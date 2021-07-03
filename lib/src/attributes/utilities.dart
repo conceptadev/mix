@@ -137,6 +137,24 @@ final align = AlignmentUtility();
 /// Alignment center
 final center = align.center;
 
+/// Alignment bottomCenter
+final bottomCenter = align.bottomCenter;
+
+/// Alignment bottomLeft
+final bottomLeft = align.bottomLeft;
+
+/// Alignment bottomRight
+final bottomRight = align.bottomRight;
+
+/// Alignment topCenter
+final topCenter = align.topCenter;
+
+/// Alignment topLeft
+final topLeft = align.topLeft;
+
+/// Alignment topRight
+final topRight = align.topRight;
+
 /// Height
 final h = SizeUtility<HeightAttribute>();
 
