@@ -2,7 +2,7 @@
 
 An expressive way to build design systems effortlessly in Flutter.
 
-A library of primitive building blocks to help developers and designers create consistent UI.
+Mix offers primitive building blocks to help developers and designers create beautiful, and consistent UI.
 
 ## Motivation & Goals
 
