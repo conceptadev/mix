@@ -12,22 +12,24 @@ enum BorderSidePosition {
 }
 
 class BorderSideUtility {
-  BorderSideUtility(this.position);
+  const BorderSideUtility(this.position);
 
   final BorderSidePosition position;
 
-  factory BorderSideUtility.all() => BorderSideUtility(BorderSidePosition.all);
+  factory BorderSideUtility.all() =>
+      const BorderSideUtility(BorderSidePosition.all);
 
   factory BorderSideUtility.left() =>
-      BorderSideUtility(BorderSidePosition.left);
+      const BorderSideUtility(BorderSidePosition.left);
 
-  factory BorderSideUtility.top() => BorderSideUtility(BorderSidePosition.top);
+  factory BorderSideUtility.top() =>
+      const BorderSideUtility(BorderSidePosition.top);
 
   factory BorderSideUtility.right() =>
-      BorderSideUtility(BorderSidePosition.right);
+      const BorderSideUtility(BorderSidePosition.right);
 
   factory BorderSideUtility.bottom() =>
-      BorderSideUtility(BorderSidePosition.bottom);
+      const BorderSideUtility(BorderSidePosition.bottom);
 
   BorderAttribute color(Color color) => builder(color: color);
   BorderAttribute width(double width) => builder(width: width);
@@ -58,9 +60,9 @@ class BorderSideAttribute extends Attribute<BorderSide> {
   final Color? color;
   final double? width;
   final BorderStyle? style;
-
+  @override
   BorderSide get value {
-    return BorderSide().copyWith(
+    return const BorderSide().copyWith(
       color: color,
       width: width,
       style: style,

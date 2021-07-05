@@ -36,7 +36,7 @@ import 'text/text_scale_factor.dart';
 import 'text/text_width_basis.dart';
 import 'text/word_spacing.dart';
 
-final marginUtility = SpaceUtility<MarginAttribute>();
+const marginUtility = SpaceUtility<MarginAttribute>();
 
 /// Margin all
 final m = marginUtility.all;
@@ -60,7 +60,7 @@ final mx = marginUtility.horizontal;
 /// Margin verttical
 final my = marginUtility.vertical;
 
-final paddingUtility = SpaceUtility<PaddingAttribute>();
+const paddingUtility = SpaceUtility<PaddingAttribute>();
 
 /// Padding all
 final p = paddingUtility.all;
@@ -84,16 +84,16 @@ final px = paddingUtility.horizontal;
 final py = paddingUtility.vertical;
 
 /// Rotate widget
-final rotate = RotateUtility();
+const rotate = RotateUtility();
 
 /// Opacity
-final opacity = OpacityUtility();
+const opacity = OpacityUtility();
 
 /// Flex
-final flex = FlexUtility();
+const flex = FlexUtility();
 
 /// Flex fit
-final flexFit = FlexFitUtility();
+const flexFit = FlexFitUtility();
 
 /// Flexible
 final flexible = flexFit.loose;
@@ -102,22 +102,22 @@ final flexible = flexFit.loose;
 final expanded = flexFit.tight;
 
 /// Flex Align
-final mainAxis = MainAxisAlignmentUtility();
-final crossAxis = CrossAxisAligmentUtility();
+const mainAxis = MainAxisAlignmentUtility();
+const crossAxis = CrossAxisAligmentUtility();
 
-final axisSize = MainAxisSizeUtility();
+const axisSize = MainAxisSizeUtility();
 
 /// Axis
 // final axis = AxisUtility();
 
 /// Fitting
-final fit = BoxFitUtility();
+const fit = BoxFitUtility();
 
 /// Aspect Ratio
-final aspectRatio = AspectRationUtility();
+const aspectRatio = AspectRationUtility();
 
 /// Border radius
-final borderRadius = BorderRadiusUtility();
+const borderRadius = BorderRadiusUtility();
 final rounded = borderRadius.fromParams;
 final roundedTopLeft = borderRadius.topLeft;
 final roundedTopRight = borderRadius.topRight;
@@ -125,14 +125,14 @@ final roundedBottomLeft = borderRadius.bottomLeft;
 final roundedBottomRight = borderRadius.bottomRight;
 
 /// Background color attribute
-final backgroundColor = ColorUtility<BackgroundColorAttribute>();
-final bgColor = backgroundColor;
+const backgroundColor = ColorUtility<BackgroundColorAttribute>();
+const bgColor = backgroundColor;
 
 /// Text color attribute
-final textColor = ColorUtility<TextColorAttribute>();
+const textColor = ColorUtility<TextColorAttribute>();
 
 /// Aligment
-final align = AlignmentUtility();
+const align = AlignmentUtility();
 
 /// Alignment center
 final center = align.center;
@@ -156,28 +156,28 @@ final topLeft = align.topLeft;
 final topRight = align.topRight;
 
 /// Height
-final h = SizeUtility<HeightAttribute>();
+const h = SizeUtility<HeightAttribute>();
 
 /// Width
-final w = SizeUtility<WidthAttribute>();
+const w = SizeUtility<WidthAttribute>();
 
 /// Max height attribute
-final maxH = SizeUtility<MaxHeightAttribute>();
+const maxH = SizeUtility<MaxHeightAttribute>();
 
 /// Min height attribute
-final minH = SizeUtility<MinHeightAttribute>();
+const minH = SizeUtility<MinHeightAttribute>();
 
 /// Max width attribute
-final maxW = SizeUtility<MaxWidthAttribute>();
+const maxW = SizeUtility<MaxWidthAttribute>();
 
 /// Min width attribute
-final minW = SizeUtility<MinWidthAttribute>();
+const minW = SizeUtility<MinWidthAttribute>();
 
 /// Gap
-final gap = SizeUtility<GapAttribute>();
+const gap = SizeUtility<GapAttribute>();
 
 /// Hide attribute
-final hide = HideUtility();
+const hide = HideUtility();
 
 final _borderAllUtility = BorderSideUtility.all();
 
@@ -235,7 +235,7 @@ final borderBottomWidth = _borderBottomUtility.width;
 final borderBottomStyle = _borderBottomUtility.style;
 
 /// Box shadow utility
-final boxShadow = BoxShadowUtility();
+const boxShadow = BoxShadowUtility();
 
 /// Shadow offset
 final shadowOffset = boxShadow.offset;
@@ -249,26 +249,26 @@ final shadowBlur = boxShadow.blurRadius;
 /// Shadow color
 final shadowColor = boxShadow.color;
 
-final textAlign = TextAlignUtility();
-final fontWeight = FontWeightUtility();
-final textBaseline = TextBaselineUtility();
-final fontStyle = FontStyleUtility();
-final textDirection = TextDirectionUtility();
-final textWidthBasis = TextWidthBasisUtility();
-final textOverflow = TextOverflowUtility();
-final locale = LocaleUtility();
-final fontFamily = FontFamilyUtility();
-final maxLines = MaxLinesUtility();
-final fontSize = FontSizeUtility();
+const textAlign = TextAlignUtility();
+const fontWeight = FontWeightUtility();
+const textBaseline = TextBaselineUtility();
+const fontStyle = FontStyleUtility();
+const textDirection = TextDirectionUtility();
+const textWidthBasis = TextWidthBasisUtility();
+const textOverflow = TextOverflowUtility();
+const locale = LocaleUtility();
+const fontFamily = FontFamilyUtility();
+const maxLines = MaxLinesUtility();
+const fontSize = FontSizeUtility();
 
-final wordSpacing = WordSpacingUtility();
-final letterSpacing = LetterSpacingUtility();
-final softWrap = SoftWrapUtility();
-final textScaleFactor = TextScaleFactorUtility();
-final debugLabel = DebugLabelUtility();
-final textHeight = TextHeightUtility();
+const wordSpacing = WordSpacingUtility();
+const letterSpacing = LetterSpacingUtility();
+const softWrap = SoftWrapUtility();
+const textScaleFactor = TextScaleFactorUtility();
+const debugLabel = DebugLabelUtility();
+const textHeight = TextHeightUtility();
 
 /// Dynamic Attributes
 
-final dark = DarkModeUtility();
-final iconSize = IconSizeUtility();
+const dark = DarkModeUtility();
+const iconSize = IconSizeUtility();

@@ -71,7 +71,7 @@ class SpaceAttribute extends Attribute<EdgeInsets> with _$SpaceAttribute {
     final double? right,
     final double? bottom,
   }) = PaddingAttribute;
-
+  @override
   EdgeInsets get value {
     return EdgeInsets.only(
       left: left ?? 0.0,

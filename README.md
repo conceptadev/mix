@@ -1,6 +1,6 @@
 ## <img src="https://raw.githubusercontent.com/leoafarias/mix/main/assets/logo.png" alt="Mix" width="350"/><br>
 
-An expressive way to build design systems effortlessly in Flutter.
+An expressive way to effortlessly build design systems in Flutter.
 
 Mix offers primitive building blocks to help developers and designers create beautiful and consistent UI.
 

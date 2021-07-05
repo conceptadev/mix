@@ -44,7 +44,7 @@ class BorderAttribute extends Attribute<Border> {
   final BorderSideAttribute? top;
   final BorderSideAttribute? right;
   final BorderSideAttribute? bottom;
-
+  @override
   Border get value {
     return Border(
       left: left?.value ?? BorderSide.none,

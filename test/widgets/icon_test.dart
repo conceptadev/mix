@@ -27,8 +27,8 @@ void main() {
         DirectionalTestWidget(
           child: Mix(
             IconColorAttribute(Colors.greenAccent),
-            IconSizeAttribute(23),
-            TextDirectionAttribute(TextDirection.rtl),
+            const IconSizeAttribute(23),
+            const TextDirectionAttribute(TextDirection.rtl),
           ).icon(Icons.bolt),
         ),
       );

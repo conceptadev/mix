@@ -4,7 +4,7 @@ import 'package:mix/src/attributes/primitives/space.dart';
 void main() {
   group("Test Mix Utilities", () {
     test('Test Margin Utilities', () async {
-      final marginUtility = SpaceUtility<MarginAttribute>();
+      const marginUtility = SpaceUtility<MarginAttribute>();
       final m = marginUtility.all;
       final mt = marginUtility.top;
       final mb = marginUtility.bottom;
@@ -23,7 +23,7 @@ void main() {
     });
 
     test('Test Padding Utilities', () async {
-      final paddingUtility = SpaceUtility<PaddingAttribute>();
+      const paddingUtility = SpaceUtility<PaddingAttribute>();
       final p = paddingUtility.all;
       final pt = paddingUtility.top;
       final pb = paddingUtility.bottom;

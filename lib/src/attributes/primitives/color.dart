@@ -6,6 +6,7 @@ import '../base_attribute.dart';
 part 'color.freezed.dart';
 
 class ColorUtility<T extends ColorAttribute> {
+  const ColorUtility();
   T call(Color color) => ColorAttribute.create<T>(color);
 }
 
@@ -30,7 +31,7 @@ class ColorAttribute extends Attribute<Color> with _$ColorAttribute {
 
   /// Icon color
   factory ColorAttribute.iconColor(Color color) = IconColorAttribute;
-
+  @override
   Color get value {
     return color;
   }

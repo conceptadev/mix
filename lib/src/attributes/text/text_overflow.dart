@@ -4,17 +4,19 @@ import '../base_attribute.dart';
 
 class TextOverflowUtility {
   const TextOverflowUtility();
-  TextOverflowAttribute get clip => TextOverflowAttribute(TextOverflow.clip);
+  TextOverflowAttribute get clip =>
+      const TextOverflowAttribute(TextOverflow.clip);
   TextOverflowAttribute get ellipsis =>
-      TextOverflowAttribute(TextOverflow.ellipsis);
-  TextOverflowAttribute get fade => TextOverflowAttribute(TextOverflow.fade);
+      const TextOverflowAttribute(TextOverflow.ellipsis);
+  TextOverflowAttribute get fade =>
+      const TextOverflowAttribute(TextOverflow.fade);
   TextOverflowAttribute get visible =>
-      TextOverflowAttribute(TextOverflow.visible);
+      const TextOverflowAttribute(TextOverflow.visible);
 }
 
 class TextOverflowAttribute extends TextTypeAttribute<TextOverflow> {
   const TextOverflowAttribute([this.textOverflow = TextOverflow.clip]);
   final TextOverflow textOverflow;
-
+  @override
   TextOverflow get value => textOverflow;
 }

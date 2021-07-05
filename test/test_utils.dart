@@ -20,7 +20,7 @@ class DirectionalTestWidget extends StatelessWidget {
 }
 
 class BoxInsideFlexWidget extends StatelessWidget {
-  const BoxInsideFlexWidget(this.mix);
+  const BoxInsideFlexWidget(this.mix, {Key? key}) : super(key: key);
 
   final Mix mix;
 
@@ -31,7 +31,7 @@ class BoxInsideFlexWidget extends StatelessWidget {
         children: [
           Box(
             mix,
-            child: SizedBox(
+            child: const SizedBox(
               height: 20,
               width: 20,
             ),
@@ -43,7 +43,7 @@ class BoxInsideFlexWidget extends StatelessWidget {
 }
 
 class BoxTestWidget extends StatelessWidget {
-  const BoxTestWidget(this.mix);
+  const BoxTestWidget(this.mix, {Key? key}) : super(key: key);
 
   final Mix mix;
 
@@ -52,7 +52,7 @@ class BoxTestWidget extends StatelessWidget {
     return DirectionalTestWidget(
       child: Box(
         mix,
-        child: SizedBox(
+        child: const SizedBox(
           height: 25,
           width: 25,
         ),

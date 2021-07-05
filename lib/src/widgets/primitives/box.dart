@@ -44,7 +44,7 @@ class BoxMixer extends MixerWidget {
 
     if (mixer.hidden != null) {
       if (mixer.hidden!.value == true) {
-        return SizedBox.shrink();
+        return const SizedBox.shrink();
       }
     }
 

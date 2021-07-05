@@ -6,31 +6,31 @@ class FontWeightUtility {
   const FontWeightUtility();
 
   /// Thin, the least thick
-  FontWeightAttribute get w100 => FontWeightAttribute(FontWeight.w100);
+  FontWeightAttribute get w100 => const FontWeightAttribute(FontWeight.w100);
 
   /// Extra-light
-  FontWeightAttribute get w200 => FontWeightAttribute(FontWeight.w200);
+  FontWeightAttribute get w200 => const FontWeightAttribute(FontWeight.w200);
 
   /// Light
-  FontWeightAttribute get w300 => FontWeightAttribute(FontWeight.w300);
+  FontWeightAttribute get w300 => const FontWeightAttribute(FontWeight.w300);
 
   /// Normal / regular / plain
-  FontWeightAttribute get w400 => FontWeightAttribute(FontWeight.w400);
+  FontWeightAttribute get w400 => const FontWeightAttribute(FontWeight.w400);
 
   /// Medium
-  FontWeightAttribute get w500 => FontWeightAttribute(FontWeight.w500);
+  FontWeightAttribute get w500 => const FontWeightAttribute(FontWeight.w500);
 
   /// Semi-bold
-  FontWeightAttribute get w600 => FontWeightAttribute(FontWeight.w600);
+  FontWeightAttribute get w600 => const FontWeightAttribute(FontWeight.w600);
 
   /// Bold
-  FontWeightAttribute get w700 => FontWeightAttribute(FontWeight.w700);
+  FontWeightAttribute get w700 => const FontWeightAttribute(FontWeight.w700);
 
   /// Extra-bold
-  FontWeightAttribute get w800 => FontWeightAttribute(FontWeight.w800);
+  FontWeightAttribute get w800 => const FontWeightAttribute(FontWeight.w800);
 
   /// Black, the most thick
-  FontWeightAttribute get w900 => FontWeightAttribute(FontWeight.w900);
+  FontWeightAttribute get w900 => const FontWeightAttribute(FontWeight.w900);
 
   /// The default font weight.
   FontWeightAttribute get normal => w400;
@@ -55,6 +55,6 @@ class FontWeightUtility {
 class FontWeightAttribute extends TextTypeAttribute<FontWeight> {
   const FontWeightAttribute(this.fontWeight);
   final FontWeight fontWeight;
-
+  @override
   FontWeight get value => fontWeight;
 }

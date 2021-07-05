@@ -37,7 +37,7 @@ class ConstraintsAttribute extends Attribute<BoxConstraints> {
       minHeight: minHeight?.value,
     );
   }
-
+  @override
   BoxConstraints get value {
     BoxConstraints? constraints;
 

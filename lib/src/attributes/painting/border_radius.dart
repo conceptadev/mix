@@ -4,6 +4,7 @@ import '../../helpers/helpers.dart';
 import '../base_attribute.dart';
 
 class BorderRadiusUtility {
+  const BorderRadiusUtility();
   BorderRadiusAttribute get none {
     return all(0.0);
   }
@@ -55,7 +56,7 @@ class BorderRadiusUtility {
   ]) {
     final values = positionalToList(p1, p2, p3, p4);
     BorderRadiusAttribute borderRadius;
-    final borderRadiusUtility = BorderRadiusUtility();
+    const borderRadiusUtility = BorderRadiusUtility();
 
     if (values.isEmpty) {
       return borderRadiusUtility.none;
@@ -121,7 +122,7 @@ class BorderRadiusAttribute extends Attribute<BorderRadius> {
   final double? topRight;
   final double? bottomLeft;
   final double? bottomRight;
-
+  @override
   BorderRadius get value {
     return BorderRadius.only(
       topLeft: Radius.circular(topLeft ?? 0.0),

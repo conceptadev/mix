@@ -5,6 +5,7 @@ import '../base_attribute.dart';
 part 'size.freezed.dart';
 
 class SizeUtility<T extends SizeAttribute> {
+  const SizeUtility();
   T call(double size) => SizeAttribute.create<T>(size);
 }
 
@@ -23,7 +24,7 @@ class SizeAttribute extends Attribute<double> with _$SizeAttribute {
   factory SizeAttribute.maxWidth(double size) = MaxWidthAttribute;
   factory SizeAttribute.minWidth(double size) = MinWidthAttribute;
   factory SizeAttribute.gap(double size) = GapAttribute;
-
+  @override
   double get value {
     return size;
   }

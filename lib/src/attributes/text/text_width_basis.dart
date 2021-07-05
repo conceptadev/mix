@@ -5,15 +5,16 @@ import '../base_attribute.dart';
 class TextWidthBasisUtility {
   const TextWidthBasisUtility();
   TextWidthBasisAttribute get parent =>
-      TextWidthBasisAttribute(TextWidthBasis.parent);
+      const TextWidthBasisAttribute(TextWidthBasis.parent);
 
   TextWidthBasisAttribute get longestLine =>
-      TextWidthBasisAttribute(TextWidthBasis.longestLine);
+      const TextWidthBasisAttribute(TextWidthBasis.longestLine);
 }
 
 class TextWidthBasisAttribute extends TextTypeAttribute<TextWidthBasis> {
   const TextWidthBasisAttribute(this.textWidthBasis);
   final TextWidthBasis textWidthBasis;
 
+  @override
   TextWidthBasis get value => textWidthBasis;
 }

@@ -6,7 +6,7 @@ class BoxDecorationAttribute extends Attribute<Decoration> {
   const BoxDecorationAttribute(this.decoration);
 
   final BoxDecoration decoration;
-
+  @override
   Decoration get value {
     return decoration;
   }

@@ -3,35 +3,41 @@ import 'package:flutter/material.dart';
 import '../base_attribute.dart';
 
 class BoxShadowColorUtility {
+  const BoxShadowColorUtility();
   BoxShadowAttribute call(Color color) {
     return BoxShadowAttribute(color: color);
   }
 }
 
 class BoxShadowOffsetUtility {
+  const BoxShadowOffsetUtility();
   BoxShadowAttribute call(double x, double y) {
     return BoxShadowAttribute(offset: Offset(x, y));
   }
 }
 
 class BoxShadowBlurRadiusUtility {
+  const BoxShadowBlurRadiusUtility();
   BoxShadowAttribute call(double blurRadius) {
     return BoxShadowAttribute(blurRadius: blurRadius);
   }
 }
 
 class BoxShadowSpreadRadiusUtility {
+  const BoxShadowSpreadRadiusUtility();
   BoxShadowAttribute call(double spreadRadius) {
     return BoxShadowAttribute(spreadRadius: spreadRadius);
   }
 }
 
 class BoxShadowUtility {
-  BoxShadowColorUtility get color => BoxShadowColorUtility();
-  BoxShadowOffsetUtility get offset => BoxShadowOffsetUtility();
-  BoxShadowBlurRadiusUtility get blurRadius => BoxShadowBlurRadiusUtility();
+  const BoxShadowUtility();
+  BoxShadowColorUtility get color => const BoxShadowColorUtility();
+  BoxShadowOffsetUtility get offset => const BoxShadowOffsetUtility();
+  BoxShadowBlurRadiusUtility get blurRadius =>
+      const BoxShadowBlurRadiusUtility();
   BoxShadowSpreadRadiusUtility get spreadRadius =>
-      BoxShadowSpreadRadiusUtility();
+      const BoxShadowSpreadRadiusUtility();
 }
 
 class BoxShadowAttribute extends Attribute<BoxShadow> {
@@ -47,7 +53,7 @@ class BoxShadowAttribute extends Attribute<BoxShadow> {
   final double? blurRadius;
   final double? spreadRadius;
 
-  static final _defaults = const BoxShadow();
+  static const _defaults = BoxShadow();
 
   static BoxShadowAttribute get none {
     return BoxShadowAttribute(
@@ -58,6 +64,7 @@ class BoxShadowAttribute extends Attribute<BoxShadow> {
     );
   }
 
+  @override
   BoxShadow get value {
     return BoxShadow(
       color: color ?? _defaults.color,

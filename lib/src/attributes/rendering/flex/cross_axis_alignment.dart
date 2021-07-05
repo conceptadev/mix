@@ -3,16 +3,17 @@ import 'package:flutter/material.dart';
 import '../../base_attribute.dart';
 
 class CrossAxisAligmentUtility {
+  const CrossAxisAligmentUtility();
   CrossAxisAlignmentAttribute get start =>
-      CrossAxisAlignmentAttribute(CrossAxisAlignment.start);
+      const CrossAxisAlignmentAttribute(CrossAxisAlignment.start);
   CrossAxisAlignmentAttribute get end =>
-      CrossAxisAlignmentAttribute(CrossAxisAlignment.end);
+      const CrossAxisAlignmentAttribute(CrossAxisAlignment.end);
   CrossAxisAlignmentAttribute get center =>
-      CrossAxisAlignmentAttribute(CrossAxisAlignment.center);
+      const CrossAxisAlignmentAttribute(CrossAxisAlignment.center);
   CrossAxisAlignmentAttribute get stretch =>
-      CrossAxisAlignmentAttribute(CrossAxisAlignment.stretch);
+      const CrossAxisAlignmentAttribute(CrossAxisAlignment.stretch);
   CrossAxisAlignmentAttribute get baseline =>
-      CrossAxisAlignmentAttribute(CrossAxisAlignment.baseline);
+      const CrossAxisAlignmentAttribute(CrossAxisAlignment.baseline);
 }
 
 class CrossAxisAlignmentAttribute extends Attribute<CrossAxisAlignment> {
@@ -20,6 +21,6 @@ class CrossAxisAlignmentAttribute extends Attribute<CrossAxisAlignment> {
       : _alignment = alignment;
 
   final CrossAxisAlignment _alignment;
-  // Returns axis value
+  @override
   CrossAxisAlignment get value => _alignment;
 }

@@ -12,7 +12,7 @@ abstract class Attribute<T> {
 abstract class DynamicAttribute<T> extends Attribute<Attribute> {
   const DynamicAttribute(Attribute attribute) : _attribute = attribute;
   final Attribute _attribute;
-
+  @override
   Attribute get value => _attribute;
 
   bool shouldApply(BuildContext context);

@@ -43,13 +43,13 @@ void main() {
       await tester.pumpWidget(
         DirectionalTestWidget(
           child: Mix(
-            TextOverflowAttribute(TextOverflow.ellipsis),
-            SoftWrapAttribute(true),
-            TextScaleFactorAttribute(2.2),
-            TextWidthBasisAttribute(TextWidthBasis.longestLine),
-            MaxLinesAttribute(3),
-            TextAlignAttribute(TextAlign.justify),
-            TextDirectionAttribute(TextDirection.rtl),
+            const TextOverflowAttribute(TextOverflow.ellipsis),
+            const SoftWrapAttribute(true),
+            const TextScaleFactorAttribute(2.2),
+            const TextWidthBasisAttribute(TextWidthBasis.longestLine),
+            const MaxLinesAttribute(3),
+            const TextAlignAttribute(TextAlign.justify),
+            const TextDirectionAttribute(TextDirection.rtl),
           ).text(widgetText),
         ),
       );
@@ -69,17 +69,17 @@ void main() {
       await tester.pumpWidget(
         DirectionalTestWidget(
           child: Mix(
-            FontSizeAttribute(20),
-            WordSpacingAttribute(2),
-            LetterSpacingAttribute(3),
-            TextBaselineAttribute(TextBaseline.ideographic),
-            FontFamilyAttribute('Roboto'),
-            FontWeightAttribute(FontWeight.bold),
+            const FontSizeAttribute(20),
+            const WordSpacingAttribute(2),
+            const LetterSpacingAttribute(3),
+            const TextBaselineAttribute(TextBaseline.ideographic),
+            const FontFamilyAttribute('Roboto'),
+            const FontWeightAttribute(FontWeight.bold),
             TextColorAttribute(Colors.amber),
-            FontStyleAttribute(FontStyle.italic),
-            LocaleAttribute(Locale('es', 'US')),
-            DebugLabelAttribute('debug_label'),
-            TextHeightAttribute(10),
+            const FontStyleAttribute(FontStyle.italic),
+            const LocaleAttribute(Locale('es', 'US')),
+            const DebugLabelAttribute('debug_label'),
+            const TextHeightAttribute(10),
             BackgroundColorAttribute(Colors.blue),
           ).text(widgetText),
         ),

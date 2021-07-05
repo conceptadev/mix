@@ -103,7 +103,7 @@ class FlexBoxMixer extends MixerWidget {
 }
 
 class RowBox extends FlexBox {
-  RowBox(
+  const RowBox(
     Mix mix, {
     Key? key,
     List<Widget> children = const <Widget>[],
@@ -116,7 +116,7 @@ class RowBox extends FlexBox {
 }
 
 class ColumnBox extends FlexBox {
-  ColumnBox(
+  const ColumnBox(
     Mix mix, {
     Key? key,
     List<Widget> children = const <Widget>[],
