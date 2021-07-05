@@ -19,7 +19,7 @@ import 'package:mix/src/attributes/text/text_overflow.dart';
 import 'package:mix/src/attributes/text/text_scale_factor.dart';
 import 'package:mix/src/attributes/text/text_width_basis.dart';
 import 'package:mix/src/attributes/text/word_spacing.dart';
-import 'package:mix/src/widgets/text.dart';
+import 'package:mix/src/widgets/primitives/text.dart';
 
 import '../test_utils.dart';
 

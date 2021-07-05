@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
-import 'package:mix/src/utils.dart';
+import 'package:mix/src/helpers/helpers.dart';
 
 final darkColor = hexToColor('#1c1c1c');
 

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../mixer/mix.dart';
-import '../mixer/mixer.dart';
+import '../../mixer/mix_factory.dart';
+import '../../mixer/mixer.dart';
+import '../mix_widget.dart';
 import 'box.dart';
-import 'mix_widget.dart';
 
 class IconBox extends MixWidget {
   const IconBox(

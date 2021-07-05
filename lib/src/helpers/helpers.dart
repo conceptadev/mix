@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'attributes/base_attribute.dart';
+import '../attributes/base_attribute.dart';
 
 /// Attribute params to list
 List<Attribute> attributeParamToList([

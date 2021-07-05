@@ -1,10 +1,10 @@
 import 'package:flutter/widgets.dart';
 
-import '../mixer/mix.dart';
-import '../mixer/mixer.dart';
+import '../../mixer/mix_factory.dart';
+import '../../mixer/mixer.dart';
+import '../helper_widgets.dart';
+import '../mix_widget.dart';
 import 'box.dart';
-import 'helper_widgets.dart';
-import 'mix_widget.dart';
 
 class FlexBox extends MixWidget {
   const FlexBox(

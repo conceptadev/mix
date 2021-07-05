@@ -1,9 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import '../mixer/mix.dart';
-import '../mixer/mixer.dart';
-import 'mix_widget.dart';
+import '../../mixer/mix_factory.dart';
+import '../../mixer/mixer.dart';
+import '../mix_widget.dart';
 
 class TextBox extends MixWidget {
   const TextBox(

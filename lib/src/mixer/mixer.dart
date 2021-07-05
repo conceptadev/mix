@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:mix/mix.dart';
-import 'package:mix/src/attributes/icon/icon_size.dart';
 
+import '../../mix.dart';
 import '../attributes/base_attribute.dart';
 import '../attributes/dynamic/hidden.dart';
+import '../attributes/icon/icon_size.dart';
 import '../attributes/layout/aspect_ratio.dart';
 import '../attributes/layout/constraints.dart';
 import '../attributes/layout/flex.dart';

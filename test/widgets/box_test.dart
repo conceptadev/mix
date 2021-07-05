@@ -14,7 +14,7 @@ import 'package:mix/src/attributes/primitives/color.dart';
 import 'package:mix/src/attributes/primitives/size.dart';
 import 'package:mix/src/attributes/primitives/space.dart';
 import 'package:mix/src/attributes/rendering/flex/flex_fit.dart';
-import 'package:mix/src/widgets/box.dart';
+import 'package:mix/src/widgets/primitives/box.dart';
 
 import '../test_utils.dart';
 

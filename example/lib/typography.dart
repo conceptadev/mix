@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
 import 'package:mix/src/attributes/icon/icon_size.dart';
-import 'package:mix/src/widgets/text.dart';
+import 'package:mix/src/widgets/primitives/text.dart';
 
 final defaultColor = textColor(Colors.black);
 final darkDefaultColor = dark(textColor(Colors.white));

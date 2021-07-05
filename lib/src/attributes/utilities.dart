@@ -234,7 +234,20 @@ final borderBottomWidth = _borderBottomUtility.width;
 /// Border style for bottom border side
 final borderBottomStyle = _borderBottomUtility.style;
 
+/// Box shadow utility
 final boxShadow = BoxShadowUtility();
+
+/// Shadow offset
+final shadowOffset = boxShadow.offset;
+
+/// Shadow spread radius
+final shadowSpread = boxShadow.spreadRadius;
+
+/// Shadow blur radius
+final shadowBlur = boxShadow.blurRadius;
+
+/// Shadow color
+final shadowColor = boxShadow.color;
 
 final textAlign = TextAlignUtility();
 final fontWeight = FontWeightUtility();

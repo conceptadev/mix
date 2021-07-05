@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../utils.dart';
+import '../../helpers/helpers.dart';
 import '../base_attribute.dart';
 
 class BorderRadiusUtility {
