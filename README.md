@@ -6,7 +6,9 @@ Mix offers primitive building blocks to help developers and designers create bea
 
 ```bash
 # Important
-Mix is currently being used internally to build design systems in Flutter. However, it is still in the experimental development stages. Major APIs are expected to change until the 1.0 release.
+Mix is currently being used internally to build design systems in Flutter.
+However, it is still in the experimental development stages.
+Major APIs are expected to change until the 1.0 release.
 ```
 
 ## Motivation & Goals
