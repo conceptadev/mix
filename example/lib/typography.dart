@@ -51,7 +51,7 @@ class PreviewTypography extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView(
       children: [
-        TextBox(
+        TextMix(
           DST.heading1,
           text: 'Heading 1',
         ),

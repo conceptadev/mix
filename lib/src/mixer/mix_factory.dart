@@ -63,13 +63,13 @@ class Mix {
     return RowBox(mx, children: children);
   }
 
-  TextBox text(
+  TextMix text(
     String text, {
     Mix? mix,
     Key? key,
   }) {
     final mx = Mix.combine(this, mix);
-    return TextBox(mx, text: text, key: key);
+    return TextMix(mx, text: text, key: key);
   }
 
   ColumnBox column({
@@ -80,13 +80,13 @@ class Mix {
     return ColumnBox(mx, children: children);
   }
 
-  IconBox icon(
+  IconMix icon(
     IconData icon, {
     Mix? mix,
     String? semanticLabel,
   }) {
     final mx = Mix.combine(this, mix);
-    return IconBox(
+    return IconMix(
       mx,
       icon: icon,
       semanticLabel: semanticLabel,

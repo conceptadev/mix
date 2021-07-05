@@ -5,8 +5,8 @@ import '../../mixer/mix_factory.dart';
 import '../../mixer/mixer.dart';
 import '../mix_widget.dart';
 
-class TextBox extends MixWidget {
-  const TextBox(
+class TextMix extends MixWidget {
+  const TextMix(
     Mix mix, {
     Key? key,
     required this.text,

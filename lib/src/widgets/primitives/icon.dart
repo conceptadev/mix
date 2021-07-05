@@ -5,8 +5,8 @@ import '../../mixer/mixer.dart';
 import '../mix_widget.dart';
 import 'box.dart';
 
-class IconBox extends MixWidget {
-  const IconBox(
+class IconMix extends MixWidget {
+  const IconMix(
     Mix mix, {
     required this.icon,
     this.semanticLabel,
@@ -19,7 +19,7 @@ class IconBox extends MixWidget {
   @override
   Widget build(BuildContext context) {
     final mixer = Mixer.build(context, mix);
-    return IconBoxMixer(
+    return IconMixer(
       mixer,
       icon: icon,
       semanticLabel: semanticLabel,
@@ -27,8 +27,8 @@ class IconBox extends MixWidget {
   }
 }
 
-class IconBoxMixer extends MixerWidget {
-  const IconBoxMixer(
+class IconMixer extends MixerWidget {
+  const IconMixer(
     Mixer mixer, {
     required this.icon,
     this.semanticLabel,
