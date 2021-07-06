@@ -112,8 +112,8 @@ class BoxMixer extends MixerWidget {
 
     if (mixer.maxHeight != null || mixer.maxWidth != null) {
       current = LimitedBox(
-        maxHeight: mixer.height?.value ?? double.infinity,
-        maxWidth: mixer.width?.value ?? double.infinity,
+        maxHeight: mixer.maxHeight?.value ?? double.infinity,
+        maxWidth: mixer.maxWidth?.value ?? double.infinity,
         child: current,
       );
     }

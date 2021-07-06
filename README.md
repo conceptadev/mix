@@ -131,11 +131,11 @@ Similar to a `Container` with some slight adjustments for a better development e
 
 The equivalent of the Flex widgets (Flex, Row, Column). Allow for the use of flex Attributes, and wrap them in a `Box` to use box attributes for composability.
 
-##### ColumnMix
+#### ColumnBox
 
 The equivalent of the `Column` widget. Allows you to use Mix attributes to style and build custom text widgets. It is an abstraction of `Flexbox`, so it will also accept `Box` attributes.
 
-##### RowMix
+#### RowBox
 
 The equivalent of the `Row` widget. Allows you to use Mix attributes to style and build custom text widgets. It is an abstraction of `Flexbox`, so it will also accept `Box` attributes.
 

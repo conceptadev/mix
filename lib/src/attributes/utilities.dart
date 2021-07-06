@@ -1,4 +1,6 @@
 // ignore_for_file: camel_case_types
+import 'package:mix/src/attributes/dynamic/media_query.dart';
+
 import '../attributes/dynamic/dark_mode.dart';
 import 'dynamic/hidden.dart';
 import 'icon/icon_size.dart';
@@ -249,6 +251,7 @@ final shadowBlur = boxShadow.blurRadius;
 /// Shadow color
 final shadowColor = boxShadow.color;
 
+/// Text align
 const textAlign = TextAlignUtility();
 const fontWeight = FontWeightUtility();
 const textBaseline = TextBaselineUtility();
@@ -268,7 +271,12 @@ const textScaleFactor = TextScaleFactorUtility();
 const debugLabel = DebugLabelUtility();
 const textHeight = TextHeightUtility();
 
+/// Icon Size
+const iconSize = IconSizeUtility();
+
 /// Dynamic Attributes
 
 const dark = DarkModeUtility();
-const iconSize = IconSizeUtility();
+
+/// Media query utility
+const mq = MediaQueryUtility();
