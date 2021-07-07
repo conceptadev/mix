@@ -1,8 +1,15 @@
-import 'package:example/usage.dart';
+import 'package:example/remix/theme.dart';
+import 'package:example/remix/theme_provider.dart';
+import 'package:example/remix/typography/typography.preview.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(
+    RemixTheme(
+      data: RemixThemeData(),
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -11,15 +18,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Mix Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: ThemeData.light(),
       home: Scaffold(
         backgroundColor: Colors.white.withOpacity(0.9),
         appBar: AppBar(
           title: Text('Mix Demo'),
         ),
-        body: UsageExample(),
+        body: TypographyPreview(),
       ),
     );
   }

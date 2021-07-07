@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mix/src/attributes/text/text_style.dart';
 
 import '../../mix.dart';
 import '../attributes/base_attribute.dart';
@@ -73,7 +74,6 @@ class Mixer {
   FlexFitAttribute? flexFit;
   BoxFitAttribute? boxFit;
   AspectRatioAttribute? aspectRatio;
-  // Text Attributes
   TextColorAttribute? textColor;
   TextAlignAttribute? textAlign;
   FontSizeAttribute? fontSize;
@@ -90,6 +90,7 @@ class Mixer {
   SoftWrapAttribute? softWrap;
   TextScaleFactorAttribute? textScaleFactor;
   TextWidthBasisAttribute? textWidthBasis;
+  TextStyleAttribute? textStyle;
   DebugLabelAttribute? debugLabel;
   TextHeightAttribute? textHeight;
   IconColorAttribute? iconColor;
@@ -122,6 +123,8 @@ class Mixer {
 
   factory Mixer.fromList(List<Attribute> attributes) {
     final mixer = Mixer._(attributes);
+    // Set default text style
+    mixer.textStyle = const TextStyleAttribute(TextStyle());
     for (final attribute in attributes) {
       if (attribute is DynamicAttribute) {
         mixer.dynamicAttributes ??= [];
@@ -157,6 +160,10 @@ class Mixer {
 
       if (attribute is TextColorAttribute) {
         mixer.textColor = attribute;
+      }
+
+      if (attribute is TextStyleAttribute) {
+        mixer.textStyle = attribute;
       }
 
       if (attribute is TextAlignAttribute) {

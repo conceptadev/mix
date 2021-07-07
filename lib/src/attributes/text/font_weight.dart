@@ -5,6 +5,9 @@ import '../base_attribute.dart';
 class FontWeightUtility {
   const FontWeightUtility();
 
+  FontWeightAttribute call(FontWeight fontWeight) =>
+      FontWeightAttribute(fontWeight);
+
   /// Thin, the least thick
   FontWeightAttribute get w100 => const FontWeightAttribute(FontWeight.w100);
 

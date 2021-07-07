@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mix/mix.dart';
 
 /// Possible screen sizes
 enum ScreenSize { xs, sm, md, lg }
@@ -19,6 +20,16 @@ extension ContextExtensions on BuildContext {
 
   /// MediaQueryData for context
   MediaQueryData get mq => MediaQuery.of(this);
+
+  /// Theme context helpers
+
+  ThemeData get theme => Theme.of(this);
+
+  /// Theme color scheme
+  ColorScheme get colorScheme => theme.colorScheme;
+
+  /// Theme text theme
+  TextTheme get textTheme => theme.textTheme;
 
   /// Is device in landscape mode.
   bool get isLandscape => mq.orientation == Orientation.landscape;
@@ -42,4 +53,25 @@ extension ContextExtensions on BuildContext {
                 ? ScreenSize.sm
                 : ScreenSize.xs;
   }
+}
+
+extension TextStyleExtension on TextStyle {
+  Mix get mix => Mix(textStyle(this));
+}
+
+extension HexColor on Color {
+  /// String is in the format "aabbcc" or "ffaabbcc" with an optional leading "#".
+  static Color fromHex(String hexString) {
+    final buffer = StringBuffer();
+    if (hexString.length == 6 || hexString.length == 7) buffer.write('ff');
+    buffer.write(hexString.replaceFirst('#', ''));
+    return Color(int.parse(buffer.toString(), radix: 16));
+  }
+
+  /// Prefixes a hash sign if [leadingHashSign] is set to `true` (default is `true`).
+  String toHex({bool leadingHashSign = true}) => '${leadingHashSign ? '#' : ''}'
+      '${alpha.toRadixString(16).padLeft(2, '0')}'
+      '${red.toRadixString(16).padLeft(2, '0')}'
+      '${green.toRadixString(16).padLeft(2, '0')}'
+      '${blue.toRadixString(16).padLeft(2, '0')}';
 }

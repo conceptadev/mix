@@ -53,6 +53,19 @@ class TextMixer extends MixerWidget {
         fontStyle: mixer.fontStyle?.value,
         height: mixer.textHeight?.value,
         backgroundColor: mixer.backgroundColor?.value,
+      ).copyWith(
+        wordSpacing: mixer.textStyle?.value.wordSpacing,
+        textBaseline: mixer.textStyle?.value.textBaseline,
+        letterSpacing: mixer.textStyle?.value.letterSpacing,
+        fontSize: mixer.textStyle?.value.fontSize,
+        fontWeight: mixer.textStyle?.value.fontWeight,
+        fontFamily: mixer.textStyle?.value.fontFamily,
+        locale: mixer.textStyle?.value.locale,
+        debugLabel: mixer.textStyle?.value.debugLabel,
+        color: mixer.textStyle?.value.color,
+        fontStyle: mixer.textStyle?.value.fontStyle,
+        height: mixer.textStyle?.value.height,
+        backgroundColor: mixer.textStyle?.value.backgroundColor,
       ),
     );
   }

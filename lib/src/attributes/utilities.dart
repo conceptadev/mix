@@ -1,5 +1,6 @@
 // ignore_for_file: camel_case_types
 import 'package:mix/src/attributes/dynamic/media_query.dart';
+import 'package:mix/src/attributes/text/text_style.dart';
 
 import '../attributes/dynamic/dark_mode.dart';
 import 'dynamic/hidden.dart';
@@ -270,6 +271,7 @@ const softWrap = SoftWrapUtility();
 const textScaleFactor = TextScaleFactorUtility();
 const debugLabel = DebugLabelUtility();
 const textHeight = TextHeightUtility();
+const textStyle = TextStyleUtility();
 
 /// Icon Size
 const iconSize = IconSizeUtility();

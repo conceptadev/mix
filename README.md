@@ -95,6 +95,23 @@ Box(
 
 ```
 
+You can also leverage media query context values
+
+```dart
+final flexMix = Mix(gap(20), mainAxis.center);
+
+// Adaptive gutter for your flex widgets using media query
+final adaptiveFlexMix = flexMix.mix(
+  mq.xs(gap(10)),
+  mq.sm(gap(15)),
+  mq.lg(gap(40)),
+);
+```
+
+## APIs
+
+Documentation is currently in progress. For now you can find some of the available utilities [here](https://github.com/leoafarias/mix/blob/main/lib/src/attributes/utilities.dart)
+
 ## Concepts
 
 Here are some high-level concepts to understand how Mix works and to allow for you to get started.
