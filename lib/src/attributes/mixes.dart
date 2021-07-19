@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mix/mix.dart';
 
-import '../mixer/public.dart';
 import 'utilities.dart';
 
 // Color.fromRGBO(30, 144, 255, 0.1)

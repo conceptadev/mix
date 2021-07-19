@@ -1,12 +1,12 @@
-import 'package:example/remix/theme.dart';
-import 'package:example/remix/theme_provider.dart';
+import 'package:example/remix/typography/typography.dart';
 import 'package:example/remix/typography/typography.preview.dart';
 import 'package:flutter/material.dart';
+import 'package:mix/mix.dart';
 
 void main() {
   runApp(
-    RemixTheme(
-      data: RemixThemeData(),
+    MixScope(
+      data: MixStyles(),
       child: MyApp(),
     ),
   );
