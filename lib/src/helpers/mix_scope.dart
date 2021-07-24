@@ -79,6 +79,8 @@ abstract class Model extends Listenable {
   }
 }
 
+/// {@template mix.mixscope}
+///
 /// Provides a [Model] to all descendants of this Widget.
 ///
 /// Descendant Widgets can access the model by using the
@@ -91,13 +93,13 @@ abstract class Model extends Listenable {
 /// ### Example
 ///
 /// ```
-/// ScopedModel<CounterModel>(
-///   model: CounterModel(),
-///   child: ScopedModelDescendant<CounterModel>(
-///     builder: (context, child, model) => Text(model.counter.toString()),
-///   ),
-/// );
+/// MixScope<MixStyles>(
+///   data: MixStyles(),
+///   child: MixDescendantWidget(),
+/// )
 /// ```
+///
+/// {@endtemplate}
 class MixScope<T extends MixData> extends StatelessWidget {
   /// The [Model] to provide to [child] and its descendants.
   final T data;
@@ -105,6 +107,7 @@ class MixScope<T extends MixData> extends StatelessWidget {
   /// The [Widget] the [styles] will be available to.
   final Widget child;
 
+  /// {@macro mix.mixscope}
   const MixScope({
     required this.data,
     required this.child,
