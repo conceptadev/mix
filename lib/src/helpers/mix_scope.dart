@@ -95,7 +95,7 @@ abstract class Model extends Listenable {
 /// ```
 /// MixScope<MixStyles>(
 ///   data: MixStyles(),
-///   child: MixDescendantWidget(),
+///   child: MyApp(),
 /// )
 /// ```
 ///
