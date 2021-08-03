@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
+import 'package:mix/src/helpers/helpers.dart';
 
 /// Possible screen sizes
 enum ScreenSize { xs, sm, md, lg }
@@ -59,17 +60,9 @@ extension TextStyleExtension on TextStyle {
   Mix get mix => Mix(textStyle(this));
 }
 
-/// String is in the format "aabbcc" or "ffaabbcc" with an optional leading "#".
-Color colorToHex(String hexString) {
-  final buffer = StringBuffer();
-  if (hexString.length == 6 || hexString.length == 7) buffer.write('ff');
-  buffer.write(hexString.replaceFirst('#', ''));
-  return Color(int.parse(buffer.toString(), radix: 16));
-}
-
 extension ColorExtensions on Color {
   /// String is in the format "aabbcc" or "ffaabbcc" with an optional leading "#".
-  static Color fromHex(String hexString) => colorToHex(hexString);
+  static Color fromHex(String hexString) => hexToColor(hexString);
 
   /// Prefixes a hash sign if [leadingHashSign] is set to `true` (default is `true`).
   String toHex({bool leadingHashSign = true}) => '${leadingHashSign ? '#' : ''}'
@@ -77,4 +70,36 @@ extension ColorExtensions on Color {
       '${red.toRadixString(16).padLeft(2, '0')}'
       '${green.toRadixString(16).padLeft(2, '0')}'
       '${blue.toRadixString(16).padLeft(2, '0')}';
+}
+
+extension StringExtensions on String {
+  String get capitalize {
+    final current = this;
+    if (current.isEmpty) {
+      return this;
+    }
+
+    return current[0].toUpperCase() + current.substring(1);
+  }
+
+  String get titleCase {
+    const separator = ' ';
+    final current = this;
+    List<String> words =
+        current.split(separator).map((word) => word.capitalize).toList();
+
+    return words.join(separator);
+  }
+
+  String get sentenceCase {
+    const separator = ' ';
+    final current = this;
+    List<String> words = current.split(separator);
+
+    if (words.isNotEmpty) {
+      words[0].capitalize;
+    }
+
+    return words.join(separator);
+  }
 }

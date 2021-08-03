@@ -8,7 +8,7 @@ class FontStyleUtility {
   FontStyleAttribute get italic => const FontStyleAttribute(FontStyle.italic);
 }
 
-class FontStyleAttribute extends TextTypeAttribute<FontStyle> {
+class FontStyleAttribute extends TextMixAttribute<FontStyle> {
   const FontStyleAttribute(this.fontStyle);
 
   final FontStyle fontStyle;

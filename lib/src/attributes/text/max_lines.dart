@@ -5,7 +5,7 @@ class MaxLinesUtility {
   MaxLinesAttribute call(int maxLines) => MaxLinesAttribute(maxLines);
 }
 
-class MaxLinesAttribute extends TextTypeAttribute<int> {
+class MaxLinesAttribute extends TextMixAttribute<int> {
   const MaxLinesAttribute(this.maxLines);
   final int maxLines;
   @override

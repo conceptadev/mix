@@ -30,20 +30,8 @@ class Mix {
     Attribute? p11,
     Attribute? p12,
   ]) {
-    final params = attributeParamToList(
-      p1,
-      p2,
-      p3,
-      p4,
-      p5,
-      p6,
-      p7,
-      p8,
-      p9,
-      p10,
-      p11,
-      p12,
-    );
+    final params =
+        attributeParamToList(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12);
     return Mix._(params);
   }
 
@@ -109,6 +97,7 @@ class Mix {
     Attribute? p12,
   ]) {
     final newParams = [...params];
+    // Combine attributes into existing params
     newParams.addAll(
       attributeParamToList(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12),
     );
@@ -123,6 +112,13 @@ class Mix {
     Mix? mix3,
     Mix? mix4,
     Mix? mix5,
+    Mix? mix6,
+    Mix? mix7,
+    Mix? mix8,
+    Mix? mix9,
+    Mix? mix10,
+    Mix? mix11,
+    Mix? mix12,
   ]) {
     final list = <Attribute>[];
     if (mix1 != null) list.addAll(mix1.params);
@@ -130,6 +126,13 @@ class Mix {
     if (mix3 != null) list.addAll(mix3.params);
     if (mix4 != null) list.addAll(mix4.params);
     if (mix5 != null) list.addAll(mix5.params);
+    if (mix6 != null) list.addAll(mix6.params);
+    if (mix7 != null) list.addAll(mix7.params);
+    if (mix8 != null) list.addAll(mix8.params);
+    if (mix9 != null) list.addAll(mix9.params);
+    if (mix10 != null) list.addAll(mix10.params);
+    if (mix11 != null) list.addAll(mix11.params);
+    if (mix12 != null) list.addAll(mix12.params);
 
     return Mix._(list);
   }

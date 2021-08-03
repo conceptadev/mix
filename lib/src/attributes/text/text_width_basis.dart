@@ -11,7 +11,7 @@ class TextWidthBasisUtility {
       const TextWidthBasisAttribute(TextWidthBasis.longestLine);
 }
 
-class TextWidthBasisAttribute extends TextTypeAttribute<TextWidthBasis> {
+class TextWidthBasisAttribute extends TextMixAttribute<TextWidthBasis> {
   const TextWidthBasisAttribute(this.textWidthBasis);
   final TextWidthBasis textWidthBasis;
 

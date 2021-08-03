@@ -9,7 +9,7 @@ class LocaleUtility {
   }
 }
 
-class LocaleAttribute extends TextTypeAttribute<Locale> {
+class LocaleAttribute extends TextMixAttribute<Locale> {
   const LocaleAttribute(this.locale);
 
   final Locale locale;

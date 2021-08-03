@@ -6,7 +6,7 @@ class LetterSpacingUtility {
       LetterSpacingAttribute(letterSpacing);
 }
 
-class LetterSpacingAttribute extends TextTypeAttribute<double> {
+class LetterSpacingAttribute extends TextMixAttribute<double> {
   const LetterSpacingAttribute(this.letterSpacing);
   final double letterSpacing;
   @override

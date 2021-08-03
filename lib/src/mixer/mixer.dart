@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mix/src/attributes/modifiers/text_modifier.dart';
 import 'package:mix/src/attributes/text/text_style.dart';
 
 import '../../mix.dart';
@@ -96,6 +97,7 @@ class Mixer {
   IconColorAttribute? iconColor;
   IconSizeAttribute? iconSize;
   List<DynamicAttribute>? dynamicAttributes;
+  List<TextModifierAttribute>? textModifierAttributes;
 
   /// Applies `DynamicAttribute` based on context
   Mixer applyDynamicAttributes(BuildContext context) {
@@ -116,6 +118,23 @@ class Mixer {
     return Mixer.fromList([...attributes, ...attributesToApply]);
   }
 
+  /// Applies all [TextModifierAttributes] to [text]
+  String applyTextModifiers(String text) {
+    final modifierList = textModifierAttributes ?? [];
+
+    if (modifierList.isEmpty) {
+      return text;
+    }
+
+    String modifiedText = text;
+
+    for (final attr in modifierList) {
+      modifiedText = attr.modify(modifiedText);
+    }
+
+    return modifiedText;
+  }
+
   factory Mixer.build(BuildContext context, Mix mix) {
     final mixer = Mixer.fromList(mix.params);
     return mixer.applyDynamicAttributes(context);
@@ -130,6 +149,12 @@ class Mixer {
         mixer.dynamicAttributes ??= [];
         mixer.dynamicAttributes!.add(attribute);
       }
+
+      if (attribute is TextModifierAttribute) {
+        mixer.textModifierAttributes ??= [];
+        mixer.textModifierAttributes!.add(attribute);
+      }
+
       if (attribute is MarginAttribute) {
         mixer.margin = mergeSpaceAttribute(mixer.margin, attribute);
       }

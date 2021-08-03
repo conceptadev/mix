@@ -11,7 +11,7 @@ class TextDirectionUtility {
       const TextDirectionAttribute(TextDirection.rtl);
 }
 
-class TextDirectionAttribute extends TextTypeAttribute<TextDirection> {
+class TextDirectionAttribute extends TextMixAttribute<TextDirection> {
   const TextDirectionAttribute(this.textDirection);
 
   final TextDirection textDirection;

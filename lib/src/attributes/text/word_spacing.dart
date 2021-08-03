@@ -6,7 +6,7 @@ class WordSpacingUtility {
       WordSpacingAttribute(wordSpacing);
 }
 
-class WordSpacingAttribute extends TextTypeAttribute<double> {
+class WordSpacingAttribute extends TextMixAttribute<double> {
   const WordSpacingAttribute(this.wordSpacing);
   final double wordSpacing;
   @override

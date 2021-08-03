@@ -23,7 +23,7 @@ class ColorAttribute extends Attribute<Color> with _$ColorAttribute {
       BackgroundColorAttribute;
 
   /// Text color
-  @Implements.fromString('TextTypeAttribute<Color>')
+  @Implements.fromString('TextMixAttribute<Color>')
   factory ColorAttribute.textColor(Color color) = TextColorAttribute;
 
   /// Border color

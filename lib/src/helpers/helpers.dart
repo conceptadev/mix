@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mix/src/mixer/mix_attribute.dart';
 
 import '../attributes/base_attribute.dart';
 
@@ -55,7 +56,20 @@ List<Attribute> attributeParamToList([
   if (p12 != null) {
     params.add(p12);
   }
-  return params;
+  return _spreadNestedMix(params);
+}
+
+_spreadNestedMix(List<Attribute> attributes) {
+  final spreaded = [...attributes];
+  for (final attr in attributes) {
+    if (attr is WithMixAttribute) {
+      spreaded.addAll(attr.value);
+    } else {
+      spreaded.add(attr);
+    }
+  }
+
+  return spreaded;
 }
 
 /// Turns 4 positional args into a list
@@ -82,10 +96,10 @@ List<T> positionalToList<T>([
   return params;
 }
 
-Color hexToColor(String hexColor) {
-  hexColor = hexColor.toUpperCase().replaceAll("#", "");
-  if (hexColor.length == 6) {
-    hexColor = "FF$hexColor";
-  }
-  return Color(int.parse(hexColor, radix: 16));
+/// String is in the format "aabbcc" or "ffaabbcc" with an optional leading "#".
+Color hexToColor(String hexString) {
+  final buffer = StringBuffer();
+  if (hexString.length == 6 || hexString.length == 7) buffer.write('ff');
+  buffer.write(hexString.replaceFirst('#', ''));
+  return Color(int.parse(buffer.toString(), radix: 16));
 }

@@ -11,7 +11,7 @@ class TextBaselineUtility {
       const TextBaselineAttribute(TextBaseline.ideographic);
 }
 
-class TextBaselineAttribute extends TextTypeAttribute<TextBaseline> {
+class TextBaselineAttribute extends TextMixAttribute<TextBaseline> {
   const TextBaselineAttribute(this.textBaseline);
   final TextBaseline textBaseline;
   @override

@@ -6,7 +6,7 @@ class SoftWrapUtility {
   SoftWrapAttribute call(bool softWrap) => SoftWrapAttribute(softWrap);
 }
 
-class SoftWrapAttribute extends TextTypeAttribute<bool> {
+class SoftWrapAttribute extends TextMixAttribute<bool> {
   // ignore: avoid_positional_boolean_parameters
   const SoftWrapAttribute(this.softWrap);
   final bool softWrap;

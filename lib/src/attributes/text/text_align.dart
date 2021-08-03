@@ -35,7 +35,7 @@ class TextAlignUtility {
   TextAlignAttribute get end => const TextAlignAttribute(TextAlign.end);
 }
 
-class TextAlignAttribute extends TextTypeAttribute<TextAlign> {
+class TextAlignAttribute extends TextMixAttribute<TextAlign> {
   const TextAlignAttribute(this.textAlign);
   final TextAlign textAlign;
   @override

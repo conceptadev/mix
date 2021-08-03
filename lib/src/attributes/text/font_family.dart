@@ -6,7 +6,7 @@ class FontFamilyUtility {
       FontFamilyAttribute(fontFamily);
 }
 
-class FontFamilyAttribute extends TextTypeAttribute<String> {
+class FontFamilyAttribute extends TextMixAttribute<String> {
   const FontFamilyAttribute(this.fontFamily);
   final String fontFamily;
   @override

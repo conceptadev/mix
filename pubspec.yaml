@@ -10,7 +10,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_hooks: ^0.17.0
   freezed_annotation: ^0.14.2
 
 dev_dependencies:
@@ -19,6 +18,6 @@ dev_dependencies:
   test_cov_console: ^0.0.4
   flutter_test:
     sdk: flutter
-  flutter_lints: ^1.0.3
+  flutter_lints: ^1.0.4
 
 flutter:

@@ -1,6 +1,8 @@
 // ignore_for_file: camel_case_types
 import 'package:mix/src/attributes/dynamic/media_query.dart';
+import 'package:mix/src/attributes/modifiers/text_modifier.dart';
 import 'package:mix/src/attributes/text/text_style.dart';
+import 'package:mix/src/mixer/mix_attribute.dart';
 
 import '../attributes/dynamic/dark_mode.dart';
 import 'dynamic/hidden.dart';
@@ -117,7 +119,7 @@ const axisSize = MainAxisSizeUtility();
 const fit = BoxFitUtility();
 
 /// Aspect Ratio
-const aspectRatio = AspectRationUtility();
+const aspectRatio = AspectRatioUtility();
 
 /// Border radius
 const borderRadius = BorderRadiusUtility();
@@ -238,19 +240,19 @@ final borderBottomWidth = _borderBottomUtility.width;
 final borderBottomStyle = _borderBottomUtility.style;
 
 /// Box shadow utility
-const boxShadow = BoxShadowUtility();
+const shadow = BoxShadowUtility();
 
 /// Shadow offset
-final shadowOffset = boxShadow.offset;
+final shadowOffset = shadow.offset;
 
 /// Shadow spread radius
-final shadowSpread = boxShadow.spreadRadius;
+final shadowSpread = shadow.spreadRadius;
 
 /// Shadow blur radius
-final shadowBlur = boxShadow.blurRadius;
+final shadowBlur = shadow.blurRadius;
 
 /// Shadow color
-final shadowColor = boxShadow.color;
+final shadowColor = shadow.color;
 
 /// Text align
 const textAlign = TextAlignUtility();
@@ -276,9 +278,21 @@ const textStyle = TextStyleUtility();
 /// Icon Size
 const iconSize = IconSizeUtility();
 
-/// Dynamic Attributes
+/// Icon color attribute
+const iconColor = ColorUtility<IconColorAttribute>();
 
+/// Dynamic Attributes
 const dark = DarkModeUtility();
 
 /// Media query utility
 const mq = MediaQueryUtility();
+
+// Modifiers
+/// Capitalizes text
+const capitalize = TextModifierAttribute(CapitalizeModifier());
+const upperCase = TextModifierAttribute(UpperCaseModifier());
+const lowerCase = TextModifierAttribute(LowerCaseModifier());
+const titleCase = TextModifierAttribute(TitleCaseModifier());
+const sentenceCase = TextModifierAttribute(SentenceCaseModifier());
+
+const withMix = WithMixUtility();

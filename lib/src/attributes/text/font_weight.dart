@@ -55,7 +55,7 @@ class FontWeightUtility {
       ];
 }
 
-class FontWeightAttribute extends TextTypeAttribute<FontWeight> {
+class FontWeightAttribute extends TextMixAttribute<FontWeight> {
   const FontWeightAttribute(this.fontWeight);
   final FontWeight fontWeight;
   @override

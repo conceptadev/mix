@@ -1,7 +1,7 @@
 import '../base_attribute.dart';
 
-class AspectRationUtility {
-  const AspectRationUtility();
+class AspectRatioUtility {
+  const AspectRatioUtility();
   AspectRatioAttribute call(double aspectRatio) =>
       AspectRatioAttribute(aspectRatio);
 }

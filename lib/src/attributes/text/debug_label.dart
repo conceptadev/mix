@@ -6,7 +6,7 @@ class DebugLabelUtility {
       DebugLabelAttribute(debugLabel);
 }
 
-class DebugLabelAttribute extends TextTypeAttribute<String> {
+class DebugLabelAttribute extends TextMixAttribute<String> {
   const DebugLabelAttribute(this.debugLabel);
   final String debugLabel;
   @override

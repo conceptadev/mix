@@ -23,6 +23,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_hooks: ^0.18.0
   mix:
     path: ../
 
@@ -30,6 +31,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   flutter_syntax_view: ^4.0.0
+  hooks_riverpod: ^1.0.0-dev.6
 
 dev_dependencies:
   flutter_test:

@@ -34,12 +34,6 @@ class _$ColorAttributeTearOff {
     );
   }
 
-  ShadowColorAttribute shadowColor(Color color) {
-    return ShadowColorAttribute(
-      color,
-    );
-  }
-
   BorderColorAttribute borderColor(Color color) {
     return BorderColorAttribute(
       color,
@@ -65,7 +59,6 @@ mixin _$ColorAttribute {
     TResult Function(Color color) $default, {
     required TResult Function(Color color) backgroundColor,
     required TResult Function(Color color) textColor,
-    required TResult Function(Color color) shadowColor,
     required TResult Function(Color color) borderColor,
     required TResult Function(Color color) iconColor,
   }) =>
@@ -75,7 +68,6 @@ mixin _$ColorAttribute {
     TResult Function(Color color)? $default, {
     TResult Function(Color color)? backgroundColor,
     TResult Function(Color color)? textColor,
-    TResult Function(Color color)? shadowColor,
     TResult Function(Color color)? borderColor,
     TResult Function(Color color)? iconColor,
     required TResult orElse(),
@@ -86,7 +78,6 @@ mixin _$ColorAttribute {
     TResult Function(_ColorAttribute value) $default, {
     required TResult Function(BackgroundColorAttribute value) backgroundColor,
     required TResult Function(TextColorAttribute value) textColor,
-    required TResult Function(ShadowColorAttribute value) shadowColor,
     required TResult Function(BorderColorAttribute value) borderColor,
     required TResult Function(IconColorAttribute value) iconColor,
   }) =>
@@ -96,7 +87,6 @@ mixin _$ColorAttribute {
     TResult Function(_ColorAttribute value)? $default, {
     TResult Function(BackgroundColorAttribute value)? backgroundColor,
     TResult Function(TextColorAttribute value)? textColor,
-    TResult Function(ShadowColorAttribute value)? shadowColor,
     TResult Function(BorderColorAttribute value)? borderColor,
     TResult Function(IconColorAttribute value)? iconColor,
     required TResult orElse(),
@@ -208,7 +198,6 @@ class _$_ColorAttribute extends _ColorAttribute {
     TResult Function(Color color) $default, {
     required TResult Function(Color color) backgroundColor,
     required TResult Function(Color color) textColor,
-    required TResult Function(Color color) shadowColor,
     required TResult Function(Color color) borderColor,
     required TResult Function(Color color) iconColor,
   }) {
@@ -221,7 +210,6 @@ class _$_ColorAttribute extends _ColorAttribute {
     TResult Function(Color color)? $default, {
     TResult Function(Color color)? backgroundColor,
     TResult Function(Color color)? textColor,
-    TResult Function(Color color)? shadowColor,
     TResult Function(Color color)? borderColor,
     TResult Function(Color color)? iconColor,
     required TResult orElse(),
@@ -238,7 +226,6 @@ class _$_ColorAttribute extends _ColorAttribute {
     TResult Function(_ColorAttribute value) $default, {
     required TResult Function(BackgroundColorAttribute value) backgroundColor,
     required TResult Function(TextColorAttribute value) textColor,
-    required TResult Function(ShadowColorAttribute value) shadowColor,
     required TResult Function(BorderColorAttribute value) borderColor,
     required TResult Function(IconColorAttribute value) iconColor,
   }) {
@@ -251,7 +238,6 @@ class _$_ColorAttribute extends _ColorAttribute {
     TResult Function(_ColorAttribute value)? $default, {
     TResult Function(BackgroundColorAttribute value)? backgroundColor,
     TResult Function(TextColorAttribute value)? textColor,
-    TResult Function(ShadowColorAttribute value)? shadowColor,
     TResult Function(BorderColorAttribute value)? borderColor,
     TResult Function(IconColorAttribute value)? iconColor,
     required TResult orElse(),
@@ -347,7 +333,6 @@ class _$BackgroundColorAttribute extends BackgroundColorAttribute {
     TResult Function(Color color) $default, {
     required TResult Function(Color color) backgroundColor,
     required TResult Function(Color color) textColor,
-    required TResult Function(Color color) shadowColor,
     required TResult Function(Color color) borderColor,
     required TResult Function(Color color) iconColor,
   }) {
@@ -360,7 +345,6 @@ class _$BackgroundColorAttribute extends BackgroundColorAttribute {
     TResult Function(Color color)? $default, {
     TResult Function(Color color)? backgroundColor,
     TResult Function(Color color)? textColor,
-    TResult Function(Color color)? shadowColor,
     TResult Function(Color color)? borderColor,
     TResult Function(Color color)? iconColor,
     required TResult orElse(),
@@ -377,7 +361,6 @@ class _$BackgroundColorAttribute extends BackgroundColorAttribute {
     TResult Function(_ColorAttribute value) $default, {
     required TResult Function(BackgroundColorAttribute value) backgroundColor,
     required TResult Function(TextColorAttribute value) textColor,
-    required TResult Function(ShadowColorAttribute value) shadowColor,
     required TResult Function(BorderColorAttribute value) borderColor,
     required TResult Function(IconColorAttribute value) iconColor,
   }) {
@@ -390,7 +373,6 @@ class _$BackgroundColorAttribute extends BackgroundColorAttribute {
     TResult Function(_ColorAttribute value)? $default, {
     TResult Function(BackgroundColorAttribute value)? backgroundColor,
     TResult Function(TextColorAttribute value)? textColor,
-    TResult Function(ShadowColorAttribute value)? shadowColor,
     TResult Function(BorderColorAttribute value)? borderColor,
     TResult Function(IconColorAttribute value)? iconColor,
     required TResult orElse(),
@@ -450,7 +432,7 @@ class _$TextColorAttributeCopyWithImpl<$Res>
 
 /// @nodoc
 
-@Implements.fromString('TextTypeAttribute<Color>')
+@Implements.fromString('TextMixAttribute<Color>')
 class _$TextColorAttribute extends TextColorAttribute {
   _$TextColorAttribute(this.color) : super._();
 
@@ -485,7 +467,6 @@ class _$TextColorAttribute extends TextColorAttribute {
     TResult Function(Color color) $default, {
     required TResult Function(Color color) backgroundColor,
     required TResult Function(Color color) textColor,
-    required TResult Function(Color color) shadowColor,
     required TResult Function(Color color) borderColor,
     required TResult Function(Color color) iconColor,
   }) {
@@ -498,7 +479,6 @@ class _$TextColorAttribute extends TextColorAttribute {
     TResult Function(Color color)? $default, {
     TResult Function(Color color)? backgroundColor,
     TResult Function(Color color)? textColor,
-    TResult Function(Color color)? shadowColor,
     TResult Function(Color color)? borderColor,
     TResult Function(Color color)? iconColor,
     required TResult orElse(),
@@ -515,7 +495,6 @@ class _$TextColorAttribute extends TextColorAttribute {
     TResult Function(_ColorAttribute value) $default, {
     required TResult Function(BackgroundColorAttribute value) backgroundColor,
     required TResult Function(TextColorAttribute value) textColor,
-    required TResult Function(ShadowColorAttribute value) shadowColor,
     required TResult Function(BorderColorAttribute value) borderColor,
     required TResult Function(IconColorAttribute value) iconColor,
   }) {
@@ -528,7 +507,6 @@ class _$TextColorAttribute extends TextColorAttribute {
     TResult Function(_ColorAttribute value)? $default, {
     TResult Function(BackgroundColorAttribute value)? backgroundColor,
     TResult Function(TextColorAttribute value)? textColor,
-    TResult Function(ShadowColorAttribute value)? shadowColor,
     TResult Function(BorderColorAttribute value)? borderColor,
     TResult Function(IconColorAttribute value)? iconColor,
     required TResult orElse(),
@@ -541,7 +519,7 @@ class _$TextColorAttribute extends TextColorAttribute {
 }
 
 abstract class TextColorAttribute extends ColorAttribute
-    implements TextTypeAttribute<Color> {
+    implements TextMixAttribute<Color> {
   factory TextColorAttribute(Color color) = _$TextColorAttribute;
   TextColorAttribute._() : super._();
 
@@ -550,144 +528,6 @@ abstract class TextColorAttribute extends ColorAttribute
   @override
   @JsonKey(ignore: true)
   $TextColorAttributeCopyWith<TextColorAttribute> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $ShadowColorAttributeCopyWith<$Res>
-    implements $ColorAttributeCopyWith<$Res> {
-  factory $ShadowColorAttributeCopyWith(ShadowColorAttribute value,
-          $Res Function(ShadowColorAttribute) then) =
-      _$ShadowColorAttributeCopyWithImpl<$Res>;
-  @override
-  $Res call({Color color});
-}
-
-/// @nodoc
-class _$ShadowColorAttributeCopyWithImpl<$Res>
-    extends _$ColorAttributeCopyWithImpl<$Res>
-    implements $ShadowColorAttributeCopyWith<$Res> {
-  _$ShadowColorAttributeCopyWithImpl(
-      ShadowColorAttribute _value, $Res Function(ShadowColorAttribute) _then)
-      : super(_value, (v) => _then(v as ShadowColorAttribute));
-
-  @override
-  ShadowColorAttribute get _value => super._value as ShadowColorAttribute;
-
-  @override
-  $Res call({
-    Object? color = freezed,
-  }) {
-    return _then(ShadowColorAttribute(
-      color == freezed
-          ? _value.color
-          : color // ignore: cast_nullable_to_non_nullable
-              as Color,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$ShadowColorAttribute extends ShadowColorAttribute {
-  _$ShadowColorAttribute(this.color) : super._();
-
-  @override
-  final Color color;
-
-  @override
-  String toString() {
-    return 'ColorAttribute.shadowColor(color: $color)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other is ShadowColorAttribute &&
-            (identical(other.color, color) ||
-                const DeepCollectionEquality().equals(other.color, color)));
-  }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(color);
-
-  @JsonKey(ignore: true)
-  @override
-  $ShadowColorAttributeCopyWith<ShadowColorAttribute> get copyWith =>
-      _$ShadowColorAttributeCopyWithImpl<ShadowColorAttribute>(
-          this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>(
-    TResult Function(Color color) $default, {
-    required TResult Function(Color color) backgroundColor,
-    required TResult Function(Color color) textColor,
-    required TResult Function(Color color) shadowColor,
-    required TResult Function(Color color) borderColor,
-    required TResult Function(Color color) iconColor,
-  }) {
-    return shadowColor(color);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>(
-    TResult Function(Color color)? $default, {
-    TResult Function(Color color)? backgroundColor,
-    TResult Function(Color color)? textColor,
-    TResult Function(Color color)? shadowColor,
-    TResult Function(Color color)? borderColor,
-    TResult Function(Color color)? iconColor,
-    required TResult orElse(),
-  }) {
-    if (shadowColor != null) {
-      return shadowColor(color);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>(
-    TResult Function(_ColorAttribute value) $default, {
-    required TResult Function(BackgroundColorAttribute value) backgroundColor,
-    required TResult Function(TextColorAttribute value) textColor,
-    required TResult Function(ShadowColorAttribute value) shadowColor,
-    required TResult Function(BorderColorAttribute value) borderColor,
-    required TResult Function(IconColorAttribute value) iconColor,
-  }) {
-    return shadowColor(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>(
-    TResult Function(_ColorAttribute value)? $default, {
-    TResult Function(BackgroundColorAttribute value)? backgroundColor,
-    TResult Function(TextColorAttribute value)? textColor,
-    TResult Function(ShadowColorAttribute value)? shadowColor,
-    TResult Function(BorderColorAttribute value)? borderColor,
-    TResult Function(IconColorAttribute value)? iconColor,
-    required TResult orElse(),
-  }) {
-    if (shadowColor != null) {
-      return shadowColor(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class ShadowColorAttribute extends ColorAttribute {
-  factory ShadowColorAttribute(Color color) = _$ShadowColorAttribute;
-  ShadowColorAttribute._() : super._();
-
-  @override
-  Color get color => throw _privateConstructorUsedError;
-  @override
-  @JsonKey(ignore: true)
-  $ShadowColorAttributeCopyWith<ShadowColorAttribute> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -762,7 +602,6 @@ class _$BorderColorAttribute extends BorderColorAttribute {
     TResult Function(Color color) $default, {
     required TResult Function(Color color) backgroundColor,
     required TResult Function(Color color) textColor,
-    required TResult Function(Color color) shadowColor,
     required TResult Function(Color color) borderColor,
     required TResult Function(Color color) iconColor,
   }) {
@@ -775,7 +614,6 @@ class _$BorderColorAttribute extends BorderColorAttribute {
     TResult Function(Color color)? $default, {
     TResult Function(Color color)? backgroundColor,
     TResult Function(Color color)? textColor,
-    TResult Function(Color color)? shadowColor,
     TResult Function(Color color)? borderColor,
     TResult Function(Color color)? iconColor,
     required TResult orElse(),
@@ -792,7 +630,6 @@ class _$BorderColorAttribute extends BorderColorAttribute {
     TResult Function(_ColorAttribute value) $default, {
     required TResult Function(BackgroundColorAttribute value) backgroundColor,
     required TResult Function(TextColorAttribute value) textColor,
-    required TResult Function(ShadowColorAttribute value) shadowColor,
     required TResult Function(BorderColorAttribute value) borderColor,
     required TResult Function(IconColorAttribute value) iconColor,
   }) {
@@ -805,7 +642,6 @@ class _$BorderColorAttribute extends BorderColorAttribute {
     TResult Function(_ColorAttribute value)? $default, {
     TResult Function(BackgroundColorAttribute value)? backgroundColor,
     TResult Function(TextColorAttribute value)? textColor,
-    TResult Function(ShadowColorAttribute value)? shadowColor,
     TResult Function(BorderColorAttribute value)? borderColor,
     TResult Function(IconColorAttribute value)? iconColor,
     required TResult orElse(),
@@ -899,7 +735,6 @@ class _$IconColorAttribute extends IconColorAttribute {
     TResult Function(Color color) $default, {
     required TResult Function(Color color) backgroundColor,
     required TResult Function(Color color) textColor,
-    required TResult Function(Color color) shadowColor,
     required TResult Function(Color color) borderColor,
     required TResult Function(Color color) iconColor,
   }) {
@@ -912,7 +747,6 @@ class _$IconColorAttribute extends IconColorAttribute {
     TResult Function(Color color)? $default, {
     TResult Function(Color color)? backgroundColor,
     TResult Function(Color color)? textColor,
-    TResult Function(Color color)? shadowColor,
     TResult Function(Color color)? borderColor,
     TResult Function(Color color)? iconColor,
     required TResult orElse(),
@@ -929,7 +763,6 @@ class _$IconColorAttribute extends IconColorAttribute {
     TResult Function(_ColorAttribute value) $default, {
     required TResult Function(BackgroundColorAttribute value) backgroundColor,
     required TResult Function(TextColorAttribute value) textColor,
-    required TResult Function(ShadowColorAttribute value) shadowColor,
     required TResult Function(BorderColorAttribute value) borderColor,
     required TResult Function(IconColorAttribute value) iconColor,
   }) {
@@ -942,7 +775,6 @@ class _$IconColorAttribute extends IconColorAttribute {
     TResult Function(_ColorAttribute value)? $default, {
     TResult Function(BackgroundColorAttribute value)? backgroundColor,
     TResult Function(TextColorAttribute value)? textColor,
-    TResult Function(ShadowColorAttribute value)? shadowColor,
     TResult Function(BorderColorAttribute value)? borderColor,
     TResult Function(IconColorAttribute value)? iconColor,
     required TResult orElse(),

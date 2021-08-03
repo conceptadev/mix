@@ -1,12 +1,11 @@
-import 'package:example/remix/typography/typography.dart';
-import 'package:example/remix/typography/typography.preview.dart';
+import 'package:example/providers/dark_mode.provider.dart';
+import 'package:example/remix/screens/app_shell.dart';
 import 'package:flutter/material.dart';
-import 'package:mix/mix.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 void main() {
   runApp(
-    MixScope(
-      data: MixStyles(),
+    ProviderScope(
       child: MyApp(),
     ),
   );
@@ -16,16 +15,14 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Mix Demo',
-      theme: ThemeData.light(),
-      home: Scaffold(
-        backgroundColor: Colors.white.withOpacity(0.9),
-        appBar: AppBar(
-          title: Text('Mix Demo'),
-        ),
-        body: TypographyPreview(),
-      ),
-    );
+    return Consumer(builder: (context, ref, _) {
+      final darkMode = ref.watch(darkModeProvider).state;
+      return MaterialApp(
+        title: 'Remix',
+        debugShowCheckedModeBanner: false,
+        theme: darkMode ? ThemeData.dark() : ThemeData.light(),
+        home: AppShell(),
+      );
+    });
   }
 }

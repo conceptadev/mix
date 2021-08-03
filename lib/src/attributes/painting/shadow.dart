@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mix/mix.dart';
 
 import '../base_attribute.dart';
 
@@ -6,6 +7,10 @@ class BoxShadowColorUtility {
   const BoxShadowColorUtility();
   BoxShadowAttribute call(Color color) {
     return BoxShadowAttribute(color: color);
+  }
+
+  static BoxShadowAttribute fromHex(String hexString) {
+    return BoxShadowAttribute(color: hexToColor(hexString));
   }
 }
 
@@ -32,6 +37,20 @@ class BoxShadowSpreadRadiusUtility {
 
 class BoxShadowUtility {
   const BoxShadowUtility();
+
+  BoxShadowAttribute call({
+    Color? color,
+    Offset? offset,
+    double? blurRadius,
+    double? spreadRadius,
+  }) =>
+      BoxShadowAttribute(
+        color: color,
+        offset: offset,
+        blurRadius: blurRadius,
+        spreadRadius: spreadRadius,
+      );
+
   BoxShadowColorUtility get color => const BoxShadowColorUtility();
   BoxShadowOffsetUtility get offset => const BoxShadowOffsetUtility();
   BoxShadowBlurRadiusUtility get blurRadius =>

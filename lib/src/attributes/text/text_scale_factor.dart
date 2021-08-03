@@ -6,7 +6,7 @@ class TextScaleFactorUtility {
       TextScaleFactorAttribute(textScaleFactor);
 }
 
-class TextScaleFactorAttribute extends TextTypeAttribute<double> {
+class TextScaleFactorAttribute extends TextMixAttribute<double> {
   const TextScaleFactorAttribute(this.textScaleFactor);
   final double textScaleFactor;
   @override

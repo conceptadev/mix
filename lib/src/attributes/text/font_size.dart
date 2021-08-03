@@ -5,7 +5,7 @@ class FontSizeUtility {
   FontSizeAttribute call(double fontSize) => FontSizeAttribute(fontSize);
 }
 
-class FontSizeAttribute extends TextTypeAttribute<double> {
+class FontSizeAttribute extends TextMixAttribute<double> {
   const FontSizeAttribute(this.fontSize);
   final double fontSize;
   @override

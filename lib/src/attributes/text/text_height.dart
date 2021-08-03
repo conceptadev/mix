@@ -6,7 +6,7 @@ class TextHeightUtility {
       TextHeightAttribute(textHeight);
 }
 
-class TextHeightAttribute extends TextTypeAttribute<double> {
+class TextHeightAttribute extends TextMixAttribute<double> {
   const TextHeightAttribute(this.textHeight);
   final double textHeight;
   @override

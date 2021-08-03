@@ -7,7 +7,7 @@ class TextStyleUtility {
   TextStyleAttribute call(TextStyle textStyle) => TextStyleAttribute(textStyle);
 }
 
-class TextStyleAttribute extends TextTypeAttribute<TextStyle> {
+class TextStyleAttribute extends TextMixAttribute<TextStyle> {
   const TextStyleAttribute(this.textStyle);
   final TextStyle textStyle;
 

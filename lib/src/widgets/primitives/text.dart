@@ -32,7 +32,7 @@ class TextMixer extends MixerWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      text,
+      mixer.applyTextModifiers(text),
       softWrap: mixer.softWrap?.value,
       textDirection: mixer.textDirection?.value,
       textWidthBasis: mixer.textWidthBasis?.value,

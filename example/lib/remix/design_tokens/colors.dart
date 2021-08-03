@@ -1,16 +1,20 @@
+import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
 
-class RemixColors {
-  get primary => colorToHex('#1E90FF');
-  get secondary => colorToHex('#115FFB');
-  get tertiary => colorToHex('#5540FB');
+class RxColors {
+  static Color get black => hexToColor('#000000');
+  static Color get white => hexToColor('#FFFFFF');
 
-  get grey100 => colorToHex('#F5F5F5');
-  get grey200 => colorToHex('#EEEEEE');
-  get grey300 => colorToHex('#E0E0E0');
-  get grey400 => colorToHex('#BDBDBD');
+  static Color get primary => hexToColor('#1E90FF');
+  static Color get secondary => hexToColor('#115FFB');
+  static Color get tertiary => hexToColor('#5540FB');
 
-  get success => colorToHex('#18A957');
-  get warning => colorToHex('#FFBB38');
-  get error => colorToHex('#DF1642');
+  static MaterialColor get grey => Colors.grey;
+
+  static Color get success => hexToColor('#18A957');
+  static Color get warning => hexToColor('#FFBB38');
+  static Color get error => hexToColor('#DF1642');
+
+  static Color get lightShadow => grey.shade300;
+  static Color get darkShadow => grey.shade900;
 }

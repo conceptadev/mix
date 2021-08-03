@@ -14,7 +14,7 @@ class TextOverflowUtility {
       const TextOverflowAttribute(TextOverflow.visible);
 }
 
-class TextOverflowAttribute extends TextTypeAttribute<TextOverflow> {
+class TextOverflowAttribute extends TextMixAttribute<TextOverflow> {
   const TextOverflowAttribute([this.textOverflow = TextOverflow.clip]);
   final TextOverflow textOverflow;
   @override
