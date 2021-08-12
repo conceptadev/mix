@@ -1,6 +1,6 @@
 // ignore_for_file: camel_case_types
+import 'package:mix/src/attributes/directives/text_modifier.dart';
 import 'package:mix/src/attributes/dynamic/media_query.dart';
-import 'package:mix/src/attributes/modifiers/text_modifier.dart';
 import 'package:mix/src/attributes/text/text_style.dart';
 import 'package:mix/src/mixer/mix_attribute.dart';
 
@@ -289,10 +289,10 @@ const mq = MediaQueryUtility();
 
 // Modifiers
 /// Capitalizes text
-const capitalize = TextModifierAttribute(CapitalizeModifier());
-const upperCase = TextModifierAttribute(UpperCaseModifier());
-const lowerCase = TextModifierAttribute(LowerCaseModifier());
-const titleCase = TextModifierAttribute(TitleCaseModifier());
-const sentenceCase = TextModifierAttribute(SentenceCaseModifier());
+const capitalize = TextDirectiveAttribute(CapitalizeDirective());
+const upperCase = TextDirectiveAttribute(UpperCaseDirective());
+const lowerCase = TextDirectiveAttribute(LowerCaseDirective());
+const titleCase = TextDirectiveAttribute(TitleCaseDirective());
+const sentenceCase = TextDirectiveAttribute(SentenceCaseDirective());
 
-const withMix = WithMixUtility();
+const apply = ApplyMixUtility();

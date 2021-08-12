@@ -29,14 +29,14 @@ class RxTypography {
 
   Mix get _heading {
     return Mix(
-      withMix(_base),
+      apply(_base),
       titleCase,
     );
   }
 
   Mix get h1 {
     return Mix(
-      withMix(_heading),
+      apply(_heading),
       fontSize(96),
       RxFontWeight.light,
       letterSpacing(-1.5),
@@ -45,7 +45,7 @@ class RxTypography {
 
   Mix get h2 {
     return Mix(
-      withMix(_heading),
+      apply(_heading),
       fontSize(60),
       letterSpacing(-0.5),
       RxFontWeight.light,
@@ -54,7 +54,7 @@ class RxTypography {
 
   Mix get h3 {
     return Mix(
-      withMix(_heading),
+      apply(_heading),
       fontSize(48),
       letterSpacing(0),
     );
@@ -62,7 +62,7 @@ class RxTypography {
 
   Mix get h4 {
     return Mix(
-      withMix(_heading),
+      apply(_heading),
       fontSize(34),
       letterSpacing(0.25),
       fontWeight.bold,
@@ -71,7 +71,7 @@ class RxTypography {
 
   Mix get h5 {
     return Mix(
-      withMix(_heading),
+      apply(_heading),
       fontSize(24),
       letterSpacing(0),
       fontWeight.bold,
@@ -80,7 +80,7 @@ class RxTypography {
 
   Mix get h6 {
     return Mix(
-      withMix(_heading),
+      apply(_heading),
       fontSize(20),
       letterSpacing(0.15),
       fontWeight.bold,
@@ -89,7 +89,7 @@ class RxTypography {
 
   Mix get subtitle {
     return Mix(
-      withMix(_heading),
+      apply(_heading),
       fontSize(16),
       letterSpacing(0.15),
     );
@@ -97,7 +97,7 @@ class RxTypography {
 
   Mix get _body {
     return Mix(
-      withMix(_base),
+      apply(_base),
       textHeight(1.8),
       textColor(RxColors.grey.shade600),
       textColor(RxColors.grey.shade400).onDark,
@@ -106,7 +106,7 @@ class RxTypography {
 
   Mix get body1 {
     return Mix(
-      withMix(_body),
+      apply(_body),
       fontSize(16),
       letterSpacing(0.5),
     );
@@ -114,7 +114,7 @@ class RxTypography {
 
   Mix get body2 {
     return Mix(
-      withMix(_body),
+      apply(_body),
       fontSize(14),
       letterSpacing(0.25),
     );
@@ -122,7 +122,7 @@ class RxTypography {
 
   Mix get caption {
     return Mix(
-      withMix(_base),
+      apply(_base),
       fontSize(12),
       letterSpacing(0.4),
     );
@@ -130,7 +130,7 @@ class RxTypography {
 
   Mix get overline {
     return Mix(
-      withMix(_base),
+      apply(_base),
       fontSize(10),
       letterSpacing(1.5),
       upperCase,

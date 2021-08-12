@@ -17,7 +17,7 @@ class RmxCard extends StatelessWidget {
         rounded(10),
         bgColor(RxColors.white),
         bgColor(RxColors.grey.shade800).onDark,
-        withMix(shadow20),
+        apply(shadow20),
       ),
       child: child,
     );

@@ -29,18 +29,18 @@ abstract class RawRemixButtonRecipe {
 
 class ButtonRecipe implements RawRemixButtonRecipe {
   Mix get container => Mix(
-        withMix(_container),
+        apply(_container),
         bgColor(RxColors.primary),
-        withMix(RxShadows.shadow20),
+        apply(RxShadows.shadow20),
       );
 
   Mix get label => Mix(
-        withMix(_label),
+        apply(_label),
         textColor(RxColors.white),
       );
 
   Mix get icon => Mix(
-        withMix(_icon),
+        apply(_icon),
         iconColor(RxColors.white),
         iconSize(20),
       );
@@ -48,19 +48,19 @@ class ButtonRecipe implements RawRemixButtonRecipe {
 
 class OutlinedButtonRecipe implements RawRemixButtonRecipe {
   Mix get container => Mix(
-        withMix(_container),
+        apply(_container),
         borderColor(RxColors.primary),
         borderWidth(1),
         bgColor(Colors.transparent),
       );
 
   Mix get label => Mix(
-        withMix(_label),
+        apply(_label),
         textColor(RxColors.primary),
       );
 
   Mix get icon => Mix(
-        withMix(_icon),
+        apply(_icon),
         iconColor(RxColors.primary),
       );
 }
@@ -68,16 +68,16 @@ class OutlinedButtonRecipe implements RawRemixButtonRecipe {
 /// Recipe for
 class TextButtonrecipe implements RawRemixButtonRecipe {
   Mix get container => Mix(
-        withMix(_container),
+        apply(_container),
       );
 
   Mix get label => Mix(
-        withMix(_label),
+        apply(_label),
         textColor(RxColors.primary),
       );
 
   Mix get icon => Mix(
-        withMix(_icon),
+        apply(_icon),
         iconColor(RxColors.primary),
       );
 }

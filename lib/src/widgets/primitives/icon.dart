@@ -19,7 +19,7 @@ class IconMix extends MixWidget {
   @override
   Widget build(BuildContext context) {
     final mixer = Mixer.build(context, mix);
-    return IconMixer(
+    return IconMixerWidget(
       mixer,
       icon: icon,
       semanticLabel: semanticLabel,
@@ -27,8 +27,8 @@ class IconMix extends MixWidget {
   }
 }
 
-class IconMixer extends MixerWidget {
-  const IconMixer(
+class IconMixerWidget extends MixerWidget {
+  const IconMixerWidget(
     Mixer mixer, {
     required this.icon,
     this.semanticLabel,
@@ -40,7 +40,7 @@ class IconMixer extends MixerWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BoxMixer(
+    return BoxMixerWidget(
       mixer,
       child: Icon(
         icon,

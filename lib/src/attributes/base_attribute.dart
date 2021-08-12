@@ -31,8 +31,8 @@ abstract class DynamicAttribute extends Attribute<Attribute> {
   bool shouldApply(BuildContext context);
 }
 
-abstract class AttributeModifier<T> {
-  const AttributeModifier();
+abstract class AttributeDirective<T> {
+  const AttributeDirective();
   T modify(T value);
 }
 

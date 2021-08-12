@@ -16,12 +16,12 @@ class TextMix extends MixWidget {
   @override
   Widget build(BuildContext context) {
     final mixer = Mixer.build(context, mix);
-    return TextMixer(mixer, text: text);
+    return TextMixerWidget(mixer, text: text);
   }
 }
 
-class TextMixer extends MixerWidget {
-  const TextMixer(
+class TextMixerWidget extends MixerWidget {
+  const TextMixerWidget(
     Mixer mixer, {
     Key? key,
     required this.text,

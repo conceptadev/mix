@@ -45,7 +45,7 @@ class FlexBox extends MixWidget {
   @override
   Widget build(BuildContext context) {
     final mixer = Mixer.build(context, mix);
-    return FlexBoxMixer(
+    return FlexBoxMixerWidget(
       mixer,
       direction: direction,
       children: children,
@@ -53,8 +53,8 @@ class FlexBox extends MixWidget {
   }
 }
 
-class FlexBoxMixer extends MixerWidget {
-  const FlexBoxMixer(
+class FlexBoxMixerWidget extends MixerWidget {
+  const FlexBoxMixerWidget(
     Mixer mixer, {
     Key? key,
     required this.direction,
@@ -86,7 +86,7 @@ class FlexBoxMixer extends MixerWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BoxMixer(
+    return BoxMixerWidget(
       mixer,
       child: Flex(
         direction: direction,

@@ -16,12 +16,12 @@ class Box extends MixWidget {
   @override
   Widget build(BuildContext context) {
     final mixer = Mixer.build(context, mix);
-    return BoxMixer(mixer, child: child);
+    return BoxMixerWidget(mixer, child: child);
   }
 }
 
-class BoxMixer extends MixerWidget {
-  const BoxMixer(
+class BoxMixerWidget extends MixerWidget {
+  const BoxMixerWidget(
     Mixer mixer, {
     required this.child,
     Key? key,

@@ -1,8 +1,8 @@
 import 'package:mix/src/attributes/base_attribute.dart';
 import 'package:mix/src/mixer/mix_factory.dart';
 
-class WithMixUtility {
-  const WithMixUtility();
+class ApplyMixUtility {
+  const ApplyMixUtility();
   WithMixAttribute call([
     Mix? mix1,
     Mix? mix2,

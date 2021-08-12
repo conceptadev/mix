@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mix/src/attributes/modifiers/text_modifier.dart';
+import 'package:mix/src/attributes/directives/text_modifier.dart';
 import 'package:mix/src/attributes/text/text_style.dart';
 
 import '../../mix.dart';
@@ -97,7 +97,7 @@ class Mixer {
   IconColorAttribute? iconColor;
   IconSizeAttribute? iconSize;
   List<DynamicAttribute>? dynamicAttributes;
-  List<TextModifierAttribute>? textModifierAttributes;
+  List<TextDirectiveAttribute>? textDirectiveAttributes;
 
   /// Applies `DynamicAttribute` based on context
   Mixer applyDynamicAttributes(BuildContext context) {
@@ -120,7 +120,7 @@ class Mixer {
 
   /// Applies all [TextModifierAttributes] to [text]
   String applyTextModifiers(String text) {
-    final modifierList = textModifierAttributes ?? [];
+    final modifierList = textDirectiveAttributes ?? [];
 
     if (modifierList.isEmpty) {
       return text;
@@ -150,9 +150,9 @@ class Mixer {
         mixer.dynamicAttributes!.add(attribute);
       }
 
-      if (attribute is TextModifierAttribute) {
-        mixer.textModifierAttributes ??= [];
-        mixer.textModifierAttributes!.add(attribute);
+      if (attribute is TextDirectiveAttribute) {
+        mixer.textDirectiveAttributes ??= [];
+        mixer.textDirectiveAttributes!.add(attribute);
       }
 
       if (attribute is MarginAttribute) {

@@ -34,7 +34,7 @@ void main() {
       );
 
       expect(
-        tester.widget<TextMixer>(find.byType(TextMixer)).text,
+        tester.widget<TextMixerWidget>(find.byType(TextMixerWidget)).text,
         widgetText,
       );
     });
