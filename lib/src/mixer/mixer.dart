@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mix/src/attributes/directives/text_modifier.dart';
+import 'package:mix/src/attributes/modifiers/text_modifier.dart';
 import 'package:mix/src/attributes/text/text_style.dart';
 
 import '../../mix.dart';

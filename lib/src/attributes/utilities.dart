@@ -1,6 +1,6 @@
 // ignore_for_file: camel_case_types
-import 'package:mix/src/attributes/directives/text_modifier.dart';
 import 'package:mix/src/attributes/dynamic/media_query.dart';
+import 'package:mix/src/attributes/modifiers/text_modifier.dart';
 import 'package:mix/src/attributes/text/text_style.dart';
 import 'package:mix/src/mixer/mix_attribute.dart';
 

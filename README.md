@@ -108,6 +108,20 @@ final adaptiveFlexMix = flexMix.mix(
 );
 ```
 
+#### Attribute Modifiers
+
+Allows to modify the output of a value that is passed in an attribute. Text formatting is a great example of this where you want certain types of text to format as titleCase, sentenceCase, capitalize, lowercase.
+
+Using attribute modifiers you can apply this on the Mix level and not worry about working with individual inputs.
+
+```dart
+// Whenever the h1 mix is used it will always format as a titleCase. The content "This is the headline" will become "This Is The Headline" when used within a TextMix widget.
+final h1 = Mix(
+  titleCase,
+  fontSize(48),
+);
+```
+
 ## APIs
 
 Documentation is currently in progress. For now you can find some of the available utilities [here](https://github.com/leoafarias/mix/blob/main/lib/src/attributes/utilities.dart)
