@@ -1,24 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
-import 'package:mix/src/attributes/primitives/color.dart';
-import 'package:mix/src/attributes/text/debug_label.dart';
-import 'package:mix/src/attributes/text/font_family.dart';
-import 'package:mix/src/attributes/text/font_size.dart';
-import 'package:mix/src/attributes/text/font_style.dart';
-import 'package:mix/src/attributes/text/font_weight.dart';
-import 'package:mix/src/attributes/text/letter_spacing.dart';
-import 'package:mix/src/attributes/text/locale.dart';
-import 'package:mix/src/attributes/text/max_lines.dart';
-import 'package:mix/src/attributes/text/soft_wrap.dart';
-import 'package:mix/src/attributes/text/text_align.dart';
-import 'package:mix/src/attributes/text/text_baseline.dart';
-import 'package:mix/src/attributes/text/text_direction.dart';
-import 'package:mix/src/attributes/text/text_height.dart';
-import 'package:mix/src/attributes/text/text_overflow.dart';
-import 'package:mix/src/attributes/text/text_scale_factor.dart';
-import 'package:mix/src/attributes/text/text_width_basis.dart';
-import 'package:mix/src/attributes/text/word_spacing.dart';
+import 'package:mix/src/attributes/primitives/painting/background_color.dart';
+import 'package:mix/src/attributes/primitives/text/debug_label.dart';
+import 'package:mix/src/attributes/primitives/text/font_family.dart';
+import 'package:mix/src/attributes/primitives/text/font_size.dart';
+import 'package:mix/src/attributes/primitives/text/font_style.dart';
+import 'package:mix/src/attributes/primitives/text/font_weight.dart';
+import 'package:mix/src/attributes/primitives/text/letter_spacing.dart';
+import 'package:mix/src/attributes/primitives/text/locale.dart';
+import 'package:mix/src/attributes/primitives/text/max_lines.dart';
+import 'package:mix/src/attributes/primitives/text/soft_wrap.dart';
+import 'package:mix/src/attributes/primitives/text/text_align.dart';
+import 'package:mix/src/attributes/primitives/text/text_baseline.dart';
+import 'package:mix/src/attributes/primitives/text/text_color.dart';
+import 'package:mix/src/attributes/primitives/text/text_direction.dart';
+import 'package:mix/src/attributes/primitives/text/text_height.dart';
+import 'package:mix/src/attributes/primitives/text/text_overflow.dart';
+import 'package:mix/src/attributes/primitives/text/text_scale_factor.dart';
+import 'package:mix/src/attributes/primitives/text/text_width_basis.dart';
+import 'package:mix/src/attributes/primitives/text/word_spacing.dart';
 import 'package:mix/src/widgets/primitives/text.dart';
 
 import '../test_utils.dart';
@@ -75,12 +76,12 @@ void main() {
             const TextBaselineAttribute(TextBaseline.ideographic),
             const FontFamilyAttribute('Roboto'),
             const FontWeightAttribute(FontWeight.bold),
-            TextColorAttribute(Colors.amber),
+            const TextColorAttribute(Colors.amber),
             const FontStyleAttribute(FontStyle.italic),
             const LocaleAttribute(Locale('es', 'US')),
             const DebugLabelAttribute('debug_label'),
             const TextHeightAttribute(10),
-            BackgroundColorAttribute(Colors.blue),
+            const BackgroundColorAttribute(Colors.blue),
           ).text(widgetText),
         ),
       );

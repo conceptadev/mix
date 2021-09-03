@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
-import 'package:mix/src/attributes/dynamic/hidden.dart';
-import 'package:mix/src/attributes/layout/aspect_ratio.dart';
-import 'package:mix/src/attributes/layout/flex.dart';
-import 'package:mix/src/attributes/painting/alignment.dart';
-import 'package:mix/src/attributes/painting/border.dart';
-import 'package:mix/src/attributes/painting/border_radius.dart';
-import 'package:mix/src/attributes/painting/border_side.dart';
-import 'package:mix/src/attributes/painting/opacity.dart';
-import 'package:mix/src/attributes/painting/rotate.dart';
-import 'package:mix/src/attributes/primitives/color.dart';
-import 'package:mix/src/attributes/primitives/size.dart';
-import 'package:mix/src/attributes/primitives/space.dart';
-import 'package:mix/src/attributes/rendering/flex/flex_fit.dart';
+import 'package:mix/src/attributes/base/size.dart';
+import 'package:mix/src/attributes/base/space.dart';
+import 'package:mix/src/attributes/primitives/layout/aspect_ratio.dart';
+import 'package:mix/src/attributes/primitives/layout/flex.dart';
+import 'package:mix/src/attributes/primitives/painting/alignment.dart';
+import 'package:mix/src/attributes/primitives/painting/background_color.dart';
+import 'package:mix/src/attributes/primitives/painting/border.dart';
+import 'package:mix/src/attributes/primitives/painting/border_radius.dart';
+import 'package:mix/src/attributes/primitives/painting/border_side.dart';
+import 'package:mix/src/attributes/primitives/painting/opacity.dart';
+import 'package:mix/src/attributes/primitives/painting/rotate.dart';
+import 'package:mix/src/attributes/primitives/rendering/flex/flex_fit.dart';
+import 'package:mix/src/utilities/dynamic/hidden.dart';
 import 'package:mix/src/widgets/primitives/box.dart';
 
 import '../test_utils.dart';
@@ -160,7 +160,7 @@ void main() {
         (tester) async {
           await tester.pumpWidget(
             BoxTestWidget(
-              Mix(BackgroundColorAttribute(Colors.lime)),
+              Mix(const BackgroundColorAttribute(Colors.lime)),
             ),
           );
 

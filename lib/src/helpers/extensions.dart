@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
-import 'package:mix/src/helpers/helpers.dart';
+import 'package:mix/src/helpers/utils.dart';
 
 /// Possible screen sizes
 enum ScreenSize { xs, sm, md, lg }

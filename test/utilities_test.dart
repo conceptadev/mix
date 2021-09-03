@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mix/src/attributes/primitives/space.dart';
+import 'package:mix/src/attributes/base/space.dart';
 
 void main() {
   group("Test Mix Utilities", () {

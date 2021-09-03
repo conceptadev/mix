@@ -1,47 +1,50 @@
 import 'package:flutter/material.dart';
-import 'package:mix/src/attributes/modifiers/text_modifier.dart';
-import 'package:mix/src/attributes/text/text_style.dart';
+import 'package:mix/src/attributes/primitives/icon/icon_color.dart';
+import 'package:mix/src/attributes/primitives/layout/aspect_ratio.dart';
+import 'package:mix/src/attributes/primitives/painting/background_color.dart';
+import 'package:mix/src/attributes/primitives/text/text_color.dart';
+import 'package:mix/src/attributes/primitives/text/text_style.dart';
+import 'package:mix/src/utilities/gap.dart';
+import 'package:mix/src/utilities/modifiers/text_modifier.dart';
 
 import '../../mix.dart';
+import '../attributes/base/size.dart';
+import '../attributes/base/space.dart';
 import '../attributes/base_attribute.dart';
-import '../attributes/dynamic/hidden.dart';
-import '../attributes/icon/icon_size.dart';
-import '../attributes/layout/aspect_ratio.dart';
-import '../attributes/layout/constraints.dart';
-import '../attributes/layout/flex.dart';
-import '../attributes/painting/alignment.dart';
-import '../attributes/painting/axis.dart';
-import '../attributes/painting/border.dart';
-import '../attributes/painting/border_radius.dart';
-import '../attributes/painting/box_decoration.dart';
-import '../attributes/painting/box_fit.dart';
-import '../attributes/painting/opacity.dart';
-import '../attributes/painting/rotate.dart';
-import '../attributes/painting/shadow.dart';
-import '../attributes/primitives/color.dart';
-import '../attributes/primitives/size.dart';
-import '../attributes/primitives/space.dart';
-import '../attributes/rendering/flex/cross_axis_alignment.dart';
-import '../attributes/rendering/flex/flex_fit.dart';
-import '../attributes/rendering/flex/main_axis_alignment.dart';
-import '../attributes/rendering/flex/main_axis_size.dart';
-import '../attributes/text/debug_label.dart';
-import '../attributes/text/font_family.dart';
-import '../attributes/text/font_size.dart';
-import '../attributes/text/font_style.dart';
-import '../attributes/text/font_weight.dart';
-import '../attributes/text/letter_spacing.dart';
-import '../attributes/text/locale.dart';
-import '../attributes/text/max_lines.dart';
-import '../attributes/text/soft_wrap.dart';
-import '../attributes/text/text_align.dart';
-import '../attributes/text/text_baseline.dart';
-import '../attributes/text/text_direction.dart';
-import '../attributes/text/text_height.dart';
-import '../attributes/text/text_overflow.dart';
-import '../attributes/text/text_scale_factor.dart';
-import '../attributes/text/text_width_basis.dart';
-import '../attributes/text/word_spacing.dart';
+import '../attributes/primitives/icon/icon_size.dart';
+import '../attributes/primitives/layout/constraints.dart';
+import '../attributes/primitives/layout/flex.dart';
+import '../attributes/primitives/painting/alignment.dart';
+import '../attributes/primitives/painting/axis.dart';
+import '../attributes/primitives/painting/border.dart';
+import '../attributes/primitives/painting/border_radius.dart';
+import '../attributes/primitives/painting/box_decoration.dart';
+import '../attributes/primitives/painting/box_fit.dart';
+import '../attributes/primitives/painting/opacity.dart';
+import '../attributes/primitives/painting/rotate.dart';
+import '../attributes/primitives/painting/shadow.dart';
+import '../attributes/primitives/rendering/flex/cross_axis_alignment.dart';
+import '../attributes/primitives/rendering/flex/flex_fit.dart';
+import '../attributes/primitives/rendering/flex/main_axis_alignment.dart';
+import '../attributes/primitives/rendering/flex/main_axis_size.dart';
+import '../attributes/primitives/text/debug_label.dart';
+import '../attributes/primitives/text/font_family.dart';
+import '../attributes/primitives/text/font_size.dart';
+import '../attributes/primitives/text/font_style.dart';
+import '../attributes/primitives/text/font_weight.dart';
+import '../attributes/primitives/text/letter_spacing.dart';
+import '../attributes/primitives/text/locale.dart';
+import '../attributes/primitives/text/max_lines.dart';
+import '../attributes/primitives/text/soft_wrap.dart';
+import '../attributes/primitives/text/text_align.dart';
+import '../attributes/primitives/text/text_baseline.dart';
+import '../attributes/primitives/text/text_direction.dart';
+import '../attributes/primitives/text/text_height.dart';
+import '../attributes/primitives/text/text_overflow.dart';
+import '../attributes/primitives/text/text_scale_factor.dart';
+import '../attributes/primitives/text/text_width_basis.dart';
+import '../attributes/primitives/text/word_spacing.dart';
+import '../utilities/dynamic/hidden.dart';
 
 /// Mixer
 class Mixer {
@@ -68,7 +71,7 @@ class Mixer {
   MainAxisSizeAttribute? mainAxisSize;
   CrossAxisAlignmentAttribute? crossAxisAlignment;
   MainAxisAlignmentAttribute? mainAxisAlignment;
-  GapAttribute? gap;
+  GapSizeAttribute? gap;
   RotateAttribute? rotate;
   OpacityAttribute? opacity;
   FlexAttribute? flex;
@@ -278,7 +281,7 @@ class Mixer {
         mixer.backgroundColor = attribute;
       }
 
-      if (attribute is GapAttribute) {
+      if (attribute is GapSizeAttribute) {
         mixer.gap = attribute;
       }
 

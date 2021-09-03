@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mix/mix.dart';
-import 'package:mix/src/attributes/dynamic/dark_mode.dart';
-import 'package:mix/src/attributes/dynamic/media_query.dart';
+import 'package:mix/src/utilities/dynamic/dark_mode.dart';
+import 'package:mix/src/utilities/dynamic/media_query.dart';
+import 'package:mix/src/utilities/utilities_api.dart';
 
 /// Base attribute
 abstract class Attribute<T> {
