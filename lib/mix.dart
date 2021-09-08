@@ -10,6 +10,7 @@ export 'package:mix/src/widgets/primitives/text.dart'
 export 'package:mix/src/widgets/primitives/pressable.dart' show Pressable;
 
 export 'src/attributes/attributes_api.dart';
+export 'src/attributes/primitives/rendering/flex/main_axis_size.dart';
 export 'src/attributes/base_attribute.dart'
     show Attribute, DynamicAttribute, AttributeExtensions;
 export 'src/helpers/extensions.dart';

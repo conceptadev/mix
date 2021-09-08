@@ -89,57 +89,51 @@ class _PressableMixerWidgetState extends State<PressableMixerWidget> {
   bool _pressing = false;
   bool _shouldShowFocus = false;
 
-  bool get enabled => widget.onPressed != null && widget.onLongPressed != null;
+  bool get enabled => widget.onPressed != null || widget.onLongPressed != null;
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTap: widget.onPressed,
-      onTapDown: (_) {
-        if (mounted) setState(() => _pressing = true);
-        // widget.onTapDown?.call();
-      },
-      onTapUp: (_) async {
-        // widget.onTapUp?.call();
-        if (!enabled) return;
-        await Future.delayed(const Duration(milliseconds: 100));
-        if (mounted) setState(() => _pressing = false);
-      },
-      onTapCancel: () {
-        // widget.onTapCancel?.call();
-        if (mounted) setState(() => _pressing = false);
-      },
-      // onLongPress: widget.onLongPress,
-      onLongPressStart: (_) {
-        // widget.onLongPressStart?.call();
-        if (mounted) setState(() => _pressing = true);
-      },
-      onLongPressEnd: (_) {
-        // widget.onLongPressEnd?.call();
-        if (mounted) setState(() => _pressing = false);
-      },
-      child: FocusableActionDetector(
-        // mouseCursor: widget.cursor?.resolve(states) ??
-        //     MouseCursor.defer,
-        focusNode: node,
-        autofocus: widget.autofocus,
+    return MergeSemantics(
+      child: Semantics(
+        button: true,
         enabled: enabled,
-        // actions: _actionMap,
-        // onFocusChange: widget.onFocusChange,
-        onShowFocusHighlight: (v) {
-          if (mounted) setState(() => _shouldShowFocus = v);
-        },
-        onShowHoverHighlight: (v) {
-          if (mounted) setState(() => _hovering = v);
-        },
-        child: MergeSemantics(
-          child: Semantics(
-            // label: widget.semanticLabel,
-            button: true,
-            enabled: enabled,
-            focusable: enabled && node.canRequestFocus,
-            focused: node.hasFocus,
+        focusable: enabled && node.canRequestFocus,
+        focused: node.hasFocus,
+        child: FocusableActionDetector(
+          focusNode: node,
+          autofocus: widget.autofocus,
+          enabled: enabled,
+          onShowFocusHighlight: (v) {
+            if (mounted) setState(() => _shouldShowFocus = v);
+          },
+          onShowHoverHighlight: (v) {
+            if (mounted) setState(() => _hovering = v);
+          },
+          child: GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: widget.onPressed,
+            onTapDown: (_) {
+              if (mounted) setState(() => _pressing = true);
+              // widget.onTapDown?.call();
+            },
+            onTapUp: (_) async {
+              // widget.onTapUp?.call();
+              if (!enabled) return;
+              await Future.delayed(const Duration(milliseconds: 100));
+              if (mounted) setState(() => _pressing = false);
+            },
+            onTapCancel: () {
+              // widget.onTapCancel?.call();
+              if (mounted) setState(() => _pressing = false);
+            },
+            onLongPressStart: (_) {
+              // widget.onLongPressStart?.call();
+              if (mounted) setState(() => _pressing = true);
+            },
+            onLongPressEnd: (_) {
+              // widget.onLongPressEnd?.call();
+              if (mounted) setState(() => _pressing = false);
+            },
             child: () {
               final disabled = widget.mixer.disabled;
               final focused = widget.mixer.focused;
@@ -147,15 +141,25 @@ class _PressableMixerWidgetState extends State<PressableMixerWidget> {
               final pressing = widget.mixer.pressing;
 
               Mix? mix = () {
-                if (!enabled && disabled != null) return Mix(disabled);
-                if (_pressing && pressing != null) return Mix(pressing);
-                if (_hovering && hovering != null) return Mix(hovering);
-                if (_shouldShowFocus && focused != null) return Mix(focused);
+                if (!enabled && disabled != null) return disabled.mix;
+                if (_pressing && pressing != null) return pressing.mix;
+                if (_hovering && hovering != null) return hovering.mix;
+                if (_shouldShowFocus && focused != null) return focused.mix;
               }();
 
+              print(hovering);
+
               return BoxMixerWidget(
-                mix != null ? Mixer.build(context, mix) : widget.mixer,
-                child: widget.child,
+                widget.mixer,
+                child: () {
+                  if (mix != null) {
+                    return BoxMixerWidget(
+                      Mixer.build(context, mix),
+                      child: widget.child,
+                    );
+                  }
+                  return widget.child;
+                }(),
               );
             }(),
           ),

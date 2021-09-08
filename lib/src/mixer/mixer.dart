@@ -351,6 +351,23 @@ class Mixer {
       if (attribute is FlexFitAttribute) {
         mixer.flexFit = attribute;
       }
+
+      if (attribute is DisabledAttribute) {
+        mixer.disabled = attribute;
+      }
+
+      if (attribute is FocusedAttribute) {
+        mixer.focused = attribute;
+      }
+
+      if (attribute is HoveringAttribute) {
+        mixer.hovering = attribute;
+        print('haha');
+      }
+
+      if (attribute is PressingAttribute) {
+        mixer.pressing = attribute;
+      }
     }
 
     if (mixer.height != null ||
