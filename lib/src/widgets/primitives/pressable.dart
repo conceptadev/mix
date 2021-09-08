@@ -13,7 +13,7 @@ class Pressable extends MixWidget {
     this.onLongPressed,
     this.focusNode,
     this.autofocus = false,
-    this.clipBehavior = Clip.none,
+    this.behavior,
     Key? key,
   }) : super(mix, key: key);
 
@@ -22,7 +22,7 @@ class Pressable extends MixWidget {
   final VoidCallback? onLongPressed;
   final FocusNode? focusNode;
   final bool autofocus;
-  final Clip clipBehavior;
+  final HitTestBehavior? behavior;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +32,6 @@ class Pressable extends MixWidget {
       onLongPressed: onLongPressed,
       focusNode: focusNode,
       autofocus: autofocus,
-      clipBehavior: clipBehavior,
       child: child,
     );
   }
@@ -46,7 +45,7 @@ class PressableMixerWidget extends StatefulWidget {
     this.onLongPressed,
     this.focusNode,
     this.autofocus = false,
-    this.clipBehavior = Clip.none,
+    this.behavior,
     Key? key,
   }) : super(key: key);
 
@@ -57,7 +56,8 @@ class PressableMixerWidget extends StatefulWidget {
   final VoidCallback? onLongPressed;
   final FocusNode? focusNode;
   final bool autofocus;
-  final Clip clipBehavior;
+
+  final HitTestBehavior? behavior;
 
   @override
   _PressableMixerWidgetState createState() => _PressableMixerWidgetState();
@@ -78,6 +78,12 @@ class _PressableMixerWidgetState extends State<PressableMixerWidget> {
     if (widget.focusNode != oldWidget.focusNode) {
       node = widget.focusNode ?? node;
     }
+  }
+
+  @override
+  void dispose() { 
+    if (widget.focusNode == null) node.dispose();
+    super.dispose();
   }
 
   FocusNode _createFocusNode() {
@@ -109,28 +115,23 @@ class _PressableMixerWidgetState extends State<PressableMixerWidget> {
             if (mounted) setState(() => _hovering = v);
           },
           child: GestureDetector(
-            behavior: HitTestBehavior.opaque,
+            behavior: widget.behavior,
             onTap: widget.onPressed,
             onTapDown: (_) {
               if (mounted) setState(() => _pressing = true);
-              // widget.onTapDown?.call();
             },
             onTapUp: (_) async {
-              // widget.onTapUp?.call();
               if (!enabled) return;
               await Future.delayed(const Duration(milliseconds: 100));
               if (mounted) setState(() => _pressing = false);
             },
             onTapCancel: () {
-              // widget.onTapCancel?.call();
               if (mounted) setState(() => _pressing = false);
             },
             onLongPressStart: (_) {
-              // widget.onLongPressStart?.call();
               if (mounted) setState(() => _pressing = true);
             },
             onLongPressEnd: (_) {
-              // widget.onLongPressEnd?.call();
               if (mounted) setState(() => _pressing = false);
             },
             child: () {
