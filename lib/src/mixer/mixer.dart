@@ -362,7 +362,6 @@ class Mixer {
 
       if (attribute is HoveringAttribute) {
         mixer.hovering = attribute;
-        print('haha');
       }
 
       if (attribute is PressingAttribute) {

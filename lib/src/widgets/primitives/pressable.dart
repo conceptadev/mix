@@ -147,8 +147,6 @@ class _PressableMixerWidgetState extends State<PressableMixerWidget> {
                 if (_shouldShowFocus && focused != null) return focused.mix;
               }();
 
-              print(hovering);
-
               return BoxMixerWidget(
                 widget.mixer,
                 child: () {
