@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:mix/src/attributes/primitives/gestures/disabled.dart';
+import 'package:mix/src/attributes/primitives/gestures/focused.dart';
+import 'package:mix/src/attributes/primitives/gestures/hovering.dart';
+import 'package:mix/src/attributes/primitives/gestures/pressing.dart';
 import 'package:mix/src/attributes/primitives/icon/icon_color.dart';
 import 'package:mix/src/attributes/primitives/layout/aspect_ratio.dart';
 import 'package:mix/src/attributes/primitives/painting/background_color.dart';
@@ -101,6 +105,10 @@ class Mixer {
   IconSizeAttribute? iconSize;
   List<DynamicAttribute>? dynamicAttributes;
   List<TextDirectiveAttribute>? textDirectiveAttributes;
+  DisabledAttribute? disabled;
+  FocusedAttribute? focused;
+  HoveringAttribute? hovering;
+  PressingAttribute? pressing;
 
   /// Applies `DynamicAttribute` based on context
   Mixer applyDynamicAttributes(BuildContext context) {

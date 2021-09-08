@@ -5,6 +5,15 @@ import '../../mixer/mixer.dart';
 import '../mix_widget.dart';
 import 'box.dart';
 
+enum _PressableState {
+
+  disabled,
+  focused,
+  hovering,
+  pressing,
+
+}
+
 class Pressable extends MixWidget {
   const Pressable(
     Mix mix, {
