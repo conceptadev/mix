@@ -7,6 +7,7 @@ export 'package:mix/src/widgets/primitives/flex_box.dart'
 export 'package:mix/src/widgets/primitives/icon.dart' show IconMix;
 export 'package:mix/src/widgets/primitives/text.dart'
     show TextMix, TextMixerWidget;
+export 'package:mix/src/widgets/primitives/pressable.dart' show Pressable;
 
 export 'src/attributes/attributes_api.dart';
 export 'src/attributes/base_attribute.dart'
