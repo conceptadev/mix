@@ -26,9 +26,8 @@ class Pressable extends MixWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mixer = Mixer.build(context, mix);
     return PressableMixerWidget(
-      mixer,
+      mix,
       onPressed: onPressed,
       onLongPressed: onLongPressed,
       focusNode: focusNode,
@@ -41,7 +40,7 @@ class Pressable extends MixWidget {
 
 class PressableMixerWidget extends StatefulWidget {
   const PressableMixerWidget(
-    this.mixer, {
+    this.mix, {
     required this.child,
     required this.onPressed,
     this.onLongPressed,
@@ -51,7 +50,7 @@ class PressableMixerWidget extends StatefulWidget {
     Key? key,
   }) : super(key: key);
 
-  final Mixer mixer;
+  final Mix mix;
 
   final Widget child;
   final VoidCallback? onPressed;
@@ -135,29 +134,25 @@ class _PressableMixerWidgetState extends State<PressableMixerWidget> {
               if (mounted) setState(() => _pressing = false);
             },
             child: () {
-              final disabled = widget.mixer.disabled;
-              final focused = widget.mixer.focused;
-              final hovering = widget.mixer.hovering;
-              final pressing = widget.mixer.pressing;
+              final mixer = Mixer.build(context, widget.mix);
 
-              Mix? mix = () {
+              final disabled = mixer.disabled;
+              final focused = mixer.focused;
+              final hovering = mixer.hovering;
+              final pressing = mixer.pressing;
+
+              Mix? gestureMix = () {
                 if (!enabled && disabled != null) return disabled.mix;
                 if (_pressing && pressing != null) return pressing.mix;
                 if (_hovering && hovering != null) return hovering.mix;
                 if (_shouldShowFocus && focused != null) return focused.mix;
               }();
 
+              final mixer1 = Mixer.build(context, Mix.combine(widget.mix, gestureMix));
+
               return BoxMixerWidget(
-                widget.mixer,
-                child: () {
-                  if (mix != null) {
-                    return BoxMixerWidget(
-                      Mixer.build(context, mix),
-                      child: widget.child,
-                    );
-                  }
-                  return widget.child;
-                }(),
+                mixer1,
+                child: widget.child,
               );
             }(),
           ),
