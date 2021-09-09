@@ -1,3 +1,7 @@
+import 'package:mix/src/attributes/primitives/gestures/disabled.dart';
+import 'package:mix/src/attributes/primitives/gestures/focused.dart';
+import 'package:mix/src/attributes/primitives/gestures/hovering.dart';
+import 'package:mix/src/attributes/primitives/gestures/pressing.dart';
 import 'package:mix/src/attributes/primitives/painting/alignment.dart';
 import 'package:mix/src/attributes/primitives/painting/border_radius.dart';
 import 'package:mix/src/utilities/apply_mix.dart';
@@ -56,3 +60,10 @@ const titleCase = TextDirectiveAttribute(TitleCaseDirective());
 const sentenceCase = TextDirectiveAttribute(SentenceCaseDirective());
 
 const apply = ApplyMixUtility();
+
+// Gestures
+
+const disabled = DisabledUtility();
+const focused = FocusedUtility();
+const hovering = HoveringUtility();
+const pressing = PressingUtility();
