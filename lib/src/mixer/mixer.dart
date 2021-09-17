@@ -389,21 +389,21 @@ class Mixer {
 
     // This handles in case there is a color attribute
     // but not other decoration
-    if (mixer.border != null ||
-        mixer.borderRadius != null ||
-        mixer.boxShadow != null) {
-      mixer.decoration = BoxDecorationAttribute(
-        BoxDecoration(
-          border: mixer.border?.value,
-          borderRadius: mixer.borderRadius?.value,
-          color: mixer.backgroundColor?.value,
-          boxShadow: mixer.boxShadow != null ? [mixer.boxShadow!.value] : null,
-        ),
-      );
+    // if (mixer.border != null ||
+    //     mixer.borderRadius != null ||
+    //     mixer.boxShadow != null) {
+    //   mixer.decoration = BoxDecorationAttribute(
+    //     BoxDecoration(
+    //       border: mixer.border?.value,
+    //       borderRadius: mixer.borderRadius?.value,
+    //       color: mixer.backgroundColor?.value,
+    //       boxShadow: mixer.boxShadow != null ? [mixer.boxShadow!.value] : null,
+    //     ),
+    //   );
 
-      /// Remove color if there is decoration
-      mixer.backgroundColor = null;
-    }
+    //   /// Remove color if there is decoration
+    //   mixer.backgroundColor = null;
+    // }
 
     return mixer;
   }

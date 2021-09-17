@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:mix/src/attributes/animation/animated_mix.dart';
 
 import '../../base_attribute.dart';
 
-class BoxDecorationAttribute extends Attribute<Decoration> {
-  const BoxDecorationAttribute(this.decoration);
+class BoxDecorationAttribute extends Attribute<Decoration> with AnimatedMix<Decoration> {
+  BoxDecorationAttribute(this.decoration);
 
   final BoxDecoration decoration;
   @override
