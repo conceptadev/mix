@@ -9,7 +9,7 @@ mixin AnimatedMix<T> on Attribute<T> {
   bool get hasAnimation => animationDuration != null;
 
   Attribute<T> animated([
-    Duration duration = const Duration(milliseconds: 1600),
+    Duration duration = const Duration(milliseconds: 100),
     Curve curve = Curves.linear,
   ]) {
     animationDuration = duration;
