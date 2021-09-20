@@ -60,33 +60,70 @@ class BoxMixerWidget extends MixerWidget {
     }
 
     if (mixer.aspectRatio != null) {
-      current = AspectRatio(
-        aspectRatio: mixer.aspectRatio!.value,
-        child: current,
-      );
+      if (mixer.aspectRatio!.hasAnimation) {
+        current = TweenAnimationBuilder<double>(
+          tween: Tween<double>(end: mixer.aspectRatio!.value),
+          duration: mixer.aspectRatio!.animationDuration!,
+          curve: mixer.aspectRatio!.animationCurve!,
+          onEnd: mixer.aspectRatio!.onEnd,
+          builder: (context, value, child) {
+            return AspectRatio(aspectRatio: value, child: child);
+          },
+          child: current,
+        );
+      } else {
+        current = AspectRatio(
+          aspectRatio: mixer.aspectRatio!.value,
+          child: current,
+        );
+      }
     }
 
     if (mixer.alignment != null) {
-      current = Align(
-        alignment: mixer.alignment!.value,
-        child: current,
-      );
+      if (mixer.alignment!.hasAnimation) {
+        current = AnimatedAlign(
+          duration: mixer.alignment!.animationDuration!,
+          curve: mixer.alignment!.animationCurve!,
+          onEnd: mixer.alignment!.onEnd,
+          alignment: mixer.alignment!.value,
+          child: current,
+        );
+      } else {
+        current = Align(
+          alignment: mixer.alignment!.value,
+          child: current,
+        );
+      }
     }
 
     final effectivePadding = _paddingIncludingDecoration;
     if (effectivePadding != null) {
-      current = Padding(
-        padding: effectivePadding,
-        child: current,
-      );
+      if (mixer.padding!.hasAnimation) {
+        current = AnimatedPadding(
+          duration: mixer.padding!.animationDuration!,
+          curve: mixer.padding!.animationCurve!,
+          onEnd: mixer.padding!.onEnd,
+          padding: effectivePadding,
+          child: current,
+        );
+      } else {
+        current = Padding(
+          padding: effectivePadding,
+          child: current,
+        );
+      }
     }
 
     if (mixer.backgroundColor != null) {
       if (mixer.backgroundColor!.hasAnimation) {
-        current = AnimatedContainer(
+        current = TweenAnimationBuilder<Color>(
           duration: mixer.backgroundColor!.animationDuration!,
           curve: mixer.backgroundColor!.animationCurve!,
-          color: mixer.backgroundColor!.value,
+          onEnd: mixer.backgroundColor!.onEnd,
+          tween: Tween<Color>(end: mixer.backgroundColor!.value),
+          builder: (context, color, child) {
+            return ColoredBox(color: color, child: child);
+          },
           child: current,
         );
       } else {
@@ -99,10 +136,14 @@ class BoxMixerWidget extends MixerWidget {
 
     if (mixer.decoration != null) {
       if (mixer.decoration!.hasAnimation) {
-        current = AnimatedContainer(
+        current = TweenAnimationBuilder<Decoration>(
           duration: mixer.decoration!.animationDuration!,
           curve: mixer.decoration!.animationCurve!,
-          decoration: mixer.decoration!.value,
+          onEnd: mixer.decoration!.onEnd,
+          tween: DecorationTween(end: mixer.decoration!.value),
+          builder: (context, value, child) {
+            return DecoratedBox(decoration: value, child: child);
+          },
           child: current,
         );
       } else {
@@ -114,18 +155,41 @@ class BoxMixerWidget extends MixerWidget {
     }
 
     if (mixer.opacity != null) {
-      current = Opacity(
-        opacity: mixer.opacity!.value,
-        child: current,
-      );
+      if (mixer.opacity!.hasAnimation) {
+        current = AnimatedOpacity(
+          duration: mixer.opacity!.animationDuration!,
+          curve: mixer.opacity!.animationCurve!,
+          opacity: mixer.opacity!.value,
+          onEnd: mixer.opacity!.onEnd,
+          child: current,
+        );
+      } else {
+        current = Opacity(
+          opacity: mixer.opacity!.value,
+          child: current,
+        );
+      }
     }
 
     /// Set child constraints
     if (mixer.constraints != null) {
-      current = ConstrainedBox(
-        constraints: mixer.constraints!.value,
-        child: current,
-      );
+      if (mixer.constraints!.hasAnimation) {
+        current = TweenAnimationBuilder<BoxConstraints>(
+          duration: mixer.constraints!.animationDuration!,
+          curve: mixer.constraints!.animationCurve!,
+          onEnd: mixer.constraints!.onEnd,
+          tween: BoxConstraintsTween(end: mixer.constraints!.value),
+          builder: (context, value, child) {
+            return ConstrainedBox(constraints: value, child: child);
+          },
+          child: current,
+        );
+      } else {
+        current = ConstrainedBox(
+          constraints: mixer.constraints!.value,
+          child: current,
+        );
+      }
     }
 
     if (mixer.maxHeight != null || mixer.maxWidth != null) {
@@ -144,10 +208,20 @@ class BoxMixerWidget extends MixerWidget {
     }
 
     if (mixer.margin != null) {
-      current = Padding(
-        padding: mixer.margin!.value,
-        child: current,
-      );
+      if (mixer.margin!.hasAnimation) {
+        current = AnimatedPadding(
+          duration: mixer.margin!.animationDuration!,
+          curve: mixer.margin!.animationCurve!,
+          onEnd: mixer.margin!.onEnd,
+          padding: mixer.margin!.value,
+          child: current,
+        );
+      } else {
+        current = Padding(
+          padding: mixer.margin!.value,
+          child: current,
+        );
+      }
     }
 
     if (mixer.flex != null || mixer.flexFit != null) {

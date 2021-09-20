@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:mix/src/attributes/animation/animated_mix.dart';
 import 'package:mix/src/attributes/base_attribute.dart';
 
 part 'space.freezed.dart';
@@ -44,8 +45,8 @@ class SpaceUtility<T extends SpaceAttribute> {
 
 /// Space Attribute
 @freezed
-class SpaceAttribute extends Attribute<EdgeInsets> with _$SpaceAttribute {
-  const SpaceAttribute._();
+class SpaceAttribute extends Attribute<EdgeInsets> with _$SpaceAttribute, AnimatedMix<EdgeInsets> {
+  SpaceAttribute._();
 
   /// Defaut constructor
   factory SpaceAttribute({

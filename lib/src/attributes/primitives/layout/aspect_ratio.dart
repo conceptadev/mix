@@ -1,3 +1,5 @@
+import 'package:mix/src/attributes/animation/animated_mix.dart';
+
 import '../../base_attribute.dart';
 
 class AspectRatioUtility {
@@ -6,8 +8,8 @@ class AspectRatioUtility {
       AspectRatioAttribute(aspectRatio);
 }
 
-class AspectRatioAttribute extends Attribute<double> {
-  const AspectRatioAttribute(this.aspectRatio);
+class AspectRatioAttribute extends Attribute<double> with AnimatedMix<double> {
+  AspectRatioAttribute(this.aspectRatio);
 
   final double aspectRatio;
   @override

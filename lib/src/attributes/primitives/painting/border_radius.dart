@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mix/src/attributes/animation/animated_mix.dart';
 
 import '../../../helpers/utils.dart';
 import '../../base_attribute.dart';
@@ -111,8 +112,8 @@ class BorderRadiusUtility {
 }
 
 /// Border radius attribute
-class BorderRadiusAttribute extends Attribute<BorderRadius> {
-  const BorderRadiusAttribute({
+class BorderRadiusAttribute extends Attribute<BorderRadius> with AnimatedMix<BorderRadius> {
+  BorderRadiusAttribute({
     this.topLeft,
     this.topRight,
     this.bottomLeft,

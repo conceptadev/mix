@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mix/src/attributes/animation/animated_mix.dart';
 
 import '../../base_attribute.dart';
 import 'border_side.dart';
@@ -32,8 +33,8 @@ class BorderUtility {
 }
 
 /// Border attribute
-class BorderAttribute extends Attribute<Border> {
-  const BorderAttribute({
+class BorderAttribute extends Attribute<Border> with AnimatedMix<Border> {
+  BorderAttribute({
     this.left,
     this.top,
     this.right,
