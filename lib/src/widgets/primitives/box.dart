@@ -87,6 +87,7 @@ class BoxMixerWidget extends MixerWidget {
           duration: mixer.backgroundColor!.animationDuration!,
           curve: mixer.backgroundColor!.animationCurve!,
           color: mixer.backgroundColor!.value,
+          onEnd: mixer.backgroundColor!.onEnd,
           child: current,
         );
       } else {
@@ -103,6 +104,7 @@ class BoxMixerWidget extends MixerWidget {
           duration: mixer.decoration!.animationDuration!,
           curve: mixer.decoration!.animationCurve!,
           decoration: mixer.decoration!.value,
+          onEnd: mixer.decoration!.onEnd,
           child: current,
         );
       } else {
@@ -119,6 +121,7 @@ class BoxMixerWidget extends MixerWidget {
           duration: mixer.opacity!.animationDuration!,
           curve: mixer.opacity!.animationCurve!,
           opacity: mixer.opacity!.value,
+          onEnd: mixer.opacity!.onEnd,
           child: current,
         );
       } else {
@@ -135,6 +138,7 @@ class BoxMixerWidget extends MixerWidget {
         current = AnimatedContainer(
           duration: mixer.constraints!.animationDuration!,
           curve: mixer.constraints!.animationCurve!,
+          onEnd: mixer.constraints!.onEnd,
           child: current,
         );
       } else {
