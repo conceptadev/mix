@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
+import 'package:mix/src/attributes/animation/animated_mix.dart';
 
 import '../../base_attribute.dart';
 
@@ -59,8 +60,8 @@ class BoxShadowUtility {
       const BoxShadowSpreadRadiusUtility();
 }
 
-class BoxShadowAttribute extends Attribute<BoxShadow> {
-  const BoxShadowAttribute({
+class BoxShadowAttribute extends Attribute<BoxShadow> with AnimatedMix<BoxShadow> {
+  BoxShadowAttribute({
     this.color,
     this.offset,
     this.blurRadius,

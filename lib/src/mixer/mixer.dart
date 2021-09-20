@@ -431,7 +431,10 @@ class Mixer {
         ),
       );
 
-      if (mixer.backgroundColor?.hasAnimation ?? false) {
+      if ((mixer.backgroundColor?.hasAnimation ?? false) ||
+          (mixer.border?.hasAnimation ?? false) ||
+          (mixer.borderRadius?.hasAnimation ?? false) ||
+          (mixer.boxShadow?.hasAnimation ?? false)) {
         mixer.decoration!.animated();
       }
 

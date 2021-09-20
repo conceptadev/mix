@@ -122,10 +122,7 @@ class BoxMixerWidget extends MixerWidget {
           onEnd: mixer.backgroundColor!.onEnd,
           tween: Tween<Color>(end: mixer.backgroundColor!.value),
           builder: (context, color, child) {
-            return ColoredBox(
-              color: color,
-              child: child,
-            );
+            return ColoredBox(color: color, child: child);
           },
           child: current,
         );
@@ -139,21 +136,14 @@ class BoxMixerWidget extends MixerWidget {
 
     if (mixer.decoration != null) {
       if (mixer.decoration!.hasAnimation) {
-        // current = TweenAnimationBuilder<Decoration>(
-        //   duration: mixer.decoration!.animationDuration!,
-        //   curve: mixer.decoration!.animationCurve!,
-        //   onEnd: mixer.decoration!.onEnd,
-        //   tween: Tween<Decoration>(end: mixer.decoration!.value),
-        //   builder: (context, value, child) {
-        //     return DecoratedBox(decoration: value, child: child);
-        //   },
-        //   child: current,
-        // );
-        current = AnimatedContainer(
+        current = TweenAnimationBuilder<Decoration>(
           duration: mixer.decoration!.animationDuration!,
           curve: mixer.decoration!.animationCurve!,
-          decoration: mixer.decoration!.value,
           onEnd: mixer.decoration!.onEnd,
+          tween: DecorationTween(end: mixer.decoration!.value),
+          builder: (context, value, child) {
+            return DecoratedBox(decoration: value, child: child);
+          },
           child: current,
         );
       } else {
@@ -184,10 +174,14 @@ class BoxMixerWidget extends MixerWidget {
     /// Set child constraints
     if (mixer.constraints != null) {
       if (mixer.constraints!.hasAnimation) {
-        current = AnimatedContainer(
+        current = TweenAnimationBuilder<BoxConstraints>(
           duration: mixer.constraints!.animationDuration!,
           curve: mixer.constraints!.animationCurve!,
           onEnd: mixer.constraints!.onEnd,
+          tween: BoxConstraintsTween(end: mixer.constraints!.value),
+          builder: (context, value, child) {
+            return ConstrainedBox(constraints: value, child: child);
+          },
           child: current,
         );
       } else {
