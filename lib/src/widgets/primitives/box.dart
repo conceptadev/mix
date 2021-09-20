@@ -122,10 +122,18 @@ class BoxMixerWidget extends MixerWidget {
 
     /// Set child constraints
     if (mixer.constraints != null) {
-      current = ConstrainedBox(
-        constraints: mixer.constraints!.value,
-        child: current,
-      );
+      if (mixer.constraints!.hasAnimation) {
+        current = AnimatedContainer(
+          duration: mixer.constraints!.animationDuration!,
+          curve: mixer.constraints!.animationCurve!,
+          child: current,
+        );
+      } else {
+        current = ConstrainedBox(
+          constraints: mixer.constraints!.value,
+          child: current,
+        );
+      }
     }
 
     if (mixer.maxHeight != null || mixer.maxWidth != null) {

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
+import '../../animation/animated_mix.dart';
 import '../../base/size.dart';
 import '../../base_attribute.dart';
 
-class ConstraintsAttribute extends Attribute<BoxConstraints> {
+class ConstraintsAttribute extends Attribute<BoxConstraints> with AnimatedMix<BoxConstraints> {
   ConstraintsAttribute({
     this.width,
     this.minWidth,
