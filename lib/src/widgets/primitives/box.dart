@@ -82,17 +82,35 @@ class BoxMixerWidget extends MixerWidget {
     }
 
     if (mixer.backgroundColor != null) {
-      current = ColoredBox(
-        color: mixer.backgroundColor!.value,
-        child: current,
-      );
+      if (mixer.backgroundColor!.hasAnimation) {
+        current = AnimatedContainer(
+          duration: mixer.backgroundColor!.animationDuration!,
+          curve: mixer.backgroundColor!.animationCurve!,
+          color: mixer.backgroundColor!.value,
+          child: current,
+        );
+      } else {
+        current = ColoredBox(
+          color: mixer.backgroundColor!.value,
+          child: current,
+        );
+      }
     }
 
     if (mixer.decoration != null) {
-      current = DecoratedBox(
-        decoration: mixer.decoration!.value,
-        child: current,
-      );
+      if (mixer.decoration!.hasAnimation) {
+        current = AnimatedContainer(
+          duration: mixer.decoration!.animationDuration!,
+          curve: mixer.decoration!.animationCurve!,
+          decoration: mixer.decoration!.value,
+          child: current,
+        );
+      } else {
+        current = DecoratedBox(
+          decoration: mixer.decoration!.value,
+          child: current,
+        );
+      }
     }
 
     if (mixer.opacity != null) {

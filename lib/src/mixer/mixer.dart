@@ -431,6 +431,10 @@ class Mixer {
         ),
       );
 
+      if (mixer.backgroundColor?.hasAnimation ?? false) {
+        mixer.decoration!.animated();
+      }
+
       /// Remove color if there is decoration
       mixer.backgroundColor = null;
     }
