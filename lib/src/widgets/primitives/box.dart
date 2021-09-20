@@ -67,10 +67,20 @@ class BoxMixerWidget extends MixerWidget {
     }
 
     if (mixer.alignment != null) {
-      current = Align(
-        alignment: mixer.alignment!.value,
-        child: current,
-      );
+      if (mixer.alignment!.hasAnimation) {
+        current = AnimatedAlign(
+          duration: mixer.alignment!.animationDuration!,
+          curve: mixer.alignment!.animationCurve!,
+          onEnd: mixer.alignment!.onEnd,
+          alignment: mixer.alignment!.value,
+          child: current,
+        );
+      } else {
+        current = Align(
+          alignment: mixer.alignment!.value,
+          child: current,
+        );
+      }
     }
 
     final effectivePadding = _paddingIncludingDecoration;
