@@ -75,10 +75,20 @@ class BoxMixerWidget extends MixerWidget {
 
     final effectivePadding = _paddingIncludingDecoration;
     if (effectivePadding != null) {
-      current = Padding(
-        padding: effectivePadding,
-        child: current,
-      );
+      if (mixer.padding!.hasAnimation) {
+        current = AnimatedPadding(
+          duration: mixer.padding!.animationDuration!,
+          curve: mixer.padding!.animationCurve!,
+          onEnd: mixer.padding!.onEnd,
+          padding: effectivePadding,
+          child: current,
+        );
+      } else {
+        current = Padding(
+          padding: effectivePadding,
+          child: current,
+        );
+      }
     }
 
     if (mixer.backgroundColor != null) {
@@ -165,10 +175,20 @@ class BoxMixerWidget extends MixerWidget {
     }
 
     if (mixer.margin != null) {
-      current = Padding(
-        padding: mixer.margin!.value,
-        child: current,
-      );
+      if (mixer.margin!.hasAnimation) {
+        current = AnimatedPadding(
+          duration: mixer.margin!.animationDuration!,
+          curve: mixer.margin!.animationCurve!,
+          onEnd: mixer.margin!.onEnd,
+          padding: mixer.margin!.value,
+          child: current,
+        );
+      } else {
+        current = Padding(
+          padding: mixer.margin!.value,
+          child: current,
+        );
+      }
     }
 
     if (mixer.flex != null || mixer.flexFit != null) {
