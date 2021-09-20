@@ -114,10 +114,19 @@ class BoxMixerWidget extends MixerWidget {
     }
 
     if (mixer.opacity != null) {
-      current = Opacity(
-        opacity: mixer.opacity!.value,
-        child: current,
-      );
+      if (mixer.opacity!.hasAnimation) {
+        current = AnimatedOpacity(
+          duration: mixer.opacity!.animationDuration!,
+          curve: mixer.opacity!.animationCurve!,
+          opacity: mixer.opacity!.value,
+          child: current,
+        );
+      } else {
+        current = Opacity(
+          opacity: mixer.opacity!.value,
+          child: current,
+        );
+      }
     }
 
     /// Set child constraints
