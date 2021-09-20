@@ -81,7 +81,7 @@ class _PressableMixerWidgetState extends State<PressableMixerWidget> {
   }
 
   @override
-  void dispose() { 
+  void dispose() {
     if (widget.focusNode == null) node.dispose();
     super.dispose();
   }
@@ -149,16 +149,53 @@ class _PressableMixerWidgetState extends State<PressableMixerWidget> {
                 if (_shouldShowFocus && focused != null) return focused.mix;
               }();
 
-              final mixer1 = Mixer.build(context, Mix.combine(widget.mix, gestureMix));
+              final mixer1 =
+                  Mixer.build(context, Mix.combine(widget.mix, gestureMix));
 
-              return BoxMixerWidget(
-                mixer1,
-                child: widget.child,
+              return PressableNotifier(
+                disabled: !enabled,
+                focused: _shouldShowFocus,
+                hovering: _hovering,
+                pressing: _pressing,
+                child: BoxMixerWidget(
+                  mixer1,
+                  child: widget.child,
+                ),
               );
             }(),
           ),
         ),
       ),
     );
+  }
+}
+
+class PressableNotifier extends InheritedWidget {
+  const PressableNotifier({
+    Key? key,
+    required Widget child,
+    this.hovering = false,
+    this.pressing = false,
+    this.focused = false,
+    this.disabled = false,
+  }) : super(key: key, child: child);
+
+  final bool hovering;
+  final bool pressing;
+  final bool focused;
+  final bool disabled;
+
+  bool get isNone => !hovering && !pressing && !focused && !disabled;
+
+  static PressableNotifier? of(BuildContext context) {
+    return context.dependOnInheritedWidgetOfExactType<PressableNotifier>();
+  }
+
+  @override
+  bool updateShouldNotify(PressableNotifier oldWidget) {
+    return hovering != oldWidget.hovering ||
+        pressing != oldWidget.pressing ||
+        focused != oldWidget.focused ||
+        disabled != oldWidget.disabled;
   }
 }

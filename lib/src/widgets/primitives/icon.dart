@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../mix.dart';
 import '../../mixer/mix_factory.dart';
 import '../../mixer/mixer.dart';
 import '../mix_widget.dart';
