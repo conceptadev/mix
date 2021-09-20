@@ -126,7 +126,35 @@ class Mixer {
       }
     }
 
-    return Mixer.fromList([...attributes, ...attributesToApply]);
+    return Mixer.fromList([
+      ...attributes,
+      ...attributesToApply,
+    ]);
+  }
+
+  Mixer applyPressableAttributes(BuildContext context) {
+    final pressable = PressableNotifier.of(context);
+
+    if (pressable == null || pressable.isNone) {
+      return this;
+    }
+
+    final pressableAttributesToApply = <Attribute>[];
+
+    if (pressable.disabled && disabled != null) {
+      pressableAttributesToApply.addAll(disabled!.mix.params);
+    } else if (pressable.pressing && pressing != null) {
+      pressableAttributesToApply.addAll(pressing!.mix.params);
+    } else if (pressable.hovering && hovering != null) {
+      pressableAttributesToApply.addAll(hovering!.mix.params);
+    } else if (pressable.focused && focused != null) {
+      pressableAttributesToApply.addAll(focused!.mix.params);
+    }
+
+    return Mixer.fromList([
+      ...attributes,
+      ...pressableAttributesToApply,
+    ]);
   }
 
   /// Applies all [TextModifierAttributes] to [text]
@@ -148,7 +176,9 @@ class Mixer {
 
   factory Mixer.build(BuildContext context, Mix mix) {
     final mixer = Mixer.fromList(mix.params);
-    return mixer.applyDynamicAttributes(context);
+    return mixer
+        .applyDynamicAttributes(context)
+        .applyPressableAttributes(context);
   }
 
   factory Mixer.fromList(List<Attribute> attributes) {
