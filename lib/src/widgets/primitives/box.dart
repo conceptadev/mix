@@ -62,9 +62,10 @@ class BoxMixerWidget extends MixerWidget {
     if (mixer.aspectRatio != null) {
       if (mixer.aspectRatio!.hasAnimation) {
         current = TweenAnimationBuilder<double>(
-          tween: Tween<double>(begin: 0, end: mixer.aspectRatio!.value),
+          tween: Tween<double>(end: mixer.aspectRatio!.value),
           duration: mixer.aspectRatio!.animationDuration!,
           curve: mixer.aspectRatio!.animationCurve!,
+          onEnd: mixer.aspectRatio!.onEnd,
           builder: (context, value, child) {
             return AspectRatio(aspectRatio: value, child: child);
           },
@@ -115,11 +116,17 @@ class BoxMixerWidget extends MixerWidget {
 
     if (mixer.backgroundColor != null) {
       if (mixer.backgroundColor!.hasAnimation) {
-        current = AnimatedContainer(
+        current = TweenAnimationBuilder<Color>(
           duration: mixer.backgroundColor!.animationDuration!,
           curve: mixer.backgroundColor!.animationCurve!,
-          color: mixer.backgroundColor!.value,
           onEnd: mixer.backgroundColor!.onEnd,
+          tween: Tween<Color>(end: mixer.backgroundColor!.value),
+          builder: (context, color, child) {
+            return ColoredBox(
+              color: color,
+              child: child,
+            );
+          },
           child: current,
         );
       } else {
@@ -132,6 +139,16 @@ class BoxMixerWidget extends MixerWidget {
 
     if (mixer.decoration != null) {
       if (mixer.decoration!.hasAnimation) {
+        // current = TweenAnimationBuilder<Decoration>(
+        //   duration: mixer.decoration!.animationDuration!,
+        //   curve: mixer.decoration!.animationCurve!,
+        //   onEnd: mixer.decoration!.onEnd,
+        //   tween: Tween<Decoration>(end: mixer.decoration!.value),
+        //   builder: (context, value, child) {
+        //     return DecoratedBox(decoration: value, child: child);
+        //   },
+        //   child: current,
+        // );
         current = AnimatedContainer(
           duration: mixer.decoration!.animationDuration!,
           curve: mixer.decoration!.animationCurve!,

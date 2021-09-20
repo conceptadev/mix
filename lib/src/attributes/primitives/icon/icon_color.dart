@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mix/src/attributes/animation/animated_mix.dart';
 
 import '../../base_attribute.dart';
 
@@ -7,8 +8,8 @@ class IconColorUtility {
   IconColorAttribute call(Color iconColor) => IconColorAttribute(iconColor);
 }
 
-class IconColorAttribute extends Attribute<Color> {
-  const IconColorAttribute(this.iconColor);
+class IconColorAttribute extends Attribute<Color> with AnimatedMix<Color> {
+  IconColorAttribute(this.iconColor);
   final Color iconColor;
   @override
   Color get value => iconColor;
