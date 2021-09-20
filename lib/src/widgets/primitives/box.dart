@@ -60,10 +60,22 @@ class BoxMixerWidget extends MixerWidget {
     }
 
     if (mixer.aspectRatio != null) {
-      current = AspectRatio(
-        aspectRatio: mixer.aspectRatio!.value,
-        child: current,
-      );
+      if (mixer.aspectRatio!.hasAnimation) {
+        current = TweenAnimationBuilder<double>(
+          tween: Tween<double>(begin: 0, end: mixer.aspectRatio!.value),
+          duration: mixer.aspectRatio!.animationDuration!,
+          curve: mixer.aspectRatio!.animationCurve!,
+          builder: (context, value, child) {
+            return AspectRatio(aspectRatio: value, child: child);
+          },
+          child: current,
+        );
+      } else {
+        current = AspectRatio(
+          aspectRatio: mixer.aspectRatio!.value,
+          child: current,
+        );
+      }
     }
 
     if (mixer.alignment != null) {
