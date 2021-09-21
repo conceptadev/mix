@@ -43,12 +43,35 @@ class IconMixerWidget extends MixerWidget {
   Widget build(BuildContext context) {
     return BoxMixerWidget(
       mixer,
-      child: Icon(
-        icon,
-        size: mixer.iconSize?.value,
-        color: mixer.iconColor?.value,
-        textDirection: mixer.textDirection?.value,
-        semanticLabel: semanticLabel,
+      child: TweenAnimationBuilder<double?>(
+        duration: mixer.iconSize?.animationDuration ?? Duration.zero,
+        curve: mixer.iconSize?.animationCurve ?? Curves.linear,
+        tween: Tween<double?>(end: mixer.iconSize?.value),
+        builder: (context, value, child) {
+          return IconTheme.merge(
+            data: IconThemeData(size: value),
+            child: TweenAnimationBuilder<Color?>(
+              duration: mixer.iconColor?.animationDuration ?? Duration.zero,
+              curve: mixer.iconColor?.animationCurve ?? Curves.linear,
+              tween: ColorTween(end: mixer.iconColor?.value),
+              child: child,
+              builder: (context, value, child) {
+                if (value == null) {
+                  return child!;
+                }
+                return IconTheme.merge(
+                  data: IconThemeData(color: value),
+                  child: child!,
+                );
+              },
+            ),
+          );
+        },
+        child: Icon(
+          icon,
+          textDirection: mixer.textDirection?.value,
+          semanticLabel: semanticLabel,
+        ),
       ),
     );
   }
