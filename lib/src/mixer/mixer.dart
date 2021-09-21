@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mix/src/attributes/animation/animated_text.dart';
 import 'package:mix/src/attributes/primitives/gestures/disabled.dart';
 import 'package:mix/src/attributes/primitives/gestures/focused.dart';
 import 'package:mix/src/attributes/primitives/gestures/hovering.dart';
@@ -82,6 +83,7 @@ class Mixer {
   FlexFitAttribute? flexFit;
   BoxFitAttribute? boxFit;
   AspectRatioAttribute? aspectRatio;
+  AnimatedTextAttribute? animatedText;
   TextColorAttribute? textColor;
   TextAlignAttribute? textAlign;
   FontSizeAttribute? fontSize;
@@ -222,6 +224,10 @@ class Mixer {
 
       if (attribute is IconSizeAttribute) {
         mixer.iconSize = attribute;
+      }
+
+      if (attribute is AnimatedTextAttribute) {
+        mixer.animatedText = attribute;
       }
 
       if (attribute is TextColorAttribute) {
