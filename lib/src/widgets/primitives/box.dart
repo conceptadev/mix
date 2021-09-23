@@ -116,12 +116,15 @@ class BoxMixerWidget extends MixerWidget {
 
     if (mixer.backgroundColor != null) {
       if (mixer.backgroundColor!.hasAnimation) {
-        current = TweenAnimationBuilder<Color>(
+        current = TweenAnimationBuilder<Color?>(
           duration: mixer.backgroundColor!.animationDuration!,
           curve: mixer.backgroundColor!.animationCurve!,
           onEnd: mixer.backgroundColor!.onEnd,
-          tween: Tween<Color>(end: mixer.backgroundColor!.value),
+          tween: ColorTween(end: mixer.backgroundColor!.value),
           builder: (context, color, child) {
+            if (color == null) {
+              return child!;
+            }
             return ColoredBox(color: color, child: child);
           },
           child: current,

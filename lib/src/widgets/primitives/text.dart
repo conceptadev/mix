@@ -31,6 +31,52 @@ class TextMixerWidget extends MixerWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textStyle = TextStyle(
+      wordSpacing: mixer.wordSpacing?.value,
+      textBaseline: mixer.textBaseline?.value,
+      letterSpacing: mixer.letterSpacing?.value,
+      fontSize: mixer.fontSize?.value,
+      fontWeight: mixer.fontWeight?.value,
+      fontFamily: mixer.fontFamily?.value,
+      locale: mixer.locale?.value,
+      debugLabel: mixer.debugLabel?.value,
+      color: mixer.textColor?.value,
+      fontStyle: mixer.fontStyle?.value,
+      height: mixer.textHeight?.value,
+      backgroundColor: mixer.backgroundColor?.value,
+    ).copyWith(
+      wordSpacing: mixer.textStyle?.value.wordSpacing,
+      textBaseline: mixer.textStyle?.value.textBaseline,
+      letterSpacing: mixer.textStyle?.value.letterSpacing,
+      fontSize: mixer.textStyle?.value.fontSize,
+      fontWeight: mixer.textStyle?.value.fontWeight,
+      fontFamily: mixer.textStyle?.value.fontFamily,
+      locale: mixer.textStyle?.value.locale,
+      debugLabel: mixer.textStyle?.value.debugLabel,
+      color: mixer.textStyle?.value.color,
+      fontStyle: mixer.textStyle?.value.fontStyle,
+      height: mixer.textStyle?.value.height,
+      backgroundColor: mixer.textStyle?.value.backgroundColor,
+    );
+
+    if (mixer.animatedText != null) {
+      return AnimatedDefaultTextStyle(
+        child: Text(
+          mixer.applyTextModifiers(text),
+          textDirection: mixer.textDirection?.value,
+          textWidthBasis: mixer.textWidthBasis?.value,
+          textScaleFactor: mixer.textScaleFactor?.value,
+        ),
+        style: textStyle,
+        duration: mixer.animatedText!.animationDuration!,
+        curve: mixer.animatedText!.animationCurve!,
+        onEnd: mixer.animatedText!.onEnd,
+        softWrap: mixer.softWrap?.value ?? true,
+        textAlign: mixer.textAlign?.value,
+        overflow: mixer.textOverflow?.value ?? TextOverflow.clip,
+        maxLines: mixer.maxLines?.value,
+      );
+    }
     return Text(
       mixer.applyTextModifiers(text),
       softWrap: mixer.softWrap?.value,
@@ -40,33 +86,7 @@ class TextMixerWidget extends MixerWidget {
       overflow: mixer.textOverflow?.value,
       maxLines: mixer.maxLines?.value,
       textScaleFactor: mixer.textScaleFactor?.value,
-      style: TextStyle(
-        wordSpacing: mixer.wordSpacing?.value,
-        textBaseline: mixer.textBaseline?.value,
-        letterSpacing: mixer.letterSpacing?.value,
-        fontSize: mixer.fontSize?.value,
-        fontWeight: mixer.fontWeight?.value,
-        fontFamily: mixer.fontFamily?.value,
-        locale: mixer.locale?.value,
-        debugLabel: mixer.debugLabel?.value,
-        color: mixer.textColor?.value,
-        fontStyle: mixer.fontStyle?.value,
-        height: mixer.textHeight?.value,
-        backgroundColor: mixer.backgroundColor?.value,
-      ).copyWith(
-        wordSpacing: mixer.textStyle?.value.wordSpacing,
-        textBaseline: mixer.textStyle?.value.textBaseline,
-        letterSpacing: mixer.textStyle?.value.letterSpacing,
-        fontSize: mixer.textStyle?.value.fontSize,
-        fontWeight: mixer.textStyle?.value.fontWeight,
-        fontFamily: mixer.textStyle?.value.fontFamily,
-        locale: mixer.textStyle?.value.locale,
-        debugLabel: mixer.textStyle?.value.debugLabel,
-        color: mixer.textStyle?.value.color,
-        fontStyle: mixer.textStyle?.value.fontStyle,
-        height: mixer.textStyle?.value.height,
-        backgroundColor: mixer.textStyle?.value.backgroundColor,
-      ),
+      style: textStyle,
     );
   }
 

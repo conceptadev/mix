@@ -5,6 +5,7 @@ import 'package:mix/src/attributes/primitives/text/text_color.dart';
 import 'package:mix/src/attributes/primitives/text/text_style.dart';
 
 import '../utilities/dynamic/hidden.dart';
+import 'animation/animated_text.dart';
 import 'base/size.dart';
 import 'base/space.dart';
 import 'primitives/icon/icon_size.dart';
@@ -118,6 +119,9 @@ const borderRadius = BorderRadiusUtility();
 /// Background color attribute
 const backgroundColor = BackgroundColorUtility();
 const bgColor = backgroundColor;
+
+/// Animated text attribute
+const animatedText = AnimatedTextUtility();
 
 /// Text color attribute
 const textColor = TextColorUtility();
