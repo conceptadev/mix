@@ -46,7 +46,9 @@ class IconMixerWidget extends MixerWidget {
       child: TweenAnimationBuilder<double?>(
         duration: mixer.iconSize?.animationDuration ?? Duration.zero,
         curve: mixer.iconSize?.animationCurve ?? Curves.linear,
-        tween: Tween<double?>(end: mixer.iconSize?.value),
+        tween: Tween<double?>(
+          end: mixer.iconSize?.value ?? IconTheme.of(context).size ?? 24.0,
+        ),
         builder: (context, value, child) {
           return IconTheme.merge(
             data: IconThemeData(size: value),
