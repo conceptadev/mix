@@ -81,7 +81,7 @@ void main() {
             const LocaleAttribute(Locale('es', 'US')),
             const DebugLabelAttribute('debug_label'),
             const TextHeightAttribute(10),
-            const BackgroundColorAttribute(Colors.blue),
+            BackgroundColorAttribute(Colors.blue),
           ).text(widgetText),
         ),
       );

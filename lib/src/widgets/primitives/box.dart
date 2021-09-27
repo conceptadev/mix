@@ -98,7 +98,7 @@ class BoxMixerWidget extends MixerWidget {
 
     final effectivePadding = _paddingIncludingDecoration;
     if (effectivePadding != null) {
-      if (mixer.padding!.hasAnimation) {
+      if (mixer.padding?.hasAnimation ?? false) {
         current = AnimatedPadding(
           duration: mixer.padding!.animationDuration!,
           curve: mixer.padding!.animationCurve!,

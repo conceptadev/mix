@@ -26,8 +26,8 @@ void main() {
       await tester.pumpWidget(
         DirectionalTestWidget(
           child: Mix(
-            const IconColorAttribute(Colors.greenAccent),
-            const IconSizeAttribute(23),
+            IconColorAttribute(Colors.greenAccent),
+            IconSizeAttribute(23),
             const TextDirectionAttribute(TextDirection.rtl),
           ).icon(Icons.bolt),
         ),

@@ -109,7 +109,7 @@ void main() {
         (tester) async {
           await tester.pumpWidget(
             BoxTestWidget(
-              Mix(const AspectRatioAttribute(3 / 2)),
+              Mix(AspectRatioAttribute(3 / 2)),
             ),
           );
 
@@ -126,7 +126,7 @@ void main() {
         (tester) async {
           await tester.pumpWidget(
             BoxTestWidget(
-              Mix(const AlignmentAttribute(Alignment.centerRight)),
+              Mix(AlignmentAttribute(Alignment.centerRight)),
             ),
           );
 
@@ -143,7 +143,7 @@ void main() {
         (tester) async {
           await tester.pumpWidget(
             BoxTestWidget(
-              Mix(const OpacityAttribute(0.5)),
+              Mix(OpacityAttribute(0.5)),
             ),
           );
 
@@ -160,7 +160,7 @@ void main() {
         (tester) async {
           await tester.pumpWidget(
             BoxTestWidget(
-              Mix(const BackgroundColorAttribute(Colors.lime)),
+              Mix(BackgroundColorAttribute(Colors.lime)),
             ),
           );
 
@@ -175,7 +175,7 @@ void main() {
       testWidgets(
         'Responds to Decoration attributes',
         (tester) async {
-          const side = BorderSideAttribute(
+          final side = BorderSideAttribute(
             color: Colors.green,
             width: 1.0,
             style: BorderStyle.solid,
@@ -184,8 +184,8 @@ void main() {
             BoxTestWidget(
               Mix(
                 BackgroundColorAttribute(Colors.purple),
-                const BorderRadiusAttribute(topLeft: 20),
-                const BorderAttribute(
+                BorderRadiusAttribute(topLeft: 20),
+                BorderAttribute(
                   bottom: side,
                   top: side,
                   left: side,
