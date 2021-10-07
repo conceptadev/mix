@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mix/src/attributes/base_attribute.dart';
-import 'package:mix/src/helpers/extensions.dart';
+
+import '../../../mix.dart';
 
 class DarkModeUtility {
   const DarkModeUtility();
@@ -11,6 +12,7 @@ class DarkModeAttribute extends DynamicAttribute {
   const DarkModeAttribute(Attribute attribute) : super(attribute);
   @override
   bool shouldApply(BuildContext context) {
-    return context.isDarkMode;
+    return mixTheme.brightness == Brightness.dark;
+    // return context.isDarkMode;
   }
 }
