@@ -17,4 +17,5 @@ export 'src/helpers/extensions.dart';
 export 'src/helpers/utils.dart';
 export 'src/mixer/mix_factory.dart' show Mix;
 export 'src/mixer/mixer.dart' show Mixer;
+export 'src/theme/theme.dart';
 export 'src/utilities/utilities_api.dart';
