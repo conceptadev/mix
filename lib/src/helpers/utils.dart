@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mix/src/utilities/apply_mix.dart';
+import 'package:mix/src/attributes/apply_mix.dart';
 
 import '../attributes/base_attribute.dart';
 

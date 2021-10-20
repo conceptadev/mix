@@ -1,13 +1,22 @@
+import 'package:mix/src/attributes/apply_mix.dart';
+import 'package:mix/src/attributes/dynamic/dark_mode.dart';
+import 'package:mix/src/attributes/dynamic/media_query.dart';
+import 'package:mix/src/attributes/layout/gap.dart';
+import 'package:mix/src/attributes/primitives/gestures/disabled.dart';
+import 'package:mix/src/attributes/primitives/gestures/focused.dart';
+import 'package:mix/src/attributes/primitives/gestures/hovering.dart';
+import 'package:mix/src/attributes/primitives/gestures/pressing.dart';
 import 'package:mix/src/attributes/primitives/icon/icon_color.dart';
 import 'package:mix/src/attributes/primitives/layout/aspect_ratio.dart';
 import 'package:mix/src/attributes/primitives/painting/background_color.dart';
 import 'package:mix/src/attributes/primitives/text/text_color.dart';
 import 'package:mix/src/attributes/primitives/text/text_style.dart';
+import 'package:mix/src/directives/text_directive.dart';
 
-import '../utilities/dynamic/hidden.dart';
 import 'animation/animated_text.dart';
 import 'base/size.dart';
 import 'base/space.dart';
+import 'dynamic/hidden.dart';
 import 'primitives/icon/icon_size.dart';
 import 'primitives/layout/flex.dart';
 import 'primitives/painting/alignment.dart';
@@ -97,6 +106,12 @@ const flex = FlexUtility();
 
 /// Flex fit
 const flexFit = FlexFitUtility();
+
+/// Flexible
+final flexible = flexFit.loose;
+
+/// Expand
+final expanded = flexFit.tight;
 
 /// Flex Align
 const mainAxis = MainAxisAlignmentUtility();
@@ -246,3 +261,61 @@ const iconSize = IconSizeUtility();
 
 /// Icon color attribute
 const iconColor = IconColorUtility();
+
+/// Rounded utility
+const _br = BorderRadiusUtility();
+final rounded = _br.fromParams;
+final roundedTL = _br.topLeft;
+final roundedTR = _br.topRight;
+final roundedBL = _br.bottomLeft;
+final roundedBR = _br.bottomRight;
+
+/// Aligment
+const _align = AlignmentUtility();
+
+/// Alignment center
+final center = _align.center;
+
+/// Alignment bottomCenter
+final bottomCenter = _align.bottomCenter;
+
+/// Alignment bottomLeft
+final bottomLeft = _align.bottomLeft;
+
+/// Alignment bottomRight
+final bottomRight = _align.bottomRight;
+
+/// Alignment topCenter
+final topCenter = _align.topCenter;
+
+/// Alignment topLeft
+final topLeft = _align.topLeft;
+
+/// Alignment topRight
+final topRight = _align.topRight;
+
+/// Gap
+const gap = GapSizeUtility();
+
+/// Dynamic Attributes
+const dark = DarkModeUtility();
+
+/// Media query utility
+const mq = MediaQueryUtility();
+
+// Modifiers
+/// Capitalizes text
+const capitalize = TextDirectiveAttribute(CapitalizeDirective());
+const upperCase = TextDirectiveAttribute(UpperCaseDirective());
+const lowerCase = TextDirectiveAttribute(LowerCaseDirective());
+const titleCase = TextDirectiveAttribute(TitleCaseDirective());
+const sentenceCase = TextDirectiveAttribute(SentenceCaseDirective());
+
+const apply = ApplyMixUtility();
+
+// Gestures
+
+const disabled = DisabledUtility();
+const focused = FocusedUtility();
+const hovering = HoveringUtility();
+const pressing = PressingUtility();

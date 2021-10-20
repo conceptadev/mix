@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../mixer/mix_factory.dart';
 import '../../mixer/mixer.dart';
+import '../layout/box.dart';
 import '../mix_widget.dart';
-import 'box.dart';
 
 class Pressable extends MixWidget {
   const Pressable(

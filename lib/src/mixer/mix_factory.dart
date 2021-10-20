@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 import '../attributes/base_attribute.dart';
 import '../helpers/utils.dart';
-import '../widgets/primitives/box.dart';
-import '../widgets/primitives/flex_box.dart';
+import '../widgets/layout/box.dart';
+import '../widgets/layout/flex_box.dart';
 import '../widgets/primitives/icon.dart';
-import '../widgets/primitives/text.dart';
+import '../widgets/typography/text.dart';
 
 /// Defines a mix
 class Mix {

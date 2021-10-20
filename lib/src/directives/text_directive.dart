@@ -1,6 +1,6 @@
 import 'package:mix/src/attributes/base_attribute.dart';
 
-import '../../helpers/extensions.dart';
+import '../helpers/extensions.dart';
 
 typedef TextDirective = AttributeDirective<String>;
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mix/src/attributes/animation/animated_text.dart';
+import 'package:mix/src/attributes/layout/gap.dart';
 import 'package:mix/src/attributes/primitives/gestures/disabled.dart';
 import 'package:mix/src/attributes/primitives/gestures/focused.dart';
 import 'package:mix/src/attributes/primitives/gestures/hovering.dart';
@@ -9,13 +10,13 @@ import 'package:mix/src/attributes/primitives/layout/aspect_ratio.dart';
 import 'package:mix/src/attributes/primitives/painting/background_color.dart';
 import 'package:mix/src/attributes/primitives/text/text_color.dart';
 import 'package:mix/src/attributes/primitives/text/text_style.dart';
-import 'package:mix/src/utilities/gap.dart';
-import 'package:mix/src/utilities/modifiers/text_modifier.dart';
+import 'package:mix/src/directives/text_directive.dart';
 
 import '../../mix.dart';
 import '../attributes/base/size.dart';
 import '../attributes/base/space.dart';
 import '../attributes/base_attribute.dart';
+import '../attributes/dynamic/hidden.dart';
 import '../attributes/primitives/icon/icon_size.dart';
 import '../attributes/primitives/layout/constraints.dart';
 import '../attributes/primitives/layout/flex.dart';
@@ -49,7 +50,6 @@ import '../attributes/primitives/text/text_overflow.dart';
 import '../attributes/primitives/text/text_scale_factor.dart';
 import '../attributes/primitives/text/text_width_basis.dart';
 import '../attributes/primitives/text/word_spacing.dart';
-import '../utilities/dynamic/hidden.dart';
 
 /// Mixer
 class Mixer {

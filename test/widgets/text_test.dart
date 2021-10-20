@@ -20,7 +20,7 @@ import 'package:mix/src/attributes/primitives/text/text_overflow.dart';
 import 'package:mix/src/attributes/primitives/text/text_scale_factor.dart';
 import 'package:mix/src/attributes/primitives/text/text_width_basis.dart';
 import 'package:mix/src/attributes/primitives/text/word_spacing.dart';
-import 'package:mix/src/widgets/primitives/text.dart';
+import 'package:mix/src/widgets/typography/text.dart';
 
 import '../test_utils.dart';
 
