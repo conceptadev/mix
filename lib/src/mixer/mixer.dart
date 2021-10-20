@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:mix/src/attributes/animation/animated_text.dart';
 import 'package:mix/src/attributes/layout/gap.dart';
 import 'package:mix/src/attributes/primitives/gestures/disabled.dart';
 import 'package:mix/src/attributes/primitives/gestures/focused.dart';
 import 'package:mix/src/attributes/primitives/gestures/hovering.dart';
 import 'package:mix/src/attributes/primitives/gestures/pressing.dart';
-import 'package:mix/src/attributes/primitives/icon/icon_color.dart';
 import 'package:mix/src/attributes/primitives/layout/aspect_ratio.dart';
 import 'package:mix/src/attributes/primitives/painting/background_color.dart';
-import 'package:mix/src/attributes/primitives/text/text_color.dart';
-import 'package:mix/src/attributes/primitives/text/text_style.dart';
+import 'package:mix/src/attributes/primitives/text/text_attributes.dart';
 import 'package:mix/src/directives/text_directive.dart';
 
 import '../../mix.dart';
@@ -17,7 +14,6 @@ import '../attributes/base/size.dart';
 import '../attributes/base/space.dart';
 import '../attributes/base_attribute.dart';
 import '../attributes/dynamic/hidden.dart';
-import '../attributes/primitives/icon/icon_size.dart';
 import '../attributes/primitives/layout/constraints.dart';
 import '../attributes/primitives/layout/flex.dart';
 import '../attributes/primitives/painting/alignment.dart';
@@ -33,23 +29,6 @@ import '../attributes/primitives/rendering/flex/cross_axis_alignment.dart';
 import '../attributes/primitives/rendering/flex/flex_fit.dart';
 import '../attributes/primitives/rendering/flex/main_axis_alignment.dart';
 import '../attributes/primitives/rendering/flex/main_axis_size.dart';
-import '../attributes/primitives/text/debug_label.dart';
-import '../attributes/primitives/text/font_family.dart';
-import '../attributes/primitives/text/font_size.dart';
-import '../attributes/primitives/text/font_style.dart';
-import '../attributes/primitives/text/font_weight.dart';
-import '../attributes/primitives/text/letter_spacing.dart';
-import '../attributes/primitives/text/locale.dart';
-import '../attributes/primitives/text/max_lines.dart';
-import '../attributes/primitives/text/soft_wrap.dart';
-import '../attributes/primitives/text/text_align.dart';
-import '../attributes/primitives/text/text_baseline.dart';
-import '../attributes/primitives/text/text_direction.dart';
-import '../attributes/primitives/text/text_height.dart';
-import '../attributes/primitives/text/text_overflow.dart';
-import '../attributes/primitives/text/text_scale_factor.dart';
-import '../attributes/primitives/text/text_width_basis.dart';
-import '../attributes/primitives/text/word_spacing.dart';
 
 /// Mixer
 class Mixer {
@@ -73,40 +52,21 @@ class Mixer {
   MaxWidthAttribute? maxWidth;
   MinWidthAttribute? minWidth;
   AxisAttribute? axis;
-  MainAxisSizeAttribute? mainAxisSize;
-  CrossAxisAlignmentAttribute? crossAxisAlignment;
-  MainAxisAlignmentAttribute? mainAxisAlignment;
-  GapSizeAttribute? gap;
   RotateAttribute? rotate;
   OpacityAttribute? opacity;
-  FlexAttribute? flex;
   FlexFitAttribute? flexFit;
   BoxFitAttribute? boxFit;
   AspectRatioAttribute? aspectRatio;
-  AnimatedTextAttribute? animatedText;
-  TextColorAttribute? textColor;
-  TextAlignAttribute? textAlign;
-  FontSizeAttribute? fontSize;
-  WordSpacingAttribute? wordSpacing;
-  LetterSpacingAttribute? letterSpacing;
-  TextBaselineAttribute? textBaseline;
-  MaxLinesAttribute? maxLines;
-  FontFamilyAttribute? fontFamily;
-  FontWeightAttribute? fontWeight;
-  TextDirectionAttribute? textDirection;
-  FontStyleAttribute? fontStyle;
-  LocaleAttribute? locale;
-  TextOverflowAttribute? textOverflow;
-  SoftWrapAttribute? softWrap;
-  TextScaleFactorAttribute? textScaleFactor;
-  TextWidthBasisAttribute? textWidthBasis;
-  TextStyleAttribute? textStyle;
-  DebugLabelAttribute? debugLabel;
-  TextHeightAttribute? textHeight;
-  IconColorAttribute? iconColor;
-  IconSizeAttribute? iconSize;
+
+  MainAxisSizeAttribute? mainAxisSize;
+  CrossAxisAlignmentAttribute? crossAxisAlignment;
+  MainAxisAlignmentAttribute? mainAxisAlignment;
+  FlexAttribute? flex;
+  GapSizeAttribute? gap;
+
   List<DynamicAttribute>? dynamicAttributes;
   List<TextDirectiveAttribute>? textDirectiveAttributes;
+  TextAttribute? textAttribute;
   DisabledAttribute? disabled;
   FocusedAttribute? focused;
   HoveringAttribute? hovering;
@@ -185,8 +145,7 @@ class Mixer {
 
   factory Mixer.fromList(List<Attribute> attributes) {
     final mixer = Mixer._(attributes);
-    // Set default text style
-    mixer.textStyle = const TextStyleAttribute(TextStyle());
+
     for (final attribute in attributes) {
       if (attribute is DynamicAttribute) {
         mixer.dynamicAttributes ??= [];
@@ -196,6 +155,15 @@ class Mixer {
       if (attribute is TextDirectiveAttribute) {
         mixer.textDirectiveAttributes ??= [];
         mixer.textDirectiveAttributes!.add(attribute);
+      }
+
+      if (attribute is TextAttribute) {
+        final textAttribute = mixer.textAttribute;
+        if (textAttribute != null) {
+          mixer.textAttribute = attribute;
+        } else {
+          mixer.textAttribute = textAttribute!.merge(attribute);
+        }
       }
 
       if (attribute is MarginAttribute) {
@@ -216,93 +184,6 @@ class Mixer {
 
       if (attribute is AxisAttribute) {
         mixer.axis = attribute;
-      }
-
-      if (attribute is IconColorAttribute) {
-        mixer.iconColor = attribute;
-      }
-
-      if (attribute is IconSizeAttribute) {
-        mixer.iconSize = attribute;
-      }
-
-      if (attribute is AnimatedTextAttribute) {
-        mixer.animatedText = attribute;
-      }
-
-      if (attribute is TextColorAttribute) {
-        mixer.textColor = attribute;
-      }
-
-      if (attribute is TextStyleAttribute) {
-        mixer.textStyle = attribute;
-      }
-
-      if (attribute is TextAlignAttribute) {
-        mixer.textAlign = attribute;
-      }
-
-      if (attribute is FontSizeAttribute) {
-        mixer.fontSize = attribute;
-      }
-
-      if (attribute is WordSpacingAttribute) {
-        mixer.wordSpacing = attribute;
-      }
-
-      if (attribute is LetterSpacingAttribute) {
-        mixer.letterSpacing = attribute;
-      }
-
-      if (attribute is TextBaselineAttribute) {
-        mixer.textBaseline = attribute;
-      }
-
-      if (attribute is MaxLinesAttribute) {
-        mixer.maxLines = attribute;
-      }
-
-      if (attribute is FontFamilyAttribute) {
-        mixer.fontFamily = attribute;
-      }
-
-      if (attribute is FontWeightAttribute) {
-        mixer.fontWeight = attribute;
-      }
-      if (attribute is TextDirectionAttribute) {
-        mixer.textDirection = attribute;
-      }
-
-      if (attribute is FontStyleAttribute) {
-        mixer.fontStyle = attribute;
-      }
-
-      if (attribute is LocaleAttribute) {
-        mixer.locale = attribute;
-      }
-
-      if (attribute is TextOverflowAttribute) {
-        mixer.textOverflow = attribute;
-      }
-
-      if (attribute is SoftWrapAttribute) {
-        mixer.softWrap = attribute;
-      }
-
-      if (attribute is TextScaleFactorAttribute) {
-        mixer.textScaleFactor = attribute;
-      }
-
-      if (attribute is TextWidthBasisAttribute) {
-        mixer.textWidthBasis = attribute;
-      }
-
-      if (attribute is DebugLabelAttribute) {
-        mixer.debugLabel = attribute;
-      }
-
-      if (attribute is TextHeightAttribute) {
-        mixer.textHeight = attribute;
       }
 
       if (attribute is AspectRatioAttribute) {

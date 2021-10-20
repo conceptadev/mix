@@ -1,0 +1,53 @@
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _clsx = _interopRequireDefault(require("clsx"));
+
+var _stylesModule = _interopRequireDefault(require("./styles.module.css"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+/* eslint-disable jsx-a11y/control-has-associated-label */
+function HeadingsInline({
+  toc,
+  isChild
+}) {
+  if (!toc.length) {
+    return null;
+  }
+
+  return <ul className={isChild ? '' : 'table-of-contents'}>
+      {toc.map(heading => <li key={heading.id}>
+          <a href={`#${heading.id}`} // Developer provided the HTML, so assume it's safe.
+      // eslint-disable-next-line react/no-danger
+      dangerouslySetInnerHTML={{
+        __html: heading.value
+      }} />
+          <HeadingsInline isChild toc={heading.children} />
+        </li>)}
+    </ul>;
+}
+
+function TOCInline({
+  toc
+}) {
+  return <div className={(0, _clsx.default)(_stylesModule.default.tableOfContentsInline)}>
+      <HeadingsInline toc={toc} />
+    </div>;
+}
+
+var _default = TOCInline;
+exports.default = _default;

@@ -9,8 +9,7 @@ import 'package:mix/src/attributes/primitives/gestures/pressing.dart';
 import 'package:mix/src/attributes/primitives/icon/icon_color.dart';
 import 'package:mix/src/attributes/primitives/layout/aspect_ratio.dart';
 import 'package:mix/src/attributes/primitives/painting/background_color.dart';
-import 'package:mix/src/attributes/primitives/text/text_color.dart';
-import 'package:mix/src/attributes/primitives/text/text_style.dart';
+import 'package:mix/src/attributes/primitives/text/text_attributes.dart';
 import 'package:mix/src/directives/text_directive.dart';
 
 import 'animation/animated_text.dart';
@@ -30,23 +29,6 @@ import 'primitives/rendering/flex/cross_axis_alignment.dart';
 import 'primitives/rendering/flex/flex_fit.dart';
 import 'primitives/rendering/flex/main_axis_alignment.dart';
 import 'primitives/rendering/flex/main_axis_size.dart';
-import 'primitives/text/debug_label.dart';
-import 'primitives/text/font_family.dart';
-import 'primitives/text/font_size.dart';
-import 'primitives/text/font_style.dart';
-import 'primitives/text/font_weight.dart';
-import 'primitives/text/letter_spacing.dart';
-import 'primitives/text/locale.dart';
-import 'primitives/text/max_lines.dart';
-import 'primitives/text/soft_wrap.dart';
-import 'primitives/text/text_align.dart';
-import 'primitives/text/text_baseline.dart';
-import 'primitives/text/text_direction.dart';
-import 'primitives/text/text_height.dart';
-import 'primitives/text/text_overflow.dart';
-import 'primitives/text/text_scale_factor.dart';
-import 'primitives/text/text_width_basis.dart';
-import 'primitives/text/word_spacing.dart';
 
 const marginUtility = SpaceUtility<MarginAttribute>();
 
@@ -139,7 +121,7 @@ const bgColor = backgroundColor;
 const animatedText = AnimatedTextUtility();
 
 /// Text color attribute
-const textColor = TextColorUtility();
+const textColor = TextAttribute();
 
 /// Aligment
 const align = AlignmentUtility();
@@ -235,26 +217,44 @@ final shadowBlur = shadow.blurRadius;
 /// Shadow color
 final shadowColor = shadow.color;
 
-/// Text align
-const textAlign = TextAlignUtility();
-const fontWeight = FontWeightUtility();
-const textBaseline = TextBaselineUtility();
-const fontStyle = FontStyleUtility();
-const textDirection = TextDirectionUtility();
-const textWidthBasis = TextWidthBasisUtility();
-const textOverflow = TextOverflowUtility();
-const locale = LocaleUtility();
-const fontFamily = FontFamilyUtility();
-const maxLines = MaxLinesUtility();
-const fontSize = FontSizeUtility();
+const _textUtil = TextUtility();
 
-const wordSpacing = WordSpacingUtility();
-const letterSpacing = LetterSpacingUtility();
-const softWrap = SoftWrapUtility();
-const textScaleFactor = TextScaleFactorUtility();
-const debugLabel = DebugLabelUtility();
-const textHeight = TextHeightUtility();
-const textStyle = TextStyleUtility();
+/// Text align
+final textAlign = _textUtil.textAlign;
+final textDirection = _textUtil.textDirection;
+final textWidthBasis = _textUtil.textWidthBasis;
+final locale = _textUtil.locale;
+final maxLines = _textUtil.maxLines;
+final textOverflow = _textUtil.overflow;
+final textStyle = _textUtil.style;
+final softWrap = _textUtil.softWrap;
+final textScaleFactor = _textUtil.textScaleFactor;
+final strutStyle = _textUtil.strutStyle;
+final semanticsLabel = _textUtil.semanticsLabel;
+
+const _textStyleUtil = TextStyleUtility();
+final fontWeight = _textStyleUtil.fontWeight;
+final textBaseline = _textStyleUtil.textBaseline;
+final letterSpacing = _textStyleUtil.letterSpacing;
+final debugLabel = _textStyleUtil.debugLabel;
+final textHeight = _textStyleUtil.height;
+final wordSpacing = _textStyleUtil.wordSpacing;
+final fontStyle = _textStyleUtil.fontStyle;
+final fontFamily = _textStyleUtil.fontFamily;
+final fontSize = _textStyleUtil.fontSize;
+final inherit = _textStyleUtil.inherit;
+final color = _textStyleUtil.color;
+final textBgColor = _textStyleUtil.backgroundColor;
+
+final textForeground = _textStyleUtil.foreground;
+final textBackground = _textStyleUtil.background;
+final textShadows = _textStyleUtil.shadows;
+final fontFeatures = _textStyleUtil.fontFeatures;
+final textDecoration = _textStyleUtil.decoration;
+final textDecorationColor = _textStyleUtil.decorationColor;
+final textDecorationStyle = _textStyleUtil.decorationStyle;
+final textDecorationThickness = _textStyleUtil.decorationThickness;
+final fontFamilyFallback = _textStyleUtil.fontFamilyFallback;
 
 /// Icon Size
 const iconSize = IconSizeUtility();

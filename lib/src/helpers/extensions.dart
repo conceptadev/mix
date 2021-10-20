@@ -103,3 +103,22 @@ extension StringExtensions on String {
     return words.join(separator);
   }
 }
+
+extension StrutStyleExtension on StrutStyle {
+  merge(StrutStyle? strutStyle) {
+    return StrutStyle(
+      fontFamily: strutStyle?.fontFamily ?? this.fontFamily,
+      fontFamilyFallback:
+          strutStyle?.fontFamilyFallback ?? this.fontFamilyFallback,
+      fontSize: strutStyle?.fontSize ?? this.fontSize,
+      height: strutStyle?.height ?? this.height,
+      leadingDistribution:
+          strutStyle?.leadingDistribution ?? this.leadingDistribution,
+      leading: strutStyle?.leading ?? this.leading,
+      fontWeight: strutStyle?.fontWeight ?? this.fontWeight,
+      fontStyle: strutStyle?.fontStyle ?? this.fontStyle,
+      forceStrutHeight: strutStyle?.forceStrutHeight ?? this.forceStrutHeight,
+      debugLabel: strutStyle?.debugLabel ?? this.debugLabel,
+    );
+  }
+}

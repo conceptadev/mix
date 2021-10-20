@@ -1,0 +1,83 @@
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = DocsVersionDropdownNavbarItem;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _DefaultNavbarItem = _interopRequireDefault(require("@theme/NavbarItem/DefaultNavbarItem"));
+
+var _DropdownNavbarItem = _interopRequireDefault(require("@theme/NavbarItem/DropdownNavbarItem"));
+
+var _useDocs = require("@theme/hooks/useDocs");
+
+var _themeCommon = require("@docusaurus/theme-common");
+
+var _Translate = require("@docusaurus/Translate");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+const getVersionMainDoc = version => version.docs.find(doc => doc.id === version.mainDocId);
+
+function DocsVersionDropdownNavbarItem({
+  mobile,
+  docsPluginId,
+  dropdownActiveClassDisabled,
+  dropdownItemsBefore,
+  dropdownItemsAfter,
+  ...props
+}) {
+  var _ref, _activeDocContext$act;
+
+  const activeDocContext = (0, _useDocs.useActiveDocContext)(docsPluginId);
+  const versions = (0, _useDocs.useVersions)(docsPluginId);
+  const latestVersion = (0, _useDocs.useLatestVersion)(docsPluginId);
+  const {
+    preferredVersion,
+    savePreferredVersionName
+  } = (0, _themeCommon.useDocsPreferredVersion)(docsPluginId);
+
+  function getItems() {
+    const versionLinks = versions.map(version => {
+      // We try to link to the same doc, in another version
+      // When not possible, fallback to the "main doc" of the version
+      const versionDoc = (activeDocContext === null || activeDocContext === void 0 ? void 0 : activeDocContext.alternateDocVersions[version.name]) || getVersionMainDoc(version);
+      return {
+        isNavLink: true,
+        label: version.label,
+        to: versionDoc.path,
+        isActive: () => version === (activeDocContext === null || activeDocContext === void 0 ? void 0 : activeDocContext.activeVersion),
+        onClick: () => {
+          savePreferredVersionName(version.name);
+        }
+      };
+    });
+    return [...dropdownItemsBefore, ...versionLinks, ...dropdownItemsAfter];
+  }
+
+  const items = getItems();
+  const dropdownVersion = (_ref = (_activeDocContext$act = activeDocContext.activeVersion) !== null && _activeDocContext$act !== void 0 ? _activeDocContext$act : preferredVersion) !== null && _ref !== void 0 ? _ref : latestVersion; // Mobile dropdown is handled a bit differently
+
+  const dropdownLabel = mobile && items ? (0, _Translate.translate)({
+    id: 'theme.navbar.mobileVersionsDropdown.label',
+    message: 'Versions',
+    description: 'The label for the navbar versions dropdown on mobile view'
+  }) : dropdownVersion.label;
+  const dropdownTo = mobile && items ? undefined : getVersionMainDoc(dropdownVersion).path; // We don't want to render a version dropdown with 0 or 1 item
+  // If we build the site with a single docs version (onlyIncludeVersions: ['1.0.0'])
+  // We'd rather render a button instead of a dropdown
+
+  if (items.length <= 1) {
+    return <_DefaultNavbarItem.default {...props} mobile={mobile} label={dropdownLabel} to={dropdownTo} isActive={dropdownActiveClassDisabled ? () => false : undefined} />;
+  }
+
+  return <_DropdownNavbarItem.default {...props} mobile={mobile} label={dropdownLabel} to={dropdownTo} items={items} isActive={dropdownActiveClassDisabled ? () => false : undefined} />;
+}

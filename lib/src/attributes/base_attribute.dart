@@ -7,9 +7,6 @@ import 'package:mix/src/attributes/utilities.dart';
 abstract class Attribute<T> {
   /// Constructor
   const Attribute();
-
-  /// Builds attribute into widget propety
-  T get value;
 }
 
 extension AttributeExtensions on Attribute {
@@ -25,7 +22,7 @@ extension AttributeExtensions on Attribute {
 abstract class DynamicAttribute extends Attribute<Attribute> {
   const DynamicAttribute(Attribute attribute) : _attribute = attribute;
   final Attribute _attribute;
-  @override
+
   Attribute get value => _attribute;
 
   bool shouldApply(BuildContext context);
@@ -36,14 +33,10 @@ abstract class AttributeDirective<T> {
   T modify(T value);
 }
 
-abstract class BoxMixAttribute<T> extends Attribute<T> {
-  const BoxMixAttribute();
+abstract class BoxTypeAttribute<T> extends Attribute<T> {
+  const BoxTypeAttribute();
 }
 
-abstract class FlexMixAttribute<T> extends BoxMixAttribute<T> {
-  const FlexMixAttribute();
-}
-
-abstract class TextMixAttribute<T> extends Attribute<T> {
-  const TextMixAttribute();
+abstract class TextTypeAttribute<T> extends Attribute<T> {
+  const TextTypeAttribute();
 }

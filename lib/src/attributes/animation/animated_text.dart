@@ -18,7 +18,7 @@ class AnimatedTextUtility {
       );
 }
 
-class AnimatedTextAttribute extends TextMixAttribute with AnimatedMix {
+class AnimatedTextAttribute extends TextTypeAttribute with AnimatedMix {
   AnimatedTextAttribute({
     Duration duration = const Duration(milliseconds: 100),
     Curve curve = Curves.linear,

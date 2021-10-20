@@ -1,0 +1,42 @@
+{
+    "name": "@types/sax",
+    "version": "1.2.3",
+    "description": "TypeScript definitions for sax-js",
+    "homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/sax",
+    "license": "MIT",
+    "contributors": [
+        {
+            "name": "Vincent Siao (Asana, Inc.)",
+            "url": "https://github.com/vsiao",
+            "githubUsername": "vsiao"
+        },
+        {
+            "name": "Evert Pot",
+            "url": "https://github.com/evert",
+            "githubUsername": "evert"
+        },
+        {
+            "name": "Daniel Cassidy",
+            "url": "https://github.com/djcsdy",
+            "githubUsername": "djcsdy"
+        },
+        {
+            "name": "Fabian van der Veen",
+            "url": "https://github.com/fvanderveen",
+            "githubUsername": "fvanderveen"
+        }
+    ],
+    "main": "",
+    "types": "index.d.ts",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+        "directory": "types/sax"
+    },
+    "scripts": {},
+    "dependencies": {
+        "@types/node": "*"
+    },
+    "typesPublisherContentHash": "894751fd53a96d551bc70a3f7ce7a2c229fbbfc1ed56fbcc581a90e7f74fa11a",
+    "typeScriptVersion": "3.6"
+}

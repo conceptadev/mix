@@ -31,34 +31,6 @@ class TextMixerWidget extends MixerWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textStyle = TextStyle(
-      wordSpacing: mixer.wordSpacing?.value,
-      textBaseline: mixer.textBaseline?.value,
-      letterSpacing: mixer.letterSpacing?.value,
-      fontSize: mixer.fontSize?.value,
-      fontWeight: mixer.fontWeight?.value,
-      fontFamily: mixer.fontFamily?.value,
-      locale: mixer.locale?.value,
-      debugLabel: mixer.debugLabel?.value,
-      color: mixer.textColor?.value,
-      fontStyle: mixer.fontStyle?.value,
-      height: mixer.textHeight?.value,
-      backgroundColor: mixer.backgroundColor?.value,
-    ).copyWith(
-      wordSpacing: mixer.textStyle?.value.wordSpacing,
-      textBaseline: mixer.textStyle?.value.textBaseline,
-      letterSpacing: mixer.textStyle?.value.letterSpacing,
-      fontSize: mixer.textStyle?.value.fontSize,
-      fontWeight: mixer.textStyle?.value.fontWeight,
-      fontFamily: mixer.textStyle?.value.fontFamily,
-      locale: mixer.textStyle?.value.locale,
-      debugLabel: mixer.textStyle?.value.debugLabel,
-      color: mixer.textStyle?.value.color,
-      fontStyle: mixer.textStyle?.value.fontStyle,
-      height: mixer.textStyle?.value.height,
-      backgroundColor: mixer.textStyle?.value.backgroundColor,
-    );
-
     if (mixer.animatedText != null) {
       return AnimatedDefaultTextStyle(
         child: Text(
@@ -93,10 +65,7 @@ class TextMixerWidget extends MixerWidget {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(
-      DiagnosticsProperty<bool>('softWrap', mixer.softWrap?.value,
-          showName: false, defaultValue: null),
-    );
+
     properties.add(
       DiagnosticsProperty<EdgeInsetsGeometry>('padding', mixer.padding?.value,
           defaultValue: null),

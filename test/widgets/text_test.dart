@@ -1,25 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
-import 'package:mix/src/attributes/primitives/painting/background_color.dart';
-import 'package:mix/src/attributes/primitives/text/debug_label.dart';
-import 'package:mix/src/attributes/primitives/text/font_family.dart';
-import 'package:mix/src/attributes/primitives/text/font_size.dart';
-import 'package:mix/src/attributes/primitives/text/font_style.dart';
-import 'package:mix/src/attributes/primitives/text/font_weight.dart';
-import 'package:mix/src/attributes/primitives/text/letter_spacing.dart';
-import 'package:mix/src/attributes/primitives/text/locale.dart';
-import 'package:mix/src/attributes/primitives/text/max_lines.dart';
-import 'package:mix/src/attributes/primitives/text/soft_wrap.dart';
-import 'package:mix/src/attributes/primitives/text/text_align.dart';
-import 'package:mix/src/attributes/primitives/text/text_baseline.dart';
-import 'package:mix/src/attributes/primitives/text/text_color.dart';
-import 'package:mix/src/attributes/primitives/text/text_direction.dart';
-import 'package:mix/src/attributes/primitives/text/text_height.dart';
-import 'package:mix/src/attributes/primitives/text/text_overflow.dart';
-import 'package:mix/src/attributes/primitives/text/text_scale_factor.dart';
-import 'package:mix/src/attributes/primitives/text/text_width_basis.dart';
-import 'package:mix/src/attributes/primitives/text/word_spacing.dart';
+import 'package:mix/src/attributes/primitives/text/text_attributes.dart';
 import 'package:mix/src/widgets/typography/text.dart';
 
 import '../test_utils.dart';
@@ -41,16 +23,17 @@ void main() {
     });
 
     testWidgets('Adds Text properties on widget', (tester) async {
+      const _textUtil = TextUtility();
       await tester.pumpWidget(
         DirectionalTestWidget(
           child: Mix(
-            const TextOverflowAttribute(TextOverflow.ellipsis),
-            const SoftWrapAttribute(true),
-            const TextScaleFactorAttribute(2.2),
-            const TextWidthBasisAttribute(TextWidthBasis.longestLine),
-            const MaxLinesAttribute(3),
-            const TextAlignAttribute(TextAlign.justify),
-            const TextDirectionAttribute(TextDirection.rtl),
+            _textUtil.overflow(TextOverflow.ellipsis),
+            _textUtil.softWrap(true),
+            _textUtil.textScaleFactor(2.2),
+            _textUtil.textWidthBasis(TextWidthBasis.longestLine),
+            _textUtil.maxLines(3),
+            _textUtil.textAlign(TextAlign.justify),
+            _textUtil.textDirection(TextDirection.rtl),
           ).text(widgetText),
         ),
       );
@@ -67,21 +50,21 @@ void main() {
     });
 
     testWidgets('Adds Text Style on widget', (tester) async {
+      const _styleUtil = TextStyleUtility();
       await tester.pumpWidget(
         DirectionalTestWidget(
           child: Mix(
-            const FontSizeAttribute(20),
-            const WordSpacingAttribute(2),
-            const LetterSpacingAttribute(3),
-            const TextBaselineAttribute(TextBaseline.ideographic),
-            const FontFamilyAttribute('Roboto'),
-            const FontWeightAttribute(FontWeight.bold),
-            const TextColorAttribute(Colors.amber),
-            const FontStyleAttribute(FontStyle.italic),
-            const LocaleAttribute(Locale('es', 'US')),
-            const DebugLabelAttribute('debug_label'),
-            const TextHeightAttribute(10),
-            BackgroundColorAttribute(Colors.blue),
+            _styleUtil.fontSize(20),
+            _styleUtil.wordSpacing(2),
+            _styleUtil.letterSpacing(3),
+            _styleUtil.textBaseline(TextBaseline.ideographic),
+            _styleUtil.fontFamily('Roboto'),
+            _styleUtil.fontWeight(FontWeight.bold),
+            _styleUtil.color(Colors.amber),
+            _styleUtil.fontStyle(FontStyle.italic),
+            _styleUtil.locale(Locale('es', 'US')),
+            _styleUtil.height(10),
+            _styleUtil.backgroundColor(Colors.blue),
           ).text(widgetText),
         ),
       );

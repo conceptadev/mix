@@ -5,7 +5,7 @@ import '../helpers/extensions.dart';
 typedef TextDirective = AttributeDirective<String>;
 
 /// Attribute that is able to modify text
-class TextDirectiveAttribute extends TextMixAttribute<TextDirective> {
+class TextDirectiveAttribute extends TextTypeAttribute<TextDirective> {
   const TextDirectiveAttribute(TextDirective directive)
       : _directive = directive;
 

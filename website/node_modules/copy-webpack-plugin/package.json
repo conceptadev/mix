@@ -1,0 +1,84 @@
+{
+  "name": "copy-webpack-plugin",
+  "version": "9.0.1",
+  "description": "Copy files && directories with webpack",
+  "license": "MIT",
+  "repository": "webpack-contrib/copy-webpack-plugin",
+  "author": "Len Boyette",
+  "homepage": "https://github.com/webpack-contrib/copy-webpack-plugin",
+  "bugs": "https://github.com/webpack-contrib/copy-webpack-plugin/issues",
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/webpack"
+  },
+  "main": "dist/cjs.js",
+  "engines": {
+    "node": ">= 12.13.0"
+  },
+  "scripts": {
+    "start": "npm run build -- -w",
+    "clean": "del-cli dist",
+    "prebuild": "npm run clean",
+    "build": "cross-env NODE_ENV=production babel src -d dist --copy-files",
+    "commitlint": "commitlint --from=master",
+    "security": "npm audit --production",
+    "lint:prettier": "prettier --list-different .",
+    "lint:js": "eslint --cache .",
+    "lint": "npm-run-all -l -p \"lint:**\"",
+    "test:only": "cross-env NODE_ENV=test jest",
+    "test:watch": "npm run test:only -- --watch",
+    "test:coverage": "npm run test:only -- --collectCoverageFrom=\"src/**/*.js\" --coverage",
+    "pretest": "npm run lint",
+    "test": "npm run test:coverage",
+    "prepare": "husky install && npm run build",
+    "release": "standard-version"
+  },
+  "files": [
+    "dist"
+  ],
+  "peerDependencies": {
+    "webpack": "^5.1.0"
+  },
+  "dependencies": {
+    "fast-glob": "^3.2.5",
+    "glob-parent": "^6.0.0",
+    "globby": "^11.0.3",
+    "normalize-path": "^3.0.0",
+    "p-limit": "^3.1.0",
+    "schema-utils": "^3.0.0",
+    "serialize-javascript": "^6.0.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.14.5",
+    "@babel/core": "^7.14.6",
+    "@babel/preset-env": "^7.14.7",
+    "@commitlint/cli": "^12.1.4",
+    "@commitlint/config-conventional": "^12.1.4",
+    "@webpack-contrib/eslint-config-webpack": "^3.0.0",
+    "babel-jest": "^27.0.5",
+    "cross-env": "^7.0.3",
+    "del": "^6.0.0",
+    "del-cli": "^4.0.0",
+    "eslint": "^7.29.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.23.4",
+    "file-loader": "^6.2.0",
+    "husky": "^6.0.0",
+    "is-gzip": "^2.0.0",
+    "jest": "^27.0.5",
+    "lint-staged": "^11.0.0",
+    "memfs": "^3.2.2",
+    "mkdirp": "^1.0.4",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.3.1",
+    "standard-version": "^9.3.0",
+    "webpack": "^5.40.0"
+  },
+  "keywords": [
+    "webpack",
+    "plugin",
+    "transfer",
+    "move",
+    "copy"
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "name": "core-js-compat",
+  "description": "core-js compat",
+  "version": "3.17.3",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zloirock/core-js.git",
+    "directory": "packages/core-js-compat"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "browserslist": "^4.17.0",
+    "semver": "7.0.0"
+  },
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/core-js"
+  },
+  "license": "MIT",
+  "gitHead": "c65f52bdd73b4ff6eee0bd3ec39ddad901dbfa49"
+}
