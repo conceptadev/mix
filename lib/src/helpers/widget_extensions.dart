@@ -30,34 +30,3 @@ extension TextExtension on Text {
         textWidthBasis: textWidthBasis ?? this.textWidthBasis,
       );
 }
-
-extension ContainerExtension on Container {
-  Container copyWith({
-    AlignmentGeometry? alignment,
-    EdgeInsetsGeometry? padding,
-    Color? color,
-    Decoration? decoration,
-    Decoration? foregroundDecoration,
-    BoxConstraints? constraints,
-    EdgeInsetsGeometry? margin,
-    Matrix4? transform,
-    AlignmentGeometry? transformAlignment,
-    Clip clipBehavior = Clip.none,
-    double? width,
-    double? height,
-  }) =>
-      Container(
-        alignment: alignment,
-        padding: padding,
-        color: color,
-        decoration: decoration,
-        foregroundDecoration: foregroundDecoration,
-        constraints: constraints,
-        margin: margin,
-        transform: transform,
-        transformAlignment: transformAlignment,
-        clipBehavior: clipBehavior,
-        width: width,
-        height: height,
-      );
-}

@@ -2,7 +2,6 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
-import 'package:mix/src/helpers/widget_extensions.dart';
 
 import '../../base_attribute.dart';
 
@@ -234,24 +233,6 @@ class TextAttribute extends Attribute<bool> {
       maxLines: attribute.maxLines ?? maxLines,
       semanticsLabel: attribute.semanticsLabel ?? semanticsLabel,
       textWidthBasis: attribute.textWidthBasis ?? textWidthBasis,
-    );
-  }
-
-  @override
-  Text decorate(Text widget) {
-    return widget.copyWith(
-      data: widget.data,
-      style: style,
-      strutStyle: strutStyle,
-      textAlign: textAlign,
-      textDirection: textDirection,
-      locale: locale,
-      softWrap: softWrap,
-      overflow: overflow,
-      textScaleFactor: textScaleFactor,
-      maxLines: maxLines,
-      semanticsLabel: semanticsLabel,
-      textWidthBasis: textWidthBasis,
     );
   }
 }

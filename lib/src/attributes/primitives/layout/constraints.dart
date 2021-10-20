@@ -4,7 +4,8 @@ import '../../animation/animated_mix.dart';
 import '../../base/size.dart';
 import '../../base_attribute.dart';
 
-class ConstraintsAttribute extends Attribute<BoxConstraints> with AnimatedMix<BoxConstraints> {
+class ConstraintsAttribute extends Attribute<BoxConstraints>
+    with AnimatedMix<BoxConstraints> {
   ConstraintsAttribute({
     this.width,
     this.minWidth,
@@ -68,19 +69,3 @@ class ConstraintsAttribute extends Attribute<BoxConstraints> with AnimatedMix<Bo
     }
   }
 }
-
-// /// Merges Border radius
-// ConstraintsAttribute mergeConstraintsAttribute(
-//   ConstraintsAttribute? attribute,
-//   ConstraintsAttribute other,
-// ) {
-//   attribute ??= ConstraintsAttribute();
-//   return attribute.copyWith(
-//     width: other.width,
-//     minWidth: other.minWidth,
-//     maxWidth: other.maxWidth,
-//     height: other.height,
-//     minHeight: other.minHeight,
-//     maxHeight: other.maxHeight,
-//   );
-// }

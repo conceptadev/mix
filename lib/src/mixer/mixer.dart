@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mix/src/attributes/layout/gap.dart';
+import 'package:mix/src/attributes/primitives/box/box_attributes.dart';
 import 'package:mix/src/attributes/primitives/gestures/disabled.dart';
 import 'package:mix/src/attributes/primitives/gestures/focused.dart';
 import 'package:mix/src/attributes/primitives/gestures/hovering.dart';
@@ -35,28 +36,10 @@ class Mixer {
   Mixer._(this.attributes);
   final List<Attribute> attributes;
 
-  MarginAttribute? margin;
-  PaddingAttribute? padding;
-  AlignmentAttribute? alignment;
-  ConstraintsAttribute? constraints;
-  HiddenAttribute? hidden;
-  BackgroundColorAttribute? backgroundColor;
-  BorderAttribute? border;
-  BorderRadiusAttribute? borderRadius;
-  BoxShadowAttribute? boxShadow;
-  BoxDecorationAttribute? decoration;
-  HeightAttribute? height;
-  MaxHeightAttribute? maxHeight;
-  MinHeightAttribute? minHeight;
-  WidthAttribute? width;
-  MaxWidthAttribute? maxWidth;
-  MinWidthAttribute? minWidth;
-  AxisAttribute? axis;
-  RotateAttribute? rotate;
-  OpacityAttribute? opacity;
-  FlexFitAttribute? flexFit;
-  BoxFitAttribute? boxFit;
-  AspectRatioAttribute? aspectRatio;
+  BoxAttribute? boxAttribute;
+  List<DynamicAttribute>? dynamicAttributes;
+  List<TextDirectiveAttribute>? textDirectiveAttributes;
+  TextAttribute? textAttribute;
 
   MainAxisSizeAttribute? mainAxisSize;
   CrossAxisAlignmentAttribute? crossAxisAlignment;
@@ -64,9 +47,6 @@ class Mixer {
   FlexAttribute? flex;
   GapSizeAttribute? gap;
 
-  List<DynamicAttribute>? dynamicAttributes;
-  List<TextDirectiveAttribute>? textDirectiveAttributes;
-  TextAttribute? textAttribute;
   DisabledAttribute? disabled;
   FocusedAttribute? focused;
   HoveringAttribute? hovering;
@@ -163,6 +143,15 @@ class Mixer {
           mixer.textAttribute = attribute;
         } else {
           mixer.textAttribute = textAttribute!.merge(attribute);
+        }
+      }
+
+      if (attribute is BoxAttribute) {
+        final boxAttribute = mixer.boxAttribute;
+        if (boxAttribute != null) {
+          mixer.boxAttribute = attribute;
+        } else {
+          mixer.boxAttribute = boxAttribute!.merge(attribute);
         }
       }
 

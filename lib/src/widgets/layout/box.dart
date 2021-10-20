@@ -1,12 +1,34 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:mix/mix.dart';
 
-class Box extends StatelessWidget {
+import '../../mixer/mix_factory.dart';
+import '../../mixer/mixer.dart';
+import '../mix_widget.dart';
+
+class Box extends MixWidget {
+  const Box(
+    Mix mix, {
+    required this.child,
+    Key? key,
+  }) : super(mix, key: key);
+
+  final Widget? child;
+  @override
+  Widget build(BuildContext context) {
+    final mixer = Mixer.build(context, mix);
+
+    return BoxWidget(child: child);
+  }
+}
+
+class BoxWidget extends StatelessWidget {
   final bool animated;
   final EdgeInsets? margin;
   final EdgeInsets? padding;
   final AlignmentGeometry? alignment;
-  final BoxConstraints? constraints;
+
   final bool? hidden;
   final Color? backgroundColor;
   final Border? border;
@@ -28,11 +50,10 @@ class Box extends StatelessWidget {
   // Child Widget
   final Widget? child;
 
-  const Box({
+  const BoxWidget({
     this.margin,
     this.padding,
     this.alignment,
-    this.constraints,
     this.hidden,
     this.backgroundColor,
     this.border,
@@ -52,7 +73,8 @@ class Box extends StatelessWidget {
     this.animationCurve = Curves.linear,
     this.animated = false,
     this.child,
-  });
+    Key? key,
+  }) : super(key: key);
 
   EdgeInsetsGeometry? get _paddingIncludingDecoration {
     if (decoration == null || decoration!.padding == null) {
@@ -63,9 +85,44 @@ class Box extends StatelessWidget {
     return padding!.add(decorationPadding!);
   }
 
+  BoxConstraints? get _constraints {
+    BoxConstraints? constraints;
+
+    if (minWidth != null ||
+        maxWidth != null ||
+        minHeight != null ||
+        maxHeight != null) {
+      constraints = BoxConstraints(
+        minHeight: minHeight ?? 0.0,
+        maxHeight: maxHeight ?? double.infinity,
+        minWidth: minWidth ?? 0.0,
+        maxWidth: maxWidth ?? double.infinity,
+      );
+    }
+
+    // If there are min or max constraints
+    if (height != null || width != null) {
+      if (constraints != null) {
+        constraints = constraints.tighten(
+          width: width,
+          height: height,
+        );
+      } else {
+        constraints = BoxConstraints.tightFor(
+          width: width,
+          height: height,
+        );
+      }
+    }
+
+    return constraints;
+  }
+
   @override
   Widget build(BuildContext context) {
     var current = child;
+
+    final constraints = _constraints;
 
     if (hidden != null) {
       if (hidden == true) {
@@ -73,7 +130,7 @@ class Box extends StatelessWidget {
       }
     }
 
-    if (child == null && (constraints == null || !constraints!.isTight)) {
+    if (child == null && (constraints == null || !constraints.isTight)) {
       current = LimitedBox(
         maxWidth: 0.0,
         maxHeight: 0.0,
@@ -198,7 +255,7 @@ class Box extends StatelessWidget {
         current = TweenAnimationBuilder<BoxConstraints>(
           duration: animationDuration,
           curve: animationCurve,
-          tween: BoxConstraintsTween(end: constraints!),
+          tween: BoxConstraintsTween(end: constraints),
           builder: (context, value, child) {
             return ConstrainedBox(constraints: value, child: child);
           },
@@ -206,19 +263,19 @@ class Box extends StatelessWidget {
         );
       } else {
         current = ConstrainedBox(
-          constraints: constraints!,
+          constraints: constraints,
           child: current,
         );
       }
     }
-
-    if (maxHeight != null || maxWidth != null) {
-      current = LimitedBox(
-        maxHeight: maxHeight ?? double.infinity,
-        maxWidth: maxWidth ?? double.infinity,
-        child: current,
-      );
-    }
+// TODO: is this still needed?
+    // if (maxHeight != null || maxWidth != null) {
+    //   current = LimitedBox(
+    //     maxHeight: maxHeight ?? double.infinity,
+    //     maxWidth: maxWidth ?? double.infinity,
+    //     child: current,
+    //   );
+    // }
 
     if (rotate != null) {
       current = RotatedBox(

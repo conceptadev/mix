@@ -122,3 +122,57 @@ extension StrutStyleExtension on StrutStyle {
     );
   }
 }
+
+extension EdgeInsetExtension on EdgeInsets {
+  EdgeInsets merge(EdgeInsets? edgeInsets) {
+    return EdgeInsets.only(
+      top: edgeInsets?.top ?? this.top,
+      bottom: edgeInsets?.bottom ?? this.bottom,
+      left: edgeInsets?.left ?? this.left,
+      right: edgeInsets?.right ?? this.right,
+    );
+  }
+}
+
+extension BorderExtension on Border {
+  Border merge(Border? border) {
+    return Border(
+      top: this.top.merge(border?.top),
+      bottom: this.bottom.merge(border?.bottom),
+      left: this.left.merge(border?.left),
+      right: this.right.merge(border?.right),
+    );
+  }
+}
+
+extension BorderSideExtension on BorderSide {
+  BorderSide merge(BorderSide? borderSide) {
+    return BorderSide(
+      color: borderSide?.color ?? this.color,
+      width: borderSide?.width ?? this.width,
+      style: borderSide?.style ?? this.style,
+    );
+  }
+}
+
+extension BorderRadiusExtension on BorderRadius {
+  BorderRadius merge(BorderRadius? borderRadius) {
+    return BorderRadius.only(
+      topLeft: borderRadius?.topLeft ?? this.topLeft,
+      topRight: borderRadius?.topRight ?? this.topRight,
+      bottomLeft: borderRadius?.bottomLeft ?? this.bottomLeft,
+      bottomRight: borderRadius?.bottomRight ?? this.bottomRight,
+    );
+  }
+}
+
+extension BoxShadowExtension on BoxShadow {
+  BoxShadow merge(BoxShadow? boxShadow) {
+    return BoxShadow(
+      color: boxShadow?.color ?? this.color,
+      offset: boxShadow?.offset ?? this.offset,
+      blurRadius: boxShadow?.blurRadius ?? this.blurRadius,
+      spreadRadius: boxShadow?.spreadRadius ?? this.spreadRadius,
+    );
+  }
+}
