@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../../../mix.dart';
 import '../../mixer/mix_factory.dart';
 import '../../mixer/mixer.dart';
-import '../layout/box.dart';
 import '../mix_widget.dart';
 
 class IconMix extends MixWidget {
@@ -44,7 +43,7 @@ class IconMixerWidget extends MixerWidget {
     return BoxMixerWidget(
       mixer,
       child: TweenAnimationBuilder<double?>(
-        duration: mixer.iconSize?.animationDuration ?? Duration.zero,
+        duration: mixer.boxAttribute.animationDuration ?? Duration.zero,
         curve: mixer.iconSize?.animationCurve ?? Curves.linear,
         tween: Tween<double?>(
           end: mixer.iconSize?.value ?? IconTheme.of(context).size ?? 24.0,

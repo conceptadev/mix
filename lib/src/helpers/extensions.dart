@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mix/mix.dart';
 import 'package:mix/src/helpers/utils.dart';
 
 /// Possible screen sizes
@@ -23,7 +22,6 @@ extension ContextExtensions on BuildContext {
   MediaQueryData get mq => MediaQuery.of(this);
 
   /// Theme context helpers
-
   ThemeData get theme => Theme.of(this);
 
   /// Theme color scheme
@@ -54,10 +52,6 @@ extension ContextExtensions on BuildContext {
                 ? ScreenSize.sm
                 : ScreenSize.xs;
   }
-}
-
-extension TextStyleExtension on TextStyle {
-  Mix get mix => Mix(textStyle(this));
 }
 
 extension ColorExtensions on Color {
@@ -107,18 +101,17 @@ extension StringExtensions on String {
 extension StrutStyleExtension on StrutStyle {
   merge(StrutStyle? strutStyle) {
     return StrutStyle(
-      fontFamily: strutStyle?.fontFamily ?? this.fontFamily,
-      fontFamilyFallback:
-          strutStyle?.fontFamilyFallback ?? this.fontFamilyFallback,
-      fontSize: strutStyle?.fontSize ?? this.fontSize,
-      height: strutStyle?.height ?? this.height,
+      fontFamily: strutStyle?.fontFamily ?? fontFamily,
+      fontFamilyFallback: strutStyle?.fontFamilyFallback ?? fontFamilyFallback,
+      fontSize: strutStyle?.fontSize ?? fontSize,
+      height: strutStyle?.height ?? height,
       leadingDistribution:
-          strutStyle?.leadingDistribution ?? this.leadingDistribution,
-      leading: strutStyle?.leading ?? this.leading,
-      fontWeight: strutStyle?.fontWeight ?? this.fontWeight,
-      fontStyle: strutStyle?.fontStyle ?? this.fontStyle,
-      forceStrutHeight: strutStyle?.forceStrutHeight ?? this.forceStrutHeight,
-      debugLabel: strutStyle?.debugLabel ?? this.debugLabel,
+          strutStyle?.leadingDistribution ?? leadingDistribution,
+      leading: strutStyle?.leading ?? leading,
+      fontWeight: strutStyle?.fontWeight ?? fontWeight,
+      fontStyle: strutStyle?.fontStyle ?? fontStyle,
+      forceStrutHeight: strutStyle?.forceStrutHeight ?? forceStrutHeight,
+      debugLabel: strutStyle?.debugLabel ?? debugLabel,
     );
   }
 }
@@ -126,10 +119,10 @@ extension StrutStyleExtension on StrutStyle {
 extension EdgeInsetExtension on EdgeInsets {
   EdgeInsets merge(EdgeInsets? edgeInsets) {
     return EdgeInsets.only(
-      top: edgeInsets?.top ?? this.top,
-      bottom: edgeInsets?.bottom ?? this.bottom,
-      left: edgeInsets?.left ?? this.left,
-      right: edgeInsets?.right ?? this.right,
+      top: edgeInsets?.top ?? top,
+      bottom: edgeInsets?.bottom ?? bottom,
+      left: edgeInsets?.left ?? left,
+      right: edgeInsets?.right ?? right,
     );
   }
 }
@@ -162,17 +155,6 @@ extension BorderRadiusExtension on BorderRadius {
       topRight: borderRadius?.topRight ?? this.topRight,
       bottomLeft: borderRadius?.bottomLeft ?? this.bottomLeft,
       bottomRight: borderRadius?.bottomRight ?? this.bottomRight,
-    );
-  }
-}
-
-extension BoxShadowExtension on BoxShadow {
-  BoxShadow merge(BoxShadow? boxShadow) {
-    return BoxShadow(
-      color: boxShadow?.color ?? this.color,
-      offset: boxShadow?.offset ?? this.offset,
-      blurRadius: boxShadow?.blurRadius ?? this.blurRadius,
-      spreadRadius: boxShadow?.spreadRadius ?? this.spreadRadius,
     );
   }
 }

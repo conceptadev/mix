@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:mix/src/widgets/layout/box.dart';
 
 import '../../mixer/mix_factory.dart';
 import '../../mixer/mixer.dart';
-import '../layout/box.dart';
 import '../mix_widget.dart';
 
 class Pressable extends MixWidget {
@@ -137,28 +137,13 @@ class _PressableMixerWidgetState extends State<PressableMixerWidget> {
             child: () {
               final mixer = Mixer.build(context, widget.mix);
 
-              final disabled = mixer.disabled;
-              final focused = mixer.focused;
-              final hovering = mixer.hovering;
-              final pressing = mixer.pressing;
-
-              Mix? gestureMix = () {
-                if (!enabled && disabled != null) return disabled.mix;
-                if (_pressing && pressing != null) return pressing.mix;
-                if (_hovering && hovering != null) return hovering.mix;
-                if (_shouldShowFocus && focused != null) return focused.mix;
-              }();
-
-              final mixer1 =
-                  Mixer.build(context, Mix.combine(widget.mix, gestureMix));
-
               return PressableNotifier(
                 disabled: !enabled,
                 focused: _shouldShowFocus,
                 hovering: _hovering,
                 pressing: _pressing,
-                child: BoxMixerWidget(
-                  mixer1,
+                child: BoxWidget(
+                  mixer.boxAttribute,
                   child: widget.child,
                 ),
               );

@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
+import 'package:mix/src/attributes/primitives/box/box_attributes_props.dart';
 
 import '../../base_attribute.dart';
 
@@ -14,7 +15,7 @@ class BoxAttribute extends Attribute<bool> {
   final Color? backgroundColor;
   final Border? border;
   final BorderRadius? borderRadius;
-  final BoxShadow? boxShadow;
+  final BoxShadowProperties? boxShadow;
   final BoxDecoration? decoration;
   final double? height;
   final double? maxHeight;
@@ -25,14 +26,13 @@ class BoxAttribute extends Attribute<bool> {
   final int? rotate;
   final double? opacity;
   final double? aspectRatio;
-  // Container properties
   //Animation
-  final Duration animationDuration;
-  final Curve animationCurve;
+  final Duration? animationDuration;
+  final Curve? animationCurve;
 
   const BoxAttribute({
-    this.margin = EdgeInsets.zero,
-    this.padding = EdgeInsets.zero,
+    this.margin,
+    this.padding,
     this.alignment,
     this.hidden,
     this.backgroundColor,
@@ -49,13 +49,11 @@ class BoxAttribute extends Attribute<bool> {
     this.rotate,
     this.opacity,
     this.aspectRatio,
-    this.animationDuration = const Duration(milliseconds: 100),
+    this.animationDuration = const Duration(milliseconds: 0),
     this.animationCurve = Curves.linear,
     this.animated,
     Key? key,
   });
-  @override
-  bool get value => true;
 
   BoxAttribute merge(BoxAttribute attribute) {
     return BoxAttribute(

@@ -1,221 +1,183 @@
+import 'package:flutter/material.dart';
 import 'package:mix/src/attributes/apply_mix.dart';
+import 'package:mix/src/attributes/base_attribute.dart';
 import 'package:mix/src/attributes/dynamic/dark_mode.dart';
 import 'package:mix/src/attributes/dynamic/media_query.dart';
-import 'package:mix/src/attributes/layout/gap.dart';
-import 'package:mix/src/attributes/primitives/gestures/disabled.dart';
-import 'package:mix/src/attributes/primitives/gestures/focused.dart';
-import 'package:mix/src/attributes/primitives/gestures/hovering.dart';
-import 'package:mix/src/attributes/primitives/gestures/pressing.dart';
+import 'package:mix/src/attributes/dynamic/pressable_attributes.dart';
+import 'package:mix/src/attributes/primitives/box/box_attributes.dart';
+import 'package:mix/src/attributes/primitives/box/box_attributes_props.dart';
 import 'package:mix/src/attributes/primitives/icon/icon_color.dart';
-import 'package:mix/src/attributes/primitives/layout/aspect_ratio.dart';
-import 'package:mix/src/attributes/primitives/painting/background_color.dart';
 import 'package:mix/src/attributes/primitives/text/text_attributes.dart';
 import 'package:mix/src/directives/text_directive.dart';
 
-import 'animation/animated_text.dart';
-import 'base/size.dart';
-import 'base/space.dart';
-import 'dynamic/hidden.dart';
 import 'primitives/icon/icon_size.dart';
-import 'primitives/layout/flex.dart';
-import 'primitives/painting/alignment.dart';
-import 'primitives/painting/border_radius.dart';
-import 'primitives/painting/border_side.dart';
-import 'primitives/painting/box_fit.dart';
-import 'primitives/painting/opacity.dart';
-import 'primitives/painting/rotate.dart';
-import 'primitives/painting/shadow.dart';
-import 'primitives/rendering/flex/cross_axis_alignment.dart';
-import 'primitives/rendering/flex/flex_fit.dart';
-import 'primitives/rendering/flex/main_axis_alignment.dart';
-import 'primitives/rendering/flex/main_axis_size.dart';
 
-const marginUtility = SpaceUtility<MarginAttribute>();
+_marginUtil(EdgeInsets insets) => BoxAttribute(margin: insets);
 
 /// Margin all
-final m = marginUtility.all;
+m(double value) => _marginUtil(EdgeInsets.all(value));
 
 /// Margin top
-
-final mt = marginUtility.top;
+mt(double value) => _marginUtil(EdgeInsets.only(top: value));
 
 /// Margin bottom
-final mb = marginUtility.bottom;
+mb(double value) => _marginUtil(EdgeInsets.only(bottom: value));
 
 /// Margin right
-final mr = marginUtility.right;
+mr(double value) => _marginUtil(EdgeInsets.only(right: value));
 
 /// Margin left
-final ml = marginUtility.left;
-
-/// Margin horizontal
-final mx = marginUtility.horizontal;
+ml(double value) => _marginUtil(EdgeInsets.only(left: value));
 
 /// Margin verttical
-final my = marginUtility.vertical;
+my(double value) => _marginUtil(EdgeInsets.symmetric(vertical: value));
 
-const paddingUtility = SpaceUtility<PaddingAttribute>();
+/// Margin horizontal
+mx(double value) => _marginUtil(EdgeInsets.symmetric(horizontal: value));
 
-/// Padding all
-final p = paddingUtility.all;
+_paddingUtil(EdgeInsets insets) => BoxAttribute(padding: insets);
 
-/// Padding top
-final pt = paddingUtility.top;
+/// Margin all
+p(double value) => _paddingUtil(EdgeInsets.all(value));
 
-/// Padding bottom
-final pb = paddingUtility.bottom;
+/// Margin top
+pt(double value) => _paddingUtil(EdgeInsets.only(top: value));
 
-/// Padding right
-final pr = paddingUtility.right;
+/// Margin bottom
+pb(double value) => _paddingUtil(EdgeInsets.only(bottom: value));
 
-/// Padding left
-final pl = paddingUtility.left;
+/// Margin right
+pr(double value) => _paddingUtil(EdgeInsets.only(right: value));
 
-/// Padding horizontal
-final px = paddingUtility.horizontal;
+/// Margin left
+pl(double value) => _paddingUtil(EdgeInsets.only(left: value));
 
-/// Padding verttical
-final py = paddingUtility.vertical;
+/// Margin verttical
+py(double value) => _paddingUtil(EdgeInsets.symmetric(vertical: value));
+
+/// Margin horizontal
+px(double value) => _paddingUtil(EdgeInsets.symmetric(horizontal: value));
 
 /// Rotate widget
-const rotate = RotateUtility();
+rotate(int value) => BoxAttribute(rotate: value);
+
+/// Rotate 90
+rotate90() => const BoxAttribute(rotate: 1);
+
+/// Rotate 180
+rotate180() => const BoxAttribute(rotate: 2);
+
+/// Rotate 270
+rotate270() => const BoxAttribute(rotate: 3);
+
+/// Rotate 360
+rotate360() => const BoxAttribute(rotate: 4);
 
 /// Opacity
-const opacity = OpacityUtility();
-
-/// Flex
-const flex = FlexUtility();
-
-/// Flex fit
-const flexFit = FlexFitUtility();
-
-/// Flexible
-final flexible = flexFit.loose;
-
-/// Expand
-final expanded = flexFit.tight;
-
-/// Flex Align
-const mainAxis = MainAxisAlignmentUtility();
-const crossAxis = CrossAxisAligmentUtility();
-
-const axisSize = MainAxisSizeUtility();
-
-/// Axis
-// final axis = AxisUtility();
-
-/// Fitting
-const fit = BoxFitUtility();
+opacity(double value) => BoxAttribute(opacity: value);
 
 /// Aspect Ratio
-const aspectRatio = AspectRatioUtility();
+aspectRatio(double value) => BoxAttribute(aspectRatio: value);
+
+_radii(double? value) => Radius.circular(value ?? 0.0);
+_borderRadius(BorderRadius radius) => BoxAttribute(borderRadius: radius);
+_borderRadiusOnly({
+  double? topLeft,
+  double? topRight,
+  double? bottomLeft,
+  double? bottomRight,
+}) =>
+    _borderRadius(BorderRadius.only(
+      topLeft: _radii(topLeft),
+      topRight: _radii(topRight),
+      bottomLeft: _radii(bottomLeft),
+      bottomRight: _radii(bottomRight),
+    ));
 
 /// Border radius
-const borderRadius = BorderRadiusUtility();
+rounded(double value) => _borderRadius(BorderRadius.all(_radii(value)));
+
+roundedTL(double value) {
+  return _borderRadiusOnly(topLeft: value);
+}
+
+roundedTR(double value) {
+  return _borderRadiusOnly(topRight: value);
+}
+
+roundedBL(double value) {
+  return _borderRadiusOnly(bottomLeft: value);
+}
+
+roundedBR(double value) {
+  return _borderRadiusOnly(bottomRight: value);
+}
 
 /// Background color attribute
-const backgroundColor = BackgroundColorUtility();
-const bgColor = backgroundColor;
-
-/// Animated text attribute
-const animatedText = AnimatedTextUtility();
-
-/// Text color attribute
-const textColor = TextAttribute();
-
-/// Aligment
-const align = AlignmentUtility();
+bgColor(Color color) => BoxAttribute(backgroundColor: color);
 
 /// Height
-const h = SizeUtility<HeightAttribute>();
+h(double height) => BoxAttribute(height: height);
 
 /// Width
-const w = SizeUtility<WidthAttribute>();
+w(double width) => BoxAttribute(width: width);
 
 /// Max height attribute
-const maxH = SizeUtility<MaxHeightAttribute>();
-
-/// Min height attribute
-const minH = SizeUtility<MinHeightAttribute>();
+maxH(double maxHeight) => BoxAttribute(maxHeight: maxHeight);
 
 /// Max width attribute
-const maxW = SizeUtility<MaxWidthAttribute>();
+maxW(double maxWidth) => BoxAttribute(maxWidth: maxWidth);
+
+/// Min height attribute
+minH(double minHeight) => BoxAttribute(minHeight: minHeight);
 
 /// Min width attribute
-const minW = SizeUtility<MinWidthAttribute>();
+minW(double minWidth) => BoxAttribute(minWidth: minWidth);
 
 /// Hide attribute
-const hide = HideUtility();
-
-final _borderAllUtility = BorderSideUtility.all();
+hide(bool condition) => BoxAttribute(hidden: condition);
 
 /// Border color for all borde sides
-final borderColor = _borderAllUtility.color;
+borderColor(Color color) => BoxAttribute(border: Border.all(color: color));
 
 /// Border width for all border sides
-final borderWidth = _borderAllUtility.width;
+borderWidth(double width) => BoxAttribute(border: Border.all(width: width));
 
 /// Border style for all border sides
-final borderStyle = _borderAllUtility.style;
+borderStyle(BorderStyle style) {
+  return BoxAttribute(border: Border.all(style: style));
+}
 
-final _borderLeftUtility = BorderSideUtility.left();
-
-/// Border color for left borde side
-final borderLeftColor = _borderLeftUtility.color;
-
-/// Border width for left border side
-final borderLeftWidth = _borderLeftUtility.width;
-
-/// Border style for left border side
-final borderLeftStyle = _borderLeftUtility.style;
-
-final _borderTopUtility = BorderSideUtility.top();
-
-/// Border color for top borde side
-final borderTopColor = _borderTopUtility.color;
-
-/// Border width for top border side
-final borderTopWidth = _borderTopUtility.width;
-
-/// Border style for top border side
-final borderTopStyle = _borderTopUtility.style;
-
-final _borderRightUtility = BorderSideUtility.right();
-
-/// Border color for right borde side
-final borderRightColor = _borderRightUtility.color;
-
-/// Border width for right border side
-final borderRightWidth = _borderRightUtility.width;
-
-/// Border style for right border side
-final borderRightStyle = _borderRightUtility.style;
-
-final _borderBottomUtility = BorderSideUtility.bottom();
-
-/// Border color for bottom borde side
-final borderBottomColor = _borderBottomUtility.color;
-
-/// Border width for bottom border side
-final borderBottomWidth = _borderBottomUtility.width;
-
-/// Border style for bottom border side
-final borderBottomStyle = _borderBottomUtility.style;
+_shadowUtil({
+  Color? color,
+  Offset? offset,
+  double? blurRadius,
+  double? spreadRadius,
+}) {
+  return BoxAttribute(
+    boxShadow: BoxShadowProperties(
+      color: color,
+      offset: offset,
+      blurRadius: blurRadius,
+      spreadRadius: spreadRadius,
+    ),
+  );
+}
 
 /// Box shadow utility
-const shadow = BoxShadowUtility();
-
-/// Shadow offset
-final shadowOffset = shadow.offset;
-
-/// Shadow spread radius
-final shadowSpread = shadow.spreadRadius;
-
-/// Shadow blur radius
-final shadowBlur = shadow.blurRadius;
-
-/// Shadow color
-final shadowColor = shadow.color;
+shadow({
+  Color? color,
+  Offset? offset,
+  double? blurRadius,
+  double? spreadRadius,
+}) {
+  return _shadowUtil(
+    color: color,
+    offset: offset,
+    blurRadius: blurRadius,
+    spreadRadius: spreadRadius,
+  );
+}
 
 const _textUtil = TextUtility();
 
@@ -240,10 +202,10 @@ final debugLabel = _textStyleUtil.debugLabel;
 final textHeight = _textStyleUtil.height;
 final wordSpacing = _textStyleUtil.wordSpacing;
 final fontStyle = _textStyleUtil.fontStyle;
-final fontFamily = _textStyleUtil.fontFamily;
+
 final fontSize = _textStyleUtil.fontSize;
 final inherit = _textStyleUtil.inherit;
-final color = _textStyleUtil.color;
+
 final textBgColor = _textStyleUtil.backgroundColor;
 
 final textForeground = _textStyleUtil.foreground;
@@ -261,42 +223,7 @@ const iconSize = IconSizeUtility();
 
 /// Icon color attribute
 const iconColor = IconColorUtility();
-
-/// Rounded utility
-const _br = BorderRadiusUtility();
-final rounded = _br.fromParams;
-final roundedTL = _br.topLeft;
-final roundedTR = _br.topRight;
-final roundedBL = _br.bottomLeft;
-final roundedBR = _br.bottomRight;
-
-/// Aligment
-const _align = AlignmentUtility();
-
-/// Alignment center
-final center = _align.center;
-
-/// Alignment bottomCenter
-final bottomCenter = _align.bottomCenter;
-
-/// Alignment bottomLeft
-final bottomLeft = _align.bottomLeft;
-
-/// Alignment bottomRight
-final bottomRight = _align.bottomRight;
-
-/// Alignment topCenter
-final topCenter = _align.topCenter;
-
-/// Alignment topLeft
-final topLeft = _align.topLeft;
-
-/// Alignment topRight
-final topRight = _align.topRight;
-
-/// Gap
-const gap = GapSizeUtility();
-
+// TODO: DO gap widget
 /// Dynamic Attributes
 const dark = DarkModeUtility();
 
@@ -315,7 +242,7 @@ const apply = ApplyMixUtility();
 
 // Gestures
 
-const disabled = DisabledUtility();
-const focused = FocusedUtility();
-const hovering = HoveringUtility();
-const pressing = PressingUtility();
+disabled(Attribute attribute) => DisabledAttribute(attribute);
+focused(Attribute attribute) => FocusedAttribute(attribute);
+hovering(Attribute attribute) => HoveringAttribute(attribute);
+pressing(Attribute attribute) => PressingAttribute(attribute);

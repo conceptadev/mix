@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:mix/mix.dart';
+import 'package:mix/src/attributes/primitives/box/box_attributes.dart';
 
 import '../../mixer/mix_factory.dart';
 import '../../mixer/mixer.dart';
@@ -19,98 +20,60 @@ class Box extends MixWidget {
   Widget build(BuildContext context) {
     final mixer = Mixer.build(context, mix);
 
-    return BoxWidget(child: child);
+    return BoxWidget(
+      mixer.boxAttribute,
+      child: child,
+    );
   }
 }
 
 class BoxWidget extends StatelessWidget {
-  final bool animated;
-  final EdgeInsets? margin;
-  final EdgeInsets? padding;
-  final AlignmentGeometry? alignment;
-
-  final bool? hidden;
-  final Color? backgroundColor;
-  final Border? border;
-  final BorderRadius? borderRadius;
-  final BoxShadow? boxShadow;
-  final BoxDecoration? decoration;
-  final double? height;
-  final double? maxHeight;
-  final double? minHeight;
-  final double? width;
-  final double? maxWidth;
-  final double? minWidth;
-  final int? rotate;
-  final double? opacity;
-  final double? aspectRatio;
-  //Animation
-  final Duration animationDuration;
-  final Curve animationCurve;
+  final BoxAttribute attributes;
   // Child Widget
   final Widget? child;
 
-  const BoxWidget({
-    this.margin,
-    this.padding,
-    this.alignment,
-    this.hidden,
-    this.backgroundColor,
-    this.border,
-    this.borderRadius,
-    this.boxShadow,
-    this.decoration,
-    this.height,
-    this.maxHeight,
-    this.minHeight,
-    this.width,
-    this.maxWidth,
-    this.minWidth,
-    this.rotate,
-    this.opacity,
-    this.aspectRatio,
-    this.animationDuration = const Duration(milliseconds: 100),
-    this.animationCurve = Curves.linear,
-    this.animated = false,
+  const BoxWidget(
+    this.attributes, {
     this.child,
     Key? key,
   }) : super(key: key);
 
   EdgeInsetsGeometry? get _paddingIncludingDecoration {
-    if (decoration == null || decoration!.padding == null) {
-      return padding;
+    if (attributes.decoration == null ||
+        attributes.decoration!.padding == null) {
+      return attributes.padding;
     }
-    final decorationPadding = decoration!.padding;
-    if (padding == null) return decorationPadding;
-    return padding!.add(decorationPadding!);
+    final decorationPadding = attributes.decoration!.padding;
+    if (attributes.padding == null) return decorationPadding;
+    return attributes.padding!.add(decorationPadding!);
   }
 
   BoxConstraints? get _constraints {
     BoxConstraints? constraints;
 
-    if (minWidth != null ||
-        maxWidth != null ||
-        minHeight != null ||
-        maxHeight != null) {
+    if (attributes.minWidth != null ||
+        attributes.maxWidth != null ||
+        attributes.minHeight != null ||
+        attributes.maxHeight != null) {
       constraints = BoxConstraints(
-        minHeight: minHeight ?? 0.0,
-        maxHeight: maxHeight ?? double.infinity,
-        minWidth: minWidth ?? 0.0,
-        maxWidth: maxWidth ?? double.infinity,
+        minHeight: attributes.minHeight ?? 0.0,
+        maxHeight: attributes.maxHeight ?? double.infinity,
+        minWidth: attributes.minWidth ?? 0.0,
+        maxWidth: attributes.maxWidth ?? double.infinity,
       );
     }
 
     // If there are min or max constraints
-    if (height != null || width != null) {
+    if (attributes.height != null || attributes.width != null) {
       if (constraints != null) {
         constraints = constraints.tighten(
-          width: width,
-          height: height,
+          width: attributes.width,
+          height: attributes.height,
         );
       } else {
         constraints = BoxConstraints.tightFor(
-          width: width,
-          height: height,
+          width: attributes.width,
+          height: attributes.height,
         );
       }
     }
@@ -121,6 +84,19 @@ class BoxWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var current = child;
+    const ms100 = Duration(milliseconds: 100);
+
+    final animated = attributes.animated ?? false;
+    final animationDuration = attributes.animationDuration ?? ms100;
+    final animationCurve = attributes.animationCurve ?? Curves.linear;
+    final alignment = attributes.alignment;
+    final aspectRatio = attributes.aspectRatio;
+    final hidden = attributes.hidden;
+    final backgroundColor = attributes.backgroundColor;
+    final decoration = attributes.decoration;
+    final opacity = attributes.opacity;
+    final rotate = attributes.rotate;
+    final margin = attributes.margin;
 
     final constraints = _constraints;
 
@@ -153,7 +129,7 @@ class BoxWidget extends StatelessWidget {
         );
       } else {
         current = AspectRatio(
-          aspectRatio: aspectRatio!,
+          aspectRatio: aspectRatio,
           child: current,
         );
       }
@@ -164,12 +140,12 @@ class BoxWidget extends StatelessWidget {
         current = AnimatedAlign(
           duration: animationDuration,
           curve: animationCurve,
-          alignment: alignment!,
+          alignment: alignment,
           child: current,
         );
       } else {
         current = Align(
-          alignment: alignment!,
+          alignment: alignment,
           child: current,
         );
       }
@@ -208,7 +184,7 @@ class BoxWidget extends StatelessWidget {
         );
       } else {
         current = ColoredBox(
-          color: backgroundColor!,
+          color: backgroundColor,
           child: current,
         );
       }
@@ -227,7 +203,7 @@ class BoxWidget extends StatelessWidget {
         );
       } else {
         current = DecoratedBox(
-          decoration: decoration!,
+          decoration: decoration,
           child: current,
         );
       }
@@ -238,12 +214,12 @@ class BoxWidget extends StatelessWidget {
         current = AnimatedOpacity(
           duration: animationDuration,
           curve: animationCurve,
-          opacity: opacity!,
+          opacity: opacity,
           child: current,
         );
       } else {
         current = Opacity(
-          opacity: opacity!,
+          opacity: opacity,
           child: current,
         );
       }
@@ -279,7 +255,7 @@ class BoxWidget extends StatelessWidget {
 
     if (rotate != null) {
       current = RotatedBox(
-        quarterTurns: rotate!,
+        quarterTurns: rotate,
         child: current,
       );
     }
@@ -289,12 +265,12 @@ class BoxWidget extends StatelessWidget {
         current = AnimatedPadding(
           duration: animationDuration,
           curve: animationCurve,
-          padding: margin!,
+          padding: margin,
           child: current,
         );
       } else {
         current = Padding(
-          padding: margin!,
+          padding: margin,
           child: current,
         );
       }

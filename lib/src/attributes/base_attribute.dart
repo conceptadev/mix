@@ -9,6 +9,14 @@ abstract class Attribute<T> {
   const Attribute();
 }
 
+// Some classes have defaults
+// Facade allows us ot set all properties as optional
+// For improved merge and override of properties
+abstract class Properties<T> {
+  const Properties();
+  T build();
+}
+
 extension AttributeExtensions on Attribute {
   DarkModeAttribute get onDark => dark(this);
   XSmallScreenSizeAttribute get onXSmall => mq.xs(this);
@@ -19,8 +27,17 @@ extension AttributeExtensions on Attribute {
   LandscapeAttribute get onLandscape => mq.landscape(this);
 }
 
-abstract class DynamicAttribute extends Attribute<Attribute> {
+abstract class DynamicAttribute extends Attribute {
   const DynamicAttribute(Attribute attribute) : _attribute = attribute;
+  final Attribute _attribute;
+
+  Attribute get value => _attribute;
+
+  bool shouldApply(BuildContext context);
+}
+
+abstract class PressableAttribute extends Attribute {
+  const PressableAttribute(Attribute attribute) : _attribute = attribute;
   final Attribute _attribute;
 
   Attribute get value => _attribute;
