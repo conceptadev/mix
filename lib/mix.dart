@@ -12,7 +12,6 @@ export 'package:mix/src/widgets/typography/text.dart'
 
 export 'src/attributes/base_attribute.dart'
     show Attribute, DynamicAttribute, AttributeExtensions;
-export 'src/attributes/primitives/rendering/flex/main_axis_size.dart';
 export 'src/attributes/utilities.dart';
 export 'src/helpers/extensions.dart';
 export 'src/helpers/utils.dart';

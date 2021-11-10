@@ -6,7 +6,7 @@ import 'package:mix/src/attributes/primitives/box/box_attributes_props.dart';
 
 import '../../base_attribute.dart';
 
-class BoxAttribute extends Attribute<bool> {
+class BoxAttribute extends Attribute {
   final bool? animated;
   final EdgeInsets? margin;
   final EdgeInsets? padding;

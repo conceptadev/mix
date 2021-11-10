@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mix/src/attributes/dynamic/pressable_attributes.dart';
 import 'package:mix/src/attributes/primitives/box/box_attributes.dart';
-import 'package:mix/src/attributes/primitives/gestures/disabled.dart';
-import 'package:mix/src/attributes/primitives/gestures/focused.dart';
-import 'package:mix/src/attributes/primitives/gestures/hovering.dart';
-import 'package:mix/src/attributes/primitives/gestures/pressing.dart';
 import 'package:mix/src/attributes/primitives/text/text_attributes.dart';
 import 'package:mix/src/directives/text_directive.dart';
 

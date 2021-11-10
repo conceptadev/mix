@@ -189,8 +189,7 @@ class TextStyleUtility {
   }
 }
 
-//TODO: Fix this extends
-class TextAttribute extends Attribute<bool> {
+class TextAttribute extends Attribute {
   final TextStyle? style;
   final StrutStyle? strutStyle;
   final TextAlign? textAlign;
@@ -217,10 +216,9 @@ class TextAttribute extends Attribute<bool> {
     this.textWidthBasis,
   });
 
-  @override
   TextAttribute merge(TextAttribute attribute) {
-    final wStyle = attribute.style ?? TextStyle();
-    final wStructStyle = attribute.strutStyle ?? StrutStyle();
+    final wStyle = attribute.style ?? const TextStyle();
+    final wStructStyle = attribute.strutStyle ?? const StrutStyle();
     return TextAttribute(
       style: wStyle.merge(style),
       strutStyle: wStructStyle.merge(strutStyle),
