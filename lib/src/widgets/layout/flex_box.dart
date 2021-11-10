@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 
 import '../../mixer/mix_factory.dart';
-import '../../mixer/mixer.dart';
+import '../../mixer/recipe_factory.dart';
 import '../helper_widgets.dart';
 import '../mix_widget.dart';
 
@@ -43,7 +43,7 @@ class FlexBox extends MixWidget {
   }
   @override
   Widget build(BuildContext context) {
-    final mixer = Mixer.build(context, mix);
+    final mixer = Recipe.build(context, mix);
     return FlexBoxMixerWidget(
       mixer,
       direction: direction,
@@ -54,7 +54,7 @@ class FlexBox extends MixWidget {
 
 class FlexBoxMixerWidget extends MixerWidget {
   const FlexBoxMixerWidget(
-    Mixer mixer, {
+    Recipe mixer, {
     Key? key,
     required this.direction,
     required this.children,
@@ -66,7 +66,7 @@ class FlexBoxMixerWidget extends MixerWidget {
   // Creates gap to space in between
   List<Widget> renderChildrenWithGap(List<Widget> children) {
     // If no gap is set return widgets
-    if (mixer.gap == null) return children;
+    if (recipe.gap == null) return children;
 
     // List of widgets with gap
     final widgets = <Widget>[];
@@ -76,7 +76,7 @@ class FlexBoxMixerWidget extends MixerWidget {
       // Add gap if not last item if its not last element
 
       if (widget != children.last) {
-        widgets.add(GapWidget(mixer.gap!.value));
+        widgets.add(GapWidget(recipe.gap!.value));
       }
     }
 
@@ -86,14 +86,14 @@ class FlexBoxMixerWidget extends MixerWidget {
   @override
   Widget build(BuildContext context) {
     return BoxMixerWidget(
-      mixer,
+      recipe,
       child: Flex(
         direction: direction,
         mainAxisAlignment:
-            mixer.mainAxisAlignment?.value ?? MainAxisAlignment.start,
+            recipe.mainAxisAlignment?.value ?? MainAxisAlignment.start,
         crossAxisAlignment:
-            mixer.crossAxisAlignment?.value ?? CrossAxisAlignment.center,
-        mainAxisSize: mixer.mainAxisSize?.value ?? MainAxisSize.max,
+            recipe.crossAxisAlignment?.value ?? CrossAxisAlignment.center,
+        mainAxisSize: recipe.mainAxisSize?.value ?? MainAxisSize.max,
         verticalDirection: VerticalDirection.down,
         children: renderChildrenWithGap(children),
       ),

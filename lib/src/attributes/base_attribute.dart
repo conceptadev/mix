@@ -4,56 +4,44 @@ import 'package:mix/src/attributes/dynamic/media_query.dart';
 import 'package:mix/src/attributes/utilities.dart';
 
 /// Base attribute
-abstract class Attribute<T> {
-  /// Constructor
-  const Attribute();
-}
 
 // Some classes have defaults
 // Facade allows us ot set all properties as optional
 // For improved merge and override of properties
-abstract class Properties<T> {
+abstract class Attribute {
+  const Attribute();
+}
+
+abstract class Properties<T> extends Attribute {
   const Properties();
   T build();
 }
 
 extension AttributeExtensions on Attribute {
-  DarkModeAttribute get onDark => dark(this);
-  XSmallScreenSizeAttribute get onXSmall => mq.xs(this);
-  SmallScreenSizeAttribute get onSmall => mq.sm(this);
-  MediumScreenSizeAttribute get onMedium => mq.md(this);
-  LargeScreenSizeAttribute get onLarge => mq.lg(this);
-  PortraitAttribute get onPortrait => mq.portrait(this);
-  LandscapeAttribute get onLandscape => mq.landscape(this);
+  DarkModeAttribute get onDark => DarkModeAttribute(this);
+  ScreenSizeAttribute get onXSmall => mq.xsmall(this);
+  ScreenSizeAttribute get onSmall => mq.small(this);
+  ScreenSizeAttribute get onMedium => mq.medium(this);
+  ScreenSizeAttribute get onLarge => mq.large(this);
+  OrientationAttribute get onPortrait => mq.portrait(this);
+  OrientationAttribute get onLandscape => mq.landscape(this);
+}
+
+abstract class NestedAttributes extends Attribute {
+  const NestedAttributes();
+
+  List<Attribute> get attributes;
 }
 
 abstract class DynamicAttribute extends Attribute {
-  const DynamicAttribute(Attribute attribute) : _attribute = attribute;
-  final Attribute _attribute;
+  const DynamicAttribute(this.attribute);
 
-  Attribute get value => _attribute;
-
-  bool shouldApply(BuildContext context);
-}
-
-abstract class PressableAttribute extends Attribute {
-  const PressableAttribute(Attribute attribute) : _attribute = attribute;
-  final Attribute _attribute;
-
-  Attribute get value => _attribute;
+  final Attribute attribute;
 
   bool shouldApply(BuildContext context);
 }
 
-abstract class AttributeDirective<T> {
-  const AttributeDirective();
+abstract class Directive<T> extends Attribute {
+  const Directive();
   T modify(T value);
-}
-
-abstract class BoxTypeAttribute<T> extends Attribute<T> {
-  const BoxTypeAttribute();
-}
-
-abstract class TextTypeAttribute<T> extends Attribute<T> {
-  const TextTypeAttribute();
 }

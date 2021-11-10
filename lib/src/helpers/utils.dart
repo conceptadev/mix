@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:mix/src/attributes/apply_mix.dart';
 
 import '../attributes/base_attribute.dart';
 
 /// Attribute params to list
-List<Attribute> attributeParamToList([
+List<Attribute> paramsToAttributes([
   Attribute? p1,
   Attribute? p2,
   Attribute? p3,
@@ -18,52 +17,52 @@ List<Attribute> attributeParamToList([
   Attribute? p11,
   Attribute? p12,
 ]) {
-  final params = <Attribute>[];
+  final attributes = <Attribute>[];
 
   if (p1 != null) {
-    params.add(p1);
+    attributes.add(p1);
   }
   if (p2 != null) {
-    params.add(p2);
+    attributes.add(p2);
   }
   if (p3 != null) {
-    params.add(p3);
+    attributes.add(p3);
   }
   if (p4 != null) {
-    params.add(p4);
+    attributes.add(p4);
   }
   if (p5 != null) {
-    params.add(p5);
+    attributes.add(p5);
   }
   if (p6 != null) {
-    params.add(p6);
+    attributes.add(p6);
   }
   if (p7 != null) {
-    params.add(p7);
+    attributes.add(p7);
   }
   if (p8 != null) {
-    params.add(p8);
+    attributes.add(p8);
   }
   if (p9 != null) {
-    params.add(p9);
+    attributes.add(p9);
   }
   if (p10 != null) {
-    params.add(p10);
+    attributes.add(p10);
   }
   if (p11 != null) {
-    params.add(p11);
+    attributes.add(p11);
   }
   if (p12 != null) {
-    params.add(p12);
+    attributes.add(p12);
   }
-  return _spreadNestedMix(params);
+  return _spreadNestedMix(attributes);
 }
 
-_spreadNestedMix(List<Attribute> attributes) {
-  final spreaded = [...attributes];
-  for (final attr in attributes) {
-    if (attr is ApplyMixAttribute) {
-      spreaded.addAll(attr.value);
+_spreadNestedMix(List<Attribute> props) {
+  final spreaded = [...props];
+  for (final attr in props) {
+    if (attr is NestedAttributes) {
+      spreaded.addAll(attr.attributes);
     } else {
       spreaded.add(attr);
     }

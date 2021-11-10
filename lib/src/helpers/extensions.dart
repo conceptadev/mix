@@ -31,9 +31,11 @@ extension ContextExtensions on BuildContext {
   TextTheme get textTheme => theme.textTheme;
 
   /// Is device in landscape mode.
+  @deprecated
   bool get isLandscape => mq.orientation == Orientation.landscape;
 
   /// Is device in portrait mode.
+  @deprecated
   bool get isPortrait => mq.orientation == Orientation.portrait;
 
   /// Screen width
@@ -64,38 +66,6 @@ extension ColorExtensions on Color {
       '${red.toRadixString(16).padLeft(2, '0')}'
       '${green.toRadixString(16).padLeft(2, '0')}'
       '${blue.toRadixString(16).padLeft(2, '0')}';
-}
-
-extension StringExtensions on String {
-  String get capitalize {
-    final current = this;
-    if (current.isEmpty) {
-      return this;
-    }
-
-    return current[0].toUpperCase() + current.substring(1);
-  }
-
-  String get titleCase {
-    const separator = ' ';
-    final current = this;
-    List<String> words =
-        current.split(separator).map((word) => word.capitalize).toList();
-
-    return words.join(separator);
-  }
-
-  String get sentenceCase {
-    const separator = ' ';
-    final current = this;
-    List<String> words = current.split(separator);
-
-    if (words.isNotEmpty) {
-      words[0].capitalize;
-    }
-
-    return words.join(separator);
-  }
 }
 
 extension StrutStyleExtension on StrutStyle {
@@ -130,10 +100,10 @@ extension EdgeInsetExtension on EdgeInsets {
 extension BorderExtension on Border {
   Border merge(Border? border) {
     return Border(
-      top: this.top.merge(border?.top),
-      bottom: this.bottom.merge(border?.bottom),
-      left: this.left.merge(border?.left),
-      right: this.right.merge(border?.right),
+      top: top.merge(border?.top),
+      bottom: bottom.merge(border?.bottom),
+      left: left.merge(border?.left),
+      right: right.merge(border?.right),
     );
   }
 }
@@ -141,9 +111,9 @@ extension BorderExtension on Border {
 extension BorderSideExtension on BorderSide {
   BorderSide merge(BorderSide? borderSide) {
     return BorderSide(
-      color: borderSide?.color ?? this.color,
-      width: borderSide?.width ?? this.width,
-      style: borderSide?.style ?? this.style,
+      color: borderSide?.color ?? color,
+      width: borderSide?.width ?? width,
+      style: borderSide?.style ?? style,
     );
   }
 }
@@ -151,10 +121,10 @@ extension BorderSideExtension on BorderSide {
 extension BorderRadiusExtension on BorderRadius {
   BorderRadius merge(BorderRadius? borderRadius) {
     return BorderRadius.only(
-      topLeft: borderRadius?.topLeft ?? this.topLeft,
-      topRight: borderRadius?.topRight ?? this.topRight,
-      bottomLeft: borderRadius?.bottomLeft ?? this.bottomLeft,
-      bottomRight: borderRadius?.bottomRight ?? this.bottomRight,
+      topLeft: borderRadius?.topLeft ?? topLeft,
+      topRight: borderRadius?.topRight ?? topRight,
+      bottomLeft: borderRadius?.bottomLeft ?? bottomLeft,
+      bottomRight: borderRadius?.bottomRight ?? bottomRight,
     );
   }
 }

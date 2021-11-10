@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../mix.dart';
 import '../../mixer/mix_factory.dart';
-import '../../mixer/mixer.dart';
+import '../../mixer/recipe_factory.dart';
 import '../mix_widget.dart';
 
 class IconMix extends MixWidget {
@@ -18,7 +18,7 @@ class IconMix extends MixWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mixer = Mixer.build(context, mix);
+    final mixer = Recipe.build(context, mix);
     return IconMixerWidget(
       mixer,
       icon: icon,
@@ -29,7 +29,7 @@ class IconMix extends MixWidget {
 
 class IconMixerWidget extends MixerWidget {
   const IconMixerWidget(
-    Mixer mixer, {
+    Recipe mixer, {
     required this.icon,
     this.semanticLabel,
     Key? key,
@@ -41,20 +41,20 @@ class IconMixerWidget extends MixerWidget {
   @override
   Widget build(BuildContext context) {
     return BoxMixerWidget(
-      mixer,
+      recipe,
       child: TweenAnimationBuilder<double?>(
-        duration: mixer.boxAttribute.animationDuration ?? Duration.zero,
-        curve: mixer.iconSize?.animationCurve ?? Curves.linear,
+        duration: recipe.boxProps.animationDuration ?? Duration.zero,
+        curve: recipe.iconSize?.animationCurve ?? Curves.linear,
         tween: Tween<double?>(
-          end: mixer.iconSize?.value ?? IconTheme.of(context).size ?? 24.0,
+          end: recipe.iconSize?.value ?? IconTheme.of(context).size ?? 24.0,
         ),
         builder: (context, value, child) {
           return IconTheme.merge(
             data: IconThemeData(size: value),
             child: TweenAnimationBuilder<Color?>(
-              duration: mixer.iconColor?.animationDuration ?? Duration.zero,
-              curve: mixer.iconColor?.animationCurve ?? Curves.linear,
-              tween: ColorTween(end: mixer.iconColor?.value),
+              duration: recipe.iconColor?.animationDuration ?? Duration.zero,
+              curve: recipe.iconColor?.animationCurve ?? Curves.linear,
+              tween: ColorTween(end: recipe.iconColor?.value),
               child: child,
               builder: (context, value, child) {
                 if (value == null) {
@@ -70,7 +70,7 @@ class IconMixerWidget extends MixerWidget {
         },
         child: Icon(
           icon,
-          textDirection: mixer.textDirection?.value,
+          textDirection: recipe.textDirection?.value,
           semanticLabel: semanticLabel,
         ),
       ),

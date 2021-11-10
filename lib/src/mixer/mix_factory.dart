@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:mix/src/mixer/recipe_factory.dart';
 
 import '../attributes/base_attribute.dart';
+import '../attributes/primitives/box/box.widget.dart';
 import '../helpers/utils.dart';
-import '../widgets/layout/box.dart';
 import '../widgets/layout/flex_box.dart';
 import '../widgets/primitives/icon.dart';
 import '../widgets/typography/text.dart';
 
 /// Defines a mix
 class Mix {
-  const Mix._(this.params);
-  // Exposed for performance testing
-  const Mix.builder(this.params);
+  const Mix._(this.props);
 
-  final List<Attribute> params;
+  final List<Attribute> props;
 
   /// Define mix with parameters
   factory Mix([
@@ -31,7 +30,7 @@ class Mix {
     Attribute? p12,
   ]) {
     final params =
-        attributeParamToList(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12);
+        paramsToAttributes(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12);
     return Mix._(params);
   }
 
@@ -81,8 +80,8 @@ class Mix {
     );
   }
 
-  /// Adds more attributes to the existing mix
-  Mix mix([
+  /// Adds more properties to a mix
+  Mix add([
     Attribute? p1,
     Attribute? p2,
     Attribute? p3,
@@ -96,16 +95,16 @@ class Mix {
     Attribute? p11,
     Attribute? p12,
   ]) {
-    final newParams = [...params];
+    final newParams = [...props];
     // Combine attributes into existing params
     newParams.addAll(
-      attributeParamToList(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12),
+      paramsToAttributes(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12),
     );
 
     return Mix._(newParams);
   }
 
-  /// Merges 2 or 3 shape definitions
+  /// Merges many mixes into one
   static Mix combine([
     Mix? mix1,
     Mix? mix2,
@@ -121,18 +120,18 @@ class Mix {
     Mix? mix12,
   ]) {
     final list = <Attribute>[];
-    if (mix1 != null) list.addAll(mix1.params);
-    if (mix2 != null) list.addAll(mix2.params);
-    if (mix3 != null) list.addAll(mix3.params);
-    if (mix4 != null) list.addAll(mix4.params);
-    if (mix5 != null) list.addAll(mix5.params);
-    if (mix6 != null) list.addAll(mix6.params);
-    if (mix7 != null) list.addAll(mix7.params);
-    if (mix8 != null) list.addAll(mix8.params);
-    if (mix9 != null) list.addAll(mix9.params);
-    if (mix10 != null) list.addAll(mix10.params);
-    if (mix11 != null) list.addAll(mix11.params);
-    if (mix12 != null) list.addAll(mix12.params);
+    if (mix1 != null) list.addAll(mix1.props);
+    if (mix2 != null) list.addAll(mix2.props);
+    if (mix3 != null) list.addAll(mix3.props);
+    if (mix4 != null) list.addAll(mix4.props);
+    if (mix5 != null) list.addAll(mix5.props);
+    if (mix6 != null) list.addAll(mix6.props);
+    if (mix7 != null) list.addAll(mix7.props);
+    if (mix8 != null) list.addAll(mix8.props);
+    if (mix9 != null) list.addAll(mix9.props);
+    if (mix10 != null) list.addAll(mix10.props);
+    if (mix11 != null) list.addAll(mix11.props);
+    if (mix12 != null) list.addAll(mix12.props);
 
     return Mix._(list);
   }
@@ -148,5 +147,9 @@ class Mix {
     } else {
       return falseMix;
     }
+  }
+
+  Recipe build(BuildContext context) {
+    return Recipe.build(context, this);
   }
 }

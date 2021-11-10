@@ -1,50 +1,65 @@
 import 'package:mix/src/attributes/base_attribute.dart';
 
-import '../helpers/extensions.dart';
-
-typedef TextDirective = AttributeDirective<String>;
+enum TextDirectiveModifier {
+  capitalize,
+  titleCase,
+  sentenceCase,
+  lowerCase,
+  upperCase,
+}
 
 /// Attribute that is able to modify text
-class TextDirectiveAttribute extends TextTypeAttribute<TextDirective> {
-  const TextDirectiveAttribute(TextDirective directive)
-      : _directive = directive;
+class TextDirectiveAttribute extends Directive<String> {
+  const TextDirectiveAttribute(this.modifier);
 
   /// Function to execute the directive
-  final AttributeDirective<String> _directive;
+  final TextDirectiveModifier modifier;
 
   @override
-  AttributeDirective<String> get value => _directive;
-
-  /// Short version for  [value.modify]
-  String modify(String value) => _directive.modify(value);
+  String modify(String value) {
+    switch (modifier) {
+      case TextDirectiveModifier.capitalize:
+        return value.capitalize;
+      case TextDirectiveModifier.titleCase:
+        return value.titleCase;
+      case TextDirectiveModifier.sentenceCase:
+        return value.sentenceCase;
+      case TextDirectiveModifier.lowerCase:
+        return value.toLowerCase();
+      case TextDirectiveModifier.upperCase:
+        return value.toUpperCase();
+    }
+  }
 }
 
-class CapitalizeDirective extends AttributeDirective<String> {
-  const CapitalizeDirective();
-  @override
-  String modify(String value) => value.capitalize;
-}
+extension StringExtensions on String {
+  String get capitalize {
+    final current = this;
+    if (current.isEmpty) {
+      return this;
+    }
 
-class TitleCaseDirective extends AttributeDirective<String> {
-  const TitleCaseDirective();
-  @override
-  String modify(String value) => value.titleCase;
-}
+    return current[0].toUpperCase() + current.substring(1);
+  }
 
-class SentenceCaseDirective extends AttributeDirective<String> {
-  const SentenceCaseDirective();
-  @override
-  String modify(String value) => value.sentenceCase;
-}
+  String get titleCase {
+    const separator = ' ';
+    final current = this;
+    List<String> words =
+        current.split(separator).map((word) => word.capitalize).toList();
 
-class UpperCaseDirective extends AttributeDirective<String> {
-  const UpperCaseDirective();
-  @override
-  String modify(String value) => value.toUpperCase();
-}
+    return words.join(separator);
+  }
 
-class LowerCaseDirective extends AttributeDirective<String> {
-  const LowerCaseDirective();
-  @override
-  String modify(String value) => value.toLowerCase();
+  String get sentenceCase {
+    const separator = ' ';
+    final current = this;
+    List<String> words = current.split(separator);
+
+    if (words.isNotEmpty) {
+      words[0].capitalize;
+    }
+
+    return words.join(separator);
+  }
 }

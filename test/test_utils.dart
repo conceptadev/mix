@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
-import 'package:mix/src/widgets/layout/box.dart';
+import 'package:mix/src/attributes/primitives/box/box.widget.dart';
 
 class DirectionalTestWidget extends StatelessWidget {
   const DirectionalTestWidget({

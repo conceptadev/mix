@@ -1,185 +1,147 @@
 import 'package:flutter/material.dart';
-import 'package:mix/src/attributes/apply_mix.dart';
 import 'package:mix/src/attributes/base_attribute.dart';
-import 'package:mix/src/attributes/dynamic/dark_mode.dart';
 import 'package:mix/src/attributes/dynamic/media_query.dart';
 import 'package:mix/src/attributes/dynamic/pressable_attributes.dart';
-import 'package:mix/src/attributes/primitives/box/box_attributes.dart';
-import 'package:mix/src/attributes/primitives/box/box_attributes_props.dart';
-import 'package:mix/src/attributes/primitives/icon/icon_color.dart';
-import 'package:mix/src/attributes/primitives/text/text_attributes.dart';
+import 'package:mix/src/attributes/primitives/box/box.properties.dart';
+import 'package:mix/src/attributes/primitives/box/box.utilities.dart';
+import 'package:mix/src/attributes/primitives/functions/apply_mix.dart';
+import 'package:mix/src/attributes/primitives/text/text.utilities.dart';
+import 'package:mix/src/attributes/primitives/widget_attributes.dart';
 import 'package:mix/src/directives/text_directive.dart';
 
-import 'primitives/icon/icon_size.dart';
-
-_marginUtil(EdgeInsets insets) => BoxAttribute(margin: insets);
-
-/// Margin all
-m(double value) => _marginUtil(EdgeInsets.all(value));
-
-/// Margin top
-mt(double value) => _marginUtil(EdgeInsets.only(top: value));
-
-/// Margin bottom
-mb(double value) => _marginUtil(EdgeInsets.only(bottom: value));
-
-/// Margin right
-mr(double value) => _marginUtil(EdgeInsets.only(right: value));
-
-/// Margin left
-ml(double value) => _marginUtil(EdgeInsets.only(left: value));
-
-/// Margin verttical
-my(double value) => _marginUtil(EdgeInsets.symmetric(vertical: value));
-
-/// Margin horizontal
-mx(double value) => _marginUtil(EdgeInsets.symmetric(horizontal: value));
-
-_paddingUtil(EdgeInsets insets) => BoxAttribute(padding: insets);
+const _boxUtils = BoxUtility();
+const _widgetUtils = WidgetUtility();
+const _textUtil = TextUtility();
 
 /// Margin all
-p(double value) => _paddingUtil(EdgeInsets.all(value));
+BoxProperties m(double value) => _boxUtils.margin(EdgeInsets.all(value));
 
 /// Margin top
-pt(double value) => _paddingUtil(EdgeInsets.only(top: value));
+BoxProperties mt(double value) => _boxUtils.margin(EdgeInsets.only(top: value));
 
 /// Margin bottom
-pb(double value) => _paddingUtil(EdgeInsets.only(bottom: value));
+BoxProperties mb(double value) =>
+    _boxUtils.margin(EdgeInsets.only(bottom: value));
 
 /// Margin right
-pr(double value) => _paddingUtil(EdgeInsets.only(right: value));
+BoxProperties mr(double value) =>
+    _boxUtils.margin(EdgeInsets.only(right: value));
 
 /// Margin left
-pl(double value) => _paddingUtil(EdgeInsets.only(left: value));
+BoxProperties ml(double value) =>
+    _boxUtils.margin(EdgeInsets.only(left: value));
 
 /// Margin verttical
-py(double value) => _paddingUtil(EdgeInsets.symmetric(vertical: value));
+BoxProperties my(double value) =>
+    _boxUtils.margin(EdgeInsets.symmetric(vertical: value));
 
 /// Margin horizontal
-px(double value) => _paddingUtil(EdgeInsets.symmetric(horizontal: value));
+BoxProperties mx(double value) =>
+    _boxUtils.margin(EdgeInsets.symmetric(horizontal: value));
+
+/// Padding all
+BoxProperties p(double value) => _boxUtils.padding(EdgeInsets.all(value));
+
+/// Padding top
+BoxProperties pt(double value) =>
+    _boxUtils.padding(EdgeInsets.only(top: value));
+
+/// Padding bottom
+BoxProperties pb(double value) =>
+    _boxUtils.padding(EdgeInsets.only(bottom: value));
+
+/// Padding right
+BoxProperties pr(double value) =>
+    _boxUtils.padding(EdgeInsets.only(right: value));
+
+/// Padding left
+BoxProperties pl(double value) =>
+    _boxUtils.padding(EdgeInsets.only(left: value));
+
+/// Padding verttical
+BoxProperties py(double value) =>
+    _boxUtils.padding(EdgeInsets.symmetric(vertical: value));
+
+/// Padding horizontal
+BoxProperties px(double value) =>
+    _boxUtils.padding(EdgeInsets.symmetric(horizontal: value));
 
 /// Rotate widget
-rotate(int value) => BoxAttribute(rotate: value);
+final rotate = _boxUtils.rotate;
 
 /// Rotate 90
-rotate90() => const BoxAttribute(rotate: 1);
+BoxProperties rotate90() => rotate(1);
 
 /// Rotate 180
-rotate180() => const BoxAttribute(rotate: 2);
+BoxProperties rotate180() => rotate(2);
 
 /// Rotate 270
-rotate270() => const BoxAttribute(rotate: 3);
+BoxProperties rotate270() => rotate(3);
 
 /// Rotate 360
-rotate360() => const BoxAttribute(rotate: 4);
+BoxProperties rotate360() => rotate(4);
 
 /// Opacity
-opacity(double value) => BoxAttribute(opacity: value);
+BoxProperties opacity(double value) => _boxUtils.opacity(value);
 
 /// Aspect Ratio
-aspectRatio(double value) => BoxAttribute(aspectRatio: value);
+BoxProperties aspectRatio(double value) => _boxUtils.aspectRatio(value);
 
-_radii(double? value) => Radius.circular(value ?? 0.0);
-_borderRadius(BorderRadius radius) => BoxAttribute(borderRadius: radius);
-_borderRadiusOnly({
-  double? topLeft,
-  double? topRight,
-  double? bottomLeft,
-  double? bottomRight,
-}) =>
-    _borderRadius(BorderRadius.only(
-      topLeft: _radii(topLeft),
-      topRight: _radii(topRight),
-      bottomLeft: _radii(bottomLeft),
-      bottomRight: _radii(bottomRight),
-    ));
+BoxProperties rounded(double value) => _boxUtils.rounded(value);
 
-/// Border radius
-rounded(double value) => _borderRadius(BorderRadius.all(_radii(value)));
-
-roundedTL(double value) {
-  return _borderRadiusOnly(topLeft: value);
+BoxProperties roundedTL(double value) {
+  return _boxUtils.roundedOnly(topLeft: value);
 }
 
-roundedTR(double value) {
-  return _borderRadiusOnly(topRight: value);
+BoxProperties roundedTR(double value) {
+  return _boxUtils.roundedOnly(topRight: value);
 }
 
-roundedBL(double value) {
-  return _borderRadiusOnly(bottomLeft: value);
+BoxProperties roundedBL(double value) {
+  return _boxUtils.roundedOnly(bottomLeft: value);
 }
 
-roundedBR(double value) {
-  return _borderRadiusOnly(bottomRight: value);
+BoxProperties roundedBR(double value) {
+  return _boxUtils.roundedOnly(bottomRight: value);
 }
 
 /// Background color attribute
-bgColor(Color color) => BoxAttribute(backgroundColor: color);
+final bgColor = _boxUtils.backgroundColor;
 
 /// Height
-h(double height) => BoxAttribute(height: height);
+final h = _boxUtils.height;
 
 /// Width
-w(double width) => BoxAttribute(width: width);
+final w = _boxUtils.width;
 
 /// Max height attribute
-maxH(double maxHeight) => BoxAttribute(maxHeight: maxHeight);
+final maxH = _boxUtils.maxHeight;
 
 /// Max width attribute
-maxW(double maxWidth) => BoxAttribute(maxWidth: maxWidth);
+final maxW = _boxUtils.maxWidth;
 
 /// Min height attribute
-minH(double minHeight) => BoxAttribute(minHeight: minHeight);
+final minH = _boxUtils.minHeight;
 
 /// Min width attribute
-minW(double minWidth) => BoxAttribute(minWidth: minWidth);
+final minW = _boxUtils.minWidth;
 
 /// Hide attribute
-hide(bool condition) => BoxAttribute(hidden: condition);
+final hide = _widgetUtils.hidden;
+
+final animated = _widgetUtils.animated;
 
 /// Border color for all borde sides
-borderColor(Color color) => BoxAttribute(border: Border.all(color: color));
+final borderColor = _boxUtils.borderColor;
 
 /// Border width for all border sides
-borderWidth(double width) => BoxAttribute(border: Border.all(width: width));
+final borderWidth = _boxUtils.borderWidth;
 
 /// Border style for all border sides
-borderStyle(BorderStyle style) {
-  return BoxAttribute(border: Border.all(style: style));
-}
-
-_shadowUtil({
-  Color? color,
-  Offset? offset,
-  double? blurRadius,
-  double? spreadRadius,
-}) {
-  return BoxAttribute(
-    boxShadow: BoxShadowProperties(
-      color: color,
-      offset: offset,
-      blurRadius: blurRadius,
-      spreadRadius: spreadRadius,
-    ),
-  );
-}
+final borderStyle = _boxUtils.borderStyle;
 
 /// Box shadow utility
-shadow({
-  Color? color,
-  Offset? offset,
-  double? blurRadius,
-  double? spreadRadius,
-}) {
-  return _shadowUtil(
-    color: color,
-    offset: offset,
-    blurRadius: blurRadius,
-    spreadRadius: spreadRadius,
-  );
-}
-
-const _textUtil = TextUtility();
+final shadow = _boxUtils.shadow;
 
 /// Text align
 final textAlign = _textUtil.textAlign;
@@ -218,31 +180,22 @@ final textDecorationStyle = _textStyleUtil.decorationStyle;
 final textDecorationThickness = _textStyleUtil.decorationThickness;
 final fontFamilyFallback = _textStyleUtil.fontFamilyFallback;
 
-/// Icon Size
-const iconSize = IconSizeUtility();
-
-/// Icon color attribute
-const iconColor = IconColorUtility();
-// TODO: DO gap widget
-/// Dynamic Attributes
-const dark = DarkModeUtility();
-
 /// Media query utility
 const mq = MediaQueryUtility();
 
 // Modifiers
-/// Capitalizes text
-const capitalize = TextDirectiveAttribute(CapitalizeDirective());
-const upperCase = TextDirectiveAttribute(UpperCaseDirective());
-const lowerCase = TextDirectiveAttribute(LowerCaseDirective());
-const titleCase = TextDirectiveAttribute(TitleCaseDirective());
-const sentenceCase = TextDirectiveAttribute(SentenceCaseDirective());
 
-const apply = ApplyMixUtility();
+const capitalize = TextDirectiveAttribute(TextDirectiveModifier.capitalize);
+const upperCase = TextDirectiveAttribute(TextDirectiveModifier.upperCase);
+const lowerCase = TextDirectiveAttribute(TextDirectiveModifier.lowerCase);
+const titleCase = TextDirectiveAttribute(TextDirectiveModifier.titleCase);
+const sentenceCase = TextDirectiveAttribute(TextDirectiveModifier.sentenceCase);
+
+const apply = ApplyUtility.fromMixes;
 
 // Gestures
 
-disabled(Attribute attribute) => DisabledAttribute(attribute);
-focused(Attribute attribute) => FocusedAttribute(attribute);
-hovering(Attribute attribute) => HoveringAttribute(attribute);
-pressing(Attribute attribute) => PressingAttribute(attribute);
+disabled(Attribute property) => DisabledAttribute(property);
+focused(Attribute property) => FocusedAttribute(property);
+hovering(Attribute property) => HoverAttribute(property);
+pressing(Attribute property) => PressingAttribute(property);

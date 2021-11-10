@@ -1,8 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:mix/src/attributes/primitives/text/text_attributes.dart';
 
 import '../../mixer/mix_factory.dart';
-import '../../mixer/mixer.dart';
+import '../../mixer/recipe_factory.dart';
 import '../mix_widget.dart';
 
 class TextMix extends MixWidget {
@@ -15,14 +16,14 @@ class TextMix extends MixWidget {
   final String text;
   @override
   Widget build(BuildContext context) {
-    final mixer = Mixer.build(context, mix);
+    final mixer = Recipe.build(context, mix);
     return TextMixerWidget(mixer, text: text);
   }
 }
 
 class TextMixerWidget extends MixerWidget {
   const TextMixerWidget(
-    Mixer mixer, {
+    Recipe mixer, {
     Key? key,
     required this.text,
   }) : super(mixer, key: key);
@@ -31,33 +32,40 @@ class TextMixerWidget extends MixerWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (mixer.animatedText != null) {
+    final animated = recipe.animated;
+    final animationDuration = recipe.widgetAttribute.animationDuration;
+    final animationCurve = recipe.widgetAttribute.animationCurve;
+    final hidden = recipe.widgetAttribute.hidden;
+
+    final textAtr = recipe.textProps;
+
+    if (animated) {
       return AnimatedDefaultTextStyle(
         child: Text(
-          mixer.applyTextModifiers(text),
-          textDirection: mixer.textDirection?.value,
-          textWidthBasis: mixer.textWidthBasis?.value,
-          textScaleFactor: mixer.textScaleFactor?.value,
+          recipe.applyTextModifiers(text),
+          textDirection: textAtr.textDirection,
+          textWidthBasis: textAtr.textWidthBasis,
+          textScaleFactor: textAtr.textScaleFactor,
         ),
         style: textStyle,
-        duration: mixer.animatedText!.animationDuration!,
-        curve: mixer.animatedText!.animationCurve!,
-        onEnd: mixer.animatedText!.onEnd,
-        softWrap: mixer.softWrap?.value ?? true,
-        textAlign: mixer.textAlign?.value,
-        overflow: mixer.textOverflow?.value ?? TextOverflow.clip,
-        maxLines: mixer.maxLines?.value,
+        duration: animationDuration,
+        curve: animationCurve,
+        onEnd: recipe.animatedText!.onEnd,
+        softWrap: textAtr.softWrap,
+        textAlign: textAtr.textAlign,
+        overflow: textAtr.textOverflow,
+        maxLines: mixtextAtrer.maxLines?.value,
       );
     }
     return Text(
-      mixer.applyTextModifiers(text),
-      softWrap: mixer.softWrap?.value,
-      textDirection: mixer.textDirection?.value,
-      textWidthBasis: mixer.textWidthBasis?.value,
-      textAlign: mixer.textAlign?.value,
-      overflow: mixer.textOverflow?.value,
-      maxLines: mixer.maxLines?.value,
-      textScaleFactor: mixer.textScaleFactor?.value,
+      recipe.applyTextModifiers(text),
+      softWrap: recipe.softWrap?.value,
+      textDirection: recipe.textDirection?.value,
+      textWidthBasis: recipe.textWidthBasis?.value,
+      textAlign: recipe.textAlign?.value,
+      overflow: recipe.textOverflow?.value,
+      maxLines: recipe.maxLines?.value,
+      textScaleFactor: recipe.textScaleFactor?.value,
       style: textStyle,
     );
   }
@@ -67,26 +75,26 @@ class TextMixerWidget extends MixerWidget {
     super.debugFillProperties(properties);
 
     properties.add(
-      DiagnosticsProperty<EdgeInsetsGeometry>('padding', mixer.padding?.value,
+      DiagnosticsProperty<EdgeInsetsGeometry>('padding', recipe.padding?.value,
           defaultValue: null),
     );
 
-    if (mixer.backgroundColor != null) {
+    if (recipe.backgroundColor != null) {
       properties.add(
         DiagnosticsProperty<Color>(
-            'backgroundColor', mixer.backgroundColor?.value),
+            'backgroundColor', recipe.backgroundColor?.value),
       );
     }
 
-    if (mixer.constraints != null) {
+    if (recipe.constraints != null) {
       properties.add(
         DiagnosticsProperty<BoxConstraints>(
-            'constraints', mixer.constraints?.value,
+            'constraints', recipe.constraints?.value,
             defaultValue: null),
       );
     }
     properties.add(
-      DiagnosticsProperty<EdgeInsetsGeometry>('margin', mixer.margin?.value,
+      DiagnosticsProperty<EdgeInsetsGeometry>('margin', recipe.margin?.value,
           defaultValue: null),
     );
   }

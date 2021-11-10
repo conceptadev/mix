@@ -4,112 +4,70 @@ import 'package:mix/src/helpers/extensions.dart';
 
 class MediaQueryUtility {
   const MediaQueryUtility();
-  ScreenSizeUtility<LargeScreenSizeAttribute> get lg =>
-      const ScreenSizeUtility<LargeScreenSizeAttribute>();
+  ScreenSizeAttribute xsmall(Attribute attribute) {
+    return ScreenSizeAttribute(
+      attribute,
+      ScreenSize.xs,
+    );
+  }
 
-  ScreenSizeUtility<MediumScreenSizeAttribute> get md =>
-      const ScreenSizeUtility<MediumScreenSizeAttribute>();
+  ScreenSizeAttribute small(Attribute attribute) {
+    return ScreenSizeAttribute(
+      attribute,
+      ScreenSize.sm,
+    );
+  }
 
-  ScreenSizeUtility<SmallScreenSizeAttribute> get sm =>
-      const ScreenSizeUtility<SmallScreenSizeAttribute>();
+  ScreenSizeAttribute medium(Attribute attribute) {
+    return ScreenSizeAttribute(
+      attribute,
+      ScreenSize.md,
+    );
+  }
 
-  ScreenSizeUtility<XSmallScreenSizeAttribute> get xs =>
-      const ScreenSizeUtility<XSmallScreenSizeAttribute>();
+  ScreenSizeAttribute large(Attribute attribute) {
+    return ScreenSizeAttribute(
+      attribute,
+      ScreenSize.lg,
+    );
+  }
 
-  OrientationUtility<PortraitAttribute> get portrait =>
-      const OrientationUtility<PortraitAttribute>();
+  OrientationAttribute portrait(Attribute attribute) {
+    return OrientationAttribute(
+      attribute,
+      Orientation.portrait,
+    );
+  }
 
-  OrientationUtility<LandscapeAttribute> get landscape =>
-      const OrientationUtility<LandscapeAttribute>();
-}
-
-class OrientationUtility<T extends OrientationAttribute> {
-  const OrientationUtility();
-
-  T call(Attribute attribute) {
-    switch (T) {
-      case PortraitAttribute:
-        return PortraitAttribute(attribute) as T;
-      case LandscapeAttribute:
-        return LandscapeAttribute(attribute) as T;
-
-      default:
-        throw Exception('Cannot create OrientationAttribute of $T');
-    }
+  OrientationAttribute landscape(Attribute attribute) {
+    return OrientationAttribute(
+      attribute,
+      Orientation.landscape,
+    );
   }
 }
 
-class ScreenSizeUtility<T extends ScreenSizeAttribute> {
-  const ScreenSizeUtility();
+class ScreenSizeAttribute extends DynamicAttribute {
+  const ScreenSizeAttribute(
+    Attribute attribute,
+    this.screenSize,
+  ) : super(attribute);
 
-  T call(Attribute attribute) {
-    switch (T) {
-      case LargeScreenSizeAttribute:
-        return LargeScreenSizeAttribute(attribute) as T;
-      case MediumScreenSizeAttribute:
-        return MediumScreenSizeAttribute(attribute) as T;
-      case SmallScreenSizeAttribute:
-        return SmallScreenSizeAttribute(attribute) as T;
-      case XSmallScreenSizeAttribute:
-        return XSmallScreenSizeAttribute(attribute) as T;
-      default:
-        throw Exception('Cannot create ScreenSizeAttribute of $T');
-    }
-  }
-}
-
-abstract class ScreenSizeAttribute extends DynamicAttribute {
-  const ScreenSizeAttribute(Attribute attribute) : super(attribute);
-}
-
-class LargeScreenSizeAttribute extends ScreenSizeAttribute {
-  const LargeScreenSizeAttribute(Attribute attribute) : super(attribute);
+  final ScreenSize screenSize;
   @override
   bool shouldApply(BuildContext context) {
-    return context.screenSize == ScreenSize.lg;
+    return context.screenSize == screenSize;
   }
 }
 
-class MediumScreenSizeAttribute extends ScreenSizeAttribute {
-  const MediumScreenSizeAttribute(Attribute attribute) : super(attribute);
+class OrientationAttribute extends DynamicAttribute {
+  const OrientationAttribute(
+    Attribute attribute,
+    this.orientation,
+  ) : super(attribute);
+  final Orientation orientation;
   @override
   bool shouldApply(BuildContext context) {
-    return context.screenSize == ScreenSize.md;
-  }
-}
-
-class SmallScreenSizeAttribute extends ScreenSizeAttribute {
-  const SmallScreenSizeAttribute(Attribute attribute) : super(attribute);
-  @override
-  bool shouldApply(BuildContext context) {
-    return context.screenSize == ScreenSize.sm;
-  }
-}
-
-class XSmallScreenSizeAttribute extends ScreenSizeAttribute {
-  const XSmallScreenSizeAttribute(Attribute attribute) : super(attribute);
-  @override
-  bool shouldApply(BuildContext context) {
-    return context.screenSize == ScreenSize.xs;
-  }
-}
-
-abstract class OrientationAttribute extends DynamicAttribute {
-  const OrientationAttribute(Attribute attribute) : super(attribute);
-}
-
-class PortraitAttribute extends OrientationAttribute {
-  const PortraitAttribute(Attribute attribute) : super(attribute);
-  @override
-  bool shouldApply(BuildContext context) {
-    return context.isPortrait;
-  }
-}
-
-class LandscapeAttribute extends OrientationAttribute {
-  const LandscapeAttribute(Attribute attribute) : super(attribute);
-  @override
-  bool shouldApply(BuildContext context) {
-    return context.isLandscape;
+    return context.mq.orientation == orientation;
   }
 }

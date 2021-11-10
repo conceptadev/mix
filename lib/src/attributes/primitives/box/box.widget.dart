@@ -2,11 +2,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:mix/mix.dart';
-import 'package:mix/src/attributes/primitives/box/box_attributes.dart';
 
-import '../../mixer/mix_factory.dart';
-import '../../mixer/mixer.dart';
-import '../mix_widget.dart';
+import '../../../mixer/mix_factory.dart';
+import '../../../mixer/recipe_factory.dart';
+import '../../../widgets/mix_widget.dart';
 
 class Box extends MixWidget {
   const Box(
@@ -18,38 +17,36 @@ class Box extends MixWidget {
   final Widget? child;
   @override
   Widget build(BuildContext context) {
-    final mixer = Mixer.build(context, mix);
-
-    return BoxWidget(
-      mixer.boxAttribute,
+    return BoxMixerWidget(
+      mix.build(context),
       child: child,
     );
   }
 }
 
-class BoxWidget extends StatelessWidget {
-  final BoxAttribute attributes;
+class BoxMixerWidget extends MixerWidget {
   // Child Widget
   final Widget? child;
 
-  const BoxWidget(
-    this.attributes, {
+  const BoxMixerWidget(
+    Recipe recipe, {
     this.child,
     Key? key,
-  }) : super(key: key);
+  }) : super(recipe, key: key);
 
   EdgeInsetsGeometry? get _paddingIncludingDecoration {
-    if (attributes.decoration == null ||
-        attributes.decoration!.padding == null) {
-      return attributes.padding;
+    if (recipe.boxProps.decoration == null ||
+        recipe.boxProps.decoration!.padding == null) {
+      return recipe.boxProps.padding;
     }
-    final decorationPadding = attributes.decoration!.padding;
-    if (attributes.padding == null) return decorationPadding;
-    return attributes.padding!.add(decorationPadding!);
+    final decorationPadding = recipe.boxProps.decoration!.padding;
+    if (recipe.boxProps.padding == null) return decorationPadding;
+    return recipe.boxProps.padding!.add(decorationPadding!);
   }
 
   BoxConstraints? get _constraints {
     BoxConstraints? constraints;
+    final attributes = recipe.boxProps;
 
     if (attributes.minWidth != null ||
         attributes.maxWidth != null ||
@@ -84,23 +81,25 @@ class BoxWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var current = child;
-    const ms100 = Duration(milliseconds: 100);
 
-    final animated = attributes.animated ?? false;
-    final animationDuration = attributes.animationDuration ?? ms100;
-    final animationCurve = attributes.animationCurve ?? Curves.linear;
-    final alignment = attributes.alignment;
-    final aspectRatio = attributes.aspectRatio;
+    // Generic widget attributes
+    final animated = attributes.animated;
+    final animationDuration = attributes.animationDuration;
+    final animationCurve = attributes.animationCurve;
     final hidden = attributes.hidden;
-    final backgroundColor = attributes.backgroundColor;
-    final decoration = attributes.decoration;
-    final opacity = attributes.opacity;
-    final rotate = attributes.rotate;
-    final margin = attributes.margin;
+
+    // Box Attributes
+    final alignment = boxAttributes.alignment;
+    final aspectRatio = boxAttributes.aspectRatio;
+    final backgroundColor = boxAttributes.backgroundColor;
+    final decoration = boxAttributes.decoration;
+    final opacity = boxAttributes.opacity;
+    final rotate = boxAttributes.rotate;
+    final margin = boxAttributes.margin;
 
     final constraints = _constraints;
 
-    if (hidden != null) {
+    if (hidden) {
       if (hidden == true) {
         return const SizedBox.shrink();
       }
@@ -244,7 +243,7 @@ class BoxWidget extends StatelessWidget {
         );
       }
     }
-// TODO: is this still needed?
+    // TODO: is this still needed?
     // if (maxHeight != null || maxWidth != null) {
     //   current = LimitedBox(
     //     maxHeight: maxHeight ?? double.infinity,

@@ -4,6 +4,7 @@ import 'package:mix/mix.dart';
 import 'package:mix/src/attributes/base/size.dart';
 import 'package:mix/src/attributes/base/space.dart';
 import 'package:mix/src/attributes/dynamic/hidden.dart';
+import 'package:mix/src/attributes/primitives/box/box.widget.dart';
 import 'package:mix/src/attributes/primitives/layout/aspect_ratio.dart';
 import 'package:mix/src/attributes/primitives/layout/flex.dart';
 import 'package:mix/src/attributes/primitives/painting/alignment.dart';
@@ -14,7 +15,6 @@ import 'package:mix/src/attributes/primitives/painting/border_side.dart';
 import 'package:mix/src/attributes/primitives/painting/opacity.dart';
 import 'package:mix/src/attributes/primitives/painting/rotate.dart';
 import 'package:mix/src/attributes/primitives/rendering/flex/flex_fit.dart';
-import 'package:mix/src/widgets/layout/box.dart';
 
 import '../test_utils.dart';
 
