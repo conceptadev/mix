@@ -1,25 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:mix/src/attributes/primitives/box/box.properties.dart';
-import 'package:mix/src/attributes/primitives/text/text.properties.dart';
-import 'package:mix/src/attributes/primitives/widget_attributes.dart';
-import 'package:mix/src/directives/text_directive.dart';
+import 'package:mix/src/attributes/box/box.attributes.dart';
+import 'package:mix/src/attributes/directives/text_directive.dart';
+import 'package:mix/src/attributes/text/text.attributes.dart';
+import 'package:mix/src/attributes/widget_attributes.dart';
 
 import '../../mix.dart';
-import '../attributes/base_attribute.dart';
+import '../attributes/attribute.dart';
 
 /// Recipe
 class Recipe {
-  BoxProperties boxProps;
-  TextProperties textProps;
-  WidgetProperties widgetProps;
+  BoxAttributes boxProps;
+  TextAttributes textProps;
+  WidgetAttributes widgetProps;
+
   List<DynamicAttribute> dynamicProps;
-  // List<TextDirectiveAttribute> textDirectiveAttributes;
+  List<DirectiveAttribute> directives;
 
   Recipe._({
     required this.boxProps,
     required this.textProps,
     required this.widgetProps,
-    // required this.textDirectiveAttributes,
+    required this.directives,
     required this.dynamicProps,
   });
 
@@ -53,36 +54,37 @@ class Recipe {
   }
 
   Recipe copyWith({
-    BoxProperties boxProps = const BoxProperties(),
-    TextProperties textProps = const TextProperties(),
-    WidgetProperties widgetProps = const WidgetProperties(),
+    BoxAttributes boxProps = const BoxAttributes(),
+    TextAttributes textProps = const TextAttributes(),
+    WidgetAttributes widgetProps = const WidgetAttributes(),
     List<DynamicAttribute> dynamicProps = const [],
-    List<TextDirectiveAttribute> textDirectiveAttributes = const [],
+    List<DirectiveAttribute> directives = const [],
   }) {
     return Recipe._(
       boxProps: this.boxProps.merge(boxProps),
       textProps: this.textProps.merge(textProps),
       widgetProps: this.widgetProps.merge(widgetProps),
       dynamicProps: this.dynamicProps..addAll(dynamicProps),
+      directives: this.directives..addAll(directives),
     );
   }
 
-  // /// Applies all [TextModifierAttributes] to [text]
-  // String applyTextModifiers(String text) {
-  //   final modifierList = textDirectiveAttributes;
+  /// Applies all [TextDirectiveAttribute] to [text]
+  String applyTextDirectives(String text) {
+    final textDirectives = directives.whereType<TextDirectiveAttribute>();
 
-  //   if (modifierList.isEmpty) {
-  //     return text;
-  //   }
+    if (textDirectives.isEmpty) {
+      return text;
+    }
 
-  //   String modifiedText = text;
+    String modifiedText = text;
 
-  //   for (final attr in modifierList) {
-  //     modifiedText = attr.modify(modifiedText);
-  //   }
+    for (final attr in textDirectives) {
+      modifiedText = attr.modify(modifiedText);
+    }
 
-  //   return modifiedText;
-  // }
+    return modifiedText;
+  }
 
   factory Recipe.build(BuildContext context, Mix mix) {
     final mixer = Recipe.fromList(mix.props);
@@ -90,25 +92,30 @@ class Recipe {
   }
 
   factory Recipe.fromList(List<Attribute> props) {
-    var boxProps = const BoxProperties();
-    var textProps = const TextProperties();
-    const widgetProps = WidgetProperties();
+    var boxProps = const BoxAttributes();
+    var textProps = const TextAttributes();
+    const widgetProps = WidgetAttributes();
     final dynamicProps = <DynamicAttribute>[];
+    final directives = <DirectiveAttribute>[];
 
     for (final prop in props) {
       if (prop is DynamicAttribute) {
         dynamicProps.add(prop);
       }
 
-      if (prop is WidgetProperties) {
+      if (prop is DynamicAttribute) {
+        dynamicProps.add(prop);
+      }
+
+      if (prop is WidgetAttributes) {
         widgetProps.merge(prop);
       }
 
-      if (prop is TextProperties) {
+      if (prop is TextAttributes) {
         textProps = textProps.merge(prop);
       }
 
-      if (prop is BoxProperties) {
+      if (prop is BoxAttributes) {
         boxProps = boxProps.merge(prop);
       }
     }
@@ -118,6 +125,7 @@ class Recipe {
       textProps: textProps,
       dynamicProps: dynamicProps,
       widgetProps: widgetProps,
+      directives: directives,
     );
   }
 }

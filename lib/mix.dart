@@ -1,16 +1,16 @@
 library mix;
 
-export 'package:mix/src/attributes/primitives/box/box.widget.dart' show Box;
-export 'package:mix/src/widgets/layout/flex_box.dart'
+export 'package:mix/src/attributes/box/box.widget.dart' show Box;
+export 'package:mix/src/attributes/flex/flex_box.dart'
     show FlexBox, ColumnBox, RowBox, FlexBoxMixerWidget;
+export 'package:mix/src/attributes/icon/icon.widget.dart' show IconMix;
+export 'package:mix/src/attributes/text/text.widget.dart'
+    show TextMix, TextMixerWidget;
 export 'package:mix/src/widgets/mix_widget.dart' show MixerWidget;
-export 'package:mix/src/widgets/primitives/icon.dart' show IconMix;
 export 'package:mix/src/widgets/primitives/pressable.dart'
     show Pressable, PressableNotifier;
-export 'package:mix/src/widgets/typography/text.dart'
-    show TextMix, TextMixerWidget;
 
-export 'src/attributes/base_attribute.dart'
+export 'src/attributes/attribute.dart'
     show Mixer, DynamicAttribute, AttributeExtensions;
 export 'src/attributes/utilities.dart';
 export 'src/helpers/extensions.dart';

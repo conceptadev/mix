@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:mix/src/mixer/recipe_factory.dart';
 
-import '../attributes/base_attribute.dart';
-import '../attributes/primitives/box/box.widget.dart';
+import '../attributes/attribute.dart';
+import '../attributes/box/box.widget.dart';
+import '../attributes/flex/flex_box.dart';
+import '../attributes/icon/icon.widget.dart';
+import '../attributes/text/text.widget.dart';
 import '../helpers/utils.dart';
-import '../widgets/layout/flex_box.dart';
-import '../widgets/primitives/icon.dart';
-import '../widgets/typography/text.dart';
 
 /// Defines a mix
 class Mix {

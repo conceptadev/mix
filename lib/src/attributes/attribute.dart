@@ -12,8 +12,8 @@ abstract class Attribute {
   const Attribute();
 }
 
-abstract class Properties<T> extends Attribute {
-  const Properties();
+abstract class AttributeWithBuilder<T> extends Attribute {
+  const AttributeWithBuilder();
   T build();
 }
 
@@ -41,7 +41,7 @@ abstract class DynamicAttribute extends Attribute {
   bool shouldApply(BuildContext context);
 }
 
-abstract class Directive<T> extends Attribute {
-  const Directive();
+abstract class DirectiveAttribute<T> extends Attribute {
+  const DirectiveAttribute();
   T modify(T value);
 }

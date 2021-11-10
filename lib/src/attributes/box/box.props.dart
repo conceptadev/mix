@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-class BoxAttributes {
+class BoxProps {
   final EdgeInsets? margin;
   final EdgeInsets? padding;
   final AlignmentGeometry? alignment;
@@ -21,7 +21,7 @@ class BoxAttributes {
   final double? opacity;
   final double? aspectRatio;
 
-  const BoxAttributes({
+  const BoxProps({
     this.margin,
     this.padding,
     this.alignment,

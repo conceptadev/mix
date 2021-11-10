@@ -2,8 +2,8 @@ import 'package:flutter/widgets.dart';
 
 import '../../mixer/mix_factory.dart';
 import '../../mixer/recipe_factory.dart';
-import '../helper_widgets.dart';
-import '../mix_widget.dart';
+import '../../widgets/helper_widgets.dart';
+import '../../widgets/mix_widget.dart';
 
 class FlexBox extends MixWidget {
   const FlexBox(

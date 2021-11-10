@@ -1,12 +1,12 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:mix/src/attributes/primitives/text/text_attributes.dart';
+import 'package:mix/src/attributes/text/text.props.dart';
 import 'package:mix/src/helpers/extensions.dart';
 
-import '../../base_attribute.dart';
+import '../attribute.dart';
 
-class TextProperties extends Properties<TextAttributes> {
+class TextAttributes extends AttributeWithBuilder<TextProps> {
   final TextStyle? style;
   final StrutStyle? strutStyle;
   final TextAlign? textAlign;
@@ -18,7 +18,7 @@ class TextProperties extends Properties<TextAttributes> {
   final int? maxLines;
   final String? semanticsLabel;
   final TextWidthBasis? textWidthBasis;
-  const TextProperties({
+  const TextAttributes({
     this.style,
     this.strutStyle,
     this.textAlign,
@@ -32,8 +32,8 @@ class TextProperties extends Properties<TextAttributes> {
     this.textWidthBasis,
   });
 
-  TextProperties merge(TextProperties other) {
-    return TextProperties(
+  TextAttributes merge(TextAttributes other) {
+    return TextAttributes(
       style: style?.merge(style) ?? other.style,
       strutStyle: strutStyle?.merge(strutStyle) ?? other.strutStyle,
       textAlign: other.textAlign ?? textAlign,
@@ -49,9 +49,9 @@ class TextProperties extends Properties<TextAttributes> {
   }
 
   @override
-  TextAttributes build() {
-    return TextAttributes(
-      style: style,
+  TextProps build() {
+    return TextProps(
+      style: style ?? const TextStyle(),
       strutStyle: strutStyle,
       textAlign: textAlign,
       textDirection: textDirection,

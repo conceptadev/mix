@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:mix/src/attributes/box/box.widget.dart';
 
 import '../../../mix.dart';
 import '../../mixer/mix_factory.dart';
 import '../../mixer/recipe_factory.dart';
-import '../mix_widget.dart';
+import '../../widgets/mix_widget.dart';
 
 class IconMix extends MixWidget {
   const IconMix(
@@ -41,9 +42,9 @@ class IconMixerWidget extends MixerWidget {
   @override
   Widget build(BuildContext context) {
     return BoxMixerWidget(
-      recipe,
+      recipe: recipe,
       child: TweenAnimationBuilder<double?>(
-        duration: recipe.boxProps.animationDuration ?? Duration.zero,
+        duration: attributes.animationDuration,
         curve: recipe.iconSize?.animationCurve ?? Curves.linear,
         tween: Tween<double?>(
           end: recipe.iconSize?.value ?? IconTheme.of(context).size ?? 24.0,

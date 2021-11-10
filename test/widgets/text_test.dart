@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
-import 'package:mix/src/attributes/primitives/text/text_attributes.dart';
-import 'package:mix/src/widgets/typography/text.dart';
+import 'package:mix/src/attributes/text/text.props.dart';
+import 'package:mix/src/attributes/text/text.widget.dart';
 
 import '../test_utils.dart';
 

@@ -1,12 +1,12 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:mix/src/attributes/primitives/box/box.attributes.dart';
+import 'package:mix/src/attributes/box/box.props.dart';
 
-import '../../../helpers/extensions.dart';
-import '../../base_attribute.dart';
+import '../../helpers/extensions.dart';
+import '../attribute.dart';
 
-class BoxProperties extends Properties<BoxAttributes> {
+class BoxAttributes extends AttributeWithBuilder<BoxProps> {
   final EdgeInsets? margin;
   final EdgeInsets? padding;
   final AlignmentGeometry? alignment;
@@ -25,7 +25,7 @@ class BoxProperties extends Properties<BoxAttributes> {
   final double? opacity;
   final double? aspectRatio;
 
-  const BoxProperties({
+  const BoxAttributes({
     this.margin,
     this.padding,
     this.alignment,
@@ -46,8 +46,8 @@ class BoxProperties extends Properties<BoxAttributes> {
     Key? key,
   });
 
-  BoxProperties merge(BoxProperties other) {
-    return BoxProperties(
+  BoxAttributes merge(BoxAttributes other) {
+    return BoxAttributes(
       margin: other.margin?.merge(margin) ?? margin,
       padding: other.padding?.merge(padding) ?? padding,
       alignment: alignment ?? other.alignment,
@@ -69,8 +69,8 @@ class BoxProperties extends Properties<BoxAttributes> {
   }
 
   @override
-  BoxAttributes build() {
-    return BoxAttributes(
+  BoxProps build() {
+    return BoxProps(
       margin: margin,
       padding: padding,
       alignment: alignment,
@@ -92,7 +92,7 @@ class BoxProperties extends Properties<BoxAttributes> {
   }
 }
 
-class BoxShadowProperties extends Properties<BoxShadow> {
+class BoxShadowProperties extends AttributeWithBuilder<BoxShadow> {
   const BoxShadowProperties({
     this.color,
     this.offset,

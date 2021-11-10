@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
-import 'package:mix/src/attributes/base_attribute.dart';
+import 'package:mix/src/attributes/attribute.dart';
 
 class DisabledAttribute extends DynamicAttribute {
   const DisabledAttribute(Attribute props) : super(props);

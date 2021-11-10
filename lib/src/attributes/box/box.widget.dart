@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:mix/mix.dart';
 
-import '../../../mixer/mix_factory.dart';
-import '../../../mixer/recipe_factory.dart';
-import '../../../widgets/mix_widget.dart';
+import '../../mixer/mix_factory.dart';
+import '../../mixer/recipe_factory.dart';
+import '../../widgets/mix_widget.dart';
 
 class Box extends MixWidget {
   const Box(
@@ -18,7 +18,7 @@ class Box extends MixWidget {
   @override
   Widget build(BuildContext context) {
     return BoxMixerWidget(
-      mix.build(context),
+      recipe: mix.build(context),
       child: child,
     );
   }
@@ -28,8 +28,8 @@ class BoxMixerWidget extends MixerWidget {
   // Child Widget
   final Widget? child;
 
-  const BoxMixerWidget(
-    Recipe recipe, {
+  const BoxMixerWidget({
+    required Recipe recipe,
     this.child,
     Key? key,
   }) : super(recipe, key: key);

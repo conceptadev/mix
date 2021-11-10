@@ -1,107 +1,107 @@
 import 'package:flutter/material.dart';
-import 'package:mix/src/attributes/base_attribute.dart';
+import 'package:mix/src/attributes/apply_mix.dart';
+import 'package:mix/src/attributes/attribute.dart';
+import 'package:mix/src/attributes/box/box.attributes.dart';
+import 'package:mix/src/attributes/box/box.utilities.dart';
+import 'package:mix/src/attributes/directives/text_directive.dart';
 import 'package:mix/src/attributes/dynamic/media_query.dart';
 import 'package:mix/src/attributes/dynamic/pressable_attributes.dart';
-import 'package:mix/src/attributes/primitives/box/box.properties.dart';
-import 'package:mix/src/attributes/primitives/box/box.utilities.dart';
-import 'package:mix/src/attributes/primitives/functions/apply_mix.dart';
-import 'package:mix/src/attributes/primitives/text/text.utilities.dart';
-import 'package:mix/src/attributes/primitives/widget_attributes.dart';
-import 'package:mix/src/directives/text_directive.dart';
+import 'package:mix/src/attributes/text/text.utilities.dart';
+import 'package:mix/src/attributes/widget_attributes.dart';
 
 const _boxUtils = BoxUtility();
 const _widgetUtils = WidgetUtility();
 const _textUtil = TextUtility();
 
 /// Margin all
-BoxProperties m(double value) => _boxUtils.margin(EdgeInsets.all(value));
+BoxAttributes m(double value) => _boxUtils.margin(EdgeInsets.all(value));
 
 /// Margin top
-BoxProperties mt(double value) => _boxUtils.margin(EdgeInsets.only(top: value));
+BoxAttributes mt(double value) => _boxUtils.margin(EdgeInsets.only(top: value));
 
 /// Margin bottom
-BoxProperties mb(double value) =>
+BoxAttributes mb(double value) =>
     _boxUtils.margin(EdgeInsets.only(bottom: value));
 
 /// Margin right
-BoxProperties mr(double value) =>
+BoxAttributes mr(double value) =>
     _boxUtils.margin(EdgeInsets.only(right: value));
 
 /// Margin left
-BoxProperties ml(double value) =>
+BoxAttributes ml(double value) =>
     _boxUtils.margin(EdgeInsets.only(left: value));
 
 /// Margin verttical
-BoxProperties my(double value) =>
+BoxAttributes my(double value) =>
     _boxUtils.margin(EdgeInsets.symmetric(vertical: value));
 
 /// Margin horizontal
-BoxProperties mx(double value) =>
+BoxAttributes mx(double value) =>
     _boxUtils.margin(EdgeInsets.symmetric(horizontal: value));
 
 /// Padding all
-BoxProperties p(double value) => _boxUtils.padding(EdgeInsets.all(value));
+BoxAttributes p(double value) => _boxUtils.padding(EdgeInsets.all(value));
 
 /// Padding top
-BoxProperties pt(double value) =>
+BoxAttributes pt(double value) =>
     _boxUtils.padding(EdgeInsets.only(top: value));
 
 /// Padding bottom
-BoxProperties pb(double value) =>
+BoxAttributes pb(double value) =>
     _boxUtils.padding(EdgeInsets.only(bottom: value));
 
 /// Padding right
-BoxProperties pr(double value) =>
+BoxAttributes pr(double value) =>
     _boxUtils.padding(EdgeInsets.only(right: value));
 
 /// Padding left
-BoxProperties pl(double value) =>
+BoxAttributes pl(double value) =>
     _boxUtils.padding(EdgeInsets.only(left: value));
 
 /// Padding verttical
-BoxProperties py(double value) =>
+BoxAttributes py(double value) =>
     _boxUtils.padding(EdgeInsets.symmetric(vertical: value));
 
 /// Padding horizontal
-BoxProperties px(double value) =>
+BoxAttributes px(double value) =>
     _boxUtils.padding(EdgeInsets.symmetric(horizontal: value));
 
 /// Rotate widget
 final rotate = _boxUtils.rotate;
 
 /// Rotate 90
-BoxProperties rotate90() => rotate(1);
+BoxAttributes rotate90() => rotate(1);
 
 /// Rotate 180
-BoxProperties rotate180() => rotate(2);
+BoxAttributes rotate180() => rotate(2);
 
 /// Rotate 270
-BoxProperties rotate270() => rotate(3);
+BoxAttributes rotate270() => rotate(3);
 
 /// Rotate 360
-BoxProperties rotate360() => rotate(4);
+BoxAttributes rotate360() => rotate(4);
 
 /// Opacity
-BoxProperties opacity(double value) => _boxUtils.opacity(value);
+BoxAttributes opacity(double value) => _boxUtils.opacity(value);
 
 /// Aspect Ratio
-BoxProperties aspectRatio(double value) => _boxUtils.aspectRatio(value);
+BoxAttributes aspectRatio(double value) => _boxUtils.aspectRatio(value);
 
-BoxProperties rounded(double value) => _boxUtils.rounded(value);
+BoxAttributes rounded(double value) => _boxUtils.rounded(value);
 
-BoxProperties roundedTL(double value) {
+BoxAttributes roundedTL(double value) {
   return _boxUtils.roundedOnly(topLeft: value);
 }
 
-BoxProperties roundedTR(double value) {
+BoxAttributes roundedTR(double value) {
   return _boxUtils.roundedOnly(topRight: value);
 }
 
-BoxProperties roundedBL(double value) {
+BoxAttributes roundedBL(double value) {
   return _boxUtils.roundedOnly(bottomLeft: value);
 }
 
-BoxProperties roundedBR(double value) {
+BoxAttributes roundedBR(double value) {
   return _boxUtils.roundedOnly(bottomRight: value);
 }
 

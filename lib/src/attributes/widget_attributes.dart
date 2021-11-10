@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:mix/src/attributes/base_attribute.dart';
+import 'package:mix/src/attributes/attribute.dart';
 
 class WidgetUtility {
   const WidgetUtility();
-  WidgetProperties hidden(bool condition) {
-    return WidgetProperties(hidden: condition);
+  WidgetAttributes hidden(bool condition) {
+    return WidgetAttributes(hidden: condition);
   }
 
-  WidgetProperties animated(
+  WidgetAttributes animated(
     Curve? curve,
     Duration? duration,
   ) {
-    return WidgetProperties(
+    return WidgetAttributes(
       animated: true,
       animationCurve: curve,
       animationDuration: duration,
@@ -19,14 +19,14 @@ class WidgetUtility {
   }
 }
 
-class WidgetProperties implements Properties<WidgetAttributes> {
+class WidgetAttributes implements AttributeWithBuilder<WidgetProps> {
   final bool? animated;
   final bool? hidden;
   //Animation
   final Duration? animationDuration;
   final Curve? animationCurve;
 
-  const WidgetProperties({
+  const WidgetAttributes({
     this.hidden,
     this.animationDuration = const Duration(milliseconds: 0),
     this.animationCurve = Curves.linear,
@@ -34,8 +34,8 @@ class WidgetProperties implements Properties<WidgetAttributes> {
     Key? key,
   });
 
-  WidgetProperties merge(WidgetProperties other) {
-    return WidgetProperties(
+  WidgetAttributes merge(WidgetAttributes other) {
+    return WidgetAttributes(
       hidden: hidden ?? other.hidden,
       animationDuration: animationDuration ?? other.animationDuration,
       animationCurve: animationCurve ?? other.animationCurve,
@@ -44,8 +44,8 @@ class WidgetProperties implements Properties<WidgetAttributes> {
   }
 
   @override
-  WidgetAttributes build() {
-    return WidgetAttributes(
+  WidgetProps build() {
+    return WidgetProps(
       hidden: hidden ?? false,
       animated: animated ?? false,
       animationDuration: animationDuration ?? const Duration(milliseconds: 100),
@@ -54,14 +54,14 @@ class WidgetProperties implements Properties<WidgetAttributes> {
   }
 }
 
-class WidgetAttributes {
+class WidgetProps {
   final bool animated;
   final bool hidden;
   //Animation
   final Duration animationDuration;
   final Curve animationCurve;
 
-  const WidgetAttributes({
+  const WidgetProps({
     required this.hidden,
     required this.animationDuration,
     required this.animationCurve,

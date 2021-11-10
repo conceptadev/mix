@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mix/src/attributes/base_attribute.dart';
+import 'package:mix/src/attributes/attribute.dart';
 import 'package:mix/src/helpers/extensions.dart';
 
 class MediaQueryUtility {

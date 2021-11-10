@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mix/src/attributes/primitives/box/box.attributes.dart';
-import 'package:mix/src/attributes/primitives/text/text_attributes.dart';
-import 'package:mix/src/attributes/primitives/widget_attributes.dart';
+import 'package:mix/src/attributes/box/box.props.dart';
+import 'package:mix/src/attributes/text/text.props.dart';
+import 'package:mix/src/attributes/widget_attributes.dart';
 
 import '../../mix.dart';
 import '../mixer/recipe_factory.dart';
@@ -28,9 +28,9 @@ abstract class MixerWidget extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-  WidgetAttributes get attributes => recipe.widgetProps.build();
-  BoxAttributes get boxAttributes => recipe.boxProps.build();
-  TextAttributes get textAttributes => recipe.textProps.build();
+  WidgetProps get attributes => recipe.widgetProps.build();
+  BoxProps get boxAttributes => recipe.boxProps.build();
+  TextProps get textAttributes => recipe.textProps.build();
 
   final Recipe recipe;
 

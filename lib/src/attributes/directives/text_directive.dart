@@ -1,4 +1,4 @@
-import 'package:mix/src/attributes/base_attribute.dart';
+import 'package:mix/src/attributes/attribute.dart';
 
 enum TextDirectiveModifier {
   capitalize,
@@ -9,7 +9,7 @@ enum TextDirectiveModifier {
 }
 
 /// Attribute that is able to modify text
-class TextDirectiveAttribute extends Directive<String> {
+class TextDirectiveAttribute extends DirectiveAttribute<String> {
   const TextDirectiveAttribute(this.modifier);
 
   /// Function to execute the directive

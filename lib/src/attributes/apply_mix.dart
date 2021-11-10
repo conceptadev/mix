@@ -1,4 +1,4 @@
-import 'package:mix/src/attributes/base_attribute.dart';
+import 'package:mix/src/attributes/attribute.dart';
 import 'package:mix/src/mixer/mix_factory.dart';
 
 class ApplyUtility extends NestedAttributes {

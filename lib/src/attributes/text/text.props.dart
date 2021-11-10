@@ -2,10 +2,10 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-class TextAttributes {
+class TextProps {
   final bool softWrap;
   final TextOverflow overflow;
-  final TextStyle? style;
+  final TextStyle style;
   final StrutStyle? strutStyle;
   final TextAlign? textAlign;
   final TextDirection? textDirection;
@@ -15,10 +15,10 @@ class TextAttributes {
   final String? semanticsLabel;
   final TextWidthBasis? textWidthBasis;
   // Constructor
-  const TextAttributes({
+  const TextProps({
     required this.softWrap,
     required this.overflow,
-    this.style,
+    required this.style,
     this.strutStyle,
     this.textAlign,
     this.textDirection,

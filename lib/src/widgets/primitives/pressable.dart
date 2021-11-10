@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mix/src/attributes/primitives/box/box.widget.dart';
+import 'package:mix/src/attributes/box/box.widget.dart';
 
 import '../../mixer/mix_factory.dart';
 import '../../mixer/recipe_factory.dart';
@@ -143,7 +143,7 @@ class _PressableMixerWidgetState extends State<PressableMixerWidget> {
                 hovering: _hovering,
                 pressing: _pressing,
                 child: BoxMixerWidget(
-                  mixer.boxProps,
+                  recipe: mixer,
                   child: widget.child,
                 ),
               );
