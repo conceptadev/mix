@@ -17,7 +17,7 @@ class BoxAttributes extends AttributeWithBuilder<BoxProps> {
   final IBorder? border;
   final IBorderRadius? borderRadius;
   final IBoxShadow? boxShadow;
-  final BoxDecoration? decoration;
+
   final double? height;
   final double? maxHeight;
   final double? minHeight;
@@ -39,7 +39,6 @@ class BoxAttributes extends AttributeWithBuilder<BoxProps> {
     this.borderRadius,
     this.backgroundColor,
     this.boxShadow,
-    this.decoration,
     this.height,
     this.maxHeight,
     this.minHeight,
@@ -64,7 +63,6 @@ class BoxAttributes extends AttributeWithBuilder<BoxProps> {
       border: other.border?.merge(border) ?? border,
       borderRadius: other.borderRadius?.merge(borderRadius) ?? borderRadius,
       boxShadow: boxShadow?.merge(boxShadow) ?? boxShadow,
-      decoration: decoration ?? other.decoration,
       height: other.height ?? height,
       maxHeight: other.maxHeight ?? maxHeight,
       minHeight: other.minHeight ?? minHeight,
@@ -77,23 +75,67 @@ class BoxAttributes extends AttributeWithBuilder<BoxProps> {
     );
   }
 
+  BoxDecoration? get _decoration {
+    if (border != null || borderRadius != null || boxShadow != null) {
+      return BoxDecoration(
+        border: border?.generate(),
+        borderRadius: borderRadius?.generate(),
+        boxShadow: boxShadow == null ? [] : [boxShadow!.generate()],
+      );
+    }
+  }
+
+  EdgeInsetsGeometry? get _paddingIncludingDecoration {
+    if (_decoration == null || _decoration!.padding == null) {
+      return padding;
+    }
+    final decorationPadding = _decoration!.padding;
+    if (padding == null) return decorationPadding;
+    return padding!.add(decorationPadding!);
+  }
+
+  BoxConstraints? get _constraints {
+    BoxConstraints? constraints;
+
+    if (minWidth != null ||
+        maxWidth != null ||
+        minHeight != null ||
+        maxHeight != null) {
+      constraints = BoxConstraints(
+        minHeight: minHeight ?? 0.0,
+        maxHeight: maxHeight ?? double.infinity,
+        minWidth: minWidth ?? 0.0,
+        maxWidth: maxWidth ?? double.infinity,
+      );
+    }
+
+    // If there are min or max constraints
+    if (height != null || width != null) {
+      if (constraints != null) {
+        constraints = constraints.tighten(
+          width: width,
+          height: height,
+        );
+      } else {
+        constraints = BoxConstraints.tightFor(
+          width: width,
+          height: height,
+        );
+      }
+    }
+
+    return constraints;
+  }
+
   @override
   BoxProps build() {
     return BoxProps(
       margin: margin,
-      padding: padding,
+      padding: _paddingIncludingDecoration,
       alignment: alignment,
-      backgroundColor: backgroundColor,
-      border: border?.generate(),
-      borderRadius: borderRadius?.generate(),
-      boxShadow: boxShadow?.generate(),
-      decoration: decoration,
-      height: height,
-      maxHeight: maxHeight,
-      minHeight: minHeight,
-      width: width,
-      maxWidth: maxWidth,
-      minWidth: minWidth,
+      backgroundColor: _decoration == null ? backgroundColor : null,
+      decoration: _decoration,
+      constraints: _constraints,
       rotate: rotate,
       opacity: opacity,
       aspectRatio: aspectRatio,

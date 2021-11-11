@@ -34,50 +34,6 @@ class BoxMixerWidget extends MixerWidget {
     Key? key,
   }) : super(recipe, key: key);
 
-  EdgeInsetsGeometry? get _paddingIncludingDecoration {
-    if (recipe.box.decoration == null ||
-        recipe.box.decoration!.padding == null) {
-      return recipe.box.padding;
-    }
-    final decorationPadding = recipe.box.decoration!.padding;
-    if (recipe.box.padding == null) return decorationPadding;
-    return recipe.box.padding!.add(decorationPadding!);
-  }
-
-  BoxConstraints? get _constraints {
-    BoxConstraints? constraints;
-    final attributes = recipe.box;
-
-    if (attributes.minWidth != null ||
-        attributes.maxWidth != null ||
-        attributes.minHeight != null ||
-        attributes.maxHeight != null) {
-      constraints = BoxConstraints(
-        minHeight: attributes.minHeight ?? 0.0,
-        maxHeight: attributes.maxHeight ?? double.infinity,
-        minWidth: attributes.minWidth ?? 0.0,
-        maxWidth: attributes.maxWidth ?? double.infinity,
-      );
-    }
-
-    // If there are min or max constraints
-    if (attributes.height != null || attributes.width != null) {
-      if (constraints != null) {
-        constraints = constraints.tighten(
-          width: attributes.width,
-          height: attributes.height,
-        );
-      } else {
-        constraints = BoxConstraints.tightFor(
-          width: attributes.width,
-          height: attributes.height,
-        );
-      }
-    }
-
-    return constraints;
-  }
-
   @override
   Widget build(BuildContext context) {
     var current = child;
@@ -98,8 +54,8 @@ class BoxMixerWidget extends MixerWidget {
     final margin = boxProps.margin;
     final flex = boxProps.flex;
     final flexFit = boxProps.flexFit;
-
-    final constraints = _constraints;
+    final effectivePadding = boxProps.padding;
+    final constraints = boxProps.constraints;
 
     if (hidden == true) {
       return const SizedBox.shrink();
@@ -150,7 +106,6 @@ class BoxMixerWidget extends MixerWidget {
       }
     }
 
-    final effectivePadding = _paddingIncludingDecoration;
     if (effectivePadding != null) {
       if (animated) {
         current = AnimatedPadding(
