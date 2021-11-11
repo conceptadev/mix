@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:mix/src/attributes/animation/animation.utility.dart';
 import 'package:mix/src/attributes/attribute.dart';
 import 'package:mix/src/attributes/box/box.attributes.dart';
 import 'package:mix/src/attributes/box/box.util.dart';
+import 'package:mix/src/attributes/common/common.utility.dart';
 import 'package:mix/src/attributes/context/media_query.dart';
 import 'package:mix/src/attributes/context/pressable_attributes.dart';
 import 'package:mix/src/attributes/directives/text_directive.dart';

@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:mix/mix.dart';
+import 'package:mix/src/attributes/box/box.attributes.dart';
 
 import '../../mixer/mix_factory.dart';
 import '../../mixer/recipe_factory.dart';
@@ -9,7 +10,7 @@ import '../../widgets/mix_widget.dart';
 
 class Box extends MixWidget {
   const Box(
-    Mix mix, {
+    Mix<BoxAttributes> mix, {
     required this.child,
     Key? key,
   }) : super(mix, key: key);
@@ -44,7 +45,7 @@ class BoxMixerWidget extends MixerWidget {
     final animationCurve = props.animationCurve;
 
     // Box Attributes
-    final hidden = boxProps.hidden;
+    final hidden = props.hidden;
     final alignment = boxProps.alignment;
     final aspectRatio = boxProps.aspectRatio;
     final backgroundColor = boxProps.backgroundColor;

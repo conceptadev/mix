@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mix/src/attributes/context/dark_mode.dart';
 import 'package:mix/src/attributes/context/media_query.dart';
+import 'package:mix/src/attributes/text/text.props.dart';
 import 'package:mix/src/attributes/utilities.dart';
 
 /// Base attribute
@@ -17,6 +18,13 @@ abstract class AttributeWithBuilder<T> extends Attribute {
   T build();
 }
 
+abstract class TextAttributeWithBuilder
+    extends AttributeWithBuilder<TextProps> {
+  const TextAttributeWithBuilder();
+  @override
+  TextProps build();
+}
+
 extension AttributeExtensions on Attribute {
   DarkModeAttribute get onDark => DarkModeAttribute(this);
   ScreenSizeAttribute get onXSmall => mq.xsmall(this);
@@ -27,10 +35,10 @@ extension AttributeExtensions on Attribute {
   OrientationAttribute get onLandscape => mq.landscape(this);
 }
 
-abstract class NestedAttributes extends Attribute {
+abstract class NestedAttributes<T extends Attribute> extends Attribute {
   const NestedAttributes();
 
-  List<Attribute> get attributes;
+  List<T> get attributes;
 }
 
 abstract class DynamicAttribute extends Attribute {

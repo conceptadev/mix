@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 
-class AnimationProps {
+class CommonProps {
   final bool animated;
   final Duration animationDuration;
   final Curve animationCurve;
+  final bool hidden;
 
-  const AnimationProps({
+  const CommonProps({
     required this.animationDuration,
     required this.animationCurve,
     required this.animated,
-    Key? key,
+    required this.hidden,
   });
 }

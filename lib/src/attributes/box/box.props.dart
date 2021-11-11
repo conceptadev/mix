@@ -2,6 +2,8 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
+/// Attributes that are only compatible with [Box] widget
+
 class BoxProps {
   final EdgeInsetsGeometry? margin;
   final EdgeInsetsGeometry? padding;
@@ -14,7 +16,6 @@ class BoxProps {
   final int? rotate;
   final double? opacity;
   final double? aspectRatio;
-  final bool? hidden;
   final FlexFit? flexFit;
   final int? flex;
 
@@ -30,7 +31,6 @@ class BoxProps {
     this.rotate,
     this.opacity,
     this.aspectRatio,
-    this.hidden,
     this.flex,
     this.flexFit,
   });

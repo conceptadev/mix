@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mix/src/attributes/animation/animation.attributes.dart';
 import 'package:mix/src/attributes/box/box.attributes.dart';
+import 'package:mix/src/attributes/common/common.attributes.dart';
 import 'package:mix/src/attributes/directives/text_directive.dart';
 import 'package:mix/src/attributes/flex/flex.attributes.dart';
 import 'package:mix/src/attributes/icon/icon.attributes.dart';
@@ -13,7 +13,7 @@ import '../attributes/attribute.dart';
 class Recipe {
   BoxAttributes box;
   TextAttributes text;
-  AnimationAttributes animation;
+  CommonAttributes animation;
   IconAttributes icon;
   FlexAttributes flex;
 
@@ -62,7 +62,7 @@ class Recipe {
   Recipe copyWith({
     BoxAttributes boxProps = const BoxAttributes(),
     TextAttributes textProps = const TextAttributes(),
-    AnimationAttributes animationProps = const AnimationAttributes(),
+    CommonAttributes animationProps = const CommonAttributes(),
     IconAttributes iconProps = const IconAttributes(),
     FlexAttributes flexProps = const FlexAttributes(),
     List<DynamicAttribute> dynamicProps = const [],
@@ -106,7 +106,7 @@ class Recipe {
     var textAttributes = const TextAttributes();
     var iconAttributes = const IconAttributes();
     var flexAttributes = const FlexAttributes();
-    const animationAttributes = AnimationAttributes();
+    const animationAttributes = CommonAttributes();
     final dynamicAttributes = <DynamicAttribute>[];
     final directiveAttributes = <DirectiveAttribute>[];
 
@@ -119,7 +119,7 @@ class Recipe {
         directiveAttributes.add(attribute);
       }
 
-      if (attribute is AnimationAttributes) {
+      if (attribute is CommonAttributes) {
         animationAttributes.merge(attribute);
       }
 

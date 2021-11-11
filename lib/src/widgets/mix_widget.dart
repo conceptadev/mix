@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mix/src/attributes/animation/animation.props.dart';
 import 'package:mix/src/attributes/box/box.props.dart';
+import 'package:mix/src/attributes/common/common.props.dart';
 import 'package:mix/src/attributes/flex/flex.props.dart';
 import 'package:mix/src/attributes/icon/icon.props.dart';
 import 'package:mix/src/attributes/text/text.props.dart';
@@ -30,7 +30,7 @@ abstract class MixerWidget extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-  AnimationProps get props => recipe.animation.build();
+  CommonProps get props => recipe.animation.build();
   BoxProps get boxProps => recipe.box.build();
   TextProps get textProps => recipe.text.build();
   IconProps get iconProps => recipe.icon.build();
