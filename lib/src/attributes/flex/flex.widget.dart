@@ -3,7 +3,7 @@ import 'package:mix/src/attributes/box/box.widget.dart';
 
 import '../../mixer/mix_factory.dart';
 import '../../mixer/recipe_factory.dart';
-import '../../widgets/helper_widgets.dart';
+import '../../widgets/gap_widget.dart';
 import '../../widgets/mix_widget.dart';
 
 class FlexBox extends MixWidget {
@@ -40,7 +40,7 @@ class FlexBoxMixerWidget extends MixerWidget {
   final Axis direction;
 
   // Creates gap to space in between
-  List<Widget> renderChildrenWithGap(List<Widget> children) {
+  List<Widget> _renderChildrenWithGap(List<Widget> children) {
     // If no gap is set return widgets
     final gapSize = flexProps.gapSize;
 
@@ -71,7 +71,7 @@ class FlexBoxMixerWidget extends MixerWidget {
         crossAxisAlignment: flexProps.crossAxisAlignment,
         mainAxisSize: flexProps.mainAxisSize,
         verticalDirection: flexProps.verticalDirection,
-        children: renderChildrenWithGap(children),
+        children: _renderChildrenWithGap(children),
       ),
     );
   }

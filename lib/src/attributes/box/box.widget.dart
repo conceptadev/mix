@@ -54,20 +54,40 @@ class BoxMixerWidget extends MixerWidget {
     final margin = boxProps.margin;
     final flex = boxProps.flex;
     final flexFit = boxProps.flexFit;
-    final effectivePadding = boxProps.padding;
     final constraints = boxProps.constraints;
+    final padding = boxProps.padding;
+    final height = boxProps.height;
+    final width = boxProps.width;
 
     if (hidden == true) {
       return const SizedBox.shrink();
     }
 
-    if (child == null && (constraints == null || !constraints.isTight)) {
-      current = LimitedBox(
-        maxWidth: 0.0,
-        maxHeight: 0.0,
-        child: ConstrainedBox(
-          constraints: const BoxConstraints.expand(),
-        ),
+    if (animated) {
+      current = AnimatedContainer(
+        color: backgroundColor,
+        decoration: decoration,
+        alignment: alignment,
+        constraints: constraints,
+        margin: margin,
+        padding: padding,
+        height: height,
+        width: width,
+        child: current,
+        duration: animationDuration,
+        curve: animationCurve,
+      );
+    } else {
+      current = Container(
+        color: backgroundColor,
+        decoration: decoration,
+        alignment: alignment,
+        constraints: constraints,
+        margin: margin,
+        padding: padding,
+        height: height,
+        width: width,
+        child: current,
       );
     }
 
@@ -90,79 +110,6 @@ class BoxMixerWidget extends MixerWidget {
       }
     }
 
-    if (alignment != null) {
-      if (animated) {
-        current = AnimatedAlign(
-          duration: animationDuration,
-          curve: animationCurve,
-          alignment: alignment,
-          child: current,
-        );
-      } else {
-        current = Align(
-          alignment: alignment,
-          child: current,
-        );
-      }
-    }
-
-    if (effectivePadding != null) {
-      if (animated) {
-        current = AnimatedPadding(
-          duration: animationDuration,
-          curve: animationCurve,
-          padding: effectivePadding,
-          child: current,
-        );
-      } else {
-        current = Padding(
-          padding: effectivePadding,
-          child: current,
-        );
-      }
-    }
-
-    if (backgroundColor != null) {
-      if (animated) {
-        current = TweenAnimationBuilder<Color?>(
-          duration: animationDuration,
-          curve: animationCurve,
-          tween: ColorTween(end: backgroundColor),
-          builder: (context, color, child) {
-            if (color == null) {
-              return child!;
-            }
-            return ColoredBox(color: color, child: child);
-          },
-          child: current,
-        );
-      } else {
-        current = ColoredBox(
-          color: backgroundColor,
-          child: current,
-        );
-      }
-    }
-
-    if (decoration != null) {
-      if (animated) {
-        current = TweenAnimationBuilder<Decoration>(
-          duration: animationDuration,
-          curve: animationCurve,
-          tween: DecorationTween(end: decoration),
-          builder: (context, value, child) {
-            return DecoratedBox(decoration: value, child: child);
-          },
-          child: current,
-        );
-      } else {
-        current = DecoratedBox(
-          decoration: decoration,
-          child: current,
-        );
-      }
-    }
-
     if (opacity != null) {
       if (animated) {
         current = AnimatedOpacity(
@@ -179,34 +126,6 @@ class BoxMixerWidget extends MixerWidget {
       }
     }
 
-    /// Set child constraints
-    if (constraints != null) {
-      if (animated) {
-        current = TweenAnimationBuilder<BoxConstraints>(
-          duration: animationDuration,
-          curve: animationCurve,
-          tween: BoxConstraintsTween(end: constraints),
-          builder: (context, value, child) {
-            return ConstrainedBox(constraints: value, child: child);
-          },
-          child: current,
-        );
-      } else {
-        current = ConstrainedBox(
-          constraints: constraints,
-          child: current,
-        );
-      }
-    }
-    // TODO: is this still needed?
-    // if (maxHeight != null || maxWidth != null) {
-    //   current = LimitedBox(
-    //     maxHeight: maxHeight ?? double.infinity,
-    //     maxWidth: maxWidth ?? double.infinity,
-    //     child: current,
-    //   );
-    // }
-
     if (rotate != null) {
       current = RotatedBox(
         quarterTurns: rotate,
@@ -214,30 +133,14 @@ class BoxMixerWidget extends MixerWidget {
       );
     }
 
-    if (margin != null) {
-      if (animated) {
-        current = AnimatedPadding(
-          duration: animationDuration,
-          curve: animationCurve,
-          padding: margin,
-          child: current,
-        );
-      } else {
-        current = Padding(
-          padding: margin,
-          child: current,
-        );
-      }
-    }
-
     if (flexFit != null || flex != null) {
       current = Flexible(
         flex: flex ?? 1,
         fit: flexFit ?? FlexFit.loose,
-        child: current!,
+        child: current,
       );
     }
 
-    return current!;
+    return current;
   }
 }

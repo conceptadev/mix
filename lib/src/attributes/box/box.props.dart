@@ -9,6 +9,8 @@ class BoxProps {
   final Color? backgroundColor;
   final BoxDecoration? decoration;
   final BoxConstraints? constraints;
+  final double? width;
+  final double? height;
   final int? rotate;
   final double? opacity;
   final double? aspectRatio;
@@ -19,6 +21,8 @@ class BoxProps {
   const BoxProps({
     this.margin,
     this.padding,
+    this.height,
+    this.width,
     this.alignment,
     this.backgroundColor,
     this.decoration,

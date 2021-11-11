@@ -82,15 +82,6 @@ class BoxAttributes extends AttributeWithBuilder<BoxProps> {
     }
   }
 
-  EdgeInsetsGeometry? get _paddingIncludingDecoration {
-    if (_decoration == null || _decoration!.padding == null) {
-      return padding;
-    }
-    final decorationPadding = _decoration!.padding;
-    if (padding == null) return decorationPadding;
-    return padding!.add(decorationPadding!);
-  }
-
   BoxConstraints? get _constraints {
     BoxConstraints? constraints;
 
@@ -106,21 +97,6 @@ class BoxAttributes extends AttributeWithBuilder<BoxProps> {
       );
     }
 
-    // If there are min or max constraints
-    if (height != null || width != null) {
-      if (constraints != null) {
-        constraints = constraints.tighten(
-          width: width,
-          height: height,
-        );
-      } else {
-        constraints = BoxConstraints.tightFor(
-          width: width,
-          height: height,
-        );
-      }
-    }
-
     return constraints;
   }
 
@@ -128,7 +104,7 @@ class BoxAttributes extends AttributeWithBuilder<BoxProps> {
   BoxProps build() {
     return BoxProps(
       margin: margin,
-      padding: _paddingIncludingDecoration,
+      padding: padding,
       alignment: alignment,
       backgroundColor: _decoration == null ? backgroundColor : null,
       decoration: _decoration,

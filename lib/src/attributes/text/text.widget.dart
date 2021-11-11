@@ -85,24 +85,5 @@ class TextMixerWidget extends MixerWidget {
         defaultValue: null,
       ),
     );
-
-    // if (recipe.backgroundColor != null) {
-    //   properties.add(
-    //     DiagnosticsProperty<Color>(
-    //         'backgroundColor', recipe.backgroundColor?.value),
-    //   );
-    // }
-
-    // if (recipe.constraints != null) {
-    //   properties.add(
-    //     DiagnosticsProperty<BoxConstraints>(
-    //         'constraints', recipe.constraints?.value,
-    //         defaultValue: null),
-    //   );
-    // }
-    // properties.add(
-    //   DiagnosticsProperty<EdgeInsetsGeometry>('margin', recipe.margin?.value,
-    //       defaultValue: null),
-    // );
   }
 }
