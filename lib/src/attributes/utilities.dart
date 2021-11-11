@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:mix/src/attributes/apply_mix.dart';
+import 'package:mix/src/attributes/animation/animation.utility.dart';
 import 'package:mix/src/attributes/attribute.dart';
 import 'package:mix/src/attributes/box/box.attributes.dart';
-import 'package:mix/src/attributes/box/box.utilities.dart';
+import 'package:mix/src/attributes/box/box.util.dart';
+import 'package:mix/src/attributes/context/media_query.dart';
+import 'package:mix/src/attributes/context/pressable_attributes.dart';
 import 'package:mix/src/attributes/directives/text_directive.dart';
-import 'package:mix/src/attributes/dynamic/media_query.dart';
-import 'package:mix/src/attributes/dynamic/pressable_attributes.dart';
-import 'package:mix/src/attributes/text/text.utilities.dart';
-import 'package:mix/src/attributes/widget_attributes.dart';
+import 'package:mix/src/attributes/helpers/apply_mix.dart';
+import 'package:mix/src/attributes/text/text.util.dart';
 
 const _boxUtils = BoxUtility();
-const _widgetUtils = WidgetUtility();
+const _animationUtil = AnimationUtility();
 const _textUtil = TextUtility();
 
 /// Margin all
@@ -127,9 +127,9 @@ final minH = _boxUtils.minHeight;
 final minW = _boxUtils.minWidth;
 
 /// Hide attribute
-final hide = _widgetUtils.hidden;
+final hide = _boxUtils.hidden;
 
-final animated = _widgetUtils.animated;
+final animated = _animationUtil.animated;
 
 /// Border color for all borde sides
 final borderColor = _boxUtils.borderColor;

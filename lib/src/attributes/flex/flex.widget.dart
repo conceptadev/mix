@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:mix/src/attributes/box/box.widget.dart';
 
 import '../../mixer/mix_factory.dart';
 import '../../mixer/recipe_factory.dart';
@@ -16,31 +17,6 @@ class FlexBox extends MixWidget {
   final List<Widget> children;
   final Axis direction;
 
-  factory FlexBox.row(
-    Mix mix, {
-    Key? key,
-    required List<Widget> children,
-  }) {
-    return FlexBox(
-      mix,
-      key: key,
-      children: children,
-      direction: Axis.horizontal,
-    );
-  }
-
-  factory FlexBox.column(
-    Mix mix, {
-    Key? key,
-    required List<Widget> children,
-  }) {
-    return FlexBox(
-      mix,
-      key: key,
-      children: children,
-      direction: Axis.vertical,
-    );
-  }
   @override
   Widget build(BuildContext context) {
     final mixer = Recipe.build(context, mix);
@@ -66,7 +42,9 @@ class FlexBoxMixerWidget extends MixerWidget {
   // Creates gap to space in between
   List<Widget> renderChildrenWithGap(List<Widget> children) {
     // If no gap is set return widgets
-    if (recipe.gap == null) return children;
+    final gapSize = flexProps.gapSize;
+
+    if (gapSize == null) return children;
 
     // List of widgets with gap
     final widgets = <Widget>[];
@@ -76,7 +54,7 @@ class FlexBoxMixerWidget extends MixerWidget {
       // Add gap if not last item if its not last element
 
       if (widget != children.last) {
-        widgets.add(GapWidget(recipe.gap!.value));
+        widgets.add(GapWidget(gapSize));
       }
     }
 
@@ -89,20 +67,18 @@ class FlexBoxMixerWidget extends MixerWidget {
       recipe,
       child: Flex(
         direction: direction,
-        mainAxisAlignment:
-            recipe.mainAxisAlignment?.value ?? MainAxisAlignment.start,
-        crossAxisAlignment:
-            recipe.crossAxisAlignment?.value ?? CrossAxisAlignment.center,
-        mainAxisSize: recipe.mainAxisSize?.value ?? MainAxisSize.max,
-        verticalDirection: VerticalDirection.down,
+        mainAxisAlignment: flexProps.mainAxisAlignment,
+        crossAxisAlignment: flexProps.crossAxisAlignment,
+        mainAxisSize: flexProps.mainAxisSize,
+        verticalDirection: flexProps.verticalDirection,
         children: renderChildrenWithGap(children),
       ),
     );
   }
 }
 
-class RowBox extends FlexBox {
-  const RowBox(
+class HBox extends FlexBox {
+  const HBox(
     Mix mix, {
     Key? key,
     List<Widget> children = const <Widget>[],
@@ -114,8 +90,8 @@ class RowBox extends FlexBox {
         );
 }
 
-class ColumnBox extends FlexBox {
-  const ColumnBox(
+class VBox extends FlexBox {
+  const VBox(
     Mix mix, {
     Key? key,
     List<Widget> children = const <Widget>[],

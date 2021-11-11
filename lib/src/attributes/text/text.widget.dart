@@ -16,33 +16,34 @@ class TextMix extends MixWidget {
   final String text;
   @override
   Widget build(BuildContext context) {
-    final mixer = Recipe.build(context, mix);
-    return TextMixerWidget(mixer, text: text);
+    return TextMixerWidget(
+      Recipe.build(context, mix),
+      text: text,
+    );
   }
 }
 
 class TextMixerWidget extends MixerWidget {
   const TextMixerWidget(
-    Recipe mixer, {
+    Recipe recipe, {
     Key? key,
     required this.text,
-  }) : super(mixer, key: key);
+  }) : super(recipe, key: key);
 
   final String text;
 
   @override
   Widget build(BuildContext context) {
     onEnd() {}
-    final animated = attributes.animated;
-    final animationDuration = attributes.animationDuration;
-    final animationCurve = attributes.animationCurve;
+    final animated = props.animated;
+    final animationDuration = props.animationDuration;
+    final animationCurve = props.animationCurve;
 
-    final textAtr = recipe.textProps;
+    final textAtr = recipe.text;
 
     final content = recipe.applyTextDirectives(text);
 
-    return BoxMixerWidget(
-        recipe: recipe,
+    return BoxMixerWidget(recipe,
         child: animated
             ? AnimatedDefaultTextStyle(
                 child: Text(
@@ -51,25 +52,25 @@ class TextMixerWidget extends MixerWidget {
                   textWidthBasis: textAtr.textWidthBasis,
                   textScaleFactor: textAtr.textScaleFactor,
                 ),
-                style: textAttributes.style,
+                style: textProps.style,
                 duration: animationDuration,
                 curve: animationCurve,
                 onEnd: onEnd,
-                softWrap: textAttributes.softWrap,
+                softWrap: textProps.softWrap,
                 textAlign: textAtr.textAlign,
-                overflow: textAttributes.overflow,
-                maxLines: textAttributes.maxLines,
+                overflow: textProps.overflow,
+                maxLines: textProps.maxLines,
               )
             : Text(
                 content,
-                softWrap: textAttributes.softWrap,
-                textDirection: textAttributes.textDirection,
-                textWidthBasis: textAttributes.textWidthBasis,
-                textAlign: textAttributes.textAlign,
-                overflow: textAttributes.overflow,
-                maxLines: textAttributes.maxLines,
-                textScaleFactor: textAttributes.textScaleFactor,
-                style: textAttributes.style,
+                softWrap: textProps.softWrap,
+                textDirection: textProps.textDirection,
+                textWidthBasis: textProps.textWidthBasis,
+                textAlign: textProps.textAlign,
+                overflow: textProps.overflow,
+                maxLines: textProps.maxLines,
+                textScaleFactor: textProps.textScaleFactor,
+                style: textProps.style,
               ));
   }
 
@@ -80,7 +81,7 @@ class TextMixerWidget extends MixerWidget {
     properties.add(
       DiagnosticsProperty<EdgeInsetsGeometry>(
         'padding',
-        boxAttributes.padding,
+        boxProps.padding,
         defaultValue: null,
       ),
     );

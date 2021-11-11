@@ -1,27 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:mix/src/attributes/animation/animation.attributes.dart';
 import 'package:mix/src/attributes/box/box.attributes.dart';
 import 'package:mix/src/attributes/directives/text_directive.dart';
+import 'package:mix/src/attributes/flex/flex.attributes.dart';
+import 'package:mix/src/attributes/icon/icon.attributes.dart';
 import 'package:mix/src/attributes/text/text.attributes.dart';
-import 'package:mix/src/attributes/widget_attributes.dart';
 
 import '../../mix.dart';
 import '../attributes/attribute.dart';
 
 /// Recipe
 class Recipe {
-  BoxAttributes boxProps;
-  TextAttributes textProps;
-  WidgetAttributes widgetProps;
+  BoxAttributes box;
+  TextAttributes text;
+  AnimationAttributes animation;
+  IconAttributes icon;
+  FlexAttributes flex;
 
   List<DynamicAttribute> dynamicProps;
   List<DirectiveAttribute> directives;
 
   Recipe._({
-    required this.boxProps,
-    required this.textProps,
-    required this.widgetProps,
+    required this.box,
+    required this.text,
+    required this.animation,
     required this.directives,
     required this.dynamicProps,
+    required this.icon,
+    required this.flex,
   });
 
   /// Applies `DynamicAttribute` based on context
@@ -47,8 +53,8 @@ class Recipe {
 
   Recipe merge(Recipe other) {
     return copyWith(
-      boxProps: other.boxProps,
-      textProps: other.textProps,
+      boxProps: other.box,
+      textProps: other.text,
       dynamicProps: other.dynamicProps,
     );
   }
@@ -56,16 +62,20 @@ class Recipe {
   Recipe copyWith({
     BoxAttributes boxProps = const BoxAttributes(),
     TextAttributes textProps = const TextAttributes(),
-    WidgetAttributes widgetProps = const WidgetAttributes(),
+    AnimationAttributes animationProps = const AnimationAttributes(),
+    IconAttributes iconProps = const IconAttributes(),
+    FlexAttributes flexProps = const FlexAttributes(),
     List<DynamicAttribute> dynamicProps = const [],
     List<DirectiveAttribute> directives = const [],
   }) {
     return Recipe._(
-      boxProps: this.boxProps.merge(boxProps),
-      textProps: this.textProps.merge(textProps),
-      widgetProps: this.widgetProps.merge(widgetProps),
+      box: box.merge(boxProps),
+      text: text.merge(textProps),
+      animation: animation.merge(animationProps),
       dynamicProps: this.dynamicProps..addAll(dynamicProps),
       directives: this.directives..addAll(directives),
+      icon: icon.merge(iconProps),
+      flex: flex.merge(flexProps),
     );
   }
 
@@ -91,41 +101,53 @@ class Recipe {
     return mixer._applyDynamicProperties(context);
   }
 
-  factory Recipe.fromList(List<Attribute> props) {
-    var boxProps = const BoxAttributes();
-    var textProps = const TextAttributes();
-    const widgetProps = WidgetAttributes();
-    final dynamicProps = <DynamicAttribute>[];
-    final directives = <DirectiveAttribute>[];
+  factory Recipe.fromList(List<Attribute> attributes) {
+    var boxAttributes = const BoxAttributes();
+    var textAttributes = const TextAttributes();
+    var iconAttributes = const IconAttributes();
+    var flexAttributes = const FlexAttributes();
+    const animationAttributes = AnimationAttributes();
+    final dynamicAttributes = <DynamicAttribute>[];
+    final directiveAttributes = <DirectiveAttribute>[];
 
-    for (final prop in props) {
-      if (prop is DynamicAttribute) {
-        dynamicProps.add(prop);
+    for (final attribute in attributes) {
+      if (attribute is DynamicAttribute) {
+        dynamicAttributes.add(attribute);
       }
 
-      if (prop is DynamicAttribute) {
-        dynamicProps.add(prop);
+      if (attribute is DirectiveAttribute) {
+        directiveAttributes.add(attribute);
       }
 
-      if (prop is WidgetAttributes) {
-        widgetProps.merge(prop);
+      if (attribute is AnimationAttributes) {
+        animationAttributes.merge(attribute);
       }
 
-      if (prop is TextAttributes) {
-        textProps = textProps.merge(prop);
+      if (attribute is TextAttributes) {
+        textAttributes = textAttributes.merge(attribute);
       }
 
-      if (prop is BoxAttributes) {
-        boxProps = boxProps.merge(prop);
+      if (attribute is BoxAttributes) {
+        boxAttributes = boxAttributes.merge(attribute);
+      }
+
+      if (attribute is IconAttributes) {
+        iconAttributes = iconAttributes.merge(attribute);
+      }
+
+      if (attribute is FlexAttributes) {
+        flexAttributes = flexAttributes.merge(attribute);
       }
     }
 
     return Recipe._(
-      boxProps: boxProps,
-      textProps: textProps,
-      dynamicProps: dynamicProps,
-      widgetProps: widgetProps,
-      directives: directives,
+      box: boxAttributes,
+      text: textAttributes,
+      dynamicProps: dynamicAttributes,
+      animation: animationAttributes,
+      directives: directiveAttributes,
+      icon: iconAttributes,
+      flex: flexAttributes,
     );
   }
 }

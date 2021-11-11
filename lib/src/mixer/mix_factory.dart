@@ -3,7 +3,7 @@ import 'package:mix/src/mixer/recipe_factory.dart';
 
 import '../attributes/attribute.dart';
 import '../attributes/box/box.widget.dart';
-import '../attributes/flex/flex_box.dart';
+import '../attributes/flex/flex.widget.dart';
 import '../attributes/icon/icon.widget.dart';
 import '../attributes/text/text.widget.dart';
 import '../helpers/utils.dart';
@@ -42,12 +42,12 @@ class Mix {
     return Box(mx, child: child);
   }
 
-  RowBox row({
+  HBox row({
     required List<Widget> children,
     Mix? mix,
   }) {
     final mx = Mix.combine(this, mix);
-    return RowBox(mx, children: children);
+    return HBox(mx, children: children);
   }
 
   TextMix text(
@@ -59,12 +59,12 @@ class Mix {
     return TextMix(mx, text: text, key: key);
   }
 
-  ColumnBox column({
+  VBox column({
     Mix? mix,
     required List<Widget> children,
   }) {
     final mx = Mix.combine(this, mix);
-    return ColumnBox(mx, children: children);
+    return VBox(mx, children: children);
   }
 
   IconMix icon(

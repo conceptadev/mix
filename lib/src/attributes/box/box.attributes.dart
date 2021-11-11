@@ -2,6 +2,9 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:mix/src/attributes/box/box.props.dart';
+import 'package:mix/src/interfaces/border.dart';
+import 'package:mix/src/interfaces/border_radius.dart';
+import 'package:mix/src/interfaces/box_shadow.dart';
 
 import '../../helpers/extensions.dart';
 import '../attribute.dart';
@@ -11,9 +14,9 @@ class BoxAttributes extends AttributeWithBuilder<BoxProps> {
   final EdgeInsets? padding;
   final AlignmentGeometry? alignment;
   final Color? backgroundColor;
-  final Border? border;
-  final BorderRadius? borderRadius;
-  final BoxShadowProperties? boxShadow;
+  final IBorder? border;
+  final IBorderRadius? borderRadius;
+  final IBoxShadow? boxShadow;
   final BoxDecoration? decoration;
   final double? height;
   final double? maxHeight;
@@ -24,6 +27,9 @@ class BoxAttributes extends AttributeWithBuilder<BoxProps> {
   final int? rotate;
   final double? opacity;
   final double? aspectRatio;
+  final bool? hidden;
+  final FlexFit? flexFit;
+  final int? flex;
 
   const BoxAttributes({
     this.margin,
@@ -43,11 +49,14 @@ class BoxAttributes extends AttributeWithBuilder<BoxProps> {
     this.rotate,
     this.opacity,
     this.aspectRatio,
-    Key? key,
+    this.hidden,
+    this.flex,
+    this.flexFit,
   });
 
   BoxAttributes merge(BoxAttributes other) {
     return BoxAttributes(
+      hidden: other.hidden ?? hidden,
       margin: other.margin?.merge(margin) ?? margin,
       padding: other.padding?.merge(padding) ?? padding,
       alignment: alignment ?? other.alignment,
@@ -75,9 +84,9 @@ class BoxAttributes extends AttributeWithBuilder<BoxProps> {
       padding: padding,
       alignment: alignment,
       backgroundColor: backgroundColor,
-      border: border,
-      borderRadius: borderRadius,
-      boxShadow: boxShadow?.build(),
+      border: border?.generate(),
+      borderRadius: borderRadius?.generate(),
+      boxShadow: boxShadow?.generate(),
       decoration: decoration,
       height: height,
       maxHeight: maxHeight,
@@ -88,45 +97,6 @@ class BoxAttributes extends AttributeWithBuilder<BoxProps> {
       rotate: rotate,
       opacity: opacity,
       aspectRatio: aspectRatio,
-    );
-  }
-}
-
-class BoxShadowProperties extends AttributeWithBuilder<BoxShadow> {
-  const BoxShadowProperties({
-    this.color,
-    this.offset,
-    this.blurRadius,
-    this.spreadRadius,
-  });
-
-  /// The amount the box should be inflated prior to applying the blur.
-  final double? spreadRadius;
-  final Color? color;
-  final Offset? offset;
-  final double? blurRadius;
-
-  BoxShadowProperties merge(BoxShadowProperties? boxShadow) {
-    if (boxShadow == null) {
-      return this;
-    }
-    return BoxShadowProperties(
-      color: boxShadow.color ?? color,
-      offset: boxShadow.offset ?? offset,
-      blurRadius: boxShadow.blurRadius ?? blurRadius,
-      spreadRadius: boxShadow.spreadRadius ?? spreadRadius,
-    );
-  }
-
-  final BoxShadow _defaultBoxShadow = const BoxShadow();
-
-  @override
-  BoxShadow build() {
-    return BoxShadow(
-      color: color ?? _defaultBoxShadow.color,
-      offset: offset ?? _defaultBoxShadow.offset,
-      blurRadius: blurRadius ?? _defaultBoxShadow.blurRadius,
-      spreadRadius: spreadRadius ?? _defaultBoxShadow.spreadRadius,
     );
   }
 }

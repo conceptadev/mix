@@ -143,7 +143,7 @@ class _PressableMixerWidgetState extends State<PressableMixerWidget> {
                 hovering: _hovering,
                 pressing: _pressing,
                 child: BoxMixerWidget(
-                  recipe: mixer,
+                  mixer,
                   child: widget.child,
                 ),
               );

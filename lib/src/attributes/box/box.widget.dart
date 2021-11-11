@@ -18,7 +18,7 @@ class Box extends MixWidget {
   @override
   Widget build(BuildContext context) {
     return BoxMixerWidget(
-      recipe: mix.build(context),
+      mix.build(context),
       child: child,
     );
   }
@@ -28,25 +28,25 @@ class BoxMixerWidget extends MixerWidget {
   // Child Widget
   final Widget? child;
 
-  const BoxMixerWidget({
-    required Recipe recipe,
+  const BoxMixerWidget(
+    Recipe recipe, {
     this.child,
     Key? key,
   }) : super(recipe, key: key);
 
   EdgeInsetsGeometry? get _paddingIncludingDecoration {
-    if (recipe.boxProps.decoration == null ||
-        recipe.boxProps.decoration!.padding == null) {
-      return recipe.boxProps.padding;
+    if (recipe.box.decoration == null ||
+        recipe.box.decoration!.padding == null) {
+      return recipe.box.padding;
     }
-    final decorationPadding = recipe.boxProps.decoration!.padding;
-    if (recipe.boxProps.padding == null) return decorationPadding;
-    return recipe.boxProps.padding!.add(decorationPadding!);
+    final decorationPadding = recipe.box.decoration!.padding;
+    if (recipe.box.padding == null) return decorationPadding;
+    return recipe.box.padding!.add(decorationPadding!);
   }
 
   BoxConstraints? get _constraints {
     BoxConstraints? constraints;
-    final attributes = recipe.boxProps;
+    final attributes = recipe.box;
 
     if (attributes.minWidth != null ||
         attributes.maxWidth != null ||
@@ -83,26 +83,26 @@ class BoxMixerWidget extends MixerWidget {
     var current = child;
 
     // Generic widget attributes
-    final animated = attributes.animated;
-    final animationDuration = attributes.animationDuration;
-    final animationCurve = attributes.animationCurve;
-    final hidden = attributes.hidden;
+    final animated = props.animated;
+    final animationDuration = props.animationDuration;
+    final animationCurve = props.animationCurve;
 
     // Box Attributes
-    final alignment = boxAttributes.alignment;
-    final aspectRatio = boxAttributes.aspectRatio;
-    final backgroundColor = boxAttributes.backgroundColor;
-    final decoration = boxAttributes.decoration;
-    final opacity = boxAttributes.opacity;
-    final rotate = boxAttributes.rotate;
-    final margin = boxAttributes.margin;
+    final hidden = boxProps.hidden;
+    final alignment = boxProps.alignment;
+    final aspectRatio = boxProps.aspectRatio;
+    final backgroundColor = boxProps.backgroundColor;
+    final decoration = boxProps.decoration;
+    final opacity = boxProps.opacity;
+    final rotate = boxProps.rotate;
+    final margin = boxProps.margin;
+    final flex = boxProps.flex;
+    final flexFit = boxProps.flexFit;
 
     final constraints = _constraints;
 
-    if (hidden) {
-      if (hidden == true) {
-        return const SizedBox.shrink();
-      }
+    if (hidden == true) {
+      return const SizedBox.shrink();
     }
 
     if (child == null && (constraints == null || !constraints.isTight)) {
@@ -273,6 +273,14 @@ class BoxMixerWidget extends MixerWidget {
           child: current,
         );
       }
+    }
+
+    if (flexFit != null || flex != null) {
+      current = Flexible(
+        flex: flex ?? 1,
+        fit: flexFit ?? FlexFit.loose,
+        child: current!,
+      );
     }
 
     return current!;

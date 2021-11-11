@@ -20,6 +20,9 @@ class BoxProps {
   final int? rotate;
   final double? opacity;
   final double? aspectRatio;
+  final bool? hidden;
+  final FlexFit? flexFit;
+  final int? flex;
 
   const BoxProps({
     this.margin,
@@ -39,6 +42,8 @@ class BoxProps {
     this.rotate,
     this.opacity,
     this.aspectRatio,
-    Key? key,
+    this.hidden,
+    this.flex,
+    this.flexFit,
   });
 }

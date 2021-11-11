@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mix/src/attributes/box/box.attributes.dart';
+import 'package:mix/src/interfaces/border.dart';
+import 'package:mix/src/interfaces/border_radius.dart';
+import 'package:mix/src/interfaces/box_shadow.dart';
 
 class BoxUtility {
   const BoxUtility();
@@ -46,12 +49,12 @@ class BoxUtility {
   Radius _circular(double? value) => Radius.circular(value ?? 0.0);
 
   /// Border radius
-  BoxAttributes borderRadius(BorderRadius radius) =>
+  BoxAttributes borderRadius(IBorderRadius radius) =>
       BoxAttributes(borderRadius: radius);
 
   /// Rounded border radius
   BoxAttributes rounded(double value) =>
-      borderRadius(BorderRadius.all(_circular(value)));
+      borderRadius(IBorderRadius.all(_circular(value)));
 
   BoxAttributes roundedOnly({
     double? topLeft,
@@ -60,7 +63,7 @@ class BoxUtility {
     double? bottomRight,
   }) {
     return borderRadius(
-      BorderRadius.only(
+      IBorderRadius(
         topLeft: _circular(topLeft),
         topRight: _circular(topRight),
         bottomLeft: _circular(bottomLeft),
@@ -69,17 +72,29 @@ class BoxUtility {
     );
   }
 
+  /// Flex
+  BoxAttributes flex(int value) => BoxAttributes(flex: value);
+
+  /// FlexFit
+  BoxAttributes flexFit(FlexFit value) => BoxAttributes(flexFit: value);
+
+  /// Expanded
+  BoxAttributes expanded() => const BoxAttributes(flexFit: FlexFit.tight);
+
+  /// Flexible
+  BoxAttributes flexible() => const BoxAttributes(flexFit: FlexFit.loose);
+
   /// Border color for all borde sides
   BoxAttributes borderColor(Color color) =>
-      BoxAttributes(border: Border.all(color: color));
+      BoxAttributes(border: IBorder.all(color: color));
 
   /// Border width for all border sides
   BoxAttributes borderWidth(double width) =>
-      BoxAttributes(border: Border.all(width: width));
+      BoxAttributes(border: IBorder.all(width: width));
 
   /// Border style for all border sides
   BoxAttributes borderStyle(BorderStyle style) {
-    return BoxAttributes(border: Border.all(style: style));
+    return BoxAttributes(border: IBorder.all(style: style));
   }
 
   BoxAttributes shadow({
@@ -89,7 +104,7 @@ class BoxUtility {
     double? spreadRadius,
   }) {
     return BoxAttributes(
-      boxShadow: BoxShadowProperties(
+      boxShadow: IBoxShadow(
         color: color,
         offset: offset,
         blurRadius: blurRadius,
@@ -97,4 +112,8 @@ class BoxUtility {
       ),
     );
   }
+
+  /// Hidden property
+  BoxAttributes hidden([bool? condition = true]) =>
+      BoxAttributes(hidden: condition);
 }

@@ -13,39 +13,42 @@ class ScreenSizeBreakpoints {
 }
 
 extension ContextExtensions on BuildContext {
-  Brightness get brightness => Theme.of(this).brightness;
+  Brightness brightness() => Theme.of(this).brightness;
 
   /// Check if brightness is Brightness.dark
-  bool get isDarkMode => brightness == Brightness.dark;
+  bool isDarkMode() => brightness() == Brightness.dark;
 
   /// MediaQueryData for context
-  MediaQueryData get mq => MediaQuery.of(this);
+  MediaQueryData mq() => MediaQuery.of(this);
 
   /// Theme context helpers
-  ThemeData get theme => Theme.of(this);
+  ThemeData theme() => Theme.of(this);
 
   /// Theme color scheme
-  ColorScheme get colorScheme => theme.colorScheme;
+  ColorScheme colorScheme() => theme().colorScheme;
 
   /// Theme text theme
-  TextTheme get textTheme => theme.textTheme;
+  TextTheme textTheme() => theme().textTheme;
+
+  /// Orientation of the device
+  Orientation orientation() => mq().orientation;
 
   /// Is device in landscape mode.
   @deprecated
-  bool get isLandscape => mq.orientation == Orientation.landscape;
+  bool isLandscape() => orientation() == Orientation.landscape;
 
   /// Is device in portrait mode.
   @deprecated
-  bool get isPortrait => mq.orientation == Orientation.portrait;
+  bool isPortrait() => orientation() == Orientation.portrait;
 
   /// Screen width
-  double get screenWidth => mq.size.width;
+  double get screenWidth => mq().size.width;
 
   /// Screen height
-  double get screenHeight => mq.size.height;
+  double get screenHeight => mq().size.height;
 
   /// Returns [ScreenSize] based on Material breakpoints
-  ScreenSize get screenSize {
+  ScreenSize screenSize() {
     return screenWidth >= ScreenSizeBreakpoints.lg
         ? ScreenSize.lg
         : screenWidth >= ScreenSizeBreakpoints.md
@@ -69,62 +72,29 @@ extension ColorExtensions on Color {
 }
 
 extension StrutStyleExtension on StrutStyle {
-  merge(StrutStyle? strutStyle) {
+  merge(StrutStyle? other) {
     return StrutStyle(
-      fontFamily: strutStyle?.fontFamily ?? fontFamily,
-      fontFamilyFallback: strutStyle?.fontFamilyFallback ?? fontFamilyFallback,
-      fontSize: strutStyle?.fontSize ?? fontSize,
-      height: strutStyle?.height ?? height,
-      leadingDistribution:
-          strutStyle?.leadingDistribution ?? leadingDistribution,
-      leading: strutStyle?.leading ?? leading,
-      fontWeight: strutStyle?.fontWeight ?? fontWeight,
-      fontStyle: strutStyle?.fontStyle ?? fontStyle,
-      forceStrutHeight: strutStyle?.forceStrutHeight ?? forceStrutHeight,
-      debugLabel: strutStyle?.debugLabel ?? debugLabel,
+      fontFamily: other?.fontFamily ?? fontFamily,
+      fontFamilyFallback: other?.fontFamilyFallback ?? fontFamilyFallback,
+      fontSize: other?.fontSize ?? fontSize,
+      height: other?.height ?? height,
+      leadingDistribution: other?.leadingDistribution ?? leadingDistribution,
+      leading: other?.leading ?? leading,
+      fontWeight: other?.fontWeight ?? fontWeight,
+      fontStyle: other?.fontStyle ?? fontStyle,
+      forceStrutHeight: other?.forceStrutHeight ?? forceStrutHeight,
+      debugLabel: other?.debugLabel ?? debugLabel,
     );
   }
 }
 
 extension EdgeInsetExtension on EdgeInsets {
-  EdgeInsets merge(EdgeInsets? edgeInsets) {
-    return EdgeInsets.only(
-      top: edgeInsets?.top ?? top,
-      bottom: edgeInsets?.bottom ?? bottom,
-      left: edgeInsets?.left ?? left,
-      right: edgeInsets?.right ?? right,
-    );
-  }
-}
-
-extension BorderExtension on Border {
-  Border merge(Border? border) {
-    return Border(
-      top: top.merge(border?.top),
-      bottom: bottom.merge(border?.bottom),
-      left: left.merge(border?.left),
-      right: right.merge(border?.right),
-    );
-  }
-}
-
-extension BorderSideExtension on BorderSide {
-  BorderSide merge(BorderSide? borderSide) {
-    return BorderSide(
-      color: borderSide?.color ?? color,
-      width: borderSide?.width ?? width,
-      style: borderSide?.style ?? style,
-    );
-  }
-}
-
-extension BorderRadiusExtension on BorderRadius {
-  BorderRadius merge(BorderRadius? borderRadius) {
-    return BorderRadius.only(
-      topLeft: borderRadius?.topLeft ?? topLeft,
-      topRight: borderRadius?.topRight ?? topRight,
-      bottomLeft: borderRadius?.bottomLeft ?? bottomLeft,
-      bottomRight: borderRadius?.bottomRight ?? bottomRight,
+  EdgeInsets merge(EdgeInsets? other) {
+    return copyWith(
+      top: other?.top,
+      bottom: other?.bottom,
+      left: other?.left,
+      right: other?.right,
     );
   }
 }

@@ -19,9 +19,8 @@ class IconMix extends MixWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mixer = Recipe.build(context, mix);
     return IconMixerWidget(
-      mixer,
+      mix.build(context),
       icon: icon,
       semanticLabel: semanticLabel,
     );
@@ -42,20 +41,20 @@ class IconMixerWidget extends MixerWidget {
   @override
   Widget build(BuildContext context) {
     return BoxMixerWidget(
-      recipe: recipe,
+      recipe,
       child: TweenAnimationBuilder<double?>(
-        duration: attributes.animationDuration,
-        curve: recipe.iconSize?.animationCurve ?? Curves.linear,
+        duration: props.animationDuration,
+        curve: props.animationCurve,
         tween: Tween<double?>(
-          end: recipe.iconSize?.value ?? IconTheme.of(context).size ?? 24.0,
+          end: iconProps.size,
         ),
         builder: (context, value, child) {
           return IconTheme.merge(
             data: IconThemeData(size: value),
             child: TweenAnimationBuilder<Color?>(
-              duration: recipe.iconColor?.animationDuration ?? Duration.zero,
-              curve: recipe.iconColor?.animationCurve ?? Curves.linear,
-              tween: ColorTween(end: recipe.iconColor?.value),
+              duration: props.animationDuration,
+              curve: props.animationCurve,
+              tween: ColorTween(end: iconProps.color),
               child: child,
               builder: (context, value, child) {
                 if (value == null) {
@@ -71,7 +70,9 @@ class IconMixerWidget extends MixerWidget {
         },
         child: Icon(
           icon,
-          textDirection: recipe.textDirection?.value,
+          color: iconProps.color,
+          size: iconProps.size,
+          textDirection: iconProps.textDirection,
           semanticLabel: semanticLabel,
         ),
       ),

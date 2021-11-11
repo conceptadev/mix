@@ -6,6 +6,6 @@ class DarkModeAttribute extends DynamicAttribute {
   const DarkModeAttribute(Attribute attribute) : super(attribute);
   @override
   bool shouldApply(BuildContext context) {
-    return context.isDarkMode;
+    return context.isDarkMode();
   }
 }
