@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mix/mix.dart';
 import 'package:mix/src/attributes/box/box.attributes.dart';
-import 'package:mix/src/interfaces/border.dart';
-import 'package:mix/src/interfaces/border_radius.dart';
-import 'package:mix/src/interfaces/box_shadow.dart';
 
 class BoxUtility {
   const BoxUtility();
@@ -49,12 +47,12 @@ class BoxUtility {
   Radius _circular(double? value) => Radius.circular(value ?? 0.0);
 
   /// Border radius
-  BoxAttributes borderRadius(IBorderRadius radius) =>
+  BoxAttributes borderRadius(BorderRadius radius) =>
       BoxAttributes(borderRadius: radius);
 
   /// Rounded border radius
   BoxAttributes rounded(double value) =>
-      borderRadius(IBorderRadius.all(_circular(value)));
+      borderRadius(BorderRadius.all(_circular(value)));
 
   BoxAttributes roundedOnly({
     double? topLeft,
@@ -63,7 +61,7 @@ class BoxUtility {
     double? bottomRight,
   }) {
     return borderRadius(
-      IBorderRadius(
+      BorderRadius.only(
         topLeft: _circular(topLeft),
         topRight: _circular(topRight),
         bottomLeft: _circular(bottomLeft),
@@ -86,15 +84,15 @@ class BoxUtility {
 
   /// Border color for all borde sides
   BoxAttributes borderColor(Color color) =>
-      BoxAttributes(border: IBorder.all(color: color));
+      BoxAttributes(border: Border.all(color: color));
 
   /// Border width for all border sides
   BoxAttributes borderWidth(double width) =>
-      BoxAttributes(border: IBorder.all(width: width));
+      BoxAttributes(border: Border.all(width: width));
 
   /// Border style for all border sides
   BoxAttributes borderStyle(BorderStyle style) {
-    return BoxAttributes(border: IBorder.all(style: style));
+    return BoxAttributes(border: Border.all(style: style));
   }
 
   BoxAttributes shadow({
@@ -103,8 +101,10 @@ class BoxUtility {
     double? blurRadius,
     double? spreadRadius,
   }) {
+    const boxShadow = BoxShadow();
+
     return BoxAttributes(
-      boxShadow: IBoxShadow(
+      boxShadow: boxShadow.copyWith(
         color: color,
         offset: offset,
         blurRadius: blurRadius,

@@ -2,10 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:mix/src/mixer/recipe_factory.dart';
 
 import '../attributes/attribute.dart';
-import '../attributes/box/box.widget.dart';
-import '../attributes/flex/flex.widget.dart';
-import '../attributes/icon/icon.widget.dart';
-import '../attributes/text/text.widget.dart';
 import '../helpers/utils.dart';
 
 /// Defines a mix
@@ -32,52 +28,6 @@ class Mix {
     final params =
         paramsToAttributes(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12);
     return Mix._(params);
-  }
-
-  Box box({
-    required Widget child,
-    Mix? mix,
-  }) {
-    final mx = Mix.combine(this, mix);
-    return Box(mx, child: child);
-  }
-
-  HBox row({
-    required List<Widget> children,
-    Mix? mix,
-  }) {
-    final mx = Mix.combine(this, mix);
-    return HBox(mx, children: children);
-  }
-
-  TextMix text(
-    String text, {
-    Mix? mix,
-    Key? key,
-  }) {
-    final mx = Mix.combine(this, mix);
-    return TextMix(mx, text: text, key: key);
-  }
-
-  VBox column({
-    Mix? mix,
-    required List<Widget> children,
-  }) {
-    final mx = Mix.combine(this, mix);
-    return VBox(mx, children: children);
-  }
-
-  IconMix icon(
-    IconData icon, {
-    Mix? mix,
-    String? semanticLabel,
-  }) {
-    final mx = Mix.combine(this, mix);
-    return IconMix(
-      mx,
-      icon: icon,
-      semanticLabel: semanticLabel,
-    );
   }
 
   /// Adds more properties to a mix

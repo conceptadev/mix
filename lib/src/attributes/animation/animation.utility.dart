@@ -15,4 +15,18 @@ class AnimationUtility {
       animationDuration: duration,
     );
   }
+
+  AnimationAttributes animationDuration(int milliseconds) {
+    return AnimationAttributes(
+      animationDuration: Duration(
+        milliseconds: milliseconds,
+      ),
+    );
+  }
+
+  AnimationAttributes animationCurve(Curve curve) {
+    return AnimationAttributes(
+      animationCurve: curve,
+    );
+  }
 }

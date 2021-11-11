@@ -98,3 +98,84 @@ extension EdgeInsetExtension on EdgeInsets {
     );
   }
 }
+
+extension BorderExtension on Border {
+  Border merge(Border? other) {
+    return Border(
+      top: top.merge(other?.top),
+      bottom: bottom.merge(other?.bottom),
+      left: left.merge(other?.left),
+      right: right.merge(other?.right),
+    );
+  }
+}
+
+extension BorderSideExtension on BorderSide {
+  BorderSide merge(BorderSide? other) {
+    if (other == null) return this;
+    return copyWith(
+      color: other.color,
+      width: other.width,
+      style: other.style,
+    );
+  }
+}
+
+extension BorderRadiusExtension on BorderRadius {
+  BorderRadius merge(BorderRadius? other) {
+    if (other == null) return this;
+    return BorderRadius.only(
+      topLeft: _getNotDefault(other.topLeft, topLeft),
+      topRight: _getNotDefault(other.topRight, topRight),
+      bottomLeft: _getNotDefault(other.bottomLeft, bottomLeft),
+      bottomRight: _getNotDefault(other.bottomRight, bottomRight),
+    );
+  }
+
+  Radius _getNotDefault(Radius other, Radius radius) {
+    if (radius == Radius.zero && other != Radius.zero) return other;
+    if (radius != Radius.zero && other == Radius.zero) return radius;
+    return other;
+  }
+}
+
+extension BoxShadowExtension on BoxShadow {
+  BoxShadow copyWith({
+    Color? color,
+    Offset? offset,
+    double? blurRadius,
+    double? spreadRadius,
+  }) {
+    return BoxShadow(
+      color: color ?? this.color,
+      offset: offset ?? this.offset,
+      blurRadius: blurRadius ?? this.blurRadius,
+      spreadRadius: spreadRadius ?? this.spreadRadius,
+    );
+  }
+
+  static BoxShadow only({
+    Color? color,
+    Offset? offset,
+    double? blurRadius,
+    double? spreadRadius,
+  }) {
+    const boxShadow = BoxShadow();
+    return boxShadow.copyWith(
+      color: color,
+      offset: offset,
+      blurRadius: blurRadius,
+      spreadRadius: spreadRadius,
+    );
+  }
+
+  BoxShadow merge(BoxShadow? other) {
+    if (other == null) return this;
+    return copyWith(
+      color: other.color,
+      offset: other.offset,
+      blurRadius: other.blurRadius,
+      spreadRadius: other.spreadRadius,
+    );
+  }
+}

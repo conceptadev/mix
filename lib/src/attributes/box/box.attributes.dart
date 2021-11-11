@@ -2,9 +2,6 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:mix/src/attributes/box/box.props.dart';
-import 'package:mix/src/interfaces/border.dart';
-import 'package:mix/src/interfaces/border_radius.dart';
-import 'package:mix/src/interfaces/box_shadow.dart';
 
 import '../../helpers/extensions.dart';
 import '../attribute.dart';
@@ -14,9 +11,9 @@ class BoxAttributes extends AttributeWithBuilder<BoxProps> {
   final EdgeInsets? padding;
   final AlignmentGeometry? alignment;
   final Color? backgroundColor;
-  final IBorder? border;
-  final IBorderRadius? borderRadius;
-  final IBoxShadow? boxShadow;
+  final Border? border;
+  final BorderRadius? borderRadius;
+  final BoxShadow? boxShadow;
 
   final double? height;
   final double? maxHeight;
@@ -78,9 +75,9 @@ class BoxAttributes extends AttributeWithBuilder<BoxProps> {
   BoxDecoration? get _decoration {
     if (border != null || borderRadius != null || boxShadow != null) {
       return BoxDecoration(
-        border: border?.generate(),
-        borderRadius: borderRadius?.generate(),
-        boxShadow: boxShadow == null ? [] : [boxShadow!.generate()],
+        border: border,
+        borderRadius: borderRadius,
+        boxShadow: boxShadow == null ? [] : [boxShadow!],
       );
     }
   }
