@@ -1,44 +1,105 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mix/src/attributes/base/space.dart';
+import 'package:mix/src/attributes/utilities.dart';
+import 'package:mix/src/attributes/widgets/box/box.utils.dart';
 
 void main() {
   group("Test Mix Utilities", () {
     test('Test Margin Utilities', () async {
-      const marginUtility = SpaceUtility<MarginAttribute>();
-      final m = marginUtility.all;
-      final mt = marginUtility.top;
-      final mb = marginUtility.bottom;
-      final mr = marginUtility.right;
-      final ml = marginUtility.left;
-      final mx = marginUtility.horizontal;
-      final my = marginUtility.vertical;
-
-      expect(m(20), MarginAttribute(left: 20, top: 20, right: 20, bottom: 20));
-      expect(mt(18), MarginAttribute(top: 18));
-      expect(mb(17), MarginAttribute(bottom: 17));
-      expect(mr(16), MarginAttribute(right: 16));
-      expect(ml(15), MarginAttribute(left: 15));
-      expect(mx(14), MarginAttribute(left: 14, right: 14));
-      expect(my(13), MarginAttribute(top: 13, bottom: 13));
+      expect(
+        m(20),
+        BoxUtility.margin(
+          const EdgeInsets.only(left: 20, top: 20, right: 20, bottom: 20),
+        ),
+      );
+      expect(
+        mt(18),
+        BoxUtility.margin(
+          const EdgeInsets.only(top: 18),
+        ),
+      );
+      expect(
+        mb(17),
+        BoxUtility.margin(
+          const EdgeInsets.only(bottom: 17),
+        ),
+      );
+      expect(
+        mr(16),
+        BoxUtility.margin(
+          const EdgeInsets.only(right: 16),
+        ),
+      );
+      expect(
+        ml(15),
+        BoxUtility.margin(
+          const EdgeInsets.only(left: 15),
+        ),
+      );
+      expect(
+        mx(14),
+        BoxUtility.margin(
+          const EdgeInsets.only(left: 14, right: 14),
+        ),
+      );
+      expect(
+        my(13),
+        BoxUtility.margin(
+          const EdgeInsets.only(top: 13, bottom: 13),
+        ),
+      );
     });
 
     test('Test Padding Utilities', () async {
-      const paddingUtility = SpaceUtility<PaddingAttribute>();
-      final p = paddingUtility.all;
-      final pt = paddingUtility.top;
-      final pb = paddingUtility.bottom;
-      final pr = paddingUtility.right;
-      final pl = paddingUtility.left;
-      final px = paddingUtility.horizontal;
-      final py = paddingUtility.vertical;
-
-      expect(p(20), PaddingAttribute(left: 20, top: 20, right: 20, bottom: 20));
-      expect(pt(18), PaddingAttribute(top: 18));
-      expect(pb(17), PaddingAttribute(bottom: 17));
-      expect(pr(16), PaddingAttribute(right: 16));
-      expect(pl(15), PaddingAttribute(left: 15));
-      expect(px(14), PaddingAttribute(left: 14, right: 14));
-      expect(py(13), PaddingAttribute(top: 13, bottom: 13));
+      expect(
+        p(20),
+        BoxUtility.padding(
+          const EdgeInsets.all(20),
+        ),
+        reason: "Padding not applied to all",
+      );
+      expect(
+        pt(18),
+        BoxUtility.padding(
+          const EdgeInsets.only(top: 18),
+        ),
+        reason: "Padding not applied to top",
+      );
+      expect(
+        pb(17),
+        BoxUtility.padding(
+          const EdgeInsets.only(bottom: 17),
+        ),
+        reason: "Padding not applied to bottom",
+      );
+      expect(
+        pr(16),
+        BoxUtility.padding(
+          const EdgeInsets.only(right: 16),
+        ),
+        reason: "Padding not applied to right",
+      );
+      expect(
+        pl(15),
+        BoxUtility.padding(
+          const EdgeInsets.only(left: 15),
+        ),
+        reason: "Padding not applied to left",
+      );
+      expect(
+        px(14),
+        BoxUtility.padding(
+          const EdgeInsets.only(left: 14, right: 14),
+        ),
+        reason: "Padding not applied to horizontally",
+      );
+      expect(
+        py(13),
+        BoxUtility.padding(
+          const EdgeInsets.only(top: 13, bottom: 13),
+        ),
+        reason: "Padding not applied to vertically",
+      );
     });
   });
 }

@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:mix/src/attributes/widgets/box/box.attributes.dart';
+import 'package:mix/src/attributes/widgets/flex/flex.attributes.dart';
+import 'package:mix/src/attributes/widgets/icon/icon.attributes.dart';
+import 'package:mix/src/attributes/widgets/text/text.attributes.dart';
 
 import '../../mix.dart';
 import '../mixer/mixer.dart';
@@ -21,11 +25,24 @@ abstract class MixWidget extends StatelessWidget {
 abstract class MixerWidget extends StatelessWidget {
   /// Constructor
   const MixerWidget(
-    this.mixer, {
+    this.recipe, {
     Key? key,
   }) : super(key: key);
 
-  final Mixer mixer;
+  BoxAttributes get boxProps => recipe.box;
+  TextAttributes get textProps => recipe.text;
+  IconAttributes get iconProps => recipe.icon;
+  FlexAttributes get flexProps => recipe.flex;
+
+  // Common
+  bool get animated => recipe.common.animated == true;
+  Duration get animationDuration =>
+      recipe.common.animationDuration ?? const Duration(milliseconds: 100);
+  Curve get animationCurve => recipe.common.animationCurve ?? Curves.linear;
+  bool get hidden => recipe.common.hidden == true;
+  TextDirection? get textDirection => recipe.common.textDirection;
+
+  final Mixer recipe;
 
   @override
   Widget build(BuildContext context);

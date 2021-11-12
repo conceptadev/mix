@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mix/mix.dart';
 import 'package:mix/src/helpers/utils.dart';
 
 /// Possible screen sizes
@@ -14,38 +13,42 @@ class ScreenSizeBreakpoints {
 }
 
 extension ContextExtensions on BuildContext {
-  Brightness get brightness => Theme.of(this).brightness;
+  Brightness brightness() => Theme.of(this).brightness;
 
   /// Check if brightness is Brightness.dark
-  bool get isDarkMode => brightness == Brightness.dark;
+  bool isDarkMode() => brightness() == Brightness.dark;
 
   /// MediaQueryData for context
-  MediaQueryData get mq => MediaQuery.of(this);
+  MediaQueryData mq() => MediaQuery.of(this);
 
   /// Theme context helpers
-
-  ThemeData get theme => Theme.of(this);
+  ThemeData theme() => Theme.of(this);
 
   /// Theme color scheme
-  ColorScheme get colorScheme => theme.colorScheme;
+  ColorScheme colorScheme() => theme().colorScheme;
 
   /// Theme text theme
-  TextTheme get textTheme => theme.textTheme;
+  TextTheme textTheme() => theme().textTheme;
+
+  /// Orientation of the device
+  Orientation orientation() => mq().orientation;
 
   /// Is device in landscape mode.
-  bool get isLandscape => mq.orientation == Orientation.landscape;
+  @deprecated
+  bool isLandscape() => orientation() == Orientation.landscape;
 
   /// Is device in portrait mode.
-  bool get isPortrait => mq.orientation == Orientation.portrait;
+  @deprecated
+  bool isPortrait() => orientation() == Orientation.portrait;
 
   /// Screen width
-  double get screenWidth => mq.size.width;
+  double get screenWidth => mq().size.width;
 
   /// Screen height
-  double get screenHeight => mq.size.height;
+  double get screenHeight => mq().size.height;
 
   /// Returns [ScreenSize] based on Material breakpoints
-  ScreenSize get screenSize {
+  ScreenSize screenSize() {
     return screenWidth >= ScreenSizeBreakpoints.lg
         ? ScreenSize.lg
         : screenWidth >= ScreenSizeBreakpoints.md
@@ -54,10 +57,6 @@ extension ContextExtensions on BuildContext {
                 ? ScreenSize.sm
                 : ScreenSize.xs;
   }
-}
-
-extension TextStyleExtension on TextStyle {
-  Mix get mix => Mix(textStyle(this));
 }
 
 extension ColorExtensions on Color {
@@ -72,34 +71,107 @@ extension ColorExtensions on Color {
       '${blue.toRadixString(16).padLeft(2, '0')}';
 }
 
-extension StringExtensions on String {
-  String get capitalize {
-    final current = this;
-    if (current.isEmpty) {
-      return this;
-    }
+extension StrutStyleExtension on StrutStyle {
+  merge(StrutStyle? other) {
+    return StrutStyle(
+      fontFamily: other?.fontFamily ?? fontFamily,
+      fontFamilyFallback: other?.fontFamilyFallback ?? fontFamilyFallback,
+      fontSize: other?.fontSize ?? fontSize,
+      height: other?.height ?? height,
+      leadingDistribution: other?.leadingDistribution ?? leadingDistribution,
+      leading: other?.leading ?? leading,
+      fontWeight: other?.fontWeight ?? fontWeight,
+      fontStyle: other?.fontStyle ?? fontStyle,
+      forceStrutHeight: other?.forceStrutHeight ?? forceStrutHeight,
+      debugLabel: other?.debugLabel ?? debugLabel,
+    );
+  }
+}
 
-    return current[0].toUpperCase() + current.substring(1);
+extension EdgeInsetExtension on EdgeInsets {
+  EdgeInsets merge(EdgeInsets? other) {
+    if (other == null) return this;
+    return copyWith(
+      top: _mergeIf(other.top, top, _d.top),
+      bottom: _mergeIf(other.bottom, bottom, _d.bottom),
+      left: _mergeIf(other.left, left, _d.left),
+      right: _mergeIf(other.right, right, _d.right),
+    );
   }
 
-  String get titleCase {
-    const separator = ' ';
-    final current = this;
-    List<String> words =
-        current.split(separator).map((word) => word.capitalize).toList();
+  static const EdgeInsets _d = EdgeInsets.zero;
+}
 
-    return words.join(separator);
+extension BorderExtension on Border {
+  Border merge(Border? other) {
+    if (other == null) return this;
+    return Border(
+      top: top.merge(other.top),
+      bottom: bottom.merge(other.bottom),
+      left: left.merge(other.left),
+      right: right.merge(other.right),
+    );
+  }
+}
+
+extension BorderSideExtension on BorderSide {
+  static const BorderSide _d = BorderSide();
+
+  BorderSide merge(BorderSide? other) {
+    if (other == null) return this;
+    return copyWith(
+      color: _mergeIf(other.color, color, _d.color),
+      width: _mergeIf(other.width, width, _d.width),
+      style: _mergeIf(other.style, style, _d.style),
+    );
+  }
+}
+
+extension BorderRadiusExtension on BorderRadius {
+  BorderRadius merge(BorderRadius? other) {
+    if (other == null) return this;
+    return BorderRadius.only(
+      topLeft: _mergeIf(other.topLeft, topLeft, _d),
+      topRight: _mergeIf(other.topRight, topRight, _d),
+      bottomLeft: _mergeIf(other.bottomLeft, bottomLeft, _d),
+      bottomRight: _mergeIf(other.bottomRight, bottomRight, _d),
+    );
   }
 
-  String get sentenceCase {
-    const separator = ' ';
-    final current = this;
-    List<String> words = current.split(separator);
+  static const Radius _d = Radius.zero;
+}
 
-    if (words.isNotEmpty) {
-      words[0].capitalize;
-    }
-
-    return words.join(separator);
+extension BoxShadowExtension on BoxShadow {
+  BoxShadow copyWith({
+    Color? color,
+    Offset? offset,
+    double? blurRadius,
+    double? spreadRadius,
+  }) {
+    return BoxShadow(
+      color: color ?? this.color,
+      offset: offset ?? this.offset,
+      blurRadius: blurRadius ?? this.blurRadius,
+      spreadRadius: spreadRadius ?? this.spreadRadius,
+    );
   }
+
+  static const BoxShadow _d = BoxShadow();
+
+  BoxShadow merge(BoxShadow? o) {
+    if (o == null) return this;
+    return copyWith(
+      color: _mergeIf(o.color, color, _d.color),
+      offset: _mergeIf(o.offset, offset, _d.offset),
+      blurRadius: _mergeIf(o.blurRadius, blurRadius, _d.blurRadius),
+      spreadRadius: _mergeIf(o.spreadRadius, spreadRadius, _d.spreadRadius),
+    );
+  }
+}
+
+/// Receives a value, an other value and a default value for comparison
+T _mergeIf<T>(T other, T thisValue, T defaultValue) {
+  if (thisValue == defaultValue && other != defaultValue) return other;
+  if (thisValue != defaultValue && other == defaultValue) return thisValue;
+  return other;
 }

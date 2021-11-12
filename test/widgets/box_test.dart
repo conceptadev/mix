@@ -1,20 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mix/mix.dart';
-import 'package:mix/src/attributes/base/size.dart';
-import 'package:mix/src/attributes/base/space.dart';
-import 'package:mix/src/attributes/primitives/layout/aspect_ratio.dart';
-import 'package:mix/src/attributes/primitives/layout/flex.dart';
-import 'package:mix/src/attributes/primitives/painting/alignment.dart';
-import 'package:mix/src/attributes/primitives/painting/background_color.dart';
-import 'package:mix/src/attributes/primitives/painting/border.dart';
-import 'package:mix/src/attributes/primitives/painting/border_radius.dart';
-import 'package:mix/src/attributes/primitives/painting/border_side.dart';
-import 'package:mix/src/attributes/primitives/painting/opacity.dart';
-import 'package:mix/src/attributes/primitives/painting/rotate.dart';
-import 'package:mix/src/attributes/primitives/rendering/flex/flex_fit.dart';
-import 'package:mix/src/utilities/dynamic/hidden.dart';
-import 'package:mix/src/widgets/primitives/box.dart';
+import 'package:mix/src/attributes/widgets/box/box.attributes.dart';
+import 'package:mix/src/attributes/widgets/box/box.widget.dart';
+import 'package:mix/src/attributes/widgets/common/common.attributes.dart';
+import 'package:mix/src/mixer/mix_factory.dart';
 
 import '../test_utils.dart';
 
@@ -29,10 +18,11 @@ void main() {
           await tester.pumpWidget(
             DirectionalTestWidget(
               child: Mix().box(
-                  child: const Text(
-                widgetText,
-                key: Key('child-key'),
-              )),
+                child: const Text(
+                  widgetText,
+                  key: Key('child-key'),
+                ),
+              ),
             ),
           );
 
@@ -54,8 +44,8 @@ void main() {
           await tester.pumpWidget(
             BoxInsideFlexWidget(
               Mix(
-                const FlexAttribute(2),
-                const FlexFitAttribute(FlexFit.tight),
+                const BoxAttributes(flex: 2),
+                const BoxAttributes(flexFit: FlexFit.tight),
               ),
             ),
           );
@@ -74,7 +64,7 @@ void main() {
         (tester) async {
           await tester.pumpWidget(
             BoxTestWidget(
-              Mix(const RotateAttribute(3)),
+              Mix(const BoxAttributes(rotate: 3)),
             ),
           );
 
@@ -91,7 +81,7 @@ void main() {
         (tester) async {
           await tester.pumpWidget(
             BoxTestWidget(
-              Mix(const HiddenAttribute()),
+              Mix(const CommonAttributes(hidden: true)),
             ),
           );
 
@@ -109,7 +99,7 @@ void main() {
         (tester) async {
           await tester.pumpWidget(
             BoxTestWidget(
-              Mix(AspectRatioAttribute(3 / 2)),
+              Mix(const BoxAttributes(aspectRatio: 3 / 2)),
             ),
           );
 
@@ -126,7 +116,7 @@ void main() {
         (tester) async {
           await tester.pumpWidget(
             BoxTestWidget(
-              Mix(AlignmentAttribute(Alignment.centerRight)),
+              Mix(const BoxAttributes(alignment: Alignment.centerRight)),
             ),
           );
 
@@ -143,7 +133,7 @@ void main() {
         (tester) async {
           await tester.pumpWidget(
             BoxTestWidget(
-              Mix(OpacityAttribute(0.5)),
+              Mix(const BoxAttributes(opacity: 0.5)),
             ),
           );
 
@@ -160,7 +150,7 @@ void main() {
         (tester) async {
           await tester.pumpWidget(
             BoxTestWidget(
-              Mix(BackgroundColorAttribute(Colors.lime)),
+              Mix(const BoxAttributes(backgroundColor: Colors.lime)),
             ),
           );
 
@@ -175,46 +165,40 @@ void main() {
       testWidgets(
         'Responds to Decoration attributes',
         (tester) async {
-          final side = BorderSideAttribute(
+          final border = Border.all(
             color: Colors.green,
             width: 1.0,
             style: BorderStyle.solid,
           );
+          const borderRadius = BorderRadius.only(
+            topLeft: Radius.circular(20),
+          );
           await tester.pumpWidget(
             BoxTestWidget(
               Mix(
-                BackgroundColorAttribute(Colors.purple),
-                BorderRadiusAttribute(topLeft: 20),
-                BorderAttribute(
-                  bottom: side,
-                  top: side,
-                  left: side,
-                  right: side,
-                ),
+                const BoxAttributes(backgroundColor: Colors.purple),
+                const BoxAttributes(borderRadius: borderRadius),
+                BoxAttributes(border: border),
               ),
             ),
           );
 
-          final decoratedBoxWidget = tester.widget<DecoratedBox>(
-            find.byType(DecoratedBox),
+          final decoratedBoxWidget = tester.widget<Container>(
+            find.byType(Container),
           );
 
-          expect(
-            decoratedBoxWidget.decoration,
-            const BoxDecoration(
-              color: Colors.purple,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(20),
-              ),
-              border: Border.fromBorderSide(
-                BorderSide(
-                  color: Colors.green,
-                  width: 1.0,
-                  style: BorderStyle.solid,
-                ),
-              ),
-            ),
+          final widgetDecoration =
+              decoratedBoxWidget.decoration as BoxDecoration;
+
+          final decoration = BoxDecoration(
+            color: Colors.purple,
+            borderRadius: borderRadius,
+            border: border,
           );
+          expect(widgetDecoration.color, decoration.color);
+          expect(widgetDecoration.borderRadius, decoration.borderRadius);
+          expect(widgetDecoration.border, decoration.border);
+          // expect(widgetDecoration, decoration);
         },
       );
 
@@ -224,11 +208,13 @@ void main() {
           await tester.pumpWidget(
             BoxTestWidget(
               Mix(
-                MarginAttribute(
-                  left: 15,
-                  top: 25,
-                  right: 35,
-                  bottom: 45,
+                const BoxAttributes(
+                  margin: EdgeInsets.only(
+                    left: 15,
+                    top: 25,
+                    right: 35,
+                    bottom: 45,
+                  ),
                 ),
               ),
             ),
@@ -251,11 +237,13 @@ void main() {
           await tester.pumpWidget(
             BoxTestWidget(
               Mix(
-                PaddingAttribute(
-                  left: 10,
-                  top: 20,
-                  right: 30,
-                  bottom: 40,
+                const BoxAttributes(
+                  padding: EdgeInsets.only(
+                    left: 10,
+                    top: 20,
+                    right: 30,
+                    bottom: 40,
+                  ),
                 ),
               ),
             ),
@@ -278,34 +266,24 @@ void main() {
           await tester.pumpWidget(
             BoxTestWidget(
               Mix(
-                MaxHeightAttribute(105),
-                MinHeightAttribute(55),
-                MaxWidthAttribute(155),
-                MinWidthAttribute(45),
+                const BoxAttributes(maxHeight: 105),
+                const BoxAttributes(minHeight: 55),
+                const BoxAttributes(maxWidth: 155),
+                const BoxAttributes(minWidth: 45),
               ),
             ),
           );
 
-          final constrainedBoxWidget = tester.widget<ConstrainedBox>(
-            find.byType(ConstrainedBox),
+          final container = tester.widget<Container>(
+            find.byType(Container),
           );
 
-          expect(
-            constrainedBoxWidget.constraints,
-            const BoxConstraints(
-              maxHeight: 105,
-              minHeight: 55,
-              maxWidth: 155,
-              minWidth: 45,
-            ),
-          );
+          final constraints = container.constraints;
 
-          final limitedBoxWidget = tester.widget<LimitedBox>(
-            find.byType(LimitedBox),
-          );
-
-          expect(limitedBoxWidget.maxHeight, 105);
-          expect(limitedBoxWidget.maxWidth, 155);
+          expect(constraints!.maxHeight, 105.0);
+          expect(constraints.minHeight, 55.0);
+          expect(constraints.maxWidth, 155.0);
+          expect(constraints.minWidth, 45.0);
         },
       );
     },

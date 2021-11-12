@@ -1,26 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mix/mix.dart';
-import 'package:mix/src/attributes/primitives/painting/background_color.dart';
-import 'package:mix/src/attributes/primitives/text/debug_label.dart';
-import 'package:mix/src/attributes/primitives/text/font_family.dart';
-import 'package:mix/src/attributes/primitives/text/font_size.dart';
-import 'package:mix/src/attributes/primitives/text/font_style.dart';
-import 'package:mix/src/attributes/primitives/text/font_weight.dart';
-import 'package:mix/src/attributes/primitives/text/letter_spacing.dart';
-import 'package:mix/src/attributes/primitives/text/locale.dart';
-import 'package:mix/src/attributes/primitives/text/max_lines.dart';
-import 'package:mix/src/attributes/primitives/text/soft_wrap.dart';
-import 'package:mix/src/attributes/primitives/text/text_align.dart';
-import 'package:mix/src/attributes/primitives/text/text_baseline.dart';
-import 'package:mix/src/attributes/primitives/text/text_color.dart';
-import 'package:mix/src/attributes/primitives/text/text_direction.dart';
-import 'package:mix/src/attributes/primitives/text/text_height.dart';
-import 'package:mix/src/attributes/primitives/text/text_overflow.dart';
-import 'package:mix/src/attributes/primitives/text/text_scale_factor.dart';
-import 'package:mix/src/attributes/primitives/text/text_width_basis.dart';
-import 'package:mix/src/attributes/primitives/text/word_spacing.dart';
-import 'package:mix/src/widgets/primitives/text.dart';
+import 'package:mix/src/attributes/widgets/common/common.utils.dart';
+import 'package:mix/src/attributes/widgets/text/text.utils.dart';
+import 'package:mix/src/mixer/mix_factory.dart';
 
 import '../test_utils.dart';
 
@@ -35,7 +17,7 @@ void main() {
       );
 
       expect(
-        tester.widget<TextMixerWidget>(find.byType(TextMixerWidget)).text,
+        tester.widget<Text>(find.byType(Text)).data,
         widgetText,
       );
     });
@@ -44,13 +26,13 @@ void main() {
       await tester.pumpWidget(
         DirectionalTestWidget(
           child: Mix(
-            const TextOverflowAttribute(TextOverflow.ellipsis),
-            const SoftWrapAttribute(true),
-            const TextScaleFactorAttribute(2.2),
-            const TextWidthBasisAttribute(TextWidthBasis.longestLine),
-            const MaxLinesAttribute(3),
-            const TextAlignAttribute(TextAlign.justify),
-            const TextDirectionAttribute(TextDirection.rtl),
+            TextUtility.overflow(TextOverflow.ellipsis),
+            TextUtility.softWrap(true),
+            TextUtility.textScaleFactor(2.2),
+            TextUtility.textWidthBasis(TextWidthBasis.longestLine),
+            TextUtility.maxLines(3),
+            TextUtility.textAlign(TextAlign.justify),
+            CommonUtility.textDirection(TextDirection.rtl),
           ).text(widgetText),
         ),
       );
@@ -70,18 +52,17 @@ void main() {
       await tester.pumpWidget(
         DirectionalTestWidget(
           child: Mix(
-            const FontSizeAttribute(20),
-            const WordSpacingAttribute(2),
-            const LetterSpacingAttribute(3),
-            const TextBaselineAttribute(TextBaseline.ideographic),
-            const FontFamilyAttribute('Roboto'),
-            const FontWeightAttribute(FontWeight.bold),
-            const TextColorAttribute(Colors.amber),
-            const FontStyleAttribute(FontStyle.italic),
-            const LocaleAttribute(Locale('es', 'US')),
-            const DebugLabelAttribute('debug_label'),
-            const TextHeightAttribute(10),
-            BackgroundColorAttribute(Colors.blue),
+            TextStyleUtility.fontSize(20),
+            TextStyleUtility.wordSpacing(2),
+            TextStyleUtility.letterSpacing(3),
+            TextStyleUtility.textBaseline(TextBaseline.ideographic),
+            TextStyleUtility.fontFamily('Roboto'),
+            TextStyleUtility.fontWeight(FontWeight.bold),
+            TextStyleUtility.color(Colors.amber),
+            TextStyleUtility.fontStyle(FontStyle.italic),
+            TextStyleUtility.locale(const Locale('es', 'US')),
+            TextStyleUtility.height(10),
+            TextStyleUtility.backgroundColor(Colors.blue),
           ).text(widgetText),
         ),
       );

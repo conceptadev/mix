@@ -1,40 +1,111 @@
 import 'package:flutter/material.dart';
+import 'package:mix/mix.dart';
+import 'package:mix/src/mixer/mixer.dart';
 
-import '../attributes/base_attribute.dart';
+import '../attributes/attribute.dart';
 import '../helpers/utils.dart';
-import '../widgets/primitives/box.dart';
-import '../widgets/primitives/flex_box.dart';
-import '../widgets/primitives/icon.dart';
-import '../widgets/primitives/text.dart';
 
 /// Defines a mix
-class Mix {
-  const Mix._(this.params);
-  // Exposed for performance testing
-  const Mix.builder(this.params);
+class Mix<T extends Attribute> {
+  const Mix._(this.attributes);
 
-  final List<Attribute> params;
+  final List<T> attributes;
 
   /// Define mix with parameters
   factory Mix([
-    Attribute? p1,
-    Attribute? p2,
-    Attribute? p3,
-    Attribute? p4,
-    Attribute? p5,
-    Attribute? p6,
-    Attribute? p7,
-    Attribute? p8,
-    Attribute? p9,
-    Attribute? p10,
-    Attribute? p11,
-    Attribute? p12,
+    T? p1,
+    T? p2,
+    T? p3,
+    T? p4,
+    T? p5,
+    T? p6,
+    T? p7,
+    T? p8,
+    T? p9,
+    T? p10,
+    T? p11,
+    T? p12,
   ]) {
     final params =
-        attributeParamToList(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12);
+        paramsToAttributes(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12);
     return Mix._(params);
   }
 
+  /// Adds more properties to a mix
+  Mix<T> add([
+    T? p1,
+    T? p2,
+    T? p3,
+    T? p4,
+    T? p5,
+    T? p6,
+    T? p7,
+    T? p8,
+    T? p9,
+    T? p10,
+    T? p11,
+    T? p12,
+  ]) {
+    final newParams = [...attributes];
+    // Combine attributes into existing params
+    newParams.addAll(
+      paramsToAttributes<T>(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12),
+    );
+
+    return Mix._(newParams);
+  }
+
+  /// Merges many mixes into one
+  static Mix<T> combine<T extends Attribute>([
+    Mix<T>? mix1,
+    Mix<T>? mix2,
+    Mix<T>? mix3,
+    Mix<T>? mix4,
+    Mix<T>? mix5,
+    Mix<T>? mix6,
+    Mix<T>? mix7,
+    Mix<T>? mix8,
+    Mix<T>? mix9,
+    Mix<T>? mix10,
+    Mix<T>? mix11,
+    Mix<T>? mix12,
+  ]) {
+    final list = <T>[];
+    if (mix1 != null) list.addAll(mix1.attributes);
+    if (mix2 != null) list.addAll(mix2.attributes);
+    if (mix3 != null) list.addAll(mix3.attributes);
+    if (mix4 != null) list.addAll(mix4.attributes);
+    if (mix5 != null) list.addAll(mix5.attributes);
+    if (mix6 != null) list.addAll(mix6.attributes);
+    if (mix7 != null) list.addAll(mix7.attributes);
+    if (mix8 != null) list.addAll(mix8.attributes);
+    if (mix9 != null) list.addAll(mix9.attributes);
+    if (mix10 != null) list.addAll(mix10.attributes);
+    if (mix11 != null) list.addAll(mix11.attributes);
+    if (mix12 != null) list.addAll(mix12.attributes);
+
+    return Mix<T>._(list);
+  }
+
+  /// Chooses mix based on condition
+  static Mix chooser<T extends Attribute>({
+    required bool condition,
+    required Mix<T> trueMix,
+    required Mix<T> falseMix,
+  }) {
+    if (condition) {
+      return trueMix;
+    } else {
+      return falseMix;
+    }
+  }
+
+  Mixer build(BuildContext context) {
+    return Mixer.build(context, this);
+  }
+}
+
+extension MixExtension on Mix {
   Box box({
     required Widget child,
     Mix? mix,
@@ -43,12 +114,12 @@ class Mix {
     return Box(mx, child: child);
   }
 
-  RowBox row({
-    required List<Widget> children,
+  HBox row({
     Mix? mix,
+    required List<Widget> children,
   }) {
     final mx = Mix.combine(this, mix);
-    return RowBox(mx, children: children);
+    return HBox(mx, children: children);
   }
 
   TextMix text(
@@ -60,12 +131,12 @@ class Mix {
     return TextMix(mx, text: text, key: key);
   }
 
-  ColumnBox column({
+  VBox column({
     Mix? mix,
     required List<Widget> children,
   }) {
     final mx = Mix.combine(this, mix);
-    return ColumnBox(mx, children: children);
+    return VBox(mx, children: children);
   }
 
   IconMix icon(
@@ -79,74 +150,5 @@ class Mix {
       icon: icon,
       semanticLabel: semanticLabel,
     );
-  }
-
-  /// Adds more attributes to the existing mix
-  Mix mix([
-    Attribute? p1,
-    Attribute? p2,
-    Attribute? p3,
-    Attribute? p4,
-    Attribute? p5,
-    Attribute? p6,
-    Attribute? p7,
-    Attribute? p8,
-    Attribute? p9,
-    Attribute? p10,
-    Attribute? p11,
-    Attribute? p12,
-  ]) {
-    final newParams = [...params];
-    // Combine attributes into existing params
-    newParams.addAll(
-      attributeParamToList(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12),
-    );
-
-    return Mix._(newParams);
-  }
-
-  /// Merges 2 or 3 shape definitions
-  static Mix combine([
-    Mix? mix1,
-    Mix? mix2,
-    Mix? mix3,
-    Mix? mix4,
-    Mix? mix5,
-    Mix? mix6,
-    Mix? mix7,
-    Mix? mix8,
-    Mix? mix9,
-    Mix? mix10,
-    Mix? mix11,
-    Mix? mix12,
-  ]) {
-    final list = <Attribute>[];
-    if (mix1 != null) list.addAll(mix1.params);
-    if (mix2 != null) list.addAll(mix2.params);
-    if (mix3 != null) list.addAll(mix3.params);
-    if (mix4 != null) list.addAll(mix4.params);
-    if (mix5 != null) list.addAll(mix5.params);
-    if (mix6 != null) list.addAll(mix6.params);
-    if (mix7 != null) list.addAll(mix7.params);
-    if (mix8 != null) list.addAll(mix8.params);
-    if (mix9 != null) list.addAll(mix9.params);
-    if (mix10 != null) list.addAll(mix10.params);
-    if (mix11 != null) list.addAll(mix11.params);
-    if (mix12 != null) list.addAll(mix12.params);
-
-    return Mix._(list);
-  }
-
-  /// Chooses mix based on condition
-  static Mix chooser({
-    required bool condition,
-    required Mix trueMix,
-    required Mix falseMix,
-  }) {
-    if (condition) {
-      return trueMix;
-    } else {
-      return falseMix;
-    }
   }
 }
