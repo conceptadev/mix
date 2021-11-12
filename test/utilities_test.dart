@@ -54,44 +54,51 @@ void main() {
       expect(
         p(20),
         BoxUtility.padding(
-          const EdgeInsets.only(left: 20, top: 20, right: 20, bottom: 20),
+          const EdgeInsets.all(20),
         ),
+        reason: "Padding not applied to all",
       );
       expect(
         pt(18),
         BoxUtility.padding(
           const EdgeInsets.only(top: 18),
         ),
+        reason: "Padding not applied to top",
       );
       expect(
         pb(17),
         BoxUtility.padding(
           const EdgeInsets.only(bottom: 17),
         ),
+        reason: "Padding not applied to bottom",
       );
       expect(
-        mr(16),
+        pr(16),
         BoxUtility.padding(
           const EdgeInsets.only(right: 16),
         ),
+        reason: "Padding not applied to right",
       );
       expect(
         pl(15),
         BoxUtility.padding(
           const EdgeInsets.only(left: 15),
         ),
+        reason: "Padding not applied to left",
       );
       expect(
         px(14),
         BoxUtility.padding(
           const EdgeInsets.only(left: 14, right: 14),
         ),
+        reason: "Padding not applied to horizontally",
       );
       expect(
         py(13),
         BoxUtility.padding(
           const EdgeInsets.only(top: 13, bottom: 13),
         ),
+        reason: "Padding not applied to vertically",
       );
     });
   });

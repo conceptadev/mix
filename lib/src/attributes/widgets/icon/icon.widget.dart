@@ -42,7 +42,7 @@ class IconMixerWidget extends MixerWidget {
       icon,
       color: iconProps.color,
       size: iconProps.size,
-      textDirection: iconProps.textDirection,
+      textDirection: textDirection,
       semanticLabel: semanticLabel,
     );
 

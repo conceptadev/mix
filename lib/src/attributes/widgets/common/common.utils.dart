@@ -33,4 +33,8 @@ class CommonUtility {
   static CommonAttributes textDirection(TextDirection? textDirection) {
     return CommonAttributes(textDirection: textDirection);
   }
+
+  /// Hidden property
+  static CommonAttributes hidden([bool? condition = true]) =>
+      CommonAttributes(hidden: condition);
 }

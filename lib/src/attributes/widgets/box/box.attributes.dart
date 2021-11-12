@@ -28,7 +28,6 @@ class BoxAttributes extends Attribute {
   final double? aspectRatio;
   final FlexFit? flexFit;
   final int? flex;
-  final bool? hidden;
 
   const BoxAttributes({
     this.margin,
@@ -47,19 +46,17 @@ class BoxAttributes extends Attribute {
     this.rotate,
     this.opacity,
     this.aspectRatio,
-    this.hidden,
     this.flex,
     this.flexFit,
   });
 
   BoxAttributes merge(BoxAttributes o) {
     return BoxAttributes(
-      border: border?.merge(o.border) ?? border,
+      border: border?.merge(o.border) ?? o.border,
       borderRadius: borderRadius?.merge(o.borderRadius) ?? o.borderRadius,
       boxShadow: boxShadow?.merge(o.boxShadow) ?? o.boxShadow,
       margin: margin?.merge(o.margin) ?? o.margin,
       padding: padding?.merge(o.padding) ?? o.padding,
-      hidden: o.hidden ?? hidden,
       alignment: alignment ?? o.alignment,
       backgroundColor: backgroundColor ?? o.backgroundColor,
       height: o.height ?? height,
@@ -71,6 +68,8 @@ class BoxAttributes extends Attribute {
       rotate: o.rotate ?? rotate,
       opacity: o.opacity ?? opacity,
       aspectRatio: o.aspectRatio ?? aspectRatio,
+      flex: o.flex ?? flex,
+      flexFit: o.flexFit ?? flexFit,
     );
   }
 
@@ -125,8 +124,7 @@ class BoxAttributes extends Attribute {
         other.opacity == opacity &&
         other.aspectRatio == aspectRatio &&
         other.flexFit == flexFit &&
-        other.flex == flex &&
-        other.hidden == hidden;
+        other.flex == flex;
   }
 
   @override
@@ -148,7 +146,6 @@ class BoxAttributes extends Attribute {
         opacity.hashCode ^
         aspectRatio.hashCode ^
         flexFit.hashCode ^
-        flex.hashCode ^
-        hidden.hashCode;
+        flex.hashCode;
   }
 }

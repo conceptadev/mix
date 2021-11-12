@@ -5,10 +5,6 @@ class Nothing extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LimitedBox(
-      maxWidth: 0.0,
-      maxHeight: 0.0,
-      child: ConstrainedBox(constraints: const BoxConstraints.expand()),
-    );
+    return SizedBox.fromSize(size: Size.zero);
   }
 }

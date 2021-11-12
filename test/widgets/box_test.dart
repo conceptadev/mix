@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/src/attributes/widgets/box/box.attributes.dart';
 import 'package:mix/src/attributes/widgets/box/box.widget.dart';
+import 'package:mix/src/attributes/widgets/common/common.attributes.dart';
 import 'package:mix/src/mixer/mix_factory.dart';
 
 import '../test_utils.dart';
@@ -80,7 +81,7 @@ void main() {
         (tester) async {
           await tester.pumpWidget(
             BoxTestWidget(
-              Mix(const BoxAttributes(hidden: true)),
+              Mix(const CommonAttributes(hidden: true)),
             ),
           );
 
@@ -164,46 +165,40 @@ void main() {
       testWidgets(
         'Responds to Decoration attributes',
         (tester) async {
+          final border = Border.all(
+            color: Colors.green,
+            width: 1.0,
+            style: BorderStyle.solid,
+          );
+          const borderRadius = BorderRadius.only(
+            topLeft: Radius.circular(20),
+          );
           await tester.pumpWidget(
             BoxTestWidget(
               Mix(
                 const BoxAttributes(backgroundColor: Colors.purple),
-                const BoxAttributes(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                  ),
-                ),
-                BoxAttributes(
-                  border: Border.all(
-                    color: Colors.green,
-                    width: 1.0,
-                    style: BorderStyle.solid,
-                  ),
-                ),
+                const BoxAttributes(borderRadius: borderRadius),
+                BoxAttributes(border: border),
               ),
             ),
           );
 
-          final decoratedBoxWidget = tester.widget<DecoratedBox>(
-            find.byType(DecoratedBox),
+          final decoratedBoxWidget = tester.widget<Container>(
+            find.byType(Container),
           );
 
-          expect(
-            decoratedBoxWidget.decoration,
-            const BoxDecoration(
-              color: Colors.purple,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(20),
-              ),
-              border: Border.fromBorderSide(
-                BorderSide(
-                  color: Colors.green,
-                  width: 1.0,
-                  style: BorderStyle.solid,
-                ),
-              ),
-            ),
+          final widgetDecoration =
+              decoratedBoxWidget.decoration as BoxDecoration;
+
+          final decoration = BoxDecoration(
+            color: Colors.purple,
+            borderRadius: borderRadius,
+            border: border,
           );
+          expect(widgetDecoration.color, decoration.color);
+          expect(widgetDecoration.borderRadius, decoration.borderRadius);
+          expect(widgetDecoration.border, decoration.border);
+          // expect(widgetDecoration, decoration);
         },
       );
 
@@ -279,26 +274,16 @@ void main() {
             ),
           );
 
-          final constrainedBoxWidget = tester.widget<ConstrainedBox>(
-            find.byType(ConstrainedBox),
+          final container = tester.widget<Container>(
+            find.byType(Container),
           );
 
-          expect(
-            constrainedBoxWidget.constraints,
-            const BoxConstraints(
-              maxHeight: 105,
-              minHeight: 55,
-              maxWidth: 155,
-              minWidth: 45,
-            ),
-          );
+          final constraints = container.constraints;
 
-          final limitedBoxWidget = tester.widget<LimitedBox>(
-            find.byType(LimitedBox),
-          );
-
-          expect(limitedBoxWidget.maxHeight, 105);
-          expect(limitedBoxWidget.maxWidth, 155);
+          expect(constraints!.maxHeight, 105.0);
+          expect(constraints.minHeight, 55.0);
+          expect(constraints.maxWidth, 155.0);
+          expect(constraints.minWidth, 45.0);
         },
       );
     },

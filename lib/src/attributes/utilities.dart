@@ -124,7 +124,7 @@ const minH = BoxUtility.minHeight;
 const minW = BoxUtility.minWidth;
 
 /// Hide attribute
-const hide = BoxUtility.hidden;
+const hide = CommonUtility.hidden;
 
 const animated = CommonUtility.animated;
 const animationDuration = CommonUtility.animationDuration;

@@ -119,8 +119,4 @@ class BoxUtility {
       ),
     );
   }
-
-  /// Hidden property
-  static BoxAttributes hidden([bool? condition = true]) =>
-      BoxAttributes(hidden: condition);
 }
