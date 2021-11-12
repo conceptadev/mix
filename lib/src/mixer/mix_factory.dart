@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:mix/src/mixer/recipe_factory.dart';
+import 'package:mix/mix.dart';
+import 'package:mix/src/mixer/mixer.dart';
 
 import '../attributes/attribute.dart';
 import '../helpers/utils.dart';
 
 /// Defines a mix
 class Mix<T extends Attribute> {
-  const Mix._(this.props);
+  const Mix._(this.attributes);
 
-  final List<T> props;
+  final List<T> attributes;
 
   /// Define mix with parameters
   factory Mix([
@@ -31,7 +32,7 @@ class Mix<T extends Attribute> {
   }
 
   /// Adds more properties to a mix
-  Mix add([
+  Mix<T> add([
     T? p1,
     T? p2,
     T? p3,
@@ -45,7 +46,7 @@ class Mix<T extends Attribute> {
     T? p11,
     T? p12,
   ]) {
-    final newParams = [...props];
+    final newParams = [...attributes];
     // Combine attributes into existing params
     newParams.addAll(
       paramsToAttributes<T>(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12),
@@ -55,7 +56,7 @@ class Mix<T extends Attribute> {
   }
 
   /// Merges many mixes into one
-  static Mix combine<T extends Attribute>([
+  static Mix<T> combine<T extends Attribute>([
     Mix<T>? mix1,
     Mix<T>? mix2,
     Mix<T>? mix3,
@@ -70,20 +71,20 @@ class Mix<T extends Attribute> {
     Mix<T>? mix12,
   ]) {
     final list = <T>[];
-    if (mix1 != null) list.addAll(mix1.props);
-    if (mix2 != null) list.addAll(mix2.props);
-    if (mix3 != null) list.addAll(mix3.props);
-    if (mix4 != null) list.addAll(mix4.props);
-    if (mix5 != null) list.addAll(mix5.props);
-    if (mix6 != null) list.addAll(mix6.props);
-    if (mix7 != null) list.addAll(mix7.props);
-    if (mix8 != null) list.addAll(mix8.props);
-    if (mix9 != null) list.addAll(mix9.props);
-    if (mix10 != null) list.addAll(mix10.props);
-    if (mix11 != null) list.addAll(mix11.props);
-    if (mix12 != null) list.addAll(mix12.props);
+    if (mix1 != null) list.addAll(mix1.attributes);
+    if (mix2 != null) list.addAll(mix2.attributes);
+    if (mix3 != null) list.addAll(mix3.attributes);
+    if (mix4 != null) list.addAll(mix4.attributes);
+    if (mix5 != null) list.addAll(mix5.attributes);
+    if (mix6 != null) list.addAll(mix6.attributes);
+    if (mix7 != null) list.addAll(mix7.attributes);
+    if (mix8 != null) list.addAll(mix8.attributes);
+    if (mix9 != null) list.addAll(mix9.attributes);
+    if (mix10 != null) list.addAll(mix10.attributes);
+    if (mix11 != null) list.addAll(mix11.attributes);
+    if (mix12 != null) list.addAll(mix12.attributes);
 
-    return Mix._(list);
+    return Mix<T>._(list);
   }
 
   /// Chooses mix based on condition
@@ -99,7 +100,55 @@ class Mix<T extends Attribute> {
     }
   }
 
-  Recipe build(BuildContext context) {
-    return Recipe.build(context, this);
+  Mixer build(BuildContext context) {
+    return Mixer.build(context, this);
+  }
+}
+
+extension MixExtension on Mix {
+  Box box({
+    required Widget child,
+    Mix? mix,
+  }) {
+    final mx = Mix.combine(this, mix);
+    return Box(mx, child: child);
+  }
+
+  HBox row({
+    Mix? mix,
+    required List<Widget> children,
+  }) {
+    final mx = Mix.combine(this, mix);
+    return HBox(mx, children: children);
+  }
+
+  TextMix text(
+    String text, {
+    Mix? mix,
+    Key? key,
+  }) {
+    final mx = Mix.combine(this, mix);
+    return TextMix(mx, text: text, key: key);
+  }
+
+  VBox column({
+    Mix? mix,
+    required List<Widget> children,
+  }) {
+    final mx = Mix.combine(this, mix);
+    return VBox(mx, children: children);
+  }
+
+  IconMix icon(
+    IconData icon, {
+    Mix? mix,
+    String? semanticLabel,
+  }) {
+    final mx = Mix.combine(this, mix);
+    return IconMix(
+      mx,
+      icon: icon,
+      semanticLabel: semanticLabel,
+    );
   }
 }

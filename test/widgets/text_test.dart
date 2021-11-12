@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mix/mix.dart';
-import 'package:mix/src/attributes/text/text.props.dart';
-import 'package:mix/src/attributes/text/text.widget.dart';
+import 'package:mix/src/attributes/widgets/common/common.utils.dart';
+import 'package:mix/src/attributes/widgets/text/text.utils.dart';
+import 'package:mix/src/mixer/mix_factory.dart';
 
 import '../test_utils.dart';
 
@@ -17,23 +17,22 @@ void main() {
       );
 
       expect(
-        tester.widget<TextMixerWidget>(find.byType(TextMixerWidget)).text,
+        tester.widget<Text>(find.byType(Text)).data,
         widgetText,
       );
     });
 
     testWidgets('Adds Text properties on widget', (tester) async {
-      const _textUtil = TextUtility();
       await tester.pumpWidget(
         DirectionalTestWidget(
           child: Mix(
-            _textUtil.overflow(TextOverflow.ellipsis),
-            _textUtil.softWrap(true),
-            _textUtil.textScaleFactor(2.2),
-            _textUtil.textWidthBasis(TextWidthBasis.longestLine),
-            _textUtil.maxLines(3),
-            _textUtil.textAlign(TextAlign.justify),
-            _textUtil.textDirection(TextDirection.rtl),
+            TextUtility.overflow(TextOverflow.ellipsis),
+            TextUtility.softWrap(true),
+            TextUtility.textScaleFactor(2.2),
+            TextUtility.textWidthBasis(TextWidthBasis.longestLine),
+            TextUtility.maxLines(3),
+            TextUtility.textAlign(TextAlign.justify),
+            CommonUtility.textDirection(TextDirection.rtl),
           ).text(widgetText),
         ),
       );
@@ -50,21 +49,20 @@ void main() {
     });
 
     testWidgets('Adds Text Style on widget', (tester) async {
-      const _styleUtil = TextStyleUtility();
       await tester.pumpWidget(
         DirectionalTestWidget(
           child: Mix(
-            _styleUtil.fontSize(20),
-            _styleUtil.wordSpacing(2),
-            _styleUtil.letterSpacing(3),
-            _styleUtil.textBaseline(TextBaseline.ideographic),
-            _styleUtil.fontFamily('Roboto'),
-            _styleUtil.fontWeight(FontWeight.bold),
-            _styleUtil.color(Colors.amber),
-            _styleUtil.fontStyle(FontStyle.italic),
-            _styleUtil.locale(Locale('es', 'US')),
-            _styleUtil.height(10),
-            _styleUtil.backgroundColor(Colors.blue),
+            TextStyleUtility.fontSize(20),
+            TextStyleUtility.wordSpacing(2),
+            TextStyleUtility.letterSpacing(3),
+            TextStyleUtility.textBaseline(TextBaseline.ideographic),
+            TextStyleUtility.fontFamily('Roboto'),
+            TextStyleUtility.fontWeight(FontWeight.bold),
+            TextStyleUtility.color(Colors.amber),
+            TextStyleUtility.fontStyle(FontStyle.italic),
+            TextStyleUtility.locale(const Locale('es', 'US')),
+            TextStyleUtility.height(10),
+            TextStyleUtility.backgroundColor(Colors.blue),
           ).text(widgetText),
         ),
       );

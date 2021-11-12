@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:mix/src/attributes/box/box.props.dart';
-import 'package:mix/src/attributes/common/common.props.dart';
-import 'package:mix/src/attributes/flex/flex.props.dart';
-import 'package:mix/src/attributes/icon/icon.props.dart';
-import 'package:mix/src/attributes/text/text.props.dart';
+import 'package:mix/src/attributes/widgets/box/box.attributes.dart';
+import 'package:mix/src/attributes/widgets/flex/flex.attributes.dart';
+import 'package:mix/src/attributes/widgets/icon/icon.attributes.dart';
+import 'package:mix/src/attributes/widgets/text/text.attributes.dart';
 
 import '../../mix.dart';
-import '../mixer/recipe_factory.dart';
+import '../mixer/mixer.dart';
 
 /// Mix Widget
 abstract class MixWidget extends StatelessWidget {
@@ -30,13 +29,20 @@ abstract class MixerWidget extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-  CommonProps get props => recipe.animation.build();
-  BoxProps get boxProps => recipe.box.build();
-  TextProps get textProps => recipe.text.build();
-  IconProps get iconProps => recipe.icon.build();
-  FlexProps get flexProps => recipe.flex.build();
+  BoxAttributes get boxProps => recipe.box;
+  TextAttributes get textProps => recipe.text;
+  IconAttributes get iconProps => recipe.icon;
+  FlexAttributes get flexProps => recipe.flex;
 
-  final Recipe recipe;
+  // Common
+  bool get animated => recipe.common.animated == true;
+  Duration get animationDuration =>
+      recipe.common.animationDuration ?? const Duration(milliseconds: 100);
+  Curve get animationCurve => recipe.common.animationCurve ?? Curves.linear;
+  bool get hidden => recipe.common.hidden == true;
+  TextDirection? get textDirection => recipe.common.textDirection;
+
+  final Mixer recipe;
 
   @override
   Widget build(BuildContext context);

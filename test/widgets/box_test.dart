@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mix/mix.dart';
-import 'package:mix/src/attributes/box/box.attributes.dart';
-import 'package:mix/src/attributes/box/box.widget.dart';
+import 'package:mix/src/attributes/widgets/box/box.attributes.dart';
+import 'package:mix/src/attributes/widgets/box/box.widget.dart';
+import 'package:mix/src/mixer/mix_factory.dart';
 
 import '../test_utils.dart';
 
@@ -17,10 +17,11 @@ void main() {
           await tester.pumpWidget(
             DirectionalTestWidget(
               child: Mix().box(
-                  child: const Text(
-                widgetText,
-                key: Key('child-key'),
-              )),
+                child: const Text(
+                  widgetText,
+                  key: Key('child-key'),
+                ),
+              ),
             ),
           );
 

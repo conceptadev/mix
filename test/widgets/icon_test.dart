@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mix/mix.dart';
-import 'package:mix/src/attributes/primitives/icon/icon_color.dart';
-import 'package:mix/src/attributes/primitives/icon/icon_size.dart';
-import 'package:mix/src/attributes/primitives/text/text_direction.dart';
+import 'package:mix/src/attributes/widgets/common/common.attributes.dart';
+import 'package:mix/src/attributes/widgets/icon/icon.attributes.dart';
+import 'package:mix/src/mixer/mix_factory.dart';
 
 import '../test_utils.dart';
 
@@ -26,9 +25,9 @@ void main() {
       await tester.pumpWidget(
         DirectionalTestWidget(
           child: Mix(
-            IconColorAttribute(Colors.greenAccent),
-            IconSizeAttribute(23),
-            const TextDirectionAttribute(TextDirection.rtl),
+            const IconAttributes(color: Colors.greenAccent),
+            const IconAttributes(size: 23),
+            const CommonAttributes(textDirection: TextDirection.rtl),
           ).icon(Icons.bolt),
         ),
       );

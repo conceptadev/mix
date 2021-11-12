@@ -90,33 +90,39 @@ extension StrutStyleExtension on StrutStyle {
 
 extension EdgeInsetExtension on EdgeInsets {
   EdgeInsets merge(EdgeInsets? other) {
+    if (other == null) return this;
     return copyWith(
-      top: other?.top,
-      bottom: other?.bottom,
-      left: other?.left,
-      right: other?.right,
+      top: _mergeIf(other.top, top, _d.top),
+      bottom: _mergeIf(other.bottom, bottom, _d.bottom),
+      left: _mergeIf(other.left, left, _d.left),
+      right: _mergeIf(other.right, right, _d.right),
     );
   }
+
+  static const EdgeInsets _d = EdgeInsets.zero;
 }
 
 extension BorderExtension on Border {
   Border merge(Border? other) {
+    if (other == null) return this;
     return Border(
-      top: top.merge(other?.top),
-      bottom: bottom.merge(other?.bottom),
-      left: left.merge(other?.left),
-      right: right.merge(other?.right),
+      top: top.merge(other.top),
+      bottom: bottom.merge(other.bottom),
+      left: left.merge(other.left),
+      right: right.merge(other.right),
     );
   }
 }
 
 extension BorderSideExtension on BorderSide {
+  static const BorderSide _d = BorderSide();
+
   BorderSide merge(BorderSide? other) {
     if (other == null) return this;
     return copyWith(
-      color: other.color,
-      width: other.width,
-      style: other.style,
+      color: _mergeIf(other.color, color, _d.color),
+      width: _mergeIf(other.width, width, _d.width),
+      style: _mergeIf(other.style, style, _d.style),
     );
   }
 }
@@ -125,18 +131,14 @@ extension BorderRadiusExtension on BorderRadius {
   BorderRadius merge(BorderRadius? other) {
     if (other == null) return this;
     return BorderRadius.only(
-      topLeft: _getNotDefault(other.topLeft, topLeft),
-      topRight: _getNotDefault(other.topRight, topRight),
-      bottomLeft: _getNotDefault(other.bottomLeft, bottomLeft),
-      bottomRight: _getNotDefault(other.bottomRight, bottomRight),
+      topLeft: _mergeIf(other.topLeft, topLeft, _d),
+      topRight: _mergeIf(other.topRight, topRight, _d),
+      bottomLeft: _mergeIf(other.bottomLeft, bottomLeft, _d),
+      bottomRight: _mergeIf(other.bottomRight, bottomRight, _d),
     );
   }
 
-  Radius _getNotDefault(Radius other, Radius radius) {
-    if (radius == Radius.zero && other != Radius.zero) return other;
-    if (radius != Radius.zero && other == Radius.zero) return radius;
-    return other;
-  }
+  static const Radius _d = Radius.zero;
 }
 
 extension BoxShadowExtension on BoxShadow {
@@ -154,28 +156,22 @@ extension BoxShadowExtension on BoxShadow {
     );
   }
 
-  static BoxShadow only({
-    Color? color,
-    Offset? offset,
-    double? blurRadius,
-    double? spreadRadius,
-  }) {
-    const boxShadow = BoxShadow();
-    return boxShadow.copyWith(
-      color: color,
-      offset: offset,
-      blurRadius: blurRadius,
-      spreadRadius: spreadRadius,
-    );
-  }
+  static const BoxShadow _d = BoxShadow();
 
-  BoxShadow merge(BoxShadow? other) {
-    if (other == null) return this;
+  BoxShadow merge(BoxShadow? o) {
+    if (o == null) return this;
     return copyWith(
-      color: other.color,
-      offset: other.offset,
-      blurRadius: other.blurRadius,
-      spreadRadius: other.spreadRadius,
+      color: _mergeIf(o.color, color, _d.color),
+      offset: _mergeIf(o.offset, offset, _d.offset),
+      blurRadius: _mergeIf(o.blurRadius, blurRadius, _d.blurRadius),
+      spreadRadius: _mergeIf(o.spreadRadius, spreadRadius, _d.spreadRadius),
     );
   }
+}
+
+/// Receives a value, an other value and a default value for comparison
+T _mergeIf<T>(T other, T thisValue, T defaultValue) {
+  if (thisValue == defaultValue && other != defaultValue) return other;
+  if (thisValue != defaultValue && other == defaultValue) return thisValue;
+  return other;
 }

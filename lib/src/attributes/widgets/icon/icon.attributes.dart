@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mix/src/attributes/attribute.dart';
-import 'package:mix/src/attributes/icon/icon.props.dart';
 
-class IconAttributes extends AttributeWithBuilder<IconProps> {
+class IconAttributes extends Attribute {
   final Color? color;
   final TextDirection? textDirection;
   final double? size;
@@ -17,15 +16,6 @@ class IconAttributes extends AttributeWithBuilder<IconProps> {
       color: other.color ?? color,
       size: other.size ?? size,
       textDirection: other.textDirection ?? textDirection,
-    );
-  }
-
-  @override
-  build() {
-    return IconProps(
-      color: color,
-      size: size ?? 24.0,
-      textDirection: textDirection,
     );
   }
 }

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:mix/src/attributes/common/common.attributes.dart';
+import 'package:mix/src/attributes/widgets/common/common.attributes.dart';
 
-class AnimationUtility {
-  const AnimationUtility();
+class CommonUtility {
+  const CommonUtility._();
 
-  CommonAttributes animated({
+  static CommonAttributes animated({
     bool? animated = true,
     Curve? curve,
     Duration? duration,
@@ -16,7 +16,7 @@ class AnimationUtility {
     );
   }
 
-  CommonAttributes animationDuration(int milliseconds) {
+  static CommonAttributes animationDuration(int milliseconds) {
     return CommonAttributes(
       animationDuration: Duration(
         milliseconds: milliseconds,
@@ -24,9 +24,13 @@ class AnimationUtility {
     );
   }
 
-  CommonAttributes animationCurve(Curve curve) {
+  static CommonAttributes animationCurve(Curve curve) {
     return CommonAttributes(
       animationCurve: curve,
     );
+  }
+
+  static CommonAttributes textDirection(TextDirection? textDirection) {
+    return CommonAttributes(textDirection: textDirection);
   }
 }

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:mix/src/attributes/context/dark_mode.dart';
-import 'package:mix/src/attributes/context/media_query.dart';
-import 'package:mix/src/attributes/text/text.props.dart';
-import 'package:mix/src/attributes/utilities.dart';
+import 'package:mix/mix.dart';
+import 'package:mix/src/attributes/context/context.utils.dart';
+import 'package:mix/src/attributes/context/dark_mode.attributes.dart';
+import 'package:mix/src/attributes/context/media_query.attributes.dart';
 
 /// Base attribute
 
@@ -13,32 +13,24 @@ abstract class Attribute {
   const Attribute();
 }
 
-abstract class AttributeWithBuilder<T> extends Attribute {
-  const AttributeWithBuilder();
-  T build();
-}
-
-abstract class TextAttributeWithBuilder
-    extends AttributeWithBuilder<TextProps> {
-  const TextAttributeWithBuilder();
-  @override
-  TextProps build();
-}
-
 extension AttributeExtensions on Attribute {
   DarkModeAttribute get onDark => DarkModeAttribute(this);
-  ScreenSizeAttribute get onXSmall => mq.xsmall(this);
-  ScreenSizeAttribute get onSmall => mq.small(this);
-  ScreenSizeAttribute get onMedium => mq.medium(this);
-  ScreenSizeAttribute get onLarge => mq.large(this);
-  OrientationAttribute get onPortrait => mq.portrait(this);
-  OrientationAttribute get onLandscape => mq.landscape(this);
+  // MediaQueryAttribute get onMediaQuery => MediaQueryAttribute(this);
+  ScreenSizeAttribute get onXSmall => ContextUtility.xsmall(this);
+  ScreenSizeAttribute get onSmall => ContextUtility.small(this);
+  ScreenSizeAttribute get onMedium => ContextUtility.medium(this);
+  ScreenSizeAttribute get onLarge => ContextUtility.large(this);
+  OrientationAttribute get onPortrait => ContextUtility.portrait(this);
+  OrientationAttribute get onLandscape => ContextUtility.landscape(this);
 }
 
-abstract class NestedAttributes<T extends Attribute> extends Attribute {
-  const NestedAttributes();
+/// Allows to pass down Mixes as attributes for use with helpers
+class NestedMixAttributes<T extends Attribute> extends Attribute {
+  NestedMixAttributes(Mix<T> mix) : _mix = mix;
 
-  List<T> get attributes;
+  final Mix<T> _mix;
+
+  List<T> get attributes => _mix.attributes;
 }
 
 abstract class DynamicAttribute extends Attribute {

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:mix/src/attributes/attribute.dart';
-import 'package:mix/src/attributes/flex/flex.props.dart';
 
-class FlexAttributes extends AttributeWithBuilder<FlexProps> {
+class FlexAttributes extends Attribute {
   final Axis? direction;
   final MainAxisAlignment? mainAxisAlignment;
   final CrossAxisAlignment? crossAxisAlignment;
   final MainAxisSize? mainAxisSize;
   final VerticalDirection? verticalDirection;
+  final double? gapSize;
 
   const FlexAttributes({
     this.direction,
@@ -15,6 +15,7 @@ class FlexAttributes extends AttributeWithBuilder<FlexProps> {
     this.crossAxisAlignment,
     this.mainAxisSize,
     this.verticalDirection,
+    this.gapSize,
   });
 
   merge(FlexAttributes other) {
@@ -24,17 +25,7 @@ class FlexAttributes extends AttributeWithBuilder<FlexProps> {
       crossAxisAlignment: other.crossAxisAlignment ?? crossAxisAlignment,
       mainAxisSize: other.mainAxisSize ?? mainAxisSize,
       verticalDirection: other.verticalDirection ?? verticalDirection,
-    );
-  }
-
-  @override
-  build() {
-    return FlexProps(
-      direction: direction,
-      mainAxisAlignment: mainAxisAlignment ?? MainAxisAlignment.start,
-      crossAxisAlignment: crossAxisAlignment ?? CrossAxisAlignment.center,
-      mainAxisSize: mainAxisSize ?? MainAxisSize.max,
-      verticalDirection: verticalDirection ?? VerticalDirection.down,
+      gapSize: other.gapSize ?? gapSize,
     );
   }
 }

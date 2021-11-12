@@ -1,7 +1,7 @@
 import 'package:mix/src/attributes/attribute.dart';
 import 'package:mix/src/helpers/utils.dart';
 
-enum TextDirectiveModifier {
+enum TextModifier {
   capitalize,
   titleCase,
   sentenceCase,
@@ -14,20 +14,20 @@ class TextDirectiveAttribute extends DirectiveAttribute<String> {
   const TextDirectiveAttribute(this.modifier);
 
   /// Function to execute the directive
-  final TextDirectiveModifier modifier;
+  final TextModifier modifier;
 
   @override
   String modify(String value) {
     switch (modifier) {
-      case TextDirectiveModifier.capitalize:
+      case TextModifier.capitalize:
         return capitalize(value);
-      case TextDirectiveModifier.titleCase:
+      case TextModifier.titleCase:
         return titleCase(value);
-      case TextDirectiveModifier.sentenceCase:
+      case TextModifier.sentenceCase:
         return sentenceCase(value);
-      case TextDirectiveModifier.lowerCase:
+      case TextModifier.lowerCase:
         return value.toLowerCase();
-      case TextDirectiveModifier.upperCase:
+      case TextModifier.upperCase:
         return value.toUpperCase();
     }
   }

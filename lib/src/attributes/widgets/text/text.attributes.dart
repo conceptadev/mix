@@ -1,16 +1,15 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:mix/src/attributes/text/text.props.dart';
 import 'package:mix/src/helpers/extensions.dart';
 
-import '../attribute.dart';
+import '../../attribute.dart';
 
-class TextAttributes extends AttributeWithBuilder<TextProps> {
+class TextAttributes extends Attribute {
   final TextStyle? style;
   final StrutStyle? strutStyle;
   final TextAlign? textAlign;
-  final TextDirection? textDirection;
+
   final Locale? locale;
   final bool? softWrap;
   final TextOverflow? overflow;
@@ -22,7 +21,6 @@ class TextAttributes extends AttributeWithBuilder<TextProps> {
     this.style,
     this.strutStyle,
     this.textAlign,
-    this.textDirection,
     this.locale,
     this.softWrap,
     this.overflow,
@@ -33,11 +31,11 @@ class TextAttributes extends AttributeWithBuilder<TextProps> {
   });
 
   TextAttributes merge(TextAttributes other) {
+    final merge = style?.merge(other.style) ?? other.style;
     return TextAttributes(
-      style: style?.merge(style) ?? other.style,
-      strutStyle: strutStyle?.merge(strutStyle) ?? other.strutStyle,
+      style: merge,
+      strutStyle: strutStyle?.merge(other.strutStyle) ?? other.strutStyle,
       textAlign: other.textAlign ?? textAlign,
-      textDirection: other.textDirection ?? textDirection,
       locale: other.locale ?? locale,
       softWrap: other.softWrap ?? softWrap,
       overflow: other.overflow ?? overflow,
@@ -45,23 +43,6 @@ class TextAttributes extends AttributeWithBuilder<TextProps> {
       maxLines: other.maxLines ?? maxLines,
       semanticsLabel: other.semanticsLabel ?? semanticsLabel,
       textWidthBasis: other.textWidthBasis ?? textWidthBasis,
-    );
-  }
-
-  @override
-  TextProps build() {
-    return TextProps(
-      style: style ?? const TextStyle(),
-      strutStyle: strutStyle,
-      textAlign: textAlign,
-      textDirection: textDirection,
-      locale: locale,
-      softWrap: softWrap ?? true,
-      overflow: overflow ?? TextOverflow.clip,
-      textScaleFactor: textScaleFactor,
-      maxLines: maxLines,
-      semanticsLabel: semanticsLabel,
-      textWidthBasis: textWidthBasis,
     );
   }
 }

@@ -61,7 +61,7 @@ List<T> paramsToAttributes<T extends Attribute>([
 _spreadNestedMix<T extends Attribute>(List<T> props) {
   final spreaded = [...props];
   for (final attr in props) {
-    if (attr is NestedAttributes<T>) {
+    if (attr is NestedMixAttributes<T>) {
       spreaded.addAll(attr.attributes);
     } else {
       spreaded.add(attr);

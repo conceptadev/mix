@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:mix/src/attributes/box/box.widget.dart';
 
-import '../../../mix.dart';
-import '../../mixer/mix_factory.dart';
-import '../../mixer/recipe_factory.dart';
-import '../../widgets/mix_widget.dart';
+import '../../../mixer/mix_factory.dart';
+import '../../../mixer/mixer.dart';
+import '../../../widgets/mix_widget.dart';
 
 class IconMix extends MixWidget {
   const IconMix(
@@ -29,7 +27,7 @@ class IconMix extends MixWidget {
 
 class IconMixerWidget extends MixerWidget {
   const IconMixerWidget(
-    Recipe mixer, {
+    Mixer mixer, {
     required this.icon,
     this.semanticLabel,
     Key? key,
@@ -40,11 +38,20 @@ class IconMixerWidget extends MixerWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BoxMixerWidget(
-      recipe,
-      child: TweenAnimationBuilder<double?>(
-        duration: props.animationDuration,
-        curve: props.animationCurve,
+    final iconWidget = Icon(
+      icon,
+      color: iconProps.color,
+      size: iconProps.size,
+      textDirection: iconProps.textDirection,
+      semanticLabel: semanticLabel,
+    );
+
+    if (!animated) {
+      return iconWidget;
+    } else {
+      return TweenAnimationBuilder<double?>(
+        duration: animationDuration,
+        curve: animationCurve,
         tween: Tween<double?>(
           end: iconProps.size,
         ),
@@ -52,8 +59,8 @@ class IconMixerWidget extends MixerWidget {
           return IconTheme.merge(
             data: IconThemeData(size: value),
             child: TweenAnimationBuilder<Color?>(
-              duration: props.animationDuration,
-              curve: props.animationCurve,
+              duration: animationDuration,
+              curve: animationCurve,
               tween: ColorTween(end: iconProps.color),
               child: child,
               builder: (context, value, child) {
@@ -68,14 +75,8 @@ class IconMixerWidget extends MixerWidget {
             ),
           );
         },
-        child: Icon(
-          icon,
-          color: iconProps.color,
-          size: iconProps.size,
-          textDirection: iconProps.textDirection,
-          semanticLabel: semanticLabel,
-        ),
-      ),
-    );
+        child: iconWidget,
+      );
+    }
   }
 }

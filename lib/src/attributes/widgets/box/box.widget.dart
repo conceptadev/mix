@@ -1,16 +1,15 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:mix/mix.dart';
-import 'package:mix/src/attributes/box/box.attributes.dart';
+import 'package:mix/src/widgets/nothing_widget.dart';
 
-import '../../mixer/mix_factory.dart';
-import '../../mixer/recipe_factory.dart';
-import '../../widgets/mix_widget.dart';
+import '../../../mixer/mix_factory.dart';
+import '../../../mixer/mixer.dart';
+import '../../../widgets/mix_widget.dart';
 
 class Box extends MixWidget {
   const Box(
-    Mix<BoxAttributes> mix, {
+    Mix mix, {
     required this.child,
     Key? key,
   }) : super(mix, key: key);
@@ -30,25 +29,21 @@ class BoxMixerWidget extends MixerWidget {
   final Widget? child;
 
   const BoxMixerWidget(
-    Recipe recipe, {
+    Mixer mixer, {
     this.child,
     Key? key,
-  }) : super(recipe, key: key);
+  }) : super(mixer, key: key);
 
   @override
   Widget build(BuildContext context) {
     var current = child;
 
-    // Generic widget attributes
-    final animated = props.animated;
-    final animationDuration = props.animationDuration;
-    final animationCurve = props.animationCurve;
-
     // Box Attributes
-    final hidden = props.hidden;
+
     final alignment = boxProps.alignment;
     final aspectRatio = boxProps.aspectRatio;
-    final backgroundColor = boxProps.backgroundColor;
+    final bgColor =
+        boxProps.decoration == null ? boxProps.backgroundColor : null;
     final decoration = boxProps.decoration;
     final opacity = boxProps.opacity;
     final rotate = boxProps.rotate;
@@ -61,12 +56,12 @@ class BoxMixerWidget extends MixerWidget {
     final width = boxProps.width;
 
     if (hidden == true) {
-      return const SizedBox.shrink();
+      return const Nothing();
     }
 
     if (animated) {
       current = AnimatedContainer(
-        color: backgroundColor,
+        color: bgColor,
         decoration: decoration,
         alignment: alignment,
         constraints: constraints,
@@ -80,7 +75,7 @@ class BoxMixerWidget extends MixerWidget {
       );
     } else {
       current = Container(
-        color: backgroundColor,
+        color: bgColor,
         decoration: decoration,
         alignment: alignment,
         constraints: constraints,

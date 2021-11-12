@@ -1,10 +1,10 @@
 import 'package:flutter/widgets.dart';
-import 'package:mix/src/attributes/box/box.widget.dart';
 
-import '../../mixer/mix_factory.dart';
-import '../../mixer/recipe_factory.dart';
-import '../../widgets/gap_widget.dart';
-import '../../widgets/mix_widget.dart';
+import '../../../mixer/mix_factory.dart';
+import '../../../mixer/mixer.dart';
+import '../../../widgets/gap_widget.dart';
+import '../../../widgets/mix_widget.dart';
+import '../box/box.widget.dart';
 
 class FlexBox extends MixWidget {
   const FlexBox(
@@ -19,7 +19,7 @@ class FlexBox extends MixWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mixer = Recipe.build(context, mix);
+    final mixer = Mixer.build(context, mix);
     return FlexBoxMixerWidget(
       mixer,
       direction: direction,
@@ -30,7 +30,7 @@ class FlexBox extends MixWidget {
 
 class FlexBoxMixerWidget extends MixerWidget {
   const FlexBoxMixerWidget(
-    Recipe mixer, {
+    Mixer mixer, {
     Key? key,
     required this.direction,
     required this.children,
@@ -40,10 +40,8 @@ class FlexBoxMixerWidget extends MixerWidget {
   final Axis direction;
 
   // Creates gap to space in between
-  List<Widget> _renderChildrenWithGap(List<Widget> children) {
+  List<Widget> _renderChildrenWithGap(double? gapSize, List<Widget> children) {
     // If no gap is set return widgets
-    final gapSize = flexProps.gapSize;
-
     if (gapSize == null) return children;
 
     // List of widgets with gap
@@ -63,15 +61,21 @@ class FlexBoxMixerWidget extends MixerWidget {
 
   @override
   Widget build(BuildContext context) {
+    final mainAxis = flexProps.mainAxisAlignment ?? MainAxisAlignment.start;
+    final crossAxis = flexProps.crossAxisAlignment ?? CrossAxisAlignment.center;
+    final mainAxisSize = flexProps.mainAxisSize ?? MainAxisSize.max;
+    final vDirection = flexProps.verticalDirection ?? VerticalDirection.down;
+    final gapSize = flexProps.gapSize;
+
     return BoxMixerWidget(
       recipe,
       child: Flex(
         direction: direction,
-        mainAxisAlignment: flexProps.mainAxisAlignment,
-        crossAxisAlignment: flexProps.crossAxisAlignment,
-        mainAxisSize: flexProps.mainAxisSize,
-        verticalDirection: flexProps.verticalDirection,
-        children: _renderChildrenWithGap(children),
+        mainAxisAlignment: mainAxis,
+        crossAxisAlignment: crossAxis,
+        mainAxisSize: mainAxisSize,
+        verticalDirection: vDirection,
+        children: _renderChildrenWithGap(gapSize, children),
       ),
     );
   }
