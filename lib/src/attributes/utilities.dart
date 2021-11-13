@@ -64,7 +64,7 @@ BoxAttributes px(double value) =>
     BoxUtility.padding(EdgeInsets.symmetric(horizontal: value));
 
 /// Rotate widget
-final rotate = BoxUtility.rotate;
+const rotate = BoxUtility.rotate;
 
 /// Rotate 90
 BoxAttributes rotate90() => rotate(1);
@@ -166,7 +166,7 @@ const fontStyle = TextStyleUtility.fontStyle;
 
 const fontSize = TextStyleUtility.fontSize;
 const inherit = TextStyleUtility.inherit;
-
+const textColor = TextStyleUtility.color;
 const textBgColor = TextStyleUtility.backgroundColor;
 const textColor = TextStyleUtility.color;
 const textForeground = TextStyleUtility.foreground;

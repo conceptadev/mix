@@ -7,7 +7,7 @@ class DisabledAttribute extends DynamicAttribute {
   @override
   bool shouldApply(BuildContext context) {
     final pressable = PressableNotifier.of(context);
-    return pressable?.disabled != null;
+    return pressable?.disabled == true;
   }
 }
 
@@ -16,7 +16,8 @@ class PressingAttribute extends DynamicAttribute {
   @override
   bool shouldApply(BuildContext context) {
     final pressable = PressableNotifier.of(context);
-    return pressable?.pressing != null;
+
+    return pressable?.pressing == true;
   }
 }
 
@@ -25,7 +26,8 @@ class HoverAttribute extends DynamicAttribute {
   @override
   bool shouldApply(BuildContext context) {
     final pressable = PressableNotifier.of(context);
-    return pressable?.hovering != null;
+
+    return pressable?.hovering == true;
   }
 }
 
@@ -34,6 +36,6 @@ class FocusedAttribute extends DynamicAttribute {
   @override
   bool shouldApply(BuildContext context) {
     final pressable = PressableNotifier.of(context);
-    return pressable?.focused != null;
+    return pressable?.focused == true;
   }
 }

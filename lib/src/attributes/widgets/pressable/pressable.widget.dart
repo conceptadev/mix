@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../../mixer/mix_factory.dart';
-import '../../../mixer/mixer.dart';
 import '../../../widgets/mix_widget.dart';
 import '../../widgets/box/box.widget.dart';
 
@@ -135,15 +134,13 @@ class _PressableMixerWidgetState extends State<PressableMixerWidget> {
               if (mounted) setState(() => _pressing = false);
             },
             child: () {
-              final mixer = Mixer.build(context, widget.mix);
-
               return PressableNotifier(
                 disabled: !enabled,
                 focused: _shouldShowFocus,
                 hovering: _hovering,
                 pressing: _pressing,
-                child: BoxMixerWidget(
-                  mixer,
+                child: Box(
+                  widget.mix,
                   child: widget.child,
                 ),
               );
