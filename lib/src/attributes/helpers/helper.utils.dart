@@ -1,36 +1,116 @@
-import 'package:mix/src/attributes/attribute.dart';
+import 'package:mix/src/attributes/common/attribute.dart';
 import 'package:mix/src/mixer/mix_factory.dart';
 
-class HelpersUtility {
-  const HelpersUtility._();
-  static NestedMixAttributes<T> apply<T extends Attribute>([
-    Mix<T>? mix1,
-    Mix<T>? mix2,
-    Mix<T>? mix3,
-    Mix<T>? mix4,
-    Mix<T>? mix5,
-    Mix<T>? mix6,
-    Mix<T>? mix7,
-    Mix<T>? mix8,
-    Mix<T>? mix9,
-    Mix<T>? mix10,
-    Mix<T>? mix11,
-    Mix<T>? mix12,
-  ]) {
-    final mix = Mix.combine<T>(
-      mix1,
-      mix2,
-      mix3,
-      mix4,
-      mix5,
-      mix6,
-      mix7,
-      mix8,
-      mix9,
-      mix10,
-      mix11,
-      mix12,
-    );
-    return NestedMixAttributes<T>(mix);
+class HelperUtils {
+  const HelperUtils._();
+
+  static NestedAttribute<T> apply<T extends Attribute>(List<Mix<T>> mixes) {
+    final combinedMix = Mix<T>();
+    for (var mix in mixes) {
+      combinedMix.addAll(mix.attributes);
+    }
+
+    return NestedAttribute<T>(combinedMix.attributes);
   }
 }
+
+typedef AttributesParamFn<T extends Attribute, R> = R Function(
+    List<T> attributes);
+
+typedef PositionalParamFn<T, R> = R Function([
+  T? p1,
+  T? p2,
+  T? p3,
+  T? p4,
+  T? p5,
+  T? p6,
+]);
+
+class WrapFunction<T extends Attribute, R> {
+  const WrapFunction._(this.fn);
+  final AttributesParamFn<T, R> fn;
+
+  static PositionalParamFn<T, R> withPositionalParams<T extends Attribute, R>(
+      AttributesParamFn<T, R> fn) {
+    return WrapFunction<T, R>._(fn).withAttributeParams;
+  }
+
+  _spreadNestedMix(List<T> attributes) {
+    final spreaded = [...attributes];
+    for (final attr in attributes) {
+      if (attr is NestedAttribute<T>) {
+        spreaded.addAll(attr.attributes);
+      } else {
+        spreaded.add(attr);
+      }
+    }
+
+    return spreaded;
+  }
+
+  /// Attribute params to list
+  R withAttributeParams([
+    T? p1,
+    T? p2,
+    T? p3,
+    T? p4,
+    T? p5,
+    T? p6,
+  ]) {
+    final attributes = <T>[];
+
+    if (p1 != null) {
+      attributes.add(p1);
+    }
+    if (p2 != null) {
+      attributes.add(p2);
+    }
+    if (p3 != null) {
+      attributes.add(p3);
+    }
+    if (p4 != null) {
+      attributes.add(p4);
+    }
+    if (p5 != null) {
+      attributes.add(p5);
+    }
+    if (p6 != null) {
+      attributes.add(p6);
+    }
+
+    return fn(_spreadNestedMix(attributes));
+  }
+}
+
+// /// Attribute params to list
+// List<T> withAttributeParams<T>([
+//   T? p1,
+//   T? p2,
+//   T? p3,
+//   T? p4,
+//   T? p5,
+//   T? p6,
+// ]) {
+//   final attributes = <T>[];
+
+//   if (p1 != null) {
+//     attributes.add(p1);
+//   }
+//   if (p2 != null) {
+//     attributes.add(p2);
+//   }
+//   if (p3 != null) {
+//     attributes.add(p3);
+//   }
+//   if (p4 != null) {
+//     attributes.add(p4);
+//   }
+//   if (p5 != null) {
+//     attributes.add(p5);
+//   }
+//   if (p6 != null) {
+//     attributes.add(p6);
+//   }
+
+//   return attributes;
+// }

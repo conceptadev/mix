@@ -1,17 +1,17 @@
 library mix;
 
-export 'package:mix/src/attributes/widgets/box/box.widget.dart' show Box;
-export 'package:mix/src/attributes/widgets/flex/flex.widget.dart'
+export 'package:mix/src/widgets/box.widget.dart' show Box;
+export 'package:mix/src/widgets/flex.widget.dart'
     show FlexBox, VBox, HBox, FlexBoxMixerWidget;
-export 'package:mix/src/attributes/widgets/icon/icon.widget.dart' show IconMix;
-export 'package:mix/src/attributes/widgets/pressable/pressable.widget.dart'
-    show Pressable, PressableNotifier;
-export 'package:mix/src/attributes/widgets/text/text.widget.dart' show TextMix;
-export 'package:mix/src/widgets/mix_widget.dart' show MixerWidget;
+export 'package:mix/src/widgets/icon.widget.dart' show IconMix;
+export 'package:mix/src/widgets/mix.widget.dart' show MixerWidget;
+export 'package:mix/src/widgets/pressable.widget.dart' show Pressable;
+export 'package:mix/src/widgets/text.widget.dart' show TextMix;
 
-export 'src/attributes/attribute.dart'
+export 'src/attributes/common/attribute.dart'
     show DynamicAttribute, AttributeExtensions;
-export 'src/attributes/utilities.dart';
+export 'src/attributes/exports.dart';
 export 'src/helpers/extensions.dart';
 export 'src/mixer/mix_factory.dart' show Mix;
 export 'src/mixer/mixer.dart' show Mixer;
+export 'src/notifiers/token.notifier.dart';

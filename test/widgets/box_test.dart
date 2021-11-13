@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mix/src/attributes/widgets/box/box.attributes.dart';
-import 'package:mix/src/attributes/widgets/box/box.widget.dart';
-import 'package:mix/src/attributes/widgets/common/common.attributes.dart';
+import 'package:mix/src/attributes/box/box.attributes.dart';
+import 'package:mix/src/attributes/shared/shared.attributes.dart';
 import 'package:mix/src/mixer/mix_factory.dart';
+import 'package:mix/src/widgets/box.widget.dart';
 
 import '../test_utils.dart';
 
@@ -81,7 +81,7 @@ void main() {
         (tester) async {
           await tester.pumpWidget(
             BoxTestWidget(
-              Mix(const CommonAttributes(hidden: true)),
+              Mix(const SharedAttributes(hidden: true)),
             ),
           );
 

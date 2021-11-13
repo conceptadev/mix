@@ -7,20 +7,24 @@ class TypographyPreview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final boxMix = Mix(
-      bgColor(Colors.red),
-      p(10),
-      animated(),
-      hovering(
+      bgColor(Colors.blue),
+      rounded(5),
+      p(20),
+      border(color: Colors.red),
+      animated(duration: 150),
+      elevation(10),
+      hover(
         bgColor(
-          Colors.green,
+          Colors.blue.shade400,
         ),
       ),
       pressing(
-        bgColor(Colors.orange),
-        rounded(20),
-        p(20),
+        bgColor(Colors.blue.shade600),
+        elevation(4),
+        p(15),
       ),
     );
+
     return SingleChildScrollView(
       child: Column(
         children: [

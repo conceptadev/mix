@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../attributes/attribute.dart';
+import 'package:mix/src/attributes/common/attribute.dart';
 
 /// Attribute params to list
 List<T> paramsToAttributes<T extends Attribute>([
@@ -61,7 +60,7 @@ List<T> paramsToAttributes<T extends Attribute>([
 _spreadNestedMix<T extends Attribute>(List<T> props) {
   final spreaded = [...props];
   for (final attr in props) {
-    if (attr is NestedMixAttributes<T>) {
+    if (attr is NestedAttribute<T>) {
       spreaded.addAll(attr.attributes);
     } else {
       spreaded.add(attr);

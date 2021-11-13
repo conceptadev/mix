@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mix/src/attributes/widgets/common/common.attributes.dart';
-import 'package:mix/src/attributes/widgets/icon/icon.attributes.dart';
+import 'package:mix/src/attributes/icon/icon.attributes.dart';
+import 'package:mix/src/attributes/shared/shared.attributes.dart';
 import 'package:mix/src/mixer/mix_factory.dart';
 
 import '../test_utils.dart';
@@ -27,7 +27,7 @@ void main() {
           child: Mix(
             const IconAttributes(color: Colors.greenAccent),
             const IconAttributes(size: 23),
-            const CommonAttributes(textDirection: TextDirection.rtl),
+            const SharedAttributes(textDirection: TextDirection.rtl),
           ).icon(Icons.bolt),
         ),
       );

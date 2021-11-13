@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
+import 'package:mix/src/attributes/common/attribute.dart';
 import 'package:mix/src/mixer/mixer.dart';
 
-import '../attributes/attribute.dart';
 import '../helpers/utils.dart';
 
 /// Defines a mix
@@ -47,12 +47,34 @@ class Mix<T extends Attribute> {
     T? p12,
   ]) {
     final newParams = [...attributes];
+    final params = paramsToAttributes<T>(
+        p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12);
+
     // Combine attributes into existing params
-    newParams.addAll(
-      paramsToAttributes<T>(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12),
-    );
+    newParams.addAll(params);
 
     return Mix._(newParams);
+  }
+
+  Mix<T> addAll(List<T> attributes) {
+    final newParams = [...this.attributes];
+    newParams.addAll(attributes);
+    return Mix._(newParams);
+  }
+
+  static Mix<T> fromList<T extends Attribute>(List<T> attributes) {
+    return Mix._(attributes);
+  }
+
+  /// Returns a new mix by taking either a mix or attributes or both
+  static Mix<T> fromMixAndAttributes<T extends Attribute>({
+    Mix<T>? mix,
+    List<T>? attributes,
+  }) {
+    if (mix == null && attributes == null) return Mix();
+    if (attributes != null && mix != null) return mix.addAll(attributes);
+    if (attributes != null) return Mix._(attributes);
+    return mix!;
   }
 
   /// Merges many mixes into one
