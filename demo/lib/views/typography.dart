@@ -6,11 +6,10 @@ class TypographyPreview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final redBg = Mix(bgColor(Colors.red), p(10));
-    final onHoverGreen = Mix(
-      animated(
-        duration: const Duration(milliseconds: 200),
-      ),
+    final boxMix = Mix(
+      bgColor(Colors.red),
+      p(10),
+      animated(),
       hovering(
         bgColor(
           Colors.green,
@@ -18,6 +17,7 @@ class TypographyPreview extends StatelessWidget {
       ),
       pressing(
         bgColor(Colors.orange),
+        rounded(20),
         p(20),
       ),
     );
@@ -25,7 +25,7 @@ class TypographyPreview extends StatelessWidget {
       child: Column(
         children: [
           Pressable(
-            Mix.combine(redBg, onHoverGreen),
+            boxMix,
             onPressed: () {},
             child: TextMix(
               Mix(textColor(Colors.black)),

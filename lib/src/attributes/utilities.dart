@@ -168,7 +168,7 @@ const fontSize = TextStyleUtility.fontSize;
 const inherit = TextStyleUtility.inherit;
 const textColor = TextStyleUtility.color;
 const textBgColor = TextStyleUtility.backgroundColor;
-const textColor = TextStyleUtility.color;
+
 const textForeground = TextStyleUtility.foreground;
 const textBackground = TextStyleUtility.background;
 const textShadows = TextStyleUtility.shadows;
