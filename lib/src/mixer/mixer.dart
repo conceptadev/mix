@@ -42,7 +42,7 @@ class Mixer {
 
     for (final attr in dynamicList) {
       if (attr.shouldApply(context)) {
-        propsToApply.add(attr.attribute);
+        propsToApply.addAll(attr.attributes);
       }
     }
 

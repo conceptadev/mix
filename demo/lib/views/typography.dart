@@ -8,20 +8,19 @@ class TypographyPreview extends StatelessWidget {
   Widget build(BuildContext context) {
     final redBg = Mix(bgColor(Colors.red), p(10));
     final onHoverGreen = Mix(
-        animated(
-          duration: const Duration(milliseconds: 200),
+      animated(
+        duration: const Duration(milliseconds: 200),
+      ),
+      hovering(
+        bgColor(
+          Colors.green,
         ),
-        hovering(
-          bgColor(
-            Colors.green,
-          ),
-        ),
-        pressing(
-          bgColor(Colors.orange),
-        ),
-        pressing(
-          p(20),
-        ));
+      ),
+      pressing(
+        bgColor(Colors.orange),
+        p(20),
+      ),
+    );
     return SingleChildScrollView(
       child: Column(
         children: [

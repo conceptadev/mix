@@ -6,49 +6,49 @@ import 'package:mix/src/helpers/extensions.dart';
 
 class ContextUtility {
   const ContextUtility._();
-  static ScreenSizeAttribute xsmall(Attribute attribute) {
+  static ScreenSizeAttribute xsmall(List<Attribute> attributes) {
     return ScreenSizeAttribute(
-      attribute,
+      attributes,
       ScreenSize.xs,
     );
   }
 
-  static ScreenSizeAttribute small(Attribute attribute) {
+  static ScreenSizeAttribute small(List<Attribute> attributes) {
     return ScreenSizeAttribute(
-      attribute,
+      attributes,
       ScreenSize.sm,
     );
   }
 
-  static ScreenSizeAttribute medium(Attribute attribute) {
+  static ScreenSizeAttribute medium(List<Attribute> attributes) {
     return ScreenSizeAttribute(
-      attribute,
+      attributes,
       ScreenSize.md,
     );
   }
 
-  static ScreenSizeAttribute large(Attribute attribute) {
+  static ScreenSizeAttribute large(List<Attribute> attributes) {
     return ScreenSizeAttribute(
-      attribute,
+      attributes,
       ScreenSize.lg,
     );
   }
 
-  static OrientationAttribute portrait(Attribute attribute) {
+  static OrientationAttribute portrait(List<Attribute> attributes) {
     return OrientationAttribute(
-      attribute,
+      attributes,
       Orientation.portrait,
     );
   }
 
-  static OrientationAttribute landscape(Attribute attribute) {
+  static OrientationAttribute landscape(List<Attribute> attributes) {
     return OrientationAttribute(
-      attribute,
+      attributes,
       Orientation.landscape,
     );
   }
 
-  static DarkModeAttribute dark(Attribute attribute) {
-    return DarkModeAttribute(attribute);
+  static DarkModeAttribute dark(List<Attribute> attributes) {
+    return DarkModeAttribute(attributes);
   }
 }

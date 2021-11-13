@@ -6,8 +6,7 @@ export 'package:mix/src/attributes/widgets/flex/flex.widget.dart'
 export 'package:mix/src/attributes/widgets/icon/icon.widget.dart' show IconMix;
 export 'package:mix/src/attributes/widgets/pressable/pressable.widget.dart'
     show Pressable, PressableNotifier;
-export 'package:mix/src/attributes/widgets/text/text.widget.dart'
-    show TextMix, _TextMixerWidget;
+export 'package:mix/src/attributes/widgets/text/text.widget.dart' show TextMix;
 export 'package:mix/src/widgets/mix_widget.dart' show MixerWidget;
 
 export 'src/attributes/attribute.dart'

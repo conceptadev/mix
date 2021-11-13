@@ -168,7 +168,7 @@ const fontSize = TextStyleUtility.fontSize;
 const inherit = TextStyleUtility.inherit;
 
 const textBgColor = TextStyleUtility.backgroundColor;
-
+const textColor = TextStyleUtility.color;
 const textForeground = TextStyleUtility.foreground;
 const textBackground = TextStyleUtility.background;
 const textShadows = TextStyleUtility.shadows;
@@ -201,7 +201,11 @@ const apply = HelpersUtility.apply;
 
 // Gestures
 
-const disabled = PressableUtility.disabled;
-const focused = PressableUtility.focus;
-const hovering = PressableUtility.hover;
-const pressing = PressableUtility.pressing;
+final disabled =
+    const PositionalParameterFunc(PressableUtility.disabled).spreadDynamic;
+final focus =
+    const PositionalParameterFunc(PressableUtility.focus).spreadDynamic;
+final hovering =
+    const PositionalParameterFunc(PressableUtility.hover).spreadDynamic;
+final pressing =
+    const PositionalParameterFunc(PressableUtility.pressing).spreadDynamic;

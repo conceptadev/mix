@@ -3,7 +3,7 @@ import 'package:mix/mix.dart';
 import 'package:mix/src/attributes/attribute.dart';
 
 class DisabledAttribute extends DynamicAttribute {
-  const DisabledAttribute(Attribute props) : super(props);
+  const DisabledAttribute(List<Attribute> props) : super(props);
   @override
   bool shouldApply(BuildContext context) {
     final pressable = PressableNotifier.of(context);
@@ -12,7 +12,7 @@ class DisabledAttribute extends DynamicAttribute {
 }
 
 class PressingAttribute extends DynamicAttribute {
-  const PressingAttribute(Attribute props) : super(props);
+  const PressingAttribute(List<Attribute> props) : super(props);
   @override
   bool shouldApply(BuildContext context) {
     final pressable = PressableNotifier.of(context);
@@ -21,7 +21,7 @@ class PressingAttribute extends DynamicAttribute {
 }
 
 class HoverAttribute extends DynamicAttribute {
-  const HoverAttribute(Attribute props) : super(props);
+  const HoverAttribute(List<Attribute> props) : super(props);
   @override
   bool shouldApply(BuildContext context) {
     final pressable = PressableNotifier.of(context);
@@ -30,7 +30,7 @@ class HoverAttribute extends DynamicAttribute {
 }
 
 class FocusedAttribute extends DynamicAttribute {
-  const FocusedAttribute(Attribute props) : super(props);
+  const FocusedAttribute(List<Attribute> props) : super(props);
   @override
   bool shouldApply(BuildContext context) {
     final pressable = PressableNotifier.of(context);

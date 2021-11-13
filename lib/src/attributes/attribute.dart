@@ -14,14 +14,14 @@ abstract class Attribute {
 }
 
 extension AttributeExtensions on Attribute {
-  DarkModeAttribute get onDark => DarkModeAttribute(this);
+  DarkModeAttribute get onDark => DarkModeAttribute([this]);
   // MediaQueryAttribute get onMediaQuery => MediaQueryAttribute(this);
-  ScreenSizeAttribute get onXSmall => ContextUtility.xsmall(this);
-  ScreenSizeAttribute get onSmall => ContextUtility.small(this);
-  ScreenSizeAttribute get onMedium => ContextUtility.medium(this);
-  ScreenSizeAttribute get onLarge => ContextUtility.large(this);
-  OrientationAttribute get onPortrait => ContextUtility.portrait(this);
-  OrientationAttribute get onLandscape => ContextUtility.landscape(this);
+  ScreenSizeAttribute get onXSmall => ContextUtility.xsmall([this]);
+  ScreenSizeAttribute get onSmall => ContextUtility.small([this]);
+  ScreenSizeAttribute get onMedium => ContextUtility.medium([this]);
+  ScreenSizeAttribute get onLarge => ContextUtility.large([this]);
+  OrientationAttribute get onPortrait => ContextUtility.portrait([this]);
+  OrientationAttribute get onLandscape => ContextUtility.landscape([this]);
 }
 
 /// Allows to pass down Mixes as attributes for use with helpers
@@ -34,9 +34,9 @@ class NestedMixAttributes<T extends Attribute> extends Attribute {
 }
 
 abstract class DynamicAttribute extends Attribute {
-  const DynamicAttribute(this.attribute);
+  const DynamicAttribute(this.attributes);
 
-  final Attribute attribute;
+  final List<Attribute> attributes;
 
   bool shouldApply(BuildContext context);
 }

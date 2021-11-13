@@ -4,9 +4,9 @@ import 'package:mix/src/attributes/attribute.dart';
 
 class ScreenSizeAttribute extends DynamicAttribute {
   const ScreenSizeAttribute(
-    Attribute attribute,
+    List<Attribute> attributes,
     this.screenSize,
-  ) : super(attribute);
+  ) : super(attributes);
 
   final ScreenSize screenSize;
   @override
@@ -17,9 +17,9 @@ class ScreenSizeAttribute extends DynamicAttribute {
 
 class OrientationAttribute extends DynamicAttribute {
   const OrientationAttribute(
-    Attribute attribute,
+    List<Attribute> attributes,
     this.orientation,
-  ) : super(attribute);
+  ) : super(attributes);
   final Orientation orientation;
   @override
   bool shouldApply(BuildContext context) {
