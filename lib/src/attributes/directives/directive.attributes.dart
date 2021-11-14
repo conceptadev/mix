@@ -1,4 +1,4 @@
-import 'package:mix/src/attributes/attribute.dart';
+import 'package:mix/src/attributes/common/attribute.dart';
 import 'package:mix/src/helpers/utils.dart';
 
 enum TextModifier {

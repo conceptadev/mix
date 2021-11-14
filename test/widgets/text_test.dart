@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mix/src/attributes/widgets/common/common.utils.dart';
-import 'package:mix/src/attributes/widgets/text/text.utils.dart';
+import 'package:mix/src/attributes/shared/shared.utils.dart';
+import 'package:mix/src/attributes/text/text.utils.dart';
 import 'package:mix/src/mixer/mix_factory.dart';
 
 import '../test_utils.dart';
@@ -32,7 +32,7 @@ void main() {
             TextUtility.textWidthBasis(TextWidthBasis.longestLine),
             TextUtility.maxLines(3),
             TextUtility.textAlign(TextAlign.justify),
-            CommonUtility.textDirection(TextDirection.rtl),
+            SharedUtils.textDirection(TextDirection.rtl),
           ).text(widgetText),
         ),
       );

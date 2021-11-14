@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:mix/src/attributes/widgets/icon/icon.attributes.dart';
-import 'package:mix/src/attributes/widgets/text/text.attributes.dart';
+import 'package:mix/src/attributes/icon/icon.attributes.dart';
+import 'package:mix/src/attributes/text/text.attributes.dart';
 
 import '../../mix.dart';
-import '../attributes/attribute.dart';
+import '../attributes/box/box.attributes.dart';
+import '../attributes/common/attribute.dart';
 import '../attributes/directives/directive.attributes.dart';
-import '../attributes/widgets/box/box.attributes.dart';
-import '../attributes/widgets/common/common.attributes.dart';
-import '../attributes/widgets/flex/flex.attributes.dart';
+import '../attributes/flex/flex.attributes.dart';
+import '../attributes/shared/shared.attributes.dart';
 
 /// Recipe
 class Mixer {
   BoxAttributes box;
   TextAttributes text;
-  CommonAttributes common;
+  SharedAttributes common;
   IconAttributes icon;
   FlexAttributes flex;
 
@@ -42,7 +42,7 @@ class Mixer {
 
     for (final attr in dynamicList) {
       if (attr.shouldApply(context)) {
-        propsToApply.add(attr.attribute);
+        propsToApply.addAll(attr.attributes);
       }
     }
 
@@ -62,7 +62,7 @@ class Mixer {
   Mixer copyWith({
     BoxAttributes boxProps = const BoxAttributes(),
     TextAttributes textProps = const TextAttributes(),
-    CommonAttributes commonProps = const CommonAttributes(),
+    SharedAttributes commonProps = const SharedAttributes(),
     IconAttributes iconProps = const IconAttributes(),
     FlexAttributes flexProps = const FlexAttributes(),
     List<DynamicAttribute> dynamicProps = const [],
@@ -106,7 +106,7 @@ class Mixer {
     var textAttributes = const TextAttributes();
     var iconAttributes = const IconAttributes();
     var flexAttributes = const FlexAttributes();
-    var commonAttributes = const CommonAttributes();
+    var commonAttributes = const SharedAttributes();
     final dynamicAttributes = <DynamicAttribute>[];
     final directiveAttributes = <DirectiveAttribute>[];
 
@@ -119,7 +119,7 @@ class Mixer {
         directiveAttributes.add(attribute);
       }
 
-      if (attribute is CommonAttributes) {
+      if (attribute is SharedAttributes) {
         commonAttributes = commonAttributes.merge(attribute);
       }
 
