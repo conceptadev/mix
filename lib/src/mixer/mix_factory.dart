@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
 import 'package:mix/src/attributes/common/attribute.dart';
+import 'package:mix/src/attributes/helpers/helper.utils.dart';
+import 'package:mix/src/helpers/utils.dart';
 import 'package:mix/src/mixer/mixer.dart';
-
-import '../helpers/utils.dart';
 
 /// Defines a mix
 class Mix<T extends Attribute> {
-  const Mix._(this.attributes);
+  const Mix._(List<T> attributes) : _attributes = attributes;
 
-  final List<T> attributes;
+  final List<T> _attributes;
+
+  List<T> get attributes {
+    return spreadNestedAttributes(_attributes);
+  }
 
   /// Define mix with parameters
   factory Mix([
@@ -26,34 +30,26 @@ class Mix<T extends Attribute> {
     T? p11,
     T? p12,
   ]) {
-    final params =
-        paramsToAttributes(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12);
+    final params = <T>[];
+    if (p1 != null) params.add(p1);
+    if (p2 != null) params.add(p2);
+    if (p3 != null) params.add(p3);
+    if (p4 != null) params.add(p4);
+    if (p5 != null) params.add(p5);
+    if (p6 != null) params.add(p6);
+    if (p7 != null) params.add(p7);
+    if (p8 != null) params.add(p8);
+    if (p9 != null) params.add(p9);
+    if (p10 != null) params.add(p10);
+    if (p11 != null) params.add(p11);
+    if (p12 != null) params.add(p12);
+
     return Mix._(params);
   }
 
   /// Adds more properties to a mix
-  Mix<T> add([
-    T? p1,
-    T? p2,
-    T? p3,
-    T? p4,
-    T? p5,
-    T? p6,
-    T? p7,
-    T? p8,
-    T? p9,
-    T? p10,
-    T? p11,
-    T? p12,
-  ]) {
-    final newParams = [...attributes];
-    final params = paramsToAttributes<T>(
-        p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12);
-
-    // Combine attributes into existing params
-    newParams.addAll(params);
-
-    return Mix._(newParams);
+  PositionalParamFn<T, Mix<T>> get add {
+    return WrapFunction(addAll).withPositionalToList;
   }
 
   Mix<T> addAll(List<T> attributes) {
@@ -78,6 +74,12 @@ class Mix<T extends Attribute> {
   }
 
   /// Merges many mixes into one
+  static Mix<T> combineAll<T extends Attribute>(List<Mix<T>> mixes) {
+    final attributes = mixes.expand((element) => element.attributes).toList();
+    return Mix._(attributes);
+  }
+
+  /// Merges many mixes into one
   static Mix<T> combine<T extends Attribute>([
     Mix<T>? mix1,
     Mix<T>? mix2,
@@ -85,12 +87,6 @@ class Mix<T extends Attribute> {
     Mix<T>? mix4,
     Mix<T>? mix5,
     Mix<T>? mix6,
-    Mix<T>? mix7,
-    Mix<T>? mix8,
-    Mix<T>? mix9,
-    Mix<T>? mix10,
-    Mix<T>? mix11,
-    Mix<T>? mix12,
   ]) {
     final list = <T>[];
     if (mix1 != null) list.addAll(mix1.attributes);
@@ -99,12 +95,6 @@ class Mix<T extends Attribute> {
     if (mix4 != null) list.addAll(mix4.attributes);
     if (mix5 != null) list.addAll(mix5.attributes);
     if (mix6 != null) list.addAll(mix6.attributes);
-    if (mix7 != null) list.addAll(mix7.attributes);
-    if (mix8 != null) list.addAll(mix8.attributes);
-    if (mix9 != null) list.addAll(mix9.attributes);
-    if (mix10 != null) list.addAll(mix10.attributes);
-    if (mix11 != null) list.addAll(mix11.attributes);
-    if (mix12 != null) list.addAll(mix12.attributes);
 
     return Mix<T>._(list);
   }

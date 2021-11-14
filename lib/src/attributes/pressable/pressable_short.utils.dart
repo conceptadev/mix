@@ -1,7 +1,9 @@
 import 'package:mix/src/attributes/helpers/helper.utils.dart';
 import 'package:mix/src/attributes/pressable/pressable.utils.dart';
 
-final disabled = WrapFunction.withPositionalParams(PressableUtility.disabled);
-final focus = WrapFunction.withPositionalParams(PressableUtility.focus);
-final hover = WrapFunction.withPositionalParams(PressableUtility.hover);
-final pressing = WrapFunction.withPositionalParams(PressableUtility.pressing);
+final disabled =
+    const WrapFunction(PressableUtility.disabled).withPositionalToList;
+final focus = const WrapFunction(PressableUtility.focus).withPositionalToList;
+final hover = const WrapFunction(PressableUtility.hover).withPositionalToList;
+final pressing =
+    const WrapFunction(PressableUtility.pressing).withPositionalToList;

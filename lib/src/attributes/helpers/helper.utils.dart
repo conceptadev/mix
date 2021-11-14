@@ -14,8 +14,7 @@ class HelperUtils {
   }
 }
 
-typedef AttributesParamFn<T extends Attribute, R> = R Function(
-    List<T> attributes);
+typedef FunctionWithListParam<T, R> = R Function(List<T> params);
 
 typedef PositionalParamFn<T, R> = R Function([
   T? p1,
@@ -24,93 +23,49 @@ typedef PositionalParamFn<T, R> = R Function([
   T? p4,
   T? p5,
   T? p6,
+  T? p7,
+  T? p8,
+  T? p9,
+  T? p10,
+  T? p11,
+  T? p12,
 ]);
 
-class WrapFunction<T extends Attribute, R> {
-  const WrapFunction._(this.fn);
-  final AttributesParamFn<T, R> fn;
+class WrapFunction<T, R> {
+  const WrapFunction(this.fn);
 
-  static PositionalParamFn<T, R> withPositionalParams<T extends Attribute, R>(
-      AttributesParamFn<T, R> fn) {
-    return WrapFunction<T, R>._(fn).withAttributeParams;
-  }
+  final FunctionWithListParam<T, R> fn;
 
-  _spreadNestedMix(List<T> attributes) {
-    final spreaded = [...attributes];
-    for (final attr in attributes) {
-      if (attr is NestedAttribute<T>) {
-        spreaded.addAll(attr.attributes);
-      } else {
-        spreaded.add(attr);
-      }
-    }
+  PositionalParamFn<T, R> get withPositionalToList {
+    return ([
+      T? p1,
+      T? p2,
+      T? p3,
+      T? p4,
+      T? p5,
+      T? p6,
+      T? p7,
+      T? p8,
+      T? p9,
+      T? p10,
+      T? p11,
+      T? p12,
+    ]) {
+      final params = <T>[];
+      if (p1 != null) params.add(p1);
+      if (p2 != null) params.add(p2);
+      if (p3 != null) params.add(p3);
+      if (p4 != null) params.add(p4);
+      if (p5 != null) params.add(p5);
+      if (p6 != null) params.add(p6);
+      if (p7 != null) params.add(p7);
+      if (p8 != null) params.add(p8);
+      if (p9 != null) params.add(p9);
+      if (p10 != null) params.add(p10);
+      if (p11 != null) params.add(p11);
+      if (p12 != null) params.add(p12);
 
-    return spreaded;
-  }
-
-  /// Attribute params to list
-  R withAttributeParams([
-    T? p1,
-    T? p2,
-    T? p3,
-    T? p4,
-    T? p5,
-    T? p6,
-  ]) {
-    final attributes = <T>[];
-
-    if (p1 != null) {
-      attributes.add(p1);
-    }
-    if (p2 != null) {
-      attributes.add(p2);
-    }
-    if (p3 != null) {
-      attributes.add(p3);
-    }
-    if (p4 != null) {
-      attributes.add(p4);
-    }
-    if (p5 != null) {
-      attributes.add(p5);
-    }
-    if (p6 != null) {
-      attributes.add(p6);
-    }
-
-    return fn(_spreadNestedMix(attributes));
+      return fn(params);
+    };
   }
 }
-
-// /// Attribute params to list
-// List<T> withAttributeParams<T>([
-//   T? p1,
-//   T? p2,
-//   T? p3,
-//   T? p4,
-//   T? p5,
-//   T? p6,
-// ]) {
-//   final attributes = <T>[];
-
-//   if (p1 != null) {
-//     attributes.add(p1);
-//   }
-//   if (p2 != null) {
-//     attributes.add(p2);
-//   }
-//   if (p3 != null) {
-//     attributes.add(p3);
-//   }
-//   if (p4 != null) {
-//     attributes.add(p4);
-//   }
-//   if (p5 != null) {
-//     attributes.add(p5);
-//   }
-//   if (p6 != null) {
-//     attributes.add(p6);
-//   }
-
-//   return attributes;
-// }
