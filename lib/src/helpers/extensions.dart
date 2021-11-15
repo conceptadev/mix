@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:mix/src/attributes/shared/shared.attributes.dart';
-import 'package:mix/src/attributes/shared/shared.notifier.dart';
 import 'package:mix/src/attributes/text/text.attributes.dart';
 import 'package:mix/src/attributes/text/text.notifier.dart';
 import 'package:mix/src/helpers/utils.dart';
+import 'package:mix/src/mixer/mixer.dart';
+import 'package:mix/src/mixer/mixer.notifier.dart';
 import 'package:mix/src/theme/mix_theme.dart';
 import 'package:mix/src/theme/theme_data.dart';
 import 'package:mix/src/theme/theme_spacing.dart';
@@ -41,7 +41,7 @@ extension ContextExtensions on BuildContext {
   TextAttributes? textAttributes() => TextAttributeNotifier.of(this);
 
   /// shared attributes of parent
-  SharedAttributes? sharedAttributes() => SharedAttributeNotifier.of(this);
+  Mixer? mixer() => MixerNotifier.of(this);
 
   /// Theme color scheme
   ColorScheme colorScheme() => theme().colorScheme;

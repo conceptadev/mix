@@ -1,4 +1,5 @@
 import 'package:mix/src/attributes/dynamic/dynamic.utils.dart';
+import 'package:mix/src/attributes/helpers/helper.utils.dart';
 
 /// Dynamic utilities
 const xsmall = DynamicUtils.xsmall;
@@ -9,4 +10,4 @@ const large = DynamicUtils.large;
 const portrait = DynamicUtils.portrait;
 const landscape = DynamicUtils.landscape;
 
-const dark = DynamicUtils.dark;
+final dark = const WrapFunction(DynamicUtils.dark).withPositionalToList;

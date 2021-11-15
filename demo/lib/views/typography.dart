@@ -7,12 +7,22 @@ class TypographyPreview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final mix = Mix(
-      rounded(5),
+      rounded(35),
       padding(20),
-      border(color: Colors.black),
-      animated(duration: 150),
+      font(
+        weight: FontWeight.bold,
+        color: Colors.black,
+      ),
+      border(
+        color: Colors.black,
+        width: 3,
+      ),
+      animated(),
+      dark(
+        border(color: Colors.white),
+        textColor(Colors.white),
+      ),
       elevation(8),
-      scale(1),
       hover(
         textColor(Colors.green),
         border(color: Colors.green),
@@ -23,8 +33,9 @@ class TypographyPreview extends StatelessWidget {
       press(
         bgColor(Colors.green.shade600),
         textColor(Colors.white),
+        border(color: Colors.greenAccent),
         elevation(2),
-        scale(0.8),
+        scale(0.9),
       ),
     );
 

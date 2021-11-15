@@ -48,15 +48,19 @@ class Mixer {
       }
     }
 
-    final dynamicMixer = Mixer.fromList(context, attributesToApply);
+    if (attributesToApply.isEmpty) {
+      return this;
+    }
 
+    final dynamicMixer = Mixer.fromList(context, attributesToApply);
     return merge(dynamicMixer);
   }
 
   /// Applies [MixTheme] data
-  Mixer _applyThemeData(BuildContext context) {
+  Mixer _applyContextData(BuildContext context) {
     return copyWith(
       boxProps: box?.applyContext(context),
+      textProps: text?.applyContext(context),
     );
   }
 
@@ -75,6 +79,10 @@ class Mixer {
       attributesToApply.addAll(mix.attributes);
     }
 
+    if (attributesToApply.isEmpty) {
+      return this;
+    }
+
     final tokenMixer = Mixer.fromList(context, attributesToApply);
 
     return merge(tokenMixer);
@@ -91,6 +99,44 @@ class Mixer {
       directives: other.directives,
       flexProps: other.flex,
     );
+  }
+
+  List<Attribute> get allAttributes {
+    final attributes = <Attribute>[];
+
+    if (box != null) {
+      attributes.add(box!);
+    }
+
+    if (text != null) {
+      attributes.add(text!);
+    }
+
+    if (icon != null) {
+      attributes.add(icon!);
+    }
+
+    if (shared != null) {
+      attributes.add(shared!);
+    }
+
+    if (flex != null) {
+      attributes.add(flex!);
+    }
+
+    if (directives.isNotEmpty) {
+      attributes.addAll(directives);
+    }
+
+    if (dynamicProps.isNotEmpty) {
+      attributes.addAll(dynamicProps);
+    }
+
+    if (tokens.isNotEmpty) {
+      attributes.addAll(tokens);
+    }
+
+    return attributes;
   }
 
   Mixer copyWith({
@@ -133,20 +179,26 @@ class Mixer {
   }
 
   factory Mixer.build(BuildContext context, Mix mix) {
-    return Mixer.fromList(context, mix.attributes);
+    return Mixer.fromList(context, mix.attributes)
+        ._applyTokenAttributes(context)
+        ._applyDynamicAttributes(context)
+        ._applyContextData(context);
   }
 
   factory Mixer.fromList(BuildContext context, List<Attribute> attributes) {
+    final allAttributes = context.mixer()?.allAttributes ?? [];
+    final combined = allAttributes..addAll(attributes);
     BoxAttributes? boxAttributes;
     IconAttributes? iconAttributes;
     FlexAttributes? flexAttributes;
-    var sharedAttributes = context.sharedAttributes();
-    var textAttributes = context.textAttributes();
+    SharedAttributes? sharedAttributes;
+    TextAttributes? textAttributes;
+
     final dynamicAttributes = <DynamicAttribute>[];
     final directiveAttributes = <DirectiveAttribute>[];
     final tokenRefAttributes = <TokenRefAttribute>[];
 
-    for (final attribute in attributes) {
+    for (final attribute in combined) {
       if (attribute is DynamicAttribute) {
         dynamicAttributes.add(attribute);
       }
@@ -185,7 +237,7 @@ class Mixer {
       }
     }
 
-    final mixer = Mixer._(
+    return Mixer._(
       box: boxAttributes,
       text: textAttributes,
       dynamicProps: dynamicAttributes,
@@ -195,10 +247,5 @@ class Mixer {
       flex: flexAttributes,
       tokens: tokenRefAttributes,
     );
-
-    return mixer
-        ._applyDynamicAttributes(context)
-        ._applyTokenAttributes(context)
-        ._applyThemeData(context);
   }
 }

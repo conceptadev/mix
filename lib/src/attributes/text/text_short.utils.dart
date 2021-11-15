@@ -13,6 +13,8 @@ const textScaleFactor = TextUtility.textScaleFactor;
 const strutStyle = TextUtility.strutStyle;
 const semanticsLabel = TextUtility.semanticsLabel;
 
+const font = TextStyleUtility.font;
+
 const fontWeight = TextStyleUtility.fontWeight;
 const textBaseline = TextStyleUtility.textBaseline;
 const letterSpacing = TextStyleUtility.letterSpacing;

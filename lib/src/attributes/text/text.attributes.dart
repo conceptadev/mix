@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:mix/mix.dart';
 import 'package:mix/src/helpers/extensions.dart';
 
 import '../common/attribute.dart';
@@ -30,20 +31,53 @@ class TextAttributes extends Attribute {
     this.textWidthBasis,
   });
 
+  TextAttributes applyContext(BuildContext context) {
+    return copyWith(
+      style: context.defaultTextStyle().merge(style),
+    );
+  }
+
   TextAttributes merge(TextAttributes? other) {
     if (other == null) return this;
-    final merge = style?.merge(other.style) ?? other.style;
+
     return TextAttributes(
-      style: merge,
+      // Need to inherit to allow for overrides
+      style: style?.merge(other.style) ?? other.style,
       strutStyle: strutStyle?.merge(other.strutStyle) ?? other.strutStyle,
-      textAlign: other.textAlign ?? textAlign,
-      locale: other.locale ?? locale,
-      softWrap: other.softWrap ?? softWrap,
-      overflow: other.overflow ?? overflow,
-      textScaleFactor: other.textScaleFactor ?? textScaleFactor,
-      maxLines: other.maxLines ?? maxLines,
-      semanticsLabel: other.semanticsLabel ?? semanticsLabel,
-      textWidthBasis: other.textWidthBasis ?? textWidthBasis,
+      textAlign: other.textAlign,
+      locale: other.locale,
+      softWrap: other.softWrap,
+      overflow: other.overflow,
+      textScaleFactor: other.textScaleFactor,
+      maxLines: other.maxLines,
+      semanticsLabel: other.semanticsLabel,
+      textWidthBasis: other.textWidthBasis,
+    );
+  }
+
+  TextAttributes copyWith({
+    TextStyle? style,
+    StrutStyle? strutStyle,
+    TextAlign? textAlign,
+    Locale? locale,
+    bool? softWrap,
+    TextOverflow? overflow,
+    double? textScaleFactor,
+    int? maxLines,
+    String? semanticsLabel,
+    TextWidthBasis? textWidthBasis,
+  }) {
+    return TextAttributes(
+      style: style ?? this.style,
+      strutStyle: strutStyle ?? this.strutStyle,
+      textAlign: textAlign ?? this.textAlign,
+      locale: locale ?? this.locale,
+      softWrap: softWrap ?? this.softWrap,
+      overflow: overflow ?? this.overflow,
+      textScaleFactor: textScaleFactor ?? this.textScaleFactor,
+      maxLines: maxLines ?? this.maxLines,
+      semanticsLabel: semanticsLabel ?? this.semanticsLabel,
+      textWidthBasis: textWidthBasis ?? this.textWidthBasis,
     );
   }
 }

@@ -98,6 +98,22 @@ class TextStyleUtility {
     );
   }
 
+  static TextAttributes font({
+    Color? color,
+    FontWeight? weight,
+    double? size,
+    String? family,
+  }) {
+    return TextAttributes(
+      style: TextStyle(
+        color: color,
+        fontWeight: weight,
+        fontSize: size,
+        fontFamily: family,
+      ),
+    );
+  }
+
   static TextAttributes fontFamily(String? fontFamily) {
     return TextAttributes(
       style: TextStyle(fontFamily: fontFamily),

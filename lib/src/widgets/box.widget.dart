@@ -1,13 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:mix/src/attributes/shared/shared.notifier.dart';
-import 'package:mix/src/attributes/text/text.notifier.dart';
-import 'package:mix/src/widgets/nothing.widget.dart';
 
 import '../mixer/mix_factory.dart';
 import '../mixer/mixer.dart';
+import '../mixer/mixer.notifier.dart';
 import 'mix.widget.dart';
+import 'nothing.widget.dart';
 
 class Box extends MixWidget {
   const Box(
@@ -61,22 +60,14 @@ class BoxMixerWidget extends MixerWidget {
     final scale = boxProps?.scale;
 
     if (hidden == true) {
-      return const Nothing();
+      return const Empty();
     }
     // Apply notifier to children
     if (current != null) {
-      if (sharedProps != null) {
-        current = SharedAttributeNotifier(
-          attributes: sharedProps,
-          child: current,
-        );
-      }
-      if (textProps != null) {
-        current = TextAttributeNotifier(
-          attributes: textProps,
-          child: current,
-        );
-      }
+      current = MixerNotifier(
+        mixer: mixer,
+        child: current,
+      );
     }
 
     if (animated) {
@@ -103,15 +94,6 @@ class BoxMixerWidget extends MixerWidget {
         padding: padding,
         height: height,
         width: width,
-        child: current,
-      );
-    }
-
-    if (elevation != null) {
-      current = Material(
-        borderRadius: borderRadius,
-        elevation: elevation,
-        animationDuration: animationDuration,
         child: current,
       );
     }
@@ -163,21 +145,6 @@ class BoxMixerWidget extends MixerWidget {
       }
     }
 
-    if (rotate != null) {
-      current = RotatedBox(
-        quarterTurns: rotate,
-        child: current,
-      );
-    }
-
-    if (flexFit != null || flex != null) {
-      current = Flexible(
-        flex: flex ?? 1,
-        fit: flexFit ?? FlexFit.loose,
-        child: current,
-      );
-    }
-
     if (scale != null) {
       if (animated) {
         current = AnimatedScale(
@@ -191,6 +158,21 @@ class BoxMixerWidget extends MixerWidget {
           child: current,
         );
       }
+    }
+
+    if (rotate != null) {
+      current = RotatedBox(
+        quarterTurns: rotate,
+        child: current,
+      );
+    }
+
+    if (flexFit != null || flex != null) {
+      current = Flexible(
+        flex: flex ?? 1,
+        fit: flexFit ?? FlexFit.loose,
+        child: current,
+      );
     }
 
     return current;

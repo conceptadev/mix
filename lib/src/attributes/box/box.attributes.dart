@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:mix/mix.dart';
 
 import '../../helpers/extensions.dart';
 import '../common/attribute.dart';
