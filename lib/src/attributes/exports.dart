@@ -10,7 +10,6 @@ export './dynamic/dark_mode.attributes.dart';
 export './dynamic/dynamic.utils.dart';
 export './dynamic/dynamic_short.utils.dart';
 export './dynamic/media_query.attributes.dart';
-export './dynamic/token_ref.attributes.dart';
 
 /// Flex
 export './flex/flex.attributes.dart';
@@ -36,3 +35,8 @@ export './shared/shared_short.utils.dart';
 export './text/text.attributes.dart';
 export './text/text.utils.dart';
 export './text/text_short.utils.dart';
+
+/// Token
+export './token/token.attributes.dart';
+export './token/token.utils.dart';
+export './token/token_short.utils.dart';

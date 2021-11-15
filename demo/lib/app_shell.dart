@@ -15,7 +15,7 @@ class AppShell extends HookConsumerWidget {
 
     final darkMode = ref.watch(darkModeProvider.state);
 
-    return TokenNotifier(
+    return MixTheme(
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Remix'),

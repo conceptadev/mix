@@ -61,14 +61,15 @@ class FlexBoxMixerWidget extends MixerWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mainAxis = flexProps.mainAxisAlignment ?? MainAxisAlignment.start;
-    final crossAxis = flexProps.crossAxisAlignment ?? CrossAxisAlignment.center;
-    final mainAxisSize = flexProps.mainAxisSize ?? MainAxisSize.max;
-    final vDirection = flexProps.verticalDirection ?? VerticalDirection.down;
-    final gapSize = flexProps.gapSize;
+    final mainAxis = flexProps?.mainAxisAlignment ?? MainAxisAlignment.start;
+    final crossAxis =
+        flexProps?.crossAxisAlignment ?? CrossAxisAlignment.center;
+    final mainAxisSize = flexProps?.mainAxisSize ?? MainAxisSize.max;
+    final vDirection = flexProps?.verticalDirection ?? VerticalDirection.down;
+    final gapSize = flexProps?.gapSize;
 
     return BoxMixerWidget(
-      recipe,
+      mixer,
       child: Flex(
         direction: direction,
         mainAxisAlignment: mainAxis,

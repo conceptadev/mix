@@ -3,43 +3,6 @@ import 'package:mix/mix.dart';
 import 'package:mix/src/attributes/box/box.attributes.dart';
 import 'package:mix/src/mappers/border.mapper.dart';
 
-/// Background color attribute
-const bgColor = BoxUtility.backgroundColor;
-
-/// Height
-const h = BoxUtility.height;
-
-/// Width
-const w = BoxUtility.width;
-
-/// Max height attribute
-const maxH = BoxUtility.maxHeight;
-
-/// Max width attribute
-const maxW = BoxUtility.maxWidth;
-
-/// Min height attribute
-const minH = BoxUtility.minHeight;
-
-/// Min width attribute
-const minW = BoxUtility.minWidth;
-
-/// Border utility
-const border = BoxUtility.border;
-
-/// Border color for all borde sides
-const borderColor = BoxUtility.borderColor;
-
-/// Border width for all border sides
-const borderWidth = BoxUtility.borderWidth;
-
-/// Border style for all border sides
-const borderStyle = BoxUtility.borderStyle;
-
-/// Box shadow utility
-const shadow = BoxUtility.shadow;
-const elevation = BoxUtility.elevation;
-
 class BoxUtility {
   const BoxUtility._();
 
@@ -255,6 +218,13 @@ class BoxUtility {
   /// Border style for all border sides
   static BoxAttributes borderStyle(BorderStyle style) {
     return BoxAttributes(border: Border.all(style: style));
+  }
+
+  /// Scale transform box utility
+  static BoxAttributes scale(double scale) {
+    return BoxAttributes(
+      scale: scale,
+    );
   }
 
   static BoxAttributes shadow({

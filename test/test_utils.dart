@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
 import 'package:mix/src/widgets/box.widget.dart';
 
-class DirectionalTestWidget extends StatelessWidget {
-  const DirectionalTestWidget({
+class MixTestWidget extends StatelessWidget {
+  const MixTestWidget({
     required this.child,
     Key? key,
   }) : super(key: key);
@@ -12,9 +12,11 @@ class DirectionalTestWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Directionality(
-      textDirection: TextDirection.ltr,
-      child: child,
+    return MixTheme(
+      child: Directionality(
+        textDirection: TextDirection.ltr,
+        child: child,
+      ),
     );
   }
 }
@@ -26,7 +28,7 @@ class BoxInsideFlexWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DirectionalTestWidget(
+    return MixTestWidget(
       child: Column(
         children: [
           Box(
@@ -49,7 +51,7 @@ class BoxTestWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DirectionalTestWidget(
+    return MixTestWidget(
       child: Box(
         mix,
         child: const SizedBox(

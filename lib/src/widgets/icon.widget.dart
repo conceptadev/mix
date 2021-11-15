@@ -40,8 +40,8 @@ class IconMixerWidget extends MixerWidget {
   Widget build(BuildContext context) {
     final iconWidget = Icon(
       icon,
-      color: iconProps.color,
-      size: iconProps.size,
+      color: iconProps?.color,
+      size: iconProps?.size,
       textDirection: textDirection,
       semanticLabel: semanticLabel,
     );
@@ -53,7 +53,7 @@ class IconMixerWidget extends MixerWidget {
         duration: animationDuration,
         curve: animationCurve,
         tween: Tween<double?>(
-          end: iconProps.size,
+          end: iconProps?.size,
         ),
         builder: (context, value, child) {
           return IconTheme.merge(
@@ -61,7 +61,7 @@ class IconMixerWidget extends MixerWidget {
             child: TweenAnimationBuilder<Color?>(
               duration: animationDuration,
               curve: animationCurve,
-              tween: ColorTween(end: iconProps.color),
+              tween: ColorTween(end: iconProps?.color),
               child: child,
               builder: (context, value, child) {
                 if (value == null) {

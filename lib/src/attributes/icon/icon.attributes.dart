@@ -9,7 +9,9 @@ class IconAttributes extends Attribute {
     this.size,
   });
 
-  merge(IconAttributes other) {
+  IconAttributes merge(IconAttributes? other) {
+    if (other == null) return this;
+
     return IconAttributes(
       color: other.color ?? color,
       size: other.size ?? size,

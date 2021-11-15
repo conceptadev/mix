@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:mix/src/attributes/shared/shared.notifier.dart';
+import 'package:mix/src/attributes/text/text.notifier.dart';
 import 'package:mix/src/widgets/nothing.widget.dart';
 
 import '../mixer/mix_factory.dart';
@@ -40,24 +42,41 @@ class BoxMixerWidget extends MixerWidget {
 
     // Box Attributes
 
-    final alignment = boxProps.alignment;
-    final aspectRatio = boxProps.aspectRatio;
+    final alignment = boxProps?.alignment;
+    final aspectRatio = boxProps?.aspectRatio;
     final bgColor =
-        boxProps.decoration == null ? boxProps.backgroundColor : null;
-    final decoration = boxProps.decoration;
-    final opacity = boxProps.opacity;
-    final rotate = boxProps.rotate;
-    final margin = boxProps.margin;
-    final flex = boxProps.flex;
-    final flexFit = boxProps.flexFit;
-    final constraints = boxProps.constraints;
-    final padding = boxProps.padding;
-    final height = boxProps.height;
-    final width = boxProps.width;
-    final elevation = boxProps.elevation;
+        boxProps?.decoration == null ? boxProps?.backgroundColor : null;
+    final decoration = boxProps?.decoration;
+    final opacity = boxProps?.opacity;
+    final rotate = boxProps?.rotate;
+    final margin = boxProps?.margin;
+    final padding = boxProps?.padding;
+    final flex = boxProps?.flex;
+    final flexFit = boxProps?.flexFit;
+    final constraints = boxProps?.constraints;
+    final height = boxProps?.height;
+    final width = boxProps?.width;
+    final elevation = boxProps?.elevation;
+    final borderRadius = boxProps?.borderRadius;
+    final scale = boxProps?.scale;
 
     if (hidden == true) {
       return const Nothing();
+    }
+    // Apply notifier to children
+    if (current != null) {
+      if (sharedProps != null) {
+        current = SharedAttributeNotifier(
+          attributes: sharedProps,
+          child: current,
+        );
+      }
+      if (textProps != null) {
+        current = TextAttributeNotifier(
+          attributes: textProps,
+          child: current,
+        );
+      }
     }
 
     if (animated) {
@@ -90,7 +109,16 @@ class BoxMixerWidget extends MixerWidget {
 
     if (elevation != null) {
       current = Material(
-        borderRadius: boxProps.borderRadius,
+        borderRadius: borderRadius,
+        elevation: elevation,
+        animationDuration: animationDuration,
+        child: current,
+      );
+    }
+
+    if (elevation != null) {
+      current = Material(
+        borderRadius: borderRadius,
         elevation: elevation,
         animationDuration: animationDuration,
         child: current,
@@ -104,7 +132,10 @@ class BoxMixerWidget extends MixerWidget {
           duration: animationDuration,
           curve: animationCurve,
           builder: (context, value, child) {
-            return AspectRatio(aspectRatio: value, child: child);
+            return AspectRatio(
+              aspectRatio: value,
+              child: child,
+            );
           },
           child: current,
         );
@@ -145,6 +176,21 @@ class BoxMixerWidget extends MixerWidget {
         fit: flexFit ?? FlexFit.loose,
         child: current,
       );
+    }
+
+    if (scale != null) {
+      if (animated) {
+        current = AnimatedScale(
+          scale: scale,
+          duration: animationDuration,
+          child: current,
+        );
+      } else {
+        current = Transform.scale(
+          scale: scale,
+          child: current,
+        );
+      }
     }
 
     return current;

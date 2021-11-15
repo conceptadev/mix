@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
 import 'package:mix/src/attributes/common/attribute.dart';
-import 'package:mix/src/notifiers/pressable.notifier.dart';
+import 'package:mix/src/attributes/pressable/pressable.notifier.dart';
 
 class DisabledAttribute extends DynamicAttribute {
   const DisabledAttribute(List<Attribute> props) : super(props);

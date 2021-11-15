@@ -16,7 +16,7 @@ void main() {
         'Adds child on widget',
         (tester) async {
           await tester.pumpWidget(
-            DirectionalTestWidget(
+            MixTestWidget(
               child: Mix().box(
                 child: const Text(
                   widgetText,

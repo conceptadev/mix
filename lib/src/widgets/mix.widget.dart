@@ -25,24 +25,25 @@ abstract class MixWidget extends StatelessWidget {
 abstract class MixerWidget extends StatelessWidget {
   /// Constructor
   const MixerWidget(
-    this.recipe, {
+    this.mixer, {
     Key? key,
   }) : super(key: key);
 
-  BoxAttributes get boxProps => recipe.box;
-  TextAttributes get textProps => recipe.text;
-  IconAttributes get iconProps => recipe.icon;
-  FlexAttributes get flexProps => recipe.flex;
+  BoxAttributes? get boxProps => mixer.box;
+  TextAttributes? get textProps => mixer.text;
+  IconAttributes? get iconProps => mixer.icon;
+  FlexAttributes? get flexProps => mixer.flex;
+  SharedAttributes? get sharedProps => mixer.shared;
 
   // Common
-  bool get animated => recipe.common.animated == true;
+  bool get animated => sharedProps?.animated == true;
   Duration get animationDuration =>
-      recipe.common.animationDuration ?? const Duration(milliseconds: 100);
-  Curve get animationCurve => recipe.common.animationCurve ?? Curves.linear;
-  bool get hidden => recipe.common.hidden == true;
-  TextDirection? get textDirection => recipe.common.textDirection;
+      sharedProps?.animationDuration ?? const Duration(milliseconds: 100);
+  Curve get animationCurve => sharedProps?.animationCurve ?? Curves.linear;
+  bool get hidden => sharedProps?.hidden == true;
+  TextDirection? get textDirection => sharedProps?.textDirection;
 
-  final Mixer recipe;
+  final Mixer mixer;
 
   @override
   Widget build(BuildContext context);

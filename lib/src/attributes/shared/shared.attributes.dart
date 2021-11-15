@@ -17,7 +17,9 @@ class SharedAttributes implements Attribute {
     this.textDirection,
   });
 
-  SharedAttributes merge(SharedAttributes other) {
+  SharedAttributes merge(SharedAttributes? other) {
+    if (other == null) return this;
+
     return SharedAttributes(
       hidden: other.hidden ?? hidden,
       animated: other.animated ?? animated,

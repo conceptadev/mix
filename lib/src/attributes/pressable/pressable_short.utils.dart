@@ -5,5 +5,5 @@ final disabled =
     const WrapFunction(PressableUtility.disabled).withPositionalToList;
 final focus = const WrapFunction(PressableUtility.focus).withPositionalToList;
 final hover = const WrapFunction(PressableUtility.hover).withPositionalToList;
-final pressing =
+final press =
     const WrapFunction(PressableUtility.pressing).withPositionalToList;

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mix/mix.dart';
 import 'package:mix/src/attributes/common/attribute.dart';
 import 'package:mix/src/attributes/dynamic/dark_mode.attributes.dart';
 import 'package:mix/src/attributes/dynamic/media_query.attributes.dart';

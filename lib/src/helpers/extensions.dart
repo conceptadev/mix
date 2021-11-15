@@ -1,5 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:mix/src/attributes/shared/shared.attributes.dart';
+import 'package:mix/src/attributes/shared/shared.notifier.dart';
+import 'package:mix/src/attributes/text/text.attributes.dart';
+import 'package:mix/src/attributes/text/text.notifier.dart';
 import 'package:mix/src/helpers/utils.dart';
+import 'package:mix/src/theme/mix_theme.dart';
+import 'package:mix/src/theme/theme_data.dart';
+import 'package:mix/src/theme/theme_spacing.dart';
 
 /// Possible screen sizes
 enum ScreenSize { xs, sm, md, lg }
@@ -18,14 +25,30 @@ extension ContextExtensions on BuildContext {
   /// Check if brightness is Brightness.dark
   bool isDarkMode() => brightness() == Brightness.dark;
 
+  /// Get mix theme
+  MixThemeData mixData() => MixTheme.of(this);
+
+  /// Get spacing data from mix theme
+  SpacingData spacingData() => mixData().spacing;
+
   /// MediaQueryData for context
   MediaQueryData mq() => MediaQuery.of(this);
 
   /// Theme context helpers
   ThemeData theme() => Theme.of(this);
 
+  /// Text attributes of parent
+  TextAttributes? textAttributes() => TextAttributeNotifier.of(this);
+
+  /// shared attributes of parent
+  SharedAttributes? sharedAttributes() => SharedAttributeNotifier.of(this);
+
   /// Theme color scheme
   ColorScheme colorScheme() => theme().colorScheme;
+
+  /// Default TextStyle
+  TextStyle defaultTextStyle() =>
+      theme().textTheme.bodyText1 ?? const TextStyle();
 
   /// Theme text theme
   TextTheme textTheme() => theme().textTheme;

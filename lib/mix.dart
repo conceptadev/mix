@@ -14,4 +14,4 @@ export 'src/attributes/exports.dart';
 export 'src/helpers/extensions.dart';
 export 'src/mixer/mix_factory.dart' show Mix;
 export 'src/mixer/mixer.dart' show Mixer;
-export 'src/notifiers/token.notifier.dart';
+export 'src/theme/mix_theme.dart';

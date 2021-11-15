@@ -11,71 +11,107 @@ import '../attributes/shared/shared.attributes.dart';
 
 /// Recipe
 class Mixer {
-  BoxAttributes box;
-  TextAttributes text;
-  SharedAttributes common;
-  IconAttributes icon;
-  FlexAttributes flex;
+  BoxAttributes? box;
+  TextAttributes? text;
+  SharedAttributes? shared;
+  IconAttributes? icon;
+  FlexAttributes? flex;
 
   List<DynamicAttribute> dynamicProps;
+  List<TokenRefAttribute> tokens;
   List<DirectiveAttribute> directives;
 
   Mixer._({
-    required this.box,
-    required this.text,
-    required this.common,
-    required this.directives,
-    required this.dynamicProps,
-    required this.icon,
-    required this.flex,
+    this.box,
+    this.text,
+    this.shared,
+    this.icon,
+    this.flex,
+    this.directives = const [],
+    this.dynamicProps = const [],
+    this.tokens = const [],
   });
 
   /// Applies `DynamicAttribute` based on context
-  Mixer _applyDynamicProperties(BuildContext context) {
+  Mixer _applyDynamicAttributes(BuildContext context) {
     final dynamicList = dynamicProps;
 
     if (dynamicList.isEmpty) {
       return this;
     }
 
-    final propsToApply = <Attribute>[];
+    final attributesToApply = <Attribute>[];
 
     for (final attr in dynamicList) {
       if (attr.shouldApply(context)) {
-        propsToApply.addAll(attr.attributes);
+        attributesToApply.addAll(attr.attributes);
       }
     }
 
-    final dynamicMixer = Mixer.fromList(propsToApply);
+    final dynamicMixer = Mixer.fromList(context, attributesToApply);
 
     return merge(dynamicMixer);
+  }
+
+  /// Applies [MixTheme] data
+  Mixer _applyThemeData(BuildContext context) {
+    return copyWith(
+      boxProps: box?.applyContext(context),
+    );
+  }
+
+  /// Applies `TokenAttribute` based on context
+  Mixer _applyTokenAttributes(BuildContext context) {
+    final tokenList = tokens;
+
+    if (tokenList.isEmpty) {
+      return this;
+    }
+
+    final attributesToApply = <Attribute>[];
+
+    for (final attr in tokenList) {
+      final mix = attr.getToken(context);
+      attributesToApply.addAll(mix.attributes);
+    }
+
+    final tokenMixer = Mixer.fromList(context, attributesToApply);
+
+    return merge(tokenMixer);
   }
 
   Mixer merge(Mixer other) {
     return copyWith(
       boxProps: other.box,
       textProps: other.text,
+      iconProps: other.icon,
+      sharedProps: other.shared,
       dynamicProps: other.dynamicProps,
+      tokens: other.tokens,
+      directives: other.directives,
+      flexProps: other.flex,
     );
   }
 
   Mixer copyWith({
-    BoxAttributes boxProps = const BoxAttributes(),
-    TextAttributes textProps = const TextAttributes(),
-    SharedAttributes commonProps = const SharedAttributes(),
-    IconAttributes iconProps = const IconAttributes(),
-    FlexAttributes flexProps = const FlexAttributes(),
+    BoxAttributes? boxProps,
+    TextAttributes? textProps,
+    SharedAttributes? sharedProps,
+    IconAttributes? iconProps,
+    FlexAttributes? flexProps,
     List<DynamicAttribute> dynamicProps = const [],
     List<DirectiveAttribute> directives = const [],
+    List<TokenRefAttribute> tokens = const [],
   }) {
     return Mixer._(
-      box: box.merge(boxProps),
-      text: text.merge(textProps),
-      common: common.merge(commonProps),
       dynamicProps: this.dynamicProps..addAll(dynamicProps),
       directives: this.directives..addAll(directives),
-      icon: icon.merge(iconProps),
-      flex: flex.merge(flexProps),
+      tokens: this.tokens..addAll(tokens),
+      box: box?.merge(boxProps) ?? boxProps,
+      text: text?.merge(textProps) ?? textProps,
+      shared: shared?.merge(sharedProps) ?? sharedProps,
+      icon: icon?.merge(iconProps) ?? iconProps,
+      flex: flex?.merge(flexProps) ?? flexProps,
     );
   }
 
@@ -97,18 +133,18 @@ class Mixer {
   }
 
   factory Mixer.build(BuildContext context, Mix mix) {
-    final mixer = Mixer.fromList(mix.attributes);
-    return mixer._applyDynamicProperties(context);
+    return Mixer.fromList(context, mix.attributes);
   }
 
-  factory Mixer.fromList(List<Attribute> attributes) {
-    var boxAttributes = const BoxAttributes();
-    var textAttributes = const TextAttributes();
-    var iconAttributes = const IconAttributes();
-    var flexAttributes = const FlexAttributes();
-    var commonAttributes = const SharedAttributes();
+  factory Mixer.fromList(BuildContext context, List<Attribute> attributes) {
+    BoxAttributes? boxAttributes;
+    IconAttributes? iconAttributes;
+    FlexAttributes? flexAttributes;
+    var sharedAttributes = context.sharedAttributes();
+    var textAttributes = context.textAttributes();
     final dynamicAttributes = <DynamicAttribute>[];
     final directiveAttributes = <DirectiveAttribute>[];
+    final tokenRefAttributes = <TokenRefAttribute>[];
 
     for (final attribute in attributes) {
       if (attribute is DynamicAttribute) {
@@ -119,35 +155,50 @@ class Mixer {
         directiveAttributes.add(attribute);
       }
 
+      if (attribute is TokenRefAttribute) {
+        tokenRefAttributes.add(attribute);
+      }
+
       if (attribute is SharedAttributes) {
-        commonAttributes = commonAttributes.merge(attribute);
+        sharedAttributes ??= const SharedAttributes();
+        sharedAttributes = sharedAttributes.merge(attribute);
       }
 
       if (attribute is TextAttributes) {
+        textAttributes ??= const TextAttributes();
         textAttributes = textAttributes.merge(attribute);
       }
 
       if (attribute is BoxAttributes) {
+        boxAttributes ??= const BoxAttributes();
         boxAttributes = boxAttributes.merge(attribute);
       }
 
       if (attribute is IconAttributes) {
+        iconAttributes ??= const IconAttributes();
         iconAttributes = iconAttributes.merge(attribute);
       }
 
       if (attribute is FlexAttributes) {
+        flexAttributes ??= const FlexAttributes();
         flexAttributes = flexAttributes.merge(attribute);
       }
     }
 
-    return Mixer._(
+    final mixer = Mixer._(
       box: boxAttributes,
       text: textAttributes,
       dynamicProps: dynamicAttributes,
-      common: commonAttributes,
+      shared: sharedAttributes,
       directives: directiveAttributes,
       icon: iconAttributes,
       flex: flexAttributes,
+      tokens: tokenRefAttributes,
     );
+
+    return mixer
+        ._applyDynamicAttributes(context)
+        ._applyTokenAttributes(context)
+        ._applyThemeData(context);
   }
 }

@@ -10,7 +10,7 @@ void main() {
   group("Mix Icon widget", () {
     testWidgets('Adds icon on widget', (tester) async {
       await tester.pumpWidget(
-        DirectionalTestWidget(
+        MixTestWidget(
           child: Mix().icon(Icons.bolt),
         ),
       );
@@ -23,7 +23,7 @@ void main() {
 
     testWidgets('Adds Icon properties on widget', (tester) async {
       await tester.pumpWidget(
-        DirectionalTestWidget(
+        MixTestWidget(
           child: Mix(
             const IconAttributes(color: Colors.greenAccent),
             const IconAttributes(size: 23),

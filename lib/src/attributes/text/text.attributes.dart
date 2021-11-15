@@ -30,7 +30,8 @@ class TextAttributes extends Attribute {
     this.textWidthBasis,
   });
 
-  TextAttributes merge(TextAttributes other) {
+  TextAttributes merge(TextAttributes? other) {
+    if (other == null) return this;
     final merge = style?.merge(other.style) ?? other.style;
     return TextAttributes(
       style: merge,

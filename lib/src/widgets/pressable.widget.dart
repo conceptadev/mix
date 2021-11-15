@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mix/src/notifiers/pressable.notifier.dart';
+import 'package:mix/src/attributes/pressable/pressable.notifier.dart';
 
 import '../mixer/mix_factory.dart';
 import 'box.widget.dart';

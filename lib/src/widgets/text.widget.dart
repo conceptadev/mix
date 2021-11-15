@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:mix/src/helpers/extensions.dart';
 
 import '../mixer/mix_factory.dart';
 import '../mixer/mixer.dart';
@@ -33,38 +34,35 @@ class _TextMixerWidget extends MixerWidget {
 
   @override
   Widget build(BuildContext context) {
-    onEnd() {}
-
-    final content = recipe.applyTextDirectives(text);
+    final content = mixer.applyTextDirectives(text);
 
     if (animated) {
       return AnimatedDefaultTextStyle(
         child: Text(
           content,
           textDirection: textDirection,
-          textWidthBasis: textProps.textWidthBasis,
-          textScaleFactor: textProps.textScaleFactor,
+          textWidthBasis: textProps?.textWidthBasis,
+          textScaleFactor: textProps?.textScaleFactor,
         ),
-        style: textProps.style ?? const TextStyle(),
+        style: textProps?.style ?? context.defaultTextStyle(),
         duration: animationDuration,
         curve: animationCurve,
-        onEnd: onEnd,
-        softWrap: textProps.softWrap ?? true,
-        textAlign: textProps.textAlign,
-        overflow: textProps.overflow ?? TextOverflow.clip,
-        maxLines: textProps.maxLines,
+        softWrap: textProps?.softWrap ?? true,
+        textAlign: textProps?.textAlign,
+        overflow: textProps?.overflow ?? TextOverflow.clip,
+        maxLines: textProps?.maxLines,
       );
     } else {
       return Text(
         content,
-        softWrap: textProps.softWrap,
+        softWrap: textProps?.softWrap,
         textDirection: textDirection,
-        textWidthBasis: textProps.textWidthBasis,
-        textAlign: textProps.textAlign,
-        overflow: textProps.overflow,
-        maxLines: textProps.maxLines,
-        textScaleFactor: textProps.textScaleFactor,
-        style: textProps.style,
+        textWidthBasis: textProps?.textWidthBasis,
+        textAlign: textProps?.textAlign,
+        overflow: textProps?.overflow,
+        maxLines: textProps?.maxLines,
+        textScaleFactor: textProps?.textScaleFactor,
+        style: textProps?.style,
       );
     }
   }
@@ -76,7 +74,7 @@ class _TextMixerWidget extends MixerWidget {
     properties.add(
       DiagnosticsProperty<EdgeInsetsGeometry>(
         'padding',
-        boxProps.padding,
+        boxProps?.padding,
         defaultValue: null,
       ),
     );

@@ -11,7 +11,7 @@ void main() {
     const widgetText = 'Mix Text Widget';
     testWidgets('Adds text on widget', (tester) async {
       await tester.pumpWidget(
-        DirectionalTestWidget(
+        MixTestWidget(
           child: Mix().text(widgetText),
         ),
       );
@@ -24,7 +24,7 @@ void main() {
 
     testWidgets('Adds Text properties on widget', (tester) async {
       await tester.pumpWidget(
-        DirectionalTestWidget(
+        MixTestWidget(
           child: Mix(
             TextUtility.overflow(TextOverflow.ellipsis),
             TextUtility.softWrap(true),
@@ -50,7 +50,7 @@ void main() {
 
     testWidgets('Adds Text Style on widget', (tester) async {
       await tester.pumpWidget(
-        DirectionalTestWidget(
+        MixTestWidget(
           child: Mix(
             TextStyleUtility.fontSize(20),
             TextStyleUtility.wordSpacing(2),

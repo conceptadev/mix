@@ -6,22 +6,25 @@ class TypographyPreview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final boxMix = Mix(
-      bgColor(Colors.blue),
+    final mix = Mix(
       rounded(5),
-      p(20),
-      border(color: Colors.red),
+      padding(20),
+      border(color: Colors.black),
       animated(duration: 150),
-      elevation(10),
+      elevation(8),
+      scale(1),
       hover(
+        textColor(Colors.green),
+        border(color: Colors.green),
         bgColor(
-          Colors.blue.shade400,
+          Colors.green.withOpacity(0.1),
         ),
       ),
-      pressing(
-        bgColor(Colors.blue.shade600),
-        elevation(4),
-        p(15),
+      press(
+        bgColor(Colors.green.shade600),
+        textColor(Colors.white),
+        elevation(2),
+        scale(0.8),
       ),
     );
 
@@ -29,10 +32,10 @@ class TypographyPreview extends StatelessWidget {
       child: Column(
         children: [
           Pressable(
-            boxMix,
+            mix,
             onPressed: () {},
             child: TextMix(
-              Mix(textColor(Colors.black)),
+              Mix(),
               text: 'Simple Text',
             ),
           )

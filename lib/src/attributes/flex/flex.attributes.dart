@@ -18,7 +18,9 @@ class FlexAttributes extends Attribute {
     this.gapSize,
   });
 
-  merge(FlexAttributes other) {
+  FlexAttributes merge(FlexAttributes? other) {
+    if (other == null) return this;
+
     return FlexAttributes(
       direction: other.direction ?? direction,
       mainAxisAlignment: other.mainAxisAlignment ?? mainAxisAlignment,
