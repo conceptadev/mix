@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mix/src/attributes/box/box.attributes.dart';
 import 'package:mix/src/attributes/flex/flex.attributes.dart';
@@ -19,6 +20,15 @@ abstract class MixWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context);
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+
+    properties.add(
+      DiagnosticsProperty<Mix>('mix', mix, defaultValue: null),
+    );
+  }
 }
 
 /// Mixer Widget
@@ -47,4 +57,85 @@ abstract class MixerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context);
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+
+    properties.add(
+      DiagnosticsProperty<Mixer>(
+        'mixer',
+        mixer,
+        defaultValue: null,
+      ),
+    );
+
+    properties.add(
+      DiagnosticsProperty<BoxAttributes>(
+        'box',
+        boxProps,
+        defaultValue: null,
+      ),
+    );
+
+    properties.add(
+      DiagnosticsProperty<TextAttributes>(
+        'text',
+        textProps,
+        defaultValue: null,
+      ),
+    );
+
+    properties.add(
+      DiagnosticsProperty<IconAttributes>(
+        'icon',
+        iconProps,
+        defaultValue: null,
+      ),
+    );
+
+    properties.add(
+      DiagnosticsProperty<FlexAttributes>(
+        'flex',
+        flexProps,
+        defaultValue: null,
+      ),
+    );
+
+    properties.add(
+      DiagnosticsProperty<SharedAttributes>(
+        'shared',
+        sharedProps,
+        defaultValue: null,
+      ),
+    );
+
+    properties.add(
+      DiagnosticsProperty<bool>('animated', animated, defaultValue: false),
+    );
+
+    properties.add(
+      DiagnosticsProperty<Duration>(
+        'animationDuration',
+        animationDuration,
+        defaultValue: const Duration(milliseconds: 100),
+      ),
+    );
+
+    properties.add(
+      DiagnosticsProperty<Curve>(
+        'animationCurve',
+        animationCurve,
+        defaultValue: Curves.linear,
+      ),
+    );
+
+    properties.add(
+      DiagnosticsProperty<bool>(
+        'hidden',
+        hidden,
+        defaultValue: false,
+      ),
+    );
+  }
 }
