@@ -40,6 +40,9 @@ extension ContextExtensions on BuildContext {
   /// Text attributes of parent
   TextAttributes? textAttributes() => TextAttributeNotifier.of(this);
 
+  /// Directionality of context
+  TextDirection directionality() => Directionality.of(this);
+
   /// shared attributes of parent
   Mixer? mixer() => MixerNotifier.of(this);
 

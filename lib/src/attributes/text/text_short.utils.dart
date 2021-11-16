@@ -13,8 +13,6 @@ const textScaleFactor = TextUtility.textScaleFactor;
 const strutStyle = TextUtility.strutStyle;
 const semanticsLabel = TextUtility.semanticsLabel;
 
-const font = TextStyleUtility.font;
-
 const fontWeight = TextStyleUtility.fontWeight;
 const textBaseline = TextStyleUtility.textBaseline;
 const letterSpacing = TextStyleUtility.letterSpacing;
@@ -37,3 +35,8 @@ const textDecorationColor = TextStyleUtility.decorationColor;
 const textDecorationStyle = TextStyleUtility.decorationStyle;
 const textDecorationThickness = TextStyleUtility.decorationThickness;
 const fontFamilyFallback = TextStyleUtility.fontFamilyFallback;
+
+/// Friendly utilities
+const font = TextFriendlyUtility.textStyle;
+const bold = TextFriendlyUtility.bold;
+const italic = TextFriendlyUtility.italic;

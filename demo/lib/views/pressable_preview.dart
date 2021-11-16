@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
 
-class TypographyPreview extends StatelessWidget {
-  const TypographyPreview({Key? key}) : super(key: key);
+class PressablePreview extends StatelessWidget {
+  const PressablePreview({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final mix = Mix(
       rounded(35),
       padding(20),
+      animated(),
+      scale(1),
+      elevation(8),
       font(
         weight: FontWeight.bold,
         color: Colors.black,
@@ -17,23 +20,16 @@ class TypographyPreview extends StatelessWidget {
         color: Colors.black,
         width: 3,
       ),
-      animated(),
       dark(
         border(color: Colors.white),
         textColor(Colors.white),
       ),
-      elevation(8),
       hover(
-        textColor(Colors.green),
-        border(color: Colors.green),
-        bgColor(
-          Colors.green.withOpacity(0.1),
-        ),
-      ),
-      press(
         bgColor(Colors.green.shade600),
         textColor(Colors.white),
         border(color: Colors.greenAccent),
+      ),
+      press(
         elevation(2),
         scale(0.9),
       ),

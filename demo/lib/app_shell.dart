@@ -4,7 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mix/mix.dart';
 
 import 'providers/dark_mode.provider.dart';
-import 'views/typography.dart';
+import 'views/pressable_preview.dart';
 
 class AppShell extends HookConsumerWidget {
   const AppShell({Key? key}) : super(key: key);
@@ -62,10 +62,10 @@ class AppShell extends HookConsumerWidget {
             // This is the main content.
             Expanded(
               child: [
-                const TypographyPreview(),
-                const TypographyPreview(),
-                const TypographyPreview(),
-                const TypographyPreview(),
+                const PressablePreview(),
+                const PressablePreview(),
+                const PressablePreview(),
+                const PressablePreview(),
               ][selected.value],
             ),
           ],

@@ -3,6 +3,87 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:mix/src/attributes/text/text.attributes.dart';
 
+class TextFriendlyUtility {
+  const TextFriendlyUtility._();
+
+  static TextAttributes textStyle({
+    Color? color,
+    Paint? background,
+    Color? backgroundColor,
+    String? debugLabel,
+    FontWeight? weight,
+    double? size,
+    String? family,
+    FontStyle? style,
+    double? letterSpacing,
+    double? wordSpacing,
+    List<String>? fontFamilyFallback,
+    Paint? foreground,
+    double? height,
+    bool inherit = true,
+    Locale? locale,
+    Shadow? shadow,
+    List<Shadow>? shadows,
+    double? decorationThickness,
+    TextDecorationStyle? decorationStyle,
+    TextBaseline? textBaseline,
+    Color? decorationColor,
+  }) {
+    combineShadows() {
+      final s = shadows ?? [];
+      if (shadow != null) s.add(shadow);
+      return s;
+    }
+
+    return TextAttributes(
+      style: TextStyle(
+        color: color,
+        fontWeight: weight,
+        fontSize: size,
+        fontFamily: family,
+        fontStyle: style,
+        letterSpacing: letterSpacing,
+        wordSpacing: wordSpacing,
+        fontFamilyFallback: fontFamilyFallback,
+        foreground: foreground,
+        height: height,
+        inherit: inherit,
+        locale: locale,
+        shadows: combineShadows(),
+        textBaseline: textBaseline,
+        decorationThickness: decorationThickness,
+        decorationStyle: decorationStyle,
+        decorationColor: decorationColor,
+        debugLabel: debugLabel,
+        background: background,
+        backgroundColor: backgroundColor,
+      ),
+    );
+  }
+
+  static TextAttributes bold() {
+    return TextStyleUtility.fontWeight(FontWeight.bold);
+  }
+
+  static TextAttributes italic() {
+    return TextStyleUtility.fontStyle(FontStyle.italic);
+  }
+
+  static TextAttributes textShadow({
+    Color color = const Color(0x33000000),
+    double blurRadius = 0.0,
+    Offset offset = Offset.zero,
+  }) {
+    return TextStyleUtility.shadows([
+      Shadow(
+        color: color,
+        blurRadius: blurRadius,
+        offset: offset,
+      ),
+    ]);
+  }
+}
+
 class TextUtility {
   const TextUtility._();
 
@@ -95,22 +176,6 @@ class TextStyleUtility {
   static TextAttributes decorationThickness(double? decorationThickness) {
     return TextAttributes(
       style: TextStyle(decorationThickness: decorationThickness),
-    );
-  }
-
-  static TextAttributes font({
-    Color? color,
-    FontWeight? weight,
-    double? size,
-    String? family,
-  }) {
-    return TextAttributes(
-      style: TextStyle(
-        color: color,
-        fontWeight: weight,
-        fontSize: size,
-        fontFamily: family,
-      ),
     );
   }
 

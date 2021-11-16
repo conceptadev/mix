@@ -25,10 +25,10 @@ class TextMix extends MixWidget {
 
 class _TextMixerWidget extends MixerWidget {
   const _TextMixerWidget(
-    Mixer recipe, {
+    Mixer mixer, {
     Key? key,
     required this.text,
-  }) : super(recipe, key: key);
+  }) : super(mixer, key: key);
 
   final String text;
 
@@ -43,6 +43,14 @@ class _TextMixerWidget extends MixerWidget {
           textDirection: textDirection,
           textWidthBasis: textProps?.textWidthBasis,
           textScaleFactor: textProps?.textScaleFactor,
+          locale: textProps?.locale,
+          maxLines: textProps?.maxLines,
+          overflow: textProps?.overflow,
+          softWrap: textProps?.softWrap,
+          strutStyle: textProps?.strutStyle,
+          style: textProps?.style,
+          textAlign: textProps?.textAlign,
+          textHeightBehavior: textProps?.textHeightBehavior,
         ),
         style: textProps?.style ?? context.defaultTextStyle(),
         duration: animationDuration,
@@ -63,6 +71,9 @@ class _TextMixerWidget extends MixerWidget {
         maxLines: textProps?.maxLines,
         textScaleFactor: textProps?.textScaleFactor,
         style: textProps?.style,
+        locale: textProps?.locale,
+        strutStyle: textProps?.strutStyle,
+        textHeightBehavior: textProps?.textHeightBehavior,
       );
     }
   }
@@ -72,10 +83,138 @@ class _TextMixerWidget extends MixerWidget {
     super.debugFillProperties(properties);
 
     properties.add(
-      DiagnosticsProperty<EdgeInsetsGeometry>(
-        'padding',
-        boxProps?.padding,
+      DiagnosticsProperty<bool>(
+        'softWrap',
+        textProps?.softWrap,
+        defaultValue: true,
+      ),
+    );
+
+    properties.add(
+      DiagnosticsProperty<TextAlign>(
+        'textAlign',
+        textProps?.textAlign,
         defaultValue: null,
+      ),
+    );
+
+    properties.add(
+      DiagnosticsProperty<TextDirection>(
+        'textDirection',
+        textDirection,
+        defaultValue: null,
+      ),
+    );
+
+    properties.add(
+      DiagnosticsProperty<TextWidthBasis>(
+        'textWidthBasis',
+        textProps?.textWidthBasis,
+        defaultValue: null,
+      ),
+    );
+
+    properties.add(
+      DiagnosticsProperty<double>(
+        'textScaleFactor',
+        textProps?.textScaleFactor,
+        defaultValue: null,
+      ),
+    );
+
+    properties.add(
+      DiagnosticsProperty<Locale>(
+        'locale',
+        textProps?.locale,
+        defaultValue: null,
+      ),
+    );
+
+    properties.add(
+      DiagnosticsProperty<StrutStyle>(
+        'strutStyle',
+        textProps?.strutStyle,
+        defaultValue: null,
+      ),
+    );
+
+    properties.add(
+      DiagnosticsProperty<TextHeightBehavior>(
+        'textHeightBehavior',
+        textProps?.textHeightBehavior,
+        defaultValue: null,
+      ),
+    );
+
+    properties.add(
+      DiagnosticsProperty<TextOverflow>(
+        'overflow',
+        textProps?.overflow,
+        defaultValue: null,
+      ),
+    );
+
+    properties.add(
+      DiagnosticsProperty<int>(
+        'maxLines',
+        textProps?.maxLines,
+        defaultValue: null,
+      ),
+    );
+
+    properties.add(
+      DiagnosticsProperty<double>(
+        'textScaleFactor',
+        textProps?.textScaleFactor,
+        defaultValue: null,
+      ),
+    );
+
+    properties.add(
+      DiagnosticsProperty<TextStyle>(
+        'style',
+        textProps?.style,
+        defaultValue: null,
+      ),
+    );
+
+    properties.add(
+      DiagnosticsProperty<String>(
+        'text',
+        text,
+        defaultValue: null,
+      ),
+    );
+
+    properties.add(
+      DiagnosticsProperty<Duration>(
+        'animationDuration',
+        animationDuration,
+        defaultValue: null,
+      ),
+    );
+
+    properties.add(
+      DiagnosticsProperty<Curve>(
+        'animationCurve',
+        animationCurve,
+        defaultValue: null,
+      ),
+    );
+
+    properties.add(
+      DiagnosticsProperty<Mixer>(
+        'mixer',
+        mixer,
+        defaultValue: null,
+      ),
+    );
+
+    properties.add(
+      DiagnosticsProperty<bool>(
+        'animated',
+        animated,
+        defaultValue: false,
       ),
     );
   }

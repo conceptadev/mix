@@ -40,7 +40,6 @@ class BoxMixerWidget extends MixerWidget {
     var current = child;
 
     // Box Attributes
-
     final alignment = boxProps?.alignment;
     final aspectRatio = boxProps?.aspectRatio;
     final bgColor =
@@ -102,6 +101,7 @@ class BoxMixerWidget extends MixerWidget {
       current = Material(
         borderRadius: borderRadius,
         elevation: elevation,
+        color: Colors.transparent,
         animationDuration: animationDuration,
         child: current,
       );

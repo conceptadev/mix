@@ -1,4 +1,4 @@
-import 'package:mix/src/attributes/directives/directive.attributes.dart';
+import 'package:mix/src/attributes/directives/text/text_directive.attributes.dart';
 
 class DirectivesUtility {
   const DirectivesUtility._();

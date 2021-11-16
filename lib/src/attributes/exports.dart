@@ -5,6 +5,11 @@ export './box/box.utils.dart';
 export './box/box_short.utils.dart';
 export './box/box_short.utils.dart';
 
+/// Text Directives
+export './directives/text/text_directive.attributes.dart';
+export './directives/text/text_directive.utils.dart';
+export './directives/text/text_directive_short.utils.dart';
+
 ///Shared
 export './dynamic/dark_mode.attributes.dart';
 export './dynamic/dynamic.utils.dart';

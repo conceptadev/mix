@@ -5,7 +5,7 @@ import 'package:mix/src/attributes/text/text.attributes.dart';
 import '../../mix.dart';
 import '../attributes/box/box.attributes.dart';
 import '../attributes/common/attribute.dart';
-import '../attributes/directives/directive.attributes.dart';
+import '../attributes/directives/text/text_directive.attributes.dart';
 import '../attributes/flex/flex.attributes.dart';
 import '../attributes/shared/shared.attributes.dart';
 
