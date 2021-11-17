@@ -12,11 +12,16 @@ import '../mixer/mixer.dart';
 abstract class MixWidget extends StatelessWidget {
   /// Constructor
   const MixWidget(
-    this.mix, {
+    Mix? mix, {
     Key? key,
-  }) : super(key: key);
+  })  : _mix = mix ?? Mix.constant,
+        super(key: key);
 
-  final Mix mix;
+  final Mix _mix;
+
+  Mix get mix {
+    return _mix;
+  }
 
   @override
   Widget build(BuildContext context);

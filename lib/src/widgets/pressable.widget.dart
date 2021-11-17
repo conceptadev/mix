@@ -6,8 +6,8 @@ import 'box.widget.dart';
 import 'mix.widget.dart';
 
 class Pressable extends MixWidget {
-  const Pressable(
-    Mix mix, {
+  const Pressable({
+    Mix? mix,
     required this.child,
     required this.onPressed,
     this.onLongPressed,
@@ -141,7 +141,7 @@ class _PressableMixerWidgetState extends State<PressableMixerWidget> {
                 hovering: _hovering,
                 pressing: _pressing,
                 child: Box(
-                  widget.mix,
+                  mix: widget.mix,
                   child: widget.child,
                 ),
               );

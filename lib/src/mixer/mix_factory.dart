@@ -63,6 +63,7 @@ class Mix<T extends Attribute> {
   }
 
   /// Returns a new mix by taking either a mix or attributes or both
+  @deprecated
   static Mix<T> fromMixAndAttributes<T extends Attribute>({
     Mix<T>? mix,
     List<T>? attributes,
@@ -115,6 +116,9 @@ class Mix<T extends Attribute> {
   Mixer build(BuildContext context) {
     return Mixer.build(context, this);
   }
+
+  /// Used for const constructor widgets
+  static const Mix constant = Mix._(<Attribute>[]);
 }
 
 extension MixExtension on Mix {
@@ -132,7 +136,7 @@ extension MixExtension on Mix {
     Mix? mix,
   }) {
     final mx = Mix.combine(this, mix);
-    return Box(mx, child: child);
+    return Box(mix: mx, child: child);
   }
 
   HBox row({

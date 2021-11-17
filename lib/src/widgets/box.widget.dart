@@ -9,10 +9,10 @@ import 'mix.widget.dart';
 import 'nothing.widget.dart';
 
 class Box extends MixWidget {
-  const Box(
-    Mix mix, {
-    this.child,
+  const Box({
+    Mix? mix,
     Key? key,
+    this.child,
   }) : super(mix, key: key);
 
   final Widget? child;
