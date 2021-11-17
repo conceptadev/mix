@@ -118,3 +118,5 @@ BoxAttributes roundedBL(double value) {
 BoxAttributes roundedBR(double value) {
   return BoxUtility.roundedOnly(bottomRight: value);
 }
+
+const align = BoxUtility.align;

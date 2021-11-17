@@ -215,6 +215,11 @@ class BoxUtility {
     return BoxAttributes(border: Border.all(width: width));
   }
 
+  /// Align box attribute
+  static BoxAttributes align(Alignment align) {
+    return BoxAttributes(alignment: align);
+  }
+
   /// Border style for all border sides
   static BoxAttributes borderStyle(BorderStyle style) {
     return BoxAttributes(border: Border.all(style: style));

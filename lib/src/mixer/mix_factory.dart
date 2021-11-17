@@ -118,6 +118,15 @@ class Mix<T extends Attribute> {
 }
 
 extension MixExtension on Mix {
+  Mix mix(Mix mix) {
+    return Mix.combineAll([this, mix]);
+  }
+
+  Mix maybeMix(Mix? mix) {
+    if (mix == null) return this;
+    return Mix.combineAll([this, mix]);
+  }
+
   Box box({
     required Widget child,
     Mix? mix,
