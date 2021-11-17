@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
 import 'package:mix/src/attributes/common/attribute.dart';
+import 'package:mix/src/attributes/dynamic/variant.attributes.dart';
 import 'package:mix/src/attributes/helpers/helper.utils.dart';
 import 'package:mix/src/helpers/utils.dart';
 import 'package:mix/src/mixer/mixer.dart';
@@ -53,9 +54,15 @@ class Mix<T extends Attribute> {
   }
 
   Mix<T> addAll(List<T> attributes) {
-    final newParams = [...this.attributes];
-    newParams.addAll(attributes);
-    return Mix._(newParams);
+    return Mix._([...this.attributes, ...attributes]);
+  }
+
+  Mix<T> getVariant(Symbol variant) {
+    final variants = attributes.where((attr) {
+      return attr is VariantAttribute && attr.variant == variant;
+    }).toList();
+
+    return addAll(variants);
   }
 
   static Mix<T> fromList<T extends Attribute>(List<T> attributes) {

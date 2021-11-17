@@ -8,22 +8,88 @@ class SwitchRemix extends StatelessWidget {
     Key? key,
     this.checked = true,
     this.onChanged,
-    this.mix,
-    this.activeMix,
-    this.thumbMix,
-    this.thumbActiveMix,
+    this.root = const SwitchRoot(),
+    this.thumb = const SwitchThumb(),
   }) : super(key: key);
 
   final bool checked;
 
   final ValueChanged<bool>? onChanged;
 
+  final SwitchRoot root;
+  final SwitchThumb thumb;
+
+  @override
+  Widget build(BuildContext context) {
+    final fn = onChanged;
+
+    return Pressable(
+      onPressed: fn == null ? null : () => fn(!checked),
+      child: root.build(
+        context: context,
+        checked: checked,
+        child: thumb.build(
+          context,
+          checked,
+        ),
+      ),
+    );
+  }
+}
+
+class SwitchThumb {
+  const SwitchThumb({
+    this.mix,
+    this.activeMix,
+    this.key,
+  });
+
   final Mix? mix;
   final Mix? activeMix;
-  final Mix? thumbMix;
-  final Mix? thumbActiveMix;
+  final Key? key;
 
-  Mix get __rootMix {
+  Mix get __mix {
+    return Mix(
+      height(12),
+      width(12),
+      rounded(100),
+      margin(4),
+      bgColor(Colors.white),
+      apply(mix),
+    );
+  }
+
+  Mix get __activeMix {
+    return Mix(
+      apply(__mix),
+      apply(activeMix),
+    );
+  }
+
+  Widget build(BuildContext context, bool checked) {
+    return Box(
+      key: key,
+      mix: Mix.chooser(
+        condition: checked,
+        trueMix: __activeMix,
+        falseMix: __mix,
+      ),
+    );
+  }
+}
+
+class SwitchRoot {
+  const SwitchRoot({
+    this.mix,
+    this.activeMix,
+    this.key,
+  });
+
+  final Mix? mix;
+  final Mix? activeMix;
+  final Key? key;
+
+  Mix get __mix {
     return Mix(
       animated(),
       height(20),
@@ -35,54 +101,28 @@ class SwitchRemix extends StatelessWidget {
     );
   }
 
-  Mix get __activeRootMix {
+  Mix get __activeMix {
     return Mix(
-      apply(__rootMix),
+      apply(__mix),
       bgColor(Colors.black87),
       align(Alignment.centerRight),
       apply(activeMix),
     );
   }
 
-  Mix get __thumbMix {
-    return Mix(
-      height(12),
-      width(12),
-      rounded(100),
-      margin(4),
-      bgColor(Colors.white),
-      apply(thumbMix),
-    );
-  }
-
-  Mix get __thumbActiveMix {
-    return Mix(
-      apply(__thumbMix),
-      apply(thumbActiveMix),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final fn = onChanged;
-
-    return Pressable(
-      Mix(),
-      onPressed: fn == null ? null : () => fn(!checked),
-      child: Box(
-        Mix.chooser(
-          condition: checked,
-          trueMix: __activeRootMix,
-          falseMix: __rootMix,
-        ),
-        child: Box(
-          Mix.chooser(
-            condition: checked,
-            trueMix: __thumbActiveMix,
-            falseMix: __thumbMix,
-          ),
-        ),
+  Widget build({
+    required BuildContext context,
+    required bool checked,
+    required Widget? child,
+  }) {
+    return Box(
+      key: key,
+      mix: Mix.chooser(
+        condition: checked,
+        trueMix: __activeMix,
+        falseMix: __mix,
       ),
+      child: child,
     );
   }
 }

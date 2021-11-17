@@ -9,19 +9,22 @@ import '../attributes/directives/text/text_directive.attributes.dart';
 import '../attributes/flex/flex.attributes.dart';
 import '../attributes/shared/shared.attributes.dart';
 
-/// Recipe
+typedef AttributeGetter<T extends Attribute> = List<Attribute>? Function(
+    T attribute);
+
 class Mixer {
+  BuildContext context;
   BoxAttributes? box;
   TextAttributes? text;
   SharedAttributes? shared;
   IconAttributes? icon;
   FlexAttributes? flex;
-
   List<DynamicAttribute> dynamicProps;
   List<TokenRefAttribute> tokens;
   List<DirectiveAttribute> directives;
 
   Mixer._({
+    required this.context,
     this.box,
     this.text,
     this.shared,
@@ -32,60 +35,39 @@ class Mixer {
     this.tokens = const [],
   });
 
-  /// Applies `DynamicAttribute` based on context
-  Mixer _applyDynamicAttributes(BuildContext context) {
-    final dynamicList = dynamicProps;
-
-    if (dynamicList.isEmpty) {
-      return this;
-    }
-
-    final attributesToApply = <Attribute>[];
-
-    for (final attr in dynamicList) {
-      if (attr.shouldApply(context)) {
-        attributesToApply.addAll(attr.attributes);
+  /// Expands `DynamicAttribute` based on context
+  Mixer _applyDynamicAttributes() {
+    return expandAttributes((Attribute attribute) {
+      /// Expands attribute if it should apply
+      if (attribute is DynamicAttribute) {
+        if (attribute.shouldApply(context)) {
+          return attribute.attributes;
+        }
       }
-    }
-
-    if (attributesToApply.isEmpty) {
-      return this;
-    }
-
-    final dynamicMixer = Mixer.fromList(context, attributesToApply);
-    return merge(dynamicMixer);
+    });
   }
 
-  /// Applies [MixTheme] data
-  Mixer _applyContextData(BuildContext context) {
-    return copyWith(
-      boxProps: box?.applyContext(context),
-      textProps: text?.applyContext(context),
-    );
+  /// Gets attributes of a `TokenAttribute` based on context
+  Mixer _applyTokenAttributes() {
+    return expandAttributes((Attribute attribute) {
+      if (attribute is TokenRefAttribute) {
+        // Get token from context and expand
+        final mix = attribute.getToken(context);
+        return mix.attributes;
+      }
+    });
   }
 
-  /// Applies `TokenAttribute` based on context
-  Mixer _applyTokenAttributes(BuildContext context) {
-    final tokenList = tokens;
+  Mixer expandAttributes<T extends Attribute>(AttributeGetter getter) {
+    final attributes = <Attribute>[];
 
-    if (tokenList.isEmpty) {
-      return this;
+    for (final attr in _allAttributes) {
+      attributes.addAll(getter(attr) ?? []);
     }
 
-    final attributesToApply = <Attribute>[];
-
-    for (final attr in tokenList) {
-      final mix = attr.getToken(context);
-      attributesToApply.addAll(mix.attributes);
-    }
-
-    if (attributesToApply.isEmpty) {
-      return this;
-    }
-
-    final tokenMixer = Mixer.fromList(context, attributesToApply);
-
-    return merge(tokenMixer);
+    if (attributes.isNotEmpty) return this;
+    final mixer = Mixer.builder(context, attributes);
+    return merge(mixer);
   }
 
   Mixer merge(Mixer other) {
@@ -101,40 +83,17 @@ class Mixer {
     );
   }
 
-  List<Attribute> get allAttributes {
+  List<Attribute> get _allAttributes {
     final attributes = <Attribute>[];
 
-    if (box != null) {
-      attributes.add(box!);
-    }
-
-    if (text != null) {
-      attributes.add(text!);
-    }
-
-    if (icon != null) {
-      attributes.add(icon!);
-    }
-
-    if (shared != null) {
-      attributes.add(shared!);
-    }
-
-    if (flex != null) {
-      attributes.add(flex!);
-    }
-
-    if (directives.isNotEmpty) {
-      attributes.addAll(directives);
-    }
-
-    if (dynamicProps.isNotEmpty) {
-      attributes.addAll(dynamicProps);
-    }
-
-    if (tokens.isNotEmpty) {
-      attributes.addAll(tokens);
-    }
+    if (box != null) attributes.add(box!);
+    if (text != null) attributes.add(text!);
+    if (icon != null) attributes.add(icon!);
+    if (shared != null) attributes.add(shared!);
+    if (flex != null) attributes.add(flex!);
+    if (directives.isNotEmpty) attributes.addAll(directives);
+    if (dynamicProps.isNotEmpty) attributes.addAll(dynamicProps);
+    if (tokens.isNotEmpty) attributes.addAll(tokens);
 
     return attributes;
   }
@@ -150,6 +109,7 @@ class Mixer {
     List<TokenRefAttribute> tokens = const [],
   }) {
     return Mixer._(
+      context: context,
       dynamicProps: this.dynamicProps..addAll(dynamicProps),
       directives: this.directives..addAll(directives),
       tokens: this.tokens..addAll(tokens),
@@ -179,15 +139,14 @@ class Mixer {
   }
 
   factory Mixer.build(BuildContext context, Mix mix) {
-    return Mixer.fromList(context, mix.attributes)
-        ._applyTokenAttributes(context)
-        ._applyDynamicAttributes(context)
-        ._applyContextData(context);
+    return Mixer.builder(context, mix.attributes)
+        ._applyTokenAttributes()
+        ._applyDynamicAttributes();
   }
 
-  factory Mixer.fromList(BuildContext context, List<Attribute> attributes) {
-    final allAttributes = context.mixer()?.allAttributes ?? [];
-    final combined = allAttributes..addAll(attributes);
+  factory Mixer.builder(BuildContext context, List<Attribute> attributes) {
+    final allAttributes = context.mixer()?._allAttributes ?? [];
+    final combined = [...allAttributes, ...attributes];
     BoxAttributes? boxAttributes;
     IconAttributes? iconAttributes;
     FlexAttributes? flexAttributes;
@@ -238,8 +197,9 @@ class Mixer {
     }
 
     return Mixer._(
-      box: boxAttributes,
-      text: textAttributes,
+      context: context,
+      box: boxAttributes?.applyContext(context),
+      text: textAttributes?.applyContext(context),
       dynamicProps: dynamicAttributes,
       shared: sharedAttributes,
       directives: directiveAttributes,
