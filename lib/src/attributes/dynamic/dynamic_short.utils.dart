@@ -11,3 +11,5 @@ const portrait = DynamicUtils.portrait;
 const landscape = DynamicUtils.landscape;
 
 final dark = const WrapFunction(DynamicUtils.dark).withPositionalToList;
+
+const variant = DynamicUtils.variant;

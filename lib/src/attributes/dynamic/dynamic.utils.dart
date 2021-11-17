@@ -3,6 +3,7 @@ import 'package:mix/mix.dart';
 import 'package:mix/src/attributes/common/attribute.dart';
 import 'package:mix/src/attributes/dynamic/dark_mode.attributes.dart';
 import 'package:mix/src/attributes/dynamic/media_query.attributes.dart';
+import 'package:mix/src/attributes/dynamic/variant.attributes.dart';
 import 'package:mix/src/helpers/extensions.dart';
 
 class DynamicUtils {
@@ -51,5 +52,9 @@ class DynamicUtils {
 
   static DarkModeAttribute dark(List<Attribute> attributes) {
     return DarkModeAttribute(attributes);
+  }
+
+  static VariantAttribute variant(Symbol variant, List<Attribute> attributes) {
+    return VariantAttribute(variant, attributes);
   }
 }
