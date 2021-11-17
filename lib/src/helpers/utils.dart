@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mix/src/attributes/common/attribute.dart';
 
 List<T> spreadNestedAttributes<T extends Attribute>(List<T> attributes) {
-  final spreaded = [...attributes];
+  final spreaded = <T>[];
   var hasNested = false;
   for (final attr in attributes) {
     if (attr is NestedAttribute<T>) {

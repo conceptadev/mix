@@ -11,6 +11,7 @@ export 'package:mix/src/widgets/text.widget.dart' show TextMix;
 export 'src/attributes/common/attribute.dart'
     show DynamicAttribute, AttributeExtensions;
 export 'src/attributes/exports.dart';
+export 'src/headless/switch/switch.dart';
 export 'src/helpers/extensions.dart';
 export 'src/mixer/mix_factory.dart' show Mix;
 export 'src/mixer/mixer.dart' show Mixer;

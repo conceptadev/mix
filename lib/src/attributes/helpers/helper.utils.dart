@@ -5,12 +5,7 @@ class HelperUtils {
   const HelperUtils._();
 
   static NestedAttribute<T> apply<T extends Attribute>(List<Mix<T>> mixes) {
-    final combinedMix = Mix<T>();
-    for (var mix in mixes) {
-      combinedMix.addAll(mix.attributes);
-    }
-
-    return NestedAttribute<T>(combinedMix.attributes);
+    return NestedAttribute<T>(Mix.combineAll(mixes).attributes);
   }
 }
 

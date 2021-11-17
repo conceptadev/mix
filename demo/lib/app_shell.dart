@@ -1,3 +1,4 @@
+import 'package:demo/views/headless_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -62,7 +63,7 @@ class AppShell extends HookConsumerWidget {
             // This is the main content.
             Expanded(
               child: [
-                const PressablePreview(),
+                const HeadlessPreview(),
                 const PressablePreview(),
                 const PressablePreview(),
                 const PressablePreview(),

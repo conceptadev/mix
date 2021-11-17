@@ -11,7 +11,7 @@ import 'nothing.widget.dart';
 class Box extends MixWidget {
   const Box(
     Mix mix, {
-    required this.child,
+    this.child,
     Key? key,
   }) : super(mix, key: key);
 
