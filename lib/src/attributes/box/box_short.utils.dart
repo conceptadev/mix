@@ -101,6 +101,7 @@ BoxAttributes rotate360() => rotate(4);
 const opacity = BoxUtility.opacity;
 const aspectRatio = BoxUtility.aspectRatio;
 
+const squared = BoxUtility.squared;
 const rounded = BoxUtility.rounded;
 
 BoxAttributes roundedTL(double value) {

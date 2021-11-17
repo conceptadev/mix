@@ -55,7 +55,7 @@ class BoxMixerWidget extends MixerWidget {
     final height = boxProps?.height;
     final width = boxProps?.width;
     final elevation = boxProps?.elevation;
-    final borderRadius = boxProps?.borderRadius;
+    final borderRadius = boxProps?.borderRadius?.toBorderRadius();
     final scale = boxProps?.scale;
 
     if (hidden == true) {

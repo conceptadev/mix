@@ -140,18 +140,19 @@ class BoxUtility {
     return BoxAttributes(minWidth: minWidth);
   }
 
-  static Radius _circular(double? value) {
-    return Radius.circular(value ?? 0.0);
-  }
-
   /// Border radius
-  static BoxAttributes borderRadius(BorderRadius radius) {
+  static BoxAttributes borderRadius(BorderRadiusProps radius) {
     return BoxAttributes(borderRadius: radius);
   }
 
   /// Rounded border radius
   static BoxAttributes rounded(double value) {
-    return borderRadius(BorderRadius.all(BoxUtility._circular(value)));
+    return borderRadius(BorderRadiusProps.all(value));
+  }
+
+  /// Squared border radius
+  static BoxAttributes squared() {
+    return borderRadius(BorderRadiusProps.zero);
   }
 
   static BoxAttributes roundedOnly({
@@ -161,11 +162,11 @@ class BoxUtility {
     double? bottomRight,
   }) {
     return borderRadius(
-      BorderRadius.only(
-        topLeft: _circular(topLeft),
-        topRight: _circular(topRight),
-        bottomLeft: _circular(bottomLeft),
-        bottomRight: _circular(bottomRight),
+      BorderRadiusProps.only(
+        topLeft: topLeft,
+        topRight: topRight,
+        bottomLeft: bottomLeft,
+        bottomRight: bottomRight,
       ),
     );
   }

@@ -14,6 +14,8 @@ class HeadlessPreview extends HookWidget {
           SwitchRemix(
             checked: active.value,
             onChanged: (value) => active.value = value,
+            mix: Mix(squared()),
+            thumbMix: Mix(squared()),
           ),
         ],
       ),

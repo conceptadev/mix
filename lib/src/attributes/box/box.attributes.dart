@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
+import 'package:mix/src/mappers/border.mapper.dart';
 
 import '../../helpers/extensions.dart';
 import '../common/attribute.dart';
@@ -15,7 +16,7 @@ class BoxAttributes extends Attribute {
   // Decoration
   final Color? backgroundColor;
   final Border? border;
-  final BorderRadius? borderRadius;
+  final BorderRadiusProps? borderRadius;
   final BoxShadow? boxShadow;
 
   // Constraints
@@ -89,7 +90,7 @@ class BoxAttributes extends Attribute {
       return BoxDecoration(
         color: backgroundColor,
         border: border,
-        borderRadius: borderRadius,
+        borderRadius: borderRadius?.toBorderRadius(),
         boxShadow: boxShadow == null ? [] : [boxShadow!],
       );
     }
@@ -181,7 +182,7 @@ class BoxAttributes extends Attribute {
     double? width,
     Color? backgroundColor,
     Border? border,
-    BorderRadius? borderRadius,
+    BorderRadiusProps? borderRadius,
     BoxShadow? boxShadow,
     double? maxHeight,
     double? minHeight,

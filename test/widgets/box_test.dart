@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/src/attributes/box/box.attributes.dart';
 import 'package:mix/src/attributes/shared/shared.attributes.dart';
+import 'package:mix/src/mappers/border.mapper.dart';
 import 'package:mix/src/mixer/mix_factory.dart';
 import 'package:mix/src/widgets/box.widget.dart';
 
@@ -170,6 +171,7 @@ void main() {
             width: 1.0,
             style: BorderStyle.solid,
           );
+          const borderRadiusProps = BorderRadiusProps.only(topLeft: 20);
           const borderRadius = BorderRadius.only(
             topLeft: Radius.circular(20),
           );
@@ -177,7 +179,7 @@ void main() {
             BoxTestWidget(
               Mix(
                 const BoxAttributes(backgroundColor: Colors.purple),
-                const BoxAttributes(borderRadius: borderRadius),
+                const BoxAttributes(borderRadius: borderRadiusProps),
                 BoxAttributes(border: border),
               ),
             ),
