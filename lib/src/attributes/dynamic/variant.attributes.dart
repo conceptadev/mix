@@ -6,6 +6,6 @@ class VariantAttribute<T extends Attribute> extends Attribute {
     this.attributes,
   );
 
-  final Symbol variant;
+  final String variant;
   final List<T> attributes;
 }

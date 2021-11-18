@@ -248,6 +248,6 @@ extension StringExtensions on String {
     if (p10 != null) params.add(p10);
     if (p11 != null) params.add(p11);
     if (p12 != null) params.add(p12);
-    return VariantAttribute(Symbol(this), params);
+    return VariantAttribute<T>(this, params);
   }
 }

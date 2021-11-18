@@ -13,6 +13,7 @@ class Mix<T extends Attribute> {
   final SharedAttributes? sharedAttribute;
   final IconAttributes? iconAttribute;
   final FlexAttributes? flexAttribute;
+  final List<VariantAttribute> variantAttributes;
   final List<DynamicAttribute> dynamicAttributes;
   final List<TokenRefAttribute> tokenAttributes;
   final List<DirectiveAttribute> directiveAttributes;
@@ -23,6 +24,7 @@ class Mix<T extends Attribute> {
     this.sharedAttribute,
     this.iconAttribute,
     this.flexAttribute,
+    this.variantAttributes = const [],
     this.directiveAttributes = const [],
     this.dynamicAttributes = const [],
     this.tokenAttributes = const [],
@@ -71,10 +73,14 @@ class Mix<T extends Attribute> {
     final dynamicAttributes = <DynamicAttribute>[];
     final directiveAttributes = <DirectiveAttribute>[];
     final tokenRefAttributes = <TokenRefAttribute>[];
+    final variantAttributes = <VariantAttribute>[];
 
     for (final attribute in combined) {
       if (attribute is DynamicAttribute) {
         dynamicAttributes.add(attribute);
+      }
+      if (attribute is VariantAttribute) {
+        variantAttributes.add(attribute);
       }
 
       if (attribute is DirectiveAttribute) {
@@ -120,6 +126,7 @@ class Mix<T extends Attribute> {
       iconAttribute: iconAttributes,
       flexAttribute: flexAttributes,
       tokenAttributes: tokenRefAttributes,
+      variantAttributes: variantAttributes,
     );
   }
 
@@ -134,53 +141,58 @@ class Mix<T extends Attribute> {
     if (directiveAttributes.isNotEmpty) attributes.addAll(directiveAttributes);
     if (dynamicAttributes.isNotEmpty) attributes.addAll(dynamicAttributes);
     if (tokenAttributes.isNotEmpty) attributes.addAll(tokenAttributes);
+    if (variantAttributes.isNotEmpty) attributes.addAll(variantAttributes);
 
     return attributes.whereType<T>().toList();
   }
 
-  Mix<T> getVariant(Symbol variant) {
-    final variantsTypes = attributes.whereType<VariantAttribute<T>>();
+  Mix<T> getVariant(String variant) {
+    final variantsTypes = attributes.whereType<VariantAttribute>();
 
     final variants =
         variantsTypes.where((element) => element.variant == variant);
 
     final newAttributes = variants.expand((e) => e.attributes).toList();
 
-    return addAll(newAttributes);
+    return addAll(newAttributes as List<T>);
   }
 
   Mix copyWith({
-    BoxAttributes? box,
-    TextAttributes? text,
-    SharedAttributes? shared,
-    IconAttributes? icon,
-    FlexAttributes? flex,
-    List<DynamicAttribute> dynamicProps = const [],
-    List<DirectiveAttribute> directives = const [],
-    List<TokenRefAttribute> tokens = const [],
+    BoxAttributes? boxAttribute,
+    TextAttributes? textAttribute,
+    SharedAttributes? sharedAttribute,
+    IconAttributes? iconAttribute,
+    FlexAttributes? flexAttribute,
+    List<DynamicAttribute> dynamicAttributes = const [],
+    List<DirectiveAttribute> directiveAttributes = const [],
+    List<TokenRefAttribute> tokenAttributes = const [],
+    List<VariantAttribute> variantAttributes = const [],
   }) {
     return Mix._(
-      dynamicAttributes: dynamicProps..addAll(dynamicProps),
-      directiveAttributes: directives..addAll(directives),
-      tokenAttributes: tokens..addAll(tokens),
-      boxAttribute: box?.merge(box) ?? box,
-      textAttribute: text?.merge(text) ?? text,
-      sharedAttribute: shared?.merge(shared) ?? shared,
-      iconAttribute: icon?.merge(icon) ?? icon,
-      flexAttribute: flex?.merge(flex) ?? flex,
+      dynamicAttributes: dynamicAttributes..addAll(dynamicAttributes),
+      directiveAttributes: directiveAttributes..addAll(directiveAttributes),
+      tokenAttributes: tokenAttributes..addAll(tokenAttributes),
+      variantAttributes: variantAttributes..addAll(variantAttributes),
+      boxAttribute: boxAttribute?.merge(boxAttribute) ?? boxAttribute,
+      textAttribute: textAttribute?.merge(textAttribute) ?? textAttribute,
+      sharedAttribute:
+          sharedAttribute?.merge(sharedAttribute) ?? sharedAttribute,
+      iconAttribute: iconAttribute?.merge(iconAttribute) ?? iconAttribute,
+      flexAttribute: flexAttribute?.merge(flexAttribute) ?? flexAttribute,
     );
   }
 
   Mix merge(Mix other) {
     return copyWith(
-      box: other.boxAttribute,
-      text: other.textAttribute,
-      icon: other.iconAttribute,
-      shared: other.sharedAttribute,
-      dynamicProps: other.dynamicAttributes,
-      tokens: other.tokenAttributes,
-      directives: other.directiveAttributes,
-      flex: other.flexAttribute,
+      boxAttribute: other.boxAttribute,
+      textAttribute: other.textAttribute,
+      iconAttribute: other.iconAttribute,
+      sharedAttribute: other.sharedAttribute,
+      dynamicAttributes: other.dynamicAttributes,
+      tokenAttributes: other.tokenAttributes,
+      directiveAttributes: other.directiveAttributes,
+      variantAttributes: other.variantAttributes,
+      flexAttribute: other.flexAttribute,
     );
   }
 

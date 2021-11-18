@@ -13,7 +13,6 @@ class HeadlessPreview extends HookWidget {
       bgColor(Colors.grey),
       'active'.variant(
         bgColor(Colors.green),
-        elevation(5),
       ),
     );
 
@@ -22,16 +21,12 @@ class HeadlessPreview extends HookWidget {
         bgColor(Colors.white54),
       ),
     );
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          SwitchX(
-            active: active.value,
-            onChanged: (value) => active.value = value,
-            root: SwitchX.Root(rootX),
-            thumb: SwitchX.Thumb(thumbX),
-          ),
-        ],
+    return Center(
+      child: SwitchX(
+        active: active.value,
+        onChanged: (value) => active.value = value,
+        root: SwitchX.Root(rootX),
+        thumb: SwitchX.Thumb(thumbX),
       ),
     );
   }
