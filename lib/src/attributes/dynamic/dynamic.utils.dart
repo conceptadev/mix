@@ -55,12 +55,12 @@ class DynamicUtils {
   }
 
   static VariantAttribute variant<T extends Attribute>(
-      Symbol variant, List<T> attributes) {
+      String variant, List<T> attributes) {
     return VariantAttribute(variant, attributes);
   }
 
   static VariantAttribute variantParams<T extends Attribute>(
-    Symbol variant, [
+    String variant, [
     T? p1,
     T? p2,
     T? p3,

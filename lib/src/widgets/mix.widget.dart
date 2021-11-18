@@ -44,11 +44,11 @@ abstract class MixerWidget extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-  BoxAttributes? get boxProps => mixer.box;
-  TextAttributes? get textProps => mixer.text;
-  IconAttributes? get iconProps => mixer.icon;
-  FlexAttributes? get flexProps => mixer.flex;
-  SharedAttributes? get sharedProps => mixer.shared;
+  BoxAttributes? get boxProps => mixer.mix.boxAttribute;
+  TextAttributes? get textProps => mixer.mix.textAttribute;
+  IconAttributes? get iconProps => mixer.mix.iconAttribute;
+  FlexAttributes? get flexProps => mixer.mix.flexAttribute;
+  SharedAttributes? get sharedProps => mixer.mix.sharedAttribute;
 
   // Common
   bool get animated => sharedProps?.animated == true;
