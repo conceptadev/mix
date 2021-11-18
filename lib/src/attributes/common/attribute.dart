@@ -16,9 +16,10 @@ class NestedAttribute<T extends Attribute> extends Attribute {
   final List<T> attributes;
 }
 
-abstract class DynamicAttribute<T extends Attribute>
-    extends NestedAttribute<T> {
-  const DynamicAttribute(List<T> attributes) : super(attributes);
+abstract class DynamicAttribute extends Attribute {
+  const DynamicAttribute(this.attributes);
+
+  final List<Attribute> attributes;
 
   bool shouldApply(BuildContext context);
 }

@@ -98,7 +98,6 @@ class SwitchRoot {
       height(20),
       width(36),
       rounded(100),
-      scale(3),
       bgColor(Colors.black26),
       align(Alignment.centerLeft),
       'active'.variant(

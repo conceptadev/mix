@@ -40,22 +40,12 @@ class AppShell extends HookConsumerWidget {
                 NavigationRailDestination(
                   icon: Icon(Icons.font_download_outlined),
                   selectedIcon: Icon(Icons.font_download),
-                  label: Text('Typography'),
+                  label: Text('Headless UI'),
                 ),
                 NavigationRailDestination(
                   icon: Icon(Icons.bookmark_border),
                   selectedIcon: Icon(Icons.book),
-                  label: Text('Misc'),
-                ),
-                NavigationRailDestination(
-                  icon: Icon(Icons.star_border),
-                  selectedIcon: Icon(Icons.star),
-                  label: Text('Third'),
-                ),
-                NavigationRailDestination(
-                  icon: Icon(Icons.radio_button_unchecked),
-                  selectedIcon: Icon(Icons.radio_button_checked),
-                  label: Text('Forms'),
+                  label: Text('Pressable'),
                 ),
               ],
             ),
@@ -64,8 +54,6 @@ class AppShell extends HookConsumerWidget {
             Expanded(
               child: [
                 const HeadlessPreview(),
-                const PressablePreview(),
-                const PressablePreview(),
                 const PressablePreview(),
               ][selected.value],
             ),

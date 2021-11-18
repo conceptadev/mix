@@ -19,37 +19,39 @@ class Mixer {
 
   /// Expands `DynamicAttribute` based on context
   Mixer _applyDynamicAttributes() {
-    return expandAttributes((Attribute attribute) {
-      /// Expands attribute if it should apply
+    final attributes = <Attribute>[];
+
+    bool hasDynamic = false;
+
+    for (final attribute in mix.attributes) {
       if (attribute is DynamicAttribute) {
         if (attribute.shouldApply(context)) {
-          return attribute.attributes;
+          attributes.addAll(attribute.attributes);
+          hasDynamic = true;
         }
+      } else {
+        attributes.add(attribute);
       }
-    });
+    }
+
+    if (hasDynamic) {
+      final updatedMix = Mix.fromList(attributes);
+      return Mixer.build(context, updatedMix);
+    } else {
+      return this;
+    }
   }
 
   /// Gets attributes of a `TokenAttribute` based on context
-  Mixer _applyTokenAttributes() {
-    return expandAttributes((Attribute attribute) {
-      if (attribute is TokenRefAttribute) {
-        // Get token from context and expand
-        final mix = attribute.getToken(context);
-        return mix.attributes;
-      }
-    });
-  }
-
-  Mixer expandAttributes<T extends Attribute>(AttributeGetter getter) {
-    final attributes = <Attribute>[];
-
-    for (final attr in mix.attributes) {
-      attributes.addAll(getter(attr) ?? []);
-    }
-
-    if (attributes.isEmpty) return this;
-    return Mixer.build(context, mix.addAll(attributes));
-  }
+  // Mixer _applyTokenAttributes() {
+  //   return expandAttributes((Attribute attribute) {
+  //     if (attribute is TokenRefAttribute) {
+  //       // Get token from context and expand
+  //       final mix = attribute.getToken(context);
+  //       return mix.attributes;
+  //     }
+  //   });
+  // }
 
   /// Applies all [TextDirectiveAttribute] to [text]
   String applyTextDirectives(String text) {
@@ -74,6 +76,6 @@ class Mixer {
       context: context,
       mix: mix,
     );
-    return mixer._applyTokenAttributes()._applyDynamicAttributes();
+    return mixer._applyDynamicAttributes();
   }
 }
