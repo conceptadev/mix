@@ -115,7 +115,7 @@ class BoxAttributes extends Attribute {
   }
 
   BoxAttributes applyContext(BuildContext context) {
-    final spacingData = context.spacingData();
+    final spacingData = context.spacingData;
 
     return copyWith(
       margin: spacingData.applyEdgeInsets(context, margin),

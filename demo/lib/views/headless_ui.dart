@@ -8,14 +8,28 @@ class HeadlessPreview extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final active = useState(false);
+
+    final rootX = Mix(
+      bgColor(Colors.grey),
+      'active'.variant(
+        bgColor(Colors.green),
+        elevation(5),
+      ),
+    );
+
+    final thumbX = Mix(
+      'active'.variant(
+        bgColor(Colors.white54),
+      ),
+    );
     return SingleChildScrollView(
       child: Column(
         children: [
-          SwitchRemix(
-            checked: active.value,
+          SwitchX(
+            active: active.value,
             onChanged: (value) => active.value = value,
-            root: const SwitchRoot(),
-            thumb: const SwitchThumb(),
+            root: SwitchX.Root(rootX),
+            thumb: SwitchX.Thumb(thumbX),
           ),
         ],
       ),

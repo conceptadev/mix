@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mix/src/attributes/common/attribute.dart';
+import 'package:mix/src/attributes/dynamic/variant.attributes.dart';
 import 'package:mix/src/attributes/text/text.attributes.dart';
 import 'package:mix/src/attributes/text/text.notifier.dart';
 import 'package:mix/src/helpers/utils.dart';
@@ -20,58 +22,74 @@ class ScreenSizeBreakpoints {
 }
 
 extension ContextExtensions on BuildContext {
-  Brightness brightness() => Theme.of(this).brightness;
+  Brightness get brightness => Theme.of(this).brightness;
 
   /// Check if brightness is Brightness.dark
-  bool isDarkMode() => brightness() == Brightness.dark;
+  bool get isDarkMode => brightness == Brightness.dark;
 
   /// Get mix theme
-  MixThemeData mixData() => MixTheme.of(this);
+  MixThemeData get mixData => MixTheme.of(this);
 
   /// Get spacing data from mix theme
-  SpacingData spacingData() => mixData().spacing;
+  SpacingData get spacingData => mixData.spacing;
 
   /// MediaQueryData for context
-  MediaQueryData mq() => MediaQuery.of(this);
+  MediaQueryData get mq => MediaQuery.of(this);
 
   /// Theme context helpers
-  ThemeData theme() => Theme.of(this);
+  ThemeData get theme => Theme.of(this);
 
   /// Text attributes of parent
-  TextAttributes? textAttributes() => TextAttributeNotifier.of(this);
+  TextAttributes? get textAttributes => TextAttributeNotifier.of(this);
 
   /// Directionality of context
-  TextDirection directionality() => Directionality.of(this);
+  TextDirection get directionality => Directionality.of(this);
 
   /// shared attributes of parent
-  Mixer? mixer() => MixerNotifier.of(this);
+  Mixer? get mixer => MixerNotifier.of(this);
+
+  /// Ancestor Attributes
+  List<Attribute> get ancestorAttributes => mixer?.allAttributes ?? [];
+
+  List<Attribute> ancestorAttributesOfType<T extends Attribute>() {
+    final ancestorAttributes = this.ancestorAttributes;
+
+    final attributes = <Attribute>[];
+    for (final attr in ancestorAttributes) {
+      if (attr is T) {
+        attributes.add(attr);
+      }
+    }
+
+    return attributes;
+  }
 
   /// Theme color scheme
-  ColorScheme colorScheme() => theme().colorScheme;
+  ColorScheme get colorScheme => theme.colorScheme;
 
   /// Default TextStyle
   TextStyle defaultTextStyle() =>
-      theme().textTheme.bodyText1 ?? const TextStyle();
+      theme.textTheme.bodyText1 ?? const TextStyle();
 
   /// Theme text theme
-  TextTheme textTheme() => theme().textTheme;
+  TextTheme get textTheme => theme.textTheme;
 
   /// Orientation of the device
-  Orientation orientation() => mq().orientation;
+  Orientation get orientation => mq.orientation;
 
   /// Is device in landscape mode.
-  @deprecated
-  bool isLandscape() => orientation() == Orientation.landscape;
+
+  bool get isLandscape => orientation == Orientation.landscape;
 
   /// Is device in portrait mode.
-  @deprecated
-  bool isPortrait() => orientation() == Orientation.portrait;
+
+  bool get isPortrait => orientation == Orientation.portrait;
 
   /// Screen width
-  double get screenWidth => mq().size.width;
+  double get screenWidth => mq.size.width;
 
   /// Screen height
-  double get screenHeight => mq().size.height;
+  double get screenHeight => mq.size.height;
 
   /// Returns [ScreenSize] based on Material breakpoints
   ScreenSize screenSize() {
@@ -200,4 +218,36 @@ T _mergeIf<T>(T other, T thisValue, T defaultValue) {
   if (thisValue == defaultValue && other != defaultValue) return other;
   if (thisValue != defaultValue && other == defaultValue) return thisValue;
   return other;
+}
+
+extension StringExtensions on String {
+  VariantAttribute<T> variant<T extends Attribute>([
+    T? p1,
+    T? p2,
+    T? p3,
+    T? p4,
+    T? p5,
+    T? p6,
+    T? p7,
+    T? p8,
+    T? p9,
+    T? p10,
+    T? p11,
+    T? p12,
+  ]) {
+    final params = <T>[];
+    if (p1 != null) params.add(p1);
+    if (p2 != null) params.add(p2);
+    if (p3 != null) params.add(p3);
+    if (p4 != null) params.add(p4);
+    if (p5 != null) params.add(p5);
+    if (p6 != null) params.add(p6);
+    if (p7 != null) params.add(p7);
+    if (p8 != null) params.add(p8);
+    if (p9 != null) params.add(p9);
+    if (p10 != null) params.add(p10);
+    if (p11 != null) params.add(p11);
+    if (p12 != null) params.add(p12);
+    return VariantAttribute(Symbol(this), params);
+  }
 }

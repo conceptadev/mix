@@ -61,11 +61,11 @@ class Mixer {
   Mixer expandAttributes<T extends Attribute>(AttributeGetter getter) {
     final attributes = <Attribute>[];
 
-    for (final attr in _allAttributes) {
+    for (final attr in allAttributes) {
       attributes.addAll(getter(attr) ?? []);
     }
 
-    if (attributes.isNotEmpty) return this;
+    if (attributes.isEmpty) return this;
     final mixer = Mixer.builder(context, attributes);
     return merge(mixer);
   }
@@ -83,7 +83,7 @@ class Mixer {
     );
   }
 
-  List<Attribute> get _allAttributes {
+  List<Attribute> get allAttributes {
     final attributes = <Attribute>[];
 
     if (box != null) attributes.add(box!);
@@ -145,8 +145,7 @@ class Mixer {
   }
 
   factory Mixer.builder(BuildContext context, List<Attribute> attributes) {
-    final allAttributes = context.mixer()?._allAttributes ?? [];
-    final combined = [...allAttributes, ...attributes];
+    final combined = [...attributes];
     BoxAttributes? boxAttributes;
     IconAttributes? iconAttributes;
     FlexAttributes? flexAttributes;

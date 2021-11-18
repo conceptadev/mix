@@ -83,7 +83,7 @@ class SpacingData {
 
   EdgeInsets? applyEdgeInsets(BuildContext context, EdgeInsets? edgeInsets) {
     if (edgeInsets != null) {
-      final spacingData = context.spacingData();
+      final spacingData = context.spacingData;
 
       return _translate(edgeInsets, spacingData);
     }

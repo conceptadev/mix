@@ -1,36 +1,48 @@
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
+import 'package:mix/src/attributes/common/attribute.dart';
 import 'package:mix/src/attributes/helpers/helper_short.utils.dart';
 import 'package:mix/src/mixer/mix_factory.dart';
 
-class SwitchRemix extends StatelessWidget {
-  const SwitchRemix({
+class SwitchX extends StatelessWidget {
+  const SwitchX({
     Key? key,
-    this.checked = true,
+    this.active = true,
     this.onChanged,
-    this.root = const SwitchRoot(),
-    this.thumb = const SwitchThumb(),
+    this.root = const SwitchRoot(Mix.constant),
+    this.thumb = const SwitchThumb(Mix.constant),
   }) : super(key: key);
 
-  final bool checked;
+  final bool active;
 
   final ValueChanged<bool>? onChanged;
 
   final SwitchRoot root;
   final SwitchThumb thumb;
 
+  // ignore: non_constant_identifier_names
+  static SwitchRoot Root<T extends Attribute>(Mix<T> mix, {Key? key}) {
+    return SwitchRoot(mix, key: key);
+  }
+
+  // ignore: non_constant_identifier_names
+  static SwitchThumb Thumb<T extends Attribute>(Mix<T> mix, {Key? key}) {
+    return SwitchThumb(mix, key: key);
+  }
+
+  @override
   @override
   Widget build(BuildContext context) {
     final fn = onChanged;
 
     return Pressable(
-      onPressed: fn == null ? null : () => fn(!checked),
+      onPressed: fn == null ? null : () => fn(!active),
       child: root.build(
         context: context,
-        checked: checked,
+        checked: active,
         child: thumb.build(
           context,
-          checked,
+          active,
         ),
       ),
     );
@@ -38,8 +50,8 @@ class SwitchRemix extends StatelessWidget {
 }
 
 class SwitchThumb {
-  const SwitchThumb({
-    this.mix,
+  const SwitchThumb(
+    this.mix, {
     this.activeMix,
     this.key,
   });
@@ -59,19 +71,12 @@ class SwitchThumb {
     );
   }
 
-  Mix get __activeMix {
-    return Mix(
-      apply(__mix),
-      apply(activeMix),
-    );
-  }
-
   Widget build(BuildContext context, bool checked) {
     return Box(
       key: key,
       mix: Mix.chooser(
         condition: checked,
-        trueMix: __activeMix,
+        trueMix: __mix.getVariant(#active),
         falseMix: __mix,
       ),
     );
@@ -79,14 +84,12 @@ class SwitchThumb {
 }
 
 class SwitchRoot {
-  const SwitchRoot({
-    this.mix,
-    this.activeMix,
+  const SwitchRoot(
+    this.mix, {
     this.key,
   });
 
   final Mix? mix;
-  final Mix? activeMix;
   final Key? key;
 
   Mix get __mix {
@@ -97,16 +100,10 @@ class SwitchRoot {
       rounded(100),
       bgColor(Colors.black26),
       align(Alignment.centerLeft),
+      'active'.variant(
+        align(Alignment.centerRight),
+      ),
       apply(mix),
-    );
-  }
-
-  Mix get __activeMix {
-    return Mix(
-      apply(__mix),
-      bgColor(Colors.black87),
-      align(Alignment.centerRight),
-      apply(activeMix),
     );
   }
 
@@ -119,7 +116,7 @@ class SwitchRoot {
       key: key,
       mix: Mix.chooser(
         condition: checked,
-        trueMix: __activeMix,
+        trueMix: __mix.getVariant(#active),
         falseMix: __mix,
       ),
       child: child,

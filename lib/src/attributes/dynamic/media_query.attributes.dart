@@ -23,6 +23,6 @@ class OrientationAttribute extends DynamicAttribute {
   final Orientation orientation;
   @override
   bool shouldApply(BuildContext context) {
-    return context.orientation() == orientation;
+    return context.orientation == orientation;
   }
 }

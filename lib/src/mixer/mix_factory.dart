@@ -58,11 +58,14 @@ class Mix<T extends Attribute> {
   }
 
   Mix<T> getVariant(Symbol variant) {
-    final variants = attributes.where((attr) {
-      return attr is VariantAttribute && attr.variant == variant;
-    }).toList();
+    final variantsTypes = attributes.whereType<VariantAttribute<T>>();
 
-    return addAll(variants);
+    final variants =
+        variantsTypes.where((element) => element.variant == variant);
+
+    final newAttributes = variants.expand((e) => e.attributes).toList();
+
+    return addAll(newAttributes);
   }
 
   static Mix<T> fromList<T extends Attribute>(List<T> attributes) {

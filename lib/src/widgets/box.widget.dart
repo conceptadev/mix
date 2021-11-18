@@ -49,6 +49,7 @@ class BoxMixerWidget extends MixerWidget {
     final rotate = boxProps?.rotate;
     final margin = boxProps?.margin;
     final padding = boxProps?.padding;
+
     final flex = boxProps?.flex;
     final flexFit = boxProps?.flexFit;
     final constraints = boxProps?.constraints;
