@@ -8,13 +8,25 @@ import 'package:mix/src/mixer/mixer.dart';
 
 /// Defines a mix
 class Mix<T extends Attribute> {
-  const Mix._(List<T> attributes) : _attributes = attributes;
+  final BoxAttributes? boxAttribute;
+  final TextAttributes? textAttribute;
+  final SharedAttributes? sharedAttribute;
+  final IconAttributes? iconAttribute;
+  final FlexAttributes? flexAttribute;
+  final List<DynamicAttribute> dynamicAttributes;
+  final List<TokenRefAttribute> tokenAttributes;
+  final List<DirectiveAttribute> directiveAttributes;
 
-  final List<T> _attributes;
-
-  List<T> get attributes {
-    return spreadNestedAttributes(_attributes);
-  }
+  const Mix._({
+    this.boxAttribute,
+    this.textAttribute,
+    this.sharedAttribute,
+    this.iconAttribute,
+    this.flexAttribute,
+    this.directiveAttributes = const [],
+    this.dynamicAttributes = const [],
+    this.tokenAttributes = const [],
+  });
 
   /// Define mix with parameters
   factory Mix([
@@ -45,16 +57,85 @@ class Mix<T extends Attribute> {
     if (p11 != null) params.add(p11);
     if (p12 != null) params.add(p12);
 
-    return Mix._(params);
+    return Mix.fromList(params);
   }
 
-  /// Adds more properties to a mix
-  PositionalParamFn<T, Mix<T>> get add {
-    return WrapFunction(addAll).withPositionalToList;
+  factory Mix.fromList(List<T> attributes) {
+    final combined = spreadNestedAttributes(attributes);
+    BoxAttributes? boxAttributes;
+    IconAttributes? iconAttributes;
+    FlexAttributes? flexAttributes;
+    SharedAttributes? sharedAttributes;
+    TextAttributes? textAttributes;
+
+    final dynamicAttributes = <DynamicAttribute>[];
+    final directiveAttributes = <DirectiveAttribute>[];
+    final tokenRefAttributes = <TokenRefAttribute>[];
+
+    for (final attribute in combined) {
+      if (attribute is DynamicAttribute) {
+        dynamicAttributes.add(attribute);
+      }
+
+      if (attribute is DirectiveAttribute) {
+        directiveAttributes.add(attribute);
+      }
+
+      if (attribute is TokenRefAttribute) {
+        tokenRefAttributes.add(attribute);
+      }
+
+      if (attribute is SharedAttributes) {
+        sharedAttributes ??= const SharedAttributes();
+        sharedAttributes = sharedAttributes.merge(attribute);
+      }
+
+      if (attribute is TextAttributes) {
+        textAttributes ??= const TextAttributes();
+        textAttributes = textAttributes.merge(attribute);
+      }
+
+      if (attribute is BoxAttributes) {
+        boxAttributes ??= const BoxAttributes();
+        boxAttributes = boxAttributes.merge(attribute);
+      }
+
+      if (attribute is IconAttributes) {
+        iconAttributes ??= const IconAttributes();
+        iconAttributes = iconAttributes.merge(attribute);
+      }
+
+      if (attribute is FlexAttributes) {
+        flexAttributes ??= const FlexAttributes();
+        flexAttributes = flexAttributes.merge(attribute);
+      }
+    }
+
+    return Mix._(
+      boxAttribute: boxAttributes,
+      textAttribute: textAttributes,
+      dynamicAttributes: dynamicAttributes,
+      sharedAttribute: sharedAttributes,
+      directiveAttributes: directiveAttributes,
+      iconAttribute: iconAttributes,
+      flexAttribute: flexAttributes,
+      tokenAttributes: tokenRefAttributes,
+    );
   }
 
-  Mix<T> addAll(List<T> attributes) {
-    return Mix._([...this.attributes, ...attributes]);
+  List<T> get attributes {
+    final attributes = <Attribute>[];
+
+    if (boxAttribute != null) attributes.add(boxAttribute!);
+    if (textAttribute != null) attributes.add(textAttribute!);
+    if (iconAttribute != null) attributes.add(iconAttribute!);
+    if (sharedAttribute != null) attributes.add(sharedAttribute!);
+    if (flexAttribute != null) attributes.add(flexAttribute!);
+    if (directiveAttributes.isNotEmpty) attributes.addAll(directiveAttributes);
+    if (dynamicAttributes.isNotEmpty) attributes.addAll(dynamicAttributes);
+    if (tokenAttributes.isNotEmpty) attributes.addAll(tokenAttributes);
+
+    return attributes.whereType<T>().toList();
   }
 
   Mix<T> getVariant(Symbol variant) {
@@ -68,26 +149,45 @@ class Mix<T extends Attribute> {
     return addAll(newAttributes);
   }
 
-  static Mix<T> fromList<T extends Attribute>(List<T> attributes) {
-    return Mix._(attributes);
+  Mix copyWith({
+    BoxAttributes? box,
+    TextAttributes? text,
+    SharedAttributes? shared,
+    IconAttributes? icon,
+    FlexAttributes? flex,
+    List<DynamicAttribute> dynamicProps = const [],
+    List<DirectiveAttribute> directives = const [],
+    List<TokenRefAttribute> tokens = const [],
+  }) {
+    return Mix._(
+      dynamicAttributes: dynamicProps..addAll(dynamicProps),
+      directiveAttributes: directives..addAll(directives),
+      tokenAttributes: tokens..addAll(tokens),
+      boxAttribute: box?.merge(box) ?? box,
+      textAttribute: text?.merge(text) ?? text,
+      sharedAttribute: shared?.merge(shared) ?? shared,
+      iconAttribute: icon?.merge(icon) ?? icon,
+      flexAttribute: flex?.merge(flex) ?? flex,
+    );
   }
 
-  /// Returns a new mix by taking either a mix or attributes or both
-  @deprecated
-  static Mix<T> fromMixAndAttributes<T extends Attribute>({
-    Mix<T>? mix,
-    List<T>? attributes,
-  }) {
-    if (mix == null && attributes == null) return Mix();
-    if (attributes != null && mix != null) return mix.addAll(attributes);
-    if (attributes != null) return Mix._(attributes);
-    return mix!;
+  Mix merge(Mix other) {
+    return copyWith(
+      box: other.boxAttribute,
+      text: other.textAttribute,
+      icon: other.iconAttribute,
+      shared: other.sharedAttribute,
+      dynamicProps: other.dynamicAttributes,
+      tokens: other.tokenAttributes,
+      directives: other.directiveAttributes,
+      flex: other.flexAttribute,
+    );
   }
 
   /// Merges many mixes into one
   static Mix<T> combineAll<T extends Attribute>(List<Mix<T>> mixes) {
     final attributes = mixes.expand((element) => element.attributes).toList();
-    return Mix._(attributes);
+    return Mix.fromList(attributes);
   }
 
   /// Merges many mixes into one
@@ -107,7 +207,7 @@ class Mix<T extends Attribute> {
     if (mix5 != null) list.addAll(mix5.attributes);
     if (mix6 != null) list.addAll(mix6.attributes);
 
-    return Mix<T>._(list);
+    return Mix.fromList(list);
   }
 
   /// Chooses mix based on condition
@@ -128,10 +228,19 @@ class Mix<T extends Attribute> {
   }
 
   /// Used for const constructor widgets
-  static const Mix constant = Mix._(<Attribute>[]);
+  static const Mix constant = Mix._();
 }
 
-extension MixExtension on Mix {
+extension MixExtension<T extends Attribute> on Mix<T> {
+  /// Adds more properties to a mix
+  PositionalParamFn<T, Mix<T>> get add {
+    return WrapFunction(addAll).withPositionalToList;
+  }
+
+  Mix<T> addAll(List<T> attributes) {
+    return Mix.fromList([...this.attributes, ...attributes]);
+  }
+
   Mix mix(Mix mix) {
     return Mix.combineAll([this, mix]);
   }

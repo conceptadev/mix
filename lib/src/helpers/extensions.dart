@@ -49,7 +49,7 @@ extension ContextExtensions on BuildContext {
   Mixer? get mixer => MixerNotifier.of(this);
 
   /// Ancestor Attributes
-  List<Attribute> get ancestorAttributes => mixer?.allAttributes ?? [];
+  List<Attribute> get ancestorAttributes => mixer?.mix.attributes ?? [];
 
   List<Attribute> ancestorAttributesOfType<T extends Attribute>() {
     final ancestorAttributes = this.ancestorAttributes;
