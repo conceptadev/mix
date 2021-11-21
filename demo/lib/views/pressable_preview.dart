@@ -43,8 +43,7 @@ class PressablePreview extends StatelessWidget {
           Pressable(
             mix: mix,
             onPressed: () {},
-            child: TextMix(
-              Mix(),
+            child: const TextMix(
               text: 'Simple Text',
             ),
           )

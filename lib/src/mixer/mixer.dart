@@ -1,32 +1,51 @@
 import 'package:flutter/material.dart';
+import 'package:mix/src/attributes/box/box.mixer.dart';
+import 'package:mix/src/attributes/flex/flex.mixer.dart';
+import 'package:mix/src/attributes/icon/icon.mixer.dart';
+import 'package:mix/src/attributes/shared/shared.mixer.dart';
+import 'package:mix/src/attributes/text/text.mixer.dart';
 
 import '../../mix.dart';
 import '../attributes/common/attribute.dart';
-import '../attributes/directives/text/text_directive.attributes.dart';
 import 'mix_factory.dart';
 
 typedef AttributeGetter<T extends Attribute> = List<Attribute>? Function(
     T attribute);
 
-class Mixer {
+class MixContext {
   BuildContext context;
   Mix mix;
 
-  Mixer._({
-    required this.context,
+  MixContext._({
     required this.mix,
+    required this.context,
   });
 
+  BoxMixer get boxMixer => BoxMixer.fromContext(this);
+  TextMixer get textMixer => TextMixer.fromContext(withAncestorContext());
+  IconMixer get iconMixer => IconMixer.fromContext(withAncestorContext());
+  FlexMixer get flexMixer => FlexMixer.fromContext(this);
+  SharedMixer get sharedMixer => SharedMixer.fromContext(withAncestorContext());
+
+  factory MixContext.create(BuildContext context, Mix mix) {
+    final mixWithContext = applyDynamicAttributes(context, mix);
+    return MixContext._(context: context, mix: mixWithContext);
+  }
+
   /// Expands `DynamicAttribute` based on context
-  Mixer _applyDynamicAttributes() {
-    final attributes = <Attribute>[];
+  static Mix<T> applyDynamicAttributes<T extends Attribute>(
+    BuildContext context,
+    Mix<T> mix,
+  ) {
+    final attributes = <T>[];
+    final dynamicAttributes = <T>[];
 
     bool hasDynamic = false;
 
     for (final attribute in mix.attributes) {
-      if (attribute is DynamicAttribute) {
+      if (attribute is DynamicAttribute<T>) {
         if (attribute.shouldApply(context)) {
-          attributes.addAll(attribute.attributes);
+          dynamicAttributes.addAll(attribute.attributes);
           hasDynamic = true;
         }
       } else {
@@ -35,14 +54,24 @@ class Mixer {
     }
 
     if (hasDynamic) {
-      final updatedMix = Mix.fromList(attributes);
-      return Mixer.build(context, updatedMix);
+      final dynamicMix = Mix.fromList([...attributes, ...dynamicAttributes]);
+      return applyDynamicAttributes(context, dynamicMix);
+    } else {
+      return mix;
+    }
+  }
+
+  MixContext withAncestorContext() {
+    final ancestorMixer = context.ancestorMixer;
+
+    if (ancestorMixer != null) {
+      return MixContext.create(context, ancestorMixer.mix.merge(mix));
     } else {
       return this;
     }
   }
 
-  /// Gets attributes of a `TokenAttribute` based on context
+  /// Gets attributes of a `TokenAttribute` based on csontext
   // Mixer _applyTokenAttributes() {
   //   return expandAttributes((Attribute attribute) {
   //     if (attribute is TokenRefAttribute) {
@@ -53,29 +82,24 @@ class Mixer {
   //   });
   // }
 
-  /// Applies all [TextDirectiveAttribute] to [text]
-  String applyTextDirectives(String text) {
-    final textDirectives =
-        mix.directiveAttributes.whereType<TextDirectiveAttribute>();
-
-    if (textDirectives.isEmpty) {
-      return text;
+  /// Applies all [WidgetAttribute]s to a [Widget]
+  Widget applyWidgetAttributes(Widget widget) {
+    var current = widget;
+    final attributeMap = <Type, WidgetAttribute?>{};
+    for (final attribute in mix.widgetAttributes) {
+      var existing = attributeMap[attribute.runtimeType];
+      if (existing != null) {
+        attributeMap[attribute.runtimeType] = existing.merge(attribute);
+      } else {
+        attributeMap[attribute.runtimeType] = attribute;
+      }
     }
 
-    String modifiedText = text;
-
-    for (final attr in textDirectives) {
-      modifiedText = attr.modify(modifiedText);
-    }
-
-    return modifiedText;
-  }
-
-  factory Mixer.build(BuildContext context, Mix mix) {
-    final mixer = Mixer._(
-      context: context,
-      mix: mix,
+    // Apply widget attributes
+    attributeMap.forEach(
+      (key, value) => current = value!.render(this, current),
     );
-    return mixer._applyDynamicAttributes();
+
+    return current;
   }
 }

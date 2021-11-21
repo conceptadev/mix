@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mix/mix.dart';
 
 /// Base attribute
 
@@ -16,12 +17,18 @@ class NestedAttribute<T extends Attribute> extends Attribute {
   final List<T> attributes;
 }
 
-abstract class DynamicAttribute extends Attribute {
+abstract class DynamicAttribute<T extends Attribute> extends Attribute {
   const DynamicAttribute(this.attributes);
 
-  final List<Attribute> attributes;
+  final List<T> attributes;
 
   bool shouldApply(BuildContext context);
+}
+
+abstract class WidgetAttribute<T extends WidgetAttribute<T>> extends Attribute {
+  const WidgetAttribute();
+  WidgetAttribute<T> merge(T other);
+  Widget render(MixContext mixContext, Widget child);
 }
 
 abstract class DirectiveAttribute<T> extends Attribute {

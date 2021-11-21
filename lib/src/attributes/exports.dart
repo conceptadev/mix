@@ -45,3 +45,10 @@ export './text/text_short.utils.dart';
 export './token/token.attributes.dart';
 export './token/token.utils.dart';
 export './token/token_short.utils.dart';
+export 'widget_decorators/aspect_ratio.dart';
+export 'widget_decorators/flexible.dart';
+export 'widget_decorators/opacity.dart';
+export 'widget_decorators/rotate.dart';
+
+/// Widgets
+export 'widget_decorators/scale.dart';

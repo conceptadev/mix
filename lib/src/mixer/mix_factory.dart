@@ -16,7 +16,8 @@ class Mix<T extends Attribute> {
   final List<VariantAttribute> variantAttributes;
   final List<DynamicAttribute> dynamicAttributes;
   final List<TokenRefAttribute> tokenAttributes;
-  final List<DirectiveAttribute> directiveAttributes;
+  final List<DirectiveAttribute> directives;
+  final List<WidgetAttribute> widgetAttributes;
 
   const Mix._({
     this.boxAttribute,
@@ -25,9 +26,10 @@ class Mix<T extends Attribute> {
     this.iconAttribute,
     this.flexAttribute,
     this.variantAttributes = const [],
-    this.directiveAttributes = const [],
+    this.directives = const [],
     this.dynamicAttributes = const [],
     this.tokenAttributes = const [],
+    this.widgetAttributes = const [],
   });
 
   /// Define mix with parameters
@@ -74,6 +76,7 @@ class Mix<T extends Attribute> {
     final directiveAttributes = <DirectiveAttribute>[];
     final tokenRefAttributes = <TokenRefAttribute>[];
     final variantAttributes = <VariantAttribute>[];
+    final widgetAttributes = <WidgetAttribute>[];
 
     for (final attribute in combined) {
       if (attribute is DynamicAttribute) {
@@ -85,6 +88,10 @@ class Mix<T extends Attribute> {
 
       if (attribute is DirectiveAttribute) {
         directiveAttributes.add(attribute);
+      }
+
+      if (attribute is WidgetAttribute) {
+        widgetAttributes.add(attribute);
       }
 
       if (attribute is TokenRefAttribute) {
@@ -122,11 +129,12 @@ class Mix<T extends Attribute> {
       textAttribute: textAttributes,
       dynamicAttributes: dynamicAttributes,
       sharedAttribute: sharedAttributes,
-      directiveAttributes: directiveAttributes,
+      directives: directiveAttributes,
       iconAttribute: iconAttributes,
       flexAttribute: flexAttributes,
       tokenAttributes: tokenRefAttributes,
       variantAttributes: variantAttributes,
+      widgetAttributes: widgetAttributes,
     );
   }
 
@@ -138,10 +146,11 @@ class Mix<T extends Attribute> {
     if (iconAttribute != null) attributes.add(iconAttribute!);
     if (sharedAttribute != null) attributes.add(sharedAttribute!);
     if (flexAttribute != null) attributes.add(flexAttribute!);
-    if (directiveAttributes.isNotEmpty) attributes.addAll(directiveAttributes);
+    if (directives.isNotEmpty) attributes.addAll(directives);
     if (dynamicAttributes.isNotEmpty) attributes.addAll(dynamicAttributes);
     if (tokenAttributes.isNotEmpty) attributes.addAll(tokenAttributes);
     if (variantAttributes.isNotEmpty) attributes.addAll(variantAttributes);
+    if (widgetAttributes.isNotEmpty) attributes.addAll(widgetAttributes);
 
     return attributes.whereType<T>().toList();
   }
@@ -164,21 +173,23 @@ class Mix<T extends Attribute> {
     IconAttributes? iconAttribute,
     FlexAttributes? flexAttribute,
     List<DynamicAttribute> dynamicAttributes = const [],
-    List<DirectiveAttribute> directiveAttributes = const [],
+    List<DirectiveAttribute> directives = const [],
     List<TokenRefAttribute> tokenAttributes = const [],
     List<VariantAttribute> variantAttributes = const [],
+    List<WidgetAttribute> widgetAttributes = const [],
   }) {
     return Mix._(
-      dynamicAttributes: dynamicAttributes..addAll(dynamicAttributes),
-      directiveAttributes: directiveAttributes..addAll(directiveAttributes),
-      tokenAttributes: tokenAttributes..addAll(tokenAttributes),
-      variantAttributes: variantAttributes..addAll(variantAttributes),
-      boxAttribute: boxAttribute?.merge(boxAttribute) ?? boxAttribute,
-      textAttribute: textAttribute?.merge(textAttribute) ?? textAttribute,
+      dynamicAttributes: [...this.dynamicAttributes, ...dynamicAttributes],
+      directives: [...this.directives, ...directives],
+      tokenAttributes: [...this.tokenAttributes, ...tokenAttributes],
+      variantAttributes: [...this.variantAttributes, ...variantAttributes],
+      widgetAttributes: [...this.widgetAttributes, ...widgetAttributes],
+      boxAttribute: this.boxAttribute?.merge(boxAttribute) ?? boxAttribute,
+      textAttribute: this.textAttribute?.merge(textAttribute) ?? textAttribute,
       sharedAttribute:
-          sharedAttribute?.merge(sharedAttribute) ?? sharedAttribute,
-      iconAttribute: iconAttribute?.merge(iconAttribute) ?? iconAttribute,
-      flexAttribute: flexAttribute?.merge(flexAttribute) ?? flexAttribute,
+          this.sharedAttribute?.merge(sharedAttribute) ?? sharedAttribute,
+      iconAttribute: this.iconAttribute?.merge(iconAttribute) ?? iconAttribute,
+      flexAttribute: this.flexAttribute?.merge(flexAttribute) ?? flexAttribute,
     );
   }
 
@@ -190,9 +201,10 @@ class Mix<T extends Attribute> {
       sharedAttribute: other.sharedAttribute,
       dynamicAttributes: other.dynamicAttributes,
       tokenAttributes: other.tokenAttributes,
-      directiveAttributes: other.directiveAttributes,
+      directives: other.directives,
       variantAttributes: other.variantAttributes,
       flexAttribute: other.flexAttribute,
+      widgetAttributes: other.widgetAttributes,
     );
   }
 
@@ -235,8 +247,8 @@ class Mix<T extends Attribute> {
     }
   }
 
-  Mixer build(BuildContext context) {
-    return Mixer.build(context, this);
+  MixContext createContext(BuildContext context) {
+    return MixContext.create(context, this);
   }
 
   /// Used for const constructor widgets
@@ -284,7 +296,7 @@ extension MixExtension<T extends Attribute> on Mix<T> {
     Key? key,
   }) {
     final mx = Mix.combine(this, mix);
-    return TextMix(mx, text: text, key: key);
+    return TextMix(mix: mx, text: text, key: key);
   }
 
   VBox column({
@@ -302,7 +314,7 @@ extension MixExtension<T extends Attribute> on Mix<T> {
   }) {
     final mx = Mix.combine(this, mix);
     return IconMix(
-      mx,
+      mix: mx,
       icon: icon,
       semanticLabel: semanticLabel,
     );

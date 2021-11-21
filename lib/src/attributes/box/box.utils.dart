@@ -2,14 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
 import 'package:mix/src/attributes/box/box.attributes.dart';
 import 'package:mix/src/mappers/border.mapper.dart';
+import 'package:mix/src/mappers/border_radius.mapper.dart';
+import 'package:mix/src/mappers/box_shadow.mapper.dart';
 
 class BoxUtility {
   const BoxUtility._();
-
-  /// Rotate property
-  static BoxAttributes rotate(int value) {
-    return BoxAttributes(rotate: value);
-  }
 
   /// Margin property
   static BoxAttributes margin(double value) {
@@ -91,24 +88,9 @@ class BoxUtility {
     return BoxAttributes(padding: EdgeInsets.symmetric(vertical: value));
   }
 
-  /// Elevation property
-  static BoxAttributes elevation(double value) {
-    return BoxAttributes(elevation: value);
-  }
-
-  /// Opacity
-  static BoxAttributes opacity(double value) {
-    return BoxAttributes(opacity: value);
-  }
-
-  /// Aspect Ratio
-  static BoxAttributes aspectRatio(double value) {
-    return BoxAttributes(aspectRatio: value);
-  }
-
   /// Background color attribute
   static BoxAttributes backgroundColor(Color color) =>
-      BoxAttributes(backgroundColor: color);
+      BoxAttributes(color: color);
 
   /// Height
   static BoxAttributes height(double height) {
@@ -171,22 +153,6 @@ class BoxUtility {
     );
   }
 
-  /// Flex
-  static BoxAttributes flex(int value) => BoxAttributes(flex: value);
-
-  /// FlexFit
-  static BoxAttributes flexFit(FlexFit value) => BoxAttributes(flexFit: value);
-
-  /// Expanded
-  static BoxAttributes expanded() {
-    return const BoxAttributes(flexFit: FlexFit.tight);
-  }
-
-  /// Flexible
-  static BoxAttributes flexible() {
-    return const BoxAttributes(flexFit: FlexFit.loose);
-  }
-
   /// Border color for all borde sides
   static BoxAttributes border({
     Color? color,
@@ -194,12 +160,17 @@ class BoxUtility {
     BorderStyle? style,
     Border? asBorder,
   }) {
-    final border = asBorder ??
-        BorderSideProps(
-          color: color,
-          width: width,
-          style: style,
-        ).toBorder();
+    BorderProps border;
+    if (asBorder != null) {
+      border = BorderProps.fromBorder(asBorder);
+    } else {
+      final side = BorderSideProps.only(
+        color: color,
+        width: width,
+        style: style,
+      );
+      border = BorderProps.fromBorderSide(side);
+    }
 
     return BoxAttributes(
       border: border,
@@ -208,12 +179,12 @@ class BoxUtility {
 
   /// Border color for all borde sides
   static BoxAttributes borderColor(Color color) {
-    return BoxAttributes(border: Border.all(color: color));
+    return BoxAttributes(border: BorderProps.all(color: color));
   }
 
   /// Border width for all border sides
   static BoxAttributes borderWidth(double width) {
-    return BoxAttributes(border: Border.all(width: width));
+    return BoxAttributes(border: BorderProps.all(width: width));
   }
 
   /// Align box attribute
@@ -223,14 +194,7 @@ class BoxUtility {
 
   /// Border style for all border sides
   static BoxAttributes borderStyle(BorderStyle style) {
-    return BoxAttributes(border: Border.all(style: style));
-  }
-
-  /// Scale transform box utility
-  static BoxAttributes scale(double scale) {
-    return BoxAttributes(
-      scale: scale,
-    );
+    return BoxAttributes(border: BorderProps.all(style: style));
   }
 
   static BoxAttributes shadow({
@@ -239,15 +203,30 @@ class BoxUtility {
     double? blurRadius,
     double? spreadRadius,
   }) {
-    const boxShadow = BoxShadow();
+    final boxShadow = BoxShadowProps(
+      color: color,
+      offset: offset,
+      blurRadius: blurRadius,
+      spreadRadius: spreadRadius,
+    );
 
     return BoxAttributes(
-      boxShadow: boxShadow.copyWith(
-        color: color,
-        offset: offset,
-        blurRadius: blurRadius,
-        spreadRadius: spreadRadius,
-      ),
+      boxShadow: [boxShadow],
+    );
+  }
+
+  /// Elevation property for box attributes
+  static BoxAttributes elevation(int elevation) {
+    const elevationOptions = [1, 2, 3, 4, 6, 8, 9, 12, 16, 24];
+    assert(
+      elevationOptions.contains(elevation),
+      'Elevation must be one of the following: ${elevationOptions.join(', ')}',
+    );
+
+    return BoxAttributes(
+      boxShadow: kElevationToShadow[elevation]!
+          .map((e) => e.toBoxShadowProps())
+          .toList(),
     );
   }
 }

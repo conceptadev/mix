@@ -19,9 +19,8 @@ class FlexBox extends MixWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mixer = Mixer.build(context, mix);
     return FlexBoxMixerWidget(
-      mixer,
+      mix.createContext(context),
       direction: direction,
       children: children,
     );
@@ -30,7 +29,7 @@ class FlexBox extends MixWidget {
 
 class FlexBoxMixerWidget extends MixerWidget {
   const FlexBoxMixerWidget(
-    Mixer mixer, {
+    MixContext mixer, {
     Key? key,
     required this.direction,
     required this.children,
@@ -61,22 +60,15 @@ class FlexBoxMixerWidget extends MixerWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mainAxis = flexProps?.mainAxisAlignment ?? MainAxisAlignment.start;
-    final crossAxis =
-        flexProps?.crossAxisAlignment ?? CrossAxisAlignment.center;
-    final mainAxisSize = flexProps?.mainAxisSize ?? MainAxisSize.max;
-    final vDirection = flexProps?.verticalDirection ?? VerticalDirection.down;
-    final gapSize = flexProps?.gapSize;
-
     return BoxMixerWidget(
-      mixer,
+      mixContext,
       child: Flex(
         direction: direction,
-        mainAxisAlignment: mainAxis,
-        crossAxisAlignment: crossAxis,
-        mainAxisSize: mainAxisSize,
-        verticalDirection: vDirection,
-        children: _renderChildrenWithGap(gapSize, children),
+        mainAxisAlignment: flexMixer.mainAxisAlignment,
+        crossAxisAlignment: flexMixer.crossAxisAlignment,
+        mainAxisSize: flexMixer.mainAxisSize,
+        verticalDirection: flexMixer.verticalDirection,
+        children: _renderChildrenWithGap(flexMixer.gapSize, children),
       ),
     );
   }

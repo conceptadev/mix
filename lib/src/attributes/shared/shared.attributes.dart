@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mix/src/attributes/common/attribute.dart';
 
 class SharedAttributes implements Attribute {
-  final bool? hidden;
+  final bool? visible;
   //Animation
   final bool? animated;
   final Duration? animationDuration;
@@ -10,7 +10,7 @@ class SharedAttributes implements Attribute {
   final TextDirection? textDirection;
 
   const SharedAttributes({
-    this.hidden,
+    this.visible,
     this.animated,
     this.animationDuration,
     this.animationCurve,
@@ -21,7 +21,7 @@ class SharedAttributes implements Attribute {
     if (other == null) return this;
 
     return SharedAttributes(
-      hidden: other.hidden ?? hidden,
+      visible: other.visible ?? visible,
       animated: other.animated ?? animated,
       animationDuration: other.animationDuration ?? animationDuration,
       animationCurve: other.animationCurve ?? animationCurve,

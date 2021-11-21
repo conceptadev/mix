@@ -21,13 +21,24 @@ class HeadlessPreview extends HookWidget {
         bgColor(Colors.white54),
       ),
     );
-    return Center(
-      child: SwitchX(
-        active: active.value,
-        onChanged: (value) => active.value = value,
-        root: SwitchX.Root(rootX),
-        thumb: SwitchX.Thumb(thumbX),
-      ),
+    return Column(
+      children: [
+        SwitchRemix(
+          active: active.value,
+          onChanged: (value) => active.value = value,
+          thumb: SwitchRemix.Thumb(thumbX),
+        ),
+        SizedBox(height: 20),
+        RadioButtonRemix(
+          checked: active.value,
+          onChanged: (value) => active.value = value,
+        ),
+        SizedBox(height: 20),
+        CheckboxRemix(
+          checked: active.value,
+          onChanged: (value) => active.value = value,
+        ),
+      ],
     );
   }
 }

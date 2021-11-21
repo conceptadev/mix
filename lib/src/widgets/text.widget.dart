@@ -1,14 +1,15 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mix/src/helpers/extensions.dart';
+import 'package:mix/src/widgets/nothing.widget.dart';
 
 import '../mixer/mix_factory.dart';
 import '../mixer/mixer.dart';
 import 'mix.widget.dart';
 
 class TextMix extends MixWidget {
-  const TextMix(
-    Mix mix, {
+  const TextMix({
+    Mix? mix,
     Key? key,
     required this.text,
   }) : super(mix, key: key);
@@ -17,7 +18,7 @@ class TextMix extends MixWidget {
   @override
   Widget build(BuildContext context) {
     return _TextMixerWidget(
-      Mixer.build(context, mix),
+      mix.createContext(context),
       text: text,
     );
   }
@@ -25,7 +26,7 @@ class TextMix extends MixWidget {
 
 class _TextMixerWidget extends MixerWidget {
   const _TextMixerWidget(
-    Mixer mixer, {
+    MixContext mixer, {
     Key? key,
     required this.text,
   }) : super(mixer, key: key);
@@ -34,46 +35,49 @@ class _TextMixerWidget extends MixerWidget {
 
   @override
   Widget build(BuildContext context) {
-    final content = mixer.applyTextDirectives(text);
+    if (!sharedMixer.visible) {
+      return const Empty();
+    }
+    final content = textMixer.applyTextDirectives(text);
 
-    if (animated) {
+    if (sharedMixer.animated) {
       return AnimatedDefaultTextStyle(
         child: Text(
           content,
-          textDirection: textDirection,
-          textWidthBasis: textProps?.textWidthBasis,
-          textScaleFactor: textProps?.textScaleFactor,
-          locale: textProps?.locale,
-          maxLines: textProps?.maxLines,
-          overflow: textProps?.overflow,
-          softWrap: textProps?.softWrap,
-          strutStyle: textProps?.strutStyle,
-          style: textProps?.style,
-          textAlign: textProps?.textAlign,
-          textHeightBehavior: textProps?.textHeightBehavior,
+          textDirection: sharedMixer.textDirection,
+          textWidthBasis: textMixer.textWidthBasis,
+          textScaleFactor: textMixer.textScaleFactor,
+          locale: textMixer.locale,
+          maxLines: textMixer.maxLines,
+          overflow: textMixer.overflow,
+          softWrap: textMixer.softWrap,
+          strutStyle: textMixer.strutStyle,
+          style: textMixer.style,
+          textAlign: textMixer.textAlign,
+          textHeightBehavior: textMixer.textHeightBehavior,
         ),
-        style: textProps?.style ?? context.defaultTextStyle(),
-        duration: animationDuration,
-        curve: animationCurve,
-        softWrap: textProps?.softWrap ?? true,
-        textAlign: textProps?.textAlign,
-        overflow: textProps?.overflow ?? TextOverflow.clip,
-        maxLines: textProps?.maxLines,
+        style: textMixer.style ?? context.defaultTextStyle(),
+        duration: sharedMixer.animationDuration,
+        curve: sharedMixer.animationCurve,
+        softWrap: textMixer.softWrap,
+        overflow: textMixer.overflow,
+        textAlign: textMixer.textAlign,
+        maxLines: textMixer.maxLines,
       );
     } else {
       return Text(
         content,
-        softWrap: textProps?.softWrap,
-        textDirection: textDirection,
-        textWidthBasis: textProps?.textWidthBasis,
-        textAlign: textProps?.textAlign,
-        overflow: textProps?.overflow,
-        maxLines: textProps?.maxLines,
-        textScaleFactor: textProps?.textScaleFactor,
-        style: textProps?.style,
-        locale: textProps?.locale,
-        strutStyle: textProps?.strutStyle,
-        textHeightBehavior: textProps?.textHeightBehavior,
+        softWrap: textMixer.softWrap,
+        textDirection: sharedMixer.textDirection,
+        textWidthBasis: textMixer.textWidthBasis,
+        textAlign: textMixer.textAlign,
+        overflow: textMixer.overflow,
+        maxLines: textMixer.maxLines,
+        textScaleFactor: textMixer.textScaleFactor,
+        style: textMixer.style,
+        locale: textMixer.locale,
+        strutStyle: textMixer.strutStyle,
+        textHeightBehavior: textMixer.textHeightBehavior,
       );
     }
   }
@@ -85,7 +89,7 @@ class _TextMixerWidget extends MixerWidget {
     properties.add(
       DiagnosticsProperty<bool>(
         'softWrap',
-        textProps?.softWrap,
+        textMixer.softWrap,
         defaultValue: true,
       ),
     );
@@ -93,7 +97,7 @@ class _TextMixerWidget extends MixerWidget {
     properties.add(
       DiagnosticsProperty<TextAlign>(
         'textAlign',
-        textProps?.textAlign,
+        textMixer.textAlign,
         defaultValue: null,
       ),
     );
@@ -101,7 +105,7 @@ class _TextMixerWidget extends MixerWidget {
     properties.add(
       DiagnosticsProperty<TextDirection>(
         'textDirection',
-        textDirection,
+        sharedMixer.textDirection,
         defaultValue: null,
       ),
     );
@@ -109,7 +113,7 @@ class _TextMixerWidget extends MixerWidget {
     properties.add(
       DiagnosticsProperty<TextWidthBasis>(
         'textWidthBasis',
-        textProps?.textWidthBasis,
+        textMixer.textWidthBasis,
         defaultValue: null,
       ),
     );
@@ -117,7 +121,7 @@ class _TextMixerWidget extends MixerWidget {
     properties.add(
       DiagnosticsProperty<double>(
         'textScaleFactor',
-        textProps?.textScaleFactor,
+        textMixer.textScaleFactor,
         defaultValue: null,
       ),
     );
@@ -125,7 +129,7 @@ class _TextMixerWidget extends MixerWidget {
     properties.add(
       DiagnosticsProperty<Locale>(
         'locale',
-        textProps?.locale,
+        textMixer.locale,
         defaultValue: null,
       ),
     );
@@ -133,7 +137,7 @@ class _TextMixerWidget extends MixerWidget {
     properties.add(
       DiagnosticsProperty<StrutStyle>(
         'strutStyle',
-        textProps?.strutStyle,
+        textMixer.strutStyle,
         defaultValue: null,
       ),
     );
@@ -141,7 +145,7 @@ class _TextMixerWidget extends MixerWidget {
     properties.add(
       DiagnosticsProperty<TextHeightBehavior>(
         'textHeightBehavior',
-        textProps?.textHeightBehavior,
+        textMixer.textHeightBehavior,
         defaultValue: null,
       ),
     );
@@ -149,7 +153,7 @@ class _TextMixerWidget extends MixerWidget {
     properties.add(
       DiagnosticsProperty<TextOverflow>(
         'overflow',
-        textProps?.overflow,
+        textMixer.overflow,
         defaultValue: null,
       ),
     );
@@ -157,7 +161,7 @@ class _TextMixerWidget extends MixerWidget {
     properties.add(
       DiagnosticsProperty<int>(
         'maxLines',
-        textProps?.maxLines,
+        textMixer.maxLines,
         defaultValue: null,
       ),
     );
@@ -165,7 +169,7 @@ class _TextMixerWidget extends MixerWidget {
     properties.add(
       DiagnosticsProperty<double>(
         'textScaleFactor',
-        textProps?.textScaleFactor,
+        textMixer.textScaleFactor,
         defaultValue: null,
       ),
     );
@@ -173,7 +177,7 @@ class _TextMixerWidget extends MixerWidget {
     properties.add(
       DiagnosticsProperty<TextStyle>(
         'style',
-        textProps?.style,
+        textMixer.style,
         defaultValue: null,
       ),
     );
@@ -189,7 +193,7 @@ class _TextMixerWidget extends MixerWidget {
     properties.add(
       DiagnosticsProperty<Duration>(
         'animationDuration',
-        animationDuration,
+        sharedMixer.animationDuration,
         defaultValue: null,
       ),
     );
@@ -197,15 +201,15 @@ class _TextMixerWidget extends MixerWidget {
     properties.add(
       DiagnosticsProperty<Curve>(
         'animationCurve',
-        animationCurve,
+        sharedMixer.animationCurve,
         defaultValue: null,
       ),
     );
 
     properties.add(
-      DiagnosticsProperty<Mixer>(
+      DiagnosticsProperty<MixContext>(
         'mixer',
-        mixer,
+        mixContext,
         defaultValue: null,
       ),
     );
@@ -213,7 +217,7 @@ class _TextMixerWidget extends MixerWidget {
     properties.add(
       DiagnosticsProperty<bool>(
         'animated',
-        animated,
+        sharedMixer.animated,
         defaultValue: false,
       ),
     );
