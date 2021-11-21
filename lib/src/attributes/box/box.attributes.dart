@@ -1,8 +1,11 @@
 import 'dart:ui';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
 import 'package:mix/src/mappers/border.mapper.dart';
+import 'package:mix/src/mappers/border_radius.mapper.dart';
+import 'package:mix/src/mappers/box_shadow.mapper.dart';
 
 import '../../helpers/extensions.dart';
 import '../common/attribute.dart';
@@ -14,24 +17,17 @@ class BoxAttributes extends Attribute {
   final double? height;
   final double? width;
   // Decoration
-  final Color? backgroundColor;
-  final Border? border;
+  final Color? color;
+  final BorderProps? border;
   final BorderRadiusProps? borderRadius;
-  final BoxShadow? boxShadow;
+  final List<BoxShadowProps>? boxShadow;
 
   // Constraints
   final double? maxHeight;
   final double? minHeight;
   final double? maxWidth;
   final double? minWidth;
-  // Addons
-  final int? rotate;
-  final double? opacity;
-  final double? aspectRatio;
-  final FlexFit? flexFit;
-  final int? flex;
-  final double? elevation;
-  final double? scale;
+  final BoxShape? shape;
 
   const BoxAttributes({
     this.margin,
@@ -39,7 +35,7 @@ class BoxAttributes extends Attribute {
     this.alignment,
     this.border,
     this.borderRadius,
-    this.backgroundColor,
+    this.color,
     this.boxShadow,
     this.height,
     this.width,
@@ -47,14 +43,7 @@ class BoxAttributes extends Attribute {
     this.minHeight,
     this.maxWidth,
     this.minWidth,
-    // Addons
-    this.rotate,
-    this.opacity,
-    this.aspectRatio,
-    this.flex,
-    this.flexFit,
-    this.elevation,
-    this.scale,
+    this.shape,
   });
 
   BoxAttributes merge(BoxAttributes? box) {
@@ -68,58 +57,13 @@ class BoxAttributes extends Attribute {
       padding: padding?.merge(box.padding) ?? box.padding,
       // Override values
       alignment: box.alignment,
-      backgroundColor: box.backgroundColor,
+      color: box.color,
       height: box.height,
       maxHeight: box.maxHeight,
       minHeight: box.minHeight,
       width: box.width,
       maxWidth: box.maxWidth,
       minWidth: box.minWidth,
-      rotate: box.rotate,
-      opacity: box.opacity,
-      aspectRatio: box.aspectRatio,
-      flex: box.flex,
-      flexFit: box.flexFit,
-      elevation: box.elevation,
-      scale: box.scale,
-    );
-  }
-
-  BoxDecoration? get decoration {
-    if (border != null || borderRadius != null || boxShadow != null) {
-      return BoxDecoration(
-        color: backgroundColor,
-        border: border,
-        borderRadius: borderRadius?.toBorderRadius(),
-        boxShadow: boxShadow == null ? [] : [boxShadow!],
-      );
-    }
-  }
-
-  BoxConstraints? get constraints {
-    BoxConstraints? constraints;
-
-    if (minWidth != null ||
-        maxWidth != null ||
-        minHeight != null ||
-        maxHeight != null) {
-      constraints = BoxConstraints(
-        minHeight: minHeight ?? 0.0,
-        maxHeight: maxHeight ?? double.infinity,
-        minWidth: minWidth ?? 0.0,
-        maxWidth: maxWidth ?? double.infinity,
-      );
-    }
-
-    return constraints;
-  }
-
-  BoxAttributes applyContext(BuildContext context) {
-    final spacingData = context.spacingData;
-
-    return copyWith(
-      margin: spacingData.applyEdgeInsets(context, margin),
-      padding: spacingData.applyEdgeInsets(context, padding),
     );
   }
 
@@ -133,21 +77,14 @@ class BoxAttributes extends Attribute {
         other.alignment == alignment &&
         other.height == height &&
         other.width == width &&
-        other.backgroundColor == backgroundColor &&
+        other.color == color &&
         other.border == border &&
         other.borderRadius == borderRadius &&
-        other.boxShadow == boxShadow &&
+        listEquals(other.boxShadow, boxShadow) &&
         other.maxHeight == maxHeight &&
         other.minHeight == minHeight &&
         other.maxWidth == maxWidth &&
-        other.minWidth == minWidth &&
-        other.rotate == rotate &&
-        other.opacity == opacity &&
-        other.aspectRatio == aspectRatio &&
-        other.flexFit == flexFit &&
-        other.flex == flex &&
-        other.elevation == elevation &&
-        other.scale == scale;
+        other.minWidth == minWidth;
   }
 
   @override
@@ -157,21 +94,14 @@ class BoxAttributes extends Attribute {
         alignment.hashCode ^
         height.hashCode ^
         width.hashCode ^
-        backgroundColor.hashCode ^
+        color.hashCode ^
         border.hashCode ^
         borderRadius.hashCode ^
         boxShadow.hashCode ^
         maxHeight.hashCode ^
         minHeight.hashCode ^
         maxWidth.hashCode ^
-        minWidth.hashCode ^
-        rotate.hashCode ^
-        opacity.hashCode ^
-        aspectRatio.hashCode ^
-        flexFit.hashCode ^
-        flex.hashCode ^
-        elevation.hashCode ^
-        scale.hashCode;
+        minWidth.hashCode;
   }
 
   BoxAttributes copyWith({
@@ -180,21 +110,14 @@ class BoxAttributes extends Attribute {
     AlignmentGeometry? alignment,
     double? height,
     double? width,
-    Color? backgroundColor,
-    Border? border,
+    Color? color,
+    BorderProps? border,
     BorderRadiusProps? borderRadius,
-    BoxShadow? boxShadow,
+    List<BoxShadowProps>? boxShadow,
     double? maxHeight,
     double? minHeight,
     double? maxWidth,
     double? minWidth,
-    int? rotate,
-    double? opacity,
-    double? aspectRatio,
-    FlexFit? flexFit,
-    int? flex,
-    double? elevation,
-    double? scale,
   }) {
     return BoxAttributes(
       margin: margin ?? this.margin,
@@ -202,7 +125,7 @@ class BoxAttributes extends Attribute {
       alignment: alignment ?? this.alignment,
       height: height ?? this.height,
       width: width ?? this.width,
-      backgroundColor: backgroundColor ?? this.backgroundColor,
+      color: color ?? this.color,
       border: border ?? this.border,
       borderRadius: borderRadius ?? this.borderRadius,
       boxShadow: boxShadow ?? this.boxShadow,
@@ -210,13 +133,6 @@ class BoxAttributes extends Attribute {
       minHeight: minHeight ?? this.minHeight,
       maxWidth: maxWidth ?? this.maxWidth,
       minWidth: minWidth ?? this.minWidth,
-      rotate: rotate ?? this.rotate,
-      opacity: opacity ?? this.opacity,
-      aspectRatio: aspectRatio ?? this.aspectRatio,
-      flexFit: flexFit ?? this.flexFit,
-      flex: flex ?? this.flex,
-      elevation: elevation ?? this.elevation,
-      scale: scale ?? this.scale,
     );
   }
 }

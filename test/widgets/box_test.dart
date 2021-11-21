@@ -2,7 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/src/attributes/box/box.attributes.dart';
 import 'package:mix/src/attributes/shared/shared.attributes.dart';
+import 'package:mix/src/attributes/widget_decorators/aspect_ratio.dart';
+import 'package:mix/src/attributes/widget_decorators/flexible.dart';
+import 'package:mix/src/attributes/widget_decorators/opacity.dart';
+import 'package:mix/src/attributes/widget_decorators/rotate.dart';
 import 'package:mix/src/mappers/border.mapper.dart';
+import 'package:mix/src/mappers/border_radius.mapper.dart';
 import 'package:mix/src/mixer/mix_factory.dart';
 import 'package:mix/src/widgets/box.widget.dart';
 
@@ -45,8 +50,8 @@ void main() {
           await tester.pumpWidget(
             BoxInsideFlexWidget(
               Mix(
-                const BoxAttributes(flex: 2),
-                const BoxAttributes(flexFit: FlexFit.tight),
+                const FlexibleWidgetAttribute(flex: 2),
+                const FlexibleWidgetAttribute(flexFit: FlexFit.tight),
               ),
             ),
           );
@@ -65,7 +70,7 @@ void main() {
         (tester) async {
           await tester.pumpWidget(
             BoxTestWidget(
-              Mix(const BoxAttributes(rotate: 3)),
+              Mix(const RotateWidgetAttribute(quarterTurns: 3)),
             ),
           );
 
@@ -82,7 +87,7 @@ void main() {
         (tester) async {
           await tester.pumpWidget(
             BoxTestWidget(
-              Mix(const SharedAttributes(hidden: true)),
+              Mix(const SharedAttributes(visible: false)),
             ),
           );
 
@@ -100,7 +105,7 @@ void main() {
         (tester) async {
           await tester.pumpWidget(
             BoxTestWidget(
-              Mix(const BoxAttributes(aspectRatio: 3 / 2)),
+              Mix(const AspectRationWidgetAttribute(aspectRatio: 3 / 2)),
             ),
           );
 
@@ -134,7 +139,9 @@ void main() {
         (tester) async {
           await tester.pumpWidget(
             BoxTestWidget(
-              Mix(const BoxAttributes(opacity: 0.5)),
+              Mix(
+                const OpacityWidgetAttribute(opacity: 0.5),
+              ),
             ),
           );
 
@@ -151,7 +158,7 @@ void main() {
         (tester) async {
           await tester.pumpWidget(
             BoxTestWidget(
-              Mix(const BoxAttributes(backgroundColor: Colors.lime)),
+              Mix(const BoxAttributes(color: Colors.lime)),
             ),
           );
 
@@ -166,6 +173,12 @@ void main() {
       testWidgets(
         'Responds to Decoration attributes',
         (tester) async {
+          final borderProps = BorderProps.all(
+            color: Colors.green,
+            width: 1.0,
+            style: BorderStyle.solid,
+          );
+
           final border = Border.all(
             color: Colors.green,
             width: 1.0,
@@ -178,9 +191,9 @@ void main() {
           await tester.pumpWidget(
             BoxTestWidget(
               Mix(
-                const BoxAttributes(backgroundColor: Colors.purple),
+                const BoxAttributes(color: Colors.purple),
                 const BoxAttributes(borderRadius: borderRadiusProps),
-                BoxAttributes(border: border),
+                BoxAttributes(border: borderProps),
               ),
             ),
           );

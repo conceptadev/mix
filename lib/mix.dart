@@ -8,11 +8,10 @@ export 'package:mix/src/widgets/mix.widget.dart' show MixerWidget;
 export 'package:mix/src/widgets/pressable.widget.dart' show Pressable;
 export 'package:mix/src/widgets/text.widget.dart' show TextMix;
 
-export 'src/attributes/common/attribute.dart'
-    show DynamicAttribute, AttributeExtensions;
+export 'src/attributes/common/attribute.dart' show DynamicAttribute;
 export 'src/attributes/exports.dart';
-export 'src/headless/switch/switch.dart';
+export 'src/headless/exports.dart';
 export 'src/helpers/extensions.dart';
 export 'src/mixer/mix_factory.dart' show Mix;
-export 'src/mixer/mixer.dart' show Mixer;
+export 'src/mixer/mixer.dart' show MixContext;
 export 'src/theme/mix_theme.dart';

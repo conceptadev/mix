@@ -37,7 +37,11 @@ class SharedUtils {
     return SharedAttributes(textDirection: textDirection);
   }
 
-  /// Hidden property
-  static SharedAttributes hidden([bool? condition = true]) =>
-      SharedAttributes(hidden: condition);
+  /// Visible utility
+  static SharedAttributes visible([bool? condition = true]) =>
+      SharedAttributes(visible: condition);
+
+  /// Hidden utility
+  static SharedAttributes hidden([bool condition = false]) =>
+      SharedAttributes(visible: !condition);
 }

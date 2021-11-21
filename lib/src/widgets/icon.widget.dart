@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:mix/src/widgets/nothing.widget.dart';
 
 import '../mixer/mix_factory.dart';
 import '../mixer/mixer.dart';
 import 'mix.widget.dart';
 
 class IconMix extends MixWidget {
-  const IconMix(
-    Mix mix, {
+  const IconMix({
+    Mix? mix,
     required this.icon,
     this.semanticLabel,
     Key? key,
@@ -18,7 +19,7 @@ class IconMix extends MixWidget {
   @override
   Widget build(BuildContext context) {
     return IconMixerWidget(
-      mix.build(context),
+      mix.createContext(context),
       icon: icon,
       semanticLabel: semanticLabel,
     );
@@ -27,41 +28,42 @@ class IconMix extends MixWidget {
 
 class IconMixerWidget extends MixerWidget {
   const IconMixerWidget(
-    Mixer mixer, {
+    MixContext mixContext, {
     required this.icon,
     this.semanticLabel,
     Key? key,
-  }) : super(mixer, key: key);
+  }) : super(mixContext, key: key);
 
   final IconData icon;
   final String? semanticLabel;
 
   @override
   Widget build(BuildContext context) {
-    final iconWidget = Icon(
+    if (!sharedMixer.visible) {
+      return const Empty();
+    }
+    Widget iconWidget = Icon(
       icon,
-      color: iconProps?.color,
-      size: iconProps?.size,
-      textDirection: textDirection,
+      color: iconMixer.color,
+      size: iconMixer.size,
+      textDirection: sharedMixer.textDirection,
       semanticLabel: semanticLabel,
     );
 
-    if (!animated) {
-      return iconWidget;
-    } else {
-      return TweenAnimationBuilder<double?>(
-        duration: animationDuration,
-        curve: animationCurve,
-        tween: Tween<double?>(
-          end: iconProps?.size,
+    if (sharedMixer.animated) {
+      iconWidget = TweenAnimationBuilder<double>(
+        duration: sharedMixer.animationDuration,
+        curve: sharedMixer.animationCurve,
+        tween: Tween<double>(
+          end: iconMixer.size ?? 24,
         ),
         builder: (context, value, child) {
           return IconTheme.merge(
             data: IconThemeData(size: value),
             child: TweenAnimationBuilder<Color?>(
-              duration: animationDuration,
-              curve: animationCurve,
-              tween: ColorTween(end: iconProps?.color),
+              duration: sharedMixer.animationDuration,
+              curve: sharedMixer.animationCurve,
+              tween: ColorTween(end: iconMixer.color),
               child: child,
               builder: (context, value, child) {
                 if (value == null) {
@@ -78,5 +80,7 @@ class IconMixerWidget extends MixerWidget {
         child: iconWidget,
       );
     }
+
+    return iconWidget;
   }
 }

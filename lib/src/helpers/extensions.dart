@@ -4,8 +4,9 @@ import 'package:mix/src/attributes/dynamic/variant.attributes.dart';
 import 'package:mix/src/attributes/text/text.attributes.dart';
 import 'package:mix/src/attributes/text/text.notifier.dart';
 import 'package:mix/src/helpers/utils.dart';
+import 'package:mix/src/mappers/box_shadow.mapper.dart';
+import 'package:mix/src/mixer/mix_context_notifier.dart';
 import 'package:mix/src/mixer/mixer.dart';
-import 'package:mix/src/mixer/mixer.notifier.dart';
 import 'package:mix/src/theme/mix_theme.dart';
 import 'package:mix/src/theme/theme_data.dart';
 import 'package:mix/src/theme/theme_spacing.dart';
@@ -46,23 +47,7 @@ extension ContextExtensions on BuildContext {
   TextDirection get directionality => Directionality.of(this);
 
   /// shared attributes of parent
-  Mixer? get mixer => MixerNotifier.of(this);
-
-  /// Ancestor Attributes
-  List<Attribute> get ancestorAttributes => mixer?.mix.attributes ?? [];
-
-  List<Attribute> ancestorAttributesOfType<T extends Attribute>() {
-    final ancestorAttributes = this.ancestorAttributes;
-
-    final attributes = <Attribute>[];
-    for (final attr in ancestorAttributes) {
-      if (attr is T) {
-        attributes.add(attr);
-      }
-    }
-
-    return attributes;
-  }
+  MixContext? get ancestorMixer => MixContextNotifier.of(this);
 
   /// Theme color scheme
   ColorScheme get colorScheme => theme.colorScheme;
@@ -186,6 +171,7 @@ extension BorderRadiusExtension on BorderRadius {
 }
 
 extension BoxShadowExtension on BoxShadow {
+  @deprecated
   BoxShadow copyWith({
     Color? color,
     Offset? offset,
@@ -200,8 +186,17 @@ extension BoxShadowExtension on BoxShadow {
     );
   }
 
-  static const BoxShadow _d = BoxShadow();
+  BoxShadowProps toBoxShadowProps() {
+    return BoxShadowProps(
+      blurRadius: blurRadius,
+      color: color,
+      offset: Offset(offset.dx, offset.dy),
+      spreadRadius: spreadRadius,
+    );
+  }
 
+  static const BoxShadow _d = BoxShadow();
+  @deprecated
   BoxShadow merge(BoxShadow? o) {
     if (o == null) return this;
     return copyWith(

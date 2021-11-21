@@ -77,30 +77,6 @@ const borderStyle = BoxUtility.borderStyle;
 /// Box shadow utility
 const shadow = BoxUtility.shadow;
 
-/// Elevation utility
-const elevation = BoxUtility.elevation;
-
-/// Rotate utility
-const rotate = BoxUtility.rotate;
-
-// Scale utility
-const scale = BoxUtility.scale;
-
-/// Rotate 90
-BoxAttributes rotate90() => rotate(1);
-
-/// Rotate 180
-BoxAttributes rotate180() => rotate(2);
-
-/// Rotate 270
-BoxAttributes rotate270() => rotate(3);
-
-/// Rotate 360
-BoxAttributes rotate360() => rotate(4);
-
-const opacity = BoxUtility.opacity;
-const aspectRatio = BoxUtility.aspectRatio;
-
 const squared = BoxUtility.squared;
 const rounded = BoxUtility.rounded;
 
@@ -121,3 +97,6 @@ BoxAttributes roundedBR(double value) {
 }
 
 const align = BoxUtility.align;
+
+/// Elevation
+const elevation = BoxUtility.elevation;

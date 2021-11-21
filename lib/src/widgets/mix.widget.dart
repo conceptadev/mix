@@ -1,9 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:mix/src/attributes/box/box.attributes.dart';
-import 'package:mix/src/attributes/flex/flex.attributes.dart';
-import 'package:mix/src/attributes/icon/icon.attributes.dart';
-import 'package:mix/src/attributes/text/text.attributes.dart';
+import 'package:mix/src/attributes/box/box.mixer.dart';
+import 'package:mix/src/attributes/flex/flex.mixer.dart';
+import 'package:mix/src/attributes/icon/icon.mixer.dart';
+import 'package:mix/src/attributes/shared/shared.mixer.dart';
+import 'package:mix/src/attributes/text/text.mixer.dart';
 
 import '../../mix.dart';
 import '../mixer/mixer.dart';
@@ -40,25 +41,17 @@ abstract class MixWidget extends StatelessWidget {
 abstract class MixerWidget extends StatelessWidget {
   /// Constructor
   const MixerWidget(
-    this.mixer, {
+    this.mixContext, {
     Key? key,
   }) : super(key: key);
 
-  BoxAttributes? get boxProps => mixer.mix.boxAttribute;
-  TextAttributes? get textProps => mixer.mix.textAttribute;
-  IconAttributes? get iconProps => mixer.mix.iconAttribute;
-  FlexAttributes? get flexProps => mixer.mix.flexAttribute;
-  SharedAttributes? get sharedProps => mixer.mix.sharedAttribute;
+  BoxMixer get boxMixer => mixContext.boxMixer;
+  TextMixer get textMixer => mixContext.textMixer;
+  IconMixer get iconMixer => mixContext.iconMixer;
+  FlexMixer get flexMixer => mixContext.flexMixer;
+  SharedMixer get sharedMixer => mixContext.sharedMixer;
 
-  // Common
-  bool get animated => sharedProps?.animated == true;
-  Duration get animationDuration =>
-      sharedProps?.animationDuration ?? const Duration(milliseconds: 100);
-  Curve get animationCurve => sharedProps?.animationCurve ?? Curves.linear;
-  bool get hidden => sharedProps?.hidden == true;
-  TextDirection? get textDirection => sharedProps?.textDirection;
-
-  final Mixer mixer;
+  final MixContext mixContext;
 
   @override
   Widget build(BuildContext context);
@@ -68,78 +61,10 @@ abstract class MixerWidget extends StatelessWidget {
     super.debugFillProperties(properties);
 
     properties.add(
-      DiagnosticsProperty<Mixer>(
-        'mixer',
-        mixer,
+      DiagnosticsProperty<MixContext>(
+        'mixContext',
+        mixContext,
         defaultValue: null,
-      ),
-    );
-
-    properties.add(
-      DiagnosticsProperty<BoxAttributes>(
-        'box',
-        boxProps,
-        defaultValue: null,
-      ),
-    );
-
-    properties.add(
-      DiagnosticsProperty<TextAttributes>(
-        'text',
-        textProps,
-        defaultValue: null,
-      ),
-    );
-
-    properties.add(
-      DiagnosticsProperty<IconAttributes>(
-        'icon',
-        iconProps,
-        defaultValue: null,
-      ),
-    );
-
-    properties.add(
-      DiagnosticsProperty<FlexAttributes>(
-        'flex',
-        flexProps,
-        defaultValue: null,
-      ),
-    );
-
-    properties.add(
-      DiagnosticsProperty<SharedAttributes>(
-        'shared',
-        sharedProps,
-        defaultValue: null,
-      ),
-    );
-
-    properties.add(
-      DiagnosticsProperty<bool>('animated', animated, defaultValue: false),
-    );
-
-    properties.add(
-      DiagnosticsProperty<Duration>(
-        'animationDuration',
-        animationDuration,
-        defaultValue: const Duration(milliseconds: 100),
-      ),
-    );
-
-    properties.add(
-      DiagnosticsProperty<Curve>(
-        'animationCurve',
-        animationCurve,
-        defaultValue: Curves.linear,
-      ),
-    );
-
-    properties.add(
-      DiagnosticsProperty<bool>(
-        'hidden',
-        hidden,
-        defaultValue: false,
       ),
     );
   }
