@@ -18,12 +18,10 @@ class NeonPreview extends StatelessWidget {
       shadow(
         color: Colors.purpleAccent,
         blurRadius: 5.0,
-        spreadRadius: 0.0,
       ),
       hover(
         shadow(
           blurRadius: 15.0,
-          spreadRadius: 0.0,
         ),
       ),
       bgColor(Colors.white),

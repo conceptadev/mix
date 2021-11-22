@@ -6,8 +6,9 @@ import 'package:mix/src/attributes/widget_decorators/aspect_ratio.dart';
 import 'package:mix/src/attributes/widget_decorators/flexible.dart';
 import 'package:mix/src/attributes/widget_decorators/opacity.dart';
 import 'package:mix/src/attributes/widget_decorators/rotate.dart';
-import 'package:mix/src/mappers/border.mapper.dart';
-import 'package:mix/src/mappers/border_radius.mapper.dart';
+import 'package:mix/src/dto/border.dto.dart';
+import 'package:mix/src/dto/border_radius.dto.dart';
+import 'package:mix/src/dto/edge_insets.dto.dart';
 import 'package:mix/src/mixer/mix_factory.dart';
 import 'package:mix/src/widgets/box.widget.dart';
 
@@ -173,7 +174,7 @@ void main() {
       testWidgets(
         'Responds to Decoration attributes',
         (tester) async {
-          final borderProps = BorderProps.all(
+          final borderProps = BorderDto.all(
             color: Colors.green,
             width: 1.0,
             style: BorderStyle.solid,
@@ -184,7 +185,7 @@ void main() {
             width: 1.0,
             style: BorderStyle.solid,
           );
-          const borderRadiusProps = BorderRadiusProps.only(topLeft: 20);
+          const borderRadiusProps = BorderRadiusDto.only(topLeft: 20);
           const borderRadius = BorderRadius.only(
             topLeft: Radius.circular(20),
           );
@@ -224,7 +225,7 @@ void main() {
             BoxTestWidget(
               Mix(
                 const BoxAttributes(
-                  margin: EdgeInsets.only(
+                  margin: EdgeInsetsDto.only(
                     left: 15,
                     top: 25,
                     right: 35,
@@ -253,7 +254,7 @@ void main() {
             BoxTestWidget(
               Mix(
                 const BoxAttributes(
-                  padding: EdgeInsets.only(
+                  padding: EdgeInsetsDto.only(
                     left: 10,
                     top: 20,
                     right: 30,

@@ -1,27 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:mix/src/mappers/class_properties.dart';
+import 'package:mix/src/dto/dto.dart';
 
-class BorderProps extends Properties<Border> {
+class BorderDto extends Dto<Border> {
   final BorderSideProps? top;
   final BorderSideProps? right;
   final BorderSideProps? bottom;
   final BorderSideProps? left;
 
-  const BorderProps._({
+  const BorderDto._({
     this.bottom,
     this.left,
     this.right,
     this.top,
   });
 
-  const BorderProps.only({
+  const BorderDto.only({
     this.top,
     this.right,
     this.bottom,
     this.left,
   });
 
-  const BorderProps.fromBorderSide(BorderSideProps side)
+  const BorderDto.fromBorderSide(BorderSideProps side)
       : this.only(
           top: side,
           right: side,
@@ -29,12 +29,12 @@ class BorderProps extends Properties<Border> {
           left: side,
         );
 
-  factory BorderProps.all({
+  factory BorderDto.all({
     Color? color,
     double? width,
     BorderStyle? style,
   }) {
-    return BorderProps.fromBorderSide(
+    return BorderDto.fromBorderSide(
       BorderSideProps.only(
         color: color,
         width: width,
@@ -43,8 +43,8 @@ class BorderProps extends Properties<Border> {
     );
   }
 
-  factory BorderProps.fromBorder(Border border) {
-    return BorderProps.only(
+  factory BorderDto.fromBorder(Border border) {
+    return BorderDto.only(
       top: BorderSideProps.fromBorderSide(border.top),
       right: BorderSideProps.fromBorderSide(border.right),
       bottom: BorderSideProps.fromBorderSide(border.bottom),
@@ -52,24 +52,24 @@ class BorderProps extends Properties<Border> {
     );
   }
 
-  BorderSide _createEachSide(BorderSideProps? side) {
+  BorderSide _createEachSide(BuildContext context, BorderSideProps? side) {
     if (side == null) {
       return BorderSide.none;
     }
-    return side.create();
+    return side.create(context);
   }
 
   @override
-  Border create() {
+  Border create(BuildContext context) {
     return Border(
-      top: _createEachSide(top),
-      right: _createEachSide(right),
-      bottom: _createEachSide(bottom),
-      left: _createEachSide(left),
+      top: _createEachSide(context, top),
+      right: _createEachSide(context, right),
+      bottom: _createEachSide(context, bottom),
+      left: _createEachSide(context, left),
     );
   }
 
-  BorderProps merge(BorderProps? other) {
+  BorderDto merge(BorderDto? other) {
     if (other == null) return this;
 
     return copyWith(
@@ -80,13 +80,13 @@ class BorderProps extends Properties<Border> {
     );
   }
 
-  BorderProps copyWith({
+  BorderDto copyWith({
     BorderSideProps? top,
     BorderSideProps? right,
     BorderSideProps? bottom,
     BorderSideProps? left,
   }) {
-    return BorderProps._(
+    return BorderDto._(
       top: this.top?.merge(top) ?? top,
       right: this.right?.merge(right) ?? right,
       bottom: this.bottom?.merge(bottom) ?? bottom,
@@ -98,7 +98,7 @@ class BorderProps extends Properties<Border> {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is BorderProps &&
+    return other is BorderDto &&
         other.top == top &&
         other.right == right &&
         other.bottom == bottom &&
@@ -116,7 +116,7 @@ class BorderProps extends Properties<Border> {
   }
 }
 
-class BorderSideProps extends Properties<BorderSide> {
+class BorderSideProps extends Dto<BorderSide> {
   final Color? color;
   final double? width;
   final BorderStyle? style;
@@ -165,7 +165,7 @@ class BorderSideProps extends Properties<BorderSide> {
   final BorderSide _default = const BorderSide();
 
   @override
-  BorderSide create() {
+  BorderSide create(BuildContext context) {
     return BorderSide(
       color: color ?? _default.color,
       width: width ?? _default.width,

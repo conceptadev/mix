@@ -8,9 +8,9 @@ class PressablePreview extends StatelessWidget {
   Widget build(BuildContext context) {
     final mix = Mix(
       rounded(35),
-      padding(20),
       animated(),
       scale(1),
+      padding.xlarge,
       elevation(8),
       bgColor(Colors.white),
       font(

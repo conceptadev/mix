@@ -1,43 +1,16 @@
 import 'dart:math';
 
+import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:mix/src/mappers/class_properties.dart';
+import 'package:mix/src/dto/dto.dart';
 
-extension BoxShadowPropsExtension on List<BoxShadowProps> {
-  List<BoxShadow> create() {
-    return map((e) => e.create()).toList();
-  }
-
-  List<BoxShadowProps> merge(List<BoxShadowProps>? other) {
-    final otherList = other ?? [];
-
-    // Create array with the largest size
-    final maxLength = max(length, otherList.length);
-
-    // Get index value of List<BoxShadowProps>
-    BoxShadowProps? getValueAtIndex(int index, List<BoxShadowProps> list) {
-      if (index < list.length) return list[index];
-      return null;
-    }
-
-    final mergedShadows = List<BoxShadowProps>.generate(maxLength, (int index) {
-      final otherValue = getValueAtIndex(index, otherList);
-      final thisValue = getValueAtIndex(index, this);
-      // One of the values should be valid because of maxLength
-      return thisValue?.merge(otherValue) ?? otherValue!;
-    });
-
-    return mergedShadows;
-  }
-}
-
-class BoxShadowProps extends Properties<BoxShadow> {
+class BoxShadowDto extends Dto<BoxShadow> {
   final Color? color;
   final Offset? offset;
   final double? blurRadius;
   final double? spreadRadius;
 
-  const BoxShadowProps({
+  const BoxShadowDto({
     this.color,
     this.offset,
     this.blurRadius,
@@ -47,7 +20,7 @@ class BoxShadowProps extends Properties<BoxShadow> {
   final BoxShadow _default = const BoxShadow();
 
   @override
-  BoxShadow create() {
+  BoxShadow create(BuildContext context) {
     return BoxShadow(
       color: color ?? _default.color,
       offset: offset ?? _default.offset,
@@ -56,7 +29,7 @@ class BoxShadowProps extends Properties<BoxShadow> {
     );
   }
 
-  BoxShadowProps merge(BoxShadowProps? other) {
+  BoxShadowDto merge(BoxShadowDto? other) {
     if (other == null) return this;
     return copyWith(
       color: other.color,
@@ -65,13 +38,13 @@ class BoxShadowProps extends Properties<BoxShadow> {
     );
   }
 
-  BoxShadowProps copyWith({
+  BoxShadowDto copyWith({
     Color? color,
     Offset? offset,
     double? blurRadius,
     double? spreadRadius,
   }) {
-    return BoxShadowProps(
+    return BoxShadowDto(
       color: color ?? this.color,
       offset: offset ?? this.offset,
       blurRadius: blurRadius ?? this.blurRadius,
@@ -83,7 +56,7 @@ class BoxShadowProps extends Properties<BoxShadow> {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is BoxShadowProps &&
+    return other is BoxShadowDto &&
         other.color == color &&
         other.offset == offset &&
         other.blurRadius == blurRadius &&
@@ -101,5 +74,33 @@ class BoxShadowProps extends Properties<BoxShadow> {
   @override
   String toString() {
     return 'BoxShadowProps(color: $color, offset: $offset, blurRadius: $blurRadius, spreadRadius: $spreadRadius)';
+  }
+}
+
+extension BoxShadowDtoExtension on List<BoxShadowDto> {
+  List<BoxShadow> create(BuildContext context) {
+    return map((e) => e.create(context)).toList();
+  }
+
+  List<BoxShadowDto> merge(List<BoxShadowDto>? other) {
+    final otherList = other ?? [];
+
+    // Create array with the largest size
+    final maxLength = max(length, otherList.length);
+
+    // Get index value of List<BoxShadowProps>
+    BoxShadowDto? getValueAtIndex(int index, List<BoxShadowDto> list) {
+      if (index < list.length) return list[index];
+      return null;
+    }
+
+    final mergedShadows = List<BoxShadowDto>.generate(maxLength, (int index) {
+      final otherValue = getValueAtIndex(index, otherList);
+      final thisValue = getValueAtIndex(index, this);
+      // One of the values should be valid because of maxLength
+      return thisValue?.merge(otherValue) ?? otherValue!;
+    });
+
+    return mergedShadows;
   }
 }

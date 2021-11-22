@@ -78,7 +78,7 @@ class BoxMixerWidget extends MixerWidget {
       );
     }
 
-    current = mixContext.applyWidgetAttributes(current);
+    current = mixContext.applyWidgetDecorators(current);
     return current;
   }
 }

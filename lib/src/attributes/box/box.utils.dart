@@ -1,91 +1,92 @@
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
 import 'package:mix/src/attributes/box/box.attributes.dart';
-import 'package:mix/src/mappers/border.mapper.dart';
-import 'package:mix/src/mappers/border_radius.mapper.dart';
-import 'package:mix/src/mappers/box_shadow.mapper.dart';
+import 'package:mix/src/dto/border.dto.dart';
+import 'package:mix/src/dto/border_radius.dto.dart';
+import 'package:mix/src/dto/box_shadow.dto.dart';
+import 'package:mix/src/dto/edge_insets.dto.dart';
 
 class BoxUtility {
   const BoxUtility._();
 
   /// Margin property
   static BoxAttributes margin(double value) {
-    return BoxAttributes(margin: EdgeInsets.all(value));
+    return BoxAttributes(margin: EdgeInsetsDto.all(value));
   }
 
   /// Margin from insets
   static BoxAttributes marginInsets(EdgeInsets insets) {
-    return BoxAttributes(margin: insets);
+    return BoxAttributes(margin: EdgeInsetsDto.fromEdgeInsets(insets));
   }
 
   /// Margin top
   static BoxAttributes marginTop(double value) {
-    return BoxAttributes(margin: EdgeInsets.only(top: value));
+    return BoxAttributes(margin: EdgeInsetsDto.only(top: value));
   }
 
   /// Margin right
   static BoxAttributes marginRight(double value) {
-    return BoxAttributes(margin: EdgeInsets.only(right: value));
+    return BoxAttributes(margin: EdgeInsetsDto.only(right: value));
   }
 
   /// Margin bottom
   static BoxAttributes marginBottom(double value) {
-    return BoxAttributes(margin: EdgeInsets.only(bottom: value));
+    return BoxAttributes(margin: EdgeInsetsDto.only(bottom: value));
   }
 
   /// Margin left
   static BoxAttributes marginLeft(double value) {
-    return BoxAttributes(margin: EdgeInsets.only(left: value));
+    return BoxAttributes(margin: EdgeInsetsDto.only(left: value));
   }
 
   /// Margin horizontal
   static BoxAttributes marginHorizontal(double value) {
-    return BoxAttributes(margin: EdgeInsets.symmetric(horizontal: value));
+    return BoxAttributes(margin: EdgeInsetsDto.symmetric(horizontal: value));
   }
 
   /// Margin vertical
   static BoxAttributes marginVertical(double value) {
-    return BoxAttributes(margin: EdgeInsets.symmetric(vertical: value));
+    return BoxAttributes(margin: EdgeInsetsDto.symmetric(vertical: value));
   }
 
   /// Padding property
   static BoxAttributes padding(double value) {
-    return BoxAttributes(padding: EdgeInsets.all(value));
+    return BoxAttributes(padding: EdgeInsetsDto.all(value));
   }
 
   /// Padding from insets
   static BoxAttributes paddingInsets(EdgeInsets insets) {
-    return BoxAttributes(padding: insets);
+    return BoxAttributes(padding: EdgeInsetsDto.fromEdgeInsets(insets));
   }
 
   /// Padding top
   static BoxAttributes paddingTop(double value) {
-    return BoxAttributes(padding: EdgeInsets.only(top: value));
+    return BoxAttributes(padding: EdgeInsetsDto.only(top: value));
   }
 
   /// Padding right
   static BoxAttributes paddingRight(double value) {
-    return BoxAttributes(padding: EdgeInsets.only(right: value));
+    return BoxAttributes(padding: EdgeInsetsDto.only(right: value));
   }
 
   /// Padding bottom
   static BoxAttributes paddingBottom(double value) {
-    return BoxAttributes(padding: EdgeInsets.only(bottom: value));
+    return BoxAttributes(padding: EdgeInsetsDto.only(bottom: value));
   }
 
   /// Padding left
   static BoxAttributes paddingLeft(double value) {
-    return BoxAttributes(padding: EdgeInsets.only(left: value));
+    return BoxAttributes(padding: EdgeInsetsDto.only(left: value));
   }
 
   /// Padding horizontal
   static BoxAttributes paddingHorizontal(double value) {
-    return BoxAttributes(padding: EdgeInsets.symmetric(horizontal: value));
+    return BoxAttributes(padding: EdgeInsetsDto.symmetric(horizontal: value));
   }
 
   /// Padding vertical
   static BoxAttributes paddingVertical(double value) {
-    return BoxAttributes(padding: EdgeInsets.symmetric(vertical: value));
+    return BoxAttributes(padding: EdgeInsetsDto.symmetric(vertical: value));
   }
 
   /// Background color attribute
@@ -123,18 +124,18 @@ class BoxUtility {
   }
 
   /// Border radius
-  static BoxAttributes borderRadius(BorderRadiusProps radius) {
+  static BoxAttributes borderRadius(BorderRadiusDto radius) {
     return BoxAttributes(borderRadius: radius);
   }
 
   /// Rounded border radius
   static BoxAttributes rounded(double value) {
-    return borderRadius(BorderRadiusProps.all(value));
+    return borderRadius(BorderRadiusDto.all(value));
   }
 
   /// Squared border radius
   static BoxAttributes squared() {
-    return borderRadius(BorderRadiusProps.zero);
+    return borderRadius(BorderRadiusDto.zero);
   }
 
   static BoxAttributes roundedOnly({
@@ -144,7 +145,7 @@ class BoxUtility {
     double? bottomRight,
   }) {
     return borderRadius(
-      BorderRadiusProps.only(
+      BorderRadiusDto.only(
         topLeft: topLeft,
         topRight: topRight,
         bottomLeft: bottomLeft,
@@ -160,16 +161,16 @@ class BoxUtility {
     BorderStyle? style,
     Border? asBorder,
   }) {
-    BorderProps border;
+    BorderDto border;
     if (asBorder != null) {
-      border = BorderProps.fromBorder(asBorder);
+      border = BorderDto.fromBorder(asBorder);
     } else {
       final side = BorderSideProps.only(
         color: color,
         width: width,
         style: style,
       );
-      border = BorderProps.fromBorderSide(side);
+      border = BorderDto.fromBorderSide(side);
     }
 
     return BoxAttributes(
@@ -179,12 +180,12 @@ class BoxUtility {
 
   /// Border color for all borde sides
   static BoxAttributes borderColor(Color color) {
-    return BoxAttributes(border: BorderProps.all(color: color));
+    return BoxAttributes(border: BorderDto.all(color: color));
   }
 
   /// Border width for all border sides
   static BoxAttributes borderWidth(double width) {
-    return BoxAttributes(border: BorderProps.all(width: width));
+    return BoxAttributes(border: BorderDto.all(width: width));
   }
 
   /// Align box attribute
@@ -194,7 +195,7 @@ class BoxUtility {
 
   /// Border style for all border sides
   static BoxAttributes borderStyle(BorderStyle style) {
-    return BoxAttributes(border: BorderProps.all(style: style));
+    return BoxAttributes(border: BorderDto.all(style: style));
   }
 
   static BoxAttributes shadow({
@@ -203,7 +204,7 @@ class BoxUtility {
     double? blurRadius,
     double? spreadRadius,
   }) {
-    final boxShadow = BoxShadowProps(
+    final boxShadow = BoxShadowDto(
       color: color,
       offset: offset,
       blurRadius: blurRadius,

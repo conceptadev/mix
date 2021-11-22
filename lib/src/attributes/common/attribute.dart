@@ -17,14 +17,6 @@ class NestedAttribute<T extends Attribute> extends Attribute {
   final List<T> attributes;
 }
 
-abstract class DynamicAttribute<T extends Attribute> extends Attribute {
-  const DynamicAttribute(this.attributes);
-
-  final List<T> attributes;
-
-  bool shouldApply(BuildContext context);
-}
-
 abstract class WidgetAttribute<T extends WidgetAttribute<T>> extends Attribute {
   const WidgetAttribute();
   WidgetAttribute<T> merge(T other);

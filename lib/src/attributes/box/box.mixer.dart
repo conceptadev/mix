@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
-import 'package:mix/src/mappers/box_shadow.mapper.dart';
+import 'package:mix/src/dto/box_shadow.dto.dart';
 
 class BoxMixer {
   final Color? _color;
@@ -42,18 +42,16 @@ class BoxMixer {
     final context = mixContext.context;
     final box = mixContext.mix.boxAttribute;
 
-    final spacingData = context.spacingData;
-
     return BoxMixer(
       color: box?.color,
       alignment: box?.alignment,
-      margin: spacingData.applyEdgeInsets(context, box?.margin),
-      padding: spacingData.applyEdgeInsets(context, box?.padding),
+      margin: box?.margin?.create(context),
+      padding: box?.padding?.create(context),
       width: box?.width,
       height: box?.height,
-      border: box?.border?.create(),
-      borderRadius: box?.borderRadius?.create(),
-      boxShadow: box?.boxShadow?.create(),
+      border: box?.border?.create(context),
+      borderRadius: box?.borderRadius?.create(context),
+      boxShadow: box?.boxShadow?.create(context),
       maxHeight: box?.maxHeight,
       maxWidth: box?.maxWidth,
       minHeight: box?.minHeight,
