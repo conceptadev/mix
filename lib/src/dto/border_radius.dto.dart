@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:mix/src/mappers/class_properties.dart';
+import 'package:mix/src/dto/dto.dart';
 
-class BorderRadiusProps extends Properties<BorderRadius> {
+class BorderRadiusDto extends Dto<BorderRadius> {
   final double? topLeft;
   final double? topRight;
   final double? bottomLeft;
   final double? bottomRight;
 
-  const BorderRadiusProps._({
+  const BorderRadiusDto._({
     this.topLeft,
     this.topRight,
     this.bottomLeft,
     this.bottomRight,
   });
 
-  const BorderRadiusProps.only({
+  const BorderRadiusDto.only({
     this.topLeft,
     this.topRight,
     this.bottomLeft,
@@ -22,9 +22,9 @@ class BorderRadiusProps extends Properties<BorderRadius> {
   });
 
   /// A border radius with all zero radii.
-  static const BorderRadiusProps zero = BorderRadiusProps.all(0);
+  static const BorderRadiusDto zero = BorderRadiusDto.all(0);
 
-  const BorderRadiusProps.all(double radius)
+  const BorderRadiusDto.all(double radius)
       : this.only(
           topLeft: radius,
           topRight: radius,
@@ -37,7 +37,7 @@ class BorderRadiusProps extends Properties<BorderRadius> {
   }
 
   @override
-  BorderRadius create() {
+  BorderRadius create(BuildContext context) {
     return BorderRadius.only(
       topLeft: _createRadius(topLeft),
       topRight: _createRadius(topRight),
@@ -46,7 +46,7 @@ class BorderRadiusProps extends Properties<BorderRadius> {
     );
   }
 
-  BorderRadiusProps merge(BorderRadiusProps? borderRadius) {
+  BorderRadiusDto merge(BorderRadiusDto? borderRadius) {
     if (borderRadius == null) return this;
     return copyWith(
       topLeft: borderRadius.topLeft,
@@ -56,13 +56,13 @@ class BorderRadiusProps extends Properties<BorderRadius> {
     );
   }
 
-  BorderRadiusProps copyWith({
+  BorderRadiusDto copyWith({
     double? topLeft,
     double? topRight,
     double? bottomLeft,
     double? bottomRight,
   }) {
-    return BorderRadiusProps._(
+    return BorderRadiusDto._(
       topLeft: topLeft ?? this.topLeft,
       topRight: topRight ?? this.topRight,
       bottomLeft: bottomLeft ?? this.bottomLeft,
@@ -74,7 +74,7 @@ class BorderRadiusProps extends Properties<BorderRadius> {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is BorderRadiusProps &&
+    return other is BorderRadiusDto &&
         other.topLeft == topLeft &&
         other.topRight == topRight &&
         other.bottomLeft == bottomLeft &&

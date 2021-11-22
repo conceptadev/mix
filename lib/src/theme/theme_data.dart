@@ -1,7 +1,7 @@
 import 'package:mix/mix.dart';
 import 'package:mix/src/attributes/common/attribute.dart';
 
-import './theme_spacing.dart';
+import 'spacing.dart';
 
 typedef TokenMap<T extends Attribute> = Map<Symbol, List<T>>;
 
@@ -14,6 +14,27 @@ enum SizeToken {
   xxlarge,
 }
 
+extension SizeTokenExtension on SizeToken {
+  double get value {
+    switch (this) {
+      case SizeToken.xsmall:
+        return -0.1;
+      case SizeToken.small:
+        return -0.2;
+      case SizeToken.medium:
+        return -0.3;
+      case SizeToken.large:
+        return -0.4;
+      case SizeToken.xlarge:
+        return -0.5;
+      case SizeToken.xxlarge:
+        return -0.6;
+      default:
+        throw Exception('Invalid SizeToken');
+    }
+  }
+}
+
 class MixThemeData {
   MixThemeData._({
     required this.spacing,
@@ -22,16 +43,16 @@ class MixThemeData {
 
   static get defaults {
     return MixThemeData._(
-      spacing: SpacingData.defaults,
+      spacing: MixThemeSpaceData.defaults,
       tokens: {},
     );
   }
 
-  final SpacingData spacing;
+  final MixThemeSpaceData spacing;
   final TokenMap tokens;
 
   MixThemeData copyWith({
-    SpacingData? spacing,
+    MixThemeSpaceData? spacing,
     TokenMap? tokens,
   }) {
     return MixThemeData._(

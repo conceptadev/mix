@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:mix/src/attributes/common/attribute.dart';
 
 class VariantAttribute<T extends Attribute> extends Attribute {
@@ -8,4 +9,6 @@ class VariantAttribute<T extends Attribute> extends Attribute {
 
   final String variant;
   final List<T> attributes;
+
+  bool shouldApply(BuildContext context) => false;
 }

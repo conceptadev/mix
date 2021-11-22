@@ -3,13 +3,13 @@ import 'package:mix/src/attributes/common/attribute.dart';
 import 'package:mix/src/attributes/dynamic/variant.attributes.dart';
 import 'package:mix/src/attributes/text/text.attributes.dart';
 import 'package:mix/src/attributes/text/text.notifier.dart';
+import 'package:mix/src/dto/box_shadow.dto.dart';
 import 'package:mix/src/helpers/utils.dart';
-import 'package:mix/src/mappers/box_shadow.mapper.dart';
 import 'package:mix/src/mixer/mix_context_notifier.dart';
 import 'package:mix/src/mixer/mixer.dart';
 import 'package:mix/src/theme/mix_theme.dart';
+import 'package:mix/src/theme/spacing.dart';
 import 'package:mix/src/theme/theme_data.dart';
-import 'package:mix/src/theme/theme_spacing.dart';
 
 /// Possible screen sizes
 enum ScreenSize { xs, sm, md, lg }
@@ -32,7 +32,7 @@ extension ContextExtensions on BuildContext {
   MixThemeData get mixData => MixTheme.of(this);
 
   /// Get spacing data from mix theme
-  SpacingData get spacingData => mixData.spacing;
+  MixThemeSpaceData get spacingData => mixData.spacing;
 
   /// MediaQueryData for context
   MediaQueryData get mq => MediaQuery.of(this);
@@ -77,7 +77,7 @@ extension ContextExtensions on BuildContext {
   double get screenHeight => mq.size.height;
 
   /// Returns [ScreenSize] based on Material breakpoints
-  ScreenSize screenSize() {
+  ScreenSize get screenSize {
     return screenWidth >= ScreenSizeBreakpoints.lg
         ? ScreenSize.lg
         : screenWidth >= ScreenSizeBreakpoints.md
@@ -186,8 +186,8 @@ extension BoxShadowExtension on BoxShadow {
     );
   }
 
-  BoxShadowProps toBoxShadowProps() {
-    return BoxShadowProps(
+  BoxShadowDto toBoxShadowProps() {
+    return BoxShadowDto(
       blurRadius: blurRadius,
       color: color,
       offset: Offset(offset.dx, offset.dy),

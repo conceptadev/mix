@@ -14,7 +14,6 @@ class Mix<T extends Attribute> {
   final IconAttributes? iconAttribute;
   final FlexAttributes? flexAttribute;
   final List<VariantAttribute> variantAttributes;
-  final List<DynamicAttribute> dynamicAttributes;
   final List<TokenRefAttribute> tokenAttributes;
   final List<DirectiveAttribute> directives;
   final List<WidgetAttribute> widgetAttributes;
@@ -27,7 +26,6 @@ class Mix<T extends Attribute> {
     this.flexAttribute,
     this.variantAttributes = const [],
     this.directives = const [],
-    this.dynamicAttributes = const [],
     this.tokenAttributes = const [],
     this.widgetAttributes = const [],
   });
@@ -72,16 +70,12 @@ class Mix<T extends Attribute> {
     SharedAttributes? sharedAttributes;
     TextAttributes? textAttributes;
 
-    final dynamicAttributes = <DynamicAttribute>[];
     final directiveAttributes = <DirectiveAttribute>[];
     final tokenRefAttributes = <TokenRefAttribute>[];
     final variantAttributes = <VariantAttribute>[];
     final widgetAttributes = <WidgetAttribute>[];
 
     for (final attribute in combined) {
-      if (attribute is DynamicAttribute) {
-        dynamicAttributes.add(attribute);
-      }
       if (attribute is VariantAttribute) {
         variantAttributes.add(attribute);
       }
@@ -127,7 +121,6 @@ class Mix<T extends Attribute> {
     return Mix._(
       boxAttribute: boxAttributes,
       textAttribute: textAttributes,
-      dynamicAttributes: dynamicAttributes,
       sharedAttribute: sharedAttributes,
       directives: directiveAttributes,
       iconAttribute: iconAttributes,
@@ -147,7 +140,7 @@ class Mix<T extends Attribute> {
     if (sharedAttribute != null) attributes.add(sharedAttribute!);
     if (flexAttribute != null) attributes.add(flexAttribute!);
     if (directives.isNotEmpty) attributes.addAll(directives);
-    if (dynamicAttributes.isNotEmpty) attributes.addAll(dynamicAttributes);
+
     if (tokenAttributes.isNotEmpty) attributes.addAll(tokenAttributes);
     if (variantAttributes.isNotEmpty) attributes.addAll(variantAttributes);
     if (widgetAttributes.isNotEmpty) attributes.addAll(widgetAttributes);
@@ -172,14 +165,12 @@ class Mix<T extends Attribute> {
     SharedAttributes? sharedAttribute,
     IconAttributes? iconAttribute,
     FlexAttributes? flexAttribute,
-    List<DynamicAttribute> dynamicAttributes = const [],
     List<DirectiveAttribute> directives = const [],
     List<TokenRefAttribute> tokenAttributes = const [],
     List<VariantAttribute> variantAttributes = const [],
     List<WidgetAttribute> widgetAttributes = const [],
   }) {
     return Mix._(
-      dynamicAttributes: [...this.dynamicAttributes, ...dynamicAttributes],
       directives: [...this.directives, ...directives],
       tokenAttributes: [...this.tokenAttributes, ...tokenAttributes],
       variantAttributes: [...this.variantAttributes, ...variantAttributes],
@@ -199,7 +190,6 @@ class Mix<T extends Attribute> {
       textAttribute: other.textAttribute,
       iconAttribute: other.iconAttribute,
       sharedAttribute: other.sharedAttribute,
-      dynamicAttributes: other.dynamicAttributes,
       tokenAttributes: other.tokenAttributes,
       directives: other.directives,
       variantAttributes: other.variantAttributes,

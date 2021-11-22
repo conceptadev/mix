@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mix/src/attributes/box/box.mixer.dart';
+import 'package:mix/src/attributes/dynamic/variant.attributes.dart';
 import 'package:mix/src/attributes/flex/flex.mixer.dart';
 import 'package:mix/src/attributes/icon/icon.mixer.dart';
 import 'package:mix/src/attributes/shared/shared.mixer.dart';
@@ -28,34 +29,34 @@ class MixContext {
   SharedMixer get sharedMixer => SharedMixer.fromContext(withAncestorContext());
 
   factory MixContext.create(BuildContext context, Mix mix) {
-    final mixWithContext = applyDynamicAttributes(context, mix);
+    final mixWithContext = applyVariants(context, mix);
     return MixContext._(context: context, mix: mixWithContext);
   }
 
   /// Expands `DynamicAttribute` based on context
-  static Mix<T> applyDynamicAttributes<T extends Attribute>(
+  static Mix<T> applyVariants<T extends Attribute>(
     BuildContext context,
     Mix<T> mix,
   ) {
     final attributes = <T>[];
-    final dynamicAttributes = <T>[];
+    final variants = <T>[];
 
-    bool hasDynamic = false;
+    bool hasVariants = false;
 
     for (final attribute in mix.attributes) {
-      if (attribute is DynamicAttribute<T>) {
+      if (attribute is VariantAttribute<T>) {
         if (attribute.shouldApply(context)) {
-          dynamicAttributes.addAll(attribute.attributes);
-          hasDynamic = true;
+          variants.addAll(attribute.attributes);
+          hasVariants = true;
         }
       } else {
         attributes.add(attribute);
       }
     }
 
-    if (hasDynamic) {
-      final dynamicMix = Mix.fromList([...attributes, ...dynamicAttributes]);
-      return applyDynamicAttributes(context, dynamicMix);
+    if (hasVariants) {
+      final variantMix = Mix.fromList([...attributes, ...variants]);
+      return applyVariants(context, variantMix);
     } else {
       return mix;
     }
@@ -83,7 +84,7 @@ class MixContext {
   // }
 
   /// Applies all [WidgetAttribute]s to a [Widget]
-  Widget applyWidgetAttributes(Widget widget) {
+  Widget applyWidgetDecorators(Widget widget) {
     var current = widget;
     final attributeMap = <Type, WidgetAttribute?>{};
     for (final attribute in mix.widgetAttributes) {
