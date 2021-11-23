@@ -10,7 +10,7 @@ class PressablePreview extends StatelessWidget {
       rounded(35),
       animated(),
       scale(1),
-      padding.xlarge,
+      padding(20),
       elevation(8),
       bgColor(Colors.white),
       font(
