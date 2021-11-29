@@ -28,12 +28,12 @@ class HeadlessPreview extends HookWidget {
           onChanged: (value) => active.value = value,
           thumb: SwitchRemix.Thumb(thumbX),
         ),
-        SizedBox(height: 20),
+        const SizedBox(height: 20),
         RadioButtonRemix(
           checked: active.value,
           onChanged: (value) => active.value = value,
         ),
-        SizedBox(height: 20),
+        const SizedBox(height: 20),
         CheckboxRemix(
           checked: active.value,
           onChanged: (value) => active.value = value,

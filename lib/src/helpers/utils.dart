@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:mix/src/attributes/common/attribute.dart';
 
 List<T> spreadNestedAttributes<T extends Attribute>(List<T> attributes) {
@@ -19,14 +18,6 @@ List<T> spreadNestedAttributes<T extends Attribute>(List<T> attributes) {
   } else {
     return spreaded;
   }
-}
-
-/// String is in the format "aabbcc" or "ffaabbcc" with an optional leading "#".
-Color hexToColor(String hexString) {
-  final buffer = StringBuffer();
-  if (hexString.length == 6 || hexString.length == 7) buffer.write('ff');
-  buffer.write(hexString.replaceFirst('#', ''));
-  return Color(int.parse(buffer.toString(), radix: 16));
 }
 
 String capitalize(String string) {

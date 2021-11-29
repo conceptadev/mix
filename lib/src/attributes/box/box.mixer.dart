@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
 import 'package:mix/src/dto/box_shadow.dto.dart';
+import 'package:mix/src/helpers/color.utils.dart';
 
 class BoxMixer {
   final Color? _color;
@@ -43,7 +44,7 @@ class BoxMixer {
     final box = mixContext.mix.boxAttribute;
 
     return BoxMixer(
-      color: box?.color,
+      color: box?.color?.create(context),
       alignment: box?.alignment,
       margin: box?.margin?.create(context),
       padding: box?.padding?.create(context),

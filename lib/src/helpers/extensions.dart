@@ -4,23 +4,11 @@ import 'package:mix/src/attributes/dynamic/variant.attributes.dart';
 import 'package:mix/src/attributes/text/text.attributes.dart';
 import 'package:mix/src/attributes/text/text.notifier.dart';
 import 'package:mix/src/dto/box_shadow.dto.dart';
-import 'package:mix/src/helpers/utils.dart';
 import 'package:mix/src/mixer/mix_context_notifier.dart';
 import 'package:mix/src/mixer/mixer.dart';
 import 'package:mix/src/theme/mix_theme.dart';
 import 'package:mix/src/theme/spacing.dart';
 import 'package:mix/src/theme/theme_data.dart';
-
-/// Possible screen sizes
-enum ScreenSize { xs, sm, md, lg }
-
-// https://material.io/design/layout/responsive-layout-grid.html#breakpoints
-class ScreenSizeBreakpoints {
-  static double xs = 0;
-  static double sm = 600;
-  static double md = 1240;
-  static double lg = 1440;
-}
 
 extension ContextExtensions on BuildContext {
   Brightness get brightness => Theme.of(this).brightness;
@@ -75,20 +63,28 @@ extension ContextExtensions on BuildContext {
 
   /// Screen height
   double get screenHeight => mq.size.height;
-
-  /// Returns [ScreenSize] based on Material breakpoints
-  ScreenSize get screenSize {
-    return screenWidth >= ScreenSizeBreakpoints.lg
-        ? ScreenSize.lg
-        : screenWidth >= ScreenSizeBreakpoints.md
-            ? ScreenSize.md
-            : screenWidth >= ScreenSizeBreakpoints.sm
-                ? ScreenSize.sm
-                : ScreenSize.xs;
-  }
 }
 
 extension ColorExtensions on Color {
+  Color darken([double amount = .1]) {
+    assert(amount >= 0 && amount <= 1);
+
+    final hsl = HSLColor.fromColor(this);
+    final hslDark = hsl.withLightness((hsl.lightness - amount).clamp(0.0, 1.0));
+
+    return hslDark.toColor();
+  }
+
+  Color lighten([double amount = .1]) {
+    assert(amount >= 0 && amount <= 1);
+
+    final hsl = HSLColor.fromColor(this);
+    final hslLight =
+        hsl.withLightness((hsl.lightness + amount).clamp(0.0, 1.0));
+
+    return hslLight.toColor();
+  }
+
   /// String is in the format "aabbcc" or "ffaabbcc" with an optional leading "#".
   static Color fromHex(String hexString) => hexToColor(hexString);
 
@@ -98,6 +94,14 @@ extension ColorExtensions on Color {
       '${red.toRadixString(16).padLeft(2, '0')}'
       '${green.toRadixString(16).padLeft(2, '0')}'
       '${blue.toRadixString(16).padLeft(2, '0')}';
+}
+
+/// String is in the format "aabbcc" or "ffaabbcc" with an optional leading "#".
+Color hexToColor(String hexString) {
+  final buffer = StringBuffer();
+  if (hexString.length == 6 || hexString.length == 7) buffer.write('ff');
+  buffer.write(hexString.replaceFirst('#', ''));
+  return Color(int.parse(buffer.toString(), radix: 16));
 }
 
 extension StrutStyleExtension on StrutStyle {

@@ -33,7 +33,7 @@ class MixContext {
     return MixContext._(context: context, mix: mixWithContext);
   }
 
-  /// Expands `DynamicAttribute` based on context
+  /// Expands `VariantAttributes` based on context
   static Mix<T> applyVariants<T extends Attribute>(
     BuildContext context,
     Mix<T> mix,
@@ -56,6 +56,7 @@ class MixContext {
 
     if (hasVariants) {
       final variantMix = Mix.fromList([...attributes, ...variants]);
+
       return applyVariants(context, variantMix);
     } else {
       return mix;

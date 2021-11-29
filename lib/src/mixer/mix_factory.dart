@@ -247,8 +247,8 @@ class Mix<T extends Attribute> {
 
 extension MixExtension<T extends Attribute> on Mix<T> {
   /// Adds more properties to a mix
-  PositionalParamFn<T, Mix<T>> get add {
-    return WrapFunction(addAll).withPositionalToList;
+  WrapFunction<T, Mix<T>> get add {
+    return WrapFunction(addAll);
   }
 
   Mix<T> addAll(List<T> attributes) {

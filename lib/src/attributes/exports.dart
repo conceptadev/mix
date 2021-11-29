@@ -7,7 +7,6 @@ export './box/box_short.utils.dart';
 
 /// Text Directives
 export './directives/text/text_directive.attributes.dart';
-export './directives/text/text_directive.utils.dart';
 export './directives/text/text_directive_short.utils.dart';
 
 ///Shared
@@ -20,6 +19,10 @@ export './dynamic/media_query.attributes.dart';
 export './flex/flex.attributes.dart';
 export './flex/flex.utils.dart';
 export './flex/flex_short.utils.dart';
+
+/// Helpers
+export './helpers/helper.utils.dart';
+export './helpers/helper_short.utils.dart';
 
 /// Icon
 export './icon/icon.attributes.dart';
@@ -45,10 +48,10 @@ export './text/text_short.utils.dart';
 export './token/token.attributes.dart';
 export './token/token.utils.dart';
 export './token/token_short.utils.dart';
+
+/// Widgets
 export 'widget_decorators/aspect_ratio.dart';
 export 'widget_decorators/flexible.dart';
 export 'widget_decorators/opacity.dart';
 export 'widget_decorators/rotate.dart';
-
-/// Widgets
 export 'widget_decorators/scale.dart';

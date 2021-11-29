@@ -12,10 +12,10 @@ class PressablePreview extends StatelessWidget {
       scale(1),
       padding(20),
       elevation(8),
-      bgColor(Colors.white),
+      bgColor(cs().background),
       font(
         weight: FontWeight.bold,
-        color: Colors.black,
+        color: cs().onBackground,
       ),
       border(
         color: Colors.black,
@@ -23,7 +23,6 @@ class PressablePreview extends StatelessWidget {
       ),
       dark(
         border(color: Colors.white),
-        bgColor(Colors.black),
         textColor(Colors.white),
       ),
       hover(

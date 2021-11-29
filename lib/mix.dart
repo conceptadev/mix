@@ -8,7 +8,7 @@ export 'package:mix/src/widgets/mix.widget.dart' show MixerWidget;
 export 'package:mix/src/widgets/pressable.widget.dart' show Pressable;
 export 'package:mix/src/widgets/text.widget.dart' show TextMix;
 
-export 'src/attributes/common/attribute.dart' show DynamicAttribute;
+export 'src/attributes/common/attribute.dart';
 export 'src/attributes/exports.dart';
 export 'src/headless/exports.dart';
 export 'src/helpers/extensions.dart';

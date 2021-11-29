@@ -4,35 +4,35 @@ import 'package:mix/src/attributes/common/attribute.dart';
 import 'package:mix/src/attributes/dynamic/dark_mode.attributes.dart';
 import 'package:mix/src/attributes/dynamic/media_query.attributes.dart';
 import 'package:mix/src/attributes/dynamic/variant.attributes.dart';
-import 'package:mix/src/helpers/extensions.dart';
+import 'package:mix/src/theme/breakpoints.dart';
 
 class DynamicUtils {
   const DynamicUtils._();
   static ScreenSizeAttribute xsmall(List<Attribute> attributes) {
     return ScreenSizeAttribute(
       attributes,
-      ScreenSize.xs,
+      ScreenSizeToken.xsmall,
     );
   }
 
   static ScreenSizeAttribute small(List<Attribute> attributes) {
     return ScreenSizeAttribute(
       attributes,
-      ScreenSize.sm,
+      ScreenSizeToken.small,
     );
   }
 
   static ScreenSizeAttribute medium(List<Attribute> attributes) {
     return ScreenSizeAttribute(
       attributes,
-      ScreenSize.md,
+      ScreenSizeToken.medium,
     );
   }
 
   static ScreenSizeAttribute large(List<Attribute> attributes) {
     return ScreenSizeAttribute(
       attributes,
-      ScreenSize.lg,
+      ScreenSizeToken.large,
     );
   }
 

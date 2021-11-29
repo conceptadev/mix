@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
 import 'package:mix/src/attributes/common/attribute.dart';
 import 'package:mix/src/attributes/dynamic/variant.attributes.dart';
+import 'package:mix/src/theme/breakpoints.dart';
 
 class ScreenSizeAttribute extends VariantAttribute {
   const ScreenSizeAttribute(
@@ -9,10 +10,11 @@ class ScreenSizeAttribute extends VariantAttribute {
     this.screenSize,
   ) : super('screenSize', attributes);
 
-  final ScreenSize screenSize;
+  final ScreenSizeToken screenSize;
   @override
   bool shouldApply(BuildContext context) {
-    return context.screenSize == screenSize;
+    final breakpoints = context.mixData.breakpoints;
+    return breakpoints.getScreenSize(context) == screenSize;
   }
 }
 

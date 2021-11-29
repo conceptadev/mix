@@ -1,4 +1,4 @@
-import './theme_data.dart';
+import 'package:mix/src/theme/refs.dart';
 
 // ignore: constant_identifier_names
 
@@ -33,27 +33,27 @@ class MixThemeSpaceData {
   double fromValue(double? value) {
     if (value == null) return 0.0;
 
-    if (SizeToken.xsmall.value == value) {
+    if (SizeToken.xsmall.ref == value) {
       return xsmall;
     }
 
-    if (SizeToken.small.value == value) {
+    if (SizeToken.small.ref == value) {
       return small;
     }
 
-    if (SizeToken.medium.value == value) {
+    if (SizeToken.medium.ref == value) {
       return medium;
     }
 
-    if (SizeToken.large.value == value) {
+    if (SizeToken.large.ref == value) {
       return large;
     }
 
-    if (SizeToken.xlarge.value == value) {
+    if (SizeToken.xlarge.ref == value) {
       return xlarge;
     }
 
-    if (SizeToken.xxlarge.value == value) {
+    if (SizeToken.xxlarge.ref == value) {
       return xxlarge;
     }
     return value;
@@ -69,30 +69,4 @@ class MixThemeSpaceData {
       xxlarge: other?.xxlarge ?? xxlarge,
     );
   }
-}
-
-class WithSpaceUtils<T> {
-  const WithSpaceUtils(T Function(double value) fn) : _fn = fn;
-
-  final T Function(double value) _fn;
-
-  T call(double value) => _fn(value);
-
-  T get xsmall => call(SizeToken.xsmall.value);
-  T get xs => xsmall;
-
-  T get small => call(SizeToken.small.value);
-  T get sm => small;
-
-  T get medium => call(SizeToken.medium.value);
-  T get md => medium;
-
-  T get large => call(SizeToken.large.value);
-  T get lg => large;
-
-  T get xlarge => call(SizeToken.xlarge.value);
-  T get xl => xlarge;
-
-  T get xxlarge => call(SizeToken.xxlarge.value);
-  T get xxl => xxlarge;
 }

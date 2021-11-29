@@ -24,6 +24,12 @@ class NeonPreview extends StatelessWidget {
           blurRadius: 15.0,
         ),
       ),
+      large(
+        bgColor(Colors.orange),
+      ),
+      small(
+        bgColor(Colors.yellow),
+      ),
       bgColor(Colors.white),
     );
 
