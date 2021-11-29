@@ -14,7 +14,7 @@ class ScreenSizeAttribute extends VariantAttribute {
   @override
   bool shouldApply(BuildContext context) {
     final breakpoints = context.mixData.breakpoints;
-    return breakpoints.getScreenSize(context) == screenSize;
+    return breakpoints.getScreenSize(context).index <= screenSize.index;
   }
 }
 
