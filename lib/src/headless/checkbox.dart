@@ -20,15 +20,20 @@ class CheckboxRemix extends StatelessWidget {
       rounded(100),
       width(30),
       height(30),
-      bgColor(Colors.transparent),
-      iconColor(Colors.blue),
+      dark(
+        bgColor(Colors.transparent),
+        iconColor(Colors.blue),
+      ),
       border(
         color: Colors.blue,
         width: 2,
       ),
       'active'.variant(
         border(color: Colors.blue),
+        iconColor(Colors.blue),
+        squared(),
       ),
+      dark(),
       apply(mix),
     );
   }

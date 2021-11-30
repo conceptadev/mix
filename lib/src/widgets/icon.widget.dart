@@ -55,29 +55,26 @@ class IconMixerWidget extends MixedWidget {
         duration: sharedMixer.animationDuration,
         curve: sharedMixer.animationCurve,
         tween: Tween<double>(
-          end: iconMixer.size ?? 24,
+          end: iconMixer.size,
         ),
         builder: (context, value, child) {
-          return IconTheme.merge(
-            data: IconThemeData(size: value),
-            child: TweenAnimationBuilder<Color?>(
-              duration: sharedMixer.animationDuration,
-              curve: sharedMixer.animationCurve,
-              tween: ColorTween(end: iconMixer.color),
-              child: child,
-              builder: (context, value, child) {
-                if (value == null) {
-                  return child!;
-                }
-                return IconTheme.merge(
-                  data: IconThemeData(color: value),
-                  child: child!,
-                );
-              },
-            ),
+          final sizeValue = value;
+          return TweenAnimationBuilder<Color?>(
+            duration: sharedMixer.animationDuration,
+            curve: sharedMixer.animationCurve,
+            tween: ColorTween(end: iconMixer.color),
+            child: child,
+            builder: (context, value, child) {
+              final colorValue = value;
+
+              return Icon(
+                icon,
+                color: colorValue,
+                size: sizeValue,
+              );
+            },
           );
         },
-        child: iconWidget,
       );
     }
 

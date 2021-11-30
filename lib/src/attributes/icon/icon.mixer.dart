@@ -4,19 +4,19 @@ import 'package:mix/src/helpers/color.utils.dart';
 
 class IconMixer {
   final Color? color;
-  final double? size;
+  final double size;
 
   const IconMixer({
     this.color,
-    this.size,
+    required this.size,
   });
 
   factory IconMixer.fromContext(MixContext mixContext) {
     final icon = mixContext.iconAttribute;
-
+    final theme = IconTheme.of(mixContext.context);
     return IconMixer(
-      color: icon?.color?.create(mixContext.context),
-      size: icon?.size,
+      color: icon?.color?.create(mixContext.context) ?? theme.color,
+      size: icon?.size ?? theme.size ?? 24,
     );
   }
 
