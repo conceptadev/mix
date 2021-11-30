@@ -36,6 +36,8 @@ const paddingHorizontal = WithSizeRefs(BoxUtility.paddingHorizontal);
 const paddingVertical = WithSizeRefs(BoxUtility.paddingVertical);
 const paddingInsets = BoxUtility.paddingInsets;
 
+// const scale = BoxUtility.scale;
+
 /// Background color attribute
 const bgColor = BoxUtility.backgroundColor;
 

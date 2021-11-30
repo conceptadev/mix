@@ -38,9 +38,9 @@ abstract class MixWidget extends StatelessWidget {
 }
 
 /// Mixer Widget
-abstract class MixerWidget extends StatelessWidget {
+abstract class MixedWidget extends StatelessWidget {
   /// Constructor
-  const MixerWidget(
+  const MixedWidget(
     this.mixContext, {
     Key? key,
   }) : super(key: key);

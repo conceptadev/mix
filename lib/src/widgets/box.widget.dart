@@ -18,18 +18,18 @@ class Box extends MixWidget {
   final Widget? child;
   @override
   Widget build(BuildContext context) {
-    return BoxMixerWidget(
+    return BoxMixedWidget(
       mix.createContext(context),
       child: child,
     );
   }
 }
 
-class BoxMixerWidget extends MixerWidget {
+class BoxMixedWidget extends MixedWidget {
   // Child Widget
   final Widget? child;
 
-  const BoxMixerWidget(
+  const BoxMixedWidget(
     MixContext mixed, {
     this.child,
     Key? key,
@@ -60,9 +60,10 @@ class BoxMixerWidget extends MixerWidget {
         padding: boxMixer.padding,
         height: boxMixer.height,
         width: boxMixer.width,
-        child: current,
         duration: sharedMixer.animationDuration,
         curve: sharedMixer.animationCurve,
+        transform: boxMixer.transform,
+        child: current,
       );
     } else {
       current = Container(
@@ -74,6 +75,7 @@ class BoxMixerWidget extends MixerWidget {
         padding: boxMixer.padding,
         height: boxMixer.height,
         width: boxMixer.width,
+        transform: boxMixer.transform,
         child: current,
       );
     }

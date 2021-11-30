@@ -31,7 +31,7 @@ class PressablePreview extends StatelessWidget {
         border(color: Colors.greenAccent),
       ),
       press(
-        elevation(2),
+        elevation(1),
         scale(0.9),
       ),
     );
@@ -43,7 +43,7 @@ class PressablePreview extends StatelessWidget {
             mix: mix,
             onPressed: () {},
             child: const TextMix(
-              text: 'Simple Text',
+              'Simple Text',
             ),
           )
         ],

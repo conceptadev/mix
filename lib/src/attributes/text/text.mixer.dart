@@ -1,6 +1,8 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:mix/mix.dart';
 import 'package:mix/src/attributes/directives/text/text_directive.attributes.dart';
+import 'package:mix/src/helpers/color.utils.dart';
+import 'package:mix/src/mixer/mixer.dart';
 
 class TextMixer {
   final bool softWrap;
@@ -32,12 +34,16 @@ class TextMixer {
   });
 
   factory TextMixer.fromContext(MixContext mixContext) {
-    final mix = mixContext.mix;
-    final text = mix.textAttribute;
+    final text = mixContext.textAttribute;
     // Get all text directives
-    final directives = mix.directives.whereType<TextDirectiveAttribute>();
+    final directives =
+        mixContext.directives.whereType<TextDirectiveAttribute>();
+
     return TextMixer(
-      style: text?.style,
+      // Need to grab colorscheme from context
+      style: text?.style?.copyWith(
+        color: text.style?.color?.create(mixContext.context),
+      ),
       strutStyle: text?.strutStyle,
       textAlign: text?.textAlign,
       locale: text?.locale,
@@ -61,5 +67,40 @@ class TextMixer {
     }
 
     return modifiedText;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is TextMixer &&
+        other.softWrap == softWrap &&
+        other.overflow == overflow &&
+        listEquals(other.directives, directives) &&
+        other.style == style &&
+        other.strutStyle == strutStyle &&
+        other.textAlign == textAlign &&
+        other.locale == locale &&
+        other.textScaleFactor == textScaleFactor &&
+        other.maxLines == maxLines &&
+        other.semanticsLabel == semanticsLabel &&
+        other.textWidthBasis == textWidthBasis &&
+        other.textHeightBehavior == textHeightBehavior;
+  }
+
+  @override
+  int get hashCode {
+    return softWrap.hashCode ^
+        overflow.hashCode ^
+        directives.hashCode ^
+        style.hashCode ^
+        strutStyle.hashCode ^
+        textAlign.hashCode ^
+        locale.hashCode ^
+        textScaleFactor.hashCode ^
+        maxLines.hashCode ^
+        semanticsLabel.hashCode ^
+        textWidthBasis.hashCode ^
+        textHeightBehavior.hashCode;
   }
 }

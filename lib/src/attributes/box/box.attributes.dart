@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:mix/mix.dart';
 import 'package:mix/src/dto/border.dto.dart';
 import 'package:mix/src/dto/border_radius.dto.dart';
 import 'package:mix/src/dto/box_shadow.dto.dart';
@@ -20,6 +21,7 @@ class BoxAttributes extends Attribute {
   final BorderDto? border;
   final BorderRadiusDto? borderRadius;
   final List<BoxShadowDto>? boxShadow;
+  final Matrix4? transform;
 
   // Constraints
   final double? maxHeight;
@@ -43,10 +45,12 @@ class BoxAttributes extends Attribute {
     this.maxWidth,
     this.minWidth,
     this.shape,
+    this.transform,
   });
 
   BoxAttributes merge(BoxAttributes? box) {
     if (box == null) return this;
+
     return copyWith(
       // Mergeble values
       border: border?.merge(box.border) ?? box.border,
@@ -54,6 +58,7 @@ class BoxAttributes extends Attribute {
       boxShadow: boxShadow?.merge(box.boxShadow) ?? box.boxShadow,
       margin: margin?.merge(box.margin) ?? box.margin,
       padding: padding?.merge(box.padding) ?? box.padding,
+      transform: transform?.merge(box.transform) ?? box.transform,
       // Override values
       alignment: box.alignment,
       color: box.color,
@@ -80,6 +85,7 @@ class BoxAttributes extends Attribute {
         other.border == border &&
         other.borderRadius == borderRadius &&
         listEquals(other.boxShadow, boxShadow) &&
+        other.transform == transform &&
         other.maxHeight == maxHeight &&
         other.minHeight == minHeight &&
         other.maxWidth == maxWidth &&
@@ -98,6 +104,7 @@ class BoxAttributes extends Attribute {
         border.hashCode ^
         borderRadius.hashCode ^
         boxShadow.hashCode ^
+        transform.hashCode ^
         maxHeight.hashCode ^
         minHeight.hashCode ^
         maxWidth.hashCode ^
@@ -115,6 +122,7 @@ class BoxAttributes extends Attribute {
     BorderDto? border,
     BorderRadiusDto? borderRadius,
     List<BoxShadowDto>? boxShadow,
+    Matrix4? transform,
     double? maxHeight,
     double? minHeight,
     double? maxWidth,
@@ -131,6 +139,7 @@ class BoxAttributes extends Attribute {
       border: border ?? this.border,
       borderRadius: borderRadius ?? this.borderRadius,
       boxShadow: boxShadow ?? this.boxShadow,
+      transform: transform ?? this.transform,
       maxHeight: maxHeight ?? this.maxHeight,
       minHeight: minHeight ?? this.minHeight,
       maxWidth: maxWidth ?? this.maxWidth,
@@ -141,6 +150,6 @@ class BoxAttributes extends Attribute {
 
   @override
   String toString() {
-    return 'BoxAttributes(margin: $margin, padding: $padding, alignment: $alignment, height: $height, width: $width, color: $color, border: $border, borderRadius: $borderRadius, boxShadow: $boxShadow, maxHeight: $maxHeight, minHeight: $minHeight, maxWidth: $maxWidth, minWidth: $minWidth, shape: $shape)';
+    return 'BoxAttributes(margin: $margin, padding: $padding, alignment: $alignment, height: $height, width: $width, color: $color, border: $border, borderRadius: $borderRadius, boxShadow: $boxShadow, transform: $transform, maxHeight: $maxHeight, minHeight: $minHeight, maxWidth: $maxWidth, minWidth: $minWidth, shape: $shape)';
   }
 }

@@ -1,8 +1,53 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:mix/mix.dart';
+
 import '../attributes/common/attribute.dart';
 
-abstract class MixRef {}
+//TODO implement ref
+// abstract class MixRef {}
 
-typedef RefMap<T extends Attribute> = Map<MixRef, List<T>>;
+typedef RefMap = Map<String, TokenValueGetter<Attribute>>;
+
+typedef TokenValueGetter<T extends Attribute> = T Function(BuildContext);
+
+class MixThemeTokensData {
+  MixThemeTokensData(this.tokens);
+
+  final RefMap tokens;
+
+  static MixThemeTokensData get defaults {
+    final refMap = {
+      'headline1': (BuildContext ctx) => textStyle(ctx.tt.headline1),
+      'headline2': (BuildContext ctx) => textStyle(ctx.tt.headline2),
+      'headline3': (BuildContext ctx) => textStyle(ctx.tt.headline3),
+      'headline4': (BuildContext ctx) => textStyle(ctx.tt.headline4),
+      'headline5': (BuildContext ctx) => textStyle(ctx.tt.headline5),
+      'headline6': (BuildContext ctx) => textStyle(ctx.tt.headline6),
+      'subtitle1': (BuildContext ctx) => textStyle(ctx.tt.subtitle1),
+      'subtitle2': (BuildContext ctx) => textStyle(ctx.tt.subtitle2),
+      'bodyText1': (BuildContext ctx) => textStyle(ctx.tt.bodyText1),
+      'bodyText2': (BuildContext ctx) => textStyle(ctx.tt.bodyText2),
+      'caption': (BuildContext ctx) => textStyle(ctx.tt.caption),
+      'button': (BuildContext ctx) => textStyle(ctx.tt.button),
+      'overline': (BuildContext ctx) => textStyle(ctx.tt.overline),
+    };
+
+    return MixThemeTokensData(refMap);
+  }
+
+  MixThemeTokensData merge(MixThemeTokensData? other) {
+    if (other == null) return this;
+
+    RefMap merged = {};
+
+    merged
+      ..addAll(tokens)
+      ..addAll(other.tokens);
+
+    return MixThemeTokensData(merged);
+  }
+}
 
 enum SizeToken {
   xsmall,

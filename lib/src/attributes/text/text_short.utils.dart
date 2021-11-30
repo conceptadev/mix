@@ -40,3 +40,4 @@ const fontFamilyFallback = TextStyleUtility.fontFamilyFallback;
 const font = TextFriendlyUtility.textStyle;
 const bold = TextFriendlyUtility.bold;
 const italic = TextFriendlyUtility.italic;
+const textShadow = TextFriendlyUtility.textShadow;

@@ -26,7 +26,7 @@ class IconMix extends MixWidget {
   }
 }
 
-class IconMixerWidget extends MixerWidget {
+class IconMixerWidget extends MixedWidget {
   const IconMixerWidget(
     MixContext mixContext, {
     required this.icon,

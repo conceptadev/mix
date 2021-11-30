@@ -6,7 +6,8 @@ OpacityWidgetAttribute opacity(double opacity) {
   return OpacityWidgetAttribute(opacity: opacity);
 }
 
-class OpacityWidgetAttribute extends WidgetAttribute<OpacityWidgetAttribute> {
+class OpacityWidgetAttribute
+    extends ParentWidgetDecorator<OpacityWidgetAttribute> {
   final double opacity;
   const OpacityWidgetAttribute({
     required this.opacity,

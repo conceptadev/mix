@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
 import 'package:mix/src/dto/box_shadow.dto.dart';
@@ -14,6 +15,7 @@ class BoxMixer {
   final Border? border;
   final BorderRadius? borderRadius;
   final List<BoxShadow>? boxShadow;
+  final Matrix4? transform;
 
   // Constraints
   final double? maxHeight;
@@ -37,11 +39,12 @@ class BoxMixer {
     this.maxWidth,
     this.minWidth,
     this.shape,
+    this.transform,
   }) : _color = color;
 
   factory BoxMixer.fromContext(MixContext mixContext) {
     final context = mixContext.context;
-    final box = mixContext.mix.boxAttribute;
+    final box = mixContext.boxAttribute;
 
     return BoxMixer(
       color: box?.color?.create(context),
@@ -58,6 +61,7 @@ class BoxMixer {
       minHeight: box?.minHeight,
       minWidth: box?.minWidth,
       shape: box?.shape,
+      transform: box?.transform,
     );
   }
 
@@ -106,5 +110,46 @@ class BoxMixer {
     }
 
     return constraints;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is BoxMixer &&
+        other._color == _color &&
+        other.alignment == alignment &&
+        other.padding == padding &&
+        other.margin == margin &&
+        other.width == width &&
+        other.height == height &&
+        other.border == border &&
+        other.borderRadius == borderRadius &&
+        listEquals(other.boxShadow, boxShadow) &&
+        other.transform == transform &&
+        other.maxHeight == maxHeight &&
+        other.minHeight == minHeight &&
+        other.maxWidth == maxWidth &&
+        other.minWidth == minWidth &&
+        other.shape == shape;
+  }
+
+  @override
+  int get hashCode {
+    return _color.hashCode ^
+        alignment.hashCode ^
+        padding.hashCode ^
+        margin.hashCode ^
+        width.hashCode ^
+        height.hashCode ^
+        border.hashCode ^
+        borderRadius.hashCode ^
+        boxShadow.hashCode ^
+        transform.hashCode ^
+        maxHeight.hashCode ^
+        minHeight.hashCode ^
+        maxWidth.hashCode ^
+        minWidth.hashCode ^
+        shape.hashCode;
   }
 }

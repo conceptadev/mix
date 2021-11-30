@@ -8,10 +8,10 @@ import '../mixer/mixer.dart';
 import 'mix.widget.dart';
 
 class TextMix extends MixWidget {
-  const TextMix({
+  const TextMix(
+    this.text, {
     Mix? mix,
     Key? key,
-    required this.text,
   }) : super(mix, key: key);
 
   final String text;
@@ -24,7 +24,7 @@ class TextMix extends MixWidget {
   }
 }
 
-class _TextMixerWidget extends MixerWidget {
+class _TextMixerWidget extends MixedWidget {
   const _TextMixerWidget(
     MixContext mixer, {
     Key? key,

@@ -40,7 +40,7 @@ class NeonPreview extends StatelessWidget {
             mix: mix,
             onPressed: () {},
             child: const TextMix(
-              text: 'Simple Text',
+              'Simple Text',
             ),
           )
         ],

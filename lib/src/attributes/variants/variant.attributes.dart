@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
 import 'package:mix/src/attributes/common/attribute.dart';
-import 'package:mix/src/attributes/dynamic/variant.attributes.dart';
 import 'package:mix/src/theme/breakpoints.dart';
 
-class ScreenSizeAttribute extends VariantAttribute {
+class DarkModeAttribute<T extends Attribute> extends VariantAttribute<T> {
+  const DarkModeAttribute(List<T> attribute) : super('dark', attribute);
+  @override
+  bool shouldApply(BuildContext context) {
+    return context.isDarkMode;
+  }
+}
+
+class ScreenSizeAttribute<T extends Attribute> extends VariantAttribute<T> {
   const ScreenSizeAttribute(
-    List<Attribute> attributes,
+    List<T> attributes,
     this.screenSize,
   ) : super('screenSize', attributes);
 
@@ -18,9 +25,9 @@ class ScreenSizeAttribute extends VariantAttribute {
   }
 }
 
-class OrientationAttribute extends VariantAttribute {
+class OrientationAttribute<T extends Attribute> extends VariantAttribute<T> {
   const OrientationAttribute(
-    List<Attribute> attributes,
+    List<T> attributes,
     this.orientation,
   ) : super('orientation', attributes);
   final Orientation orientation;
