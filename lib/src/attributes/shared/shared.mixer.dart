@@ -19,7 +19,7 @@ class SharedMixer {
 
   factory SharedMixer.fromContext(MixContext mixContext) {
     final shared = mixContext.sharedAttribute;
-    print(shared?.visible);
+
     return SharedMixer(
       visible: shared?.visible ?? true,
       animated: shared?.animated ?? false,

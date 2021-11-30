@@ -22,7 +22,13 @@ class MixContext {
   final List<DirectiveAttribute> directives;
   final List<WidgetDecorator> widgetDecorators;
 
-  const MixContext._({
+  BoxMixer? _boxMixer;
+  TextMixer? _textMixer;
+  SharedMixer? _sharedMixer;
+  IconMixer? _iconMixer;
+  FlexMixer? _flexMixer;
+
+  MixContext._({
     required this.context,
     required this.boxAttribute,
     required this.textAttribute,
@@ -34,11 +40,30 @@ class MixContext {
     this.widgetDecorators = const [],
   });
 
-  BoxMixer get boxMixer => BoxMixer.fromContext(this);
-  TextMixer get textMixer => TextMixer.fromContext(withAncestorContext());
-  IconMixer get iconMixer => IconMixer.fromContext(withAncestorContext());
-  FlexMixer get flexMixer => FlexMixer.fromContext(this);
-  SharedMixer get sharedMixer => SharedMixer.fromContext(withAncestorContext());
+  BoxMixer get boxMixer {
+    _boxMixer ??= BoxMixer.fromContext(this);
+    return _boxMixer!;
+  }
+
+  TextMixer get textMixer {
+    _textMixer ??= TextMixer.fromContext(withAncestorContext());
+    return _textMixer!;
+  }
+
+  IconMixer get iconMixer {
+    _iconMixer ??= IconMixer.fromContext(withAncestorContext());
+    return _iconMixer!;
+  }
+
+  FlexMixer get flexMixer {
+    _flexMixer ??= FlexMixer.fromContext(this);
+    return _flexMixer!;
+  }
+
+  SharedMixer get sharedMixer {
+    _sharedMixer ??= SharedMixer.fromContext(withAncestorContext());
+    return _sharedMixer!;
+  }
 
   factory MixContext.create(BuildContext context, Mix mix) {
     final attributes = _applyNestedAttributes(context, mix.attributes);
