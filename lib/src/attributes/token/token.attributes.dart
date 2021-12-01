@@ -3,14 +3,14 @@ import 'package:mix/mix.dart';
 import 'package:mix/src/attributes/common/attribute.dart';
 
 class TokenRefAttribute<T extends Attribute> extends Attribute {
-  TokenRefAttribute(Symbol ref) : _ref = ref;
+  const TokenRefAttribute(this.ref);
 
-  final Symbol _ref;
+  final String ref;
 
-  Mix<T> getToken(BuildContext context) {
+  T getToken(BuildContext context) {
     final theme = context.mixData;
-    final ref = theme.getToken<T>(_ref);
-    if (ref == null) throw Exception('TokenRefAttribute: $ref not found');
-    return ref;
+    final value = theme.getToken(ref, context);
+
+    return value as T;
   }
 }

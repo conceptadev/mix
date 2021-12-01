@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:mix/src/attributes/common/attribute.dart';
-import 'package:mix/src/attributes/dynamic/variant.attributes.dart';
+import 'package:mix/src/attributes/pressable/pressable.attributes.dart';
 import 'package:mix/src/attributes/text/text.attributes.dart';
 import 'package:mix/src/attributes/text/text.notifier.dart';
+import 'package:mix/src/attributes/variants/variant.attributes.dart';
 import 'package:mix/src/dto/box_shadow.dto.dart';
 import 'package:mix/src/mixer/mix_context_notifier.dart';
 import 'package:mix/src/mixer/mixer.dart';
+import 'package:mix/src/theme/breakpoints.dart';
 import 'package:mix/src/theme/mix_theme.dart';
 import 'package:mix/src/theme/spacing.dart';
 import 'package:mix/src/theme/theme_data.dart';
@@ -46,6 +48,7 @@ extension ContextExtensions on BuildContext {
 
   /// Theme text theme
   TextTheme get textTheme => theme.textTheme;
+  TextTheme get tt => theme.textTheme;
 
   /// Orientation of the device
   Orientation get orientation => mq.orientation;
@@ -65,45 +68,6 @@ extension ContextExtensions on BuildContext {
   double get screenHeight => mq.size.height;
 }
 
-extension ColorExtensions on Color {
-  Color darken([double amount = .1]) {
-    assert(amount >= 0 && amount <= 1);
-
-    final hsl = HSLColor.fromColor(this);
-    final hslDark = hsl.withLightness((hsl.lightness - amount).clamp(0.0, 1.0));
-
-    return hslDark.toColor();
-  }
-
-  Color lighten([double amount = .1]) {
-    assert(amount >= 0 && amount <= 1);
-
-    final hsl = HSLColor.fromColor(this);
-    final hslLight =
-        hsl.withLightness((hsl.lightness + amount).clamp(0.0, 1.0));
-
-    return hslLight.toColor();
-  }
-
-  /// String is in the format "aabbcc" or "ffaabbcc" with an optional leading "#".
-  static Color fromHex(String hexString) => hexToColor(hexString);
-
-  /// Prefixes a hash sign if [leadingHashSign] is set to `true` (default is `true`).
-  String toHex({bool leadingHashSign = true}) => '${leadingHashSign ? '#' : ''}'
-      '${alpha.toRadixString(16).padLeft(2, '0')}'
-      '${red.toRadixString(16).padLeft(2, '0')}'
-      '${green.toRadixString(16).padLeft(2, '0')}'
-      '${blue.toRadixString(16).padLeft(2, '0')}';
-}
-
-/// String is in the format "aabbcc" or "ffaabbcc" with an optional leading "#".
-Color hexToColor(String hexString) {
-  final buffer = StringBuffer();
-  if (hexString.length == 6 || hexString.length == 7) buffer.write('ff');
-  buffer.write(hexString.replaceFirst('#', ''));
-  return Color(int.parse(buffer.toString(), radix: 16));
-}
-
 extension StrutStyleExtension on StrutStyle {
   merge(StrutStyle? other) {
     return StrutStyle(
@@ -121,75 +85,7 @@ extension StrutStyleExtension on StrutStyle {
   }
 }
 
-extension EdgeInsetExtension on EdgeInsets {
-  EdgeInsets merge(EdgeInsets? other) {
-    if (other == null) return this;
-    return copyWith(
-      top: _mergeIf(other.top, top, _d.top),
-      bottom: _mergeIf(other.bottom, bottom, _d.bottom),
-      left: _mergeIf(other.left, left, _d.left),
-      right: _mergeIf(other.right, right, _d.right),
-    );
-  }
-
-  static const EdgeInsets _d = EdgeInsets.zero;
-}
-
-extension BorderExtension on Border {
-  Border merge(Border? other) {
-    if (other == null) return this;
-    return Border(
-      top: top.merge(other.top),
-      bottom: bottom.merge(other.bottom),
-      left: left.merge(other.left),
-      right: right.merge(other.right),
-    );
-  }
-}
-
-extension BorderSideExtension on BorderSide {
-  static const BorderSide _d = BorderSide();
-
-  BorderSide merge(BorderSide? other) {
-    if (other == null) return this;
-    return copyWith(
-      color: _mergeIf(other.color, color, _d.color),
-      width: _mergeIf(other.width, width, _d.width),
-      style: _mergeIf(other.style, style, _d.style),
-    );
-  }
-}
-
-extension BorderRadiusExtension on BorderRadius {
-  BorderRadius merge(BorderRadius? other) {
-    if (other == null) return this;
-    return BorderRadius.only(
-      topLeft: _mergeIf(other.topLeft, topLeft, _d),
-      topRight: _mergeIf(other.topRight, topRight, _d),
-      bottomLeft: _mergeIf(other.bottomLeft, bottomLeft, _d),
-      bottomRight: _mergeIf(other.bottomRight, bottomRight, _d),
-    );
-  }
-
-  static const Radius _d = Radius.zero;
-}
-
 extension BoxShadowExtension on BoxShadow {
-  @deprecated
-  BoxShadow copyWith({
-    Color? color,
-    Offset? offset,
-    double? blurRadius,
-    double? spreadRadius,
-  }) {
-    return BoxShadow(
-      color: color ?? this.color,
-      offset: offset ?? this.offset,
-      blurRadius: blurRadius ?? this.blurRadius,
-      spreadRadius: spreadRadius ?? this.spreadRadius,
-    );
-  }
-
   BoxShadowDto toBoxShadowProps() {
     return BoxShadowDto(
       blurRadius: blurRadius,
@@ -198,25 +94,14 @@ extension BoxShadowExtension on BoxShadow {
       spreadRadius: spreadRadius,
     );
   }
-
-  static const BoxShadow _d = BoxShadow();
-  @deprecated
-  BoxShadow merge(BoxShadow? o) {
-    if (o == null) return this;
-    return copyWith(
-      color: _mergeIf(o.color, color, _d.color),
-      offset: _mergeIf(o.offset, offset, _d.offset),
-      blurRadius: _mergeIf(o.blurRadius, blurRadius, _d.blurRadius),
-      spreadRadius: _mergeIf(o.spreadRadius, spreadRadius, _d.spreadRadius),
-    );
-  }
 }
 
-/// Receives a value, an other value and a default value for comparison
-T _mergeIf<T>(T other, T thisValue, T defaultValue) {
-  if (thisValue == defaultValue && other != defaultValue) return other;
-  if (thisValue != defaultValue && other == defaultValue) return thisValue;
-  return other;
+extension Matrix4Extension on Matrix4 {
+  /// Merge [other] into this matrix.
+  Matrix4 merge(Matrix4? other) {
+    if (other == null) return this;
+    return clone()..multiply(other);
+  }
 }
 
 extension StringExtensions on String {
@@ -247,6 +132,31 @@ extension StringExtensions on String {
     if (p10 != null) params.add(p10);
     if (p11 != null) params.add(p11);
     if (p12 != null) params.add(p12);
-    return VariantAttribute<T>(this, params);
+    switch (this) {
+      case 'dark':
+        return DarkModeAttribute(params);
+      case 'hover':
+        return HoverAttribute(params);
+      case 'pressing':
+        return PressingAttribute(params);
+      case 'disabled':
+        return DisabledAttribute(params);
+      case 'focus':
+        return FocusedAttribute(params);
+      case 'xsmall':
+        return ScreenSizeAttribute(params, ScreenSizeToken.xsmall);
+      case 'small':
+        return ScreenSizeAttribute(params, ScreenSizeToken.small);
+      case 'medium':
+        return ScreenSizeAttribute(params, ScreenSizeToken.medium);
+      case 'large':
+        return ScreenSizeAttribute(params, ScreenSizeToken.large);
+      case 'landscape':
+        return OrientationAttribute(params, Orientation.landscape);
+      case 'portrait':
+        return OrientationAttribute(params, Orientation.portrait);
+      default:
+        return VariantAttribute(this, params);
+    }
   }
 }

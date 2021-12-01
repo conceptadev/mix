@@ -42,6 +42,6 @@ class SharedUtils {
       SharedAttributes(visible: condition);
 
   /// Hidden utility
-  static SharedAttributes hidden([bool condition = false]) =>
+  static SharedAttributes hidden([bool condition = true]) =>
       SharedAttributes(visible: !condition);
 }

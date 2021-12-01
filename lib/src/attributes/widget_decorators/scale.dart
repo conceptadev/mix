@@ -6,7 +6,7 @@ ScaleWidgetAttribute scale(double scale) {
   return ScaleWidgetAttribute(scale);
 }
 
-class ScaleWidgetAttribute extends WidgetAttribute<ScaleWidgetAttribute> {
+class ScaleWidgetAttribute extends ParentWidgetDecorator<ScaleWidgetAttribute> {
   final double scale;
   const ScaleWidgetAttribute(this.scale);
 
@@ -19,9 +19,16 @@ class ScaleWidgetAttribute extends WidgetAttribute<ScaleWidgetAttribute> {
   Widget render(MixContext mixContext, Widget? child) {
     final shared = mixContext.sharedMixer;
     if (shared.animated) {
-      return AnimatedScale(
-        scale: scale,
+      return TweenAnimationBuilder<double>(
+        tween: Tween<double>(begin: 1, end: scale),
         duration: shared.animationDuration,
+        curve: shared.animationCurve,
+        builder: (context, value, child) {
+          return Transform.scale(
+            scale: value,
+            child: child,
+          );
+        },
         child: child,
       );
     } else {

@@ -17,10 +17,36 @@ class NestedAttribute<T extends Attribute> extends Attribute {
   final List<T> attributes;
 }
 
-abstract class WidgetAttribute<T extends WidgetAttribute<T>> extends Attribute {
-  const WidgetAttribute();
-  WidgetAttribute<T> merge(T other);
+class VariantAttribute<T extends Attribute> extends Attribute {
+  const VariantAttribute(
+    this.variant,
+    this.attributes,
+  );
+
+  final String variant;
+  final List<T> attributes;
+
+  bool shouldApply(BuildContext context) => false;
+}
+
+enum WidgetDecoratorType {
+  parent,
+  child,
+  separator,
+}
+
+abstract class WidgetDecorator<T extends WidgetDecorator<T>> extends Attribute {
+  const WidgetDecorator();
+  WidgetDecorator<T> merge(T other);
+  WidgetDecoratorType get type;
   Widget render(MixContext mixContext, Widget child);
+}
+
+abstract class ParentWidgetDecorator<T extends WidgetDecorator<T>>
+    extends WidgetDecorator<T> {
+  const ParentWidgetDecorator();
+  @override
+  WidgetDecoratorType get type => WidgetDecoratorType.parent;
 }
 
 abstract class DirectiveAttribute<T> extends Attribute {

@@ -7,8 +7,8 @@ import 'gap.widget.dart';
 import 'mix.widget.dart';
 
 class FlexBox extends MixWidget {
-  const FlexBox(
-    Mix mix, {
+  const FlexBox({
+    Mix? mix,
     Key? key,
     required this.direction,
     required this.children,
@@ -27,7 +27,7 @@ class FlexBox extends MixWidget {
   }
 }
 
-class FlexBoxMixerWidget extends MixerWidget {
+class FlexBoxMixerWidget extends MixedWidget {
   const FlexBoxMixerWidget(
     MixContext mixer, {
     Key? key,
@@ -60,7 +60,7 @@ class FlexBoxMixerWidget extends MixerWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BoxMixerWidget(
+    return BoxMixedWidget(
       mixContext,
       child: Flex(
         direction: direction,
@@ -75,12 +75,12 @@ class FlexBoxMixerWidget extends MixerWidget {
 }
 
 class HBox extends FlexBox {
-  const HBox(
-    Mix mix, {
+  const HBox({
+    Mix? mix,
     Key? key,
     List<Widget> children = const <Widget>[],
   }) : super(
-          mix,
+          mix: mix,
           key: key,
           children: children,
           direction: Axis.horizontal,
@@ -88,12 +88,12 @@ class HBox extends FlexBox {
 }
 
 class VBox extends FlexBox {
-  const VBox(
-    Mix mix, {
+  const VBox({
+    Mix? mix,
     Key? key,
     List<Widget> children = const <Widget>[],
   }) : super(
-          mix,
+          mix: mix,
           key: key,
           children: children,
           direction: Axis.vertical,

@@ -19,7 +19,7 @@ class FlexMixer {
   });
 
   factory FlexMixer.fromContext(MixContext mixContext) {
-    final flex = mixContext.mix.flexAttribute;
+    final flex = mixContext.flexAttribute;
     return FlexMixer(
       direction: flex?.direction,
       mainAxisAlignment: flex?.mainAxisAlignment ?? MainAxisAlignment.start,
@@ -28,5 +28,28 @@ class FlexMixer {
       verticalDirection: flex?.verticalDirection ?? VerticalDirection.down,
       gapSize: flex?.gapSize,
     );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is FlexMixer &&
+        other.direction == direction &&
+        other.mainAxisAlignment == mainAxisAlignment &&
+        other.crossAxisAlignment == crossAxisAlignment &&
+        other.mainAxisSize == mainAxisSize &&
+        other.verticalDirection == verticalDirection &&
+        other.gapSize == gapSize;
+  }
+
+  @override
+  int get hashCode {
+    return direction.hashCode ^
+        mainAxisAlignment.hashCode ^
+        crossAxisAlignment.hashCode ^
+        mainAxisSize.hashCode ^
+        verticalDirection.hashCode ^
+        gapSize.hashCode;
   }
 }

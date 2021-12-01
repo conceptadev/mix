@@ -9,12 +9,6 @@ export './box/box_short.utils.dart';
 export './directives/text/text_directive.attributes.dart';
 export './directives/text/text_directive_short.utils.dart';
 
-///Shared
-export './dynamic/dark_mode.attributes.dart';
-export './dynamic/dynamic.utils.dart';
-export './dynamic/dynamic_short.utils.dart';
-export './dynamic/media_query.attributes.dart';
-
 /// Flex
 export './flex/flex.attributes.dart';
 export './flex/flex.utils.dart';
@@ -48,6 +42,10 @@ export './text/text_short.utils.dart';
 export './token/token.attributes.dart';
 export './token/token.utils.dart';
 export './token/token_short.utils.dart';
+
+/// Variants
+export 'variants/variants.utils.dart';
+export 'variants/variants_short.utils.dart';
 
 /// Widgets
 export 'widget_decorators/aspect_ratio.dart';

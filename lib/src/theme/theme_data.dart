@@ -1,7 +1,7 @@
+import 'package:flutter/material.dart';
+import 'package:mix/mix.dart';
 import 'package:mix/src/theme/breakpoints.dart';
 
-import '../attributes/common/attribute.dart';
-import '../mixer/mix_factory.dart';
 import 'refs.dart';
 import 'spacing.dart';
 
@@ -16,18 +16,26 @@ class MixThemeData {
     return MixThemeData._(
       spacing: MixThemeSpaceData.defaults,
       breakpoints: MixThemeBreakpointsData.defaults,
-      tokens: {},
+      tokens: MixThemeTokensData.defaults,
     );
   }
 
   final MixThemeSpaceData spacing;
   final MixThemeBreakpointsData breakpoints;
-  final RefMap tokens;
+  final MixThemeTokensData tokens;
+
+  Attribute getToken(String token, BuildContext context) {
+    final value = tokens.tokens[token]?.call(context);
+    if (value == null) {
+      throw Exception('Token $token not found');
+    }
+    return value;
+  }
 
   MixThemeData copyWith({
     MixThemeSpaceData? spacing,
     MixThemeBreakpointsData? breakpoints,
-    RefMap? tokens,
+    MixThemeTokensData? tokens,
   }) {
     return MixThemeData._(
       spacing: spacing ?? this.spacing,
@@ -37,18 +45,13 @@ class MixThemeData {
   }
 
   MixThemeData merge(MixThemeData? other) {
-    if (other == null) {
-      return this;
-    }
+    if (other == null) return this;
+
     return copyWith(
       spacing: other.spacing,
       tokens: other.tokens,
       breakpoints: other.breakpoints,
     );
-  }
-
-  Mix<T>? getToken<T extends Attribute>(Symbol key) {
-    return tokens[key] as Mix<T>?;
   }
 
   @override

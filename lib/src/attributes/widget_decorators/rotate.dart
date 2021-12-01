@@ -18,7 +18,8 @@ rotate270() => rotate(3);
 /// Rotate 360
 rotate360() => rotate(4);
 
-class RotateWidgetAttribute extends WidgetAttribute<RotateWidgetAttribute> {
+class RotateWidgetAttribute
+    extends ParentWidgetDecorator<RotateWidgetAttribute> {
   final int quarterTurns;
   const RotateWidgetAttribute({required this.quarterTurns});
 

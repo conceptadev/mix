@@ -7,7 +7,7 @@ AspectRationWidgetAttribute aspectRatio(double aspectRatio) {
 }
 
 class AspectRationWidgetAttribute
-    extends WidgetAttribute<AspectRationWidgetAttribute> {
+    extends ParentWidgetDecorator<AspectRationWidgetAttribute> {
   final double aspectRatio;
   const AspectRationWidgetAttribute({required this.aspectRatio});
 

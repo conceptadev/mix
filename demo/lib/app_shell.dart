@@ -1,3 +1,5 @@
+import 'package:demo/views/button_preview.dart';
+import 'package:demo/views/cards.dart';
 import 'package:demo/views/headless_ui.dart';
 import 'package:demo/views/neon_preview.dart';
 import 'package:flutter/material.dart';
@@ -53,6 +55,16 @@ class AppShell extends HookConsumerWidget {
                   selectedIcon: Icon(Icons.book),
                   label: Text('Neon'),
                 ),
+                NavigationRailDestination(
+                  icon: Icon(Icons.bookmark_border),
+                  selectedIcon: Icon(Icons.book),
+                  label: Text('Cards'),
+                ),
+                NavigationRailDestination(
+                  icon: Icon(Icons.bookmark_border),
+                  selectedIcon: Icon(Icons.book),
+                  label: Text('Buttons'),
+                ),
               ],
             ),
             const VerticalDivider(thickness: 1, width: 1),
@@ -62,6 +74,8 @@ class AppShell extends HookConsumerWidget {
                 const HeadlessPreview(),
                 const PressablePreview(),
                 const NeonPreview(),
+                const CardsPreview(),
+                const ButtonsPreview()
               ][selected.value],
             ),
           ],

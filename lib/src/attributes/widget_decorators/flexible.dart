@@ -22,7 +22,8 @@ FlexibleWidgetAttribute flexible() {
   return const FlexibleWidgetAttribute(flexFit: FlexFit.loose);
 }
 
-class FlexibleWidgetAttribute extends WidgetAttribute<FlexibleWidgetAttribute> {
+class FlexibleWidgetAttribute
+    extends ParentWidgetDecorator<FlexibleWidgetAttribute> {
   final FlexFit? flexFit;
   final int? flex;
   const FlexibleWidgetAttribute({

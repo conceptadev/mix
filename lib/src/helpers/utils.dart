@@ -1,25 +1,3 @@
-import 'package:mix/src/attributes/common/attribute.dart';
-
-List<T> spreadNestedAttributes<T extends Attribute>(List<T> attributes) {
-  final spreaded = <T>[];
-  var hasNested = false;
-  for (final attr in attributes) {
-    if (attr is NestedAttribute<T>) {
-      spreaded.addAll(attr.attributes);
-      hasNested = true;
-    } else {
-      spreaded.add(attr);
-    }
-  }
-
-  /// Recursive check for nested attributes
-  if (hasNested) {
-    return spreadNestedAttributes(spreaded);
-  } else {
-    return spreaded;
-  }
-}
-
 String capitalize(String string) {
   final current = string;
   if (current.isEmpty) {

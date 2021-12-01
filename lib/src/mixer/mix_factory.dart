@@ -1,34 +1,15 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
 import 'package:mix/src/attributes/common/attribute.dart';
-import 'package:mix/src/attributes/dynamic/variant.attributes.dart';
 import 'package:mix/src/attributes/helpers/helper.utils.dart';
-import 'package:mix/src/helpers/utils.dart';
 import 'package:mix/src/mixer/mixer.dart';
 
 /// Defines a mix
 class Mix<T extends Attribute> {
-  final BoxAttributes? boxAttribute;
-  final TextAttributes? textAttribute;
-  final SharedAttributes? sharedAttribute;
-  final IconAttributes? iconAttribute;
-  final FlexAttributes? flexAttribute;
-  final List<VariantAttribute> variantAttributes;
-  final List<TokenRefAttribute> tokenAttributes;
-  final List<DirectiveAttribute> directives;
-  final List<WidgetAttribute> widgetAttributes;
+  final List<T> attributes;
 
-  const Mix._({
-    this.boxAttribute,
-    this.textAttribute,
-    this.sharedAttribute,
-    this.iconAttribute,
-    this.flexAttribute,
-    this.variantAttributes = const [],
-    this.directives = const [],
-    this.tokenAttributes = const [],
-    this.widgetAttributes = const [],
-  });
+  const Mix._([this.attributes = const []]);
 
   /// Define mix with parameters
   factory Mix([
@@ -59,93 +40,7 @@ class Mix<T extends Attribute> {
     if (p11 != null) params.add(p11);
     if (p12 != null) params.add(p12);
 
-    return Mix.fromList(params);
-  }
-
-  factory Mix.fromList(List<T> attributes) {
-    final combined = spreadNestedAttributes(attributes);
-    BoxAttributes? boxAttributes;
-    IconAttributes? iconAttributes;
-    FlexAttributes? flexAttributes;
-    SharedAttributes? sharedAttributes;
-    TextAttributes? textAttributes;
-
-    final directiveAttributes = <DirectiveAttribute>[];
-    final tokenRefAttributes = <TokenRefAttribute>[];
-    final variantAttributes = <VariantAttribute>[];
-    final widgetAttributes = <WidgetAttribute>[];
-
-    for (final attribute in combined) {
-      if (attribute is VariantAttribute) {
-        variantAttributes.add(attribute);
-      }
-
-      if (attribute is DirectiveAttribute) {
-        directiveAttributes.add(attribute);
-      }
-
-      if (attribute is WidgetAttribute) {
-        widgetAttributes.add(attribute);
-      }
-
-      if (attribute is TokenRefAttribute) {
-        tokenRefAttributes.add(attribute);
-      }
-
-      if (attribute is SharedAttributes) {
-        sharedAttributes ??= const SharedAttributes();
-        sharedAttributes = sharedAttributes.merge(attribute);
-      }
-
-      if (attribute is TextAttributes) {
-        textAttributes ??= const TextAttributes();
-        textAttributes = textAttributes.merge(attribute);
-      }
-
-      if (attribute is BoxAttributes) {
-        boxAttributes ??= const BoxAttributes();
-        boxAttributes = boxAttributes.merge(attribute);
-      }
-
-      if (attribute is IconAttributes) {
-        iconAttributes ??= const IconAttributes();
-        iconAttributes = iconAttributes.merge(attribute);
-      }
-
-      if (attribute is FlexAttributes) {
-        flexAttributes ??= const FlexAttributes();
-        flexAttributes = flexAttributes.merge(attribute);
-      }
-    }
-
-    return Mix._(
-      boxAttribute: boxAttributes,
-      textAttribute: textAttributes,
-      sharedAttribute: sharedAttributes,
-      directives: directiveAttributes,
-      iconAttribute: iconAttributes,
-      flexAttribute: flexAttributes,
-      tokenAttributes: tokenRefAttributes,
-      variantAttributes: variantAttributes,
-      widgetAttributes: widgetAttributes,
-    );
-  }
-
-  List<T> get attributes {
-    final attributes = <Attribute>[];
-
-    if (boxAttribute != null) attributes.add(boxAttribute!);
-    if (textAttribute != null) attributes.add(textAttribute!);
-    if (iconAttribute != null) attributes.add(iconAttribute!);
-    if (sharedAttribute != null) attributes.add(sharedAttribute!);
-    if (flexAttribute != null) attributes.add(flexAttribute!);
-    if (directives.isNotEmpty) attributes.addAll(directives);
-
-    if (tokenAttributes.isNotEmpty) attributes.addAll(tokenAttributes);
-    if (variantAttributes.isNotEmpty) attributes.addAll(variantAttributes);
-    if (widgetAttributes.isNotEmpty) attributes.addAll(widgetAttributes);
-
-    return attributes.whereType<T>().toList();
+    return Mix._(params);
   }
 
   Mix<T> getVariant(String variant) {
@@ -159,49 +54,10 @@ class Mix<T extends Attribute> {
     return addAll(newAttributes as List<T>);
   }
 
-  Mix copyWith({
-    BoxAttributes? boxAttribute,
-    TextAttributes? textAttribute,
-    SharedAttributes? sharedAttribute,
-    IconAttributes? iconAttribute,
-    FlexAttributes? flexAttribute,
-    List<DirectiveAttribute> directives = const [],
-    List<TokenRefAttribute> tokenAttributes = const [],
-    List<VariantAttribute> variantAttributes = const [],
-    List<WidgetAttribute> widgetAttributes = const [],
-  }) {
-    return Mix._(
-      directives: [...this.directives, ...directives],
-      tokenAttributes: [...this.tokenAttributes, ...tokenAttributes],
-      variantAttributes: [...this.variantAttributes, ...variantAttributes],
-      widgetAttributes: [...this.widgetAttributes, ...widgetAttributes],
-      boxAttribute: this.boxAttribute?.merge(boxAttribute) ?? boxAttribute,
-      textAttribute: this.textAttribute?.merge(textAttribute) ?? textAttribute,
-      sharedAttribute:
-          this.sharedAttribute?.merge(sharedAttribute) ?? sharedAttribute,
-      iconAttribute: this.iconAttribute?.merge(iconAttribute) ?? iconAttribute,
-      flexAttribute: this.flexAttribute?.merge(flexAttribute) ?? flexAttribute,
-    );
-  }
-
-  Mix merge(Mix other) {
-    return copyWith(
-      boxAttribute: other.boxAttribute,
-      textAttribute: other.textAttribute,
-      iconAttribute: other.iconAttribute,
-      sharedAttribute: other.sharedAttribute,
-      tokenAttributes: other.tokenAttributes,
-      directives: other.directives,
-      variantAttributes: other.variantAttributes,
-      flexAttribute: other.flexAttribute,
-      widgetAttributes: other.widgetAttributes,
-    );
-  }
-
   /// Merges many mixes into one
   static Mix<T> combineAll<T extends Attribute>(List<Mix<T>> mixes) {
     final attributes = mixes.expand((element) => element.attributes).toList();
-    return Mix.fromList(attributes);
+    return Mix._(attributes);
   }
 
   /// Merges many mixes into one
@@ -221,7 +77,7 @@ class Mix<T extends Attribute> {
     if (mix5 != null) list.addAll(mix5.attributes);
     if (mix6 != null) list.addAll(mix6.attributes);
 
-    return Mix.fromList(list);
+    return Mix._(list);
   }
 
   /// Chooses mix based on condition
@@ -252,7 +108,7 @@ extension MixExtension<T extends Attribute> on Mix<T> {
   }
 
   Mix<T> addAll(List<T> attributes) {
-    return Mix.fromList([...this.attributes, ...attributes]);
+    return Mix._([...this.attributes, ...attributes]);
   }
 
   Mix mix(Mix mix) {
@@ -266,43 +122,91 @@ extension MixExtension<T extends Attribute> on Mix<T> {
 
   Box box({
     required Widget child,
-    Mix? mix,
+    Key? key,
+    Mix? overrideMix,
   }) {
-    final mx = Mix.combine(this, mix);
+    final mx = Mix.combine(this, overrideMix);
     return Box(mix: mx, child: child);
   }
 
-  HBox row({
-    Mix? mix,
+  HBox hbox({
+    Mix? overrideMix,
     required List<Widget> children,
+    Key? key,
   }) {
-    final mx = Mix.combine(this, mix);
-    return HBox(mx, children: children);
+    final mix = Mix.combine(this, overrideMix);
+    return HBox(mix: mix, children: children);
+  }
+
+  Pressable _pressable({
+    required Widget child,
+    Key? key,
+    Mix? overrideMix,
+    void Function()? onPressed,
+    void Function()? onLongPressed,
+  }) {
+    final mx = Mix.combine(this, overrideMix);
+    return Pressable(
+      mix: mx,
+      child: child,
+      onPressed: onPressed,
+      onLongPressed: onLongPressed,
+    );
+  }
+
+  PressableWidgetFn get pressable {
+    return _pressable;
+  }
+
+  HBox row({
+    Mix? overrideMix,
+    required List<Widget> children,
+    Key? key,
+  }) {
+    return hbox(
+      overrideMix: overrideMix,
+      children: children,
+      key: key,
+    );
   }
 
   TextMix text(
     String text, {
-    Mix? mix,
+    Mix? overrideMix,
     Key? key,
   }) {
-    final mx = Mix.combine(this, mix);
-    return TextMix(mix: mx, text: text, key: key);
+    final mix = Mix.combine(this, overrideMix);
+    return TextMix(text, mix: mix, key: key);
+  }
+
+  VBox vbox({
+    Key? key,
+    Mix? overrideMix,
+    required List<Widget> children,
+  }) {
+    final mix = Mix.combine(this, overrideMix);
+    return VBox(mix: mix, children: children);
   }
 
   VBox column({
-    Mix? mix,
+    Mix? overrideMix,
+    Key? key,
     required List<Widget> children,
   }) {
-    final mx = Mix.combine(this, mix);
-    return VBox(mx, children: children);
+    return vbox(
+      children: children,
+      overrideMix: overrideMix,
+      key: key,
+    );
   }
 
   IconMix icon(
     IconData icon, {
-    Mix? mix,
+    Mix? overrideMix,
+    Key? key,
     String? semanticLabel,
   }) {
-    final mx = Mix.combine(this, mix);
+    final mx = Mix.combine(this, overrideMix);
     return IconMix(
       mix: mx,
       icon: icon,
@@ -310,3 +214,11 @@ extension MixExtension<T extends Attribute> on Mix<T> {
     );
   }
 }
+
+typedef PressableWidgetFn = Pressable Function({
+  required Widget child,
+  Key? key,
+  Mix? overrideMix,
+  void Function()? onPressed,
+  void Function()? onLongPressed,
+});
