@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
-import 'package:mix/src/helpers/color.utils.dart';
+import 'package:mix/src/theme/refs/refs.dart';
 
 class IconMixer {
   final Color? color;
@@ -14,8 +14,14 @@ class IconMixer {
   factory IconMixer.fromContext(MixContext mixContext) {
     final icon = mixContext.iconAttribute;
     final theme = IconTheme.of(mixContext.context);
+    var color = icon?.color;
+
+    if (color is ColorRef) {
+      color = mixContext.getColorRef(color);
+    }
+
     return IconMixer(
-      color: icon?.color?.create(mixContext.context) ?? theme.color,
+      color: color ?? theme.color,
       size: icon?.size ?? theme.size ?? 24,
     );
   }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
 import 'package:mix/src/attributes/common/attribute.dart';
-import 'package:mix/src/theme/breakpoints.dart';
+import 'package:mix/src/theme/tokens/breakpoints_token.dart';
 
 class DarkModeAttribute<T extends Attribute> extends VariantAttribute<T> {
   const DarkModeAttribute(List<T> attribute) : super('dark', attribute);
@@ -20,7 +20,7 @@ class ScreenSizeAttribute<T extends Attribute> extends VariantAttribute<T> {
   final ScreenSizeToken screenSize;
   @override
   bool shouldApply(BuildContext context) {
-    final breakpoints = context.mixData.breakpoints;
+    final breakpoints = MixTheme.of(context).breakpoints;
     return breakpoints.getScreenSize(context).index <= screenSize.index;
   }
 }

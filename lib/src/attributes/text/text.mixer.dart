@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mix/src/attributes/directives/text/text_directive.attributes.dart';
-import 'package:mix/src/helpers/color.utils.dart';
 import 'package:mix/src/mixer/mixer.dart';
+import 'package:mix/src/theme/refs/refs.dart';
 
 class TextMixer {
   final bool softWrap;
@@ -39,10 +39,16 @@ class TextMixer {
     final directives =
         mixContext.directives.whereType<TextDirectiveAttribute>();
 
+    var color = text?.style?.color;
+
+    if (color is ColorRef) {
+      color = mixContext.getColorRef(color);
+    }
+
     return TextMixer(
       // Need to grab colorscheme from context
       style: text?.style?.copyWith(
-        color: text.style?.color?.create(mixContext.context),
+        color: color,
       ),
       strutStyle: text?.strutStyle,
       textAlign: text?.textAlign,

@@ -1,9 +1,9 @@
-import 'package:mix/src/theme/refs.dart';
+import 'package:mix/src/theme/refs/refs.dart';
 
 // ignore: constant_identifier_names
 
-class MixThemeSpaceData {
-  const MixThemeSpaceData._({
+class SpaceToken {
+  const SpaceToken._({
     required this.xsmall,
     required this.small,
     required this.medium,
@@ -13,7 +13,7 @@ class MixThemeSpaceData {
   });
 
   static get defaults {
-    return const MixThemeSpaceData._(
+    return const SpaceToken._(
       xsmall: 2,
       small: 4,
       medium: 8,
@@ -33,34 +33,34 @@ class MixThemeSpaceData {
   double fromValue(double? value) {
     if (value == null) return 0.0;
 
-    if (SizeToken.xsmall.ref == value) {
+    if (SizeRefName.xsmall.ref == value) {
       return xsmall;
     }
 
-    if (SizeToken.small.ref == value) {
+    if (SizeRefName.small.ref == value) {
       return small;
     }
 
-    if (SizeToken.medium.ref == value) {
+    if (SizeRefName.medium.ref == value) {
       return medium;
     }
 
-    if (SizeToken.large.ref == value) {
+    if (SizeRefName.large.ref == value) {
       return large;
     }
 
-    if (SizeToken.xlarge.ref == value) {
+    if (SizeRefName.xlarge.ref == value) {
       return xlarge;
     }
 
-    if (SizeToken.xxlarge.ref == value) {
+    if (SizeRefName.xxlarge.ref == value) {
       return xxlarge;
     }
     return value;
   }
 
-  MixThemeSpaceData merge(MixThemeSpaceData? other) {
-    return MixThemeSpaceData._(
+  SpaceToken merge(SpaceToken? other) {
+    return SpaceToken._(
       xsmall: other?.xsmall ?? xsmall,
       small: other?.small ?? small,
       medium: other?.medium ?? medium,

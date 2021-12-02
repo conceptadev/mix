@@ -23,16 +23,16 @@ class HeadlessPreview extends HookWidget {
     );
     return Column(
       children: [
-        SwitchRemix(
-          active: active.value,
-          onChanged: (value) => active.value = value,
-          thumb: SwitchRemix.Thumb(thumbX),
-        ),
+        // SwitchRemix(
+        //   active: active.value,
+        //   onChanged: (value) => active.value = value,
+        //   thumb: SwitchRemix.Thumb(thumbX),
+        // ),
         const SizedBox(height: 20),
-        RadioButtonRemix(
-          checked: active.value,
-          onChanged: (value) => active.value = value,
-        ),
+        // RadioButtonRemix(
+        //   checked: active.value,
+        //   onChanged: (value) => active.value = value,
+        // ),
         const SizedBox(height: 20),
         CheckboxRemix(
           checked: active.value,

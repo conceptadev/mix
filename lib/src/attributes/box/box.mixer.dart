@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
 import 'package:mix/src/dto/box_shadow.dto.dart';
-import 'package:mix/src/helpers/color.utils.dart';
+import 'package:mix/src/theme/refs/refs.dart';
 
 class BoxMixer {
   final Color? _color;
@@ -46,8 +46,14 @@ class BoxMixer {
     final context = mixContext.context;
     final box = mixContext.boxAttribute;
 
+    var color = box?.color;
+
+    if (color is ColorRef) {
+      color = mixContext.getColorRef(color);
+    }
+
     return BoxMixer(
-      color: box?.color?.create(context),
+      color: color,
       alignment: box?.alignment,
       margin: box?.margin?.create(context),
       padding: box?.padding?.create(context),

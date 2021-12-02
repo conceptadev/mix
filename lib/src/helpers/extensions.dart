@@ -7,22 +7,13 @@ import 'package:mix/src/attributes/variants/variant.attributes.dart';
 import 'package:mix/src/dto/box_shadow.dto.dart';
 import 'package:mix/src/mixer/mix_context_notifier.dart';
 import 'package:mix/src/mixer/mixer.dart';
-import 'package:mix/src/theme/breakpoints.dart';
-import 'package:mix/src/theme/mix_theme.dart';
-import 'package:mix/src/theme/spacing.dart';
-import 'package:mix/src/theme/theme_data.dart';
+import 'package:mix/src/theme/tokens/breakpoints_token.dart';
 
 extension ContextExtensions on BuildContext {
   Brightness get brightness => Theme.of(this).brightness;
 
   /// Check if brightness is Brightness.dark
   bool get isDarkMode => brightness == Brightness.dark;
-
-  /// Get mix theme
-  MixThemeData get mixData => MixTheme.of(this);
-
-  /// Get spacing data from mix theme
-  MixThemeSpaceData get spacingData => mixData.spacing;
 
   /// MediaQueryData for context
   MediaQueryData get mq => MediaQuery.of(this);

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mix/mix.dart';
 
 enum ColorToken {
   primary,
@@ -38,53 +37,7 @@ const _colorSchemeTranslationValues = [
   Color(0xFF00000C),
 ];
 
-class MixColorScheme {
-  const MixColorScheme();
-  Color get primary => ColorToken.primary.value;
-  Color get primaryVariant => ColorToken.primaryVariant.value;
-  Color get secondary => ColorToken.secondary.value;
-  Color get secondaryVariant => ColorToken.secondaryVariant.value;
-  Color get surface => ColorToken.surface.value;
-  Color get background => ColorToken.background.value;
-  Color get error => ColorToken.error.value;
-  Color get onPrimary => ColorToken.onPrimary.value;
-  Color get onSecondary => ColorToken.onSecondary.value;
-  Color get onSurface => ColorToken.onSurface.value;
-  Color get onBackground => ColorToken.onBackground.value;
-  Color get onError => ColorToken.onError.value;
-}
-
 extension ColorExtensions on Color {
-  Color create(BuildContext context) {
-    if (ColorToken.primary.value == this) {
-      return context.colorScheme.primary;
-    } else if (ColorToken.primaryVariant.value == this) {
-      return context.colorScheme.primaryVariant;
-    } else if (ColorToken.secondary.value == this) {
-      return context.colorScheme.secondary;
-    } else if (ColorToken.secondaryVariant.value == this) {
-      return context.colorScheme.secondaryVariant;
-    } else if (ColorToken.surface.value == this) {
-      return context.colorScheme.surface;
-    } else if (ColorToken.background.value == this) {
-      return context.colorScheme.background;
-    } else if (ColorToken.error.value == this) {
-      return context.colorScheme.error;
-    } else if (ColorToken.onPrimary.value == this) {
-      return context.colorScheme.onPrimary;
-    } else if (ColorToken.onSecondary.value == this) {
-      return context.colorScheme.onSecondary;
-    } else if (ColorToken.onSurface.value == this) {
-      return context.colorScheme.onSurface;
-    } else if (ColorToken.onBackground.value == this) {
-      return context.colorScheme.onBackground;
-    } else if (ColorToken.onError.value == this) {
-      return context.colorScheme.onError;
-    } else {
-      return this;
-    }
-  }
-
   Color darken([double amount = .1]) {
     assert(amount >= 0 && amount <= 1);
 

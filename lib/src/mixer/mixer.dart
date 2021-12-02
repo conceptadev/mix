@@ -4,6 +4,7 @@ import 'package:mix/src/attributes/flex/flex.mixer.dart';
 import 'package:mix/src/attributes/icon/icon.mixer.dart';
 import 'package:mix/src/attributes/shared/shared.mixer.dart';
 import 'package:mix/src/attributes/text/text.mixer.dart';
+import 'package:mix/src/theme/refs/refs.dart';
 
 import '../../mix.dart';
 import '../attributes/common/attribute.dart';
@@ -144,11 +145,6 @@ class MixContext {
           spreaded.addAll(attribute.attributes);
           hasNested = true;
         }
-      } else if (attribute is TokenRefAttribute<T>) {
-        // Get token from context and expand
-        final tokenAttributes = attribute.getToken(context);
-        spreaded.add(tokenAttributes);
-        hasNested = true;
       } else if (attribute is NestedAttribute<T>) {
         spreaded.addAll(attribute.attributes);
         hasNested = true;
@@ -172,6 +168,15 @@ class MixContext {
     } else {
       return this;
     }
+  }
+
+  Color getColorRef(MixRef<Color> ref) {
+    final refValue = MixTheme.of(context).contextRef.tokens[ref];
+    if (refValue == null) {
+      throw Exception('Ref $ref not found');
+    }
+    final color = refValue(context);
+    return color;
   }
 
   /// Applies all [WidgetDecorator]s to a [Widget]
@@ -228,7 +233,7 @@ class MixContext {
       directives: other.directives,
       variantAttributes: other.variantAttributes,
       flexAttribute: other.flexAttribute,
-      widgetAttributes: other.widgetDecorators,
+      widgetDecorators: other.widgetDecorators,
     );
   }
 
@@ -241,13 +246,13 @@ class MixContext {
     FlexAttributes? flexAttribute,
     List<DirectiveAttribute> directives = const [],
     List<VariantAttribute> variantAttributes = const [],
-    List<WidgetDecorator> widgetAttributes = const [],
+    List<WidgetDecorator> widgetDecorators = const [],
   }) {
     return MixContext._(
       context: context ?? this.context,
       directives: [...this.directives, ...directives],
       variantAttributes: [...this.variantAttributes, ...variantAttributes],
-      widgetDecorators: [...this.widgetDecorators, ...widgetAttributes],
+      widgetDecorators: [...this.widgetDecorators, ...widgetDecorators],
       boxAttribute: this.boxAttribute?.merge(boxAttribute) ?? boxAttribute,
       textAttribute: this.textAttribute?.merge(textAttribute) ?? textAttribute,
       sharedAttribute:

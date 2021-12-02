@@ -1,6 +1,5 @@
 import 'package:mix/mix.dart';
 import 'package:mix/src/attributes/common/attribute.dart';
-import 'package:mix/src/helpers/color.utils.dart';
 import 'package:mix/src/mixer/mix_factory.dart';
 
 class HelperUtils {
@@ -8,10 +7,6 @@ class HelperUtils {
 
   static NestedAttribute<T> apply<T extends Attribute>(List<Mix<T>> mixes) {
     return NestedAttribute<T>(Mix.combineAll(mixes).attributes);
-  }
-
-  static MixColorScheme colorScheme() {
-    return const MixColorScheme();
   }
 }
 
