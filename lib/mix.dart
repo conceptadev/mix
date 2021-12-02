@@ -11,7 +11,6 @@ export 'src/attributes/common/attribute.dart';
 export 'src/attributes/exports.dart';
 export 'src/headless/exports.dart';
 export 'src/helpers/extensions.dart';
-export 'src/helpers/hot_reload.dart';
 export 'src/mixer/mix_factory.dart';
 export 'src/mixer/mixer.dart';
 export 'src/theme/mix_theme.dart';
