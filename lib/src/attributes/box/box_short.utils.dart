@@ -1,6 +1,6 @@
 import 'package:mix/src/attributes/box/box.attributes.dart';
 import 'package:mix/src/attributes/box/box.utils.dart';
-import 'package:mix/src/theme/refs.dart';
+import 'package:mix/src/theme/refs/refs.dart';
 
 const m = WithSizeRefs(BoxUtility.margin);
 const mt = WithSizeRefs(BoxUtility.marginTop);

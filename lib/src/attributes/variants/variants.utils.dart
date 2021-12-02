@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
 import 'package:mix/src/attributes/common/attribute.dart';
 import 'package:mix/src/attributes/variants/variant.attributes.dart';
-import 'package:mix/src/theme/breakpoints.dart';
+import 'package:mix/src/theme/tokens/breakpoints_token.dart';
 
 class VariantUtils {
   const VariantUtils._();

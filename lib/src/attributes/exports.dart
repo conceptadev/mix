@@ -38,11 +38,6 @@ export './text/text.attributes.dart';
 export './text/text.utils.dart';
 export './text/text_short.utils.dart';
 
-/// Token
-export './token/token.attributes.dart';
-export './token/token.utils.dart';
-export './token/token_short.utils.dart';
-
 /// Variants
 export 'variants/variants.utils.dart';
 export 'variants/variants_short.utils.dart';

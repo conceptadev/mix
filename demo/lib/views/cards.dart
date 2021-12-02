@@ -5,7 +5,7 @@ Mix get heading {
   return Mix(
     titleCase(),
     font(
-      color: cs().onSurface,
+      color: $onSurface,
     ),
   );
 }
@@ -15,7 +15,7 @@ Mix get card {
     margin(20),
     elevation(6),
     rounded(10),
-    bgColor(cs().surface),
+    bgColor($surface),
     padding(20),
     gap(10),
     crossAxis(CrossAxisAlignment.start),
@@ -31,7 +31,7 @@ class CardsPreview extends StatelessWidget {
     //   margin(20),
     //   elevation(6),
     //   rounded(10),
-    //   bgColor(cs().surface),
+    //   bgColor(theme.colors.surface),
     //   width(100),
     //   padding(20),
     //   titleCase(),

@@ -17,21 +17,23 @@ class CheckboxRemix extends StatelessWidget {
   Mix get __mix {
     return Mix(
       animated(),
-      rounded(100),
+      rounded(5),
       width(30),
       height(30),
       dark(
-        bgColor(Colors.transparent),
-        iconColor(Colors.blue),
+        iconColor($onSecondary),
       ),
       border(
         color: Colors.blue,
         width: 2,
       ),
       'active'.variant(
-        border(color: Colors.blue),
-        iconColor(Colors.blue),
-        squared(),
+        icon(color: $onPrimary),
+        bgColor($primary),
+        dark(
+          icon(color: $onPrimary),
+          bgColor($secondary),
+        ),
       ),
       dark(),
       apply(mix),
