@@ -11,15 +11,25 @@ class IconMix extends MixWidget {
     required this.icon,
     this.semanticLabel,
     Key? key,
+    this.variant,
+    this.inherit = true,
   }) : super(mix, key: key);
 
   final IconData icon;
   final String? semanticLabel;
+  final String? variant;
+  final bool inherit;
 
   @override
   Widget build(BuildContext context) {
+    MixContext mixCtx = MixContext.create(
+      context,
+      mix,
+      inherit: inherit,
+    );
+
     return IconMixerWidget(
-      mix.createContext(context),
+      mixCtx,
       icon: icon,
       semanticLabel: semanticLabel,
     );

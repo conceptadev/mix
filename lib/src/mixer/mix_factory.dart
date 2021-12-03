@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
 import 'package:mix/src/attributes/common/attribute.dart';
 import 'package:mix/src/attributes/helpers/helper.utils.dart';
-import 'package:mix/src/mixer/mixer.dart';
 
 /// Defines a mix
 class Mix<T extends Attribute> {
@@ -43,15 +42,28 @@ class Mix<T extends Attribute> {
     return Mix._(params);
   }
 
-  Mix<T> getVariant(String variant) {
+  const Mix.fromAttributes(this.attributes);
+
+  /// Returns a new mix with the current attributes and the variants
+  Mix<T> withVariant(String variant) {
     final variantsTypes = attributes.whereType<VariantAttribute>();
 
-    final variants =
-        variantsTypes.where((element) => element.variant == variant);
+    final variants = variantsTypes.where((element) => element.name == variant);
 
     final newAttributes = variants.expand((e) => e.attributes).toList();
 
     return addAll(newAttributes as List<T>);
+  }
+
+  /// Returns only the attributes within the variant
+  Mix<T> onlyVariant(String variant) {
+    final variantsTypes = attributes.whereType<VariantAttribute<T>>();
+
+    final variants = variantsTypes.where((element) => element.name == variant);
+
+    final newAttributes = variants.expand<T>((e) => e.attributes).toList();
+
+    return Mix<T>().addAll(newAttributes);
   }
 
   /// Merges many mixes into one
@@ -91,10 +103,6 @@ class Mix<T extends Attribute> {
     } else {
       return falseMix;
     }
-  }
-
-  MixContext createContext(BuildContext context) {
-    return MixContext.create(context, this);
   }
 
   /// Used for const constructor widgets

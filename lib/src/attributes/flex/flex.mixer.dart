@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mix/src/mixer/mixer.dart';
+import 'package:mix/mix.dart';
 
 class FlexMixer {
   final Axis? direction;
@@ -18,8 +18,11 @@ class FlexMixer {
     this.gapSize,
   });
 
-  factory FlexMixer.fromContext(MixContext mixContext) {
-    final flex = mixContext.flexAttribute;
+  factory FlexMixer.fromContext(
+    BuildContext context,
+    FlexAttributes? attributes,
+  ) {
+    final flex = attributes;
     return FlexMixer(
       direction: flex?.direction,
       mainAxisAlignment: flex?.mainAxisAlignment ?? MainAxisAlignment.start,

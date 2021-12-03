@@ -19,11 +19,11 @@ class NestedAttribute<T extends Attribute> extends Attribute {
 
 class VariantAttribute<T extends Attribute> extends Attribute {
   const VariantAttribute(
-    this.variant,
+    this.name,
     this.attributes,
   );
 
-  final String variant;
+  final String name;
   final List<T> attributes;
 
   bool shouldApply(BuildContext context) => false;

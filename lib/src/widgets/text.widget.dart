@@ -12,13 +12,27 @@ class TextMix extends MixWidget {
     this.text, {
     Mix? mix,
     Key? key,
+    this.inherit = true,
+    this.variant,
   }) : super(mix, key: key);
 
   final String text;
+  final String? variant;
+
+  /// Check if should inherit Text and
+  /// Shared attributes from ancestor
+  final bool inherit;
+
   @override
   Widget build(BuildContext context) {
+    MixContext mixCtx = MixContext.create(
+      context,
+      mix,
+      inherit: inherit,
+    );
+
     return _TextMixerWidget(
-      mix.createContext(context),
+      mixCtx,
       text: text,
     );
   }

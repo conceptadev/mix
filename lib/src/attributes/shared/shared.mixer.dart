@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mix/src/mixer/mixer.dart';
+import 'package:mix/mix.dart';
 
 class SharedMixer {
   final bool visible;
@@ -17,8 +17,11 @@ class SharedMixer {
     this.textDirection,
   });
 
-  factory SharedMixer.fromContext(MixContext mixContext) {
-    final shared = mixContext.sharedAttribute;
+  factory SharedMixer.fromContext(
+    BuildContext context,
+    SharedAttributes? attributes,
+  ) {
+    final shared = attributes;
 
     return SharedMixer(
       visible: shared?.visible ?? true,

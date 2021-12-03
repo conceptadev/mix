@@ -28,7 +28,7 @@ extension ContextExtensions on BuildContext {
   TextDirection get directionality => Directionality.of(this);
 
   /// shared attributes of parent
-  MixContext? get ancestorMixer => MixContextNotifier.of(this);
+  MixContext? get ancestorMixContext => MixContextNotifier.of(this);
 
   /// Theme color scheme
   ColorScheme get colorScheme => theme.colorScheme;

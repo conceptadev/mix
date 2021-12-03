@@ -1,94 +1,82 @@
 import 'package:flutter/material.dart';
-import 'package:mix/src/attributes/box/box.mixer.dart';
-import 'package:mix/src/attributes/flex/flex.mixer.dart';
-import 'package:mix/src/attributes/icon/icon.mixer.dart';
-import 'package:mix/src/attributes/shared/shared.mixer.dart';
-import 'package:mix/src/attributes/text/text.mixer.dart';
-import 'package:mix/src/theme/refs/refs.dart';
 
 import '../../mix.dart';
+import '../attributes/box/box.mixer.dart';
 import '../attributes/common/attribute.dart';
+import '../attributes/flex/flex.mixer.dart';
+import '../attributes/icon/icon.mixer.dart';
+import '../attributes/shared/shared.mixer.dart';
+import '../attributes/text/text.mixer.dart';
 import 'mix_factory.dart';
 
 class MixContext {
   final BuildContext context;
+  final Mix source;
 
-  final BoxAttributes? boxAttribute;
-  final TextAttributes? textAttribute;
-  final SharedAttributes? sharedAttribute;
-  final IconAttributes? iconAttribute;
-  final FlexAttributes? flexAttribute;
-  final List<VariantAttribute> variantAttributes;
-
+  final List<VariantAttribute> variants;
   final List<DirectiveAttribute> directives;
-  final List<WidgetDecorator> widgetDecorators;
+  final List<WidgetDecorator> decorators;
 
-  BoxMixer? _boxMixer;
-  TextMixer? _textMixer;
-  SharedMixer? _sharedMixer;
-  IconMixer? _iconMixer;
-  FlexMixer? _flexMixer;
+  final BoxMixer boxMixer;
+  final TextMixer textMixer;
+  final SharedMixer sharedMixer;
+  final IconMixer iconMixer;
+  final FlexMixer flexMixer;
 
   MixContext._({
     required this.context,
-    required this.boxAttribute,
-    required this.textAttribute,
-    required this.sharedAttribute,
-    required this.iconAttribute,
-    required this.flexAttribute,
+    required this.boxMixer,
+    required this.textMixer,
+    required this.sharedMixer,
+    required this.iconMixer,
+    required this.flexMixer,
+    required this.source,
     this.directives = const [],
-    this.variantAttributes = const [],
-    this.widgetDecorators = const [],
+    this.variants = const [],
+    this.decorators = const [],
   });
 
-  BoxMixer get boxMixer {
-    _boxMixer ??= BoxMixer.fromContext(this);
-    return _boxMixer!;
+  factory MixContext.create(
+    BuildContext context,
+    Mix mix, {
+    bool inherit = false,
+  }) {
+    var attributes = [...mix.attributes];
+    if (inherit) {
+      /// Get ancestor context
+      final ancestor = context.ancestorMixContext;
+      if (ancestor != null) {
+        attributes.addAll(ancestor.source.attributes);
+      }
+    }
+    return _build(context, attributes);
   }
 
-  TextMixer get textMixer {
-    _textMixer ??= TextMixer.fromContext(withAncestorContext());
-    return _textMixer!;
-  }
-
-  IconMixer get iconMixer {
-    _iconMixer ??= IconMixer.fromContext(withAncestorContext());
-    return _iconMixer!;
-  }
-
-  FlexMixer get flexMixer {
-    _flexMixer ??= FlexMixer.fromContext(this);
-    return _flexMixer!;
-  }
-
-  SharedMixer get sharedMixer {
-    _sharedMixer ??= SharedMixer.fromContext(withAncestorContext());
-    return _sharedMixer!;
-  }
-
-  factory MixContext.create(BuildContext context, Mix mix) {
-    final attributes = _applyNestedAttributes(context, mix.attributes);
+  static MixContext _build<T extends Attribute>(
+      BuildContext context, List<T> attributes) {
+    final _attributes = _applyNestedAttributes(context, attributes);
     BoxAttributes? boxAttributes;
     IconAttributes? iconAttributes;
     FlexAttributes? flexAttributes;
     SharedAttributes? sharedAttributes;
     TextAttributes? textAttributes;
 
-    final directiveAttributes = <DirectiveAttribute>[];
-    final variantAttributes = <VariantAttribute>[];
-    final widgetDecorators = <WidgetDecorator>[];
+    final source = Mix.fromAttributes(_attributes);
+    final directives = <DirectiveAttribute>[];
+    final variants = <VariantAttribute>[];
+    final decorators = <WidgetDecorator>[];
 
-    for (final attribute in attributes) {
+    for (final attribute in _attributes) {
       if (attribute is VariantAttribute) {
-        variantAttributes.add(attribute);
+        variants.add(attribute);
       }
 
       if (attribute is DirectiveAttribute) {
-        directiveAttributes.add(attribute);
+        directives.add(attribute);
       }
 
       if (attribute is WidgetDecorator) {
-        widgetDecorators.add(attribute);
+        decorators.add(attribute);
       }
 
       if (attribute is SharedAttributes) {
@@ -119,22 +107,25 @@ class MixContext {
 
     return MixContext._(
       context: context,
-      boxAttribute: boxAttributes,
-      textAttribute: textAttributes,
-      sharedAttribute: sharedAttributes,
-      directives: directiveAttributes,
-      iconAttribute: iconAttributes,
-      flexAttribute: flexAttributes,
-      variantAttributes: variantAttributes,
-      widgetDecorators: widgetDecorators,
+      source: source,
+      boxMixer: BoxMixer.fromContext(context, boxAttributes),
+      textMixer: TextMixer.fromContext(
+        context,
+        textAttributes,
+        directives.whereType<TextDirectiveAttribute>(),
+      ),
+      sharedMixer: SharedMixer.fromContext(context, sharedAttributes),
+      iconMixer: IconMixer.fromContext(context, iconAttributes),
+      flexMixer: FlexMixer.fromContext(context, flexAttributes),
+      directives: directives,
+      variants: variants,
+      decorators: decorators,
     );
   }
 
   /// Expands `VariantAttributes` based on context
   static List<T> _applyNestedAttributes<T extends Attribute>(
-    BuildContext context,
-    List<T> attributes,
-  ) {
+      BuildContext context, List<T> attributes) {
     final spreaded = <T>[];
 
     bool hasNested = false;
@@ -142,8 +133,12 @@ class MixContext {
     for (final attribute in attributes) {
       if (attribute is VariantAttribute<T>) {
         if (attribute.shouldApply(context)) {
+          // If its selected, add it to the list
           spreaded.addAll(attribute.attributes);
           hasNested = true;
+        } else {
+          // If not selected, add it to the list for future use
+          spreaded.add(attribute);
         }
       } else if (attribute is NestedAttribute<T>) {
         spreaded.addAll(attribute.attributes);
@@ -154,29 +149,13 @@ class MixContext {
     }
 
     if (hasNested) {
-      return _applyNestedAttributes(context, spreaded);
+      return _applyNestedAttributes(
+        context,
+        spreaded,
+      );
     } else {
       return spreaded;
     }
-  }
-
-  MixContext withAncestorContext() {
-    final ancestorContext = context.ancestorMixer;
-
-    if (ancestorContext != null) {
-      return merge(ancestorContext);
-    } else {
-      return this;
-    }
-  }
-
-  Color getColorRef(MixRef<Color> ref) {
-    final refValue = MixTheme.of(context).contextRef.tokens[ref];
-    if (refValue == null) {
-      throw Exception('Ref $ref not found');
-    }
-    final color = refValue(context);
-    return color;
   }
 
   /// Applies all [WidgetDecorator]s to a [Widget]
@@ -184,7 +163,7 @@ class MixContext {
     var current = widget;
     final attributeMap = <Type, WidgetDecorator>{};
 
-    for (final attribute in widgetDecorators) {
+    for (final attribute in decorators) {
       final existing = attributeMap[attribute.runtimeType];
       if (existing != null) {
         attributeMap[attribute.runtimeType] = existing.merge(attribute);
@@ -226,39 +205,17 @@ class MixContext {
 
     return copyWith(
       context: other.context,
-      boxAttribute: other.boxAttribute,
-      textAttribute: other.textAttribute,
-      iconAttribute: other.iconAttribute,
-      sharedAttribute: other.sharedAttribute,
-      directives: other.directives,
-      variantAttributes: other.variantAttributes,
-      flexAttribute: other.flexAttribute,
-      widgetDecorators: other.widgetDecorators,
+      source: other.source,
     );
   }
 
   MixContext copyWith({
     BuildContext? context,
-    BoxAttributes? boxAttribute,
-    TextAttributes? textAttribute,
-    SharedAttributes? sharedAttribute,
-    IconAttributes? iconAttribute,
-    FlexAttributes? flexAttribute,
-    List<DirectiveAttribute> directives = const [],
-    List<VariantAttribute> variantAttributes = const [],
-    List<WidgetDecorator> widgetDecorators = const [],
+    Mix? source,
   }) {
-    return MixContext._(
-      context: context ?? this.context,
-      directives: [...this.directives, ...directives],
-      variantAttributes: [...this.variantAttributes, ...variantAttributes],
-      widgetDecorators: [...this.widgetDecorators, ...widgetDecorators],
-      boxAttribute: this.boxAttribute?.merge(boxAttribute) ?? boxAttribute,
-      textAttribute: this.textAttribute?.merge(textAttribute) ?? textAttribute,
-      sharedAttribute:
-          this.sharedAttribute?.merge(sharedAttribute) ?? sharedAttribute,
-      iconAttribute: this.iconAttribute?.merge(iconAttribute) ?? iconAttribute,
-      flexAttribute: this.flexAttribute?.merge(flexAttribute) ?? flexAttribute,
+    return MixContext.create(
+      this.context,
+      Mix.combine(this.source, source),
     );
   }
 }

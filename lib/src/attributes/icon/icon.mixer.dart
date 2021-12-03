@@ -11,13 +11,16 @@ class IconMixer {
     required this.size,
   });
 
-  factory IconMixer.fromContext(MixContext mixContext) {
-    final icon = mixContext.iconAttribute;
-    final theme = IconTheme.of(mixContext.context);
+  factory IconMixer.fromContext(
+    BuildContext context,
+    IconAttributes? attributes,
+  ) {
+    final icon = attributes;
+    final theme = IconTheme.of(context);
     var color = icon?.color;
 
     if (color is ColorRef) {
-      color = mixContext.getColorRef(color);
+      color = color.create(context);
     }
 
     return IconMixer(

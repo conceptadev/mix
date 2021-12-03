@@ -30,6 +30,15 @@ class ColorRef extends Color implements MixRef<Color> {
   @override
   final String id;
 
+  Color create(BuildContext context) {
+    final refValue = MixTheme.of(context).contextRef.tokens[this];
+    if (refValue == null) {
+      throw Exception('Ref $id not found');
+    }
+    final color = refValue(context);
+    return color;
+  }
+
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;

@@ -42,14 +42,16 @@ class BoxMixer {
     this.transform,
   }) : _color = color;
 
-  factory BoxMixer.fromContext(MixContext mixContext) {
-    final context = mixContext.context;
-    final box = mixContext.boxAttribute;
+  factory BoxMixer.fromContext(
+    BuildContext context,
+    BoxAttributes? attributes,
+  ) {
+    final box = attributes;
 
     var color = box?.color;
 
     if (color is ColorRef) {
-      color = mixContext.getColorRef(color);
+      color = color.create(context);
     }
 
     return BoxMixer(

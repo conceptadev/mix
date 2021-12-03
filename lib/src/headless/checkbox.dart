@@ -49,7 +49,7 @@ class CheckboxRemix extends StatelessWidget {
       child: Box(
         mix: Mix.chooser(
           condition: checked,
-          trueMix: __mix.getVariant('active'),
+          trueMix: __mix.withVariant('active'),
           falseMix: __mix,
         ),
         child: IconMix(

@@ -50,7 +50,7 @@ class SwitchRemix extends StatelessWidget {
           key: key,
           mix: Mix.chooser(
             condition: active,
-            trueMix: __mix.getVariant('active'),
+            trueMix: __mix.withVariant('active'),
             falseMix: __mix,
           ),
           child: thumb.build(
@@ -81,7 +81,7 @@ class SwitchThumb {
     return Box(
       mix: Mix.chooser(
         condition: checked,
-        trueMix: __mix.getVariant('active'),
+        trueMix: __mix.withVariant('active'),
         falseMix: __mix,
       ),
     );

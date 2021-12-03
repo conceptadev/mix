@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mix/src/attributes/directives/text/text_directive.attributes.dart';
-import 'package:mix/src/mixer/mixer.dart';
+import 'package:mix/src/attributes/exports.dart';
 import 'package:mix/src/theme/refs/refs.dart';
 
 class TextMixer {
@@ -33,16 +33,18 @@ class TextMixer {
     this.textHeightBehavior,
   });
 
-  factory TextMixer.fromContext(MixContext mixContext) {
-    final text = mixContext.textAttribute;
+  factory TextMixer.fromContext(
+    BuildContext context,
+    TextAttributes? attributes,
+    Iterable<TextDirectiveAttribute> directives,
+  ) {
+    final text = attributes;
     // Get all text directives
-    final directives =
-        mixContext.directives.whereType<TextDirectiveAttribute>();
 
     var color = text?.style?.color;
 
     if (color is ColorRef) {
-      color = mixContext.getColorRef(color);
+      color = color.create(context);
     }
 
     return TextMixer(

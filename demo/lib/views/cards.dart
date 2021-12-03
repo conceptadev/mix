@@ -1,25 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
 
-Mix get heading {
-  return Mix(
-    titleCase(),
-    font(
-      color: $onSurface,
-    ),
-  );
-}
-
 Mix get card {
   return Mix(
-    margin(20),
-    elevation(6),
-    rounded(10),
-    bgColor($surface),
-    padding(20),
-    gap(10),
-    crossAxis(CrossAxisAlignment.start),
-  );
+      margin(20),
+      elevation(6),
+      rounded(10),
+      bgColor($surface),
+      padding(20),
+      gap(10),
+      crossAxis(CrossAxisAlignment.start),
+      'heading1'.variant(
+        upperCase(),
+        font(
+          color: $onSurface,
+        ),
+      ));
 }
 
 class CardsPreview extends StatelessWidget {
@@ -27,25 +23,16 @@ class CardsPreview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final mix = Mix(
-    //   margin(20),
-    //   elevation(6),
-    //   rounded(10),
-    //   bgColor(theme.colors.surface),
-    //   width(100),
-    //   padding(20),
-    //   titleCase(),
-    //   gap(10),
-    //   crossAxis(CrossAxisAlignment.start),
-    // );
-
     return SingleChildScrollView(
       child: card.vbox(
         children: const [
-          TextMix('This is a title'),
           TextMix(
-            'This is great content that I add here when I need something awesome',
+            'This is a title',
+            variant: 'heading1',
           ),
+          // TextMix(
+          //   'This is great content that I add here when I need something awesome',
+          // ),
         ],
       ),
     );

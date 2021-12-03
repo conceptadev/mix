@@ -19,7 +19,7 @@ class Box extends MixWidget {
   @override
   Widget build(BuildContext context) {
     return BoxMixedWidget(
-      mix.createContext(context),
+      MixContext.create(context, mix),
       child: child,
     );
   }
