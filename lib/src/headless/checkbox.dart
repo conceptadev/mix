@@ -25,29 +25,15 @@ class CheckboxX extends StatelessWidget {
         size: 18,
         color: $primary,
       ),
-      // bgColor($primary),
       border(
         color: Colors.grey[300],
         width: 2,
       ),
-      dark(
-        iconColor($onSecondary),
-      ),
-      dark() |
-          active(
-            border(
-              color: $error,
-            ),
-          ),
       active(
         iconColor($primary),
-        // border(
-        //   color: $primary,
-        // ),
-        // dark(
-        //   icon(color: $onPrimary),
-        //   bgColor($secondary),
-        // ),
+      ),
+      (hover | active)(
+        borderColor($primary),
       ),
     );
   }

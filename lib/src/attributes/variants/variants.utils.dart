@@ -14,84 +14,64 @@ class VariantUtils {
     };
   }
 
-  static VariantAttribute<T> small<T extends Attribute>(
-    List<T> attributes,
-  ) {
-    return VariantAttribute<T>(
-      screenSizeVariant,
-      attributes,
+  static Var<T> small<T extends Attribute>() {
+    return Var<T>(
+      SystemVariants.screenSize.value,
       checkFn: _screenSizeCheck(ScreenSizeToken.small),
     );
   }
 
-  static VariantAttribute<T> xsmall<T extends Attribute>(
-    List<T> attributes,
-  ) {
-    return VariantAttribute<T>(
-      screenSizeVariant,
-      attributes,
+  static Var<T> xsmall<T extends Attribute>() {
+    return Var<T>(
+      SystemVariants.screenSize.value,
       checkFn: _screenSizeCheck(ScreenSizeToken.xsmall),
     );
   }
 
-  static VariantAttribute<T> medium<T extends Attribute>(
-    List<T> attributes,
-  ) {
-    return VariantAttribute<T>(
-      screenSizeVariant,
-      attributes,
+  static Var<T> medium<T extends Attribute>() {
+    return Var<T>(
+      SystemVariants.screenSize.value,
       checkFn: _screenSizeCheck(ScreenSizeToken.medium),
     );
   }
 
-  static VariantAttribute<T> large<T extends Attribute>(
-    List<T> attributes,
-  ) {
-    return VariantAttribute<T>(
-      screenSizeVariant,
-      attributes,
+  static Var<T> large<T extends Attribute>() {
+    return Var<T>(
+      SystemVariants.screenSize.value,
       checkFn: _screenSizeCheck(ScreenSizeToken.large),
     );
   }
 
-  static VariantAttribute<T> portrait<T extends Attribute>(
-    List<T> attributes,
-  ) {
-    return VariantAttribute<T>(
-      orientationVariant,
-      attributes,
+  static Var<T> portrait<T extends Attribute>() {
+    return Var<T>(
+      SystemVariants.orientation.value,
       checkFn: (BuildContext context) {
         return context.orientation == Orientation.portrait;
       },
     );
   }
 
-  static VariantAttribute<T> landscape<T extends Attribute>(
-    List<T> attributes,
-  ) {
-    return VariantAttribute<T>(
-      orientationVariant,
-      attributes,
+  static Var<T> landscape<T extends Attribute>() {
+    return Var<T>(
+      SystemVariants.orientation.value,
       checkFn: (BuildContext context) {
         return context.orientation == Orientation.landscape;
       },
     );
   }
 
-  static VariantAttribute<T> dark<T extends Attribute>(List<T> attributes) {
-    return VariantAttribute<T>(
-      darkVariant,
-      attributes,
+  static Var<T> dark<T extends Attribute>() {
+    return Var<T>(
+      SystemVariants.dark.value,
       checkFn: (BuildContext context) {
         return context.isDarkMode;
       },
     );
   }
 
-  static VariantAttribute<T> disabled<T extends Attribute>(List<T> attributes) {
-    return VariantAttribute<T>(
-      disabledVariant,
-      attributes,
+  static Var<T> disabled<T extends Attribute>() {
+    return Var<T>(
+      SystemVariants.disabled.value,
       checkFn: (BuildContext context) {
         final pressable = PressableNotifier.of(context);
         return pressable?.disabled == true;
@@ -99,10 +79,9 @@ class VariantUtils {
     );
   }
 
-  static VariantAttribute<T> focused<T extends Attribute>(List<T> attributes) {
-    return VariantAttribute<T>(
-      focusVariant,
-      attributes,
+  static Var<T> focused<T extends Attribute>() {
+    return Var<T>(
+      SystemVariants.focus.value,
       checkFn: (BuildContext context) {
         final pressable = PressableNotifier.of(context);
         return pressable?.focused == true;
@@ -110,10 +89,9 @@ class VariantUtils {
     );
   }
 
-  static VariantAttribute<T> pressing<T extends Attribute>(List<T> attributes) {
-    return VariantAttribute<T>(
-      pressingVariant,
-      attributes,
+  static Var<T> pressing<T extends Attribute>() {
+    return Var<T>(
+      SystemVariants.pressing.value,
       checkFn: (BuildContext context) {
         final pressable = PressableNotifier.of(context);
         return pressable?.pressing == true;
@@ -121,29 +99,13 @@ class VariantUtils {
     );
   }
 
-  static VariantAttribute<T> hover<T extends Attribute>(List<T> attributes) {
-    return VariantAttribute<T>(
-      hoverVariant,
-      attributes,
+  static Var<T> hover<T extends Attribute>() {
+    return Var<T>(
+      SystemVariants.hover.value,
       checkFn: (BuildContext context) {
         final pressable = PressableNotifier.of(context);
         return pressable?.hovering == true;
       },
-    );
-  }
-
-  // final pressable = PressableNotifier.of(context);
-  //   return pressable?.disabled == true;
-
-  static VariantAttribute variant<T extends Attribute>(
-    Var variant,
-    List<T> attributes, {
-    bool Function(BuildContext)? checkFn,
-  }) {
-    return VariantAttribute(
-      variant,
-      attributes,
-      checkFn: checkFn,
     );
   }
 }

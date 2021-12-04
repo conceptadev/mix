@@ -24,44 +24,6 @@ class VariantAttribute<T extends Attribute> extends Attribute {
   final List<T> attributes;
   final bool Function(BuildContext)? checkFn;
 
-  VariantAttribute<T> operator &(VariantAttribute<T> other) {
-    return VariantAttribute<T>(
-      variant,
-      [
-        VariantAttribute<T>(
-          other.variant,
-          attributes + other.attributes,
-          checkFn: other.checkFn,
-        ) as T
-      ],
-      checkFn: checkFn,
-    );
-  }
-
-  NestedAttribute<T> operator |(VariantAttribute<T> other) {
-    final combinedAttributes = attributes + other.attributes;
-    return NestedAttribute<T>([
-      VariantAttribute(
-        variant,
-        combinedAttributes,
-        checkFn: checkFn,
-      ) as T,
-      VariantAttribute(
-        other.variant,
-        combinedAttributes,
-        checkFn: other.checkFn,
-      ) as T
-    ]);
-  }
-
-  VariantAttribute<T> operator >(VariantAttribute<T> other) {
-    return this & other;
-  }
-
-  VariantAttribute<T> operator <(VariantAttribute<T> other) {
-    return other > this;
-  }
-
   bool shouldApply(BuildContext context) {
     return checkFn?.call(context) ?? false;
   }
