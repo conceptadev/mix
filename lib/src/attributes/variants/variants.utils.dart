@@ -1,59 +1,149 @@
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
 import 'package:mix/src/attributes/common/attribute.dart';
-import 'package:mix/src/attributes/variants/variant.attributes.dart';
+import 'package:mix/src/attributes/pressable/pressable.notifier.dart';
 import 'package:mix/src/theme/tokens/breakpoints_token.dart';
 
 class VariantUtils {
   const VariantUtils._();
-  static ScreenSizeAttribute xsmall(List<Attribute> attributes) {
-    return ScreenSizeAttribute(
+
+  static _screenSizeCheck(ScreenSizeToken screenSize) {
+    return (BuildContext context) {
+      final breakpoints = MixTheme.of(context).breakpoints;
+      return breakpoints.getScreenSize(context).index <= screenSize.index;
+    };
+  }
+
+  static VariantAttribute<T> small<T extends Attribute>(
+    List<T> attributes,
+  ) {
+    return VariantAttribute<T>(
+      screenSizeVariant,
       attributes,
-      ScreenSizeToken.xsmall,
+      checkFn: _screenSizeCheck(ScreenSizeToken.small),
     );
   }
 
-  static ScreenSizeAttribute small(List<Attribute> attributes) {
-    return ScreenSizeAttribute(
+  static VariantAttribute<T> xsmall<T extends Attribute>(
+    List<T> attributes,
+  ) {
+    return VariantAttribute<T>(
+      screenSizeVariant,
       attributes,
-      ScreenSizeToken.small,
+      checkFn: _screenSizeCheck(ScreenSizeToken.xsmall),
     );
   }
 
-  static ScreenSizeAttribute medium(List<Attribute> attributes) {
-    return ScreenSizeAttribute(
+  static VariantAttribute<T> medium<T extends Attribute>(
+    List<T> attributes,
+  ) {
+    return VariantAttribute<T>(
+      screenSizeVariant,
       attributes,
-      ScreenSizeToken.medium,
+      checkFn: _screenSizeCheck(ScreenSizeToken.medium),
     );
   }
 
-  static ScreenSizeAttribute large(List<Attribute> attributes) {
-    return ScreenSizeAttribute(
+  static VariantAttribute<T> large<T extends Attribute>(
+    List<T> attributes,
+  ) {
+    return VariantAttribute<T>(
+      screenSizeVariant,
       attributes,
-      ScreenSizeToken.large,
+      checkFn: _screenSizeCheck(ScreenSizeToken.large),
     );
   }
 
-  static OrientationAttribute portrait(List<Attribute> attributes) {
-    return OrientationAttribute(
+  static VariantAttribute<T> portrait<T extends Attribute>(
+    List<T> attributes,
+  ) {
+    return VariantAttribute<T>(
+      orientationVariant,
       attributes,
-      Orientation.portrait,
+      checkFn: (BuildContext context) {
+        return context.orientation == Orientation.portrait;
+      },
     );
   }
 
-  static OrientationAttribute landscape(List<Attribute> attributes) {
-    return OrientationAttribute(
+  static VariantAttribute<T> landscape<T extends Attribute>(
+    List<T> attributes,
+  ) {
+    return VariantAttribute<T>(
+      orientationVariant,
       attributes,
-      Orientation.landscape,
+      checkFn: (BuildContext context) {
+        return context.orientation == Orientation.landscape;
+      },
     );
   }
 
-  static DarkModeAttribute dark(List<Attribute> attributes) {
-    return DarkModeAttribute(attributes);
+  static VariantAttribute<T> dark<T extends Attribute>(List<T> attributes) {
+    return VariantAttribute<T>(
+      darkVariant,
+      attributes,
+      checkFn: (BuildContext context) {
+        return context.isDarkMode;
+      },
+    );
   }
+
+  static VariantAttribute<T> disabled<T extends Attribute>(List<T> attributes) {
+    return VariantAttribute<T>(
+      disabledVariant,
+      attributes,
+      checkFn: (BuildContext context) {
+        final pressable = PressableNotifier.of(context);
+        return pressable?.disabled == true;
+      },
+    );
+  }
+
+  static VariantAttribute<T> focused<T extends Attribute>(List<T> attributes) {
+    return VariantAttribute<T>(
+      focusVariant,
+      attributes,
+      checkFn: (BuildContext context) {
+        final pressable = PressableNotifier.of(context);
+        return pressable?.focused == true;
+      },
+    );
+  }
+
+  static VariantAttribute<T> pressing<T extends Attribute>(List<T> attributes) {
+    return VariantAttribute<T>(
+      pressingVariant,
+      attributes,
+      checkFn: (BuildContext context) {
+        final pressable = PressableNotifier.of(context);
+        return pressable?.pressing == true;
+      },
+    );
+  }
+
+  static VariantAttribute<T> hover<T extends Attribute>(List<T> attributes) {
+    return VariantAttribute<T>(
+      hoverVariant,
+      attributes,
+      checkFn: (BuildContext context) {
+        final pressable = PressableNotifier.of(context);
+        return pressable?.hovering == true;
+      },
+    );
+  }
+
+  // final pressable = PressableNotifier.of(context);
+  //   return pressable?.disabled == true;
 
   static VariantAttribute variant<T extends Attribute>(
-      String variant, List<T> attributes) {
-    return VariantAttribute(variant, attributes);
+    Var variant,
+    List<T> attributes, {
+    bool Function(BuildContext)? checkFn,
+  }) {
+    return VariantAttribute(
+      variant,
+      attributes,
+      checkFn: checkFn,
+    );
   }
 }

@@ -1,12 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:mix/src/attributes/box/box.mixer.dart';
-import 'package:mix/src/attributes/flex/flex.mixer.dart';
-import 'package:mix/src/attributes/icon/icon.mixer.dart';
-import 'package:mix/src/attributes/shared/shared.mixer.dart';
-import 'package:mix/src/attributes/text/text.mixer.dart';
 
 import '../../mix.dart';
+import '../attributes/box/box.mixer.dart';
+import '../attributes/flex/flex.mixer.dart';
+import '../attributes/icon/icon.mixer.dart';
+import '../attributes/shared/shared.mixer.dart';
+import '../attributes/text/text.mixer.dart';
 import '../mixer/mixer.dart';
 
 /// Mix Widget
@@ -22,6 +22,10 @@ abstract class MixWidget extends StatelessWidget {
 
   Mix get mix {
     return _mix;
+  }
+
+  List<Var>? variantOrNull(Var? variant) {
+    return variant == null ? null : [variant];
   }
 
   @override
@@ -64,6 +68,46 @@ abstract class MixedWidget extends StatelessWidget {
       DiagnosticsProperty<MixContext>(
         'mixContext',
         mixContext,
+        defaultValue: null,
+      ),
+    );
+
+    properties.add(
+      DiagnosticsProperty<BoxMixer>(
+        'boxMixer',
+        boxMixer,
+        defaultValue: null,
+      ),
+    );
+
+    properties.add(
+      DiagnosticsProperty<TextMixer>(
+        'textMixer',
+        textMixer,
+        defaultValue: null,
+      ),
+    );
+
+    properties.add(
+      DiagnosticsProperty<IconMixer>(
+        'iconMixer',
+        iconMixer,
+        defaultValue: null,
+      ),
+    );
+
+    properties.add(
+      DiagnosticsProperty<FlexMixer>(
+        'flexMixer',
+        flexMixer,
+        defaultValue: null,
+      ),
+    );
+
+    properties.add(
+      DiagnosticsProperty<SharedMixer>(
+        'sharedMixer',
+        sharedMixer,
         defaultValue: null,
       ),
     );

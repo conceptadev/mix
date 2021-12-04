@@ -12,14 +12,26 @@ class Box extends MixWidget {
   const Box({
     Mix? mix,
     Key? key,
+    this.inherit = true,
+    this.variant,
     this.child,
   }) : super(mix, key: key);
 
   final Widget? child;
+  final Var? variant;
+  final bool inherit;
+
   @override
   Widget build(BuildContext context) {
+    MixContext mixed = MixContext.create(
+      context,
+      mix,
+      inherit: inherit,
+      customVariants: variantOrNull(variant),
+    );
+
     return BoxMixedWidget(
-      MixContext.create(context, mix),
+      mixed,
       child: child,
     );
   }

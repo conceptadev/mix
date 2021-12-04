@@ -11,30 +11,30 @@ class HeadlessPreview extends HookWidget {
 
     final rootX = Mix(
       bgColor(Colors.grey),
-      'active'.variant(
+      const Var('active')(
         bgColor(Colors.green),
       ),
     );
 
     final thumbX = Mix(
-      'active'.variant(
+      const Var('active')(
         bgColor(Colors.white54),
       ),
     );
     return Column(
       children: [
-        // SwitchRemix(
+        // SwitchX(
         //   active: active.value,
         //   onChanged: (value) => active.value = value,
-        //   thumb: SwitchRemix.Thumb(thumbX),
+        //   thumb: SwitchX.Thumb(thumbX),
         // ),
-        const SizedBox(height: 20),
-        // RadioButtonRemix(
+        // const SizedBox(height: 20),
+        // RadioButtonX(
         //   checked: active.value,
         //   onChanged: (value) => active.value = value,
         // ),
         const SizedBox(height: 20),
-        CheckboxRemix(
+        CheckboxX(
           checked: active.value,
           onChanged: (value) => active.value = value,
         ),

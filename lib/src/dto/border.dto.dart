@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mix/src/dto/dto.dart';
+import 'package:mix/src/theme/refs/refs.dart';
 
 class BorderDto extends Dto<Border> {
   final BorderSideProps? top;
@@ -52,20 +53,20 @@ class BorderDto extends Dto<Border> {
     );
   }
 
-  BorderSide _createEachSide(BuildContext context, BorderSideProps? side) {
+  BorderSide _resolveEachSide(BuildContext context, BorderSideProps? side) {
     if (side == null) {
       return BorderSide.none;
     }
-    return side.create(context);
+    return side.resolve(context);
   }
 
   @override
-  Border create(BuildContext context) {
+  Border resolve(BuildContext context) {
     return Border(
-      top: _createEachSide(context, top),
-      right: _createEachSide(context, right),
-      bottom: _createEachSide(context, bottom),
-      left: _createEachSide(context, left),
+      top: _resolveEachSide(context, top),
+      right: _resolveEachSide(context, right),
+      bottom: _resolveEachSide(context, bottom),
+      left: _resolveEachSide(context, left),
     );
   }
 
@@ -165,9 +166,15 @@ class BorderSideProps extends Dto<BorderSide> {
   final BorderSide _default = const BorderSide();
 
   @override
-  BorderSide create(BuildContext context) {
+  BorderSide resolve(BuildContext context) {
+    Color? _color = color;
+
+    if (_color is ColorRef) {
+      _color = _color.resolve(context);
+    }
+
     return BorderSide(
-      color: color ?? _default.color,
+      color: _color ?? _default.color,
       width: width ?? _default.width,
       style: style ?? _default.style,
     );

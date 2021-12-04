@@ -41,17 +41,28 @@ class TextMixer {
     final text = attributes;
     // Get all text directives
 
-    var color = text?.style?.color;
+    TextStyle? finalStyle = text?.style;
+    TextStyle? refStyle = text?.styleRef?.resolve(context);
 
+    if (finalStyle is TextStyleRef) {
+      finalStyle = finalStyle.resolve(context);
+    }
+
+    if (refStyle != null) {
+      finalStyle = refStyle.merge(finalStyle);
+    }
+
+    var color = finalStyle?.color;
     if (color is ColorRef) {
-      color = color.create(context);
+      // Also build color ref
+      finalStyle = finalStyle?.copyWith(
+        color: color.resolve(context),
+      );
     }
 
     return TextMixer(
       // Need to grab colorscheme from context
-      style: text?.style?.copyWith(
-        color: color,
-      ),
+      style: finalStyle,
       strutStyle: text?.strutStyle,
       textAlign: text?.textAlign,
       locale: text?.locale,

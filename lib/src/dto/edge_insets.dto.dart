@@ -66,7 +66,7 @@ class EdgeInsetsDto extends Dto<EdgeInsets> {
   }
 
   @override
-  EdgeInsets create(BuildContext context) {
+  EdgeInsets resolve(BuildContext context) {
     final spacing = MixTheme.of(context).space;
     return EdgeInsets.only(
       top: spacing.fromValue(top),

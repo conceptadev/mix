@@ -3,11 +3,14 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
 import 'package:mix/src/helpers/extensions.dart';
+import 'package:mix/src/theme/refs/refs.dart';
 
 import '../common/attribute.dart';
 
 class TextAttributes extends Attribute {
   final TextStyle? style;
+  // Ref for context
+  final TextStyleRef? styleRef;
   final StrutStyle? strutStyle;
   final TextAlign? textAlign;
 
@@ -22,6 +25,7 @@ class TextAttributes extends Attribute {
 
   const TextAttributes({
     this.style,
+    this.styleRef,
     this.strutStyle,
     this.textAlign,
     this.locale,
@@ -34,19 +38,14 @@ class TextAttributes extends Attribute {
     this.textHeightBehavior,
   });
 
-  TextAttributes applyContext(BuildContext context) {
-    return copyWith(
-      style: context.defaultTextStyle().merge(style),
-    );
-  }
-
   TextAttributes merge(TextAttributes? other) {
     if (other == null) return this;
 
     return copyWith(
       // Need to inherit to allow for overrides
-      style: style?.merge(other.style) ?? other.style,
-      strutStyle: strutStyle?.merge(other.strutStyle) ?? other.strutStyle,
+      style: other.style,
+      styleRef: other.styleRef,
+      strutStyle: other.strutStyle,
       textAlign: other.textAlign,
       locale: other.locale,
       softWrap: other.softWrap,
@@ -61,6 +60,7 @@ class TextAttributes extends Attribute {
 
   TextAttributes copyWith({
     TextStyle? style,
+    TextStyleRef? styleRef,
     StrutStyle? strutStyle,
     TextAlign? textAlign,
     Locale? locale,
@@ -72,9 +72,30 @@ class TextAttributes extends Attribute {
     TextWidthBasis? textWidthBasis,
     TextHeightBehavior? textHeightBehavior,
   }) {
+    TextStyle? _thisStyle = this.style;
+    TextStyle? _otherStyle = style;
+
+    TextStyleRef? _thisStyleRef = this.styleRef;
+    TextStyleRef? _otherStyleRef = styleRef;
+
+    // During the merge we need to move the ref
+    // clunky but allows cleaner api for devs
+    if (_thisStyle is TextStyleRef) {
+      _thisStyleRef = _thisStyle;
+    } else {
+      _thisStyle = _thisStyle;
+    }
+
+    if (style is TextStyleRef) {
+      _otherStyleRef = style;
+    } else {
+      _otherStyle = style;
+    }
+
     return TextAttributes(
-      style: style ?? this.style,
-      strutStyle: strutStyle ?? this.strutStyle,
+      style: _thisStyle?.merge(_otherStyle) ?? _otherStyle,
+      strutStyle: this.strutStyle?.merge(strutStyle) ?? strutStyle,
+      styleRef: _otherStyleRef ?? _thisStyleRef,
       textAlign: textAlign ?? this.textAlign,
       locale: locale ?? this.locale,
       softWrap: softWrap ?? this.softWrap,
@@ -93,6 +114,7 @@ class TextAttributes extends Attribute {
 
     return other is TextAttributes &&
         other.style == style &&
+        other.styleRef == styleRef &&
         other.strutStyle == strutStyle &&
         other.textAlign == textAlign &&
         other.locale == locale &&
@@ -108,6 +130,7 @@ class TextAttributes extends Attribute {
   @override
   int get hashCode {
     return style.hashCode ^
+        styleRef.hashCode ^
         strutStyle.hashCode ^
         textAlign.hashCode ^
         locale.hashCode ^

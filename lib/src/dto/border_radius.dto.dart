@@ -37,7 +37,7 @@ class BorderRadiusDto extends Dto<BorderRadius> {
   }
 
   @override
-  BorderRadius create(BuildContext context) {
+  BorderRadius resolve(BuildContext context) {
     return BorderRadius.only(
       topLeft: _createRadius(topLeft),
       topRight: _createRadius(topRight),

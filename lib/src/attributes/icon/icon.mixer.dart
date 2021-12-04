@@ -20,7 +20,7 @@ class IconMixer {
     var color = icon?.color;
 
     if (color is ColorRef) {
-      color = color.create(context);
+      color = color.resolve(context);
     }
 
     return IconMixer(

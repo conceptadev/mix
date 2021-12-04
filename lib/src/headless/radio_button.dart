@@ -3,8 +3,8 @@ import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
 import 'package:mix/src/attributes/helpers/helper_short.utils.dart';
 
-class RadioButtonRemix extends StatelessWidget {
-  const RadioButtonRemix({
+class RadioButtonX extends StatelessWidget {
+  const RadioButtonX({
     Key? key,
     required this.checked,
     required this.onChanged,
@@ -16,6 +16,10 @@ class RadioButtonRemix extends StatelessWidget {
   final ValueChanged<bool>? onChanged;
   final RadioButtonIndicator indicator;
 
+  static Var on = const Var('active');
+  static Var disabled = const Var('disabled');
+  static Var off = const Var('off');
+
   Mix get __mix {
     return Mix(
       animated(),
@@ -25,7 +29,7 @@ class RadioButtonRemix extends StatelessWidget {
         color: Colors.blue,
         width: 2,
       ),
-      'active'.variant(
+      active(
         border(color: Colors.blue),
       ),
       apply(mix),
@@ -36,24 +40,18 @@ class RadioButtonRemix extends StatelessWidget {
   Widget build(BuildContext context) {
     final fn = onChanged;
     return Pressable(
-      mix: mix,
+      mix: __mix,
+      variant: active,
       onPressed: fn == null ? null : () => fn(!checked),
-      child: Box(
-        mix: Mix.chooser(
-          condition: checked,
-          trueMix: __mix.withVariant('active'),
-          falseMix: __mix,
-        ),
-        child: indicator.build(
-          context,
-          checked,
-        ),
+      child: indicator.build(
+        context,
+        checked,
       ),
     );
   }
 }
 
-extension RadioButtonRemixExtension on RadioButtonRemix {
+extension RadioButtonRemixExtension on RadioButtonX {
   // ignore: non_constant_identifier_names
   static RadioButtonIndicator Indicator(Mix? mix, {Widget? child}) {
     return RadioButtonIndicator(mix);
@@ -75,7 +73,7 @@ class RadioButtonIndicator {
       animated(),
       rounded(100),
       margin(4),
-      'active'.variant(
+      RadioButtonX.on(
         bgColor(Colors.blue),
       ),
       apply(mix),
@@ -84,11 +82,8 @@ class RadioButtonIndicator {
 
   Widget build(BuildContext context, bool checked) {
     return Box(
-      mix: Mix.chooser(
-        condition: checked,
-        trueMix: __mix.withVariant('active'),
-        falseMix: __mix,
-      ),
+      variant: checked ? RadioButtonX.on : RadioButtonX.off,
+      mix: __mix,
       child: child,
     );
   }

@@ -44,26 +44,9 @@ class Mix<T extends Attribute> {
 
   const Mix.fromAttributes(this.attributes);
 
-  /// Returns a new mix with the current attributes and the variants
-  Mix<T> withVariant(String variant) {
-    final variantsTypes = attributes.whereType<VariantAttribute>();
-
-    final variants = variantsTypes.where((element) => element.name == variant);
-
-    final newAttributes = variants.expand((e) => e.attributes).toList();
-
-    return addAll(newAttributes as List<T>);
-  }
-
-  /// Returns only the attributes within the variant
-  Mix<T> onlyVariant(String variant) {
-    final variantsTypes = attributes.whereType<VariantAttribute<T>>();
-
-    final variants = variantsTypes.where((element) => element.name == variant);
-
-    final newAttributes = variants.expand<T>((e) => e.attributes).toList();
-
-    return Mix<T>().addAll(newAttributes);
+  factory Mix.fromMaybeAttribute(List<T?> attributes) {
+    final validAttributes = attributes.whereType<T>();
+    return Mix._(validAttributes.toList());
   }
 
   /// Merges many mixes into one

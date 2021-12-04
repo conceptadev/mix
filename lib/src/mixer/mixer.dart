@@ -11,7 +11,8 @@ import 'mix_factory.dart';
 
 class MixContext {
   final BuildContext context;
-  final Mix source;
+  final Mix sourceMix;
+  final Mix descendentMix;
 
   final List<VariantAttribute> variants;
   final List<DirectiveAttribute> directives;
@@ -25,36 +26,49 @@ class MixContext {
 
   MixContext._({
     required this.context,
+    required this.sourceMix,
+    required this.descendentMix,
     required this.boxMixer,
     required this.textMixer,
     required this.sharedMixer,
     required this.iconMixer,
     required this.flexMixer,
-    required this.source,
-    this.directives = const [],
-    this.variants = const [],
-    this.decorators = const [],
+    required this.directives,
+    required this.variants,
+    required this.decorators,
   });
 
   factory MixContext.create(
     BuildContext context,
     Mix mix, {
     bool inherit = false,
+    List<Var>? customVariants,
   }) {
-    var attributes = [...mix.attributes];
+    Mix _mix = mix;
     if (inherit) {
       /// Get ancestor context
-      final ancestor = context.ancestorMixContext;
-      if (ancestor != null) {
-        attributes.addAll(ancestor.source.attributes);
+      final inheritedMix = context.inheritedMix;
+      if (inheritedMix != null) {
+        _mix = Mix.combine(mix, inheritedMix);
       }
     }
-    return _build(context, attributes);
+    return _build(
+      context,
+      _mix.attributes,
+      customVariants: customVariants ?? [],
+    );
   }
 
   static MixContext _build<T extends Attribute>(
-      BuildContext context, List<T> attributes) {
-    final _attributes = _applyNestedAttributes(context, attributes);
+    BuildContext context,
+    List<T> attributes, {
+    required List<Var> customVariants,
+  }) {
+    final _attributes = _expandAttributes(
+      context,
+      attributes,
+      customVariants: customVariants,
+    );
     BoxAttributes? boxAttributes;
     IconAttributes? iconAttributes;
     FlexAttributes? flexAttributes;
@@ -107,7 +121,14 @@ class MixContext {
 
     return MixContext._(
       context: context,
-      source: source,
+      sourceMix: source,
+      descendentMix: Mix.fromMaybeAttribute([
+        textAttributes,
+        iconAttributes,
+        sharedAttributes,
+        ...variants,
+        ...directives
+      ]),
       boxMixer: BoxMixer.fromContext(context, boxAttributes),
       textMixer: TextMixer.fromContext(
         context,
@@ -123,16 +144,20 @@ class MixContext {
     );
   }
 
-  /// Expands `VariantAttributes` based on context
-  static List<T> _applyNestedAttributes<T extends Attribute>(
-      BuildContext context, List<T> attributes) {
+  /// Expands `VariantAttribute` and `NestedAttribute` based on context
+  static List<T> _expandAttributes<T extends Attribute>(
+    BuildContext context,
+    List<T> attributes, {
+    required List<Var> customVariants,
+  }) {
     final spreaded = <T>[];
 
     bool hasNested = false;
 
     for (final attribute in attributes) {
       if (attribute is VariantAttribute<T>) {
-        if (attribute.shouldApply(context)) {
+        if (customVariants.contains(attribute.variant) ||
+            attribute.shouldApply(context)) {
           // If its selected, add it to the list
           spreaded.addAll(attribute.attributes);
           hasNested = true;
@@ -149,9 +174,10 @@ class MixContext {
     }
 
     if (hasNested) {
-      return _applyNestedAttributes(
+      return _expandAttributes(
         context,
         spreaded,
+        customVariants: customVariants,
       );
     } else {
       return spreaded;
@@ -205,17 +231,17 @@ class MixContext {
 
     return copyWith(
       context: other.context,
-      source: other.source,
+      sourceMix: other.sourceMix,
     );
   }
 
   MixContext copyWith({
     BuildContext? context,
-    Mix? source,
+    Mix? sourceMix,
   }) {
     return MixContext.create(
       this.context,
-      Mix.combine(this.source, source),
+      Mix.combine(this.sourceMix, sourceMix),
     );
   }
 }

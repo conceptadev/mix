@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:mix/src/widgets/nothing.widget.dart';
 
+import '../attributes/exports.dart';
 import '../mixer/mix_factory.dart';
 import '../mixer/mixer.dart';
 import 'mix.widget.dart';
+import 'nothing.widget.dart';
 
 class IconMix extends MixWidget {
   const IconMix({
@@ -17,7 +18,7 @@ class IconMix extends MixWidget {
 
   final IconData icon;
   final String? semanticLabel;
-  final String? variant;
+  final Var? variant;
   final bool inherit;
 
   @override
@@ -26,12 +27,15 @@ class IconMix extends MixWidget {
       context,
       mix,
       inherit: inherit,
+      customVariants: variantOrNull(variant),
     );
 
-    return IconMixerWidget(
-      mixCtx,
-      icon: icon,
-      semanticLabel: semanticLabel,
+    return Semantics(
+      label: semanticLabel,
+      child: IconMixerWidget(
+        mixCtx,
+        icon: icon,
+      ),
     );
   }
 }
@@ -40,12 +44,10 @@ class IconMixerWidget extends MixedWidget {
   const IconMixerWidget(
     MixContext mixContext, {
     required this.icon,
-    this.semanticLabel,
     Key? key,
   }) : super(mixContext, key: key);
 
   final IconData icon;
-  final String? semanticLabel;
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +59,6 @@ class IconMixerWidget extends MixedWidget {
       color: iconMixer.color,
       size: iconMixer.size,
       textDirection: sharedMixer.textDirection,
-      semanticLabel: semanticLabel,
     );
 
     if (sharedMixer.animated) {

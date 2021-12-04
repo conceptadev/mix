@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:mix/src/dto/dto.dart';
+import 'package:mix/src/theme/refs/refs.dart';
 
 class BoxShadowDto extends Dto<BoxShadow> {
   final Color? color;
@@ -20,9 +21,15 @@ class BoxShadowDto extends Dto<BoxShadow> {
   final BoxShadow _default = const BoxShadow();
 
   @override
-  BoxShadow create(BuildContext context) {
+  BoxShadow resolve(BuildContext context) {
+    Color? _color = color;
+
+    if (_color is ColorRef) {
+      _color = _color.resolve(context);
+    }
+
     return BoxShadow(
-      color: color ?? _default.color,
+      color: _color ?? _default.color,
       offset: offset ?? _default.offset,
       blurRadius: blurRadius ?? _default.blurRadius,
       spreadRadius: spreadRadius ?? _default.spreadRadius,
@@ -79,7 +86,7 @@ class BoxShadowDto extends Dto<BoxShadow> {
 
 extension BoxShadowDtoExtension on List<BoxShadowDto> {
   List<BoxShadow> create(BuildContext context) {
-    return map((e) => e.create(context)).toList();
+    return map((e) => e.resolve(context)).toList();
   }
 
   List<BoxShadowDto> merge(List<BoxShadowDto>? other) {

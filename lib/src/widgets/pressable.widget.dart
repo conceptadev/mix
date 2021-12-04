@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mix/src/attributes/exports.dart';
 import 'package:mix/src/attributes/pressable/pressable.notifier.dart';
 
 import '../mixer/mix_factory.dart';
@@ -12,6 +13,7 @@ class Pressable extends MixWidget {
     required this.onPressed,
     this.onLongPressed,
     this.focusNode,
+    this.variant,
     this.autofocus = false,
     this.behavior,
     Key? key,
@@ -23,11 +25,13 @@ class Pressable extends MixWidget {
   final FocusNode? focusNode;
   final bool autofocus;
   final HitTestBehavior? behavior;
+  final Var? variant;
 
   @override
   Widget build(BuildContext context) {
     return PressableMixerWidget(
       mix,
+      variant: variant,
       onPressed: onPressed,
       onLongPressed: onLongPressed,
       focusNode: focusNode,
@@ -44,6 +48,7 @@ class PressableMixerWidget extends StatefulWidget {
     required this.onPressed,
     this.onLongPressed,
     this.focusNode,
+    this.variant,
     this.autofocus = false,
     this.behavior,
     Key? key,
@@ -56,6 +61,7 @@ class PressableMixerWidget extends StatefulWidget {
   final VoidCallback? onLongPressed;
   final FocusNode? focusNode;
   final bool autofocus;
+  final Var? variant;
 
   final HitTestBehavior? behavior;
 
@@ -142,6 +148,7 @@ class _PressableMixerWidgetState extends State<PressableMixerWidget> {
                 pressing: _pressing,
                 child: Box(
                   mix: widget.mix,
+                  variant: widget.variant,
                   child: widget.child,
                 ),
               );

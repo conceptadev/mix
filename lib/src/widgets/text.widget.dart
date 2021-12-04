@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:mix/src/attributes/exports.dart';
 import 'package:mix/src/helpers/extensions.dart';
 import 'package:mix/src/widgets/nothing.widget.dart';
 
@@ -17,7 +18,7 @@ class TextMix extends MixWidget {
   }) : super(mix, key: key);
 
   final String text;
-  final String? variant;
+  final Var? variant;
 
   /// Check if should inherit Text and
   /// Shared attributes from ancestor
@@ -25,14 +26,15 @@ class TextMix extends MixWidget {
 
   @override
   Widget build(BuildContext context) {
-    MixContext mixCtx = MixContext.create(
+    MixContext mixed = MixContext.create(
       context,
       mix,
       inherit: inherit,
+      customVariants: variantOrNull(variant),
     );
 
     return _TextMixerWidget(
-      mixCtx,
+      mixed,
       text: text,
     );
   }

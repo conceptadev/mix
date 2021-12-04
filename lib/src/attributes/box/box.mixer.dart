@@ -51,18 +51,18 @@ class BoxMixer {
     var color = box?.color;
 
     if (color is ColorRef) {
-      color = color.create(context);
+      color = color.resolve(context);
     }
 
     return BoxMixer(
       color: color,
       alignment: box?.alignment,
-      margin: box?.margin?.create(context),
-      padding: box?.padding?.create(context),
+      margin: box?.margin?.resolve(context),
+      padding: box?.padding?.resolve(context),
       width: box?.width,
       height: box?.height,
-      border: box?.border?.create(context),
-      borderRadius: box?.borderRadius?.create(context),
+      border: box?.border?.resolve(context),
+      borderRadius: box?.borderRadius?.resolve(context),
       boxShadow: box?.boxShadow?.create(context),
       maxHeight: box?.maxHeight,
       maxWidth: box?.maxWidth,

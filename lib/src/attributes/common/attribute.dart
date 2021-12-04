@@ -18,15 +18,57 @@ class NestedAttribute<T extends Attribute> extends Attribute {
 }
 
 class VariantAttribute<T extends Attribute> extends Attribute {
-  const VariantAttribute(
-    this.name,
-    this.attributes,
-  );
+  const VariantAttribute(this.variant, this.attributes, {this.checkFn});
 
-  final String name;
+  final Var variant;
   final List<T> attributes;
+  final bool Function(BuildContext)? checkFn;
 
-  bool shouldApply(BuildContext context) => false;
+  VariantAttribute<T> operator &(VariantAttribute<T> other) {
+    return VariantAttribute<T>(
+      variant,
+      [
+        VariantAttribute<T>(
+          other.variant,
+          attributes + other.attributes,
+          checkFn: other.checkFn,
+        ) as T
+      ],
+      checkFn: checkFn,
+    );
+  }
+
+  NestedAttribute<T> operator |(VariantAttribute<T> other) {
+    final combinedAttributes = attributes + other.attributes;
+    return NestedAttribute<T>([
+      VariantAttribute(
+        variant,
+        combinedAttributes,
+        checkFn: checkFn,
+      ) as T,
+      VariantAttribute(
+        other.variant,
+        combinedAttributes,
+        checkFn: other.checkFn,
+      ) as T
+    ]);
+  }
+
+  VariantAttribute<T> operator >(VariantAttribute<T> other) {
+    return this & other;
+  }
+
+  VariantAttribute<T> operator <(VariantAttribute<T> other) {
+    return other > this;
+  }
+
+  bool shouldApply(BuildContext context) {
+    return checkFn?.call(context) ?? false;
+  }
+
+  @override
+  String toString() =>
+      'VariantAttribute(variant: $variant, attributes: $attributes)';
 }
 
 enum WidgetDecoratorType {

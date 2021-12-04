@@ -9,7 +9,7 @@ class MixTheme extends InheritedWidget {
     Key? key,
     required Widget child,
     MixThemeData? theme,
-  })  : data = MixThemeData.defaults.merge(theme),
+  })  : data = MixThemeData.defaults().merge(theme),
         super(key: key, child: child);
 
   final MixThemeData data;
@@ -19,7 +19,7 @@ class MixTheme extends InheritedWidget {
     if (mixTheme != null) {
       return mixTheme.data;
     } else {
-      return MixThemeData.defaults;
+      return MixThemeData.defaults();
     }
   }
 
@@ -32,15 +32,16 @@ class MixTheme extends InheritedWidget {
 class MixThemeData {
   MixThemeData._({
     required this.space,
-    required this.contextRef,
     required this.breakpoints,
+    //TODO: implement font family d
+    required this.contextRef,
   });
 
-  static MixThemeData get defaults {
+  factory MixThemeData.defaults() {
     return MixThemeData._(
       space: SpaceToken.defaults,
       breakpoints: BreakpointsToken.defaults,
-      contextRef: ContextRefTokens.defaults,
+      contextRef: ContextRefTokens.defaults(),
     );
   }
 

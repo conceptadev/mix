@@ -23,10 +23,10 @@ export './icon/icon.attributes.dart';
 export './icon/icon.utils.dart';
 export './icon/icon_short.utils.dart';
 
-/// Pressable
-export './pressable/pressable.attributes.dart';
-export './pressable/pressable.utils.dart';
-export './pressable/pressable_short.utils.dart';
+/// Image
+export './image/image.attributes.dart';
+export './image/image.utils.dart';
+export './image/image_short.utils.dart';
 
 /// Shared
 export './shared/shared.attributes.dart';
@@ -39,7 +39,7 @@ export './text/text.utils.dart';
 export './text/text_short.utils.dart';
 
 /// Variants
-export 'variants/variants.utils.dart';
+export '../helpers/variants.dart';
 export 'variants/variants_short.utils.dart';
 
 /// Widgets

@@ -4,8 +4,8 @@ import 'package:mix/src/attributes/common/attribute.dart';
 import 'package:mix/src/attributes/helpers/helper_short.utils.dart';
 import 'package:mix/src/mixer/mix_factory.dart';
 
-class SwitchRemix extends StatelessWidget {
-  const SwitchRemix({
+class SwitchX extends StatelessWidget {
+  const SwitchX({
     Key? key,
     this.active = true,
     this.mix,
@@ -19,6 +19,10 @@ class SwitchRemix extends StatelessWidget {
   final SwitchThumb thumb;
   final Mix? mix;
 
+  static Var on = const Var('active');
+  static Var disabled = const Var('disabled');
+  static Var off = const Var('off');
+
   Mix get __mix {
     return Mix(
       animated(),
@@ -27,10 +31,9 @@ class SwitchRemix extends StatelessWidget {
       rounded(100),
       bgColor(Colors.black26),
       align(Alignment.centerLeft),
-      'active'.variant(
+      on(
         align(Alignment.centerRight),
       ),
-      apply(mix),
     );
   }
 
@@ -47,12 +50,9 @@ class SwitchRemix extends StatelessWidget {
     return Pressable(
         onPressed: fn == null ? null : () => fn(!active),
         child: Box(
+          variant: active ? SwitchX.on : SwitchX.off,
+          mix: __mix,
           key: key,
-          mix: Mix.chooser(
-            condition: active,
-            trueMix: __mix.withVariant('active'),
-            falseMix: __mix,
-          ),
           child: thumb.build(
             context,
             active,
@@ -79,11 +79,8 @@ class SwitchThumb {
 
   Widget build(BuildContext context, bool checked) {
     return Box(
-      mix: Mix.chooser(
-        condition: checked,
-        trueMix: __mix.withVariant('active'),
-        falseMix: __mix,
-      ),
+      variant: checked ? SwitchX.on : SwitchX.off,
+      mix: __mix,
     );
   }
 }

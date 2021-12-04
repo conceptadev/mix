@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
-import 'package:mix/src/attributes/helpers/helper_short.utils.dart';
 
-class CheckboxRemix extends StatelessWidget {
-  const CheckboxRemix({
+const active = Var('active');
+
+class CheckboxX extends StatelessWidget {
+  const CheckboxX({
     Key? key,
     required this.checked,
     required this.onChanged,
@@ -18,25 +19,36 @@ class CheckboxRemix extends StatelessWidget {
     return Mix(
       animated(),
       rounded(5),
-      width(30),
-      height(30),
+      width(25),
+      height(25),
+      icon(
+        size: 18,
+        color: $primary,
+      ),
+      // bgColor($primary),
+      border(
+        color: Colors.grey[300],
+        width: 2,
+      ),
       dark(
         iconColor($onSecondary),
       ),
-      border(
-        color: Colors.blue,
-        width: 2,
+      dark() |
+          active(
+            border(
+              color: $error,
+            ),
+          ),
+      active(
+        iconColor($primary),
+        // border(
+        //   color: $primary,
+        // ),
+        // dark(
+        //   icon(color: $onPrimary),
+        //   bgColor($secondary),
+        // ),
       ),
-      'active'.variant(
-        icon(color: $onPrimary),
-        bgColor($primary),
-        dark(
-          icon(color: $onPrimary),
-          bgColor($secondary),
-        ),
-      ),
-      dark(),
-      apply(mix),
     );
   }
 
@@ -44,18 +56,12 @@ class CheckboxRemix extends StatelessWidget {
   Widget build(BuildContext context) {
     final fn = onChanged;
     return Pressable(
-      mix: mix,
+      mix: Mix.combine(__mix, mix),
+      variant: checked ? active : null,
       onPressed: fn == null ? null : () => fn(!checked),
-      child: Box(
-        mix: Mix.chooser(
-          condition: checked,
-          trueMix: __mix.withVariant('active'),
-          falseMix: __mix,
-        ),
-        child: IconMix(
-          mix: Mix(hide(!checked)),
-          icon: Icons.check_rounded,
-        ),
+      child: IconMix(
+        mix: Mix(hide(!checked)),
+        icon: Icons.check_rounded,
       ),
     );
   }
