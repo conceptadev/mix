@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 
+import '../mixer/mix_context.dart';
 import '../mixer/mix_factory.dart';
-import '../mixer/mixer.dart';
 import 'box.widget.dart';
 import 'gap.widget.dart';
 import 'mix.widget.dart';

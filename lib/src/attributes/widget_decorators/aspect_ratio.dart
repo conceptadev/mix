@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mix/src/attributes/common/attribute.dart';
-import 'package:mix/src/mixer/mixer.dart';
+import 'package:mix/src/mixer/mix_context.dart';
 
 AspectRationWidgetAttribute aspectRatio(double aspectRatio) {
   return AspectRationWidgetAttribute(aspectRatio: aspectRatio);

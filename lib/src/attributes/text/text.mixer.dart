@@ -70,7 +70,6 @@ class TextMixer {
       overflow: text?.overflow ?? TextOverflow.clip,
       textScaleFactor: text?.textScaleFactor,
       maxLines: text?.maxLines,
-      semanticsLabel: text?.semanticsLabel,
       textWidthBasis: text?.textWidthBasis,
       textHeightBehavior: text?.textHeightBehavior,
       directives: directives.toList(),

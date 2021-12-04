@@ -7,7 +7,7 @@ import '../attributes/flex/flex.mixer.dart';
 import '../attributes/icon/icon.mixer.dart';
 import '../attributes/shared/shared.mixer.dart';
 import '../attributes/text/text.mixer.dart';
-import '../mixer/mixer.dart';
+import '../mixer/mix_context.dart';
 
 /// Mix Widget
 abstract class MixWidget extends StatelessWidget {

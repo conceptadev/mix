@@ -119,10 +119,6 @@ class TextUtility {
     return TextAttributes(maxLines: maxLines);
   }
 
-  static TextAttributes semanticsLabel(String? semanticsLabel) {
-    return TextAttributes(semanticsLabel: semanticsLabel);
-  }
-
   static TextAttributes textWidthBasis(TextWidthBasis? textWidthBasis) {
     return TextAttributes(textWidthBasis: textWidthBasis);
   }

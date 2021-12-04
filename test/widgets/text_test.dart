@@ -4,7 +4,7 @@ import 'package:mix/src/attributes/shared/shared.utils.dart';
 import 'package:mix/src/attributes/text/text.utils.dart';
 import 'package:mix/src/mixer/mix_factory.dart';
 
-import '../test_utils.dart';
+import '../testing_utils.dart';
 
 void main() {
   group("Mix Text widget", () {

@@ -165,7 +165,7 @@ class BoxUtility {
     if (asBorder != null) {
       border = BorderDto.fromBorder(asBorder);
     } else {
-      final side = BorderSideProps.only(
+      final side = BorderSideDto.only(
         color: color,
         width: width,
         style: style,

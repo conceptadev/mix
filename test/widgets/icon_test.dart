@@ -4,7 +4,7 @@ import 'package:mix/src/attributes/icon/icon.attributes.dart';
 import 'package:mix/src/attributes/shared/shared.attributes.dart';
 import 'package:mix/src/mixer/mix_factory.dart';
 
-import '../test_utils.dart';
+import '../testing_utils.dart';
 
 void main() {
   group("Mix Icon widget", () {

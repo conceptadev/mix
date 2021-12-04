@@ -19,7 +19,7 @@ class TextAttributes extends Attribute {
   final TextOverflow? overflow;
   final double? textScaleFactor;
   final int? maxLines;
-  final String? semanticsLabel;
+
   final TextWidthBasis? textWidthBasis;
   final TextHeightBehavior? textHeightBehavior;
 
@@ -33,7 +33,6 @@ class TextAttributes extends Attribute {
     this.overflow,
     this.textScaleFactor,
     this.maxLines,
-    this.semanticsLabel,
     this.textWidthBasis,
     this.textHeightBehavior,
   });
@@ -52,7 +51,7 @@ class TextAttributes extends Attribute {
       overflow: other.overflow,
       textScaleFactor: other.textScaleFactor,
       maxLines: other.maxLines,
-      semanticsLabel: other.semanticsLabel,
+
       textWidthBasis: other.textWidthBasis,
       textHeightBehavior: other.textHeightBehavior,
     );
@@ -102,7 +101,6 @@ class TextAttributes extends Attribute {
       overflow: overflow ?? this.overflow,
       textScaleFactor: textScaleFactor ?? this.textScaleFactor,
       maxLines: maxLines ?? this.maxLines,
-      semanticsLabel: semanticsLabel ?? this.semanticsLabel,
       textWidthBasis: textWidthBasis ?? this.textWidthBasis,
       textHeightBehavior: textHeightBehavior ?? this.textHeightBehavior,
     );
@@ -122,7 +120,6 @@ class TextAttributes extends Attribute {
         other.overflow == overflow &&
         other.textScaleFactor == textScaleFactor &&
         other.maxLines == maxLines &&
-        other.semanticsLabel == semanticsLabel &&
         other.textWidthBasis == textWidthBasis &&
         other.textHeightBehavior == textHeightBehavior;
   }
@@ -138,7 +135,6 @@ class TextAttributes extends Attribute {
         overflow.hashCode ^
         textScaleFactor.hashCode ^
         maxLines.hashCode ^
-        semanticsLabel.hashCode ^
         textWidthBasis.hashCode ^
         textHeightBehavior.hashCode;
   }

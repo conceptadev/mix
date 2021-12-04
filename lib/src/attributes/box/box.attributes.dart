@@ -68,6 +68,7 @@ class BoxAttributes extends Attribute {
       width: box.width,
       maxWidth: box.maxWidth,
       minWidth: box.minWidth,
+      shape: box.shape,
     );
   }
 

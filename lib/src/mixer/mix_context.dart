@@ -12,6 +12,7 @@ import 'mix_factory.dart';
 class MixContext {
   final BuildContext context;
   final Mix sourceMix;
+  final Mix originalMix;
   final Mix descendentMix;
 
   final List<VariantAttribute> variants;
@@ -27,6 +28,7 @@ class MixContext {
   MixContext._({
     required this.context,
     required this.sourceMix,
+    required this.originalMix,
     required this.descendentMix,
     required this.boxMixer,
     required this.textMixer,
@@ -54,19 +56,19 @@ class MixContext {
     }
     return _build(
       context,
-      _mix.attributes,
+      _mix,
       customVariants: customVariants ?? [],
     );
   }
 
   static MixContext _build<T extends Attribute>(
     BuildContext context,
-    List<T> attributes, {
+    Mix<T> mix, {
     required List<Var> customVariants,
   }) {
     final _attributes = _expandAttributes(
       context,
-      attributes,
+      mix.attributes,
       customVariants: customVariants,
     );
     BoxAttributes? boxAttributes;
@@ -122,6 +124,7 @@ class MixContext {
     return MixContext._(
       context: context,
       sourceMix: source,
+      originalMix: mix,
       descendentMix: Mix.fromMaybeAttribute([
         textAttributes,
         iconAttributes,
@@ -243,5 +246,26 @@ class MixContext {
       this.context,
       Mix.combine(this.sourceMix, sourceMix),
     );
+  }
+}
+
+class MixContextNotifier extends InheritedWidget {
+  const MixContextNotifier(
+    this.mixContext, {
+    Key? key,
+    required Widget child,
+  }) : super(key: key, child: child);
+
+  final MixContext? mixContext;
+
+  static MixContext? of(BuildContext context) {
+    final widget =
+        context.dependOnInheritedWidgetOfExactType<MixContextNotifier>();
+    return widget?.mixContext;
+  }
+
+  @override
+  bool updateShouldNotify(MixContextNotifier oldWidget) {
+    return mixContext != oldWidget.mixContext;
   }
 }

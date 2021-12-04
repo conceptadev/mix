@@ -11,7 +11,6 @@ const textStyle = TextUtility.style;
 const softWrap = TextUtility.softWrap;
 const textScaleFactor = TextUtility.textScaleFactor;
 const strutStyle = TextUtility.strutStyle;
-const semanticsLabel = TextUtility.semanticsLabel;
 
 const fontWeight = TextStyleUtility.fontWeight;
 const textBaseline = TextStyleUtility.textBaseline;

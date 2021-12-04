@@ -3,10 +3,10 @@ import 'package:mix/src/dto/dto.dart';
 import 'package:mix/src/theme/refs/refs.dart';
 
 class BorderDto extends Dto<Border> {
-  final BorderSideProps? top;
-  final BorderSideProps? right;
-  final BorderSideProps? bottom;
-  final BorderSideProps? left;
+  final BorderSideDto? top;
+  final BorderSideDto? right;
+  final BorderSideDto? bottom;
+  final BorderSideDto? left;
 
   const BorderDto._({
     this.bottom,
@@ -22,7 +22,7 @@ class BorderDto extends Dto<Border> {
     this.left,
   });
 
-  const BorderDto.fromBorderSide(BorderSideProps side)
+  const BorderDto.fromBorderSide(BorderSideDto side)
       : this.only(
           top: side,
           right: side,
@@ -36,7 +36,7 @@ class BorderDto extends Dto<Border> {
     BorderStyle? style,
   }) {
     return BorderDto.fromBorderSide(
-      BorderSideProps.only(
+      BorderSideDto.only(
         color: color,
         width: width,
         style: style,
@@ -46,14 +46,14 @@ class BorderDto extends Dto<Border> {
 
   factory BorderDto.fromBorder(Border border) {
     return BorderDto.only(
-      top: BorderSideProps.fromBorderSide(border.top),
-      right: BorderSideProps.fromBorderSide(border.right),
-      bottom: BorderSideProps.fromBorderSide(border.bottom),
-      left: BorderSideProps.fromBorderSide(border.left),
+      top: BorderSideDto.fromBorderSide(border.top),
+      right: BorderSideDto.fromBorderSide(border.right),
+      bottom: BorderSideDto.fromBorderSide(border.bottom),
+      left: BorderSideDto.fromBorderSide(border.left),
     );
   }
 
-  BorderSide _resolveEachSide(BuildContext context, BorderSideProps? side) {
+  BorderSide _resolveEachSide(BuildContext context, BorderSideDto? side) {
     if (side == null) {
       return BorderSide.none;
     }
@@ -82,10 +82,10 @@ class BorderDto extends Dto<Border> {
   }
 
   BorderDto copyWith({
-    BorderSideProps? top,
-    BorderSideProps? right,
-    BorderSideProps? bottom,
-    BorderSideProps? left,
+    BorderSideDto? top,
+    BorderSideDto? right,
+    BorderSideDto? bottom,
+    BorderSideDto? left,
   }) {
     return BorderDto._(
       top: this.top?.merge(top) ?? top,
@@ -117,46 +117,46 @@ class BorderDto extends Dto<Border> {
   }
 }
 
-class BorderSideProps extends Dto<BorderSide> {
+class BorderSideDto extends Dto<BorderSide> {
   final Color? color;
   final double? width;
   final BorderStyle? style;
 
-  const BorderSideProps._({
+  const BorderSideDto._({
     this.color,
     this.width,
     this.style,
   });
 
-  const BorderSideProps.only({
+  const BorderSideDto.only({
     this.color,
     this.width,
     this.style,
   });
 
-  factory BorderSideProps.fromBorderSide(BorderSide side) {
-    return BorderSideProps.only(
+  factory BorderSideDto.fromBorderSide(BorderSide side) {
+    return BorderSideDto.only(
       color: side.color,
       width: side.width,
       style: side.style,
     );
   }
 
-  BorderSideProps copyWith({
+  BorderSideDto copyWith({
     Color? color,
     double? width,
     BorderStyle? style,
   }) {
-    return BorderSideProps._(
+    return BorderSideDto._(
       color: color ?? this.color,
       width: width ?? this.width,
       style: style ?? this.style,
     );
   }
 
-  BorderSideProps merge(BorderSideProps? other) {
+  BorderSideDto merge(BorderSideDto? other) {
     if (other == null) return this;
-    return BorderSideProps._(
+    return BorderSideDto._(
       color: other.color ?? color,
       width: other.width ?? width,
       style: other.style ?? style,

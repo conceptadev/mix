@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mix/src/attributes/text/text.attributes.dart';
 import 'package:mix/src/attributes/text/text.notifier.dart';
 import 'package:mix/src/dto/box_shadow.dto.dart';
-import 'package:mix/src/mixer/mix_context_notifier.dart';
+import 'package:mix/src/mixer/mix_context.dart';
 import 'package:mix/src/mixer/mix_factory.dart';
 
 extension ContextExtensions on BuildContext {

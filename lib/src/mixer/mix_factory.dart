@@ -49,6 +49,10 @@ class Mix<T extends Attribute> {
     return Mix._(validAttributes.toList());
   }
 
+  Mix<T> clone() {
+    return Mix._([...attributes]);
+  }
+
   /// Merges many mixes into one
   static Mix<T> combineAll<T extends Attribute>(List<Mix<T>> mixes) {
     final attributes = mixes.expand((element) => element.attributes).toList();
@@ -90,6 +94,16 @@ class Mix<T extends Attribute> {
 
   /// Used for const constructor widgets
   static const Mix constant = Mix._();
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is Mix<T> && listEquals(other.attributes, attributes);
+  }
+
+  @override
+  int get hashCode => attributes.hashCode;
 }
 
 extension MixExtension<T extends Attribute> on Mix<T> {
@@ -112,9 +126,8 @@ extension MixExtension<T extends Attribute> on Mix<T> {
   }
 
   Box box({
-    required Widget child,
-    Key? key,
     Mix? overrideMix,
+    required Widget child,
   }) {
     final mx = Mix.combine(this, overrideMix);
     return Box(mix: mx, child: child);
@@ -123,7 +136,6 @@ extension MixExtension<T extends Attribute> on Mix<T> {
   HBox hbox({
     Mix? overrideMix,
     required List<Widget> children,
-    Key? key,
   }) {
     final mix = Mix.combine(this, overrideMix);
     return HBox(mix: mix, children: children);
@@ -131,7 +143,6 @@ extension MixExtension<T extends Attribute> on Mix<T> {
 
   Pressable _pressable({
     required Widget child,
-    Key? key,
     Mix? overrideMix,
     void Function()? onPressed,
     void Function()? onLongPressed,
@@ -152,26 +163,22 @@ extension MixExtension<T extends Attribute> on Mix<T> {
   HBox row({
     Mix? overrideMix,
     required List<Widget> children,
-    Key? key,
   }) {
     return hbox(
       overrideMix: overrideMix,
       children: children,
-      key: key,
     );
   }
 
   TextMix text(
     String text, {
     Mix? overrideMix,
-    Key? key,
   }) {
     final mix = Mix.combine(this, overrideMix);
-    return TextMix(text, mix: mix, key: key);
+    return TextMix(text, mix: mix);
   }
 
   VBox vbox({
-    Key? key,
     Mix? overrideMix,
     required List<Widget> children,
   }) {
@@ -181,34 +188,28 @@ extension MixExtension<T extends Attribute> on Mix<T> {
 
   VBox column({
     Mix? overrideMix,
-    Key? key,
     required List<Widget> children,
   }) {
     return vbox(
       children: children,
       overrideMix: overrideMix,
-      key: key,
     );
   }
 
   IconMix icon(
     IconData icon, {
     Mix? overrideMix,
-    Key? key,
-    String? semanticLabel,
   }) {
     final mx = Mix.combine(this, overrideMix);
     return IconMix(
       mix: mx,
       icon: icon,
-      semanticLabel: semanticLabel,
     );
   }
 }
 
 typedef PressableWidgetFn = Pressable Function({
   required Widget child,
-  Key? key,
   Mix? overrideMix,
   void Function()? onPressed,
   void Function()? onLongPressed,

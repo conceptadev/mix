@@ -2,9 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
 
-import '../mixer/mix_context_notifier.dart';
+import '../mixer/mix_context.dart';
 import '../mixer/mix_factory.dart';
-import '../mixer/mixer.dart';
 import 'mix.widget.dart';
 import 'nothing.widget.dart';
 

@@ -12,7 +12,7 @@ import 'package:mix/src/dto/edge_insets.dto.dart';
 import 'package:mix/src/mixer/mix_factory.dart';
 import 'package:mix/src/widgets/box.widget.dart';
 
-import '../test_utils.dart';
+import '../testing_utils.dart';
 
 void main() {
   group(

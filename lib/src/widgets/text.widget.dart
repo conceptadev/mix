@@ -4,8 +4,8 @@ import 'package:mix/src/attributes/exports.dart';
 import 'package:mix/src/helpers/extensions.dart';
 import 'package:mix/src/widgets/nothing.widget.dart';
 
+import '../mixer/mix_context.dart';
 import '../mixer/mix_factory.dart';
-import '../mixer/mixer.dart';
 import 'mix.widget.dart';
 
 class TextMix extends MixWidget {
@@ -33,15 +33,15 @@ class TextMix extends MixWidget {
       customVariants: variantOrNull(variant),
     );
 
-    return _TextMixerWidget(
+    return TextMixerWidget(
       mixed,
       text: text,
     );
   }
 }
 
-class _TextMixerWidget extends MixedWidget {
-  const _TextMixerWidget(
+class TextMixerWidget extends MixedWidget {
+  const TextMixerWidget(
     MixContext mixer, {
     Key? key,
     required this.text,

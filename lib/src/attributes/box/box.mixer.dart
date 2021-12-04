@@ -142,6 +142,57 @@ class BoxMixer {
         other.shape == shape;
   }
 
+  /// Check what properties are different from another instance of [BoxMixer].
+  List<String> getDifference(BoxMixer other) {
+    final diff = <String>[];
+    if (_color != other._color) {
+      diff.add('color');
+    }
+    if (alignment != other.alignment) {
+      diff.add('alignment');
+    }
+    if (padding != other.padding) {
+      diff.add('padding');
+    }
+    if (margin != other.margin) {
+      diff.add('margin');
+    }
+    if (width != other.width) {
+      diff.add('width');
+    }
+    if (height != other.height) {
+      diff.add('height');
+    }
+    if (border != other.border) {
+      diff.add('border');
+    }
+    if (borderRadius != other.borderRadius) {
+      diff.add('borderRadius');
+    }
+    if (listEquals(boxShadow, other.boxShadow) == false) {
+      diff.add('boxShadow');
+    }
+    if (transform != other.transform) {
+      diff.add('transform');
+    }
+    if (maxHeight != other.maxHeight) {
+      diff.add('maxHeight');
+    }
+    if (minHeight != other.minHeight) {
+      diff.add('minHeight');
+    }
+    if (maxWidth != other.maxWidth) {
+      diff.add('maxWidth');
+    }
+    if (minWidth != other.minWidth) {
+      diff.add('minWidth');
+    }
+    if (shape != other.shape) {
+      diff.add('shape');
+    }
+    return diff;
+  }
+
   @override
   int get hashCode {
     return _color.hashCode ^
