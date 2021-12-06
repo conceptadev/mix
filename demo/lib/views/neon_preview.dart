@@ -6,42 +6,49 @@ class NeonPreview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // final mix = Mix(
+    //   padding(16),
+    //   rounded(10),
+    //   animated(),
+    //   textColor(Colors.purpleAccent),
+    //   border(
+    //     color: Colors.purpleAccent,
+    //     width: 1,
+    //   ),
+    //   shadow(
+    //     color: Colors.purpleAccent,
+    //     blurRadius: 5.0,
+    //   ),
+    //   hover(
+    //     shadow(
+    //       blurRadius: 15.0,
+    //     ),
+    //   ),
+    //   large(
+    //     bgColor(Colors.orange),
+    //   ),
+    //   small(
+    //     bgColor(Colors.yellow),
+    //   ),
+    //   bgColor(Colors.white),
+    // );
+
     final mix = Mix(
-      padding(16),
+      height(100),
+      width(100),
       rounded(10),
-      animated(),
-      textColor(Colors.purpleAccent),
-      border(
-        color: Colors.purpleAccent,
-        width: 1,
-      ),
-      shadow(
-        color: Colors.purpleAccent,
-        blurRadius: 5.0,
-      ),
-      hover(
-        shadow(
-          blurRadius: 15.0,
-        ),
-      ),
-      large(
-        bgColor(Colors.orange),
-      ),
-      small(
-        bgColor(Colors.yellow),
-      ),
-      bgColor(Colors.white),
+      elevation(2),
+      bgColor(Colors.purple),
+      align(Alignment.center),
+      textColor(Colors.white),
     );
 
     return SingleChildScrollView(
       child: Column(
         children: [
-          Pressable(
+          Box(
             mix: mix,
-            onPressed: () {},
-            child: const TextMix(
-              'Simple Text',
-            ),
+            child: TextMix('Purple Box'),
           )
         ],
       ),

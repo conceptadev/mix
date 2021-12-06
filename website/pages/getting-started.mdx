@@ -1,0 +1,133 @@
+import Image from 'next/image'
+
+# Getting Started
+
+## Installation
+
+Just run the following command to add Mix in your project.
+
+```bash
+flutter pub add mix
+```
+
+## Usage
+
+Here is a simple example of defining and using a Mix to get started.
+
+**Rounded Purple Box with Elevation and White Text**
+
+```dart
+
+import 'package:mix/mix.dart';
+
+final mix = Mix(
+    height(100),
+    width(100),
+    rounded(10),
+    elevation(2),
+    bgColor(Colors.purple),
+    align(Alignment.center),
+    textColor(Colors.white),
+);
+
+Box(
+    mix: mix,
+    child: TextMix('Purple Box'),
+);
+
+```
+
+**Results**
+
+![Tux, the Linux mascot](/images/purple-box.png)
+
+## Concepts
+
+### Mix
+
+The base of the API. If you come from the web you can think of a Mix as a stylesheet. That allows to group visual properties.
+
+### Attributes & Utilities
+
+Attributes are the foundation for characteristics or visual property, that can be defined and added to a Mix.
+
+In Flutter we say "Everything is a widget", so for us "Everything in a Mix is an attribute".
+
+To make interaction with `Attributes` easier we have `Utility` functions. That allow for more control over how an attribute is composed.
+
+Lets take the following example.
+
+```dart
+Mix(height(100))
+```
+
+This is defining a Mix with the box height attribute of 100.
+However **height** is a `Utility` that allows us to compose an `Attribute`.
+
+**Similar to this**
+
+```dart
+BoxAttribute height(double value) => BoxAttribute(height: value);
+```
+
+With that in mind you can think of the following being equivalent.
+
+```dart
+Mix(height(100))
+// is equivalent to
+Mix(BoxAttribute(height: 100))
+```
+
+As you can see `Utilities` are not required for comsing Mixes however, make a cleaner API possible and overall better development experience.
+
+### Mixer Widgets
+
+The widget primitives that allow to render a Mix. They are the following:
+
+#### Box
+
+The most basic widget primitive. `Box` is not like a `Container`, Box is a Container". That means you can think of all `BoxAttributes` as `Container` properties.
+
+That means that this:
+
+```dart
+Box(mix:Mix(height(100)));
+```
+
+will be translated into
+
+```dart d
+Container(height: 100);
+```
+
+#### Flexbox
+
+The equivalent of the Flex widgets (Flex, Row, Column). Allow for the use of flex Attributes, and wrap them in a `Box` for composability.
+
+#### HBox
+
+Horizontal `Flexbox` widget. The equivalent of a `Row` in Flutter.
+
+#### VBox
+
+Vertical `Flexbox` widget. The equivalent of a `Column` in Flutter.
+
+#### TextMix
+
+The equivalent of the `Text` widget. Allows you to use Mix attributes to style and build custom text widgets.
+
+#### IconMix
+
+The equivalent to the `Icon` widget. Allows to use Mix attributes to style and build custom icon widgets.
+
+### Variants
+
+These are variations of a Mix.
+
+## Directives
+
+## Decorators
+
+## Theme
+
+## Tokens
