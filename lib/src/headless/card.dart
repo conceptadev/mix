@@ -6,13 +6,40 @@ const title = Var('title');
 
 const paragraph = Var('paragraph');
 
+/// Usage example:
+///
+/// ```dart
+/// CardX(
+///  children: [
+///    TextMix(
+///      titleContent,
+///      variant: title,
+///    ),
+///    TextMix(
+///      paragraphContent,
+///      variant: paragraph,
+///    ),
+///  ],
+/// ),
+/// ```
 class CardX extends StatelessWidget {
+  /// Creates a card
   const CardX({
     Key? key,
     required this.children,
     this.mix,
   }) : super(key: key);
 
+  /// The content of the card.
+  ///
+  /// [title] and [paragraph] can be used alongside with [TextMix]:
+  ///
+  /// ```dart
+  /// TextMix(
+  ///   'This is the card title',
+  ///   variant: title,
+  /// )
+  /// ```
   final List<Widget> children;
   final Mix? mix;
 
