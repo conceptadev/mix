@@ -1,4 +1,8 @@
-# ![mix](https://raw.githubusercontent.com/leoafarias/mix/main/assets/logo.png)
+<p align="center">
+  <img width="250" src="https://raw.githubusercontent.com/leoafarias/mix/main/assets/logo.png">
+</p>
+
+#
 
 An expressive way to effortlessly build design systems in Flutter. Mix offers primitive building blocks to help developers and designers create beautiful and consistent UI.
 
