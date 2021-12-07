@@ -1,7 +1,7 @@
+import 'package:demo/views/basic_example.dart';
 import 'package:demo/views/button_preview.dart';
 import 'package:demo/views/cards.dart';
 import 'package:demo/views/headless_ui.dart';
-import 'package:demo/views/neon_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -41,6 +41,10 @@ class AppShell extends HookConsumerWidget {
               // labelType: NavigationRailLabelType.selected,
               destinations: const <NavigationRailDestination>[
                 NavigationRailDestination(
+                  icon: Icon(Icons.circle),
+                  label: Text('Basic Example'),
+                ),
+                NavigationRailDestination(
                   icon: Icon(Icons.font_download_outlined),
                   selectedIcon: Icon(Icons.font_download),
                   label: Text('Headless UI'),
@@ -49,11 +53,6 @@ class AppShell extends HookConsumerWidget {
                   icon: Icon(Icons.bookmark_border),
                   selectedIcon: Icon(Icons.book),
                   label: Text('Pressable'),
-                ),
-                NavigationRailDestination(
-                  icon: Icon(Icons.bookmark_border),
-                  selectedIcon: Icon(Icons.book),
-                  label: Text('Neon'),
                 ),
                 NavigationRailDestination(
                   icon: Icon(Icons.bookmark_border),
@@ -71,9 +70,9 @@ class AppShell extends HookConsumerWidget {
             // This is the main content.
             Expanded(
               child: [
+                const Center(child: BasicExample()),
                 const HeadlessPreview(),
                 const PressablePreview(),
-                const NeonPreview(),
                 const CardsPreview(),
                 const ButtonsPreview()
               ][selected.value],
