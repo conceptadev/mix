@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:mix/mix.dart';
 import 'package:mix/src/attributes/box/box.attributes.dart';
 import 'package:mix/src/dto/border.dto.dart';
 import 'package:mix/src/dto/border_radius.dto.dart';
 import 'package:mix/src/dto/box_shadow.dto.dart';
 import 'package:mix/src/dto/edge_insets.dto.dart';
+import 'package:mix/src/helpers/extensions.dart';
 
 class BoxUtility {
   const BoxUtility._();
@@ -218,11 +218,42 @@ class BoxUtility {
 
   /// Elevation property for box attributes
   static BoxAttributes elevation(int elevation) {
-    const elevationOptions = [1, 2, 3, 4, 6, 8, 9, 12, 16, 24];
+    const elevationOptions = [0, 1, 2, 3, 4, 6, 8, 9, 12, 16, 24];
     assert(
       elevationOptions.contains(elevation),
       'Elevation must be one of the following: ${elevationOptions.join(', ')}',
     );
+
+    if (elevation == 0) {
+      return const BoxAttributes(
+        boxShadow: [
+          BoxShadowDto(
+            blurRadius: 0,
+            offset: Offset(0, 0),
+            spreadRadius: 0,
+            color: Colors.transparent,
+          ),
+          BoxShadowDto(
+            blurRadius: 0,
+            offset: Offset(0, 0),
+            spreadRadius: 0,
+            color: Colors.transparent,
+          ),
+          BoxShadowDto(
+            blurRadius: 0,
+            offset: Offset(0, 0),
+            spreadRadius: 0,
+            color: Colors.transparent,
+          ),
+          BoxShadowDto(
+            blurRadius: 0,
+            offset: Offset(0, 0),
+            spreadRadius: 0,
+            color: Colors.transparent,
+          )
+        ],
+      );
+    }
 
     return BoxAttributes(
       boxShadow: kElevationToShadow[elevation]!

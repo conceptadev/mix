@@ -1,6 +1,5 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:mix/mix.dart';
+import 'package:mix/src/helpers/variants.dart';
 
 import '../mixer/mix_context.dart';
 import '../mixer/mix_factory.dart';
@@ -17,7 +16,7 @@ class Box extends MixWidget {
   }) : super(mix, key: key);
 
   final Widget? child;
-  final Var? variant;
+  final Variant? variant;
   final bool inherit;
 
   @override

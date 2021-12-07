@@ -30,12 +30,12 @@ class MultiVariant<T extends Attribute> {
     required this.operator,
   });
 
-  final List<Var<T>> variants;
+  final List<Variant<T>> variants;
   final _OP operator;
 
   List<VariantAttribute<T>> _buildOrOperations(
     List<T> attributes, {
-    Iterable<Var<T>>? variants,
+    Iterable<Variant<T>>? variants,
   }) {
     variants ??= this.variants;
     final attributeVariants = variants.map((v) {
@@ -105,17 +105,17 @@ class MultiVariant<T extends Attribute> {
   }
 }
 
-class Var<T extends Attribute> {
-  const Var(this.name, {this.checkFn});
+class Variant<T extends Attribute> {
+  const Variant(this.name, {this.checkFn});
 
   final String name;
 
   final bool Function(BuildContext)? checkFn;
 
-  MultiVariant<T> operator &(Var<T> variant) =>
+  MultiVariant<T> operator &(Variant<T> variant) =>
       MultiVariant<T>([this, variant], operator: _OP.and);
 
-  MultiVariant<T> operator |(Var<T> variant) =>
+  MultiVariant<T> operator |(Variant<T> variant) =>
       MultiVariant<T>([this, variant], operator: _OP.or);
 
   VariantAttribute<T> call([
@@ -156,7 +156,7 @@ class Var<T extends Attribute> {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is Var && other.name == name;
+    return other is Variant && other.name == name;
   }
 
   @override

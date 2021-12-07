@@ -20,7 +20,7 @@ class NestedAttribute<T extends Attribute> extends Attribute {
 class VariantAttribute<T extends Attribute> extends Attribute {
   const VariantAttribute(this.variant, this.attributes, {this.checkFn});
 
-  final Var variant;
+  final Variant variant;
   final List<T> attributes;
   final bool Function(BuildContext)? checkFn;
 

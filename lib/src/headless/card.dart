@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
 
-const title = Var('title');
+const title = Variant('title');
 
-const paragraph = Var('paragraph');
+const paragraph = Variant('paragraph');
 
 /// Usage example:
 ///

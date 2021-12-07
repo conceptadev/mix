@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
 
-const active = Var('active');
+const active = Variant('active');
 
-class CheckboxX extends StatelessWidget {
+class CheckboxX extends RemixableWidget {
   const CheckboxX({
     Key? key,
     required this.checked,
     required this.onChanged,
-    this.mix,
-  }) : super(key: key);
-  final Mix? mix;
+    Mix? mix,
+  }) : super(mix, key: key);
+
   final bool checked;
   final ValueChanged<bool>? onChanged;
 
-  Mix get __mix {
+  @override
+  Mix get defaultMix {
     return Mix(
       animated(),
       rounded(5),
@@ -32,6 +32,9 @@ class CheckboxX extends StatelessWidget {
       active(
         iconColor($primary),
       ),
+      disabled(
+        border(color: Colors.grey.shade300),
+      ),
       (hover | active)(
         borderColor($primary),
       ),
@@ -42,7 +45,7 @@ class CheckboxX extends StatelessWidget {
   Widget build(BuildContext context) {
     final fn = onChanged;
     return Pressable(
-      mix: Mix.combine(__mix, mix),
+      mix: mix,
       variant: checked ? active : null,
       onPressed: fn == null ? null : () => fn(!checked),
       child: IconMix(

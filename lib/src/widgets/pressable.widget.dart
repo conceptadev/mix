@@ -25,7 +25,7 @@ class Pressable extends MixWidget {
   final FocusNode? focusNode;
   final bool autofocus;
   final HitTestBehavior? behavior;
-  final Var? variant;
+  final Variant? variant;
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +61,7 @@ class PressableMixerWidget extends StatefulWidget {
   final VoidCallback? onLongPressed;
   final FocusNode? focusNode;
   final bool autofocus;
-  final Var? variant;
+  final Variant? variant;
 
   final HitTestBehavior? behavior;
 

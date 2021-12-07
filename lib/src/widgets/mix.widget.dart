@@ -7,7 +7,6 @@ import '../attributes/flex/flex.mixer.dart';
 import '../attributes/icon/icon.mixer.dart';
 import '../attributes/shared/shared.mixer.dart';
 import '../attributes/text/text.mixer.dart';
-import '../mixer/mix_context.dart';
 
 /// Mix Widget
 abstract class MixWidget extends StatelessWidget {
@@ -24,7 +23,7 @@ abstract class MixWidget extends StatelessWidget {
     return _mix;
   }
 
-  List<Var>? variantOrNull(Var? variant) {
+  List<Variant>? variantOrNull(Variant? variant) {
     return variant == null ? null : [variant];
   }
 
@@ -38,6 +37,21 @@ abstract class MixWidget extends StatelessWidget {
     properties.add(
       DiagnosticsProperty<Mix>('mix', mix, defaultValue: null),
     );
+  }
+}
+
+abstract class RemixableWidget extends MixWidget {
+  /// Constructor
+  const RemixableWidget(
+    Mix? mix, {
+    Key? key,
+  }) : super(mix, key: key);
+
+  abstract final Mix defaultMix;
+
+  @override
+  Mix get mix {
+    return defaultMix.mix(_mix);
   }
 }
 

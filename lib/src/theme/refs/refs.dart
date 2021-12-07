@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:mix/mix.dart';
+import 'package:mix/src/helpers/extensions.dart';
+import 'package:mix/src/theme/mix_theme.dart';
 import 'package:mix/src/theme/refs/color_tokens.dart';
 import 'package:mix/src/theme/refs/typography_tokens.dart';
 

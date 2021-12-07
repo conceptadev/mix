@@ -1,6 +1,7 @@
 import 'package:demo/views/basic_example.dart';
 import 'package:demo/views/button_preview.dart';
 import 'package:demo/views/cards.dart';
+import 'package:demo/views/design_token_example.dart';
 import 'package:demo/views/headless_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -22,7 +23,7 @@ class AppShell extends HookConsumerWidget {
     return MixTheme(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Remix'),
+          title: const Text('Mix'),
           actions: [
             Switch(
               value: darkMode.state,
@@ -45,25 +46,26 @@ class AppShell extends HookConsumerWidget {
                   label: Text('Basic Example'),
                 ),
                 NavigationRailDestination(
-                  icon: Icon(Icons.font_download_outlined),
-                  selectedIcon: Icon(Icons.font_download),
-                  label: Text('Headless UI'),
+                  icon: Icon(Icons.circle),
+                  label: Text('Design Tokens'),
                 ),
                 NavigationRailDestination(
-                  icon: Icon(Icons.bookmark_border),
-                  selectedIcon: Icon(Icons.book),
+                  icon: Icon(Icons.circle),
                   label: Text('Pressable'),
                 ),
                 NavigationRailDestination(
-                  icon: Icon(Icons.bookmark_border),
-                  selectedIcon: Icon(Icons.book),
+                  icon: Icon(Icons.circle),
                   label: Text('Cards'),
                 ),
                 NavigationRailDestination(
-                  icon: Icon(Icons.bookmark_border),
-                  selectedIcon: Icon(Icons.book),
-                  label: Text('Buttons'),
+                  icon: Icon(Icons.circle),
+                  label: Text('Headless'),
                 ),
+                // NavigationRailDestination(
+                //   icon: Icon(Icons.bookmark_border),
+                //   selectedIcon: Icon(Icons.book),
+                //   label: Text('Buttons'),
+                // ),
               ],
             ),
             const VerticalDivider(thickness: 1, width: 1),
@@ -71,10 +73,11 @@ class AppShell extends HookConsumerWidget {
             Expanded(
               child: [
                 const Center(child: BasicExample()),
-                const HeadlessPreview(),
-                const PressablePreview(),
-                const CardsPreview(),
-                const ButtonsPreview()
+                const Center(child: DesignTokenExample()),
+                const Center(child: PressablePreview()),
+                const Center(child: CardsPreview()),
+                const Center(child: HeadlessPreview()),
+                const ButtonsPreview(),
               ][selected.value],
             ),
           ],

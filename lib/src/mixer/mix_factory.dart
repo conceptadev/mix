@@ -1,8 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:mix/mix.dart';
 import 'package:mix/src/attributes/common/attribute.dart';
 import 'package:mix/src/attributes/helpers/helper.utils.dart';
+import 'package:mix/src/widgets/box.widget.dart';
+import 'package:mix/src/widgets/flex.widget.dart';
+import 'package:mix/src/widgets/icon.widget.dart';
+import 'package:mix/src/widgets/pressable.widget.dart';
+import 'package:mix/src/widgets/text.widget.dart';
 
 /// Defines a mix
 class Mix<T extends Attribute> {
@@ -116,7 +120,7 @@ extension MixExtension<T extends Attribute> on Mix<T> {
     return Mix._([...this.attributes, ...attributes]);
   }
 
-  Mix mix(Mix mix) {
+  Mix<T> mix(Mix<T> mix) {
     return Mix.combineAll([this, mix]);
   }
 
