@@ -77,7 +77,7 @@ class MixContext {
     SharedAttributes? sharedAttributes;
     TextAttributes? textAttributes;
 
-    final source = Mix.fromAttributes(_attributes);
+    final source = Mix.fromList(_attributes);
     final directives = <DirectiveAttribute>[];
     final variants = <VariantAttribute>[];
     final decorators = <WidgetDecorator>[];
@@ -125,7 +125,7 @@ class MixContext {
       context: context,
       sourceMix: source,
       originalMix: mix,
-      descendentMix: Mix.fromMaybeAttribute([
+      descendentMix: Mix.fromMaybeList([
         textAttributes,
         iconAttributes,
         sharedAttributes,

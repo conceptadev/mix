@@ -1,4 +1,4 @@
-import Image from 'next/image'
+import Callout from 'nextra-theme-docs/callout'
 
 # Getting Started
 
@@ -39,13 +39,104 @@ Box(
 
 **Results**
 
-![Tux, the Linux mascot](/images/purple-box.png)
+![Purple Box](/images/purple-box.png)
+
+## Mixing
+
+You will compose visual attributes using **Mixes**. This allows you to compose, combine, inherit and override visual attributes. If you come from the web you can think of a Mix as a stylesheet. That allows to group visual attributes.
+
+### Creating a Mix
+
+#### Mix
+
+You can create a Mix by calling it's class and passing positional attributes like so
+
+```dart
+
+final mix = Mix(
+    height(100),
+    width(100),
+    bgColor(Colors.purple),
+    rounded(10),
+);
+
+```
+
+#### Mix.fromList()
+
+Allows you to create a Mix from a List of attributes. This has the same behavior but provides the ability to receive a List instead of positional arguments.
+
+```dart
+final mix = Mix.fromList([
+    height(100),
+    width(100),
+    bgColor(Colors.purple),
+    rounded(10),
+]);
+```
+
+<Callout emoji="⚠️">
+  The order of the attributes is important, and keep in mind when composing and
+  overriding them. Attributes will be prioritized from right to left.
+</Callout>
+
+### Extending a Mix
+
+Mixes are immutable. The new Mix created will inherit all attributes of the original.
+
+#### Adding attributes to a Mix
+
+##### .add
+
+If you have an existing Mix you can add attributes to it by calling the `add` method. This will return a new Mix with the new attributes added.
+
+```dart
+final newMix = mix.add(
+    height(200),
+    width(200),
+    bgColor(Colors.red),
+);
+```
+
+##### .addAll
+
+Similar to `add` but allows you to pass a List of attributes.
+
+```dart
+final newMix = mix.addAll([
+    height(200),
+    width(200),
+    bgColor(Colors.red),
+]);
+```
+
+#### Combining Mixes
+
+Combining Mixes is a critical part of composing visual attributes. There are a few methods, and constructors that allow for easy ways to combine them.
+
+##### .mix()
+
+```dart
+final thirdMix = firstMix.mix(secondMix);
+```
+
+##### .maybeMix()
+
+If you are receiving a nullable Mix as a parameter there is a simple helper method to keep your code clean.
+
+##### Mix.combine()
+
+Creates a new Mix from a positional arguments of Mixes.
+
+##### Mix.combineAll()
+
+Creates a new Mix from a List of Mixes.
+
+### Utility Helpers
+
+##### Mix.chooser()
 
 ## Concepts
-
-### Mix
-
-The base of the API. If you come from the web you can think of a Mix as a stylesheet. That allows to group visual properties.
 
 ### Attributes & Utilities
 

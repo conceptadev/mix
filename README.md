@@ -4,48 +4,55 @@
 
 #
 
-An expressive way to effortlessly build design systems in Flutter. Mix offers primitive building blocks to help developers and designers create beautiful and consistent UI.
+Build Flutter design systems expressively and effortlessly. **Mix** offers primitive building blocks to help developers and designers create beautiful and consistent UI.
 
 **Important**
 
 ```text
-Mix is currently being used internally to build design systems in Flutter.
-However, it is still in the experimental development stages.
-Major APIs are expected to change until the 1.0 release.
+Mix is currently being used internally to build design systems in Flutter. It is still in heavy development. Major APIs are expected to change until the 1.0 release.
 ```
 
-## Motivation & Goals
+## Motivation
 
-- Creating consistent custom (non-material) UI in Flutter is difficult
-- Maintaining a design system is much harder than building it.
-- Visual attributes should be defined outside of a widget by a composable API shared across the design system.
-- Style consistently with a global theme
-- Respond to changing requirements quickly
-- Create adaptive layouts with ease
-- Material Theme compatible
+Flutter favors [composition](https://docs.flutter.dev/resources/architectural-overview#composition) over inheritance when building widgets. This choice keeps Flutter API extremely easy to interact with and powerful.
+
+However, in our experience, both inheritance and composition are essential when defining presentation attributes. [Themes](https://docs.flutter.dev/cookbook/design/themes) are an excellent example of inheritance but are not extended across all visual properties.
+
+When building a design system, it can be challenging to develop and maintain a consistent UI that shares the same design language for widget variations or across different widgets within the design system.
+
+> Maintaining a design system is much harder than building it.
+
+## Goals
+
+Provide simple API to compose design and layout attributes for widgets. That can easily be extended, overridden, and combined; we call this a **Mix**.
+
+- Visual attributes should be defined outside of a BuildContext by a composable API shared across the design system.
+- Style consistently with a global context
+- Allow to respond to changing requirements quickly
+- Create adaptive designs and layouts with ease
 
 ## Principles
 
+- **Abstract Flutter API, and not modify its behavior.**
 - Development efficiency is gained by the ease of use, consistency, and reusability, not coding speed.
-- Abstract Flutter API, and not modify its behavior.
 - Composability should be a priority. Mixes, Attributes, Widgets, etc.
-- Designer friendly (use simple standard semantics when possible)
+- Designer friendly (use simple standard semantics when possible).
 
-## Examples
+## Usage
 
 ### Simple Mix
 
 ```dart
-final squareMix = Mix(h(150), w(150));
+import 'package:mix/mix.dart';
 
-Box(
-    squareMix,
-    child: Text('Square'),
-);
+final squareMix = Mix(height(150), width(150));
+
+// Use in a Box widget
+Box(mix:squareMix, child:Child());
 
 // You can also use the following:
 // This way has some downsides. More info soon...
-squareMix.box(child:Text('Square'));
+squareMix.box(child:Child());
 ```
 
 ### Composability
@@ -53,26 +60,30 @@ squareMix.box(child:Text('Square'));
 #### Extend Mixes
 
 ```dart
-final cardMix = squareMix.mix(p(20), rounded(20), bgColor(Colors.white));
+final cardMix = squareMix.mix(
+  padding(20),
+  rounded(20),
+  bgColor(Colors.white),
+);
 ```
 
 #### Override Mixes
 
 ```dart
-final redCardMix = cardMix.mix(bgColor(Colors.red));
+final redCardMix = cardMix.mix(
+  bgColor(Colors.red),
+);
 ```
 
 #### Combine Mixes
 
 ```dart
 final elevationMix = Mix(
-    shadowColor(Colors.black12),
-    shadowBlur(4),
-    shadowOffset(0, 2),
+    elevation(2),
 );
 
 Box(
-    Mix.combine(cardMix, elevationMix),
+    mix: Mix.combine(cardMix, elevationMix),
     child: Text('Card With Shadow'),
 );
 ```
@@ -81,19 +92,27 @@ Box(
 
 ```dart
 // If you wan't to change the Mix depending on a condition
-final conditonalMix = Mix.chooser(isSelected, dynamicMix, redCardMix);
+final conditonalMix = Mix.chooser(
+  condition: isSelected,
+  trueMix: dynamicMix,
+  falseMix: redCardMix,
+);
 ```
 
-#### Dynamic Mixes
+#### Variants
 
-If you want the card to change color when in dark mode you can use a dynamic attribute.
+If you want the card to change color when in dark mode you can use variants.
 
 ```dart
-final dynamicMix = cardMix.mix(dark(bgColor(Colors.black)));
+final cardWithDarkMode = cardMix.mix(
+  dark(
+    bgColor(Colors.black),
+  ),
+);
 
 /// Now, when the app is on dark mode the card color will change to `black`.
 Box(
-    dynamicMix,
+    mix: cardWithDarkMode,
     child: Text('Dynamic Card'),
 );
 
@@ -102,13 +121,12 @@ Box(
 You can also leverage media query context values
 
 ```dart
-final flexMix = Mix(gap(20), mainAxis.center);
-
 // Adaptive gutter for your flex widgets using media query
-final adaptiveFlexMix = flexMix.mix(
-  mq.xs(gap(10)),
-  mq.sm(gap(15)),
-  mq.lg(gap(40)),
+final flexMix = Mix(
+  mainAxis.center,
+  gap(10),
+  medium(gap(15)),
+  large(gap(40)),
 );
 ```
 
@@ -121,14 +139,14 @@ Using attribute modifiers you can apply this on the Mix level and not worry abou
 ```dart
 // Whenever the h1 mix is used it will always format as a titleCase. The content "This is the headline" will become "This Is The Headline" when used within a TextMix widget.
 final h1 = Mix(
-  titleCase,
+  titleCase(),
   fontSize(48),
 );
 ```
 
 ## APIs
 
-Documentation is currently in progress. For now you can find some of the available utilities [here](https://github.com/leoafarias/mix/blob/main/lib/src/attributes/utilities.dart)
+Documentation is currently in progress. For now you can find some of the available utilities.
 
 ## Concepts
 
@@ -165,14 +183,6 @@ Similar to a `Container` with some slight adjustments for a better development e
 #### Flexbox
 
 The equivalent of the Flex widgets (Flex, Row, Column). Allow for the use of flex Attributes, and wrap them in a `Box` to use box attributes for composability.
-
-#### ColumnBox
-
-The equivalent of the `Column` widget. Allows you to use Mix attributes to style and build custom text widgets. It is an abstraction of `Flexbox`, so it will also accept `Box` attributes.
-
-#### RowBox
-
-The equivalent of the `Row` widget. Allows you to use Mix attributes to style and build custom text widgets. It is an abstraction of `Flexbox`, so it will also accept `Box` attributes.
 
 #### TextMix
 

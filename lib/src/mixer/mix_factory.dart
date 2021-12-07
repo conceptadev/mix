@@ -42,9 +42,9 @@ class Mix<T extends Attribute> {
     return Mix._(params);
   }
 
-  const Mix.fromAttributes(this.attributes);
+  const Mix.fromList(this.attributes);
 
-  factory Mix.fromMaybeAttribute(List<T?> attributes) {
+  factory Mix.fromMaybeList(List<T?> attributes) {
     final validAttributes = attributes.whereType<T>();
     return Mix._(validAttributes.toList());
   }

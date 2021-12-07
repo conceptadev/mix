@@ -13,7 +13,7 @@ const overrideTextAttribute = TextAttributes(
   ),
 );
 
-final pressableMix = Mix.fromAttributes([
+final pressableMix = Mix.fromList([
   baseBoxAttributes,
   baseTextAttributes,
   textVariant(overrideTextAttribute),
