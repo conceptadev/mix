@@ -45,10 +45,16 @@ Provide simple API to compose design and layout attributes for widgets. That can
 ```dart
 import 'package:mix/mix.dart';
 
-final squareMix = Mix(height(150), width(150));
+final squareMix = Mix(
+  height(150),
+  width(150),
+);
 
 // Use in a Box widget
-Box(mix:squareMix, child:Child());
+Box
+  mix:squareMix,
+  child:Child(),
+);
 
 // You can also use the following:
 // This way has some downsides. More info soon...
