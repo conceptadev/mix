@@ -2,6 +2,8 @@ export default {
   github: 'https://github.com/leoafarias/mix',
   docsRepositoryBase: 'https://github.com/leoafarias/mix/blob/main',
   titleSuffix: ' – Mix',
+
+  floatTOC: true,
   logo: (
     <>
       <span className="mr-2 font-extrabold hidden md:inline">Mix</span>
