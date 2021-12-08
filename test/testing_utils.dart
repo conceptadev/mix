@@ -4,7 +4,6 @@ import 'package:mix/src/dto/border.dto.dart';
 import 'package:mix/src/dto/border_radius.dto.dart';
 import 'package:mix/src/dto/box_shadow.dto.dart';
 import 'package:mix/src/dto/edge_insets.dto.dart';
-import 'package:mix/src/widgets/box.widget.dart';
 
 class MixTestWidget extends StatelessWidget {
   const MixTestWidget({

@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
       child: Consumer(builder: (context, ref, _) {
         final darkMode = ref.watch(darkModeProvider);
         return MaterialApp(
-          title: 'Remix',
+          title: 'Mix',
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
             fontFamily: 'Inter',

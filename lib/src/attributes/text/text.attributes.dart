@@ -1,7 +1,4 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:mix/mix.dart';
 import 'package:mix/src/helpers/extensions.dart';
 import 'package:mix/src/theme/refs/refs.dart';
 

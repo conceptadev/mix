@@ -1,38 +1,44 @@
 import 'package:flutter/material.dart';
-import 'package:mix/mix.dart';
 import 'package:mix/src/attributes/common/attribute.dart';
-import 'package:mix/src/attributes/helpers/helper_short.utils.dart';
+import 'package:mix/src/attributes/exports.dart';
 import 'package:mix/src/mixer/mix_factory.dart';
+import 'package:mix/src/theme/refs/color_tokens.dart';
+import 'package:mix/src/widgets/box.widget.dart';
+import 'package:mix/src/widgets/mix.widget.dart';
+import 'package:mix/src/widgets/pressable.widget.dart';
 
-class SwitchX extends StatelessWidget {
+class SwitchX extends RemixableWidget {
   const SwitchX({
     Key? key,
     this.active = true,
-    this.mix,
+    Mix? mix,
     this.onChanged,
     this.thumb = const SwitchThumb(Mix.constant),
-  }) : super(key: key);
+  }) : super(mix, key: key);
 
   final bool active;
 
   final ValueChanged<bool>? onChanged;
   final SwitchThumb thumb;
-  final Mix? mix;
 
-  static Var on = const Var('active');
-  static Var disabled = const Var('disabled');
-  static Var off = const Var('off');
+  static Variant whenOn = const Variant('active');
+  static Variant whenOff = const Variant('off');
 
-  Mix get __mix {
+  @override
+  Mix get defaultMix {
     return Mix(
       animated(),
       height(20),
       width(36),
       rounded(100),
-      bgColor(Colors.black26),
-      align(Alignment.centerLeft),
-      on(
+      bgColor($onPrimary),
+      whenOff(
+        align(Alignment.centerLeft),
+        bgColor(Colors.grey.shade300),
+      ),
+      whenOn(
         align(Alignment.centerRight),
+        bgColor($primary),
       ),
     );
   }
@@ -43,21 +49,18 @@ class SwitchX extends StatelessWidget {
   }
 
   @override
-  @override
   Widget build(BuildContext context) {
     final fn = onChanged;
 
     return Pressable(
-        onPressed: fn == null ? null : () => fn(!active),
-        child: Box(
-          variant: active ? SwitchX.on : SwitchX.off,
-          mix: __mix,
-          key: key,
-          child: thumb.build(
-            context,
-            active,
-          ),
-        ));
+      onPressed: fn == null ? null : () => fn(!active),
+      variant: active ? SwitchX.whenOn : SwitchX.whenOff,
+      mix: mix,
+      child: thumb.build(
+        context,
+        active,
+      ),
+    );
   }
 }
 
@@ -73,13 +76,12 @@ class SwitchThumb {
       rounded(100),
       margin(4),
       bgColor(Colors.white),
-      apply(mix),
     );
   }
 
   Widget build(BuildContext context, bool checked) {
     return Box(
-      variant: checked ? SwitchX.on : SwitchX.off,
+      variant: checked ? SwitchX.whenOn : SwitchX.whenOff,
       mix: __mix,
     );
   }

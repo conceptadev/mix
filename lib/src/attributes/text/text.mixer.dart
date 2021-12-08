@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:mix/src/attributes/directives/text/text_directive.attributes.dart';
 import 'package:mix/src/attributes/exports.dart';
 import 'package:mix/src/theme/refs/refs.dart';
 

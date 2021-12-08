@@ -18,7 +18,7 @@ class IconMix extends MixWidget {
 
   final IconData icon;
   final String? semanticLabel;
-  final Var? variant;
+  final Variant? variant;
   final bool inherit;
 
   @override

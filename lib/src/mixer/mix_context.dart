@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mix/src/attributes/exports.dart';
+import 'package:mix/src/helpers/extensions.dart';
 
-import '../../mix.dart';
 import '../attributes/box/box.mixer.dart';
 import '../attributes/common/attribute.dart';
 import '../attributes/flex/flex.mixer.dart';
@@ -44,7 +45,7 @@ class MixContext {
     BuildContext context,
     Mix mix, {
     bool inherit = false,
-    List<Var>? customVariants,
+    List<Variant>? customVariants,
   }) {
     Mix _mix = mix;
     if (inherit) {
@@ -64,7 +65,7 @@ class MixContext {
   static MixContext _build<T extends Attribute>(
     BuildContext context,
     Mix<T> mix, {
-    required List<Var> customVariants,
+    required List<Variant> customVariants,
   }) {
     final _attributes = _expandAttributes(
       context,
@@ -151,7 +152,7 @@ class MixContext {
   static List<T> _expandAttributes<T extends Attribute>(
     BuildContext context,
     List<T> attributes, {
-    required List<Var> customVariants,
+    required List<Variant> customVariants,
   }) {
     final spreaded = <T>[];
 

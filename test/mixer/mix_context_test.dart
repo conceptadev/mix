@@ -4,7 +4,7 @@ import 'package:mix/mix.dart';
 
 import '../testing_utils.dart';
 
-const textVariant = Var('textVariant');
+const textVariant = Variant('textVariant');
 
 const overrideTextAttribute = TextAttributes(
   style: TextStyle(

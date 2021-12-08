@@ -18,7 +18,7 @@ class TextMix extends MixWidget {
   }) : super(mix, key: key);
 
   final String text;
-  final Var? variant;
+  final Variant? variant;
 
   /// Check if should inherit Text and
   /// Shared attributes from ancestor

@@ -1,4 +1,3 @@
-import 'package:mix/mix.dart';
 import 'package:mix/src/attributes/common/attribute.dart';
 import 'package:mix/src/mixer/mix_factory.dart';
 

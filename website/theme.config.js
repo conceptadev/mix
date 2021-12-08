@@ -2,12 +2,18 @@ export default {
   github: 'https://github.com/leoafarias/mix',
   docsRepositoryBase: 'https://github.com/leoafarias/mix/blob/main',
   titleSuffix: ' – Mix',
+
+  floatTOC: true,
   logo: (
     <>
+      <img
+        className="md:inline object-contain hidden"
+        style={{ height: '2em' }}
+        src={
+          'https://raw.githubusercontent.com/leoafarias/mix/main/assets/mix-icon.svg'
+        }
+      />
       <span className="mr-2 font-extrabold hidden md:inline">Mix</span>
-      <span className="text-gray-600 font-normal hidden md:inline">
-        Effortlessly build Flutter design systems.
-      </span>
     </>
   ),
   head: (
@@ -25,15 +31,15 @@ export default {
         content="Mix: An expressive way to effortlessly build design systems in Flutter."
       />
       <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:image" content="https://nextra.vercel.app/og.png" />
-      <meta name="twitter:site:domain" content="nextra.vercel.app" />
-      <meta name="twitter:url" content="https://nextra.vercel.app" />
+      <meta name="twitter:image" content="https://fluttermix.com/og.png" />
+      <meta name="twitter:site:domain" content="fluttermix.com" />
+      <meta name="twitter:url" content="https://fluttermix.com" />
       <meta
         name="og:title"
         content="Mix: An expressive way to effortlessly build design systems in Flutter."
       />
-      <meta name="og:image" content="https://nextra.vercel.app/og.png" />
-      <meta name="apple-mobile-web-app-title" content="Nextra" />
+      <meta name="og:image" content="https://fluttermix.com/og.png" />
+      <meta name="apple-mobile-web-app-title" content="Mix" />
       <link
         rel="apple-touch-icon"
         sizes="180x180"
@@ -54,16 +60,11 @@ export default {
       <link
         rel="icon"
         type="image/png"
-        sizes="96x96"
-        href="/favicon-96x96.png"
-      />
-      <link
-        rel="icon"
-        type="image/png"
         sizes="16x16"
         href="/favicon-16x16.png"
       />
-      <meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
+      <link rel="manifest" href="/site.webmanifest" />
+      <meta name="msapplication-TileImage" content="/ms-icon-150x150.png" />
     </>
   ),
   search: true,
@@ -71,6 +72,6 @@ export default {
   nextLinks: true,
   footer: true,
   footerEditLink: 'Edit this page on GitHub',
-  footerText: <>MIT {new Date().getFullYear()} © Nextra.</>,
+  footerText: <>MIT {new Date().getFullYear()} © Mix.</>,
   unstable_faviconGlyph: '👋',
 }
