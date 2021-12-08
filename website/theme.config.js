@@ -8,12 +8,15 @@ export default {
     <>
       <img
         className="md:inline object-contain hidden"
-        style={{ height: '2em' }}
+        style={{ height: '1em' }}
         src={
           'https://raw.githubusercontent.com/leoafarias/mix/main/assets/mix-icon.svg'
         }
       />
-      <span className="mr-2 font-extrabold hidden md:inline">Mix</span>
+      <span className="mr-2 font-extrabold mx-2 hidden md:inline">Mix</span>
+      <span className="text-gray-600 font-normal text-sm hidden md:inline">
+        Effortlessly build Flutter design systems.
+      </span>
     </>
   ),
   head: (

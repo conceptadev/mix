@@ -1,5 +1,7 @@
 import Callout from 'nextra-theme-docs/callout'
 
+import CodeSnippet from '../../components/CodeSnippet.js'
+
 # Getting Started
 
 ## Installation
@@ -16,7 +18,8 @@ Here is a simple example of defining and using a Mix to get started.
 
 **Rounded Purple Box with Elevation and White Text**
 
-```dart
+<CodeSnippet>
+{`
 
 import 'package:mix/mix.dart';
 
@@ -34,8 +37,8 @@ Box(
     mix: mix,
     child: TextMix('Purple Box'),
 );
-
-```
+`}
+</CodeSnippet>
 
 **Results**
 
@@ -51,7 +54,8 @@ You will compose visual attributes using **Mixes**. This allows you to compose, 
 
 You can create a Mix by calling it's class and passing positional attributes like so
 
-```dart
+<CodeSnippet>
+{`
 
 final mix = Mix(
     height(100),
@@ -60,20 +64,23 @@ final mix = Mix(
     rounded(10),
 );
 
-```
+`}
+</CodeSnippet>
 
 #### Mix.fromList()
 
 Allows you to create a Mix from a List of attributes. This has the same behavior but provides the ability to receive a List instead of positional arguments.
 
-```dart
+<CodeSnippet>
+{`
 final mix = Mix.fromList([
     height(100),
     width(100),
     bgColor(Colors.purple),
     rounded(10),
 ]);
-```
+`}
+</CodeSnippet>
 
 <Callout emoji="⚠️">
   The order of the attributes is important, and keep in mind when composing and
@@ -90,25 +97,29 @@ Mixes are immutable. The new Mix created will inherit all attributes of the orig
 
 If you have an existing Mix you can add attributes to it by calling the `add` method. This will return a new Mix with the new attributes added.
 
-```dart
+<CodeSnippet>
+{`
 final newMix = mix.add(
     height(200),
     width(200),
     bgColor(Colors.red),
 );
-```
+`}
+</CodeSnippet>
 
 ##### .addAll
 
 Similar to `add` but allows you to pass a List of attributes.
 
-```dart
+<CodeSnippet>
+{`
 final newMix = mix.addAll([
     height(200),
     width(200),
     bgColor(Colors.red),
 ]);
-```
+`}
+</CodeSnippet>
 
 #### Combining Mixes
 
@@ -116,9 +127,11 @@ Combining Mixes is a critical part of composing visual attributes. There are a f
 
 ##### .mix()
 
-```dart
+<CodeSnippet>
+{`
 final thirdMix = firstMix.mix(secondMix);
-```
+`}
+</CodeSnippet>
 
 ##### .maybeMix()
 
@@ -148,26 +161,32 @@ To make interaction with `Attributes` easier we have `Utility` functions. That a
 
 Lets take the following example.
 
-```dart
+<CodeSnippet>
+{`
 Mix(height(100))
-```
+`}
+</CodeSnippet>
 
 This is defining a Mix with the box height attribute of 100.
 However **height** is a `Utility` that allows us to compose an `Attribute`.
 
 **Similar to this**
 
-```dart
+<CodeSnippet>
+{`
 BoxAttribute height(double value) => BoxAttribute(height: value);
-```
+`}
+</CodeSnippet>
 
 With that in mind you can think of the following being equivalent.
 
-```dart
+<CodeSnippet>
+{`
 Mix(height(100))
 // is equivalent to
 Mix(BoxAttribute(height: 100))
-```
+`}
+</CodeSnippet>
 
 As you can see `Utilities` are not required for comsing Mixes however, make a cleaner API possible and overall better development experience.
 
@@ -181,15 +200,19 @@ The most basic widget primitive. `Box` is not like a `Container`, Box is a Conta
 
 That means that this:
 
-```dart
+<CodeSnippet>
+{`
 Box(mix:Mix(height(100)));
-```
+`}
+</CodeSnippet>
 
 will be translated into
 
-```dart d
+<CodeSnippet>
+{`
 Container(height: 100);
-```
+`}
+</CodeSnippet>
 
 #### Flexbox
 

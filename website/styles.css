@@ -1,3 +1,13 @@
+@tailwind utilities;
+
+.dark code {
+  background-color: transparent;
+}
+
+pre code {
+  color: inherit;
+}
+
 /* html,
 body {
   width: 100%;
