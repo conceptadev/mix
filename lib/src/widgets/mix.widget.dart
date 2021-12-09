@@ -51,7 +51,7 @@ abstract class RemixableWidget extends MixWidget {
 
   @override
   Mix get mix {
-    return defaultMix.mix(_mix);
+    return defaultMix.apply(_mix);
   }
 }
 

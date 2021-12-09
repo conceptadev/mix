@@ -113,18 +113,18 @@ class Mix<T extends Attribute> {
 extension MixExtension<T extends Attribute> on Mix<T> {
   /// Adds more properties to a mix
   WrapFunction<T, Mix<T>> get add {
-    return WrapFunction(addAll);
+    return WrapFunction(addList);
   }
 
-  Mix<T> addAll(List<T> attributes) {
+  Mix<T> addList(List<T> attributes) {
     return Mix._([...this.attributes, ...attributes]);
   }
 
-  Mix<T> mix(Mix<T> mix) {
+  Mix<T> apply(Mix<T> mix) {
     return Mix.combineAll([this, mix]);
   }
 
-  Mix maybeMix(Mix? mix) {
+  Mix<T> applyMaybe(Mix<T>? mix) {
     if (mix == null) return this;
     return Mix.combineAll([this, mix]);
   }

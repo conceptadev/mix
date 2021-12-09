@@ -1,0 +1,105 @@
+import Callout from 'nextra-theme-docs/callout'
+
+import Code from '../../../components/Code.js'
+
+## Mixing
+
+You will compose visual attributes using **Mixes**. This allows you to compose, combine, inherit and override visual attributes. If you come from the web you can think of a Mix as a stylesheet. That allows to group visual attributes.
+## Create a Mix
+
+### `Mix()`
+
+You can create a Mix by calling it's class and passing positional attributes like so
+
+<Code>
+{`
+
+final mix = Mix(
+    height(100),
+    width(100),
+    bgColor(Colors.purple),
+    rounded(10),
+);
+
+`}
+</Code>
+
+### `Mix.fromList()`
+
+Allows you to create a Mix from a List of attributes. This has the same behavior but provides the ability to receive a List instead of positional arguments.
+
+<Code>
+{`
+final mix = Mix.fromList([
+    height(100),
+    width(100),
+    bgColor(Colors.purple),
+    rounded(10),
+]);
+`}
+</Code>
+
+<Callout emoji="⚠️">
+  The order of the attributes is important, and keep in mind when composing and
+  overriding them. Attributes will be prioritized from right to left.
+</Callout>
+## Extend an existing Mix
+
+Mixes are immutable. The new Mix created will inherit all attributes of the original.
+
+### Add attributes
+
+#### `.add()`
+
+If you have an existing Mix you can add attributes to it by calling the `add` method. This will return a new Mix with the new attributes added.
+
+<Code>
+{`
+final newMix = mix.add(
+    height(200),
+    width(200),
+    bgColor(Colors.red),
+);
+`}
+</Code>
+
+#### `.addList()`
+
+Similar to `add` but allows you to pass a List of attributes.
+
+<Code>
+{`
+final newMix = mix.addList([
+    height(200),
+    width(200),
+    bgColor(Colors.red),
+]);
+`}
+</Code>
+
+### Combining Mixes
+
+Combining Mixes is a critical part of composing visual attributes. There are a few methods, and constructors that allow for easy ways to combine them.
+
+#### `.apply()`
+
+<Code>
+{`
+final thirdMix = firstMix.apply(secondMix);
+`}
+</Code>
+
+#### `.applyMaybe()`
+
+If you are receiving a nullable Mix as a parameter there is a simple helper method to keep your code clean.
+
+#### Mix.combine()
+
+Creates a new Mix from a positional arguments of Mixes.
+
+#### Mix.combineAll()
+
+Creates a new Mix from a List of Mixes.
+## Utility Helpers
+
+### Mix.chooser()

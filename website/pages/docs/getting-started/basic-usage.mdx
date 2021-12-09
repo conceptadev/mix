@@ -1,0 +1,42 @@
+import Callout from 'nextra-theme-docs/callout'
+
+import Code from '../../../components/Code.js'
+
+# Getting Started
+
+## Installation
+
+Just run the following command to add Mix in your project.
+
+```
+flutter pub add mix
+```
+
+## Usage
+
+Here is a simple example of defining and using a Mix to get started.
+
+**Rounded Purple Box with Elevation and White Text**
+
+<Code>
+{`import 'package:mix/mix.dart';
+
+final mix = Mix(
+    height(100),
+    width(100),
+    rounded(10),
+    elevation(2),
+    bgColor(Colors.purple),
+    align(Alignment.center),
+    textColor(Colors.white),
+);
+
+Box(
+    mix: mix,
+    child: TextMix('Purple Box'),
+);`}
+</Code>
+
+**Results**
+
+![Purple Box](/images/purple-box.png)

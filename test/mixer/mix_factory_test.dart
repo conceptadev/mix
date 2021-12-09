@@ -78,7 +78,7 @@ void main() {
 
     test('Adds Attributes to Mix', () async {
       final firstWithOneMore = firstMix.add(bgColor(Colors.yellow)).attributes;
-      final firstWithTwoMoreAsList = firstMix.addAll([
+      final firstWithTwoMoreAsList = firstMix.addList([
         bgColor(Colors.yellow),
         bgColor(Colors.green),
       ]).attributes;
@@ -91,9 +91,9 @@ void main() {
     test('Combines Mixes', () async {
       final combined = Mix.combine(firstMix, secondMix).attributes;
       final combinedAsList = Mix.combineAll([firstMix, secondMix]).attributes;
-      final combineAsMix = firstMix.mix(secondMix).attributes;
-      final combinedMaybeMix = firstMix.maybeMix(secondMix);
-      final combinedMaybeMixNull = firstMix.maybeMix(null);
+      final combineAsMix = firstMix.apply(secondMix).attributes;
+      final combinedMaybeMix = firstMix.applyMaybe(secondMix);
+      final combinedMaybeMixNull = firstMix.applyMaybe(null);
 
       final secondCopy = firstMix.clone();
       final thirdCopy = firstMix.clone();
@@ -125,7 +125,7 @@ void main() {
       final copyFirstMix = Mix.fromList(firstMix.attributes);
       final copySecondMix = Mix.fromList(secondMix.attributes);
       final combinedMixFirst = Mix.combine(firstMix, secondMix);
-      final combinedMixSecond = firstMix.mix(secondMix);
+      final combinedMixSecond = firstMix.apply(secondMix);
 
       expect(copyFirstMix, firstMix);
       expect(copySecondMix, secondMix);
