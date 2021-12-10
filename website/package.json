@@ -24,7 +24,7 @@
     "autoprefixer": "^10.0.4",
     "postcss": "^8.1.10",
     "prettier": "^2.0.5",
-    "tailwindcss": "^2.1.1"
+    "tailwindcss": "^2.2.19"
   },
   "prettier": {
     "semi": false,

@@ -79,6 +79,27 @@ Container(
 )
 ```
 
+## Decorators
+
+Decorators allow to extend Mix functionality by providing an easy way to define it's Widget composition tree. This allows to keep the a lean core, and give complete control over layout, attribute, and widgets not supported by our `MixableWidgets`.
+
+As an example we will provide the implementation for our `scale` attribute. The Container does not provide a scale property, so the implementation is done by wrapping a `Container` with the `Transform` widget.
+
+```dart
+Transform.scale(
+  scale: 0.5,
+  child: Container(
+    child: const Text('Half sized box'),
+  ),
+)
+```
+
+Since `Box` is a `Container` it also does not have a `scale` property. However by using a `Decorator` we can accomlish the same effect.
+```dart
+Box(mix: Mix(scale(0.5)));
+```
+
+
 ## Variants
 
 While building your design system you will find have the need to create certain variations of a Widget. This makes the design system more flexible and reusable, by leveraging shared visual properties between them.
@@ -124,25 +145,9 @@ const TextMix('Click Here', mix: style),
 ```
 In the above example  `Click Here` becomes `CLICK HERE`
 
-## Decorators
-
-Decorators allow to extend Mix functionality by providing an easy way to define it's Widget composition tree. This allows to keep the a lean core, and give complete control over layout, attribute, and widgets not supported by our `MixableWidgets`.
-
-As an example we will provide the implementation for our `scale` attribute. The Container does not provide a scale property, so the implementation is done by wrapping a `Container` with the `Transform` widget.
-
-```dart
-Transform.scale(
-  scale: 0.5,
-  child: Container(
-    child: const Text('Half sized box'),
-  ),
-)
-```
-
-Since `Box` is a `Container` it also does not have a `scale` property. However by using a `Decorator` we can accomlish the same effect.
-```dart
-Box(mix: Mix(scale(0.5)));
-```
 
 
 ## Design Tokens
+ Tokens allow to define visual properties like colors, text styles, and spacing that can be consistently applied across all your widgets.
+ 
+ The most important difference between defining a design token in Mix vs. a constant is that Mix allows you to define `context` reference values that will be used on build time.

@@ -6,31 +6,15 @@ pre {
 }
 
 pre code {
+  @apply text-sm;
   background-color: #070509 !important;
   font-family: 'Fira Code', monospace;
-  font-weght: 300;
+  font-weight: 300;
+  color: #ffffff;
 }
 
-pre code.has-highlight .token-line {
-  opacity: 0.3;
-}
-
-code.has-highlight .token-line.highlight {
-  opacity: 1;
-  filter: none;
-  background-color: rgb(4, 3, 5) !important;
-}
-
-code.has-highlight .token-line.highlight.first {
-  /* border-top: 1px solid rgb(255, 255, 255, 0.1); */
-  margin-top: 5px !important;
-  padding-top: 10px !important;
-}
-
-code.has-highlight .token-line.highlight.last {
-  /* border-bottom: 1px solid rgb(255, 255, 255, 0.1); */
-  margin-bottom: 5px !important;
-  padding-bottom: 10px !important;
+code.prism-code {
+  --c-highlight: rgb(255, 255, 255, 0.02) !important;
 }
 
 pre code.prism-code.language-dart span.token.design-token {
@@ -44,6 +28,10 @@ pre code.prism-code.language-dart span.token.design-token {
 code.prism-code.language-dart span.token.plain {
   color: #f78c6c !important;
 }
+
+/* code.prism-code.language-dart span.token.metadata.symbol {
+  color: #fff !important;
+} */
 
 pre code.prism-code.language-dart span.token.string {
   color: #73e7d3 !important;
@@ -71,12 +59,6 @@ pre code.prism-code.language-dart span.token.punctuation {
 
 pre code.prism-code.language-dart span.token.operator {
   color: #777 !important;
-}
-
-/* Hack to make the TOC links look better by adjusting kerning */
-article > main + div a.font-semibold {
-  font-weight: 500;
-  letter-spacing: -0.01rem;
 }
 
 /* SIDEBAR, hopefully you can remove thi later */
