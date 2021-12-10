@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:mix/src/attributes/exports.dart';
 import 'package:mix/src/helpers/extensions.dart';
 
-import '../attributes/box/box.mixer.dart';
+import '../attributes/box/box.props.dart';
 import '../attributes/common/attribute.dart';
-import '../attributes/flex/flex.mixer.dart';
-import '../attributes/icon/icon.mixer.dart';
-import '../attributes/shared/shared.mixer.dart';
-import '../attributes/text/text.mixer.dart';
+import '../attributes/flex/flex.props.dart';
+import '../attributes/icon/icon.props.dart';
+import '../attributes/shared/shared.props.dart';
+import '../attributes/text/text.props.dart';
 import 'mix_factory.dart';
 
 class MixContext {
@@ -20,11 +20,11 @@ class MixContext {
   final List<DirectiveAttribute> directives;
   final List<WidgetDecorator> decorators;
 
-  final BoxMixer boxMixer;
-  final TextMixer textMixer;
-  final SharedMixer sharedMixer;
-  final IconMixer iconMixer;
-  final FlexMixer flexMixer;
+  final BoxProps boxMixer;
+  final TextProps textMixer;
+  final SharedProps sharedMixer;
+  final IconProps iconMixer;
+  final FlexProps flexMixer;
 
   MixContext._({
     required this.context,
@@ -133,15 +133,15 @@ class MixContext {
         ...variants,
         ...directives
       ]),
-      boxMixer: BoxMixer.fromContext(context, boxAttributes),
-      textMixer: TextMixer.fromContext(
+      boxMixer: BoxProps.fromContext(context, boxAttributes),
+      textMixer: TextProps.fromContext(
         context,
         textAttributes,
         directives.whereType<TextDirectiveAttribute>(),
       ),
-      sharedMixer: SharedMixer.fromContext(context, sharedAttributes),
-      iconMixer: IconMixer.fromContext(context, iconAttributes),
-      flexMixer: FlexMixer.fromContext(context, flexAttributes),
+      sharedMixer: SharedProps.fromContext(context, sharedAttributes),
+      iconMixer: IconProps.fromContext(context, iconAttributes),
+      flexMixer: FlexProps.fromContext(context, flexAttributes),
       directives: directives,
       variants: variants,
       decorators: decorators,
@@ -188,26 +188,46 @@ class MixContext {
     }
   }
 
-  /// Applies all [WidgetDecorator]s to a [Widget]
-  Widget applyWidgetDecorators(Widget widget) {
+  /// Applies all [WidgetDecorator] of [type] to a [Widget]
+  Widget _applyWidgetDecorators(
+    Widget widget, {
+    required WidgetDecoratorType type,
+  }) {
     var current = widget;
-    final attributeMap = <Type, WidgetDecorator>{};
 
-    for (final attribute in decorators) {
-      final existing = attributeMap[attribute.runtimeType];
+    final decoratorMap = <Type, WidgetDecorator>{};
+
+    final selectedDecorators = decorators.where(
+      (decorator) => decorator.type == type,
+    );
+
+    if (selectedDecorators.isEmpty) {
+      return current;
+    }
+
+    for (final attribute in selectedDecorators) {
+      final existing = decoratorMap[attribute.runtimeType];
       if (existing != null) {
-        attributeMap[attribute.runtimeType] = existing.merge(attribute);
+        decoratorMap[attribute.runtimeType] = existing.merge(attribute);
       } else {
-        attributeMap[attribute.runtimeType] = attribute;
+        decoratorMap[attribute.runtimeType] = attribute;
       }
     }
 
     // Apply widget attributes
-    attributeMap.forEach(
+    decoratorMap.forEach(
       (key, value) => current = value.render(this, current),
     );
 
     return current;
+  }
+
+  Widget renderParentDecorators(Widget widget) {
+    return _applyWidgetDecorators(widget, type: WidgetDecoratorType.parent);
+  }
+
+  Widget renderChildDecorators(Widget widget) {
+    return _applyWidgetDecorators(widget, type: WidgetDecoratorType.child);
   }
 
   @override

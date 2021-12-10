@@ -6,7 +6,7 @@ import '../mixer/mix_factory.dart';
 import 'mix.widget.dart';
 import 'nothing.widget.dart';
 
-class Box extends MixWidget {
+class Box extends MixableWidget {
   const Box({
     Mix? mix,
     Key? key,
@@ -56,7 +56,7 @@ class BoxMixedWidget extends MixedWidget {
     if (current != null) {
       current = MixContextNotifier(
         mixContext,
-        child: current,
+        child: mixContext.renderChildDecorators(current),
       );
     }
 
@@ -90,7 +90,7 @@ class BoxMixedWidget extends MixedWidget {
       );
     }
 
-    current = mixContext.applyWidgetDecorators(current);
+    current = mixContext.renderParentDecorators(current);
     return current;
   }
 }

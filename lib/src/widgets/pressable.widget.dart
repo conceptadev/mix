@@ -6,7 +6,7 @@ import '../mixer/mix_factory.dart';
 import 'box.widget.dart';
 import 'mix.widget.dart';
 
-class Pressable extends MixWidget {
+class Pressable extends MixableWidget {
   const Pressable({
     Mix? mix,
     required this.child,

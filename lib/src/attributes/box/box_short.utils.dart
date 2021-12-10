@@ -16,7 +16,9 @@ const marginBottom = WithSizeRefs(BoxUtility.marginBottom);
 const marginRight = WithSizeRefs(BoxUtility.marginRight);
 const marginLeft = WithSizeRefs(BoxUtility.marginLeft);
 const marginHorizontal = WithSizeRefs(BoxUtility.marginHorizontal);
+const marginX = marginHorizontal;
 const marginVertical = WithSizeRefs(BoxUtility.marginVertical);
+const marginY = marginVertical;
 const marginInsets = BoxUtility.marginInsets;
 
 const p = WithSizeRefs(BoxUtility.padding);

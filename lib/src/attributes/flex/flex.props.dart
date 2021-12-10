@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
 
-class FlexMixer {
+class FlexProps {
   final Axis? direction;
   final MainAxisAlignment mainAxisAlignment;
   final CrossAxisAlignment crossAxisAlignment;
@@ -9,7 +9,7 @@ class FlexMixer {
   final VerticalDirection verticalDirection;
   final double? gapSize;
 
-  const FlexMixer({
+  const FlexProps({
     this.direction,
     required this.mainAxisAlignment,
     required this.crossAxisAlignment,
@@ -18,12 +18,12 @@ class FlexMixer {
     this.gapSize,
   });
 
-  factory FlexMixer.fromContext(
+  factory FlexProps.fromContext(
     BuildContext context,
     FlexAttributes? attributes,
   ) {
     final flex = attributes;
-    return FlexMixer(
+    return FlexProps(
       direction: flex?.direction,
       mainAxisAlignment: flex?.mainAxisAlignment ?? MainAxisAlignment.start,
       crossAxisAlignment: flex?.crossAxisAlignment ?? CrossAxisAlignment.center,
@@ -37,7 +37,7 @@ class FlexMixer {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is FlexMixer &&
+    return other is FlexProps &&
         other.direction == direction &&
         other.mainAxisAlignment == mainAxisAlignment &&
         other.crossAxisAlignment == crossAxisAlignment &&

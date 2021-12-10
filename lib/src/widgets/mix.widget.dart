@@ -2,16 +2,16 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../mix.dart';
-import '../attributes/box/box.mixer.dart';
-import '../attributes/flex/flex.mixer.dart';
-import '../attributes/icon/icon.mixer.dart';
-import '../attributes/shared/shared.mixer.dart';
-import '../attributes/text/text.mixer.dart';
+import '../attributes/box/box.props.dart';
+import '../attributes/flex/flex.props.dart';
+import '../attributes/icon/icon.props.dart';
+import '../attributes/shared/shared.props.dart';
+import '../attributes/text/text.props.dart';
 
 /// Mix Widget
-abstract class MixWidget extends StatelessWidget {
+abstract class MixableWidget extends StatelessWidget {
   /// Constructor
-  const MixWidget(
+  const MixableWidget(
     Mix? mix, {
     Key? key,
   })  : _mix = mix ?? Mix.constant,
@@ -40,7 +40,7 @@ abstract class MixWidget extends StatelessWidget {
   }
 }
 
-abstract class RemixableWidget extends MixWidget {
+abstract class RemixableWidget extends MixableWidget {
   /// Constructor
   const RemixableWidget(
     Mix? mix, {
@@ -63,11 +63,11 @@ abstract class MixedWidget extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-  BoxMixer get boxMixer => mixContext.boxMixer;
-  TextMixer get textMixer => mixContext.textMixer;
-  IconMixer get iconMixer => mixContext.iconMixer;
-  FlexMixer get flexMixer => mixContext.flexMixer;
-  SharedMixer get sharedMixer => mixContext.sharedMixer;
+  BoxProps get boxMixer => mixContext.boxMixer;
+  TextProps get textMixer => mixContext.textMixer;
+  IconProps get iconMixer => mixContext.iconMixer;
+  FlexProps get flexMixer => mixContext.flexMixer;
+  SharedProps get sharedMixer => mixContext.sharedMixer;
 
   final MixContext mixContext;
 
@@ -87,7 +87,7 @@ abstract class MixedWidget extends StatelessWidget {
     );
 
     properties.add(
-      DiagnosticsProperty<BoxMixer>(
+      DiagnosticsProperty<BoxProps>(
         'boxMixer',
         boxMixer,
         defaultValue: null,
@@ -95,7 +95,7 @@ abstract class MixedWidget extends StatelessWidget {
     );
 
     properties.add(
-      DiagnosticsProperty<TextMixer>(
+      DiagnosticsProperty<TextProps>(
         'textMixer',
         textMixer,
         defaultValue: null,
@@ -103,7 +103,7 @@ abstract class MixedWidget extends StatelessWidget {
     );
 
     properties.add(
-      DiagnosticsProperty<IconMixer>(
+      DiagnosticsProperty<IconProps>(
         'iconMixer',
         iconMixer,
         defaultValue: null,
@@ -111,7 +111,7 @@ abstract class MixedWidget extends StatelessWidget {
     );
 
     properties.add(
-      DiagnosticsProperty<FlexMixer>(
+      DiagnosticsProperty<FlexProps>(
         'flexMixer',
         flexMixer,
         defaultValue: null,
@@ -119,7 +119,7 @@ abstract class MixedWidget extends StatelessWidget {
     );
 
     properties.add(
-      DiagnosticsProperty<SharedMixer>(
+      DiagnosticsProperty<SharedProps>(
         'sharedMixer',
         sharedMixer,
         defaultValue: null,

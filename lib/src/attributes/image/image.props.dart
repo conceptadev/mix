@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mix/src/attributes/image/image.attributes.dart';
 import 'package:mix/src/theme/refs/refs.dart';
 
-class ImageMixer {
+class ImageProps {
   final Color? color;
   final double? scale;
 
@@ -15,7 +15,7 @@ class ImageMixer {
   final AlignmentGeometry alignment;
   final ImageRepeat repeat;
 
-  const ImageMixer({
+  const ImageProps({
     this.color,
     this.scale,
     this.width,
@@ -26,7 +26,7 @@ class ImageMixer {
     required this.repeat,
   });
 
-  factory ImageMixer.fromContext(
+  factory ImageProps.fromContext(
     BuildContext context,
     ImageAttributes? attributes,
   ) {
@@ -38,7 +38,7 @@ class ImageMixer {
       color = color.resolve(context);
     }
 
-    return ImageMixer(
+    return ImageProps(
       color: color,
       scale: image?.scale,
       width: image?.width,
@@ -54,7 +54,7 @@ class ImageMixer {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is ImageMixer &&
+    return other is ImageProps &&
         other.color == color &&
         other.scale == scale &&
         other.width == width &&

@@ -8,7 +8,7 @@ import '../mixer/mix_context.dart';
 import '../mixer/mix_factory.dart';
 import 'mix.widget.dart';
 
-class TextMix extends MixWidget {
+class TextMix extends MixableWidget {
   const TextMix(
     this.text, {
     Mix? mix,

@@ -6,7 +6,7 @@ import 'box.widget.dart';
 import 'gap.widget.dart';
 import 'mix.widget.dart';
 
-class FlexBox extends MixWidget {
+class FlexBox extends MixableWidget {
   const FlexBox({
     Mix? mix,
     Key? key,

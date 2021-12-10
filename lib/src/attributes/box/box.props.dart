@@ -4,7 +4,7 @@ import 'package:mix/mix.dart';
 import 'package:mix/src/dto/box_shadow.dto.dart';
 import 'package:mix/src/theme/refs/refs.dart';
 
-class BoxMixer {
+class BoxProps {
   final Color? _color;
   final AlignmentGeometry? alignment;
   final EdgeInsetsGeometry? padding;
@@ -24,7 +24,7 @@ class BoxMixer {
   final double? minWidth;
   final BoxShape? shape;
 
-  const BoxMixer({
+  const BoxProps({
     Color? color,
     this.alignment,
     this.padding,
@@ -42,7 +42,7 @@ class BoxMixer {
     this.transform,
   }) : _color = color;
 
-  factory BoxMixer.fromContext(
+  factory BoxProps.fromContext(
     BuildContext context,
     BoxAttributes? attributes,
   ) {
@@ -54,7 +54,7 @@ class BoxMixer {
       color = color.resolve(context);
     }
 
-    return BoxMixer(
+    return BoxProps(
       color: color,
       alignment: box?.alignment,
       margin: box?.margin?.resolve(context),
@@ -124,7 +124,7 @@ class BoxMixer {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is BoxMixer &&
+    return other is BoxProps &&
         other._color == _color &&
         other.alignment == alignment &&
         other.padding == padding &&
@@ -142,8 +142,8 @@ class BoxMixer {
         other.shape == shape;
   }
 
-  /// Check what properties are different from another instance of [BoxMixer].
-  List<String> getDifference(BoxMixer other) {
+  /// Check what properties are different from another instance of [BoxProps].
+  List<String> getDifference(BoxProps other) {
     final diff = <String>[];
     if (_color != other._color) {
       diff.add('color');

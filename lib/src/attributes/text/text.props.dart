@@ -1,9 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:mix/src/attributes/exports.dart';
-import 'package:mix/src/theme/refs/refs.dart';
 
-class TextMixer {
+import '../../theme/refs/refs.dart';
+import '../exports.dart';
+
+class TextProps {
   final bool softWrap;
   final TextOverflow overflow;
   final List<TextDirectiveAttribute> directives;
@@ -17,7 +18,7 @@ class TextMixer {
   final TextWidthBasis? textWidthBasis;
   final TextHeightBehavior? textHeightBehavior;
 
-  const TextMixer({
+  const TextProps({
     required this.softWrap,
     required this.overflow,
     required this.directives,
@@ -32,7 +33,7 @@ class TextMixer {
     this.textHeightBehavior,
   });
 
-  factory TextMixer.fromContext(
+  factory TextProps.fromContext(
     BuildContext context,
     TextAttributes? attributes,
     Iterable<TextDirectiveAttribute> directives,
@@ -59,7 +60,7 @@ class TextMixer {
       );
     }
 
-    return TextMixer(
+    return TextProps(
       // Need to grab colorscheme from context
       style: finalStyle,
       strutStyle: text?.strutStyle,
@@ -90,7 +91,7 @@ class TextMixer {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is TextMixer &&
+    return other is TextProps &&
         other.softWrap == softWrap &&
         other.overflow == overflow &&
         listEquals(other.directives, directives) &&

@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
 import 'package:mix/src/theme/refs/refs.dart';
 
-class IconMixer {
+class IconProps {
   final Color? color;
   final double size;
 
-  const IconMixer({
+  const IconProps({
     this.color,
     required this.size,
   });
 
-  factory IconMixer.fromContext(
+  factory IconProps.fromContext(
     BuildContext context,
     IconAttributes? attributes,
   ) {
@@ -23,7 +23,7 @@ class IconMixer {
       color = color.resolve(context);
     }
 
-    return IconMixer(
+    return IconProps(
       color: color ?? theme.color,
       size: icon?.size ?? theme.size ?? 24,
     );
@@ -33,7 +33,7 @@ class IconMixer {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is IconMixer && other.color == color && other.size == size;
+    return other is IconProps && other.color == color && other.size == size;
   }
 
   @override

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:mix/mix.dart';
 
-class SharedMixer {
+import 'shared.attributes.dart';
+
+class SharedProps {
   final bool visible;
   //Animation
   final bool animated;
@@ -9,7 +10,7 @@ class SharedMixer {
   final Curve animationCurve;
   final TextDirection? textDirection;
 
-  const SharedMixer({
+  const SharedProps({
     required this.visible,
     required this.animated,
     required this.animationDuration,
@@ -17,13 +18,13 @@ class SharedMixer {
     this.textDirection,
   });
 
-  factory SharedMixer.fromContext(
+  factory SharedProps.fromContext(
     BuildContext context,
     SharedAttributes? attributes,
   ) {
     final shared = attributes;
 
-    return SharedMixer(
+    return SharedProps(
       visible: shared?.visible ?? true,
       animated: shared?.animated ?? false,
       animationDuration: shared?.animationDuration ??
@@ -39,7 +40,7 @@ class SharedMixer {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is SharedMixer &&
+    return other is SharedProps &&
         other.visible == visible &&
         other.animated == animated &&
         other.animationDuration == animationDuration &&

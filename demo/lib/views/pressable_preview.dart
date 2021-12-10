@@ -45,7 +45,14 @@ class PressablePreview extends StatelessWidget {
             child: const TextMix(
               'Simple Text',
             ),
-          )
+          ),
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(
+                Radius.circular(10),
+              ),
+            ),
+          ),
         ],
       ),
     );

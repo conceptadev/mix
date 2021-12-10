@@ -6,7 +6,7 @@ import '../mixer/mix_factory.dart';
 import 'mix.widget.dart';
 import 'nothing.widget.dart';
 
-class IconMix extends MixWidget {
+class IconMix extends MixableWidget {
   const IconMix({
     Mix? mix,
     required this.icon,
