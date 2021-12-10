@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mix/src/attributes/common/attribute.dart';
 import 'package:mix/src/mixer/mix_context.dart';
 
-RotateWidgetAttribute rotate(int quarterTurns) {
-  return RotateWidgetAttribute(quarterTurns: quarterTurns);
+RotateDecorator rotate(int quarterTurns) {
+  return RotateDecorator(quarterTurns: quarterTurns);
 }
 
 /// Rotate 90
@@ -18,14 +18,13 @@ rotate270() => rotate(3);
 /// Rotate 360
 rotate360() => rotate(4);
 
-class RotateWidgetAttribute
-    extends ParentWidgetDecorator<RotateWidgetAttribute> {
+class RotateDecorator extends ParentWidgetDecorator<RotateDecorator> {
   final int quarterTurns;
-  const RotateWidgetAttribute({required this.quarterTurns});
+  const RotateDecorator({required this.quarterTurns});
 
   @override
-  RotateWidgetAttribute merge(RotateWidgetAttribute other) {
-    return RotateWidgetAttribute(
+  RotateDecorator merge(RotateDecorator other) {
+    return RotateDecorator(
       quarterTurns: other.quarterTurns,
     );
   }

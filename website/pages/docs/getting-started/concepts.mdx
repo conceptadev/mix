@@ -43,7 +43,7 @@ As you can see `Utilities` are not required for comsing Mixes however, make a cl
 
 ## Mixable Widgets
 
-The Widget primitives that allow to render a Mix. At first sight it might look like these widgets are doing a lot, however they are just wrapping basic Flutter widgets and allowing their visual properties to be defined through a Mix.
+These are the widget primitives that allow a Mix to be rendered. At first sight it might look like these widgets are doing a lot, however they are just wrapping basic Flutter widgets and allowing their visual properties to be defined through a Mix.
 
 The most basic widget primitive. `Box` is not like a `Container`, "Box is a Container". That means you can think of all `BoxAttributes` as Container properties.
 
@@ -105,14 +105,44 @@ Pressable(
 );
 ```
 
-Some other examples of preconfigured `Variants` are `dark()` and `focus()`
+Some other examples of pre-configured `Variants` are `dark()` and `focus()`. Variants can be extremely powerful, and allow you to create consistent variations of your Widgets.
 
 
 
 ## Directives
 
+Allow you to transform/modify Widget properties by defining them as an `Attribute`. A great example of this would be the text directives.
+
+As an example you are able to change the case of a `TextMix` by using a directive. 
+
+```dart highlight="2"
+final style = Mix(
+  upperCase(),
+);
+
+const TextMix('Click Here', mix: style),
+```
+In the above example  `Click Here` becomes `CLICK HERE`
+
 ## Decorators
 
-## Theme
+Decorators allow to extend Mix functionality by providing an easy way to define it's Widget composition tree. This allows to keep the a lean core, and give complete control over layout, attribute, and widgets not supported by our `MixableWidgets`.
 
-## Tokens
+As an example we will provide the implementation for our `scale` attribute. The Container does not provide a scale property, so the implementation is done by wrapping a `Container` with the `Transform` widget.
+
+```dart
+Transform.scale(
+  scale: 0.5,
+  child: Container(
+    child: const Text('Half sized box'),
+  ),
+)
+```
+
+Since `Box` is a `Container` it also does not have a `scale` property. However by using a `Decorator` we can accomlish the same effect.
+```dart
+Box(mix: Mix(scale(0.5)));
+```
+
+
+## Design Tokens

@@ -58,6 +58,7 @@ export default function Nextra({ Component, pageProps }) {
   React.useEffect(() => {
     addClassToDesignTokens()
     addStyleToHighlightLines()
-  })
+  }, [])
+
   return <Component {...pageProps} />
 }

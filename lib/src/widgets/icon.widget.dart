@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../attributes/exports.dart';
 import '../mixer/mix_context.dart';
 import '../mixer/mix_factory.dart';
-import 'mix.widget.dart';
+import 'mixable.widget.dart';
 import 'nothing.widget.dart';
 
 class IconMix extends MixableWidget {

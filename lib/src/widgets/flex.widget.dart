@@ -4,7 +4,7 @@ import '../mixer/mix_context.dart';
 import '../mixer/mix_factory.dart';
 import 'box.widget.dart';
 import 'gap.widget.dart';
-import 'mix.widget.dart';
+import 'mixable.widget.dart';
 
 class FlexBox extends MixableWidget {
   const FlexBox({
