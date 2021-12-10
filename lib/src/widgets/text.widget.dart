@@ -6,7 +6,7 @@ import 'package:mix/src/widgets/nothing.widget.dart';
 
 import '../mixer/mix_context.dart';
 import '../mixer/mix_factory.dart';
-import 'mix.widget.dart';
+import 'mixable.widget.dart';
 
 class TextMix extends MixableWidget {
   const TextMix(

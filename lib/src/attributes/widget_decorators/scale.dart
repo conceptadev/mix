@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:mix/src/attributes/common/attribute.dart';
 import 'package:mix/src/mixer/mix_context.dart';
 
-ScaleWidgetAttribute scale(double scale) {
-  return ScaleWidgetAttribute(scale);
+ScaleDecorator scale(double scale) {
+  return ScaleDecorator(scale);
 }
 
-class ScaleWidgetAttribute extends ParentWidgetDecorator<ScaleWidgetAttribute> {
+class ScaleDecorator extends ParentWidgetDecorator<ScaleDecorator> {
   final double scale;
-  const ScaleWidgetAttribute(this.scale);
+  const ScaleDecorator(this.scale);
 
   @override
-  ScaleWidgetAttribute merge(ScaleWidgetAttribute other) {
-    return ScaleWidgetAttribute(other.scale);
+  ScaleDecorator merge(ScaleDecorator other) {
+    return ScaleDecorator(other.scale);
   }
 
   @override

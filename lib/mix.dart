@@ -3,7 +3,7 @@ library mix;
 export 'package:mix/src/widgets/box.widget.dart';
 export 'package:mix/src/widgets/flex.widget.dart';
 export 'package:mix/src/widgets/icon.widget.dart';
-export 'package:mix/src/widgets/mix.widget.dart';
+export 'package:mix/src/widgets/mixable.widget.dart';
 export 'package:mix/src/widgets/pressable.widget.dart';
 export 'package:mix/src/widgets/text.widget.dart';
 

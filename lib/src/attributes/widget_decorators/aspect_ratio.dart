@@ -2,18 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:mix/src/attributes/common/attribute.dart';
 import 'package:mix/src/mixer/mix_context.dart';
 
-AspectRationWidgetAttribute aspectRatio(double aspectRatio) {
-  return AspectRationWidgetAttribute(aspectRatio: aspectRatio);
+AspectRatioDecorator aspectRatio(double aspectRatio) {
+  return AspectRatioDecorator(aspectRatio: aspectRatio);
 }
 
-class AspectRationWidgetAttribute
-    extends ParentWidgetDecorator<AspectRationWidgetAttribute> {
+class AspectRatioDecorator extends ParentWidgetDecorator<AspectRatioDecorator> {
   final double aspectRatio;
-  const AspectRationWidgetAttribute({required this.aspectRatio});
+  const AspectRatioDecorator({required this.aspectRatio});
 
   @override
-  AspectRationWidgetAttribute merge(AspectRationWidgetAttribute other) {
-    return AspectRationWidgetAttribute(
+  AspectRatioDecorator merge(AspectRatioDecorator other) {
+    return AspectRatioDecorator(
       aspectRatio: other.aspectRatio,
     );
   }

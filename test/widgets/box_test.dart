@@ -51,8 +51,8 @@ void main() {
           await tester.pumpWidget(
             BoxInsideFlexWidget(
               Mix(
-                const FlexibleWidgetAttribute(flex: 2),
-                const FlexibleWidgetAttribute(flexFit: FlexFit.tight),
+                const FlexibleDecorator(flex: 2),
+                const FlexibleDecorator(flexFit: FlexFit.tight),
               ),
             ),
           );
@@ -71,7 +71,7 @@ void main() {
         (tester) async {
           await tester.pumpWidget(
             BoxTestWidget(
-              Mix(const RotateWidgetAttribute(quarterTurns: 3)),
+              Mix(const RotateDecorator(quarterTurns: 3)),
             ),
           );
 
@@ -106,7 +106,7 @@ void main() {
         (tester) async {
           await tester.pumpWidget(
             BoxTestWidget(
-              Mix(const AspectRationWidgetAttribute(aspectRatio: 3 / 2)),
+              Mix(const AspectRatioDecorator(aspectRatio: 3 / 2)),
             ),
           );
 
@@ -141,7 +141,7 @@ void main() {
           await tester.pumpWidget(
             BoxTestWidget(
               Mix(
-                const OpacityWidgetAttribute(opacity: 0.5),
+                const OpacityDecorator(opacity: 0.5),
               ),
             ),
           );

@@ -4,7 +4,7 @@ import 'package:mix/src/attributes/pressable/pressable.notifier.dart';
 
 import '../mixer/mix_factory.dart';
 import 'box.widget.dart';
-import 'mix.widget.dart';
+import 'mixable.widget.dart';
 
 class Pressable extends MixableWidget {
   const Pressable({

@@ -112,8 +112,14 @@ class Mix<T extends Attribute> {
 
 extension MixExtension<T extends Attribute> on Mix<T> {
   /// Adds more properties to a mix
-  WrapFunction<T, Mix<T>> get add {
+
+  WrapFunction<T, Mix<T>> get mix {
     return WrapFunction(addList);
+  }
+
+  @deprecated
+  WrapFunction<T, Mix<T>> get add {
+    return mix;
   }
 
   Mix<T> addList(List<T> attributes) {

@@ -13,7 +13,6 @@ pre code {
 
 pre code.has-highlight .token-line {
   opacity: 0.3;
-  /* filter: grayscale(100%); */
 }
 
 code.has-highlight .token-line.highlight {
@@ -23,26 +22,27 @@ code.has-highlight .token-line.highlight {
 }
 
 code.has-highlight .token-line.highlight.first {
-  border-top: 1px solid rgb(255, 255, 255, 0.1);
+  /* border-top: 1px solid rgb(255, 255, 255, 0.1); */
   margin-top: 5px !important;
   padding-top: 10px !important;
 }
 
 code.has-highlight .token-line.highlight.last {
-  border-bottom: 1px solid rgb(255, 255, 255, 0.1);
+  /* border-bottom: 1px solid rgb(255, 255, 255, 0.1); */
   margin-bottom: 5px !important;
   padding-bottom: 10px !important;
-}
-code.prism-code.language-dart span.token.plain {
-  color: #f78c6c !important;
 }
 
 pre code.prism-code.language-dart span.token.design-token {
   color: #ffffff !important;
-  background-color: rgb(115, 34, 203, 0.2) !important;
+  background-color: rgb(115, 34, 203, 0.3) !important;
   padding: 0px 5px !important;
   border-radius: 10px !important;
   /* text-shadow: 1px 1px 5px rgb(255, 255, 255, 0.8); */
+}
+
+code.prism-code.language-dart span.token.plain {
+  color: #f78c6c !important;
 }
 
 pre code.prism-code.language-dart span.token.string {
@@ -62,7 +62,7 @@ pre code.prism-code.language-dart span.token.class-name {
 }
 
 pre code.prism-code.language-dart span.token.function {
-  color: #e7aa67 !important;
+  color: #ffae32 !important;
 }
 
 pre code.prism-code.language-dart span.token.punctuation {
@@ -73,13 +73,6 @@ pre code.prism-code.language-dart span.token.operator {
   color: #777 !important;
 }
 
-/* pre .dark span.token.string {
-  color: red !important;
-} */
-
-/* pre span.token.plain {
-  color: rgb(255, 255, 255) !important;
-} */
 /* Hack to make the TOC links look better by adjusting kerning */
 article > main + div a.font-semibold {
   font-weight: 500;
@@ -89,10 +82,6 @@ article > main + div a.font-semibold {
 /* SIDEBAR, hopefully you can remove thi later */
 div.w-64 ul li[style*='margin-left:1rem'] {
   font-weight: 700;
-}
-
-body .dark {
-  background-color: #000 !important;
 }
 
 /* body {

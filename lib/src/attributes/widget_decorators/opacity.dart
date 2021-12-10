@@ -2,20 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:mix/src/attributes/common/attribute.dart';
 import 'package:mix/src/mixer/mix_context.dart';
 
-OpacityWidgetAttribute opacity(double opacity) {
-  return OpacityWidgetAttribute(opacity: opacity);
+OpacityDecorator opacity(double opacity) {
+  return OpacityDecorator(opacity: opacity);
 }
 
-class OpacityWidgetAttribute
-    extends ParentWidgetDecorator<OpacityWidgetAttribute> {
+class OpacityDecorator extends ParentWidgetDecorator<OpacityDecorator> {
   final double opacity;
-  const OpacityWidgetAttribute({
+  const OpacityDecorator({
     required this.opacity,
   });
 
   @override
-  OpacityWidgetAttribute merge(OpacityWidgetAttribute other) {
-    return OpacityWidgetAttribute(opacity: other.opacity);
+  OpacityDecorator merge(OpacityDecorator other) {
+    return OpacityDecorator(opacity: other.opacity);
   }
 
   @override

@@ -4,7 +4,7 @@ import 'package:mix/src/attributes/exports.dart';
 import 'package:mix/src/mixer/mix_factory.dart';
 import 'package:mix/src/theme/refs/color_tokens.dart';
 import 'package:mix/src/widgets/box.widget.dart';
-import 'package:mix/src/widgets/mix.widget.dart';
+import 'package:mix/src/widgets/mixable.widget.dart';
 import 'package:mix/src/widgets/pressable.widget.dart';
 
 class SwitchX extends RemixableWidget {

@@ -3,37 +3,36 @@ import 'package:mix/src/attributes/common/attribute.dart';
 import 'package:mix/src/mixer/mix_context.dart';
 
 /// Flex
-FlexibleWidgetAttribute flex(int value) {
-  return FlexibleWidgetAttribute(flex: value);
+FlexibleDecorator flex(int value) {
+  return FlexibleDecorator(flex: value);
 }
 
 /// FlexFit
-FlexibleWidgetAttribute flexFit(FlexFit flexFit) {
-  return FlexibleWidgetAttribute(flexFit: flexFit);
+FlexibleDecorator flexFit(FlexFit flexFit) {
+  return FlexibleDecorator(flexFit: flexFit);
 }
 
 /// Expanded
-FlexibleWidgetAttribute expanded() {
-  return const FlexibleWidgetAttribute(flexFit: FlexFit.tight);
+FlexibleDecorator expanded() {
+  return const FlexibleDecorator(flexFit: FlexFit.tight);
 }
 
 /// Flexible
-FlexibleWidgetAttribute flexible() {
-  return const FlexibleWidgetAttribute(flexFit: FlexFit.loose);
+FlexibleDecorator flexible() {
+  return const FlexibleDecorator(flexFit: FlexFit.loose);
 }
 
-class FlexibleWidgetAttribute
-    extends ParentWidgetDecorator<FlexibleWidgetAttribute> {
+class FlexibleDecorator extends ParentWidgetDecorator<FlexibleDecorator> {
   final FlexFit? flexFit;
   final int? flex;
-  const FlexibleWidgetAttribute({
+  const FlexibleDecorator({
     this.flexFit,
     this.flex,
   });
 
   @override
-  FlexibleWidgetAttribute merge(FlexibleWidgetAttribute other) {
-    return FlexibleWidgetAttribute(
+  FlexibleDecorator merge(FlexibleDecorator other) {
+    return FlexibleDecorator(
       flexFit: other.flexFit ?? flexFit,
       flex: other.flex ?? flex,
     );
