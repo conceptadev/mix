@@ -11,8 +11,7 @@ You will compose visual attributes using **Mixes**. This allows you to compose, 
 
 You can create a Mix by calling it's class and passing positional attributes like so
 
-<Code>
-{`
+```dart
 
 final mix = Mix(
     height(100),
@@ -21,23 +20,20 @@ final mix = Mix(
     rounded(10),
 );
 
-`}
-</Code>
+```
 
 ### `Mix.fromList()`
 
 Allows you to create a Mix from a List of attributes. This has the same behavior but provides the ability to receive a List instead of positional arguments.
 
-<Code>
-{`
+```dart
 final mix = Mix.fromList([
     height(100),
     width(100),
     bgColor(Colors.purple),
     rounded(10),
 ]);
-`}
-</Code>
+```
 
 <Callout emoji="⚠️">
   The order of the attributes is important, and keep in mind when composing and
@@ -53,29 +49,25 @@ Mixes are immutable. The new Mix created will inherit all attributes of the orig
 
 If you have an existing Mix you can add attributes to it by calling the `add` method. This will return a new Mix with the new attributes added.
 
-<Code>
-{`
+```dart
 final newMix = mix.add(
     height(200),
     width(200),
     bgColor(Colors.red),
 );
-`}
-</Code>
+```
 
 #### `.addList()`
 
 Similar to `add` but allows you to pass a List of attributes.
 
-<Code>
-{`
+```dart
 final newMix = mix.addList([
     height(200),
     width(200),
     bgColor(Colors.red),
 ]);
-`}
-</Code>
+```
 
 ### Combining Mixes
 
@@ -83,11 +75,9 @@ Combining Mixes is a critical part of composing visual attributes. There are a f
 
 #### `.apply()`
 
-<Code>
-{`
+```dart
 final thirdMix = firstMix.apply(secondMix);
-`}
-</Code>
+```
 
 #### `.applyMaybe()`
 
