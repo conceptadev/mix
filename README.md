@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="150" src="https://raw.githubusercontent.com/leoafarias/mix/main/assets/logo.png">
+  <img width="150" src="https://raw.githubusercontent.com/leoafarias/mix/main/assets/animated.svg">
 </p>
 
 #
