@@ -6,11 +6,11 @@ OpacityDecorator opacity(double opacity) {
   return OpacityDecorator(opacity: opacity);
 }
 
-class OpacityDecorator extends ParentWidgetDecorator<OpacityDecorator> {
+class OpacityDecorator extends ParentDecorator<OpacityDecorator> {
   final double opacity;
   const OpacityDecorator({
     required this.opacity,
-  });
+  }) : super(const Key('OpacityDecorator'));
 
   @override
   OpacityDecorator merge(OpacityDecorator other) {
@@ -19,7 +19,7 @@ class OpacityDecorator extends ParentWidgetDecorator<OpacityDecorator> {
 
   @override
   Widget render(MixContext mixContext, Widget child) {
-    final shared = mixContext.sharedMixer;
+    final shared = mixContext.sharedProps;
     if (shared.animated) {
       return AnimatedOpacity(
         duration: shared.animationDuration,

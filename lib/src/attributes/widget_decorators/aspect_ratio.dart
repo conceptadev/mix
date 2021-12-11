@@ -6,9 +6,10 @@ AspectRatioDecorator aspectRatio(double aspectRatio) {
   return AspectRatioDecorator(aspectRatio: aspectRatio);
 }
 
-class AspectRatioDecorator extends ParentWidgetDecorator<AspectRatioDecorator> {
+class AspectRatioDecorator extends ParentDecorator<AspectRatioDecorator> {
   final double aspectRatio;
-  const AspectRatioDecorator({required this.aspectRatio});
+  const AspectRatioDecorator({required this.aspectRatio})
+      : super(const Key('AspectRatioDecorator'));
 
   @override
   AspectRatioDecorator merge(AspectRatioDecorator other) {
@@ -19,7 +20,7 @@ class AspectRatioDecorator extends ParentWidgetDecorator<AspectRatioDecorator> {
 
   @override
   Widget render(MixContext mixContext, Widget child) {
-    final shared = mixContext.sharedMixer;
+    final shared = mixContext.sharedProps;
     if (shared.animated) {
       return TweenAnimationBuilder<double>(
         tween: Tween<double>(end: aspectRatio),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mix/mix.dart';
 import 'package:mix/src/helpers/variants.dart';
+import 'package:mix/src/widgets/decorator.widget.dart';
 
 import '../mixer/mix_context.dart';
 import '../mixer/mix_factory.dart';
@@ -56,8 +58,17 @@ class BoxMixedWidget extends MixedWidget {
     if (current != null) {
       current = MixContextNotifier(
         mixContext,
-        child: mixContext.renderChildDecorators(current),
+        child: current,
       );
+
+      // Wrap child decorators
+      if (childDecorators.isNotEmpty) {
+        current = DecoratorWrapper(
+          mixContext,
+          child: current,
+          decorators: childDecorators,
+        );
+      }
     }
 
     if (sharedMixer.animated) {
@@ -90,7 +101,15 @@ class BoxMixedWidget extends MixedWidget {
       );
     }
 
-    current = mixContext.renderParentDecorators(current);
+    // Wrap parent decorators
+    if (parentDecorators.isNotEmpty) {
+      current = DecoratorWrapper(
+        mixContext,
+        child: current,
+        decorators: parentDecorators,
+      );
+    }
+
     return current;
   }
 }

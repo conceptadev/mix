@@ -18,9 +18,10 @@ rotate270() => rotate(3);
 /// Rotate 360
 rotate360() => rotate(4);
 
-class RotateDecorator extends ParentWidgetDecorator<RotateDecorator> {
+class RotateDecorator extends ParentDecorator<RotateDecorator> {
   final int quarterTurns;
-  const RotateDecorator({required this.quarterTurns});
+  const RotateDecorator({required this.quarterTurns})
+      : super(const Key('RotateDecorator'));
 
   @override
   RotateDecorator merge(RotateDecorator other) {

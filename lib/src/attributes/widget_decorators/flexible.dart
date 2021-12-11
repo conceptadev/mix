@@ -22,13 +22,13 @@ FlexibleDecorator flexible() {
   return const FlexibleDecorator(flexFit: FlexFit.loose);
 }
 
-class FlexibleDecorator extends ParentWidgetDecorator<FlexibleDecorator> {
+class FlexibleDecorator extends ParentDecorator<FlexibleDecorator> {
   final FlexFit? flexFit;
   final int? flex;
   const FlexibleDecorator({
     this.flexFit,
     this.flex,
-  });
+  }) : super(const Key('FlexibleDecorator'));
 
   @override
   FlexibleDecorator merge(FlexibleDecorator other) {

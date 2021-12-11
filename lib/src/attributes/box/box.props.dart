@@ -63,7 +63,7 @@ class BoxProps {
       height: box?.height,
       border: box?.border?.resolve(context),
       borderRadius: box?.borderRadius?.resolve(context),
-      boxShadow: box?.boxShadow?.create(context),
+      boxShadow: box?.boxShadow?.resolve(context),
       maxHeight: box?.maxHeight,
       maxWidth: box?.maxWidth,
       minHeight: box?.minHeight,

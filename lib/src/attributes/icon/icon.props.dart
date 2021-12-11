@@ -16,6 +16,13 @@ class IconProps {
     IconAttributes? attributes,
   ) {
     final icon = attributes;
+
+    if (attributes == null) {
+      return const IconProps(
+        size: 24,
+      );
+    }
+
     final theme = IconTheme.of(context);
     var color = icon?.color;
 

@@ -71,7 +71,7 @@ class BorderDto extends Dto<Border> {
   }
 
   BorderDto merge(BorderDto? other) {
-    if (other == null) return this;
+    if (other == null || other == this) return this;
 
     return copyWith(
       top: other.top,

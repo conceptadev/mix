@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mix/src/dto/dto.dart';
 import 'package:mix/src/theme/refs/refs.dart';
@@ -84,12 +85,13 @@ class BoxShadowDto extends Dto<BoxShadow> {
 }
 
 extension BoxShadowDtoExtension on List<BoxShadowDto> {
-  List<BoxShadow> create(BuildContext context) {
+  List<BoxShadow> resolve(BuildContext context) {
     return map((e) => e.resolve(context)).toList();
   }
 
   List<BoxShadowDto> merge(List<BoxShadowDto>? other) {
-    final otherList = other ?? [];
+    if (other == null || listEquals(other, this)) return this;
+    final otherList = other;
 
     // Create array with the largest size
     final maxLength = max(length, otherList.length);

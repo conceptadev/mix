@@ -63,11 +63,14 @@ abstract class MixedWidget extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-  BoxProps get boxMixer => mixContext.boxMixer;
-  TextProps get textMixer => mixContext.textMixer;
-  IconProps get iconMixer => mixContext.iconMixer;
-  FlexProps get flexMixer => mixContext.flexMixer;
-  SharedProps get sharedMixer => mixContext.sharedMixer;
+  BoxProps get boxMixer => mixContext.boxProps;
+  TextProps get textMixer => mixContext.textProps;
+  IconProps get iconMixer => mixContext.iconProps;
+  FlexProps get flexMixer => mixContext.flexProps;
+  SharedProps get sharedMixer => mixContext.sharedProps;
+  DecoratorMap get decorators => mixContext.decorators;
+  List<Decorator> get parentDecorators => mixContext.decorators.parents;
+  List<Decorator> get childDecorators => mixContext.decorators.children;
 
   final MixContext mixContext;
 

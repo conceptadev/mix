@@ -86,7 +86,7 @@ extension BoxShadowExtension on BoxShadow {
 extension Matrix4Extension on Matrix4 {
   /// Merge [other] into this matrix.
   Matrix4 merge(Matrix4? other) {
-    if (other == null) return this;
+    if (other == null || other == this) return this;
     return clone()..multiply(other);
   }
 }

@@ -25,14 +25,14 @@ enum ClipDecoratorType {
   oval,
 }
 
-class ClipDecorator extends ParentWidgetDecorator<ClipDecorator> {
+class ClipDecorator extends ParentDecorator<ClipDecorator> {
   final BorderRadius? borderRadius;
   final ClipDecoratorType clipType;
 
   const ClipDecorator(
     this.clipType, {
     this.borderRadius,
-  });
+  }) : super(const Key('ClipDecorator'));
 
   @override
   ClipDecorator merge(ClipDecorator other) {
@@ -41,7 +41,7 @@ class ClipDecorator extends ParentWidgetDecorator<ClipDecorator> {
 
   @override
   Widget render(MixContext mixContext, Widget child) {
-    final shared = mixContext.sharedMixer;
+    final shared = mixContext.sharedProps;
 
     if (clipType == ClipDecoratorType.triangle) {
       return ClipPath(

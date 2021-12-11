@@ -55,7 +55,7 @@ class EdgeInsetsDto extends Dto<EdgeInsets> {
   }
 
   EdgeInsetsDto merge(EdgeInsetsDto? other) {
-    if (other == null) return this;
+    if (other == null || other == this) return this;
 
     return EdgeInsetsDto._(
       top: other.top ?? top,

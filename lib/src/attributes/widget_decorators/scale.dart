@@ -6,9 +6,9 @@ ScaleDecorator scale(double scale) {
   return ScaleDecorator(scale);
 }
 
-class ScaleDecorator extends ParentWidgetDecorator<ScaleDecorator> {
+class ScaleDecorator extends ParentDecorator<ScaleDecorator> {
   final double scale;
-  const ScaleDecorator(this.scale);
+  const ScaleDecorator(this.scale) : super(const Key('ScaleDecorator'));
 
   @override
   ScaleDecorator merge(ScaleDecorator other) {
@@ -17,7 +17,7 @@ class ScaleDecorator extends ParentWidgetDecorator<ScaleDecorator> {
 
   @override
   Widget render(MixContext mixContext, Widget? child) {
-    final shared = mixContext.sharedMixer;
+    final shared = mixContext.sharedProps;
     if (shared.animated) {
       return TweenAnimationBuilder<double>(
         tween: Tween<double>(begin: 1, end: scale),

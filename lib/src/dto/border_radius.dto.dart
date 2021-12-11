@@ -46,13 +46,13 @@ class BorderRadiusDto extends Dto<BorderRadius> {
     );
   }
 
-  BorderRadiusDto merge(BorderRadiusDto? borderRadius) {
-    if (borderRadius == null) return this;
+  BorderRadiusDto merge(BorderRadiusDto? other) {
+    if (other == null || other == this) return this;
     return copyWith(
-      topLeft: borderRadius.topLeft,
-      topRight: borderRadius.topRight,
-      bottomLeft: borderRadius.bottomLeft,
-      bottomRight: borderRadius.bottomRight,
+      topLeft: other.topLeft,
+      topRight: other.topRight,
+      bottomLeft: other.bottomLeft,
+      bottomRight: other.bottomRight,
     );
   }
 

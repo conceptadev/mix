@@ -10,6 +10,22 @@ import '../attributes/shared/shared.props.dart';
 import '../attributes/text/text.props.dart';
 import 'mix_factory.dart';
 
+typedef DecoratorMap = Map<DecoratorType, List<Decorator>>;
+
+extension DecoratorMapExtension on DecoratorMap {
+  List<Decorator> get parents {
+    return _getOrDefault(DecoratorType.parent);
+  }
+
+  List<Decorator> get children {
+    return _getOrDefault(DecoratorType.child);
+  }
+
+  List<Decorator> _getOrDefault(DecoratorType type) {
+    return this[type] ?? [];
+  }
+}
+
 class MixContext {
   final BuildContext context;
   final Mix sourceMix;
@@ -18,24 +34,24 @@ class MixContext {
 
   final List<VariantAttribute> variants;
   final List<DirectiveAttribute> directives;
-  final List<WidgetDecorator> decorators;
+  final DecoratorMap decorators;
 
-  final BoxProps boxMixer;
-  final TextProps textMixer;
-  final SharedProps sharedMixer;
-  final IconProps iconMixer;
-  final FlexProps flexMixer;
+  final BoxProps boxProps;
+  final TextProps textProps;
+  final SharedProps sharedProps;
+  final IconProps iconProps;
+  final FlexProps flexProps;
 
   MixContext._({
     required this.context,
     required this.sourceMix,
     required this.originalMix,
     required this.descendentMix,
-    required this.boxMixer,
-    required this.textMixer,
-    required this.sharedMixer,
-    required this.iconMixer,
-    required this.flexMixer,
+    required this.boxProps,
+    required this.textProps,
+    required this.sharedProps,
+    required this.iconProps,
+    required this.flexProps,
     required this.directives,
     required this.variants,
     required this.decorators,
@@ -81,7 +97,7 @@ class MixContext {
     final source = Mix.fromList(_attributes);
     final directives = <DirectiveAttribute>[];
     final variants = <VariantAttribute>[];
-    final decorators = <WidgetDecorator>[];
+    final decorators = <Decorator>[];
 
     for (final attribute in _attributes) {
       if (attribute is VariantAttribute) {
@@ -92,7 +108,7 @@ class MixContext {
         directives.add(attribute);
       }
 
-      if (attribute is WidgetDecorator) {
+      if (attribute is Decorator) {
         decorators.add(attribute);
       }
 
@@ -133,18 +149,18 @@ class MixContext {
         ...variants,
         ...directives
       ]),
-      boxMixer: BoxProps.fromContext(context, boxAttributes),
-      textMixer: TextProps.fromContext(
+      boxProps: BoxProps.fromContext(context, boxAttributes),
+      textProps: TextProps.fromContext(
         context,
         textAttributes,
         directives.whereType<TextDirectiveAttribute>(),
       ),
-      sharedMixer: SharedProps.fromContext(context, sharedAttributes),
-      iconMixer: IconProps.fromContext(context, iconAttributes),
-      flexMixer: FlexProps.fromContext(context, flexAttributes),
+      sharedProps: SharedProps.fromContext(context, sharedAttributes),
+      iconProps: IconProps.fromContext(context, iconAttributes),
+      flexProps: FlexProps.fromContext(context, flexAttributes),
       directives: directives,
       variants: variants,
-      decorators: decorators,
+      decorators: _getDecoratorMap(decorators),
     );
   }
 
@@ -188,46 +204,28 @@ class MixContext {
     }
   }
 
-  /// Applies all [WidgetDecorator] of [type] to a [Widget]
-  Widget _applyWidgetDecorators(
-    Widget widget, {
-    required WidgetDecoratorType type,
-  }) {
-    var current = widget;
+  static DecoratorMap _getDecoratorMap(List<Decorator> decorators) {
+    final DecoratorMap decoratorMap = {};
+    final mergedDecorators = <Type, Decorator>{};
 
-    final decoratorMap = <Type, WidgetDecorator>{};
-
-    final selectedDecorators = decorators.where(
-      (decorator) => decorator.type == type,
-    );
-
-    if (selectedDecorators.isEmpty) {
-      return current;
-    }
-
-    for (final attribute in selectedDecorators) {
-      final existing = decoratorMap[attribute.runtimeType];
+    for (final attribute in decorators) {
+      final existing = mergedDecorators[attribute.runtimeType];
       if (existing != null) {
-        decoratorMap[attribute.runtimeType] = existing.merge(attribute);
+        mergedDecorators[attribute.runtimeType] = existing.merge(attribute);
       } else {
-        decoratorMap[attribute.runtimeType] = attribute;
+        mergedDecorators[attribute.runtimeType] = attribute;
       }
     }
 
-    // Apply widget attributes
-    decoratorMap.forEach(
-      (key, value) => current = value.render(this, current),
-    );
+    mergedDecorators.forEach((_, decorator) {
+      decoratorMap[decorator.type] ??= [];
+      // Add to decorator map and sort to guarantee order consistency
+      decoratorMap[decorator.type]!
+        ..add(decorator)
+        ..sort((a, b) => a.key.hashCode - b.key.hashCode);
+    });
 
-    return current;
-  }
-
-  Widget renderParentDecorators(Widget widget) {
-    return _applyWidgetDecorators(widget, type: WidgetDecoratorType.parent);
-  }
-
-  Widget renderChildDecorators(Widget widget) {
-    return _applyWidgetDecorators(widget, type: WidgetDecoratorType.child);
+    return decoratorMap;
   }
 
   @override
@@ -235,20 +233,20 @@ class MixContext {
     if (identical(this, other)) return true;
 
     return other is MixContext &&
-        other.boxMixer == boxMixer &&
-        other.textMixer == textMixer &&
-        other.iconMixer == iconMixer &&
-        other.flexMixer == flexMixer &&
-        other.sharedMixer == sharedMixer;
+        other.boxProps == boxProps &&
+        other.textProps == textProps &&
+        other.iconProps == iconProps &&
+        other.flexProps == flexProps &&
+        other.sharedProps == sharedProps;
   }
 
   @override
   int get hashCode =>
-      boxMixer.hashCode ^
-      textMixer.hashCode ^
-      iconMixer.hashCode ^
-      flexMixer.hashCode ^
-      sharedMixer.hashCode;
+      boxProps.hashCode ^
+      textProps.hashCode ^
+      iconProps.hashCode ^
+      flexProps.hashCode ^
+      sharedProps.hashCode;
 
   MixContext merge(MixContext? other) {
     if (other == null) return this;

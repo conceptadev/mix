@@ -33,24 +33,31 @@ class VariantAttribute<T extends Attribute> extends Attribute {
       'VariantAttribute(variant: $variant, attributes: $attributes)';
 }
 
-enum WidgetDecoratorType {
+enum DecoratorType {
   parent,
   child,
   separator,
 }
 
-abstract class WidgetDecorator<T extends WidgetDecorator<T>> extends Attribute {
-  const WidgetDecorator();
-  WidgetDecorator<T> merge(T other);
-  WidgetDecoratorType get type;
+abstract class Decorator<T extends Decorator<T>> extends Attribute {
+  const Decorator(this.key);
+  final Key key;
+  Decorator<T> merge(T other);
+
+  DecoratorType get type;
   Widget render(MixContext mixContext, Widget child);
 }
 
-abstract class ParentWidgetDecorator<T extends WidgetDecorator<T>>
-    extends WidgetDecorator<T> {
-  const ParentWidgetDecorator();
+abstract class ParentDecorator<T extends Decorator<T>> extends Decorator<T> {
+  const ParentDecorator(Key key) : super(key);
   @override
-  WidgetDecoratorType get type => WidgetDecoratorType.parent;
+  DecoratorType get type => DecoratorType.parent;
+}
+
+abstract class ChildDecorator<T extends Decorator<T>> extends Decorator<T> {
+  const ChildDecorator(Key key) : super(key);
+  @override
+  DecoratorType get type => DecoratorType.child;
 }
 
 abstract class DirectiveAttribute<T> extends Attribute {
