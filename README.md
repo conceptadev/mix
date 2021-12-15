@@ -2,9 +2,9 @@
   <img width="150" src="https://raw.githubusercontent.com/leoafarias/mix/main/assets/animated.svg">
 </p>
 
-#
+---
 
-Build Flutter design systems expressively and effortlessly. **Mix** offers primitive building blocks to help developers and designers create beautiful and consistent UI.
+Build Flutter design systems expressively and effortlessly. **Mix** offers primitive building blocks to help developers and designers create beautiful UI with confidence.
 
 **Important**
 
