@@ -9,7 +9,8 @@ Build Flutter design systems expressively and effortlessly. **Mix** offers primi
 **Important**
 
 ```text
-Mix is currently being used internally to build design systems in Flutter. It is still in heavy development. Major APIs are expected to change until the 1.0 release.
+Mix is currently being used internally to build design systems in Flutter. 
+It is still in heavy development. Major APIs are expected to change until the 1.0 release.
 ```
 
 ## Motivation
