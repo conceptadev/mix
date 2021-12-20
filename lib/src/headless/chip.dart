@@ -9,25 +9,25 @@ import 'package:mix/mix.dart';
 ///   onPressed: () => debugPrint('lorem'),
 /// ),
 /// ```
-class ChipX extends StatelessWidget {
+class ChipX extends RemixableWidget {
   /// Creates a chip
   const ChipX({
     Key? key,
     required this.children,
-    this.mix,
+    Mix? mix,
     this.onPressed,
-  }) : super(key: key);
+  }) : super(mix, key: key);
 
   /// The content of the chip.
   ///
   /// Usually a combination of [IconMix] with [TextMix]
   final List<Widget> children;
-  final Mix? mix;
 
   /// Called when the chip is pressed. If null, the chip will have no behavior
   final VoidCallback? onPressed;
 
-  Mix get __mix {
+  @override
+  Mix get defaultMix {
     return Mix(
       margin(10),
       elevation(3),
@@ -60,15 +60,14 @@ class ChipX extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final finalMix = Mix.combine(__mix, mix);
     if (onPressed == null) {
       return HBox(
         children: children,
-        mix: finalMix,
+        mix: mix,
       );
     }
     return Pressable(
-      mix: finalMix,
+      mix: mix,
       onPressed: onPressed,
       child: Row(children: children),
     );
