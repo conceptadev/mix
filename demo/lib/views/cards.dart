@@ -38,8 +38,3 @@ class CardsPreview extends StatelessWidget {
     );
   }
 }
-
-final chip = ChipX(
-  children: const [IconMix(icon: Icons.add), TextMix('Lorem')],
-  onPressed: () => debugPrint('lorem'),
-);
