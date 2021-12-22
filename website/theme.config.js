@@ -2,7 +2,6 @@ export default {
   github: 'https://github.com/leoafarias/mix',
   docsRepositoryBase: 'https://github.com/leoafarias/mix/blob/main',
   titleSuffix: ' – Mix',
-
   floatTOC: true,
   logo: (
     <>

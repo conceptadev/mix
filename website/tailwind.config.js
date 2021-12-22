@@ -2,8 +2,13 @@ const colors = require('tailwindcss/colors')
 
 module.exports = {
   mode: 'jit',
-  purge: ['./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
-  darkMode: 'class', // or 'media' or 'class'
+  purge: [
+    './pages/**/*.{js,ts,jsx,tsx,md,mdx}',
+    './components/**/*.{js,ts,jsx,tsx}',
+    './theme.config.js',
+    './styles.css',
+  ],
+  darkMode: 'class',
   theme: {
     extend: {
       fontFamily: {
@@ -20,7 +25,6 @@ module.exports = {
         ],
       },
       colors: {
-        dark: '#000',
         gray: colors.trueGray,
         blue: colors.blue,
         orange: colors.orange,
