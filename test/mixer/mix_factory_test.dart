@@ -77,8 +77,8 @@ void main() {
     });
 
     test('Adds Attributes to Mix', () async {
-      final firstWithOneMore = firstMix.add(bgColor(Colors.yellow)).attributes;
-      final firstWithTwoMoreAsList = firstMix.addList([
+      final firstWithOneMore = firstMix.mix(bgColor(Colors.yellow)).attributes;
+      final firstWithTwoMoreAsList = firstMix.addAttributes([
         bgColor(Colors.yellow),
         bgColor(Colors.green),
       ]).attributes;
@@ -137,14 +137,14 @@ void main() {
     test('Chooses Mixes based on conditional', () async {
       final chooseFirstMix = Mix.chooser(
         condition: true,
-        trueMix: firstMix,
-        falseMix: secondMix,
+        ifTrue: firstMix,
+        ifFalse: secondMix,
       );
 
       final chooseSecondMix = Mix.chooser(
         condition: false,
-        trueMix: firstMix,
-        falseMix: secondMix,
+        ifTrue: firstMix,
+        ifFalse: secondMix,
       );
 
       expect(chooseFirstMix, firstMix);

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:mix/mix.dart';
-import 'package:mix/src/helpers/variants.dart';
-import 'package:mix/src/widgets/decorator.widget.dart';
 
+import '../helpers/variants.dart';
 import '../mixer/mix_context.dart';
 import '../mixer/mix_factory.dart';
+import 'decorator.widget.dart';
 import 'mixable.widget.dart';
 import 'nothing.widget.dart';
 
@@ -23,15 +22,12 @@ class Box extends MixableWidget {
 
   @override
   Widget build(BuildContext context) {
-    MixContext mixed = MixContext.create(
-      context,
-      mix,
-      inherit: inherit,
-      customVariants: variantOrNull(variant),
-    );
-
     return BoxMixedWidget(
-      mixed,
+      MixContext.create(
+        context: context,
+        mix: mix.withMaybeVariant(variant),
+        inherit: inherit,
+      ),
       child: child,
     );
   }

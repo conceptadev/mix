@@ -67,6 +67,9 @@ class CardX extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VBox(mix: Mix.combine(__mix, mix), children: children);
+    return VBox(
+      mix: Mix.combine(__mix, mix),
+      children: children,
+    );
   }
 }

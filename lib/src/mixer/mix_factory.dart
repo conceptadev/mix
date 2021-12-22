@@ -1,18 +1,26 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:mix/src/attributes/common/attribute.dart';
-import 'package:mix/src/attributes/helpers/helper.utils.dart';
-import 'package:mix/src/widgets/box.widget.dart';
-import 'package:mix/src/widgets/flex.widget.dart';
-import 'package:mix/src/widgets/icon.widget.dart';
-import 'package:mix/src/widgets/pressable.widget.dart';
-import 'package:mix/src/widgets/text.widget.dart';
+import 'package:mix/src/helpers/variants.dart';
+
+import '../attributes/common/attribute.dart';
+import '../attributes/helpers/helper.utils.dart';
+import '../widgets/box.widget.dart';
+import '../widgets/flex.widget.dart';
+import '../widgets/icon.widget.dart';
+import '../widgets/pressable.widget.dart';
+import '../widgets/text.widget.dart';
 
 /// Defines a mix
 class Mix<T extends Attribute> {
   final List<T> attributes;
 
-  const Mix._([this.attributes = const []]);
+  /// These are the `Variants` that will be passed to `MixContext` in order to be applied for this mix
+  final List<Variant<T>> variantToApply;
+
+  const Mix._(
+    this.attributes, {
+    this.variantToApply = const [],
+  });
 
   /// Define mix with parameters
   factory Mix([
@@ -46,7 +54,10 @@ class Mix<T extends Attribute> {
     return Mix._(params);
   }
 
-  const Mix.fromList(this.attributes);
+  const Mix.fromList(
+    this.attributes, {
+    this.variantToApply = const [],
+  });
 
   factory Mix.fromMaybeList(List<T?> attributes) {
     final validAttributes = attributes.whereType<T>();
@@ -55,6 +66,30 @@ class Mix<T extends Attribute> {
 
   Mix<T> clone() {
     return Mix._([...attributes]);
+  }
+
+  Mix<T> withVariant(Variant<T> variant) {
+    return Mix._(
+      [...attributes],
+      variantToApply: [...variantToApply, variant],
+    );
+  }
+
+  Mix<T> withMaybeVariant(Variant<T>? variant) {
+    if (variant == null) return this;
+    return Mix._(
+      [...attributes],
+      variantToApply: [...variantToApply, variant],
+    );
+  }
+
+  Mix<T> withVariants(List<Variant<T>> variants) {
+    return Mix._([
+      ...attributes
+    ], variantToApply: [
+      ...variantToApply,
+      ...variants,
+    ]);
   }
 
   /// Merges many mixes into one
@@ -72,57 +107,77 @@ class Mix<T extends Attribute> {
     Mix<T>? mix5,
     Mix<T>? mix6,
   ]) {
-    final list = <T>[];
-    if (mix1 != null) list.addAll(mix1.attributes);
-    if (mix2 != null) list.addAll(mix2.attributes);
-    if (mix3 != null) list.addAll(mix3.attributes);
-    if (mix4 != null) list.addAll(mix4.attributes);
-    if (mix5 != null) list.addAll(mix5.attributes);
-    if (mix6 != null) list.addAll(mix6.attributes);
+    final attributes = <T>[];
+    final variants = <Variant<T>>[];
+    if (mix1 != null) {
+      attributes.addAll(mix1.attributes);
+      variants.addAll(mix1.variantToApply);
+    }
 
-    return Mix._(list);
+    if (mix2 != null) {
+      attributes.addAll(mix2.attributes);
+      variants.addAll(mix2.variantToApply);
+    }
+
+    if (mix3 != null) {
+      attributes.addAll(mix3.attributes);
+      variants.addAll(mix3.variantToApply);
+    }
+
+    if (mix4 != null) {
+      attributes.addAll(mix4.attributes);
+      variants.addAll(mix4.variantToApply);
+    }
+
+    if (mix5 != null) {
+      attributes.addAll(mix5.attributes);
+      variants.addAll(mix5.variantToApply);
+    }
+
+    if (mix6 != null) {
+      attributes.addAll(mix6.attributes);
+      variants.addAll(mix6.variantToApply);
+    }
+
+    return Mix._(attributes, variantToApply: variants);
   }
 
   /// Chooses mix based on condition
   static Mix chooser<T extends Attribute>({
     required bool condition,
-    required Mix<T> trueMix,
-    required Mix<T> falseMix,
+    required Mix<T> ifTrue,
+    required Mix<T> ifFalse,
   }) {
     if (condition) {
-      return trueMix;
+      return ifTrue;
     } else {
-      return falseMix;
+      return ifFalse;
     }
   }
 
   /// Used for const constructor widgets
-  static const Mix constant = Mix._();
+  static const Mix constant = Mix._([]);
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is Mix<T> && listEquals(other.attributes, attributes);
+    return other is Mix<T> &&
+        listEquals(other.attributes, attributes) &&
+        listEquals(other.variantToApply, variantToApply);
   }
 
   @override
-  int get hashCode => attributes.hashCode;
+  int get hashCode => attributes.hashCode ^ variantToApply.hashCode;
 }
 
 extension MixExtension<T extends Attribute> on Mix<T> {
-  /// Adds more properties to a mix
-
+  /// Adds an Attribute to a Mix
   WrapFunction<T, Mix<T>> get mix {
-    return WrapFunction(addList);
+    return WrapFunction(addAttributes);
   }
 
-  @deprecated
-  WrapFunction<T, Mix<T>> get add {
-    return mix;
-  }
-
-  Mix<T> addList(List<T> attributes) {
+  Mix<T> addAttributes(List<T> attributes) {
     return Mix._([...this.attributes, ...attributes]);
   }
 

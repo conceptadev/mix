@@ -49,24 +49,24 @@ Mixes are immutable. The new Mix created will inherit all attributes of the orig
 
 ### Add attributes
 
-#### `.add()`
+#### `.mix()`
 
-If you have an existing Mix you can add attributes to it by calling the `add` method. This will return a new Mix with the new attributes added.
+If you have an existing Mix you can add attributes to it by calling the `mix` method. This will return a new Mix with the new attributes added.
 
 ```dart
-final newMix = mix.add(
+final newMix = mix.mix(
     height(200),
     width(200),
     bgColor(Colors.red),
 );
 ```
 
-#### `.addList()`
+#### `.addAttributes()`
 
 Similar to `add` but allows you to pass a List of attributes.
 
 ```dart
-final newMix = mix.addList([
+final newMix = mix.addAttributes([
     height(200),
     width(200),
     bgColor(Colors.red),

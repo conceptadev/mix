@@ -57,11 +57,10 @@ class MixContext {
     required this.decorators,
   });
 
-  factory MixContext.create(
-    BuildContext context,
-    Mix mix, {
+  factory MixContext.create({
+    required BuildContext context,
+    required Mix mix,
     bool inherit = false,
-    List<Variant>? customVariants,
   }) {
     Mix _mix = mix;
     if (inherit) {
@@ -71,22 +70,23 @@ class MixContext {
         _mix = Mix.combine(mix, inheritedMix);
       }
     }
+
     return _build(
-      context,
-      _mix,
-      customVariants: customVariants ?? [],
+      context: context,
+      mix: _mix,
+      variantsToApply: mix.variantToApply,
     );
   }
 
-  static MixContext _build<T extends Attribute>(
-    BuildContext context,
-    Mix<T> mix, {
-    required List<Variant> customVariants,
+  static MixContext _build<T extends Attribute>({
+    required BuildContext context,
+    required Mix<T> mix,
+    required List<Variant> variantsToApply,
   }) {
     final _attributes = _expandAttributes(
       context,
       mix.attributes,
-      customVariants: customVariants,
+      variantsToApply: variantsToApply,
     );
     BoxAttributes? boxAttributes;
     IconAttributes? iconAttributes;
@@ -168,7 +168,7 @@ class MixContext {
   static List<T> _expandAttributes<T extends Attribute>(
     BuildContext context,
     List<T> attributes, {
-    required List<Variant> customVariants,
+    required List<Variant> variantsToApply,
   }) {
     final spreaded = <T>[];
 
@@ -176,7 +176,7 @@ class MixContext {
 
     for (final attribute in attributes) {
       if (attribute is VariantAttribute<T>) {
-        if (customVariants.contains(attribute.variant) ||
+        if (variantsToApply.contains(attribute.variant) ||
             attribute.shouldApply(context)) {
           // If its selected, add it to the list
           spreaded.addAll(attribute.attributes);
@@ -197,7 +197,7 @@ class MixContext {
       return _expandAttributes(
         context,
         spreaded,
-        customVariants: customVariants,
+        variantsToApply: variantsToApply,
       );
     } else {
       return spreaded;
@@ -252,18 +252,16 @@ class MixContext {
     if (other == null) return this;
 
     return copyWith(
-      context: other.context,
       sourceMix: other.sourceMix,
     );
   }
 
   MixContext copyWith({
-    BuildContext? context,
     Mix? sourceMix,
   }) {
     return MixContext.create(
-      this.context,
-      Mix.combine(this.sourceMix, sourceMix),
+      context: context,
+      mix: Mix.combine(this.sourceMix, sourceMix),
     );
   }
 }

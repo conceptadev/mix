@@ -14,7 +14,7 @@ pre code {
 }
 
 code.prism-code {
-  --c-highlight: rgb(255, 255, 255, 0.02) !important;
+  --c-highlight: rgb(115, 34, 203, 0.1) !important;
 }
 
 pre code.prism-code.language-dart span.token.design-token {

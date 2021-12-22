@@ -1,4 +1,10 @@
-## Unreleased
+## 0.0.4
+
+- Optimization improvements
+- Added clip decorator
+- Fixed some bugs.
+
+## 0.0.3
 
 - Global Mix for reusability of design tokens and mixes across DS.
 - `withMix` utility to add nested mixes and combine them.

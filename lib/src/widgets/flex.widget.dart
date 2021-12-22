@@ -20,7 +20,7 @@ class FlexBox extends MixableWidget {
   @override
   Widget build(BuildContext context) {
     return FlexBoxMixerWidget(
-      MixContext.create(context, mix),
+      MixContext.create(context: context, mix: mix),
       direction: direction,
       children: children,
     );
