@@ -5,7 +5,7 @@ import toast, { Toaster } from 'react-hot-toast'
 
 const CallToAction = () => {
   const onClick = () => {
-    copy('npx create-turbo@latest')
+    copy('flutter pub add mix')
     toast.success('Copied to clipboard')
   }
   return (
