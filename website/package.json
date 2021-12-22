@@ -11,13 +11,16 @@
   "author": "Shu Ding",
   "license": "MIT",
   "dependencies": {
+    "@heroicons/react": "^1.0.5",
+    "copy-to-clipboard": "^3.3.1",
     "next": "^12.0.7",
     "nextra": "2.0.0-beta.5",
     "nextra-theme-docs": "2.0.0-beta.5",
     "prism-react-renderer": "^1.2.1",
     "prismjs": "^1.25.0",
     "react": "^17.0.1",
-    "react-dom": "^17.0.1"
+    "react-dom": "^17.0.1",
+    "react-hot-toast": "^2.1.1"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.4.1",
