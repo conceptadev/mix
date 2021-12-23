@@ -1,15 +1,15 @@
 export default {
-  github: 'https://github.com/leoafarias/mix',
-  docsRepositoryBase: 'https://github.com/leoafarias/mix/blob/main',
-  titleSuffix: ' – Mix',
+  github: "https://github.com/leoafarias/mix",
+  docsRepositoryBase: "https://github.com/leoafarias/mix/blob/main",
+  titleSuffix: " – Mix",
   floatTOC: true,
   logo: (
     <>
       <img
         className="md:inline object-contain hidden"
-        style={{ height: '1em' }}
+        style={{ height: "1em" }}
         src={
-          'https://raw.githubusercontent.com/leoafarias/mix/main/assets/mix-icon.svg'
+          "https://raw.githubusercontent.com/leoafarias/mix/main/assets/mix-icon.svg"
         }
       />
       <span className="mr-2 font-extrabold mx-2 hidden md:inline">Mix</span>
@@ -73,7 +73,7 @@ export default {
   prevLinks: true,
   nextLinks: true,
   footer: true,
-  footerEditLink: 'Edit this page on GitHub',
+  footerEditLink: "Edit this page on GitHub",
   footerText: <>MIT {new Date().getFullYear()} © Mix.</>,
-  unstable_faviconGlyph: '👋',
-}
+  unstable_faviconGlyph: "👋",
+};

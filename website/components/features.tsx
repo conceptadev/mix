@@ -8,36 +8,36 @@ import {
   FingerPrintIcon,
   LightningBoltIcon,
   RefreshIcon,
-} from '@heroicons/react/outline'
+} from "@heroicons/react/outline";
 
 const features = [
   {
-    name: 'Incremental builds',
+    name: "Incremental builds",
     description: `Building once is painful enough, Turborepo will remember what you've built and skip the stuff that's already been computed.`,
     icon: RefreshIcon,
   },
   {
-    name: 'Content-aware hashing',
+    name: "Content-aware hashing",
     description: `Turborepo looks at the contents of your files, not timestamps to figure out what needs to be built.`,
     icon: FingerPrintIcon,
   },
   {
-    name: 'Cloud caching',
+    name: "Cloud caching",
     description: `Share a cloud build cache with your teammates and CI/CD for even faster builds.`,
     icon: CloudUploadIcon,
   },
   {
-    name: 'Parallel execution',
+    name: "Parallel execution",
     description: `Execute builds using every core at maximum parallelism without wasting idle CPUs.`,
     icon: LightningBoltIcon,
   },
   {
-    name: 'Task pipelines',
+    name: "Task pipelines",
     description: `Define the relationships between your tasks and then let Turborepo optimize what to build and when.`,
     icon: ArrowsExpandIcon,
   },
   {
-    name: 'Zero runtime overhead',
+    name: "Zero runtime overhead",
     description: `Turborepo doesn't interfere with your runtime code or touch your sourcemaps. It does what it does and then gets out of your way.`,
     icon: ChipIcon,
   },
@@ -52,12 +52,12 @@ const features = [
   //   icon: DownloadIcon,
   // },
   {
-    name: 'Pruned subsets',
+    name: "Pruned subsets",
     description: `Speed up PaaS deploys by generating a subset of your monorepo with only what's needed to build a specific target.`,
     icon: ChartPieIcon,
   },
   {
-    name: 'JSON configuration',
+    name: "JSON configuration",
     description: `Reduce complexity through convention. Fan out configuration with just a few lines of JSON.`,
     icon: BeakerIcon,
   },
@@ -66,7 +66,7 @@ const features = [
     description: `Generate build profiles and import them in Chrome or Edge to understand which tasks are taking the longest.`,
     icon: ChartBarIcon,
   },
-]
+];
 
 function Features() {
   return (
@@ -75,7 +75,7 @@ function Features() {
         {features.map(({ icon: Icon, ...feature }, i) => (
           <div
             className="flex items-center space-x-4"
-            key={feature.name.split(' ').join('-')}
+            key={feature.name.split(" ").join("-")}
           >
             <div>
               <Icon
@@ -93,7 +93,7 @@ function Features() {
         ))}
       </div>
     </>
-  )
+  );
 }
 
-export default Features
+export default Features;
