@@ -62,7 +62,10 @@ void main() {
 
         final mixContext = boxMixedWidget.mixContext;
 
-        final matchContext = MixContext.create(context, pressableMix);
+        final matchContext = MixContext.create(
+          context: context,
+          mix: pressableMix,
+        );
 
         expect(mixContext.originalMix, pressableMix);
 

@@ -11,6 +11,15 @@ import 'package:mix/mix.dart';
 import 'providers/dark_mode.provider.dart';
 import 'views/pressable_preview.dart';
 
+const screens = [
+  Center(child: BasicExample()),
+  Center(child: DesignTokenExample()),
+  Center(child: PressablePreview()),
+  Center(child: CardsPreview()),
+  Center(child: HeadlessPreview()),
+  ButtonsPreview(),
+];
+
 class AppShell extends HookConsumerWidget {
   const AppShell({Key? key}) : super(key: key);
 
@@ -33,52 +42,40 @@ class AppShell extends HookConsumerWidget {
         ),
         body: Row(
           children: [
-            NavigationRail(
-              extended: true,
-              selectedIndex: selected.value,
-              onDestinationSelected: (index) {
-                selected.value = index;
-              },
-              // labelType: NavigationRailLabelType.selected,
-              destinations: const <NavigationRailDestination>[
-                NavigationRailDestination(
-                  icon: Icon(Icons.circle),
-                  label: Text('Basic Example'),
-                ),
-                NavigationRailDestination(
-                  icon: Icon(Icons.circle),
-                  label: Text('Design Tokens'),
-                ),
-                NavigationRailDestination(
-                  icon: Icon(Icons.circle),
-                  label: Text('Pressable'),
-                ),
-                NavigationRailDestination(
-                  icon: Icon(Icons.circle),
-                  label: Text('Cards'),
-                ),
-                NavigationRailDestination(
-                  icon: Icon(Icons.circle),
-                  label: Text('Headless'),
-                ),
-                // NavigationRailDestination(
-                //   icon: Icon(Icons.bookmark_border),
-                //   selectedIcon: Icon(Icons.book),
-                //   label: Text('Buttons'),
-                // ),
-              ],
-            ),
+            // NavigationRail(
+            //   extended: true,
+            //   selectedIndex: selected.value,
+            //   onDestinationSelected: (index) {
+            //     selected.value = index;
+            //   },
+            //   // labelType: NavigationRailLabelType.selected,
+            //   destinations: const <NavigationRailDestination>[
+            //     NavigationRailDestination(
+            //       icon: Icon(Icons.circle),
+            //       label: Text('Basic Example'),
+            //     ),
+            //     NavigationRailDestination(
+            //       icon: Icon(Icons.circle),
+            //       label: Text('Design Tokens'),
+            //     ),
+            //     NavigationRailDestination(
+            //       icon: Icon(Icons.circle),
+            //       label: Text('Pressable'),
+            //     ),
+            //     NavigationRailDestination(
+            //       icon: Icon(Icons.circle),
+            //       label: Text('Cards'),
+            //     ),
+            //     NavigationRailDestination(
+            //       icon: Icon(Icons.circle),
+            //       label: Text('Headless'),
+            //     ),
+            //   ],
+            // ),
             const VerticalDivider(thickness: 1, width: 1),
             // This is the main content.
             Expanded(
-              child: [
-                const Center(child: BasicExample()),
-                const Center(child: DesignTokenExample()),
-                const Center(child: PressablePreview()),
-                const Center(child: CardsPreview()),
-                const Center(child: HeadlessPreview()),
-                const ButtonsPreview(),
-              ][selected.value],
+              child: screens[selected.value],
             ),
           ],
         ),

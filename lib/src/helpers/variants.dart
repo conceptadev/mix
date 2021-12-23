@@ -42,7 +42,7 @@ class MultiVariant<T extends Attribute> {
       return VariantAttribute<T>(
         v,
         attributes,
-        checkFn: v.checkFn,
+        shouldApply: v.shouldApply,
       );
     });
 
@@ -106,11 +106,11 @@ class MultiVariant<T extends Attribute> {
 }
 
 class Variant<T extends Attribute> {
-  const Variant(this.name, {this.checkFn});
+  const Variant(this.name, {this.shouldApply});
 
   final String name;
 
-  final bool Function(BuildContext)? checkFn;
+  final bool Function(BuildContext)? shouldApply;
 
   MultiVariant<T> operator &(Variant<T> variant) =>
       MultiVariant<T>([this, variant], operator: _OP.and);
@@ -149,7 +149,7 @@ class Variant<T extends Attribute> {
     return VariantAttribute<T>(
       this,
       params,
-      checkFn: checkFn,
+      shouldApply: shouldApply,
     );
   }
 

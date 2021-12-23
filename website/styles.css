@@ -1,6 +1,3 @@
-@tailwind utilities;
-@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400&family=JetBrains+Mono&display=swap');
-
 pre {
   background-color: #070509 !important;
 }
@@ -8,13 +5,13 @@ pre {
 pre code {
   @apply text-sm;
   background-color: #070509 !important;
-  font-family: 'Fira Code', monospace;
+  font-family: "Fira Code", monospace;
   font-weight: 300;
   color: #ffffff;
 }
 
 code.prism-code {
-  --c-highlight: rgb(255, 255, 255, 0.02) !important;
+  --c-highlight: rgb(115, 34, 203, 0.1) !important;
 }
 
 pre code.prism-code.language-dart span.token.design-token {
@@ -62,7 +59,7 @@ pre code.prism-code.language-dart span.token.operator {
 }
 
 /* SIDEBAR, hopefully you can remove thi later */
-div.w-64 ul li[style*='margin-left:1rem'] {
+div.w-64 ul li[style*="margin-left:1rem"] {
   font-weight: 700;
 }
 
