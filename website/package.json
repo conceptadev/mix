@@ -31,9 +31,5 @@
     "prettier": "^2.0.5",
     "tailwindcss": "^2.2.19",
     "typescript": "^4.5.4"
-  },
-  "prettier": {
-    "semi": false,
-    "singleQuote": true
   }
 }
