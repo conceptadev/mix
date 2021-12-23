@@ -11,17 +11,27 @@ class CardsPreview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      children: const [
+      children: [
         CardX(
           children: [
-            TextMix(
+            const TextMix(
               titleContent,
               variant: title,
             ),
-            TextMix(
+            const TextMix(
               paragraphContent,
               variant: paragraph,
             ),
+            Row(children: [
+              ChipX(
+                children: const [IconMix(icon: Icons.add), TextMix('Lorem')],
+                onPressed: () => debugPrint('lorem'),
+              ),
+              const ChipX(children: [TextMix('Ipsum')]),
+              const ChipX(children: [TextMix('Dolor')]),
+              const ChipX(children: [TextMix('Sit')]),
+              const ChipX(children: [TextMix('Amet')]),
+            ]),
           ],
         ),
       ],
