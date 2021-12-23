@@ -1,8 +1,6 @@
 /* eslint-disable @next/next/google-font-display */
 
-import Document, { Head, Html, Main, NextScript } from 'next/document'
-
-// We use display=block to remove the jank
+import Document, { Head, Html, Main, NextScript } from "next/document";
 
 class MyDocument extends Document {
   render() {
@@ -25,8 +23,8 @@ class MyDocument extends Document {
           <NextScript />
         </body>
       </Html>
-    )
+    );
   }
 }
 
-export default MyDocument
+export default MyDocument;

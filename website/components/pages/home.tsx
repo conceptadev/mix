@@ -9,51 +9,51 @@ import {
   FingerPrintIcon,
   LightningBoltIcon,
   RefreshIcon,
-} from '@heroicons/react/outline'
-import copy from 'copy-to-clipboard'
-import Head from 'next/head'
-import Image from 'next/image'
-import Link from 'next/link'
-import toast, { Toaster } from 'react-hot-toast'
+} from "@heroicons/react/outline";
+import copy from "copy-to-clipboard";
+import Head from "next/head";
+import Image from "next/image";
+import Link from "next/link";
+import toast, { Toaster } from "react-hot-toast";
 
 const features = [
   {
-    name: 'Incremental builds',
+    name: "Incremental builds",
     description: `Building once is painful enough, Turborepo will remember what you've built and skip the stuff that's already been computed.`,
     icon: RefreshIcon,
   },
   {
-    name: 'Content-aware hashing',
+    name: "Content-aware hashing",
     description: `Turborepo looks at the contents of your files, not timestamps to figure out what needs to be built.`,
     icon: FingerPrintIcon,
   },
   {
-    name: 'Remote Caching',
+    name: "Remote Caching",
     description: `Share a remote build cache with your teammates and CI/CD for even faster builds.`,
     icon: CloudUploadIcon,
   },
   {
-    name: 'Parallel execution',
+    name: "Parallel execution",
     description: `Execute builds using every core at maximum parallelism without wasting idle CPUs.`,
     icon: LightningBoltIcon,
   },
   {
-    name: 'Zero runtime overhead',
+    name: "Zero runtime overhead",
     description: `Turborepo won’t interfere with your runtime code or touch your sourcemaps. `,
     icon: ChipIcon,
   },
   {
-    name: 'Pruned subsets',
+    name: "Pruned subsets",
     description: `Speed up PaaS deploys by generating a subset of your monorepo with only what's needed to build a specific target.`,
     icon: ChartPieIcon,
   },
   {
-    name: 'Task pipelines',
+    name: "Task pipelines",
     description: `Define the relationships between your tasks and then let Turborepo optimize what to build and when.`,
     icon: ArrowsExpandIcon,
   },
   {
-    name: 'Meets you where you’re at',
+    name: "Meets you where you’re at",
     description: `Using Lerna? Keep your package publishing workflow and use Turborepo to turbocharge task running.`,
     icon: BeakerIcon,
   },
@@ -62,13 +62,13 @@ const features = [
     description: `Generate build profiles and import them in Chrome or Edge to understand which tasks are taking the longest.`,
     icon: ChartBarIcon,
   },
-]
+];
 
 function Page() {
   const onClick = () => {
-    copy('npx create-turbo@latest')
-    toast.success('Copied to clipboard')
-  }
+    copy("npx create-turbo@latest");
+    toast.success("Copied to clipboard");
+  };
   return (
     <>
       <Head>
@@ -85,7 +85,7 @@ function Page() {
           <br className="hidden lg:block" />
           <span className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-blue-500 ">
             make ship happen.
-          </span>{' '}
+          </span>{" "}
         </h1>
         <p className="max-w-lg mx-auto mt-6 text-xl font-medium leading-tight text-center text-gray-400 sm:max-w-4xl sm:text-2xl md:text-3xl lg:text-4xl">
           Turborepo is a high-performance build system for JavaScript and
@@ -172,7 +172,7 @@ function Page() {
             <p className="mb-6 text-lg leading-normal text-current lg:text-xl">
               <b className="relative inline-block text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-red-500">
                 With Turborepo, we&apos;re doing just that.
-              </b>{' '}
+              </b>{" "}
               We&apos;re abstracting the complex configuration needed for most
               monorepos into a single cohesive build system—giving you a world
               class development experience without the maintenance burden.
@@ -225,7 +225,7 @@ function Page() {
 
       <Toaster position="bottom-right" />
     </>
-  )
+  );
 }
 
-export default Page
+export default Page;

@@ -1,13 +1,13 @@
-import { DuplicateIcon } from '@heroicons/react/outline'
-import copy from 'copy-to-clipboard'
-import Link from 'next/link'
-import toast, { Toaster } from 'react-hot-toast'
+import { DuplicateIcon } from "@heroicons/react/outline";
+import copy from "copy-to-clipboard";
+import Link from "next/link";
+import toast, { Toaster } from "react-hot-toast";
 
 const CallToAction = () => {
   const onClick = () => {
-    copy('flutter pub add mix')
-    toast.success('Copied to clipboard')
-  }
+    copy("flutter pub add mix");
+    toast.success("Copied to clipboard");
+  };
   return (
     <div className="max-w-xl mx-auto mt-5 sm:flex sm:justify-center md:mt-8">
       <div className="rounded-md ">
@@ -28,7 +28,7 @@ const CallToAction = () => {
       </div>
       <Toaster position="bottom-right" />
     </div>
-  )
-}
+  );
+};
 
-export default CallToAction
+export default CallToAction;

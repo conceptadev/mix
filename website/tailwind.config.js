@@ -1,8 +1,6 @@
-const colors = require("tailwindcss/colors");
-
 module.exports = {
   mode: "jit",
-  purge: [
+  content: [
     "./pages/**/*.{js,ts,jsx,tsx,md,mdx}",
     "./components/**/*.{js,ts,jsx,tsx}",
     "./theme.config.js",
@@ -10,29 +8,10 @@ module.exports = {
   ],
   darkMode: "class",
   theme: {
-    extend: {
-      fontFamily: {
-        sans: [`"Inter"`, "sans-serif"],
-        mono: [
-          "Menlo",
-          "Monaco",
-          "Lucida Console",
-          "Liberation Mono",
-          "DejaVu Sans Mono",
-          "Bitstream Vera Sans Mono",
-          "Courier New",
-          "monospace",
-        ],
-      },
-      colors: {
-        gray: colors.trueGray,
-        blue: colors.blue,
-        orange: colors.orange,
-        green: colors.green,
-        red: colors.red,
-        yellow: colors.yellow,
-      },
-    },
+    extend: {},
   },
-  plugins: [require("@tailwindcss/typography")],
+  variants: {
+    extend: {},
+  },
+  plugins: [],
 };
