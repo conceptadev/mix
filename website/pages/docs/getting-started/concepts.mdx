@@ -2,8 +2,7 @@
 title: Core Concepts
 ---
 
-import Callout from 'nextra-theme-docs/callout'
-
+import Callout from "nextra-theme-docs/callout";
 
 # Core Concepts
 
@@ -33,7 +32,6 @@ Consider the following example:
 Mix(height(100));
 ```
 
-
 This defines a _Mix_ with the box height attribute of _100_.
 The function `height()` is a `Utility` that allows us to compose an `Attribute`.
 
@@ -61,7 +59,7 @@ At first glance it might seem these widgets are doing a lot &mdash; in reality, 
 
 The fundamental widget primitive defined in _Mix_ is a `Box`. A `Box` can contain other widgets and a set of `BoxAttributes` to define it's visual properties.
 
-> An easy misconception would be to think that `Box` is __like__ a `Container`, but that would be incorrect: `Box` __is__ a `Container`.
+> An easy misconception would be to think that `Box` is **like** a `Container`, but that would be incorrect: `Box` **is** a `Container`.
 
 That means that this:
 
@@ -92,5 +90,3 @@ Container(
   ),
 )
 ```
-
-

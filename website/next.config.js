@@ -1,7 +1,8 @@
-const withNextra = require('nextra')({
-  theme: 'nextra-theme-docs',
-  themeConfig: './theme.config.js',
-})
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const withNextra = require("nextra")({
+  theme: "nextra-theme-docs",
+  themeConfig: "./theme.config.js",
+});
 
 module.exports = withNextra({
   reactStrictMode: true,
@@ -9,4 +10,4 @@ module.exports = withNextra({
     swcLoader: true,
     swcMinify: true,
   },
-})
+});

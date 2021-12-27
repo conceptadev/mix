@@ -17,4 +17,4 @@ export const MixIcon = ({ size = 20 }) => (
       fillRule="evenodd"
     />
   </svg>
-)
+);

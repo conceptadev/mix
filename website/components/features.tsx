@@ -72,7 +72,7 @@ function Features() {
   return (
     <>
       <div className="grid grid-cols-2 gap-6 my-12 sm:grid-cols-3 ">
-        {features.map(({ icon: Icon, ...feature }, i) => (
+        {features.map(({ icon: Icon, ...feature }, _) => (
           <div
             className="flex items-center space-x-4"
             key={feature.name.split(" ").join("-")}
