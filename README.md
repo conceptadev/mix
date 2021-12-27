@@ -4,12 +4,16 @@
 
 ---
 
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
+
 Build Flutter design systems expressively and effortlessly. **Mix** offers primitive building blocks to help developers and designers create beautiful UI with confidence.
 
 **Important**
 
 ```text
-Mix is currently being used internally to build design systems in Flutter. 
+Mix is currently being used internally to build design systems in Flutter.
 It is still in heavy development. Major APIs are expected to change until the 1.0 release.
 ```
 
