@@ -4,9 +4,10 @@
 
 ---
 
-<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](#contributors-)
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
+![GitHub stars](https://img.shields.io/github/stars/leoafarias/mix?style=social)
+[![Pub Version](https://img.shields.io/pub/v/mix?label=version&style=flat-square)](https://pub.dev/packages/mix/changelog)
+[![Likes](https://badges.bar/mix/likes)](https://pub.dev/packages/mix/score)
+[![Pub points](https://badges.bar/mix/pub%20points)](https://pub.dev/packages/mix/score) [![Github All Contributors](https://img.shields.io/github/all-contributors/leoafarias/mix?style=flat-square)](https://github.com/leoafarias/mix/graphs/contributors) [![MIT Licence](https://img.shields.io/github/license/leoafarias/mix?style=flat-square&longCache=true)](https://opensource.org/licenses/mit-license.php) [![Awesome Flutter](https://img.shields.io/badge/awesome-flutter-purple?longCache=true&style=flat-square)](https://github.com/Solido/awesome-flutter)
 
 Build Flutter design systems expressively and effortlessly. **Mix** offers primitive building blocks to help developers and designers create beautiful UI with confidence.
 
@@ -61,148 +62,29 @@ Box
   child:Child(),
 );
 
-// You can also use the following:
-// This way has some downsides. More info soon...
-squareMix.box(child:Child());
 ```
 
-### Composability
+[Read our docs for more information](https://www.fluttermix.com)
 
-#### Extend Mixes
+## Contributors ✨
 
-```dart
-final cardMix = squareMix.mix(
-  padding(20),
-  rounded(20),
-  bgColor(Colors.white),
-);
-```
+Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
 
-#### Override Mixes
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tr>
+    <td align="center"><a href="https://github.com/leoafarias"><img src="https://avatars.githubusercontent.com/u/435833?v=4?s=50" width="50px;" alt=""/><br /><sub><b>Leo Farias</b></sub></a><br /><a href="#ideas-leoafarias" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/leoafarias/mix/commits?author=leoafarias" title="Code">💻</a> <a href="https://github.com/leoafarias/mix/commits?author=leoafarias" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://discord.gg/VhDsNvhbhc"><img src="https://avatars.githubusercontent.com/u/45696119?v=4?s=50" width="50px;" alt=""/><br /><sub><b>Bruno D'Luka</b></sub></a><br /><a href="https://github.com/leoafarias/mix/commits?author=bdlukaa" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/rickbsgu"><img src="https://avatars.githubusercontent.com/u/161474?v=4?s=50" width="50px;" alt=""/><br /><sub><b>Rick Berger</b></sub></a><br /><a href="https://github.com/leoafarias/mix/commits?author=rickbsgu" title="Documentation">📖</a></td>
+    <td align="center"><a href="http://souvikbiswas.com/"><img src="https://avatars.githubusercontent.com/u/43280874?v=4?s=50" width="50px;" alt=""/><br /><sub><b>Souvik Biswas</b></sub></a><br /><a href="#content-sbis04" title="Content">🖋</a> <a href="#tutorial-sbis04" title="Tutorials">✅</a></td>
+  </tr>
+</table>
 
-```dart
-final redCardMix = cardMix.mix(
-  bgColor(Colors.red),
-);
-```
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
 
-#### Combine Mixes
+<!-- ALL-CONTRIBUTORS-LIST:END -->
 
-```dart
-final elevationMix = Mix(
-    elevation(2),
-);
-
-Box(
-    mix: Mix.combine(cardMix, elevationMix),
-    child: Text('Card With Shadow'),
-);
-```
-
-#### Conditional Mixes
-
-```dart
-// If you wan't to change the Mix depending on a condition
-final conditonalMix = Mix.chooser(
-  condition: isSelected,
-  trueMix: dynamicMix,
-  falseMix: redCardMix,
-);
-```
-
-#### Variants
-
-If you want the card to change color when in dark mode you can use variants.
-
-```dart
-final cardWithDarkMode = cardMix.mix(
-  dark(
-    bgColor(Colors.black),
-  ),
-);
-
-/// Now, when the app is on dark mode the card color will change to `black`.
-Box(
-    mix: cardWithDarkMode,
-    child: Text('Dynamic Card'),
-);
-
-```
-
-You can also leverage media query context values
-
-```dart
-// Adaptive gutter for your flex widgets using media query
-final flexMix = Mix(
-  mainAxis.center,
-  gap(10),
-  medium(gap(15)),
-  large(gap(40)),
-);
-```
-
-#### Attribute Modifiers
-
-Allows to modify the output of a value that is passed in an attribute. Text formatting is a great example of this where you want certain types of text to format as titleCase, sentenceCase, capitalize, lowercase.
-
-Using attribute modifiers you can apply this on the Mix level and not worry about working with individual inputs.
-
-```dart
-// Whenever the h1 mix is used it will always format as a titleCase. The content "This is the headline" will become "This Is The Headline" when used within a TextMix widget.
-final h1 = Mix(
-  titleCase(),
-  fontSize(48),
-);
-```
-
-## APIs
-
-Documentation is currently in progress. For now you can find some of the available utilities.
-
-## Concepts
-
-Here are some high-level concepts to understand how Mix works and to allow for you to get started.
-
-### Attributes
-
-These are the features or characteristics of certain widgets. Most attributes map out to layout, visual widgets, or widget styling itself. Attributes are primitives which get translated into their Flutter API.
-
-### Dynamic Attributes
-
-Attributes can be dynamic, which means they only are applied in case a condition is met. This allows for the creation of Atributes that can be used depending on the widget's `BuildContext`.
-
-### Utilities
-
-These are classes whose primary purpose is providing a better API for Attributes.
-
-Not required for building Mixes; however, make a cleaner API possible and overall better development experience.
-
-### Mixes
-
-Combination or `mix` of Attributes. Mixes are passed to Widgets and translated into the widget's properties.
-
-Mixes can be reused across multiple widgets and also combine, extended, and overridden.
-
-### Mixer Widgets
-
-These are the building block for your design system. You can easily build new widgets that take advantage of Mixes; however, there are some primitives provided.
-
-#### Box
-
-Similar to a `Container` with some slight adjustments for a better development experience.
-
-#### Flexbox
-
-The equivalent of the Flex widgets (Flex, Row, Column). Allow for the use of flex Attributes, and wrap them in a `Box` to use box attributes for composability.
-
-#### TextMix
-
-The equivalent of the Text widget. Allows you to use Mix attributes to style and build custom text widgets.
-
-#### IconMix
-
-The equivlent to the Icon widget. Allows to use Mix attributes to style and build custom icon widgets.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
