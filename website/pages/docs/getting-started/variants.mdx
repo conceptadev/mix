@@ -30,10 +30,11 @@ Variants can be extremely powerful, and allow you to create consistent variation
 
 ## Built-in Variants
 
-Mix already has some `Reactive Variants` defined which can be used to create responsive Widgets. 
+Mix already has some `Reactive Variants` defined which can be used to create responsive Widgets.
 
 ### Pressable
-These are `Variants` that will change based on different *gestures* and state of the `Pressable` Widget.
+
+These are `Variants` that will change based on different _gestures_ and state of the `Pressable` Widget.
 
 - `hover()`: Applies attributes on hover.
 - `focus()`: Applies attributes on focus.
@@ -41,6 +42,7 @@ These are `Variants` that will change based on different *gestures* and state of
 - `disabled()`: Applies attributes when disabled.
 
 ### Breakpoints
+
 - `large()`: Applies attributes when the screen is at least `large` breakpoint.
 - `medium()`: Applies attributes when the screen is at least `medium` breakpoint.
 - `small()`: Applies attributes when the screen is at least `small` breakpoint.
@@ -48,20 +50,23 @@ These are `Variants` that will change based on different *gestures* and state of
 Breakpoints for these sizes can be configured in the `MixTheme`.
 
 ### Orientation
+
 - `portrait()`: Applies attributes when the screen is in portrait orientation.
 - `landscape()`: Applies attributes when the screen is in landscape orientation.
 
 ### Dark Mode
+
 - `dark()`: Applies attributes when the theme is in dark mode.
 - `light()`: Applies attributes when the theme is in light mode.
 
-
 ## Custom Variants
+
 Mix gives you complete control of how to define your own `Variants` and when they are applied.
 
 There are two types of `Variants` that you are able to define.
 
 ### Callable Variants
+
 Can be called manually when they need to be applied. You can define a variant the following way.
 
 ```dart highlight="6-10"
@@ -89,7 +94,9 @@ Pressable(
 );
 
 ```
+
 You are also able to pass the variant through MixableWidgets `variant` parameter
+
 ```dart
 Pressable(
   mix: mix,
@@ -100,7 +107,7 @@ Pressable(
 
 ```
 
-### Reactive Variants 
+### Reactive Variants
 
 These are `Variants` that have a method that defines when they should be applied based on the `BuildContext`. These will be applied automatically.
 
@@ -114,7 +121,3 @@ final dark = Variant(
     },
 );
 ```
-
-
-
-
