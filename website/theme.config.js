@@ -1,6 +1,9 @@
-export default {
+import DocSearch from "./components/DocSearch";
+const themeConfig = {
   github: "https://github.com/leoafarias/mix",
   docsRepositoryBase: "https://github.com/leoafarias/mix/blob/main",
+  search: true,
+  customSearch: <DocSearch />,
   titleSuffix: " – Mix",
   floatTOC: true,
   logo: (
@@ -69,7 +72,7 @@ export default {
       <meta name="msapplication-TileImage" content="/ms-icon-150x150.png" />
     </>
   ),
-  search: true,
+
   prevLinks: true,
   nextLinks: true,
   footer: true,
@@ -77,3 +80,5 @@ export default {
   footerText: <>MIT {new Date().getFullYear()} © Mix.</>,
   unstable_faviconGlyph: "👋",
 };
+
+export default themeConfig;
