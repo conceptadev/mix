@@ -1,9 +1,9 @@
-import DocSearch from "./components/DocSearch";
+import CustomSearch from "./components/Search";
 const themeConfig = {
   github: "https://github.com/leoafarias/mix",
   docsRepositoryBase: "https://github.com/leoafarias/mix/blob/main",
   search: true,
-  customSearch: <DocSearch />,
+  customSearch: <CustomSearch />,
   titleSuffix: " – Mix",
   floatTOC: true,
   logo: (
