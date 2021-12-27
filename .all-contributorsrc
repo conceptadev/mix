@@ -38,6 +38,16 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "sbis04",
+      "name": "Souvik Biswas",
+      "avatar_url": "https://avatars.githubusercontent.com/u/43280874?v=4",
+      "profile": "http://souvikbiswas.com/",
+      "contributions": [
+        "content",
+        "tutorial"
+      ]
     }
   ],
   "contributorsPerLine": 7
