@@ -1,3 +1,4 @@
+import Image from "next/image";
 import CustomSearch from "./components/Search";
 const themeConfig = {
   github: "https://github.com/leoafarias/mix",
@@ -8,12 +9,12 @@ const themeConfig = {
   floatTOC: true,
   logo: (
     <>
-      <img
+      <Image
         className="md:inline object-contain hidden"
-        style={{ height: "1em" }}
-        src={
-          "https://raw.githubusercontent.com/leoafarias/mix/main/assets/mix-icon.svg"
-        }
+        height={16}
+        width={16}
+        alt="Mix Icon"
+        src={"/assets/mix-icon-gradient.svg"}
       />
       <span className="mr-2 font-extrabold mx-2 hidden md:inline">Mix</span>
       <span className="text-gray-600 font-normal text-sm hidden md:inline">
@@ -77,7 +78,17 @@ const themeConfig = {
   nextLinks: true,
   footer: true,
   footerEditLink: "Edit this page on GitHub",
-  footerText: <>MIT {new Date().getFullYear()} © Mix.</>,
+  footerText: (
+    <>
+      <a
+        href="https://vercel.com/?utm_source=fluttermix&utm_campaign=oss"
+        target="_blank"
+        rel="noreferrer"
+      >
+        <Image src="/assets/powered-by-vercel.svg" height={43} width={211} />{" "}
+      </a>
+    </>
+  ),
   unstable_faviconGlyph: "👋",
 };
 

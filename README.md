@@ -88,3 +88,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
+
+<a href="https://vercel.com/?utm_source=fluttermix&utm_campaign=oss" target="_blank">
+  <p align="center">
+    <img width="150" src="https://raw.githubusercontent.com/leoafarias/mix/main/assets/powered-by-vercel.svg">
+  </p>
+</a>
