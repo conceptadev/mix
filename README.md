@@ -91,6 +91,6 @@ This project follows the [all-contributors](https://github.com/all-contributors/
 
 <a href="https://vercel.com/?utm_source=fluttermix&utm_campaign=oss" target="_blank">
   <p align="center">
-    <img width="150" src="https://raw.githubusercontent.com/leoafarias/mix/main/assets/powered-by-vercel.svg">
+    <img width="210" src="https://raw.githubusercontent.com/leoafarias/mix/main/assets/powered-by-vercel.svg">
   </p>
 </a>
