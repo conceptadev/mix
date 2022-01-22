@@ -1,3 +1,7 @@
+## 0.0.5
+
+- Adjustments on Mix helper for applying variants, and attributes
+
 ## 0.0.4
 
 - Optimization improvements

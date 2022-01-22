@@ -10,4 +10,23 @@ module.exports = withNextra({
     swcLoader: true,
     swcMinify: true,
   },
+  async redirects() {
+    return [
+      {
+        source: "/docs/variant",
+        destination: "/docs/getting-started/variant",
+        permanent: true,
+      },
+      {
+        source: "/docs/getting-started",
+        destination: "/docs/getting-started/basic-usage",
+        permanent: true,
+      },
+      {
+        source: "/docs/changelog",
+        destination: "https://github.com/leoafarias/mix/releases",
+        permanent: true,
+      },
+    ];
+  },
 });
