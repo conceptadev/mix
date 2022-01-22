@@ -52,7 +52,7 @@ class AlertDialogX extends RemixableWidget {
             HBox(
               mix: Mix(
                 mainAxis(MainAxisAlignment.end),
-                gap(10.0),
+                gap(16.0),
               ),
               children: actions!,
             ),
