@@ -26,15 +26,12 @@ class TextMix extends MixableWidget {
 
   @override
   Widget build(BuildContext context) {
-    MixContext mixed = MixContext.create(
-      context,
-      mix,
-      inherit: inherit,
-      customVariants: variantOrNull(variant),
-    );
-
     return TextMixerWidget(
-      mixed,
+      MixContext.create(
+        context: context,
+        mix: mix.withMaybeVariant(variant),
+        inherit: inherit,
+      ),
       text: text,
     );
   }

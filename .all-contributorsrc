@@ -1,0 +1,54 @@
+{
+  "projectName": "mix",
+  "projectOwner": "leoafarias",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 50,
+  "commit": true,
+  "commitConvention": "eslint",
+  "contributors": [
+    {
+      "login": "leoafarias",
+      "name": "Leo Farias",
+      "avatar_url": "https://avatars.githubusercontent.com/u/435833?v=4",
+      "profile": "https://github.com/leoafarias",
+      "contributions": [
+        "ideas",
+        "code",
+        "doc"
+      ]
+    },
+    {
+      "login": "bdlukaa",
+      "name": "Bruno D'Luka",
+      "avatar_url": "https://avatars.githubusercontent.com/u/45696119?v=4",
+      "profile": "https://discord.gg/VhDsNvhbhc",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "rickbsgu",
+      "name": "Rick Berger",
+      "avatar_url": "https://avatars.githubusercontent.com/u/161474?v=4",
+      "profile": "https://github.com/rickbsgu",
+      "contributions": [
+        "doc"
+      ]
+    },
+    {
+      "login": "sbis04",
+      "name": "Souvik Biswas",
+      "avatar_url": "https://avatars.githubusercontent.com/u/43280874?v=4",
+      "profile": "http://souvikbiswas.com/",
+      "contributions": [
+        "content",
+        "tutorial"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7
+}

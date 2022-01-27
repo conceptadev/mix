@@ -23,10 +23,6 @@ abstract class MixableWidget extends StatelessWidget {
     return _mix;
   }
 
-  List<Variant>? variantOrNull(Variant? variant) {
-    return variant == null ? null : [variant];
-  }
-
   @override
   Widget build(BuildContext context);
 

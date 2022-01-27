@@ -44,8 +44,11 @@ class RadioButtonX extends RemixableWidget {
   Widget build(BuildContext context) {
     final fn = onChanged;
     return Pressable(
-      mix: mix,
-      variant: checked ? whenOn : whenOff,
+      mix: Mix.chooser(
+        condition: checked,
+        ifTrue: mix.withVariant(whenOn),
+        ifFalse: mix.withVariant(whenOff),
+      ),
       onPressed: fn == null ? null : () => fn(!checked),
       child: indicator.build(
         context,
@@ -86,8 +89,11 @@ class RadioButtonIndicator {
 
   Widget build(BuildContext context, bool checked) {
     return Box(
-      variant: checked ? RadioButtonX.whenOn : RadioButtonX.whenOff,
-      mix: __mix,
+      mix: Mix.chooser(
+        condition: checked,
+        ifTrue: __mix.withVariant(RadioButtonX.whenOn),
+        ifFalse: __mix.withVariant(RadioButtonX.whenOff),
+      ),
       child: child,
     );
   }

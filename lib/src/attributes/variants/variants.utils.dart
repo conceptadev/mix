@@ -19,35 +19,35 @@ class VariantUtils {
   static Variant<T> small<T extends Attribute>() {
     return Variant<T>(
       SystemVariants.screenSize.value,
-      checkFn: _screenSizeCheck(ScreenSizeToken.small),
+      shouldApply: _screenSizeCheck(ScreenSizeToken.small),
     );
   }
 
   static Variant<T> xsmall<T extends Attribute>() {
     return Variant<T>(
       SystemVariants.screenSize.value,
-      checkFn: _screenSizeCheck(ScreenSizeToken.xsmall),
+      shouldApply: _screenSizeCheck(ScreenSizeToken.xsmall),
     );
   }
 
   static Variant<T> medium<T extends Attribute>() {
     return Variant<T>(
       SystemVariants.screenSize.value,
-      checkFn: _screenSizeCheck(ScreenSizeToken.medium),
+      shouldApply: _screenSizeCheck(ScreenSizeToken.medium),
     );
   }
 
   static Variant<T> large<T extends Attribute>() {
     return Variant<T>(
       SystemVariants.screenSize.value,
-      checkFn: _screenSizeCheck(ScreenSizeToken.large),
+      shouldApply: _screenSizeCheck(ScreenSizeToken.large),
     );
   }
 
   static Variant<T> portrait<T extends Attribute>() {
     return Variant<T>(
       SystemVariants.orientation.value,
-      checkFn: (BuildContext context) {
+      shouldApply: (BuildContext context) {
         return context.orientation == Orientation.portrait;
       },
     );
@@ -56,7 +56,7 @@ class VariantUtils {
   static Variant<T> landscape<T extends Attribute>() {
     return Variant<T>(
       SystemVariants.orientation.value,
-      checkFn: (BuildContext context) {
+      shouldApply: (BuildContext context) {
         return context.orientation == Orientation.landscape;
       },
     );
@@ -65,8 +65,17 @@ class VariantUtils {
   static Variant<T> dark<T extends Attribute>() {
     return Variant<T>(
       SystemVariants.dark.value,
-      checkFn: (BuildContext context) {
+      shouldApply: (BuildContext context) {
         return context.isDarkMode;
+      },
+    );
+  }
+
+  static Variant<T> light<T extends Attribute>() {
+    return Variant<T>(
+      SystemVariants.dark.value,
+      shouldApply: (BuildContext context) {
+        return context.isDarkMode == false;
       },
     );
   }
@@ -74,7 +83,7 @@ class VariantUtils {
   static Variant<T> disabled<T extends Attribute>() {
     return Variant<T>(
       SystemVariants.disabled.value,
-      checkFn: (BuildContext context) {
+      shouldApply: (BuildContext context) {
         final pressable = PressableNotifier.of(context);
         return pressable?.disabled == true;
       },
@@ -84,7 +93,7 @@ class VariantUtils {
   static Variant<T> focused<T extends Attribute>() {
     return Variant<T>(
       SystemVariants.focus.value,
-      checkFn: (BuildContext context) {
+      shouldApply: (BuildContext context) {
         final pressable = PressableNotifier.of(context);
         return pressable?.focused == true;
       },
@@ -94,7 +103,7 @@ class VariantUtils {
   static Variant<T> pressing<T extends Attribute>() {
     return Variant<T>(
       SystemVariants.pressing.value,
-      checkFn: (BuildContext context) {
+      shouldApply: (BuildContext context) {
         final pressable = PressableNotifier.of(context);
         return pressable?.pressing == true;
       },
@@ -104,7 +113,7 @@ class VariantUtils {
   static Variant<T> hover<T extends Attribute>() {
     return Variant<T>(
       SystemVariants.hover.value,
-      checkFn: (BuildContext context) {
+      shouldApply: (BuildContext context) {
         final pressable = PressableNotifier.of(context);
         return pressable?.hovering == true;
       },

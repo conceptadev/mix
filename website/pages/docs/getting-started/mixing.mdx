@@ -2,13 +2,14 @@
 title: Mixing
 ---
 
-import Callout from 'nextra-theme-docs/callout'
+import Callout from "nextra-theme-docs/callout";
 
-import Code from '../../../components/Code.js'
+import Code from "../../../components/Code.js";
 
-## Mixing
+# Mixing
 
 You will compose visual attributes using **Mixes**. This allows you to compose, combine, inherit and override visual attributes. If you come from the web you can think of a Mix as a stylesheet. That allows to group visual attributes.
+
 ## Create a Mix
 
 ### `Mix()`
@@ -49,24 +50,24 @@ Mixes are immutable. The new Mix created will inherit all attributes of the orig
 
 ### Add attributes
 
-#### `.add()`
+#### `.mix()`
 
-If you have an existing Mix you can add attributes to it by calling the `add` method. This will return a new Mix with the new attributes added.
+If you have an existing Mix you can add attributes to it by calling the `mix` method. This will return a new Mix with the new attributes added.
 
 ```dart
-final newMix = mix.add(
+final newMix = mix.mix(
     height(200),
     width(200),
     bgColor(Colors.red),
 );
 ```
 
-#### `.addList()`
+#### `.addAttributes()`
 
 Similar to `add` but allows you to pass a List of attributes.
 
 ```dart
-final newMix = mix.addList([
+final newMix = mix.addAttributes([
     height(200),
     width(200),
     bgColor(Colors.red),
@@ -77,15 +78,23 @@ final newMix = mix.addList([
 
 Combining Mixes is a critical part of composing visual attributes. There are a few methods, and constructors that allow for easy ways to combine them.
 
-#### `.apply()`
+#### `.apply(Mix)`
 
 ```dart
 final thirdMix = firstMix.apply(secondMix);
 ```
 
-#### `.applyMaybe()`
+#### `.applyMaybe(Mix?)`
 
 If you are receiving a nullable Mix as a parameter there is a simple helper method to keep your code clean.
+
+#### `.withVariant(Variant)`
+
+Applies Attributes from a Mix variant. Read more about on the [Variant](/docs/variant) page.
+
+#### `.withMaybeVariant(Variant?)`
+
+Same as `withVariant` but allows you to pass a nullable Variant.
 
 #### Mix.combine()
 
@@ -94,6 +103,7 @@ Creates a new Mix from a positional arguments of Mixes.
 #### Mix.combineAll()
 
 Creates a new Mix from a List of Mixes.
+
 ## Utility Helpers
 
 ### Mix.chooser()

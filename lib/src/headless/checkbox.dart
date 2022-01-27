@@ -45,8 +45,11 @@ class CheckboxX extends RemixableWidget {
   Widget build(BuildContext context) {
     final fn = onChanged;
     return Pressable(
-      mix: mix,
-      variant: checked ? active : null,
+      mix: Mix.chooser(
+        condition: checked,
+        ifTrue: mix.withVariant(active),
+        ifFalse: mix,
+      ),
       onPressed: fn == null ? null : () => fn(!checked),
       child: IconMix(
         mix: Mix(hide(!checked)),

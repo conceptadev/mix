@@ -1,3 +1,123 @@
 # Variants
 
-Coming soon
+## Overview
+
+While building your design system you will find have the need to create certain variations of a Widget. This makes the design system more flexible and reusable, by leveraging shared visual properties between them.
+
+In the following example `hover()` is a `Variant` that will be applied when `Pressable` triggers the hover state.
+
+```dart highlight="8-11"
+final style = Mix(
+  width(750),
+  height(50),
+  rounded(10),
+  textStyle($button),
+  bgColor($primary),
+  textColor($onPrimary),
+  hover(
+    bgColor($primary),
+    textColor($onPrimary),
+  ),
+);
+
+Pressable(
+  mix: style,
+  child: const TextMix('Button'),
+);
+```
+
+Variants can be extremely powerful, and allow you to create consistent variations of your Widgets.
+
+## Built-in Variants
+
+Mix already has some `Reactive Variants` defined which can be used to create responsive Widgets.
+
+### Pressable
+
+These are `Variants` that will change based on different _gestures_ and state of the `Pressable` Widget.
+
+- `hover()`: Applies attributes on hover.
+- `focus()`: Applies attributes on focus.
+- `press()`: Applies attributes when pressing.
+- `disabled()`: Applies attributes when disabled.
+
+### Breakpoints
+
+- `large()`: Applies attributes when the screen is at least `large` breakpoint.
+- `medium()`: Applies attributes when the screen is at least `medium` breakpoint.
+- `small()`: Applies attributes when the screen is at least `small` breakpoint.
+
+Breakpoints for these sizes can be configured in the `MixTheme`.
+
+### Orientation
+
+- `portrait()`: Applies attributes when the screen is in portrait orientation.
+- `landscape()`: Applies attributes when the screen is in landscape orientation.
+
+### Dark Mode
+
+- `dark()`: Applies attributes when the theme is in dark mode.
+- `light()`: Applies attributes when the theme is in light mode.
+
+## Custom Variants
+
+Mix gives you complete control of how to define your own `Variants` and when they are applied.
+
+There are two types of `Variants` that you are able to define.
+
+### Callable Variants
+
+Can be called manually when they need to be applied. You can define a variant the following way.
+
+```dart highlight="6-10"
+const outlined = Variant('outlined');
+
+final mix = Mix(
+    bgColor(Colors.black),
+    textColor(Colors.white),
+    outlined(
+        bgColor(Colors.transparent),
+        borderColor(Colors.black),
+        textColor(Colors.black),
+    ),
+);
+```
+
+You are then able to choose when to apply the variant based on your own logic.
+
+```dart
+
+Pressable(
+  mix: mix.withVariant(outlined),
+  onPress: () {},
+  child: TextMix('Outlined Button'),
+);
+
+```
+
+You are also able to pass the variant through MixableWidgets `variant` parameter
+
+```dart
+Pressable(
+  mix: mix,
+  variant: outlined,
+  onPress: () {},
+  child: TextMix('Outlined Button'),
+);
+
+```
+
+### Reactive Variants
+
+These are `Variants` that have a method that defines when they should be applied based on the `BuildContext`. These will be applied automatically.
+
+Here is an example implementation of the `dark()` to understand how it works.
+
+```dart
+final dark = Variant(
+    'dark',
+    shouldApply: (BuildContext context) {
+        return Theme.of(context).brightness == Brightness.dark;
+    },
+);
+```

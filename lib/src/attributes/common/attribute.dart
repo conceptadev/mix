@@ -18,14 +18,18 @@ class NestedAttribute<T extends Attribute> extends Attribute {
 }
 
 class VariantAttribute<T extends Attribute> extends Attribute {
-  const VariantAttribute(this.variant, this.attributes, {this.checkFn});
+  const VariantAttribute(
+    this.variant,
+    this.attributes, {
+    bool Function(BuildContext)? shouldApply,
+  }) : _shouldApply = shouldApply;
 
   final Variant variant;
   final List<T> attributes;
-  final bool Function(BuildContext)? checkFn;
+  final bool Function(BuildContext)? _shouldApply;
 
   bool shouldApply(BuildContext context) {
-    return checkFn?.call(context) ?? false;
+    return _shouldApply?.call(context) ?? false;
   }
 
   @override

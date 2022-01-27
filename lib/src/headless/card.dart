@@ -22,13 +22,13 @@ const paragraph = Variant('paragraph');
 ///  ],
 /// ),
 /// ```
-class CardX extends StatelessWidget {
+class CardX extends RemixableWidget {
   /// Creates a card
   const CardX({
     Key? key,
     required this.children,
-    this.mix,
-  }) : super(key: key);
+    Mix? mix,
+  }) : super(mix, key: key);
 
   /// The content of the card.
   ///
@@ -41,9 +41,9 @@ class CardX extends StatelessWidget {
   /// )
   /// ```
   final List<Widget> children;
-  final Mix? mix;
 
-  Mix get __mix {
+  @override
+  Mix get defaultMix {
     return Mix(
       margin(20),
       elevation(6),
@@ -67,6 +67,6 @@ class CardX extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VBox(mix: Mix.combine(__mix, mix), children: children);
+    return VBox(mix: mix, children: children);
   }
 }

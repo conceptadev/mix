@@ -54,8 +54,11 @@ class SwitchX extends RemixableWidget {
 
     return Pressable(
       onPressed: fn == null ? null : () => fn(!active),
-      variant: active ? SwitchX.whenOn : SwitchX.whenOff,
-      mix: mix,
+      mix: Mix.chooser(
+        condition: active,
+        ifTrue: mix.withVariant(SwitchX.whenOn),
+        ifFalse: mix.withVariant(SwitchX.whenOff),
+      ),
       child: thumb.build(
         context,
         active,
@@ -81,8 +84,11 @@ class SwitchThumb {
 
   Widget build(BuildContext context, bool checked) {
     return Box(
-      variant: checked ? SwitchX.whenOn : SwitchX.whenOff,
-      mix: __mix,
+      mix: Mix.chooser(
+        condition: checked,
+        ifTrue: __mix.withVariant(SwitchX.whenOn),
+        ifFalse: __mix.withVariant(SwitchX.whenOff),
+      ),
     );
   }
 }

@@ -23,17 +23,14 @@ class IconMix extends MixableWidget {
 
   @override
   Widget build(BuildContext context) {
-    MixContext mixCtx = MixContext.create(
-      context,
-      mix,
-      inherit: inherit,
-      customVariants: variantOrNull(variant),
-    );
-
     return Semantics(
       label: semanticLabel,
       child: IconMixerWidget(
-        mixCtx,
+        MixContext.create(
+          context: context,
+          mix: mix.withMaybeVariant(variant),
+          inherit: inherit,
+        ),
         icon: icon,
       ),
     );

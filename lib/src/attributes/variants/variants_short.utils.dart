@@ -10,6 +10,7 @@ final portrait = VariantUtils.portrait();
 final landscape = VariantUtils.landscape();
 
 final dark = VariantUtils.dark();
+final light = VariantUtils.light();
 
 final disabled = VariantUtils.disabled();
 final focus = VariantUtils.focused();

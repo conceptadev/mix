@@ -2,36 +2,46 @@
 title: Core Concepts
 ---
 
-import Callout from 'nextra-theme-docs/callout'
-
+import Callout from "nextra-theme-docs/callout";
 
 # Core Concepts
 
+This section defines _Mix_ `Attributes` and the `Utilities` that can be used to create them.
+
 ## Attributes & Utilities
 
-Attributes are the foundation for visual characteristics and properties, that can be defined and added to a Mix. In Flutter we say "Everything is a widget", so in Mix.
+`Attributes` are the foundation for visual characteristics and properties that can be defined and added to a _Mix_.
+
+In _Flutter_ we say:
+
+> Everything is a widget
+
+In _Mix_, we say:
 
 > Everything is an Attribute
 
-To make interaction with `Attributes` easier we have `Utility` functions. That allow for more control over how an attribute is composed.
+**Note: In this document, a _Mix_ is an object that contains a collection of `Attributes`.**
 
-Lets take the following example.
+#### Utilities
+
+To facilitate interacting with `Attributes`, we use `Utility` functions. These functions allow more control over how an attribute is composed.
+
+Consider the following example:
 
 ```dart
 Mix(height(100));
 ```
 
+This defines a _Mix_ with the box height attribute of _100_.
+The function `height()` is a `Utility` that allows us to compose an `Attribute`.
 
-This is defining a Mix with the box height attribute of _100_.
-However `height()` is a `Utility` that allows us to compose an `Attribute`.
-
-**Similar to this**
+**Note: The above example is a actually a shortcut for the following expression:**
 
 ```dart
 height(double value) => BoxAttribute(height: value);
 ```
 
-With that in mind you can think of the following being equivalent.
+With that in mind you can think of the following equivalency:
 
 ```dart
 Mix(height(100))
@@ -39,15 +49,17 @@ Mix(height(100))
 Mix(BoxAttribute(height: 100))
 ```
 
-As you can see `Utilities` are not required for comsing Mixes however, make a cleaner API possible and overall better development experience.
+As you can see, `Utilities` are not required for composing _Mixes_. However, they make a cleaner API possible, and an overall better development experience.
 
 ## Mixable Widgets
 
-These are the widget primitives that allow a Mix to be rendered. At first sight it might look like these widgets are doing a lot, however they are just wrapping basic Flutter widgets and allowing their visual properties to be defined through a Mix.
+The _Mix_ package defines a set of widget primitives that can use _Mix_ `Attributes` and allow them to be rendered with those `Attributes`.
 
-The most basic widget primitive. `Box` is not like a `Container`, "Box is a Container". That means you can think of all `BoxAttributes` as Container properties.
+At first glance it might seem these widgets are doing a lot &mdash; in reality, they are simply wrapping basic _Flutter_ widgets and allowing their visual properties to be defined through a _Mix._
 
-> You might think Box is like a Container, but that would be wrong. Box is a Container.
+The fundamental widget primitive defined in _Mix_ is a `Box`. A `Box` can contain other widgets and a set of `BoxAttributes` to define it's visual properties.
+
+> An easy misconception would be to think that `Box` is **like** a `Container`, but that would be incorrect: `Box` **is** a `Container`.
 
 That means that this:
 
@@ -55,19 +67,19 @@ That means that this:
 Box(mix:Mix(height(100)));
 ```
 
-will become the following
+will become the following:
 
 ```dart
 Container(height: 100);
 ```
 
-You can start to think as `Utilities` as shortcuts to defining visual properties.
+You can think of `Utilities` as shortcuts to defining visual properties. Thus:
 
 ```dart
 Box(mix:Mix(rounded(100)));
 ```
 
-will become the following
+will become the following:
 
 ```dart
 Container(
@@ -78,76 +90,3 @@ Container(
   ),
 )
 ```
-
-## Decorators
-
-Decorators allow to extend Mix functionality by providing an easy way to define it's Widget composition tree. This allows to keep the a lean core, and give complete control over layout, attribute, and widgets not supported by our `MixableWidgets`.
-
-As an example we will provide the implementation for our `scale` attribute. The Container does not provide a scale property, so the implementation is done by wrapping a `Container` with the `Transform` widget.
-
-```dart
-Transform.scale(
-  scale: 0.5,
-  child: Container(
-    child: const Text('Half sized box'),
-  ),
-)
-```
-
-Since `Box` is a `Container` it also does not have a `scale` property. However by using a `Decorator` we can accomlish the same effect.
-```dart
-Box(mix: Mix(scale(0.5)));
-```
-
-
-## Variants
-
-While building your design system you will find have the need to create certain variations of a Widget. This makes the design system more flexible and reusable, by leveraging shared visual properties between them.
-
-In the following example `hover()` is a `Variant` that will be applied when `Pressable` triggers the hover state.
-
-```dart highlight="8-11"
-final style = Mix(
-  width(750),
-  height(50),
-  rounded(10),
-  textStyle($button),
-  bgColor($primary),
-  textColor($onPrimary),
-  hover(
-    bgColor($primary),
-    textColor($onPrimary),
-  ),
-);
-
-Pressable(
-  mix: style,
-  child: const TextMix('Button'),
-);
-```
-
-Some other examples of pre-configured `Variants` are `dark()` and `focus()`. Variants can be extremely powerful, and allow you to create consistent variations of your Widgets.
-
-
-
-## Directives
-
-Allow you to transform/modify Widget properties by defining them as an `Attribute`. A great example of this would be the text directives.
-
-As an example you are able to change the case of a `TextMix` by using a directive. 
-
-```dart highlight="2"
-final style = Mix(
-  upperCase(),
-);
-
-const TextMix('Click Here', mix: style),
-```
-In the above example  `Click Here` becomes `CLICK HERE`
-
-
-
-## Design Tokens
- Tokens allow to define visual properties like colors, text styles, and spacing that can be consistently applied across all your widgets.
- 
- The most important difference between defining a design token in Mix vs. a constant is that Mix allows you to define `context` reference values that will be used on build time.
