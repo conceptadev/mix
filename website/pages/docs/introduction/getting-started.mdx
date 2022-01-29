@@ -1,0 +1,144 @@
+---
+id: auth-email
+title: 'Login With Email'
+description: Use Supabase to Authenticate and Authorize your users using email.
+---
+
+## With and without Mix
+
+Mix provides a lot of different benefits on how you can define and organize your design tokens, and no documentation would be complete without a syntax comparison between **Mix vs. Without Mix**.
+
+Let's go ahead and take a look at the code. Don't worry about understanding each line, the docs will go into more detail about each item.
+
+### With Mix
+
+```dart 
+class CustomMixWidget extends StatelessWidget {
+  const CustomMixWidget({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final style = Mix(
+      height(100),
+      animated(),
+      marginY(10),
+      elevation(10),
+      rounded(10),
+      bgColor($primary),
+      textStyle($button),
+      textColor($onPrimary),
+      hover(
+        elevation(2),
+        padding(20),
+        bgColor($secondary),
+        textColor($onSecondary),
+      ),
+    );
+    return Box(
+      mix: style,
+      child: const TextMix('Custom Widget'),
+    );
+  }
+}
+```
+
+### Without Mix
+
+```dart
+class CustomWidget extends StatefulWidget {
+  const CustomWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  _CustomWidgetState createState() => _CustomWidgetState();
+}
+
+class _CustomWidgetState extends State<CustomWidget> {
+  bool _isHover = false;
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return MouseRegion(
+      onEnter: (event) {
+        setState(() => _isHover = true);
+      },
+      onExit: (event) {
+        setState(() => _isHover = false);
+      },
+      child: Material(
+        elevation: _isHover ? 2 : 10,
+        child: AnimatedContainer(
+          curve: Curves.linear,
+          duration: const Duration(milliseconds: 100),
+          height: 100,
+          padding:
+              _isHover ? const EdgeInsets.all(20) : const EdgeInsets.all(0),
+          margin: const EdgeInsets.symmetric(vertical: 10),
+          decoration: BoxDecoration(
+            color: _isHover ? colorScheme.secondary : colorScheme.primary,
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Text(
+            'Custom Widget',
+            style: Theme.of(context).textTheme.button?.copyWith(
+                  color: _isHover
+                      ? colorScheme.onSecondary
+                      : colorScheme.onPrimary,
+                ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+```
+
+## Core concepts
+
+### Attributes
+
+`Attributes` are the foundation for visual characteristics and properties that can be defined and added to a _Mix_.
+
+In _Flutter_ we say:
+
+> Everything is a widget
+
+In _Mix_, we say:
+
+> Everything is an Attribute
+
+**Note: A _Mix_ is an object that contains a collection of `Attributes`.**
+
+#### Utilities
+
+To facilitate interacting with `Attributes`, we use `Utility` functions. These functions allow more control over how an attribute is composed.
+
+Consider the following example:
+
+```dart
+Mix(height(100));
+```
+
+This defines a _Mix_ with the box height attribute of _100_.
+The function `height()` is a `Utility` that allows us to compose an `Attribute`.
+
+With that in mind you can think that
+
+```dart
+Mix(height(100))
+```
+
+is equivalent to
+
+```dart
+Mix(BoxAttribute(height: 100))
+```
+
+As you can see, `Utilities` are not required for composing _Mixes_. However, they make a cleaner API possible, and an overall better development experience.
