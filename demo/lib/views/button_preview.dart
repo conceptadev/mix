@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
 
 PressableWidgetFn get button => Mix(
-      textStyle($body2),
+      textStyle($caption),
       bgColor($primary),
       paddingHorizontal(20),
       paddingVertical(10),

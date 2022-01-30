@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
 
-import 'button_preview.dart';
-
 class PressablePreview extends StatelessWidget {
   const PressablePreview({Key? key}) : super(key: key);
 
@@ -43,42 +41,13 @@ class PressablePreview extends StatelessWidget {
         children: [
           Pressable(
             mix: mix,
-            onPressed: () {
-              showDialog(
-                context: context,
-                builder: (context) {
-                  return AlertDialogX(
-                    content: const [
-                      TextMix('Are you absolutely sure?', variant: title),
-                      TextMix(
-                        'This action cannot be undone. This will permanently delete your account and remove your data from our servers.',
-                        variant: paragraph,
-                      ),
-                    ],
-                    actions: [
-                      button(
-                        child: const TextMix('Cancel'),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                      ),
-                      button(
-                        child: const TextMix('Yes, delete account'),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                      ),
-                    ],
-                  );
-                },
-              );
-            },
+            onPressed: () {},
             child: const TextMix(
               'Simple Text',
             ),
           ),
           Container(
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
               borderRadius: BorderRadius.all(
                 Radius.circular(10),
               ),
