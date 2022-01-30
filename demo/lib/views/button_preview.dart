@@ -3,15 +3,10 @@ import 'package:mix/mix.dart';
 
 PressableWidgetFn get button => Mix(
       textStyle($body2),
-      bold(),
-      fontSize(16.0),
-      animated(),
       bgColor($primary),
-      (hover)(
-        bgColor($primaryVariant),
-      ),
-      paddingHorizontal(15.0),
-      paddingVertical(8.0),
+      paddingHorizontal(20),
+      paddingVertical(10),
+      bold(),
       rounded(5),
     ).pressable;
 

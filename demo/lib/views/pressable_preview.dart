@@ -51,9 +51,7 @@ class PressablePreview extends StatelessWidget {
                     content: const [
                       TextMix('Are you absolutely sure?', variant: title),
                       TextMix(
-                        'This action cannot be undone. '
-                        'This will permanently delete your account and remove '
-                        'your data from our servers.',
+                        'This action cannot be undone. This will permanently delete your account and remove your data from our servers.',
                         variant: paragraph,
                       ),
                     ],
@@ -63,26 +61,12 @@ class PressablePreview extends StatelessWidget {
                         onPressed: () {
                           Navigator.pop(context);
                         },
-                        overrideMix: Mix(
-                          textColor(Colors.grey.shade700),
-                          bgColor(Colors.grey.shade400),
-                          (hover)(
-                            bgColor(Colors.grey),
-                          ),
-                        ),
                       ),
                       button(
                         child: const TextMix('Yes, delete account'),
                         onPressed: () {
                           Navigator.pop(context);
                         },
-                        overrideMix: Mix(
-                          textColor(Colors.red.shade100),
-                          bgColor(Colors.redAccent.shade200),
-                          (hover)(
-                            bgColor(Colors.redAccent.shade400),
-                          ),
-                        ),
                       ),
                     ],
                   );
