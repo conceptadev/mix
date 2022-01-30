@@ -1,9 +1,4 @@
 {
-  "basic-usage": "Basic Usage",
-  "concepts": "Core Concepts",
-  "mixing": "Mixing",
-  "variants": "Variants",
   "design-tokens": "Design Tokens",
-  "decorators": "Decorators",
-  "directives": "Directives"
+  "decorators": "Decorators"
 }
