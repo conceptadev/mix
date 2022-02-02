@@ -1,0 +1,73 @@
+---
+title: 'Attributes and Utilities'
+---
+
+import Code from "../../../components/Code.js";
+import Callout from "nextra-theme-docs/callout";
+
+# Attributes
+
+`Attributes` are the foundation for visual characteristics and properties that can be defined and added to a _Mix_.
+
+In _Flutter_ we say:
+
+<Callout emoji="🛹">
+  Everything is a Widget
+</Callout>
+
+In _Mix_, we say:
+
+<Callout>
+  Everything is an Attribute
+</Callout>
+
+**Note: A _Mix_ is an object that contains a collection of `Attributes`.**
+
+## Utilities
+
+To facilitate interacting with `Attributes`, we use `Utility` functions. These functions allow more control over how an attribute is composed.
+
+Consider the following example:
+
+```dart
+Mix(height(100));
+```
+
+This defines a _Mix_ with the box height attribute of _100_.
+The function `height()` is a `Utility` that allows us to compose an `Attribute`.
+
+With that in mind you can think that
+
+```dart
+Mix(height(100))
+```
+
+is equivalent to
+
+```dart
+Mix(BoxAttribute(height: 100))
+```
+
+As you can see, `Utilities` are not required for composing _Mixes_. However, they make a cleaner API possible, and an overall better development experience.
+
+## Directives
+
+Directives are _Attributes_ that define a transformation that needs to happen within the widget during build time. A great example of this would be the `TextDirective` which allow to define the text case, for your `TextMix` widget.
+
+```dart highlight="2"
+final style = Mix(
+  upperCase(),
+);
+
+const TextMix('Open', mix: style),
+```
+
+In the above example, the text `Open` becomes `OPEN`. Currently, Directives only apply to text
+
+### Directives catalog
+
+- `capitalize()`
+- `upperCase()`
+- `lowerCase()`
+- `titleCase()`
+- `sentenceCase()`
