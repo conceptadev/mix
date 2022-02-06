@@ -71,3 +71,120 @@ In the above example, the text `Open` becomes `OPEN`. Currently, Directives only
 - `lowerCase()`
 - `titleCase()`
 - `sentenceCase()`
+
+## Attributes Catalog
+
+A list of attributes you can use on the built-in mixable widgets
+
+### Box
+
+Attributes for `Box`
+
+#### Margin attributes
+
+- `m`, `margin`: Margin
+- `mt`, `marginTop`: Margin top
+- `mb`, `marginBottom`: Margin bottom
+- `mr`, `marginRight`: Margin right
+- `ml`, `marginLeft`: Margin left
+- `mx`, `marginHorizontal`, `marginX`: Margin horizontal
+- `my`, `marginVertical`, `marginY`: Margin vertical
+- `mi`, `marginInsets`: Margin insets - `mi(EdgeInsets.only(top: 10.0, right: 5.0))`
+
+#### Padding attributes
+
+- `p`, `padding`: Margin
+- `pt`, `paddingTop`: Margin top
+- `pb`, `paddingBottom`: Margin bottom
+- `pr`, `paddingRight`: Margin right
+- `pl`, `paddingLeft`: Margin left
+- `px`, `paddingHorizontal`, `paddingX`: Margin horizontal
+- `py`, `paddingVertical`, `paddingY`: Margin vertical
+- `pi`, `paddingInsets`: Margin insets - `pi(EdgeInsets.only(top: 10.0, right: 5.0))`
+
+#### Constraints attributes
+
+- `h`, `height`: Height
+- `maxH`, `maxHeight`: Max height
+- `w`, `width`: Width
+- `maxW`, `maxWidth`: Max width
+
+#### Decoration attributes
+
+- `bgColor`: Background color
+- `border`: Border - `border(color: Colors.black, width: 0.4)`
+- `borderColor`: Border color
+- `borderWidth`: Border width
+- `borderStyle`: Border style
+- `shadow`: Shadow - `shadow(color: Colors.black, offset: Offset(-1, -2), blurRadius: 3.0)`,
+- `squared`: Squared
+- `rounded`: Rounded - `rounded(12.0)`
+- `elevation`: Elevation - 0, 1, 2, 3, 4, 6, 8, 9, 12, 16, 24
+
+#### Other
+
+- `align`: Alignment
+
+### Flex
+
+Attributes for `FlexBox`
+
+- `flexDirection`: Flex direction - `flexDirection(Axis.vertical)`
+- `verticalDirection`: Vertical direction - `verticalDirection(VerticalDirection.up)`
+- `mainAxis`: Main axis alignment - `mainAxis(MainAxisAlignment.start)`
+- `mainAxisSize`: Main axis size - `mainAxisSize(MainAxisSize.min)`
+- `crossAxis`: Cross axis alignment - `crossAxis(CrossAxisAlignment.end)`
+- `gap`: Gap - `gap(3.0)`
+
+### Icon
+
+Attributes for `IconMix`
+
+- `icon`: Icon size and color - `icon(size: 24.0, color: Colors.grey)`
+- `iconSize`: Icon size
+- `iconColor`: Icon color
+
+### Text
+
+Attributes for `TextMix`
+
+- `textAlign`: Text alignment
+- `textWidthBasis`: Text width basis
+- `locale`: Locale
+- `maxLines`: Max lines
+- `textOverflow`: Text overflow
+- `textStyle`: Text style
+- `softWrap`: Soft wrap
+- `textScaleFactor`: Text scale factor
+- `strutStyle`: Strut style
+
+#### Style
+
+- `textBaseline`: Text baseline
+- `letterSpacing`: Letter spacing
+- `wordSpacing`: Word spacing
+- `textHeight`: Text height
+- `fontStyle`, `font`: Font style
+- `fontSize`: Font size
+- `textColor`: Text color
+- `textBgColor`: Text background color
+- `textForeground`: Text foreground decoration
+- `textBackground`: Text background decoration
+- `textShadows`: Text shadows
+- `textShadow`: Text shadow - `textShadow(color: Colors.black, blurRadius: 3.0)`
+- `fontFeatures`: Font features
+- `textDecoration`: Text decoration
+- `textDecorationColor`: Text decoration color
+- `textDecorationStyle`: Text decoration style
+- `textDecorationThickness`: Text decoration thickness
+- `bold`: Bold font weight
+- `italic`: Italic font weight
+
+#### Other
+
+- `fontFamilyFallback`: Font family fallback
+- `debugLabel`: Debug label
+
+### Other
+
+- `apply`: Apply a mix into another (See [mixing](/docs/core-concepts/mixing))
