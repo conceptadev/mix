@@ -8,6 +8,7 @@ import 'package:mix/src/helpers/extensions.dart';
 
 import '../common/attribute.dart';
 
+/// {@category Attributes}
 class BoxAttributes extends Attribute {
   final EdgeInsetsDto? margin;
   final EdgeInsetsDto? padding;

@@ -2,7 +2,17 @@ dartdoc:
   categories:
     "Mixable Widgets":
       markdown: lib/topics/mixable_widgets.md
-  categoryOrder: ["Mixable Widgets"]
+    "Mix Object":
+      markdown: lib/topics/mix_object.md
+    "Attributes":
+      markdown: lib/topics/attributes.md
+    "Utilities":
+      markdown: lib/topics/utilities.md
+  categoryOrder: 
+    - "Mix Object"
+    - "Mixable Widgets"
+    - "Attributes"
+    - "Utilities"
   nodoc: 
     - 'lib/src/dto/edge_insets.dto.dart' 
     - 'lib/src/dto/dto.dart' 
@@ -15,10 +25,8 @@ dartdoc:
     - 'lib/src/attributes/directives/text/text_directive_short.utils.dart' 
     - 'lib/src/attributes/variants/variants_short.utils.dart' 
     - 'lib/src/attributes/variants/variants.utils.dart' 
-    - 'lib/src/attributes/box/box.utils.dart' 
     - 'lib/src/attributes/box/box.props.dart' 
-    - 'lib/src/attributes/box/box_short.utils.dart' 
-    - 'lib/src/attributes/box/box.attributes.dart' 
+    - 'lib/src/attributes/box/box_short.utils.dart'
     - 'lib/src/attributes/shared/shared.attributes.dart' 
     - 'lib/src/attributes/shared/shared.utils.dart' 
     - 'lib/src/attributes/shared/shared_short.utils.dart' 
@@ -67,13 +75,11 @@ dartdoc:
     - 'lib/src/headless/exports.dart' 
     - 'lib/src/headless/switch.dart' 
     - 'lib/src/mixer/mix_context.dart' 
-    - 'lib/src/mixer/mix_factory.dart' 
     - 'lib/src/helpers/variants.dart' 
     - 'lib/src/helpers/utils.dart' 
     - 'lib/src/helpers/extensions.dart' 
     - 'lib/src/helpers/color.utils.dart' 
     - 'lib/src/widgets/gap.widget.dart' 
-    - 'lib/src/widgets/pressable.widget.dart' 
     - 'lib/src/widgets/mixable.widget.dart' 
     - 'lib/src/widgets/icon.widget.dart' 
     - 'lib/src/widgets/remixable.widget.dart' 
@@ -83,3 +89,11 @@ dartdoc:
     - 'lib/src/widgets/decorator.widget.dart' 
   processed:
     - 'lib/src/widgets/box.widget.dart'
+    - 'lib/src/mixer/mix_factory.dart' 
+    - 'lib/src/widgets/pressable.widget.dart'
+    - 'lib/src/attributes/box/box.attributes.dart'
+    - 'lib/src/attributes/box/box.utils.dart'
+ 
+
+
+

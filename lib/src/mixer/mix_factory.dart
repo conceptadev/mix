@@ -11,6 +11,7 @@ import '../widgets/pressable.widget.dart';
 import '../widgets/text.widget.dart';
 
 /// Defines a mix
+/// {@category Mix Object}
 class Mix<T extends Attribute> {
   final List<T> attributes;
 
@@ -22,7 +23,7 @@ class Mix<T extends Attribute> {
     this.variantToApply = const [],
   });
 
-  /// Define mix with parameters
+  /// Instantiate a mix with _Attribute_ parameters
   factory Mix([
     T? p1,
     T? p2,
@@ -54,11 +55,14 @@ class Mix<T extends Attribute> {
     return Mix._(params);
   }
 
+  /// Instantiate a mix from a _List_ of _Attribute_ instances (cannot be null)
   const Mix.fromList(
     this.attributes, {
     this.variantToApply = const [],
   });
 
+  /// Instantiate a mix from a _List_ of _Attribute_ instances
+  /// (_attributes_ argument can be null)
   factory Mix.fromMaybeList(List<T?> attributes) {
     final validAttributes = attributes.whereType<T>();
     return Mix._(validAttributes.toList());
@@ -68,13 +72,16 @@ class Mix<T extends Attribute> {
     return Mix._([...attributes]);
   }
 
-  Mix<T> withVariant(Variant<T> variant) {
+ /// Returns a new mix instance from this instance with the
+ /// _Variant_ instance added
+   Mix<T> withVariant(Variant<T> variant) {
     return Mix._(
       [...attributes],
       variantToApply: [...variantToApply, variant],
     );
   }
 
+  /// Same as _withVariant_, but the argument is nullable
   Mix<T> withMaybeVariant(Variant<T>? variant) {
     if (variant == null) return this;
     return Mix._(
@@ -83,6 +90,7 @@ class Mix<T extends Attribute> {
     );
   }
 
+  /// Same as _withVariant_, but can accept a _List_ of _Variant_ instances
   Mix<T> withVariants(List<Variant<T>> variants) {
     return Mix._([
       ...attributes
@@ -92,7 +100,7 @@ class Mix<T extends Attribute> {
     ]);
   }
 
-  /// Merges many mixes into one
+  /// Same as _combine_, but accepts a _List_ of _Mix_ instances
   static Mix<T> combineAll<T extends Attribute>(List<Mix<T>> mixes) {
     final attributes = mixes.expand((element) => element.attributes).toList();
     return Mix._(attributes);
@@ -156,6 +164,7 @@ class Mix<T extends Attribute> {
   }
 
   /// Used for const constructor widgets
+  /// @nodoc
   static const Mix constant = Mix._([]);
 
   @override
@@ -171,25 +180,30 @@ class Mix<T extends Attribute> {
   int get hashCode => attributes.hashCode ^ variantToApply.hashCode;
 }
 
+/// @nodoc
 extension MixExtension<T extends Attribute> on Mix<T> {
   /// Adds an Attribute to a Mix
   WrapFunction<T, Mix<T>> get mix {
     return WrapFunction(addAttributes);
   }
 
+  /// Adds a list of attributes to a Mix
   Mix<T> addAttributes(List<T> attributes) {
     return Mix._([...this.attributes, ...attributes]);
   }
 
+  /// Combines argument mix with this mix.
   Mix<T> apply(Mix<T> mix) {
     return Mix.combineAll([this, mix]);
   }
 
+  /// Like apply, but the argument mix is nullable
   Mix<T> applyMaybe(Mix<T>? mix) {
     if (mix == null) return this;
     return Mix.combineAll([this, mix]);
   }
 
+  /// @nodoc
   Box box({
     Mix? overrideMix,
     required Widget child,
@@ -198,6 +212,7 @@ extension MixExtension<T extends Attribute> on Mix<T> {
     return Box(mix: mx, child: child);
   }
 
+  /// @nodoc
   HBox hbox({
     Mix? overrideMix,
     required List<Widget> children,
@@ -221,10 +236,12 @@ extension MixExtension<T extends Attribute> on Mix<T> {
     );
   }
 
+  /// @nodoc
   PressableWidgetFn get pressable {
     return _pressable;
   }
 
+  /// @nodoc
   HBox row({
     Mix? overrideMix,
     required List<Widget> children,
@@ -235,6 +252,7 @@ extension MixExtension<T extends Attribute> on Mix<T> {
     );
   }
 
+  /// @nodoc
   TextMix text(
     String text, {
     Mix? overrideMix,
@@ -243,6 +261,7 @@ extension MixExtension<T extends Attribute> on Mix<T> {
     return TextMix(text, mix: mix);
   }
 
+  /// @nodoc
   VBox vbox({
     Mix? overrideMix,
     required List<Widget> children,
@@ -251,6 +270,7 @@ extension MixExtension<T extends Attribute> on Mix<T> {
     return VBox(mix: mix, children: children);
   }
 
+  /// @nodoc
   VBox column({
     Mix? overrideMix,
     required List<Widget> children,
@@ -261,6 +281,7 @@ extension MixExtension<T extends Attribute> on Mix<T> {
     );
   }
 
+  /// @nodoc
   IconMix icon(
     IconData icon, {
     Mix? overrideMix,
@@ -273,6 +294,7 @@ extension MixExtension<T extends Attribute> on Mix<T> {
   }
 }
 
+/// Callback function typedef - used in _PressableWidget_
 typedef PressableWidgetFn = Pressable Function({
   required Widget child,
   Mix? overrideMix,

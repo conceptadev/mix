@@ -6,6 +6,10 @@ import '../mixer/mix_factory.dart';
 import 'box.widget.dart';
 import 'mixable.widget.dart';
 
+/// The _Mixable_ corollary to the Flutter _Button_ class
+/// Use anywhere you would use a _Button_
+///
+/// {@category Mixable Widgets}
 class Pressable extends MixableWidget {
   const Pressable({
     Mix? mix,
@@ -41,6 +45,7 @@ class Pressable extends MixableWidget {
   }
 }
 
+/// @nodoc
 class PressableMixerWidget extends StatefulWidget {
   const PressableMixerWidget(
     this.mix, {
