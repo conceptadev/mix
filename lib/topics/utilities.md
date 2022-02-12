@@ -23,6 +23,8 @@ Instead, _Mix_ defines a set of global shortcut functions that you can use, inst
 
 Global functions are defined for each utility function, and will return an attribute of the correct type by virtue of the fact that utility shortcut names are unique.
 
+(Note that the _Short Util_ name is not necessarily the same as the static function name in the _Utility_ class.)
+
 ## Under The Covers
 
 What is happening in the above code snippet can be traced in the source.  _BoxUtility_ shortcuts are defined in the file '.../attributes/box/box_short.utils.  The ones we are using are declared thus:
@@ -44,4 +46,8 @@ These constants are assigned to the following static functions in BoxUtility.dar
 ```
 
 Note that each of these functions returns a _BoxAttributes_ class, which is derived from _Attributes_.
+
+## In The API Docs
+
+In each of the _Utility_ classes, each of the static functions lists it's one or more applicable _Short Util_(s).
 
