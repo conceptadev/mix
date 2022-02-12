@@ -7,6 +7,7 @@ import 'decorator.widget.dart';
 import 'mixable.widget.dart';
 import 'nothing.widget.dart';
 
+/// {@category Mixable Widgets}
 class Box extends MixableWidget {
   const Box({
     Mix? mix,
@@ -33,6 +34,7 @@ class Box extends MixableWidget {
   }
 }
 
+/// @nodoc
 class BoxMixedWidget extends MixedWidget {
   // Child Widget
   final Widget? child;

@@ -1,0 +1,1 @@
+These are widgets that can contain a _Mix_ object.
