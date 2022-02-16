@@ -3,7 +3,9 @@ import 'package:mix/src/helpers/extensions.dart';
 import 'package:mix/src/theme/refs/refs.dart';
 
 import '../common/attribute.dart';
-
+/// ## Widget:
+/// - [TextMix](TextMix-class.html)
+/// {@category Attributes}
 class TextAttributes extends Attribute {
   final TextStyle? style;
   // Ref for context

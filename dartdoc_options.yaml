@@ -40,8 +40,6 @@ dartdoc:
     - 'lib/src/attributes/exports.dart' 
     - 'lib/src/attributes/text/text_short.utils.dart' 
     - 'lib/src/attributes/text/text.props.dart' 
-    - 'lib/src/attributes/text/text.attributes.dart' 
-    - 'lib/src/attributes/text/text.utils.dart' 
     - 'lib/src/attributes/text/text.notifier.dart' 
     - 'lib/src/attributes/icon/icon.attributes.dart' 
     - 'lib/src/attributes/icon/icon.props.dart' 
@@ -85,7 +83,6 @@ dartdoc:
     - 'lib/src/widgets/remixable.widget.dart' 
     - 'lib/src/widgets/flex.widget.dart' 
     - 'lib/src/widgets/nothing.widget.dart' 
-    - 'lib/src/widgets/text.widget.dart' 
     - 'lib/src/widgets/decorator.widget.dart' 
   processed:
     - 'lib/src/widgets/box.widget.dart'
@@ -93,7 +90,11 @@ dartdoc:
     - 'lib/src/widgets/pressable.widget.dart'
     - 'lib/src/attributes/box/box.attributes.dart'
     - 'lib/src/attributes/box/box.utils.dart'
- 
+    - 'lib/src/widgets/text.widget.dart' 
+    - 'lib/src/attributes/text/text.attributes.dart' 
+    - 'lib/src/attributes/text/text.utils.dart' 
+
+
 
 
 

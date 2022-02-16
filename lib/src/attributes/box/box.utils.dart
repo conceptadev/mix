@@ -5,7 +5,9 @@ import 'package:mix/src/dto/border_radius.dto.dart';
 import 'package:mix/src/dto/box_shadow.dto.dart';
 import 'package:mix/src/dto/edge_insets.dto.dart';
 import 'package:mix/src/helpers/extensions.dart';
-
+///
+/// ## Widget:
+/// - [Box](Box-class.html)
 /// {@category Utilities}
 class BoxUtility {
   const BoxUtility._();

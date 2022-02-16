@@ -6,7 +6,11 @@ import '../mixer/mix_factory.dart';
 import 'decorator.widget.dart';
 import 'mixable.widget.dart';
 import 'nothing.widget.dart';
-
+/// ## Attributes:
+/// - [BoxAttributes](BoxAttributes-class.html)  
+/// ## Utilities:
+/// - [BoxUtility](BoxUtility-class.html)
+///
 /// {@category Mixable Widgets}
 class Box extends MixableWidget {
   const Box({
