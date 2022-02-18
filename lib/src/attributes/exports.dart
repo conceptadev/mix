@@ -8,6 +8,7 @@ export './box/box_short.utils.dart';
 /// Text Directives
 export './directives/text/text_directive.attributes.dart';
 export './directives/text/text_directive_short.utils.dart';
+export './directives/text/text_directive.utils.dart';
 
 /// Flex
 export './flex/flex.attributes.dart';

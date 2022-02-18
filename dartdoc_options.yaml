@@ -1,4 +1,5 @@
 dartdoc:
+  showStats: true
   categories:
     "Mixable Widgets":
       markdown: lib/topics/mixable_widgets.md
@@ -20,8 +21,6 @@ dartdoc:
     - 'lib/src/dto/box_shadow.dto.dart' 
     - 'lib/src/dto/text_style.dto.dart' 
     - 'lib/src/dto/border_radius.dto.dart' 
-    - 'lib/src/attributes/directives/text/text_directive.utils.dart' 
-    - 'lib/src/attributes/directives/text/text_directive.attributes.dart' 
     - 'lib/src/attributes/directives/text/text_directive_short.utils.dart' 
     - 'lib/src/attributes/variants/variants_short.utils.dart' 
     - 'lib/src/attributes/variants/variants.utils.dart' 
@@ -92,7 +91,11 @@ dartdoc:
     - 'lib/src/attributes/box/box.utils.dart'
     - 'lib/src/widgets/text.widget.dart' 
     - 'lib/src/attributes/text/text.attributes.dart' 
-    - 'lib/src/attributes/text/text.utils.dart' 
+    - 'lib/src/attributes/text/text.utils.dart'
+    - 'lib/src/attributes/directives/text/text_directive.utils.dart'
+    - 'lib/src/attributes/directives/text/text_directive.attributes.dart' 
+
+
 
 
 
