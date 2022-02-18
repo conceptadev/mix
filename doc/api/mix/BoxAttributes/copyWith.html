@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the copyWith method from the BoxAttributes class, for the Dart programming language.">
+  <title>copyWith method - BoxAttributes class - mix library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../../static-assets/styles.css?v1">
+  <link rel="icon" href="../../static-assets/favicon.png?v1">
+
+  
+</head>
+
+
+<body data-base-href="../../"
+      data-using-base-href="false">
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <button id="sidenav-left-toggle" type="button">&nbsp;</button>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../../index.html">mix</a></li>
+    <li><a href="../../mix/mix-library.html">mix</a></li>
+    <li><a href="../../mix/BoxAttributes-class.html">BoxAttributes</a></li>
+    <li class="self-crumb">copyWith method</li>
+  </ol>
+  <div class="self-name">copyWith</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<main>
+
+
+  <div id="dartdoc-main-content" class="main-content">
+      <div>
+<h1><span class="kind-method">copyWith</span> method 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
+</h1></div>
+
+    <section class="multi-line-signature">
+      
+
+<span class="returntype"><a href="../../mix/BoxAttributes-class.html">BoxAttributes</a></span>
+<span class="name ">copyWith</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="copyWith-param-margin">{<span class="type-annotation">EdgeInsetsDto?</span> <span class="parameter-name">margin</span>, </span></li>
+<li><span class="parameter" id="copyWith-param-padding"><span class="type-annotation">EdgeInsetsDto?</span> <span class="parameter-name">padding</span>, </span></li>
+<li><span class="parameter" id="copyWith-param-alignment"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/painting/AlignmentGeometry-class.html">AlignmentGeometry</a>?</span> <span class="parameter-name">alignment</span>, </span></li>
+<li><span class="parameter" id="copyWith-param-height"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a>?</span> <span class="parameter-name">height</span>, </span></li>
+<li><span class="parameter" id="copyWith-param-width"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a>?</span> <span class="parameter-name">width</span>, </span></li>
+<li><span class="parameter" id="copyWith-param-color"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-ui/Color-class.html">Color</a>?</span> <span class="parameter-name">color</span>, </span></li>
+<li><span class="parameter" id="copyWith-param-border"><span class="type-annotation">BorderDto?</span> <span class="parameter-name">border</span>, </span></li>
+<li><span class="parameter" id="copyWith-param-borderRadius"><span class="type-annotation">BorderRadiusDto?</span> <span class="parameter-name">borderRadius</span>, </span></li>
+<li><span class="parameter" id="copyWith-param-boxShadow"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter">BoxShadowDto</span>&gt;</span>?</span> <span class="parameter-name">boxShadow</span>, </span></li>
+<li><span class="parameter" id="copyWith-param-transform"><span class="type-annotation"><a href="https://pub.dev/documentation/vector_math/2.1.1/vector_math_64/Matrix4-class.html">Matrix4</a>?</span> <span class="parameter-name">transform</span>, </span></li>
+<li><span class="parameter" id="copyWith-param-maxHeight"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a>?</span> <span class="parameter-name">maxHeight</span>, </span></li>
+<li><span class="parameter" id="copyWith-param-minHeight"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a>?</span> <span class="parameter-name">minHeight</span>, </span></li>
+<li><span class="parameter" id="copyWith-param-maxWidth"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a>?</span> <span class="parameter-name">maxWidth</span>, </span></li>
+<li><span class="parameter" id="copyWith-param-minWidth"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a>?</span> <span class="parameter-name">minWidth</span>, </span></li>
+<li><span class="parameter" id="copyWith-param-shape"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/painting/BoxShape.html">BoxShape</a>?</span> <span class="parameter-name">shape</span>}</span></li>
+</ol>)
+
+      
+
+    </section>
+    
+
+
+    
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">BoxAttributes copyWith({
+  EdgeInsetsDto? margin,
+  EdgeInsetsDto? padding,
+  AlignmentGeometry? alignment,
+  double? height,
+  double? width,
+  Color? color,
+  BorderDto? border,
+  BorderRadiusDto? borderRadius,
+  List&lt;BoxShadowDto&gt;? boxShadow,
+  Matrix4? transform,
+  double? maxHeight,
+  double? minHeight,
+  double? maxWidth,
+  double? minWidth,
+  BoxShape? shape,
+}) {
+  return BoxAttributes(
+    margin: margin ?? this.margin,
+    padding: padding ?? this.padding,
+    alignment: alignment ?? this.alignment,
+    height: height ?? this.height,
+    width: width ?? this.width,
+    color: color ?? this.color,
+    border: border ?? this.border,
+    borderRadius: borderRadius ?? this.borderRadius,
+    boxShadow: boxShadow ?? this.boxShadow,
+    transform: transform ?? this.transform,
+    maxHeight: maxHeight ?? this.maxHeight,
+    minHeight: minHeight ?? this.minHeight,
+    maxWidth: maxWidth ?? this.maxWidth,
+    minWidth: minWidth ?? this.minWidth,
+    shape: shape ?? this.shape,
+  );
+}</code></pre>
+</section>
+
+
+  </div> <!-- /.main-content -->
+
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+  <li><a href="../../index.html">mix</a></li>
+  <li><a href="../../mix/mix-library.html">mix</a></li>
+  <li><a href="../../mix/BoxAttributes-class.html">BoxAttributes</a></li>
+  <li class="self-crumb">copyWith method</li>
+</ol>
+
+
+    <h5>BoxAttributes class</h5>
+    <ol>
+
+    <li class="section-title"><a href="../../mix/BoxAttributes-class.html#constructors">Constructors</a></li>
+    <li><a href="../../mix/BoxAttributes/BoxAttributes.html">BoxAttributes</a></li>
+
+
+    <li class="section-title">
+      <a href="../../mix/BoxAttributes-class.html#instance-properties">Properties</a>
+    </li>
+    <li><a href="../../mix/BoxAttributes/alignment.html">alignment</a></li>
+    <li><a href="../../mix/BoxAttributes/border.html">border</a></li>
+    <li><a href="../../mix/BoxAttributes/borderRadius.html">borderRadius</a></li>
+    <li><a href="../../mix/BoxAttributes/boxShadow.html">boxShadow</a></li>
+    <li><a href="../../mix/BoxAttributes/color.html">color</a></li>
+    <li><a href="../../mix/BoxAttributes/hashCode.html">hashCode</a></li>
+    <li><a href="../../mix/BoxAttributes/height.html">height</a></li>
+    <li><a href="../../mix/BoxAttributes/margin.html">margin</a></li>
+    <li><a href="../../mix/BoxAttributes/maxHeight.html">maxHeight</a></li>
+    <li><a href="../../mix/BoxAttributes/maxWidth.html">maxWidth</a></li>
+    <li><a href="../../mix/BoxAttributes/minHeight.html">minHeight</a></li>
+    <li><a href="../../mix/BoxAttributes/minWidth.html">minWidth</a></li>
+    <li><a href="../../mix/BoxAttributes/padding.html">padding</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></li>
+    <li><a href="../../mix/BoxAttributes/shape.html">shape</a></li>
+    <li><a href="../../mix/BoxAttributes/transform.html">transform</a></li>
+    <li><a href="../../mix/BoxAttributes/width.html">width</a></li>
+
+    <li class="section-title"><a href="../../mix/BoxAttributes-class.html#instance-methods">Methods</a></li>
+    <li><a href="../../mix/BoxAttributes/copyWith.html">copyWith</a></li>
+    <li><a href="../../mix/BoxAttributes/merge.html">merge</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
+    <li><a href="../../mix/BoxAttributes/toString.html">toString</a></li>
+
+    <li class="section-title"><a href="../../mix/BoxAttributes-class.html#operators">Operators</a></li>
+    <li><a href="../../mix/BoxAttributes/operator_equals.html">operator ==</a></li>
+
+
+
+
+</ol>
+
+  </div><!--/.sidebar-offcanvas-->
+
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div><!--/.sidebar-offcanvas-->
+
+</main>
+
+<footer>
+  <span class="no-break">
+    mix
+      0.0.5
+  </span>
+
+  
+</footer>
+
+
+
+<script src="../../static-assets/highlight.pack.js?v1"></script>
+<script src="../../static-assets/script.js?v1"></script>
+
+
+
+</body>
+
+</html>
+

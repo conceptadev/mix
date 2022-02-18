@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="Utilities Topic docs, for the Dart programming language.">
+  <title>Utilities Topic - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../static-assets/styles.css?v1">
+  <link rel="icon" href="../static-assets/favicon.png?v1">
+
+  
+</head>
+
+
+<body data-base-href="../"
+      data-using-base-href="false">
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <button id="sidenav-left-toggle" type="button">&nbsp;</button>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../index.html">mix</a></li>
+    <li class="self-crumb">Utilities Topic</li>
+  </ol>
+  <div class="self-name">Utilities</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<main>
+
+
+<div id="dartdoc-main-content" class="main-content">
+  <h1><span class="kind-category">Utilities</span> Topic</h1>
+  
+<section class="desc markdown">
+  <p><em>Utilities</em> are classes with static functions and a series of global constants and functions for a given widget type that can be used to instantiate <em>Attribute</em> objects.</p>
+<p>To use a utility class — say a <em>BoxUtility</em> class to create <em>Attributes</em> for, say, <em>backgroundColor</em> and <em>height</em>, you could use the following code:</p>
+<pre class="language-dart"><code class="language-dart">  Mix newMix = Mix(
+    BoxUtility.backgroundColor(Colors.green),
+    BoxUtility.height(20.0)
+    );
+</code></pre>
+<h2 id="short-utils">Short Utils</h2>
+<p>The above works fine, but it's somewhat onerous to have to specify the utility class and full attribute name for every attribute you want to define.</p>
+<p>Instead, <em>Mix</em> defines a set of global shortcut functions that you can use, instead:</p>
+<pre class="language-dart"><code class="language-dart">  Mix newMix = Mix(
+    bgColor(Colors.green),
+    h(20.0)
+  );
+</code></pre>
+<p>Global functions are defined for each utility function, and will return an attribute of the correct type by virtue of the fact that utility shortcut names are unique.</p>
+<p>(Note that the <em>Short Util</em> name is not necessarily the same as the static function name in the <em>Utility</em> class.)</p>
+<h2 id="under-the-covers">Under The Covers</h2>
+<p>What is happening in the above code snippet can be traced in the source.  <em>BoxUtility</em> shortcuts are defined in the file '.../attributes/box/box_short.utils.  The ones we are using are declared thus:</p>
+<pre class="language-dart"><code class="language-dart">  const bgColor = BoxUtility.backgroundColor;
+  const h = BoxUtility.height;
+</code></pre>
+<p>These constants are assigned to the following static functions in BoxUtility.dart:</p>
+<pre class="language-dart"><code class="language-dart">    static BoxAttributes backgroundColor(Color color) =&gt;
+      BoxAttributes(color: color);
+
+    static BoxAttributes height(double height) {
+      return BoxAttributes(height: height);
+    }
+</code></pre>
+<p>Note that each of these functions returns a <em>BoxAttributes</em> class, which is derived from <em>Attributes</em>.</p>
+<h2 id="in-the-api-docs">In The API Docs</h2>
+<p>In each of the <em>Utility</em> classes, each of the static functions lists it's one or more applicable <em>Short Util</em>(s).</p>
+</section>
+
+
+
+  <section class="summary offset-anchor" id="classes">
+    <h2>Classes</h2>
+
+    <dl>
+      <dt id="BoxUtility">
+  <span class="name "><a href="../mix/BoxUtility-class.html">BoxUtility</a></span> 
+    <span class="category utilities cp-3 linked" title="This is part of the Utilities Topic."><a href="../topics/Utilities-topic.html">Utilities</a></span>
+
+</dt>
+<dd>
+  Widget: <a href="../mix/BoxUtility-class.html">[...]</a>
+</dd>
+
+      <dt id="TextDirectiveUtils">
+  <span class="name "><a href="../mix/TextDirectiveUtils-class.html">TextDirectiveUtils</a></span> 
+    <span class="category utilities cp-3 linked" title="This is part of the Utilities Topic."><a href="../topics/Utilities-topic.html">Utilities</a></span>
+
+</dt>
+<dd>
+  Widget <a href="../mix/TextDirectiveUtils-class.html">[...]</a>
+</dd>
+
+      <dt id="TextStyleUtility">
+  <span class="name "><a href="../mix/TextStyleUtility-class.html">TextStyleUtility</a></span> 
+    <span class="category utilities cp-3 linked" title="This is part of the Utilities Topic."><a href="../topics/Utilities-topic.html">Utilities</a></span>
+
+</dt>
+<dd>
+  Widget: <a href="../mix/TextStyleUtility-class.html">[...]</a>
+</dd>
+
+      <dt id="TextUtility">
+  <span class="name "><a href="../mix/TextUtility-class.html">TextUtility</a></span> 
+    <span class="category utilities cp-3 linked" title="This is part of the Utilities Topic."><a href="../topics/Utilities-topic.html">Utilities</a></span>
+
+</dt>
+<dd>
+  Widget: <a href="../mix/TextUtility-class.html">[...]</a>
+</dd>
+
+    </dl>
+  </section>
+
+
+
+
+
+
+
+
+</div> <!-- /.main-content -->
+
+<div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+  <header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+  <li><a href="../index.html">mix</a></li>
+  <li class="self-crumb">Utilities Topic</li>
+</ol>
+
+
+  <h5><span class="package-name">mix</span> <span class="package-kind">package</span></h5>
+  <ol>
+      <li class="section-title">Topics</li>
+        <li><a href="../topics/Attributes-topic.html">Attributes</a></li>
+        <li><a href="../topics/Mix Object-topic.html">Mix&nbsp;Object</a></li>
+        <li><a href="../topics/Mixable Widgets-topic.html">Mixable&nbsp;Widgets</a></li>
+        <li><a href="../topics/Utilities-topic.html">Utilities</a></li>
+      <li class="section-title">Libraries</li>
+      <li><a href="../mix/mix-library.html">mix</a></li>
+</ol>
+
+</div>
+
+<div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  <h5>Utilities Topic</h5>
+  <ol>
+
+
+  <li class="section-title"><a href="../topics/Utilities-topic.html#classes">Classes</a></li>
+  <li><a href="../mix/BoxUtility-class.html">BoxUtility</a></li>
+  <li><a href="../mix/TextDirectiveUtils-class.html">TextDirectiveUtils</a></li>
+  <li><a href="../mix/TextStyleUtility-class.html">TextStyleUtility</a></li>
+  <li><a href="../mix/TextUtility-class.html">TextUtility</a></li>
+
+
+
+
+
+
+</ol>
+
+</div>
+<!--/sidebar-offcanvas-right-->
+</main>
+
+<footer>
+  <span class="no-break">
+    mix
+      0.0.5
+  </span>
+
+  
+</footer>
+
+
+
+<script src="../static-assets/highlight.pack.js?v1"></script>
+<script src="../static-assets/script.js?v1"></script>
+
+
+
+</body>
+
+</html>
+
