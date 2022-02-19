@@ -12,7 +12,7 @@ To use a utility class (_BoxUtility_, for this example) to create _Attributes_ f
 ## Short Utils
 The above works fine, but it's somewhat onerous to have to specify the utility class and full attribute name for every attribute you want to define.
 
-Instead, _Mix_ defines a set of global shortcut functions that you can use, instead:
+Instead, _Mix_ defines a set of global shortcut functions that you can use:
 
 ```dart
   Mix newMix = Mix(
