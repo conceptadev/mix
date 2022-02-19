@@ -27,14 +27,14 @@ Global functions are defined for each utility function, and will return an attri
 
 ## Under The Covers
 
-What is happening in the above code snippet can be traced in the source.  _BoxUtility_ shortcuts are defined in the file '.../attributes/box/box_short.utils.  The ones we are using are declared thus:
+What is happening in the above code snippet can be traced in the source.  _BoxUtility_ shortcuts are defined in the file 'lib/src/attributes/box/box_short.utils.dart'.  The ones we are using are declared thus:
 
 ```dart
   const bgColor = BoxUtility.backgroundColor;
   const h = BoxUtility.height;
 ```
 
-These constants are assigned to the following static functions in BoxUtility.dart:
+These constants are assigned to the following static functions in the file 'lib/src/attributes/box/box.utils.dart':
 
 ```dart
     static BoxAttributes backgroundColor(Color color) =>
