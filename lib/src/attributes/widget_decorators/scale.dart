@@ -2,10 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:mix/src/attributes/common/attribute.dart';
 import 'package:mix/src/mixer/mix_context.dart';
 
+/// @nodoc
 ScaleDecorator scale(double scale) {
   return ScaleDecorator(scale);
 }
 
+/// Short Utils:
+/// - scale(double scale)
+///
+/// {@category Decorators}
 class ScaleDecorator extends ParentDecorator<ScaleDecorator> {
   final double scale;
   const ScaleDecorator(this.scale) : super(const Key('ScaleDecorator'));

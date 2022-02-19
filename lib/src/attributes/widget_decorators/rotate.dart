@@ -7,17 +7,28 @@ RotateDecorator rotate(int quarterTurns) {
 }
 
 /// Rotate 90
+/// @nodoc
 rotate90() => rotate(1);
 
 /// Rotate 180
+/// @nodoc
 rotate180() => rotate(2);
 
 /// Rotate 270
+/// @nodoc
 rotate270() => rotate(3);
 
 /// Rotate 360
+/// @nodoc
 rotate360() => rotate(4);
 
+/// Short Utils:
+/// - rotate90()
+/// - rotate180()
+/// - rotate270()
+/// - rotate360()
+///
+/// {@category Decorators}
 class RotateDecorator extends ParentDecorator<RotateDecorator> {
   final int quarterTurns;
   const RotateDecorator({required this.quarterTurns})

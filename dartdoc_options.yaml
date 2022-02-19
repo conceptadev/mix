@@ -11,6 +11,8 @@ dartdoc:
       markdown: lib/topics/utilities.md
     "Variants":
       markdown: lib/topics/variants.md
+    "Decorators":
+      markdown: lib/topics/decorators.md
   categoryOrder: 
     - "Mix Object"
     - "Mixable Widgets"
@@ -43,13 +45,6 @@ dartdoc:
     - 'lib/src/attributes/text/text.notifier.dart' 
     - 'lib/src/attributes/icon/icon.props.dart' 
     - 'lib/src/attributes/icon/icon_short.utils.dart'  
-    - 'lib/src/attributes/widget_decorators/rotate.dart' 
-    - 'lib/src/attributes/widget_decorators/flexible.dart' 
-    - 'lib/src/attributes/widget_decorators/aspect_ratio.dart' 
-    - 'lib/src/attributes/widget_decorators/clip_decorators/clip_rrect.dart' 
-    - 'lib/src/attributes/widget_decorators/clip_decorators/clip_utils.dart' 
-    - 'lib/src/attributes/widget_decorators/opacity.dart' 
-    - 'lib/src/attributes/widget_decorators/scale.dart' 
     - 'lib/src/attributes/flex/flex_short.utils.dart' 
     - 'lib/src/attributes/flex/flex.props.dart' 
     - 'lib/src/attributes/helpers/helper.utils.dart' 
@@ -95,7 +90,14 @@ dartdoc:
     - 'lib/src/headless/checkbox.dart' 
     - 'lib/src/headless/alert_dialog.dart'
     - 'lib/src/attributes/variants/variants.utils.dart' 
-    - 'lib/src/helpers/variants.dart' 
+    - 'lib/src/helpers/variants.dart'
+    - 'lib/src/attributes/widget_decorators/rotate.dart' 
+    - 'lib/src/attributes/widget_decorators/flexible.dart' 
+    - 'lib/src/attributes/widget_decorators/aspect_ratio.dart' 
+    - 'lib/src/attributes/widget_decorators/clip_decorators/clip_rrect.dart' 
+    - 'lib/src/attributes/widget_decorators/clip_decorators/clip_utils.dart' 
+    - 'lib/src/attributes/widget_decorators/opacity.dart' 
+    - 'lib/src/attributes/widget_decorators/scale.dart'  
 
 
 

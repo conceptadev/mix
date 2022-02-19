@@ -7,6 +7,13 @@
   "overriddenDepth": 0
  },
  {
+  "name": "Decorators",
+  "qualifiedName": "Decorators",
+  "href": "topics/Decorators-topic.html",
+  "type": "Topic",
+  "overriddenDepth": 0
+ },
+ {
   "name": "Mix Object",
   "qualifiedName": "Mix Object",
   "href": "topics/Mix Object-topic.html",
@@ -111,6 +118,66 @@
   "packageName": "mix",
   "enclosedBy": {
    "name": "AlertDialogX",
+   "type": "class"
+  }
+ },
+ {
+  "name": "AspectRatioDecorator",
+  "qualifiedName": "mix.AspectRatioDecorator",
+  "href": "mix/AspectRatioDecorator-class.html",
+  "type": "class",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "mix",
+   "type": "library"
+  }
+ },
+ {
+  "name": "AspectRatioDecorator",
+  "qualifiedName": "mix.AspectRatioDecorator.AspectRatioDecorator",
+  "href": "mix/AspectRatioDecorator/AspectRatioDecorator.html",
+  "type": "constructor",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "AspectRatioDecorator",
+   "type": "class"
+  }
+ },
+ {
+  "name": "aspectRatio",
+  "qualifiedName": "mix.AspectRatioDecorator.aspectRatio",
+  "href": "mix/AspectRatioDecorator/aspectRatio.html",
+  "type": "property",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "AspectRatioDecorator",
+   "type": "class"
+  }
+ },
+ {
+  "name": "merge",
+  "qualifiedName": "mix.AspectRatioDecorator.merge",
+  "href": "mix/AspectRatioDecorator/merge.html",
+  "type": "method",
+  "overriddenDepth": 1,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "AspectRatioDecorator",
+   "type": "class"
+  }
+ },
+ {
+  "name": "render",
+  "qualifiedName": "mix.AspectRatioDecorator.render",
+  "href": "mix/AspectRatioDecorator/render.html",
+  "type": "method",
+  "overriddenDepth": 1,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "AspectRatioDecorator",
    "type": "class"
   }
  },
@@ -1075,6 +1142,78 @@
   }
  },
  {
+  "name": "ClipDecorator",
+  "qualifiedName": "mix.ClipDecorator",
+  "href": "mix/ClipDecorator-class.html",
+  "type": "class",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "mix",
+   "type": "library"
+  }
+ },
+ {
+  "name": "ClipDecorator",
+  "qualifiedName": "mix.ClipDecorator.ClipDecorator",
+  "href": "mix/ClipDecorator/ClipDecorator.html",
+  "type": "constructor",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "ClipDecorator",
+   "type": "class"
+  }
+ },
+ {
+  "name": "borderRadius",
+  "qualifiedName": "mix.ClipDecorator.borderRadius",
+  "href": "mix/ClipDecorator/borderRadius.html",
+  "type": "property",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "ClipDecorator",
+   "type": "class"
+  }
+ },
+ {
+  "name": "clipType",
+  "qualifiedName": "mix.ClipDecorator.clipType",
+  "href": "mix/ClipDecorator/clipType.html",
+  "type": "property",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "ClipDecorator",
+   "type": "class"
+  }
+ },
+ {
+  "name": "merge",
+  "qualifiedName": "mix.ClipDecorator.merge",
+  "href": "mix/ClipDecorator/merge.html",
+  "type": "method",
+  "overriddenDepth": 1,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "ClipDecorator",
+   "type": "class"
+  }
+ },
+ {
+  "name": "render",
+  "qualifiedName": "mix.ClipDecorator.render",
+  "href": "mix/ClipDecorator/render.html",
+  "type": "method",
+  "overriddenDepth": 1,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "ClipDecorator",
+   "type": "class"
+  }
+ },
+ {
   "name": "FlexAttributes",
   "qualifiedName": "mix.FlexAttributes",
   "href": "mix/FlexAttributes-class.html",
@@ -1323,6 +1462,78 @@
   "packageName": "mix",
   "enclosedBy": {
    "name": "FlexUtils",
+   "type": "class"
+  }
+ },
+ {
+  "name": "FlexibleDecorator",
+  "qualifiedName": "mix.FlexibleDecorator",
+  "href": "mix/FlexibleDecorator-class.html",
+  "type": "class",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "mix",
+   "type": "library"
+  }
+ },
+ {
+  "name": "FlexibleDecorator",
+  "qualifiedName": "mix.FlexibleDecorator.FlexibleDecorator",
+  "href": "mix/FlexibleDecorator/FlexibleDecorator.html",
+  "type": "constructor",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "FlexibleDecorator",
+   "type": "class"
+  }
+ },
+ {
+  "name": "flex",
+  "qualifiedName": "mix.FlexibleDecorator.flex",
+  "href": "mix/FlexibleDecorator/flex.html",
+  "type": "property",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "FlexibleDecorator",
+   "type": "class"
+  }
+ },
+ {
+  "name": "flexFit",
+  "qualifiedName": "mix.FlexibleDecorator.flexFit",
+  "href": "mix/FlexibleDecorator/flexFit.html",
+  "type": "property",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "FlexibleDecorator",
+   "type": "class"
+  }
+ },
+ {
+  "name": "merge",
+  "qualifiedName": "mix.FlexibleDecorator.merge",
+  "href": "mix/FlexibleDecorator/merge.html",
+  "type": "method",
+  "overriddenDepth": 1,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "FlexibleDecorator",
+   "type": "class"
+  }
+ },
+ {
+  "name": "render",
+  "qualifiedName": "mix.FlexibleDecorator.render",
+  "href": "mix/FlexibleDecorator/render.html",
+  "type": "method",
+  "overriddenDepth": 1,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "FlexibleDecorator",
    "type": "class"
   }
  },
@@ -1771,6 +1982,66 @@
   }
  },
  {
+  "name": "OpacityDecorator",
+  "qualifiedName": "mix.OpacityDecorator",
+  "href": "mix/OpacityDecorator-class.html",
+  "type": "class",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "mix",
+   "type": "library"
+  }
+ },
+ {
+  "name": "OpacityDecorator",
+  "qualifiedName": "mix.OpacityDecorator.OpacityDecorator",
+  "href": "mix/OpacityDecorator/OpacityDecorator.html",
+  "type": "constructor",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "OpacityDecorator",
+   "type": "class"
+  }
+ },
+ {
+  "name": "merge",
+  "qualifiedName": "mix.OpacityDecorator.merge",
+  "href": "mix/OpacityDecorator/merge.html",
+  "type": "method",
+  "overriddenDepth": 1,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "OpacityDecorator",
+   "type": "class"
+  }
+ },
+ {
+  "name": "opacity",
+  "qualifiedName": "mix.OpacityDecorator.opacity",
+  "href": "mix/OpacityDecorator/opacity.html",
+  "type": "property",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "OpacityDecorator",
+   "type": "class"
+  }
+ },
+ {
+  "name": "render",
+  "qualifiedName": "mix.OpacityDecorator.render",
+  "href": "mix/OpacityDecorator/render.html",
+  "type": "method",
+  "overriddenDepth": 1,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "OpacityDecorator",
+   "type": "class"
+  }
+ },
+ {
   "name": "Pressable",
   "qualifiedName": "mix.Pressable",
   "href": "mix/Pressable-class.html",
@@ -2091,6 +2362,126 @@
   "packageName": "mix",
   "enclosedBy": {
    "name": "RadioButtonX",
+   "type": "class"
+  }
+ },
+ {
+  "name": "RotateDecorator",
+  "qualifiedName": "mix.RotateDecorator",
+  "href": "mix/RotateDecorator-class.html",
+  "type": "class",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "mix",
+   "type": "library"
+  }
+ },
+ {
+  "name": "RotateDecorator",
+  "qualifiedName": "mix.RotateDecorator.RotateDecorator",
+  "href": "mix/RotateDecorator/RotateDecorator.html",
+  "type": "constructor",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "RotateDecorator",
+   "type": "class"
+  }
+ },
+ {
+  "name": "merge",
+  "qualifiedName": "mix.RotateDecorator.merge",
+  "href": "mix/RotateDecorator/merge.html",
+  "type": "method",
+  "overriddenDepth": 1,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "RotateDecorator",
+   "type": "class"
+  }
+ },
+ {
+  "name": "quarterTurns",
+  "qualifiedName": "mix.RotateDecorator.quarterTurns",
+  "href": "mix/RotateDecorator/quarterTurns.html",
+  "type": "property",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "RotateDecorator",
+   "type": "class"
+  }
+ },
+ {
+  "name": "render",
+  "qualifiedName": "mix.RotateDecorator.render",
+  "href": "mix/RotateDecorator/render.html",
+  "type": "method",
+  "overriddenDepth": 1,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "RotateDecorator",
+   "type": "class"
+  }
+ },
+ {
+  "name": "ScaleDecorator",
+  "qualifiedName": "mix.ScaleDecorator",
+  "href": "mix/ScaleDecorator-class.html",
+  "type": "class",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "mix",
+   "type": "library"
+  }
+ },
+ {
+  "name": "ScaleDecorator",
+  "qualifiedName": "mix.ScaleDecorator.ScaleDecorator",
+  "href": "mix/ScaleDecorator/ScaleDecorator.html",
+  "type": "constructor",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "ScaleDecorator",
+   "type": "class"
+  }
+ },
+ {
+  "name": "merge",
+  "qualifiedName": "mix.ScaleDecorator.merge",
+  "href": "mix/ScaleDecorator/merge.html",
+  "type": "method",
+  "overriddenDepth": 1,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "ScaleDecorator",
+   "type": "class"
+  }
+ },
+ {
+  "name": "render",
+  "qualifiedName": "mix.ScaleDecorator.render",
+  "href": "mix/ScaleDecorator/render.html",
+  "type": "method",
+  "overriddenDepth": 1,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "ScaleDecorator",
+   "type": "class"
+  }
+ },
+ {
+  "name": "scale",
+  "qualifiedName": "mix.ScaleDecorator.scale",
+  "href": "mix/ScaleDecorator/scale.html",
+  "type": "property",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "ScaleDecorator",
    "type": "class"
   }
  },
@@ -3431,6 +3822,18 @@
   "qualifiedName": "mix.paragraph",
   "href": "mix/paragraph-constant.html",
   "type": "top-level constant",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "mix",
+   "type": "library"
+  }
+ },
+ {
+  "name": "rotate",
+  "qualifiedName": "mix.rotate",
+  "href": "mix/rotate.html",
+  "type": "function",
   "overriddenDepth": 0,
   "packageName": "mix",
   "enclosedBy": {

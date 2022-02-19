@@ -2,10 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:mix/src/attributes/common/attribute.dart';
 import 'package:mix/src/mixer/mix_context.dart';
 
+/// @nodoc
 OpacityDecorator opacity(double opacity) {
   return OpacityDecorator(opacity: opacity);
 }
 
+/// Short Utils:
+/// - opacity(double opacity)
+///
+/// {@category Decorators}
 class OpacityDecorator extends ParentDecorator<OpacityDecorator> {
   final double opacity;
   const OpacityDecorator({

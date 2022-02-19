@@ -3,6 +3,7 @@ import 'package:mix/src/attributes/common/attribute.dart';
 import 'package:mix/src/attributes/widget_decorators/clip_decorators/clip_utils.dart';
 import 'package:mix/src/mixer/mix_context.dart';
 
+/// @nodoc
 ClipDecorator clipRounded(double radius) {
   return ClipDecorator(
     ClipDecoratorType.rounded,
@@ -10,14 +11,17 @@ ClipDecorator clipRounded(double radius) {
   );
 }
 
+/// @nodoc
 ClipDecorator clipOval() {
   return const ClipDecorator(ClipDecoratorType.oval);
 }
 
+/// @nodoc
 ClipDecorator clipTriangle() {
   return const ClipDecorator(ClipDecoratorType.triangle);
 }
 
+/// @nodoc
 enum ClipDecoratorType {
   triangle,
   rect,
@@ -25,6 +29,12 @@ enum ClipDecoratorType {
   oval,
 }
 
+/// ## Short Utils:
+/// - clipRounded(double radius)
+/// - clipOval()
+/// - clipTriangle()
+///
+/// {@category Decorators}
 class ClipDecorator extends ParentDecorator<ClipDecorator> {
   final BorderRadius? borderRadius;
   final ClipDecoratorType clipType;
@@ -82,6 +92,7 @@ class ClipDecorator extends ParentDecorator<ClipDecorator> {
   }
 }
 
+/// @nodoc
 class AnimatedClipRRect extends StatelessWidget {
   const AnimatedClipRRect({
     required this.duration,

@@ -9,6 +9,15 @@
   ]
  },
  {
+  "name": "AspectRatioDecorator",
+  "qualifiedName": "mix.AspectRatioDecorator",
+  "href": "mix/AspectRatioDecorator-class.html",
+  "type": "class",
+  "categories": [
+   "Decorators"
+  ]
+ },
+ {
   "name": "Box",
   "qualifiedName": "mix.Box",
   "href": "mix/Box-class.html",
@@ -63,6 +72,15 @@
   ]
  },
  {
+  "name": "ClipDecorator",
+  "qualifiedName": "mix.ClipDecorator",
+  "href": "mix/ClipDecorator-class.html",
+  "type": "class",
+  "categories": [
+   "Decorators"
+  ]
+ },
+ {
   "name": "FlexAttributes",
   "qualifiedName": "mix.FlexAttributes",
   "href": "mix/FlexAttributes-class.html",
@@ -87,6 +105,15 @@
   "type": "class",
   "categories": [
    "Utilities"
+  ]
+ },
+ {
+  "name": "FlexibleDecorator",
+  "qualifiedName": "mix.FlexibleDecorator",
+  "href": "mix/FlexibleDecorator-class.html",
+  "type": "class",
+  "categories": [
+   "Decorators"
   ]
  },
  {
@@ -135,6 +162,15 @@
   ]
  },
  {
+  "name": "OpacityDecorator",
+  "qualifiedName": "mix.OpacityDecorator",
+  "href": "mix/OpacityDecorator-class.html",
+  "type": "class",
+  "categories": [
+   "Decorators"
+  ]
+ },
+ {
   "name": "Pressable",
   "qualifiedName": "mix.Pressable",
   "href": "mix/Pressable-class.html",
@@ -150,6 +186,24 @@
   "type": "class",
   "categories": [
    "Mixable Widgets"
+  ]
+ },
+ {
+  "name": "RotateDecorator",
+  "qualifiedName": "mix.RotateDecorator",
+  "href": "mix/RotateDecorator-class.html",
+  "type": "class",
+  "categories": [
+   "Decorators"
+  ]
+ },
+ {
+  "name": "ScaleDecorator",
+  "qualifiedName": "mix.ScaleDecorator",
+  "href": "mix/ScaleDecorator-class.html",
+  "type": "class",
+  "categories": [
+   "Decorators"
   ]
  },
  {
