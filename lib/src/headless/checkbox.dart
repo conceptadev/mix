@@ -2,7 +2,33 @@ import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
 
 const active = Variant('active');
-
+/// _Mix_ corollary to Flutter _Checkbox_ widget
+///
+/// Default _Mix_ values:
+/// ```
+///      animated(),
+///      rounded(5),
+///      width(25),
+///      height(25),
+///      icon(
+///        size: 18,
+///        color: $primary,
+///      ),
+///      border(
+///        color: Colors.grey[300],
+///        width: 2,
+///      ),
+///      active(
+///        iconColor($primary),
+///      ),
+///      disabled(
+///        border(color: Colors.grey.shade300),
+///      ),
+///      (hover | active)(
+///        borderColor($primary),
+///      )
+/// ```
+/// {@category Mixable Widgets}
 class CheckboxX extends RemixableWidget {
   const CheckboxX({
     Key? key,

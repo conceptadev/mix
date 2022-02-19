@@ -1,5 +1,14 @@
 [
  {
+  "name": "AlertDialogX",
+  "qualifiedName": "mix.AlertDialogX",
+  "href": "mix/AlertDialogX-class.html",
+  "type": "class",
+  "categories": [
+   "Mixable Widgets"
+  ]
+ },
+ {
   "name": "Box",
   "qualifiedName": "mix.Box",
   "href": "mix/Box-class.html",
@@ -24,6 +33,33 @@
   "type": "class",
   "categories": [
    "Utilities"
+  ]
+ },
+ {
+  "name": "CardX",
+  "qualifiedName": "mix.CardX",
+  "href": "mix/CardX-class.html",
+  "type": "class",
+  "categories": [
+   "Mixable Widgets"
+  ]
+ },
+ {
+  "name": "CheckboxX",
+  "qualifiedName": "mix.CheckboxX",
+  "href": "mix/CheckboxX-class.html",
+  "type": "class",
+  "categories": [
+   "Mixable Widgets"
+  ]
+ },
+ {
+  "name": "ChipX",
+  "qualifiedName": "mix.ChipX",
+  "href": "mix/ChipX-class.html",
+  "type": "class",
+  "categories": [
+   "Mixable Widgets"
   ]
  },
  {
@@ -102,6 +138,24 @@
   "name": "Pressable",
   "qualifiedName": "mix.Pressable",
   "href": "mix/Pressable-class.html",
+  "type": "class",
+  "categories": [
+   "Mixable Widgets"
+  ]
+ },
+ {
+  "name": "RadioButtonX",
+  "qualifiedName": "mix.RadioButtonX",
+  "href": "mix/RadioButtonX-class.html",
+  "type": "class",
+  "categories": [
+   "Mixable Widgets"
+  ]
+ },
+ {
+  "name": "SwitchX",
+  "qualifiedName": "mix.SwitchX",
+  "href": "mix/SwitchX-class.html",
   "type": "class",
   "categories": [
    "Mixable Widgets"

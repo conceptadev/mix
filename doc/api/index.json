@@ -36,6 +36,78 @@
   "packageName": "mix"
  },
  {
+  "name": "AlertDialogX",
+  "qualifiedName": "mix.AlertDialogX",
+  "href": "mix/AlertDialogX-class.html",
+  "type": "class",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "mix",
+   "type": "library"
+  }
+ },
+ {
+  "name": "AlertDialogX",
+  "qualifiedName": "mix.AlertDialogX.AlertDialogX",
+  "href": "mix/AlertDialogX/AlertDialogX.html",
+  "type": "constructor",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "AlertDialogX",
+   "type": "class"
+  }
+ },
+ {
+  "name": "actions",
+  "qualifiedName": "mix.AlertDialogX.actions",
+  "href": "mix/AlertDialogX/actions.html",
+  "type": "property",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "AlertDialogX",
+   "type": "class"
+  }
+ },
+ {
+  "name": "build",
+  "qualifiedName": "mix.AlertDialogX.build",
+  "href": "mix/AlertDialogX/build.html",
+  "type": "method",
+  "overriddenDepth": 2,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "AlertDialogX",
+   "type": "class"
+  }
+ },
+ {
+  "name": "content",
+  "qualifiedName": "mix.AlertDialogX.content",
+  "href": "mix/AlertDialogX/content.html",
+  "type": "property",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "AlertDialogX",
+   "type": "class"
+  }
+ },
+ {
+  "name": "defaultMix",
+  "qualifiedName": "mix.AlertDialogX.defaultMix",
+  "href": "mix/AlertDialogX/defaultMix.html",
+  "type": "property",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "AlertDialogX",
+   "type": "class"
+  }
+ },
+ {
   "name": "Box",
   "qualifiedName": "mix.Box",
   "href": "mix/Box-class.html",
@@ -788,6 +860,210 @@
   "packageName": "mix",
   "enclosedBy": {
    "name": "BoxUtility",
+   "type": "class"
+  }
+ },
+ {
+  "name": "CardX",
+  "qualifiedName": "mix.CardX",
+  "href": "mix/CardX-class.html",
+  "type": "class",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "mix",
+   "type": "library"
+  }
+ },
+ {
+  "name": "CardX",
+  "qualifiedName": "mix.CardX.CardX",
+  "href": "mix/CardX/CardX.html",
+  "type": "constructor",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "CardX",
+   "type": "class"
+  }
+ },
+ {
+  "name": "build",
+  "qualifiedName": "mix.CardX.build",
+  "href": "mix/CardX/build.html",
+  "type": "method",
+  "overriddenDepth": 2,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "CardX",
+   "type": "class"
+  }
+ },
+ {
+  "name": "children",
+  "qualifiedName": "mix.CardX.children",
+  "href": "mix/CardX/children.html",
+  "type": "property",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "CardX",
+   "type": "class"
+  }
+ },
+ {
+  "name": "defaultMix",
+  "qualifiedName": "mix.CardX.defaultMix",
+  "href": "mix/CardX/defaultMix.html",
+  "type": "property",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "CardX",
+   "type": "class"
+  }
+ },
+ {
+  "name": "CheckboxX",
+  "qualifiedName": "mix.CheckboxX",
+  "href": "mix/CheckboxX-class.html",
+  "type": "class",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "mix",
+   "type": "library"
+  }
+ },
+ {
+  "name": "CheckboxX",
+  "qualifiedName": "mix.CheckboxX.CheckboxX",
+  "href": "mix/CheckboxX/CheckboxX.html",
+  "type": "constructor",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "CheckboxX",
+   "type": "class"
+  }
+ },
+ {
+  "name": "build",
+  "qualifiedName": "mix.CheckboxX.build",
+  "href": "mix/CheckboxX/build.html",
+  "type": "method",
+  "overriddenDepth": 2,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "CheckboxX",
+   "type": "class"
+  }
+ },
+ {
+  "name": "checked",
+  "qualifiedName": "mix.CheckboxX.checked",
+  "href": "mix/CheckboxX/checked.html",
+  "type": "property",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "CheckboxX",
+   "type": "class"
+  }
+ },
+ {
+  "name": "defaultMix",
+  "qualifiedName": "mix.CheckboxX.defaultMix",
+  "href": "mix/CheckboxX/defaultMix.html",
+  "type": "property",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "CheckboxX",
+   "type": "class"
+  }
+ },
+ {
+  "name": "onChanged",
+  "qualifiedName": "mix.CheckboxX.onChanged",
+  "href": "mix/CheckboxX/onChanged.html",
+  "type": "property",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "CheckboxX",
+   "type": "class"
+  }
+ },
+ {
+  "name": "ChipX",
+  "qualifiedName": "mix.ChipX",
+  "href": "mix/ChipX-class.html",
+  "type": "class",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "mix",
+   "type": "library"
+  }
+ },
+ {
+  "name": "ChipX",
+  "qualifiedName": "mix.ChipX.ChipX",
+  "href": "mix/ChipX/ChipX.html",
+  "type": "constructor",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "ChipX",
+   "type": "class"
+  }
+ },
+ {
+  "name": "build",
+  "qualifiedName": "mix.ChipX.build",
+  "href": "mix/ChipX/build.html",
+  "type": "method",
+  "overriddenDepth": 2,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "ChipX",
+   "type": "class"
+  }
+ },
+ {
+  "name": "children",
+  "qualifiedName": "mix.ChipX.children",
+  "href": "mix/ChipX/children.html",
+  "type": "property",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "ChipX",
+   "type": "class"
+  }
+ },
+ {
+  "name": "defaultMix",
+  "qualifiedName": "mix.ChipX.defaultMix",
+  "href": "mix/ChipX/defaultMix.html",
+  "type": "property",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "ChipX",
+   "type": "class"
+  }
+ },
+ {
+  "name": "onPressed",
+  "qualifiedName": "mix.ChipX.onPressed",
+  "href": "mix/ChipX/onPressed.html",
+  "type": "property",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "ChipX",
    "type": "class"
   }
  },
@@ -1617,6 +1893,366 @@
   "enclosedBy": {
    "name": "mix",
    "type": "library"
+  }
+ },
+ {
+  "name": "RadioButtonIndicator",
+  "qualifiedName": "mix.RadioButtonIndicator",
+  "href": "mix/RadioButtonIndicator-class.html",
+  "type": "class",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "mix",
+   "type": "library"
+  }
+ },
+ {
+  "name": "RadioButtonIndicator",
+  "qualifiedName": "mix.RadioButtonIndicator.RadioButtonIndicator",
+  "href": "mix/RadioButtonIndicator/RadioButtonIndicator.html",
+  "type": "constructor",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "RadioButtonIndicator",
+   "type": "class"
+  }
+ },
+ {
+  "name": "build",
+  "qualifiedName": "mix.RadioButtonIndicator.build",
+  "href": "mix/RadioButtonIndicator/build.html",
+  "type": "method",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "RadioButtonIndicator",
+   "type": "class"
+  }
+ },
+ {
+  "name": "child",
+  "qualifiedName": "mix.RadioButtonIndicator.child",
+  "href": "mix/RadioButtonIndicator/child.html",
+  "type": "property",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "RadioButtonIndicator",
+   "type": "class"
+  }
+ },
+ {
+  "name": "mix",
+  "qualifiedName": "mix.RadioButtonIndicator.mix",
+  "href": "mix/RadioButtonIndicator/mix.html",
+  "type": "property",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "RadioButtonIndicator",
+   "type": "class"
+  }
+ },
+ {
+  "name": "RadioButtonRemixExtension",
+  "qualifiedName": "mix.RadioButtonRemixExtension",
+  "href": "mix/RadioButtonRemixExtension.html",
+  "type": "extension",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "mix",
+   "type": "library"
+  }
+ },
+ {
+  "name": "Indicator",
+  "qualifiedName": "mix.RadioButtonRemixExtension.Indicator",
+  "href": "mix/RadioButtonRemixExtension/Indicator.html",
+  "type": "method",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "RadioButtonRemixExtension",
+   "type": "extension"
+  }
+ },
+ {
+  "name": "RadioButtonX",
+  "qualifiedName": "mix.RadioButtonX",
+  "href": "mix/RadioButtonX-class.html",
+  "type": "class",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "mix",
+   "type": "library"
+  }
+ },
+ {
+  "name": "RadioButtonX",
+  "qualifiedName": "mix.RadioButtonX.RadioButtonX",
+  "href": "mix/RadioButtonX/RadioButtonX.html",
+  "type": "constructor",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "RadioButtonX",
+   "type": "class"
+  }
+ },
+ {
+  "name": "build",
+  "qualifiedName": "mix.RadioButtonX.build",
+  "href": "mix/RadioButtonX/build.html",
+  "type": "method",
+  "overriddenDepth": 2,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "RadioButtonX",
+   "type": "class"
+  }
+ },
+ {
+  "name": "checked",
+  "qualifiedName": "mix.RadioButtonX.checked",
+  "href": "mix/RadioButtonX/checked.html",
+  "type": "property",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "RadioButtonX",
+   "type": "class"
+  }
+ },
+ {
+  "name": "defaultMix",
+  "qualifiedName": "mix.RadioButtonX.defaultMix",
+  "href": "mix/RadioButtonX/defaultMix.html",
+  "type": "property",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "RadioButtonX",
+   "type": "class"
+  }
+ },
+ {
+  "name": "indicator",
+  "qualifiedName": "mix.RadioButtonX.indicator",
+  "href": "mix/RadioButtonX/indicator.html",
+  "type": "property",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "RadioButtonX",
+   "type": "class"
+  }
+ },
+ {
+  "name": "onChanged",
+  "qualifiedName": "mix.RadioButtonX.onChanged",
+  "href": "mix/RadioButtonX/onChanged.html",
+  "type": "property",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "RadioButtonX",
+   "type": "class"
+  }
+ },
+ {
+  "name": "whenOff",
+  "qualifiedName": "mix.RadioButtonX.whenOff",
+  "href": "mix/RadioButtonX/whenOff.html",
+  "type": "property",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "RadioButtonX",
+   "type": "class"
+  }
+ },
+ {
+  "name": "whenOn",
+  "qualifiedName": "mix.RadioButtonX.whenOn",
+  "href": "mix/RadioButtonX/whenOn.html",
+  "type": "property",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "RadioButtonX",
+   "type": "class"
+  }
+ },
+ {
+  "name": "SwitchThumb",
+  "qualifiedName": "mix.SwitchThumb",
+  "href": "mix/SwitchThumb-class.html",
+  "type": "class",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "mix",
+   "type": "library"
+  }
+ },
+ {
+  "name": "SwitchThumb",
+  "qualifiedName": "mix.SwitchThumb.SwitchThumb",
+  "href": "mix/SwitchThumb/SwitchThumb.html",
+  "type": "constructor",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "SwitchThumb",
+   "type": "class"
+  }
+ },
+ {
+  "name": "build",
+  "qualifiedName": "mix.SwitchThumb.build",
+  "href": "mix/SwitchThumb/build.html",
+  "type": "method",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "SwitchThumb",
+   "type": "class"
+  }
+ },
+ {
+  "name": "mix",
+  "qualifiedName": "mix.SwitchThumb.mix",
+  "href": "mix/SwitchThumb/mix.html",
+  "type": "property",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "SwitchThumb",
+   "type": "class"
+  }
+ },
+ {
+  "name": "SwitchX",
+  "qualifiedName": "mix.SwitchX",
+  "href": "mix/SwitchX-class.html",
+  "type": "class",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "mix",
+   "type": "library"
+  }
+ },
+ {
+  "name": "SwitchX",
+  "qualifiedName": "mix.SwitchX.SwitchX",
+  "href": "mix/SwitchX/SwitchX.html",
+  "type": "constructor",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "SwitchX",
+   "type": "class"
+  }
+ },
+ {
+  "name": "Thumb",
+  "qualifiedName": "mix.SwitchX.Thumb",
+  "href": "mix/SwitchX/Thumb.html",
+  "type": "method",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "SwitchX",
+   "type": "class"
+  }
+ },
+ {
+  "name": "active",
+  "qualifiedName": "mix.SwitchX.active",
+  "href": "mix/SwitchX/active.html",
+  "type": "property",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "SwitchX",
+   "type": "class"
+  }
+ },
+ {
+  "name": "build",
+  "qualifiedName": "mix.SwitchX.build",
+  "href": "mix/SwitchX/build.html",
+  "type": "method",
+  "overriddenDepth": 2,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "SwitchX",
+   "type": "class"
+  }
+ },
+ {
+  "name": "defaultMix",
+  "qualifiedName": "mix.SwitchX.defaultMix",
+  "href": "mix/SwitchX/defaultMix.html",
+  "type": "property",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "SwitchX",
+   "type": "class"
+  }
+ },
+ {
+  "name": "onChanged",
+  "qualifiedName": "mix.SwitchX.onChanged",
+  "href": "mix/SwitchX/onChanged.html",
+  "type": "property",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "SwitchX",
+   "type": "class"
+  }
+ },
+ {
+  "name": "thumb",
+  "qualifiedName": "mix.SwitchX.thumb",
+  "href": "mix/SwitchX/thumb.html",
+  "type": "property",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "SwitchX",
+   "type": "class"
+  }
+ },
+ {
+  "name": "whenOff",
+  "qualifiedName": "mix.SwitchX.whenOff",
+  "href": "mix/SwitchX/whenOff.html",
+  "type": "property",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "SwitchX",
+   "type": "class"
+  }
+ },
+ {
+  "name": "whenOn",
+  "qualifiedName": "mix.SwitchX.whenOn",
+  "href": "mix/SwitchX/whenOn.html",
+  "type": "property",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "SwitchX",
+   "type": "class"
   }
  },
  {
@@ -2469,6 +3105,42 @@
   "enclosedBy": {
    "name": "VBox",
    "type": "class"
+  }
+ },
+ {
+  "name": "active",
+  "qualifiedName": "mix.active",
+  "href": "mix/active-constant.html",
+  "type": "top-level constant",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "mix",
+   "type": "library"
+  }
+ },
+ {
+  "name": "paragraph",
+  "qualifiedName": "mix.paragraph",
+  "href": "mix/paragraph-constant.html",
+  "type": "top-level constant",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "mix",
+   "type": "library"
+  }
+ },
+ {
+  "name": "title",
+  "qualifiedName": "mix.title",
+  "href": "mix/title-constant.html",
+  "type": "top-level constant",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "mix",
+   "type": "library"
   }
  }
 ]
