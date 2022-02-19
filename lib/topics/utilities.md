@@ -51,3 +51,13 @@ Note that each of these functions returns a _BoxAttributes_ class, which is deri
 
 In each of the _Utility_ classes, each of the static functions lists it's one or more applicable _Short Util_(s).
 
+Using the above examples, the [_BoxUtility_](BoxUtility-class.html) class page static methods for the attributes we are using are documented as follows:
+
+> ### Static Methods  
+> ...  
+> [backgroundColor]()([Color]() color) → BoxAttributes  
+> Short Utils: bgColor  
+> ...  
+> [height]()([double]() height) → BoxAttributes  
+> Short Utils: height, h  
+
