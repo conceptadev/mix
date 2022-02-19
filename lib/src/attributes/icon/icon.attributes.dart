@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mix/src/attributes/common/attribute.dart';
 
+/// ## Widget
+/// - [IconMix](IconMix-class.html)
+///
+/// {@category Attributes}
 class IconAttributes extends Attribute {
   final Color? color;
   final double? size;

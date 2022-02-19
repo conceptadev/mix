@@ -9,6 +9,11 @@ import 'mixable.widget.dart';
 /// The _Mixable_ corollary to the Flutter _Button_ class
 /// Use anywhere you would use a _Button_
 ///
+/// ## Attributes
+/// _Pressable_ does not have it's own appearance attributes &mdash; the frame appearance can be controlled by a containing [_Box_](Box-class.html) widget, while the child widget (usually a [_TextMix_](TextMix-class.html) or [_IconMix_](IconMix-class.html)) attributes control its own appearance.
+///
+/// See the containing or the child widget-specific documentation for applicable attributes and utilities.
+///
 /// {@category Mixable Widgets}
 class Pressable extends MixableWidget {
   const Pressable({

@@ -85,6 +85,9 @@ class TextFriendlyUtility {
 }
 /// ## Widget:
 /// - [TextMix](TextMix-class.html)
+///
+/// Utility functions and short utils are listed in [Static Methods](#static-methods)
+///
 /// {@category Utilities}
 class TextUtility {
   const TextUtility._();
@@ -137,6 +140,9 @@ class TextUtility {
 
 /// ## Widget:
 /// - [TextMix](TextMix-class.html)
+///
+/// Utility functions and short utils are listed in [Static Methods](#static-methods)
+///
 /// {@category Utilities}
 class TextStyleUtility {
   const TextStyleUtility._();

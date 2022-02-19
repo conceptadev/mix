@@ -8,6 +8,9 @@ import 'package:mix/src/helpers/extensions.dart';
 ///
 /// ## Widget:
 /// - [Box](Box-class.html)
+///
+/// Utility functions and short utils are listed in [Static Methods](#static-methods)
+///
 /// {@category Utilities}
 class BoxUtility {
   const BoxUtility._();

@@ -3,6 +3,8 @@ import 'package:mix/mix.dart';
 /// ## Widget
 /// - [TextMix](TextMix-class.html)
 ///
+/// Utility functions and short utils are listed in [Static Methods](#static-methods)
+///
 /// {@category Utilities}
 /// {@subCategory Directives}
 class TextDirectiveUtils {

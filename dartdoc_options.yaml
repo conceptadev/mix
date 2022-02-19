@@ -40,10 +40,8 @@ dartdoc:
     - 'lib/src/attributes/text/text_short.utils.dart' 
     - 'lib/src/attributes/text/text.props.dart' 
     - 'lib/src/attributes/text/text.notifier.dart' 
-    - 'lib/src/attributes/icon/icon.attributes.dart' 
     - 'lib/src/attributes/icon/icon.props.dart' 
-    - 'lib/src/attributes/icon/icon_short.utils.dart' 
-    - 'lib/src/attributes/icon/icon.utils.dart' 
+    - 'lib/src/attributes/icon/icon_short.utils.dart'  
     - 'lib/src/attributes/widget_decorators/rotate.dart' 
     - 'lib/src/attributes/widget_decorators/flexible.dart' 
     - 'lib/src/attributes/widget_decorators/aspect_ratio.dart' 
@@ -52,8 +50,6 @@ dartdoc:
     - 'lib/src/attributes/widget_decorators/opacity.dart' 
     - 'lib/src/attributes/widget_decorators/scale.dart' 
     - 'lib/src/attributes/flex/flex_short.utils.dart' 
-    - 'lib/src/attributes/flex/flex.utils.dart' 
-    - 'lib/src/attributes/flex/flex.attributes.dart' 
     - 'lib/src/attributes/flex/flex.props.dart' 
     - 'lib/src/attributes/helpers/helper.utils.dart' 
     - 'lib/src/attributes/helpers/helper_short.utils.dart' 
@@ -78,9 +74,7 @@ dartdoc:
     - 'lib/src/helpers/color.utils.dart' 
     - 'lib/src/widgets/gap.widget.dart' 
     - 'lib/src/widgets/mixable.widget.dart' 
-    - 'lib/src/widgets/icon.widget.dart' 
     - 'lib/src/widgets/remixable.widget.dart' 
-    - 'lib/src/widgets/flex.widget.dart' 
     - 'lib/src/widgets/nothing.widget.dart' 
     - 'lib/src/widgets/decorator.widget.dart' 
   processed:
@@ -94,6 +88,16 @@ dartdoc:
     - 'lib/src/attributes/text/text.utils.dart'
     - 'lib/src/attributes/directives/text/text_directive.utils.dart'
     - 'lib/src/attributes/directives/text/text_directive.attributes.dart' 
+    - 'lib/src/widgets/flex.widget.dart'
+    - 'lib/src/attributes/flex/flex.utils.dart' 
+    - 'lib/src/attributes/flex/flex.attributes.dart'
+    - 'lib/src/widgets/icon.widget.dart'
+    - 'lib/src/attributes/icon/icon.attributes.dart' 
+    - 'lib/src/attributes/icon/icon.utils.dart'
+ 
+
+
+
 
 
 

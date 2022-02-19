@@ -6,6 +6,14 @@ import '../mixer/mix_factory.dart';
 import 'mixable.widget.dart';
 import 'nothing.widget.dart';
 
+/// The _Mix_ corollary to Flutter _Icon_ widget
+///
+/// ## Attributes
+/// - [IconAttributes](IconAttributes-class.html)
+/// ## Utilities
+/// - [IconUtils](IconUtils-class.html)
+///
+/// {@category Mixable Widgets}
 class IconMix extends MixableWidget {
   const IconMix({
     Mix? mix,

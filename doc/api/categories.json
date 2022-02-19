@@ -27,6 +27,69 @@
   ]
  },
  {
+  "name": "FlexAttributes",
+  "qualifiedName": "mix.FlexAttributes",
+  "href": "mix/FlexAttributes-class.html",
+  "type": "class",
+  "categories": [
+   "Attributes"
+  ]
+ },
+ {
+  "name": "FlexBox",
+  "qualifiedName": "mix.FlexBox",
+  "href": "mix/FlexBox-class.html",
+  "type": "class",
+  "categories": [
+   "Mixable Widgets"
+  ]
+ },
+ {
+  "name": "FlexUtils",
+  "qualifiedName": "mix.FlexUtils",
+  "href": "mix/FlexUtils-class.html",
+  "type": "class",
+  "categories": [
+   "Utilities"
+  ]
+ },
+ {
+  "name": "HBox",
+  "qualifiedName": "mix.HBox",
+  "href": "mix/HBox-class.html",
+  "type": "class",
+  "categories": [
+   "Mixable Widgets"
+  ]
+ },
+ {
+  "name": "IconAttributes",
+  "qualifiedName": "mix.IconAttributes",
+  "href": "mix/IconAttributes-class.html",
+  "type": "class",
+  "categories": [
+   "Attributes"
+  ]
+ },
+ {
+  "name": "IconMix",
+  "qualifiedName": "mix.IconMix",
+  "href": "mix/IconMix-class.html",
+  "type": "class",
+  "categories": [
+   "Mixable Widgets"
+  ]
+ },
+ {
+  "name": "IconUtils",
+  "qualifiedName": "mix.IconUtils",
+  "href": "mix/IconUtils-class.html",
+  "type": "class",
+  "categories": [
+   "Utilities"
+  ]
+ },
+ {
   "name": "Mix",
   "qualifiedName": "mix.Mix",
   "href": "mix/Mix-class.html",
@@ -102,6 +165,15 @@
   "type": "class",
   "categories": [
    "Utilities"
+  ]
+ },
+ {
+  "name": "VBox",
+  "qualifiedName": "mix.VBox",
+  "href": "mix/VBox-class.html",
+  "type": "class",
+  "categories": [
+   "Mixable Widgets"
   ]
  }
 ]

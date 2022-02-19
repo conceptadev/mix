@@ -792,6 +792,522 @@
   }
  },
  {
+  "name": "FlexAttributes",
+  "qualifiedName": "mix.FlexAttributes",
+  "href": "mix/FlexAttributes-class.html",
+  "type": "class",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "mix",
+   "type": "library"
+  }
+ },
+ {
+  "name": "FlexAttributes",
+  "qualifiedName": "mix.FlexAttributes.FlexAttributes",
+  "href": "mix/FlexAttributes/FlexAttributes.html",
+  "type": "constructor",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "FlexAttributes",
+   "type": "class"
+  }
+ },
+ {
+  "name": "crossAxisAlignment",
+  "qualifiedName": "mix.FlexAttributes.crossAxisAlignment",
+  "href": "mix/FlexAttributes/crossAxisAlignment.html",
+  "type": "property",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "FlexAttributes",
+   "type": "class"
+  }
+ },
+ {
+  "name": "direction",
+  "qualifiedName": "mix.FlexAttributes.direction",
+  "href": "mix/FlexAttributes/direction.html",
+  "type": "property",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "FlexAttributes",
+   "type": "class"
+  }
+ },
+ {
+  "name": "gapSize",
+  "qualifiedName": "mix.FlexAttributes.gapSize",
+  "href": "mix/FlexAttributes/gapSize.html",
+  "type": "property",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "FlexAttributes",
+   "type": "class"
+  }
+ },
+ {
+  "name": "mainAxisAlignment",
+  "qualifiedName": "mix.FlexAttributes.mainAxisAlignment",
+  "href": "mix/FlexAttributes/mainAxisAlignment.html",
+  "type": "property",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "FlexAttributes",
+   "type": "class"
+  }
+ },
+ {
+  "name": "mainAxisSize",
+  "qualifiedName": "mix.FlexAttributes.mainAxisSize",
+  "href": "mix/FlexAttributes/mainAxisSize.html",
+  "type": "property",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "FlexAttributes",
+   "type": "class"
+  }
+ },
+ {
+  "name": "merge",
+  "qualifiedName": "mix.FlexAttributes.merge",
+  "href": "mix/FlexAttributes/merge.html",
+  "type": "method",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "FlexAttributes",
+   "type": "class"
+  }
+ },
+ {
+  "name": "verticalDirection",
+  "qualifiedName": "mix.FlexAttributes.verticalDirection",
+  "href": "mix/FlexAttributes/verticalDirection.html",
+  "type": "property",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "FlexAttributes",
+   "type": "class"
+  }
+ },
+ {
+  "name": "FlexBox",
+  "qualifiedName": "mix.FlexBox",
+  "href": "mix/FlexBox-class.html",
+  "type": "class",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "mix",
+   "type": "library"
+  }
+ },
+ {
+  "name": "FlexBox",
+  "qualifiedName": "mix.FlexBox.FlexBox",
+  "href": "mix/FlexBox/FlexBox.html",
+  "type": "constructor",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "FlexBox",
+   "type": "class"
+  }
+ },
+ {
+  "name": "build",
+  "qualifiedName": "mix.FlexBox.build",
+  "href": "mix/FlexBox/build.html",
+  "type": "method",
+  "overriddenDepth": 2,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "FlexBox",
+   "type": "class"
+  }
+ },
+ {
+  "name": "children",
+  "qualifiedName": "mix.FlexBox.children",
+  "href": "mix/FlexBox/children.html",
+  "type": "property",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "FlexBox",
+   "type": "class"
+  }
+ },
+ {
+  "name": "direction",
+  "qualifiedName": "mix.FlexBox.direction",
+  "href": "mix/FlexBox/direction.html",
+  "type": "property",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "FlexBox",
+   "type": "class"
+  }
+ },
+ {
+  "name": "FlexUtils",
+  "qualifiedName": "mix.FlexUtils",
+  "href": "mix/FlexUtils-class.html",
+  "type": "class",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "mix",
+   "type": "library"
+  }
+ },
+ {
+  "name": "crossAxis",
+  "qualifiedName": "mix.FlexUtils.crossAxis",
+  "href": "mix/FlexUtils/crossAxis.html",
+  "type": "method",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "FlexUtils",
+   "type": "class"
+  }
+ },
+ {
+  "name": "direction",
+  "qualifiedName": "mix.FlexUtils.direction",
+  "href": "mix/FlexUtils/direction.html",
+  "type": "method",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "FlexUtils",
+   "type": "class"
+  }
+ },
+ {
+  "name": "gap",
+  "qualifiedName": "mix.FlexUtils.gap",
+  "href": "mix/FlexUtils/gap.html",
+  "type": "method",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "FlexUtils",
+   "type": "class"
+  }
+ },
+ {
+  "name": "mainAxis",
+  "qualifiedName": "mix.FlexUtils.mainAxis",
+  "href": "mix/FlexUtils/mainAxis.html",
+  "type": "method",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "FlexUtils",
+   "type": "class"
+  }
+ },
+ {
+  "name": "mainAxisSize",
+  "qualifiedName": "mix.FlexUtils.mainAxisSize",
+  "href": "mix/FlexUtils/mainAxisSize.html",
+  "type": "method",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "FlexUtils",
+   "type": "class"
+  }
+ },
+ {
+  "name": "verticalDirection",
+  "qualifiedName": "mix.FlexUtils.verticalDirection",
+  "href": "mix/FlexUtils/verticalDirection.html",
+  "type": "method",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "FlexUtils",
+   "type": "class"
+  }
+ },
+ {
+  "name": "HBox",
+  "qualifiedName": "mix.HBox",
+  "href": "mix/HBox-class.html",
+  "type": "class",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "mix",
+   "type": "library"
+  }
+ },
+ {
+  "name": "HBox",
+  "qualifiedName": "mix.HBox.HBox",
+  "href": "mix/HBox/HBox.html",
+  "type": "constructor",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "HBox",
+   "type": "class"
+  }
+ },
+ {
+  "name": "IconAttributes",
+  "qualifiedName": "mix.IconAttributes",
+  "href": "mix/IconAttributes-class.html",
+  "type": "class",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "mix",
+   "type": "library"
+  }
+ },
+ {
+  "name": "IconAttributes",
+  "qualifiedName": "mix.IconAttributes.IconAttributes",
+  "href": "mix/IconAttributes/IconAttributes.html",
+  "type": "constructor",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "IconAttributes",
+   "type": "class"
+  }
+ },
+ {
+  "name": "color",
+  "qualifiedName": "mix.IconAttributes.color",
+  "href": "mix/IconAttributes/color.html",
+  "type": "property",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "IconAttributes",
+   "type": "class"
+  }
+ },
+ {
+  "name": "merge",
+  "qualifiedName": "mix.IconAttributes.merge",
+  "href": "mix/IconAttributes/merge.html",
+  "type": "method",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "IconAttributes",
+   "type": "class"
+  }
+ },
+ {
+  "name": "size",
+  "qualifiedName": "mix.IconAttributes.size",
+  "href": "mix/IconAttributes/size.html",
+  "type": "property",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "IconAttributes",
+   "type": "class"
+  }
+ },
+ {
+  "name": "IconMix",
+  "qualifiedName": "mix.IconMix",
+  "href": "mix/IconMix-class.html",
+  "type": "class",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "mix",
+   "type": "library"
+  }
+ },
+ {
+  "name": "IconMix",
+  "qualifiedName": "mix.IconMix.IconMix",
+  "href": "mix/IconMix/IconMix.html",
+  "type": "constructor",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "IconMix",
+   "type": "class"
+  }
+ },
+ {
+  "name": "build",
+  "qualifiedName": "mix.IconMix.build",
+  "href": "mix/IconMix/build.html",
+  "type": "method",
+  "overriddenDepth": 2,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "IconMix",
+   "type": "class"
+  }
+ },
+ {
+  "name": "icon",
+  "qualifiedName": "mix.IconMix.icon",
+  "href": "mix/IconMix/icon.html",
+  "type": "property",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "IconMix",
+   "type": "class"
+  }
+ },
+ {
+  "name": "inherit",
+  "qualifiedName": "mix.IconMix.inherit",
+  "href": "mix/IconMix/inherit.html",
+  "type": "property",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "IconMix",
+   "type": "class"
+  }
+ },
+ {
+  "name": "semanticLabel",
+  "qualifiedName": "mix.IconMix.semanticLabel",
+  "href": "mix/IconMix/semanticLabel.html",
+  "type": "property",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "IconMix",
+   "type": "class"
+  }
+ },
+ {
+  "name": "variant",
+  "qualifiedName": "mix.IconMix.variant",
+  "href": "mix/IconMix/variant.html",
+  "type": "property",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "IconMix",
+   "type": "class"
+  }
+ },
+ {
+  "name": "IconMixerWidget",
+  "qualifiedName": "mix.IconMixerWidget",
+  "href": "mix/IconMixerWidget-class.html",
+  "type": "class",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "mix",
+   "type": "library"
+  }
+ },
+ {
+  "name": "IconMixerWidget",
+  "qualifiedName": "mix.IconMixerWidget.IconMixerWidget",
+  "href": "mix/IconMixerWidget/IconMixerWidget.html",
+  "type": "constructor",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "IconMixerWidget",
+   "type": "class"
+  }
+ },
+ {
+  "name": "build",
+  "qualifiedName": "mix.IconMixerWidget.build",
+  "href": "mix/IconMixerWidget/build.html",
+  "type": "method",
+  "overriddenDepth": 2,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "IconMixerWidget",
+   "type": "class"
+  }
+ },
+ {
+  "name": "icon",
+  "qualifiedName": "mix.IconMixerWidget.icon",
+  "href": "mix/IconMixerWidget/icon.html",
+  "type": "property",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "IconMixerWidget",
+   "type": "class"
+  }
+ },
+ {
+  "name": "IconUtils",
+  "qualifiedName": "mix.IconUtils",
+  "href": "mix/IconUtils-class.html",
+  "type": "class",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "mix",
+   "type": "library"
+  }
+ },
+ {
+  "name": "icon",
+  "qualifiedName": "mix.IconUtils.icon",
+  "href": "mix/IconUtils/icon.html",
+  "type": "method",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "IconUtils",
+   "type": "class"
+  }
+ },
+ {
+  "name": "iconColor",
+  "qualifiedName": "mix.IconUtils.iconColor",
+  "href": "mix/IconUtils/iconColor.html",
+  "type": "method",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "IconUtils",
+   "type": "class"
+  }
+ },
+ {
+  "name": "iconSize",
+  "qualifiedName": "mix.IconUtils.iconSize",
+  "href": "mix/IconUtils/iconSize.html",
+  "type": "method",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "IconUtils",
+   "type": "class"
+  }
+ },
+ {
   "name": "Mix",
   "qualifiedName": "mix.Mix",
   "href": "mix/Mix-class.html",
@@ -1928,6 +2444,30 @@
   "packageName": "mix",
   "enclosedBy": {
    "name": "TextUtility",
+   "type": "class"
+  }
+ },
+ {
+  "name": "VBox",
+  "qualifiedName": "mix.VBox",
+  "href": "mix/VBox-class.html",
+  "type": "class",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "mix",
+   "type": "library"
+  }
+ },
+ {
+  "name": "VBox",
+  "qualifiedName": "mix.VBox.VBox",
+  "href": "mix/VBox/VBox.html",
+  "type": "constructor",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "VBox",
    "type": "class"
   }
  }
