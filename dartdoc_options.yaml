@@ -9,6 +9,8 @@ dartdoc:
       markdown: lib/topics/attributes.md
     "Utilities":
       markdown: lib/topics/utilities.md
+    "Variants":
+      markdown: lib/topics/variants.md
   categoryOrder: 
     - "Mix Object"
     - "Mixable Widgets"
@@ -23,7 +25,6 @@ dartdoc:
     - 'lib/src/dto/border_radius.dto.dart' 
     - 'lib/src/attributes/directives/text/text_directive_short.utils.dart' 
     - 'lib/src/attributes/variants/variants_short.utils.dart' 
-    - 'lib/src/attributes/variants/variants.utils.dart' 
     - 'lib/src/attributes/box/box.props.dart' 
     - 'lib/src/attributes/box/box_short.utils.dart'
     - 'lib/src/attributes/shared/shared.attributes.dart' 
@@ -62,7 +63,6 @@ dartdoc:
     - 'lib/src/headless/button.dart' 
     - 'lib/src/headless/exports.dart' 
     - 'lib/src/mixer/mix_context.dart' 
-    - 'lib/src/helpers/variants.dart' 
     - 'lib/src/helpers/utils.dart' 
     - 'lib/src/helpers/extensions.dart' 
     - 'lib/src/helpers/color.utils.dart' 
@@ -93,7 +93,10 @@ dartdoc:
     - 'lib/src/headless/switch.dart'
     - 'lib/src/headless/radio_button.dart' 
     - 'lib/src/headless/checkbox.dart' 
-    - 'lib/src/headless/alert_dialog.dart' 
+    - 'lib/src/headless/alert_dialog.dart'
+    - 'lib/src/attributes/variants/variants.utils.dart' 
+    - 'lib/src/helpers/variants.dart' 
+
 
 
  

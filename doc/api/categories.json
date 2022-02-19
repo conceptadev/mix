@@ -229,5 +229,23 @@
   "categories": [
    "Mixable Widgets"
   ]
+ },
+ {
+  "name": "Variant",
+  "qualifiedName": "mix.Variant",
+  "href": "mix/Variant-class.html",
+  "type": "class",
+  "categories": [
+   "Variants"
+  ]
+ },
+ {
+  "name": "VariantUtils",
+  "qualifiedName": "mix.VariantUtils",
+  "href": "mix/VariantUtils-class.html",
+  "type": "class",
+  "categories": [
+   "Variants"
+  ]
  }
 ]

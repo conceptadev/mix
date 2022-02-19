@@ -41,6 +41,7 @@ export './text/text_short.utils.dart';
 
 /// Variants
 export '../helpers/variants.dart';
+export 'variants/variants.utils.dart';
 export 'variants/variants_short.utils.dart';
 
 /// Widgets

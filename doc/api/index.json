@@ -28,6 +28,13 @@
   "overriddenDepth": 0
  },
  {
+  "name": "Variants",
+  "qualifiedName": "Variants",
+  "href": "topics/Variants-topic.html",
+  "type": "Topic",
+  "overriddenDepth": 0
+ },
+ {
   "name": "mix",
   "qualifiedName": "mix",
   "href": "mix/mix-library.html",
@@ -2256,6 +2263,30 @@
   }
  },
  {
+  "name": "SystemVariantsExt",
+  "qualifiedName": "mix.SystemVariantsExt",
+  "href": "mix/SystemVariantsExt.html",
+  "type": "extension",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "mix",
+   "type": "library"
+  }
+ },
+ {
+  "name": "value",
+  "qualifiedName": "mix.SystemVariantsExt.value",
+  "href": "mix/SystemVariantsExt/value.html",
+  "type": "property",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "SystemVariantsExt",
+   "type": "extension"
+  }
+ },
+ {
   "name": "TextAttributes",
   "qualifiedName": "mix.TextAttributes",
   "href": "mix/TextAttributes-class.html",
@@ -3104,6 +3135,282 @@
   "packageName": "mix",
   "enclosedBy": {
    "name": "VBox",
+   "type": "class"
+  }
+ },
+ {
+  "name": "Variant",
+  "qualifiedName": "mix.Variant",
+  "href": "mix/Variant-class.html",
+  "type": "class",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "mix",
+   "type": "library"
+  }
+ },
+ {
+  "name": "operator &",
+  "qualifiedName": "mix.Variant.&",
+  "href": "mix/Variant/operator_bitwise_and.html",
+  "type": "method",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "Variant",
+   "type": "class"
+  }
+ },
+ {
+  "name": "operator ==",
+  "qualifiedName": "mix.Variant.==",
+  "href": "mix/Variant/operator_equals.html",
+  "type": "method",
+  "overriddenDepth": 1,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "Variant",
+   "type": "class"
+  }
+ },
+ {
+  "name": "Variant",
+  "qualifiedName": "mix.Variant.Variant",
+  "href": "mix/Variant/Variant.html",
+  "type": "constructor",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "Variant",
+   "type": "class"
+  }
+ },
+ {
+  "name": "call",
+  "qualifiedName": "mix.Variant.call",
+  "href": "mix/Variant/call.html",
+  "type": "method",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "Variant",
+   "type": "class"
+  }
+ },
+ {
+  "name": "hashCode",
+  "qualifiedName": "mix.Variant.hashCode",
+  "href": "mix/Variant/hashCode.html",
+  "type": "property",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "Variant",
+   "type": "class"
+  }
+ },
+ {
+  "name": "name",
+  "qualifiedName": "mix.Variant.name",
+  "href": "mix/Variant/name.html",
+  "type": "property",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "Variant",
+   "type": "class"
+  }
+ },
+ {
+  "name": "shouldApply",
+  "qualifiedName": "mix.Variant.shouldApply",
+  "href": "mix/Variant/shouldApply.html",
+  "type": "property",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "Variant",
+   "type": "class"
+  }
+ },
+ {
+  "name": "toString",
+  "qualifiedName": "mix.Variant.toString",
+  "href": "mix/Variant/toString.html",
+  "type": "method",
+  "overriddenDepth": 1,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "Variant",
+   "type": "class"
+  }
+ },
+ {
+  "name": "operator |",
+  "qualifiedName": "mix.Variant.|",
+  "href": "mix/Variant/operator_bitwise_or.html",
+  "type": "method",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "Variant",
+   "type": "class"
+  }
+ },
+ {
+  "name": "VariantUtils",
+  "qualifiedName": "mix.VariantUtils",
+  "href": "mix/VariantUtils-class.html",
+  "type": "class",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "mix",
+   "type": "library"
+  }
+ },
+ {
+  "name": "dark",
+  "qualifiedName": "mix.VariantUtils.dark",
+  "href": "mix/VariantUtils/dark.html",
+  "type": "method",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "VariantUtils",
+   "type": "class"
+  }
+ },
+ {
+  "name": "disabled",
+  "qualifiedName": "mix.VariantUtils.disabled",
+  "href": "mix/VariantUtils/disabled.html",
+  "type": "method",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "VariantUtils",
+   "type": "class"
+  }
+ },
+ {
+  "name": "focused",
+  "qualifiedName": "mix.VariantUtils.focused",
+  "href": "mix/VariantUtils/focused.html",
+  "type": "method",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "VariantUtils",
+   "type": "class"
+  }
+ },
+ {
+  "name": "hover",
+  "qualifiedName": "mix.VariantUtils.hover",
+  "href": "mix/VariantUtils/hover.html",
+  "type": "method",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "VariantUtils",
+   "type": "class"
+  }
+ },
+ {
+  "name": "landscape",
+  "qualifiedName": "mix.VariantUtils.landscape",
+  "href": "mix/VariantUtils/landscape.html",
+  "type": "method",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "VariantUtils",
+   "type": "class"
+  }
+ },
+ {
+  "name": "large",
+  "qualifiedName": "mix.VariantUtils.large",
+  "href": "mix/VariantUtils/large.html",
+  "type": "method",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "VariantUtils",
+   "type": "class"
+  }
+ },
+ {
+  "name": "light",
+  "qualifiedName": "mix.VariantUtils.light",
+  "href": "mix/VariantUtils/light.html",
+  "type": "method",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "VariantUtils",
+   "type": "class"
+  }
+ },
+ {
+  "name": "medium",
+  "qualifiedName": "mix.VariantUtils.medium",
+  "href": "mix/VariantUtils/medium.html",
+  "type": "method",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "VariantUtils",
+   "type": "class"
+  }
+ },
+ {
+  "name": "portrait",
+  "qualifiedName": "mix.VariantUtils.portrait",
+  "href": "mix/VariantUtils/portrait.html",
+  "type": "method",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "VariantUtils",
+   "type": "class"
+  }
+ },
+ {
+  "name": "pressing",
+  "qualifiedName": "mix.VariantUtils.pressing",
+  "href": "mix/VariantUtils/pressing.html",
+  "type": "method",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "VariantUtils",
+   "type": "class"
+  }
+ },
+ {
+  "name": "small",
+  "qualifiedName": "mix.VariantUtils.small",
+  "href": "mix/VariantUtils/small.html",
+  "type": "method",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "VariantUtils",
+   "type": "class"
+  }
+ },
+ {
+  "name": "xsmall",
+  "qualifiedName": "mix.VariantUtils.xsmall",
+  "href": "mix/VariantUtils/xsmall.html",
+  "type": "method",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "VariantUtils",
    "type": "class"
   }
  },

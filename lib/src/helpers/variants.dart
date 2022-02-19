@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
 
 /// Used to check if its reserved
+/// @nodoc
 enum SystemVariants {
   dark,
   screenSize,
@@ -19,11 +20,13 @@ extension SystemVariantsExt on SystemVariants {
   }
 }
 
+/// @nodoc
 enum _OP {
   and,
   or,
 }
 
+/// @nodoc
 class MultiVariant<T extends Attribute> {
   const MultiVariant(
     this.variants, {
@@ -105,6 +108,7 @@ class MultiVariant<T extends Attribute> {
   }
 }
 
+/// {@category Variants}
 class Variant<T extends Attribute> {
   const Variant(this.name, {this.shouldApply});
 
