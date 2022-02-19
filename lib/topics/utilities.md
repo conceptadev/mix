@@ -1,6 +1,6 @@
 _Utilities_ are classes with static functions and a series of global constants and functions for a given widget type that can be used to instantiate _Attribute_ objects.
 
-To use a utility class &mdash; say a _BoxUtility_ class to create _Attributes_ for, say, _backgroundColor_ and _height_, you could use the following code:
+To use a utility class (_BoxUtility_, for this example) to create _Attributes_ for _backgroundColor_ and _height_ of a _Box_ widget, you could use the following code:
 
 ```dart
   Mix newMix = Mix(
