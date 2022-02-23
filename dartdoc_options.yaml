@@ -38,7 +38,7 @@ dartdoc:
     - 'lib/src/attributes/image/image.utils.dart' 
     - 'lib/src/attributes/image/image.props.dart' 
     - 'lib/src/attributes/pressable/pressable.notifier.dart' 
-    - 'lib/src/attributes/common/attribute.dart' 
+    - 'lib/src/attributes/common/attribute.dart'
     - 'lib/src/attributes/exports.dart' 
     - 'lib/src/attributes/text/text_short.utils.dart' 
     - 'lib/src/attributes/text/text.props.dart' 
@@ -49,6 +49,8 @@ dartdoc:
     - 'lib/src/attributes/flex/flex.props.dart' 
     - 'lib/src/attributes/helpers/helper.utils.dart' 
     - 'lib/src/attributes/helpers/helper_short.utils.dart' 
+    - 'lib/src/attributes/widget_decorators/decorator_short_utils.dart'
+    - 'lib/src/attributes/widget_decorators/clip_decorators/clip_utils.dart'
     - 'lib/src/theme/refs/typography_tokens.dart' 
     - 'lib/src/theme/refs/refs.dart' 
     - 'lib/src/theme/refs/color_tokens.dart' 
@@ -97,7 +99,8 @@ dartdoc:
     - 'lib/src/attributes/widget_decorators/clip_decorators/clip_rrect.dart' 
     - 'lib/src/attributes/widget_decorators/clip_decorators/clip_utils.dart' 
     - 'lib/src/attributes/widget_decorators/opacity.dart' 
-    - 'lib/src/attributes/widget_decorators/scale.dart'  
+    - 'lib/src/attributes/widget_decorators/scale.dart'
+    - 'lib/src/attributes/widget_decorators/decorator_utils.dart'  
 
 
 

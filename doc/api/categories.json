@@ -18,6 +18,15 @@
   ]
  },
  {
+  "name": "AspectRatioDecoratorUtility",
+  "qualifiedName": "mix.AspectRatioDecoratorUtility",
+  "href": "mix/AspectRatioDecoratorUtility-class.html",
+  "type": "class",
+  "categories": [
+   "Utilities"
+  ]
+ },
+ {
   "name": "Box",
   "qualifiedName": "mix.Box",
   "href": "mix/Box-class.html",
@@ -81,6 +90,15 @@
   ]
  },
  {
+  "name": "ClipDecoratorUtility",
+  "qualifiedName": "mix.ClipDecoratorUtility",
+  "href": "mix/ClipDecoratorUtility-class.html",
+  "type": "class",
+  "categories": [
+   "Utilities"
+  ]
+ },
+ {
   "name": "FlexAttributes",
   "qualifiedName": "mix.FlexAttributes",
   "href": "mix/FlexAttributes-class.html",
@@ -114,6 +132,15 @@
   "type": "class",
   "categories": [
    "Decorators"
+  ]
+ },
+ {
+  "name": "FlexibleDecoratorUtility",
+  "qualifiedName": "mix.FlexibleDecoratorUtility",
+  "href": "mix/FlexibleDecoratorUtility-class.html",
+  "type": "class",
+  "categories": [
+   "Utilities"
   ]
  },
  {
@@ -171,6 +198,15 @@
   ]
  },
  {
+  "name": "OpacityDecoratorUtility",
+  "qualifiedName": "mix.OpacityDecoratorUtility",
+  "href": "mix/OpacityDecoratorUtility-class.html",
+  "type": "class",
+  "categories": [
+   "Utilities"
+  ]
+ },
+ {
   "name": "Pressable",
   "qualifiedName": "mix.Pressable",
   "href": "mix/Pressable-class.html",
@@ -198,12 +234,30 @@
   ]
  },
  {
+  "name": "RotateDecoratorUtility",
+  "qualifiedName": "mix.RotateDecoratorUtility",
+  "href": "mix/RotateDecoratorUtility-class.html",
+  "type": "class",
+  "categories": [
+   "Utilities"
+  ]
+ },
+ {
   "name": "ScaleDecorator",
   "qualifiedName": "mix.ScaleDecorator",
   "href": "mix/ScaleDecorator-class.html",
   "type": "class",
   "categories": [
    "Decorators"
+  ]
+ },
+ {
+  "name": "ScaleDecoratorUtility",
+  "qualifiedName": "mix.ScaleDecoratorUtility",
+  "href": "mix/ScaleDecoratorUtility-class.html",
+  "type": "class",
+  "categories": [
+   "Utilities"
   ]
  },
  {

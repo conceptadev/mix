@@ -1,25 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mix/src/attributes/common/attribute.dart';
-import 'package:mix/src/attributes/widget_decorators/clip_decorators/clip_utils.dart';
 import 'package:mix/src/mixer/mix_context.dart';
-
-/// @nodoc
-ClipDecorator clipRounded(double radius) {
-  return ClipDecorator(
-    ClipDecoratorType.rounded,
-    borderRadius: BorderRadius.circular(radius),
-  );
-}
-
-/// @nodoc
-ClipDecorator clipOval() {
-  return const ClipDecorator(ClipDecoratorType.oval);
-}
-
-/// @nodoc
-ClipDecorator clipTriangle() {
-  return const ClipDecorator(ClipDecoratorType.triangle);
-}
 
 /// @nodoc
 enum ClipDecoratorType {
@@ -29,10 +10,10 @@ enum ClipDecoratorType {
   oval,
 }
 
-/// ## Short Utils:
-/// - clipRounded(double radius)
-/// - clipOval()
-/// - clipTriangle()
+/// ## Widget
+/// - (All)
+/// ## Utilities
+/// - [ClipDecoratorUtility](ClipDecoratorUtility-class.html)
 ///
 /// {@category Decorators}
 class ClipDecorator extends ParentDecorator<ClipDecorator> {
@@ -122,4 +103,20 @@ class AnimatedClipRRect extends StatelessWidget {
       child: child,
     );
   }
+}
+
+/// @nodoc
+class TriangleClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    final path = Path();
+    path.moveTo(size.width / 2, 0.0);
+    path.lineTo(size.width, size.height);
+    path.lineTo(0.0, size.height);
+    path.close();
+    return path;
+  }
+
+  @override
+  bool shouldReclip(TriangleClipper oldClipper) => false;
 }

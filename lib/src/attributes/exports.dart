@@ -46,8 +46,10 @@ export 'variants/variants_short.utils.dart';
 
 /// Widgets
 export 'widget_decorators/aspect_ratio.dart';
-export 'widget_decorators/clip_decorators/clip_rrect.dart';
+export 'widget_decorators/clip_decorator.dart';
 export 'widget_decorators/flexible.dart';
 export 'widget_decorators/opacity.dart';
 export 'widget_decorators/rotate.dart';
 export 'widget_decorators/scale.dart';
+export 'widget_decorators/decorator_utils.dart';
+export 'widget_decorators/decorator_short_utils.dart';

@@ -182,6 +182,42 @@
   }
  },
  {
+  "name": "AspectRatioDecoratorUtility",
+  "qualifiedName": "mix.AspectRatioDecoratorUtility",
+  "href": "mix/AspectRatioDecoratorUtility-class.html",
+  "type": "class",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "mix",
+   "type": "library"
+  }
+ },
+ {
+  "name": "AspectRatioDecoratorUtility",
+  "qualifiedName": "mix.AspectRatioDecoratorUtility.AspectRatioDecoratorUtility",
+  "href": "mix/AspectRatioDecoratorUtility/AspectRatioDecoratorUtility.html",
+  "type": "constructor",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "AspectRatioDecoratorUtility",
+   "type": "class"
+  }
+ },
+ {
+  "name": "aspectRatio",
+  "qualifiedName": "mix.AspectRatioDecoratorUtility.aspectRatio",
+  "href": "mix/AspectRatioDecoratorUtility/aspectRatio.html",
+  "type": "method",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "AspectRatioDecoratorUtility",
+   "type": "class"
+  }
+ },
+ {
   "name": "Box",
   "qualifiedName": "mix.Box",
   "href": "mix/Box-class.html",
@@ -1214,6 +1250,66 @@
   }
  },
  {
+  "name": "ClipDecoratorUtility",
+  "qualifiedName": "mix.ClipDecoratorUtility",
+  "href": "mix/ClipDecoratorUtility-class.html",
+  "type": "class",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "mix",
+   "type": "library"
+  }
+ },
+ {
+  "name": "ClipDecoratorUtility",
+  "qualifiedName": "mix.ClipDecoratorUtility.ClipDecoratorUtility",
+  "href": "mix/ClipDecoratorUtility/ClipDecoratorUtility.html",
+  "type": "constructor",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "ClipDecoratorUtility",
+   "type": "class"
+  }
+ },
+ {
+  "name": "clipOval",
+  "qualifiedName": "mix.ClipDecoratorUtility.clipOval",
+  "href": "mix/ClipDecoratorUtility/clipOval.html",
+  "type": "method",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "ClipDecoratorUtility",
+   "type": "class"
+  }
+ },
+ {
+  "name": "clipRounded",
+  "qualifiedName": "mix.ClipDecoratorUtility.clipRounded",
+  "href": "mix/ClipDecoratorUtility/clipRounded.html",
+  "type": "method",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "ClipDecoratorUtility",
+   "type": "class"
+  }
+ },
+ {
+  "name": "clipTriangle",
+  "qualifiedName": "mix.ClipDecoratorUtility.clipTriangle",
+  "href": "mix/ClipDecoratorUtility/clipTriangle.html",
+  "type": "method",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "ClipDecoratorUtility",
+   "type": "class"
+  }
+ },
+ {
   "name": "FlexAttributes",
   "qualifiedName": "mix.FlexAttributes",
   "href": "mix/FlexAttributes-class.html",
@@ -1534,6 +1630,78 @@
   "packageName": "mix",
   "enclosedBy": {
    "name": "FlexibleDecorator",
+   "type": "class"
+  }
+ },
+ {
+  "name": "FlexibleDecoratorUtility",
+  "qualifiedName": "mix.FlexibleDecoratorUtility",
+  "href": "mix/FlexibleDecoratorUtility-class.html",
+  "type": "class",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "mix",
+   "type": "library"
+  }
+ },
+ {
+  "name": "FlexibleDecoratorUtility",
+  "qualifiedName": "mix.FlexibleDecoratorUtility.FlexibleDecoratorUtility",
+  "href": "mix/FlexibleDecoratorUtility/FlexibleDecoratorUtility.html",
+  "type": "constructor",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "FlexibleDecoratorUtility",
+   "type": "class"
+  }
+ },
+ {
+  "name": "expanded",
+  "qualifiedName": "mix.FlexibleDecoratorUtility.expanded",
+  "href": "mix/FlexibleDecoratorUtility/expanded.html",
+  "type": "method",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "FlexibleDecoratorUtility",
+   "type": "class"
+  }
+ },
+ {
+  "name": "flex",
+  "qualifiedName": "mix.FlexibleDecoratorUtility.flex",
+  "href": "mix/FlexibleDecoratorUtility/flex.html",
+  "type": "method",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "FlexibleDecoratorUtility",
+   "type": "class"
+  }
+ },
+ {
+  "name": "flexFit",
+  "qualifiedName": "mix.FlexibleDecoratorUtility.flexFit",
+  "href": "mix/FlexibleDecoratorUtility/flexFit.html",
+  "type": "method",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "FlexibleDecoratorUtility",
+   "type": "class"
+  }
+ },
+ {
+  "name": "flexible",
+  "qualifiedName": "mix.FlexibleDecoratorUtility.flexible",
+  "href": "mix/FlexibleDecoratorUtility/flexible.html",
+  "type": "method",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "FlexibleDecoratorUtility",
    "type": "class"
   }
  },
@@ -2042,6 +2210,42 @@
   }
  },
  {
+  "name": "OpacityDecoratorUtility",
+  "qualifiedName": "mix.OpacityDecoratorUtility",
+  "href": "mix/OpacityDecoratorUtility-class.html",
+  "type": "class",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "mix",
+   "type": "library"
+  }
+ },
+ {
+  "name": "OpacityDecoratorUtility",
+  "qualifiedName": "mix.OpacityDecoratorUtility.OpacityDecoratorUtility",
+  "href": "mix/OpacityDecoratorUtility/OpacityDecoratorUtility.html",
+  "type": "constructor",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "OpacityDecoratorUtility",
+   "type": "class"
+  }
+ },
+ {
+  "name": "opacity",
+  "qualifiedName": "mix.OpacityDecoratorUtility.opacity",
+  "href": "mix/OpacityDecoratorUtility/opacity.html",
+  "type": "method",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "OpacityDecoratorUtility",
+   "type": "class"
+  }
+ },
+ {
   "name": "Pressable",
   "qualifiedName": "mix.Pressable",
   "href": "mix/Pressable-class.html",
@@ -2426,6 +2630,90 @@
   }
  },
  {
+  "name": "RotateDecoratorUtility",
+  "qualifiedName": "mix.RotateDecoratorUtility",
+  "href": "mix/RotateDecoratorUtility-class.html",
+  "type": "class",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "mix",
+   "type": "library"
+  }
+ },
+ {
+  "name": "RotateDecoratorUtility",
+  "qualifiedName": "mix.RotateDecoratorUtility.RotateDecoratorUtility",
+  "href": "mix/RotateDecoratorUtility/RotateDecoratorUtility.html",
+  "type": "constructor",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "RotateDecoratorUtility",
+   "type": "class"
+  }
+ },
+ {
+  "name": "rotate",
+  "qualifiedName": "mix.RotateDecoratorUtility.rotate",
+  "href": "mix/RotateDecoratorUtility/rotate.html",
+  "type": "method",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "RotateDecoratorUtility",
+   "type": "class"
+  }
+ },
+ {
+  "name": "rotate90",
+  "qualifiedName": "mix.RotateDecoratorUtility.rotate90",
+  "href": "mix/RotateDecoratorUtility/rotate90.html",
+  "type": "method",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "RotateDecoratorUtility",
+   "type": "class"
+  }
+ },
+ {
+  "name": "rotate180",
+  "qualifiedName": "mix.RotateDecoratorUtility.rotate180",
+  "href": "mix/RotateDecoratorUtility/rotate180.html",
+  "type": "method",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "RotateDecoratorUtility",
+   "type": "class"
+  }
+ },
+ {
+  "name": "rotate270",
+  "qualifiedName": "mix.RotateDecoratorUtility.rotate270",
+  "href": "mix/RotateDecoratorUtility/rotate270.html",
+  "type": "method",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "RotateDecoratorUtility",
+   "type": "class"
+  }
+ },
+ {
+  "name": "rotate360",
+  "qualifiedName": "mix.RotateDecoratorUtility.rotate360",
+  "href": "mix/RotateDecoratorUtility/rotate360.html",
+  "type": "method",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "RotateDecoratorUtility",
+   "type": "class"
+  }
+ },
+ {
   "name": "ScaleDecorator",
   "qualifiedName": "mix.ScaleDecorator",
   "href": "mix/ScaleDecorator-class.html",
@@ -2482,6 +2770,42 @@
   "packageName": "mix",
   "enclosedBy": {
    "name": "ScaleDecorator",
+   "type": "class"
+  }
+ },
+ {
+  "name": "ScaleDecoratorUtility",
+  "qualifiedName": "mix.ScaleDecoratorUtility",
+  "href": "mix/ScaleDecoratorUtility-class.html",
+  "type": "class",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "mix",
+   "type": "library"
+  }
+ },
+ {
+  "name": "ScaleDecoratorUtility",
+  "qualifiedName": "mix.ScaleDecoratorUtility.ScaleDecoratorUtility",
+  "href": "mix/ScaleDecoratorUtility/ScaleDecoratorUtility.html",
+  "type": "constructor",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "ScaleDecoratorUtility",
+   "type": "class"
+  }
+ },
+ {
+  "name": "scale",
+  "qualifiedName": "mix.ScaleDecoratorUtility.scale",
+  "href": "mix/ScaleDecoratorUtility/scale.html",
+  "type": "method",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "ScaleDecoratorUtility",
    "type": "class"
   }
  },
@@ -3822,18 +4146,6 @@
   "qualifiedName": "mix.paragraph",
   "href": "mix/paragraph-constant.html",
   "type": "top-level constant",
-  "overriddenDepth": 0,
-  "packageName": "mix",
-  "enclosedBy": {
-   "name": "mix",
-   "type": "library"
-  }
- },
- {
-  "name": "rotate",
-  "qualifiedName": "mix.rotate",
-  "href": "mix/rotate.html",
-  "type": "function",
   "overriddenDepth": 0,
   "packageName": "mix",
   "enclosedBy": {
