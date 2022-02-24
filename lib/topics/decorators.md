@@ -13,10 +13,5 @@ corresponding property on that widget.
 
 _Decorators_ are added to the _Mix_ object like any other _Attribute_.
 
-_Short Utils_ are listed with the class &mdash; there is no corresponding
-_Utility_ class for these items.
-
-> ### Note:
-> I've gone ahead and listed these, but it's problematic.
-> Might rethink the implementation on these to make them more consistent
-> with the rest of the _Utility_ classes.
+Also, as with any other _Attribute_, there is a _Utility_ class to
+create them, and associated _Short Utils_.
