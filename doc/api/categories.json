@@ -45,6 +45,15 @@
   ]
  },
  {
+  "name": "BoxShadowExtension",
+  "qualifiedName": "mix.BoxShadowExtension",
+  "href": "mix/BoxShadowExtension.html",
+  "type": "extension",
+  "categories": [
+   "Misc Utils"
+  ]
+ },
+ {
   "name": "BoxUtility",
   "qualifiedName": "mix.BoxUtility",
   "href": "mix/BoxUtility-class.html",
@@ -96,6 +105,42 @@
   "type": "class",
   "categories": [
    "Utilities"
+  ]
+ },
+ {
+  "name": "ColorExtensions",
+  "qualifiedName": "mix.ColorExtensions",
+  "href": "mix/ColorExtensions.html",
+  "type": "extension",
+  "categories": [
+   "Misc Utils"
+  ]
+ },
+ {
+  "name": "ColorSchemeTokenExtension",
+  "qualifiedName": "mix.ColorSchemeTokenExtension",
+  "href": "mix/ColorSchemeTokenExtension.html",
+  "type": "extension",
+  "categories": [
+   "Misc Utils"
+  ]
+ },
+ {
+  "name": "ColorToken",
+  "qualifiedName": "mix.ColorToken",
+  "href": "mix/ColorToken.html",
+  "type": "enum",
+  "categories": [
+   "Misc Utils"
+  ]
+ },
+ {
+  "name": "ContextExtensions",
+  "qualifiedName": "mix.ContextExtensions",
+  "href": "mix/ContextExtensions.html",
+  "type": "extension",
+  "categories": [
+   "Misc Utils"
   ]
  },
  {
@@ -180,6 +225,15 @@
   ]
  },
  {
+  "name": "Matrix4Extension",
+  "qualifiedName": "mix.Matrix4Extension",
+  "href": "mix/Matrix4Extension.html",
+  "type": "extension",
+  "categories": [
+   "Misc Utils"
+  ]
+ },
+ {
   "name": "Mix",
   "qualifiedName": "mix.Mix",
   "href": "mix/Mix-class.html",
@@ -258,6 +312,15 @@
   "type": "class",
   "categories": [
    "Utilities"
+  ]
+ },
+ {
+  "name": "StrutStyleExtension",
+  "qualifiedName": "mix.StrutStyleExtension",
+  "href": "mix/StrutStyleExtension.html",
+  "type": "extension",
+  "categories": [
+   "Misc Utils"
   ]
  },
  {
@@ -354,6 +417,15 @@
   "type": "class",
   "categories": [
    "Variants"
+  ]
+ },
+ {
+  "name": "hexToColor",
+  "qualifiedName": "mix.hexToColor",
+  "href": "mix/hexToColor.html",
+  "type": "function",
+  "categories": [
+   "Misc Utils"
   ]
  }
 ]

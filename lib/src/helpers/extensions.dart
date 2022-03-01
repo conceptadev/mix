@@ -5,6 +5,7 @@ import 'package:mix/src/dto/box_shadow.dto.dart';
 import 'package:mix/src/mixer/mix_context.dart';
 import 'package:mix/src/mixer/mix_factory.dart';
 
+/// {@category Misc Utils}
 extension ContextExtensions on BuildContext {
   Brightness get brightness => Theme.of(this).brightness;
 
@@ -55,6 +56,7 @@ extension ContextExtensions on BuildContext {
   double get screenHeight => mq.size.height;
 }
 
+/// {@category Misc Utils}
 extension StrutStyleExtension on StrutStyle {
   merge(StrutStyle? other) {
     return StrutStyle(
@@ -72,6 +74,7 @@ extension StrutStyleExtension on StrutStyle {
   }
 }
 
+/// {@category Misc Utils}
 extension BoxShadowExtension on BoxShadow {
   BoxShadowDto toBoxShadowProps() {
     return BoxShadowDto(
@@ -83,6 +86,7 @@ extension BoxShadowExtension on BoxShadow {
   }
 }
 
+/// {@category Misc Utils}
 extension Matrix4Extension on Matrix4 {
   /// Merge [other] into this matrix.
   Matrix4 merge(Matrix4? other) {

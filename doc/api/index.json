@@ -14,6 +14,13 @@
   "overriddenDepth": 0
  },
  {
+  "name": "Misc Utils",
+  "qualifiedName": "Misc Utils",
+  "href": "topics/Misc Utils-topic.html",
+  "type": "Topic",
+  "overriddenDepth": 0
+ },
+ {
   "name": "Mix Object",
   "qualifiedName": "Mix Object",
   "href": "topics/Mix Object-topic.html",
@@ -551,6 +558,30 @@
   "enclosedBy": {
    "name": "BoxAttributes",
    "type": "class"
+  }
+ },
+ {
+  "name": "BoxShadowExtension",
+  "qualifiedName": "mix.BoxShadowExtension",
+  "href": "mix/BoxShadowExtension.html",
+  "type": "extension",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "mix",
+   "type": "library"
+  }
+ },
+ {
+  "name": "toBoxShadowProps",
+  "qualifiedName": "mix.BoxShadowExtension.toBoxShadowProps",
+  "href": "mix/BoxShadowExtension/toBoxShadowProps.html",
+  "type": "method",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "BoxShadowExtension",
+   "type": "extension"
   }
  },
  {
@@ -1310,6 +1341,318 @@
   }
  },
  {
+  "name": "ColorExtensions",
+  "qualifiedName": "mix.ColorExtensions",
+  "href": "mix/ColorExtensions.html",
+  "type": "extension",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "mix",
+   "type": "library"
+  }
+ },
+ {
+  "name": "darken",
+  "qualifiedName": "mix.ColorExtensions.darken",
+  "href": "mix/ColorExtensions/darken.html",
+  "type": "method",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "ColorExtensions",
+   "type": "extension"
+  }
+ },
+ {
+  "name": "fromHex",
+  "qualifiedName": "mix.ColorExtensions.fromHex",
+  "href": "mix/ColorExtensions/fromHex.html",
+  "type": "method",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "ColorExtensions",
+   "type": "extension"
+  }
+ },
+ {
+  "name": "lighten",
+  "qualifiedName": "mix.ColorExtensions.lighten",
+  "href": "mix/ColorExtensions/lighten.html",
+  "type": "method",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "ColorExtensions",
+   "type": "extension"
+  }
+ },
+ {
+  "name": "toHex",
+  "qualifiedName": "mix.ColorExtensions.toHex",
+  "href": "mix/ColorExtensions/toHex.html",
+  "type": "method",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "ColorExtensions",
+   "type": "extension"
+  }
+ },
+ {
+  "name": "ColorSchemeTokenExtension",
+  "qualifiedName": "mix.ColorSchemeTokenExtension",
+  "href": "mix/ColorSchemeTokenExtension.html",
+  "type": "extension",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "mix",
+   "type": "library"
+  }
+ },
+ {
+  "name": "value",
+  "qualifiedName": "mix.ColorSchemeTokenExtension.value",
+  "href": "mix/ColorSchemeTokenExtension/value.html",
+  "type": "property",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "ColorSchemeTokenExtension",
+   "type": "extension"
+  }
+ },
+ {
+  "name": "ColorToken",
+  "qualifiedName": "mix.ColorToken",
+  "href": "mix/ColorToken.html",
+  "type": "enum",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "mix",
+   "type": "library"
+  }
+ },
+ {
+  "name": "toString",
+  "qualifiedName": "mix.ColorToken.toString",
+  "href": "mix/ColorToken/toString.html",
+  "type": "method",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "ColorToken",
+   "type": "enum"
+  }
+ },
+ {
+  "name": "ContextExtensions",
+  "qualifiedName": "mix.ContextExtensions",
+  "href": "mix/ContextExtensions.html",
+  "type": "extension",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "mix",
+   "type": "library"
+  }
+ },
+ {
+  "name": "brightness",
+  "qualifiedName": "mix.ContextExtensions.brightness",
+  "href": "mix/ContextExtensions/brightness.html",
+  "type": "property",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "ContextExtensions",
+   "type": "extension"
+  }
+ },
+ {
+  "name": "colorScheme",
+  "qualifiedName": "mix.ContextExtensions.colorScheme",
+  "href": "mix/ContextExtensions/colorScheme.html",
+  "type": "property",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "ContextExtensions",
+   "type": "extension"
+  }
+ },
+ {
+  "name": "defaultTextStyle",
+  "qualifiedName": "mix.ContextExtensions.defaultTextStyle",
+  "href": "mix/ContextExtensions/defaultTextStyle.html",
+  "type": "method",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "ContextExtensions",
+   "type": "extension"
+  }
+ },
+ {
+  "name": "directionality",
+  "qualifiedName": "mix.ContextExtensions.directionality",
+  "href": "mix/ContextExtensions/directionality.html",
+  "type": "property",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "ContextExtensions",
+   "type": "extension"
+  }
+ },
+ {
+  "name": "inheritedMix",
+  "qualifiedName": "mix.ContextExtensions.inheritedMix",
+  "href": "mix/ContextExtensions/inheritedMix.html",
+  "type": "property",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "ContextExtensions",
+   "type": "extension"
+  }
+ },
+ {
+  "name": "isDarkMode",
+  "qualifiedName": "mix.ContextExtensions.isDarkMode",
+  "href": "mix/ContextExtensions/isDarkMode.html",
+  "type": "property",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "ContextExtensions",
+   "type": "extension"
+  }
+ },
+ {
+  "name": "isLandscape",
+  "qualifiedName": "mix.ContextExtensions.isLandscape",
+  "href": "mix/ContextExtensions/isLandscape.html",
+  "type": "property",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "ContextExtensions",
+   "type": "extension"
+  }
+ },
+ {
+  "name": "isPortrait",
+  "qualifiedName": "mix.ContextExtensions.isPortrait",
+  "href": "mix/ContextExtensions/isPortrait.html",
+  "type": "property",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "ContextExtensions",
+   "type": "extension"
+  }
+ },
+ {
+  "name": "mq",
+  "qualifiedName": "mix.ContextExtensions.mq",
+  "href": "mix/ContextExtensions/mq.html",
+  "type": "property",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "ContextExtensions",
+   "type": "extension"
+  }
+ },
+ {
+  "name": "orientation",
+  "qualifiedName": "mix.ContextExtensions.orientation",
+  "href": "mix/ContextExtensions/orientation.html",
+  "type": "property",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "ContextExtensions",
+   "type": "extension"
+  }
+ },
+ {
+  "name": "screenHeight",
+  "qualifiedName": "mix.ContextExtensions.screenHeight",
+  "href": "mix/ContextExtensions/screenHeight.html",
+  "type": "property",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "ContextExtensions",
+   "type": "extension"
+  }
+ },
+ {
+  "name": "screenWidth",
+  "qualifiedName": "mix.ContextExtensions.screenWidth",
+  "href": "mix/ContextExtensions/screenWidth.html",
+  "type": "property",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "ContextExtensions",
+   "type": "extension"
+  }
+ },
+ {
+  "name": "textAttributes",
+  "qualifiedName": "mix.ContextExtensions.textAttributes",
+  "href": "mix/ContextExtensions/textAttributes.html",
+  "type": "property",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "ContextExtensions",
+   "type": "extension"
+  }
+ },
+ {
+  "name": "textTheme",
+  "qualifiedName": "mix.ContextExtensions.textTheme",
+  "href": "mix/ContextExtensions/textTheme.html",
+  "type": "property",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "ContextExtensions",
+   "type": "extension"
+  }
+ },
+ {
+  "name": "theme",
+  "qualifiedName": "mix.ContextExtensions.theme",
+  "href": "mix/ContextExtensions/theme.html",
+  "type": "property",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "ContextExtensions",
+   "type": "extension"
+  }
+ },
+ {
+  "name": "tt",
+  "qualifiedName": "mix.ContextExtensions.tt",
+  "href": "mix/ContextExtensions/tt.html",
+  "type": "property",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "ContextExtensions",
+   "type": "extension"
+  }
+ },
+ {
   "name": "FlexAttributes",
   "qualifiedName": "mix.FlexAttributes",
   "href": "mix/FlexAttributes-class.html",
@@ -1967,6 +2310,30 @@
   "enclosedBy": {
    "name": "IconUtils",
    "type": "class"
+  }
+ },
+ {
+  "name": "Matrix4Extension",
+  "qualifiedName": "mix.Matrix4Extension",
+  "href": "mix/Matrix4Extension.html",
+  "type": "extension",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "mix",
+   "type": "library"
+  }
+ },
+ {
+  "name": "merge",
+  "qualifiedName": "mix.Matrix4Extension.merge",
+  "href": "mix/Matrix4Extension/merge.html",
+  "type": "method",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "Matrix4Extension",
+   "type": "extension"
   }
  },
  {
@@ -2807,6 +3174,30 @@
   "enclosedBy": {
    "name": "ScaleDecoratorUtility",
    "type": "class"
+  }
+ },
+ {
+  "name": "StrutStyleExtension",
+  "qualifiedName": "mix.StrutStyleExtension",
+  "href": "mix/StrutStyleExtension.html",
+  "type": "extension",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "mix",
+   "type": "library"
+  }
+ },
+ {
+  "name": "merge",
+  "qualifiedName": "mix.StrutStyleExtension.merge",
+  "href": "mix/StrutStyleExtension/merge.html",
+  "type": "method",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "StrutStyleExtension",
+   "type": "extension"
   }
  },
  {
@@ -4134,6 +4525,18 @@
   "qualifiedName": "mix.active",
   "href": "mix/active-constant.html",
   "type": "top-level constant",
+  "overriddenDepth": 0,
+  "packageName": "mix",
+  "enclosedBy": {
+   "name": "mix",
+   "type": "library"
+  }
+ },
+ {
+  "name": "hexToColor",
+  "qualifiedName": "mix.hexToColor",
+  "href": "mix/hexToColor.html",
+  "type": "function",
   "overriddenDepth": 0,
   "packageName": "mix",
   "enclosedBy": {

@@ -13,11 +13,16 @@ dartdoc:
       markdown: lib/topics/variants.md
     "Decorators":
       markdown: lib/topics/decorators.md
+    "Misc Utils":
+      markdown: lib/topics/misc_utils.md
   categoryOrder: 
     - "Mix Object"
     - "Mixable Widgets"
     - "Attributes"
     - "Utilities"
+    - "Variants"
+    - "Decorators"
+    - "Misc Utils"
   nodoc: 
     - 'lib/src/dto/edge_insets.dto.dart' 
     - 'lib/src/dto/dto.dart' 
@@ -61,8 +66,6 @@ dartdoc:
     - 'lib/src/headless/exports.dart' 
     - 'lib/src/mixer/mix_context.dart' 
     - 'lib/src/helpers/utils.dart' 
-    - 'lib/src/helpers/extensions.dart' 
-    - 'lib/src/helpers/color.utils.dart' 
     - 'lib/src/widgets/gap.widget.dart' 
     - 'lib/src/widgets/mixable.widget.dart' 
     - 'lib/src/widgets/remixable.widget.dart' 
@@ -101,6 +104,8 @@ dartdoc:
     - 'lib/src/attributes/widget_decorators/opacity.dart' 
     - 'lib/src/attributes/widget_decorators/scale.dart'
     - 'lib/src/attributes/widget_decorators/decorator_utils.dart'  
+    - 'lib/src/helpers/extensions.dart' 
+    - 'lib/src/helpers/color.utils.dart' 
 
 
 

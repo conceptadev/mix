@@ -12,6 +12,7 @@ export 'src/attributes/exports.dart';
 export 'src/headless/exports.dart';
 export 'src/helpers/extensions.dart';
 export 'src/helpers/variants.dart';
+export 'src/helpers/color.utils.dart';
 export 'src/mixer/mix_context.dart';
 export 'src/mixer/mix_factory.dart';
 export 'src/theme/mix_theme.dart';
