@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mix/src/dto/dto.dart';
-import 'package:mix/src/theme/refs/refs.dart';
+import 'package:mix/src/theme/refs/color_ref.dart';
 
 class BorderDto extends Dto<Border> {
   final BorderSideDto? top;

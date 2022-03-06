@@ -33,25 +33,25 @@ class MixThemeData {
   MixThemeData._({
     required this.space,
     required this.breakpoints,
-    //TODO: implement font family d
+    //TODO: implement font family
     required this.contextRef,
   });
 
   factory MixThemeData.defaults() {
     return MixThemeData._(
-      space: SpaceToken.defaults,
-      breakpoints: BreakpointsToken.defaults,
+      space: MixThemeSpace.defaults,
+      breakpoints: MixThemeBreakpoints.defaults,
       contextRef: ContextRefTokens.defaults(),
     );
   }
 
-  final SpaceToken space;
-  final BreakpointsToken breakpoints;
+  final MixThemeSpace space;
+  final MixThemeBreakpoints breakpoints;
   final ContextRefTokens contextRef;
 
   MixThemeData copyWith({
-    SpaceToken? space,
-    BreakpointsToken? breakpoints,
+    MixThemeSpace? space,
+    MixThemeBreakpoints? breakpoints,
     ContextRefTokens? contextRef,
   }) {
     return MixThemeData._(
@@ -87,5 +87,5 @@ class MixThemeData {
 
   @override
   String toString() =>
-      'MixThemeData(spacing: $space, breakpoints: $breakpoints, tokens: $contextRef)';
+      'MixThemeData(space: $space, breakpoints: $breakpoints, tokens: $contextRef)';
 }

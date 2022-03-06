@@ -15,5 +15,5 @@ export 'src/helpers/variants.dart';
 export 'src/mixer/mix_context.dart';
 export 'src/mixer/mix_factory.dart';
 export 'src/theme/mix_theme.dart';
-export 'src/theme/refs/color_tokens.dart';
-export 'src/theme/refs/typography_tokens.dart';
+export 'src/theme/tokens/color_scheme_tokens.dart';
+export 'src/theme/tokens/text_theme_tokens.dart';

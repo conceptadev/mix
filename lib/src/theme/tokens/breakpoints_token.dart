@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 enum ScreenSizeToken { xsmall, small, medium, large }
 
-class BreakpointsToken {
-  const BreakpointsToken._({
+class MixThemeBreakpoints {
+  const MixThemeBreakpoints._({
     required this.xsmall,
     required this.small,
     required this.medium,
@@ -11,7 +11,7 @@ class BreakpointsToken {
   });
 
   static get defaults {
-    return const BreakpointsToken._(
+    return const MixThemeBreakpoints._(
       xsmall: 0,
       small: 600,
       medium: 1240,
@@ -24,8 +24,8 @@ class BreakpointsToken {
   final double medium;
   final double large;
 
-  BreakpointsToken merge(BreakpointsToken? other) {
-    return BreakpointsToken._(
+  MixThemeBreakpoints merge(MixThemeBreakpoints? other) {
+    return MixThemeBreakpoints._(
       xsmall: other?.xsmall ?? xsmall,
       small: other?.small ?? small,
       medium: other?.medium ?? medium,

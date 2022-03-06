@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mix/mix.dart';
-import 'package:mix/src/theme/refs/refs.dart';
+
+import '../../theme/refs/color_ref.dart';
+import '../exports.dart';
 
 class IconProps {
   final Color? color;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mix/src/helpers/extensions.dart';
-import 'package:mix/src/theme/refs/refs.dart';
 
+import '../../helpers/extensions.dart';
+import '../../theme/refs/text_style_ref.dart';
 import '../common/attribute.dart';
 
 class TextAttributes extends Attribute {

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mix/src/helpers/extensions.dart';
-import 'package:mix/src/theme/mix_theme.dart';
-import 'package:mix/src/theme/refs/color_tokens.dart';
-import 'package:mix/src/theme/refs/typography_tokens.dart';
+
+import '../tokens/color_scheme_tokens.dart';
+import '../tokens/text_theme_tokens.dart';
 
 abstract class MixRef<T> {
   const MixRef([this.id]);
@@ -11,62 +11,11 @@ abstract class MixRef<T> {
   T resolve(BuildContext context);
 }
 
-class TextStyleRef extends TextStyle implements MixRef<TextStyle> {
-  const TextStyleRef(this.id) : super();
-  @override
-  final String id;
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is TextStyleRef && other.id == id;
-  }
-
-  @override
-  TextStyle resolve(BuildContext context) {
-    final refValue = MixTheme.of(context).contextRef.tokens[this];
-    if (refValue == null) {
-      throw Exception('Ref $id not found');
-    }
-    final style = refValue(context);
-    return style;
-  }
-
-  @override
-  int get hashCode => id.hashCode;
-}
-
-class ColorRef extends Color implements MixRef<Color> {
-  const ColorRef(this.id) : super(0);
-  @override
-  final String id;
-  @override
-  Color resolve(BuildContext context) {
-    final refValue = MixTheme.of(context).contextRef.tokens[this];
-    if (refValue == null) {
-      throw Exception('Ref $id not found');
-    }
-    final color = refValue(context);
-    return color;
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is ColorRef && other.id == id;
-  }
-
-  @override
-  int get hashCode => id.hashCode;
-}
-
 typedef RefMap<T extends MixRef<V>, V> = Map<T, RefValueGetter<V>>;
 
 typedef RefValueGetter<T> = T Function(BuildContext);
 
-final RefMap defaultTokens = {
+final RefMap themeTokens = {
   $h1: (BuildContext context) {
     return context.textTheme.headline1;
   },
@@ -109,14 +58,8 @@ final RefMap defaultTokens = {
   $primary: (BuildContext context) {
     return context.colorScheme.primary;
   },
-  $primaryVariant: (BuildContext context) {
-    return context.colorScheme.primaryVariant;
-  },
   $secondary: (BuildContext context) {
     return context.colorScheme.secondary;
-  },
-  $secondaryVariant: (BuildContext context) {
-    return context.colorScheme.secondaryVariant;
   },
   $surface: (BuildContext context) {
     return context.colorScheme.surface;
@@ -148,7 +91,7 @@ class ContextRefTokens {
   ContextRefTokens(this.tokens);
 
   final RefMap tokens;
-  factory ContextRefTokens.defaults() => ContextRefTokens(defaultTokens);
+  factory ContextRefTokens.defaults() => ContextRefTokens(themeTokens);
 
   RefValueGetter<dynamic>? operator [](MixRef<dynamic> ref) => tokens[ref];
 
@@ -163,71 +106,4 @@ class ContextRefTokens {
 
     return ContextRefTokens(merged);
   }
-}
-
-enum SizeRefName {
-  xsmall,
-  small,
-  medium,
-  large,
-  xlarge,
-  xxlarge,
-}
-
-extension SizeTokenExtension on SizeRefName {
-  double get ref {
-    switch (this) {
-      case SizeRefName.xsmall:
-        return -0.1;
-      case SizeRefName.small:
-        return -0.2;
-      case SizeRefName.medium:
-        return -0.3;
-      case SizeRefName.large:
-        return -0.4;
-      case SizeRefName.xlarge:
-        return -0.5;
-      case SizeRefName.xxlarge:
-        return -0.6;
-      default:
-        throw Exception('Invalid SizeToken');
-    }
-  }
-}
-
-class MixToken {
-  const MixToken._();
-
-  static double get xsmall => SizeRefName.xsmall.ref;
-  static double get small => SizeRefName.small.ref;
-  static double get medium => SizeRefName.medium.ref;
-  static double get large => SizeRefName.large.ref;
-  static double get xlarge => SizeRefName.xlarge.ref;
-  static double get xxlarge => SizeRefName.xxlarge.ref;
-}
-
-class WithSizeRefs<T> {
-  const WithSizeRefs(T Function(double value) fn) : _fn = fn;
-
-  final T Function(double value) _fn;
-
-  T call(double value) => _fn(value);
-
-  T get xsmall => call(SizeRefName.xsmall.ref);
-  T get xs => xsmall;
-
-  T get small => call(SizeRefName.small.ref);
-  T get sm => small;
-
-  T get medium => call(SizeRefName.medium.ref);
-  T get md => medium;
-
-  T get large => call(SizeRefName.large.ref);
-  T get lg => large;
-
-  T get xlarge => call(SizeRefName.xlarge.ref);
-  T get xl => xlarge;
-
-  T get xxlarge => call(SizeRefName.xxlarge.ref);
-  T get xxl => xxlarge;
 }

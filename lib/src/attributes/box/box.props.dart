@@ -1,8 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:mix/mix.dart';
-import 'package:mix/src/dto/box_shadow.dto.dart';
-import 'package:mix/src/theme/refs/refs.dart';
+
+import '../../dto/box_shadow.dto.dart';
+import '../../theme/refs/color_ref.dart';
+import 'box.attributes.dart';
 
 class BoxProps {
   final Color? _color;
@@ -99,6 +100,8 @@ class BoxProps {
       }
 
       return boxDecoration;
+    } else {
+      return null;
     }
   }
 
