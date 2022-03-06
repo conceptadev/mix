@@ -1,0 +1,139 @@
+---
+id: mixing
+title: 'Mixing'
+---
+
+import Code from "../../../components/Code.js";
+import Callout from "nextra-theme-docs/callout";
+
+# Mixing
+
+You will compose visual attributes using **Mixes**. This allows you to compose, combine, inherit and override visual attributes. If you come from the web you can think of a Mix as a stylesheet. That allows to group visual attributes.
+
+## Create a Mix
+
+<Callout emoji="⚠️">
+  The order of the attributes is important, and keep in mind when composing and
+  overriding them. Attributes will be prioritized from right to left.
+</Callout>
+
+### `Mix()`
+
+You can create a Mix by calling it's class and passing positional attributes like so
+
+```dart
+
+final mix = Mix(
+  height(100),
+  width(100),
+  bgColor(Colors.purple),
+  rounded(10),
+);
+
+```
+
+### `Mix.fromList()`
+
+Allows you to create a Mix from a List of attributes. This has the same behavior but provides the ability to receive a List instead of positional arguments. 
+
+```dart
+final mix = Mix.fromList([
+  height(100),
+  width(100),
+  bgColor(Colors.purple),
+  rounded(10),
+]);
+```
+
+It also provides the possibility to use optional attributes using `if/else`:
+
+```dart
+final mix = Mix.fromList([
+  if (hasError) 
+    bgColor(Colors.red)
+  else
+    bgColor(Colors.green),
+  textColor(Colors.white),
+  bold(),
+]);
+```
+
+## Extend an existing Mix
+
+Mixes are immutable. The new Mix created will inherit all attributes of the original.
+
+### Add attributes
+
+#### `.mix()`
+
+If you have an existing Mix you can add attributes to it by calling the `mix` method. This will return a new Mix with the new attributes added.
+
+```dart
+final newMix = mix.mix(
+  height(200),
+  width(200),
+  bgColor(Colors.red),
+);
+```
+
+#### `.addAttributes()`
+
+Similar to `mix` but allows you to pass a List of attributes.
+
+```dart
+final newMix = mix.addAttributes([
+  height(200),
+  width(200),
+  bgColor(Colors.red),
+]);
+```
+
+### Combining Mixes
+
+Combining Mixes is a critical part of composing visual attributes. There are a few methods, and constructors that allow for easy ways to combine them.
+
+#### `.apply(Mix)` and `.applyMaybe(Mix?)`
+
+```dart
+final thirdMix = firstMix.apply(secondMix);
+```
+
+If you are receiving a nullable Mix as a parameter there is a simple helper method to keep your code clean: `applyMaybe`
+
+```dart
+Mix? secondMix;
+final thirdMix = firstMix.applyMaybe(secondMix);
+```
+
+#### Mix.combine()
+
+Creates a new Mix from a positional arguments of Mixes.
+
+```dart
+final thirdMix = Mix.combine(firstMix, secondMix);
+```
+
+#### Mix.combineAll()
+
+Creates a new Mix from a List of Mixes.
+
+```dart
+final fifthMix = Mix.combine([firstMix, secondMix, thirdMix, fourthMix]);
+```
+
+## Utility Helpers
+
+### Mix.chooser()
+
+Uses a _Mix_ based on a condition
+
+```dart
+final errorMix = Mix(bgColor(Colors.red));
+final successMix = Mix(bgColor(Colors.green));
+
+final mix = Mix.chooser(
+  condition: hasError,
+  ifTrue: errorMix,
+  ifFalse: succesMix,
+);
+```

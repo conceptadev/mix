@@ -1,0 +1,184 @@
+---
+id: mixable-widgets
+title: 'Mixable widgets'
+---
+
+import Code from "../../../components/Code.js";
+
+## Mixable Widgets
+
+`package:mix/mix.dart` defines a set of widget primitives that can use _Mix_ `Attributes` and allow them to be rendered with those `Attributes`.
+
+At first glance it might seem these widgets are doing a lot &mdash; in reality, they are simply wrapping basic _Flutter_ widgets and allowing their visual properties to be defined through a _Mix._
+
+The fundamental widget primitive defined in _Mix_ is a `Box`. A `Box` can contain other widgets and a set of `BoxAttributes` to define it's visual properties.
+
+> An easy misconception would be to think that `Box` is **like** a `Container`, but that would be incorrect: `Box` **is** a `Container`.
+
+That means that this:
+
+```dart
+Box(mix: Mix(height(100)));
+```
+
+will become the following:
+
+```dart
+Container(height: 100);
+```
+
+You can think of `Utilities` as shortcuts to defining visual properties. Thus:
+
+```dart
+Box(mix: Mix(rounded(100)));
+```
+
+will become the following:
+
+```dart
+Container(
+  decoration: BoxDecoration(
+    borderRadius: BorderRadius.circular(100),
+  ),
+)
+```
+
+## Mixable catalog
+
+Built-in mixable widgets that you can use right-away in your app.
+
+### Box
+
+`Box` is, basically, a `Container`. A mixable that will usually be the base widget to create most of your layouts.
+
+```dart
+Box(
+  mix: Mix(
+    height(100),
+    width(300),
+    rounded(15),
+    bgColor(Colors.amber),
+    align(Alignment.center),
+    elevation(4), // can be 0, 1, 2, 3, 4, 6, 8, 9, 12, 16, 24
+  ),
+),
+```
+
+### FlexBox
+
+A flex box is a widget that takes a list of children and displays them according to its `axis`.
+
+```dart
+FlexBox(
+  mix: Mix(gap(6.0)),
+  axis: Axis.horizontal,
+  children: [
+    IconMix(icon: Icons.search),
+    TextMix('Click to search'),
+  ],
+)
+```
+
+#### HBox and VBox
+
+`HBox` and `VBox` are helper widgets that are, basically, a `FlexBox` under the hood. `axis` is, respectively, `Axis.horizontal` and `Axis.vertical`
+
+```dart
+Hbox(
+  mix: Mix(gap(6)),
+  children: [
+    Image.fromAsset('assets/bahamas.png'),
+    VBox(
+      children: [
+        TextMix('The Bahamas', variant: title),
+        TextMix("""The Bahamas, known officially as the Commonwealth of The Bahamas, 
+is a sovereign country within the Lucayan Archipelago of the West Indies in the Atlantic. 
+It takes up 97% of the Lucayan Archipelago's land area and is home to 88% of the archipelago's 
+population. The archipelagic state consists of more than 700 islands, cays, and islets in the 
+Atlantic Ocean, and is located north of Cuba and northwest of the island of Hispaniola (split 
+between Haiti and the Dominican Republic) and the Turks and Caicos Islands, southeast of the 
+American state of Florida, and east of the Florida Keys. The capital is Nassau on the island of 
+New Providence. The Royal Bahamas Defence Force describes The Bahamas' territory as encompassing 
+470,000 km2 (180,000 sq mi) of ocean space.""", variant: paragraph),
+      ],
+    ),
+  ],
+),
+```
+
+### IconMix
+
+It's capable of displaying icons and inherit data from parent mixes
+
+```dart
+IconMix(
+  mix: Mix(
+    iconSize(30),
+    iconColor(Colors.grey),
+  ),
+  icon: Icons.add,
+),
+```
+
+### Pressable
+
+A `Pressable` is a mixable widget that can provide the following information for its descendants:
+
+* hovering
+* pressing
+* disabled
+* focused
+
+Here's how you can create a text button with it:
+
+```dart
+Pressable(
+  onPressed: () => debugPrint('my awesome button was pressed'),
+  child: Box(
+    mix: Mix(
+      // when nothing's happening, bg color is the default grey
+      bgColor(Colors.grey),
+      (hover)(
+        // when hovering, bg color is a lighter grey
+        bgColor(Colors.grey.shade300),
+      ),
+      (press)(
+        // when pressing, bg color is a darker grey
+        bgColor(Colors.grey.shade600),
+      ),
+      rounded(8),
+      padding(10),
+      alignment(Alignment.center),
+    ),
+    child: TextMix(
+      'PRESS ME',
+      mix: Mix(
+        fontSize(18.0),
+        (disabled)(
+          textColor(Colors.grey.shade900),
+        ),
+        textColor(Colors.black),
+        bold(),
+      ),
+    ),
+  ),
+),
+```
+
+### TextMix
+
+It's capable of rendering text and inherit data from parent mixes
+
+```dart
+TextMix(
+  'Mix is AWESOME!'
+  mix: Mix(
+    fontSize(16.0),
+    textColor(Colors.black),
+    bold(),
+    textShadow(
+      offset: const Offset(2.0, 2.0),
+    ),
+  ),
+),
+```

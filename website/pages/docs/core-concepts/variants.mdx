@@ -1,6 +1,11 @@
-# Variants
+---
+id: variants
+title: 'Variants'
+---
 
-## Overview
+import Code from "../../../components/Code.js";
+
+# Variants
 
 While building your design system you will find have the need to create certain variations of a Widget. This makes the design system more flexible and reusable, by leveraging shared visual properties between them.
 
@@ -27,6 +32,43 @@ Pressable(
 ```
 
 Variants can be extremely powerful, and allow you to create consistent variations of your Widgets.
+
+## Usage
+
+To use a variant, call it on a _Mix_
+
+```dart
+final mix = Mix(
+  dark(
+    textColor(Colors.white),
+  ),
+  light(
+    textColor(Colors.black),
+  )
+);
+```
+
+### `|` and `&`
+
+`|`: whether one of the variants apply
+`&`: when all of the variants apply
+
+```dart
+final style = Mix(
+  padding(20.0),
+  (hover | pressing)(
+    textColor(Colors.black),
+    bold(),
+  ),
+  (small & medium)(
+    width(300),
+    height(400),
+    bgColor(Colors.white),
+  )
+)
+
+
+```
 
 ## Built-in Variants
 
@@ -73,13 +115,13 @@ Can be called manually when they need to be applied. You can define a variant th
 const outlined = Variant('outlined');
 
 final mix = Mix(
-    bgColor(Colors.black),
-    textColor(Colors.white),
-    outlined(
-        bgColor(Colors.transparent),
-        borderColor(Colors.black),
-        textColor(Colors.black),
-    ),
+  bgColor(Colors.black),
+  textColor(Colors.white),
+  outlined(
+    bgColor(Colors.transparent),
+    borderColor(Colors.black),
+    textColor(Colors.black),
+  ),
 );
 ```
 
@@ -90,7 +132,7 @@ You are then able to choose when to apply the variant based on your own logic.
 Pressable(
   mix: mix.withVariant(outlined),
   onPress: () {},
-  child: TextMix('Outlined Button'),
+  child: const TextMix('Outlined Button'),
 );
 
 ```
@@ -102,7 +144,7 @@ Pressable(
   mix: mix,
   variant: outlined,
   onPress: () {},
-  child: TextMix('Outlined Button'),
+  child: const TextMix('Outlined Button'),
 );
 
 ```
@@ -115,9 +157,9 @@ Here is an example implementation of the `dark()` to understand how it works.
 
 ```dart
 final dark = Variant(
-    'dark',
-    shouldApply: (BuildContext context) {
-        return Theme.of(context).brightness == Brightness.dark;
-    },
+  'dark',
+  shouldApply: (BuildContext context) {
+    return Theme.of(context).brightness == Brightness.dark;
+  },
 );
 ```

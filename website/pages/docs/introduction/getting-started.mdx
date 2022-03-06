@@ -1,16 +1,11 @@
-import Callout from "nextra-theme-docs/callout";
+---
+id: getting-started
+title: 'Getting started'
+---
 
-# Getting Started
+import Code from "../../../components/Code.js";
 
-## Installation
-
-Just run the following command to add Mix in your project.
-
-```
-flutter pub add mix
-```
-
-## Usage
+## With and without Mix
 
 Mix provides a lot of different benefits on how you can define and organize your design tokens, and no documentation would be complete without a syntax comparison between **Mix vs. Without Mix**.
 
@@ -18,7 +13,7 @@ Let's go ahead and take a look at the code. Don't worry about understanding each
 
 ### With Mix
 
-```dart
+```dart 
 class CustomMixWidget extends StatelessWidget {
   const CustomMixWidget({Key? key}) : super(key: key);
 
@@ -48,7 +43,7 @@ class CustomMixWidget extends StatelessWidget {
 }
 ```
 
-### Comparison without Mix
+### Without Mix
 
 ```dart
 class CustomWidget extends StatefulWidget {
