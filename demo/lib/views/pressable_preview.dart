@@ -25,10 +25,9 @@ class PressablePreview extends StatelessWidget {
         border(color: Colors.white),
         textColor(Colors.white),
       ),
-      hover(
-        // bgColor(Colors.green.shade600),
+      (hover & active)(
         textColor(Colors.white),
-        border(color: Colors.greenAccent),
+        borderColor(Colors.greenAccent),
       ),
       press(
         elevation(1),
