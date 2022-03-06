@@ -1,7 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import '../../theme/refs/color_ref.dart';
 
-import '../../theme/refs/refs.dart';
+import '../../theme/refs/text_style_ref.dart';
 import '../exports.dart';
 
 class TextProps {

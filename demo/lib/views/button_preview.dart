@@ -8,7 +8,7 @@ PressableWidgetFn get button => Mix(
       animated(),
       bgColor($primary),
       (hover)(
-        bgColor($primaryVariant),
+        bgColor($colorScheme.secondary),
       ),
       paddingHorizontal(15.0),
       paddingVertical(8.0),

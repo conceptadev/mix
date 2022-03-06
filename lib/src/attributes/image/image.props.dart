@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mix/src/attributes/image/image.attributes.dart';
-import 'package:mix/src/theme/refs/refs.dart';
+
+import '../../theme/refs/color_ref.dart';
+import 'image.attributes.dart';
 
 class ImageProps {
   final Color? color;

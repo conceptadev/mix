@@ -1,9 +1,9 @@
-import 'package:mix/src/theme/refs/refs.dart';
+import '../refs/space_ref.dart';
 
-// ignore: constant_identifier_names
+const $space = SpaceRef();
 
-class SpaceToken {
-  const SpaceToken._({
+class MixThemeSpace {
+  const MixThemeSpace._({
     required this.xsmall,
     required this.small,
     required this.medium,
@@ -13,7 +13,7 @@ class SpaceToken {
   });
 
   static get defaults {
-    return const SpaceToken._(
+    return const MixThemeSpace._(
       xsmall: 2,
       small: 4,
       medium: 8,
@@ -33,34 +33,34 @@ class SpaceToken {
   double fromValue(double? value) {
     if (value == null) return 0.0;
 
-    if (SizeRefName.xsmall.ref == value) {
+    if ($space.xsmall == value) {
       return xsmall;
     }
 
-    if (SizeRefName.small.ref == value) {
+    if ($space.small == value) {
       return small;
     }
 
-    if (SizeRefName.medium.ref == value) {
+    if ($space.medium == value) {
       return medium;
     }
 
-    if (SizeRefName.large.ref == value) {
+    if ($space.large == value) {
       return large;
     }
 
-    if (SizeRefName.xlarge.ref == value) {
+    if ($space.xlarge == value) {
       return xlarge;
     }
 
-    if (SizeRefName.xxlarge.ref == value) {
+    if ($space.xxlarge == value) {
       return xxlarge;
     }
     return value;
   }
 
-  SpaceToken merge(SpaceToken? other) {
-    return SpaceToken._(
+  MixThemeSpace merge(MixThemeSpace? other) {
+    return MixThemeSpace._(
       xsmall: other?.xsmall ?? xsmall,
       small: other?.small ?? small,
       medium: other?.medium ?? medium,
@@ -69,4 +69,30 @@ class SpaceToken {
       xxlarge: other?.xxlarge ?? xxlarge,
     );
   }
+}
+
+class WithSpaceTokens<T> {
+  const WithSpaceTokens(T Function(double value) fn) : _fn = fn;
+
+  final T Function(double value) _fn;
+
+  T call(double value) => _fn(value);
+
+  T get xsmall => call($space.xsmall);
+  T get xs => xsmall;
+
+  T get small => call($space.small);
+  T get sm => small;
+
+  T get medium => call($space.medium);
+  T get md => medium;
+
+  T get large => call($space.large);
+  T get lg => large;
+
+  T get xlarge => call($space.xlarge);
+  T get xl => xlarge;
+
+  T get xxlarge => call($space.xxlarge);
+  T get xxl => xxlarge;
 }
