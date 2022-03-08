@@ -6,6 +6,7 @@ import 'package:mix/src/helpers/variants.dart';
 import 'package:mix/src/theme/mix_theme.dart';
 import 'package:mix/src/theme/tokens/breakpoints_token.dart';
 
+/// {@category Variants}
 class VariantUtils {
   const VariantUtils._();
 
@@ -16,6 +17,7 @@ class VariantUtils {
     };
   }
 
+  /// Short Utils: small
   static Variant<T> small<T extends Attribute>() {
     return Variant<T>(
       SystemVariants.screenSize.value,
@@ -23,6 +25,7 @@ class VariantUtils {
     );
   }
 
+  /// Short Utils: xsmall
   static Variant<T> xsmall<T extends Attribute>() {
     return Variant<T>(
       SystemVariants.screenSize.value,
@@ -30,6 +33,7 @@ class VariantUtils {
     );
   }
 
+  /// Short Utils: medium
   static Variant<T> medium<T extends Attribute>() {
     return Variant<T>(
       SystemVariants.screenSize.value,
@@ -37,6 +41,7 @@ class VariantUtils {
     );
   }
 
+  /// Short Utils: large
   static Variant<T> large<T extends Attribute>() {
     return Variant<T>(
       SystemVariants.screenSize.value,
@@ -44,6 +49,7 @@ class VariantUtils {
     );
   }
 
+  /// Short Utils: portrait
   static Variant<T> portrait<T extends Attribute>() {
     return Variant<T>(
       SystemVariants.orientation.value,
@@ -53,6 +59,7 @@ class VariantUtils {
     );
   }
 
+  /// Short Utils: landscape
   static Variant<T> landscape<T extends Attribute>() {
     return Variant<T>(
       SystemVariants.orientation.value,
@@ -62,6 +69,7 @@ class VariantUtils {
     );
   }
 
+  /// Short Utils: dark
   static Variant<T> dark<T extends Attribute>() {
     return Variant<T>(
       SystemVariants.dark.value,
@@ -71,6 +79,7 @@ class VariantUtils {
     );
   }
 
+  /// Short Utils: light
   static Variant<T> light<T extends Attribute>() {
     return Variant<T>(
       SystemVariants.dark.value,
@@ -80,6 +89,7 @@ class VariantUtils {
     );
   }
 
+  /// Short Utils: disabled
   static Variant<T> disabled<T extends Attribute>() {
     return Variant<T>(
       SystemVariants.disabled.value,
@@ -90,6 +100,7 @@ class VariantUtils {
     );
   }
 
+  /// Short Utils: focused
   static Variant<T> focused<T extends Attribute>() {
     return Variant<T>(
       SystemVariants.focus.value,
@@ -100,6 +111,7 @@ class VariantUtils {
     );
   }
 
+  /// Short utils: pressing
   static Variant<T> pressing<T extends Attribute>() {
     return Variant<T>(
       SystemVariants.pressing.value,
@@ -110,6 +122,7 @@ class VariantUtils {
     );
   }
 
+  /// Short Utils: hover
   static Variant<T> hover<T extends Attribute>() {
     return Variant<T>(
       SystemVariants.hover.value,

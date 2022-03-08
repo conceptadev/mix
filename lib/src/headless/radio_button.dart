@@ -4,7 +4,25 @@ import 'package:mix/src/mixer/mix_factory.dart';
 import 'package:mix/src/widgets/box.widget.dart';
 import 'package:mix/src/widgets/mixable.widget.dart';
 import 'package:mix/src/widgets/pressable.widget.dart';
-
+/// _Mix_ corollary to Flutter _RadioButton_ class
+///
+/// Default _Mix_ values:
+/// ```
+///      animated(),
+///      rounded(100),
+///      bgColor(Colors.transparent),
+///      border(
+///        color: Colors.grey.shade300,
+///        width: 2,
+///      ),
+///      (whenOn | hover)(
+///        border(color: Colors.blue),
+///      ),
+///      disabled(
+///        border(color: Colors.grey.shade300),
+///      )
+/// ```
+/// {@category Mixable Widgets}
 class RadioButtonX extends RemixableWidget {
   const RadioButtonX({
     Key? key,

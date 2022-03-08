@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:mix/src/attributes/common/attribute.dart';
 import 'package:mix/src/mixer/mix_context.dart';
-
-OpacityDecorator opacity(double opacity) {
-  return OpacityDecorator(opacity: opacity);
-}
-
+/// ## Widget
+/// - (All)
+/// ## Utilities
+/// - [OpacityDecoratorUtility](OpacityDecoratorUtility-class.html)
+///
+/// {@category Decorators}
 class OpacityDecorator extends ParentDecorator<OpacityDecorator> {
   final double opacity;
   const OpacityDecorator({

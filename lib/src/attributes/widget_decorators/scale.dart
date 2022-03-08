@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:mix/src/attributes/common/attribute.dart';
 import 'package:mix/src/mixer/mix_context.dart';
-
-ScaleDecorator scale(double scale) {
-  return ScaleDecorator(scale);
-}
-
+/// ## Widget
+/// - (All)
+/// ## Utilities
+/// - [ScaleDecoratorUtility](ScaleDecoratorUtility-class.html)
+///
+/// {@category Decorators}
 class ScaleDecorator extends ParentDecorator<ScaleDecorator> {
   final double scale;
   const ScaleDecorator(this.scale) : super(const Key('ScaleDecorator'));

@@ -5,7 +5,28 @@ import 'package:mix/mix.dart';
 const title = Variant('title');
 
 const paragraph = Variant('paragraph');
-
+/// _Mix_ corollary to Flutter _Card_ widget
+///
+/// Default _Mix_ attributes:
+/// ```dart
+///    margin(20),
+///    elevation(6),
+///    rounded(10),
+///    padding(20),
+///    gap(10),
+///    crossAxis(CrossAxisAlignment.start),
+///    bgColor($surface),
+///    paragraph(
+///      textStyle($body1),
+///    ),
+///    title(
+///      titleCase(),
+///      textStyle($h6),
+///      font(
+///        weight: FontWeight.bold,
+///      ),
+///    ),
+/// ```
 /// Usage example:
 ///
 /// ```dart
@@ -22,6 +43,7 @@ const paragraph = Variant('paragraph');
 ///  ],
 /// ),
 /// ```
+/// {@category Mixable Widgets}
 class CardX extends RemixableWidget {
   /// Creates a card
   const CardX({

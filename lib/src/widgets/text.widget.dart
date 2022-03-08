@@ -8,6 +8,17 @@ import '../mixer/mix_context.dart';
 import '../mixer/mix_factory.dart';
 import 'mixable.widget.dart';
 
+/// _Mix_ corollary to Flutter _Text_ widget  
+/// Use wherever you would use a Flutter _Text_ widget
+///
+/// ## Attributes:
+/// - [TextAttributes](TextAttributes-class.html)
+/// - [TextDirectiveAttribute](TextDirectiveAttribute-class.html)
+/// ## Utilities:
+/// - [TextUtility](TextUtility-class.html)
+/// - [TextStyleUtility](TextStyleUtility-class.html)
+/// - [TextDirectiveUtils](TextDirectiveUtils-class.html)
+/// {@category Mixable Widgets}
 class TextMix extends MixableWidget {
   const TextMix(
     this.text, {
@@ -37,6 +48,7 @@ class TextMix extends MixableWidget {
   }
 }
 
+/// @nodoc
 class TextMixerWidget extends MixedWidget {
   const TextMixerWidget(
     MixContext mixer, {

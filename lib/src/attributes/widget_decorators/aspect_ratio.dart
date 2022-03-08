@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:mix/src/attributes/common/attribute.dart';
 import 'package:mix/src/mixer/mix_context.dart';
-
-AspectRatioDecorator aspectRatio(double aspectRatio) {
-  return AspectRatioDecorator(aspectRatio: aspectRatio);
-}
-
+/// ## Widget
+/// - (All)
+/// ## Utilities
+/// - [AspectRatioDecoratorUtility](AspectRatioDecoratorUtility-class.html)
+///
+/// {@category Decorators}
 class AspectRatioDecorator extends ParentDecorator<AspectRatioDecorator> {
   final double aspectRatio;
   const AspectRatioDecorator({required this.aspectRatio})

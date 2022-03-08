@@ -1,5 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
+/// _Mix_ corollary to Flutter _Chip_ Widget
+///
+/// Default _Mix_ values:
+/// ```dart
+///      margin(10),
+///      elevation(3),
+///      rounded(80),
+///      px(10),
+///      py(4),
+///      gap(10),
+///      bgColor($surface),
+///      animated(),
+///      hover(
+///        bgColor(Colors.grey.shade50),
+///      ),
+///      press(
+///        bgColor(Colors.grey.shade200),
+///      ),
+///
+///      // Text
+///      apply(Mix(
+///        iconSize(20),
+///        paragraph(
+///          textStyle($body1),
+///        ),
+///        textStyle($body2),
+///        font(
+///          weight: FontWeight.w500,
+///        ),
+/// ```
 
 /// Usage example:
 ///
@@ -9,6 +39,7 @@ import 'package:mix/mix.dart';
 ///   onPressed: () => debugPrint('lorem'),
 /// ),
 /// ```
+/// {@category Mixable Widgets}
 class ChipX extends RemixableWidget {
   /// Creates a chip
   const ChipX({

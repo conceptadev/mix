@@ -10,6 +10,8 @@ enum TextModifier {
 }
 
 /// Attribute that is able to modify text
+/// {@category Attributes}
+/// {@subCategory Directives}
 class TextDirectiveAttribute extends DirectiveAttribute<String> {
   const TextDirectiveAttribute(this.modifier);
 

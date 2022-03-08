@@ -6,7 +6,25 @@ import 'package:mix/src/theme/tokens/color_scheme_tokens.dart';
 import 'package:mix/src/widgets/box.widget.dart';
 import 'package:mix/src/widgets/mixable.widget.dart';
 import 'package:mix/src/widgets/pressable.widget.dart';
-
+/// _Mix_ corollary to Flutter _Switch_ widget
+///
+/// Default _Mix_ values:
+/// ```
+///     animated(),
+///      height(20),
+///      width(36),
+///      rounded(100),
+///      bgColor($onPrimary),
+///      whenOff(
+///        align(Alignment.centerLeft),
+///        bgColor(Colors.grey.shade300),
+///      ),
+///      whenOn(
+///        align(Alignment.centerRight),
+///        bgColor($primary),
+///      )
+/// ```
+/// {@category Mixable Widgets}
 class SwitchX extends RemixableWidget {
   const SwitchX({
     Key? key,

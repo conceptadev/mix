@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/// {@category Misc Utils}
 enum ColorToken {
   primary,
   primaryVariant,
@@ -15,6 +16,7 @@ enum ColorToken {
   onError,
 }
 
+/// {@category Misc Utils}
 extension ColorSchemeTokenExtension on ColorToken {
   Color get value {
     final colorIndex = _colorSchemeTranslationValues[index];
@@ -22,6 +24,7 @@ extension ColorSchemeTokenExtension on ColorToken {
   }
 }
 
+/// @nodoc
 const _colorSchemeTranslationValues = [
   Color(0xFF000001),
   Color(0xFF000002),
@@ -37,6 +40,7 @@ const _colorSchemeTranslationValues = [
   Color(0xFF00000C),
 ];
 
+/// {@category Misc Utils}
 extension ColorExtensions on Color {
   Color darken([double amount = .1]) {
     assert(amount >= 0 && amount <= 1);
@@ -69,6 +73,7 @@ extension ColorExtensions on Color {
 }
 
 /// String is in the format "aabbcc" or "ffaabbcc" with an optional leading "#".
+/// {@category Misc Utils}
 Color hexToColor(String hexString) {
   final buffer = StringBuffer();
   if (hexString.length == 6 || hexString.length == 7) buffer.write('ff');

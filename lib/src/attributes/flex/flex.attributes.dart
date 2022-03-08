@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:mix/src/attributes/common/attribute.dart';
 
+///
+/// ## Widget
+/// - [FlexBox](FlexBox-class.html)
+///
+/// {@category Attributes}
 class FlexAttributes extends Attribute {
   final Axis? direction;
   final MainAxisAlignment? mainAxisAlignment;

@@ -6,6 +6,15 @@ import 'box.widget.dart';
 import 'gap.widget.dart';
 import 'mixable.widget.dart';
 
+/// _Mix_ corollary to Flutter _Flex_ widget  
+/// Use wherever you would use a Flutter _Text_ widget
+///
+/// ## Attributes
+/// - [FlexAttributes](FlexAttributes-class.html)
+/// ## Utilities
+/// - [FlexUtils](FlexUtils-class.html)
+///
+/// {@category Mixable Widgets}
 class FlexBox extends MixableWidget {
   const FlexBox({
     Mix? mix,
@@ -27,6 +36,7 @@ class FlexBox extends MixableWidget {
   }
 }
 
+/// @nodoc
 class FlexBoxMixerWidget extends MixedWidget {
   const FlexBoxMixerWidget(
     MixContext mixer, {
@@ -74,6 +84,11 @@ class FlexBoxMixerWidget extends MixedWidget {
   }
 }
 
+/// Horizontal FlexBox, corollary to Flutter _Row_ widget
+///
+/// See [FlexBox](FlexBox-class.html) for _Attributes_ and _Utility links.
+///
+/// {@category Mixable Widgets}
 class HBox extends FlexBox {
   const HBox({
     Mix? mix,
@@ -87,6 +102,11 @@ class HBox extends FlexBox {
         );
 }
 
+/// Vertical FlexBox, corollary to Flutter _Column_ widget
+///
+/// See [FlexBox](FlexBox-class.html) for _Attributes_ and _Utility links.
+///
+/// {@category Mixable Widgets}
 class VBox extends FlexBox {
   const VBox({
     Mix? mix,
