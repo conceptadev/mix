@@ -30,6 +30,7 @@ class BoxAttributes extends Attribute {
   final double? maxWidth;
   final double? minWidth;
   final BoxShape? shape;
+  final Gradient? gradient;
 
   const BoxAttributes({
     this.margin,
@@ -47,6 +48,7 @@ class BoxAttributes extends Attribute {
     this.minWidth,
     this.shape,
     this.transform,
+    this.gradient,
   });
 
   BoxAttributes merge(BoxAttributes? box) {
@@ -70,6 +72,7 @@ class BoxAttributes extends Attribute {
       maxWidth: box.maxWidth,
       minWidth: box.minWidth,
       shape: box.shape,
+      gradient: box.gradient,
     );
   }
 
@@ -92,7 +95,8 @@ class BoxAttributes extends Attribute {
         other.minHeight == minHeight &&
         other.maxWidth == maxWidth &&
         other.minWidth == minWidth &&
-        other.shape == shape;
+        other.shape == shape &&
+        other.gradient == gradient;
   }
 
   @override
@@ -111,7 +115,8 @@ class BoxAttributes extends Attribute {
         minHeight.hashCode ^
         maxWidth.hashCode ^
         minWidth.hashCode ^
-        shape.hashCode;
+        shape.hashCode ^
+        gradient.hashCode;
   }
 
   BoxAttributes copyWith({
@@ -130,6 +135,7 @@ class BoxAttributes extends Attribute {
     double? maxWidth,
     double? minWidth,
     BoxShape? shape,
+    Gradient? gradient,
   }) {
     return BoxAttributes(
       margin: margin ?? this.margin,
@@ -147,11 +153,12 @@ class BoxAttributes extends Attribute {
       maxWidth: maxWidth ?? this.maxWidth,
       minWidth: minWidth ?? this.minWidth,
       shape: shape ?? this.shape,
+      gradient: gradient ?? this.gradient,
     );
   }
 
   @override
   String toString() {
-    return 'BoxAttributes(margin: $margin, padding: $padding, alignment: $alignment, height: $height, width: $width, color: $color, border: $border, borderRadius: $borderRadius, boxShadow: $boxShadow, transform: $transform, maxHeight: $maxHeight, minHeight: $minHeight, maxWidth: $maxWidth, minWidth: $minWidth, shape: $shape)';
+    return 'BoxAttributes(margin: $margin, padding: $padding, alignment: $alignment, height: $height, width: $width, color: $color, border: $border, borderRadius: $borderRadius, boxShadow: $boxShadow, transform: $transform, maxHeight: $maxHeight, minHeight: $minHeight, maxWidth: $maxWidth, minWidth: $minWidth, shape: $shape , gradient: $gradient)';
   }
 }

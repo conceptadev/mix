@@ -17,6 +17,7 @@ class BoxProps {
   final BorderRadius? borderRadius;
   final List<BoxShadow>? boxShadow;
   final Matrix4? transform;
+  final Gradient? gradient;
 
   // Constraints
   final double? maxHeight;
@@ -41,6 +42,7 @@ class BoxProps {
     this.minWidth,
     this.shape,
     this.transform,
+    this.gradient,
   }) : _color = color;
 
   factory BoxProps.fromContext(
@@ -71,28 +73,35 @@ class BoxProps {
       minWidth: box?.minWidth,
       shape: box?.shape,
       transform: box?.transform,
+      gradient: box?.gradient,
     );
   }
 
+  // Color is null decoration exists, color gets added to decoration
   Color? get color => decoration == null ? _color : null;
 
   BoxDecoration? get decoration {
+    BoxDecoration? boxDecoration;
     if (border != null ||
         borderRadius != null ||
         boxShadow != null ||
-        shape != null) {
-      var boxDecoration = BoxDecoration(
+        shape != null ||
+        gradient != null) {
+      boxDecoration = BoxDecoration(
         color: _color,
         border: border,
         boxShadow: boxShadow,
+        gradient: gradient,
       );
 
+      // Shape is added separately because it doesn't accept a nullable value
       if (shape != null) {
         boxDecoration = boxDecoration.copyWith(
           shape: shape,
         );
       }
 
+      // Border radius is added if no shape exists.
       if (shape == null && borderRadius != null) {
         boxDecoration = boxDecoration.copyWith(
           borderRadius: borderRadius,
@@ -212,6 +221,7 @@ class BoxProps {
         minHeight.hashCode ^
         maxWidth.hashCode ^
         minWidth.hashCode ^
-        shape.hashCode;
+        shape.hashCode ^
+        gradient.hashCode;
   }
 }

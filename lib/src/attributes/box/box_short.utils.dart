@@ -105,3 +105,7 @@ const align = BoxUtility.align;
 
 /// Elevation
 const elevation = BoxUtility.elevation;
+
+/// Gradient
+const linearGradient = BoxUtility.linearGradient;
+const radialGradient = BoxUtility.radialGradient;

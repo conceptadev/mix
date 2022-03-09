@@ -212,6 +212,50 @@ class BoxUtility {
     return BoxAttributes(border: BorderDto.all(style: style));
   }
 
+  static BoxAttributes linearGradient({
+    Alignment begin = Alignment.centerLeft,
+    Alignment end = Alignment.centerRight,
+    required List<Color> colors,
+    List<double>? stops,
+    TileMode tileMode = TileMode.clamp,
+    GradientTransform? transform,
+  }) {
+    return BoxAttributes(
+      gradient: LinearGradient(
+        begin: begin,
+        end: end,
+        colors: colors,
+        stops: stops,
+        tileMode: tileMode,
+        transform: transform,
+      ),
+    );
+  }
+
+  static BoxAttributes radialGradient({
+    Alignment center = Alignment.center,
+    double radius = 0.5,
+    required List<Color> colors,
+    List<double>? stops,
+    TileMode tileMode = TileMode.clamp,
+    AlignmentGeometry? focal,
+    double focalRadius = 0.0,
+    GradientTransform? transform,
+  }) {
+    return BoxAttributes(
+      gradient: RadialGradient(
+        center: center,
+        radius: radius,
+        colors: colors,
+        stops: stops,
+        tileMode: tileMode,
+        focal: focal,
+        focalRadius: focalRadius,
+        transform: transform,
+      ),
+    );
+  }
+
   /// Short Utils: shadow  
   static BoxAttributes shadow({
     Color? color,
