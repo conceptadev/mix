@@ -67,7 +67,7 @@ class MixContext {
       /// Get ancestor context
       final inheritedMix = context.inheritedMix;
       if (inheritedMix != null) {
-        _mix = Mix.combine(mix, inheritedMix);
+        _mix = Mix.combine(inheritedMix, mix);
       }
     }
 
