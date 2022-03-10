@@ -15,9 +15,9 @@ import 'nothing.widget.dart';
 ///
 /// {@category Mixable Widgets}
 class IconMix extends MixableWidget {
-  const IconMix({
+  const IconMix(
+    this.icon, {
     Mix? mix,
-    required this.icon,
     this.semanticLabel,
     Key? key,
     this.variant,
