@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:mix/src/attributes/text/text.attributes.dart';
+
 /// @nodoc
 class TextFriendlyUtility {
   const TextFriendlyUtility._();
@@ -83,6 +84,7 @@ class TextFriendlyUtility {
     ]);
   }
 }
+
 /// ## Widget:
 /// - [TextMix](TextMix-class.html)
 ///
@@ -238,7 +240,7 @@ class TextStyleUtility {
     );
   }
 
-  /// Short Utils: (none)
+  /// Short Utils: (fontWeight)
   static TextAttributes fontWeight(FontWeight? fontWeight) {
     return TextAttributes(
       style: TextStyle(fontWeight: fontWeight),
