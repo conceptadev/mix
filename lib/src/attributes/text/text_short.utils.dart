@@ -12,7 +12,7 @@ const softWrap = TextUtility.softWrap;
 const textScaleFactor = TextUtility.textScaleFactor;
 const strutStyle = TextUtility.strutStyle;
 
-// const fontWeight = TextStyleUtility.fontWeight;
+const fontWeight = TextStyleUtility.fontWeight;
 const textBaseline = TextStyleUtility.textBaseline;
 const letterSpacing = TextStyleUtility.letterSpacing;
 const debugLabel = TextStyleUtility.debugLabel;
