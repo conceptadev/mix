@@ -24,7 +24,7 @@ class CardsPreview extends StatelessWidget {
             ),
             Row(children: [
               ChipX(
-                children: const [IconMix(icon: Icons.add), TextMix('Lorem')],
+                children: const [IconMix(Icons.add), TextMix('Lorem')],
                 onPressed: () => debugPrint('lorem'),
               ),
               const ChipX(children: [TextMix('Ipsum')]),

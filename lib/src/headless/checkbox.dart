@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
 
 const active = Variant('active');
+
 /// _Mix_ corollary to Flutter _Checkbox_ widget
 ///
 /// Default _Mix_ values:
@@ -78,8 +79,8 @@ class CheckboxX extends RemixableWidget {
       ),
       onPressed: fn == null ? null : () => fn(!checked),
       child: IconMix(
+        Icons.check_rounded,
         mix: Mix(hide(!checked)),
-        icon: Icons.check_rounded,
       ),
     );
   }

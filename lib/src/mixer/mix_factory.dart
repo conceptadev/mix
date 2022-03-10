@@ -72,9 +72,9 @@ class Mix<T extends Attribute> {
     return Mix._([...attributes]);
   }
 
- /// Returns a new mix instance from this instance with the
- /// _Variant_ instance added
-   Mix<T> withVariant(Variant<T> variant) {
+  /// Returns a new mix instance from this instance with the
+  /// _Variant_ instance added
+  Mix<T> withVariant(Variant<T> variant) {
     return Mix._(
       [...attributes],
       variantToApply: [...variantToApply, variant],
@@ -288,8 +288,8 @@ extension MixExtension<T extends Attribute> on Mix<T> {
   }) {
     final mx = Mix.combine(this, overrideMix);
     return IconMix(
+      icon,
       mix: mx,
-      icon: icon,
     );
   }
 }
