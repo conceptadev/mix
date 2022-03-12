@@ -10,7 +10,7 @@ class MixThemeBreakpoints {
     required this.large,
   });
 
-  static get defaults {
+  static MixThemeBreakpoints get defaults {
     return const MixThemeBreakpoints._(
       xsmall: 0,
       small: 600,

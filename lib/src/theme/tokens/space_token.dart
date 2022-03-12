@@ -12,7 +12,7 @@ class MixThemeSpace {
     required this.xxlarge,
   });
 
-  static get defaults {
+  static MixThemeSpace get defaults {
     return const MixThemeSpace._(
       xsmall: 2,
       small: 4,

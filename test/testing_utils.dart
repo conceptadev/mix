@@ -16,6 +16,7 @@ class MixTestWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MixTheme(
+      data: MixThemeData(),
       child: Directionality(
         textDirection: TextDirection.ltr,
         child: child,
