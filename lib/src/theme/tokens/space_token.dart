@@ -3,7 +3,7 @@ import '../refs/space_ref.dart';
 const $space = SpaceRef();
 
 class MixThemeSpace {
-  const MixThemeSpace._({
+  const MixThemeSpace.raw({
     required this.xsmall,
     required this.small,
     required this.medium,
@@ -12,14 +12,21 @@ class MixThemeSpace {
     required this.xxlarge,
   });
 
-  static MixThemeSpace get defaults {
-    return const MixThemeSpace._(
-      xsmall: 2,
-      small: 4,
-      medium: 8,
-      large: 16,
-      xlarge: 32,
-      xxlarge: 64,
+  factory MixThemeSpace({
+    double? xsmall,
+    double? small,
+    double? medium,
+    double? large,
+    double? xlarge,
+    double? xxlarge,
+  }) {
+    return MixThemeSpace.raw(
+      xsmall: xsmall ?? 2,
+      small: small ?? 4,
+      medium: medium ?? 8,
+      large: large ?? 16,
+      xlarge: xlarge ?? 32,
+      xxlarge: xxlarge ?? 64,
     );
   }
 
@@ -59,15 +66,32 @@ class MixThemeSpace {
     return value;
   }
 
-  MixThemeSpace merge(MixThemeSpace? other) {
-    return MixThemeSpace._(
-      xsmall: other?.xsmall ?? xsmall,
-      small: other?.small ?? small,
-      medium: other?.medium ?? medium,
-      large: other?.large ?? large,
-      xlarge: other?.xlarge ?? xlarge,
-      xxlarge: other?.xxlarge ?? xxlarge,
-    );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is MixThemeSpace &&
+        other.xsmall == xsmall &&
+        other.small == small &&
+        other.medium == medium &&
+        other.large == large &&
+        other.xlarge == xlarge &&
+        other.xxlarge == xxlarge;
+  }
+
+  @override
+  int get hashCode {
+    return xsmall.hashCode ^
+        small.hashCode ^
+        medium.hashCode ^
+        large.hashCode ^
+        xlarge.hashCode ^
+        xxlarge.hashCode;
+  }
+
+  @override
+  String toString() {
+    return 'MixThemeSpace(xsmall: $xsmall, small: $small, medium: $medium, large: $large, xlarge: $xlarge, xxlarge: $xxlarge)';
   }
 }
 

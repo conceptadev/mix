@@ -42,9 +42,9 @@ class MixThemeData {
     MixThemeBreakpoints? breakpoints,
     ContextRefTokens? contextRef,
   }) {
-    space ??= MixThemeSpace.defaults;
-    breakpoints ??= MixThemeBreakpoints.defaults;
-    contextRef ??= ContextRefTokens.defaults();
+    space ??= MixThemeSpace();
+    breakpoints ??= MixThemeBreakpoints();
+    contextRef = ContextRefTokens.defaults.merge(contextRef);
     return MixThemeData.raw(
       space: space,
       breakpoints: breakpoints,
