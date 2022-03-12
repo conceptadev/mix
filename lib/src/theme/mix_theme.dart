@@ -30,6 +30,10 @@ class MixTheme extends InheritedWidget {
 }
 
 class MixThemeData {
+  final MixThemeSpace space;
+  final MixThemeBreakpoints breakpoints;
+  final ContextRefTokens contextRef;
+
   const MixThemeData.raw({
     required this.space,
     required this.breakpoints,
@@ -51,10 +55,6 @@ class MixThemeData {
       contextRef: contextRef,
     );
   }
-
-  final MixThemeSpace space;
-  final MixThemeBreakpoints breakpoints;
-  final ContextRefTokens contextRef;
 
   MixThemeData copyWith({
     MixThemeSpace? space,

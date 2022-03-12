@@ -3,6 +3,13 @@ import '../refs/space_ref.dart';
 const $space = SpaceRef();
 
 class MixThemeSpace {
+  final double xsmall;
+  final double small;
+  final double medium;
+  final double large;
+  final double xlarge;
+  final double xxlarge;
+
   const MixThemeSpace.raw({
     required this.xsmall,
     required this.small,
@@ -29,13 +36,6 @@ class MixThemeSpace {
       xxlarge: xxlarge ?? 64,
     );
   }
-
-  final double xsmall;
-  final double small;
-  final double medium;
-  final double large;
-  final double xlarge;
-  final double xxlarge;
 
   double fromValue(double? value) {
     if (value == null) return 0.0;
@@ -64,6 +64,24 @@ class MixThemeSpace {
       return xxlarge;
     }
     return value;
+  }
+
+  MixThemeSpace copyWith({
+    double? xsmall,
+    double? small,
+    double? medium,
+    double? large,
+    double? xlarge,
+    double? xxlarge,
+  }) {
+    return MixThemeSpace.raw(
+      xsmall: xsmall ?? this.xsmall,
+      small: small ?? this.small,
+      medium: medium ?? this.medium,
+      large: large ?? this.large,
+      xlarge: xlarge ?? this.xlarge,
+      xxlarge: xxlarge ?? this.xxlarge,
+    );
   }
 
   @override

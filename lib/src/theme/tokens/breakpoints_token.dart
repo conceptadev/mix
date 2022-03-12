@@ -3,6 +3,11 @@ import 'package:flutter/material.dart';
 enum ScreenSizeToken { xsmall, small, medium, large }
 
 class MixThemeBreakpoints {
+  final double xsmall;
+  final double small;
+  final double medium;
+  final double large;
+
   const MixThemeBreakpoints.raw({
     required this.xsmall,
     required this.small,
@@ -24,11 +29,6 @@ class MixThemeBreakpoints {
     );
   }
 
-  final double xsmall;
-  final double small;
-  final double medium;
-  final double large;
-
   /// Returns [ScreenSizeToken] based on Material breakpoints
   ScreenSizeToken getScreenSize(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -39,6 +39,20 @@ class MixThemeBreakpoints {
             : screenWidth >= small
                 ? ScreenSizeToken.small
                 : ScreenSizeToken.xsmall;
+  }
+
+  MixThemeBreakpoints copyWith({
+    double? xsmall,
+    double? small,
+    double? medium,
+    double? large,
+  }) {
+    return MixThemeBreakpoints.raw(
+      xsmall: xsmall ?? this.xsmall,
+      small: small ?? this.small,
+      medium: medium ?? this.medium,
+      large: large ?? this.large,
+    );
   }
 
   @override
