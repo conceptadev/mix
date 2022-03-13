@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+
 import 'package:mix/src/helpers/extensions.dart';
 
 import '../tokens/color_scheme_tokens.dart';
@@ -15,7 +16,7 @@ typedef RefMap<T extends MixRef<V>, V> = Map<T, RefValueGetter<V>>;
 
 typedef RefValueGetter<T> = T Function(BuildContext);
 
-final RefMap themeTokens = {
+final RefMap _themeTokens = {
   $h1: (BuildContext context) {
     return context.textTheme.headline1;
   },
@@ -88,22 +89,31 @@ final RefMap themeTokens = {
 };
 
 class ContextRefTokens {
-  ContextRefTokens(this.tokens);
-
   final RefMap tokens;
-  factory ContextRefTokens.defaults() => ContextRefTokens(themeTokens);
+
+  const ContextRefTokens.raw(this.tokens);
+
+  static ContextRefTokens get defaults => ContextRefTokens.raw(_themeTokens);
 
   RefValueGetter<dynamic>? operator [](MixRef<dynamic> ref) => tokens[ref];
 
   ContextRefTokens merge(ContextRefTokens? other) {
-    if (other == null) return this;
+    if (other == null || other == this) return this;
 
-    RefMap merged = {};
-
-    merged
-      ..addAll(tokens)
-      ..addAll(other.tokens);
-
-    return ContextRefTokens(merged);
+    final mergedRefs = {...tokens, ...other.tokens};
+    return ContextRefTokens.raw(mergedRefs);
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is ContextRefTokens && other.tokens == tokens;
+  }
+
+  @override
+  int get hashCode => tokens.hashCode;
+
+  @override
+  String toString() => 'ContextRefTokens(tokens: $tokens)';
 }

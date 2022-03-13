@@ -5,8 +5,10 @@ import 'refs.dart';
 
 class ColorRef extends Color implements MixRef<Color> {
   const ColorRef(this.id) : super(0);
+
   @override
   final String id;
+
   @override
   Color resolve(BuildContext context) {
     final refValue = MixTheme.of(context).contextRef.tokens[this];
@@ -26,4 +28,7 @@ class ColorRef extends Color implements MixRef<Color> {
 
   @override
   int get hashCode => id.hashCode;
+
+  @override
+  String toString() => 'ColorRef(id: $id)';
 }

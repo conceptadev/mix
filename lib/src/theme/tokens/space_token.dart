@@ -3,7 +3,14 @@ import '../refs/space_ref.dart';
 const $space = SpaceRef();
 
 class MixThemeSpace {
-  const MixThemeSpace._({
+  final double xsmall;
+  final double small;
+  final double medium;
+  final double large;
+  final double xlarge;
+  final double xxlarge;
+
+  const MixThemeSpace.raw({
     required this.xsmall,
     required this.small,
     required this.medium,
@@ -12,23 +19,23 @@ class MixThemeSpace {
     required this.xxlarge,
   });
 
-  static get defaults {
-    return const MixThemeSpace._(
-      xsmall: 2,
-      small: 4,
-      medium: 8,
-      large: 16,
-      xlarge: 32,
-      xxlarge: 64,
+  factory MixThemeSpace({
+    double? xsmall,
+    double? small,
+    double? medium,
+    double? large,
+    double? xlarge,
+    double? xxlarge,
+  }) {
+    return MixThemeSpace.raw(
+      xsmall: xsmall ?? 2,
+      small: small ?? 4,
+      medium: medium ?? 8,
+      large: large ?? 16,
+      xlarge: xlarge ?? 32,
+      xxlarge: xxlarge ?? 64,
     );
   }
-
-  final double xsmall;
-  final double small;
-  final double medium;
-  final double large;
-  final double xlarge;
-  final double xxlarge;
 
   double fromValue(double? value) {
     if (value == null) return 0.0;
@@ -59,15 +66,50 @@ class MixThemeSpace {
     return value;
   }
 
-  MixThemeSpace merge(MixThemeSpace? other) {
-    return MixThemeSpace._(
-      xsmall: other?.xsmall ?? xsmall,
-      small: other?.small ?? small,
-      medium: other?.medium ?? medium,
-      large: other?.large ?? large,
-      xlarge: other?.xlarge ?? xlarge,
-      xxlarge: other?.xxlarge ?? xxlarge,
+  MixThemeSpace copyWith({
+    double? xsmall,
+    double? small,
+    double? medium,
+    double? large,
+    double? xlarge,
+    double? xxlarge,
+  }) {
+    return MixThemeSpace.raw(
+      xsmall: xsmall ?? this.xsmall,
+      small: small ?? this.small,
+      medium: medium ?? this.medium,
+      large: large ?? this.large,
+      xlarge: xlarge ?? this.xlarge,
+      xxlarge: xxlarge ?? this.xxlarge,
     );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is MixThemeSpace &&
+        other.xsmall == xsmall &&
+        other.small == small &&
+        other.medium == medium &&
+        other.large == large &&
+        other.xlarge == xlarge &&
+        other.xxlarge == xxlarge;
+  }
+
+  @override
+  int get hashCode {
+    return xsmall.hashCode ^
+        small.hashCode ^
+        medium.hashCode ^
+        large.hashCode ^
+        xlarge.hashCode ^
+        xxlarge.hashCode;
+  }
+
+  @override
+  String toString() {
+    return 'MixThemeSpace(xsmall: $xsmall, small: $small, medium: $medium, large: $large, xlarge: $xlarge, xxlarge: $xxlarge)';
   }
 }
 

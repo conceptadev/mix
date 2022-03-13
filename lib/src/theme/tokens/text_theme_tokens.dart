@@ -14,11 +14,11 @@ const $caption = TextStyleRef('caption');
 const $button = TextStyleRef('button');
 const $overline = TextStyleRef('overline');
 
-const $textTheme = TextThemeTokens();
+const $textTheme = _TextThemeTokens();
 const $tt = $textTheme;
 
-class TextThemeTokens {
-  const TextThemeTokens();
+class _TextThemeTokens {
+  const _TextThemeTokens();
 
   final TextStyleRef h1 = $h1;
   final TextStyleRef h2 = $h2;

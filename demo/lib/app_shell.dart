@@ -30,6 +30,7 @@ class AppShell extends HookConsumerWidget {
     final darkMode = ref.watch(darkModeProvider.state);
 
     return MixTheme(
+      data: MixThemeData(),
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Mix'),

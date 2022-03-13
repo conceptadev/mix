@@ -5,6 +5,7 @@ import 'refs.dart';
 
 class TextStyleRef extends TextStyle implements MixRef<TextStyle> {
   const TextStyleRef(this.id) : super();
+
   @override
   final String id;
 
