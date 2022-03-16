@@ -13,6 +13,12 @@ class CardsPreview extends StatelessWidget {
     return ListView(
       children: [
         CardX(
+          mix: Mix(
+            // If true, bgColor is white
+            (true)(
+              bgColor(Colors.blue),
+            ),
+          ),
           children: [
             const TextMix(
               titleContent,
