@@ -1,3 +1,8 @@
+---
+id: context-references
+title: 'Context Tokens'
+---
+
 # Context Tokens
 
 Context Tokens are design tokens that are defined at build time. With this, it's possible to do things like:
@@ -58,7 +63,7 @@ Color references:
 
 ## Creating new context references
 
-First, define a call to that reference. It usually starts with a dollar sign (`$`):
+First, define a call to that reference. It'll be used by the attributes at build time. It usually starts with a dollar sign (`$`):
 
 ```dart
 const $myColor = ColorRef('myColor');
@@ -87,5 +92,7 @@ MixTheme(
 Finally, use it a `Mix`:
 
 ```dart
-final myMix = Mix(bgColor($myColor));
+final myMix = Mix(
+  bgColor($myColor),
+);
 ```

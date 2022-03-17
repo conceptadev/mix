@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
+
 /// _Mix_ corollary to Flutter _Chip_ Widget
 ///
 /// Default _Mix_ values:
