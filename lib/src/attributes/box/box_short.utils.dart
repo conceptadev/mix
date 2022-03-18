@@ -84,6 +84,7 @@ const shadow = BoxUtility.shadow;
 
 const squared = BoxUtility.squared;
 const rounded = BoxUtility.rounded;
+const r = BoxUtility.rounded;
 
 BoxAttributes roundedTL(double value) {
   return BoxUtility.roundedOnly(topLeft: value);
