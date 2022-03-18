@@ -134,7 +134,7 @@ class BoxUtility {
     return BoxAttributes(borderRadius: radius);
   }
  
-  /// Short Utils: rounded  
+  /// Short Utils: rounded, r
   /// (Rounded corners)
   static BoxAttributes rounded(double value) {
     return borderRadius(BorderRadiusDto.all(value));
