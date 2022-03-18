@@ -43,36 +43,36 @@ class AppShell extends HookConsumerWidget {
         ),
         body: Row(
           children: [
-            // NavigationRail(
-            //   extended: true,
-            //   selectedIndex: selected.value,
-            //   onDestinationSelected: (index) {
-            //     selected.value = index;
-            //   },
-            //   // labelType: NavigationRailLabelType.selected,
-            //   destinations: const <NavigationRailDestination>[
-            //     NavigationRailDestination(
-            //       icon: Icon(Icons.circle),
-            //       label: Text('Basic Example'),
-            //     ),
-            //     NavigationRailDestination(
-            //       icon: Icon(Icons.circle),
-            //       label: Text('Design Tokens'),
-            //     ),
-            //     NavigationRailDestination(
-            //       icon: Icon(Icons.circle),
-            //       label: Text('Pressable'),
-            //     ),
-            //     NavigationRailDestination(
-            //       icon: Icon(Icons.circle),
-            //       label: Text('Cards'),
-            //     ),
-            //     NavigationRailDestination(
-            //       icon: Icon(Icons.circle),
-            //       label: Text('Headless'),
-            //     ),
-            //   ],
-            // ),
+            NavigationRail(
+              extended: true,
+              selectedIndex: selected.value,
+              onDestinationSelected: (index) {
+                selected.value = index;
+              },
+              // labelType: NavigationRailLabelType.selected,
+              destinations: const <NavigationRailDestination>[
+                NavigationRailDestination(
+                  icon: Icon(Icons.circle),
+                  label: Text('Basic Example'),
+                ),
+                NavigationRailDestination(
+                  icon: Icon(Icons.circle),
+                  label: Text('Design Tokens'),
+                ),
+                NavigationRailDestination(
+                  icon: Icon(Icons.circle),
+                  label: Text('Pressable'),
+                ),
+                NavigationRailDestination(
+                  icon: Icon(Icons.circle),
+                  label: Text('Cards'),
+                ),
+                NavigationRailDestination(
+                  icon: Icon(Icons.circle),
+                  label: Text('Headless'),
+                ),
+              ],
+            ),
             const VerticalDivider(thickness: 1, width: 1),
             // This is the main content.
             Expanded(
