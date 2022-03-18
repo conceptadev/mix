@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:mix/src/attributes/shared/shared.attributes.dart';
-
+/// ## Widget:
+/// - (all)
+///
+/// Utility functions and short utils are listed in [Static Methods](#static-methods)
+///
+/// {@category Utilities}
 class SharedUtils {
   const SharedUtils._();
 
@@ -19,6 +24,7 @@ class SharedUtils {
     );
   }
 
+  /// Short Utils: animationDuration
   static SharedAttributes animationDuration(int milliseconds) {
     return SharedAttributes(
       animationDuration: Duration(
@@ -27,21 +33,23 @@ class SharedUtils {
     );
   }
 
+  /// Short Utils: animationCurve
   static SharedAttributes animationCurve(Curve curve) {
     return SharedAttributes(
       animationCurve: curve,
     );
   }
 
+  /// Short Utils: textDirection
   static SharedAttributes textDirection(TextDirection? textDirection) {
     return SharedAttributes(textDirection: textDirection);
   }
 
-  /// Visible utility
+  /// Short Utils: visible
   static SharedAttributes visible([bool? condition = true]) =>
       SharedAttributes(visible: condition);
 
-  /// Hidden utility
+  /// Short Utils: hidden
   static SharedAttributes hidden([bool condition = true]) =>
       SharedAttributes(visible: !condition);
 }
