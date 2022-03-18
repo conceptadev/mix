@@ -3,8 +3,15 @@ import 'package:mix/mix.dart';
 
 import 'button_preview.dart';
 
-class PressablePreview extends StatelessWidget {
+class PressablePreview extends StatefulWidget {
   const PressablePreview({Key? key}) : super(key: key);
+
+  @override
+  State<PressablePreview> createState() => _PressablePreviewState();
+}
+
+class _PressablePreviewState extends State<PressablePreview> {
+  bool _enabled = false;
 
   @override
   Widget build(BuildContext context) {
@@ -37,70 +44,71 @@ class PressablePreview extends StatelessWidget {
       ),
     );
 
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          Pressable(
-            mix: mix,
-            onPressed: () {
-              showDialog(
-                context: context,
-                builder: (context) {
-                  return AlertDialogX(
-                    content: const [
-                      TextMix('Are you absolutely sure?', variant: title),
-                      TextMix(
-                        'This action cannot be undone. '
-                        'This will permanently delete your account and remove '
-                        'your data from our servers.',
-                        variant: paragraph,
-                      ),
-                    ],
-                    actions: [
-                      button(
-                        child: const TextMix('Cancel'),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        overrideMix: Mix(
-                          textColor(Colors.grey.shade700),
-                          bgColor(Colors.grey.shade400),
-                          (hover)(
-                            bgColor(Colors.grey),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SwitchX(
+              active: _enabled,
+              onChanged: (v) => setState(() => _enabled = v),
+            ),
+            const SizedBox(width: 5.0),
+            Text(_enabled ? 'Enabled' : 'Disabled'),
+          ],
+        ),
+        Pressable(
+          mix: mix,
+          onPressed: _enabled
+              ? () {
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialogX(
+                        content: const [
+                          TextMix('Are you absolutely sure?', variant: title),
+                          TextMix(
+                            'This action cannot be undone. '
+                            'This will permanently delete your account and remove '
+                            'your data from our servers.',
+                            variant: paragraph,
                           ),
-                        ),
-                      ),
-                      button(
-                        child: const TextMix('Yes, delete account'),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        overrideMix: Mix(
-                          textColor(Colors.red.shade100),
-                          bgColor(Colors.redAccent.shade200),
-                          (hover)(
-                            bgColor(Colors.redAccent.shade400),
+                        ],
+                        actions: [
+                          button(
+                            child: const TextMix('Cancel'),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            overrideMix: Mix(
+                              textColor(Colors.grey.shade700),
+                              bgColor(Colors.grey.shade400),
+                              (hover)(
+                                bgColor(Colors.grey),
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                    ],
+                          button(
+                            child: const TextMix('Yes, delete account'),
+                            onPressed: Navigator.of(context).pop,
+                            overrideMix: Mix(
+                              textColor(Colors.red.shade100),
+                              bgColor(Colors.redAccent.shade200),
+                              (hover)(
+                                bgColor(Colors.redAccent.shade400),
+                              ),
+                            ),
+                          ),
+                        ],
+                      );
+                    },
                   );
-                },
-              );
-            },
-            child: const TextMix(
-              'Simple Text',
-            ),
-          ),
-          Container(
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.all(
-                Radius.circular(10),
-              ),
-            ),
-          ),
-        ],
-      ),
+                }
+              : null,
+          child: const TextMix('Simple Text'),
+        ),
+      ],
     );
   }
 }
