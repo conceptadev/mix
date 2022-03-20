@@ -7,6 +7,7 @@ import '../attributes/flex/flex.props.dart';
 import '../attributes/icon/icon.props.dart';
 import '../attributes/shared/shared.props.dart';
 import '../attributes/text/text.props.dart';
+import '../attributes/zbox/zbox.props.dart';
 
 /// Mix Widget
 abstract class MixableWidget extends StatelessWidget {
@@ -64,6 +65,7 @@ abstract class MixedWidget extends StatelessWidget {
   IconProps get iconMixer => mixContext.iconProps;
   FlexProps get flexMixer => mixContext.flexProps;
   SharedProps get sharedMixer => mixContext.sharedProps;
+  ZBoxProps get zBoxProps => mixContext.zBoxProps;
   DecoratorMap get decorators => mixContext.decorators;
   List<Decorator> get parentDecorators => mixContext.decorators.parents;
   List<Decorator> get childDecorators => mixContext.decorators.children;
