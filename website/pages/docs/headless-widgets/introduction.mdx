@@ -1,0 +1,41 @@
+---
+id: introduction
+title: "Introduction"
+---
+
+# Introduction
+
+Headless Widgets are completely unstyled while offering maximum visual flexibility. In 
+other words, Headless Components do not care about UI, but with functionality.
+
+## RemixableWidget
+
+Every Headless Widget is a instance of a `RemixableWidget`. It provides a `defaultMix` 
+that is the base UI implementation of the widget. This can be heavily changed by providing a `mix`. 
+
+`CardX`, for example, uses `$surface` as the background color by default, but it can be 
+overrideen by providing `mix`:
+
+```dart
+CardX(
+  mix: Mix(
+    bgColor(Colors.amber),
+  ),
+),
+```
+
+## Variants
+
+As stated before in this documentation, variants are capable of creating consistent 
+variations of widgets. They are heavily used Headless Widgets, usually to separate 
+styles from one component to another. 
+
+For example, imagine a card with a title and a subtitle. How would the style for 
+each text be specifically changed without affecting the other parts of the widget?
+
+They can also be used for to change the UI according to the current state. For example,
+on a selected checkbox, the style is different from the normal state.
+
+## Headless Widgets Catalog
+
+The catalog of built-in headless widgets 
