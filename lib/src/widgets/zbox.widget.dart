@@ -34,9 +34,9 @@ class ZBoxMixedWidget extends MixedWidget {
       mixContext,
       child: Stack(
         children: children,
-        alignment: zBoxProps.alignment,
-        clipBehavior: zBoxProps.clipBehavior,
-        fit: zBoxProps.fit,
+        alignment: zBoxMixer.alignment,
+        clipBehavior: zBoxMixer.clipBehavior,
+        fit: zBoxMixer.fit,
       ),
     );
   }

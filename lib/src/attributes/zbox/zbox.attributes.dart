@@ -42,9 +42,9 @@ class ZBoxAttributes extends Attribute {
     if (other == null) return this;
 
     return ZBoxAttributes(
-      alignment: alignment,
-      clipBehavior: clipBehavior,
-      fit: fit,
+      alignment: other.alignment ?? alignment,
+      clipBehavior: other.clipBehavior ?? clipBehavior,
+      fit: other.fit ?? fit,
     );
   }
 }

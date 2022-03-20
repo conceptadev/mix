@@ -44,6 +44,11 @@ export '../helpers/variants.dart';
 export 'variants/variants.utils.dart';
 export 'variants/variants_short.utils.dart';
 
+/// ZBox
+export './zbox/zbox.attributes.dart';
+export './zbox/zbox.utils.dart';
+export './zbox/zbox_short.utils.dart';
+
 /// Widgets
 export 'widget_decorators/aspect_ratio.dart';
 export 'widget_decorators/clip_decorator.dart';

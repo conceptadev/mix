@@ -65,7 +65,7 @@ abstract class MixedWidget extends StatelessWidget {
   IconProps get iconMixer => mixContext.iconProps;
   FlexProps get flexMixer => mixContext.flexProps;
   SharedProps get sharedMixer => mixContext.sharedProps;
-  ZBoxProps get zBoxProps => mixContext.zBoxProps;
+  ZBoxProps get zBoxMixer => mixContext.zBoxProps;
   DecoratorMap get decorators => mixContext.decorators;
   List<Decorator> get parentDecorators => mixContext.decorators.parents;
   List<Decorator> get childDecorators => mixContext.decorators.children;
@@ -123,6 +123,14 @@ abstract class MixedWidget extends StatelessWidget {
       DiagnosticsProperty<SharedProps>(
         'sharedMixer',
         sharedMixer,
+        defaultValue: null,
+      ),
+    );
+
+    properties.add(
+      DiagnosticsProperty(
+        'zBoxMixer',
+        zBoxMixer,
         defaultValue: null,
       ),
     );

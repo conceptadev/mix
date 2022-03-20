@@ -6,6 +6,7 @@ export 'package:mix/src/widgets/icon.widget.dart';
 export 'package:mix/src/widgets/mixable.widget.dart';
 export 'package:mix/src/widgets/pressable.widget.dart';
 export 'package:mix/src/widgets/text.widget.dart';
+export 'package:mix/src/widgets/zbox.widget.dart';
 
 export 'src/attributes/common/attribute.dart';
 export 'src/attributes/exports.dart';

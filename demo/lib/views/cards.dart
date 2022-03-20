@@ -40,6 +40,19 @@ class CardsPreview extends StatelessWidget {
             ]),
           ],
         ),
+        ZBox(
+          mix: Mix(
+            h(100),
+            w(100),
+            bgColor(Colors.blue),
+            align(Alignment.center),
+            zAligmnent(Alignment.center),
+          ),
+          children: [
+            Container(height: 30, width: 30, color: Colors.black),
+            Container(height: 20, width: 20, color: Colors.amber),
+          ],
+        ),
       ],
     );
   }

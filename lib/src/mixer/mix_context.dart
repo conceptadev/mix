@@ -1,4 +1,6 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
 import 'package:mix/src/attributes/exports.dart';
 import 'package:mix/src/attributes/zbox/zbox.attributes.dart';
 import 'package:mix/src/helpers/extensions.dart';
@@ -244,20 +246,37 @@ class MixContext {
     if (identical(this, other)) return true;
 
     return other is MixContext &&
+        other.context == context &&
+        other.sourceMix == sourceMix &&
+        other.originalMix == originalMix &&
+        other.descendentMix == descendentMix &&
+        listEquals(other.variants, variants) &&
+        listEquals(other.directives, directives) &&
+        other.decorators == decorators &&
         other.boxProps == boxProps &&
         other.textProps == textProps &&
+        other.sharedProps == sharedProps &&
         other.iconProps == iconProps &&
         other.flexProps == flexProps &&
-        other.sharedProps == sharedProps;
+        other.zBoxProps == zBoxProps;
   }
 
   @override
-  int get hashCode =>
-      boxProps.hashCode ^
-      textProps.hashCode ^
-      iconProps.hashCode ^
-      flexProps.hashCode ^
-      sharedProps.hashCode;
+  int get hashCode {
+    return context.hashCode ^
+        sourceMix.hashCode ^
+        originalMix.hashCode ^
+        descendentMix.hashCode ^
+        variants.hashCode ^
+        directives.hashCode ^
+        decorators.hashCode ^
+        boxProps.hashCode ^
+        textProps.hashCode ^
+        sharedProps.hashCode ^
+        iconProps.hashCode ^
+        flexProps.hashCode ^
+        zBoxProps.hashCode;
+  }
 
   MixContext merge(MixContext? other) {
     if (other == null) return this;
