@@ -4,5 +4,6 @@
     "card": "Card",
     "checkbox": "Checkbox",
     "chip": "Chip",
-    "radio-button": "Radio Button"
+    "radio-button": "Radio Button",
+    "switch": "Switch"
 }
