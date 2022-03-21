@@ -36,14 +36,27 @@ each text be specifically changed without affecting the other parts of the widge
 They can also be used for to change the UI according to the current state. For example,
 on a selected checkbox, the style is different from the normal state.
 
+To change or add an attribute based on a variant, call it on the Mix initialization.
+Take the `AlertDialogX` as example:
+
+```dart
+final dialog = AlertDialogX(
+  mix: Mix(
+    title(
+      // Everything inside [title] will only be taken into account only on the title
+      textColor(Colors.green),
+    ),
+  ),
+);
+```
+
 ## Headless Widgets Catalog
 
 The catalog of built-in headless widgets:
 
-- AlertDialogX
-- ButtonX
-- CardX
-- CheckboxX
-- ChipX
-- RadioButtonX
-- SwitchX
+- [AlertDialogX](/docs/headless-widgets/alert-dialog)
+- [CardX](/docs/headless-widgets/card)
+- [CheckboxX](/docs/headless-widgets/checkbox)
+- [ChipX](/docs/headless-widgets/chip)
+- [RadioButtonX](/docs/headless-widgets/radio-button)
+- [SwitchX](/docs/headless-widgets/switch)
