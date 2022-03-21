@@ -21,15 +21,13 @@ final pressableMix = Mix.fromList([
 
 class _MixContextTestWidget extends StatelessWidget {
   const _MixContextTestWidget({Key? key}) : super(key: key);
-  static bool hasBeenPressed = false;
+
   @override
   Widget build(BuildContext context) {
     return MixTestWidget(
       child: Pressable(
         mix: pressableMix,
-        onPressed: () {
-          hasBeenPressed = true;
-        },
+        onPressed: () {},
         child: Column(
           children: [
             const TextMix('Hello'),
