@@ -2,5 +2,6 @@
     "introduction": "Introduction",
     "alert-dialog": "Alert Dialog",
     "card": "Card",
-    "checkbox": "Checkbox"
+    "checkbox": "Checkbox",
+    "chip": "Chip"
 }
