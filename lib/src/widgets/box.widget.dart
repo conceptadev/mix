@@ -9,9 +9,11 @@ import 'nothing.widget.dart';
 /// _Mix_ corollary to Flutter _Container_ widget
 /// 
 /// ## Attributes:
-/// - [BoxAttributes](BoxAttributes-class.html)  
+/// - [BoxAttributes](BoxAttributes-class.html)
+/// - [SharedAttributes](SharedAttributes-class.html) 
 /// ## Utilities:
 /// - [BoxUtility](BoxUtility-class.html)
+/// - [SharedUtils](SharedUtils-class.html)
 ///
 /// {@category Mixable Widgets}
 class Box extends MixableWidget {
