@@ -40,36 +40,10 @@ on a selected checkbox, the style is different from the normal state.
 
 The catalog of built-in headless widgets:
 
-### Alert Dialog
-
-Alerts are urgent interruptions, requiring acknowledgement, that inform the user about a 
-situation. They can be displayed using the `showDialog` function, provided by the Flutter
-Framework.
-
-They can take `content` and `actions`. The `title` and `paragraph` variants are used to
-customize the style of both texts.
-
-```dart
-final dialog = AlertDialogX(
-  content: <Widget>[
-    TextMix(
-      'Are you absolutely sure?', 
-      variant: title, // `title` variant used to style the TextMix as title
-    ),
-    TextMix(
-      'This action cannot be undone. '
-      'This will permanently delete your account and remove '
-      'your data from our servers.',
-      variant: paragraph, // `paragraph` variant to style the TextMix as 
-    ),
-  ],
-  actions: <Widget>[
-    // your buttons come here
-  ],
-);
-
-showDialog(
-  context: context,
-  builder: (context) => dialog,
-);
-```
+- AlertDialogX
+- ButtonX
+- CardX
+- CheckboxX
+- ChipX
+- RadioButtonX
+- SwitchX
