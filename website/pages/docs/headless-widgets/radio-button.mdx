@@ -1,0 +1,70 @@
+---
+id: radio-button
+title: "RadioButtonX"
+---
+
+# Radio Button
+
+Radio buttons allow the user to select one option from a set.
+
+It does not hold state in itself. This means the `checked` state needs to
+be handled outside of the widget. The values can be provided and updated
+using the `checked` and `onChanged` properties on the `RadioButtonX` constructor.
+
+```dart
+bool checked = false;
+
+RadioButtonX(
+  checked: checked,
+  onChanged: (v) => setState(() => checked = v),
+),
+```
+
+It makes use of the `active` variant, that can be used alongside other
+variants, such as `hover`, `press` and `disable`, to provide the best effect
+to the end-user.
+
+```dart
+RadioButtonX(
+  mix: Mix(
+    (hover | active)( // if hovering and active
+      borderColor($primary), // the color of the border is [$primary]
+    )
+  ),
+  ...,
+),
+```
+
+## Indicator
+
+You can provide a custom indicator to the radio button using the `indicator`
+property:
+
+```dart
+RadioButtonX(
+  indicator: RadioButtonIndicator(Mix(
+    (active)( // if active
+      bgColor(Colors.amber), // use the color amber
+    ),
+  )),
+),
+```
+
+A `child` can also be provided to `RadioButtonIndicator`.
+
+`RadioButtonIndicator` can be extended in order to create custom effects, like:
+
+```dart
+class _MyRadioButtonIndicator extends RadioButtonIndicator {
+
+  _MyRadioButtonIndicator() : super(Mix.constant);
+
+  Widget build(BuildContext context, bool checked) {
+    if (checked) { // Return a custom widget to be shown as the indicator
+      return ...;
+    }
+    return const SizedBox.shrink();
+  }
+
+}
+```
