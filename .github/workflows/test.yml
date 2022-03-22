@@ -12,12 +12,14 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-
+      - uses: kuhnroyal/flutter-fvm-config-action@v1
       - uses: subosito/flutter-action@v2
         with:
-          channel: "stable"
-      - run: flutter --version
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: ${{ env.FLUTTER_CHANNEL }}
 
+      - run: flutter --version
       - run: flutter pub get
-      - run: flutter analyze
+      - name: Analyze Dart
+        uses: zgosalvez/github-actions-analyze-dart@v1
       - run: flutter test --coverage
