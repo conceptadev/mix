@@ -7,26 +7,31 @@ import Code from "../../../components/Code.js";
 
 # Variants
 
-While building your design system you will find have the need to create certain variations of a Widget. This makes the design system more flexible and reusable, by leveraging shared visual properties between them.
+While building your design system you will find have the need to create certain variations 
+of a Widget. This makes the design system more flexible and reusable, by leveraging shared 
+visual properties between them.
 
-In the following example `hover()` is a `Variant` that will be applied when `Pressable` triggers the hover state.
+In the following example `hover()` is a `Variant` that will be applied when a `Pressable` 
+triggers the hover state.
 
-```dart highlight="8-11"
-final style = Mix(
-  width(750),
-  height(50),
-  rounded(10),
+```dart highlight="8-13"
+final buttonMix = Mix(
+  width(750.0),
+  height(50.0),
+  rounded(10.0),
   textStyle($button),
   bgColor($primary),
   textColor($onPrimary),
   hover(
-    bgColor($primary),
+    // The `bgColor` and `textColor` properties will be overridden with the 
+    // new value when the variant applies
+    bgColor($primary), 
     textColor($onPrimary),
   ),
 );
 
 Pressable(
-  mix: style,
+  mix: buttonMix,
   child: const TextMix('Button'),
 );
 ```
@@ -48,29 +53,47 @@ final mix = Mix(
 );
 ```
 
-### `|` and `&`
+### Conditional operators
 
-`|`: whether one of the variants apply
-`&`: when all of the variants apply
+The operators `|` and `&` can be used to add conditions to your mix:
 
-```dart
-final style = Mix(
+- `|`: whether one of the variants apply
+
+```dart highlight="3-7"
+final mix = Mix(
   padding(20.0),
-  (hover | press)(
-    textColor(Colors.black),
-    bold(),
-  ),
-  (small & medium)(
+  (small | medium)( // Whether it's small OR medium
     width(300),
     height(400),
     bgColor(Colors.white),
-  )
-)
-
-
+  ),
+);
 ```
 
-## Built-in Variants
+- `&`: when all of the variants apply
+
+```dart highlight="3-6"
+final mix = Mix(
+  padding(20.0),
+  (hover & press)( // When it's hovering AND pressing
+    textColor(Colors.black),
+    bold(),
+  ),
+);
+```
+
+The `not` operator can also be called to execute the variant content only when the given
+variant is not called. For example:
+
+```dart highlight="2-4"
+final mix = Mix(
+  (not(disabled))(
+    scale(1.2),
+  ),
+);
+```
+
+## Variants catalog
 
 Mix already has some `Reactive Variants` defined which can be used to create responsive Widgets.
 
