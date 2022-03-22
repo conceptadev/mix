@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-import 'package:mix/mix.dart';
+import '../common/attribute.dart';
 
 class ZBoxAttributes extends Attribute {
   final AlignmentGeometry? alignment;

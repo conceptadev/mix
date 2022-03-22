@@ -21,15 +21,13 @@ final pressableMix = Mix.fromList([
 
 class _MixContextTestWidget extends StatelessWidget {
   const _MixContextTestWidget({Key? key}) : super(key: key);
-  static bool hasBeenPressed = false;
+
   @override
   Widget build(BuildContext context) {
     return MixTestWidget(
       child: Pressable(
         mix: pressableMix,
-        onPressed: () {
-          hasBeenPressed = true;
-        },
+        onPressed: () {},
         child: Column(
           children: [
             const TextMix('Hello'),
@@ -67,11 +65,27 @@ void main() {
           mix: pressableMix,
         );
 
-        expect(mixContext.originalMix, pressableMix);
+        expect(mixContext.sourceMix, pressableMix);
+        expect(
+          mixContext.descendentMix,
+          matchContext.descendentMix,
+          reason: 'descendentMix',
+        );
 
-        expect(matchContext, mixContext);
-        expect(matchContext == mixContext, true);
-        // Different instance but same same properties
+        expect(
+          mixContext.originalMix,
+          matchContext.originalMix,
+          reason: 'originalMix',
+        );
+
+        expect(
+          mixContext.sourceMix,
+          matchContext.sourceMix,
+          reason: 'sourceMix',
+        );
+
+        // expect(matchContext == mixContext, true);
+        // Different instance but same properties
         expect(matchContext.hashCode == mixContext.hashCode, false);
       });
 

@@ -1,8 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
 import 'package:mix/src/attributes/exports.dart';
-import 'package:mix/src/attributes/zbox/zbox.attributes.dart';
 import 'package:mix/src/helpers/extensions.dart';
 
 import '../attributes/box/box.props.dart';
