@@ -184,8 +184,11 @@ class MixContext {
 
     for (final attribute in attributes) {
       if (attribute is VariantAttribute<T>) {
-        if (variantsToApply.contains(attribute.variant) ||
-            attribute.shouldApply(context)) {
+        final bool willApply = variantsToApply.contains(attribute.variant) ||
+            attribute.shouldApply(context);
+        // If it's inverse (from `not(variant)`), only apply if [willApply] is
+        // false. Otherwise, apply only when [willApply]
+        if (attribute.variant.inverse ? !willApply : willApply) {
           // If its selected, add it to the list
           spreaded.addAll(attribute.attributes);
           hasNested = true;

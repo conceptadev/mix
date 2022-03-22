@@ -22,3 +22,5 @@ final inactive = VariantUtils.inactive();
 
 final title = VariantUtils.title();
 final paragraph = VariantUtils.paragraph();
+
+const not = VariantUtils.not;

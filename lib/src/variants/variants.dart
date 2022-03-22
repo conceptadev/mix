@@ -148,11 +148,12 @@ class MultiVariant<T extends Attribute> {
 
 /// {@category Variants}
 class Variant<T extends Attribute> {
-  const Variant(this.name, {this.shouldApply});
-
   final String name;
-
   final bool Function(BuildContext)? shouldApply;
+
+  bool inverse = false;
+
+  Variant(this.name, {this.shouldApply});
 
   MultiVariant<T> operator &(Variant<T> variant) =>
       MultiVariant<T>([this, variant], operator: _VariantOperations.and);

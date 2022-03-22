@@ -150,4 +150,8 @@ class VariantUtils {
   static Variant<T> paragraph<T extends Attribute>() {
     return Variant<T>(SystemVariants.paragraph.value);
   }
+
+  static Variant<T> not<T extends Attribute>(Variant<T> other) {
+    return other..inverse = true;
+  }
 }
