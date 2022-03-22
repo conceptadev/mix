@@ -11,6 +11,10 @@ enum SystemVariants {
   focus,
   hover,
   pressing,
+  active,
+  inactive,
+  title,
+  paragraph,
 }
 
 extension SystemVariantsExt on SystemVariants {

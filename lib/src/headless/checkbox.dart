@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
 
-const active = Variant('active');
-
 /// _Mix_ corollary to Flutter _Checkbox_ widget
 ///
 /// Default _Mix_ values:

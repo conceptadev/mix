@@ -2,10 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
 
-const title = Variant('title');
-
-const paragraph = Variant('paragraph');
-
 /// _Mix_ corollary to Flutter _Card_ widget
 ///
 /// Default _Mix_ attributes:
