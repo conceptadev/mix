@@ -1,4 +1,6 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
 import 'package:mix/mix.dart';
 
 /// Used to check if its reserved
@@ -25,20 +27,37 @@ extension SystemVariantsExt on SystemVariants {
 }
 
 /// @nodoc
-enum _VariantOperations {
-  and,
-  or,
-}
+enum _VariantOperations { and, or }
 
 /// @nodoc
 class MultiVariant<T extends Attribute> {
+  final List<Variant<T>> variants;
+  final _VariantOperations operator;
+
   const MultiVariant(
     this.variants, {
     required this.operator,
   });
 
-  final List<Variant<T>> variants;
-  final _VariantOperations operator;
+  MultiVariant<T> operator &(Variant<T> variant) {
+    if (operator != _VariantOperations.and) {
+      throw 'All the operators in the equation must be the same';
+    }
+
+    variants.add(variant);
+
+    return this;
+  }
+
+  MultiVariant<T> operator |(Variant<T> variant) {
+    if (operator != _VariantOperations.or) {
+      throw 'All the operators in the equation must be the same';
+    }
+
+    variants.add(variant);
+
+    return this;
+  }
 
   List<VariantAttribute<T>> _buildOrOperations(
     List<T> attributes, {
@@ -110,6 +129,21 @@ class MultiVariant<T extends Attribute> {
 
     return NestedAttribute<VariantAttribute<T>>(attributes);
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is MultiVariant<T> &&
+        listEquals(other.variants, variants) &&
+        other.operator == operator;
+  }
+
+  @override
+  int get hashCode => variants.hashCode ^ operator.hashCode;
+
+  @override
+  String toString() => 'MultiVariant(variants: $variants, operator: $operator)';
 }
 
 /// {@category Variants}
@@ -164,12 +198,15 @@ class Variant<T extends Attribute> {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is Variant && other.name == name;
+
+    return other is Variant<T> &&
+        other.name == name &&
+        other.shouldApply == shouldApply;
   }
 
   @override
-  int get hashCode => name.hashCode;
+  int get hashCode => name.hashCode ^ shouldApply.hashCode;
 
   @override
-  String toString() => 'Var(name: $name)';
+  String toString() => 'Variant(name: $name)';
 }
