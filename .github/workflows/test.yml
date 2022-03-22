@@ -20,7 +20,6 @@ jobs:
 
       - run: flutter --version
       - run: flutter pub get
-      - name: Analyze Dart
 
       - uses: axel-op/dart-package-analyzer@v3
         with:
