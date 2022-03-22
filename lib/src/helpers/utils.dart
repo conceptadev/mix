@@ -27,11 +27,3 @@ String sentenceCase(String string) {
 
   return words.join(separator);
 }
-
-bool nullToBoolean(dynamic value) {
-  if (value == null || value == false) {
-    return false;
-  } else {
-    return true;
-  }
-}

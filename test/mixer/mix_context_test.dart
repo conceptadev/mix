@@ -40,7 +40,7 @@ class _MixContextTestWidget extends StatelessWidget {
               mix: Mix(
                 textColor(Colors.purple),
               ),
-            )
+            ),
           ],
         ),
       ),
