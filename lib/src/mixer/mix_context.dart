@@ -1,16 +1,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:mix/src/attributes/exports.dart';
-import 'package:mix/src/helpers/extensions.dart';
+import 'package:mix/mix.dart';
 
 import '../attributes/box/box.props.dart';
-import '../attributes/common/attribute.dart';
 import '../attributes/flex/flex.props.dart';
 import '../attributes/icon/icon.props.dart';
 import '../attributes/shared/shared.props.dart';
 import '../attributes/text/text.props.dart';
 import '../attributes/zbox/zbox.props.dart';
-import 'mix_factory.dart';
 
 typedef DecoratorMap = Map<DecoratorType, List<Decorator>>;
 

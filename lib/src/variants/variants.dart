@@ -21,7 +21,7 @@ extension SystemVariantsExt on SystemVariants {
 }
 
 /// @nodoc
-enum _OP {
+enum _VariantOperations {
   and,
   or,
 }
@@ -34,7 +34,7 @@ class MultiVariant<T extends Attribute> {
   });
 
   final List<Variant<T>> variants;
-  final _OP operator;
+  final _VariantOperations operator;
 
   List<VariantAttribute<T>> _buildOrOperations(
     List<T> attributes, {
@@ -98,9 +98,9 @@ class MultiVariant<T extends Attribute> {
     if (p12 != null) params.add(p12);
 
     List<VariantAttribute<T>> attributes = [];
-    if (operator == _OP.and) {
+    if (operator == _VariantOperations.and) {
       attributes = _buildAndOperations(params);
-    } else if (operator == _OP.or) {
+    } else if (operator == _VariantOperations.or) {
       attributes = _buildOrOperations(params);
     }
 
@@ -117,10 +117,10 @@ class Variant<T extends Attribute> {
   final bool Function(BuildContext)? shouldApply;
 
   MultiVariant<T> operator &(Variant<T> variant) =>
-      MultiVariant<T>([this, variant], operator: _OP.and);
+      MultiVariant<T>([this, variant], operator: _VariantOperations.and);
 
   MultiVariant<T> operator |(Variant<T> variant) =>
-      MultiVariant<T>([this, variant], operator: _OP.or);
+      MultiVariant<T>([this, variant], operator: _VariantOperations.or);
 
   VariantAttribute<T> call([
     T? p1,
