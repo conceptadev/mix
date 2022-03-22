@@ -12,7 +12,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - uses: leoafarias/flutter-fvm-config-action
+      - uses: leoafarias/flutter-fvm-config-action@main
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: ${{ env.FLUTTER_VERSION }}
