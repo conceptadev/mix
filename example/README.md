@@ -1,18 +1,12 @@
----
-id: getting-started
-title: 'Getting started'
----
-
-
-## With and without Mix
+# Example
 
 Mix provides a lot of different benefits on how you can define and organize your design tokens, and no documentation would be complete without a syntax comparison between **Mix vs. Without Mix**.
 
 Let's go ahead and take a look at the code. Don't worry about understanding each line, the docs will go into more detail about each item.
 
-### With Mix
+## With Mix
 
-```dart 
+```dart
 class CustomMixWidget extends StatelessWidget {
   const CustomMixWidget({Key? key}) : super(key: key);
 
@@ -42,7 +36,7 @@ class CustomMixWidget extends StatelessWidget {
 }
 ```
 
-### Without Mix
+## Without Mix
 
 ```dart
 class CustomWidget extends StatefulWidget {
