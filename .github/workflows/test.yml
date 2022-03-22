@@ -21,5 +21,8 @@ jobs:
       - run: flutter --version
       - run: flutter pub get
       - name: Analyze Dart
-        uses: zgosalvez/github-actions-analyze-dart@v1
+
+      - uses: axel-op/dart-package-analyzer@v3
+        with:
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
       - run: flutter test --coverage
