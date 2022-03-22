@@ -34,7 +34,8 @@ class _PressablePreviewState extends State<PressablePreview> {
         border(color: Colors.white),
         textColor(Colors.white),
       ),
-      (hover & active)(
+      // could be `hover & enabled`
+      (hover & not(disabled))(
         textColor(Colors.white),
         borderColor(Colors.greenAccent),
       ),

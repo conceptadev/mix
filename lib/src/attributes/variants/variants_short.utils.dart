@@ -12,6 +12,7 @@ final landscape = VariantUtils.landscape();
 final dark = VariantUtils.dark();
 final light = VariantUtils.light();
 
+final enabled = not(disabled);
 final disabled = VariantUtils.disabled();
 final focus = VariantUtils.focused();
 final hover = VariantUtils.hover();

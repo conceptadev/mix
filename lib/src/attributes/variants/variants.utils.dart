@@ -138,7 +138,7 @@ class VariantUtils {
 
   /// Short Utils: inactive
   static Variant<T> inactive<T extends Attribute>() {
-    return Variant<T>(SystemVariants.active.value);
+    return Variant<T>(SystemVariants.inactive.value);
   }
 
   /// Short Utils: title
