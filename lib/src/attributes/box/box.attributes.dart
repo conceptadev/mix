@@ -7,6 +7,7 @@ import 'package:mix/src/dto/edge_insets.dto.dart';
 import 'package:mix/src/helpers/extensions.dart';
 
 import '../common/attribute.dart';
+
 /// ## Widget:
 /// - [Box](Box-class.html)
 ///

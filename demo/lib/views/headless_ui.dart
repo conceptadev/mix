@@ -9,18 +9,6 @@ class HeadlessPreview extends HookWidget {
   Widget build(BuildContext context) {
     final active = useState(false);
 
-    final rootX = Mix(
-      bgColor(Colors.grey),
-      const Variant('active')(
-        bgColor(Colors.green),
-      ),
-    );
-
-    final thumbX = Mix(
-      const Variant('active')(
-        bgColor(Colors.white54),
-      ),
-    );
     return Column(
       children: [
         SwitchX(

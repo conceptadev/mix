@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../helpers/extensions.dart';
 import '../../theme/refs/text_style_ref.dart';
 import '../common/attribute.dart';
+
 /// ## Widget:
 /// - [TextMix](TextMix-class.html)
 /// {@category Attributes}

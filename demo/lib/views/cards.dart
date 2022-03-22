@@ -13,6 +13,12 @@ class CardsPreview extends StatelessWidget {
     return ListView(
       children: [
         CardX(
+          mix: Mix(
+            // If true, bgColor is white
+            (true)(
+              bgColor(Colors.blue),
+            ),
+          ),
           children: [
             const TextMix(
               titleContent,
@@ -32,6 +38,24 @@ class CardsPreview extends StatelessWidget {
               const ChipX(children: [TextMix('Sit')]),
               const ChipX(children: [TextMix('Amet')]),
             ]),
+          ],
+        ),
+        ZBox(
+          mix: Mix(
+            h(100),
+            w(100),
+            bgColor(Colors.blue),
+            zAligmnent(Alignment.center),
+            m(12.0),
+            r(10.0),
+            elevation(6),
+          ),
+          children: [
+            Box(mix: Mix(h(50), w(50), bgColor(Colors.white))),
+            Box(mix: Mix(h(40), w(40), bgColor(Colors.red))),
+            Box(mix: Mix(h(30), w(30), bgColor(Colors.black))),
+            Box(mix: Mix(h(20), w(20), bgColor(Colors.amber))),
+            Box(mix: Mix(h(10), w(10), bgColor(Colors.green))),
           ],
         ),
       ],

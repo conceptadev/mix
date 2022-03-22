@@ -15,8 +15,7 @@ import 'package:mix/src/attributes/widget_decorators/clip_decorator.dart';
 /// {@category Utilities}
 class ScaleDecoratorUtility {
   /// Short Utils: scale
-  static ScaleDecorator scale(double scale) =>
-    ScaleDecorator(scale);
+  static ScaleDecorator scale(double scale) => ScaleDecorator(scale);
 }
 
 /// ## Widget:
@@ -26,11 +25,10 @@ class ScaleDecoratorUtility {
 ///
 /// {@category Utilities}
 class RotateDecoratorUtility {
-
   /// Short Utils: rotate
   static RotateDecorator rotate(int quarterTurns) =>
-    RotateDecorator(quarterTurns: quarterTurns);
-  
+      RotateDecorator(quarterTurns: quarterTurns);
+
   /// Short Utils: rotate90
   static rotate90() => rotate(1);
 
@@ -53,7 +51,7 @@ class RotateDecoratorUtility {
 class OpacityDecoratorUtility {
   /// Short Utils: opacity
   static OpacityDecorator opacity(double opacity) =>
-    OpacityDecorator(opacity: opacity);
+      OpacityDecorator(opacity: opacity);
 }
 
 /// ## Widget:
@@ -64,20 +62,19 @@ class OpacityDecoratorUtility {
 /// {@category Utilities}
 class FlexibleDecoratorUtility {
   /// Short Utils: flex
-  static FlexibleDecorator flex(int value) =>
-    FlexibleDecorator(flex: value);
+  static FlexibleDecorator flex(int value) => FlexibleDecorator(flex: value);
 
   /// Short Utils: flexFit
   static FlexibleDecorator flexFit(FlexFit flexFit) =>
-    FlexibleDecorator(flexFit: flexFit);
+      FlexibleDecorator(flexFit: flexFit);
 
   /// Short Utils: expanded
   static FlexibleDecorator expanded() =>
-    const FlexibleDecorator(flexFit: FlexFit.tight);
+      const FlexibleDecorator(flexFit: FlexFit.tight);
 
   /// Short Utils: flexible
   static FlexibleDecorator flexible() =>
-    const FlexibleDecorator(flexFit: FlexFit.loose);
+      const FlexibleDecorator(flexFit: FlexFit.loose);
 }
 
 /// ## Widget:
@@ -89,7 +86,7 @@ class FlexibleDecoratorUtility {
 class AspectRatioDecoratorUtility {
   /// Short Utils: aspectRatio
   static AspectRatioDecorator aspectRatio(double aspectRatio) =>
-    AspectRatioDecorator(aspectRatio: aspectRatio);
+      AspectRatioDecorator(aspectRatio: aspectRatio);
 }
 
 /// ## Widget:

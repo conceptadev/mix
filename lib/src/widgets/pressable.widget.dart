@@ -134,6 +134,7 @@ class _PressableMixerWidgetState extends State<PressableMixerWidget> {
             behavior: widget.behavior,
             onTap: widget.onPressed,
             onTapDown: (_) {
+              if (!enabled) return;
               if (mounted) setState(() => _pressing = true);
             },
             onTapUp: (_) async {
@@ -142,12 +143,15 @@ class _PressableMixerWidgetState extends State<PressableMixerWidget> {
               if (mounted) setState(() => _pressing = false);
             },
             onTapCancel: () {
+              if (!enabled) return;
               if (mounted) setState(() => _pressing = false);
             },
             onLongPressStart: (_) {
+              if (!enabled) return;
               if (mounted) setState(() => _pressing = true);
             },
             onLongPressEnd: (_) {
+              if (!enabled) return;
               if (mounted) setState(() => _pressing = false);
             },
             child: () {

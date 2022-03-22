@@ -8,7 +8,7 @@ import '../mixer/mix_context.dart';
 import '../mixer/mix_factory.dart';
 import 'mixable.widget.dart';
 
-/// _Mix_ corollary to Flutter _Text_ widget  
+/// _Mix_ corollary to Flutter _Text_ widget
 /// Use wherever you would use a Flutter _Text_ widget
 ///
 /// ## Attributes:

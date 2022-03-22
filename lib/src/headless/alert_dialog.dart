@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
+
 /// _Mix_ corollary to Flutter _AlertDialog_ class
 ///
 /// Default _Mix_ values:

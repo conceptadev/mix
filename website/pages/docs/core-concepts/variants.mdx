@@ -85,11 +85,24 @@ These are `Variants` that will change based on different _gestures_ and state of
 
 ### Breakpoints
 
-- `large()`: Applies attributes when the screen is at least `large` breakpoint.
-- `medium()`: Applies attributes when the screen is at least `medium` breakpoint.
 - `small()`: Applies attributes when the screen is at least `small` breakpoint.
+- `medium()`: Applies attributes when the screen is at least `medium` breakpoint.
+- `large()`: Applies attributes when the screen is at least `large` breakpoint.
 
-Breakpoints for these sizes can be configured in the `MixTheme`.
+Breakpoints for these sizes can be configured in the `MixTheme`:
+
+```dart
+MixTheme(
+  data: MixThemeData(
+    breakpoints: MixThemeBreakpoints(
+      small: 600, // cellphone
+      medium: 1240, // tablet
+      large: 1440, // desktop
+    ),
+  ),
+  child: ...,
+),
+```
 
 ### Orientation
 

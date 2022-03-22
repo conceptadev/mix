@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mix/src/attributes/exports.dart';
 import 'package:mix/src/helpers/extensions.dart';
@@ -8,6 +9,7 @@ import '../attributes/flex/flex.props.dart';
 import '../attributes/icon/icon.props.dart';
 import '../attributes/shared/shared.props.dart';
 import '../attributes/text/text.props.dart';
+import '../attributes/zbox/zbox.props.dart';
 import 'mix_factory.dart';
 
 typedef DecoratorMap = Map<DecoratorType, List<Decorator>>;
@@ -41,6 +43,7 @@ class MixContext {
   final SharedProps sharedProps;
   final IconProps iconProps;
   final FlexProps flexProps;
+  final ZBoxProps zBoxProps;
 
   MixContext._({
     required this.context,
@@ -52,6 +55,7 @@ class MixContext {
     required this.sharedProps,
     required this.iconProps,
     required this.flexProps,
+    required this.zBoxProps,
     required this.directives,
     required this.variants,
     required this.decorators,
@@ -93,6 +97,7 @@ class MixContext {
     FlexAttributes? flexAttributes;
     SharedAttributes? sharedAttributes;
     TextAttributes? textAttributes;
+    ZBoxAttributes? zBoxAttributes;
 
     final source = Mix.fromList(_attributes);
     final directives = <DirectiveAttribute>[];
@@ -136,6 +141,11 @@ class MixContext {
         flexAttributes ??= const FlexAttributes();
         flexAttributes = flexAttributes.merge(attribute);
       }
+
+      if (attribute is ZBoxAttributes) {
+        zBoxAttributes ??= const ZBoxAttributes();
+        zBoxAttributes = zBoxAttributes.merge(attribute);
+      }
     }
 
     return MixContext._(
@@ -158,6 +168,7 @@ class MixContext {
       sharedProps: SharedProps.fromContext(context, sharedAttributes),
       iconProps: IconProps.fromContext(context, iconAttributes),
       flexProps: FlexProps.fromContext(context, flexAttributes),
+      zBoxProps: ZBoxProps.fromContext(context, zBoxAttributes),
       directives: directives,
       variants: variants,
       decorators: _getDecoratorMap(decorators),
@@ -233,20 +244,37 @@ class MixContext {
     if (identical(this, other)) return true;
 
     return other is MixContext &&
+        other.context == context &&
+        other.sourceMix == sourceMix &&
+        other.originalMix == originalMix &&
+        other.descendentMix == descendentMix &&
+        listEquals(other.variants, variants) &&
+        listEquals(other.directives, directives) &&
+        other.decorators == decorators &&
         other.boxProps == boxProps &&
         other.textProps == textProps &&
+        other.sharedProps == sharedProps &&
         other.iconProps == iconProps &&
         other.flexProps == flexProps &&
-        other.sharedProps == sharedProps;
+        other.zBoxProps == zBoxProps;
   }
 
   @override
-  int get hashCode =>
-      boxProps.hashCode ^
-      textProps.hashCode ^
-      iconProps.hashCode ^
-      flexProps.hashCode ^
-      sharedProps.hashCode;
+  int get hashCode {
+    return context.hashCode ^
+        sourceMix.hashCode ^
+        originalMix.hashCode ^
+        descendentMix.hashCode ^
+        variants.hashCode ^
+        directives.hashCode ^
+        decorators.hashCode ^
+        boxProps.hashCode ^
+        textProps.hashCode ^
+        sharedProps.hashCode ^
+        iconProps.hashCode ^
+        flexProps.hashCode ^
+        zBoxProps.hashCode;
+  }
 
   MixContext merge(MixContext? other) {
     if (other == null) return this;

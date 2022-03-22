@@ -6,7 +6,7 @@ import 'box.widget.dart';
 import 'gap.widget.dart';
 import 'mixable.widget.dart';
 
-/// _Mix_ corollary to Flutter _Flex_ widget  
+/// _Mix_ corollary to Flutter _Flex_ widget
 /// Use wherever you would use a Flutter _Text_ widget
 ///
 /// ## Attributes

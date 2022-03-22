@@ -1,3 +1,10 @@
+## 0.0.6
+
+- Refactored MixTheme & Context Tokens
+- ZBox Widget
+- Headless Widgets (Experimental)
+- Lots of bug fixes and performance improvements.
+
 ## 0.0.5
 
 - Adjustments on Mix helper for applying variants, and attributes

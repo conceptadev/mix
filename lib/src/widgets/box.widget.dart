@@ -6,8 +6,9 @@ import '../mixer/mix_factory.dart';
 import 'decorator.widget.dart';
 import 'mixable.widget.dart';
 import 'nothing.widget.dart';
+
 /// _Mix_ corollary to Flutter _Container_ widget
-/// 
+///
 /// ## Attributes:
 /// - [BoxAttributes](BoxAttributes-class.html)
 /// - [SharedAttributes](SharedAttributes-class.html) 
