@@ -1,9 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:mix/src/attributes/common/attribute.dart';
+import 'package:flutter/widgets.dart';
+import 'package:mix/mix.dart';
+
 import 'package:mix/src/attributes/pressable/pressable.notifier.dart';
-import 'package:mix/src/helpers/extensions.dart';
-import 'package:mix/src/helpers/variants.dart';
-import 'package:mix/src/theme/mix_theme.dart';
 import 'package:mix/src/theme/tokens/breakpoints_token.dart';
 
 /// {@category Variants}
@@ -131,5 +129,29 @@ class VariantUtils {
         return pressable?.hovering == true;
       },
     );
+  }
+
+  /// Short Utils: active
+  static Variant<T> active<T extends Attribute>() {
+    return Variant<T>(SystemVariants.active.value);
+  }
+
+  /// Short Utils: inactive
+  static Variant<T> inactive<T extends Attribute>() {
+    return Variant<T>(SystemVariants.inactive.value);
+  }
+
+  /// Short Utils: title
+  static Variant<T> title<T extends Attribute>() {
+    return Variant<T>(SystemVariants.title.value);
+  }
+
+  /// Short Utils: paragraph
+  static Variant<T> paragraph<T extends Attribute>() {
+    return Variant<T>(SystemVariants.paragraph.value);
+  }
+
+  static Variant<T> not<T extends Attribute>(Variant<T> other) {
+    return other..inverse = true;
   }
 }

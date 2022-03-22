@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mix/src/attributes/exports.dart';
+import 'package:mix/mix.dart';
 import 'package:mix/src/attributes/pressable/pressable.notifier.dart';
-
-import '../mixer/mix_factory.dart';
-import 'box.widget.dart';
-import 'mixable.widget.dart';
 
 /// The _Mixable_ corollary to the Flutter _Button_ class
 /// Use anywhere you would use a _Button_
