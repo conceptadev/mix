@@ -62,6 +62,9 @@ final RefMap _themeTokens = {
   $secondary: (BuildContext context) {
     return context.colorScheme.secondary;
   },
+  $tertiary: (BuildContext context) {
+    return context.colorScheme.tertiary;
+  },
   $surface: (BuildContext context) {
     return context.colorScheme.surface;
   },
@@ -76,6 +79,9 @@ final RefMap _themeTokens = {
   },
   $onSecondary: (BuildContext context) {
     return context.colorScheme.onSecondary;
+  },
+  $onTertiary: (BuildContext context) {
+    return context.colorScheme.onTertiary;
   },
   $onSurface: (BuildContext context) {
     return context.colorScheme.onSurface;
