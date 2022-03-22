@@ -36,7 +36,8 @@ Pressable(
 );
 ```
 
-Variants can be extremely powerful, and allow you to create consistent variations of your Widgets.
+Variants can be extremely powerful, and allow you to create consistent variations of your 
+Widgets.
 
 ## Usage
 
@@ -95,11 +96,13 @@ final mix = Mix(
 
 ## Variants catalog
 
-Mix already has some `Reactive Variants` defined which can be used to create responsive Widgets.
+Mix already has some `Reactive Variants` defined which can be used to create responsive 
+Widgets.
 
 ### Pressable
 
-These are `Variants` that will change based on different _gestures_ and state of the `Pressable` Widget.
+These are `Variants` that will change based on different _gestures_ and state of the 
+`Pressable` Widget.
 
 - `hover()`: Applies attributes on hover.
 - `focus()`: Applies attributes on focus.
@@ -149,7 +152,7 @@ For widgets such as Dialogs, Cards and Modals, it's good to have titles and cont
 - `title()`: Applies attributes when the `TextMix` is marked as title
 - `paragraph()`: Applies attributes when the `TextMix` is marked as paragraph
 
-```dart
+```dart highlight="2-7"
 final mix = Mix(
   title(
     titleCase(), // Makes the title uppercase
@@ -164,13 +167,16 @@ All other texts that are not marked as `title` will not be touched.
 
 ## Custom Variants
 
-Mix gives you complete control of how to define your own `Variants` and when they are applied.
+Mix gives you complete control of how to define your own `Variants` and when they are 
+applied.
 
-There are two types of `Variants` that you are able to define.
+There are two types of `Variants` that you are able to define: callable and context 
+variants.
 
 ### Callable Variants
 
-Can be called manually when they need to be applied. You can define a variant the following way.
+Can be called manually when they need to be applied. You can define a variant the following 
+way.
 
 ```dart highlight="6-10"
 const outlined = Variant('outlined');
@@ -188,35 +194,35 @@ final mix = Mix(
 
 You are then able to choose when to apply the variant based on your own logic.
 
-```dart
-
+```dart highlight="2"
 Pressable(
   mix: mix.withVariant(outlined),
-  onPress: () {},
+  onPressed: () {},
   child: const TextMix('Outlined Button'),
 );
-
 ```
 
-You are also able to pass the variant through MixableWidgets `variant` parameter
+You are also able to pass the variant through the `variant` parameter on the 
+`MixableWidget` constructor
 
-```dart
+```dart highlight="3"
 Pressable(
   mix: mix,
   variant: outlined,
-  onPress: () {},
+  onPressed: () {},
   child: const TextMix('Outlined Button'),
 );
 
 ```
 
-### Reactive Variants
+### Context Variants
 
-These are `Variants` that have a method that defines when they should be applied based on the `BuildContext`. These will be applied automatically.
+These are `Variants` that have a method that defines when they should be applied based on 
+the `BuildContext`. These will be applied automatically.
 
 Here is an example implementation of the `dark()` to understand how it works.
 
-```dart
+```dart highlight="3-5"
 final dark = Variant(
   'dark',
   shouldApply: (BuildContext context) {
