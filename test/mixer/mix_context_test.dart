@@ -84,7 +84,6 @@ void main() {
           reason: 'sourceMix',
         );
 
-        // expect(matchContext == mixContext, true);
         // Different instance but same properties
         expect(matchContext.hashCode == mixContext.hashCode, false);
       });

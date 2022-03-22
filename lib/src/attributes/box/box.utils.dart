@@ -5,6 +5,7 @@ import 'package:mix/src/dto/border_radius.dto.dart';
 import 'package:mix/src/dto/box_shadow.dto.dart';
 import 'package:mix/src/dto/edge_insets.dto.dart';
 import 'package:mix/src/helpers/extensions.dart';
+
 ///
 /// ## Widget:
 /// - [Box](Box-class.html)
@@ -69,17 +70,17 @@ class BoxUtility {
   static BoxAttributes paddingTop(double value) {
     return BoxAttributes(padding: EdgeInsetsDto.only(top: value));
   }
- 
+
   /// Short Utils: paddingRight, pr
   static BoxAttributes paddingRight(double value) {
     return BoxAttributes(padding: EdgeInsetsDto.only(right: value));
   }
- 
+
   /// Short Utils: paddingBottom, pb
   static BoxAttributes paddingBottom(double value) {
     return BoxAttributes(padding: EdgeInsetsDto.only(bottom: value));
   }
- 
+
   /// Short Utils: paddingLeft, pl
   static BoxAttributes paddingLeft(double value) {
     return BoxAttributes(padding: EdgeInsetsDto.only(left: value));
@@ -108,12 +109,12 @@ class BoxUtility {
   static BoxAttributes width(double width) {
     return BoxAttributes(width: width);
   }
- 
+
   /// Short Utils: maxHeight, maxH
   static BoxAttributes maxHeight(double maxHeight) {
     return BoxAttributes(maxHeight: maxHeight);
   }
- 
+
   /// Short Utils: maxWidth, maxW
   static BoxAttributes maxWidth(double maxWidth) {
     return BoxAttributes(maxWidth: maxWidth);
@@ -128,25 +129,25 @@ class BoxUtility {
   static BoxAttributes minWidth(double minWidth) {
     return BoxAttributes(minWidth: minWidth);
   }
- 
+
   /// Short Utils: (none: see rounded)
   static BoxAttributes borderRadius(BorderRadiusDto radius) {
     return BoxAttributes(borderRadius: radius);
   }
- 
+
   /// Short Utils: rounded, r
   /// (Rounded corners)
   static BoxAttributes rounded(double value) {
     return borderRadius(BorderRadiusDto.all(value));
   }
- 
-  /// Short Utils: squared  
+
+  /// Short Utils: squared
   /// (Squared corners)
   static BoxAttributes squared() {
     return borderRadius(BorderRadiusDto.zero);
   }
- 
-  /// Short Utils: roundedTR, roundedBR, roundedTL, roundedBL  
+
+  /// Short Utils: roundedTR, roundedBR, roundedTL, roundedBL
   /// (Rounding select corners)
   static BoxAttributes roundedOnly({
     double? topLeft,
@@ -163,8 +164,8 @@ class BoxUtility {
       ),
     );
   }
- 
-  /// Short Utils: border  
+
+  /// Short Utils: border
   /// (Border attributes for all border sides)
   static BoxAttributes border({
     Color? color,
@@ -188,26 +189,26 @@ class BoxUtility {
       border: border,
     );
   }
- 
-  /// Short Utils: borderColor  
-  /// (Border color for all border sides) 
+
+  /// Short Utils: borderColor
+  /// (Border color for all border sides)
   static BoxAttributes borderColor(Color color) {
     return BoxAttributes(border: BorderDto.all(color: color));
   }
 
-  /// Short Utils: borderWidth  
-  /// (Border width for all border sides)   
+  /// Short Utils: borderWidth
+  /// (Border width for all border sides)
   static BoxAttributes borderWidth(double width) {
     return BoxAttributes(border: BorderDto.all(width: width));
   }
- 
+
   /// Short Utils: align
   static BoxAttributes align(Alignment align) {
     return BoxAttributes(alignment: align);
   }
 
-  /// Short Utils: borderStyle  
-  /// (Border style for all border sides)  
+  /// Short Utils: borderStyle
+  /// (Border style for all border sides)
   static BoxAttributes borderStyle(BorderStyle style) {
     return BoxAttributes(border: BorderDto.all(style: style));
   }
@@ -256,7 +257,7 @@ class BoxUtility {
     );
   }
 
-  /// Short Utils: shadow  
+  /// Short Utils: shadow
   static BoxAttributes shadow({
     Color? color,
     Offset? offset,

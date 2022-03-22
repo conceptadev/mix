@@ -78,7 +78,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/leoafarias"><img src="https://avatars.githubusercontent.com/u/435833?v=4?s=50" width="50px;" alt=""/><br /><sub><b>Leo Farias</b></sub></a><br /><a href="#ideas-leoafarias" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/leoafarias/mix/commits?author=leoafarias" title="Code">💻</a> <a href="https://github.com/leoafarias/mix/commits?author=leoafarias" title="Documentation">📖</a></td>
     <td align="center"><a href="https://discord.gg/VhDsNvhbhc"><img src="https://avatars.githubusercontent.com/u/45696119?v=4?s=50" width="50px;" alt=""/><br /><sub><b>Bruno D'Luka</b></sub></a><br /><a href="https://github.com/leoafarias/mix/commits?author=bdlukaa" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/rickbsgu"><img src="https://avatars.githubusercontent.com/u/161474?v=4?s=50" width="50px;" alt=""/><br /><sub><b>Rick Berger</b></sub></a><br /><a href="https://github.com/leoafarias/mix/commits?author=rickbsgu" title="Documentation">📖</a></td>
-    <td align="center"><a href="http://souvikbiswas.com/"><img src="https://avatars.githubusercontent.com/u/43280874?v=4?s=50" width="50px;" alt=""/><br /><sub><b>Souvik Biswas</b></sub></a><br /><a href="#content-sbis04" title="Content">🖋</a> <a href="#tutorial-sbis04" title="Tutorials">✅</a></td>
+    <td align="center"><a href="https://github.com/sbis04"><img src="https://avatars.githubusercontent.com/u/43280874?v=4?s=50" width="50px;" alt=""/><br /><sub><b>Souvik Biswas</b></sub></a><br /><a href="#content-sbis04" title="Content">🖋</a> <a href="#tutorial-sbis04" title="Tutorials">✅</a></td>
   </tr>
 </table>
 
