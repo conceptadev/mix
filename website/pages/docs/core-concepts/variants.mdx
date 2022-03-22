@@ -137,6 +137,31 @@ MixTheme(
 - `dark()`: Applies attributes when the theme is in dark mode.
 - `light()`: Applies attributes when the theme is in light mode.
 
+### State Holding
+
+- `active()`: Applies attributes when the widget state is marked as active
+- `inactive()`: Applies attributes when the widget state is marked as inactive
+
+### Text Styling
+
+For widgets such as Dialogs, Cards and Modals, it's good to have titles and content.
+
+- `title()`: Applies attributes when the `TextMix` is marked as title
+- `paragraph()`: Applies attributes when the `TextMix` is marked as paragraph
+
+```dart
+final mix = Mix(
+  title(
+    titleCase(), // Makes the title uppercase
+    font(
+      weight: FontWeight.bold, // Makes the title bold
+    ),
+  ),
+);
+```
+
+All other texts that are not marked as `title` will not be touched.
+
 ## Custom Variants
 
 Mix gives you complete control of how to define your own `Variants` and when they are applied.
