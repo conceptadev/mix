@@ -8,8 +8,10 @@ import 'nothing.widget.dart';
 ///
 /// ## Attributes:
 /// - [BoxAttributes](BoxAttributes-class.html)
+/// - [SharedAttributes](SharedAttributes-class.html) 
 /// ## Utilities:
 /// - [BoxUtility](BoxUtility-class.html)
+/// - [SharedUtils](SharedUtils-class.html)
 ///
 /// {@category Mixable Widgets}
 class Box extends MixableWidget {

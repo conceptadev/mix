@@ -7,8 +7,10 @@ import 'nothing.widget.dart';
 ///
 /// ## Attributes
 /// - [IconAttributes](IconAttributes-class.html)
+/// - [SharedAttributes](SharedAttributes-class.html) 
 /// ## Utilities
 /// - [IconUtils](IconUtils-class.html)
+/// - [SharedUtils](SharedUtils-class.html)
 ///
 /// {@category Mixable Widgets}
 class IconMix extends MixableWidget {
@@ -42,6 +44,7 @@ class IconMix extends MixableWidget {
   }
 }
 
+/// {@nodoc}
 class IconMixerWidget extends MixedWidget {
   const IconMixerWidget(
     MixContext mixContext, {

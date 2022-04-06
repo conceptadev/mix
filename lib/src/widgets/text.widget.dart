@@ -10,10 +10,12 @@ import 'package:mix/src/widgets/nothing.widget.dart';
 /// ## Attributes:
 /// - [TextAttributes](TextAttributes-class.html)
 /// - [TextDirectiveAttribute](TextDirectiveAttribute-class.html)
+/// - [SharedAttributes](SharedAttributes-class.html) 
 /// ## Utilities:
 /// - [TextUtility](TextUtility-class.html)
 /// - [TextStyleUtility](TextStyleUtility-class.html)
 /// - [TextDirectiveUtils](TextDirectiveUtils-class.html)
+/// - [SharedUtils](SharedUtils-class.html)
 /// {@category Mixable Widgets}
 class TextMix extends MixableWidget {
   const TextMix(
