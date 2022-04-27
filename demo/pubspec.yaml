@@ -38,6 +38,10 @@ dependencies:
   flutter_hooks: ^0.18.1
   hooks_riverpod: ^1.0.0
   functional_widget: ^0.9.1
+  adaptive_navigation: ^0.0.5
+  google_fonts: ^2.3.2
+  desktop_window: ^0.4.0
+  community_material_icon: ^5.9.55
 
 dev_dependencies:
   flutter_test:

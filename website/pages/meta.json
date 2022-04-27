@@ -1,11 +1,11 @@
 {
   "index": {
     "title": "Introduction",
-    "type": "nav",
+    "type": "page",
     "hidden": true
   },
   "docs": {
     "title": "Docs",
-    "type": "nav"
+    "type": "page"
   }
 }

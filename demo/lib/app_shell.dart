@@ -1,3 +1,5 @@
+import 'package:community_material_icon/community_material_icon.dart';
+import 'package:demo/components/atoms/adaptive_scaffold.dart';
 import 'package:demo/views/basic_example.dart';
 import 'package:demo/views/button_preview.dart';
 import 'package:demo/views/cards.dart';
@@ -31,9 +33,10 @@ class AppShell extends HookConsumerWidget {
 
     return MixTheme(
       data: MixThemeData(),
-      child: Scaffold(
+      child: AdaptiveNavigationScaffold(
         appBar: AppBar(
-          title: const Text('Mix'),
+          title: const Text('Mix Gallery'),
+          centerTitle: false,
           actions: [
             Switch(
               value: darkMode.state,
@@ -41,45 +44,31 @@ class AppShell extends HookConsumerWidget {
             )
           ],
         ),
-        body: Row(
-          children: [
-            NavigationRail(
-              extended: true,
-              selectedIndex: selected.value,
-              onDestinationSelected: (index) {
-                selected.value = index;
-              },
-              // labelType: NavigationRailLabelType.selected,
-              destinations: const <NavigationRailDestination>[
-                NavigationRailDestination(
-                  icon: Icon(Icons.circle),
-                  label: Text('Basic Example'),
-                ),
-                NavigationRailDestination(
-                  icon: Icon(Icons.circle),
-                  label: Text('Design Tokens'),
-                ),
-                NavigationRailDestination(
-                  icon: Icon(Icons.circle),
-                  label: Text('Pressable'),
-                ),
-                NavigationRailDestination(
-                  icon: Icon(Icons.circle),
-                  label: Text('Cards'),
-                ),
-                NavigationRailDestination(
-                  icon: Icon(Icons.circle),
-                  label: Text('Headless'),
-                ),
-              ],
-            ),
-            const VerticalDivider(thickness: 1, width: 1),
-            // This is the main content.
-            Expanded(
-              child: screens[selected.value],
-            ),
-          ],
-        ),
+        currentIndex: selected.value,
+        onNavigationIndexChange: (index) => selected.value = index,
+        destinations: const <AdaptiveScaffoldDestination>[
+          AdaptiveScaffoldDestination(
+            icon: Icon(CommunityMaterialIcons.widgets),
+            label: 'Components',
+          ),
+          AdaptiveScaffoldDestination(
+            icon: Icon(CommunityMaterialIcons.view_compact),
+            label: 'Layout',
+          ),
+          AdaptiveScaffoldDestination(
+            icon: Icon(CommunityMaterialIcons.format_text_variant),
+            label: 'Typography',
+          ),
+          AdaptiveScaffoldDestination(
+            icon: Icon(CommunityMaterialIcons.message_alert),
+            label: 'Feedback',
+          ),
+          AdaptiveScaffoldDestination(
+            icon: Icon(Icons.circle),
+            label: 'Headless',
+          ),
+        ],
+        body: screens[selected.value],
       ),
     );
   }

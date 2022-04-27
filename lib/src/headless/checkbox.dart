@@ -69,6 +69,7 @@ class CheckboxX extends RemixableWidget {
   @override
   Widget build(BuildContext context) {
     final fn = onChanged;
+
     return Pressable(
       mix: Mix.chooser(
         condition: checked,
