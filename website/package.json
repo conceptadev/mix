@@ -11,35 +11,25 @@
   "author": "Shu Ding",
   "license": "MIT",
   "dependencies": {
-    "@docsearch/react": "^3.0.0-alpha.42",
     "@heroicons/react": "^1.0.5",
+    "@docsearch/react": "^3.0.0",
     "copy-to-clipboard": "^3.3.1",
-    "global": "^4.4.0",
     "next": "^12.0.7",
-    "nextra": "2.0.0-beta.5",
-    "nextra-theme-docs": "2.0.0-beta.5",
-    "prism-react-renderer": "^1.2.1",
-    "prismjs": "^1.25.0",
+    "nextra": "2.0.0-alpha.48",
+    "nextra-theme-docs": "2.0.0-alpha.48",
     "react": "^17.0.1",
-    "react-dom": "^17.0.1",
-    "react-hot-toast": "^2.1.1"
+    "react-hot-toast": "^2.1.1",
+    "react-dom": "^17.0.1"
   },
   "devDependencies": {
-    "@tailwindcss/typography": "^0.5.0",
-    "@types/node": "^17.0.4",
-    "@types/react": "^17.0.38",
-    "@typescript-eslint/eslint-plugin": "^5.8.0",
-    "@typescript-eslint/parser": "^5.8.0",
-    "autoprefixer": "^10.4.0",
-    "eslint": "^8.5.0",
-    "eslint-config-next": "^12.0.7",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-next": "^0.0.0",
-    "husky": "^7.0.4",
+    "@types/mdx": "^2.0.1",
+    "@types/node": "^17.0.23",
+    "@types/react": "^17.0.34",
+    "autoprefixer": "^10.4.4",
     "postcss": "^8.4.5",
     "postcss-import": "^14.0.2",
-    "prettier": "^2.5.1",
+    "prettier": "^2.0.5",
     "tailwindcss": "^3.0.7",
-    "typescript": "^4.5.4"
+    "typescript": "^4.4.4"
   }
 }
