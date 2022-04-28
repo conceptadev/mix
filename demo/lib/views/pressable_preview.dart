@@ -34,8 +34,7 @@ class _PressablePreviewState extends State<PressablePreview> {
         border(color: Colors.white),
         textColor(Colors.white),
       ),
-      // could be `hover & enabled`
-      (hover & not(disabled))(
+      (hover & active)(
         textColor(Colors.white),
         borderColor(Colors.greenAccent),
       ),
@@ -52,7 +51,7 @@ class _PressablePreviewState extends State<PressablePreview> {
           mainAxisSize: MainAxisSize.min,
           children: [
             SwitchX(
-              checked: _enabled,
+              active: _enabled,
               onChanged: (v) => setState(() => _enabled = v),
             ),
             const SizedBox(width: 5.0),
@@ -67,7 +66,7 @@ class _PressablePreviewState extends State<PressablePreview> {
                     context: context,
                     builder: (context) {
                       return AlertDialogX(
-                        content: [
+                        content: const [
                           TextMix('Are you absolutely sure?', variant: title),
                           TextMix(
                             'This action cannot be undone. '

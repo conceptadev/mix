@@ -37,6 +37,9 @@ class RadioButtonX extends RemixableWidget {
   final ValueChanged<bool>? onChanged;
   final RadioButtonIndicator indicator;
 
+  static Variant whenOn = const Variant('active');
+
+  static Variant whenOff = const Variant('off');
   @override
   Mix get defaultMix {
     return Mix(
@@ -47,7 +50,7 @@ class RadioButtonX extends RemixableWidget {
         color: Colors.grey.shade300,
         width: 2,
       ),
-      (active | hover)(
+      (whenOn | hover)(
         border(color: Colors.blue),
       ),
       disabled(
@@ -62,8 +65,8 @@ class RadioButtonX extends RemixableWidget {
     return Pressable(
       mix: Mix.chooser(
         condition: checked,
-        ifTrue: mix.withVariant(active),
-        ifFalse: mix.withVariant(inactive),
+        ifTrue: mix.withVariant(whenOn),
+        ifFalse: mix.withVariant(whenOff),
       ),
       onPressed: fn == null ? null : () => fn(!checked),
       child: indicator.build(
@@ -96,7 +99,7 @@ class RadioButtonIndicator {
       animated(),
       rounded(100),
       margin(4),
-      active(
+      RadioButtonX.whenOn(
         bgColor(Colors.blue),
       ),
       apply(mix),
@@ -107,8 +110,8 @@ class RadioButtonIndicator {
     return Box(
       mix: Mix.chooser(
         condition: checked,
-        ifTrue: __mix.withVariant(active),
-        ifFalse: __mix.withVariant(inactive),
+        ifTrue: __mix.withVariant(RadioButtonX.whenOn),
+        ifFalse: __mix.withVariant(RadioButtonX.whenOff),
       ),
       child: child,
     );
