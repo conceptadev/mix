@@ -18,10 +18,4 @@ final focus = VariantUtils.focused();
 final hover = VariantUtils.hover();
 final press = VariantUtils.pressing();
 
-final active = VariantUtils.active();
-final inactive = VariantUtils.inactive();
-
-final title = VariantUtils.title();
-final paragraph = VariantUtils.paragraph();
-
 const not = VariantUtils.not;

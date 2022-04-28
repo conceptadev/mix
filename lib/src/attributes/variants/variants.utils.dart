@@ -8,7 +8,9 @@ import 'package:mix/src/theme/tokens/breakpoints_token.dart';
 class VariantUtils {
   const VariantUtils._();
 
-  static _screenSizeCheck(ScreenSizeToken screenSize) {
+  static bool Function(BuildContext) _screenSizeCheck(
+    ScreenSizeToken screenSize,
+  ) {
     return (BuildContext context) {
       final breakpoints = MixTheme.of(context).breakpoints;
       return breakpoints.getScreenSize(context).index <= screenSize.index;
@@ -129,26 +131,6 @@ class VariantUtils {
         return pressable?.hovering == true;
       },
     );
-  }
-
-  /// Short Utils: active
-  static Variant<T> active<T extends Attribute>() {
-    return Variant<T>(SystemVariants.active.value);
-  }
-
-  /// Short Utils: inactive
-  static Variant<T> inactive<T extends Attribute>() {
-    return Variant<T>(SystemVariants.inactive.value);
-  }
-
-  /// Short Utils: title
-  static Variant<T> title<T extends Attribute>() {
-    return Variant<T>(SystemVariants.title.value);
-  }
-
-  /// Short Utils: paragraph
-  static Variant<T> paragraph<T extends Attribute>() {
-    return Variant<T>(SystemVariants.paragraph.value);
   }
 
   static Variant<T> not<T extends Attribute>(Variant<T> other) {
