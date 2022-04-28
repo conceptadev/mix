@@ -13,6 +13,7 @@ class VariantUtils {
   ) {
     return (BuildContext context) {
       final breakpoints = MixTheme.of(context).breakpoints;
+
       return breakpoints.getScreenSize(context).index <= screenSize.index;
     };
   }
@@ -84,7 +85,7 @@ class VariantUtils {
     return Variant<T>(
       SystemVariants.dark.value,
       shouldApply: (BuildContext context) {
-        return context.isDarkMode == false;
+        return !context.isDarkMode;
       },
     );
   }
@@ -95,6 +96,7 @@ class VariantUtils {
       SystemVariants.disabled.value,
       shouldApply: (BuildContext context) {
         final pressable = PressableNotifier.of(context);
+
         return pressable?.disabled == true;
       },
     );
@@ -106,6 +108,7 @@ class VariantUtils {
       SystemVariants.focus.value,
       shouldApply: (BuildContext context) {
         final pressable = PressableNotifier.of(context);
+
         return pressable?.focused == true;
       },
     );
@@ -117,6 +120,7 @@ class VariantUtils {
       SystemVariants.pressing.value,
       shouldApply: (BuildContext context) {
         final pressable = PressableNotifier.of(context);
+
         return pressable?.pressing == true;
       },
     );
@@ -128,6 +132,7 @@ class VariantUtils {
       SystemVariants.hover.value,
       shouldApply: (BuildContext context) {
         final pressable = PressableNotifier.of(context);
+
         return pressable?.hovering == true;
       },
     );
