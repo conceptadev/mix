@@ -16,7 +16,7 @@ import 'package:mix/src/widgets/pressable.widget.dart';
 ///        color: Colors.grey.shade300,
 ///        width: 2,
 ///      ),
-///      (whenOn | hover)(
+///      (active | hover)(
 ///        border(color: Colors.blue),
 ///      ),
 ///      disabled(
@@ -36,6 +36,9 @@ class RadioButtonX extends RemixableWidget {
   final bool checked;
   final ValueChanged<bool>? onChanged;
   final RadioButtonIndicator indicator;
+
+  static Variant active = const Variant('active');
+  static Variant inactive = const Variant('inactive');
 
   @override
   Mix get defaultMix {
@@ -96,7 +99,7 @@ class RadioButtonIndicator {
       animated(),
       rounded(100),
       margin(4),
-      active(
+      RadioButtonX.active(
         bgColor(Colors.blue),
       ),
       apply(mix),
@@ -107,8 +110,8 @@ class RadioButtonIndicator {
     return Box(
       mix: Mix.chooser(
         condition: checked,
-        ifTrue: __mix.withVariant(active),
-        ifFalse: __mix.withVariant(inactive),
+        ifTrue: __mix.withVariant(RadioButtonX.active),
+        ifFalse: __mix.withVariant(RadioButtonX.inactive),
       ),
       child: child,
     );

@@ -1,6 +1,4 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
 import 'package:mix/mix.dart';
 
 /// Used to check if its reserved
@@ -13,10 +11,6 @@ enum SystemVariants {
   focus,
   hover,
   pressing,
-  active,
-  inactive,
-  title,
-  paragraph,
 }
 
 extension SystemVariantsExt on SystemVariants {
@@ -27,37 +21,20 @@ extension SystemVariantsExt on SystemVariants {
 }
 
 /// @nodoc
-enum _VariantOperations { and, or }
+enum _OP {
+  and,
+  or,
+}
 
 /// @nodoc
 class MultiVariant<T extends Attribute> {
-  final List<Variant<T>> variants;
-  final _VariantOperations operator;
-
   const MultiVariant(
     this.variants, {
     required this.operator,
   });
 
-  MultiVariant<T> operator &(Variant<T> variant) {
-    if (operator != _VariantOperations.and) {
-      throw 'All the operators in the equation must be the same';
-    }
-
-    variants.add(variant);
-
-    return this;
-  }
-
-  MultiVariant<T> operator |(Variant<T> variant) {
-    if (operator != _VariantOperations.or) {
-      throw 'All the operators in the equation must be the same';
-    }
-
-    variants.add(variant);
-
-    return this;
-  }
+  final List<Variant<T>> variants;
+  final _OP operator;
 
   List<VariantAttribute<T>> _buildOrOperations(
     List<T> attributes, {
@@ -121,45 +98,29 @@ class MultiVariant<T extends Attribute> {
     if (p12 != null) params.add(p12);
 
     List<VariantAttribute<T>> attributes = [];
-    if (operator == _VariantOperations.and) {
+    if (operator == _OP.and) {
       attributes = _buildAndOperations(params);
-    } else if (operator == _VariantOperations.or) {
+    } else if (operator == _OP.or) {
       attributes = _buildOrOperations(params);
     }
 
     return NestedAttribute<VariantAttribute<T>>(attributes);
   }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is MultiVariant<T> &&
-        listEquals(other.variants, variants) &&
-        other.operator == operator;
-  }
-
-  @override
-  int get hashCode => variants.hashCode ^ operator.hashCode;
-
-  @override
-  String toString() => 'MultiVariant(variants: $variants, operator: $operator)';
 }
 
 /// {@category Variants}
 class Variant<T extends Attribute> {
+  const Variant(this.name, {this.shouldApply});
+
   final String name;
+
   final bool Function(BuildContext)? shouldApply;
 
-  bool inverse = false;
-
-  Variant(this.name, {this.shouldApply});
-
   MultiVariant<T> operator &(Variant<T> variant) =>
-      MultiVariant<T>([this, variant], operator: _VariantOperations.and);
+      MultiVariant<T>([this, variant], operator: _OP.and);
 
   MultiVariant<T> operator |(Variant<T> variant) =>
-      MultiVariant<T>([this, variant], operator: _VariantOperations.or);
+      MultiVariant<T>([this, variant], operator: _OP.or);
 
   VariantAttribute<T> call([
     T? p1,
@@ -199,15 +160,12 @@ class Variant<T extends Attribute> {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-
-    return other is Variant<T> &&
-        other.name == name &&
-        other.shouldApply == shouldApply;
+    return other is Variant && other.name == name;
   }
 
   @override
-  int get hashCode => name.hashCode ^ shouldApply.hashCode;
+  int get hashCode => name.hashCode;
 
   @override
-  String toString() => 'Variant(name: $name)';
+  String toString() => 'Var(name: $name)';
 }

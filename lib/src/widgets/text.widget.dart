@@ -1,8 +1,12 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter/widgets.dart';
-
-import 'package:mix/mix.dart';
+import 'package:flutter/material.dart';
+import 'package:mix/src/attributes/exports.dart';
+import 'package:mix/src/helpers/extensions.dart';
 import 'package:mix/src/widgets/nothing.widget.dart';
+
+import '../mixer/mix_context.dart';
+import '../mixer/mix_factory.dart';
+import 'mixable.widget.dart';
 
 /// _Mix_ corollary to Flutter _Text_ widget
 /// Use wherever you would use a Flutter _Text_ widget

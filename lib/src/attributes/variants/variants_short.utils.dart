@@ -1,6 +1,6 @@
-import 'package:mix/mix.dart';
+import 'package:mix/src/attributes/variants/variants.utils.dart';
 
-// Dynamic utilities
+/// Dynamic utilities
 final xsmall = VariantUtils.xsmall();
 final small = VariantUtils.small();
 final medium = VariantUtils.medium();
@@ -12,16 +12,7 @@ final landscape = VariantUtils.landscape();
 final dark = VariantUtils.dark();
 final light = VariantUtils.light();
 
-final enabled = not(disabled);
 final disabled = VariantUtils.disabled();
 final focus = VariantUtils.focused();
 final hover = VariantUtils.hover();
 final press = VariantUtils.pressing();
-
-final active = VariantUtils.active();
-final inactive = VariantUtils.inactive();
-
-final title = VariantUtils.title();
-final paragraph = VariantUtils.paragraph();
-
-const not = VariantUtils.not;
