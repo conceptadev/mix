@@ -2,6 +2,7 @@ import Image from "next/image";
 import CustomSearch from "./components/Search";
 const themeConfig = {
   github: "https://github.com/fluttertools/mix",
+  projectLink: "https://github.com/fluttertools/mix",
   docsRepositoryBase: "https://github.com/fluttertools/mix/blob/main",
   search: true,
   customSearch: <CustomSearch />,
