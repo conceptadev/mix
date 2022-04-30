@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mix/mix.dart';
 
-import '../helpers/variants.dart';
-import '../mixer/mix_context.dart';
-import '../mixer/mix_factory.dart';
 import 'decorator.widget.dart';
-import 'mixable.widget.dart';
 import 'nothing.widget.dart';
 
 /// _Mix_ corollary to Flutter _Container_ widget

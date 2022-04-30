@@ -1,14 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:mix/src/helpers/variants.dart';
-
-import '../attributes/common/attribute.dart';
-import '../attributes/helpers/helper.utils.dart';
-import '../widgets/box.widget.dart';
-import '../widgets/flex.widget.dart';
-import '../widgets/icon.widget.dart';
-import '../widgets/pressable.widget.dart';
-import '../widgets/text.widget.dart';
+import 'package:mix/mix.dart';
 
 /// Defines a mix
 /// {@category Mix Object}

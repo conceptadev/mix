@@ -7,6 +7,8 @@ import 'package:mix/src/widgets/box.widget.dart';
 import 'package:mix/src/widgets/mixable.widget.dart';
 import 'package:mix/src/widgets/pressable.widget.dart';
 
+import 'exports.dart';
+
 /// _Mix_ corollary to Flutter _Switch_ widget
 ///
 /// Default _Mix_ values:
@@ -16,7 +18,7 @@ import 'package:mix/src/widgets/pressable.widget.dart';
 ///      width(36),
 ///      rounded(100),
 ///      bgColor($onPrimary),
-///      whenOff(
+///      inactive(
 ///        align(Alignment.centerLeft),
 ///        bgColor(Colors.grey.shade300),
 ///      ),
@@ -29,19 +31,16 @@ import 'package:mix/src/widgets/pressable.widget.dart';
 class SwitchX extends RemixableWidget {
   const SwitchX({
     Key? key,
-    this.active = true,
+    this.checked = true,
     Mix? mix,
     this.onChanged,
     this.thumb = const SwitchThumb(Mix.constant),
   }) : super(mix, key: key);
 
-  final bool active;
+  final bool checked;
 
   final ValueChanged<bool>? onChanged;
   final SwitchThumb thumb;
-
-  static Variant on = const Variant('on');
-  static Variant off = const Variant('off');
 
   @override
   Mix get defaultMix {
@@ -51,11 +50,11 @@ class SwitchX extends RemixableWidget {
       width(36),
       rounded(100),
       bgColor($onPrimary),
-      off(
+      inactive(
         align(Alignment.centerLeft),
         bgColor(Colors.grey.shade300),
       ),
-      on(
+      active(
         align(Alignment.centerRight),
         bgColor($primary),
       ),
@@ -72,16 +71,13 @@ class SwitchX extends RemixableWidget {
     final fn = onChanged;
 
     return Pressable(
-      onPressed: fn == null ? null : () => fn(!active),
+      onPressed: fn == null ? null : () => fn(!checked),
       mix: Mix.chooser(
-        condition: active,
-        ifTrue: mix.withVariant(SwitchX.on),
-        ifFalse: mix.withVariant(SwitchX.off),
+        condition: checked,
+        ifTrue: mix.withVariant(active),
+        ifFalse: mix.withVariant(inactive),
       ),
-      child: thumb.build(
-        context,
-        active,
-      ),
+      child: thumb.build(context, checked),
     );
   }
 }
@@ -105,8 +101,8 @@ class SwitchThumb {
     return Box(
       mix: Mix.chooser(
         condition: checked,
-        ifTrue: __mix.withVariant(SwitchX.on),
-        ifFalse: __mix.withVariant(SwitchX.off),
+        ifTrue: __mix.withVariant(active),
+        ifFalse: __mix.withVariant(inactive),
       ),
     );
   }

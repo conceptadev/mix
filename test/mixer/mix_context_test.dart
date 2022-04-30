@@ -4,7 +4,7 @@ import 'package:mix/mix.dart';
 
 import '../testing_utils.dart';
 
-const textVariant = Variant('textVariant');
+final textVariant = Variant('textVariant');
 
 const overrideTextAttribute = TextAttributes(
   style: TextStyle(
@@ -31,10 +31,7 @@ class _MixContextTestWidget extends StatelessWidget {
         child: Column(
           children: [
             const TextMix('Hello'),
-            const TextMix(
-              'With Variant',
-              variant: textVariant,
-            ),
+            TextMix('With Variant', variant: textVariant),
             TextMix(
               'With Mix',
               mix: Mix(
