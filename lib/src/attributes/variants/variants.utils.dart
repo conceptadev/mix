@@ -131,26 +131,6 @@ class VariantUtils {
     );
   }
 
-  /// Short Utils: active
-  static Variant<T> active<T extends Attribute>() {
-    return Variant<T>(SystemVariants.active.value);
-  }
-
-  /// Short Utils: inactive
-  static Variant<T> inactive<T extends Attribute>() {
-    return Variant<T>(SystemVariants.inactive.value);
-  }
-
-  /// Short Utils: title
-  static Variant<T> title<T extends Attribute>() {
-    return Variant<T>(SystemVariants.title.value);
-  }
-
-  /// Short Utils: paragraph
-  static Variant<T> paragraph<T extends Attribute>() {
-    return Variant<T>(SystemVariants.paragraph.value);
-  }
-
   static Variant<T> not<T extends Attribute>(Variant<T> other) {
     return other..inverse = true;
   }
