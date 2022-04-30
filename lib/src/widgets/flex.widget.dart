@@ -11,10 +11,8 @@ import 'mixable.widget.dart';
 ///
 /// ## Attributes
 /// - [FlexAttributes](FlexAttributes-class.html)
-/// - [SharedAttributes](SharedAttributes-class.html) 
 /// ## Utilities
 /// - [FlexUtils](FlexUtils-class.html)
-/// - [SharedUtils](SharedUtils-class.html)
 ///
 /// {@category Mixable Widgets}
 class FlexBox extends MixableWidget {

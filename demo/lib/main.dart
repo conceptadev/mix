@@ -1,14 +1,10 @@
-import 'package:demo/theme.dart';
-import 'package:desktop_window/desktop_window.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'app_shell.dart';
 import 'providers/dark_mode.provider.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await DesktopWindow.setMinWindowSize(const Size(600, 600));
+void main() {
   runApp(const MyApp());
 }
 
@@ -22,10 +18,17 @@ class MyApp extends StatelessWidget {
       child: Consumer(builder: (context, ref, _) {
         final darkMode = ref.watch(darkModeProvider);
         return MaterialApp(
-          title: 'Mix Gallery',
+          title: 'Mix',
           debugShowCheckedModeBanner: false,
-          theme: lightTheme,
-          darkTheme: darkTheme,
+          theme: ThemeData(
+            fontFamily: 'Inter',
+          ),
+          darkTheme: ThemeData(
+            fontFamily: 'Inter',
+            colorScheme: ColorScheme.fromSwatch(
+              brightness: Brightness.dark,
+            ),
+          ),
           themeMode: darkMode ? ThemeMode.dark : ThemeMode.light,
           home: const AppShell(),
         );

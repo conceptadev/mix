@@ -18,7 +18,6 @@ class ZBoxProps {
     ZBoxAttributes? attributes,
   ) {
     final zbox = attributes;
-
     return ZBoxProps(
       alignment: zbox?.alignment ?? Alignment.topLeft,
       clipBehavior: zbox?.clipBehavior ?? Clip.none,

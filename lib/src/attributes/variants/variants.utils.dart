@@ -1,9 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:mix/src/attributes/common/attribute.dart';
+import 'package:flutter/widgets.dart';
+import 'package:mix/mix.dart';
+
 import 'package:mix/src/attributes/pressable/pressable.notifier.dart';
-import 'package:mix/src/helpers/extensions.dart';
-import 'package:mix/src/helpers/variants.dart';
-import 'package:mix/src/theme/mix_theme.dart';
 import 'package:mix/src/theme/tokens/breakpoints_token.dart';
 
 /// {@category Variants}

@@ -1,10 +1,7 @@
 import 'package:flutter/widgets.dart';
 
 import '../common/attribute.dart';
-/// ## Widget:
-/// - [ZBox](ZBox-class.html)
-///
-/// {@category Attributes}
+
 class ZBoxAttributes extends Attribute {
   final AlignmentGeometry? alignment;
   final StackFit? fit;

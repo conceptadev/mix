@@ -24,7 +24,7 @@ class VariantAttribute<T extends Attribute> extends Attribute {
     bool Function(BuildContext)? shouldApply,
   }) : _shouldApply = shouldApply;
 
-  final Variant variant;
+  final Variant<T> variant;
   final List<T> attributes;
   final bool Function(BuildContext)? _shouldApply;
 

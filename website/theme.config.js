@@ -1,12 +1,12 @@
 import Image from "next/image";
 import CustomSearch from "./components/Search";
 const themeConfig = {
-  github: "https://github.com/fluttertools/mix",
-  projectLink: "https://github.com/fluttertools/mix",
-  docsRepositoryBase: "https://github.com/fluttertools/mix/blob/main",
+  github: "https://github.com/leoafarias/mix",
+  docsRepositoryBase: "https://github.com/leoafarias/mix/blob/main",
   search: true,
   customSearch: <CustomSearch />,
   titleSuffix: " – Mix",
+  floatTOC: true,
   logo: (
     <>
       <Image
@@ -46,7 +46,6 @@ const themeConfig = {
       />
       <meta name="og:image" content="https://fluttermix.com/og.png" />
       <meta name="apple-mobile-web-app-title" content="Mix" />
-
       <link
         rel="apple-touch-icon"
         sizes="180x180"
@@ -77,14 +76,8 @@ const themeConfig = {
 
   prevLinks: true,
   nextLinks: true,
-  floatTOC: true,
   footer: true,
-  nextThemes: {
-    defaultTheme: "dark",
-  },
-  defaultMenuCollapsed: true,
   footerEditLink: "Edit this page on GitHub",
-  darkMode: true,
   footerText: (
     <>
       <a

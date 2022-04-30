@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
 
-const active = Variant('active');
-
 /// _Mix_ corollary to Flutter _Checkbox_ widget
 ///
 /// Default _Mix_ values:
@@ -71,12 +69,11 @@ class CheckboxX extends RemixableWidget {
   @override
   Widget build(BuildContext context) {
     final fn = onChanged;
-
     return Pressable(
       mix: Mix.chooser(
         condition: checked,
         ifTrue: mix.withVariant(active),
-        ifFalse: mix,
+        ifFalse: mix.withVariant(inactive),
       ),
       onPressed: fn == null ? null : () => fn(!checked),
       child: IconMix(

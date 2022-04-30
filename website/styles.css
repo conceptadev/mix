@@ -1,25 +1,82 @@
-body {
-  font-family: "Inter", sans-serif;
-  font-weight: 400;
+pre {
+  background-color: #070509 !important;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: "Inter", sans-serif;
+pre code {
+  @apply text-sm;
+  background-color: #070509 !important;
+  font-family: "Fira Code", monospace;
+  font-weight: 300;
+  color: #ffffff;
+}
+
+code.prism-code {
+  --c-highlight: rgb(115, 34, 203, 0.1) !important;
+}
+
+pre code.prism-code.language-dart span.token.design-token {
+  color: #ffffff !important;
+  background-color: rgb(115, 34, 203, 0.3) !important;
+  padding: 0px 5px !important;
+  border-radius: 10px !important;
+  /* text-shadow: 1px 1px 5px rgb(255, 255, 255, 0.8); */
+}
+
+code.prism-code.language-dart span.token.plain {
+  color: #f78c6c !important;
+}
+
+/* code.prism-code.language-dart span.token.metadata.symbol {
+  color: #fff !important;
+} */
+
+pre code.prism-code.language-dart span.token.string {
+  color: #73e7d3 !important;
+}
+
+pre code.prism-code.language-dart span.token.number {
+  color: #f78c6c !important;
+}
+
+pre code.prism-code.language-dart span.token.keyword {
+  color: #f776b6 !important;
+}
+
+pre code.prism-code.language-dart span.token.class-name {
+  color: #52f3d7 !important;
+}
+
+pre code.prism-code.language-dart span.token.function {
+  color: #ffae32 !important;
+}
+
+pre code.prism-code.language-dart span.token.punctuation {
+  color: #777 !important;
+}
+
+pre code.prism-code.language-dart span.token.operator {
+  color: #777 !important;
+}
+
+/* SIDEBAR, hopefully you can remove thi later */
+div.w-64 ul li[style*="margin-left:1rem"] {
   font-weight: 700;
 }
 
-i,
-b,
-em {
-  font-family: "Inter", sans-serif;
-  font-weight: 600;
-}
+/* body {
+  background: linear-gradient(-45deg, #000000, #1b1329, #000000, #1c3827);
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+} */
 
-pre code span {
-  font-family: "Fira Code", monospace;
-}
+/* @keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+} */

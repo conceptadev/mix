@@ -89,10 +89,7 @@ class AnimatedClipRRect extends StatelessWidget {
   final Widget child;
 
   static Widget _builder(
-    BuildContext context,
-    BorderRadius radius,
-    Widget? child,
-  ) {
+      BuildContext context, BorderRadius radius, Widget? child) {
     return ClipRRect(borderRadius: radius, child: child);
   }
 
