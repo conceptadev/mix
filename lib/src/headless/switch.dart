@@ -18,11 +18,11 @@ import 'exports.dart';
 ///      width(36),
 ///      rounded(100),
 ///      bgColor($onPrimary),
-///      whenOff(
+///      inactive(
 ///        align(Alignment.centerLeft),
 ///        bgColor(Colors.grey.shade300),
 ///      ),
-///      whenOn(
+///      active(
 ///        align(Alignment.centerRight),
 ///        bgColor($primary),
 ///      )

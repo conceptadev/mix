@@ -18,7 +18,7 @@ import 'exports.dart';
 ///        color: Colors.grey.shade300,
 ///        width: 2,
 ///      ),
-///      (whenOn | hover)(
+///      (active | hover)(
 ///        border(color: Colors.blue),
 ///      ),
 ///      disabled(
