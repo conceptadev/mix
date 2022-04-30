@@ -12,7 +12,7 @@ class HeadlessPreview extends HookWidget {
     return Column(
       children: [
         SwitchX(
-          checked: active.value,
+          active: active.value,
           onChanged: (value) => active.value = value,
         ),
         const SizedBox(height: 20),

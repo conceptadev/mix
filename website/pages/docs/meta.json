@@ -1,6 +1,8 @@
 {
-  "introduction": "Introduction",
-  "core-concepts": "Core concepts",
+  "introduction": {
+    "title": "Introduction"
+  },
+  "concepts": "Concepts",
   "theme": "Theme",
   "headless-widgets": "Headless Widgets",
   "faq": "FAQ"

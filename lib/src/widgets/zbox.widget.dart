@@ -1,6 +1,14 @@
 import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
 
+/// ## Attributes:
+/// - [ZBoxAttributes](ZBoxAttributes-class.html)
+/// - [SharedAttributes](SharedAttributes-class.html) 
+/// ## Utilities:
+/// - [ZBoxUtility](ZBoxUtility-class.html)
+/// - [SharedUtils](SharedUtils-class.html)
+///
+/// {@category Mixable Widgets}
 class ZBox extends MixableWidget {
   final List<Widget> children;
 
@@ -19,6 +27,7 @@ class ZBox extends MixableWidget {
   }
 }
 
+/// {@nodoc}
 class ZBoxMixedWidget extends MixedWidget {
   final List<Widget> children;
 
