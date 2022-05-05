@@ -12,23 +12,20 @@ of a Widget. This makes the design system more flexible and reusable, by leverag
 visual properties between them.
 
 In the following example `hover()` is a `Variant` that will be applied when a `Pressable` 
-triggers the hover state.
+triggers the hover state. The `bgColor` and `textColor` properties will be overridden with the new value when the variant applies
 
 ```dart highlight="8-13"
-final buttonMix = Mix(
-  
+final style = Mix(
   bgColor($primary),
   textColor($onPrimary),
   hover(
-    // The `bgColor` and `textColor` properties will be overridden with the 
-    // new value when the variant applies
     bgColor($primary), 
     textColor($onPrimary),
   ),
 );
 
 Pressable(
-  mix: buttonMix,
+  mix: style,
   child: const TextMix('Button'),
 );
 ```
