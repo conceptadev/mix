@@ -1,23 +1,21 @@
 import 'package:mix/src/theme/tokens/size.dart';
 
 class MixThemeSpace extends MixThemeSize {
-  factory MixThemeSpace({
+  const MixThemeSpace({
     double? xsmall,
     double? small,
     double? medium,
     double? large,
     double? xlarge,
     double? xxlarge,
-  }) {
-    return MixThemeSpace(
-      xsmall: xsmall ?? 2,
-      small: small ?? 4,
-      medium: medium ?? 8,
-      large: large ?? 16,
-      xlarge: xlarge ?? 32,
-      xxlarge: xxlarge ?? 64,
-    );
-  }
+  }) : super(
+          xsmall: xsmall ?? 2,
+          small: small ?? 4,
+          medium: medium ?? 8,
+          large: large ?? 16,
+          xlarge: xlarge ?? 32,
+          xxlarge: xxlarge ?? 64,
+        );
 
   @override
   MixThemeSpace copyWith({
