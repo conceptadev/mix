@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-
 import 'package:mix/src/helpers/extensions.dart';
 
 import '../tokens/color_scheme_tokens.dart';
@@ -17,22 +16,22 @@ typedef RefMap<T extends MixRef<V>, V> = Map<T, RefValueGetter<V>>;
 typedef RefValueGetter<T> = T Function(BuildContext);
 
 final RefMap _themeTokens = {
-  $h1: (BuildContext context) {
+  $headline1: (BuildContext context) {
     return context.textTheme.headline1;
   },
-  $h2: (BuildContext context) {
+  $headline2: (BuildContext context) {
     return context.textTheme.headline2;
   },
-  $h3: (BuildContext context) {
+  $headline3: (BuildContext context) {
     return context.textTheme.headline3;
   },
-  $h4: (BuildContext context) {
+  $headline4: (BuildContext context) {
     return context.textTheme.headline4;
   },
-  $h5: (BuildContext context) {
+  $headline5: (BuildContext context) {
     return context.textTheme.headline5;
   },
-  $h6: (BuildContext context) {
+  $headline6: (BuildContext context) {
     return context.textTheme.headline6;
   },
   $subtitle1: (BuildContext context) {

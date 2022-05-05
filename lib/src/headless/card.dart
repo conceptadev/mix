@@ -76,7 +76,7 @@ class CardX extends RemixableWidget {
       ),
       title(
         titleCase(),
-        textStyle($h6),
+        textStyle($headline6),
         font(
           weight: FontWeight.bold,
         ),

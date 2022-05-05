@@ -23,6 +23,7 @@ class TextStyleRef extends TextStyle implements MixRef<TextStyle> {
       throw Exception('Ref $id not found');
     }
     final style = refValue(context);
+
     return style;
   }
 
