@@ -76,6 +76,7 @@ class Mix<T extends Attribute> {
   /// Same as _withVariant_, but the argument is nullable
   Mix<T> withMaybeVariant(Variant<T>? variant) {
     if (variant == null) return this;
+
     return Mix._(
       [...attributes],
       variantToApply: [...variantToApply, variant],
@@ -84,17 +85,19 @@ class Mix<T extends Attribute> {
 
   /// Same as _withVariant_, but can accept a _List_ of _Variant_ instances
   Mix<T> withVariants(List<Variant<T>> variants) {
-    return Mix._([
-      ...attributes
-    ], variantToApply: [
-      ...variantToApply,
-      ...variants,
-    ]);
+    return Mix._(
+      [...attributes],
+      variantToApply: [
+        ...variantToApply,
+        ...variants,
+      ],
+    );
   }
 
   /// Same as _combine_, but accepts a _List_ of _Mix_ instances
   static Mix<T> combineAll<T extends Attribute>(List<Mix<T>> mixes) {
     final attributes = mixes.expand((element) => element.attributes).toList();
+
     return Mix._(attributes);
   }
 

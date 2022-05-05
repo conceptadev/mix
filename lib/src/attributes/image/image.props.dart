@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../theme/refs/color_ref.dart';
+import '../../theme/refs/color_token.dart';
 import 'image.attributes.dart';
 
 class ImageProps {
@@ -35,7 +35,7 @@ class ImageProps {
 
     var color = image?.color;
 
-    if (color is ColorRef) {
+    if (color is ColorToken) {
       color = color.resolve(context);
     }
 

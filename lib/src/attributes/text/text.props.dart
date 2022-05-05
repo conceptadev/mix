@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import '../../theme/refs/color_ref.dart';
 
-import '../../theme/refs/text_style_ref.dart';
+import '../../theme/refs/color_token.dart';
+import '../../theme/refs/text_style_token.dart';
 import '../exports.dart';
 
 class TextProps {
@@ -45,7 +45,7 @@ class TextProps {
     TextStyle? finalStyle = text?.style;
     TextStyle? refStyle = text?.styleRef?.resolve(context);
 
-    if (finalStyle is TextStyleRef) {
+    if (finalStyle is TextStyleToken) {
       finalStyle = finalStyle.resolve(context);
     }
 
@@ -54,7 +54,7 @@ class TextProps {
     }
 
     var color = finalStyle?.color;
-    if (color is ColorRef) {
+    if (color is ColorToken) {
       // Also build color ref
       finalStyle = finalStyle?.copyWith(
         color: color.resolve(context),

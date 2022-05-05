@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mix/src/dto/dto.dart';
-import 'package:mix/src/theme/refs/color_ref.dart';
+import 'package:mix/src/theme/refs/color_token.dart';
 
 class BorderDto extends Dto<Border> {
   final BorderSideDto? top;
@@ -57,6 +57,7 @@ class BorderDto extends Dto<Border> {
     if (side == null) {
       return BorderSide.none;
     }
+
     return side.resolve(context);
   }
 
@@ -156,6 +157,7 @@ class BorderSideDto extends Dto<BorderSide> {
 
   BorderSideDto merge(BorderSideDto? other) {
     if (other == null) return this;
+
     return BorderSideDto._(
       color: other.color ?? color,
       width: other.width ?? width,
@@ -169,7 +171,7 @@ class BorderSideDto extends Dto<BorderSide> {
   BorderSide resolve(BuildContext context) {
     Color? _color = color;
 
-    if (_color is ColorRef) {
+    if (_color is ColorToken) {
       _color = _color.resolve(context);
     }
 

@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
 import 'package:mix/mix.dart';
 
 /// Used to check if its reserved
@@ -80,6 +79,7 @@ class MultiVariant<T extends Attribute> {
   ) {
     final attributeVariants = variants.map((variant) {
       final otherVariants = variants.where((otherV) => otherV != variant);
+
       return VariantAttribute(
         variant,
         _buildOrOperations(
@@ -92,6 +92,7 @@ class MultiVariant<T extends Attribute> {
     return attributeVariants.toList();
   }
 
+  // ignore: long-parameter-list
   NestedAttribute<VariantAttribute<T>> call([
     T? p1,
     T? p2,
@@ -161,6 +162,7 @@ class Variant<T extends Attribute> {
   MultiVariant<T> operator |(Variant<T> variant) =>
       MultiVariant<T>([this, variant], operator: _VariantOperations.or);
 
+  // ignore: long-parameter-list
   VariantAttribute<T> call([
     T? p1,
     T? p2,

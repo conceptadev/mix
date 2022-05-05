@@ -32,6 +32,7 @@ class MixThemeBreakpoints {
   /// Returns [ScreenSizeToken] based on Material breakpoints
   ScreenSizeToken getScreenSize(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
+
     return screenWidth >= large
         ? ScreenSizeToken.large
         : screenWidth >= medium

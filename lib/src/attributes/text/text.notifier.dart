@@ -15,6 +15,7 @@ class TextAttributeNotifier extends InheritedWidget {
   static TextAttributes? of(BuildContext context) {
     final widget =
         context.dependOnInheritedWidgetOfExactType<TextAttributeNotifier>();
+
     return widget?.attributes;
   }
 

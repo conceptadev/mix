@@ -48,6 +48,7 @@ class BorderRadiusDto extends Dto<BorderRadius> {
 
   BorderRadiusDto merge(BorderRadiusDto? other) {
     if (other == null || other == this) return this;
+
     return copyWith(
       topLeft: other.topLeft,
       topRight: other.topRight,

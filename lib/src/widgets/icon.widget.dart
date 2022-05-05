@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
 
-import 'nothing.widget.dart';
+import 'empty.widget.dart';
 
 /// The _Mix_ corollary to Flutter _Icon_ widget
 ///
 /// ## Attributes
 /// - [IconAttributes](IconAttributes-class.html)
-/// - [SharedAttributes](SharedAttributes-class.html) 
+/// - [SharedAttributes](SharedAttributes-class.html)
 /// ## Utilities
 /// - [IconUtils](IconUtils-class.html)
 /// - [SharedUtils](SharedUtils-class.html)

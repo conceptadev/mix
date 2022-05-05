@@ -1,10 +1,10 @@
 import 'package:flutter/widgets.dart';
 
 import '../mix_theme.dart';
-import 'refs.dart';
+import 'tokens.dart';
 
-class TextStyleRef extends TextStyle implements MixRef<TextStyle> {
-  const TextStyleRef(this.id) : super();
+class TextStyleToken extends TextStyle implements MixToken<TextStyle> {
+  const TextStyleToken(this.id) : super();
 
   @override
   final String id;
@@ -13,14 +13,14 @@ class TextStyleRef extends TextStyle implements MixRef<TextStyle> {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is TextStyleRef && other.id == id;
+    return other is TextStyleToken && other.id == id;
   }
 
   @override
   TextStyle resolve(BuildContext context) {
-    final refValue = MixTheme.of(context).contextRef.tokens[this];
+    final refValue = MixTheme.of(context).designTokens.tokens[this];
     if (refValue == null) {
-      throw Exception('Ref $id not found');
+      throw Exception('Token $id not found');
     }
     final style = refValue(context);
 

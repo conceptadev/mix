@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 /// {@category Misc Utils}
-enum ColorToken {
+enum ColorSchemeNames {
   primary,
   primaryVariant,
   secondary,
@@ -19,9 +19,10 @@ enum ColorToken {
 }
 
 /// {@category Misc Utils}
-extension ColorSchemeTokenExtension on ColorToken {
+extension ColorSchemeNamesExtension on ColorSchemeNames {
   Color get value {
     final colorIndex = _colorSchemeTranslationValues[index];
+
     return colorIndex;
   }
 }
@@ -80,5 +81,8 @@ Color hexToColor(String hexString) {
   final buffer = StringBuffer();
   if (hexString.length == 6 || hexString.length == 7) buffer.write('ff');
   buffer.write(hexString.replaceFirst('#', ''));
-  return Color(int.parse(buffer.toString(), radix: 16));
+
+  return Color(
+    int.parse(buffer.toString(), radix: 16),
+  );
 }
