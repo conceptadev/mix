@@ -1,42 +1,36 @@
 ---
 id: context-references
-title: 'Context Tokens'
+title: 'Design Tokens'
 ---
 
-# Context Tokens
+# Design Tokens
 
-Context Tokens are design tokens that are defined at build time. With this, it's possible to do things like:
+Symbols that are able to reference values within the `BuildContext`.
 
-- dynamically changing the accent color of the app
-- define multiple themes for different parts of the app
+- Use Material Theme values within any Mix (even outside of BuildContext)
+- Define dynamic BuildContext values that want to reuse throughout the app.
+- Dynamically changing the accent color of the app
 
-Context tokens are made of references (`MixRef`), which can be read by `Mix` at build time. There are a lot of built-in context tokens already available for usage, from colors to text:
+Design Tokens are made of references (`MixToken`), which can be read by `Mix` at run time. There are a lot of built-in context design tokens already available for usage, from colors to text:
 
-For example, if you want to create a rounded button with the primary color, you can use `bgColor($primary)`:
+For example, if you want to create a button with the primary color, you can use `bgColor($primary)`:
 
 ```dart
-PressableWidgetFn get button => Mix(
-      textStyle($body2),
-      bold(),
-      fontSize(16.0),
-      paddingHorizontal(15.0),
-      paddingVertical(8.0),
-      rounded(5),
-
-      animated(), // animate your color change
-      bgColor($primary), // use the primary color
-      (hover)(
-        bgColor($colorScheme.secondary), // when hovering, use the secondary color
-      ),
-
-    ).pressable;
+Mix get style => Mix(
+  textStyle($body2), // Text theme from Material Theme
+  bgColor($primary), // use the primary color from Material Theme
+  (hover)(
+    bgColor($secondary), // when hovering, use the secondary color
+  ),
+);
 
 class MyButton extends StatelessWidget {
   const MyButton({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return button( // call your button
+    return Pressable( // call your button
+      mix: style,
       child: const TextMix('Details'),
       onPressed: () {},
     );
@@ -44,24 +38,32 @@ class MyButton extends StatelessWidget {
 }
 ```
 
-## Context References Catalog
+## Material Theme Tokens
 
 The built-in context references you can use on your app. They are based on the material theme:
 
-Text references:
+### Text Theme
 
-- `$h1`, `$h2`, `$h3`, `$h4`, `$h5`, `$h6`
-- `$subtitle1`, `$subtitle2`
-- `$body1`, `$body1`
-- `$caption`, `$button`, `$overline`
+**Material 2**
+- $h1, $h2, $h3, $h4, $h5, $h6
+- $subtitle1, $subtitle2
+- $body1, $body1
+- $caption, $button, $overline
 
-Color references:
+**Material 3**
+- $displaySmall, $displayMedium, $displayLarge
+- $headlineSmall, $headlineMedium, $headlineLarge
+- $titleSmall, $titleMedium, $titleLarge
+- $bodySmall, $bodyMedium, $bodyLarge
+- $labelSmall, $labelMedium, $labelLarge
 
-- `$primary`, `$secondary`, `$surface`, `$background`, `$error`
-- `$onPrimary`, `$onSecondary`, `$onSurface`, `$onBackground`, `$onError`
-- `colorScheme`: returns all the colors above 
+### Color Scheme
 
-## Creating new context references
+- $primary, $secondary, $surface, $background, $error
+- $onPrimary, $onSecondary, $onSurface, $onBackground, $onError
+- colorScheme: returns all the colors above 
+
+## Creating New Design Tokens
 
 First, define a call to that reference. It'll be used by the attributes at build time. It usually starts with a dollar sign (`$`):
 
@@ -74,7 +76,7 @@ Then, define it on your `MixThemeData`:
 ```dart
 MixTheme(
   data: MixThemeData(
-    contextRef: {
+    designTokens: {
       $myColor: (BuildContext context) {
         final brightness = Theme.of(context).brightness;
         if (brightness == Brightness.light) {
