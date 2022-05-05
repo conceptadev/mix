@@ -1,8 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
-
 import 'package:mix/src/attributes/pressable/pressable.notifier.dart';
-import 'package:mix/src/theme/tokens/breakpoints_token.dart';
+import 'package:mix/src/theme/tokens/breakpoints.dart';
 
 /// {@category Variants}
 class VariantUtils {
@@ -11,6 +10,7 @@ class VariantUtils {
   static _screenSizeCheck(ScreenSizeToken screenSize) {
     return (BuildContext context) {
       final breakpoints = MixTheme.of(context).breakpoints;
+
       return breakpoints.getScreenSize(context).index <= screenSize.index;
     };
   }
@@ -93,6 +93,7 @@ class VariantUtils {
       SystemVariants.disabled.value,
       shouldApply: (BuildContext context) {
         final pressable = PressableNotifier.of(context);
+
         return pressable?.disabled == true;
       },
     );
@@ -104,6 +105,7 @@ class VariantUtils {
       SystemVariants.focus.value,
       shouldApply: (BuildContext context) {
         final pressable = PressableNotifier.of(context);
+
         return pressable?.focused == true;
       },
     );
@@ -115,6 +117,7 @@ class VariantUtils {
       SystemVariants.pressing.value,
       shouldApply: (BuildContext context) {
         final pressable = PressableNotifier.of(context);
+
         return pressable?.pressing == true;
       },
     );
@@ -126,6 +129,7 @@ class VariantUtils {
       SystemVariants.hover.value,
       shouldApply: (BuildContext context) {
         final pressable = PressableNotifier.of(context);
+
         return pressable?.hovering == true;
       },
     );

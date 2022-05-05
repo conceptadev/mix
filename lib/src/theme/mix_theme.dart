@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-
-import 'package:mix/src/theme/refs/refs.dart';
-import 'package:mix/src/theme/tokens/breakpoints_token.dart';
-import 'package:mix/src/theme/tokens/space_token.dart';
+import 'package:mix/src/theme/refs/tokens.dart';
+import 'package:mix/src/theme/tokens/breakpoints.dart';
+import 'package:mix/src/theme/tokens/space.dart';
 
 class MixTheme extends InheritedWidget {
   const MixTheme({
@@ -32,45 +31,46 @@ class MixTheme extends InheritedWidget {
 class MixThemeData {
   final MixThemeSpace space;
   final MixThemeBreakpoints breakpoints;
-  final ContextRefTokens contextRef;
+  final MixDesignTokens designTokens;
 
   const MixThemeData.raw({
     required this.space,
     required this.breakpoints,
     // TODO: implement font family
-    required this.contextRef,
+    required this.designTokens,
   });
 
   factory MixThemeData({
     MixThemeSpace? space,
     MixThemeBreakpoints? breakpoints,
-    ContextRefTokens? contextRef,
+    MixDesignTokens? designTokens,
   }) {
     space ??= MixThemeSpace();
     breakpoints ??= MixThemeBreakpoints();
-    contextRef = ContextRefTokens.defaults.merge(contextRef);
+    designTokens = MixDesignTokens.defaults.merge(designTokens);
+
     return MixThemeData.raw(
       space: space,
       breakpoints: breakpoints,
-      contextRef: contextRef,
+      designTokens: designTokens,
     );
   }
 
   MixThemeData copyWith({
     MixThemeSpace? space,
     MixThemeBreakpoints? breakpoints,
-    ContextRefTokens? contextRef,
+    MixDesignTokens? designTokens,
   }) {
     return MixThemeData.raw(
       space: space ?? this.space,
       breakpoints: breakpoints ?? this.breakpoints,
-      contextRef: contextRef ?? this.contextRef,
+      designTokens: designTokens ?? this.designTokens,
     );
   }
 
   @override
   String toString() =>
-      'MixThemeData(space: $space, breakpoints: $breakpoints, tokens: $contextRef)';
+      'MixThemeData(space: $space, breakpoints: $breakpoints, tokens: $designTokens)';
 
   @override
   bool operator ==(Object other) {
@@ -79,11 +79,11 @@ class MixThemeData {
     return other is MixThemeData &&
         other.space == space &&
         other.breakpoints == breakpoints &&
-        other.contextRef == contextRef;
+        other.designTokens == designTokens;
   }
 
   @override
   int get hashCode {
-    return space.hashCode ^ breakpoints.hashCode ^ contextRef.hashCode;
+    return space.hashCode ^ breakpoints.hashCode ^ designTokens.hashCode;
   }
 }

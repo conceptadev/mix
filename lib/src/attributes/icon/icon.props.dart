@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../theme/refs/color_ref.dart';
+import '../../theme/refs/color_token.dart';
 import '../exports.dart';
 
 class IconProps {
@@ -27,7 +27,7 @@ class IconProps {
     final theme = IconTheme.of(context);
     var color = icon?.color;
 
-    if (color is ColorRef) {
+    if (color is ColorToken) {
       color = color.resolve(context);
     }
 

@@ -1,5 +1,5 @@
 // Short directives
-import 'package:mix/src/attributes/directives/text/text_directive.utils.dart';
+import 'package:mix/src/attributes/text/directives/text_directive.utils.dart';
 
 const capitalize = TextDirectiveUtils.capitalize;
 const upperCase = TextDirectiveUtils.upperCase;

@@ -79,6 +79,7 @@ class MixContext {
     );
   }
 
+  // ignore: long-method
   static MixContext _build<T extends Attribute>({
     required BuildContext context,
     required Mix<T> mix,
@@ -154,7 +155,7 @@ class MixContext {
         iconAttributes,
         sharedAttributes,
         ...variants,
-        ...directives
+        ...directives,
       ]),
       boxProps: BoxProps.fromContext(context, boxAttributes),
       textProps: TextProps.fromContext(
@@ -306,6 +307,7 @@ class MixContextNotifier extends InheritedWidget {
   static MixContext? of(BuildContext context) {
     final widget =
         context.dependOnInheritedWidgetOfExactType<MixContextNotifier>();
+
     return widget?.mixContext;
   }
 

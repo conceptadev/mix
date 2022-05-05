@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../helpers/extensions.dart';
-import '../../theme/refs/text_style_ref.dart';
+import '../../theme/refs/text_style_token.dart';
 import '../common/attribute.dart';
 
 /// ## Widget:
@@ -10,7 +10,7 @@ import '../common/attribute.dart';
 class TextAttributes extends Attribute {
   final TextStyle? style;
   // Ref for context
-  final TextStyleRef? styleRef;
+  final TextStyleToken? styleRef;
   final StrutStyle? strutStyle;
   final TextAlign? textAlign;
 
@@ -59,7 +59,7 @@ class TextAttributes extends Attribute {
 
   TextAttributes copyWith({
     TextStyle? style,
-    TextStyleRef? styleRef,
+    TextStyleToken? styleRef,
     StrutStyle? strutStyle,
     TextAlign? textAlign,
     Locale? locale,
@@ -74,18 +74,18 @@ class TextAttributes extends Attribute {
     TextStyle? _thisStyle = this.style;
     TextStyle? _otherStyle = style;
 
-    TextStyleRef? _thisStyleRef = this.styleRef;
-    TextStyleRef? _otherStyleRef = styleRef;
+    TextStyleToken? _thisStyleRef = this.styleRef;
+    TextStyleToken? _otherStyleRef = styleRef;
 
     // During the merge we need to move the ref
     // clunky but allows cleaner api for devs
-    if (_thisStyle is TextStyleRef) {
+    if (_thisStyle is TextStyleToken) {
       _thisStyleRef = _thisStyle;
     } else {
       _thisStyle = _thisStyle;
     }
 
-    if (style is TextStyleRef) {
+    if (style is TextStyleToken) {
       _otherStyleRef = style;
     } else {
       _otherStyle = style;

@@ -16,6 +16,7 @@ class WrapFunction<T, R> {
 
   final FunctionWithListParam<T, R> fn;
 
+  // ignore: long-parameter-list
   R call([
     T? p1,
     T? p2,

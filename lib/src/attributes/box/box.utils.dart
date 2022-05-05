@@ -213,6 +213,7 @@ class BoxUtility {
     return BoxAttributes(border: BorderDto.all(style: style));
   }
 
+  // ignore: long-parameter-list
   static BoxAttributes linearGradient({
     Alignment begin = Alignment.centerLeft,
     Alignment end = Alignment.centerRight,
@@ -233,6 +234,7 @@ class BoxUtility {
     );
   }
 
+  // ignore: long-parameter-list
   static BoxAttributes radialGradient({
     Alignment center = Alignment.center,
     double radius = 0.5,
@@ -310,7 +312,7 @@ class BoxUtility {
             offset: Offset(0, 0),
             spreadRadius: 0,
             color: Colors.transparent,
-          )
+          ),
         ],
       );
     }

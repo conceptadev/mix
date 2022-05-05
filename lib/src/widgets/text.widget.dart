@@ -1,8 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
-
 import 'package:mix/mix.dart';
-import 'package:mix/src/widgets/nothing.widget.dart';
+import 'package:mix/src/widgets/empty.widget.dart';
 
 /// _Mix_ corollary to Flutter _Text_ widget
 /// Use wherever you would use a Flutter _Text_ widget
@@ -10,7 +9,7 @@ import 'package:mix/src/widgets/nothing.widget.dart';
 /// ## Attributes:
 /// - [TextAttributes](TextAttributes-class.html)
 /// - [TextDirectiveAttribute](TextDirectiveAttribute-class.html)
-/// - [SharedAttributes](SharedAttributes-class.html) 
+/// - [SharedAttributes](SharedAttributes-class.html)
 /// ## Utilities:
 /// - [TextUtility](TextUtility-class.html)
 /// - [TextStyleUtility](TextStyleUtility-class.html)

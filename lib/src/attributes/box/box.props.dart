@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../dto/box_shadow.dto.dart';
-import '../../theme/refs/color_ref.dart';
+import '../../theme/refs/color_token.dart';
 import 'box.attributes.dart';
 
 class BoxProps {
@@ -53,7 +53,7 @@ class BoxProps {
 
     var color = box?.color;
 
-    if (color is ColorRef) {
+    if (color is ColorToken) {
       color = color.resolve(context);
     }
 

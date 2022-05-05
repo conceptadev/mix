@@ -98,7 +98,7 @@ const baseBoxAttributes = BoxAttributes(
       color: Colors.black,
       blurRadius: 10,
       offset: Offset(10, 10),
-    )
+    ),
   ],
 );
 

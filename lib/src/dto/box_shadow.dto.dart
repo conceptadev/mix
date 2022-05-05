@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mix/src/dto/dto.dart';
-import 'package:mix/src/theme/refs/color_ref.dart';
+import 'package:mix/src/theme/refs/color_token.dart';
 
 class BoxShadowDto extends Dto<BoxShadow> {
   final Color? color;
@@ -24,7 +24,7 @@ class BoxShadowDto extends Dto<BoxShadow> {
   BoxShadow resolve(BuildContext context) {
     Color? _color = color;
 
-    if (_color is ColorRef) {
+    if (_color is ColorToken) {
       _color = _color.resolve(context);
     }
 
@@ -38,6 +38,7 @@ class BoxShadowDto extends Dto<BoxShadow> {
 
   BoxShadowDto merge(BoxShadowDto? other) {
     if (other == null) return this;
+
     return copyWith(
       color: other.color,
       offset: other.offset,
@@ -99,6 +100,7 @@ extension BoxShadowDtoExtension on List<BoxShadowDto> {
     // Get index value of List<BoxShadowProps>
     BoxShadowDto? getValueAtIndex(int index, List<BoxShadowDto> list) {
       if (index < list.length) return list[index];
+
       return null;
     }
 
@@ -106,6 +108,7 @@ extension BoxShadowDtoExtension on List<BoxShadowDto> {
       final otherValue = getValueAtIndex(index, otherList);
       final thisValue = getValueAtIndex(index, this);
       // One of the values should be valid because of maxLength
+
       return thisValue?.merge(otherValue) ?? otherValue!;
     });
 

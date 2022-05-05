@@ -1,21 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:mix/src/helpers/extensions.dart';
+import 'package:mix/mix.dart';
+import 'package:mix/src/theme/refs/tokens.dart';
 
-import '../tokens/color_scheme_tokens.dart';
-import '../tokens/text_theme_tokens.dart';
-
-abstract class MixRef<T> {
-  const MixRef([this.id]);
-  final String? id;
-  T resolve(BuildContext context);
-}
-
-typedef RefMap<T extends MixRef<V>, V> = Map<T, RefValueGetter<V>>;
-
-typedef RefValueGetter<T> = T Function(BuildContext);
-
-final RefMap _themeTokens = {
+final TokenMap materialThemeTokens = {
   $headline1: (BuildContext context) {
     return context.textTheme.headline1;
   },
@@ -91,34 +78,41 @@ final RefMap _themeTokens = {
   $onError: (BuildContext context) {
     return context.colorScheme.onError;
   },
+  // Material 3 Typeset
+  $displayLarge: (BuildContext context) {
+    return context.textTheme.displayLarge;
+  },
+  $displayMedium: (BuildContext context) {
+    return context.textTheme.displayMedium;
+  },
+  $displaySmall: (BuildContext context) {
+    return context.textTheme.displaySmall;
+  },
+  $headlineLarge: (BuildContext context) {
+    return context.textTheme.headlineLarge;
+  },
+  $headlineMedium: (BuildContext context) {
+    return context.textTheme.headlineMedium;
+  },
+  $headlineSmall: (BuildContext context) {
+    return context.textTheme.headlineSmall;
+  },
+  $titleLarge: (BuildContext context) {
+    return context.textTheme.titleLarge;
+  },
+  $titleMedium: (BuildContext context) {
+    return context.textTheme.titleMedium;
+  },
+  $titleSmall: (BuildContext context) {
+    return context.textTheme.titleSmall;
+  },
+  $labelLarge: (BuildContext context) {
+    return context.textTheme.labelLarge;
+  },
+  $labelMedium: (BuildContext context) {
+    return context.textTheme.labelMedium;
+  },
+  $labelSmall: (BuildContext context) {
+    return context.textTheme.labelSmall;
+  },
 };
-
-class ContextRefTokens {
-  final RefMap tokens;
-
-  const ContextRefTokens.raw(this.tokens);
-
-  static ContextRefTokens get defaults => ContextRefTokens.raw(_themeTokens);
-
-  RefValueGetter<dynamic>? operator [](MixRef<dynamic> ref) => tokens[ref];
-
-  ContextRefTokens merge(ContextRefTokens? other) {
-    if (other == null || other == this) return this;
-
-    final mergedRefs = {...tokens, ...other.tokens};
-    return ContextRefTokens.raw(mergedRefs);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is ContextRefTokens && other.tokens == tokens;
-  }
-
-  @override
-  int get hashCode => tokens.hashCode;
-
-  @override
-  String toString() => 'ContextRefTokens(tokens: $tokens)';
-}

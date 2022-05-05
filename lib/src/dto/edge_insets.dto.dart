@@ -42,6 +42,7 @@ class EdgeInsetsDto extends Dto<EdgeInsets> {
 
   static double? _nullIfZero(double? value) {
     if (value == 0.0) return null;
+
     return value;
   }
 
@@ -68,11 +69,12 @@ class EdgeInsetsDto extends Dto<EdgeInsets> {
   @override
   EdgeInsets resolve(BuildContext context) {
     final spacing = MixTheme.of(context).space;
+
     return EdgeInsets.only(
-      top: spacing.fromValue(top),
-      bottom: spacing.fromValue(bottom),
-      left: spacing.fromValue(left),
-      right: spacing.fromValue(right),
+      top: spacing.fromValue(top) ?? 0.0,
+      bottom: spacing.fromValue(bottom) ?? 0.0,
+      left: spacing.fromValue(left) ?? 0.0,
+      right: spacing.fromValue(right) ?? 0.0,
     );
   }
 
