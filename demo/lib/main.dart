@@ -1,5 +1,6 @@
 import 'package:demo/theme.dart';
 import 'package:desktop_window/desktop_window.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -7,8 +8,10 @@ import 'app_shell.dart';
 import 'providers/dark_mode.provider.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await DesktopWindow.setMinWindowSize(const Size(600, 600));
+  if (!kIsWeb) {
+    WidgetsFlutterBinding.ensureInitialized();
+    await DesktopWindow.setMinWindowSize(const Size(600, 600));
+  }
   runApp(const MyApp());
 }
 
