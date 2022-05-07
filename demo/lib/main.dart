@@ -3,6 +3,7 @@ import 'package:desktop_window/desktop_window.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:mix/mix.dart';
 import 'package:url_strategy/url_strategy.dart';
 
 import 'app_shell.dart';
@@ -35,12 +36,14 @@ class MyApp extends StatelessWidget {
           theme: lightTheme,
           darkTheme: darkTheme,
           themeMode: darkMode ? ThemeMode.dark : ThemeMode.light,
-          initialRoute: '/docs/variants/and',
+          initialRoute: '/',
           routes: {
             '/': (context) => const AppShell(),
             '/docs/variants': (context) => const VariantsDefaultExample(),
             '/docs/variants/or': (context) => const VariantsOrOperator(),
             '/docs/variants/and': (context) => const VariantsAndOperator(),
+            '/docs/variants/catalog/pressable': (context) =>
+                const VariantsCatalogPressable(),
           },
           onUnknownRoute: (settings) {
             return MaterialPageRoute(builder: (context) {
@@ -65,9 +68,12 @@ class MyApp extends StatelessWidget {
             });
           },
           builder: (context, child) {
-            return Material(
-              color: Colors.grey,
-              child: child,
+            return MixTheme(
+              data: MixThemeData(),
+              child: Material(
+                color: $background.resolve(context),
+                child: child ?? const SizedBox.shrink(),
+              ),
             );
           },
         );
