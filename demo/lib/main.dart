@@ -35,10 +35,12 @@ class MyApp extends StatelessWidget {
           theme: lightTheme,
           darkTheme: darkTheme,
           themeMode: darkMode ? ThemeMode.dark : ThemeMode.light,
-          initialRoute: '/docs/variants',
+          initialRoute: '/docs/variants/and',
           routes: {
             '/': (context) => const AppShell(),
             '/docs/variants': (context) => const VariantsDefaultExample(),
+            '/docs/variants/or': (context) => const VariantsOrOperator(),
+            '/docs/variants/and': (context) => const VariantsAndOperator(),
           },
           onUnknownRoute: (settings) {
             return MaterialPageRoute(builder: (context) {
@@ -63,7 +65,10 @@ class MyApp extends StatelessWidget {
             });
           },
           builder: (context, child) {
-            return Scaffold(body: child);
+            return Material(
+              color: Colors.grey,
+              child: child,
+            );
           },
         );
       }),
