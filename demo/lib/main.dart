@@ -6,6 +6,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:url_strategy/url_strategy.dart';
 
 import 'app_shell.dart';
+import 'docs/docs.dart';
 import 'providers/dark_mode.provider.dart';
 
 void main() async {
@@ -34,9 +35,10 @@ class MyApp extends StatelessWidget {
           theme: lightTheme,
           darkTheme: darkTheme,
           themeMode: darkMode ? ThemeMode.dark : ThemeMode.light,
-          initialRoute: '/',
+          initialRoute: '/docs/variants',
           routes: {
             '/': (context) => const AppShell(),
+            '/docs/variants': (context) => const VariantsDefaultExample(),
           },
           onUnknownRoute: (settings) {
             return MaterialPageRoute(builder: (context) {
@@ -59,6 +61,9 @@ class MyApp extends StatelessWidget {
                 ),
               );
             });
+          },
+          builder: (context, child) {
+            return Scaffold(body: child);
           },
         );
       }),
