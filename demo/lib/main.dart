@@ -3,8 +3,11 @@ import 'package:desktop_window/desktop_window.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:mix/mix.dart';
+import 'package:url_strategy/url_strategy.dart';
 
 import 'app_shell.dart';
+import 'docs/docs.dart';
 import 'providers/dark_mode.provider.dart';
 
 void main() async {
@@ -12,6 +15,9 @@ void main() async {
     WidgetsFlutterBinding.ensureInitialized();
     await DesktopWindow.setMinWindowSize(const Size(600, 600));
   }
+
+  setPathUrlStrategy();
+
   runApp(const MyApp());
 }
 
@@ -30,7 +36,46 @@ class MyApp extends StatelessWidget {
           theme: lightTheme,
           darkTheme: darkTheme,
           themeMode: darkMode ? ThemeMode.dark : ThemeMode.light,
-          home: const AppShell(),
+          initialRoute: '/',
+          routes: {
+            '/': (context) => const AppShell(),
+            '/docs/variants': (context) => const VariantsDefaultExample(),
+            '/docs/variants/or': (context) => const VariantsOrOperator(),
+            '/docs/variants/and': (context) => const VariantsAndOperator(),
+            '/docs/variants/catalog/pressable': (context) =>
+                const VariantsCatalogPressable(),
+          },
+          onUnknownRoute: (settings) {
+            return MaterialPageRoute(builder: (context) {
+              final theme = Theme.of(context);
+              return Scaffold(
+                body: Center(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        '404',
+                        style: theme.textTheme.headline1,
+                      ),
+                      Text(
+                        'Sorry, we couldn\'t find the page you\'re looking for :/',
+                        style: theme.textTheme.subtitle2,
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            });
+          },
+          builder: (context, child) {
+            return MixTheme(
+              data: MixThemeData(),
+              child: Material(
+                color: $background.resolve(context),
+                child: child ?? const SizedBox.shrink(),
+              ),
+            );
+          },
         );
       }),
     );

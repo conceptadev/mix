@@ -20,11 +20,23 @@ dependencies:
   google_fonts: ^2.3.2
   desktop_window: ^0.4.0
   community_material_icon: ^5.9.55
+  url_strategy: ^0.2.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^1.0.0
+  flutter_launcher_icons: ^0.9.2
+  flutter_native_splash: ^2.1.6
 
 flutter:
   uses-material-design: true
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/logo.png"
+
+flutter_native_splash:
+  color: "#ffffff"
+  image: "assets/logo.png"

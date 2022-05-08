@@ -1,0 +1,26 @@
+import 'package:flutter/material.dart';
+import 'package:mix/mix.dart';
+
+class VariantsAndOperator extends StatelessWidget {
+  const VariantsAndOperator({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final mix = Mix(
+      padding(20.0),
+      textColor(Colors.white),
+      (hover & enabled)(
+        // When it's hovering AND pressing
+        textColor(Colors.black),
+        bold(),
+      ),
+    );
+    return Center(
+      child: Pressable(
+        mix: mix,
+        onPressed: () {},
+        child: const TextMix('HOVER THIS TO CHANGE THE TEXT COLOR'),
+      ),
+    );
+  }
+}
