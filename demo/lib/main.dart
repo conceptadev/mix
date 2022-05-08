@@ -4,7 +4,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mix/mix.dart';
-import 'package:url_strategy/url_strategy.dart';
 
 import 'app_shell.dart';
 import 'docs/docs.dart';
@@ -16,7 +15,7 @@ void main() async {
     await DesktopWindow.setMinWindowSize(const Size(600, 600));
   }
 
-  setPathUrlStrategy();
+  // setPathUrlStrategy();
 
   runApp(const MyApp());
 }
@@ -46,23 +45,20 @@ class MyApp extends StatelessWidget {
                 const VariantsCatalogPressable(),
           },
           onUnknownRoute: (settings) {
-            return MaterialPageRoute(builder: (context) {
+            return PageRouteBuilder(pageBuilder: (context, _, __) {
               final theme = Theme.of(context);
               return Scaffold(
                 body: Center(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        '404',
-                        style: theme.textTheme.headline1,
-                      ),
-                      Text(
-                        'Sorry, we couldn\'t find the page you\'re looking for :/',
-                        style: theme.textTheme.subtitle2,
-                      ),
-                    ],
-                  ),
+                  child: Column(mainAxisSize: MainAxisSize.min, children: [
+                    Text(
+                      '404',
+                      style: theme.textTheme.headline1,
+                    ),
+                    Text(
+                      'Sorry, we couldn\'t find the page you\'re looking for :/',
+                      style: theme.textTheme.subtitle2,
+                    ),
+                  ]),
                 ),
               );
             });
