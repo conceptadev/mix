@@ -72,12 +72,14 @@ class SwitchX extends RemixableWidget {
 
     return Pressable(
       onPressed: fn == null ? null : () => fn(!checked),
-      mix: Mix.chooser(
-        condition: checked,
-        ifTrue: mix.withVariant(active),
-        ifFalse: mix.withVariant(inactive),
+      child: Box(
+        mix: Mix.chooser(
+          condition: checked,
+          ifTrue: mix.withVariant(active),
+          ifFalse: mix.withVariant(inactive),
+        ),
+        child: thumb.build(context, checked),
       ),
-      child: thumb.build(context, checked),
     );
   }
 }

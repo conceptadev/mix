@@ -2,6 +2,7 @@ import 'package:flutter/widgets.dart';
 
 import '../mixer/mix_context.dart';
 import '../mixer/mix_factory.dart';
+import '../variants/variants.dart';
 import 'box.widget.dart';
 import 'gap.widget.dart';
 import 'mixable.widget.dart';
@@ -11,7 +12,7 @@ import 'mixable.widget.dart';
 ///
 /// ## Attributes
 /// - [FlexAttributes](FlexAttributes-class.html)
-/// - [SharedAttributes](SharedAttributes-class.html) 
+/// - [SharedAttributes](SharedAttributes-class.html)
 /// ## Utilities
 /// - [FlexUtils](FlexUtils-class.html)
 /// - [SharedUtils](SharedUtils-class.html)
@@ -21,17 +22,24 @@ class FlexBox extends MixableWidget {
   const FlexBox({
     Mix? mix,
     Key? key,
+    List<Variant>? variants,
+    bool inherit = false,
     required this.direction,
     required this.children,
-  }) : super(mix, key: key);
+  }) : super(
+          mix,
+          variants: variants,
+          inherit: inherit,
+          key: key,
+        );
 
   final List<Widget> children;
   final Axis direction;
 
   @override
   Widget build(BuildContext context) {
-    return FlexBoxMixerWidget(
-      MixContext.create(context: context, mix: mix),
+    return FlexBoxMixedWidget(
+      getMixContext(context),
       direction: direction,
       children: children,
     );
@@ -39,13 +47,13 @@ class FlexBox extends MixableWidget {
 }
 
 /// @nodoc
-class FlexBoxMixerWidget extends MixedWidget {
-  const FlexBoxMixerWidget(
-    MixContext mixer, {
+class FlexBoxMixedWidget extends MixedWidget {
+  const FlexBoxMixedWidget(
+    MixContext mixContext, {
     Key? key,
     required this.direction,
     required this.children,
-  }) : super(mixer, key: key);
+  }) : super(mixContext, key: key);
 
   final List<Widget> children;
   final Axis direction;
@@ -94,12 +102,16 @@ class FlexBoxMixerWidget extends MixedWidget {
 class HBox extends FlexBox {
   const HBox({
     Mix? mix,
+    List<Variant>? variants,
     Key? key,
+    bool inherit = false,
     List<Widget> children = const <Widget>[],
   }) : super(
           mix: mix,
           key: key,
+          variants: variants,
           children: children,
+          inherit: inherit,
           direction: Axis.horizontal,
         );
 }
@@ -112,11 +124,15 @@ class HBox extends FlexBox {
 class VBox extends FlexBox {
   const VBox({
     Mix? mix,
+    List<Variant>? variants,
     Key? key,
+    bool inherit = false,
     List<Widget> children = const <Widget>[],
   }) : super(
           mix: mix,
+          variants: variants,
           key: key,
+          inherit: inherit,
           children: children,
           direction: Axis.vertical,
         );

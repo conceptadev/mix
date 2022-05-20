@@ -99,9 +99,11 @@ class ChipX extends RemixableWidget {
       );
     }
     return Pressable(
-      mix: mix,
       onPressed: onPressed,
-      child: Row(children: children),
+      child: HBox(
+        mix: mix,
+        children: children,
+      ),
     );
   }
 }

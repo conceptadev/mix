@@ -26,12 +26,12 @@ class _MixContextTestWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return MixTestWidget(
       child: Pressable(
-        mix: pressableMix,
         onPressed: () {},
-        child: Column(
+        child: VBox(
+          mix: pressableMix,
           children: [
             const TextMix('Hello'),
-            TextMix('With Variant', variant: textVariant),
+            TextMix('With Variant', variants: [textVariant]),
             TextMix(
               'With Mix',
               mix: Mix(
@@ -63,11 +63,6 @@ void main() {
         );
 
         expect(mixContext.sourceMix, pressableMix);
-        expect(
-          mixContext.descendentMix,
-          matchContext.descendentMix,
-          reason: 'descendentMix',
-        );
 
         expect(
           mixContext.originalMix,

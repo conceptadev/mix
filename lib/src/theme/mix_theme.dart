@@ -45,7 +45,7 @@ class MixThemeData {
     MixThemeBreakpoints? breakpoints,
     MixDesignTokens? designTokens,
   }) {
-    space ??= MixThemeSpace();
+    space ??= const MixThemeSpace();
     breakpoints ??= MixThemeBreakpoints();
     designTokens = MixDesignTokens.defaults.merge(designTokens);
 

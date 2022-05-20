@@ -18,23 +18,22 @@ class Box extends MixableWidget {
   const Box({
     Mix? mix,
     Key? key,
-    this.inherit = true,
-    this.variant,
+    bool inherit = false,
+    List<Variant>? variants,
     this.child,
-  }) : super(mix, key: key);
+  }) : super(
+          mix,
+          variants: variants,
+          inherit: inherit,
+          key: key,
+        );
 
   final Widget? child;
-  final Variant? variant;
-  final bool inherit;
 
   @override
   Widget build(BuildContext context) {
     return BoxMixedWidget(
-      MixContext.create(
-        context: context,
-        mix: mix.withMaybeVariant(variant),
-        inherit: inherit,
-      ),
+      getMixContext(context),
       child: child,
     );
   }
@@ -46,10 +45,10 @@ class BoxMixedWidget extends MixedWidget {
   final Widget? child;
 
   const BoxMixedWidget(
-    MixContext mixed, {
+    MixContext mixContext, {
     this.child,
     Key? key,
-  }) : super(mixed, key: key);
+  }) : super(mixContext, key: key);
 
   @override
   Widget build(BuildContext context) {

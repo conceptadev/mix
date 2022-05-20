@@ -15,13 +15,24 @@ abstract class MixableWidget extends StatelessWidget {
   const MixableWidget(
     Mix? mix, {
     Key? key,
+    bool? inherit,
+    List<Variant>? variants,
   })  : _mix = mix ?? Mix.constant,
+        _variants = variants,
+        _inherit = inherit ?? true,
         super(key: key);
 
   final Mix _mix;
 
-  Mix get mix {
-    return _mix;
+  final List<Variant>? _variants;
+  final bool _inherit;
+
+  MixContext getMixContext(BuildContext context) {
+    return MixContext.create(
+      context: context,
+      mix: _mix.withMaybeVariants(_variants),
+      inherit: _inherit,
+    );
   }
 
   @override
@@ -32,7 +43,14 @@ abstract class MixableWidget extends StatelessWidget {
     super.debugFillProperties(properties);
 
     properties.add(
-      DiagnosticsProperty<Mix>('mix', mix, defaultValue: null),
+      DiagnosticsProperty<Mix>('mix', _mix, defaultValue: null),
+    );
+    properties.add(
+      DiagnosticsProperty<List<Variant>>('variants', _variants,
+          defaultValue: null),
+    );
+    properties.add(
+      DiagnosticsProperty<bool>('inherit', _inherit, defaultValue: true),
     );
   }
 }
@@ -46,7 +64,6 @@ abstract class RemixableWidget extends MixableWidget {
 
   abstract final Mix defaultMix;
 
-  @override
   Mix get mix {
     return defaultMix.apply(_mix);
   }
