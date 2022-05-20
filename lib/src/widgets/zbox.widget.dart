@@ -3,7 +3,7 @@ import 'package:mix/mix.dart';
 
 /// ## Attributes:
 /// - [ZBoxAttributes](ZBoxAttributes-class.html)
-/// - [SharedAttributes](SharedAttributes-class.html) 
+/// - [SharedAttributes](SharedAttributes-class.html)
 /// ## Utilities:
 /// - [ZBoxUtility](ZBoxUtility-class.html)
 /// - [SharedUtils](SharedUtils-class.html)
@@ -15,13 +15,20 @@ class ZBox extends MixableWidget {
   const ZBox({
     Mix? mix,
     Key? key,
+    bool? inherit,
+    List<Variant>? variants,
     this.children = const <Widget>[],
-  }) : super(mix, key: key);
+  }) : super(
+          mix,
+          variants: variants,
+          inherit: inherit,
+          key: key,
+        );
 
   @override
   Widget build(BuildContext context) {
     return ZBoxMixedWidget(
-      MixContext.create(context: context, mix: mix),
+      getMixContext(context),
       children: children,
     );
   }
@@ -32,10 +39,10 @@ class ZBoxMixedWidget extends MixedWidget {
   final List<Widget> children;
 
   const ZBoxMixedWidget(
-    MixContext mixed, {
+    MixContext mixContext, {
     Key? key,
     this.children = const <Widget>[],
-  }) : super(mixed, key: key);
+  }) : super(mixContext, key: key);
 
   @override
   Widget build(BuildContext context) {

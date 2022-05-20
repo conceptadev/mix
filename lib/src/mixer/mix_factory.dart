@@ -61,7 +61,7 @@ class Mix<T extends Attribute> {
   }
 
   Mix<T> clone() {
-    return Mix._([...attributes]);
+    return Mix._([...attributes], variantToApply: [...variantToApply]);
   }
 
   /// Returns a new mix instance from this instance with the
@@ -94,11 +94,21 @@ class Mix<T extends Attribute> {
     );
   }
 
+  Mix<T> withMaybeVariants(List<Variant<T>>? variants) {
+    if (variants == null || variants.isEmpty) return this;
+    return withVariants(variants);
+  }
+
   /// Same as _combine_, but accepts a _List_ of _Mix_ instances
   static Mix<T> combineAll<T extends Attribute>(List<Mix<T>> mixes) {
     final attributes = mixes.expand((element) => element.attributes).toList();
+    final variantToApply =
+        mixes.expand((element) => element.variantToApply).toList();
 
-    return Mix._(attributes);
+    return Mix._(
+      attributes,
+      variantToApply: variantToApply,
+    );
   }
 
   /// Merges many mixes into one
@@ -184,7 +194,8 @@ extension MixExtension<T extends Attribute> on Mix<T> {
 
   /// Adds a list of attributes to a Mix
   Mix<T> addAttributes(List<T> attributes) {
-    return Mix._([...this.attributes, ...attributes]);
+    return Mix._([...this.attributes, ...attributes],
+        variantToApply: [...variantToApply]);
   }
 
   /// Combines argument mix with this mix.
@@ -217,14 +228,13 @@ extension MixExtension<T extends Attribute> on Mix<T> {
   }
 
   Pressable _pressable({
-    required Widget child,
+    required MixableWidget child,
     Mix? overrideMix,
     void Function()? onPressed,
     void Function()? onLongPressed,
   }) {
     final mx = Mix.combine(this, overrideMix);
     return Pressable(
-      mix: mx,
       child: child,
       onPressed: onPressed,
       onLongPressed: onLongPressed,
@@ -291,7 +301,7 @@ extension MixExtension<T extends Attribute> on Mix<T> {
 
 /// Callback function typedef - used in _PressableWidget_
 typedef PressableWidgetFn = Pressable Function({
-  required Widget child,
+  required MixableWidget child,
   Mix? overrideMix,
   void Function()? onPressed,
   void Function()? onLongPressed,

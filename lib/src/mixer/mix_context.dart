@@ -29,7 +29,6 @@ class MixContext {
   final BuildContext context;
   final Mix sourceMix;
   final Mix originalMix;
-  final Mix descendentMix;
 
   final List<VariantAttribute> variants;
   final List<DirectiveAttribute> directives;
@@ -46,7 +45,6 @@ class MixContext {
     required this.context,
     required this.sourceMix,
     required this.originalMix,
-    required this.descendentMix,
     required this.boxProps,
     required this.textProps,
     required this.sharedProps,
@@ -58,25 +56,39 @@ class MixContext {
     required this.decorators,
   });
 
+  // factory MixContext.fromContext(BuildContext context) {
+  //   return MixContext.create(
+  //     context: context,
+  //     inherit: true,
+  //     mix: Mix.constant,
+  //   );
+  // }
+
   factory MixContext.create({
     required BuildContext context,
     required Mix mix,
     bool inherit = false,
   }) {
     Mix _mix = mix;
+
+    MixContext? inheritedMixContext;
+
     if (inherit) {
       /// Get ancestor context
-      final inheritedMix = context.inheritedMix;
-      if (inheritedMix != null) {
-        _mix = Mix.combine(inheritedMix, mix);
-      }
+      inheritedMixContext = context.inheritedMixContext;
     }
 
-    return _build(
+    final mixContext = _build(
       context: context,
       mix: _mix,
       variantsToApply: mix.variantToApply,
     );
+
+    if (inheritedMixContext != null) {
+      return inheritedMixContext.merge(mixContext);
+    } else {
+      return mixContext;
+    }
   }
 
   // ignore: long-method
@@ -150,13 +162,6 @@ class MixContext {
       context: context,
       sourceMix: source,
       originalMix: mix,
-      descendentMix: Mix.fromMaybeList([
-        textAttributes,
-        iconAttributes,
-        sharedAttributes,
-        ...variants,
-        ...directives,
-      ]),
       boxProps: BoxProps.fromContext(context, boxAttributes),
       textProps: TextProps.fromContext(
         context,
@@ -248,7 +253,6 @@ class MixContext {
         other.context == context &&
         other.sourceMix == sourceMix &&
         other.originalMix == originalMix &&
-        other.descendentMix == descendentMix &&
         listEquals(other.variants, variants) &&
         listEquals(other.directives, directives) &&
         other.decorators == decorators &&
@@ -265,7 +269,6 @@ class MixContext {
     return context.hashCode ^
         sourceMix.hashCode ^
         originalMix.hashCode ^
-        descendentMix.hashCode ^
         variants.hashCode ^
         directives.hashCode ^
         decorators.hashCode ^

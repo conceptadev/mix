@@ -4,7 +4,6 @@ import 'package:mix/src/attributes/text/text.attributes.dart';
 import 'package:mix/src/attributes/text/text.notifier.dart';
 import 'package:mix/src/dto/box_shadow.dto.dart';
 import 'package:mix/src/mixer/mix_context.dart';
-import 'package:mix/src/mixer/mix_factory.dart';
 
 /// {@category Misc Utils}
 extension ContextExtensions on BuildContext {
@@ -26,7 +25,7 @@ extension ContextExtensions on BuildContext {
   TextDirection get directionality => Directionality.of(this);
 
   /// shared attributes of parent
-  Mix? get inheritedMix => MixContextNotifier.of(this)?.descendentMix;
+  MixContext? get inheritedMixContext => MixContextNotifier.of(this);
 
   /// Theme color scheme
   ColorScheme get colorScheme => theme.colorScheme;

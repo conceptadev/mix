@@ -21,25 +21,21 @@ class TextMix extends MixableWidget {
     this.text, {
     Mix? mix,
     Key? key,
-    this.inherit = true,
-    this.variant,
-  }) : super(mix, key: key);
+    List<Variant>? variants,
+    bool? inherit,
+  }) : super(
+          mix,
+          inherit: inherit,
+          variants: variants,
+          key: key,
+        );
 
   final String text;
-  final Variant? variant;
-
-  /// Check if should inherit Text and
-  /// Shared attributes from ancestor
-  final bool inherit;
 
   @override
   Widget build(BuildContext context) {
     return TextMixerWidget(
-      MixContext.create(
-        context: context,
-        mix: mix.withMaybeVariant(variant),
-        inherit: inherit,
-      ),
+      getMixContext(context),
       text: text,
     );
   }
@@ -48,10 +44,10 @@ class TextMix extends MixableWidget {
 /// @nodoc
 class TextMixerWidget extends MixedWidget {
   const TextMixerWidget(
-    MixContext mixer, {
+    MixContext mixContext, {
     Key? key,
     required this.text,
-  }) : super(mixer, key: key);
+  }) : super(mixContext, key: key);
 
   final String text;
 

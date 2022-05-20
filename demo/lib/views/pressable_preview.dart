@@ -60,7 +60,6 @@ class _PressablePreviewState extends State<PressablePreview> {
           ],
         ),
         Pressable(
-          mix: mix,
           onPressed: _enabled
               ? () {
                   showDialog(
@@ -68,12 +67,15 @@ class _PressablePreviewState extends State<PressablePreview> {
                     builder: (context) {
                       return AlertDialogX(
                         content: [
-                          TextMix('Are you absolutely sure?', variant: title),
+                          TextMix(
+                            'Are you absolutely sure?',
+                            variants: [title],
+                          ),
                           TextMix(
                             'This action cannot be undone. '
                             'This will permanently delete your account and remove '
                             'your data from our servers.',
-                            variant: paragraph,
+                            variants: [paragraph],
                           ),
                         ],
                         actions: [
@@ -107,7 +109,10 @@ class _PressablePreviewState extends State<PressablePreview> {
                   );
                 }
               : null,
-          child: const TextMix('Simple Text'),
+          child: Box(
+            mix: mix,
+            child: const TextMix('Simple Text'),
+          ),
         ),
       ],
     );
