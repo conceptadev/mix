@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
+import 'package:mix/src/theme/material_theme/material_tokens.dart';
 
 /// _Mix_ corollary to Flutter _Checkbox_ widget
 ///
@@ -11,20 +12,20 @@ import 'package:mix/mix.dart';
 ///      height(25),
 ///      icon(
 ///        size: 18,
-///        color: $primary,
+///        color: MaterialTokens.colorScheme.primary,
 ///      ),
 ///      border(
 ///        color: Colors.grey[300],
 ///        width: 2,
 ///      ),
 ///      active(
-///        iconColor($primary),
+///        iconColor(MaterialTokens.colorScheme.primary),
 ///      ),
 ///      disabled(
 ///        border(color: Colors.grey.shade300),
 ///      ),
 ///      (hover | active)(
-///        borderColor($primary),
+///        borderColor(MaterialTokens.colorScheme.primary),
 ///      )
 /// ```
 /// {@category Mixable Widgets}
@@ -40,7 +41,7 @@ class CheckboxX extends RemixableWidget {
   final ValueChanged<bool>? onChanged;
 
   @override
-  Mix get defaultMix {
+  Mix get baseMix {
     return Mix(
       animated(),
       rounded(5),
@@ -48,20 +49,20 @@ class CheckboxX extends RemixableWidget {
       height(25),
       icon(
         size: 18,
-        color: $primary,
+        color: MaterialTokens.colorScheme.primary,
       ),
       border(
         color: Colors.grey[300],
         width: 2,
       ),
       active(
-        iconColor($primary),
+        iconColor(MaterialTokens.colorScheme.primary),
       ),
       disabled(
         border(color: Colors.grey.shade300),
       ),
       (hover | active)(
-        borderColor($primary),
+        borderColor(MaterialTokens.colorScheme.primary),
       ),
     );
   }
