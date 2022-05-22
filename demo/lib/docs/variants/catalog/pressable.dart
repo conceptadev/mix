@@ -10,7 +10,7 @@ class VariantsCatalogPressable extends StatelessWidget {
       buildBlock(
         'Hover',
         Mix(hover(
-          border(color: $primary, width: 2),
+          border(color: MaterialTokens.colorScheme.primary, width: 2),
           padding(4.0),
         )),
         const Text('Hover this to show the highlight'),
@@ -19,7 +19,7 @@ class VariantsCatalogPressable extends StatelessWidget {
       buildBlock(
         'Focus',
         Mix(focus(
-          border(color: $primary, width: 2),
+          border(color: MaterialTokens.colorScheme.primary, width: 2),
           padding(4.0),
         )),
         const Text('Focus this to show the highlight'),
@@ -28,7 +28,7 @@ class VariantsCatalogPressable extends StatelessWidget {
       buildBlock(
         'Press',
         Mix(press(
-          border(color: $primary, width: 2),
+          border(color: MaterialTokens.colorScheme.primary, width: 2),
           padding(4.0),
         )),
         const Text('Press this to show the highlight'),
@@ -51,8 +51,10 @@ class VariantsCatalogPressable extends StatelessWidget {
               ),
               Pressable(
                 onPressed: () {},
-                mix: mix,
-                child: child,
+                child: Box(
+                  mix: mix,
+                  child: child,
+                ),
               ),
             ],
           ),
