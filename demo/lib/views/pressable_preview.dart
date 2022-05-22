@@ -21,10 +21,10 @@ class _PressablePreviewState extends State<PressablePreview> {
       scale(1),
       padding(20),
       elevation(8),
-      bgColor($primary),
+      bgColor(MaterialTokens.colorScheme.primary),
       font(
         weight: FontWeight.bold,
-        color: $onBackground,
+        color: MaterialTokens.colorScheme.onBackground,
       ),
       border(
         color: Colors.black,

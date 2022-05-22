@@ -6,9 +6,9 @@ Mix get mix => Mix(
       width(100),
       rounded(10),
       elevation(2),
-      bgColor($surface),
+      bgColor(MaterialTokens.colorScheme.surface),
       align(Alignment.center),
-      textColor($onSurface),
+      textColor(MaterialTokens.colorScheme.onSurface),
     );
 
 class DesignTokenExample extends StatelessWidget {

@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
 
 PressableWidgetFn get button => Mix(
-      textStyle($body2),
+      textStyle(MaterialTokens.textTheme.bodyText2),
       bold(),
       fontSize(16.0),
       animated(),
-      bgColor($primary),
+      bgColor(MaterialTokens.colorScheme.primary),
       (hover)(
-        bgColor($colorScheme.secondary),
+        bgColor(MaterialTokens.colorScheme.secondary),
       ),
       paddingHorizontal(15.0),
       paddingVertical(8.0),
