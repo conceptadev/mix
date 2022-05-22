@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
+import 'package:mix/src/theme/material_theme/material_tokens.dart';
 
 /// _Mix_ corollary to Flutter _Card_ widget
 ///
@@ -62,7 +63,7 @@ class CardX extends RemixableWidget {
   final List<Widget> children;
 
   @override
-  Mix get defaultMix {
+  Mix get baseMix {
     return Mix(
       margin(20),
       elevation(6),
@@ -70,13 +71,13 @@ class CardX extends RemixableWidget {
       padding(20),
       gap(10),
       crossAxis(CrossAxisAlignment.start),
-      bgColor($surface),
+      bgColor(MaterialTokens.colorScheme.surface),
       paragraph(
-        textStyle($body1),
+        textStyle(MaterialTokens.textTheme.bodyText1),
       ),
       title(
         titleCase(),
-        textStyle($headline6),
+        textStyle(MaterialTokens.textTheme.headline6),
         font(
           weight: FontWeight.bold,
         ),
