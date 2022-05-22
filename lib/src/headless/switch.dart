@@ -3,6 +3,7 @@ import 'package:mix/src/attributes/common/attribute.dart';
 import 'package:mix/src/attributes/exports.dart';
 import 'package:mix/src/mixer/mix_factory.dart';
 import 'package:mix/src/theme/material_theme/color_scheme_tokens.dart';
+import 'package:mix/src/theme/material_theme/material_tokens.dart';
 import 'package:mix/src/widgets/box.widget.dart';
 import 'package:mix/src/widgets/mixable.widget.dart';
 import 'package:mix/src/widgets/pressable.widget.dart';
@@ -17,14 +18,14 @@ import 'exports.dart';
 ///      height(20),
 ///      width(36),
 ///      rounded(100),
-///      bgColor($onPrimary),
+///      bgColor(MaterialTokens.colorScheme.onPrimary),
 ///      inactive(
 ///        align(Alignment.centerLeft),
 ///        bgColor(Colors.grey.shade300),
 ///      ),
 ///      active(
 ///        align(Alignment.centerRight),
-///        bgColor($primary),
+///        bgColor(MaterialTokens.colorScheme.primary),
 ///      )
 /// ```
 /// {@category Mixable Widgets}
@@ -43,20 +44,20 @@ class SwitchX extends RemixableWidget {
   final SwitchThumb thumb;
 
   @override
-  Mix get defaultMix {
+  Mix get baseMix {
     return Mix(
       animated(),
       height(20),
       width(36),
       rounded(100),
-      bgColor($onPrimary),
+      bgColor(MaterialTokens.colorScheme.onPrimary),
       inactive(
         align(Alignment.centerLeft),
         bgColor(Colors.grey.shade300),
       ),
       active(
         align(Alignment.centerRight),
-        bgColor($primary),
+        bgColor(MaterialTokens.colorScheme.primary),
       ),
     );
   }
