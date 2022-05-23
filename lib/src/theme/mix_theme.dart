@@ -3,6 +3,8 @@ import 'package:flutter/widgets.dart';
 import 'package:mix/src/theme/tokens/breakpoints.dart';
 import 'package:mix/src/theme/tokens/space.dart';
 
+final cacheMap = <int, MixThemeData>{};
+
 class MixTheme extends InheritedWidget {
   const MixTheme({
     Key? key,

@@ -79,27 +79,31 @@ class _PressablePreviewState extends State<PressablePreview> {
                           ),
                         ],
                         actions: [
-                          button(
-                            child: const TextMix('Cancel'),
+                          Pressable(
                             onPressed: () {
                               Navigator.pop(context);
                             },
-                            overrideMix: Mix(
-                              textColor(Colors.grey.shade700),
-                              bgColor(Colors.grey.shade400),
-                              (hover)(
-                                bgColor(Colors.grey),
+                            child: button.box(
+                              child: const TextMix('Cancel'),
+                              overrideMix: Mix(
+                                textColor(Colors.grey.shade700),
+                                bgColor(Colors.grey.shade400),
+                                (hover)(
+                                  bgColor(Colors.grey),
+                                ),
                               ),
                             ),
                           ),
-                          button(
-                            child: const TextMix('Yes, delete account'),
+                          Pressable(
                             onPressed: Navigator.of(context).pop,
-                            overrideMix: Mix(
-                              textColor(Colors.red.shade100),
-                              bgColor(Colors.redAccent.shade200),
-                              (hover)(
-                                bgColor(Colors.redAccent.shade400),
+                            child: button.box(
+                              child: const TextMix('Yes, delete account'),
+                              overrideMix: Mix(
+                                textColor(Colors.red.shade100),
+                                bgColor(Colors.redAccent.shade200),
+                                (hover)(
+                                  bgColor(Colors.redAccent.shade400),
+                                ),
                               ),
                             ),
                           ),

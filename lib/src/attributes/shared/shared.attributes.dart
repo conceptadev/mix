@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mix/src/attributes/common/attribute.dart';
+
 /// ## Widget:
 /// - [(all)](/topics/Mixable%20Widgets-topic.html)
 ///

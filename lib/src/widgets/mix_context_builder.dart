@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mix/src/mixer/mix_context.dart';
+import 'package:mix/src/mixer/mix_context_notifier.dart';
 import 'package:mix/src/mixer/mix_factory.dart';
 import 'package:mix/src/variants/variants.dart';
 import 'package:mix/src/widgets/mixable.widget.dart';

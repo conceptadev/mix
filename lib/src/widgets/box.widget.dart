@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
+import 'package:mix/src/mixer/mix_context_notifier.dart';
 
 import 'decorator.widget.dart';
 import 'empty.widget.dart';

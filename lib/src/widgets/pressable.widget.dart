@@ -100,25 +100,6 @@ class _PressableMixerWidgetState extends State<PressableMixerWidget> {
 
   @override
   Widget build(BuildContext context) {
-    // MixableWidget renderAs() {
-    //   if (widget.asWidget == null || widget.asWidget.runtimeType == Box) {
-    //     return Box(
-    //       mix: widget.mix,
-    //       variant: widget.variant,
-    //       child: widget.child,
-    //     );
-    //   }
-
-    //   if (widget.asWidget.runtimeType == HBox) {
-    //     return HBox(
-    //       mix: widget.mix,
-    //       variant: widget.variant,
-    //       children: widget.child,
-    //     );
-    //   }
-    //   return widget.child;
-    // }
-
     return MergeSemantics(
       child: Semantics(
         button: true,

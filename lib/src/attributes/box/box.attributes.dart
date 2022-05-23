@@ -54,7 +54,6 @@ class BoxAttributes extends Attribute {
 
   BoxAttributes merge(BoxAttributes? box) {
     if (box == null) return this;
-
     return copyWith(
       // Mergeble values
       border: border?.merge(box.border) ?? box.border,

@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:mix/mix.dart';
 
 import '../../theme/refs/color_token.dart';
 import '../../theme/refs/text_style_token.dart';
@@ -37,8 +38,9 @@ class TextProps {
   factory TextProps.fromContext(
     BuildContext context,
     TextAttributes? attributes,
-    Iterable<TextDirectiveAttribute> directives,
+    Iterable<DirectiveAttribute> directives,
   ) {
+    final textDirectives = directives.whereType<TextDirectiveAttribute>();
     final text = attributes;
     // Get all text directives
 
@@ -73,7 +75,7 @@ class TextProps {
       maxLines: text?.maxLines,
       textWidthBasis: text?.textWidthBasis,
       textHeightBehavior: text?.textHeightBehavior,
-      directives: directives.toList(),
+      directives: textDirectives.toList(),
     );
   }
 
