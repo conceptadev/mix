@@ -66,14 +66,14 @@ class CustomMixWidget extends StatelessWidget {
       marginY(10),
       elevation(10),
       rounded(10),
-      bgColor($primary),
-      textStyle($button),
-      textColor($onPrimary),
+      bgColor(MaterialTokens.colorScheme.primary),
+      textStyle(MaterialTokens.textTheme.button),
+      textColor(MaterialTokens.colorScheme.onPrimary),
       hover(
         elevation(2),
         padding(20),
-        bgColor($secondary),
-        textColor($onSecondary),
+        bgColor(MaterialTokens.colorScheme.secondary),
+        textColor(MaterialTokens.colorScheme.onSecondary),
       ),
     );
     return Box(

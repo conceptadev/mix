@@ -10,12 +10,12 @@ class HeadlessCardX extends StatelessWidget {
       children: [
         TextMix(
           'Lorem ipsum dolor sit amet, consectetur',
-          variant: title,
+          variants: [title],
         ),
         TextMix(
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
           ' Sed hendrerit risus a neque maximus, non viverra',
-          variant: paragraph,
+          variants: [paragraph],
         ),
       ],
     );

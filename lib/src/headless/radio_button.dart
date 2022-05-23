@@ -40,7 +40,7 @@ class RadioButtonX extends RemixableWidget {
   final RadioButtonIndicator indicator;
 
   @override
-  Mix get defaultMix {
+  Mix get baseMix {
     return Mix(
       animated(),
       rounded(100),

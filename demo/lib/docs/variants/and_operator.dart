@@ -17,9 +17,11 @@ class VariantsAndOperator extends StatelessWidget {
     );
     return Center(
       child: Pressable(
-        mix: mix,
         onPressed: () {},
-        child: const TextMix('HOVER THIS TO CHANGE THE TEXT COLOR'),
+        child: Box(
+          mix: mix,
+          child: const TextMix('HOVER THIS TO CHANGE THE TEXT COLOR'),
+        ),
       ),
     );
   }

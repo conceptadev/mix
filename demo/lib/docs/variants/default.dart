@@ -7,19 +7,21 @@ class VariantsDefaultExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final style = Mix(
-      bgColor($secondary),
-      textColor($onSecondary),
+      bgColor(MaterialTokens.colorScheme.secondary),
+      textColor(MaterialTokens.colorScheme.onSecondary),
       hover(
-        bgColor($primary),
-        textColor($onPrimary),
+        bgColor(MaterialTokens.colorScheme.primary),
+        textColor(MaterialTokens.colorScheme.onPrimary),
       ),
     );
 
     return Center(
       child: Pressable(
         onPressed: () {},
-        mix: style,
-        child: const TextMix('Button'),
+        child: Box(
+          mix: style,
+          child: const TextMix('Button'),
+        ),
       ),
     );
   }

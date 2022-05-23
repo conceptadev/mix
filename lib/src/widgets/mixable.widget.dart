@@ -62,10 +62,10 @@ abstract class RemixableWidget extends MixableWidget {
     Key? key,
   }) : super(mix, key: key);
 
-  abstract final Mix defaultMix;
+  abstract final Mix baseMix;
 
   Mix get mix {
-    return defaultMix.apply(_mix);
+    return baseMix.apply(_mix);
   }
 }
 

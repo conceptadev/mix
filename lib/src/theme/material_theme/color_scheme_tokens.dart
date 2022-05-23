@@ -1,34 +1,55 @@
+import 'package:mix/src/helpers/extensions.dart';
+
 import '../refs/color_token.dart';
 
-const $primary = ColorToken('primary');
-const $secondary = ColorToken('secondary');
-const $tertiary = ColorToken('tertiary');
-const $surface = ColorToken('surface');
-const $background = ColorToken('background');
-const $error = ColorToken('error');
-const $onPrimary = ColorToken('onPrimary');
-const $onSecondary = ColorToken('onSecondary');
-const $onTertiary = ColorToken('onTertiary');
-const $onSurface = ColorToken('onSurface');
-const $onBackground = ColorToken('onBackground');
-const $onError = ColorToken('onError');
+class MaterialColorSchemeTokens {
+  MaterialColorSchemeTokens();
 
-const $colorScheme = _ColorSchemeTokens();
-const $cs = $colorScheme;
+  final ColorToken primary = ColorToken('primary', (context) {
+    return context.theme.colorScheme.primary;
+  });
 
-class _ColorSchemeTokens {
-  const _ColorSchemeTokens();
+  final ColorToken secondary = ColorToken('secondary', (context) {
+    return context.theme.colorScheme.secondary;
+  });
 
-  final ColorToken primary = $primary;
-  final ColorToken secondary = $secondary;
-  final ColorToken tertiary = $tertiary;
-  final ColorToken surface = $surface;
-  final ColorToken background = $background;
-  final ColorToken error = $error;
-  final ColorToken onPrimary = $onPrimary;
-  final ColorToken onSecondary = $onSecondary;
-  final ColorToken onTertiary = $onTertiary;
-  final ColorToken onSurface = $onSurface;
-  final ColorToken onBackground = $onBackground;
-  final ColorToken onError = $onError;
+  final ColorToken tertiary = ColorToken('tertiary', (context) {
+    return context.theme.colorScheme.tertiary;
+  });
+
+  final ColorToken surface = ColorToken('surface', (context) {
+    return context.theme.colorScheme.surface;
+  });
+
+  final ColorToken background = ColorToken('background', (context) {
+    return context.theme.colorScheme.background;
+  });
+
+  final ColorToken error = ColorToken('error', (context) {
+    return context.theme.colorScheme.error;
+  });
+
+  final ColorToken onPrimary = ColorToken('onPrimary', (context) {
+    return context.theme.colorScheme.onPrimary;
+  });
+
+  final ColorToken onSecondary = ColorToken('onSecondary', (context) {
+    return context.theme.colorScheme.onSecondary;
+  });
+
+  final ColorToken onTertiary = ColorToken('onTertiary', (context) {
+    return context.theme.colorScheme.onTertiary;
+  });
+
+  final ColorToken onSurface = ColorToken('onSurface', (context) {
+    return context.theme.colorScheme.onSurface;
+  });
+
+  final ColorToken onBackground = ColorToken('onBackground', (context) {
+    return context.theme.colorScheme.onBackground;
+  });
+
+  final ColorToken onError = ColorToken('onError', (context) {
+    return context.theme.colorScheme.onError;
+  });
 }

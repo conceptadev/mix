@@ -6,7 +6,7 @@ import 'package:mix/src/dto/box_shadow.dto.dart';
 import 'package:mix/src/mixer/mix_context.dart';
 
 /// {@category Misc Utils}
-extension ContextExtensions on BuildContext {
+extension BuildContextExtensions on BuildContext {
   Brightness get brightness => Theme.of(this).brightness;
 
   /// Check if brightness is Brightness.dark
