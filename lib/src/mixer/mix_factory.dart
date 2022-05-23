@@ -57,40 +57,43 @@ class Mix<T extends Attribute> {
   /// (_attributes_ argument can be null)
   factory Mix.fromMaybeList(List<T?> attributes) {
     final validAttributes = attributes.whereType<T>();
-    return Mix._(validAttributes.toList());
+    return Mix.fromList(validAttributes.toList());
   }
 
   Mix<T> clone() {
-    return Mix._([...attributes], variantToApply: [...variantToApply]);
+    return copyWith();
+  }
+
+  Mix<T> copyWith({
+    List<T> attributes = const [],
+    List<Variant<T>> variantToApply = const [],
+  }) {
+    return Mix._(
+      [...this.attributes, ...attributes],
+      variantToApply: [...this.variantToApply, ...variantToApply],
+    );
   }
 
   /// Returns a new mix instance from this instance with the
   /// _Variant_ instance added
   Mix<T> withVariant(Variant<T> variant) {
-    return Mix._(
-      [...attributes],
-      variantToApply: [...variantToApply, variant],
+    return copyWith(
+      attributes: attributes,
+      variantToApply: [variant],
     );
   }
 
   /// Same as _withVariant_, but the argument is nullable
   Mix<T> withMaybeVariant(Variant<T>? variant) {
     if (variant == null) return this;
-
-    return Mix._(
-      [...attributes],
-      variantToApply: [...variantToApply, variant],
-    );
+    return withVariant(variant);
   }
 
   /// Same as _withVariant_, but can accept a _List_ of _Variant_ instances
   Mix<T> withVariants(List<Variant<T>> variants) {
-    return Mix._(
-      [...attributes],
-      variantToApply: [
-        ...variantToApply,
-        ...variants,
-      ],
+    return copyWith(
+      attributes: attributes,
+      variantToApply: variants,
     );
   }
 
@@ -156,7 +159,7 @@ class Mix<T extends Attribute> {
   }
 
   /// Chooses mix based on condition
-  static Mix chooser<T extends Attribute>({
+  static Mix<T> chooser<T extends Attribute>({
     required bool condition,
     required Mix<T> ifTrue,
     required Mix<T> ifFalse,
@@ -166,6 +169,24 @@ class Mix<T extends Attribute> {
     } else {
       return ifFalse;
     }
+  }
+
+  static Mix<T> variantSwitcher<T extends Attribute>(
+    Mix<T> mix,
+    Map<bool, Variant<T>> cases,
+  ) {
+    final keys = cases.keys.toList();
+    final values = cases.values.toList();
+
+    List<Variant<T>> variants = [];
+
+    for (var i = 0; i < keys.length; i++) {
+      if (keys[i]) {
+        variants.add(values[i]);
+      }
+    }
+
+    return mix.withVariants(variants);
   }
 
   /// Used for const constructor widgets
@@ -194,8 +215,7 @@ extension MixExtension<T extends Attribute> on Mix<T> {
 
   /// Adds a list of attributes to a Mix
   Mix<T> addAttributes(List<T> attributes) {
-    return Mix._([...this.attributes, ...attributes],
-        variantToApply: [...variantToApply]);
+    return copyWith(attributes: attributes);
   }
 
   /// Combines argument mix with this mix.
@@ -206,7 +226,7 @@ extension MixExtension<T extends Attribute> on Mix<T> {
   /// Like apply, but the argument mix is nullable
   Mix<T> applyMaybe(Mix<T>? mix) {
     if (mix == null) return this;
-    return Mix.combineAll([this, mix]);
+    return apply(mix);
   }
 
   /// @nodoc
@@ -225,25 +245,6 @@ extension MixExtension<T extends Attribute> on Mix<T> {
   }) {
     final mix = Mix.combine(this, overrideMix);
     return HBox(mix: mix, children: children);
-  }
-
-  Pressable _pressable({
-    required MixableWidget child,
-    Mix? overrideMix,
-    void Function()? onPressed,
-    void Function()? onLongPressed,
-  }) {
-    final mx = Mix.combine(this, overrideMix);
-    return Pressable(
-      child: child,
-      onPressed: onPressed,
-      onLongPressed: onLongPressed,
-    );
-  }
-
-  /// @nodoc
-  PressableWidgetFn get pressable {
-    return _pressable;
   }
 
   /// @nodoc
@@ -298,11 +299,3 @@ extension MixExtension<T extends Attribute> on Mix<T> {
     );
   }
 }
-
-/// Callback function typedef - used in _PressableWidget_
-typedef PressableWidgetFn = Pressable Function({
-  required MixableWidget child,
-  Mix? overrideMix,
-  void Function()? onPressed,
-  void Function()? onLongPressed,
-});
