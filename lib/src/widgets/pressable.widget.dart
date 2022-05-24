@@ -123,9 +123,8 @@ class _PressableMixerWidgetState extends State<PressableMixerWidget> {
               if (!enabled) return;
               if (mounted) setState(() => _pressing = true);
             },
-            onTapUp: (_) async {
+            onTapUp: (_) {
               if (!enabled) return;
-              await Future.delayed(const Duration(milliseconds: 100));
               if (mounted) setState(() => _pressing = false);
             },
             onTapCancel: () {

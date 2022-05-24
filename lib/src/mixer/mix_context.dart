@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
+import 'package:mix/src/mixer/mix_context_notifier.dart';
 
 import '../attributes/box/box.props.dart';
 import '../attributes/flex/flex.props.dart';
@@ -56,39 +57,34 @@ class MixContext {
     required this.decorators,
   });
 
-  // factory MixContext.fromContext(BuildContext context) {
-  //   return MixContext.create(
-  //     context: context,
-  //     inherit: true,
-  //     mix: Mix.constant,
-  //   );
-  // }
-
   factory MixContext.create({
     required BuildContext context,
     required Mix mix,
     bool inherit = false,
   }) {
-    Mix _mix = mix;
-
     MixContext? inheritedMixContext;
 
     if (inherit) {
       /// Get ancestor context
-      inheritedMixContext = context.inheritedMixContext;
+      inheritedMixContext = MixContextNotifier.of(context);
     }
 
-    MixContext mixContext;
-    mixContext = _build(
+    final inheritedMix = inheritedMixContext?.sourceMix;
+
+    Mix combinedMix;
+
+    if (inheritedMixContext != null && mix.isEmpty) {
+      return inheritedMixContext;
+    } else if (inheritedMix != null) {
+      combinedMix = inheritedMix.apply(mix);
+    } else {
+      combinedMix = mix;
+    }
+
+    return _build(
       context: context,
-      mix: _mix,
+      mix: combinedMix,
     );
-
-    if (inheritedMixContext != null) {
-      mixContext = inheritedMixContext.merge(mixContext);
-    }
-
-    return mixContext;
   }
 
   // ignore: long-method
@@ -171,18 +167,36 @@ class MixContext {
       }
     }
 
-    final boxProps = BoxProps.fromContext(context, boxAttributes);
+    final boxProps = BoxProps.fromContext(
+      context,
+      boxAttributes,
+    );
 
-    final textProps =
-        TextProps.fromContext(context, textAttributes, directives);
+    final textProps = TextProps.fromContext(
+      context,
+      textAttributes,
+      directives,
+    );
 
-    final sharedProps = SharedProps.fromContext(context, sharedAttributes);
+    final sharedProps = SharedProps.fromContext(
+      context,
+      sharedAttributes,
+    );
 
-    final iconProps = IconProps.fromContext(context, iconAttributes);
+    final iconProps = IconProps.fromContext(
+      context,
+      iconAttributes,
+    );
 
-    final flexProps = FlexProps.fromContext(context, flexAttributes);
-    final zBoxProps = ZBoxProps.fromContext(context, zBoxAttributes);
-    final decoratorMap = _getDecoratorMap(decorators);
+    final flexProps = FlexProps.fromContext(
+      context,
+      flexAttributes,
+    );
+    final zBoxProps = ZBoxProps.fromContext(
+      context,
+      zBoxAttributes,
+    );
+    final decoratorMap = _buildDecoratorMap(decorators);
 
     return MixContext._(
       context: context,
@@ -244,7 +258,7 @@ class MixContext {
     return spreaded;
   }
 
-  static DecoratorMap _getDecoratorMap(List<Decorator> decorators) {
+  static DecoratorMap _buildDecoratorMap(List<Decorator> decorators) {
     final DecoratorMap decoratorMap = {};
     final mergedDecorators = <Type, Decorator>{};
 
@@ -303,21 +317,21 @@ class MixContext {
         zBoxProps.hashCode;
   }
 
-  MixContext merge(MixContext? other) {
-    if (other == null) return this;
+  // MixContext merge(MixContext? other) {
+  //   if (other == null) return this;
 
-    return copyWith(
-      sourceMix: other.sourceMix,
-    );
-  }
+  //   return copyWith(
+  //     sourceMix: other.sourceMix,
+  //   );
+  // }
 
-  MixContext copyWith({
-    Mix? sourceMix,
-  }) {
-    return MixContext.create(
-      context: context,
-      mix: Mix.combine(this.sourceMix, sourceMix),
-      inherit: false,
-    );
-  }
+  // MixContext copyWith({
+  //   Mix? sourceMix,
+  // }) {
+  //   return MixContext.create(
+  //     context: context,
+  //     mix: Mix.combine(this.sourceMix, sourceMix),
+  //     inherit: false,
+  //   );
+  // }
 }

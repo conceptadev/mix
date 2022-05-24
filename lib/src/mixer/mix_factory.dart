@@ -64,6 +64,10 @@ class Mix<T extends Attribute> {
     return copyWith();
   }
 
+  get isEmpty {
+    return attributes.isEmpty && variantToApply.isEmpty;
+  }
+
   Mix<T> copyWith({
     List<T> attributes = const [],
     List<Variant<T>> variantToApply = const [],

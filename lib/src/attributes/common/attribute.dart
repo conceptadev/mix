@@ -43,7 +43,7 @@ enum DecoratorType {
   separator,
 }
 
-abstract class Decorator<T extends Decorator<T>> extends Attribute {
+abstract class Decorator<T> extends Attribute {
   const Decorator(this.key);
   final Key key;
   Decorator<T> merge(T other);
@@ -52,13 +52,13 @@ abstract class Decorator<T extends Decorator<T>> extends Attribute {
   Widget render(MixContext mixContext, Widget child);
 }
 
-abstract class ParentDecorator<T extends Decorator<T>> extends Decorator<T> {
+abstract class ParentDecorator<T> extends Decorator<T> {
   const ParentDecorator(Key key) : super(key);
   @override
   DecoratorType get type => DecoratorType.parent;
 }
 
-abstract class ChildDecorator<T extends Decorator<T>> extends Decorator<T> {
+abstract class ChildDecorator<T> extends Decorator<T> {
   const ChildDecorator(Key key) : super(key);
   @override
   DecoratorType get type => DecoratorType.child;
