@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
+import 'package:mix/src/mixer/mix_context_notifier.dart';
 
 import '../attributes/box/box.props.dart';
 import '../attributes/flex/flex.props.dart';
@@ -29,7 +30,6 @@ class MixContext {
   final BuildContext context;
   final Mix sourceMix;
   final Mix originalMix;
-  final Mix descendentMix;
 
   final List<VariantAttribute> variants;
   final List<DirectiveAttribute> directives;
@@ -46,7 +46,6 @@ class MixContext {
     required this.context,
     required this.sourceMix,
     required this.originalMix,
-    required this.descendentMix,
     required this.boxProps,
     required this.textProps,
     required this.sharedProps,
@@ -63,19 +62,28 @@ class MixContext {
     required Mix mix,
     bool inherit = false,
   }) {
-    Mix _mix = mix;
+    MixContext? inheritedMixContext;
+
     if (inherit) {
       /// Get ancestor context
-      final inheritedMix = context.inheritedMix;
-      if (inheritedMix != null) {
-        _mix = Mix.combine(inheritedMix, mix);
-      }
+      inheritedMixContext = MixContextNotifier.of(context);
+    }
+
+    final inheritedMix = inheritedMixContext?.sourceMix;
+
+    Mix combinedMix;
+
+    if (inheritedMixContext != null && mix.isEmpty) {
+      return inheritedMixContext;
+    } else if (inheritedMix != null) {
+      combinedMix = inheritedMix.apply(mix);
+    } else {
+      combinedMix = mix;
     }
 
     return _build(
       context: context,
-      mix: _mix,
-      variantsToApply: mix.variantToApply,
+      mix: combinedMix,
     );
   }
 
@@ -83,13 +91,8 @@ class MixContext {
   static MixContext _build<T extends Attribute>({
     required BuildContext context,
     required Mix<T> mix,
-    required List<Variant> variantsToApply,
   }) {
-    final _attributes = _expandAttributes(
-      context,
-      mix.attributes,
-      variantsToApply: variantsToApply,
-    );
+    final _attributes = _expandAttributes(context, mix);
     BoxAttributes? boxAttributes;
     IconAttributes? iconAttributes;
     FlexAttributes? flexAttributes;
@@ -116,76 +119,113 @@ class MixContext {
       }
 
       if (attribute is SharedAttributes) {
-        sharedAttributes ??= const SharedAttributes();
-        sharedAttributes = sharedAttributes.merge(attribute);
+        if (sharedAttributes == null) {
+          sharedAttributes = attribute;
+        } else {
+          sharedAttributes = sharedAttributes.merge(attribute);
+        }
       }
 
       if (attribute is TextAttributes) {
-        textAttributes ??= const TextAttributes();
-        textAttributes = textAttributes.merge(attribute);
+        if (textAttributes == null) {
+          textAttributes = attribute;
+        } else {
+          textAttributes = textAttributes.merge(attribute);
+        }
       }
 
       if (attribute is BoxAttributes) {
-        boxAttributes ??= const BoxAttributes();
-        boxAttributes = boxAttributes.merge(attribute);
+        if (boxAttributes == null) {
+          boxAttributes = attribute;
+        } else {
+          boxAttributes = boxAttributes.merge(attribute);
+        }
       }
 
       if (attribute is IconAttributes) {
-        iconAttributes ??= const IconAttributes();
-        iconAttributes = iconAttributes.merge(attribute);
+        if (iconAttributes == null) {
+          iconAttributes = attribute;
+        } else {
+          iconAttributes = iconAttributes.merge(attribute);
+        }
       }
 
       if (attribute is FlexAttributes) {
-        flexAttributes ??= const FlexAttributes();
-        flexAttributes = flexAttributes.merge(attribute);
+        if (flexAttributes == null) {
+          flexAttributes = attribute;
+        } else {
+          flexAttributes = flexAttributes.merge(attribute);
+        }
       }
 
       if (attribute is ZBoxAttributes) {
-        zBoxAttributes ??= const ZBoxAttributes();
-        zBoxAttributes = zBoxAttributes.merge(attribute);
+        if (zBoxAttributes == null) {
+          zBoxAttributes = attribute;
+        } else {
+          zBoxAttributes = zBoxAttributes.merge(attribute);
+        }
       }
     }
+
+    final boxProps = BoxProps.fromContext(
+      context,
+      boxAttributes,
+    );
+
+    final textProps = TextProps.fromContext(
+      context,
+      textAttributes,
+      directives,
+    );
+
+    final sharedProps = SharedProps.fromContext(
+      context,
+      sharedAttributes,
+    );
+
+    final iconProps = IconProps.fromContext(
+      context,
+      iconAttributes,
+    );
+
+    final flexProps = FlexProps.fromContext(
+      context,
+      flexAttributes,
+    );
+    final zBoxProps = ZBoxProps.fromContext(
+      context,
+      zBoxAttributes,
+    );
+    final decoratorMap = _buildDecoratorMap(decorators);
 
     return MixContext._(
       context: context,
       sourceMix: source,
       originalMix: mix,
-      descendentMix: Mix.fromMaybeList([
-        textAttributes,
-        iconAttributes,
-        sharedAttributes,
-        ...variants,
-        ...directives,
-      ]),
-      boxProps: BoxProps.fromContext(context, boxAttributes),
-      textProps: TextProps.fromContext(
-        context,
-        textAttributes,
-        directives.whereType<TextDirectiveAttribute>(),
-      ),
-      sharedProps: SharedProps.fromContext(context, sharedAttributes),
-      iconProps: IconProps.fromContext(context, iconAttributes),
-      flexProps: FlexProps.fromContext(context, flexAttributes),
-      zBoxProps: ZBoxProps.fromContext(context, zBoxAttributes),
+      boxProps: boxProps,
+      textProps: textProps,
+      sharedProps: sharedProps,
+      iconProps: iconProps,
+      flexProps: flexProps,
+      zBoxProps: zBoxProps,
       directives: directives,
       variants: variants,
-      decorators: _getDecoratorMap(decorators),
+      decorators: decoratorMap,
     );
   }
 
   /// Expands `VariantAttribute` and `NestedAttribute` based on context
   static List<T> _expandAttributes<T extends Attribute>(
     BuildContext context,
-    List<T> attributes, {
-    required List<Variant> variantsToApply,
-  }) {
-    final spreaded = <T>[];
+    Mix<T> mix,
+  ) {
+    List<T> spreaded = <T>[];
 
     bool hasNested = false;
 
-    for (final attribute in attributes) {
+    for (final attribute in mix.attributes) {
       if (attribute is VariantAttribute<T>) {
-        final bool willApply = variantsToApply.contains(attribute.variant) ||
+        final bool willApply = mix.variantToApply.contains(attribute.variant) ||
             attribute.shouldApply(context);
         // If it's inverse (from `not(variant)`), only apply if [willApply] is
         // false. Otherwise, apply only when [willApply]
@@ -206,17 +246,19 @@ class MixContext {
     }
 
     if (hasNested) {
-      return _expandAttributes(
+      spreaded = _expandAttributes(
         context,
-        spreaded,
-        variantsToApply: variantsToApply,
+        Mix.fromList(
+          spreaded,
+          variantToApply: mix.variantToApply,
+        ),
       );
-    } else {
-      return spreaded;
     }
+
+    return spreaded;
   }
 
-  static DecoratorMap _getDecoratorMap(List<Decorator> decorators) {
+  static DecoratorMap _buildDecoratorMap(List<Decorator> decorators) {
     final DecoratorMap decoratorMap = {};
     final mergedDecorators = <Type, Decorator>{};
 
@@ -248,7 +290,6 @@ class MixContext {
         other.context == context &&
         other.sourceMix == sourceMix &&
         other.originalMix == originalMix &&
-        other.descendentMix == descendentMix &&
         listEquals(other.variants, variants) &&
         listEquals(other.directives, directives) &&
         other.decorators == decorators &&
@@ -265,7 +306,6 @@ class MixContext {
     return context.hashCode ^
         sourceMix.hashCode ^
         originalMix.hashCode ^
-        descendentMix.hashCode ^
         variants.hashCode ^
         directives.hashCode ^
         decorators.hashCode ^
@@ -277,42 +317,21 @@ class MixContext {
         zBoxProps.hashCode;
   }
 
-  MixContext merge(MixContext? other) {
-    if (other == null) return this;
+  // MixContext merge(MixContext? other) {
+  //   if (other == null) return this;
 
-    return copyWith(
-      sourceMix: other.sourceMix,
-    );
-  }
+  //   return copyWith(
+  //     sourceMix: other.sourceMix,
+  //   );
+  // }
 
-  MixContext copyWith({
-    Mix? sourceMix,
-  }) {
-    return MixContext.create(
-      context: context,
-      mix: Mix.combine(this.sourceMix, sourceMix),
-    );
-  }
-}
-
-class MixContextNotifier extends InheritedWidget {
-  const MixContextNotifier(
-    this.mixContext, {
-    Key? key,
-    required Widget child,
-  }) : super(key: key, child: child);
-
-  final MixContext? mixContext;
-
-  static MixContext? of(BuildContext context) {
-    final widget =
-        context.dependOnInheritedWidgetOfExactType<MixContextNotifier>();
-
-    return widget?.mixContext;
-  }
-
-  @override
-  bool updateShouldNotify(MixContextNotifier oldWidget) {
-    return mixContext != oldWidget.mixContext;
-  }
+  // MixContext copyWith({
+  //   Mix? sourceMix,
+  // }) {
+  //   return MixContext.create(
+  //     context: context,
+  //     mix: Mix.combine(this.sourceMix, sourceMix),
+  //     inherit: false,
+  //   );
+  // }
 }

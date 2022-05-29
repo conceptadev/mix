@@ -10,13 +10,15 @@ class HeadlessAlertDialogX extends StatelessWidget {
       content: <Widget>[
         TextMix(
           'Are you absolutely sure?',
-          variant: title, // `title` variant used to style the TextMix as title
+          variants: [
+            title
+          ], // `title` variant used to style the TextMix as title
         ),
         TextMix(
           'This action cannot be undone. '
           'This will permanently delete your account and remove '
           'your data from our servers.',
-          variant: paragraph, // `paragraph` variant to style the TextMix as
+          variants: [paragraph], // `paragraph` variant to style the TextMix as
         ),
       ],
       actions: const <Widget>[

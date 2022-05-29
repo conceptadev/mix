@@ -16,10 +16,10 @@ triggers the hover state. The `bgColor` and `textColor` properties will be overr
 
 ```dart highlight="4-7"
 final style = Mix(
-  bgColor($primary),
+  bgColor(MaterialTokens.colorScheme.primary),
   textColor($onPrimary),
   hover(
-    bgColor($primary), 
+    bgColor(MaterialTokens.colorScheme.primary), 
     textColor($onPrimary),
   ),
 );

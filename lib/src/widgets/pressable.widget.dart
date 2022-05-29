@@ -11,32 +11,27 @@ import 'package:mix/src/attributes/pressable/pressable.notifier.dart';
 /// See the containing or the child widget-specific documentation for applicable attributes and utilities.
 ///
 /// {@category Mixable Widgets}
-class Pressable extends MixableWidget {
+class Pressable extends StatelessWidget {
   const Pressable({
-    Mix? mix,
     required this.child,
     required this.onPressed,
     this.onLongPressed,
     this.focusNode,
-    this.variant,
     this.autofocus = false,
     this.behavior,
     Key? key,
-  }) : super(mix, key: key);
+  }) : super(key: key);
 
-  final Widget child;
+  final MixableWidget child;
   final VoidCallback? onPressed;
   final VoidCallback? onLongPressed;
   final FocusNode? focusNode;
   final bool autofocus;
   final HitTestBehavior? behavior;
-  final Variant? variant;
 
   @override
   Widget build(BuildContext context) {
     return PressableMixerWidget(
-      mix,
-      variant: variant,
       onPressed: onPressed,
       onLongPressed: onLongPressed,
       focusNode: focusNode,
@@ -48,26 +43,21 @@ class Pressable extends MixableWidget {
 
 /// @nodoc
 class PressableMixerWidget extends StatefulWidget {
-  const PressableMixerWidget(
-    this.mix, {
+  const PressableMixerWidget({
     required this.child,
     required this.onPressed,
     this.onLongPressed,
     this.focusNode,
-    this.variant,
     this.autofocus = false,
     this.behavior,
     Key? key,
   }) : super(key: key);
 
-  final Mix mix;
-
-  final Widget child;
+  final MixableWidget child;
   final VoidCallback? onPressed;
   final VoidCallback? onLongPressed;
   final FocusNode? focusNode;
   final bool autofocus;
-  final Variant? variant;
 
   final HitTestBehavior? behavior;
 
@@ -133,9 +123,8 @@ class _PressableMixerWidgetState extends State<PressableMixerWidget> {
               if (!enabled) return;
               if (mounted) setState(() => _pressing = true);
             },
-            onTapUp: (_) async {
+            onTapUp: (_) {
               if (!enabled) return;
-              await Future.delayed(const Duration(milliseconds: 100));
               if (mounted) setState(() => _pressing = false);
             },
             onTapCancel: () {
@@ -156,11 +145,7 @@ class _PressableMixerWidgetState extends State<PressableMixerWidget> {
                 focused: _shouldShowFocus,
                 hovering: _hovering,
                 pressing: _pressing,
-                child: Box(
-                  mix: widget.mix,
-                  variant: widget.variant,
-                  child: widget.child,
-                ),
+                child: widget.child,
               );
             }(),
           ),

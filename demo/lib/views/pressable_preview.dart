@@ -21,10 +21,10 @@ class _PressablePreviewState extends State<PressablePreview> {
       scale(1),
       padding(20),
       elevation(8),
-      bgColor($primary),
+      bgColor(MaterialTokens.colorScheme.primary),
       font(
         weight: FontWeight.bold,
-        color: $onBackground,
+        color: MaterialTokens.colorScheme.onBackground,
       ),
       border(
         color: Colors.black,
@@ -60,7 +60,6 @@ class _PressablePreviewState extends State<PressablePreview> {
           ],
         ),
         Pressable(
-          mix: mix,
           onPressed: _enabled
               ? () {
                   showDialog(
@@ -68,36 +67,43 @@ class _PressablePreviewState extends State<PressablePreview> {
                     builder: (context) {
                       return AlertDialogX(
                         content: [
-                          TextMix('Are you absolutely sure?', variant: title),
+                          TextMix(
+                            'Are you absolutely sure?',
+                            variants: [title],
+                          ),
                           TextMix(
                             'This action cannot be undone. '
                             'This will permanently delete your account and remove '
                             'your data from our servers.',
-                            variant: paragraph,
+                            variants: [paragraph],
                           ),
                         ],
                         actions: [
-                          button(
-                            child: const TextMix('Cancel'),
+                          Pressable(
                             onPressed: () {
                               Navigator.pop(context);
                             },
-                            overrideMix: Mix(
-                              textColor(Colors.grey.shade700),
-                              bgColor(Colors.grey.shade400),
-                              (hover)(
-                                bgColor(Colors.grey),
+                            child: button.box(
+                              child: const TextMix('Cancel'),
+                              overrideMix: Mix(
+                                textColor(Colors.grey.shade700),
+                                bgColor(Colors.grey.shade400),
+                                (hover)(
+                                  bgColor(Colors.grey),
+                                ),
                               ),
                             ),
                           ),
-                          button(
-                            child: const TextMix('Yes, delete account'),
+                          Pressable(
                             onPressed: Navigator.of(context).pop,
-                            overrideMix: Mix(
-                              textColor(Colors.red.shade100),
-                              bgColor(Colors.redAccent.shade200),
-                              (hover)(
-                                bgColor(Colors.redAccent.shade400),
+                            child: button.box(
+                              child: const TextMix('Yes, delete account'),
+                              overrideMix: Mix(
+                                textColor(Colors.red.shade100),
+                                bgColor(Colors.redAccent.shade200),
+                                (hover)(
+                                  bgColor(Colors.redAccent.shade400),
+                                ),
                               ),
                             ),
                           ),
@@ -107,7 +113,10 @@ class _PressablePreviewState extends State<PressablePreview> {
                   );
                 }
               : null,
-          child: const TextMix('Simple Text'),
+          child: Box(
+            mix: mix,
+            child: const TextMix('Simple Text'),
+          ),
         ),
       ],
     );

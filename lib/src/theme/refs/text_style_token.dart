@@ -1,13 +1,15 @@
 import 'package:flutter/widgets.dart';
 
-import '../mix_theme.dart';
 import 'tokens.dart';
 
 class TextStyleToken extends TextStyle implements MixToken<TextStyle> {
-  const TextStyleToken(this.id) : super();
+  const TextStyleToken(this.id, this.getter) : super();
 
   @override
   final String id;
+
+  @override
+  final TokenValueGetter<TextStyle> getter;
 
   @override
   bool operator ==(Object other) {
@@ -18,13 +20,7 @@ class TextStyleToken extends TextStyle implements MixToken<TextStyle> {
 
   @override
   TextStyle resolve(BuildContext context) {
-    final refValue = MixTheme.of(context).designTokens.tokens[this];
-    if (refValue == null) {
-      throw Exception('Token $id not found');
-    }
-    final style = refValue(context);
-
-    return style;
+    return getter(context);
   }
 
   @override

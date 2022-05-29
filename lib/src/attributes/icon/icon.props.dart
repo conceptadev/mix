@@ -18,23 +18,27 @@ class IconProps {
   ) {
     final icon = attributes;
 
+    IconProps props;
+
     if (attributes == null) {
-      return const IconProps(
+      props = const IconProps(
         size: 24,
+      );
+    } else {
+      final theme = IconTheme.of(context);
+      var color = icon?.color;
+
+      if (color is ColorToken) {
+        color = color.resolve(context);
+      }
+
+      props = IconProps(
+        color: color ?? theme.color,
+        size: icon?.size ?? theme.size ?? 24,
       );
     }
 
-    final theme = IconTheme.of(context);
-    var color = icon?.color;
-
-    if (color is ColorToken) {
-      color = color.resolve(context);
-    }
-
-    return IconProps(
-      color: color ?? theme.color,
-      size: icon?.size ?? theme.size ?? 24,
-    );
+    return props;
   }
 
   @override

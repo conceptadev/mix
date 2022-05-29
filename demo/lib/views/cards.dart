@@ -20,8 +20,8 @@ class CardsPreview extends StatelessWidget {
             ),
           ),
           children: [
-            TextMix(titleContent, variant: title),
-            TextMix(paragraphContent, variant: paragraph),
+            TextMix(titleContent, variants: [title]),
+            TextMix(paragraphContent, variants: [paragraph]),
             Row(children: [
               ChipX(
                 children: const [IconMix(Icons.add), TextMix('Lorem')],

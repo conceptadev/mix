@@ -40,7 +40,7 @@ class RadioButtonX extends RemixableWidget {
   final RadioButtonIndicator indicator;
 
   @override
-  Mix get defaultMix {
+  Mix get baseMix {
     return Mix(
       animated(),
       rounded(100),
@@ -62,15 +62,17 @@ class RadioButtonX extends RemixableWidget {
   Widget build(BuildContext context) {
     final fn = onChanged;
     return Pressable(
-      mix: Mix.chooser(
-        condition: checked,
-        ifTrue: mix.withVariant(active),
-        ifFalse: mix.withVariant(inactive),
-      ),
       onPressed: fn == null ? null : () => fn(!checked),
-      child: indicator.build(
-        context,
-        checked,
+      child: Box(
+        mix: Mix.chooser(
+          condition: checked,
+          ifTrue: mix.withVariant(active),
+          ifFalse: mix.withVariant(inactive),
+        ),
+        child: indicator.build(
+          context,
+          checked,
+        ),
       ),
     );
   }

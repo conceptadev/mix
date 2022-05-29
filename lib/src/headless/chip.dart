@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
+import 'package:mix/src/theme/material_theme/material_tokens.dart';
 
 /// _Mix_ corollary to Flutter _Chip_ Widget
 ///
@@ -11,7 +12,7 @@ import 'package:mix/mix.dart';
 ///      px(10),
 ///      py(4),
 ///      gap(10),
-///      bgColor($surface),
+///      bgColor(MaterialTokens.colorScheme.surface),
 ///      animated(),
 ///      hover(
 ///        bgColor(Colors.grey.shade50),
@@ -24,9 +25,9 @@ import 'package:mix/mix.dart';
 ///      apply(Mix(
 ///        iconSize(20),
 ///        paragraph(
-///          textStyle($body1),
+///          textStyle(MaterialTokens.colorScheme.body1),
 ///        ),
-///        textStyle($body2),
+///        textStyle(MaterialTokens.colorScheme.body2),
 ///        font(
 ///          weight: FontWeight.w500,
 ///        ),
@@ -59,7 +60,7 @@ class ChipX extends RemixableWidget {
   final VoidCallback? onPressed;
 
   @override
-  Mix get defaultMix {
+  Mix get baseMix {
     return Mix(
       margin(10),
       elevation(3),
@@ -67,7 +68,7 @@ class ChipX extends RemixableWidget {
       px(10),
       py(4),
       gap(10),
-      bgColor($surface),
+      bgColor(MaterialTokens.colorScheme.surface),
       animated(),
       hover(
         bgColor(Colors.grey.shade50),
@@ -80,9 +81,9 @@ class ChipX extends RemixableWidget {
       apply(Mix(
         iconSize(20),
         paragraph(
-          textStyle($body1),
+          textStyle(MaterialTokens.textTheme.bodyText1),
         ),
-        textStyle($body2),
+        textStyle(MaterialTokens.textTheme.bodyText2),
         font(
           weight: FontWeight.w500,
         ),
@@ -99,9 +100,11 @@ class ChipX extends RemixableWidget {
       );
     }
     return Pressable(
-      mix: mix,
       onPressed: onPressed,
-      child: Row(children: children),
+      child: HBox(
+        mix: mix,
+        children: children,
+      ),
     );
   }
 }
