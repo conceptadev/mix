@@ -11,3 +11,4 @@ export 'variants/not_operator.dart';
 export 'variants/or_operator.dart';
 export 'variants/and_operator.dart';
 export 'variants/catalog/pressable.dart';
+export 'variants/catalog/text_styling.dart';

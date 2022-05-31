@@ -54,6 +54,8 @@ class MyApp extends StatelessWidget {
             // Documentation on https://www.fluttermix.com/docs/concepts/variants#variants-catalog
             '/docs/variants/catalog/pressable': (context) =>
                 const VariantsCatalogPressable(),
+            '/docs/variants/catalog/text_styling': (context) =>
+                const VariantsTextStylingExample(),
           },
           onUnknownRoute: (settings) {
             return PageRouteBuilder(pageBuilder: (context, _, __) {
