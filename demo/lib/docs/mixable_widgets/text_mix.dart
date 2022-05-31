@@ -6,14 +6,16 @@ class MixableWidgetsCatalogTextMix extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextMix(
-      'Mix is AWESOME!',
-      mix: Mix(
-        fontSize(16.0),
-        textColor(Colors.black),
-        bold(),
-        textShadow(
-          offset: const Offset(2.0, 2.0),
+    return Center(
+      child: TextMix(
+        'Mix is AWESOME!',
+        mix: Mix(
+          fontSize(16.0),
+          textColor(Colors.black),
+          bold(),
+          textShadow(
+            offset: const Offset(2.0, 2.0),
+          ),
         ),
       ),
     );

@@ -6,14 +6,16 @@ class MixableWidgetsCatalogBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Box(
-      mix: Mix(
-        height(100),
-        width(300),
-        rounded(15),
-        bgColor(Colors.amber),
-        align(Alignment.center),
-        elevation(4), // can be 0, 1, 2, 3, 4, 6, 8, 9, 12, 16, 24
+    return Center(
+      child: Box(
+        mix: Mix(
+          height(100),
+          width(300),
+          rounded(15),
+          bgColor(Colors.amber),
+          align(Alignment.center),
+          elevation(4), // can be 0, 1, 2, 3, 4, 6, 8, 9, 12, 16, 24
+        ),
       ),
     );
   }

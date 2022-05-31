@@ -7,6 +7,7 @@ class VariantsTextStylingExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final mix = Mix(
+      mainAxis(MainAxisAlignment.center),
       title(
         titleCase(), // Makes the title uppercase
         font(

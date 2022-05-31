@@ -23,14 +23,17 @@ class VariantsDarkLightExample extends HookConsumerWidget {
     final darkMode = ref.watch(darkModeProvider.state);
 
     return Column(children: [
-      Row(children: [
-        const Spacer(),
-        Switch(
-          value: darkMode.state,
-          onChanged: (value) => darkMode.state = value,
-        ),
-        Text(darkMode.state ? 'DARK' : 'LIGHT'),
-      ]),
+      Padding(
+        padding: const EdgeInsets.only(right: 8.0),
+        child: Row(children: [
+          const Spacer(),
+          Switch(
+            value: darkMode.state,
+            onChanged: (value) => darkMode.state = value,
+          ),
+          Text(darkMode.state ? 'DARK' : 'LIGHT'),
+        ]),
+      ),
       const Spacer(),
       TextMix(
         'THIS IS THE TEXT',

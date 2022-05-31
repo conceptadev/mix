@@ -10,7 +10,7 @@ class VariantsAndOperator extends StatelessWidget {
       padding(20.0),
       textColor(Colors.amber),
       (hover & enabled)(
-        // When it's hovering AND pressing
+        // When it's hovering AND enabled
         textColor(Colors.black),
         bold(),
       ),
