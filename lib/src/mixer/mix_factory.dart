@@ -2,19 +2,16 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
 
-
 /// Defines a mix
 /// {@category Mix Object}
 class Mix<T extends Attribute> {
   final List<T> attributes;
-  final Iterable<AttributeExtension<dynamic>> extensions;
 
   /// These are the `Variants` that will be passed to `MixContext` in order to be applied for this mix
   final List<Variant<T>> variantToApply;
 
   const Mix._(
     this.attributes, {
-    this.extensions = const [],
     this.variantToApply = const [],
   });
 
@@ -54,7 +51,6 @@ class Mix<T extends Attribute> {
   const Mix.fromList(
     this.attributes, {
     this.variantToApply = const [],
-    this.extensions = const [],
   });
 
   /// Instantiate a mix from a _List_ of _Attribute_ instances
@@ -123,6 +119,7 @@ class Mix<T extends Attribute> {
   }
 
   /// Merges many mixes into one
+  // ignore: long-parameter-list
   static Mix<T> combine<T extends Attribute>([
     Mix<T>? mix1,
     Mix<T>? mix2,

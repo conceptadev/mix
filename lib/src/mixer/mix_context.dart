@@ -28,7 +28,7 @@ extension DecoratorMapExtension on DecoratorMap {
 
 class MixContext {
   final BuildContext context;
-  final AttributeExtensions extensions;
+  final InheritedAttributes inheritedAttributes;
   final Mix sourceMix;
   final Mix originalMix;
 
@@ -43,10 +43,10 @@ class MixContext {
   final FlexProps flexProps;
   final ZBoxProps zBoxProps;
 
-  /// Used to obtain a [AttributeExtension] from [extensions].
+  /// Used to obtain a [InheritedAttribute] from [InheritedAttributes].
   ///
-  /// Obtain with `mixContext.extension<MyAttributeExtension>()`.
-  T extension<T>() => extensions.extension<T>()!;
+  /// Obtain with `mixContext.fromType<MyInheritedAttribute>()`.
+  T fromType<T>() => inheritedAttributes.fromType<T>()!;
 
   MixContext._({
     required this.context,
@@ -61,7 +61,7 @@ class MixContext {
     required this.directives,
     required this.variants,
     required this.decorators,
-    required this.extensions,
+    required this.inheritedAttributes,
   });
 
   factory MixContext.create({
@@ -113,20 +113,19 @@ class MixContext {
     final variants = <VariantAttribute>[];
     final decorators = <Decorator>[];
 
-    final Map<Object, AttributeExtension> extensionAttributes = {};
+    final Map<Object, InheritedAttribute> inheritedAttributesMap = {};
 
     for (final attribute in _attributes) {
-      if (attribute is AttributeExtension) {
-        var extensionAttribute = extensionAttributes[attribute.type];
+      if (attribute is InheritedAttribute) {
+        var inheritedAttribute = inheritedAttributesMap[attribute.type];
 
-        if (extensionAttribute == null) {
-          extensionAttribute = attribute;
+        if (inheritedAttribute == null) {
+          inheritedAttribute = attribute;
         } else {
-          extensionAttribute =
-              extensionAttribute.merge(attribute) as AttributeExtension;
+          inheritedAttribute = inheritedAttribute.merge(attribute);
         }
 
-        extensionAttributes[attribute.type] = extensionAttribute;
+        inheritedAttributesMap[attribute.type] = inheritedAttribute;
       }
 
       if (attribute is VariantAttribute) {
@@ -234,7 +233,7 @@ class MixContext {
       directives: directives,
       variants: variants,
       decorators: decoratorMap,
-      extensions: AttributeExtensions(extensionAttributes),
+      inheritedAttributes: InheritedAttributes(inheritedAttributesMap),
     );
   }
 

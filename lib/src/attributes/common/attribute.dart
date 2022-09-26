@@ -7,35 +7,31 @@ import 'package:mix/mix.dart';
 // Facade allows us ot set all properties as optional
 // For improved merge and override of properties
 abstract class Attribute {
-  
   //final bool isExtension = false;
-  
+
   const Attribute();
 }
 
 /// An interface that add support to custom attributes for [MixContext].
-abstract class AttributeExtension<T extends AttributeExtension<T>>
+abstract class InheritedAttribute<T extends InheritedAttribute<T>>
     extends Attribute {
-  const AttributeExtension();
+  const InheritedAttribute();
 
-  T merge(T other);
+  InheritedAttribute<T> merge(covariant InheritedAttribute<T>? other);
 
   Object get type => T;
 }
 
-class AttributeExtensions {
-  final Map<Object, AttributeExtension<dynamic>> extensions;
+class InheritedAttributes {
+  final Map<Object, InheritedAttribute<dynamic>> attributes;
 
-  AttributeExtensions(this.extensions);
+  InheritedAttributes(this.attributes);
 
-  /// Used to obtain a [AttributeExtension] from [extensions].
+  /// Used to obtain a [InheritedAttribute] from [MixContext].
   ///
-  /// Obtain with `mixContext.extension<MyAttributeExtension>()`.
-  T? extension<T>() => extensions[T] as T?;
-
-  // TODO(): Add merge method to support inherited extensions
+  /// Obtain with `mixContext.fromType<MyAttributeExtension>()`.
+  T? fromType<T>() => attributes[T] as T?;
 }
-
 
 /// Allows to pass down Mixes as attributes for use with helpers
 class NestedAttribute<T extends Attribute> extends Attribute {

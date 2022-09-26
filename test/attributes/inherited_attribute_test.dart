@@ -12,7 +12,7 @@ const withColor = MyIconAttributes.withColor;
 
 const inputDecoration = InputDecorationAttributes.inputDecoration;
 
-class MyIconAttributes extends AttributeExtension<MyIconAttributes> {
+class MyIconAttributes extends InheritedAttribute<MyIconAttributes> {
   const MyIconAttributes({
     this.color,
     this.size,
@@ -22,10 +22,14 @@ class MyIconAttributes extends AttributeExtension<MyIconAttributes> {
   final double? size;
 
   @override
-  MyIconAttributes merge(MyIconAttributes other) {
+  MyIconAttributes merge(MyIconAttributes? other) {
+    if(other is! InheritedAttribute<MyIconAttributes>) {
+      return this;
+    }
+
     return MyIconAttributes(
-      color: other.color ?? color,
-      size: other.size ?? size,
+      color: other?.color ?? color,
+      size: other?.size ?? size,
     );
   }
 
@@ -50,7 +54,7 @@ class MyIconAttributes extends AttributeExtension<MyIconAttributes> {
 }
 
 class InputDecorationAttributes extends InputDecoration
-    implements AttributeExtension<InputDecorationAttributes> {
+    implements InheritedAttribute<InputDecorationAttributes> {
   const InputDecorationAttributes({
     Color? iconColor,
     Color? fillColor,
@@ -117,8 +121,8 @@ class CustomWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return MixableBuilder(
       variants: variants,
-      builder: (context) {
-        final attributes = context.extension<MyIconAttributes>();
+      builder: (mixContext) {
+        final attributes = mixContext.fromType<MyIconAttributes>();
 
         return Semantics(
           label: semanticLabel,
@@ -128,7 +132,7 @@ class CustomWidget extends StatelessWidget {
                 icon,
                 color: attributes.color,
                 size: attributes.size,
-                textDirection: context.sharedProps.textDirection,
+                textDirection: mixContext.sharedProps.textDirection,
               ),
             ],
           ),
@@ -158,8 +162,9 @@ class TextFieldWidget extends StatelessWidget {
     return MixableBuilder(
       mix: Style().base,
       variants: variants,
-      builder: (context) {
-        final inputDecoration = context.extension<InputDecorationAttributes>();
+      builder: (mixContext) {
+        final inputDecoration =
+            mixContext.fromType<InputDecorationAttributes>();
 
         return Semantics(
           label: semanticLabel,
