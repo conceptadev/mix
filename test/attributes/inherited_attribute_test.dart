@@ -23,7 +23,7 @@ class MyIconAttributes extends InheritedAttribute<MyIconAttributes> {
 
   @override
   MyIconAttributes merge(MyIconAttributes? other) {
-    if(other is! InheritedAttribute<MyIconAttributes>) {
+    if (other is! InheritedAttribute<MyIconAttributes>) {
       return this;
     }
 
@@ -119,9 +119,9 @@ class CustomWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MixableBuilder(
+    return MixContextBuilder(
       variants: variants,
-      builder: (mixContext) {
+      builder: (context, mixContext) {
         final attributes = mixContext.fromType<MyIconAttributes>();
 
         return Semantics(
@@ -159,10 +159,10 @@ class TextFieldWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MixableBuilder(
+    return MixContextBuilder(
       mix: Style().base,
       variants: variants,
-      builder: (mixContext) {
+      builder: (context, mixContext) {
         final inputDecoration =
             mixContext.fromType<InputDecorationAttributes>();
 
