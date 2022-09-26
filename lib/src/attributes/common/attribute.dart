@@ -7,8 +7,6 @@ import 'package:mix/mix.dart';
 // Facade allows us ot set all properties as optional
 // For improved merge and override of properties
 abstract class Attribute {
-  //final bool isExtension = false;
-
   const Attribute();
 }
 
