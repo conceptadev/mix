@@ -28,6 +28,7 @@ extension DecoratorMapExtension on DecoratorMap {
 
 class MixContext {
   final BuildContext context;
+  final AttributeExtensions extensions;
   final Mix sourceMix;
   final Mix originalMix;
 
@@ -42,6 +43,11 @@ class MixContext {
   final FlexProps flexProps;
   final ZBoxProps zBoxProps;
 
+  /// Used to obtain a [AttributeExtension] from [extensions].
+  ///
+  /// Obtain with `mixContext.extension<MyAttributeExtension>()`.
+  T extension<T>() => extensions.extension<T>()!;
+
   MixContext._({
     required this.context,
     required this.sourceMix,
@@ -55,6 +61,7 @@ class MixContext {
     required this.directives,
     required this.variants,
     required this.decorators,
+    required this.extensions,
   });
 
   factory MixContext.create({
@@ -93,6 +100,7 @@ class MixContext {
     required Mix<T> mix,
   }) {
     final _attributes = _expandAttributes(context, mix);
+
     BoxAttributes? boxAttributes;
     IconAttributes? iconAttributes;
     FlexAttributes? flexAttributes;
@@ -105,7 +113,22 @@ class MixContext {
     final variants = <VariantAttribute>[];
     final decorators = <Decorator>[];
 
+    final Map<Object, AttributeExtension> extensionAttributes = {};
+
     for (final attribute in _attributes) {
+      if (attribute is AttributeExtension) {
+        var extensionAttribute = extensionAttributes[attribute.type];
+
+        if (extensionAttribute == null) {
+          extensionAttribute = attribute;
+        } else {
+          extensionAttribute =
+              extensionAttribute.merge(attribute) as AttributeExtension;
+        }
+
+        extensionAttributes[attribute.type] = extensionAttribute;
+      }
+
       if (attribute is VariantAttribute) {
         variants.add(attribute);
       }
@@ -211,6 +234,7 @@ class MixContext {
       directives: directives,
       variants: variants,
       decorators: decoratorMap,
+      extensions: AttributeExtensions(extensionAttributes),
     );
   }
 

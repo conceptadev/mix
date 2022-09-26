@@ -10,6 +10,60 @@ import '../attributes/text/text.props.dart';
 import '../attributes/zbox/zbox.props.dart';
 
 /// Mix Widget
+class MixableBuilder extends StatelessWidget {
+  final Widget Function(MixContext mixContext) builder;
+
+  /// Constructor
+  const MixableBuilder({
+    Key? key,
+    bool? inherit,
+    List<Variant>? variants,
+    required this.builder,
+    required Mix mix,
+  })  : _mix = mix,
+        _variants = variants,
+        _inherit = inherit ?? true,
+        super(key: key);
+
+  final Mix _mix;
+
+  final List<Variant>? _variants;
+  final bool _inherit;
+
+  MixContext getMixContext(BuildContext context) {
+    return MixContext.create(
+      context: context,
+      mix: _mix.withMaybeVariants(_variants),
+      inherit: _inherit,
+    );
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+
+    properties.add(
+      DiagnosticsProperty<Mix>('mix', _mix, defaultValue: null),
+    );
+    properties.add(
+      DiagnosticsProperty<List<Variant>>(
+        'variants',
+        _variants,
+        defaultValue: null,
+      ),
+    );
+    properties.add(
+      DiagnosticsProperty<bool>('inherit', _inherit, defaultValue: true),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return builder(getMixContext(context));
+  }
+}
+
+/// Mix Widget
 abstract class MixableWidget extends StatelessWidget {
   /// Constructor
   const MixableWidget(
@@ -46,8 +100,11 @@ abstract class MixableWidget extends StatelessWidget {
       DiagnosticsProperty<Mix>('mix', _mix, defaultValue: null),
     );
     properties.add(
-      DiagnosticsProperty<List<Variant>>('variants', _variants,
-          defaultValue: null),
+      DiagnosticsProperty<List<Variant>>(
+        'variants',
+        _variants,
+        defaultValue: null,
+      ),
     );
     properties.add(
       DiagnosticsProperty<bool>('inherit', _inherit, defaultValue: true),

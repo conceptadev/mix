@@ -5,7 +5,7 @@ export 'package:mix/src/widgets/box.widget.dart';
 export 'package:mix/src/widgets/flex.widget.dart';
 export 'package:mix/src/widgets/gap.widget.dart';
 export 'package:mix/src/widgets/icon.widget.dart';
-export 'package:mix/src/widgets/mix_context_builder.dart';
+export 'package:mix/src/widgets/mix_builder.dart';
 export 'package:mix/src/widgets/mixable.widget.dart';
 export 'package:mix/src/widgets/pressable.widget.dart';
 export 'package:mix/src/widgets/text.widget.dart';
@@ -26,3 +26,5 @@ export 'src/theme/mix_theme.dart';
 export 'src/theme/refs/color_token.dart';
 export 'src/theme/refs/text_style_token.dart';
 export 'src/variants/variants.dart';
+
+
