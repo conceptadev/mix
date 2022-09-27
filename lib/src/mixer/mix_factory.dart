@@ -119,6 +119,7 @@ class Mix<T extends Attribute> {
   }
 
   /// Merges many mixes into one
+  // ignore: long-parameter-list
   static Mix<T> combine<T extends Attribute>([
     Mix<T>? mix1,
     Mix<T>? mix2,

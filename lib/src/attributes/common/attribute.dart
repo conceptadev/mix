@@ -10,6 +10,27 @@ abstract class Attribute {
   const Attribute();
 }
 
+/// An interface that add support to custom attributes for [MixContext].
+abstract class InheritedAttribute<T extends InheritedAttribute<T>>
+    extends Attribute {
+  const InheritedAttribute();
+
+  InheritedAttribute<T> merge(covariant InheritedAttribute<T>? other);
+
+  Object get type => T;
+}
+
+class InheritedAttributes {
+  final Map<Object, InheritedAttribute<dynamic>> attributes;
+
+  InheritedAttributes(this.attributes);
+
+  /// Used to obtain a [InheritedAttribute] from [MixContext].
+  ///
+  /// Obtain with `mixContext.fromType<MyAttributeExtension>()`.
+  T? fromType<T>() => attributes[T] as T?;
+}
+
 /// Allows to pass down Mixes as attributes for use with helpers
 class NestedAttribute<T extends Attribute> extends Attribute {
   const NestedAttribute(this.attributes);

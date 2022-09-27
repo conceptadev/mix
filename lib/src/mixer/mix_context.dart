@@ -28,6 +28,7 @@ extension DecoratorMapExtension on DecoratorMap {
 
 class MixContext {
   final BuildContext context;
+  final InheritedAttributes inheritedAttributes;
   final Mix sourceMix;
   final Mix originalMix;
 
@@ -42,6 +43,16 @@ class MixContext {
   final FlexProps flexProps;
   final ZBoxProps zBoxProps;
 
+  /// Used to obtain a [InheritedAttribute] from [InheritedAttributes].
+  ///
+  /// Obtain with `mixContext.fromType<MyInheritedAttribute>()`.
+  T fromType<T extends InheritedAttribute<T>>() {
+    final attribute = inheritedAttributes.fromType<T>();
+    debugCheckInheritedAttribute<T>(attribute);
+
+    return attribute!;
+  }
+
   MixContext._({
     required this.context,
     required this.sourceMix,
@@ -55,6 +66,7 @@ class MixContext {
     required this.directives,
     required this.variants,
     required this.decorators,
+    required this.inheritedAttributes,
   });
 
   factory MixContext.create({
@@ -93,6 +105,7 @@ class MixContext {
     required Mix<T> mix,
   }) {
     final _attributes = _expandAttributes(context, mix);
+
     BoxAttributes? boxAttributes;
     IconAttributes? iconAttributes;
     FlexAttributes? flexAttributes;
@@ -105,7 +118,21 @@ class MixContext {
     final variants = <VariantAttribute>[];
     final decorators = <Decorator>[];
 
+    final Map<Object, InheritedAttribute> inheritedAttributesMap = {};
+
     for (final attribute in _attributes) {
+      if (attribute is InheritedAttribute) {
+        var inheritedAttribute = inheritedAttributesMap[attribute.type];
+
+        if (inheritedAttribute == null) {
+          inheritedAttribute = attribute;
+        } else {
+          inheritedAttribute = inheritedAttribute.merge(attribute);
+        }
+
+        inheritedAttributesMap[attribute.type] = inheritedAttribute;
+      }
+
       if (attribute is VariantAttribute) {
         variants.add(attribute);
       }
@@ -211,6 +238,7 @@ class MixContext {
       directives: directives,
       variants: variants,
       decorators: decoratorMap,
+      inheritedAttributes: InheritedAttributes(inheritedAttributesMap),
     );
   }
 
@@ -334,4 +362,17 @@ class MixContext {
   //     inherit: false,
   //   );
   // }
+}
+
+/// Asserts that the given mixContext has a [T] attribute.
+void debugCheckInheritedAttribute<T extends InheritedAttribute<T>>(
+  InheritedAttribute? attribute,
+) {
+  assert(() {
+    return attribute is T;
+  }(), '''
+   No $T could be found starting from the mixContext 
+   when call mixContext.fromType<$T>(). This can happen because you 
+   have not create a Mix with $T.
+  ''');
 }

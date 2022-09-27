@@ -46,8 +46,11 @@ abstract class MixableWidget extends StatelessWidget {
       DiagnosticsProperty<Mix>('mix', _mix, defaultValue: null),
     );
     properties.add(
-      DiagnosticsProperty<List<Variant>>('variants', _variants,
-          defaultValue: null),
+      DiagnosticsProperty<List<Variant>>(
+        'variants',
+        _variants,
+        defaultValue: null,
+      ),
     );
     properties.add(
       DiagnosticsProperty<bool>('inherit', _inherit, defaultValue: true),

@@ -6,7 +6,9 @@ import 'package:mix/src/variants/variants.dart';
 import 'package:mix/src/widgets/mixable.widget.dart';
 
 typedef WidgetMixBuilder<T> = Widget Function(
-    BuildContext context, MixContext mixContext);
+  BuildContext context,
+  MixContext mixContext,
+);
 
 class MixContextBuilder extends MixableWidget {
   const MixContextBuilder({
@@ -27,6 +29,7 @@ class MixContextBuilder extends MixableWidget {
   @override
   Widget build(BuildContext context) {
     final mixContext = getMixContext(context);
+
     return MixContextNotifier(
       mixContext,
       child: builder(
@@ -36,3 +39,4 @@ class MixContextBuilder extends MixableWidget {
     );
   }
 }
+
