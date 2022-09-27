@@ -365,7 +365,6 @@ class MixContext {
 }
 
 /// Asserts that the given mixContext has a [T] attribute.
-/// Does nothing if asserts are disabled. Always returns true.
 void debugCheckInheritedAttribute<T extends InheritedAttribute<T>>(
   InheritedAttribute? attribute,
 ) {
