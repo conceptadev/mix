@@ -46,7 +46,12 @@ class MixContext {
   /// Used to obtain a [InheritedAttribute] from [InheritedAttributes].
   ///
   /// Obtain with `mixContext.fromType<MyInheritedAttribute>()`.
-  T fromType<T>() => inheritedAttributes.fromType<T>()!;
+  T fromType<T extends InheritedAttribute<T>>() {
+    final attribute = inheritedAttributes.fromType<T>();
+    debugCheckInheritedAttribute<T>(attribute);
+
+    return attribute!;
+  }
 
   MixContext._({
     required this.context,
@@ -357,4 +362,18 @@ class MixContext {
   //     inherit: false,
   //   );
   // }
+}
+
+/// Asserts that the given mixContext has a [T] attribute.
+/// Does nothing if asserts are disabled. Always returns true.
+void debugCheckInheritedAttribute<T extends InheritedAttribute<T>>(
+  InheritedAttribute? attribute,
+) {
+  assert(() {
+    return attribute is T;
+  }(), '''
+   No $T could be found starting from the mixContext 
+   when call mixContext.fromType<$T>(). This can happen because you 
+   have not create a Mix with $T.
+  ''');
 }
