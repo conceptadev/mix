@@ -6,14 +6,15 @@ import '../testing_utils.dart';
 
 final activated = Variant("activated");
 
-const myIcon = MyIconAttributes.icon;
-const withSize = MyIconAttributes.withSize;
-const withColor = MyIconAttributes.withColor;
+const customIcon = InheritedIconAttribute.icon;
+const withSize = InheritedIconAttribute.withSize;
+const withColor = InheritedIconAttribute.withColor;
 
-const inputDecoration = InputDecorationAttributes.inputDecoration;
+const inputDecoration = InputDecorationThemeAttribute.inputDecoration;
 
-class MyIconAttributes extends InheritedAttribute<MyIconAttributes> {
-  const MyIconAttributes({
+class InheritedIconAttribute
+    extends InheritedAttribute<InheritedIconAttribute> {
+  const InheritedIconAttribute({
     this.color,
     this.size,
   });
@@ -22,60 +23,63 @@ class MyIconAttributes extends InheritedAttribute<MyIconAttributes> {
   final double? size;
 
   @override
-  MyIconAttributes merge(MyIconAttributes? other) {
-    if (other is! InheritedAttribute<MyIconAttributes>) {
-      return this;
-    }
-
-    return MyIconAttributes(
-      color: other?.color ?? color,
-      size: other?.size ?? size,
+  InheritedIconAttribute merge(InheritedIconAttribute other) {
+    return InheritedIconAttribute(
+      color: other.color ?? color,
+      size: other.size ?? size,
     );
   }
 
-  static MyIconAttributes icon({required Color color, required double size}) {
-    return MyIconAttributes(
+  static InheritedIconAttribute icon({
+    required Color color,
+    required double size,
+  }) {
+    return InheritedIconAttribute(
       size: size,
       color: color,
     );
   }
 
-  static MyIconAttributes withColor(Color color) {
-    return MyIconAttributes(
+  static InheritedIconAttribute withColor(Color color) {
+    return InheritedIconAttribute(
       color: color,
     );
   }
 
-  static MyIconAttributes withSize(double size) {
-    return MyIconAttributes(
+  static InheritedIconAttribute withSize(double size) {
+    return InheritedIconAttribute(
       size: size,
     );
   }
 }
 
-class InputDecorationAttributes extends InputDecoration
-    implements InheritedAttribute<InputDecorationAttributes> {
-  const InputDecorationAttributes({
+class InputDecorationThemeAttribute extends InputDecorationTheme
+    implements InheritedAttribute<InputDecorationThemeAttribute> {
+  const InputDecorationThemeAttribute({
     Color? iconColor,
     Color? fillColor,
     InputBorder? border,
-  }) : super(iconColor: iconColor, fillColor: fillColor, border: border);
+  }) : super(
+          iconColor: iconColor,
+          fillColor: fillColor,
+          border: border,
+        );
 
   @override
-  InputDecorationAttributes merge(InputDecorationAttributes other) {
-    return InputDecorationAttributes(
+  InputDecorationThemeAttribute merge(InputDecorationThemeAttribute other) {
+    return InputDecorationThemeAttribute(
       iconColor: other.iconColor ?? iconColor,
       fillColor: other.fillColor ?? fillColor,
       border: other.border ?? border,
     );
   }
 
-  static InputDecorationAttributes inputDecoration({
+  static InputDecorationThemeAttribute inputDecoration({
     Color? iconColor,
     Color? fillColor,
     InputBorder? border,
   }) {
-    return InputDecorationAttributes(
+    return InputDecorationThemeAttribute(
       iconColor: iconColor ?? iconColor,
       fillColor: fillColor ?? fillColor,
       border: border ?? border,
@@ -83,25 +87,23 @@ class InputDecorationAttributes extends InputDecoration
   }
 
   @override
-  Object get type => InputDecorationAttributes;
+  Object get type => InputDecorationThemeAttribute;
 }
 
-class Style {
-  late final base = Mix(
-    withSize(23),
-    withColor(Colors.green),
-    inputDecoration(
-      border: const UnderlineInputBorder(
-        borderSide: BorderSide(color: Colors.red, width: 2),
-      ),
+final mix = Mix(
+  withSize(23),
+  withColor(Colors.green),
+  inputDecoration(
+    border: const UnderlineInputBorder(
+      borderSide: BorderSide(color: Colors.red, width: 2),
     ),
-    inputDecoration(
-      fillColor: Colors.red,
-    ),
-    activated(withColor(Colors.blue), inputDecoration(fillColor: Colors.green)),
-    const SharedAttributes(textDirection: TextDirection.rtl),
-  );
-}
+  ),
+  inputDecoration(
+    fillColor: Colors.red,
+  ),
+  activated(withColor(Colors.blue), inputDecoration(fillColor: Colors.green)),
+  const SharedAttributes(textDirection: TextDirection.rtl),
+);
 
 class CustomWidget extends StatelessWidget {
   const CustomWidget(
@@ -122,7 +124,7 @@ class CustomWidget extends StatelessWidget {
     return MixContextBuilder(
       variants: variants,
       builder: (context, mixContext) {
-        final attributes = mixContext.fromType<MyIconAttributes>();
+        final attribute = mixContext.fromType<InheritedIconAttribute>();
 
         return Semantics(
           label: semanticLabel,
@@ -130,15 +132,15 @@ class CustomWidget extends StatelessWidget {
             children: [
               Icon(
                 icon,
-                color: attributes.color,
-                size: attributes.size,
+                color: attribute.color,
+                size: attribute.size,
                 textDirection: mixContext.sharedProps.textDirection,
               ),
             ],
           ),
         );
       },
-      mix: Style().base,
+      mix: mix,
     );
   }
 }
@@ -160,18 +162,19 @@ class TextFieldWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MixContextBuilder(
-      mix: Style().base,
+      mix: mix,
       variants: variants,
       builder: (context, mixContext) {
-        final inputDecoration =
-            mixContext.fromType<InputDecorationAttributes>();
+        final decorationTheme =
+            mixContext.fromType<InputDecorationThemeAttribute>();
 
         return Semantics(
           label: semanticLabel,
           child: Column(
             children: [
               TextField(
-                decoration: inputDecoration,
+                decoration:
+                    const InputDecoration().applyDefaults(decorationTheme),
               ),
             ],
           ),
@@ -182,8 +185,8 @@ class TextFieldWidget extends StatelessWidget {
 }
 
 void main() {
-  group("mix attribute extension", () {
-    testWidgets('custom icon mix attribute extension', (tester) async {
+  group("inherited icon attribute", () {
+    testWidgets('without variants', (tester) async {
       await tester.pumpWidget(
         const MixTestWidget(
           child: CustomWidget(Icons.bolt),
@@ -199,7 +202,7 @@ void main() {
       expect(icon.textDirection, TextDirection.rtl);
     });
 
-    testWidgets('TextField', (tester) async {
+    testWidgets('with variant', (tester) async {
       await tester.pumpWidget(
         MixTestWidget(
           child: CustomWidget(
@@ -219,8 +222,8 @@ void main() {
     });
   });
 
-  group("TextField attribute extension with variant", () {
-    testWidgets('custom icon mix attribute extension', (tester) async {
+  group("inherited input theme attribute", () {
+    testWidgets('without variants', (tester) async {
       await tester.pumpWidget(
         const MixTestWidget(
           child: MaterialApp(
@@ -238,7 +241,7 @@ void main() {
       expect(textField.decoration!.fillColor, Colors.red);
     });
 
-    testWidgets('TextField', (tester) async {
+    testWidgets('with variants', (tester) async {
       await tester.pumpWidget(
         MixTestWidget(
           child: MaterialApp(
