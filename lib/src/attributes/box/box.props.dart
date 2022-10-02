@@ -160,6 +160,7 @@ class BoxProps {
     if (_color != other._color) {
       diff.add('color');
     }
+
     if (alignment != other.alignment) {
       diff.add('alignment');
     }
