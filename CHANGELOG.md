@@ -1,7 +1,14 @@
+## 0.0.7
+
+- Performance improvements
+- Bug fixes [#59](https://github.com/leoafarias/mix/issues/59) by @bdlukaa
+- InheritedAttribute - Custiom Mix attributes [#94](https://github.com/leoafarias/mix/pull/94) by @pbissonho
+
+
 ## 0.0.6
 
 - Refactored MixTheme & Context Tokens
-- ZBox Widget
+- ZBox Widget by @
 - Headless Widgets (Experimental)
 - Lots of bug fixes and performance improvements.
 
