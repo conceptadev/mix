@@ -152,9 +152,10 @@ class Variant<T extends Attribute> {
   final String name;
   final bool Function(BuildContext)? shouldApply;
 
-  bool inverse = false;
+  final bool inverse;
 
-  Variant(this.name, {this.shouldApply});
+  const Variant(this.name, {this.shouldApply}) : inverse = false;
+  const Variant._inverse(this.name, {this.shouldApply}) : inverse = true;
 
   MultiVariant<T> operator &(Variant<T> variant) =>
       MultiVariant<T>([this, variant], operator: _VariantOperations.and);
@@ -212,4 +213,11 @@ class Variant<T extends Attribute> {
 
   @override
   String toString() => 'Variant(name: $name)';
+
+  Variant<T> inverseInstance() {
+    return Variant<T>._inverse(
+      name,
+      shouldApply: shouldApply,
+    );
+  }
 }
