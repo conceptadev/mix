@@ -48,6 +48,15 @@
         "content",
         "tutorial"
       ]
+    },
+    {
+      "login": "tilucasoli",
+      "name": "Lucas Oliveira",
+      "avatar_url": "https://avatars.githubusercontent.com/u/62367544?v=4",
+      "profile": "https://github.com/tilucasoli",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7
