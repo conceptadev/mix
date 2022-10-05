@@ -136,6 +136,6 @@ class VariantUtils {
   }
 
   static Variant<T> not<T extends Attribute>(Variant<T> other) {
-    return other..inverse = true;
+    return other.inverseInstance();
   }
 }
