@@ -80,7 +80,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/rickbsgu"><img src="https://avatars.githubusercontent.com/u/161474?v=4?s=50" width="50px;" alt=""/><br /><sub><b>Rick Berger</b></sub></a><br /><a href="https://github.com/leoafarias/mix/commits?author=rickbsgu" title="Documentation">📖</a></td>
     <td align="center"><a href="https://github.com/sbis04"><img src="https://avatars.githubusercontent.com/u/43280874?v=4?s=50" width="50px;" alt=""/><br /><sub><b>Souvik Biswas</b></sub></a><br /><a href="#content-sbis04" title="Content">🖋</a> <a href="#tutorial-sbis04" title="Tutorials">✅</a></td>
     <td align="center"><a href="https://github.com/tilucasoli"><img src="https://avatars.githubusercontent.com/u/62367544?v=4?s=50" width="50px;" alt=""/><br /><sub><b>Lucas Oliveira</b></sub></a><br /><a href="https://github.com/leoafarias/mix/commits?author=tilucasoli" title="Code">💻</a></td>
-    <td align="center"><a href="https://www.linkedin.com/in/pedrobissonho/"><img src="https://avatars.githubusercontent.com/u/43250625?v=4?s=50" width="50px;" alt=""/><br /><sub><b>Pedro Bissonho</b></sub></a><br /><a href="https://github.com/leoafarias/mix/commits?author=pbissonho" title="Code">💻</a></td>
+    <td align="center"><a href="https://www.linkedin.com/in/pedrobissonho/"><img src="https://avatars.githubusercontent.com/u/43250625?v=4?s=50" width="50px;" alt=""/><br /><sub><b>Pedro Bissonho</b></sub></a><br /><a href="https://github.com/leoafarias/mix/commits?author=pbissonho" title="Code">💻</a> <a href="#ideas-pbissonho" title="Ideas, Planning, & Feedback">🤔</a></td>
   </tr>
 </table>
 
