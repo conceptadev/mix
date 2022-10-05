@@ -5,9 +5,9 @@
 ---
 
 ![GitHub stars](https://img.shields.io/github/stars/fluttertools/mix?style=social)
-[![Pub Version](https://img.shields.io/pub/v/mix?label=version&style=flat-square)](https://pub.dev/packages/mix/changelog)
-[![Likes](https://badges.bar/mix/likes)](https://pub.dev/packages/mix/score)
-[![Pub points](https://badges.bar/mix/pub%20points)](https://pub.dev/packages/mix/score) [![Github All Contributors](https://img.shields.io/github/all-contributors/fluttertools/mix?style=flat-square)](https://github.com/fluttertools/mix/graphs/contributors) [![MIT Licence](https://img.shields.io/github/license/fluttertools/mix?style=flat-square&longCache=true)](https://opensource.org/licenses/mit-license.php) [![Awesome Flutter](https://img.shields.io/badge/awesome-flutter-purple?longCache=true&style=flat-square)](https://github.com/Solido/awesome-flutter)
+[![Pub Version](https://img.shields.io/pub/v/mix?label=version&style=for-the-badge)](https://pub.dev/packages/mix/changelog)
+![Pub Likes](https://img.shields.io/pub/likes/mix?label=Pub%20Likes&style=for-the-badge)
+![Pub Points](https://img.shields.io/pub/points/mix?label=Pub%20Points&style=for-the-badge) [![Github All Contributors](https://img.shields.io/github/all-contributors/fluttertools/mix?style=for-the-badge)](https://github.com/fluttertools/mix/graphs/contributors) [![MIT Licence](https://img.shields.io/github/license/fluttertools/mix?style=for-the-badge&longCache=true)](https://opensource.org/licenses/mit-license.php) [![Awesome Flutter](https://img.shields.io/badge/awesome-flutter-purple?longCache=true&style=for-the-badge)](https://github.com/Solido/awesome-flutter)
 
 Build Flutter design systems expressively and effortlessly. **Mix** offers primitive building blocks to help developers and designers create beautiful UI with confidence.
 
