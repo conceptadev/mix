@@ -57,6 +57,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "pbissonho",
+      "name": "Pedro Bissonho",
+      "avatar_url": "https://avatars.githubusercontent.com/u/43250625?v=4",
+      "profile": "https://www.linkedin.com/in/pedrobissonho/",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7
