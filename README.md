@@ -1,6 +1,7 @@
-<p align="center">
-  <img width="150" src="https://raw.githubusercontent.com/leoafarias/mix/main/assets/animated.svg">
-</p>
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/leoafarias/mix/main/assets/dark.svg">
+  <img alt="Mix logo" src="https://raw.githubusercontent.com/leoafarias/mix/main/assets/light.svg">
+</picture>
 
 ---
 
