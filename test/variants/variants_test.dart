@@ -10,7 +10,7 @@ void main() {
       themeMode: ThemeMode.dark,
       home: Box(
         mix: Mix(
-          (dark)(bgColor(Colors.black)),
+          (onDark)(bgColor(Colors.black)),
           h(50),
           w(50),
         ),
@@ -28,7 +28,7 @@ void main() {
       themeMode: ThemeMode.light,
       home: Box(
         mix: Mix(
-          not(dark)(bgColor(Colors.black)),
+          onNot(onDark)(bgColor(Colors.black)),
           h(50),
           w(50),
         ),

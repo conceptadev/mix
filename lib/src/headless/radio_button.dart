@@ -49,10 +49,10 @@ class RadioButtonX extends RemixableWidget {
         color: Colors.grey.shade300,
         width: 2,
       ),
-      (active | hover)(
+      (active | onHover)(
         border(color: Colors.blue),
       ),
-      disabled(
+      onDisabled(
         border(color: Colors.grey.shade300),
       ),
     );

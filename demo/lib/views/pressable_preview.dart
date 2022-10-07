@@ -30,16 +30,16 @@ class _PressablePreviewState extends State<PressablePreview> {
         color: Colors.black,
         width: 3,
       ),
-      dark(
+      onDark(
         border(color: Colors.white),
         textColor(Colors.white),
       ),
       // could be `hover & enabled`
-      (hover & not(disabled))(
+      (onHover & onNot(onDisabled))(
         textColor(Colors.white),
         borderColor(Colors.greenAccent),
       ),
-      press(
+      onPress(
         elevation(1),
         scale(0.9),
       ),
@@ -88,7 +88,7 @@ class _PressablePreviewState extends State<PressablePreview> {
                               overrideMix: Mix(
                                 textColor(Colors.grey.shade700),
                                 bgColor(Colors.grey.shade400),
-                                (hover)(
+                                (onHover)(
                                   bgColor(Colors.grey),
                                 ),
                               ),
@@ -101,7 +101,7 @@ class _PressablePreviewState extends State<PressablePreview> {
                               overrideMix: Mix(
                                 textColor(Colors.red.shade100),
                                 bgColor(Colors.redAccent.shade200),
-                                (hover)(
+                                (onHover)(
                                   bgColor(Colors.redAccent.shade400),
                                 ),
                               ),
