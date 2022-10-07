@@ -60,10 +60,10 @@ class BoxProps {
     return BoxProps(
       color: color?.resolve(context),
       alignment: box?.alignment,
-      margin: box?.margin?.resolve(context),
+      margin: box?.margin?.resolve(context).resolve(context),
       padding: box?.padding?.resolve(context),
       width: box?.width,
-      height: box?.height,
+      height: box?.height?.resolve(context),
       border: box?.border?.resolve(context),
       borderRadius: box?.borderRadius?.resolve(context),
       boxShadow: box?.boxShadow?.resolve(context),

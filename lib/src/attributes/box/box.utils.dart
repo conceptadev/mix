@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
-import 'package:mix/src/attributes/box/box.attributes.dart';
 import 'package:mix/src/dto/border.dto.dart';
 import 'package:mix/src/dto/border_radius.dto.dart';
 import 'package:mix/src/dto/box_shadow.dto.dart';
 import 'package:mix/src/dto/edge_insets.dto.dart';
-import 'package:mix/src/helpers/extensions.dart';
 
 ///
 /// ## Widget:
@@ -18,43 +16,74 @@ class BoxUtility {
   const BoxUtility._();
 
   /// Short Utils: margin, m
-  static BoxAttributes margin(double value) {
-    return BoxAttributes(margin: EdgeInsetsDto.all(value));
+  static BoxAttributes margin(MixableProperty value) {
+    return BoxAttributes(
+      margin:
+          MixProperty.ensureProperty<EdgeInsetsDto>(EdgeInsetsDto.all(value)),
+    );
   }
 
   /// Short Utils: marginInsets, mi
   static BoxAttributes marginInsets(EdgeInsets insets) {
-    return BoxAttributes(margin: EdgeInsetsDto.fromEdgeInsets(insets));
+    return BoxAttributes(
+      margin: MixProperty.ensureProperty<EdgeInsetsDto>(
+        EdgeInsetsDto.fromEdgeInsets(insets),
+      ),
+    );
   }
 
   /// Short Utils: marginTop, mt
   static BoxAttributes marginTop(double value) {
-    return BoxAttributes(margin: EdgeInsetsDto.only(top: value));
+    return BoxAttributes(
+      margin: MixProperty.ensureProperty<EdgeInsetsDto>(
+        EdgeInsetsDto.only(top: value),
+      ),
+    );
   }
 
   /// Short Utils: marginRight, mr
   static BoxAttributes marginRight(double value) {
-    return BoxAttributes(margin: EdgeInsetsDto.only(right: value));
+    return BoxAttributes(
+      margin: MixProperty.ensureProperty<EdgeInsetsDto>(
+        EdgeInsetsDto.only(right: value),
+      ),
+    );
   }
 
   /// Short Utils: marginBottom, mb
   static BoxAttributes marginBottom(double value) {
-    return BoxAttributes(margin: EdgeInsetsDto.only(bottom: value));
+    return BoxAttributes(
+      margin: MixProperty.ensureProperty<EdgeInsetsDto>(
+        EdgeInsetsDto.only(bottom: value),
+      ),
+    );
   }
 
   /// Short Utils: marginLeft, ml
   static BoxAttributes marginLeft(double value) {
-    return BoxAttributes(margin: EdgeInsetsDto.only(left: value));
+    return BoxAttributes(
+      margin: MixProperty.ensureProperty<EdgeInsetsDto>(
+        EdgeInsetsDto.only(left: value),
+      ),
+    );
   }
 
   /// Short Utils: marginHorizontal, marginX, mx
   static BoxAttributes marginHorizontal(double value) {
-    return BoxAttributes(margin: EdgeInsetsDto.symmetric(horizontal: value));
+    return BoxAttributes(
+      margin: MixProperty.ensureProperty<EdgeInsetsDto>(
+        EdgeInsetsDto.symmetric(horizontal: value),
+      ),
+    );
   }
 
   /// Short Utils: marginVertical, marginY, my
   static BoxAttributes marginVertical(double value) {
-    return BoxAttributes(margin: EdgeInsetsDto.symmetric(vertical: value));
+    return BoxAttributes(
+      margin: MixProperty.ensureProperty<EdgeInsetsDto>(
+        EdgeInsetsDto.symmetric(vertical: value),
+      ),
+    );
   }
 
   /// Short Utils: padding, p
@@ -99,11 +128,11 @@ class BoxUtility {
 
   /// Short Utils: bgColor
   static BoxAttributes backgroundColor(MixableProperty color) =>
-      BoxAttributes(color: MixProperty.ensureProperty(color));
+      BoxAttributes(color: MixProperty.ensureProperty<Color>(color));
 
   /// Short Utils: height, h
-  static BoxAttributes height(double height) {
-    return BoxAttributes(height: height);
+  static BoxAttributes height(MixableProperty height) {
+    return BoxAttributes(height: MixProperty.ensureProperty<double>(height));
   }
 
   /// Short Utils: width, w

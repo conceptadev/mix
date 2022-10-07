@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-typedef S = Object;
-
 /// Gets a property based off a theme extension
 MixProperty<S> theme<T extends ThemeExtension<dynamic>, S>(
   S Function(T ext) callback,
@@ -18,20 +16,40 @@ MixProperty<S> theme<T extends ThemeExtension<dynamic>, S>(
   });
 }
 
+/// A mix property lets you fetch your params based on the current context.
+///
+/// ```dart
+/// Mix(
+///   bgColor(MixProperty((context) {
+///     return Theme.of(context).canvasColor;
+///   })),
+/// ),
+/// ```
+///
+/// See also:
+///
+///  * [MixableProperty]
+///  * [theme], a helper function that provides a custom theme extension from
+///    the closest [Theme] widget.
 class MixProperty<T> {
   final T Function(BuildContext context) resolve;
 
+  /// Creates a mix property.
   const MixProperty(this.resolve);
 
+  /// Creates a mix property with a defined value
   factory MixProperty.value(T value) => MixProperty<T>((_) => value);
 
-  static MixProperty<T> ensureProperty<T>(dynamic param) {
-    if (param is MixProperty<T>) return param;
+  /// Ensure a [MixableProperty] is either [MixProperty] or [T]
+  // @internal
+  static MixProperty<T> ensureProperty<T>(MixableProperty property) {
+    if (property is MixProperty<T>) return property;
 
-    if (param is T) return MixProperty.value(param);
+    if (property is T) return MixProperty.value(property);
 
     throw TypeError();
   }
 }
 
+/// A property that can be dynamically defined
 typedef MixableProperty = dynamic;

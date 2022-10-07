@@ -14,10 +14,10 @@ import '../common/attribute.dart';
 ///
 /// {@category Attributes}
 class BoxAttributes extends Attribute {
-  final EdgeInsetsDto? margin;
+  final MixProperty<EdgeInsetsDto>? margin;
   final EdgeInsetsDto? padding;
   final AlignmentGeometry? alignment;
-  final double? height;
+  final MixProperty<double>? height;
   final double? width;
   // Decoration
   final MixProperty<Color>? color;
@@ -61,7 +61,8 @@ class BoxAttributes extends Attribute {
       border: border?.merge(box.border) ?? box.border,
       borderRadius: borderRadius?.merge(box.borderRadius) ?? box.borderRadius,
       boxShadow: boxShadow?.merge(box.boxShadow) ?? box.boxShadow,
-      margin: margin?.merge(box.margin) ?? box.margin,
+      // margin: margin?.merge(box.margin) ?? box.margin,
+      margin: margin ?? box.margin,
       padding: padding?.merge(box.padding) ?? box.padding,
       transform: transform?.merge(box.transform) ?? box.transform,
       // Override values
@@ -122,10 +123,10 @@ class BoxAttributes extends Attribute {
   }
 
   BoxAttributes copyWith({
-    EdgeInsetsDto? margin,
+    MixProperty<EdgeInsetsDto>? margin,
     EdgeInsetsDto? padding,
     AlignmentGeometry? alignment,
-    double? height,
+    MixProperty<double>? height,
     double? width,
     MixProperty<Color>? color,
     BorderDto? border,
