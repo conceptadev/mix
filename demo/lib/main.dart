@@ -38,11 +38,6 @@ class MyApp extends StatelessWidget {
           initialRoute: '/',
           routes: {
             '/': (context) => const AppShell(),
-            '/docs/headless/alert-dialog': (context) =>
-                const HeadlessAlertDialogX(),
-            '/docs/headless/card': (context) => const HeadlessCardX(),
-            '/docs/headless/checkbox': (context) => const HeadlessCheckboxX(),
-            '/docs/headless/chip': (context) => const HeadlessChipX(),
             '/docs/variants': (context) => const VariantsDefaultExample(),
             '/docs/variants/or': (context) => const VariantsOrOperator(),
             '/docs/variants/and': (context) => const VariantsAndOperator(),
