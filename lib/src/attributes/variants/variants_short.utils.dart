@@ -1,21 +1,60 @@
 import 'package:mix/mix.dart';
 
 // Dynamic utilities
-final xsmall = VariantUtils.xsmall();
-final small = VariantUtils.small();
-final medium = VariantUtils.medium();
-final large = VariantUtils.large();
+final onXSmall = VariantUtils.onXsmall();
+final onMedium = VariantUtils.onMedium();
+final onSmall = VariantUtils.onSmall();
+final onLarge = VariantUtils.onLarge();
+final onPortrait = VariantUtils.onPortrait();
+final onLandscape = VariantUtils.onLandscape();
+final onDark = VariantUtils.onDark();
+final onLight = VariantUtils.onLight();
 
-final portrait = VariantUtils.portrait();
-final landscape = VariantUtils.landscape();
+final onDisabled = VariantUtils.onDisabled();
+final onFocus = VariantUtils.onFocus();
+final onHover = VariantUtils.onHover();
+final onPress = VariantUtils.onPress();
+const onNot = VariantUtils.onNot;
+final onEnabled = onNot(onDisabled);
 
-final dark = VariantUtils.dark();
-final light = VariantUtils.light();
+@Deprecated('Use onXSmall instead')
+final xsmall = onXSmall;
 
-final enabled = not(disabled);
-final disabled = VariantUtils.disabled();
-final focus = VariantUtils.focused();
-final hover = VariantUtils.hover();
-final press = VariantUtils.pressing();
+@Deprecated('Use onSmall instead')
+final small = onSmall;
 
-const not = VariantUtils.not;
+@Deprecated('Use onMedium instead')
+final medium = onMedium;
+
+@Deprecated('Use onDark instead')
+final dark = onDark;
+
+@Deprecated('Use onLight instead')
+final light = onLight;
+
+@Deprecated('Use onLarge instead')
+final large = onLarge;
+
+@Deprecated('Use onHover instead')
+final hover = onHover;
+
+@Deprecated('Use onFocus instead')
+final focus = onFocus;
+
+@Deprecated('Use onPortrait instead')
+final portrait = onPortrait;
+
+@Deprecated('Use onLandscape instead')
+final landscape = onLandscape;
+
+@Deprecated('Use onDisabled instead')
+final disabled = onDisabled;
+
+@Deprecated('Use onEnabled instead')
+final enabled = onEnabled;
+
+@Deprecated('Use onPress instead')
+final press = onPress;
+
+@Deprecated('Use onNot instead')
+const not = onNot;

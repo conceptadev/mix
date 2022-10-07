@@ -70,10 +70,10 @@ class ChipX extends RemixableWidget {
       gap(10),
       bgColor(MaterialTokens.colorScheme.surface),
       animated(),
-      hover(
+      onHover(
         bgColor(Colors.grey.shade50),
       ),
-      press(
+      onPress(
         bgColor(Colors.grey.shade200),
       ),
 

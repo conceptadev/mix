@@ -58,10 +58,10 @@ class CheckboxX extends RemixableWidget {
       active(
         iconColor(MaterialTokens.colorScheme.primary),
       ),
-      disabled(
+      onDisabled(
         border(color: Colors.grey.shade300),
       ),
-      (hover | active)(
+      (onHover | active)(
         borderColor(MaterialTokens.colorScheme.primary),
       ),
     );

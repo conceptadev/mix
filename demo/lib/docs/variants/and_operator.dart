@@ -9,7 +9,7 @@ class VariantsAndOperator extends StatelessWidget {
     final mix = Mix(
       padding(20.0),
       textColor(Colors.white),
-      (hover & enabled)(
+      (onHover & onEnabled)(
         // When it's hovering AND pressing
         textColor(Colors.black),
         bold(),

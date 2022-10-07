@@ -69,7 +69,7 @@ class CustomMixWidget extends StatelessWidget {
       bgColor(MaterialTokens.colorScheme.primary),
       textStyle(MaterialTokens.textTheme.button),
       textColor(MaterialTokens.colorScheme.onPrimary),
-      hover(
+      onHover(
         elevation(2),
         padding(20),
         bgColor(MaterialTokens.colorScheme.secondary),

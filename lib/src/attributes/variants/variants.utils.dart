@@ -1,7 +1,10 @@
-import 'package:flutter/widgets.dart';
-import 'package:mix/mix.dart';
+import 'package:flutter/material.dart';
+import 'package:mix/src/attributes/common/attribute.dart';
 import 'package:mix/src/attributes/pressable/pressable.notifier.dart';
+import 'package:mix/src/helpers/extensions.dart';
+import 'package:mix/src/theme/mix_theme.dart';
 import 'package:mix/src/theme/tokens/breakpoints.dart';
+import 'package:mix/src/variants/variants.dart';
 
 /// {@category Variants}
 class VariantUtils {
@@ -15,40 +18,35 @@ class VariantUtils {
     };
   }
 
-  /// Short Utils: small
-  static Variant<T> small<T extends Attribute>() {
+  static Variant<T> onSmall<T extends Attribute>() {
     return Variant<T>(
       SystemVariants.screenSize.value,
       shouldApply: _screenSizeCheck(ScreenSizeToken.small),
     );
   }
 
-  /// Short Utils: xsmall
-  static Variant<T> xsmall<T extends Attribute>() {
+  static Variant<T> onXsmall<T extends Attribute>() {
     return Variant<T>(
       SystemVariants.screenSize.value,
       shouldApply: _screenSizeCheck(ScreenSizeToken.xsmall),
     );
   }
 
-  /// Short Utils: medium
-  static Variant<T> medium<T extends Attribute>() {
+  static Variant<T> onMedium<T extends Attribute>() {
     return Variant<T>(
       SystemVariants.screenSize.value,
       shouldApply: _screenSizeCheck(ScreenSizeToken.medium),
     );
   }
 
-  /// Short Utils: large
-  static Variant<T> large<T extends Attribute>() {
+  static Variant<T> onLarge<T extends Attribute>() {
     return Variant<T>(
       SystemVariants.screenSize.value,
       shouldApply: _screenSizeCheck(ScreenSizeToken.large),
     );
   }
 
-  /// Short Utils: portrait
-  static Variant<T> portrait<T extends Attribute>() {
+  static Variant<T> onPortrait<T extends Attribute>() {
     return Variant<T>(
       SystemVariants.orientation.value,
       shouldApply: (BuildContext context) {
@@ -57,8 +55,7 @@ class VariantUtils {
     );
   }
 
-  /// Short Utils: landscape
-  static Variant<T> landscape<T extends Attribute>() {
+  static Variant<T> onLandscape<T extends Attribute>() {
     return Variant<T>(
       SystemVariants.orientation.value,
       shouldApply: (BuildContext context) {
@@ -67,8 +64,7 @@ class VariantUtils {
     );
   }
 
-  /// Short Utils: dark
-  static Variant<T> dark<T extends Attribute>() {
+  static Variant<T> onDark<T extends Attribute>() {
     return Variant<T>(
       SystemVariants.dark.value,
       shouldApply: (BuildContext context) {
@@ -77,18 +73,16 @@ class VariantUtils {
     );
   }
 
-  /// Short Utils: light
-  static Variant<T> light<T extends Attribute>() {
+  static Variant<T> onLight<T extends Attribute>() {
     return Variant<T>(
       SystemVariants.dark.value,
       shouldApply: (BuildContext context) {
-        return context.isDarkMode == false;
+        return Theme.of(context).brightness == Brightness.light;
       },
     );
   }
 
-  /// Short Utils: disabled
-  static Variant<T> disabled<T extends Attribute>() {
+  static Variant<T> onDisabled<T extends Attribute>() {
     return Variant<T>(
       SystemVariants.disabled.value,
       shouldApply: (BuildContext context) {
@@ -99,8 +93,7 @@ class VariantUtils {
     );
   }
 
-  /// Short Utils: focused
-  static Variant<T> focused<T extends Attribute>() {
+  static Variant<T> onFocus<T extends Attribute>() {
     return Variant<T>(
       SystemVariants.focus.value,
       shouldApply: (BuildContext context) {
@@ -111,8 +104,7 @@ class VariantUtils {
     );
   }
 
-  /// Short utils: pressing
-  static Variant<T> pressing<T extends Attribute>() {
+  static Variant<T> onPress<T extends Attribute>() {
     return Variant<T>(
       SystemVariants.pressing.value,
       shouldApply: (BuildContext context) {
@@ -123,8 +115,7 @@ class VariantUtils {
     );
   }
 
-  /// Short Utils: hover
-  static Variant<T> hover<T extends Attribute>() {
+  static Variant<T> onHover<T extends Attribute>() {
     return Variant<T>(
       SystemVariants.hover.value,
       shouldApply: (BuildContext context) {
@@ -135,7 +126,7 @@ class VariantUtils {
     );
   }
 
-  static Variant<T> not<T extends Attribute>(Variant<T> other) {
+  static Variant<T> onNot<T extends Attribute>(Variant<T> other) {
     return other.inverseInstance();
   }
 }

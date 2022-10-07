@@ -16,7 +16,7 @@ final firstMix = Mix(
   // Icon Attribute
   iconColor(Colors.green),
   // Variant Attribute
-  dark(margin(10)),
+  onDark(margin(10)),
   animationDuration(1000),
   padding(0),
   margin(0),
@@ -40,8 +40,8 @@ final secondMix = Mix(
   // Icon Attribute
   iconSize(10),
   // Variant Attribute
-  hover(width(100)),
-  focus(height(100)),
+  onHover(width(100)),
+  onFocus(height(100)),
   iconColor(Colors.red),
 );
 
