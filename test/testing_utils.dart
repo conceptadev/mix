@@ -73,17 +73,17 @@ const borderSide = BorderSideDto.only(
   width: 1,
 );
 
-const baseBoxAttributes = BoxAttributes(
-  border: BorderDto.fromBorderSide(borderSide),
-  borderRadius: BorderRadiusDto.only(
+final baseBoxAttributes = BoxAttributes(
+  border: const BorderDto.fromBorderSide(borderSide),
+  borderRadius: const BorderRadiusDto.only(
     topLeft: 20,
     topRight: 20,
     bottomLeft: 20,
     bottomRight: 20,
   ),
-  color: Colors.red,
-  margin: EdgeInsetsDto.all(10),
-  padding: EdgeInsetsDto.all(20),
+  color: MixProperty<Color>.value(Colors.red),
+  margin: const EdgeInsetsDto.all(10),
+  padding: const EdgeInsetsDto.all(20),
   minWidth: 0,
   width: 100,
   maxWidth: 250,
@@ -94,7 +94,7 @@ const baseBoxAttributes = BoxAttributes(
   shape: BoxShape.rectangle,
   transform: null,
   boxShadow: [
-    BoxShadowDto(
+    const BoxShadowDto(
       color: Colors.black,
       blurRadius: 10,
       offset: Offset(10, 10),

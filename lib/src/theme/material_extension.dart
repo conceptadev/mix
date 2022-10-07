@@ -23,7 +23,7 @@ class MixProperty<T> {
 
   const MixProperty(this.resolve);
 
-  static MixProperty<T> value<T>(T value) => MixProperty<T>((_) => value);
+  factory MixProperty.value(T value) => MixProperty<T>((_) => value);
 
   static MixProperty<T> ensureProperty<T>(dynamic param) {
     if (param is MixProperty<T>) return param;
