@@ -7,9 +7,14 @@ MixProperty<S> theme<T extends ThemeExtension<dynamic>, S>(
   S Function(T ext) callback,
 ) {
   return MixProperty<S>((context) {
-    final T ext = Theme.of(context).extension<T>()!;
+    final T? ext = Theme.of(context).extension<T>();
 
-    return callback(ext);
+    assert(
+      ext != null,
+      '$T is not a theme extension. Please provide a valid type',
+    );
+
+    return callback(ext!);
   });
 }
 
