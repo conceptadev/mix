@@ -43,9 +43,37 @@ class MixProperty<T> {
   /// Ensure a [MixableProperty] is either [MixProperty] or [T]
   // @internal
   static MixProperty<T> ensureProperty<T>(MixableProperty property) {
+    if (property == null) return MixProperty.value(property);
+
     if (property is MixProperty<T>) return property;
 
     if (property is T) return MixProperty.value(property);
+
+    // This is an edge case.
+    //
+    // In dart, we can do `double height = 100;` but if we do `var height = 100;`,
+    // it'll be automatically inferred that `height` is an int. The same happens
+    // if we declare values to parameters (for example, `BoxAttributes(height: 100)`).
+    //
+    // To overcome this issue, we check if the property is a number ([num]), and
+    // also ensure [T] is a number. If both are true, we ensure the numbers are
+    // converted correctly to the type [T].
+    //
+    // To do this, we use a dart hack to check if T == num using type strings
+    // (Type.toString(), which results in the class name).
+    if (property is num) {
+      final numericTypes = [
+        '$double',
+        '$int',
+      ];
+
+      if (!numericTypes.contains('$T')) throw TypeError();
+
+      if ('$T' == '$double') property = property.toDouble();
+      if ('$T' == '$int') property = property.toInt();
+
+      return MixProperty.value(property as T);
+    }
 
     throw TypeError();
   }

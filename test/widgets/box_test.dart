@@ -217,12 +217,14 @@ void main() {
           await tester.pumpWidget(
             BoxTestWidget(
               Mix(
-                const BoxAttributes(
-                  margin: EdgeInsetsDto.only(
-                    left: 15,
-                    top: 25,
-                    right: 35,
-                    bottom: 45,
+                BoxAttributes(
+                  margin: MixProperty.value(
+                    const EdgeInsetsDto.only(
+                      left: 15,
+                      top: 25,
+                      right: 35,
+                      bottom: 45,
+                    ),
                   ),
                 ),
               ),
