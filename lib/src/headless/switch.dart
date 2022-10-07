@@ -1,14 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mix/src/attributes/common/attribute.dart';
-import 'package:mix/src/attributes/exports.dart';
-import 'package:mix/src/mixer/mix_factory.dart';
-import 'package:mix/src/theme/material_theme/color_scheme_tokens.dart';
-import 'package:mix/src/theme/material_theme/material_tokens.dart';
-import 'package:mix/src/widgets/box.widget.dart';
-import 'package:mix/src/widgets/mixable.widget.dart';
-import 'package:mix/src/widgets/pressable.widget.dart';
-
-import 'exports.dart';
+import 'package:mix/mix.dart';
 
 /// _Mix_ corollary to Flutter _Switch_ widget
 ///

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
-import 'package:mix/src/theme/material_theme/material_tokens.dart';
 
 /// _Mix_ corollary to Flutter _Card_ widget
 ///

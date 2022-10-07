@@ -23,8 +23,7 @@ export 'src/theme/material_theme/color_scheme_tokens.dart';
 export 'src/theme/material_theme/material_tokens.dart';
 export 'src/theme/material_theme/text_theme_tokens.dart';
 export 'src/theme/mix_theme.dart';
+export 'src/theme/material_extension.dart';
 export 'src/theme/refs/color_token.dart';
 export 'src/theme/refs/text_style_token.dart';
 export 'src/variants/variants.dart';
-
-

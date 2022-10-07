@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
-import 'package:mix/src/theme/material_theme/material_tokens.dart';
 
 /// _Mix_ corollary to Flutter _AlertDialog_ class
 ///

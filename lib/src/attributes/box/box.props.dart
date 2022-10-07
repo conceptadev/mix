@@ -53,12 +53,12 @@ class BoxProps {
 
     var color = box?.color;
 
-    if (color is ColorToken) {
-      color = color.resolve(context);
-    }
+    // if (color is ColorToken) {
+    //   color = color.resolve(context);
+    // }
 
     return BoxProps(
-      color: color,
+      color: color?.resolve(context),
       alignment: box?.alignment,
       margin: box?.margin?.resolve(context),
       padding: box?.padding?.resolve(context),

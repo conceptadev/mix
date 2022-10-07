@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mix/mix.dart';
 import 'package:mix/src/attributes/box/box.attributes.dart';
 import 'package:mix/src/dto/border.dto.dart';
 import 'package:mix/src/dto/border_radius.dto.dart';
@@ -97,8 +98,8 @@ class BoxUtility {
   }
 
   /// Short Utils: bgColor
-  static BoxAttributes backgroundColor(Color color) =>
-      BoxAttributes(color: color);
+  static BoxAttributes backgroundColor(MixableProperty color) =>
+      BoxAttributes(color: MixProperty.ensureProperty(color));
 
   /// Short Utils: height, h
   static BoxAttributes height(double height) {

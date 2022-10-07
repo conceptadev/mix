@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:mix/mix.dart';
 import 'package:mix/src/dto/border.dto.dart';
 import 'package:mix/src/dto/border_radius.dto.dart';
 import 'package:mix/src/dto/box_shadow.dto.dart';
@@ -19,7 +20,7 @@ class BoxAttributes extends Attribute {
   final double? height;
   final double? width;
   // Decoration
-  final Color? color;
+  final MixProperty<Color>? color;
   final BorderDto? border;
   final BorderRadiusDto? borderRadius;
   final List<BoxShadowDto>? boxShadow;
@@ -54,6 +55,7 @@ class BoxAttributes extends Attribute {
 
   BoxAttributes merge(BoxAttributes? box) {
     if (box == null) return this;
+
     return copyWith(
       // Mergeble values
       border: border?.merge(box.border) ?? box.border,
@@ -125,7 +127,7 @@ class BoxAttributes extends Attribute {
     AlignmentGeometry? alignment,
     double? height,
     double? width,
-    Color? color,
+    MixProperty<Color>? color,
     BorderDto? border,
     BorderRadiusDto? borderRadius,
     List<BoxShadowDto>? boxShadow,

@@ -1,11 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mix/src/attributes/exports.dart';
-import 'package:mix/src/mixer/mix_factory.dart';
-import 'package:mix/src/widgets/box.widget.dart';
-import 'package:mix/src/widgets/mixable.widget.dart';
-import 'package:mix/src/widgets/pressable.widget.dart';
-
-import 'exports.dart';
+import 'package:mix/mix.dart';
 
 /// _Mix_ corollary to Flutter _RadioButton_ class
 ///
@@ -61,6 +55,7 @@ class RadioButtonX extends RemixableWidget {
   @override
   Widget build(BuildContext context) {
     final fn = onChanged;
+
     return Pressable(
       onPressed: fn == null ? null : () => fn(!checked),
       child: Box(
