@@ -25,7 +25,7 @@ extension DecoratorMapExtension on DecoratorMap {
 
 class MixContext {
   final BuildContext context;
-  final InheritedAttributes inheritedAttributes;
+  final InheritedAttributes attributes;
   final Mix sourceMix;
   final Mix originalMix;
 
@@ -37,7 +37,7 @@ class MixContext {
   ///
   /// Obtain with `mixContext.fromType<MyInheritedAttribute>()`.
   T? fromType<T extends InheritedAttribute>() {
-    final attribute = inheritedAttributes.fromType<T>();
+    final attribute = attributes.fromType<T>();
 
     return attribute;
   }
@@ -49,7 +49,7 @@ class MixContext {
     required this.directives,
     required this.variants,
     required this.decorators,
-    required this.inheritedAttributes,
+    required this.attributes,
   });
 
   factory MixContext.create({
@@ -122,16 +122,14 @@ class MixContext {
       }
     }
 
-    final decoratorMap = _buildDecoratorMap(decorators);
-
     return MixContext._(
       context: context,
       sourceMix: source,
       originalMix: mix,
       directives: directives,
       variants: variants,
-      decorators: decoratorMap,
-      inheritedAttributes: InheritedAttributes(inheritedAttributesMap),
+      decorators: _buildDecoratorMap(decorators),
+      attributes: InheritedAttributes(inheritedAttributesMap),
     );
   }
 
@@ -214,7 +212,7 @@ class MixContext {
         listEquals(other.variants, variants) &&
         listEquals(other.directives, directives) &&
         other.decorators == decorators &&
-        other.inheritedAttributes == inheritedAttributes;
+        other.attributes == attributes;
   }
 
   @override
@@ -225,6 +223,6 @@ class MixContext {
         variants.hashCode ^
         directives.hashCode ^
         decorators.hashCode ^
-        inheritedAttributes.hashCode;
+        attributes.hashCode;
   }
 }
