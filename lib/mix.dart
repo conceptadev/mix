@@ -1,17 +1,17 @@
 library mix;
 
 export 'package:mix/src/theme/tokens/size.dart';
-export 'package:mix/src/widgets/box.widget.dart';
-export 'package:mix/src/widgets/flex.widget.dart';
+export 'package:mix/src/widgets/box/box.widget.dart';
+export 'package:mix/src/widgets/flex/flex.widget.dart';
 export 'package:mix/src/widgets/gap.widget.dart';
-export 'package:mix/src/widgets/icon.widget.dart';
+export 'package:mix/src/widgets/icon/icon.widget.dart';
 export 'package:mix/src/widgets/mix_context_builder.dart';
 export 'package:mix/src/widgets/mixable.widget.dart';
-export 'package:mix/src/widgets/pressable.widget.dart';
-export 'package:mix/src/widgets/text.widget.dart';
-export 'package:mix/src/widgets/zbox.widget.dart';
+export 'package:mix/src/widgets/pressable/pressable.widget.dart';
+export 'package:mix/src/widgets/text/text.widget.dart';
+export 'package:mix/src/widgets/zbox/zbox.widget.dart';
 
-export 'src/attributes/common/attribute.dart';
+export 'src/attributes/attribute.dart';
 export 'src/attributes/exports.dart';
 export 'src/helpers/color.utils.dart';
 export 'src/helpers/extensions.dart';

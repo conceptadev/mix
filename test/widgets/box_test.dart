@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mix/src/attributes/box/box.attributes.dart';
+import 'package:mix/src/addons/widget_decorators/aspect_ratio.dart';
+import 'package:mix/src/addons/widget_decorators/flexible.dart';
+import 'package:mix/src/addons/widget_decorators/opacity.dart';
+import 'package:mix/src/addons/widget_decorators/rotate.dart';
 import 'package:mix/src/attributes/shared/shared.attributes.dart';
-import 'package:mix/src/attributes/widget_decorators/aspect_ratio.dart';
-import 'package:mix/src/attributes/widget_decorators/flexible.dart';
-import 'package:mix/src/attributes/widget_decorators/opacity.dart';
-import 'package:mix/src/attributes/widget_decorators/rotate.dart';
 import 'package:mix/src/dto/border.dto.dart';
 import 'package:mix/src/dto/border_radius.dto.dart';
 import 'package:mix/src/dto/edge_insets.dto.dart';
 import 'package:mix/src/mixer/mix_factory.dart';
-import 'package:mix/src/widgets/box.widget.dart';
+import 'package:mix/src/widgets/box/box.attributes.dart';
+import 'package:mix/src/widgets/box/box.widget.dart';
 
 import '../testing_utils.dart';
 

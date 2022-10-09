@@ -1,13 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:mix/src/decorators/decorator.dart';
 
 import '../../mix.dart';
-import '../attributes/box/box.props.dart';
-import '../attributes/flex/flex.props.dart';
-import '../attributes/icon/icon.props.dart';
-import '../attributes/shared/shared.props.dart';
-import '../attributes/text/text.props.dart';
-import '../attributes/zbox/zbox.props.dart';
 
 /// Mix Widget
 abstract class MixableWidget extends StatelessWidget {
@@ -80,15 +75,11 @@ abstract class MixedWidget extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-  BoxProps get boxMixer => mixContext.boxProps;
-  TextProps get textMixer => mixContext.textProps;
-  IconProps get iconMixer => mixContext.iconProps;
-  FlexProps get flexMixer => mixContext.flexProps;
-  SharedProps get sharedMixer => mixContext.sharedProps;
-  ZBoxProps get zBoxMixer => mixContext.zBoxProps;
   DecoratorMap get decorators => mixContext.decorators;
-  List<Decorator> get parentDecorators => mixContext.decorators.parents;
-  List<Decorator> get childDecorators => mixContext.decorators.children;
+  List<DecoratorAttribute> get parentDecorators =>
+      mixContext.decorators.parents;
+  List<DecoratorAttribute> get childDecorators =>
+      mixContext.decorators.children;
 
   final MixContext mixContext;
 
@@ -103,54 +94,6 @@ abstract class MixedWidget extends StatelessWidget {
       DiagnosticsProperty<MixContext>(
         'mixContext',
         mixContext,
-        defaultValue: null,
-      ),
-    );
-
-    properties.add(
-      DiagnosticsProperty<BoxProps>(
-        'boxMixer',
-        boxMixer,
-        defaultValue: null,
-      ),
-    );
-
-    properties.add(
-      DiagnosticsProperty<TextProps>(
-        'textMixer',
-        textMixer,
-        defaultValue: null,
-      ),
-    );
-
-    properties.add(
-      DiagnosticsProperty<IconProps>(
-        'iconMixer',
-        iconMixer,
-        defaultValue: null,
-      ),
-    );
-
-    properties.add(
-      DiagnosticsProperty<FlexProps>(
-        'flexMixer',
-        flexMixer,
-        defaultValue: null,
-      ),
-    );
-
-    properties.add(
-      DiagnosticsProperty<SharedProps>(
-        'sharedMixer',
-        sharedMixer,
-        defaultValue: null,
-      ),
-    );
-
-    properties.add(
-      DiagnosticsProperty(
-        'zBoxMixer',
-        zBoxMixer,
         defaultValue: null,
       ),
     );

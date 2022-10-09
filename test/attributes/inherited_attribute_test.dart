@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart' hide border, onEnabled, icon, iconColor;
+import 'package:mix/src/attributes/shared/shared.props.dart';
 
 import '../testing_utils.dart';
 
@@ -12,8 +13,7 @@ const withColor = InheritedIconAttribute.withColor;
 
 const inputDecoration = InputDecorationThemeAttribute.inputDecoration;
 
-class InheritedIconAttribute
-    extends InheritedAttribute<InheritedIconAttribute> {
+class InheritedIconAttribute extends InheritedAttribute {
   const InheritedIconAttribute({
     this.color,
     this.size,
@@ -54,7 +54,7 @@ class InheritedIconAttribute
 }
 
 class InputDecorationThemeAttribute extends InputDecorationTheme
-    implements InheritedAttribute<InputDecorationThemeAttribute> {
+    implements InheritedAttribute {
   const InputDecorationThemeAttribute({
     Color? iconColor,
     Color? fillColor,
@@ -124,7 +124,9 @@ class CustomWidget extends StatelessWidget {
     return MixContextBuilder(
       variants: variants,
       builder: (context, mixContext) {
-        final attribute = mixContext.fromType<InheritedIconAttribute>();
+        final attribute = mixContext.fromType<InheritedIconAttribute>()!;
+
+        final sharedProps = SharedProps.fromContext(mixContext);
 
         return Semantics(
           label: semanticLabel,
@@ -134,7 +136,7 @@ class CustomWidget extends StatelessWidget {
                 icon,
                 color: attribute.color,
                 size: attribute.size,
-                textDirection: mixContext.sharedProps.textDirection,
+                textDirection: sharedProps.textDirection,
               ),
             ],
           ),
@@ -174,7 +176,7 @@ class TextFieldWidget extends StatelessWidget {
             children: [
               TextField(
                 decoration:
-                    const InputDecoration().applyDefaults(decorationTheme),
+                    const InputDecoration().applyDefaults(decorationTheme!),
               ),
             ],
           ),

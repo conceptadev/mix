@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:mix/src/attributes/common/attribute.dart';
-import 'package:mix/src/attributes/text/text.attributes.dart';
-import 'package:mix/src/attributes/text/text.notifier.dart';
+import 'package:mix/src/attributes/attribute.dart';
 import 'package:mix/src/dto/box_shadow.dto.dart';
+import 'package:mix/src/widgets/text/text.attributes.dart';
+import 'package:mix/src/widgets/text/text.notifier.dart';
 
 /// {@category Misc Utils}
 extension BuildContextExtensions on BuildContext {

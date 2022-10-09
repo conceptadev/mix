@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:mix/src/attributes/common/attribute.dart';
+import 'package:mix/src/attributes/attribute.dart';
 
 /// ## Widget:
 /// - [(all)](/topics/Mixable%20Widgets-topic.html)
 ///
 /// {@category Attributes}
-class SharedAttributes implements Attribute {
+class SharedAttributes extends InheritedAttribute {
   final bool? visible;
   //Animation
   final bool? animated;
@@ -21,6 +21,7 @@ class SharedAttributes implements Attribute {
     this.textDirection,
   });
 
+  @override
   SharedAttributes merge(SharedAttributes? other) {
     if (other == null) return this;
 
