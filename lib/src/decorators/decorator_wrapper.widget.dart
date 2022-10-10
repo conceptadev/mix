@@ -1,26 +1,61 @@
 import 'package:flutter/material.dart';
-import 'package:mix/mix.dart';
 import 'package:mix/src/decorators/decorator_attributes.dart';
+import 'package:mix/src/mixer/mix_context.dart';
 
-class DecoratorWrapper extends StatelessWidget {
+class ParentDecoratorWrapper extends DecoratorWrapper {
+  const ParentDecoratorWrapper(
+    MixContext mixContext, {
+    Key? key,
+    required Widget child,
+  }) : super(
+          mixContext,
+          key: key,
+          child: child,
+          type: DecoratorType.parent,
+        );
+}
+
+class ChildDecoratorWrapper extends DecoratorWrapper {
+  const ChildDecoratorWrapper(
+    MixContext mixContext, {
+    Key? key,
+    required Widget child,
+  }) : super(
+          mixContext,
+          key: key,
+          child: child,
+          type: DecoratorType.child,
+        );
+}
+
+abstract class DecoratorWrapper extends StatelessWidget {
   const DecoratorWrapper(
     this.mixContext, {
     Key? key,
     required this.child,
-    required this.decorators,
+    required this.type,
   }) : super(key: key);
 
-  final List<DecoratorAttribute>? decorators;
+  final DecoratorType type;
   final Widget child;
   final MixContext mixContext;
 
   @override
   Widget build(BuildContext context) {
-    var current = child;
-    final _decorators = decorators ?? [];
+    List<DecoratorAttribute> decorators;
 
-    if (_decorators.isNotEmpty) {
-      for (var decorator in _decorators) {
+    if (type == DecoratorType.parent) {
+      decorators = mixContext.attributes.decorators.parents;
+    } else if (type == DecoratorType.child) {
+      decorators = mixContext.attributes.decorators.children;
+    } else {
+      throw Exception('Decorator type not supported');
+    }
+
+    var current = child;
+
+    if (decorators.isNotEmpty) {
+      for (var decorator in decorators) {
         current = _DecoratedWidget(
           decorator,
           key: decorator.key,

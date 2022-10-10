@@ -22,4 +22,16 @@ class IconAttributes extends InheritedAttribute {
       size: other.size ?? size,
     );
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is IconAttributes &&
+        other.color == color &&
+        other.size == size;
+  }
+
+  @override
+  int get hashCode => color.hashCode ^ size.hashCode;
 }

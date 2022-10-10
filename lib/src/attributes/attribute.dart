@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 /// Base attribute
 
 // Some classes have defaults
@@ -21,7 +23,10 @@ typedef InheritedAttributeMap = Map<Object, InheritedAttribute>;
 class MixInheritedAttributes {
   final InheritedAttributeMap attributes;
 
-  MixInheritedAttributes(this.attributes);
+  const MixInheritedAttributes(this.attributes);
+
+  const MixInheritedAttributes.empty()
+      : attributes = const <Object, InheritedAttribute>{};
 
   factory MixInheritedAttributes.fromList(List<InheritedAttribute> attributes) {
     final InheritedAttributeMap attributesMap = {};
@@ -42,31 +47,46 @@ class MixInheritedAttributes {
   }
 
   MixInheritedAttributes merge(MixInheritedAttributes? other) {
-    final InheritedAttributeMap mergedAttributes = attributes;
-
     if (other == null) {
       return this;
     }
-    final otherAttributes = other.attributes;
 
-    for (final attributeType in otherAttributes.keys) {
-      var inheritedAttribute = attributes[attributeType];
-      final otherAttribute = otherAttributes[attributeType];
+    InheritedAttributeMap mergedAttributes = {};
 
-      if (inheritedAttribute == null) {
-        inheritedAttribute = otherAttributes[attributeType];
+    final keys = [...attributes.keys, ...other.attributes.keys];
+
+    for (final key in keys) {
+      final attribute = attributes[key];
+      final otherAttribute = other.attributes[key];
+
+      if (attribute == null) {
+        mergedAttributes[key] = otherAttribute!;
+      } else if (otherAttribute == null) {
+        mergedAttributes[key] = attribute;
       } else {
-        inheritedAttribute = inheritedAttribute.merge(otherAttribute);
+        mergedAttributes[key] = attribute.merge(otherAttribute);
       }
-
-      mergedAttributes[attributeType] = inheritedAttribute!;
     }
 
-    return MixInheritedAttributes(attributes);
+    return MixInheritedAttributes(mergedAttributes);
   }
 
   /// Used to obtain a [InheritedAttribute] from [MixContext].
   ///
   /// Obtain with `mixContext.fromType<MyAttributeExtension>()`.
   T? fromType<T>() => attributes[T] as T?;
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is MixInheritedAttributes &&
+        mapEquals(
+          other.attributes,
+          attributes,
+        );
+  }
+
+  @override
+  int get hashCode => attributes.hashCode;
 }

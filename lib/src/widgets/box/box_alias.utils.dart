@@ -1,6 +1,6 @@
+import 'package:mix/src/attributes/exports.dart';
 import 'package:mix/src/theme/tokens/size.dart';
 
-import 'box.attributes.dart';
 import 'box.utils.dart';
 
 const m = WithSizeTokens(BoxUtility.margin);

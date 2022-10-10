@@ -36,4 +36,27 @@ class FlexAttributes extends InheritedAttribute {
       gapSize: other.gapSize ?? gapSize,
     );
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is FlexAttributes &&
+        other.direction == direction &&
+        other.mainAxisAlignment == mainAxisAlignment &&
+        other.crossAxisAlignment == crossAxisAlignment &&
+        other.mainAxisSize == mainAxisSize &&
+        other.verticalDirection == verticalDirection &&
+        other.gapSize == gapSize;
+  }
+
+  @override
+  int get hashCode {
+    return direction.hashCode ^
+        mainAxisAlignment.hashCode ^
+        crossAxisAlignment.hashCode ^
+        mainAxisSize.hashCode ^
+        verticalDirection.hashCode ^
+        gapSize.hashCode;
+  }
 }

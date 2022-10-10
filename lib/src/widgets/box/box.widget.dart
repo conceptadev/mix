@@ -61,9 +61,6 @@ class BoxMixedWidget extends MixedWidget {
 
     final sharedProps = mixContext.sharedProps;
 
-    final parentDecorators = mixContext.decorators.parents;
-    final childDecorators = mixContext.decorators.children;
-
     if (!sharedProps.visible) {
       return const Empty();
     }
@@ -71,17 +68,11 @@ class BoxMixedWidget extends MixedWidget {
     if (current != null) {
       current = MixContextNotifier(
         mixContext,
-        child: current,
-      );
-
-      // Wrap child decorators
-      if (childDecorators.isNotEmpty) {
-        current = DecoratorWrapper(
+        child: ChildDecoratorWrapper(
           mixContext,
           child: current,
-          decorators: childDecorators,
-        );
-      }
+        ),
+      );
     }
 
     if (sharedProps.animated) {
@@ -115,13 +106,11 @@ class BoxMixedWidget extends MixedWidget {
     }
 
     // Wrap parent decorators
-    if (parentDecorators.isNotEmpty) {
-      current = DecoratorWrapper(
-        mixContext,
-        child: current,
-        decorators: parentDecorators,
-      );
-    }
+
+    current = ParentDecoratorWrapper(
+      mixContext,
+      child: current,
+    );
 
     return current;
   }

@@ -11,12 +11,12 @@ abstract class MixableWidget extends StatelessWidget {
     Key? key,
     bool? inherit,
     List<Variant>? variants,
-  })  : _mix = mix ?? Mix.constant,
+  })  : _mix = mix,
         _variants = variants,
         _inherit = inherit ?? true,
         super(key: key);
 
-  final Mix _mix;
+  final Mix? _mix;
 
   final List<Variant>? _variants;
   final bool _inherit;
@@ -24,7 +24,8 @@ abstract class MixableWidget extends StatelessWidget {
   MixContext createMixContext(BuildContext context) {
     return MixContext.create(
       context: context,
-      mix: _mix.withMaybeVariants(_variants),
+      mix: _mix ?? Mix(),
+      variants: _variants ?? [],
       inherit: _inherit,
     );
   }

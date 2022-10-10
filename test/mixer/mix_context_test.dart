@@ -62,13 +62,7 @@ void main() {
           mix: pressableMix,
         );
 
-        expect(mixContext.sourceMix, pressableMix);
-
-        expect(
-          mixContext.originalMix,
-          matchContext.originalMix,
-          reason: 'originalMix',
-        );
+        expect(mixContext.sourceMix, matchContext.sourceMix);
 
         expect(
           mixContext.sourceMix,

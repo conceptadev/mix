@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:mix/src/attributes/exports.dart';
 import 'package:mix/src/dto/border.dto.dart';
 import 'package:mix/src/dto/border_radius.dto.dart';
 import 'package:mix/src/dto/box_shadow.dto.dart';
 import 'package:mix/src/dto/edge_insets.dto.dart';
 import 'package:mix/src/helpers/extensions.dart';
-import 'package:mix/src/widgets/box/box.attributes.dart';
 
 ///
 /// ## Widget:

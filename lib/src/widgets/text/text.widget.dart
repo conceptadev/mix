@@ -56,8 +56,7 @@ class TextMixerWidget extends MixedWidget {
   Widget build(BuildContext context) {
     final props = mixContext.textProps;
 
-    final directives =
-        mixContext.directives.whereType<TextDirectiveAttribute>();
+    final directives = mixContext.directivesWhereType<TextDirectiveAttribute>();
 
     final sharedProps = mixContext.sharedProps;
     if (!sharedProps.visible) {

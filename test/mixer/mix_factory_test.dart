@@ -58,9 +58,9 @@ const nextedMixLength = 2;
 void main() {
   group("Mix Factory", () {
     test('Creates a Mix from positional Attributes', () async {
-      final firstAttr = firstMix.attributes;
-      final secondAttr = secondMix.attributes;
-      final nestedAttr = nestedMix.attributes;
+      final firstAttr = firstMix;
+      final secondAttr = secondMix;
+      final nestedAttr = nestedMix;
 
       expect(firstAttr.length, firstMixLength);
       expect(secondAttr.length, secondMixLength);
@@ -68,12 +68,12 @@ void main() {
     });
 
     test('Creates a Mix from Attributes List', () async {
-      final mixFromList = Mix.fromList(firstMix.attributes);
+      final mixFromList = Mix.fromList(firstMix.source.toList());
       final mixFromMaybeList =
-          Mix.fromMaybeList([null, ...firstMix.attributes]);
+          Mix.fromMaybeList([null, ...firstMix.source.toList()]);
 
-      expect(mixFromList.attributes.length, firstMixLength);
-      expect(mixFromMaybeList.attributes.length, firstMixLength);
+      expect(mixFromList.length, firstMixLength);
+      expect(mixFromMaybeList.length, firstMixLength);
     });
 
     test('Adds Attributes to Mix', () async {
@@ -83,15 +83,15 @@ void main() {
         bgColor(Colors.green),
       ]).attributes;
 
-      expect(firstMix.attributes.length, firstMixLength);
-      expect(firstWithOneMore.length, firstMixLength + 1);
-      expect(firstWithTwoMoreAsList.length, firstMixLength + 2);
+      expect(firstMix.source.length, firstMixLength);
+      expect(firstWithOneMore.source.length, firstMixLength + 1);
+      expect(firstWithTwoMoreAsList.source.length, firstMixLength + 2);
     });
 
     test('Combines Mixes', () async {
-      final combined = Mix.combine(firstMix, secondMix).attributes;
-      final combinedAsList = Mix.combineAll([firstMix, secondMix]).attributes;
-      final combineAsMix = firstMix.apply(secondMix).attributes;
+      final combined = Mix.combine(firstMix, secondMix).source;
+      final combinedAsList = Mix.combineAll([firstMix, secondMix]).source;
+      final combineAsMix = firstMix.apply(secondMix).source;
       final combinedMaybeMix = firstMix.applyMaybe(secondMix);
       final combinedMaybeMixNull = firstMix.applyMaybe(null);
 
@@ -108,30 +108,28 @@ void main() {
         forthCopy,
         fifthCopy,
         sixthCopy,
-      ).attributes;
+      ).source;
 
       expect(combined.length, firstMixLength + secondMixLength);
       expect(combinedAsList.length, firstMixLength + secondMixLength);
       expect(combineAsMix.length, firstMixLength + secondMixLength);
       expect(combinedWithAllParams.length, firstMixLength * 6);
       expect(
-        combinedMaybeMix.attributes.length,
+        combinedMaybeMix.length,
         firstMixLength + secondMixLength,
       );
-      expect(combinedMaybeMixNull.attributes.length, firstMixLength);
+      expect(combinedMaybeMixNull.length, firstMixLength);
     });
 
     test('Equality of Mix', () async {
-      final copyFirstMix = Mix.fromList(firstMix.attributes);
-      final copySecondMix = Mix.fromList(secondMix.attributes);
+      final copyFirstMix = Mix.fromList(firstMix.source);
+      final copySecondMix = Mix.fromList(secondMix.source);
       final combinedMixFirst = Mix.combine(firstMix, secondMix);
       final combinedMixSecond = firstMix.apply(secondMix);
 
       expect(copyFirstMix, firstMix);
       expect(copySecondMix, secondMix);
       expect(combinedMixFirst, combinedMixSecond);
-      // Check hashCode
-      expect(copyFirstMix.hashCode, firstMix.hashCode);
     });
 
     test('Chooses Mixes based on conditional', () async {

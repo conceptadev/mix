@@ -1,13 +1,13 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mix/src/attributes/attribute.dart';
 import 'package:mix/src/attributes/nested_attribute.dart';
 import 'package:mix/src/attributes/shared/shared.props.dart';
-import 'package:mix/src/decorators/decorator_attributes.dart';
 import 'package:mix/src/directives/directive.dart';
+import 'package:mix/src/mixer/mix_attributes.dart';
 import 'package:mix/src/mixer/mix_context_notifier.dart';
 import 'package:mix/src/mixer/mix_factory.dart';
 import 'package:mix/src/variants/variant_attribute.dart';
+import 'package:mix/src/variants/variants.dart';
 import 'package:mix/src/widgets/box/box.props.dart';
 import 'package:mix/src/widgets/flex/flex.props.dart';
 import 'package:mix/src/widgets/icon/icon.props.dart';
@@ -18,40 +18,28 @@ import 'package:mix/src/widgets/zbox/zbox.props.dart';
 class MixContext {
   final BuildContext context;
   final Mix sourceMix;
-  final Mix originalMix;
-
-  final MixInheritedAttributes attributes;
-  final MixDecoratorAttributes decorators;
-  final List<VariantAttribute> variants;
-  final List<DirectiveAttribute> directives;
+  final MixAttributes attributes;
 
   MixContext._({
     required this.context,
     required this.sourceMix,
-    required this.originalMix,
-    required this.directives,
-    required this.variants,
-    required this.decorators,
     required this.attributes,
   });
 
   factory MixContext.create({
     required BuildContext context,
     required Mix mix,
+    List<Variant> variants = const [],
     bool inherit = false,
   }) {
-    MixContext? inheritedMixContext;
+    Mix combinedMix;
 
     if (inherit) {
       /// Get ancestor context
-      inheritedMixContext = MixContextNotifier.of(context);
-    }
+      final inheritedMixContext = MixContextNotifier.of(context);
 
-    Mix combinedMix;
-    final inheritedMix = inheritedMixContext?.sourceMix;
-
-    if (inheritedMix != null) {
-      combinedMix = inheritedMix.apply(mix);
+      final inheritedMix = inheritedMixContext?.sourceMix;
+      combinedMix = inheritedMix?.apply(mix) ?? mix;
     } else {
       combinedMix = mix;
     }
@@ -59,47 +47,27 @@ class MixContext {
     return _build(
       context: context,
       mix: combinedMix,
+      variants: variants,
     );
   }
 
   static MixContext _build<T extends Attribute>({
     required BuildContext context,
     required Mix<T> mix,
+    required List<Variant> variants,
   }) {
-    final _attributes = _expandAttributes(context, mix);
+    final _selectedAttributes = _selectAttributes(
+      context,
+      mix.attributes.source,
+      variants,
+    );
 
-    final source = Mix.fromList(_attributes);
-    final directives = <DirectiveAttribute>[];
-    final variants = <VariantAttribute>[];
-    final decorators = <DecoratorAttribute>[];
-    final attributes = <InheritedAttribute>[];
-
-    for (final attribute in _attributes) {
-      if (attribute is InheritedAttribute) {
-        attributes.add(attribute);
-      }
-
-      if (attribute is VariantAttribute) {
-        variants.add(attribute);
-      }
-
-      if (attribute is DirectiveAttribute) {
-        directives.add(attribute);
-      }
-
-      if (attribute is DecoratorAttribute) {
-        decorators.add(attribute);
-      }
-    }
+    final source = Mix.fromList(_selectedAttributes);
 
     return MixContext._(
       context: context,
       sourceMix: source,
-      originalMix: mix,
-      directives: directives,
-      variants: variants,
-      decorators: MixDecoratorAttributes.fromList(decorators),
-      attributes: MixInheritedAttributes.fromList(attributes),
+      attributes: MixAttributes.fromList(_selectedAttributes),
     );
   }
 
@@ -107,30 +75,39 @@ class MixContext {
     return MixContext._(
       context: context,
       sourceMix: sourceMix,
-      originalMix: originalMix,
-      directives: directives,
-      variants: variants,
-      decorators: decorators,
       attributes: attributes,
     );
   }
 
+  Iterable<T> directivesWhereType<T extends DirectiveAttribute>() {
+    return attributes.directives.whereType<T>();
+  }
+
+  T? attributesWhereType<T extends InheritedAttribute>() {
+    return attributes.attributes.fromType<T>();
+  }
+
   /// Expands `VariantAttribute` and `NestedAttribute` based on context
-  static List<T> _expandAttributes<T extends Attribute>(
+  static List<Attribute> _selectAttributes(
     BuildContext context,
-    Mix<T> mix,
+    List<Attribute> attributes,
+    List<Variant> variants,
   ) {
-    List<T> spreaded = <T>[];
+    List<Attribute> spreaded = [];
 
     bool hasNested = false;
 
-    for (final attribute in mix.attributes) {
-      if (attribute is VariantAttribute<T>) {
-        final bool willApply = mix.variantToApply.contains(attribute.variant) ||
+    for (final attribute in attributes) {
+      if (attribute is VariantAttribute) {
+        final bool shouldApply = variants.contains(attribute.variant) ||
             attribute.shouldApply(context);
+
         // If it's inverse (from `not(variant)`), only apply if [willApply] is
         // false. Otherwise, apply only when [willApply]
-        if (attribute.variant.inverse ? !willApply : willApply) {
+        final willApply =
+            attribute.variant.inverse ? !shouldApply : shouldApply;
+
+        if (willApply) {
           // If its selected, add it to the list
           spreaded.addAll(attribute.attributes);
           hasNested = true;
@@ -138,7 +115,7 @@ class MixContext {
           // If not selected, add it to the list for future use
           spreaded.add(attribute);
         }
-      } else if (attribute is NestedAttribute<T>) {
+      } else if (attribute is NestedAttribute) {
         spreaded.addAll(attribute.attributes);
         hasNested = true;
       } else {
@@ -147,13 +124,7 @@ class MixContext {
     }
 
     if (hasNested) {
-      spreaded = _expandAttributes(
-        context,
-        Mix.fromList(
-          spreaded,
-          variantToApply: mix.variantToApply,
-        ),
-      );
+      spreaded = _selectAttributes(context, spreaded, variants);
     }
 
     return spreaded;
@@ -163,7 +134,7 @@ class MixContext {
   ///
   /// Obtain with `mixContext.fromType<MyInheritedAttribute>()`.
   T? fromType<T extends InheritedAttribute>() {
-    return attributes.fromType<T>();
+    return attributesWhereType<T>();
   }
 
   @override
@@ -173,22 +144,12 @@ class MixContext {
     return other is MixContext &&
         other.context == context &&
         other.sourceMix == sourceMix &&
-        other.originalMix == originalMix &&
-        listEquals(other.variants, variants) &&
-        listEquals(other.directives, directives) &&
-        other.decorators == decorators &&
         other.attributes == attributes;
   }
 
   @override
   int get hashCode {
-    return context.hashCode ^
-        sourceMix.hashCode ^
-        originalMix.hashCode ^
-        variants.hashCode ^
-        directives.hashCode ^
-        decorators.hashCode ^
-        attributes.hashCode;
+    return context.hashCode ^ sourceMix.hashCode ^ attributes.hashCode;
   }
 }
 

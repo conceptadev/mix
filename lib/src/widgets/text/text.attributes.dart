@@ -37,6 +37,7 @@ class TextAttributes extends InheritedAttribute {
     this.textHeightBehavior,
   });
 
+  @override
   TextAttributes merge(TextAttributes? other) {
     if (other == null) return this;
 

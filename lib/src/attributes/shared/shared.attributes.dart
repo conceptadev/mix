@@ -33,4 +33,25 @@ class SharedAttributes extends InheritedAttribute {
       textDirection: other.textDirection ?? textDirection,
     );
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is SharedAttributes &&
+        other.visible == visible &&
+        other.animated == animated &&
+        other.animationDuration == animationDuration &&
+        other.animationCurve == animationCurve &&
+        other.textDirection == textDirection;
+  }
+
+  @override
+  int get hashCode {
+    return visible.hashCode ^
+        animated.hashCode ^
+        animationDuration.hashCode ^
+        animationCurve.hashCode ^
+        textDirection.hashCode;
+  }
 }

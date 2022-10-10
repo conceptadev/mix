@@ -1,19 +1,16 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
+import 'package:mix/src/mixer/mix_attributes.dart';
+
+const kVariantDeprecationNotice =
+    'Deprecated pass variants directly to the Mixable Widget Contructor';
 
 /// Defines a mix
 /// {@category Mix Object}
 class Mix<T extends Attribute> {
-  final List<T> attributes;
+  final MixAttributes attributes;
 
-  /// These are the `Variants` that will be passed to `MixContext` in order to be applied for this mix
-  final List<Variant<T>> variantToApply;
-
-  const Mix._(
-    this.attributes, {
-    this.variantToApply = const [],
-  });
+  const Mix._(this.attributes);
 
   /// Instantiate a mix with _Attribute_ parameters
   factory Mix([
@@ -44,14 +41,13 @@ class Mix<T extends Attribute> {
     if (p11 != null) params.add(p11);
     if (p12 != null) params.add(p12);
 
-    return Mix._(params);
+    return Mix.fromList(params);
   }
 
   /// Instantiate a mix from a _List_ of _Attribute_ instances (cannot be null)
-  const Mix.fromList(
-    this.attributes, {
-    this.variantToApply = const [],
-  });
+  factory Mix.fromList(List<T> attributes) {
+    return Mix._(MixAttributes.fromList(attributes));
+  }
 
   /// Instantiate a mix from a _List_ of _Attribute_ instances
   /// (_attributes_ argument can be null)
@@ -61,46 +57,42 @@ class Mix<T extends Attribute> {
   }
 
   Mix<T> clone() {
-    return copyWith();
+    return Mix._(attributes);
   }
 
-  get isEmpty {
-    return attributes.isEmpty && variantToApply.isEmpty;
+  List<Attribute> get source {
+    return attributes.source;
   }
 
   Mix<T> copyWith({
-    List<T> attributes = const [],
-    List<Variant<T>> variantToApply = const [],
+    MixAttributes? attributes,
   }) {
-    return Mix._(
-      [...this.attributes, ...attributes],
-      variantToApply: [...this.variantToApply, ...variantToApply],
-    );
+    return Mix._(this.attributes.merge(attributes));
   }
+
+  int get length => attributes.source.length;
 
   /// Returns a new mix instance from this instance with the
   /// _Variant_ instance added
+  @Deprecated(kVariantDeprecationNotice)
   Mix<T> withVariant(Variant<T> variant) {
     return copyWith(
       attributes: attributes,
-      variantToApply: [variant],
     );
   }
 
-  /// Same as _withVariant_, but the argument is nullable
+  @Deprecated(kVariantDeprecationNotice)
   Mix<T> withMaybeVariant(Variant<T>? variant) {
     if (variant == null) return this;
     return withVariant(variant);
   }
 
-  /// Same as _withVariant_, but can accept a _List_ of _Variant_ instances
+  @Deprecated(kVariantDeprecationNotice)
   Mix<T> withVariants(List<Variant<T>> variants) {
-    return copyWith(
-      attributes: attributes,
-      variantToApply: variants,
-    );
+    return copyWith(attributes: attributes);
   }
 
+  @Deprecated(kVariantDeprecationNotice)
   Mix<T> withMaybeVariants(List<Variant<T>>? variants) {
     if (variants == null || variants.isEmpty) return this;
     return withVariants(variants);
@@ -108,14 +100,12 @@ class Mix<T extends Attribute> {
 
   /// Same as _combine_, but accepts a _List_ of _Mix_ instances
   static Mix<T> combineAll<T extends Attribute>(List<Mix<T>> mixes) {
-    final attributes = mixes.expand((element) => element.attributes).toList();
-    final variantToApply =
-        mixes.expand((element) => element.variantToApply).toList();
+    MixAttributes attributes = const MixAttributes.empty();
+    for (final mix in mixes) {
+      attributes = attributes.merge(mix.attributes);
+    }
 
-    return Mix._(
-      attributes,
-      variantToApply: variantToApply,
-    );
+    return Mix._(attributes);
   }
 
   /// Merges many mixes into one
@@ -128,39 +118,33 @@ class Mix<T extends Attribute> {
     Mix<T>? mix5,
     Mix<T>? mix6,
   ]) {
-    final attributes = <T>[];
-    final variants = <Variant<T>>[];
+    MixAttributes attributes = const MixAttributes.empty();
+
     if (mix1 != null) {
-      attributes.addAll(mix1.attributes);
-      variants.addAll(mix1.variantToApply);
+      attributes = attributes.merge(mix1.attributes);
     }
 
     if (mix2 != null) {
-      attributes.addAll(mix2.attributes);
-      variants.addAll(mix2.variantToApply);
+      attributes = attributes.merge(mix2.attributes);
     }
 
     if (mix3 != null) {
-      attributes.addAll(mix3.attributes);
-      variants.addAll(mix3.variantToApply);
+      attributes = attributes.merge(mix3.attributes);
     }
 
     if (mix4 != null) {
-      attributes.addAll(mix4.attributes);
-      variants.addAll(mix4.variantToApply);
+      attributes = attributes.merge(mix4.attributes);
     }
 
     if (mix5 != null) {
-      attributes.addAll(mix5.attributes);
-      variants.addAll(mix5.variantToApply);
+      attributes = attributes.merge(mix5.attributes);
     }
 
     if (mix6 != null) {
-      attributes.addAll(mix6.attributes);
-      variants.addAll(mix6.variantToApply);
+      attributes = attributes.merge(mix6.attributes);
     }
 
-    return Mix._(attributes, variantToApply: variants);
+    return Mix._(attributes);
   }
 
   /// Chooses mix based on condition
@@ -176,6 +160,7 @@ class Mix<T extends Attribute> {
     }
   }
 
+  @Deprecated(kVariantDeprecationNotice)
   static Mix<T> variantSwitcher<T extends Attribute>(
     Mix<T> mix,
     Map<bool, Variant<T>> cases,
@@ -196,19 +181,17 @@ class Mix<T extends Attribute> {
 
   /// Used for const constructor widgets
   /// @nodoc
-  static const Mix constant = Mix._([]);
+  static const Mix constant = Mix._(MixAttributes.empty());
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is Mix<T> &&
-        listEquals(other.attributes, attributes) &&
-        listEquals(other.variantToApply, variantToApply);
+    return other is Mix<T> && other.attributes == attributes;
   }
 
   @override
-  int get hashCode => attributes.hashCode ^ variantToApply.hashCode;
+  int get hashCode => attributes.hashCode;
 }
 
 /// @nodoc
@@ -220,7 +203,7 @@ extension MixExtension<T extends Attribute> on Mix<T> {
 
   /// Adds a list of attributes to a Mix
   Mix<T> addAttributes(List<T> attributes) {
-    return copyWith(attributes: attributes);
+    return copyWith(attributes: MixAttributes.fromList(attributes));
   }
 
   /// Combines argument mix with this mix.

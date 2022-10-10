@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mix/src/attributes/attribute.dart';
 import 'package:mix/src/variants/variants.dart';
@@ -20,4 +21,18 @@ class VariantAttribute<T extends Attribute> extends Attribute {
   @override
   String toString() =>
       'VariantAttribute(variant: $variant, attributes: $attributes)';
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is VariantAttribute<T> &&
+        other.variant == variant &&
+        listEquals(other.attributes, attributes) &&
+        other._shouldApply == _shouldApply;
+  }
+
+  @override
+  int get hashCode =>
+      variant.hashCode ^ attributes.hashCode ^ _shouldApply.hashCode;
 }
