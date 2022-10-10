@@ -1,6 +1,5 @@
 import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
-import 'package:mix/src/widgets/zbox/zbox.props.dart';
 
 /// ## Attributes:
 /// - [ZBoxAttributes](ZBoxAttributes-class.html)
@@ -29,7 +28,7 @@ class ZBox extends MixableWidget {
   @override
   Widget build(BuildContext context) {
     return ZBoxMixedWidget(
-      getMixContext(context),
+      createMixContext(context),
       children: children,
     );
   }
@@ -47,7 +46,7 @@ class ZBoxMixedWidget extends MixedWidget {
 
   @override
   Widget build(BuildContext context) {
-    final props = ZBoxProps.fromContext(mixContext);
+    final props = mixContext.zBoxProps;
     return BoxMixedWidget(
       mixContext,
       child: Stack(

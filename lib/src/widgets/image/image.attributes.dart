@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mix/src/attributes/attribute.dart';
 
-class ImageAttributes extends Attribute {
+class ImageAttributes extends InheritedAttribute {
   final Color? color;
   final double? scale;
 
@@ -24,6 +24,7 @@ class ImageAttributes extends Attribute {
     this.repeat,
   });
 
+  @override
   ImageAttributes merge(ImageAttributes? other) {
     if (other == null) return this;
 

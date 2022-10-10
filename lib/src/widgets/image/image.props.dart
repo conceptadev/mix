@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mix/src/mixer/mix_context.dart';
 
 import '../../theme/refs/color_token.dart';
 import 'image.attributes.dart';
@@ -27,13 +28,12 @@ class ImageProps {
     required this.repeat,
   });
 
-  factory ImageProps.fromContext(
-    BuildContext context,
-    ImageAttributes? attributes,
-  ) {
-    final image = attributes;
+  factory ImageProps.fromContext(MixContext mixContext) {
+    final attributes = mixContext.fromType<ImageAttributes>();
 
-    var color = image?.color;
+    var color = attributes?.color;
+
+    final context = mixContext.context;
 
     if (color is ColorToken) {
       color = color.resolve(context);
@@ -41,13 +41,13 @@ class ImageProps {
 
     return ImageProps(
       color: color,
-      scale: image?.scale,
-      width: image?.width,
-      height: image?.height,
-      colorBlendMode: image?.colorBlendMode,
-      fit: image?.fit,
-      alignment: image?.alignment ?? Alignment.center,
-      repeat: image?.repeat ?? ImageRepeat.noRepeat,
+      scale: attributes?.scale,
+      width: attributes?.width,
+      height: attributes?.height,
+      colorBlendMode: attributes?.colorBlendMode,
+      fit: attributes?.fit,
+      alignment: attributes?.alignment ?? Alignment.center,
+      repeat: attributes?.repeat ?? ImageRepeat.noRepeat,
     );
   }
 

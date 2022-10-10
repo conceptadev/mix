@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:mix/mix.dart';
+import 'package:mix/src/mixer/mix_context.dart';
+import 'package:mix/src/theme/refs/color_token.dart';
+import 'package:mix/src/theme/refs/text_style_token.dart';
+import 'package:mix/src/widgets/text/text.attributes.dart';
 
 class TextProps {
   final bool softWrap;

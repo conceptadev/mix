@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
-import 'package:mix/src/attributes/shared/shared.props.dart';
-import 'package:mix/src/widgets/icon/icon.props.dart';
 
 import '../empty.widget.dart';
 
@@ -38,7 +36,7 @@ class IconMix extends MixableWidget {
     return Semantics(
       label: semanticLabel,
       child: IconMixerWidget(
-        getMixContext(context),
+        createMixContext(context),
         icon: icon,
       ),
     );
@@ -57,9 +55,9 @@ class IconMixerWidget extends MixedWidget {
 
   @override
   Widget build(BuildContext context) {
-    final props = IconProps.fromContext(mixContext);
+    final props = mixContext.iconProps;
 
-    final sharedProps = SharedProps.fromContext(mixContext);
+    final sharedProps = mixContext.sharedProps;
 
     if (!sharedProps.visible) {
       return const Empty();

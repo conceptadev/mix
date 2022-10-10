@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mix/src/attributes/shared/shared.props.dart';
-import 'package:mix/src/decorators/decorator.dart';
+import 'package:mix/src/decorators/decorator_attributes.dart';
 import 'package:mix/src/mixer/mix_context.dart';
 
 /// ## Widget
@@ -9,7 +8,8 @@ import 'package:mix/src/mixer/mix_context.dart';
 /// - [AspectRatioDecoratorUtility](AspectRatioDecoratorUtility-class.html)
 ///
 /// {@category Decorators}
-class AspectRatioDecorator extends ParentDecorator<AspectRatioDecorator> {
+class AspectRatioDecorator
+    extends ParentDecoratorAttribute<AspectRatioDecorator> {
   final double aspectRatio;
   const AspectRatioDecorator({required this.aspectRatio})
       : super(const Key('AspectRatioDecorator'));
@@ -23,7 +23,7 @@ class AspectRatioDecorator extends ParentDecorator<AspectRatioDecorator> {
 
   @override
   Widget render(MixContext mixContext, Widget child) {
-    final sharedProps = SharedProps.fromContext(mixContext);
+    final sharedProps = mixContext.sharedProps;
 
     if (sharedProps.animated) {
       return TweenAnimationBuilder<double>(

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mix/src/decorators/decorator.dart';
+import 'package:mix/src/decorators/decorator_attributes.dart';
 import 'package:mix/src/mixer/mix_context.dart';
 
 /// ## Widget
@@ -8,7 +8,7 @@ import 'package:mix/src/mixer/mix_context.dart';
 /// - [RotateDecoratorUtility](RotateDecoratorUtility-class.html)
 ///
 /// {@category Decorators}
-class RotateDecorator extends ParentDecorator<RotateDecorator> {
+class RotateDecorator extends ParentDecoratorAttribute<RotateDecorator> {
   final int quarterTurns;
   const RotateDecorator({required this.quarterTurns})
       : super(const Key('RotateDecorator'));

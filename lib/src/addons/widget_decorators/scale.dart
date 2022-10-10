@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mix/src/attributes/shared/shared.props.dart';
-import 'package:mix/src/decorators/decorator.dart';
+import 'package:mix/src/decorators/decorator_attributes.dart';
 import 'package:mix/src/mixer/mix_context.dart';
 
 /// ## Widget
@@ -9,7 +8,7 @@ import 'package:mix/src/mixer/mix_context.dart';
 /// - [ScaleDecoratorUtility](ScaleDecoratorUtility-class.html)
 ///
 /// {@category Decorators}
-class ScaleDecorator extends ParentDecorator<ScaleDecorator> {
+class ScaleDecorator extends ParentDecoratorAttribute<ScaleDecorator> {
   final double scale;
   const ScaleDecorator(this.scale) : super(const Key('ScaleDecorator'));
 
@@ -20,7 +19,7 @@ class ScaleDecorator extends ParentDecorator<ScaleDecorator> {
 
   @override
   Widget render(MixContext mixContext, Widget? child) {
-    final shared = SharedProps.fromContext(mixContext);
+    final shared = mixContext.sharedProps;
     if (shared.animated) {
       return TweenAnimationBuilder<double>(
         tween: Tween<double>(begin: 1, end: scale),

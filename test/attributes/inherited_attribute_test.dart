@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart' hide border, onEnabled, icon, iconColor;
-import 'package:mix/src/attributes/shared/shared.props.dart';
 
 import '../testing_utils.dart';
 
@@ -126,7 +125,7 @@ class CustomWidget extends StatelessWidget {
       builder: (context, mixContext) {
         final attribute = mixContext.fromType<InheritedIconAttribute>()!;
 
-        final sharedProps = SharedProps.fromContext(mixContext);
+        final sharedProps = mixContext.sharedProps;
 
         return Semantics(
           label: semanticLabel,

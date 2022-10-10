@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mix/src/attributes/shared/shared.props.dart';
-import 'package:mix/src/decorators/decorator.dart';
+import 'package:mix/src/decorators/decorator_attributes.dart';
 import 'package:mix/src/mixer/mix_context.dart';
 
 /// ## Widget
@@ -9,7 +9,7 @@ import 'package:mix/src/mixer/mix_context.dart';
 /// - [OpacityDecoratorUtility](OpacityDecoratorUtility-class.html)
 ///
 /// {@category Decorators}
-class OpacityDecorator extends ParentDecorator<OpacityDecorator> {
+class OpacityDecorator extends ParentDecoratorAttribute<OpacityDecorator> {
   final double opacity;
   const OpacityDecorator({
     required this.opacity,

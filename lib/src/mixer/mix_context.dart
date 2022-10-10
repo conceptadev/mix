@@ -1,46 +1,29 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:mix/mix.dart';
+import 'package:mix/src/attributes/attribute.dart';
 import 'package:mix/src/attributes/nested_attribute.dart';
-import 'package:mix/src/decorators/decorator.dart';
+import 'package:mix/src/attributes/shared/shared.props.dart';
+import 'package:mix/src/decorators/decorator_attributes.dart';
 import 'package:mix/src/directives/directive.dart';
 import 'package:mix/src/mixer/mix_context_notifier.dart';
+import 'package:mix/src/mixer/mix_factory.dart';
 import 'package:mix/src/variants/variant_attribute.dart';
-
-typedef DecoratorMap = Map<DecoratorType, List<DecoratorAttribute>>;
-
-extension DecoratorMapExtension on DecoratorMap {
-  List<DecoratorAttribute> get parents {
-    return _getOrDefault(DecoratorType.parent);
-  }
-
-  List<DecoratorAttribute> get children {
-    return _getOrDefault(DecoratorType.child);
-  }
-
-  List<DecoratorAttribute> _getOrDefault(DecoratorType type) {
-    return this[type] ?? [];
-  }
-}
+import 'package:mix/src/widgets/box/box.props.dart';
+import 'package:mix/src/widgets/flex/flex.props.dart';
+import 'package:mix/src/widgets/icon/icon.props.dart';
+import 'package:mix/src/widgets/image/image.props.dart';
+import 'package:mix/src/widgets/text/text.props.dart';
+import 'package:mix/src/widgets/zbox/zbox.props.dart';
 
 class MixContext {
   final BuildContext context;
-  final InheritedAttributes attributes;
   final Mix sourceMix;
   final Mix originalMix;
 
+  final MixInheritedAttributes attributes;
+  final MixDecoratorAttributes decorators;
   final List<VariantAttribute> variants;
   final List<DirectiveAttribute> directives;
-  final DecoratorMap decorators;
-
-  /// Used to obtain a [InheritedAttribute] from [InheritedAttributes].
-  ///
-  /// Obtain with `mixContext.fromType<MyInheritedAttribute>()`.
-  T? fromType<T extends InheritedAttribute>() {
-    final attribute = attributes.fromType<T>();
-
-    return attribute;
-  }
 
   MixContext._({
     required this.context,
@@ -64,13 +47,10 @@ class MixContext {
       inheritedMixContext = MixContextNotifier.of(context);
     }
 
+    Mix combinedMix;
     final inheritedMix = inheritedMixContext?.sourceMix;
 
-    Mix combinedMix;
-
-    if (inheritedMixContext != null && mix.isEmpty) {
-      return inheritedMixContext;
-    } else if (inheritedMix != null) {
+    if (inheritedMix != null) {
       combinedMix = inheritedMix.apply(mix);
     } else {
       combinedMix = mix;
@@ -82,7 +62,6 @@ class MixContext {
     );
   }
 
-  // ignore: long-method
   static MixContext _build<T extends Attribute>({
     required BuildContext context,
     required Mix<T> mix,
@@ -93,20 +72,11 @@ class MixContext {
     final directives = <DirectiveAttribute>[];
     final variants = <VariantAttribute>[];
     final decorators = <DecoratorAttribute>[];
-
-    final Map<Type, InheritedAttribute> inheritedAttributesMap = {};
+    final attributes = <InheritedAttribute>[];
 
     for (final attribute in _attributes) {
       if (attribute is InheritedAttribute) {
-        var inheritedAttribute = inheritedAttributesMap[attribute.runtimeType];
-
-        if (inheritedAttribute == null) {
-          inheritedAttribute = attribute;
-        } else {
-          inheritedAttribute = inheritedAttribute.merge(attribute);
-        }
-
-        inheritedAttributesMap[attribute.runtimeType] = inheritedAttribute;
+        attributes.add(attribute);
       }
 
       if (attribute is VariantAttribute) {
@@ -128,8 +98,20 @@ class MixContext {
       originalMix: mix,
       directives: directives,
       variants: variants,
-      decorators: _buildDecoratorMap(decorators),
-      attributes: InheritedAttributes(inheritedAttributesMap),
+      decorators: MixDecoratorAttributes.fromList(decorators),
+      attributes: MixInheritedAttributes.fromList(attributes),
+    );
+  }
+
+  MixContext merge(MixContext other) {
+    return MixContext._(
+      context: context,
+      sourceMix: sourceMix,
+      originalMix: originalMix,
+      directives: directives,
+      variants: variants,
+      decorators: decorators,
+      attributes: attributes,
     );
   }
 
@@ -177,28 +159,11 @@ class MixContext {
     return spreaded;
   }
 
-  static DecoratorMap _buildDecoratorMap(List<DecoratorAttribute> decorators) {
-    final DecoratorMap decoratorMap = {};
-    final mergedDecorators = <Type, DecoratorAttribute>{};
-
-    for (final attribute in decorators) {
-      final existing = mergedDecorators[attribute.runtimeType];
-      if (existing != null) {
-        mergedDecorators[attribute.runtimeType] = existing.merge(attribute);
-      } else {
-        mergedDecorators[attribute.runtimeType] = attribute;
-      }
-    }
-
-    mergedDecorators.forEach((_, decorator) {
-      decoratorMap[decorator.type] ??= [];
-      // Add to decorator map and sort to guarantee order consistency
-      decoratorMap[decorator.type]!
-        ..add(decorator)
-        ..sort((a, b) => a.key.hashCode - b.key.hashCode);
-    });
-
-    return decoratorMap;
+  /// Used to obtain a [InheritedAttribute] from [MixInheritedAttributes].
+  ///
+  /// Obtain with `mixContext.fromType<MyInheritedAttribute>()`.
+  T? fromType<T extends InheritedAttribute>() {
+    return attributes.fromType<T>();
   }
 
   @override
@@ -225,4 +190,16 @@ class MixContext {
         decorators.hashCode ^
         attributes.hashCode;
   }
+}
+
+extension MixContextExtensions on MixContext {
+  SharedProps get sharedProps => SharedProps.fromContext(this);
+  BoxProps get boxProps => BoxProps.fromContext(this);
+  // Cache this value
+  FlexProps get flexProps => FlexProps.fromContext(this);
+
+  ZBoxProps get zBoxProps => ZBoxProps.fromContext(this);
+  IconProps get iconProps => IconProps.fromContext(this);
+  TextProps get textProps => TextProps.fromContext(this);
+  ImageProps get imageProps => ImageProps.fromContext(this);
 }

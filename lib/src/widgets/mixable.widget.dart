@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:mix/src/decorators/decorator.dart';
 
 import '../../mix.dart';
 
@@ -22,7 +21,7 @@ abstract class MixableWidget extends StatelessWidget {
   final List<Variant>? _variants;
   final bool _inherit;
 
-  MixContext getMixContext(BuildContext context) {
+  MixContext createMixContext(BuildContext context) {
     return MixContext.create(
       context: context,
       mix: _mix.withMaybeVariants(_variants),
@@ -53,20 +52,6 @@ abstract class MixableWidget extends StatelessWidget {
   }
 }
 
-abstract class RemixableWidget extends MixableWidget {
-  /// Constructor
-  const RemixableWidget(
-    Mix? mix, {
-    Key? key,
-  }) : super(mix, key: key);
-
-  abstract final Mix baseMix;
-
-  Mix get mix {
-    return baseMix.apply(_mix);
-  }
-}
-
 /// Mixer Widget
 abstract class MixedWidget extends StatelessWidget {
   /// Constructor
@@ -74,12 +59,6 @@ abstract class MixedWidget extends StatelessWidget {
     this.mixContext, {
     Key? key,
   }) : super(key: key);
-
-  DecoratorMap get decorators => mixContext.decorators;
-  List<DecoratorAttribute> get parentDecorators =>
-      mixContext.decorators.parents;
-  List<DecoratorAttribute> get childDecorators =>
-      mixContext.decorators.children;
 
   final MixContext mixContext;
 

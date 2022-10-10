@@ -19,9 +19,7 @@ class SharedProps {
     this.textDirection,
   });
 
-  factory SharedProps.fromContext(
-    MixContext mixContext,
-  ) {
+  factory SharedProps.fromContext(MixContext mixContext) {
     final shared = mixContext.fromType<SharedAttributes>();
 
     return SharedProps(

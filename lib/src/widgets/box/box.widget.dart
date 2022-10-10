@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
-import 'package:mix/src/attributes/shared/shared.props.dart';
 import 'package:mix/src/mixer/mix_context_notifier.dart';
-import 'package:mix/src/widgets/box/box.props.dart';
 
 import '../../decorators/decorator_wrapper.widget.dart';
 import '../empty.widget.dart';
@@ -35,8 +33,10 @@ class Box extends MixableWidget {
 
   @override
   Widget build(BuildContext context) {
+    final mixContext = createMixContext(context);
+
     return BoxMixedWidget(
-      getMixContext(context),
+      mixContext,
       child: child,
     );
   }
@@ -57,9 +57,12 @@ class BoxMixedWidget extends MixedWidget {
   Widget build(BuildContext context) {
     var current = child;
 
-    final props = BoxProps.fromContext(mixContext);
+    final props = mixContext.boxProps;
 
-    final sharedProps = SharedProps.fromContext(mixContext);
+    final sharedProps = mixContext.sharedProps;
+
+    final parentDecorators = mixContext.decorators.parents;
+    final childDecorators = mixContext.decorators.children;
 
     if (!sharedProps.visible) {
       return const Empty();

@@ -1,9 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
-import 'package:mix/src/attributes/shared/shared.props.dart';
 import 'package:mix/src/widgets/empty.widget.dart';
-import 'package:mix/src/widgets/text/text.props.dart';
 import 'package:mix/src/widgets/text/text_helpers.dart';
 
 /// _Mix_ corollary to Flutter _Text_ widget
@@ -38,7 +36,7 @@ class TextMix extends MixableWidget {
   @override
   Widget build(BuildContext context) {
     return TextMixerWidget(
-      getMixContext(context),
+      createMixContext(context),
       text: text,
     );
   }
@@ -56,12 +54,12 @@ class TextMixerWidget extends MixedWidget {
 
   @override
   Widget build(BuildContext context) {
-    final props = TextProps.fromContext(mixContext);
+    final props = mixContext.textProps;
 
     final directives =
         mixContext.directives.whereType<TextDirectiveAttribute>();
 
-    final sharedProps = SharedProps.fromContext(mixContext);
+    final sharedProps = mixContext.sharedProps;
     if (!sharedProps.visible) {
       return const Empty();
     }

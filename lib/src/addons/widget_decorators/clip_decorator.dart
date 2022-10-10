@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mix/src/attributes/shared/shared.props.dart';
-import 'package:mix/src/decorators/decorator.dart';
+import 'package:mix/src/decorators/decorator_attributes.dart';
 import 'package:mix/src/mixer/mix_context.dart';
 
 /// @nodoc
@@ -17,7 +16,7 @@ enum ClipDecoratorType {
 /// - [ClipDecoratorUtility](ClipDecoratorUtility-class.html)
 ///
 /// {@category Decorators}
-class ClipDecorator extends ParentDecorator<ClipDecorator> {
+class ClipDecorator extends ParentDecoratorAttribute<ClipDecorator> {
   final BorderRadius? borderRadius;
   final ClipDecoratorType clipType;
 
@@ -33,7 +32,7 @@ class ClipDecorator extends ParentDecorator<ClipDecorator> {
 
   @override
   Widget render(MixContext mixContext, Widget child) {
-    final sharedProps = SharedProps.fromContext(mixContext);
+    final sharedProps = mixContext.sharedProps;
 
     if (clipType == ClipDecoratorType.triangle) {
       return ClipPath(

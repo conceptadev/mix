@@ -1,6 +1,5 @@
 import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
-import 'package:mix/src/widgets/flex/flex.props.dart';
 
 import '../../mixer/mix_context.dart';
 import '../../mixer/mix_factory.dart';
@@ -41,7 +40,7 @@ class FlexBox extends MixableWidget {
   @override
   Widget build(BuildContext context) {
     return FlexBoxMixedWidget(
-      getMixContext(context),
+      createMixContext(context),
       direction: direction,
       children: children,
     );
@@ -82,7 +81,7 @@ class FlexBoxMixedWidget extends MixedWidget {
 
   @override
   Widget build(BuildContext context) {
-    final props = FlexProps.fromContext(mixContext);
+    final props = mixContext.flexProps;
 
     return BoxMixedWidget(
       mixContext,

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mix/src/decorators/decorator.dart';
+import 'package:mix/src/decorators/decorator_attributes.dart';
 import 'package:mix/src/mixer/mix_context.dart';
 
 /// ## Widget
@@ -8,7 +8,7 @@ import 'package:mix/src/mixer/mix_context.dart';
 /// - [FlexibleDecoratorUtility](FlexibleDecoratorUtility-class.html)
 ///
 /// {@category Decorators}
-class FlexibleDecorator extends ParentDecorator<FlexibleDecorator> {
+class FlexibleDecorator extends ParentDecoratorAttribute<FlexibleDecorator> {
   final FlexFit? flexFit;
   final int? flex;
   const FlexibleDecorator({

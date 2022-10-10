@@ -28,7 +28,7 @@ class MixContextBuilder extends MixableWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mixContext = getMixContext(context);
+    final mixContext = createMixContext(context);
 
     return MixContextNotifier(
       mixContext,
