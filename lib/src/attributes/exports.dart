@@ -6,25 +6,25 @@ export './helpers/helper.utils.dart';
 /// Shared
 export './shared/shared.attributes.dart';
 export './shared/shared.utils.dart';
-export '../addons/system_variants/systeem_variants_alias.utils.dart';
-
-/// Variants
-export '../addons/system_variants/system_variants.utils.dart';
 
 /// Widgets
-export '../addons/widget_decorators/aspect_ratio.dart';
-export '../addons/widget_decorators/clip_decorator.dart';
-export '../addons/widget_decorators/decorator_alias_utils.dart';
-export '../addons/widget_decorators/decorator_utils.dart';
-export '../addons/widget_decorators/flexible.dart';
-export '../addons/widget_decorators/opacity.dart';
-export '../addons/widget_decorators/rotate.dart';
-export '../addons/widget_decorators/scale.dart';
+export '../decorators/widget_decorators/aspect_ratio.dart';
+export '../decorators/widget_decorators/clip_decorator.dart';
+export '../decorators/widget_decorators/decorator_alias_utils.dart';
+export '../decorators/widget_decorators/decorator_utils.dart';
+export '../decorators/widget_decorators/flexible.dart';
+export '../decorators/widget_decorators/opacity.dart';
+export '../decorators/widget_decorators/rotate.dart';
+export '../decorators/widget_decorators/scale.dart';
 
 /// Text Directives
 export '../directives/text_directives/text_directive.attributes.dart';
 export '../directives/text_directives/text_directive.utils.dart';
 export '../directives/text_directives/text_directive_alias.utils.dart';
+export '../variants/dynamic_variants/systeem_variants_alias.utils.dart';
+
+/// Variants
+export '../variants/dynamic_variants/system_variants.utils.dart';
 export '../widgets/box/box.attributes.dart';
 export '../widgets/box/box.utils.dart';
 export '../widgets/box/box.utils.dart';

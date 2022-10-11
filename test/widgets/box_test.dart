@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mix/src/addons/widget_decorators/aspect_ratio.dart';
-import 'package:mix/src/addons/widget_decorators/flexible.dart';
-import 'package:mix/src/addons/widget_decorators/opacity.dart';
-import 'package:mix/src/addons/widget_decorators/rotate.dart';
 import 'package:mix/src/attributes/shared/shared.attributes.dart';
+import 'package:mix/src/decorators/widget_decorators/aspect_ratio.dart';
+import 'package:mix/src/decorators/widget_decorators/flexible.dart';
+import 'package:mix/src/decorators/widget_decorators/opacity.dart';
+import 'package:mix/src/decorators/widget_decorators/rotate.dart';
 import 'package:mix/src/dto/border.dto.dart';
 import 'package:mix/src/dto/border_radius.dto.dart';
 import 'package:mix/src/dto/edge_insets.dto.dart';

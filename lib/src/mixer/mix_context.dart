@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mix/src/attributes/attribute.dart';
 import 'package:mix/src/attributes/shared/shared.props.dart';
-import 'package:mix/src/directives/directive.dart';
+import 'package:mix/src/directives/directive_attribute.dart';
 import 'package:mix/src/mixer/mix_factory.dart';
-import 'package:mix/src/mixer/mix_helpers.dart';
 import 'package:mix/src/mixer/mix_values.dart';
+import 'package:mix/src/variants/variant_attribute.dart';
 import 'package:mix/src/variants/variants.dart';
 import 'package:mix/src/widgets/box/box.props.dart';
 import 'package:mix/src/widgets/flex/flex.props.dart';
@@ -50,7 +50,7 @@ class MixContext {
 
     final variants = mix.values.variants;
 
-    final attributes = selectVariantsToApply(
+    final attributes = _selectVariantsToApply(
       context,
       selectedVariants,
       variants,
@@ -62,6 +62,39 @@ class MixContext {
       context: context,
       mix: Mix.fromValues(appliedValues),
     );
+  }
+
+  static List<Attribute> _selectVariantsToApply(
+    BuildContext context,
+    List<Variant> selectedVariants,
+    List<Attribute> attributes,
+  ) {
+    List<Attribute> _expanded = [];
+
+    for (final attribute in attributes) {
+      if (attribute is VariantAttribute) {
+        final shouldApply = selectedVariants.contains(attribute.variant) ||
+            attribute.shouldApply(context);
+        // If it's inverse (from `not(variant)`), only apply if [willApply] is
+        // false. Otherwise, apply only when [willApply]
+        final willApply =
+            attribute.variant.inverse ? !shouldApply : shouldApply;
+        if (willApply) {
+          // If its selected, add it to the list
+          _expanded.addAll(_selectVariantsToApply(
+            context,
+            selectedVariants,
+            attribute.values,
+          ));
+        } else {
+          // If not selected, add it to the list for future use
+          _expanded.add(attribute);
+        }
+      } else {
+        _expanded.add(attribute);
+      }
+    }
+    return _expanded;
   }
 
   MixValues get attributes {

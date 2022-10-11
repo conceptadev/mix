@@ -13,11 +13,13 @@ class Variant<T extends Attribute> {
   const Variant(this.name, {this.shouldApply}) : inverse = false;
   const Variant._inverse(this.name, {this.shouldApply}) : inverse = true;
 
-  VariantOperation<T> operator &(Variant<T> variant) =>
-      VariantOperation<T>([this, variant], operator: VariantOperator.and);
+  VariantOperation<T> operator &(Variant<T> variant) {
+    return VariantOperation<T>([this, variant], operator: VariantOperator.and);
+  }
 
-  VariantOperation<T> operator |(Variant<T> variant) =>
-      VariantOperation<T>([this, variant], operator: VariantOperator.or);
+  VariantOperation<T> operator |(Variant<T> variant) {
+    return VariantOperation<T>([this, variant], operator: VariantOperator.or);
+  }
 
   // ignore: long-parameter-list
   VariantAttribute<T> call([
@@ -48,11 +50,7 @@ class Variant<T extends Attribute> {
     if (p11 != null) params.add(p11);
     if (p12 != null) params.add(p12);
 
-    return VariantAttribute<T>(
-      this,
-      params,
-      shouldApply: shouldApply,
-    );
+    return VariantAttribute<T>(this, params);
   }
 
   @override

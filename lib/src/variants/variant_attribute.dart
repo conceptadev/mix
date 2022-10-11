@@ -4,11 +4,8 @@ import 'package:mix/src/attributes/attribute.dart';
 import 'package:mix/src/variants/variants.dart';
 
 class VariantAttribute<T extends Attribute> extends Attribute {
-  const VariantAttribute(
-    this.variant,
-    List<T> attributes, {
-    bool Function(BuildContext)? shouldApply,
-  }) : _attributes = attributes;
+  const VariantAttribute(this.variant, List<T> attributes)
+      : _attributes = attributes;
 
   final Variant<T> variant;
   final List<T> _attributes;

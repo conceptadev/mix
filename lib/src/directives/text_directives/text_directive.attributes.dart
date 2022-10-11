@@ -1,4 +1,4 @@
-import 'package:mix/src/directives/directive.dart';
+import 'package:mix/src/directives/directive_attribute.dart';
 import 'package:mix/src/widgets/text/text_helpers.dart';
 
 enum TextModifier {

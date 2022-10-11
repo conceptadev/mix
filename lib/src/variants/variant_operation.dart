@@ -42,12 +42,8 @@ class VariantOperation<T extends Attribute> {
     Iterable<Variant<T>>? variants,
   }) {
     variants ??= this.variants;
-    final attributeVariants = variants.map((v) {
-      return VariantAttribute<T>(
-        v,
-        attributes,
-        shouldApply: v.shouldApply,
-      );
+    final attributeVariants = variants.map((variant) {
+      return VariantAttribute<T>(variant, attributes);
     });
 
     return attributeVariants.toList();

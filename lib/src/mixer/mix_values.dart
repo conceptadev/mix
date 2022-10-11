@@ -2,8 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:mix/src/attributes/attribute.dart';
 import 'package:mix/src/attributes/nested_attribute.dart';
 import 'package:mix/src/decorators/decorator_attribute.dart';
-import 'package:mix/src/directives/directive.dart';
-import 'package:mix/src/mixer/mix_helpers.dart';
+import 'package:mix/src/directives/directive_attribute.dart';
 import 'package:mix/src/variants/variant_attribute.dart';
 
 class MixValues {
@@ -26,7 +25,7 @@ class MixValues {
         directives = const [];
 
   factory MixValues.fromList(List<Attribute> attributes) {
-    final _expanded = expandNestedAttributes(attributes);
+    final _expanded = _expandNestedAttributes(attributes);
 
     final directiveList = <DirectiveAttribute>[];
     final variantList = <VariantAttribute>[];
@@ -110,6 +109,29 @@ class MixValues {
       variants: [...variants, ...other.variants],
       directives: [...directives, ...other.directives],
     );
+  }
+
+  static List<Attribute> _expandNestedAttributes(List<Attribute> attributes) {
+    List<Attribute> _expanded = [];
+
+    for (final attribute in attributes) {
+      if (attribute is NestedAttribute) {
+        _expanded.addAll(
+          _expandNestedAttributes(attribute.values),
+        );
+      } else if (attribute is VariantAttribute) {
+        _expanded.add(
+          VariantAttribute(
+            attribute.variant,
+            _expandNestedAttributes(attribute.values),
+          ),
+        );
+      } else {
+        _expanded.add(attribute);
+      }
+    }
+
+    return _expanded;
   }
 
   @override

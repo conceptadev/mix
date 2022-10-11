@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:mix/src/addons/widget_decorators/aspect_ratio.dart';
-import 'package:mix/src/addons/widget_decorators/clip_decorator.dart';
-import 'package:mix/src/addons/widget_decorators/flexible.dart';
-import 'package:mix/src/addons/widget_decorators/opacity.dart';
-import 'package:mix/src/addons/widget_decorators/rotate.dart';
-import 'package:mix/src/addons/widget_decorators/scale.dart';
+import 'package:mix/src/decorators/widget_decorators/aspect_ratio.dart';
+import 'package:mix/src/decorators/widget_decorators/clip_decorator.dart';
+import 'package:mix/src/decorators/widget_decorators/flexible.dart';
+import 'package:mix/src/decorators/widget_decorators/opacity.dart';
+import 'package:mix/src/decorators/widget_decorators/rotate.dart';
+import 'package:mix/src/decorators/widget_decorators/scale.dart';
 
 /// ## Widget:
 /// - (All)
