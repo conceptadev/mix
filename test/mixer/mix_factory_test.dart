@@ -25,8 +25,6 @@ final firstMix = Mix(
   minWidth(100),
 );
 
-const firstMixLength = 12;
-
 final secondMix = Mix(
   // Box attribute
   padding(10),
@@ -45,26 +43,19 @@ final secondMix = Mix(
   iconColor(Colors.red),
 );
 
-const secondMixLength = 8;
-
 final nestedMix = Mix(
   // Box attribute
   apply(firstMix),
   apply(secondMix),
 );
 
-const nextedMixLength = 2;
-
 void main() {
   group("Mix Factory", () {
     test('Creates a Mix from positional Attributes', () async {
-      final firstAttr = firstMix;
-      final secondAttr = secondMix;
-      final nestedAttr = nestedMix;
+      final mergedValues = firstMix.values.merge(secondMix.values);
 
-      expect(firstAttr.length, firstMixLength);
-      expect(secondAttr.length, secondMixLength);
-      expect(nestedAttr.length, 2);
+      expect(nestedMix.length, mergedValues.source.length);
+      expect(nestedMix.values, mergedValues);
     });
 
     test('Creates a Mix from Attributes List', () async {
@@ -72,53 +63,49 @@ void main() {
       final mixFromMaybeList =
           Mix.fromMaybeList([null, ...firstMix.source.toList()]);
 
-      expect(mixFromList.length, firstMixLength);
-      expect(mixFromMaybeList.length, firstMixLength);
+      expect(mixFromList.length, greaterThan(0));
+      expect(mixFromList.values, firstMix.values);
+      expect(mixFromMaybeList.length, firstMix.length);
     });
 
-    test('Adds Attributes to Mix', () async {
-      final firstWithOneMore = firstMix.mix(bgColor(Colors.yellow)).attributes;
-      final firstWithTwoMoreAsList = firstMix.addAttributes([
-        bgColor(Colors.yellow),
-        bgColor(Colors.green),
-      ]).attributes;
+    test('Adds Attributes to an Existing Mix', () async {
+      const boxAttribute = BoxAttributes(color: Colors.blue);
 
-      expect(firstMix.source.length, firstMixLength);
-      expect(firstWithOneMore.source.length, firstMixLength + 1);
-      expect(firstWithTwoMoreAsList.source.length, firstMixLength + 2);
+      const flexAttribute = FlexAttributes(direction: Axis.horizontal);
+
+      final _baseMix = Mix(boxAttribute);
+      final _modifiedMix = _baseMix.mix(flexAttribute);
+
+      final _modifiedBoxAttribute =
+          _modifiedMix.values.attributes.fromType<BoxAttributes>();
+      final _modifiedFlexAttribute =
+          _modifiedMix.values.attributes.fromType<FlexAttributes>();
+
+      expect(_baseMix.length, 1);
+      expect(_modifiedMix.length, 2);
+
+      expect(_modifiedBoxAttribute, boxAttribute);
+      expect(_modifiedFlexAttribute, flexAttribute);
     });
 
     test('Combines Mixes', () async {
-      final combined = Mix.combine(firstMix, secondMix).source;
-      final combinedAsList = Mix.combineAll([firstMix, secondMix]).source;
-      final combineAsMix = firstMix.apply(secondMix).source;
-      final combinedMaybeMix = firstMix.applyMaybe(secondMix);
-      final combinedMaybeMixNull = firstMix.applyMaybe(null);
-
-      final secondCopy = firstMix.clone();
-      final thirdCopy = firstMix.clone();
-      final forthCopy = firstMix.clone();
-      final fifthCopy = firstMix.clone();
-      final sixthCopy = firstMix.clone();
-
-      final combinedWithAllParams = Mix.combine(
-        firstMix,
-        secondCopy,
-        thirdCopy,
-        forthCopy,
-        fifthCopy,
-        sixthCopy,
-      ).source;
-
-      expect(combined.length, firstMixLength + secondMixLength);
-      expect(combinedAsList.length, firstMixLength + secondMixLength);
-      expect(combineAsMix.length, firstMixLength + secondMixLength);
-      expect(combinedWithAllParams.length, firstMixLength * 6);
-      expect(
-        combinedMaybeMix.length,
-        firstMixLength + secondMixLength,
+      const blueBackground = BoxAttributes(
+        color: Colors.blue,
       );
-      expect(combinedMaybeMixNull.length, firstMixLength);
+
+      const yellowBackground = BoxAttributes(
+        color: Colors.yellow,
+      );
+      final _baseMix = Mix(blueBackground);
+      final _modifiedMix = _baseMix.mix(yellowBackground);
+
+      final _modifiedBoxAttribute =
+          _modifiedMix.values.attributes.fromType<BoxAttributes>();
+      final _baseBoxAttribute =
+          _baseMix.values.attributes.fromType<BoxAttributes>();
+
+      expect(yellowBackground, _modifiedBoxAttribute);
+      expect(blueBackground, _baseBoxAttribute);
     });
 
     test('Equality of Mix', () async {

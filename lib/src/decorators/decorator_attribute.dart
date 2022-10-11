@@ -18,12 +18,12 @@ extension DecoratorsMapListExtension on DecoratorsMapList {
 }
 
 class MixDecoratorAttributes {
-  final DecoratorsMapList decorators;
+  final DecoratorsMapList values;
 
-  const MixDecoratorAttributes(this.decorators);
+  const MixDecoratorAttributes(this.values);
 
   const MixDecoratorAttributes.empty()
-      : decorators = const {
+      : values = const {
           DecoratorType.parent: [],
           DecoratorType.child: [],
           DecoratorType.separator: [],
@@ -54,40 +54,39 @@ class MixDecoratorAttributes {
     return MixDecoratorAttributes(decoratorMap);
   }
 
+  MixDecoratorAttributes clone() {
+    return MixDecoratorAttributes(Map.from(values));
+  }
+
   MixDecoratorAttributes merge(MixDecoratorAttributes? other) {
     if (other == null) {
       return this;
     }
 
-    final thisList = decorators.entries.map((e) => e.value).expand((e) => e);
+    final thisList = values.entries.map((e) => e.value).expand((e) => e);
 
-    final otherList =
-        other.decorators.entries.map((e) => e.value).expand((e) => e);
+    final otherList = other.values.entries.map((e) => e.value).expand((e) => e);
 
     return MixDecoratorAttributes.fromList([...thisList, ...otherList]);
   }
 
   get children {
-    return decorators[DecoratorType.child] ?? [];
+    return values[DecoratorType.child] ?? [];
   }
 
   get parents {
-    return decorators[DecoratorType.parent] ?? [];
+    return values[DecoratorType.parent] ?? [];
   }
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is MixDecoratorAttributes &&
-        mapEquals(
-          other.decorators,
-          decorators,
-        );
+    return other is MixDecoratorAttributes && mapEquals(other.values, values);
   }
 
   @override
-  int get hashCode => decorators.hashCode;
+  int get hashCode => values.hashCode;
 }
 
 abstract class DecoratorAttribute<T> extends Attribute {

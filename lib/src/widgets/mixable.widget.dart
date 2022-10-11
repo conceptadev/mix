@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:mix/src/mixer/mix_context_notifier.dart';
 
 import '../../mix.dart';
 
@@ -11,22 +12,32 @@ abstract class MixableWidget extends StatelessWidget {
     Key? key,
     bool? inherit,
     List<Variant>? variants,
-  })  : _mix = mix,
+  })  : _mix = mix ?? Mix.constant,
         _variants = variants,
         _inherit = inherit ?? true,
         super(key: key);
 
-  final Mix? _mix;
+  final Mix _mix;
 
   final List<Variant>? _variants;
   final bool _inherit;
 
   MixContext createMixContext(BuildContext context) {
+    Mix combinedMix;
+    if (_inherit) {
+      /// Get ancestor context
+      final inheritedMixContext = MixContextNotifier.of(context);
+
+      final inheritedMix = inheritedMixContext?.mix;
+      combinedMix = inheritedMix?.apply(_mix) ?? _mix;
+    } else {
+      combinedMix = _mix;
+    }
+
     return MixContext.create(
       context: context,
-      mix: _mix ?? Mix(),
+      mix: combinedMix,
       variants: _variants ?? [],
-      inherit: _inherit,
     );
   }
 

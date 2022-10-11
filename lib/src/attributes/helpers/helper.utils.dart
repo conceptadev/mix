@@ -5,7 +5,7 @@ import 'package:mix/src/mixer/mix_factory.dart';
 class HelperUtils {
   const HelperUtils._();
 
-  static NestedAttribute apply<T extends Attribute>(List<Mix<T>> mixes) {
+  static NestedAttribute apply<T extends Attribute>(List<Mix> mixes) {
     return NestedAttribute(Mix.combineAll(mixes).source.toList());
   }
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mix/src/decorators/decorator_attributes.dart';
+import 'package:mix/src/decorators/decorator_attribute.dart';
 import 'package:mix/src/mixer/mix_context.dart';
 
 class DecoratorAttributeWidget extends StatelessWidget {

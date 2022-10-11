@@ -79,9 +79,9 @@ class InputDecorationThemeAttribute extends InputDecorationTheme
     InputBorder? border,
   }) {
     return InputDecorationThemeAttribute(
-      iconColor: iconColor ?? iconColor,
-      fillColor: fillColor ?? fillColor,
-      border: border ?? border,
+      iconColor: iconColor,
+      fillColor: fillColor,
+      border: border,
     );
   }
 
@@ -122,6 +122,7 @@ class CustomWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return MixContextBuilder(
       variants: variants,
+      mix: mix,
       builder: (context, mixContext) {
         final attribute = mixContext.fromType<InheritedIconAttribute>()!;
 
@@ -141,7 +142,6 @@ class CustomWidget extends StatelessWidget {
           ),
         );
       },
-      mix: mix,
     );
   }
 }

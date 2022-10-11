@@ -1,38 +1,39 @@
 import 'package:flutter/foundation.dart';
 import 'package:mix/src/attributes/attribute.dart';
-import 'package:mix/src/decorators/decorator_attributes.dart';
+import 'package:mix/src/attributes/nested_attribute.dart';
+import 'package:mix/src/decorators/decorator_attribute.dart';
 import 'package:mix/src/directives/directive.dart';
+import 'package:mix/src/mixer/mix_helpers.dart';
 import 'package:mix/src/variants/variant_attribute.dart';
 
-class MixAttributes {
+class MixValues {
   final MixInheritedAttributes attributes;
   final MixDecoratorAttributes decorators;
   final List<VariantAttribute> variants;
   final List<DirectiveAttribute> directives;
-  final List<Attribute> source;
 
-  const MixAttributes._({
+  const MixValues({
     required this.attributes,
     required this.decorators,
     required this.variants,
     required this.directives,
-    required this.source,
   });
 
-  const MixAttributes.empty()
+  const MixValues.empty()
       : attributes = const MixInheritedAttributes.empty(),
         decorators = const MixDecoratorAttributes.empty(),
         variants = const [],
-        source = const [],
         directives = const [];
 
-  factory MixAttributes.fromList(List<Attribute> attributes) {
+  factory MixValues.fromList(List<Attribute> attributes) {
+    final _expanded = expandNestedAttributes(attributes);
+
     final directiveList = <DirectiveAttribute>[];
     final variantList = <VariantAttribute>[];
     final decoratorList = <DecoratorAttribute>[];
     final attributeList = <InheritedAttribute>[];
 
-    for (final attribute in attributes) {
+    for (final attribute in _expanded) {
       if (attribute is InheritedAttribute) {
         attributeList.add(attribute);
       }
@@ -48,39 +49,66 @@ class MixAttributes {
       if (attribute is DecoratorAttribute) {
         decoratorList.add(attribute);
       }
+
+      if (attribute is NestedAttribute) {
+        throw Exception('Should not have nested attributes at this point');
+      }
     }
 
-    return MixAttributes._(
+    return MixValues(
       attributes: MixInheritedAttributes.fromList(attributeList),
+      decorators: MixDecoratorAttributes.fromList(decoratorList),
       directives: directiveList,
       variants: variantList,
-      decorators: MixDecoratorAttributes.fromList(decoratorList),
-      source: [...attributes],
     );
   }
 
-  @Deprecated('Use MixAttributes.fromList instead')
-  MixAttributes clone() {
-    return MixAttributes._(
-      attributes: attributes,
-      decorators: decorators,
-      variants: variants,
-      directives: directives,
-      source: source,
+  bool get hasDirectives => directives.isNotEmpty;
+
+  bool get hasVariants => variants.isNotEmpty;
+
+  List<Attribute> get source {
+    return [
+      ...attributes.values.values,
+      ...decorators.values.values.expand((element) => element),
+      ...variants,
+      ...directives,
+    ];
+  }
+
+  MixValues copyWith({
+    MixInheritedAttributes? attributes,
+    MixDecoratorAttributes? decorators,
+    List<VariantAttribute>? variants,
+    List<DirectiveAttribute>? directives,
+  }) {
+    return MixValues(
+      attributes: attributes ?? this.attributes,
+      decorators: decorators ?? this.decorators,
+      variants: variants ?? this.variants,
+      directives: directives ?? this.directives,
     );
   }
 
-  MixAttributes merge(MixAttributes? other) {
+  MixValues clone() {
+    return MixValues(
+      attributes: attributes.clone(),
+      decorators: decorators.clone(),
+      variants: [...variants],
+      directives: [...directives],
+    );
+  }
+
+  MixValues merge(MixValues? other) {
     if (other == null) {
       return this;
     }
 
-    return MixAttributes._(
+    return MixValues(
       attributes: attributes.merge(other.attributes),
       decorators: decorators.merge(other.decorators),
       variants: [...variants, ...other.variants],
       directives: [...directives, ...other.directives],
-      source: [...source, ...other.source],
     );
   }
 
@@ -88,11 +116,10 @@ class MixAttributes {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is MixAttributes &&
+    return other is MixValues &&
         listEquals(other.variants, variants) &&
         listEquals(other.directives, directives) &&
         other.decorators == decorators &&
-        listEquals(other.source, source) &&
         other.attributes == attributes;
   }
 
@@ -101,7 +128,6 @@ class MixAttributes {
     return variants.hashCode ^
         directives.hashCode ^
         decorators.hashCode ^
-        source.hashCode ^
         attributes.hashCode;
   }
 }

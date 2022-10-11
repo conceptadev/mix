@@ -6,21 +6,24 @@ import 'package:mix/src/variants/variants.dart';
 class VariantAttribute<T extends Attribute> extends Attribute {
   const VariantAttribute(
     this.variant,
-    this.attributes, {
+    List<T> attributes, {
     bool Function(BuildContext)? shouldApply,
-  }) : _shouldApply = shouldApply;
+  }) : _attributes = attributes;
 
   final Variant<T> variant;
-  final List<T> attributes;
-  final bool Function(BuildContext)? _shouldApply;
+  final List<T> _attributes;
+
+  List<T> get values {
+    return _attributes;
+  }
 
   bool shouldApply(BuildContext context) {
-    return _shouldApply?.call(context) ?? false;
+    return variant.shouldApply?.call(context) ?? false;
   }
 
   @override
   String toString() =>
-      'VariantAttribute(variant: $variant, attributes: $attributes)';
+      'VariantAttribute(variant: $variant, attributes: $values)';
 
   @override
   bool operator ==(Object other) {
@@ -28,11 +31,9 @@ class VariantAttribute<T extends Attribute> extends Attribute {
 
     return other is VariantAttribute<T> &&
         other.variant == variant &&
-        listEquals(other.attributes, attributes) &&
-        other._shouldApply == _shouldApply;
+        listEquals(other.values, values);
   }
 
   @override
-  int get hashCode =>
-      variant.hashCode ^ attributes.hashCode ^ _shouldApply.hashCode;
+  int get hashCode => variant.hashCode ^ _attributes.hashCode;
 }

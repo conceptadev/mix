@@ -21,12 +21,12 @@ abstract class InheritedAttribute extends Attribute {
 typedef InheritedAttributeMap = Map<Object, InheritedAttribute>;
 
 class MixInheritedAttributes {
-  final InheritedAttributeMap attributes;
+  final InheritedAttributeMap values;
 
-  const MixInheritedAttributes(this.attributes);
+  const MixInheritedAttributes(this.values);
 
   const MixInheritedAttributes.empty()
-      : attributes = const <Object, InheritedAttribute>{};
+      : values = const <Object, InheritedAttribute>{};
 
   factory MixInheritedAttributes.fromList(List<InheritedAttribute> attributes) {
     final InheritedAttributeMap attributesMap = {};
@@ -46,6 +46,10 @@ class MixInheritedAttributes {
     return MixInheritedAttributes(attributesMap);
   }
 
+  MixInheritedAttributes clone() {
+    return MixInheritedAttributes(Map.from(values));
+  }
+
   MixInheritedAttributes merge(MixInheritedAttributes? other) {
     if (other == null) {
       return this;
@@ -53,11 +57,11 @@ class MixInheritedAttributes {
 
     InheritedAttributeMap mergedAttributes = {};
 
-    final keys = [...attributes.keys, ...other.attributes.keys];
+    final keys = [...values.keys, ...other.values.keys];
 
     for (final key in keys) {
-      final attribute = attributes[key];
-      final otherAttribute = other.attributes[key];
+      final attribute = values[key];
+      final otherAttribute = other.values[key];
 
       if (attribute == null) {
         mergedAttributes[key] = otherAttribute!;
@@ -74,7 +78,7 @@ class MixInheritedAttributes {
   /// Used to obtain a [InheritedAttribute] from [MixContext].
   ///
   /// Obtain with `mixContext.fromType<MyAttributeExtension>()`.
-  T? fromType<T>() => attributes[T] as T?;
+  A? fromType<A extends InheritedAttribute>() => values[A] as A?;
 
   @override
   bool operator ==(Object other) {
@@ -82,11 +86,11 @@ class MixInheritedAttributes {
 
     return other is MixInheritedAttributes &&
         mapEquals(
-          other.attributes,
-          attributes,
+          other.values,
+          values,
         );
   }
 
   @override
-  int get hashCode => attributes.hashCode;
+  int get hashCode => values.hashCode;
 }
