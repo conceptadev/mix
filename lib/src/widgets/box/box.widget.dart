@@ -19,7 +19,7 @@ class Box extends MixableWidget {
   const Box({
     Mix? mix,
     Key? key,
-    bool inherit = false,
+    bool? inherit,
     List<Variant>? variants,
     this.child,
   }) : super(

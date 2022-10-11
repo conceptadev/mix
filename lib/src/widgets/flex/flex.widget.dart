@@ -24,7 +24,7 @@ class FlexBox extends MixableWidget {
     Mix? mix,
     Key? key,
     List<Variant>? variants,
-    bool inherit = false,
+    bool? inherit,
     required this.direction,
     required this.children,
   }) : super(

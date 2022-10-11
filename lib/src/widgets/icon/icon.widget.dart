@@ -20,7 +20,7 @@ class IconMix extends MixableWidget {
     this.semanticLabel,
     Key? key,
     List<Variant>? variants,
-    bool? inherit,
+    bool inherit = true,
   }) : super(
           mix,
           variants: variants,

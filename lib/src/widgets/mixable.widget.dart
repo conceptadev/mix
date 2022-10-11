@@ -14,7 +14,7 @@ abstract class MixableWidget extends StatelessWidget {
     List<Variant>? variants,
   })  : _mix = mix ?? Mix.constant,
         _variants = variants,
-        _inherit = inherit ?? true,
+        _inherit = inherit ?? false,
         super(key: key);
 
   final Mix _mix;

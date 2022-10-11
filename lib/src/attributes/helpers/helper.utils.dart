@@ -49,16 +49,3 @@ class WrapFunction<T, R> {
     return fn(params);
   }
 }
-
-// TODO: Remove this
-// class WrapVariant<T extends Attribute, R extends VariantAttribute<T>>
-//     extends WrapFunction<T, R> {
-//   const WrapVariant(this.variant, FunctionWithListParam<T, R> fn) : super(fn);
-
-//   final Var<T> variant;
-
-//   operator &(WrapVariant<T, R> other) {
-//     final combinedVariant = variant & other.variant;
-//     return WrapVariant<T, R>(combinedVariant, this.fn & other.fn);
-//   }
-// }

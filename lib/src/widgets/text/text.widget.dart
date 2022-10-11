@@ -23,7 +23,7 @@ class TextMix extends MixableWidget {
     Mix? mix,
     Key? key,
     List<Variant>? variants,
-    bool? inherit,
+    bool inherit = true,
   }) : super(
           mix,
           inherit: inherit,
