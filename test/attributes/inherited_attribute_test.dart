@@ -4,7 +4,7 @@ import 'package:mix/mix.dart' hide border, onEnabled, icon, iconColor;
 
 import '../testing_utils.dart';
 
-final activated = Variant("activated");
+const activated = Variant("activated");
 
 const customIcon = InheritedIconAttribute.icon;
 const withSize = InheritedIconAttribute.withSize;

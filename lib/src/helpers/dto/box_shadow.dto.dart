@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:mix/src/dto/dto.dart';
+import 'package:mix/src/helpers/dto/dto.dart';
 import 'package:mix/src/theme/refs/color_token.dart';
 
 class BoxShadowDto extends Dto<BoxShadow> {

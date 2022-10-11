@@ -759,7 +759,7 @@ DA:154,0
 LF:70
 LH:52
 end_of_record
-SF:lib/src/dto/border.dto.dart
+SF:lib/src/helpers/dto/border.dto.dart
 DA:11,0
 DA:18,5
 DA:25,5
@@ -833,7 +833,7 @@ DA:185,0
 LF:70
 LH:21
 end_of_record
-SF:lib/src/dto/border_radius.dto.dart
+SF:lib/src/helpers/dto/border_radius.dto.dart
 DA:10,0
 DA:17,11
 DA:27,6
@@ -872,7 +872,7 @@ DA:89,0
 LF:35
 LH:11
 end_of_record
-SF:lib/src/dto/box_shadow.dto.dart
+SF:lib/src/helpers/dto/box_shadow.dto.dart
 DA:14,4
 DA:23,1
 DA:25,1
@@ -919,7 +919,7 @@ DA:108,0
 LF:43
 LH:10
 end_of_record
-SF:lib/src/dto/edge_insets.dto.dart
+SF:lib/src/helpers/dto/edge_insets.dto.dart
 DA:11,6
 DA:18,2
 DA:25,6
@@ -1977,7 +1977,7 @@ DA:43,0
 LF:14
 LH:3
 end_of_record
-SF:lib/src/dto/dto.dart
+SF:lib/src/helpers/dto/dto.dart
 DA:4,14
 LF:1
 LH:1

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mix/src/dto/dto.dart';
+import 'package:mix/src/helpers/dto/dto.dart';
 import 'package:mix/src/theme/refs/color_token.dart';
 
 class BorderDto extends Dto<Border> {

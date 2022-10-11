@@ -1,9 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:mix/src/dto/border.dto.dart';
-import 'package:mix/src/dto/border_radius.dto.dart';
-import 'package:mix/src/dto/box_shadow.dto.dart';
-import 'package:mix/src/dto/edge_insets.dto.dart';
+import 'package:mix/src/helpers/dto/border.dto.dart';
+import 'package:mix/src/helpers/dto/border_radius.dto.dart';
+import 'package:mix/src/helpers/dto/box_shadow.dto.dart';
+import 'package:mix/src/helpers/dto/edge_insets.dto.dart';
 import 'package:mix/src/helpers/extensions.dart';
 
 import '../../attributes/attribute.dart';
@@ -55,6 +55,7 @@ class BoxAttributes extends InheritedAttribute {
   @override
   BoxAttributes merge(BoxAttributes? other) {
     if (other == null) return this;
+
     return copyWith(
       // Mergeble values
       border: border?.merge(other.border) ?? other.border,

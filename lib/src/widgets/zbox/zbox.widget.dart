@@ -47,6 +47,7 @@ class ZBoxMixedWidget extends MixedWidget {
   @override
   Widget build(BuildContext context) {
     final props = mixContext.zBoxProps;
+
     return BoxMixedWidget(
       mixContext,
       child: Stack(

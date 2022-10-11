@@ -88,6 +88,7 @@ class Mix {
   @Deprecated(kVariantDeprecationNotice)
   Mix withMaybeVariant(Variant<Attribute>? variant) {
     if (variant == null) return this;
+
     return withVariant(variant);
   }
 
@@ -99,6 +100,7 @@ class Mix {
   @Deprecated(kVariantDeprecationNotice)
   Mix withMaybeVariants(List<Variant<Attribute>>? variants) {
     if (variants == null || variants.isEmpty) return this;
+
     return withVariants(variants);
   }
 

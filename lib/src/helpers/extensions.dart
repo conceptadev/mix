@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mix/src/attributes/attribute.dart';
-import 'package:mix/src/dto/box_shadow.dto.dart';
+import 'package:mix/src/helpers/dto/box_shadow.dto.dart';
 import 'package:mix/src/widgets/text/text.attributes.dart';
 import 'package:mix/src/widgets/text/text.notifier.dart';
 
@@ -88,13 +87,5 @@ extension Matrix4Extension on Matrix4 {
   Matrix4 merge(Matrix4? other) {
     if (other == null || other == this) return this;
     return clone()..multiply(other);
-  }
-}
-
-/// {@category Misc Utils}
-extension BoolExtension on bool {
-  Attribute? call(Attribute attribute) {
-    if (this) return attribute;
-    return null;
   }
 }

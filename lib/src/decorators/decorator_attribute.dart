@@ -11,12 +11,6 @@ enum DecoratorType {
 
 typedef DecoratorsMapList = Map<DecoratorType, List<DecoratorAttribute>>;
 
-extension DecoratorsMapListExtension on DecoratorsMapList {
-  List<DecoratorAttribute> get parent => this[DecoratorType.parent] ?? [];
-  List<DecoratorAttribute> get child => this[DecoratorType.child] ?? [];
-  List<DecoratorAttribute> get separator => this[DecoratorType.separator] ?? [];
-}
-
 class MixDecoratorAttributes {
   final DecoratorsMapList values;
 

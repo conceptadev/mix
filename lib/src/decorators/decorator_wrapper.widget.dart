@@ -56,7 +56,7 @@ abstract class DecoratorWrapper extends StatelessWidget {
 
     if (decorators.isNotEmpty) {
       for (var decorator in decorators) {
-        current = _DecoratedWidget(
+        current = DecoratorAttributeWidget(
           decorator,
           key: decorator.key,
           mixContext: mixContext,
@@ -69,8 +69,8 @@ abstract class DecoratorWrapper extends StatelessWidget {
   }
 }
 
-class _DecoratedWidget extends StatelessWidget {
-  const _DecoratedWidget(
+class DecoratorAttributeWidget extends StatelessWidget {
+  const DecoratorAttributeWidget(
     this.decorator, {
     Key? key,
     required this.child,

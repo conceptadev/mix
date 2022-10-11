@@ -8,14 +8,14 @@ export './shared/shared.attributes.dart';
 export './shared/shared.utils.dart';
 
 /// Widgets
-export '../decorators/widget_decorators/aspect_ratio.dart';
-export '../decorators/widget_decorators/clip_decorator.dart';
-export '../decorators/widget_decorators/decorator_alias_utils.dart';
-export '../decorators/widget_decorators/decorator_utils.dart';
-export '../decorators/widget_decorators/flexible.dart';
-export '../decorators/widget_decorators/opacity.dart';
-export '../decorators/widget_decorators/rotate.dart';
-export '../decorators/widget_decorators/scale.dart';
+export '../decorators/box_decorators/aspect_ratio.dart';
+export '../decorators/box_decorators/clip_decorator.dart';
+export '../decorators/box_decorators/flexible.dart';
+export '../decorators/box_decorators/opacity.dart';
+export '../decorators/box_decorators/rotate.dart';
+export '../decorators/box_decorators/scale.dart';
+export '../decorators/decorator_alias_utils.dart';
+export '../decorators/decorator_utils.dart';
 
 /// Text Directives
 export '../directives/text_directives/text_directive.attributes.dart';

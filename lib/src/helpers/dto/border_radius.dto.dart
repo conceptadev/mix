@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mix/src/dto/dto.dart';
+import 'package:mix/src/helpers/dto/dto.dart';
 
 class BorderRadiusDto extends Dto<BorderRadius> {
   final double? topLeft;

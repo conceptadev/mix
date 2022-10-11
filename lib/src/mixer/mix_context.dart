@@ -41,7 +41,7 @@ class MixContext {
   }) {
     // Tracks the values selected and does not allow for
     // attributes already expended to be expended again.
-    MixValues _values = MixValues(
+    MixValues values = MixValues(
       attributes: mix.values.attributes,
       decorators: mix.values.decorators,
       directives: mix.values.directives,
@@ -56,7 +56,7 @@ class MixContext {
       variants,
     );
 
-    final appliedValues = _values.merge(MixValues.fromList(attributes));
+    final appliedValues = values.merge(MixValues.fromList(attributes));
 
     return MixContext._(
       context: context,

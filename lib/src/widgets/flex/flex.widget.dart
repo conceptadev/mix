@@ -1,5 +1,4 @@
 import 'package:flutter/widgets.dart';
-import 'package:mix/mix.dart';
 
 import '../../mixer/mix_context.dart';
 import '../../mixer/mix_factory.dart';
