@@ -73,19 +73,19 @@ void main() {
 
       const flexAttribute = FlexAttributes(direction: Axis.horizontal);
 
-      final _baseMix = Mix(boxAttribute);
-      final _modifiedMix = _baseMix.mix(flexAttribute);
+      final baseMix = Mix(boxAttribute);
+      final modifiedMix = baseMix.mix(flexAttribute);
 
-      final _modifiedBoxAttribute =
-          _modifiedMix.values.attributes.fromType<BoxAttributes>();
-      final _modifiedFlexAttribute =
-          _modifiedMix.values.attributes.fromType<FlexAttributes>();
+      final modifiedBoxAttribute =
+          modifiedMix.values.attributes.fromType<BoxAttributes>();
+      final modifiedFlexAttribute =
+          modifiedMix.values.attributes.fromType<FlexAttributes>();
 
-      expect(_baseMix.length, 1);
-      expect(_modifiedMix.length, 2);
+      expect(baseMix.length, 1);
+      expect(modifiedMix.length, 2);
 
-      expect(_modifiedBoxAttribute, boxAttribute);
-      expect(_modifiedFlexAttribute, flexAttribute);
+      expect(modifiedBoxAttribute, boxAttribute);
+      expect(modifiedFlexAttribute, flexAttribute);
     });
 
     test('Combines Mixes', () async {
@@ -96,16 +96,16 @@ void main() {
       const yellowBackground = BoxAttributes(
         color: Colors.yellow,
       );
-      final _baseMix = Mix(blueBackground);
-      final _modifiedMix = _baseMix.mix(yellowBackground);
+      final baseMix = Mix(blueBackground);
+      final modifiedMix = baseMix.mix(yellowBackground);
 
-      final _modifiedBoxAttribute =
-          _modifiedMix.values.attributes.fromType<BoxAttributes>();
-      final _baseBoxAttribute =
-          _baseMix.values.attributes.fromType<BoxAttributes>();
+      final modifiedBoxAttribute =
+          modifiedMix.values.attributes.fromType<BoxAttributes>();
+      final baseBoxAttribute =
+          baseMix.values.attributes.fromType<BoxAttributes>();
 
-      expect(yellowBackground, _modifiedBoxAttribute);
-      expect(blueBackground, _baseBoxAttribute);
+      expect(yellowBackground, modifiedBoxAttribute);
+      expect(blueBackground, baseBoxAttribute);
     });
 
     test('Equality of Mix', () async {

@@ -1,4 +1,4 @@
-import 'package:mix/src/helpers/extensions.dart';
+import '../../helpers/extensions.dart';
 
 import '../refs/text_style_token.dart';
 

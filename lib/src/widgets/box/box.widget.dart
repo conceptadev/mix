@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:mix/mix.dart';
-import 'package:mix/src/mixer/mix_context_notifier.dart';
 
+import '../../../mix.dart';
 import '../../decorators/decorator_wrapper.widget.dart';
+import '../../mixer/mix_context_notifier.dart';
 import '../empty.widget.dart';
 
 /// _Mix_ corollary to Flutter _Container_ widget

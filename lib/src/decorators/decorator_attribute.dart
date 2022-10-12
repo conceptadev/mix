@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:mix/src/attributes/attribute.dart';
-import 'package:mix/src/mixer/mix_context.dart';
+import '../attributes/attribute.dart';
+import '../mixer/mix_context.dart';
 
 enum DecoratorType {
   parent,

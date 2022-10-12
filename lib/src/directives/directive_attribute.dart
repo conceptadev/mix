@@ -1,4 +1,4 @@
-import 'package:mix/src/attributes/attribute.dart';
+import '../attributes/attribute.dart';
 
 abstract class DirectiveAttribute<T> extends Attribute {
   const DirectiveAttribute();

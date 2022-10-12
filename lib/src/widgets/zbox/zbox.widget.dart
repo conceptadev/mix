@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'package:mix/mix.dart';
+import '../../../mix.dart';
 
 /// ## Attributes:
 /// - [ZBoxAttributes](ZBoxAttributes-class.html)
@@ -51,10 +51,10 @@ class ZBoxMixedWidget extends MixedWidget {
     return BoxMixedWidget(
       mixContext,
       child: Stack(
-        children: children,
         alignment: props.alignment,
         clipBehavior: props.clipBehavior,
         fit: props.fit,
+        children: children,
       ),
     );
   }

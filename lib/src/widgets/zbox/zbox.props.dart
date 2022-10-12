@@ -1,7 +1,6 @@
 import 'package:flutter/widgets.dart';
-import 'package:mix/mix.dart';
+import '../../../mix.dart';
 
-import 'zbox.attributes.dart';
 
 class ZBoxProps {
   final AlignmentGeometry alignment;

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mix/mix.dart';
+import '../../../mix.dart';
 
 class IconProps {
   final Color? color;

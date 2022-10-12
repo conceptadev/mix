@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:mix/src/attributes/exports.dart';
-import 'package:mix/src/helpers/dto/box_shadow.dto.dart';
-import 'package:mix/src/mixer/mix_context.dart';
+import '../../attributes/exports.dart';
+import '../../helpers/dto/box_shadow.dto.dart';
+import '../../mixer/mix_context.dart';
 
 import '../../theme/refs/color_token.dart';
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mix/src/widgets/flex/flex.attributes.dart';
+import 'flex.attributes.dart';
 
 /// ## Widget
 /// - [FlexBox](FlexBox-class.html)

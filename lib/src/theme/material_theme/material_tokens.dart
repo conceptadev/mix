@@ -1,4 +1,4 @@
-import 'package:mix/mix.dart';
+import '../../../mix.dart';
 
 class MaterialTokens {
   const MaterialTokens._();

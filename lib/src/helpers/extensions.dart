@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mix/src/helpers/dto/box_shadow.dto.dart';
-import 'package:mix/src/widgets/text/text.attributes.dart';
-import 'package:mix/src/widgets/text/text.notifier.dart';
+import 'dto/box_shadow.dto.dart';
 
 /// {@category Misc Utils}
 extension BuildContextExtensions on BuildContext {
@@ -15,9 +13,6 @@ extension BuildContextExtensions on BuildContext {
 
   /// Theme context helpers
   ThemeData get theme => Theme.of(this);
-
-  /// Text attributes of parent
-  TextAttributes? get textAttributes => TextAttributeNotifier.of(this);
 
   /// Directionality of context
   TextDirection get directionality => Directionality.of(this);
@@ -86,6 +81,7 @@ extension Matrix4Extension on Matrix4 {
   /// Merge [other] into this matrix.
   Matrix4 merge(Matrix4? other) {
     if (other == null || other == this) return this;
+
     return clone()..multiply(other);
   }
 }

@@ -1,6 +1,6 @@
-import 'package:mix/src/attributes/attribute.dart';
-import 'package:mix/src/attributes/nested_attribute.dart';
-import 'package:mix/src/mixer/mix_factory.dart';
+import '../attribute.dart';
+import '../nested_attribute.dart';
+import '../../mixer/mix_factory.dart';
 
 class HelperUtils {
   const HelperUtils._();

@@ -1,4 +1,4 @@
-import 'package:mix/src/attributes/exports.dart';
+import '../attributes/exports.dart';
 
 const flexDirection = FlexUtils.direction;
 const verticalDirection = FlexUtils.verticalDirection;

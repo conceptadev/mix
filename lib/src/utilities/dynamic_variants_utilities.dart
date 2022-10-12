@@ -1,20 +1,20 @@
-import 'package:mix/mix.dart';
+import '../../mix.dart';
 
 // Dynamic utilities
-final onXSmall = SystemVariantUtils.onXsmall();
-final onMedium = SystemVariantUtils.onMedium();
-final onSmall = SystemVariantUtils.onSmall();
-final onLarge = SystemVariantUtils.onLarge();
-final onPortrait = SystemVariantUtils.onPortrait();
-final onLandscape = SystemVariantUtils.onLandscape();
-final onDark = SystemVariantUtils.onDark();
-final onLight = SystemVariantUtils.onLight();
+final onXSmall = DynamicVariantUtilities.onXsmall();
+final onMedium = DynamicVariantUtilities.onMedium();
+final onSmall = DynamicVariantUtilities.onSmall();
+final onLarge = DynamicVariantUtilities.onLarge();
+final onPortrait = DynamicVariantUtilities.onPortrait();
+final onLandscape = DynamicVariantUtilities.onLandscape();
+final onDark = DynamicVariantUtilities.onDark();
+final onLight = DynamicVariantUtilities.onLight();
 
-final onDisabled = SystemVariantUtils.onDisabled();
-final onFocus = SystemVariantUtils.onFocus();
-final onHover = SystemVariantUtils.onHover();
-final onPress = SystemVariantUtils.onPress();
-const onNot = SystemVariantUtils.onNot;
+final onDisabled = DynamicVariantUtilities.onDisabled();
+final onFocus = DynamicVariantUtilities.onFocus();
+final onHover = DynamicVariantUtilities.onHover();
+final onPress = DynamicVariantUtilities.onPress();
+const onNot = DynamicVariantUtilities.onNot;
 final onEnabled = onNot(onDisabled);
 
 @Deprecated('Use onXSmall instead')

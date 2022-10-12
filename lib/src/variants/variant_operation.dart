@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
-import 'package:mix/src/attributes/attribute.dart';
-import 'package:mix/src/attributes/nested_attribute.dart';
-import 'package:mix/src/variants/variant_attribute.dart';
-import 'package:mix/src/variants/variants.dart';
+import '../attributes/attribute.dart';
+import '../attributes/nested_attribute.dart';
+import 'variant_attribute.dart';
+import 'variants.dart';
 
 /// @nodoc
 enum VariantOperator { and, or }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mix/src/attributes/attribute.dart';
+import '../../attributes/attribute.dart';
 
 /// ## Widget
 /// - [IconMix](IconMix-class.html)

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mix/src/helpers/dto/dto.dart';
-import 'package:mix/src/theme/mix_theme.dart';
+import 'dto.dart';
+import '../../theme/mix_theme.dart';
 
 class EdgeInsetsDto extends Dto<EdgeInsets> {
   final double? top;

@@ -1,4 +1,4 @@
-import 'package:mix/src/directives/text_directives/text_directive.attributes.dart';
+import 'text_directive.attributes.dart';
 
 String capitalize(String string) {
   final current = string;
@@ -12,8 +12,7 @@ String capitalize(String string) {
 String titleCase(String string) {
   const separator = ' ';
   final current = string;
-  List<String> words =
-      current.split(separator).map((word) => capitalize(word)).toList();
+  List<String> words = current.split(separator).map(capitalize).toList();
 
   return words.join(separator);
 }

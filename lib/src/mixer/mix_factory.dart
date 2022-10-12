@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mix/mix.dart';
-import 'package:mix/src/mixer/mix_values.dart';
+import '../../mix.dart';
+import 'mix_values.dart';
 
 const kVariantDeprecationNotice =
     'Deprecated pass variants directly to the Mixable Widget Contructor';
@@ -217,6 +217,7 @@ extension MixExtension<T extends Attribute> on Mix {
     required Widget child,
   }) {
     final mx = Mix.combine(this, overrideMix);
+
     return Box(mix: mx, child: child);
   }
 
@@ -226,6 +227,7 @@ extension MixExtension<T extends Attribute> on Mix {
     required List<Widget> children,
   }) {
     final mix = Mix.combine(this, overrideMix);
+
     return HBox(mix: mix, children: children);
   }
 
@@ -275,6 +277,7 @@ extension MixExtension<T extends Attribute> on Mix {
     Mix? overrideMix,
   }) {
     final mx = Mix.combine(this, overrideMix);
+
     return IconMix(
       icon,
       mix: mx,

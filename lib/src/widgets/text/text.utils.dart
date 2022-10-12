@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:mix/src/widgets/text/text.attributes.dart';
+import 'text.attributes.dart';
 
 /// @nodoc
 class TextFriendlyUtility {

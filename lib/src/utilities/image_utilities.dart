@@ -1,4 +1,4 @@
-import 'package:mix/src/widgets/image/image.utils.dart';
+import '../widgets/image/image.utils.dart';
 
 const image = ImageUtils.image;
 

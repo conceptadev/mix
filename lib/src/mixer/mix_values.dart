@@ -1,9 +1,9 @@
 import 'package:flutter/foundation.dart';
-import 'package:mix/src/attributes/attribute.dart';
-import 'package:mix/src/attributes/nested_attribute.dart';
-import 'package:mix/src/decorators/decorator_attribute.dart';
-import 'package:mix/src/directives/directive_attribute.dart';
-import 'package:mix/src/variants/variant_attribute.dart';
+import '../attributes/attribute.dart';
+import '../attributes/nested_attribute.dart';
+import '../decorators/decorator_attribute.dart';
+import '../directives/directive_attribute.dart';
+import '../variants/variant_attribute.dart';
 
 class MixValues {
   final MixInheritedAttributes attributes;
@@ -25,14 +25,14 @@ class MixValues {
         directives = const [];
 
   factory MixValues.fromList(List<Attribute> attributes) {
-    final _expanded = _expandNestedAttributes(attributes);
+    final expanded = _expandNestedAttributes(attributes);
 
     final directiveList = <DirectiveAttribute>[];
     final variantList = <VariantAttribute>[];
     final decoratorList = <DecoratorAttribute>[];
     final attributeList = <InheritedAttribute>[];
 
-    for (final attribute in _expanded) {
+    for (final attribute in expanded) {
       if (attribute is InheritedAttribute) {
         attributeList.add(attribute);
       }
@@ -112,26 +112,26 @@ class MixValues {
   }
 
   static List<Attribute> _expandNestedAttributes(List<Attribute> attributes) {
-    List<Attribute> _expanded = [];
+    List<Attribute> expanded = [];
 
     for (final attribute in attributes) {
       if (attribute is NestedAttribute) {
-        _expanded.addAll(
+        expanded.addAll(
           _expandNestedAttributes(attribute.values),
         );
       } else if (attribute is VariantAttribute) {
-        _expanded.add(
+        expanded.add(
           VariantAttribute(
             attribute.variant,
             _expandNestedAttributes(attribute.values),
           ),
         );
       } else {
-        _expanded.add(attribute);
+        expanded.add(attribute);
       }
     }
 
-    return _expanded;
+    return expanded;
   }
 
   @override

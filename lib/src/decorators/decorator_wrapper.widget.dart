@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mix/src/decorators/decorator_attribute.dart';
-import 'package:mix/src/mixer/mix_context.dart';
+import 'decorator_attribute.dart';
+import '../mixer/mix_context.dart';
 
 class ParentDecoratorWrapper extends DecoratorWrapper {
   const ParentDecoratorWrapper(

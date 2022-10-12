@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mix/src/helpers/dto/dto.dart';
-import 'package:mix/src/theme/refs/color_token.dart';
+
+import '../../theme/refs/color_token.dart';
+import 'dto.dart';
 
 class BorderDto extends Dto<Border> {
   final BorderSideDto? top;
@@ -169,14 +170,14 @@ class BorderSideDto extends Dto<BorderSide> {
 
   @override
   BorderSide resolve(BuildContext context) {
-    Color? _color = color;
+    Color? resolvedColor = color;
 
-    if (_color is ColorToken) {
-      _color = _color.resolve(context);
+    if (resolvedColor is ColorToken) {
+      resolvedColor = resolvedColor.resolve(context);
     }
 
     return BorderSide(
-      color: _color ?? _default.color,
+      color: resolvedColor ?? _default.color,
       width: width ?? _default.width,
       style: style ?? _default.style,
     );

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mix/mix.dart';
-import 'package:mix/src/variants/variant_attribute.dart';
-import 'package:mix/src/variants/variant_operation.dart';
+import '../../mix.dart';
+import 'variant_attribute.dart';
+import 'variant_operation.dart';
 
 /// {@category Variants}
 class Variant<T extends Attribute> {

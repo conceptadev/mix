@@ -1,8 +1,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
-import 'package:mix/mix.dart';
-import 'package:mix/src/widgets/empty.widget.dart';
-import 'package:mix/src/widgets/text/text_helpers.dart';
+import '../../helpers/extensions.dart';
+import '../../mixer/mix_context.dart';
+import '../../mixer/mix_factory.dart';
+import '../../variants/variants.dart';
+import '../empty.widget.dart';
+import '../mixable.widget.dart';
+import 'text_directives/text_directive.attributes.dart';
+import 'text_directives/text_directive_helpers.dart';
 
 /// _Mix_ corollary to Flutter _Text_ widget
 /// Use wherever you would use a Flutter _Text_ widget
@@ -66,6 +71,13 @@ class TextMixerWidget extends MixedWidget {
 
     if (sharedProps.animated) {
       return AnimatedDefaultTextStyle(
+        style: props.style ?? context.defaultTextStyle(),
+        duration: sharedProps.animationDuration,
+        curve: sharedProps.animationCurve,
+        softWrap: props.softWrap,
+        overflow: props.overflow,
+        textAlign: props.textAlign,
+        maxLines: props.maxLines,
         child: Text(
           content,
           textDirection: sharedProps.textDirection,
@@ -80,13 +92,6 @@ class TextMixerWidget extends MixedWidget {
           textAlign: props.textAlign,
           textHeightBehavior: props.textHeightBehavior,
         ),
-        style: props.style ?? context.defaultTextStyle(),
-        duration: sharedProps.animationDuration,
-        curve: sharedProps.animationCurve,
-        softWrap: props.softWrap,
-        overflow: props.overflow,
-        textAlign: props.textAlign,
-        maxLines: props.maxLines,
       );
     } else {
       return Text(

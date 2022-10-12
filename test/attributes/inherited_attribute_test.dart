@@ -205,7 +205,7 @@ void main() {
 
     testWidgets('with variant', (tester) async {
       await tester.pumpWidget(
-        MixTestWidget(
+        const MixTestWidget(
           child: CustomWidget(
             Icons.bolt,
             variants: [activated],
@@ -244,7 +244,7 @@ void main() {
 
     testWidgets('with variants', (tester) async {
       await tester.pumpWidget(
-        MixTestWidget(
+        const MixTestWidget(
           child: MaterialApp(
             home: Scaffold(
               body: TextFieldWidget(

@@ -1,4 +1,4 @@
-import 'text.utils.dart';
+import '../widgets/text/text.utils.dart';
 
 /// Text align
 const textAlign = TextUtility.textAlign;

@@ -72,30 +72,30 @@ class TextAttributes extends InheritedAttribute {
     TextWidthBasis? textWidthBasis,
     TextHeightBehavior? textHeightBehavior,
   }) {
-    TextStyle? _thisStyle = this.style;
-    TextStyle? _otherStyle = style;
+    TextStyle? thisStyle = this.style;
+    TextStyle? otherStyle = style;
 
-    TextStyleToken? _thisStyleRef = this.styleRef;
-    TextStyleToken? _otherStyleRef = styleRef;
+    TextStyleToken? thisStyleRef = this.styleRef;
+    TextStyleToken? otherStyleRef = styleRef;
 
     // During the merge we need to move the ref
     // clunky but allows cleaner api for devs
-    if (_thisStyle is TextStyleToken) {
-      _thisStyleRef = _thisStyle;
+    if (thisStyle is TextStyleToken) {
+      thisStyleRef = thisStyle;
     } else {
-      _thisStyle = _thisStyle;
+      thisStyle = thisStyle;
     }
 
     if (style is TextStyleToken) {
-      _otherStyleRef = style;
+      otherStyleRef = style;
     } else {
-      _otherStyle = style;
+      otherStyle = style;
     }
 
     return TextAttributes(
-      style: _thisStyle?.merge(_otherStyle) ?? _otherStyle,
+      style: thisStyle?.merge(otherStyle) ?? otherStyle,
       strutStyle: this.strutStyle?.merge(strutStyle) ?? strutStyle,
-      styleRef: _otherStyleRef ?? _thisStyleRef,
+      styleRef: otherStyleRef ?? thisStyleRef,
       textAlign: textAlign ?? this.textAlign,
       locale: locale ?? this.locale,
       softWrap: softWrap ?? this.softWrap,

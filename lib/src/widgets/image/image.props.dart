@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mix/src/mixer/mix_context.dart';
+import '../../mixer/mix_context.dart';
 
 import '../../theme/refs/color_token.dart';
 import 'image.attributes.dart';

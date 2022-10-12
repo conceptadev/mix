@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:mix/src/mixer/mix_context_notifier.dart';
+import '../mixer/mix_context_notifier.dart';
 
 import '../../mix.dart';
 

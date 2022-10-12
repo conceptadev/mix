@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:mix/src/attributes/attribute.dart';
-import 'package:mix/src/attributes/shared/shared.props.dart';
-import 'package:mix/src/directives/directive_attribute.dart';
-import 'package:mix/src/mixer/mix_factory.dart';
-import 'package:mix/src/mixer/mix_values.dart';
-import 'package:mix/src/variants/variant_attribute.dart';
-import 'package:mix/src/variants/variants.dart';
-import 'package:mix/src/widgets/box/box.props.dart';
-import 'package:mix/src/widgets/flex/flex.props.dart';
-import 'package:mix/src/widgets/icon/icon.props.dart';
-import 'package:mix/src/widgets/image/image.props.dart';
-import 'package:mix/src/widgets/text/text.props.dart';
-import 'package:mix/src/widgets/zbox/zbox.props.dart';
+import '../attributes/attribute.dart';
+import '../attributes/shared/shared.props.dart';
+import '../directives/directive_attribute.dart';
+import 'mix_factory.dart';
+import 'mix_values.dart';
+import '../variants/variant_attribute.dart';
+import '../variants/variants.dart';
+import '../widgets/box/box.props.dart';
+import '../widgets/flex/flex.props.dart';
+import '../widgets/icon/icon.props.dart';
+import '../widgets/image/image.props.dart';
+import '../widgets/text/text.props.dart';
+import '../widgets/zbox/zbox.props.dart';
 
 class MixContext {
   final BuildContext context;
@@ -69,7 +69,7 @@ class MixContext {
     List<Variant> selectedVariants,
     List<Attribute> attributes,
   ) {
-    List<Attribute> _expanded = [];
+    List<Attribute> expanded = [];
 
     for (final attribute in attributes) {
       if (attribute is VariantAttribute) {
@@ -81,20 +81,21 @@ class MixContext {
             attribute.variant.inverse ? !shouldApply : shouldApply;
         if (willApply) {
           // If its selected, add it to the list
-          _expanded.addAll(_selectVariantsToApply(
+          expanded.addAll(_selectVariantsToApply(
             context,
             selectedVariants,
             attribute.values,
           ));
         } else {
           // If not selected, add it to the list for future use
-          _expanded.add(attribute);
+          expanded.add(attribute);
         }
       } else {
-        _expanded.add(attribute);
+        expanded.add(attribute);
       }
     }
-    return _expanded;
+
+    return expanded;
   }
 
   MixValues get attributes {

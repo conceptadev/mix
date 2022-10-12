@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mix/src/attributes/shared/shared.props.dart';
-import 'package:mix/src/decorators/decorator_attribute.dart';
-import 'package:mix/src/mixer/mix_context.dart';
+import '../../../attributes/shared/shared.props.dart';
+import '../../../decorators/decorator_attribute.dart';
+import '../../../mixer/mix_context.dart';
 
 /// ## Widget
 /// - (All)

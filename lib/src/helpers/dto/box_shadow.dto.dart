@@ -2,8 +2,9 @@ import 'dart:math';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:mix/src/helpers/dto/dto.dart';
-import 'package:mix/src/theme/refs/color_token.dart';
+
+import '../../theme/refs/color_token.dart';
+import 'dto.dart';
 
 class BoxShadowDto extends Dto<BoxShadow> {
   final Color? color;
@@ -22,14 +23,14 @@ class BoxShadowDto extends Dto<BoxShadow> {
 
   @override
   BoxShadow resolve(BuildContext context) {
-    Color? _color = color;
+    Color? resolvedColor = color;
 
-    if (_color is ColorToken) {
-      _color = _color.resolve(context);
+    if (resolvedColor is ColorToken) {
+      resolvedColor = resolvedColor.resolve(context);
     }
 
     return BoxShadow(
-      color: _color ?? _default.color,
+      color: color ?? _default.color,
       offset: offset ?? _default.offset,
       blurRadius: blurRadius ?? _default.blurRadius,
       spreadRadius: spreadRadius ?? _default.spreadRadius,

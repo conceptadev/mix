@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:mix/src/attributes/attribute.dart';
-import 'package:mix/src/helpers/extensions.dart';
-import 'package:mix/src/theme/mix_theme.dart';
-import 'package:mix/src/theme/tokens/breakpoints.dart';
-import 'package:mix/src/variants/variants.dart';
-import 'package:mix/src/widgets/pressable/pressable.notifier.dart';
+import '../../attributes/attribute.dart';
+import '../../helpers/extensions.dart';
+import '../../theme/mix_theme.dart';
+import '../../theme/tokens/breakpoints.dart';
+import '../variants.dart';
+import '../../widgets/pressable/pressable.notifier.dart';
 
 /// {@category Variants}
-class SystemVariantUtils {
-  const SystemVariantUtils._();
+class DynamicVariantUtilities {
+  const DynamicVariantUtilities._();
 
   static _screenSizeCheck(ScreenSizeToken screenSize) {
     return (BuildContext context) {

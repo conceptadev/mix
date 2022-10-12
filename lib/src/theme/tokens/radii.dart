@@ -1,4 +1,4 @@
-import 'package:mix/src/theme/tokens/size.dart';
+import 'size.dart';
 
 class MixThemeRadii extends MixThemeSize {
   const MixThemeRadii({

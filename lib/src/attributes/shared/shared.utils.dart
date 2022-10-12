@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mix/src/attributes/shared/shared.attributes.dart';
+import 'shared.attributes.dart';
 /// ## Widget:
 /// - (all)
 ///

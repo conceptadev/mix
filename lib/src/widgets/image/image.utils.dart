@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mix/src/widgets/image/image.attributes.dart';
+import 'image.attributes.dart';
 
 class ImageUtils {
   const ImageUtils._();

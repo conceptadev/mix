@@ -1,5 +1,5 @@
-import 'package:mix/src/attributes/exports.dart';
-import 'package:mix/src/theme/tokens/size.dart';
+import '../attributes/exports.dart';
+import '../theme/tokens/size.dart';
 
 const m = WithSizeTokens(BoxUtility.margin);
 const mt = WithSizeTokens(BoxUtility.marginTop);
