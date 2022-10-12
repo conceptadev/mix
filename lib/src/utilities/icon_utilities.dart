@@ -1,5 +1,5 @@
-import '../attributes/exports.dart';
+import '../widgets/icon/icon.utils.dart';
 
-const icon = IconUtils.icon;
-const iconSize = IconUtils.iconSize;
-const iconColor = IconUtils.iconColor;
+const icon = IconUtility.icon;
+const iconSize = IconUtility.iconSize;
+const iconColor = IconUtility.iconColor;

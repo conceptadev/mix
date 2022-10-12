@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'icon.attributes.dart';
 
 /// ## Widget
@@ -7,8 +8,8 @@ import 'icon.attributes.dart';
 /// Utility functions and short utils are listed in [Static Methods](#static-methods)
 ///
 /// {@category Utilities}
-class IconUtils {
-  const IconUtils._();
+class IconUtility {
+  const IconUtility._();
 
   /// Short Utils: icon
   static IconAttributes icon({double? size, Color? color}) {

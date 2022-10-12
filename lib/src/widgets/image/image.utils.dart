@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+
 import 'image.attributes.dart';
 
-class ImageUtils {
-  const ImageUtils._();
+class ImageUtility {
+  const ImageUtility._();
 
   static ImageAttributes image({
     Color? color,

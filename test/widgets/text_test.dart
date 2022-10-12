@@ -32,7 +32,7 @@ void main() {
             TextUtility.textWidthBasis(TextWidthBasis.longestLine),
             TextUtility.maxLines(3),
             TextUtility.textAlign(TextAlign.justify),
-            SharedUtils.textDirection(TextDirection.rtl),
+            SharedUtility.textDirection(TextDirection.rtl),
           ).text(widgetText),
         ),
       );

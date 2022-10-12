@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../../mix.dart';
 import 'pressable.notifier.dart';
 
@@ -62,10 +63,10 @@ class PressableMixerWidget extends StatefulWidget {
   final HitTestBehavior? behavior;
 
   @override
-  _PressableMixerWidgetState createState() => _PressableMixerWidgetState();
+  PressableMixerWidgetState createState() => PressableMixerWidgetState();
 }
 
-class _PressableMixerWidgetState extends State<PressableMixerWidget> {
+class PressableMixerWidgetState extends State<PressableMixerWidget> {
   late FocusNode node;
 
   @override

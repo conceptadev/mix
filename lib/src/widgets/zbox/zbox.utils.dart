@@ -9,8 +9,8 @@ import 'zbox.attributes.dart';
 ///
 /// {@category Utilities}
 ///
-class ZBoxUtils {
-  const ZBoxUtils._();
+class ZBoxUtility {
+  const ZBoxUtility._();
 
   /// Short Utils: zAlignment
   static ZBoxAttributes alignment(AlignmentGeometry alignment) {

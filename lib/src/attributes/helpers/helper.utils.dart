@@ -1,9 +1,9 @@
+import '../../mixer/mix_factory.dart';
 import '../attribute.dart';
 import '../nested_attribute.dart';
-import '../../mixer/mix_factory.dart';
 
-class HelperUtils {
-  const HelperUtils._();
+class HelperUtility {
+  const HelperUtility._();
 
   static NestedAttribute apply<T extends Attribute>(List<Mix> mixes) {
     return NestedAttribute(Mix.combineAll(mixes).source.toList());

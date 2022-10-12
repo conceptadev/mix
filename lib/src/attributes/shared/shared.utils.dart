@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+
 import 'shared.attributes.dart';
+
 /// ## Widget:
 /// - (all)
 ///
 /// Utility functions and short utils are listed in [Static Methods](#static-methods)
 ///
 /// {@category Utilities}
-class SharedUtils {
-  const SharedUtils._();
+class SharedUtility {
+  const SharedUtility._();
 
   static SharedAttributes animated({
     bool animated = true,

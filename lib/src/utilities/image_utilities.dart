@@ -1,10 +1,10 @@
 import '../widgets/image/image.utils.dart';
 
-const image = ImageUtils.image;
+const image = ImageUtility.image;
 
-const imageColor = ImageUtils.color;
-const imageScale = ImageUtils.scale;
-const imageColorBlendMode = ImageUtils.colorBlendMode;
-const imageFit = ImageUtils.fit;
-const imageAlignment = ImageUtils.alignment;
-const imageRepeat = ImageUtils.repeat;
+const imageColor = ImageUtility.color;
+const imageScale = ImageUtility.scale;
+const imageColorBlendMode = ImageUtility.colorBlendMode;
+const imageFit = ImageUtility.fit;
+const imageAlignment = ImageUtility.alignment;
+const imageRepeat = ImageUtility.repeat;

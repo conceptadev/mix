@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'flex.attributes.dart';
 
 /// ## Widget
@@ -7,8 +8,8 @@ import 'flex.attributes.dart';
 /// Utility functions and short utils are listed in [Static Methods](#static-methods)
 ///
 /// {@category Utilities}
-class FlexUtils {
-  const FlexUtils._();
+class FlexUtility {
+  const FlexUtility._();
 
   /// Short Utils: flexDirection
   static FlexAttributes direction(Axis direction) {

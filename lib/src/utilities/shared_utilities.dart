@@ -1,9 +1,9 @@
-import '../attributes/exports.dart';
+import '../attributes/shared/shared.utils.dart';
 
-const show = SharedUtils.visible;
-const hide = SharedUtils.hidden;
+const show = SharedUtility.visible;
+const hide = SharedUtility.hidden;
 
-const animated = SharedUtils.animated;
-const animationDuration = SharedUtils.animationDuration;
-const animationCurve = SharedUtils.animationCurve;
-const textDirection = SharedUtils.textDirection;
+const animated = SharedUtility.animated;
+const animationDuration = SharedUtility.animationDuration;
+const animationCurve = SharedUtility.animationCurve;
+const textDirection = SharedUtility.textDirection;
