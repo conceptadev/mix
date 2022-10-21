@@ -1,8 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import '../mixer/mix_context_notifier.dart';
 
-import '../../mix.dart';
+import '../mixer/mix_context.dart';
+import '../mixer/mix_context_notifier.dart';
+import '../mixer/mix_factory.dart';
+import '../variants/variants.dart';
 
 /// Mix Widget
 abstract class MixableWidget extends StatelessWidget {

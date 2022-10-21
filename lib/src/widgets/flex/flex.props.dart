@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../../mix.dart';
+
+import '../../mixer/mix_context.dart';
+import 'flex.attributes.dart';
 
 class FlexProps {
   final Axis? direction;

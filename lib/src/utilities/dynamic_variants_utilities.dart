@@ -1,4 +1,4 @@
-import '../../mix.dart';
+import '../variants/dynamic_variants/dynamic_variants.utils.dart';
 
 // Dynamic utilities
 final onXSmall = DynamicVariantUtilities.onXsmall();

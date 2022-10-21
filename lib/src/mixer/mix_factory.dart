@@ -1,5 +1,12 @@
 import 'package:flutter/material.dart';
-import '../../mix.dart';
+
+import '../attributes/attribute.dart';
+import '../attributes/helpers/helper.utils.dart';
+import '../variants/variants.dart';
+import '../widgets/box/box.widget.dart';
+import '../widgets/flex/flex.widget.dart';
+import '../widgets/icon/icon.widget.dart';
+import '../widgets/text/text.widget.dart';
 import 'mix_values.dart';
 
 const kVariantDeprecationNotice =
@@ -203,6 +210,7 @@ extension MixExtension<T extends Attribute> on Mix {
   /// Like apply, but the argument mix is nullable
   Mix maybeApply(Mix? mix) {
     if (mix == null) return this;
+
     return apply(mix);
   }
 
@@ -216,9 +224,10 @@ extension MixExtension<T extends Attribute> on Mix {
     Mix? overrideMix,
     required Widget child,
   }) {
-    final mx = Mix.combine(this, overrideMix);
-
-    return Box(mix: mx, child: child);
+    return Box(
+      mix: maybeApply(overrideMix),
+      child: child,
+    );
   }
 
   /// @nodoc
@@ -226,9 +235,10 @@ extension MixExtension<T extends Attribute> on Mix {
     Mix? overrideMix,
     required List<Widget> children,
   }) {
-    final mix = Mix.combine(this, overrideMix);
-
-    return HBox(mix: mix, children: children);
+    return HBox(
+      mix: maybeApply(overrideMix),
+      children: children,
+    );
   }
 
   /// @nodoc
@@ -247,8 +257,10 @@ extension MixExtension<T extends Attribute> on Mix {
     String text, {
     Mix? overrideMix,
   }) {
-    final mix = Mix.combine(this, overrideMix);
-    return TextMix(text, mix: mix);
+    return TextMix(
+      text,
+      mix: maybeApply(overrideMix),
+    );
   }
 
   /// @nodoc
@@ -256,8 +268,10 @@ extension MixExtension<T extends Attribute> on Mix {
     Mix? overrideMix,
     required List<Widget> children,
   }) {
-    final mix = Mix.combine(this, overrideMix);
-    return VBox(mix: mix, children: children);
+    return VBox(
+      mix: maybeApply(overrideMix),
+      children: children,
+    );
   }
 
   /// @nodoc
@@ -276,11 +290,9 @@ extension MixExtension<T extends Attribute> on Mix {
     IconData icon, {
     Mix? overrideMix,
   }) {
-    final mx = Mix.combine(this, overrideMix);
-
     return IconMix(
       icon,
-      mix: mx,
+      mix: maybeApply(overrideMix),
     );
   }
 }

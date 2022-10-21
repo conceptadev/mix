@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../mix.dart';
+
+import '../attributes/attribute.dart';
 import 'variant_attribute.dart';
 import 'variant_operation.dart';
 

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import '../../../mix.dart';
+
+import '../../mixer/mix_context.dart';
+import '../../theme/refs/color_token.dart';
+import 'icon.attributes.dart';
 
 class IconProps {
   final Color? color;

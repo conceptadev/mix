@@ -1,5 +1,10 @@
 import 'package:flutter/widgets.dart';
-import '../../../mix.dart';
+
+import '../../mixer/mix_context.dart';
+import '../../mixer/mix_factory.dart';
+import '../../variants/variants.dart';
+import '../box/box.widget.dart';
+import '../mixable.widget.dart';
 
 /// ## Attributes:
 /// - [ZBoxAttributes](ZBoxAttributes-class.html)
