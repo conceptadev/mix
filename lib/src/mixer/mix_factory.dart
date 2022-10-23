@@ -64,6 +64,7 @@ class Mix {
   /// (_attributes_ argument can be null)
   factory Mix.fromMaybeList(List<Attribute?> attributes) {
     final validAttributes = attributes.whereType<Attribute>();
+
     return Mix.fromList(validAttributes.toList());
   }
 
@@ -113,12 +114,12 @@ class Mix {
 
   /// Same as _combine_, but accepts a _List_ of _Mix_ instances
   static Mix combineAll<T extends Attribute>(List<Mix> mixes) {
-    MixValues attributes = const MixValues.empty();
+    MixValues values = const MixValues.empty();
     for (final mix in mixes) {
-      attributes = attributes.merge(mix.values);
+      values = values.merge(mix.values);
     }
 
-    return Mix._(attributes);
+    return Mix._(values);
   }
 
   /// Merges many mixes into one
@@ -131,16 +132,16 @@ class Mix {
     Mix? mix5,
     Mix? mix6,
   ]) {
-    MixValues attributes = const MixValues.empty();
+    MixValues values = const MixValues.empty();
 
-    if (mix1 != null) attributes = attributes.merge(mix1.values);
-    if (mix2 != null) attributes = attributes.merge(mix2.values);
-    if (mix3 != null) attributes = attributes.merge(mix3.values);
-    if (mix4 != null) attributes = attributes.merge(mix4.values);
-    if (mix5 != null) attributes = attributes.merge(mix5.values);
-    if (mix6 != null) attributes = attributes.merge(mix6.values);
+    if (mix1 != null) values = values.merge(mix1.values);
+    if (mix2 != null) values = values.merge(mix2.values);
+    if (mix3 != null) values = values.merge(mix3.values);
+    if (mix4 != null) values = values.merge(mix4.values);
+    if (mix5 != null) values = values.merge(mix5.values);
+    if (mix6 != null) values = values.merge(mix6.values);
 
-    return Mix._(attributes);
+    return Mix._(values);
   }
 
   /// Chooses mix based on condition
