@@ -20,4 +20,7 @@ class NestedAttribute<T extends Attribute> extends Attribute {
 
   @override
   int get hashCode => values.hashCode;
+
+  @override
+  String toString() => 'NestedAttribute(_attributes: $_attributes)';
 }
