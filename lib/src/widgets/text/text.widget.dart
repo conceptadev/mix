@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter/widgets.dart';
-import '../../helpers/extensions.dart';
+import 'package:flutter/material.dart';
+
 import '../../mixer/mix_context.dart';
 import '../../mixer/mix_factory.dart';
 import '../../variants/variants.dart';
@@ -71,7 +71,9 @@ class TextMixerWidget extends MixedWidget {
 
     if (sharedProps.animated) {
       return AnimatedDefaultTextStyle(
-        style: props.style ?? context.defaultTextStyle(),
+        style: props.style ??
+            Theme.of(context).textTheme.bodyText1 ??
+            const TextStyle(),
         duration: sharedProps.animationDuration,
         curve: sharedProps.animationCurve,
         softWrap: props.softWrap,

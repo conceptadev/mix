@@ -1,113 +1,110 @@
-import '../../helpers/extensions.dart';
+import 'package:flutter/material.dart';
 
+import '../../helpers/extensions.dart';
 import '../refs/text_style_token.dart';
 
 class MaterialTextThemeTokens {
   MaterialTextThemeTokens();
   // Material 2
-  final TextStyleToken headline1 = TextStyleToken('headline1', (context) {
-    return context.theme.textTheme.headline1!;
-  });
-  final TextStyleToken headline2 = TextStyleToken('headline2', (context) {
-    return context.theme.textTheme.headline2!;
-  });
-  final TextStyleToken headline3 = TextStyleToken('headline3', (context) {
-    return context.theme.textTheme.headline3!;
-  });
-  final TextStyleToken headline4 = TextStyleToken('headline4', (context) {
-    return context.theme.textTheme.headline4!;
-  });
-  final TextStyleToken headline5 = TextStyleToken('headline5', (context) {
-    return context.theme.textTheme.headline5!;
-  });
-  final TextStyleToken headline6 = TextStyleToken('headline6', (context) {
-    return context.theme.textTheme.headline6!;
-  });
-  final TextStyleToken subtitle1 = TextStyleToken('subtitle1', (context) {
-    return context.theme.textTheme.subtitle1!;
-  });
-  final TextStyleToken subtitle2 = TextStyleToken('subtitle2', (context) {
-    return context.theme.textTheme.subtitle2!;
-  });
-  final TextStyleToken bodyText1 = TextStyleToken('body1', (context) {
-    return context.theme.textTheme.bodyText1!;
-  });
-  final TextStyleToken bodyText2 = TextStyleToken('body2', (context) {
-    return context.theme.textTheme.bodyText2!;
-  });
-  final TextStyleToken caption = TextStyleToken('caption', (context) {
-    return context.theme.textTheme.caption!;
-  });
-  final TextStyleToken button = TextStyleToken('button', (context) {
-    return context.theme.textTheme.button!;
-  });
-  final TextStyleToken overline = TextStyleToken('overline', (context) {
-    return context.theme.textTheme.overline!;
-  });
+  final TextStyleToken headline1 = TextStyleToken(
+    (context) => Theme.of(context).textTheme.headline1!,
+  );
+  final TextStyleToken headline2 = TextStyleToken(
+    (context) => Theme.of(context).textTheme.headline2!,
+  );
+  final TextStyleToken headline3 = TextStyleToken(
+    (context) => Theme.of(context).textTheme.headline3!,
+  );
+  final TextStyleToken headline4 = TextStyleToken(
+    (context) => Theme.of(context).textTheme.headline4!,
+  );
+  final TextStyleToken headline5 = TextStyleToken(
+    (context) => Theme.of(context).textTheme.headline5!,
+  );
+  final TextStyleToken headline6 = TextStyleToken(
+    (context) => Theme.of(context).textTheme.headline6!,
+  );
+  final TextStyleToken subtitle1 = TextStyleToken(
+    (context) => Theme.of(context).textTheme.subtitle1!,
+  );
+  final TextStyleToken subtitle2 = TextStyleToken(
+    (context) => Theme.of(context).textTheme.subtitle2!,
+  );
+  final TextStyleToken bodyText1 = TextStyleToken(
+    (context) => Theme.of(context).textTheme.bodyText1!,
+  );
+  final TextStyleToken bodyText2 = TextStyleToken(
+    (context) => Theme.of(context).textTheme.bodyText2!,
+  );
+  final TextStyleToken caption = TextStyleToken(
+    (context) => Theme.of(context).textTheme.caption!,
+  );
+  final TextStyleToken button = TextStyleToken(
+    (context) => Theme.of(context).textTheme.button!,
+  );
+  final TextStyleToken overline = TextStyleToken(
+    (context) => Theme.of(context).textTheme.overline!,
+  );
 
   // Material 3
 
-  final TextStyleToken displayLarge = TextStyleToken('displayLarge', (context) {
-    return context.theme.textTheme.displayLarge!;
-  });
+  final TextStyleToken displayLarge = TextStyleToken(
+    (context) => Theme.of(context).textTheme.displayLarge!,
+  );
 
-  final TextStyleToken displayMedium =
-      TextStyleToken('displayMedium', (context) {
-    return context.theme.textTheme.displayMedium!;
-  });
+  final TextStyleToken displayMedium = TextStyleToken(
+    (context) => Theme.of(context).textTheme.displayMedium!,
+  );
 
-  final TextStyleToken displaySmall = TextStyleToken('displaySmall', (context) {
-    return context.theme.textTheme.displaySmall!;
-  });
+  final TextStyleToken displaySmall = TextStyleToken(
+    (context) => Theme.of(context).textTheme.displaySmall!,
+  );
 
-  final TextStyleToken headlineLarge =
-      TextStyleToken('headlineLarge', (context) {
-    return context.theme.textTheme.headlineLarge!;
-  });
+  final TextStyleToken headlineLarge = TextStyleToken(
+    (context) => Theme.of(context).textTheme.headlineLarge!,
+  );
 
-  final TextStyleToken headlineMedium =
-      TextStyleToken('headlineMedium', (context) {
-    return context.theme.textTheme.headlineMedium!;
-  });
+  final TextStyleToken headlineMedium = TextStyleToken(
+    (context) => Theme.of(context).textTheme.headlineMedium!,
+  );
 
-  final TextStyleToken headlineSmall =
-      TextStyleToken('headlineSmall', (context) {
-    return context.theme.textTheme.headlineSmall!;
-  });
+  final TextStyleToken headlineSmall = TextStyleToken(
+    (context) => Theme.of(context).textTheme.headlineSmall!,
+  );
 
-  final TextStyleToken titleLarge = TextStyleToken('titleLarge', (context) {
-    return context.theme.textTheme.titleLarge!;
-  });
+  final TextStyleToken titleLarge = TextStyleToken(
+    (context) => Theme.of(context).textTheme.titleLarge!,
+  );
 
-  final TextStyleToken titleMedium = TextStyleToken('titleMedium', (context) {
-    return context.theme.textTheme.titleMedium!;
-  });
+  final TextStyleToken titleMedium = TextStyleToken(
+    (context) => Theme.of(context).textTheme.titleMedium!,
+  );
 
-  final TextStyleToken titleSmall = TextStyleToken('titleSmall', (context) {
-    return context.theme.textTheme.titleSmall!;
-  });
+  final TextStyleToken titleSmall = TextStyleToken(
+    (context) => Theme.of(context).textTheme.titleSmall!,
+  );
 
-  final TextStyleToken bodyLarge = TextStyleToken('bodyLarge', (context) {
-    return context.theme.textTheme.bodyLarge!;
-  });
+  final TextStyleToken bodyLarge = TextStyleToken(
+    (context) => Theme.of(context).textTheme.bodyLarge!,
+  );
 
-  final TextStyleToken bodyMedium = TextStyleToken('bodyMedium', (context) {
-    return context.theme.textTheme.bodyMedium!;
-  });
+  final TextStyleToken bodyMedium = TextStyleToken(
+    (context) => Theme.of(context).textTheme.bodyMedium!,
+  );
 
-  final TextStyleToken bodySmall = TextStyleToken('bodySmall', (context) {
-    return context.textTheme.bodySmall!;
-  });
+  final TextStyleToken bodySmall = TextStyleToken(
+    (context) => context.textTheme.bodySmall!,
+  );
 
-  final TextStyleToken labelLarge = TextStyleToken('labelLarge', (context) {
-    return context.textTheme.labelLarge!;
-  });
+  final TextStyleToken labelLarge = TextStyleToken(
+    (context) => context.textTheme.labelLarge!,
+  );
 
-  final TextStyleToken labelMedium = TextStyleToken('labelMedium', (context) {
-    return context.textTheme.labelMedium!;
-  });
+  final TextStyleToken labelMedium = TextStyleToken(
+    (context) => context.textTheme.labelMedium!,
+  );
 
-  final TextStyleToken labelSmall = TextStyleToken('labelSmall', (context) {
-    return context.textTheme.labelSmall!;
-  });
+  final TextStyleToken labelSmall = TextStyleToken(
+    (context) => context.textTheme.labelSmall!,
+  );
 }

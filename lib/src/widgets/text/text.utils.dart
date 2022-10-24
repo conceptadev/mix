@@ -8,6 +8,7 @@ import 'text.attributes.dart';
 class TextFriendlyUtility {
   const TextFriendlyUtility._();
 
+  // ignore: long-parameter-list
   static TextAttributes textStyle({
     Color? color,
     Paint? background,
@@ -34,6 +35,7 @@ class TextFriendlyUtility {
     combineShadows() {
       final s = shadows ?? [];
       if (shadow != null) s.add(shadow);
+
       return s;
     }
 

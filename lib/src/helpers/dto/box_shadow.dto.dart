@@ -21,6 +21,19 @@ class BoxShadowDto extends Dto<BoxShadow> {
 
   final BoxShadow _default = const BoxShadow();
 
+  factory BoxShadowDto.fromBoxShadow(BoxShadow? boxShadow) {
+    if (boxShadow == null) {
+      return const BoxShadowDto();
+    }
+
+    return BoxShadowDto(
+      blurRadius: boxShadow.blurRadius,
+      color: boxShadow.color,
+      offset: Offset(boxShadow.offset.dx, boxShadow.offset.dy),
+      spreadRadius: boxShadow.spreadRadius,
+    );
+  }
+
   @override
   BoxShadow resolve(BuildContext context) {
     Color? resolvedColor = color;

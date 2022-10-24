@@ -182,7 +182,7 @@ class BoxProps {
     if (borderRadius != other.borderRadius) {
       diff.add('borderRadius');
     }
-    if (listEquals(boxShadow, other.boxShadow) == false) {
+    if (!listEquals(boxShadow, other.boxShadow)) {
       diff.add('boxShadow');
     }
     if (transform != other.transform) {
@@ -203,6 +203,7 @@ class BoxProps {
     if (shape != other.shape) {
       diff.add('shape');
     }
+
     return diff;
   }
 

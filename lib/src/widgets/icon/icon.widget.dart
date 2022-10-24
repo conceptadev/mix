@@ -81,6 +81,7 @@ class IconMixerWidget extends MixedWidget {
         ),
         builder: (context, value, child) {
           final sizeValue = value;
+
           return TweenAnimationBuilder<Color?>(
             duration: sharedProps.animationDuration,
             curve: sharedProps.animationCurve,

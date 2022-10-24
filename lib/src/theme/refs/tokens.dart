@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 abstract class MixToken<T> {
-  const MixToken(this.id, this.getter);
-  final String id;
-  final TokenValueGetter<T> getter;
+  const MixToken(this.valueGetter);
+
+  final TokenValueGetter<T> valueGetter;
   T resolve(BuildContext context);
 }
 

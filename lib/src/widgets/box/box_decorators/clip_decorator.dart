@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../../decorators/decorator_attribute.dart';
 import '../../../mixer/mix_context.dart';
 
@@ -117,6 +118,7 @@ class TriangleClipper extends CustomClipper<Path> {
     path.lineTo(size.width, size.height);
     path.lineTo(0.0, size.height);
     path.close();
+
     return path;
   }
 

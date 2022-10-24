@@ -5,6 +5,7 @@ import 'image.attributes.dart';
 class ImageUtility {
   const ImageUtility._();
 
+  // ignore: long-parameter-list
   static ImageAttributes image({
     Color? color,
     double? width,

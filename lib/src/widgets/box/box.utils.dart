@@ -4,7 +4,6 @@ import '../../helpers/dto/border.dto.dart';
 import '../../helpers/dto/border_radius.dto.dart';
 import '../../helpers/dto/box_shadow.dto.dart';
 import '../../helpers/dto/edge_insets.dto.dart';
-import '../../helpers/extensions.dart';
 import 'box.attributes.dart';
 
 ///
@@ -320,7 +319,7 @@ class BoxUtility {
 
     return BoxAttributes(
       boxShadow: kElevationToShadow[elevation]!
-          .map((e) => e.toBoxShadowProps())
+          .map(BoxShadowDto.fromBoxShadow)
           .toList(),
     );
   }

@@ -1,3 +1,3 @@
-import '../attributes/helpers/helper.utils.dart';
+import '../../mix.dart';
 
 const apply = WrapFunction(HelperUtility.apply);

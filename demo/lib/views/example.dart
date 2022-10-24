@@ -76,6 +76,7 @@ class CustomMixWidget extends StatelessWidget {
         textColor(MaterialTokens.colorScheme.onSecondary),
       ),
     );
+
     return Box(
       mix: style,
       child: const TextMix('Custom Widget'),

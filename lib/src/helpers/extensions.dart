@@ -1,32 +1,28 @@
 import 'package:flutter/material.dart';
-import 'dto/box_shadow.dto.dart';
 
-/// {@category Misc Utils}
-extension BuildContextExtensions on BuildContext {
+extension ThemeContextExtensions on BuildContext {
   Brightness get brightness => Theme.of(this).brightness;
 
   /// Check if brightness is Brightness.dark
   bool get isDarkMode => brightness == Brightness.dark;
 
-  /// MediaQueryData for context
-  MediaQueryData get mq => MediaQuery.of(this);
-
   /// Theme context helpers
   ThemeData get theme => Theme.of(this);
-
-  /// Directionality of context
-  TextDirection get directionality => Directionality.of(this);
 
   /// Theme color scheme
   ColorScheme get colorScheme => theme.colorScheme;
 
-  /// Default TextStyle
-  TextStyle defaultTextStyle() =>
-      theme.textTheme.bodyText1 ?? const TextStyle();
-
   /// Theme text theme
   TextTheme get textTheme => theme.textTheme;
-  TextTheme get tt => theme.textTheme;
+}
+
+/// {@category Misc Utils}
+extension MediaQueryContextExtensions on BuildContext {
+  /// MediaQueryData for context
+  MediaQueryData get mq => MediaQuery.of(this);
+
+  /// Directionality of context
+  TextDirection get directionality => Directionality.of(this);
 
   /// Orientation of the device
   Orientation get orientation => mq.orientation;
@@ -60,18 +56,6 @@ extension StrutStyleExtension on StrutStyle {
       fontStyle: other?.fontStyle ?? fontStyle,
       forceStrutHeight: other?.forceStrutHeight ?? forceStrutHeight,
       debugLabel: other?.debugLabel ?? debugLabel,
-    );
-  }
-}
-
-/// {@category Misc Utils}
-extension BoxShadowExtension on BoxShadow {
-  BoxShadowDto toBoxShadowProps() {
-    return BoxShadowDto(
-      blurRadius: blurRadius,
-      color: color,
-      offset: Offset(offset.dx, offset.dy),
-      spreadRadius: spreadRadius,
     );
   }
 }

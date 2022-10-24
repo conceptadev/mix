@@ -3,26 +3,13 @@ import 'package:flutter/widgets.dart';
 import 'tokens.dart';
 
 class TextStyleToken extends TextStyle implements MixToken<TextStyle> {
-  const TextStyleToken(this.id, this.getter) : super();
+  const TextStyleToken(this.valueGetter) : super();
 
   @override
-  final String id;
-
-  @override
-  final TokenValueGetter<TextStyle> getter;
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is TextStyleToken && other.id == id;
-  }
+  final TokenValueGetter<TextStyle> valueGetter;
 
   @override
   TextStyle resolve(BuildContext context) {
-    return getter(context);
+    return valueGetter(context);
   }
-
-  @override
-  int get hashCode => id.hashCode;
 }

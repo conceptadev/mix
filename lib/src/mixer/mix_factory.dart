@@ -84,34 +84,6 @@ class Mix {
 
   int get length => values.source.length;
 
-  /// Returns a new mix instance from this instance with the
-  /// _Variant_ instance added
-  @Deprecated(kVariantDeprecationNotice)
-  Mix withVariant(Variant<Attribute> variant) {
-    return copyWith(
-      attributes: values,
-    );
-  }
-
-  @Deprecated(kVariantDeprecationNotice)
-  Mix withMaybeVariant(Variant<Attribute>? variant) {
-    if (variant == null) return this;
-
-    return withVariant(variant);
-  }
-
-  @Deprecated(kVariantDeprecationNotice)
-  Mix withVariants(List<Variant<Attribute>> variants) {
-    return copyWith(attributes: values);
-  }
-
-  @Deprecated(kVariantDeprecationNotice)
-  Mix withMaybeVariants(List<Variant<Attribute>>? variants) {
-    if (variants == null || variants.isEmpty) return this;
-
-    return withVariants(variants);
-  }
-
   /// Same as _combine_, but accepts a _List_ of _Mix_ instances
   static Mix combineAll<T extends Attribute>(List<Mix> mixes) {
     MixValues values = const MixValues.empty();
@@ -155,6 +127,34 @@ class Mix {
     } else {
       return ifFalse;
     }
+  }
+
+  /// Returns a new mix instance from this instance with the
+  /// _Variant_ instance added
+  @Deprecated(kVariantDeprecationNotice)
+  Mix withVariant(Variant<Attribute> variant) {
+    return copyWith(
+      attributes: values,
+    );
+  }
+
+  @Deprecated(kVariantDeprecationNotice)
+  Mix withMaybeVariant(Variant<Attribute>? variant) {
+    if (variant == null) return this;
+
+    return withVariant(variant);
+  }
+
+  @Deprecated(kVariantDeprecationNotice)
+  Mix withVariants(List<Variant<Attribute>> variants) {
+    return copyWith(attributes: values);
+  }
+
+  @Deprecated(kVariantDeprecationNotice)
+  Mix withMaybeVariants(List<Variant<Attribute>>? variants) {
+    if (variants == null || variants.isEmpty) return this;
+
+    return withVariants(variants);
   }
 
   @Deprecated(kVariantDeprecationNotice)
