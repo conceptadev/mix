@@ -1,8 +1,9 @@
 name: Create Release
 
-on:
-  release:
-    types: [published, released]
+on: [push, pull_request]
+# on:
+#   release:
+#     types: [published, released]
 
 jobs:
   test:
@@ -30,17 +31,11 @@ jobs:
       PUB_CREDENTIALS: ${{ secrets.PUB_CREDENTIALS }}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
-      - uses: actions/checkout@v1
-      - uses: dart-lang/setup-dart@v1.3
-
-      - name: Install dependencies
-        run: dart pub get
-
-      - name: Build Version Number
-        run: dart pub run build_runner build --delete-conflicting-outputs
-
-      # - name: Deploy Github
-      #   run: dart pub run grinder pkg-github-all
-
-      - name: Deploy to Pub
-        run: dart pub run grinder pkg-pub-deploy
+      - name: 'Checkout'
+        uses: actions/checkout@v2 # required!
+        
+      - name: '>> Dart package <<'
+        uses: k-paxian/dart-package-publisher@master
+        with:
+          credentialJson: ${{ secrets.PUB_CREDENTIALS }}
+          dryRunOnly: true
