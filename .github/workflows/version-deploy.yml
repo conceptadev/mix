@@ -38,4 +38,3 @@ jobs:
         uses: k-paxian/dart-package-publisher@master
         with:
           credentialJson: ${{ secrets.PUB_CREDENTIALS }}
-          dryRunOnly: true
