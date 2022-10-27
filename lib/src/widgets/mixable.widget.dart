@@ -25,15 +25,14 @@ abstract class MixableWidget extends StatelessWidget {
   final bool _inherit;
 
   MixContext createMixContext(BuildContext context) {
-    Mix combinedMix;
+    var combinedMix = _mix;
+
     if (_inherit) {
       /// Get ancestor context
       final inheritedMixContext = MixContextNotifier.of(context);
 
       final inheritedMix = inheritedMixContext?.mix;
       combinedMix = inheritedMix?.apply(_mix) ?? _mix;
-    } else {
-      combinedMix = _mix;
     }
 
     return MixContext.create(
