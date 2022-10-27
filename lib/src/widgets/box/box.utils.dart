@@ -319,7 +319,7 @@ class BoxUtility {
 
     return BoxAttributes(
       boxShadow: kElevationToShadow[elevation]!
-          .map(BoxShadowDto.fromBoxShadow)
+          .map((e) => BoxShadowDto.fromBoxShadow(e))
           .toList(),
     );
   }
