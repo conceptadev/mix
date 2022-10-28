@@ -1,26 +1,24 @@
-import 'package:flutter/foundation.dart';
+import '../mixer/mix_factory.dart';
 import 'attribute.dart';
 
 /// Allows to pass down Mixes as attributes for use with helpers
-class NestedAttribute<T extends Attribute> extends Attribute {
-  const NestedAttribute(List<T> attributes) : _attributes = attributes;
+class NestedMixAttribute<T extends Attribute> extends Attribute {
+  const NestedMixAttribute(Mix mix) : _mix = mix;
 
-  final List<T> _attributes;
+  final Mix _mix;
 
-  List<T> get values {
-    return _attributes;
-  }
+  Mix get value => _mix;
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is NestedAttribute<T> && listEquals(other.values, values);
+    return other is NestedMixAttribute<T> && other.value == value;
   }
 
   @override
-  int get hashCode => values.hashCode;
+  int get hashCode => value.hashCode;
 
   @override
-  String toString() => 'NestedAttribute(_attributes: $_attributes)';
+  String toString() => 'NestedMixAttribute(mix: $_mix)';
 }

@@ -12,7 +12,7 @@ class ParentDecoratorWrapper extends DecoratorWrapper {
           mixContext,
           key: key,
           child: child,
-          type: DecoratorType.parent,
+          type: DecoratorLocation.boxParent,
         );
 }
 
@@ -25,7 +25,7 @@ class ChildDecoratorWrapper extends DecoratorWrapper {
           mixContext,
           key: key,
           child: child,
-          type: DecoratorType.child,
+          type: DecoratorLocation.boxChild,
         );
 }
 
@@ -37,21 +37,13 @@ abstract class DecoratorWrapper extends StatelessWidget {
     required this.type,
   }) : super(key: key);
 
-  final DecoratorType type;
+  final DecoratorLocation type;
   final Widget child;
   final MixContext mixContext;
 
   @override
   Widget build(BuildContext context) {
-    List<DecoratorAttribute> decorators = mixContext;
-
-    if (type == DecoratorType.parent) {
-      decorators = mixContext.getDecorators();
-    } else if (type == DecoratorType.child) {
-      decorators = mixContext.values.decorators.children;
-    } else {
-      throw Exception('Decorator type not supported');
-    }
+    final decorators = mixContext.decoratorsOfLocation(type);
 
     var current = child;
 

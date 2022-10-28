@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../../attributes/shared/shared.props.dart';
 import '../../../decorators/decorator_attribute.dart';
 import '../../../mixer/mix_context.dart';
@@ -9,11 +10,12 @@ import '../../../mixer/mix_context.dart';
 /// - [OpacityDecoratorUtility](OpacityDecoratorUtility-class.html)
 ///
 /// {@category Decorators}
-class OpacityDecorator extends ParentDecoratorAttribute<OpacityDecorator> {
+class OpacityDecorator extends BoxParentDecoratorAttribute<OpacityDecorator> {
   final double opacity;
   const OpacityDecorator({
     required this.opacity,
-  }) : super(const Key('OpacityDecorator'));
+    Key? key,
+  }) : super(key: key);
 
   @override
   OpacityDecorator merge(OpacityDecorator other) {
@@ -26,6 +28,7 @@ class OpacityDecorator extends ParentDecoratorAttribute<OpacityDecorator> {
 
     if (sharedProps.animated) {
       return AnimatedOpacity(
+        key: key,
         duration: sharedProps.animationDuration,
         curve: sharedProps.animationCurve,
         opacity: opacity,
@@ -33,6 +36,7 @@ class OpacityDecorator extends ParentDecoratorAttribute<OpacityDecorator> {
       );
     } else {
       return Opacity(
+        key: key,
         opacity: opacity,
         child: child,
       );

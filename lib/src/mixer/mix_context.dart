@@ -17,12 +17,12 @@ import 'mix_values.dart';
 
 class MixContext {
   final BuildContext context;
-  final Mix mix;
+  final MixValues _mixValues;
 
   MixContext._({
     required this.context,
-    required this.mix,
-  });
+    required MixValues mixValues,
+  }) : _mixValues = mixValues;
 
   factory MixContext.create({
     required BuildContext context,
@@ -31,26 +31,26 @@ class MixContext {
   }) {
     return _build(
       context: context,
-      mix: mix,
+      mix: mix.values,
       selectedVariants: variants,
     );
   }
 
   static MixContext _build<T extends Attribute>({
     required BuildContext context,
-    required Mix mix,
+    required MixValues mix,
     required List<Variant> selectedVariants,
   }) {
     // Tracks the values selected and does not allow for
     // attributes already expended to be expended again.
     MixValues values = MixValues(
-      attributes: mix.values.attributes,
-      decorators: mix.values.decorators,
-      directives: mix.values.directives,
+      attributes: mix.attributes,
+      decorators: mix.decorators,
+      directives: mix.directives,
       variants: [],
     );
 
-    final variants = mix.values.variants;
+    final variants = mix.variants;
 
     final attributes = _selectVariantsToApply(
       context,
@@ -58,11 +58,11 @@ class MixContext {
       variants,
     );
 
-    final appliedValues = values.merge(MixValues.fromList(attributes));
+    final appliedValues = values.merge(MixValues.create(attributes));
 
     return MixContext._(
       context: context,
-      mix: Mix.fromValues(appliedValues),
+      mixValues: appliedValues,
     );
   }
 
@@ -86,7 +86,7 @@ class MixContext {
           expanded.addAll(_selectVariantsToApply(
             context,
             selectedVariants,
-            attribute.values,
+            attribute.value.toList(),
           ));
         } else {
           // If not selected, add it to the list for future use
@@ -100,26 +100,15 @@ class MixContext {
     return expanded;
   }
 
-  MixValues get values {
-    return mix.values;
-  }
-
-  MixContext merge(MixContext other) {
-    return MixContext._(
-      context: context,
-      mix: mix,
-    );
-  }
-
   /// Used to obtain a [InheritedAttribute] from [MixInheritedAttributes].
   ///
   /// Obtain with `mixContext.attributesOfType<MyInheritedAttribute>()`.
   T? attributesOfType<T extends InheritedAttribute>() {
-    return values.attributes.attributesOfType<T>();
+    return _mixValues.attributesOfType<T>();
   }
 
   T dependOnAttributesOfType<T extends InheritedAttribute>() {
-    final attribute = values.attributes.attributesOfType<T>();
+    final attribute = _mixValues.attributesOfType<T>();
 
     if (attribute is! T) {
       throw '''
@@ -133,15 +122,17 @@ class MixContext {
   }
 
   Iterable<T> directivesOfType<T extends DirectiveAttribute>() {
-    return values.directives.whereType<T>();
+    return _mixValues.directivesOfType<T>();
   }
 
-  Iterable<ParentDecoratorAttribute> getDecorators(DecoratorType type) {
-    return values.decorators.whereDecoratorType(type);
+  List<DecoratorAttribute> decoratorsOfLocation(
+    DecoratorLocation location,
+  ) {
+    return _mixValues.decoratorsOfLocation(location);
   }
 
-  Iterable<ChildDecoratorAttribute> getChildDecorators() {
-    return values.decorators.getChildDecorators();
+  Mix asMix() {
+    return Mix.fromValues(_mixValues);
   }
 
   @override
@@ -150,13 +141,12 @@ class MixContext {
 
     return other is MixContext &&
         other.context == context &&
-        other.mix == mix &&
-        other.values == values;
+        other._mixValues == _mixValues;
   }
 
   @override
   int get hashCode {
-    return context.hashCode ^ mix.hashCode ^ values.hashCode;
+    return context.hashCode ^ _mixValues.hashCode;
   }
 }
 

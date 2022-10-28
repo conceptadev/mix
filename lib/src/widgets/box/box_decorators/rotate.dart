@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../../decorators/decorator_attribute.dart';
 import '../../../mixer/mix_context.dart';
 
@@ -8,10 +9,12 @@ import '../../../mixer/mix_context.dart';
 /// - [RotateDecoratorUtility](RotateDecoratorUtility-class.html)
 ///
 /// {@category Decorators}
-class RotateDecorator extends ParentDecoratorAttribute<RotateDecorator> {
+class RotateDecorator extends BoxParentDecoratorAttribute<RotateDecorator> {
   final int quarterTurns;
-  const RotateDecorator({required this.quarterTurns})
-      : super(const Key('RotateDecorator'));
+  const RotateDecorator({
+    required this.quarterTurns,
+    Key? key,
+  }) : super(key: key);
 
   @override
   RotateDecorator merge(RotateDecorator other) {
@@ -23,6 +26,7 @@ class RotateDecorator extends ParentDecoratorAttribute<RotateDecorator> {
   @override
   Widget render(MixContext mixContext, Widget child) {
     return RotatedBox(
+      key: key,
       quarterTurns: quarterTurns,
       child: child,
     );

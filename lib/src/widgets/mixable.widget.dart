@@ -31,7 +31,7 @@ abstract class MixableWidget extends StatelessWidget {
       /// Get ancestor context
       final inheritedMixContext = MixContextNotifier.of(context);
 
-      final inheritedMix = inheritedMixContext?.mix;
+      final inheritedMix = inheritedMixContext?.asMix();
       combinedMix = inheritedMix?.apply(_mix) ?? _mix;
     }
 

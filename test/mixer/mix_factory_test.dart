@@ -54,14 +54,13 @@ void main() {
     test('Creates a Mix from positional Attributes', () async {
       final mergedValues = firstMix.values.merge(secondMix.values);
 
-      expect(nestedMix.length, mergedValues.source.length);
+      expect(nestedMix.length, mergedValues.toList().length);
       expect(nestedMix.values, mergedValues);
     });
 
     test('Creates a Mix from Attributes List', () async {
-      final mixFromList = Mix.fromList(firstMix.source.toList());
-      final mixFromMaybeList =
-          Mix.fromMaybeList([null, ...firstMix.source.toList()]);
+      final mixFromList = Mix.fromList(firstMix.toList());
+      final mixFromMaybeList = Mix.fromMaybeList([null, ...firstMix.toList()]);
 
       expect(mixFromList.length, greaterThan(0));
       expect(mixFromList.values, firstMix.values);
@@ -77,9 +76,9 @@ void main() {
       final modifiedMix = baseMix.mix(flexAttribute);
 
       final modifiedBoxAttribute =
-          modifiedMix.values.attributes.attributesOfType<BoxAttributes>();
+          modifiedMix.values.attributesOfType<BoxAttributes>();
       final modifiedFlexAttribute =
-          modifiedMix.values.attributes.attributesOfType<FlexAttributes>();
+          modifiedMix.values.attributesOfType<FlexAttributes>();
 
       expect(baseMix.length, 1);
       expect(modifiedMix.length, 2);
@@ -100,17 +99,16 @@ void main() {
       final modifiedMix = baseMix.mix(yellowBackground);
 
       final modifiedBoxAttribute =
-          modifiedMix.values.attributes.attributesOfType<BoxAttributes>();
-      final baseBoxAttribute =
-          baseMix.values.attributes.attributesOfType<BoxAttributes>();
+          modifiedMix.values.attributesOfType<BoxAttributes>();
+      final baseBoxAttribute = baseMix.values.attributesOfType<BoxAttributes>();
 
       expect(yellowBackground, modifiedBoxAttribute);
       expect(blueBackground, baseBoxAttribute);
     });
 
     test('Equality of Mix', () async {
-      final copyFirstMix = Mix.fromList(firstMix.source);
-      final copySecondMix = Mix.fromList(secondMix.source);
+      final copyFirstMix = Mix.fromList(firstMix.toList());
+      final copySecondMix = Mix.fromList(secondMix.toList());
       final combinedMixFirst = Mix.combine(firstMix, secondMix);
       final combinedMixSecond = firstMix.apply(secondMix);
 

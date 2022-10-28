@@ -25,7 +25,7 @@ class MixValues {
         variants = const [],
         directives = const [];
 
-  factory MixValues.fromList(List<Attribute> attributes) {
+  factory MixValues.create(List<Attribute> attributes) {
     final expanded = _expandNestedAttributes(attributes);
 
     final directiveList = <DirectiveAttribute>[];
@@ -50,7 +50,7 @@ class MixValues {
         decoratorList.add(attribute);
       }
 
-      if (attribute is NestedAttribute) {
+      if (attribute is NestedMixAttribute) {
         throw Exception('Should not have nested attributes at this point');
       }
     }
@@ -67,7 +67,26 @@ class MixValues {
 
   bool get hasVariants => variants.isNotEmpty;
 
-  List<Attribute> get source {
+  bool get hasDecorators => decorators.isNotEmpty;
+
+  bool get hasAttributes => attributes.isNotEmpty;
+
+  /// Used to obtain a [InheritedAttribute] from [MixContext].
+  ///
+  /// Obtain with `mixContext.fromType<MyAttributeExtension>()`.
+  A? attributesOfType<A extends InheritedAttribute>() {
+    return attributes[A] as A?;
+  }
+
+  Iterable<T> directivesOfType<T extends DirectiveAttribute>() {
+    return directives.whereType<T>();
+  }
+
+  List<DecoratorAttribute> decoratorsOfLocation(DecoratorLocation location) {
+    return decorators.values[location] ?? [];
+  }
+
+  List<Attribute> toList() {
     return [
       ...attributes.values.values,
       ...decorators.values.values.expand((element) => element),
@@ -116,16 +135,9 @@ class MixValues {
     List<Attribute> expanded = [];
 
     for (final attribute in attributes) {
-      if (attribute is NestedAttribute) {
+      if (attribute is NestedMixAttribute) {
         expanded.addAll(
-          _expandNestedAttributes(attribute.values),
-        );
-      } else if (attribute is VariantAttribute) {
-        expanded.add(
-          VariantAttribute(
-            attribute.variant,
-            _expandNestedAttributes(attribute.values),
-          ),
+          _expandNestedAttributes(attribute.value.toList()),
         );
       } else {
         expanded.add(attribute);

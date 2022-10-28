@@ -10,10 +10,12 @@ import '../../../mixer/mix_context.dart';
 ///
 /// {@category Decorators}
 class AspectRatioDecorator
-    extends ParentDecoratorAttribute<AspectRatioDecorator> {
+    extends BoxParentDecoratorAttribute<AspectRatioDecorator> {
   final double aspectRatio;
-  const AspectRatioDecorator({required this.aspectRatio})
-      : super(const Key('AspectRatioDecorator'));
+  const AspectRatioDecorator({
+    required this.aspectRatio,
+    Key? key,
+  }) : super(key: key);
 
   @override
   AspectRatioDecorator merge(AspectRatioDecorator other) {
@@ -33,6 +35,7 @@ class AspectRatioDecorator
         curve: sharedProps.animationCurve,
         builder: (context, value, child) {
           return AspectRatio(
+            key: key,
             aspectRatio: value,
             child: child,
           );
@@ -41,6 +44,7 @@ class AspectRatioDecorator
       );
     } else {
       return AspectRatio(
+        key: key,
         aspectRatio: aspectRatio,
         child: child,
       );

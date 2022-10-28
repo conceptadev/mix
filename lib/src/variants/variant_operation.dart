@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
+
 import '../attributes/attribute.dart';
 import '../attributes/nested_attribute.dart';
+import '../mixer/mix_factory.dart';
 import 'variant_attribute.dart';
 import 'variants.dart';
 
@@ -43,7 +45,7 @@ class VariantOperation<T extends Attribute> {
   }) {
     variants ??= this.variants;
     final attributeVariants = variants.map((variant) {
-      return VariantAttribute<T>(variant, attributes);
+      return VariantAttribute<T>(variant, Mix.fromList(attributes));
     });
 
     return attributeVariants.toList();
@@ -57,18 +59,20 @@ class VariantOperation<T extends Attribute> {
 
       return VariantAttribute(
         variant,
-        _buildOrOperations(
-          attributes,
-          variants: otherVariants,
+        Mix.fromList(
+          _buildOrOperations(
+            attributes,
+            variants: otherVariants,
+          ),
         ),
       );
-    }) as Iterable<VariantAttribute<T>>;
+    });
 
     return attributeVariants.toList();
   }
 
   // ignore: long-parameter-list
-  NestedAttribute<VariantAttribute<T>> call([
+  NestedMixAttribute<VariantAttribute<T>> call([
     T? p1,
     T? p2,
     T? p3,
@@ -103,7 +107,7 @@ class VariantOperation<T extends Attribute> {
       attributes = _buildOrOperations(params);
     }
 
-    return NestedAttribute<VariantAttribute<T>>(attributes);
+    return NestedMixAttribute<VariantAttribute<T>>(Mix.fromList(attributes));
   }
 
   @override

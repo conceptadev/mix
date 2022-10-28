@@ -18,7 +18,7 @@ abstract class InheritedAttribute extends Attribute {
   Object get type => InheritedAttribute;
 }
 
-typedef InheritedAttributeMap = Map<Object, InheritedAttribute>;
+typedef InheritedAttributeMap = Map<Type, InheritedAttribute>;
 
 class MixInheritedAttributes {
   final InheritedAttributeMap values;
@@ -26,7 +26,7 @@ class MixInheritedAttributes {
   const MixInheritedAttributes(this.values);
 
   const MixInheritedAttributes.empty()
-      : values = const <Object, InheritedAttribute>{};
+      : values = const <Type, InheritedAttribute>{};
 
   factory MixInheritedAttributes.fromList(List<InheritedAttribute> attributes) {
     final InheritedAttributeMap attributesMap = {};
@@ -46,9 +46,15 @@ class MixInheritedAttributes {
     return MixInheritedAttributes(attributesMap);
   }
 
+  bool get isEmpty => values.isEmpty;
+
+  bool get isNotEmpty => values.isNotEmpty;
+
   MixInheritedAttributes clone() {
     return MixInheritedAttributes(Map.from(values));
   }
+
+  List<InheritedAttribute> toList() => values.values.toList();
 
   MixInheritedAttributes merge(MixInheritedAttributes? other) {
     if (other == null) {
@@ -75,10 +81,9 @@ class MixInheritedAttributes {
     return MixInheritedAttributes(mergedAttributes);
   }
 
-  /// Used to obtain a [InheritedAttribute] from [MixContext].
-  ///
-  /// Obtain with `mixContext.fromType<MyAttributeExtension>()`.
-  A? attributesOfType<A extends InheritedAttribute>() => values[A] as A?;
+  operator [](Object key) {
+    return values[key];
+  }
 
   @override
   bool operator ==(Object other) {

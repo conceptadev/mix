@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../../decorators/decorator_attribute.dart';
 import '../../../mixer/mix_context.dart';
 
@@ -8,9 +9,12 @@ import '../../../mixer/mix_context.dart';
 /// - [ScaleDecoratorUtility](ScaleDecoratorUtility-class.html)
 ///
 /// {@category Decorators}
-class ScaleDecorator extends ParentDecoratorAttribute<ScaleDecorator> {
+class ScaleDecorator extends BoxParentDecoratorAttribute<ScaleDecorator> {
   final double scale;
-  const ScaleDecorator(this.scale) : super(const Key('ScaleDecorator'));
+  const ScaleDecorator(
+    this.scale, {
+    Key? key,
+  }) : super(key: key);
 
   @override
   ScaleDecorator merge(ScaleDecorator other) {
@@ -27,6 +31,7 @@ class ScaleDecorator extends ParentDecoratorAttribute<ScaleDecorator> {
         curve: shared.animationCurve,
         builder: (context, value, child) {
           return Transform.scale(
+            key: key,
             scale: value,
             child: child,
           );
@@ -35,6 +40,7 @@ class ScaleDecorator extends ParentDecoratorAttribute<ScaleDecorator> {
       );
     } else {
       return Transform.scale(
+        key: key,
         scale: scale,
         child: child,
       );

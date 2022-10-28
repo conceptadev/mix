@@ -1,26 +1,23 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
 import '../attributes/attribute.dart';
+import '../mixer/mix_factory.dart';
 import 'variants.dart';
 
 class VariantAttribute<T extends Attribute> extends Attribute {
-  const VariantAttribute(this.variant, List<T> attributes)
-      : _attributes = attributes;
+  const VariantAttribute(this.variant, Mix mix) : _mix = mix;
 
   final Variant<T> variant;
-  final List<T> _attributes;
+  final Mix _mix;
 
-  List<T> get values {
-    return _attributes;
-  }
+  Mix get value => _mix;
 
   bool shouldApply(BuildContext context) {
     return variant.shouldApply?.call(context) ?? false;
   }
 
   @override
-  String toString() =>
-      'VariantAttribute(variant: $variant, attributes: $values)';
+  String toString() => 'VariantAttribute(variant: $variant, mix: $value)';
 
   @override
   bool operator ==(Object other) {
@@ -28,9 +25,9 @@ class VariantAttribute<T extends Attribute> extends Attribute {
 
     return other is VariantAttribute<T> &&
         other.variant == variant &&
-        listEquals(other.values, values);
+        other.value == value;
   }
 
   @override
-  int get hashCode => variant.hashCode ^ _attributes.hashCode;
+  int get hashCode => variant.hashCode ^ _mix.hashCode;
 }

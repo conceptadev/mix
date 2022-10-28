@@ -48,10 +48,9 @@ class BoxProps {
 
   factory BoxProps.fromContext(MixContext mixContext) {
     final boxAttributes = mixContext.attributesOfType<BoxAttributes>();
+    final context = mixContext.context;
 
     var color = boxAttributes?.color;
-
-    final context = mixContext.context;
 
     if (color is ColorToken) {
       color = color.resolve(context);

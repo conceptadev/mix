@@ -17,14 +17,15 @@ enum ClipDecoratorType {
 /// - [ClipDecoratorUtility](ClipDecoratorUtility-class.html)
 ///
 /// {@category Decorators}
-class ClipDecorator extends ParentDecoratorAttribute<ClipDecorator> {
+class ClipDecorator extends BoxParentDecoratorAttribute<ClipDecorator> {
   final BorderRadius? borderRadius;
   final ClipDecoratorType clipType;
 
   const ClipDecorator(
     this.clipType, {
     this.borderRadius,
-  }) : super(const Key('ClipDecorator'));
+    Key? key,
+  }) : super(key: key);
 
   @override
   ClipDecorator merge(ClipDecorator other) {
@@ -37,6 +38,7 @@ class ClipDecorator extends ParentDecoratorAttribute<ClipDecorator> {
 
     if (clipType == ClipDecoratorType.triangle) {
       return ClipPath(
+        key: key,
         clipper: TriangleClipper(),
         child: child,
       );
@@ -44,6 +46,7 @@ class ClipDecorator extends ParentDecoratorAttribute<ClipDecorator> {
 
     if (clipType == ClipDecoratorType.rect) {
       return ClipRect(
+        key: key,
         child: child,
       );
     }
@@ -51,6 +54,7 @@ class ClipDecorator extends ParentDecoratorAttribute<ClipDecorator> {
     if (clipType == ClipDecoratorType.rounded) {
       if (sharedProps.animated) {
         return AnimatedClipRRect(
+          key: key,
           duration: sharedProps.animationDuration,
           curve: sharedProps.animationCurve,
           borderRadius: borderRadius ?? BorderRadius.circular(0),
@@ -58,6 +62,7 @@ class ClipDecorator extends ParentDecoratorAttribute<ClipDecorator> {
         );
       } else {
         return ClipRRect(
+          key: key,
           borderRadius: borderRadius,
           child: child,
         );
@@ -66,6 +71,7 @@ class ClipDecorator extends ParentDecoratorAttribute<ClipDecorator> {
 
     if (clipType == ClipDecoratorType.oval) {
       return ClipOval(
+        key: key,
         child: child,
       );
     }

@@ -4,13 +4,12 @@ import 'package:flutter/material.dart';
 import '../attributes/attribute.dart';
 import '../mixer/mix_context.dart';
 
-enum DecoratorType {
-  parent,
-  child,
-  separator,
+enum DecoratorLocation {
+  boxParent,
+  boxChild,
 }
 
-typedef DecoratorsMapList = Map<DecoratorType, List<DecoratorAttribute>>;
+typedef DecoratorsMapList = Map<DecoratorLocation, List<DecoratorAttribute>>;
 
 class MixDecoratorAttributes {
   final DecoratorsMapList values;
@@ -19,9 +18,8 @@ class MixDecoratorAttributes {
 
   const MixDecoratorAttributes.empty()
       : values = const {
-          DecoratorType.parent: [],
-          DecoratorType.child: [],
-          DecoratorType.separator: [],
+          DecoratorLocation.boxParent: [],
+          DecoratorLocation.boxChild: [],
         };
 
   factory MixDecoratorAttributes.fromList(List<DecoratorAttribute> decorators) {
@@ -43,7 +41,9 @@ class MixDecoratorAttributes {
       // Add to decorator map and sort to guarantee order consistency
       decoratorMap[decorator.type]!
         ..add(decorator)
-        ..sort((a, b) => a.key.hashCode - b.key.hashCode);
+        ..sort(
+          (a, b) => a.key.hashCode - b.key.hashCode,
+        );
     });
 
     return MixDecoratorAttributes(decoratorMap);
@@ -54,31 +54,18 @@ class MixDecoratorAttributes {
   }
 
   MixDecoratorAttributes merge(MixDecoratorAttributes? other) {
-    if (other == null) {
-      return this;
-    }
+    if (other == null) return this;
 
-    final thisList = values.entries.map((e) => e.value).expand((e) => e);
-
-    final otherList = other.values.entries.map((e) => e.value).expand((e) => e);
-
-    return MixDecoratorAttributes.fromList([...thisList, ...otherList]);
+    return MixDecoratorAttributes.fromList([...toList(), ...other.toList()]);
   }
 
-  List<DecoratorAttribute> whereDecoratorType(DecoratorType type) {
-    return values[type] ?? [];
-  }
+  bool get isEmpty => values.isEmpty;
 
-  List<ChildDecoratorAttribute> getChildDecorators() {
-    final decorators = values[DecoratorType.child] ?? [];
+  bool get isNotEmpty => values.isNotEmpty;
 
-    return decorators as List<ChildDecoratorAttribute>;
-  }
-
-  List<ParentDecoratorAttribute> getParentDecorators() {
-    final decorators = values[DecoratorType.parent] ?? [];
-
-    return decorators as List<ParentDecoratorAttribute>;
+  List<DecoratorAttribute> toList() {
+    // flatten nested list
+    return values.entries.map((e) => e.value).expand((e) => e).toList();
   }
 
   @override
@@ -93,22 +80,28 @@ class MixDecoratorAttributes {
 }
 
 abstract class DecoratorAttribute<T> extends Attribute {
-  const DecoratorAttribute(this.key);
-  final Key key;
+  const DecoratorAttribute({this.key});
+
+  /// Key is required in order for proper sorting
+  final Key? key;
   DecoratorAttribute<T> merge(T other);
 
-  DecoratorType get type;
+  DecoratorLocation get type;
   Widget render(MixContext mixContext, Widget child);
 }
 
-abstract class ParentDecoratorAttribute<T> extends DecoratorAttribute<T> {
-  const ParentDecoratorAttribute(Key key) : super(key);
+abstract class BoxParentDecoratorAttribute<T> extends DecoratorAttribute<T> {
+  const BoxParentDecoratorAttribute({
+    Key? key,
+  }) : super(key: key);
   @override
-  DecoratorType get type => DecoratorType.parent;
+  DecoratorLocation get type => DecoratorLocation.boxParent;
 }
 
-abstract class ChildDecoratorAttribute<T> extends DecoratorAttribute<T> {
-  const ChildDecoratorAttribute(Key key) : super(key);
+abstract class BoxChildDecoratorAttribute<T> extends DecoratorAttribute<T> {
+  const BoxChildDecoratorAttribute({
+    Key? key,
+  }) : super(key: key);
   @override
-  DecoratorType get type => DecoratorType.child;
+  DecoratorLocation get type => DecoratorLocation.boxChild;
 }

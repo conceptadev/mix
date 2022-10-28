@@ -53,7 +53,7 @@ class Mix {
 
   /// Instantiate a mix from a _List_ of _Attribute_ instances (cannot be null)
   factory Mix.fromList(List<Attribute> attributes) {
-    return Mix._(MixValues.fromList(attributes));
+    return Mix._(MixValues.create(attributes));
   }
 
   factory Mix.fromValues(MixValues values) {
@@ -72,8 +72,8 @@ class Mix {
     return Mix._(values);
   }
 
-  List<Attribute> get source {
-    return values.source;
+  List<Attribute> toList() {
+    return values.toList();
   }
 
   Mix copyWith({
@@ -82,7 +82,7 @@ class Mix {
     return Mix._(values.merge(attributes));
   }
 
-  int get length => values.source.length;
+  int get length => values.toList().length;
 
   /// Same as _combine_, but accepts a _List_ of _Mix_ instances
   static Mix combineAll<T extends Attribute>(List<Mix> mixes) {
@@ -200,7 +200,7 @@ extension MixExtension<T extends Attribute> on Mix {
 
   /// Adds a list of attributes to a Mix
   Mix addAttributes(List<Attribute> attributes) {
-    return copyWith(attributes: MixValues.fromList(attributes));
+    return copyWith(attributes: MixValues.create(attributes));
   }
 
   /// Combines argument mix with this mix.

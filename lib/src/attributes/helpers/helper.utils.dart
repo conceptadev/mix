@@ -4,8 +4,8 @@ import '../nested_attribute.dart';
 class HelperUtility {
   const HelperUtility._();
 
-  static NestedAttribute apply(List<Mix> mixes) {
-    return NestedAttribute(Mix.combineAll(mixes).source);
+  static NestedMixAttribute apply(List<Mix> mixes) {
+    return NestedMixAttribute(Mix.combineAll(mixes));
   }
 }
 

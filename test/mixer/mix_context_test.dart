@@ -62,11 +62,11 @@ void main() {
           mix: pressableMix,
         );
 
-        expect(mixContext.mix, matchContext.mix);
+        expect(mixContext.asMix(), matchContext.asMix());
 
         expect(
-          mixContext.mix,
-          matchContext.mix,
+          mixContext.asMix(),
+          matchContext.asMix(),
           reason: 'sourceMix',
         );
 

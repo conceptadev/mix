@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../attributes/attribute.dart';
+import '../mixer/mix_factory.dart';
 import 'variant_attribute.dart';
 import 'variant_operation.dart';
 
@@ -51,7 +52,7 @@ class Variant<T extends Attribute> {
     if (p11 != null) params.add(p11);
     if (p12 != null) params.add(p12);
 
-    return VariantAttribute<T>(this, params);
+    return VariantAttribute<T>(this, Mix.fromList(params));
   }
 
   @override

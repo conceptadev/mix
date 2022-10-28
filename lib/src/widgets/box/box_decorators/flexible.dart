@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../../decorators/decorator_attribute.dart';
 import '../../../mixer/mix_context.dart';
 
@@ -8,13 +9,14 @@ import '../../../mixer/mix_context.dart';
 /// - [FlexibleDecoratorUtility](FlexibleDecoratorUtility-class.html)
 ///
 /// {@category Decorators}
-class FlexibleDecorator extends ParentDecoratorAttribute<FlexibleDecorator> {
+class FlexibleDecorator extends BoxParentDecoratorAttribute<FlexibleDecorator> {
   final FlexFit? flexFit;
   final int? flex;
   const FlexibleDecorator({
     this.flexFit,
     this.flex,
-  }) : super(const Key('FlexibleDecorator'));
+    Key? key,
+  }) : super(key: key);
 
   @override
   FlexibleDecorator merge(FlexibleDecorator other) {
@@ -27,6 +29,7 @@ class FlexibleDecorator extends ParentDecoratorAttribute<FlexibleDecorator> {
   @override
   Widget render(MixContext mixContext, Widget child) {
     return Flexible(
+      key: key,
       fit: flexFit ?? FlexFit.loose,
       flex: flex ?? 1,
       child: child,
