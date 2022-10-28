@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+
 import '../attributes/attribute.dart';
 import '../attributes/nested_attribute.dart';
 import '../decorators/decorator_attribute.dart';

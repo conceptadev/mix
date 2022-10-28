@@ -21,7 +21,7 @@ class FlexProps {
   });
 
   factory FlexProps.fromContext(MixContext mixContext) {
-    final flexAttributes = mixContext.fromType<FlexAttributes>();
+    final flexAttributes = mixContext.attributesOfType<FlexAttributes>();
 
     return FlexProps(
       direction: flexAttributes?.direction,

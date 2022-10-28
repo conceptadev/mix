@@ -14,7 +14,7 @@ class IconProps {
   });
 
   factory IconProps.fromContext(MixContext mixContext) {
-    final iconAttributes = mixContext.fromType<IconAttributes>();
+    final iconAttributes = mixContext.attributesOfType<IconAttributes>();
 
     final context = mixContext.context;
 

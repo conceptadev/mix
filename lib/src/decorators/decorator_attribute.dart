@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
 import '../attributes/attribute.dart';
 import '../mixer/mix_context.dart';
 
@@ -64,12 +65,20 @@ class MixDecoratorAttributes {
     return MixDecoratorAttributes.fromList([...thisList, ...otherList]);
   }
 
-  get children {
-    return values[DecoratorType.child] ?? [];
+  List<DecoratorAttribute> whereDecoratorType(DecoratorType type) {
+    return values[type] ?? [];
   }
 
-  get parents {
-    return values[DecoratorType.parent] ?? [];
+  List<ChildDecoratorAttribute> getChildDecorators() {
+    final decorators = values[DecoratorType.child] ?? [];
+
+    return decorators as List<ChildDecoratorAttribute>;
+  }
+
+  List<ParentDecoratorAttribute> getParentDecorators() {
+    final decorators = values[DecoratorType.parent] ?? [];
+
+    return decorators as List<ParentDecoratorAttribute>;
   }
 
   @override

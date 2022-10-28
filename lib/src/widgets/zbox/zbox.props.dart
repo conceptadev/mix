@@ -17,7 +17,7 @@ class ZBoxProps {
   factory ZBoxProps.fromContext(
     MixContext mixContext,
   ) {
-    final zBoxAttributes = mixContext.fromType<ZBoxAttributes>();
+    final zBoxAttributes = mixContext.attributesOfType<ZBoxAttributes>();
 
     return ZBoxProps(
       alignment: zBoxAttributes?.alignment ?? Alignment.topLeft,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../mixer/mix_context.dart';
 import '../../theme/refs/color_token.dart';
 import '../../theme/refs/text_style_token.dart';
@@ -33,7 +34,7 @@ class TextProps {
   });
 
   factory TextProps.fromContext(MixContext mixContext) {
-    final textAttributes = mixContext.fromType<TextAttributes>();
+    final textAttributes = mixContext.attributesOfType<TextAttributes>();
 
     final context = mixContext.context;
 

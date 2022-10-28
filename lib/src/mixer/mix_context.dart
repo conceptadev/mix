@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+
 import '../attributes/attribute.dart';
 import '../attributes/shared/shared.props.dart';
+import '../decorators/decorator_attribute.dart';
 import '../directives/directive_attribute.dart';
-import 'mix_factory.dart';
-import 'mix_values.dart';
 import '../variants/variant_attribute.dart';
 import '../variants/variants.dart';
 import '../widgets/box/box.props.dart';
@@ -12,6 +12,8 @@ import '../widgets/icon/icon.props.dart';
 import '../widgets/image/image.props.dart';
 import '../widgets/text/text.props.dart';
 import '../widgets/zbox/zbox.props.dart';
+import 'mix_factory.dart';
+import 'mix_values.dart';
 
 class MixContext {
   final BuildContext context;
@@ -98,7 +100,7 @@ class MixContext {
     return expanded;
   }
 
-  MixValues get attributes {
+  MixValues get values {
     return mix.values;
   }
 
@@ -111,13 +113,35 @@ class MixContext {
 
   /// Used to obtain a [InheritedAttribute] from [MixInheritedAttributes].
   ///
-  /// Obtain with `mixContext.fromType<MyInheritedAttribute>()`.
-  T? fromType<T extends InheritedAttribute>() {
-    return attributes.attributes.fromType<T>();
+  /// Obtain with `mixContext.attributesOfType<MyInheritedAttribute>()`.
+  T? attributesOfType<T extends InheritedAttribute>() {
+    return values.attributes.attributesOfType<T>();
   }
 
-  Iterable<T> directivesWhereType<T extends DirectiveAttribute>() {
-    return attributes.directives.whereType<T>();
+  T dependOnAttributesOfType<T extends InheritedAttribute>() {
+    final attribute = values.attributes.attributesOfType<T>();
+
+    if (attribute is! T) {
+      throw '''
+      No $T could be found starting from MixContext 
+      when call mixContext.attributesOfType<$T>(). This can happen because you 
+      have not create a Mix with $T.
+      ''';
+    }
+
+    return attribute;
+  }
+
+  Iterable<T> directivesOfType<T extends DirectiveAttribute>() {
+    return values.directives.whereType<T>();
+  }
+
+  Iterable<ParentDecoratorAttribute> getDecorators(DecoratorType type) {
+    return values.decorators.whereDecoratorType(type);
+  }
+
+  Iterable<ChildDecoratorAttribute> getChildDecorators() {
+    return values.decorators.getChildDecorators();
   }
 
   @override
@@ -127,12 +151,12 @@ class MixContext {
     return other is MixContext &&
         other.context == context &&
         other.mix == mix &&
-        other.attributes == attributes;
+        other.values == values;
   }
 
   @override
   int get hashCode {
-    return context.hashCode ^ mix.hashCode ^ attributes.hashCode;
+    return context.hashCode ^ mix.hashCode ^ values.hashCode;
   }
 }
 

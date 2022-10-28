@@ -78,7 +78,7 @@ class MixInheritedAttributes {
   /// Used to obtain a [InheritedAttribute] from [MixContext].
   ///
   /// Obtain with `mixContext.fromType<MyAttributeExtension>()`.
-  A? fromType<A extends InheritedAttribute>() => values[A] as A?;
+  A? attributesOfType<A extends InheritedAttribute>() => values[A] as A?;
 
   @override
   bool operator ==(Object other) {

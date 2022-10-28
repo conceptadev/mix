@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../mixer/mix_context.dart';
 
+import '../../mixer/mix_context.dart';
 import 'shared.attributes.dart';
 
 class SharedProps {
@@ -20,7 +20,7 @@ class SharedProps {
   });
 
   factory SharedProps.fromContext(MixContext mixContext) {
-    final shared = mixContext.fromType<SharedAttributes>();
+    final shared = mixContext.attributesOfType<SharedAttributes>();
 
     return SharedProps(
       visible: shared?.visible ?? true,

@@ -77,9 +77,9 @@ void main() {
       final modifiedMix = baseMix.mix(flexAttribute);
 
       final modifiedBoxAttribute =
-          modifiedMix.values.attributes.fromType<BoxAttributes>();
+          modifiedMix.values.attributes.attributesOfType<BoxAttributes>();
       final modifiedFlexAttribute =
-          modifiedMix.values.attributes.fromType<FlexAttributes>();
+          modifiedMix.values.attributes.attributesOfType<FlexAttributes>();
 
       expect(baseMix.length, 1);
       expect(modifiedMix.length, 2);
@@ -100,9 +100,9 @@ void main() {
       final modifiedMix = baseMix.mix(yellowBackground);
 
       final modifiedBoxAttribute =
-          modifiedMix.values.attributes.fromType<BoxAttributes>();
+          modifiedMix.values.attributes.attributesOfType<BoxAttributes>();
       final baseBoxAttribute =
-          baseMix.values.attributes.fromType<BoxAttributes>();
+          baseMix.values.attributes.attributesOfType<BoxAttributes>();
 
       expect(yellowBackground, modifiedBoxAttribute);
       expect(blueBackground, baseBoxAttribute);

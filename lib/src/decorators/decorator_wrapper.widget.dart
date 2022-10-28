@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'decorator_attribute.dart';
+
 import '../mixer/mix_context.dart';
+import 'decorator_attribute.dart';
 
 class ParentDecoratorWrapper extends DecoratorWrapper {
   const ParentDecoratorWrapper(
@@ -42,12 +43,12 @@ abstract class DecoratorWrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<DecoratorAttribute> decorators;
+    List<DecoratorAttribute> decorators = mixContext;
 
     if (type == DecoratorType.parent) {
-      decorators = mixContext.attributes.decorators.parents;
+      decorators = mixContext.getDecorators();
     } else if (type == DecoratorType.child) {
-      decorators = mixContext.attributes.decorators.children;
+      decorators = mixContext.values.decorators.children;
     } else {
       throw Exception('Decorator type not supported');
     }
