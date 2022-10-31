@@ -37,6 +37,8 @@ const paddingLeft = WithSizeTokens(BoxUtility.paddingLeft);
 const paddingHorizontal = WithSizeTokens(BoxUtility.paddingHorizontal);
 const paddingVertical = WithSizeTokens(BoxUtility.paddingVertical);
 const paddingInsets = BoxUtility.paddingInsets;
+// Transform
+const transform = BoxUtility.transform;
 
 // const scale = BoxUtility.scale;
 

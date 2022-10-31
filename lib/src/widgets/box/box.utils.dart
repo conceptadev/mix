@@ -190,6 +190,10 @@ class BoxUtility {
     );
   }
 
+  static BoxAttributes transform(Matrix4 transform) {
+    return BoxAttributes(transform: transform);
+  }
+
   /// Short Utils: borderColor
   /// (Border color for all border sides)
   static BoxAttributes borderColor(Color color) {

@@ -186,4 +186,19 @@ class BorderSideDto extends Dto<BorderSide> {
   @override
   String toString() =>
       'BorderSideProps(color: $color, width: $width, style: $style)';
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is BorderSideDto &&
+        other.color == color &&
+        other.width == width &&
+        other.style == style;
+  }
+
+  @override
+  int get hashCode {
+    return color.hashCode ^ width.hashCode ^ style.hashCode;
+  }
 }

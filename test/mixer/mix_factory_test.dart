@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
+import 'package:mix/src/helpers/dto/edge_insets.dto.dart';
 
 final firstMix = Mix(
   // Box attribute
@@ -52,10 +53,18 @@ final nestedMix = Mix(
 void main() {
   group("Mix Factory", () {
     test('Creates a Mix from positional Attributes', () async {
-      final mergedValues = firstMix.values.merge(secondMix.values);
+      final style = Mix(
+        bgColor(Colors.red),
+        margin(10),
+      );
 
-      expect(nestedMix.length, mergedValues.toList().length);
-      expect(nestedMix.values, mergedValues);
+      final boxAttribute = style.values.attributesOfType<BoxAttributes>()!;
+
+      // Length is only 1 because margin and color are BoxAttributes
+      expect(style.length, 1);
+
+      expect(boxAttribute.color, Colors.red);
+      expect(boxAttribute.margin, const EdgeInsetsDto.all(10));
     });
 
     test('Creates a Mix from Attributes List', () async {

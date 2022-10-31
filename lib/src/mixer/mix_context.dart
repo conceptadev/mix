@@ -131,7 +131,7 @@ class MixContext {
     return _mixValues.decoratorsOfLocation(location);
   }
 
-  Mix asMix() {
+  Mix toMix() {
     return Mix.fromValues(_mixValues);
   }
 
