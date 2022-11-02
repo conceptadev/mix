@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mix/src/attributes/icon/icon.attributes.dart';
 import 'package:mix/src/attributes/shared/shared.attributes.dart';
 import 'package:mix/src/mixer/mix_factory.dart';
+import 'package:mix/src/widgets/icon/icon.attributes.dart';
 
 import '../testing_utils.dart';
 

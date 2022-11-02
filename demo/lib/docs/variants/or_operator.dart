@@ -15,6 +15,7 @@ class VariantsOrOperator extends StatelessWidget {
         bgColor(Colors.white),
       ),
     );
+
     return Center(
       child: Box(
         mix: mix,

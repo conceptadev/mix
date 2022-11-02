@@ -15,6 +15,7 @@ class VariantsAndOperator extends StatelessWidget {
         bold(),
       ),
     );
+
     return Center(
       child: Pressable(
         onPressed: () {},

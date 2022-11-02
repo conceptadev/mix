@@ -4,7 +4,7 @@ import 'package:mix/mix.dart' hide border, onEnabled, icon, iconColor;
 
 import '../testing_utils.dart';
 
-final activated = Variant("activated");
+const activated = Variant("activated");
 
 const customIcon = InheritedIconAttribute.icon;
 const withSize = InheritedIconAttribute.withSize;
@@ -12,8 +12,7 @@ const withColor = InheritedIconAttribute.withColor;
 
 const inputDecoration = InputDecorationThemeAttribute.inputDecoration;
 
-class InheritedIconAttribute
-    extends InheritedAttribute<InheritedIconAttribute> {
+class InheritedIconAttribute extends InheritedAttribute {
   const InheritedIconAttribute({
     this.color,
     this.size,
@@ -54,7 +53,7 @@ class InheritedIconAttribute
 }
 
 class InputDecorationThemeAttribute extends InputDecorationTheme
-    implements InheritedAttribute<InputDecorationThemeAttribute> {
+    implements InheritedAttribute {
   const InputDecorationThemeAttribute({
     Color? iconColor,
     Color? fillColor,
@@ -80,9 +79,9 @@ class InputDecorationThemeAttribute extends InputDecorationTheme
     InputBorder? border,
   }) {
     return InputDecorationThemeAttribute(
-      iconColor: iconColor ?? iconColor,
-      fillColor: fillColor ?? fillColor,
-      border: border ?? border,
+      iconColor: iconColor,
+      fillColor: fillColor,
+      border: border,
     );
   }
 
@@ -123,8 +122,12 @@ class CustomWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return MixContextBuilder(
       variants: variants,
+      mix: mix,
       builder: (context, mixContext) {
-        final attribute = mixContext.fromType<InheritedIconAttribute>();
+        final attribute =
+            mixContext.attributesOfType<InheritedIconAttribute>()!;
+
+        final sharedProps = mixContext.sharedProps;
 
         return Semantics(
           label: semanticLabel,
@@ -134,13 +137,12 @@ class CustomWidget extends StatelessWidget {
                 icon,
                 color: attribute.color,
                 size: attribute.size,
-                textDirection: mixContext.sharedProps.textDirection,
+                textDirection: sharedProps.textDirection,
               ),
             ],
           ),
         );
       },
-      mix: mix,
     );
   }
 }
@@ -166,7 +168,7 @@ class TextFieldWidget extends StatelessWidget {
       variants: variants,
       builder: (context, mixContext) {
         final decorationTheme =
-            mixContext.fromType<InputDecorationThemeAttribute>();
+            mixContext.attributesOfType<InputDecorationThemeAttribute>();
 
         return Semantics(
           label: semanticLabel,
@@ -174,7 +176,7 @@ class TextFieldWidget extends StatelessWidget {
             children: [
               TextField(
                 decoration:
-                    const InputDecoration().applyDefaults(decorationTheme),
+                    const InputDecoration().applyDefaults(decorationTheme!),
               ),
             ],
           ),
@@ -204,7 +206,7 @@ void main() {
 
     testWidgets('with variant', (tester) async {
       await tester.pumpWidget(
-        MixTestWidget(
+        const MixTestWidget(
           child: CustomWidget(
             Icons.bolt,
             variants: [activated],
@@ -243,7 +245,7 @@ void main() {
 
     testWidgets('with variants', (tester) async {
       await tester.pumpWidget(
-        MixTestWidget(
+        const MixTestWidget(
           child: MaterialApp(
             home: Scaffold(
               body: TextFieldWidget(

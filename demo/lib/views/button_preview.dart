@@ -29,7 +29,7 @@ class ButtonsPreview extends StatelessWidget {
               child: const TextMix('Details'),
             ),
             onPressed: () {},
-          )
+          ),
         ],
       ),
     );

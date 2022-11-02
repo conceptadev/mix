@@ -1,55 +1,55 @@
-import 'package:mix/src/helpers/extensions.dart';
+import 'package:flutter/material.dart';
 
 import '../refs/color_token.dart';
 
 class MaterialColorSchemeTokens {
   MaterialColorSchemeTokens();
 
-  final ColorToken primary = ColorToken('primary', (context) {
-    return context.theme.colorScheme.primary;
-  });
+  final ColorToken primary = ColorToken(
+    (context) => Theme.of(context).colorScheme.primary,
+  );
 
-  final ColorToken secondary = ColorToken('secondary', (context) {
-    return context.theme.colorScheme.secondary;
-  });
+  final ColorToken secondary = ColorToken(
+    (context) => Theme.of(context).colorScheme.secondary,
+  );
 
-  final ColorToken tertiary = ColorToken('tertiary', (context) {
-    return context.theme.colorScheme.tertiary;
-  });
+  final ColorToken tertiary = ColorToken(
+    (context) => Theme.of(context).colorScheme.tertiary,
+  );
 
-  final ColorToken surface = ColorToken('surface', (context) {
-    return context.theme.colorScheme.surface;
-  });
+  final ColorToken surface = ColorToken(
+    (context) => Theme.of(context).colorScheme.surface,
+  );
 
-  final ColorToken background = ColorToken('background', (context) {
-    return context.theme.colorScheme.background;
-  });
+  final ColorToken background = ColorToken(
+    (context) => Theme.of(context).colorScheme.background,
+  );
 
-  final ColorToken error = ColorToken('error', (context) {
-    return context.theme.colorScheme.error;
-  });
+  final ColorToken error = ColorToken(
+    (context) => Theme.of(context).colorScheme.error,
+  );
 
-  final ColorToken onPrimary = ColorToken('onPrimary', (context) {
-    return context.theme.colorScheme.onPrimary;
-  });
+  final ColorToken onPrimary = ColorToken(
+    (context) => Theme.of(context).colorScheme.onPrimary,
+  );
 
-  final ColorToken onSecondary = ColorToken('onSecondary', (context) {
-    return context.theme.colorScheme.onSecondary;
-  });
+  final ColorToken onSecondary = ColorToken(
+    (context) => Theme.of(context).colorScheme.onSecondary,
+  );
 
-  final ColorToken onTertiary = ColorToken('onTertiary', (context) {
-    return context.theme.colorScheme.onTertiary;
-  });
+  final ColorToken onTertiary = ColorToken(
+    (context) => Theme.of(context).colorScheme.onTertiary,
+  );
 
-  final ColorToken onSurface = ColorToken('onSurface', (context) {
-    return context.theme.colorScheme.onSurface;
-  });
+  final ColorToken onSurface = ColorToken(
+    (context) => Theme.of(context).colorScheme.onSurface,
+  );
 
-  final ColorToken onBackground = ColorToken('onBackground', (context) {
-    return context.theme.colorScheme.onBackground;
-  });
+  final ColorToken onBackground = ColorToken(
+    (context) => Theme.of(context).colorScheme.onBackground,
+  );
 
-  final ColorToken onError = ColorToken('onError', (context) {
-    return context.theme.colorScheme.onError;
-  });
+  final ColorToken onError = ColorToken(
+    (context) => Theme.of(context).colorScheme.onError,
+  );
 }

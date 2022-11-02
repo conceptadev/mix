@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:mix/src/theme/tokens/breakpoints.dart';
-import 'package:mix/src/theme/tokens/space.dart';
+import 'tokens/breakpoints.dart';
+import 'tokens/space.dart';
 
 final cacheMap = <int, MixThemeData>{};
 
