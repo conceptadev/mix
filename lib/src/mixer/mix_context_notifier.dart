@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mix/src/mixer/mix_context.dart';
+import 'mix_context.dart';
 
 class MixContextNotifier extends InheritedWidget {
   const MixContextNotifier(

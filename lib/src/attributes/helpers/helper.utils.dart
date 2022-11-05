@@ -1,11 +1,11 @@
-import 'package:mix/src/attributes/common/attribute.dart';
-import 'package:mix/src/mixer/mix_factory.dart';
+import '../../mixer/mix_factory.dart';
+import '../nested_attribute.dart';
 
-class HelperUtils {
-  const HelperUtils._();
+class HelperUtility {
+  const HelperUtility._();
 
-  static NestedAttribute<T> apply<T extends Attribute>(List<Mix<T>> mixes) {
-    return NestedAttribute<T>(Mix.combineAll(mixes).attributes);
+  static NestedMixAttribute apply(List<Mix> mixes) {
+    return NestedMixAttribute(Mix.combineAll(mixes));
   }
 }
 
@@ -48,16 +48,3 @@ class WrapFunction<T, R> {
     return fn(params);
   }
 }
-
-// TODO: Remove this
-// class WrapVariant<T extends Attribute, R extends VariantAttribute<T>>
-//     extends WrapFunction<T, R> {
-//   const WrapVariant(this.variant, FunctionWithListParam<T, R> fn) : super(fn);
-
-//   final Var<T> variant;
-
-//   operator &(WrapVariant<T, R> other) {
-//     final combinedVariant = variant & other.variant;
-//     return WrapVariant<T, R>(combinedVariant, this.fn & other.fn);
-//   }
-// }

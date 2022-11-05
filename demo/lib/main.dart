@@ -1,4 +1,3 @@
-import 'package:demo/theme.dart';
 import 'package:desktop_window/desktop_window.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +7,7 @@ import 'package:mix/mix.dart';
 import 'app_shell.dart';
 import 'docs/docs.dart';
 import 'providers/dark_mode.provider.dart';
+import 'theme.dart';
 
 void main() async {
   if (!kIsWeb) {
@@ -29,6 +29,7 @@ class MyApp extends StatelessWidget {
     return ProviderScope(
       child: Consumer(builder: (context, ref, _) {
         final darkMode = ref.watch(darkModeProvider);
+
         return MaterialApp(
           title: 'Mix Gallery',
           debugShowCheckedModeBanner: false,
@@ -38,11 +39,6 @@ class MyApp extends StatelessWidget {
           initialRoute: '/',
           routes: {
             '/': (context) => const AppShell(),
-            '/docs/headless/alert-dialog': (context) =>
-                const HeadlessAlertDialogX(),
-            '/docs/headless/card': (context) => const HeadlessCardX(),
-            '/docs/headless/checkbox': (context) => const HeadlessCheckboxX(),
-            '/docs/headless/chip': (context) => const HeadlessChipX(),
             '/docs/variants': (context) => const VariantsDefaultExample(),
             '/docs/variants/or': (context) => const VariantsOrOperator(),
             '/docs/variants/and': (context) => const VariantsAndOperator(),

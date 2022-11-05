@@ -15,7 +15,7 @@ dartdoc:
       markdown: lib/topics/decorators.md
     "Misc Utils":
       markdown: lib/topics/misc_utils.md
-  categoryOrder: 
+  categoryOrder:
     - "Mix Object"
     - "Mixable Widgets"
     - "Attributes"
@@ -23,109 +23,91 @@ dartdoc:
     - "Variants"
     - "Decorators"
     - "Misc Utils"
-  nodoc: 
-    - 'lib/src/dto/edge_insets.dto.dart' 
-    - 'lib/src/dto/dto.dart' 
-    - 'lib/src/dto/border.dto.dart' 
-    - 'lib/src/dto/box_shadow.dto.dart' 
-    - 'lib/src/dto/text_style.dto.dart' 
-    - 'lib/src/dto/border_radius.dto.dart' 
-    - 'lib/src/attributes/directives/text/text_directive_short.utils.dart' 
-    - 'lib/src/attributes/variants/variants_short.utils.dart' 
-    - 'lib/src/attributes/box/box.props.dart' 
-    - 'lib/src/attributes/box/box_short.utils.dart'
-    - 'lib/src/attributes/shared/shared_short.utils.dart' 
-    - 'lib/src/attributes/shared/shared.props.dart' 
-    - 'lib/src/attributes/image/image.attributes.dart' 
-    - 'lib/src/attributes/image/image_short.utils.dart' 
-    - 'lib/src/attributes/image/image.utils.dart' 
-    - 'lib/src/attributes/image/image.props.dart' 
-    - 'lib/src/attributes/pressable/pressable.notifier.dart' 
-    - 'lib/src/attributes/common/attribute.dart'
-    - 'lib/src/attributes/exports.dart' 
-    - 'lib/src/attributes/text/text_short.utils.dart' 
-    - 'lib/src/attributes/text/text.props.dart' 
-    - 'lib/src/attributes/text/text.notifier.dart' 
-    - 'lib/src/attributes/icon/icon.props.dart' 
-    - 'lib/src/attributes/icon/icon_short.utils.dart'  
-    - 'lib/src/attributes/flex/flex_short.utils.dart' 
-    - 'lib/src/attributes/flex/flex.props.dart'
-    - 'lib/src/attributes/zbox/zbox.props.dart'
-    - 'lib/src/attributes/zbox/zbox_short.utils.dart' 
-    - 'lib/src/attributes/helpers/helper.utils.dart' 
-    - 'lib/src/attributes/helpers/helper_short.utils.dart' 
-    - 'lib/src/attributes/widget_decorators/decorator_short_utils.dart'
-    - 'lib/src/attributes/widget_decorators/clip_decorators/clip_utils.dart'
-    - 'lib/src/theme/refs/typography_tokens.dart' 
-    - 'lib/src/theme/refs/refs.dart' 
-    - 'lib/src/theme/refs/color_tokens.dart' 
-    - 'lib/src/theme/mix_theme.dart' 
-    - 'lib/src/theme/tokens/breakpoints_token.dart' 
-    - 'lib/src/theme/tokens/space_token.dart' 
-    - 'lib/src/headless/button.dart' 
-    - 'lib/src/headless/exports.dart' 
-    - 'lib/src/mixer/mix_context.dart' 
-    - 'lib/src/helpers/utils.dart' 
-    - 'lib/src/widgets/gap.widget.dart' 
-    - 'lib/src/widgets/mixable.widget.dart' 
-    - 'lib/src/widgets/remixable.widget.dart' 
-    - 'lib/src/widgets/nothing.widget.dart' 
-    - 'lib/src/widgets/decorator.widget.dart' 
+  nodoc:
+    - "lib/src/helpers/dto/edge_insets.dto.dart"
+    - "lib/src/helpers/dto/dto.dart"
+    - "lib/src/helpers/dto/border.dto.dart"
+    - "lib/src/helpers/dto/box_shadow.dto.dart"
+    - "lib/src/helpers/dto/text_style.dto.dart"
+    - "lib/src/helpers/dto/border_radius.dto.dart"
+    - "lib/src/attributes/directives/text/text_directive_short.utils.dart"
+    - "lib/src/attributes/variants/variants_short.utils.dart"
+    - "lib/src/attributes/box/box.props.dart"
+    - "lib/src/attributes/box/box_short.utils.dart"
+    - "lib/src/attributes/shared/shared_short.utils.dart"
+    - "lib/src/attributes/shared/shared.props.dart"
+    - "lib/src/attributes/image/image.attributes.dart"
+    - "lib/src/attributes/image/image_short.utils.dart"
+    - "lib/src/attributes/image/image.utils.dart"
+    - "lib/src/attributes/image/image.props.dart"
+    - "lib/src/attributes/pressable/pressable.notifier.dart"
+    - "lib/src/attributes/common/attribute.dart"
+    - "lib/src/attributes/exports.dart"
+    - "lib/src/attributes/text/text_short.utils.dart"
+    - "lib/src/attributes/text/text.props.dart"
+    - "lib/src/attributes/text/text.notifier.dart"
+    - "lib/src/attributes/icon/icon.props.dart"
+    - "lib/src/attributes/icon/icon_short.utils.dart"
+    - "lib/src/attributes/flex/flex_short.utils.dart"
+    - "lib/src/attributes/flex/flex.props.dart"
+    - "lib/src/attributes/zbox/zbox.props.dart"
+    - "lib/src/attributes/zbox/zbox_short.utils.dart"
+    - "lib/src/attributes/helpers/helper.utils.dart"
+    - "lib/src/attributes/helpers/helper_short.utils.dart"
+    - "lib/src/attributes/widget_decorators/decorator_short_utils.dart"
+    - "lib/src/attributes/widget_decorators/clip_decorators/clip_utils.dart"
+    - "lib/src/theme/refs/typography_tokens.dart"
+    - "lib/src/theme/refs/refs.dart"
+    - "lib/src/theme/refs/color_tokens.dart"
+    - "lib/src/theme/mix_theme.dart"
+    - "lib/src/theme/tokens/breakpoints_token.dart"
+    - "lib/src/theme/tokens/space_token.dart"
+    - "lib/src/headless/button.dart"
+    - "lib/src/headless/exports.dart"
+    - "lib/src/mixer/mix_context.dart"
+    - "lib/src/helpers/utils.dart"
+    - "lib/src/widgets/gap.widget.dart"
+    - "lib/src/widgets/mixable.widget.dart"
+    - "lib/src/widgets/remixable.widget.dart"
+    - "lib/src/widgets/nothing.widget.dart"
+    - "lib/src/widgets/decorator.widget.dart"
   processed:
-    - 'lib/src/widgets/box.widget.dart'
-    - 'lib/src/mixer/mix_factory.dart' 
-    - 'lib/src/widgets/pressable.widget.dart'
-    - 'lib/src/attributes/box/box.attributes.dart'
-    - 'lib/src/attributes/box/box.utils.dart'
-    - 'lib/src/widgets/text.widget.dart' 
-    - 'lib/src/attributes/text/text.attributes.dart' 
-    - 'lib/src/attributes/text/text.utils.dart'
-    - 'lib/src/attributes/directives/text/text_directive.utils.dart'
-    - 'lib/src/attributes/directives/text/text_directive.attributes.dart' 
-    - 'lib/src/widgets/flex.widget.dart'
-    - 'lib/src/attributes/flex/flex.utils.dart' 
-    - 'lib/src/attributes/flex/flex.attributes.dart'
-    - 'lib/src/widgets/icon.widget.dart'
-    - 'lib/src/attributes/icon/icon.attributes.dart' 
-    - 'lib/src/attributes/icon/icon.utils.dart'
-    - 'lib/src/headless/chip.dart' 
-    - 'lib/src/headless/card.dart'
-    - 'lib/src/headless/switch.dart'
-    - 'lib/src/headless/radio_button.dart' 
-    - 'lib/src/headless/checkbox.dart' 
-    - 'lib/src/headless/alert_dialog.dart'
-    - 'lib/src/attributes/variants/variants.utils.dart' 
-    - 'lib/src/helpers/variants.dart'
-    - 'lib/src/attributes/widget_decorators/rotate.dart' 
-    - 'lib/src/attributes/widget_decorators/flexible.dart' 
-    - 'lib/src/attributes/widget_decorators/aspect_ratio.dart' 
-    - 'lib/src/attributes/widget_decorators/clip_decorators/clip_rrect.dart' 
-    - 'lib/src/attributes/widget_decorators/clip_decorators/clip_utils.dart' 
-    - 'lib/src/attributes/widget_decorators/opacity.dart' 
-    - 'lib/src/attributes/widget_decorators/scale.dart'
-    - 'lib/src/attributes/widget_decorators/decorator_utils.dart'
-    - 'lib/src/attributes/shared/shared.attributes.dart' 
-    - 'lib/src/attributes/shared/shared.utils.dart'  
-    - 'lib/src/helpers/extensions.dart' 
-    - 'lib/src/helpers/color.utils.dart'
-    - 'lib/src/widgets/zbox.widget.dart'
-    - 'lib/src/attributes/zbox.attributes.dart'
-    - 'lib/src/attributes/zbox.utils.dart'
-
-
-
- 
-
-
-
- 
-
-
-
-
-
-
-
-
-
-
+    - "lib/src/widgets/box.widget.dart"
+    - "lib/src/mixer/mix_factory.dart"
+    - "lib/src/widgets/pressable.widget.dart"
+    - "lib/src/attributes/box/box.attributes.dart"
+    - "lib/src/attributes/box/box.utils.dart"
+    - "lib/src/widgets/text.widget.dart"
+    - "lib/src/attributes/text/text.attributes.dart"
+    - "lib/src/attributes/text/text.utils.dart"
+    - "lib/src/attributes/directives/text/text_directive.utils.dart"
+    - "lib/src/attributes/directives/text/text_directive.attributes.dart"
+    - "lib/src/widgets/flex.widget.dart"
+    - "lib/src/attributes/flex/flex.utils.dart"
+    - "lib/src/attributes/flex/flex.attributes.dart"
+    - "lib/src/widgets/icon.widget.dart"
+    - "lib/src/attributes/icon/icon.attributes.dart"
+    - "lib/src/attributes/icon/icon.utils.dart"
+    - "lib/src/headless/chip.dart"
+    - "lib/src/headless/card.dart"
+    - "lib/src/headless/switch.dart"
+    - "lib/src/headless/radio_button.dart"
+    - "lib/src/headless/checkbox.dart"
+    - "lib/src/headless/alert_dialog.dart"
+    - "lib/src/attributes/variants/variants.utils.dart"
+    - "lib/src/helpers/variants.dart"
+    - "lib/src/attributes/widget_decorators/rotate.dart"
+    - "lib/src/attributes/widget_decorators/flexible.dart"
+    - "lib/src/attributes/widget_decorators/aspect_ratio.dart"
+    - "lib/src/attributes/widget_decorators/clip_decorators/clip_rrect.dart"
+    - "lib/src/attributes/widget_decorators/clip_decorators/clip_utils.dart"
+    - "lib/src/attributes/widget_decorators/opacity.dart"
+    - "lib/src/attributes/widget_decorators/scale.dart"
+    - "lib/src/attributes/widget_decorators/decorator_utils.dart"
+    - "lib/src/attributes/shared/shared.attributes.dart"
+    - "lib/src/attributes/shared/shared.utils.dart"
+    - "lib/src/helpers/extensions.dart"
+    - "lib/src/helpers/color.utils.dart"
+    - "lib/src/widgets/zbox.widget.dart"
+    - "lib/src/attributes/zbox.attributes.dart"
+    - "lib/src/attributes/zbox.utils.dart"

@@ -9,7 +9,7 @@ class VariantsDefaultExample extends StatelessWidget {
     final style = Mix(
       bgColor(MaterialTokens.colorScheme.secondary),
       textColor(MaterialTokens.colorScheme.onSecondary),
-      hover(
+      onHover(
         bgColor(MaterialTokens.colorScheme.primary),
         textColor(MaterialTokens.colorScheme.onPrimary),
       ),

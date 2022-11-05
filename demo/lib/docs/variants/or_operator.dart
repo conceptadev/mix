@@ -8,13 +8,14 @@ class VariantsOrOperator extends StatelessWidget {
   Widget build(BuildContext context) {
     final mix = Mix(
       padding(20.0),
-      (small | medium)(
+      (onSmall | onMedium)(
         // Whether it's small OR medium
         width(300),
         height(400),
         bgColor(Colors.white),
       ),
     );
+
     return Center(
       child: Box(
         mix: mix,

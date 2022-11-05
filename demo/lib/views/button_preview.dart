@@ -7,7 +7,7 @@ Mix get button => Mix(
       fontSize(16.0),
       animated(),
       bgColor(MaterialTokens.colorScheme.primary),
-      hover(
+      onHover(
         bgColor(MaterialTokens.colorScheme.secondary),
       ),
       paddingHorizontal(15.0),
@@ -29,7 +29,7 @@ class ButtonsPreview extends StatelessWidget {
               child: const TextMix('Details'),
             ),
             onPressed: () {},
-          )
+          ),
         ],
       ),
     );

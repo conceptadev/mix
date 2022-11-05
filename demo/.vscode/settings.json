@@ -7,5 +7,9 @@
   // Remove from file watching
   "files.watcherExclude": {
     "**/.fvm": true
+  },
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": true,
+    "source.fixAll": true
   }
 }

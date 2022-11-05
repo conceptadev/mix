@@ -1,13 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import '../../mix.dart';
-import '../attributes/box/box.props.dart';
-import '../attributes/flex/flex.props.dart';
-import '../attributes/icon/icon.props.dart';
-import '../attributes/shared/shared.props.dart';
-import '../attributes/text/text.props.dart';
-import '../attributes/zbox/zbox.props.dart';
+import '../mixer/mix_context.dart';
+import '../mixer/mix_context_notifier.dart';
+import '../mixer/mix_factory.dart';
+import '../variants/variants.dart';
 
 /// Mix Widget
 abstract class MixableWidget extends StatelessWidget {
@@ -19,7 +16,7 @@ abstract class MixableWidget extends StatelessWidget {
     List<Variant>? variants,
   })  : _mix = mix ?? Mix.constant,
         _variants = variants,
-        _inherit = inherit ?? true,
+        _inherit = inherit ?? false,
         super(key: key);
 
   final Mix _mix;
@@ -27,11 +24,21 @@ abstract class MixableWidget extends StatelessWidget {
   final List<Variant>? _variants;
   final bool _inherit;
 
-  MixContext getMixContext(BuildContext context) {
+  MixContext createMixContext(BuildContext context) {
+    var combinedMix = _mix;
+
+    if (_inherit) {
+      /// Get ancestor context
+      final inheritedMixContext = MixContextNotifier.of(context);
+
+      final inheritedMix = inheritedMixContext?.toMix();
+      combinedMix = inheritedMix?.apply(_mix) ?? _mix;
+    }
+
     return MixContext.create(
       context: context,
-      mix: _mix.withMaybeVariants(_variants),
-      inherit: _inherit,
+      mix: combinedMix,
+      variants: _variants ?? [],
     );
   }
 
@@ -58,20 +65,6 @@ abstract class MixableWidget extends StatelessWidget {
   }
 }
 
-abstract class RemixableWidget extends MixableWidget {
-  /// Constructor
-  const RemixableWidget(
-    Mix? mix, {
-    Key? key,
-  }) : super(mix, key: key);
-
-  abstract final Mix baseMix;
-
-  Mix get mix {
-    return baseMix.apply(_mix);
-  }
-}
-
 /// Mixer Widget
 abstract class MixedWidget extends StatelessWidget {
   /// Constructor
@@ -79,16 +72,6 @@ abstract class MixedWidget extends StatelessWidget {
     this.mixContext, {
     Key? key,
   }) : super(key: key);
-
-  BoxProps get boxMixer => mixContext.boxProps;
-  TextProps get textMixer => mixContext.textProps;
-  IconProps get iconMixer => mixContext.iconProps;
-  FlexProps get flexMixer => mixContext.flexProps;
-  SharedProps get sharedMixer => mixContext.sharedProps;
-  ZBoxProps get zBoxMixer => mixContext.zBoxProps;
-  DecoratorMap get decorators => mixContext.decorators;
-  List<Decorator> get parentDecorators => mixContext.decorators.parents;
-  List<Decorator> get childDecorators => mixContext.decorators.children;
 
   final MixContext mixContext;
 
@@ -103,54 +86,6 @@ abstract class MixedWidget extends StatelessWidget {
       DiagnosticsProperty<MixContext>(
         'mixContext',
         mixContext,
-        defaultValue: null,
-      ),
-    );
-
-    properties.add(
-      DiagnosticsProperty<BoxProps>(
-        'boxMixer',
-        boxMixer,
-        defaultValue: null,
-      ),
-    );
-
-    properties.add(
-      DiagnosticsProperty<TextProps>(
-        'textMixer',
-        textMixer,
-        defaultValue: null,
-      ),
-    );
-
-    properties.add(
-      DiagnosticsProperty<IconProps>(
-        'iconMixer',
-        iconMixer,
-        defaultValue: null,
-      ),
-    );
-
-    properties.add(
-      DiagnosticsProperty<FlexProps>(
-        'flexMixer',
-        flexMixer,
-        defaultValue: null,
-      ),
-    );
-
-    properties.add(
-      DiagnosticsProperty<SharedProps>(
-        'sharedMixer',
-        sharedMixer,
-        defaultValue: null,
-      ),
-    );
-
-    properties.add(
-      DiagnosticsProperty(
-        'zBoxMixer',
-        zBoxMixer,
         defaultValue: null,
       ),
     );

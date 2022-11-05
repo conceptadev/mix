@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
-import 'package:mix/src/dto/border.dto.dart';
-import 'package:mix/src/dto/border_radius.dto.dart';
-import 'package:mix/src/dto/box_shadow.dto.dart';
-import 'package:mix/src/dto/edge_insets.dto.dart';
+import 'package:mix/src/helpers/dto/border.dto.dart';
+import 'package:mix/src/helpers/dto/border_radius.dto.dart';
+import 'package:mix/src/helpers/dto/box_shadow.dto.dart';
+import 'package:mix/src/helpers/dto/edge_insets.dto.dart';
 
 class MixTestWidget extends StatelessWidget {
   const MixTestWidget({
