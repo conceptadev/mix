@@ -5,6 +5,7 @@ import 'package:mix/src/helpers/dto/border.dto.dart';
 import 'package:mix/src/helpers/dto/border_radius.dto.dart';
 import 'package:mix/src/helpers/dto/edge_insets.dto.dart';
 import 'package:mix/src/mixer/mix_factory.dart';
+import 'package:mix/src/theme/material_extension.dart';
 import 'package:mix/src/widgets/box/box.attributes.dart';
 import 'package:mix/src/widgets/box/box.widget.dart';
 import 'package:mix/src/widgets/box/box_decorators/aspect_ratio.dart';

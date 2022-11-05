@@ -8,6 +8,7 @@ export 'src/helpers/color.utils.dart';
 export 'src/helpers/extensions.dart';
 export 'src/mixer/mix_context.dart';
 export 'src/mixer/mix_factory.dart';
+export 'src/theme/material_extension.dart';
 export 'src/theme/material_theme/color_scheme_tokens.dart';
 export 'src/theme/material_theme/material_tokens.dart';
 export 'src/theme/material_theme/text_theme_tokens.dart';

@@ -5,11 +5,13 @@ import 'package:mix/src/helpers/dto/border.dto.dart';
 import 'package:mix/src/helpers/dto/border_radius.dto.dart';
 import 'package:mix/src/helpers/dto/box_shadow.dto.dart';
 import 'package:mix/src/helpers/dto/edge_insets.dto.dart';
+import 'package:mix/src/theme/material_extension.dart';
 
 void main() {
   group("Box Attributes", () {
     test('-> Margin', () async {
-      const marginAttribute = BoxAttributes(margin: EdgeInsetsDto.all(20));
+      final marginAttribute =
+          BoxAttributes(margin: MixProperty.value(const EdgeInsetsDto.all(20)));
       final marginUtilityAttribute = margin(20);
 
       expect(
@@ -78,7 +80,7 @@ void main() {
     });
 
     test('-> Height', () async {
-      const heightAttribute = BoxAttributes(height: 50);
+      final heightAttribute = BoxAttributes(height: MixProperty.value(50));
       final heightUtilityAttribute = height(50);
 
       expect(

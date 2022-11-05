@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
 import 'package:mix/src/helpers/dto/edge_insets.dto.dart';
+import 'package:mix/src/theme/material_extension.dart';
 
 final firstMix = Mix(
   // Box attribute
@@ -77,7 +78,8 @@ void main() {
     });
 
     test('Adds Attributes to an Existing Mix', () async {
-      const boxAttribute = BoxAttributes(color: Colors.blue);
+      final boxAttribute =
+          BoxAttributes(color: MixProperty<Color>.value(Colors.blue));
 
       const flexAttribute = FlexAttributes(direction: Axis.horizontal);
 
@@ -97,12 +99,12 @@ void main() {
     });
 
     test('Combines Mixes', () async {
-      const blueBackground = BoxAttributes(
-        color: Colors.blue,
+      final blueBackground = BoxAttributes(
+        color: MixProperty.value(Colors.blue),
       );
 
-      const yellowBackground = BoxAttributes(
-        color: Colors.yellow,
+      final yellowBackground = BoxAttributes(
+        color: MixProperty.value(Colors.yellow),
       );
       final baseMix = Mix(blueBackground);
       final modifiedMix = baseMix.mix(yellowBackground);

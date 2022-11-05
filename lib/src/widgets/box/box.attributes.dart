@@ -7,6 +7,7 @@ import '../../helpers/dto/border_radius.dto.dart';
 import '../../helpers/dto/box_shadow.dto.dart';
 import '../../helpers/dto/edge_insets.dto.dart';
 import '../../helpers/extensions.dart';
+import '../../theme/material_extension.dart';
 
 /// ## Widget:
 /// - [Box](Box-class.html)
@@ -62,7 +63,7 @@ class BoxAttributes extends InheritedAttribute {
       borderRadius:
           borderRadius?.merge(other.borderRadius) ?? other.borderRadius,
       boxShadow: boxShadow?.merge(other.boxShadow) ?? other.boxShadow,
-      margin: margin?.merge(other.margin) ?? other.margin,
+      // margin: margin?.merge(other.margin) ?? other.margin,
       padding: padding?.merge(other.padding) ?? other.padding,
       transform: transform?.merge(other.transform) ?? other.transform,
       // Override values

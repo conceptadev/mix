@@ -57,13 +57,15 @@ class BoxProps {
     return BoxProps(
       color: color?.resolve(context),
       alignment: boxAttributes?.alignment,
-      margin: boxAttributes?.margin?.resolve(context),
+      margin: boxAttributes?.margin?.resolve(context).resolve(context),
       padding: boxAttributes?.padding?.resolve(context),
       width: boxAttributes?.width,
-      height: boxAttributes?.height,
+      height: boxAttributes?.height?.resolve(context),
       border: boxAttributes?.border?.resolve(context),
       borderRadius: boxAttributes?.borderRadius?.resolve(context),
-      boxShadow: boxAttributes?.boxShadow?.resolve(context),
+      boxShadow: boxAttributes?.boxShadow
+          ?.map((shadow) => shadow.resolve(context))
+          .toList(),
       maxHeight: boxAttributes?.maxHeight,
       maxWidth: boxAttributes?.maxWidth,
       minHeight: boxAttributes?.minHeight,
