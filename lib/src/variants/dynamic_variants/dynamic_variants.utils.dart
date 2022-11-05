@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+
 import '../../attributes/attribute.dart';
 import '../../helpers/extensions.dart';
 import '../../theme/mix_theme.dart';
 import '../../theme/tokens/breakpoints.dart';
-import '../variants.dart';
 import '../../widgets/pressable/pressable.notifier.dart';
+import '../variant_condition.dart';
+import '../variants.dart';
 
 /// {@category Variants}
 class DynamicVariantUtilities {
@@ -128,5 +130,9 @@ class DynamicVariantUtilities {
 
   static Variant<T> onNot<T extends Attribute>(Variant<T> other) {
     return other.inverseInstance();
+  }
+
+  static Variant<T> when<T extends Attribute>(bool apply) {
+    return WhenVariant<T>('when', apply);
   }
 }

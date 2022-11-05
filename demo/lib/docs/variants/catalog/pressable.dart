@@ -27,10 +27,12 @@ class VariantsCatalogPressable extends StatelessWidget {
       const VerticalDivider(),
       buildBlock(
         'Press',
-        Mix(onPress(
-          border(color: MaterialTokens.colorScheme.primary, width: 2),
-          padding(4.0),
-        )),
+        Mix(
+          onPress(
+            border(color: MaterialTokens.colorScheme.primary, width: 2),
+            padding(4.0),
+          ),
+        ),
         const Text('Press this to show the highlight'),
       ),
     ]);

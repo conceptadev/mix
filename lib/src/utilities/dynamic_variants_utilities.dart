@@ -16,6 +16,7 @@ final onHover = DynamicVariantUtilities.onHover();
 final onPress = DynamicVariantUtilities.onPress();
 const onNot = DynamicVariantUtilities.onNot;
 final onEnabled = onNot(onDisabled);
+const when = DynamicVariantUtilities.when;
 
 @Deprecated('Use onXSmall instead')
 final xsmall = onXSmall;
