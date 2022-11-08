@@ -12,7 +12,11 @@ Mix get button => Mix(
       ),
       paddingHorizontal(15.0),
       paddingVertical(8.0),
-      rounded(5),
+      when(true)(
+        rounded(5),
+      )(
+        rounded(10),
+      ),
     );
 
 class ButtonsPreview extends StatelessWidget {

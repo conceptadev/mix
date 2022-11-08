@@ -132,7 +132,7 @@ class DynamicVariantUtilities {
     return other.inverseInstance();
   }
 
-  static Variant<T> when<T extends Attribute>(bool apply) {
+  static WhenVariant<T> when<T extends Attribute>(bool apply) {
     return WhenVariant<T>('when', apply);
   }
 }

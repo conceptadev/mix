@@ -89,6 +89,8 @@ class WhenVariantAttribute<T extends Attribute> extends VariantAttribute<T> {
     T? p11,
     T? p12,
   ]) {
+    if (apply) return WhenVariantAttribute(variant, value, apply);
+
     final params = <T>[];
     if (p1 != null) params.add(p1);
     if (p2 != null) params.add(p2);
