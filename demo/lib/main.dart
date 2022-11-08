@@ -48,6 +48,7 @@ class MyApp extends StatelessWidget {
           onUnknownRoute: (settings) {
             return PageRouteBuilder(pageBuilder: (context, _, __) {
               final theme = Theme.of(context);
+
               return Scaffold(
                 body: Center(
                   child: Column(mainAxisSize: MainAxisSize.min, children: [

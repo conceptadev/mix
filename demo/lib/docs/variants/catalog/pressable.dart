@@ -32,6 +32,9 @@ class VariantsCatalogPressable extends StatelessWidget {
             border(color: MaterialTokens.colorScheme.primary, width: 2),
             padding(4.0),
           ),
+          when(true)(
+            
+          ),
         ),
         const Text('Press this to show the highlight'),
       ),

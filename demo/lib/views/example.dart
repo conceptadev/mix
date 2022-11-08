@@ -7,7 +7,7 @@ class CustomWidget extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _CustomWidgetState createState() => _CustomWidgetState();
+  State<CustomWidget> createState() => _CustomWidgetState();
 }
 
 class _CustomWidgetState extends State<CustomWidget> {

@@ -14,7 +14,7 @@ dependencies:
 
   cupertino_icons: ^1.0.5
   flutter_hooks: ^0.18.5+1
-  hooks_riverpod: ^2.0.2
+  hooks_riverpod: ^2.1.1
 
   adaptive_navigation: ^0.0.7
   google_fonts: ^3.0.1
