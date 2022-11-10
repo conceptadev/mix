@@ -4,32 +4,30 @@ import '../attributes/attribute.dart';
 import '../attributes/nested_attribute.dart';
 import '../decorators/decorator_attribute.dart';
 import '../directives/directive_attribute.dart';
+import '../variants/variant.dart';
 import '../variants/variant_attribute.dart';
 
 class MixValues {
   final MixInheritedAttributes attributes;
   final MixDecoratorAttributes decorators;
   final List<VariantAttribute> variants;
+  final List<ContextVariantAttribute> contextVariants;
   final List<DirectiveAttribute> directives;
 
   const MixValues({
     required this.attributes,
     required this.decorators,
     required this.variants,
+    required this.contextVariants,
     required this.directives,
   });
-
-  const MixValues.empty()
-      : attributes = const MixInheritedAttributes.empty(),
-        decorators = const MixDecoratorAttributes.empty(),
-        variants = const [],
-        directives = const [];
 
   factory MixValues.create(List<Attribute> attributes) {
     final expanded = _expandNestedAttributes(attributes);
 
     final directiveList = <DirectiveAttribute>[];
     final variantList = <VariantAttribute>[];
+    final contextVariantList = <ContextVariantAttribute>[];
     final decoratorList = <DecoratorAttribute>[];
     final attributeList = <InheritedAttribute>[];
 
@@ -40,6 +38,10 @@ class MixValues {
 
       if (attribute is VariantAttribute) {
         variantList.add(attribute);
+      }
+
+      if (attribute is ContextVariantAttribute) {
+        contextVariantList.add(attribute);
       }
 
       if (attribute is DirectiveAttribute) {
@@ -60,6 +62,7 @@ class MixValues {
       decorators: MixDecoratorAttributes.fromList(decoratorList),
       directives: directiveList,
       variants: variantList,
+      contextVariants: contextVariantList,
     );
   }
 
@@ -67,9 +70,48 @@ class MixValues {
 
   bool get hasVariants => variants.isNotEmpty;
 
+  bool get hasContextVariants => contextVariants.isNotEmpty;
+
   bool get hasDecorators => decorators.isNotEmpty;
 
   bool get hasAttributes => attributes.isNotEmpty;
+
+  MixValues applyManyVariants(List<Variant> variants) {
+    // Return values if list is empty
+    if (variants.isEmpty) {
+      return this;
+    }
+    final existingVariants = <VariantAttribute>[];
+    final matchedVariants = <VariantAttribute>[];
+
+    for (final variantAttribute in this.variants) {
+      // Check if a variant attrribute matches the list
+      if (variants.contains(variantAttribute.variant)) {
+        matchedVariants.add(variantAttribute);
+      } else {
+        existingVariants.add(variantAttribute);
+      }
+    }
+
+    // Get mixes of variants that match
+    final mixes = matchedVariants.map((e) => e.value);
+
+    // Flatten mixes to attributes
+    final attributesToApply = mixes.expand((e) => e.toList());
+
+// Merge into existing attributes
+    return MixValues(
+      attributes: attributes,
+      decorators: decorators,
+      variants: existingVariants,
+      contextVariants: contextVariants,
+      directives: directives,
+    ).merge(MixValues.create(attributesToApply.toList()));
+  }
+
+  MixValues applyVariant(Variant variant) {
+    return applyManyVariants([variant]);
+  }
 
   /// Used to obtain a [InheritedAttribute] from [MixContext].
   ///
@@ -99,6 +141,7 @@ class MixValues {
     MixInheritedAttributes? attributes,
     MixDecoratorAttributes? decorators,
     List<VariantAttribute>? variants,
+    List<ContextVariantAttribute>? contextVariants,
     List<DirectiveAttribute>? directives,
   }) {
     return MixValues(
@@ -106,6 +149,7 @@ class MixValues {
       decorators: decorators ?? this.decorators,
       variants: variants ?? this.variants,
       directives: directives ?? this.directives,
+      contextVariants: contextVariants ?? this.contextVariants,
     );
   }
 
@@ -114,6 +158,7 @@ class MixValues {
       attributes: attributes.clone(),
       decorators: decorators.clone(),
       variants: [...variants],
+      contextVariants: [...contextVariants],
       directives: [...directives],
     );
   }
@@ -127,6 +172,7 @@ class MixValues {
       attributes: attributes.merge(other.attributes),
       decorators: decorators.merge(other.decorators),
       variants: [...variants, ...other.variants],
+      contextVariants: [...contextVariants, ...other.contextVariants],
       directives: [...directives, ...other.directives],
     );
   }
@@ -146,6 +192,13 @@ class MixValues {
 
     return expanded;
   }
+
+  const MixValues.empty()
+      : attributes = const MixInheritedAttributes.empty(),
+        decorators = const MixDecoratorAttributes.empty(),
+        variants = const [],
+        contextVariants = const [],
+        directives = const [];
 
   @override
   bool operator ==(Object other) {

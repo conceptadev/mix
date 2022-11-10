@@ -26,7 +26,7 @@ export 'src/utilities/shared_utilities.dart';
 export 'src/utilities/text_utilities.dart';
 export 'src/utilities/zbox_utilities.dart';
 export 'src/variants/dynamic_variants/dynamic_variants.utils.dart';
-export 'src/variants/variants.dart';
+export 'src/variants/variant.dart';
 export 'src/widgets/box/box.attributes.dart';
 export 'src/widgets/box/box.utils.dart';
 export 'src/widgets/box/box.widget.dart';

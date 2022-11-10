@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../mixer/mix_context.dart';
 import '../mixer/mix_context_notifier.dart';
 import '../mixer/mix_factory.dart';
-import '../variants/variants.dart';
+import '../variants/variant.dart';
 
 /// Mix Widget
 abstract class MixableWidget extends StatelessWidget {
@@ -37,8 +37,7 @@ abstract class MixableWidget extends StatelessWidget {
 
     return MixContext.create(
       context: context,
-      mix: combinedMix,
-      variants: _variants ?? [],
+      mix: combinedMix.withManyVariants(_variants ?? []),
     );
   }
 
