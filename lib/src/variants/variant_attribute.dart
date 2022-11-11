@@ -2,19 +2,25 @@ import 'package:flutter/material.dart';
 
 import '../attributes/attribute.dart';
 import '../mixer/mix_factory.dart';
-import 'variants.dart';
+import 'context_variant.dart';
+import 'variant.dart';
 
-class VariantAttribute<T extends Attribute> extends Attribute {
+class ContextVariantAttribute extends VariantAttribute<ContextVariant> {
+  const ContextVariantAttribute(ContextVariant variant, Mix mix)
+      : super(variant, mix);
+
+  bool shouldApply(BuildContext context) {
+    return variant.shouldApply.call(context);
+  }
+}
+
+class VariantAttribute<T extends Variant> extends Attribute {
   const VariantAttribute(this.variant, Mix mix) : _mix = mix;
 
-  final Variant<T> variant;
+  final T variant;
   final Mix _mix;
 
   Mix get value => _mix;
-
-  bool shouldApply(BuildContext context) {
-    return variant.shouldApply?.call(context) ?? false;
-  }
 
   @override
   String toString() => 'VariantAttribute(variant: $variant, mix: $value)';
@@ -23,7 +29,7 @@ class VariantAttribute<T extends Attribute> extends Attribute {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is VariantAttribute<T> &&
+    return other is VariantAttribute &&
         other.variant == variant &&
         other.value == value;
   }

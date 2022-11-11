@@ -5,8 +5,10 @@ import '../../helpers/extensions.dart';
 import '../../theme/mix_theme.dart';
 import '../../theme/tokens/breakpoints.dart';
 import '../../widgets/pressable/pressable.notifier.dart';
+
 import '../variant_condition.dart';
-import '../variants.dart';
+import '../context_variant.dart';
+import '../variant.dart';
 
 /// {@category Variants}
 class DynamicVariantUtilities {
@@ -20,36 +22,36 @@ class DynamicVariantUtilities {
     };
   }
 
-  static Variant<T> onSmall<T extends Attribute>() {
-    return Variant<T>(
+  static ContextVariant onSmall<T extends Attribute>() {
+    return ContextVariant(
       'onSmall',
       shouldApply: _screenSizeCheck(ScreenSizeToken.small),
     );
   }
 
-  static Variant<T> onXsmall<T extends Attribute>() {
-    return Variant<T>(
+  static ContextVariant onXsmall<T extends Attribute>() {
+    return ContextVariant(
       'onXsmall',
       shouldApply: _screenSizeCheck(ScreenSizeToken.xsmall),
     );
   }
 
-  static Variant<T> onMedium<T extends Attribute>() {
-    return Variant<T>(
+  static ContextVariant onMedium<T extends Attribute>() {
+    return ContextVariant(
       'onMedium',
       shouldApply: _screenSizeCheck(ScreenSizeToken.medium),
     );
   }
 
-  static Variant<T> onLarge<T extends Attribute>() {
-    return Variant<T>(
+  static ContextVariant onLarge<T extends Attribute>() {
+    return ContextVariant(
       'onLarge',
       shouldApply: _screenSizeCheck(ScreenSizeToken.large),
     );
   }
 
-  static Variant<T> onPortrait<T extends Attribute>() {
-    return Variant<T>(
+  static ContextVariant onPortrait<T extends Attribute>() {
+    return ContextVariant(
       'onPortrait',
       shouldApply: (BuildContext context) {
         return context.orientation == Orientation.portrait;
@@ -57,8 +59,8 @@ class DynamicVariantUtilities {
     );
   }
 
-  static Variant<T> onLandscape<T extends Attribute>() {
-    return Variant<T>(
+  static ContextVariant onLandscape<T extends Attribute>() {
+    return ContextVariant(
       'onLandscape',
       shouldApply: (BuildContext context) {
         return context.orientation == Orientation.landscape;
@@ -66,8 +68,8 @@ class DynamicVariantUtilities {
     );
   }
 
-  static Variant<T> onDark<T extends Attribute>() {
-    return Variant<T>(
+  static ContextVariant onDark<T extends Attribute>() {
+    return ContextVariant(
       'onDark',
       shouldApply: (BuildContext context) {
         return context.isDarkMode;
@@ -75,8 +77,8 @@ class DynamicVariantUtilities {
     );
   }
 
-  static Variant<T> onLight<T extends Attribute>() {
-    return Variant<T>(
+  static ContextVariant onLight<T extends Attribute>() {
+    return ContextVariant(
       'onLight',
       shouldApply: (BuildContext context) {
         return Theme.of(context).brightness == Brightness.light;
@@ -84,8 +86,8 @@ class DynamicVariantUtilities {
     );
   }
 
-  static Variant<T> onDisabled<T extends Attribute>() {
-    return Variant<T>(
+  static ContextVariant onDisabled<T extends Attribute>() {
+    return ContextVariant(
       'onDisabled',
       shouldApply: (BuildContext context) {
         final pressable = PressableNotifier.of(context);
@@ -95,8 +97,8 @@ class DynamicVariantUtilities {
     );
   }
 
-  static Variant<T> onFocus<T extends Attribute>() {
-    return Variant<T>(
+  static ContextVariant onFocus<T extends Attribute>() {
+    return ContextVariant(
       'onFocus',
       shouldApply: (BuildContext context) {
         final pressable = PressableNotifier.of(context);
@@ -106,8 +108,8 @@ class DynamicVariantUtilities {
     );
   }
 
-  static Variant<T> onPress<T extends Attribute>() {
-    return Variant<T>(
+  static ContextVariant onPress<T extends Attribute>() {
+    return ContextVariant(
       'onPress',
       shouldApply: (BuildContext context) {
         final pressable = PressableNotifier.of(context);
@@ -117,8 +119,8 @@ class DynamicVariantUtilities {
     );
   }
 
-  static Variant<T> onHover<T extends Attribute>() {
-    return Variant<T>(
+  static ContextVariant onHover<T extends Attribute>() {
+    return ContextVariant(
       'onHover',
       shouldApply: (BuildContext context) {
         final pressable = PressableNotifier.of(context);
@@ -128,8 +130,8 @@ class DynamicVariantUtilities {
     );
   }
 
-  static Variant<T> onNot<T extends Attribute>(Variant<T> other) {
-    return other.inverseInstance();
+  static T onNot<T extends Variant>(T other) {
+    return other.inverseInstance() as T;
   }
 
   static WhenVariant<T> when<T extends Attribute>(bool apply) {

@@ -5,7 +5,6 @@ import '../attributes/shared/shared.props.dart';
 import '../decorators/decorator_attribute.dart';
 import '../directives/directive_attribute.dart';
 import '../variants/variant_attribute.dart';
-import '../variants/variants.dart';
 import '../widgets/box/box.props.dart';
 import '../widgets/flex/flex.props.dart';
 import '../widgets/icon/icon.props.dart';
@@ -27,19 +26,16 @@ class MixContext {
   factory MixContext.create({
     required BuildContext context,
     required Mix mix,
-    List<Variant> variants = const [],
   }) {
     return _build(
       context: context,
       mix: mix.values,
-      selectedVariants: variants,
     );
   }
 
   static MixContext _build<T extends Attribute>({
     required BuildContext context,
     required MixValues mix,
-    required List<Variant> selectedVariants,
   }) {
     // Tracks the values selected and does not allow for
     // attributes already expended to be expended again.
@@ -47,15 +43,15 @@ class MixContext {
       attributes: mix.attributes,
       decorators: mix.decorators,
       directives: mix.directives,
-      variants: [],
+      variants: mix.variants,
+      contextVariants: [],
     );
 
-    final variants = mix.variants;
+    final contextVariants = mix.contextVariants;
 
-    final attributes = _selectVariantsToApply(
+    final attributes = _applyContextVariants(
       context,
-      selectedVariants,
-      variants,
+      contextVariants,
     );
 
     final appliedValues = values.merge(MixValues.create(attributes));
@@ -66,26 +62,23 @@ class MixContext {
     );
   }
 
-  static List<Attribute> _selectVariantsToApply(
+  static List<Attribute> _applyContextVariants(
     BuildContext context,
-    List<Variant> selectedVariants,
     List<Attribute> attributes,
   ) {
     List<Attribute> expanded = [];
 
     for (final attribute in attributes) {
-      if (attribute is VariantAttribute) {
-        final shouldApply = selectedVariants.contains(attribute.variant) ||
-            attribute.shouldApply(context);
+      if (attribute is ContextVariantAttribute) {
+        final shouldApply = attribute.shouldApply(context);
         // If it's inverse (from `not(variant)`), only apply if [willApply] is
         // false. Otherwise, apply only when [willApply]
         final willApply =
             attribute.variant.inverse ? !shouldApply : shouldApply;
         if (willApply) {
           // If its selected, add it to the list
-          expanded.addAll(_selectVariantsToApply(
+          expanded.addAll(_applyContextVariants(
             context,
-            selectedVariants,
             attribute.value.toList(),
           ));
         } else {

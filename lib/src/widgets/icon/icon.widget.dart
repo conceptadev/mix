@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../mixer/mix_context.dart';
 import '../../mixer/mix_factory.dart';
-import '../../variants/variants.dart';
+import '../../variants/variant.dart';
 import '../empty.widget.dart';
 import '../mixable.widget.dart';
 
