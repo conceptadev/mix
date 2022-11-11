@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../attributes/attribute.dart';
 import '../attributes/helpers/helper.utils.dart';
-import '../variants/variants.dart';
+import '../variants/variant.dart';
 import '../widgets/box/box.widget.dart';
 import '../widgets/flex/flex.widget.dart';
 import '../widgets/icon/icon.widget.dart';
@@ -131,41 +131,35 @@ class Mix {
 
   /// Returns a new mix instance from this instance with the
   /// _Variant_ instance added
-  @Deprecated(kVariantDeprecationNotice)
-  Mix withVariant(Variant<Attribute> variant) {
-    return copyWith(
-      attributes: values,
-    );
+
+  Mix withVariant(Variant variant) {
+    return Mix._(values.applyVariant(variant));
   }
 
-  @Deprecated(kVariantDeprecationNotice)
-  Mix withMaybeVariant(Variant<Attribute>? variant) {
+  Mix withMaybeVariant(Variant? variant) {
     if (variant == null) return this;
 
     return withVariant(variant);
   }
 
-  @Deprecated(kVariantDeprecationNotice)
-  Mix withVariants(List<Variant<Attribute>> variants) {
-    return copyWith(attributes: values);
+  Mix withManyVariants(List<Variant> variants) {
+    return Mix._(values.applyManyVariants(variants));
   }
 
-  @Deprecated(kVariantDeprecationNotice)
-  Mix withMaybeVariants(List<Variant<Attribute>>? variants) {
-    if (variants == null || variants.isEmpty) return this;
-
-    return withVariants(variants);
+  @Deprecated('Use withManyVariants now')
+  Mix withVariants(List<Variant> variants) {
+    return withManyVariants(variants);
   }
 
   @Deprecated(kVariantDeprecationNotice)
   static Mix variantSwitcher<T extends Attribute>(
     Mix mix,
-    Map<bool, Variant<Attribute>> cases,
+    Map<bool, Variant> cases,
   ) {
     final keys = cases.keys.toList();
     final values = cases.values.toList();
 
-    List<Variant<Attribute>> variants = [];
+    List<Variant> variants = [];
 
     for (var i = 0; i < keys.length; i++) {
       if (keys[i]) {
