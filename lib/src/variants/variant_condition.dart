@@ -2,10 +2,10 @@ import 'package:flutter/widgets.dart';
 
 import '../attributes/attribute.dart';
 import '../mixer/mix_factory.dart';
+import 'context_variant.dart';
 import 'variant_attribute.dart';
-import 'variants.dart';
 
-class WhenVariant<T extends Attribute> extends Variant<T> {
+class WhenVariant extends ContextVariant {
   final bool apply;
 
   WhenVariant(String name, this.apply) : super(name, shouldApply: (_) => apply);
@@ -24,24 +24,24 @@ class WhenVariant<T extends Attribute> extends Variant<T> {
   /// ),
   /// ```
   // ignore: long-parameter-list
-  WhenVariantAttribute<T> call([
-    T? p1,
-    T? p2,
-    T? p3,
-    T? p4,
-    T? p5,
-    T? p6,
-    T? p7,
-    T? p8,
-    T? p9,
-    T? p10,
-    T? p11,
-    T? p12,
+  WhenVariantAttribute call([
+    Attribute? p1,
+    Attribute? p2,
+    Attribute? p3,
+    Attribute? p4,
+    Attribute? p5,
+    Attribute? p6,
+    Attribute? p7,
+    Attribute? p8,
+    Attribute? p9,
+    Attribute? p10,
+    Attribute? p11,
+    Attribute? p12,
   ]) {
     final attribute =
         super.call(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12);
 
-    return WhenVariantAttribute<T>(
+    return WhenVariantAttribute(
       attribute.variant,
       attribute.value,
       apply,
@@ -49,11 +49,11 @@ class WhenVariant<T extends Attribute> extends Variant<T> {
   }
 }
 
-class WhenVariantAttribute<T extends Attribute> extends VariantAttribute<T> {
+class WhenVariantAttribute extends ContextVariantAttribute {
   final bool apply;
 
   WhenVariantAttribute(
-    Variant<T> variant,
+    ContextVariant variant,
     Mix mix,
     this.apply,
   ) : super(variant, mix);
@@ -75,23 +75,23 @@ class WhenVariantAttribute<T extends Attribute> extends VariantAttribute<T> {
   /// ),
   /// ```
   // ignore: long-parameter-list
-  VariantAttribute<T> call([
-    T? p1,
-    T? p2,
-    T? p3,
-    T? p4,
-    T? p5,
-    T? p6,
-    T? p7,
-    T? p8,
-    T? p9,
-    T? p10,
-    T? p11,
-    T? p12,
+  VariantAttribute call([
+    Attribute? p1,
+    Attribute? p2,
+    Attribute? p3,
+    Attribute? p4,
+    Attribute? p5,
+    Attribute? p6,
+    Attribute? p7,
+    Attribute? p8,
+    Attribute? p9,
+    Attribute? p10,
+    Attribute? p11,
+    Attribute? p12,
   ]) {
     if (apply) return WhenVariantAttribute(variant, value, apply);
 
-    final params = <T>[];
+    final params = <Attribute>[];
     if (p1 != null) params.add(p1);
     if (p2 != null) params.add(p2);
     if (p3 != null) params.add(p3);

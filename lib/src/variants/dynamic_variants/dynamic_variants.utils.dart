@@ -5,10 +5,9 @@ import '../../helpers/extensions.dart';
 import '../../theme/mix_theme.dart';
 import '../../theme/tokens/breakpoints.dart';
 import '../../widgets/pressable/pressable.notifier.dart';
-
-import '../variant_condition.dart';
 import '../context_variant.dart';
 import '../variant.dart';
+import '../variant_condition.dart';
 
 /// {@category Variants}
 class DynamicVariantUtilities {
@@ -134,7 +133,7 @@ class DynamicVariantUtilities {
     return other.inverseInstance() as T;
   }
 
-  static WhenVariant<T> when<T extends Attribute>(bool apply) {
-    return WhenVariant<T>('when', apply);
+  static WhenVariant when(bool apply) {
+    return WhenVariant('when', apply);
   }
 }
