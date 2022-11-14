@@ -23,7 +23,7 @@ class AppShell extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final selected = useState(0);
 
-    final darkMode = ref.watch(darkModeProvider.state);
+    final darkMode = ref.watch(darkModeProvider);
 
     return MixTheme(
       data: MixThemeData(),
@@ -33,8 +33,9 @@ class AppShell extends HookConsumerWidget {
           centerTitle: false,
           actions: [
             Switch(
-              value: darkMode.state,
-              onChanged: (value) => darkMode.state = value,
+              value: darkMode,
+              onChanged: (value) =>
+                  ref.read(darkModeProvider.notifier).state = value,
             ),
           ],
         ),

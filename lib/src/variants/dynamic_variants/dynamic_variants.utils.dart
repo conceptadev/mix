@@ -7,6 +7,7 @@ import '../../theme/tokens/breakpoints.dart';
 import '../../widgets/pressable/pressable.notifier.dart';
 import '../context_variant.dart';
 import '../variant.dart';
+import '../variant_condition.dart';
 
 /// {@category Variants}
 class DynamicVariantUtilities {
@@ -130,5 +131,9 @@ class DynamicVariantUtilities {
 
   static T onNot<T extends Variant>(T other) {
     return other.inverseInstance() as T;
+  }
+
+  static WhenVariant when(bool apply) {
+    return WhenVariant('when', apply);
   }
 }

@@ -45,7 +45,7 @@ class AdaptiveNavigationScaffold extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _AdaptiveNavigationScaffoldState createState() =>
+  State<AdaptiveNavigationScaffold> createState() =>
       _AdaptiveNavigationScaffoldState();
 }
 
@@ -74,7 +74,7 @@ class _AdaptiveNavigationScaffoldState
                 ),
               ],
               selectedIndex: widget.currentIndex,
-              onDestinationSelected: widget.onNavigationIndexChange ?? (_) {},
+              onDestinationSelected: widget.onNavigationIndexChange,
             ),
             const VerticalDivider(
               width: 1,
