@@ -14,7 +14,7 @@ visual properties between them.
 In the following example `hover()` is a `Variant` that will be applied when a `Pressable` 
 triggers the hover state. The `bgColor` and `textColor` properties will be overridden with the new value when the variant applies
 
-```dart highlight="8-13"
+```dart highlight="10-13"
 final style = Mix(
   bgColor(MaterialTokens.colorScheme.primary),
   textColor($onPrimary),
@@ -44,7 +44,7 @@ final mix = Mix(
   ),
   light(
     textColor(Colors.black),
-  )
+  ),
 );
 ```
 
@@ -84,6 +84,37 @@ variant is not called. For example:
 final mix = Mix(
   (not(disabled))(
     scale(1.2),
+  ),
+);
+```
+
+### Conditional variants
+
+The `when` variant lets you concisely evaluate expressions within a mix or a within variant list.
+
+```dart highlight="5-7"
+bool hasError = true;
+
+final mix = Mix(
+  bgColor(Colors.green),
+  when(hasError)(
+    bgColor(Colors.red),
+  ),
+);
+```
+
+If the `hasError` condition is true, the attributes inside the statement are applied and, if necessary, will override previous attributes.
+To ensure specific control over the flow, you can use the else statement by adding another statement right after it:
+
+```dart highlight="4-8"
+bool hasError = true;
+
+final mix = Mix(
+  when(hasError)(
+    bgColor(Colors.red),
+  )(
+    // will be executed if `hasError` is false
+    bgColor(Colors.green),
   ),
 );
 ```
