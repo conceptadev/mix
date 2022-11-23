@@ -6,8 +6,8 @@ version: 1.0.0
 environment:
   sdk: '>=2.18.4 <3.0.0'
 
-# dependencies:
-#   path: ^1.8.0
+dependencies:
+  mix:
 
 dev_dependencies:
   lints: ^2.0.0
