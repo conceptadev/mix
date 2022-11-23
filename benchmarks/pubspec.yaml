@@ -7,8 +7,16 @@ environment:
   sdk: '>=2.18.4 <3.0.0'
 
 dependencies:
+  flutter:
+    sdk: flutter
   mix:
 
 dev_dependencies:
+  flutter_test:
+    sdk: flutter
   lints: ^2.0.0
   test: ^1.16.0
+
+dependency_overrides:
+  mix:
+    path: ../
