@@ -60,6 +60,29 @@ void main() {
   watch.reset();
 
   {
+    watch.start();
+
+    Mix.combineAll([
+      Mix(bgColor(Colors.black)),
+      Mix(textColor(Colors.black)),
+      Mix(margin(20)),
+      Mix(rounded(10)),
+      Mix(borderColor(Colors.black)),
+    ]);
+
+    watch.stop();
+
+    printer.addResult(
+      description: 'Combine multiple mixes',
+      value: watch.elapsedMicroseconds.toDouble(),
+      unit: 'microseconds',
+      name: 'combine_multiple_mixes_bench',
+    );
+  }
+
+  watch.reset();
+
+  {
     final hasError = Variant('hasError');
     final mix = Mix(
       hasError(
@@ -82,6 +105,8 @@ void main() {
       name: 'apply_variant_bench',
     );
   }
+
+  watch.reset();
 
   {
     final mix = Mix(
