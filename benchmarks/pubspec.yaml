@@ -1,10 +1,9 @@
 name: benchmarks
 description: A sample command-line application.
 version: 1.0.0
-# homepage: https://www.example.com
 
 environment:
-  sdk: '>=2.18.4 <3.0.0'
+  sdk: '>=2.13.0 <3.0.0'
 
 dependencies:
   flutter:

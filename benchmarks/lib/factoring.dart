@@ -2,7 +2,7 @@ import 'package:benchmarks/common.dart';
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
 
-/// flutter run -d windows -t lib/factoring.dart --release
+/// flutter run -t lib/factoring.dart --release
 void main() {
   assert(
     false,

@@ -6,7 +6,7 @@ import 'package:mockito/mockito.dart';
 
 class MockBuildContext extends Mock implements BuildContext {}
 
-/// flutter run -d windows -t lib/values.dart --release
+/// flutter run -t lib/values.dart --release
 void main() async {
   assert(
     false,
