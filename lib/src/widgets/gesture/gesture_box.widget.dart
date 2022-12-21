@@ -133,15 +133,17 @@ class GestureBoxMixerWidgetState extends State<GestureBoxMixerWidget> {
               updateState(() => _onTap = false);
             },
             onLongPressStart: (_) {
+              updateState(() => _onTap = true);
               updateState(() => _onLongPress = true);
             },
             onLongPressEnd: (_) {
               updateState(() => _onLongPress = false);
+              updateState(() => _onTap = false);
             },
             child: Box(
               mix: widget.mix.withManyVariants([
                 if (_onHover) onHover,
-                if (_onTap) onPress,
+                if (_onTap) onTap,
                 if (_onShouldShowFocus) onFocus,
                 if (_onLongPress) onLongPress,
                 if (!enabled) onDisabled,

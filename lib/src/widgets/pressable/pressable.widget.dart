@@ -12,6 +12,7 @@ import 'pressable.notifier.dart';
 /// See the containing or the child widget-specific documentation for applicable attributes and utilities.
 ///
 /// {@category Mixable Widgets}
+@Deprecated('Use GestureBox instead')
 class Pressable extends StatelessWidget {
   const Pressable({
     required this.child,
