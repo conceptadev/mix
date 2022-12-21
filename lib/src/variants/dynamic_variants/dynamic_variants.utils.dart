@@ -4,7 +4,6 @@ import '../../attributes/attribute.dart';
 import '../../helpers/extensions.dart';
 import '../../theme/mix_theme.dart';
 import '../../theme/tokens/breakpoints.dart';
-import '../../widgets/pressable/pressable.notifier.dart';
 import '../context_variant.dart';
 import '../variant.dart';
 import '../variant_condition.dart';
@@ -85,49 +84,11 @@ class DynamicVariantUtilities {
     );
   }
 
-  static ContextVariant onDisabled<T extends Attribute>() {
-    return ContextVariant(
-      'onDisabled',
-      shouldApply: (BuildContext context) {
-        final pressable = PressableNotifier.of(context);
-
-        return pressable?.disabled == true;
-      },
-    );
-  }
-
-  static ContextVariant onFocus<T extends Attribute>() {
-    return ContextVariant(
-      'onFocus',
-      shouldApply: (BuildContext context) {
-        final pressable = PressableNotifier.of(context);
-
-        return pressable?.focused == true;
-      },
-    );
-  }
-
-  static ContextVariant onPress<T extends Attribute>() {
-    return ContextVariant(
-      'onPress',
-      shouldApply: (BuildContext context) {
-        final pressable = PressableNotifier.of(context);
-
-        return pressable?.pressing == true;
-      },
-    );
-  }
-
-  static ContextVariant onHover<T extends Attribute>() {
-    return ContextVariant(
-      'onHover',
-      shouldApply: (BuildContext context) {
-        final pressable = PressableNotifier.of(context);
-
-        return pressable?.hovering == true;
-      },
-    );
-  }
+  static const onDisabled = Variant('onDisabled');
+  static const onFocus = Variant('onFocus');
+  static const onTap = Variant('onTap');
+  static const onLongPress = Variant('onLongPress');
+  static const onHover = Variant('onHover');
 
   static T onNot<T extends Variant>(T other) {
     return other.inverseInstance() as T;
