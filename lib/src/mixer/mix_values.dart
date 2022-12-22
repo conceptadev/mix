@@ -4,8 +4,10 @@ import '../attributes/attribute.dart';
 import '../attributes/nested_attribute.dart';
 import '../decorators/decorator_attribute.dart';
 import '../directives/directive_attribute.dart';
+import '../helpers/extensions.dart';
 import '../variants/variant.dart';
 import '../variants/variant_attribute.dart';
+import 'mix_factory.dart';
 
 class MixValues {
   final MixInheritedAttributes attributes;
@@ -76,28 +78,31 @@ class MixValues {
 
   bool get hasAttributes => attributes.isNotEmpty;
 
+  // You can control the order that is applied by changing the order of the list of variants
   MixValues applyManyVariants(List<Variant> variants) {
     // Return values if list is empty
     if (variants.isEmpty) {
       return this;
     }
-    final existingVariants = <VariantAttribute>[];
+    final existingVariants = [...this.variants];
     final matchedVariants = <VariantAttribute>[];
 
-    for (final variantAttribute in this.variants) {
-      // Check if a variant attrribute matches the list
-      if (variants.contains(variantAttribute.variant)) {
-        matchedVariants.add(variantAttribute);
-      } else {
-        existingVariants.add(variantAttribute);
+    for (final v in variants) {
+      // Gets the matched variant and removes from existing variants list
+
+      final containsVariant = existingVariants.firstWhereAndRemove(
+        (e) => e.variant == v,
+      );
+      if (containsVariant != null) {
+        matchedVariants.add(containsVariant);
       }
     }
 
     // Get mixes of variants that match
-    final mixes = matchedVariants.map((e) => e.value);
+    final mixes = matchedVariants.map((e) => e.value).toList();
 
     // Flatten mixes to attributes
-    final attributesToApply = mixes.expand((e) => e.toList());
+    final attributesToApply = Mix.combineAll(mixes);
 
 // Merge into existing attributes
     return MixValues(
@@ -106,7 +111,7 @@ class MixValues {
       variants: existingVariants,
       contextVariants: contextVariants,
       directives: directives,
-    ).merge(MixValues.create(attributesToApply.toList()));
+    ).merge(attributesToApply.values);
   }
 
   MixValues applyVariant(Variant variant) {

@@ -91,10 +91,18 @@ class GestureBoxMixerWidgetState extends State<GestureBoxMixerWidget> {
 
   bool _onHover = false;
   bool _onShouldShowFocus = false;
-  bool _onTap = false;
+  bool _onPress = false;
   bool _onLongPress = false;
 
   bool get enabled => widget.onTap != null || widget.onLongPress != null;
+
+  void unpress() {
+    Future.delayed(const Duration(milliseconds: 100), () {
+      if (!_onLongPress) {
+        updateState(() => _onPress = false);
+      }
+    });
+  }
 
   updateState(void Function() fn) {
     if (mounted) setState(fn);
@@ -124,29 +132,29 @@ class GestureBoxMixerWidgetState extends State<GestureBoxMixerWidget> {
               widget.onTap?.call();
             },
             onTapDown: (_) {
-              updateState(() => _onTap = true);
+              updateState(() => _onPress = true);
             },
             onTapUp: (_) {
-              updateState(() => _onTap = false);
+              unpress();
             },
             onTapCancel: () {
-              updateState(() => _onTap = false);
+              unpress();
             },
             onLongPressStart: (_) {
-              updateState(() => _onTap = true);
+              updateState(() => _onPress = true);
               updateState(() => _onLongPress = true);
             },
             onLongPressEnd: (_) {
               updateState(() => _onLongPress = false);
-              updateState(() => _onTap = false);
+              updateState(() => _onPress = false);
             },
             child: Box(
               mix: widget.mix.withManyVariants([
-                if (_onHover) onHover,
-                if (_onTap) onTap,
-                if (_onShouldShowFocus) onFocus,
-                if (_onLongPress) onLongPress,
                 if (!enabled) onDisabled,
+                if (_onShouldShowFocus) onFocus,
+                if (_onHover) onHover,
+                if (_onPress) onPress,
+                if (_onLongPress) onLongPress,
               ]),
               child: widget.child,
             ),

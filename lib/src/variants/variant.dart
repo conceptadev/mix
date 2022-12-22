@@ -62,7 +62,7 @@ class Variant {
   int get hashCode => name.hashCode ^ inverse.hashCode;
 
   @override
-  String toString() => 'Variant(name: $name, inverse: $inverse)';
+  String toString() => 'name: $name, inverse: $inverse';
 
   Variant inverseInstance() {
     return Variant(

@@ -86,7 +86,7 @@ class DynamicVariantUtilities {
 
   static const onDisabled = Variant('onDisabled');
   static const onFocus = Variant('onFocus');
-  static const onTap = Variant('onTap');
+  static const onPress = Variant('onPress');
   static const onLongPress = Variant('onLongPress');
   static const onHover = Variant('onHover');
 

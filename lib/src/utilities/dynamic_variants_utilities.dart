@@ -13,8 +13,8 @@ final onLight = DynamicVariantUtilities.onLight();
 const onDisabled = DynamicVariantUtilities.onDisabled;
 const onFocus = DynamicVariantUtilities.onFocus;
 const onHover = DynamicVariantUtilities.onHover;
-const onTap = DynamicVariantUtilities.onTap;
-const onPress = onTap;
+
+const onPress = DynamicVariantUtilities.onPress;
 const onLongPress = DynamicVariantUtilities.onLongPress;
 
 const onNot = DynamicVariantUtilities.onNot;
