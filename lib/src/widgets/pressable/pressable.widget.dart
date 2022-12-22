@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../mixer/mix_factory.dart';
-import '../mixable.widget.dart';
 import 'gesture_box.widget.dart';
 
 class Pressable extends StatelessWidget {
@@ -16,7 +15,7 @@ class Pressable extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-  final MixableWidget child;
+  final Widget child;
   final VoidCallback? onPressed;
   final VoidCallback? onLongPressed;
   final FocusNode? focusNode;

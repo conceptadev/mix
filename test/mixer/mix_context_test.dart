@@ -27,8 +27,8 @@ class _MixContextTestWidget extends StatelessWidget {
     return MixTestWidget(
       child: Pressable(
         onPressed: () {},
-        child: VBox(
-          mix: pressableMix,
+        mix: pressableMix,
+        child: Column(
           children: [
             const TextMix('Hello'),
             const TextMix('With Variant', variants: [textVariant]),
