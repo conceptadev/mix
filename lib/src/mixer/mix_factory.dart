@@ -69,7 +69,7 @@ class Mix {
   }
 
   Mix clone() {
-    return Mix._(values);
+    return Mix._(values.clone());
   }
 
   List<Attribute> toList() {
