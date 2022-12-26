@@ -10,12 +10,12 @@ final onLandscape = DynamicVariantUtilities.onLandscape();
 final onDark = DynamicVariantUtilities.onDark();
 final onLight = DynamicVariantUtilities.onLight();
 
-const onDisabled = DynamicVariantUtilities.onDisabled;
-const onFocus = DynamicVariantUtilities.onFocus;
-const onHover = DynamicVariantUtilities.onHover;
+final onDisabled = DynamicVariantUtilities.onDisabled();
+final onFocus = DynamicVariantUtilities.onFocus();
+final onHover = DynamicVariantUtilities.onHover();
 
-const onPress = DynamicVariantUtilities.onPress;
-const onLongPress = DynamicVariantUtilities.onLongPress;
+final onPress = DynamicVariantUtilities.onPress();
+final onLongPress = DynamicVariantUtilities.onLongPress();
 
 const onNot = DynamicVariantUtilities.onNot;
 final onEnabled = onNot(onDisabled);
@@ -40,10 +40,10 @@ final light = onLight;
 final large = onLarge;
 
 @Deprecated('Use onHover instead')
-const hover = onHover;
+final hover = onHover;
 
 @Deprecated('Use onFocus instead')
-const focus = onFocus;
+final focus = onFocus;
 
 @Deprecated('Use onPortrait instead')
 final portrait = onPortrait;
@@ -52,13 +52,13 @@ final portrait = onPortrait;
 final landscape = onLandscape;
 
 @Deprecated('Use onDisabled instead')
-const disabled = onDisabled;
+final disabled = onDisabled;
 
 @Deprecated('Use onEnabled instead')
 final enabled = onEnabled;
 
 @Deprecated('Use onPress instead')
-const press = onPress;
+final press = onPress;
 
 @Deprecated('Use onNot instead')
 const not = onNot;

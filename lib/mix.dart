@@ -48,8 +48,6 @@ export 'src/widgets/image/image.attributes.dart';
 export 'src/widgets/image/image.utils.dart';
 export 'src/widgets/mix_context_builder.dart';
 export 'src/widgets/mixable.widget.dart';
-export 'src/widgets/pressable/gesture_box.widget.dart';
-export 'src/widgets/pressable/pressable.widget.dart';
 export 'src/widgets/pressable/pressable.widget.dart';
 export 'src/widgets/text/text.attributes.dart';
 export 'src/widgets/text/text.utils.dart';
