@@ -139,12 +139,10 @@ class _PressableState extends State<Pressable> {
             onShowHoverHighlight: (v) {
               updateState(() => _hover = v);
             },
-            child: InkWell(
-              child: PressableNotifier(
-                state: state,
-                focus: _focus,
-                child: widget.child,
-              ),
+            child: PressableNotifier(
+              state: state,
+              focus: _focus,
+              child: widget.child,
             ),
           ),
         ),
