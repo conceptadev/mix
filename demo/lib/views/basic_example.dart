@@ -27,10 +27,12 @@ class BasicExample extends HookWidget {
       ),
     );
 
-    return GestureBox(
-      mix: mix,
-      onTap: () => print('tapped'),
-      child: const TextMix('Gradient Box'),
+    return Pressable(
+      onPressed: () => print('tapped'),
+      child: Box(
+        mix: mix,
+        child: const TextMix('Gradient Box'),
+      ),
     );
   }
 }

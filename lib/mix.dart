@@ -16,6 +16,7 @@ export 'src/theme/mix_theme.dart';
 export 'src/theme/refs/color_token.dart';
 export 'src/theme/refs/text_style_token.dart';
 export 'src/theme/tokens/size.dart';
+export 'src/theme/tokens/space.dart';
 export 'src/utilities/box_decorator_utilities.dart';
 export 'src/utilities/box_utilities.dart';
 export 'src/utilities/dynamic_variants_utilities.dart';
