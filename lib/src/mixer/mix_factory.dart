@@ -35,18 +35,10 @@ class Mix {
     Attribute? p12,
   ]) {
     final params = <Attribute>[];
-    if (p1 != null) params.add(p1);
-    if (p2 != null) params.add(p2);
-    if (p3 != null) params.add(p3);
-    if (p4 != null) params.add(p4);
-    if (p5 != null) params.add(p5);
-    if (p6 != null) params.add(p6);
-    if (p7 != null) params.add(p7);
-    if (p8 != null) params.add(p8);
-    if (p9 != null) params.add(p9);
-    if (p10 != null) params.add(p10);
-    if (p11 != null) params.add(p11);
-    if (p12 != null) params.add(p12);
+
+    for (final param in [p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12]) {
+      if (param != null) params.add(param);
+    }
 
     return Mix.fromList(params);
   }

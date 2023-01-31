@@ -36,25 +36,18 @@ class MixValues {
     for (final attribute in expanded) {
       if (attribute is InheritedAttribute) {
         attributeList.add(attribute);
-      }
-
-      if (attribute is VariantAttribute) {
-        variantList.add(attribute);
-      }
-
-      if (attribute is ContextVariantAttribute) {
-        contextVariantList.add(attribute);
-      }
-
-      if (attribute is DirectiveAttribute) {
+      } else if (attribute is VariantAttribute) {
+        // Breakdown different types of variant attributes
+        if (attribute is ContextVariantAttribute) {
+          contextVariantList.add(attribute);
+        } else {
+          variantList.add(attribute);
+        }
+      } else if (attribute is DirectiveAttribute) {
         directiveList.add(attribute);
-      }
-
-      if (attribute is DecoratorAttribute) {
+      } else if (attribute is DecoratorAttribute) {
         decoratorList.add(attribute);
-      }
-
-      if (attribute is NestedMixAttribute) {
+      } else if (attribute is NestedMixAttribute) {
         throw Exception('Should not have nested attributes at this point');
       }
     }
