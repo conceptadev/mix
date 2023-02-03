@@ -9,6 +9,8 @@ final onPortrait = DynamicVariantUtilities.onPortrait();
 final onLandscape = DynamicVariantUtilities.onLandscape();
 final onDark = DynamicVariantUtilities.onDark();
 final onLight = DynamicVariantUtilities.onLight();
+final onRTL = DynamicVariantUtilities.onRTL();
+final onLTR = onNot(onRTL);
 
 final onDisabled = DynamicVariantUtilities.onDisabled();
 final onFocus = DynamicVariantUtilities.onFocus();
