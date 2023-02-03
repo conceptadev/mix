@@ -207,7 +207,7 @@ class BoxUtility {
   }
 
   /// Short Utils: align
-  static BoxAttributes align(Alignment align) {
+  static BoxAttributes align(AlignmentGeometry align) {
     return BoxAttributes(alignment: align);
   }
 
@@ -219,8 +219,8 @@ class BoxUtility {
 
   // ignore: long-parameter-list
   static BoxAttributes linearGradient({
-    Alignment begin = Alignment.centerLeft,
-    Alignment end = Alignment.centerRight,
+    AlignmentGeometry begin = AlignmentDirectional.centerStart,
+    AlignmentGeometry end = AlignmentDirectional.centerEnd,
     required List<Color> colors,
     List<double>? stops,
     TileMode tileMode = TileMode.clamp,
@@ -240,7 +240,7 @@ class BoxUtility {
 
   // ignore: long-parameter-list
   static BoxAttributes radialGradient({
-    Alignment center = Alignment.center,
+    AlignmentGeometry center = Alignment.center,
     double radius = 0.5,
     required List<Color> colors,
     List<double>? stops,
