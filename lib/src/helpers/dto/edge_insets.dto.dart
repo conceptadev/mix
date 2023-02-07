@@ -14,7 +14,7 @@ abstract class EdgeInsetsGeometryDto extends Dto<EdgeInsetsGeometry> {
   double? get _end;
 
   bool get _isDirectional =>
-      !(_start == null && _end == null) && (_left == null && _end == null);
+      (_start != null || _end != null) && (_left == null && _right == null);
 
   @override
   EdgeInsetsGeometry resolve(BuildContext context) {
@@ -221,7 +221,8 @@ class EdgeInsetsDirectionalDto extends EdgeInsetsGeometryDto {
         );
 
   factory EdgeInsetsDirectionalDto.fromEdgeInsets(
-      EdgeInsetsDirectional edgeInsets) {
+    EdgeInsetsDirectional edgeInsets,
+  ) {
     return EdgeInsetsDirectionalDto._(
       top: _nullIfZero(edgeInsets.top),
       bottom: _nullIfZero(edgeInsets.bottom),
@@ -246,7 +247,7 @@ class EdgeInsetsDirectionalDto extends EdgeInsetsGeometryDto {
   double? get _start => start;
 
   @override
-  double? get _end => bottom;
+  double? get _end => end;
 
   EdgeInsetsDirectionalDto copyWith({
     double? top,
