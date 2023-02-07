@@ -13,8 +13,8 @@ import '../../helpers/extensions.dart';
 ///
 /// {@category Attributes}
 class BoxAttributes extends InheritedAttribute {
-  final EdgeInsetsDto? margin;
-  final EdgeInsetsDto? padding;
+  final EdgeInsetsGeometryDto? margin;
+  final EdgeInsetsGeometryDto? padding;
   final AlignmentGeometry? alignment;
   final double? height;
   final double? width;
@@ -123,8 +123,8 @@ class BoxAttributes extends InheritedAttribute {
   }
 
   BoxAttributes copyWith({
-    EdgeInsetsDto? margin,
-    EdgeInsetsDto? padding,
+    EdgeInsetsGeometryDto? margin,
+    EdgeInsetsGeometryDto? padding,
     AlignmentGeometry? alignment,
     double? height,
     double? width,

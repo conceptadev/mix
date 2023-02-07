@@ -21,9 +21,22 @@ class BoxUtility {
     return BoxAttributes(margin: EdgeInsetsDto.all(value));
   }
 
+  static EdgeInsetsGeometryDto _fromEdgeInsets(EdgeInsetsGeometry insets) {
+    if (insets is EdgeInsets) {
+      return EdgeInsetsDto.fromEdgeInsets(insets);
+    }
+    if (insets is EdgeInsetsDirectional) {
+      return EdgeInsetsDirectionalDto.fromEdgeInsets(insets);
+    }
+
+    throw UnsupportedError(
+      "${insets.runtimeType} is not suppported, use EdgeInsets or EdgeInsetsDirectional",
+    );
+  }
+
   /// Short Utils: marginInsets, mi
-  static BoxAttributes marginInsets(EdgeInsets insets) {
-    return BoxAttributes(margin: EdgeInsetsDto.fromEdgeInsets(insets));
+  static BoxAttributes marginInsets(EdgeInsetsGeometry insets) {
+    return BoxAttributes(margin: _fromEdgeInsets(insets));
   }
 
   /// Short Utils: marginTop, mt
@@ -46,6 +59,16 @@ class BoxUtility {
     return BoxAttributes(margin: EdgeInsetsDto.only(left: value));
   }
 
+  /// Short Utils: marginStart, ms
+  static BoxAttributes marginStart(double value) {
+    return BoxAttributes(margin: EdgeInsetsDirectionalDto.only(start: value));
+  }
+
+  /// Short Utils: marginEnd, me
+  static BoxAttributes marginEnd(double value) {
+    return BoxAttributes(margin: EdgeInsetsDirectionalDto.only(end: value));
+  }
+
   /// Short Utils: marginHorizontal, marginX, mx
   static BoxAttributes marginHorizontal(double value) {
     return BoxAttributes(margin: EdgeInsetsDto.symmetric(horizontal: value));
@@ -62,8 +85,8 @@ class BoxUtility {
   }
 
   /// Short Utils: paddingInsets, pi
-  static BoxAttributes paddingInsets(EdgeInsets insets) {
-    return BoxAttributes(padding: EdgeInsetsDto.fromEdgeInsets(insets));
+  static BoxAttributes paddingInsets(EdgeInsetsGeometry insets) {
+    return BoxAttributes(padding: _fromEdgeInsets(insets));
   }
 
   /// Short Utils: paddingTop, pt
@@ -84,6 +107,16 @@ class BoxUtility {
   /// Short Utils: paddingLeft, pl
   static BoxAttributes paddingLeft(double value) {
     return BoxAttributes(padding: EdgeInsetsDto.only(left: value));
+  }
+
+  /// Short Utils: paddingStart, ps
+  static BoxAttributes paddingStart(double value) {
+    return BoxAttributes(padding: EdgeInsetsDirectionalDto.only(start: value));
+  }
+
+  /// Short Utils: paddingEnd, pe
+  static BoxAttributes paddingEnd(double value) {
+    return BoxAttributes(padding: EdgeInsetsDirectionalDto.only(end: value));
   }
 
   /// Short Utils: paddingHorizontal, px
