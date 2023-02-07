@@ -96,6 +96,13 @@ const squared = BoxUtility.squared;
 const rounded = BoxUtility.rounded;
 const r = BoxUtility.rounded;
 
+const roundedHorizontal = BoxUtility.roundedHorizontal;
+const roundedVertical = BoxUtility.roundedVertical;
+const roundedDirectionalHorizontal = BoxUtility.roundedDirectionalHorizontal;
+const roundedH = BoxUtility.roundedHorizontal;
+const roundedV = BoxUtility.roundedVertical;
+const roundedDH = BoxUtility.roundedDirectionalHorizontal;
+
 BoxAttributes roundedTL(double value) {
   return BoxUtility.roundedOnly(topLeft: value);
 }
@@ -110,6 +117,22 @@ BoxAttributes roundedBL(double value) {
 
 BoxAttributes roundedBR(double value) {
   return BoxUtility.roundedOnly(bottomRight: value);
+}
+
+BoxAttributes roundedTS(double value) {
+  return BoxUtility.roundedDirectionalOnly(topStart: value);
+}
+
+BoxAttributes roundedTE(double value) {
+  return BoxUtility.roundedDirectionalOnly(topEnd: value);
+}
+
+BoxAttributes roundedBS(double value) {
+  return BoxUtility.roundedDirectionalOnly(bottomStart: value);
+}
+
+BoxAttributes roundedBE(double value) {
+  return BoxUtility.roundedDirectionalOnly(bottomEnd: value);
 }
 
 const align = BoxUtility.align;

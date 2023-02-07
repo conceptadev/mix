@@ -21,7 +21,7 @@ class BoxAttributes extends InheritedAttribute {
   // Decoration
   final Color? color;
   final BorderDto? border;
-  final BorderRadiusDto? borderRadius;
+  final BorderRadiusGeometryDto? borderRadius;
   final List<BoxShadowDto>? boxShadow;
   final Matrix4? transform;
 
@@ -130,7 +130,7 @@ class BoxAttributes extends InheritedAttribute {
     double? width,
     Color? color,
     BorderDto? border,
-    BorderRadiusDto? borderRadius,
+    BorderRadiusGeometryDto? borderRadius,
     List<BoxShadowDto>? boxShadow,
     Matrix4? transform,
     double? maxHeight,

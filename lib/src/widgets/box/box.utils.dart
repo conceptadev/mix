@@ -164,7 +164,7 @@ class BoxUtility {
   }
 
   /// Short Utils: (none: see rounded)
-  static BoxAttributes borderRadius(BorderRadiusDto radius) {
+  static BoxAttributes borderRadius(BorderRadiusGeometryDto radius) {
     return BoxAttributes(borderRadius: radius);
   }
 
@@ -194,6 +194,63 @@ class BoxUtility {
         topRight: topRight,
         bottomLeft: bottomLeft,
         bottomRight: bottomRight,
+      ),
+    );
+  }
+
+  /// Short Utils: roundedTE, roundedBE, roundedTS, roundedBS
+  /// (Rounding select corners)
+  static BoxAttributes roundedDirectionalOnly({
+    double? topStart,
+    double? topEnd,
+    double? bottomStart,
+    double? bottomEnd,
+  }) {
+    return borderRadius(
+      BorderRadiusDirectionalDto.only(
+        topStart: topStart,
+        topEnd: topEnd,
+        bottomStart: bottomStart,
+        bottomEnd: bottomEnd,
+      ),
+    );
+  }
+
+  /// Short Utils: roundedHorizontal, roundedH
+  static BoxAttributes roundedHorizontal({
+    double? left,
+    double? right,
+  }) {
+    return borderRadius(
+      BorderRadiusDto.horizontal(
+        left: left,
+        right: right,
+      ),
+    );
+  }
+
+  /// Short Utils: roundedVertical, roundedV
+  static BoxAttributes roundedVertical({
+    double? top,
+    double? bottom,
+  }) {
+    return borderRadius(
+      BorderRadiusDto.vertical(
+        top: top,
+        bottom: bottom,
+      ),
+    );
+  }
+
+  /// Short Utils: roundedDirectionalHorizontal, roundedDH
+  static BoxAttributes roundedDirectionalHorizontal({
+    double? start,
+    double? end,
+  }) {
+    return borderRadius(
+      BorderRadiusDirectionalDto.horizontal(
+        start: start,
+        end: end,
       ),
     );
   }
