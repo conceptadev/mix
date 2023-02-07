@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import '../../theme/mix_theme.dart';
 import 'dto.dart';
 
-abstract class EdgeInsetsGeometryDto extends Dto<EdgeInsetsGeometry> {
+abstract class EdgeInsetsGeometryDto<T extends EdgeInsetsGeometry>
+    extends Dto<T> {
   const EdgeInsetsGeometryDto();
 
   double? get _top;
@@ -15,29 +16,6 @@ abstract class EdgeInsetsGeometryDto extends Dto<EdgeInsetsGeometry> {
 
   bool get _isDirectional =>
       (_start != null || _end != null) && (_left == null && _right == null);
-
-  @override
-  EdgeInsetsGeometry resolve(BuildContext context) {
-    final spacing = MixTheme.of(context).space;
-    final top = spacing.fromValue(_top) ?? 0.0;
-    final bottom = spacing.fromValue(_bottom) ?? 0.0;
-
-    if (_isDirectional) {
-      return EdgeInsetsDirectional.only(
-        top: top,
-        bottom: bottom,
-        start: spacing.fromValue(_start) ?? 0.0,
-        end: spacing.fromValue(_end) ?? 0.0,
-      );
-    }
-
-    return EdgeInsets.only(
-      top: top,
-      bottom: bottom,
-      left: spacing.fromValue(_left) ?? 0.0,
-      right: spacing.fromValue(_right) ?? 0.0,
-    );
-  }
 
   EdgeInsetsGeometryDto merge(EdgeInsetsGeometryDto? other) {
     if (other == null || other == this) return this;
@@ -65,44 +43,19 @@ abstract class EdgeInsetsGeometryDto extends Dto<EdgeInsetsGeometry> {
   }
 
   @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    if (_isDirectional) {
-      return other is EdgeInsetsDirectionalDto &&
-          other.top == _top &&
-          other.bottom == _bottom &&
-          other.start == _start &&
-          other.bottom == _bottom;
-    }
-
-    return other is EdgeInsetsDto &&
-        other.top == _top &&
-        other.bottom == _bottom &&
-        other.left == _left &&
-        other.right == _right;
-  }
-
-  @override
-  int get hashCode {
-    return _top.hashCode ^
-        _bottom.hashCode ^
-        (_isDirectional
-            ? _start.hashCode ^ _end.hashCode
-            : _left.hashCode ^ _right.hashCode);
-  }
-
-  @override
   String toString() {
+    if (_top == _bottom && _bottom == _left && _left == _right) {
+      return 'EdgeInsets.all($_left)';
+    }
     if (_isDirectional) {
       return 'EdgeInsetsDirectionalDto(top: $_top, bottom: $_bottom, start: $_start, end: $_end)';
-    } else {
-      return 'EdgeInsetsDto(top: $_top, bottom: $_bottom, left: $_left, right: $_right)';
     }
+
+    return 'EdgeInsetsDto(top: $_top, bottom: $_bottom, left: $_left, right: $_right)';
   }
 }
 
-class EdgeInsetsDto extends EdgeInsetsGeometryDto {
+class EdgeInsetsDto extends EdgeInsetsGeometryDto<EdgeInsets> {
   final double? top;
   final double? bottom;
   final double? left;
@@ -180,9 +133,38 @@ class EdgeInsetsDto extends EdgeInsetsGeometryDto {
       right: right ?? this.right,
     );
   }
+
+  @override
+  EdgeInsets resolve(BuildContext context) {
+    final spacing = MixTheme.of(context).space;
+
+    return EdgeInsets.only(
+      top: spacing.fromValue(_top) ?? 0.0,
+      bottom: spacing.fromValue(_bottom) ?? 0.0,
+      left: spacing.fromValue(_left) ?? 0.0,
+      right: spacing.fromValue(_right) ?? 0.0,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is EdgeInsetsDto &&
+        other.top == _top &&
+        other.bottom == _bottom &&
+        other.left == _left &&
+        other.right == _right;
+  }
+
+  @override
+  int get hashCode {
+    return _top.hashCode ^ _bottom.hashCode ^ _left.hashCode ^ _right.hashCode;
+  }
 }
 
-class EdgeInsetsDirectionalDto extends EdgeInsetsGeometryDto {
+class EdgeInsetsDirectionalDto
+    extends EdgeInsetsGeometryDto<EdgeInsetsDirectional> {
   final double? top;
   final double? bottom;
   final double? start;
@@ -261,6 +243,34 @@ class EdgeInsetsDirectionalDto extends EdgeInsetsGeometryDto {
       start: start ?? this.start,
       end: end ?? this.end,
     );
+  }
+
+  @override
+  EdgeInsetsDirectional resolve(BuildContext context) {
+    final spacing = MixTheme.of(context).space;
+
+    return EdgeInsetsDirectional.only(
+      top: spacing.fromValue(_top) ?? 0.0,
+      bottom: spacing.fromValue(_bottom) ?? 0.0,
+      start: spacing.fromValue(_start) ?? 0.0,
+      end: spacing.fromValue(_end) ?? 0.0,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is EdgeInsetsDirectionalDto &&
+        other.top == _top &&
+        other.bottom == _bottom &&
+        other.start == _start &&
+        other.end == _end;
+  }
+
+  @override
+  int get hashCode {
+    return _top.hashCode ^ _bottom.hashCode ^ _start.hashCode ^ _end.hashCode;
   }
 }
 
