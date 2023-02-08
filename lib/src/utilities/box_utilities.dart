@@ -79,6 +79,18 @@ const minWidth = BoxUtility.minWidth;
 
 /// Border utility
 const border = BoxUtility.border;
+const borderTop = BoxUtility.borderTop;
+const borderBottom = BoxUtility.borderBottom;
+const borderLeft = BoxUtility.borderLeft;
+const borderRight = BoxUtility.borderRight;
+const borderStart = BoxUtility.borderStart;
+const borderEnd = BoxUtility.borderEnd;
+const bt = BoxUtility.borderTop;
+const bb = BoxUtility.borderBottom;
+const bl = BoxUtility.borderLeft;
+const br = BoxUtility.borderRight;
+const bs = BoxUtility.borderStart;
+const be = BoxUtility.borderEnd;
 
 /// Border color for all borde sides
 const borderColor = BoxUtility.borderColor;

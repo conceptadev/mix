@@ -261,22 +261,128 @@ class BoxUtility {
     Color? color,
     double? width,
     BorderStyle? style,
-    Border? asBorder,
+    BoxBorder? asBorder,
   }) {
-    BorderDto border;
+    BoxBorderDto border;
+
     if (asBorder != null) {
-      border = BorderDto.fromBorder(asBorder);
+      if (asBorder is BorderDirectional) {
+        border = BorderDirectionalDto.fromBorder(asBorder);
+      } else {
+        border = BorderDto.fromBorder(asBorder as Border);
+      }
     } else {
-      final side = BorderSideDto.only(
+      border = BorderDto.all(
         color: color,
         width: width,
         style: style,
       );
-      border = BorderDto.fromBorderSide(side);
     }
 
     return BoxAttributes(
       border: border,
+    );
+  }
+
+  /// Short Utils: borderTop, bt
+  static BoxAttributes borderTop({
+    Color? color,
+    double? width,
+    BorderStyle? style,
+  }) {
+    return BoxAttributes(
+      border: BorderDto.only(
+        top: BorderSideDto.only(
+          color: color,
+          width: width,
+          style: style,
+        ),
+      ),
+    );
+  }
+
+  /// Short Utils: borderBottom, bb
+  static BoxAttributes borderBottom({
+    Color? color,
+    double? width,
+    BorderStyle? style,
+  }) {
+    return BoxAttributes(
+      border: BorderDto.only(
+        bottom: BorderSideDto.only(
+          color: color,
+          width: width,
+          style: style,
+        ),
+      ),
+    );
+  }
+
+  /// Short Utils: borderLeft, bl
+  static BoxAttributes borderLeft({
+    Color? color,
+    double? width,
+    BorderStyle? style,
+  }) {
+    return BoxAttributes(
+      border: BorderDto.only(
+        left: BorderSideDto.only(
+          color: color,
+          width: width,
+          style: style,
+        ),
+      ),
+    );
+  }
+
+  /// Short Utils: borderRight, br
+  static BoxAttributes borderRight({
+    Color? color,
+    double? width,
+    BorderStyle? style,
+  }) {
+    return BoxAttributes(
+      border: BorderDto.only(
+        right: BorderSideDto.only(
+          color: color,
+          width: width,
+          style: style,
+        ),
+      ),
+    );
+  }
+
+  /// Short Utils: borderStart, bs
+  static BoxAttributes borderStart({
+    Color? color,
+    double? width,
+    BorderStyle? style,
+  }) {
+    return BoxAttributes(
+      border: BorderDirectionalDto.only(
+        start: BorderSideDto.only(
+          color: color,
+          width: width,
+          style: style,
+        ),
+      ),
+    );
+  }
+
+  /// Short Utils: borderEnd, be
+  static BoxAttributes borderEnd({
+    Color? color,
+    double? width,
+    BorderStyle? style,
+  }) {
+    return BoxAttributes(
+      border: BorderDirectionalDto.only(
+        end: BorderSideDto.only(
+          color: color,
+          width: width,
+          style: style,
+        ),
+      ),
     );
   }
 

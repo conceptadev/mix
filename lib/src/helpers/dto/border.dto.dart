@@ -3,7 +3,52 @@ import 'package:flutter/material.dart';
 import '../../theme/refs/color_token.dart';
 import 'dto.dart';
 
-class BorderDto extends Dto<Border> {
+abstract class BoxBorderDto<T extends BoxBorder> extends Dto<T> {
+  const BoxBorderDto();
+
+  BorderSideDto? get _top;
+  BorderSideDto? get _right;
+  BorderSideDto? get _bottom;
+  BorderSideDto? get _left;
+  BorderSideDto? get _start;
+  BorderSideDto? get _end;
+
+  BorderSide _resolveEachSide(BuildContext context, BorderSideDto? side) {
+    if (side == null) {
+      return BorderSide.none;
+    }
+
+    return side.resolve(context);
+  }
+
+  BoxBorderDto merge(BoxBorderDto? other) {
+    if (other == null || other == this) return this;
+
+    if (other is BorderDirectionalDto) {
+      return BorderDirectionalDto._(
+        top: other.top ?? _top,
+        bottom: other.bottom ?? _bottom,
+        start: other.start ?? _start,
+        end: other.end ?? _end,
+      );
+    }
+
+    if (other is BorderDto) {
+      return BorderDto._(
+        top: other.top ?? _top,
+        bottom: other.bottom ?? _bottom,
+        left: other.left ?? _left,
+        right: other.right ?? _right,
+      );
+    }
+
+    throw UnsupportedError(
+      "${other.runtimeType} is not supported, use EdgeInsetsDto or EdgeInsetsDirectionalDto",
+    );
+  }
+}
+
+class BorderDto extends BoxBorderDto<Border> {
   final BorderSideDto? top;
   final BorderSideDto? right;
   final BorderSideDto? bottom;
@@ -54,6 +99,24 @@ class BorderDto extends Dto<Border> {
     );
   }
 
+  @override
+  BorderSideDto? get _top => top;
+
+  @override
+  BorderSideDto? get _bottom => bottom;
+
+  @override
+  BorderSideDto? get _left => left;
+
+  @override
+  BorderSideDto? get _right => right;
+
+  @override
+  BorderSideDto? get _start => null;
+
+  @override
+  BorderSideDto? get _end => null;
+
   BorderSide _resolveEachSide(BuildContext context, BorderSideDto? side) {
     if (side == null) {
       return BorderSide.none;
@@ -69,17 +132,6 @@ class BorderDto extends Dto<Border> {
       right: _resolveEachSide(context, right),
       bottom: _resolveEachSide(context, bottom),
       left: _resolveEachSide(context, left),
-    );
-  }
-
-  BorderDto merge(BorderDto? other) {
-    if (other == null || other == this) return this;
-
-    return copyWith(
-      top: other.top,
-      right: other.right,
-      bottom: other.bottom,
-      left: other.left,
     );
   }
 
@@ -116,6 +168,121 @@ class BorderDto extends Dto<Border> {
   @override
   String toString() {
     return 'BorderProps(top: $top, right: $right, bottom: $bottom, left: $left)';
+  }
+}
+
+class BorderDirectionalDto extends BoxBorderDto<BorderDirectional> {
+  final BorderSideDto? top;
+  final BorderSideDto? bottom;
+  final BorderSideDto? start;
+  final BorderSideDto? end;
+
+  const BorderDirectionalDto._({
+    this.top,
+    this.bottom,
+    this.start,
+    this.end,
+  });
+
+  const BorderDirectionalDto.only({
+    this.top,
+    this.bottom,
+    this.start,
+    this.end,
+  });
+
+  const BorderDirectionalDto.fromBorderSide(BorderSideDto side)
+      : this.only(
+          top: side,
+          bottom: side,
+          start: side,
+          end: side,
+        );
+
+  factory BorderDirectionalDto.all({
+    Color? color,
+    double? width,
+    BorderStyle? style,
+  }) {
+    return BorderDirectionalDto.fromBorderSide(
+      BorderSideDto.only(
+        color: color,
+        width: width,
+        style: style,
+      ),
+    );
+  }
+
+  factory BorderDirectionalDto.fromBorder(BorderDirectional border) {
+    return BorderDirectionalDto.only(
+      top: BorderSideDto.fromBorderSide(border.top),
+      bottom: BorderSideDto.fromBorderSide(border.bottom),
+      start: BorderSideDto.fromBorderSide(border.start),
+      end: BorderSideDto.fromBorderSide(border.end),
+    );
+  }
+
+  @override
+  BorderSideDto? get _top => top;
+
+  @override
+  BorderSideDto? get _bottom => bottom;
+
+  @override
+  BorderSideDto? get _left => null;
+
+  @override
+  BorderSideDto? get _right => null;
+
+  @override
+  BorderSideDto? get _start => start;
+
+  @override
+  BorderSideDto? get _end => end;
+
+  @override
+  BorderDirectional resolve(BuildContext context) {
+    return BorderDirectional(
+      top: _resolveEachSide(context, top),
+      bottom: _resolveEachSide(context, bottom),
+      start: _resolveEachSide(context, start),
+      end: _resolveEachSide(context, end),
+    );
+  }
+
+  BorderDirectionalDto copyWith({
+    BorderSideDto? top,
+    BorderSideDto? bottom,
+    BorderSideDto? start,
+    BorderSideDto? end,
+  }) {
+    return BorderDirectionalDto._(
+      top: this.top?.merge(top) ?? top,
+      bottom: this.bottom?.merge(bottom) ?? bottom,
+      start: this.start?.merge(start) ?? start,
+      end: this.end?.merge(end) ?? end,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is BorderDirectionalDto &&
+        other.top == top &&
+        other.bottom == bottom &&
+        other.start == start &&
+        other.end == end;
+  }
+
+  @override
+  int get hashCode {
+    return top.hashCode ^ bottom.hashCode ^ start.hashCode ^ end.hashCode;
+  }
+
+  @override
+  String toString() {
+    return 'BorderDirectionalDto(top: $top, bottom: $bottom, right: $start, left: $end)';
   }
 }
 
