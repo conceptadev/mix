@@ -1,23 +1,18 @@
-import 'package:flutter/material.dart';
-
 import '../attributes/attribute.dart';
 import '../attributes/helpers/helper.utils.dart';
 import '../variants/variant.dart';
-import '../widgets/box/box.widget.dart';
-import '../widgets/flex/flex.widget.dart';
-import '../widgets/icon/icon.widget.dart';
-import '../widgets/text/text.widget.dart';
+import '../variants/variant_attribute.dart';
 import 'mix_values.dart';
 
-const kVariantDeprecationNotice =
-    'Deprecated pass variants directly to the Mixable Widget Contructor';
-
 /// Defines a mix
-/// {@category Mix Object}
-class Mix {
-  final MixValues values;
 
-  const Mix._(this.values);
+class Mix {
+  final MixValues _values;
+
+  const Mix._(MixValues values) : _values = values;
+
+  /// Used for const constructor widgets
+  static const Mix constant = Mix._(MixValues.empty());
 
   /// Instantiate a mix with _Attribute_ parameters
   factory Mix([
@@ -40,11 +35,11 @@ class Mix {
       if (param != null) params.add(param);
     }
 
-    return Mix.fromList(params);
+    return Mix.fromAttributes(params);
   }
 
   /// Instantiate a mix from a _List_ of _Attribute_ instances (cannot be null)
-  factory Mix.fromList(List<Attribute> attributes) {
+  factory Mix.fromAttributes(Iterable<Attribute> attributes) {
     return Mix._(MixValues.create(attributes));
   }
 
@@ -52,60 +47,85 @@ class Mix {
     return Mix._(values);
   }
 
-  /// Instantiate a mix from a _List_ of _Attribute_ instances
-  /// (_attributes_ argument can be null)
-  factory Mix.fromMaybeList(List<Attribute?> attributes) {
-    final validAttributes = attributes.whereType<Attribute>();
-
-    return Mix.fromList(validAttributes.toList());
+  Iterable<Attribute> toAttributes() {
+    return _values.toAttributes();
   }
 
-  Mix clone() {
-    return Mix._(values.clone());
-  }
-
-  List<Attribute> toList() {
-    return values.toList();
+  MixValues toValues() {
+    return _values;
   }
 
   Mix copyWith({
-    MixValues? attributes,
+    MixValues? values,
   }) {
-    return Mix._(values.merge(attributes));
+    return Mix._(_values.merge(values));
   }
 
-  int get length => values.toList().length;
+// Clone this Mix into a new instance
+  Mix clone() => Mix._(_values.clone());
 
-  /// Same as _combine_, but accepts a _List_ of _Mix_ instances
-  static Mix combineAll<T extends Attribute>(List<Mix> mixes) {
-    MixValues values = const MixValues.empty();
-    for (final mix in mixes) {
-      values = values.merge(mix.values);
+  /// Merge this mix with argument mix
+  Mix merge(Mix mix) => Mix.combine([this, mix]);
+
+  /// Merges argument mix with this mix. If argument mix is null, returns this mix.
+  Mix mergeNullable(Mix? mix) => mix == null ? this : merge(mix);
+
+  Mix selectVariant(Variant variant) {
+    return selectVariants([variant]);
+  }
+
+  Mix selectVariants(List<Variant> variants) {
+    // Return values if list is empty
+    if (variants.isEmpty) {
+      return this;
+    }
+    final existingVariants = [..._values.variants];
+    final matchedVariants = <VariantAttribute>[];
+
+    for (final v in variants) {
+      existingVariants.removeWhere((e) {
+        if (e.variant == v) {
+          matchedVariants.add(e);
+
+          return true;
+        }
+
+        return false;
+      });
     }
 
-    return Mix._(values);
+    // Get mixes of variants that match
+    final mixToApply = matchedVariants.toMix();
+
+    final existingMix = Mix._(
+      MixValues(
+        attributes: _values.attributes,
+        decorators: _values.decorators,
+        variants: existingVariants,
+        contextVariants: _values.contextVariants,
+        directives: _values.directives,
+      ),
+    );
+
+    // Merge into existing values
+    return existingMix.merge(mixToApply);
   }
 
-  /// Merges many mixes into one
-  // ignore: long-parameter-list
-  static Mix combine<T extends Attribute>([
-    Mix? mix1,
-    Mix? mix2,
-    Mix? mix3,
-    Mix? mix4,
-    Mix? mix5,
-    Mix? mix6,
-  ]) {
-    MixValues values = const MixValues.empty();
+  Mix selectVariantCondition<T extends Attribute>(
+    Map<bool, Variant> cases,
+  ) {
+    final keys = cases.keys.toList();
+    final values = cases.values.toList();
 
-    if (mix1 != null) values = values.merge(mix1.values);
-    if (mix2 != null) values = values.merge(mix2.values);
-    if (mix3 != null) values = values.merge(mix3.values);
-    if (mix4 != null) values = values.merge(mix4.values);
-    if (mix5 != null) values = values.merge(mix5.values);
-    if (mix6 != null) values = values.merge(mix6.values);
+    List<Variant> variants = [];
 
-    return Mix._(values);
+    for (var i = 0; i < keys.length; i++) {
+      if (keys[i]) {
+        variants.add(values[i]);
+      }
+    }
+
+    return selectVariants(variants);
   }
 
   /// Chooses mix based on condition
@@ -121,165 +141,112 @@ class Mix {
     }
   }
 
-  /// Returns a new mix instance from this instance with the
-  /// _Variant_ instance added
+  /// Merges many mixes into one
+  // ignore: long-parameter-list
+  static Mix combine<T extends Attribute>(List<Mix> mixes) {
+    Mix combinedMix = Mix.constant;
+    for (final mix in mixes) {
+      combinedMix = mix.merge(mix);
+    }
 
-  Mix withVariant(Variant variant) {
-    return Mix._(values.applyVariant(variant));
+    return combinedMix;
   }
 
+  @Deprecated('Use selectVariantCondition now')
+  static Mix variantSwitcher<T extends Attribute>(
+    Mix mix,
+    Map<bool, Variant> cases,
+  ) {
+    return mix.selectVariantCondition(cases);
+  }
+
+  @Deprecated('Use Mix.combine now')
+  static Mix combineAll<T extends Attribute>(List<Mix> mixes) {
+    return Mix.combine(mixes);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is Mix && other._values == _values;
+  }
+
+  @override
+  int get hashCode => _values.hashCode;
+}
+
+extension ListMixExtension on List<Mix> {
+  Mix toMix() {
+    return Mix.combine(this);
+  }
+
+  /// Flatten to MixValues
+  MixValues toMixValues() {
+    return toMix()._values;
+  }
+}
+
+extension ListVariantAttributeExtension on List<VariantAttribute> {
+  // Combines Mixes from List<Variantattribute> into a Mix
+  Mix toMix() {
+    // Get mixes of variants that match
+    final mixes = map((e) => e.value).toList();
+
+    return Mix.combine(mixes);
+  }
+}
+
+extension DeprecatedMixExtension<T extends Attribute> on Mix {
+  /// Adds an Attribute to a Mix
+  @Deprecated('Simplifying the mix API to avoid confusion. Use apply instead')
+  WrapFunction<T, Mix> get mix {
+    return WrapFunction(addAttributes);
+  }
+
+  @Deprecated('Use selectVariants now')
+  Mix withVariants(List<Variant> variants) {
+    return withManyVariants(variants);
+  }
+
+  @Deprecated(
+    'Use mix.merge() now. You might have to turn into a Mix first. firstMix.merge(secondMix)',
+  )
+  Mix addAttributes(List<Attribute> attributes) {
+    final newValues = MixValues.create(attributes);
+
+    return Mix._(_values.merge(newValues));
+  }
+
+  @Deprecated('Use selectVariants now')
+  Mix withManyVariants(List<Variant> variants) {
+    return selectVariants(variants);
+  }
+
+  @Deprecated('Use selectVariant now')
+  Mix withVariant(Variant variant) {
+    return selectVariant(variant);
+  }
+
+  @Deprecated('Use merge now')
+  Mix apply(Mix mix) => merge(mix);
+
+  @Deprecated('Use selectVariant now')
   Mix withMaybeVariant(Variant? variant) {
     if (variant == null) return this;
 
     return withVariant(variant);
   }
 
-  Mix withManyVariants(List<Variant> variants) {
-    return Mix._(values.applyManyVariants(variants));
-  }
-
-  @Deprecated('Use withManyVariants now')
-  Mix withVariants(List<Variant> variants) {
-    return withManyVariants(variants);
-  }
-
-  @Deprecated(kVariantDeprecationNotice)
-  static Mix variantSwitcher<T extends Attribute>(
-    Mix mix,
-    Map<bool, Variant> cases,
-  ) {
-    final keys = cases.keys.toList();
-    final values = cases.values.toList();
-
-    List<Variant> variants = [];
-
-    for (var i = 0; i < keys.length; i++) {
-      if (keys[i]) {
-        variants.add(values[i]);
-      }
-    }
-
-    return mix.withVariants(variants);
-  }
-
-  /// Used for const constructor widgets
-  /// @nodoc
-  static const Mix constant = Mix._(MixValues.empty());
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is Mix && other.values == values;
-  }
-
-  @override
-  int get hashCode => values.hashCode;
-}
-
-/// @nodoc
-extension MixExtension<T extends Attribute> on Mix {
-  /// Adds an Attribute to a Mix
-  WrapFunction<T, Mix> get mix {
-    return WrapFunction(addAttributes);
-  }
-
-  /// Adds a list of attributes to a Mix
-  Mix addAttributes(List<Attribute> attributes) {
-    return copyWith(attributes: MixValues.create(attributes));
-  }
-
-  /// Combines argument mix with this mix.
-  Mix apply(Mix mix) {
-    return Mix.combineAll([this, mix]);
-  }
-
-  /// Like apply, but the argument mix is nullable
+  @Deprecated('Use mergeNullable instead')
   Mix maybeApply(Mix? mix) {
     if (mix == null) return this;
 
     return apply(mix);
   }
 
-  @Deprecated('Use maybeApply instead')
+  @Deprecated('Use applyNullable instead')
   Mix applyMaybe(Mix? mix) {
     return maybeApply(mix);
-  }
-
-  /// @nodoc
-  Box box({
-    Mix? overrideMix,
-    required Widget child,
-  }) {
-    return Box(
-      mix: maybeApply(overrideMix),
-      child: child,
-    );
-  }
-
-  /// @nodoc
-  HBox hbox({
-    Mix? overrideMix,
-    required List<Widget> children,
-  }) {
-    return HBox(
-      mix: maybeApply(overrideMix),
-      children: children,
-    );
-  }
-
-  /// @nodoc
-  HBox row({
-    Mix? overrideMix,
-    required List<Widget> children,
-  }) {
-    return hbox(
-      overrideMix: overrideMix,
-      children: children,
-    );
-  }
-
-  /// @nodoc
-  TextMix text(
-    String text, {
-    Mix? overrideMix,
-  }) {
-    return TextMix(
-      text,
-      mix: maybeApply(overrideMix),
-    );
-  }
-
-  /// @nodoc
-  VBox vbox({
-    Mix? overrideMix,
-    required List<Widget> children,
-  }) {
-    return VBox(
-      mix: maybeApply(overrideMix),
-      children: children,
-    );
-  }
-
-  /// @nodoc
-  VBox column({
-    Mix? overrideMix,
-    required List<Widget> children,
-  }) {
-    return vbox(
-      children: children,
-      overrideMix: overrideMix,
-    );
-  }
-
-  /// @nodoc
-  IconMix icon(
-    IconData icon, {
-    Mix? overrideMix,
-  }) {
-    return IconMix(
-      icon,
-      mix: maybeApply(overrideMix),
-    );
   }
 }

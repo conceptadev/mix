@@ -5,7 +5,7 @@ class HelperUtility {
   const HelperUtility._();
 
   static NestedMixAttribute apply(List<Mix> mixes) {
-    return NestedMixAttribute(Mix.combineAll(mixes));
+    return NestedMixAttribute(Mix.combine(mixes));
   }
 }
 

@@ -68,12 +68,11 @@ void main() {
     });
 
     test('Creates a Mix from Attributes List', () async {
-      final mixFromList = Mix.fromList(firstMix.toList());
-      final mixFromMaybeList = Mix.fromMaybeList([null, ...firstMix.toList()]);
+      final mixFromList =
+          Mix.fromAttributes(firstMix.toValues().toAttributes());
 
       expect(mixFromList.length, greaterThan(0));
       expect(mixFromList.values, firstMix.values);
-      expect(mixFromMaybeList.length, firstMix.length);
     });
 
     test('Adds Attributes to an Existing Mix', () async {
@@ -116,10 +115,10 @@ void main() {
     });
 
     test('Equality of Mix', () async {
-      final copyFirstMix = Mix.fromList(firstMix.toList());
-      final copySecondMix = Mix.fromList(secondMix.toList());
+      final copyFirstMix = Mix.fromAttributes(firstMix.toAttributes());
+      final copySecondMix = Mix.fromAttributes(secondMix.toAttributes());
       final combinedMixFirst = Mix.combine(firstMix, secondMix);
-      final combinedMixSecond = firstMix.apply(secondMix);
+      final combinedMixSecond = firstMix.merge(secondMix);
 
       expect(copyFirstMix, firstMix);
       expect(copySecondMix, secondMix);

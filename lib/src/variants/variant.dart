@@ -4,21 +4,27 @@ import 'variant_attribute.dart';
 import 'variant_operation.dart';
 
 /// {@category Variants}
+/// A class representing a variant, which is a combination of attributes.
+/// It can be combined with other variants using logical AND (&) and OR (|) operations.
 class Variant {
   final String name;
-
   final bool inverse;
 
+  /// Creates a new [Variant] with a given [name] and an optional [inverse] flag.
   const Variant(this.name, {this.inverse = false});
 
+  /// Combines this variant with another [variant] using a logical AND operation.
   VariantOperation operator &(Variant variant) {
     return VariantOperation([this, variant], operator: VariantOperator.and);
   }
 
+  /// Combines this variant with another [variant] using a logical OR operation.
   VariantOperation operator |(Variant variant) {
     return VariantOperation([this, variant], operator: VariantOperator.or);
   }
 
+  /// Applies the variant to a set of attributes and creates a [VariantAttribute] instance.
+  /// Up to 12 optional [Attribute] parameters can be provided.
   // ignore: long-parameter-list
   VariantAttribute call([
     Attribute? p1,
@@ -35,20 +41,13 @@ class Variant {
     Attribute? p12,
   ]) {
     final params = <Attribute>[];
-    if (p1 != null) params.add(p1);
-    if (p2 != null) params.add(p2);
-    if (p3 != null) params.add(p3);
-    if (p4 != null) params.add(p4);
-    if (p5 != null) params.add(p5);
-    if (p6 != null) params.add(p6);
-    if (p7 != null) params.add(p7);
-    if (p8 != null) params.add(p8);
-    if (p9 != null) params.add(p9);
-    if (p10 != null) params.add(p10);
-    if (p11 != null) params.add(p11);
-    if (p12 != null) params.add(p12);
 
-    return VariantAttribute(this, Mix.fromList(params));
+    for (final param in [p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12]) {
+      if (param != null) params.add(param);
+    }
+
+    // Create a VariantAttribute using the collected parameters
+    return VariantAttribute(this, Mix.fromAttributes(params));
   }
 
   @override
@@ -64,6 +63,7 @@ class Variant {
   @override
   String toString() => 'name: $name, inverse: $inverse';
 
+  /// Returns a new [Variant] instance with the same [name] and an inverted [inverse] flag.
   Variant inverseInstance() {
     return Variant(
       name,

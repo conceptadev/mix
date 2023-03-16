@@ -9,10 +9,10 @@ enum DecoratorLocation {
   boxChild,
 }
 
-typedef DecoratorsMapList = Map<DecoratorLocation, List<DecoratorAttribute>>;
+// typedef DecoratorsMapList = Map<DecoratorLocation, List<DecoratorAttribute>>;
 
 class MixDecoratorAttributes {
-  final DecoratorsMapList values;
+  final Map<DecoratorLocation, List<DecoratorAttribute>> values;
 
   const MixDecoratorAttributes(this.values);
 
@@ -34,7 +34,7 @@ class MixDecoratorAttributes {
       }
     }
 
-    final DecoratorsMapList decoratorMap = {};
+    final Map<DecoratorLocation, List<DecoratorAttribute>> decoratorMap = {};
 
     mergedDecorators.forEach((_, decorator) {
       decoratorMap[decorator.type] ??= [];
@@ -56,16 +56,17 @@ class MixDecoratorAttributes {
   MixDecoratorAttributes merge(MixDecoratorAttributes? other) {
     if (other == null) return this;
 
-    return MixDecoratorAttributes.fromList([...toList(), ...other.toList()]);
+    return MixDecoratorAttributes.fromList(
+      [...toAttributes(), ...other.toAttributes()],
+    );
   }
 
   bool get isEmpty => values.isEmpty;
 
   bool get isNotEmpty => values.isNotEmpty;
 
-  List<DecoratorAttribute> toList() {
-    // flatten nested list
-    return values.entries.map((e) => e.value).expand((e) => e).toList();
+  Iterable<DecoratorAttribute> toAttributes() {
+    return values.values.expand((element) => element);
   }
 
   @override

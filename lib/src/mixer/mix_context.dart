@@ -29,25 +29,25 @@ class MixContext {
   }) {
     return _build(
       context: context,
-      mix: mix.values,
+      mix: mix,
     );
   }
 
   static MixContext _build<T extends Attribute>({
     required BuildContext context,
-    required MixValues mix,
+    required Mix mix,
   }) {
     // Tracks the values selected and does not allow for
     // attributes already expended to be expended again.
     MixValues values = MixValues(
-      attributes: mix.attributes,
-      decorators: mix.decorators,
-      directives: mix.directives,
-      variants: mix.variants,
+      attributes: mix.toValues().attributes,
+      decorators: mix.toValues().decorators,
+      directives: mix.toValues().directives,
+      variants: mix.toValues().variants,
       contextVariants: [],
     );
 
-    final contextVariants = mix.contextVariants;
+    final contextVariants = values.contextVariants;
 
     final attributes = _applyContextVariants(
       context,
@@ -64,33 +64,36 @@ class MixContext {
 
   static List<Attribute> _applyContextVariants(
     BuildContext context,
-    List<Attribute> attributes,
+    Iterable<Attribute> attributes,
   ) {
-    List<Attribute> expanded = [];
+    // Use the fold method to reduce the input attributes list
+    // into a single list of expanded attributes.
+    return attributes.fold<List<Attribute>>(
+      [], // Initial empty list to accumulate the result.
+      (expanded, attribute) {
+        // Check if the current attribute is a ContextVariantAttribute.
+        if (attribute is ContextVariantAttribute) {
+          // Determine if the attribute should be applied based on the context.
+          final shouldApply = attribute.shouldApply(context);
+          // Check if the attribute is inverse (from `not(variant)`). If it is,
+          // only apply if shouldApply is false. Otherwise, apply only when shouldApply.
+          final willApply =
+              attribute.variant.inverse ? !shouldApply : shouldApply;
 
-    for (final attribute in attributes) {
-      if (attribute is ContextVariantAttribute) {
-        final shouldApply = attribute.shouldApply(context);
-        // If it's inverse (from `not(variant)`), only apply if [willApply] is
-        // false. Otherwise, apply only when [willApply]
-        final willApply =
-            attribute.variant.inverse ? !shouldApply : shouldApply;
-        if (willApply) {
-          // If its selected, add it to the list
-          expanded.addAll(_applyContextVariants(
-            context,
-            attribute.value.toList(),
-          ));
+          // If willApply is true, recursively apply context variants to
+          // the attribute's value and add the result to the expanded list.
+          // Otherwise, add the attribute itself to the list.
+          return expanded
+            ..addAll(willApply
+                ? _applyContextVariants(context, attribute.value.toAttributes())
+                : [attribute]);
         } else {
-          // If not selected, add it to the list for future use
-          expanded.add(attribute);
+          // If the current attribute is not a ContextVariantAttribute,
+          // simply add it to the expanded list.
+          return expanded..add(attribute);
         }
-      } else {
-        expanded.add(attribute);
-      }
-    }
-
-    return expanded;
+      },
+    );
   }
 
   /// Used to obtain a [InheritedAttribute] from [MixInheritedAttributes].
@@ -124,9 +127,7 @@ class MixContext {
     return _mixValues.decoratorsOfLocation(location);
   }
 
-  Mix toMix() {
-    return Mix.fromValues(_mixValues);
-  }
+  MixValues toValues() => _mixValues;
 
   @override
   bool operator ==(Object other) {

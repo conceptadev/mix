@@ -1,13 +1,10 @@
 import 'package:flutter/foundation.dart';
 
-import '../attributes/attribute.dart';
+import '../../mix.dart';
 import '../attributes/nested_attribute.dart';
 import '../decorators/decorator_attribute.dart';
 import '../directives/directive_attribute.dart';
-import '../helpers/extensions.dart';
-import '../variants/variant.dart';
 import '../variants/variant_attribute.dart';
-import 'mix_factory.dart';
 
 class MixValues {
   final MixInheritedAttributes attributes;
@@ -24,7 +21,7 @@ class MixValues {
     required this.directives,
   });
 
-  factory MixValues.create(List<Attribute> attributes) {
+  factory MixValues.create(Iterable<Attribute> attributes) {
     final expanded = _expandNestedAttributes(attributes);
 
     final directiveList = <DirectiveAttribute>[];
@@ -71,46 +68,6 @@ class MixValues {
 
   bool get hasAttributes => attributes.isNotEmpty;
 
-  // You can control the order that is applied by changing the order of the list of variants
-  MixValues applyManyVariants(List<Variant> variants) {
-    // Return values if list is empty
-    if (variants.isEmpty) {
-      return this;
-    }
-    final existingVariants = [...this.variants];
-    final matchedVariants = <VariantAttribute>[];
-
-    for (final v in variants) {
-      // Gets the matched variant and removes from existing variants list
-
-      final containsVariant = existingVariants.firstWhereAndRemove(
-        (e) => e.variant == v,
-      );
-      if (containsVariant != null) {
-        matchedVariants.add(containsVariant);
-      }
-    }
-
-    // Get mixes of variants that match
-    final mixes = matchedVariants.map((e) => e.value).toList();
-
-    // Flatten mixes to attributes
-    final attributesToApply = Mix.combineAll(mixes);
-
-// Merge into existing attributes
-    return MixValues(
-      attributes: attributes,
-      decorators: decorators,
-      variants: existingVariants,
-      contextVariants: contextVariants,
-      directives: directives,
-    ).merge(attributesToApply.values);
-  }
-
-  MixValues applyVariant(Variant variant) {
-    return applyManyVariants([variant]);
-  }
-
   /// Used to obtain a [InheritedAttribute] from [MixContext].
   ///
   /// Obtain with `mixContext.fromType<MyAttributeExtension>()`.
@@ -123,13 +80,13 @@ class MixValues {
   }
 
   List<DecoratorAttribute> decoratorsOfLocation(DecoratorLocation location) {
-    return decorators.values[location] ?? [];
+    return decorators.values[location] ?? const [];
   }
 
-  List<Attribute> toList() {
+  Iterable<Attribute> toAttributes() {
     return [
-      ...attributes.values.values,
-      ...decorators.values.values.expand((element) => element),
+      ...attributes.toAttributes(),
+      ...decorators.toAttributes(),
       ...variants,
       ...directives,
     ];
@@ -175,20 +132,18 @@ class MixValues {
     );
   }
 
-  static List<Attribute> _expandNestedAttributes(List<Attribute> attributes) {
-    List<Attribute> expanded = [];
-
-    for (final attribute in attributes) {
+  static Iterable<Attribute> _expandNestedAttributes(
+    Iterable<Attribute> attributes,
+  ) {
+    return attributes.expand((attribute) {
       if (attribute is NestedMixAttribute) {
-        expanded.addAll(
-          _expandNestedAttributes(attribute.value.toList()),
-        );
-      } else {
-        expanded.add(attribute);
-      }
-    }
+        final nestedMix = attribute.value;
 
-    return expanded;
+        return _expandNestedAttributes(nestedMix.toAttributes());
+      } else {
+        return [attribute];
+      }
+    });
   }
 
   const MixValues.empty()

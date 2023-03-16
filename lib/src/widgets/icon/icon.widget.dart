@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import '../../mixer/mix_context.dart';
 import '../../mixer/mix_factory.dart';
 import '../../variants/variant.dart';
-import '../empty.widget.dart';
 import '../mixable.widget.dart';
+import '../nothing.widget.dart';
 
 /// The _Mix_ corollary to Flutter _Icon_ widget
 ///
@@ -63,7 +63,7 @@ class IconMixerWidget extends MixedWidget {
     final sharedProps = mixContext.sharedProps;
 
     if (!sharedProps.visible) {
-      return const Empty();
+      return const Nothing();
     }
     Widget iconWidget = Icon(
       icon,

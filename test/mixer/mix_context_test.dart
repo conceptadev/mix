@@ -13,7 +13,7 @@ const overrideTextAttribute = TextAttributes(
   ),
 );
 
-final pressableMix = Mix.fromList([
+final pressableMix = Mix.fromAttributes([
   baseBoxAttributes,
   baseTextAttributes,
   textVariant(overrideTextAttribute),
@@ -62,11 +62,11 @@ void main() {
           mix: pressableMix,
         );
 
-        expect(mixContext.toMix(), matchContext.toMix());
+        expect(mixContext.toValues(), matchContext.toValues());
 
         expect(
-          mixContext.toMix(),
-          matchContext.toMix(),
+          mixContext.toValues(),
+          matchContext.toValues(),
           reason: 'sourceMix',
         );
 

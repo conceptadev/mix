@@ -18,18 +18,17 @@ abstract class InheritedAttribute extends Attribute {
   Object get type => InheritedAttribute;
 }
 
-typedef InheritedAttributeMap = Map<Type, InheritedAttribute>;
-
 class MixInheritedAttributes {
-  final InheritedAttributeMap values;
+  final Map<Type, InheritedAttribute> _mapOfvalues;
 
-  const MixInheritedAttributes(this.values);
+  const MixInheritedAttributes(Map<Type, InheritedAttribute> values)
+      : _mapOfvalues = values;
 
   const MixInheritedAttributes.empty()
-      : values = const <Type, InheritedAttribute>{};
+      : _mapOfvalues = const <Type, InheritedAttribute>{};
 
   factory MixInheritedAttributes.fromList(List<InheritedAttribute> attributes) {
-    final InheritedAttributeMap attributesMap = {};
+    final Map<Type, InheritedAttribute> attributesMap = {};
 
     for (final attribute in attributes) {
       var inheritedAttribute = attributesMap[attribute.runtimeType];
@@ -46,28 +45,28 @@ class MixInheritedAttributes {
     return MixInheritedAttributes(attributesMap);
   }
 
-  bool get isEmpty => values.isEmpty;
+  bool get isEmpty => _mapOfvalues.isEmpty;
 
-  bool get isNotEmpty => values.isNotEmpty;
+  bool get isNotEmpty => _mapOfvalues.isNotEmpty;
 
   MixInheritedAttributes clone() {
-    return MixInheritedAttributes(Map.from(values));
+    return MixInheritedAttributes(Map.from(_mapOfvalues));
   }
 
-  List<InheritedAttribute> toList() => values.values.toList();
+  Iterable<InheritedAttribute> toAttributes() => _mapOfvalues.values;
 
   MixInheritedAttributes merge(MixInheritedAttributes? other) {
     if (other == null) {
       return this;
     }
 
-    InheritedAttributeMap mergedAttributes = {};
+    Map<Type, InheritedAttribute> mergedAttributes = {};
 
-    final keys = [...values.keys, ...other.values.keys];
+    final keys = [..._mapOfvalues.keys, ...other._mapOfvalues.keys];
 
     for (final key in keys) {
-      final attribute = values[key];
-      final otherAttribute = other.values[key];
+      final attribute = _mapOfvalues[key];
+      final otherAttribute = other._mapOfvalues[key];
 
       if (attribute == null) {
         mergedAttributes[key] = otherAttribute!;
@@ -82,7 +81,7 @@ class MixInheritedAttributes {
   }
 
   operator [](Object key) {
-    return values[key];
+    return _mapOfvalues[key];
   }
 
   @override
@@ -91,11 +90,11 @@ class MixInheritedAttributes {
 
     return other is MixInheritedAttributes &&
         mapEquals(
-          other.values,
-          values,
+          other._mapOfvalues,
+          _mapOfvalues,
         );
   }
 
   @override
-  int get hashCode => values.hashCode;
+  int get hashCode => _mapOfvalues.hashCode;
 }

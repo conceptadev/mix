@@ -31,13 +31,15 @@ abstract class MixableWidget extends StatelessWidget {
       /// Get ancestor context
       final inheritedMixContext = MixContextNotifier.of(context);
 
-      final inheritedMix = inheritedMixContext?.toMix();
-      combinedMix = inheritedMix?.apply(_mix) ?? _mix;
+      if (inheritedMixContext != null) {
+        final inheritedValues = inheritedMixContext.toValues();
+        combinedMix = combinedMix.copyWith(values: inheritedValues);
+      }
     }
 
     return MixContext.create(
       context: context,
-      mix: combinedMix.withManyVariants(_variants ?? []),
+      mix: combinedMix.selectVariants(_variants ?? []),
     );
   }
 

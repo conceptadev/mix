@@ -6,148 +6,133 @@ import '../../helpers/dto/box_shadow.dto.dart';
 import '../../helpers/dto/edge_insets.dto.dart';
 import 'box.attributes.dart';
 
-///
-/// ## Widget:
-/// - [Box](Box-class.html)
-///
-/// Utility functions and short utils are listed in [Static Methods](#static-methods)
-///
-/// {@category Utilities}
 class BoxUtility {
   const BoxUtility._();
 
-  /// Short Utils: margin, m
+  /// Sets margin for the Box object. value specifies the amount of margin for all sides.
   static BoxAttributes margin(double value) {
     return BoxAttributes(margin: EdgeInsetsDto.all(value));
   }
 
-  /// Short Utils: marginInsets, mi
+  /// Sets margin for the Box object using EdgeInsets.
   static BoxAttributes marginInsets(EdgeInsets insets) {
     return BoxAttributes(margin: EdgeInsetsDto.fromEdgeInsets(insets));
   }
 
-  /// Short Utils: marginTop, mt
+  /// Sets margin on top side.
   static BoxAttributes marginTop(double value) {
     return BoxAttributes(margin: EdgeInsetsDto.only(top: value));
   }
 
-  /// Short Utils: marginRight, mr
+  /// Sets margin on right side.
+
   static BoxAttributes marginRight(double value) {
     return BoxAttributes(margin: EdgeInsetsDto.only(right: value));
   }
 
-  /// Short Utils: marginBottom, mb
+  /// Sets margin on bottom side.
   static BoxAttributes marginBottom(double value) {
     return BoxAttributes(margin: EdgeInsetsDto.only(bottom: value));
   }
 
-  /// Short Utils: marginLeft, ml
+  /// Sets margin on left side.
   static BoxAttributes marginLeft(double value) {
     return BoxAttributes(margin: EdgeInsetsDto.only(left: value));
   }
 
-  /// Short Utils: marginHorizontal, marginX, mx
+  /// Sets margin on both horizontal sides.
   static BoxAttributes marginHorizontal(double value) {
     return BoxAttributes(margin: EdgeInsetsDto.symmetric(horizontal: value));
   }
 
-  /// Short Utils: marginVertical, marginY, my
+  /// Sets margin on both vertical sides.
   static BoxAttributes marginVertical(double value) {
     return BoxAttributes(margin: EdgeInsetsDto.symmetric(vertical: value));
   }
 
-  /// Short Utils: padding, p
+  /// Sets padding for the Box object. value specifies the amount of padding for all sides.
   static BoxAttributes padding(double value) {
     return BoxAttributes(padding: EdgeInsetsDto.all(value));
   }
 
-  /// Short Utils: paddingInsets, pi
+  /// Sets padding for the Box object using EdgeInsets.
   static BoxAttributes paddingInsets(EdgeInsets insets) {
     return BoxAttributes(padding: EdgeInsetsDto.fromEdgeInsets(insets));
   }
 
-  /// Short Utils: paddingTop, pt
+  /// Sets padding on top side.
   static BoxAttributes paddingTop(double value) {
     return BoxAttributes(padding: EdgeInsetsDto.only(top: value));
   }
 
-  /// Short Utils: paddingRight, pr
+  /// Sets padding on right side.
   static BoxAttributes paddingRight(double value) {
     return BoxAttributes(padding: EdgeInsetsDto.only(right: value));
   }
 
-  /// Short Utils: paddingBottom, pb
+  /// Sets padding on bottom side.
   static BoxAttributes paddingBottom(double value) {
     return BoxAttributes(padding: EdgeInsetsDto.only(bottom: value));
   }
 
-  /// Short Utils: paddingLeft, pl
+  /// Sets padding on left side.
   static BoxAttributes paddingLeft(double value) {
     return BoxAttributes(padding: EdgeInsetsDto.only(left: value));
   }
 
-  /// Short Utils: paddingHorizontal, px
+  /// Sets padding on both horizontal sides.
   static BoxAttributes paddingHorizontal(double value) {
     return BoxAttributes(padding: EdgeInsetsDto.symmetric(horizontal: value));
   }
 
-  /// Short Utils: paddingVertical, py
+  /// Sets padding on both vertical sides.
   static BoxAttributes paddingVertical(double value) {
     return BoxAttributes(padding: EdgeInsetsDto.symmetric(vertical: value));
   }
 
-  /// Short Utils: bgColor
+  /// Sets the color of the Box object.
   static BoxAttributes backgroundColor(Color color) =>
       BoxAttributes(color: color);
 
-  /// Short Utils: height, h
+  /// Sets the height of the Box object.
   static BoxAttributes height(double height) {
     return BoxAttributes(height: height);
   }
 
-  /// Short Utils: width, w
   static BoxAttributes width(double width) {
     return BoxAttributes(width: width);
   }
 
-  /// Short Utils: maxHeight, maxH
   static BoxAttributes maxHeight(double maxHeight) {
     return BoxAttributes(maxHeight: maxHeight);
   }
 
-  /// Short Utils: maxWidth, maxW
   static BoxAttributes maxWidth(double maxWidth) {
     return BoxAttributes(maxWidth: maxWidth);
   }
 
-  /// Short Utils: minHeight, minH
   static BoxAttributes minHeight(double minHeight) {
     return BoxAttributes(minHeight: minHeight);
   }
 
-  /// Short Utils: minWidth, minW
   static BoxAttributes minWidth(double minWidth) {
     return BoxAttributes(minWidth: minWidth);
   }
 
-  /// Short Utils: (none: see rounded)
   static BoxAttributes borderRadius(BorderRadiusDto radius) {
     return BoxAttributes(borderRadius: radius);
   }
 
-  /// Short Utils: rounded, r
   /// (Rounded corners)
   static BoxAttributes rounded(double value) {
     return borderRadius(BorderRadiusDto.all(value));
   }
 
-  /// Short Utils: squared
   /// (Squared corners)
   static BoxAttributes squared() {
     return borderRadius(BorderRadiusDto.zero);
   }
 
-  /// Short Utils: roundedTR, roundedBR, roundedTL, roundedBL
   /// (Rounding select corners)
   static BoxAttributes roundedOnly({
     double? topLeft,
@@ -165,7 +150,6 @@ class BoxUtility {
     );
   }
 
-  /// Short Utils: border
   /// (Border attributes for all border sides)
   static BoxAttributes border({
     Color? color,
@@ -173,20 +157,16 @@ class BoxUtility {
     BorderStyle? style,
     Border? asBorder,
   }) {
-    BorderDto border;
-    if (asBorder != null) {
-      border = BorderDto.fromBorder(asBorder);
-    } else {
-      final side = BorderSideDto.only(
-        color: color,
-        width: width,
-        style: style,
-      );
-      border = BorderDto.fromBorderSide(side);
-    }
-
     return BoxAttributes(
-      border: border,
+      border: asBorder != null
+          ? BorderDto.fromBorder(asBorder)
+          : BorderDto.fromBorderSide(
+              BorderSideDto.only(
+                color: color,
+                width: width,
+                style: style,
+              ),
+            ),
     );
   }
 
@@ -194,24 +174,20 @@ class BoxUtility {
     return BoxAttributes(transform: transform);
   }
 
-  /// Short Utils: borderColor
   /// (Border color for all border sides)
   static BoxAttributes borderColor(Color color) {
     return BoxAttributes(border: BorderDto.all(color: color));
   }
 
-  /// Short Utils: borderWidth
   /// (Border width for all border sides)
   static BoxAttributes borderWidth(double width) {
     return BoxAttributes(border: BorderDto.all(width: width));
   }
 
-  /// Short Utils: align
   static BoxAttributes align(Alignment align) {
     return BoxAttributes(alignment: align);
   }
 
-  /// Short Utils: borderStyle
   /// (Border style for all border sides)
   static BoxAttributes borderStyle(BorderStyle style) {
     return BoxAttributes(border: BorderDto.all(style: style));
@@ -263,7 +239,6 @@ class BoxUtility {
     );
   }
 
-  /// Short Utils: shadow
   static BoxAttributes shadow({
     Color? color,
     Offset? offset,
@@ -282,7 +257,6 @@ class BoxUtility {
     );
   }
 
-  /// Short Utils: elevation
   static BoxAttributes elevation(int elevation) {
     const elevationOptions = [0, 1, 2, 3, 4, 6, 8, 9, 12, 16, 24];
     assert(
@@ -293,24 +267,6 @@ class BoxUtility {
     if (elevation == 0) {
       return const BoxAttributes(
         boxShadow: [
-          BoxShadowDto(
-            blurRadius: 0,
-            offset: Offset(0, 0),
-            spreadRadius: 0,
-            color: Colors.transparent,
-          ),
-          BoxShadowDto(
-            blurRadius: 0,
-            offset: Offset(0, 0),
-            spreadRadius: 0,
-            color: Colors.transparent,
-          ),
-          BoxShadowDto(
-            blurRadius: 0,
-            offset: Offset(0, 0),
-            spreadRadius: 0,
-            color: Colors.transparent,
-          ),
           BoxShadowDto(
             blurRadius: 0,
             offset: Offset(0, 0),

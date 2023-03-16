@@ -47,7 +47,7 @@ class ContextVariant extends Variant {
     if (p11 != null) params.add(p11);
     if (p12 != null) params.add(p12);
 
-    return ContextVariantAttribute(this, Mix.fromList(params));
+    return ContextVariantAttribute(this, Mix.fromAttributes(params));
   }
 
   @override

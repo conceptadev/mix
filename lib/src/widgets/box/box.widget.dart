@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../mix.dart';
 import '../../decorators/decorator_wrapper.widget.dart';
 import '../../mixer/mix_context_notifier.dart';
-import '../empty.widget.dart';
+import '../nothing.widget.dart';
 
 /// _Mix_ corollary to Flutter _Container_ widget
 ///
@@ -62,7 +62,7 @@ class BoxMixedWidget extends MixedWidget {
     final sharedProps = mixContext.sharedProps;
 
     if (!sharedProps.visible) {
-      return const Empty();
+      return const Nothing();
     }
     // Apply notifier to children
     if (current != null) {

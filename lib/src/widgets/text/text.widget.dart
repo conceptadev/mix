@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import '../../mixer/mix_context.dart';
 import '../../mixer/mix_factory.dart';
 import '../../variants/variant.dart';
-import '../empty.widget.dart';
 import '../mixable.widget.dart';
+import '../nothing.widget.dart';
 import 'text_directives/text_directive.attributes.dart';
 import 'text_directives/text_directive_helpers.dart';
 
@@ -65,7 +65,7 @@ class TextMixerWidget extends MixedWidget {
 
     final sharedProps = mixContext.sharedProps;
     if (!sharedProps.visible) {
-      return const Empty();
+      return const Nothing();
     }
     final content = applyTextDirectives(text, directives);
 
