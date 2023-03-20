@@ -282,6 +282,20 @@ class BoxUtility {
     );
   }
 
+  /// Short Utils: shadow
+  static BoxAttributes shadowFromBox(BoxShadow boxShadow) {
+    final boxShadowDto = BoxShadowDto(
+      color: boxShadow.color,
+      offset: boxShadow.offset,
+      blurRadius: boxShadow.blurRadius,
+      spreadRadius: boxShadow.spreadRadius,
+    );
+
+    return BoxAttributes(
+      boxShadow: [boxShadowDto],
+    );
+  }
+
   /// Short Utils: elevation
   static BoxAttributes elevation(int elevation) {
     const elevationOptions = [0, 1, 2, 3, 4, 6, 8, 9, 12, 16, 24];

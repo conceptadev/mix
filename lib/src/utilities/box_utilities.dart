@@ -83,6 +83,7 @@ const borderStyle = BoxUtility.borderStyle;
 
 /// Box shadow utility
 const shadow = BoxUtility.shadow;
+const shadowFromBox = BoxUtility.shadowFromBox;
 
 const squared = BoxUtility.squared;
 const rounded = BoxUtility.rounded;
