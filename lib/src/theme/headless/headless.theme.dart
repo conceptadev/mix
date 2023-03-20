@@ -1,4 +1,4 @@
-import 'switch/switch.theme.dart';
+import '../../../mix.dart';
 
 class HeadlessThemeData {
   final SwitchXThemeData switchTheme;

@@ -21,11 +21,8 @@ class SwitchXThumb extends MixableWidget {
             _thumbTheme.size.height,
       );
 
-  /// The [ThumbThemeData].
-  Mix get themeMix => _thumbTheme.toMix();
-
   /// The combination of the [mix] and the [ThumbThemeData] mix.
-  Mix get mix => themeMix.maybeApply(_mix);
+  Mix get mix => _thumbTheme.toMix().maybeApply(_mix);
 
   final Mix? _mix;
   final Widget child;
@@ -46,8 +43,11 @@ class SwitchXThumb extends MixableWidget {
       'SwitchX thumbMix parameter must have height and width attributes',
     );
 
+    final thumbTheme = MixTheme.of(context).headlessThemeData.switchTheme.thumb;
+    final themeMixWithCustom = thumbTheme.toMix().maybeApply(_mix);
+
     return Box(
-      mix: mix,
+      mix: themeMixWithCustom,
       child: child,
     );
   }

@@ -21,11 +21,8 @@ class SwitchXTrack extends MixableWidget {
             _trackTheme.size.height,
       );
 
-  /// The [ThumbThemeData].
-  Mix get themeMix => _trackTheme.toMix();
-
   /// The combination of the [mix] and the [ThumbThemeData] mix.
-  Mix get mix => themeMix.maybeApply(_mix);
+  Mix get mix => _trackTheme.toMix().maybeApply(_mix);
 
   final Mix? _mix;
   final Widget child;
@@ -47,8 +44,11 @@ class SwitchXTrack extends MixableWidget {
       'SwitchX bgMix parameter must have height and width attributes',
     );
 
+    final thumbTheme = MixTheme.of(context).headlessThemeData.switchTheme.thumb;
+    final themeMixWithCustom = thumbTheme.toMix().maybeApply(_mix);
+
     return Box(
-      mix: mix,
+      mix: themeMixWithCustom,
       child: child,
     );
   }

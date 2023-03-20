@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../../../mix.dart';
-import 'switch.theme.dart';
 
 /// Defines the theme of the switch track
 class TrackThemeData extends SwitchXThemeProp {

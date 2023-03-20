@@ -117,7 +117,6 @@ class SwitchXState extends State<SwitchX> with SingleTickerProviderStateMixin {
     return MergeSemantics(
       child: Semantics(
         toggled: _value,
-        checked: _value,
         textDirection: TextDirection.ltr,
         attributedValue: _value //
             ? AttributedString('on')
