@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+
+import 'headless/headless.theme.dart';
 import 'tokens/breakpoints.dart';
 import 'tokens/space.dart';
 
@@ -32,38 +33,40 @@ class MixTheme extends InheritedWidget {
 class MixThemeData {
   final MixThemeSpace space;
   final MixThemeBreakpoints breakpoints;
+  final HeadlessThemeData headlessThemeData;
 
   const MixThemeData.raw({
     required this.space,
     required this.breakpoints,
+    required this.headlessThemeData,
     // TODO: implement font family
   });
 
-  factory MixThemeData({
+  MixThemeData({
     MixThemeSpace? space,
     MixThemeBreakpoints? breakpoints,
-  }) {
-    space ??= const MixThemeSpace();
-    breakpoints ??= MixThemeBreakpoints();
-
-    return MixThemeData.raw(
-      space: space,
-      breakpoints: breakpoints,
-    );
-  }
+    HeadlessThemeData? headlessThemeData,
+  }) : this.raw(
+          space: space ?? const MixThemeSpace(),
+          breakpoints: breakpoints ?? const MixThemeBreakpoints(),
+          headlessThemeData: headlessThemeData ?? HeadlessThemeData(),
+        );
 
   MixThemeData copyWith({
     MixThemeSpace? space,
     MixThemeBreakpoints? breakpoints,
+    HeadlessThemeData? headlessThemeData,
   }) {
     return MixThemeData.raw(
       space: space ?? this.space,
       breakpoints: breakpoints ?? this.breakpoints,
+      headlessThemeData: headlessThemeData ?? this.headlessThemeData,
     );
   }
 
   @override
-  String toString() => 'MixThemeData(space: $space, breakpoints: $breakpoints';
+  String toString() =>
+      'MixThemeData(space: $space, breakpoints: $breakpoints, headlessThemeData: $headlessThemeData)';
 
   @override
   bool operator ==(Object other) {
@@ -71,11 +74,12 @@ class MixThemeData {
 
     return other is MixThemeData &&
         other.space == space &&
-        other.breakpoints == breakpoints;
+        other.breakpoints == breakpoints &&
+        other.headlessThemeData == headlessThemeData;
   }
 
   @override
   int get hashCode {
-    return space.hashCode ^ breakpoints.hashCode;
+    return space.hashCode ^ breakpoints.hashCode ^ headlessThemeData.hashCode;
   }
 }

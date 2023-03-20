@@ -15,19 +15,17 @@ class MixThemeBreakpoints {
     required this.large,
   });
 
-  factory MixThemeBreakpoints({
+  const MixThemeBreakpoints({
     double? xsmall,
     double? small,
     double? medium,
     double? large,
-  }) {
-    return MixThemeBreakpoints.raw(
-      xsmall: xsmall ?? 0,
-      small: small ?? 600,
-      medium: medium ?? 1240,
-      large: large ?? 1440,
-    );
-  }
+  }) : this.raw(
+          xsmall: xsmall ?? 0,
+          small: small ?? 600,
+          medium: medium ?? 960,
+          large: large ?? 1280,
+        );
 
   /// Returns [ScreenSizeToken] based on Material breakpoints
   ScreenSizeToken getScreenSize(BuildContext context) {
