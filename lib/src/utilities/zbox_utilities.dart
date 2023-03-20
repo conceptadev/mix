@@ -1,5 +1,5 @@
 import '../widgets/zbox/zbox.utils.dart';
 
-const zAligmnent = ZBoxUtility.alignment;
+const zAlign = ZBoxUtility.zAlign;
 const zFit = ZBoxUtility.fit;
 const zClip = ZBoxUtility.clipBehavior;

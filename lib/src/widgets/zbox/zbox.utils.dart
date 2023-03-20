@@ -12,8 +12,8 @@ import 'zbox.attributes.dart';
 class ZBoxUtility {
   const ZBoxUtility._();
 
-  /// Short Utils: zAlignment
-  static ZBoxAttributes alignment(AlignmentGeometry alignment) {
+  /// Short Utils: zAlign
+  static ZBoxAttributes zAlign(AlignmentGeometry alignment) {
     return ZBoxAttributes(alignment: alignment);
   }
 
