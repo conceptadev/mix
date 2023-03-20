@@ -9,14 +9,36 @@ Switches toggle the state of a single setting on or off.
 
 It does not hold state in itself. This means the `checked` state needs to
 be handled outside of the widget. The values can be provided and updated
-using the `checked` and `onChanged` properties on the `SwitchX` constructor.
+using the `checked` and `onChange` properties on the `SwitchX` constructor.
 
 ```dart
 bool checked = false;
 
 SwitchX(
-  active: checked,
-  onChanged: (v) => setState(() => checked = v),
+  value: checked,
+  onChange: (v) => setState(() => checked = v),
+),
+```
+
+## Track
+
+You can provide a custom track (thumb background) to the switch using the `track` property:
+
+```dart
+final trackMix = Mix(
+  height(22),
+  rounded(11),
+  bgColor(Colors.purple.shade200),
+  onActive(
+    bgColor(Colors.purple.shade700),
+  ),
+  onDisabled(
+    bgColor(Colors.grey.shade400),
+  ),
+);
+
+SwitchX(
+  track: SwitchTrack(mix: trackMix),
 ),
 ```
 
@@ -27,30 +49,78 @@ property:
 
 ```dart
 SwitchX(
-  indicator: SwitchThumb(Mix(
-    (active)( // if active
-      bgColor(Colors.amber), // use the color amber
-    ),
+  thumb: SwitchThumb(
+    mix: Mix(
+      onActive( // if active
+        bgColor(Colors.amber), // use the color amber
+      ),
   )),
 ),
 ```
 
 A `child` can also be provided to `SwitchThumb`.
 
-`SwitchThumb` can be extended in order to create custom effects, like:
-
 ```dart
-class _MySwitchThumb extends SwitchThumb {
-
-  _MySwitchThumb() : super(Mix.constant);
-
-  Widget build(BuildContext context, bool checked) {
-    if (checked) { // Return a custom widget to be shown as the indicator
-      return ...;
-    }
-    return const SizedBox.shrink();
-  }
-
-}
+SwitchX(
+  thumb: SwitchThumb(
+    child: IconMix(
+      Icons.check,
+      mix: Mix(
+        iconSize(12),
+        onDisabled(
+          iconColor(Colors.amber.shade400),
+        ),
+      ),
+    ),
+  ).
+),
 ```
 
+## Variants 
+
+### onActive and onNotActive
+
+The `onActive` and `onNotActive` variants can be used to apply a mix
+when the switch is active or not active.
+
+```dart
+bool checked = false;
+
+SwitchX(
+  value: checked,
+  onChange: (v) => setState(() => checked = v),
+  thumb: SwitchThumb(
+    mix: Mix(
+      onActive( // if value is true
+        bgColor(Colors.amber), // use the color amber
+      ),
+      onNotActive( // if value is false
+        bgColor(Colors.amber.shade400), // use the color amber.shade400
+      ),
+    ),
+  ),
+),
+```
+
+### onDisabled and onNot(onDisabled)
+
+The disabled property is defined on the `onChange` callback.
+If the `onChange` callback is null, the switch is disabled.
+The `onDisabled` and `onNot(onDisabled())` variants can be used to apply a mix when the switch is disabled or not disabled.
+
+```dart
+bool checked = false;
+
+SwitchX(
+  value: checked,
+  onChange: null
+  disabled: true,
+  track: SwitchTrack(
+    mix: Mix(
+      onDisabled( // if disabled
+        bgColor(Colors.grey.shade400), // use the color grey.shade400
+      ),
+    ),
+  ),
+),
+```
