@@ -1,22 +1,12 @@
 import 'package:flutter/material.dart';
 
-import '../../mixer/mix_context.dart';
 import '../../mixer/mix_factory.dart';
 import '../../variants/variant.dart';
-import '../mixable.widget.dart';
+import '../mix.widget.dart';
 import '../nothing.widget.dart';
+import 'icon.props.dart';
 
-/// The _Mix_ corollary to Flutter _Icon_ widget
-///
-/// ## Attributes
-/// - [IconAttributes](IconAttributes-class.html)
-/// - [SharedAttributes](SharedAttributes-class.html)
-/// ## Utilities
-/// - [IconUtils](IconUtils-class.html)
-/// - [SharedUtils](SharedUtils-class.html)
-///
-/// {@category Mixable Widgets}
-class IconMix extends MixableWidget {
+class IconMix extends MixWidget {
   const IconMix(
     this.icon, {
     Mix? mix,
@@ -47,35 +37,32 @@ class IconMix extends MixableWidget {
 }
 
 /// {@nodoc}
-class IconMixerWidget extends MixedWidget {
+class IconMixerWidget extends StatelessWidget {
   const IconMixerWidget(
-    MixContext mixContext, {
+    this.props, {
     this.icon,
     Key? key,
-  }) : super(mixContext, key: key);
+  }) : super(key: key);
 
   final IconData? icon;
+  final IconProps props;
 
   @override
   Widget build(BuildContext context) {
-    final props = mixContext.iconProps;
-
-    final sharedProps = mixContext.sharedProps;
-
-    if (!sharedProps.visible) {
+    if (!props.visible) {
       return const Nothing();
     }
     Widget iconWidget = Icon(
       icon,
       color: props.color,
       size: props.size,
-      textDirection: sharedProps.textDirection,
+      textDirection: props.textDirection,
     );
 
-    if (sharedProps.animated) {
+    if (props.animated) {
       iconWidget = TweenAnimationBuilder<double>(
-        duration: sharedProps.animationDuration,
-        curve: sharedProps.animationCurve,
+        duration: props.animationDuration,
+        curve: props.animationCurve,
         tween: Tween<double>(
           end: props.size,
         ),
@@ -83,8 +70,8 @@ class IconMixerWidget extends MixedWidget {
           final sizeValue = value;
 
           return TweenAnimationBuilder<Color?>(
-            duration: sharedProps.animationDuration,
-            curve: sharedProps.animationCurve,
+            duration: props.animationDuration,
+            curve: props.animationCurve,
             tween: ColorTween(end: props.color),
             child: child,
             builder: (context, value, child) {

@@ -1,11 +1,14 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import '../../mixer/mix_context.dart';
+import '../../attributes/common/common.props.dart';
+import '../../mixer/mix_context_data.dart';
 import '../../theme/refs/color_token.dart';
 import '../../theme/refs/text_style_token.dart';
 import 'text.attributes.dart';
+import 'text_directives/text_directive.attributes.dart';
 
-class TextProps {
+class TextProps extends CommonProps {
   final bool softWrap;
   final TextOverflow overflow;
 
@@ -18,6 +21,7 @@ class TextProps {
   final String? semanticsLabel;
   final TextWidthBasis? textWidthBasis;
   final TextHeightBehavior? textHeightBehavior;
+  final List<TextDirectiveAttribute> directives;
 
   const TextProps({
     required this.softWrap,
@@ -31,10 +35,23 @@ class TextProps {
     this.semanticsLabel,
     this.textWidthBasis,
     this.textHeightBehavior,
-  });
+    this.directives = const [],
+    required bool animated,
+    required Duration animationDuration,
+    required Curve animationCurve,
+    required bool visible,
+    TextDirection? textDirection,
+  }) : super(
+          visible: visible,
+          animated: animated,
+          animationDuration: animationDuration,
+          animationCurve: animationCurve,
+          textDirection: textDirection,
+        );
 
-  factory TextProps.fromContext(MixContext mixContext) {
+  factory TextProps.fromContext(MixContextData mixContext) {
     final textAttributes = mixContext.attributesOfType<TextAttributes>();
+    final commonProps = CommonProps.fromContext(mixContext);
 
     final context = mixContext.context;
 
@@ -57,6 +74,9 @@ class TextProps {
       );
     }
 
+    final textDirectives =
+        mixContext.directivesOfType<TextDirectiveAttribute>().toList();
+
     return TextProps(
       // Need to grab colorscheme from context
       style: finalStyle,
@@ -69,6 +89,13 @@ class TextProps {
       maxLines: textAttributes?.maxLines,
       textWidthBasis: textAttributes?.textWidthBasis,
       textHeightBehavior: textAttributes?.textHeightBehavior,
+      directives: textDirectives,
+      // Common Props
+      visible: commonProps.visible,
+      animated: commonProps.animated,
+      animationDuration: commonProps.animationDuration,
+      animationCurve: commonProps.animationCurve,
+      textDirection: commonProps.textDirection,
     );
   }
 
@@ -87,7 +114,13 @@ class TextProps {
         other.maxLines == maxLines &&
         other.semanticsLabel == semanticsLabel &&
         other.textWidthBasis == textWidthBasis &&
-        other.textHeightBehavior == textHeightBehavior;
+        other.textHeightBehavior == textHeightBehavior &&
+        other.visible == visible &&
+        other.animated == animated &&
+        other.animationDuration == animationDuration &&
+        other.animationCurve == animationCurve &&
+        other.textDirection == textDirection &&
+        listEquals(other.directives, directives);
   }
 
   @override
@@ -102,6 +135,12 @@ class TextProps {
         maxLines.hashCode ^
         semanticsLabel.hashCode ^
         textWidthBasis.hashCode ^
-        textHeightBehavior.hashCode;
+        textHeightBehavior.hashCode ^
+        visible.hashCode ^
+        animated.hashCode ^
+        animationDuration.hashCode ^
+        animationCurve.hashCode ^
+        textDirection.hashCode ^
+        directives.hashCode;
   }
 }

@@ -1,21 +1,14 @@
 import 'package:flutter/material.dart';
 
-import '../../../mix.dart';
 import '../../decorators/decorator_wrapper.widget.dart';
-import '../../mixer/mix_context_notifier.dart';
+import '../../mixer/mix_factory.dart';
+import '../../variants/variant.dart';
+import '../mix.widget.dart';
+import '../mix_context_builder.dart';
 import '../nothing.widget.dart';
+import 'box.props.dart';
 
-/// _Mix_ corollary to Flutter _Container_ widget
-///
-/// ## Attributes:
-/// - [BoxAttributes](BoxAttributes-class.html)
-/// - [SharedAttributes](SharedAttributes-class.html)
-/// ## Utilities:
-/// - [BoxUtility](BoxUtility-class.html)
-/// - [SharedUtils](SharedUtils-class.html)
-///
-/// {@category Mixable Widgets}
-class Box extends MixableWidget {
+class Box extends MixWidget {
   const Box({
     Mix? mix,
     Key? key,
@@ -33,49 +26,50 @@ class Box extends MixableWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mixContext = createMixContext(context);
+    return MixContextBuilder(
+      mix: mix,
+      inherit: inherit,
+      variants: variants,
+      builder: ((context, mixContext) {
+        final props = BoxProps.fromContext(mixContext);
 
-    return BoxMixedWidget(
-      mixContext,
-      child: child,
+        return BoxMixedWidget(
+          props,
+          child: child,
+        );
+      }),
     );
   }
 }
 
-/// @nodoc
-class BoxMixedWidget extends MixedWidget {
+class BoxMixedWidget extends StatelessWidget {
   // Child Widget
   final Widget? child;
 
   const BoxMixedWidget(
-    MixContext mixContext, {
+    this.props, {
     this.child,
     Key? key,
-  }) : super(mixContext, key: key);
+  }) : super(key: key);
+
+  final BoxProps props;
 
   @override
   Widget build(BuildContext context) {
-    var current = child;
-
-    final props = mixContext.boxProps;
-
-    final sharedProps = mixContext.sharedProps;
-
-    if (!sharedProps.visible) {
+    if (!props.visible) {
       return const Nothing();
     }
+    var current = child;
+
     // Apply notifier to children
     if (current != null) {
-      current = MixContextNotifier(
-        mixContext,
-        child: ChildDecoratorWrapper(
-          mixContext,
-          child: current,
-        ),
+      current = DecoratorWrapper(
+        props.childDecorators,
+        child: current,
       );
     }
 
-    if (sharedProps.animated) {
+    if (props.animated) {
       current = AnimatedContainer(
         color: props.color,
         decoration: props.decoration,
@@ -85,8 +79,8 @@ class BoxMixedWidget extends MixedWidget {
         padding: props.padding,
         height: props.height,
         width: props.width,
-        duration: sharedProps.animationDuration,
-        curve: sharedProps.animationCurve,
+        duration: props.animationDuration,
+        curve: props.animationCurve,
         transform: props.transform,
         child: current,
       );
@@ -106,9 +100,8 @@ class BoxMixedWidget extends MixedWidget {
     }
 
     // Wrap parent decorators
-
-    current = ParentDecoratorWrapper(
-      mixContext,
+    current = current = DecoratorWrapper(
+      props.parentDecorators,
       child: current,
     );
 

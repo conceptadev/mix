@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mix/src/attributes/shared/shared.attributes.dart';
+import 'package:mix/src/attributes/common/common.attributes.dart';
 import 'package:mix/src/helpers/dto/border.dto.dart';
 import 'package:mix/src/helpers/dto/border_radius.dto.dart';
 import 'package:mix/src/helpers/dto/edge_insets.dto.dart';
@@ -88,7 +88,7 @@ void main() {
         (tester) async {
           await tester.pumpWidget(
             BoxTestWidget(
-              Mix(const SharedAttributes(visible: false)),
+              Mix(const CommonAttributes(visible: false)),
             ),
           );
 

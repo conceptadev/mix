@@ -1,12 +1,14 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+import '../../attributes/common/common.props.dart';
+import '../../decorators/decorator_attribute.dart';
 import '../../helpers/dto/box_shadow.dto.dart';
-import '../../mixer/mix_context.dart';
+import '../../mixer/mix_context_data.dart';
 import '../../theme/refs/color_token.dart';
 import 'box.attributes.dart';
 
-class BoxProps {
+class BoxProps extends CommonProps {
   final Color? _color;
   final AlignmentGeometry? alignment;
   final EdgeInsetsGeometry? padding;
@@ -27,6 +29,9 @@ class BoxProps {
   final double? minWidth;
   final BoxShape? shape;
 
+  final Iterable<BoxParentDecoratorAttribute> parentDecorators;
+  final Iterable<BoxChildDecoratorAttribute> childDecorators;
+
   const BoxProps({
     Color? color,
     this.alignment,
@@ -44,11 +49,35 @@ class BoxProps {
     this.shape,
     this.transform,
     this.gradient,
-  }) : _color = color;
+    // Common Props
+    required bool animated,
+    required Duration animationDuration,
+    required Curve animationCurve,
+    required bool visible,
+    TextDirection? textDirection,
 
-  factory BoxProps.fromContext(MixContext mixContext) {
-    final boxAttributes = mixContext.attributesOfType<BoxAttributes>();
-    final context = mixContext.context;
+    // Decorators
+    this.parentDecorators = const [],
+    this.childDecorators = const [],
+  })  : _color = color,
+        super(
+          visible: visible,
+          animated: animated,
+          animationDuration: animationDuration,
+          animationCurve: animationCurve,
+          textDirection: textDirection,
+        );
+
+  factory BoxProps.fromContext(MixContextData data) {
+    final boxAttributes = data.attributesOfType<BoxAttributes>();
+    final commonProps = CommonProps.fromContext(data);
+
+    final parentDecorators =
+        data.decoratorsOfType<BoxParentDecoratorAttribute>();
+
+    final childDecorators = data.decoratorsOfType<BoxChildDecoratorAttribute>();
+
+    final context = data.context;
 
     var color = boxAttributes?.color;
 
@@ -73,6 +102,17 @@ class BoxProps {
       shape: boxAttributes?.shape,
       transform: boxAttributes?.transform,
       gradient: boxAttributes?.gradient,
+
+      // Common Props
+      animated: commonProps.animated,
+      animationDuration: commonProps.animationDuration,
+      animationCurve: commonProps.animationCurve,
+      visible: commonProps.visible,
+      textDirection: commonProps.textDirection,
+
+      // Decorators
+      parentDecorators: parentDecorators,
+      childDecorators: childDecorators,
     );
   }
 

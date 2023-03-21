@@ -21,6 +21,7 @@ class MixValues {
     required this.directives,
   });
 
+  /// Creates a new [MixValues] instance from the provided [Iterable] of [Attribute]s.
   factory MixValues.create(Iterable<Attribute> attributes) {
     final expanded = _expandNestedAttributes(attributes);
 
@@ -68,21 +69,36 @@ class MixValues {
 
   bool get hasAttributes => attributes.isNotEmpty;
 
-  /// Used to obtain a [InheritedAttribute] from [MixContext].
-  ///
-  /// Obtain with `mixContext.fromType<MyAttributeExtension>()`.
+  /// Returns an instance of the specified [InheritedAttribute] type from the [MixContext].
   A? attributesOfType<A extends InheritedAttribute>() {
     return attributes[A] as A?;
   }
 
+  /// Returns an [Iterable] of [DirectiveAttribute]s of the specified type.
   Iterable<T> directivesOfType<T extends DirectiveAttribute>() {
     return directives.whereType<T>();
   }
 
-  List<DecoratorAttribute> decoratorsOfLocation(DecoratorLocation location) {
+  /// Returns a [List] of [DecoratorAttribute]s for the specified [DecoratorLocation].
+  Iterable<DecoratorAttribute> _decoratorsOfLocation(
+    DecoratorLocation location,
+  ) {
     return decorators.values[location] ?? const [];
   }
 
+  Iterable<T> decoratorsOfType<T extends DecoratorAttribute>() {
+    if (T == BoxParentDecoratorAttribute) {
+      return _decoratorsOfLocation(DecoratorLocation.boxParent) as Iterable<T>;
+    }
+
+    if (T == BoxChildDecoratorAttribute) {
+      return _decoratorsOfLocation(DecoratorLocation.boxChild) as Iterable<T>;
+    }
+
+    throw Exception('Unsupported decorator type');
+  }
+
+  /// Returns an [Iterable] of [Attribute]s containing all attributes, decorators, variants, and directives.
   Iterable<Attribute> toAttributes() {
     return [
       ...attributes.toAttributes(),
@@ -92,6 +108,7 @@ class MixValues {
     ];
   }
 
+  /// Creates a new [MixValues] instance by replacing the specified attributes with new values.
   MixValues copyWith({
     MixInheritedAttributes? attributes,
     MixDecoratorAttributes? decorators,
@@ -108,6 +125,7 @@ class MixValues {
     );
   }
 
+  /// Creates a new [MixValues] instance with the same attributes, decorators, variants, and directives.
   MixValues clone() {
     return MixValues(
       attributes: attributes.clone(),
@@ -118,6 +136,7 @@ class MixValues {
     );
   }
 
+  /// Merges the current [MixValues] instance with another [MixValues] instance.
   MixValues merge(MixValues? other) {
     if (other == null) {
       return this;
@@ -132,6 +151,7 @@ class MixValues {
     );
   }
 
+  /// Expands nested attributes from the provided [Iterable] of [Attribute]s.
   static Iterable<Attribute> _expandNestedAttributes(
     Iterable<Attribute> attributes,
   ) {
@@ -146,6 +166,7 @@ class MixValues {
     });
   }
 
+  /// An empty [MixValues] instance with no attributes, decorators, variants, or directives.
   const MixValues.empty()
       : attributes = const MixInheritedAttributes.empty(),
         decorators = const MixDecoratorAttributes.empty(),

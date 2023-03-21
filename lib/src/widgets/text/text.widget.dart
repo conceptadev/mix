@@ -1,28 +1,15 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import '../../mixer/mix_context.dart';
 import '../../mixer/mix_factory.dart';
 import '../../variants/variant.dart';
-import '../mixable.widget.dart';
+import '../mix.widget.dart';
+import '../mix_context_builder.dart';
 import '../nothing.widget.dart';
-import 'text_directives/text_directive.attributes.dart';
+import 'text.props.dart';
 import 'text_directives/text_directive_helpers.dart';
 
-/// _Mix_ corollary to Flutter _Text_ widget
-/// Use wherever you would use a Flutter _Text_ widget
-///
-/// ## Attributes:
-/// - [TextAttributes](TextAttributes-class.html)
-/// - [TextDirectiveAttribute](TextDirectiveAttribute-class.html)
-/// - [SharedAttributes](SharedAttributes-class.html)
-/// ## Utilities:
-/// - [TextUtility](TextUtility-class.html)
-/// - [TextStyleUtility](TextStyleUtility-class.html)
-/// - [TextDirectiveUtils](TextDirectiveUtils-class.html)
-/// - [SharedUtils](SharedUtils-class.html)
-/// {@category Mixable Widgets}
-class TextMix extends MixableWidget {
+class TextMix extends MixWidget {
   const TextMix(
     this.text, {
     Mix? mix,
@@ -40,49 +27,49 @@ class TextMix extends MixableWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextMixerWidget(
-      createMixContext(context),
-      text: text,
+    return MixContextBuilder(
+      mix: mix,
+      builder: ((context, mixContext) {
+        final props = TextProps.fromContext(mixContext);
+
+        return TextMixerWidget(props, text: text);
+      }),
     );
   }
 }
 
-/// @nodoc
-class TextMixerWidget extends MixedWidget {
+// TODO: Rename this to TextMixerWidget for something more descriptive
+class TextMixerWidget extends StatelessWidget {
   const TextMixerWidget(
-    MixContext mixContext, {
+    this.props, {
     Key? key,
     required this.text,
-  }) : super(mixContext, key: key);
+  }) : super(key: key);
 
   final String text;
+  final TextProps props;
 
   @override
   Widget build(BuildContext context) {
-    final props = mixContext.textProps;
-
-    final directives = mixContext.directivesOfType<TextDirectiveAttribute>();
-
-    final sharedProps = mixContext.sharedProps;
-    if (!sharedProps.visible) {
+    if (!props.visible) {
       return const Nothing();
     }
-    final content = applyTextDirectives(text, directives);
+    final content = applyTextDirectives(text, props.directives);
 
-    if (sharedProps.animated) {
+    if (props.animated) {
       return AnimatedDefaultTextStyle(
         style: props.style ??
             Theme.of(context).textTheme.bodyText1 ??
             const TextStyle(),
-        duration: sharedProps.animationDuration,
-        curve: sharedProps.animationCurve,
+        duration: props.animationDuration,
+        curve: props.animationCurve,
         softWrap: props.softWrap,
         overflow: props.overflow,
         textAlign: props.textAlign,
         maxLines: props.maxLines,
         child: Text(
           content,
-          textDirection: sharedProps.textDirection,
+          textDirection: props.textDirection,
           textWidthBasis: props.textWidthBasis,
           textScaleFactor: props.textScaleFactor,
           locale: props.locale,
@@ -99,7 +86,7 @@ class TextMixerWidget extends MixedWidget {
       return Text(
         content,
         softWrap: props.softWrap,
-        textDirection: sharedProps.textDirection,
+        textDirection: props.textDirection,
         textWidthBasis: props.textWidthBasis,
         textAlign: props.textAlign,
         overflow: props.overflow,
@@ -126,9 +113,9 @@ class TextMixerWidget extends MixedWidget {
     );
 
     properties.add(
-      DiagnosticsProperty<MixContext>(
-        'mixer',
-        mixContext,
+      DiagnosticsProperty<TextProps>(
+        'props',
+        props,
         defaultValue: null,
       ),
     );

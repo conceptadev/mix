@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../../mixer/mix_context.dart';
-import 'shared.attributes.dart';
+import '../../mixer/mix_context_data.dart';
+import 'common.attributes.dart';
 
-class SharedProps {
+class CommonProps {
   final bool visible;
   //Animation
   final bool animated;
@@ -11,7 +11,7 @@ class SharedProps {
   final Curve animationCurve;
   final TextDirection? textDirection;
 
-  const SharedProps({
+  const CommonProps({
     required this.visible,
     required this.animated,
     required this.animationDuration,
@@ -19,18 +19,18 @@ class SharedProps {
     this.textDirection,
   });
 
-  factory SharedProps.fromContext(MixContext mixContext) {
-    final shared = mixContext.attributesOfType<SharedAttributes>();
+  factory CommonProps.fromContext(MixContextData mixContext) {
+    final common = mixContext.attributesOfType<CommonAttributes>();
 
-    return SharedProps(
-      visible: shared?.visible ?? true,
-      animated: shared?.animated ?? false,
-      animationDuration: shared?.animationDuration ??
+    return CommonProps(
+      visible: common?.visible ?? true,
+      animated: common?.animated ?? false,
+      animationDuration: common?.animationDuration ??
           const Duration(
             milliseconds: 100,
           ),
-      animationCurve: shared?.animationCurve ?? Curves.linear,
-      textDirection: shared?.textDirection,
+      animationCurve: common?.animationCurve ?? Curves.linear,
+      textDirection: common?.textDirection,
     );
   }
 
@@ -38,7 +38,7 @@ class SharedProps {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is SharedProps &&
+    return other is CommonProps &&
         other.visible == visible &&
         other.animated == animated &&
         other.animationDuration == animationDuration &&

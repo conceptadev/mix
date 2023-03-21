@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import '../attributes/attribute.dart';
+import '../../mix.dart';
 import '../mixer/mix_context.dart';
 
 enum DecoratorLocation {
@@ -12,7 +12,7 @@ enum DecoratorLocation {
 // typedef DecoratorsMapList = Map<DecoratorLocation, List<DecoratorAttribute>>;
 
 class MixDecoratorAttributes {
-  final Map<DecoratorLocation, List<DecoratorAttribute>> values;
+  final Map<DecoratorLocation, Iterable<DecoratorAttribute>> values;
 
   const MixDecoratorAttributes(this.values);
 
@@ -36,15 +36,17 @@ class MixDecoratorAttributes {
 
     final Map<DecoratorLocation, List<DecoratorAttribute>> decoratorMap = {};
 
-    mergedDecorators.forEach((_, decorator) {
-      decoratorMap[decorator.type] ??= [];
-      // Add to decorator map and sort to guarantee order consistency
-      decoratorMap[decorator.type]!
-        ..add(decorator)
-        ..sort(
-          (a, b) => a.key.hashCode - b.key.hashCode,
-        );
-    });
+    mergedDecorators.forEach(
+      (_, decorator) {
+        decoratorMap[decorator.type] ??= [];
+        // Add to decorator map and sort to guarantee order consistency
+        decoratorMap[decorator.type]!
+          ..add(decorator)
+          ..sort(
+            (a, b) => a.key.hashCode - b.key.hashCode,
+          );
+      },
+    );
 
     return MixDecoratorAttributes(decoratorMap);
   }
@@ -88,7 +90,19 @@ abstract class DecoratorAttribute<T> extends Attribute {
   DecoratorAttribute<T> merge(T other);
 
   DecoratorLocation get type;
-  Widget render(MixContext mixContext, Widget child);
+  Widget builder(MixContextData data, Widget child);
+
+  Widget render(BuildContext context, Widget child) {
+    final mixContext = MixContext.of(context);
+
+    if (mixContext == null) {
+      throw Exception(
+        'DecoratorAttribute can only be rendered within a MixContext',
+      );
+    }
+
+    return builder(mixContext, child);
+  }
 }
 
 abstract class BoxParentDecoratorAttribute<T> extends DecoratorAttribute<T> {

@@ -1,20 +1,17 @@
 import 'package:flutter/widgets.dart';
 
-import '../../mixer/mix_context.dart';
 import '../../mixer/mix_factory.dart';
 import '../../variants/variant.dart';
+import '../box/box.props.dart';
 import '../box/box.widget.dart';
-import '../mixable.widget.dart';
+import '../mix.widget.dart';
+import '../mix_context_builder.dart';
+import 'zbox.props.dart';
 
-/// ## Attributes:
-/// - [ZBoxAttributes](ZBoxAttributes-class.html)
-/// - [SharedAttributes](SharedAttributes-class.html)
-/// ## Utilities:
-/// - [ZBoxUtility](ZBoxUtility-class.html)
-/// - [SharedUtils](SharedUtils-class.html)
-///
-/// {@category Mixable Widgets}
-class ZBox extends MixableWidget {
+// ZBox widget, a custom Box widget that has a Stack as a child. It combines
+// the features of a Box widget with a Stack widget, allowing developers to
+// create complex and responsive layouts.
+class ZBox extends MixWidget {
   final List<Widget> children;
 
   const ZBox({
@@ -32,35 +29,24 @@ class ZBox extends MixableWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ZBoxMixedWidget(
-      createMixContext(context),
-      children: children,
-    );
-  }
-}
+    return MixContextBuilder(
+      mix: mix,
+      inherit: inherit,
+      variants: variants,
+      builder: (context, mixContext) {
+        final zProps = ZBoxProps.fromContext(mixContext);
+        final boxProps = BoxProps.fromContext(mixContext);
 
-/// {@nodoc}
-class ZBoxMixedWidget extends MixedWidget {
-  final List<Widget> children;
-
-  const ZBoxMixedWidget(
-    MixContext mixContext, {
-    Key? key,
-    this.children = const <Widget>[],
-  }) : super(mixContext, key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final props = mixContext.zBoxProps;
-
-    return BoxMixedWidget(
-      mixContext,
-      child: Stack(
-        alignment: props.alignment,
-        clipBehavior: props.clipBehavior,
-        fit: props.fit,
-        children: children,
-      ),
+        return BoxMixedWidget(
+          boxProps,
+          child: Stack(
+            alignment: zProps.alignment,
+            clipBehavior: zProps.clipBehavior,
+            fit: zProps.fit,
+            children: children,
+          ),
+        );
+      },
     );
   }
 }

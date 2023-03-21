@@ -101,7 +101,7 @@ final mix = Mix(
     fillColor: Colors.red,
   ),
   activated(withColor(Colors.blue), inputDecoration(fillColor: Colors.green)),
-  const SharedAttributes(textDirection: TextDirection.rtl),
+  const CommonAttributes(textDirection: TextDirection.rtl),
 );
 
 class CustomWidget extends StatelessWidget {

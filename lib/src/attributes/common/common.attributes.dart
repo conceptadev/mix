@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
+
 import '../attribute.dart';
 
-/// ## Widget:
-/// - [(all)](/topics/Mixable%20Widgets-topic.html)
-///
-/// {@category Attributes}
-class SharedAttributes extends InheritedAttribute {
+class CommonAttributes extends InheritedAttribute {
   final bool? visible;
   //Animation
   final bool? animated;
@@ -13,7 +10,7 @@ class SharedAttributes extends InheritedAttribute {
   final Curve? animationCurve;
   final TextDirection? textDirection;
 
-  const SharedAttributes({
+  const CommonAttributes({
     this.visible,
     this.animated,
     this.animationDuration,
@@ -22,10 +19,10 @@ class SharedAttributes extends InheritedAttribute {
   });
 
   @override
-  SharedAttributes merge(SharedAttributes? other) {
+  CommonAttributes merge(CommonAttributes? other) {
     if (other == null) return this;
 
-    return SharedAttributes(
+    return CommonAttributes(
       visible: other.visible ?? visible,
       animated: other.animated ?? animated,
       animationDuration: other.animationDuration ?? animationDuration,
@@ -38,7 +35,7 @@ class SharedAttributes extends InheritedAttribute {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is SharedAttributes &&
+    return other is CommonAttributes &&
         other.visible == visible &&
         other.animated == animated &&
         other.animationDuration == animationDuration &&

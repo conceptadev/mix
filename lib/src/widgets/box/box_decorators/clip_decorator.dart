@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../decorators/decorator_attribute.dart';
-import '../../../mixer/mix_context.dart';
+import '../../../mixer/mix_context_data.dart';
 
 /// @nodoc
 enum ClipDecoratorType {
@@ -33,7 +33,7 @@ class ClipDecorator extends BoxParentDecoratorAttribute<ClipDecorator> {
   }
 
   @override
-  Widget render(MixContext mixContext, Widget child) {
+  Widget builder(MixContextData mixContext, Widget child) {
     final sharedProps = mixContext.sharedProps;
 
     if (clipType == ClipDecoratorType.triangle) {

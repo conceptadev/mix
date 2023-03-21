@@ -1,12 +1,12 @@
 library mix;
 
 export 'src/attributes/attribute.dart';
+export 'src/attributes/common/common.attributes.dart';
+export 'src/attributes/common/common.utils.dart';
 export 'src/attributes/helpers/helper.utils.dart';
-export 'src/attributes/shared/shared.attributes.dart';
-export 'src/attributes/shared/shared.utils.dart';
 export 'src/helpers/color.utils.dart';
 export 'src/helpers/extensions.dart';
-export 'src/mixer/mix_context.dart';
+export 'src/mixer/mix_context_data.dart';
 export 'src/mixer/mix_factory.dart';
 export 'src/mixer/mix_values.dart';
 export 'src/theme/material_theme/color_scheme_tokens.dart';
@@ -47,8 +47,8 @@ export 'src/widgets/icon/icon.utils.dart';
 export 'src/widgets/icon/icon.widget.dart';
 export 'src/widgets/image/image.attributes.dart';
 export 'src/widgets/image/image.utils.dart';
+export 'src/widgets/mix.widget.dart';
 export 'src/widgets/mix_context_builder.dart';
-export 'src/widgets/mixable.widget.dart';
 export 'src/widgets/pressable/pressable.widget.dart';
 export 'src/widgets/text/text.attributes.dart';
 export 'src/widgets/text/text.utils.dart';
