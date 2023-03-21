@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../attributes/common/common.props.dart';
-import '../../mixer/mix_context_data.dart';
+import '../../mixer/mix_context.dart';
 import '../../theme/refs/color_token.dart';
 import 'icon.attributes.dart';
 
@@ -25,12 +25,11 @@ class IconProps extends CommonProps {
           textDirection: textDirection,
         );
 
-  factory IconProps.fromContext(MixContextData mixContext) {
+  factory IconProps.fromContext(BuildContext context) {
+    final mixContext = MixContext.of(context);
     final iconAttributes = mixContext.attributesOfType<IconAttributes>();
 
     final commonProps = CommonProps.fromContext(mixContext);
-
-    final context = mixContext.context;
 
     IconProps props;
 

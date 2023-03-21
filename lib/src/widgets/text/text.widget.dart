@@ -7,7 +7,6 @@ import '../mix.widget.dart';
 import '../mix_context_builder.dart';
 import '../nothing.widget.dart';
 import 'text.props.dart';
-import 'text_directives/text_directive_helpers.dart';
 
 class TextMix extends MixWidget {
   const TextMix(
@@ -29,18 +28,18 @@ class TextMix extends MixWidget {
   Widget build(BuildContext context) {
     return MixContextBuilder(
       mix: mix,
-      builder: ((context, mixContext) {
+      builder: (context, mixContext) {
         final props = TextProps.fromContext(mixContext);
 
-        return TextMixerWidget(props, text: text);
-      }),
+        return TextMixedWidget(props, text: text);
+      },
     );
   }
 }
 
 // TODO: Rename this to TextMixerWidget for something more descriptive
-class TextMixerWidget extends StatelessWidget {
-  const TextMixerWidget(
+class TextMixedWidget extends StatelessWidget {
+  const TextMixedWidget(
     this.props, {
     Key? key,
     required this.text,
@@ -54,7 +53,7 @@ class TextMixerWidget extends StatelessWidget {
     if (!props.visible) {
       return const Nothing();
     }
-    final content = applyTextDirectives(text, props.directives);
+    final content = props.applyTextDirectives(text);
 
     if (props.animated) {
       return AnimatedDefaultTextStyle(

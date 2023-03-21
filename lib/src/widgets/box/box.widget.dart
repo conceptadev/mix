@@ -30,14 +30,14 @@ class Box extends MixWidget {
       mix: mix,
       inherit: inherit,
       variants: variants,
-      builder: ((context, mixContext) {
+      builder: (context, mixContext) {
         final props = BoxProps.fromContext(mixContext);
 
         return BoxMixedWidget(
           props,
           child: child,
         );
-      }),
+      },
     );
   }
 }

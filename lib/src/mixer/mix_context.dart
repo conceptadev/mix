@@ -11,10 +11,16 @@ class MixContext extends InheritedWidget {
 
   final MixContextData? mixContext;
 
-  static MixContextData? of(BuildContext context) {
+  static MixContextData of(BuildContext context) {
     final widget = context.dependOnInheritedWidgetOfExactType<MixContext>();
 
-    return widget?.mixContext;
+    final data = widget?.mixContext;
+
+    if (data == null) {
+      throw Exception('MixContext not found in widget tree');
+    }
+
+    return data;
   }
 
   @override

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../mixer/mix_factory.dart';
 import '../../variants/variant.dart';
 import '../mix.widget.dart';
+import '../mix_context_builder.dart';
 import '../nothing.widget.dart';
 import 'icon.props.dart';
 
@@ -28,9 +29,18 @@ class IconMix extends MixWidget {
   Widget build(BuildContext context) {
     return Semantics(
       label: semanticLabel,
-      child: IconMixerWidget(
-        createMixContext(context),
-        icon: icon,
+      child: MixContextBuilder(
+        mix: mix,
+        inherit: inherit,
+        variants: variants,
+        builder: (context, mixContext) {
+          final props = IconProps.fromContext(mixContext);
+
+          return IconMixerWidget(
+            props,
+            icon: icon,
+          );
+        },
       ),
     );
   }

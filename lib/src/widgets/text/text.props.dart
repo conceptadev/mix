@@ -89,6 +89,7 @@ class TextProps extends CommonProps {
       maxLines: textAttributes?.maxLines,
       textWidthBasis: textAttributes?.textWidthBasis,
       textHeightBehavior: textAttributes?.textHeightBehavior,
+      // Directives
       directives: textDirectives,
       // Common Props
       visible: commonProps.visible,
@@ -97,6 +98,19 @@ class TextProps extends CommonProps {
       animationCurve: commonProps.animationCurve,
       textDirection: commonProps.textDirection,
     );
+  }
+
+  String applyTextDirectives(
+    String? text,
+  ) {
+    if (text == null) return '';
+
+    var modifiedText = text;
+    for (final directive in directives) {
+      modifiedText = directive.modify(modifiedText);
+    }
+
+    return modifiedText;
   }
 
   @override

@@ -15,11 +15,9 @@ import 'mix_factory.dart';
 import 'mix_values.dart';
 
 class MixContextData {
-  final BuildContext context;
   final MixValues _mixValues;
 
   MixContextData._({
-    required this.context,
     required MixValues mixValues,
   }) : _mixValues = mixValues;
 
@@ -57,7 +55,6 @@ class MixContextData {
     final appliedValues = values.merge(MixValues.create(attributes));
 
     return MixContextData._(
-      context: context,
       mixValues: appliedValues,
     );
   }
@@ -131,14 +128,12 @@ class MixContextData {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is MixContextData &&
-        other.context == context &&
-        other._mixValues == _mixValues;
+    return other is MixContextData && other._mixValues == _mixValues;
   }
 
   @override
   int get hashCode {
-    return context.hashCode ^ _mixValues.hashCode;
+    return _mixValues.hashCode;
   }
 }
 
