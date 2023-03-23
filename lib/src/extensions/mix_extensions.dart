@@ -7,9 +7,9 @@ import '../widgets/flex/flex.widget.dart';
 import '../widgets/icon/icon.widget.dart';
 import '../widgets/text/text.widget.dart';
 
-extension MixExtension<T extends Attribute> on Mix {
+extension MixExtension<T extends Attribute> on MixFactory {
   Box box({
-    Mix? overrideMix,
+    MixFactory? overrideMix,
     required Widget child,
   }) {
     return Box(
@@ -19,7 +19,7 @@ extension MixExtension<T extends Attribute> on Mix {
   }
 
   HBox hbox({
-    Mix? overrideMix,
+    MixFactory? overrideMix,
     required List<Widget> children,
   }) {
     return HBox(
@@ -29,7 +29,7 @@ extension MixExtension<T extends Attribute> on Mix {
   }
 
   HBox row({
-    Mix? overrideMix,
+    MixFactory? overrideMix,
     required List<Widget> children,
   }) {
     return hbox(
@@ -40,7 +40,7 @@ extension MixExtension<T extends Attribute> on Mix {
 
   TextMix text(
     String text, {
-    Mix? overrideMix,
+    MixFactory? overrideMix,
   }) {
     return TextMix(
       text,
@@ -49,7 +49,7 @@ extension MixExtension<T extends Attribute> on Mix {
   }
 
   VBox vbox({
-    Mix? overrideMix,
+    MixFactory? overrideMix,
     required List<Widget> children,
   }) {
     return VBox(
@@ -59,7 +59,7 @@ extension MixExtension<T extends Attribute> on Mix {
   }
 
   VBox column({
-    Mix? overrideMix,
+    MixFactory? overrideMix,
     required List<Widget> children,
   }) {
     return vbox(
@@ -70,7 +70,7 @@ extension MixExtension<T extends Attribute> on Mix {
 
   IconMix icon(
     IconData icon, {
-    Mix? overrideMix,
+    MixFactory? overrideMix,
   }) {
     return IconMix(
       icon,

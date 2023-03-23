@@ -10,7 +10,7 @@ typedef WidgetMixBuilder = Widget Function(
 
 class MixContextBuilder extends MixWidget {
   const MixContextBuilder({
-    required Mix mix,
+    required MixFactory mix,
     bool inherit = false,
     List<Variant>? variants,
     required WidgetMixBuilder builder,

@@ -6,7 +6,7 @@ class VariantsOrOperator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mix = Mix(
+    final mix = MixFactory(
       padding(20.0),
       (onSmall | onMedium)(
         // Whether it's small OR medium

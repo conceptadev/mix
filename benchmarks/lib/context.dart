@@ -20,7 +20,7 @@ void main() async {
   testWidgets('Build', (tester) async {
     await tester.pumpWidget(MaterialApp(
       home: Builder(builder: (context) {
-        final expensiveContextMix = Mix(
+        final expensiveContextMix = MixFactory(
           onNot(onHover)(p(10)),
           onNot(onPress)(p(15)),
           onNot(onFocus)(p(20)),

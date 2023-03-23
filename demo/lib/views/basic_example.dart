@@ -7,7 +7,7 @@ class BasicExample extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mix = Mix(
+    final mix = MixFactory(
       height(100),
       width(100),
       rounded(10),

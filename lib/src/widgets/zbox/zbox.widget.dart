@@ -16,7 +16,7 @@ class ZBox extends MixWidget {
   final List<Widget> children;
 
   const ZBox({
-    Mix? mix,
+    MixFactory? mix,
     Key? key,
     bool? inherit,
     List<Variant>? variants,

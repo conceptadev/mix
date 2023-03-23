@@ -11,7 +11,7 @@ import 'box.props.dart';
 
 class Box extends MixWidget {
   const Box({
-    Mix? mix,
+    MixFactory? mix,
     Key? key,
     bool? inherit,
     List<Variant>? variants,

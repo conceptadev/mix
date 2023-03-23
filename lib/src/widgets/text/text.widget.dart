@@ -12,7 +12,7 @@ import 'text.props.dart';
 class TextMix extends MixWidget {
   const TextMix(
     this.text, {
-    Mix? mix,
+    MixFactory? mix,
     Key? key,
     List<Variant>? variants,
     this.semanticsLabel,

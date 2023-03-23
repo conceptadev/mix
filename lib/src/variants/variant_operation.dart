@@ -47,9 +47,10 @@ class VariantOperation {
     variants ??= this.variants;
     final attributeVariants = variants.map((variant) {
       if (variant is ContextVariant) {
-        return ContextVariantAttribute(variant, Mix.fromAttributes(attributes));
+        return ContextVariantAttribute(
+            variant, MixFactory.fromAttributes(attributes));
       } else {
-        return VariantAttribute(variant, Mix.fromAttributes(attributes));
+        return VariantAttribute(variant, MixFactory.fromAttributes(attributes));
       }
     });
 
@@ -62,7 +63,7 @@ class VariantOperation {
     final attributeVariants = variants.map((variant) {
       final otherVariants = variants.where((otherV) => otherV != variant);
 
-      final mixToApply = Mix.fromAttributes(
+      final mixToApply = MixFactory.fromAttributes(
         _buildOrOperations(
           attributes,
           variants: otherVariants,
@@ -120,7 +121,8 @@ class VariantOperation {
       attributes = _buildOrOperations(params);
     }
 
-    return NestedMixAttribute<VariantAttribute>(Mix.fromAttributes(attributes));
+    return NestedMixAttribute<VariantAttribute>(
+        MixFactory.fromAttributes(attributes));
   }
 
   @override

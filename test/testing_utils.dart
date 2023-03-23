@@ -28,7 +28,7 @@ class MixTestWidget extends StatelessWidget {
 class BoxInsideFlexWidget extends StatelessWidget {
   const BoxInsideFlexWidget(this.mix, {Key? key}) : super(key: key);
 
-  final Mix mix;
+  final MixFactory mix;
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +51,7 @@ class BoxInsideFlexWidget extends StatelessWidget {
 class BoxTestWidget extends StatelessWidget {
   const BoxTestWidget(this.mix, {Key? key}) : super(key: key);
 
-  final Mix mix;
+  final MixFactory mix;
 
   @override
   Widget build(BuildContext context) {

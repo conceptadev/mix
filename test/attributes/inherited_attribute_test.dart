@@ -89,7 +89,7 @@ class InputDecorationThemeAttribute extends InputDecorationTheme
   Object get type => InputDecorationThemeAttribute;
 }
 
-final mix = Mix(
+final mix = MixFactory(
   withSize(23),
   withColor(Colors.green),
   inputDecoration(

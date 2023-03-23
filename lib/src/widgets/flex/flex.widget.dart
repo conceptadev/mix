@@ -12,7 +12,7 @@ import 'flex.props.dart';
 
 class FlexBox extends MixWidget {
   const FlexBox({
-    Mix? mix,
+    MixFactory? mix,
     Key? key,
     List<Variant>? variants,
     bool? inherit,
@@ -81,7 +81,7 @@ class FlexBox extends MixWidget {
 
 class HBox extends FlexBox {
   const HBox({
-    Mix? mix,
+    MixFactory? mix,
     List<Variant>? variants,
     Key? key,
     bool inherit = false,
@@ -98,7 +98,7 @@ class HBox extends FlexBox {
 
 class VBox extends FlexBox {
   const VBox({
-    Mix? mix,
+    MixFactory? mix,
     List<Variant>? variants,
     Key? key,
     bool inherit = false,

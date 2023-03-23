@@ -20,7 +20,7 @@ void main() async {
     watch.start();
 
     final variant = Variant('light');
-    Mix.fromValues(MixValues.create([
+    MixFactory.fromValues(MixValues.create([
       bgColor(Color(0xFFFFFFFFF)), // directive
       variant(textColor(Color(0xFF000000))), // variant
       onHover(textColor(Color(0xFF645876))), // context

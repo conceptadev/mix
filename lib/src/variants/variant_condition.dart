@@ -54,7 +54,7 @@ class WhenVariantAttribute extends ContextVariantAttribute {
 
   WhenVariantAttribute(
     ContextVariant variant,
-    Mix mix,
+    MixFactory mix,
     this.apply,
   ) : super(variant, mix);
 
@@ -105,6 +105,7 @@ class WhenVariantAttribute extends ContextVariantAttribute {
     if (p11 != null) params.add(p11);
     if (p12 != null) params.add(p12);
 
-    return WhenVariantAttribute(variant, Mix.fromAttributes(params), !apply);
+    return WhenVariantAttribute(
+        variant, MixFactory.fromAttributes(params), !apply);
   }
 }

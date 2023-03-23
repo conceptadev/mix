@@ -24,7 +24,7 @@ void main() {
         (tester) async {
           await tester.pumpWidget(
             MixTestWidget(
-              child: Mix().box(
+              child: MixFactory().box(
                 child: const Text(
                   widgetText,
                   key: Key('child-key'),
@@ -49,10 +49,10 @@ void main() {
         'Responds to Flexible attributes',
         (tester) async {
           await tester.pumpWidget(
-            BoxInsideFlexWidget(
-              Mix(
-                const FlexibleDecorator(flex: 2),
-                const FlexibleDecorator(flexFit: FlexFit.tight),
+            const BoxInsideFlexWidget(
+              MixFactory(
+                FlexibleDecorator(flex: 2),
+                FlexibleDecorator(flexFit: FlexFit.tight),
               ),
             ),
           );
@@ -70,8 +70,8 @@ void main() {
         'Responds to RotatedBox attributes',
         (tester) async {
           await tester.pumpWidget(
-            BoxTestWidget(
-              Mix(const RotateDecorator(quarterTurns: 3)),
+            const BoxTestWidget(
+              MixFactory(RotateDecorator(quarterTurns: 3)),
             ),
           );
 
@@ -87,8 +87,8 @@ void main() {
         'Responds to Hidden attributes',
         (tester) async {
           await tester.pumpWidget(
-            BoxTestWidget(
-              Mix(const CommonAttributes(visible: false)),
+            const BoxTestWidget(
+              MixFactory(CommonAttributes(visible: false)),
             ),
           );
 
@@ -105,8 +105,8 @@ void main() {
         'Responds to AspectRatio attributes',
         (tester) async {
           await tester.pumpWidget(
-            BoxTestWidget(
-              Mix(const AspectRatioDecorator(aspectRatio: 3 / 2)),
+            const BoxTestWidget(
+              MixFactory(AspectRatioDecorator(aspectRatio: 3 / 2)),
             ),
           );
 
@@ -122,8 +122,8 @@ void main() {
         'Responds to Align attributes',
         (tester) async {
           await tester.pumpWidget(
-            BoxTestWidget(
-              Mix(const BoxAttributes(alignment: Alignment.centerRight)),
+            const BoxTestWidget(
+              MixFactory(BoxAttributes(alignment: Alignment.centerRight)),
             ),
           );
 
@@ -139,9 +139,9 @@ void main() {
         'Responds to Opacity attributes',
         (tester) async {
           await tester.pumpWidget(
-            BoxTestWidget(
-              Mix(
-                const OpacityDecorator(opacity: 0.5),
+            const BoxTestWidget(
+              MixFactory(
+                OpacityDecorator(opacity: 0.5),
               ),
             ),
           );
@@ -158,8 +158,8 @@ void main() {
         'Responds to ColoredBox attributes',
         (tester) async {
           await tester.pumpWidget(
-            BoxTestWidget(
-              Mix(const BoxAttributes(color: Colors.lime)),
+            const BoxTestWidget(
+              MixFactory(BoxAttributes(color: Colors.lime)),
             ),
           );
 
@@ -191,7 +191,7 @@ void main() {
           );
           await tester.pumpWidget(
             BoxTestWidget(
-              Mix(
+              MixFactory(
                 const BoxAttributes(color: Colors.purple),
                 const BoxAttributes(borderRadius: borderRadiusProps),
                 BoxAttributes(border: borderProps),
@@ -222,9 +222,9 @@ void main() {
         'Responds to Margin attributes',
         (tester) async {
           await tester.pumpWidget(
-            BoxTestWidget(
-              Mix(
-                const BoxAttributes(
+            const BoxTestWidget(
+              MixFactory(
+                BoxAttributes(
                   margin: EdgeInsetsDto.only(
                     left: 15,
                     top: 25,
@@ -251,9 +251,9 @@ void main() {
         'Responds to Padding attributes',
         (tester) async {
           await tester.pumpWidget(
-            BoxTestWidget(
-              Mix(
-                const BoxAttributes(
+            const BoxTestWidget(
+              MixFactory(
+                BoxAttributes(
                   padding: EdgeInsetsDto.only(
                     left: 10,
                     top: 20,
@@ -280,12 +280,12 @@ void main() {
         'Responds to max/min constraints',
         (tester) async {
           await tester.pumpWidget(
-            BoxTestWidget(
-              Mix(
-                const BoxAttributes(maxHeight: 105),
-                const BoxAttributes(minHeight: 55),
-                const BoxAttributes(maxWidth: 155),
-                const BoxAttributes(minWidth: 45),
+            const BoxTestWidget(
+              MixFactory(
+                BoxAttributes(maxHeight: 105),
+                BoxAttributes(minHeight: 55),
+                BoxAttributes(maxWidth: 155),
+                BoxAttributes(minWidth: 45),
               ),
             ),
           );

@@ -16,7 +16,7 @@ class MixContextData {
 
   factory MixContextData.create({
     required BuildContext context,
-    required Mix mix,
+    required MixFactory mix,
   }) {
     return _build(
       context: context,
@@ -26,7 +26,7 @@ class MixContextData {
 
   static MixContextData _build<T extends Attribute>({
     required BuildContext context,
-    required Mix mix,
+    required MixFactory mix,
   }) {
     // Tracks the values selected and does not allow for
     // attributes already expended to be expended again.

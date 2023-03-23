@@ -4,7 +4,7 @@ import 'package:mix/mix.dart';
 
 void main() {
   testWidgets('System Theme Variants', (tester) async {
-    final mix = Mix(
+    final mix = MixFactory(
       bgColor(Colors.green),
       onDark(bgColor(Colors.black)),
       h(50),
@@ -31,8 +31,8 @@ void main() {
       theme: ThemeData(),
       darkTheme: ThemeData.dark(),
       themeMode: ThemeMode.light,
-      home: Box(
-        mix: Mix(
+      home: const Box(
+        mix: MixFactory(
           onNot(onDark)(bgColor(Colors.black)),
           h(50),
           w(50),
@@ -48,8 +48,8 @@ void main() {
     bool hasError = true;
 
     Widget box() {
-      return Box(
-        mix: Mix(
+      return const Box(
+        mix: MixFactory(
           when(hasError)(
             bgColor(Colors.red),
           )(

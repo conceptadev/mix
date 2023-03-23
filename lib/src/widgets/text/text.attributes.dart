@@ -5,9 +5,6 @@ import '../../helpers/dto/double.dto.dart';
 import '../../helpers/dto/text_style.dto.dart';
 import '../../helpers/extensions.dart';
 
-/// ## Widget:
-/// - [TextMix](TextMix-class.html)
-/// {@category Attributes}
 class TextAttributes extends InheritedAttributes {
   final TextStyleMergeableDto? style;
 

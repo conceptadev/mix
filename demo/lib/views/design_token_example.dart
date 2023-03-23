@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
 
-Mix get mix => Mix(
+MixFactory get mix => MixFactory(
       height(100),
       width(100),
       rounded(10),
