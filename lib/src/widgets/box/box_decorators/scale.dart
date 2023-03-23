@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../attributes/common/common.props.dart';
 import '../../../decorators/decorator_attribute.dart';
-import '../../../mixer/mix_context_data.dart';
 
 /// ## Widget
 /// - (All)
@@ -22,13 +22,13 @@ class ScaleDecorator extends BoxParentDecoratorAttribute<ScaleDecorator> {
   }
 
   @override
-  Widget builder(MixContextData mixContext, Widget? child) {
-    final shared = mixContext.sharedProps;
-    if (shared.animated) {
+  Widget builder(BuildContext context, Widget? child) {
+    final common = CommonProps.fromContext(context);
+    if (common.animated) {
       return TweenAnimationBuilder<double>(
         tween: Tween<double>(begin: 1, end: scale),
-        duration: shared.animationDuration,
-        curve: shared.animationCurve,
+        duration: common.animationDuration,
+        curve: common.animationCurve,
         builder: (context, value, child) {
           return Transform.scale(
             key: key,

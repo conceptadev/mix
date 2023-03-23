@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import '../../helpers/dto/border.dto.dart';
 import '../../helpers/dto/border_radius.dto.dart';
 import '../../helpers/dto/box_shadow.dto.dart';
+import '../../helpers/dto/color.dto.dart';
+import '../../helpers/dto/double.dto.dart';
 import '../../helpers/dto/edge_insets.dto.dart';
 import 'box.attributes.dart';
 
@@ -11,7 +13,7 @@ class BoxUtility {
 
   /// Sets margin for the Box object. value specifies the amount of margin for all sides.
   static BoxAttributes margin(double value) {
-    return BoxAttributes(margin: EdgeInsetsDto.all(value));
+    return BoxAttributes(margin: EdgeInsetsDto.all(value.dto));
   }
 
   /// Sets margin for the Box object using EdgeInsets.
@@ -21,38 +23,39 @@ class BoxUtility {
 
   /// Sets margin on top side.
   static BoxAttributes marginTop(double value) {
-    return BoxAttributes(margin: EdgeInsetsDto.only(top: value));
+    return BoxAttributes(margin: EdgeInsetsDto.only(top: value.dto));
   }
 
   /// Sets margin on right side.
 
   static BoxAttributes marginRight(double value) {
-    return BoxAttributes(margin: EdgeInsetsDto.only(right: value));
+    return BoxAttributes(margin: EdgeInsetsDto.only(right: value.dto));
   }
 
   /// Sets margin on bottom side.
   static BoxAttributes marginBottom(double value) {
-    return BoxAttributes(margin: EdgeInsetsDto.only(bottom: value));
+    return BoxAttributes(margin: EdgeInsetsDto.only(bottom: value.dto));
   }
 
   /// Sets margin on left side.
   static BoxAttributes marginLeft(double value) {
-    return BoxAttributes(margin: EdgeInsetsDto.only(left: value));
+    return BoxAttributes(margin: EdgeInsetsDto.only(left: value.dto));
   }
 
   /// Sets margin on both horizontal sides.
   static BoxAttributes marginHorizontal(double value) {
-    return BoxAttributes(margin: EdgeInsetsDto.symmetric(horizontal: value));
+    return BoxAttributes(
+        margin: EdgeInsetsDto.symmetric(horizontal: value.dto));
   }
 
   /// Sets margin on both vertical sides.
   static BoxAttributes marginVertical(double value) {
-    return BoxAttributes(margin: EdgeInsetsDto.symmetric(vertical: value));
+    return BoxAttributes(margin: EdgeInsetsDto.symmetric(vertical: value.dto));
   }
 
   /// Sets padding for the Box object. value specifies the amount of padding for all sides.
   static BoxAttributes padding(double value) {
-    return BoxAttributes(padding: EdgeInsetsDto.all(value));
+    return BoxAttributes(padding: EdgeInsetsDto.all(value.dto));
   }
 
   /// Sets padding for the Box object using EdgeInsets.
@@ -62,61 +65,68 @@ class BoxUtility {
 
   /// Sets padding on top side.
   static BoxAttributes paddingTop(double value) {
-    return BoxAttributes(padding: EdgeInsetsDto.only(top: value));
+    return BoxAttributes(padding: EdgeInsetsDto.only(top: value.dto));
   }
 
   /// Sets padding on right side.
   static BoxAttributes paddingRight(double value) {
-    return BoxAttributes(padding: EdgeInsetsDto.only(right: value));
+    return BoxAttributes(padding: EdgeInsetsDto.only(right: value.dto));
   }
 
   /// Sets padding on bottom side.
   static BoxAttributes paddingBottom(double value) {
-    return BoxAttributes(padding: EdgeInsetsDto.only(bottom: value));
+    return BoxAttributes(padding: EdgeInsetsDto.only(bottom: value.dto));
   }
 
   /// Sets padding on left side.
   static BoxAttributes paddingLeft(double value) {
-    return BoxAttributes(padding: EdgeInsetsDto.only(left: value));
+    return BoxAttributes(padding: EdgeInsetsDto.only(left: value.dto));
   }
 
   /// Sets padding on both horizontal sides.
   static BoxAttributes paddingHorizontal(double value) {
-    return BoxAttributes(padding: EdgeInsetsDto.symmetric(horizontal: value));
+    return BoxAttributes(
+      padding: EdgeInsetsDto.symmetric(
+        horizontal: value.dto,
+      ),
+    );
   }
 
   /// Sets padding on both vertical sides.
   static BoxAttributes paddingVertical(double value) {
-    return BoxAttributes(padding: EdgeInsetsDto.symmetric(vertical: value));
+    return BoxAttributes(padding: EdgeInsetsDto.symmetric(vertical: value.dto));
   }
 
   /// Sets the color of the Box object.
-  static BoxAttributes backgroundColor(Color color) =>
-      BoxAttributes(color: color);
+  static BoxAttributes backgroundColor(Color color) {
+    return BoxAttributes(
+      color: ColorDto(color),
+    );
+  }
 
   /// Sets the height of the Box object.
   static BoxAttributes height(double height) {
-    return BoxAttributes(height: height);
+    return BoxAttributes(height: height.dto);
   }
 
   static BoxAttributes width(double width) {
-    return BoxAttributes(width: width);
+    return BoxAttributes(width: width.dto);
   }
 
   static BoxAttributes maxHeight(double maxHeight) {
-    return BoxAttributes(maxHeight: maxHeight);
+    return BoxAttributes(maxHeight: maxHeight.dto);
   }
 
   static BoxAttributes maxWidth(double maxWidth) {
-    return BoxAttributes(maxWidth: maxWidth);
+    return BoxAttributes(maxWidth: maxWidth.dto);
   }
 
   static BoxAttributes minHeight(double minHeight) {
-    return BoxAttributes(minHeight: minHeight);
+    return BoxAttributes(minHeight: minHeight.dto);
   }
 
   static BoxAttributes minWidth(double minWidth) {
-    return BoxAttributes(minWidth: minWidth);
+    return BoxAttributes(minWidth: minWidth.dto);
   }
 
   static BoxAttributes borderRadius(BorderRadiusDto radius) {
@@ -125,7 +135,7 @@ class BoxUtility {
 
   /// (Rounded corners)
   static BoxAttributes rounded(double value) {
-    return borderRadius(BorderRadiusDto.all(value));
+    return borderRadius(BorderRadiusDto.all(value.dto));
   }
 
   /// (Squared corners)
@@ -142,10 +152,10 @@ class BoxUtility {
   }) {
     return borderRadius(
       BorderRadiusDto.only(
-        topLeft: topLeft,
-        topRight: topRight,
-        bottomLeft: bottomLeft,
-        bottomRight: bottomRight,
+        topLeft: topLeft?.dto,
+        topRight: topRight?.dto,
+        bottomLeft: bottomLeft?.dto,
+        bottomRight: bottomRight?.dto,
       ),
     );
   }

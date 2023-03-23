@@ -2,7 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../mix.dart';
-import '../mixer/mix_context.dart';
 
 enum DecoratorLocation {
   boxParent,
@@ -90,18 +89,10 @@ abstract class DecoratorAttribute<T> extends Attribute {
   DecoratorAttribute<T> merge(T other);
 
   DecoratorLocation get type;
-  Widget builder(MixContextData data, Widget child);
+  Widget builder(BuildContext context, Widget child);
 
   Widget render(BuildContext context, Widget child) {
-    final mixContext = MixContext.of(context);
-
-    if (mixContext == null) {
-      throw Exception(
-        'DecoratorAttribute can only be rendered within a MixContext',
-      );
-    }
-
-    return builder(mixContext, child);
+    return builder(context, child);
   }
 }
 

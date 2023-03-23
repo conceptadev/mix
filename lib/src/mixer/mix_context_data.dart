@@ -1,16 +1,9 @@
 import 'package:flutter/material.dart';
 
 import '../attributes/attribute.dart';
-import '../attributes/common/common.props.dart';
 import '../decorators/decorator_attribute.dart';
 import '../directives/directive_attribute.dart';
 import '../variants/variant_attribute.dart';
-import '../widgets/box/box.props.dart';
-import '../widgets/flex/flex.props.dart';
-import '../widgets/icon/icon.props.dart';
-import '../widgets/image/image.props.dart';
-import '../widgets/text/text.props.dart';
-import '../widgets/zbox/zbox.props.dart';
 import 'mix_factory.dart';
 import 'mix_values.dart';
 
@@ -93,14 +86,14 @@ class MixContextData {
     );
   }
 
-  /// Used to obtain a [InheritedAttribute] from [MixInheritedAttributes].
+  /// Used to obtain a [InheritedAttributes] from [MixInheritedAttributes].
   ///
   /// Obtain with `mixContext.attributesOfType<MyInheritedAttribute>()`.
-  T? attributesOfType<T extends InheritedAttribute>() {
+  T? attributesOfType<T extends InheritedAttributes>() {
     return _mixValues.attributesOfType<T>();
   }
 
-  T dependOnAttributesOfType<T extends InheritedAttribute>() {
+  T dependOnAttributesOfType<T extends InheritedAttributes>() {
     final attribute = _mixValues.attributesOfType<T>();
 
     if (attribute is! T) {
@@ -114,12 +107,12 @@ class MixContextData {
     return attribute;
   }
 
-  Iterable<T> directivesOfType<T extends DirectiveAttribute>() {
-    return _mixValues.directivesOfType<T>();
+  List<T> directivesOfType<T extends DirectiveAttribute>() {
+    return _mixValues.directivesOfType<T>().toList();
   }
 
-  Iterable<T> decoratorsOfType<T extends DecoratorAttribute>() {
-    return _mixValues.decoratorsOfType<T>();
+  List<T> decoratorsOfType<T extends DecoratorAttribute>() {
+    return _mixValues.decoratorsOfType<T>().toList();
   }
 
   MixValues toValues() => _mixValues;
@@ -135,27 +128,4 @@ class MixContextData {
   int get hashCode {
     return _mixValues.hashCode;
   }
-}
-
-extension MixContextExtensions on MixContextData {
-  @Deprecated('use SharedProps.fromContext(context) instead')
-  CommonProps get sharedProps => CommonProps.fromContext(this);
-
-  @Deprecated('use BoxProps.fromContext(context) instead')
-  BoxProps get boxProps => BoxProps.fromContext(this);
-
-  @Deprecated('use FlexProps.fromContext(context) instead')
-  FlexProps get flexProps => FlexProps.fromContext(this);
-
-  @Deprecated('use ZBoxProps.fromContext(context) instead')
-  ZBoxProps get zBoxProps => ZBoxProps.fromContext(this);
-
-  @Deprecated('use IconProps.fromContext(context) instead')
-  IconProps get iconProps => IconProps.fromContext(this);
-
-  @Deprecated('use TextProps.fromContext(context) instead')
-  TextProps get textProps => TextProps.fromContext(this);
-
-  @Deprecated('use ImageProps.fromContext(context) instead')
-  ImageProps get imageProps => ImageProps.fromContext(this);
 }

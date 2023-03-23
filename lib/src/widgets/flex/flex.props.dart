@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../mixer/mix_context_data.dart';
+import '../../mixer/mix_context.dart';
 import 'flex.attributes.dart';
 
 class FlexProps {
@@ -20,7 +20,8 @@ class FlexProps {
     this.gapSize,
   });
 
-  factory FlexProps.fromContext(MixContextData mixContext) {
+  factory FlexProps.fromContext(BuildContext context) {
+    final mixContext = MixContext.ensureOf(context);
     final flexAttributes = mixContext.attributesOfType<FlexAttributes>();
 
     return FlexProps(
@@ -32,7 +33,7 @@ class FlexProps {
       mainAxisSize: flexAttributes?.mainAxisSize ?? MainAxisSize.max,
       verticalDirection:
           flexAttributes?.verticalDirection ?? VerticalDirection.down,
-      gapSize: flexAttributes?.gapSize,
+      gapSize: flexAttributes?.gapSize?.resolve(context),
     );
   }
 

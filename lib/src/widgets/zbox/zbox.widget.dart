@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 
+import '../../attributes/common/common.props.dart';
 import '../../mixer/mix_factory.dart';
 import '../../variants/variant.dart';
 import '../box/box.props.dart';
@@ -34,11 +35,13 @@ class ZBox extends MixWidget {
       inherit: inherit,
       variants: variants,
       builder: (context, mixContext) {
-        final zProps = ZBoxProps.fromContext(mixContext);
-        final boxProps = BoxProps.fromContext(mixContext);
+        final zProps = ZBoxProps.fromContext(context);
+        final boxProps = BoxProps.fromContext(context);
+        final commonProps = CommonProps.fromContext(context);
 
         return BoxMixedWidget(
-          boxProps,
+          boxProps: boxProps,
+          commonProps: commonProps,
           child: Stack(
             alignment: zProps.alignment,
             clipBehavior: zProps.clipBehavior,

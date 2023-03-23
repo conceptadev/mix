@@ -29,10 +29,10 @@ class MixValues {
     final variantList = <VariantAttribute>[];
     final contextVariantList = <ContextVariantAttribute>[];
     final decoratorList = <DecoratorAttribute>[];
-    final attributeList = <InheritedAttribute>[];
+    final attributeList = <InheritedAttributes>[];
 
     for (final attribute in expanded) {
-      if (attribute is InheritedAttribute) {
+      if (attribute is InheritedAttributes) {
         attributeList.add(attribute);
       } else if (attribute is VariantAttribute) {
         // Breakdown different types of variant attributes
@@ -69,8 +69,8 @@ class MixValues {
 
   bool get hasAttributes => attributes.isNotEmpty;
 
-  /// Returns an instance of the specified [InheritedAttribute] type from the [MixContext].
-  A? attributesOfType<A extends InheritedAttribute>() {
+  /// Returns an instance of the specified [InheritedAttributes] type from the [MixContext].
+  A? attributesOfType<A extends InheritedAttributes>() {
     return attributes[A] as A?;
   }
 

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../../decorators/decorator_attribute.dart';
-import '../../../mixer/mix_context_data.dart';
 
 /// ## Widget
 /// - (All)
@@ -27,7 +26,7 @@ class FlexibleDecorator extends BoxParentDecoratorAttribute<FlexibleDecorator> {
   }
 
   @override
-  Widget builder(MixContextData mixContext, Widget child) {
+  Widget builder(BuildContext context, Widget child) {
     return Flexible(
       key: key,
       fit: flexFit ?? FlexFit.loose,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../attributes/common/common.props.dart';
 import '../../decorators/decorator_wrapper.widget.dart';
 import '../../mixer/mix_factory.dart';
 import '../../variants/variant.dart';
@@ -31,10 +32,12 @@ class Box extends MixWidget {
       inherit: inherit,
       variants: variants,
       builder: (context, mixContext) {
-        final props = BoxProps.fromContext(mixContext);
+        final boxProps = BoxProps.fromContext(context);
+        final commonProps = CommonProps.fromContext(context);
 
         return BoxMixedWidget(
-          props,
+          boxProps: boxProps,
+          commonProps: commonProps,
           child: child,
         );
       },
@@ -46,17 +49,19 @@ class BoxMixedWidget extends StatelessWidget {
   // Child Widget
   final Widget? child;
 
-  const BoxMixedWidget(
-    this.props, {
+  const BoxMixedWidget({
+    required this.boxProps,
+    required this.commonProps,
     this.child,
     Key? key,
   }) : super(key: key);
 
-  final BoxProps props;
+  final BoxProps boxProps;
+  final CommonProps commonProps;
 
   @override
   Widget build(BuildContext context) {
-    if (!props.visible) {
+    if (!commonProps.visible) {
       return const Nothing();
     }
     var current = child;
@@ -64,44 +69,44 @@ class BoxMixedWidget extends StatelessWidget {
     // Apply notifier to children
     if (current != null) {
       current = DecoratorWrapper(
-        props.childDecorators,
+        boxProps.childDecorators,
         child: current,
       );
     }
 
-    if (props.animated) {
+    if (commonProps.animated) {
       current = AnimatedContainer(
-        color: props.color,
-        decoration: props.decoration,
-        alignment: props.alignment,
-        constraints: props.constraints,
-        margin: props.margin,
-        padding: props.padding,
-        height: props.height,
-        width: props.width,
-        duration: props.animationDuration,
-        curve: props.animationCurve,
-        transform: props.transform,
+        color: boxProps.color,
+        decoration: boxProps.decoration,
+        alignment: boxProps.alignment,
+        constraints: boxProps.constraints,
+        margin: boxProps.margin,
+        padding: boxProps.padding,
+        height: boxProps.height,
+        width: boxProps.width,
+        duration: commonProps.animationDuration,
+        curve: commonProps.animationCurve,
+        transform: boxProps.transform,
         child: current,
       );
     } else {
       current = Container(
-        color: props.color,
-        decoration: props.decoration,
-        alignment: props.alignment,
-        constraints: props.constraints,
-        margin: props.margin,
-        padding: props.padding,
-        height: props.height,
-        width: props.width,
-        transform: props.transform,
+        color: boxProps.color,
+        decoration: boxProps.decoration,
+        alignment: boxProps.alignment,
+        constraints: boxProps.constraints,
+        margin: boxProps.margin,
+        padding: boxProps.padding,
+        height: boxProps.height,
+        width: boxProps.width,
+        transform: boxProps.transform,
         child: current,
       );
     }
 
     // Wrap parent decorators
-    current = current = DecoratorWrapper(
-      props.parentDecorators,
+    current = DecoratorWrapper(
+      boxProps.parentDecorators,
       child: current,
     );
 

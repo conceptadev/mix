@@ -1,14 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import '../../attributes/common/common.props.dart';
 import '../../decorators/decorator_attribute.dart';
 import '../../helpers/dto/box_shadow.dto.dart';
-import '../../mixer/mix_context_data.dart';
-import '../../theme/refs/color_token.dart';
+import '../../mixer/mix_context.dart';
 import 'box.attributes.dart';
 
-class BoxProps extends CommonProps {
+class BoxProps {
   final Color? _color;
   final AlignmentGeometry? alignment;
   final EdgeInsetsGeometry? padding;
@@ -29,8 +27,8 @@ class BoxProps extends CommonProps {
   final double? minWidth;
   final BoxShape? shape;
 
-  final Iterable<BoxParentDecoratorAttribute> parentDecorators;
-  final Iterable<BoxChildDecoratorAttribute> childDecorators;
+  final List<BoxParentDecoratorAttribute> parentDecorators;
+  final List<BoxChildDecoratorAttribute> childDecorators;
 
   const BoxProps({
     Color? color,
@@ -49,70 +47,39 @@ class BoxProps extends CommonProps {
     this.shape,
     this.transform,
     this.gradient,
-    // Common Props
-    required bool animated,
-    required Duration animationDuration,
-    required Curve animationCurve,
-    required bool visible,
-    TextDirection? textDirection,
-
     // Decorators
     this.parentDecorators = const [],
     this.childDecorators = const [],
-  })  : _color = color,
-        super(
-          visible: visible,
-          animated: animated,
-          animationDuration: animationDuration,
-          animationCurve: animationCurve,
-          textDirection: textDirection,
-        );
+  }) : _color = color;
 
-  factory BoxProps.fromContext(MixContextData data) {
-    final boxAttributes = data.attributesOfType<BoxAttributes>();
-    final commonProps = CommonProps.fromContext(data);
+  factory BoxProps.fromContext(BuildContext context) {
+    final mixContext = MixContext.ensureOf(context);
+    final attributes = mixContext.attributesOfType<BoxAttributes>();
 
-    final parentDecorators =
-        data.decoratorsOfType<BoxParentDecoratorAttribute>();
+    final parents = mixContext.decoratorsOfType<BoxParentDecoratorAttribute>();
 
-    final childDecorators = data.decoratorsOfType<BoxChildDecoratorAttribute>();
-
-    final context = data.context;
-
-    var color = boxAttributes?.color;
-
-    if (color is ColorToken) {
-      color = color.resolve(context);
-    }
+    final children = mixContext.decoratorsOfType<BoxChildDecoratorAttribute>();
 
     return BoxProps(
-      color: color,
-      alignment: boxAttributes?.alignment,
-      margin: boxAttributes?.margin?.resolve(context),
-      padding: boxAttributes?.padding?.resolve(context),
-      width: boxAttributes?.width,
-      height: boxAttributes?.height,
-      border: boxAttributes?.border?.resolve(context),
-      borderRadius: boxAttributes?.borderRadius?.resolve(context),
-      boxShadow: boxAttributes?.boxShadow?.resolve(context),
-      maxHeight: boxAttributes?.maxHeight,
-      maxWidth: boxAttributes?.maxWidth,
-      minHeight: boxAttributes?.minHeight,
-      minWidth: boxAttributes?.minWidth,
-      shape: boxAttributes?.shape,
-      transform: boxAttributes?.transform,
-      gradient: boxAttributes?.gradient,
-
-      // Common Props
-      animated: commonProps.animated,
-      animationDuration: commonProps.animationDuration,
-      animationCurve: commonProps.animationCurve,
-      visible: commonProps.visible,
-      textDirection: commonProps.textDirection,
-
+      color: attributes?.color?.resolve(context),
+      alignment: attributes?.alignment,
+      margin: attributes?.margin?.resolve(context),
+      padding: attributes?.padding?.resolve(context),
+      width: attributes?.width?.resolve(context),
+      height: attributes?.height?.resolve(context),
+      border: attributes?.border?.resolve(context),
+      borderRadius: attributes?.borderRadius?.resolve(context),
+      boxShadow: attributes?.boxShadow?.resolve(context),
+      maxHeight: attributes?.maxHeight?.resolve(context),
+      maxWidth: attributes?.maxWidth?.resolve(context),
+      minHeight: attributes?.minHeight?.resolve(context),
+      minWidth: attributes?.minWidth?.resolve(context),
+      shape: attributes?.shape,
+      transform: attributes?.transform,
+      gradient: attributes?.gradient,
       // Decorators
-      parentDecorators: parentDecorators,
-      childDecorators: childDecorators,
+      parentDecorators: parents,
+      childDecorators: children,
     );
   }
 
@@ -190,57 +157,39 @@ class BoxProps extends CommonProps {
         other.minHeight == minHeight &&
         other.maxWidth == maxWidth &&
         other.minWidth == minWidth &&
+        listEquals(other.parentDecorators, parentDecorators) &&
+        listEquals(other.childDecorators, childDecorators) &&
         other.shape == shape;
   }
 
-  /// Check what properties are different from another instance of [BoxProps].
+  /// Returns a list of properties that are different between this [BoxProps] instance
+  /// and another [BoxProps] instance.
   List<String> getDifference(BoxProps other) {
     final diff = <String>[];
-    if (_color != other._color) {
-      diff.add('color');
-    }
 
-    if (alignment != other.alignment) {
-      diff.add('alignment');
+// Return if there are no diferences
+    if (this == other) return diff;
+
+    if (_color != other._color) diff.add('color');
+    if (alignment != other.alignment) diff.add('alignment');
+    if (padding != other.padding) diff.add('padding');
+    if (margin != other.margin) diff.add('margin');
+    if (width != other.width) diff.add('width');
+    if (height != other.height) diff.add('height');
+    if (border != other.border) diff.add('border');
+    if (borderRadius != other.borderRadius) diff.add('borderRadius');
+    if (!listEquals(boxShadow, other.boxShadow)) diff.add('boxShadow');
+    if (transform != other.transform) diff.add('transform');
+    if (maxHeight != other.maxHeight) diff.add('maxHeight');
+    if (minHeight != other.minHeight) diff.add('minHeight');
+    if (maxWidth != other.maxWidth) diff.add('maxWidth');
+    if (minWidth != other.minWidth) diff.add('minWidth');
+    if (shape != other.shape) diff.add('shape');
+    if (!listEquals(parentDecorators, other.parentDecorators)) {
+      diff.add('parentDecorators');
     }
-    if (padding != other.padding) {
-      diff.add('padding');
-    }
-    if (margin != other.margin) {
-      diff.add('margin');
-    }
-    if (width != other.width) {
-      diff.add('width');
-    }
-    if (height != other.height) {
-      diff.add('height');
-    }
-    if (border != other.border) {
-      diff.add('border');
-    }
-    if (borderRadius != other.borderRadius) {
-      diff.add('borderRadius');
-    }
-    if (!listEquals(boxShadow, other.boxShadow)) {
-      diff.add('boxShadow');
-    }
-    if (transform != other.transform) {
-      diff.add('transform');
-    }
-    if (maxHeight != other.maxHeight) {
-      diff.add('maxHeight');
-    }
-    if (minHeight != other.minHeight) {
-      diff.add('minHeight');
-    }
-    if (maxWidth != other.maxWidth) {
-      diff.add('maxWidth');
-    }
-    if (minWidth != other.minWidth) {
-      diff.add('minWidth');
-    }
-    if (shape != other.shape) {
-      diff.add('shape');
+    if (!listEquals(childDecorators, other.childDecorators)) {
+      diff.add('childDecorators');
     }
 
     return diff;
@@ -263,6 +212,8 @@ class BoxProps extends CommonProps {
         maxWidth.hashCode ^
         minWidth.hashCode ^
         shape.hashCode ^
-        gradient.hashCode;
+        gradient.hashCode ^
+        parentDecorators.hashCode ^
+        childDecorators.hashCode;
   }
 }

@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
 
 import '../../attributes/attribute.dart';
+import '../../helpers/dto/double.dto.dart';
+import '../../helpers/dto/text_style.dto.dart';
 import '../../helpers/extensions.dart';
-import '../../theme/refs/text_style_token.dart';
 
 /// ## Widget:
 /// - [TextMix](TextMix-class.html)
 /// {@category Attributes}
-class TextAttributes extends InheritedAttribute {
-  final TextStyle? style;
-  // Ref for context
-  final TextStyleToken? styleRef;
+class TextAttributes extends InheritedAttributes {
+  final TextStyleMergeableDto? style;
+
   final StrutStyle? strutStyle;
   final TextAlign? textAlign;
 
   final Locale? locale;
   final bool? softWrap;
   final TextOverflow? overflow;
-  final double? textScaleFactor;
+  final DoubleDto? textScaleFactor;
   final int? maxLines;
 
   final TextWidthBasis? textWidthBasis;
@@ -25,7 +25,6 @@ class TextAttributes extends InheritedAttribute {
 
   const TextAttributes({
     this.style,
-    this.styleRef,
     this.strutStyle,
     this.textAlign,
     this.locale,
@@ -44,7 +43,7 @@ class TextAttributes extends InheritedAttribute {
     return copyWith(
       // Need to inherit to allow for overrides
       style: other.style,
-      styleRef: other.styleRef,
+
       strutStyle: other.strutStyle,
       textAlign: other.textAlign,
       locale: other.locale,
@@ -59,43 +58,20 @@ class TextAttributes extends InheritedAttribute {
   }
 
   TextAttributes copyWith({
-    TextStyle? style,
-    TextStyleToken? styleRef,
+    TextStyleMergeableDto? style,
     StrutStyle? strutStyle,
     TextAlign? textAlign,
     Locale? locale,
     bool? softWrap,
     TextOverflow? overflow,
-    double? textScaleFactor,
+    DoubleDto? textScaleFactor,
     int? maxLines,
-    String? semanticsLabel,
     TextWidthBasis? textWidthBasis,
     TextHeightBehavior? textHeightBehavior,
   }) {
-    TextStyle? thisStyle = this.style;
-    TextStyle? otherStyle = style;
-
-    TextStyleToken? thisStyleRef = this.styleRef;
-    TextStyleToken? otherStyleRef = styleRef;
-
-    // During the merge we need to move the ref
-    // clunky but allows cleaner api for devs
-    if (thisStyle is TextStyleToken) {
-      thisStyleRef = thisStyle;
-    } else {
-      thisStyle = thisStyle;
-    }
-
-    if (style is TextStyleToken) {
-      otherStyleRef = style;
-    } else {
-      otherStyle = style;
-    }
-
     return TextAttributes(
-      style: thisStyle?.merge(otherStyle) ?? otherStyle,
+      style: this.style?.merge(style) ?? style,
       strutStyle: this.strutStyle?.merge(strutStyle) ?? strutStyle,
-      styleRef: otherStyleRef ?? thisStyleRef,
       textAlign: textAlign ?? this.textAlign,
       locale: locale ?? this.locale,
       softWrap: softWrap ?? this.softWrap,
@@ -113,7 +89,6 @@ class TextAttributes extends InheritedAttribute {
 
     return other is TextAttributes &&
         other.style == style &&
-        other.styleRef == styleRef &&
         other.strutStyle == strutStyle &&
         other.textAlign == textAlign &&
         other.locale == locale &&
@@ -128,7 +103,6 @@ class TextAttributes extends InheritedAttribute {
   @override
   int get hashCode {
     return style.hashCode ^
-        styleRef.hashCode ^
         strutStyle.hashCode ^
         textAlign.hashCode ^
         locale.hashCode ^

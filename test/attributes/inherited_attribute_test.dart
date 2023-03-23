@@ -12,7 +12,7 @@ const withColor = InheritedIconAttribute.withColor;
 
 const inputDecoration = InputDecorationThemeAttribute.inputDecoration;
 
-class InheritedIconAttribute extends InheritedAttribute {
+class InheritedIconAttribute extends InheritedAttributes {
   const InheritedIconAttribute({
     this.color,
     this.size,
@@ -53,7 +53,7 @@ class InheritedIconAttribute extends InheritedAttribute {
 }
 
 class InputDecorationThemeAttribute extends InputDecorationTheme
-    implements InheritedAttribute {
+    implements InheritedAttributes {
   const InputDecorationThemeAttribute({
     Color? iconColor,
     Color? fillColor,

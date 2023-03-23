@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+
+import 'double.dto.dart';
 import 'dto.dart';
 
 class BorderRadiusDto extends Dto<BorderRadius> {
-  final double? topLeft;
-  final double? topRight;
-  final double? bottomLeft;
-  final double? bottomRight;
+  final DoubleDto? topLeft;
+  final DoubleDto? topRight;
+  final DoubleDto? bottomLeft;
+  final DoubleDto? bottomRight;
 
   const BorderRadiusDto._({
     this.topLeft,
@@ -22,9 +24,9 @@ class BorderRadiusDto extends Dto<BorderRadius> {
   });
 
   /// A border radius with all zero radii.
-  static const BorderRadiusDto zero = BorderRadiusDto.all(0);
+  static const BorderRadiusDto zero = BorderRadiusDto.all(DoubleDto(0.0));
 
-  const BorderRadiusDto.all(double radius)
+  const BorderRadiusDto.all(DoubleDto radius)
       : this.only(
           topLeft: radius,
           topRight: radius,
@@ -39,29 +41,29 @@ class BorderRadiusDto extends Dto<BorderRadius> {
   @override
   BorderRadius resolve(BuildContext context) {
     return BorderRadius.only(
-      topLeft: _createRadius(topLeft),
-      topRight: _createRadius(topRight),
-      bottomLeft: _createRadius(bottomLeft),
-      bottomRight: _createRadius(bottomRight),
+      topLeft: _createRadius(topLeft?.resolve(context)),
+      topRight: _createRadius(topRight?.resolve(context)),
+      bottomLeft: _createRadius(bottomLeft?.resolve(context)),
+      bottomRight: _createRadius(bottomRight?.resolve(context)),
     );
   }
 
   BorderRadiusDto merge(BorderRadiusDto? other) {
-    if (other == null || other == this) return this;
+    if (other == this) return this;
 
     return copyWith(
-      topLeft: other.topLeft,
-      topRight: other.topRight,
-      bottomLeft: other.bottomLeft,
-      bottomRight: other.bottomRight,
+      topLeft: other?.topLeft ?? topLeft,
+      topRight: other?.topRight ?? topRight,
+      bottomLeft: other?.bottomLeft ?? bottomLeft,
+      bottomRight: other?.bottomRight ?? bottomRight,
     );
   }
 
   BorderRadiusDto copyWith({
-    double? topLeft,
-    double? topRight,
-    double? bottomLeft,
-    double? bottomRight,
+    DoubleDto? topLeft,
+    DoubleDto? topRight,
+    DoubleDto? bottomLeft,
+    DoubleDto? bottomRight,
   }) {
     return BorderRadiusDto._(
       topLeft: topLeft ?? this.topLeft,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../attributes/common/common.props.dart';
 import '../../mixer/mix_factory.dart';
 import '../../variants/variant.dart';
 import '../mix.widget.dart';
@@ -27,62 +28,66 @@ class IconMix extends MixWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Semantics(
-      label: semanticLabel,
-      child: MixContextBuilder(
-        mix: mix,
-        inherit: inherit,
-        variants: variants,
-        builder: (context, mixContext) {
-          final props = IconProps.fromContext(mixContext);
+    return MixContextBuilder(
+      mix: mix,
+      inherit: inherit,
+      variants: variants,
+      builder: (context, mixContext) {
+        final iconProps = IconProps.fromContext(context);
+        final commonProps = CommonProps.fromContext(context);
 
-          return IconMixerWidget(
-            props,
-            icon: icon,
-          );
-        },
-      ),
+        return IconMixerWidget(
+          iconProps: iconProps,
+          commonProps: commonProps,
+          icon: icon,
+        );
+      },
     );
   }
 }
 
 /// {@nodoc}
 class IconMixerWidget extends StatelessWidget {
-  const IconMixerWidget(
-    this.props, {
+  const IconMixerWidget({
+    required this.iconProps,
+    required this.commonProps,
     this.icon,
+    this.semanticLabel,
     Key? key,
   }) : super(key: key);
 
   final IconData? icon;
-  final IconProps props;
+  final IconProps iconProps;
+  final CommonProps commonProps;
+
+  final String? semanticLabel;
 
   @override
   Widget build(BuildContext context) {
-    if (!props.visible) {
+    if (!commonProps.visible) {
       return const Nothing();
     }
     Widget iconWidget = Icon(
       icon,
-      color: props.color,
-      size: props.size,
-      textDirection: props.textDirection,
+      color: iconProps.color,
+      size: iconProps.size,
+      textDirection: commonProps.textDirection,
     );
 
-    if (props.animated) {
+    if (commonProps.animated) {
       iconWidget = TweenAnimationBuilder<double>(
-        duration: props.animationDuration,
-        curve: props.animationCurve,
+        duration: commonProps.animationDuration,
+        curve: commonProps.animationCurve,
         tween: Tween<double>(
-          end: props.size,
+          end: iconProps.size,
         ),
         builder: (context, value, child) {
           final sizeValue = value;
 
           return TweenAnimationBuilder<Color?>(
-            duration: props.animationDuration,
-            curve: props.animationCurve,
-            tween: ColorTween(end: props.color),
+            duration: commonProps.animationDuration,
+            curve: commonProps.animationCurve,
+            tween: ColorTween(end: iconProps.color),
             child: child,
             builder: (context, value, child) {
               final colorValue = value;
@@ -98,6 +103,9 @@ class IconMixerWidget extends StatelessWidget {
       );
     }
 
-    return iconWidget;
+    return Semantics(
+      label: semanticLabel,
+      child: iconWidget,
+    );
   }
 }

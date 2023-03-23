@@ -1,14 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import '../../attributes/common/common.props.dart';
-import '../../mixer/mix_context_data.dart';
-import '../../theme/refs/color_token.dart';
-import '../../theme/refs/text_style_token.dart';
+import '../../mixer/mix_context.dart';
 import 'text.attributes.dart';
 import 'text_directives/text_directive.attributes.dart';
 
-class TextProps extends CommonProps {
+class TextProps {
   final bool softWrap;
   final TextOverflow overflow;
 
@@ -18,7 +15,7 @@ class TextProps extends CommonProps {
   final Locale? locale;
   final double? textScaleFactor;
   final int? maxLines;
-  final String? semanticsLabel;
+
   final TextWidthBasis? textWidthBasis;
   final TextHeightBehavior? textHeightBehavior;
   final List<TextDirectiveAttribute> directives;
@@ -32,71 +29,32 @@ class TextProps extends CommonProps {
     this.locale,
     this.textScaleFactor,
     this.maxLines,
-    this.semanticsLabel,
     this.textWidthBasis,
     this.textHeightBehavior,
     this.directives = const [],
-    required bool animated,
-    required Duration animationDuration,
-    required Curve animationCurve,
-    required bool visible,
-    TextDirection? textDirection,
-  }) : super(
-          visible: visible,
-          animated: animated,
-          animationDuration: animationDuration,
-          animationCurve: animationCurve,
-          textDirection: textDirection,
-        );
+  });
 
-  factory TextProps.fromContext(MixContextData mixContext) {
+  factory TextProps.fromContext(BuildContext context) {
+    final mixContext = MixContext.ensureOf(context);
     final textAttributes = mixContext.attributesOfType<TextAttributes>();
-    final commonProps = CommonProps.fromContext(mixContext);
-
-    final context = mixContext.context;
-
-    TextStyle? finalStyle = textAttributes?.style;
-    TextStyle? refStyle = textAttributes?.styleRef?.resolve(context);
-
-    if (finalStyle is TextStyleToken) {
-      finalStyle = finalStyle.resolve(context);
-    }
-
-    if (refStyle != null) {
-      finalStyle = refStyle.merge(finalStyle);
-    }
-
-    var color = finalStyle?.color;
-    if (color is ColorToken) {
-      // Also build color ref
-      finalStyle = finalStyle?.copyWith(
-        color: color.resolve(context),
-      );
-    }
 
     final textDirectives =
         mixContext.directivesOfType<TextDirectiveAttribute>().toList();
 
     return TextProps(
       // Need to grab colorscheme from context
-      style: finalStyle,
+      style: textAttributes?.style?.resolve(context),
       strutStyle: textAttributes?.strutStyle,
       textAlign: textAttributes?.textAlign,
       locale: textAttributes?.locale,
       softWrap: textAttributes?.softWrap ?? true,
       overflow: textAttributes?.overflow ?? TextOverflow.clip,
-      textScaleFactor: textAttributes?.textScaleFactor,
+      textScaleFactor: textAttributes?.textScaleFactor?.resolve(context),
       maxLines: textAttributes?.maxLines,
       textWidthBasis: textAttributes?.textWidthBasis,
       textHeightBehavior: textAttributes?.textHeightBehavior,
       // Directives
       directives: textDirectives,
-      // Common Props
-      visible: commonProps.visible,
-      animated: commonProps.animated,
-      animationDuration: commonProps.animationDuration,
-      animationCurve: commonProps.animationCurve,
-      textDirection: commonProps.textDirection,
     );
   }
 
@@ -126,14 +84,8 @@ class TextProps extends CommonProps {
         other.locale == locale &&
         other.textScaleFactor == textScaleFactor &&
         other.maxLines == maxLines &&
-        other.semanticsLabel == semanticsLabel &&
         other.textWidthBasis == textWidthBasis &&
         other.textHeightBehavior == textHeightBehavior &&
-        other.visible == visible &&
-        other.animated == animated &&
-        other.animationDuration == animationDuration &&
-        other.animationCurve == animationCurve &&
-        other.textDirection == textDirection &&
         listEquals(other.directives, directives);
   }
 
@@ -147,14 +99,8 @@ class TextProps extends CommonProps {
         locale.hashCode ^
         textScaleFactor.hashCode ^
         maxLines.hashCode ^
-        semanticsLabel.hashCode ^
         textWidthBasis.hashCode ^
         textHeightBehavior.hashCode ^
-        visible.hashCode ^
-        animated.hashCode ^
-        animationDuration.hashCode ^
-        animationCurve.hashCode ^
-        textDirection.hashCode ^
         directives.hashCode;
   }
 }

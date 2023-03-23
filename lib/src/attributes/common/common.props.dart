@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../mixer/mix_context_data.dart';
+import '../../mixer/mix_context.dart';
 import 'common.attributes.dart';
 
 class CommonProps {
@@ -19,8 +19,9 @@ class CommonProps {
     this.textDirection,
   });
 
-  factory CommonProps.fromContext(MixContextData mixContext) {
-    final common = mixContext.attributesOfType<CommonAttributes>();
+  factory CommonProps.fromContext(BuildContext context) {
+    final mix = MixContext.ensureOf(context);
+    final common = mix.attributesOfType<CommonAttributes>();
 
     return CommonProps(
       visible: common?.visible ?? true,

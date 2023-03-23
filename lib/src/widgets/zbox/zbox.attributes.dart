@@ -6,7 +6,7 @@ import '../../attributes/attribute.dart';
 /// - [ZBox](ZBox-class.html)
 ///
 /// {@category Attributes}
-class ZBoxAttributes extends InheritedAttribute {
+class ZBoxAttributes extends InheritedAttributes {
   final AlignmentGeometry? alignment;
   final StackFit? fit;
   final Clip? clipBehavior;

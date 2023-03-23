@@ -1,5 +1,41 @@
 import 'package:flutter/material.dart';
 
+import '../attributes/common/common.props.dart';
+import '../mixer/mix_context.dart';
+import '../mixer/mix_context_data.dart';
+import '../widgets/box/box.props.dart';
+import '../widgets/flex/flex.props.dart';
+import '../widgets/icon/icon.props.dart';
+import '../widgets/image/image.props.dart';
+import '../widgets/text/text.props.dart';
+import '../widgets/zbox/zbox.props.dart';
+import 'dto/text_style.dto.dart';
+
+extension MixContextExtensions on BuildContext {
+  MixContextData? get mixContext => MixContext.of(this);
+
+  @Deprecated('use SharedProps.fromContext(context) instead')
+  CommonProps get sharedProps => CommonProps.fromContext(this);
+
+  @Deprecated('use BoxProps.fromContext(context) instead')
+  BoxProps get boxProps => BoxProps.fromContext(this);
+
+  @Deprecated('use FlexProps.fromContext(context) instead')
+  FlexProps get flexProps => FlexProps.fromContext(this);
+
+  @Deprecated('use ZBoxProps.fromContext(context) instead')
+  ZBoxProps get zBoxProps => ZBoxProps.fromContext(this);
+
+  @Deprecated('use IconProps.fromContext(context) instead')
+  IconProps get iconProps => IconProps.fromContext(this);
+
+  @Deprecated('use TextProps.fromContext(context) instead')
+  TextProps get textProps => TextProps.fromContext(this);
+
+  @Deprecated('use ImageProps.fromContext(context) instead')
+  ImageProps get imageProps => ImageProps.fromContext(this);
+}
+
 extension ThemeContextExtensions on BuildContext {
   Brightness get brightness => Theme.of(this).brightness;
 
@@ -42,9 +78,8 @@ extension MediaQueryContextExtensions on BuildContext {
   double get screenHeight => mq.size.height;
 }
 
-/// {@category Misc Utils}
 extension StrutStyleExtension on StrutStyle {
-  merge(StrutStyle? other) {
+  StrutStyle merge(StrutStyle? other) {
     return StrutStyle(
       fontFamily: other?.fontFamily ?? fontFamily,
       fontFamilyFallback: other?.fontFamilyFallback ?? fontFamilyFallback,
@@ -60,7 +95,6 @@ extension StrutStyleExtension on StrutStyle {
   }
 }
 
-/// {@category Misc Utils}
 extension Matrix4Extension on Matrix4 {
   /// Merge [other] into this matrix.
   Matrix4 merge(Matrix4? other) {
@@ -68,4 +102,8 @@ extension Matrix4Extension on Matrix4 {
 
     return clone()..multiply(other);
   }
+}
+
+extension TextStyleExtension on TextStyle {
+  TextStyleMergeableDto get ref => TextStyleMergeableDto(this);
 }

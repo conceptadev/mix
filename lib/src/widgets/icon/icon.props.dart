@@ -1,83 +1,37 @@
 import 'package:flutter/material.dart';
 
-import '../../attributes/common/common.props.dart';
 import '../../mixer/mix_context.dart';
-import '../../theme/refs/color_token.dart';
 import 'icon.attributes.dart';
 
-class IconProps extends CommonProps {
+class IconProps {
   final Color? color;
   final double size;
 
   const IconProps({
     this.color,
     required this.size,
-    required bool animated,
-    required Duration animationDuration,
-    required Curve animationCurve,
-    required bool visible,
-    TextDirection? textDirection,
-  }) : super(
-          visible: visible,
-          animated: animated,
-          animationDuration: animationDuration,
-          animationCurve: animationCurve,
-          textDirection: textDirection,
-        );
+  });
 
   factory IconProps.fromContext(BuildContext context) {
-    final mixContext = MixContext.of(context);
+    final mixContext = MixContext.ensureOf(context);
     final iconAttributes = mixContext.attributesOfType<IconAttributes>();
-
-    final commonProps = CommonProps.fromContext(mixContext);
 
     IconProps props;
 
-// Icon with default size
-    props = IconProps(
-      size: 24,
-      animated: commonProps.animated,
-      animationDuration: commonProps.animationDuration,
-      animationCurve: commonProps.animationCurve,
-      visible: commonProps.visible,
-      textDirection: commonProps.textDirection,
-    );
-
-    if (iconAttributes != null) {
+    if (iconAttributes == null) {
+      props = const IconProps(
+        size: 24,
+      );
+    } else {
       final theme = IconTheme.of(context);
-      var color = iconAttributes.color;
 
-      if (color is ColorToken) {
-        color = color.resolve(context);
-      }
-
-      props = props.copyWith(
-        color: color ?? theme.color,
-        size: iconAttributes.size ?? theme.size ?? 24,
+      props = IconProps(
+        color: iconAttributes.color?.resolve(context) ?? theme.color,
+        size: iconAttributes.size?.resolve(context) ?? theme.size ?? 24,
       );
     }
 
     return props;
-  }
-
-  IconProps copyWith({
-    Color? color,
-    double? size,
-    bool? animated,
-    Duration? animationDuration,
-    Curve? animationCurve,
-    bool? visible,
-    TextDirection? textDirection,
-  }) {
-    return IconProps(
-      color: color ?? this.color,
-      size: size ?? this.size,
-      animated: animated ?? this.animated,
-      animationDuration: animationDuration ?? this.animationDuration,
-      animationCurve: animationCurve ?? this.animationCurve,
-      visible: visible ?? this.visible,
-      textDirection: textDirection ?? this.textDirection,
-    );
   }
 
   @override

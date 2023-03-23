@@ -10,25 +10,27 @@ abstract class Attribute {
 }
 
 /// An interface that add support to custom attributes for [MixContext].
-abstract class InheritedAttribute extends Attribute {
-  const InheritedAttribute();
+abstract class InheritedAttributes extends Attribute {
+  const InheritedAttributes();
 
-  InheritedAttribute merge(covariant InheritedAttribute? other);
+  InheritedAttributes merge(covariant InheritedAttributes? other);
 
-  Object get type => InheritedAttribute;
+  Object get type => InheritedAttributes;
 }
 
 class MixInheritedAttributes {
-  final Map<Type, InheritedAttribute> _mapOfvalues;
+  final Map<Type, InheritedAttributes> _mapOfvalues;
 
-  const MixInheritedAttributes(Map<Type, InheritedAttribute> values)
+  const MixInheritedAttributes(Map<Type, InheritedAttributes> values)
       : _mapOfvalues = values;
 
   const MixInheritedAttributes.empty()
-      : _mapOfvalues = const <Type, InheritedAttribute>{};
+      : _mapOfvalues = const <Type, InheritedAttributes>{};
 
-  factory MixInheritedAttributes.fromList(List<InheritedAttribute> attributes) {
-    final Map<Type, InheritedAttribute> attributesMap = {};
+  factory MixInheritedAttributes.fromList(
+    List<InheritedAttributes> attributes,
+  ) {
+    final Map<Type, InheritedAttributes> attributesMap = {};
 
     for (final attribute in attributes) {
       var inheritedAttribute = attributesMap[attribute.runtimeType];
@@ -53,14 +55,14 @@ class MixInheritedAttributes {
     return MixInheritedAttributes(Map.from(_mapOfvalues));
   }
 
-  Iterable<InheritedAttribute> toAttributes() => _mapOfvalues.values;
+  Iterable<InheritedAttributes> toAttributes() => _mapOfvalues.values;
 
   MixInheritedAttributes merge(MixInheritedAttributes? other) {
     if (other == null) {
       return this;
     }
 
-    Map<Type, InheritedAttribute> mergedAttributes = {};
+    Map<Type, InheritedAttributes> mergedAttributes = {};
 
     final keys = [..._mapOfvalues.keys, ...other._mapOfvalues.keys];
 

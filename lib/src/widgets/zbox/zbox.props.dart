@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-import '../../mixer/mix_context_data.dart';
+import '../../mixer/mix_context.dart';
 import 'zbox.attributes.dart';
 
 class ZBoxProps {
@@ -14,9 +14,8 @@ class ZBoxProps {
     required this.clipBehavior,
   });
 
-  factory ZBoxProps.fromContext(
-    MixContextData mixContext,
-  ) {
+  factory ZBoxProps.fromContext(BuildContext context) {
+    final mixContext = MixContext.ensureOf(context);
     final zBoxAttributes = mixContext.attributesOfType<ZBoxAttributes>();
 
     return ZBoxProps(

@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+import '../../attributes/common/common.props.dart';
 import '../../mixer/mix_factory.dart';
 import '../../variants/variant.dart';
 import '../mix.widget.dart';
@@ -14,6 +15,7 @@ class TextMix extends MixWidget {
     Mix? mix,
     Key? key,
     List<Variant>? variants,
+    this.semanticsLabel,
     bool inherit = true,
   }) : super(
           mix,
@@ -23,15 +25,22 @@ class TextMix extends MixWidget {
         );
 
   final String text;
+  final String? semanticsLabel;
 
   @override
   Widget build(BuildContext context) {
     return MixContextBuilder(
       mix: mix,
-      builder: (context, mixContext) {
-        final props = TextProps.fromContext(mixContext);
+      builder: (context, _) {
+        final textProps = TextProps.fromContext(context);
+        final commonProps = CommonProps.fromContext(context);
 
-        return TextMixedWidget(props, text: text);
+        return TextMixedWidget(
+          textProps: textProps,
+          commonProps: commonProps,
+          text: text,
+          semanticsLabel: semanticsLabel,
+        );
       },
     );
   }
@@ -39,63 +48,57 @@ class TextMix extends MixWidget {
 
 // TODO: Rename this to TextMixerWidget for something more descriptive
 class TextMixedWidget extends StatelessWidget {
-  const TextMixedWidget(
-    this.props, {
-    Key? key,
+  const TextMixedWidget({
+    required this.textProps,
+    required this.commonProps,
     required this.text,
+    Key? key,
+    this.semanticsLabel,
   }) : super(key: key);
 
   final String text;
-  final TextProps props;
+  final TextProps textProps;
+  final CommonProps commonProps;
+  final String? semanticsLabel;
 
   @override
   Widget build(BuildContext context) {
-    if (!props.visible) {
+    if (!commonProps.visible) {
       return const Nothing();
     }
-    final content = props.applyTextDirectives(text);
+    final content = textProps.applyTextDirectives(text);
 
-    if (props.animated) {
+    final textWidget = Text(
+      content,
+      textDirection: commonProps.textDirection,
+      textWidthBasis: textProps.textWidthBasis,
+      textScaleFactor: textProps.textScaleFactor,
+      locale: textProps.locale,
+      maxLines: textProps.maxLines,
+      overflow: textProps.overflow,
+      softWrap: textProps.softWrap,
+      strutStyle: textProps.strutStyle,
+      style: textProps.style,
+      textAlign: textProps.textAlign,
+      textHeightBehavior: textProps.textHeightBehavior,
+      semanticsLabel: semanticsLabel,
+    );
+
+    if (commonProps.animated) {
       return AnimatedDefaultTextStyle(
-        style: props.style ??
+        style: textProps.style ??
             Theme.of(context).textTheme.bodyText1 ??
             const TextStyle(),
-        duration: props.animationDuration,
-        curve: props.animationCurve,
-        softWrap: props.softWrap,
-        overflow: props.overflow,
-        textAlign: props.textAlign,
-        maxLines: props.maxLines,
-        child: Text(
-          content,
-          textDirection: props.textDirection,
-          textWidthBasis: props.textWidthBasis,
-          textScaleFactor: props.textScaleFactor,
-          locale: props.locale,
-          maxLines: props.maxLines,
-          overflow: props.overflow,
-          softWrap: props.softWrap,
-          strutStyle: props.strutStyle,
-          style: props.style,
-          textAlign: props.textAlign,
-          textHeightBehavior: props.textHeightBehavior,
-        ),
+        duration: commonProps.animationDuration,
+        curve: commonProps.animationCurve,
+        softWrap: textProps.softWrap,
+        overflow: textProps.overflow,
+        textAlign: textProps.textAlign,
+        maxLines: textProps.maxLines,
+        child: textWidget,
       );
     } else {
-      return Text(
-        content,
-        softWrap: props.softWrap,
-        textDirection: props.textDirection,
-        textWidthBasis: props.textWidthBasis,
-        textAlign: props.textAlign,
-        overflow: props.overflow,
-        maxLines: props.maxLines,
-        textScaleFactor: props.textScaleFactor,
-        style: props.style,
-        locale: props.locale,
-        strutStyle: props.strutStyle,
-        textHeightBehavior: props.textHeightBehavior,
-      );
+      return textWidget;
     }
   }
 
@@ -114,7 +117,15 @@ class TextMixedWidget extends StatelessWidget {
     properties.add(
       DiagnosticsProperty<TextProps>(
         'props',
-        props,
+        textProps,
+        defaultValue: null,
+      ),
+    );
+
+    properties.add(
+      DiagnosticsProperty<CommonProps>(
+        'commonProps',
+        commonProps,
         defaultValue: null,
       ),
     );

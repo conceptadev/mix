@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../mixer/mix_context_data.dart';
+import '../../mixer/mix_context.dart';
 import '../../theme/refs/color_token.dart';
 import 'image.attributes.dart';
 
@@ -28,12 +28,11 @@ class ImageProps {
     required this.repeat,
   });
 
-  factory ImageProps.fromContext(MixContextData mixContext) {
+  factory ImageProps.fromContext(BuildContext context) {
+    final mixContext = MixContext.ensureOf(context);
     final attributes = mixContext.attributesOfType<ImageAttributes>();
 
     var color = attributes?.color;
-
-    final context = mixContext.context;
 
     if (color is ColorToken) {
       color = color.resolve(context);

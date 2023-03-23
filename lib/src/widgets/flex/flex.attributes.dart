@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
+
 import '../../attributes/attribute.dart';
+import '../../helpers/dto/double.dto.dart';
 
 ///
 /// ## Widget
 /// - [FlexBox](FlexBox-class.html)
 ///
 /// {@category Attributes}
-class FlexAttributes extends InheritedAttribute {
+class FlexAttributes extends InheritedAttributes {
   final Axis? direction;
   final MainAxisAlignment? mainAxisAlignment;
   final CrossAxisAlignment? crossAxisAlignment;
   final MainAxisSize? mainAxisSize;
   final VerticalDirection? verticalDirection;
-  final double? gapSize;
+  final DoubleDto? gapSize;
 
   const FlexAttributes({
     this.direction,

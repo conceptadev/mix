@@ -2,14 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../attributes/common/common.props.dart';
 import '../../../decorators/decorator_attribute.dart';
-import '../../../mixer/mix_context_data.dart';
 
-/// ## Widget
-/// - (All)
-/// ## Utilities
-/// - [OpacityDecoratorUtility](OpacityDecoratorUtility-class.html)
-///
-/// {@category Decorators}
 class OpacityDecorator extends BoxParentDecoratorAttribute<OpacityDecorator> {
   final double opacity;
   const OpacityDecorator({
@@ -23,14 +16,14 @@ class OpacityDecorator extends BoxParentDecoratorAttribute<OpacityDecorator> {
   }
 
   @override
-  Widget builder(MixContextData mixContext, Widget child) {
-    final sharedProps = CommonProps.fromContext(mixContext);
+  Widget builder(BuildContext context, Widget child) {
+    final commonProps = CommonProps.fromContext(context);
 
-    if (sharedProps.animated) {
+    if (commonProps.animated) {
       return AnimatedOpacity(
         key: key,
-        duration: sharedProps.animationDuration,
-        curve: sharedProps.animationCurve,
+        duration: commonProps.animationDuration,
+        curve: commonProps.animationCurve,
         opacity: opacity,
         child: child,
       );

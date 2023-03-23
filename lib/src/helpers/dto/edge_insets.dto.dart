@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 
 import '../../theme/mix_theme.dart';
+import 'double.dto.dart';
 import 'dto.dart';
 
 class EdgeInsetsDto extends Dto<EdgeInsets> {
-  final double? top;
-  final double? bottom;
-  final double? left;
-  final double? right;
+  final DoubleDto? top;
+  final DoubleDto? bottom;
+  final DoubleDto? left;
+  final DoubleDto? right;
 
   const EdgeInsetsDto._({
     this.top,
@@ -23,7 +24,7 @@ class EdgeInsetsDto extends Dto<EdgeInsets> {
     this.right,
   });
 
-  const EdgeInsetsDto.all(double value)
+  const EdgeInsetsDto.all(DoubleDto value)
       : this._(
           top: value,
           bottom: value,
@@ -32,8 +33,8 @@ class EdgeInsetsDto extends Dto<EdgeInsets> {
         );
 
   const EdgeInsetsDto.symmetric({
-    double? horizontal,
-    double? vertical,
+    DoubleDto? horizontal,
+    DoubleDto? vertical,
   }) : this._(
           top: vertical,
           bottom: vertical,
@@ -41,10 +42,11 @@ class EdgeInsetsDto extends Dto<EdgeInsets> {
           right: horizontal,
         );
 
-  static double? _nullIfZero(double? value) {
-    if (value == 0.0) return null;
+  static DoubleDto? _nullIfZero(double? value) {
+    // Edgeinsets set default value of 0.0
+    if (value == null || value == 0.0) return null;
 
-    return value;
+    return DoubleDto(value);
   }
 
   factory EdgeInsetsDto.fromEdgeInsets(EdgeInsets edgeInsets) {
@@ -72,10 +74,10 @@ class EdgeInsetsDto extends Dto<EdgeInsets> {
     final spacing = MixTheme.of(context).space;
 
     return EdgeInsets.only(
-      top: spacing.fromValue(top) ?? 0.0,
-      bottom: spacing.fromValue(bottom) ?? 0.0,
-      left: spacing.fromValue(left) ?? 0.0,
-      right: spacing.fromValue(right) ?? 0.0,
+      top: spacing.fromValue(top?.resolve(context)) ?? 0.0,
+      bottom: spacing.fromValue(bottom?.resolve(context)) ?? 0.0,
+      left: spacing.fromValue(left?.resolve(context)) ?? 0.0,
+      right: spacing.fromValue(right?.resolve(context)) ?? 0.0,
     );
   }
 
@@ -96,10 +98,10 @@ class EdgeInsetsDto extends Dto<EdgeInsets> {
   }
 
   EdgeInsetsDto copyWith({
-    double? top,
-    double? bottom,
-    double? left,
-    double? right,
+    DoubleDto? top,
+    DoubleDto? bottom,
+    DoubleDto? left,
+    DoubleDto? right,
   }) {
     return EdgeInsetsDto._(
       top: top ?? this.top,

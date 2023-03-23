@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../attribute.dart';
 
-class CommonAttributes extends InheritedAttribute {
+class CommonAttributes extends InheritedAttributes {
   final bool? visible;
   //Animation
   final bool? animated;

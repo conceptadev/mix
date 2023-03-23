@@ -5,31 +5,29 @@ import '../../attributes/attribute.dart';
 import '../../helpers/dto/border.dto.dart';
 import '../../helpers/dto/border_radius.dto.dart';
 import '../../helpers/dto/box_shadow.dto.dart';
+import '../../helpers/dto/color.dto.dart';
+import '../../helpers/dto/double.dto.dart';
 import '../../helpers/dto/edge_insets.dto.dart';
 import '../../helpers/extensions.dart';
 
-/// ## Widget:
-/// - [Box](Box-class.html)
-///
-/// {@category Attributes}
-class BoxAttributes extends InheritedAttribute {
+class BoxAttributes extends InheritedAttributes {
   final EdgeInsetsDto? margin;
   final EdgeInsetsDto? padding;
   final AlignmentGeometry? alignment;
-  final double? height;
-  final double? width;
+  final DoubleDto? height;
+  final DoubleDto? width;
   // Decoration
-  final Color? color;
+  final ColorDto? color;
   final BorderDto? border;
   final BorderRadiusDto? borderRadius;
   final List<BoxShadowDto>? boxShadow;
   final Matrix4? transform;
 
   // Constraints
-  final double? maxHeight;
-  final double? minHeight;
-  final double? maxWidth;
-  final double? minWidth;
+  final DoubleDto? maxHeight;
+  final DoubleDto? minHeight;
+  final DoubleDto? maxWidth;
+  final DoubleDto? minWidth;
   final BoxShape? shape;
   final Gradient? gradient;
 
@@ -51,6 +49,44 @@ class BoxAttributes extends InheritedAttribute {
     this.transform,
     this.gradient,
   });
+
+  BoxAttributes copyWith({
+    EdgeInsetsDto? margin,
+    EdgeInsetsDto? padding,
+    AlignmentGeometry? alignment,
+    ColorDto? color,
+    BorderDto? border,
+    BorderRadiusDto? borderRadius,
+    List<BoxShadowDto>? boxShadow,
+    Matrix4? transform,
+    DoubleDto? height,
+    DoubleDto? width,
+    DoubleDto? maxHeight,
+    DoubleDto? minHeight,
+    DoubleDto? maxWidth,
+    DoubleDto? minWidth,
+    BoxShape? shape,
+    Gradient? gradient,
+  }) {
+    return BoxAttributes(
+      margin: margin ?? this.margin,
+      padding: padding ?? this.padding,
+      alignment: alignment ?? this.alignment,
+      height: height ?? this.height,
+      width: width ?? this.width,
+      color: color ?? this.color,
+      border: border ?? this.border,
+      borderRadius: borderRadius ?? this.borderRadius,
+      boxShadow: boxShadow ?? this.boxShadow,
+      transform: transform ?? this.transform,
+      maxHeight: maxHeight ?? this.maxHeight,
+      minHeight: minHeight ?? this.minHeight,
+      maxWidth: maxWidth ?? this.maxWidth,
+      minWidth: minWidth ?? this.minWidth,
+      shape: shape ?? this.shape,
+      gradient: gradient ?? this.gradient,
+    );
+  }
 
   @override
   BoxAttributes merge(BoxAttributes? other) {
@@ -120,44 +156,6 @@ class BoxAttributes extends InheritedAttribute {
         minWidth.hashCode ^
         shape.hashCode ^
         gradient.hashCode;
-  }
-
-  BoxAttributes copyWith({
-    EdgeInsetsDto? margin,
-    EdgeInsetsDto? padding,
-    AlignmentGeometry? alignment,
-    double? height,
-    double? width,
-    Color? color,
-    BorderDto? border,
-    BorderRadiusDto? borderRadius,
-    List<BoxShadowDto>? boxShadow,
-    Matrix4? transform,
-    double? maxHeight,
-    double? minHeight,
-    double? maxWidth,
-    double? minWidth,
-    BoxShape? shape,
-    Gradient? gradient,
-  }) {
-    return BoxAttributes(
-      margin: margin ?? this.margin,
-      padding: padding ?? this.padding,
-      alignment: alignment ?? this.alignment,
-      height: height ?? this.height,
-      width: width ?? this.width,
-      color: color ?? this.color,
-      border: border ?? this.border,
-      borderRadius: borderRadius ?? this.borderRadius,
-      boxShadow: boxShadow ?? this.boxShadow,
-      transform: transform ?? this.transform,
-      maxHeight: maxHeight ?? this.maxHeight,
-      minHeight: minHeight ?? this.minHeight,
-      maxWidth: maxWidth ?? this.maxWidth,
-      minWidth: minWidth ?? this.minWidth,
-      shape: shape ?? this.shape,
-      gradient: gradient ?? this.gradient,
-    );
   }
 
   @override
