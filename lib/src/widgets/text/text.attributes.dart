@@ -1,11 +1,13 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../attributes/attribute.dart';
 import '../../helpers/dto/double.dto.dart';
 import '../../helpers/dto/text_style.dto.dart';
 import '../../helpers/extensions.dart';
+import 'text_directives/text_directive.attributes.dart';
 
-class TextAttributes extends InheritedAttributes {
+class TextAttributes extends WidgetAttributes {
   final TextStyleMergeableDto? style;
 
   final StrutStyle? strutStyle;
@@ -20,6 +22,8 @@ class TextAttributes extends InheritedAttributes {
   final TextWidthBasis? textWidthBasis;
   final TextHeightBehavior? textHeightBehavior;
 
+  final List<TextDirectiveAttribute> directives;
+
   const TextAttributes({
     this.style,
     this.strutStyle,
@@ -31,6 +35,7 @@ class TextAttributes extends InheritedAttributes {
     this.maxLines,
     this.textWidthBasis,
     this.textHeightBehavior,
+    this.directives = const [],
   });
 
   @override
@@ -51,6 +56,7 @@ class TextAttributes extends InheritedAttributes {
 
       textWidthBasis: other.textWidthBasis,
       textHeightBehavior: other.textHeightBehavior,
+      directives: other.directives,
     );
   }
 
@@ -65,6 +71,7 @@ class TextAttributes extends InheritedAttributes {
     int? maxLines,
     TextWidthBasis? textWidthBasis,
     TextHeightBehavior? textHeightBehavior,
+    List<TextDirectiveAttribute>? directives,
   }) {
     return TextAttributes(
       style: this.style?.merge(style) ?? style,
@@ -77,6 +84,7 @@ class TextAttributes extends InheritedAttributes {
       maxLines: maxLines ?? this.maxLines,
       textWidthBasis: textWidthBasis ?? this.textWidthBasis,
       textHeightBehavior: textHeightBehavior ?? this.textHeightBehavior,
+      directives: [...this.directives, ...?directives],
     );
   }
 
@@ -94,7 +102,8 @@ class TextAttributes extends InheritedAttributes {
         other.textScaleFactor == textScaleFactor &&
         other.maxLines == maxLines &&
         other.textWidthBasis == textWidthBasis &&
-        other.textHeightBehavior == textHeightBehavior;
+        other.textHeightBehavior == textHeightBehavior &&
+        listEquals(directives, other.directives);
   }
 
   @override
@@ -108,6 +117,7 @@ class TextAttributes extends InheritedAttributes {
         textScaleFactor.hashCode ^
         maxLines.hashCode ^
         textWidthBasis.hashCode ^
-        textHeightBehavior.hashCode;
+        textHeightBehavior.hashCode ^
+        directives.hashCode;
   }
 }

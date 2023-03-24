@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 import '../../../attributes/common/common.props.dart';
-import '../../../decorators/decorator_attribute.dart';
+import '../box.decorator.dart';
 
-class OpacityDecorator extends BoxParentDecoratorAttribute<OpacityDecorator> {
+class OpacityDecorator extends BoxDecoratorAttribute<OpacityDecorator> {
   final double opacity;
   const OpacityDecorator({
     required this.opacity,
@@ -16,7 +16,7 @@ class OpacityDecorator extends BoxParentDecoratorAttribute<OpacityDecorator> {
   }
 
   @override
-  Widget builder(BuildContext context, Widget child) {
+  Widget build(BuildContext context, Widget child) {
     final commonProps = CommonProps.fromContext(context);
 
     if (commonProps.animated) {

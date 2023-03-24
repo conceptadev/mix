@@ -8,7 +8,7 @@ import '../../helpers/dto/double.dto.dart';
 /// - [FlexBox](FlexBox-class.html)
 ///
 /// {@category Attributes}
-class FlexAttributes extends InheritedAttributes {
+class FlexAttributes extends WidgetAttributes {
   final Axis? direction;
   final MainAxisAlignment? mainAxisAlignment;
   final CrossAxisAlignment? crossAxisAlignment;

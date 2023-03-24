@@ -9,8 +9,10 @@ import '../../helpers/dto/color.dto.dart';
 import '../../helpers/dto/double.dto.dart';
 import '../../helpers/dto/edge_insets.dto.dart';
 import '../../helpers/extensions.dart';
+import '../../helpers/mergeable_map.dart';
+import 'box.decorator.dart';
 
-class BoxAttributes extends InheritedAttributes {
+class BoxAttributes extends WidgetAttributes {
   final EdgeInsetsDto? margin;
   final EdgeInsetsDto? padding;
   final AlignmentGeometry? alignment;
@@ -31,6 +33,8 @@ class BoxAttributes extends InheritedAttributes {
   final BoxShape? shape;
   final Gradient? gradient;
 
+  final MergeableMap<BoxDecoratorAttribute>? decorators;
+
   const BoxAttributes({
     this.margin,
     this.padding,
@@ -48,6 +52,7 @@ class BoxAttributes extends InheritedAttributes {
     this.shape,
     this.transform,
     this.gradient,
+    this.decorators,
   });
 
   BoxAttributes copyWith({
@@ -67,6 +72,7 @@ class BoxAttributes extends InheritedAttributes {
     DoubleDto? minWidth,
     BoxShape? shape,
     Gradient? gradient,
+    MergeableMap<BoxDecoratorAttribute>? decorators,
   }) {
     return BoxAttributes(
       margin: margin ?? this.margin,
@@ -85,6 +91,7 @@ class BoxAttributes extends InheritedAttributes {
       minWidth: minWidth ?? this.minWidth,
       shape: shape ?? this.shape,
       gradient: gradient ?? this.gradient,
+      decorators: decorators ?? this.decorators,
     );
   }
 
@@ -112,6 +119,8 @@ class BoxAttributes extends InheritedAttributes {
       minWidth: other.minWidth,
       shape: other.shape,
       gradient: other.gradient,
+      decorators:
+          decorators != null ? other.decorators?.merge(decorators) : decorators,
     );
   }
 
@@ -135,7 +144,8 @@ class BoxAttributes extends InheritedAttributes {
         other.maxWidth == maxWidth &&
         other.minWidth == minWidth &&
         other.shape == shape &&
-        other.gradient == gradient;
+        other.gradient == gradient &&
+        other.decorators == decorators;
   }
 
   @override
@@ -155,11 +165,12 @@ class BoxAttributes extends InheritedAttributes {
         maxWidth.hashCode ^
         minWidth.hashCode ^
         shape.hashCode ^
-        gradient.hashCode;
+        gradient.hashCode ^
+        decorators.hashCode;
   }
 
   @override
   String toString() {
-    return 'BoxAttributes(margin: $margin, padding: $padding, alignment: $alignment, height: $height, width: $width, color: $color, border: $border, borderRadius: $borderRadius, boxShadow: $boxShadow, transform: $transform, maxHeight: $maxHeight, minHeight: $minHeight, maxWidth: $maxWidth, minWidth: $minWidth, shape: $shape , gradient: $gradient)';
+    return 'BoxAttributes(margin: $margin, padding: $padding, alignment: $alignment, height: $height, width: $width, color: $color, border: $border, borderRadius: $borderRadius, boxShadow: $boxShadow, transform: $transform, maxHeight: $maxHeight, minHeight: $minHeight, maxWidth: $maxWidth, minWidth: $minWidth, shape: $shape, gradient: $gradient, decorators: $decorators)';
   }
 }

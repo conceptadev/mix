@@ -11,7 +11,7 @@ void main() {
     testWidgets('Adds icon on widget', (tester) async {
       await tester.pumpWidget(
         MixTestWidget(
-          child: MixFactory().icon(Icons.bolt),
+          child: Mix().icon(Icons.bolt),
         ),
       );
 
@@ -24,7 +24,7 @@ void main() {
     testWidgets('Adds Icon properties on widget', (tester) async {
       await tester.pumpWidget(
         MixTestWidget(
-          child: MixFactory(
+          child: Mix(
             const IconAttributes(color: Colors.greenAccent),
             const IconAttributes(size: 23),
             const CommonAttributes(textDirection: TextDirection.rtl),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../attributes/common/common.props.dart';
-import '../../../decorators/decorator_attribute.dart';
+import '../box.decorator.dart';
 
 /// ## Widget
 /// - (All)
@@ -9,8 +9,7 @@ import '../../../decorators/decorator_attribute.dart';
 /// - [AspectRatioDecoratorUtility](AspectRatioDecoratorUtility-class.html)
 ///
 /// {@category Decorators}
-class AspectRatioDecorator
-    extends BoxParentDecoratorAttribute<AspectRatioDecorator> {
+class AspectRatioDecorator extends BoxDecoratorAttribute<AspectRatioDecorator> {
   final double aspectRatio;
   const AspectRatioDecorator({
     required this.aspectRatio,
@@ -25,7 +24,7 @@ class AspectRatioDecorator
   }
 
   @override
-  Widget builder(BuildContext context, Widget child) {
+  Widget build(BuildContext context, Widget child) {
     final commonProps = CommonProps.fromContext(context);
 
     if (commonProps.animated) {

@@ -1,3 +1,3 @@
 import '../../mix.dart';
 
-const apply = WrapFunction(HelperUtility.apply);
+const apply = SpreadFunctionParams(HelperUtility.apply);

@@ -9,7 +9,7 @@ class VariantsCatalogPressable extends StatelessWidget {
     return Row(children: [
       buildBlock(
         'Hover',
-        MixFactory(onHover(
+        Mix(onHover(
           border(color: MaterialTokens.colorScheme.primary, width: 2),
           padding(4.0),
         )),
@@ -18,7 +18,7 @@ class VariantsCatalogPressable extends StatelessWidget {
       const VerticalDivider(),
       buildBlock(
         'Focus',
-        MixFactory(onFocus(
+        Mix(onFocus(
           border(color: MaterialTokens.colorScheme.primary, width: 2),
           padding(4.0),
         )),
@@ -27,7 +27,7 @@ class VariantsCatalogPressable extends StatelessWidget {
       const VerticalDivider(),
       buildBlock(
         'Press',
-        MixFactory(onPress(
+        Mix(onPress(
           border(color: MaterialTokens.colorScheme.primary, width: 2),
           padding(4.0),
         )),
@@ -36,7 +36,7 @@ class VariantsCatalogPressable extends StatelessWidget {
     ]);
   }
 
-  Widget buildBlock(String title, MixFactory mix, Widget child) {
+  Widget buildBlock(String title, Mix mix, Widget child) {
     return Builder(builder: (context) {
       return Expanded(
         child: Padding(

@@ -6,7 +6,7 @@ import 'context_variant.dart';
 import 'variant.dart';
 
 class ContextVariantAttribute extends VariantAttribute<ContextVariant> {
-  const ContextVariantAttribute(ContextVariant variant, MixFactory mix)
+  const ContextVariantAttribute(ContextVariant variant, Mix mix)
       : super(variant, mix);
 
   bool shouldApply(BuildContext context) {
@@ -15,12 +15,12 @@ class ContextVariantAttribute extends VariantAttribute<ContextVariant> {
 }
 
 class VariantAttribute<T extends Variant> extends Attribute {
-  const VariantAttribute(this.variant, MixFactory mix) : _mix = mix;
+  const VariantAttribute(this.variant, Mix mix) : _mix = mix;
 
   final T variant;
-  final MixFactory _mix;
+  final Mix _mix;
 
-  MixFactory get value => _mix;
+  Mix get value => _mix;
 
   @override
   String toString() => 'VariantAttribute(variant: $variant, mix: $value)';

@@ -9,20 +9,20 @@ import '../variants/variant.dart';
 abstract class MixWidget extends StatelessWidget {
   /// Constructor
   const MixWidget(
-    MixFactory? mix, {
+    Mix? mix, {
     Key? key,
     bool? inherit,
     List<Variant>? variants,
-  })  : _mix = mix ?? MixFactory.constant,
+  })  : _mix = mix ?? Mix.constant,
         _variants = variants,
         _inherit = inherit ?? false,
         super(key: key);
 
-  final MixFactory _mix;
+  final Mix _mix;
   final List<Variant>? _variants;
   final bool _inherit;
 
-  MixFactory get mix => _mix;
+  Mix get mix => _mix;
   bool get inherit => _inherit;
   List<Variant>? get variants => _variants;
 
@@ -53,7 +53,7 @@ abstract class MixWidget extends StatelessWidget {
     super.debugFillProperties(properties);
 
     properties.add(
-      DiagnosticsProperty<MixFactory>('mix', mix, defaultValue: null),
+      DiagnosticsProperty<Mix>('mix', mix, defaultValue: null),
     );
     properties.add(
       DiagnosticsProperty<List<Variant>>(

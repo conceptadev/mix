@@ -47,7 +47,7 @@ class Variant {
     }
 
     // Create a VariantAttribute using the collected parameters
-    return VariantAttribute(this, MixFactory.fromAttributes(params));
+    return VariantAttribute(this, Mix.fromAttributes(params));
   }
 
   @override

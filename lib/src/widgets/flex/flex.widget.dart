@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 import '../../attributes/common/common.props.dart';
 import '../../mixer/mix_factory.dart';
 import '../../variants/variant.dart';
-import '../box/box.props.dart';
+import '../box/box.descriptor.dart';
 import '../box/box.widget.dart';
 import '../gap.widget.dart';
 import '../mix.widget.dart';
@@ -12,7 +12,7 @@ import 'flex.props.dart';
 
 class FlexBox extends MixWidget {
   const FlexBox({
-    MixFactory? mix,
+    Mix? mix,
     Key? key,
     List<Variant>? variants,
     bool? inherit,
@@ -56,7 +56,7 @@ class FlexBox extends MixWidget {
       variants: variants,
       builder: (context, mixContext) {
         final flexProps = FlexProps.fromContext(context);
-        final boxProps = BoxProps.fromContext(context);
+        final boxProps = BoxDescriptor.fromContext(context);
         final commonProps = CommonProps.fromContext(context);
 
         return BoxMixedWidget(
@@ -81,7 +81,7 @@ class FlexBox extends MixWidget {
 
 class HBox extends FlexBox {
   const HBox({
-    MixFactory? mix,
+    Mix? mix,
     List<Variant>? variants,
     Key? key,
     bool inherit = false,
@@ -98,7 +98,7 @@ class HBox extends FlexBox {
 
 class VBox extends FlexBox {
   const VBox({
-    MixFactory? mix,
+    Mix? mix,
     List<Variant>? variants,
     Key? key,
     bool inherit = false,

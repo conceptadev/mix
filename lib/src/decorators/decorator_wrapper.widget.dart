@@ -9,7 +9,7 @@ class DecoratorWrapper extends StatelessWidget {
     required this.child,
   }) : super(key: key);
 
-  final Iterable<DecoratorAttribute> decorators;
+  final List<DecoratorAttribute> decorators;
 
   final Widget child;
 

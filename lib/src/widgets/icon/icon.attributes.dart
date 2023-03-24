@@ -6,7 +6,7 @@ import '../../helpers/dto/double.dto.dart';
 /// - [IconMix](IconMix-class.html)
 ///
 /// {@category Attributes}
-class IconAttributes extends InheritedAttributes {
+class IconAttributes extends WidgetAttributes {
   final ColorDto? color;
   final DoubleDto? size;
   const IconAttributes({

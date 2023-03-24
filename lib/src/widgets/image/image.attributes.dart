@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../attributes/attribute.dart';
 
-class ImageAttributes extends InheritedAttributes {
+class ImageAttributes extends WidgetAttributes {
   final Color? color;
   final double? scale;
 

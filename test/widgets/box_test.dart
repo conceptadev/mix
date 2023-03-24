@@ -24,7 +24,7 @@ void main() {
         (tester) async {
           await tester.pumpWidget(
             MixTestWidget(
-              child: MixFactory().box(
+              child: Mix().box(
                 child: const Text(
                   widgetText,
                   key: Key('child-key'),
@@ -50,7 +50,7 @@ void main() {
         (tester) async {
           await tester.pumpWidget(
             const BoxInsideFlexWidget(
-              MixFactory(
+              Mix(
                 FlexibleDecorator(flex: 2),
                 FlexibleDecorator(flexFit: FlexFit.tight),
               ),
@@ -71,7 +71,7 @@ void main() {
         (tester) async {
           await tester.pumpWidget(
             const BoxTestWidget(
-              MixFactory(RotateDecorator(quarterTurns: 3)),
+              Mix(RotateDecorator(quarterTurns: 3)),
             ),
           );
 
@@ -88,7 +88,7 @@ void main() {
         (tester) async {
           await tester.pumpWidget(
             const BoxTestWidget(
-              MixFactory(CommonAttributes(visible: false)),
+              Mix(CommonAttributes(visible: false)),
             ),
           );
 
@@ -106,7 +106,7 @@ void main() {
         (tester) async {
           await tester.pumpWidget(
             const BoxTestWidget(
-              MixFactory(AspectRatioDecorator(aspectRatio: 3 / 2)),
+              Mix(AspectRatioDecorator(aspectRatio: 3 / 2)),
             ),
           );
 
@@ -123,7 +123,7 @@ void main() {
         (tester) async {
           await tester.pumpWidget(
             const BoxTestWidget(
-              MixFactory(BoxAttributes(alignment: Alignment.centerRight)),
+              Mix(BoxAttributes(alignment: Alignment.centerRight)),
             ),
           );
 
@@ -140,7 +140,7 @@ void main() {
         (tester) async {
           await tester.pumpWidget(
             const BoxTestWidget(
-              MixFactory(
+              Mix(
                 OpacityDecorator(opacity: 0.5),
               ),
             ),
@@ -159,7 +159,7 @@ void main() {
         (tester) async {
           await tester.pumpWidget(
             const BoxTestWidget(
-              MixFactory(BoxAttributes(color: Colors.lime)),
+              Mix(BoxAttributes(color: Colors.lime)),
             ),
           );
 
@@ -191,7 +191,7 @@ void main() {
           );
           await tester.pumpWidget(
             BoxTestWidget(
-              MixFactory(
+              Mix(
                 const BoxAttributes(color: Colors.purple),
                 const BoxAttributes(borderRadius: borderRadiusProps),
                 BoxAttributes(border: borderProps),
@@ -223,7 +223,7 @@ void main() {
         (tester) async {
           await tester.pumpWidget(
             const BoxTestWidget(
-              MixFactory(
+              Mix(
                 BoxAttributes(
                   margin: EdgeInsetsDto.only(
                     left: 15,
@@ -252,7 +252,7 @@ void main() {
         (tester) async {
           await tester.pumpWidget(
             const BoxTestWidget(
-              MixFactory(
+              Mix(
                 BoxAttributes(
                   padding: EdgeInsetsDto.only(
                     left: 10,
@@ -281,7 +281,7 @@ void main() {
         (tester) async {
           await tester.pumpWidget(
             const BoxTestWidget(
-              MixFactory(
+              Mix(
                 BoxAttributes(maxHeight: 105),
                 BoxAttributes(minHeight: 55),
                 BoxAttributes(maxWidth: 155),

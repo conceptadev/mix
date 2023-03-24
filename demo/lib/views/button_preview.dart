@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
 
-MixFactory get button => MixFactory(
+Mix get button => Mix(
       textStyle(MaterialTokens.textTheme.bodyText2),
       bold(),
       fontSize(16.0),

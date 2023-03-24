@@ -6,7 +6,7 @@ class VariantsAndOperator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mix = MixFactory(
+    final mix = Mix(
       padding(20.0),
       textColor(Colors.white),
       (onHover & onEnabled)(

@@ -12,7 +12,7 @@ const withColor = InheritedIconAttribute.withColor;
 
 const inputDecoration = InputDecorationThemeAttribute.inputDecoration;
 
-class InheritedIconAttribute extends InheritedAttributes {
+class InheritedIconAttribute extends WidgetAttributes {
   const InheritedIconAttribute({
     this.color,
     this.size,
@@ -53,7 +53,7 @@ class InheritedIconAttribute extends InheritedAttributes {
 }
 
 class InputDecorationThemeAttribute extends InputDecorationTheme
-    implements InheritedAttributes {
+    implements WidgetAttributes {
   const InputDecorationThemeAttribute({
     Color? iconColor,
     Color? fillColor,
@@ -89,7 +89,7 @@ class InputDecorationThemeAttribute extends InputDecorationTheme
   Object get type => InputDecorationThemeAttribute;
 }
 
-final mix = MixFactory(
+final mix = Mix(
   withSize(23),
   withColor(Colors.green),
   inputDecoration(

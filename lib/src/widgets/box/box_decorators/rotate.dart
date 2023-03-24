@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../decorators/decorator_attribute.dart';
+import '../box.decorator.dart';
 
 /// ## Widget
 /// - (All)
@@ -8,7 +8,7 @@ import '../../../decorators/decorator_attribute.dart';
 /// - [RotateDecoratorUtility](RotateDecoratorUtility-class.html)
 ///
 /// {@category Decorators}
-class RotateDecorator extends BoxParentDecoratorAttribute<RotateDecorator> {
+class RotateDecorator extends BoxDecoratorAttribute<RotateDecorator> {
   final int quarterTurns;
   const RotateDecorator({
     required this.quarterTurns,
@@ -23,7 +23,7 @@ class RotateDecorator extends BoxParentDecoratorAttribute<RotateDecorator> {
   }
 
   @override
-  Widget builder(BuildContext context, Widget child) {
+  Widget build(BuildContext context, Widget child) {
     return RotatedBox(
       key: key,
       quarterTurns: quarterTurns,

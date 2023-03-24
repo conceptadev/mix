@@ -6,28 +6,7 @@ import '../variants/variant.dart';
 import '../variants/variant_attribute.dart';
 import 'mix_values.dart';
 
-MixFactory Mix([
-  Attribute? p1,
-  Attribute? p2,
-  Attribute? p3,
-  Attribute? p4,
-  Attribute? p5,
-  Attribute? p6,
-  Attribute? p7,
-  Attribute? p8,
-  Attribute? p9,
-  Attribute? p10,
-  Attribute? p11,
-  Attribute? p12,
-]) {
-  final params = <Attribute>[];
-
-  for (final param in [p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12]) {
-    if (param != null) params.add(param);
-  }
-
-  return MixFactory.fromAttributes(params);
-}
+typedef Mix = MixFactory;
 
 /// A class representing a mix of attributes, decorators, variants, context
 /// variants, and directives.
@@ -42,6 +21,30 @@ class MixFactory {
 
   /// A constant, empty mix for use with const constructor widgets.
   static const MixFactory constant = MixFactory._(MixValues.empty());
+
+  // Factory constructors
+  factory MixFactory([
+    Attribute? p1,
+    Attribute? p2,
+    Attribute? p3,
+    Attribute? p4,
+    Attribute? p5,
+    Attribute? p6,
+    Attribute? p7,
+    Attribute? p8,
+    Attribute? p9,
+    Attribute? p10,
+    Attribute? p11,
+    Attribute? p12,
+  ]) {
+    final params = <Attribute>[];
+
+    for (final param in [p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12]) {
+      if (param != null) params.add(param);
+    }
+
+    return MixFactory.fromAttributes(params);
+  }
 
   /// Constructs a mix from a non-null iterable of [Attribute] instances.
   factory MixFactory.fromAttributes(Iterable<Attribute> attributes) {
@@ -114,10 +117,8 @@ class MixFactory {
     final existingMix = MixFactory._(
       MixValues(
         attributes: _values.attributes,
-        decorators: _values.decorators,
         variants: existingVariants,
         contextVariants: _values.contextVariants,
-        directives: _values.directives,
       ),
     );
 
@@ -192,8 +193,8 @@ class MixFactory {
 extension DeprecatedMixExtension<T extends Attribute> on MixFactory {
   /// Adds an Attribute to a Mix
   @Deprecated('Simplifying the mix API to avoid confusion. Use apply instead')
-  WrapFunction<T, MixFactory> get mix {
-    return WrapFunction(addAttributes);
+  SpreadFunctionParams<T, MixFactory> get mix {
+    return SpreadFunctionParams(addAttributes);
   }
 
   @Deprecated('Use selectVariants now')
@@ -218,6 +219,11 @@ extension DeprecatedMixExtension<T extends Attribute> on MixFactory {
   @Deprecated('Use selectVariant now')
   MixFactory withVariant(Variant variant) {
     return selectVariant(variant);
+  }
+
+  @Deprecated('Use combine now')
+  MixFactory combineAll(List<MixFactory> mixes) {
+    return MixFactory.combine(mixes);
   }
 
   @Deprecated('Use merge now')

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../decorators/decorator_attribute.dart';
+import '../box.decorator.dart';
 
 /// ## Widget
 /// - (All)
@@ -8,7 +8,7 @@ import '../../../decorators/decorator_attribute.dart';
 /// - [FlexibleDecoratorUtility](FlexibleDecoratorUtility-class.html)
 ///
 /// {@category Decorators}
-class FlexibleDecorator extends BoxParentDecoratorAttribute<FlexibleDecorator> {
+class FlexibleDecorator extends BoxDecoratorAttribute<FlexibleDecorator> {
   final FlexFit? flexFit;
   final int? flex;
   const FlexibleDecorator({
@@ -26,7 +26,7 @@ class FlexibleDecorator extends BoxParentDecoratorAttribute<FlexibleDecorator> {
   }
 
   @override
-  Widget builder(BuildContext context, Widget child) {
+  Widget build(BuildContext context, Widget child) {
     return Flexible(
       key: key,
       fit: flexFit ?? FlexFit.loose,

@@ -13,7 +13,7 @@ const overrideTextAttribute = TextAttributes(
   ),
 );
 
-final pressableMix = MixFactory.fromAttributes([
+final pressableMix = Mix.fromAttributes([
   baseBoxAttributes,
   baseTextAttributes,
   textVariant(overrideTextAttribute),
@@ -34,7 +34,7 @@ class _MixContextTestWidget extends StatelessWidget {
             TextMix('With Variant', variants: [textVariant]),
             TextMix(
               'With Mix',
-              mix: MixFactory(
+              mix: Mix(
                 textColor(Colors.purple),
               ),
             ),

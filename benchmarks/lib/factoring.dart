@@ -13,7 +13,7 @@ void main() {
   final watch = Stopwatch();
 
   {
-    final firstMix = MixFactory(
+    final firstMix = Mix(
       height(100),
       animated(),
       marginY(10),
@@ -28,7 +28,7 @@ void main() {
       ),
     );
 
-    final secondMix = MixFactory(
+    final secondMix = Mix(
       width(100),
       marginX(10),
       shadow(spreadRadius: 100),
@@ -45,7 +45,7 @@ void main() {
 
     watch.start();
 
-    MixFactory.combine(firstMix, secondMix);
+    Mix.combine([firstMix, secondMix]);
 
     watch.stop();
 
@@ -62,12 +62,12 @@ void main() {
   {
     watch.start();
 
-    MixFactory.combineAll([
-      MixFactory(bgColor(Colors.black)),
-      MixFactory(textColor(Colors.black)),
-      MixFactory(margin(20)),
-      MixFactory(rounded(10)),
-      MixFactory(borderColor(Colors.black)),
+    Mix.combine([
+      Mix(bgColor(Colors.black)),
+      Mix(textColor(Colors.black)),
+      Mix(margin(20)),
+      Mix(rounded(10)),
+      Mix(borderColor(Colors.black)),
     ]);
 
     watch.stop();
@@ -84,7 +84,7 @@ void main() {
 
   {
     final hasError = Variant('hasError');
-    final mix = MixFactory(
+    final mix = Mix(
       hasError(
         padding(20),
         bgColor(Color(0xFFFFFF80)),
@@ -109,7 +109,7 @@ void main() {
   watch.reset();
 
   {
-    final mix = MixFactory(
+    final mix = Mix(
       onDisabled(padding(20)),
       onFocus(bgColor(Color(0xFFFFFF80))),
       onHover(textColor(Color(0xFF000000))),

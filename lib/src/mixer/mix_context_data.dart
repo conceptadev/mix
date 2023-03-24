@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../attributes/attribute.dart';
-import '../decorators/decorator_attribute.dart';
-import '../directives/directive_attribute.dart';
 import '../variants/variant_attribute.dart';
 import 'mix_factory.dart';
 import 'mix_values.dart';
@@ -16,7 +14,7 @@ class MixContextData {
 
   factory MixContextData.create({
     required BuildContext context,
-    required MixFactory mix,
+    required Mix mix,
   }) {
     return _build(
       context: context,
@@ -26,14 +24,12 @@ class MixContextData {
 
   static MixContextData _build<T extends Attribute>({
     required BuildContext context,
-    required MixFactory mix,
+    required Mix mix,
   }) {
     // Tracks the values selected and does not allow for
     // attributes already expended to be expended again.
     MixValues values = MixValues(
       attributes: mix.toValues().attributes,
-      decorators: mix.toValues().decorators,
-      directives: mix.toValues().directives,
       variants: mix.toValues().variants,
       contextVariants: [],
     );
@@ -86,14 +82,14 @@ class MixContextData {
     );
   }
 
-  /// Used to obtain a [InheritedAttributes] from [MixInheritedAttributes].
+  /// Used to obtain a [WidgetAttributes] from [MergeableMap<WidgetAttributes>].
   ///
   /// Obtain with `mixContext.attributesOfType<MyInheritedAttribute>()`.
-  T? attributesOfType<T extends InheritedAttributes>() {
+  T? attributesOfType<T extends WidgetAttributes>() {
     return _mixValues.attributesOfType<T>();
   }
 
-  T dependOnAttributesOfType<T extends InheritedAttributes>() {
+  T dependOnAttributesOfType<T extends WidgetAttributes>() {
     final attribute = _mixValues.attributesOfType<T>();
 
     if (attribute is! T) {
@@ -105,14 +101,6 @@ class MixContextData {
     }
 
     return attribute;
-  }
-
-  List<T> directivesOfType<T extends DirectiveAttribute>() {
-    return _mixValues.directivesOfType<T>().toList();
-  }
-
-  List<T> decoratorsOfType<T extends DecoratorAttribute>() {
-    return _mixValues.decoratorsOfType<T>().toList();
   }
 
   MixValues toValues() => _mixValues;

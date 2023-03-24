@@ -7,24 +7,24 @@ import 'package:mix/src/helpers/dto/edge_insets.dto.dart';
 void main() {
   group("Nested Attributes", () {
     test('-> Apply Mixes', () async {
-      final styleMargin = MixFactory(
+      final styleMargin = Mix(
         const BoxAttributes(
           margin: EdgeInsetsDto.all(20),
         ),
       );
-      final styleColor = MixFactory(
+      final styleColor = Mix(
         const BoxAttributes(color: Colors.red),
       );
-      final nestedStyle = MixFactory(
+      final nestedStyle = Mix(
         NestedMixAttribute(
-          MixFactory.combineAll([
+          Mix.combine([
             styleMargin,
             styleColor,
           ]),
         ),
       );
 
-      final nestedStyleUtility = MixFactory(
+      final nestedStyleUtility = Mix(
         apply(styleColor, styleMargin),
       );
 

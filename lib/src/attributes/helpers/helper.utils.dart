@@ -4,15 +4,15 @@ import '../nested_attribute.dart';
 class HelperUtility {
   const HelperUtility._();
 
-  static NestedMixAttribute apply(List<MixFactory> mixes) {
-    return NestedMixAttribute(MixFactory.combine(mixes));
+  static NestedMixAttribute apply(List<Mix> mixes) {
+    return NestedMixAttribute(Mix.combine(mixes));
   }
 }
 
 typedef FunctionWithListParam<T, R> = R Function(List<T> params);
 
-class WrapFunction<T, R> {
-  const WrapFunction(this.fn);
+class SpreadFunctionParams<T, R> {
+  const SpreadFunctionParams(this.fn);
 
   final FunctionWithListParam<T, R> fn;
 

@@ -7,11 +7,11 @@ import '../../variants/variant.dart';
 import '../mix.widget.dart';
 import '../mix_context_builder.dart';
 import '../nothing.widget.dart';
-import 'box.props.dart';
+import 'box.descriptor.dart';
 
 class Box extends MixWidget {
   const Box({
-    MixFactory? mix,
+    Mix? mix,
     Key? key,
     bool? inherit,
     List<Variant>? variants,
@@ -32,7 +32,7 @@ class Box extends MixWidget {
       inherit: inherit,
       variants: variants,
       builder: (context, mixContext) {
-        final boxProps = BoxProps.fromContext(context);
+        final boxProps = BoxDescriptor.fromContext(context);
         final commonProps = CommonProps.fromContext(context);
 
         return BoxMixedWidget(
@@ -56,7 +56,7 @@ class BoxMixedWidget extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-  final BoxProps boxProps;
+  final BoxDescriptor boxProps;
   final CommonProps commonProps;
 
   @override
@@ -65,14 +65,6 @@ class BoxMixedWidget extends StatelessWidget {
       return const Nothing();
     }
     var current = child;
-
-    // Apply notifier to children
-    if (current != null) {
-      current = DecoratorWrapper(
-        boxProps.childDecorators,
-        child: current,
-      );
-    }
 
     if (commonProps.animated) {
       current = AnimatedContainer(
@@ -105,10 +97,12 @@ class BoxMixedWidget extends StatelessWidget {
     }
 
     // Wrap parent decorators
-    current = DecoratorWrapper(
-      boxProps.parentDecorators,
-      child: current,
-    );
+    if (boxProps.decorators != null) {
+      current = DecoratorWrapper(
+        boxProps.decorators!,
+        child: current,
+      );
+    }
 
     return current;
   }

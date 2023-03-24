@@ -1,12 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import '../../decorators/decorator_attribute.dart';
 import '../../helpers/dto/box_shadow.dto.dart';
 import '../../mixer/mix_context.dart';
 import 'box.attributes.dart';
+import 'box.decorator.dart';
 
-class BoxProps {
+class BoxDescriptor {
   final Color? _color;
   final AlignmentGeometry? alignment;
   final EdgeInsetsGeometry? padding;
@@ -22,15 +22,15 @@ class BoxProps {
 
   // Constraints
   final double? maxHeight;
+
   final double? minHeight;
   final double? maxWidth;
   final double? minWidth;
   final BoxShape? shape;
 
-  final List<BoxParentDecoratorAttribute> parentDecorators;
-  final List<BoxChildDecoratorAttribute> childDecorators;
+  final List<BoxDecoratorAttribute>? decorators;
 
-  const BoxProps({
+  const BoxDescriptor({
     Color? color,
     this.alignment,
     this.padding,
@@ -48,19 +48,14 @@ class BoxProps {
     this.transform,
     this.gradient,
     // Decorators
-    this.parentDecorators = const [],
-    this.childDecorators = const [],
+    this.decorators,
   }) : _color = color;
 
-  factory BoxProps.fromContext(BuildContext context) {
+  factory BoxDescriptor.fromContext(BuildContext context) {
     final mixContext = MixContext.ensureOf(context);
     final attributes = mixContext.attributesOfType<BoxAttributes>();
 
-    final parents = mixContext.decoratorsOfType<BoxParentDecoratorAttribute>();
-
-    final children = mixContext.decoratorsOfType<BoxChildDecoratorAttribute>();
-
-    return BoxProps(
+    return BoxDescriptor(
       color: attributes?.color?.resolve(context),
       alignment: attributes?.alignment,
       margin: attributes?.margin?.resolve(context),
@@ -78,8 +73,7 @@ class BoxProps {
       transform: attributes?.transform,
       gradient: attributes?.gradient,
       // Decorators
-      parentDecorators: parents,
-      childDecorators: children,
+      decorators: attributes?.decorators?.values.toList(),
     );
   }
 
@@ -142,7 +136,7 @@ class BoxProps {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is BoxProps &&
+    return other is BoxDescriptor &&
         other._color == _color &&
         other.alignment == alignment &&
         other.padding == padding &&
@@ -157,14 +151,13 @@ class BoxProps {
         other.minHeight == minHeight &&
         other.maxWidth == maxWidth &&
         other.minWidth == minWidth &&
-        listEquals(other.parentDecorators, parentDecorators) &&
-        listEquals(other.childDecorators, childDecorators) &&
+        other.decorators == decorators &&
         other.shape == shape;
   }
 
-  /// Returns a list of properties that are different between this [BoxProps] instance
-  /// and another [BoxProps] instance.
-  List<String> getDifference(BoxProps other) {
+  /// Returns a list of properties that are different between this [BoxDescriptor] instance
+  /// and another [BoxDescriptor] instance.
+  List<String> getDifference(BoxDescriptor other) {
     final diff = <String>[];
 
 // Return if there are no diferences
@@ -185,11 +178,8 @@ class BoxProps {
     if (maxWidth != other.maxWidth) diff.add('maxWidth');
     if (minWidth != other.minWidth) diff.add('minWidth');
     if (shape != other.shape) diff.add('shape');
-    if (!listEquals(parentDecorators, other.parentDecorators)) {
-      diff.add('parentDecorators');
-    }
-    if (!listEquals(childDecorators, other.childDecorators)) {
-      diff.add('childDecorators');
+    if (decorators != other.decorators) {
+      diff.add('decorators');
     }
 
     return diff;
@@ -213,7 +203,6 @@ class BoxProps {
         minWidth.hashCode ^
         shape.hashCode ^
         gradient.hashCode ^
-        parentDecorators.hashCode ^
-        childDecorators.hashCode;
+        decorators.hashCode;
   }
 }

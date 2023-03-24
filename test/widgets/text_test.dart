@@ -12,7 +12,7 @@ void main() {
     testWidgets('Adds text on widget', (tester) async {
       await tester.pumpWidget(
         MixTestWidget(
-          child: MixFactory().text(widgetText),
+          child: Mix().text(widgetText),
         ),
       );
 
@@ -25,7 +25,7 @@ void main() {
     testWidgets('Adds Text properties on widget', (tester) async {
       await tester.pumpWidget(
         MixTestWidget(
-          child: MixFactory(
+          child: Mix(
             TextUtility.overflow(TextOverflow.ellipsis),
             TextUtility.softWrap(true),
             TextUtility.textScaleFactor(2.2),
@@ -51,7 +51,7 @@ void main() {
     testWidgets('Adds Text Style on widget', (tester) async {
       await tester.pumpWidget(
         MixTestWidget(
-          child: MixFactory(
+          child: Mix(
             TextStyleUtility.fontSize(20),
             TextStyleUtility.wordSpacing(2),
             TextStyleUtility.letterSpacing(3),

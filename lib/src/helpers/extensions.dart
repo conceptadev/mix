@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../attributes/common/common.props.dart';
 import '../mixer/mix_context.dart';
 import '../mixer/mix_context_data.dart';
-import '../widgets/box/box.props.dart';
+import '../widgets/box/box.descriptor.dart';
 import '../widgets/flex/flex.props.dart';
 import '../widgets/icon/icon.props.dart';
 import '../widgets/image/image.props.dart';
@@ -18,7 +18,7 @@ extension MixContextExtensions on BuildContext {
   CommonProps get sharedProps => CommonProps.fromContext(this);
 
   @Deprecated('use BoxProps.fromContext(context) instead')
-  BoxProps get boxProps => BoxProps.fromContext(this);
+  BoxDescriptor get boxProps => BoxDescriptor.fromContext(this);
 
   @Deprecated('use FlexProps.fromContext(context) instead')
   FlexProps get flexProps => FlexProps.fromContext(this);

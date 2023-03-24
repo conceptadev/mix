@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 import '../../attributes/common/common.props.dart';
 import '../../mixer/mix_factory.dart';
 import '../../variants/variant.dart';
-import '../box/box.props.dart';
+import '../box/box.descriptor.dart';
 import '../box/box.widget.dart';
 import '../mix.widget.dart';
 import '../mix_context_builder.dart';
@@ -16,7 +16,7 @@ class ZBox extends MixWidget {
   final List<Widget> children;
 
   const ZBox({
-    MixFactory? mix,
+    Mix? mix,
     Key? key,
     bool? inherit,
     List<Variant>? variants,
@@ -36,7 +36,7 @@ class ZBox extends MixWidget {
       variants: variants,
       builder: (context, mixContext) {
         final zProps = ZBoxProps.fromContext(context);
-        final boxProps = BoxProps.fromContext(context);
+        final boxProps = BoxDescriptor.fromContext(context);
         final commonProps = CommonProps.fromContext(context);
 
         return BoxMixedWidget(

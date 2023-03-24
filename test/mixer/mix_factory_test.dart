@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
 import 'package:mix/src/helpers/dto/edge_insets.dto.dart';
 
-final firstMix = MixFactory(
+final firstMix = Mix(
   // Box attribute
   bgColor(Colors.blue),
   // Text attribute
@@ -26,7 +26,7 @@ final firstMix = MixFactory(
   minWidth(100),
 );
 
-final secondMix = MixFactory(
+final secondMix = Mix(
   // Box attribute
   padding(10),
   // Text attribute
@@ -44,7 +44,7 @@ final secondMix = MixFactory(
   iconColor(Colors.red),
 );
 
-final nestedMix = MixFactory(
+final nestedMix = Mix(
   // Box attribute
   apply(firstMix),
   apply(secondMix),
@@ -53,7 +53,7 @@ final nestedMix = MixFactory(
 void main() {
   group("Mix Factory", () {
     test('Creates a Mix from positional Attributes', () async {
-      final style = MixFactory(
+      final style = Mix(
         bgColor(Colors.red),
         margin(10),
       );
@@ -69,7 +69,7 @@ void main() {
 
     test('Creates a Mix from Attributes List', () async {
       final mixFromList =
-          MixFactory.fromAttributes(firstMix.toValues().toAttributes());
+          Mix.fromAttributes(firstMix.toValues().toAttributes());
 
       expect(mixFromList.length, greaterThan(0));
       expect(mixFromList.values, firstMix.values);
@@ -80,7 +80,7 @@ void main() {
 
       const flexAttribute = FlexAttributes(direction: Axis.horizontal);
 
-      final baseMix = MixFactory(boxAttribute);
+      final baseMix = Mix(boxAttribute);
       final modifiedMix = baseMix.mix(flexAttribute);
 
       final modifiedBoxAttribute =
@@ -103,7 +103,7 @@ void main() {
       const yellowBackground = BoxAttributes(
         color: Colors.yellow,
       );
-      final baseMix = MixFactory(blueBackground);
+      final baseMix = Mix(blueBackground);
       final modifiedMix = baseMix.mix(yellowBackground);
 
       final modifiedBoxAttribute =
@@ -115,9 +115,9 @@ void main() {
     });
 
     test('Equality of Mix', () async {
-      final copyFirstMix = MixFactory.fromAttributes(firstMix.toAttributes());
-      final copySecondMix = MixFactory.fromAttributes(secondMix.toAttributes());
-      final combinedMixFirst = MixFactory.combine(firstMix, secondMix);
+      final copyFirstMix = Mix.fromAttributes(firstMix.toAttributes());
+      final copySecondMix = Mix.fromAttributes(secondMix.toAttributes());
+      final combinedMixFirst = Mix.combine(firstMix, secondMix);
       final combinedMixSecond = firstMix.merge(secondMix);
 
       expect(copyFirstMix, firstMix);
@@ -126,13 +126,13 @@ void main() {
     });
 
     test('Chooses Mixes based on conditional', () async {
-      final chooseFirstMix = MixFactory.chooser(
+      final chooseFirstMix = Mix.chooser(
         condition: true,
         ifTrue: firstMix,
         ifFalse: secondMix,
       );
 
-      final chooseSecondMix = MixFactory.chooser(
+      final chooseSecondMix = Mix.chooser(
         condition: false,
         ifTrue: firstMix,
         ifFalse: secondMix,

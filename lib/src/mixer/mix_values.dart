@@ -2,37 +2,33 @@ import 'package:flutter/foundation.dart';
 
 import '../../mix.dart';
 import '../attributes/nested_attribute.dart';
-import '../decorators/decorator_attribute.dart';
 import '../directives/directive_attribute.dart';
+import '../helpers/mergeable_map.dart';
 import '../variants/variant_attribute.dart';
 
 class MixValues {
-  final MixInheritedAttributes attributes;
-  final MixDecoratorAttributes decorators;
+  final MergeableMap<WidgetAttributes>? attributes;
+
   final List<VariantAttribute> variants;
   final List<ContextVariantAttribute> contextVariants;
-  final List<DirectiveAttribute> directives;
 
   const MixValues({
     required this.attributes,
-    required this.decorators,
     required this.variants,
     required this.contextVariants,
-    required this.directives,
   });
 
   /// Creates a new [MixValues] instance from the provided [Iterable] of [Attribute]s.
   factory MixValues.create(Iterable<Attribute> attributes) {
     final expanded = _expandNestedAttributes(attributes);
 
-    final directiveList = <DirectiveAttribute>[];
     final variantList = <VariantAttribute>[];
     final contextVariantList = <ContextVariantAttribute>[];
-    final decoratorList = <DecoratorAttribute>[];
-    final attributeList = <InheritedAttributes>[];
+
+    final attributeList = <WidgetAttributes>[];
 
     for (final attribute in expanded) {
-      if (attribute is InheritedAttributes) {
+      if (attribute is WidgetAttributes) {
         attributeList.add(attribute);
       } else if (attribute is VariantAttribute) {
         // Breakdown different types of variant attributes
@@ -41,98 +37,58 @@ class MixValues {
         } else {
           variantList.add(attribute);
         }
-      } else if (attribute is DirectiveAttribute) {
-        directiveList.add(attribute);
-      } else if (attribute is DecoratorAttribute) {
-        decoratorList.add(attribute);
       } else if (attribute is NestedMixAttribute) {
         throw Exception('Should not have nested attributes at this point');
       }
     }
 
     return MixValues(
-      attributes: MixInheritedAttributes.fromList(attributeList),
-      decorators: MixDecoratorAttributes.fromList(decoratorList),
-      directives: directiveList,
+      attributes: MergeableMap.fromList<WidgetAttributes>(attributeList),
       variants: variantList,
       contextVariants: contextVariantList,
     );
   }
 
-  bool get hasDirectives => directives.isNotEmpty;
-
   bool get hasVariants => variants.isNotEmpty;
 
   bool get hasContextVariants => contextVariants.isNotEmpty;
 
-  bool get hasDecorators => decorators.isNotEmpty;
+  bool get hasAttributes => attributes?.isNotEmpty == true;
 
-  bool get hasAttributes => attributes.isNotEmpty;
-
-  /// Returns an instance of the specified [InheritedAttributes] type from the [MixContext].
-  A? attributesOfType<A extends InheritedAttributes>() {
-    return attributes[A] as A?;
+  /// Returns an instance of the specified [WidgetAttributes] type from the [MixContext].
+  A? attributesOfType<A extends WidgetAttributes>() {
+    return attributes?[A] as A?;
   }
 
-  /// Returns an [Iterable] of [DirectiveAttribute]s of the specified type.
-  Iterable<T> directivesOfType<T extends DirectiveAttribute>() {
-    return directives.whereType<T>();
-  }
-
-  /// Returns a [List] of [DecoratorAttribute]s for the specified [DecoratorLocation].
-  Iterable<DecoratorAttribute> _decoratorsOfLocation(
-    DecoratorLocation location,
-  ) {
-    return decorators.values[location] ?? const [];
-  }
-
-  Iterable<T> decoratorsOfType<T extends DecoratorAttribute>() {
-    if (T == BoxParentDecoratorAttribute) {
-      return _decoratorsOfLocation(DecoratorLocation.boxParent) as Iterable<T>;
-    }
-
-    if (T == BoxChildDecoratorAttribute) {
-      return _decoratorsOfLocation(DecoratorLocation.boxChild) as Iterable<T>;
-    }
-
-    throw Exception('Unsupported decorator type');
-  }
-
-  /// Returns an [Iterable] of [Attribute]s containing all attributes, decorators, variants, and directives.
+  /// Returns an [Iterable] of [Attribute]s containing all attributes, variants, and directives.
   Iterable<Attribute> toAttributes() {
     return [
-      ...attributes.toAttributes(),
-      ...decorators.toAttributes(),
+      ...?attributes?.values,
       ...variants,
-      ...directives,
+      ...contextVariants,
     ];
   }
 
   /// Creates a new [MixValues] instance by replacing the specified attributes with new values.
   MixValues copyWith({
-    MixInheritedAttributes? attributes,
-    MixDecoratorAttributes? decorators,
+    MergeableMap<WidgetAttributes>? attributes,
     List<VariantAttribute>? variants,
     List<ContextVariantAttribute>? contextVariants,
     List<DirectiveAttribute>? directives,
   }) {
     return MixValues(
       attributes: attributes ?? this.attributes,
-      decorators: decorators ?? this.decorators,
       variants: variants ?? this.variants,
-      directives: directives ?? this.directives,
       contextVariants: contextVariants ?? this.contextVariants,
     );
   }
 
-  /// Creates a new [MixValues] instance with the same attributes, decorators, variants, and directives.
+  /// Creates a new [MixValues] instance with the same attributes, variants, and directives.
   MixValues clone() {
     return MixValues(
-      attributes: attributes.clone(),
-      decorators: decorators.clone(),
+      attributes: attributes?.clone(),
       variants: [...variants],
       contextVariants: [...contextVariants],
-      directives: [...directives],
     );
   }
 
@@ -143,11 +99,9 @@ class MixValues {
     }
 
     return MixValues(
-      attributes: attributes.merge(other.attributes),
-      decorators: decorators.merge(other.decorators),
+      attributes: attributes?.merge(other.attributes),
       variants: [...variants, ...other.variants],
       contextVariants: [...contextVariants, ...other.contextVariants],
-      directives: [...directives, ...other.directives],
     );
   }
 
@@ -168,11 +122,9 @@ class MixValues {
 
   /// An empty [MixValues] instance with no attributes, decorators, variants, or directives.
   const MixValues.empty()
-      : attributes = const MixInheritedAttributes.empty(),
-        decorators = const MixDecoratorAttributes.empty(),
+      : attributes = null,
         variants = const [],
-        contextVariants = const [],
-        directives = const [];
+        contextVariants = const [];
 
   @override
   bool operator ==(Object other) {
@@ -180,16 +132,11 @@ class MixValues {
 
     return other is MixValues &&
         listEquals(other.variants, variants) &&
-        listEquals(other.directives, directives) &&
-        other.decorators == decorators &&
         other.attributes == attributes;
   }
 
   @override
   int get hashCode {
-    return variants.hashCode ^
-        directives.hashCode ^
-        decorators.hashCode ^
-        attributes.hashCode;
+    return variants.hashCode ^ attributes.hashCode;
   }
 }

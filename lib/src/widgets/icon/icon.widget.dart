@@ -11,7 +11,7 @@ import 'icon.props.dart';
 class IconMix extends MixWidget {
   const IconMix(
     this.icon, {
-    MixFactory? mix,
+    Mix? mix,
     this.semanticLabel,
     Key? key,
     List<Variant>? variants,

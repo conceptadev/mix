@@ -18,7 +18,7 @@ class TextProps {
 
   final TextWidthBasis? textWidthBasis;
   final TextHeightBehavior? textHeightBehavior;
-  final List<TextDirectiveAttribute> directives;
+  final List<TextDirectiveAttribute> _directives;
 
   const TextProps({
     required this.softWrap,
@@ -31,15 +31,12 @@ class TextProps {
     this.maxLines,
     this.textWidthBasis,
     this.textHeightBehavior,
-    this.directives = const [],
-  });
+    List<TextDirectiveAttribute>? directives,
+  }) : _directives = directives ?? const [];
 
   factory TextProps.fromContext(BuildContext context) {
     final mixContext = MixContext.ensureOf(context);
     final textAttributes = mixContext.attributesOfType<TextAttributes>();
-
-    final textDirectives =
-        mixContext.directivesOfType<TextDirectiveAttribute>().toList();
 
     return TextProps(
       // Need to grab colorscheme from context
@@ -54,7 +51,7 @@ class TextProps {
       textWidthBasis: textAttributes?.textWidthBasis,
       textHeightBehavior: textAttributes?.textHeightBehavior,
       // Directives
-      directives: textDirectives,
+      directives: textAttributes?.directives,
     );
   }
 
@@ -64,7 +61,7 @@ class TextProps {
     if (text == null) return '';
 
     var modifiedText = text;
-    for (final directive in directives) {
+    for (final directive in _directives) {
       modifiedText = directive.modify(modifiedText);
     }
 
@@ -86,7 +83,7 @@ class TextProps {
         other.maxLines == maxLines &&
         other.textWidthBasis == textWidthBasis &&
         other.textHeightBehavior == textHeightBehavior &&
-        listEquals(other.directives, directives);
+        listEquals(other._directives, _directives);
   }
 
   @override
@@ -101,6 +98,6 @@ class TextProps {
         maxLines.hashCode ^
         textWidthBasis.hashCode ^
         textHeightBehavior.hashCode ^
-        directives.hashCode;
+        _directives.hashCode;
   }
 }
