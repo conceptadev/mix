@@ -145,6 +145,15 @@ class DynamicVariantUtilities {
     return other.inverseInstance() as T;
   }
 
+  static ContextVariant onRTL<T extends Attribute>() {
+    return ContextVariant(
+      'onRTL',
+      shouldApply: (BuildContext context) {
+        return context.directionality == TextDirection.rtl;
+      },
+    );
+  }
+
   static WhenVariant when(bool apply) {
     return WhenVariant('when', apply);
   }

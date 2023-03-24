@@ -47,7 +47,7 @@ class FlexUtility {
   // Create a FlexAttribues for gap size
   static FlexAttributes gap(double gapSize) {
     return FlexAttributes(
-      gapSize: gapSize.dto,
+      gapSize: DoubleDto.from(gapSize),
     );
   }
 }

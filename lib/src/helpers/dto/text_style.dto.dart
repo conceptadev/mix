@@ -42,7 +42,7 @@ class TextStyleDto extends Dto<TextStyle> {
     this.debugLabel,
   });
 
-  factory TextStyleDto.fromTextStyle(TextStyle style) {
+  factory TextStyleDto.from(TextStyle style) {
     final fontSize = style.fontSize;
     final letterSpacing = style.letterSpacing;
     final wordSpacing = style.wordSpacing;
@@ -197,11 +197,18 @@ class TextStyleDto extends Dto<TextStyle> {
 // This class allows to create a list TextStyleDtos
 // that will only be merged and resolved when the resolve method is called.
 class TextStyleMergeableDto extends MergeableDto<TextStyle, TextStyleDto> {
-  const TextStyleMergeableDto.fromList(List<TextStyleDto> textStyles)
+  const TextStyleMergeableDto(List<TextStyleDto> textStyles)
       : super(textStyles);
 
-  TextStyleMergeableDto(TextStyle textStyle)
-      : super([TextStyleDto.fromTextStyle(textStyle)]);
+  factory TextStyleMergeableDto.from(TextStyle style) {
+    return TextStyleMergeableDto([TextStyleDto.from(style)]);
+  }
+
+  static maybeFrom(TextStyle? style) {
+    if (style == null) return null;
+
+    return TextStyleMergeableDto.from(style);
+  }
 
   @override
   TextStyle resolve(BuildContext context) {
@@ -217,7 +224,7 @@ class TextStyleMergeableDto extends MergeableDto<TextStyle, TextStyleDto> {
   TextStyleMergeableDto copyWith({
     List<TextStyleDto>? dtos,
   }) {
-    return TextStyleMergeableDto.fromList(
+    return TextStyleMergeableDto(
       [...values, ...?dtos],
     );
   }

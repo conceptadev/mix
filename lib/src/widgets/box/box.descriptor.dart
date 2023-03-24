@@ -14,8 +14,8 @@ class BoxDescriptor {
   final double? width;
   final double? height;
 
-  final Border? border;
-  final BorderRadius? borderRadius;
+  final BoxBorder? border;
+  final BorderRadiusGeometry? borderRadius;
   final List<BoxShadow>? boxShadow;
   final Matrix4? transform;
   final Gradient? gradient;

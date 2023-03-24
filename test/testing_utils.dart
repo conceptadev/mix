@@ -5,8 +5,10 @@ import 'package:mix/src/helpers/dto/border_radius.dto.dart';
 import 'package:mix/src/helpers/dto/box_shadow.dto.dart';
 import 'package:mix/src/helpers/dto/edge_insets.dto.dart';
 
-class MixTestWidget extends StatelessWidget {
-  const MixTestWidget({
+export 'package:mix/src/helpers/extensions.dart';
+
+class TestMixWidget extends StatelessWidget {
+  const TestMixWidget({
     required this.child,
     Key? key,
   }) : super(key: key);
@@ -15,8 +17,33 @@ class MixTestWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return Directionality(
+      textDirection: TextDirection.ltr,
+      child: child,
+    );
+  }
+}
+
+// ignore: constant_identifier_names
+const FillWidget = SizedBox(
+  height: 25,
+  width: 25,
+);
+
+class WrapMixThemeWidget extends StatelessWidget {
+  const WrapMixThemeWidget({
+    required this.child,
+    this.theme,
+    Key? key,
+  }) : super(key: key);
+
+  final Widget child;
+  final MixThemeData? theme;
+
+  @override
+  Widget build(BuildContext context) {
     return MixTheme(
-      data: MixThemeData(),
+      data: theme ?? MixThemeData(),
       child: Directionality(
         textDirection: TextDirection.ltr,
         child: child,
@@ -32,15 +59,12 @@ class BoxInsideFlexWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MixTestWidget(
+    return TestMixWidget(
       child: Column(
         children: [
           Box(
             mix: mix,
-            child: const SizedBox(
-              height: 20,
-              width: 20,
-            ),
+            child: FillWidget,
           ),
         ],
       ),
@@ -49,13 +73,18 @@ class BoxInsideFlexWidget extends StatelessWidget {
 }
 
 class BoxTestWidget extends StatelessWidget {
-  const BoxTestWidget(this.mix, {Key? key}) : super(key: key);
+  const BoxTestWidget(
+    this.mix, {
+    Key? key,
+    double? height,
+    double? width,
+  }) : super(key: key);
 
   final Mix mix;
 
   @override
   Widget build(BuildContext context) {
-    return MixTestWidget(
+    return TestMixWidget(
       child: Box(
         mix: mix,
         child: const SizedBox(
@@ -73,9 +102,9 @@ const borderSide = BorderSideDto.only(
   width: 1,
 );
 
-const baseBoxAttributes = BoxAttributes(
-  border: BorderDto.fromBorderSide(borderSide),
-  borderRadius: BorderRadiusDto.only(
+final baseBoxAttributes = BoxAttributes(
+  border: const BorderDto.fromBorderSide(borderSide),
+  borderRadius: const BorderRadiusDto.only(
     topLeft: 20,
     topRight: 20,
     bottomLeft: 20,
@@ -94,7 +123,7 @@ const baseBoxAttributes = BoxAttributes(
   shape: BoxShape.rectangle,
   transform: null,
   boxShadow: [
-    BoxShadowDto(
+    const BoxShadowDto(
       color: Colors.black,
       blurRadius: 10,
       offset: Offset(10, 10),

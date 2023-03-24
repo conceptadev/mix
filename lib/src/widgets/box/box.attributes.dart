@@ -13,15 +13,15 @@ import '../../helpers/mergeable_map.dart';
 import 'box.decorator.dart';
 
 class BoxAttributes extends WidgetAttributes {
-  final EdgeInsetsDto? margin;
-  final EdgeInsetsDto? padding;
+  final EdgeInsetsGeometryDto? margin;
+  final EdgeInsetsGeometryDto? padding;
   final AlignmentGeometry? alignment;
   final DoubleDto? height;
   final DoubleDto? width;
   // Decoration
   final ColorDto? color;
-  final BorderDto? border;
-  final BorderRadiusDto? borderRadius;
+  final BoxBorderDto? border;
+  final BorderRadiusGeometryDto? borderRadius;
   final List<BoxShadowDto>? boxShadow;
   final Matrix4? transform;
 
@@ -56,12 +56,12 @@ class BoxAttributes extends WidgetAttributes {
   });
 
   BoxAttributes copyWith({
-    EdgeInsetsDto? margin,
-    EdgeInsetsDto? padding,
+    EdgeInsetsGeometryDto? margin,
+    EdgeInsetsGeometryDto? padding,
     AlignmentGeometry? alignment,
     ColorDto? color,
-    BorderDto? border,
-    BorderRadiusDto? borderRadius,
+    BoxBorderDto? border,
+    BorderRadiusGeometryDto? borderRadius,
     List<BoxShadowDto>? boxShadow,
     Matrix4? transform,
     DoubleDto? height,

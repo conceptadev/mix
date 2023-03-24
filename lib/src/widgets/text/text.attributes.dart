@@ -38,6 +38,34 @@ class TextAttributes extends WidgetAttributes {
     this.directives = const [],
   });
 
+  factory TextAttributes.fromValues({
+    TextStyle? style,
+    StrutStyle? strutStyle,
+    TextAlign? textAlign,
+    Locale? locale,
+    bool? softWrap,
+    TextOverflow? overflow,
+    double? textScaleFactor,
+    int? maxLines,
+    TextWidthBasis? textWidthBasis,
+    TextHeightBehavior? textHeightBehavior,
+    List<TextDirectiveAttribute>? directives,
+  }) {
+    return TextAttributes(
+      style: TextStyleMergeableDto.maybeFrom(style),
+      strutStyle: strutStyle,
+      textAlign: textAlign,
+      locale: locale,
+      softWrap: softWrap,
+      overflow: overflow,
+      textScaleFactor: DoubleDto.maybeFrom(textScaleFactor),
+      maxLines: maxLines,
+      textWidthBasis: textWidthBasis,
+      textHeightBehavior: textHeightBehavior,
+      directives: directives ?? const [],
+    );
+  }
+
   @override
   TextAttributes merge(TextAttributes? other) {
     if (other == null) return this;

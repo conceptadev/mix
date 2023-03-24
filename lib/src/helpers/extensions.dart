@@ -9,7 +9,6 @@ import '../widgets/icon/icon.props.dart';
 import '../widgets/image/image.props.dart';
 import '../widgets/text/text.props.dart';
 import '../widgets/zbox/zbox.props.dart';
-import 'dto/text_style.dto.dart';
 
 extension MixContextExtensions on BuildContext {
   MixContextData? get mixContext => MixContext.of(this);
@@ -104,6 +103,11 @@ extension Matrix4Extension on Matrix4 {
   }
 }
 
-extension TextStyleExtension on TextStyle {
-  TextStyleMergeableDto get ref => TextStyleMergeableDto(this);
+extension IterableExtension<T> on Iterable<T> {
+  Iterable<T> sorted([Comparator<T>? compare]) {
+    List<T> newList = List.from(this);
+    newList.sort(compare);
+
+    return newList;
+  }
 }

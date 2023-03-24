@@ -51,12 +51,10 @@ class BoxShadowDto extends Dto<BoxShadow> {
   }
 
   BoxShadowDto merge(BoxShadowDto? other) {
-    if (other == null) return this;
-
     return copyWith(
-      color: other.color,
-      offset: other.offset,
-      blurRadius: other.blurRadius,
+      color: other?.color,
+      offset: other?.offset,
+      blurRadius: other?.blurRadius,
     );
   }
 

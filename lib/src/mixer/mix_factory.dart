@@ -61,9 +61,7 @@ class MixFactory {
   }
 
   /// Returns a [MixValues] instance representing the values in this MixFactory.
-  MixValues toValues() {
-    return _values;
-  }
+  MixValues get values => _values;
 
   /// Returns a new mix with the provided [values] merged with this mix's values.
   MixFactory copyWith({
@@ -77,6 +75,10 @@ class MixFactory {
 
   /// Merges this mix with the provided [mix] and returns the resulting MixFactory.
   MixFactory merge(MixFactory mix) => MixFactory.combine([this, mix]);
+
+  MixFactory mergeMany(List<MixFactory> mixes) {
+    return MixFactory.combine([this, ...mixes]);
+  }
 
   /// Merges this mix with the provided nullable [mix].
   ///
@@ -168,12 +170,12 @@ class MixFactory {
   /// Iterates through the list of mixes, merging each mix with the previous mix
   /// and returning the final combined MixFactory.
   static MixFactory combine<T extends Attribute>(List<MixFactory> mixes) {
-    MixFactory combinedMix = MixFactory.constant;
+    MixValues combinedValues = const MixValues.empty();
     for (final mix in mixes) {
-      combinedMix = mix.merge(mix);
+      combinedValues = combinedValues.merge(mix.values);
     }
 
-    return combinedMix;
+    return MixFactory.fromValues(combinedValues);
   }
 
   // Deprecated methods and extensions have been omitted for brevity.
@@ -203,7 +205,7 @@ extension DeprecatedMixExtension<T extends Attribute> on MixFactory {
   }
 
   @Deprecated(
-    'Use MixFactory.merge() now. You might have to turn into a Mix first. firstMixFactory.merge(secondMix)',
+    'Use merge() or mergeMany() now. You might have to turn into a Mix first. firstMixFactory.merge(secondMix)',
   )
   MixFactory addAttributes(List<Attribute> attributes) {
     final newValues = MixValues.create(attributes);
@@ -216,6 +218,10 @@ extension DeprecatedMixExtension<T extends Attribute> on MixFactory {
     return selectVariants(variants);
   }
 
+  @Deprecated('Use merge() or mergeMany() instead')
+  SpreadFunctionParams<MixFactory, MixFactory> get apply =>
+      SpreadFunctionParams(mergeMany);
+
   @Deprecated('Use selectVariant now')
   MixFactory withVariant(Variant variant) {
     return selectVariant(variant);
@@ -225,9 +231,6 @@ extension DeprecatedMixExtension<T extends Attribute> on MixFactory {
   MixFactory combineAll(List<MixFactory> mixes) {
     return MixFactory.combine(mixes);
   }
-
-  @Deprecated('Use merge now')
-  MixFactory apply(MixFactory mix) => merge(mix);
 
   @Deprecated('Use selectVariant now')
   MixFactory withMaybeVariant(Variant? variant) {

@@ -55,6 +55,14 @@ class MixValues {
 
   bool get hasAttributes => attributes?.isNotEmpty == true;
 
+  bool get isEmpty => !hasVariants && !hasContextVariants && !hasAttributes;
+
+  bool get isNotEmpty => !isEmpty;
+
+  int get length {
+    return variants.length + contextVariants.length + (attributes?.length ?? 0);
+  }
+
   /// Returns an instance of the specified [WidgetAttributes] type from the [MixContext].
   A? attributesOfType<A extends WidgetAttributes>() {
     return attributes?[A] as A?;
@@ -94,14 +102,12 @@ class MixValues {
 
   /// Merges the current [MixValues] instance with another [MixValues] instance.
   MixValues merge(MixValues? other) {
-    if (other == null) {
-      return this;
-    }
+    if (other?.isEmpty == true) return this;
 
     return MixValues(
-      attributes: attributes?.merge(other.attributes),
-      variants: [...variants, ...other.variants],
-      contextVariants: [...contextVariants, ...other.contextVariants],
+      attributes: attributes?.merge(other?.attributes) ?? other?.attributes,
+      variants: [...variants, ...?other?.variants],
+      contextVariants: [...contextVariants, ...?other?.contextVariants],
     );
   }
 

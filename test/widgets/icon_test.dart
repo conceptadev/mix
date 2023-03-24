@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/src/attributes/common/common.attributes.dart';
+import 'package:mix/src/extensions/mix_extensions.dart';
 import 'package:mix/src/mixer/mix_factory.dart';
 import 'package:mix/src/widgets/icon/icon.attributes.dart';
 
@@ -10,7 +11,7 @@ void main() {
   group("Mix Icon widget", () {
     testWidgets('Adds icon on widget', (tester) async {
       await tester.pumpWidget(
-        MixTestWidget(
+        TestMixWidget(
           child: Mix().icon(Icons.bolt),
         ),
       );
@@ -23,10 +24,10 @@ void main() {
 
     testWidgets('Adds Icon properties on widget', (tester) async {
       await tester.pumpWidget(
-        MixTestWidget(
+        TestMixWidget(
           child: Mix(
-            const IconAttributes(color: Colors.greenAccent),
-            const IconAttributes(size: 23),
+            IconAttributes(color: Colors.greenAccent.toDto()),
+            IconAttributes(size: 23.toDto()),
             const CommonAttributes(textDirection: TextDirection.rtl),
           ).icon(Icons.bolt),
         ),

@@ -4,12 +4,14 @@ import 'package:mix/mix.dart';
 import 'package:mix/src/helpers/dto/border.dto.dart';
 import 'package:mix/src/helpers/dto/border_radius.dto.dart';
 import 'package:mix/src/helpers/dto/box_shadow.dto.dart';
+import 'package:mix/src/helpers/dto/double.dto.dart';
 import 'package:mix/src/helpers/dto/edge_insets.dto.dart';
 
 void main() {
   group("Box Attributes", () {
     test('-> Margin', () async {
-      const marginAttribute = BoxAttributes(margin: EdgeInsetsDto.all(20));
+      const marginAttribute =
+          BoxAttributes(margin: EdgeInsetsDto.all(DoubleDto(20)));
       final marginUtilityAttribute = margin(20);
 
       expect(
@@ -26,13 +28,15 @@ void main() {
 
       expect(
         marginAttribute.margin,
-        const EdgeInsetsDto.all(20),
-        reason: 'Margin attribute does not match EdgeInsetsDto.all(20)',
+        const EdgeInsetsDto.all(DoubleDto(20)),
+        reason:
+            'Margin attribute does not match EdgeInsetsDto.all(DoubleDto(20))',
       );
     });
 
     test('-> Padding', () async {
-      const paddingAttribute = BoxAttributes(padding: EdgeInsetsDto.all(30));
+      const paddingAttribute =
+          BoxAttributes(padding: EdgeInsetsDto.all(DoubleDto(30)));
       final paddingUtilityAttribute = padding(30);
 
       expect(
@@ -49,13 +53,14 @@ void main() {
 
       expect(
         paddingAttribute.padding,
-        const EdgeInsetsDto.all(30),
-        reason: 'Padding attribute does not match EdgeInsetsDto.all(20)',
+        const EdgeInsetsDto.all(DoubleDto(30)),
+        reason:
+            'Padding attribute does not match EdgeInsetsDto.all(DoubleDto(30))',
       );
     });
 
     test('-> Width', () async {
-      const widthAttribute = BoxAttributes(width: 40);
+      const widthAttribute = BoxAttributes(width: DoubleDto(40));
       final widthUtilityAttribute = width(40);
 
       expect(
@@ -78,7 +83,7 @@ void main() {
     });
 
     test('-> Height', () async {
-      const heightAttribute = BoxAttributes(height: 50);
+      const heightAttribute = BoxAttributes(height: DoubleDto(50));
       final heightUtilityAttribute = height(50);
 
       expect(
@@ -101,7 +106,7 @@ void main() {
     });
 
     test('-> Min Width', () async {
-      const minWidthAttribute = BoxAttributes(minWidth: 60);
+      const minWidthAttribute = BoxAttributes(minWidth: DoubleDto(60));
       final minWidthUtilityAttribute = minWidth(60);
 
       expect(
@@ -124,7 +129,7 @@ void main() {
     });
 
     test('-> Min Height', () async {
-      const minHeightAttribute = BoxAttributes(minHeight: 70);
+      const minHeightAttribute = BoxAttributes(minHeight: DoubleDto(70));
       final minHeightUtilityAttribute = minHeight(70);
 
       expect(
@@ -147,7 +152,7 @@ void main() {
     });
 
     test('-> Max Width', () async {
-      const maxWidthAttribute = BoxAttributes(maxWidth: 80);
+      const maxWidthAttribute = BoxAttributes(maxWidth: DoubleDto(80));
       final maxWidthUtilityAttribute = maxWidth(80);
 
       expect(
@@ -170,7 +175,7 @@ void main() {
     });
 
     test('-> Max Height', () async {
-      const maxHeightAttribute = BoxAttributes(maxHeight: 90);
+      const maxHeightAttribute = BoxAttributes(maxHeight: DoubleDto(90));
       final maxHeightUtilityAttribute = maxHeight(90);
 
       expect(
@@ -219,7 +224,7 @@ void main() {
 
     test('-> Border Radius', () async {
       const borderRadiusAttribute =
-          BoxAttributes(borderRadius: BorderRadiusDto.all(10));
+          BoxAttributes(borderRadius: BorderRadiusDto.all(DoubleDto(10)));
       final borderRadiusUtilityAttribute = rounded(10);
 
       expect(
@@ -236,13 +241,13 @@ void main() {
 
       expect(
         borderRadiusAttribute.borderRadius,
-        const BorderRadiusDto.all(10),
+        const BorderRadiusDto.all(DoubleDto(10)),
         reason:
             'Border Radius attribute does not match BorderRadiusDto.all(10)',
       );
 
-      const topLeftBorderRadius =
-          BoxAttributes(borderRadius: BorderRadiusDto.only(topLeft: 10));
+      const topLeftBorderRadius = BoxAttributes(
+          borderRadius: BorderRadiusDto.only(topLeft: DoubleDto(10)));
       final topLeftBorderRadiusUtility = roundedTL(10);
 
       expect(
@@ -259,7 +264,7 @@ void main() {
 
       expect(
         topLeftBorderRadius.borderRadius,
-        const BorderRadiusDto.only(topLeft: 10),
+        const BorderRadiusDto.only(topLeft: DoubleDto(10)),
         reason:
             'Border Radius attribute does not match BorderRadiusDto.only(topLeft: 10)',
       );

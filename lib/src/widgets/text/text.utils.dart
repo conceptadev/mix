@@ -96,7 +96,7 @@ class TextUtility {
   static TextAttributes style(TextStyle? style) {
     if (style == null) return const TextAttributes();
 
-    return TextAttributes(style: TextStyleMergeableDto(style));
+    return TextAttributes(style: TextStyleMergeableDto.from(style));
   }
 
   /// Short Utils: strutStyle
@@ -126,7 +126,9 @@ class TextUtility {
 
   /// Short Utils: textScaleFactor
   static TextAttributes textScaleFactor(double textScaleFactor) {
-    return TextAttributes(textScaleFactor: textScaleFactor.dto);
+    return TextAttributes(
+      textScaleFactor: DoubleDto.from(textScaleFactor),
+    );
   }
 
   /// Short Utils: maxLines

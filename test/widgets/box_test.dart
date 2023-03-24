@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/src/attributes/common/common.attributes.dart';
+import 'package:mix/src/extensions/mix_extensions.dart';
 import 'package:mix/src/helpers/dto/border.dto.dart';
 import 'package:mix/src/helpers/dto/border_radius.dto.dart';
 import 'package:mix/src/helpers/dto/edge_insets.dto.dart';
@@ -11,6 +12,7 @@ import 'package:mix/src/widgets/box/box_decorators/aspect_ratio.dart';
 import 'package:mix/src/widgets/box/box_decorators/flexible.dart';
 import 'package:mix/src/widgets/box/box_decorators/opacity.dart';
 import 'package:mix/src/widgets/box/box_decorators/rotate.dart';
+import 'package:mix/src/widgets/flex/flex.widget.dart';
 
 import '../testing_utils.dart';
 
@@ -23,7 +25,7 @@ void main() {
         'Adds child on widget',
         (tester) async {
           await tester.pumpWidget(
-            MixTestWidget(
+            TestMixWidget(
               child: Mix().box(
                 child: const Text(
                   widgetText,
@@ -49,10 +51,10 @@ void main() {
         'Responds to Flexible attributes',
         (tester) async {
           await tester.pumpWidget(
-            const BoxInsideFlexWidget(
-              Mix(
-                FlexibleDecorator(flex: 2),
-                FlexibleDecorator(flexFit: FlexFit.tight),
+            VBox(
+              mix: Mix(
+                const FlexibleDecorator(flex: 2),
+                const FlexibleDecorator(flexFit: FlexFit.tight),
               ),
             ),
           );
@@ -70,8 +72,8 @@ void main() {
         'Responds to RotatedBox attributes',
         (tester) async {
           await tester.pumpWidget(
-            const BoxTestWidget(
-              Mix(RotateDecorator(quarterTurns: 3)),
+            BoxTestWidget(
+              Mix(const RotateDecorator(quarterTurns: 3)),
             ),
           );
 
@@ -87,8 +89,8 @@ void main() {
         'Responds to Hidden attributes',
         (tester) async {
           await tester.pumpWidget(
-            const BoxTestWidget(
-              Mix(CommonAttributes(visible: false)),
+            BoxTestWidget(
+              Mix(const CommonAttributes(visible: false)),
             ),
           );
 
@@ -105,8 +107,8 @@ void main() {
         'Responds to AspectRatio attributes',
         (tester) async {
           await tester.pumpWidget(
-            const BoxTestWidget(
-              Mix(AspectRatioDecorator(aspectRatio: 3 / 2)),
+            BoxTestWidget(
+              Mix(const AspectRatioDecorator(aspectRatio: 3 / 2)),
             ),
           );
 
@@ -122,8 +124,12 @@ void main() {
         'Responds to Align attributes',
         (tester) async {
           await tester.pumpWidget(
-            const BoxTestWidget(
-              Mix(BoxAttributes(alignment: Alignment.centerRight)),
+            BoxTestWidget(
+              Mix(
+                const BoxAttributes(
+                  alignment: Alignment.centerRight,
+                ),
+              ),
             ),
           );
 
@@ -139,9 +145,9 @@ void main() {
         'Responds to Opacity attributes',
         (tester) async {
           await tester.pumpWidget(
-            const BoxTestWidget(
+            BoxTestWidget(
               Mix(
-                OpacityDecorator(opacity: 0.5),
+                const OpacityDecorator(opacity: 0.5),
               ),
             ),
           );
@@ -158,8 +164,8 @@ void main() {
         'Responds to ColoredBox attributes',
         (tester) async {
           await tester.pumpWidget(
-            const BoxTestWidget(
-              Mix(BoxAttributes(color: Colors.lime)),
+            BoxTestWidget(
+              Mix(BoxAttributes(color: Colors.lime.toDto())),
             ),
           );
 
@@ -185,15 +191,15 @@ void main() {
             width: 1.0,
             style: BorderStyle.solid,
           );
-          const borderRadiusProps = BorderRadiusDto.only(topLeft: 20);
+          final borderRadiusProps = BorderRadiusDto.only(topLeft: 20.toDto());
           const borderRadius = BorderRadius.only(
             topLeft: Radius.circular(20),
           );
           await tester.pumpWidget(
             BoxTestWidget(
               Mix(
-                const BoxAttributes(color: Colors.purple),
-                const BoxAttributes(borderRadius: borderRadiusProps),
+                BoxAttributes(color: Colors.purple.toDto()),
+                BoxAttributes(borderRadius: borderRadiusProps),
                 BoxAttributes(border: borderProps),
               ),
             ),
@@ -221,16 +227,18 @@ void main() {
       testWidgets(
         'Responds to Margin attributes',
         (tester) async {
+          const edgeInsets = EdgeInsets.only(
+            left: 15,
+            top: 25,
+            right: 35,
+            bottom: 45,
+          );
+
           await tester.pumpWidget(
-            const BoxTestWidget(
+            BoxTestWidget(
               Mix(
                 BoxAttributes(
-                  margin: EdgeInsetsDto.only(
-                    left: 15,
-                    top: 25,
-                    right: 35,
-                    bottom: 45,
-                  ),
+                  margin: EdgeInsetsDto.from(edgeInsets),
                 ),
               ),
             ),
@@ -242,7 +250,7 @@ void main() {
 
           expect(
             marginWidget.padding,
-            const EdgeInsets.fromLTRB(15, 25, 35, 45),
+            edgeInsets,
           );
         },
       );
@@ -250,16 +258,18 @@ void main() {
       testWidgets(
         'Responds to Padding attributes',
         (tester) async {
+          const edgeInsets = EdgeInsets.only(
+            left: 10,
+            top: 20,
+            right: 30,
+            bottom: 40,
+          );
+
           await tester.pumpWidget(
-            const BoxTestWidget(
+            BoxTestWidget(
               Mix(
                 BoxAttributes(
-                  padding: EdgeInsetsDto.only(
-                    left: 10,
-                    top: 20,
-                    right: 30,
-                    bottom: 40,
-                  ),
+                  padding: EdgeInsetsDto.from(edgeInsets),
                 ),
               ),
             ),
@@ -280,12 +290,12 @@ void main() {
         'Responds to max/min constraints',
         (tester) async {
           await tester.pumpWidget(
-            const BoxTestWidget(
+            BoxTestWidget(
               Mix(
-                BoxAttributes(maxHeight: 105),
-                BoxAttributes(minHeight: 55),
-                BoxAttributes(maxWidth: 155),
-                BoxAttributes(minWidth: 45),
+                BoxAttributes(maxHeight: 105.toDto()),
+                BoxAttributes(minHeight: 55.toDto()),
+                BoxAttributes(maxWidth: 155.toDto()),
+                BoxAttributes(minWidth: 45.toDto()),
               ),
             ),
           );

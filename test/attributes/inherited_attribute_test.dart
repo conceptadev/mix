@@ -190,7 +190,7 @@ void main() {
   group("inherited icon attribute", () {
     testWidgets('without variants', (tester) async {
       await tester.pumpWidget(
-        const MixTestWidget(
+        const TestMixWidget(
           child: CustomWidget(Icons.bolt),
         ),
       );
@@ -206,7 +206,7 @@ void main() {
 
     testWidgets('with variant', (tester) async {
       await tester.pumpWidget(
-        const MixTestWidget(
+        const TestMixWidget(
           child: CustomWidget(
             Icons.bolt,
             variants: [activated],
@@ -227,7 +227,7 @@ void main() {
   group("inherited input theme attribute", () {
     testWidgets('without variants', (tester) async {
       await tester.pumpWidget(
-        const MixTestWidget(
+        const TestMixWidget(
           child: MaterialApp(
             home: Material(
               child: TextFieldWidget(
@@ -245,7 +245,7 @@ void main() {
 
     testWidgets('with variants', (tester) async {
       await tester.pumpWidget(
-        const MixTestWidget(
+        const TestMixWidget(
           child: MaterialApp(
             home: Scaffold(
               body: TextFieldWidget(

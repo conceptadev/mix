@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/src/attributes/common/common.utils.dart';
+import 'package:mix/src/extensions/mix_extensions.dart';
 import 'package:mix/src/mixer/mix_factory.dart';
 import 'package:mix/src/widgets/text/text.utils.dart';
 
@@ -11,7 +12,7 @@ void main() {
     const widgetText = 'Mix Text Widget';
     testWidgets('Adds text on widget', (tester) async {
       await tester.pumpWidget(
-        MixTestWidget(
+        TestMixWidget(
           child: Mix().text(widgetText),
         ),
       );
@@ -24,7 +25,7 @@ void main() {
 
     testWidgets('Adds Text properties on widget', (tester) async {
       await tester.pumpWidget(
-        MixTestWidget(
+        TestMixWidget(
           child: Mix(
             TextUtility.overflow(TextOverflow.ellipsis),
             TextUtility.softWrap(true),
@@ -50,7 +51,7 @@ void main() {
 
     testWidgets('Adds Text Style on widget', (tester) async {
       await tester.pumpWidget(
-        MixTestWidget(
+        TestMixWidget(
           child: Mix(
             TextStyleUtility.fontSize(20),
             TextStyleUtility.wordSpacing(2),

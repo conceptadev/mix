@@ -76,6 +76,8 @@ class MergeableMap<T extends MergeableAttributeMixin> {
 
   Iterable<T> get values => _keys.map((key) => _map[key] as T);
 
+  int get length => _map.length;
+
   void clear() {
     _map.clear();
     _keys.clear();

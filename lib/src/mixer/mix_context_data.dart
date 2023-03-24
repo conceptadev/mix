@@ -29,8 +29,8 @@ class MixContextData {
     // Tracks the values selected and does not allow for
     // attributes already expended to be expended again.
     MixValues values = MixValues(
-      attributes: mix.toValues().attributes,
-      variants: mix.toValues().variants,
+      attributes: mix.values.attributes,
+      variants: mix.values.variants,
       contextVariants: [],
     );
 
