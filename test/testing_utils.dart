@@ -3,7 +3,11 @@ import 'package:mix/mix.dart';
 import 'package:mix/src/helpers/dto/border.dto.dart';
 import 'package:mix/src/helpers/dto/border_radius.dto.dart';
 import 'package:mix/src/helpers/dto/box_shadow.dto.dart';
+import 'package:mix/src/helpers/dto/color.dto.dart';
+import 'package:mix/src/helpers/dto/double.dto.dart';
 import 'package:mix/src/helpers/dto/edge_insets.dto.dart';
+import 'package:mix/src/helpers/dto/radius_dto.dart';
+import 'package:mix/src/helpers/dto/text_style.dto.dart';
 
 export 'package:mix/src/helpers/extensions.dart';
 
@@ -102,28 +106,28 @@ const borderSide = BorderSideDto.only(
   width: 1,
 );
 
-final baseBoxAttributes = BoxAttributes(
-  border: const BorderDto.fromBorderSide(borderSide),
-  borderRadius: const BorderRadiusDto.only(
-    topLeft: 20,
-    topRight: 20,
-    bottomLeft: 20,
-    bottomRight: 20,
+const baseBoxAttributes = BoxAttributes(
+  border: BorderDto.fromBorderSide(borderSide),
+  borderRadius: BorderRadiusDto.only(
+    topLeft: RadiusDto.circular(DoubleDto.from(20)),
+    topRight: RadiusDto.circular(DoubleDto.from(20)),
+    bottomLeft: RadiusDto.circular(DoubleDto.from(20)),
+    bottomRight: RadiusDto.circular(DoubleDto.from(20)),
   ),
-  color: Colors.red,
-  margin: EdgeInsetsDto.all(10),
-  padding: EdgeInsetsDto.all(20),
-  minWidth: 0,
-  width: 100,
-  maxWidth: 250,
-  minHeight: 50,
-  height: 150,
-  maxHeight: 200,
+  color: ColorDto.from(Colors.red),
+  margin: EdgeInsetsDto.all(DoubleDto.from(20)),
+  padding: EdgeInsetsDto.all(DoubleDto.from(20)),
+  minWidth: DoubleDto.from(50),
+  width: DoubleDto.from(100),
+  maxWidth: DoubleDto.from(250),
+  minHeight: DoubleDto.from(50),
+  height: DoubleDto.from(150),
+  maxHeight: DoubleDto.from(200),
   alignment: Alignment.center,
   shape: BoxShape.rectangle,
   transform: null,
   boxShadow: [
-    const BoxShadowDto(
+    BoxShadowDto(
       color: Colors.black,
       blurRadius: 10,
       offset: Offset(10, 10),
@@ -133,13 +137,13 @@ final baseBoxAttributes = BoxAttributes(
 
 const baseTextAttributes = TextAttributes(
   textAlign: TextAlign.center,
-  textScaleFactor: 1,
+  textScaleFactor: DoubleDto.from(1),
   maxLines: 1,
   overflow: TextOverflow.ellipsis,
   locale: Locale('en', 'US'),
   textWidthBasis: TextWidthBasis.parent,
   textHeightBehavior: TextHeightBehavior(),
-  style: TextStyle(
+  style: TextStyleDto(
     color: Colors.black,
     fontSize: 20,
     fontWeight: FontWeight.w500,

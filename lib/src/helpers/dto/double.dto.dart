@@ -4,6 +4,7 @@ import 'dto.dart';
 
 typedef ValueModifier<T> = T Function(T value);
 
+@Deprecated('Remove this for now')
 class DoubleDto extends Dto<double> {
   final double _value;
 
@@ -16,7 +17,11 @@ class DoubleDto extends Dto<double> {
   })  : _value = value,
         _modifier = directive;
 
-  factory DoubleDto.from(double value) => DoubleDto(value);
+  const DoubleDto.from(
+    double value, {
+    ValueModifier<double>? directiv,
+  })  : _value = value,
+        _modifier = null;
 
   static DoubleDto? maybeFrom(double? value) {
     if (value == null) return null;

@@ -6,6 +6,7 @@ import '../../helpers/dto/box_shadow.dto.dart';
 import '../../helpers/dto/color.dto.dart';
 import '../../helpers/dto/double.dto.dart';
 import '../../helpers/dto/edge_insets.dto.dart';
+import '../../helpers/dto/radius_dto.dart';
 import 'box.attributes.dart';
 
 ///
@@ -18,7 +19,8 @@ import 'box.attributes.dart';
 class BoxUtility {
   const BoxUtility._();
 
-  static fromValues(
+  // ignore: long-parameter-list
+  static fromValues({
     EdgeInsets? margin,
     EdgeInsets? padding,
     AlignmentGeometry? alignment,
@@ -38,7 +40,7 @@ class BoxUtility {
     double? minWidth,
     BoxShape? shape,
     Gradient? gradient,
-  ) {
+  }) {
     return BoxAttributes(
       margin: EdgeInsetsDto.fromNullable(margin),
       padding: EdgeInsetsDto.fromNullable(padding),
@@ -275,7 +277,13 @@ class BoxUtility {
   /// Short Utils: rounded, r
   /// (Rounded corners)
   static BoxAttributes rounded(double value) {
-    return borderRadius(BorderRadiusDto.all(value));
+    return borderRadius(
+      BorderRadiusDto.all(
+        RadiusDto.circular(
+          DoubleDto.from(value),
+        ),
+      ),
+    );
   }
 
   /// Short Utils: squared
@@ -294,10 +302,18 @@ class BoxUtility {
   }) {
     return borderRadius(
       BorderRadiusDto.only(
-        topLeft: topLeft,
-        topRight: topRight,
-        bottomLeft: bottomLeft,
-        bottomRight: bottomRight,
+        topLeft: topLeft != null
+            ? RadiusDto.circular(DoubleDto.from(topLeft))
+            : null,
+        topRight: topRight != null
+            ? RadiusDto.circular(DoubleDto.from(topRight))
+            : null,
+        bottomLeft: bottomLeft != null
+            ? RadiusDto.circular(DoubleDto.from(bottomLeft))
+            : null,
+        bottomRight: bottomRight != null
+            ? RadiusDto.circular(DoubleDto.from(bottomRight))
+            : null,
       ),
     );
   }
@@ -312,10 +328,17 @@ class BoxUtility {
   }) {
     return borderRadius(
       BorderRadiusDirectionalDto.only(
-        topStart: topStart,
-        topEnd: topEnd,
-        bottomStart: bottomStart,
-        bottomEnd: bottomEnd,
+        topStart: topStart != null
+            ? RadiusDto.circular(DoubleDto.from(topStart))
+            : null,
+        topEnd:
+            topEnd != null ? RadiusDto.circular(DoubleDto.from(topEnd)) : null,
+        bottomStart: bottomStart != null
+            ? RadiusDto.circular(DoubleDto.from(bottomStart))
+            : null,
+        bottomEnd: bottomEnd != null
+            ? RadiusDto.circular(DoubleDto.from(bottomEnd))
+            : null,
       ),
     );
   }
@@ -327,8 +350,8 @@ class BoxUtility {
   }) {
     return borderRadius(
       BorderRadiusDto.horizontal(
-        left: left,
-        right: right,
+        left: left != null ? RadiusDto.circular(DoubleDto.from(left)) : null,
+        right: right != null ? RadiusDto.circular(DoubleDto.from(right)) : null,
       ),
     );
   }
@@ -340,8 +363,16 @@ class BoxUtility {
   }) {
     return borderRadius(
       BorderRadiusDto.vertical(
-        top: top,
-        bottom: bottom,
+        top: top != null
+            ? RadiusDto.circular(
+                DoubleDto.from(top),
+              )
+            : null,
+        bottom: bottom != null
+            ? RadiusDto.circular(
+                DoubleDto.from(bottom),
+              )
+            : null,
       ),
     );
   }
@@ -353,8 +384,16 @@ class BoxUtility {
   }) {
     return borderRadius(
       BorderRadiusDirectionalDto.horizontal(
-        start: start,
-        end: end,
+        start: start != null
+            ? RadiusDto.circular(
+                DoubleDto.from(start),
+              )
+            : null,
+        end: end != null
+            ? RadiusDto.circular(
+                DoubleDto.from(end),
+              )
+            : null,
       ),
     );
   }

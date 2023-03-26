@@ -8,7 +8,8 @@ import '../../helpers/extensions.dart';
 import 'text_directives/text_directive.attributes.dart';
 
 class TextAttributes extends WidgetAttributes {
-  final TextStyleMergeableDto? style;
+  final List<TextStyleDto>? _styles;
+  final TextStyleDto? _style;
 
   final StrutStyle? strutStyle;
   final TextAlign? textAlign;
@@ -25,7 +26,8 @@ class TextAttributes extends WidgetAttributes {
   final List<TextDirectiveAttribute> directives;
 
   const TextAttributes({
-    this.style,
+    TextStyleDto? style,
+    List<TextStyleDto>? styles,
     this.strutStyle,
     this.textAlign,
     this.locale,
@@ -36,7 +38,8 @@ class TextAttributes extends WidgetAttributes {
     this.textWidthBasis,
     this.textHeightBehavior,
     this.directives = const [],
-  });
+  })  : _styles = const [],
+        _style = style;
 
   factory TextAttributes.fromValues({
     TextStyle? style,
@@ -52,7 +55,7 @@ class TextAttributes extends WidgetAttributes {
     List<TextDirectiveAttribute>? directives,
   }) {
     return TextAttributes(
-      style: TextStyleMergeableDto.maybeFrom(style),
+      style: TextStyleDto.maybeFrom(style),
       strutStyle: strutStyle,
       textAlign: textAlign,
       locale: locale,
@@ -66,13 +69,18 @@ class TextAttributes extends WidgetAttributes {
     );
   }
 
+  // Combines the text styles
+  List<TextStyleDto>? get styles {
+    return [if (_style != null) _style!, ...?_styles];
+  }
+
   @override
   TextAttributes merge(TextAttributes? other) {
     if (other == null) return this;
 
     return copyWith(
       // Need to inherit to allow for overrides
-      style: other.style,
+      styles: other.styles,
 
       strutStyle: other.strutStyle,
       textAlign: other.textAlign,
@@ -89,7 +97,7 @@ class TextAttributes extends WidgetAttributes {
   }
 
   TextAttributes copyWith({
-    TextStyleMergeableDto? style,
+    List<TextStyleDto>? styles,
     StrutStyle? strutStyle,
     TextAlign? textAlign,
     Locale? locale,
@@ -102,7 +110,7 @@ class TextAttributes extends WidgetAttributes {
     List<TextDirectiveAttribute>? directives,
   }) {
     return TextAttributes(
-      style: this.style?.merge(style) ?? style,
+      styles: [...?this.styles, ...?styles],
       strutStyle: this.strutStyle?.merge(strutStyle) ?? strutStyle,
       textAlign: textAlign ?? this.textAlign,
       locale: locale ?? this.locale,
@@ -121,7 +129,7 @@ class TextAttributes extends WidgetAttributes {
     if (identical(this, other)) return true;
 
     return other is TextAttributes &&
-        other.style == style &&
+        listEquals(styles, other.styles) &&
         other.strutStyle == strutStyle &&
         other.textAlign == textAlign &&
         other.locale == locale &&
@@ -136,7 +144,7 @@ class TextAttributes extends WidgetAttributes {
 
   @override
   int get hashCode {
-    return style.hashCode ^
+    return styles.hashCode ^
         strutStyle.hashCode ^
         textAlign.hashCode ^
         locale.hashCode ^

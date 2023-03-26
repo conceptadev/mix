@@ -36,7 +36,7 @@ class RadiusDto extends Dto<Radius> {
     );
   }
 
-  static RadiusDto? fromNullable(Radius? radius) {
+  static RadiusDto? maybeFrom(Radius? radius) {
     if (radius == null) return null;
 
     return RadiusDto.from(radius);

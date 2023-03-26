@@ -96,7 +96,7 @@ class TextUtility {
   static TextAttributes style(TextStyle? style) {
     if (style == null) return const TextAttributes();
 
-    return TextAttributes(style: TextStyleMergeableDto.from(style));
+    return TextAttributes(style: TextStyleDto.from(style));
   }
 
   /// Short Utils: strutStyle

@@ -8,10 +8,7 @@ class ColorDto extends Dto<Color> {
 
   const ColorDto(this.value);
 
-  factory ColorDto.from(Color token) {
-    return ColorDto(token);
-  }
-
+  const ColorDto.from(Color color) : value = color;
   static ColorDto? fromNullable(Color? token) {
     if (token == null) {
       return null;

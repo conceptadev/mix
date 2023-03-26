@@ -38,9 +38,15 @@ class TextProps {
     final mixContext = MixContext.ensureOf(context);
     final textAttributes = mixContext.attributesOfType<TextAttributes>();
 
+    var mergedStyle = const TextStyle();
+
+    for (var style in textAttributes?.styles ?? []) {
+      mergedStyle = mergedStyle.merge(style.resolve(context));
+    }
+
     return TextProps(
       // Need to grab colorscheme from context
-      style: textAttributes?.style?.resolve(context),
+      style: mergedStyle,
       strutStyle: textAttributes?.strutStyle,
       textAlign: textAttributes?.textAlign,
       locale: textAttributes?.locale,

@@ -71,6 +71,10 @@ class TextStyleDto extends Dto<TextStyle> {
     );
   }
 
+  static maybeFrom(TextStyle? style) {
+    return style != null ? TextStyleDto.from(style) : null;
+  }
+
   @override
   TextStyle resolve(BuildContext context) {
     return TextStyle(
@@ -196,44 +200,27 @@ class TextStyleDto extends Dto<TextStyle> {
 
 // This class allows to create a list TextStyleDtos
 // that will only be merged and resolved when the resolve method is called.
-class TextStyleMergeableDto extends MergeableDto<TextStyle, TextStyleDto> {
-  const TextStyleMergeableDto(List<TextStyleDto> textStyles)
-      : super(textStyles);
+// class TextStyleMergeableDto extends MergeableDto<TextStyle, TextStyleDto> {
+//   const TextStyleMergeableDto(TextStyleDto textStyle)
+//       : super(textStyle, const []);
 
-  factory TextStyleMergeableDto.from(TextStyle style) {
-    return TextStyleMergeableDto([TextStyleDto.from(style)]);
-  }
+//   TextStyleMergeableDto.from(TextStyle style)
+//       : super(TextStyleDto.from(style), const []);
 
-  static maybeFrom(TextStyle? style) {
-    if (style == null) return null;
+//   static maybeFrom(TextStyle? style) {
+//     if (style == null) return null;
 
-    return TextStyleMergeableDto.from(style);
-  }
+//     return TextStyleMergeableDto.from(style);
+//   }
 
-  @override
-  TextStyle resolve(BuildContext context) {
-    var mergedStyle = const TextStyle();
+//   @override
+//   TextStyle resolve(BuildContext context) {
+//     var mergedStyle = const TextStyle();
 
-    for (var style in values) {
-      mergedStyle = mergedStyle.merge(style.resolve(context));
-    }
+//     for (var style in mergeableValues) {
+//       mergedStyle = mergedStyle.merge(style.resolve(context));
+//     }
 
-    return mergedStyle;
-  }
-
-  TextStyleMergeableDto copyWith({
-    List<TextStyleDto>? dtos,
-  }) {
-    return TextStyleMergeableDto(
-      [...values, ...?dtos],
-    );
-  }
-
-  TextStyleMergeableDto merge(TextStyleMergeableDto? other) {
-    if (other == null) return this;
-
-    return copyWith(
-      dtos: other.values,
-    );
-  }
-}
+//     return mergedStyle;
+//   }
+// }

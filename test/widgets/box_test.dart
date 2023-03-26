@@ -1,18 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mix/src/attributes/common/common.attributes.dart';
+import 'package:mix/mix.dart';
 import 'package:mix/src/extensions/mix_extensions.dart';
 import 'package:mix/src/helpers/dto/border.dto.dart';
 import 'package:mix/src/helpers/dto/border_radius.dto.dart';
+import 'package:mix/src/helpers/dto/double.dto.dart';
 import 'package:mix/src/helpers/dto/edge_insets.dto.dart';
-import 'package:mix/src/mixer/mix_factory.dart';
-import 'package:mix/src/widgets/box/box.attributes.dart';
-import 'package:mix/src/widgets/box/box.widget.dart';
-import 'package:mix/src/widgets/box/box_decorators/aspect_ratio.dart';
-import 'package:mix/src/widgets/box/box_decorators/flexible.dart';
-import 'package:mix/src/widgets/box/box_decorators/opacity.dart';
-import 'package:mix/src/widgets/box/box_decorators/rotate.dart';
-import 'package:mix/src/widgets/flex/flex.widget.dart';
 
 import '../testing_utils.dart';
 
@@ -165,7 +158,7 @@ void main() {
         (tester) async {
           await tester.pumpWidget(
             BoxTestWidget(
-              Mix(BoxAttributes(color: Colors.lime.toDto())),
+              Mix(BoxUtility.fromValues(color: Colors.lime)),
             ),
           );
 
@@ -191,7 +184,8 @@ void main() {
             width: 1.0,
             style: BorderStyle.solid,
           );
-          final borderRadiusProps = BorderRadiusDto.only(topLeft: 20.toDto());
+          final borderRadiusProps =
+              const BorderRadiusDto.only(topLeft: DoubleDto.from(20));
           const borderRadius = BorderRadius.only(
             topLeft: Radius.circular(20),
           );

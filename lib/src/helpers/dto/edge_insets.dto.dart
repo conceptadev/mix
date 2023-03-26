@@ -8,12 +8,12 @@ abstract class EdgeInsetsGeometryDto<T extends EdgeInsetsGeometry>
     extends Dto<T> {
   const EdgeInsetsGeometryDto();
 
-  DoubleDto? get _top;
-  DoubleDto? get _bottom;
-  DoubleDto? get _left;
-  DoubleDto? get _right;
-  DoubleDto? get _start;
-  DoubleDto? get _end;
+  double? get _top;
+  double? get _bottom;
+  double? get _left;
+  double? get _right;
+  double? get _start;
+  double? get _end;
 
   bool get _isDirectional =>
       (_start != null || _end != null) && (_left == null && _right == null);
