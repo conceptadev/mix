@@ -13,15 +13,15 @@ import '../../helpers/extensions.dart';
 ///
 /// {@category Attributes}
 class BoxAttributes extends InheritedAttribute {
-  final EdgeInsetsDto? margin;
-  final EdgeInsetsDto? padding;
+  final EdgeInsetsGeometryDto? margin;
+  final EdgeInsetsGeometryDto? padding;
   final AlignmentGeometry? alignment;
   final double? height;
   final double? width;
   // Decoration
   final Color? color;
-  final BorderDto? border;
-  final BorderRadiusDto? borderRadius;
+  final BoxBorderDto? border;
+  final BorderRadiusGeometryDto? borderRadius;
   final List<BoxShadowDto>? boxShadow;
   final Matrix4? transform;
 
@@ -123,14 +123,14 @@ class BoxAttributes extends InheritedAttribute {
   }
 
   BoxAttributes copyWith({
-    EdgeInsetsDto? margin,
-    EdgeInsetsDto? padding,
+    EdgeInsetsGeometryDto? margin,
+    EdgeInsetsGeometryDto? padding,
     AlignmentGeometry? alignment,
     double? height,
     double? width,
     Color? color,
-    BorderDto? border,
-    BorderRadiusDto? borderRadius,
+    BoxBorderDto? border,
+    BorderRadiusGeometryDto? borderRadius,
     List<BoxShadowDto>? boxShadow,
     Matrix4? transform,
     double? maxHeight,
