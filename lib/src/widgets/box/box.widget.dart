@@ -75,35 +75,22 @@ class BoxMixedWidget extends MixedWidget {
       );
     }
 
-    if (sharedProps.animated) {
-      current = AnimatedContainer(
-        color: props.color,
-        decoration: props.decoration,
-        alignment: props.alignment,
-        constraints: props.constraints,
-        margin: props.margin,
-        padding: props.padding,
-        height: props.height,
-        width: props.width,
-        duration: sharedProps.animationDuration,
-        curve: sharedProps.animationCurve,
-        transform: props.transform,
-        child: current,
-      );
-    } else {
-      current = Container(
-        color: props.color,
-        decoration: props.decoration,
-        alignment: props.alignment,
-        constraints: props.constraints,
-        margin: props.margin,
-        padding: props.padding,
-        height: props.height,
-        width: props.width,
-        transform: props.transform,
-        child: current,
-      );
-    }
+    current = BoxAnimation(
+      animated: sharedProps.animated,
+      color: props.color,
+      decoration: props.decoration,
+      alignment: props.alignment,
+      constraints: props.constraints,
+      margin: props.margin,
+      padding: props.padding,
+      height: props.height,
+      width: props.width,
+      duration: sharedProps.animationDuration,
+      // duration: lastAnimateDur ?? Duration.zero,
+      curve: sharedProps.animationCurve,
+      transform: props.transform,
+      child: current,
+    );
 
     // Wrap parent decorators
 
@@ -113,5 +100,88 @@ class BoxMixedWidget extends MixedWidget {
     );
 
     return current;
+  }
+}
+
+class BoxAnimation extends StatefulWidget {
+  final bool animated;
+  final Color? color;
+  final BoxDecoration? decoration;
+  final AlignmentGeometry? alignment;
+  final BoxConstraints? constraints;
+  final EdgeInsetsGeometry? margin;
+  final EdgeInsetsGeometry? padding;
+  final double? height;
+  final double? width;
+  final Duration? duration;
+  final Curve? curve;
+  final Matrix4? transform;
+  final Widget? child;
+
+  const BoxAnimation({
+    Key? key,
+    required this.animated,
+    this.color,
+    this.decoration,
+    this.alignment,
+    this.constraints,
+    this.margin,
+    this.padding,
+    this.height,
+    this.width,
+    this.duration,
+    this.curve,
+    this.transform,
+    this.child,
+  }) : super(key: key);
+
+  @override
+  State<BoxAnimation> createState() => _BoxAnimationState();
+}
+
+class _BoxAnimationState extends State<BoxAnimation> {
+  Duration? lastAnimateDur;
+
+  @override
+  Widget build(BuildContext context) {
+    late Widget result;
+
+    if (widget.animated || lastAnimateDur != null) {
+      lastAnimateDur = widget.duration!;
+
+      result = AnimatedContainer(
+        color: widget.color,
+        decoration: widget.decoration,
+        alignment: widget.alignment,
+        constraints: widget.constraints,
+        margin: widget.margin,
+        padding: widget.padding,
+        height: widget.height,
+        width: widget.width,
+        duration: lastAnimateDur!,
+        curve: widget.curve ?? Curves.linear,
+        transform: widget.transform,
+        child: widget.child,
+      );
+    } else {
+      result = Container(
+        color: widget.color,
+        decoration: widget.decoration,
+        alignment: widget.alignment,
+        constraints: widget.constraints,
+        margin: widget.margin,
+        padding: widget.padding,
+        height: widget.height,
+        width: widget.width,
+        transform: widget.transform,
+        child: widget.child,
+      );
+    }
+
+    if (!widget.animated) {
+      lastAnimateDur = null;
+    }
+
+    return result;
   }
 }
