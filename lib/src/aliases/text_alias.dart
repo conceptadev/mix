@@ -1,4 +1,5 @@
 import '../widgets/text/text.utils.dart';
+import '../widgets/text/text_directives/text_directives.dart';
 
 /// Text align
 const textAlign = TextUtility.textAlign;
@@ -40,3 +41,11 @@ const font = TextFriendlyUtility.textStyle;
 const bold = TextFriendlyUtility.bold;
 const italic = TextFriendlyUtility.italic;
 const textShadow = TextFriendlyUtility.textShadow;
+
+/// Directives
+
+final capitalize = TextUtility.directive(const CapitalizeDirective());
+final upperCase = TextUtility.directive(const UppercaseDirective());
+final lowerCase = TextUtility.directive(const LowercaseDirective());
+final titleCase = TextUtility.directive(const TitleCaseDirective());
+final sentenceCase = TextUtility.directive(const SentenceCaseDirective());

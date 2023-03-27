@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../../helpers/dto/text_style.dto.dart';
 import '../../mixer/mix_context.dart';
 import 'text.attributes.dart';
-import 'text_directives/text_directive.attributes.dart';
+import 'text_directives/text_directives.dart';
 
 class TextDescriptor {
   final bool softWrap;
@@ -19,7 +19,7 @@ class TextDescriptor {
 
   final TextWidthBasis? textWidthBasis;
   final TextHeightBehavior? textHeightBehavior;
-  final List<TextDirectiveAttribute> _directives;
+  final List<TextDirective> _directives;
 
   const TextDescriptor({
     required this.softWrap,
@@ -32,7 +32,7 @@ class TextDescriptor {
     this.maxLines,
     this.textWidthBasis,
     this.textHeightBehavior,
-    List<TextDirectiveAttribute>? directives,
+    List<TextDirective>? directives,
   }) : _directives = directives ?? const [];
 
   factory TextDescriptor.fromContext(BuildContext context) {

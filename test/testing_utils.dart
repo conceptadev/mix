@@ -8,7 +8,7 @@ import 'package:mix/src/helpers/dto/box_shadow.dto.dart';
 import 'package:mix/src/helpers/dto/color.dto.dart';
 import 'package:mix/src/helpers/dto/edge_insets.dto.dart';
 import 'package:mix/src/helpers/dto/text_style.dto.dart';
-import 'package:mix/src/widgets/text/text_directives/text_directive.attributes.dart';
+import 'package:mix/src/widgets/text/text_directives/text_directives.dart';
 
 export 'package:mix/src/helpers/extensions.dart';
 

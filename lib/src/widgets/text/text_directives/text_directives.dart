@@ -1,7 +1,7 @@
 import '../../../directives/directive_attribute.dart';
 import 'text_directive_helpers.dart';
 
-class UppercaseDirective extends TextDirectiveAttribute {
+class UppercaseDirective extends TextDirective {
   const UppercaseDirective();
 
   @override
@@ -10,7 +10,7 @@ class UppercaseDirective extends TextDirectiveAttribute {
   }
 }
 
-class CapitalizeDirective extends TextDirectiveAttribute {
+class CapitalizeDirective extends TextDirective {
   const CapitalizeDirective();
 
   @override
@@ -19,7 +19,7 @@ class CapitalizeDirective extends TextDirectiveAttribute {
   }
 }
 
-class LowercaseDirective extends TextDirectiveAttribute {
+class LowercaseDirective extends TextDirective {
   const LowercaseDirective();
 
   @override
@@ -28,7 +28,7 @@ class LowercaseDirective extends TextDirectiveAttribute {
   }
 }
 
-class SentenceCaseDirective extends TextDirectiveAttribute {
+class SentenceCaseDirective extends TextDirective {
   const SentenceCaseDirective();
 
   @override
@@ -37,7 +37,7 @@ class SentenceCaseDirective extends TextDirectiveAttribute {
   }
 }
 
-class TitleCaseDirective extends TextDirectiveAttribute {
+class TitleCaseDirective extends TextDirective {
   const TitleCaseDirective();
   @override
   String modify(String value) {
@@ -48,8 +48,8 @@ class TitleCaseDirective extends TextDirectiveAttribute {
 /// Attribute that is able to modify text
 /// {@category Attributes}
 /// {@subCategory Directives}
-abstract class TextDirectiveAttribute extends DirectiveAttribute<String> {
-  const TextDirectiveAttribute();
+abstract class TextDirective extends Directive<String> {
+  const TextDirective();
 
   @override
   String modify(String value);

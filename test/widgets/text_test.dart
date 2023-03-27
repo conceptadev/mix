@@ -4,6 +4,7 @@ import 'package:mix/src/attributes/common/common.utils.dart';
 import 'package:mix/src/extensions/mix_extensions.dart';
 import 'package:mix/src/mixer/mix_factory.dart';
 import 'package:mix/src/widgets/text/text.utils.dart';
+import 'package:mix/src/widgets/text/text_directives/text_directives.dart';
 
 import '../testing_utils.dart';
 
@@ -82,6 +83,26 @@ void main() {
       expect(textStyle.locale!.countryCode, 'US');
       expect(textStyle.height, 10);
       expect(textStyle.backgroundColor, Colors.blue);
+    });
+
+    testWidgets('Text Directives', (tester) async {
+      await tester.pumpWidget(
+        TestMixWidget(
+          child: Mix(
+            TextUtility.directives([
+              const UppercaseDirective(),
+              const SentenceCaseDirective(),
+              const CapitalizeDirective(),
+            ]),
+          ).text(widgetText),
+        ),
+      );
+
+      final textWidget = tester.widget<Text>(find.byType(Text));
+
+      expect(textWidget.data, isNot(equals(widgetText)));
+
+      expect(textWidget.data, equals(widgetText.toUpperCase()));
     });
   });
 }

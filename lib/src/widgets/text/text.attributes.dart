@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../../attributes/attribute.dart';
 import '../../helpers/dto/text_style.dto.dart';
 import '../../helpers/extensions.dart';
-import 'text_directives/text_directive.attributes.dart';
+import 'text_directives/text_directives.dart';
 
 class TextAttributes extends WidgetAttributes {
   final List<TextStyleDto>? _styles;
@@ -22,7 +22,7 @@ class TextAttributes extends WidgetAttributes {
   final TextWidthBasis? textWidthBasis;
   final TextHeightBehavior? textHeightBehavior;
 
-  final List<TextDirectiveAttribute> directives;
+  final List<TextDirective> directives;
 
   const TextAttributes({
     TextStyleDto? style,
@@ -51,7 +51,7 @@ class TextAttributes extends WidgetAttributes {
     int? maxLines,
     TextWidthBasis? textWidthBasis,
     TextHeightBehavior? textHeightBehavior,
-    List<TextDirectiveAttribute>? directives,
+    List<TextDirective>? directives,
   }) {
     return TextAttributes(
       style: TextStyleDto.maybeFrom(style),
@@ -106,7 +106,7 @@ class TextAttributes extends WidgetAttributes {
     int? maxLines,
     TextWidthBasis? textWidthBasis,
     TextHeightBehavior? textHeightBehavior,
-    List<TextDirectiveAttribute>? directives,
+    List<TextDirective>? directives,
   }) {
     return TextAttributes(
       styles: [...?this.styles, ...?styles],
