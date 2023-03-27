@@ -8,19 +8,18 @@ import 'variant_operation.dart';
 /// It can be combined with other variants using logical AND (&) and OR (|) operations.
 class Variant {
   final String name;
-  final bool inverse;
 
   /// Creates a new [Variant] with a given [name] and an optional [inverse] flag.
-  const Variant(this.name, {this.inverse = false});
+  const Variant(this.name);
 
   /// Combines this variant with another [variant] using a logical AND operation.
   VariantOperation operator &(Variant variant) {
-    return VariantOperation([this, variant], operator: VariantOperator.and);
+    return VariantOperation([this, variant], operator: EnumVariantOperator.and);
   }
 
   /// Combines this variant with another [variant] using a logical OR operation.
   VariantOperation operator |(Variant variant) {
-    return VariantOperation([this, variant], operator: VariantOperator.or);
+    return VariantOperation([this, variant], operator: EnumVariantOperator.or);
   }
 
   /// Applies the variant to a set of attributes and creates a [VariantAttribute] instance.
@@ -54,20 +53,12 @@ class Variant {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is Variant && other.name == name && other.inverse == inverse;
+    return other is Variant && other.name == name;
   }
 
   @override
-  int get hashCode => name.hashCode ^ inverse.hashCode;
+  int get hashCode => name.hashCode;
 
   @override
-  String toString() => 'name: $name, inverse: $inverse';
-
-  /// Returns a new [Variant] instance with the same [name] and an inverted [inverse] flag.
-  Variant inverseInstance() {
-    return Variant(
-      name,
-      inverse: true,
-    );
-  }
+  String toString() => 'name: $name';
 }

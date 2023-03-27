@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 
-import '../../../mix.dart';
 import '../../helpers/dto/border.dto.dart';
 import '../../helpers/dto/border_radius.dto.dart';
 import '../../helpers/dto/box_shadow.dto.dart';
 import '../../helpers/dto/color.dto.dart';
 import '../../helpers/dto/edge_insets.dto.dart';
 import '../../helpers/dto/radius_dto.dart';
+import '../../helpers/mergeable_map.dart';
+import 'box.attributes.dart';
+import 'box.decorator.dart';
 
 ///
 /// ## Widget:
@@ -588,6 +590,16 @@ class BoxUtility {
     return BoxAttributes(
       boxShadow: [boxShadow],
     );
+  }
+
+  static BoxAttributes decorators(List<BoxDecorator> decorators) {
+    return BoxAttributes(
+      decorators: MergeableMap.fromList(decorators),
+    );
+  }
+
+  static BoxAttributes decorator(BoxDecorator decorator) {
+    return BoxUtility.decorators([decorator]);
   }
 
   /// Short Utils: elevation

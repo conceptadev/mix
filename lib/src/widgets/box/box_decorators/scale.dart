@@ -9,7 +9,7 @@ import '../box.decorator.dart';
 /// - [ScaleDecoratorUtility](ScaleDecoratorUtility-class.html)
 ///
 /// {@category Decorators}
-class ScaleDecorator extends BoxDecoratorAttribute<ScaleDecorator> {
+class ScaleDecorator extends BoxDecorator<ScaleDecorator> {
   final double scale;
   const ScaleDecorator(
     this.scale, {

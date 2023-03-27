@@ -1,5 +1,3 @@
-import '../decorators/decorator_attribute.dart';
-
 /// Base attribute
 
 // Some classes have defaults
@@ -9,9 +7,13 @@ abstract class Attribute {
   const Attribute();
 }
 
+mixin MergeableMixin<T> {
+  T merge(covariant T? other);
+}
+
 /// An interface that add support to custom attributes for [MixContext].
 abstract class WidgetAttributes extends Attribute
-    with MergeableAttributeMixin<WidgetAttributes> {
+    with MergeableMixin<WidgetAttributes> {
   const WidgetAttributes();
 
   @override

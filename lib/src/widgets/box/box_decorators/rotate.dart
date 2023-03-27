@@ -8,7 +8,7 @@ import '../box.decorator.dart';
 /// - [RotateDecoratorUtility](RotateDecoratorUtility-class.html)
 ///
 /// {@category Decorators}
-class RotateDecorator extends BoxDecoratorAttribute<RotateDecorator> {
+class RotateDecorator extends BoxDecorator<RotateDecorator> {
   final int quarterTurns;
   const RotateDecorator({
     required this.quarterTurns,

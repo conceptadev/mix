@@ -37,7 +37,7 @@ class TextAttributes extends WidgetAttributes {
     this.textWidthBasis,
     this.textHeightBehavior,
     this.directives = const [],
-  })  : _styles = const [],
+  })  : _styles = styles,
         _style = style;
 
   factory TextAttributes.fromValues({

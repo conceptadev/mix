@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'decorator_attribute.dart';
+import 'decorator.dart';
 
 class DecoratorWrapper extends StatelessWidget {
   const DecoratorWrapper(
@@ -9,7 +9,7 @@ class DecoratorWrapper extends StatelessWidget {
     required this.child,
   }) : super(key: key);
 
-  final List<DecoratorAttribute> decorators;
+  final List<Decorator> decorators;
 
   final Widget child;
 
@@ -38,7 +38,7 @@ class _RenderDecoratorWidget extends StatelessWidget {
     required this.child,
   }) : super(key: key);
 
-  final DecoratorAttribute decorator;
+  final Decorator decorator;
   final Widget child;
 
   @override

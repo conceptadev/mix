@@ -2,13 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../mix.dart';
 
-mixin MergeableAttributeMixin<T> on Attribute {
-  T merge(covariant T? other);
-}
-
-abstract class DecoratorAttribute<T extends DecoratorAttribute<T>>
-    extends Attribute with MergeableAttributeMixin<T> {
-  const DecoratorAttribute({
+abstract class Decorator<T extends Decorator<T>> with MergeableMixin<T> {
+  const Decorator({
     this.key,
   });
 
@@ -19,6 +14,9 @@ abstract class DecoratorAttribute<T extends DecoratorAttribute<T>>
   String get groupKey;
 
   Widget build(BuildContext context, Widget child);
+
+  @override
+  T merge(covariant T other);
 
   Widget render(BuildContext context, Widget child) {
     return build(context, child);

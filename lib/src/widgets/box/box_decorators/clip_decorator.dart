@@ -17,7 +17,7 @@ enum ClipDecoratorType {
 /// - [ClipDecoratorUtility](ClipDecoratorUtility-class.html)
 ///
 /// {@category Decorators}
-class ClipDecorator extends BoxDecoratorAttribute<ClipDecorator> {
+class ClipDecorator extends BoxDecorator<ClipDecorator> {
   final BorderRadius? borderRadius;
   final ClipDecoratorType clipType;
 

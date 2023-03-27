@@ -51,16 +51,12 @@ class MixContextData {
         if (attribute is ContextVariantAttribute) {
           // Determine if the attribute should be applied based on the context.
           final shouldApply = attribute.shouldApply(context);
-          // Check if the attribute is inverse (from `not(variant)`). If it is,
-          // only apply if shouldApply is false. Otherwise, apply only when shouldApply.
-          final willApply =
-              attribute.variant.inverse ? !shouldApply : shouldApply;
 
           // If willApply is true, recursively apply context variants to
           // the attribute's value and add the result to the expanded list.
           // Otherwise, add the attribute itself to the list.
           return expanded
-            ..addAll(willApply
+            ..addAll(shouldApply
                 ? _applyContextVariants(context, attribute.value.toAttributes())
                 : [attribute]);
         } else {

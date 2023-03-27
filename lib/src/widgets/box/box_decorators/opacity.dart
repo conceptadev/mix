@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../attributes/common/common.descriptor.dart';
 import '../box.decorator.dart';
 
-class OpacityDecorator extends BoxDecoratorAttribute<OpacityDecorator> {
+class OpacityDecorator extends BoxDecorator<OpacityDecorator> {
   final double opacity;
   const OpacityDecorator({
     required this.opacity,

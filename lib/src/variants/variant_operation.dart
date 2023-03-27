@@ -7,13 +7,11 @@ import 'context_variant.dart';
 import 'variant.dart';
 import 'variant_attribute.dart';
 
-/// @nodoc
-enum VariantOperator { and, or }
+enum EnumVariantOperator { and, or }
 
-/// @nodoc
 class VariantOperation {
   final List<Variant> variants;
-  final VariantOperator operator;
+  final EnumVariantOperator operator;
 
   const VariantOperation(
     this.variants, {
@@ -21,7 +19,7 @@ class VariantOperation {
   });
 
   VariantOperation operator &(Variant variant) {
-    if (operator != VariantOperator.and) {
+    if (operator != EnumVariantOperator.and) {
       throw 'All the operators in the equation must be the same';
     }
 
@@ -31,7 +29,7 @@ class VariantOperation {
   }
 
   VariantOperation operator |(Variant variant) {
-    if (operator != VariantOperator.or) {
+    if (operator != EnumVariantOperator.or) {
       throw 'All the operators in the equation must be the same';
     }
 
@@ -114,9 +112,9 @@ class VariantOperation {
     if (p12 != null) params.add(p12);
 
     List<VariantAttribute> attributes = [];
-    if (operator == VariantOperator.and) {
+    if (operator == EnumVariantOperator.and) {
       attributes = _buildAndOperations(params);
-    } else if (operator == VariantOperator.or) {
+    } else if (operator == EnumVariantOperator.or) {
       attributes = _buildOrOperations(params);
     }
 

@@ -32,7 +32,7 @@ class BoxAttributes extends WidgetAttributes {
   final BoxShape? shape;
   final Gradient? gradient;
 
-  final MergeableMap<BoxDecoratorAttribute>? decorators;
+  final MergeableMap<BoxDecorator>? decorators;
 
   const BoxAttributes({
     this.margin,
@@ -71,7 +71,7 @@ class BoxAttributes extends WidgetAttributes {
     double? minWidth,
     BoxShape? shape,
     Gradient? gradient,
-    MergeableMap<BoxDecoratorAttribute>? decorators,
+    MergeableMap<BoxDecorator>? decorators,
   }) {
     return BoxAttributes(
       margin: margin ?? this.margin,

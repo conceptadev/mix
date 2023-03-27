@@ -1,11 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+import '../../helpers/dto/text_style.dto.dart';
 import '../../mixer/mix_context.dart';
 import 'text.attributes.dart';
 import 'text_directives/text_directive.attributes.dart';
 
-class TextProps {
+class TextDescriptor {
   final bool softWrap;
   final TextOverflow overflow;
 
@@ -20,7 +21,7 @@ class TextProps {
   final TextHeightBehavior? textHeightBehavior;
   final List<TextDirectiveAttribute> _directives;
 
-  const TextProps({
+  const TextDescriptor({
     required this.softWrap,
     required this.overflow,
     this.style,
@@ -34,17 +35,17 @@ class TextProps {
     List<TextDirectiveAttribute>? directives,
   }) : _directives = directives ?? const [];
 
-  factory TextProps.fromContext(BuildContext context) {
+  factory TextDescriptor.fromContext(BuildContext context) {
     final mixContext = MixContext.ensureOf(context);
     final textAttributes = mixContext.attributesOfType<TextAttributes>();
 
     var mergedStyle = const TextStyle();
 
-    for (var style in textAttributes?.styles ?? []) {
+    for (var style in textAttributes?.styles ?? <TextStyleDto>[]) {
       mergedStyle = mergedStyle.merge(style.resolve(context));
     }
 
-    return TextProps(
+    return TextDescriptor(
       // Need to grab colorscheme from context
       style: mergedStyle,
       strutStyle: textAttributes?.strutStyle,
@@ -56,6 +57,7 @@ class TextProps {
       maxLines: textAttributes?.maxLines,
       textWidthBasis: textAttributes?.textWidthBasis,
       textHeightBehavior: textAttributes?.textHeightBehavior,
+
       // Directives
       directives: textAttributes?.directives,
     );
@@ -78,7 +80,7 @@ class TextProps {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is TextProps &&
+    return other is TextDescriptor &&
         other.softWrap == softWrap &&
         other.overflow == overflow &&
         other.style == style &&

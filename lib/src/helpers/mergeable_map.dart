@@ -1,9 +1,9 @@
-import '../decorators/decorator_attribute.dart';
+import '../attributes/attribute.dart';
 
 // Mergeable Map, that merges values baed on their runtime type.
 // This is used to merge different attributes.
 // Also outputs a list in the order that they were added.
-class MergeableMap<T extends MergeableAttributeMixin> {
+class MergeableMap<T extends MergeableMixin> {
   final Map<Type, T> _map = {};
   final List<Type> _keys = [];
 
@@ -18,7 +18,7 @@ class MergeableMap<T extends MergeableAttributeMixin> {
     }
   }
 
-  static MergeableMap<T> fromList<T extends MergeableAttributeMixin<T>>(
+  static MergeableMap<T> fromList<T extends MergeableMixin>(
     List<T> iterable,
   ) {
     final map = MergeableMap<T>();
@@ -51,14 +51,14 @@ class MergeableMap<T extends MergeableAttributeMixin> {
 
     // Iterate over the keys of the current map and add them to the new map.
     for (var key in _keys) {
-      map[key] = _map[key]!;
+      map[key] = _map[key] as T;
     }
 
     // Iterate over the keys of the other map and add them to the new map.
     // If a key already exists in the new map, the value from the other map
     // will overwrite the existing value.
     for (var key in other._keys) {
-      map[key] = other._map[key]!;
+      map[key] = other._map[key] as T;
     }
 
     // Return the new map containing the merged elements.
@@ -68,7 +68,7 @@ class MergeableMap<T extends MergeableAttributeMixin> {
   MergeableMap<T> clone() {
     final map = MergeableMap<T>();
     for (final key in _keys) {
-      map[key] = _map[key]!;
+      map[key] = _map[key] as T;
     }
 
     return map;

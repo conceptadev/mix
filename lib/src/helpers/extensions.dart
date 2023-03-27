@@ -9,7 +9,7 @@ import '../widgets/box/box.descriptor.dart';
 import '../widgets/flex/flex.descriptor.dart';
 import '../widgets/icon/icon.props.dart';
 import '../widgets/image/image.props.dart';
-import '../widgets/text/text.props.dart';
+import '../widgets/text/text.descriptor.dart';
 import '../widgets/zbox/zbox.props.dart';
 
 extension MixContextExtensions on BuildContext {
@@ -31,7 +31,7 @@ extension MixContextExtensions on BuildContext {
   IconProps get iconProps => IconProps.fromContext(this);
 
   @Deprecated('use TextProps.fromContext(context) instead')
-  TextProps get textProps => TextProps.fromContext(this);
+  TextDescriptor get textProps => TextDescriptor.fromContext(this);
 
   @Deprecated('use ImageProps.fromContext(context) instead')
   ImageProps get imageProps => ImageProps.fromContext(this);

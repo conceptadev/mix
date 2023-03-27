@@ -7,6 +7,7 @@ import 'package:mix/src/helpers/dto/border_radius.dto.dart';
 import 'package:mix/src/helpers/dto/color.dto.dart';
 import 'package:mix/src/helpers/dto/edge_insets.dto.dart';
 import 'package:mix/src/helpers/dto/radius_dto.dart';
+import 'package:mix/src/widgets/box/box_decorator.utils.dart';
 
 import '../testing_utils.dart';
 
@@ -45,10 +46,10 @@ void main() {
         'Responds to Flexible attributes',
         (tester) async {
           await tester.pumpWidget(
-            VBox(
-              mix: Mix(
-                const FlexibleDecorator(flex: 2),
-                const FlexibleDecorator(flexFit: FlexFit.tight),
+            BoxInsideFlexWidget(
+              Mix(
+                BoxDecoratorUtility.flex(2),
+                BoxDecoratorUtility.flexFit(FlexFit.tight),
               ),
             ),
           );
@@ -67,7 +68,9 @@ void main() {
         (tester) async {
           await tester.pumpWidget(
             BoxTestWidget(
-              Mix(const RotateDecorator(quarterTurns: 3)),
+              Mix(
+                BoxDecoratorUtility.rotate(3),
+              ),
             ),
           );
 
@@ -102,7 +105,7 @@ void main() {
         (tester) async {
           await tester.pumpWidget(
             BoxTestWidget(
-              Mix(const AspectRatioDecorator(aspectRatio: 3 / 2)),
+              Mix(BoxDecoratorUtility.aspectRatio(3 / 2)),
             ),
           );
 
@@ -141,7 +144,7 @@ void main() {
           await tester.pumpWidget(
             BoxTestWidget(
               Mix(
-                const OpacityDecorator(opacity: 0.5),
+                BoxDecoratorUtility.opacity(0.5),
               ),
             ),
           );

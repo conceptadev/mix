@@ -28,7 +28,7 @@ class BoxDescriptor {
   final double? minWidth;
   final BoxShape? shape;
 
-  final List<BoxDecoratorAttribute>? decorators;
+  final List<BoxDecorator>? decorators;
 
   const BoxDescriptor({
     Color? color,

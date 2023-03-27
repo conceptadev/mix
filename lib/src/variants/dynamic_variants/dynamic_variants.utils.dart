@@ -7,7 +7,6 @@ import '../../theme/tokens/breakpoints.dart';
 import '../../widgets/pressable/pressable.notifier.dart';
 import '../../widgets/pressable/pressable_state.dart';
 import '../context_variant.dart';
-import '../variant.dart';
 import '../variant_condition.dart';
 
 /// {@category Variants}
@@ -142,7 +141,7 @@ class DynamicVariantUtilities {
   }
 
 //TODO: change this API
-  static T onNot<T extends Variant>(T other) {
+  static T onNot<T extends ContextVariant>(T other) {
     return other.inverseInstance() as T;
   }
 

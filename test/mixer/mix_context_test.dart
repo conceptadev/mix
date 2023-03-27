@@ -29,8 +29,6 @@ void main() {
 
       final widgetFinder = find.byType(BoxMixedWidget);
 
-      final boxWidget = widgetFinder.evaluate().first.widget as BoxMixedWidget;
-
       // Get BuildContext for boxWidget
       BuildContext context = tester.element(widgetFinder);
 

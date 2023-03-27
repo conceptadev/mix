@@ -9,7 +9,7 @@ import '../box.decorator.dart';
 /// - [AspectRatioDecoratorUtility](AspectRatioDecoratorUtility-class.html)
 ///
 /// {@category Decorators}
-class AspectRatioDecorator extends BoxDecoratorAttribute<AspectRatioDecorator> {
+class AspectRatioDecorator extends BoxDecorator<AspectRatioDecorator> {
   final double aspectRatio;
   const AspectRatioDecorator({
     required this.aspectRatio,

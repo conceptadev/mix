@@ -125,11 +125,13 @@ class BorderDto extends BoxBorderDto<Border> {
 
   // Used mostly for testing
   factory BorderDto.random() {
+    final side = BorderSideDto.random();
+
     return BorderDto.only(
-      top: BorderSideDto.random(),
-      right: BorderSideDto.random(),
-      bottom: BorderSideDto.random(),
-      left: BorderSideDto.random(),
+      top: side,
+      right: side,
+      bottom: side,
+      left: side,
     );
   }
 

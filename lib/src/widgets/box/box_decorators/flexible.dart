@@ -8,7 +8,7 @@ import '../box.decorator.dart';
 /// - [FlexibleDecoratorUtility](FlexibleDecoratorUtility-class.html)
 ///
 /// {@category Decorators}
-class FlexibleDecorator extends BoxDecoratorAttribute<FlexibleDecorator> {
+class FlexibleDecorator extends BoxDecorator<FlexibleDecorator> {
   final FlexFit? flexFit;
   final int? flex;
   const FlexibleDecorator({

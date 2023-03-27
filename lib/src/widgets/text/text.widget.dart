@@ -7,7 +7,7 @@ import '../../variants/variant.dart';
 import '../mix.widget.dart';
 import '../mix_context_builder.dart';
 import '../nothing.widget.dart';
-import 'text.props.dart';
+import 'text.descriptor.dart';
 
 class TextMix extends MixWidget {
   const TextMix(
@@ -32,7 +32,7 @@ class TextMix extends MixWidget {
     return MixContextBuilder(
       mix: mix,
       builder: (context, _) {
-        final textProps = TextProps.fromContext(context);
+        final textProps = TextDescriptor.fromContext(context);
         final commonProps = CommonDescriptor.fromContext(context);
 
         return TextMixedWidget(
@@ -57,7 +57,7 @@ class TextMixedWidget extends StatelessWidget {
   }) : super(key: key);
 
   final String text;
-  final TextProps textProps;
+  final TextDescriptor textProps;
   final CommonDescriptor commonProps;
   final String? semanticsLabel;
 
@@ -115,7 +115,7 @@ class TextMixedWidget extends StatelessWidget {
     );
 
     properties.add(
-      DiagnosticsProperty<TextProps>(
+      DiagnosticsProperty<TextDescriptor>(
         'props',
         textProps,
         defaultValue: null,
