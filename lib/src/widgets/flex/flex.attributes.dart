@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../attributes/attribute.dart';
-import '../../helpers/dto/double.dto.dart';
 
 ///
 /// ## Widget
@@ -14,7 +13,7 @@ class FlexAttributes extends WidgetAttributes {
   final CrossAxisAlignment? crossAxisAlignment;
   final MainAxisSize? mainAxisSize;
   final VerticalDirection? verticalDirection;
-  final DoubleDto? gapSize;
+  final double? gapSize;
 
   const FlexAttributes({
     this.direction,

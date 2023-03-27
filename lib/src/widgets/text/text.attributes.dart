@@ -2,7 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../attributes/attribute.dart';
-import '../../helpers/dto/double.dto.dart';
 import '../../helpers/dto/text_style.dto.dart';
 import '../../helpers/extensions.dart';
 import 'text_directives/text_directive.attributes.dart';
@@ -17,7 +16,7 @@ class TextAttributes extends WidgetAttributes {
   final Locale? locale;
   final bool? softWrap;
   final TextOverflow? overflow;
-  final DoubleDto? textScaleFactor;
+  final double? textScaleFactor;
   final int? maxLines;
 
   final TextWidthBasis? textWidthBasis;
@@ -61,7 +60,7 @@ class TextAttributes extends WidgetAttributes {
       locale: locale,
       softWrap: softWrap,
       overflow: overflow,
-      textScaleFactor: DoubleDto.maybeFrom(textScaleFactor),
+      textScaleFactor: textScaleFactor,
       maxLines: maxLines,
       textWidthBasis: textWidthBasis,
       textHeightBehavior: textHeightBehavior,
@@ -103,7 +102,7 @@ class TextAttributes extends WidgetAttributes {
     Locale? locale,
     bool? softWrap,
     TextOverflow? overflow,
-    DoubleDto? textScaleFactor,
+    double? textScaleFactor,
     int? maxLines,
     TextWidthBasis? textWidthBasis,
     TextHeightBehavior? textHeightBehavior,

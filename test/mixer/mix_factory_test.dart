@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
 import 'package:mix/src/helpers/dto/color.dto.dart';
-import 'package:mix/src/helpers/dto/double.dto.dart';
 import 'package:mix/src/helpers/dto/edge_insets.dto.dart';
 
 final firstMix = Mix(
@@ -66,7 +65,7 @@ void main() {
       expect(style.values.length, 1);
 
       expect(boxAttribute.color, const ColorDto(Colors.red));
-      expect(boxAttribute.margin, const EdgeInsetsDto.all(DoubleDto(10)));
+      expect(boxAttribute.margin, const EdgeInsetsDto.all(10));
     });
 
     test('Creates a Mix from Attributes List', () async {
@@ -81,7 +80,7 @@ void main() {
       expect(mix.values.length, 1);
 
       expect(boxAttribute.color, const ColorDto(Colors.red));
-      expect(boxAttribute.margin, const EdgeInsetsDto.all(DoubleDto(10)));
+      expect(boxAttribute.margin, const EdgeInsetsDto.all(10));
     });
   });
 

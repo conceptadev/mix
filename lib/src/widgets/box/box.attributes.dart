@@ -6,7 +6,6 @@ import '../../helpers/dto/border.dto.dart';
 import '../../helpers/dto/border_radius.dto.dart';
 import '../../helpers/dto/box_shadow.dto.dart';
 import '../../helpers/dto/color.dto.dart';
-import '../../helpers/dto/double.dto.dart';
 import '../../helpers/dto/edge_insets.dto.dart';
 import '../../helpers/extensions.dart';
 import '../../helpers/mergeable_map.dart';
@@ -16,8 +15,8 @@ class BoxAttributes extends WidgetAttributes {
   final EdgeInsetsGeometryDto? margin;
   final EdgeInsetsGeometryDto? padding;
   final AlignmentGeometry? alignment;
-  final DoubleDto? height;
-  final DoubleDto? width;
+  final double? height;
+  final double? width;
   // Decoration
   final ColorDto? color;
   final BoxBorderDto? border;
@@ -26,10 +25,10 @@ class BoxAttributes extends WidgetAttributes {
   final Matrix4? transform;
 
   // Constraints
-  final DoubleDto? maxHeight;
-  final DoubleDto? minHeight;
-  final DoubleDto? maxWidth;
-  final DoubleDto? minWidth;
+  final double? maxHeight;
+  final double? minHeight;
+  final double? maxWidth;
+  final double? minWidth;
   final BoxShape? shape;
   final Gradient? gradient;
 
@@ -64,12 +63,12 @@ class BoxAttributes extends WidgetAttributes {
     BorderRadiusGeometryDto? borderRadius,
     List<BoxShadowDto>? boxShadow,
     Matrix4? transform,
-    DoubleDto? height,
-    DoubleDto? width,
-    DoubleDto? maxHeight,
-    DoubleDto? minHeight,
-    DoubleDto? maxWidth,
-    DoubleDto? minWidth,
+    double? height,
+    double? width,
+    double? maxHeight,
+    double? minHeight,
+    double? maxWidth,
+    double? minWidth,
     BoxShape? shape,
     Gradient? gradient,
     MergeableMap<BoxDecoratorAttribute>? decorators,

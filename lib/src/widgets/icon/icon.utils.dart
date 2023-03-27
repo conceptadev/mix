@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../helpers/dto/color.dto.dart';
-import '../../helpers/dto/double.dto.dart';
 import 'icon.attributes.dart';
 
 /// ## Widget
@@ -16,7 +15,7 @@ class IconUtility {
   /// Short Utils: icon
   static IconAttributes icon({double? size, Color? color}) {
     return IconAttributes(
-      size: size != null ? DoubleDto(size) : null,
+      size: size,
       color: color != null ? ColorDto(color) : null,
     );
   }
@@ -24,7 +23,7 @@ class IconUtility {
   /// Short Utils: iconSize
   static IconAttributes iconSize(double size) {
     return IconAttributes(
-      size: DoubleDto(size),
+      size: size,
     );
   }
 

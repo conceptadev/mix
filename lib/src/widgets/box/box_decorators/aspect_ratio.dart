@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../attributes/common/common.props.dart';
+import '../../../attributes/common/common.descriptor.dart';
 import '../box.decorator.dart';
 
 /// ## Widget
@@ -25,7 +25,7 @@ class AspectRatioDecorator extends BoxDecoratorAttribute<AspectRatioDecorator> {
 
   @override
   Widget build(BuildContext context, Widget child) {
-    final commonProps = CommonProps.fromContext(context);
+    final commonProps = CommonDescriptor.fromContext(context);
 
     if (commonProps.animated) {
       return TweenAnimationBuilder<double>(

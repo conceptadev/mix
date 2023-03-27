@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-import '../../attributes/common/common.props.dart';
+import '../../attributes/common/common.descriptor.dart';
 import '../../mixer/mix_factory.dart';
 import '../../variants/variant.dart';
 import '../box/box.descriptor.dart';
@@ -8,7 +8,7 @@ import '../box/box.widget.dart';
 import '../gap.widget.dart';
 import '../mix.widget.dart';
 import '../mix_context_builder.dart';
-import 'flex.props.dart';
+import 'flex.descriptor.dart';
 
 class FlexBox extends MixWidget {
   const FlexBox({
@@ -55,9 +55,9 @@ class FlexBox extends MixWidget {
       inherit: inherit,
       variants: variants,
       builder: (context, mixContext) {
-        final flexProps = FlexProps.fromContext(context);
+        final flexProps = FlexDescriptor.fromContext(context);
         final boxProps = BoxDescriptor.fromContext(context);
-        final commonProps = CommonProps.fromContext(context);
+        final commonProps = CommonDescriptor.fromContext(context);
 
         return BoxMixedWidget(
           boxProps: boxProps,

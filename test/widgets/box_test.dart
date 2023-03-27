@@ -4,8 +4,9 @@ import 'package:mix/mix.dart';
 import 'package:mix/src/extensions/mix_extensions.dart';
 import 'package:mix/src/helpers/dto/border.dto.dart';
 import 'package:mix/src/helpers/dto/border_radius.dto.dart';
-import 'package:mix/src/helpers/dto/double.dto.dart';
+import 'package:mix/src/helpers/dto/color.dto.dart';
 import 'package:mix/src/helpers/dto/edge_insets.dto.dart';
+import 'package:mix/src/helpers/dto/radius_dto.dart';
 
 import '../testing_utils.dart';
 
@@ -158,7 +159,7 @@ void main() {
         (tester) async {
           await tester.pumpWidget(
             BoxTestWidget(
-              Mix(BoxUtility.fromValues(color: Colors.lime)),
+              Mix(BoxUtility.backgroundColor(Colors.lime)),
             ),
           );
 
@@ -174,7 +175,7 @@ void main() {
         'Responds to Decoration attributes',
         (tester) async {
           final borderProps = BorderDto.all(
-            color: Colors.green,
+            color: const ColorDto(Colors.green),
             width: 1.0,
             style: BorderStyle.solid,
           );
@@ -184,16 +185,17 @@ void main() {
             width: 1.0,
             style: BorderStyle.solid,
           );
-          final borderRadiusProps =
-              const BorderRadiusDto.only(topLeft: DoubleDto.from(20));
+          const borderRadiusProps = BorderRadiusDto.only(
+            topLeft: RadiusDto.circular(20),
+          );
           const borderRadius = BorderRadius.only(
             topLeft: Radius.circular(20),
           );
           await tester.pumpWidget(
             BoxTestWidget(
               Mix(
-                BoxAttributes(color: Colors.purple.toDto()),
-                BoxAttributes(borderRadius: borderRadiusProps),
+                const BoxAttributes(color: ColorDto(Colors.purple)),
+                const BoxAttributes(borderRadius: borderRadiusProps),
                 BoxAttributes(border: borderProps),
               ),
             ),
@@ -286,10 +288,10 @@ void main() {
           await tester.pumpWidget(
             BoxTestWidget(
               Mix(
-                BoxAttributes(maxHeight: 105.toDto()),
-                BoxAttributes(minHeight: 55.toDto()),
-                BoxAttributes(maxWidth: 155.toDto()),
-                BoxAttributes(minWidth: 45.toDto()),
+                const BoxAttributes(maxHeight: 105),
+                const BoxAttributes(minHeight: 55),
+                const BoxAttributes(maxWidth: 155),
+                const BoxAttributes(minWidth: 45),
               ),
             ),
           );

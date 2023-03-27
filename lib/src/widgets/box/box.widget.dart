@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../attributes/common/common.props.dart';
+import '../../attributes/common/common.descriptor.dart';
 import '../../decorators/decorator_wrapper.widget.dart';
 import '../../mixer/mix_factory.dart';
 import '../../variants/variant.dart';
@@ -33,7 +33,7 @@ class Box extends MixWidget {
       variants: variants,
       builder: (context, mixContext) {
         final boxProps = BoxDescriptor.fromContext(context);
-        final commonProps = CommonProps.fromContext(context);
+        final commonProps = CommonDescriptor.fromContext(context);
 
         return BoxMixedWidget(
           boxProps: boxProps,
@@ -57,7 +57,7 @@ class BoxMixedWidget extends StatelessWidget {
   }) : super(key: key);
 
   final BoxDescriptor boxProps;
-  final CommonProps commonProps;
+  final CommonDescriptor commonProps;
 
   @override
   Widget build(BuildContext context) {

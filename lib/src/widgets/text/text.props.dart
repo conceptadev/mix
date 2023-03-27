@@ -52,7 +52,7 @@ class TextProps {
       locale: textAttributes?.locale,
       softWrap: textAttributes?.softWrap ?? true,
       overflow: textAttributes?.overflow ?? TextOverflow.clip,
-      textScaleFactor: textAttributes?.textScaleFactor?.resolve(context),
+      textScaleFactor: textAttributes?.textScaleFactor,
       maxLines: textAttributes?.maxLines,
       textWidthBasis: textAttributes?.textWidthBasis,
       textHeightBehavior: textAttributes?.textHeightBehavior,

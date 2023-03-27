@@ -3,11 +3,11 @@ import 'dart:math';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import '../../theme/refs/color_token.dart';
+import 'color.dto.dart';
 import 'dto.dart';
 
 class BoxShadowDto extends Dto<BoxShadow> {
-  final Color? color;
+  final ColorDto? color;
   final Offset? offset;
   final double? blurRadius;
   final double? spreadRadius;
@@ -28,22 +28,28 @@ class BoxShadowDto extends Dto<BoxShadow> {
 
     return BoxShadowDto(
       blurRadius: boxShadow.blurRadius,
-      color: boxShadow.color,
+      color: ColorDto.maybeFrom(boxShadow.color),
       offset: Offset(boxShadow.offset.dx, boxShadow.offset.dy),
       spreadRadius: boxShadow.spreadRadius,
     );
   }
 
+  factory BoxShadowDto.random() {
+    return BoxShadowDto(
+      color: ColorDto.random(),
+      offset: Offset(
+        Random().nextDouble() * 10,
+        Random().nextDouble() * 10,
+      ),
+      blurRadius: Random().nextDouble() * 10,
+      spreadRadius: Random().nextDouble() * 10,
+    );
+  }
+
   @override
   BoxShadow resolve(BuildContext context) {
-    Color? resolvedColor = color;
-
-    if (resolvedColor is ColorToken) {
-      resolvedColor = resolvedColor.resolve(context);
-    }
-
     return BoxShadow(
-      color: color ?? _default.color,
+      color: color?.resolve(context) ?? _default.color,
       offset: offset ?? _default.offset,
       blurRadius: blurRadius ?? _default.blurRadius,
       spreadRadius: spreadRadius ?? _default.spreadRadius,
@@ -59,7 +65,7 @@ class BoxShadowDto extends Dto<BoxShadow> {
   }
 
   BoxShadowDto copyWith({
-    Color? color,
+    ColorDto? color,
     Offset? offset,
     double? blurRadius,
     double? spreadRadius,

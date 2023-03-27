@@ -2,7 +2,6 @@ import 'package:flutter/foundation.dart';
 
 import '../../mix.dart';
 import '../attributes/nested_attribute.dart';
-import '../directives/directive_attribute.dart';
 import '../helpers/mergeable_map.dart';
 import '../variants/variant_attribute.dart';
 
@@ -24,7 +23,6 @@ class MixValues {
 
     final variantList = <VariantAttribute>[];
     final contextVariantList = <ContextVariantAttribute>[];
-
     final attributeList = <WidgetAttributes>[];
 
     for (final attribute in expanded) {
@@ -43,7 +41,7 @@ class MixValues {
     }
 
     return MixValues(
-      attributes: MergeableMap.fromList<WidgetAttributes>(attributeList),
+      attributes: MergeableMap.fromList(attributeList),
       variants: variantList,
       contextVariants: contextVariantList,
     );
@@ -82,12 +80,22 @@ class MixValues {
     MergeableMap<WidgetAttributes>? attributes,
     List<VariantAttribute>? variants,
     List<ContextVariantAttribute>? contextVariants,
-    List<DirectiveAttribute>? directives,
   }) {
     return MixValues(
-      attributes: attributes ?? this.attributes,
-      variants: variants ?? this.variants,
-      contextVariants: contextVariants ?? this.contextVariants,
+      attributes: this.attributes?.merge(attributes) ?? attributes,
+      variants: [...this.variants, ...?variants],
+      contextVariants: [...this.contextVariants, ...?contextVariants],
+    );
+  }
+
+  /// Merges the current [MixValues] instance with another [MixValues] instance.
+  MixValues merge(MixValues? other) {
+    if (other == null || other.isEmpty) return this;
+
+    return copyWith(
+      attributes: other.attributes,
+      variants: other.variants,
+      contextVariants: other.contextVariants,
     );
   }
 
@@ -97,17 +105,6 @@ class MixValues {
       attributes: attributes?.clone(),
       variants: [...variants],
       contextVariants: [...contextVariants],
-    );
-  }
-
-  /// Merges the current [MixValues] instance with another [MixValues] instance.
-  MixValues merge(MixValues? other) {
-    if (other?.isEmpty == true) return this;
-
-    return MixValues(
-      attributes: attributes?.merge(other?.attributes) ?? other?.attributes,
-      variants: [...variants, ...?other?.variants],
-      contextVariants: [...contextVariants, ...?other?.contextVariants],
     );
   }
 

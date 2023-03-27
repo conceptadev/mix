@@ -1,6 +1,5 @@
 import '../../attributes/attribute.dart';
 import '../../helpers/dto/color.dto.dart';
-import '../../helpers/dto/double.dto.dart';
 
 /// ## Widget
 /// - [IconMix](IconMix-class.html)
@@ -8,7 +7,7 @@ import '../../helpers/dto/double.dto.dart';
 /// {@category Attributes}
 class IconAttributes extends WidgetAttributes {
   final ColorDto? color;
-  final DoubleDto? size;
+  final double? size;
   const IconAttributes({
     this.color,
     this.size,

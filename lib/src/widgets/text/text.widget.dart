@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import '../../attributes/common/common.props.dart';
+import '../../attributes/common/common.descriptor.dart';
 import '../../mixer/mix_factory.dart';
 import '../../variants/variant.dart';
 import '../mix.widget.dart';
@@ -33,7 +33,7 @@ class TextMix extends MixWidget {
       mix: mix,
       builder: (context, _) {
         final textProps = TextProps.fromContext(context);
-        final commonProps = CommonProps.fromContext(context);
+        final commonProps = CommonDescriptor.fromContext(context);
 
         return TextMixedWidget(
           textProps: textProps,
@@ -58,7 +58,7 @@ class TextMixedWidget extends StatelessWidget {
 
   final String text;
   final TextProps textProps;
-  final CommonProps commonProps;
+  final CommonDescriptor commonProps;
   final String? semanticsLabel;
 
   @override
@@ -123,7 +123,7 @@ class TextMixedWidget extends StatelessWidget {
     );
 
     properties.add(
-      DiagnosticsProperty<CommonProps>(
+      DiagnosticsProperty<CommonDescriptor>(
         'commonProps',
         commonProps,
         defaultValue: null,

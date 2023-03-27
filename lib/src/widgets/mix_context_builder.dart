@@ -31,9 +31,11 @@ class MixContextBuilder extends MixWidget {
 
     return MixContext(
       mixContext,
-      child: _builder(
-        context,
-        mixContext,
+      child: Builder(
+        builder: (context) => _builder(
+          context,
+          mixContext,
+        ),
       ),
     );
   }

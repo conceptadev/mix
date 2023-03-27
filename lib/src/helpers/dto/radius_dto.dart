@@ -1,38 +1,39 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
-import 'double.dto.dart';
 import 'dto.dart';
 
 class RadiusDto extends Dto<Radius> {
   /// The radius value on the horizontal axis.
-  final DoubleDto _x;
+  final double _x;
 
   /// The radius value on the vertical axis.
-  final DoubleDto _y;
+  final double _y;
 
-  const RadiusDto.circular(DoubleDto radius) : this.elliptical(radius, radius);
+  const RadiusDto.circular(double radius) : this.elliptical(radius, radius);
 
   const RadiusDto.zero()
       : this.elliptical(
-          const DoubleDto(0),
-          const DoubleDto(0),
+          0,
+          0,
         );
 
   /// Constructs an elliptical radius with the given radii.
-  const RadiusDto.elliptical(DoubleDto x, DoubleDto y)
+  const RadiusDto.elliptical(double x, double y)
       : _x = x,
         _y = y;
 
   factory RadiusDto.from(Radius radius) {
     if (radius.x == radius.y) {
       return RadiusDto.circular(
-        DoubleDto.from(radius.x),
+        radius.x,
       );
     }
 
     return RadiusDto.elliptical(
-      DoubleDto.from(radius.x),
-      DoubleDto.from(radius.y),
+      radius.x,
+      radius.y,
     );
   }
 
@@ -42,10 +43,17 @@ class RadiusDto extends Dto<Radius> {
     return RadiusDto.from(radius);
   }
 
+  factory RadiusDto.random() {
+    return RadiusDto.elliptical(
+      Random().nextDouble() * 20,
+      Random().nextDouble() * 20,
+    );
+  }
+
   @override
   Radius resolve(BuildContext context) {
-    final resolvedX = _x.resolve(context);
-    final resolvedY = _y.resolve(context);
+    final resolvedX = _x;
+    final resolvedY = _y;
 
     if (resolvedX == 0 && resolvedY == 0) {
       return Radius.zero;

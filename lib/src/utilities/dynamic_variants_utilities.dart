@@ -16,6 +16,7 @@ final onDisabled = DynamicVariantUtilities.onDisabled();
 final onFocus = DynamicVariantUtilities.onFocus();
 final onHover = DynamicVariantUtilities.onHover();
 final onPress = DynamicVariantUtilities.onPress();
+final onLongPress = DynamicVariantUtilities.onLongPress();
 const onNot = DynamicVariantUtilities.onNot;
 final onEnabled = onNot(onDisabled);
 const when = DynamicVariantUtilities.when;

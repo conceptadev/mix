@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/src/attributes/common/common.attributes.dart';
 import 'package:mix/src/extensions/mix_extensions.dart';
+import 'package:mix/src/helpers/dto/color.dto.dart';
 import 'package:mix/src/mixer/mix_factory.dart';
 import 'package:mix/src/widgets/icon/icon.attributes.dart';
 
@@ -26,8 +27,8 @@ void main() {
       await tester.pumpWidget(
         TestMixWidget(
           child: Mix(
-            IconAttributes(color: Colors.greenAccent.toDto()),
-            IconAttributes(size: 23.toDto()),
+            const IconAttributes(color: ColorDto(Colors.greenAccent)),
+            const IconAttributes(size: 23),
             const CommonAttributes(textDirection: TextDirection.rtl),
           ).icon(Icons.bolt),
         ),

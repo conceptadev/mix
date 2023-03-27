@@ -27,7 +27,7 @@ class IconProps {
 
       props = IconProps(
         color: iconAttributes.color?.resolve(context) ?? theme.color,
-        size: iconAttributes.size?.resolve(context) ?? theme.size ?? 24,
+        size: iconAttributes.size ?? theme.size ?? 24,
       );
     }
 

@@ -13,17 +13,23 @@ void main() {
 
     await tester.pumpWidget(
       MaterialApp(
-        theme: ThemeData(),
-        darkTheme: ThemeData.dark(),
-        themeMode: ThemeMode.dark,
+        theme: ThemeData.dark(),
         home: Box(
           mix: mix,
         ),
       ),
     );
-    final colorWidget = tester.widget<Container>(find.byType(Container));
+    final containerWidget =
+        find.byType(Container).evaluate().first.widget as Container;
 
-    expect(colorWidget.color, Colors.black);
+    final widgetFinder = find.byType(BoxMixedWidget);
+
+    // Get BuildContext for boxWidget
+    BuildContext context = tester.element(widgetFinder);
+
+    expect(context.brightness, Brightness.dark);
+    expect(containerWidget.color, isNot(equals(Colors.green)));
+    expect(containerWidget.color, Colors.black);
   });
 
   testWidgets('not Variant', (tester) async {
@@ -31,7 +37,7 @@ void main() {
       theme: ThemeData(),
       darkTheme: ThemeData.dark(),
       themeMode: ThemeMode.light,
-      home: const Box(
+      home: Box(
         mix: Mix(
           onNot(onDark)(bgColor(Colors.black)),
           h(50),
@@ -48,7 +54,7 @@ void main() {
     bool hasError = true;
 
     Widget box() {
-      return const Box(
+      return Box(
         mix: Mix(
           when(hasError)(
             bgColor(Colors.red),

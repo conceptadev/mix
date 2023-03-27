@@ -141,6 +141,7 @@ class DynamicVariantUtilities {
     );
   }
 
+//TODO: change this API
   static T onNot<T extends Variant>(T other) {
     return other.inverseInstance() as T;
   }

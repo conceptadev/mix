@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../mixer/mix_context.dart';
 import 'flex.attributes.dart';
 
-class FlexProps {
+class FlexDescriptor {
   final Axis? direction;
   final MainAxisAlignment mainAxisAlignment;
   final CrossAxisAlignment crossAxisAlignment;
@@ -11,7 +11,7 @@ class FlexProps {
   final VerticalDirection verticalDirection;
   final double? gapSize;
 
-  const FlexProps({
+  const FlexDescriptor({
     this.direction,
     required this.mainAxisAlignment,
     required this.crossAxisAlignment,
@@ -20,11 +20,11 @@ class FlexProps {
     this.gapSize,
   });
 
-  factory FlexProps.fromContext(BuildContext context) {
+  factory FlexDescriptor.fromContext(BuildContext context) {
     final mixContext = MixContext.ensureOf(context);
     final flexAttributes = mixContext.attributesOfType<FlexAttributes>();
 
-    return FlexProps(
+    return FlexDescriptor(
       direction: flexAttributes?.direction,
       mainAxisAlignment:
           flexAttributes?.mainAxisAlignment ?? MainAxisAlignment.start,
@@ -33,7 +33,7 @@ class FlexProps {
       mainAxisSize: flexAttributes?.mainAxisSize ?? MainAxisSize.max,
       verticalDirection:
           flexAttributes?.verticalDirection ?? VerticalDirection.down,
-      gapSize: flexAttributes?.gapSize?.resolve(context),
+      gapSize: flexAttributes?.gapSize,
     );
   }
 
@@ -41,7 +41,7 @@ class FlexProps {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is FlexProps &&
+    return other is FlexDescriptor &&
         other.direction == direction &&
         other.mainAxisAlignment == mainAxisAlignment &&
         other.crossAxisAlignment == crossAxisAlignment &&

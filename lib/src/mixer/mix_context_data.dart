@@ -16,16 +16,6 @@ class MixContextData {
     required BuildContext context,
     required Mix mix,
   }) {
-    return _build(
-      context: context,
-      mix: mix,
-    );
-  }
-
-  static MixContextData _build<T extends Attribute>({
-    required BuildContext context,
-    required Mix mix,
-  }) {
     // Tracks the values selected and does not allow for
     // attributes already expended to be expended again.
     MixValues values = MixValues(
@@ -34,7 +24,7 @@ class MixContextData {
       contextVariants: [],
     );
 
-    final contextVariants = values.contextVariants;
+    final contextVariants = mix.values.contextVariants;
 
     final attributes = _applyContextVariants(
       context,

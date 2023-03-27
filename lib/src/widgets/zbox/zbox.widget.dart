@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-import '../../attributes/common/common.props.dart';
+import '../../attributes/common/common.descriptor.dart';
 import '../../mixer/mix_factory.dart';
 import '../../variants/variant.dart';
 import '../box/box.descriptor.dart';
@@ -37,7 +37,7 @@ class ZBox extends MixWidget {
       builder: (context, mixContext) {
         final zProps = ZBoxProps.fromContext(context);
         final boxProps = BoxDescriptor.fromContext(context);
-        final commonProps = CommonProps.fromContext(context);
+        final commonProps = CommonDescriptor.fromContext(context);
 
         return BoxMixedWidget(
           boxProps: boxProps,

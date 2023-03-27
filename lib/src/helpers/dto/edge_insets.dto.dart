@@ -1,7 +1,8 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
-import '../../theme/mix_theme.dart';
-import 'double.dto.dart';
+import '../../../mix.dart';
 import 'dto.dart';
 
 abstract class EdgeInsetsGeometryDto<T extends EdgeInsetsGeometry>
@@ -70,10 +71,10 @@ abstract class EdgeInsetsGeometryDto<T extends EdgeInsetsGeometry>
 }
 
 class EdgeInsetsDto extends EdgeInsetsGeometryDto<EdgeInsets> {
-  final DoubleDto? top;
-  final DoubleDto? bottom;
-  final DoubleDto? left;
-  final DoubleDto? right;
+  final double? top;
+  final double? bottom;
+  final double? left;
+  final double? right;
 
   const EdgeInsetsDto._({
     this.top,
@@ -89,7 +90,7 @@ class EdgeInsetsDto extends EdgeInsetsGeometryDto<EdgeInsets> {
     this.right,
   });
 
-  const EdgeInsetsDto.all(DoubleDto value)
+  const EdgeInsetsDto.all(double value)
       : this._(
           top: value,
           bottom: value,
@@ -98,8 +99,8 @@ class EdgeInsetsDto extends EdgeInsetsGeometryDto<EdgeInsets> {
         );
 
   const EdgeInsetsDto.symmetric({
-    DoubleDto? horizontal,
-    DoubleDto? vertical,
+    double? horizontal,
+    double? vertical,
   }) : this._(
           top: vertical,
           bottom: vertical,
@@ -116,35 +117,36 @@ class EdgeInsetsDto extends EdgeInsetsGeometryDto<EdgeInsets> {
     );
   }
 
-  static EdgeInsetsDto? fromNullable(EdgeInsets? edgeInsets) {
+  // Helper utility for internal API use and cleaner conditional checking
+  static EdgeInsetsDto? maybeFrom(EdgeInsets? edgeInsets) {
     if (edgeInsets == null) return null;
 
     return EdgeInsetsDto.from(edgeInsets);
   }
 
   @override
-  DoubleDto? get _top => top;
+  double? get _top => top;
 
   @override
-  DoubleDto? get _bottom => bottom;
+  double? get _bottom => bottom;
 
   @override
-  DoubleDto? get _left => left;
+  double? get _left => left;
 
   @override
-  DoubleDto? get _right => right;
+  double? get _right => right;
 
   @override
-  DoubleDto? get _start => null;
+  double? get _start => null;
 
   @override
-  DoubleDto? get _end => null;
+  double? get _end => null;
 
   EdgeInsetsDto copyWith({
-    DoubleDto? top,
-    DoubleDto? bottom,
-    DoubleDto? left,
-    DoubleDto? right,
+    double? top,
+    double? bottom,
+    double? left,
+    double? right,
   }) {
     return EdgeInsetsDto._(
       top: top ?? this.top,
@@ -161,10 +163,22 @@ class EdgeInsetsDto extends EdgeInsetsGeometryDto<EdgeInsets> {
     // TODO: Clean this up
 
     return EdgeInsets.only(
-      top: spacing.fromValue(_top?.resolve(context)) ?? 0.0,
-      bottom: spacing.fromValue(_bottom?.resolve(context)) ?? 0.0,
-      left: spacing.fromValue(_left?.resolve(context)) ?? 0.0,
-      right: spacing.fromValue(_right?.resolve(context)) ?? 0.0,
+      top: spacing.fromValue(_top) ?? 0.0,
+      bottom: spacing.fromValue(_bottom) ?? 0.0,
+      left: spacing.fromValue(_left) ?? 0.0,
+      right: spacing.fromValue(_right) ?? 0.0,
+    );
+  }
+
+  // Used mostly for testing
+  factory EdgeInsetsDto.random() {
+    final random = Random();
+
+    return EdgeInsetsDto._(
+      top: random.nextMaxDouble(100),
+      bottom: random.nextMaxDouble(100),
+      left: random.nextMaxDouble(100),
+      right: random.nextMaxDouble(100),
     );
   }
 
@@ -187,10 +201,10 @@ class EdgeInsetsDto extends EdgeInsetsGeometryDto<EdgeInsets> {
 
 class EdgeInsetsDirectionalDto
     extends EdgeInsetsGeometryDto<EdgeInsetsDirectional> {
-  final DoubleDto? top;
-  final DoubleDto? bottom;
-  final DoubleDto? start;
-  final DoubleDto? end;
+  final double? top;
+  final double? bottom;
+  final double? start;
+  final double? end;
 
   const EdgeInsetsDirectionalDto._({
     this.top,
@@ -206,7 +220,7 @@ class EdgeInsetsDirectionalDto
     this.end,
   });
 
-  const EdgeInsetsDirectionalDto.all(DoubleDto value)
+  const EdgeInsetsDirectionalDto.all(double value)
       : this._(
           top: value,
           bottom: value,
@@ -215,8 +229,8 @@ class EdgeInsetsDirectionalDto
         );
 
   const EdgeInsetsDirectionalDto.symmetric({
-    DoubleDto? horizontal,
-    DoubleDto? vertical,
+    double? horizontal,
+    double? vertical,
   }) : this._(
           top: vertical,
           bottom: vertical,
@@ -236,28 +250,28 @@ class EdgeInsetsDirectionalDto
   }
 
   @override
-  DoubleDto? get _top => top;
+  double? get _top => top;
 
   @override
-  DoubleDto? get _bottom => bottom;
+  double? get _bottom => bottom;
 
   @override
-  DoubleDto? get _left => null;
+  double? get _left => null;
 
   @override
-  DoubleDto? get _right => null;
+  double? get _right => null;
 
   @override
-  DoubleDto? get _start => start;
+  double? get _start => start;
 
   @override
-  DoubleDto? get _end => end;
+  double? get _end => end;
 
   EdgeInsetsDirectionalDto copyWith({
-    DoubleDto? top,
-    DoubleDto? bottom,
-    DoubleDto? start,
-    DoubleDto? end,
+    double? top,
+    double? bottom,
+    double? start,
+    double? end,
   }) {
     return EdgeInsetsDirectionalDto._(
       top: top ?? this.top,
@@ -272,10 +286,10 @@ class EdgeInsetsDirectionalDto
     final spacing = MixTheme.of(context).space;
 
     return EdgeInsetsDirectional.only(
-      top: spacing.fromValue(_top?.resolve(context)) ?? 0.0,
-      bottom: spacing.fromValue(_bottom?.resolve(context)) ?? 0.0,
-      start: spacing.fromValue(_start?.resolve(context)) ?? 0.0,
-      end: spacing.fromValue(_end?.resolve(context)) ?? 0.0,
+      top: spacing.fromValue(_top) ?? 0.0,
+      bottom: spacing.fromValue(_bottom) ?? 0.0,
+      start: spacing.fromValue(_start) ?? 0.0,
+      end: spacing.fromValue(_end) ?? 0.0,
     );
   }
 
@@ -296,8 +310,8 @@ class EdgeInsetsDirectionalDto
   }
 }
 
-DoubleDto? _nullIfZero(double? value) {
+double? _nullIfZero(double? value) {
   if (value == null || value == 0.0) return null;
 
-  return DoubleDto(value);
+  return value;
 }

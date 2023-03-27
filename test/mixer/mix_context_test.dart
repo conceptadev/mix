@@ -15,8 +15,8 @@ final overrideTextAttribute = TextAttributes.fromValues(
 );
 
 final pressableMix = Mix.fromAttributes([
-  baseBoxAttributes,
-  baseTextAttributes,
+  randomBoxAttributes(),
+  randomTextAttributes(),
   textVariant(overrideTextAttribute),
 ]);
 
@@ -34,12 +34,17 @@ void main() {
       // Get BuildContext for boxWidget
       BuildContext context = tester.element(widgetFinder);
 
-// Grab the MixContext from the BoxMixedWidget MixContext.of(context)
+      // Grab the MixContext from the BoxMixedWidget MixContext.of(context)
       final mix = MixContext.of(context);
 
       final matchMix = MixContextData.create(
         context: context,
         mix: pressableMix,
+      );
+
+      final clonedMix = MixContextData.create(
+        context: context,
+        mix: pressableMix.clone(),
       );
 
       expect(mix?.toValues(), matchMix.toValues());
@@ -51,7 +56,10 @@ void main() {
       );
 
       // Different instance but same properties
-      expect(matchMix.hashCode == mix.hashCode, false);
+      expect(matchMix.hashCode == mix.hashCode, true);
+      expect(clonedMix.hashCode == mix.hashCode, false);
+      expect(matchMix, equals(mix));
+      expect(clonedMix, equals(mix));
       expect(widgetFinder, findsOneWidget);
     });
   });

@@ -1,10 +1,12 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
-import '../attributes/common/common.props.dart';
+import '../attributes/common/common.descriptor.dart';
 import '../mixer/mix_context.dart';
 import '../mixer/mix_context_data.dart';
 import '../widgets/box/box.descriptor.dart';
-import '../widgets/flex/flex.props.dart';
+import '../widgets/flex/flex.descriptor.dart';
 import '../widgets/icon/icon.props.dart';
 import '../widgets/image/image.props.dart';
 import '../widgets/text/text.props.dart';
@@ -14,13 +16,13 @@ extension MixContextExtensions on BuildContext {
   MixContextData? get mixContext => MixContext.of(this);
 
   @Deprecated('use SharedProps.fromContext(context) instead')
-  CommonProps get sharedProps => CommonProps.fromContext(this);
+  CommonDescriptor get sharedProps => CommonDescriptor.fromContext(this);
 
   @Deprecated('use BoxProps.fromContext(context) instead')
   BoxDescriptor get boxProps => BoxDescriptor.fromContext(this);
 
   @Deprecated('use FlexProps.fromContext(context) instead')
-  FlexProps get flexProps => FlexProps.fromContext(this);
+  FlexDescriptor get flexProps => FlexDescriptor.fromContext(this);
 
   @Deprecated('use ZBoxProps.fromContext(context) instead')
   ZBoxProps get zBoxProps => ZBoxProps.fromContext(this);
@@ -35,7 +37,7 @@ extension MixContextExtensions on BuildContext {
   ImageProps get imageProps => ImageProps.fromContext(this);
 }
 
-extension ThemeContextExtensions on BuildContext {
+extension ThemeContextExt on BuildContext {
   Brightness get brightness => Theme.of(this).brightness;
 
   /// Check if brightness is Brightness.dark
@@ -52,7 +54,7 @@ extension ThemeContextExtensions on BuildContext {
 }
 
 /// {@category Misc Utils}
-extension MediaQueryContextExtensions on BuildContext {
+extension MediaQueryContextExt on BuildContext {
   /// MediaQueryData for context
   MediaQueryData get mq => MediaQuery.of(this);
 
@@ -77,7 +79,7 @@ extension MediaQueryContextExtensions on BuildContext {
   double get screenHeight => mq.size.height;
 }
 
-extension StrutStyleExtension on StrutStyle {
+extension StrutStyleExt on StrutStyle {
   StrutStyle merge(StrutStyle? other) {
     return StrutStyle(
       fontFamily: other?.fontFamily ?? fontFamily,
@@ -94,7 +96,7 @@ extension StrutStyleExtension on StrutStyle {
   }
 }
 
-extension Matrix4Extension on Matrix4 {
+extension Matrix4Ext on Matrix4 {
   /// Merge [other] into this matrix.
   Matrix4 merge(Matrix4? other) {
     if (other == null || other == this) return this;
@@ -103,11 +105,56 @@ extension Matrix4Extension on Matrix4 {
   }
 }
 
-extension IterableExtension<T> on Iterable<T> {
+extension IterableExt<T> on Iterable<T> {
   Iterable<T> sorted([Comparator<T>? compare]) {
     List<T> newList = List.from(this);
     newList.sort(compare);
 
     return newList;
+  }
+}
+
+extension ListExt<T> on List<T> {
+  T random() {
+    return Random().randomElement(this);
+  }
+
+  T? firstWhereOrNull(bool Function(T) test) {
+    for (T element in this) {
+      if (test(element)) {
+        return element;
+      }
+    }
+
+    return null;
+  }
+}
+
+extension RandomExt on Random {
+  T randomElement<T>(List<T> list) {
+    if (list.isEmpty) throw StateError('List is empty');
+
+    return list[nextInt(list.length)];
+  }
+
+  T? randomElementOrNull<T>(List<T> list) {
+    return list.isEmpty ? null : randomElement(list);
+  }
+
+  T randomElementOr<T>(List<T> list, T or) {
+    return list.isEmpty ? or : randomElement(list);
+  }
+
+  double nextDoubleInRange(double min, double max) {
+    return min + nextDouble() * (max - min);
+  }
+
+  int nextIntInRange(int min, int max) {
+    return min + nextInt(max - min);
+  }
+
+  // Returns a double within the max value range.
+  double nextMaxDouble(double max) {
+    return nextDoubleInRange(0, max);
   }
 }

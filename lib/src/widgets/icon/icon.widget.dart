@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../attributes/common/common.props.dart';
+import '../../attributes/common/common.descriptor.dart';
 import '../../mixer/mix_factory.dart';
 import '../../variants/variant.dart';
 import '../mix.widget.dart';
@@ -34,7 +34,7 @@ class IconMix extends MixWidget {
       variants: variants,
       builder: (context, mixContext) {
         final iconProps = IconProps.fromContext(context);
-        final commonProps = CommonProps.fromContext(context);
+        final commonProps = CommonDescriptor.fromContext(context);
 
         return IconMixerWidget(
           iconProps: iconProps,
@@ -58,7 +58,7 @@ class IconMixerWidget extends StatelessWidget {
 
   final IconData? icon;
   final IconProps iconProps;
-  final CommonProps commonProps;
+  final CommonDescriptor commonProps;
 
   final String? semanticLabel;
 

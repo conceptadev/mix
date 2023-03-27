@@ -94,7 +94,7 @@ void main() {
 
     watch.start();
 
-    mix.withVariant(hasError);
+    mix.selectVariant(hasError);
 
     watch.stop();
 

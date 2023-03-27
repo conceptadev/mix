@@ -1,6 +1,9 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
-import '../../theme/refs/color_token.dart';
+import '../../../mix.dart';
+import 'color.dto.dart';
 import 'dto.dart';
 
 abstract class BoxBorderDto<T extends BoxBorder> extends Dto<T> {
@@ -98,7 +101,7 @@ class BorderDto extends BoxBorderDto<Border> {
         );
 
   factory BorderDto.all({
-    Color? color,
+    ColorDto? color,
     double? width,
     BorderStyle? style,
   }) {
@@ -120,12 +123,14 @@ class BorderDto extends BoxBorderDto<Border> {
     );
   }
 
-  static BorderDto? fromNullable(Border? border) {
-    if (border == null) {
-      return null;
-    }
-
-    return BorderDto.from(border);
+  // Used mostly for testing
+  factory BorderDto.random() {
+    return BorderDto.only(
+      top: BorderSideDto.random(),
+      right: BorderSideDto.random(),
+      bottom: BorderSideDto.random(),
+      left: BorderSideDto.random(),
+    );
   }
 
   @override
@@ -247,7 +252,7 @@ class BorderDirectionalDto extends BoxBorderDto<BorderDirectional> {
         );
 
   factory BorderDirectionalDto.all({
-    Color? color,
+    ColorDto? color,
     double? width,
     BorderStyle? style,
   }) {
@@ -334,7 +339,7 @@ class BorderDirectionalDto extends BoxBorderDto<BorderDirectional> {
 }
 
 class BorderSideDto extends Dto<BorderSide> {
-  final Color? color;
+  final ColorDto? color;
   final double? width;
   final BorderStyle? style;
 
@@ -352,14 +357,22 @@ class BorderSideDto extends Dto<BorderSide> {
 
   factory BorderSideDto.fromBorderSide(BorderSide side) {
     return BorderSideDto.only(
-      color: side.color,
+      color: ColorDto(side.color),
       width: side.width,
       style: side.style,
     );
   }
 
+  factory BorderSideDto.random() {
+    return BorderSideDto.only(
+      color: ColorDto.random(),
+      width: Random().nextDouble() * 4,
+      style: BorderStyle.values.random(),
+    );
+  }
+
   BorderSideDto copyWith({
-    Color? color,
+    ColorDto? color,
     double? width,
     BorderStyle? style,
   }) {
@@ -384,14 +397,8 @@ class BorderSideDto extends Dto<BorderSide> {
 
   @override
   BorderSide resolve(BuildContext context) {
-    Color? resolvedColor = color;
-
-    if (resolvedColor is ColorToken) {
-      resolvedColor = resolvedColor.resolve(context);
-    }
-
     return BorderSide(
-      color: resolvedColor ?? _default.color,
+      color: color?.resolve(context) ?? _default.color,
       width: width ?? _default.width,
       style: style ?? _default.style,
     );

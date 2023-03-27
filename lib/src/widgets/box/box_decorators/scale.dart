@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../attributes/common/common.props.dart';
+import '../../../attributes/common/common.descriptor.dart';
 import '../box.decorator.dart';
 
 /// ## Widget
@@ -23,7 +23,7 @@ class ScaleDecorator extends BoxDecoratorAttribute<ScaleDecorator> {
 
   @override
   Widget build(BuildContext context, Widget? child) {
-    final common = CommonProps.fromContext(context);
+    final common = CommonDescriptor.fromContext(context);
     if (common.animated) {
       return TweenAnimationBuilder<double>(
         tween: Tween<double>(begin: 1, end: scale),

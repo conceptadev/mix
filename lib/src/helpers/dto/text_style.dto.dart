@@ -4,16 +4,15 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'color.dto.dart';
-import 'double.dto.dart';
 import 'dto.dart';
 
 class TextStyleDto extends Dto<TextStyle> {
   final String? fontFamily;
   final FontWeight? fontWeight;
   final FontStyle? fontStyle;
-  final DoubleDto? fontSize;
-  final DoubleDto? letterSpacing;
-  final DoubleDto? wordSpacing;
+  final double? fontSize;
+  final double? letterSpacing;
+  final double? wordSpacing;
   final TextBaseline? textBaseline;
   final ColorDto? color;
   final ColorDto? backgroundColor;
@@ -43,9 +42,6 @@ class TextStyleDto extends Dto<TextStyle> {
   });
 
   factory TextStyleDto.from(TextStyle style) {
-    final fontSize = style.fontSize;
-    final letterSpacing = style.letterSpacing;
-    final wordSpacing = style.wordSpacing;
     final color = style.color;
     final backgroundColor = style.backgroundColor;
     final decorationColor = style.decorationColor;
@@ -54,9 +50,9 @@ class TextStyleDto extends Dto<TextStyle> {
       fontFamily: style.fontFamily,
       fontWeight: style.fontWeight,
       fontStyle: style.fontStyle,
-      fontSize: fontSize != null ? DoubleDto(fontSize) : null,
-      letterSpacing: letterSpacing != null ? DoubleDto(letterSpacing) : null,
-      wordSpacing: wordSpacing != null ? DoubleDto(wordSpacing) : null,
+      fontSize: style.fontSize,
+      letterSpacing: style.letterSpacing,
+      wordSpacing: style.wordSpacing,
       textBaseline: style.textBaseline,
       color: color != null ? ColorDto(color) : null,
       backgroundColor:
@@ -75,15 +71,23 @@ class TextStyleDto extends Dto<TextStyle> {
     return style != null ? TextStyleDto.from(style) : null;
   }
 
+  factory TextStyleDto.random() {
+    return TextStyleDto(
+      color: ColorDto.random(),
+      backgroundColor: ColorDto.random(),
+      decorationColor: ColorDto.random(),
+    );
+  }
+
   @override
   TextStyle resolve(BuildContext context) {
     return TextStyle(
       fontFamily: fontFamily,
       fontWeight: fontWeight,
       fontStyle: fontStyle,
-      fontSize: fontSize?.resolve(context),
-      letterSpacing: letterSpacing?.resolve(context),
-      wordSpacing: wordSpacing?.resolve(context),
+      fontSize: fontSize,
+      letterSpacing: letterSpacing,
+      wordSpacing: wordSpacing,
       textBaseline: textBaseline,
       color: color?.resolve(context),
       backgroundColor: backgroundColor?.resolve(context),
@@ -165,9 +169,9 @@ class TextStyleDto extends Dto<TextStyle> {
     String? fontFamily,
     FontWeight? fontWeight,
     FontStyle? fontStyle,
-    DoubleDto? fontSize,
-    DoubleDto? letterSpacing,
-    DoubleDto? wordSpacing,
+    double? fontSize,
+    double? letterSpacing,
+    double? wordSpacing,
     TextBaseline? textBaseline,
     ColorDto? color,
     ColorDto? backgroundColor,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../attributes/common/common.props.dart';
+import '../../../attributes/common/common.descriptor.dart';
 import '../box.decorator.dart';
 
 /// @nodoc
@@ -34,7 +34,7 @@ class ClipDecorator extends BoxDecoratorAttribute<ClipDecorator> {
 
   @override
   Widget build(BuildContext context, Widget child) {
-    final commonProps = CommonProps.fromContext(context);
+    final commonProps = CommonDescriptor.fromContext(context);
 
     if (clipType == ClipDecoratorType.triangle) {
       return ClipPath(

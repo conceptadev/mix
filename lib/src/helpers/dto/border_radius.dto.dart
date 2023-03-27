@@ -133,6 +133,15 @@ class BorderRadiusDto extends BorderRadiusGeometryDto<BorderRadius> {
           bottomRight: right,
         );
 
+  factory BorderRadiusDto.random() {
+    return BorderRadiusDto._(
+      topLeft: RadiusDto.random(),
+      topRight: RadiusDto.random(),
+      bottomLeft: RadiusDto.random(),
+      bottomRight: RadiusDto.random(),
+    );
+  }
+
   @override
   RadiusDto? get _bottomEnd => null;
 

@@ -2,7 +2,6 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-import '../../helpers/dto/double.dto.dart';
 import '../../helpers/dto/text_style.dto.dart';
 import 'text.attributes.dart';
 
@@ -127,7 +126,7 @@ class TextUtility {
   /// Short Utils: textScaleFactor
   static TextAttributes textScaleFactor(double textScaleFactor) {
     return TextAttributes(
-      textScaleFactor: DoubleDto.from(textScaleFactor),
+      textScaleFactor: textScaleFactor,
     );
   }
 

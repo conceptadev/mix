@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../mixer/mix_context.dart';
 import 'common.attributes.dart';
 
-class CommonProps {
+class CommonDescriptor {
   final bool visible;
   //Animation
   final bool animated;
@@ -11,7 +11,7 @@ class CommonProps {
   final Curve animationCurve;
   final TextDirection? textDirection;
 
-  const CommonProps({
+  const CommonDescriptor({
     required this.visible,
     required this.animated,
     required this.animationDuration,
@@ -19,11 +19,11 @@ class CommonProps {
     this.textDirection,
   });
 
-  factory CommonProps.fromContext(BuildContext context) {
+  factory CommonDescriptor.fromContext(BuildContext context) {
     final mix = MixContext.ensureOf(context);
     final common = mix.attributesOfType<CommonAttributes>();
 
-    return CommonProps(
+    return CommonDescriptor(
       visible: common?.visible ?? true,
       animated: common?.animated ?? false,
       animationDuration: common?.animationDuration ??
@@ -39,7 +39,7 @@ class CommonProps {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is CommonProps &&
+    return other is CommonDescriptor &&
         other.visible == visible &&
         other.animated == animated &&
         other.animationDuration == animationDuration &&

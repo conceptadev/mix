@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 import '../../theme/refs/color_token.dart';
@@ -9,7 +11,9 @@ class ColorDto extends Dto<Color> {
   const ColorDto(this.value);
 
   const ColorDto.from(Color color) : value = color;
-  static ColorDto? fromNullable(Color? token) {
+
+  // Helper utility for internal API usage
+  static ColorDto? maybeFrom(Color? token) {
     if (token == null) {
       return null;
     }
@@ -26,6 +30,18 @@ class ColorDto extends Dto<Color> {
     }
 
     return value;
+  }
+
+  // Used mostly for testing
+  factory ColorDto.random() {
+    return ColorDto(
+      Color.fromARGB(
+        255,
+        Random().nextInt(255),
+        Random().nextInt(255),
+        Random().nextInt(255),
+      ),
+    );
   }
 
   @override
