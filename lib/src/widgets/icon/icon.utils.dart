@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../helpers/dto/color.dto.dart';
+import '../../dtos/color.dto.dart';
 import 'icon.attributes.dart';
 
 /// ## Widget

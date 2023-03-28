@@ -1,5 +1,5 @@
 import '../../attributes/attribute.dart';
-import '../../helpers/dto/color.dto.dart';
+import '../../dtos/color.dto.dart';
 
 /// ## Widget
 /// - [IconMix](IconMix-class.html)

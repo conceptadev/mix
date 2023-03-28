@@ -1,23 +1,22 @@
-import 'dart:math';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import 'color.dto.dart';
-import 'dto.dart';
+import '../../helpers/mergeable_list.dart';
+import '../color.dto.dart';
+import 'shadow.dto.dart';
 
-class BoxShadowDto extends Dto<BoxShadow> {
-  final ColorDto? color;
-  final Offset? offset;
-  final double? blurRadius;
+class BoxShadowDto extends ShadowDto<BoxShadow> {
   final double? spreadRadius;
 
   const BoxShadowDto({
-    this.color,
-    this.offset,
-    this.blurRadius,
+    ColorDto? color,
+    Offset? offset,
+    double? blurRadius,
     this.spreadRadius,
-  });
+  }) : super(
+          color: color,
+          offset: offset,
+          blurRadius: blurRadius,
+        );
 
   final BoxShadow _default = const BoxShadow();
 
@@ -34,18 +33,6 @@ class BoxShadowDto extends Dto<BoxShadow> {
     );
   }
 
-  factory BoxShadowDto.random() {
-    return BoxShadowDto(
-      color: ColorDto.random(),
-      offset: Offset(
-        Random().nextDouble() * 10,
-        Random().nextDouble() * 10,
-      ),
-      blurRadius: Random().nextDouble() * 10,
-      spreadRadius: Random().nextDouble() * 10,
-    );
-  }
-
   @override
   BoxShadow resolve(BuildContext context) {
     return BoxShadow(
@@ -56,14 +43,7 @@ class BoxShadowDto extends Dto<BoxShadow> {
     );
   }
 
-  BoxShadowDto merge(BoxShadowDto? other) {
-    return copyWith(
-      color: other?.color,
-      offset: other?.offset,
-      blurRadius: other?.blurRadius,
-    );
-  }
-
+  @override
   BoxShadowDto copyWith({
     ColorDto? color,
     Offset? offset,
@@ -75,6 +55,16 @@ class BoxShadowDto extends Dto<BoxShadow> {
       offset: offset ?? this.offset,
       blurRadius: blurRadius ?? this.blurRadius,
       spreadRadius: spreadRadius ?? this.spreadRadius,
+    );
+  }
+
+  @override
+  BoxShadowDto merge(BoxShadowDto? other) {
+    return copyWith(
+      color: other?.color,
+      offset: other?.offset,
+      blurRadius: other?.blurRadius,
+      spreadRadius: other?.spreadRadius,
     );
   }
 
@@ -99,37 +89,16 @@ class BoxShadowDto extends Dto<BoxShadow> {
 
   @override
   String toString() {
-    return 'BoxShadowProps(color: $color, offset: $offset, blurRadius: $blurRadius, spreadRadius: $spreadRadius)';
+    return 'BoxShadowDto(color: $color, offset: $offset, blurRadius: $blurRadius, spreadRadius: $spreadRadius)';
   }
 }
 
-extension BoxShadowDtoExtension on List<BoxShadowDto> {
+extension BoxShadowDtoExt on List<BoxShadowDto> {
   List<BoxShadow> resolve(BuildContext context) {
     return map((e) => e.resolve(context)).toList();
   }
 
   List<BoxShadowDto> merge(List<BoxShadowDto>? other) {
-    if (other == null || listEquals(other, this)) return this;
-    final otherList = other;
-
-    // Create array with the largest size
-    final maxLength = max(length, otherList.length);
-
-    // Get index value of List<BoxShadowProps>
-    BoxShadowDto? getValueAtIndex(int index, List<BoxShadowDto> list) {
-      if (index < list.length) return list[index];
-
-      return null;
-    }
-
-    final mergedShadows = List<BoxShadowDto>.generate(maxLength, (int index) {
-      final otherValue = getValueAtIndex(index, otherList);
-      final thisValue = getValueAtIndex(index, this);
-      // One of the values should be valid because of maxLength
-
-      return thisValue?.merge(otherValue) ?? otherValue!;
-    });
-
-    return mergedShadows;
+    return combineMergeableLists(this, other);
   }
 }

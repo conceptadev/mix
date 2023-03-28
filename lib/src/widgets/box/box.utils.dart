@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 
-import '../../helpers/dto/border.dto.dart';
-import '../../helpers/dto/border_radius.dto.dart';
-import '../../helpers/dto/box_shadow.dto.dart';
-import '../../helpers/dto/color.dto.dart';
-import '../../helpers/dto/edge_insets.dto.dart';
-import '../../helpers/dto/radius_dto.dart';
+import '../../dtos/border/border.dto.dart';
+import '../../dtos/border/border_side.dto.dart';
+import '../../dtos/border/box_border.dto.dart';
+import '../../dtos/color.dto.dart';
+import '../../dtos/edge_insets/edge_insets.dto.dart';
+import '../../dtos/edge_insets/edge_insets_directional.dto.dart';
+import '../../dtos/edge_insets/edge_insets_geometry.dto.dart';
+import '../../dtos/radius/border_radius.dto.dart';
+import '../../dtos/radius/border_radius_directional.dto.dart';
+import '../../dtos/radius/border_radius_geometry.dto.dart';
+import '../../dtos/radius/radius_dto.dart';
+import '../../dtos/shadow/box_shadow.dto.dart';
 import '../../helpers/mergeable_map.dart';
 import 'box.attributes.dart';
 import 'box.decorator.dart';

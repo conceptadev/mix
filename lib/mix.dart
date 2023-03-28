@@ -14,7 +14,7 @@ export 'src/attributes/attribute.dart';
 export 'src/attributes/common/common.attributes.dart';
 export 'src/attributes/common/common.utils.dart';
 export 'src/attributes/helpers/helper.utils.dart';
-export 'src/helpers/color.utils.dart';
+export 'src/helpers/color_helpers.dart';
 export 'src/helpers/extensions.dart';
 export 'src/mixer/mix_context_data.dart';
 export 'src/mixer/mix_factory.dart';

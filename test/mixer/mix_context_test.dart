@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
 import 'package:mix/src/mixer/mix_context.dart';
 
-import '../testing_utils.dart';
+import '../helpers/random_dto.dart';
 
 const textVariant = Variant('textVariant');
 
@@ -15,8 +15,8 @@ final overrideTextAttribute = TextAttributes.fromValues(
 );
 
 final pressableMix = Mix.fromAttributes([
-  randomBoxAttributes(),
-  randomTextAttributes(),
+  RandomGenerator.boxAttributes(),
+  RandomGenerator.textAttributes(),
   textVariant(overrideTextAttribute),
 ]);
 

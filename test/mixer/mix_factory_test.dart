@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
-import 'package:mix/src/helpers/dto/color.dto.dart';
-import 'package:mix/src/helpers/dto/edge_insets.dto.dart';
+import 'package:mix/src/dtos/color.dto.dart';
+import 'package:mix/src/dtos/edge_insets/edge_insets.dto.dart';
 
 final firstMix = Mix(
   // Box attribute

@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-import 'dto.dart';
+import '../dto.dart';
 
 class RadiusDto extends Dto<Radius> {
   /// The radius value on the horizontal axis.

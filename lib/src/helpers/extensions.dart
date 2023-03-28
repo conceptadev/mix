@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 
 import '../attributes/common/common.descriptor.dart';
@@ -115,10 +113,6 @@ extension IterableExt<T> on Iterable<T> {
 }
 
 extension ListExt<T> on List<T> {
-  T random() {
-    return Random().randomElement(this);
-  }
-
   T? firstWhereOrNull(bool Function(T) test) {
     for (T element in this) {
       if (test(element)) {
@@ -127,34 +121,5 @@ extension ListExt<T> on List<T> {
     }
 
     return null;
-  }
-}
-
-extension RandomExt on Random {
-  T randomElement<T>(List<T> list) {
-    if (list.isEmpty) throw StateError('List is empty');
-
-    return list[nextInt(list.length)];
-  }
-
-  T? randomElementOrNull<T>(List<T> list) {
-    return list.isEmpty ? null : randomElement(list);
-  }
-
-  T randomElementOr<T>(List<T> list, T or) {
-    return list.isEmpty ? or : randomElement(list);
-  }
-
-  double nextDoubleInRange(double min, double max) {
-    return min + nextDouble() * (max - min);
-  }
-
-  int nextIntInRange(int min, int max) {
-    return min + nextInt(max - min);
-  }
-
-  // Returns a double within the max value range.
-  double nextMaxDouble(double max) {
-    return nextDoubleInRange(0, max);
   }
 }

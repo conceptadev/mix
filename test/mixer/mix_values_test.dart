@@ -2,7 +2,7 @@ import 'package:flutter_test/flutter_test.dart'; // importing flutter_test packa
 import 'package:mix/mix.dart';
 import 'package:mix/src/variants/variant_attribute.dart';
 
-import '../testing_utils.dart';
+import '../helpers/random_dto.dart';
 
 void main() {
   group('MixValues', () {
@@ -20,22 +20,25 @@ void main() {
     });
 
     final attributeList = <WidgetAttributes>[
-      randomBoxAttributes(),
-      randomBoxAttributes(),
-      randomTextAttributes(),
+      RandomGenerator.boxAttributes(),
+      RandomGenerator.boxAttributes(),
+      RandomGenerator.textAttributes(),
     ];
     final variantList = <VariantAttribute>[
-      VariantAttribute(const Variant('testVariant'), randomMix()),
-      VariantAttribute(const Variant('anotherTestVariant'), randomMix()),
+      VariantAttribute(const Variant('testVariant'), RandomGenerator.mix()),
+      VariantAttribute(
+        const Variant('anotherTestVariant'),
+        RandomGenerator.mix(),
+      ),
     ];
     final contextVariantList = <ContextVariantAttribute>[
       DynamicVariantUtilities.onDark()(
-        randomTextAttributes(),
-        randomBoxAttributes(),
+        RandomGenerator.textAttributes(),
+        RandomGenerator.boxAttributes(),
       ),
       DynamicVariantUtilities.onLarge()(
-        randomTextAttributes(),
-        randomBoxAttributes(),
+        RandomGenerator.textAttributes(),
+        RandomGenerator.boxAttributes(),
       ),
     ];
 

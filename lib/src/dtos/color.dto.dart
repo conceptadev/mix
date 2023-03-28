@@ -1,8 +1,6 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 
-import '../../theme/refs/color_token.dart';
+import '../theme/refs/color_token.dart';
 import 'dto.dart';
 
 class ColorDto extends Dto<Color> {
@@ -30,18 +28,6 @@ class ColorDto extends Dto<Color> {
     }
 
     return value;
-  }
-
-  // Used mostly for testing
-  factory ColorDto.random() {
-    return ColorDto(
-      Color.fromARGB(
-        255,
-        Random().nextInt(255),
-        Random().nextInt(255),
-        Random().nextInt(255),
-      ),
-    );
   }
 
   @override

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import 'color.dto.dart';
 import 'dto.dart';
+import 'shadow/shadow.dto.dart';
 
 class TextStyleDto extends Dto<TextStyle> {
   final String? fontFamily;
@@ -16,7 +17,7 @@ class TextStyleDto extends Dto<TextStyle> {
   final TextBaseline? textBaseline;
   final ColorDto? color;
   final ColorDto? backgroundColor;
-  final List<Shadow>? shadows;
+  final List<ShadowDto>? shadows;
   final List<FontFeature>? fontFeatures;
   final TextDecoration? decoration;
   final ColorDto? decorationColor;
@@ -57,7 +58,7 @@ class TextStyleDto extends Dto<TextStyle> {
       color: ColorDto.maybeFrom(style.color),
       backgroundColor: ColorDto.maybeFrom(style.backgroundColor),
       decorationColor: ColorDto.maybeFrom(style.decorationColor),
-      shadows: style.shadows,
+      shadows: style.shadows?.map((e) => ShadowDto.from(e)).toList(),
       fontFeatures: style.fontFeatures,
       decoration: style.decoration,
       decorationStyle: style.decorationStyle,
@@ -69,15 +70,6 @@ class TextStyleDto extends Dto<TextStyle> {
 
   static maybeFrom(TextStyle? style) {
     return style != null ? TextStyleDto.from(style) : null;
-  }
-
-  // TODO: Move this to a test file
-  factory TextStyleDto.random() {
-    return TextStyleDto(
-      color: ColorDto.random(),
-      backgroundColor: ColorDto.random(),
-      decorationColor: ColorDto.random(),
-    );
   }
 
   @override
@@ -93,7 +85,7 @@ class TextStyleDto extends Dto<TextStyle> {
       textBaseline: textBaseline,
       color: color?.resolve(context),
       backgroundColor: backgroundColor?.resolve(context),
-      shadows: shadows,
+      shadows: shadows?.map((e) => e.resolve(context)).toList(),
       fontFeatures: fontFeatures,
       decoration: decoration,
       decorationColor: decorationColor?.resolve(context),
@@ -103,27 +95,67 @@ class TextStyleDto extends Dto<TextStyle> {
     );
   }
 
+  TextStyleDto copyWith({
+    String? fontFamily,
+    FontWeight? fontWeight,
+    FontStyle? fontStyle,
+    double? fontSize,
+    double? letterSpacing,
+    double? wordSpacing,
+    TextBaseline? textBaseline,
+    ColorDto? color,
+    ColorDto? backgroundColor,
+    List<ShadowDto>? shadows,
+    List<FontFeature>? fontFeatures,
+    TextDecoration? decoration,
+    ColorDto? decorationColor,
+    TextDecorationStyle? decorationStyle,
+    String? debugLabel,
+    Locale? locale,
+    double? height,
+  }) {
+    return TextStyleDto(
+      fontFamily: fontFamily ?? this.fontFamily,
+      fontWeight: fontWeight ?? this.fontWeight,
+      fontStyle: fontStyle ?? this.fontStyle,
+      fontSize: fontSize ?? this.fontSize,
+      letterSpacing: letterSpacing ?? this.letterSpacing,
+      wordSpacing: wordSpacing ?? this.wordSpacing,
+      textBaseline: textBaseline ?? this.textBaseline,
+      color: color ?? this.color,
+      backgroundColor: backgroundColor ?? this.backgroundColor,
+      shadows: this.shadows?.merge(shadows) ?? shadows,
+      fontFeatures: fontFeatures ?? this.fontFeatures,
+      decoration: decoration ?? this.decoration,
+      decorationColor: decorationColor ?? this.decorationColor,
+      decorationStyle: decorationStyle ?? this.decorationStyle,
+      debugLabel: debugLabel ?? this.debugLabel,
+      locale: locale ?? this.locale,
+      height: height ?? this.height,
+    );
+  }
+
   TextStyleDto merge(TextStyleDto? other) {
     if (other == null) return this;
 
-    return TextStyleDto(
-      fontFamily: other.fontFamily ?? fontFamily,
-      fontWeight: other.fontWeight ?? fontWeight,
-      fontStyle: other.fontStyle ?? fontStyle,
-      fontSize: other.fontSize ?? fontSize,
-      height: other.height ?? height,
-      letterSpacing: other.letterSpacing ?? letterSpacing,
-      wordSpacing: other.wordSpacing ?? wordSpacing,
-      textBaseline: other.textBaseline ?? textBaseline,
-      color: other.color ?? color,
-      backgroundColor: other.backgroundColor ?? backgroundColor,
-      shadows: other.shadows ?? shadows,
-      fontFeatures: other.fontFeatures ?? fontFeatures,
-      decoration: other.decoration ?? decoration,
-      decorationColor: other.decorationColor ?? decorationColor,
-      decorationStyle: other.decorationStyle ?? decorationStyle,
-      debugLabel: other.debugLabel ?? debugLabel,
-      locale: other.locale ?? locale,
+    return copyWith(
+      fontFamily: other.fontFamily,
+      fontWeight: other.fontWeight,
+      fontStyle: other.fontStyle,
+      fontSize: other.fontSize,
+      height: other.height,
+      letterSpacing: other.letterSpacing,
+      wordSpacing: other.wordSpacing,
+      textBaseline: other.textBaseline,
+      color: other.color,
+      backgroundColor: other.backgroundColor,
+      shadows: other.shadows,
+      fontFeatures: other.fontFeatures,
+      decoration: other.decoration,
+      decorationColor: other.decorationColor,
+      decorationStyle: other.decorationStyle,
+      debugLabel: other.debugLabel,
+      locale: other.locale,
     );
   }
 
@@ -173,45 +205,5 @@ class TextStyleDto extends Dto<TextStyle> {
   @override
   String toString() {
     return 'TextStyleDto(fontFamily: $fontFamily, fontWeight: $fontWeight, fontStyle: $fontStyle, fontSize: $fontSize, letterSpacing: $letterSpacing, wordSpacing: $wordSpacing, textBaseline: $textBaseline, color: $color, backgroundColor: $backgroundColor, shadows: $shadows, fontFeatures: $fontFeatures, decoration: $decoration, decorationColor: $decorationColor, decorationStyle: $decorationStyle, debugLabel: $debugLabel)';
-  }
-
-  TextStyleDto copyWith({
-    String? fontFamily,
-    FontWeight? fontWeight,
-    FontStyle? fontStyle,
-    double? fontSize,
-    double? letterSpacing,
-    double? wordSpacing,
-    TextBaseline? textBaseline,
-    ColorDto? color,
-    ColorDto? backgroundColor,
-    List<Shadow>? shadows,
-    List<FontFeature>? fontFeatures,
-    TextDecoration? decoration,
-    ColorDto? decorationColor,
-    TextDecorationStyle? decorationStyle,
-    String? debugLabel,
-    Locale? locale,
-    double? height,
-  }) {
-    return TextStyleDto(
-      fontFamily: fontFamily ?? this.fontFamily,
-      fontWeight: fontWeight ?? this.fontWeight,
-      fontStyle: fontStyle ?? this.fontStyle,
-      fontSize: fontSize ?? this.fontSize,
-      letterSpacing: letterSpacing ?? this.letterSpacing,
-      wordSpacing: wordSpacing ?? this.wordSpacing,
-      textBaseline: textBaseline ?? this.textBaseline,
-      color: color ?? this.color,
-      backgroundColor: backgroundColor ?? this.backgroundColor,
-      shadows: shadows ?? this.shadows,
-      fontFeatures: fontFeatures ?? this.fontFeatures,
-      decoration: decoration ?? this.decoration,
-      decorationColor: decorationColor ?? this.decorationColor,
-      decorationStyle: decorationStyle ?? this.decorationStyle,
-      debugLabel: debugLabel ?? this.debugLabel,
-      locale: locale ?? this.locale,
-      height: height ?? this.height,
-    );
   }
 }

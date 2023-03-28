@@ -43,8 +43,7 @@ const _colorSchemeTranslationValues = [
   Color(0xFF00000C),
 ];
 
-/// {@category Misc Utils}
-extension ColorExtensions on Color {
+extension ColorExt on Color {
   Color darken([double amount = .1]) {
     assert(amount >= 0 && amount <= 1);
 

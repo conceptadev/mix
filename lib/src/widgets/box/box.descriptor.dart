@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../../mix.dart';
-import '../../helpers/dto/box_shadow.dto.dart';
+import '../../dtos/shadow/box_shadow.dto.dart';
 import '../../mixer/mix_context.dart';
 import 'box.decorator.dart';
 

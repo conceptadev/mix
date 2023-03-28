@@ -2,11 +2,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../attributes/attribute.dart';
-import '../../helpers/dto/border.dto.dart';
-import '../../helpers/dto/border_radius.dto.dart';
-import '../../helpers/dto/box_shadow.dto.dart';
-import '../../helpers/dto/color.dto.dart';
-import '../../helpers/dto/edge_insets.dto.dart';
+import '../../dtos/border/box_border.dto.dart';
+import '../../dtos/color.dto.dart';
+import '../../dtos/edge_insets/edge_insets_geometry.dto.dart';
+import '../../dtos/radius/border_radius_geometry.dto.dart';
+import '../../dtos/shadow/box_shadow.dto.dart';
 import '../../helpers/extensions.dart';
 import '../../helpers/mergeable_map.dart';
 import 'box.decorator.dart';
@@ -118,8 +118,7 @@ class BoxAttributes extends WidgetAttributes {
       minWidth: other.minWidth,
       shape: other.shape,
       gradient: other.gradient,
-      decorators:
-          decorators != null ? other.decorators?.merge(decorators) : decorators,
+      decorators: decorators?.merge(other.decorators) ?? decorators,
     );
   }
 
