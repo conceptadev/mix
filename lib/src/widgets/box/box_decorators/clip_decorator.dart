@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../decorators/decorator_attribute.dart';
-import '../../../mixer/mix_context.dart';
+import '../../../attributes/common/common.descriptor.dart';
+import '../box.decorator.dart';
 
 /// @nodoc
 enum ClipDecoratorType {
@@ -17,7 +17,7 @@ enum ClipDecoratorType {
 /// - [ClipDecoratorUtility](ClipDecoratorUtility-class.html)
 ///
 /// {@category Decorators}
-class ClipDecorator extends BoxParentDecoratorAttribute<ClipDecorator> {
+class ClipDecorator extends BoxDecorator<ClipDecorator> {
   final BorderRadius? borderRadius;
   final ClipDecoratorType clipType;
 
@@ -33,8 +33,8 @@ class ClipDecorator extends BoxParentDecoratorAttribute<ClipDecorator> {
   }
 
   @override
-  Widget render(MixContext mixContext, Widget child) {
-    final sharedProps = mixContext.sharedProps;
+  Widget build(BuildContext context, Widget child) {
+    final commonProps = CommonDescriptor.fromContext(context);
 
     if (clipType == ClipDecoratorType.triangle) {
       return ClipPath(
@@ -52,11 +52,11 @@ class ClipDecorator extends BoxParentDecoratorAttribute<ClipDecorator> {
     }
 
     if (clipType == ClipDecoratorType.rounded) {
-      if (sharedProps.animated) {
+      if (commonProps.animated) {
         return AnimatedClipRRect(
           key: key,
-          duration: sharedProps.animationDuration,
-          curve: sharedProps.animationCurve,
+          duration: commonProps.animationDuration,
+          curve: commonProps.animationCurve,
           borderRadius: borderRadius ?? BorderRadius.circular(0),
           child: child,
         );

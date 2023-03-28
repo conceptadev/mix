@@ -5,8 +5,8 @@ import '../../helpers/extensions.dart';
 import '../../theme/mix_theme.dart';
 import '../../theme/tokens/breakpoints.dart';
 import '../../widgets/pressable/pressable.notifier.dart';
+import '../../widgets/pressable/pressable_state.dart';
 import '../context_variant.dart';
-import '../variant.dart';
 import '../variant_condition.dart';
 
 /// {@category Variants}
@@ -85,22 +85,13 @@ class DynamicVariantUtilities {
     );
   }
 
-  static ContextVariant onRTL<T extends Attribute>() {
-    return ContextVariant(
-      'onRTL',
-      shouldApply: (BuildContext context) {
-        return context.directionality == TextDirection.rtl;
-      },
-    );
-  }
-
   static ContextVariant onDisabled<T extends Attribute>() {
     return ContextVariant(
       'onDisabled',
       shouldApply: (BuildContext context) {
         final pressable = PressableNotifier.of(context);
 
-        return pressable?.disabled == true;
+        return pressable?.state == PressableState.disabled;
       },
     );
   }
@@ -111,7 +102,7 @@ class DynamicVariantUtilities {
       shouldApply: (BuildContext context) {
         final pressable = PressableNotifier.of(context);
 
-        return pressable?.focused == true;
+        return pressable?.focus == true;
       },
     );
   }
@@ -122,7 +113,18 @@ class DynamicVariantUtilities {
       shouldApply: (BuildContext context) {
         final pressable = PressableNotifier.of(context);
 
-        return pressable?.pressing == true;
+        return pressable?.state == PressableState.pressed;
+      },
+    );
+  }
+
+  static ContextVariant onLongPress<T extends Attribute>() {
+    return ContextVariant(
+      'onLongPress',
+      shouldApply: (BuildContext context) {
+        final pressable = PressableNotifier.of(context);
+
+        return pressable?.state == PressableState.longPressed;
       },
     );
   }
@@ -133,13 +135,23 @@ class DynamicVariantUtilities {
       shouldApply: (BuildContext context) {
         final pressable = PressableNotifier.of(context);
 
-        return pressable?.hovering == true;
+        return pressable?.state == PressableState.hover;
       },
     );
   }
 
-  static T onNot<T extends Variant>(T other) {
+//TODO: change this API
+  static T onNot<T extends ContextVariant>(T other) {
     return other.inverseInstance() as T;
+  }
+
+  static ContextVariant onRTL<T extends Attribute>() {
+    return ContextVariant(
+      'onRTL',
+      shouldApply: (BuildContext context) {
+        return context.directionality == TextDirection.rtl;
+      },
+    );
   }
 
   static WhenVariant when(bool apply) {

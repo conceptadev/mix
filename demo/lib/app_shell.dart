@@ -56,11 +56,7 @@ class AppShell extends HookConsumerWidget {
           ),
           AdaptiveScaffoldDestination(
             icon: Icon(CommunityMaterialIcons.message_alert),
-            label: 'Feedback',
-          ),
-          AdaptiveScaffoldDestination(
-            icon: Icon(Icons.circle),
-            label: 'Headless',
+            label: 'Variant',
           ),
         ],
         body: screens[selected.value],

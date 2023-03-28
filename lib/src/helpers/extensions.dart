@@ -1,6 +1,41 @@
 import 'package:flutter/material.dart';
 
-extension ThemeContextExtensions on BuildContext {
+import '../attributes/common/common.descriptor.dart';
+import '../mixer/mix_context.dart';
+import '../mixer/mix_context_data.dart';
+import '../widgets/box/box.descriptor.dart';
+import '../widgets/flex/flex.descriptor.dart';
+import '../widgets/icon/icon.props.dart';
+import '../widgets/image/image.props.dart';
+import '../widgets/text/text.descriptor.dart';
+import '../widgets/zbox/zbox.props.dart';
+
+extension MixContextExtensions on BuildContext {
+  MixContextData? get mixContext => MixContext.of(this);
+
+  @Deprecated('use SharedProps.fromContext(context) instead')
+  CommonDescriptor get sharedProps => CommonDescriptor.fromContext(this);
+
+  @Deprecated('use BoxProps.fromContext(context) instead')
+  BoxDescriptor get boxProps => BoxDescriptor.fromContext(this);
+
+  @Deprecated('use FlexProps.fromContext(context) instead')
+  FlexDescriptor get flexProps => FlexDescriptor.fromContext(this);
+
+  @Deprecated('use ZBoxProps.fromContext(context) instead')
+  ZBoxProps get zBoxProps => ZBoxProps.fromContext(this);
+
+  @Deprecated('use IconProps.fromContext(context) instead')
+  IconProps get iconProps => IconProps.fromContext(this);
+
+  @Deprecated('use TextProps.fromContext(context) instead')
+  TextDescriptor get textProps => TextDescriptor.fromContext(this);
+
+  @Deprecated('use ImageProps.fromContext(context) instead')
+  ImageProps get imageProps => ImageProps.fromContext(this);
+}
+
+extension ThemeContextExt on BuildContext {
   Brightness get brightness => Theme.of(this).brightness;
 
   /// Check if brightness is Brightness.dark
@@ -17,7 +52,7 @@ extension ThemeContextExtensions on BuildContext {
 }
 
 /// {@category Misc Utils}
-extension MediaQueryContextExtensions on BuildContext {
+extension MediaQueryContextExt on BuildContext {
   /// MediaQueryData for context
   MediaQueryData get mq => MediaQuery.of(this);
 
@@ -42,9 +77,8 @@ extension MediaQueryContextExtensions on BuildContext {
   double get screenHeight => mq.size.height;
 }
 
-/// {@category Misc Utils}
-extension StrutStyleExtension on StrutStyle {
-  merge(StrutStyle? other) {
+extension StrutStyleExt on StrutStyle {
+  StrutStyle merge(StrutStyle? other) {
     return StrutStyle(
       fontFamily: other?.fontFamily ?? fontFamily,
       fontFamilyFallback: other?.fontFamilyFallback ?? fontFamilyFallback,
@@ -60,12 +94,32 @@ extension StrutStyleExtension on StrutStyle {
   }
 }
 
-/// {@category Misc Utils}
-extension Matrix4Extension on Matrix4 {
+extension Matrix4Ext on Matrix4 {
   /// Merge [other] into this matrix.
   Matrix4 merge(Matrix4? other) {
     if (other == null || other == this) return this;
 
     return clone()..multiply(other);
+  }
+}
+
+extension IterableExt<T> on Iterable<T> {
+  Iterable<T> sorted([Comparator<T>? compare]) {
+    List<T> newList = List.from(this);
+    newList.sort(compare);
+
+    return newList;
+  }
+}
+
+extension ListExt<T> on List<T> {
+  T? firstWhereOrNull(bool Function(T) test) {
+    for (T element in this) {
+      if (test(element)) {
+        return element;
+      }
+    }
+
+    return null;
   }
 }

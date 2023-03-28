@@ -1,5 +1,3 @@
-import 'text_directive.attributes.dart';
-
 String capitalize(String string) {
   final current = string;
   if (current.isEmpty) {
@@ -27,18 +25,4 @@ String sentenceCase(String string) {
   }
 
   return words.join(separator);
-}
-
-String applyTextDirectives(
-  String? text,
-  Iterable<TextDirectiveAttribute> textDirectives,
-) {
-  if (text == null) return '';
-
-  var modifiedText = text;
-  for (final dir in textDirectives) {
-    modifiedText = dir.modify(modifiedText);
-  }
-
-  return modifiedText;
 }

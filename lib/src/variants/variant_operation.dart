@@ -7,13 +7,11 @@ import 'context_variant.dart';
 import 'variant.dart';
 import 'variant_attribute.dart';
 
-/// @nodoc
-enum VariantOperator { and, or }
+enum EnumVariantOperator { and, or }
 
-/// @nodoc
 class VariantOperation {
   final List<Variant> variants;
-  final VariantOperator operator;
+  final EnumVariantOperator operator;
 
   const VariantOperation(
     this.variants, {
@@ -21,7 +19,7 @@ class VariantOperation {
   });
 
   VariantOperation operator &(Variant variant) {
-    if (operator != VariantOperator.and) {
+    if (operator != EnumVariantOperator.and) {
       throw 'All the operators in the equation must be the same';
     }
 
@@ -31,7 +29,7 @@ class VariantOperation {
   }
 
   VariantOperation operator |(Variant variant) {
-    if (operator != VariantOperator.or) {
+    if (operator != EnumVariantOperator.or) {
       throw 'All the operators in the equation must be the same';
     }
 
@@ -47,9 +45,9 @@ class VariantOperation {
     variants ??= this.variants;
     final attributeVariants = variants.map((variant) {
       if (variant is ContextVariant) {
-        return ContextVariantAttribute(variant, Mix.fromList(attributes));
+        return ContextVariantAttribute(variant, Mix.fromAttributes(attributes));
       } else {
-        return VariantAttribute(variant, Mix.fromList(attributes));
+        return VariantAttribute(variant, Mix.fromAttributes(attributes));
       }
     });
 
@@ -62,7 +60,7 @@ class VariantOperation {
     final attributeVariants = variants.map((variant) {
       final otherVariants = variants.where((otherV) => otherV != variant);
 
-      final mixToApply = Mix.fromList(
+      final mixToApply = Mix.fromAttributes(
         _buildOrOperations(
           attributes,
           variants: otherVariants,
@@ -114,13 +112,13 @@ class VariantOperation {
     if (p12 != null) params.add(p12);
 
     List<VariantAttribute> attributes = [];
-    if (operator == VariantOperator.and) {
+    if (operator == EnumVariantOperator.and) {
       attributes = _buildAndOperations(params);
-    } else if (operator == VariantOperator.or) {
+    } else if (operator == EnumVariantOperator.or) {
       attributes = _buildOrOperations(params);
     }
 
-    return NestedMixAttribute<VariantAttribute>(Mix.fromList(attributes));
+    return NestedMixAttribute<VariantAttribute>(Mix.fromAttributes(attributes));
   }
 
   @override

@@ -1,13 +1,12 @@
-import 'package:flutter/material.dart';
-
 import '../../attributes/attribute.dart';
+import '../../dtos/color.dto.dart';
 
 /// ## Widget
 /// - [IconMix](IconMix-class.html)
 ///
 /// {@category Attributes}
-class IconAttributes extends InheritedAttribute {
-  final Color? color;
+class IconAttributes extends WidgetAttributes {
+  final ColorDto? color;
   final double? size;
   const IconAttributes({
     this.color,

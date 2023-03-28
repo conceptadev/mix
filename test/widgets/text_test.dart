@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mix/src/attributes/shared/shared.utils.dart';
+import 'package:mix/src/attributes/common/common.utils.dart';
+import 'package:mix/src/extensions/mix_extensions.dart';
 import 'package:mix/src/mixer/mix_factory.dart';
 import 'package:mix/src/widgets/text/text.utils.dart';
+import 'package:mix/src/widgets/text/text_directives/text_directives.dart';
 
 import '../testing_utils.dart';
 
@@ -11,7 +13,7 @@ void main() {
     const widgetText = 'Mix Text Widget';
     testWidgets('Adds text on widget', (tester) async {
       await tester.pumpWidget(
-        MixTestWidget(
+        TestMixWidget(
           child: Mix().text(widgetText),
         ),
       );
@@ -24,7 +26,7 @@ void main() {
 
     testWidgets('Adds Text properties on widget', (tester) async {
       await tester.pumpWidget(
-        MixTestWidget(
+        TestMixWidget(
           child: Mix(
             TextUtility.overflow(TextOverflow.ellipsis),
             TextUtility.softWrap(true),
@@ -32,7 +34,7 @@ void main() {
             TextUtility.textWidthBasis(TextWidthBasis.longestLine),
             TextUtility.maxLines(3),
             TextUtility.textAlign(TextAlign.justify),
-            SharedUtility.textDirection(TextDirection.rtl),
+            CommonUtility.textDirection(TextDirection.rtl),
           ).text(widgetText),
         ),
       );
@@ -50,7 +52,7 @@ void main() {
 
     testWidgets('Adds Text Style on widget', (tester) async {
       await tester.pumpWidget(
-        MixTestWidget(
+        TestMixWidget(
           child: Mix(
             TextStyleUtility.fontSize(20),
             TextStyleUtility.wordSpacing(2),
@@ -81,6 +83,26 @@ void main() {
       expect(textStyle.locale!.countryCode, 'US');
       expect(textStyle.height, 10);
       expect(textStyle.backgroundColor, Colors.blue);
+    });
+
+    testWidgets('Text Directives', (tester) async {
+      await tester.pumpWidget(
+        TestMixWidget(
+          child: Mix(
+            TextUtility.directives([
+              const UppercaseDirective(),
+              const SentenceCaseDirective(),
+              const CapitalizeDirective(),
+            ]),
+          ).text(widgetText),
+        ),
+      );
+
+      final textWidget = tester.widget<Text>(find.byType(Text));
+
+      expect(textWidget.data, isNot(equals(widgetText)));
+
+      expect(textWidget.data, equals(widgetText.toUpperCase()));
     });
   });
 }

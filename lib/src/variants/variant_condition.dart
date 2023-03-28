@@ -105,6 +105,6 @@ class WhenVariantAttribute extends ContextVariantAttribute {
     if (p11 != null) params.add(p11);
     if (p12 != null) params.add(p12);
 
-    return WhenVariantAttribute(variant, Mix.fromList(params), !apply);
+    return WhenVariantAttribute(variant, Mix.fromAttributes(params), !apply);
   }
 }

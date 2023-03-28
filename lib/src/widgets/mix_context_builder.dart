@@ -1,41 +1,41 @@
 import 'package:flutter/material.dart';
 
+import '../../mix.dart';
 import '../mixer/mix_context.dart';
-import '../mixer/mix_context_notifier.dart';
-import '../mixer/mix_factory.dart';
-import '../variants/variant.dart';
-import 'mixable.widget.dart';
 
-typedef WidgetMixBuilder<T> = Widget Function(
+typedef WidgetMixBuilder = Widget Function(
   BuildContext context,
-  MixContext mixContext,
+  MixContextData mixContext,
 );
 
-class MixContextBuilder extends MixableWidget {
+class MixContextBuilder extends MixWidget {
   const MixContextBuilder({
-    required this.builder,
     required Mix mix,
-    bool? inherit,
+    bool inherit = false,
     List<Variant>? variants,
+    required WidgetMixBuilder builder,
     Key? key,
-  }) : super(
+  })  : _builder = builder,
+        super(
           mix,
           key: key,
           inherit: inherit,
           variants: variants,
         );
 
-  final WidgetMixBuilder builder;
+  final WidgetMixBuilder _builder;
 
   @override
   Widget build(BuildContext context) {
-    final mixContext = createMixContext(context);
+    final mixContext = createMixContextData(context);
 
-    return MixContextNotifier(
+    return MixContext(
       mixContext,
-      child: builder(
-        context,
-        mixContext,
+      child: Builder(
+        builder: (context) => _builder(
+          context,
+          mixContext,
+        ),
       ),
     );
   }

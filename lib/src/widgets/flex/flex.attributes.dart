@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../attributes/attribute.dart';
 
 ///
@@ -6,7 +7,7 @@ import '../../attributes/attribute.dart';
 /// - [FlexBox](FlexBox-class.html)
 ///
 /// {@category Attributes}
-class FlexAttributes extends InheritedAttribute {
+class FlexAttributes extends WidgetAttributes {
   final Axis? direction;
   final MainAxisAlignment? mainAxisAlignment;
   final CrossAxisAlignment? crossAxisAlignment;

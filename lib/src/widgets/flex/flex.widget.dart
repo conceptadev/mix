@@ -1,24 +1,16 @@
 import 'package:flutter/widgets.dart';
 
-import '../../mixer/mix_context.dart';
+import '../../attributes/common/common.descriptor.dart';
 import '../../mixer/mix_factory.dart';
 import '../../variants/variant.dart';
+import '../box/box.descriptor.dart';
 import '../box/box.widget.dart';
 import '../gap.widget.dart';
-import '../mixable.widget.dart';
+import '../mix.widget.dart';
+import '../mix_context_builder.dart';
+import 'flex.descriptor.dart';
 
-/// _Mix_ corollary to Flutter _Flex_ widget
-/// Use wherever you would use a Flutter _Text_ widget
-///
-/// ## Attributes
-/// - [FlexAttributes](FlexAttributes-class.html)
-/// - [SharedAttributes](SharedAttributes-class.html)
-/// ## Utilities
-/// - [FlexUtils](FlexUtils-class.html)
-/// - [SharedUtils](SharedUtils-class.html)
-///
-/// {@category Mixable Widgets}
-class FlexBox extends MixableWidget {
+class FlexBox extends MixWidget {
   const FlexBox({
     Mix? mix,
     Key? key,
@@ -32,28 +24,6 @@ class FlexBox extends MixableWidget {
           inherit: inherit,
           key: key,
         );
-
-  final List<Widget> children;
-  final Axis direction;
-
-  @override
-  Widget build(BuildContext context) {
-    return FlexBoxMixedWidget(
-      createMixContext(context),
-      direction: direction,
-      children: children,
-    );
-  }
-}
-
-/// @nodoc
-class FlexBoxMixedWidget extends MixedWidget {
-  const FlexBoxMixedWidget(
-    MixContext mixContext, {
-    Key? key,
-    required this.direction,
-    required this.children,
-  }) : super(mixContext, key: key);
 
   final List<Widget> children;
   final Axis direction;
@@ -80,27 +50,35 @@ class FlexBoxMixedWidget extends MixedWidget {
 
   @override
   Widget build(BuildContext context) {
-    final props = mixContext.flexProps;
+    return MixContextBuilder(
+      mix: mix,
+      inherit: inherit,
+      variants: variants,
+      builder: (context, mixContext) {
+        final flexProps = FlexDescriptor.fromContext(context);
+        final boxProps = BoxDescriptor.fromContext(context);
+        final commonProps = CommonDescriptor.fromContext(context);
 
-    return BoxMixedWidget(
-      mixContext,
-      child: Flex(
-        direction: direction,
-        mainAxisAlignment: props.mainAxisAlignment,
-        crossAxisAlignment: props.crossAxisAlignment,
-        mainAxisSize: props.mainAxisSize,
-        verticalDirection: props.verticalDirection,
-        children: _renderChildrenWithGap(props.gapSize, children),
-      ),
+        return BoxMixedWidget(
+          boxProps: boxProps,
+          commonProps: commonProps,
+          child: Flex(
+            direction: direction,
+            mainAxisAlignment: flexProps.mainAxisAlignment,
+            crossAxisAlignment: flexProps.crossAxisAlignment,
+            mainAxisSize: flexProps.mainAxisSize,
+            verticalDirection: flexProps.verticalDirection,
+            children: _renderChildrenWithGap(
+              flexProps.gapSize,
+              children,
+            ),
+          ),
+        );
+      },
     );
   }
 }
 
-/// Horizontal FlexBox, corollary to Flutter _Row_ widget
-///
-/// See [FlexBox](FlexBox-class.html) for _Attributes_ and _Utility links.
-///
-/// {@category Mixable Widgets}
 class HBox extends FlexBox {
   const HBox({
     Mix? mix,
@@ -118,11 +96,6 @@ class HBox extends FlexBox {
         );
 }
 
-/// Vertical FlexBox, corollary to Flutter _Column_ widget
-///
-/// See [FlexBox](FlexBox-class.html) for _Attributes_ and _Utility links.
-///
-/// {@category Mixable Widgets}
 class VBox extends FlexBox {
   const VBox({
     Mix? mix,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../decorators/decorator_attribute.dart';
-import '../../../mixer/mix_context.dart';
+import '../../../attributes/common/common.descriptor.dart';
+import '../box.decorator.dart';
 
 /// ## Widget
 /// - (All)
@@ -9,8 +9,7 @@ import '../../../mixer/mix_context.dart';
 /// - [AspectRatioDecoratorUtility](AspectRatioDecoratorUtility-class.html)
 ///
 /// {@category Decorators}
-class AspectRatioDecorator
-    extends BoxParentDecoratorAttribute<AspectRatioDecorator> {
+class AspectRatioDecorator extends BoxDecorator<AspectRatioDecorator> {
   final double aspectRatio;
   const AspectRatioDecorator({
     required this.aspectRatio,
@@ -25,14 +24,14 @@ class AspectRatioDecorator
   }
 
   @override
-  Widget render(MixContext mixContext, Widget child) {
-    final sharedProps = mixContext.sharedProps;
+  Widget build(BuildContext context, Widget child) {
+    final commonProps = CommonDescriptor.fromContext(context);
 
-    if (sharedProps.animated) {
+    if (commonProps.animated) {
       return TweenAnimationBuilder<double>(
         tween: Tween<double>(end: aspectRatio),
-        duration: sharedProps.animationDuration,
-        curve: sharedProps.animationCurve,
+        duration: commonProps.animationDuration,
+        curve: commonProps.animationCurve,
         builder: (context, value, child) {
           return AspectRatio(
             key: key,

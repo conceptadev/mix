@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart' hide border, onEnabled, icon, iconColor;
+import 'package:mix/src/attributes/common/common.descriptor.dart';
 
 import '../testing_utils.dart';
 
@@ -12,7 +13,7 @@ const withColor = InheritedIconAttribute.withColor;
 
 const inputDecoration = InputDecorationThemeAttribute.inputDecoration;
 
-class InheritedIconAttribute extends InheritedAttribute {
+class InheritedIconAttribute extends WidgetAttributes {
   const InheritedIconAttribute({
     this.color,
     this.size,
@@ -53,7 +54,7 @@ class InheritedIconAttribute extends InheritedAttribute {
 }
 
 class InputDecorationThemeAttribute extends InputDecorationTheme
-    implements InheritedAttribute {
+    implements WidgetAttributes {
   const InputDecorationThemeAttribute({
     Color? iconColor,
     Color? fillColor,
@@ -101,7 +102,7 @@ final mix = Mix(
     fillColor: Colors.red,
   ),
   activated(withColor(Colors.blue), inputDecoration(fillColor: Colors.green)),
-  const SharedAttributes(textDirection: TextDirection.rtl),
+  const CommonAttributes(textDirection: TextDirection.rtl),
 );
 
 class CustomWidget extends StatelessWidget {
@@ -127,7 +128,7 @@ class CustomWidget extends StatelessWidget {
         final attribute =
             mixContext.attributesOfType<InheritedIconAttribute>()!;
 
-        final sharedProps = mixContext.sharedProps;
+        final sharedProps = CommonDescriptor.fromContext(context);
 
         return Semantics(
           label: semanticLabel,
@@ -190,7 +191,7 @@ void main() {
   group("inherited icon attribute", () {
     testWidgets('without variants', (tester) async {
       await tester.pumpWidget(
-        const MixTestWidget(
+        const TestMixWidget(
           child: CustomWidget(Icons.bolt),
         ),
       );
@@ -206,7 +207,7 @@ void main() {
 
     testWidgets('with variant', (tester) async {
       await tester.pumpWidget(
-        const MixTestWidget(
+        const TestMixWidget(
           child: CustomWidget(
             Icons.bolt,
             variants: [activated],
@@ -227,7 +228,7 @@ void main() {
   group("inherited input theme attribute", () {
     testWidgets('without variants', (tester) async {
       await tester.pumpWidget(
-        const MixTestWidget(
+        const TestMixWidget(
           child: MaterialApp(
             home: Material(
               child: TextFieldWidget(
@@ -245,7 +246,7 @@ void main() {
 
     testWidgets('with variants', (tester) async {
       await tester.pumpWidget(
-        const MixTestWidget(
+        const TestMixWidget(
           child: MaterialApp(
             home: Scaffold(
               body: TextFieldWidget(

@@ -5,22 +5,33 @@ import '../mixer/mix_factory.dart';
 import 'context_variant.dart';
 import 'variant.dart';
 
-class ContextVariantAttribute extends VariantAttribute<ContextVariant> {
-  const ContextVariantAttribute(ContextVariant variant, Mix mix)
-      : super(variant, mix);
-
-  bool shouldApply(BuildContext context) {
-    return variant.shouldApply.call(context);
-  }
-}
-
-class VariantAttribute<T extends Variant> extends Attribute {
-  const VariantAttribute(this.variant, Mix mix) : _mix = mix;
+class VariantAttribute<T extends Variant> extends Attribute
+    with MergeableMixin<VariantAttribute<T>> {
+  const VariantAttribute(
+    this.variant,
+    Mix mix,
+  ) : _mix = mix;
 
   final T variant;
   final Mix _mix;
 
   Mix get value => _mix;
+
+  @override
+  VariantAttribute<T> merge(covariant VariantAttribute<T> other) {
+    if (other.variant != variant) {
+      throw ArgumentError.value(
+        other,
+        'other',
+        'VariantAttribute must have the same variant',
+      );
+    }
+
+    return VariantAttribute(
+      variant,
+      _mix.merge(other._mix),
+    );
+  }
 
   @override
   String toString() => 'VariantAttribute(variant: $variant, mix: $value)';
@@ -36,4 +47,18 @@ class VariantAttribute<T extends Variant> extends Attribute {
 
   @override
   int get hashCode => variant.hashCode ^ _mix.hashCode;
+}
+
+class ContextVariantAttribute extends VariantAttribute<ContextVariant> {
+  const ContextVariantAttribute(
+    ContextVariant variant,
+    Mix mix,
+  ) : super(
+          variant,
+          mix,
+        );
+
+  bool shouldApply(BuildContext context) {
+    return variant.shouldApply.call(context);
+  }
 }

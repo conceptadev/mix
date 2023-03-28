@@ -1,65 +1,75 @@
 import 'package:flutter/material.dart';
-import 'box_decorators/aspect_ratio.dart';
-import 'box_decorators/clip_decorator.dart';
-import 'box_decorators/flexible.dart';
-import 'box_decorators/opacity.dart';
-import 'box_decorators/rotate.dart';
-import 'box_decorators/scale.dart';
+
+import '../../../mix.dart';
 
 class BoxDecoratorUtility {
   /// Short Utils: flex
-  static FlexibleDecorator flex(int value) {
-    return FlexibleDecorator(flex: value);
-  }
-
-  /// Short Utils: flexFit
-  static FlexibleDecorator flexFit(FlexFit flexFit) {
-    return FlexibleDecorator(flexFit: flexFit);
-  }
-
-  /// Short Utils: expanded
-  static FlexibleDecorator expanded() {
-    return const FlexibleDecorator(flexFit: FlexFit.tight);
-  }
-
-  /// Short Utils: flexible
-  static FlexibleDecorator flexible() {
-    return const FlexibleDecorator(flexFit: FlexFit.loose);
-  }
-
-  static AspectRatioDecorator aspectRatio(double aspectRatio) {
-    return AspectRatioDecorator(aspectRatio: aspectRatio);
-  }
-
-  /// Short Utils: clipRounded
-  static ClipDecorator clipRounded(double radius) {
-    return ClipDecorator(
-      ClipDecoratorType.rounded,
-      borderRadius: BorderRadius.circular(radius),
+  static BoxAttributes flex(int value) {
+    return BoxUtility.decorator(
+      FlexibleDecorator(flex: value),
     );
   }
 
-  static ScaleDecorator scale(double scale) {
-    return ScaleDecorator(scale);
+  /// Short Utils: flexFit
+  static BoxAttributes flexFit(FlexFit flexFit) {
+    return BoxUtility.decorator(
+      FlexibleDecorator(flexFit: flexFit),
+    );
+  }
+
+  /// Short Utils: expanded
+  static BoxAttributes expanded() {
+    return BoxUtility.decorator(
+      const FlexibleDecorator(flexFit: FlexFit.tight),
+    );
+  }
+
+  /// Short Utils: flexible
+  static BoxAttributes flexible() {
+    return BoxUtility.decorator(
+      const FlexibleDecorator(flexFit: FlexFit.loose),
+    );
+  }
+
+  static BoxAttributes aspectRatio(double aspectRatio) {
+    return BoxUtility.decorator(
+      AspectRatioDecorator(aspectRatio: aspectRatio),
+    );
+  }
+
+  /// Short Utils: clipRounded
+  static BoxAttributes clipRounded(double radius) {
+    return BoxUtility.decorator(
+      ClipDecorator(
+        ClipDecoratorType.rounded,
+        borderRadius: BorderRadius.circular(radius),
+      ),
+    );
+  }
+
+  static BoxAttributes scale(double scale) {
+    return BoxUtility.decorator(ScaleDecorator(scale));
   }
 
   /// Short Utils: clipOval
-  static ClipDecorator clipOval() {
-    return const ClipDecorator(ClipDecoratorType.oval);
+  static BoxAttributes clipOval() {
+    return BoxUtility.decorator(const ClipDecorator(ClipDecoratorType.oval));
   }
 
   /// Short Utils: clipTriangle
-  static ClipDecorator clipTriangle() {
-    return const ClipDecorator(ClipDecoratorType.triangle);
+  static BoxAttributes clipTriangle() {
+    return BoxUtility.decorator(
+      const ClipDecorator(ClipDecoratorType.triangle),
+    );
   }
 
-  static OpacityDecorator opacity(double opacity) {
-    return OpacityDecorator(opacity: opacity);
+  static BoxAttributes opacity(double opacity) {
+    return BoxUtility.decorator(OpacityDecorator(opacity: opacity));
   }
 
   /// Short Utils: rotate
-  static RotateDecorator rotate(int quarterTurns) {
-    return RotateDecorator(quarterTurns: quarterTurns);
+  static BoxAttributes rotate(int quarterTurns) {
+    return BoxUtility.decorator(RotateDecorator(quarterTurns: quarterTurns));
   }
 
   /// Short Utils: rotate90

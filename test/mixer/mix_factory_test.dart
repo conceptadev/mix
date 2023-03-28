@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
-import 'package:mix/src/helpers/dto/edge_insets.dto.dart';
+import 'package:mix/src/dtos/color.dto.dart';
+import 'package:mix/src/dtos/edge_insets/edge_insets.dto.dart';
 
 final firstMix = Mix(
   // Box attribute
@@ -61,86 +62,74 @@ void main() {
       final boxAttribute = style.values.attributesOfType<BoxAttributes>()!;
 
       // Length is only 1 because margin and color are BoxAttributes
-      expect(style.length, 1);
+      expect(style.values.length, 1);
 
-      expect(boxAttribute.color, Colors.red);
+      expect(boxAttribute.color, const ColorDto(Colors.red));
       expect(boxAttribute.margin, const EdgeInsetsDto.all(10));
     });
 
     test('Creates a Mix from Attributes List', () async {
-      final mixFromList = Mix.fromList(firstMix.toList());
-      final mixFromMaybeList = Mix.fromMaybeList([null, ...firstMix.toList()]);
+      final mix = Mix.fromAttributes([
+        bgColor(Colors.red),
+        margin(10),
+      ]);
 
-      expect(mixFromList.length, greaterThan(0));
-      expect(mixFromList.values, firstMix.values);
-      expect(mixFromMaybeList.length, firstMix.length);
+      final boxAttribute = mix.values.attributesOfType<BoxAttributes>()!;
+
+      // Length is only 1 because margin and color are BoxAttributes
+      expect(mix.values.length, 1);
+
+      expect(boxAttribute.color, const ColorDto(Colors.red));
+      expect(boxAttribute.margin, const EdgeInsetsDto.all(10));
     });
+  });
 
-    test('Adds Attributes to an Existing Mix', () async {
-      const boxAttribute = BoxAttributes(color: Colors.blue);
+  test('Combines Mixes', () async {
+    const boxAttribute = BoxAttributes(color: ColorDto(Colors.blue));
 
-      const flexAttribute = FlexAttributes(direction: Axis.horizontal);
+    const flexAttribute = FlexAttributes(direction: Axis.horizontal);
 
-      final baseMix = Mix(boxAttribute);
-      final modifiedMix = baseMix.mix(flexAttribute);
+    final baseMix = Mix(boxAttribute);
+    final appliedMix = baseMix.merge(Mix(flexAttribute));
 
-      final modifiedBoxAttribute =
-          modifiedMix.values.attributesOfType<BoxAttributes>();
-      final modifiedFlexAttribute =
-          modifiedMix.values.attributesOfType<FlexAttributes>();
+    final modifiedBoxAttribute =
+        appliedMix.values.attributesOfType<BoxAttributes>();
 
-      expect(baseMix.length, 1);
-      expect(modifiedMix.length, 2);
+    final modifiedFlexAttribute =
+        appliedMix.values.attributesOfType<FlexAttributes>();
 
-      expect(modifiedBoxAttribute, boxAttribute);
-      expect(modifiedFlexAttribute, flexAttribute);
-    });
+    expect(baseMix.values.length, 1);
+    expect(appliedMix.values.length, 2);
 
-    test('Combines Mixes', () async {
-      const blueBackground = BoxAttributes(
-        color: Colors.blue,
-      );
+    expect(modifiedBoxAttribute, equals(boxAttribute));
+    expect(modifiedFlexAttribute, equals(flexAttribute));
+  });
 
-      const yellowBackground = BoxAttributes(
-        color: Colors.yellow,
-      );
-      final baseMix = Mix(blueBackground);
-      final modifiedMix = baseMix.mix(yellowBackground);
+  test('Equality of Mix', () async {
+    final copyFirstMix = Mix.fromAttributes(firstMix.toAttributes());
+    final copySecondMix = Mix.fromAttributes(secondMix.toAttributes());
+    final combinedMixFirst = Mix.combine([firstMix, secondMix]);
+    final combinedMixSecond = firstMix.merge(secondMix);
 
-      final modifiedBoxAttribute =
-          modifiedMix.values.attributesOfType<BoxAttributes>();
-      final baseBoxAttribute = baseMix.values.attributesOfType<BoxAttributes>();
+    expect(copyFirstMix, equals(firstMix));
+    expect(copySecondMix, equals(secondMix));
+    expect(combinedMixFirst, equals(combinedMixSecond));
+  });
 
-      expect(yellowBackground, modifiedBoxAttribute);
-      expect(blueBackground, baseBoxAttribute);
-    });
+  test('Chooses Mixes based on conditional', () async {
+    final chooseFirstMix = Mix.chooser(
+      condition: true,
+      ifTrue: firstMix,
+      ifFalse: secondMix,
+    );
 
-    test('Equality of Mix', () async {
-      final copyFirstMix = Mix.fromList(firstMix.toList());
-      final copySecondMix = Mix.fromList(secondMix.toList());
-      final combinedMixFirst = Mix.combine(firstMix, secondMix);
-      final combinedMixSecond = firstMix.apply(secondMix);
+    final chooseSecondMix = Mix.chooser(
+      condition: false,
+      ifTrue: firstMix,
+      ifFalse: secondMix,
+    );
 
-      expect(copyFirstMix, firstMix);
-      expect(copySecondMix, secondMix);
-      expect(combinedMixFirst, combinedMixSecond);
-    });
-
-    test('Chooses Mixes based on conditional', () async {
-      final chooseFirstMix = Mix.chooser(
-        condition: true,
-        ifTrue: firstMix,
-        ifFalse: secondMix,
-      );
-
-      final chooseSecondMix = Mix.chooser(
-        condition: false,
-        ifTrue: firstMix,
-        ifFalse: secondMix,
-      );
-
-      expect(chooseFirstMix, firstMix);
-      expect(chooseSecondMix, secondMix);
-    });
+    expect(chooseFirstMix, firstMix);
+    expect(chooseSecondMix, secondMix);
   });
 }

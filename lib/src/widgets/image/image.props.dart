@@ -28,12 +28,11 @@ class ImageProps {
     required this.repeat,
   });
 
-  factory ImageProps.fromContext(MixContext mixContext) {
+  factory ImageProps.fromContext(BuildContext context) {
+    final mixContext = MixContext.ensureOf(context);
     final attributes = mixContext.attributesOfType<ImageAttributes>();
 
     var color = attributes?.color;
-
-    final context = mixContext.context;
 
     if (color is ColorToken) {
       color = color.resolve(context);

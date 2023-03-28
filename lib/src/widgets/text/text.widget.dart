@@ -1,33 +1,21 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import '../../mixer/mix_context.dart';
+import '../../attributes/common/common.descriptor.dart';
 import '../../mixer/mix_factory.dart';
 import '../../variants/variant.dart';
-import '../empty.widget.dart';
-import '../mixable.widget.dart';
-import 'text_directives/text_directive.attributes.dart';
-import 'text_directives/text_directive_helpers.dart';
+import '../mix.widget.dart';
+import '../mix_context_builder.dart';
+import '../nothing.widget.dart';
+import 'text.descriptor.dart';
 
-/// _Mix_ corollary to Flutter _Text_ widget
-/// Use wherever you would use a Flutter _Text_ widget
-///
-/// ## Attributes:
-/// - [TextAttributes](TextAttributes-class.html)
-/// - [TextDirectiveAttribute](TextDirectiveAttribute-class.html)
-/// - [SharedAttributes](SharedAttributes-class.html)
-/// ## Utilities:
-/// - [TextUtility](TextUtility-class.html)
-/// - [TextStyleUtility](TextStyleUtility-class.html)
-/// - [TextDirectiveUtils](TextDirectiveUtils-class.html)
-/// - [SharedUtils](SharedUtils-class.html)
-/// {@category Mixable Widgets}
-class TextMix extends MixableWidget {
+class TextMix extends MixWidget {
   const TextMix(
     this.text, {
     Mix? mix,
     Key? key,
     List<Variant>? variants,
+    this.semanticsLabel,
     bool inherit = true,
   }) : super(
           mix,
@@ -37,79 +25,80 @@ class TextMix extends MixableWidget {
         );
 
   final String text;
+  final String? semanticsLabel;
 
   @override
   Widget build(BuildContext context) {
-    return TextMixerWidget(
-      createMixContext(context),
-      text: text,
+    return MixContextBuilder(
+      mix: mix,
+      builder: (context, _) {
+        final textProps = TextDescriptor.fromContext(context);
+        final commonProps = CommonDescriptor.fromContext(context);
+
+        return TextMixedWidget(
+          textProps: textProps,
+          commonProps: commonProps,
+          text: text,
+          semanticsLabel: semanticsLabel,
+        );
+      },
     );
   }
 }
 
-/// @nodoc
-class TextMixerWidget extends MixedWidget {
-  const TextMixerWidget(
-    MixContext mixContext, {
-    Key? key,
+// TODO: Rename this to TextMixerWidget for something more descriptive
+class TextMixedWidget extends StatelessWidget {
+  const TextMixedWidget({
+    required this.textProps,
+    required this.commonProps,
     required this.text,
-  }) : super(mixContext, key: key);
+    Key? key,
+    this.semanticsLabel,
+  }) : super(key: key);
 
   final String text;
+  final TextDescriptor textProps;
+  final CommonDescriptor commonProps;
+  final String? semanticsLabel;
 
   @override
   Widget build(BuildContext context) {
-    final props = mixContext.textProps;
-
-    final directives = mixContext.directivesOfType<TextDirectiveAttribute>();
-
-    final sharedProps = mixContext.sharedProps;
-    if (!sharedProps.visible) {
-      return const Empty();
+    if (!commonProps.visible) {
+      return const Nothing();
     }
-    final content = applyTextDirectives(text, directives);
+    final content = textProps.applyTextDirectives(text);
 
-    if (sharedProps.animated) {
+    final textWidget = Text(
+      content,
+      textDirection: commonProps.textDirection,
+      textWidthBasis: textProps.textWidthBasis,
+      textScaleFactor: textProps.textScaleFactor,
+      locale: textProps.locale,
+      maxLines: textProps.maxLines,
+      overflow: textProps.overflow,
+      softWrap: textProps.softWrap,
+      strutStyle: textProps.strutStyle,
+      style: textProps.style,
+      textAlign: textProps.textAlign,
+      textHeightBehavior: textProps.textHeightBehavior,
+      semanticsLabel: semanticsLabel,
+    );
+
+    if (commonProps.animated) {
       return AnimatedDefaultTextStyle(
-        style: props.style ??
+        style: textProps.style ??
             Theme.of(context).textTheme.bodyText1 ??
             const TextStyle(),
-        duration: sharedProps.animationDuration,
-        curve: sharedProps.animationCurve,
-        softWrap: props.softWrap,
-        overflow: props.overflow,
-        textAlign: props.textAlign,
-        maxLines: props.maxLines,
-        child: Text(
-          content,
-          textDirection: sharedProps.textDirection,
-          textWidthBasis: props.textWidthBasis,
-          textScaleFactor: props.textScaleFactor,
-          locale: props.locale,
-          maxLines: props.maxLines,
-          overflow: props.overflow,
-          softWrap: props.softWrap,
-          strutStyle: props.strutStyle,
-          style: props.style,
-          textAlign: props.textAlign,
-          textHeightBehavior: props.textHeightBehavior,
-        ),
+        duration: commonProps.animationDuration,
+        curve: commonProps.animationCurve,
+        softWrap: textProps.softWrap,
+        overflow: textProps.overflow,
+        textAlign: textProps.textAlign,
+        maxLines: textProps.maxLines,
+        child: textWidget,
       );
     } else {
-      return Text(
-        content,
-        softWrap: props.softWrap,
-        textDirection: sharedProps.textDirection,
-        textWidthBasis: props.textWidthBasis,
-        textAlign: props.textAlign,
-        overflow: props.overflow,
-        maxLines: props.maxLines,
-        textScaleFactor: props.textScaleFactor,
-        style: props.style,
-        locale: props.locale,
-        strutStyle: props.strutStyle,
-        textHeightBehavior: props.textHeightBehavior,
-      );
+      return textWidget;
     }
   }
 
@@ -126,9 +115,17 @@ class TextMixerWidget extends MixedWidget {
     );
 
     properties.add(
-      DiagnosticsProperty<MixContext>(
-        'mixer',
-        mixContext,
+      DiagnosticsProperty<TextDescriptor>(
+        'props',
+        textProps,
+        defaultValue: null,
+      ),
+    );
+
+    properties.add(
+      DiagnosticsProperty<CommonDescriptor>(
+        'commonProps',
+        commonProps,
         defaultValue: null,
       ),
     );

@@ -2,24 +2,23 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../attributes/attribute.dart';
-import '../../helpers/dto/border.dto.dart';
-import '../../helpers/dto/border_radius.dto.dart';
-import '../../helpers/dto/box_shadow.dto.dart';
-import '../../helpers/dto/edge_insets.dto.dart';
+import '../../dtos/border/box_border.dto.dart';
+import '../../dtos/color.dto.dart';
+import '../../dtos/edge_insets/edge_insets_geometry.dto.dart';
+import '../../dtos/radius/border_radius_geometry.dto.dart';
+import '../../dtos/shadow/box_shadow.dto.dart';
 import '../../helpers/extensions.dart';
+import '../../helpers/mergeable_map.dart';
+import 'box.decorator.dart';
 
-/// ## Widget:
-/// - [Box](Box-class.html)
-///
-/// {@category Attributes}
-class BoxAttributes extends InheritedAttribute {
+class BoxAttributes extends WidgetAttributes {
   final EdgeInsetsGeometryDto? margin;
   final EdgeInsetsGeometryDto? padding;
   final AlignmentGeometry? alignment;
   final double? height;
   final double? width;
   // Decoration
-  final Color? color;
+  final ColorDto? color;
   final BoxBorderDto? border;
   final BorderRadiusGeometryDto? borderRadius;
   final List<BoxShadowDto>? boxShadow;
@@ -32,6 +31,8 @@ class BoxAttributes extends InheritedAttribute {
   final double? minWidth;
   final BoxShape? shape;
   final Gradient? gradient;
+
+  final MergeableMap<BoxDecorator>? decorators;
 
   const BoxAttributes({
     this.margin,
@@ -50,7 +51,48 @@ class BoxAttributes extends InheritedAttribute {
     this.shape,
     this.transform,
     this.gradient,
+    this.decorators,
   });
+
+  BoxAttributes copyWith({
+    EdgeInsetsGeometryDto? margin,
+    EdgeInsetsGeometryDto? padding,
+    AlignmentGeometry? alignment,
+    ColorDto? color,
+    BoxBorderDto? border,
+    BorderRadiusGeometryDto? borderRadius,
+    List<BoxShadowDto>? boxShadow,
+    Matrix4? transform,
+    double? height,
+    double? width,
+    double? maxHeight,
+    double? minHeight,
+    double? maxWidth,
+    double? minWidth,
+    BoxShape? shape,
+    Gradient? gradient,
+    MergeableMap<BoxDecorator>? decorators,
+  }) {
+    return BoxAttributes(
+      margin: margin ?? this.margin,
+      padding: padding ?? this.padding,
+      alignment: alignment ?? this.alignment,
+      height: height ?? this.height,
+      width: width ?? this.width,
+      color: color ?? this.color,
+      border: border ?? this.border,
+      borderRadius: borderRadius ?? this.borderRadius,
+      boxShadow: boxShadow ?? this.boxShadow,
+      transform: transform ?? this.transform,
+      maxHeight: maxHeight ?? this.maxHeight,
+      minHeight: minHeight ?? this.minHeight,
+      maxWidth: maxWidth ?? this.maxWidth,
+      minWidth: minWidth ?? this.minWidth,
+      shape: shape ?? this.shape,
+      gradient: gradient ?? this.gradient,
+      decorators: decorators ?? this.decorators,
+    );
+  }
 
   @override
   BoxAttributes merge(BoxAttributes? other) {
@@ -76,6 +118,7 @@ class BoxAttributes extends InheritedAttribute {
       minWidth: other.minWidth,
       shape: other.shape,
       gradient: other.gradient,
+      decorators: decorators?.merge(other.decorators) ?? decorators,
     );
   }
 
@@ -99,7 +142,8 @@ class BoxAttributes extends InheritedAttribute {
         other.maxWidth == maxWidth &&
         other.minWidth == minWidth &&
         other.shape == shape &&
-        other.gradient == gradient;
+        other.gradient == gradient &&
+        other.decorators == decorators;
   }
 
   @override
@@ -119,49 +163,12 @@ class BoxAttributes extends InheritedAttribute {
         maxWidth.hashCode ^
         minWidth.hashCode ^
         shape.hashCode ^
-        gradient.hashCode;
-  }
-
-  BoxAttributes copyWith({
-    EdgeInsetsGeometryDto? margin,
-    EdgeInsetsGeometryDto? padding,
-    AlignmentGeometry? alignment,
-    double? height,
-    double? width,
-    Color? color,
-    BoxBorderDto? border,
-    BorderRadiusGeometryDto? borderRadius,
-    List<BoxShadowDto>? boxShadow,
-    Matrix4? transform,
-    double? maxHeight,
-    double? minHeight,
-    double? maxWidth,
-    double? minWidth,
-    BoxShape? shape,
-    Gradient? gradient,
-  }) {
-    return BoxAttributes(
-      margin: margin ?? this.margin,
-      padding: padding ?? this.padding,
-      alignment: alignment ?? this.alignment,
-      height: height ?? this.height,
-      width: width ?? this.width,
-      color: color ?? this.color,
-      border: border ?? this.border,
-      borderRadius: borderRadius ?? this.borderRadius,
-      boxShadow: boxShadow ?? this.boxShadow,
-      transform: transform ?? this.transform,
-      maxHeight: maxHeight ?? this.maxHeight,
-      minHeight: minHeight ?? this.minHeight,
-      maxWidth: maxWidth ?? this.maxWidth,
-      minWidth: minWidth ?? this.minWidth,
-      shape: shape ?? this.shape,
-      gradient: gradient ?? this.gradient,
-    );
+        gradient.hashCode ^
+        decorators.hashCode;
   }
 
   @override
   String toString() {
-    return 'BoxAttributes(margin: $margin, padding: $padding, alignment: $alignment, height: $height, width: $width, color: $color, border: $border, borderRadius: $borderRadius, boxShadow: $boxShadow, transform: $transform, maxHeight: $maxHeight, minHeight: $minHeight, maxWidth: $maxWidth, minWidth: $minWidth, shape: $shape , gradient: $gradient)';
+    return 'BoxAttributes(margin: $margin, padding: $padding, alignment: $alignment, height: $height, width: $width, color: $color, border: $border, borderRadius: $borderRadius, boxShadow: $boxShadow, transform: $transform, maxHeight: $maxHeight, minHeight: $minHeight, maxWidth: $maxWidth, minWidth: $minWidth, shape: $shape, gradient: $gradient, decorators: $decorators)';
   }
 }

@@ -1,156 +1,56 @@
 import 'package:flutter/material.dart';
 
-import '../attributes/attribute.dart';
-import '../attributes/shared/shared.props.dart';
-import '../decorators/decorator_attribute.dart';
-import '../directives/directive_attribute.dart';
-import '../variants/variant_attribute.dart';
-import '../widgets/box/box.props.dart';
-import '../widgets/flex/flex.props.dart';
-import '../widgets/icon/icon.props.dart';
-import '../widgets/image/image.props.dart';
-import '../widgets/text/text.props.dart';
-import '../widgets/zbox/zbox.props.dart';
-import 'mix_factory.dart';
-import 'mix_values.dart';
+import 'mix_context_data.dart';
 
-class MixContext {
-  final BuildContext context;
-  final MixValues _mixValues;
-
-  MixContext._({
-    required this.context,
-    required MixValues mixValues,
-  }) : _mixValues = mixValues;
-
-  factory MixContext.create({
-    required BuildContext context,
-    required Mix mix,
-  }) {
-    return _build(
-      context: context,
-      mix: mix.values,
-    );
-  }
-
-  static MixContext _build<T extends Attribute>({
-    required BuildContext context,
-    required MixValues mix,
-  }) {
-    // Tracks the values selected and does not allow for
-    // attributes already expended to be expended again.
-    MixValues values = MixValues(
-      attributes: mix.attributes,
-      decorators: mix.decorators,
-      directives: mix.directives,
-      variants: mix.variants,
-      contextVariants: [],
-    );
-
-    final contextVariants = mix.contextVariants;
-
-    final attributes = _applyContextVariants(
-      context,
-      contextVariants,
-    );
-
-    final appliedValues = values.merge(MixValues.create(attributes));
-
-    return MixContext._(
-      context: context,
-      mixValues: appliedValues,
-    );
-  }
-
-  static List<Attribute> _applyContextVariants(
-    BuildContext context,
-    List<Attribute> attributes,
-  ) {
-    List<Attribute> expanded = [];
-
-    for (final attribute in attributes) {
-      if (attribute is ContextVariantAttribute) {
-        final shouldApply = attribute.shouldApply(context);
-        // If it's inverse (from `not(variant)`), only apply if [willApply] is
-        // false. Otherwise, apply only when [willApply]
-        final willApply =
-            attribute.variant.inverse ? !shouldApply : shouldApply;
-        if (willApply) {
-          // If its selected, add it to the list
-          expanded.addAll(_applyContextVariants(
-            context,
-            attribute.value.toList(),
-          ));
-        } else {
-          // If not selected, add it to the list for future use
-          expanded.add(attribute);
-        }
-      } else {
-        expanded.add(attribute);
-      }
-    }
-
-    return expanded;
-  }
-
-  /// Used to obtain a [InheritedAttribute] from [MixInheritedAttributes].
+/// Context data widget for Mix data.
+///
+/// Inherits from [InheritedWidget] and stores [mixContext], a value that can be
+/// accessed by widgets through the static method `of()` or by ensuring it is
+/// present with `ensureOf()`.
+class MixContext extends InheritedWidget {
+  /// Initializes a new instance of [MixContext].
   ///
-  /// Obtain with `mixContext.attributesOfType<MyInheritedAttribute>()`.
-  T? attributesOfType<T extends InheritedAttribute>() {
-    return _mixValues.attributesOfType<T>();
+  /// The `mixContext` parameter is the [MixContextData] object to store. [child]
+  /// receives the element tree that will use this context, and [key] can be set
+  /// to track changes.
+  const MixContext(
+    this.mixContext, {
+    Key? key,
+    required Widget child,
+  }) : super(key: key, child: child);
+
+  /// Contains the context data object.
+  final MixContextData? mixContext;
+
+  /// Returns the context data from the widget tree in [context].
+  ///
+  /// This method returns the first instance of [MixContext] that it finds
+  /// while searching up the widget tree. Returns null if not found.
+  static MixContextData? of(BuildContext context) {
+    final widget = context.dependOnInheritedWidgetOfExactType<MixContext>();
+
+    return widget?.mixContext;
   }
 
-  T dependOnAttributesOfType<T extends InheritedAttribute>() {
-    final attribute = _mixValues.attributesOfType<T>();
+  /// Ensures that [MixContext] is available on the widget tree starting at
+  /// the given [context].
+  ///
+  /// Throws an exception if [MixContext] is not found within the given widget
+  /// tree containing [context].
+  static MixContextData ensureOf(BuildContext context) {
+    final data = of(context);
 
-    if (attribute is! T) {
-      throw '''
-      No $T could be found starting from MixContext 
-      when call mixContext.attributesOfType<$T>(). This can happen because you 
-      have not create a Mix with $T.
-      ''';
+    if (data == null) {
+      throw Exception('MixContext not found in widget tree');
     }
 
-    return attribute;
-  }
-
-  Iterable<T> directivesOfType<T extends DirectiveAttribute>() {
-    return _mixValues.directivesOfType<T>();
-  }
-
-  List<DecoratorAttribute> decoratorsOfLocation(
-    DecoratorLocation location,
-  ) {
-    return _mixValues.decoratorsOfLocation(location);
-  }
-
-  Mix toMix() {
-    return Mix.fromValues(_mixValues);
+    return data;
   }
 
   @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is MixContext &&
-        other.context == context &&
-        other._mixValues == _mixValues;
+  bool updateShouldNotify(MixContext oldWidget) {
+    // Returns true if the `mixContext` inside the widget has changed since
+    // the last time a dependent overridden method was called.
+    return mixContext != oldWidget.mixContext;
   }
-
-  @override
-  int get hashCode {
-    return context.hashCode ^ _mixValues.hashCode;
-  }
-}
-
-extension MixContextExtensions on MixContext {
-  SharedProps get sharedProps => SharedProps.fromContext(this);
-  BoxProps get boxProps => BoxProps.fromContext(this);
-  // Cache this value
-  FlexProps get flexProps => FlexProps.fromContext(this);
-
-  ZBoxProps get zBoxProps => ZBoxProps.fromContext(this);
-  IconProps get iconProps => IconProps.fromContext(this);
-  TextProps get textProps => TextProps.fromContext(this);
-  ImageProps get imageProps => ImageProps.fromContext(this);
 }

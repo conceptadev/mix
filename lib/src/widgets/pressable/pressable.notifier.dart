@@ -1,21 +1,18 @@
 import 'package:flutter/widgets.dart';
 
+import 'pressable_state.dart';
+
 class PressableNotifier extends InheritedWidget {
   const PressableNotifier({
     Key? key,
     required Widget child,
-    this.hovering = false,
-    this.pressing = false,
-    this.focused = false,
-    this.disabled = false,
+    required this.state,
+    this.focus = false,
   }) : super(key: key, child: child);
 
-  final bool hovering;
-  final bool pressing;
-  final bool focused;
-  final bool disabled;
+  final PressableState state;
 
-  bool get isNone => !hovering && !pressing && !focused && !disabled;
+  final bool focus;
 
   static PressableNotifier? of(BuildContext context) {
     return context.dependOnInheritedWidgetOfExactType<PressableNotifier>();
@@ -23,9 +20,6 @@ class PressableNotifier extends InheritedWidget {
 
   @override
   bool updateShouldNotify(PressableNotifier oldWidget) {
-    return hovering != oldWidget.hovering ||
-        pressing != oldWidget.pressing ||
-        focused != oldWidget.focused ||
-        disabled != oldWidget.disabled;
+    return oldWidget.focus != focus || oldWidget.state != state;
   }
 }

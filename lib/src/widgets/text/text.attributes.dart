@@ -1,16 +1,15 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../attributes/attribute.dart';
+import '../../dtos/text_style.dto.dart';
 import '../../helpers/extensions.dart';
-import '../../theme/refs/text_style_token.dart';
+import 'text_directives/text_directives.dart';
 
-/// ## Widget:
-/// - [TextMix](TextMix-class.html)
-/// {@category Attributes}
-class TextAttributes extends InheritedAttribute {
-  final TextStyle? style;
-  // Ref for context
-  final TextStyleToken? styleRef;
+class TextAttributes extends WidgetAttributes {
+  final List<TextStyleDto>? _styles;
+  final TextStyleDto? _style;
+
   final StrutStyle? strutStyle;
   final TextAlign? textAlign;
 
@@ -23,9 +22,11 @@ class TextAttributes extends InheritedAttribute {
   final TextWidthBasis? textWidthBasis;
   final TextHeightBehavior? textHeightBehavior;
 
+  final List<TextDirective> directives;
+
   const TextAttributes({
-    this.style,
-    this.styleRef,
+    TextStyleDto? style,
+    List<TextStyleDto>? styles,
     this.strutStyle,
     this.textAlign,
     this.locale,
@@ -35,7 +36,42 @@ class TextAttributes extends InheritedAttribute {
     this.maxLines,
     this.textWidthBasis,
     this.textHeightBehavior,
-  });
+    this.directives = const [],
+  })  : _styles = styles,
+        _style = style;
+
+  factory TextAttributes.fromValues({
+    TextStyle? style,
+    StrutStyle? strutStyle,
+    TextAlign? textAlign,
+    Locale? locale,
+    bool? softWrap,
+    TextOverflow? overflow,
+    double? textScaleFactor,
+    int? maxLines,
+    TextWidthBasis? textWidthBasis,
+    TextHeightBehavior? textHeightBehavior,
+    List<TextDirective>? directives,
+  }) {
+    return TextAttributes(
+      style: TextStyleDto.maybeFrom(style),
+      strutStyle: strutStyle,
+      textAlign: textAlign,
+      locale: locale,
+      softWrap: softWrap,
+      overflow: overflow,
+      textScaleFactor: textScaleFactor,
+      maxLines: maxLines,
+      textWidthBasis: textWidthBasis,
+      textHeightBehavior: textHeightBehavior,
+      directives: directives ?? const [],
+    );
+  }
+
+  // Combines the text styles
+  List<TextStyleDto>? get styles {
+    return [if (_style != null) _style!, ...?_styles];
+  }
 
   @override
   TextAttributes merge(TextAttributes? other) {
@@ -43,8 +79,8 @@ class TextAttributes extends InheritedAttribute {
 
     return copyWith(
       // Need to inherit to allow for overrides
-      style: other.style,
-      styleRef: other.styleRef,
+      styles: other.styles,
+
       strutStyle: other.strutStyle,
       textAlign: other.textAlign,
       locale: other.locale,
@@ -55,12 +91,12 @@ class TextAttributes extends InheritedAttribute {
 
       textWidthBasis: other.textWidthBasis,
       textHeightBehavior: other.textHeightBehavior,
+      directives: other.directives,
     );
   }
 
   TextAttributes copyWith({
-    TextStyle? style,
-    TextStyleToken? styleRef,
+    List<TextStyleDto>? styles,
     StrutStyle? strutStyle,
     TextAlign? textAlign,
     Locale? locale,
@@ -68,34 +104,13 @@ class TextAttributes extends InheritedAttribute {
     TextOverflow? overflow,
     double? textScaleFactor,
     int? maxLines,
-    String? semanticsLabel,
     TextWidthBasis? textWidthBasis,
     TextHeightBehavior? textHeightBehavior,
+    List<TextDirective>? directives,
   }) {
-    TextStyle? thisStyle = this.style;
-    TextStyle? otherStyle = style;
-
-    TextStyleToken? thisStyleRef = this.styleRef;
-    TextStyleToken? otherStyleRef = styleRef;
-
-    // During the merge we need to move the ref
-    // clunky but allows cleaner api for devs
-    if (thisStyle is TextStyleToken) {
-      thisStyleRef = thisStyle;
-    } else {
-      thisStyle = thisStyle;
-    }
-
-    if (style is TextStyleToken) {
-      otherStyleRef = style;
-    } else {
-      otherStyle = style;
-    }
-
     return TextAttributes(
-      style: thisStyle?.merge(otherStyle) ?? otherStyle,
+      styles: [...?this.styles, ...?styles],
       strutStyle: this.strutStyle?.merge(strutStyle) ?? strutStyle,
-      styleRef: otherStyleRef ?? thisStyleRef,
       textAlign: textAlign ?? this.textAlign,
       locale: locale ?? this.locale,
       softWrap: softWrap ?? this.softWrap,
@@ -104,6 +119,7 @@ class TextAttributes extends InheritedAttribute {
       maxLines: maxLines ?? this.maxLines,
       textWidthBasis: textWidthBasis ?? this.textWidthBasis,
       textHeightBehavior: textHeightBehavior ?? this.textHeightBehavior,
+      directives: [...this.directives, ...?directives],
     );
   }
 
@@ -112,8 +128,7 @@ class TextAttributes extends InheritedAttribute {
     if (identical(this, other)) return true;
 
     return other is TextAttributes &&
-        other.style == style &&
-        other.styleRef == styleRef &&
+        listEquals(styles, other.styles) &&
         other.strutStyle == strutStyle &&
         other.textAlign == textAlign &&
         other.locale == locale &&
@@ -122,13 +137,13 @@ class TextAttributes extends InheritedAttribute {
         other.textScaleFactor == textScaleFactor &&
         other.maxLines == maxLines &&
         other.textWidthBasis == textWidthBasis &&
-        other.textHeightBehavior == textHeightBehavior;
+        other.textHeightBehavior == textHeightBehavior &&
+        listEquals(directives, other.directives);
   }
 
   @override
   int get hashCode {
-    return style.hashCode ^
-        styleRef.hashCode ^
+    return styles.hashCode ^
         strutStyle.hashCode ^
         textAlign.hashCode ^
         locale.hashCode ^
@@ -137,6 +152,7 @@ class TextAttributes extends InheritedAttribute {
         textScaleFactor.hashCode ^
         maxLines.hashCode ^
         textWidthBasis.hashCode ^
-        textHeightBehavior.hashCode;
+        textHeightBehavior.hashCode ^
+        directives.hashCode;
   }
 }

@@ -1,72 +1,35 @@
 import 'package:flutter/material.dart';
 
-import '../mixable.widget.dart';
 import 'pressable.notifier.dart';
+import 'pressable_state.dart';
 
-/// The _Mixable_ corollary to the Flutter _Button_ class
-/// Use anywhere you would use a _Button_
-///
-/// ## Attributes
-/// _Pressable_ does not have it's own appearance attributes &mdash; the frame appearance can be controlled by a containing [_Box_](Box-class.html) widget, while the child widget (usually a [_TextMix_](TextMix-class.html) or [_IconMix_](IconMix-class.html)) attributes control its own appearance.
-///
-/// See the containing or the child widget-specific documentation for applicable attributes and utilities.
-///
-/// {@category Mixable Widgets}
-class Pressable extends StatelessWidget {
+class Pressable extends StatefulWidget {
   const Pressable({
     required this.child,
     required this.onPressed,
-    this.onLongPressed,
+    this.onLongPress,
     this.focusNode,
     this.autofocus = false,
+    this.onFocusChange,
     this.behavior,
     Key? key,
   }) : super(key: key);
 
-  final MixableWidget child;
+  final Widget child;
   final VoidCallback? onPressed;
-  final VoidCallback? onLongPressed;
+  final VoidCallback? onLongPress;
   final FocusNode? focusNode;
   final bool autofocus;
-  final HitTestBehavior? behavior;
-
-  @override
-  Widget build(BuildContext context) {
-    return PressableMixerWidget(
-      onPressed: onPressed,
-      onLongPressed: onLongPressed,
-      focusNode: focusNode,
-      autofocus: autofocus,
-      child: child,
-    );
-  }
-}
-
-/// @nodoc
-class PressableMixerWidget extends StatefulWidget {
-  const PressableMixerWidget({
-    required this.child,
-    required this.onPressed,
-    this.onLongPressed,
-    this.focusNode,
-    this.autofocus = false,
-    this.behavior,
-    Key? key,
-  }) : super(key: key);
-
-  final MixableWidget child;
-  final VoidCallback? onPressed;
-  final VoidCallback? onLongPressed;
-  final FocusNode? focusNode;
-  final bool autofocus;
+  final Function(bool)? onFocusChange;
 
   final HitTestBehavior? behavior;
 
   @override
-  PressableMixerWidgetState createState() => PressableMixerWidgetState();
+  // ignore: library_private_types_in_public_api
+  _PressableState createState() => _PressableState();
 }
 
-class PressableMixerWidgetState extends State<PressableMixerWidget> {
+class _PressableState extends State<Pressable> {
   late FocusNode node;
 
   @override
@@ -76,7 +39,7 @@ class PressableMixerWidgetState extends State<PressableMixerWidget> {
   }
 
   @override
-  void didUpdateWidget(PressableMixerWidget oldWidget) {
+  void didUpdateWidget(Pressable oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.focusNode != oldWidget.focusNode) {
       node = widget.focusNode ?? node;
@@ -93,62 +56,94 @@ class PressableMixerWidgetState extends State<PressableMixerWidget> {
     return FocusNode(debugLabel: '${widget.runtimeType}');
   }
 
-  bool _hovering = false;
-  bool _pressing = false;
-  bool _shouldShowFocus = false;
+  bool _hover = false;
+  bool _focus = false;
+  bool _pressed = false;
+  bool _longpressed = false;
 
-  bool get enabled => widget.onPressed != null || widget.onLongPressed != null;
+  bool get _onEnabled => widget.onPressed != null || widget.onLongPress != null;
+
+  PressableState get state {
+    if (widget.onPressed == null && widget.onLongPress == null) {
+      return PressableState.disabled;
+    }
+    // Long pressed has priority over pressed
+    // Due to delay of removing the _press state
+    if (_longpressed) {
+      return PressableState.longPressed;
+    }
+
+    if (_pressed) {
+      return PressableState.pressed;
+    }
+
+    if (_hover) {
+      return PressableState.hover;
+    }
+
+    return PressableState.inactive;
+  }
+
+  void handleUnpress() {
+    Future.delayed(const Duration(milliseconds: 100), () {
+      if (_pressed) {
+        updateState(() => _pressed = false);
+      }
+    });
+  }
+
+  updateState(void Function() fn) {
+    if (mounted) setState(fn);
+  }
 
   @override
   Widget build(BuildContext context) {
     return MergeSemantics(
       child: Semantics(
         button: true,
-        enabled: enabled,
-        focusable: enabled && node.canRequestFocus,
+        enabled: _onEnabled,
+        focusable: _onEnabled && node.canRequestFocus,
         focused: node.hasFocus,
-        child: FocusableActionDetector(
-          focusNode: node,
-          autofocus: widget.autofocus,
-          enabled: enabled,
-          onShowFocusHighlight: (v) {
-            if (mounted) setState(() => _shouldShowFocus = v);
+        child: GestureDetector(
+          behavior: widget.behavior,
+          onTap: () {
+            widget.onPressed?.call();
           },
-          onShowHoverHighlight: (v) {
-            if (mounted) setState(() => _hovering = v);
+          onTapDown: (_) {
+            updateState(() => _pressed = true);
           },
-          child: GestureDetector(
-            behavior: widget.behavior,
-            onTap: widget.onPressed,
-            onTapDown: (_) {
-              if (!enabled) return;
-              if (mounted) setState(() => _pressing = true);
+          onTapUp: (_) {
+            handleUnpress();
+          },
+          onTapCancel: () {
+            handleUnpress();
+          },
+          onLongPress: widget.onLongPress,
+          onLongPressStart: (_) {
+            updateState(() => _longpressed = true);
+          },
+          onLongPressEnd: (_) {
+            updateState(() => _longpressed = false);
+          },
+          onLongPressCancel: () {
+            updateState(() => _longpressed = false);
+          },
+          child: FocusableActionDetector(
+            focusNode: node,
+            autofocus: widget.autofocus,
+            enabled: _onEnabled,
+            onFocusChange: widget.onFocusChange,
+            onShowFocusHighlight: (v) {
+              updateState(() => _focus = v);
             },
-            onTapUp: (_) {
-              if (!enabled) return;
-              if (mounted) setState(() => _pressing = false);
+            onShowHoverHighlight: (v) {
+              updateState(() => _hover = v);
             },
-            onTapCancel: () {
-              if (!enabled) return;
-              if (mounted) setState(() => _pressing = false);
-            },
-            onLongPressStart: (_) {
-              if (!enabled) return;
-              if (mounted) setState(() => _pressing = true);
-            },
-            onLongPressEnd: (_) {
-              if (!enabled) return;
-              if (mounted) setState(() => _pressing = false);
-            },
-            child: () {
-              return PressableNotifier(
-                disabled: !enabled,
-                focused: _shouldShowFocus,
-                hovering: _hovering,
-                pressing: _pressing,
-                child: widget.child,
-              );
-            }(),
+            child: PressableNotifier(
+              state: state,
+              focus: _focus,
+              child: widget.child,
+            ),
           ),
         ),
       ),
