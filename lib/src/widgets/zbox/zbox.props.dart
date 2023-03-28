@@ -14,9 +14,8 @@ class ZBoxProps {
     required this.clipBehavior,
   });
 
-  factory ZBoxProps.fromContext(
-    MixContext mixContext,
-  ) {
+  factory ZBoxProps.fromContext(BuildContext context) {
+    final mixContext = MixContext.ensureOf(context);
     final zBoxAttributes = mixContext.attributesOfType<ZBoxAttributes>();
 
     return ZBoxProps(

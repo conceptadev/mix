@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
-import 'package:mix/src/helpers/dto/border.dto.dart';
-import 'package:mix/src/helpers/dto/border_radius.dto.dart';
-import 'package:mix/src/helpers/dto/box_shadow.dto.dart';
-import 'package:mix/src/helpers/dto/edge_insets.dto.dart';
+import 'package:mix/src/dtos/border/border.dto.dart';
+import 'package:mix/src/dtos/color.dto.dart';
+import 'package:mix/src/dtos/edge_insets/edge_insets.dto.dart';
+import 'package:mix/src/dtos/radius/border_radius.dto.dart';
+import 'package:mix/src/dtos/radius/radius_dto.dart';
+import 'package:mix/src/dtos/shadow/box_shadow.dto.dart';
 
 void main() {
   group("Box Attributes", () {
@@ -50,7 +52,7 @@ void main() {
       expect(
         paddingAttribute.padding,
         const EdgeInsetsDto.all(30),
-        reason: 'Padding attribute does not match EdgeInsetsDto.all(20)',
+        reason: 'Padding attribute does not match EdgeInsetsDto.all(30)',
       );
     });
 
@@ -218,8 +220,11 @@ void main() {
     // Border Radius
 
     test('-> Border Radius', () async {
-      const borderRadiusAttribute =
-          BoxAttributes(borderRadius: BorderRadiusDto.all(10));
+      const borderRadiusAttribute = BoxAttributes(
+        borderRadius: BorderRadiusDto.all(
+          RadiusDto.circular(10),
+        ),
+      );
       final borderRadiusUtilityAttribute = rounded(10);
 
       expect(
@@ -236,13 +241,16 @@ void main() {
 
       expect(
         borderRadiusAttribute.borderRadius,
-        const BorderRadiusDto.all(10),
+        const BorderRadiusDto.all(RadiusDto.circular(10)),
         reason:
             'Border Radius attribute does not match BorderRadiusDto.all(10)',
       );
 
-      const topLeftBorderRadius =
-          BoxAttributes(borderRadius: BorderRadiusDto.only(topLeft: 10));
+      const topLeftBorderRadius = BoxAttributes(
+        borderRadius: BorderRadiusDto.only(
+          topLeft: RadiusDto.circular(10),
+        ),
+      );
       final topLeftBorderRadiusUtility = roundedTL(10);
 
       expect(
@@ -259,7 +267,7 @@ void main() {
 
       expect(
         topLeftBorderRadius.borderRadius,
-        const BorderRadiusDto.only(topLeft: 10),
+        const BorderRadiusDto.only(topLeft: RadiusDto.circular(10)),
         reason:
             'Border Radius attribute does not match BorderRadiusDto.only(topLeft: 10)',
       );
@@ -272,7 +280,7 @@ void main() {
         border: BorderDto.all(
           style: BorderStyle.solid,
           width: 10,
-          color: Colors.red,
+          color: const ColorDto(Colors.red),
         ),
       );
       final borderUtilityAttribute = border(
@@ -298,7 +306,7 @@ void main() {
         BorderDto.all(
           style: BorderStyle.solid,
           width: 10,
-          color: Colors.red,
+          color: const ColorDto(Colors.red),
         ),
         reason: 'Border attribute does not match BorderDto.all(10)',
       );
@@ -310,7 +318,7 @@ void main() {
       const shadowAttribute = BoxAttributes(
         boxShadow: [
           BoxShadowDto(
-            color: Colors.red,
+            color: ColorDto(Colors.red),
             offset: Offset(10, 10),
             blurRadius: 10,
             spreadRadius: 15,
@@ -340,7 +348,7 @@ void main() {
         shadowAttribute.boxShadow,
         [
           const BoxShadowDto(
-            color: Colors.red,
+            color: ColorDto(Colors.red),
             offset: Offset(10, 10),
             blurRadius: 10,
             spreadRadius: 15,

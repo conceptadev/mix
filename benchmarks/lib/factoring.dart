@@ -45,7 +45,7 @@ void main() {
 
     watch.start();
 
-    Mix.combine(firstMix, secondMix);
+    Mix.combine([firstMix, secondMix]);
 
     watch.stop();
 
@@ -62,7 +62,7 @@ void main() {
   {
     watch.start();
 
-    Mix.combineAll([
+    Mix.combine([
       Mix(bgColor(Colors.black)),
       Mix(textColor(Colors.black)),
       Mix(margin(20)),
@@ -94,7 +94,7 @@ void main() {
 
     watch.start();
 
-    mix.withVariant(hasError);
+    mix.selectVariant(hasError);
 
     watch.stop();
 

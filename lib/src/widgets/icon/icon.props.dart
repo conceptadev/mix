@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../mixer/mix_context.dart';
-import '../../theme/refs/color_token.dart';
 import 'icon.attributes.dart';
 
 class IconProps {
@@ -13,10 +12,9 @@ class IconProps {
     required this.size,
   });
 
-  factory IconProps.fromContext(MixContext mixContext) {
+  factory IconProps.fromContext(BuildContext context) {
+    final mixContext = MixContext.ensureOf(context);
     final iconAttributes = mixContext.attributesOfType<IconAttributes>();
-
-    final context = mixContext.context;
 
     IconProps props;
 
@@ -26,14 +24,9 @@ class IconProps {
       );
     } else {
       final theme = IconTheme.of(context);
-      var color = iconAttributes.color;
-
-      if (color is ColorToken) {
-        color = color.resolve(context);
-      }
 
       props = IconProps(
-        color: color ?? theme.color,
+        color: iconAttributes.color?.resolve(context) ?? theme.color,
         size: iconAttributes.size ?? theme.size ?? 24,
       );
     }

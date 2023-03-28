@@ -1,22 +1,14 @@
 import 'package:flutter/material.dart';
 
-import '../../mixer/mix_context.dart';
+import '../../attributes/common/common.descriptor.dart';
 import '../../mixer/mix_factory.dart';
 import '../../variants/variant.dart';
-import '../empty.widget.dart';
-import '../mixable.widget.dart';
+import '../mix.widget.dart';
+import '../mix_context_builder.dart';
+import '../nothing.widget.dart';
+import 'icon.props.dart';
 
-/// The _Mix_ corollary to Flutter _Icon_ widget
-///
-/// ## Attributes
-/// - [IconAttributes](IconAttributes-class.html)
-/// - [SharedAttributes](SharedAttributes-class.html)
-/// ## Utilities
-/// - [IconUtils](IconUtils-class.html)
-/// - [SharedUtils](SharedUtils-class.html)
-///
-/// {@category Mixable Widgets}
-class IconMix extends MixableWidget {
+class IconMix extends MixWidget {
   const IconMix(
     this.icon, {
     Mix? mix,
@@ -36,56 +28,66 @@ class IconMix extends MixableWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Semantics(
-      label: semanticLabel,
-      child: IconMixerWidget(
-        createMixContext(context),
-        icon: icon,
-      ),
+    return MixContextBuilder(
+      mix: mix,
+      inherit: inherit,
+      variants: variants,
+      builder: (context, mixContext) {
+        final iconProps = IconProps.fromContext(context);
+        final commonProps = CommonDescriptor.fromContext(context);
+
+        return IconMixerWidget(
+          iconProps: iconProps,
+          commonProps: commonProps,
+          icon: icon,
+        );
+      },
     );
   }
 }
 
 /// {@nodoc}
-class IconMixerWidget extends MixedWidget {
-  const IconMixerWidget(
-    MixContext mixContext, {
+class IconMixerWidget extends StatelessWidget {
+  const IconMixerWidget({
+    required this.iconProps,
+    required this.commonProps,
     this.icon,
+    this.semanticLabel,
     Key? key,
-  }) : super(mixContext, key: key);
+  }) : super(key: key);
 
   final IconData? icon;
+  final IconProps iconProps;
+  final CommonDescriptor commonProps;
+
+  final String? semanticLabel;
 
   @override
   Widget build(BuildContext context) {
-    final props = mixContext.iconProps;
-
-    final sharedProps = mixContext.sharedProps;
-
-    if (!sharedProps.visible) {
-      return const Empty();
+    if (!commonProps.visible) {
+      return const Nothing();
     }
     Widget iconWidget = Icon(
       icon,
-      color: props.color,
-      size: props.size,
-      textDirection: sharedProps.textDirection,
+      color: iconProps.color,
+      size: iconProps.size,
+      textDirection: commonProps.textDirection,
     );
 
-    if (sharedProps.animated) {
+    if (commonProps.animated) {
       iconWidget = TweenAnimationBuilder<double>(
-        duration: sharedProps.animationDuration,
-        curve: sharedProps.animationCurve,
+        duration: commonProps.animationDuration,
+        curve: commonProps.animationCurve,
         tween: Tween<double>(
-          end: props.size,
+          end: iconProps.size,
         ),
         builder: (context, value, child) {
           final sizeValue = value;
 
           return TweenAnimationBuilder<Color?>(
-            duration: sharedProps.animationDuration,
-            curve: sharedProps.animationCurve,
-            tween: ColorTween(end: props.color),
+            duration: commonProps.animationDuration,
+            curve: commonProps.animationCurve,
+            tween: ColorTween(end: iconProps.color),
             child: child,
             builder: (context, value, child) {
               final colorValue = value;
@@ -101,6 +103,9 @@ class IconMixerWidget extends MixedWidget {
       );
     }
 
-    return iconWidget;
+    return Semantics(
+      label: semanticLabel,
+      child: iconWidget,
+    );
   }
 }

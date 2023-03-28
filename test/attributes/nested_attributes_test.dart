@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
 import 'package:mix/src/attributes/nested_attribute.dart';
-import 'package:mix/src/helpers/dto/edge_insets.dto.dart';
+import 'package:mix/src/dtos/color.dto.dart';
+import 'package:mix/src/dtos/edge_insets/edge_insets.dto.dart';
 
 void main() {
   group("Nested Attributes", () {
@@ -13,11 +14,11 @@ void main() {
         ),
       );
       final styleColor = Mix(
-        const BoxAttributes(color: Colors.red),
+        const BoxAttributes(color: ColorDto(Colors.red)),
       );
       final nestedStyle = Mix(
         NestedMixAttribute(
-          Mix.combineAll([
+          Mix.combine([
             styleMargin,
             styleColor,
           ]),
@@ -37,7 +38,7 @@ void main() {
       expect(
         boxAttributes,
         const BoxAttributes(
-          color: Colors.red,
+          color: ColorDto(Colors.red),
           margin: EdgeInsetsDto.all(20),
         ),
       );
@@ -45,7 +46,7 @@ void main() {
       expect(
         boxAttributesUtility,
         const BoxAttributes(
-          color: Colors.red,
+          color: ColorDto(Colors.red),
           margin: EdgeInsetsDto.all(20),
         ),
       );

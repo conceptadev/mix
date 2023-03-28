@@ -37,7 +37,7 @@ void main() async {
 
         watch.start();
 
-        MixContext.create(context: context, mix: expensiveContextMix);
+        MixContextData.create(context: context, mix: expensiveContextMix);
 
         watch.stop();
 

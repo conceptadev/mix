@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
-import 'package:mix/src/helpers/dto/border.dto.dart';
-import 'package:mix/src/helpers/dto/border_radius.dto.dart';
-import 'package:mix/src/helpers/dto/box_shadow.dto.dart';
-import 'package:mix/src/helpers/dto/edge_insets.dto.dart';
 
-class MixTestWidget extends StatelessWidget {
-  const MixTestWidget({
+export 'package:mix/src/helpers/extensions.dart';
+
+class TestMixWidget extends StatelessWidget {
+  const TestMixWidget({
     required this.child,
     Key? key,
   }) : super(key: key);
@@ -15,8 +13,33 @@ class MixTestWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return Directionality(
+      textDirection: TextDirection.ltr,
+      child: child,
+    );
+  }
+}
+
+// ignore: constant_identifier_names
+const FillWidget = SizedBox(
+  height: 25,
+  width: 25,
+);
+
+class WrapMixThemeWidget extends StatelessWidget {
+  const WrapMixThemeWidget({
+    required this.child,
+    this.theme,
+    Key? key,
+  }) : super(key: key);
+
+  final Widget child;
+  final MixThemeData? theme;
+
+  @override
+  Widget build(BuildContext context) {
     return MixTheme(
-      data: MixThemeData(),
+      data: theme ?? MixThemeData(),
       child: Directionality(
         textDirection: TextDirection.ltr,
         child: child,
@@ -32,15 +55,12 @@ class BoxInsideFlexWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MixTestWidget(
+    return TestMixWidget(
       child: Column(
         children: [
           Box(
             mix: mix,
-            child: const SizedBox(
-              height: 20,
-              width: 20,
-            ),
+            child: FillWidget,
           ),
         ],
       ),
@@ -49,13 +69,18 @@ class BoxInsideFlexWidget extends StatelessWidget {
 }
 
 class BoxTestWidget extends StatelessWidget {
-  const BoxTestWidget(this.mix, {Key? key}) : super(key: key);
+  const BoxTestWidget(
+    this.mix, {
+    Key? key,
+    double? height,
+    double? width,
+  }) : super(key: key);
 
   final Mix mix;
 
   @override
   Widget build(BuildContext context) {
-    return MixTestWidget(
+    return TestMixWidget(
       child: Box(
         mix: mix,
         child: const SizedBox(
@@ -66,67 +91,3 @@ class BoxTestWidget extends StatelessWidget {
     );
   }
 }
-
-const borderSide = BorderSideDto.only(
-  color: Color(0xFF000000),
-  style: BorderStyle.solid,
-  width: 1,
-);
-
-const baseBoxAttributes = BoxAttributes(
-  border: BorderDto.fromBorderSide(borderSide),
-  borderRadius: BorderRadiusDto.only(
-    topLeft: 20,
-    topRight: 20,
-    bottomLeft: 20,
-    bottomRight: 20,
-  ),
-  color: Colors.red,
-  margin: EdgeInsetsDto.all(10),
-  padding: EdgeInsetsDto.all(20),
-  minWidth: 0,
-  width: 100,
-  maxWidth: 250,
-  minHeight: 50,
-  height: 150,
-  maxHeight: 200,
-  alignment: Alignment.center,
-  shape: BoxShape.rectangle,
-  transform: null,
-  boxShadow: [
-    BoxShadowDto(
-      color: Colors.black,
-      blurRadius: 10,
-      offset: Offset(10, 10),
-    ),
-  ],
-);
-
-const baseTextAttributes = TextAttributes(
-  textAlign: TextAlign.center,
-  textScaleFactor: 1,
-  maxLines: 1,
-  overflow: TextOverflow.ellipsis,
-  locale: Locale('en', 'US'),
-  textWidthBasis: TextWidthBasis.parent,
-  textHeightBehavior: TextHeightBehavior(),
-  style: TextStyle(
-    color: Colors.black,
-    fontSize: 20,
-    fontWeight: FontWeight.w500,
-    fontStyle: FontStyle.normal,
-    fontFamily: 'Roboto',
-    decoration: TextDecoration.none,
-    decorationColor: Colors.black,
-    decorationStyle: TextDecorationStyle.solid,
-    decorationThickness: 1,
-    debugLabel: '',
-    shadows: [
-      Shadow(
-        color: Colors.black,
-        offset: Offset(10, 10),
-        blurRadius: 10,
-      ),
-    ],
-  ),
-);

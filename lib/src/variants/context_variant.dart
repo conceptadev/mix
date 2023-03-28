@@ -1,21 +1,26 @@
 import 'package:flutter/material.dart';
 
-import '../attributes/attribute.dart';
-import '../mixer/mix_factory.dart';
-import 'variant.dart';
+import '../../mix.dart';
 import 'variant_attribute.dart';
+
+typedef ShouldApplyFunc = bool Function(BuildContext);
 
 class ContextVariant extends Variant {
   const ContextVariant(
     String name, {
-    required this.shouldApply,
-    inverse = false,
-  }) : super(
-          name,
-          inverse: inverse,
-        );
+    required ShouldApplyFunc shouldApply,
+    bool inverse = false,
+  })  : _inverse = inverse,
+        _shouldApply = shouldApply,
+        super(name);
 
-  final bool Function(BuildContext) shouldApply;
+  final bool _inverse;
+
+  final ShouldApplyFunc _shouldApply;
+
+  bool shouldApply(BuildContext context) {
+    return _inverse ? !_shouldApply(context) : _shouldApply(context);
+  }
 
   @override
   // ignore: long-parameter-list
@@ -34,28 +39,19 @@ class ContextVariant extends Variant {
     Attribute? p12,
   ]) {
     final params = <Attribute>[];
-    if (p1 != null) params.add(p1);
-    if (p2 != null) params.add(p2);
-    if (p3 != null) params.add(p3);
-    if (p4 != null) params.add(p4);
-    if (p5 != null) params.add(p5);
-    if (p6 != null) params.add(p6);
-    if (p7 != null) params.add(p7);
-    if (p8 != null) params.add(p8);
-    if (p9 != null) params.add(p9);
-    if (p10 != null) params.add(p10);
-    if (p11 != null) params.add(p11);
-    if (p12 != null) params.add(p12);
 
-    return ContextVariantAttribute(this, Mix.fromList(params));
+    for (final param in [p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12]) {
+      if (param != null) params.add(param);
+    }
+
+    return ContextVariantAttribute(this, Mix.fromAttributes(params));
   }
 
-  @override
   ContextVariant inverseInstance() {
     return ContextVariant(
       name,
-      shouldApply: shouldApply,
-      inverse: true,
+      shouldApply: _shouldApply,
+      inverse: !_inverse,
     );
   }
 
@@ -68,10 +64,9 @@ class ContextVariant extends Variant {
 
     return other is ContextVariant &&
         other.shouldApply == shouldApply &&
-        other.inverse == inverse &&
         other.name == name;
   }
 
   @override
-  int get hashCode => shouldApply.hashCode ^ inverse.hashCode ^ name.hashCode;
+  int get hashCode => shouldApply.hashCode ^ name.hashCode;
 }

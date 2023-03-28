@@ -1,6 +1,4 @@
-import '../attributes/attribute.dart';
-
-abstract class DirectiveAttribute<T> extends Attribute {
-  const DirectiveAttribute();
-  T modify(T value);
+abstract class Directive<T> {
+  const Directive();
+  T modify(covariant T value);
 }
