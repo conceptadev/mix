@@ -85,6 +85,15 @@ class DynamicVariantUtilities {
     );
   }
 
+  static ContextVariant onRTL<T extends Attribute>() {
+    return ContextVariant(
+      'onRTL',
+      shouldApply: (BuildContext context) {
+        return context.directionality == TextDirection.rtl;
+      },
+    );
+  }
+
   static ContextVariant onDisabled<T extends Attribute>() {
     return ContextVariant(
       'onDisabled',
