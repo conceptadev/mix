@@ -11,6 +11,7 @@ class CommonUtility {
     Duration? asDuration,
   }) {
     return CommonAttributes(
+      animated: true,
       animationCurve: curve,
       animationDuration:
           // Prioritize duration in milliseconds
@@ -21,6 +22,7 @@ class CommonUtility {
   /// Short Utils: animationDuration
   static CommonAttributes animationDuration(int milliseconds) {
     return CommonAttributes(
+      animated: true,
       animationDuration: Duration(
         milliseconds: milliseconds,
       ),
@@ -30,6 +32,7 @@ class CommonUtility {
   /// Short Utils: animationCurve
   static CommonAttributes animationCurve(Curve curve) {
     return CommonAttributes(
+      animated: true,
       animationCurve: curve,
     );
   }
