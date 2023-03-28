@@ -10,13 +10,6 @@ import '../../helpers/mergeable_map.dart';
 import 'box.attributes.dart';
 import 'box.decorator.dart';
 
-///
-/// ## Widget:
-/// - [Box](Box-class.html)
-///
-/// Utility functions and short utils are listed in [Static Methods](#static-methods)
-///
-/// {@category Utilities}
 class BoxUtility {
   const BoxUtility._();
 
@@ -594,7 +587,7 @@ class BoxUtility {
 
   static BoxAttributes decorators(List<BoxDecorator> decorators) {
     return BoxAttributes(
-      decorators: MergeableMap.fromList(decorators),
+      decorators: MergeableMap(decorators),
     );
   }
 

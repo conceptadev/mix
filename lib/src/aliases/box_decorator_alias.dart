@@ -7,8 +7,7 @@ const scale = BoxDecoratorUtility.scale;
 const rotate = BoxDecoratorUtility.rotate;
 const rotate90 = BoxDecoratorUtility.rotate90;
 const rotate180 = BoxDecoratorUtility.rotate180;
-const rotate270 = BoxDecoratorUtility.rotate;
-const rotate360 = BoxDecoratorUtility.rotate;
+const rotate270 = BoxDecoratorUtility.rotate270;
 
 const opacity = BoxDecoratorUtility.opacity;
 

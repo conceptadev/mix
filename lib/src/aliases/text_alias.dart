@@ -28,6 +28,7 @@ const textBgColor = TextStyleUtility.backgroundColor;
 
 const textForeground = TextStyleUtility.foreground;
 const textBackground = TextStyleUtility.background;
+
 const textShadows = TextStyleUtility.shadows;
 const fontFeatures = TextStyleUtility.fontFeatures;
 const textDecoration = TextStyleUtility.decoration;

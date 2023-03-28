@@ -41,7 +41,7 @@ class MixValues {
     }
 
     return MixValues(
-      attributes: MergeableMap.fromList(attributeList),
+      attributes: MergeableMap(attributeList),
       variants: variantList,
       contextVariants: contextVariantList,
     );

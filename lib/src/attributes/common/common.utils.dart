@@ -5,14 +5,12 @@ import 'common.attributes.dart';
 class CommonUtility {
   const CommonUtility._();
 
-  static CommonAttributes animated({
-    bool animated = true,
+  static CommonAttributes animation({
     Curve? curve,
     int? duration,
     Duration? asDuration,
   }) {
     return CommonAttributes(
-      animated: animated,
       animationCurve: curve,
       animationDuration:
           // Prioritize duration in milliseconds

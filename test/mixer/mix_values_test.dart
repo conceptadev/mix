@@ -1,6 +1,5 @@
 import 'package:flutter_test/flutter_test.dart'; // importing flutter_test package
 import 'package:mix/mix.dart';
-import 'package:mix/src/helpers/mergeable_map.dart';
 import 'package:mix/src/variants/variant_attribute.dart';
 
 import '../testing_utils.dart';
@@ -41,10 +40,8 @@ void main() {
     ];
 
     test('Valid Length Counts', () {
-      final mixValues = MixValues(
-        attributes: MergeableMap.fromList(attributeList),
-        variants: variantList,
-        contextVariants: contextVariantList,
+      final mixValues = MixValues.create(
+        [...attributeList, ...variantList, ...contextVariantList],
       );
 
       expect(mixValues.length, equals(6));

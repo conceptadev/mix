@@ -1,44 +1,60 @@
 import 'dart:collection';
 
 import '../attributes/attribute.dart';
+import '../variants/variant_attribute.dart';
 
 /// A map-like data structure that can merge values with the same key based on
 /// their runtime type. Maintains insertion order of keys.
 ///
 /// This is used to merge different attributes.
-class MergeableMap<T extends MergeableMixin> {
-  final LinkedHashMap<Type, T> _map = LinkedHashMap<Type, T>();
+class MergeableMap<T extends MergeableMixin, K> {
+  final LinkedHashMap<K, T> _map = LinkedHashMap<K, T>();
+  final K Function(T) _keyMapper;
 
   /// Creates a new [MergeableMap] instance with the given [iterable].
   ///
-  /// The optional [keyMapper] function is used to map the iterable items to
+  /// The required [keyMapper] function is used to map the iterable items to
   /// their respective keys. If not provided, the runtime type of the item is
   /// used as the key.
-  MergeableMap(List<T> iterable) {
+  MergeableMap(List<T> iterable, K Function(T) keyMapper)
+      : _keyMapper = keyMapper {
     for (final item in iterable) {
       _update(item);
     }
   }
 
+  static MergeableMap<T, K> runtimeTypeAsKey<T extends MergeableMixin, K>(
+    List<T> iterable,
+  ) {
+    return MergeableMap(iterable, (item) => item.runtimeType as K);
+  }
+
+  static MergeableMap<T, K> variantAsKey<T extends VariantAttribute, K>(
+    List<T> iterable,
+  ) {
+    return MergeableMap(iterable, (item) => item.variant as K);
+  }
+
   /// Creates an empty [MergeableMap] instance.
-  factory MergeableMap.empty() {
-    return MergeableMap([]);
+  MergeableMap<T, K> _emptyInstance() {
+    return MergeableMap<T, K>([], _keyMapper);
   }
 
   void _update(T value) {
+    final key = _keyMapper(value);
     _map.update(
-      value.runtimeType,
+      key,
       (existingValue) => existingValue.merge(value),
       ifAbsent: () => value,
     );
   }
 
   /// Retrieves the value associated with the given [key] or `null` if not found.
-  T? operator [](Type key) => _map[key];
+  T? operator [](K key) => _map[key];
 
   /// Associates the [value] with the given [key]. If the key already exists,
   /// the value is merged with the existing value.
-  void operator []=(Type key, covariant T value) {
+  void operator []=(K key, covariant T value) {
     _update(value);
   }
 
@@ -50,10 +66,10 @@ class MergeableMap<T extends MergeableMixin> {
   /// iterates over the keys of both maps and creates a new [MergeableMap]
   /// containing the union of both maps. In case of overlapping keys, the value
   /// from the `other` map will overwrite the value from the current map.
-  MergeableMap<T> merge(MergeableMap<T>? other) {
+  MergeableMap<T, K> merge(MergeableMap<T, K>? other) {
     if (other == null) return this;
 
-    final mergedMap = MergeableMap<T>.empty();
+    final mergedMap = _emptyInstance();
     mergedMap._map.addAll(_map);
     other._map.forEach((key, value) {
       mergedMap[key] = value;
@@ -64,8 +80,8 @@ class MergeableMap<T extends MergeableMixin> {
 
   /// Creates a new [MergeableMap] instance with the same key-value pairs as
   /// this map.
-  MergeableMap<T> clone() {
-    final clonedMap = MergeableMap<T>.empty();
+  MergeableMap<T, K> clone() {
+    final clonedMap = _emptyInstance();
     clonedMap._map.addAll(_map);
 
     return clonedMap;
