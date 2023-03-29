@@ -41,7 +41,7 @@ export 'src/widgets/box/box_decorators/scale.dart';
 export 'src/widgets/flex/flex.attributes.dart';
 export 'src/widgets/flex/flex.utils.dart';
 export 'src/widgets/flex/flex.widget.dart';
-export 'src/widgets/gap.widget.dart';
+export 'src/widgets/gap/gap_rendering.dart';
 export 'src/widgets/icon/icon.attributes.dart';
 export 'src/widgets/icon/icon.utils.dart';
 export 'src/widgets/icon/icon.widget.dart';

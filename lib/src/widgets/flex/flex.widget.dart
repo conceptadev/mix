@@ -5,7 +5,7 @@ import '../../mixer/mix_factory.dart';
 import '../../variants/variant.dart';
 import '../box/box.descriptor.dart';
 import '../box/box.widget.dart';
-import '../gap.widget.dart';
+import '../gap/gap_widget.dart';
 import '../mix.widget.dart';
 import '../mix_context_builder.dart';
 import 'flex.descriptor.dart';
@@ -41,7 +41,7 @@ class FlexBox extends MixWidget {
       // Add gap if not last item if its not last element
 
       if (widget != children.last) {
-        widgets.add(GapWidget(gapSize));
+        widgets.add(Gap(gapSize));
       }
     }
 
