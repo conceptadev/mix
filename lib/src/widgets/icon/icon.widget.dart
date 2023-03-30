@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import '../../attributes/common/common.descriptor.dart';
 import '../../mixer/mix_factory.dart';
 import '../../variants/variant.dart';
+import '../empty.widget.dart';
 import '../mix.widget.dart';
 import '../mix_context_builder.dart';
-import '../nothing.widget.dart';
 import 'icon.props.dart';
 
 class IconMix extends MixWidget {
@@ -65,7 +65,7 @@ class IconMixerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (!commonProps.visible) {
-      return const Nothing();
+      return const Empty();
     }
     Widget iconWidget = Icon(
       icon,

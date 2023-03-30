@@ -4,9 +4,9 @@ import '../../attributes/common/common.descriptor.dart';
 import '../../decorators/decorator_wrapper.widget.dart';
 import '../../mixer/mix_factory.dart';
 import '../../variants/variant.dart';
+import '../empty.widget.dart';
 import '../mix.widget.dart';
 import '../mix_context_builder.dart';
-import '../nothing.widget.dart';
 import 'box.descriptor.dart';
 
 class Box extends MixWidget {
@@ -62,7 +62,7 @@ class BoxMixedWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (!commonProps.visible) {
-      return const Nothing();
+      return const Empty();
     }
     var current = child;
 
