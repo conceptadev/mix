@@ -27,6 +27,7 @@ dart_code_metrics:
     - no-empty-block
     - prefer-trailing-comma
     - no-equal-then-else
+
   anti-patterns:
     - long-method
     - long-parameter-list

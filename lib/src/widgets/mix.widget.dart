@@ -1,22 +1,21 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import '../mixer/mix_context.dart';
-import '../mixer/mix_context_data.dart';
-import '../mixer/mix_factory.dart';
+import '../factory/mix_context.dart';
+import '../factory/mix_context_data.dart';
+import '../factory/mix_factory.dart';
 import '../variants/variant.dart';
 
 abstract class MixWidget extends StatelessWidget {
   /// Constructor
-  const MixWidget(
-    Mix? mix, {
-    Key? key,
+  const MixWidget({
+    Mix? mix,
+    super.key,
     bool? inherit,
     List<Variant>? variants,
   })  : _mix = mix ?? Mix.constant,
         _variants = variants,
-        _inherit = inherit ?? false,
-        super(key: key);
+        _inherit = inherit ?? false;
 
   final Mix _mix;
   final List<Variant>? _variants;
@@ -64,34 +63,6 @@ abstract class MixWidget extends StatelessWidget {
     );
     properties.add(
       DiagnosticsProperty<bool>('inherit', inherit, defaultValue: true),
-    );
-  }
-}
-
-/// Mixer Widget
-@Deprecated('Simplifying the api by removing this')
-abstract class MixedWidget extends StatelessWidget {
-  /// Constructor
-  const MixedWidget(
-    this.mixContext, {
-    Key? key,
-  }) : super(key: key);
-
-  final MixContextData mixContext;
-
-  @override
-  Widget build(BuildContext context);
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-
-    properties.add(
-      DiagnosticsProperty<MixContextData>(
-        'mixContext',
-        mixContext,
-        defaultValue: null,
-      ),
     );
   }
 }

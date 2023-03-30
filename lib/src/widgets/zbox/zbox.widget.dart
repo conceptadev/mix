@@ -1,8 +1,6 @@
 import 'package:flutter/widgets.dart';
 
 import '../../attributes/common/common.descriptor.dart';
-import '../../mixer/mix_factory.dart';
-import '../../variants/variant.dart';
 import '../box/box.descriptor.dart';
 import '../box/box.widget.dart';
 import '../mix.widget.dart';
@@ -13,20 +11,15 @@ import 'zbox.props.dart';
 // the features of a Box widget with a Stack widget, allowing developers to
 // create complex and responsive layouts.
 class ZBox extends MixWidget {
-  final List<Widget> children;
-
   const ZBox({
-    Mix? mix,
-    Key? key,
-    bool? inherit,
-    List<Variant>? variants,
+    super.mix,
+    super.key,
+    super.inherit,
+    super.variants,
     this.children = const <Widget>[],
-  }) : super(
-          mix,
-          variants: variants,
-          inherit: inherit,
-          key: key,
-        );
+  });
+
+  final List<Widget> children;
 
   @override
   Widget build(BuildContext context) {

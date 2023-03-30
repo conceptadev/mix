@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../attributes/attribute.dart';
-import '../mixer/mix_factory.dart';
+import '../factory/mix_factory.dart';
 import 'context_variant.dart';
 import 'variant.dart';
 

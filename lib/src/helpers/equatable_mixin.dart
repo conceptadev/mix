@@ -2,13 +2,13 @@ import 'deep_collection_equality.dart';
 import 'extensions.dart';
 
 /// Returns a `hashCode` for [props].
-int mapPropsToHashCode(Iterable? props) =>
+int _mapPropsToHashCode(Iterable? props) =>
     _finish([...?props].fold(0, _combine));
 
 const DeepCollectionEquality _equality = DeepCollectionEquality();
 
 /// Determines whether [list1] and [list2] are equal.
-bool equals(List? list1, List? list2) {
+bool _equals(List? list1, List? list2) {
   if (identical(list1, list2)) return true;
   if (list1 == null || list2 == null) return false;
   final length = list1.length;
@@ -92,11 +92,11 @@ mixin EquatableMixin {
     return identical(this, other) ||
         other is EquatableMixin &&
             runtimeType == other.runtimeType &&
-            equals(props, other.props);
+            _equals(props, other.props);
   }
 
   @override
-  int get hashCode => runtimeType.hashCode ^ mapPropsToHashCode(props);
+  int get hashCode => runtimeType.hashCode ^ _mapPropsToHashCode(props);
 
   @override
   String toString() {

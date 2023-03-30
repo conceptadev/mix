@@ -1,9 +1,8 @@
 import '../attributes/attribute.dart';
-import '../mixer/mix_factory.dart';
+import '../factory/mix_factory.dart';
 import 'variant_attribute.dart';
 import 'variant_operation.dart';
 
-/// {@category Variants}
 /// A class representing a variant, which is a combination of attributes.
 /// It can be combined with other variants using logical AND (&) and OR (|) operations.
 class Variant {

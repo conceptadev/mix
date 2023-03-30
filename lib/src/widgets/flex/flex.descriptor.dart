@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../mixer/mix_context.dart';
+import '../../factory/mix_context.dart';
 import 'flex.attributes.dart';
 
 class FlexDescriptor {

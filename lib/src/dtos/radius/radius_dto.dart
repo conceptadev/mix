@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 
 import '../dto.dart';
@@ -41,13 +39,6 @@ class RadiusDto extends Dto<Radius> {
     if (radius == null) return null;
 
     return RadiusDto.from(radius);
-  }
-
-  factory RadiusDto.random() {
-    return RadiusDto.elliptical(
-      Random().nextDouble() * 20,
-      Random().nextDouble() * 20,
-    );
   }
 
   @override

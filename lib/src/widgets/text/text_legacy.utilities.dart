@@ -6,228 +6,234 @@ import '../../dtos/text_style.dto.dart';
 import 'text.attributes.dart';
 import 'text_directives/text_directives.dart';
 
-class TextUtility {
-  const TextUtility._();
+const kDeprecationMessage = 'Will be removed in the future';
 
-  /// Short Utils: style
+@Deprecated('Use TextUtility instead')
+class LegacyTextUtility {
+  const LegacyTextUtility._();
+
+  @Deprecated(kDeprecationMessage)
   static TextAttributes style(TextStyle? style) {
     if (style == null) return const TextAttributes();
 
     return TextAttributes(style: TextStyleDto.from(style));
   }
 
-  /// Short Utils: strutStyle
+  @Deprecated(kDeprecationMessage)
   static TextAttributes strutStyle(StrutStyle strutStyle) {
     return TextAttributes(strutStyle: strutStyle);
   }
 
-  /// Short Utils: textAlign
+  @Deprecated(kDeprecationMessage)
   static TextAttributes textAlign(TextAlign textAlign) {
     return TextAttributes(textAlign: textAlign);
   }
 
-  /// Short Utils: locale
+  @Deprecated(kDeprecationMessage)
   static TextAttributes locale(Locale locale) {
     return TextAttributes(locale: locale);
   }
 
-  /// Short Utils: softWrap
+  @Deprecated(kDeprecationMessage)
   static TextAttributes softWrap(bool softWrap) {
     return TextAttributes(softWrap: softWrap);
   }
 
-  /// Short Utils: overflow
+  @Deprecated(kDeprecationMessage)
   static TextAttributes overflow(TextOverflow overflow) {
     return TextAttributes(overflow: overflow);
   }
 
-  /// Short Utils: textScaleFactor
+  @Deprecated(kDeprecationMessage)
   static TextAttributes textScaleFactor(double textScaleFactor) {
-    return TextAttributes(
-      textScaleFactor: textScaleFactor,
-    );
+    return TextAttributes(textScaleFactor: textScaleFactor);
   }
 
-  /// Short Utils: maxLines
+  @Deprecated(kDeprecationMessage)
   static TextAttributes maxLines(int maxLines) {
     return TextAttributes(maxLines: maxLines);
   }
 
-  /// Short Utils: textWidthBasis
+  @Deprecated(kDeprecationMessage)
   static TextAttributes textWidthBasis(TextWidthBasis textWidthBasis) {
     return TextAttributes(textWidthBasis: textWidthBasis);
   }
 
+  @Deprecated(kDeprecationMessage)
   static TextAttributes directives(List<TextDirective> directives) {
     return TextAttributes(directives: directives);
   }
 
+  @Deprecated(kDeprecationMessage)
   static TextAttributes directive(TextDirective directive) {
     return TextAttributes(directives: [directive]);
   }
 }
 
-class TextStyleUtility {
-  const TextStyleUtility._();
+@Deprecated(kDeprecationMessage)
+class LegacyTextStyleUtility {
+  const LegacyTextStyleUtility._();
 
-  /// Short Utils: textBackground
+  @Deprecated(kDeprecationMessage)
   static TextAttributes background(Paint? background) {
-    return TextUtility.style(
+    return LegacyTextUtility.style(
       TextStyle(background: background),
     );
   }
 
-  /// Short Utils: textBgColor
+  @Deprecated(kDeprecationMessage)
   static TextAttributes backgroundColor(Color? backgroundColor) {
-    return TextUtility.style(
+    return LegacyTextUtility.style(
       TextStyle(backgroundColor: backgroundColor),
     );
   }
 
-  /// Short Utils: textColor
+  @Deprecated(kDeprecationMessage)
   static TextAttributes color(Color? color) {
-    return TextUtility.style(
+    return LegacyTextUtility.style(
       TextStyle(color: color),
     );
   }
 
-  /// Short Utils: debugLabel
+  @Deprecated(kDeprecationMessage)
   static TextAttributes debugLabel(String? debugLabel) {
-    return TextUtility.style(
+    return LegacyTextUtility.style(
       TextStyle(debugLabel: debugLabel),
     );
   }
 
-  /// Short Utils: textDecoration
+  @Deprecated(kDeprecationMessage)
   static TextAttributes decoration(TextDecoration? decoration) {
-    return TextUtility.style(
+    return LegacyTextUtility.style(
       TextStyle(decoration: decoration),
     );
   }
 
-  /// Short Utils: textDecorationColor
+  @Deprecated(kDeprecationMessage)
   static TextAttributes decorationColor(Color? decorationColor) {
-    return TextUtility.style(
+    return LegacyTextUtility.style(
       TextStyle(decorationColor: decorationColor),
     );
   }
 
-  /// Short Utils: textDecorationStyle
+  @Deprecated(kDeprecationMessage)
   static TextAttributes decorationStyle(TextDecorationStyle? decorationStyle) {
-    return TextUtility.style(
+    return LegacyTextUtility.style(
       TextStyle(decorationStyle: decorationStyle),
     );
   }
 
-  /// Short Utils: textDecorationThickness
+  @Deprecated(kDeprecationMessage)
   static TextAttributes decorationThickness(double? decorationThickness) {
-    return TextUtility.style(
+    return LegacyTextUtility.style(
       TextStyle(decorationThickness: decorationThickness),
     );
   }
 
-  /// Short Utils: (none)
+  @Deprecated(kDeprecationMessage)
   static TextAttributes fontFamily(String? fontFamily) {
-    return TextUtility.style(
+    return LegacyTextUtility.style(
       TextStyle(fontFamily: fontFamily),
     );
   }
 
-  /// Short Utils: fontFamilyFallback
+  @Deprecated(kDeprecationMessage)
   static TextAttributes fontFamilyFallback(List<String>? fontFamilyFallback) {
-    return TextUtility.style(
+    return LegacyTextUtility.style(
       TextStyle(fontFamilyFallback: fontFamilyFallback),
     );
   }
 
-  /// Short Utils: fontFeatures
+  @Deprecated(kDeprecationMessage)
   static TextAttributes fontFeatures(List<FontFeature>? fontFeatures) {
-    return TextUtility.style(
+    return LegacyTextUtility.style(
       TextStyle(fontFeatures: fontFeatures),
     );
   }
 
-  /// Short Utils: fontSize
+  @Deprecated(kDeprecationMessage)
   static TextAttributes fontSize(double? fontSize) {
-    return TextUtility.style(
+    return LegacyTextUtility.style(
       TextStyle(fontSize: fontSize),
     );
   }
 
-  /// Short Utils: fontStyle
+  @Deprecated(kDeprecationMessage)
   static TextAttributes fontStyle(FontStyle? fontStyle) {
-    return TextUtility.style(
+    return LegacyTextUtility.style(
       TextStyle(fontStyle: fontStyle),
     );
   }
 
-  /// Short Utils: (fontWeight)
+  @Deprecated(kDeprecationMessage)
   static TextAttributes fontWeight(FontWeight? fontWeight) {
-    return TextUtility.style(
+    return LegacyTextUtility.style(
       TextStyle(fontWeight: fontWeight),
     );
   }
 
-  /// Short Utils: textForeground
+  @Deprecated(kDeprecationMessage)
   static TextAttributes foreground(Paint? foreground) {
-    return TextUtility.style(
+    return LegacyTextUtility.style(
       TextStyle(foreground: foreground),
     );
   }
 
-  /// Short Utils: textHeight
+  @Deprecated(kDeprecationMessage)
   static TextAttributes height(double? height) {
-    return TextUtility.style(
+    return LegacyTextUtility.style(
       TextStyle(height: height),
     );
   }
 
-  /// Short Utils: inherit
+  @Deprecated(kDeprecationMessage)
   static TextAttributes inherit({inherit = true}) {
-    return TextUtility.style(
+    return LegacyTextUtility.style(
       TextStyle(inherit: inherit),
     );
   }
 
-  /// Short Utils: letterSpacing
+  @Deprecated(kDeprecationMessage)
   static TextAttributes letterSpacing(double? letterSpacing) {
-    return TextUtility.style(
+    return LegacyTextUtility.style(
       TextStyle(letterSpacing: letterSpacing),
     );
   }
 
-  /// Short Utils: (none - see under TextAttributes)
+  @Deprecated(kDeprecationMessage)
   static TextAttributes locale(Locale? locale) {
-    return TextUtility.style(
+    return LegacyTextUtility.style(
       TextStyle(locale: locale),
     );
   }
 
-  /// Short Utils: textShadows
+  @Deprecated(kDeprecationMessage)
   static TextAttributes shadows(List<Shadow> shadows) {
-    return TextUtility.style(
+    return LegacyTextUtility.style(
       TextStyle(shadows: shadows),
     );
   }
 
-  /// Short Utils: textBaseline
+  @Deprecated(kDeprecationMessage)
   static TextAttributes textBaseline(TextBaseline? textBaseline) {
-    return TextUtility.style(
+    return LegacyTextUtility.style(
       TextStyle(textBaseline: textBaseline),
     );
   }
 
-  /// Short Utils: wordSpacing
+  @Deprecated(kDeprecationMessage)
   static TextAttributes wordSpacing(double? wordSpacing) {
-    return TextUtility.style(
+    return LegacyTextUtility.style(
       TextStyle(wordSpacing: wordSpacing),
     );
   }
 }
 
-class TextFriendlyUtility {
-  const TextFriendlyUtility._();
+@Deprecated(kDeprecationMessage)
+class LegacyTextFriendlyUtility {
+  const LegacyTextFriendlyUtility._();
 
+  @Deprecated(kDeprecationMessage)
   // ignore: long-parameter-list
   static TextAttributes textStyle({
     Color? color,
@@ -259,7 +265,7 @@ class TextFriendlyUtility {
       return s;
     }
 
-    return TextUtility.style(
+    return LegacyTextUtility.style(
       TextStyle(
         color: color,
         fontWeight: weight,
@@ -285,20 +291,23 @@ class TextFriendlyUtility {
     );
   }
 
+  @Deprecated(kDeprecationMessage)
   static TextAttributes bold() {
-    return TextStyleUtility.fontWeight(FontWeight.bold);
+    return LegacyTextStyleUtility.fontWeight(FontWeight.bold);
   }
 
+  @Deprecated(kDeprecationMessage)
   static TextAttributes italic() {
-    return TextStyleUtility.fontStyle(FontStyle.italic);
+    return LegacyTextStyleUtility.fontStyle(FontStyle.italic);
   }
 
+  @Deprecated(kDeprecationMessage)
   static TextAttributes textShadow({
     Color color = const Color(0x33000000),
     double blurRadius = 0.0,
     Offset offset = Offset.zero,
   }) {
-    return TextStyleUtility.shadows([
+    return LegacyTextStyleUtility.shadows([
       Shadow(
         color: color,
         blurRadius: blurRadius,

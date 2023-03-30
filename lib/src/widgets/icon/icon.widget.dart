@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../attributes/common/common.descriptor.dart';
-import '../../mixer/mix_factory.dart';
-import '../../variants/variant.dart';
 import '../empty.widget.dart';
 import '../mix.widget.dart';
 import '../mix_context_builder.dart';
@@ -11,17 +9,12 @@ import 'icon.props.dart';
 class IconMix extends MixWidget {
   const IconMix(
     this.icon, {
-    Mix? mix,
     this.semanticLabel,
-    Key? key,
-    List<Variant>? variants,
-    bool inherit = true,
-  }) : super(
-          mix,
-          variants: variants,
-          inherit: inherit,
-          key: key,
-        );
+    super.mix,
+    super.key,
+    super.variants,
+    super.inherit,
+  });
 
   final IconData? icon;
   final String? semanticLabel;
@@ -46,15 +39,14 @@ class IconMix extends MixWidget {
   }
 }
 
-/// {@nodoc}
 class IconMixerWidget extends StatelessWidget {
   const IconMixerWidget({
     required this.iconProps,
     required this.commonProps,
     this.icon,
     this.semanticLabel,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final IconData? icon;
   final IconProps iconProps;

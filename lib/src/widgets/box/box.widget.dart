@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../../attributes/common/common.descriptor.dart';
 import '../../decorators/decorator_wrapper.widget.dart';
-import '../../mixer/mix_factory.dart';
-import '../../variants/variant.dart';
 import '../empty.widget.dart';
 import '../mix.widget.dart';
 import '../mix_context_builder.dart';
@@ -11,17 +9,12 @@ import 'box.descriptor.dart';
 
 class Box extends MixWidget {
   const Box({
-    Mix? mix,
-    Key? key,
-    bool? inherit,
-    List<Variant>? variants,
+    super.mix,
+    super.key,
+    super.inherit,
+    super.variants,
     this.child,
-  }) : super(
-          mix,
-          variants: variants,
-          inherit: inherit,
-          key: key,
-        );
+  });
 
   final Widget? child;
 

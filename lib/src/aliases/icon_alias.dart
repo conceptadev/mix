@@ -1,4 +1,4 @@
-import '../widgets/icon/icon.utils.dart';
+import '../widgets/icon/icon.utilities.dart';
 
 const icon = IconUtility.icon;
 const iconSize = IconUtility.iconSize;

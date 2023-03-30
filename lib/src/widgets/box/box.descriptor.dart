@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../../mix.dart';
 import '../../dtos/shadow/box_shadow.dto.dart';
-import '../../mixer/mix_context.dart';
+import '../../factory/mix_context.dart';
 import 'box.decorator.dart';
 
 class BoxDescriptor {

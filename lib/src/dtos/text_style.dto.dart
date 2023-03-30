@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+import '../../mix.dart';
 import 'color.dto.dart';
 import 'dto.dart';
 import 'shadow/shadow.dto.dart';
@@ -10,6 +11,7 @@ import 'shadow/shadow.dto.dart';
 class TextStyleDto extends Dto<TextStyle> {
   final String? fontFamily;
   final FontWeight? fontWeight;
+  final bool? inherit;
   final FontStyle? fontStyle;
   final double? fontSize;
   final double? letterSpacing;
@@ -25,8 +27,15 @@ class TextStyleDto extends Dto<TextStyle> {
   final Locale? locale;
   final String? debugLabel;
   final double? height;
+  final Paint? foreground;
+  final Paint? background;
+  final double? decorationThickness;
+  final List<String>? fontFamilyFallback;
+
+  final TextStyleToken? styleToken;
 
   const TextStyleDto({
+    this.inherit,
     this.fontFamily,
     this.fontWeight,
     this.fontStyle,
@@ -44,14 +53,26 @@ class TextStyleDto extends Dto<TextStyle> {
     this.debugLabel,
     this.locale,
     this.height,
+    this.foreground,
+    this.background,
+    this.decorationThickness,
+    this.fontFamilyFallback,
+    this.styleToken,
   });
 
   factory TextStyleDto.from(TextStyle style) {
+    if (style is TextStyleToken) {
+      return TextStyleDto(styleToken: style);
+    }
+
     return TextStyleDto(
       fontFamily: style.fontFamily,
+      inherit: style.inherit,
       fontWeight: style.fontWeight,
       fontStyle: style.fontStyle,
       fontSize: style.fontSize,
+      background: style.background,
+      foreground: style.foreground,
       letterSpacing: style.letterSpacing,
       wordSpacing: style.wordSpacing,
       textBaseline: style.textBaseline,
@@ -65,6 +86,8 @@ class TextStyleDto extends Dto<TextStyle> {
       debugLabel: style.debugLabel,
       locale: style.locale,
       height: style.height,
+      decorationThickness: style.decorationThickness,
+      fontFamilyFallback: style.fontFamilyFallback,
     );
   }
 
@@ -72,15 +95,18 @@ class TextStyleDto extends Dto<TextStyle> {
     return style != null ? TextStyleDto.from(style) : null;
   }
 
+  bool get hasToken => styleToken != null;
+
   @override
   TextStyle resolve(BuildContext context) {
-    return TextStyle(
+    final resolvedStyle = TextStyle(
       fontFamily: fontFamily,
       fontWeight: fontWeight,
       fontStyle: fontStyle,
       fontSize: fontSize,
       letterSpacing: letterSpacing,
       height: height,
+      inherit: inherit ?? const TextStyle().inherit,
       wordSpacing: wordSpacing,
       textBaseline: textBaseline,
       color: color?.resolve(context),
@@ -91,12 +117,30 @@ class TextStyleDto extends Dto<TextStyle> {
       decorationColor: decorationColor?.resolve(context),
       decorationStyle: decorationStyle,
       debugLabel: debugLabel,
+      background: background,
+      foreground: foreground,
       locale: locale,
+      decorationThickness: decorationThickness,
+      fontFamilyFallback: fontFamilyFallback,
     );
+
+    TextStyle? styleRef;
+
+    if (styleToken != null) {
+      styleRef = MixTokenResolver(context).textStyle(styleToken!);
+    }
+
+    // If there is a style token, use it as a base
+    if (styleRef != null) {
+      return styleRef.merge(resolvedStyle);
+    } else {
+      return resolvedStyle;
+    }
   }
 
   TextStyleDto copyWith({
     String? fontFamily,
+    bool? inherit,
     FontWeight? fontWeight,
     FontStyle? fontStyle,
     double? fontSize,
@@ -113,8 +157,14 @@ class TextStyleDto extends Dto<TextStyle> {
     String? debugLabel,
     Locale? locale,
     double? height,
+    Paint? background,
+    Paint? foreground,
+    double? decorationThickness,
+    List<String>? fontFamilyFallback,
+    TextStyleToken? styleToken,
   }) {
     return TextStyleDto(
+      inherit: inherit ?? this.inherit,
       fontFamily: fontFamily ?? this.fontFamily,
       fontWeight: fontWeight ?? this.fontWeight,
       fontStyle: fontStyle ?? this.fontStyle,
@@ -132,6 +182,11 @@ class TextStyleDto extends Dto<TextStyle> {
       debugLabel: debugLabel ?? this.debugLabel,
       locale: locale ?? this.locale,
       height: height ?? this.height,
+      background: background ?? this.background,
+      foreground: foreground ?? this.foreground,
+      decorationThickness: decorationThickness ?? this.decorationThickness,
+      fontFamilyFallback: [...?this.fontFamilyFallback, ...?fontFamilyFallback],
+      styleToken: styleToken ?? this.styleToken,
     );
   }
 
@@ -140,6 +195,7 @@ class TextStyleDto extends Dto<TextStyle> {
 
     return copyWith(
       fontFamily: other.fontFamily,
+      inherit: other.inherit,
       fontWeight: other.fontWeight,
       fontStyle: other.fontStyle,
       fontSize: other.fontSize,
@@ -156,6 +212,11 @@ class TextStyleDto extends Dto<TextStyle> {
       decorationStyle: other.decorationStyle,
       debugLabel: other.debugLabel,
       locale: other.locale,
+      background: other.background,
+      foreground: other.foreground,
+      decorationThickness: other.decorationThickness,
+      fontFamilyFallback: other.fontFamilyFallback,
+      styleToken: other.styleToken,
     );
   }
 
@@ -180,7 +241,13 @@ class TextStyleDto extends Dto<TextStyle> {
         other.decorationColor == decorationColor &&
         other.decorationStyle == decorationStyle &&
         other.debugLabel == debugLabel &&
-        other.locale == locale;
+        other.locale == locale &&
+        other.background == background &&
+        other.foreground == foreground &&
+        other.inherit == inherit &&
+        other.decorationThickness == decorationThickness &&
+        listEquals(other.fontFamilyFallback, fontFamilyFallback) &&
+        other.styleToken == styleToken;
   }
 
   @override
@@ -200,10 +267,10 @@ class TextStyleDto extends Dto<TextStyle> {
       decoration.hashCode ^
       decorationColor.hashCode ^
       decorationStyle.hashCode ^
+      foreground.hashCode ^
+      inherit.hashCode ^
+      background.hashCode ^
+      locale.hashCode ^
+      decorationThickness.hashCode ^
       debugLabel.hashCode;
-
-  @override
-  String toString() {
-    return 'TextStyleDto(fontFamily: $fontFamily, fontWeight: $fontWeight, fontStyle: $fontStyle, fontSize: $fontSize, letterSpacing: $letterSpacing, wordSpacing: $wordSpacing, textBaseline: $textBaseline, color: $color, backgroundColor: $backgroundColor, shadows: $shadows, fontFeatures: $fontFeatures, decoration: $decoration, decorationColor: $decorationColor, decorationStyle: $decorationStyle, debugLabel: $debugLabel)';
-  }
 }

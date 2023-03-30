@@ -2,32 +2,25 @@ import 'package:flutter/material.dart';
 
 enum ScreenSizeToken { xsmall, small, medium, large }
 
-class MixThemeBreakpoints {
+class MixBreakpointsTokens {
   final double xsmall;
   final double small;
   final double medium;
   final double large;
 
-  const MixThemeBreakpoints.raw({
+  const MixBreakpointsTokens.raw({
     required this.xsmall,
     required this.small,
     required this.medium,
     required this.large,
   });
 
-  factory MixThemeBreakpoints({
-    double? xsmall,
-    double? small,
-    double? medium,
-    double? large,
-  }) {
-    return MixThemeBreakpoints.raw(
-      xsmall: xsmall ?? 0,
-      small: small ?? 600,
-      medium: medium ?? 1240,
-      large: large ?? 1440,
-    );
-  }
+  const MixBreakpointsTokens({
+    this.xsmall = 0,
+    this.small = 600,
+    this.medium = 1240,
+    this.large = 1440,
+  });
 
   /// Returns [ScreenSizeToken] based on Material breakpoints
   ScreenSizeToken getScreenSize(BuildContext context) {
@@ -42,13 +35,13 @@ class MixThemeBreakpoints {
                 : ScreenSizeToken.xsmall;
   }
 
-  MixThemeBreakpoints copyWith({
+  MixBreakpointsTokens copyWith({
     double? xsmall,
     double? small,
     double? medium,
     double? large,
   }) {
-    return MixThemeBreakpoints.raw(
+    return MixBreakpointsTokens.raw(
       xsmall: xsmall ?? this.xsmall,
       small: small ?? this.small,
       medium: medium ?? this.medium,
@@ -60,7 +53,7 @@ class MixThemeBreakpoints {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is MixThemeBreakpoints &&
+    return other is MixBreakpointsTokens &&
         other.xsmall == xsmall &&
         other.small == small &&
         other.medium == medium &&

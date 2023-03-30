@@ -94,6 +94,49 @@ class BoxAttributes extends WidgetAttributes {
     );
   }
 
+  factory BoxAttributes.from({
+    EdgeInsetsGeometry? margin,
+    EdgeInsetsGeometry? padding,
+    AlignmentGeometry? alignment,
+    double? height,
+    double? width,
+    // Decoration
+    Color? color,
+    BoxBorder? border,
+    BorderRadiusGeometry? borderRadius,
+    List<BoxShadowDto>? boxShadow,
+    Matrix4? transform,
+
+    // Constraints
+    double? maxHeight,
+    double? minHeight,
+    double? maxWidth,
+    double? minWidth,
+    BoxShape? shape,
+    Gradient? gradient,
+  }) {
+    return BoxAttributes(
+      margin: EdgeInsetsGeometryDto.maybeFrom(margin),
+      padding: EdgeInsetsGeometryDto.maybeFrom(padding),
+      alignment: alignment,
+      height: height,
+      width: width,
+      // Decoration
+      color: ColorDto.maybeFrom(color),
+      border: BoxBorderDto.maybeFrom(border),
+      borderRadius: BorderRadiusGeometryDto.maybeFrom(borderRadius),
+      boxShadow: boxShadow,
+      transform: transform,
+      // Constraints
+      maxHeight: maxHeight,
+      minHeight: minHeight,
+      maxWidth: maxWidth,
+      minWidth: minWidth,
+      shape: shape,
+      gradient: gradient,
+    );
+  }
+
   @override
   BoxAttributes merge(BoxAttributes? other) {
     if (other == null) return this;

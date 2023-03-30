@@ -1,5 +1,8 @@
 import 'package:flutter_test/flutter_test.dart'; // importing flutter_test package
-import 'package:mix/mix.dart';
+import 'package:mix/src/attributes/attribute.dart';
+import 'package:mix/src/factory/mix_values.dart';
+import 'package:mix/src/variants/utilities/context_variant_utilities.dart';
+import 'package:mix/src/variants/variant.dart';
 import 'package:mix/src/variants/variant_attribute.dart';
 
 import '../helpers/random_dto.dart';
@@ -32,11 +35,11 @@ void main() {
       ),
     ];
     final contextVariantList = <ContextVariantAttribute>[
-      DynamicVariantUtilities.onDark()(
+      ContextVariantUtilities.onDark()(
         RandomGenerator.textAttributes(),
         RandomGenerator.boxAttributes(),
       ),
-      DynamicVariantUtilities.onLarge()(
+      ContextVariantUtilities.onLarge()(
         RandomGenerator.textAttributes(),
         RandomGenerator.boxAttributes(),
       ),

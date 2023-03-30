@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
 import '../attributes/common/common.descriptor.dart';
-import '../mixer/mix_context.dart';
-import '../mixer/mix_context_data.dart';
+import '../factory/mix_context.dart';
+import '../factory/mix_context_data.dart';
+import '../theme/mix_theme.dart';
 import '../widgets/box/box.descriptor.dart';
 import '../widgets/flex/flex.descriptor.dart';
 import '../widgets/icon/icon.props.dart';
@@ -10,49 +11,11 @@ import '../widgets/image/image.props.dart';
 import '../widgets/text/text.descriptor.dart';
 import '../widgets/zbox/zbox.props.dart';
 
-extension MixContextExtensions on BuildContext {
+extension BuildContextExt on BuildContext {
   MixContextData? get mixContext => MixContext.of(this);
 
-  @Deprecated('use SharedProps.fromContext(context) instead')
-  CommonDescriptor get sharedProps => CommonDescriptor.fromContext(this);
+  /// MEDIA QUERY EXTENSION METHODS
 
-  @Deprecated('use BoxProps.fromContext(context) instead')
-  BoxDescriptor get boxProps => BoxDescriptor.fromContext(this);
-
-  @Deprecated('use FlexProps.fromContext(context) instead')
-  FlexDescriptor get flexProps => FlexDescriptor.fromContext(this);
-
-  @Deprecated('use ZBoxProps.fromContext(context) instead')
-  ZBoxProps get zBoxProps => ZBoxProps.fromContext(this);
-
-  @Deprecated('use IconProps.fromContext(context) instead')
-  IconProps get iconProps => IconProps.fromContext(this);
-
-  @Deprecated('use TextProps.fromContext(context) instead')
-  TextDescriptor get textProps => TextDescriptor.fromContext(this);
-
-  @Deprecated('use ImageProps.fromContext(context) instead')
-  ImageProps get imageProps => ImageProps.fromContext(this);
-}
-
-extension ThemeContextExt on BuildContext {
-  Brightness get brightness => Theme.of(this).brightness;
-
-  /// Check if brightness is Brightness.dark
-  bool get isDarkMode => brightness == Brightness.dark;
-
-  /// Theme context helpers
-  ThemeData get theme => Theme.of(this);
-
-  /// Theme color scheme
-  ColorScheme get colorScheme => theme.colorScheme;
-
-  /// Theme text theme
-  TextTheme get textTheme => theme.textTheme;
-}
-
-/// {@category Misc Utils}
-extension MediaQueryContextExt on BuildContext {
   /// MediaQueryData for context
   MediaQueryData get mq => MediaQuery.of(this);
 
@@ -75,6 +38,46 @@ extension MediaQueryContextExt on BuildContext {
 
   /// Screen height
   double get screenHeight => mq.size.height;
+
+  // Theme Context Extensions
+
+  Brightness get brightness => Theme.of(this).brightness;
+
+  /// Check if brightness is Brightness.dark
+  bool get isDarkMode => brightness == Brightness.dark;
+
+  /// Theme context helpers
+  ThemeData get theme => Theme.of(this);
+
+  /// Theme color scheme
+  ColorScheme get colorScheme => theme.colorScheme;
+
+  /// Theme text theme
+  TextTheme get textTheme => theme.textTheme;
+
+  /// Mix Theme Data
+  MixThemeData get mixTheme => MixTheme.of(this);
+
+  @Deprecated('use SharedProps.fromContext(context) instead')
+  CommonDescriptor get sharedProps => CommonDescriptor.fromContext(this);
+
+  @Deprecated('use BoxProps.fromContext(context) instead')
+  BoxDescriptor get boxProps => BoxDescriptor.fromContext(this);
+
+  @Deprecated('use FlexProps.fromContext(context) instead')
+  FlexDescriptor get flexProps => FlexDescriptor.fromContext(this);
+
+  @Deprecated('use ZBoxProps.fromContext(context) instead')
+  ZBoxProps get zBoxProps => ZBoxProps.fromContext(this);
+
+  @Deprecated('use IconProps.fromContext(context) instead')
+  IconProps get iconProps => IconProps.fromContext(this);
+
+  @Deprecated('use TextProps.fromContext(context) instead')
+  TextDescriptor get textProps => TextDescriptor.fromContext(this);
+
+  @Deprecated('use ImageProps.fromContext(context) instead')
+  ImageProps get imageProps => ImageProps.fromContext(this);
 }
 
 extension StrutStyleExt on StrutStyle {

@@ -1,69 +1,21 @@
 import 'package:flutter/material.dart';
 
-import '../../dtos/border/border.dto.dart';
-import '../../dtos/border/border_side.dto.dart';
-import '../../dtos/border/box_border.dto.dart';
-import '../../dtos/color.dto.dart';
-import '../../dtos/edge_insets/edge_insets.dto.dart';
-import '../../dtos/edge_insets/edge_insets_directional.dto.dart';
-import '../../dtos/edge_insets/edge_insets_geometry.dto.dart';
-import '../../dtos/radius/border_radius.dto.dart';
-import '../../dtos/radius/border_radius_directional.dto.dart';
-import '../../dtos/radius/border_radius_geometry.dto.dart';
-import '../../dtos/radius/radius_dto.dart';
-import '../../dtos/shadow/box_shadow.dto.dart';
-import '../../helpers/mergeable_map.dart';
-import 'box.attributes.dart';
-import 'box.decorator.dart';
+import '../../../dtos/border/border.dto.dart';
+import '../../../dtos/border/border_side.dto.dart';
+import '../../../dtos/border/box_border.dto.dart';
+import '../../../dtos/color.dto.dart';
+import '../../../dtos/edge_insets/edge_insets.dto.dart';
+import '../../../dtos/edge_insets/edge_insets_directional.dto.dart';
+import '../../../dtos/radius/border_radius.dto.dart';
+import '../../../dtos/radius/border_radius_directional.dto.dart';
+import '../../../dtos/radius/border_radius_geometry.dto.dart';
+import '../../../dtos/radius/radius_dto.dart';
+import '../../../dtos/shadow/box_shadow.dto.dart';
+import '../../../helpers/mergeable_map.dart';
+import '../box.attributes.dart';
+import '../box.decorator.dart';
 
-class BoxUtility {
-  const BoxUtility._();
-
-  // ignore: long-parameter-list
-  static BoxAttributes fromValues({
-    EdgeInsets? margin,
-    EdgeInsets? padding,
-    AlignmentGeometry? alignment,
-    double? height,
-    double? width,
-    // Decoration
-    Color? color,
-    BoxBorder? border,
-    BorderRadiusGeometry? borderRadius,
-    List<BoxShadowDto>? boxShadow,
-    Matrix4? transform,
-
-    // Constraints
-    double? maxHeight,
-    double? minHeight,
-    double? maxWidth,
-    double? minWidth,
-    BoxShape? shape,
-    Gradient? gradient,
-  }) {
-    return BoxAttributes(
-      margin: EdgeInsetsDto.maybeFrom(margin),
-      padding: EdgeInsetsDto.maybeFrom(padding),
-      alignment: alignment,
-      height: height,
-      width: width,
-      // Decoration
-      color: ColorDto.maybeFrom(color),
-      border: BoxBorderDto.maybeFrom(border),
-      borderRadius: BorderRadiusGeometryDto.maybeFrom(borderRadius),
-      boxShadow: boxShadow,
-      transform: transform,
-      // Constraints
-      maxHeight: maxHeight,
-      minHeight: minHeight,
-      maxWidth: maxWidth,
-      minWidth: minWidth,
-      shape: shape,
-      gradient: gradient,
-    );
-  }
-
-  /// Short Utils: margin, m
+extension BoxUtilities on BoxAttributes {
   static BoxAttributes margin(double value) {
     return BoxAttributes(
       margin: EdgeInsetsDto.only(
@@ -75,34 +27,28 @@ class BoxUtility {
     );
   }
 
-  /// Short Utils: marginInsets, mi
   static BoxAttributes marginInsets(EdgeInsetsGeometry insets) {
-    return BoxAttributes(margin: EdgeInsetsGeometryDto.from(insets));
+    return BoxAttributes.from(margin: insets);
   }
 
-  /// Short Utils: marginTop, mt
   static BoxAttributes marginTop(double value) {
     return BoxAttributes(
       margin: EdgeInsetsDto.only(top: value),
     );
   }
 
-  /// Short Utils: marginRight, mr
   static BoxAttributes marginRight(double value) {
     return BoxAttributes(margin: EdgeInsetsDto.only(right: value));
   }
 
-  /// Short Utils: marginBottom, mb
   static BoxAttributes marginBottom(double value) {
     return BoxAttributes(margin: EdgeInsetsDto.only(bottom: value));
   }
 
-  /// Short Utils: marginLeft, ml
   static BoxAttributes marginLeft(double value) {
     return BoxAttributes(margin: EdgeInsetsDto.only(left: value));
   }
 
-  /// Short Utils: marginStart, ms
   static BoxAttributes marginStart(double value) {
     return BoxAttributes(
       margin: EdgeInsetsDirectionalDto.only(
@@ -111,7 +57,6 @@ class BoxUtility {
     );
   }
 
-  /// Short Utils: marginEnd, me
   static BoxAttributes marginEnd(double value) {
     return BoxAttributes(
       margin: EdgeInsetsDirectionalDto.only(
@@ -120,7 +65,6 @@ class BoxUtility {
     );
   }
 
-  /// Short Utils: marginHorizontal, marginX, mx
   static BoxAttributes marginHorizontal(double value) {
     return BoxAttributes(
       margin: EdgeInsetsDto.symmetric(
@@ -129,7 +73,6 @@ class BoxUtility {
     );
   }
 
-  /// Short Utils: marginVertical, marginY, my
   static BoxAttributes marginVertical(double value) {
     return BoxAttributes(
       margin: EdgeInsetsDto.symmetric(
@@ -138,37 +81,50 @@ class BoxUtility {
     );
   }
 
-  /// Short Utils: padding, p
   static BoxAttributes padding(double value) {
     return BoxAttributes(padding: EdgeInsetsDto.all(value));
   }
 
-  /// Short Utils: paddingInsets, pi
-  static BoxAttributes paddingInsets(EdgeInsetsGeometry insets) {
-    return BoxAttributes(padding: EdgeInsetsGeometryDto.from(insets));
+  static BoxAttributes paddingAll(double value) {
+    return BoxAttributes(padding: EdgeInsetsDto.all(value));
   }
 
-  /// Short Utils: paddingTop, pt
+  static BoxAttributes paddingOnly(
+    double top,
+    double right,
+    double bottom,
+    double left,
+  ) {
+    return BoxAttributes(
+      padding: EdgeInsetsDto.only(
+        top: top,
+        right: right,
+        bottom: bottom,
+        left: left,
+      ),
+    );
+  }
+
+  static BoxAttributes paddingInsets(EdgeInsetsGeometry insets) {
+    return BoxAttributes.from(padding: insets);
+  }
+
   static BoxAttributes paddingTop(double value) {
     return BoxAttributes(padding: EdgeInsetsDto.only(top: value));
   }
 
-  /// Short Utils: paddingRight, pr
   static BoxAttributes paddingRight(double value) {
     return BoxAttributes(padding: EdgeInsetsDto.only(right: value));
   }
 
-  /// Short Utils: paddingBottom, pb
   static BoxAttributes paddingBottom(double value) {
     return BoxAttributes(padding: EdgeInsetsDto.only(bottom: value));
   }
 
-  /// Short Utils: paddingLeft, pl
   static BoxAttributes paddingLeft(double value) {
     return BoxAttributes(padding: EdgeInsetsDto.only(left: value));
   }
 
-  /// Short Utils: paddingStart, ps
   static BoxAttributes paddingStart(double value) {
     return BoxAttributes(
       padding: EdgeInsetsDirectionalDto.only(
@@ -177,7 +133,6 @@ class BoxUtility {
     );
   }
 
-  /// Short Utils: paddingEnd, pe
   static BoxAttributes paddingEnd(double value) {
     return BoxAttributes(
       padding: EdgeInsetsDirectionalDto.only(
@@ -186,7 +141,6 @@ class BoxUtility {
     );
   }
 
-  /// Short Utils: paddingHorizontal, px
   static BoxAttributes paddingHorizontal(double value) {
     return BoxAttributes(
       padding: EdgeInsetsDto.symmetric(
@@ -195,7 +149,6 @@ class BoxUtility {
     );
   }
 
-  /// Short Utils: paddingVertical, py
   static BoxAttributes paddingVertical(double value) {
     return BoxAttributes(
       padding: EdgeInsetsDto.symmetric(
@@ -204,84 +157,68 @@ class BoxUtility {
     );
   }
 
-  /// Short Utils: bgColor
   static BoxAttributes backgroundColor(Color color) =>
-      BoxAttributes(color: ColorDto.from(color));
+      BoxAttributes.from(color: color);
 
-  /// Short Utils: height, h
   static BoxAttributes height(double height) {
     return BoxAttributes(
       height: height,
     );
   }
 
-  /// Short Utils: width, w
   static BoxAttributes width(double width) {
     return BoxAttributes(
       width: width,
     );
   }
 
-  /// Short Utils: maxHeight, maxH
   static BoxAttributes maxHeight(double maxHeight) {
     return BoxAttributes(
       maxHeight: maxHeight,
     );
   }
 
-  /// Short Utils: maxWidth, maxW
   static BoxAttributes maxWidth(double maxWidth) {
     return BoxAttributes(
       maxWidth: maxWidth,
     );
   }
 
-  /// Short Utils: minHeight, minH
   static BoxAttributes minHeight(double minHeight) {
     return BoxAttributes(
       minHeight: minHeight,
     );
   }
 
-  /// Short Utils: minWidth, minW
   static BoxAttributes minWidth(double minWidth) {
     return BoxAttributes(
       minWidth: minWidth,
     );
   }
 
-  /// Short Utils: (none: see rounded)
-  static BoxAttributes borderRadius(BorderRadiusGeometryDto radius) {
+  static BoxAttributes _borderRadius(BorderRadiusGeometryDto radius) {
     return BoxAttributes(borderRadius: radius);
   }
 
-  /// Short Utils: rounded, r
-  /// (Rounded corners)
   static BoxAttributes rounded(double value) {
-    return borderRadius(
+    return _borderRadius(
       BorderRadiusDto.all(
-        RadiusDto.circular(
-          value,
-        ),
+        RadiusDto.circular(value),
       ),
     );
   }
 
-  /// Short Utils: squared
-  /// (Squared corners)
   static BoxAttributes squared() {
-    return borderRadius(BorderRadiusDto.zero);
+    return _borderRadius(BorderRadiusDto.zero);
   }
 
-  /// Short Utils: roundedTR, roundedBR, roundedTL, roundedBL
-  /// (Rounding select corners)
   static BoxAttributes roundedOnly({
     double? topLeft,
     double? topRight,
     double? bottomLeft,
     double? bottomRight,
   }) {
-    return borderRadius(
+    return _borderRadius(
       BorderRadiusDto.only(
         topLeft: topLeft != null ? RadiusDto.circular(topLeft) : null,
         topRight: topRight != null ? RadiusDto.circular(topRight) : null,
@@ -292,15 +229,13 @@ class BoxUtility {
     );
   }
 
-  /// Short Utils: roundedTE, roundedBE, roundedTS, roundedBS
-  /// (Rounding select corners)
   static BoxAttributes roundedDirectionalOnly({
     double? topStart,
     double? topEnd,
     double? bottomStart,
     double? bottomEnd,
   }) {
-    return borderRadius(
+    return _borderRadius(
       BorderRadiusDirectionalDto.only(
         topStart: topStart != null ? RadiusDto.circular(topStart) : null,
         topEnd: topEnd != null ? RadiusDto.circular(topEnd) : null,
@@ -311,12 +246,11 @@ class BoxUtility {
     );
   }
 
-  /// Short Utils: roundedHorizontal, roundedH
   static BoxAttributes roundedHorizontal({
     double? left,
     double? right,
   }) {
-    return borderRadius(
+    return _borderRadius(
       BorderRadiusDto.horizontal(
         left: left != null ? RadiusDto.circular(left) : null,
         right: right != null ? RadiusDto.circular(right) : null,
@@ -324,50 +258,76 @@ class BoxUtility {
     );
   }
 
-  /// Short Utils: roundedVertical, roundedV
   static BoxAttributes roundedVertical({
     double? top,
     double? bottom,
   }) {
-    return borderRadius(
+    return _borderRadius(
       BorderRadiusDto.vertical(
-        top: top != null
-            ? RadiusDto.circular(
-                top,
-              )
-            : null,
-        bottom: bottom != null
-            ? RadiusDto.circular(
-                bottom,
-              )
-            : null,
+        top: top != null ? RadiusDto.circular(top) : null,
+        bottom: bottom != null ? RadiusDto.circular(bottom) : null,
       ),
     );
   }
 
-  /// Short Utils: roundedDirectionalHorizontal, roundedDH
   static BoxAttributes roundedDirectionalHorizontal({
     double? start,
     double? end,
   }) {
-    return borderRadius(
+    return _borderRadius(
       BorderRadiusDirectionalDto.horizontal(
-        start: start != null
-            ? RadiusDto.circular(
-                start,
-              )
-            : null,
-        end: end != null
-            ? RadiusDto.circular(
-                end,
-              )
-            : null,
+        start: start != null ? RadiusDto.circular(start) : null,
+        end: end != null ? RadiusDto.circular(end) : null,
       ),
     );
   }
 
-  /// Short Utils: border
-  /// (Border attributes for all border sides)
+  static BoxAttributes roundedDirectionalVertical({
+    double? top,
+    double? bottom,
+  }) {
+    return _borderRadius(
+      BorderRadiusDirectionalDto.vertical(
+        top: top != null ? RadiusDto.circular(top) : null,
+        bottom: bottom != null ? RadiusDto.circular(bottom) : null,
+      ),
+    );
+  }
+
+  static BoxAttributes _borderHelper({
+    required BoxBorderSide side,
+    Color? color,
+    double? width,
+    BorderStyle? style,
+  }) {
+    BorderSideDto borderSide = BorderSideDto.only(
+      color: ColorDto.maybeFrom(color),
+      width: width,
+      style: style,
+    );
+
+    switch (side) {
+      case BoxBorderSide.top:
+        return BoxAttributes(border: BorderDto.only(top: borderSide));
+      case BoxBorderSide.bottom:
+        return BoxAttributes(border: BorderDto.only(bottom: borderSide));
+      case BoxBorderSide.left:
+        return BoxAttributes(border: BorderDto.only(left: borderSide));
+      case BoxBorderSide.right:
+        return BoxAttributes(border: BorderDto.only(right: borderSide));
+      case BoxBorderSide.start:
+        return BoxAttributes(
+          border: BorderDirectionalDto.only(start: borderSide),
+        );
+      case BoxBorderSide.end:
+        return BoxAttributes(
+          border: BorderDirectionalDto.only(end: borderSide),
+        );
+      default:
+        throw ArgumentError('Invalid side provided: $side');
+    }
+  }
+
   static BoxAttributes border({
     Color? color,
     double? width,
@@ -388,110 +348,84 @@ class BoxUtility {
       );
     }
 
-    return BoxAttributes(
-      border: border,
-    );
+    return BoxAttributes(border: border);
   }
 
-  /// Short Utils: borderTop, bt
   static BoxAttributes borderTop({
     Color? color,
     double? width,
     BorderStyle? style,
   }) {
-    return BoxAttributes(
-      border: BorderDto.only(
-        top: BorderSideDto.only(
-          color: ColorDto.maybeFrom(color),
-          width: width,
-          style: style,
-        ),
-      ),
+    return _borderHelper(
+      side: BoxBorderSide.top,
+      color: color,
+      width: width,
+      style: style,
     );
   }
 
-  /// Short Utils: borderBottom, bb
   static BoxAttributes borderBottom({
     Color? color,
     double? width,
     BorderStyle? style,
   }) {
-    return BoxAttributes(
-      border: BorderDto.only(
-        bottom: BorderSideDto.only(
-          color: ColorDto.maybeFrom(color),
-          width: width,
-          style: style,
-        ),
-      ),
+    return _borderHelper(
+      side: BoxBorderSide.bottom,
+      color: color,
+      width: width,
+      style: style,
     );
   }
 
-  /// Short Utils: borderLeft, bl
   static BoxAttributes borderLeft({
     Color? color,
     double? width,
     BorderStyle? style,
   }) {
-    return BoxAttributes(
-      border: BorderDto.only(
-        left: BorderSideDto.only(
-          color: ColorDto.maybeFrom(color),
-          width: width,
-          style: style,
-        ),
-      ),
+    return _borderHelper(
+      side: BoxBorderSide.left,
+      color: color,
+      width: width,
+      style: style,
     );
   }
 
-  /// Short Utils: borderRight, br
   static BoxAttributes borderRight({
     Color? color,
     double? width,
     BorderStyle? style,
   }) {
-    return BoxAttributes(
-      border: BorderDto.only(
-        right: BorderSideDto.only(
-          color: ColorDto.maybeFrom(color),
-          width: width,
-          style: style,
-        ),
-      ),
+    return _borderHelper(
+      side: BoxBorderSide.right,
+      color: color,
+      width: width,
+      style: style,
     );
   }
 
-  /// Short Utils: borderStart, bs
   static BoxAttributes borderStart({
     Color? color,
     double? width,
     BorderStyle? style,
   }) {
-    return BoxAttributes(
-      border: BorderDirectionalDto.only(
-        start: BorderSideDto.only(
-          color: ColorDto.maybeFrom(color),
-          width: width,
-          style: style,
-        ),
-      ),
+    return _borderHelper(
+      side: BoxBorderSide.start,
+      color: color,
+      width: width,
+      style: style,
     );
   }
 
-  /// Short Utils: borderEnd, be
   static BoxAttributes borderEnd({
     Color? color,
     double? width,
     BorderStyle? style,
   }) {
-    return BoxAttributes(
-      border: BorderDirectionalDto.only(
-        end: BorderSideDto.only(
-          color: ColorDto.maybeFrom(color),
-          width: width,
-          style: style,
-        ),
-      ),
+    return _borderHelper(
+      side: BoxBorderSide.end,
+      color: color,
+      width: width,
+      style: style,
     );
   }
 
@@ -499,8 +433,6 @@ class BoxUtility {
     return BoxAttributes(transform: transform);
   }
 
-  /// Short Utils: borderColor
-  /// (Border color for all border sides)
   static BoxAttributes borderColor(Color color) {
     return BoxAttributes(
       border: BorderDto.all(
@@ -509,19 +441,14 @@ class BoxUtility {
     );
   }
 
-  /// Short Utils: borderWidth
-  /// (Border width for all border sides)
   static BoxAttributes borderWidth(double width) {
     return BoxAttributes(border: BorderDto.all(width: width));
   }
 
-  /// Short Utils: align
   static BoxAttributes align(AlignmentGeometry align) {
     return BoxAttributes(alignment: align);
   }
 
-  /// Short Utils: borderStyle
-  /// (Border style for all border sides)
   static BoxAttributes borderStyle(BorderStyle style) {
     return BoxAttributes(border: BorderDto.all(style: style));
   }
@@ -572,7 +499,6 @@ class BoxUtility {
     );
   }
 
-  /// Short Utils: shadow
   static BoxAttributes shadow({
     Color? color,
     Offset? offset,
@@ -598,10 +524,9 @@ class BoxUtility {
   }
 
   static BoxAttributes decorator(BoxDecorator decorator) {
-    return BoxUtility.decorators([decorator]);
+    return BoxUtilities.decorators([decorator]);
   }
 
-  /// Short Utils: elevation
   static BoxAttributes elevation(int elevation) {
     const elevationOptions = [0, 1, 2, 3, 4, 6, 8, 9, 12, 16, 24];
     assert(

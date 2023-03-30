@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../dtos/text_style.dto.dart';
-import '../../mixer/mix_context.dart';
+import '../../factory/mix_context.dart';
 import 'text.attributes.dart';
 import 'text_directives/text_directives.dart';
 

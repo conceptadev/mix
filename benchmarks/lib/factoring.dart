@@ -19,7 +19,7 @@ void main() {
       marginY(10),
       rounded(10),
       bgColor(Color(0xFF00FF80)),
-      textStyle(TextStyle()),
+      textStyle(asStyle: TextStyle()),
       textColor(Color(0xFFFFFFFF)),
       onHover(
         padding(20),

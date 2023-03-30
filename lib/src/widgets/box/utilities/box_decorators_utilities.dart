@@ -1,45 +1,45 @@
 import 'package:flutter/material.dart';
 
-import '../../../mix.dart';
+import '../../../../mix.dart';
 
 class BoxDecoratorUtility {
   /// Short Utils: flex
   static BoxAttributes flex(int value) {
-    return BoxUtility.decorator(
+    return BoxUtilities.decorator(
       FlexibleDecorator(flex: value),
     );
   }
 
   /// Short Utils: flexFit
   static BoxAttributes flexFit(FlexFit flexFit) {
-    return BoxUtility.decorator(
+    return BoxUtilities.decorator(
       FlexibleDecorator(flexFit: flexFit),
     );
   }
 
   /// Short Utils: expanded
   static BoxAttributes expanded() {
-    return BoxUtility.decorator(
+    return BoxUtilities.decorator(
       const FlexibleDecorator(flexFit: FlexFit.tight),
     );
   }
 
   /// Short Utils: flexible
   static BoxAttributes flexible() {
-    return BoxUtility.decorator(
+    return BoxUtilities.decorator(
       const FlexibleDecorator(flexFit: FlexFit.loose),
     );
   }
 
   static BoxAttributes aspectRatio(double aspectRatio) {
-    return BoxUtility.decorator(
+    return BoxUtilities.decorator(
       AspectRatioDecorator(aspectRatio: aspectRatio),
     );
   }
 
   /// Short Utils: clipRounded
   static BoxAttributes clipRounded(double radius) {
-    return BoxUtility.decorator(
+    return BoxUtilities.decorator(
       ClipDecorator(
         ClipDecoratorType.rounded,
         borderRadius: BorderRadius.circular(radius),
@@ -48,28 +48,28 @@ class BoxDecoratorUtility {
   }
 
   static BoxAttributes scale(double scale) {
-    return BoxUtility.decorator(ScaleDecorator(scale));
+    return BoxUtilities.decorator(ScaleDecorator(scale));
   }
 
   /// Short Utils: clipOval
   static BoxAttributes clipOval() {
-    return BoxUtility.decorator(const ClipDecorator(ClipDecoratorType.oval));
+    return BoxUtilities.decorator(const ClipDecorator(ClipDecoratorType.oval));
   }
 
   /// Short Utils: clipTriangle
   static BoxAttributes clipTriangle() {
-    return BoxUtility.decorator(
+    return BoxUtilities.decorator(
       const ClipDecorator(ClipDecoratorType.triangle),
     );
   }
 
   static BoxAttributes opacity(double opacity) {
-    return BoxUtility.decorator(OpacityDecorator(opacity: opacity));
+    return BoxUtilities.decorator(OpacityDecorator(opacity: opacity));
   }
 
   /// Short Utils: rotate
   static BoxAttributes rotate(int quarterTurns) {
-    return BoxUtility.decorator(RotateDecorator(quarterTurns: quarterTurns));
+    return BoxUtilities.decorator(RotateDecorator(quarterTurns: quarterTurns));
   }
 
   /// Short Utils: rotate90

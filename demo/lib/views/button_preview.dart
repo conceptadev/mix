@@ -2,21 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
 
 Mix get button => Mix(
-      textStyle(MaterialTokens.textTheme.bodyText2),
+      textStyle(asStyle: MaterialTokens.textTheme.bodyText2),
       bold(),
       fontSize(16.0),
-      animated(),
       bgColor(MaterialTokens.colorScheme.primary),
       onHover(
         bgColor(MaterialTokens.colorScheme.secondary),
       ),
       paddingHorizontal(15.0),
       paddingVertical(8.0),
-      when(true)(
-        rounded(5),
-      )(
-        rounded(10),
-      ),
     );
 
 class ButtonsPreview extends StatelessWidget {

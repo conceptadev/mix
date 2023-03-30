@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
-import 'package:mix/src/mixer/mix_context.dart';
+import 'package:mix/src/factory/mix_context.dart';
 
 import '../helpers/random_dto.dart';
 

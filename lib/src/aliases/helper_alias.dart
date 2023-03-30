@@ -1,3 +1,3 @@
 import '../../mix.dart';
 
-const apply = SpreadFunctionParams(HelperUtility.apply);
+const apply = SpreadPositionalParams(HelperUtility.apply);

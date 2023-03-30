@@ -4,6 +4,8 @@ import '../dto.dart';
 import 'border.dto.dart';
 import 'border_side.dto.dart';
 
+enum BoxBorderSide { top, bottom, left, right, start, end }
+
 abstract class BoxBorderDto<T extends BoxBorder> extends Dto<T> {
   const BoxBorderDto();
 

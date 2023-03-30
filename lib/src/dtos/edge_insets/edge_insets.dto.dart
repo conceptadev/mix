@@ -24,22 +24,18 @@ class EdgeInsetsDto extends EdgeInsetsGeometryDto<EdgeInsets> {
   });
 
   const EdgeInsetsDto.all(double value)
-      : this._(
-          top: value,
-          bottom: value,
-          left: value,
-          right: value,
-        );
+      : top = value,
+        bottom = value,
+        left = value,
+        right = value;
 
   const EdgeInsetsDto.symmetric({
     double? horizontal,
     double? vertical,
-  }) : this._(
-          top: vertical,
-          bottom: vertical,
-          left: horizontal,
-          right: horizontal,
-        );
+  })  : top = vertical,
+        bottom = vertical,
+        left = horizontal,
+        right = horizontal;
 
   factory EdgeInsetsDto.from(EdgeInsets edgeInsets) {
     return EdgeInsetsDto._(
@@ -93,31 +89,16 @@ class EdgeInsetsDto extends EdgeInsetsGeometryDto<EdgeInsets> {
 
   @override
   EdgeInsets resolve(BuildContext context) {
-    final spacing = MixTheme.of(context).space;
-
-    // TODO: Clean this up
+    final tokenResolver = MixTokenResolver(context);
 
     return EdgeInsets.only(
-      top: spacing.fromValue(_top) ?? 0.0,
-      bottom: spacing.fromValue(_bottom) ?? 0.0,
-      left: spacing.fromValue(_left) ?? 0.0,
-      right: spacing.fromValue(_right) ?? 0.0,
+      top: tokenResolver.space(_top ?? 0.0),
+      bottom: tokenResolver.space(_bottom ?? 0.0),
+      left: tokenResolver.space(_left ?? 0.0),
+      right: tokenResolver.space(_right ?? 0.0),
     );
   }
 
   @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is EdgeInsetsDto &&
-        other.top == _top &&
-        other.bottom == _bottom &&
-        other.left == _left &&
-        other.right == _right;
-  }
-
-  @override
-  int get hashCode {
-    return _top.hashCode ^ _bottom.hashCode ^ _left.hashCode ^ _right.hashCode;
-  }
+  List<Object?> get props => [top, bottom, left, right];
 }

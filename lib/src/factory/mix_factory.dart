@@ -195,8 +195,8 @@ class MixFactory {
 extension DeprecatedMixExtension<T extends Attribute> on MixFactory {
   /// Adds an Attribute to a Mix
   @Deprecated('Simplifying the mix API to avoid confusion. Use apply instead')
-  SpreadFunctionParams<T, MixFactory> get mix {
-    return SpreadFunctionParams(addAttributes);
+  SpreadPositionalParams<T, MixFactory> get mix {
+    return SpreadPositionalParams(addAttributes);
   }
 
   @Deprecated('Use selectVariants now')
@@ -219,8 +219,8 @@ extension DeprecatedMixExtension<T extends Attribute> on MixFactory {
   }
 
   @Deprecated('Use merge() or mergeMany() instead')
-  SpreadFunctionParams<MixFactory, MixFactory> get apply =>
-      SpreadFunctionParams(mergeMany);
+  SpreadPositionalParams<MixFactory, MixFactory> get apply =>
+      SpreadPositionalParams(mergeMany);
 
   @Deprecated('Use selectVariant now')
   MixFactory withVariant(Variant variant) {

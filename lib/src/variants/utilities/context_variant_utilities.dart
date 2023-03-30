@@ -7,11 +7,10 @@ import '../../theme/tokens/breakpoints.dart';
 import '../../widgets/pressable/pressable.notifier.dart';
 import '../../widgets/pressable/pressable_state.dart';
 import '../context_variant.dart';
-import '../variant_condition.dart';
 
 /// {@category Variants}
-class DynamicVariantUtilities {
-  const DynamicVariantUtilities._();
+class ContextVariantUtilities {
+  const ContextVariantUtilities._();
 
   static _screenSizeCheck(ScreenSizeToken screenSize) {
     return (BuildContext context) {
@@ -140,7 +139,6 @@ class DynamicVariantUtilities {
     );
   }
 
-//TODO: change this API
   static T onNot<T extends ContextVariant>(T other) {
     return other.inverseInstance() as T;
   }
@@ -152,9 +150,5 @@ class DynamicVariantUtilities {
         return context.directionality == TextDirection.rtl;
       },
     );
-  }
-
-  static WhenVariant when(bool apply) {
-    return WhenVariant('when', apply);
   }
 }

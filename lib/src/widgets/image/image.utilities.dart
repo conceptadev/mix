@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../dtos/color.dto.dart';
 import 'image.attributes.dart';
 
 class ImageUtility {
@@ -17,7 +18,7 @@ class ImageUtility {
     ImageRepeat? repeat,
   }) {
     return ImageAttributes(
-      color: color,
+      color: ColorDto.maybeFrom(color),
       scale: scale,
       fit: fit,
       alignment: alignment,
@@ -26,7 +27,7 @@ class ImageUtility {
   }
 
   static ImageAttributes color(Color color) {
-    return ImageAttributes(color: color);
+    return ImageAttributes(color: ColorDto.from(color));
   }
 
   static ImageAttributes scale(double scale) {

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
+import '../../helpers/equatable_mixin.dart';
 import '../dto.dart';
 import 'edge_insets.dto.dart';
 import 'edge_insets_directional.dto.dart';
 
 abstract class EdgeInsetsGeometryDto<T extends EdgeInsetsGeometry>
-    extends Dto<T> {
+    extends Dto<T> with EquatableMixin {
   const EdgeInsetsGeometryDto();
 
   double? get _top;
@@ -32,6 +33,15 @@ abstract class EdgeInsetsGeometryDto<T extends EdgeInsetsGeometry>
     throw UnsupportedError(
       "${edgeInsets.runtimeType} is not suppported, use EdgeInsets or EdgeInsetsDirectional",
     );
+  }
+
+  static D? maybeFrom<T extends EdgeInsetsGeometry,
+      D extends EdgeInsetsGeometryDto<T>>(
+    T? edgeInsets,
+  ) {
+    if (edgeInsets == null) return null;
+
+    return from(edgeInsets);
   }
 
   EdgeInsetsGeometryDto merge(covariant EdgeInsetsGeometryDto? other) {

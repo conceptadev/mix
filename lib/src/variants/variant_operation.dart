@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 
 import '../attributes/attribute.dart';
 import '../attributes/nested_attribute.dart';
-import '../mixer/mix_factory.dart';
+import '../factory/mix_factory.dart';
 import 'context_variant.dart';
 import 'variant.dart';
 import 'variant_attribute.dart';

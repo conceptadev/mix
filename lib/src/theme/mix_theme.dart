@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'tokens/breakpoints.dart';
-import 'tokens/space.dart';
 
-final cacheMap = <int, MixThemeData>{};
+import '../../mix.dart';
+import 'tokens/breakpoints.dart';
+import 'tokens/mix_token.dart';
+import 'tokens/radii_token.dart';
 
 class MixTheme extends InheritedWidget {
   const MixTheme({
@@ -30,40 +31,56 @@ class MixTheme extends InheritedWidget {
 }
 
 class MixThemeData {
-  final MixThemeSpace space;
-  final MixThemeBreakpoints breakpoints;
+  final MixSpaceTokens space;
+  late MixSpaceTokensReference spaceRef;
+  final MixBreakpointsTokens breakpoints;
 
-  const MixThemeData.raw({
+  final MixColorTokens colors;
+  final MixTextStyleTokens textStyles;
+
+  MixThemeData.raw({
     required this.space,
     required this.breakpoints,
-    // TODO: implement font family
-  });
+    required this.colors,
+    required this.textStyles,
+  }) {
+    // Creates a refernece map of the tokens
+    spaceRef = space.map((key, value) => MapEntry(key.ref, key));
+  }
 
   factory MixThemeData({
-    MixThemeSpace? space,
-    MixThemeBreakpoints? breakpoints,
+    MixSpaceTokens? space,
+    MixBreakpointsTokens? breakpoints,
+    MixColorTokens? colors,
+    MixTextStyleTokens? textStyles,
   }) {
-    space ??= const MixThemeSpace();
-    breakpoints ??= MixThemeBreakpoints();
-
     return MixThemeData.raw(
-      space: space,
-      breakpoints: breakpoints,
+      space: {...?space, ...SpaceTokens.tokens},
+      breakpoints: breakpoints ?? const MixBreakpointsTokens(),
+      colors: {...?colors, ...$MDColorScheme.tokens},
+      textStyles: {...?textStyles, ...$M3Text.tokens, ...$M2Text.tokens},
     );
   }
 
   MixThemeData copyWith({
-    MixThemeSpace? space,
-    MixThemeBreakpoints? breakpoints,
+    MixSpaceTokens? space,
+    MixBreakpointsTokens? breakpoints,
+    MixRadiiTokens? radii,
+    MixColorTokens? colors,
+    MixTextStyleTokens? textStyles,
   }) {
     return MixThemeData.raw(
-      space: space ?? this.space,
+      space: {...this.space, ...?space},
       breakpoints: breakpoints ?? this.breakpoints,
+      colors: {...this.colors, ...?colors},
+      textStyles: {...this.textStyles, ...?textStyles},
     );
   }
 
   @override
-  String toString() => 'MixThemeData(space: $space, breakpoints: $breakpoints';
+  String toString() {
+    return 'MixThemeData(space: $space, breakpoints: $breakpoints  colors: $colors, textStyles: $textStyles)';
+  }
 
   @override
   bool operator ==(Object other) {
@@ -71,11 +88,64 @@ class MixThemeData {
 
     return other is MixThemeData &&
         other.space == space &&
-        other.breakpoints == breakpoints;
+        other.breakpoints == breakpoints &&
+        other.colors == colors &&
+        other.spaceRef == spaceRef &&
+        other.textStyles == textStyles;
   }
 
   @override
   int get hashCode {
-    return space.hashCode ^ breakpoints.hashCode;
+    return space.hashCode ^
+        breakpoints.hashCode ^
+        colors.hashCode ^
+        spaceRef.hashCode ^
+        textStyles.hashCode;
+  }
+}
+
+class MixTokenResolver {
+  final BuildContext context;
+
+  MixTokenResolver(this.context);
+
+  Color color(ColorToken token) {
+    final color = MixTheme.of(context).colors[token]?.call(context);
+
+    if (color == null) {
+      throw Exception('Color token $token is not defined in Mix Theme');
+    }
+
+    return color;
+  }
+
+  TextStyle textStyle(TextStyleToken token) {
+    final style = MixTheme.of(context).textStyles[token]?.call(context);
+
+    if (style == null) {
+      throw Exception('TextStyle token $token is not defined in Mix Theme');
+    }
+
+    return style;
+  }
+
+  double space(double value) {
+    final mixTheme = MixTheme.of(context);
+
+    // Check if value is a reference
+    final token = mixTheme.spaceRef[value];
+
+    // if value is not a reference return value
+    if (token == null) {
+      return value;
+    }
+
+    final space = mixTheme.space[token]?.call(context);
+
+    if (space == null) {
+      throw Exception('Spacetoken $token is not defined in Mix Theme');
+    }
+
+    return space;
   }
 }

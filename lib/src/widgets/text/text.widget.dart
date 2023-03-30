@@ -2,8 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../attributes/common/common.descriptor.dart';
-import '../../mixer/mix_factory.dart';
-import '../../variants/variant.dart';
 import '../empty.widget.dart';
 import '../mix.widget.dart';
 import '../mix_context_builder.dart';
@@ -12,17 +10,12 @@ import 'text.descriptor.dart';
 class TextMix extends MixWidget {
   const TextMix(
     this.text, {
-    Mix? mix,
-    Key? key,
-    List<Variant>? variants,
+    super.mix,
+    super.key,
+    super.variants,
+    super.inherit,
     this.semanticsLabel,
-    bool inherit = true,
-  }) : super(
-          mix,
-          inherit: inherit,
-          variants: variants,
-          key: key,
-        );
+  });
 
   final String text;
   final String? semanticsLabel;
@@ -46,7 +39,6 @@ class TextMix extends MixWidget {
   }
 }
 
-// TODO: Rename this to TextMixerWidget for something more descriptive
 class TextMixedWidget extends StatelessWidget {
   const TextMixedWidget({
     required this.textProps,

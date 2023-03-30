@@ -1,8 +1,6 @@
 import 'package:flutter/widgets.dart';
 
 import '../../attributes/common/common.descriptor.dart';
-import '../../mixer/mix_factory.dart';
-import '../../variants/variant.dart';
 import '../box/box.descriptor.dart';
 import '../box/box.widget.dart';
 import '../gap/gap_widget.dart';
@@ -12,18 +10,13 @@ import 'flex.descriptor.dart';
 
 class FlexBox extends MixWidget {
   const FlexBox({
-    Mix? mix,
-    Key? key,
-    List<Variant>? variants,
-    bool? inherit,
+    super.mix,
+    super.key,
+    super.variants,
+    super.inherit,
     required this.direction,
     required this.children,
-  }) : super(
-          mix,
-          variants: variants,
-          inherit: inherit,
-          key: key,
-        );
+  });
 
   final List<Widget> children;
   final Axis direction;
@@ -81,33 +74,25 @@ class FlexBox extends MixWidget {
 
 class HBox extends FlexBox {
   const HBox({
-    Mix? mix,
-    List<Variant>? variants,
-    Key? key,
-    bool inherit = false,
+    super.mix,
+    super.variants,
+    super.key,
+    super.inherit,
     List<Widget> children = const <Widget>[],
   }) : super(
-          mix: mix,
-          key: key,
-          variants: variants,
-          children: children,
-          inherit: inherit,
           direction: Axis.horizontal,
+          children: children,
         );
 }
 
 class VBox extends FlexBox {
   const VBox({
-    Mix? mix,
-    List<Variant>? variants,
-    Key? key,
-    bool inherit = false,
+    super.mix,
+    super.variants,
+    super.key,
+    super.inherit,
     List<Widget> children = const <Widget>[],
   }) : super(
-          mix: mix,
-          variants: variants,
-          key: key,
-          inherit: inherit,
           children: children,
           direction: Axis.vertical,
         );

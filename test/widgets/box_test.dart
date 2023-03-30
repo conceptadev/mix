@@ -7,7 +7,7 @@ import 'package:mix/src/dtos/edge_insets/edge_insets.dto.dart';
 import 'package:mix/src/dtos/radius/border_radius.dto.dart';
 import 'package:mix/src/dtos/radius/radius_dto.dart';
 import 'package:mix/src/extensions/mix_extensions.dart';
-import 'package:mix/src/widgets/box/box_decorator.utils.dart';
+import 'package:mix/src/widgets/box/utilities/box_decorators_utilities.dart';
 
 import '../testing_utils.dart';
 
@@ -162,7 +162,7 @@ void main() {
         (tester) async {
           await tester.pumpWidget(
             BoxTestWidget(
-              Mix(BoxUtility.backgroundColor(Colors.lime)),
+              Mix(BoxUtilities.backgroundColor(Colors.lime)),
             ),
           );
 

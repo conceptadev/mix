@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-import '../../mixer/mix_context.dart';
+import '../../factory/mix_context.dart';
 import 'zbox.attributes.dart';
 
 class ZBoxProps {

@@ -55,6 +55,16 @@ class BorderRadiusDirectionalDto
           bottomEnd: end,
         );
 
+  const BorderRadiusDirectionalDto.vertical({
+    RadiusDto? top,
+    RadiusDto? bottom,
+  }) : this.only(
+          topStart: top,
+          topEnd: top,
+          bottomStart: bottom,
+          bottomEnd: bottom,
+        );
+
   @override
   RadiusDto? get bottomEnd => _bottomEnd;
 

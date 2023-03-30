@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mix/src/attributes/common/common.utils.dart';
+import 'package:mix/src/attributes/common/common.utilities.dart';
 import 'package:mix/src/extensions/mix_extensions.dart';
-import 'package:mix/src/mixer/mix_factory.dart';
-import 'package:mix/src/widgets/text/text.utils.dart';
+import 'package:mix/src/factory/mix_factory.dart';
+import 'package:mix/src/widgets/text/text.utilities.dart';
 import 'package:mix/src/widgets/text/text_directives/text_directives.dart';
 
 import '../testing_utils.dart';
@@ -54,17 +54,19 @@ void main() {
       await tester.pumpWidget(
         TestMixWidget(
           child: Mix(
-            TextStyleUtility.fontSize(20),
-            TextStyleUtility.wordSpacing(2),
-            TextStyleUtility.letterSpacing(3),
-            TextStyleUtility.textBaseline(TextBaseline.ideographic),
-            TextStyleUtility.fontFamily('Roboto'),
-            TextStyleUtility.fontWeight(FontWeight.bold),
-            TextStyleUtility.color(Colors.amber),
-            TextStyleUtility.fontStyle(FontStyle.italic),
-            TextStyleUtility.locale(const Locale('es', 'US')),
-            TextStyleUtility.height(10),
-            TextStyleUtility.backgroundColor(Colors.blue),
+            TextUtility.textStyle(
+              fontSize: 20,
+              wordSpacing: 2,
+              letterSpacing: 3,
+              textBaseline: TextBaseline.ideographic,
+              fontFamily: 'Roboto',
+              fontWeight: FontWeight.bold,
+              color: Colors.amber,
+              fontStyle: FontStyle.italic,
+              locale: const Locale('es', 'US'),
+              height: 10,
+              backgroundColor: Colors.blue,
+            ),
           ).text(widgetText),
         ),
       );
