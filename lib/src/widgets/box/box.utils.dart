@@ -63,16 +63,8 @@ class BoxUtility {
     );
   }
 
-  /// Short Utils: margin, m
   static BoxAttributes margin(double value) {
-    return BoxAttributes(
-      margin: EdgeInsetsDto.only(
-        top: value,
-        bottom: value,
-        left: value,
-        right: value,
-      ),
-    );
+    return BoxAttributes(margin: EdgeInsetsDirectionalDto.all(value));
   }
 
   /// Short Utils: marginInsets, mi
@@ -80,61 +72,32 @@ class BoxUtility {
     return BoxAttributes(margin: EdgeInsetsGeometryDto.from(insets));
   }
 
-  /// Short Utils: marginTop, mt
-  static BoxAttributes marginTop(double value) {
-    return BoxAttributes(
-      margin: EdgeInsetsDto.only(top: value),
-    );
-  }
-
-  /// Short Utils: marginRight, mr
-  static BoxAttributes marginRight(double value) {
-    return BoxAttributes(margin: EdgeInsetsDto.only(right: value));
-  }
-
-  /// Short Utils: marginBottom, mb
-  static BoxAttributes marginBottom(double value) {
-    return BoxAttributes(margin: EdgeInsetsDto.only(bottom: value));
-  }
-
-  /// Short Utils: marginLeft, ml
-  static BoxAttributes marginLeft(double value) {
-    return BoxAttributes(margin: EdgeInsetsDto.only(left: value));
-  }
-
-  /// Short Utils: marginStart, ms
-  static BoxAttributes marginStart(double value) {
+  // ignore: long-parameter-list
+  static BoxAttributes marginOnly({
+    double? left,
+    double? top,
+    double? right,
+    double? bottom,
+  }) {
     return BoxAttributes(
       margin: EdgeInsetsDirectionalDto.only(
-        start: value,
+        start: left,
+        top: top,
+        end: right,
+        bottom: bottom,
       ),
     );
   }
 
-  /// Short Utils: marginEnd, me
-  static BoxAttributes marginEnd(double value) {
+  static BoxAttributes marginX(double value) {
     return BoxAttributes(
-      margin: EdgeInsetsDirectionalDto.only(
-        end: value,
-      ),
+      margin: EdgeInsetsDirectionalDto.symmetric(horizontal: value),
     );
   }
 
-  /// Short Utils: marginHorizontal, marginX, mx
-  static BoxAttributes marginHorizontal(double value) {
+  static BoxAttributes marginY(double value) {
     return BoxAttributes(
-      margin: EdgeInsetsDto.symmetric(
-        horizontal: value,
-      ),
-    );
-  }
-
-  /// Short Utils: marginVertical, marginY, my
-  static BoxAttributes marginVertical(double value) {
-    return BoxAttributes(
-      margin: EdgeInsetsDto.symmetric(
-        vertical: value,
-      ),
+      margin: EdgeInsetsDirectionalDto.symmetric(vertical: value),
     );
   }
 
@@ -148,59 +111,31 @@ class BoxUtility {
     return BoxAttributes(padding: EdgeInsetsGeometryDto.from(insets));
   }
 
-  /// Short Utils: paddingTop, pt
-  static BoxAttributes paddingTop(double value) {
-    return BoxAttributes(padding: EdgeInsetsDto.only(top: value));
-  }
-
-  /// Short Utils: paddingRight, pr
-  static BoxAttributes paddingRight(double value) {
-    return BoxAttributes(padding: EdgeInsetsDto.only(right: value));
-  }
-
-  /// Short Utils: paddingBottom, pb
-  static BoxAttributes paddingBottom(double value) {
-    return BoxAttributes(padding: EdgeInsetsDto.only(bottom: value));
-  }
-
-  /// Short Utils: paddingLeft, pl
-  static BoxAttributes paddingLeft(double value) {
-    return BoxAttributes(padding: EdgeInsetsDto.only(left: value));
-  }
-
-  /// Short Utils: paddingStart, ps
-  static BoxAttributes paddingStart(double value) {
+  static BoxAttributes paddingOnly({
+    double? left,
+    double? top,
+    double? right,
+    double? bottom,
+  }) {
     return BoxAttributes(
-      padding: EdgeInsetsDirectionalDto.only(
-        start: value,
+      margin: EdgeInsetsDto.only(
+        left: left,
+        top: top,
+        right: right,
+        bottom: bottom,
       ),
     );
   }
 
-  /// Short Utils: paddingEnd, pe
-  static BoxAttributes paddingEnd(double value) {
+  static BoxAttributes paddingX(double value) {
     return BoxAttributes(
-      padding: EdgeInsetsDirectionalDto.only(
-        end: value,
-      ),
+      margin: EdgeInsetsDirectionalDto.symmetric(horizontal: value),
     );
   }
 
-  /// Short Utils: paddingHorizontal, px
-  static BoxAttributes paddingHorizontal(double value) {
+  static BoxAttributes paddingY(double value) {
     return BoxAttributes(
-      padding: EdgeInsetsDto.symmetric(
-        horizontal: value,
-      ),
-    );
-  }
-
-  /// Short Utils: paddingVertical, py
-  static BoxAttributes paddingVertical(double value) {
-    return BoxAttributes(
-      padding: EdgeInsetsDto.symmetric(
-        vertical: value,
-      ),
+      margin: EdgeInsetsDirectionalDto.symmetric(vertical: value),
     );
   }
 

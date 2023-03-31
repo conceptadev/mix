@@ -4,6 +4,7 @@ export 'src/aliases/box_alias.dart';
 export 'src/aliases/box_decorator_alias.dart';
 export 'src/aliases/common_alias.dart';
 export 'src/aliases/context_variants_alias.dart';
+export 'src/aliases/deprecated_alias.dart';
 export 'src/aliases/flex_alias.dart';
 export 'src/aliases/helper_alias.dart';
 export 'src/aliases/icon_alias.dart';
