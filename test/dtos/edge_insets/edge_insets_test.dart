@@ -4,6 +4,8 @@ import 'package:mix/mix.dart';
 import 'package:mix/src/aliases/token_alias.dart';
 import 'package:mix/src/dtos/edge_insets/edge_insets.dto.dart';
 
+import '../../helpers/context_finder.dart';
+
 void main() {
   group('EdgeInsetsDto tests', () {
     test('EdgeInsetsDto.all creates EdgeInsetsDto with equal values', () {
@@ -85,11 +87,11 @@ void main() {
         }),
       ));
 
-      final widgetFinder = find.byType(Container);
-      final container = tester.widget<Container>(widgetFinder);
+      final container = tester.findWidgetOfType<Container>();
+      // final container = tester.widget<Container>(widgetFinder);
 
       // Get BuildContext for boxWidget
-      BuildContext context = tester.element(widgetFinder);
+      final context = tester.findWidgetContext<Container>();
 
       expect(
         container.margin,

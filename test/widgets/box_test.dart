@@ -9,7 +9,7 @@ import 'package:mix/src/dtos/radius/radius_dto.dart';
 import 'package:mix/src/extensions/mix_extensions.dart';
 import 'package:mix/src/widgets/box/utilities/box_decorators_utilities.dart';
 
-import '../testing_utils.dart';
+import '../helpers/testing_utils.dart';
 
 void main() {
   group(

@@ -4,7 +4,7 @@ import 'package:mix/mix.dart' hide border, onEnabled, icon, iconColor;
 import 'package:mix/src/attributes/common/common.descriptor.dart';
 import 'package:mix/src/helpers/equatable_mixin.dart';
 
-import '../testing_utils.dart';
+import '../helpers/testing_utils.dart';
 
 const activated = Variant("activated");
 

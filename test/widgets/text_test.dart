@@ -6,7 +6,7 @@ import 'package:mix/src/factory/mix_factory.dart';
 import 'package:mix/src/widgets/text/text.utilities.dart';
 import 'package:mix/src/widgets/text/text_directives/text_directives.dart';
 
-import '../testing_utils.dart';
+import '../helpers/testing_utils.dart';
 
 void main() {
   group("Mix Text widget", () {

@@ -6,7 +6,7 @@ import 'package:mix/src/extensions/mix_extensions.dart';
 import 'package:mix/src/factory/mix_factory.dart';
 import 'package:mix/src/widgets/icon/icon.attributes.dart';
 
-import '../testing_utils.dart';
+import '../helpers/testing_utils.dart';
 
 void main() {
   group("Mix Icon widget", () {
