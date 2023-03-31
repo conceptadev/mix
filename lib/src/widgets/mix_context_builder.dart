@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../mix.dart';
-import '../factory/mix_context.dart';
+import '../factory/mix_provider.dart';
 
 typedef WidgetMixBuilder = Widget Function(
   BuildContext context,
@@ -23,7 +23,7 @@ class MixContextBuilder extends MixWidget {
   Widget build(BuildContext context) {
     final mixContext = createMixContextData(context);
 
-    return MixContext(
+    return MixProvider(
       mixContext,
       child: Builder(
         builder: (context) => _builder(

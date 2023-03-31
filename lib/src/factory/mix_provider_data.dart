@@ -5,6 +5,9 @@ import '../variants/variant_attribute.dart';
 import 'mix_factory.dart';
 import 'mix_values.dart';
 
+@Deprecated('Use MixData instead.')
+typedef MixContext = MixData;
+
 class MixData {
   final MixValues _mixValues;
 

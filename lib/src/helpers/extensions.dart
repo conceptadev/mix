@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../attributes/common/common.descriptor.dart';
-import '../factory/mix_context.dart';
-import '../factory/mix_context_data.dart';
+import '../factory/mix_provider.dart';
+import '../factory/mix_provider_data.dart';
 import '../theme/mix_theme.dart';
 import '../widgets/box/box.descriptor.dart';
 import '../widgets/flex/flex.descriptor.dart';
@@ -12,7 +12,7 @@ import '../widgets/text/text.descriptor.dart';
 import '../widgets/zbox/zbox.props.dart';
 
 extension BuildContextExt on BuildContext {
-  MixData? get mixContext => MixContext.of(this);
+  MixData? get mix => MixProvider.of(this);
 
   /// MEDIA QUERY EXTENSION METHODS
 

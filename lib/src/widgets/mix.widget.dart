@@ -1,9 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import '../factory/mix_context.dart';
-import '../factory/mix_context_data.dart';
 import '../factory/mix_factory.dart';
+import '../factory/mix_provider.dart';
+import '../factory/mix_provider_data.dart';
 import '../variants/variant.dart';
 
 abstract class MixWidget extends StatelessWidget {
@@ -30,7 +30,7 @@ abstract class MixWidget extends StatelessWidget {
 
     if (_inherit) {
       /// Get ancestor context
-      final inheritedMixContext = MixContext.of(context);
+      final inheritedMixContext = MixProvider.of(context);
 
       if (inheritedMixContext != null) {
         final inheritedValues = inheritedMixContext.toValues();

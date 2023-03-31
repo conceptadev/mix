@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../dtos/text_style.dto.dart';
-import '../../factory/mix_context.dart';
+import '../../factory/mix_provider.dart';
 import 'text.attributes.dart';
 import 'text_directives/text_directives.dart';
 
@@ -36,7 +36,7 @@ class TextDescriptor {
   }) : _directives = directives ?? const [];
 
   factory TextDescriptor.fromContext(BuildContext context) {
-    final mixContext = MixContext.ensureOf(context);
+    final mixContext = MixProvider.ensureOf(context);
     final textAttributes = mixContext.attributesOfType<TextAttributes>();
 
     var mergedStyle = const TextStyle();

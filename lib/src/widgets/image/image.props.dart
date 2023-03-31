@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../factory/mix_context.dart';
+import '../../factory/mix_provider.dart';
 import 'image.attributes.dart';
 
 class ImageProps {
@@ -28,7 +28,7 @@ class ImageProps {
   });
 
   factory ImageProps.fromContext(BuildContext context) {
-    final mixContext = MixContext.ensureOf(context);
+    final mixContext = MixProvider.ensureOf(context);
     final attributes = mixContext.attributesOfType<ImageAttributes>();
 
     var color = attributes?.color;

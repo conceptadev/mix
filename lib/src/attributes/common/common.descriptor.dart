@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../factory/mix_context.dart';
+import '../../factory/mix_provider.dart';
 import 'common.attributes.dart';
 
 class CommonDescriptor {
@@ -20,7 +20,7 @@ class CommonDescriptor {
   });
 
   factory CommonDescriptor.fromContext(BuildContext context) {
-    final mix = MixContext.ensureOf(context);
+    final mix = MixProvider.ensureOf(context);
     final common = mix.attributesOfType<CommonAttributes>();
 
     return CommonDescriptor(

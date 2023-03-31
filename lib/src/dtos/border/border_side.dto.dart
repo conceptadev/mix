@@ -7,6 +7,7 @@ class BorderSideDto extends Dto<BorderSide> {
   final ColorDto? color;
   final double? width;
   final BorderStyle? style;
+
   final double? strokeAlign;
 
   const BorderSideDto._({
@@ -65,7 +66,8 @@ class BorderSideDto extends Dto<BorderSide> {
       color: color?.resolve(context) ?? _default.color,
       width: width ?? _default.width,
       style: style ?? _default.style,
-      strokeAlign: strokeAlign ?? _default.strokeAlign,
+      // TODO: Temporarily removed because of compatibility issues
+      // strokeAlign: strokeAlign ?? _default.strokeAlign,
     );
   }
 

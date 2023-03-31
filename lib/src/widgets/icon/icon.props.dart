@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../factory/mix_context.dart';
+import '../../factory/mix_provider.dart';
 import 'icon.attributes.dart';
 
 class IconProps {
@@ -13,7 +13,7 @@ class IconProps {
   });
 
   factory IconProps.fromContext(BuildContext context) {
-    final mixContext = MixContext.ensureOf(context);
+    final mixContext = MixProvider.ensureOf(context);
     final iconAttributes = mixContext.attributesOfType<IconAttributes>();
 
     IconProps props;

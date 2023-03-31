@@ -98,6 +98,37 @@ mixin EquatableMixin {
   @override
   int get hashCode => runtimeType.hashCode ^ _mapPropsToHashCode(props);
 
+  List<String> getDiff(Object other) {
+    final diff = <String>[];
+
+// Return if there are no diferences
+    if (this == other) return diff;
+
+    if (other is EquatableMixin) {
+      final otherProps = other.props;
+      final length = props.length;
+
+      for (var i = 0; i < length; i++) {
+        final dynamic unit1 = props[i];
+        final dynamic unit2 = otherProps[i];
+
+        if (unit1 is Iterable || unit1 is Map) {
+          if (!_equality.equals(unit1, unit2)) {
+            diff.add(props[i].toString());
+          }
+        } else if (unit1?.runtimeType != unit2?.runtimeType) {
+          diff.add(props[i].toString());
+        } else if (unit1 != unit2) {
+          diff.add(props[i].toString());
+        }
+      }
+    } else {
+      diff.add('other is not EquatableMixin');
+    }
+
+    return diff;
+  }
+
   @override
   String toString() {
     if (stringify) {

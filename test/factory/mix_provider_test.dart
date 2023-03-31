@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
-import 'package:mix/src/factory/mix_context.dart';
+import 'package:mix/src/factory/mix_provider.dart';
 
 import '../helpers/random_dto.dart';
 
@@ -21,8 +21,8 @@ final pressableMix = Mix.fromAttributes([
 ]);
 
 void main() {
-  group("Mix Context", () {
-    testWidgets('Mix Context exist and Matches', (tester) async {
+  group("Mix Provider", () {
+    testWidgets('Mix Provider exist and Matches', (tester) async {
       await tester.pumpWidget(Box(
         mix: pressableMix,
       ));
@@ -33,7 +33,7 @@ void main() {
       BuildContext context = tester.element(widgetFinder);
 
       // Grab the MixContext from the BoxMixedWidget MixContext.of(context)
-      final mix = MixContext.of(context);
+      final mix = MixProvider.of(context);
 
       final matchMix = MixData.create(
         context: context,

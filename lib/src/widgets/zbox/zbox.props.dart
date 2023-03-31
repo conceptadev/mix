@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-import '../../factory/mix_context.dart';
+import '../../factory/mix_provider.dart';
 import 'zbox.attributes.dart';
 
 class ZBoxProps {
@@ -15,7 +15,7 @@ class ZBoxProps {
   });
 
   factory ZBoxProps.fromContext(BuildContext context) {
-    final mixContext = MixContext.ensureOf(context);
+    final mixContext = MixProvider.ensureOf(context);
     final zBoxAttributes = mixContext.attributesOfType<ZBoxAttributes>();
 
     return ZBoxProps(
