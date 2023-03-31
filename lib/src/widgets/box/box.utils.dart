@@ -64,7 +64,7 @@ class BoxUtility {
   }
 
   static BoxAttributes margin(double value) {
-    return BoxAttributes(margin: EdgeInsetsDirectionalDto.all(value));
+    return BoxAttributes(margin: EdgeInsetsDto.all(value));
   }
 
   /// Short Utils: marginInsets, mi
