@@ -88,25 +88,7 @@ class BorderDto extends BoxBorderDto<Border> {
   }
 
   @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is BorderDto &&
-        other.top == top &&
-        other.right == right &&
-        other.bottom == bottom &&
-        other.left == left;
-  }
-
-  @override
-  int get hashCode {
-    return top.hashCode ^ right.hashCode ^ bottom.hashCode ^ left.hashCode;
-  }
-
-  @override
-  String toString() {
-    return 'BorderProps(top: $top, right: $right, bottom: $bottom, left: $left)';
-  }
+  get props => [_top, _right, _bottom, _left];
 }
 
 class BorderDirectionalDto extends BoxBorderDto<BorderDirectional> {
@@ -210,23 +192,5 @@ class BorderDirectionalDto extends BoxBorderDto<BorderDirectional> {
   }
 
   @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is BorderDirectionalDto &&
-        other.top == top &&
-        other.bottom == bottom &&
-        other.start == start &&
-        other.end == end;
-  }
-
-  @override
-  int get hashCode {
-    return top.hashCode ^ bottom.hashCode ^ start.hashCode ^ end.hashCode;
-  }
-
-  @override
-  String toString() {
-    return 'BorderDirectionalDto(top: $top, bottom: $bottom, right: $start, left: $end)';
-  }
+  get props => [_top, _bottom, _start, _end];
 }

@@ -35,12 +35,12 @@ void main() {
       // Grab the MixContext from the BoxMixedWidget MixContext.of(context)
       final mix = MixContext.of(context);
 
-      final matchMix = MixContextData.create(
+      final matchMix = MixData.create(
         context: context,
         mix: pressableMix,
       );
 
-      final clonedMix = MixContextData.create(
+      final clonedMix = MixData.create(
         context: context,
         mix: pressableMix.clone(),
       );

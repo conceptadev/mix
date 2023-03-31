@@ -7,8 +7,8 @@ class OpacityDecorator extends BoxDecorator<OpacityDecorator> {
   final double opacity;
   const OpacityDecorator({
     required this.opacity,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   OpacityDecorator merge(OpacityDecorator other) {
@@ -35,4 +35,7 @@ class OpacityDecorator extends BoxDecorator<OpacityDecorator> {
       );
     }
   }
+
+  @override
+  get props => [opacity];
 }

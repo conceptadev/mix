@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../attributes/attribute.dart';
@@ -166,52 +165,23 @@ class BoxAttributes extends WidgetAttributes {
   }
 
   @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is BoxAttributes &&
-        other.margin == margin &&
-        other.padding == padding &&
-        other.alignment == alignment &&
-        other.height == height &&
-        other.width == width &&
-        other.color == color &&
-        other.border == border &&
-        other.borderRadius == borderRadius &&
-        listEquals(other.boxShadow, boxShadow) &&
-        other.transform == transform &&
-        other.maxHeight == maxHeight &&
-        other.minHeight == minHeight &&
-        other.maxWidth == maxWidth &&
-        other.minWidth == minWidth &&
-        other.shape == shape &&
-        other.gradient == gradient &&
-        other.decorators == decorators;
-  }
-
-  @override
-  int get hashCode {
-    return margin.hashCode ^
-        padding.hashCode ^
-        alignment.hashCode ^
-        height.hashCode ^
-        width.hashCode ^
-        color.hashCode ^
-        border.hashCode ^
-        borderRadius.hashCode ^
-        boxShadow.hashCode ^
-        transform.hashCode ^
-        maxHeight.hashCode ^
-        minHeight.hashCode ^
-        maxWidth.hashCode ^
-        minWidth.hashCode ^
-        shape.hashCode ^
-        gradient.hashCode ^
-        decorators.hashCode;
-  }
-
-  @override
-  String toString() {
-    return 'BoxAttributes(margin: $margin, padding: $padding, alignment: $alignment, height: $height, width: $width, color: $color, border: $border, borderRadius: $borderRadius, boxShadow: $boxShadow, transform: $transform, maxHeight: $maxHeight, minHeight: $minHeight, maxWidth: $maxWidth, minWidth: $minWidth, shape: $shape, gradient: $gradient, decorators: $decorators)';
-  }
+  get props => [
+        margin,
+        padding,
+        alignment,
+        height,
+        width,
+        color,
+        border,
+        borderRadius,
+        boxShadow,
+        transform,
+        maxHeight,
+        minHeight,
+        maxWidth,
+        minWidth,
+        shape,
+        gradient,
+        decorators,
+      ];
 }

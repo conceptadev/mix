@@ -108,21 +108,5 @@ class BorderRadiusDto extends BorderRadiusGeometryDto<BorderRadius> {
   }
 
   @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is BorderRadiusDto &&
-        other.topLeft == topLeft &&
-        other.topRight == topRight &&
-        other.bottomLeft == bottomLeft &&
-        other.bottomRight == bottomRight;
-  }
-
-  @override
-  int get hashCode {
-    return topLeft.hashCode ^
-        topRight.hashCode ^
-        bottomLeft.hashCode ^
-        bottomRight.hashCode;
-  }
+  get props => [topLeft, topRight, bottomLeft, bottomRight];
 }

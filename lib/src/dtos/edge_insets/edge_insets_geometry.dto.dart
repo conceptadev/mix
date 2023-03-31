@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 
-import '../../helpers/equatable_mixin.dart';
 import '../dto.dart';
 import 'edge_insets.dto.dart';
 import 'edge_insets_directional.dto.dart';
 
 abstract class EdgeInsetsGeometryDto<T extends EdgeInsetsGeometry>
-    extends Dto<T> with EquatableMixin {
+    extends Dto<T> {
   const EdgeInsetsGeometryDto();
 
   double? get _top;
@@ -70,16 +69,7 @@ abstract class EdgeInsetsGeometryDto<T extends EdgeInsetsGeometry>
   }
 
   @override
-  String toString() {
-    if (_top == _bottom && _bottom == _left && _left == _right) {
-      return 'EdgeInsets.all($_left)';
-    }
-    if (_isDirectional) {
-      return 'EdgeInsetsDirectionalDto(top: $_top, bottom: $_bottom, start: $_start, end: $_end)';
-    }
-
-    return 'EdgeInsetsDto(top: $_top, bottom: $_bottom, left: $_left, right: $_right)';
-  }
+  get props => [_top, _bottom, _left, _right, _start, _end];
 }
 
 double? doubleNullIfZero(double? value) {

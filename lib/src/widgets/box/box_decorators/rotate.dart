@@ -12,8 +12,8 @@ class RotateDecorator extends BoxDecorator<RotateDecorator> {
   final int quarterTurns;
   const RotateDecorator({
     required this.quarterTurns,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   RotateDecorator merge(RotateDecorator other) {
@@ -30,4 +30,7 @@ class RotateDecorator extends BoxDecorator<RotateDecorator> {
       child: child,
     );
   }
+
+  @override
+  get props => [quarterTurns];
 }

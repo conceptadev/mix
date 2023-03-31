@@ -12,7 +12,7 @@ import '../widgets/text/text.descriptor.dart';
 import '../widgets/zbox/zbox.props.dart';
 
 extension BuildContextExt on BuildContext {
-  MixContextData? get mixContext => MixContext.of(this);
+  MixData? get mixContext => MixContext.of(this);
 
   /// MEDIA QUERY EXTENSION METHODS
 

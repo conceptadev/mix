@@ -54,12 +54,5 @@ class RadiusDto extends Dto<Radius> {
   }
 
   @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is RadiusDto && other._x == _x && other._y == _y;
-  }
-
-  @override
-  int get hashCode => _x.hashCode ^ _y.hashCode;
+  get props => [_x, _y];
 }

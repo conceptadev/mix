@@ -25,7 +25,7 @@ abstract class MixWidget extends StatelessWidget {
   bool get inherit => _inherit;
   List<Variant>? get variants => _variants;
 
-  MixContextData createMixContextData(BuildContext context) {
+  MixData createMixContextData(BuildContext context) {
     var combinedMix = _mix;
 
     if (_inherit) {
@@ -38,7 +38,7 @@ abstract class MixWidget extends StatelessWidget {
       }
     }
 
-    return MixContextData.create(
+    return MixData.create(
       context: context,
       mix: combinedMix.selectVariants(_variants ?? []),
     );

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart' hide border, onEnabled, icon, iconColor;
 import 'package:mix/src/attributes/common/common.descriptor.dart';
+import 'package:mix/src/helpers/equatable_mixin.dart';
 
 import '../testing_utils.dart';
 
@@ -51,19 +52,22 @@ class InheritedIconAttribute extends WidgetAttributes {
       size: size,
     );
   }
+
+  @override
+  get props => [color, size];
 }
 
-class InputDecorationThemeAttribute extends InputDecorationTheme
+class InputDecorationThemeAttribute
+    with EquatableMixin
     implements WidgetAttributes {
+  final Color? iconColor;
+  final Color? fillColor;
+  final InputBorder? border;
   const InputDecorationThemeAttribute({
-    Color? iconColor,
-    Color? fillColor,
-    InputBorder? border,
-  }) : super(
-          iconColor: iconColor,
-          fillColor: fillColor,
-          border: border,
-        );
+    this.iconColor,
+    this.fillColor,
+    this.border,
+  });
 
   @override
   InputDecorationThemeAttribute merge(InputDecorationThemeAttribute other) {
@@ -71,6 +75,14 @@ class InputDecorationThemeAttribute extends InputDecorationTheme
       iconColor: other.iconColor ?? iconColor,
       fillColor: other.fillColor ?? fillColor,
       border: other.border ?? border,
+    );
+  }
+
+  InputDecorationTheme resolve() {
+    return InputDecorationTheme(
+      iconColor: iconColor,
+      fillColor: fillColor,
+      border: border,
     );
   }
 
@@ -87,7 +99,7 @@ class InputDecorationThemeAttribute extends InputDecorationTheme
   }
 
   @override
-  Object get type => InputDecorationThemeAttribute;
+  get props => [iconColor, fillColor, border];
 }
 
 final mix = Mix(
@@ -168,16 +180,16 @@ class TextFieldWidget extends StatelessWidget {
       mix: mix,
       variants: variants,
       builder: (context, mixContext) {
-        final decorationTheme =
-            mixContext.attributesOfType<InputDecorationThemeAttribute>();
+        final decorationTheme = mixContext
+            .dependOnAttributesOfType<InputDecorationThemeAttribute>();
 
         return Semantics(
           label: semanticLabel,
           child: Column(
             children: [
               TextField(
-                decoration:
-                    const InputDecoration().applyDefaults(decorationTheme!),
+                decoration: const InputDecoration()
+                    .applyDefaults(decorationTheme.resolve()),
               ),
             ],
           ),

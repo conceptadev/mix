@@ -43,28 +43,14 @@ class ImageAttributes extends WidgetAttributes {
   }
 
   @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is ImageAttributes &&
-        other.color == color &&
-        other.scale == scale &&
-        other.width == width &&
-        other.height == height &&
-        other.colorBlendMode == colorBlendMode &&
-        other.fit == fit &&
-        other.alignment == alignment &&
-        other.repeat == repeat;
-  }
-
-  @override
-  int get hashCode =>
-      color.hashCode ^
-      scale.hashCode ^
-      width.hashCode ^
-      height.hashCode ^
-      colorBlendMode.hashCode ^
-      fit.hashCode ^
-      alignment.hashCode ^
-      repeat.hashCode;
+  get props => [
+        color,
+        scale,
+        width,
+        height,
+        colorBlendMode,
+        fit,
+        alignment,
+        repeat,
+      ];
 }

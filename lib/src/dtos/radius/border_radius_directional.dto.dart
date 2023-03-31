@@ -114,21 +114,10 @@ class BorderRadiusDirectionalDto
   }
 
   @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is BorderRadiusDirectionalDto &&
-        other.topStart == topStart &&
-        other.topEnd == topEnd &&
-        other.bottomStart == bottomStart &&
-        other.bottomEnd == bottomEnd;
-  }
-
-  @override
-  int get hashCode {
-    return topStart.hashCode ^
-        topEnd.hashCode ^
-        bottomStart.hashCode ^
-        bottomEnd.hashCode;
-  }
+  List<Object?> get props => [
+        topStart,
+        topEnd,
+        bottomStart,
+        bottomEnd,
+      ];
 }

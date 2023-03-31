@@ -32,15 +32,5 @@ class ColorDto extends Dto<Color> {
   }
 
   @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is ColorDto && other.value == value;
-  }
-
-  @override
-  int get hashCode => value.hashCode;
-
-  @override
-  String toString() => 'ColorDto(value: $value)';
+  get props => [value];
 }

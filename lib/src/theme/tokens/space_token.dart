@@ -27,7 +27,7 @@ class SpaceTokens {
 ///
 /// A space token defines a value for controlling the
 /// size of UI elements.
-class SpaceToken extends MixToken<double> with WithReferenceMixin<double> {
+class SpaceToken extends MixToken with WithReferenceMixin {
   /// A constant constructor that accepts a `String` argument named [name].
   /// Name needs to be unique per token
   ///

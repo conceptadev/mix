@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
 import '../../mix.dart';
+import '../helpers/equatable_mixin.dart';
 
-abstract class Decorator<T extends Decorator<T>> with MergeableMixin<T> {
+abstract class Decorator<T extends Decorator<T>>
+    with MergeableMixin<T>, EquatableMixin {
   const Decorator({
     this.key,
   });

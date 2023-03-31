@@ -24,14 +24,8 @@ class IconAttributes extends WidgetAttributes {
   }
 
   @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is IconAttributes &&
-        other.color == color &&
-        other.size == size;
-  }
-
-  @override
-  int get hashCode => color.hashCode ^ size.hashCode;
+  get props => [
+        color,
+        size,
+      ];
 }

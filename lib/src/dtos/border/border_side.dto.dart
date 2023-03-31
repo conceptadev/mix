@@ -7,7 +7,7 @@ class BorderSideDto extends Dto<BorderSide> {
   final ColorDto? color;
   final double? width;
   final BorderStyle? style;
-  final StrokeAlign? strokeAlign;
+  final double? strokeAlign;
 
   const BorderSideDto._({
     this.color,
@@ -36,7 +36,7 @@ class BorderSideDto extends Dto<BorderSide> {
     ColorDto? color,
     double? width,
     BorderStyle? style,
-    StrokeAlign? strokeAlign,
+    double? strokeAlign,
   }) {
     return BorderSideDto._(
       color: color ?? this.color,
@@ -70,25 +70,5 @@ class BorderSideDto extends Dto<BorderSide> {
   }
 
   @override
-  String toString() =>
-      'BorderSideProps(color: $color, width: $width, style: $style, strokeAlign: $strokeAlign)';
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is BorderSideDto &&
-        other.color == color &&
-        other.width == width &&
-        other.style == style &&
-        other.strokeAlign == strokeAlign;
-  }
-
-  @override
-  int get hashCode {
-    return color.hashCode ^
-        width.hashCode ^
-        style.hashCode ^
-        strokeAlign.hashCode;
-  }
+  get props => [color, width, style, strokeAlign];
 }

@@ -2,10 +2,6 @@ import 'package:flutter/widgets.dart';
 
 import '../../attributes/attribute.dart';
 
-/// ## Widget:
-/// - [ZBox](ZBox-class.html)
-///
-/// {@category Attributes}
 class ZBoxAttributes extends WidgetAttributes {
   final AlignmentGeometry? alignment;
   final StackFit? fit;
@@ -16,19 +12,6 @@ class ZBoxAttributes extends WidgetAttributes {
     this.fit,
     this.clipBehavior,
   });
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is ZBoxAttributes &&
-        other.alignment == alignment &&
-        other.fit == fit &&
-        other.clipBehavior == clipBehavior;
-  }
-
-  @override
-  int get hashCode => alignment.hashCode ^ fit.hashCode ^ clipBehavior.hashCode;
 
   ZBoxAttributes copyWith({
     AlignmentGeometry? alignment,
@@ -52,4 +35,11 @@ class ZBoxAttributes extends WidgetAttributes {
       fit: other.fit ?? fit,
     );
   }
+
+  @override
+  get props => [
+        alignment,
+        fit,
+        clipBehavior,
+      ];
 }

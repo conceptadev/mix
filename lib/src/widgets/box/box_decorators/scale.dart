@@ -13,8 +13,8 @@ class ScaleDecorator extends BoxDecorator<ScaleDecorator> {
   final double scale;
   const ScaleDecorator(
     this.scale, {
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   ScaleDecorator merge(ScaleDecorator other) {
@@ -46,4 +46,7 @@ class ScaleDecorator extends BoxDecorator<ScaleDecorator> {
       );
     }
   }
+
+  @override
+  get props => [scale];
 }

@@ -5,14 +5,14 @@ import '../variants/variant_attribute.dart';
 import 'mix_factory.dart';
 import 'mix_values.dart';
 
-class MixContextData {
+class MixData {
   final MixValues _mixValues;
 
-  MixContextData._({
+  MixData._({
     required MixValues mixValues,
   }) : _mixValues = mixValues;
 
-  factory MixContextData.create({
+  factory MixData.create({
     required BuildContext context,
     required Mix mix,
   }) {
@@ -33,7 +33,7 @@ class MixContextData {
 
     final appliedValues = values.merge(MixValues.create(attributes));
 
-    return MixContextData._(
+    return MixData._(
       mixValues: appliedValues,
     );
   }
@@ -95,7 +95,7 @@ class MixContextData {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is MixContextData && other._mixValues == _mixValues;
+    return other is MixData && other._mixValues == _mixValues;
   }
 
   @override

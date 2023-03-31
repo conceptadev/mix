@@ -8,17 +8,11 @@ class BoxShadowDto extends ShadowDto<BoxShadow> {
   final double? spreadRadius;
 
   const BoxShadowDto({
-    ColorDto? color,
-    Offset? offset,
-    double? blurRadius,
+    super.color,
+    super.offset,
+    super.blurRadius,
     this.spreadRadius,
-  }) : super(
-          color: color,
-          offset: offset,
-          blurRadius: blurRadius,
-        );
-
-  final BoxShadow _default = const BoxShadow();
+  });
 
   factory BoxShadowDto.fromBoxShadow(BoxShadow? boxShadow) {
     if (boxShadow == null) {
@@ -36,10 +30,10 @@ class BoxShadowDto extends ShadowDto<BoxShadow> {
   @override
   BoxShadow resolve(BuildContext context) {
     return BoxShadow(
-      color: color?.resolve(context) ?? _default.color,
-      offset: offset ?? _default.offset,
-      blurRadius: blurRadius ?? _default.blurRadius,
-      spreadRadius: spreadRadius ?? _default.spreadRadius,
+      color: color?.resolve(context) ?? const BoxShadow().color,
+      offset: offset ?? const BoxShadow().offset,
+      blurRadius: blurRadius ?? const BoxShadow().blurRadius,
+      spreadRadius: spreadRadius ?? const BoxShadow().spreadRadius,
     );
   }
 
@@ -69,28 +63,7 @@ class BoxShadowDto extends ShadowDto<BoxShadow> {
   }
 
   @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is BoxShadowDto &&
-        other.color == color &&
-        other.offset == offset &&
-        other.blurRadius == blurRadius &&
-        other.spreadRadius == spreadRadius;
-  }
-
-  @override
-  int get hashCode {
-    return color.hashCode ^
-        offset.hashCode ^
-        blurRadius.hashCode ^
-        spreadRadius.hashCode;
-  }
-
-  @override
-  String toString() {
-    return 'BoxShadowDto(color: $color, offset: $offset, blurRadius: $blurRadius, spreadRadius: $spreadRadius)';
-  }
+  get props => [color, offset, blurRadius, spreadRadius];
 }
 
 extension BoxShadowDtoExt on List<BoxShadowDto> {

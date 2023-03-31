@@ -14,8 +14,8 @@ class FlexibleDecorator extends BoxDecorator<FlexibleDecorator> {
   const FlexibleDecorator({
     this.flexFit,
     this.flex,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   FlexibleDecorator merge(FlexibleDecorator other) {
@@ -34,4 +34,7 @@ class FlexibleDecorator extends BoxDecorator<FlexibleDecorator> {
       child: child,
     );
   }
+
+  @override
+  get props => [flexFit, flex];
 }

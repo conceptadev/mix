@@ -1,3 +1,5 @@
+import '../helpers/equatable_mixin.dart';
+
 /// Base attribute
 
 // Some classes have defaults
@@ -13,11 +15,9 @@ mixin MergeableMixin<T> {
 
 /// An interface that add support to custom attributes for [MixContext].
 abstract class WidgetAttributes extends Attribute
-    with MergeableMixin<WidgetAttributes> {
+    with MergeableMixin<WidgetAttributes>, EquatableMixin {
   const WidgetAttributes();
 
   @override
   WidgetAttributes merge(covariant WidgetAttributes? other);
-
-  Object get type => WidgetAttributes;
 }

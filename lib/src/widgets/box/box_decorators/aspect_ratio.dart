@@ -7,8 +7,8 @@ class AspectRatioDecorator extends BoxDecorator<AspectRatioDecorator> {
   final double aspectRatio;
   const AspectRatioDecorator({
     required this.aspectRatio,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   AspectRatioDecorator merge(AspectRatioDecorator other) {
@@ -43,4 +43,7 @@ class AspectRatioDecorator extends BoxDecorator<AspectRatioDecorator> {
       );
     }
   }
+
+  @override
+  get props => [aspectRatio];
 }

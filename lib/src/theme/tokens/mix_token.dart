@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 
 import '../../../mix.dart';
 
-abstract class MixToken<T> {
+abstract class MixToken {
   final String name;
   const MixToken(this.name);
 
@@ -18,7 +18,7 @@ abstract class MixToken<T> {
   int get hashCode => runtimeType.hashCode ^ name.hashCode;
 }
 
-mixin WithReferenceMixin<T> on MixToken<T> {
+mixin WithReferenceMixin<T> on MixToken {
   // Refernce is negativce for tracking
   // Also reference are passed as double to DTOs
 

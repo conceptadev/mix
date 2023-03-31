@@ -10,7 +10,7 @@ import 'mix_context_data.dart';
 class MixContext extends InheritedWidget {
   /// Initializes a new instance of [MixContext].
   ///
-  /// The `mixContext` parameter is the [MixContextData] object to store. [child]
+  /// The `mixContext` parameter is the [MixData] object to store. [child]
   /// receives the element tree that will use this context, and [key] can be set
   /// to track changes.
   const MixContext(
@@ -20,13 +20,13 @@ class MixContext extends InheritedWidget {
   }) : super(key: key, child: child);
 
   /// Contains the context data object.
-  final MixContextData? mixContext;
+  final MixData? mixContext;
 
   /// Returns the context data from the widget tree in [context].
   ///
   /// This method returns the first instance of [MixContext] that it finds
   /// while searching up the widget tree. Returns null if not found.
-  static MixContextData? of(BuildContext context) {
+  static MixData? of(BuildContext context) {
     final widget = context.dependOnInheritedWidgetOfExactType<MixContext>();
 
     return widget?.mixContext;
@@ -37,7 +37,7 @@ class MixContext extends InheritedWidget {
   ///
   /// Throws an exception if [MixContext] is not found within the given widget
   /// tree containing [context].
-  static MixContextData ensureOf(BuildContext context) {
+  static MixData ensureOf(BuildContext context) {
     final data = of(context);
 
     if (data == null) {

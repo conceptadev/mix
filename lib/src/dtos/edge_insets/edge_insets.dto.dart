@@ -100,5 +100,5 @@ class EdgeInsetsDto extends EdgeInsetsGeometryDto<EdgeInsets> {
   }
 
   @override
-  List<Object?> get props => [top, bottom, left, right];
+  get props => [top, bottom, left, right];
 }

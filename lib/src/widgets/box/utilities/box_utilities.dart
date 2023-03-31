@@ -6,6 +6,7 @@ import '../../../dtos/border/box_border.dto.dart';
 import '../../../dtos/color.dto.dart';
 import '../../../dtos/edge_insets/edge_insets.dto.dart';
 import '../../../dtos/edge_insets/edge_insets_directional.dto.dart';
+import '../../../dtos/edge_insets/edge_insets_geometry.dto.dart';
 import '../../../dtos/radius/border_radius.dto.dart';
 import '../../../dtos/radius/border_radius_directional.dto.dart';
 import '../../../dtos/radius/border_radius_geometry.dto.dart';
@@ -27,8 +28,52 @@ extension BoxUtilities on BoxAttributes {
     );
   }
 
+  // ignore: long-parameter-list
+  static BoxAttributes _from({
+    EdgeInsetsGeometry? margin,
+    EdgeInsetsGeometry? padding,
+    AlignmentGeometry? alignment,
+    double? height,
+    double? width,
+    // Decoration
+    Color? color,
+    BoxBorder? border,
+    BorderRadiusGeometry? borderRadius,
+    List<BoxShadowDto>? boxShadow,
+    Matrix4? transform,
+
+    // Constraints
+    double? maxHeight,
+    double? minHeight,
+    double? maxWidth,
+    double? minWidth,
+    BoxShape? shape,
+    Gradient? gradient,
+  }) {
+    return BoxAttributes(
+      margin: EdgeInsetsGeometryDto.maybeFrom(margin),
+      padding: EdgeInsetsGeometryDto.maybeFrom(padding),
+      alignment: alignment,
+      height: height,
+      width: width,
+      // Decoration
+      color: ColorDto.maybeFrom(color),
+      border: BoxBorderDto.maybeFrom(border),
+      borderRadius: BorderRadiusGeometryDto.maybeFrom(borderRadius),
+      boxShadow: boxShadow,
+      transform: transform,
+      // Constraints
+      maxHeight: maxHeight,
+      minHeight: minHeight,
+      maxWidth: maxWidth,
+      minWidth: minWidth,
+      shape: shape,
+      gradient: gradient,
+    );
+  }
+
   static BoxAttributes marginInsets(EdgeInsetsGeometry insets) {
-    return BoxAttributes.from(margin: insets);
+    return _from(margin: insets);
   }
 
   static BoxAttributes marginTop(double value) {
@@ -106,7 +151,7 @@ extension BoxUtilities on BoxAttributes {
   }
 
   static BoxAttributes paddingInsets(EdgeInsetsGeometry insets) {
-    return BoxAttributes.from(padding: insets);
+    return _from(padding: insets);
   }
 
   static BoxAttributes paddingTop(double value) {
@@ -157,8 +202,7 @@ extension BoxUtilities on BoxAttributes {
     );
   }
 
-  static BoxAttributes backgroundColor(Color color) =>
-      BoxAttributes.from(color: color);
+  static BoxAttributes backgroundColor(Color color) => _from(color: color);
 
   static BoxAttributes height(double height) {
     return BoxAttributes(

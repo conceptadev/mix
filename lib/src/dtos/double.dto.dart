@@ -38,15 +38,5 @@ class DoubleDto extends Dto<double> {
   }
 
   @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is DoubleDto && other._value == _value;
-  }
-
-  @override
-  int get hashCode => _value.hashCode;
-
-  @override
-  String toString() => 'DoubleDto(value: $_value)';
+  get props => [_value, _modifier];
 }

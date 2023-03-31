@@ -5,7 +5,7 @@ import '../factory/mix_context.dart';
 
 typedef WidgetMixBuilder = Widget Function(
   BuildContext context,
-  MixContextData mixContext,
+  MixData mixContext,
 );
 
 class MixContextBuilder extends MixWidget {

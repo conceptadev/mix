@@ -1,6 +1,5 @@
 import 'dart:ui';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../mix.dart';
@@ -221,56 +220,29 @@ class TextStyleDto extends Dto<TextStyle> {
   }
 
   @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is TextStyleDto &&
-        other.fontFamily == fontFamily &&
-        other.fontWeight == fontWeight &&
-        other.fontStyle == fontStyle &&
-        other.fontSize == fontSize &&
-        other.letterSpacing == letterSpacing &&
-        other.wordSpacing == wordSpacing &&
-        other.height == height &&
-        other.textBaseline == textBaseline &&
-        other.color == color &&
-        other.backgroundColor == backgroundColor &&
-        listEquals(other.shadows, shadows) &&
-        listEquals(other.fontFeatures, fontFeatures) &&
-        other.decoration == decoration &&
-        other.decorationColor == decorationColor &&
-        other.decorationStyle == decorationStyle &&
-        other.debugLabel == debugLabel &&
-        other.locale == locale &&
-        other.background == background &&
-        other.foreground == foreground &&
-        other.inherit == inherit &&
-        other.decorationThickness == decorationThickness &&
-        listEquals(other.fontFamilyFallback, fontFamilyFallback) &&
-        other.styleToken == styleToken;
-  }
-
-  @override
-  int get hashCode =>
-      fontFamily.hashCode ^
-      fontWeight.hashCode ^
-      fontStyle.hashCode ^
-      fontSize.hashCode ^
-      letterSpacing.hashCode ^
-      wordSpacing.hashCode ^
-      textBaseline.hashCode ^
-      color.hashCode ^
-      height.hashCode ^
-      backgroundColor.hashCode ^
-      shadows.hashCode ^
-      fontFeatures.hashCode ^
-      decoration.hashCode ^
-      decorationColor.hashCode ^
-      decorationStyle.hashCode ^
-      foreground.hashCode ^
-      inherit.hashCode ^
-      background.hashCode ^
-      locale.hashCode ^
-      decorationThickness.hashCode ^
-      debugLabel.hashCode;
+  get props => [
+        fontFamily,
+        inherit,
+        fontWeight,
+        fontStyle,
+        fontSize,
+        letterSpacing,
+        wordSpacing,
+        textBaseline,
+        color,
+        backgroundColor,
+        shadows,
+        fontFeatures,
+        decoration,
+        decorationColor,
+        decorationStyle,
+        debugLabel,
+        locale,
+        height,
+        background,
+        foreground,
+        decorationThickness,
+        fontFamilyFallback,
+        styleToken,
+      ];
 }

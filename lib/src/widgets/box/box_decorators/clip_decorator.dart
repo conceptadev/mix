@@ -24,8 +24,8 @@ class ClipDecorator extends BoxDecorator<ClipDecorator> {
   const ClipDecorator(
     this.clipType, {
     this.borderRadius,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   ClipDecorator merge(ClipDecorator other) {
@@ -78,9 +78,11 @@ class ClipDecorator extends BoxDecorator<ClipDecorator> {
 
     throw Exception('Unknown clip type: $clipType');
   }
+
+  @override
+  get props => [borderRadius, clipType];
 }
 
-/// @nodoc
 class AnimatedClipRRect extends StatelessWidget {
   const AnimatedClipRRect({
     required this.duration,
@@ -115,7 +117,6 @@ class AnimatedClipRRect extends StatelessWidget {
   }
 }
 
-/// @nodoc
 class TriangleClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {

@@ -17,8 +17,6 @@ class ShadowDto<T extends Shadow> extends Dto<T>
     this.blurRadius,
   });
 
-  final Shadow _default = const Shadow();
-
   factory ShadowDto.from(Shadow shadow) {
     return ShadowDto(
       blurRadius: shadow.blurRadius,
@@ -38,9 +36,9 @@ class ShadowDto<T extends Shadow> extends Dto<T>
   @override
   T resolve(BuildContext context) {
     return Shadow(
-      color: color?.resolve(context) ?? _default.color,
-      offset: offset ?? _default.offset,
-      blurRadius: blurRadius ?? _default.blurRadius,
+      color: color?.resolve(context) ?? const Shadow().color,
+      offset: offset ?? const Shadow().offset,
+      blurRadius: blurRadius ?? const Shadow().blurRadius,
     ) as T;
   }
 
@@ -66,24 +64,7 @@ class ShadowDto<T extends Shadow> extends Dto<T>
   }
 
   @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is ShadowDto &&
-        other.color == color &&
-        other.offset == offset &&
-        other.blurRadius == blurRadius;
-  }
-
-  @override
-  int get hashCode {
-    return color.hashCode ^ offset.hashCode ^ blurRadius.hashCode;
-  }
-
-  @override
-  String toString() {
-    return 'ShadowDto(color: $color, offset: $offset, blurRadius: $blurRadius)';
-  }
+  get props => [color, offset, blurRadius];
 }
 
 extension ShadowDtoExt on List<ShadowDto> {
