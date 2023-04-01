@@ -2,13 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../box.decorator.dart';
 
-/// ## Widget
-/// - (All)
-/// ## Utilities
-/// - [FlexibleDecoratorUtility](FlexibleDecoratorUtility-class.html)
-///
-/// {@category Decorators}
-class FlexibleDecorator extends BoxDecorator<FlexibleDecorator> {
+class FlexibleDecorator extends WidgetDecorator<FlexibleDecorator> {
   final FlexFit? flexFit;
   final int? flex;
   const FlexibleDecorator({

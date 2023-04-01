@@ -24,6 +24,16 @@ class BorderDto extends BoxBorderDto<Border> {
     this.left,
   });
 
+  const BorderDto.symmetric({
+    BorderSideDto? vertical,
+    BorderSideDto? horizontal,
+  }) : this.only(
+          top: vertical,
+          right: horizontal,
+          bottom: vertical,
+          left: horizontal,
+        );
+
   const BorderDto.fromBorderSide(BorderSideDto side)
       : this.only(
           top: side,
@@ -48,10 +58,10 @@ class BorderDto extends BoxBorderDto<Border> {
 
   factory BorderDto.from(Border border) {
     return BorderDto.only(
-      top: BorderSideDto.fromBorderSide(border.top),
-      right: BorderSideDto.fromBorderSide(border.right),
-      bottom: BorderSideDto.fromBorderSide(border.bottom),
-      left: BorderSideDto.fromBorderSide(border.left),
+      top: BorderSideDto.from(border.top),
+      right: BorderSideDto.from(border.right),
+      bottom: BorderSideDto.from(border.bottom),
+      left: BorderSideDto.from(border.left),
     );
   }
 
@@ -106,10 +116,10 @@ class BorderDirectionalDto extends BoxBorderDto<BorderDirectional> {
 
   factory BorderDirectionalDto.from(BorderDirectional border) {
     return BorderDirectionalDto.only(
-      top: BorderSideDto.fromBorderSide(border.top),
-      bottom: BorderSideDto.fromBorderSide(border.bottom),
-      start: BorderSideDto.fromBorderSide(border.start),
-      end: BorderSideDto.fromBorderSide(border.end),
+      top: BorderSideDto.from(border.top),
+      bottom: BorderSideDto.from(border.bottom),
+      start: BorderSideDto.from(border.start),
+      end: BorderSideDto.from(border.end),
     );
   }
 
@@ -152,10 +162,10 @@ class BorderDirectionalDto extends BoxBorderDto<BorderDirectional> {
 
   factory BorderDirectionalDto.fromBorder(BorderDirectional border) {
     return BorderDirectionalDto.only(
-      top: BorderSideDto.fromBorderSide(border.top),
-      bottom: BorderSideDto.fromBorderSide(border.bottom),
-      start: BorderSideDto.fromBorderSide(border.start),
-      end: BorderSideDto.fromBorderSide(border.end),
+      top: BorderSideDto.from(border.top),
+      bottom: BorderSideDto.from(border.bottom),
+      start: BorderSideDto.from(border.start),
+      end: BorderSideDto.from(border.end),
     );
   }
 

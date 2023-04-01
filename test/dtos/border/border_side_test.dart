@@ -14,7 +14,7 @@ void main() {
         // strokeAlign: 12.0,
       );
 
-      BorderSideDto result = BorderSideDto.fromBorderSide(borderSide);
+      BorderSideDto result = BorderSideDto.from(borderSide);
 
       expect(result.color?.value, borderSide.color);
       expect(result.width, borderSide.width);
@@ -30,7 +30,7 @@ void main() {
         // strokeAlign: 12.0,
       );
 
-      BorderSideDto result = BorderSideDto.fromBorderSide(borderSide);
+      BorderSideDto result = BorderSideDto.from(borderSide);
 
       BorderSideDto copy = result.copyWith(
         color: const ColorDto(Colors.blue),
@@ -60,7 +60,7 @@ void main() {
         strokeAlign: 12.0,
       );
 
-      final result = BorderSideDto.fromBorderSide(borderSide);
+      final result = BorderSideDto.from(borderSide);
 
       const same = BorderSideDto.only(
         color: ColorDto.from(Colors.red),

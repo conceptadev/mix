@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import '../../../mix.dart';
@@ -29,7 +28,7 @@ class BoxDescriptor with EquatableMixin {
   final double? minWidth;
   final BoxShape? shape;
 
-  final List<BoxDecorator>? decorators;
+  final List<WidgetDecorator>? decorators;
 
   const BoxDescriptor({
     Color? color,
@@ -73,8 +72,6 @@ class BoxDescriptor with EquatableMixin {
       shape: attributes?.shape,
       transform: attributes?.transform,
       gradient: attributes?.gradient,
-      // Decorators
-      decorators: attributes?.decorators?.values.toList(),
     );
   }
 
@@ -151,6 +148,5 @@ class BoxDescriptor with EquatableMixin {
         shape,
         transform,
         gradient,
-        decorators,
       ];
 }

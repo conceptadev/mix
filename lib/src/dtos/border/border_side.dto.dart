@@ -24,7 +24,7 @@ class BorderSideDto extends Dto<BorderSide> {
     this.strokeAlign,
   });
 
-  factory BorderSideDto.fromBorderSide(BorderSide side) {
+  factory BorderSideDto.from(BorderSide side) {
     return BorderSideDto.only(
       color: ColorDto(side.color),
       width: side.width,

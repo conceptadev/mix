@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../../../attributes/common/common.descriptor.dart';
 import '../box.decorator.dart';
 
-/// @nodoc
 enum ClipDecoratorType {
   triangle,
   rect,
@@ -11,13 +10,7 @@ enum ClipDecoratorType {
   oval,
 }
 
-/// ## Widget
-/// - (All)
-/// ## Utilities
-/// - [ClipDecoratorUtility](ClipDecoratorUtility-class.html)
-///
-/// {@category Decorators}
-class ClipDecorator extends BoxDecorator<ClipDecorator> {
+class ClipDecorator extends WidgetDecorator<ClipDecorator> {
   final BorderRadius? borderRadius;
   final ClipDecoratorType clipType;
 

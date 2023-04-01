@@ -7,8 +7,6 @@ import '../../dtos/edge_insets/edge_insets_geometry.dto.dart';
 import '../../dtos/radius/border_radius_geometry.dto.dart';
 import '../../dtos/shadow/box_shadow.dto.dart';
 import '../../helpers/extensions.dart';
-import '../../helpers/mergeable_map.dart';
-import 'box.decorator.dart';
 
 class BoxAttributes extends WidgetAttributes {
   final EdgeInsetsGeometryDto? margin;
@@ -31,8 +29,6 @@ class BoxAttributes extends WidgetAttributes {
   final BoxShape? shape;
   final Gradient? gradient;
 
-  final MergeableMap<BoxDecorator>? decorators;
-
   const BoxAttributes({
     this.margin,
     this.padding,
@@ -50,7 +46,6 @@ class BoxAttributes extends WidgetAttributes {
     this.shape,
     this.transform,
     this.gradient,
-    this.decorators,
   });
 
   BoxAttributes copyWith({
@@ -70,7 +65,6 @@ class BoxAttributes extends WidgetAttributes {
     double? minWidth,
     BoxShape? shape,
     Gradient? gradient,
-    MergeableMap<BoxDecorator>? decorators,
   }) {
     return BoxAttributes(
       margin: margin ?? this.margin,
@@ -89,7 +83,6 @@ class BoxAttributes extends WidgetAttributes {
       minWidth: minWidth ?? this.minWidth,
       shape: shape ?? this.shape,
       gradient: gradient ?? this.gradient,
-      decorators: decorators ?? this.decorators,
     );
   }
 
@@ -160,7 +153,6 @@ class BoxAttributes extends WidgetAttributes {
       minWidth: other.minWidth,
       shape: other.shape,
       gradient: other.gradient,
-      decorators: decorators?.merge(other.decorators) ?? decorators,
     );
   }
 
@@ -182,6 +174,5 @@ class BoxAttributes extends WidgetAttributes {
         minWidth,
         shape,
         gradient,
-        decorators,
       ];
 }

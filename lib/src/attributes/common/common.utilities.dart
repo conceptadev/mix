@@ -19,7 +19,6 @@ class CommonUtility {
     );
   }
 
-  /// Short Utils: animationDuration
   static CommonAttributes animationDuration(int milliseconds) {
     return CommonAttributes(
       animated: true,
@@ -29,7 +28,6 @@ class CommonUtility {
     );
   }
 
-  /// Short Utils: animationCurve
   static CommonAttributes animationCurve(Curve curve) {
     return CommonAttributes(
       animated: true,
@@ -37,16 +35,13 @@ class CommonUtility {
     );
   }
 
-  /// Short Utils: textDirection
   static CommonAttributes textDirection(TextDirection? textDirection) {
     return CommonAttributes(textDirection: textDirection);
   }
 
-  /// Short Utils: visible
   static CommonAttributes visible([bool? condition = true]) =>
       CommonAttributes(visible: condition);
 
-  /// Short Utils: hidden
   static CommonAttributes hidden([bool condition = true]) =>
       CommonAttributes(visible: !condition);
 }

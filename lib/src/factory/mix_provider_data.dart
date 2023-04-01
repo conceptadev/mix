@@ -23,6 +23,7 @@ class MixData {
     // attributes already expended to be expended again.
     MixValues values = MixValues(
       attributes: mix.values.attributes,
+      decorators: mix.values.decorators,
       variants: mix.values.variants,
       contextVariants: [],
     );

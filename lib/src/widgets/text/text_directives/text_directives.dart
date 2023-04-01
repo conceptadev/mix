@@ -45,9 +45,6 @@ class TitleCaseDirective extends TextDirective {
   }
 }
 
-/// Attribute that is able to modify text
-/// {@category Attributes}
-/// {@subCategory Directives}
 abstract class TextDirective extends Directive<String> {
   const TextDirective();
 

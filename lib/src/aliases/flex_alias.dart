@@ -1,8 +1,8 @@
-import '../widgets/flex/flex.utils.dart';
+import '../widgets/flex/flex.utilities.dart';
 
-const flexDirection = FlexUtility.direction;
-const verticalDirection = FlexUtility.verticalDirection;
-const mainAxis = FlexUtility.mainAxis;
-const mainAxisSize = FlexUtility.mainAxisSize;
-const crossAxis = FlexUtility.crossAxis;
-const gap = FlexUtility.gap;
+final flexDirection = const FlexUtilities().direction;
+final verticalDirection = const FlexUtilities().verticalDirection;
+final mainAxisAlignment = const FlexUtilities().mainAxisAlignment;
+final mainAxisSize = const FlexUtilities().mainAxisSize;
+final crossAxis = const FlexUtilities().crossAxis;
+final gap = const FlexUtilities().gap;

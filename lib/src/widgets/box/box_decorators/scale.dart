@@ -3,13 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../attributes/common/common.descriptor.dart';
 import '../box.decorator.dart';
 
-/// ## Widget
-/// - (All)
-/// ## Utilities
-/// - [ScaleDecoratorUtility](ScaleDecoratorUtility-class.html)
-///
-/// {@category Decorators}
-class ScaleDecorator extends BoxDecorator<ScaleDecorator> {
+class ScaleDecorator extends WidgetDecorator<ScaleDecorator> {
   final double scale;
   const ScaleDecorator(
     this.scale, {

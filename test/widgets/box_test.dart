@@ -48,8 +48,8 @@ void main() {
           await tester.pumpWidget(
             BoxInsideFlexWidget(
               Mix(
-                BoxDecoratorUtility.flex(2),
-                BoxDecoratorUtility.flexFit(FlexFit.tight),
+                DecoratorUtility.flex(2),
+                DecoratorUtility.flexFit(FlexFit.tight),
               ),
             ),
           );
@@ -69,7 +69,7 @@ void main() {
           await tester.pumpWidget(
             BoxTestWidget(
               Mix(
-                BoxDecoratorUtility.rotate(3),
+                DecoratorUtility.rotate(3),
               ),
             ),
           );
@@ -105,7 +105,7 @@ void main() {
         (tester) async {
           await tester.pumpWidget(
             BoxTestWidget(
-              Mix(BoxDecoratorUtility.aspectRatio(3 / 2)),
+              Mix(DecoratorUtility.aspectRatio(3 / 2)),
             ),
           );
 
@@ -144,7 +144,7 @@ void main() {
           await tester.pumpWidget(
             BoxTestWidget(
               Mix(
-                BoxDecoratorUtility.opacity(0.5),
+                DecoratorUtility.opacity(0.5),
               ),
             ),
           );
@@ -162,7 +162,7 @@ void main() {
         (tester) async {
           await tester.pumpWidget(
             BoxTestWidget(
-              Mix(BoxUtilities.backgroundColor(Colors.lime)),
+              Mix(BoxUtilities().backgroundColor(Colors.lime)),
             ),
           );
 

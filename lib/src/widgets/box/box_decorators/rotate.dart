@@ -2,13 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../box.decorator.dart';
 
-/// ## Widget
-/// - (All)
-/// ## Utilities
-/// - [RotateDecoratorUtility](RotateDecoratorUtility-class.html)
-///
-/// {@category Decorators}
-class RotateDecorator extends BoxDecorator<RotateDecorator> {
+class RotateDecorator extends WidgetDecorator<RotateDecorator> {
   final int quarterTurns;
   const RotateDecorator({
     required this.quarterTurns,

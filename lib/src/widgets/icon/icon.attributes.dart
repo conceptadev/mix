@@ -1,10 +1,6 @@
 import '../../attributes/attribute.dart';
 import '../../dtos/color.dto.dart';
 
-/// ## Widget
-/// - [IconMix](IconMix-class.html)
-///
-/// {@category Attributes}
 class IconAttributes extends WidgetAttributes {
   final ColorDto? color;
   final double? size;

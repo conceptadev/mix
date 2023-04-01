@@ -1,18 +1,19 @@
-import 'package:flutter/foundation.dart';
-
 import '../../mix.dart';
 import '../attributes/nested_attribute.dart';
+import '../helpers/equatable_mixin.dart';
 import '../helpers/mergeable_map.dart';
 import '../variants/variant_attribute.dart';
+import '../widgets/box/box.decorator.dart';
 
-class MixValues {
+class MixValues with EquatableMixin {
   final MergeableMap<WidgetAttributes>? attributes;
-
+  final MergeableMap<WidgetDecorator>? decorators;
   final List<VariantAttribute> variants;
   final List<ContextVariantAttribute> contextVariants;
 
   const MixValues({
     required this.attributes,
+    required this.decorators,
     required this.variants,
     required this.contextVariants,
   });
@@ -24,10 +25,13 @@ class MixValues {
     final variantList = <VariantAttribute>[];
     final contextVariantList = <ContextVariantAttribute>[];
     final attributeList = <WidgetAttributes>[];
+    final decoratorList = <WidgetDecorator>[];
 
     for (final attribute in expanded) {
       if (attribute is WidgetAttributes) {
         attributeList.add(attribute);
+      } else if (attribute is WidgetDecorator) {
+        decoratorList.add(attribute);
       } else if (attribute is VariantAttribute) {
         // Breakdown different types of variant attributes
         if (attribute is ContextVariantAttribute) {
@@ -42,6 +46,7 @@ class MixValues {
 
     return MixValues(
       attributes: MergeableMap(attributeList),
+      decorators: MergeableMap(decoratorList),
       variants: variantList,
       contextVariants: contextVariantList,
     );
@@ -78,11 +83,13 @@ class MixValues {
   /// Creates a new [MixValues] instance by replacing the specified attributes with new values.
   MixValues copyWith({
     MergeableMap<WidgetAttributes>? attributes,
+    MergeableMap<WidgetDecorator>? decorators,
     List<VariantAttribute>? variants,
     List<ContextVariantAttribute>? contextVariants,
   }) {
     return MixValues(
       attributes: this.attributes?.merge(attributes) ?? attributes,
+      decorators: this.decorators?.merge(decorators) ?? decorators,
       variants: [...this.variants, ...?variants],
       contextVariants: [...this.contextVariants, ...?contextVariants],
     );
@@ -103,6 +110,7 @@ class MixValues {
   MixValues clone() {
     return MixValues(
       attributes: attributes?.clone(),
+      decorators: decorators?.clone(),
       variants: [...variants],
       contextVariants: [...contextVariants],
     );
@@ -126,20 +134,10 @@ class MixValues {
   /// An empty [MixValues] instance with no attributes, decorators, variants, or directives.
   const MixValues.empty()
       : attributes = null,
+        decorators = null,
         variants = const [],
         contextVariants = const [];
 
   @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is MixValues &&
-        listEquals(other.variants, variants) &&
-        other.attributes == attributes;
-  }
-
-  @override
-  int get hashCode {
-    return variants.hashCode ^ attributes.hashCode;
-  }
+  get props => [attributes, decorators, variants, contextVariants];
 }

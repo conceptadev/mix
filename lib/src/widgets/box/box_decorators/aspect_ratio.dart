@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../attributes/common/common.descriptor.dart';
 import '../box.decorator.dart';
 
-class AspectRatioDecorator extends BoxDecorator<AspectRatioDecorator> {
+class AspectRatioDecorator extends WidgetDecorator<AspectRatioDecorator> {
   final double aspectRatio;
   const AspectRatioDecorator({
     required this.aspectRatio,

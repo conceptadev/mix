@@ -1,238 +1,285 @@
 import '../../mix.dart';
 
-const margin = WrapWithSpaceTokens(BoxUtilities.margin);
-const marginTop = WrapWithSpaceTokens(BoxUtilities.marginTop);
-const marginBottom = WrapWithSpaceTokens(BoxUtilities.marginBottom);
-const marginRight = WrapWithSpaceTokens(BoxUtilities.marginRight);
-const marginLeft = WrapWithSpaceTokens(BoxUtilities.marginLeft);
-const marginStart = WrapWithSpaceTokens(BoxUtilities.marginStart);
-const marginEnd = WrapWithSpaceTokens(BoxUtilities.marginEnd);
-const marginHorizontal = WrapWithSpaceTokens(BoxUtilities.marginHorizontal);
+final margin = WrapWithSpaceTokens(BoxUtilities().margin);
+final marginTop = WrapWithSpaceTokens(BoxUtilities().marginTop);
+final marginBottom = WrapWithSpaceTokens(BoxUtilities().marginBottom);
+final marginRight = WrapWithSpaceTokens(BoxUtilities().marginRight);
+final marginLeft = WrapWithSpaceTokens(BoxUtilities().marginLeft);
+final marginDirectionalStart = WrapWithSpaceTokens(
+  BoxUtilities().marginDirectionalStart,
+);
 
-const marginVertical = WrapWithSpaceTokens(BoxUtilities.marginVertical);
+final marginDirectionalEnd = WrapWithSpaceTokens(
+  BoxUtilities().marginDirectionalEnd,
+);
 
-const marginInsets = BoxUtilities.marginInsets;
+final marginSymmetric = BoxUtilities().marginSymmetric;
+final marginHorizontal = BoxUtilities().marginHorizontal;
+final marginVertical = BoxUtilities().marginVertical;
 
-const padding = WrapWithSpaceTokens(BoxUtilities.padding);
-const paddingTop = WrapWithSpaceTokens(BoxUtilities.paddingTop);
-const paddingBottom = WrapWithSpaceTokens(BoxUtilities.paddingBottom);
-const paddingRight = WrapWithSpaceTokens(BoxUtilities.paddingRight);
-const paddingLeft = WrapWithSpaceTokens(BoxUtilities.paddingLeft);
-const paddingStart = WrapWithSpaceTokens(BoxUtilities.paddingStart);
-const paddingEnd = WrapWithSpaceTokens(BoxUtilities.paddingEnd);
-const paddingHorizontal = WrapWithSpaceTokens(BoxUtilities.paddingHorizontal);
-const paddingVertical = WrapWithSpaceTokens(BoxUtilities.paddingVertical);
-const paddingInsets = BoxUtilities.paddingInsets;
+final marginInsets = BoxUtilities().marginInsets;
+
+final padding = WrapWithSpaceTokens(BoxUtilities().padding);
+final paddingTop = WrapWithSpaceTokens(BoxUtilities().paddingTop);
+final paddingBottom = WrapWithSpaceTokens(BoxUtilities().paddingBottom);
+final paddingRight = WrapWithSpaceTokens(BoxUtilities().paddingRight);
+final paddingLeft = WrapWithSpaceTokens(BoxUtilities().paddingLeft);
+
+final paddingSymmetric = BoxUtilities().paddingSymmetric;
+final paddingHorizontal = BoxUtilities().paddingHorizontal;
+final paddingVertical = BoxUtilities().paddingVertical;
+final paddingInsets = BoxUtilities().paddingInsets;
+
+final paddingDirectionalStart = WrapWithSpaceTokens(
+  BoxUtilities().paddingDirectionalStart,
+);
+final paddingDirectionalEnd = WrapWithSpaceTokens(
+  BoxUtilities().paddingDirectionalEnd,
+);
+
+final paddingDirectionalTop = WrapWithSpaceTokens(
+  BoxUtilities().paddingDirectionalTop,
+);
+
+final paddingDirectionalBottom = WrapWithSpaceTokens(
+  BoxUtilities().paddingDirectionalBottom,
+);
+
 // Transform
-const transform = BoxUtilities.transform;
+final transform = BoxUtilities().transform;
 
 /// Background color attribute
-const backgroundColor = BoxUtilities.backgroundColor;
+final backgroundColor = BoxUtilities().backgroundColor;
 
 /// Height
-const height = BoxUtilities.height;
+final height = BoxUtilities().height;
 
 /// Width
-const width = BoxUtilities.width;
+final width = BoxUtilities().width;
 
 /// Max height attribute
-const maxHeight = BoxUtilities.maxHeight;
+final maxHeight = BoxUtilities().maxHeight;
 
 /// Max width attribute
-const maxWidth = BoxUtilities.maxWidth;
+final maxWidth = BoxUtilities().maxWidth;
 
 /// Min height attribute
-const minHeight = BoxUtilities.minHeight;
+final minHeight = BoxUtilities().minHeight;
 
 /// Min width attribute
-const minWidth = BoxUtilities.minWidth;
+final minWidth = BoxUtilities().minWidth;
 
-/// Border utility
-const border = BoxUtilities.border;
-const borderTop = BoxUtilities.borderTop;
-const borderBottom = BoxUtilities.borderBottom;
-const borderLeft = BoxUtilities.borderLeft;
-const borderRight = BoxUtilities.borderRight;
-const borderStart = BoxUtilities.borderStart;
-const borderEnd = BoxUtilities.borderEnd;
+/// Border
+final border = BoxUtilities().border;
+final borderTop = BoxUtilities().borderTop;
+final borderBottom = BoxUtilities().borderBottom;
+final borderLeft = BoxUtilities().borderLeft;
+final borderRight = BoxUtilities().borderRight;
 
-@Deprecated(kShortAliasDeprecation)
-const bt = BoxUtilities.borderTop;
+// Border Directional
 
-@Deprecated(kShortAliasDeprecation)
-const bb = BoxUtilities.borderBottom;
-
-@Deprecated(kShortAliasDeprecation)
-const bl = BoxUtilities.borderLeft;
-
-@Deprecated(kShortAliasDeprecation)
-const br = BoxUtilities.borderRight;
-
-@Deprecated(kShortAliasDeprecation)
-const bs = BoxUtilities.borderStart;
-
-@Deprecated(kShortAliasDeprecation)
-const be = BoxUtilities.borderEnd;
-
-/// Border color for all borde sides
-const borderColor = BoxUtilities.borderColor;
-
-/// Border width for all border sides
-const borderWidth = BoxUtilities.borderWidth;
-
-/// Border style for all border sides
-const borderStyle = BoxUtilities.borderStyle;
+final borderDirectionalTop = BoxUtilities().borderDirectionalTop;
+final borderDirectionalBottom = BoxUtilities().borderDirectionalBottom;
+final borderDirectionalStart = BoxUtilities().borderDirectionalStart;
+final borderDirectionalEnd = BoxUtilities().borderDirectionalEnd;
 
 /// Box shadow utility
-const shadow = BoxUtilities.shadow;
+final shadow = BoxUtilities().shadow;
 
-const squared = BoxUtilities.squared;
+final squared = BoxUtilities().squared;
 
-const rounded = BoxUtilities.rounded;
-const roundedOnly = BoxUtilities.roundedOnly;
-const roundedHorizontal = BoxUtilities.roundedHorizontal;
-const roundedVertical = BoxUtilities.roundedVertical;
-const roundedDirectionalHorizontal = BoxUtilities.roundedDirectionalHorizontal;
-const roundedDirectionalVertical = BoxUtilities.roundedDirectionalVertical;
+final rounded = BoxUtilities().rounded;
+final roundedOnly = BoxUtilities().roundedOnly;
+final roundedHorizontal = BoxUtilities().roundedHorizontal;
+final roundedVertical = BoxUtilities().roundedVertical;
+final roundedDirectionalHorizontal =
+    BoxUtilities().roundedDirectionalHorizontal;
+final roundedDirectionalVertical = BoxUtilities().roundedDirectionalVertical;
 
-const align = BoxUtilities.align;
+final alignment = BoxUtilities().alignment;
 
 /// Elevation
-const elevation = BoxUtilities.elevation;
+final elevation = BoxUtilities().elevation;
 
 /// Gradient
-const linearGradient = BoxUtilities.linearGradient;
-const radialGradient = BoxUtilities.radialGradient;
+final linearGradient = BoxUtilities().linearGradient;
+final radialGradient = BoxUtilities().radialGradient;
 
 const kShortAliasDeprecation =
-    'Short aliases will be deprecated, you can create your own. Example: const p = padding;';
+    'Short aliases will be deprecated, you can create your own. Example: final p = padding;';
 
 @Deprecated(kShortAliasDeprecation)
-const p = padding;
+final p = padding;
 
 @Deprecated(kShortAliasDeprecation)
-const pt = paddingTop;
+final pt = paddingTop;
 
 @Deprecated(kShortAliasDeprecation)
-const pb = paddingBottom;
+final pb = paddingBottom;
 
 @Deprecated(kShortAliasDeprecation)
-const pr = paddingRight;
+final pr = paddingRight;
 
 @Deprecated(kShortAliasDeprecation)
-const pl = paddingLeft;
+final pl = paddingLeft;
 
 @Deprecated(kShortAliasDeprecation)
-const ps = paddingStart;
+final ps = paddingStart;
 
 @Deprecated(kShortAliasDeprecation)
-const pe = paddingEnd;
+final pe = paddingEnd;
 
 @Deprecated(kShortAliasDeprecation)
-const px = paddingHorizontal;
+final px = paddingHorizontal;
 
 @Deprecated(kShortAliasDeprecation)
-const py = paddingVertical;
+final py = paddingVertical;
 
 @Deprecated(kShortAliasDeprecation)
-const pi = BoxUtilities.paddingInsets;
+final pi = BoxUtilities().paddingInsets;
 
 @Deprecated(kShortAliasDeprecation)
-const m = WrapWithSpaceTokens(BoxUtilities.margin);
+final m = WrapWithSpaceTokens(BoxUtilities().margin);
 @Deprecated(kShortAliasDeprecation)
-const mt = WrapWithSpaceTokens(BoxUtilities.marginTop);
+final mt = WrapWithSpaceTokens(BoxUtilities().marginTop);
 @Deprecated(kShortAliasDeprecation)
-const mb = WrapWithSpaceTokens(BoxUtilities.marginBottom);
+final mb = WrapWithSpaceTokens(BoxUtilities().marginBottom);
 @Deprecated(kShortAliasDeprecation)
-const mr = WrapWithSpaceTokens(BoxUtilities.marginRight);
+final mr = WrapWithSpaceTokens(BoxUtilities().marginRight);
 @Deprecated(kShortAliasDeprecation)
-const ml = WrapWithSpaceTokens(BoxUtilities.marginLeft);
+final ml = WrapWithSpaceTokens(BoxUtilities().marginLeft);
 @Deprecated(kShortAliasDeprecation)
-const ms = WrapWithSpaceTokens(BoxUtilities.marginStart);
+final ms = WrapWithSpaceTokens(BoxUtilities().marginStart);
 @Deprecated(kShortAliasDeprecation)
-const me = WrapWithSpaceTokens(BoxUtilities.marginEnd);
+final me = WrapWithSpaceTokens(BoxUtilities().marginEnd);
 @Deprecated(kShortAliasDeprecation)
-const mx = WrapWithSpaceTokens(BoxUtilities.marginHorizontal);
+final mx = WrapWithSpaceTokens(BoxUtilities().marginHorizontal);
 @Deprecated(kShortAliasDeprecation)
-const my = WrapWithSpaceTokens(BoxUtilities.marginVertical);
+final my = WrapWithSpaceTokens(BoxUtilities().marginVertical);
 @Deprecated(kShortAliasDeprecation)
-const mi = BoxUtilities.marginInsets;
+final mi = BoxUtilities().marginInsets;
 
 @Deprecated(kShortAliasDeprecation)
-const marginX = marginHorizontal;
+final marginX = marginHorizontal;
 
 @Deprecated(kShortAliasDeprecation)
-const marginY = marginVertical;
+final marginY = marginVertical;
 
 @Deprecated(kShortAliasDeprecation)
-const r = BoxUtilities.rounded;
+final r = BoxUtilities().rounded;
 
 @Deprecated(kShortAliasDeprecation)
-const roundedH = BoxUtilities.roundedHorizontal;
+final roundedH = BoxUtilities().roundedHorizontal;
 
 @Deprecated(kShortAliasDeprecation)
-const roundedV = BoxUtilities.roundedVertical;
+final roundedV = BoxUtilities().roundedVertical;
 
 @Deprecated(kShortAliasDeprecation)
-const roundedDH = BoxUtilities.roundedDirectionalHorizontal;
+final roundedDH = BoxUtilities().roundedDirectionalHorizontal;
 
 @Deprecated(kShortAliasDeprecation)
 BoxAttributes roundedTL(double value) {
-  return BoxUtilities.roundedOnly(topLeft: value);
+  return BoxUtilities().roundedOnly(topLeft: value);
 }
 
 @Deprecated(kShortAliasDeprecation)
 BoxAttributes roundedTR(double value) {
-  return BoxUtilities.roundedOnly(topRight: value);
+  return BoxUtilities().roundedOnly(topRight: value);
 }
 
 @Deprecated(kShortAliasDeprecation)
 BoxAttributes roundedBL(double value) {
-  return BoxUtilities.roundedOnly(bottomLeft: value);
+  return BoxUtilities().roundedOnly(bottomLeft: value);
 }
 
 @Deprecated(kShortAliasDeprecation)
 BoxAttributes roundedBR(double value) {
-  return BoxUtilities.roundedOnly(bottomRight: value);
+  return BoxUtilities().roundedOnly(bottomRight: value);
 }
 
 @Deprecated(kShortAliasDeprecation)
 BoxAttributes roundedTS(double value) {
-  return BoxUtilities.roundedDirectionalOnly(topStart: value);
+  return BoxUtilities().roundedDirectionalOnly(topStart: value);
 }
 
 @Deprecated(kShortAliasDeprecation)
 BoxAttributes roundedTE(double value) {
-  return BoxUtilities.roundedDirectionalOnly(topEnd: value);
+  return BoxUtilities().roundedDirectionalOnly(topEnd: value);
 }
 
 @Deprecated(kShortAliasDeprecation)
 BoxAttributes roundedBS(double value) {
-  return BoxUtilities.roundedDirectionalOnly(bottomStart: value);
+  return BoxUtilities().roundedDirectionalOnly(bottomStart: value);
 }
 
 @Deprecated(kShortAliasDeprecation)
 BoxAttributes roundedBE(double value) {
-  return BoxUtilities.roundedDirectionalOnly(bottomEnd: value);
+  return BoxUtilities().roundedDirectionalOnly(bottomEnd: value);
 }
 
 @Deprecated(kShortAliasDeprecation)
-const bgColor = BoxUtilities.backgroundColor;
+final bgColor = BoxUtilities().backgroundColor;
 
 @Deprecated(kShortAliasDeprecation)
-const h = BoxUtilities.height;
+final h = BoxUtilities().height;
 
 @Deprecated(kShortAliasDeprecation)
-const w = BoxUtilities.width;
+final w = BoxUtilities().width;
 
 @Deprecated(kShortAliasDeprecation)
-const maxH = BoxUtilities.maxHeight;
+final maxH = BoxUtilities().maxHeight;
 
 @Deprecated(kShortAliasDeprecation)
-const maxW = BoxUtilities.maxWidth;
+final maxW = BoxUtilities().maxWidth;
 
 @Deprecated(kShortAliasDeprecation)
-const minH = BoxUtilities.minHeight;
+final minH = BoxUtilities().minHeight;
 
 @Deprecated(kShortAliasDeprecation)
-const minW = BoxUtilities.minWidth;
+final minW = BoxUtilities().minWidth;
+
+@Deprecated(kShortAliasDeprecation)
+final bt = BoxUtilities().borderTop;
+
+@Deprecated(kShortAliasDeprecation)
+final bb = BoxUtilities().borderBottom;
+
+@Deprecated(kShortAliasDeprecation)
+final bl = BoxUtilities().borderLeft;
+
+@Deprecated(kShortAliasDeprecation)
+final br = BoxUtilities().borderRight;
+
+@Deprecated(kShortAliasDeprecation)
+final bs = BoxUtilities().borderStart;
+
+@Deprecated(kShortAliasDeprecation)
+final be = BoxUtilities().borderEnd;
+
+@Deprecated('Use paddingDirectionalStart instead')
+final paddingStart = WrapWithSpaceTokens(BoxUtilities().paddingStart);
+@Deprecated('Use paddingDirectionalEnd instead')
+final paddingEnd = WrapWithSpaceTokens(BoxUtilities().paddingEnd);
+
+@Deprecated('Use borderDirectionalStart instead')
+final borderStart = BoxUtilities().borderStart;
+
+@Deprecated('Use borderDirectionalEnd instead')
+final borderEnd = BoxUtilities().borderEnd;
+
+@Deprecated('Use border(color:color) instead')
+final borderColor = BoxUtilities().borderColor;
+
+@Deprecated('Use border(width:width) instead')
+final borderWidth = BoxUtilities().borderWidth;
+
+@Deprecated('Use border(color:color) instead')
+final borderStyle = BoxUtilities().borderStyle;
+
+@Deprecated('Use alignment instead')
+final align = alignment;
+
+@Deprecated('Use marginDirectionalStart instead')
+final marginStart = WrapWithSpaceTokens(BoxUtilities().marginStart);
+@Deprecated('Use marginDirectionalEnd instead')
+final marginEnd = WrapWithSpaceTokens(BoxUtilities().marginEnd);

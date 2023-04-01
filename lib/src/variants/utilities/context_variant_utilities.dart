@@ -8,7 +8,6 @@ import '../../widgets/pressable/pressable.notifier.dart';
 import '../../widgets/pressable/pressable_state.dart';
 import '../context_variant.dart';
 
-/// {@category Variants}
 class ContextVariantUtilities {
   const ContextVariantUtilities._();
 

@@ -12,12 +12,10 @@ import '../../../dtos/radius/border_radius_directional.dto.dart';
 import '../../../dtos/radius/border_radius_geometry.dto.dart';
 import '../../../dtos/radius/radius_dto.dart';
 import '../../../dtos/shadow/box_shadow.dto.dart';
-import '../../../helpers/mergeable_map.dart';
 import '../box.attributes.dart';
-import '../box.decorator.dart';
 
-extension BoxUtilities on BoxAttributes {
-  static BoxAttributes margin(double value) {
+class BoxUtilities {
+  BoxAttributes margin(double value) {
     return BoxAttributes(
       margin: EdgeInsetsDto.only(
         top: value,
@@ -28,113 +26,97 @@ extension BoxUtilities on BoxAttributes {
     );
   }
 
-  // ignore: long-parameter-list
-  static BoxAttributes _from({
-    EdgeInsetsGeometry? margin,
-    EdgeInsetsGeometry? padding,
-    AlignmentGeometry? alignment,
-    double? height,
-    double? width,
-    // Decoration
-    Color? color,
-    BoxBorder? border,
-    BorderRadiusGeometry? borderRadius,
-    List<BoxShadowDto>? boxShadow,
-    Matrix4? transform,
-
-    // Constraints
-    double? maxHeight,
-    double? minHeight,
-    double? maxWidth,
-    double? minWidth,
-    BoxShape? shape,
-    Gradient? gradient,
+  BoxAttributes marginOnly({
+    double? top,
+    double? bottom,
+    double? left,
+    double? right,
   }) {
     return BoxAttributes(
-      margin: EdgeInsetsGeometryDto.maybeFrom(margin),
-      padding: EdgeInsetsGeometryDto.maybeFrom(padding),
-      alignment: alignment,
-      height: height,
-      width: width,
-      // Decoration
-      color: ColorDto.maybeFrom(color),
-      border: BoxBorderDto.maybeFrom(border),
-      borderRadius: BorderRadiusGeometryDto.maybeFrom(borderRadius),
-      boxShadow: boxShadow,
-      transform: transform,
-      // Constraints
-      maxHeight: maxHeight,
-      minHeight: minHeight,
-      maxWidth: maxWidth,
-      minWidth: minWidth,
-      shape: shape,
-      gradient: gradient,
+      margin: EdgeInsetsDto.only(
+        top: top,
+        bottom: bottom,
+        left: left,
+        right: right,
+      ),
     );
   }
 
-  static BoxAttributes marginInsets(EdgeInsetsGeometry insets) {
-    return _from(margin: insets);
+  BoxAttributes marginInsets(EdgeInsetsGeometry insets) {
+    return BoxAttributes(margin: EdgeInsetsGeometryDto.from(insets));
   }
 
-  static BoxAttributes marginTop(double value) {
+  BoxAttributes marginSymmetric({
+    double? vertical,
+    double? horizontal,
+  }) {
+    return BoxAttributes(
+      margin: EdgeInsetsDto.symmetric(
+        vertical: vertical,
+        horizontal: horizontal,
+      ),
+    );
+  }
+
+  BoxAttributes marginHorizontal(double value) {
+    return marginSymmetric(horizontal: value);
+  }
+
+  BoxAttributes marginVertical(double value) {
+    return marginSymmetric(vertical: value);
+  }
+
+  BoxAttributes marginTop(double value) {
     return BoxAttributes(
       margin: EdgeInsetsDto.only(top: value),
     );
   }
 
-  static BoxAttributes marginRight(double value) {
+  BoxAttributes marginRight(double value) {
     return BoxAttributes(margin: EdgeInsetsDto.only(right: value));
   }
 
-  static BoxAttributes marginBottom(double value) {
+  BoxAttributes marginBottom(double value) {
     return BoxAttributes(margin: EdgeInsetsDto.only(bottom: value));
   }
 
-  static BoxAttributes marginLeft(double value) {
+  BoxAttributes marginLeft(double value) {
     return BoxAttributes(margin: EdgeInsetsDto.only(left: value));
   }
 
-  static BoxAttributes marginStart(double value) {
+  BoxAttributes marginDirectionalStart(double value) {
     return BoxAttributes(
-      margin: EdgeInsetsDirectionalDto.only(
-        start: value,
-      ),
+      margin: EdgeInsetsDirectionalDto.only(start: value),
     );
   }
 
-  static BoxAttributes marginEnd(double value) {
+  BoxAttributes marginDirectionalEnd(double value) {
     return BoxAttributes(
-      margin: EdgeInsetsDirectionalDto.only(
-        end: value,
-      ),
+      margin: EdgeInsetsDirectionalDto.only(end: value),
     );
   }
 
-  static BoxAttributes marginHorizontal(double value) {
+  BoxAttributes marginDirectionalTop(double value) {
     return BoxAttributes(
-      margin: EdgeInsetsDto.symmetric(
-        horizontal: value,
-      ),
+      margin: EdgeInsetsDirectionalDto.only(top: value),
     );
   }
 
-  static BoxAttributes marginVertical(double value) {
+  BoxAttributes marginDirectionalBottom(double value) {
     return BoxAttributes(
-      margin: EdgeInsetsDto.symmetric(
-        vertical: value,
-      ),
+      margin: EdgeInsetsDirectionalDto.only(bottom: value),
     );
   }
 
-  static BoxAttributes padding(double value) {
+  BoxAttributes padding(double value) {
     return BoxAttributes(padding: EdgeInsetsDto.all(value));
   }
 
-  static BoxAttributes paddingAll(double value) {
+  BoxAttributes paddingAll(double value) {
     return BoxAttributes(padding: EdgeInsetsDto.all(value));
   }
 
-  static BoxAttributes paddingOnly(
+  BoxAttributes paddingOnly(
     double top,
     double right,
     double bottom,
@@ -150,43 +132,39 @@ extension BoxUtilities on BoxAttributes {
     );
   }
 
-  static BoxAttributes paddingInsets(EdgeInsetsGeometry insets) {
-    return _from(padding: insets);
+  BoxAttributes paddingSymmetric({
+    double? vertical,
+    double? horizontal,
+  }) {
+    return BoxAttributes(
+      padding: EdgeInsetsDto.symmetric(
+        vertical: vertical,
+        horizontal: horizontal,
+      ),
+    );
   }
 
-  static BoxAttributes paddingTop(double value) {
+  BoxAttributes paddingInsets(EdgeInsetsGeometry insets) {
+    return BoxAttributes(padding: EdgeInsetsGeometryDto.from(insets));
+  }
+
+  BoxAttributes paddingTop(double value) {
     return BoxAttributes(padding: EdgeInsetsDto.only(top: value));
   }
 
-  static BoxAttributes paddingRight(double value) {
+  BoxAttributes paddingRight(double value) {
     return BoxAttributes(padding: EdgeInsetsDto.only(right: value));
   }
 
-  static BoxAttributes paddingBottom(double value) {
+  BoxAttributes paddingBottom(double value) {
     return BoxAttributes(padding: EdgeInsetsDto.only(bottom: value));
   }
 
-  static BoxAttributes paddingLeft(double value) {
+  BoxAttributes paddingLeft(double value) {
     return BoxAttributes(padding: EdgeInsetsDto.only(left: value));
   }
 
-  static BoxAttributes paddingStart(double value) {
-    return BoxAttributes(
-      padding: EdgeInsetsDirectionalDto.only(
-        start: value,
-      ),
-    );
-  }
-
-  static BoxAttributes paddingEnd(double value) {
-    return BoxAttributes(
-      padding: EdgeInsetsDirectionalDto.only(
-        end: value,
-      ),
-    );
-  }
-
-  static BoxAttributes paddingHorizontal(double value) {
+  BoxAttributes paddingHorizontal(double value) {
     return BoxAttributes(
       padding: EdgeInsetsDto.symmetric(
         horizontal: value,
@@ -194,7 +172,7 @@ extension BoxUtilities on BoxAttributes {
     );
   }
 
-  static BoxAttributes paddingVertical(double value) {
+  BoxAttributes paddingVertical(double value) {
     return BoxAttributes(
       padding: EdgeInsetsDto.symmetric(
         vertical: value,
@@ -202,49 +180,85 @@ extension BoxUtilities on BoxAttributes {
     );
   }
 
-  static BoxAttributes backgroundColor(Color color) => _from(color: color);
+  BoxAttributes paddingDirectionalOnly({
+    double? top,
+    double? bottom,
+    double? start,
+    double? end,
+  }) {
+    return BoxAttributes(
+      padding: EdgeInsetsDirectionalDto.only(
+        top: top,
+        bottom: bottom,
+        start: start,
+        end: end,
+      ),
+    );
+  }
 
-  static BoxAttributes height(double height) {
+  BoxAttributes paddingDirectionalStart(double value) {
+    return paddingDirectionalOnly(start: value);
+  }
+
+  BoxAttributes paddingDirectionalEnd(double value) {
+    return paddingDirectionalOnly(end: value);
+  }
+
+  BoxAttributes paddingDirectionalTop(double value) {
+    return paddingDirectionalOnly(top: value);
+  }
+
+  BoxAttributes paddingDirectionalBottom(double value) {
+    return paddingDirectionalOnly(bottom: value);
+  }
+
+  BoxAttributes backgroundColor(Color color) {
+    return BoxAttributes(
+      color: ColorDto.from(color),
+    );
+  }
+
+  BoxAttributes height(double height) {
     return BoxAttributes(
       height: height,
     );
   }
 
-  static BoxAttributes width(double width) {
+  BoxAttributes width(double width) {
     return BoxAttributes(
       width: width,
     );
   }
 
-  static BoxAttributes maxHeight(double maxHeight) {
+  BoxAttributes maxHeight(double maxHeight) {
     return BoxAttributes(
       maxHeight: maxHeight,
     );
   }
 
-  static BoxAttributes maxWidth(double maxWidth) {
+  BoxAttributes maxWidth(double maxWidth) {
     return BoxAttributes(
       maxWidth: maxWidth,
     );
   }
 
-  static BoxAttributes minHeight(double minHeight) {
+  BoxAttributes minHeight(double minHeight) {
     return BoxAttributes(
       minHeight: minHeight,
     );
   }
 
-  static BoxAttributes minWidth(double minWidth) {
+  BoxAttributes minWidth(double minWidth) {
     return BoxAttributes(
       minWidth: minWidth,
     );
   }
 
-  static BoxAttributes _borderRadius(BorderRadiusGeometryDto radius) {
+  BoxAttributes _borderRadius(BorderRadiusGeometryDto radius) {
     return BoxAttributes(borderRadius: radius);
   }
 
-  static BoxAttributes rounded(double value) {
+  BoxAttributes rounded(double value) {
     return _borderRadius(
       BorderRadiusDto.all(
         RadiusDto.circular(value),
@@ -252,11 +266,11 @@ extension BoxUtilities on BoxAttributes {
     );
   }
 
-  static BoxAttributes squared() {
+  BoxAttributes squared() {
     return _borderRadius(BorderRadiusDto.zero);
   }
 
-  static BoxAttributes roundedOnly({
+  BoxAttributes roundedOnly({
     double? topLeft,
     double? topRight,
     double? bottomLeft,
@@ -273,7 +287,7 @@ extension BoxUtilities on BoxAttributes {
     );
   }
 
-  static BoxAttributes roundedDirectionalOnly({
+  BoxAttributes roundedDirectionalOnly({
     double? topStart,
     double? topEnd,
     double? bottomStart,
@@ -290,7 +304,7 @@ extension BoxUtilities on BoxAttributes {
     );
   }
 
-  static BoxAttributes roundedHorizontal({
+  BoxAttributes roundedHorizontal({
     double? left,
     double? right,
   }) {
@@ -302,7 +316,7 @@ extension BoxUtilities on BoxAttributes {
     );
   }
 
-  static BoxAttributes roundedVertical({
+  BoxAttributes roundedVertical({
     double? top,
     double? bottom,
   }) {
@@ -314,7 +328,7 @@ extension BoxUtilities on BoxAttributes {
     );
   }
 
-  static BoxAttributes roundedDirectionalHorizontal({
+  BoxAttributes roundedDirectionalHorizontal({
     double? start,
     double? end,
   }) {
@@ -326,7 +340,7 @@ extension BoxUtilities on BoxAttributes {
     );
   }
 
-  static BoxAttributes roundedDirectionalVertical({
+  BoxAttributes roundedDirectionalVertical({
     double? top,
     double? bottom,
   }) {
@@ -338,52 +352,35 @@ extension BoxUtilities on BoxAttributes {
     );
   }
 
-  static BoxAttributes _borderHelper({
-    required BoxBorderSide side,
+  BorderSideDto _borderSide({
     Color? color,
     double? width,
     BorderStyle? style,
+    BorderSide? as,
   }) {
-    BorderSideDto borderSide = BorderSideDto.only(
-      color: ColorDto.maybeFrom(color),
-      width: width,
-      style: style,
-    );
-
-    switch (side) {
-      case BoxBorderSide.top:
-        return BoxAttributes(border: BorderDto.only(top: borderSide));
-      case BoxBorderSide.bottom:
-        return BoxAttributes(border: BorderDto.only(bottom: borderSide));
-      case BoxBorderSide.left:
-        return BoxAttributes(border: BorderDto.only(left: borderSide));
-      case BoxBorderSide.right:
-        return BoxAttributes(border: BorderDto.only(right: borderSide));
-      case BoxBorderSide.start:
-        return BoxAttributes(
-          border: BorderDirectionalDto.only(start: borderSide),
-        );
-      case BoxBorderSide.end:
-        return BoxAttributes(
-          border: BorderDirectionalDto.only(end: borderSide),
-        );
-      default:
-        throw ArgumentError('Invalid side provided: $side');
+    if (as != null) {
+      return BorderSideDto.from(as);
+    } else {
+      return BorderSideDto.only(
+        color: ColorDto.maybeFrom(color),
+        width: width,
+        style: style,
+      );
     }
   }
 
-  static BoxAttributes border({
+  BoxAttributes border({
     Color? color,
     double? width,
     BorderStyle? style,
     // If you want to use a custom border, use [asBorder] instead
     // This will ignore [color], [width] and [style]
-    BoxBorder? asBorder,
+    BoxBorder? as,
   }) {
     BoxBorderDto border;
 
-    if (asBorder != null) {
-      border = BoxBorderDto.from(asBorder);
+    if (as != null) {
+      border = BoxBorderDto.from(as);
     } else {
       border = BorderDto.all(
         color: ColorDto.maybeFrom(color),
@@ -395,110 +392,194 @@ extension BoxUtilities on BoxAttributes {
     return BoxAttributes(border: border);
   }
 
-  static BoxAttributes borderTop({
+  BoxAttributes borderTop({
     Color? color,
     double? width,
     BorderStyle? style,
+    BorderSide? as,
   }) {
-    return _borderHelper(
-      side: BoxBorderSide.top,
-      color: color,
-      width: width,
-      style: style,
-    );
-  }
-
-  static BoxAttributes borderBottom({
-    Color? color,
-    double? width,
-    BorderStyle? style,
-  }) {
-    return _borderHelper(
-      side: BoxBorderSide.bottom,
-      color: color,
-      width: width,
-      style: style,
-    );
-  }
-
-  static BoxAttributes borderLeft({
-    Color? color,
-    double? width,
-    BorderStyle? style,
-  }) {
-    return _borderHelper(
-      side: BoxBorderSide.left,
-      color: color,
-      width: width,
-      style: style,
-    );
-  }
-
-  static BoxAttributes borderRight({
-    Color? color,
-    double? width,
-    BorderStyle? style,
-  }) {
-    return _borderHelper(
-      side: BoxBorderSide.right,
-      color: color,
-      width: width,
-      style: style,
-    );
-  }
-
-  static BoxAttributes borderStart({
-    Color? color,
-    double? width,
-    BorderStyle? style,
-  }) {
-    return _borderHelper(
-      side: BoxBorderSide.start,
-      color: color,
-      width: width,
-      style: style,
-    );
-  }
-
-  static BoxAttributes borderEnd({
-    Color? color,
-    double? width,
-    BorderStyle? style,
-  }) {
-    return _borderHelper(
-      side: BoxBorderSide.end,
-      color: color,
-      width: width,
-      style: style,
-    );
-  }
-
-  static BoxAttributes transform(Matrix4 transform) {
-    return BoxAttributes(transform: transform);
-  }
-
-  static BoxAttributes borderColor(Color color) {
     return BoxAttributes(
-      border: BorderDto.all(
-        color: ColorDto.maybeFrom(color),
+      border: BorderDto.only(
+        top: _borderSide(
+          color: color,
+          width: width,
+          style: style,
+        ),
       ),
     );
   }
 
-  static BoxAttributes borderWidth(double width) {
-    return BoxAttributes(border: BorderDto.all(width: width));
+  BoxAttributes borderBottom({
+    Color? color,
+    double? width,
+    BorderStyle? style,
+    BorderSide? as,
+  }) {
+    return BoxAttributes(
+      border: BorderDto.only(
+        bottom: _borderSide(
+          color: color,
+          width: width,
+          style: style,
+        ),
+      ),
+    );
   }
 
-  static BoxAttributes align(AlignmentGeometry align) {
+  BoxAttributes borderLeft({
+    Color? color,
+    double? width,
+    BorderStyle? style,
+    BorderSide? as,
+  }) {
+    return BoxAttributes(
+      border: BorderDto.only(
+        left: _borderSide(
+          color: color,
+          width: width,
+          style: style,
+          as: as,
+        ),
+      ),
+    );
+  }
+
+  BoxAttributes borderRight({
+    Color? color,
+    double? width,
+    BorderStyle? style,
+    BorderSide? as,
+  }) {
+    return BoxAttributes(
+      border: BorderDto.only(
+        right: _borderSide(
+          color: color,
+          width: width,
+          style: style,
+          as: as,
+        ),
+      ),
+    );
+  }
+
+  BoxAttributes borderHorizontal({
+    Color? color,
+    double? width,
+    BorderStyle? style,
+    BorderSide? as,
+  }) {
+    return BoxAttributes(
+      border: BorderDto.symmetric(
+        horizontal: _borderSide(
+          color: color,
+          width: width,
+          style: style,
+          as: as,
+        ),
+      ),
+    );
+  }
+
+  BoxAttributes borderVertical({
+    Color? color,
+    double? width,
+    BorderStyle? style,
+    BorderSide? as,
+  }) {
+    return BoxAttributes(
+      border: BorderDto.symmetric(
+        vertical: _borderSide(
+          color: color,
+          width: width,
+          style: style,
+          as: as,
+        ),
+      ),
+    );
+  }
+
+  BoxAttributes borderDirectionalTop({
+    Color? color,
+    double? width,
+    BorderStyle? style,
+    BorderSide? as,
+  }) {
+    return BoxAttributes(
+      border: BorderDirectionalDto.only(
+        top: _borderSide(
+          color: color,
+          width: width,
+          style: style,
+          as: as,
+        ),
+      ),
+    );
+  }
+
+  BoxAttributes borderDirectionalBottom({
+    Color? color,
+    double? width,
+    BorderStyle? style,
+    BorderSide? as,
+  }) {
+    return BoxAttributes(
+      border: BorderDirectionalDto.only(
+        bottom: _borderSide(
+          color: color,
+          width: width,
+          style: style,
+          as: as,
+        ),
+      ),
+    );
+  }
+
+  BoxAttributes borderDirectionalStart({
+    Color? color,
+    double? width,
+    BorderStyle? style,
+    BorderSide? as,
+  }) {
+    return BoxAttributes(
+      border: BorderDirectionalDto.only(
+        start: _borderSide(
+          color: color,
+          width: width,
+          style: style,
+          as: as,
+        ),
+      ),
+    );
+  }
+
+  BoxAttributes borderDirectionalEnd({
+    Color? color,
+    double? width,
+    BorderStyle? style,
+    BorderSide? as,
+  }) {
+    return BoxAttributes(
+      border: BorderDirectionalDto.only(
+        end: _borderSide(
+          color: color,
+          width: width,
+          style: style,
+          as: as,
+        ),
+      ),
+    );
+  }
+
+  BoxAttributes transform(Matrix4 transform) {
+    return BoxAttributes(transform: transform);
+  }
+
+  BoxAttributes alignment(AlignmentGeometry align) {
     return BoxAttributes(alignment: align);
   }
 
-  static BoxAttributes borderStyle(BorderStyle style) {
-    return BoxAttributes(border: BorderDto.all(style: style));
-  }
-
   // ignore: long-parameter-list
-  static BoxAttributes linearGradient({
+  BoxAttributes linearGradient({
     AlignmentGeometry begin = AlignmentDirectional.centerStart,
     AlignmentGeometry end = AlignmentDirectional.centerEnd,
     required List<Color> colors,
@@ -519,7 +600,7 @@ extension BoxUtilities on BoxAttributes {
   }
 
   // ignore: long-parameter-list
-  static BoxAttributes radialGradient({
+  BoxAttributes radialGradient({
     AlignmentGeometry center = Alignment.center,
     double radius = 0.5,
     required List<Color> colors,
@@ -543,7 +624,7 @@ extension BoxUtilities on BoxAttributes {
     );
   }
 
-  static BoxAttributes shadow({
+  BoxAttributes shadow({
     Color? color,
     Offset? offset,
     double? blurRadius,
@@ -561,17 +642,7 @@ extension BoxUtilities on BoxAttributes {
     );
   }
 
-  static BoxAttributes decorators(List<BoxDecorator> decorators) {
-    return BoxAttributes(
-      decorators: MergeableMap(decorators),
-    );
-  }
-
-  static BoxAttributes decorator(BoxDecorator decorator) {
-    return BoxUtilities.decorators([decorator]);
-  }
-
-  static BoxAttributes elevation(int elevation) {
+  BoxAttributes elevation(int elevation) {
     const elevationOptions = [0, 1, 2, 3, 4, 6, 8, 9, 12, 16, 24];
     assert(
       elevationOptions.contains(elevation),
@@ -595,6 +666,99 @@ extension BoxUtilities on BoxAttributes {
       boxShadow: kElevationToShadow[elevation]!
           .map((e) => BoxShadowDto.fromBoxShadow(e))
           .toList(),
+    );
+  }
+
+  @Deprecated('Use border(color:color) instead')
+  BoxAttributes borderColor(Color color) {
+    return BoxAttributes(
+      border: BorderDto.all(
+        color: ColorDto.maybeFrom(color),
+      ),
+    );
+  }
+
+  @Deprecated('Use border(width:width) instead')
+  BoxAttributes borderWidth(double width) {
+    return BoxAttributes(border: BorderDto.all(width: width));
+  }
+
+  @Deprecated('Use border(style:style) instead')
+  BoxAttributes borderStyle(BorderStyle style) {
+    return BoxAttributes(border: BorderDto.all(style: style));
+  }
+
+  @Deprecated('Use backgroundColor(style:style) instead')
+  BoxAttributes bgColor(Color color) {
+    return BoxAttributes(
+      color: ColorDto.from(color),
+    );
+  }
+
+  @Deprecated('Use alignment instead')
+  BoxAttributes align(AlignmentGeometry align) {
+    return BoxAttributes(alignment: align);
+  }
+
+  @Deprecated('Use borderDirectionalEnd instead')
+  BoxAttributes borderEnd({
+    Color? color,
+    double? width,
+    BorderStyle? style,
+  }) {
+    return borderDirectionalEnd(
+      color: color,
+      width: width,
+      style: style,
+    );
+  }
+
+  @Deprecated('Use borderDirectionalStart instead')
+  BoxAttributes borderStart({
+    Color? color,
+    double? width,
+    BorderStyle? style,
+  }) {
+    return BoxAttributes(
+      border: BorderDirectionalDto.only(
+        start: _borderSide(
+          color: color,
+          width: width,
+          style: style,
+        ),
+      ),
+    );
+  }
+
+  @Deprecated('Use paddingDirectionalStart instead')
+  BoxAttributes paddingStart(double value) {
+    return BoxAttributes(
+      padding: EdgeInsetsDirectionalDto.only(
+        start: value,
+      ),
+    );
+  }
+
+  @Deprecated('Use paddingDirectionalEnd instead')
+  BoxAttributes paddingEnd(double value) {
+    return BoxAttributes(
+      padding: EdgeInsetsDirectionalDto.only(
+        end: value,
+      ),
+    );
+  }
+
+  @Deprecated('Use marginDirectionalStart instead')
+  BoxAttributes marginStart(double value) {
+    return BoxAttributes(
+      margin: EdgeInsetsDirectionalDto.only(start: value),
+    );
+  }
+
+  @Deprecated('Use marginDirectionalStart instead')
+  BoxAttributes marginEnd(double value) {
+    return BoxAttributes(
+      margin: EdgeInsetsDirectionalDto.only(end: value),
     );
   }
 }

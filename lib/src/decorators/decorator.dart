@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../mix.dart';
 import '../helpers/equatable_mixin.dart';
 
-abstract class Decorator<T extends Decorator<T>>
+abstract class Decorator<T extends Decorator<T>> extends Attribute
     with MergeableMixin<T>, EquatableMixin {
   const Decorator({
     this.key,
@@ -11,9 +11,6 @@ abstract class Decorator<T extends Decorator<T>>
 
   /// Key is required in order for proper sorting
   final Key? key;
-
-  /// Group Key, allows to group decorators for use in specific locations
-  String get groupKey;
 
   Widget build(BuildContext context, Widget child);
 
