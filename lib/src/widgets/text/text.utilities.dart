@@ -34,10 +34,10 @@ class TextUtility {
     Locale? locale,
     double? height,
     // If asStyle is provided, all other parameters will be ignored.
-    TextStyle? asStyle,
+    TextStyle? as,
   }) {
-    if (asStyle != null) {
-      return TextAttributes(style: TextStyleDto.from(asStyle));
+    if (as != null) {
+      return TextAttributes(style: TextStyleDto.from(as));
     }
 
     List<ShadowDto>? convertShadows() {

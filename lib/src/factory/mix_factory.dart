@@ -12,7 +12,7 @@ typedef StyleMix = MixFactory;
 /// The `MixFactory` class is primarily used for constructing styling attributes and
 /// variants. This class provides a set of factory
 /// constructors and utility methods for working with mixes.
-class MixFactory<A extends Attribute> {
+class MixFactory {
   final MixValues _values;
 
   const MixFactory._(MixValues values) : _values = values;
@@ -22,20 +22,20 @@ class MixFactory<A extends Attribute> {
 
   // Factory constructors
   factory MixFactory([
-    A? p1,
-    A? p2,
-    A? p3,
-    A? p4,
-    A? p5,
-    A? p6,
-    A? p7,
-    A? p8,
-    A? p9,
-    A? p10,
-    A? p11,
-    A? p12,
+    Attribute? p1,
+    Attribute? p2,
+    Attribute? p3,
+    Attribute? p4,
+    Attribute? p5,
+    Attribute? p6,
+    Attribute? p7,
+    Attribute? p8,
+    Attribute? p9,
+    Attribute? p10,
+    Attribute? p11,
+    Attribute? p12,
   ]) {
-    final params = <A>[];
+    final params = <Attribute>[];
 
     for (final param in [p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12]) {
       if (param != null) params.add(param);
@@ -45,7 +45,7 @@ class MixFactory<A extends Attribute> {
   }
 
   /// Constructs a mix from a non-null iterable of [Attribute] instances.
-  factory MixFactory.fromAttributes(Iterable<A> attributes) {
+  factory MixFactory.fromAttributes(Iterable<Attribute> attributes) {
     return MixFactory._(MixValues.create(attributes));
   }
 
@@ -54,8 +54,8 @@ class MixFactory<A extends Attribute> {
   }
 
   /// Returns an iterable of [Attribute] instances from this MixFactory.
-  Iterable<A> toAttributes() {
-    return _values.toAttributes() as Iterable<A>;
+  Iterable<Attribute> toAttributes() {
+    return _values.toAttributes();
   }
 
   /// Returns a [MixValues] instance representing the values in this MixFactory.

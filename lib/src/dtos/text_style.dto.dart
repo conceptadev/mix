@@ -10,7 +10,8 @@ import 'shadow/shadow.dto.dart';
 class TextStyleDto extends Dto<TextStyle> {
   final String? fontFamily;
   final FontWeight? fontWeight;
-  final bool? inherit;
+  // Removed because it changes DTO behavior
+  // final bool? inherit;
   final FontStyle? fontStyle;
   final double? fontSize;
   final double? letterSpacing;
@@ -34,7 +35,6 @@ class TextStyleDto extends Dto<TextStyle> {
   final TextStyleToken? styleToken;
 
   const TextStyleDto({
-    this.inherit,
     this.fontFamily,
     this.fontWeight,
     this.fontStyle,
@@ -66,7 +66,6 @@ class TextStyleDto extends Dto<TextStyle> {
 
     return TextStyleDto(
       fontFamily: style.fontFamily,
-      inherit: style.inherit,
       fontWeight: style.fontWeight,
       fontStyle: style.fontStyle,
       fontSize: style.fontSize,
@@ -99,13 +98,13 @@ class TextStyleDto extends Dto<TextStyle> {
   @override
   TextStyle resolve(BuildContext context) {
     final resolvedStyle = TextStyle(
+      inherit: false,
       fontFamily: fontFamily,
       fontWeight: fontWeight,
       fontStyle: fontStyle,
       fontSize: fontSize,
       letterSpacing: letterSpacing,
       height: height,
-      inherit: inherit ?? const TextStyle().inherit,
       wordSpacing: wordSpacing,
       textBaseline: textBaseline,
       color: color?.resolve(context),
@@ -126,7 +125,9 @@ class TextStyleDto extends Dto<TextStyle> {
     TextStyle? styleRef;
 
     if (styleToken != null) {
-      styleRef = MixTokenResolver(context).textStyle(styleToken!);
+      styleRef = MixTokenResolver(context)
+          .textStyle(styleToken!)
+          .copyWith(inherit: false);
     }
 
     // If there is a style token, use it as a base
@@ -139,7 +140,6 @@ class TextStyleDto extends Dto<TextStyle> {
 
   TextStyleDto copyWith({
     String? fontFamily,
-    bool? inherit,
     FontWeight? fontWeight,
     FontStyle? fontStyle,
     double? fontSize,
@@ -163,7 +163,6 @@ class TextStyleDto extends Dto<TextStyle> {
     TextStyleToken? styleToken,
   }) {
     return TextStyleDto(
-      inherit: inherit ?? this.inherit,
       fontFamily: fontFamily ?? this.fontFamily,
       fontWeight: fontWeight ?? this.fontWeight,
       fontStyle: fontStyle ?? this.fontStyle,
@@ -194,7 +193,6 @@ class TextStyleDto extends Dto<TextStyle> {
 
     return copyWith(
       fontFamily: other.fontFamily,
-      inherit: other.inherit,
       fontWeight: other.fontWeight,
       fontStyle: other.fontStyle,
       fontSize: other.fontSize,

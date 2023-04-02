@@ -7,12 +7,11 @@ typedef ShouldApplyFunc = bool Function(BuildContext);
 
 class ContextVariant extends Variant {
   const ContextVariant(
-    String name, {
+    super.name, {
     required ShouldApplyFunc shouldApply,
     bool inverse = false,
   })  : _inverse = inverse,
-        _shouldApply = shouldApply,
-        super(name);
+        _shouldApply = shouldApply;
 
   final bool _inverse;
 
@@ -56,17 +55,5 @@ class ContextVariant extends Variant {
   }
 
   @override
-  String toString() => 'ContextVariant(shouldApply: $shouldApply)';
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is ContextVariant &&
-        other.shouldApply == shouldApply &&
-        other.name == name;
-  }
-
-  @override
-  int get hashCode => shouldApply.hashCode ^ name.hashCode;
+  get props => [name, _inverse, _shouldApply];
 }
