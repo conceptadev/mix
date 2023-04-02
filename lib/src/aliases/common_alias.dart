@@ -1,4 +1,4 @@
-import '../attributes/common/common.utilities.dart';
+import '../attributes/shared/shared.utilities.dart';
 
 const show = CommonUtility.visible;
 const hide = CommonUtility.hidden;

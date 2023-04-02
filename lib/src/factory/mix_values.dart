@@ -66,7 +66,7 @@ class MixValues with EquatableMixin {
     return variants.length + contextVariants.length + (attributes?.length ?? 0);
   }
 
-  /// Returns an instance of the specified [WidgetAttributes] type from the [MixContext].
+  /// Returns an instance of the specified [WidgetAttributes] type from the [MixData].
   A? attributesOfType<A extends WidgetAttributes>() {
     return attributes?[A] as A?;
   }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../factory/mix_provider.dart';
-import 'common.attributes.dart';
+import 'shared.attributes.dart';
 
 class CommonDescriptor {
   final bool visible;
@@ -21,7 +21,7 @@ class CommonDescriptor {
 
   factory CommonDescriptor.fromContext(BuildContext context) {
     final mix = MixProvider.ensureOf(context);
-    final common = mix.attributesOfType<CommonAttributes>();
+    final common = mix.attributesOfType<SharedWidgetAttributes>();
 
     return CommonDescriptor(
       visible: common?.visible ?? true,

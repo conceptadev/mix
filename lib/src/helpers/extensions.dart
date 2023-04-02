@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../attributes/common/common.descriptor.dart';
+import '../attributes/shared/shared.descriptor.dart';
 import '../factory/mix_provider.dart';
 import '../factory/mix_provider_data.dart';
 import '../theme/mix_theme.dart';

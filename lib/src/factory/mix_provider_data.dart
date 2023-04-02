@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../attributes/attribute.dart';
 import '../variants/variant_attribute.dart';
+import '../widgets/box/box.decorator.dart';
 import 'mix_factory.dart';
 import 'mix_values.dart';
 
@@ -77,6 +78,10 @@ class MixData {
   /// Obtain with `mixContext.attributesOfType<MyInheritedAttribute>()`.
   T? attributesOfType<T extends WidgetAttributes>() {
     return _mixValues.attributesOfType<T>();
+  }
+
+  List<WidgetDecorator>? decorators() {
+    return _mixValues.decorators?.values.toList();
   }
 
   T dependOnAttributesOfType<T extends WidgetAttributes>() {

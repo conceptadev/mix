@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../attributes/common/common.descriptor.dart';
+import '../../attributes/shared/shared.descriptor.dart';
 import '../empty.widget.dart';
 import '../mix.widget.dart';
 import '../mix_context_builder.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mix/src/attributes/common/common.utilities.dart';
+import 'package:mix/src/attributes/shared/shared.utilities.dart';
 import 'package:mix/src/extensions/mix_extensions.dart';
 import 'package:mix/src/factory/mix_factory.dart';
 import 'package:mix/src/widgets/text/text.utilities.dart';

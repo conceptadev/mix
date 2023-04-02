@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart' hide border, onEnabled, icon, iconColor;
-import 'package:mix/src/attributes/common/common.descriptor.dart';
+import 'package:mix/src/attributes/shared/shared.descriptor.dart';
 import 'package:mix/src/helpers/equatable_mixin.dart';
 
 import '../helpers/testing_utils.dart';
@@ -114,7 +114,7 @@ final mix = Mix(
     fillColor: Colors.red,
   ),
   activated(withColor(Colors.blue), inputDecoration(fillColor: Colors.green)),
-  const CommonAttributes(textDirection: TextDirection.rtl),
+  const SharedWidgetAttributes(textDirection: TextDirection.rtl),
 );
 
 class CustomWidget extends StatelessWidget {

@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-import '../../attributes/common/common.descriptor.dart';
+import '../../attributes/shared/shared.descriptor.dart';
 import '../box/box.descriptor.dart';
 import '../box/box.widget.dart';
 import '../mix.widget.dart';

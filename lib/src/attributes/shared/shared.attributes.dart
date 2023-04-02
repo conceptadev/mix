@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../attribute.dart';
 
-class CommonAttributes extends WidgetAttributes {
+class SharedWidgetAttributes extends WidgetAttributes {
   final bool? visible;
   //Animation
   final bool? animated;
@@ -10,7 +10,7 @@ class CommonAttributes extends WidgetAttributes {
   final Curve? animationCurve;
   final TextDirection? textDirection;
 
-  const CommonAttributes({
+  const SharedWidgetAttributes({
     this.visible,
     this.animated,
     this.animationDuration,
@@ -19,10 +19,10 @@ class CommonAttributes extends WidgetAttributes {
   });
 
   @override
-  CommonAttributes merge(CommonAttributes? other) {
+  SharedWidgetAttributes merge(SharedWidgetAttributes? other) {
     if (other == null) return this;
 
-    return CommonAttributes(
+    return SharedWidgetAttributes(
       visible: other.visible ?? visible,
       animated: other.animated ?? animated,
       animationDuration: other.animationDuration ?? animationDuration,

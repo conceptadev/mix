@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../attributes/common/common.descriptor.dart';
+import '../../../attributes/shared/shared.descriptor.dart';
 import '../box.decorator.dart';
 
 enum ClipDecoratorType {

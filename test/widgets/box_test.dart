@@ -87,7 +87,7 @@ void main() {
         (tester) async {
           await tester.pumpWidget(
             BoxTestWidget(
-              Mix(const CommonAttributes(visible: false)),
+              Mix(const SharedWidgetAttributes(visible: false)),
             ),
           );
 

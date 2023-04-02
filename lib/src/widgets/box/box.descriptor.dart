@@ -54,6 +54,7 @@ class BoxDescriptor with EquatableMixin {
   factory BoxDescriptor.fromContext(BuildContext context) {
     final mix = MixProvider.ensureOf(context);
     final attributes = mix.attributesOfType<BoxAttributes>();
+    final decorators = mix.decorators();
 
     return BoxDescriptor(
       color: attributes?.color?.resolve(context),
@@ -72,6 +73,7 @@ class BoxDescriptor with EquatableMixin {
       shape: attributes?.shape,
       transform: attributes?.transform,
       gradient: attributes?.gradient,
+      decorators: decorators,
     );
   }
 
@@ -148,5 +150,6 @@ class BoxDescriptor with EquatableMixin {
         shape,
         transform,
         gradient,
+        decorators,
       ];
 }
