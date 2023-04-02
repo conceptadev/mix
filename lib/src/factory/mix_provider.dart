@@ -10,7 +10,7 @@ import 'mix_provider_data.dart';
 class MixProvider extends InheritedWidget {
   /// Initializes a new instance of [MixProvider].
   ///
-  /// The `mixContext` parameter is the [MixData] object to store. [child]
+  /// The `data` parameter is the [MixData] object to store. [child]
   /// receives the element tree that will use this context, and [key] can be set
   /// to track changes.
   const MixProvider(

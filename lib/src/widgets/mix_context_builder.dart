@@ -8,10 +8,9 @@ typedef WidgetMixBuilder = Widget Function(
   MixData mixContext,
 );
 
-class MixContextBuilder extends MixWidget {
-  const MixContextBuilder({
+class MixBuilder extends MixWidget {
+  const MixBuilder({
     super.mix,
-    super.inherit,
     super.variants,
     super.key,
     required WidgetMixBuilder builder,
@@ -21,14 +20,14 @@ class MixContextBuilder extends MixWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mixContext = createMixContextData(context);
+    final mix = createMixData(context);
 
     return MixProvider(
-      mixContext,
+      mix,
       child: Builder(
         builder: (context) => _builder(
           context,
-          mixContext,
+          mix,
         ),
       ),
     );

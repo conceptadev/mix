@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../attributes/shared/shared.descriptor.dart';
-import '../empty.widget.dart';
+import '../empty/empty.widget.dart';
 import '../mix.widget.dart';
 import '../mix_context_builder.dart';
 import 'text.descriptor.dart';
@@ -13,7 +13,6 @@ class TextMix extends MixWidget {
     super.mix,
     super.key,
     super.variants,
-    super.inherit,
     this.semanticsLabel,
   });
 
@@ -22,13 +21,15 @@ class TextMix extends MixWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MixContextBuilder(
+    return MixBuilder(
       mix: mix,
       builder: (context, _) {
         final textProps = TextDescriptor.fromContext(context);
+        final commonDescriptor = CommonDescriptor.fromContext(context);
 
         return TextMixedWidget(
           textDescriptor: textProps,
+          commonDescriptor: commonDescriptor,
           text: text,
           semanticsLabel: semanticsLabel,
         );
@@ -40,6 +41,7 @@ class TextMix extends MixWidget {
 class TextMixedWidget extends StatelessWidget {
   const TextMixedWidget({
     required this.textDescriptor,
+    required this.commonDescriptor,
     required this.text,
     Key? key,
     this.semanticsLabel,
@@ -47,12 +49,12 @@ class TextMixedWidget extends StatelessWidget {
 
   final String text;
   final TextDescriptor textDescriptor;
+  final CommonDescriptor commonDescriptor;
 
   final String? semanticsLabel;
 
   @override
   Widget build(BuildContext context) {
-    final commonDescriptor = CommonDescriptor.fromContext(context);
     if (!commonDescriptor.visible) {
       return const Empty();
     }

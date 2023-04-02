@@ -133,7 +133,7 @@ class CustomWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MixContextBuilder(
+    return MixBuilder(
       variants: variants,
       mix: mix,
       builder: (context, mixContext) {
@@ -176,7 +176,7 @@ class TextFieldWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MixContextBuilder(
+    return MixBuilder(
       mix: mix,
       variants: variants,
       builder: (context, mixContext) {

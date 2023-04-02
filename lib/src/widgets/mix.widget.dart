@@ -2,45 +2,30 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../factory/mix_factory.dart';
-import '../factory/mix_provider.dart';
 import '../factory/mix_provider_data.dart';
 import '../variants/variant.dart';
 
 abstract class MixWidget extends StatelessWidget {
   /// Constructor
   const MixWidget({
-    Mix? mix,
+    @Deprecated('Use the style parameter instead') Mix? mix,
+    StyleMix? style,
     super.key,
-    bool? inherit,
     List<Variant>? variants,
   })  : _mix = mix ?? Mix.constant,
-        _variants = variants,
-        _inherit = inherit ?? false;
+        _variants = variants;
 
   final Mix _mix;
   final List<Variant>? _variants;
-  final bool _inherit;
 
   Mix get mix => _mix;
-  bool get inherit => _inherit;
+
   List<Variant>? get variants => _variants;
 
-  MixData createMixContextData(BuildContext context) {
-    var combinedMix = _mix;
-
-    if (_inherit) {
-      /// Get ancestor context
-      final inheritedMixContext = MixProvider.of(context);
-
-      if (inheritedMixContext != null) {
-        final inheritedValues = inheritedMixContext.toValues();
-        combinedMix = combinedMix.copyWith(values: inheritedValues);
-      }
-    }
-
+  MixData createMixData(BuildContext context) {
     return MixData.create(
       context: context,
-      mix: combinedMix.selectVariants(_variants ?? []),
+      mix: _mix.selectVariants(_variants ?? []),
     );
   }
 
@@ -60,9 +45,6 @@ abstract class MixWidget extends StatelessWidget {
         variants,
         defaultValue: null,
       ),
-    );
-    properties.add(
-      DiagnosticsProperty<bool>('inherit', inherit, defaultValue: true),
     );
   }
 }

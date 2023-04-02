@@ -98,7 +98,7 @@ class MixData {
     return attribute;
   }
 
-  MixValues toValues() => _mixValues;
+  MixValues get values => _mixValues;
 
   @override
   bool operator ==(Object other) {

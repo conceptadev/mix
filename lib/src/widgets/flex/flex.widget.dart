@@ -13,7 +13,6 @@ class FlexBox extends MixWidget {
     super.mix,
     super.key,
     super.variants,
-    super.inherit,
     required this.direction,
     required this.children,
   });
@@ -33,7 +32,7 @@ class FlexBox extends MixWidget {
       widgets.add(widget);
       // Add gap if not last item if its not last element
 
-      if (widget != children.last) {
+      if (idx != children.length - 1) {
         widgets.add(Gap(gapSize));
       }
     }
@@ -43,9 +42,8 @@ class FlexBox extends MixWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MixContextBuilder(
+    return MixBuilder(
       mix: mix,
-      inherit: inherit,
       variants: variants,
       builder: (context, mixContext) {
         final flexProps = FlexDescriptor.fromContext(context);
@@ -77,7 +75,6 @@ class HBox extends FlexBox {
     super.mix,
     super.variants,
     super.key,
-    super.inherit,
     List<Widget> children = const <Widget>[],
   }) : super(
           direction: Axis.horizontal,
@@ -90,7 +87,6 @@ class VBox extends FlexBox {
     super.mix,
     super.variants,
     super.key,
-    super.inherit,
     List<Widget> children = const <Widget>[],
   }) : super(
           children: children,

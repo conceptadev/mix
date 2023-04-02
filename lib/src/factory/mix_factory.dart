@@ -4,7 +4,7 @@ import '../../mix.dart';
 import '../variants/variant_attribute.dart';
 
 typedef Mix = MixFactory;
-typedef Style = MixFactory;
+typedef StyleMix = MixFactory;
 
 /// A class representing a mix of attributes, decorators, variants, context
 /// variants, and directives.

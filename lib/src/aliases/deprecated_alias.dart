@@ -72,49 +72,49 @@ const letterSpacing = LegacyTextStyleUtility.letterSpacing;
 @Deprecated('Use textStyle(debugLabel: debugLabel) instead')
 const debugLabel = LegacyTextStyleUtility.debugLabel;
 
-@Deprecated('Use textStyle(fontFamily: fontFamily) instead')
+@Deprecated('Use textStyle(height: height) instead')
 const textHeight = LegacyTextStyleUtility.height;
 
-@Deprecated('Use textStyle(fontFamily: fontFamily) instead')
+@Deprecated('Use textStyle(wordSpacing: wordSpacing) instead')
 const wordSpacing = LegacyTextStyleUtility.wordSpacing;
 
-@Deprecated('Use textStyle(fontFamily: fontFamily) instead')
+@Deprecated('Use textStyle(fontStyle: fontStyle) instead')
 const fontStyle = LegacyTextStyleUtility.fontStyle;
 
-@Deprecated('Use textStyle(fontFamily: fontFamily) instead')
+@Deprecated('Use textStyle(fontSize: fontSize) instead')
 const fontSize = LegacyTextStyleUtility.fontSize;
 
-@Deprecated('Use textStyle(fontFamily: fontFamily) instead')
+@Deprecated('Use textStyle(inherit: inherit) instead')
 const inherit = LegacyTextStyleUtility.inherit;
 
-@Deprecated('Use textStyle(fontFamily: fontFamily) instead')
+@Deprecated('Use textStyle(color: color) instead')
 const textColor = LegacyTextStyleUtility.color;
 
-@Deprecated('Use textStyle(fontFamily: fontFamily) instead')
+@Deprecated('Use textStyle(backgroundColor: backgroundColor) instead')
 const textBgColor = LegacyTextStyleUtility.backgroundColor;
 
-@Deprecated('Use textStyle(fontFamily: fontFamily) instead')
+@Deprecated('Use textStyle(foreground: foreground) instead')
 const textForeground = LegacyTextStyleUtility.foreground;
 
-@Deprecated('Use textStyle(fontFamily: fontFamily) instead')
+@Deprecated('Use textStyle(background: background) instead')
 const textBackground = LegacyTextStyleUtility.background;
 
-@Deprecated('Use textStyle(fontFamily: fontFamily) instead')
+@Deprecated('Use textStyle(shadows: shadows) instead')
 const textShadows = LegacyTextStyleUtility.shadows;
 
-@Deprecated('Use textStyle(fontFamily: fontFamily) instead')
+@Deprecated('Use textStyle(fontFeatures: fontFeatures) instead')
 const fontFeatures = LegacyTextStyleUtility.fontFeatures;
 
-@Deprecated('Use textStyle(fontFamily: fontFamily) instead')
+@Deprecated('Use textStyle(decoration: decoration) instead')
 const textDecoration = LegacyTextStyleUtility.decoration;
 
-@Deprecated('Use textStyle(fontFamily: fontFamily) instead')
+@Deprecated('Use textStyle(decorationColor: decorationColor) instead')
 const textDecorationColor = LegacyTextStyleUtility.decorationColor;
 
-@Deprecated('Use textStyle(fontFamily: fontFamily) instead')
+@Deprecated('Use textStyle(decorationStyle: decorationStyle) instead')
 const textDecorationStyle = LegacyTextStyleUtility.decorationStyle;
 
-@Deprecated('Use textStyle(fontFamily: fontFamily) instead')
+@Deprecated('Use textStyle(decorationThickness: decorationThickness) instead')
 const textDecorationThickness = LegacyTextStyleUtility.decorationThickness;
 
 @Deprecated('Use textStyle(fontFamilyFallback: fontFamilyFallback) instead')

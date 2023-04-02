@@ -45,11 +45,11 @@ void main() {
         mix: pressableMix.clone(),
       );
 
-      expect(mix?.toValues(), matchMix.toValues());
+      expect(mix?.values, matchMix.values);
 
       expect(
-        mix?.toValues(),
-        matchMix.toValues(),
+        mix?.values,
+        matchMix.values,
         reason: 'MixValues should be the same',
       );
 

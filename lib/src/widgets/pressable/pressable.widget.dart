@@ -12,8 +12,8 @@ class Pressable extends StatefulWidget {
     this.autofocus = false,
     this.onFocusChange,
     this.behavior,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final Widget child;
   final VoidCallback? onPressed;

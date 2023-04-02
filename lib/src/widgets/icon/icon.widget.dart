@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../attributes/shared/shared.descriptor.dart';
-import '../empty.widget.dart';
+import '../empty/empty.widget.dart';
 import '../mix.widget.dart';
 import '../mix_context_builder.dart';
 import 'icon.props.dart';
@@ -13,7 +13,6 @@ class IconMix extends MixWidget {
     super.mix,
     super.key,
     super.variants,
-    super.inherit,
   });
 
   final IconData? icon;
@@ -21,9 +20,8 @@ class IconMix extends MixWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MixContextBuilder(
+    return MixBuilder(
       mix: mix,
-      inherit: inherit,
       variants: variants,
       builder: (context, mixContext) {
         final iconProps = IconProps.fromContext(context);

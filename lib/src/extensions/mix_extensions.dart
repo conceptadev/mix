@@ -14,14 +14,12 @@ extension MixExtension<T extends Attribute> on Mix {
   Box box({
     Mix? mix,
     Key? key,
-    bool? inherit,
     List<Variant>? variants,
     required Widget child,
   }) {
     return Box(
       mix: mergeNullable(mix),
       key: key,
-      inherit: inherit,
       variants: variants,
       child: child,
     );
@@ -31,7 +29,6 @@ extension MixExtension<T extends Attribute> on Mix {
   HBox hbox({
     Mix? mix,
     Key? key,
-    bool? inherit,
     List<Variant>? variants,
     required List<Widget> children,
   }) {
@@ -44,14 +41,12 @@ extension MixExtension<T extends Attribute> on Mix {
   HBox row({
     Mix? mix,
     Key? key,
-    bool? inherit,
     List<Variant>? variants,
     required List<Widget> children,
   }) {
     return HBox(
       mix: mergeNullable(mix),
       key: key,
-      inherit: inherit,
       variants: variants,
       children: children,
     );
@@ -63,7 +58,6 @@ extension MixExtension<T extends Attribute> on Mix {
     Key? key,
     List<Variant>? variants,
     String? semanticsLabel,
-    bool inherit = true,
   }) {
     return TextMix(
       text,
@@ -71,14 +65,12 @@ extension MixExtension<T extends Attribute> on Mix {
       key: key,
       variants: variants,
       semanticsLabel: semanticsLabel,
-      inherit: inherit,
     );
   }
 
   VBox vbox({
     Mix? mix,
     Key? key,
-    bool? inherit,
     List<Variant>? variants,
     required List<Widget> children,
   }) {
@@ -91,7 +83,6 @@ extension MixExtension<T extends Attribute> on Mix {
   VBox column({
     Mix? mix,
     Key? key,
-    bool? inherit,
     List<Variant>? variants,
     required List<Widget> children,
   }) {
@@ -106,14 +97,12 @@ extension MixExtension<T extends Attribute> on Mix {
     Mix? mix,
     Key? key,
     List<Variant>? variants,
-    bool inherit = true,
   }) {
     return IconMix(
       icon,
       mix: mergeNullable(mix),
       key: key,
       variants: variants,
-      inherit: inherit,
     );
   }
 }

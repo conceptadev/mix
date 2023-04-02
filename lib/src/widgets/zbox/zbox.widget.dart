@@ -14,7 +14,6 @@ class ZBox extends MixWidget {
   const ZBox({
     super.mix,
     super.key,
-    super.inherit,
     super.variants,
     this.children = const <Widget>[],
   });
@@ -23,9 +22,8 @@ class ZBox extends MixWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MixContextBuilder(
+    return MixBuilder(
       mix: mix,
-      inherit: inherit,
       variants: variants,
       builder: (context, mixContext) {
         final zProps = ZBoxProps.fromContext(context);

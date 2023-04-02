@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../attributes/shared/shared.descriptor.dart';
 import '../../decorators/decorator_wrapper.widget.dart';
-import '../empty.widget.dart';
+import '../empty/empty.widget.dart';
 import '../mix.widget.dart';
 import '../mix_context_builder.dart';
 import 'box.descriptor.dart';
@@ -11,7 +11,6 @@ class Box extends MixWidget {
   const Box({
     super.mix,
     super.key,
-    super.inherit,
     super.variants,
     this.child,
   });
@@ -20,9 +19,8 @@ class Box extends MixWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MixContextBuilder(
+    return MixBuilder(
       mix: mix,
-      inherit: inherit,
       variants: variants,
       builder: (context, mixContext) {
         final boxProps = BoxDescriptor.fromContext(context);
