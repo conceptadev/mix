@@ -10,8 +10,8 @@ import 'shadow/shadow.dto.dart';
 class TextStyleDto extends Dto<TextStyle> {
   final String? fontFamily;
   final FontWeight? fontWeight;
-  // Removed because it changes DTO behavior
-  // final bool? inherit;
+
+  final bool? inherit;
   final FontStyle? fontStyle;
   final double? fontSize;
   final double? letterSpacing;
@@ -35,6 +35,7 @@ class TextStyleDto extends Dto<TextStyle> {
   final TextStyleToken? styleToken;
 
   const TextStyleDto({
+    this.inherit,
     this.fontFamily,
     this.fontWeight,
     this.fontStyle,
@@ -66,6 +67,7 @@ class TextStyleDto extends Dto<TextStyle> {
 
     return TextStyleDto(
       fontFamily: style.fontFamily,
+      inherit: style.inherit,
       fontWeight: style.fontWeight,
       fontStyle: style.fontStyle,
       fontSize: style.fontSize,
@@ -97,49 +99,51 @@ class TextStyleDto extends Dto<TextStyle> {
 
   @override
   TextStyle resolve(BuildContext context) {
-    final resolvedStyle = TextStyle(
-      inherit: false,
-      fontFamily: fontFamily,
-      fontWeight: fontWeight,
-      fontStyle: fontStyle,
-      fontSize: fontSize,
-      letterSpacing: letterSpacing,
-      height: height,
-      wordSpacing: wordSpacing,
-      textBaseline: textBaseline,
-      color: color?.resolve(context),
-      backgroundColor: backgroundColor?.resolve(context),
-      shadows: shadows?.map((e) => e.resolve(context)).toList(),
-      fontFeatures: fontFeatures,
-      decoration: decoration,
-      decorationColor: decorationColor?.resolve(context),
-      decorationStyle: decorationStyle,
-      debugLabel: debugLabel,
-      background: background,
-      foreground: foreground,
-      locale: locale,
-      decorationThickness: decorationThickness,
-      fontFamilyFallback: fontFamilyFallback,
-    );
-
-    TextStyle? styleRef;
+    TextStyleDto? styleRef;
 
     if (styleToken != null) {
-      styleRef = MixTokenResolver(context)
-          .textStyle(styleToken!)
-          .copyWith(inherit: false);
+      // Load as DTO for consistent merging behavior
+      final textStyle = MixTokenResolver(context).textStyle(styleToken!);
+      styleRef = TextStyleDto.from(textStyle);
     }
 
     // If there is a style token, use it as a base
     if (styleRef != null) {
-      return styleRef.merge(resolvedStyle);
+      styleRef = styleRef.merge(this);
     } else {
-      return resolvedStyle;
+      // If not just reference itself
+      styleRef = this;
     }
+
+    return TextStyle(
+      inherit: styleRef.inherit ?? true,
+      fontFamily: styleRef.fontFamily,
+      fontWeight: styleRef.fontWeight,
+      fontStyle: styleRef.fontStyle,
+      fontSize: styleRef.fontSize,
+      letterSpacing: styleRef.letterSpacing,
+      height: styleRef.height,
+      wordSpacing: styleRef.wordSpacing,
+      textBaseline: styleRef.textBaseline,
+      color: styleRef.color?.resolve(context),
+      backgroundColor: styleRef.backgroundColor?.resolve(context),
+      shadows: styleRef.shadows?.map((e) => e.resolve(context)).toList(),
+      fontFeatures: styleRef.fontFeatures,
+      decoration: styleRef.decoration,
+      decorationColor: styleRef.decorationColor?.resolve(context),
+      decorationStyle: styleRef.decorationStyle,
+      debugLabel: styleRef.debugLabel,
+      background: styleRef.background,
+      foreground: styleRef.foreground,
+      locale: styleRef.locale,
+      decorationThickness: styleRef.decorationThickness,
+      fontFamilyFallback: styleRef.fontFamilyFallback,
+    );
   }
 
   TextStyleDto copyWith({
     String? fontFamily,
+    bool? inherit,
     FontWeight? fontWeight,
     FontStyle? fontStyle,
     double? fontSize,
@@ -163,6 +167,7 @@ class TextStyleDto extends Dto<TextStyle> {
     TextStyleToken? styleToken,
   }) {
     return TextStyleDto(
+      inherit: inherit ?? this.inherit,
       fontFamily: fontFamily ?? this.fontFamily,
       fontWeight: fontWeight ?? this.fontWeight,
       fontStyle: fontStyle ?? this.fontStyle,
@@ -193,6 +198,7 @@ class TextStyleDto extends Dto<TextStyle> {
 
     return copyWith(
       fontFamily: other.fontFamily,
+      inherit: other.inherit,
       fontWeight: other.fontWeight,
       fontStyle: other.fontStyle,
       fontSize: other.fontSize,

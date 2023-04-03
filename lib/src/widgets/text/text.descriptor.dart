@@ -39,15 +39,17 @@ class TextDescriptor {
     final mixContext = MixProvider.ensureOf(context);
     final textAttributes = mixContext.attributesOfType<TextAttributes>();
 
-    var mergedStyle = const TextStyle();
+    var mergedTextStyleDto = const TextStyleDto();
 
     for (var style in textAttributes?.styles ?? <TextStyleDto>[]) {
-      mergedStyle = mergedStyle.merge(style.resolve(context));
+      // Convert into a DTO for consistent merge behavior.
+      final textStyleDto = TextStyleDto.from(style.resolve(context));
+      mergedTextStyleDto = mergedTextStyleDto.merge(textStyleDto);
     }
 
     return TextDescriptor(
       // Need to grab colorscheme from context
-      style: mergedStyle,
+      style: mergedTextStyleDto.resolve(context),
       strutStyle: textAttributes?.strutStyle,
       textAlign: textAttributes?.textAlign,
       locale: textAttributes?.locale,
