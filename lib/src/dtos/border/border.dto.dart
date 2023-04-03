@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../factory/mix_provider_data.dart';
 import '../color.dto.dart';
 import 'border_side.dto.dart';
 import 'box_border.dto.dart';
@@ -74,12 +75,12 @@ class BorderDto extends BoxBorderDto<Border> {
   BorderSideDto? get _right => right;
 
   @override
-  Border resolve(BuildContext context) {
+  Border resolve(MixData mix) {
     return Border(
-      top: _top?.resolve(context) ?? BorderSide.none,
-      right: _right?.resolve(context) ?? BorderSide.none,
-      bottom: _bottom?.resolve(context) ?? BorderSide.none,
-      left: _left?.resolve(context) ?? BorderSide.none,
+      top: _top?.resolve(mix) ?? BorderSide.none,
+      right: _right?.resolve(mix) ?? BorderSide.none,
+      bottom: _bottom?.resolve(mix) ?? BorderSide.none,
+      left: _left?.resolve(mix) ?? BorderSide.none,
     );
   }
 
@@ -178,12 +179,12 @@ class BorderDirectionalDto extends BoxBorderDto<BorderDirectional> {
   BorderSideDto? get _end => end;
 
   @override
-  BorderDirectional resolve(BuildContext context) {
+  BorderDirectional resolve(MixData mix) {
     return BorderDirectional(
-      top: _top?.resolve(context) ?? BorderSide.none,
-      bottom: _bottom?.resolve(context) ?? BorderSide.none,
-      start: _start?.resolve(context) ?? BorderSide.none,
-      end: _end?.resolve(context) ?? BorderSide.none,
+      top: _top?.resolve(mix) ?? BorderSide.none,
+      bottom: _bottom?.resolve(mix) ?? BorderSide.none,
+      start: _start?.resolve(mix) ?? BorderSide.none,
+      end: _end?.resolve(mix) ?? BorderSide.none,
     );
   }
 

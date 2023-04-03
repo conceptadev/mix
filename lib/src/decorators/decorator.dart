@@ -12,12 +12,12 @@ abstract class Decorator<T extends Decorator<T>> extends Attribute
   /// Key is required in order for proper sorting
   final Key? key;
 
-  Widget build(BuildContext context, Widget child);
+  Widget build(MixData mix, Widget child);
 
   @override
   T merge(covariant T other);
 
-  Widget render(BuildContext context, Widget child) {
-    return build(context, child);
+  Widget render(MixData mix, Widget child) {
+    return build(mix, child);
   }
 }

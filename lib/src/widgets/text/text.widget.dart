@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../attributes/shared/shared.descriptor.dart';
+import '../../factory/mix_provider_data.dart';
 import '../empty/empty.widget.dart';
 import '../mix.widget.dart';
 import '../mix_context_builder.dart';
@@ -23,14 +24,10 @@ class TextMix extends MixWidget {
   Widget build(BuildContext context) {
     return MixBuilder(
       mix: mix,
-      builder: (context, _) {
-        final textProps = TextDescriptor.fromContext(context);
-        final commonDescriptor = CommonDescriptor.fromContext(context);
-
+      builder: (mix) {
         return TextMixedWidget(
-          textDescriptor: textProps,
-          commonDescriptor: commonDescriptor,
-          text: text,
+          mix: mix,
+          content: text,
           semanticsLabel: semanticsLabel,
         );
       },
@@ -40,54 +37,55 @@ class TextMix extends MixWidget {
 
 class TextMixedWidget extends StatelessWidget {
   const TextMixedWidget({
-    required this.textDescriptor,
-    required this.commonDescriptor,
-    required this.text,
+    required this.mix,
+    required this.content,
     Key? key,
     this.semanticsLabel,
   }) : super(key: key);
 
-  final String text;
-  final TextDescriptor textDescriptor;
-  final CommonDescriptor commonDescriptor;
+  final String content;
+  final MixData mix;
 
   final String? semanticsLabel;
 
   @override
   Widget build(BuildContext context) {
-    if (!commonDescriptor.visible) {
+    final common = CommonDescriptor.fromContext(mix);
+    final text = TextDescriptor.fromContext(mix);
+
+    if (!common.visible) {
       return const Empty();
     }
 
-    final content = textDescriptor.applyTextDirectives(text);
+    final modifiedContent = text.applyTextDirectives(content);
 
     final textWidget = Text(
-      content,
-      textDirection: commonDescriptor.textDirection,
-      textWidthBasis: textDescriptor.textWidthBasis,
-      textScaleFactor: textDescriptor.textScaleFactor,
-      locale: textDescriptor.locale,
-      maxLines: textDescriptor.maxLines,
-      overflow: textDescriptor.overflow,
-      softWrap: textDescriptor.softWrap,
-      strutStyle: textDescriptor.strutStyle,
-      style: textDescriptor.style,
-      textAlign: textDescriptor.textAlign,
-      textHeightBehavior: textDescriptor.textHeightBehavior,
+      modifiedContent,
+      textDirection: common.textDirection,
+      textWidthBasis: text.textWidthBasis,
+      textScaleFactor: text.textScaleFactor,
+      locale: text.locale,
+      maxLines: text.maxLines,
+      overflow: text.overflow,
+      softWrap: text.softWrap,
+      strutStyle: text.strutStyle,
+      style: text.style,
+      textAlign: text.textAlign,
+      textHeightBehavior: text.textHeightBehavior,
       semanticsLabel: semanticsLabel,
     );
 
-    if (commonDescriptor.animated) {
+    if (common.animated) {
       return AnimatedDefaultTextStyle(
-        style: textDescriptor.style ??
+        style: text.style ??
             Theme.of(context).textTheme.bodyLarge ??
             const TextStyle(),
-        duration: commonDescriptor.animationDuration,
-        curve: commonDescriptor.animationCurve,
-        softWrap: textDescriptor.softWrap,
-        overflow: textDescriptor.overflow,
-        textAlign: textDescriptor.textAlign,
-        maxLines: textDescriptor.maxLines,
+        duration: common.animationDuration,
+        curve: common.animationCurve,
+        softWrap: text.softWrap,
+        overflow: text.overflow,
+        textAlign: text.textAlign,
+        maxLines: text.maxLines,
         child: textWidget,
       );
     } else {
@@ -102,15 +100,15 @@ class TextMixedWidget extends StatelessWidget {
     properties.add(
       DiagnosticsProperty<String>(
         'text',
-        text,
+        content,
         defaultValue: null,
       ),
     );
 
     properties.add(
-      DiagnosticsProperty<TextDescriptor>(
+      DiagnosticsProperty<MixData>(
         'props',
-        textDescriptor,
+        mix,
         defaultValue: null,
       ),
     );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../factory/mix_provider_data.dart';
 import '../dto.dart';
 
 class RadiusDto extends Dto<Radius> {
@@ -42,7 +43,7 @@ class RadiusDto extends Dto<Radius> {
   }
 
   @override
-  Radius resolve(BuildContext context) {
+  Radius resolve(MixData mix) {
     final resolvedX = _x;
     final resolvedY = _y;
 

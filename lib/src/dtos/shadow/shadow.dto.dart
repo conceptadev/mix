@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../attributes/attribute.dart';
+import '../../../mix.dart';
 import '../../helpers/mergeable_list.dart';
 import '../color.dto.dart';
 import '../dto.dart';
@@ -34,9 +34,9 @@ class ShadowDto<T extends Shadow> extends Dto<T>
   }
 
   @override
-  T resolve(BuildContext context) {
+  T resolve(MixData mix) {
     return Shadow(
-      color: color?.resolve(context) ?? const Shadow().color,
+      color: color?.resolve(mix) ?? const Shadow().color,
       offset: offset ?? const Shadow().offset,
       blurRadius: blurRadius ?? const Shadow().blurRadius,
     ) as T;
@@ -68,8 +68,8 @@ class ShadowDto<T extends Shadow> extends Dto<T>
 }
 
 extension ShadowDtoExt on List<ShadowDto> {
-  List<Shadow> resolve(BuildContext context) {
-    return map((e) => e.resolve(context)).toList();
+  List<Shadow> resolve(MixData mix) {
+    return map((e) => e.resolve(mix)).toList();
   }
 
   List<ShadowDto> merge(List<ShadowDto>? other) {

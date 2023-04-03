@@ -1,7 +1,5 @@
 import 'package:flutter/widgets.dart';
 
-import '../../attributes/shared/shared.descriptor.dart';
-import '../box/box.descriptor.dart';
 import '../box/box.widget.dart';
 import '../gap/gap_widget.dart';
 import '../mix.widget.dart';
@@ -45,22 +43,19 @@ class FlexBox extends MixWidget {
     return MixBuilder(
       mix: mix,
       variants: variants,
-      builder: (context, mixContext) {
-        final flexProps = FlexDescriptor.fromContext(context);
-        final boxProps = BoxDescriptor.fromContext(context);
-        final commonProps = CommonDescriptor.fromContext(context);
+      builder: (mix) {
+        final flex = FlexDescriptor.fromContext(mix);
 
         return BoxMixedWidget(
-          boxProps: boxProps,
-          commonProps: commonProps,
+          mix: mix,
           child: Flex(
             direction: direction,
-            mainAxisAlignment: flexProps.mainAxisAlignment,
-            crossAxisAlignment: flexProps.crossAxisAlignment,
-            mainAxisSize: flexProps.mainAxisSize,
-            verticalDirection: flexProps.verticalDirection,
+            mainAxisAlignment: flex.mainAxisAlignment,
+            crossAxisAlignment: flex.crossAxisAlignment,
+            mainAxisSize: flex.mainAxisSize,
+            verticalDirection: flex.verticalDirection,
             children: _renderChildrenWithGap(
-              flexProps.gapSize,
+              flex.gapSize,
               children,
             ),
           ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../theme/mix_theme.dart';
+import '../factory/mix_provider_data.dart';
 import '../theme/tokens/color_token.dart';
 import 'dto.dart';
 
@@ -21,11 +21,11 @@ class ColorDto extends Dto<Color> {
   }
 
   @override
-  Color resolve(BuildContext context) {
+  Color resolve(MixData mix) {
     var resolvedColor = value;
 
     if (resolvedColor is ColorToken) {
-      resolvedColor = MixTokenResolver(context).color(resolvedColor);
+      resolvedColor = mix.resolveToken.color(resolvedColor);
     }
 
     return value;

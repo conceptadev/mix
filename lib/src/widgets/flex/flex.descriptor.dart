@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../factory/mix_provider.dart';
+import '../../factory/mix_provider_data.dart';
 import 'flex.attributes.dart';
 
 class FlexDescriptor {
@@ -20,9 +20,8 @@ class FlexDescriptor {
     this.gapSize,
   });
 
-  factory FlexDescriptor.fromContext(BuildContext context) {
-    final mixContext = MixProvider.ensureOf(context);
-    final flexAttributes = mixContext.attributesOfType<FlexAttributes>();
+  factory FlexDescriptor.fromContext(MixData mix) {
+    final flexAttributes = mix.attributesOfType<FlexAttributes>();
 
     return FlexDescriptor(
       direction: flexAttributes?.direction,

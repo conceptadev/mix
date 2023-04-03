@@ -56,8 +56,8 @@ void main() {
       // Different instance but same properties
       expect(matchMix.hashCode == mix.hashCode, true);
       expect(clonedMix.hashCode == mix.hashCode, false);
-      expect(matchMix, equals(mix));
-      expect(clonedMix, equals(mix));
+      expect(matchMix, equals(mix), reason: "matchMix should be the same");
+      expect(clonedMix, equals(mix), reason: "clonedMix should be the same");
       expect(widgetFinder, findsOneWidget);
     });
   });

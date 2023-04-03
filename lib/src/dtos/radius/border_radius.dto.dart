@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../factory/mix_provider_data.dart';
 import 'border_radius_geometry.dto.dart';
 import 'radius_dto.dart';
 
@@ -84,12 +85,12 @@ class BorderRadiusDto extends BorderRadiusGeometryDto<BorderRadius> {
   RadiusDto? get topStart => null;
 
   @override
-  BorderRadius resolve(BuildContext context) {
+  BorderRadius resolve(MixData mix) {
     return BorderRadius.only(
-      topLeft: topLeft?.resolve(context) ?? Radius.zero,
-      topRight: topRight?.resolve(context) ?? Radius.zero,
-      bottomLeft: bottomLeft?.resolve(context) ?? Radius.zero,
-      bottomRight: bottomRight?.resolve(context) ?? Radius.zero,
+      topLeft: topLeft?.resolve(mix) ?? Radius.zero,
+      topRight: topRight?.resolve(mix) ?? Radius.zero,
+      bottomLeft: bottomLeft?.resolve(mix) ?? Radius.zero,
+      bottomRight: bottomRight?.resolve(mix) ?? Radius.zero,
     );
   }
 

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../attributes/attribute.dart';
+import '../helpers/equatable_mixin.dart';
+import '../theme/mix_theme.dart';
 import '../variants/variant_attribute.dart';
 import '../widgets/box/box.decorator.dart';
 import 'mix_factory.dart';
@@ -9,12 +11,18 @@ import 'mix_values.dart';
 @Deprecated('Use MixData instead.')
 typedef MixContext = MixData;
 
-class MixData {
+class MixData with EquatableMixin {
   final MixValues _mixValues;
+  final MixTokenResolver _tokenResolver;
+  final MixThemeData? _theme;
 
   MixData._({
     required MixValues mixValues,
-  }) : _mixValues = mixValues;
+    required MixTokenResolver tokenResolver,
+    MixThemeData? theme,
+  })  : _mixValues = mixValues,
+        _tokenResolver = tokenResolver,
+        _theme = theme;
 
   factory MixData.create({
     required BuildContext context,
@@ -40,8 +48,12 @@ class MixData {
 
     return MixData._(
       mixValues: appliedValues,
+      tokenResolver: MixTokenResolver(context),
+      theme: MixTheme.maybeOf(context),
     );
   }
+
+  MixTokenResolver get resolveToken => _tokenResolver;
 
   static List<Attribute> _applyContextVariants(
     BuildContext context,
@@ -80,7 +92,7 @@ class MixData {
     return _mixValues.attributesOfType<T>();
   }
 
-  List<WidgetDecorator>? decorators() {
+  List<WidgetDecorator>? get decorators {
     return _mixValues.decorators?.values.toList();
   }
 
@@ -101,14 +113,5 @@ class MixData {
   MixValues get values => _mixValues;
 
   @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is MixData && other._mixValues == _mixValues;
-  }
-
-  @override
-  int get hashCode {
-    return _mixValues.hashCode;
-  }
+  get props => [_mixValues, _theme];
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../attributes/shared/shared.descriptor.dart';
+import '../../../factory/mix_provider_data.dart';
 import '../box.decorator.dart';
 
 class ScaleDecorator extends WidgetDecorator<ScaleDecorator> {
@@ -16,8 +17,8 @@ class ScaleDecorator extends WidgetDecorator<ScaleDecorator> {
   }
 
   @override
-  Widget build(BuildContext context, Widget? child) {
-    final common = CommonDescriptor.fromContext(context);
+  Widget build(MixData mix, Widget child) {
+    final common = CommonDescriptor.fromContext(mix);
     if (common.animated) {
       return TweenAnimationBuilder<double>(
         tween: Tween<double>(begin: 1, end: scale),

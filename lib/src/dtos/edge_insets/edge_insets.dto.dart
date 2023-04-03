@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../theme/mix_theme.dart';
+import '../../factory/mix_provider_data.dart';
 import 'edge_insets_geometry.dto.dart';
 
 class EdgeInsetsDto extends EdgeInsetsGeometryDto<EdgeInsets> {
@@ -88,14 +88,12 @@ class EdgeInsetsDto extends EdgeInsetsGeometryDto<EdgeInsets> {
   }
 
   @override
-  EdgeInsets resolve(BuildContext context) {
-    final tokenResolver = MixTokenResolver(context);
-
+  EdgeInsets resolve(MixData mix) {
     return EdgeInsets.only(
-      top: tokenResolver.space(_top ?? 0.0),
-      bottom: tokenResolver.space(_bottom ?? 0.0),
-      left: tokenResolver.space(_left ?? 0.0),
-      right: tokenResolver.space(_right ?? 0.0),
+      top: mix.resolveToken.space(_top ?? 0.0),
+      bottom: mix.resolveToken.space(_bottom ?? 0.0),
+      left: mix.resolveToken.space(_left ?? 0.0),
+      right: mix.resolveToken.space(_right ?? 0.0),
     );
   }
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import '../../mix.dart';
+import '../helpers/equatable_mixin.dart';
 import 'tokens/breakpoints.dart';
 import 'tokens/mix_token.dart';
 import 'tokens/radii_token.dart';
@@ -30,7 +31,7 @@ class MixTheme extends InheritedWidget {
   }
 }
 
-class MixThemeData {
+class MixThemeData with EquatableMixin {
   final MixSpaceTokens space;
   late MixSpaceTokensReference spaceRef;
   final MixBreakpointsTokens breakpoints;
@@ -78,30 +79,7 @@ class MixThemeData {
   }
 
   @override
-  String toString() {
-    return 'MixThemeData(space: $space, breakpoints: $breakpoints  colors: $colors, textStyles: $textStyles)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is MixThemeData &&
-        other.space == space &&
-        other.breakpoints == breakpoints &&
-        other.colors == colors &&
-        other.spaceRef == spaceRef &&
-        other.textStyles == textStyles;
-  }
-
-  @override
-  int get hashCode {
-    return space.hashCode ^
-        breakpoints.hashCode ^
-        colors.hashCode ^
-        spaceRef.hashCode ^
-        textStyles.hashCode;
-  }
+  get props => [space, breakpoints, colors, textStyles];
 }
 
 class MixTokenResolver {

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../../factory/mix_provider.dart';
+import '../../factory/mix_provider_data.dart';
 import 'image.attributes.dart';
 
-class ImageProps {
+class ImageDescriptor {
   final Color? color;
   final double? scale;
 
@@ -16,7 +16,7 @@ class ImageProps {
   final AlignmentGeometry alignment;
   final ImageRepeat repeat;
 
-  const ImageProps({
+  const ImageDescriptor({
     this.color,
     this.scale,
     this.width,
@@ -27,14 +27,11 @@ class ImageProps {
     required this.repeat,
   });
 
-  factory ImageProps.fromContext(BuildContext context) {
-    final mixContext = MixProvider.ensureOf(context);
-    final attributes = mixContext.attributesOfType<ImageAttributes>();
+  factory ImageDescriptor.fromContext(MixData mix) {
+    final attributes = mix.attributesOfType<ImageAttributes>();
 
-    var color = attributes?.color;
-
-    return ImageProps(
-      color: color?.resolve(context),
+    return ImageDescriptor(
+      color: attributes?.color?.resolve(mix),
       scale: attributes?.scale,
       width: attributes?.width,
       height: attributes?.height,
@@ -49,7 +46,7 @@ class ImageProps {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is ImageProps &&
+    return other is ImageDescriptor &&
         other.color == color &&
         other.scale == scale &&
         other.width == width &&

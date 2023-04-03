@@ -43,7 +43,7 @@ class _CustomWidgetState extends State<CustomWidget> {
           ),
           child: Text(
             'Custom Widget',
-            style: Theme.of(context).textTheme.button?.copyWith(
+            style: Theme.of(context).textTheme.labelLarge?.copyWith(
                   color: _isHover
                       ? colorScheme.onSecondary
                       : colorScheme.onPrimary,
@@ -67,7 +67,7 @@ class CustomMixWidget extends StatelessWidget {
       elevation(10),
       rounded(10),
       bgColor(MaterialTokens.colorScheme.primary),
-      textStyle(asStyle: MaterialTokens.textTheme.button),
+      textStyle(as: MaterialTokens.textTheme.button),
       textColor(MaterialTokens.colorScheme.onPrimary),
       onHover(
         elevation(2),

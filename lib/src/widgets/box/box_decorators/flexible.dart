@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../factory/mix_provider_data.dart';
 import '../box.decorator.dart';
 
 class FlexibleDecorator extends WidgetDecorator<FlexibleDecorator> {
@@ -20,7 +21,7 @@ class FlexibleDecorator extends WidgetDecorator<FlexibleDecorator> {
   }
 
   @override
-  Widget build(BuildContext context, Widget child) {
+  Widget build(MixData mix, Widget child) {
     return Flexible(
       key: key,
       fit: flexFit ?? FlexFit.loose,

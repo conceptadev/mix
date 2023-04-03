@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-
+import '../factory/mix_provider_data.dart';
 import 'dto.dart';
 
 typedef ValueModifier<T> = T Function(T value);
@@ -30,7 +29,7 @@ class DoubleDto extends Dto<double> {
   }
 
   @override
-  double resolve(BuildContext context) {
+  double resolve(MixData mix) {
     final modifier = _modifier;
 
     // Apply modifier if it exists

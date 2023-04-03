@@ -136,11 +136,10 @@ class CustomWidget extends StatelessWidget {
     return MixBuilder(
       variants: variants,
       mix: mix,
-      builder: (context, mixContext) {
-        final attribute =
-            mixContext.attributesOfType<InheritedIconAttribute>()!;
+      builder: (mix) {
+        final attribute = mix.attributesOfType<InheritedIconAttribute>()!;
 
-        final sharedProps = CommonDescriptor.fromContext(context);
+        final sharedProps = CommonDescriptor.fromContext(mix);
 
         return Semantics(
           label: semanticLabel,
@@ -179,9 +178,9 @@ class TextFieldWidget extends StatelessWidget {
     return MixBuilder(
       mix: mix,
       variants: variants,
-      builder: (context, mixContext) {
-        final decorationTheme = mixContext
-            .dependOnAttributesOfType<InputDecorationThemeAttribute>();
+      builder: (mix) {
+        final decorationTheme =
+            mix.dependOnAttributesOfType<InputDecorationThemeAttribute>();
 
         return Semantics(
           label: semanticLabel,

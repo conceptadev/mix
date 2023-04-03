@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../factory/mix_provider.dart';
+import '../../factory/mix_provider_data.dart';
 import 'shared.attributes.dart';
 
 class CommonDescriptor {
@@ -19,8 +19,7 @@ class CommonDescriptor {
     this.textDirection,
   });
 
-  factory CommonDescriptor.fromContext(BuildContext context) {
-    final mix = MixProvider.ensureOf(context);
+  factory CommonDescriptor.fromContext(MixData mix) {
     final common = mix.attributesOfType<SharedWidgetAttributes>();
 
     return CommonDescriptor(

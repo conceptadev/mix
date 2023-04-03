@@ -6,8 +6,8 @@ import '../factory/mix_provider_data.dart';
 import '../theme/mix_theme.dart';
 import '../widgets/box/box.descriptor.dart';
 import '../widgets/flex/flex.descriptor.dart';
-import '../widgets/icon/icon.props.dart';
-import '../widgets/image/image.props.dart';
+import '../widgets/icon/icon.descriptor.dart';
+import '../widgets/image/image.descriptor.dart';
 import '../widgets/text/text.descriptor.dart';
 import '../widgets/zbox/zbox.props.dart';
 
@@ -59,25 +59,31 @@ extension BuildContextExt on BuildContext {
   MixThemeData get mixTheme => MixTheme.of(this);
 
   @Deprecated('use SharedProps.fromContext(context) instead')
-  CommonDescriptor get sharedProps => CommonDescriptor.fromContext(this);
+  CommonDescriptor get sharedProps =>
+      CommonDescriptor.fromContext(MixProvider.of(this)!);
 
   @Deprecated('use BoxProps.fromContext(context) instead')
-  BoxDescriptor get boxProps => BoxDescriptor.fromContext(this);
+  BoxDescriptor get boxProps =>
+      BoxDescriptor.fromContext(MixProvider.of(this)!);
 
   @Deprecated('use FlexProps.fromContext(context) instead')
-  FlexDescriptor get flexProps => FlexDescriptor.fromContext(this);
+  FlexDescriptor get flexProps =>
+      FlexDescriptor.fromContext(MixProvider.of(this)!);
 
   @Deprecated('use ZBoxProps.fromContext(context) instead')
-  ZBoxProps get zBoxProps => ZBoxProps.fromContext(this);
+  ZBoxProps get zBoxProps => ZBoxProps.fromContext(MixProvider.of(this)!);
 
   @Deprecated('use IconProps.fromContext(context) instead')
-  IconProps get iconProps => IconProps.fromContext(this);
+  IconDescriptor get iconProps =>
+      IconDescriptor.fromContext(MixProvider.of(this)!);
 
   @Deprecated('use TextProps.fromContext(context) instead')
-  TextDescriptor get textProps => TextDescriptor.fromContext(this);
+  TextDescriptor get textProps =>
+      TextDescriptor.fromContext(MixProvider.of(this)!);
 
   @Deprecated('use ImageProps.fromContext(context) instead')
-  ImageProps get imageProps => ImageProps.fromContext(this);
+  ImageDescriptor get imageProps =>
+      ImageDescriptor.fromContext(MixProvider.of(this)!);
 }
 
 extension StrutStyleExt on StrutStyle {

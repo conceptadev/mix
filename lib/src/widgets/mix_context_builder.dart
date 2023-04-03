@@ -4,7 +4,6 @@ import '../../mix.dart';
 import '../factory/mix_provider.dart';
 
 typedef WidgetMixBuilder = Widget Function(
-  BuildContext context,
   MixData mixContext,
 );
 
@@ -25,10 +24,7 @@ class MixBuilder extends MixWidget {
     return MixProvider(
       mix,
       child: Builder(
-        builder: (context) => _builder(
-          context,
-          mix,
-        ),
+        builder: (context) => _builder(mix),
       ),
     );
   }

@@ -98,12 +98,12 @@ class TextStyleDto extends Dto<TextStyle> {
   bool get hasToken => styleToken != null;
 
   @override
-  TextStyle resolve(BuildContext context) {
+  TextStyle resolve(MixData mix) {
     TextStyleDto? styleRef;
 
     if (styleToken != null) {
       // Load as DTO for consistent merging behavior
-      final textStyle = MixTokenResolver(context).textStyle(styleToken!);
+      final textStyle = mix.resolveToken.textStyle(styleToken!);
       styleRef = TextStyleDto.from(textStyle);
     }
 
@@ -125,12 +125,12 @@ class TextStyleDto extends Dto<TextStyle> {
       height: styleRef.height,
       wordSpacing: styleRef.wordSpacing,
       textBaseline: styleRef.textBaseline,
-      color: styleRef.color?.resolve(context),
-      backgroundColor: styleRef.backgroundColor?.resolve(context),
-      shadows: styleRef.shadows?.map((e) => e.resolve(context)).toList(),
+      color: styleRef.color?.resolve(mix),
+      backgroundColor: styleRef.backgroundColor?.resolve(mix),
+      shadows: styleRef.shadows?.map((e) => e.resolve(mix)).toList(),
       fontFeatures: styleRef.fontFeatures,
       decoration: styleRef.decoration,
-      decorationColor: styleRef.decorationColor?.resolve(context),
+      decorationColor: styleRef.decorationColor?.resolve(mix),
       decorationStyle: styleRef.decorationStyle,
       debugLabel: styleRef.debugLabel,
       background: styleRef.background,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../factory/mix_provider_data.dart';
 import '../color.dto.dart';
 import '../dto.dart';
 
@@ -61,9 +62,9 @@ class BorderSideDto extends Dto<BorderSide> {
   final BorderSide _default = const BorderSide();
 
   @override
-  BorderSide resolve(BuildContext context) {
+  BorderSide resolve(MixData mix) {
     return BorderSide(
-      color: color?.resolve(context) ?? _default.color,
+      color: color?.resolve(mix) ?? _default.color,
       width: width ?? _default.width,
       style: style ?? _default.style,
       // TODO: Temporarily removed because of compatibility issues

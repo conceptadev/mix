@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
 
 Mix get button => Mix(
-      textStyle(asStyle: MaterialTokens.textTheme.bodyText2),
+      textStyle(as: MaterialTokens.textTheme.bodyText2),
       bold(),
       fontSize(16.0),
       bgColor(MaterialTokens.colorScheme.primary),

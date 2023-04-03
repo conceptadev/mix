@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../mix.dart';
 import '../../dtos/shadow/box_shadow.dto.dart';
-import '../../factory/mix_provider.dart';
 import '../../helpers/equatable_mixin.dart';
-import 'box.decorator.dart';
 
 class BoxDescriptor with EquatableMixin {
   final Color? _color;
@@ -28,8 +26,6 @@ class BoxDescriptor with EquatableMixin {
   final double? minWidth;
   final BoxShape? shape;
 
-  final List<WidgetDecorator>? decorators;
-
   const BoxDescriptor({
     Color? color,
     this.alignment,
@@ -47,25 +43,21 @@ class BoxDescriptor with EquatableMixin {
     this.shape,
     this.transform,
     this.gradient,
-    // Decorators
-    this.decorators,
   }) : _color = color;
 
-  factory BoxDescriptor.fromContext(BuildContext context) {
-    final mix = MixProvider.ensureOf(context);
+  factory BoxDescriptor.fromContext(MixData mix) {
     final attributes = mix.attributesOfType<BoxAttributes>();
-    final decorators = mix.decorators();
 
     return BoxDescriptor(
-      color: attributes?.color?.resolve(context),
+      color: attributes?.color?.resolve(mix),
       alignment: attributes?.alignment,
-      margin: attributes?.margin?.resolve(context),
-      padding: attributes?.padding?.resolve(context),
+      margin: attributes?.margin?.resolve(mix),
+      padding: attributes?.padding?.resolve(mix),
       width: attributes?.width,
       height: attributes?.height,
-      border: attributes?.border?.resolve(context),
-      borderRadius: attributes?.borderRadius?.resolve(context),
-      boxShadow: attributes?.boxShadow?.resolve(context),
+      border: attributes?.border?.resolve(mix),
+      borderRadius: attributes?.borderRadius?.resolve(mix),
+      boxShadow: attributes?.boxShadow?.resolve(mix),
       maxHeight: attributes?.maxHeight,
       maxWidth: attributes?.maxWidth,
       minHeight: attributes?.minHeight,
@@ -73,7 +65,6 @@ class BoxDescriptor with EquatableMixin {
       shape: attributes?.shape,
       transform: attributes?.transform,
       gradient: attributes?.gradient,
-      decorators: decorators,
     );
   }
 
@@ -150,6 +141,5 @@ class BoxDescriptor with EquatableMixin {
         shape,
         transform,
         gradient,
-        decorators,
       ];
 }

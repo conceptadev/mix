@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../factory/mix_provider_data.dart';
 import '../box.decorator.dart';
 
 class RotateDecorator extends WidgetDecorator<RotateDecorator> {
@@ -17,7 +18,7 @@ class RotateDecorator extends WidgetDecorator<RotateDecorator> {
   }
 
   @override
-  Widget build(BuildContext context, Widget child) {
+  Widget build(MixData mix, Widget child) {
     return RotatedBox(
       key: key,
       quarterTurns: quarterTurns,
