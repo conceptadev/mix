@@ -12,20 +12,30 @@ abstract class MixWidget extends StatelessWidget {
     StyleMix? style,
     super.key,
     List<Variant>? variants,
-  })  : _mix = mix ?? Mix.constant,
+  })  : _mix = mix,
+        _style = style,
         _variants = variants;
 
-  final Mix _mix;
+  final Mix? _mix;
+  final StyleMix? _style;
   final List<Variant>? _variants;
 
-  Mix get mix => _mix;
+  MixFactory get style {
+    if (_style != null && _mix != null) {
+      throw Exception(
+        'Please, give only one of the following parameters style OR mix',
+      );
+    }
+
+    return _style ?? _mix ?? Mix.constant;
+  }
 
   List<Variant>? get variants => _variants;
 
   MixData createMixData(BuildContext context) {
     return MixData.create(
       context: context,
-      mix: _mix.selectVariants(_variants ?? []),
+      style: style.selectVariants(_variants ?? []),
     );
   }
 
@@ -37,7 +47,7 @@ abstract class MixWidget extends StatelessWidget {
     super.debugFillProperties(properties);
 
     properties.add(
-      DiagnosticsProperty<Mix>('mix', mix, defaultValue: null),
+      DiagnosticsProperty<Mix>('mix', style, defaultValue: null),
     );
     properties.add(
       DiagnosticsProperty<List<Variant>>(

@@ -11,7 +11,8 @@ import 'text.descriptor.dart';
 class TextMix extends MixWidget {
   const TextMix(
     this.text, {
-    super.mix,
+    @Deprecated('Use the style parameter instead') super.mix,
+    super.style,
     super.key,
     super.variants,
     this.semanticsLabel,
@@ -23,7 +24,7 @@ class TextMix extends MixWidget {
   @override
   Widget build(BuildContext context) {
     return MixBuilder(
-      mix: mix,
+      style: style,
       builder: (mix) {
         return TextMixedWidget(
           mix: mix,

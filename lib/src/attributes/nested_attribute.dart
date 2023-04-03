@@ -3,11 +3,11 @@ import 'attribute.dart';
 
 /// Allows to pass down Mixes as attributes for use with helpers
 class NestedMixAttribute<T extends Attribute> extends Attribute {
-  const NestedMixAttribute(Mix mix) : _mix = mix;
+  const NestedMixAttribute(StyleMix style) : _style = style;
 
-  final Mix _mix;
+  final StyleMix _style;
 
-  Mix get value => _mix;
+  StyleMix get value => _style;
 
   @override
   bool operator ==(Object other) {
@@ -20,5 +20,5 @@ class NestedMixAttribute<T extends Attribute> extends Attribute {
   int get hashCode => value.hashCode;
 
   @override
-  String toString() => 'NestedMixAttribute(mix: $_mix)';
+  String toString() => 'NestedMixAttribute(style: $_style)';
 }

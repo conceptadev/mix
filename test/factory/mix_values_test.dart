@@ -28,10 +28,13 @@ void main() {
       RandomGenerator.textAttributes(),
     ];
     final variantList = <VariantAttribute>[
-      VariantAttribute(const Variant('testVariant'), RandomGenerator.mix()),
+      VariantAttribute(
+        const Variant('testVariant'),
+        style: RandomGenerator.mix(),
+      ),
       VariantAttribute(
         const Variant('anotherTestVariant'),
-        RandomGenerator.mix(),
+        style: RandomGenerator.mix(),
       ),
     ];
     final contextVariantList = <ContextVariantAttribute>[

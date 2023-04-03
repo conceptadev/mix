@@ -23,7 +23,7 @@ void main() async {
         final expensiveContextMix = Mix(
           onNot(onHover)(padding(10)),
           onNot(onPress)(padding(15)),
-          onNot(onFocus)(p(20)),
+          onNot(onFocus)(padding(20)),
           onNot(onDisabled)(padding(25)),
           onDark(padding(30)),
           onPortrait(padding(35)),
@@ -37,7 +37,7 @@ void main() async {
 
         watch.start();
 
-        MixData.create(context: context, mix: expensiveContextMix);
+        MixData.create(context: context, style: expensiveContextMix);
 
         watch.stop();
 

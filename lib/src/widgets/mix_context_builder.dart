@@ -9,7 +9,8 @@ typedef WidgetMixBuilder = Widget Function(
 
 class MixBuilder extends MixWidget {
   const MixBuilder({
-    super.mix,
+    @Deprecated('Use the style parameter instead') super.mix,
+    super.style,
     super.variants,
     super.key,
     required WidgetMixBuilder builder,

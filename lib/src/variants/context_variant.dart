@@ -43,7 +43,7 @@ class ContextVariant extends Variant {
       if (param != null) params.add(param);
     }
 
-    return ContextVariantAttribute(this, Mix.fromAttributes(params));
+    return ContextVariantAttribute(this, style: Mix.fromAttributes(params));
   }
 
   ContextVariant inverseInstance() {

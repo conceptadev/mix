@@ -9,14 +9,15 @@ import 'variant.dart';
 class VariantAttribute<T extends Variant> extends Attribute
     with MergeableMixin<VariantAttribute<T>>, EquatableMixin {
   const VariantAttribute(
-    this.variant,
-    Mix mix,
-  ) : _mix = mix;
+    this.variant, {
+    @Deprecated('Use the style parameter instead') Mix? mix,
+    StyleMix? style,
+  }) : _style = style ?? mix ?? Mix.constant;
 
   final T variant;
-  final Mix _mix;
+  final StyleMix _style;
 
-  Mix get value => _mix;
+  StyleMix get value => _style;
 
   @override
   VariantAttribute<T> merge(covariant VariantAttribute<T> other) {
@@ -30,7 +31,7 @@ class VariantAttribute<T extends Variant> extends Attribute
 
     return VariantAttribute(
       variant,
-      _mix.merge(other._mix),
+      style: _style.merge(other._style),
     );
   }
 
@@ -47,7 +48,7 @@ class VariantAttribute<T extends Variant> extends Attribute
   }
 
   @override
-  int get hashCode => variant.hashCode ^ _mix.hashCode;
+  int get hashCode => variant.hashCode ^ _style.hashCode;
 
   @override
   get props => [variant, value];
@@ -55,11 +56,13 @@ class VariantAttribute<T extends Variant> extends Attribute
 
 class ContextVariantAttribute extends VariantAttribute<ContextVariant> {
   const ContextVariantAttribute(
-    ContextVariant variant,
-    Mix mix,
-  ) : super(
+    ContextVariant variant, {
+    @Deprecated('Use the style parameter instead') Mix? mix,
+    StyleMix? style,
+  }) : super(
           variant,
-          mix,
+          mix: mix,
+          style: style,
         );
 
   bool shouldApply(BuildContext context) {

@@ -12,7 +12,7 @@ class BoxExample extends StatelessWidget {
       child: Column(
         children: [
           Box(
-            mix: button,
+            style: button,
             child: const TextMix('Details'),
           ),
         ],
