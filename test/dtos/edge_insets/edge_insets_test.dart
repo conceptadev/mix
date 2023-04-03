@@ -78,10 +78,15 @@ void main() {
         home: Builder(builder: (context) {
           return MixTheme(
             data: mixTheme,
-            child: Container(
-              margin: edgeInsetsDto.resolve(context),
-              padding: edgeInsetsDto.merge(overrideEdgeInsets).resolve(context),
-              child: const SizedBox(width: 50, height: 50),
+            child: MixBuilder(
+              mix: Mix(),
+              builder: (mix) {
+                return Container(
+                  margin: edgeInsetsDto.resolve(mix),
+                  padding: edgeInsetsDto.merge(overrideEdgeInsets).resolve(mix),
+                  child: const SizedBox(width: 50, height: 50),
+                );
+              },
             ),
           );
         }),
