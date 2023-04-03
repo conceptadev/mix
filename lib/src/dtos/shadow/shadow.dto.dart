@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../attributes/attribute.dart';
+import '../../../mix.dart';
 import '../../helpers/mergeable_list.dart';
 import '../color.dto.dart';
 import '../dto.dart';
@@ -16,8 +16,6 @@ class ShadowDto<T extends Shadow> extends Dto<T>
     this.offset,
     this.blurRadius,
   });
-
-  final Shadow _default = const Shadow();
 
   factory ShadowDto.from(Shadow shadow) {
     return ShadowDto(
@@ -36,11 +34,11 @@ class ShadowDto<T extends Shadow> extends Dto<T>
   }
 
   @override
-  T resolve(BuildContext context) {
+  T resolve(MixData mix) {
     return Shadow(
-      color: color?.resolve(context) ?? _default.color,
-      offset: offset ?? _default.offset,
-      blurRadius: blurRadius ?? _default.blurRadius,
+      color: color?.resolve(mix) ?? const Shadow().color,
+      offset: offset ?? const Shadow().offset,
+      blurRadius: blurRadius ?? const Shadow().blurRadius,
     ) as T;
   }
 
@@ -66,29 +64,12 @@ class ShadowDto<T extends Shadow> extends Dto<T>
   }
 
   @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is ShadowDto &&
-        other.color == color &&
-        other.offset == offset &&
-        other.blurRadius == blurRadius;
-  }
-
-  @override
-  int get hashCode {
-    return color.hashCode ^ offset.hashCode ^ blurRadius.hashCode;
-  }
-
-  @override
-  String toString() {
-    return 'ShadowDto(color: $color, offset: $offset, blurRadius: $blurRadius)';
-  }
+  get props => [color, offset, blurRadius];
 }
 
 extension ShadowDtoExt on List<ShadowDto> {
-  List<Shadow> resolve(BuildContext context) {
-    return map((e) => e.resolve(context)).toList();
+  List<Shadow> resolve(MixData mix) {
+    return map((e) => e.resolve(mix)).toList();
   }
 
   List<ShadowDto> merge(List<ShadowDto>? other) {

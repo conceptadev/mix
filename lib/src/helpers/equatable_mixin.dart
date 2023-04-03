@@ -2,13 +2,13 @@ import 'deep_collection_equality.dart';
 import 'extensions.dart';
 
 /// Returns a `hashCode` for [props].
-int mapPropsToHashCode(Iterable? props) =>
+int _mapPropsToHashCode(Iterable? props) =>
     _finish([...?props].fold(0, _combine));
 
 const DeepCollectionEquality _equality = DeepCollectionEquality();
 
 /// Determines whether [list1] and [list2] are equal.
-bool equals(List? list1, List? list2) {
+bool _equals(List? list1, List? list2) {
   if (identical(list1, list2)) return true;
   if (list1 == null || list2 == null) return false;
   final length = list1.length;
@@ -92,11 +92,42 @@ mixin EquatableMixin {
     return identical(this, other) ||
         other is EquatableMixin &&
             runtimeType == other.runtimeType &&
-            equals(props, other.props);
+            _equals(props, other.props);
   }
 
   @override
-  int get hashCode => runtimeType.hashCode ^ mapPropsToHashCode(props);
+  int get hashCode => runtimeType.hashCode ^ _mapPropsToHashCode(props);
+
+  List<String> getDiff(Object other) {
+    final diff = <String>[];
+
+// Return if there are no diferences
+    if (this == other) return diff;
+
+    if (other is EquatableMixin) {
+      final otherProps = other.props;
+      final length = props.length;
+
+      for (var i = 0; i < length; i++) {
+        final dynamic unit1 = props[i];
+        final dynamic unit2 = otherProps[i];
+
+        if (unit1 is Iterable || unit1 is Map) {
+          if (!_equality.equals(unit1, unit2)) {
+            diff.add(props[i].toString());
+          }
+        } else if (unit1?.runtimeType != unit2?.runtimeType) {
+          diff.add(props[i].toString());
+        } else if (unit1 != unit2) {
+          diff.add(props[i].toString());
+        }
+      }
+    } else {
+      diff.add('other is not EquatableMixin');
+    }
+
+    return diff;
+  }
 
   @override
   String toString() {

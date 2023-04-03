@@ -1,10 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import '../../attributes/common/common.descriptor.dart';
-import '../../mixer/mix_factory.dart';
-import '../../variants/variant.dart';
-import '../empty.widget.dart';
+import '../../attributes/shared/shared.descriptor.dart';
+import '../../factory/mix_provider_data.dart';
+import '../empty/empty.widget.dart';
 import '../mix.widget.dart';
 import '../mix_context_builder.dart';
 import 'text.descriptor.dart';
@@ -12,33 +11,23 @@ import 'text.descriptor.dart';
 class TextMix extends MixWidget {
   const TextMix(
     this.text, {
-    Mix? mix,
-    Key? key,
-    List<Variant>? variants,
+    super.mix,
+    super.key,
+    super.variants,
     this.semanticsLabel,
-    bool inherit = true,
-  }) : super(
-          mix,
-          inherit: inherit,
-          variants: variants,
-          key: key,
-        );
+  });
 
   final String text;
   final String? semanticsLabel;
 
   @override
   Widget build(BuildContext context) {
-    return MixContextBuilder(
+    return MixBuilder(
       mix: mix,
-      builder: (context, _) {
-        final textProps = TextDescriptor.fromContext(context);
-        final commonProps = CommonDescriptor.fromContext(context);
-
+      builder: (mix) {
         return TextMixedWidget(
-          textProps: textProps,
-          commonProps: commonProps,
-          text: text,
+          mix: mix,
+          content: text,
           semanticsLabel: semanticsLabel,
         );
       },
@@ -46,55 +35,57 @@ class TextMix extends MixWidget {
   }
 }
 
-// TODO: Rename this to TextMixerWidget for something more descriptive
 class TextMixedWidget extends StatelessWidget {
   const TextMixedWidget({
-    required this.textProps,
-    required this.commonProps,
-    required this.text,
+    required this.mix,
+    required this.content,
     Key? key,
     this.semanticsLabel,
   }) : super(key: key);
 
-  final String text;
-  final TextDescriptor textProps;
-  final CommonDescriptor commonProps;
+  final String content;
+  final MixData mix;
+
   final String? semanticsLabel;
 
   @override
   Widget build(BuildContext context) {
-    if (!commonProps.visible) {
+    final common = CommonDescriptor.fromContext(mix);
+    final text = TextDescriptor.fromContext(mix);
+
+    if (!common.visible) {
       return const Empty();
     }
-    final content = textProps.applyTextDirectives(text);
+
+    final modifiedContent = text.applyTextDirectives(content);
 
     final textWidget = Text(
-      content,
-      textDirection: commonProps.textDirection,
-      textWidthBasis: textProps.textWidthBasis,
-      textScaleFactor: textProps.textScaleFactor,
-      locale: textProps.locale,
-      maxLines: textProps.maxLines,
-      overflow: textProps.overflow,
-      softWrap: textProps.softWrap,
-      strutStyle: textProps.strutStyle,
-      style: textProps.style,
-      textAlign: textProps.textAlign,
-      textHeightBehavior: textProps.textHeightBehavior,
+      modifiedContent,
+      textDirection: common.textDirection,
+      textWidthBasis: text.textWidthBasis,
+      textScaleFactor: text.textScaleFactor,
+      locale: text.locale,
+      maxLines: text.maxLines,
+      overflow: text.overflow,
+      softWrap: text.softWrap,
+      strutStyle: text.strutStyle,
+      style: text.style,
+      textAlign: text.textAlign,
+      textHeightBehavior: text.textHeightBehavior,
       semanticsLabel: semanticsLabel,
     );
 
-    if (commonProps.animated) {
+    if (common.animated) {
       return AnimatedDefaultTextStyle(
-        style: textProps.style ??
-            Theme.of(context).textTheme.bodyText1 ??
+        style: text.style ??
+            Theme.of(context).textTheme.bodyLarge ??
             const TextStyle(),
-        duration: commonProps.animationDuration,
-        curve: commonProps.animationCurve,
-        softWrap: textProps.softWrap,
-        overflow: textProps.overflow,
-        textAlign: textProps.textAlign,
-        maxLines: textProps.maxLines,
+        duration: common.animationDuration,
+        curve: common.animationCurve,
+        softWrap: text.softWrap,
+        overflow: text.overflow,
+        textAlign: text.textAlign,
+        maxLines: text.maxLines,
         child: textWidget,
       );
     } else {
@@ -109,23 +100,15 @@ class TextMixedWidget extends StatelessWidget {
     properties.add(
       DiagnosticsProperty<String>(
         'text',
-        text,
+        content,
         defaultValue: null,
       ),
     );
 
     properties.add(
-      DiagnosticsProperty<TextDescriptor>(
+      DiagnosticsProperty<MixData>(
         'props',
-        textProps,
-        defaultValue: null,
-      ),
-    );
-
-    properties.add(
-      DiagnosticsProperty<CommonDescriptor>(
-        'commonProps',
-        commonProps,
+        mix,
         defaultValue: null,
       ),
     );

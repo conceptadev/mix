@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../factory/mix_provider_data.dart';
 import '../color.dto.dart';
 import 'border_side.dto.dart';
 import 'box_border.dto.dart';
@@ -23,6 +24,16 @@ class BorderDto extends BoxBorderDto<Border> {
     this.bottom,
     this.left,
   });
+
+  const BorderDto.symmetric({
+    BorderSideDto? vertical,
+    BorderSideDto? horizontal,
+  }) : this.only(
+          top: vertical,
+          right: horizontal,
+          bottom: vertical,
+          left: horizontal,
+        );
 
   const BorderDto.fromBorderSide(BorderSideDto side)
       : this.only(
@@ -48,10 +59,10 @@ class BorderDto extends BoxBorderDto<Border> {
 
   factory BorderDto.from(Border border) {
     return BorderDto.only(
-      top: BorderSideDto.fromBorderSide(border.top),
-      right: BorderSideDto.fromBorderSide(border.right),
-      bottom: BorderSideDto.fromBorderSide(border.bottom),
-      left: BorderSideDto.fromBorderSide(border.left),
+      top: BorderSideDto.from(border.top),
+      right: BorderSideDto.from(border.right),
+      bottom: BorderSideDto.from(border.bottom),
+      left: BorderSideDto.from(border.left),
     );
   }
 
@@ -64,12 +75,12 @@ class BorderDto extends BoxBorderDto<Border> {
   BorderSideDto? get _right => right;
 
   @override
-  Border resolve(BuildContext context) {
+  Border resolve(MixData mix) {
     return Border(
-      top: _top?.resolve(context) ?? BorderSide.none,
-      right: _right?.resolve(context) ?? BorderSide.none,
-      bottom: _bottom?.resolve(context) ?? BorderSide.none,
-      left: _left?.resolve(context) ?? BorderSide.none,
+      top: _top?.resolve(mix) ?? BorderSide.none,
+      right: _right?.resolve(mix) ?? BorderSide.none,
+      bottom: _bottom?.resolve(mix) ?? BorderSide.none,
+      left: _left?.resolve(mix) ?? BorderSide.none,
     );
   }
 
@@ -88,25 +99,7 @@ class BorderDto extends BoxBorderDto<Border> {
   }
 
   @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is BorderDto &&
-        other.top == top &&
-        other.right == right &&
-        other.bottom == bottom &&
-        other.left == left;
-  }
-
-  @override
-  int get hashCode {
-    return top.hashCode ^ right.hashCode ^ bottom.hashCode ^ left.hashCode;
-  }
-
-  @override
-  String toString() {
-    return 'BorderProps(top: $top, right: $right, bottom: $bottom, left: $left)';
-  }
+  get props => [_top, _right, _bottom, _left];
 }
 
 class BorderDirectionalDto extends BoxBorderDto<BorderDirectional> {
@@ -124,10 +117,10 @@ class BorderDirectionalDto extends BoxBorderDto<BorderDirectional> {
 
   factory BorderDirectionalDto.from(BorderDirectional border) {
     return BorderDirectionalDto.only(
-      top: BorderSideDto.fromBorderSide(border.top),
-      bottom: BorderSideDto.fromBorderSide(border.bottom),
-      start: BorderSideDto.fromBorderSide(border.start),
-      end: BorderSideDto.fromBorderSide(border.end),
+      top: BorderSideDto.from(border.top),
+      bottom: BorderSideDto.from(border.bottom),
+      start: BorderSideDto.from(border.start),
+      end: BorderSideDto.from(border.end),
     );
   }
 
@@ -170,10 +163,10 @@ class BorderDirectionalDto extends BoxBorderDto<BorderDirectional> {
 
   factory BorderDirectionalDto.fromBorder(BorderDirectional border) {
     return BorderDirectionalDto.only(
-      top: BorderSideDto.fromBorderSide(border.top),
-      bottom: BorderSideDto.fromBorderSide(border.bottom),
-      start: BorderSideDto.fromBorderSide(border.start),
-      end: BorderSideDto.fromBorderSide(border.end),
+      top: BorderSideDto.from(border.top),
+      bottom: BorderSideDto.from(border.bottom),
+      start: BorderSideDto.from(border.start),
+      end: BorderSideDto.from(border.end),
     );
   }
 
@@ -186,12 +179,12 @@ class BorderDirectionalDto extends BoxBorderDto<BorderDirectional> {
   BorderSideDto? get _end => end;
 
   @override
-  BorderDirectional resolve(BuildContext context) {
+  BorderDirectional resolve(MixData mix) {
     return BorderDirectional(
-      top: _top?.resolve(context) ?? BorderSide.none,
-      bottom: _bottom?.resolve(context) ?? BorderSide.none,
-      start: _start?.resolve(context) ?? BorderSide.none,
-      end: _end?.resolve(context) ?? BorderSide.none,
+      top: _top?.resolve(mix) ?? BorderSide.none,
+      bottom: _bottom?.resolve(mix) ?? BorderSide.none,
+      start: _start?.resolve(mix) ?? BorderSide.none,
+      end: _end?.resolve(mix) ?? BorderSide.none,
     );
   }
 
@@ -210,23 +203,5 @@ class BorderDirectionalDto extends BoxBorderDto<BorderDirectional> {
   }
 
   @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is BorderDirectionalDto &&
-        other.top == top &&
-        other.bottom == bottom &&
-        other.start == start &&
-        other.end == end;
-  }
-
-  @override
-  int get hashCode {
-    return top.hashCode ^ bottom.hashCode ^ start.hashCode ^ end.hashCode;
-  }
-
-  @override
-  String toString() {
-    return 'BorderDirectionalDto(top: $top, bottom: $bottom, right: $start, left: $end)';
-  }
+  get props => [_top, _bottom, _start, _end];
 }

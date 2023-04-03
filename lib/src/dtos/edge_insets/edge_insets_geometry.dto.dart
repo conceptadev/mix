@@ -34,6 +34,15 @@ abstract class EdgeInsetsGeometryDto<T extends EdgeInsetsGeometry>
     );
   }
 
+  static D? maybeFrom<T extends EdgeInsetsGeometry,
+      D extends EdgeInsetsGeometryDto<T>>(
+    T? edgeInsets,
+  ) {
+    if (edgeInsets == null) return null;
+
+    return from(edgeInsets);
+  }
+
   EdgeInsetsGeometryDto merge(covariant EdgeInsetsGeometryDto? other) {
     if (other == null) return this;
 
@@ -60,16 +69,7 @@ abstract class EdgeInsetsGeometryDto<T extends EdgeInsetsGeometry>
   }
 
   @override
-  String toString() {
-    if (_top == _bottom && _bottom == _left && _left == _right) {
-      return 'EdgeInsets.all($_left)';
-    }
-    if (_isDirectional) {
-      return 'EdgeInsetsDirectionalDto(top: $_top, bottom: $_bottom, start: $_start, end: $_end)';
-    }
-
-    return 'EdgeInsetsDto(top: $_top, bottom: $_bottom, left: $_left, right: $_right)';
-  }
+  get props => [_top, _bottom, _left, _right, _start, _end];
 }
 
 double? doubleNullIfZero(double? value) {

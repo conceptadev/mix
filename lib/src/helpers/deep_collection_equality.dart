@@ -25,6 +25,11 @@ class DeepCollectionEquality {
       return _compareMaps(object1, object2);
     }
 
+    // Equality comparison for custom classes
+    if (object1?.runtimeType == object2?.runtimeType) {
+      return object1 == object2;
+    }
+
     return false;
   }
 

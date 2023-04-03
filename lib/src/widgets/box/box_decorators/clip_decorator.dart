@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../../../attributes/common/common.descriptor.dart';
+import '../../../attributes/shared/shared.descriptor.dart';
+import '../../../factory/mix_provider_data.dart';
 import '../box.decorator.dart';
 
-/// @nodoc
 enum ClipDecoratorType {
   triangle,
   rect,
@@ -11,21 +11,15 @@ enum ClipDecoratorType {
   oval,
 }
 
-/// ## Widget
-/// - (All)
-/// ## Utilities
-/// - [ClipDecoratorUtility](ClipDecoratorUtility-class.html)
-///
-/// {@category Decorators}
-class ClipDecorator extends BoxDecorator<ClipDecorator> {
+class ClipDecorator extends WidgetDecorator<ClipDecorator> {
   final BorderRadius? borderRadius;
   final ClipDecoratorType clipType;
 
   const ClipDecorator(
     this.clipType, {
     this.borderRadius,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   ClipDecorator merge(ClipDecorator other) {
@@ -33,8 +27,8 @@ class ClipDecorator extends BoxDecorator<ClipDecorator> {
   }
 
   @override
-  Widget build(BuildContext context, Widget child) {
-    final commonProps = CommonDescriptor.fromContext(context);
+  Widget build(MixData mix, Widget child) {
+    final common = CommonDescriptor.fromContext(mix);
 
     if (clipType == ClipDecoratorType.triangle) {
       return ClipPath(
@@ -52,11 +46,11 @@ class ClipDecorator extends BoxDecorator<ClipDecorator> {
     }
 
     if (clipType == ClipDecoratorType.rounded) {
-      if (commonProps.animated) {
+      if (common.animated) {
         return AnimatedClipRRect(
           key: key,
-          duration: commonProps.animationDuration,
-          curve: commonProps.animationCurve,
+          duration: common.animationDuration,
+          curve: common.animationCurve,
           borderRadius: borderRadius ?? BorderRadius.circular(0),
           child: child,
         );
@@ -78,9 +72,11 @@ class ClipDecorator extends BoxDecorator<ClipDecorator> {
 
     throw Exception('Unknown clip type: $clipType');
   }
+
+  @override
+  get props => [borderRadius, clipType];
 }
 
-/// @nodoc
 class AnimatedClipRRect extends StatelessWidget {
   const AnimatedClipRRect({
     required this.duration,
@@ -115,7 +111,6 @@ class AnimatedClipRRect extends StatelessWidget {
   }
 }
 
-/// @nodoc
 class TriangleClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {

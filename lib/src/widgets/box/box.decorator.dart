@@ -1,15 +1,11 @@
-import 'package:flutter/material.dart';
-
 import '../../decorators/decorator.dart';
 
-abstract class BoxDecorator<T extends BoxDecorator<T>> extends Decorator<T> {
-  const BoxDecorator({
-    Key? key,
-  }) : super(key: key);
+abstract class WidgetDecorator<T extends WidgetDecorator<T>>
+    extends Decorator<T> {
+  const WidgetDecorator({
+    super.key,
+  });
 
   @override
-  T merge(T other);
-
-  @override
-  String get groupKey => 'boxWidgetDecorator';
+  T merge(covariant T other);
 }

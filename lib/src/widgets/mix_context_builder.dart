@@ -1,41 +1,30 @@
 import 'package:flutter/material.dart';
 
 import '../../mix.dart';
-import '../mixer/mix_context.dart';
+import '../factory/mix_provider.dart';
 
 typedef WidgetMixBuilder = Widget Function(
-  BuildContext context,
-  MixContextData mixContext,
+  MixData mix,
 );
 
-class MixContextBuilder extends MixWidget {
-  const MixContextBuilder({
-    required Mix mix,
-    bool inherit = false,
-    List<Variant>? variants,
+class MixBuilder extends MixWidget {
+  const MixBuilder({
+    super.mix,
+    super.variants,
+    super.key,
     required WidgetMixBuilder builder,
-    Key? key,
-  })  : _builder = builder,
-        super(
-          mix,
-          key: key,
-          inherit: inherit,
-          variants: variants,
-        );
+  }) : _builder = builder;
 
   final WidgetMixBuilder _builder;
 
   @override
   Widget build(BuildContext context) {
-    final mixContext = createMixContextData(context);
+    final mix = createMixData(context);
 
-    return MixContext(
-      mixContext,
+    return MixProvider(
+      mix,
       child: Builder(
-        builder: (context) => _builder(
-          context,
-          mixContext,
-        ),
+        builder: (context) => _builder(mix),
       ),
     );
   }

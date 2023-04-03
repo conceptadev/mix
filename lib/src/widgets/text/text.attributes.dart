@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../attributes/attribute.dart';
@@ -124,35 +123,17 @@ class TextAttributes extends WidgetAttributes {
   }
 
   @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is TextAttributes &&
-        listEquals(styles, other.styles) &&
-        other.strutStyle == strutStyle &&
-        other.textAlign == textAlign &&
-        other.locale == locale &&
-        other.softWrap == softWrap &&
-        other.overflow == overflow &&
-        other.textScaleFactor == textScaleFactor &&
-        other.maxLines == maxLines &&
-        other.textWidthBasis == textWidthBasis &&
-        other.textHeightBehavior == textHeightBehavior &&
-        listEquals(directives, other.directives);
-  }
-
-  @override
-  int get hashCode {
-    return styles.hashCode ^
-        strutStyle.hashCode ^
-        textAlign.hashCode ^
-        locale.hashCode ^
-        softWrap.hashCode ^
-        overflow.hashCode ^
-        textScaleFactor.hashCode ^
-        maxLines.hashCode ^
-        textWidthBasis.hashCode ^
-        textHeightBehavior.hashCode ^
-        directives.hashCode;
-  }
+  get props => [
+        styles,
+        strutStyle,
+        textAlign,
+        locale,
+        softWrap,
+        overflow,
+        textScaleFactor,
+        maxLines,
+        textWidthBasis,
+        textHeightBehavior,
+        directives,
+      ];
 }

@@ -1,10 +1,6 @@
 import '../../attributes/attribute.dart';
 import '../../dtos/color.dto.dart';
 
-/// ## Widget
-/// - [IconMix](IconMix-class.html)
-///
-/// {@category Attributes}
 class IconAttributes extends WidgetAttributes {
   final ColorDto? color;
   final double? size;
@@ -24,14 +20,8 @@ class IconAttributes extends WidgetAttributes {
   }
 
   @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is IconAttributes &&
-        other.color == color &&
-        other.size == size;
-  }
-
-  @override
-  int get hashCode => color.hashCode ^ size.hashCode;
+  get props => [
+        color,
+        size,
+      ];
 }

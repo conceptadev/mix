@@ -1,21 +1,16 @@
 import 'package:flutter/material.dart';
 
+import '../../../factory/mix_provider_data.dart';
 import '../box.decorator.dart';
 
-/// ## Widget
-/// - (All)
-/// ## Utilities
-/// - [FlexibleDecoratorUtility](FlexibleDecoratorUtility-class.html)
-///
-/// {@category Decorators}
-class FlexibleDecorator extends BoxDecorator<FlexibleDecorator> {
+class FlexibleDecorator extends WidgetDecorator<FlexibleDecorator> {
   final FlexFit? flexFit;
   final int? flex;
   const FlexibleDecorator({
     this.flexFit,
     this.flex,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   FlexibleDecorator merge(FlexibleDecorator other) {
@@ -26,7 +21,7 @@ class FlexibleDecorator extends BoxDecorator<FlexibleDecorator> {
   }
 
   @override
-  Widget build(BuildContext context, Widget child) {
+  Widget build(MixData mix, Widget child) {
     return Flexible(
       key: key,
       fit: flexFit ?? FlexFit.loose,
@@ -34,4 +29,7 @@ class FlexibleDecorator extends BoxDecorator<FlexibleDecorator> {
       child: child,
     );
   }
+
+  @override
+  get props => [flexFit, flex];
 }

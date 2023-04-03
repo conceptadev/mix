@@ -1,55 +1,52 @@
-import 'package:flutter/material.dart';
+import '../../helpers/extensions.dart';
+import '../tokens/color_token.dart';
 
-import '../refs/color_token.dart';
+class $MDColorScheme {
+  const $MDColorScheme._();
 
-class MaterialColorSchemeTokens {
-  MaterialColorSchemeTokens();
+  static const primary = ColorToken('primary');
 
-  final ColorToken primary = ColorToken(
-    (context) => Theme.of(context).colorScheme.primary,
-  );
+  static const secondary = ColorToken('secondary');
 
-  final ColorToken secondary = ColorToken(
-    (context) => Theme.of(context).colorScheme.secondary,
-  );
+  static const tertiary = ColorToken('tertiary');
 
-  final ColorToken tertiary = ColorToken(
-    (context) => Theme.of(context).colorScheme.tertiary,
-  );
+  static const surface = ColorToken('surface');
 
-  final ColorToken surface = ColorToken(
-    (context) => Theme.of(context).colorScheme.surface,
-  );
+  static const background = ColorToken('background');
 
-  final ColorToken background = ColorToken(
-    (context) => Theme.of(context).colorScheme.background,
-  );
+  static const error = ColorToken('error');
 
-  final ColorToken error = ColorToken(
-    (context) => Theme.of(context).colorScheme.error,
-  );
+  static const onPrimary = ColorToken('onPrimary');
 
-  final ColorToken onPrimary = ColorToken(
-    (context) => Theme.of(context).colorScheme.onPrimary,
-  );
+  static const onSecondary = ColorToken('onSecondary');
 
-  final ColorToken onSecondary = ColorToken(
-    (context) => Theme.of(context).colorScheme.onSecondary,
-  );
+  static const onTertiary = ColorToken('onTertiary');
 
-  final ColorToken onTertiary = ColorToken(
-    (context) => Theme.of(context).colorScheme.onTertiary,
-  );
+  static const onSurface = ColorToken('onSurface');
 
-  final ColorToken onSurface = ColorToken(
-    (context) => Theme.of(context).colorScheme.onSurface,
-  );
+  static const onBackground = ColorToken('onBackground');
 
-  final ColorToken onBackground = ColorToken(
-    (context) => Theme.of(context).colorScheme.onBackground,
-  );
+  static const onError = ColorToken('onError');
 
-  final ColorToken onError = ColorToken(
-    (context) => Theme.of(context).colorScheme.onError,
-  );
+  static MixColorTokens get tokens {
+    return {
+      primary: (context) => context.colorScheme.primary,
+      secondary: (context) => context.colorScheme.secondary,
+      tertiary: (context) => context.colorScheme.tertiary,
+      surface: (context) => context.colorScheme.surface,
+      background: (context) => context.colorScheme.background,
+      error: (context) => context.colorScheme.error,
+      onPrimary: (context) => context.colorScheme.onPrimary,
+      onSecondary: (context) => context.colorScheme.onSecondary,
+      onTertiary: (context) => context.colorScheme.onTertiary,
+      onSurface: (context) => context.colorScheme.onSurface,
+      onBackground: (context) => context.colorScheme.onBackground,
+      onError: (context) => context.colorScheme.onError,
+    };
+  }
 }
+
+// The same color scheme is compabile with Material 2.
+// Added typedef just for consistency
+typedef $M2Color = $MDColorScheme;
+typedef $M3Color = $MDColorScheme;

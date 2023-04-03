@@ -82,6 +82,10 @@ class MergeableMap<T extends MergeableMixin> {
     _map.clear();
   }
 
+  T firstWhere(bool Function(T) test) {
+    return _map.values.firstWhere(test);
+  }
+
   /// Returns `true` if the map contains no key-value pairs.
   bool get isEmpty => _map.isEmpty;
 
@@ -100,14 +104,8 @@ class MergeableMap<T extends MergeableMixin> {
     if (other is MergeableMap) {
       if (other._map.length != _map.length) return false;
 
-      final thisKeys = _map.keys;
-      final otherKeys = other._map.keys;
-
-      for (int i = 0; i < _map.length; i++) {
-        final thisKey = thisKeys.elementAt(i);
-        final otherKey = otherKeys.elementAt(i);
-
-        if (thisKey != otherKey || _map[thisKey] != other._map[otherKey]) {
+      for (final key in _map.keys) {
+        if (!other._map.containsKey(key) || _map[key] != other._map[key]) {
           return false;
         }
       }

@@ -1,4 +1,4 @@
-import '../../mixer/mix_factory.dart';
+import '../../factory/mix_factory.dart';
 import '../nested_attribute.dart';
 
 class HelperUtility {
@@ -13,8 +13,29 @@ typedef FunctionWithListParam<ParamType, ReturnType> = ReturnType Function(
   List<ParamType> params,
 );
 
-class SpreadFunctionParams<ParamType, ReturnType> {
-  const SpreadFunctionParams(this.fn);
+typedef FunctionWithMapParam<ParamType extends Map<String, dynamic>, ReturnType>
+    = ReturnType Function(
+  ParamType params,
+);
+
+class SpreadNamedParams<ParamType extends Map<String, dynamic>, ReturnType> {
+  final FunctionWithMapParam<ParamType, ReturnType> _function;
+  final Map<String, dynamic> _initialParams;
+
+  SpreadNamedParams(
+    this._function, {
+    ParamType? initialParams,
+  }) : _initialParams = initialParams ?? {};
+
+  ReturnType call({ParamType? additionalParams}) {
+    final params = {..._initialParams, ...?additionalParams} as ParamType;
+
+    return _function(params);
+  }
+}
+
+class SpreadPositionalParams<ParamType, ReturnType> {
+  const SpreadPositionalParams(this.fn);
 
   final FunctionWithListParam<ParamType, ReturnType> fn;
 

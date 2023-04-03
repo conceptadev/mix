@@ -1,44 +1,32 @@
 import 'package:flutter/material.dart';
 
-import '../../attributes/common/common.descriptor.dart';
-import '../../mixer/mix_factory.dart';
-import '../../variants/variant.dart';
-import '../empty.widget.dart';
+import '../../attributes/shared/shared.descriptor.dart';
+import '../../factory/mix_provider_data.dart';
+import '../empty/empty.widget.dart';
 import '../mix.widget.dart';
 import '../mix_context_builder.dart';
-import 'icon.props.dart';
+import 'icon.descriptor.dart';
 
 class IconMix extends MixWidget {
   const IconMix(
     this.icon, {
-    Mix? mix,
     this.semanticLabel,
-    Key? key,
-    List<Variant>? variants,
-    bool inherit = true,
-  }) : super(
-          mix,
-          variants: variants,
-          inherit: inherit,
-          key: key,
-        );
+    super.mix,
+    super.key,
+    super.variants,
+  });
 
   final IconData? icon;
   final String? semanticLabel;
 
   @override
   Widget build(BuildContext context) {
-    return MixContextBuilder(
+    return MixBuilder(
       mix: mix,
-      inherit: inherit,
       variants: variants,
-      builder: (context, mixContext) {
-        final iconProps = IconProps.fromContext(context);
-        final commonProps = CommonDescriptor.fromContext(context);
-
+      builder: (mix) {
         return IconMixerWidget(
-          iconProps: iconProps,
-          commonProps: commonProps,
+          mix: mix,
           icon: icon,
         );
       },
@@ -46,24 +34,24 @@ class IconMix extends MixWidget {
   }
 }
 
-/// {@nodoc}
 class IconMixerWidget extends StatelessWidget {
   const IconMixerWidget({
-    required this.iconProps,
-    required this.commonProps,
+    required this.mix,
     this.icon,
     this.semanticLabel,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final IconData? icon;
-  final IconProps iconProps;
-  final CommonDescriptor commonProps;
+  final MixData mix;
 
   final String? semanticLabel;
 
   @override
   Widget build(BuildContext context) {
+    final commonProps = CommonDescriptor.fromContext(mix);
+    final iconProps = IconDescriptor.fromContext(mix);
+
     if (!commonProps.visible) {
       return const Empty();
     }

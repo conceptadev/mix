@@ -1,4 +1,4 @@
-import '../widgets/image/image.utils.dart';
+import '../widgets/image/image.utilities.dart';
 
 const image = ImageUtility.image;
 

@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 
 import '../attributes/attribute.dart';
 import '../attributes/nested_attribute.dart';
-import '../mixer/mix_factory.dart';
+import '../factory/mix_factory.dart';
 import 'context_variant.dart';
 import 'variant.dart';
 import 'variant_attribute.dart';
@@ -20,7 +20,7 @@ class VariantOperation {
 
   VariantOperation operator &(Variant variant) {
     if (operator != EnumVariantOperator.and) {
-      throw 'All the operators in the equation must be the same';
+      throw ArgumentError('All the operators in the equation must be the same');
     }
 
     variants.add(variant);
@@ -30,7 +30,7 @@ class VariantOperation {
 
   VariantOperation operator |(Variant variant) {
     if (operator != EnumVariantOperator.or) {
-      throw 'All the operators in the equation must be the same';
+      throw ArgumentError('All the operators in the equation must be the same');
     }
 
     variants.add(variant);
@@ -43,12 +43,11 @@ class VariantOperation {
     Iterable<Variant>? variants,
   }) {
     variants ??= this.variants;
+    final mix = Mix.fromAttributes(attributes);
     final attributeVariants = variants.map((variant) {
-      if (variant is ContextVariant) {
-        return ContextVariantAttribute(variant, Mix.fromAttributes(attributes));
-      } else {
-        return VariantAttribute(variant, Mix.fromAttributes(attributes));
-      }
+      return variant is ContextVariant
+          ? ContextVariantAttribute(variant, mix)
+          : VariantAttribute(variant, mix);
     });
 
     return attributeVariants.toList();
@@ -59,24 +58,16 @@ class VariantOperation {
   ) {
     final attributeVariants = variants.map((variant) {
       final otherVariants = variants.where((otherV) => otherV != variant);
-
       final mixToApply = Mix.fromAttributes(
         _buildOrOperations(
           attributes,
           variants: otherVariants,
         ),
       );
-      if (variant is ContextVariant) {
-        return ContextVariantAttribute(
-          variant,
-          mixToApply,
-        );
-      } else {
-        return VariantAttribute(
-          variant,
-          mixToApply,
-        );
-      }
+
+      return variant is ContextVariant
+          ? ContextVariantAttribute(variant, mixToApply)
+          : VariantAttribute(variant, mixToApply);
     });
 
     return attributeVariants.toList();
@@ -97,19 +88,10 @@ class VariantOperation {
     Attribute? p11,
     Attribute? p12,
   ]) {
-    final params = [] as List<Attribute>;
-    if (p1 != null) params.add(p1);
-    if (p2 != null) params.add(p2);
-    if (p3 != null) params.add(p3);
-    if (p4 != null) params.add(p4);
-    if (p5 != null) params.add(p5);
-    if (p6 != null) params.add(p6);
-    if (p7 != null) params.add(p7);
-    if (p8 != null) params.add(p8);
-    if (p9 != null) params.add(p9);
-    if (p10 != null) params.add(p10);
-    if (p11 != null) params.add(p11);
-    if (p12 != null) params.add(p12);
+    final params = <Attribute>[];
+    for (final param in [p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12]) {
+      if (param != null) params.add(param);
+    }
 
     List<VariantAttribute> attributes = [];
     if (operator == EnumVariantOperator.and) {

@@ -1,8 +1,8 @@
 import 'dart:ui';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+import '../../mix.dart';
 import 'color.dto.dart';
 import 'dto.dart';
 import 'shadow/shadow.dto.dart';
@@ -10,6 +10,8 @@ import 'shadow/shadow.dto.dart';
 class TextStyleDto extends Dto<TextStyle> {
   final String? fontFamily;
   final FontWeight? fontWeight;
+
+  final bool? inherit;
   final FontStyle? fontStyle;
   final double? fontSize;
   final double? letterSpacing;
@@ -25,8 +27,15 @@ class TextStyleDto extends Dto<TextStyle> {
   final Locale? locale;
   final String? debugLabel;
   final double? height;
+  final Paint? foreground;
+  final Paint? background;
+  final double? decorationThickness;
+  final List<String>? fontFamilyFallback;
+
+  final TextStyleToken? styleToken;
 
   const TextStyleDto({
+    this.inherit,
     this.fontFamily,
     this.fontWeight,
     this.fontStyle,
@@ -44,14 +53,26 @@ class TextStyleDto extends Dto<TextStyle> {
     this.debugLabel,
     this.locale,
     this.height,
+    this.foreground,
+    this.background,
+    this.decorationThickness,
+    this.fontFamilyFallback,
+    this.styleToken,
   });
 
   factory TextStyleDto.from(TextStyle style) {
+    if (style is TextStyleToken) {
+      return TextStyleDto(styleToken: style);
+    }
+
     return TextStyleDto(
       fontFamily: style.fontFamily,
+      inherit: style.inherit,
       fontWeight: style.fontWeight,
       fontStyle: style.fontStyle,
       fontSize: style.fontSize,
+      background: style.background,
+      foreground: style.foreground,
       letterSpacing: style.letterSpacing,
       wordSpacing: style.wordSpacing,
       textBaseline: style.textBaseline,
@@ -65,6 +86,8 @@ class TextStyleDto extends Dto<TextStyle> {
       debugLabel: style.debugLabel,
       locale: style.locale,
       height: style.height,
+      decorationThickness: style.decorationThickness,
+      fontFamilyFallback: style.fontFamilyFallback,
     );
   }
 
@@ -72,31 +95,55 @@ class TextStyleDto extends Dto<TextStyle> {
     return style != null ? TextStyleDto.from(style) : null;
   }
 
+  bool get hasToken => styleToken != null;
+
   @override
-  TextStyle resolve(BuildContext context) {
+  TextStyle resolve(MixData mix) {
+    TextStyleDto? styleRef;
+
+    if (styleToken != null) {
+      // Load as DTO for consistent merging behavior
+      final textStyle = mix.resolveToken.textStyle(styleToken!);
+      styleRef = TextStyleDto.from(textStyle);
+    }
+
+    // If there is a style token, use it as a base
+    if (styleRef != null) {
+      styleRef = styleRef.merge(this);
+    } else {
+      // If not just reference itself
+      styleRef = this;
+    }
+
     return TextStyle(
-      fontFamily: fontFamily,
-      fontWeight: fontWeight,
-      fontStyle: fontStyle,
-      fontSize: fontSize,
-      letterSpacing: letterSpacing,
-      height: height,
-      wordSpacing: wordSpacing,
-      textBaseline: textBaseline,
-      color: color?.resolve(context),
-      backgroundColor: backgroundColor?.resolve(context),
-      shadows: shadows?.map((e) => e.resolve(context)).toList(),
-      fontFeatures: fontFeatures,
-      decoration: decoration,
-      decorationColor: decorationColor?.resolve(context),
-      decorationStyle: decorationStyle,
-      debugLabel: debugLabel,
-      locale: locale,
+      inherit: styleRef.inherit ?? true,
+      fontFamily: styleRef.fontFamily,
+      fontWeight: styleRef.fontWeight,
+      fontStyle: styleRef.fontStyle,
+      fontSize: styleRef.fontSize,
+      letterSpacing: styleRef.letterSpacing,
+      height: styleRef.height,
+      wordSpacing: styleRef.wordSpacing,
+      textBaseline: styleRef.textBaseline,
+      color: styleRef.color?.resolve(mix),
+      backgroundColor: styleRef.backgroundColor?.resolve(mix),
+      shadows: styleRef.shadows?.map((e) => e.resolve(mix)).toList(),
+      fontFeatures: styleRef.fontFeatures,
+      decoration: styleRef.decoration,
+      decorationColor: styleRef.decorationColor?.resolve(mix),
+      decorationStyle: styleRef.decorationStyle,
+      debugLabel: styleRef.debugLabel,
+      background: styleRef.background,
+      foreground: styleRef.foreground,
+      locale: styleRef.locale,
+      decorationThickness: styleRef.decorationThickness,
+      fontFamilyFallback: styleRef.fontFamilyFallback,
     );
   }
 
   TextStyleDto copyWith({
     String? fontFamily,
+    bool? inherit,
     FontWeight? fontWeight,
     FontStyle? fontStyle,
     double? fontSize,
@@ -113,8 +160,14 @@ class TextStyleDto extends Dto<TextStyle> {
     String? debugLabel,
     Locale? locale,
     double? height,
+    Paint? background,
+    Paint? foreground,
+    double? decorationThickness,
+    List<String>? fontFamilyFallback,
+    TextStyleToken? styleToken,
   }) {
     return TextStyleDto(
+      inherit: inherit ?? this.inherit,
       fontFamily: fontFamily ?? this.fontFamily,
       fontWeight: fontWeight ?? this.fontWeight,
       fontStyle: fontStyle ?? this.fontStyle,
@@ -132,6 +185,11 @@ class TextStyleDto extends Dto<TextStyle> {
       debugLabel: debugLabel ?? this.debugLabel,
       locale: locale ?? this.locale,
       height: height ?? this.height,
+      background: background ?? this.background,
+      foreground: foreground ?? this.foreground,
+      decorationThickness: decorationThickness ?? this.decorationThickness,
+      fontFamilyFallback: [...?this.fontFamilyFallback, ...?fontFamilyFallback],
+      styleToken: styleToken ?? this.styleToken,
     );
   }
 
@@ -140,6 +198,7 @@ class TextStyleDto extends Dto<TextStyle> {
 
     return copyWith(
       fontFamily: other.fontFamily,
+      inherit: other.inherit,
       fontWeight: other.fontWeight,
       fontStyle: other.fontStyle,
       fontSize: other.fontSize,
@@ -156,54 +215,38 @@ class TextStyleDto extends Dto<TextStyle> {
       decorationStyle: other.decorationStyle,
       debugLabel: other.debugLabel,
       locale: other.locale,
+      background: other.background,
+      foreground: other.foreground,
+      decorationThickness: other.decorationThickness,
+      fontFamilyFallback: other.fontFamilyFallback,
+      styleToken: other.styleToken,
     );
   }
 
   @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is TextStyleDto &&
-        other.fontFamily == fontFamily &&
-        other.fontWeight == fontWeight &&
-        other.fontStyle == fontStyle &&
-        other.fontSize == fontSize &&
-        other.letterSpacing == letterSpacing &&
-        other.wordSpacing == wordSpacing &&
-        other.height == height &&
-        other.textBaseline == textBaseline &&
-        other.color == color &&
-        other.backgroundColor == backgroundColor &&
-        listEquals(other.shadows, shadows) &&
-        listEquals(other.fontFeatures, fontFeatures) &&
-        other.decoration == decoration &&
-        other.decorationColor == decorationColor &&
-        other.decorationStyle == decorationStyle &&
-        other.debugLabel == debugLabel &&
-        other.locale == locale;
-  }
-
-  @override
-  int get hashCode =>
-      fontFamily.hashCode ^
-      fontWeight.hashCode ^
-      fontStyle.hashCode ^
-      fontSize.hashCode ^
-      letterSpacing.hashCode ^
-      wordSpacing.hashCode ^
-      textBaseline.hashCode ^
-      color.hashCode ^
-      height.hashCode ^
-      backgroundColor.hashCode ^
-      shadows.hashCode ^
-      fontFeatures.hashCode ^
-      decoration.hashCode ^
-      decorationColor.hashCode ^
-      decorationStyle.hashCode ^
-      debugLabel.hashCode;
-
-  @override
-  String toString() {
-    return 'TextStyleDto(fontFamily: $fontFamily, fontWeight: $fontWeight, fontStyle: $fontStyle, fontSize: $fontSize, letterSpacing: $letterSpacing, wordSpacing: $wordSpacing, textBaseline: $textBaseline, color: $color, backgroundColor: $backgroundColor, shadows: $shadows, fontFeatures: $fontFeatures, decoration: $decoration, decorationColor: $decorationColor, decorationStyle: $decorationStyle, debugLabel: $debugLabel)';
-  }
+  get props => [
+        fontFamily,
+        inherit,
+        fontWeight,
+        fontStyle,
+        fontSize,
+        letterSpacing,
+        wordSpacing,
+        textBaseline,
+        color,
+        backgroundColor,
+        shadows,
+        fontFeatures,
+        decoration,
+        decorationColor,
+        decorationStyle,
+        debugLabel,
+        locale,
+        height,
+        background,
+        foreground,
+        decorationThickness,
+        fontFamilyFallback,
+        styleToken,
+      ];
 }

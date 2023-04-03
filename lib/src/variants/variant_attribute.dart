@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
 import '../attributes/attribute.dart';
-import '../mixer/mix_factory.dart';
+import '../factory/mix_factory.dart';
+import '../helpers/equatable_mixin.dart';
 import 'context_variant.dart';
 import 'variant.dart';
 
 class VariantAttribute<T extends Variant> extends Attribute
-    with MergeableMixin<VariantAttribute<T>> {
+    with MergeableMixin<VariantAttribute<T>>, EquatableMixin {
   const VariantAttribute(
     this.variant,
     Mix mix,
@@ -47,6 +48,9 @@ class VariantAttribute<T extends Variant> extends Attribute
 
   @override
   int get hashCode => variant.hashCode ^ _mix.hashCode;
+
+  @override
+  get props => [variant, value];
 }
 
 class ContextVariantAttribute extends VariantAttribute<ContextVariant> {

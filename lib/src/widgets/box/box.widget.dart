@@ -1,43 +1,31 @@
 import 'package:flutter/material.dart';
 
-import '../../attributes/common/common.descriptor.dart';
+import '../../attributes/shared/shared.descriptor.dart';
 import '../../decorators/decorator_wrapper.widget.dart';
-import '../../mixer/mix_factory.dart';
-import '../../variants/variant.dart';
-import '../empty.widget.dart';
+import '../../factory/mix_provider_data.dart';
+import '../empty/empty.widget.dart';
 import '../mix.widget.dart';
 import '../mix_context_builder.dart';
 import 'box.descriptor.dart';
 
 class Box extends MixWidget {
   const Box({
-    Mix? mix,
-    Key? key,
-    bool? inherit,
-    List<Variant>? variants,
+    super.mix,
+    super.key,
+    super.variants,
     this.child,
-  }) : super(
-          mix,
-          variants: variants,
-          inherit: inherit,
-          key: key,
-        );
+  });
 
   final Widget? child;
 
   @override
   Widget build(BuildContext context) {
-    return MixContextBuilder(
+    return MixBuilder(
       mix: mix,
-      inherit: inherit,
       variants: variants,
-      builder: (context, mixContext) {
-        final boxProps = BoxDescriptor.fromContext(context);
-        final commonProps = CommonDescriptor.fromContext(context);
-
+      builder: (mix) {
         return BoxMixedWidget(
-          boxProps: boxProps,
-          commonProps: commonProps,
+          mix: mix,
           child: child,
         );
       },
@@ -50,56 +38,57 @@ class BoxMixedWidget extends StatelessWidget {
   final Widget? child;
 
   const BoxMixedWidget({
-    required this.boxProps,
-    required this.commonProps,
+    required this.mix,
     this.child,
     Key? key,
   }) : super(key: key);
 
-  final BoxDescriptor boxProps;
-  final CommonDescriptor commonProps;
+  final MixData mix;
 
   @override
   Widget build(BuildContext context) {
-    if (!commonProps.visible) {
+    final common = CommonDescriptor.fromContext(mix);
+    final box = BoxDescriptor.fromContext(mix);
+
+    if (!common.visible) {
       return const Empty();
     }
     var current = child;
 
-    if (commonProps.animated) {
+    if (common.animated) {
       current = AnimatedContainer(
-        color: boxProps.color,
-        decoration: boxProps.decoration,
-        alignment: boxProps.alignment,
-        constraints: boxProps.constraints,
-        margin: boxProps.margin,
-        padding: boxProps.padding,
-        height: boxProps.height,
-        width: boxProps.width,
-        duration: commonProps.animationDuration,
-        curve: commonProps.animationCurve,
-        transform: boxProps.transform,
+        color: box.color,
+        decoration: box.decoration,
+        alignment: box.alignment,
+        constraints: box.constraints,
+        margin: box.margin,
+        padding: box.padding,
+        height: box.height,
+        width: box.width,
+        duration: common.animationDuration,
+        curve: common.animationCurve,
+        transform: box.transform,
         child: current,
       );
     } else {
       current = Container(
-        color: boxProps.color,
-        decoration: boxProps.decoration,
-        alignment: boxProps.alignment,
-        constraints: boxProps.constraints,
-        margin: boxProps.margin,
-        padding: boxProps.padding,
-        height: boxProps.height,
-        width: boxProps.width,
-        transform: boxProps.transform,
+        color: box.color,
+        decoration: box.decoration,
+        alignment: box.alignment,
+        constraints: box.constraints,
+        margin: box.margin,
+        padding: box.padding,
+        height: box.height,
+        width: box.width,
+        transform: box.transform,
         child: current,
       );
     }
 
-    // Wrap parent decorators
-    if (boxProps.decorators != null) {
+    if (mix.decorators != null) {
+      // Wrap parent decorators
       current = DecoratorWrapper(
-        boxProps.decorators!,
+        mix,
         child: current,
       );
     }

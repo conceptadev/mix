@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../theme/refs/color_token.dart';
+import '../factory/mix_provider_data.dart';
+import '../theme/tokens/color_token.dart';
 import 'dto.dart';
 
 class ColorDto extends Dto<Color> {
@@ -11,35 +12,25 @@ class ColorDto extends Dto<Color> {
   const ColorDto.from(Color color) : value = color;
 
   // Helper utility for internal API usage
-  static ColorDto? maybeFrom(Color? token) {
-    if (token == null) {
+  static ColorDto? maybeFrom(Color? color) {
+    if (color == null) {
       return null;
     }
 
-    return ColorDto.from(token);
+    return ColorDto.from(color);
   }
 
   @override
-  Color resolve(BuildContext context) {
-    final resolvedColor = value;
+  Color resolve(MixData mix) {
+    var resolvedColor = value;
 
     if (resolvedColor is ColorToken) {
-      return resolvedColor.resolve(context);
+      resolvedColor = mix.resolveToken.color(resolvedColor);
     }
 
     return value;
   }
 
   @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is ColorDto && other.value == value;
-  }
-
-  @override
-  int get hashCode => value.hashCode;
-
-  @override
-  String toString() => 'ColorDto(value: $value)';
+  get props => [value];
 }

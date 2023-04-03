@@ -1,21 +1,22 @@
-import '../widgets/box/box_decorator.utils.dart';
+import '../widgets/box/utilities/box_decorators_utilities.dart';
 
-const aspectRatio = BoxDecoratorUtility.aspectRatio;
+const aspectRatio = DecoratorUtility.aspectRatio;
 
-const scale = BoxDecoratorUtility.scale;
+const scale = DecoratorUtility.scale;
 
-const rotate = BoxDecoratorUtility.rotate;
-const rotate90 = BoxDecoratorUtility.rotate90;
-const rotate180 = BoxDecoratorUtility.rotate180;
-const rotate270 = BoxDecoratorUtility.rotate270;
+const rotate = DecoratorUtility.rotate;
 
-const opacity = BoxDecoratorUtility.opacity;
+const opacity = DecoratorUtility.opacity;
 
-const flex = BoxDecoratorUtility.flex;
-const flexFit = BoxDecoratorUtility.flexFit;
-const expanded = BoxDecoratorUtility.expanded;
-const flexible = BoxDecoratorUtility.flexible;
+const flex = DecoratorUtility.flex;
+const flexFit = DecoratorUtility.flexFit;
+const expanded = DecoratorUtility.expanded;
+const flexible = DecoratorUtility.flexible;
 
-const clipRounded = BoxDecoratorUtility.clipRounded;
-const clipOval = BoxDecoratorUtility.clipOval;
-const clipTriangle = BoxDecoratorUtility.clipTriangle;
+const clipRounded = DecoratorUtility.clipRounded;
+const clipOval = DecoratorUtility.clipOval;
+const clipTriangle = DecoratorUtility.clipTriangle;
+
+const rotate90 = DecoratorUtility.rotate90;
+const rotate180 = DecoratorUtility.rotate180;
+const rotate270 = DecoratorUtility.rotate270;

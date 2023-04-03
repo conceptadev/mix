@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-import '../../mixer/mix_context.dart';
+import '../../factory/mix_provider_data.dart';
 import 'zbox.attributes.dart';
 
 class ZBoxProps {
@@ -14,9 +14,8 @@ class ZBoxProps {
     required this.clipBehavior,
   });
 
-  factory ZBoxProps.fromContext(BuildContext context) {
-    final mixContext = MixContext.ensureOf(context);
-    final zBoxAttributes = mixContext.attributesOfType<ZBoxAttributes>();
+  factory ZBoxProps.fromContext(MixData mix) {
+    final zBoxAttributes = mix.attributesOfType<ZBoxAttributes>();
 
     return ZBoxProps(
       alignment: zBoxAttributes?.alignment ?? Alignment.topLeft,

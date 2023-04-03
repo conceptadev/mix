@@ -21,23 +21,23 @@ void main() async {
     await tester.pumpWidget(MaterialApp(
       home: Builder(builder: (context) {
         final expensiveContextMix = Mix(
-          onNot(onHover)(p(10)),
-          onNot(onPress)(p(15)),
+          onNot(onHover)(padding(10)),
+          onNot(onPress)(padding(15)),
           onNot(onFocus)(p(20)),
-          onNot(onDisabled)(p(25)),
-          onDark(p(30)),
-          onPortrait(p(35)),
-          onMedium(p(40)),
-          onSmall(p(45)),
-          onLight(p(50)),
-          onXSmall(p(55)),
-          onLarge(p(60)),
-          onPortrait(p(65)),
+          onNot(onDisabled)(padding(25)),
+          onDark(padding(30)),
+          onPortrait(padding(35)),
+          onMedium(padding(40)),
+          onSmall(padding(45)),
+          onLight(padding(50)),
+          onXSmall(padding(55)),
+          onLarge(padding(60)),
+          onPortrait(padding(65)),
         );
 
         watch.start();
 
-        MixContextData.create(context: context, mix: expensiveContextMix);
+        MixData.create(context: context, mix: expensiveContextMix);
 
         watch.stop();
 

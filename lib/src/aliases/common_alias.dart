@@ -1,10 +1,7 @@
-import '../attributes/common/common.utils.dart';
+import '../attributes/shared/shared.utilities.dart';
 
 const show = CommonUtility.visible;
 const hide = CommonUtility.hidden;
-
-@Deprecated('Use animation instead')
-const animated = CommonUtility.animation;
 
 const animation = CommonUtility.animation;
 const animationDuration = CommonUtility.animationDuration;

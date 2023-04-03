@@ -49,31 +49,4 @@ void main() {
     final colorWidget = tester.widget<Container>(find.byType(Container));
     expect(colorWidget.color, Colors.black);
   });
-
-  testWidgets('when Variant', (tester) async {
-    bool hasError = true;
-
-    Widget box() {
-      return Box(
-        mix: Mix(
-          when(hasError)(
-            bgColor(Colors.red),
-          )(
-            bgColor(Colors.blue),
-          ),
-        ),
-      );
-    }
-
-    await tester.pumpWidget(box());
-
-    final whenWidget = tester.widget<Container>(find.byType(Container));
-    expect(whenWidget.color, Colors.red);
-
-    hasError = false;
-    await tester.pumpWidget(box());
-
-    final elseWidget = tester.widget<Container>(find.byType(Container));
-    expect(elseWidget.color, Colors.blue);
-  });
 }

@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../dtos/text_style.dto.dart';
-import '../../mixer/mix_context.dart';
+import '../../factory/mix_provider_data.dart';
 import 'text.attributes.dart';
 import 'text_directives/text_directives.dart';
 
@@ -35,19 +35,20 @@ class TextDescriptor {
     List<TextDirective>? directives,
   }) : _directives = directives ?? const [];
 
-  factory TextDescriptor.fromContext(BuildContext context) {
-    final mixContext = MixContext.ensureOf(context);
-    final textAttributes = mixContext.attributesOfType<TextAttributes>();
+  factory TextDescriptor.fromContext(MixData mix) {
+    final textAttributes = mix.attributesOfType<TextAttributes>();
 
-    var mergedStyle = const TextStyle();
+    var mergedTextStyleDto = const TextStyleDto();
 
     for (var style in textAttributes?.styles ?? <TextStyleDto>[]) {
-      mergedStyle = mergedStyle.merge(style.resolve(context));
+      // Convert into a DTO for consistent merge behavior.
+      final textStyleDto = TextStyleDto.from(style.resolve(mix));
+      mergedTextStyleDto = mergedTextStyleDto.merge(textStyleDto);
     }
 
     return TextDescriptor(
       // Need to grab colorscheme from context
-      style: mergedStyle,
+      style: mergedTextStyleDto.resolve(mix),
       strutStyle: textAttributes?.strutStyle,
       textAlign: textAttributes?.textAlign,
       locale: textAttributes?.locale,

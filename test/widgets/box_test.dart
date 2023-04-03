@@ -7,9 +7,9 @@ import 'package:mix/src/dtos/edge_insets/edge_insets.dto.dart';
 import 'package:mix/src/dtos/radius/border_radius.dto.dart';
 import 'package:mix/src/dtos/radius/radius_dto.dart';
 import 'package:mix/src/extensions/mix_extensions.dart';
-import 'package:mix/src/widgets/box/box_decorator.utils.dart';
+import 'package:mix/src/widgets/box/utilities/box_decorators_utilities.dart';
 
-import '../testing_utils.dart';
+import '../helpers/testing_utils.dart';
 
 void main() {
   group(
@@ -48,8 +48,8 @@ void main() {
           await tester.pumpWidget(
             BoxInsideFlexWidget(
               Mix(
-                BoxDecoratorUtility.flex(2),
-                BoxDecoratorUtility.flexFit(FlexFit.tight),
+                DecoratorUtility.flex(2),
+                DecoratorUtility.flexFit(FlexFit.tight),
               ),
             ),
           );
@@ -69,7 +69,7 @@ void main() {
           await tester.pumpWidget(
             BoxTestWidget(
               Mix(
-                BoxDecoratorUtility.rotate(3),
+                DecoratorUtility.rotate(3),
               ),
             ),
           );
@@ -87,7 +87,7 @@ void main() {
         (tester) async {
           await tester.pumpWidget(
             BoxTestWidget(
-              Mix(const CommonAttributes(visible: false)),
+              Mix(const SharedWidgetAttributes(visible: false)),
             ),
           );
 
@@ -105,7 +105,7 @@ void main() {
         (tester) async {
           await tester.pumpWidget(
             BoxTestWidget(
-              Mix(BoxDecoratorUtility.aspectRatio(3 / 2)),
+              Mix(DecoratorUtility.aspectRatio(3 / 2)),
             ),
           );
 
@@ -144,7 +144,7 @@ void main() {
           await tester.pumpWidget(
             BoxTestWidget(
               Mix(
-                BoxDecoratorUtility.opacity(0.5),
+                DecoratorUtility.opacity(0.5),
               ),
             ),
           );
@@ -162,7 +162,7 @@ void main() {
         (tester) async {
           await tester.pumpWidget(
             BoxTestWidget(
-              Mix(BoxUtility.backgroundColor(Colors.lime)),
+              Mix(BoxUtilities().backgroundColor(Colors.lime)),
             ),
           );
 

@@ -1,20 +1,15 @@
 import 'package:flutter/material.dart';
 
-import '../../../attributes/common/common.descriptor.dart';
+import '../../../attributes/shared/shared.descriptor.dart';
+import '../../../factory/mix_provider_data.dart';
 import '../box.decorator.dart';
 
-/// ## Widget
-/// - (All)
-/// ## Utilities
-/// - [ScaleDecoratorUtility](ScaleDecoratorUtility-class.html)
-///
-/// {@category Decorators}
-class ScaleDecorator extends BoxDecorator<ScaleDecorator> {
+class ScaleDecorator extends WidgetDecorator<ScaleDecorator> {
   final double scale;
   const ScaleDecorator(
     this.scale, {
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   ScaleDecorator merge(ScaleDecorator other) {
@@ -22,8 +17,8 @@ class ScaleDecorator extends BoxDecorator<ScaleDecorator> {
   }
 
   @override
-  Widget build(BuildContext context, Widget? child) {
-    final common = CommonDescriptor.fromContext(context);
+  Widget build(MixData mix, Widget child) {
+    final common = CommonDescriptor.fromContext(mix);
     if (common.animated) {
       return TweenAnimationBuilder<double>(
         tween: Tween<double>(begin: 1, end: scale),
@@ -46,4 +41,7 @@ class ScaleDecorator extends BoxDecorator<ScaleDecorator> {
       );
     }
   }
+
+  @override
+  get props => [scale];
 }

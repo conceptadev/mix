@@ -1,7 +1,6 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 
+import '../../factory/mix_provider_data.dart';
 import '../dto.dart';
 
 class RadiusDto extends Dto<Radius> {
@@ -43,15 +42,8 @@ class RadiusDto extends Dto<Radius> {
     return RadiusDto.from(radius);
   }
 
-  factory RadiusDto.random() {
-    return RadiusDto.elliptical(
-      Random().nextDouble() * 20,
-      Random().nextDouble() * 20,
-    );
-  }
-
   @override
-  Radius resolve(BuildContext context) {
+  Radius resolve(MixData mix) {
     final resolvedX = _x;
     final resolvedY = _y;
 
@@ -63,12 +55,5 @@ class RadiusDto extends Dto<Radius> {
   }
 
   @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is RadiusDto && other._x == _x && other._y == _y;
-  }
-
-  @override
-  int get hashCode => _x.hashCode ^ _y.hashCode;
+  get props => [_x, _y];
 }

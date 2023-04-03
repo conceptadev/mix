@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 
-import '../../../attributes/common/common.descriptor.dart';
+import '../../../attributes/shared/shared.descriptor.dart';
+import '../../../factory/mix_provider_data.dart';
 import '../box.decorator.dart';
 
-class OpacityDecorator extends BoxDecorator<OpacityDecorator> {
+class OpacityDecorator extends WidgetDecorator<OpacityDecorator> {
   final double opacity;
   const OpacityDecorator({
     required this.opacity,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   OpacityDecorator merge(OpacityDecorator other) {
@@ -16,14 +17,14 @@ class OpacityDecorator extends BoxDecorator<OpacityDecorator> {
   }
 
   @override
-  Widget build(BuildContext context, Widget child) {
-    final commonProps = CommonDescriptor.fromContext(context);
+  Widget build(MixData mix, Widget child) {
+    final common = CommonDescriptor.fromContext(mix);
 
-    if (commonProps.animated) {
+    if (common.animated) {
       return AnimatedOpacity(
         key: key,
-        duration: commonProps.animationDuration,
-        curve: commonProps.animationCurve,
+        duration: common.animationDuration,
+        curve: common.animationCurve,
         opacity: opacity,
         child: child,
       );
@@ -35,4 +36,7 @@ class OpacityDecorator extends BoxDecorator<OpacityDecorator> {
       );
     }
   }
+
+  @override
+  get props => [opacity];
 }

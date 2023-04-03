@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-
+import '../factory/mix_provider_data.dart';
 import 'dto.dart';
 
 typedef ValueModifier<T> = T Function(T value);
@@ -30,7 +29,7 @@ class DoubleDto extends Dto<double> {
   }
 
   @override
-  double resolve(BuildContext context) {
+  double resolve(MixData mix) {
     final modifier = _modifier;
 
     // Apply modifier if it exists
@@ -38,15 +37,5 @@ class DoubleDto extends Dto<double> {
   }
 
   @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is DoubleDto && other._value == _value;
-  }
-
-  @override
-  int get hashCode => _value.hashCode;
-
-  @override
-  String toString() => 'DoubleDto(value: $_value)';
+  get props => [_value, _modifier];
 }

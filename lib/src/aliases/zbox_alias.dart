@@ -1,4 +1,4 @@
-import '../widgets/zbox/zbox.utils.dart';
+import '../widgets/zbox/zbox.utilities.dart';
 
 const zAligmnent = ZBoxUtility.alignment;
 const zFit = ZBoxUtility.fit;

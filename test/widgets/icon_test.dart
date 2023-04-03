@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mix/src/attributes/common/common.attributes.dart';
+import 'package:mix/src/attributes/shared/shared.attributes.dart';
 import 'package:mix/src/dtos/color.dto.dart';
 import 'package:mix/src/extensions/mix_extensions.dart';
-import 'package:mix/src/mixer/mix_factory.dart';
+import 'package:mix/src/factory/mix_factory.dart';
 import 'package:mix/src/widgets/icon/icon.attributes.dart';
 
-import '../testing_utils.dart';
+import '../helpers/testing_utils.dart';
 
 void main() {
   group("Mix Icon widget", () {
@@ -29,7 +29,7 @@ void main() {
           child: Mix(
             const IconAttributes(color: ColorDto(Colors.greenAccent)),
             const IconAttributes(size: 23),
-            const CommonAttributes(textDirection: TextDirection.rtl),
+            const SharedWidgetAttributes(textDirection: TextDirection.rtl),
           ).icon(Icons.bolt),
         ),
       );

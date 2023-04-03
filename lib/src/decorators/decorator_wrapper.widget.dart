@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 
+import '../factory/mix_provider_data.dart';
 import 'decorator.dart';
 
 class DecoratorWrapper extends StatelessWidget {
   const DecoratorWrapper(
-    this.decorators, {
-    Key? key,
+    this.mix, {
+    super.key,
     required this.child,
-  }) : super(key: key);
+  });
 
-  final List<Decorator> decorators;
+  final MixData mix;
 
   final Widget child;
 
@@ -17,10 +18,11 @@ class DecoratorWrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     var current = child;
 
-    if (decorators.isNotEmpty) {
-      for (var decorator in decorators) {
+    if (mix.decorators?.isNotEmpty == true) {
+      for (var decorator in mix.decorators!) {
         current = _RenderDecoratorWidget(
           decorator,
+          mix: mix,
           key: decorator.key,
           child: current,
         );
@@ -34,17 +36,19 @@ class DecoratorWrapper extends StatelessWidget {
 class _RenderDecoratorWidget extends StatelessWidget {
   const _RenderDecoratorWidget(
     this.decorator, {
-    Key? key,
+    required this.mix,
+    super.key,
     required this.child,
-  }) : super(key: key);
+  });
 
   final Decorator decorator;
+  final MixData mix;
   final Widget child;
 
   @override
   Widget build(BuildContext context) {
     return decorator.render(
-      context,
+      mix,
       child,
     );
   }

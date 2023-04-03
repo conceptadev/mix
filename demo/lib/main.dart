@@ -69,7 +69,6 @@ class MyApp extends StatelessWidget {
             return MixTheme(
               data: MixThemeData(),
               child: Material(
-                color: MaterialTokens.colorScheme.background.resolve(context),
                 child: child ?? const SizedBox.shrink(),
               ),
             );

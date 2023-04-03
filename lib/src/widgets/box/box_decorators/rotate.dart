@@ -1,19 +1,14 @@
 import 'package:flutter/material.dart';
 
+import '../../../factory/mix_provider_data.dart';
 import '../box.decorator.dart';
 
-/// ## Widget
-/// - (All)
-/// ## Utilities
-/// - [RotateDecoratorUtility](RotateDecoratorUtility-class.html)
-///
-/// {@category Decorators}
-class RotateDecorator extends BoxDecorator<RotateDecorator> {
+class RotateDecorator extends WidgetDecorator<RotateDecorator> {
   final int quarterTurns;
   const RotateDecorator({
     required this.quarterTurns,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   RotateDecorator merge(RotateDecorator other) {
@@ -23,11 +18,14 @@ class RotateDecorator extends BoxDecorator<RotateDecorator> {
   }
 
   @override
-  Widget build(BuildContext context, Widget child) {
+  Widget build(MixData mix, Widget child) {
     return RotatedBox(
       key: key,
       quarterTurns: quarterTurns,
       child: child,
     );
   }
+
+  @override
+  get props => [quarterTurns];
 }

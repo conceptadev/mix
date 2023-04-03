@@ -1,7 +1,8 @@
-import 'package:flutter/widgets.dart';
+import '../factory/mix_provider_data.dart';
+import '../helpers/equatable_mixin.dart';
 
-abstract class Dto<T> {
+abstract class Dto<T> with EquatableMixin {
   const Dto();
 
-  T resolve(BuildContext context);
+  T resolve(MixData mix);
 }

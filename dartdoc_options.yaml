@@ -41,7 +41,7 @@ dartdoc:
     - "lib/src/attributes/image/image.utils.dart"
     - "lib/src/attributes/image/image.props.dart"
     - "lib/src/attributes/pressable/pressable.notifier.dart"
-    - "lib/src/attributes/common/attribute.dart"
+    - "lib/src/attributes/shared/attribute.dart"
     - "lib/src/attributes/exports.dart"
     - "lib/src/attributes/text/text_short.utils.dart"
     - "lib/src/attributes/text/text.props.dart"

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
-import '../../theme/mix_theme.dart';
+import '../../factory/mix_provider_data.dart';
+import '../../helpers/equatable_mixin.dart';
 import 'edge_insets_geometry.dto.dart';
 
 class EdgeInsetsDirectionalDto
-    extends EdgeInsetsGeometryDto<EdgeInsetsDirectional> {
+    extends EdgeInsetsGeometryDto<EdgeInsetsDirectional> with EquatableMixin {
   final double? top;
   final double? bottom;
   final double? start;
@@ -98,30 +99,15 @@ class EdgeInsetsDirectionalDto
   }
 
   @override
-  EdgeInsetsDirectional resolve(BuildContext context) {
-    final spacing = MixTheme.of(context).space;
-
+  EdgeInsetsDirectional resolve(MixData mix) {
     return EdgeInsetsDirectional.only(
-      top: spacing.fromValue(_top) ?? 0.0,
-      bottom: spacing.fromValue(_bottom) ?? 0.0,
-      start: spacing.fromValue(_start) ?? 0.0,
-      end: spacing.fromValue(_end) ?? 0.0,
+      top: mix.resolveToken.space(_top ?? 0.0),
+      bottom: mix.resolveToken.space(_bottom ?? 0.0),
+      start: mix.resolveToken.space(_start ?? 0.0),
+      end: mix.resolveToken.space(_end ?? 0.0),
     );
   }
 
   @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is EdgeInsetsDirectionalDto &&
-        other.top == _top &&
-        other.bottom == _bottom &&
-        other.start == _start &&
-        other.end == _end;
-  }
-
-  @override
-  int get hashCode {
-    return _top.hashCode ^ _bottom.hashCode ^ _start.hashCode ^ _end.hashCode;
-  }
+  get props => [top, bottom, start, end];
 }

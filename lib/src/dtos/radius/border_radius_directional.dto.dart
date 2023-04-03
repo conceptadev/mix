@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../factory/mix_provider_data.dart';
 import 'border_radius_geometry.dto.dart';
 import 'radius_dto.dart';
 
@@ -55,6 +56,16 @@ class BorderRadiusDirectionalDto
           bottomEnd: end,
         );
 
+  const BorderRadiusDirectionalDto.vertical({
+    RadiusDto? top,
+    RadiusDto? bottom,
+  }) : this.only(
+          topStart: top,
+          topEnd: top,
+          bottomStart: bottom,
+          bottomEnd: bottom,
+        );
+
   @override
   RadiusDto? get bottomEnd => _bottomEnd;
 
@@ -80,12 +91,12 @@ class BorderRadiusDirectionalDto
   RadiusDto? get topStart => _topStart;
 
   @override
-  BorderRadiusDirectional resolve(BuildContext context) {
+  BorderRadiusDirectional resolve(MixData mix) {
     return BorderRadiusDirectional.only(
-      topStart: topStart?.resolve(context) ?? Radius.zero,
-      topEnd: topEnd?.resolve(context) ?? Radius.zero,
-      bottomStart: bottomStart?.resolve(context) ?? Radius.zero,
-      bottomEnd: bottomEnd?.resolve(context) ?? Radius.zero,
+      topStart: topStart?.resolve(mix) ?? Radius.zero,
+      topEnd: topEnd?.resolve(mix) ?? Radius.zero,
+      bottomStart: bottomStart?.resolve(mix) ?? Radius.zero,
+      bottomEnd: bottomEnd?.resolve(mix) ?? Radius.zero,
     );
   }
 
@@ -104,21 +115,10 @@ class BorderRadiusDirectionalDto
   }
 
   @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is BorderRadiusDirectionalDto &&
-        other.topStart == topStart &&
-        other.topEnd == topEnd &&
-        other.bottomStart == bottomStart &&
-        other.bottomEnd == bottomEnd;
-  }
-
-  @override
-  int get hashCode {
-    return topStart.hashCode ^
-        topEnd.hashCode ^
-        bottomStart.hashCode ^
-        bottomEnd.hashCode;
-  }
+  List<Object?> get props => [
+        topStart,
+        topEnd,
+        bottomStart,
+        bottomEnd,
+      ];
 }

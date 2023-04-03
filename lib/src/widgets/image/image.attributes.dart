@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
 import '../../attributes/attribute.dart';
+import '../../dtos/color.dto.dart';
 
 class ImageAttributes extends WidgetAttributes {
-  final Color? color;
+  final ColorDto? color;
   final double? scale;
 
   final double? width;
@@ -40,4 +41,16 @@ class ImageAttributes extends WidgetAttributes {
       repeat: other.repeat ?? repeat,
     );
   }
+
+  @override
+  get props => [
+        color,
+        scale,
+        width,
+        height,
+        colorBlendMode,
+        fit,
+        alignment,
+        repeat,
+      ];
 }

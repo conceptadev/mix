@@ -12,7 +12,7 @@ import 'package:mix/src/dtos/radius/radius_dto.dart';
 import 'package:mix/src/dtos/shadow/box_shadow.dto.dart';
 import 'package:mix/src/dtos/shadow/shadow.dto.dart';
 import 'package:mix/src/dtos/text_style.dto.dart';
-import 'package:mix/src/mixer/mix_factory.dart';
+import 'package:mix/src/factory/mix_factory.dart';
 import 'package:mix/src/widgets/box/box.attributes.dart';
 import 'package:mix/src/widgets/text/text.attributes.dart';
 import 'package:mix/src/widgets/text/text_directives/text_directives.dart';
