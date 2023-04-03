@@ -118,7 +118,7 @@ class BoxAttributes extends WidgetAttributes {
       minWidth: other.minWidth,
       shape: other.shape,
       gradient: other.gradient,
-      decorators: decorators?.merge(other.decorators) ?? decorators,
+      decorators: decorators?.merge(other.decorators) ?? other.decorators,
     );
   }
 
