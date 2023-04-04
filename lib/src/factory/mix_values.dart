@@ -101,6 +101,7 @@ class MixValues with EquatableMixin {
 
     return copyWith(
       attributes: other.attributes,
+      decorators: other.decorators,
       variants: other.variants,
       contextVariants: other.contextVariants,
     );
