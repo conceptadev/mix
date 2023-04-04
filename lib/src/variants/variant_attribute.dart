@@ -10,13 +10,13 @@ class VariantAttribute<T extends Variant> extends Attribute
     with MergeableMixin<VariantAttribute<T>>, EquatableMixin {
   const VariantAttribute(
     this.variant,
-    Mix mix,
-  ) : _mix = mix;
+    StyleMix style,
+  ) : _style = style;
 
   final T variant;
-  final Mix _mix;
+  final StyleMix _style;
 
-  Mix get value => _mix;
+  StyleMix get value => _style;
 
   @override
   VariantAttribute<T> merge(covariant VariantAttribute<T> other) {
@@ -30,7 +30,7 @@ class VariantAttribute<T extends Variant> extends Attribute
 
     return VariantAttribute(
       variant,
-      _mix.merge(other._mix),
+      _style.merge(other._style),
     );
   }
 
@@ -47,7 +47,7 @@ class VariantAttribute<T extends Variant> extends Attribute
   }
 
   @override
-  int get hashCode => variant.hashCode ^ _mix.hashCode;
+  int get hashCode => variant.hashCode ^ _style.hashCode;
 
   @override
   get props => [variant, value];
@@ -55,12 +55,9 @@ class VariantAttribute<T extends Variant> extends Attribute
 
 class ContextVariantAttribute extends VariantAttribute<ContextVariant> {
   const ContextVariantAttribute(
-    ContextVariant variant,
-    Mix mix,
-  ) : super(
-          variant,
-          mix,
-        );
+    super.variant,
+    super.style,
+  );
 
   bool shouldApply(BuildContext context) {
     return variant.shouldApply.call(context);

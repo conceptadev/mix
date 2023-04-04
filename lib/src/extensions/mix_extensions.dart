@@ -10,15 +10,16 @@ import '../widgets/flex/flex.widget.dart';
 import '../widgets/icon/icon.widget.dart';
 import '../widgets/text/text.widget.dart';
 
-extension MixExtension<T extends Attribute> on Mix {
+extension MixExtension<T extends Attribute> on StyleMix {
   Box box({
-    Mix? mix,
+    @Deprecated('Use the style parameter instead') Mix? mix,
+    StyleMix? style,
     Key? key,
     List<Variant>? variants,
     required Widget child,
   }) {
     return Box(
-      mix: mergeNullable(mix),
+      style: mergeNullable(style ?? mix),
       key: key,
       variants: variants,
       child: child,
@@ -27,25 +28,27 @@ extension MixExtension<T extends Attribute> on Mix {
 
   @Deprecated('Use row instead')
   HBox hbox({
-    Mix? mix,
+    @Deprecated('Use the style parameter instead') Mix? mix,
+    StyleMix? style,
     Key? key,
     List<Variant>? variants,
     required List<Widget> children,
   }) {
     return HBox(
-      mix: mergeNullable(mix),
+      style: mergeNullable(style ?? mix),
       children: children,
     );
   }
 
   HBox row({
-    Mix? mix,
+    @Deprecated('Use the style parameter instead') Mix? mix,
+    StyleMix? style,
     Key? key,
     List<Variant>? variants,
     required List<Widget> children,
   }) {
     return HBox(
-      mix: mergeNullable(mix),
+      style: mergeNullable(style ?? mix),
       key: key,
       variants: variants,
       children: children,
@@ -54,14 +57,15 @@ extension MixExtension<T extends Attribute> on Mix {
 
   TextMix text(
     String text, {
-    Mix? mix,
+    @Deprecated('Use the style parameter instead') Mix? mix,
+    StyleMix? style,
     Key? key,
     List<Variant>? variants,
     String? semanticsLabel,
   }) {
     return TextMix(
       text,
-      mix: mergeNullable(mix),
+      style: mergeNullable(style ?? mix),
       key: key,
       variants: variants,
       semanticsLabel: semanticsLabel,
@@ -69,38 +73,41 @@ extension MixExtension<T extends Attribute> on Mix {
   }
 
   VBox vbox({
-    Mix? mix,
+    @Deprecated('Use the style parameter instead') Mix? mix,
+    StyleMix? style,
     Key? key,
     List<Variant>? variants,
     required List<Widget> children,
   }) {
     return VBox(
-      mix: mergeNullable(mix),
+      style: mergeNullable(style ?? mix),
       children: children,
     );
   }
 
   VBox column({
-    Mix? mix,
+    @Deprecated('Use the style parameter instead') Mix? mix,
+    StyleMix? style,
     Key? key,
     List<Variant>? variants,
     required List<Widget> children,
   }) {
     return vbox(
       children: children,
-      mix: mix,
+      style: style ?? mix,
     );
   }
 
   IconMix icon(
     IconData icon, {
-    Mix? mix,
+    @Deprecated('Use the style parameter instead') Mix? mix,
+    StyleMix? style,
     Key? key,
     List<Variant>? variants,
   }) {
     return IconMix(
       icon,
-      mix: mergeNullable(mix),
+      style: mergeNullable(style ?? mix),
       key: key,
       variants: variants,
     );

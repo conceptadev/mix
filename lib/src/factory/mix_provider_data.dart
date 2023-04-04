@@ -26,18 +26,24 @@ class MixData with EquatableMixin {
 
   factory MixData.create({
     required BuildContext context,
-    required Mix mix,
+    @Deprecated('Use the style parameter instead') Mix? mix,
+    StyleMix? style,
   }) {
+    assert((style != null && mix == null) || (style == null && mix != null),
+        'This method require mix OR style parameters, not both');
+
+    MixFactory styleMix = style ?? mix ?? Mix.constant;
+
     // Tracks the values selected and does not allow for
     // attributes already expended to be expended again.
     MixValues values = MixValues(
-      attributes: mix.values.attributes,
-      decorators: mix.values.decorators,
-      variants: mix.values.variants,
+      attributes: styleMix.values.attributes,
+      decorators: styleMix.values.decorators,
+      variants: styleMix.values.variants,
       contextVariants: [],
     );
 
-    final contextVariants = mix.values.contextVariants;
+    final contextVariants = styleMix.values.contextVariants;
 
     final attributes = _applyContextVariants(
       context,

@@ -8,7 +8,8 @@ import 'flex.descriptor.dart';
 
 class FlexBox extends MixWidget {
   const FlexBox({
-    super.mix,
+    @Deprecated('Use the style parameter instead') super.mix,
+    super.style,
     super.key,
     super.variants,
     required this.direction,
@@ -41,7 +42,7 @@ class FlexBox extends MixWidget {
   @override
   Widget build(BuildContext context) {
     return MixBuilder(
-      mix: mix,
+      style: style,
       variants: variants,
       builder: (mix) {
         final flex = FlexDescriptor.fromContext(mix);
@@ -67,7 +68,8 @@ class FlexBox extends MixWidget {
 
 class HBox extends FlexBox {
   const HBox({
-    super.mix,
+    @Deprecated('Use the style parameter instead') super.mix,
+    super.style,
     super.variants,
     super.key,
     List<Widget> children = const <Widget>[],
@@ -79,7 +81,8 @@ class HBox extends FlexBox {
 
 class VBox extends FlexBox {
   const VBox({
-    super.mix,
+    @Deprecated('Use the style parameter instead') super.mix,
+    super.style,
     super.variants,
     super.key,
     List<Widget> children = const <Widget>[],

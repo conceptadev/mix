@@ -28,7 +28,10 @@ void main() {
       RandomGenerator.textAttributes(),
     ];
     final variantList = <VariantAttribute>[
-      VariantAttribute(const Variant('testVariant'), RandomGenerator.mix()),
+      VariantAttribute(
+        const Variant('testVariant'),
+        RandomGenerator.mix(),
+      ),
       VariantAttribute(
         const Variant('anotherTestVariant'),
         RandomGenerator.mix(),

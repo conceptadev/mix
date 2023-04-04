@@ -43,11 +43,11 @@ class VariantOperation {
     Iterable<Variant>? variants,
   }) {
     variants ??= this.variants;
-    final mix = Mix.fromAttributes(attributes);
+    final style = Mix.fromAttributes(attributes);
     final attributeVariants = variants.map((variant) {
       return variant is ContextVariant
-          ? ContextVariantAttribute(variant, mix)
-          : VariantAttribute(variant, mix);
+          ? ContextVariantAttribute(variant, style)
+          : VariantAttribute(variant, style);
     });
 
     return attributeVariants.toList();

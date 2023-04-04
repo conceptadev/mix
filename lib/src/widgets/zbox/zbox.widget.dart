@@ -10,7 +10,8 @@ import 'zbox.props.dart';
 // create complex and responsive layouts.
 class ZBox extends MixWidget {
   const ZBox({
-    super.mix,
+    @Deprecated('Use the style parameter instead') super.mix,
+    super.style,
     super.key,
     super.variants,
     this.children = const <Widget>[],
@@ -21,7 +22,7 @@ class ZBox extends MixWidget {
   @override
   Widget build(BuildContext context) {
     return MixBuilder(
-      mix: mix,
+      style: style,
       variants: variants,
       builder: (mix) {
         final zProps = ZBoxProps.fromContext(mix);
