@@ -46,8 +46,8 @@ class VariantOperation {
     final style = Mix.fromAttributes(attributes);
     final attributeVariants = variants.map((variant) {
       return variant is ContextVariant
-          ? ContextVariantAttribute(variant, style: style)
-          : VariantAttribute(variant, style: style);
+          ? ContextVariantAttribute(variant, style)
+          : VariantAttribute(variant, style);
     });
 
     return attributeVariants.toList();
@@ -66,8 +66,8 @@ class VariantOperation {
       );
 
       return variant is ContextVariant
-          ? ContextVariantAttribute(variant, style: mixToApply)
-          : VariantAttribute(variant, style: mixToApply);
+          ? ContextVariantAttribute(variant, mixToApply)
+          : VariantAttribute(variant, mixToApply);
     });
 
     return attributeVariants.toList();

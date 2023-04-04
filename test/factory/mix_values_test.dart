@@ -30,11 +30,11 @@ void main() {
     final variantList = <VariantAttribute>[
       VariantAttribute(
         const Variant('testVariant'),
-        style: RandomGenerator.mix(),
+        RandomGenerator.mix(),
       ),
       VariantAttribute(
         const Variant('anotherTestVariant'),
-        style: RandomGenerator.mix(),
+        RandomGenerator.mix(),
       ),
     ];
     final contextVariantList = <ContextVariantAttribute>[
