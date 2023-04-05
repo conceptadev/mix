@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../factory/mix_provider_data.dart';
-import 'decorator.dart';
+import '../widgets/box/box.decorator.dart';
 
 class DecoratorWrapper extends StatelessWidget {
   const DecoratorWrapper(
@@ -41,7 +41,7 @@ class _RenderDecoratorWidget extends StatelessWidget {
     required this.child,
   });
 
-  final Decorator decorator;
+  final WidgetDecorator decorator;
   final MixData mix;
   final Widget child;
 

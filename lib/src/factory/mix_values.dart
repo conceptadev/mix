@@ -1,11 +1,11 @@
 import '../../mix.dart';
 import '../attributes/nested_attribute.dart';
-import '../helpers/equatable_mixin.dart';
+import '../helpers/equality_mixin/equality_mixin.dart';
 import '../helpers/mergeable_map.dart';
 import '../variants/variant_attribute.dart';
 import '../widgets/box/box.decorator.dart';
 
-class MixValues with EquatableMixin {
+class MixValues with EqualityMixin {
   final MergeableMap<WidgetAttributes>? attributes;
   final MergeableMap<WidgetDecorator>? decorators;
   final List<VariantAttribute> variants;
@@ -39,8 +39,6 @@ class MixValues with EquatableMixin {
         } else {
           variantList.add(attribute);
         }
-      } else if (attribute is NestedMixAttribute) {
-        throw Exception('Should not have nested attributes at this point');
       }
     }
 
@@ -121,8 +119,8 @@ class MixValues with EquatableMixin {
     Iterable<Attribute> attributes,
   ) {
     return attributes.expand((attribute) {
-      if (attribute is NestedMixAttribute) {
-        final nestedMix = attribute.value;
+      if (attribute is NestedStyleAttribute) {
+        final nestedMix = attribute.style;
 
         return _expandNestedAttributes(nestedMix.toAttributes());
       } else {

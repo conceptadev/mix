@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../attributes/attribute.dart';
-import '../helpers/equatable_mixin.dart';
+import '../helpers/equality_mixin/equality_mixin.dart';
+import '../helpers/mergeable_map.dart';
 import '../theme/mix_theme.dart';
 import '../variants/variant_attribute.dart';
 import '../widgets/box/box.decorator.dart';
@@ -11,51 +12,43 @@ import 'mix_values.dart';
 @Deprecated('Use MixData instead.')
 typedef MixContext = MixData;
 
-class MixData with EquatableMixin {
-  final MixValues _mixValues;
+class MixData with EqualityMixin {
+  final MergeableMap<WidgetAttributes> _widgetAttributes;
+  final MergeableMap<WidgetDecorator> _widgetDecorators;
   final MixTokenResolver _tokenResolver;
-  final MixThemeData? _theme;
 
   MixData._({
-    required MixValues mixValues,
+    required MergeableMap<WidgetAttributes> widgetAttributes,
+    required MergeableMap<WidgetDecorator> widgetDecorators,
     required MixTokenResolver tokenResolver,
-    MixThemeData? theme,
-  })  : _mixValues = mixValues,
-        _tokenResolver = tokenResolver,
-        _theme = theme;
+  })  : _widgetAttributes = widgetAttributes,
+        _widgetDecorators = widgetDecorators,
+        _tokenResolver = tokenResolver;
 
   factory MixData.create({
     required BuildContext context,
-    @Deprecated('Use the style parameter instead') Mix? mix,
-    StyleMix? style,
+    required StyleMix style,
   }) {
-    assert((style != null && mix == null) || (style == null && mix != null),
-        'This method require mix OR style parameters, not both');
-
-    MixFactory styleMix = style ?? mix ?? Mix.constant;
-
     // Tracks the values selected and does not allow for
     // attributes already expended to be expended again.
-    MixValues values = MixValues(
-      attributes: styleMix.values.attributes,
-      decorators: styleMix.values.decorators,
-      variants: styleMix.values.variants,
+    final currentValues = MixValues(
+      attributes: style.values.attributes,
+      decorators: style.values.decorators,
+      variants: [],
       contextVariants: [],
     );
 
-    final contextVariants = styleMix.values.contextVariants;
-
     final attributes = _applyContextVariants(
       context,
-      contextVariants,
+      style.values.contextVariants,
     );
 
-    final appliedValues = values.merge(MixValues.create(attributes));
+    final combinedValues = currentValues.merge(MixValues.create(attributes));
 
     return MixData._(
-      mixValues: appliedValues,
+      widgetAttributes: combinedValues.attributes ?? MergeableMap([]),
+      widgetDecorators: combinedValues.decorators ?? MergeableMap([]),
       tokenResolver: MixTokenResolver(context),
-      theme: MixTheme.maybeOf(context),
     );
   }
 
@@ -91,19 +84,13 @@ class MixData with EquatableMixin {
     );
   }
 
-  /// Used to obtain a [WidgetAttributes] from [MergeableMap<WidgetAttributes>].
-  ///
-  /// Obtain with `mixContext.attributesOfType<MyInheritedAttribute>()`.
-  T? attributesOfType<T extends WidgetAttributes>() {
-    return _mixValues.attributesOfType<T>();
-  }
-
-  List<WidgetDecorator>? get decorators {
-    return _mixValues.decorators?.values.toList();
+  /// Returns an instance of the specified [WidgetAttributes] type from the [MixData].
+  A? attributesOfType<A extends WidgetAttributes>() {
+    return _widgetAttributes[A] as A?;
   }
 
   T dependOnAttributesOfType<T extends WidgetAttributes>() {
-    final attribute = _mixValues.attributesOfType<T>();
+    final attribute = attributesOfType<T>();
 
     if (attribute is! T) {
       throw '''
@@ -116,8 +103,10 @@ class MixData with EquatableMixin {
     return attribute;
   }
 
-  MixValues get values => _mixValues;
+  List<WidgetDecorator>? get decorators {
+    return _widgetDecorators.values.toList();
+  }
 
   @override
-  get props => [_mixValues, _theme];
+  get props => [_widgetAttributes, _widgetDecorators];
 }

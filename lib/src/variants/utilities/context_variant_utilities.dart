@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../attributes/attribute.dart';
 import '../../helpers/extensions.dart';
 import '../../theme/mix_theme.dart';
 import '../../theme/tokens/breakpoints.dart';
@@ -19,35 +18,35 @@ class ContextVariantUtilities {
     };
   }
 
-  static ContextVariant onSmall<T extends Attribute>() {
+  static ContextVariant onSmall() {
     return ContextVariant(
       'onSmall',
       shouldApply: _screenSizeCheck(ScreenSizeToken.small),
     );
   }
 
-  static ContextVariant onXsmall<T extends Attribute>() {
+  static ContextVariant onXsmall() {
     return ContextVariant(
       'onXsmall',
       shouldApply: _screenSizeCheck(ScreenSizeToken.xsmall),
     );
   }
 
-  static ContextVariant onMedium<T extends Attribute>() {
+  static ContextVariant onMedium() {
     return ContextVariant(
       'onMedium',
       shouldApply: _screenSizeCheck(ScreenSizeToken.medium),
     );
   }
 
-  static ContextVariant onLarge<T extends Attribute>() {
+  static ContextVariant onLarge() {
     return ContextVariant(
       'onLarge',
       shouldApply: _screenSizeCheck(ScreenSizeToken.large),
     );
   }
 
-  static ContextVariant onPortrait<T extends Attribute>() {
+  static ContextVariant onPortrait() {
     return ContextVariant(
       'onPortrait',
       shouldApply: (BuildContext context) {
@@ -56,7 +55,7 @@ class ContextVariantUtilities {
     );
   }
 
-  static ContextVariant onLandscape<T extends Attribute>() {
+  static ContextVariant onLandscape() {
     return ContextVariant(
       'onLandscape',
       shouldApply: (BuildContext context) {
@@ -65,7 +64,7 @@ class ContextVariantUtilities {
     );
   }
 
-  static ContextVariant onDark<T extends Attribute>() {
+  static ContextVariant onDark() {
     return ContextVariant(
       'onDark',
       shouldApply: (BuildContext context) {
@@ -74,7 +73,7 @@ class ContextVariantUtilities {
     );
   }
 
-  static ContextVariant onLight<T extends Attribute>() {
+  static ContextVariant onLight() {
     return ContextVariant(
       'onLight',
       shouldApply: (BuildContext context) {
@@ -83,7 +82,7 @@ class ContextVariantUtilities {
     );
   }
 
-  static ContextVariant onDisabled<T extends Attribute>() {
+  static ContextVariant onDisabled() {
     return ContextVariant(
       'onDisabled',
       shouldApply: (BuildContext context) {
@@ -94,7 +93,7 @@ class ContextVariantUtilities {
     );
   }
 
-  static ContextVariant onFocus<T extends Attribute>() {
+  static ContextVariant onFocus() {
     return ContextVariant(
       'onFocus',
       shouldApply: (BuildContext context) {
@@ -105,7 +104,7 @@ class ContextVariantUtilities {
     );
   }
 
-  static ContextVariant onPress<T extends Attribute>() {
+  static ContextVariant onPress() {
     return ContextVariant(
       'onPress',
       shouldApply: (BuildContext context) {
@@ -116,7 +115,7 @@ class ContextVariantUtilities {
     );
   }
 
-  static ContextVariant onLongPress<T extends Attribute>() {
+  static ContextVariant onLongPress() {
     return ContextVariant(
       'onLongPress',
       shouldApply: (BuildContext context) {
@@ -127,7 +126,7 @@ class ContextVariantUtilities {
     );
   }
 
-  static ContextVariant onHover<T extends Attribute>() {
+  static ContextVariant onHover() {
     return ContextVariant(
       'onHover',
       shouldApply: (BuildContext context) {
@@ -142,7 +141,7 @@ class ContextVariantUtilities {
     return other.inverseInstance() as T;
   }
 
-  static ContextVariant onRTL<T extends Attribute>() {
+  static ContextVariant onRTL() {
     return ContextVariant(
       'onRTL',
       shouldApply: (BuildContext context) {

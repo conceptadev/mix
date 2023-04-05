@@ -74,7 +74,7 @@ class VariantOperation {
   }
 
   // ignore: long-parameter-list
-  NestedMixAttribute<VariantAttribute> call([
+  NestedStyleAttribute call([
     Attribute? p1,
     Attribute? p2,
     Attribute? p3,
@@ -100,7 +100,7 @@ class VariantOperation {
       attributes = _buildOrOperations(params);
     }
 
-    return NestedMixAttribute<VariantAttribute>(Mix.fromAttributes(attributes));
+    return NestedStyleAttribute(Mix.fromAttributes(attributes));
   }
 
   @override

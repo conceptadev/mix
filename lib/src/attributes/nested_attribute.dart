@@ -2,23 +2,19 @@ import '../factory/mix_factory.dart';
 import 'attribute.dart';
 
 /// Allows to pass down Mixes as attributes for use with helpers
-class NestedMixAttribute<T extends Attribute> extends Attribute {
-  const NestedMixAttribute(StyleMix style) : _style = style;
+class NestedStyleAttribute extends Attribute
+    with Mergeable<NestedStyleAttribute> {
+  const NestedStyleAttribute(this.style);
 
-  final StyleMix _style;
-
-  StyleMix get value => _style;
+  final StyleMix style;
 
   @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
+  NestedStyleAttribute merge(NestedStyleAttribute? other) {
+    if (other == null) return this;
 
-    return other is NestedMixAttribute<T> && other.value == value;
+    return NestedStyleAttribute(style.merge(other.style));
   }
 
   @override
-  int get hashCode => value.hashCode;
-
-  @override
-  String toString() => 'NestedMixAttribute(style: $_style)';
+  get props => [style];
 }

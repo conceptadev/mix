@@ -1,11 +1,23 @@
-import '../../decorators/decorator.dart';
+import 'package:flutter/material.dart';
 
-abstract class WidgetDecorator<T extends WidgetDecorator<T>>
-    extends Decorator<T> {
+import '../../attributes/attribute.dart';
+import '../../factory/mix_provider_data.dart';
+
+abstract class WidgetDecorator<T extends WidgetDecorator<T>> extends Attribute
+    with Mergeable<WidgetDecorator<T>> {
   const WidgetDecorator({
-    super.key,
+    this.key,
   });
 
+  /// Key is required in order for proper sorting
+  final Key? key;
+
+  Widget build(MixData mix, Widget child);
+
   @override
-  T merge(covariant T other);
+  WidgetDecorator<T> merge(covariant WidgetDecorator<T> other);
+
+  Widget render(MixData mix, Widget child) {
+    return build(mix, child);
+  }
 }

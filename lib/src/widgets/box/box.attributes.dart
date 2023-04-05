@@ -48,6 +48,7 @@ class BoxAttributes extends WidgetAttributes {
     this.gradient,
   });
 
+  @override
   BoxAttributes copyWith({
     EdgeInsetsGeometryDto? margin,
     EdgeInsetsGeometryDto? padding,
@@ -67,18 +68,22 @@ class BoxAttributes extends WidgetAttributes {
     Gradient? gradient,
   }) {
     return BoxAttributes(
-      margin: margin ?? this.margin,
-      padding: padding ?? this.padding,
+      // Mergeble values
+      border: this.border?.merge(border) ?? border,
+      borderRadius: this.borderRadius?.merge(borderRadius) ?? borderRadius,
+      boxShadow: this.boxShadow?.merge(boxShadow) ?? boxShadow,
+      margin: this.margin?.merge(margin) ?? margin,
+      padding: this.padding?.merge(padding) ?? padding,
+      transform: this.transform?.merge(transform) ?? transform,
+
+      // Override values
       alignment: alignment ?? this.alignment,
-      height: height ?? this.height,
-      width: width ?? this.width,
       color: color ?? this.color,
-      border: border ?? this.border,
-      borderRadius: borderRadius ?? this.borderRadius,
-      boxShadow: boxShadow ?? this.boxShadow,
-      transform: transform ?? this.transform,
+      height: height ?? this.height,
       maxHeight: maxHeight ?? this.maxHeight,
       minHeight: minHeight ?? this.minHeight,
+
+      width: width ?? this.width,
       maxWidth: maxWidth ?? this.maxWidth,
       minWidth: minWidth ?? this.minWidth,
       shape: shape ?? this.shape,
@@ -135,13 +140,12 @@ class BoxAttributes extends WidgetAttributes {
 
     return copyWith(
       // Mergeble values
-      border: border?.merge(other.border) ?? other.border,
-      borderRadius:
-          borderRadius?.merge(other.borderRadius) ?? other.borderRadius,
-      boxShadow: boxShadow?.merge(other.boxShadow) ?? other.boxShadow,
-      margin: margin?.merge(other.margin) ?? other.margin,
-      padding: padding?.merge(other.padding) ?? other.padding,
-      transform: transform?.merge(other.transform) ?? other.transform,
+      border: other.border,
+      borderRadius: other.borderRadius,
+      boxShadow: other.boxShadow,
+      margin: other.margin,
+      padding: other.padding,
+      transform: other.transform,
       // Override values
       alignment: other.alignment,
       color: other.color,

@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 
 import '../../factory/mix_provider_data.dart';
-import '../../helpers/equatable_mixin.dart';
 import 'edge_insets_geometry.dto.dart';
 
 class EdgeInsetsDirectionalDto
-    extends EdgeInsetsGeometryDto<EdgeInsetsDirectional> with EquatableMixin {
+    extends EdgeInsetsGeometryDto<EdgeInsetsDirectional> {
   final double? top;
   final double? bottom;
   final double? start;

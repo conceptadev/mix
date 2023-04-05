@@ -111,7 +111,7 @@ class MixFactory {
     }
 
     // Create a mix from the matched variants
-    final mixToApply = _fromVariantAttributes(matchedVariants);
+    final mixToApply = MixFactory.fromVariantAttributes(matchedVariants);
 
     // Create a mix with the existing values
     final existingMix = MixFactory._(
@@ -139,11 +139,11 @@ class MixFactory {
     }
 
     // Create a mix from the matched variants
-    return _fromVariantAttributes(matchedVariants);
+    return MixFactory.fromVariantAttributes(matchedVariants);
   }
 
   /// Selects variants based on a condition and returns a new mix with the selected variants.
-  MixFactory selectVariantCondition<T extends Attribute>(
+  MixFactory selectVariantCondition(
     Map<bool, Variant> cases,
   ) {
     final keys = cases.keys.toList();
@@ -160,14 +160,14 @@ class MixFactory {
     return selectVariants(variants);
   }
 
-  static MixFactory _fromVariantAttributes(List<VariantAttribute> variants) {
+  factory MixFactory.fromVariantAttributes(List<VariantAttribute> variants) {
     return MixFactory.combine(variants.map((e) => e.value).toList());
   }
 
   /// Chooses a mix based on a [condition].
   ///
   /// Returns [ifTrue] if the [condition] is true, otherwise returns [ifFalse].
-  static MixFactory chooser<T extends Attribute>({
+  factory MixFactory.chooser({
     required bool condition,
     required MixFactory ifTrue,
     required MixFactory ifFalse,
@@ -183,7 +183,7 @@ class MixFactory {
   ///
   /// Iterates through the list of mixes, merging each mix with the previous mix
   /// and returning the final combined MixFactory.
-  static MixFactory combine<T extends Attribute>(List<MixFactory> mixes) {
+  factory MixFactory.combine(List<MixFactory> mixes) {
     MixValues combinedValues = const MixValues.empty();
     for (final mix in mixes) {
       combinedValues = combinedValues.merge(mix.values);

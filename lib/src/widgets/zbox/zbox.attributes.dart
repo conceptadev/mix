@@ -13,6 +13,7 @@ class ZBoxAttributes extends WidgetAttributes {
     this.clipBehavior,
   });
 
+  @override
   ZBoxAttributes copyWith({
     AlignmentGeometry? alignment,
     StackFit? fit,
@@ -29,10 +30,10 @@ class ZBoxAttributes extends WidgetAttributes {
   ZBoxAttributes merge(ZBoxAttributes? other) {
     if (other == null) return this;
 
-    return ZBoxAttributes(
-      alignment: other.alignment ?? alignment,
-      clipBehavior: other.clipBehavior ?? clipBehavior,
-      fit: other.fit ?? fit,
+    return copyWith(
+      alignment: other.alignment,
+      clipBehavior: other.clipBehavior,
+      fit: other.fit,
     );
   }
 

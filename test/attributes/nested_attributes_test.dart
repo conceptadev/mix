@@ -17,7 +17,7 @@ void main() {
         const BoxAttributes(color: ColorDto(Colors.red)),
       );
       final nestedStyle = Mix(
-        NestedMixAttribute(
+        NestedStyleAttribute(
           Mix.combine([
             styleMargin,
             styleColor,
@@ -25,9 +25,7 @@ void main() {
         ),
       );
 
-      final nestedStyleUtility = Mix(
-        apply(styleColor, styleMargin),
-      );
+      final nestedStyleUtility = Mix.combine([styleColor, styleMargin]);
 
       final boxAttributes =
           nestedStyle.values.attributesOfType<BoxAttributes>();

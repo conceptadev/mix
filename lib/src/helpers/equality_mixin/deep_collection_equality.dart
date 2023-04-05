@@ -1,3 +1,4 @@
+
 import 'dart:collection';
 
 /// A class to perform deep equality checks on collections.

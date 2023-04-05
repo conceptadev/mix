@@ -23,9 +23,11 @@ final pressableMix = Mix.fromAttributes([
 void main() {
   group("Mix Provider", () {
     testWidgets('Mix Provider exist and Matches', (tester) async {
-      await tester.pumpWidget(Box(
-        mix: pressableMix,
-      ));
+      await tester.pumpWidget(
+        Box(
+          style: pressableMix,
+        ),
+      );
 
       final widgetFinder = find.byType(BoxMixedWidget);
 
@@ -37,19 +39,19 @@ void main() {
 
       final matchMix = MixData.create(
         context: context,
-        mix: pressableMix,
+        style: pressableMix,
       );
 
       final clonedMix = MixData.create(
         context: context,
-        mix: pressableMix.clone(),
+        style: pressableMix.clone(),
       );
 
-      expect(mix?.values, matchMix.values);
+      expect(mix, matchMix);
 
       expect(
-        mix?.values,
-        matchMix.values,
+        mix,
+        matchMix,
         reason: 'MixValues should be the same',
       );
 

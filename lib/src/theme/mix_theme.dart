@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import '../../mix.dart';
-import '../helpers/equatable_mixin.dart';
+import '../helpers/equality_mixin/equality_mixin.dart';
 import 'tokens/breakpoints.dart';
 import 'tokens/mix_token.dart';
 import 'tokens/radii_token.dart';
@@ -31,7 +31,7 @@ class MixTheme extends InheritedWidget {
   }
 }
 
-class MixThemeData with EquatableMixin {
+class MixThemeData with EqualityMixin {
   final MixSpaceTokens space;
   late MixSpaceTokensReference spaceRef;
   final MixBreakpointsTokens breakpoints;
@@ -87,8 +87,10 @@ class MixTokenResolver {
 
   MixTokenResolver(this.context);
 
+  MixThemeData get theme => MixTheme.of(context);
+
   Color color(ColorToken token) {
-    final color = MixTheme.of(context).colors[token]?.call(context);
+    final color = theme.colors[token]?.call(context);
 
     if (color == null) {
       throw Exception('Color token $token is not defined in Mix Theme');
@@ -98,7 +100,7 @@ class MixTokenResolver {
   }
 
   TextStyle textStyle(TextStyleToken token) {
-    final style = MixTheme.of(context).textStyles[token]?.call(context);
+    final style = theme.textStyles[token]?.call(context);
 
     if (style == null) {
       throw Exception('TextStyle token $token is not defined in Mix Theme');
@@ -108,7 +110,7 @@ class MixTokenResolver {
   }
 
   double space(double value) {
-    final mixTheme = MixTheme.of(context);
+    final mixTheme = theme;
 
     // Check if value is a reference
     final token = mixTheme.spaceRef[value];
