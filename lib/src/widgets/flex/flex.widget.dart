@@ -59,6 +59,34 @@ class FlexMixedWidget extends StatelessWidget {
 
 class FlexMix extends MixWidget {
   const FlexMix({
+    super.style,
+    super.key,
+    super.variants,
+    required this.direction,
+    required this.children,
+  });
+
+  final List<Widget> children;
+  final Axis direction;
+
+  @override
+  Widget build(BuildContext context) {
+    return MixBuilder(
+      style: style,
+      variants: variants,
+      builder: (mix) {
+        return FlexMixedWidget(
+          mix: mix,
+          direction: direction,
+          children: children,
+        );
+      },
+    );
+  }
+}
+
+class FlexBox extends MixWidget {
+  const FlexBox({
     @Deprecated('Use the style parameter instead') super.mix,
     super.style,
     super.key,
@@ -89,28 +117,26 @@ class FlexMix extends MixWidget {
   }
 }
 
-class HBox extends FlexMix {
+class HBox extends FlexBox {
   const HBox({
     @Deprecated('Use the style parameter instead') super.mix,
     super.style,
     super.variants,
     super.key,
-    List<Widget> children = const <Widget>[],
+    super.children = const <Widget>[],
   }) : super(
           direction: Axis.horizontal,
-          children: children,
         );
 }
 
-class VBox extends FlexMix {
+class VBox extends FlexBox {
   const VBox({
     @Deprecated('Use the style parameter instead') super.mix,
     super.style,
     super.variants,
     super.key,
-    List<Widget> children = const <Widget>[],
+    super.children = const <Widget>[],
   }) : super(
-          children: children,
           direction: Axis.vertical,
         );
 }
