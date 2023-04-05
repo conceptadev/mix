@@ -22,12 +22,29 @@ class SharedWidgetAttributes extends WidgetAttributes {
   SharedWidgetAttributes merge(SharedWidgetAttributes? other) {
     if (other == null) return this;
 
+    return copyWith(
+      visible: other.visible,
+      animated: other.animated,
+      animationDuration: other.animationDuration,
+      animationCurve: other.animationCurve,
+      textDirection: other.textDirection,
+    );
+  }
+
+  @override
+  SharedWidgetAttributes copyWith({
+    bool? visible,
+    bool? animated,
+    Duration? animationDuration,
+    Curve? animationCurve,
+    TextDirection? textDirection,
+  }) {
     return SharedWidgetAttributes(
-      visible: other.visible ?? visible,
-      animated: other.animated ?? animated,
-      animationDuration: other.animationDuration ?? animationDuration,
-      animationCurve: other.animationCurve ?? animationCurve,
-      textDirection: other.textDirection ?? textDirection,
+      visible: visible ?? this.visible,
+      animated: animated ?? this.animated,
+      animationDuration: animationDuration ?? this.animationDuration,
+      animationCurve: animationCurve ?? this.animationCurve,
+      textDirection: textDirection ?? this.textDirection,
     );
   }
 

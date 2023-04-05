@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 
 import '../attributes/attribute.dart';
 
-List<T> combineMergeableLists<T extends MergeableMixin>(
+List<T> combineMergeableLists<T extends Mergeable>(
   List<T> list,
   List<T>? other,
 ) {

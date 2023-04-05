@@ -1,23 +1,22 @@
-import '../helpers/equatable_mixin.dart';
+import '../helpers/equality_mixin/equality_mixin.dart';
 
 /// Base attribute
 
 // Some classes have defaults
 // Facade allows us ot set all properties as optional
 // For improved merge and override of properties
-abstract class Attribute {
+abstract class Attribute with EqualityMixin {
   const Attribute();
 }
 
-mixin MergeableMixin<T> {
+mixin Mergeable<T> {
   T merge(covariant T? other);
 }
 
 /// An interface that add support to custom attributes for [MixContext].
 abstract class WidgetAttributes extends Attribute
-    with MergeableMixin<WidgetAttributes>, EquatableMixin {
+    with Mergeable<WidgetAttributes> {
   const WidgetAttributes();
 
-  @override
-  WidgetAttributes merge(covariant WidgetAttributes? other);
+  WidgetAttributes copyWith();
 }

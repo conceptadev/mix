@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../../../mix.dart';
 import '../../dtos/shadow/box_shadow.dto.dart';
-import '../../helpers/equatable_mixin.dart';
+import '../../helpers/equality_mixin/equality_mixin.dart';
 
-class BoxDescriptor with EquatableMixin {
+class BoxDescriptor with EqualityMixin {
   final Color? _color;
   final AlignmentGeometry? alignment;
   final EdgeInsetsGeometry? padding;

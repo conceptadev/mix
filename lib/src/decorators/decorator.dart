@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 
 import '../../mix.dart';
-import '../helpers/equatable_mixin.dart';
 
 abstract class Decorator<T extends Decorator<T>> extends Attribute
-    with MergeableMixin<T>, EquatableMixin {
+    with Mergeable<Decorator<T>> {
   const Decorator({
     this.key,
   });
@@ -15,7 +14,7 @@ abstract class Decorator<T extends Decorator<T>> extends Attribute
   Widget build(MixData mix, Widget child);
 
   @override
-  T merge(covariant T other);
+  Decorator<T> merge(covariant Decorator<T> other);
 
   Widget render(MixData mix, Widget child) {
     return build(mix, child);

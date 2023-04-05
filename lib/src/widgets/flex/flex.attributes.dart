@@ -34,6 +34,25 @@ class FlexAttributes extends WidgetAttributes {
   }
 
   @override
+  FlexAttributes copyWith({
+    Axis? direction,
+    MainAxisAlignment? mainAxisAlignment,
+    CrossAxisAlignment? crossAxisAlignment,
+    MainAxisSize? mainAxisSize,
+    VerticalDirection? verticalDirection,
+    double? gapSize,
+  }) {
+    return FlexAttributes(
+      direction: direction ?? this.direction,
+      mainAxisAlignment: mainAxisAlignment ?? this.mainAxisAlignment,
+      crossAxisAlignment: crossAxisAlignment ?? this.crossAxisAlignment,
+      mainAxisSize: mainAxisSize ?? this.mainAxisSize,
+      verticalDirection: verticalDirection ?? this.verticalDirection,
+      gapSize: gapSize ?? this.gapSize,
+    );
+  }
+
+  @override
   get props => [
         direction,
         mainAxisAlignment,

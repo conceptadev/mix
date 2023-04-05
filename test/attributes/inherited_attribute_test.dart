@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart' hide border, onEnabled, icon, iconColor;
 import 'package:mix/src/attributes/shared/shared.descriptor.dart';
-import 'package:mix/src/helpers/equatable_mixin.dart';
 
 import '../helpers/testing_utils.dart';
 
@@ -25,9 +24,20 @@ class InheritedIconAttribute extends WidgetAttributes {
 
   @override
   InheritedIconAttribute merge(InheritedIconAttribute other) {
+    return copyWith(
+      color: other.color,
+      size: other.size,
+    );
+  }
+
+  @override
+  InheritedIconAttribute copyWith({
+    Color? color,
+    double? size,
+  }) {
     return InheritedIconAttribute(
-      color: other.color ?? color,
-      size: other.size ?? size,
+      color: color ?? this.color,
+      size: size ?? this.size,
     );
   }
 
@@ -57,9 +67,7 @@ class InheritedIconAttribute extends WidgetAttributes {
   get props => [color, size];
 }
 
-class InputDecorationThemeAttribute
-    with EquatableMixin
-    implements WidgetAttributes {
+class InputDecorationThemeAttribute extends WidgetAttributes {
   final Color? iconColor;
   final Color? fillColor;
   final InputBorder? border;
@@ -70,11 +78,13 @@ class InputDecorationThemeAttribute
   });
 
   @override
-  InputDecorationThemeAttribute merge(InputDecorationThemeAttribute other) {
+  InputDecorationThemeAttribute merge(InputDecorationThemeAttribute? other) {
+    if (other == null) return this;
+
     return InputDecorationThemeAttribute(
-      iconColor: other.iconColor ?? iconColor,
-      fillColor: other.fillColor ?? fillColor,
-      border: other.border ?? border,
+      iconColor: other.iconColor,
+      fillColor: other.fillColor,
+      border: other.border,
     );
   }
 
@@ -83,6 +93,19 @@ class InputDecorationThemeAttribute
       iconColor: iconColor,
       fillColor: fillColor,
       border: border,
+    );
+  }
+
+  @override
+  InputDecorationThemeAttribute copyWith({
+    Color? iconColor,
+    Color? fillColor,
+    InputBorder? border,
+  }) {
+    return InputDecorationThemeAttribute(
+      iconColor: iconColor ?? this.iconColor,
+      fillColor: fillColor ?? this.fillColor,
+      border: border ?? this.border,
     );
   }
 
@@ -135,7 +158,7 @@ class CustomWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return MixBuilder(
       variants: variants,
-      mix: mix,
+      style: mix,
       builder: (mix) {
         final attribute = mix.attributesOfType<InheritedIconAttribute>()!;
 
@@ -176,7 +199,7 @@ class TextFieldWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MixBuilder(
-      mix: mix,
+      style: mix,
       variants: variants,
       builder: (mix) {
         final decorationTheme =

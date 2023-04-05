@@ -10,12 +10,23 @@ class IconAttributes extends WidgetAttributes {
   });
 
   @override
+  IconAttributes copyWith({
+    ColorDto? color,
+    double? size,
+  }) {
+    return IconAttributes(
+      color: color ?? this.color,
+      size: size ?? this.size,
+    );
+  }
+
+  @override
   IconAttributes merge(IconAttributes? other) {
     if (other == null) return this;
 
-    return IconAttributes(
-      color: other.color ?? color,
-      size: other.size ?? size,
+    return copyWith(
+      color: other.color,
+      size: other.size,
     );
   }
 

@@ -94,6 +94,7 @@ class TextAttributes extends WidgetAttributes {
     );
   }
 
+  @override
   TextAttributes copyWith({
     List<TextStyleDto>? styles,
     StrutStyle? strutStyle,

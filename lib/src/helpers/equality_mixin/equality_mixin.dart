@@ -1,5 +1,5 @@
+import '../extensions.dart';
 import 'deep_collection_equality.dart';
-import 'extensions.dart';
 
 /// Returns a `hashCode` for [props].
 int _mapPropsToHashCode(Iterable? props) =>
@@ -33,7 +33,7 @@ bool _equals(List? list1, List? list2) {
 }
 
 bool _isEquatable(dynamic object) {
-  return object is EquatableMixin;
+  return object is EqualityMixin;
 }
 
 /// Jenkins Hash Functions
@@ -78,11 +78,8 @@ String mapPropsToString(Type runtimeType, List<Object?> props) =>
 
 /// A mixin that helps implement equality
 /// without needing to explicitly override [operator ==] and [hashCode].
-///
-/// Like with extending [Equatable], the [EquatableMixin] overrides the
-/// [operator ==] as well as the [hashCode] based on the provided [props].
 
-mixin EquatableMixin {
+mixin EqualityMixin {
   List<Object?> get props;
 
   bool get stringify => true;
@@ -90,7 +87,7 @@ mixin EquatableMixin {
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        other is EquatableMixin &&
+        other is EqualityMixin &&
             runtimeType == other.runtimeType &&
             _equals(props, other.props);
   }
@@ -101,10 +98,10 @@ mixin EquatableMixin {
   List<String> getDiff(Object other) {
     final diff = <String>[];
 
-// Return if there are no diferences
+    // Return if there are no diferences
     if (this == other) return diff;
 
-    if (other is EquatableMixin) {
+    if (other is EqualityMixin) {
       final otherProps = other.props;
       final length = props.length;
 

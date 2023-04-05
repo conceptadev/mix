@@ -119,3 +119,6 @@ const textDecorationThickness = LegacyTextStyleUtility.decorationThickness;
 
 @Deprecated('Use textStyle(fontFamilyFallback: fontFamilyFallback) instead')
 const fontFamilyFallback = LegacyTextStyleUtility.fontFamilyFallback;
+
+@Deprecated('Use style.merge(otherStyle), instead')
+const apply = SpreadPositionalParams(HelperUtility.apply);

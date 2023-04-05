@@ -6,7 +6,7 @@ import '../attributes/attribute.dart';
 /// their runtime type. Maintains insertion order of keys.
 ///
 /// This is used to merge different attributes.
-class MergeableMap<T extends MergeableMixin> {
+class MergeableMap<T extends Mergeable> {
   final LinkedHashMap<Type, T> _map = LinkedHashMap<Type, T>();
 
   /// Creates a new [MergeableMap] instance with the given [iterable].

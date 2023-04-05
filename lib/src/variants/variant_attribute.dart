@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 
 import '../attributes/attribute.dart';
 import '../factory/mix_factory.dart';
-import '../helpers/equatable_mixin.dart';
 import 'context_variant.dart';
 import 'variant.dart';
 
 class VariantAttribute<T extends Variant> extends Attribute
-    with MergeableMixin<VariantAttribute<T>>, EquatableMixin {
+    with Mergeable<VariantAttribute<T>> {
   const VariantAttribute(
     this.variant,
     StyleMix style,
