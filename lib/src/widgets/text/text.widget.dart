@@ -15,6 +15,7 @@ class TextMix extends MixWidget {
     super.style,
     super.key,
     super.variants,
+    super.inherit,
     this.semanticsLabel,
   });
 

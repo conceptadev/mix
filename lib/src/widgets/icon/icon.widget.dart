@@ -14,6 +14,7 @@ class IconMix extends MixWidget {
     @Deprecated('Use the style parameter instead') super.mix,
     super.style,
     super.key,
+    super.inherit,
     super.variants,
   });
 

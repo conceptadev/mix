@@ -62,6 +62,7 @@ class FlexMix extends MixWidget {
     super.style,
     super.key,
     super.variants,
+    super.inherit,
     required this.direction,
     required this.children,
   });
@@ -91,6 +92,7 @@ class FlexBox extends MixWidget {
     super.style,
     super.key,
     super.variants,
+    super.inherit,
     required this.direction,
     required this.children,
   });
@@ -123,6 +125,7 @@ class HBox extends FlexBox {
     super.style,
     super.variants,
     super.key,
+    super.inherit,
     super.children = const <Widget>[],
   }) : super(
           direction: Axis.horizontal,
@@ -135,6 +138,7 @@ class VBox extends FlexBox {
     super.style,
     super.variants,
     super.key,
+    super.inherit,
     super.children = const <Widget>[],
   }) : super(
           direction: Axis.vertical,
