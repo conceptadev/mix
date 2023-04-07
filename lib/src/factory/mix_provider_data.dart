@@ -107,6 +107,16 @@ class MixData with EqualityMixin {
     return _widgetDecorators.values.toList();
   }
 
+  /// This is similar to a merge behavior however it prioritizes the current properties
+  /// over the other properties, essentially using [MixData] `other` as the base for this instance.
+  MixData inheritFrom(MixData other) {
+    return MixData._(
+      widgetAttributes: other._widgetAttributes.merge(_widgetAttributes),
+      widgetDecorators: other._widgetDecorators.merge(_widgetDecorators),
+      tokenResolver: _tokenResolver,
+    );
+  }
+
   @override
   get props => [_widgetAttributes, _widgetDecorators];
 }

@@ -14,6 +14,7 @@ class ZBox extends MixWidget {
     super.style,
     super.key,
     super.variants,
+    super.inherit,
     this.children = const <Widget>[],
   });
 

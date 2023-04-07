@@ -20,6 +20,7 @@ class MixValues with EqualityMixin {
 
   /// Creates a new [MixValues] instance from the provided [Iterable] of [Attribute]s.
   factory MixValues.create(Iterable<Attribute> attributes) {
+    //TODO: Remove expansion of nested attributes later
     final expanded = _expandNestedAttributes(attributes);
 
     final variantList = <VariantAttribute>[];

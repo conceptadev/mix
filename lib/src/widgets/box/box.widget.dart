@@ -14,6 +14,7 @@ class Box extends MixWidget {
     super.style,
     super.key,
     super.variants,
+    super.inherit,
     this.child,
   });
 
