@@ -29,9 +29,9 @@ class BasicExample extends HookWidget {
 
     return Pressable(
       onPressed: () => print('tapped'),
-      child: Box(
+      child: StyledContainer(
         mix: mix,
-        child: const TextMix('Gradient Box'),
+        child: const StyledText('Gradient Box'),
       ),
     );
   }

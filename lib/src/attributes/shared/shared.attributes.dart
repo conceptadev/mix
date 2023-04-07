@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../attribute.dart';
 
-class SharedWidgetAttributes extends WidgetAttributes {
+class SharedWidgetAttributes extends WidgetStyleAttributes {
   final bool? visible;
   //Animation
   final bool? animated;

@@ -13,7 +13,7 @@ const withColor = InheritedIconAttribute.withColor;
 
 const inputDecoration = InputDecorationThemeAttribute.inputDecoration;
 
-class InheritedIconAttribute extends WidgetAttributes {
+class InheritedIconAttribute extends WidgetStyleAttributes {
   const InheritedIconAttribute({
     this.color,
     this.size,
@@ -67,7 +67,7 @@ class InheritedIconAttribute extends WidgetAttributes {
   get props => [color, size];
 }
 
-class InputDecorationThemeAttribute extends WidgetAttributes {
+class InputDecorationThemeAttribute extends WidgetStyleAttributes {
   final Color? iconColor;
   final Color? fillColor;
   final InputBorder? border;

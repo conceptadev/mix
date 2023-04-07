@@ -8,8 +8,11 @@ import '../mix.widget.dart';
 import '../mix_context_builder.dart';
 import 'text.descriptor.dart';
 
-class TextMix extends MixWidget {
-  const TextMix(
+@Deprecated('Use StyledText now')
+typedef TextMix = StyledText;
+
+class StyledText extends StyledWidget {
+  const StyledText(
     this.text, {
     @Deprecated('Use the style parameter instead') super.mix,
     super.style,
@@ -27,7 +30,7 @@ class TextMix extends MixWidget {
     return MixBuilder(
       style: style,
       builder: (mix) {
-        return TextMixedWidget(
+        return MixedText(
           mix: mix,
           content: text,
           semanticsLabel: semanticsLabel,
@@ -37,13 +40,16 @@ class TextMix extends MixWidget {
   }
 }
 
-class TextMixedWidget extends StatelessWidget {
-  const TextMixedWidget({
+@Deprecated('Use MixedText now')
+typedef TextMixedWidget = MixedText;
+
+class MixedText extends StatelessWidget {
+  const MixedText({
     required this.mix,
     required this.content,
-    Key? key,
+    super.key,
     this.semanticsLabel,
-  }) : super(key: key);
+  });
 
   final String content;
   final MixData mix;

@@ -18,9 +18,9 @@ class VariantsDefaultExample extends StatelessWidget {
     return Center(
       child: Pressable(
         onPressed: () {},
-        child: Box(
+        child: StyledContainer(
           mix: style,
-          child: const TextMix('Button'),
+          child: const StyledText('Button'),
         ),
       ),
     );

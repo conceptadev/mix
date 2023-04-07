@@ -22,7 +22,7 @@ void main() {
       expect(mixValues.hasContextVariants, isFalse);
     });
 
-    final attributeList = <WidgetAttributes>[
+    final attributeList = <WidgetStyleAttributes>[
       RandomGenerator.boxAttributes(),
       RandomGenerator.boxAttributes(),
       RandomGenerator.textAttributes(),

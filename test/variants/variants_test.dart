@@ -14,7 +14,7 @@ void main() {
     await tester.pumpWidget(
       MaterialApp(
         theme: ThemeData.dark(),
-        home: Box(
+        home: StyledContainer(
           mix: mix,
         ),
       ),
@@ -22,7 +22,7 @@ void main() {
     final containerWidget =
         find.byType(Container).evaluate().first.widget as Container;
 
-    final widgetFinder = find.byType(BoxMixedWidget);
+    final widgetFinder = find.byType(MixedContainer);
 
     // Get BuildContext for boxWidget
     BuildContext context = tester.element(widgetFinder);
@@ -37,7 +37,7 @@ void main() {
       theme: ThemeData(),
       darkTheme: ThemeData.dark(),
       themeMode: ThemeMode.light,
-      home: Box(
+      home: StyledContainer(
         mix: Mix(
           onNot(onDark)(bgColor(Colors.black)),
           h(50),

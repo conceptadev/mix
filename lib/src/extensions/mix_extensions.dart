@@ -10,15 +10,15 @@ import '../widgets/flex/flex.widget.dart';
 import '../widgets/icon/icon.widget.dart';
 import '../widgets/text/text.widget.dart';
 
-extension MixExtension<T extends Attribute> on StyleMix {
-  Box box({
+extension MixExtension<T extends StyleAttribute> on StyleMix {
+  StyledContainer box({
     @Deprecated('Use the style parameter instead') Mix? mix,
     StyleMix? style,
     Key? key,
     List<Variant>? variants,
     required Widget child,
   }) {
-    return Box(
+    return StyledContainer(
       style: mergeNullable(style ?? mix),
       key: key,
       variants: variants,
@@ -55,7 +55,7 @@ extension MixExtension<T extends Attribute> on StyleMix {
     );
   }
 
-  TextMix text(
+  StyledText text(
     String text, {
     @Deprecated('Use the style parameter instead') Mix? mix,
     StyleMix? style,
@@ -63,7 +63,7 @@ extension MixExtension<T extends Attribute> on StyleMix {
     List<Variant>? variants,
     String? semanticsLabel,
   }) {
-    return TextMix(
+    return StyledText(
       text,
       style: mergeNullable(style ?? mix),
       key: key,
@@ -98,14 +98,14 @@ extension MixExtension<T extends Attribute> on StyleMix {
     );
   }
 
-  IconMix icon(
+  StyledIcon icon(
     IconData icon, {
     @Deprecated('Use the style parameter instead') Mix? mix,
     StyleMix? style,
     Key? key,
     List<Variant>? variants,
   }) {
-    return IconMix(
+    return StyledIcon(
       icon,
       style: mergeNullable(style ?? mix),
       key: key,

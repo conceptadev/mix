@@ -24,12 +24,12 @@ void main() {
   group("Mix Provider", () {
     testWidgets('Mix Provider exist and Matches', (tester) async {
       await tester.pumpWidget(
-        Box(
+        StyledContainer(
           style: pressableMix,
         ),
       );
 
-      final widgetFinder = find.byType(BoxMixedWidget);
+      final widgetFinder = find.byType(MixedContainer);
 
       // Get BuildContext for boxWidget
       BuildContext context = tester.element(widgetFinder);

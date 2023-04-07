@@ -5,7 +5,7 @@ import '../factory/mix_factory.dart';
 import 'context_variant.dart';
 import 'variant.dart';
 
-class VariantAttribute<T extends Variant> extends Attribute
+class VariantAttribute<T extends Variant> extends StyleAttribute
     with Mergeable<VariantAttribute<T>> {
   const VariantAttribute(
     this.variant,

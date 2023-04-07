@@ -22,23 +22,23 @@ class Variant {
   }
 
   /// Applies the variant to a set of attributes and creates a [VariantAttribute] instance.
-  /// Up to 12 optional [Attribute] parameters can be provided.
+  /// Up to 12 optional [StyleAttribute] parameters can be provided.
   // ignore: long-parameter-list
   VariantAttribute call([
-    Attribute? p1,
-    Attribute? p2,
-    Attribute? p3,
-    Attribute? p4,
-    Attribute? p5,
-    Attribute? p6,
-    Attribute? p7,
-    Attribute? p8,
-    Attribute? p9,
-    Attribute? p10,
-    Attribute? p11,
-    Attribute? p12,
+    StyleAttribute? p1,
+    StyleAttribute? p2,
+    StyleAttribute? p3,
+    StyleAttribute? p4,
+    StyleAttribute? p5,
+    StyleAttribute? p6,
+    StyleAttribute? p7,
+    StyleAttribute? p8,
+    StyleAttribute? p9,
+    StyleAttribute? p10,
+    StyleAttribute? p11,
+    StyleAttribute? p12,
   ]) {
-    final params = <Attribute>[];
+    final params = <StyleAttribute>[];
 
     for (final param in [p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12]) {
       if (param != null) params.add(param);

@@ -6,9 +6,12 @@ import '../factory/mix_provider.dart';
 import '../factory/mix_provider_data.dart';
 import '../variants/variant.dart';
 
-abstract class MixWidget extends StatelessWidget {
+@Deprecated('Use MixWidget instead')
+typedef MixWidget = StyledWidget;
+
+abstract class StyledWidget extends StatelessWidget {
   /// Constructor
-  const MixWidget({
+  const StyledWidget({
     @Deprecated('Use the style parameter instead') Mix? mix,
     StyleMix? style,
     super.key,
@@ -70,8 +73,17 @@ abstract class MixWidget extends StatelessWidget {
     super.debugFillProperties(properties);
 
     properties.add(
-      DiagnosticsProperty<Mix>('mix', style, defaultValue: null),
+      DiagnosticsProperty<Mix>('mix', _mix, defaultValue: null),
     );
+
+    properties.add(
+      DiagnosticsProperty<StyleMix>('style', _style, defaultValue: null),
+    );
+
+    properties.add(
+      DiagnosticsProperty<bool>('inherit', _inherit, defaultValue: null),
+    );
+
     properties.add(
       DiagnosticsProperty<List<Variant>>(
         'variants',

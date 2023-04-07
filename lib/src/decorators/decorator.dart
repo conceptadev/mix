@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../mix.dart';
 
-abstract class Decorator<T extends Decorator<T>> extends Attribute
+abstract class Decorator<T extends Decorator<T>> extends StyleAttribute
     with Mergeable<Decorator<T>> {
   const Decorator({
     this.key,

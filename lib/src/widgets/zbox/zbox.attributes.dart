@@ -2,7 +2,7 @@ import 'package:flutter/widgets.dart';
 
 import '../../attributes/attribute.dart';
 
-class ZBoxAttributes extends WidgetAttributes {
+class ZBoxAttributes extends WidgetStyleAttributes {
   final AlignmentGeometry? alignment;
   final StackFit? fit;
   final Clip? clipBehavior;

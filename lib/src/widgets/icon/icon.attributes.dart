@@ -1,7 +1,7 @@
 import '../../attributes/attribute.dart';
 import '../../dtos/color.dto.dart';
 
-class IconAttributes extends WidgetAttributes {
+class IconAttributes extends WidgetStyleAttributes {
   final ColorDto? color;
   final double? size;
   const IconAttributes({

@@ -7,8 +7,11 @@ import '../mix.widget.dart';
 import '../mix_context_builder.dart';
 import 'icon.descriptor.dart';
 
-class IconMix extends MixWidget {
-  const IconMix(
+@Deprecated('Use StyledIcon now')
+typedef IconMix = StyledIcon;
+
+class StyledIcon extends StyledWidget {
+  const StyledIcon(
     this.icon, {
     this.semanticLabel,
     @Deprecated('Use the style parameter instead') super.mix,
@@ -27,7 +30,7 @@ class IconMix extends MixWidget {
       style: style,
       variants: variants,
       builder: (mix) {
-        return IconMixerWidget(
+        return MixedIcon(
           mix: mix,
           icon: icon,
         );
@@ -36,8 +39,11 @@ class IconMix extends MixWidget {
   }
 }
 
-class IconMixerWidget extends StatelessWidget {
-  const IconMixerWidget({
+@Deprecated('Use MixedIcon now')
+typedef IconMixedWidget = MixedIcon;
+
+class MixedIcon extends StatelessWidget {
+  const MixedIcon({
     required this.mix,
     this.icon,
     this.semanticLabel,

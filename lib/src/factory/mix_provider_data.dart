@@ -13,12 +13,12 @@ import 'mix_values.dart';
 typedef MixContext = MixData;
 
 class MixData with EqualityMixin {
-  final MergeableMap<WidgetAttributes> _widgetAttributes;
+  final MergeableMap<WidgetStyleAttributes> _widgetAttributes;
   final MergeableMap<WidgetDecorator> _widgetDecorators;
   final MixTokenResolver _tokenResolver;
 
   MixData._({
-    required MergeableMap<WidgetAttributes> widgetAttributes,
+    required MergeableMap<WidgetStyleAttributes> widgetAttributes,
     required MergeableMap<WidgetDecorator> widgetDecorators,
     required MixTokenResolver tokenResolver,
   })  : _widgetAttributes = widgetAttributes,
@@ -54,13 +54,13 @@ class MixData with EqualityMixin {
 
   MixTokenResolver get resolveToken => _tokenResolver;
 
-  static List<Attribute> _applyContextVariants(
+  static List<StyleAttribute> _applyContextVariants(
     BuildContext context,
-    Iterable<Attribute> attributes,
+    Iterable<StyleAttribute> attributes,
   ) {
     // Use the fold method to reduce the input attributes list
     // into a single list of expanded attributes.
-    return attributes.fold<List<Attribute>>(
+    return attributes.fold<List<StyleAttribute>>(
       [], // Initial empty list to accumulate the result.
       (expanded, attribute) {
         // Check if the current attribute is a ContextVariantAttribute.
@@ -84,12 +84,12 @@ class MixData with EqualityMixin {
     );
   }
 
-  /// Returns an instance of the specified [WidgetAttributes] type from the [MixData].
-  A? attributesOfType<A extends WidgetAttributes>() {
+  /// Returns an instance of the specified [WidgetStyleAttributes] type from the [MixData].
+  A? attributesOfType<A extends WidgetStyleAttributes>() {
     return _widgetAttributes[A] as A?;
   }
 
-  T dependOnAttributesOfType<T extends WidgetAttributes>() {
+  T dependOnAttributesOfType<T extends WidgetStyleAttributes>() {
     final attribute = attributesOfType<T>();
 
     if (attribute is! T) {

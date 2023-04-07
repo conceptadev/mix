@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../../attributes/shared/shared.descriptor.dart';
-import '../../../factory/mix_provider_data.dart';
-import '../box.decorator.dart';
+import '../../attributes/shared/shared.descriptor.dart';
+import '../../factory/mix_provider_data.dart';
+import '../../widgets/box/box.decorator.dart';
 
 class RotateDecorator extends WidgetDecorator<RotateDecorator> {
   final int quarterTurns;

@@ -16,9 +16,9 @@ class DesignTokenExample extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Box(
+    return StyledContainer(
       mix: mix,
-      child: const TextMix('Surface'),
+      child: const StyledText('Surface'),
     );
   }
 }

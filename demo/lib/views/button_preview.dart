@@ -22,9 +22,9 @@ class ButtonsPreview extends StatelessWidget {
       child: Column(
         children: [
           Pressable(
-            child: Box(
+            child: StyledContainer(
               mix: button,
-              child: const TextMix('Details'),
+              child: const StyledText('Details'),
             ),
             onPressed: () {},
           ),

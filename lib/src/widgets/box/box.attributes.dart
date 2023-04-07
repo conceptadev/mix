@@ -8,7 +8,7 @@ import '../../dtos/radius/border_radius_geometry.dto.dart';
 import '../../dtos/shadow/box_shadow.dto.dart';
 import '../../helpers/extensions.dart';
 
-class BoxAttributes extends WidgetAttributes {
+class BoxAttributes extends WidgetStyleAttributes {
   final EdgeInsetsGeometryDto? margin;
   final EdgeInsetsGeometryDto? padding;
   final AlignmentGeometry? alignment;

@@ -5,7 +5,7 @@ import '../../dtos/text_style.dto.dart';
 import '../../helpers/extensions.dart';
 import 'text_directives/text_directives.dart';
 
-class TextAttributes extends WidgetAttributes {
+class TextAttributes extends WidgetStyleAttributes {
   final List<TextStyleDto>? _styles;
   final TextStyleDto? _style;
 

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../attributes/attribute.dart';
 import '../../dtos/color.dto.dart';
 
-class ImageAttributes extends WidgetAttributes {
+class ImageAttributes extends WidgetStyleAttributes {
   final ColorDto? color;
   final double? scale;
 

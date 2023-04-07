@@ -22,20 +22,20 @@ class MixFactory {
 
   // Factory constructors
   factory MixFactory([
-    Attribute? p1,
-    Attribute? p2,
-    Attribute? p3,
-    Attribute? p4,
-    Attribute? p5,
-    Attribute? p6,
-    Attribute? p7,
-    Attribute? p8,
-    Attribute? p9,
-    Attribute? p10,
-    Attribute? p11,
-    Attribute? p12,
+    StyleAttribute? p1,
+    StyleAttribute? p2,
+    StyleAttribute? p3,
+    StyleAttribute? p4,
+    StyleAttribute? p5,
+    StyleAttribute? p6,
+    StyleAttribute? p7,
+    StyleAttribute? p8,
+    StyleAttribute? p9,
+    StyleAttribute? p10,
+    StyleAttribute? p11,
+    StyleAttribute? p12,
   ]) {
-    final params = <Attribute>[];
+    final params = <StyleAttribute>[];
 
     for (final param in [p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12]) {
       if (param != null) params.add(param);
@@ -44,8 +44,8 @@ class MixFactory {
     return MixFactory.fromAttributes(params);
   }
 
-  /// Constructs a mix from a non-null iterable of [Attribute] instances.
-  factory MixFactory.fromAttributes(Iterable<Attribute> attributes) {
+  /// Constructs a mix from a non-null iterable of [StyleAttribute] instances.
+  factory MixFactory.fromAttributes(Iterable<StyleAttribute> attributes) {
     return MixFactory._(MixValues.create(attributes));
   }
 
@@ -53,8 +53,8 @@ class MixFactory {
     return MixFactory._(values);
   }
 
-  /// Returns an iterable of [Attribute] instances from this MixFactory.
-  Iterable<Attribute> toAttributes() {
+  /// Returns an iterable of [StyleAttribute] instances from this MixFactory.
+  Iterable<StyleAttribute> toAttributes() {
     return _values.toAttributes();
   }
 
@@ -203,7 +203,7 @@ class MixFactory {
   int get hashCode => _values.hashCode;
 }
 
-extension DeprecatedMixExtension<T extends Attribute> on MixFactory {
+extension DeprecatedMixExtension<T extends StyleAttribute> on MixFactory {
   /// Adds an Attribute to a Mix
   @Deprecated('Simplifying the mix API to avoid confusion. Use apply instead')
   SpreadPositionalParams<T, MixFactory> get mix {
@@ -218,7 +218,7 @@ extension DeprecatedMixExtension<T extends Attribute> on MixFactory {
   @Deprecated(
     'Use merge() or mergeMany() now. You might have to turn into a Mix first. firstMixFactory.merge(secondMix)',
   )
-  MixFactory addAttributes(List<Attribute> attributes) {
+  MixFactory addAttributes(List<StyleAttribute> attributes) {
     final newValues = MixValues.create(attributes);
 
     return MixFactory._(_values.merge(newValues));

@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import '../../attributes/attribute.dart';
 import '../../factory/mix_provider_data.dart';
 
-abstract class WidgetDecorator<T extends WidgetDecorator<T>> extends Attribute
-    with Mergeable<WidgetDecorator<T>> {
+abstract class WidgetDecorator<T extends WidgetDecorator<T>>
+    extends StyleAttribute with Mergeable<WidgetDecorator<T>> {
   const WidgetDecorator({
     this.key,
   });

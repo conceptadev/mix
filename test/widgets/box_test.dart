@@ -31,7 +31,10 @@ void main() {
           );
 
           expect(
-            tester.widget<Box>(find.byType(Box)).child?.key,
+            tester
+                .widget<StyledContainer>(find.byType(StyledContainer))
+                .child
+                ?.key,
             const Key('child-key'),
           );
 

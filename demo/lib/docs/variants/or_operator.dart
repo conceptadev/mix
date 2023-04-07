@@ -17,7 +17,7 @@ class VariantsOrOperator extends StatelessWidget {
     );
 
     return Center(
-      child: Box(
+      child: StyledContainer(
         mix: mix,
       ),
     );

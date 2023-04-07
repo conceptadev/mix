@@ -6,7 +6,7 @@ import '../variants/variant_attribute.dart';
 import '../widgets/box/box.decorator.dart';
 
 class MixValues with EqualityMixin {
-  final MergeableMap<WidgetAttributes>? attributes;
+  final MergeableMap<WidgetStyleAttributes>? attributes;
   final MergeableMap<WidgetDecorator>? decorators;
   final List<VariantAttribute> variants;
   final List<ContextVariantAttribute> contextVariants;
@@ -18,18 +18,18 @@ class MixValues with EqualityMixin {
     required this.contextVariants,
   });
 
-  /// Creates a new [MixValues] instance from the provided [Iterable] of [Attribute]s.
-  factory MixValues.create(Iterable<Attribute> attributes) {
+  /// Creates a new [MixValues] instance from the provided [Iterable] of [StyleAttribute]s.
+  factory MixValues.create(Iterable<StyleAttribute> attributes) {
     //TODO: Remove expansion of nested attributes later
     final expanded = _expandNestedAttributes(attributes);
 
     final variantList = <VariantAttribute>[];
     final contextVariantList = <ContextVariantAttribute>[];
-    final attributeList = <WidgetAttributes>[];
+    final attributeList = <WidgetStyleAttributes>[];
     final decoratorList = <WidgetDecorator>[];
 
     for (final attribute in expanded) {
-      if (attribute is WidgetAttributes) {
+      if (attribute is WidgetStyleAttributes) {
         attributeList.add(attribute);
       } else if (attribute is WidgetDecorator) {
         decoratorList.add(attribute);
@@ -65,13 +65,13 @@ class MixValues with EqualityMixin {
     return variants.length + contextVariants.length + (attributes?.length ?? 0);
   }
 
-  /// Returns an instance of the specified [WidgetAttributes] type from the [MixData].
-  A? attributesOfType<A extends WidgetAttributes>() {
+  /// Returns an instance of the specified [WidgetStyleAttributes] type from the [MixData].
+  A? attributesOfType<A extends WidgetStyleAttributes>() {
     return attributes?[A] as A?;
   }
 
-  /// Returns an [Iterable] of [Attribute]s containing all attributes, variants, and directives.
-  Iterable<Attribute> toAttributes() {
+  /// Returns an [Iterable] of [StyleAttribute]s containing all attributes, variants, and directives.
+  Iterable<StyleAttribute> toAttributes() {
     return [
       ...?attributes?.values,
       ...variants,
@@ -81,7 +81,7 @@ class MixValues with EqualityMixin {
 
   /// Creates a new [MixValues] instance by replacing the specified attributes with new values.
   MixValues copyWith({
-    MergeableMap<WidgetAttributes>? attributes,
+    MergeableMap<WidgetStyleAttributes>? attributes,
     MergeableMap<WidgetDecorator>? decorators,
     List<VariantAttribute>? variants,
     List<ContextVariantAttribute>? contextVariants,
@@ -116,9 +116,9 @@ class MixValues with EqualityMixin {
     );
   }
 
-  /// Expands nested attributes from the provided [Iterable] of [Attribute]s.
-  static Iterable<Attribute> _expandNestedAttributes(
-    Iterable<Attribute> attributes,
+  /// Expands nested attributes from the provided [Iterable] of [StyleAttribute]s.
+  static Iterable<StyleAttribute> _expandNestedAttributes(
+    Iterable<StyleAttribute> attributes,
   ) {
     return attributes.expand((attribute) {
       if (attribute is NestedStyleAttribute) {

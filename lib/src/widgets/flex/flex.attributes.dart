@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../attributes/attribute.dart';
 
-class FlexAttributes extends WidgetAttributes {
+class FlexAttributes extends WidgetStyleAttributes {
   final Axis? direction;
   final MainAxisAlignment? mainAxisAlignment;
   final CrossAxisAlignment? crossAxisAlignment;
