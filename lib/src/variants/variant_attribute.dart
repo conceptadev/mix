@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 import '../attributes/attribute.dart';
-import '../factory/mix_factory.dart';
+import '../factory/style_mix.dart';
 import 'context_variant.dart';
 import 'variant.dart';
 
-class VariantAttribute<T extends Variant> extends StyleAttribute
+class VariantAttribute<T extends StyleVariant> extends StyleAttribute
     with Mergeable<VariantAttribute<T>> {
   const VariantAttribute(
     this.variant,
@@ -52,7 +52,7 @@ class VariantAttribute<T extends Variant> extends StyleAttribute
   get props => [variant, value];
 }
 
-class ContextVariantAttribute extends VariantAttribute<ContextVariant> {
+class ContextVariantAttribute extends VariantAttribute<ContextStyleVariant> {
   const ContextVariantAttribute(
     super.variant,
     super.style,

@@ -6,7 +6,7 @@ class VariantsDefaultExample extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final style = Mix(
+    final style = StyleMix(
       bgColor(MaterialTokens.colorScheme.secondary),
       textColor(MaterialTokens.colorScheme.onSecondary),
       onHover(

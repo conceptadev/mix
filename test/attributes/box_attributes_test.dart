@@ -11,7 +11,8 @@ import 'package:mix/src/dtos/shadow/box_shadow.dto.dart';
 void main() {
   group("Box Attributes", () {
     test('-> Margin', () async {
-      const marginAttribute = BoxAttributes(margin: EdgeInsetsDto.all(20));
+      const marginAttribute =
+          StyledContainerAttributes(margin: EdgeInsetsDto.all(20));
       final marginUtilityAttribute = margin(20);
 
       expect(
@@ -34,7 +35,8 @@ void main() {
     });
 
     test('-> Padding', () async {
-      const paddingAttribute = BoxAttributes(padding: EdgeInsetsDto.all(30));
+      const paddingAttribute =
+          StyledContainerAttributes(padding: EdgeInsetsDto.all(30));
       final paddingUtilityAttribute = padding(30);
 
       expect(
@@ -57,7 +59,7 @@ void main() {
     });
 
     test('-> Width', () async {
-      const widthAttribute = BoxAttributes(width: 40);
+      const widthAttribute = StyledContainerAttributes(width: 40);
       final widthUtilityAttribute = width(40);
 
       expect(
@@ -80,7 +82,7 @@ void main() {
     });
 
     test('-> Height', () async {
-      const heightAttribute = BoxAttributes(height: 50);
+      const heightAttribute = StyledContainerAttributes(height: 50);
       final heightUtilityAttribute = height(50);
 
       expect(
@@ -103,7 +105,7 @@ void main() {
     });
 
     test('-> Min Width', () async {
-      const minWidthAttribute = BoxAttributes(minWidth: 60);
+      const minWidthAttribute = StyledContainerAttributes(minWidth: 60);
       final minWidthUtilityAttribute = minWidth(60);
 
       expect(
@@ -126,7 +128,7 @@ void main() {
     });
 
     test('-> Min Height', () async {
-      const minHeightAttribute = BoxAttributes(minHeight: 70);
+      const minHeightAttribute = StyledContainerAttributes(minHeight: 70);
       final minHeightUtilityAttribute = minHeight(70);
 
       expect(
@@ -149,7 +151,7 @@ void main() {
     });
 
     test('-> Max Width', () async {
-      const maxWidthAttribute = BoxAttributes(maxWidth: 80);
+      const maxWidthAttribute = StyledContainerAttributes(maxWidth: 80);
       final maxWidthUtilityAttribute = maxWidth(80);
 
       expect(
@@ -172,7 +174,7 @@ void main() {
     });
 
     test('-> Max Height', () async {
-      const maxHeightAttribute = BoxAttributes(maxHeight: 90);
+      const maxHeightAttribute = StyledContainerAttributes(maxHeight: 90);
       final maxHeightUtilityAttribute = maxHeight(90);
 
       expect(
@@ -195,7 +197,8 @@ void main() {
     });
 
     test('-> Alignment', () async {
-      const alignmentAttribute = BoxAttributes(alignment: Alignment.topLeft);
+      const alignmentAttribute =
+          StyledContainerAttributes(alignment: Alignment.topLeft);
       final alignmentUtilityAttribute = align(Alignment.topLeft);
 
       expect(
@@ -220,7 +223,7 @@ void main() {
     // Border Radius
 
     test('-> Border Radius', () async {
-      const borderRadiusAttribute = BoxAttributes(
+      const borderRadiusAttribute = StyledContainerAttributes(
         borderRadius: BorderRadiusDto.all(
           RadiusDto.circular(10),
         ),
@@ -246,7 +249,7 @@ void main() {
             'Border Radius attribute does not match BorderRadiusDto.all(10)',
       );
 
-      const topLeftBorderRadius = BoxAttributes(
+      const topLeftBorderRadius = StyledContainerAttributes(
         borderRadius: BorderRadiusDto.only(
           topLeft: RadiusDto.circular(10),
         ),
@@ -276,7 +279,7 @@ void main() {
     // Border
 
     test('-> Border', () async {
-      final borderAttribute = BoxAttributes(
+      final borderAttribute = StyledContainerAttributes(
         border: BorderDto.all(
           style: BorderStyle.solid,
           width: 10,
@@ -315,7 +318,7 @@ void main() {
     // Shadows
 
     test('-> Shadow', () async {
-      const shadowAttribute = BoxAttributes(
+      const shadowAttribute = StyledContainerAttributes(
         boxShadow: [
           BoxShadowDto(
             color: ColorDto(Colors.red),
@@ -362,7 +365,7 @@ void main() {
     //TODO: Implement transform
 
     test('-> Transform', () async {
-      final transformAttribute = BoxAttributes(
+      final transformAttribute = StyledContainerAttributes(
         transform: Matrix4.rotationZ(0.1),
       );
       final transformUtilityAttribute = transform(Matrix4.rotationZ(0.1));

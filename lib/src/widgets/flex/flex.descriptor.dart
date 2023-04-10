@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../factory/mix_provider_data.dart';
 import 'flex.attributes.dart';
 
-class FlexDescriptor {
+class StyledFlexDescriptor {
   final Axis? direction;
   final MainAxisAlignment mainAxisAlignment;
   final CrossAxisAlignment crossAxisAlignment;
@@ -11,7 +11,7 @@ class FlexDescriptor {
   final VerticalDirection verticalDirection;
   final double? gapSize;
 
-  const FlexDescriptor({
+  const StyledFlexDescriptor({
     this.direction,
     required this.mainAxisAlignment,
     required this.crossAxisAlignment,
@@ -20,10 +20,10 @@ class FlexDescriptor {
     this.gapSize,
   });
 
-  factory FlexDescriptor.fromContext(MixData mix) {
-    final flexAttributes = mix.attributesOfType<FlexAttributes>();
+  factory StyledFlexDescriptor.fromContext(MixData mix) {
+    final flexAttributes = mix.attributesOfType<StyledFlexAttributes>();
 
-    return FlexDescriptor(
+    return StyledFlexDescriptor(
       direction: flexAttributes?.direction,
       mainAxisAlignment:
           flexAttributes?.mainAxisAlignment ?? MainAxisAlignment.start,
@@ -40,7 +40,7 @@ class FlexDescriptor {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is FlexDescriptor &&
+    return other is StyledFlexDescriptor &&
         other.direction == direction &&
         other.mainAxisAlignment == mainAxisAlignment &&
         other.crossAxisAlignment == crossAxisAlignment &&

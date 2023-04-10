@@ -7,7 +7,7 @@ class ImageUtility {
   const ImageUtility._();
 
   // ignore: long-parameter-list
-  static ImageAttributes image({
+  static StyledImageAttributes image({
     Color? color,
     double? width,
     double? height,
@@ -17,7 +17,7 @@ class ImageUtility {
     AlignmentGeometry? alignment,
     ImageRepeat? repeat,
   }) {
-    return ImageAttributes(
+    return StyledImageAttributes(
       color: ColorDto.maybeFrom(color),
       scale: scale,
       fit: fit,
@@ -26,35 +26,35 @@ class ImageUtility {
     );
   }
 
-  static ImageAttributes color(Color color) {
-    return ImageAttributes(color: ColorDto.from(color));
+  static StyledImageAttributes color(Color color) {
+    return StyledImageAttributes(color: ColorDto.from(color));
   }
 
-  static ImageAttributes scale(double scale) {
-    return ImageAttributes(scale: scale);
+  static StyledImageAttributes scale(double scale) {
+    return StyledImageAttributes(scale: scale);
   }
 
-  static ImageAttributes width(double width) {
-    return ImageAttributes(width: width);
+  static StyledImageAttributes width(double width) {
+    return StyledImageAttributes(width: width);
   }
 
-  static ImageAttributes height(double height) {
-    return ImageAttributes(height: height);
+  static StyledImageAttributes height(double height) {
+    return StyledImageAttributes(height: height);
   }
 
-  static ImageAttributes colorBlendMode(BlendMode colorBlendMode) {
-    return ImageAttributes(colorBlendMode: colorBlendMode);
+  static StyledImageAttributes colorBlendMode(BlendMode colorBlendMode) {
+    return StyledImageAttributes(colorBlendMode: colorBlendMode);
   }
 
-  static ImageAttributes fit(BoxFit fit) {
-    return ImageAttributes(fit: fit);
+  static StyledImageAttributes fit(BoxFit fit) {
+    return StyledImageAttributes(fit: fit);
   }
 
-  static ImageAttributes alignment(AlignmentGeometry alignment) {
-    return ImageAttributes(alignment: alignment);
+  static StyledImageAttributes alignment(AlignmentGeometry alignment) {
+    return StyledImageAttributes(alignment: alignment);
   }
 
-  static ImageAttributes repeat(ImageRepeat repeat) {
-    return ImageAttributes(repeat: repeat);
+  static StyledImageAttributes repeat(ImageRepeat repeat) {
+    return StyledImageAttributes(repeat: repeat);
   }
 }

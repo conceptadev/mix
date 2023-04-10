@@ -14,9 +14,9 @@ mixin Mergeable<T> {
 }
 
 /// An interface that add support to custom attributes for [MixContext].
-abstract class WidgetStyleAttributes extends StyleAttribute
-    with Mergeable<WidgetStyleAttributes> {
-  const WidgetStyleAttributes();
+abstract class StyledWidgetAttributes extends StyleAttribute
+    with Mergeable<StyledWidgetAttributes> {
+  const StyledWidgetAttributes();
 
-  WidgetStyleAttributes copyWith();
+  StyledWidgetAttributes copyWith();
 }

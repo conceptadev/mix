@@ -1,4 +1,4 @@
-import '../../factory/mix_factory.dart';
+import '../../factory/style_mix.dart';
 import '../nested_attribute.dart';
 
 @Deprecated('Use style.merge(otherStyle), instead')
@@ -7,9 +7,9 @@ class HelperUtility {
 
   @Deprecated('Use style.merge(otherStyle), instead')
   static NestedStyleAttribute apply(
-    List<Mix> mixes,
+    List<StyleMix> mixes,
   ) {
-    return NestedStyleAttribute(Mix.combine(mixes));
+    return NestedStyleAttribute(StyleMix.combine(mixes));
   }
 }
 

@@ -12,15 +12,15 @@ import 'package:mix/src/dtos/radius/radius_dto.dart';
 import 'package:mix/src/dtos/shadow/box_shadow.dto.dart';
 import 'package:mix/src/dtos/shadow/shadow.dto.dart';
 import 'package:mix/src/dtos/text_style.dto.dart';
-import 'package:mix/src/factory/mix_factory.dart';
-import 'package:mix/src/widgets/box/box.attributes.dart';
+import 'package:mix/src/factory/style_mix.dart';
+import 'package:mix/src/widgets/container/container.attributes.dart';
 import 'package:mix/src/widgets/text/text.attributes.dart';
 import 'package:mix/src/widgets/text/text_directives/text_directives.dart';
 
 class RandomGenerator {
   const RandomGenerator._();
-  static TextAttributes textAttributes() {
-    return TextAttributes(
+  static StyledTextAttributes textAttributes() {
+    return StyledTextAttributes(
       style: textStyleDto(),
       textAlign: TextAlign.values.random(),
       softWrap: Random().nextBool(),
@@ -36,8 +36,8 @@ class RandomGenerator {
     );
   }
 
-  static MixFactory mix() {
-    return Mix(
+  static StyleMix mix() {
+    return StyleMix(
       textAttributes(),
       textAttributes(),
       boxAttributes(),
@@ -45,7 +45,7 @@ class RandomGenerator {
     );
   }
 
-  static BoxAttributes boxAttributes({
+  static StyledContainerAttributes boxAttributes({
     bool someNullable = true,
   }) {
     final margin = edgeInsetsDto();
@@ -91,7 +91,7 @@ class RandomGenerator {
 
     final shape = Random().randomElement(BoxShape.values);
 
-    final boxAttributes = BoxAttributes(
+    final boxAttributes = StyledContainerAttributes(
       margin: margin,
       padding: padding,
       alignment: alignment,
@@ -109,7 +109,7 @@ class RandomGenerator {
     );
 
     if (someNullable) {
-      return BoxAttributes(
+      return StyledContainerAttributes(
         margin: Random().nextBool() ? margin : null,
         padding: Random().nextBool() ? padding : null,
         alignment: Random().nextBool() ? alignment : null,

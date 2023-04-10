@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 
 import '../attributes/attribute.dart';
 import '../attributes/nested_attribute.dart';
-import '../factory/mix_factory.dart';
+import '../factory/style_mix.dart';
 import 'context_variant.dart';
 import 'variant.dart';
 import 'variant_attribute.dart';
@@ -10,7 +10,7 @@ import 'variant_attribute.dart';
 enum EnumVariantOperator { and, or }
 
 class VariantOperation {
-  final List<Variant> variants;
+  final List<StyleVariant> variants;
   final EnumVariantOperator operator;
 
   const VariantOperation(
@@ -18,7 +18,7 @@ class VariantOperation {
     required this.operator,
   });
 
-  VariantOperation operator &(Variant variant) {
+  VariantOperation operator &(StyleVariant variant) {
     if (operator != EnumVariantOperator.and) {
       throw ArgumentError('All the operators in the equation must be the same');
     }
@@ -28,7 +28,7 @@ class VariantOperation {
     return this;
   }
 
-  VariantOperation operator |(Variant variant) {
+  VariantOperation operator |(StyleVariant variant) {
     if (operator != EnumVariantOperator.or) {
       throw ArgumentError('All the operators in the equation must be the same');
     }
@@ -40,12 +40,12 @@ class VariantOperation {
 
   List<VariantAttribute> _buildOrOperations(
     List<StyleAttribute> attributes, {
-    Iterable<Variant>? variants,
+    Iterable<StyleVariant>? variants,
   }) {
     variants ??= this.variants;
-    final style = Mix.fromAttributes(attributes);
+    final style = StyleMix.fromAttributes(attributes);
     final attributeVariants = variants.map((variant) {
-      return variant is ContextVariant
+      return variant is ContextStyleVariant
           ? ContextVariantAttribute(variant, style)
           : VariantAttribute(variant, style);
     });
@@ -58,14 +58,14 @@ class VariantOperation {
   ) {
     final attributeVariants = variants.map((variant) {
       final otherVariants = variants.where((otherV) => otherV != variant);
-      final mixToApply = Mix.fromAttributes(
+      final mixToApply = StyleMix.fromAttributes(
         _buildOrOperations(
           attributes,
           variants: otherVariants,
         ),
       );
 
-      return variant is ContextVariant
+      return variant is ContextStyleVariant
           ? ContextVariantAttribute(variant, mixToApply)
           : VariantAttribute(variant, mixToApply);
     });
@@ -100,7 +100,7 @@ class VariantOperation {
       attributes = _buildOrOperations(params);
     }
 
-    return NestedStyleAttribute(Mix.fromAttributes(attributes));
+    return NestedStyleAttribute(StyleMix.fromAttributes(attributes));
   }
 
   @override

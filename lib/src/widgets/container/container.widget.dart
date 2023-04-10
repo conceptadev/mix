@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 import '../../attributes/shared/shared.descriptor.dart';
-import '../../decorators/widget_decorator.dart';
+import '../../decorators/widget_decorator_wrapper.dart';
 import '../../factory/mix_provider_data.dart';
 import '../empty/empty.widget.dart';
-import '../mix.widget.dart';
 import '../mix_context_builder.dart';
-import 'box.descriptor.dart';
+import '../styled.widget.dart';
+import 'container.descriptor.dart';
 
 typedef Box = StyledContainer;
 
@@ -55,7 +55,7 @@ class MixedContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final common = CommonDescriptor.fromContext(mix);
-    final box = BoxDescriptor.fromContext(mix);
+    final box = StyledContainerDescriptor.fromContext(mix);
 
     if (!common.visible) {
       return const Empty();

@@ -5,8 +5,14 @@ import 'variant_attribute.dart';
 
 typedef ShouldApplyFunc = bool Function(BuildContext);
 
-class ContextVariant extends Variant {
-  const ContextVariant(
+@Deprecated(
+  'Use ContextStyleVariant instead. '
+  'This class will be removed in a future release.',
+)
+typedef ContextVariant = ContextStyleVariant;
+
+class ContextStyleVariant extends StyleVariant {
+  const ContextStyleVariant(
     super.name, {
     required ShouldApplyFunc shouldApply,
     bool inverse = false,
@@ -43,11 +49,11 @@ class ContextVariant extends Variant {
       if (param != null) params.add(param);
     }
 
-    return ContextVariantAttribute(this, Mix.fromAttributes(params));
+    return ContextVariantAttribute(this, StyleMix.fromAttributes(params));
   }
 
-  ContextVariant inverseInstance() {
-    return ContextVariant(
+  ContextStyleVariant inverseInstance() {
+    return ContextStyleVariant(
       name,
       shouldApply: _shouldApply,
       inverse: !_inverse,

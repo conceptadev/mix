@@ -1,21 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mix/mix.dart';
+import 'package:mix/src/aliases/container_alias.dart';
+import 'package:mix/src/aliases/context_variants_alias.dart';
+import 'package:mix/src/extensions/build_context_ext.dart';
+import 'package:mix/src/factory/style_mix.dart';
+import 'package:mix/src/widgets/container/container.widget.dart';
 
 void main() {
   testWidgets('System Theme Variants', (tester) async {
-    final mix = Mix(
-      bgColor(Colors.green),
-      onDark(bgColor(Colors.black)),
-      h(50),
-      w(50),
+    final style = StyleMix(
+      backgroundColor(Colors.green),
+      onDark(backgroundColor(Colors.black)),
+      height(50),
+      width(50),
     );
 
     await tester.pumpWidget(
       MaterialApp(
         theme: ThemeData.dark(),
         home: StyledContainer(
-          mix: mix,
+          style: style,
         ),
       ),
     );
@@ -38,10 +42,10 @@ void main() {
       darkTheme: ThemeData.dark(),
       themeMode: ThemeMode.light,
       home: StyledContainer(
-        mix: Mix(
-          onNot(onDark)(bgColor(Colors.black)),
-          h(50),
-          w(50),
+        style: StyleMix(
+          onNot(onDark)(backgroundColor(Colors.black)),
+          height(50),
+          width(50),
         ),
       ),
     ));

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
-import 'package:mix/src/extensions/mix_extensions.dart';
+import 'package:mix/src/extensions/style_mix_ext.dart';
 import 'package:mix/src/widgets/text/text_directives/text_directives.dart';
 
 import '../helpers/testing_utils.dart';
@@ -12,7 +12,7 @@ void main() {
     testWidgets('Adds text on widget', (tester) async {
       await tester.pumpWidget(
         TestMixWidget(
-          child: Mix().text(widgetText),
+          child: StyleMix().text(widgetText),
         ),
       );
 
@@ -25,7 +25,7 @@ void main() {
     testWidgets('Adds Text properties on widget', (tester) async {
       await tester.pumpWidget(
         TestMixWidget(
-          child: Mix(
+          child: StyleMix(
             TextUtility.overflow(TextOverflow.ellipsis),
             TextUtility.softWrap(true),
             TextUtility.textScaleFactor(2.2),
@@ -51,7 +51,7 @@ void main() {
     testWidgets('Adds Text Style on widget', (tester) async {
       await tester.pumpWidget(
         TestMixWidget(
-          child: Mix(
+          child: StyleMix(
             TextUtility.textStyle(
               fontSize: 20,
               wordSpacing: 2,
@@ -88,7 +88,7 @@ void main() {
     testWidgets('Text Directives', (tester) async {
       await tester.pumpWidget(
         TestMixWidget(
-          child: Mix(
+          child: StyleMix(
             TextUtility.directives([
               const UppercaseDirective(),
               const SentenceCaseDirective(),
@@ -106,7 +106,7 @@ void main() {
     });
 
     testWidgets('Resolves text styles', (tester) async {
-      final ts1 = Mix(
+      final ts1 = StyleMix(
         textStyle(
           fontSize: 20,
           wordSpacing: 2,
@@ -122,7 +122,7 @@ void main() {
         ),
       );
 
-      final ts2 = Mix(
+      final ts2 = StyleMix(
         textStyle(
           fontSize: 30,
           wordSpacing: 3,
@@ -130,7 +130,7 @@ void main() {
         ),
       );
 
-      final ts3 = Mix(
+      final ts3 = StyleMix(
         textStyle(
           fontSize: 40,
           wordSpacing: 4,
@@ -138,7 +138,7 @@ void main() {
         ),
       );
 
-      final merged = Mix.combine([ts1, ts2, ts3]);
+      final merged = StyleMix.combine([ts1, ts2, ts3]);
 
       await tester.pumpWidget(
         TestMixWidget(
@@ -148,7 +148,8 @@ void main() {
 
       final textProp = tester.widget<Text>(find.byType(Text));
 
-      final textAttributes = merged.values.attributesOfType<TextAttributes>();
+      final textAttributes =
+          merged.values.attributesOfType<StyledTextAttributes>();
 
       expect(textAttributes?.styles?.length, 3);
 
@@ -170,7 +171,7 @@ void main() {
     });
 
     testWidgets('Resolves TextStyleToken', (tester) async {
-      final ts1 = Mix(
+      final ts1 = StyleMix(
         textStyle(
           fontSize: 20,
           wordSpacing: 2,
@@ -187,17 +188,17 @@ void main() {
 
       const textStyleToken = TextStyleToken('_test_text_style_token_');
 
-      final ts2 = Mix(
+      final ts2 = StyleMix(
         textStyle(as: textStyleToken),
       );
 
-      final ts3 = Mix(
+      final ts3 = StyleMix(
         textStyle(
           letterSpacing: 5,
         ),
       );
 
-      final merged = Mix.combine([ts1, ts2, ts3]);
+      final merged = StyleMix.combine([ts1, ts2, ts3]);
 
       await tester.pumpWidget(
         MaterialApp(

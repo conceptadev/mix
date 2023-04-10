@@ -20,7 +20,7 @@ class CommonDescriptor {
   });
 
   factory CommonDescriptor.fromContext(MixData mix) {
-    final common = mix.attributesOfType<SharedWidgetAttributes>();
+    final common = mix.attributesOfType<SharedStyleAttributes>();
 
     return CommonDescriptor(
       visible: common?.visible ?? true,

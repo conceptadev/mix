@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import '../../attributes/shared/shared.descriptor.dart';
 import '../../factory/mix_provider_data.dart';
 import '../empty/empty.widget.dart';
-import '../mix.widget.dart';
 import '../mix_context_builder.dart';
+import '../styled.widget.dart';
 import 'icon.descriptor.dart';
 
 @Deprecated('Use StyledIcon now')
@@ -58,7 +58,7 @@ class MixedIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final commonProps = CommonDescriptor.fromContext(mix);
-    final iconProps = IconDescriptor.fromContext(mix);
+    final iconProps = StyledIconDescriptor.fromContext(mix);
 
     if (!commonProps.visible) {
       return const Empty();

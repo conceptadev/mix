@@ -1,10 +1,10 @@
 import 'package:flutter/widgets.dart';
 
 import '../../factory/mix_provider_data.dart';
-import '../box/box.widget.dart';
+import '../container/container.widget.dart';
 import '../gap/gap_widget.dart';
-import '../mix.widget.dart';
 import '../mix_context_builder.dart';
+import '../styled.widget.dart';
 import 'flex.descriptor.dart';
 
 class StyledFlex extends StyledWidget {
@@ -153,7 +153,7 @@ class MixedFlex extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final flex = FlexDescriptor.fromContext(mix!);
+    final flex = StyledFlexDescriptor.fromContext(mix!);
 
     return Flex(
       direction: direction,

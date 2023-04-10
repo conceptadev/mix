@@ -4,7 +4,7 @@ import 'package:mix/mix.dart';
 import 'package:mix/src/dtos/color.dto.dart';
 import 'package:mix/src/dtos/edge_insets/edge_insets.dto.dart';
 
-final firstMix = Mix(
+final firstMix = StyleMix(
   // Box attribute
   bgColor(Colors.blue),
   // Text attribute
@@ -27,7 +27,7 @@ final firstMix = Mix(
   minWidth(100),
 );
 
-final secondMix = Mix(
+final secondMix = StyleMix(
   // Box attribute
   padding(10),
   // Text attribute
@@ -45,7 +45,7 @@ final secondMix = Mix(
   iconColor(Colors.red),
 );
 
-final nestedMix = Mix(
+final nestedMix = StyleMix(
   // Box attribute
   apply(firstMix),
   apply(secondMix),
@@ -54,12 +54,13 @@ final nestedMix = Mix(
 void main() {
   group("Mix Factory", () {
     test('Creates a Mix from positional Attributes', () async {
-      final style = Mix(
+      final style = StyleMix(
         bgColor(Colors.red),
         margin(10),
       );
 
-      final boxAttribute = style.values.attributesOfType<BoxAttributes>()!;
+      final boxAttribute =
+          style.values.attributesOfType<StyledContainerAttributes>()!;
 
       // Length is only 1 because margin and color are BoxAttributes
       expect(style.values.length, 1);
@@ -69,12 +70,13 @@ void main() {
     });
 
     test('Creates a Mix from Attributes List', () async {
-      final mix = Mix.fromAttributes([
+      final mix = StyleMix.fromAttributes([
         bgColor(Colors.red),
         margin(10),
       ]);
 
-      final boxAttribute = mix.values.attributesOfType<BoxAttributes>()!;
+      final boxAttribute =
+          mix.values.attributesOfType<StyledContainerAttributes>()!;
 
       // Length is only 1 because margin and color are BoxAttributes
       expect(mix.values.length, 1);
@@ -85,18 +87,19 @@ void main() {
   });
 
   test('Combines Mixes', () async {
-    const boxAttribute = BoxAttributes(color: ColorDto(Colors.blue));
+    const boxAttribute =
+        StyledContainerAttributes(color: ColorDto(Colors.blue));
 
-    const flexAttribute = FlexAttributes(direction: Axis.horizontal);
+    const flexAttribute = StyledFlexAttributes(direction: Axis.horizontal);
 
-    final baseMix = Mix(boxAttribute);
-    final appliedMix = baseMix.merge(Mix(flexAttribute));
+    final baseMix = StyleMix(boxAttribute);
+    final appliedMix = baseMix.merge(StyleMix(flexAttribute));
 
     final modifiedBoxAttribute =
-        appliedMix.values.attributesOfType<BoxAttributes>();
+        appliedMix.values.attributesOfType<StyledContainerAttributes>();
 
     final modifiedFlexAttribute =
-        appliedMix.values.attributesOfType<FlexAttributes>();
+        appliedMix.values.attributesOfType<StyledFlexAttributes>();
 
     expect(baseMix.values.length, 1);
     expect(appliedMix.values.length, 2);
@@ -106,9 +109,9 @@ void main() {
   });
 
   test('Equality of Mix', () async {
-    final copyFirstMix = Mix.fromAttributes(firstMix.toAttributes());
-    final copySecondMix = Mix.fromAttributes(secondMix.toAttributes());
-    final combinedMixFirst = Mix.combine([firstMix, secondMix]);
+    final copyFirstMix = StyleMix.fromAttributes(firstMix.toAttributes());
+    final copySecondMix = StyleMix.fromAttributes(secondMix.toAttributes());
+    final combinedMixFirst = StyleMix.combine([firstMix, secondMix]);
     final combinedMixSecond = firstMix.merge(secondMix);
 
     expect(copyFirstMix, equals(firstMix));
@@ -117,13 +120,13 @@ void main() {
   });
 
   test('Chooses Mixes based on conditional', () async {
-    final chooseFirstMix = Mix.chooser(
+    final chooseFirstMix = StyleMix.chooser(
       condition: true,
       ifTrue: firstMix,
       ifFalse: secondMix,
     );
 
-    final chooseSecondMix = Mix.chooser(
+    final chooseSecondMix = StyleMix.chooser(
       condition: false,
       ifTrue: firstMix,
       ifFalse: secondMix,

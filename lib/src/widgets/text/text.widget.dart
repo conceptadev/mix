@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import '../../attributes/shared/shared.descriptor.dart';
 import '../../factory/mix_provider_data.dart';
 import '../empty/empty.widget.dart';
-import '../mix.widget.dart';
 import '../mix_context_builder.dart';
+import '../styled.widget.dart';
 import 'text.descriptor.dart';
 
 @Deprecated('Use StyledText now')
@@ -59,7 +59,7 @@ class MixedText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final common = CommonDescriptor.fromContext(mix);
-    final text = TextDescriptor.fromContext(mix);
+    final text = StyledTextDescriptor.fromContext(mix);
 
     if (!common.visible) {
       return const Empty();

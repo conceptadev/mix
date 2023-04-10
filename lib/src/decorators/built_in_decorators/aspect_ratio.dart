@@ -2,46 +2,49 @@ import 'package:flutter/material.dart';
 
 import '../../attributes/shared/shared.descriptor.dart';
 import '../../factory/mix_provider_data.dart';
-import '../../widgets/box/box.decorator.dart';
+import '../decorator.dart';
 
-class ScaleDecorator extends WidgetDecorator<ScaleDecorator> {
-  final double scale;
-  const ScaleDecorator(
-    this.scale, {
+class AspectRatioDecorator extends WidgetDecorator<AspectRatioDecorator> {
+  final double aspectRatio;
+  const AspectRatioDecorator({
+    required this.aspectRatio,
     super.key,
   });
 
   @override
-  ScaleDecorator merge(ScaleDecorator other) {
-    return ScaleDecorator(other.scale);
+  AspectRatioDecorator merge(AspectRatioDecorator other) {
+    return AspectRatioDecorator(
+      aspectRatio: other.aspectRatio,
+    );
   }
 
   @override
   Widget build(MixData mix, Widget child) {
     final common = CommonDescriptor.fromContext(mix);
+
     if (common.animated) {
       return TweenAnimationBuilder<double>(
-        tween: Tween<double>(begin: 1, end: scale),
+        tween: Tween<double>(end: aspectRatio),
         duration: common.animationDuration,
         curve: common.animationCurve,
         builder: (context, value, child) {
-          return Transform.scale(
+          return AspectRatio(
             key: key,
-            scale: value,
+            aspectRatio: value,
             child: child,
           );
         },
         child: child,
       );
     } else {
-      return Transform.scale(
+      return AspectRatio(
         key: key,
-        scale: scale,
+        aspectRatio: aspectRatio,
         child: child,
       );
     }
   }
 
   @override
-  get props => [scale];
+  get props => [aspectRatio];
 }

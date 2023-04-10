@@ -20,7 +20,7 @@ void main() async {
   testWidgets('Build', (tester) async {
     await tester.pumpWidget(MaterialApp(
       home: Builder(builder: (context) {
-        final expensiveContextMix = Mix(
+        final expensiveContextMix = StyleMix(
           onNot(onHover)(padding(10)),
           onNot(onPress)(padding(15)),
           onNot(onFocus)(padding(20)),

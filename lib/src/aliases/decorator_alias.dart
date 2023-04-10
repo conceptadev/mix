@@ -1,4 +1,4 @@
-import '../widgets/box/utilities/box_decorators_utilities.dart';
+import '../decorators/decorators_utilities.dart';
 
 const aspectRatio = DecoratorUtility.aspectRatio;
 

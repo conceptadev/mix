@@ -4,12 +4,12 @@ import '../attributes/shared/shared.descriptor.dart';
 import '../factory/mix_provider.dart';
 import '../factory/mix_provider_data.dart';
 import '../theme/mix_theme.dart';
-import '../widgets/box/box.descriptor.dart';
+import '../widgets/container/container.descriptor.dart';
 import '../widgets/flex/flex.descriptor.dart';
 import '../widgets/icon/icon.descriptor.dart';
 import '../widgets/image/image.descriptor.dart';
+import '../widgets/stack/stack.descriptor.dart';
 import '../widgets/text/text.descriptor.dart';
-import '../widgets/zbox/zbox.props.dart';
 
 extension BuildContextExt on BuildContext {
   MixData? get mix => MixProvider.of(this);
@@ -63,72 +63,26 @@ extension BuildContextExt on BuildContext {
       CommonDescriptor.fromContext(MixProvider.of(this)!);
 
   @Deprecated('use BoxProps.fromContext(context) instead')
-  BoxDescriptor get boxProps =>
-      BoxDescriptor.fromContext(MixProvider.of(this)!);
+  StyledContainerDescriptor get boxProps =>
+      StyledContainerDescriptor.fromContext(MixProvider.of(this)!);
 
   @Deprecated('use FlexProps.fromContext(context) instead')
-  FlexDescriptor get flexProps =>
-      FlexDescriptor.fromContext(MixProvider.of(this)!);
+  StyledFlexDescriptor get flexProps =>
+      StyledFlexDescriptor.fromContext(MixProvider.of(this)!);
 
   @Deprecated('use ZBoxProps.fromContext(context) instead')
-  ZBoxProps get zBoxProps => ZBoxProps.fromContext(MixProvider.of(this)!);
+  StyledStackDescriptor get zBoxProps =>
+      StyledStackDescriptor.fromContext(MixProvider.of(this)!);
 
   @Deprecated('use IconProps.fromContext(context) instead')
-  IconDescriptor get iconProps =>
-      IconDescriptor.fromContext(MixProvider.of(this)!);
+  StyledIconDescriptor get iconProps =>
+      StyledIconDescriptor.fromContext(MixProvider.of(this)!);
 
   @Deprecated('use TextProps.fromContext(context) instead')
-  TextDescriptor get textProps =>
-      TextDescriptor.fromContext(MixProvider.of(this)!);
+  StyledTextDescriptor get textProps =>
+      StyledTextDescriptor.fromContext(MixProvider.of(this)!);
 
   @Deprecated('use ImageProps.fromContext(context) instead')
-  ImageDescriptor get imageProps =>
-      ImageDescriptor.fromContext(MixProvider.of(this)!);
-}
-
-extension StrutStyleExt on StrutStyle {
-  StrutStyle merge(StrutStyle? other) {
-    return StrutStyle(
-      fontFamily: other?.fontFamily ?? fontFamily,
-      fontFamilyFallback: other?.fontFamilyFallback ?? fontFamilyFallback,
-      fontSize: other?.fontSize ?? fontSize,
-      height: other?.height ?? height,
-      leadingDistribution: other?.leadingDistribution ?? leadingDistribution,
-      leading: other?.leading ?? leading,
-      fontWeight: other?.fontWeight ?? fontWeight,
-      fontStyle: other?.fontStyle ?? fontStyle,
-      forceStrutHeight: other?.forceStrutHeight ?? forceStrutHeight,
-      debugLabel: other?.debugLabel ?? debugLabel,
-    );
-  }
-}
-
-extension Matrix4Ext on Matrix4 {
-  /// Merge [other] into this matrix.
-  Matrix4 merge(Matrix4? other) {
-    if (other == null || other == this) return this;
-
-    return clone()..multiply(other);
-  }
-}
-
-extension IterableExt<T> on Iterable<T> {
-  Iterable<T> sorted([Comparator<T>? compare]) {
-    List<T> newList = List.from(this);
-    newList.sort(compare);
-
-    return newList;
-  }
-}
-
-extension ListExt<T> on List<T> {
-  T? firstWhereOrNull(bool Function(T) test) {
-    for (T element in this) {
-      if (test(element)) {
-        return element;
-      }
-    }
-
-    return null;
-  }
+  StyledImageDescriptor get imageProps =>
+      StyledImageDescriptor.fromContext(MixProvider.of(this)!);
 }

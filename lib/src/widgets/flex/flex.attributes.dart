@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 
 import '../../attributes/attribute.dart';
 
-class FlexAttributes extends WidgetStyleAttributes {
+@Deprecated('Use FlexStyleAttributes instead')
+typedef FlexAttributes = StyledFlexAttributes;
+
+class StyledFlexAttributes extends StyledWidgetAttributes {
   final Axis? direction;
   final MainAxisAlignment? mainAxisAlignment;
   final CrossAxisAlignment? crossAxisAlignment;
@@ -10,7 +13,7 @@ class FlexAttributes extends WidgetStyleAttributes {
   final VerticalDirection? verticalDirection;
   final double? gapSize;
 
-  const FlexAttributes({
+  const StyledFlexAttributes({
     this.direction,
     this.mainAxisAlignment,
     this.crossAxisAlignment,
@@ -20,10 +23,10 @@ class FlexAttributes extends WidgetStyleAttributes {
   });
 
   @override
-  FlexAttributes merge(FlexAttributes? other) {
+  StyledFlexAttributes merge(StyledFlexAttributes? other) {
     if (other == null) return this;
 
-    return FlexAttributes(
+    return StyledFlexAttributes(
       direction: other.direction ?? direction,
       mainAxisAlignment: other.mainAxisAlignment ?? mainAxisAlignment,
       crossAxisAlignment: other.crossAxisAlignment ?? crossAxisAlignment,
@@ -34,7 +37,7 @@ class FlexAttributes extends WidgetStyleAttributes {
   }
 
   @override
-  FlexAttributes copyWith({
+  StyledFlexAttributes copyWith({
     Axis? direction,
     MainAxisAlignment? mainAxisAlignment,
     CrossAxisAlignment? crossAxisAlignment,
@@ -42,7 +45,7 @@ class FlexAttributes extends WidgetStyleAttributes {
     VerticalDirection? verticalDirection,
     double? gapSize,
   }) {
-    return FlexAttributes(
+    return StyledFlexAttributes(
       direction: direction ?? this.direction,
       mainAxisAlignment: mainAxisAlignment ?? this.mainAxisAlignment,
       crossAxisAlignment: crossAxisAlignment ?? this.crossAxisAlignment,

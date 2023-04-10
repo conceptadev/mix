@@ -1,10 +1,10 @@
 import 'package:flutter/widgets.dart';
 
 import '../../factory/mix_provider_data.dart';
-import '../box/box.widget.dart';
-import '../mix.widget.dart';
+import '../container/container.widget.dart';
 import '../mix_context_builder.dart';
-import 'zbox.props.dart';
+import '../styled.widget.dart';
+import 'stack.descriptor.dart';
 
 // ZBox widget, a custom Box widget that has a Stack as a child. It combines
 // the features of a Box widget with a Stack widget, allowing developers to
@@ -28,7 +28,7 @@ class StyledStack extends StyledWidget {
       style: style,
       variants: variants,
       builder: (mix) {
-        final zProps = ZBoxProps.fromContext(mix);
+        final zProps = StyledStackDescriptor.fromContext(mix);
 
         return Stack(
           alignment: zProps.alignment,
@@ -83,7 +83,7 @@ class MixedStack extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final zProps = ZBoxProps.fromContext(mix);
+    final zProps = StyledStackDescriptor.fromContext(mix);
 
     return Stack(
       alignment: zProps.alignment,

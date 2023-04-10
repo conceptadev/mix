@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 
 import '../../attributes/attribute.dart';
 import '../../dtos/text_style.dto.dart';
-import '../../helpers/extensions.dart';
+import '../../extensions/helper_ext.dart';
 import 'text_directives/text_directives.dart';
 
-class TextAttributes extends WidgetStyleAttributes {
+@Deprecated('Use TextStyleAttributes instead')
+typedef TextAttributes = StyledTextAttributes;
+
+class StyledTextAttributes extends StyledWidgetAttributes {
   final List<TextStyleDto>? _styles;
   final TextStyleDto? _style;
 
@@ -23,7 +26,7 @@ class TextAttributes extends WidgetStyleAttributes {
 
   final List<TextDirective> directives;
 
-  const TextAttributes({
+  const StyledTextAttributes({
     TextStyleDto? style,
     List<TextStyleDto>? styles,
     this.strutStyle,
@@ -39,7 +42,7 @@ class TextAttributes extends WidgetStyleAttributes {
   })  : _styles = styles,
         _style = style;
 
-  factory TextAttributes.fromValues({
+  factory StyledTextAttributes.fromValues({
     TextStyle? style,
     StrutStyle? strutStyle,
     TextAlign? textAlign,
@@ -52,7 +55,7 @@ class TextAttributes extends WidgetStyleAttributes {
     TextHeightBehavior? textHeightBehavior,
     List<TextDirective>? directives,
   }) {
-    return TextAttributes(
+    return StyledTextAttributes(
       style: TextStyleDto.maybeFrom(style),
       strutStyle: strutStyle,
       textAlign: textAlign,
@@ -73,7 +76,7 @@ class TextAttributes extends WidgetStyleAttributes {
   }
 
   @override
-  TextAttributes merge(TextAttributes? other) {
+  StyledTextAttributes merge(StyledTextAttributes? other) {
     if (other == null) return this;
 
     return copyWith(
@@ -95,7 +98,7 @@ class TextAttributes extends WidgetStyleAttributes {
   }
 
   @override
-  TextAttributes copyWith({
+  StyledTextAttributes copyWith({
     List<TextStyleDto>? styles,
     StrutStyle? strutStyle,
     TextAlign? textAlign,
@@ -108,7 +111,7 @@ class TextAttributes extends WidgetStyleAttributes {
     TextHeightBehavior? textHeightBehavior,
     List<TextDirective>? directives,
   }) {
-    return TextAttributes(
+    return StyledTextAttributes(
       styles: [...?this.styles, ...?styles],
       strutStyle: this.strutStyle?.merge(strutStyle) ?? strutStyle,
       textAlign: textAlign ?? this.textAlign,

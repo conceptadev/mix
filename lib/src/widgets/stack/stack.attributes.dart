@@ -2,24 +2,27 @@ import 'package:flutter/widgets.dart';
 
 import '../../attributes/attribute.dart';
 
-class ZBoxAttributes extends WidgetStyleAttributes {
+@Deprecated('Use StyledStackAttributes instead')
+typedef ZBoxAttributes = StyledStackAttributes;
+
+class StyledStackAttributes extends StyledWidgetAttributes {
   final AlignmentGeometry? alignment;
   final StackFit? fit;
   final Clip? clipBehavior;
 
-  const ZBoxAttributes({
+  const StyledStackAttributes({
     this.alignment,
     this.fit,
     this.clipBehavior,
   });
 
   @override
-  ZBoxAttributes copyWith({
+  StyledStackAttributes copyWith({
     AlignmentGeometry? alignment,
     StackFit? fit,
     Clip? clipBehavior,
   }) {
-    return ZBoxAttributes(
+    return StyledStackAttributes(
       alignment: alignment ?? this.alignment,
       fit: fit ?? this.fit,
       clipBehavior: clipBehavior ?? this.clipBehavior,
@@ -27,7 +30,7 @@ class ZBoxAttributes extends WidgetStyleAttributes {
   }
 
   @override
-  ZBoxAttributes merge(ZBoxAttributes? other) {
+  StyledStackAttributes merge(StyledStackAttributes? other) {
     if (other == null) return this;
 
     return copyWith(

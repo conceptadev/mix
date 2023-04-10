@@ -9,49 +9,49 @@ class FlexUtilities {
   const FlexUtilities();
 
   // Create a FlexAttribues for the direction axis
-  FlexAttributes direction(Axis direction) {
-    return FlexAttributes(
+  StyledFlexAttributes direction(Axis direction) {
+    return StyledFlexAttributes(
       direction: direction,
     );
   }
 
   // Create a FlexAttribues for the direction vertical axis
-  FlexAttributes verticalDirection(VerticalDirection verticalDirection) {
-    return FlexAttributes(
+  StyledFlexAttributes verticalDirection(VerticalDirection verticalDirection) {
+    return StyledFlexAttributes(
       verticalDirection: verticalDirection,
     );
   }
 
   // Create a FlexAttribues for the main axis
-  FlexAttributes mainAxisAlignment(MainAxisAlignment mainAxisAlignment) {
-    return FlexAttributes(
+  StyledFlexAttributes mainAxisAlignment(MainAxisAlignment mainAxisAlignment) {
+    return StyledFlexAttributes(
       mainAxisAlignment: mainAxisAlignment,
     );
   }
 
   // Create a FlexAttribues for the main axis size
-  FlexAttributes mainAxisSize(MainAxisSize mainAxisSize) {
-    return FlexAttributes(
+  StyledFlexAttributes mainAxisSize(MainAxisSize mainAxisSize) {
+    return StyledFlexAttributes(
       mainAxisSize: mainAxisSize,
     );
   }
 
   // Create a FlexAttribues for the cross axis
-  FlexAttributes crossAxis(CrossAxisAlignment crossAxisAlignment) {
-    return FlexAttributes(
+  StyledFlexAttributes crossAxis(CrossAxisAlignment crossAxisAlignment) {
+    return StyledFlexAttributes(
       crossAxisAlignment: crossAxisAlignment,
     );
   }
 
   // Create a FlexAttribues for gap size
-  FlexAttributes gap(double gapSize) {
-    return FlexAttributes(
+  StyledFlexAttributes gap(double gapSize) {
+    return StyledFlexAttributes(
       gapSize: gapSize,
     );
   }
 
   @Deprecated('Use mainAxisAlignment instead')
-  FlexAttributes mainAxis(MainAxisAlignment mainAxis) {
+  StyledFlexAttributes mainAxis(MainAxisAlignment mainAxis) {
     return mainAxisAlignment(mainAxis);
   }
 }

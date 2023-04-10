@@ -3,8 +3,11 @@
 import '../../mix.dart';
 import '../variants/variant_attribute.dart';
 
-typedef Mix = MixFactory;
-typedef StyleMix = MixFactory;
+@Deprecated(
+  'Use StyleMix instead. '
+  'This class will be removed in a future release.',
+)
+typedef Mix = StyleMix;
 
 /// A class representing a mix of attributes, decorators, variants, context
 /// variants, and directives.
@@ -12,16 +15,16 @@ typedef StyleMix = MixFactory;
 /// The `MixFactory` class is primarily used for constructing styling attributes and
 /// variants. This class provides a set of factory
 /// constructors and utility methods for working with mixes.
-class MixFactory {
-  final MixValues _values;
+class StyleMix {
+  final StyleMixData _values;
 
-  const MixFactory._(MixValues values) : _values = values;
+  const StyleMix._(StyleMixData values) : _values = values;
 
   /// A constant, empty mix for use with const constructor widgets.
-  static const MixFactory constant = MixFactory._(MixValues.empty());
+  static const StyleMix constant = StyleMix._(StyleMixData.empty());
 
   // Factory constructors
-  factory MixFactory([
+  factory StyleMix([
     StyleAttribute? p1,
     StyleAttribute? p2,
     StyleAttribute? p3,
@@ -41,16 +44,16 @@ class MixFactory {
       if (param != null) params.add(param);
     }
 
-    return MixFactory.fromAttributes(params);
+    return StyleMix.fromAttributes(params);
   }
 
   /// Constructs a mix from a non-null iterable of [StyleAttribute] instances.
-  factory MixFactory.fromAttributes(Iterable<StyleAttribute> attributes) {
-    return MixFactory._(MixValues.create(attributes));
+  factory StyleMix.fromAttributes(Iterable<StyleAttribute> attributes) {
+    return StyleMix._(StyleMixData.create(attributes));
   }
 
-  factory MixFactory.fromValues(MixValues values) {
-    return MixFactory._(values);
+  factory StyleMix.fromValues(StyleMixData values) {
+    return StyleMix._(values);
   }
 
   /// Returns an iterable of [StyleAttribute] instances from this MixFactory.
@@ -58,40 +61,41 @@ class MixFactory {
     return _values.toAttributes();
   }
 
-  /// Returns a [MixValues] instance representing the values in this MixFactory.
-  MixValues get values => _values;
+  /// Returns a [StyleMixData] instance representing the values in this MixFactory.
+  StyleMixData get values => _values;
 
   /// Returns a new mix with the provided [values] merged with this mix's values.
-  MixFactory copyWith({
-    MixValues? values,
+  StyleMix copyWith({
+    StyleMixData? values,
   }) {
-    return MixFactory._(_values.merge(values));
+    return StyleMix._(_values.merge(values));
   }
 
   /// Clones this mix into a new instance.
-  MixFactory clone() => MixFactory._(_values.clone());
+  StyleMix clone() => StyleMix._(_values.clone());
 
   /// Merges this mix with the provided [mix] and returns the resulting MixFactory.
-  MixFactory merge(MixFactory mix) => MixFactory.combine([this, mix]);
+  StyleMix merge(StyleMix mix) => StyleMix.combine([this, mix]);
 
-  MixFactory mergeMany(List<MixFactory> mixes) {
-    return MixFactory.combine([this, ...mixes]);
+  StyleMix mergeMany(List<StyleMix> mixes) {
+    return StyleMix.combine([this, ...mixes]);
   }
 
-  /// Merges this mix with the provided nullable [mix].
+  /// Merges this mix with the provided nullable [style].
   ///
-  /// If [mix] is null, returns this MixFactory. Otherwise, merges [mix] with this MixFactory.
-  MixFactory mergeNullable(MixFactory? mix) => mix == null ? this : merge(mix);
+  /// If [style] is null, returns this MixFactory. Otherwise, merges [style] with this MixFactory.
+  StyleMix mergeNullable(StyleMix? style) =>
+      style == null ? this : merge(style);
 
-  /// Selects a single [Variant] and returns a new mix with the selected variant.
-  MixFactory selectVariant(Variant variant) {
+  /// Selects a single [StyleVariant] and returns a new mix with the selected variant.
+  StyleMix selectVariant(StyleVariant variant) {
     return selectVariants([variant]);
   }
 
-  /// Selects multiple [Variant] instances and returns a new mix with the selected variants.
+  /// Selects multiple [StyleVariant] instances and returns a new mix with the selected variants.
   ///
   /// If the [variants] list is empty, returns this mix without any changes.
-  MixFactory selectVariants(List<Variant> variants) {
+  StyleMix selectVariants(List<StyleVariant> variants) {
     if (variants.isEmpty) {
       return this;
     }
@@ -111,11 +115,11 @@ class MixFactory {
     }
 
     // Create a mix from the matched variants
-    final mixToApply = MixFactory.fromVariantAttributes(matchedVariants);
+    final mixToApply = StyleMix.fromVariantAttributes(matchedVariants);
 
     // Create a mix with the existing values
-    final existingMix = MixFactory._(
-      MixValues(
+    final existingMix = StyleMix._(
+      StyleMixData(
         attributes: _values.attributes,
         decorators: _values.decorators,
         variants: existingVariants,
@@ -127,7 +131,7 @@ class MixFactory {
     return existingMix.merge(mixToApply);
   }
 
-  MixFactory pickVariants(List<Variant> variants) {
+  StyleMix pickVariants(List<StyleVariant> variants) {
     final matchedVariants = <VariantAttribute>[];
 
     final currentVariants = _values.variants;
@@ -139,17 +143,17 @@ class MixFactory {
     }
 
     // Create a mix from the matched variants
-    return MixFactory.fromVariantAttributes(matchedVariants);
+    return StyleMix.fromVariantAttributes(matchedVariants);
   }
 
   /// Selects variants based on a condition and returns a new mix with the selected variants.
-  MixFactory selectVariantCondition(
-    Map<bool, Variant> cases,
+  StyleMix selectVariantCondition(
+    Map<bool, StyleVariant> cases,
   ) {
     final keys = cases.keys.toList();
     final values = cases.values.toList();
 
-    List<Variant> variants = [];
+    List<StyleVariant> variants = [];
 
     for (var i = 0; i < keys.length; i++) {
       if (keys[i]) {
@@ -160,17 +164,17 @@ class MixFactory {
     return selectVariants(variants);
   }
 
-  factory MixFactory.fromVariantAttributes(List<VariantAttribute> variants) {
-    return MixFactory.combine(variants.map((e) => e.value).toList());
+  factory StyleMix.fromVariantAttributes(List<VariantAttribute> variants) {
+    return StyleMix.combine(variants.map((e) => e.value).toList());
   }
 
   /// Chooses a mix based on a [condition].
   ///
   /// Returns [ifTrue] if the [condition] is true, otherwise returns [ifFalse].
-  factory MixFactory.chooser({
+  factory StyleMix.chooser({
     required bool condition,
-    required MixFactory ifTrue,
-    required MixFactory ifFalse,
+    required StyleMix ifTrue,
+    required StyleMix ifFalse,
   }) {
     if (condition) {
       return ifTrue;
@@ -183,82 +187,82 @@ class MixFactory {
   ///
   /// Iterates through the list of mixes, merging each mix with the previous mix
   /// and returning the final combined MixFactory.
-  factory MixFactory.combine(List<MixFactory> mixes) {
-    MixValues combinedValues = const MixValues.empty();
+  factory StyleMix.combine(List<StyleMix> mixes) {
+    StyleMixData combinedValues = const StyleMixData.empty();
     for (final mix in mixes) {
       combinedValues = combinedValues.merge(mix.values);
     }
 
-    return MixFactory.fromValues(combinedValues);
+    return StyleMix.fromValues(combinedValues);
   }
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is MixFactory && other._values == _values;
+    return other is StyleMix && other._values == _values;
   }
 
   @override
   int get hashCode => _values.hashCode;
 }
 
-extension DeprecatedMixExtension<T extends StyleAttribute> on MixFactory {
+extension DeprecatedMixExtension<T extends StyleAttribute> on StyleMix {
   /// Adds an Attribute to a Mix
   @Deprecated('Simplifying the mix API to avoid confusion. Use apply instead')
-  SpreadPositionalParams<T, MixFactory> get mix {
+  SpreadPositionalParams<T, StyleMix> get mix {
     return SpreadPositionalParams(addAttributes);
   }
 
   @Deprecated('Use selectVariants now')
-  MixFactory withVariants(List<Variant> variants) {
+  StyleMix withVariants(List<StyleVariant> variants) {
     return withManyVariants(variants);
   }
 
   @Deprecated(
     'Use merge() or mergeMany() now. You might have to turn into a Mix first. firstMixFactory.merge(secondMix)',
   )
-  MixFactory addAttributes(List<StyleAttribute> attributes) {
-    final newValues = MixValues.create(attributes);
+  StyleMix addAttributes(List<StyleAttribute> attributes) {
+    final newValues = StyleMixData.create(attributes);
 
-    return MixFactory._(_values.merge(newValues));
+    return StyleMix._(_values.merge(newValues));
   }
 
   @Deprecated('Use selectVariants now')
-  MixFactory withManyVariants(List<Variant> variants) {
+  StyleMix withManyVariants(List<StyleVariant> variants) {
     return selectVariants(variants);
   }
 
   @Deprecated('Use merge() or mergeMany() instead')
-  SpreadPositionalParams<MixFactory, MixFactory> get apply =>
+  SpreadPositionalParams<StyleMix, StyleMix> get apply =>
       SpreadPositionalParams(mergeMany);
 
   @Deprecated('Use selectVariant now')
-  MixFactory withVariant(Variant variant) {
+  StyleMix withVariant(StyleVariant variant) {
     return selectVariant(variant);
   }
 
   @Deprecated('Use combine now')
-  MixFactory combineAll(List<MixFactory> mixes) {
-    return MixFactory.combine(mixes);
+  StyleMix combineAll(List<StyleMix> mixes) {
+    return StyleMix.combine(mixes);
   }
 
   @Deprecated('Use selectVariant now')
-  MixFactory withMaybeVariant(Variant? variant) {
+  StyleMix withMaybeVariant(StyleVariant? variant) {
     if (variant == null) return this;
 
     return withVariant(variant);
   }
 
   @Deprecated('Use mergeNullable instead')
-  MixFactory maybeApply(MixFactory? mix) {
+  StyleMix maybeApply(StyleMix? mix) {
     if (mix == null) return this;
 
     return apply(mix);
   }
 
   @Deprecated('Use applyNullable instead')
-  MixFactory applyMaybe(MixFactory? mix) {
+  StyleMix applyMaybe(StyleMix? mix) {
     return maybeApply(mix);
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../helpers/extensions.dart';
+import '../../extensions/build_context_ext.dart';
 import '../../theme/mix_theme.dart';
 import '../../theme/tokens/breakpoints.dart';
 import '../../widgets/pressable/pressable.notifier.dart';
@@ -18,36 +18,36 @@ class ContextVariantUtilities {
     };
   }
 
-  static ContextVariant onSmall() {
-    return ContextVariant(
+  static ContextStyleVariant onSmall() {
+    return ContextStyleVariant(
       'onSmall',
       shouldApply: _screenSizeCheck(ScreenSizeToken.small),
     );
   }
 
-  static ContextVariant onXsmall() {
-    return ContextVariant(
+  static ContextStyleVariant onXsmall() {
+    return ContextStyleVariant(
       'onXsmall',
       shouldApply: _screenSizeCheck(ScreenSizeToken.xsmall),
     );
   }
 
-  static ContextVariant onMedium() {
-    return ContextVariant(
+  static ContextStyleVariant onMedium() {
+    return ContextStyleVariant(
       'onMedium',
       shouldApply: _screenSizeCheck(ScreenSizeToken.medium),
     );
   }
 
-  static ContextVariant onLarge() {
-    return ContextVariant(
+  static ContextStyleVariant onLarge() {
+    return ContextStyleVariant(
       'onLarge',
       shouldApply: _screenSizeCheck(ScreenSizeToken.large),
     );
   }
 
-  static ContextVariant onPortrait() {
-    return ContextVariant(
+  static ContextStyleVariant onPortrait() {
+    return ContextStyleVariant(
       'onPortrait',
       shouldApply: (BuildContext context) {
         return context.orientation == Orientation.portrait;
@@ -55,8 +55,8 @@ class ContextVariantUtilities {
     );
   }
 
-  static ContextVariant onLandscape() {
-    return ContextVariant(
+  static ContextStyleVariant onLandscape() {
+    return ContextStyleVariant(
       'onLandscape',
       shouldApply: (BuildContext context) {
         return context.orientation == Orientation.landscape;
@@ -64,8 +64,8 @@ class ContextVariantUtilities {
     );
   }
 
-  static ContextVariant onDark() {
-    return ContextVariant(
+  static ContextStyleVariant onDark() {
+    return ContextStyleVariant(
       'onDark',
       shouldApply: (BuildContext context) {
         return context.isDarkMode;
@@ -73,8 +73,8 @@ class ContextVariantUtilities {
     );
   }
 
-  static ContextVariant onLight() {
-    return ContextVariant(
+  static ContextStyleVariant onLight() {
+    return ContextStyleVariant(
       'onLight',
       shouldApply: (BuildContext context) {
         return Theme.of(context).brightness == Brightness.light;
@@ -82,8 +82,8 @@ class ContextVariantUtilities {
     );
   }
 
-  static ContextVariant onDisabled() {
-    return ContextVariant(
+  static ContextStyleVariant onDisabled() {
+    return ContextStyleVariant(
       'onDisabled',
       shouldApply: (BuildContext context) {
         final pressable = PressableNotifier.of(context);
@@ -93,8 +93,8 @@ class ContextVariantUtilities {
     );
   }
 
-  static ContextVariant onFocus() {
-    return ContextVariant(
+  static ContextStyleVariant onFocus() {
+    return ContextStyleVariant(
       'onFocus',
       shouldApply: (BuildContext context) {
         final pressable = PressableNotifier.of(context);
@@ -104,8 +104,8 @@ class ContextVariantUtilities {
     );
   }
 
-  static ContextVariant onPress() {
-    return ContextVariant(
+  static ContextStyleVariant onPress() {
+    return ContextStyleVariant(
       'onPress',
       shouldApply: (BuildContext context) {
         final pressable = PressableNotifier.of(context);
@@ -115,8 +115,8 @@ class ContextVariantUtilities {
     );
   }
 
-  static ContextVariant onLongPress() {
-    return ContextVariant(
+  static ContextStyleVariant onLongPress() {
+    return ContextStyleVariant(
       'onLongPress',
       shouldApply: (BuildContext context) {
         final pressable = PressableNotifier.of(context);
@@ -126,8 +126,8 @@ class ContextVariantUtilities {
     );
   }
 
-  static ContextVariant onHover() {
-    return ContextVariant(
+  static ContextStyleVariant onHover() {
+    return ContextStyleVariant(
       'onHover',
       shouldApply: (BuildContext context) {
         final pressable = PressableNotifier.of(context);
@@ -137,12 +137,12 @@ class ContextVariantUtilities {
     );
   }
 
-  static T onNot<T extends ContextVariant>(T other) {
+  static T onNot<T extends ContextStyleVariant>(T other) {
     return other.inverseInstance() as T;
   }
 
-  static ContextVariant onRTL() {
-    return ContextVariant(
+  static ContextStyleVariant onRTL() {
+    return ContextStyleVariant(
       'onRTL',
       shouldApply: (BuildContext context) {
         return context.directionality == TextDirection.rtl;

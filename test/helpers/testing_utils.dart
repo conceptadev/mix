@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
 
-export 'package:mix/src/helpers/extensions.dart';
+export 'package:mix/src/extensions/helper_ext.dart';
 
 class TestMixWidget extends StatelessWidget {
   const TestMixWidget({
@@ -51,7 +51,7 @@ class WrapMixThemeWidget extends StatelessWidget {
 class BoxInsideFlexWidget extends StatelessWidget {
   const BoxInsideFlexWidget(this.mix, {Key? key}) : super(key: key);
 
-  final Mix mix;
+  final StyleMix mix;
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +76,7 @@ class BoxTestWidget extends StatelessWidget {
     double? width,
   }) : super(key: key);
 
-  final Mix mix;
+  final StyleMix mix;
 
   @override
   Widget build(BuildContext context) {

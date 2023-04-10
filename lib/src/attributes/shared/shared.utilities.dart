@@ -5,12 +5,12 @@ import 'shared.attributes.dart';
 class CommonUtility {
   const CommonUtility._();
 
-  static SharedWidgetAttributes animation({
+  static SharedStyleAttributes animation({
     Curve? curve,
     int? duration,
     Duration? asDuration,
   }) {
-    return SharedWidgetAttributes(
+    return SharedStyleAttributes(
       animated: true,
       animationCurve: curve,
       animationDuration:
@@ -19,8 +19,8 @@ class CommonUtility {
     );
   }
 
-  static SharedWidgetAttributes animationDuration(int milliseconds) {
-    return SharedWidgetAttributes(
+  static SharedStyleAttributes animationDuration(int milliseconds) {
+    return SharedStyleAttributes(
       animated: true,
       animationDuration: Duration(
         milliseconds: milliseconds,
@@ -28,20 +28,20 @@ class CommonUtility {
     );
   }
 
-  static SharedWidgetAttributes animationCurve(Curve curve) {
-    return SharedWidgetAttributes(
+  static SharedStyleAttributes animationCurve(Curve curve) {
+    return SharedStyleAttributes(
       animated: true,
       animationCurve: curve,
     );
   }
 
-  static SharedWidgetAttributes textDirection(TextDirection? textDirection) {
-    return SharedWidgetAttributes(textDirection: textDirection);
+  static SharedStyleAttributes textDirection(TextDirection? textDirection) {
+    return SharedStyleAttributes(textDirection: textDirection);
   }
 
-  static SharedWidgetAttributes visible([bool? condition = true]) =>
-      SharedWidgetAttributes(visible: condition);
+  static SharedStyleAttributes visible([bool? condition = true]) =>
+      SharedStyleAttributes(visible: condition);
 
-  static SharedWidgetAttributes hidden([bool condition = true]) =>
-      SharedWidgetAttributes(visible: !condition);
+  static SharedStyleAttributes hidden([bool condition = true]) =>
+      SharedStyleAttributes(visible: !condition);
 }

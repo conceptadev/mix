@@ -5,7 +5,7 @@ import 'package:mix/src/attributes/shared/shared.descriptor.dart';
 
 import '../helpers/testing_utils.dart';
 
-const activated = Variant("activated");
+const activated = StyleVariant("activated");
 
 const customIcon = InheritedIconAttribute.icon;
 const withSize = InheritedIconAttribute.withSize;
@@ -13,7 +13,7 @@ const withColor = InheritedIconAttribute.withColor;
 
 const inputDecoration = InputDecorationThemeAttribute.inputDecoration;
 
-class InheritedIconAttribute extends WidgetStyleAttributes {
+class InheritedIconAttribute extends StyledWidgetAttributes {
   const InheritedIconAttribute({
     this.color,
     this.size,
@@ -67,7 +67,7 @@ class InheritedIconAttribute extends WidgetStyleAttributes {
   get props => [color, size];
 }
 
-class InputDecorationThemeAttribute extends WidgetStyleAttributes {
+class InputDecorationThemeAttribute extends StyledWidgetAttributes {
   final Color? iconColor;
   final Color? fillColor;
   final InputBorder? border;
@@ -125,7 +125,7 @@ class InputDecorationThemeAttribute extends WidgetStyleAttributes {
   get props => [iconColor, fillColor, border];
 }
 
-final mix = Mix(
+final mix = StyleMix(
   withSize(23),
   withColor(Colors.green),
   inputDecoration(
@@ -137,7 +137,7 @@ final mix = Mix(
     fillColor: Colors.red,
   ),
   activated(withColor(Colors.blue), inputDecoration(fillColor: Colors.green)),
-  const SharedWidgetAttributes(textDirection: TextDirection.rtl),
+  const SharedStyleAttributes(textDirection: TextDirection.rtl),
 );
 
 class CustomWidget extends StatelessWidget {
@@ -152,7 +152,7 @@ class CustomWidget extends StatelessWidget {
 
   final IconData? icon;
   final String? semanticLabel;
-  final List<Variant> variants;
+  final List<StyleVariant> variants;
 
   @override
   Widget build(BuildContext context) {
@@ -194,7 +194,7 @@ class TextFieldWidget extends StatelessWidget {
 
   final IconData? icon;
   final String? semanticLabel;
-  final List<Variant> variants;
+  final List<StyleVariant> variants;
 
   @override
   Widget build(BuildContext context) {

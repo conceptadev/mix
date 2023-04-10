@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../attribute.dart';
 
-class SharedWidgetAttributes extends WidgetStyleAttributes {
+class SharedStyleAttributes extends StyledWidgetAttributes {
   final bool? visible;
   //Animation
   final bool? animated;
@@ -10,7 +10,7 @@ class SharedWidgetAttributes extends WidgetStyleAttributes {
   final Curve? animationCurve;
   final TextDirection? textDirection;
 
-  const SharedWidgetAttributes({
+  const SharedStyleAttributes({
     this.visible,
     this.animated,
     this.animationDuration,
@@ -19,7 +19,7 @@ class SharedWidgetAttributes extends WidgetStyleAttributes {
   });
 
   @override
-  SharedWidgetAttributes merge(SharedWidgetAttributes? other) {
+  SharedStyleAttributes merge(SharedStyleAttributes? other) {
     if (other == null) return this;
 
     return copyWith(
@@ -32,14 +32,14 @@ class SharedWidgetAttributes extends WidgetStyleAttributes {
   }
 
   @override
-  SharedWidgetAttributes copyWith({
+  SharedStyleAttributes copyWith({
     bool? visible,
     bool? animated,
     Duration? animationDuration,
     Curve? animationCurve,
     TextDirection? textDirection,
   }) {
-    return SharedWidgetAttributes(
+    return SharedStyleAttributes(
       visible: visible ?? this.visible,
       animated: animated ?? this.animated,
       animationDuration: animationDuration ?? this.animationDuration,

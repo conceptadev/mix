@@ -60,7 +60,7 @@ class CustomMixWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final style = Mix(
+    final style = StyleMix(
       height(100),
       animated(),
       marginY(10),

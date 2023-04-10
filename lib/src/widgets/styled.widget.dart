@@ -1,9 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import '../factory/mix_factory.dart';
 import '../factory/mix_provider.dart';
 import '../factory/mix_provider_data.dart';
+import '../factory/style_mix.dart';
 import '../variants/variant.dart';
 
 @Deprecated('Use MixWidget instead')
@@ -12,7 +12,7 @@ typedef MixWidget = StyledWidget;
 abstract class StyledWidget extends StatelessWidget {
   /// Constructor
   const StyledWidget({
-    @Deprecated('Use the style parameter instead') Mix? mix,
+    @Deprecated('Use the style parameter instead') StyleMix? mix,
     StyleMix? style,
     super.key,
 
@@ -20,18 +20,18 @@ abstract class StyledWidget extends StatelessWidget {
     /// Only WidgetAttributes are inherited. Decorators will not be inherited as
     /// decorators should have already been applied to the parent Widget.
     bool inherit = false,
-    List<Variant>? variants,
+    List<StyleVariant>? variants,
   })  : _mix = mix,
         _style = style,
         _variants = variants,
         _inherit = inherit;
 
-  final Mix? _mix;
+  final StyleMix? _mix;
   final StyleMix? _style;
-  final List<Variant>? _variants;
+  final List<StyleVariant>? _variants;
   final bool _inherit;
 
-  MixFactory get style {
+  StyleMix get style {
     if (_style != null && _mix != null) {
       throw Exception(
         'Please, give only one of the following parameters style OR mix',
@@ -44,10 +44,10 @@ abstract class StyledWidget extends StatelessWidget {
       );
     }
 
-    return _style ?? _mix ?? Mix.constant;
+    return _style ?? _mix ?? StyleMix.constant;
   }
 
-  List<Variant>? get variants => _variants;
+  List<StyleVariant>? get variants => _variants;
 
   MixData createMixData(BuildContext context) {
     final currentMix = MixData.create(
@@ -73,7 +73,7 @@ abstract class StyledWidget extends StatelessWidget {
     super.debugFillProperties(properties);
 
     properties.add(
-      DiagnosticsProperty<Mix>('mix', _mix, defaultValue: null),
+      DiagnosticsProperty<StyleMix>('mix', _mix, defaultValue: null),
     );
 
     properties.add(
@@ -85,7 +85,7 @@ abstract class StyledWidget extends StatelessWidget {
     );
 
     properties.add(
-      DiagnosticsProperty<List<Variant>>(
+      DiagnosticsProperty<List<StyleVariant>>(
         'variants',
         variants,
         defaultValue: null,

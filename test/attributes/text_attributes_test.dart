@@ -9,7 +9,7 @@ void main() {
     test('Test merge method', () {
       final ta1 = RandomGenerator.textAttributes();
 
-      const ta2 = TextAttributes(
+      const ta2 = StyledTextAttributes(
         textAlign: TextAlign.right,
         maxLines: 3,
         strutStyle: StrutStyle(forceStrutHeight: true),
@@ -23,7 +23,7 @@ void main() {
     });
 
     test('Test copyWith method', () {
-      const ta1 = TextAttributes(
+      const ta1 = StyledTextAttributes(
         textAlign: TextAlign.left,
         maxLines: 2,
       );
@@ -45,12 +45,12 @@ void main() {
     });
 
     test('Test merge method with null values', () {
-      const ta1 = TextAttributes(
+      const ta1 = StyledTextAttributes(
         textAlign: TextAlign.left,
         maxLines: 2,
       );
 
-      const ta2 = TextAttributes(
+      const ta2 = StyledTextAttributes(
         textAlign: null,
         maxLines: 3,
         textScaleFactor: 2,
