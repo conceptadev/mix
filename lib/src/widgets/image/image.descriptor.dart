@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../factory/mix_provider_data.dart';
 import 'image.attributes.dart';
 
-class ImageDescriptor {
+class StyledImageDescriptor {
   final Color? color;
   final double? scale;
 
@@ -16,7 +16,7 @@ class ImageDescriptor {
   final AlignmentGeometry alignment;
   final ImageRepeat repeat;
 
-  const ImageDescriptor({
+  const StyledImageDescriptor({
     this.color,
     this.scale,
     this.width,
@@ -27,10 +27,10 @@ class ImageDescriptor {
     required this.repeat,
   });
 
-  factory ImageDescriptor.fromContext(MixData mix) {
-    final attributes = mix.attributesOfType<ImageAttributes>();
+  factory StyledImageDescriptor.fromContext(MixData mix) {
+    final attributes = mix.attributesOfType<StyledImageAttributes>();
 
-    return ImageDescriptor(
+    return StyledImageDescriptor(
       color: attributes?.color?.resolve(mix),
       scale: attributes?.scale,
       width: attributes?.width,
@@ -46,7 +46,7 @@ class ImageDescriptor {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is ImageDescriptor &&
+    return other is StyledImageDescriptor &&
         other.color == color &&
         other.scale == scale &&
         other.width == width &&

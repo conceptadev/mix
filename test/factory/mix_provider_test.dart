@@ -5,16 +5,16 @@ import 'package:mix/src/factory/mix_provider.dart';
 
 import '../helpers/random_dto.dart';
 
-const textVariant = Variant('textVariant');
+const textVariant = StyleVariant('textVariant');
 
-final overrideTextAttribute = TextAttributes.fromValues(
+final overrideTextAttribute = StyledTextAttributes.fromValues(
   style: const TextStyle(
     fontSize: 18,
     color: Colors.blue,
   ),
 );
 
-final pressableMix = Mix.fromAttributes([
+final pressableMix = StyleMix.fromAttributes([
   RandomGenerator.boxAttributes(),
   RandomGenerator.textAttributes(),
   textVariant(overrideTextAttribute),
@@ -24,12 +24,12 @@ void main() {
   group("Mix Provider", () {
     testWidgets('Mix Provider exist and Matches', (tester) async {
       await tester.pumpWidget(
-        Box(
+        StyledContainer(
           style: pressableMix,
         ),
       );
 
-      final widgetFinder = find.byType(BoxMixedWidget);
+      final widgetFinder = find.byType(MixedContainer);
 
       // Get BuildContext for boxWidget
       BuildContext context = tester.element(widgetFinder);

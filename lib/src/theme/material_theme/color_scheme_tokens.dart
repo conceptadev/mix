@@ -1,4 +1,4 @@
-import '../../helpers/extensions.dart';
+import '../../extensions/build_context_ext.dart';
 import '../tokens/color_token.dart';
 
 class $MDColorScheme {

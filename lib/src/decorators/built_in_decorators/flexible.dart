@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../factory/mix_provider_data.dart';
-import '../box.decorator.dart';
+import '../../factory/mix_provider_data.dart';
+import '../decorator.dart';
 
 class FlexibleDecorator extends WidgetDecorator<FlexibleDecorator> {
   final FlexFit? flexFit;

@@ -1,35 +1,35 @@
 import '../../mix.dart';
 import '../attributes/nested_attribute.dart';
+import '../decorators/decorator.dart';
 import '../helpers/equality_mixin/equality_mixin.dart';
 import '../helpers/mergeable_map.dart';
 import '../variants/variant_attribute.dart';
-import '../widgets/box/box.decorator.dart';
 
-class MixValues with EqualityMixin {
-  final MergeableMap<WidgetAttributes>? attributes;
+class StyleMixData with EqualityMixin {
+  final MergeableMap<StyledWidgetAttributes>? attributes;
   final MergeableMap<WidgetDecorator>? decorators;
   final List<VariantAttribute> variants;
   final List<ContextVariantAttribute> contextVariants;
 
-  const MixValues({
+  const StyleMixData({
     required this.attributes,
     required this.decorators,
     required this.variants,
     required this.contextVariants,
   });
 
-  /// Creates a new [MixValues] instance from the provided [Iterable] of [Attribute]s.
-  factory MixValues.create(Iterable<Attribute> attributes) {
+  /// Creates a new [StyleMixData] instance from the provided [Iterable] of [StyleAttribute]s.
+  factory StyleMixData.create(Iterable<StyleAttribute> attributes) {
     //TODO: Remove expansion of nested attributes later
     final expanded = _expandNestedAttributes(attributes);
 
     final variantList = <VariantAttribute>[];
     final contextVariantList = <ContextVariantAttribute>[];
-    final attributeList = <WidgetAttributes>[];
+    final attributeList = <StyledWidgetAttributes>[];
     final decoratorList = <WidgetDecorator>[];
 
     for (final attribute in expanded) {
-      if (attribute is WidgetAttributes) {
+      if (attribute is StyledWidgetAttributes) {
         attributeList.add(attribute);
       } else if (attribute is WidgetDecorator) {
         decoratorList.add(attribute);
@@ -43,7 +43,7 @@ class MixValues with EqualityMixin {
       }
     }
 
-    return MixValues(
+    return StyleMixData(
       attributes: MergeableMap(attributeList),
       decorators: MergeableMap(decoratorList),
       variants: variantList,
@@ -65,13 +65,13 @@ class MixValues with EqualityMixin {
     return variants.length + contextVariants.length + (attributes?.length ?? 0);
   }
 
-  /// Returns an instance of the specified [WidgetAttributes] type from the [MixData].
-  A? attributesOfType<A extends WidgetAttributes>() {
+  /// Returns an instance of the specified [StyledWidgetAttributes] type from the [MixData].
+  A? attributesOfType<A extends StyledWidgetAttributes>() {
     return attributes?[A] as A?;
   }
 
-  /// Returns an [Iterable] of [Attribute]s containing all attributes, variants, and directives.
-  Iterable<Attribute> toAttributes() {
+  /// Returns an [Iterable] of [StyleAttribute]s containing all attributes, variants, and directives.
+  Iterable<StyleAttribute> toAttributes() {
     return [
       ...?attributes?.values,
       ...variants,
@@ -79,14 +79,14 @@ class MixValues with EqualityMixin {
     ];
   }
 
-  /// Creates a new [MixValues] instance by replacing the specified attributes with new values.
-  MixValues copyWith({
-    MergeableMap<WidgetAttributes>? attributes,
+  /// Creates a new [StyleMixData] instance by replacing the specified attributes with new values.
+  StyleMixData copyWith({
+    MergeableMap<StyledWidgetAttributes>? attributes,
     MergeableMap<WidgetDecorator>? decorators,
     List<VariantAttribute>? variants,
     List<ContextVariantAttribute>? contextVariants,
   }) {
-    return MixValues(
+    return StyleMixData(
       attributes: this.attributes?.merge(attributes) ?? attributes,
       decorators: this.decorators?.merge(decorators) ?? decorators,
       variants: [...this.variants, ...?variants],
@@ -94,8 +94,8 @@ class MixValues with EqualityMixin {
     );
   }
 
-  /// Merges the current [MixValues] instance with another [MixValues] instance.
-  MixValues merge(MixValues? other) {
+  /// Merges the current [StyleMixData] instance with another [StyleMixData] instance.
+  StyleMixData merge(StyleMixData? other) {
     if (other == null || other.isEmpty) return this;
 
     return copyWith(
@@ -106,9 +106,9 @@ class MixValues with EqualityMixin {
     );
   }
 
-  /// Creates a new [MixValues] instance with the same attributes, variants, and directives.
-  MixValues clone() {
-    return MixValues(
+  /// Creates a new [StyleMixData] instance with the same attributes, variants, and directives.
+  StyleMixData clone() {
+    return StyleMixData(
       attributes: attributes?.clone(),
       decorators: decorators?.clone(),
       variants: [...variants],
@@ -116,9 +116,9 @@ class MixValues with EqualityMixin {
     );
   }
 
-  /// Expands nested attributes from the provided [Iterable] of [Attribute]s.
-  static Iterable<Attribute> _expandNestedAttributes(
-    Iterable<Attribute> attributes,
+  /// Expands nested attributes from the provided [Iterable] of [StyleAttribute]s.
+  static Iterable<StyleAttribute> _expandNestedAttributes(
+    Iterable<StyleAttribute> attributes,
   ) {
     return attributes.expand((attribute) {
       if (attribute is NestedStyleAttribute) {
@@ -131,8 +131,8 @@ class MixValues with EqualityMixin {
     });
   }
 
-  /// An empty [MixValues] instance with no attributes, decorators, variants, or directives.
-  const MixValues.empty()
+  /// An empty [StyleMixData] instance with no attributes, decorators, variants, or directives.
+  const StyleMixData.empty()
       : attributes = null,
         decorators = null,
         variants = const [],

@@ -1,23 +1,23 @@
 import 'package:flutter/widgets.dart';
 
 import '../../factory/mix_provider_data.dart';
-import 'zbox.attributes.dart';
+import 'stack.attributes.dart';
 
-class ZBoxProps {
+class StyledStackDescriptor {
   final AlignmentGeometry alignment;
   final StackFit fit;
   final Clip clipBehavior;
 
-  const ZBoxProps({
+  const StyledStackDescriptor({
     required this.alignment,
     required this.fit,
     required this.clipBehavior,
   });
 
-  factory ZBoxProps.fromContext(MixData mix) {
-    final zBoxAttributes = mix.attributesOfType<ZBoxAttributes>();
+  factory StyledStackDescriptor.fromContext(MixData mix) {
+    final zBoxAttributes = mix.attributesOfType<StyledStackAttributes>();
 
-    return ZBoxProps(
+    return StyledStackDescriptor(
       alignment: zBoxAttributes?.alignment ?? Alignment.topLeft,
       clipBehavior: zBoxAttributes?.clipBehavior ?? Clip.none,
       fit: zBoxAttributes?.fit ?? StackFit.loose,
@@ -28,7 +28,7 @@ class ZBoxProps {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is ZBoxProps &&
+    return other is StyledStackDescriptor &&
         other.alignment == alignment &&
         other.fit == fit &&
         other.clipBehavior == clipBehavior;
@@ -37,12 +37,12 @@ class ZBoxProps {
   @override
   int get hashCode => alignment.hashCode ^ fit.hashCode ^ clipBehavior.hashCode;
 
-  ZBoxProps copyWith({
+  StyledStackDescriptor copyWith({
     AlignmentGeometry? alignment,
     StackFit? fit,
     Clip? clipBehavior,
   }) {
-    return ZBoxProps(
+    return StyledStackDescriptor(
       alignment: alignment ?? this.alignment,
       fit: fit ?? this.fit,
       clipBehavior: clipBehavior ?? this.clipBehavior,

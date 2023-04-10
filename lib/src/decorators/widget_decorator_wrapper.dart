@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 import '../factory/mix_provider_data.dart';
-import '../widgets/box/box.decorator.dart';
+import 'decorator.dart';
 
-class DecoratorWrapper extends StatelessWidget {
-  const DecoratorWrapper(
+class WidgetDecoratorWrapper extends StatelessWidget {
+  const WidgetDecoratorWrapper(
     this.mix, {
     super.key,
     required this.child,

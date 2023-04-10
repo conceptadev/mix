@@ -4,7 +4,7 @@ import '../../../mix.dart';
 import '../../dtos/shadow/box_shadow.dto.dart';
 import '../../helpers/equality_mixin/equality_mixin.dart';
 
-class BoxDescriptor with EqualityMixin {
+class StyledContainerDescriptor with EqualityMixin {
   final Color? _color;
   final AlignmentGeometry? alignment;
   final EdgeInsetsGeometry? padding;
@@ -26,7 +26,7 @@ class BoxDescriptor with EqualityMixin {
   final double? minWidth;
   final BoxShape? shape;
 
-  const BoxDescriptor({
+  const StyledContainerDescriptor({
     Color? color,
     this.alignment,
     this.padding,
@@ -45,10 +45,10 @@ class BoxDescriptor with EqualityMixin {
     this.gradient,
   }) : _color = color;
 
-  factory BoxDescriptor.fromContext(MixData mix) {
-    final attributes = mix.attributesOfType<BoxAttributes>();
+  factory StyledContainerDescriptor.fromContext(MixData mix) {
+    final attributes = mix.attributesOfType<StyledContainerAttributes>();
 
-    return BoxDescriptor(
+    return StyledContainerDescriptor(
       color: attributes?.color?.resolve(mix),
       alignment: attributes?.alignment,
       margin: attributes?.margin?.resolve(mix),

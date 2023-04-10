@@ -8,34 +8,34 @@ import 'package:mix/src/dtos/edge_insets/edge_insets.dto.dart';
 void main() {
   group("Nested Attributes", () {
     test('-> Apply Mixes', () async {
-      final styleMargin = Mix(
-        const BoxAttributes(
+      final styleMargin = StyleMix(
+        const StyledContainerAttributes(
           margin: EdgeInsetsDto.all(20),
         ),
       );
-      final styleColor = Mix(
-        const BoxAttributes(color: ColorDto(Colors.red)),
+      final styleColor = StyleMix(
+        const StyledContainerAttributes(color: ColorDto(Colors.red)),
       );
-      final nestedStyle = Mix(
+      final nestedStyle = StyleMix(
         NestedStyleAttribute(
-          Mix.combine([
+          StyleMix.combine([
             styleMargin,
             styleColor,
           ]),
         ),
       );
 
-      final nestedStyleUtility = Mix.combine([styleColor, styleMargin]);
+      final nestedStyleUtility = StyleMix.combine([styleColor, styleMargin]);
 
       final boxAttributes =
-          nestedStyle.values.attributesOfType<BoxAttributes>();
+          nestedStyle.values.attributesOfType<StyledContainerAttributes>();
 
-      final boxAttributesUtility =
-          nestedStyleUtility.values.attributesOfType<BoxAttributes>();
+      final boxAttributesUtility = nestedStyleUtility.values
+          .attributesOfType<StyledContainerAttributes>();
 
       expect(
         boxAttributes,
-        const BoxAttributes(
+        const StyledContainerAttributes(
           color: ColorDto(Colors.red),
           margin: EdgeInsetsDto.all(20),
         ),
@@ -43,7 +43,7 @@ void main() {
 
       expect(
         boxAttributesUtility,
-        const BoxAttributes(
+        const StyledContainerAttributes(
           color: ColorDto(Colors.red),
           margin: EdgeInsetsDto.all(20),
         ),

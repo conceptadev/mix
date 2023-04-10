@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../mix.dart';
+import '../../mix.dart';
 
 class DecoratorUtility {
   static FlexibleDecorator flex(int value) {

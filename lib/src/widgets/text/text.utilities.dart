@@ -12,7 +12,7 @@ class TextUtility {
   const TextUtility._();
 
   // ignore: long-parameter-list
-  static TextAttributes textStyle({
+  static StyledTextAttributes textStyle({
     String? fontFamily,
     FontWeight? fontWeight,
     FontStyle? fontStyle,
@@ -37,7 +37,7 @@ class TextUtility {
     TextStyle? as,
   }) {
     if (as != null) {
-      return TextAttributes(style: TextStyleDto.from(as));
+      return StyledTextAttributes(style: TextStyleDto.from(as));
     }
 
     List<ShadowDto>? convertShadows() {
@@ -50,7 +50,7 @@ class TextUtility {
       return shadowDtos;
     }
 
-    return TextAttributes(
+    return StyledTextAttributes(
       style: TextStyleDto(
         fontFamily: fontFamily,
         fontWeight: fontWeight,
@@ -75,55 +75,55 @@ class TextUtility {
     );
   }
 
-  static TextAttributes strutStyle(StrutStyle strutStyle) {
-    return TextAttributes(strutStyle: strutStyle);
+  static StyledTextAttributes strutStyle(StrutStyle strutStyle) {
+    return StyledTextAttributes(strutStyle: strutStyle);
   }
 
-  static TextAttributes textAlign(TextAlign textAlign) {
-    return TextAttributes(textAlign: textAlign);
+  static StyledTextAttributes textAlign(TextAlign textAlign) {
+    return StyledTextAttributes(textAlign: textAlign);
   }
 
-  static TextAttributes locale(Locale locale) {
-    return TextAttributes(locale: locale);
+  static StyledTextAttributes locale(Locale locale) {
+    return StyledTextAttributes(locale: locale);
   }
 
-  static TextAttributes softWrap(bool softWrap) {
-    return TextAttributes(softWrap: softWrap);
+  static StyledTextAttributes softWrap(bool softWrap) {
+    return StyledTextAttributes(softWrap: softWrap);
   }
 
-  static TextAttributes overflow(TextOverflow overflow) {
-    return TextAttributes(overflow: overflow);
+  static StyledTextAttributes overflow(TextOverflow overflow) {
+    return StyledTextAttributes(overflow: overflow);
   }
 
-  static TextAttributes textScaleFactor(double textScaleFactor) {
-    return TextAttributes(textScaleFactor: textScaleFactor);
+  static StyledTextAttributes textScaleFactor(double textScaleFactor) {
+    return StyledTextAttributes(textScaleFactor: textScaleFactor);
   }
 
-  static TextAttributes maxLines(int maxLines) {
-    return TextAttributes(maxLines: maxLines);
+  static StyledTextAttributes maxLines(int maxLines) {
+    return StyledTextAttributes(maxLines: maxLines);
   }
 
-  static TextAttributes textWidthBasis(TextWidthBasis textWidthBasis) {
-    return TextAttributes(textWidthBasis: textWidthBasis);
+  static StyledTextAttributes textWidthBasis(TextWidthBasis textWidthBasis) {
+    return StyledTextAttributes(textWidthBasis: textWidthBasis);
   }
 
-  static TextAttributes directives(List<TextDirective> directives) {
-    return TextAttributes(directives: directives);
+  static StyledTextAttributes directives(List<TextDirective> directives) {
+    return StyledTextAttributes(directives: directives);
   }
 
-  static TextAttributes directive(TextDirective directive) {
-    return TextAttributes(directives: [directive]);
+  static StyledTextAttributes directive(TextDirective directive) {
+    return StyledTextAttributes(directives: [directive]);
   }
 }
 
 class TextFriendlyUtility {
   const TextFriendlyUtility._();
 
-  static TextAttributes bold() {
+  static StyledTextAttributes bold() {
     return TextUtility.textStyle(fontWeight: FontWeight.bold);
   }
 
-  static TextAttributes italic() {
+  static StyledTextAttributes italic() {
     return TextUtility.textStyle(fontStyle: FontStyle.italic);
   }
 }

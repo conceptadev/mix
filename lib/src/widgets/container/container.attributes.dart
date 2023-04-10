@@ -6,9 +6,12 @@ import '../../dtos/color.dto.dart';
 import '../../dtos/edge_insets/edge_insets_geometry.dto.dart';
 import '../../dtos/radius/border_radius_geometry.dto.dart';
 import '../../dtos/shadow/box_shadow.dto.dart';
-import '../../helpers/extensions.dart';
+import '../../extensions/helper_ext.dart';
 
-class BoxAttributes extends WidgetAttributes {
+@Deprecated('Use ContainerStyleAttributes instead')
+typedef BoxAttributes = StyledContainerAttributes;
+
+class StyledContainerAttributes extends StyledWidgetAttributes {
   final EdgeInsetsGeometryDto? margin;
   final EdgeInsetsGeometryDto? padding;
   final AlignmentGeometry? alignment;
@@ -29,7 +32,7 @@ class BoxAttributes extends WidgetAttributes {
   final BoxShape? shape;
   final Gradient? gradient;
 
-  const BoxAttributes({
+  const StyledContainerAttributes({
     this.margin,
     this.padding,
     this.alignment,
@@ -49,7 +52,7 @@ class BoxAttributes extends WidgetAttributes {
   });
 
   @override
-  BoxAttributes copyWith({
+  StyledContainerAttributes copyWith({
     EdgeInsetsGeometryDto? margin,
     EdgeInsetsGeometryDto? padding,
     AlignmentGeometry? alignment,
@@ -67,7 +70,7 @@ class BoxAttributes extends WidgetAttributes {
     BoxShape? shape,
     Gradient? gradient,
   }) {
-    return BoxAttributes(
+    return StyledContainerAttributes(
       // Mergeble values
       border: this.border?.merge(border) ?? border,
       borderRadius: this.borderRadius?.merge(borderRadius) ?? borderRadius,
@@ -91,7 +94,7 @@ class BoxAttributes extends WidgetAttributes {
     );
   }
 
-  factory BoxAttributes.from({
+  factory StyledContainerAttributes.from({
     EdgeInsetsGeometry? margin,
     EdgeInsetsGeometry? padding,
     AlignmentGeometry? alignment,
@@ -112,7 +115,7 @@ class BoxAttributes extends WidgetAttributes {
     BoxShape? shape,
     Gradient? gradient,
   }) {
-    return BoxAttributes(
+    return StyledContainerAttributes(
       margin: EdgeInsetsGeometryDto.maybeFrom(margin),
       padding: EdgeInsetsGeometryDto.maybeFrom(padding),
       alignment: alignment,
@@ -135,7 +138,7 @@ class BoxAttributes extends WidgetAttributes {
   }
 
   @override
-  BoxAttributes merge(BoxAttributes? other) {
+  StyledContainerAttributes merge(StyledContainerAttributes? other) {
     if (other == null) return this;
 
     return copyWith(

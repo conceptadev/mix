@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import '../../attributes/attribute.dart';
 import '../../dtos/color.dto.dart';
 
-class ImageAttributes extends WidgetAttributes {
+@Deprecated('Use StyledImageAttributes instead')
+typedef ImageAttributes = StyledImageAttributes;
+
+class StyledImageAttributes extends StyledWidgetAttributes {
   final ColorDto? color;
   final double? scale;
 
@@ -15,7 +18,7 @@ class ImageAttributes extends WidgetAttributes {
   final AlignmentGeometry? alignment;
   final ImageRepeat? repeat;
 
-  const ImageAttributes({
+  const StyledImageAttributes({
     this.color,
     this.scale,
     this.width,
@@ -27,7 +30,7 @@ class ImageAttributes extends WidgetAttributes {
   });
 
   @override
-  ImageAttributes copyWith({
+  StyledImageAttributes copyWith({
     ColorDto? color,
     double? scale,
     double? width,
@@ -37,7 +40,7 @@ class ImageAttributes extends WidgetAttributes {
     AlignmentGeometry? alignment,
     ImageRepeat? repeat,
   }) {
-    return ImageAttributes(
+    return StyledImageAttributes(
       color: color ?? this.color,
       scale: scale ?? this.scale,
       width: width ?? this.width,
@@ -50,7 +53,7 @@ class ImageAttributes extends WidgetAttributes {
   }
 
   @override
-  ImageAttributes merge(ImageAttributes? other) {
+  StyledImageAttributes merge(StyledImageAttributes? other) {
     if (other == null) return this;
 
     return copyWith(

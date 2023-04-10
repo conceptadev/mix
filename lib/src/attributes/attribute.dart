@@ -5,8 +5,8 @@ import '../helpers/equality_mixin/equality_mixin.dart';
 // Some classes have defaults
 // Facade allows us ot set all properties as optional
 // For improved merge and override of properties
-abstract class Attribute with EqualityMixin {
-  const Attribute();
+abstract class StyleAttribute with EqualityMixin {
+  const StyleAttribute();
 }
 
 mixin Mergeable<T> {
@@ -14,9 +14,9 @@ mixin Mergeable<T> {
 }
 
 /// An interface that add support to custom attributes for [MixContext].
-abstract class WidgetAttributes extends Attribute
-    with Mergeable<WidgetAttributes> {
-  const WidgetAttributes();
+abstract class StyledWidgetAttributes extends StyleAttribute
+    with Mergeable<StyledWidgetAttributes> {
+  const StyledWidgetAttributes();
 
-  WidgetAttributes copyWith();
+  StyledWidgetAttributes copyWith();
 }

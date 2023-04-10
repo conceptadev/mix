@@ -1,27 +1,30 @@
 import '../../attributes/attribute.dart';
 import '../../dtos/color.dto.dart';
 
-class IconAttributes extends WidgetAttributes {
+@Deprecated('Use IconStyleAttributes instead')
+typedef IconAttributes = StyledIconAttributes;
+
+class StyledIconAttributes extends StyledWidgetAttributes {
   final ColorDto? color;
   final double? size;
-  const IconAttributes({
+  const StyledIconAttributes({
     this.color,
     this.size,
   });
 
   @override
-  IconAttributes copyWith({
+  StyledIconAttributes copyWith({
     ColorDto? color,
     double? size,
   }) {
-    return IconAttributes(
+    return StyledIconAttributes(
       color: color ?? this.color,
       size: size ?? this.size,
     );
   }
 
   @override
-  IconAttributes merge(IconAttributes? other) {
+  StyledIconAttributes merge(StyledIconAttributes? other) {
     if (other == null) return this;
 
     return copyWith(

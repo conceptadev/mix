@@ -11,9 +11,9 @@ class BoxExample extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          Box(
+          StyledContainer(
             style: button,
-            child: const TextMix('Details'),
+            child: const StyledText('Details'),
           ),
         ],
       ),

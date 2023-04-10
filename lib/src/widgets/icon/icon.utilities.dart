@@ -6,21 +6,21 @@ import 'icon.attributes.dart';
 class IconUtility {
   const IconUtility._();
 
-  static IconAttributes icon({double? size, Color? color}) {
-    return IconAttributes(
+  static StyledIconAttributes icon({double? size, Color? color}) {
+    return StyledIconAttributes(
       size: size,
       color: color != null ? ColorDto(color) : null,
     );
   }
 
-  static IconAttributes iconSize(double size) {
-    return IconAttributes(
+  static StyledIconAttributes iconSize(double size) {
+    return StyledIconAttributes(
       size: size,
     );
   }
 
-  static IconAttributes iconColor(Color color) {
-    return IconAttributes(
+  static StyledIconAttributes iconColor(Color color) {
+    return StyledIconAttributes(
       color: ColorDto(color),
     );
   }

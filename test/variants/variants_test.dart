@@ -1,28 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mix/mix.dart';
+import 'package:mix/src/aliases/container_alias.dart';
+import 'package:mix/src/aliases/context_variants_alias.dart';
+import 'package:mix/src/extensions/build_context_ext.dart';
+import 'package:mix/src/factory/style_mix.dart';
+import 'package:mix/src/widgets/container/container.widget.dart';
 
 void main() {
   testWidgets('System Theme Variants', (tester) async {
-    final mix = Mix(
-      bgColor(Colors.green),
-      onDark(bgColor(Colors.black)),
-      h(50),
-      w(50),
+    final style = StyleMix(
+      backgroundColor(Colors.green),
+      onDark(backgroundColor(Colors.black)),
+      height(50),
+      width(50),
     );
 
     await tester.pumpWidget(
       MaterialApp(
         theme: ThemeData.dark(),
-        home: Box(
-          mix: mix,
+        home: StyledContainer(
+          style: style,
         ),
       ),
     );
     final containerWidget =
         find.byType(Container).evaluate().first.widget as Container;
 
-    final widgetFinder = find.byType(BoxMixedWidget);
+    final widgetFinder = find.byType(MixedContainer);
 
     // Get BuildContext for boxWidget
     BuildContext context = tester.element(widgetFinder);
@@ -37,11 +41,11 @@ void main() {
       theme: ThemeData(),
       darkTheme: ThemeData.dark(),
       themeMode: ThemeMode.light,
-      home: Box(
-        mix: Mix(
-          onNot(onDark)(bgColor(Colors.black)),
-          h(50),
-          w(50),
+      home: StyledContainer(
+        style: StyleMix(
+          onNot(onDark)(backgroundColor(Colors.black)),
+          height(50),
+          width(50),
         ),
       ),
     ));

@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart'; // importing flutter_test package
 import 'package:mix/src/attributes/attribute.dart';
-import 'package:mix/src/factory/mix_values.dart';
+import 'package:mix/src/factory/style_mix_data.dart';
 import 'package:mix/src/variants/utilities/context_variant_utilities.dart';
 import 'package:mix/src/variants/variant.dart';
 import 'package:mix/src/variants/variant_attribute.dart';
@@ -10,7 +10,7 @@ import '../helpers/random_dto.dart';
 void main() {
   group('MixValues', () {
     test('Creates empty values', () {
-      const mixValues = MixValues.empty();
+      const mixValues = StyleMixData.empty();
       expect(mixValues.attributes, isNull);
 
       expect(mixValues.variants, isEmpty);
@@ -22,18 +22,18 @@ void main() {
       expect(mixValues.hasContextVariants, isFalse);
     });
 
-    final attributeList = <WidgetAttributes>[
+    final attributeList = <StyledWidgetAttributes>[
       RandomGenerator.boxAttributes(),
       RandomGenerator.boxAttributes(),
       RandomGenerator.textAttributes(),
     ];
     final variantList = <VariantAttribute>[
       VariantAttribute(
-        const Variant('testVariant'),
+        const StyleVariant('testVariant'),
         RandomGenerator.mix(),
       ),
       VariantAttribute(
-        const Variant('anotherTestVariant'),
+        const StyleVariant('anotherTestVariant'),
         RandomGenerator.mix(),
       ),
     ];
@@ -49,7 +49,7 @@ void main() {
     ];
 
     test('Valid Length Counts', () {
-      final mixValues = MixValues.create(
+      final mixValues = StyleMixData.create(
         [...attributeList, ...variantList, ...contextVariantList],
       );
 
@@ -64,7 +64,7 @@ void main() {
     });
 
     test('Create from attribute list', () {
-      final mixValues = MixValues.create([
+      final mixValues = StyleMixData.create([
         ...attributeList,
         ...variantList,
         ...contextVariantList,

@@ -1,8 +1,8 @@
-import '../factory/mix_factory.dart';
+import '../factory/style_mix.dart';
 import 'attribute.dart';
 
 /// Allows to pass down Mixes as attributes for use with helpers
-class NestedStyleAttribute extends Attribute
+class NestedStyleAttribute extends StyleAttribute
     with Mergeable<NestedStyleAttribute> {
   const NestedStyleAttribute(this.style);
 

@@ -5,8 +5,14 @@ import 'variant_attribute.dart';
 
 typedef ShouldApplyFunc = bool Function(BuildContext);
 
-class ContextVariant extends Variant {
-  const ContextVariant(
+@Deprecated(
+  'Use ContextStyleVariant instead. '
+  'This class will be removed in a future release.',
+)
+typedef ContextVariant = ContextStyleVariant;
+
+class ContextStyleVariant extends StyleVariant {
+  const ContextStyleVariant(
     super.name, {
     required ShouldApplyFunc shouldApply,
     bool inverse = false,
@@ -24,30 +30,30 @@ class ContextVariant extends Variant {
   @override
   // ignore: long-parameter-list
   ContextVariantAttribute call([
-    Attribute? p1,
-    Attribute? p2,
-    Attribute? p3,
-    Attribute? p4,
-    Attribute? p5,
-    Attribute? p6,
-    Attribute? p7,
-    Attribute? p8,
-    Attribute? p9,
-    Attribute? p10,
-    Attribute? p11,
-    Attribute? p12,
+    StyleAttribute? p1,
+    StyleAttribute? p2,
+    StyleAttribute? p3,
+    StyleAttribute? p4,
+    StyleAttribute? p5,
+    StyleAttribute? p6,
+    StyleAttribute? p7,
+    StyleAttribute? p8,
+    StyleAttribute? p9,
+    StyleAttribute? p10,
+    StyleAttribute? p11,
+    StyleAttribute? p12,
   ]) {
-    final params = <Attribute>[];
+    final params = <StyleAttribute>[];
 
     for (final param in [p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12]) {
       if (param != null) params.add(param);
     }
 
-    return ContextVariantAttribute(this, Mix.fromAttributes(params));
+    return ContextVariantAttribute(this, StyleMix.fromAttributes(params));
   }
 
-  ContextVariant inverseInstance() {
-    return ContextVariant(
+  ContextStyleVariant inverseInstance() {
+    return ContextStyleVariant(
       name,
       shouldApply: _shouldApply,
       inverse: !_inverse,

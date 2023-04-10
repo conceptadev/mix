@@ -6,7 +6,7 @@ import '../../factory/mix_provider_data.dart';
 import 'text.attributes.dart';
 import 'text_directives/text_directives.dart';
 
-class TextDescriptor {
+class StyledTextDescriptor {
   final bool softWrap;
   final TextOverflow overflow;
 
@@ -21,7 +21,7 @@ class TextDescriptor {
   final TextHeightBehavior? textHeightBehavior;
   final List<TextDirective> _directives;
 
-  const TextDescriptor({
+  const StyledTextDescriptor({
     required this.softWrap,
     required this.overflow,
     this.style,
@@ -35,8 +35,8 @@ class TextDescriptor {
     List<TextDirective>? directives,
   }) : _directives = directives ?? const [];
 
-  factory TextDescriptor.fromContext(MixData mix) {
-    final textAttributes = mix.attributesOfType<TextAttributes>();
+  factory StyledTextDescriptor.fromContext(MixData mix) {
+    final textAttributes = mix.attributesOfType<StyledTextAttributes>();
 
     var mergedTextStyleDto = const TextStyleDto();
 
@@ -46,7 +46,7 @@ class TextDescriptor {
       mergedTextStyleDto = mergedTextStyleDto.merge(textStyleDto);
     }
 
-    return TextDescriptor(
+    return StyledTextDescriptor(
       // Need to grab colorscheme from context
       style: mergedTextStyleDto.resolve(mix),
       strutStyle: textAttributes?.strutStyle,
@@ -81,7 +81,7 @@ class TextDescriptor {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is TextDescriptor &&
+    return other is StyledTextDescriptor &&
         other.softWrap == softWrap &&
         other.overflow == overflow &&
         other.style == style &&

@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mix/mix.dart';
+import 'package:mix/src/attributes/shared/shared.attributes.dart';
+import 'package:mix/src/decorators/decorators_utilities.dart';
 import 'package:mix/src/dtos/border/border.dto.dart';
 import 'package:mix/src/dtos/color.dto.dart';
 import 'package:mix/src/dtos/edge_insets/edge_insets.dto.dart';
 import 'package:mix/src/dtos/radius/border_radius.dto.dart';
 import 'package:mix/src/dtos/radius/radius_dto.dart';
-import 'package:mix/src/extensions/mix_extensions.dart';
-import 'package:mix/src/widgets/box/utilities/box_decorators_utilities.dart';
+import 'package:mix/src/extensions/style_mix_ext.dart';
+import 'package:mix/src/factory/style_mix.dart';
+import 'package:mix/src/widgets/container/container.attributes.dart';
+import 'package:mix/src/widgets/container/container.utilities.dart';
+import 'package:mix/src/widgets/container/container.widget.dart';
 
 import '../helpers/testing_utils.dart';
 
@@ -16,12 +20,13 @@ void main() {
     "Mix Box widget",
     () {
       const widgetText = 'This is a Box Widget';
+
       testWidgets(
         'Adds child on widget',
         (tester) async {
           await tester.pumpWidget(
             TestMixWidget(
-              child: Mix().box(
+              child: StyleMix().box(
                 child: const Text(
                   widgetText,
                   key: Key('child-key'),
@@ -31,7 +36,10 @@ void main() {
           );
 
           expect(
-            tester.widget<Box>(find.byType(Box)).child?.key,
+            tester
+                .widget<StyledContainer>(find.byType(StyledContainer))
+                .child
+                ?.key,
             const Key('child-key'),
           );
 
@@ -47,7 +55,7 @@ void main() {
         (tester) async {
           await tester.pumpWidget(
             BoxInsideFlexWidget(
-              Mix(
+              StyleMix(
                 DecoratorUtility.flex(2),
                 DecoratorUtility.flexFit(FlexFit.tight),
               ),
@@ -68,7 +76,7 @@ void main() {
         (tester) async {
           await tester.pumpWidget(
             BoxTestWidget(
-              Mix(
+              StyleMix(
                 DecoratorUtility.rotate(3),
               ),
             ),
@@ -87,7 +95,7 @@ void main() {
         (tester) async {
           await tester.pumpWidget(
             BoxTestWidget(
-              Mix(const SharedWidgetAttributes(visible: false)),
+              StyleMix(const SharedStyleAttributes(visible: false)),
             ),
           );
 
@@ -105,7 +113,7 @@ void main() {
         (tester) async {
           await tester.pumpWidget(
             BoxTestWidget(
-              Mix(DecoratorUtility.aspectRatio(3 / 2)),
+              StyleMix(DecoratorUtility.aspectRatio(3 / 2)),
             ),
           );
 
@@ -122,8 +130,8 @@ void main() {
         (tester) async {
           await tester.pumpWidget(
             BoxTestWidget(
-              Mix(
-                const BoxAttributes(
+              StyleMix(
+                const StyledContainerAttributes(
                   alignment: Alignment.centerRight,
                 ),
               ),
@@ -143,7 +151,7 @@ void main() {
         (tester) async {
           await tester.pumpWidget(
             BoxTestWidget(
-              Mix(
+              StyleMix(
                 DecoratorUtility.opacity(0.5),
               ),
             ),
@@ -162,7 +170,7 @@ void main() {
         (tester) async {
           await tester.pumpWidget(
             BoxTestWidget(
-              Mix(BoxUtilities().backgroundColor(Colors.lime)),
+              StyleMix(ContainerStyleUtilities().backgroundColor(Colors.lime)),
             ),
           );
 
@@ -196,10 +204,11 @@ void main() {
           );
           await tester.pumpWidget(
             BoxTestWidget(
-              Mix(
-                const BoxAttributes(color: ColorDto(Colors.purple)),
-                const BoxAttributes(borderRadius: borderRadiusProps),
-                BoxAttributes(border: borderProps),
+              StyleMix(
+                const StyledContainerAttributes(color: ColorDto(Colors.purple)),
+                const StyledContainerAttributes(
+                    borderRadius: borderRadiusProps),
+                StyledContainerAttributes(border: borderProps),
               ),
             ),
           );
@@ -235,8 +244,8 @@ void main() {
 
           await tester.pumpWidget(
             BoxTestWidget(
-              Mix(
-                BoxAttributes(
+              StyleMix(
+                StyledContainerAttributes(
                   margin: EdgeInsetsDto.from(edgeInsets),
                 ),
               ),
@@ -266,8 +275,8 @@ void main() {
 
           await tester.pumpWidget(
             BoxTestWidget(
-              Mix(
-                BoxAttributes(
+              StyleMix(
+                StyledContainerAttributes(
                   padding: EdgeInsetsDto.from(edgeInsets),
                 ),
               ),
@@ -290,11 +299,11 @@ void main() {
         (tester) async {
           await tester.pumpWidget(
             BoxTestWidget(
-              Mix(
-                const BoxAttributes(maxHeight: 105),
-                const BoxAttributes(minHeight: 55),
-                const BoxAttributes(maxWidth: 155),
-                const BoxAttributes(minWidth: 45),
+              StyleMix(
+                const StyledContainerAttributes(maxHeight: 105),
+                const StyledContainerAttributes(minHeight: 55),
+                const StyledContainerAttributes(maxWidth: 155),
+                const StyledContainerAttributes(minWidth: 45),
               ),
             ),
           );

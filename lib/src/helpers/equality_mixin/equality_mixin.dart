@@ -1,4 +1,4 @@
-import '../extensions.dart';
+import '../../extensions/helper_ext.dart';
 import 'deep_collection_equality.dart';
 
 /// Returns a `hashCode` for [props].

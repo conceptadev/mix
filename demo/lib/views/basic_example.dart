@@ -7,7 +7,7 @@ class BasicExample extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mix = Mix(
+    final mix = StyleMix(
       height(100),
       width(100),
       rounded(10),
@@ -29,9 +29,9 @@ class BasicExample extends HookWidget {
 
     return Pressable(
       onPressed: () => print('tapped'),
-      child: Box(
+      child: StyledContainer(
         mix: mix,
-        child: const TextMix('Gradient Box'),
+        child: const StyledText('Gradient Box'),
       ),
     );
   }

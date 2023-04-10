@@ -6,7 +6,7 @@ class VariantsOrOperator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mix = Mix(
+    final mix = StyleMix(
       padding(20.0),
       (onSmall | onMedium)(
         // Whether it's small OR medium
@@ -17,7 +17,7 @@ class VariantsOrOperator extends StatelessWidget {
     );
 
     return Center(
-      child: Box(
+      child: StyledContainer(
         mix: mix,
       ),
     );

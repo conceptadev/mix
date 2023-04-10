@@ -1,31 +1,30 @@
-
 import 'package:flutter/material.dart';
 
 import '../../factory/mix_provider_data.dart';
 import 'icon.attributes.dart';
 
-class IconDescriptor {
+class StyledIconDescriptor {
   final Color? color;
   final double size;
 
-  const IconDescriptor({
+  const StyledIconDescriptor({
     this.color,
     required this.size,
   });
 
-  factory IconDescriptor.fromContext(MixData mix) {
-    final iconAttributes = mix.attributesOfType<IconAttributes>();
+  factory StyledIconDescriptor.fromContext(MixData mix) {
+    final iconAttributes = mix.attributesOfType<StyledIconAttributes>();
 
-    IconDescriptor props;
+    StyledIconDescriptor props;
 
     if (iconAttributes == null) {
-      props = const IconDescriptor(
+      props = const StyledIconDescriptor(
         size: 24,
       );
     } else {
       final theme = IconTheme.of(mix.resolveToken.context);
 
-      props = IconDescriptor(
+      props = StyledIconDescriptor(
         color: iconAttributes.color?.resolve(mix) ?? theme.color,
         size: iconAttributes.size ?? theme.size ?? 24,
       );
@@ -38,7 +37,7 @@ class IconDescriptor {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is IconDescriptor &&
+    return other is StyledIconDescriptor &&
         other.color == color &&
         other.size == size;
   }

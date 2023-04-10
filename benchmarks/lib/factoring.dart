@@ -13,7 +13,7 @@ void main() {
   final watch = Stopwatch();
 
   {
-    final firstMix = Mix(
+    final firstMix = StyleMix(
       height(100),
       animated(),
       marginY(10),
@@ -28,7 +28,7 @@ void main() {
       ),
     );
 
-    final secondMix = Mix(
+    final secondMix = StyleMix(
       width(100),
       marginX(10),
       shadow(spreadRadius: 100),
@@ -45,7 +45,7 @@ void main() {
 
     watch.start();
 
-    Mix.combine([firstMix, secondMix]);
+    StyleMix.combine([firstMix, secondMix]);
 
     watch.stop();
 
@@ -62,12 +62,12 @@ void main() {
   {
     watch.start();
 
-    Mix.combine([
-      Mix(bgColor(Colors.black)),
-      Mix(textColor(Colors.black)),
-      Mix(margin(20)),
-      Mix(rounded(10)),
-      Mix(borderColor(Colors.black)),
+    StyleMix.combine([
+      StyleMix(bgColor(Colors.black)),
+      StyleMix(textColor(Colors.black)),
+      StyleMix(margin(20)),
+      StyleMix(rounded(10)),
+      StyleMix(borderColor(Colors.black)),
     ]);
 
     watch.stop();
@@ -83,8 +83,8 @@ void main() {
   watch.reset();
 
   {
-    final hasError = Variant('hasError');
-    final mix = Mix(
+    final hasError = StyleVariant('hasError');
+    final mix = StyleMix(
       hasError(
         padding(20),
         bgColor(Color(0xFFFFFF80)),
@@ -109,7 +109,7 @@ void main() {
   watch.reset();
 
   {
-    final mix = Mix(
+    final mix = StyleMix(
       onDisabled(padding(20)),
       onFocus(bgColor(Color(0xFFFFFF80))),
       onHover(textColor(Color(0xFF000000))),

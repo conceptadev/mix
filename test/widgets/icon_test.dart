@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/src/attributes/shared/shared.attributes.dart';
 import 'package:mix/src/dtos/color.dto.dart';
-import 'package:mix/src/extensions/mix_extensions.dart';
-import 'package:mix/src/factory/mix_factory.dart';
+import 'package:mix/src/extensions/style_mix_ext.dart';
+import 'package:mix/src/factory/style_mix.dart';
 import 'package:mix/src/widgets/icon/icon.attributes.dart';
 
 import '../helpers/testing_utils.dart';
@@ -13,7 +13,7 @@ void main() {
     testWidgets('Adds icon on widget', (tester) async {
       await tester.pumpWidget(
         TestMixWidget(
-          child: Mix().icon(Icons.bolt),
+          child: StyleMix().icon(Icons.bolt),
         ),
       );
 
@@ -26,10 +26,10 @@ void main() {
     testWidgets('Adds Icon properties on widget', (tester) async {
       await tester.pumpWidget(
         TestMixWidget(
-          child: Mix(
-            const IconAttributes(color: ColorDto(Colors.greenAccent)),
-            const IconAttributes(size: 23),
-            const SharedWidgetAttributes(textDirection: TextDirection.rtl),
+          child: StyleMix(
+            const StyledIconAttributes(color: ColorDto(Colors.greenAccent)),
+            const StyledIconAttributes(size: 23),
+            const SharedStyleAttributes(textDirection: TextDirection.rtl),
           ).icon(Icons.bolt),
         ),
       );
