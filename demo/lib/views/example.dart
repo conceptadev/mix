@@ -62,23 +62,23 @@ class CustomMixWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final style = StyleMix(
       height(100),
-      animated(),
-      marginY(10),
+      animation(),
+      marginVertical(10),
       elevation(10),
       rounded(10),
-      bgColor(MaterialTokens.colorScheme.primary),
-      textStyle(as: MaterialTokens.textTheme.button),
-      textColor(MaterialTokens.colorScheme.onPrimary),
+      backgroundColor($M3Color.primary),
+      textStyle(as: $M3Text.bodyMedium),
+      textStyle(color: $M3Color.onPrimary),
       onHover(
         elevation(2),
         padding(20),
-        bgColor(MaterialTokens.colorScheme.secondary),
-        textColor(MaterialTokens.colorScheme.onSecondary),
+        backgroundColor($M3Color.secondary),
+        textStyle(color: $M3Color.onSecondary),
       ),
     );
 
     return StyledContainer(
-      mix: style,
+      style: style,
       child: const StyledText('Custom Widget'),
     );
   }

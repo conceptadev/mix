@@ -54,11 +54,11 @@ class MyApp extends StatelessWidget {
                   child: Column(mainAxisSize: MainAxisSize.min, children: [
                     Text(
                       '404',
-                      style: theme.textTheme.headline1,
+                      style: theme.textTheme.headlineLarge,
                     ),
                     Text(
                       'Sorry, we couldn\'t find the page you\'re looking for :/',
-                      style: theme.textTheme.subtitle2,
+                      style: theme.textTheme.titleMedium,
                     ),
                   ]),
                 ),

@@ -2,13 +2,13 @@ import 'package:mix/mix.dart';
 
 StyleMix get button {
   return StyleMix(
-    textStyle(as: MaterialTokens.textTheme.bodyText2),
+    textStyle(as: $M3Text.bodyMedium),
     bold(),
-    fontSize(16.0),
-    animated(),
-    bgColor(MaterialTokens.colorScheme.primary),
+    textStyle(fontSize: 16.0),
+    animation(),
+    backgroundColor($M3Color.primary),
     onHover(
-      bgColor(MaterialTokens.colorScheme.secondary),
+      backgroundColor($M3Color.secondary),
     ),
     paddingHorizontal(15.0),
     paddingVertical(8.0),
