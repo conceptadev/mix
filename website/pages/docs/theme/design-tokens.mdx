@@ -13,14 +13,14 @@ Symbols that are able to reference values within the `BuildContext`.
 
 Design Tokens are made of references (`MixToken`), which can be read by `Mix` at run time. There are a lot of built-in context design tokens already available for usage, from colors to text:
 
-For example, if you want to create a button with the primary color, you can use `bgColor(MaterialTokens.colorScheme.primary)`:
+For example, if you want to create a button with the primary color, you can use `backgroundColor(MaterialTokens.colorScheme.primary)`:
 
 ```dart
 Mix get style => Mix(
   textStyle($body2), // Text theme from Material Theme
-  bgColor(MaterialTokens.colorScheme.primary), // use the primary color from Material Theme
+  backgroundColor(MaterialTokens.colorScheme.primary), // use the primary color from Material Theme
   (hover)(
-    bgColor($secondary), // when hovering, use the secondary color
+    backgroundColor($secondary), // when hovering, use the secondary color
   ),
 );
 
@@ -30,7 +30,7 @@ class MyButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Pressable( // call your button
-      mix: style,
+      style: style,
       child: const TextMix('Details'),
       onPressed: () {},
     );
@@ -95,6 +95,6 @@ Finally, use it a `Mix`:
 
 ```dart
 final myMix = Mix(
-  bgColor($myColor),
+  backgroundColor($myColor),
 );
 ```

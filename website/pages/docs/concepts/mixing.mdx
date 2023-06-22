@@ -1,10 +1,10 @@
 ---
 id: mixing
-title: 'Mixing'
+title: "Mixing"
 ---
 
 import Code from "../../../components/Code.js";
-import {Callout} from "nextra-theme-docs";
+import { Callout } from "nextra-theme-docs";
 
 # Mixing
 
@@ -26,7 +26,7 @@ You can create a Mix by calling it's class and passing positional attributes lik
 final mix = Mix(
   height(100),
   width(100),
-  bgColor(Colors.purple),
+  backgroundColor(Colors.purple),
   rounded(10),
 );
 
@@ -34,13 +34,13 @@ final mix = Mix(
 
 ### `Mix.fromList()`
 
-Allows you to create a Mix from a List of attributes. This has the same behavior but provides the ability to receive a List instead of positional arguments. 
+Allows you to create a Mix from a List of attributes. This has the same behavior but provides the ability to receive a List instead of positional arguments.
 
 ```dart
 final mix = Mix.fromList([
   height(100),
   width(100),
-  bgColor(Colors.purple),
+  backgroundColor(Colors.purple),
   rounded(10),
 ]);
 ```
@@ -49,11 +49,11 @@ It also provides the possibility to use optional attributes using `if/else`:
 
 ```dart
 final mix = Mix.fromList([
-  if (hasError) 
-    bgColor(Colors.red)
+  if (hasError)
+    backgroundColor(Colors.red)
   else
-    bgColor(Colors.green),
-  textColor(Colors.white),
+    backgroundColor(Colors.green),
+  textStyle(color: Colors.white),
   bold(),
 ]);
 ```
@@ -72,7 +72,7 @@ If you have an existing Mix you can add attributes to it by calling the `mix` me
 final newMix = mix.mix(
   height(200),
   width(200),
-  bgColor(Colors.red),
+  backgroundColor(Colors.red),
 );
 ```
 
@@ -84,7 +84,7 @@ Similar to `mix` but allows you to pass a List of attributes.
 final newMix = mix.addAttributes([
   height(200),
   width(200),
-  bgColor(Colors.red),
+  backgroundColor(Colors.red),
 ]);
 ```
 
@@ -113,7 +113,6 @@ Creates a new Mix from a positional arguments of Mixes.
 final thirdMix = Mix.combine(firstMix, secondMix);
 ```
 
-
 ## Utility Helpers
 
 ### Mix.chooser()
@@ -121,8 +120,8 @@ final thirdMix = Mix.combine(firstMix, secondMix);
 Uses a _Mix_ based on a condition
 
 ```dart
-final errorMix = Mix(bgColor(Colors.red));
-final successMix = Mix(bgColor(Colors.green));
+final errorMix = Mix(backgroundColor(Colors.red));
+final successMix = Mix(backgroundColor(Colors.green));
 
 final mix = Mix.chooser(
   condition: hasError,

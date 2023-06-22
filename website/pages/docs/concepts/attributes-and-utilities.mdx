@@ -1,17 +1,15 @@
 ---
-title: 'Attributes and Utilities'
+title: "Attributes and Utilities"
 ---
 
 import Code from "../../../components/Code.js";
-import {Callout} from "nextra-theme-docs";
+import { Callout } from "nextra-theme-docs";
 
 # Attributes
 
 `Attributes` are the foundation for visual characteristics and properties that can be defined and added to a _Mix_.
 
-
 > Everything is an Attribute.
-
 
 **Note: A _Mix_ is an object that contains a collection of `Attributes`.**
 
@@ -51,7 +49,7 @@ final style = Mix(
   upperCase(),
 );
 
-const TextMix('Open', mix: style),
+const TextMix('Open', style: style),
 ```
 
 In the above example, the text `Open` becomes `OPEN`. Currently, Directives only apply to text
@@ -67,6 +65,11 @@ In the above example, the text `Open` becomes `OPEN`. Currently, Directives only
 ## Attributes Catalog
 
 A list of attributes you can use on the built-in mixable widgets
+
+<Callout emoji="⚠️">
+  Shorthand attributes are deprecated and will be removed in the next major
+  version. Please use the longhand attributes instead, second one in the list.
+</Callout>
 
 ### Box
 
@@ -103,19 +106,22 @@ Attributes for `Box`
 
 #### Decoration attributes
 
-- `bgColor`: Background color
+- `bgColor`, `backgroundColor`: Background color
 - `border`: Border - `border(color: Colors.black, width: 0.4)`
-- `borderColor`: Border color
-- `borderWidth`: Border width
-- `borderStyle`: Border style
 - `shadow`: Shadow - `shadow(color: Colors.black, offset: Offset(-1, -2), blurRadius: 3.0)`,
 - `squared`: Squared
 - `rounded`: Rounded - `rounded(12.0)`
 - `elevation`: Elevation - 0, 1, 2, 3, 4, 6, 8, 9, 12, 16, 24
 
+Deprecated decoration attributes:
+
+- `borderColor`: Border color
+- `borderWidth`: Border width
+- `borderStyle`: Border style
+
 #### Other
 
-- `align`: Alignment
+- `align`, `alignment`: Alignment
 
 ### Flex
 
@@ -151,6 +157,8 @@ Attributes for `TextMix`
 - `strutStyle`: Strut style
 
 #### Style
+
+Attributes for `textStyle`
 
 - `textBaseline`: Text baseline
 - `letterSpacing`: Letter spacing
