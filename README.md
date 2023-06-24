@@ -75,14 +75,17 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
 <table>
-  <tr>
-    <td align="center"><a href="https://github.com/leoafarias"><img src="https://avatars.githubusercontent.com/u/435833?v=4?s=50" width="50px;" alt=""/><br /><sub><b>Leo Farias</b></sub></a><br /><a href="#ideas-leoafarias" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/leoafarias/mix/commits?author=leoafarias" title="Code">💻</a> <a href="https://github.com/leoafarias/mix/commits?author=leoafarias" title="Documentation">📖</a></td>
-    <td align="center"><a href="https://github.com/bdlukaa"><img src="https://avatars.githubusercontent.com/u/45696119?v=4?s=50" width="50px;" alt=""/><br /><sub><b>Bruno D'Luka</b></sub></a><br /><a href="https://github.com/leoafarias/mix/commits?author=bdlukaa" title="Code">💻</a></td>
-    <td align="center"><a href="https://github.com/rickbsgu"><img src="https://avatars.githubusercontent.com/u/161474?v=4?s=50" width="50px;" alt=""/><br /><sub><b>Rick Berger</b></sub></a><br /><a href="https://github.com/leoafarias/mix/commits?author=rickbsgu" title="Documentation">📖</a></td>
-    <td align="center"><a href="https://github.com/sbis04"><img src="https://avatars.githubusercontent.com/u/43280874?v=4?s=50" width="50px;" alt=""/><br /><sub><b>Souvik Biswas</b></sub></a><br /><a href="#content-sbis04" title="Content">🖋</a> <a href="#tutorial-sbis04" title="Tutorials">✅</a></td>
-    <td align="center"><a href="https://github.com/tilucasoli"><img src="https://avatars.githubusercontent.com/u/62367544?v=4?s=50" width="50px;" alt=""/><br /><sub><b>Lucas Oliveira</b></sub></a><br /><a href="https://github.com/leoafarias/mix/commits?author=tilucasoli" title="Code">💻</a></td>
-    <td align="center"><a href="https://www.linkedin.com/in/pedrobissonho/"><img src="https://avatars.githubusercontent.com/u/43250625?v=4?s=50" width="50px;" alt=""/><br /><sub><b>Pedro Bissonho</b></sub></a><br /><a href="https://github.com/leoafarias/mix/commits?author=pbissonho" title="Code">💻</a> <a href="#ideas-pbissonho" title="Ideas, Planning, & Feedback">🤔</a></td>
-  </tr>
+  <tbody>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/leoafarias"><img src="https://avatars.githubusercontent.com/u/435833?v=4?s=50" width="50px;" alt="Leo Farias"/><br /><sub><b>Leo Farias</b></sub></a><br /><a href="#ideas-leoafarias" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/conceptadev/mix/commits?author=leoafarias" title="Code">💻</a> <a href="https://github.com/conceptadev/mix/commits?author=leoafarias" title="Documentation">📖</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/bdlukaa"><img src="https://avatars.githubusercontent.com/u/45696119?v=4?s=50" width="50px;" alt="Bruno D'Luka"/><br /><sub><b>Bruno D'Luka</b></sub></a><br /><a href="https://github.com/conceptadev/mix/commits?author=bdlukaa" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/rickbsgu"><img src="https://avatars.githubusercontent.com/u/161474?v=4?s=50" width="50px;" alt="Rick Berger"/><br /><sub><b>Rick Berger</b></sub></a><br /><a href="https://github.com/conceptadev/mix/commits?author=rickbsgu" title="Documentation">📖</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/sbis04"><img src="https://avatars.githubusercontent.com/u/43280874?v=4?s=50" width="50px;" alt="Souvik Biswas"/><br /><sub><b>Souvik Biswas</b></sub></a><br /><a href="#content-sbis04" title="Content">🖋</a> <a href="#tutorial-sbis04" title="Tutorials">✅</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/tilucasoli"><img src="https://avatars.githubusercontent.com/u/62367544?v=4?s=50" width="50px;" alt="Lucas Oliveira"/><br /><sub><b>Lucas Oliveira</b></sub></a><br /><a href="https://github.com/conceptadev/mix/commits?author=tilucasoli" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://www.linkedin.com/in/pedrobissonho/"><img src="https://avatars.githubusercontent.com/u/43250625?v=4?s=50" width="50px;" alt="Pedro Bissonho"/><br /><sub><b>Pedro Bissonho</b></sub></a><br /><a href="https://github.com/conceptadev/mix/commits?author=pbissonho" title="Code">💻</a> <a href="#ideas-pbissonho" title="Ideas, Planning, & Feedback">🤔</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://webstandapp.com.br"><img src="https://avatars.githubusercontent.com/u/2068045?v=4?s=50" width="50px;" alt="Marco A. Braghim"/><br /><sub><b>Marco A. Braghim</b></sub></a><br /><a href="https://github.com/conceptadev/mix/commits?author=marcobraghim" title="Code">💻</a></td>
+    </tr>
+  </tbody>
 </table>
 
 <!-- markdownlint-restore -->
