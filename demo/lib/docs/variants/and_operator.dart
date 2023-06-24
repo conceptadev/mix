@@ -8,19 +8,21 @@ class VariantsAndOperator extends StatelessWidget {
   Widget build(BuildContext context) {
     final mix = StyleMix(
       padding(20.0),
-      textColor(Colors.white),
+      textStyle(color: Colors.white),
       (onHover & onEnabled)(
         // When it's hovering AND pressing
-        textColor(Colors.black),
+        textStyle(color: Colors.black),
         bold(),
       ),
     );
 
     return Center(
       child: Pressable(
-        onPressed: () {},
+        onPressed: () {
+          return;
+        },
         child: StyledContainer(
-          mix: mix,
+          style: mix,
           child: const StyledText('HOVER THIS TO CHANGE THE TEXT COLOR'),
         ),
       ),

@@ -21,9 +21,9 @@ void main() async {
 
     final variant = StyleVariant('light');
     StyleMix.fromValues(StyleMixData.create([
-      bgColor(Color(0xFFFFFFFFF)), // directive
-      variant(textColor(Color(0xFF000000))), // variant
-      onHover(textColor(Color(0xFF645876))), // context
+      backgroundColor(Color(0xFFFFFFFFF)), // directive
+      variant(textStyle(backgroundColor: Color(0xFF000000))), // variant
+      onHover(textStyle(color: Color(0xFF645876))), // context
       scale(2.0), // decorator
     ]));
 

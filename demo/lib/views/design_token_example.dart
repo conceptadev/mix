@@ -6,9 +6,9 @@ StyleMix get mix => StyleMix(
       width(100),
       rounded(10),
       elevation(2),
-      bgColor(MaterialTokens.colorScheme.surface),
-      align(Alignment.center),
-      textColor(MaterialTokens.colorScheme.onSurface),
+      backgroundColor($M3Color.surface),
+      alignment(Alignment.center),
+      textStyle(color: $M3Color.onSurface),
     );
 
 class DesignTokenExample extends StatelessWidget {
@@ -17,7 +17,7 @@ class DesignTokenExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StyledContainer(
-      mix: mix,
+      style: mix,
       child: const StyledText('Surface'),
     );
   }

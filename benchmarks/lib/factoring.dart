@@ -15,31 +15,30 @@ void main() {
   {
     final firstMix = StyleMix(
       height(100),
-      animated(),
-      marginY(10),
+      animation(),
+      marginVertical(10),
       rounded(10),
-      bgColor(Color(0xFF00FF80)),
-      textStyle(as: TextStyle()),
-      textColor(Color(0xFFFFFFFF)),
+      backgroundColor(Color(0xFF00FF80)),
+      textStyle(as: TextStyle(), color: Color(0xFFFFFFFF)),
       onHover(
         padding(20),
-        bgColor(Color(0xFFFFFF80)),
-        textColor(Color(0xFF000000)),
+        backgroundColor(Color(0xFFFFFF80)),
+        textStyle(color: Color(0xFF000000)),
       ),
     );
 
     final secondMix = StyleMix(
       width(100),
-      marginX(10),
+      marginHorizontal(10),
       shadow(spreadRadius: 100),
       rounded(100),
-      bgColor(Color(0xFF00FF80)),
-      borderColor(Color(0xFF984F9B)),
+      backgroundColor(Color(0xFF00FF80)),
+      border(color: Color(0xFF984F9B)),
       onPress(
         shadow(spreadRadius: 2),
         margin(20),
-        bgColor(Color(0xFFFFFF80)),
-        textColor(Color(0xFF000000)),
+        backgroundColor(Color(0xFFFFFF80)),
+        textStyle(color: Color(0xFF000000)),
       ),
     );
 
@@ -63,11 +62,11 @@ void main() {
     watch.start();
 
     StyleMix.combine([
-      StyleMix(bgColor(Colors.black)),
-      StyleMix(textColor(Colors.black)),
+      StyleMix(backgroundColor(Colors.black)),
+      StyleMix(textStyle(color: Colors.black)),
       StyleMix(margin(20)),
       StyleMix(rounded(10)),
-      StyleMix(borderColor(Colors.black)),
+      StyleMix(border(color: Colors.black)),
     ]);
 
     watch.stop();
@@ -87,8 +86,8 @@ void main() {
     final mix = StyleMix(
       hasError(
         padding(20),
-        bgColor(Color(0xFFFFFF80)),
-        textColor(Color(0xFF000000)),
+        backgroundColor(Color(0xFFFFFF80)),
+        textStyle(color: Color(0xFF000000)),
       ),
     );
 
@@ -111,16 +110,16 @@ void main() {
   {
     final mix = StyleMix(
       onDisabled(padding(20)),
-      onFocus(bgColor(Color(0xFFFFFF80))),
-      onHover(textColor(Color(0xFF000000))),
-      onPress(textBgColor(Color(0xFF964234))),
-      onDark(textHeight(10)),
-      onLight(textShadow(color: Color(0xFF000000))),
+      onFocus(backgroundColor(Color(0xFFFFFF80))),
+      onHover(textStyle(color: Color(0xFF000000))),
+      onPress(textStyle(backgroundColor: Color(0xFF964234))),
+      onDark(textStyle(height: 10)),
+      onLight(textStyle(shadow: Shadow(color: Color(0xFF000000)))),
     );
 
     watch.start();
 
-    mix.withManyVariants([
+    mix.selectVariants([
       onDisabled,
       onFocus,
       onHover,
