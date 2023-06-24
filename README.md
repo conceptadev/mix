@@ -85,6 +85,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href="https://www.linkedin.com/in/pedrobissonho/"><img src="https://avatars.githubusercontent.com/u/43250625?v=4?s=50" width="50px;" alt="Pedro Bissonho"/><br /><sub><b>Pedro Bissonho</b></sub></a><br /><a href="https://github.com/conceptadev/mix/commits?author=pbissonho" title="Code">💻</a> <a href="#ideas-pbissonho" title="Ideas, Planning, & Feedback">🤔</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://webstandapp.com.br"><img src="https://avatars.githubusercontent.com/u/2068045?v=4?s=50" width="50px;" alt="Marco A. Braghim"/><br /><sub><b>Marco A. Braghim</b></sub></a><br /><a href="https://github.com/conceptadev/mix/commits?author=marcobraghim" title="Code">💻</a></td>
     </tr>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="http://eduardom.dev"><img src="https://avatars.githubusercontent.com/u/29983481?v=4?s=50" width="50px;" alt="Eduardo M."/><br /><sub><b>Eduardo M.</b></sub></a><br /><a href="https://github.com/conceptadev/mix/commits?author=aguilaair" title="Code">💻</a></td>
+    </tr>
   </tbody>
 </table>
 
