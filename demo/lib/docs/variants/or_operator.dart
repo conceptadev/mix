@@ -12,13 +12,13 @@ class VariantsOrOperator extends StatelessWidget {
         // Whether it's small OR medium
         width(300),
         height(400),
-        bgColor(Colors.white),
+        backgroundColor(Colors.white),
       ),
     );
 
     return Center(
       child: StyledContainer(
-        mix: mix,
+        style: mix,
       ),
     );
   }
