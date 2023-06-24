@@ -20,7 +20,7 @@ To facilitate interacting with `Attributes`, we use `Utility` functions. These f
 Consider the following example:
 
 ```dart
-Mix(height(100));
+StyleMix(height(100));
 ```
 
 This defines a _Mix_ with the box height attribute of _100_.
@@ -29,13 +29,13 @@ The function `height()` is a `Utility` that allows us to compose an `Attribute`.
 With that in mind you can think that
 
 ```dart
-Mix(height(100))
+StyleMix(height(100))
 ```
 
 is equivalent to
 
 ```dart
-Mix(BoxAttribute(height: 100))
+StyleMix(BoxAttribute(height: 100))
 ```
 
 As you can see, `Utilities` are not required for composing _Mixes_. However, they make a cleaner API possible, and an overall better development experience.
@@ -45,7 +45,7 @@ As you can see, `Utilities` are not required for composing _Mixes_. However, the
 Directives are _Attributes_ that define a transformation that needs to happen within the widget during build time. A great example of this would be the `TextDirective` which allow to define the text case, for your `TextMix` widget.
 
 ```dart highlight="2"
-final style = Mix(
+final style = StyleMix(
   upperCase(),
 );
 
@@ -156,9 +156,41 @@ Attributes for `TextMix`
 - `textScaleFactor`: Text scale factor
 - `strutStyle`: Strut style
 
+#### textStyle
+
+- `inherit`: Whether this style is merged with the parent style.
+- `color`: The color to use when painting the text.
+- `backgroundColor`: The background color to use when painting the text.
+- `fontSize`: The size of glyphs (in logical pixels) to use when painting the text.
+- `fontWeight`: The typeface thickness to use when painting the text.
+- `fontStyle`: The typeface variant to use when drawing the letters (e.g., italics).
+- `letterSpacing`: The amount of space (in logical pixels) to add between each letter.
+- `wordSpacing`: The amount of space (in logical pixels) to add between each word.
+- `textBaseline`: The baseline to use when drawing the text.
+- `height`: The height of each line (in logical pixels).
+- `leadingDistribution`: The distribution of leading between lines.
+- `locale`: The locale used to select region-specific glyphs.
+- `foreground`: The paint to use when drawing the text foreground.
+- `background`: The paint to use when drawing the text background.
+- `shadows`: The list of shadows cast by the text.
+- `fontFeatures`: The list of font features to use when drawing the text.
+- `fontVariations`: The list of font variations to use when drawing the text.
+- `decoration`: The decoration to apply to the text (e.g., underline, strike-through).
+- `decorationColor`: The color to use when painting the text decoration.
+- `decorationStyle`: The style to use when painting the text decoration.
+- `decorationThickness`: The thickness of the text decoration stroke (in logical pixels).
+- `debugLabel`: The debug label to use for this text style.
+- `fontFamily`: The name of the font family to use when drawing the text.
+- `fontFamilyFallback`: The list of fallback font families to use if the primary font is not available.
+- `package`: The package that the font family is in.
+- `overflow`: How visual overflow should be handled.
+
 #### Style
 
-Attributes for `textStyle`
+<callout emoji="⚠️">
+  Text style attributes are deprecated and will be removed in the next major
+  version. Please use textStyle instead.
+</callout>
 
 - `textBaseline`: Text baseline
 - `letterSpacing`: Letter spacing

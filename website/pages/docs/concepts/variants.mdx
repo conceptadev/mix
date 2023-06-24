@@ -15,7 +15,7 @@ In the following example `hover()` is a `Variant` that will be applied when a `P
 triggers the hover state. The `backgroundColor` and `textColor` properties will be overridden with the new value when the variant applies
 
 ```dart highlight="10-13"
-final style = Mix(
+final style = StyleMix(
   backgroundColor(MaterialTokens.colorScheme.primary),
   textStyle(color: $onPrimary),
   hover(
@@ -38,7 +38,7 @@ Widgets.
 To use a variant, call it on a _Mix_
 
 ```dart
-final mix = Mix(
+final mix = StyleMix(
   dark(
     textStyle(color: Colors.white),
   ),
@@ -55,7 +55,7 @@ The operators `|` and `&` can be used to add conditions to your mix:
 - `|`: whether one of the variants apply
 
 ```dart highlight="3-7"
-final mix = Mix(
+final mix = StyleMix(
   padding(20.0),
   (small | medium)( // Whether it's small OR medium
     width(300),
@@ -68,7 +68,7 @@ final mix = Mix(
 - `&`: when all of the variants apply
 
 ```dart highlight="3-6"
-final mix = Mix(
+final mix = StyleMix(
   padding(20.0),
   (hover & press)( // When it's hovering AND pressing
     textStyle(color: Colors.black),
@@ -81,7 +81,7 @@ The `not` operator can also be called to execute the variant content only when t
 variant is not called. For example:
 
 ```dart highlight="2-4"
-final mix = Mix(
+final mix = StyleMix(
   (not(disabled))(
     scale(1.2),
   ),
@@ -95,7 +95,7 @@ The `when` variant lets you concisely evaluate expressions within a mix or a wit
 ```dart highlight="5-7"
 bool hasError = true;
 
-final mix = Mix(
+final mix = StyleMix(
   backgroundColor(Colors.green),
   when(hasError)(
     backgroundColor(Colors.red),
@@ -109,7 +109,7 @@ To ensure specific control over the flow, you can use the else statement by addi
 ```dart highlight="4-8"
 bool hasError = true;
 
-final mix = Mix(
+final mix = StyleMix(
   when(hasError)(
     backgroundColor(Colors.red),
   )(
@@ -178,7 +178,7 @@ For widgets such as Dialogs, Cards and Modals, it's good to have titles and cont
 - `paragraph()`: Applies attributes when the `TextMix` is marked as paragraph
 
 ```dart highlight="2-7"
-final mix = Mix(
+final mix = StyleMix(
   title(
     titleCase(), // Makes the title uppercase
     font(
@@ -206,7 +206,7 @@ way.
 ```dart highlight="6-10"
 const outlined = Variant('outlined');
 
-final mix = Mix(
+final mix = StyleMix(
   backgroundColor(Colors.black),
   textStyle(color: Colors.white),
   outlined(

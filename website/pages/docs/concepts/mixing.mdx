@@ -17,13 +17,13 @@ You will compose visual attributes using **Mixes**. This allows you to compose, 
   overriding them. Attributes will be prioritized from right to left.
 </Callout>
 
-### `Mix()`
+### `StyleMix()`
 
 You can create a Mix by calling it's class and passing positional attributes like so
 
 ```dart
 
-final mix = Mix(
+final mix = StyleMix(
   height(100),
   width(100),
   backgroundColor(Colors.purple),
@@ -120,8 +120,8 @@ final thirdMix = Mix.combine(firstMix, secondMix);
 Uses a _Mix_ based on a condition
 
 ```dart
-final errorMix = Mix(backgroundColor(Colors.red));
-final successMix = Mix(backgroundColor(Colors.green));
+final errorMix = StyleMix(backgroundColor(Colors.red));
+final successMix = StyleMix(backgroundColor(Colors.green));
 
 final mix = Mix.chooser(
   condition: hasError,

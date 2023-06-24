@@ -1,6 +1,6 @@
 ---
 id: context-references
-title: 'Design Tokens'
+title: "Design Tokens"
 ---
 
 # Design Tokens
@@ -16,7 +16,7 @@ Design Tokens are made of references (`MixToken`), which can be read by `Mix` at
 For example, if you want to create a button with the primary color, you can use `backgroundColor(MaterialTokens.colorScheme.primary)`:
 
 ```dart
-Mix get style => Mix(
+Mix get style => StyleMix(
   textStyle($body2), // Text theme from Material Theme
   backgroundColor(MaterialTokens.colorScheme.primary), // use the primary color from Material Theme
   (hover)(
@@ -45,12 +45,14 @@ The built-in context references you can use on your app. They are based on the m
 ### Text Theme
 
 **Material 2**
+
 - $h1, $h2, $h3, $h4, $h5, $h6
 - $subtitle1, $subtitle2
 - $body1, $body1
 - $caption, $button, $overline
 
 **Material 3**
+
 - $displaySmall, $displayMedium, $displayLarge
 - $headlineSmall, $headlineMedium, $headlineLarge
 - $titleSmall, $titleMedium, $titleLarge
@@ -61,7 +63,7 @@ The built-in context references you can use on your app. They are based on the m
 
 - MaterialTokens.colorScheme.primary, $secondary, $surface, $background, $error
 - $onPrimary, $onSecondary, $onSurface, $onBackground, $onError
-- colorScheme: returns all the colors above 
+- colorScheme: returns all the colors above
 
 ## Creating New Design Tokens
 
@@ -94,7 +96,7 @@ MixTheme(
 Finally, use it a `Mix`:
 
 ```dart
-final myMix = Mix(
+final myMix = StyleMix(
   backgroundColor($myColor),
 );
 ```
