@@ -189,7 +189,7 @@ Attributes for `TextMix`
 
 <callout emoji="⚠️">
   Text style attributes are deprecated and will be removed in the next major
-  version. Please use textStyle instead.
+  version. Please use `textStyle` instead.
 </callout>
 
 - `textBaseline`: Text baseline
@@ -218,5 +218,10 @@ Attributes for `TextMix`
 - `debugLabel`: Debug label
 
 ### Other
+
+<callout emoji="⚠️">
+  `apply` is deprecated and will be removed in the next major version. Please
+  use `style.merge(otherStyle)`, instead
+</callout>
 
 - `apply`: Apply a mix into another (See [mixing](/docs/core-concepts/mixing))

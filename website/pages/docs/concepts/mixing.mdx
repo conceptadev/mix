@@ -92,17 +92,23 @@ final newMix = mix.addAttributes([
 
 Combining Mixes is a critical part of composing visual attributes. There are a few methods, and constructors that allow for easy ways to combine them.
 
-#### `.apply(Mix)` and `.applyMaybe(Mix?)`
+#### `.apply(Mix)` and `.applyMaybe(Mix?)` (Deprecated)
 
 ```dart
 final thirdMix = firstMix.apply(secondMix);
 ```
 
-If you are receiving a nullable Mix as a parameter there is a simple helper method to keep your code clean: `applyMaybe`
+If you are receiving a nullable Mix as a parameter there is a simple helper method to keep your code clean: `applyNullable`
 
 ```dart
 Mix? secondMix;
-final thirdMix = firstMix.applyMaybe(secondMix);
+final thirdMix = firstMix.applyNullable(secondMix);
+```
+
+### `.merge(Mix)`
+
+```dart
+final thirdMix = firstMix.merge(secondMix);
 ```
 
 #### Mix.combine()
