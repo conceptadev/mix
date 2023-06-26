@@ -1,6 +1,6 @@
 ---
 id: mixable-widgets
-title: 'Mixable widgets'
+title: "Mixable widgets"
 ---
 
 import Code from "../../../components/Code.js";
@@ -18,7 +18,7 @@ The fundamental widget primitive defined in _Mix_ is a `Box`. A `Box` can contai
 That means that this:
 
 ```dart
-Box(mix: Mix(height(100)));
+Box(style: StyleMix(height(100)));
 ```
 
 will become the following:
@@ -30,7 +30,7 @@ Container(height: 100);
 You can think of `Utilities` as shortcuts to defining visual properties. Thus:
 
 ```dart
-Box(mix: Mix(rounded(100)));
+Box(style: StyleMix(rounded(100)));
 ```
 
 will become the following:
@@ -53,12 +53,12 @@ Built-in mixable widgets that you can use right-away in your app.
 
 ```dart
 Box(
-  mix: Mix(
+  style: StyleMix(
     height(100),
     width(300),
     rounded(15),
-    bgColor(Colors.amber),
-    align(Alignment.center),
+    backgroundColor(Colors.amber),
+    alignment(Alignment.center),
     elevation(4), // can be 0, 1, 2, 3, 4, 6, 8, 9, 12, 16, 24
   ),
 ),
@@ -70,7 +70,7 @@ A flex box is a widget that takes a list of children and displays them according
 
 ```dart
 FlexBox(
-  mix: Mix(gap(6.0)),
+  style: StyleMix(gap(6.0)),
   axis: Axis.horizontal,
   children: [
     IconMix(icon: Icons.search),
@@ -85,7 +85,7 @@ FlexBox(
 
 ```dart
 Hbox(
-  mix: Mix(gap(6)),
+  style: StyleMix(gap(6)),
   children: [
     Image.fromAsset('assets/image.png'),
     VBox(
@@ -104,7 +104,7 @@ It's capable of displaying icons and inherit data from parent mixes
 
 ```dart
 IconMix(
-  mix: Mix(
+  style: StyleMix(
     iconSize(30),
     iconColor(Colors.grey),
   ),
@@ -116,10 +116,10 @@ IconMix(
 
 A `Pressable` is a mixable widget that can provide the following information for its descendants:
 
-* hovering
-* pressing
-* disabled
-* focused
+- hovering
+- pressing
+- disabled
+- focused
 
 Here's how you can create a text button with it:
 
@@ -127,16 +127,16 @@ Here's how you can create a text button with it:
 Pressable(
   onPressed: () => debugPrint('my awesome button was pressed'),
   child: Box(
-    mix: Mix(
+    style: StyleMix(
       // when nothing's happening, bg color is the default grey
-      bgColor(Colors.grey),
+      backgroundColor(Colors.grey),
       (hover)(
         // when hovering, bg color is a lighter grey
-        bgColor(Colors.grey.shade300),
+        backgroundColor(Colors.grey.shade300),
       ),
       (press)(
         // when pressing, bg color is a darker grey
-        bgColor(Colors.grey.shade600),
+        backgroundColor(Colors.grey.shade600),
       ),
       rounded(8),
       padding(10),
@@ -144,12 +144,11 @@ Pressable(
     ),
     child: TextMix(
       'PRESS ME',
-      mix: Mix(
-        fontSize(18.0),
+      style: StyleMix(
         (disabled)(
-          textColor(Colors.grey.shade900),
+          textStyle(color: Colors.grey.shade900),
         ),
-        textColor(Colors.black),
+        textStyle(color: Colors.black, fontSize: 18.0),
         bold(),
       ),
     ),
@@ -164,13 +163,17 @@ It's capable of rendering text and inherit data from parent mixes
 ```dart
 TextMix(
   'Mix is AWESOME!'
-  mix: Mix(
-    fontSize(16.0),
-    textColor(Colors.black),
-    bold(),
-    textShadow(
-      offset: const Offset(2.0, 2.0),
+  style: StyleMix(
+    textStyle(
+      color: Colors.black,
+      fontSize: 16.0,
+      shadow: Shadow(
+        color: Colors.black.withOpacity(0.2),
+        offset: const Offset(2.0, 2.0),
+        blurRadius: 1,
+      ),
     ),
+    bold(),
   ),
 ),
 ```

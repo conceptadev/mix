@@ -1,8 +1,7 @@
 ---
 id: getting-started
-title: 'Getting started'
+title: "Getting started"
 ---
-
 
 ## With and without Mix
 
@@ -12,30 +11,30 @@ Let's go ahead and take a look at the code. Don't worry about understanding each
 
 ### With Mix
 
-```dart 
+```dart
 class CustomMixWidget extends StatelessWidget {
   const CustomMixWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final style = Mix(
+    final style = StyleMix(
       height(100),
       animated(),
       marginY(10),
       elevation(10),
       rounded(10),
-      bgColor(MaterialTokens.colorScheme.primary),
+      backgroundColor(MaterialTokens.colorScheme.primary),
       textStyle($button),
-      textColor($onPrimary),
+      textStyle(color: $onPrimary),
       hover(
         elevation(2),
         padding(20),
-        bgColor($secondary),
-        textColor($onSecondary),
+        backgroundColor($secondary),
+        textStyle(color: $onSecondary),
       ),
     );
     return Box(
-      mix: style,
+      style: style,
       child: const TextMix('Custom Widget'),
     );
   }

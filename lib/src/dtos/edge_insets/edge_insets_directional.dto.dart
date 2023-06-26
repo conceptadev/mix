@@ -53,23 +53,20 @@ class EdgeInsetsDirectionalDto
     );
   }
 
-  @override
   double? get _top => top;
 
-  @override
   double? get _bottom => bottom;
 
-  @override
+  /*
   double? get _left => null;
 
-  @override
   double? get _right => null;
+  */
 
-  @override
   double? get _start => start;
 
-  @override
   double? get _end => end;
+  
 
   EdgeInsetsDirectionalDto copyWith({
     double? top,

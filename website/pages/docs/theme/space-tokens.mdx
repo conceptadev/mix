@@ -1,6 +1,6 @@
 ---
 id: space-tokens
-title: 'Space Tokens'
+title: "Space Tokens"
 ---
 
 # Space Tokens
@@ -12,7 +12,7 @@ When using spacing in your `Mix`, you'll often use the `padding` and `margin` at
 Each card above has a margin of 16px horizontally, which can be achieved like the following:
 
 ```dart
-final mix = Mix(
+final mix = StyleMix(
   marginHorizontal.large,
 );
 ```
@@ -20,6 +20,7 @@ final mix = Mix(
 ## Acessing the tokens globally
 
 The space tokens can be accessed by using one of the following tokens.
+
 - `$xsmall`
 - `$small`
 - `$medium`
@@ -28,8 +29,8 @@ The space tokens can be accessed by using one of the following tokens.
 - `$xxlarge`
 
 ```dart
-final mix = Mix(
-  padding($medium), 
+final mix = StyleMix(
+  padding($medium),
 );
 ```
 

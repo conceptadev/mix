@@ -44,7 +44,8 @@ class ContainerStyleUtilities {
 
   StyledContainerAttributes marginInsets(EdgeInsetsGeometry insets) {
     return StyledContainerAttributes(
-        margin: EdgeInsetsGeometryDto.from(insets));
+      margin: EdgeInsetsGeometryDto.from(insets),
+    );
   }
 
   StyledContainerAttributes marginSymmetric({
@@ -147,7 +148,7 @@ class ContainerStyleUtilities {
 
   StyledContainerAttributes paddingInsets(EdgeInsetsGeometry insets) {
     return StyledContainerAttributes(
-        padding: EdgeInsetsGeometryDto.from(insets));
+        padding: EdgeInsetsGeometryDto.from(insets),);
   }
 
   StyledContainerAttributes paddingTop(double value) {
@@ -160,7 +161,8 @@ class ContainerStyleUtilities {
 
   StyledContainerAttributes paddingBottom(double value) {
     return StyledContainerAttributes(
-        padding: EdgeInsetsDto.only(bottom: value));
+      padding: EdgeInsetsDto.only(bottom: value),
+    );
   }
 
   StyledContainerAttributes paddingLeft(double value) {

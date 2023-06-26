@@ -60,6 +60,5 @@ class ContextStyleVariant extends StyleVariant {
     );
   }
 
-  @override
   get props => [name, _inverse, _shouldApply];
 }
