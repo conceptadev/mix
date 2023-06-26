@@ -14,6 +14,14 @@ const screens = [
   Center(child: BasicExample()),
   Center(child: DesignTokenExample()),
   ButtonsPreview(),
+  AboutListTile(
+    icon: Icon(CommunityMaterialIcons.information_outline),
+    applicationName: 'Mix Gallery',
+    applicationVersion: '1.0.0',
+    aboutBoxChildren: [
+      Text('Mix Gallery is a demo app for Mix.'),
+    ],
+  ),
 ];
 
 class AppShell extends HookConsumerWidget {

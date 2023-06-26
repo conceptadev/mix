@@ -24,11 +24,13 @@ class ButtonsPreview extends StatelessWidget {
           Pressable(
             child: StyledContainer(
               style: button,
-              child: const StyledText('Details'),
+              child: StyledText(
+                'Details',
+                style: button,
+              ),
             ),
             onPressed: () {
               return;
-            
             },
           ),
         ],
