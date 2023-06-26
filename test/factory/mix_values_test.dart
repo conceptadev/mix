@@ -80,6 +80,8 @@ void main() {
       expect(mixValues.contextVariants.length, equals(2));
     });
 
-    test('Merge Mix values', () {});
+    test('Merge Mix values', () {
+      // TODO: Test merging
+    });
   });
 }

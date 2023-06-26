@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 class Logger {
   Logger(this.tag);
 
@@ -10,10 +12,10 @@ class Logger {
 
   void stop() {
     stopwatch.stop();
-    print('$tag: ${stopwatch.elapsedMicroseconds} microseconds');
+    debugPrint('$tag: ${stopwatch.elapsedMicroseconds} microseconds');
   }
 
   void debug(String message) {
-    print('$tag: $message');
+    debugPrint('$tag: $message');
   }
 }

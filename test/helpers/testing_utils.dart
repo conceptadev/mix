@@ -59,7 +59,7 @@ class BoxInsideFlexWidget extends StatelessWidget {
       child: Column(
         children: [
           StyledContainer(
-            mix: mix,
+            style: mix,
             child: FillWidget,
           ),
         ],
@@ -82,7 +82,7 @@ class BoxTestWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return TestMixWidget(
       child: StyledContainer(
-        mix: mix,
+        style: mix,
         child: const SizedBox(
           height: 25,
           width: 25,
