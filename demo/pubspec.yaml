@@ -17,7 +17,7 @@ dependencies:
   hooks_riverpod: ^2.1.1
 
   adaptive_navigation: ^0.0.7
-  google_fonts: ^3.0.1
+  google_fonts: ^5.1.0
   desktop_window: ^0.4.0
   community_material_icon: ^5.9.55
 
@@ -25,7 +25,6 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.1
-  dart_code_metrics: ^4.21.2
   flutter_launcher_icons: ^0.10.0
   flutter_native_splash: ^2.2.11
 

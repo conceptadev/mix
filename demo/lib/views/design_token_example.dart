@@ -18,7 +18,10 @@ class DesignTokenExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return StyledContainer(
       style: mix,
-      child: const StyledText('Surface'),
+      child: StyledText(
+        'Surface',
+        style: mix,
+      ),
     );
   }
 }

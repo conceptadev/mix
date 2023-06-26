@@ -33,7 +33,10 @@ class BasicExample extends HookWidget {
       },
       child: StyledContainer(
         style: mix,
-        child: const StyledText('Gradient Box'),
+        child: StyledText(
+          'Gradient Box',
+          style: mix,
+        ),
       ),
     );
   }
