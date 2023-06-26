@@ -5,7 +5,6 @@ ThemeData _customThemeBuilder(ThemeData theme) {
   return theme
       .copyWith(
         textTheme: GoogleFonts.interTextTheme(theme.textTheme),
-        toggleableActiveColor: theme.colorScheme.secondary,
         navigationRailTheme: NavigationRailThemeData(
           backgroundColor: theme.colorScheme.surface.withAlpha(50),
           unselectedIconTheme: theme.iconTheme.copyWith(

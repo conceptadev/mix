@@ -9,19 +9,13 @@ import 'providers/dark_mode.provider.dart';
 import 'views/basic_example.dart';
 import 'views/button_preview.dart';
 import 'views/design_token_example.dart';
+import 'views/variants.dart';
 
 const screens = [
   Center(child: BasicExample()),
   Center(child: DesignTokenExample()),
   ButtonsPreview(),
-  AboutListTile(
-    icon: Icon(CommunityMaterialIcons.information_outline),
-    applicationName: 'Mix Gallery',
-    applicationVersion: '1.0.0',
-    aboutBoxChildren: [
-      Text('Mix Gallery is a demo app for Mix.'),
-    ],
-  ),
+  Center(child: VariantsExample()),
 ];
 
 class AppShell extends HookConsumerWidget {

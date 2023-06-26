@@ -7,7 +7,7 @@ class BasicExample extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mix = StyleMix(
+    final mix = StyleMix.fromAttributes([
       height(100),
       width(100),
       rounded(10),
@@ -25,19 +25,81 @@ class BasicExample extends HookWidget {
       onLongPress(
         backgroundColor(Colors.green),
       ),
+    ]);
+
+    final onSurfaceMix = StyleMix(
+      textStyle(color: Colors.black),
     );
 
-    return Pressable(
-      onPressed: () {
-        return;
-      },
-      child: StyledContainer(
-        style: mix,
-        child: StyledText(
-          'Gradient Box',
-          style: mix,
+    return GridView.extent(
+      maxCrossAxisExtent: 200,
+      padding: const EdgeInsets.all(10),
+      crossAxisSpacing: 10,
+      mainAxisSpacing: 10,
+      children: [
+        Pressable(
+          onPressed: () {
+            return;
+          },
+          child: StyledContainer(
+            style: mix,
+            child: StyledText(
+              'Pressable StyledContainer',
+              style: mix,
+            ),
+          ),
         ),
-      ),
+        Box(
+          style: mix,
+          child: StyledText(
+            'Box',
+            style: mix,
+          ),
+        ),
+        StyledFlex(
+          style: mix,
+          direction: Axis.vertical,
+          children: [
+            StyledText(
+              'This is such',
+              style: onSurfaceMix,
+            ),
+            StyledText(
+              'a cool flex!',
+              style: onSurfaceMix,
+            ),
+            StyledText(
+              'It\'s snowing!',
+              style: onSurfaceMix,
+            ),
+            StyledFlex(
+              direction: Axis.horizontal,
+              style: mix.merge(StyleMix(
+                mainAxisAlignment(MainAxisAlignment.center),
+              )),
+              children: [
+                StyledIcon(
+                  Icons.ac_unit,
+                  style: StyleMix(),
+                ),
+                StyledIcon(
+                  Icons.ac_unit,
+                  style: StyleMix(),
+                ),
+                StyleMix().icon(
+                  Icons.ac_unit,
+                ),
+                StyleMix().icon(
+                  Icons.ac_unit,
+                ),
+              ],
+            ),
+            StyledContainer(
+              style: mix,
+            ),
+          ],
+        ),
+      ],
     );
   }
 }
