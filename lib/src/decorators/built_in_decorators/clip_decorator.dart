@@ -12,12 +12,12 @@ enum ClipDecoratorType {
 }
 
 class ClipDecorator extends WidgetDecorator<ClipDecorator> {
-  final BorderRadius? borderRadius;
+  final BorderRadius borderRadius;
   final ClipDecoratorType clipType;
 
   const ClipDecorator(
     this.clipType, {
-    this.borderRadius,
+    this.borderRadius = BorderRadius.zero,
     super.key,
   });
 
@@ -51,7 +51,7 @@ class ClipDecorator extends WidgetDecorator<ClipDecorator> {
           key: key,
           duration: common.animationDuration,
           curve: common.animationCurve,
-          borderRadius: borderRadius ?? BorderRadius.circular(0),
+          borderRadius: borderRadius,
           child: child,
         );
       } else {
