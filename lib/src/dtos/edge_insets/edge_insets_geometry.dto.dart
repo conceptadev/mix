@@ -15,8 +15,8 @@ abstract class EdgeInsetsGeometryDto<T extends EdgeInsetsGeometry>
   double? get _start;
   double? get _end;
 
-  bool get _isDirectional =>
-      (_start != null || _end != null) && (_left == null && _right == null);
+  //bool get _isDirectional =>
+  //    (_start != null || _end != null) && (_left == null && _right == null);
 
   static D
       from<T extends EdgeInsetsGeometry, D extends EdgeInsetsGeometryDto<T>>(

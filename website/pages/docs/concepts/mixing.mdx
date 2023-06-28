@@ -32,12 +32,12 @@ final mix = StyleMix(
 
 ```
 
-### `Mix.fromList()`
+### `Mix.fromAttributes()`
 
 Allows you to create a Mix from a List of attributes. This has the same behavior but provides the ability to receive a List instead of positional arguments.
 
 ```dart
-final mix = Mix.fromList([
+final mix = Mix.fromAttributes([
   height(100),
   width(100),
   backgroundColor(Colors.purple),
@@ -48,7 +48,7 @@ final mix = Mix.fromList([
 It also provides the possibility to use optional attributes using `if/else`:
 
 ```dart
-final mix = Mix.fromList([
+final mix = Mix.fromAttributes([
   if (hasError)
     backgroundColor(Colors.red)
   else
@@ -64,21 +64,21 @@ Mixes are immutable. The new Mix created will inherit all attributes of the orig
 
 ### Add attributes
 
-#### `.mix()`
+#### `.apply()`
 
 If you have an existing Mix you can add attributes to it by calling the `mix` method. This will return a new Mix with the new attributes added.
 
 ```dart
-final newMix = mix.mix(
+final newMix = mix.apply(
   height(200),
   width(200),
   backgroundColor(Colors.red),
 );
 ```
 
-#### `.addAttributes()`
+#### `.addAttributes()` (Deprecated)
 
-Similar to `mix` but allows you to pass a List of attributes.
+Similar to `apply` but allows you to pass a List of attributes.
 
 ```dart
 final newMix = mix.addAttributes([

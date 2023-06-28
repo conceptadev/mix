@@ -6,13 +6,11 @@ import 'package:mix/src/dtos/edge_insets/edge_insets.dto.dart';
 
 final firstMix = StyleMix(
   // Box attribute
-  bgColor(Colors.blue),
+  backgroundColor(Colors.blue),
   // Text attribute
-  textColor(
-    Colors.red,
-  ),
+  textStyle(color: Colors.red),
   // Shared attribute
-  animated(),
+  animation(),
   // Flex Attribute
   gap(10),
   // Icon Attribute
@@ -31,11 +29,11 @@ final secondMix = StyleMix(
   // Box attribute
   padding(10),
   // Text attribute
-  fontSize(10),
+  textStyle(fontSize: 10),
   // Shared attribute
   hide(),
   // Flex Attribute
-  mainAxis(MainAxisAlignment.center),
+  mainAxisAlignment(MainAxisAlignment.center),
 
   // Icon Attribute
   iconSize(10),
@@ -45,17 +43,16 @@ final secondMix = StyleMix(
   iconColor(Colors.red),
 );
 
-final nestedMix = StyleMix(
-  // Box attribute
-  apply(firstMix),
-  apply(secondMix),
-);
+final nestedMix = StyleMix().mergeMany([
+  firstMix,
+  secondMix,
+]);
 
 void main() {
   group("Mix Factory", () {
     test('Creates a Mix from positional Attributes', () async {
       final style = StyleMix(
-        bgColor(Colors.red),
+        backgroundColor(Colors.red),
         margin(10),
       );
 
@@ -71,7 +68,7 @@ void main() {
 
     test('Creates a Mix from Attributes List', () async {
       final mix = StyleMix.fromAttributes([
-        bgColor(Colors.red),
+        backgroundColor(Colors.red),
         margin(10),
       ]);
 
