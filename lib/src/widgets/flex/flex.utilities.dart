@@ -37,7 +37,17 @@ class FlexUtilities {
   }
 
   // Create a FlexAttribues for the cross axis
+  @Deprecated('Use crossAxisAlignment instead')
   StyledFlexAttributes crossAxis(CrossAxisAlignment crossAxisAlignment) {
+    return StyledFlexAttributes(
+      crossAxisAlignment: crossAxisAlignment,
+    );
+  }
+
+  // Create a FlexAttribues for the cross axis
+  StyledFlexAttributes crossAxisAlignment(
+    CrossAxisAlignment crossAxisAlignment,
+  ) {
     return StyledFlexAttributes(
       crossAxisAlignment: crossAxisAlignment,
     );
