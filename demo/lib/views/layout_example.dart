@@ -121,8 +121,6 @@ class LayoutExample extends StatelessWidget {
               ),
             ],
           ),
-          const Divider(),
-          
         ],
       ),
     );

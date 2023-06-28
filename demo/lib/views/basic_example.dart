@@ -162,11 +162,6 @@ class BasicExample extends HookWidget {
               ),
             ),
           ),
-          const Divider(),
-          StyledText(
-            "StyledStack",
-            style: headingMix,
-          ),
         ],
       ),
     );

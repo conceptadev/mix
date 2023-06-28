@@ -19,21 +19,10 @@ class TypographyExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Column(
-        children: [
-          Pressable(
-            child: StyledContainer(
-              style: button,
-              child: StyledText(
-                'Details',
-                style: button,
-              ),
-            ),
-            onPressed: () {
-              return;
-            },
-          ),
-        ],
+      child: StyledFlex(
+        direction: Axis.vertical,
+        style: StyleMix(),
+        children: const [],
       ),
     );
   }
