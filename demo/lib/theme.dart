@@ -36,6 +36,7 @@ ThemeData get darkTheme {
           if (states.contains(MaterialState.hovered)) {
             return Colors.white;
           }
+          
           return Colors.white.withAlpha(230);
         }),
       ),
