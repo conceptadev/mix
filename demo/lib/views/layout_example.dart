@@ -71,6 +71,58 @@ class LayoutExample extends StatelessWidget {
               ),
             ],
           ),
+          const Divider(),
+          StyledText(
+            "Flex (Vertical)",
+            style: headingMix,
+          ),
+          StyledFlex(
+            direction: Axis.vertical,
+            style: flexAlign,
+            children: [
+              StyledText(
+                "This is a StyledText inside a StyledFlex!",
+                style: mix,
+              ),
+              StyledText(
+                "This is another StyledText inside a StyledFlex!",
+                style: mix,
+              ),
+              StyledText(
+                "This yet another StyledText inside a StyledFlex! It works just like a column!",
+                style: mix,
+              ),
+            ],
+          ),
+          const Divider(),
+          StyledText(
+            "Flex (Horizontal)",
+            style: headingMix,
+          ),
+          StyledFlex(
+            direction: Axis.horizontal,
+            style: flexAlign,
+            children: [
+              StyledIcon(
+                Icons.one_k,
+                style: mix,
+              ),
+              StyledIcon(
+                Icons.two_k,
+                style: mix,
+              ),
+              StyledIcon(
+                Icons.three_k,
+                style: mix,
+              ),
+              StyledIcon(
+                Icons.four_k,
+                style: mix,
+              ),
+            ],
+          ),
+          const Divider(),
+          
         ],
       ),
     );
