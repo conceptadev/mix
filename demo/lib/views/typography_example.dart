@@ -13,8 +13,8 @@ StyleMix get button => StyleMix(
       paddingVertical(8.0),
     );
 
-class ButtonsPreview extends StatelessWidget {
-  const ButtonsPreview({Key? key}) : super(key: key);
+class TypographyExample extends StatelessWidget {
+  const TypographyExample({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

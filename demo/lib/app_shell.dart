@@ -7,14 +7,14 @@ import 'package:mix/mix.dart';
 import 'components/atoms/adaptive_scaffold.dart';
 import 'providers/dark_mode.provider.dart';
 import 'views/basic_example.dart';
-import 'views/button_preview.dart';
-import 'views/design_token_example.dart';
+import 'views/typography_example.dart';
+import 'views/layout_example.dart';
 import 'views/variants.dart';
 
 const screens = [
   Center(child: BasicExample()),
-  Center(child: DesignTokenExample()),
-  ButtonsPreview(),
+  Center(child: LayoutExample()),
+  Center(child: TypographyExample()),
   Center(child: VariantsExample()),
 ];
 
