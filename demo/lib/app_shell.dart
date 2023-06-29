@@ -7,15 +7,15 @@ import 'package:mix/mix.dart';
 import 'components/atoms/adaptive_scaffold.dart';
 import 'providers/dark_mode.provider.dart';
 import 'views/basic_example.dart';
-import 'views/typography_example.dart';
 import 'views/layout_example.dart';
-import 'views/variants.dart';
+import 'views/typography_example.dart';
+//import 'views/variants.dart';
 
 const screens = [
   Center(child: BasicExample()),
   Center(child: LayoutExample()),
   Center(child: TypographyExample()),
-  Center(child: VariantsExample()),
+  //Center(child: VariantsExample()),
 ];
 
 class AppShell extends HookConsumerWidget {
@@ -56,10 +56,10 @@ class AppShell extends HookConsumerWidget {
             icon: Icon(CommunityMaterialIcons.format_text_variant),
             label: 'Typography',
           ),
-          AdaptiveScaffoldDestination(
+          /*AdaptiveScaffoldDestination(
             icon: Icon(CommunityMaterialIcons.message_alert),
             label: 'Variant',
-          ),
+          ),*/
         ],
         body: screens[selected.value],
       ),
