@@ -39,7 +39,7 @@ void main() {
     await tester.pumpWidget(expensiveWidget);
     final elapsedExpensive = stopwatch.elapsedMilliseconds;
 
-    print('Elapsed: $elapsed');
-    print('Elapsed Expensive: $elapsedExpensive');
+    debugPrint('Elapsed: $elapsed');
+    debugPrint('Elapsed Expensive: $elapsedExpensive');
   });
 }

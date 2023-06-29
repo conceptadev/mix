@@ -199,7 +199,7 @@ void main() {
     test('-> Alignment', () async {
       const alignmentAttribute =
           StyledContainerAttributes(alignment: Alignment.topLeft);
-      final alignmentUtilityAttribute = align(Alignment.topLeft);
+      final alignmentUtilityAttribute = alignment(Alignment.topLeft);
 
       expect(
         alignmentAttribute,
@@ -254,7 +254,7 @@ void main() {
           topLeft: RadiusDto.circular(10),
         ),
       );
-      final topLeftBorderRadiusUtility = roundedTL(10);
+      final topLeftBorderRadiusUtility = roundedOnly(topLeft: 10);
 
       expect(
         topLeftBorderRadius,

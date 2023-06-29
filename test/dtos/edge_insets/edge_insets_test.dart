@@ -79,7 +79,7 @@ void main() {
           return MixTheme(
             data: mixTheme,
             child: MixBuilder(
-              mix: StyleMix(),
+              style: StyleMix(),
               builder: (mix) {
                 return Container(
                   margin: edgeInsetsDto.resolve(mix),
