@@ -81,7 +81,7 @@ void main() {
     });
 
     test('Merge Mix values', () {
-      // TODO: Test merging
+      return;
     });
   });
 }
