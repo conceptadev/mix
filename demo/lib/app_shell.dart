@@ -12,9 +12,9 @@ import 'views/typography_example.dart';
 //import 'views/variants.dart';
 
 const screens = [
-  Center(child: BasicExample()),
-  Center(child: LayoutExample()),
-  Center(child: TypographyExample()),
+  BasicExample(),
+  LayoutExample(),
+  TypographyExample(),
   //Center(child: VariantsExample()),
 ];
 
@@ -61,7 +61,10 @@ class AppShell extends HookConsumerWidget {
             label: 'Variant',
           ),*/
         ],
-        body: screens[selected.value],
+        body: Align(
+          alignment: Alignment.topLeft,
+          child: screens[selected.value],
+        ),
       ),
     );
   }
