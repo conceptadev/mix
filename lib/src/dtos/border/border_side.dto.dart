@@ -67,8 +67,7 @@ class BorderSideDto extends Dto<BorderSide> {
       color: color?.resolve(mix) ?? _default.color,
       width: width ?? _default.width,
       style: style ?? _default.style,
-      // TODO: Temporarily removed because of compatibility issues
-      // strokeAlign: strokeAlign ?? _default.strokeAlign,
+      strokeAlign: strokeAlign ?? _default.strokeAlign,
     );
   }
 
