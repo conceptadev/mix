@@ -19,16 +19,14 @@ class StyleMixData with EqualityMixin {
   });
 
   /// Creates a new [StyleMixData] instance from the provided [Iterable] of [StyleAttribute]s.
+  /// No longer expands nested attributes.
   factory StyleMixData.create(Iterable<StyleAttribute> attributes) {
-    //TODO: Remove expansion of nested attributes later
-    final expanded = _expandNestedAttributes(attributes);
-
     final variantList = <VariantAttribute>[];
     final contextVariantList = <ContextVariantAttribute>[];
     final attributeList = <StyledWidgetAttributes>[];
     final decoratorList = <WidgetDecorator>[];
 
-    for (final attribute in expanded) {
+    for (final attribute in attributes) {
       if (attribute is StyledWidgetAttributes) {
         attributeList.add(attribute);
       } else if (attribute is WidgetDecorator) {
