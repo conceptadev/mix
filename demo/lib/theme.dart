@@ -5,7 +5,6 @@ ThemeData _customThemeBuilder(ThemeData theme) {
   return theme
       .copyWith(
         textTheme: GoogleFonts.interTextTheme(theme.textTheme),
-        toggleableActiveColor: theme.colorScheme.secondary,
         navigationRailTheme: NavigationRailThemeData(
           backgroundColor: theme.colorScheme.surface.withAlpha(50),
           unselectedIconTheme: theme.iconTheme.copyWith(
@@ -16,10 +15,32 @@ ThemeData _customThemeBuilder(ThemeData theme) {
           selectedItemColor: theme.colorScheme.secondary,
           unselectedItemColor: theme.colorScheme.onSurface.withAlpha(50),
         ),
+        checkboxTheme: CheckboxThemeData(
+          fillColor: getPropertyForTrack(theme),
+        ),
+        radioTheme: RadioThemeData(
+          fillColor: getPropertyForTrack(theme),
+        ),
+        switchTheme: SwitchThemeData(
+          thumbColor: getPropertyForTrack(theme),
+          trackColor: getPropertyForTrack(theme),
+        ),
       )
       .copyWith(
         visualDensity: VisualDensity.adaptivePlatformDensity,
       );
+}
+
+MaterialStateProperty<Color?> getPropertyForTrack(ThemeData theme) {
+  return MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
+    if (states.contains(MaterialState.disabled)) {
+      return null;
+    }
+    if (states.contains(MaterialState.selected)) {
+      return theme.colorScheme.secondary;
+    }
+    return null;
+  });
 }
 
 ThemeData get darkTheme {
