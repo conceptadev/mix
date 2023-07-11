@@ -7,21 +7,15 @@ import 'package:mix/mix.dart';
 import 'components/atoms/adaptive_scaffold.dart';
 import 'providers/dark_mode.provider.dart';
 import 'views/basic_example.dart';
-import 'views/button_preview.dart';
-import 'views/design_token_example.dart';
+import 'views/layout_example.dart';
+import 'views/typography_example.dart';
+//import 'views/variants.dart';
 
 const screens = [
-  Center(child: BasicExample()),
-  Center(child: DesignTokenExample()),
-  ButtonsPreview(),
-  AboutListTile(
-    icon: Icon(CommunityMaterialIcons.information_outline),
-    applicationName: 'Mix Gallery',
-    applicationVersion: '1.0.0',
-    aboutBoxChildren: [
-      Text('Mix Gallery is a demo app for Mix.'),
-    ],
-  ),
+  BasicExample(),
+  LayoutExample(),
+  TypographyExample(),
+  //Center(child: VariantsExample()),
 ];
 
 class AppShell extends HookConsumerWidget {
@@ -62,12 +56,15 @@ class AppShell extends HookConsumerWidget {
             icon: Icon(CommunityMaterialIcons.format_text_variant),
             label: 'Typography',
           ),
-          AdaptiveScaffoldDestination(
+          /*AdaptiveScaffoldDestination(
             icon: Icon(CommunityMaterialIcons.message_alert),
             label: 'Variant',
-          ),
+          ),*/
         ],
-        body: screens[selected.value],
+        body: Align(
+          alignment: Alignment.topLeft,
+          child: screens[selected.value],
+        ),
       ),
     );
   }
