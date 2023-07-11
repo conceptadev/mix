@@ -1,5 +1,4 @@
 import '../../mix.dart';
-import '../attributes/nested_attribute.dart';
 import '../decorators/decorator.dart';
 import '../helpers/equality_mixin/equality_mixin.dart';
 import '../helpers/mergeable_map.dart';
@@ -112,21 +111,6 @@ class StyleMixData with EqualityMixin {
       variants: [...variants],
       contextVariants: [...contextVariants],
     );
-  }
-
-  /// Expands nested attributes from the provided [Iterable] of [StyleAttribute]s.
-  static Iterable<StyleAttribute> _expandNestedAttributes(
-    Iterable<StyleAttribute> attributes,
-  ) {
-    return attributes.expand((attribute) {
-      if (attribute is NestedStyleAttribute) {
-        final nestedMix = attribute.style;
-
-        return _expandNestedAttributes(nestedMix.toAttributes());
-      } else {
-        return [attribute];
-      }
-    });
   }
 
   /// An empty [StyleMixData] instance with no attributes, decorators, variants, or directives.

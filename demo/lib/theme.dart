@@ -39,6 +39,7 @@ MaterialStateProperty<Color?> getPropertyForTrack(ThemeData theme) {
     if (states.contains(MaterialState.selected)) {
       return theme.colorScheme.secondary;
     }
+    
     return null;
   });
 }
