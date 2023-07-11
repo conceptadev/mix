@@ -81,7 +81,28 @@ void main() {
     });
 
     test('Merge Mix values', () {
-      // TODO: Test merging
+      final mixValues = StyleMixData.create([
+        ...attributeList,
+        ...variantList,
+        ...contextVariantList,
+      ]);
+
+      final otherMixValues = StyleMixData.create([
+        ...attributeList,
+        ...variantList,
+        ...contextVariantList,
+      ]);
+
+      final mergedMixValues = mixValues.merge(otherMixValues);
+
+      expect(mergedMixValues.length, equals(10));
+      expect(mergedMixValues.hasAttributes, isTrue);
+      expect(mergedMixValues.hasVariants, isTrue);
+      expect(mergedMixValues.hasContextVariants, isTrue);
+
+      expect(mergedMixValues.attributes?.length, equals(2));
+      expect(mergedMixValues.variants.length, equals(4));
+      expect(mergedMixValues.contextVariants.length, equals(4));
     });
   });
 }
