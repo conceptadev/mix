@@ -9,13 +9,14 @@ import 'providers/dark_mode.provider.dart';
 import 'views/basic_example.dart';
 import 'views/layout_example.dart';
 import 'views/typography_example.dart';
+import 'views/variants.dart';
 //import 'views/variants.dart';
 
 const screens = [
   BasicExample(),
   LayoutExample(),
   TypographyExample(),
-  //Center(child: VariantsExample()),
+  VariantsExample(),
 ];
 
 class AppShell extends HookConsumerWidget {
@@ -56,10 +57,10 @@ class AppShell extends HookConsumerWidget {
             icon: Icon(CommunityMaterialIcons.format_text_variant),
             label: 'Typography',
           ),
-          /*AdaptiveScaffoldDestination(
+          AdaptiveScaffoldDestination(
             icon: Icon(CommunityMaterialIcons.message_alert),
             label: 'Variant',
-          ),*/
+          ),
         ],
         body: Align(
           alignment: Alignment.topLeft,
