@@ -117,30 +117,310 @@ void main() {
   });
 
   testWidgets('Variant onXSmall', (tester) async {
-    await tester.pumpWidget(MaterialApp(
-      theme: ThemeData(),
-      darkTheme: ThemeData.dark(),
-      themeMode: ThemeMode.dark,
-      home: StyledContainer(
-        style: StyleMix(
-          onXSmall(backgroundColor(Colors.teal)),
-          backgroundColor(Colors.red),
+    await tester.pumpWidget(
+      MediaQuery(
+        data: const MediaQueryData(size: Size(1000, 1000)),
+        child: StyledContainer(
+          style: StyleMix(
+            onXSmall(backgroundColor(Colors.teal)),
+            backgroundColor(Colors.red),
+          ),
         ),
       ),
-    ));
+    );
+
+    expect(find.byType(Container), findsOneWidget);
+    expect(tester.widget<Container>(find.byType(Container)).color, Colors.red);
+
+    // Set screen size to xsmall
+    await tester.pumpWidget(
+      MediaQuery(
+        data: const MediaQueryData(size: Size(100, 100)),
+        child: StyledContainer(
+          style: StyleMix(
+            onXSmall(backgroundColor(Colors.teal)),
+            backgroundColor(Colors.red),
+          ),
+        ),
+      ),
+    );
+
+    expect(find.byType(Container), findsOneWidget);
+    expect(tester.widget<Container>(find.byType(Container)).color, Colors.teal);
+  });
+
+  testWidgets('Variant onSmall', (tester) async {
+    await tester.pumpWidget(
+      MediaQuery(
+        data: const MediaQueryData(size: Size(3000, 3000)),
+        child: StyledContainer(
+          style: StyleMix(
+            onSmall(backgroundColor(Colors.teal)),
+            backgroundColor(Colors.red),
+          ),
+        ),
+      ),
+    );
+
+    expect(find.byType(Container), findsOneWidget);
+    expect(tester.widget<Container>(find.byType(Container)).color, Colors.red);
+    // Set screen size to small
+    await tester.pumpWidget(
+      MediaQuery(
+        data: const MediaQueryData(size: Size(300, 300)),
+        child: StyledContainer(
+          style: StyleMix(
+            onSmall(backgroundColor(Colors.teal)),
+            backgroundColor(Colors.red),
+          ),
+        ),
+      ),
+    );
+
+    expect(find.byType(Container), findsOneWidget);
+    expect(tester.widget<Container>(find.byType(Container)).color, Colors.teal);
+  });
+
+  testWidgets('Variant onMedium', (tester) async {
+    // Set screen size to medium
+    await tester.pumpWidget(
+      MediaQuery(
+        data: const MediaQueryData(size: Size(3000, 3000)),
+        child: StyledContainer(
+          style: StyleMix(
+            onMedium(backgroundColor(Colors.teal)),
+            backgroundColor(Colors.red),
+          ),
+        ),
+      ),
+    );
+
+    expect(find.byType(Container), findsOneWidget);
+    expect(tester.widget<Container>(find.byType(Container)).color, Colors.red);
+
+    // Set screen size to medium
+    await tester.pumpWidget(
+      MediaQuery(
+        data: const MediaQueryData(size: Size(1300, 1300)),
+        child: StyledContainer(
+          style: StyleMix(
+            onMedium(backgroundColor(Colors.teal)),
+            backgroundColor(Colors.red),
+          ),
+        ),
+      ),
+    );
+
+    expect(find.byType(Container), findsOneWidget);
+    expect(tester.widget<Container>(find.byType(Container)).color, Colors.teal);
+  });
+
+  testWidgets('Variant onLarge', (tester) async {
+    // Set screen size to large
+    await tester.pumpWidget(
+      MediaQuery(
+        data: const MediaQueryData(size: Size(3000, 3000)),
+        child: StyledContainer(
+          style: StyleMix(
+            onLarge(backgroundColor(Colors.teal)),
+            backgroundColor(Colors.red),
+          ),
+        ),
+      ),
+    );
+
+    expect(find.byType(Container), findsOneWidget);
+    expect(tester.widget<Container>(find.byType(Container)).color, Colors.teal);
+
+    // Set screen size to large
+    await tester.pumpWidget(
+      MediaQuery(
+        data: const MediaQueryData(size: Size(2000, 2000)),
+        child: StyledContainer(
+          style: StyleMix(
+            onLarge(backgroundColor(Colors.teal)),
+            backgroundColor(Colors.red),
+          ),
+        ),
+      ),
+    );
+
+    expect(find.byType(Container), findsOneWidget);
+    expect(tester.widget<Container>(find.byType(Container)).color, Colors.teal);
+  });
+
+  testWidgets('Variant onPortrait', (tester) async {
+    // Set screen size to portrait
+    await tester.pumpWidget(
+      MediaQuery(
+        data: const MediaQueryData(size: Size(2000, 1000)),
+        child: StyledContainer(
+          style: StyleMix(
+            onPortrait(backgroundColor(Colors.teal)),
+            backgroundColor(Colors.red),
+          ),
+        ),
+      ),
+    );
+
+    expect(find.byType(Container), findsOneWidget);
+    expect(tester.widget<Container>(find.byType(Container)).color, Colors.red);
+
+    // Set screen size to portrait
+    await tester.pumpWidget(
+      MediaQuery(
+        data: const MediaQueryData(size: Size(1000, 2000)),
+        child: StyledContainer(
+          style: StyleMix(
+            onPortrait(backgroundColor(Colors.teal)),
+            backgroundColor(Colors.red),
+          ),
+        ),
+      ),
+    );
+
+    expect(find.byType(Container), findsOneWidget);
+    expect(tester.widget<Container>(find.byType(Container)).color,
+        Colors.teal);
+  });
+
+  testWidgets('Variant onLandscape', (tester) async {
+    // Set screen size to landscape
+    await tester.pumpWidget(
+      MediaQuery(
+        data: const MediaQueryData(size: Size(2000, 1000)),
+        child: StyledContainer(
+          style: StyleMix(
+            onLandscape(backgroundColor(Colors.teal)),
+            backgroundColor(Colors.red),
+          ),
+        ),
+      ),
+    );
+
+    expect(find.byType(Container), findsOneWidget);
+    expect(tester.widget<Container>(find.byType(Container)).color,
+        Colors.teal);
+
+    // Set screen size to landscape
+    await tester.pumpWidget(
+      MediaQuery(
+        data: const MediaQueryData(size: Size(1000, 2000)),
+        child: StyledContainer(
+          style: StyleMix(
+            onLandscape(backgroundColor(Colors.teal)),
+            backgroundColor(Colors.red),
+          ),
+        ),
+      ),
+    );
+
+    expect(find.byType(Container), findsOneWidget);
+    expect(tester.widget<Container>(find.byType(Container)).color, Colors.red);
+  });
+
+  testWidgets('Variant onRTL', (tester) async {
+    // Set screen size to RTL
+    await tester.pumpWidget(
+      Directionality(
+        textDirection: TextDirection.rtl,
+        child: StyledContainer(
+          style: StyleMix(
+            onRTL(backgroundColor(Colors.teal)),
+            backgroundColor(Colors.red),
+          ),
+        ),
+      ),
+    );
+
+    expect(find.byType(Container), findsOneWidget);
+    expect(tester.widget<Container>(find.byType(Container)).color,
+        Colors.teal);
+
+    // Set screen size to RTL
+    await tester.pumpWidget(
+      Directionality(
+        textDirection: TextDirection.ltr,
+        child: StyledContainer(
+          style: StyleMix(
+            onRTL(backgroundColor(Colors.teal)),
+            backgroundColor(Colors.red),
+          ),
+        ),
+      ),
+    );
+
+    expect(find.byType(Container), findsOneWidget);
+    expect(tester.widget<Container>(find.byType(Container)).color, Colors.red);
+  });
+
+  testWidgets('Variant onLTR', (tester) async {
+    // Set screen size to LTR
+    await tester.pumpWidget(
+      Directionality(
+        textDirection: TextDirection.ltr,
+        child: StyledContainer(
+          style: StyleMix(
+            onLTR(backgroundColor(Colors.teal)),
+            backgroundColor(Colors.red),
+          ),
+        ),
+      ),
+    );
+
+    expect(find.byType(Container), findsOneWidget);
+    expect(tester.widget<Container>(find.byType(Container)).color,
+        Colors.teal);
+
+    // Set screen size to LTR
+    await tester.pumpWidget(
+      Directionality(
+        textDirection: TextDirection.rtl,
+        child: StyledContainer(
+          style: StyleMix(
+            onLTR(backgroundColor(Colors.teal)),
+            backgroundColor(Colors.red),
+          ),
+        ),
+      ),
+    );
+
+    expect(find.byType(Container), findsOneWidget);
+    expect(tester.widget<Container>(find.byType(Container)).color, Colors.red);
+  });
+  
+
+  testWidgets('Variant onDisabled', (tester) async {
+    // Set screen size to LTR
+    await tester.pumpWidget(
+      Directionality(
+        textDirection: TextDirection.ltr,
+        child: StyledContainer(
+          style: StyleMix(
+            onDisabled(backgroundColor(Colors.teal)),
+            backgroundColor(Colors.red),
+          ),
+        ),
+      ),
+    );
 
     final colorWidget = tester.widget<Container>(find.byType(Container));
     expect(colorWidget.color, Colors.red);
 
-    // Set screen size to xsmall
-    await tester.binding.setSurfaceSize(const Size(100, 100));
-    addTearDown(() => tester.binding.setSurfaceSize(null));
+    // Set screen size to LTR
+    await tester.pumpWidget(
+      Directionality(
+        textDirection: TextDirection.rtl,
+        child: StyledContainer(
+          style: StyleMix(
+            onDisabled(backgroundColor(Colors.teal)),
+            backgroundColor(Colors.red),
+          ),
+        ),
+      ),
+    );
 
-    await tester.pumpAndSettle();
-
-    final colorWidget2 = tester.widget<Container>(find.byType(Container));
-
-    expect(colorWidget2.color, Colors.teal);
+    expect(colorWidget.color, Colors.teal);
   });
 }
 
