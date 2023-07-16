@@ -104,16 +104,6 @@ void main() {
     expect(colorWidget.color, Colors.red);
 
     // TODO: Figure out how to simulate hover
-    /*
-    final gesture = await tester.createGesture(kind: PointerDeviceKind.mouse);
-    await gesture.addPointer(location: Offset.zero);
-    addTearDown(() => gesture.removePointer());
-    await tester.pump();
-    await gesture.moveTo(tester.getCenter(find.byType(StyledContainer)));
-    await tester.pumpAndSettle();
-
-    expect(colorWidget.color, Colors.teal);
-    */
   });
 
   testWidgets('Variant onXSmall', (tester) async {
@@ -386,72 +376,4 @@ void main() {
   });
 
   // TODO: Figure out how to test enabed/disabled
-
-  /*testWidgets('Variant onDisabled', (tester) async {
-    // Enabled button, should be red
-    await tester.pumpWidget(
-      Directionality(
-        textDirection: TextDirection.rtl,
-        child: TextButton(
-          onPressed: () {},
-          child: StyledContainer(
-            style: StyleMix(
-              onDisabled(backgroundColor(Colors.teal)),
-              backgroundColor(Colors.red),
-            ),
-          ),
-        ),
-      ),
-    );
-
-    expect(find.byType(Container), findsOneWidget);
-    expect(tester.widget<Container>(find.byType(Container)).color, Colors.red);
-
-    // Disabled button, should be teal
-    await tester.pumpWidget(
-      Directionality(
-        textDirection: TextDirection.rtl,
-        child: TextButton(
-          onPressed: null,
-          child: StyledContainer(
-            style: StyleMix(
-              onDisabled(backgroundColor(Colors.teal)),
-              backgroundColor(Colors.red),
-            ),
-          ),
-        ),
-      ),
-    );
-
-    expect(find.byType(Container), findsOneWidget);
-    expect(tester.widget<Container>(find.byType(Container)).color, Colors.teal);
-  });*/
-
-  // Test non-utility variants
 }
-
-/*
-onXSmall
-onMedium
-onSmall
-onLarge
-
-onPortrait
-onLandscape
-
-onDark
-onLight
-
-onRTL
-onLTR
-
-onDisabled
-onEnabled
-
-onFocus
-onHover
-onPress
-onLongPress
-
-onNot
-*/
