@@ -1,5 +1,4 @@
 import '../../mix.dart';
-import '../attributes/nested_attribute.dart';
 import '../decorators/decorator.dart';
 import '../helpers/equality_mixin/equality_mixin.dart';
 import '../helpers/mergeable_map.dart';
@@ -19,16 +18,14 @@ class StyleMixData with EqualityMixin {
   });
 
   /// Creates a new [StyleMixData] instance from the provided [Iterable] of [StyleAttribute]s.
+  /// No longer expands nested attributes.
   factory StyleMixData.create(Iterable<StyleAttribute> attributes) {
-    //TODO: Remove expansion of nested attributes later
-    final expanded = _expandNestedAttributes(attributes);
-
     final variantList = <VariantAttribute>[];
     final contextVariantList = <ContextVariantAttribute>[];
     final attributeList = <StyledWidgetAttributes>[];
     final decoratorList = <WidgetDecorator>[];
 
-    for (final attribute in expanded) {
+    for (final attribute in attributes) {
       if (attribute is StyledWidgetAttributes) {
         attributeList.add(attribute);
       } else if (attribute is WidgetDecorator) {
@@ -114,21 +111,6 @@ class StyleMixData with EqualityMixin {
       variants: [...variants],
       contextVariants: [...contextVariants],
     );
-  }
-
-  /// Expands nested attributes from the provided [Iterable] of [StyleAttribute]s.
-  static Iterable<StyleAttribute> _expandNestedAttributes(
-    Iterable<StyleAttribute> attributes,
-  ) {
-    return attributes.expand((attribute) {
-      if (attribute is NestedStyleAttribute) {
-        final nestedMix = attribute.style;
-
-        return _expandNestedAttributes(nestedMix.toAttributes());
-      } else {
-        return [attribute];
-      }
-    });
   }
 
   /// An empty [StyleMixData] instance with no attributes, decorators, variants, or directives.

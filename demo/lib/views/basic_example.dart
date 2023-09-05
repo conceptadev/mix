@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:mix/mix.dart';
 
+import '../styles.dart';
+
 class BasicExample extends HookWidget {
   const BasicExample({Key? key}) : super(key: key);
 
@@ -28,25 +30,6 @@ class BasicExample extends HookWidget {
         backgroundColor(Colors.green),
       ),
     ]);
-
-    final onSurfaceMix = StyleMix(
-      textStyle(color: Colors.black),
-      onDark(
-        textStyle(color: Colors.white),
-      ),
-    );
-
-    final headingMix = StyleMix.fromAttributes([
-      textStyle(fontSize: 24),
-      ...onSurfaceMix.toAttributes(),
-    ]);
-
-    final flexAlign = StyleMix(
-      mainAxisAlignment(MainAxisAlignment.start),
-      crossAxis(CrossAxisAlignment.start),
-      mainAxisSize(MainAxisSize.max),
-      width(double.infinity),
-    );
 
     return SingleChildScrollView(
       padding: const EdgeInsets.all(20),

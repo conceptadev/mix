@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
 
+import '../styles.dart';
+
 StyleMix get mix => StyleMix(
       height(300),
       width(300),
@@ -16,25 +18,6 @@ class LayoutExample extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final flexAlign = StyleMix(
-      mainAxisAlignment(MainAxisAlignment.start),
-      crossAxis(CrossAxisAlignment.start),
-      mainAxisSize(MainAxisSize.max),
-      width(double.infinity),
-    );
-
-    final onSurfaceMix = StyleMix(
-      textStyle(color: Colors.black),
-      onDark(
-        textStyle(color: Colors.white),
-      ),
-    );
-
-    final headingMix = StyleMix.fromAttributes([
-      textStyle(fontSize: 24),
-      ...onSurfaceMix.toAttributes(),
-    ]);
-
     return SingleChildScrollView(
       padding: const EdgeInsets.all(20),
       child: StyledFlex(
