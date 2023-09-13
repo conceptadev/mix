@@ -1,6 +1,3 @@
-
-import 'dart:collection';
-
 /// A class to perform deep equality checks on collections.
 ///
 /// This class compares collections (List, Set, Map) recursively for equality.
@@ -38,7 +35,11 @@ class DeepCollectionEquality {
   ///
   /// If [object] is a collection (List, Set, Map), computes a hash code recursively.
   /// Otherwise, returns the hash code of the object.
-  int hash(Object object) {
+  int hash(Object? object) {
+    if (object == null) {
+      return 0;
+    }
+
     var hashCode = 0;
     if (object is List) {
       for (var element in object) {
@@ -49,10 +50,9 @@ class DeepCollectionEquality {
         hashCode = 31 * hashCode + hash(element);
       }
     } else if (object is Map) {
-      final sortedMap = SplayTreeMap.from(object);
-      for (var key in sortedMap.keys) {
+      for (var key in object.keys) {
         hashCode = 31 * hashCode + hash(key);
-        hashCode = 31 * hashCode + hash(sortedMap[key]);
+        hashCode = 31 * hashCode + hash(object[key]);
       }
     } else {
       hashCode = object.hashCode;
