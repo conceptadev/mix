@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../../attributes/shared/shared.descriptor.dart';
 import '../../factory/mix_provider_data.dart';
 import '../empty/empty.widget.dart';
-import '../mix_context_builder.dart';
 import '../styled.widget.dart';
 import 'icon.descriptor.dart';
 
@@ -26,15 +25,12 @@ class StyledIcon extends StyledWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MixBuilder(
-      style: style,
-      variants: variants,
-      builder: (mix) {
-        return MixedIcon(
-          mix: mix,
-          icon: icon,
-        );
-      },
+    return buildWithMix(
+      context,
+      (mix) => MixedIcon(
+        mix: mix,
+        icon: icon,
+      ),
     );
   }
 }

@@ -2,7 +2,6 @@ import 'package:flutter/widgets.dart';
 
 import '../../factory/mix_provider_data.dart';
 import '../container/container.widget.dart';
-import '../mix_context_builder.dart';
 import '../styled.widget.dart';
 import 'stack.descriptor.dart';
 
@@ -24,10 +23,9 @@ class StyledStack extends StyledWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MixBuilder(
-      style: style,
-      variants: variants,
-      builder: (mix) {
+    return buildWithMix(
+      context,
+      (mix) {
         final zProps = StyledStackDescriptor.fromContext(mix);
 
         return Stack(
@@ -55,18 +53,15 @@ class ZBox extends StyledWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MixBuilder(
-      style: style,
-      variants: variants,
-      builder: (mix) {
-        return MixedContainer(
+    return buildWithMix(
+      context,
+      (mix) => MixedContainer(
+        mix: mix,
+        child: MixedStack(
           mix: mix,
-          child: MixedStack(
-            mix: mix,
-            children: children,
-          ),
-        );
-      },
+          children: children,
+        ),
+      ),
     );
   }
 }

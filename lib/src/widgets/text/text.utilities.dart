@@ -37,6 +37,29 @@ class TextUtility {
     TextStyle? as,
   }) {
     if (as != null) {
+      assert(
+        fontFamily == null &&
+            fontWeight == null &&
+            fontStyle == null &&
+            fontSize == null &&
+            letterSpacing == null &&
+            wordSpacing == null &&
+            textBaseline == null &&
+            color == null &&
+            backgroundColor == null &&
+            shadow == null &&
+            shadows == null &&
+            fontFeatures == null &&
+            decoration == null &&
+            decorationColor == null &&
+            decorationStyle == null &&
+            foreground == null &&
+            background == null &&
+            debugLabel == null &&
+            locale == null &&
+            height == null,
+        'If asStyle is provided, all other parameters will be ignored.',
+      );
       return StyledTextAttributes(style: TextStyleDto.from(as));
     }
 

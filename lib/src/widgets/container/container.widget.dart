@@ -4,7 +4,6 @@ import '../../attributes/shared/shared.descriptor.dart';
 import '../../decorators/widget_decorator_wrapper.dart';
 import '../../factory/mix_provider_data.dart';
 import '../empty/empty.widget.dart';
-import '../mix_context_builder.dart';
 import '../styled.widget.dart';
 import 'container.descriptor.dart';
 
@@ -24,15 +23,12 @@ class StyledContainer extends StyledWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MixBuilder(
-      style: style,
-      variants: variants,
-      builder: (mix) {
-        return MixedContainer(
-          mix: mix,
-          child: child,
-        );
-      },
+    return buildWithMix(
+      context,
+      (mix) => MixedContainer(
+        mix: mix,
+        child: child,
+      ),
     );
   }
 }

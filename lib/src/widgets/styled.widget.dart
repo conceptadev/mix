@@ -5,6 +5,7 @@ import '../factory/mix_provider.dart';
 import '../factory/mix_provider_data.dart';
 import '../factory/style_mix.dart';
 import '../variants/variant.dart';
+import 'mix_context_builder.dart';
 
 @Deprecated('Use MixWidget instead')
 typedef MixWidget = StyledWidget;
@@ -38,19 +39,13 @@ abstract class StyledWidget extends StatelessWidget {
       );
     }
 
-    if (_style == null && _mix == null) {
-      throw Exception(
-        'Parameter "style" is required, and will be required in the future.',
-      );
-    }
-
     return _style ?? _mix ?? StyleMix.constant;
   }
 
   List<StyleVariant>? get variants => _variants;
 
-  MixData createMixData(BuildContext context) {
-    final currentMix = MixData.create(
+  MixData getMix(BuildContext context) {
+    final mix = MixData.create(
       context: context,
       style: style.selectVariants(_variants ?? []),
     );
@@ -58,11 +53,20 @@ abstract class StyledWidget extends StatelessWidget {
     if (_inherit) {
       final parentMix = MixProvider.of(context);
       if (parentMix != null) {
-        return currentMix.inheritFrom(parentMix);
+        return mix.inheritFrom(parentMix);
       }
     }
 
-    return currentMix;
+    return mix;
+  }
+
+  Widget buildWithMix(BuildContext context, WidgetMixBuilder builder) {
+    final mix = getMix(context);
+
+    return MixProvider(
+      mix,
+      child: builder(mix),
+    );
   }
 
   @override

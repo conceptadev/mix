@@ -3,7 +3,6 @@ import 'package:flutter/widgets.dart';
 import '../../factory/mix_provider_data.dart';
 import '../container/container.widget.dart';
 import '../gap/gap_widget.dart';
-import '../mix_context_builder.dart';
 import '../styled.widget.dart';
 import 'flex.descriptor.dart';
 
@@ -22,16 +21,13 @@ class StyledFlex extends StyledWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MixBuilder(
-      style: style,
-      variants: variants,
-      builder: (mix) {
-        return MixedFlex(
-          mix: mix,
-          direction: direction,
-          children: children,
-        );
-      },
+    return buildWithMix(
+      context,
+      (mix) => MixedFlex(
+        mix: mix,
+        direction: direction,
+        children: children,
+      ),
     );
   }
 }
@@ -52,19 +48,16 @@ class FlexBox extends StyledWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MixBuilder(
-      style: style,
-      variants: variants,
-      builder: (mix) {
-        return MixedContainer(
+    return buildWithMix(
+      context,
+      (mix) => MixedContainer(
+        mix: mix,
+        child: MixedFlex(
           mix: mix,
-          child: MixedFlex(
-            mix: mix,
-            direction: direction,
-            children: children,
-          ),
-        );
-      },
+          direction: direction,
+          children: children,
+        ),
+      ),
     );
   }
 }

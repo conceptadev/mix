@@ -73,8 +73,11 @@ int _finish(int hash) {
 }
 
 /// Returns a string for [props].
-String mapPropsToString(Type runtimeType, List<Object?> props) =>
-    '$runtimeType(${props.map((prop) => prop.toString()).join(', ')})';
+String mapPropsToString(Type runtimeType, List<Object?> props) {
+  var nonNullProps = props.where((prop) => prop != null).toList();
+
+  return '$runtimeType(${nonNullProps.map((prop) => prop.toString()).join(', ')})';
+}
 
 /// A mixin that helps implement equality
 /// without needing to explicitly override [operator ==] and [hashCode].

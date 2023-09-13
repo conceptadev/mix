@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import '../../attributes/shared/shared.descriptor.dart';
 import '../../factory/mix_provider_data.dart';
 import '../empty/empty.widget.dart';
-import '../mix_context_builder.dart';
 import '../styled.widget.dart';
 import 'text.descriptor.dart';
 
@@ -27,15 +26,13 @@ class StyledText extends StyledWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MixBuilder(
-      style: style,
-      builder: (mix) {
-        return MixedText(
-          mix: mix,
-          content: text,
-          semanticsLabel: semanticsLabel,
-        );
-      },
+    return buildWithMix(
+      context,
+      (mix) => MixedText(
+        mix: mix,
+        content: text,
+        semanticsLabel: semanticsLabel,
+      ),
     );
   }
 }

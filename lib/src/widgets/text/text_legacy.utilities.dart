@@ -118,7 +118,8 @@ class LegacyTextStyleUtility {
 
   @Deprecated(kDeprecationMessage)
   static StyledTextAttributes decorationStyle(
-      TextDecorationStyle? decorationStyle,) {
+    TextDecorationStyle? decorationStyle,
+  ) {
     return LegacyTextUtility.style(
       TextStyle(decorationStyle: decorationStyle),
     );
@@ -140,7 +141,8 @@ class LegacyTextStyleUtility {
 
   @Deprecated(kDeprecationMessage)
   static StyledTextAttributes fontFamilyFallback(
-      List<String>? fontFamilyFallback,) {
+    List<String>? fontFamilyFallback,
+  ) {
     return LegacyTextUtility.style(
       TextStyle(fontFamilyFallback: fontFamilyFallback),
     );
