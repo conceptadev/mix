@@ -257,11 +257,11 @@ class ContainerStyleUtilities {
   }) {
     return _borderRadius(
       BorderRadiusDto.only(
-        topLeft: topLeft != null ? RadiusDto.circular(topLeft) : null,
-        topRight: topRight != null ? RadiusDto.circular(topRight) : null,
         bottomLeft: bottomLeft != null ? RadiusDto.circular(bottomLeft) : null,
         bottomRight:
             bottomRight != null ? RadiusDto.circular(bottomRight) : null,
+        topLeft: topLeft != null ? RadiusDto.circular(topLeft) : null,
+        topRight: topRight != null ? RadiusDto.circular(topRight) : null,
       ),
     );
   }
@@ -274,11 +274,11 @@ class ContainerStyleUtilities {
   }) {
     return _borderRadius(
       BorderRadiusDirectionalDto.only(
-        topStart: topStart != null ? RadiusDto.circular(topStart) : null,
-        topEnd: topEnd != null ? RadiusDto.circular(topEnd) : null,
+        bottomEnd: bottomEnd != null ? RadiusDto.circular(bottomEnd) : null,
         bottomStart:
             bottomStart != null ? RadiusDto.circular(bottomStart) : null,
-        bottomEnd: bottomEnd != null ? RadiusDto.circular(bottomEnd) : null,
+        topEnd: topEnd != null ? RadiusDto.circular(topEnd) : null,
+        topStart: topStart != null ? RadiusDto.circular(topStart) : null,
       ),
     );
   }
@@ -295,8 +295,8 @@ class ContainerStyleUtilities {
   StyledContainerAttributes roundedVertical({double? top, double? bottom}) {
     return _borderRadius(
       BorderRadiusDto.vertical(
-        top: top != null ? RadiusDto.circular(top) : null,
         bottom: bottom != null ? RadiusDto.circular(bottom) : null,
+        top: top != null ? RadiusDto.circular(top) : null,
       ),
     );
   }
@@ -307,8 +307,8 @@ class ContainerStyleUtilities {
   }) {
     return _borderRadius(
       BorderRadiusDirectionalDto.horizontal(
-        start: start != null ? RadiusDto.circular(start) : null,
         end: end != null ? RadiusDto.circular(end) : null,
+        start: start != null ? RadiusDto.circular(start) : null,
       ),
     );
   }
@@ -319,8 +319,8 @@ class ContainerStyleUtilities {
   }) {
     return _borderRadius(
       BorderRadiusDirectionalDto.vertical(
-        top: top != null ? RadiusDto.circular(top) : null,
         bottom: bottom != null ? RadiusDto.circular(bottom) : null,
+        top: top != null ? RadiusDto.circular(top) : null,
       ),
     );
   }
@@ -677,8 +677,8 @@ class ContainerStyleUtilities {
         ? BorderSideDto.from(as)
         : BorderSideDto.only(
             color: ColorDto.maybeFrom(color),
-            width: width,
             style: style,
+            width: width,
           );
   }
 }

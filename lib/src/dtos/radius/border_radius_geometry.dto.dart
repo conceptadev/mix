@@ -51,10 +51,10 @@ abstract class BorderRadiusGeometryDto<T extends BorderRadiusGeometry>
 
     if (other is BorderRadiusDto) {
       return BorderRadiusDto.only(
-        topLeft: other.topLeft ?? topLeft,
-        topRight: other.topRight ?? topRight,
         bottomLeft: other.bottomLeft ?? bottomLeft,
         bottomRight: other.bottomRight ?? bottomRight,
+        topLeft: other.topLeft ?? topLeft,
+        topRight: other.topRight ?? topRight,
       );
     }
 

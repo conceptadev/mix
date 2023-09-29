@@ -28,7 +28,6 @@ class BorderDto extends BoxBorderDto<Border> {
         );
 
   const BorderDto.fromBorderSide(BorderSideDto side)
-      // ignore: no-equal-arguments
       : this.only(top: side, right: side, bottom: side, left: side);
 
   factory BorderDto.all({
@@ -37,7 +36,7 @@ class BorderDto extends BoxBorderDto<Border> {
     BorderStyle? style,
   }) {
     return BorderDto.fromBorderSide(
-      BorderSideDto.only(color: color, width: width, style: style),
+      BorderSideDto.only(color: color, style: style, width: width),
     );
   }
 
@@ -116,7 +115,6 @@ class BorderDirectionalDto extends BoxBorderDto<BorderDirectional> {
   });
 
   const BorderDirectionalDto.fromBorderSide(BorderSideDto side)
-      // ignore: no-equal-arguments
       : this.only(top: side, bottom: side, start: side, end: side);
 
   factory BorderDirectionalDto.all({
@@ -125,7 +123,7 @@ class BorderDirectionalDto extends BoxBorderDto<BorderDirectional> {
     BorderStyle? style,
   }) {
     return BorderDirectionalDto.fromBorderSide(
-      BorderSideDto.only(color: color, width: width, style: style),
+      BorderSideDto.only(color: color, style: style, width: width),
     );
   }
 

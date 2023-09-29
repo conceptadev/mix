@@ -5,10 +5,10 @@ import '../../factory/mix_provider_data.dart';
 import '../decorator.dart';
 
 enum ClipDecoratorType {
-  triangle,
+  oval,
   rect,
   rounded,
-  oval,
+  triangle,
 }
 
 class ClipDecorator extends WidgetDecorator<ClipDecorator> {
