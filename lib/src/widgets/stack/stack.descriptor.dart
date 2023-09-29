@@ -8,6 +8,9 @@ class StyledStackDescriptor {
   final StackFit fit;
   final Clip clipBehavior;
 
+  @override
+  int get hashCode => alignment.hashCode ^ fit.hashCode ^ clipBehavior.hashCode;
+
   const StyledStackDescriptor({
     required this.alignment,
     required this.fit,
@@ -19,8 +22,8 @@ class StyledStackDescriptor {
 
     return StyledStackDescriptor(
       alignment: zBoxAttributes?.alignment ?? Alignment.topLeft,
-      clipBehavior: zBoxAttributes?.clipBehavior ?? Clip.none,
       fit: zBoxAttributes?.fit ?? StackFit.loose,
+      clipBehavior: zBoxAttributes?.clipBehavior ?? Clip.none,
     );
   }
 
@@ -33,9 +36,6 @@ class StyledStackDescriptor {
         other.fit == fit &&
         other.clipBehavior == clipBehavior;
   }
-
-  @override
-  int get hashCode => alignment.hashCode ^ fit.hashCode ^ clipBehavior.hashCode;
 
   StyledStackDescriptor copyWith({
     AlignmentGeometry? alignment,

@@ -18,6 +18,17 @@ class StyledImageAttributes extends StyledWidgetAttributes {
   final AlignmentGeometry? alignment;
   final ImageRepeat? repeat;
 
+  @override
+  get props => [
+        color,
+        scale,
+        width,
+        height,
+        colorBlendMode,
+        fit,
+        alignment,
+        repeat,
+      ];
   const StyledImageAttributes({
     this.color,
     this.scale,
@@ -67,16 +78,4 @@ class StyledImageAttributes extends StyledWidgetAttributes {
       repeat: other.repeat,
     );
   }
-
-  @override
-  get props => [
-        color,
-        scale,
-        width,
-        height,
-        colorBlendMode,
-        fit,
-        alignment,
-        repeat,
-      ];
 }

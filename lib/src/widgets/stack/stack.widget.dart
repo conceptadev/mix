@@ -11,42 +11,39 @@ import 'stack.descriptor.dart';
 
 class StyledStack extends StyledWidget {
   const StyledStack({
+    this.children = const <Widget>[],
+    super.inherit,
+    super.key,
     @Deprecated('Use the style parameter instead') super.mix,
     super.style,
-    super.key,
     super.variants,
-    super.inherit,
-    this.children = const <Widget>[],
   });
 
   final List<Widget> children;
 
   @override
   Widget build(BuildContext context) {
-    return buildWithMix(
-      context,
-      (mix) {
-        final zProps = StyledStackDescriptor.fromContext(mix);
+    return buildWithMix(context, (mix) {
+      final zProps = StyledStackDescriptor.fromContext(mix);
 
-        return Stack(
-          alignment: zProps.alignment,
-          clipBehavior: zProps.clipBehavior,
-          fit: zProps.fit,
-          children: children,
-        );
-      },
-    );
+      return Stack(
+        alignment: zProps.alignment,
+        fit: zProps.fit,
+        clipBehavior: zProps.clipBehavior,
+        children: children,
+      );
+    });
   }
 }
 
 class ZBox extends StyledWidget {
   const ZBox({
+    this.children = const <Widget>[],
+    super.inherit,
+    super.key,
     @Deprecated('Use the style parameter instead') super.mix,
     super.style,
-    super.key,
     super.variants,
-    super.inherit,
-    this.children = const <Widget>[],
   });
 
   final List<Widget> children;
@@ -57,10 +54,7 @@ class ZBox extends StyledWidget {
       context,
       (mix) => MixedContainer(
         mix: mix,
-        child: MixedStack(
-          mix: mix,
-          children: children,
-        ),
+        child: MixedStack(children: children, mix: mix),
       ),
     );
   }
@@ -68,9 +62,9 @@ class ZBox extends StyledWidget {
 
 class MixedStack extends StatelessWidget {
   const MixedStack({
+    this.children = const <Widget>[],
     super.key,
     required this.mix,
-    this.children = const <Widget>[],
   });
 
   final MixData mix;
@@ -82,8 +76,8 @@ class MixedStack extends StatelessWidget {
 
     return Stack(
       alignment: zProps.alignment,
-      clipBehavior: zProps.clipBehavior,
       fit: zProps.fit,
+      clipBehavior: zProps.clipBehavior,
       children: children,
     );
   }

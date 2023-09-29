@@ -5,14 +5,14 @@ import 'pressable_state.dart';
 
 class Pressable extends StatefulWidget {
   const Pressable({
-    required this.child,
-    required this.onPressed,
-    this.onLongPress,
-    this.focusNode,
     this.autofocus = false,
-    this.onFocusChange,
     this.behavior,
+    required this.child,
+    this.focusNode,
     super.key,
+    this.onFocusChange,
+    this.onLongPress,
+    required this.onPressed,
   });
 
   final Widget child;
@@ -20,40 +20,41 @@ class Pressable extends StatefulWidget {
   final VoidCallback? onLongPress;
   final FocusNode? focusNode;
   final bool autofocus;
-  final Function(bool)? onFocusChange;
+  final Function(bool focus)? onFocusChange;
 
   final HitTestBehavior? behavior;
 
   @override
+  // Ignore no need to make this api public.
   // ignore: library_private_types_in_public_api
-  _PressableState createState() => _PressableState();
+  _PressableWidgetState createState() => _PressableWidgetState();
 }
 
-class _PressableState extends State<Pressable> {
-  late FocusNode node;
+class _PressableWidgetState extends State<Pressable> {
+  late FocusNode _node;
 
   @override
   void initState() {
     super.initState();
-    node = widget.focusNode ?? _createFocusNode();
+    _node = widget.focusNode ?? _createFocusNode();
+  }
+
+  FocusNode _createFocusNode() {
+    return FocusNode(debugLabel: '${widget.runtimeType}');
   }
 
   @override
   void didUpdateWidget(Pressable oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.focusNode != oldWidget.focusNode) {
-      node = widget.focusNode ?? node;
+      _node = widget.focusNode ?? _node;
     }
   }
 
   @override
   void dispose() {
-    if (widget.focusNode == null) node.dispose();
+    if (widget.focusNode == null) _node.dispose();
     super.dispose();
-  }
-
-  FocusNode _createFocusNode() {
-    return FocusNode(debugLabel: '${widget.runtimeType}');
   }
 
   bool _hover = false;
@@ -63,7 +64,7 @@ class _PressableState extends State<Pressable> {
 
   bool get _onEnabled => widget.onPressed != null || widget.onLongPress != null;
 
-  PressableState get state {
+  PressableState get _state {
     if (widget.onPressed == null && widget.onLongPress == null) {
       return PressableState.disabled;
     }
@@ -100,23 +101,38 @@ class _PressableState extends State<Pressable> {
   Widget build(BuildContext context) {
     return MergeSemantics(
       child: Semantics(
-        button: true,
-        enabled: _onEnabled,
-        focusable: _onEnabled && node.canRequestFocus,
-        focused: node.hasFocus,
         child: GestureDetector(
-          behavior: widget.behavior,
-          onTap: () {
-            widget.onPressed?.call();
-          },
+          child: FocusableActionDetector(
+            enabled: _onEnabled,
+            focusNode: _node,
+            autofocus: widget.autofocus,
+            onShowFocusHighlight: (v) {
+              updateState(() => _focus = v);
+            },
+            onShowHoverHighlight: (v) {
+              updateState(() => _hover = v);
+            },
+            onFocusChange: widget.onFocusChange,
+            child: PressableNotifier(
+              child: widget.child,
+              state: _state,
+              focus: _focus,
+            ),
+          ),
           onTapDown: (_) {
             updateState(() => _pressed = true);
           },
           onTapUp: (_) {
             handleUnpress();
           },
+          onTap: () {
+            widget.onPressed?.call();
+          },
           onTapCancel: () {
             handleUnpress();
+          },
+          onLongPressCancel: () {
+            updateState(() => _longpressed = false);
           },
           onLongPress: widget.onLongPress,
           onLongPressStart: (_) {
@@ -125,27 +141,12 @@ class _PressableState extends State<Pressable> {
           onLongPressEnd: (_) {
             updateState(() => _longpressed = false);
           },
-          onLongPressCancel: () {
-            updateState(() => _longpressed = false);
-          },
-          child: FocusableActionDetector(
-            focusNode: node,
-            autofocus: widget.autofocus,
-            enabled: _onEnabled,
-            onFocusChange: widget.onFocusChange,
-            onShowFocusHighlight: (v) {
-              updateState(() => _focus = v);
-            },
-            onShowHoverHighlight: (v) {
-              updateState(() => _hover = v);
-            },
-            child: PressableNotifier(
-              state: state,
-              focus: _focus,
-              child: widget.child,
-            ),
-          ),
+          behavior: widget.behavior,
         ),
+        enabled: _onEnabled,
+        button: true,
+        focusable: _onEnabled && _node.canRequestFocus,
+        focused: _node.hasFocus,
       ),
     );
   }

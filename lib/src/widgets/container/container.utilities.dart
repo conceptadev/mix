@@ -15,6 +15,7 @@ import '../../dtos/radius/radius_dto.dart';
 import '../../dtos/shadow/box_shadow.dto.dart';
 
 class ContainerStyleUtilities {
+  const ContainerStyleUtilities();
   StyledContainerAttributes margin(double value) {
     return StyledContainerAttributes(
       margin: EdgeInsetsDto.only(
@@ -54,8 +55,8 @@ class ContainerStyleUtilities {
   }) {
     return StyledContainerAttributes(
       margin: EdgeInsetsDto.symmetric(
-        vertical: vertical,
         horizontal: horizontal,
+        vertical: vertical,
       ),
     );
   }
@@ -69,9 +70,7 @@ class ContainerStyleUtilities {
   }
 
   StyledContainerAttributes marginTop(double value) {
-    return StyledContainerAttributes(
-      margin: EdgeInsetsDto.only(top: value),
-    );
+    return StyledContainerAttributes(margin: EdgeInsetsDto.only(top: value));
   }
 
   StyledContainerAttributes marginRight(double value) {
@@ -127,9 +126,9 @@ class ContainerStyleUtilities {
     return StyledContainerAttributes(
       padding: EdgeInsetsDto.only(
         top: top,
-        right: right,
         bottom: bottom,
         left: left,
+        right: right,
       ),
     );
   }
@@ -140,8 +139,8 @@ class ContainerStyleUtilities {
   }) {
     return StyledContainerAttributes(
       padding: EdgeInsetsDto.symmetric(
-        vertical: vertical,
         horizontal: horizontal,
+        vertical: vertical,
       ),
     );
   }
@@ -172,17 +171,13 @@ class ContainerStyleUtilities {
 
   StyledContainerAttributes paddingHorizontal(double value) {
     return StyledContainerAttributes(
-      padding: EdgeInsetsDto.symmetric(
-        horizontal: value,
-      ),
+      padding: EdgeInsetsDto.symmetric(horizontal: value),
     );
   }
 
   StyledContainerAttributes paddingVertical(double value) {
     return StyledContainerAttributes(
-      padding: EdgeInsetsDto.symmetric(
-        vertical: value,
-      ),
+      padding: EdgeInsetsDto.symmetric(vertical: value),
     );
   }
 
@@ -194,10 +189,10 @@ class ContainerStyleUtilities {
   }) {
     return StyledContainerAttributes(
       padding: EdgeInsetsDirectionalDto.only(
-        top: top,
         bottom: bottom,
-        start: start,
         end: end,
+        start: start,
+        top: top,
       ),
     );
   }
@@ -219,56 +214,36 @@ class ContainerStyleUtilities {
   }
 
   StyledContainerAttributes backgroundColor(Color color) {
-    return StyledContainerAttributes(
-      color: ColorDto.from(color),
-    );
+    return StyledContainerAttributes(color: ColorDto.from(color));
   }
 
   StyledContainerAttributes height(double height) {
-    return StyledContainerAttributes(
-      height: height,
-    );
+    return StyledContainerAttributes(height: height);
   }
 
   StyledContainerAttributes width(double width) {
-    return StyledContainerAttributes(
-      width: width,
-    );
+    return StyledContainerAttributes(width: width);
   }
 
   StyledContainerAttributes maxHeight(double maxHeight) {
-    return StyledContainerAttributes(
-      maxHeight: maxHeight,
-    );
+    return StyledContainerAttributes(maxHeight: maxHeight);
   }
 
   StyledContainerAttributes maxWidth(double maxWidth) {
-    return StyledContainerAttributes(
-      maxWidth: maxWidth,
-    );
+    return StyledContainerAttributes(maxWidth: maxWidth);
   }
 
   StyledContainerAttributes minHeight(double minHeight) {
-    return StyledContainerAttributes(
-      minHeight: minHeight,
-    );
+    return StyledContainerAttributes(minHeight: minHeight);
   }
 
   StyledContainerAttributes minWidth(double minWidth) {
-    return StyledContainerAttributes(
-      minWidth: minWidth,
-    );
-  }
-
-  StyledContainerAttributes _borderRadius(BorderRadiusGeometryDto radius) {
-    return StyledContainerAttributes(borderRadius: radius);
+    return StyledContainerAttributes(minWidth: minWidth);
   }
 
   StyledContainerAttributes rounded(double value) {
     return _borderRadius(
-      BorderRadiusDto.all(
-        RadiusDto.circular(value),
-      ),
+      BorderRadiusDto.all(RadiusDto.circular(value)),
     );
   }
 
@@ -310,10 +285,7 @@ class ContainerStyleUtilities {
     );
   }
 
-  StyledContainerAttributes roundedHorizontal({
-    double? left,
-    double? right,
-  }) {
+  StyledContainerAttributes roundedHorizontal({double? left, double? right}) {
     return _borderRadius(
       BorderRadiusDto.horizontal(
         left: left != null ? RadiusDto.circular(left) : null,
@@ -322,10 +294,7 @@ class ContainerStyleUtilities {
     );
   }
 
-  StyledContainerAttributes roundedVertical({
-    double? top,
-    double? bottom,
-  }) {
+  StyledContainerAttributes roundedVertical({double? top, double? bottom}) {
     return _borderRadius(
       BorderRadiusDto.vertical(
         top: top != null ? RadiusDto.circular(top) : null,
@@ -358,21 +327,6 @@ class ContainerStyleUtilities {
     );
   }
 
-  BorderSideDto _borderSide({
-    Color? color,
-    double? width,
-    BorderStyle? style,
-    BorderSide? as,
-  }) {
-    return as != null
-        ? BorderSideDto.from(as)
-        : BorderSideDto.only(
-            color: ColorDto.maybeFrom(color),
-            width: width,
-            style: style,
-          );
-  }
-
   StyledContainerAttributes border({
     Color? color,
     double? width,
@@ -401,11 +355,7 @@ class ContainerStyleUtilities {
   }) {
     return StyledContainerAttributes(
       border: BorderDto.only(
-        top: _borderSide(
-          color: color,
-          width: width,
-          style: style,
-        ),
+        top: _borderSide(color: color, width: width, style: style),
       ),
     );
   }
@@ -417,11 +367,7 @@ class ContainerStyleUtilities {
   }) {
     return StyledContainerAttributes(
       border: BorderDto.only(
-        bottom: _borderSide(
-          color: color,
-          width: width,
-          style: style,
-        ),
+        bottom: _borderSide(color: color, width: width, style: style),
       ),
     );
   }
@@ -434,12 +380,7 @@ class ContainerStyleUtilities {
   }) {
     return StyledContainerAttributes(
       border: BorderDto.only(
-        left: _borderSide(
-          color: color,
-          width: width,
-          style: style,
-          as: as,
-        ),
+        left: _borderSide(color: color, width: width, style: style, as: as),
       ),
     );
   }
@@ -452,12 +393,7 @@ class ContainerStyleUtilities {
   }) {
     return StyledContainerAttributes(
       border: BorderDto.only(
-        right: _borderSide(
-          color: color,
-          width: width,
-          style: style,
-          as: as,
-        ),
+        right: _borderSide(color: color, width: width, style: style, as: as),
       ),
     );
   }
@@ -506,12 +442,7 @@ class ContainerStyleUtilities {
   }) {
     return StyledContainerAttributes(
       border: BorderDirectionalDto.only(
-        top: _borderSide(
-          color: color,
-          width: width,
-          style: style,
-          as: as,
-        ),
+        top: _borderSide(color: color, width: width, style: style, as: as),
       ),
     );
   }
@@ -542,12 +473,7 @@ class ContainerStyleUtilities {
   }) {
     return StyledContainerAttributes(
       border: BorderDirectionalDto.only(
-        start: _borderSide(
-          color: color,
-          width: width,
-          style: style,
-          as: as,
-        ),
+        start: _borderSide(color: color, width: width, style: style, as: as),
       ),
     );
   }
@@ -560,12 +486,7 @@ class ContainerStyleUtilities {
   }) {
     return StyledContainerAttributes(
       border: BorderDirectionalDto.only(
-        end: _borderSide(
-          color: color,
-          width: width,
-          style: style,
-          as: as,
-        ),
+        end: _borderSide(color: color, width: width, style: style, as: as),
       ),
     );
   }
@@ -637,9 +558,7 @@ class ContainerStyleUtilities {
       spreadRadius: spreadRadius,
     );
 
-    return StyledContainerAttributes(
-      boxShadow: [boxShadow],
-    );
+    return StyledContainerAttributes(boxShadow: [boxShadow]);
   }
 
   StyledContainerAttributes elevation(int elevation) {
@@ -650,10 +569,10 @@ class ContainerStyleUtilities {
     );
 
     const boxShadow = BoxShadowDto(
-      blurRadius: 0,
-      offset: Offset(0, 0),
-      spreadRadius: 0,
       color: ColorDto(Colors.transparent),
+      offset: Offset(0, 0),
+      blurRadius: 0,
+      spreadRadius: 0,
     );
 
     if (elevation == 0) {
@@ -672,9 +591,7 @@ class ContainerStyleUtilities {
   @Deprecated('Use border(color:color) instead')
   StyledContainerAttributes borderColor(Color color) {
     return StyledContainerAttributes(
-      border: BorderDto.all(
-        color: ColorDto.maybeFrom(color),
-      ),
+      border: BorderDto.all(color: ColorDto.maybeFrom(color)),
     );
   }
 
@@ -690,9 +607,7 @@ class ContainerStyleUtilities {
 
   @Deprecated('Use backgroundColor(style:style) instead')
   StyledContainerAttributes bgColor(Color color) {
-    return StyledContainerAttributes(
-      color: ColorDto.from(color),
-    );
+    return StyledContainerAttributes(color: ColorDto.from(color));
   }
 
   @Deprecated('Use alignment instead')
@@ -706,11 +621,7 @@ class ContainerStyleUtilities {
     double? width,
     BorderStyle? style,
   }) {
-    return borderDirectionalEnd(
-      color: color,
-      width: width,
-      style: style,
-    );
+    return borderDirectionalEnd(color: color, width: width, style: style);
   }
 
   @Deprecated('Use borderDirectionalStart instead')
@@ -721,11 +632,7 @@ class ContainerStyleUtilities {
   }) {
     return StyledContainerAttributes(
       border: BorderDirectionalDto.only(
-        start: _borderSide(
-          color: color,
-          width: width,
-          style: style,
-        ),
+        start: _borderSide(color: color, width: width, style: style),
       ),
     );
   }
@@ -733,18 +640,14 @@ class ContainerStyleUtilities {
   @Deprecated('Use paddingDirectionalStart instead')
   StyledContainerAttributes paddingStart(double value) {
     return StyledContainerAttributes(
-      padding: EdgeInsetsDirectionalDto.only(
-        start: value,
-      ),
+      padding: EdgeInsetsDirectionalDto.only(start: value),
     );
   }
 
   @Deprecated('Use paddingDirectionalEnd instead')
   StyledContainerAttributes paddingEnd(double value) {
     return StyledContainerAttributes(
-      padding: EdgeInsetsDirectionalDto.only(
-        end: value,
-      ),
+      padding: EdgeInsetsDirectionalDto.only(end: value),
     );
   }
 
@@ -760,5 +663,24 @@ class ContainerStyleUtilities {
     return StyledContainerAttributes(
       margin: EdgeInsetsDirectionalDto.only(end: value),
     );
+  }
+
+  StyledContainerAttributes _borderRadius(BorderRadiusGeometryDto radius) {
+    return StyledContainerAttributes(borderRadius: radius);
+  }
+
+  BorderSideDto _borderSide({
+    Color? color,
+    double? width,
+    BorderStyle? style,
+    BorderSide? as,
+  }) {
+    return as != null
+        ? BorderSideDto.from(as)
+        : BorderSideDto.only(
+            color: ColorDto.maybeFrom(color),
+            width: width,
+            style: style,
+          );
   }
 }

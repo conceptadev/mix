@@ -1,18 +1,20 @@
 import 'package:flutter/rendering.dart';
 
 class RenderGap extends RenderBox {
-  RenderGap({
-    required double mainAxisExtent,
-    double? crossAxisExtent,
-    Axis? fallbackDirection,
-    Color? color,
-  })  : _mainAxisExtent = mainAxisExtent,
-        _crossAxisExtent = crossAxisExtent,
-        _color = color,
-        _fallbackDirection = fallbackDirection;
-
-  double get mainAxisExtent => _mainAxisExtent;
   double _mainAxisExtent;
+  double? _crossAxisExtent;
+  Axis? _fallbackDirection;
+  Color? _color;
+  double get mainAxisExtent => _mainAxisExtent;
+  double? get crossAxisExtent => _crossAxisExtent;
+  Axis? get fallbackDirection => _fallbackDirection;
+  Color? get color => _color;
+  Axis? get _direction {
+    final parentNode = parent;
+
+    return parentNode is RenderFlex ? parentNode.direction : fallbackDirection;
+  }
+
   set mainAxisExtent(double value) {
     if (_mainAxisExtent != value) {
       _mainAxisExtent = value;
@@ -20,8 +22,6 @@ class RenderGap extends RenderBox {
     }
   }
 
-  double? get crossAxisExtent => _crossAxisExtent;
-  double? _crossAxisExtent;
   set crossAxisExtent(double? value) {
     if (_crossAxisExtent != value) {
       _crossAxisExtent = value;
@@ -29,8 +29,6 @@ class RenderGap extends RenderBox {
     }
   }
 
-  Axis? get fallbackDirection => _fallbackDirection;
-  Axis? _fallbackDirection;
   set fallbackDirection(Axis? value) {
     if (_fallbackDirection != value) {
       _fallbackDirection = value;
@@ -38,20 +36,22 @@ class RenderGap extends RenderBox {
     }
   }
 
-  Axis? get _direction {
-    final parentNode = parent;
-
-    return parentNode is RenderFlex ? parentNode.direction : fallbackDirection;
-  }
-
-  Color? get color => _color;
-  Color? _color;
   set color(Color? value) {
     if (_color != value) {
       _color = value;
       markNeedsPaint();
     }
   }
+
+  RenderGap({
+    Color? color,
+    double? crossAxisExtent,
+    Axis? fallbackDirection,
+    required double mainAxisExtent,
+  })  : _mainAxisExtent = mainAxisExtent,
+        _crossAxisExtent = crossAxisExtent,
+        _color = color,
+        _fallbackDirection = fallbackDirection;
 
   @override
   double computeMinIntrinsicWidth(double height) {
@@ -85,30 +85,19 @@ class RenderGap extends RenderBox {
     )!;
   }
 
-  double? _computeIntrinsicExtent(Axis axis, double Function() compute) {
-    final Axis? direction = _direction;
-
-    return direction == axis
-        ? _mainAxisExtent
-        : _crossAxisExtent!.isFinite
-            ? _crossAxisExtent
-            : compute();
-  }
-
   @override
   Size computeDryLayout(BoxConstraints constraints) {
-    final Axis? direction = _direction;
+    final direction = _direction;
 
     if (direction != null) {
       return direction == Axis.horizontal
           ? constraints.constrain(Size(mainAxisExtent, crossAxisExtent!))
           : constraints.constrain(Size(crossAxisExtent!, mainAxisExtent));
-    } else {
-      throw FlutterError(
-        'A Gap widget must be placed directly inside a Flex widget '
-        'or its fallbackDirection must not be null',
-      );
     }
+    throw FlutterError(
+      'A Gap widget must be placed directly inside a Flex widget '
+      'or its fallbackDirection must not be null',
+    );
   }
 
   @override
@@ -119,7 +108,7 @@ class RenderGap extends RenderBox {
   @override
   void paint(PaintingContext context, Offset offset) {
     if (color != null) {
-      final Paint paint = Paint()..color = color!;
+      final paint = Paint()..color = color!;
       context.canvas.drawRect(offset & size, paint);
     }
   }
@@ -131,5 +120,15 @@ class RenderGap extends RenderBox {
     properties.add(DoubleProperty('crossAxisExtent', crossAxisExtent));
     properties.add(ColorProperty('color', color));
     properties.add(EnumProperty<Axis>('fallbackDirection', fallbackDirection));
+  }
+
+  double? _computeIntrinsicExtent(Axis axis, double Function() compute) {
+    final direction = _direction;
+
+    return direction == axis
+        ? _mainAxisExtent
+        : _crossAxisExtent!.isFinite
+            ? _crossAxisExtent
+            : compute();
   }
 }

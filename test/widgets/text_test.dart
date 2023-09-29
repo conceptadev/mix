@@ -10,15 +10,10 @@ void main() {
     const widgetText = 'Mix Text Widget';
     testWidgets('Adds text on widget', (tester) async {
       await tester.pumpWidget(
-        TestMixWidget(
-          child: StyleMix().text(widgetText),
-        ),
+        TestMixWidget(child: StyleMix().text(widgetText)),
       );
 
-      expect(
-        tester.widget<Text>(find.byType(Text)).data,
-        widgetText,
-      );
+      expect(tester.widget<Text>(find.byType(Text)).data, widgetText);
     });
 
     testWidgets('Adds Text properties on widget', (tester) async {
@@ -52,17 +47,17 @@ void main() {
         TestMixWidget(
           child: StyleMix(
             TextUtility.textStyle(
-              fontSize: 20,
-              wordSpacing: 2,
-              letterSpacing: 3,
-              textBaseline: TextBaseline.ideographic,
               fontFamily: 'Roboto',
               fontWeight: FontWeight.bold,
-              color: Colors.amber,
               fontStyle: FontStyle.italic,
+              fontSize: 20,
+              letterSpacing: 3,
+              wordSpacing: 2,
+              textBaseline: TextBaseline.ideographic,
+              color: Colors.amber,
+              backgroundColor: Colors.blue,
               locale: const Locale('es', 'US'),
               height: 10,
-              backgroundColor: Colors.blue,
             ),
           ).text(widgetText),
         ),
@@ -107,50 +102,38 @@ void main() {
     testWidgets('Resolves text styles', (tester) async {
       final ts1 = StyleMix(
         textStyle(
-          fontSize: 20,
-          wordSpacing: 2,
-          letterSpacing: 3,
-          textBaseline: TextBaseline.ideographic,
-          fontFamily: 'Roboto',
-          fontWeight: FontWeight.bold,
-          color: Colors.amber,
-          fontStyle: FontStyle.italic,
-          locale: const Locale('es', 'US'),
-          height: 10,
           backgroundColor: Colors.blue,
+          color: Colors.amber,
+          fontFamily: 'Roboto',
+          fontSize: 20,
+          fontStyle: FontStyle.italic,
+          fontWeight: FontWeight.bold,
+          height: 10,
+          letterSpacing: 3,
+          locale: const Locale('es', 'US'),
+          textBaseline: TextBaseline.ideographic,
+          wordSpacing: 2,
         ),
       );
 
       final ts2 = StyleMix(
-        textStyle(
-          fontSize: 30,
-          wordSpacing: 3,
-          letterSpacing: 4,
-        ),
+        textStyle(fontSize: 30, letterSpacing: 4, wordSpacing: 3),
       );
 
       final ts3 = StyleMix(
-        textStyle(
-          fontSize: 40,
-          wordSpacing: 4,
-          letterSpacing: 5,
-        ),
+        textStyle(fontSize: 40, letterSpacing: 5, wordSpacing: 4),
       );
 
       final merged = StyleMix.combine([ts1, ts2, ts3]);
 
-      await tester.pumpWidget(
-        TestMixWidget(
-          child: merged.text(widgetText),
-        ),
-      );
+      await tester.pumpWidget(TestMixWidget(child: merged.text(widgetText)));
 
       final textProp = tester.widget<Text>(find.byType(Text));
 
       final textAttributes =
           merged.values.attributesOfType<StyledTextAttributes>();
 
-      expect(textAttributes?.styles?.length, 3);
+      expect(textAttributes?.styles.length, 3);
 
       expect(textProp.style!.fontSize, 40);
       expect(textProp.style!.wordSpacing, 4);
@@ -172,40 +155,29 @@ void main() {
     testWidgets('Resolves TextStyleToken', (tester) async {
       final ts1 = StyleMix(
         textStyle(
-          fontSize: 20,
-          wordSpacing: 2,
-          letterSpacing: 3,
           backgroundColor: Colors.blue,
+          fontSize: 20,
+          letterSpacing: 3,
+          wordSpacing: 2,
         ),
       );
 
       const contextStyle = TextStyle(
         fontSize: 30,
-        wordSpacing: 3,
         letterSpacing: 4,
+        wordSpacing: 3,
       );
 
       const textStyleToken = TextStyleToken('_test_text_style_token_');
 
-      final ts2 = StyleMix(
-        textStyle(as: textStyleToken),
-      );
+      final ts2 = StyleMix(textStyle(as: textStyleToken));
 
-      final ts3 = StyleMix(
-        textStyle(
-          letterSpacing: 5,
-        ),
-      );
+      final ts3 = StyleMix(textStyle(letterSpacing: 5));
 
       final merged = StyleMix.combine([ts1, ts2, ts3]);
 
       await tester.pumpWidget(
         MaterialApp(
-          theme: ThemeData(
-            textTheme: const TextTheme(
-              displaySmall: contextStyle,
-            ),
-          ),
           home: MixTheme(
             data: MixThemeData(
               textStyles: {
@@ -213,9 +185,10 @@ void main() {
                     Theme.of(context).textTheme.displaySmall,
               },
             ),
-            child: TestMixWidget(
-              child: merged.text(widgetText),
-            ),
+            child: TestMixWidget(child: merged.text(widgetText)),
+          ),
+          theme: ThemeData(
+            textTheme: const TextTheme(displaySmall: contextStyle),
           ),
         ),
       );

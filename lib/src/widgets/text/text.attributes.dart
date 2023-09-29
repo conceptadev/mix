@@ -9,9 +9,6 @@ import 'text_directives/text_directives.dart';
 typedef TextAttributes = StyledTextAttributes;
 
 class StyledTextAttributes extends StyledWidgetAttributes {
-  final List<TextStyleDto>? _styles;
-  final TextStyleDto? _style;
-
   final StrutStyle? strutStyle;
   final TextAlign? textAlign;
 
@@ -26,104 +23,12 @@ class StyledTextAttributes extends StyledWidgetAttributes {
 
   final List<TextDirective> directives;
 
-  const StyledTextAttributes({
-    TextStyleDto? style,
-    List<TextStyleDto>? styles,
-    this.strutStyle,
-    this.textAlign,
-    this.locale,
-    this.softWrap,
-    this.overflow,
-    this.textScaleFactor,
-    this.maxLines,
-    this.textWidthBasis,
-    this.textHeightBehavior,
-    this.directives = const [],
-  })  : _styles = styles,
-        _style = style;
+  final List<TextStyleDto>? _styles;
+  final TextStyleDto? _style;
 
-  factory StyledTextAttributes.fromValues({
-    TextStyle? style,
-    StrutStyle? strutStyle,
-    TextAlign? textAlign,
-    Locale? locale,
-    bool? softWrap,
-    TextOverflow? overflow,
-    double? textScaleFactor,
-    int? maxLines,
-    TextWidthBasis? textWidthBasis,
-    TextHeightBehavior? textHeightBehavior,
-    List<TextDirective>? directives,
-  }) {
-    return StyledTextAttributes(
-      style: TextStyleDto.maybeFrom(style),
-      strutStyle: strutStyle,
-      textAlign: textAlign,
-      locale: locale,
-      softWrap: softWrap,
-      overflow: overflow,
-      textScaleFactor: textScaleFactor,
-      maxLines: maxLines,
-      textWidthBasis: textWidthBasis,
-      textHeightBehavior: textHeightBehavior,
-      directives: directives ?? const [],
-    );
-  }
-
-  // Combines the text styles
-  List<TextStyleDto>? get styles {
+  // Combines the text styles.
+  List<TextStyleDto> get styles {
     return [if (_style != null) _style!, ...?_styles];
-  }
-
-  @override
-  StyledTextAttributes merge(StyledTextAttributes? other) {
-    if (other == null) return this;
-
-    return copyWith(
-      // Need to inherit to allow for overrides
-      styles: other.styles,
-
-      strutStyle: other.strutStyle,
-      textAlign: other.textAlign,
-      locale: other.locale,
-      softWrap: other.softWrap,
-      overflow: other.overflow,
-      textScaleFactor: other.textScaleFactor,
-      maxLines: other.maxLines,
-
-      textWidthBasis: other.textWidthBasis,
-      textHeightBehavior: other.textHeightBehavior,
-      directives: other.directives,
-    );
-  }
-
-  @override
-  StyledTextAttributes copyWith({
-    List<TextStyleDto>? styles,
-    StrutStyle? strutStyle,
-    TextAlign? textAlign,
-    Locale? locale,
-    bool? softWrap,
-    TextOverflow? overflow,
-    double? textScaleFactor,
-    int? maxLines,
-    TextWidthBasis? textWidthBasis,
-    TextHeightBehavior? textHeightBehavior,
-    List<TextDirective>? directives,
-  }) {
-    return StyledTextAttributes(
-      styles: [...?this.styles, ...?styles],
-      strutStyle: this.strutStyle?.merge(strutStyle) ?? strutStyle,
-      textAlign: textAlign ?? this.textAlign,
-      locale: locale ?? this.locale,
-      softWrap: softWrap ?? this.softWrap,
-      overflow: overflow ?? this.overflow,
-      textScaleFactor: textScaleFactor ?? this.textScaleFactor,
-      maxLines: maxLines ?? this.maxLines,
-      textWidthBasis: textWidthBasis ?? this.textWidthBasis,
-      textHeightBehavior: textHeightBehavior ?? this.textHeightBehavior,
-      directives: [...this.directives, ...?directives],
-    );
   }
 
   @override
@@ -140,4 +45,98 @@ class StyledTextAttributes extends StyledWidgetAttributes {
         textHeightBehavior,
         directives,
       ];
+  const StyledTextAttributes({
+    this.directives = const [],
+    this.locale,
+    this.maxLines,
+    this.overflow,
+    this.softWrap,
+    this.strutStyle,
+    TextStyleDto? style,
+    List<TextStyleDto>? styles,
+    this.textAlign,
+    this.textHeightBehavior,
+    this.textScaleFactor,
+    this.textWidthBasis,
+  })  : _styles = styles,
+        _style = style;
+
+  factory StyledTextAttributes.fromValues({
+    List<TextDirective>? directives,
+    Locale? locale,
+    int? maxLines,
+    TextOverflow? overflow,
+    bool? softWrap,
+    StrutStyle? strutStyle,
+    TextStyle? style,
+    TextAlign? textAlign,
+    TextHeightBehavior? textHeightBehavior,
+    double? textScaleFactor,
+    TextWidthBasis? textWidthBasis,
+  }) {
+    return StyledTextAttributes(
+      directives: directives ?? const [],
+      locale: locale,
+      maxLines: maxLines,
+      overflow: overflow,
+      softWrap: softWrap,
+      strutStyle: strutStyle,
+      style: TextStyleDto.maybeFrom(style),
+      textAlign: textAlign,
+      textHeightBehavior: textHeightBehavior,
+      textScaleFactor: textScaleFactor,
+      textWidthBasis: textWidthBasis,
+    );
+  }
+
+  @override
+  StyledTextAttributes merge(StyledTextAttributes? other) {
+    if (other == null) return this;
+
+    return copyWith(
+      directives: other.directives,
+      locale: other.locale,
+      maxLines: other.maxLines,
+
+      overflow: other.overflow,
+      softWrap: other.softWrap,
+      strutStyle: other.strutStyle,
+      // Need to inherit to allow for overrides.
+      styles: other.styles,
+
+      textAlign: other.textAlign,
+      textHeightBehavior: other.textHeightBehavior,
+      textScaleFactor: other.textScaleFactor,
+      textWidthBasis: other.textWidthBasis,
+    );
+  }
+
+  @override
+  StyledTextAttributes copyWith({
+    List<TextDirective>? directives,
+    Locale? locale,
+    int? maxLines,
+    TextOverflow? overflow,
+    bool? softWrap,
+    StrutStyle? strutStyle,
+    List<TextStyleDto>? styles,
+    TextAlign? textAlign,
+    TextHeightBehavior? textHeightBehavior,
+    double? textScaleFactor,
+    TextWidthBasis? textWidthBasis,
+  }) {
+    return StyledTextAttributes(
+      directives: [...this.directives, ...?directives],
+      locale: locale ?? this.locale,
+      maxLines: maxLines ?? this.maxLines,
+      overflow: overflow ?? this.overflow,
+      softWrap: softWrap ?? this.softWrap,
+      strutStyle: this.strutStyle?.merge(strutStyle) ?? strutStyle,
+      styles: [...this.styles, ...?styles],
+      textAlign: textAlign ?? this.textAlign,
+      textHeightBehavior: textHeightBehavior ?? this.textHeightBehavior,
+      textScaleFactor: textScaleFactor ?? this.textScaleFactor,
+      textWidthBasis: textWidthBasis ?? this.textWidthBasis,
+    );
+  }
 }

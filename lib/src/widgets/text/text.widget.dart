@@ -54,6 +54,25 @@ class MixedText extends StatelessWidget {
   final String? semanticsLabel;
 
   @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+
+    properties.add(
+      DiagnosticsProperty<String>(
+        'text',
+        content,
+      ),
+    );
+
+    properties.add(
+      DiagnosticsProperty<MixData>(
+        'props',
+        mix,
+      ),
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
     final common = CommonDescriptor.fromContext(mix);
     final text = StyledTextDescriptor.fromContext(mix);
@@ -66,54 +85,33 @@ class MixedText extends StatelessWidget {
 
     final textWidget = Text(
       modifiedContent,
-      textDirection: common.textDirection,
-      textWidthBasis: text.textWidthBasis,
-      textScaleFactor: text.textScaleFactor,
-      locale: text.locale,
-      maxLines: text.maxLines,
-      overflow: text.overflow,
-      softWrap: text.softWrap,
-      strutStyle: text.strutStyle,
       style: text.style,
+      strutStyle: text.strutStyle,
       textAlign: text.textAlign,
-      textHeightBehavior: text.textHeightBehavior,
+      textDirection: common.textDirection,
+      locale: text.locale,
+      softWrap: text.softWrap,
+      overflow: text.overflow,
+      textScaleFactor: text.textScaleFactor,
+      maxLines: text.maxLines,
       semanticsLabel: semanticsLabel,
+      textWidthBasis: text.textWidthBasis,
+      textHeightBehavior: text.textHeightBehavior,
     );
 
     return common.animated
         ? AnimatedDefaultTextStyle(
+            child: textWidget,
             style: text.style ??
                 Theme.of(context).textTheme.bodyLarge ??
                 const TextStyle(),
-            duration: common.animationDuration,
-            curve: common.animationCurve,
+            textAlign: text.textAlign,
             softWrap: text.softWrap,
             overflow: text.overflow,
-            textAlign: text.textAlign,
             maxLines: text.maxLines,
-            child: textWidget,
+            curve: common.animationCurve,
+            duration: common.animationDuration,
           )
         : textWidget;
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-
-    properties.add(
-      DiagnosticsProperty<String>(
-        'text',
-        content,
-        defaultValue: null,
-      ),
-    );
-
-    properties.add(
-      DiagnosticsProperty<MixData>(
-        'props',
-        mix,
-        defaultValue: null,
-      ),
-    );
   }
 }

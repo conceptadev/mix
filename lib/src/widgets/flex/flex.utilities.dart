@@ -8,56 +8,42 @@ import 'flex.attributes.dart';
 class FlexUtilities {
   const FlexUtilities();
 
-  // Create a FlexAttribues for the direction axis
+  // Create a FlexAttribues for the direction axis.
   StyledFlexAttributes direction(Axis direction) {
-    return StyledFlexAttributes(
-      direction: direction,
-    );
+    return StyledFlexAttributes(direction: direction);
   }
 
-  // Create a FlexAttribues for the direction vertical axis
+  // Create a FlexAttribues for the direction vertical axis.
   StyledFlexAttributes verticalDirection(VerticalDirection verticalDirection) {
-    return StyledFlexAttributes(
-      verticalDirection: verticalDirection,
-    );
+    return StyledFlexAttributes(verticalDirection: verticalDirection);
   }
 
-  // Create a FlexAttribues for the main axis
+  // Create a FlexAttribues for the main axis.
   StyledFlexAttributes mainAxisAlignment(MainAxisAlignment mainAxisAlignment) {
-    return StyledFlexAttributes(
-      mainAxisAlignment: mainAxisAlignment,
-    );
+    return StyledFlexAttributes(mainAxisAlignment: mainAxisAlignment);
   }
 
-  // Create a FlexAttribues for the main axis size
+  // Create a FlexAttribues for the main axis size.
   StyledFlexAttributes mainAxisSize(MainAxisSize mainAxisSize) {
-    return StyledFlexAttributes(
-      mainAxisSize: mainAxisSize,
-    );
+    return StyledFlexAttributes(mainAxisSize: mainAxisSize);
   }
 
-  // Create a FlexAttribues for the cross axis
+  // Create a FlexAttribues for the cross axis.
   @Deprecated('Use crossAxisAlignment instead')
   StyledFlexAttributes crossAxis(CrossAxisAlignment crossAxisAlignment) {
-    return StyledFlexAttributes(
-      crossAxisAlignment: crossAxisAlignment,
-    );
+    return StyledFlexAttributes(crossAxisAlignment: crossAxisAlignment);
   }
 
-  // Create a FlexAttribues for the cross axis
+  // Create a FlexAttribues for the cross axis.
   StyledFlexAttributes crossAxisAlignment(
     CrossAxisAlignment crossAxisAlignment,
   ) {
-    return StyledFlexAttributes(
-      crossAxisAlignment: crossAxisAlignment,
-    );
+    return StyledFlexAttributes(crossAxisAlignment: crossAxisAlignment);
   }
 
-  // Create a FlexAttribues for gap size
+  // Create a FlexAttribues for gap size.
   StyledFlexAttributes gap(double gapSize) {
-    return StyledFlexAttributes(
-      gapSize: gapSize,
-    );
+    return StyledFlexAttributes(gapSize: gapSize);
   }
 
   @Deprecated('Use mainAxisAlignment instead')

@@ -16,29 +16,41 @@ class StyledImageDescriptor {
   final AlignmentGeometry alignment;
   final ImageRepeat repeat;
 
+  @override
+  int get hashCode {
+    return color.hashCode ^
+        scale.hashCode ^
+        width.hashCode ^
+        height.hashCode ^
+        colorBlendMode.hashCode ^
+        fit.hashCode ^
+        alignment.hashCode ^
+        repeat.hashCode;
+  }
+
   const StyledImageDescriptor({
+    required this.alignment,
     this.color,
-    this.scale,
-    this.width,
-    this.height,
     this.colorBlendMode,
     this.fit,
-    required this.alignment,
+    this.height,
     required this.repeat,
+    this.scale,
+    this.width,
   });
 
   factory StyledImageDescriptor.fromContext(MixData mix) {
     final attributes = mix.attributesOfType<StyledImageAttributes>();
 
     return StyledImageDescriptor(
+      alignment: attributes?.alignment ?? Alignment.center,
       color: attributes?.color?.resolve(mix),
-      scale: attributes?.scale,
-      width: attributes?.width,
-      height: attributes?.height,
       colorBlendMode: attributes?.colorBlendMode,
       fit: attributes?.fit,
-      alignment: attributes?.alignment ?? Alignment.center,
+      height: attributes?.height,
       repeat: attributes?.repeat ?? ImageRepeat.noRepeat,
+      scale: attributes?.scale,
+      width: attributes?.width,
     );
   }
 
@@ -55,18 +67,6 @@ class StyledImageDescriptor {
         other.fit == fit &&
         other.alignment == alignment &&
         other.repeat == repeat;
-  }
-
-  @override
-  int get hashCode {
-    return color.hashCode ^
-        scale.hashCode ^
-        width.hashCode ^
-        height.hashCode ^
-        colorBlendMode.hashCode ^
-        fit.hashCode ^
-        alignment.hashCode ^
-        repeat.hashCode;
   }
 
   @override

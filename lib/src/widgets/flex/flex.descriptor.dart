@@ -11,28 +11,38 @@ class StyledFlexDescriptor {
   final VerticalDirection verticalDirection;
   final double? gapSize;
 
+  @override
+  int get hashCode {
+    return direction.hashCode ^
+        mainAxisAlignment.hashCode ^
+        crossAxisAlignment.hashCode ^
+        mainAxisSize.hashCode ^
+        verticalDirection.hashCode ^
+        gapSize.hashCode;
+  }
+
   const StyledFlexDescriptor({
-    this.direction,
-    required this.mainAxisAlignment,
     required this.crossAxisAlignment,
+    this.direction,
+    this.gapSize,
+    required this.mainAxisAlignment,
     required this.mainAxisSize,
     required this.verticalDirection,
-    this.gapSize,
   });
 
   factory StyledFlexDescriptor.fromContext(MixData mix) {
     final flexAttributes = mix.attributesOfType<StyledFlexAttributes>();
 
     return StyledFlexDescriptor(
-      direction: flexAttributes?.direction,
-      mainAxisAlignment:
-          flexAttributes?.mainAxisAlignment ?? MainAxisAlignment.start,
       crossAxisAlignment:
           flexAttributes?.crossAxisAlignment ?? CrossAxisAlignment.center,
+      direction: flexAttributes?.direction,
+      gapSize: flexAttributes?.gapSize,
+      mainAxisAlignment:
+          flexAttributes?.mainAxisAlignment ?? MainAxisAlignment.start,
       mainAxisSize: flexAttributes?.mainAxisSize ?? MainAxisSize.max,
       verticalDirection:
           flexAttributes?.verticalDirection ?? VerticalDirection.down,
-      gapSize: flexAttributes?.gapSize,
     );
   }
 
@@ -47,15 +57,5 @@ class StyledFlexDescriptor {
         other.mainAxisSize == mainAxisSize &&
         other.verticalDirection == verticalDirection &&
         other.gapSize == gapSize;
-  }
-
-  @override
-  int get hashCode {
-    return direction.hashCode ^
-        mainAxisAlignment.hashCode ^
-        crossAxisAlignment.hashCode ^
-        mainAxisSize.hashCode ^
-        verticalDirection.hashCode ^
-        gapSize.hashCode;
   }
 }

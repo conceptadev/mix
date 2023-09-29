@@ -15,6 +15,8 @@ class ClipDecorator extends WidgetDecorator<ClipDecorator> {
   final BorderRadius borderRadius;
   final ClipDecoratorType clipType;
 
+  @override
+  get props => [borderRadius, clipType];
   const ClipDecorator(
     this.clipType, {
     this.borderRadius = BorderRadius.zero,
@@ -31,48 +33,31 @@ class ClipDecorator extends WidgetDecorator<ClipDecorator> {
     final common = CommonDescriptor.fromContext(mix);
 
     if (clipType == ClipDecoratorType.triangle) {
-      return ClipPath(
-        key: key,
-        clipper: TriangleClipper(),
-        child: child,
-      );
+      return ClipPath(key: key, clipper: const TriangleClipper(), child: child);
     }
 
     if (clipType == ClipDecoratorType.rect) {
-      return ClipRect(
-        key: key,
-        child: child,
-      );
+      return ClipRect(key: key, child: child);
     }
 
     if (clipType == ClipDecoratorType.rounded) {
       return common.animated
           ? AnimatedClipRRect(
-              key: key,
               duration: common.animationDuration,
               curve: common.animationCurve,
               borderRadius: borderRadius,
               child: child,
-            )
-          : ClipRRect(
               key: key,
-              borderRadius: borderRadius,
-              child: child,
-            );
+            )
+          : ClipRRect(key: key, borderRadius: borderRadius, child: child);
     }
 
     if (clipType == ClipDecoratorType.oval) {
-      return ClipOval(
-        key: key,
-        child: child,
-      );
+      return ClipOval(key: key, child: child);
     }
 
     throw Exception('Unknown clip type: $clipType');
   }
-
-  @override
-  get props => [borderRadius, clipType];
 }
 
 class AnimatedClipRRect extends StatelessWidget {
@@ -84,11 +69,6 @@ class AnimatedClipRRect extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-  final Duration duration;
-  final Curve curve;
-  final BorderRadius borderRadius;
-  final Widget child;
-
   static Widget _builder(
     BuildContext context,
     BorderRadius radius,
@@ -97,12 +77,17 @@ class AnimatedClipRRect extends StatelessWidget {
     return ClipRRect(borderRadius: radius, child: child);
   }
 
+  final Duration duration;
+  final Curve curve;
+  final BorderRadius borderRadius;
+  final Widget child;
+
   @override
   Widget build(BuildContext context) {
     return TweenAnimationBuilder<BorderRadius>(
+      tween: Tween(begin: BorderRadius.zero, end: borderRadius),
       duration: duration,
       curve: curve,
-      tween: Tween(begin: BorderRadius.zero, end: borderRadius),
       builder: _builder,
       child: child,
     );
@@ -110,6 +95,7 @@ class AnimatedClipRRect extends StatelessWidget {
 }
 
 class TriangleClipper extends CustomClipper<Path> {
+  const TriangleClipper();
   @override
   Path getClip(Size size) {
     final path = Path();

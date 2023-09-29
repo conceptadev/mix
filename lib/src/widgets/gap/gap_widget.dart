@@ -182,10 +182,10 @@ class _RawGap extends LeafRenderObjectWidget {
   @override
   RenderObject createRenderObject(BuildContext context) {
     return RenderGap(
-      mainAxisExtent: mainAxisExtent,
+      color: color,
       crossAxisExtent: crossAxisExtent ?? 0,
       fallbackDirection: fallbackDirection,
-      color: color,
+      mainAxisExtent: mainAxisExtent,
     );
   }
 

@@ -7,16 +7,12 @@ typedef IconAttributes = StyledIconAttributes;
 class StyledIconAttributes extends StyledWidgetAttributes {
   final ColorDto? color;
   final double? size;
-  const StyledIconAttributes({
-    this.color,
-    this.size,
-  });
+  @override
+  get props => [color, size];
+  const StyledIconAttributes({this.color, this.size});
 
   @override
-  StyledIconAttributes copyWith({
-    ColorDto? color,
-    double? size,
-  }) {
+  StyledIconAttributes copyWith({ColorDto? color, double? size}) {
     return StyledIconAttributes(
       color: color ?? this.color,
       size: size ?? this.size,
@@ -27,15 +23,6 @@ class StyledIconAttributes extends StyledWidgetAttributes {
   StyledIconAttributes merge(StyledIconAttributes? other) {
     if (other == null) return this;
 
-    return copyWith(
-      color: other.color,
-      size: other.size,
-    );
+    return copyWith(color: other.color, size: other.size);
   }
-
-  @override
-  get props => [
-        color,
-        size,
-      ];
 }

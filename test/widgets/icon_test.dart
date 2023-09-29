@@ -12,15 +12,10 @@ void main() {
   group("Mix Icon widget", () {
     testWidgets('Adds icon on widget', (tester) async {
       await tester.pumpWidget(
-        TestMixWidget(
-          child: StyleMix().icon(Icons.bolt),
-        ),
+        TestMixWidget(child: StyleMix().icon(Icons.bolt)),
       );
 
-      expect(
-        tester.widget<Icon>(find.byType(Icon)).icon,
-        Icons.bolt,
-      );
+      expect(tester.widget<Icon>(find.byType(Icon)).icon, Icons.bolt);
     });
 
     testWidgets('Adds Icon properties on widget', (tester) async {

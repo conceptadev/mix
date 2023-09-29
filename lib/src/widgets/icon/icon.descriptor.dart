@@ -7,10 +7,9 @@ class StyledIconDescriptor {
   final Color? color;
   final double size;
 
-  const StyledIconDescriptor({
-    this.color,
-    required this.size,
-  });
+  @override
+  int get hashCode => color.hashCode ^ size.hashCode;
+  const StyledIconDescriptor({this.color, required this.size});
 
   factory StyledIconDescriptor.fromContext(MixData mix) {
     final iconAttributes = mix.attributesOfType<StyledIconAttributes>();
@@ -18,9 +17,7 @@ class StyledIconDescriptor {
     StyledIconDescriptor props;
 
     if (iconAttributes == null) {
-      props = const StyledIconDescriptor(
-        size: 24,
-      );
+      props = const StyledIconDescriptor(size: 24);
     } else {
       final theme = IconTheme.of(mix.resolveToken.context);
 
@@ -41,7 +38,4 @@ class StyledIconDescriptor {
         other.color == color &&
         other.size == size;
   }
-
-  @override
-  int get hashCode => color.hashCode ^ size.hashCode;
 }

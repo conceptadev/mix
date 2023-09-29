@@ -13,10 +13,8 @@ void main() {
 
     await tester.pumpWidget(
       MaterialApp(
+        home: StyledContainer(style: style),
         theme: ThemeData.dark(),
-        home: StyledContainer(
-          style: style,
-        ),
       ),
     );
     final containerWidget =
@@ -24,7 +22,7 @@ void main() {
 
     final widgetFinder = find.byType(MixedContainer);
 
-    // Get BuildContext for boxWidget
+    // Get BuildContext for boxWidget.
     BuildContext context = tester.element(widgetFinder);
 
     expect(context.brightness, Brightness.dark);
@@ -34,9 +32,6 @@ void main() {
 
   testWidgets('not Variant', (tester) async {
     await tester.pumpWidget(MaterialApp(
-      theme: ThemeData(),
-      darkTheme: ThemeData.dark(),
-      themeMode: ThemeMode.light,
       home: StyledContainer(
         style: StyleMix(
           onNot(onDark)(backgroundColor(Colors.black)),
@@ -44,6 +39,9 @@ void main() {
           width(50),
         ),
       ),
+      theme: ThemeData(),
+      darkTheme: ThemeData.dark(),
+      themeMode: ThemeMode.light,
     ));
 
     final colorWidget = tester.widget<Container>(find.byType(Container));
@@ -52,15 +50,15 @@ void main() {
 
   testWidgets('Variant onDark light', (tester) async {
     await tester.pumpWidget(MaterialApp(
-      theme: ThemeData(),
-      darkTheme: ThemeData.dark(),
-      themeMode: ThemeMode.light,
       home: StyledContainer(
         style: StyleMix(
           onDark(backgroundColor(Colors.teal)),
           backgroundColor(Colors.red),
         ),
       ),
+      theme: ThemeData(),
+      darkTheme: ThemeData.dark(),
+      themeMode: ThemeMode.light,
     ));
 
     final colorWidget = tester.widget<Container>(find.byType(Container));
@@ -69,15 +67,15 @@ void main() {
 
   testWidgets('Variant onDark dark', (tester) async {
     await tester.pumpWidget(MaterialApp(
-      theme: ThemeData(),
-      darkTheme: ThemeData.dark(),
-      themeMode: ThemeMode.dark,
       home: StyledContainer(
         style: StyleMix(
           onDark(backgroundColor(Colors.teal)),
           backgroundColor(Colors.red),
         ),
       ),
+      theme: ThemeData(),
+      darkTheme: ThemeData.dark(),
+      themeMode: ThemeMode.dark,
     ));
 
     final colorWidget = tester.widget<Container>(find.byType(Container));
@@ -86,24 +84,24 @@ void main() {
 
   testWidgets('Variant onHover', (tester) async {
     await tester.pumpWidget(MaterialApp(
-      theme: ThemeData(),
-      darkTheme: ThemeData.dark(),
-      themeMode: ThemeMode.dark,
       home: Pressable(
-        onPressed: () {},
         child: StyledContainer(
           style: StyleMix(
             onHover(backgroundColor(Colors.teal)),
             backgroundColor(Colors.red),
           ),
         ),
+        onPressed: () {},
       ),
+      theme: ThemeData(),
+      darkTheme: ThemeData.dark(),
+      themeMode: ThemeMode.dark,
     ));
 
     final colorWidget = tester.widget<Container>(find.byType(Container));
     expect(colorWidget.color, Colors.red);
 
-    // TODO: Figure out how to simulate hover
+    // TODO: Figure out how to simulate hover.
   });
 
   testWidgets('Variant onXSmall', (tester) async {
@@ -122,7 +120,7 @@ void main() {
     expect(find.byType(Container), findsOneWidget);
     expect(tester.widget<Container>(find.byType(Container)).color, Colors.red);
 
-    // Set screen size to xsmall
+    // Set screen size to xsmall.
     await tester.pumpWidget(
       MediaQuery(
         data: const MediaQueryData(size: Size(100, 100)),
@@ -154,7 +152,7 @@ void main() {
 
     expect(find.byType(Container), findsOneWidget);
     expect(tester.widget<Container>(find.byType(Container)).color, Colors.red);
-    // Set screen size to small
+    // Set screen size to small.
     await tester.pumpWidget(
       MediaQuery(
         data: const MediaQueryData(size: Size(300, 300)),
@@ -172,7 +170,7 @@ void main() {
   });
 
   testWidgets('Variant onMedium', (tester) async {
-    // Set screen size to medium
+    // Set screen size to medium.
     await tester.pumpWidget(
       MediaQuery(
         data: const MediaQueryData(size: Size(3000, 3000)),
@@ -188,7 +186,7 @@ void main() {
     expect(find.byType(Container), findsOneWidget);
     expect(tester.widget<Container>(find.byType(Container)).color, Colors.red);
 
-    // Set screen size to medium
+    // Set screen size to medium.
     await tester.pumpWidget(
       MediaQuery(
         data: const MediaQueryData(size: Size(1300, 1300)),
@@ -206,7 +204,7 @@ void main() {
   });
 
   testWidgets('Variant onLarge', (tester) async {
-    // Set screen size to large
+    // Set screen size to large.
     await tester.pumpWidget(
       MediaQuery(
         data: const MediaQueryData(size: Size(3000, 3000)),
@@ -222,7 +220,7 @@ void main() {
     expect(find.byType(Container), findsOneWidget);
     expect(tester.widget<Container>(find.byType(Container)).color, Colors.teal);
 
-    // Set screen size to large
+    // Set screen size to large.
     await tester.pumpWidget(
       MediaQuery(
         data: const MediaQueryData(size: Size(2000, 2000)),
@@ -240,7 +238,7 @@ void main() {
   });
 
   testWidgets('Variant onPortrait', (tester) async {
-    // Set screen size to portrait
+    // Set screen size to portrait.
     await tester.pumpWidget(
       MediaQuery(
         data: const MediaQueryData(size: Size(2000, 1000)),
@@ -256,7 +254,7 @@ void main() {
     expect(find.byType(Container), findsOneWidget);
     expect(tester.widget<Container>(find.byType(Container)).color, Colors.red);
 
-    // Set screen size to portrait
+    // Set screen size to portrait.
     await tester.pumpWidget(
       MediaQuery(
         data: const MediaQueryData(size: Size(1000, 2000)),
@@ -274,7 +272,7 @@ void main() {
   });
 
   testWidgets('Variant onLandscape', (tester) async {
-    // Set screen size to landscape
+    // Set screen size to landscape.
     await tester.pumpWidget(
       MediaQuery(
         data: const MediaQueryData(size: Size(2000, 1000)),
@@ -290,7 +288,7 @@ void main() {
     expect(find.byType(Container), findsOneWidget);
     expect(tester.widget<Container>(find.byType(Container)).color, Colors.teal);
 
-    // Set screen size to landscape
+    // Set screen size to landscape.
     await tester.pumpWidget(
       MediaQuery(
         data: const MediaQueryData(size: Size(1000, 2000)),
@@ -308,7 +306,7 @@ void main() {
   });
 
   testWidgets('Variant onRTL', (tester) async {
-    // Set screen size to RTL
+    // Set screen size to RTL.
     await tester.pumpWidget(
       Directionality(
         textDirection: TextDirection.rtl,
@@ -324,7 +322,7 @@ void main() {
     expect(find.byType(Container), findsOneWidget);
     expect(tester.widget<Container>(find.byType(Container)).color, Colors.teal);
 
-    // Set screen size to RTL
+    // Set screen size to RTL.
     await tester.pumpWidget(
       Directionality(
         textDirection: TextDirection.ltr,
@@ -342,7 +340,7 @@ void main() {
   });
 
   testWidgets('Variant onLTR', (tester) async {
-    // Set screen size to LTR
+    // Set screen size to LTR.
     await tester.pumpWidget(
       Directionality(
         textDirection: TextDirection.ltr,
@@ -358,7 +356,7 @@ void main() {
     expect(find.byType(Container), findsOneWidget);
     expect(tester.widget<Container>(find.byType(Container)).color, Colors.teal);
 
-    // Set screen size to LTR
+    // Set screen size to LTR.
     await tester.pumpWidget(
       Directionality(
         textDirection: TextDirection.rtl,
@@ -375,5 +373,5 @@ void main() {
     expect(tester.widget<Container>(find.byType(Container)).color, Colors.red);
   });
 
-  // TODO: Figure out how to test enabed/disabled
+  // TODO: Figure out how to test enabed/disabled.
 }

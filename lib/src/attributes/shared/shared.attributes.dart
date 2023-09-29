@@ -4,7 +4,7 @@ import '../attribute.dart';
 
 class SharedStyleAttributes extends StyledWidgetAttributes {
   final bool? visible;
-  //Animation
+  // Animation.
   final bool? animated;
   final Duration? animationDuration;
   final Curve? animationCurve;
@@ -19,17 +19,13 @@ class SharedStyleAttributes extends StyledWidgetAttributes {
   });
 
   @override
-  SharedStyleAttributes merge(SharedStyleAttributes? other) {
-    if (other == null) return this;
-
-    return copyWith(
-      visible: other.visible,
-      animated: other.animated,
-      animationDuration: other.animationDuration,
-      animationCurve: other.animationCurve,
-      textDirection: other.textDirection,
-    );
-  }
+  get props => [
+        visible,
+        animated,
+        animationDuration,
+        animationCurve,
+        textDirection,
+      ];
 
   @override
   SharedStyleAttributes copyWith({
@@ -49,11 +45,15 @@ class SharedStyleAttributes extends StyledWidgetAttributes {
   }
 
   @override
-  get props => [
-        visible,
-        animated,
-        animationDuration,
-        animationCurve,
-        textDirection,
-      ];
+  SharedStyleAttributes merge(SharedStyleAttributes? other) {
+    if (other == null) return this;
+
+    return copyWith(
+      visible: other.visible,
+      animated: other.animated,
+      animationDuration: other.animationDuration,
+      animationCurve: other.animationCurve,
+      textDirection: other.textDirection,
+    );
+  }
 }

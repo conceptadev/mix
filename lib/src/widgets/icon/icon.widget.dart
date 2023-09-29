@@ -12,11 +12,11 @@ typedef IconMix = StyledIcon;
 class StyledIcon extends StyledWidget {
   const StyledIcon(
     this.icon, {
-    this.semanticLabel,
-    @Deprecated('Use the style parameter instead') super.mix,
-    super.style,
-    super.key,
     super.inherit,
+    super.key,
+    @Deprecated('Use the style parameter instead') super.mix,
+    this.semanticLabel,
+    super.style,
     super.variants,
   });
 
@@ -25,13 +25,7 @@ class StyledIcon extends StyledWidget {
 
   @override
   Widget build(BuildContext context) {
-    return buildWithMix(
-      context,
-      (mix) => MixedIcon(
-        mix: mix,
-        icon: icon,
-      ),
-    );
+    return buildWithMix(context, (mix) => MixedIcon(icon: icon, mix: mix));
   }
 }
 
@@ -40,10 +34,10 @@ typedef IconMixedWidget = MixedIcon;
 
 class MixedIcon extends StatelessWidget {
   const MixedIcon({
-    required this.mix,
     this.icon,
-    this.semanticLabel,
     super.key,
+    required this.mix,
+    this.semanticLabel,
   });
 
   final IconData? icon;
@@ -61,43 +55,34 @@ class MixedIcon extends StatelessWidget {
     }
     Widget iconWidget = Icon(
       icon,
-      color: iconProps.color,
       size: iconProps.size,
+      color: iconProps.color,
       textDirection: commonProps.textDirection,
     );
 
     if (commonProps.animated) {
       iconWidget = TweenAnimationBuilder<double>(
+        tween: Tween<double>(end: iconProps.size),
         duration: commonProps.animationDuration,
         curve: commonProps.animationCurve,
-        tween: Tween<double>(
-          end: iconProps.size,
-        ),
         builder: (context, value, child) {
           final sizeValue = value;
 
           return TweenAnimationBuilder<Color?>(
+            tween: ColorTween(end: iconProps.color),
             duration: commonProps.animationDuration,
             curve: commonProps.animationCurve,
-            tween: ColorTween(end: iconProps.color),
-            child: child,
             builder: (context, value, child) {
               final colorValue = value;
 
-              return Icon(
-                icon,
-                color: colorValue,
-                size: sizeValue,
-              );
+              return Icon(icon, size: sizeValue, color: colorValue);
             },
+            child: child,
           );
         },
       );
     }
 
-    return Semantics(
-      label: semanticLabel,
-      child: iconWidget,
-    );
+    return Semantics(child: iconWidget, label: semanticLabel);
   }
 }

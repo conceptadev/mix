@@ -5,7 +5,7 @@ import 'shared.attributes.dart';
 
 class CommonDescriptor {
   final bool visible;
-  //Animation
+  // Animation.
   final bool animated;
   final Duration animationDuration;
   final Curve animationCurve;
@@ -25,13 +25,20 @@ class CommonDescriptor {
     return CommonDescriptor(
       visible: common?.visible ?? true,
       animated: common?.animated ?? false,
-      animationDuration: common?.animationDuration ??
-          const Duration(
-            milliseconds: 100,
-          ),
+      animationDuration:
+          common?.animationDuration ?? const Duration(milliseconds: 100),
       animationCurve: common?.animationCurve ?? Curves.linear,
       textDirection: common?.textDirection,
     );
+  }
+
+  @override
+  int get hashCode {
+    return visible.hashCode ^
+        animated.hashCode ^
+        animationDuration.hashCode ^
+        animationCurve.hashCode ^
+        textDirection.hashCode;
   }
 
   @override
@@ -44,14 +51,5 @@ class CommonDescriptor {
         other.animationDuration == animationDuration &&
         other.animationCurve == animationCurve &&
         other.textDirection == textDirection;
-  }
-
-  @override
-  int get hashCode {
-    return visible.hashCode ^
-        animated.hashCode ^
-        animationDuration.hashCode ^
-        animationCurve.hashCode ^
-        textDirection.hashCode;
   }
 }

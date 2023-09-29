@@ -6,9 +6,7 @@ class HelperUtility {
   const HelperUtility._();
 
   @Deprecated('Use style.merge(otherStyle), instead')
-  static NestedStyleAttribute apply(
-    List<StyleMix> mixes,
-  ) {
+  static NestedStyleAttribute apply(List<StyleMix> mixes) {
     return NestedStyleAttribute(StyleMix.combine(mixes));
   }
 }
@@ -18,31 +16,22 @@ typedef FunctionWithListParam<ParamType, ReturnType> = ReturnType Function(
 );
 
 typedef FunctionWithMapParam<ParamType extends Map<String, dynamic>, ReturnType>
-    = ReturnType Function(
-  ParamType params,
-);
+    = ReturnType Function(ParamType params);
 
 class SpreadNamedParams<ParamType extends Map<String, dynamic>, ReturnType> {
   final FunctionWithMapParam<ParamType, ReturnType> _function;
   final Map<String, dynamic> _initialParams;
 
-  SpreadNamedParams(
-    this._function, {
-    ParamType? initialParams,
-  }) : _initialParams = initialParams ?? {};
-
-  ReturnType call({ParamType? additionalParams}) {
-    final params = {..._initialParams, ...?additionalParams} as ParamType;
-
-    return _function(params);
-  }
+  const SpreadNamedParams(this._function, {ParamType? initialParams})
+      : _initialParams = initialParams ?? const {};
 }
 
 class SpreadPositionalParams<ParamType, ReturnType> {
-  const SpreadPositionalParams(this.fn);
-
   final FunctionWithListParam<ParamType, ReturnType> fn;
 
+  const SpreadPositionalParams(this.fn);
+
+// Ignore needed for API design.
   // ignore: long-parameter-list
   ReturnType call([
     ParamType? p1,

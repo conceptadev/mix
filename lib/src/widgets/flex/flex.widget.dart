@@ -23,11 +23,7 @@ class StyledFlex extends StyledWidget {
   Widget build(BuildContext context) {
     return buildWithMix(
       context,
-      (mix) => MixedFlex(
-        mix: mix,
-        direction: direction,
-        children: children,
-      ),
+      (mix) => MixedFlex(mix: mix, direction: direction, children: children),
     );
   }
 }
@@ -52,11 +48,7 @@ class FlexBox extends StyledWidget {
       context,
       (mix) => MixedContainer(
         mix: mix,
-        child: MixedFlex(
-          mix: mix,
-          direction: direction,
-          children: children,
-        ),
+        child: MixedFlex(mix: mix, direction: direction, children: children),
       ),
     );
   }
@@ -69,9 +61,7 @@ class StyledRow extends StyledFlex {
     super.variants,
     super.inherit,
     super.children = const <Widget>[],
-  }) : super(
-          direction: Axis.horizontal,
-        );
+  }) : super(direction: Axis.horizontal);
 }
 
 class StyledColumn extends StyledFlex {
@@ -81,9 +71,7 @@ class StyledColumn extends StyledFlex {
     super.variants,
     super.inherit,
     super.children = const <Widget>[],
-  }) : super(
-          direction: Axis.vertical,
-        );
+  }) : super(direction: Axis.vertical);
 }
 
 class HBox extends FlexBox {
@@ -94,9 +82,7 @@ class HBox extends FlexBox {
     super.key,
     super.inherit,
     super.children = const <Widget>[],
-  }) : super(
-          direction: Axis.horizontal,
-        );
+  }) : super(direction: Axis.horizontal);
 }
 
 class VBox extends FlexBox {
@@ -107,9 +93,7 @@ class VBox extends FlexBox {
     super.key,
     super.inherit,
     super.children = const <Widget>[],
-  }) : super(
-          direction: Axis.vertical,
-        );
+  }) : super(direction: Axis.vertical);
 }
 
 class MixedFlex extends StatelessWidget {
@@ -124,18 +108,17 @@ class MixedFlex extends StatelessWidget {
   final Axis direction;
   final MixData? mix;
 
-  // Creates gap to space in between
+  // Creates gap to space in between.
   List<Widget> _renderChildrenWithGap(double? gapSize, List<Widget> children) {
-    // If no gap is set return widgets
+    // If no gap is set return widgets.
     if (gapSize == null) return children;
 
-    // List of widgets with gap
+    // List of widgets with gap.
     final widgets = <Widget>[];
     for (var idx = 0; idx < children.length; idx++) {
       final widget = children[idx];
       widgets.add(widget);
-      // Add gap if not last item if its not last element
-
+      // Add gap if not last item if its not last element.
       if (idx != children.length - 1) {
         widgets.add(Gap(gapSize));
       }
@@ -151,13 +134,10 @@ class MixedFlex extends StatelessWidget {
     return Flex(
       direction: direction,
       mainAxisAlignment: flex.mainAxisAlignment,
-      crossAxisAlignment: flex.crossAxisAlignment,
       mainAxisSize: flex.mainAxisSize,
+      crossAxisAlignment: flex.crossAxisAlignment,
       verticalDirection: flex.verticalDirection,
-      children: _renderChildrenWithGap(
-        flex.gapSize,
-        children,
-      ),
+      children: _renderChildrenWithGap(flex.gapSize, children),
     );
   }
 }

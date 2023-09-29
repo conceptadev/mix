@@ -25,10 +25,7 @@ class StyledContainer extends StyledWidget {
   Widget build(BuildContext context) {
     return buildWithMix(
       context,
-      (mix) => MixedContainer(
-        mix: mix,
-        child: child,
-      ),
+      (mix) => MixedContainer(mix: mix, child: child),
     );
   }
 }
@@ -37,14 +34,11 @@ class StyledContainer extends StyledWidget {
 typedef BoxMixedWidget = MixedContainer;
 
 class MixedContainer extends StatelessWidget {
-  // Child Widget
-  final Widget? child;
+  const MixedContainer({required this.mix, this.child, Key? key})
+      : super(key: key);
 
-  const MixedContainer({
-    required this.mix,
-    this.child,
-    Key? key,
-  }) : super(key: key);
+  // Child Widget.
+  final Widget? child;
 
   final MixData mix;
 
@@ -56,41 +50,38 @@ class MixedContainer extends StatelessWidget {
     if (!common.visible) {
       return const Empty();
     }
-    var current = child;
+    Widget? current = child;
 
     current = common.animated
         ? AnimatedContainer(
+            alignment: box.alignment,
+            padding: box.padding,
             color: box.color,
             decoration: box.decoration,
-            alignment: box.alignment,
+            width: box.width,
+            height: box.height,
             constraints: box.constraints,
             margin: box.margin,
-            padding: box.padding,
-            height: box.height,
-            width: box.width,
-            duration: common.animationDuration,
-            curve: common.animationCurve,
             transform: box.transform,
             child: current,
+            curve: common.animationCurve,
+            duration: common.animationDuration,
           )
         : Container(
+            alignment: box.alignment,
+            padding: box.padding,
             color: box.color,
             decoration: box.decoration,
-            alignment: box.alignment,
+            width: box.width,
+            height: box.height,
             constraints: box.constraints,
             margin: box.margin,
-            padding: box.padding,
-            height: box.height,
-            width: box.width,
             transform: box.transform,
             child: current,
           );
     if (mix.decorators != null) {
-      // Wrap parent decorators
-      current = WidgetDecoratorWrapper(
-        mix,
-        child: current,
-      );
+      // Wrap parent decorators.
+      current = WidgetDecoratorWrapper(mix, child: current);
     }
 
     return current;

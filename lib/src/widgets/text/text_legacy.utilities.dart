@@ -76,9 +76,7 @@ class LegacyTextStyleUtility {
 
   @Deprecated(kDeprecationMessage)
   static StyledTextAttributes background(Paint? background) {
-    return LegacyTextUtility.style(
-      TextStyle(background: background),
-    );
+    return LegacyTextUtility.style(TextStyle(background: background));
   }
 
   @Deprecated(kDeprecationMessage)
@@ -90,23 +88,17 @@ class LegacyTextStyleUtility {
 
   @Deprecated(kDeprecationMessage)
   static StyledTextAttributes color(Color? color) {
-    return LegacyTextUtility.style(
-      TextStyle(color: color),
-    );
+    return LegacyTextUtility.style(TextStyle(color: color));
   }
 
   @Deprecated(kDeprecationMessage)
   static StyledTextAttributes debugLabel(String? debugLabel) {
-    return LegacyTextUtility.style(
-      TextStyle(debugLabel: debugLabel),
-    );
+    return LegacyTextUtility.style(TextStyle(debugLabel: debugLabel));
   }
 
   @Deprecated(kDeprecationMessage)
   static StyledTextAttributes decoration(TextDecoration? decoration) {
-    return LegacyTextUtility.style(
-      TextStyle(decoration: decoration),
-    );
+    return LegacyTextUtility.style(TextStyle(decoration: decoration));
   }
 
   @Deprecated(kDeprecationMessage)
@@ -134,9 +126,7 @@ class LegacyTextStyleUtility {
 
   @Deprecated(kDeprecationMessage)
   static StyledTextAttributes fontFamily(String? fontFamily) {
-    return LegacyTextUtility.style(
-      TextStyle(fontFamily: fontFamily),
-    );
+    return LegacyTextUtility.style(TextStyle(fontFamily: fontFamily));
   }
 
   @Deprecated(kDeprecationMessage)
@@ -150,86 +140,62 @@ class LegacyTextStyleUtility {
 
   @Deprecated(kDeprecationMessage)
   static StyledTextAttributes fontFeatures(List<FontFeature>? fontFeatures) {
-    return LegacyTextUtility.style(
-      TextStyle(fontFeatures: fontFeatures),
-    );
+    return LegacyTextUtility.style(TextStyle(fontFeatures: fontFeatures));
   }
 
   @Deprecated(kDeprecationMessage)
   static StyledTextAttributes fontSize(double? fontSize) {
-    return LegacyTextUtility.style(
-      TextStyle(fontSize: fontSize),
-    );
+    return LegacyTextUtility.style(TextStyle(fontSize: fontSize));
   }
 
   @Deprecated(kDeprecationMessage)
   static StyledTextAttributes fontStyle(FontStyle? fontStyle) {
-    return LegacyTextUtility.style(
-      TextStyle(fontStyle: fontStyle),
-    );
+    return LegacyTextUtility.style(TextStyle(fontStyle: fontStyle));
   }
 
   @Deprecated(kDeprecationMessage)
   static StyledTextAttributes fontWeight(FontWeight? fontWeight) {
-    return LegacyTextUtility.style(
-      TextStyle(fontWeight: fontWeight),
-    );
+    return LegacyTextUtility.style(TextStyle(fontWeight: fontWeight));
   }
 
   @Deprecated(kDeprecationMessage)
   static StyledTextAttributes foreground(Paint? foreground) {
-    return LegacyTextUtility.style(
-      TextStyle(foreground: foreground),
-    );
+    return LegacyTextUtility.style(TextStyle(foreground: foreground));
   }
 
   @Deprecated(kDeprecationMessage)
   static StyledTextAttributes height(double? height) {
-    return LegacyTextUtility.style(
-      TextStyle(height: height),
-    );
+    return LegacyTextUtility.style(TextStyle(height: height));
   }
 
   @Deprecated(kDeprecationMessage)
   static StyledTextAttributes inherit({inherit = true}) {
-    return LegacyTextUtility.style(
-      TextStyle(inherit: inherit),
-    );
+    return LegacyTextUtility.style(TextStyle(inherit: inherit));
   }
 
   @Deprecated(kDeprecationMessage)
   static StyledTextAttributes letterSpacing(double? letterSpacing) {
-    return LegacyTextUtility.style(
-      TextStyle(letterSpacing: letterSpacing),
-    );
+    return LegacyTextUtility.style(TextStyle(letterSpacing: letterSpacing));
   }
 
   @Deprecated(kDeprecationMessage)
   static StyledTextAttributes locale(Locale? locale) {
-    return LegacyTextUtility.style(
-      TextStyle(locale: locale),
-    );
+    return LegacyTextUtility.style(TextStyle(locale: locale));
   }
 
   @Deprecated(kDeprecationMessage)
   static StyledTextAttributes shadows(List<Shadow> shadows) {
-    return LegacyTextUtility.style(
-      TextStyle(shadows: shadows),
-    );
+    return LegacyTextUtility.style(TextStyle(shadows: shadows));
   }
 
   @Deprecated(kDeprecationMessage)
   static StyledTextAttributes textBaseline(TextBaseline? textBaseline) {
-    return LegacyTextUtility.style(
-      TextStyle(textBaseline: textBaseline),
-    );
+    return LegacyTextUtility.style(TextStyle(textBaseline: textBaseline));
   }
 
   @Deprecated(kDeprecationMessage)
   static StyledTextAttributes wordSpacing(double? wordSpacing) {
-    return LegacyTextUtility.style(
-      TextStyle(wordSpacing: wordSpacing),
-    );
+    return LegacyTextUtility.style(TextStyle(wordSpacing: wordSpacing));
   }
 }
 
@@ -238,29 +204,28 @@ class LegacyTextFriendlyUtility {
   const LegacyTextFriendlyUtility._();
 
   @Deprecated(kDeprecationMessage)
-  // ignore: long-parameter-list
   static StyledTextAttributes textStyle({
-    Color? color,
     Paint? background,
     Color? backgroundColor,
+    Color? color,
     String? debugLabel,
-    FontWeight? weight,
-    double? size,
+    Color? decorationColor,
+    TextDecorationStyle? decorationStyle,
+    double? decorationThickness,
     String? family,
-    FontStyle? style,
-    double? letterSpacing,
-    double? wordSpacing,
     List<String>? fontFamilyFallback,
     Paint? foreground,
     double? height,
     bool inherit = true,
+    double? letterSpacing,
     Locale? locale,
     Shadow? shadow,
     List<Shadow>? shadows,
-    double? decorationThickness,
-    TextDecorationStyle? decorationStyle,
+    double? size,
+    FontStyle? style,
     TextBaseline? textBaseline,
-    Color? decorationColor,
+    FontWeight? weight,
+    double? wordSpacing,
   }) {
     combineShadows() {
       final s = shadows ?? [];
@@ -271,26 +236,26 @@ class LegacyTextFriendlyUtility {
 
     return LegacyTextUtility.style(
       TextStyle(
+        inherit: inherit,
         color: color,
-        fontWeight: weight,
+        backgroundColor: backgroundColor,
         fontSize: size,
-        fontFamily: family,
+        fontWeight: weight,
         fontStyle: style,
         letterSpacing: letterSpacing,
         wordSpacing: wordSpacing,
-        fontFamilyFallback: fontFamilyFallback,
-        foreground: foreground,
-        height: height,
-        inherit: inherit,
-        locale: locale,
-        shadows: combineShadows(),
         textBaseline: textBaseline,
-        decorationThickness: decorationThickness,
-        decorationStyle: decorationStyle,
-        decorationColor: decorationColor,
-        debugLabel: debugLabel,
+        height: height,
+        locale: locale,
+        foreground: foreground,
         background: background,
-        backgroundColor: backgroundColor,
+        shadows: combineShadows(),
+        decorationColor: decorationColor,
+        decorationStyle: decorationStyle,
+        decorationThickness: decorationThickness,
+        debugLabel: debugLabel,
+        fontFamily: family,
+        fontFamilyFallback: fontFamilyFallback,
       ),
     );
   }
@@ -307,16 +272,12 @@ class LegacyTextFriendlyUtility {
 
   @Deprecated(kDeprecationMessage)
   static StyledTextAttributes textShadow({
-    Color color = const Color(0x33000000),
     double blurRadius = 0.0,
+    Color color = const Color(0x33000000),
     Offset offset = Offset.zero,
   }) {
     return LegacyTextStyleUtility.shadows([
-      Shadow(
-        color: color,
-        blurRadius: blurRadius,
-        offset: offset,
-      ),
+      Shadow(color: color, offset: offset, blurRadius: blurRadius),
     ]);
   }
 }

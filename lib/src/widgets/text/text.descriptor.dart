@@ -21,6 +21,21 @@ class StyledTextDescriptor {
   final TextHeightBehavior? textHeightBehavior;
   final List<TextDirective> _directives;
 
+  @override
+  int get hashCode {
+    return softWrap.hashCode ^
+        overflow.hashCode ^
+        style.hashCode ^
+        strutStyle.hashCode ^
+        textAlign.hashCode ^
+        locale.hashCode ^
+        textScaleFactor.hashCode ^
+        maxLines.hashCode ^
+        textWidthBasis.hashCode ^
+        textHeightBehavior.hashCode ^
+        _directives.hashCode;
+  }
+
   const StyledTextDescriptor({
     required this.softWrap,
     required this.overflow,
@@ -47,26 +62,24 @@ class StyledTextDescriptor {
     }
 
     return StyledTextDescriptor(
-      // Need to grab colorscheme from context
+      softWrap: textAttributes?.softWrap ?? true,
+      overflow: textAttributes?.overflow ?? TextOverflow.clip,
+      // Need to grab colorscheme from context.
       style: mergedTextStyleDto.resolve(mix),
       strutStyle: textAttributes?.strutStyle,
       textAlign: textAttributes?.textAlign,
       locale: textAttributes?.locale,
-      softWrap: textAttributes?.softWrap ?? true,
-      overflow: textAttributes?.overflow ?? TextOverflow.clip,
       textScaleFactor: textAttributes?.textScaleFactor,
       maxLines: textAttributes?.maxLines,
       textWidthBasis: textAttributes?.textWidthBasis,
       textHeightBehavior: textAttributes?.textHeightBehavior,
 
-      // Directives
+      // Directives.
       directives: textAttributes?.directives,
     );
   }
 
-  String applyTextDirectives(
-    String? text,
-  ) {
+  String applyTextDirectives(String? text) {
     if (text == null) return '';
 
     var modifiedText = text;
@@ -93,20 +106,5 @@ class StyledTextDescriptor {
         other.textWidthBasis == textWidthBasis &&
         other.textHeightBehavior == textHeightBehavior &&
         listEquals(other._directives, _directives);
-  }
-
-  @override
-  int get hashCode {
-    return softWrap.hashCode ^
-        overflow.hashCode ^
-        style.hashCode ^
-        strutStyle.hashCode ^
-        textAlign.hashCode ^
-        locale.hashCode ^
-        textScaleFactor.hashCode ^
-        maxLines.hashCode ^
-        textWidthBasis.hashCode ^
-        textHeightBehavior.hashCode ^
-        _directives.hashCode;
   }
 }
