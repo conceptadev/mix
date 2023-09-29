@@ -1,3 +1,5 @@
+// ignore_for_file: prefer-correct-identifier-length
+
 import 'package:flutter/material.dart';
 
 import '../../factory/mix_provider_data.dart';
@@ -10,7 +12,9 @@ class RadiusDto extends Dto<Radius> {
   /// The radius value on the vertical axis.
   final double _y;
 
-  const RadiusDto.circular(double radius) : this.elliptical(radius, radius);
+  const RadiusDto.circular(double radius)
+      : _x = radius,
+        _y = radius;
 
   const RadiusDto.zero() : this.elliptical(0, 0);
 
@@ -20,15 +24,11 @@ class RadiusDto extends Dto<Radius> {
         _y = y;
 
   factory RadiusDto.from(Radius radius) {
-    if (radius.x == radius.y) {
-      return RadiusDto.circular(radius.x);
-    }
-
-    return RadiusDto.elliptical(radius.x, radius.y);
+    return radius.x == radius.y
+        ? RadiusDto.circular(radius.x)
+        : RadiusDto.elliptical(radius.x, radius.y);
   }
 
-  @override
-  get props => [_x, _y];
   static RadiusDto? maybeFrom(Radius? radius) {
     if (radius == null) return null;
 
@@ -38,12 +38,14 @@ class RadiusDto extends Dto<Radius> {
   @override
   Radius resolve(MixData mix) {
     final resolvedX = _x;
+    // ignore: avoid-similar-names
     final resolvedY = _y;
 
-    if (resolvedX == 0 && resolvedY == 0) {
-      return Radius.zero;
-    }
-
-    return Radius.elliptical(resolvedX, resolvedY);
+    return resolvedX == 0 && resolvedY == 0
+        ? Radius.zero
+        : Radius.elliptical(resolvedX, resolvedY);
   }
+
+  @override
+  get props => [_x, _y];
 }

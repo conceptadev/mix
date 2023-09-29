@@ -27,9 +27,9 @@ class MixData with EqualityMixin {
   ///
   /// It takes in [widgetAttributes], [widgetDecorators] and [tokenResolver] as required parameters.
   MixData._({
+    required MixTokenResolver tokenResolver,
     required MergeableMap<StyledWidgetAttributes> widgetAttributes,
     required MergeableMap<WidgetDecorator> widgetDecorators,
-    required MixTokenResolver tokenResolver,
   })  : _widgetAttributes = widgetAttributes,
         _widgetDecorators = widgetDecorators,
         _tokenResolver = tokenResolver;
@@ -50,16 +50,50 @@ class MixData with EqualityMixin {
     );
 
     final attributes = _applyContextVariants(
-      context,
       style.values.contextVariants,
+      context,
     );
 
     final combinedValues = currentValues.merge(StyleMixData.create(attributes));
 
     return MixData._(
+      tokenResolver: MixTokenResolver(context),
       widgetAttributes: combinedValues.attributes ?? const MergeableMap.empty(),
       widgetDecorators: combinedValues.decorators ?? const MergeableMap.empty(),
-      tokenResolver: MixTokenResolver(context),
+    );
+  }
+
+  /// Internal method to handle application of context variants to [attributes].
+  ///
+  /// It accepts the [context] and the list of [attributes] as parameters.
+  static List<StyleAttribute> _applyContextVariants(
+    Iterable<StyleAttribute> attributes,
+    BuildContext context,
+  ) {
+    // Use the fold method to reduce the input attributes list
+    // into a single list of expanded attributes.
+    return attributes.fold<List<StyleAttribute>>(
+      [], // Initial empty list to accumulate the result.
+      (expanded, attribute) {
+        // Check if the current attribute is a ContextVariantAttribute.
+        if (attribute is ContextVariantAttribute) {
+          // Determine if the attribute should be applied based on the context.
+          final shouldApply = attribute.shouldApply(context);
+
+          // If willApply is true, recursively apply context variants to
+          // the attribute's value and add the result to the expanded list.
+          // Otherwise, add the attribute itself to the list.
+          return expanded
+            ..addAll(shouldApply
+                // ignore: avoid-recursive-calls
+                ? _applyContextVariants(attribute.value.toAttributes(), context)
+                : [attribute]);
+        }
+
+        // If the current attribute is not a ContextVariantAttribute,
+        // simply add it to the expanded list.
+        return expanded..add(attribute);
+      },
     );
   }
 
@@ -74,12 +108,6 @@ class MixData with EqualityMixin {
   List<WidgetDecorator> get decorators {
     return _widgetDecorators.values.toList();
   }
-
-  /// Overrides the getter function of [props] from [EqualityMixin] to specify properties necessary for distinguishing instances.
-  ///
-  /// Returns a list of properties [_widgetAttributes] & [_widgetDecorators].
-  @override
-  get props => [_widgetAttributes, _widgetDecorators];
 
   /// Retrieves an instance of the specified [StyledWidgetAttributes] type from the [MixData].
   ///
@@ -114,41 +142,15 @@ class MixData with EqualityMixin {
   /// Returns a new instance of [MixData] which is actually a merge of current and other instance.
   MixData inheritFrom(MixData other) {
     return MixData._(
+      tokenResolver: _tokenResolver,
       widgetAttributes: other._widgetAttributes.merge(_widgetAttributes),
       widgetDecorators: other._widgetDecorators.merge(_widgetDecorators),
-      tokenResolver: _tokenResolver,
     );
   }
 
-  /// Internal method to handle application of context variants to [attributes].
+  /// Overrides the getter function of [props] from [EqualityMixin] to specify properties necessary for distinguishing instances.
   ///
-  /// It accepts the [context] and the list of [attributes] as parameters.
-  static List<StyleAttribute> _applyContextVariants(
-    BuildContext context,
-    Iterable<StyleAttribute> attributes,
-  ) {
-    // Use the fold method to reduce the input attributes list
-    // into a single list of expanded attributes.
-    return attributes.fold<List<StyleAttribute>>(
-      [], // Initial empty list to accumulate the result.
-      (expanded, attribute) {
-        // Check if the current attribute is a ContextVariantAttribute.
-        if (attribute is ContextVariantAttribute) {
-          // Determine if the attribute should be applied based on the context.
-          final shouldApply = attribute.shouldApply(context);
-
-          // If willApply is true, recursively apply context variants to
-          // the attribute's value and add the result to the expanded list.
-          // Otherwise, add the attribute itself to the list.
-          return expanded
-            ..addAll(shouldApply
-                ? _applyContextVariants(context, attribute.value.toAttributes())
-                : [attribute]);
-        }
-        // If the current attribute is not a ContextVariantAttribute,
-        // simply add it to the expanded list.
-        return expanded..add(attribute);
-      },
-    );
-  }
+  /// Returns a list of properties [_widgetAttributes] & [_widgetDecorators].
+  @override
+  get props => [_widgetAttributes, _widgetDecorators];
 }

@@ -68,9 +68,6 @@ class MergeableMap<T extends Mergeable> {
   /// This is a quick way to verify if the map has stored values.
   bool get isNotEmpty => _keys.isNotEmpty;
 
-  @override
-  int get hashCode => _keys.hashCode ^ _map.hashCode;
-
   /// Retrieves the value associated with the given [key].
   ///
   /// Returns `null` if the [key] is not found.
@@ -126,4 +123,7 @@ class MergeableMap<T extends Mergeable> {
         _keys.every((key) =>
             other._map.containsKey(key) && _map[key] == other._map[key]);
   }
+
+  @override
+  int get hashCode => _keys.hashCode ^ _map.hashCode;
 }

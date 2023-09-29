@@ -12,11 +12,11 @@ import '../widgets/text/text.widget.dart';
 
 extension StyleMixExt<T extends StyleAttribute> on StyleMix {
   StyledContainer container({
-    StyleMix? style,
-    Key? key,
-    bool inherit = false,
-    List<StyleVariant>? variants,
     required Widget child,
+    bool inherit = false,
+    Key? key,
+    StyleMix? style,
+    List<StyleVariant>? variants,
   }) {
     return StyledContainer(
       style: mergeNullable(style),
@@ -28,29 +28,29 @@ extension StyleMixExt<T extends StyleAttribute> on StyleMix {
   }
 
   StyledContainer box({
+    required Widget child,
+    bool inherit = false,
+    Key? key,
     @Deprecated('Use the style parameter instead') StyleMix? mix,
     StyleMix? style,
-    Key? key,
-    bool inherit = false,
     List<StyleVariant>? variants,
-    required Widget child,
   }) {
     return container(
-      style: mergeNullable(style ?? mix),
-      key: key,
       inherit: inherit,
+      key: key,
+      style: mergeNullable(style ?? mix),
       variants: variants,
       child: child,
     );
   }
 
   HBox hbox({
+    required List<Widget> children,
+    bool inherit = false,
+    Key? key,
     @Deprecated('Use the style parameter instead') StyleMix? mix,
     StyleMix? style,
-    Key? key,
-    bool inherit = false,
     List<StyleVariant>? variants,
-    required List<Widget> children,
   }) {
     return HBox(
       style: mergeNullable(style ?? mix),
@@ -62,12 +62,12 @@ extension StyleMixExt<T extends StyleAttribute> on StyleMix {
   }
 
   StyledRow row({
+    required List<Widget> children,
+    bool inherit = false,
+    Key? key,
     @Deprecated('Use the style parameter instead') StyleMix? mix,
     StyleMix? style,
-    Key? key,
-    bool inherit = false,
     List<StyleVariant>? variants,
-    required List<Widget> children,
   }) {
     return StyledRow(
       style: mergeNullable(style ?? mix),
@@ -80,12 +80,12 @@ extension StyleMixExt<T extends StyleAttribute> on StyleMix {
 
   StyledText text(
     String text, {
-    @Deprecated('Use the style parameter instead') StyleMix? mix,
-    StyleMix? style,
-    Key? key,
     bool inherit = false,
-    List<StyleVariant>? variants,
+    Key? key,
+    @Deprecated('Use the style parameter instead') StyleMix? mix,
     String? semanticsLabel,
+    StyleMix? style,
+    List<StyleVariant>? variants,
   }) {
     return StyledText(
       text,
@@ -98,12 +98,12 @@ extension StyleMixExt<T extends StyleAttribute> on StyleMix {
   }
 
   VBox vbox({
+    required List<Widget> children,
+    bool inherit = false,
+    Key? key,
     @Deprecated('Use the style parameter instead') StyleMix? mix,
     StyleMix? style,
-    Key? key,
-    bool inherit = false,
     List<StyleVariant>? variants,
-    required List<Widget> children,
   }) {
     return VBox(
       style: mergeNullable(style ?? mix),
@@ -115,12 +115,12 @@ extension StyleMixExt<T extends StyleAttribute> on StyleMix {
   }
 
   StyledColumn column({
+    required List<Widget> children,
+    bool inherit = false,
+    Key? key,
     @Deprecated('Use the style parameter instead') StyleMix? mix,
     StyleMix? style,
-    Key? key,
-    bool inherit = false,
     List<StyleVariant>? variants,
-    required List<Widget> children,
   }) {
     return StyledColumn(
       style: mergeNullable(style ?? mix),
@@ -133,10 +133,10 @@ extension StyleMixExt<T extends StyleAttribute> on StyleMix {
 
   StyledIcon icon(
     IconData icon, {
+    bool inherit = false,
+    Key? key,
     @Deprecated('Use the style parameter instead') StyleMix? mix,
     StyleMix? style,
-    Key? key,
-    bool inherit = false,
     List<StyleVariant>? variants,
   }) {
     return StyledIcon(

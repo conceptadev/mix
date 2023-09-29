@@ -53,6 +53,16 @@ class RenderGap extends RenderBox {
     }
   }
 
+  double? _computeIntrinsicExtent(Axis axis, double Function() compute) {
+    final direction = _direction;
+
+    return direction == axis
+        ? _mainAxisExtent
+        : _crossAxisExtent!.isFinite
+            ? _crossAxisExtent
+            : compute();
+  }
+
   @override
   double computeMinIntrinsicWidth(double height) {
     return _computeIntrinsicExtent(
@@ -120,15 +130,5 @@ class RenderGap extends RenderBox {
     properties.add(DoubleProperty('crossAxisExtent', crossAxisExtent));
     properties.add(ColorProperty('color', color));
     properties.add(EnumProperty<Axis>('fallbackDirection', fallbackDirection));
-  }
-
-  double? _computeIntrinsicExtent(Axis axis, double Function() compute) {
-    final direction = _direction;
-
-    return direction == axis
-        ? _mainAxisExtent
-        : _crossAxisExtent!.isFinite
-            ? _crossAxisExtent
-            : compute();
   }
 }

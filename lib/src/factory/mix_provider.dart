@@ -1,3 +1,5 @@
+// ignore_for_file: prefer-widget-private-members
+
 import 'package:flutter/material.dart';
 
 import 'mix_provider_data.dart';
@@ -13,7 +15,7 @@ class MixProvider extends InheritedWidget {
   /// The `data` parameter is the [MixData] object to store. [child]
   /// receives the element tree that will use this context, and [key] can be set
   /// to track changes.
-  const MixProvider(this.data, {Key? key, required Widget child})
+  const MixProvider(this.data, {required Widget child, Key? key})
       : super(key: key, child: child);
 
   /// Returns the context data from the widget tree in [context].
@@ -32,13 +34,13 @@ class MixProvider extends InheritedWidget {
   /// Throws an exception if [MixProvider] is not found within the given widget
   /// tree containing [context].
   static MixData ensureOf(BuildContext context) {
-    final data = of(context);
+    final mixData = of(context);
 
-    if (data == null) {
+    if (mixData == null) {
       throw Exception('MixData not found in widget tree');
     }
 
-    return data;
+    return mixData;
   }
 
   /// Contains the context data object.

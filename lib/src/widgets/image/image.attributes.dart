@@ -30,17 +30,6 @@ class StyledImageAttributes extends StyledWidgetAttributes {
   });
 
   @override
-  get props => [
-        color,
-        scale,
-        width,
-        height,
-        colorBlendMode,
-        fit,
-        alignment,
-        repeat,
-      ];
-  @override
   StyledImageAttributes copyWith({
     ColorDto? color,
     double? scale,
@@ -78,4 +67,16 @@ class StyledImageAttributes extends StyledWidgetAttributes {
       repeat: other.repeat,
     );
   }
+
+  @override
+  get props => [
+        color,
+        scale,
+        width,
+        height,
+        colorBlendMode,
+        fit,
+        alignment,
+        repeat,
+      ];
 }

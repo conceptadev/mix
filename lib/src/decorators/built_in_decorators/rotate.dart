@@ -6,26 +6,26 @@ import '../decorator.dart';
 
 class RotateDecorator extends WidgetDecorator<RotateDecorator> {
   final int quarterTurns;
-  const RotateDecorator({required this.quarterTurns, super.key});
+  const RotateDecorator({super.key, required this.quarterTurns});
 
-  @override
-  get props => [quarterTurns];
   @override
   RotateDecorator merge(RotateDecorator other) {
     return RotateDecorator(quarterTurns: other.quarterTurns);
   }
 
   @override
-  Widget build(MixData mix, Widget child) {
+  get props => [quarterTurns];
+  @override
+  Widget build(Widget child, MixData mix) {
     final common = CommonDescriptor.fromContext(mix);
 
     if (common.animated) {
       return AnimatedRotation(
         key: key,
-        child: child,
         turns: quarterTurns / 4,
         curve: common.animationCurve,
         duration: common.animationDuration,
+        child: child,
       );
     }
 

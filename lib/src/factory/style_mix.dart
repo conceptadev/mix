@@ -24,6 +24,7 @@ class StyleMix {
   const StyleMix._(StyleMixData values) : _values = values;
 
   // Factory constructors.
+  // ignore: parameters-ordering
   factory StyleMix([
     StyleAttribute? p1,
     StyleAttribute? p2,
@@ -65,8 +66,8 @@ class StyleMix {
   /// Returns [ifTrue] if the [condition] is true, otherwise returns [ifFalse].
   factory StyleMix.chooser({
     required bool condition,
-    required StyleMix ifTrue,
     required StyleMix ifFalse,
+    required StyleMix ifTrue,
   }) {
     return condition ? ifTrue : ifFalse;
   }
@@ -86,9 +87,6 @@ class StyleMix {
 
   /// Returns a [StyleMixData] instance representing the values in this MixFactory.
   StyleMixData get values => _values;
-
-  @override
-  int get hashCode => _values.hashCode;
 
   /// Returns an iterable of [StyleAttribute] instances from this MixFactory.
   Iterable<StyleAttribute> toAttributes() {
@@ -182,7 +180,7 @@ class StyleMix {
 
     List<StyleVariant> variants = [];
 
-    for (var i = 0; i < keys.length; i++) {
+    for (int i = 0; i < keys.length; i++) {
       if (keys[i]) {
         variants.add(values[i]);
       }
@@ -197,6 +195,9 @@ class StyleMix {
 
     return other is StyleMix && other._values == _values;
   }
+
+  @override
+  int get hashCode => _values.hashCode;
 }
 
 extension DeprecatedMixExtension<T extends StyleAttribute> on StyleMix {

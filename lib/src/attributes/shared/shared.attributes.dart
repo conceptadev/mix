@@ -19,15 +19,6 @@ class SharedStyleAttributes extends StyledWidgetAttributes {
   });
 
   @override
-  get props => [
-        visible,
-        animated,
-        animationDuration,
-        animationCurve,
-        textDirection,
-      ];
-
-  @override
   SharedStyleAttributes copyWith({
     bool? visible,
     bool? animated,
@@ -56,4 +47,13 @@ class SharedStyleAttributes extends StyledWidgetAttributes {
       textDirection: other.textDirection,
     );
   }
+
+  @override
+  get props => [
+        visible,
+        animated,
+        animationDuration,
+        animationCurve,
+        textDirection,
+      ];
 }

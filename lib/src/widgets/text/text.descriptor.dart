@@ -64,21 +64,6 @@ class StyledTextDescriptor {
     );
   }
 
-  @override
-  int get hashCode {
-    return softWrap.hashCode ^
-        overflow.hashCode ^
-        style.hashCode ^
-        strutStyle.hashCode ^
-        textAlign.hashCode ^
-        locale.hashCode ^
-        textScaleFactor.hashCode ^
-        maxLines.hashCode ^
-        textWidthBasis.hashCode ^
-        textHeightBehavior.hashCode ^
-        _directives.hashCode;
-  }
-
   String applyTextDirectives(String? text) {
     if (text == null) return '';
 
@@ -106,5 +91,20 @@ class StyledTextDescriptor {
         other.textWidthBasis == textWidthBasis &&
         other.textHeightBehavior == textHeightBehavior &&
         listEquals(other._directives, _directives);
+  }
+
+  @override
+  int get hashCode {
+    return softWrap.hashCode ^
+        overflow.hashCode ^
+        style.hashCode ^
+        strutStyle.hashCode ^
+        textAlign.hashCode ^
+        locale.hashCode ^
+        textScaleFactor.hashCode ^
+        maxLines.hashCode ^
+        textWidthBasis.hashCode ^
+        textHeightBehavior.hashCode ^
+        _directives.hashCode;
   }
 }

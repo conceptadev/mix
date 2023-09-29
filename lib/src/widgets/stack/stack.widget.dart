@@ -54,7 +54,7 @@ class ZBox extends StyledWidget {
       context,
       (mix) => MixedContainer(
         mix: mix,
-        child: MixedStack(children: children, mix: mix),
+        child: MixedStack(mix: mix, children: children),
       ),
     );
   }

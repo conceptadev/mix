@@ -18,23 +18,17 @@ class ColorDto extends Dto<Color> {
       : value = color,
         _directive = directive;
 
-  @override
-  get props => [value];
   // Helper utility for internal API usage.
   static ColorDto? maybeFrom(
     Color? color, {
     ValueModifier<Color>? directive,
   }) {
-    if (color == null) {
-      return null;
-    }
-
-    return ColorDto.from(color, directive: directive);
+    return color == null ? null : ColorDto(color, directive: directive);
   }
 
   @override
   Color resolve(MixData mix) {
-    var resolvedColor = value;
+    Color resolvedColor = value;
 
     if (resolvedColor is ColorToken) {
       resolvedColor = mix.resolveToken.color(resolvedColor);
@@ -42,4 +36,7 @@ class ColorDto extends Dto<Color> {
 
     return _directive?.call(resolvedColor) ?? resolvedColor;
   }
+
+  @override
+  get props => [value];
 }

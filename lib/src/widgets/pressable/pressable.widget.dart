@@ -101,24 +101,11 @@ class _PressableWidgetState extends State<Pressable> {
   Widget build(BuildContext context) {
     return MergeSemantics(
       child: Semantics(
+        enabled: _onEnabled,
+        button: true,
+        focusable: _onEnabled && _node.canRequestFocus,
+        focused: _node.hasFocus,
         child: GestureDetector(
-          child: FocusableActionDetector(
-            enabled: _onEnabled,
-            focusNode: _node,
-            autofocus: widget.autofocus,
-            onShowFocusHighlight: (v) {
-              updateState(() => _focus = v);
-            },
-            onShowHoverHighlight: (v) {
-              updateState(() => _hover = v);
-            },
-            onFocusChange: widget.onFocusChange,
-            child: PressableNotifier(
-              child: widget.child,
-              state: _state,
-              focus: _focus,
-            ),
-          ),
           onTapDown: (_) {
             updateState(() => _pressed = true);
           },
@@ -142,11 +129,24 @@ class _PressableWidgetState extends State<Pressable> {
             updateState(() => _longpressed = false);
           },
           behavior: widget.behavior,
+          child: FocusableActionDetector(
+            enabled: _onEnabled,
+            focusNode: _node,
+            autofocus: widget.autofocus,
+            onShowFocusHighlight: (v) {
+              updateState(() => _focus = v);
+            },
+            onShowHoverHighlight: (v) {
+              updateState(() => _hover = v);
+            },
+            onFocusChange: widget.onFocusChange,
+            child: PressableNotifier(
+              state: _state,
+              focus: _focus,
+              child: widget.child,
+            ),
+          ),
         ),
-        enabled: _onEnabled,
-        button: true,
-        focusable: _onEnabled && _node.canRequestFocus,
-        focused: _node.hasFocus,
       ),
     );
   }

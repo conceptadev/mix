@@ -43,18 +43,6 @@ class StyledImageDescriptor {
   }
 
   @override
-  int get hashCode {
-    return color.hashCode ^
-        scale.hashCode ^
-        width.hashCode ^
-        height.hashCode ^
-        colorBlendMode.hashCode ^
-        fit.hashCode ^
-        alignment.hashCode ^
-        repeat.hashCode;
-  }
-
-  @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
@@ -72,5 +60,17 @@ class StyledImageDescriptor {
   @override
   String toString() {
     return 'ImageMixer(color: $color, scale: $scale, width: $width, height: $height, colorBlendMode: $colorBlendMode, fit: $fit, alignment: $alignment, repeat: $repeat)';
+  }
+
+  @override
+  int get hashCode {
+    return color.hashCode ^
+        scale.hashCode ^
+        width.hashCode ^
+        height.hashCode ^
+        colorBlendMode.hashCode ^
+        fit.hashCode ^
+        alignment.hashCode ^
+        repeat.hashCode;
   }
 }

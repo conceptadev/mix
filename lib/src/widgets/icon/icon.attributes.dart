@@ -10,8 +10,6 @@ class StyledIconAttributes extends StyledWidgetAttributes {
   const StyledIconAttributes({this.color, this.size});
 
   @override
-  get props => [color, size];
-  @override
   StyledIconAttributes copyWith({ColorDto? color, double? size}) {
     return StyledIconAttributes(
       color: color ?? this.color,
@@ -25,4 +23,7 @@ class StyledIconAttributes extends StyledWidgetAttributes {
 
     return copyWith(color: other.color, size: other.size);
   }
+
+  @override
+  get props => [color, size];
 }

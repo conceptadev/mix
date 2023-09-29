@@ -9,11 +9,12 @@ class NestedStyleAttribute extends StyleAttribute
   const NestedStyleAttribute(this.style);
 
   @override
-  get props => [style];
-  @override
   NestedStyleAttribute merge(NestedStyleAttribute? other) {
     if (other == null) return this;
 
     return NestedStyleAttribute(style.merge(other.style));
   }
+
+  @override
+  get props => [style];
 }

@@ -4,12 +4,11 @@ import '../../factory/mix_provider_data.dart';
 import 'shared.attributes.dart';
 
 class CommonDescriptor {
-  final bool visible;
-  // Animation.
   final bool animated;
-  final Duration animationDuration;
   final Curve animationCurve;
+  final Duration animationDuration;
   final TextDirection? textDirection;
+  final bool visible;
 
   const CommonDescriptor({
     required this.visible,
@@ -33,15 +32,6 @@ class CommonDescriptor {
   }
 
   @override
-  int get hashCode {
-    return visible.hashCode ^
-        animated.hashCode ^
-        animationDuration.hashCode ^
-        animationCurve.hashCode ^
-        textDirection.hashCode;
-  }
-
-  @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
@@ -51,5 +41,14 @@ class CommonDescriptor {
         other.animationDuration == animationDuration &&
         other.animationCurve == animationCurve &&
         other.textDirection == textDirection;
+  }
+
+  @override
+  int get hashCode {
+    return visible.hashCode ^
+        animated.hashCode ^
+        animationDuration.hashCode ^
+        animationCurve.hashCode ^
+        textDirection.hashCode;
   }
 }

@@ -37,16 +37,6 @@ class StyledFlexDescriptor {
   }
 
   @override
-  int get hashCode {
-    return direction.hashCode ^
-        mainAxisAlignment.hashCode ^
-        crossAxisAlignment.hashCode ^
-        mainAxisSize.hashCode ^
-        verticalDirection.hashCode ^
-        gapSize.hashCode;
-  }
-
-  @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
@@ -57,5 +47,15 @@ class StyledFlexDescriptor {
         other.mainAxisSize == mainAxisSize &&
         other.verticalDirection == verticalDirection &&
         other.gapSize == gapSize;
+  }
+
+  @override
+  int get hashCode {
+    return direction.hashCode ^
+        mainAxisAlignment.hashCode ^
+        crossAxisAlignment.hashCode ^
+        mainAxisSize.hashCode ^
+        verticalDirection.hashCode ^
+        gapSize.hashCode;
   }
 }

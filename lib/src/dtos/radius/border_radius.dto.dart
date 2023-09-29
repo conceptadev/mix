@@ -13,11 +13,29 @@ class BorderRadiusDto extends BorderRadiusGeometryDto<BorderRadius> {
   final RadiusDto? _bottomLeft;
   final RadiusDto? _bottomRight;
 
+  const BorderRadiusDto.all(RadiusDto radius)
+      : _topLeft = radius,
+        _topRight = radius,
+        _bottomLeft = radius,
+        _bottomRight = radius;
+
+  const BorderRadiusDto.vertical({RadiusDto? bottom, RadiusDto? top})
+      : _bottomLeft = bottom,
+        _bottomRight = bottom,
+        _topLeft = top,
+        _topRight = top;
+
+  const BorderRadiusDto.horizontal({RadiusDto? left, RadiusDto? right})
+      : _bottomLeft = left,
+        _bottomRight = right,
+        _topLeft = left,
+        _topRight = right;
+
   const BorderRadiusDto.only({
-    RadiusDto? topLeft,
-    RadiusDto? topRight,
     RadiusDto? bottomLeft,
     RadiusDto? bottomRight,
+    RadiusDto? topLeft,
+    RadiusDto? topRight,
   })  : _topLeft = topLeft,
         _topRight = topRight,
         _bottomLeft = bottomLeft,
@@ -25,36 +43,36 @@ class BorderRadiusDto extends BorderRadiusGeometryDto<BorderRadius> {
 
   factory BorderRadiusDto.from(BorderRadius borderRadius) {
     return BorderRadiusDto.only(
-      topLeft: RadiusDto.from(borderRadius.topLeft),
-      topRight: RadiusDto.from(borderRadius.topRight),
       bottomLeft: RadiusDto.from(borderRadius.bottomLeft),
       bottomRight: RadiusDto.from(borderRadius.bottomRight),
+      topLeft: RadiusDto.from(borderRadius.topLeft),
+      topRight: RadiusDto.from(borderRadius.topRight),
     );
   }
 
-  const BorderRadiusDto.all(RadiusDto radius)
-      : this.only(
-          topLeft: radius,
-          topRight: radius,
-          bottomLeft: radius,
-          bottomRight: radius,
-        );
+  BorderRadiusDto copyWith({
+    RadiusDto? bottomLeft,
+    RadiusDto? bottomRight,
+    RadiusDto? topLeft,
+    RadiusDto? topRight,
+  }) {
+    return BorderRadiusDto.only(
+      bottomLeft: bottomLeft ?? this.bottomLeft,
+      bottomRight: bottomRight ?? this.bottomRight,
+      topLeft: topLeft ?? this.topLeft,
+      topRight: topRight ?? this.topRight,
+    );
+  }
 
-  const BorderRadiusDto.vertical({RadiusDto? top, RadiusDto? bottom})
-      : this.only(
-          topLeft: top,
-          topRight: top,
-          bottomLeft: bottom,
-          bottomRight: bottom,
-        );
-
-  const BorderRadiusDto.horizontal({RadiusDto? left, RadiusDto? right})
-      : this.only(
-          topLeft: left,
-          topRight: right,
-          bottomLeft: left,
-          bottomRight: right,
-        );
+  @override
+  BorderRadius resolve(MixData mix) {
+    return BorderRadius.only(
+      topLeft: topLeft?.resolve(mix) ?? Radius.zero,
+      topRight: topRight?.resolve(mix) ?? Radius.zero,
+      bottomLeft: bottomLeft?.resolve(mix) ?? Radius.zero,
+      bottomRight: bottomRight?.resolve(mix) ?? Radius.zero,
+    );
+  }
 
   @override
   RadiusDto? get bottomLeft => _bottomLeft;
@@ -82,27 +100,4 @@ class BorderRadiusDto extends BorderRadiusGeometryDto<BorderRadius> {
 
   @override
   get props => [topLeft, topRight, bottomLeft, bottomRight];
-  @override
-  BorderRadius resolve(MixData mix) {
-    return BorderRadius.only(
-      topLeft: topLeft?.resolve(mix) ?? Radius.zero,
-      topRight: topRight?.resolve(mix) ?? Radius.zero,
-      bottomLeft: bottomLeft?.resolve(mix) ?? Radius.zero,
-      bottomRight: bottomRight?.resolve(mix) ?? Radius.zero,
-    );
-  }
-
-  BorderRadiusDto copyWith({
-    RadiusDto? topLeft,
-    RadiusDto? topRight,
-    RadiusDto? bottomLeft,
-    RadiusDto? bottomRight,
-  }) {
-    return BorderRadiusDto.only(
-      topLeft: topLeft ?? this.topLeft,
-      topRight: topRight ?? this.topRight,
-      bottomLeft: bottomLeft ?? this.bottomLeft,
-      bottomRight: bottomRight ?? this.bottomRight,
-    );
-  }
 }

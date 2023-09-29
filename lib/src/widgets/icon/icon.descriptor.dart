@@ -29,8 +29,6 @@ class StyledIconDescriptor {
   }
 
   @override
-  int get hashCode => color.hashCode ^ size.hashCode;
-  @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
@@ -38,4 +36,7 @@ class StyledIconDescriptor {
         other.color == color &&
         other.size == size;
   }
+
+  @override
+  int get hashCode => color.hashCode ^ size.hashCode;
 }

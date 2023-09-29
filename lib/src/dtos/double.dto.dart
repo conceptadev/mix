@@ -18,8 +18,6 @@ class DoubleDto extends Dto<double> {
       : _value = value,
         _modifier = null;
 
-  @override
-  get props => [_value, _modifier];
   static DoubleDto? maybeFrom(double? value) {
     if (value == null) return null;
 
@@ -30,7 +28,9 @@ class DoubleDto extends Dto<double> {
   double resolve(MixData mix) {
     final modifier = _modifier;
 
-    // Apply modifier if it exists.
-    return modifier != null ? modifier(_value) : _value;
+    return modifier == null ? _value : modifier(_value);
   }
+
+  @override
+  get props => [_value, _modifier];
 }

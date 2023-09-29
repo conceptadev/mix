@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../mix.dart';
+import '../../attributes/exports.dart';
+import '../../factory/exports.dart';
 import '../color.dto.dart';
 import '../dto.dart';
 
@@ -9,24 +10,26 @@ class ShadowDto<T extends Shadow> extends Dto<T> with Mergeable {
   final Offset? offset;
   final double? blurRadius;
 
-  const ShadowDto({this.color, this.offset, this.blurRadius});
+  const ShadowDto({this.blurRadius, this.color, this.offset});
 
   factory ShadowDto.from(Shadow shadow) {
     return ShadowDto(
+      blurRadius: shadow.blurRadius,
       color: ColorDto.maybeFrom(shadow.color),
       offset: shadow.offset,
-      blurRadius: shadow.blurRadius,
     );
   }
 
-  @override
-  get props => [color, offset, blurRadius];
   static maybeFrom(Shadow? shadow) {
-    if (shadow == null) {
-      return null;
-    }
+    return shadow == null ? null : ShadowDto.from(shadow);
+  }
 
-    return ShadowDto.from(shadow);
+  ShadowDto copyWith({double? blurRadius, ColorDto? color, Offset? offset}) {
+    return ShadowDto(
+      blurRadius: blurRadius ?? this.blurRadius,
+      color: color ?? this.color,
+      offset: offset ?? this.offset,
+    );
   }
 
   @override
@@ -38,20 +41,15 @@ class ShadowDto<T extends Shadow> extends Dto<T> with Mergeable {
     ) as T;
   }
 
-  ShadowDto copyWith({ColorDto? color, Offset? offset, double? blurRadius}) {
-    return ShadowDto(
-      color: color ?? this.color,
-      offset: offset ?? this.offset,
-      blurRadius: blurRadius ?? this.blurRadius,
+  @override
+  ShadowDto merge(covariant ShadowDto? other) {
+    return copyWith(
+      blurRadius: other?.blurRadius,
+      color: other?.color,
+      offset: other?.offset,
     );
   }
 
   @override
-  ShadowDto merge(covariant ShadowDto? other) {
-    return copyWith(
-      color: other?.color,
-      offset: other?.offset,
-      blurRadius: other?.blurRadius,
-    );
-  }
+  get props => [color, offset, blurRadius];
 }

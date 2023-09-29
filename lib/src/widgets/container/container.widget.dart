@@ -63,9 +63,9 @@ class MixedContainer extends StatelessWidget {
             constraints: box.constraints,
             margin: box.margin,
             transform: box.transform,
-            child: current,
             curve: common.animationCurve,
             duration: common.animationDuration,
+            child: current,
           )
         : Container(
             alignment: box.alignment,

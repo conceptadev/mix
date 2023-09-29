@@ -57,13 +57,9 @@ class MixedText extends StatelessWidget {
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
 
-    properties.add(
-      DiagnosticsProperty<String>('text', content),
-    );
+    properties.add(DiagnosticsProperty<String>('text', content));
 
-    properties.add(
-      DiagnosticsProperty<MixData>('props', mix),
-    );
+    properties.add(DiagnosticsProperty<MixData>('props', mix));
   }
 
   @override
@@ -95,7 +91,6 @@ class MixedText extends StatelessWidget {
 
     return common.animated
         ? AnimatedDefaultTextStyle(
-            child: textWidget,
             style: text.style ??
                 Theme.of(context).textTheme.bodyLarge ??
                 const TextStyle(),
@@ -105,6 +100,7 @@ class MixedText extends StatelessWidget {
             maxLines: text.maxLines,
             curve: common.animationCurve,
             duration: common.animationDuration,
+            child: textWidget,
           )
         : textWidget;
   }

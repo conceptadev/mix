@@ -6,26 +6,26 @@ import '../decorator.dart';
 
 class OpacityDecorator extends WidgetDecorator<OpacityDecorator> {
   final double opacity;
-  const OpacityDecorator({required this.opacity, super.key});
+  const OpacityDecorator({super.key, required this.opacity});
 
-  @override
-  get props => [opacity];
   @override
   OpacityDecorator merge(OpacityDecorator other) {
     return OpacityDecorator(opacity: other.opacity);
   }
 
   @override
-  Widget build(MixData mix, Widget child) {
+  get props => [opacity];
+  @override
+  Widget build(Widget child, MixData mix) {
     final common = CommonDescriptor.fromContext(mix);
 
     return common.animated
         ? AnimatedOpacity(
             key: key,
-            child: child,
             opacity: opacity,
             curve: common.animationCurve,
             duration: common.animationDuration,
+            child: child,
           )
         : Opacity(key: key, opacity: opacity, child: child);
   }

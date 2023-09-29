@@ -24,19 +24,6 @@ class StyledStackDescriptor {
     );
   }
 
-  @override
-  int get hashCode => alignment.hashCode ^ fit.hashCode ^ clipBehavior.hashCode;
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is StyledStackDescriptor &&
-        other.alignment == alignment &&
-        other.fit == fit &&
-        other.clipBehavior == clipBehavior;
-  }
-
   StyledStackDescriptor copyWith({
     AlignmentGeometry? alignment,
     StackFit? fit,
@@ -48,4 +35,17 @@ class StyledStackDescriptor {
       clipBehavior: clipBehavior ?? this.clipBehavior,
     );
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is StyledStackDescriptor &&
+        other.alignment == alignment &&
+        other.fit == fit &&
+        other.clipBehavior == clipBehavior;
+  }
+
+  @override
+  int get hashCode => alignment.hashCode ^ fit.hashCode ^ clipBehavior.hashCode;
 }

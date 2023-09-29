@@ -7,7 +7,7 @@ import 'tokens/breakpoints.dart';
 import 'tokens/mix_token.dart';
 
 class MixTheme extends InheritedWidget {
-  const MixTheme({Key? key, required Widget child, required this.data})
+  const MixTheme({required Widget child, required this.data, Key? key})
       : super(key: key, child: child);
 
   static MixThemeData of(BuildContext context) {
@@ -37,41 +37,41 @@ class MixThemeData with EqualityMixin {
   final MixTextStyleTokens textStyles;
 
   const MixThemeData.raw({
-    required this.space,
     required this.breakpoints,
     required this.colors,
+    required this.space,
     required this.textStyles,
   });
   factory MixThemeData({
-    MixSpaceTokens? space,
     MixBreakpointsTokens? breakpoints,
     MixColorTokens? colors,
+    MixSpaceTokens? space,
     MixTextStyleTokens? textStyles,
   }) {
     return MixThemeData.raw(
-      space: {...?space, ...SpaceTokens.tokens},
       breakpoints: breakpoints ?? const MixBreakpointsTokens(),
       colors: {...?colors, ...$MDColorScheme.tokens},
+      space: {...?space, ...SpaceTokens.tokens},
       textStyles: {...?textStyles, ...$M3Text.tokens, ...$M2Text.tokens},
+    );
+  }
+
+  MixThemeData copyWith({
+    MixBreakpointsTokens? breakpoints,
+    MixColorTokens? colors,
+    MixSpaceTokens? space,
+    MixTextStyleTokens? textStyles,
+  }) {
+    return MixThemeData.raw(
+      breakpoints: breakpoints ?? this.breakpoints,
+      colors: {...this.colors, ...?colors},
+      space: {...this.space, ...?space},
+      textStyles: {...this.textStyles, ...?textStyles},
     );
   }
 
   @override
   get props => [space, breakpoints, colors, textStyles];
-
-  MixThemeData copyWith({
-    MixSpaceTokens? space,
-    MixBreakpointsTokens? breakpoints,
-    MixColorTokens? colors,
-    MixTextStyleTokens? textStyles,
-  }) {
-    return MixThemeData.raw(
-      space: {...this.space, ...?space},
-      breakpoints: breakpoints ?? this.breakpoints,
-      colors: {...this.colors, ...?colors},
-      textStyles: {...this.textStyles, ...?textStyles},
-    );
-  }
 }
 
 class MixTokenResolver {

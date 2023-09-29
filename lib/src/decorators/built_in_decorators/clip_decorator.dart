@@ -22,16 +22,14 @@ class ClipDecorator extends WidgetDecorator<ClipDecorator> {
   });
 
   @override
-  get props => [borderRadius, clipType];
-  @override
   ClipDecorator merge(ClipDecorator other) {
     return other;
   }
 
   @override
-  Widget build(MixData mix, Widget child) {
-    final common = CommonDescriptor.fromContext(mix);
-
+  get props => [borderRadius, clipType];
+  @override
+  Widget build(Widget child, MixData mix) {
     if (clipType == ClipDecoratorType.triangle) {
       return ClipPath(key: key, clipper: const TriangleClipper(), child: child);
     }
@@ -41,13 +39,15 @@ class ClipDecorator extends WidgetDecorator<ClipDecorator> {
     }
 
     if (clipType == ClipDecoratorType.rounded) {
+      final common = CommonDescriptor.fromContext(mix);
+
       return common.animated
           ? AnimatedClipRRect(
               duration: common.animationDuration,
               curve: common.animationCurve,
               borderRadius: borderRadius,
-              child: child,
               key: key,
+              child: child,
             )
           : ClipRRect(key: key, borderRadius: borderRadius, child: child);
     }

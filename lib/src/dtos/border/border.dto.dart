@@ -21,11 +21,14 @@ class BorderDto extends BoxBorderDto<Border> {
   }) : this.only(
           top: vertical,
           right: horizontal,
+          // ignore: no-equal-arguments
           bottom: vertical,
+          // ignore: no-equal-arguments
           left: horizontal,
         );
 
   const BorderDto.fromBorderSide(BorderSideDto side)
+      // ignore: no-equal-arguments
       : this.only(top: side, right: side, bottom: side, left: side);
 
   factory BorderDto.all({
@@ -47,8 +50,6 @@ class BorderDto extends BoxBorderDto<Border> {
     );
   }
 
-  @override
-  get props => [_top, _right, _bottom, _left];
   BorderSideDto? get _top => top;
 
   BorderSideDto? get _bottom => bottom;
@@ -56,16 +57,6 @@ class BorderDto extends BoxBorderDto<Border> {
   BorderSideDto? get _left => left;
 
   BorderSideDto? get _right => right;
-
-  @override
-  Border resolve(MixData mix) {
-    return Border(
-      top: _top?.resolve(mix) ?? BorderSide.none,
-      right: _right?.resolve(mix) ?? BorderSide.none,
-      bottom: _bottom?.resolve(mix) ?? BorderSide.none,
-      left: _left?.resolve(mix) ?? BorderSide.none,
-    );
-  }
 
   BorderDto copyWith({
     BorderSideDto? top,
@@ -80,6 +71,19 @@ class BorderDto extends BoxBorderDto<Border> {
       top: _top?.merge(top) ?? top,
     );
   }
+
+  @override
+  Border resolve(MixData mix) {
+    return Border(
+      top: _top?.resolve(mix) ?? BorderSide.none,
+      right: _right?.resolve(mix) ?? BorderSide.none,
+      bottom: _bottom?.resolve(mix) ?? BorderSide.none,
+      left: _left?.resolve(mix) ?? BorderSide.none,
+    );
+  }
+
+  @override
+  get props => [_top, _right, _bottom, _left];
 }
 
 class BorderDirectionalDto extends BoxBorderDto<BorderDirectional> {
@@ -112,6 +116,7 @@ class BorderDirectionalDto extends BoxBorderDto<BorderDirectional> {
   });
 
   const BorderDirectionalDto.fromBorderSide(BorderSideDto side)
+      // ignore: no-equal-arguments
       : this.only(top: side, bottom: side, start: side, end: side);
 
   factory BorderDirectionalDto.all({
@@ -133,16 +138,6 @@ class BorderDirectionalDto extends BoxBorderDto<BorderDirectional> {
     );
   }
 
-  @override
-  get props => [_top, _bottom, _start, _end];
-  BorderSideDto? get _top => top;
-
-  BorderSideDto? get _bottom => bottom;
-
-  BorderSideDto? get _start => start;
-
-  BorderSideDto? get _end => end;
-
   static BorderDirectionalDto? maybeFrom(BorderDirectional? border) {
     if (border == null) {
       return null;
@@ -151,15 +146,13 @@ class BorderDirectionalDto extends BoxBorderDto<BorderDirectional> {
     return BorderDirectionalDto.from(border);
   }
 
-  @override
-  BorderDirectional resolve(MixData mix) {
-    return BorderDirectional(
-      top: _top?.resolve(mix) ?? BorderSide.none,
-      start: _start?.resolve(mix) ?? BorderSide.none,
-      end: _end?.resolve(mix) ?? BorderSide.none,
-      bottom: _bottom?.resolve(mix) ?? BorderSide.none,
-    );
-  }
+  BorderSideDto? get _top => top;
+
+  BorderSideDto? get _bottom => bottom;
+
+  BorderSideDto? get _start => start;
+
+  BorderSideDto? get _end => end;
 
   BorderDirectionalDto copyWith({
     BorderSideDto? top,
@@ -174,4 +167,17 @@ class BorderDirectionalDto extends BoxBorderDto<BorderDirectional> {
       end: _end?.merge(end) ?? end,
     );
   }
+
+  @override
+  BorderDirectional resolve(MixData mix) {
+    return BorderDirectional(
+      top: _top?.resolve(mix) ?? BorderSide.none,
+      start: _start?.resolve(mix) ?? BorderSide.none,
+      end: _end?.resolve(mix) ?? BorderSide.none,
+      bottom: _bottom?.resolve(mix) ?? BorderSide.none,
+    );
+  }
+
+  @override
+  get props => [_top, _bottom, _start, _end];
 }

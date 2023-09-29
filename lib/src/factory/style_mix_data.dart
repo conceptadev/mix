@@ -69,9 +69,6 @@ class StyleMixData with EqualityMixin {
     return variants.length + contextVariants.length + (attributes?.length ?? 0);
   }
 
-  @override
-  get props => [attributes, decorators, variants, contextVariants];
-
   /// Returns an instance of the specified [StyledWidgetAttributes] type from the [MixData].
   A? attributesOfType<A extends StyledWidgetAttributes>() {
     return attributes?.get(A) as A?;
@@ -118,4 +115,7 @@ class StyleMixData with EqualityMixin {
       contextVariants: [...contextVariants],
     );
   }
+
+  @override
+  get props => [attributes, decorators, variants, contextVariants];
 }

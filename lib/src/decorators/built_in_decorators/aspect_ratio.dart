@@ -9,14 +9,14 @@ class AspectRatioDecorator extends WidgetDecorator<AspectRatioDecorator> {
   const AspectRatioDecorator({required this.aspectRatio, super.key});
 
   @override
-  get props => [aspectRatio];
-  @override
   AspectRatioDecorator merge(AspectRatioDecorator other) {
     return AspectRatioDecorator(aspectRatio: other.aspectRatio);
   }
 
   @override
-  Widget build(MixData mix, Widget child) {
+  get props => [aspectRatio];
+  @override
+  Widget build(Widget child, MixData mix) {
     final common = CommonDescriptor.fromContext(mix);
 
     return common.animated
@@ -24,8 +24,12 @@ class AspectRatioDecorator extends WidgetDecorator<AspectRatioDecorator> {
             tween: Tween<double>(end: aspectRatio),
             duration: common.animationDuration,
             curve: common.animationCurve,
-            builder: (context, value, child) {
-              return AspectRatio(key: key, aspectRatio: value, child: child);
+            builder: (context, value, builderWidget) {
+              return AspectRatio(
+                key: key,
+                aspectRatio: value,
+                child: builderWidget,
+              );
             },
             child: child,
           )

@@ -9,14 +9,14 @@ class ScaleDecorator extends WidgetDecorator<ScaleDecorator> {
   const ScaleDecorator(this.scale, {super.key});
 
   @override
-  get props => [scale];
-  @override
   ScaleDecorator merge(ScaleDecorator other) {
     return ScaleDecorator(other.scale);
   }
 
   @override
-  Widget build(MixData mix, Widget child) {
+  get props => [scale];
+  @override
+  Widget build(Widget child, MixData mix) {
     final common = CommonDescriptor.fromContext(mix);
 
     return common.animated
@@ -24,8 +24,12 @@ class ScaleDecorator extends WidgetDecorator<ScaleDecorator> {
             tween: Tween<double>(begin: 1, end: scale),
             duration: common.animationDuration,
             curve: common.animationCurve,
-            builder: (context, value, child) {
-              return Transform.scale(key: key, scale: value, child: child);
+            builder: (context, value, childWidget) {
+              return Transform.scale(
+                key: key,
+                scale: value,
+                child: childWidget,
+              );
             },
             child: child,
           )

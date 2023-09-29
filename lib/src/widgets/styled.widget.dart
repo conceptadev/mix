@@ -70,32 +70,14 @@ abstract class StyledWidget extends StatelessWidget {
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
 
-    properties.add(
-      DiagnosticsProperty<StyleMix>(
-        'mix',
-        _mix,
-      ),
-    );
+    properties.add(DiagnosticsProperty<StyleMix>('mix', _mix));
+
+    properties.add(DiagnosticsProperty<StyleMix>('style', _style));
+
+    properties.add(DiagnosticsProperty<bool>('inherit', _inherit));
 
     properties.add(
-      DiagnosticsProperty<StyleMix>(
-        'style',
-        _style,
-      ),
-    );
-
-    properties.add(
-      DiagnosticsProperty<bool>(
-        'inherit',
-        _inherit,
-      ),
-    );
-
-    properties.add(
-      DiagnosticsProperty<List<StyleVariant>>(
-        'variants',
-        variants,
-      ),
+      DiagnosticsProperty<List<StyleVariant>>('variants', variants),
     );
   }
 

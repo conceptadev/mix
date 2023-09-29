@@ -28,8 +28,6 @@ class BoxShadowDto extends ShadowDto<BoxShadow> {
   }
 
   @override
-  get props => [color, offset, blurRadius, spreadRadius];
-  @override
   BoxShadow resolve(MixData mix) {
     return BoxShadow(
       color: color?.resolve(mix) ?? const BoxShadow().color,
@@ -63,4 +61,7 @@ class BoxShadowDto extends ShadowDto<BoxShadow> {
       spreadRadius: other?.spreadRadius,
     );
   }
+
+  @override
+  get props => [color, offset, blurRadius, spreadRadius];
 }

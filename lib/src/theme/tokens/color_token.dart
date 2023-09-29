@@ -10,13 +10,13 @@ class ColorSwatchToken extends ColorSwatch<int> implements MixToken {
   const ColorSwatchToken(this.name) : super(0, const {});
 
   @override
-  int get hashCode => runtimeType.hashCode ^ name.hashCode;
-  @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is ColorSwatchToken &&
           runtimeType == other.runtimeType &&
           name == other.name;
+  @override
+  int get hashCode => runtimeType.hashCode ^ name.hashCode;
 }
 
 class ColorToken extends Color implements MixToken {
@@ -26,13 +26,13 @@ class ColorToken extends Color implements MixToken {
   const ColorToken(this.name) : super(0);
 
   @override
-  int get hashCode => runtimeType.hashCode ^ name.hashCode;
-  @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is ColorToken &&
           runtimeType == other.runtimeType &&
           name == other.name;
+  @override
+  int get hashCode => runtimeType.hashCode ^ name.hashCode;
 }
 
 typedef MixColorTokens = TokenReferenceMap<ColorToken, Color>;

@@ -25,17 +25,18 @@ class EdgeInsetsDirectionalDto
   });
 
   const EdgeInsetsDirectionalDto.all(double value)
-      : this._(bottom: value, end: value, start: value, top: value);
+      : bottom = value,
+        end = value,
+        start = value,
+        top = value;
 
   const EdgeInsetsDirectionalDto.symmetric({
     double? horizontal,
     double? vertical,
-  }) : this._(
-          bottom: vertical,
-          end: horizontal,
-          start: horizontal,
-          top: vertical,
-        );
+  })  : bottom = vertical,
+        end = horizontal,
+        start = horizontal,
+        top = vertical;
 
   factory EdgeInsetsDirectionalDto.from(EdgeInsetsDirectional edgeInsets) {
     return EdgeInsetsDirectionalDto._(
@@ -46,8 +47,6 @@ class EdgeInsetsDirectionalDto
     );
   }
 
-  @override
-  get props => [top, bottom, start, end];
   double? get _top => top;
 
   double? get _bottom => bottom;
@@ -97,4 +96,7 @@ class EdgeInsetsDirectionalDto
       bottom: mix.resolveToken.space(_bottom ?? 0.0),
     );
   }
+
+  @override
+  get props => [top, bottom, start, end];
 }

@@ -1,4 +1,5 @@
-import '../../../mix.dart';
+import 'color_scheme_tokens.dart';
+import 'text_theme_tokens.dart';
 
 @Deprecated('This has been deprecated now use MD3, and MD2 tokens instead')
 class MaterialTextThemeTokens {

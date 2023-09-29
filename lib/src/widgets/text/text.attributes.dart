@@ -76,20 +76,6 @@ class StyledTextAttributes extends StyledWidgetAttributes {
   }
 
   @override
-  get props => [
-        styles,
-        strutStyle,
-        textAlign,
-        locale,
-        softWrap,
-        overflow,
-        textScaleFactor,
-        maxLines,
-        textWidthBasis,
-        textHeightBehavior,
-        directives,
-      ];
-  @override
   StyledTextAttributes merge(StyledTextAttributes? other) {
     if (other == null) return this;
 
@@ -139,4 +125,19 @@ class StyledTextAttributes extends StyledWidgetAttributes {
       textWidthBasis: textWidthBasis ?? this.textWidthBasis,
     );
   }
+
+  @override
+  get props => [
+        styles,
+        strutStyle,
+        textAlign,
+        locale,
+        softWrap,
+        overflow,
+        textScaleFactor,
+        maxLines,
+        textWidthBasis,
+        textHeightBehavior,
+        directives,
+      ];
 }

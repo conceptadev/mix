@@ -28,6 +28,14 @@ class ContextStyleVariant extends StyleVariant {
     return _inverse ? !_shouldApply(context) : _shouldApply(context);
   }
 
+  ContextStyleVariant inverseInstance() {
+    return ContextStyleVariant(
+      name,
+      shouldApply: _shouldApply,
+      inverse: !_inverse,
+    );
+  }
+
   @override
   // ignore: long-parameter-list
   ContextVariantAttribute call([
@@ -51,13 +59,5 @@ class ContextStyleVariant extends StyleVariant {
     }
 
     return ContextVariantAttribute(this, StyleMix.fromAttributes(params));
-  }
-
-  ContextStyleVariant inverseInstance() {
-    return ContextStyleVariant(
-      name,
-      shouldApply: _shouldApply,
-      inverse: !_inverse,
-    );
   }
 }

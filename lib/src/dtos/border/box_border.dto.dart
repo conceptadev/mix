@@ -7,19 +7,12 @@ import 'border_side.dto.dart';
 abstract class BoxBorderDto<T extends BoxBorder> extends Dto<T> {
   const BoxBorderDto();
 
-  BorderSideDto? get _top;
-  BorderSideDto? get _bottom;
-  BorderSideDto? get _left;
-  BorderSideDto? get _right;
-  BorderSideDto? get _start;
-  BorderSideDto? get _end;
-
-  static Dto from<T extends BoxBorder, Dto extends BoxBorderDto<T>>(T border) {
+  static D from<T extends BoxBorder, D extends BoxBorderDto<T>>(T border) {
     if (border is Border) {
-      return BorderDto.from(border) as Dto;
+      return BorderDto.from(border) as D;
     }
     if (border is BorderDirectional) {
-      return BorderDirectionalDto.from(border) as Dto;
+      return BorderDirectionalDto.from(border) as D;
     }
 
     throw UnsupportedError(
@@ -27,15 +20,18 @@ abstract class BoxBorderDto<T extends BoxBorder> extends Dto<T> {
     );
   }
 
-  static Dto? maybeFrom<T extends BoxBorder, Dto extends BoxBorderDto<T>>(
+  static D? maybeFrom<T extends BoxBorder, D extends BoxBorderDto<T>>(
     T? border,
   ) {
-    if (border == null) {
-      return null;
-    }
-
-    return from(border);
+    return border == null ? null : from(border);
   }
+
+  BorderSideDto? get _top;
+  BorderSideDto? get _bottom;
+  BorderSideDto? get _left;
+  BorderSideDto? get _right;
+  BorderSideDto? get _start;
+  BorderSideDto? get _end;
 
   BoxBorderDto merge(BoxBorderDto? other) {
     if (other == null || other == this) return this;

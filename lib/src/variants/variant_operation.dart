@@ -15,9 +15,6 @@ class VariantOperation {
 
   const VariantOperation(this.variants, {required this.operator});
 
-  @override
-  int get hashCode => variants.hashCode ^ operator.hashCode;
-
   VariantOperation operator &(StyleVariant variant) {
     if (operator != EnumVariantOperator.and) {
       throw ArgumentError('All the operators in the equation must be the same');
@@ -68,17 +65,6 @@ class VariantOperation {
     return NestedStyleAttribute(StyleMix.fromAttributes(attributes));
   }
 
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is VariantOperation &&
-        listEquals(other.variants, variants) &&
-        other.operator == operator;
-  }
-
-  @override
-  String toString() => 'MultiVariant(variants: $variants, operator: $operator)';
   List<VariantAttribute> _buildOrOperations(
     List<StyleAttribute> attributes, {
     Iterable<StyleVariant>? variants,
@@ -110,4 +96,18 @@ class VariantOperation {
 
     return attributeVariants.toList();
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is VariantOperation &&
+        listEquals(other.variants, variants) &&
+        other.operator == operator;
+  }
+
+  @override
+  String toString() => 'MultiVariant(variants: $variants, operator: $operator)';
+  @override
+  int get hashCode => variants.hashCode ^ operator.hashCode;
 }

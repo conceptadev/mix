@@ -9,27 +9,22 @@ class MixBreakpointsTokens {
   final double large;
 
   const MixBreakpointsTokens.raw({
-    required this.xsmall,
-    required this.small,
-    required this.medium,
     required this.large,
+    required this.medium,
+    required this.small,
+    required this.xsmall,
   });
 
   const MixBreakpointsTokens({
-    this.xsmall = 0,
-    this.small = 600,
-    this.medium = 1240,
     this.large = 1440,
+    this.medium = 1240,
+    this.small = 600,
+    this.xsmall = 0,
   });
-
-  @override
-  int get hashCode {
-    return xsmall.hashCode ^ small.hashCode ^ medium.hashCode ^ large.hashCode;
-  }
 
   /// Returns [ScreenSizeToken] based on Material breakpoints.
   ScreenSizeToken getScreenSize(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
+    final screenWidth = MediaQuery.sizeOf(context).width;
 
     return screenWidth >= large
         ? ScreenSizeToken.large
@@ -41,16 +36,16 @@ class MixBreakpointsTokens {
   }
 
   MixBreakpointsTokens copyWith({
-    double? xsmall,
-    double? small,
-    double? medium,
     double? large,
+    double? medium,
+    double? small,
+    double? xsmall,
   }) {
     return MixBreakpointsTokens.raw(
-      xsmall: xsmall ?? this.xsmall,
-      small: small ?? this.small,
-      medium: medium ?? this.medium,
       large: large ?? this.large,
+      medium: medium ?? this.medium,
+      small: small ?? this.small,
+      xsmall: xsmall ?? this.xsmall,
     );
   }
 
@@ -68,5 +63,10 @@ class MixBreakpointsTokens {
   @override
   String toString() {
     return 'MixThemeBreakpoints(xsmall: $xsmall, small: $small, medium: $medium, large: $large)';
+  }
+
+  @override
+  int get hashCode {
+    return xsmall.hashCode ^ small.hashCode ^ medium.hashCode ^ large.hashCode;
   }
 }

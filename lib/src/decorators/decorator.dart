@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../mix.dart';
+import '../attributes/exports.dart';
+import '../factory/exports.dart';
 
 abstract class Decorator<T extends Decorator<T>> extends StyleAttribute
     with Mergeable<Decorator<T>> {
@@ -9,14 +10,14 @@ abstract class Decorator<T extends Decorator<T>> extends StyleAttribute
 
   const Decorator({this.key});
 
-  Widget build(MixData mix, Widget child);
+  Widget render(Widget child, MixData mix) {
+    return build(child, mix);
+  }
 
   @override
   Decorator<T> merge(covariant Decorator<T> other);
 
-  Widget render(MixData mix, Widget child) {
-    return build(mix, child);
-  }
+  Widget build(Widget child, MixData mix);
 }
 
 abstract class WidgetDecorator<T extends WidgetDecorator<T>>
@@ -26,12 +27,12 @@ abstract class WidgetDecorator<T extends WidgetDecorator<T>>
 
   const WidgetDecorator({this.key});
 
-  Widget build(MixData mix, Widget child);
+  Widget render(Widget child, MixData mix) {
+    return build(child, mix);
+  }
 
   @override
   WidgetDecorator<T> merge(covariant WidgetDecorator<T> other);
 
-  Widget render(MixData mix, Widget child) {
-    return build(mix, child);
-  }
+  Widget build(Widget child, MixData mix);
 }

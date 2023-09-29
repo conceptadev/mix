@@ -94,25 +94,6 @@ class StyledContainerAttributes extends StyledWidgetAttributes {
   }
 
   @override
-  get props => [
-        margin,
-        padding,
-        alignment,
-        height,
-        width,
-        color,
-        border,
-        borderRadius,
-        boxShadow,
-        transform,
-        maxHeight,
-        minHeight,
-        maxWidth,
-        minWidth,
-        shape,
-        gradient,
-      ];
-  @override
   StyledContainerAttributes copyWith({
     EdgeInsetsGeometryDto? margin,
     EdgeInsetsGeometryDto? padding,
@@ -179,4 +160,24 @@ class StyledContainerAttributes extends StyledWidgetAttributes {
       gradient: other.gradient,
     );
   }
+
+  @override
+  get props => [
+        margin,
+        padding,
+        alignment,
+        height,
+        width,
+        color,
+        border,
+        borderRadius,
+        boxShadow,
+        transform,
+        maxHeight,
+        minHeight,
+        maxWidth,
+        minWidth,
+        shape,
+        gradient,
+      ];
 }

@@ -9,6 +9,24 @@ abstract class BorderRadiusGeometryDto<T extends BorderRadiusGeometry>
     extends Dto<T> {
   const BorderRadiusGeometryDto();
 
+  static D from<T extends BorderRadiusGeometry,
+      D extends BorderRadiusGeometryDto<T>>(T borderRadius) {
+    if (borderRadius is BorderRadius) {
+      return BorderRadiusDto.from(borderRadius) as D;
+    }
+    if (borderRadius is BorderRadiusDirectional) {
+      return BorderRadiusDirectionalDto.from(borderRadius) as D;
+    }
+    throw UnsupportedError(
+      "${borderRadius.runtimeType} is not supported, use BorderRadius or BorderRadiusDirectional",
+    );
+  }
+
+  static D? maybeFrom<T extends BorderRadiusGeometry,
+      D extends BorderRadiusGeometryDto<T>>(T? borderRadius) {
+    return borderRadius == null ? null : from(borderRadius);
+  }
+
   RadiusDto? get topLeft => null;
   RadiusDto? get topRight => null;
   RadiusDto? get bottomLeft => null;
@@ -28,28 +46,6 @@ abstract class BorderRadiusGeometryDto<T extends BorderRadiusGeometry>
           bottomLeft == null &&
           bottomRight == null);
 
-  static Dto from<T extends BorderRadiusGeometry,
-      Dto extends BorderRadiusGeometryDto<T>>(T borderRadius) {
-    if (borderRadius is BorderRadius) {
-      return BorderRadiusDto.from(borderRadius) as Dto;
-    }
-    if (borderRadius is BorderRadiusDirectional) {
-      return BorderRadiusDirectionalDto.from(borderRadius) as Dto;
-    }
-    throw UnsupportedError(
-      "${borderRadius.runtimeType} is not supported, use BorderRadius or BorderRadiusDirectional",
-    );
-  }
-
-  static Dto? maybeFrom<T extends BorderRadiusGeometry,
-      Dto extends BorderRadiusGeometryDto<T>>(T? borderRadius) {
-    if (borderRadius == null) {
-      return null;
-    }
-
-    return BorderRadiusGeometryDto.from(borderRadius);
-  }
-
   BorderRadiusGeometryDto merge(BorderRadiusGeometryDto? other) {
     if (other == null || other == this) return this;
 
@@ -64,10 +60,10 @@ abstract class BorderRadiusGeometryDto<T extends BorderRadiusGeometry>
 
     if (other is BorderRadiusDirectionalDto) {
       return BorderRadiusDirectionalDto.only(
-        topStart: other.topStart ?? topStart,
-        topEnd: other.topEnd ?? topEnd,
-        bottomStart: other.bottomStart ?? bottomStart,
         bottomEnd: other.bottomEnd ?? bottomEnd,
+        bottomStart: other.bottomStart ?? bottomStart,
+        topEnd: other.topEnd ?? topEnd,
+        topStart: other.topStart ?? topStart,
       );
     }
 

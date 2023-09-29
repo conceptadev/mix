@@ -1,3 +1,5 @@
+// ignore_for_file: no-equal-arguments
+
 import 'package:flutter/material.dart';
 
 import '../../factory/mix_provider_data.dart';
@@ -15,18 +17,18 @@ class BorderRadiusDirectionalDto
     BorderRadiusDirectional borderRadiusDirectional,
   ) {
     return BorderRadiusDirectionalDto.only(
-      topStart: RadiusDto.from(borderRadiusDirectional.topStart),
-      topEnd: RadiusDto.from(borderRadiusDirectional.topEnd),
-      bottomStart: RadiusDto.from(borderRadiusDirectional.bottomStart),
       bottomEnd: RadiusDto.from(borderRadiusDirectional.bottomEnd),
+      bottomStart: RadiusDto.from(borderRadiusDirectional.bottomStart),
+      topEnd: RadiusDto.from(borderRadiusDirectional.topEnd),
+      topStart: RadiusDto.from(borderRadiusDirectional.topStart),
     );
   }
 
   const BorderRadiusDirectionalDto.only({
-    RadiusDto? topStart,
-    RadiusDto? topEnd,
-    RadiusDto? bottomStart,
     RadiusDto? bottomEnd,
+    RadiusDto? bottomStart,
+    RadiusDto? topEnd,
+    RadiusDto? topStart,
   })  : _topStart = topStart,
         _topEnd = topEnd,
         _bottomStart = bottomStart,
@@ -34,31 +36,61 @@ class BorderRadiusDirectionalDto
 
   const BorderRadiusDirectionalDto.all(RadiusDto radius)
       : this.only(
-          topStart: radius,
-          topEnd: radius,
-          bottomStart: radius,
           bottomEnd: radius,
+          bottomStart: radius,
+          topEnd: radius,
+          topStart: radius,
         );
 
   const BorderRadiusDirectionalDto.horizontal({
-    RadiusDto? start,
     RadiusDto? end,
+    RadiusDto? start,
   }) : this.only(
-          topStart: start,
-          topEnd: end,
-          bottomStart: start,
           bottomEnd: end,
+          bottomStart: start,
+          topEnd: end,
+          topStart: start,
         );
 
   const BorderRadiusDirectionalDto.vertical({
-    RadiusDto? top,
     RadiusDto? bottom,
+    RadiusDto? top,
   }) : this.only(
-          topStart: top,
-          topEnd: top,
-          bottomStart: bottom,
           bottomEnd: bottom,
+          bottomStart: bottom,
+          topEnd: top,
+          topStart: top,
         );
+
+  static maybeFrom(BorderRadiusDirectional? borderRadiusDirectional) {
+    if (borderRadiusDirectional == null) return null;
+
+    return BorderRadiusDirectionalDto.from(borderRadiusDirectional);
+  }
+
+  BorderRadiusDirectionalDto copyWith({
+    RadiusDto? bottomEnd,
+    RadiusDto? bottomStart,
+    RadiusDto? topEnd,
+    RadiusDto? topStart,
+  }) {
+    return BorderRadiusDirectionalDto.only(
+      bottomEnd: bottomEnd ?? this.bottomEnd,
+      bottomStart: bottomStart ?? this.bottomStart,
+      topEnd: topEnd ?? this.topEnd,
+      topStart: topStart ?? this.topStart,
+    );
+  }
+
+  @override
+  BorderRadiusDirectional resolve(MixData mix) {
+    return BorderRadiusDirectional.only(
+      topStart: topStart?.resolve(mix) ?? Radius.zero,
+      topEnd: topEnd?.resolve(mix) ?? Radius.zero,
+      bottomStart: bottomStart?.resolve(mix) ?? Radius.zero,
+      bottomEnd: bottomEnd?.resolve(mix) ?? Radius.zero,
+    );
+  }
 
   @override
   RadiusDto? get bottomEnd => _bottomEnd;
@@ -86,33 +118,4 @@ class BorderRadiusDirectionalDto
 
   @override
   List<Object?> get props => [topStart, topEnd, bottomStart, bottomEnd];
-  static maybeFrom(BorderRadiusDirectional? borderRadiusDirectional) {
-    if (borderRadiusDirectional == null) return null;
-
-    return BorderRadiusDirectionalDto.from(borderRadiusDirectional);
-  }
-
-  @override
-  BorderRadiusDirectional resolve(MixData mix) {
-    return BorderRadiusDirectional.only(
-      topStart: topStart?.resolve(mix) ?? Radius.zero,
-      topEnd: topEnd?.resolve(mix) ?? Radius.zero,
-      bottomStart: bottomStart?.resolve(mix) ?? Radius.zero,
-      bottomEnd: bottomEnd?.resolve(mix) ?? Radius.zero,
-    );
-  }
-
-  BorderRadiusDirectionalDto copyWith({
-    RadiusDto? topStart,
-    RadiusDto? topEnd,
-    RadiusDto? bottomStart,
-    RadiusDto? bottomEnd,
-  }) {
-    return BorderRadiusDirectionalDto.only(
-      topStart: topStart ?? this.topStart,
-      topEnd: topEnd ?? this.topEnd,
-      bottomStart: bottomStart ?? this.bottomStart,
-      bottomEnd: bottomEnd ?? this.bottomEnd,
-    );
-  }
 }

@@ -15,40 +15,38 @@ class BorderSideDto extends Dto<BorderSide> {
 
   const BorderSideDto._({
     this.color,
-    this.width,
-    this.style,
     this.strokeAlign,
+    this.style,
+    this.width,
   });
 
   const BorderSideDto.only({
     this.color,
-    this.width,
-    this.style,
     this.strokeAlign,
+    this.style,
+    this.width,
   });
 
   factory BorderSideDto.from(BorderSide side) {
     return BorderSideDto.only(
       color: ColorDto(side.color),
-      width: side.width,
-      style: side.style,
       strokeAlign: side.strokeAlign,
+      style: side.style,
+      width: side.width,
     );
   }
 
-  @override
-  get props => [color, width, style, strokeAlign];
   BorderSideDto copyWith({
     ColorDto? color,
-    double? width,
-    BorderStyle? style,
     double? strokeAlign,
+    BorderStyle? style,
+    double? width,
   }) {
     return BorderSideDto._(
       color: color ?? this.color,
-      width: width ?? this.width,
-      style: style ?? this.style,
       strokeAlign: strokeAlign ?? this.strokeAlign,
+      style: style ?? this.style,
+      width: width ?? this.width,
     );
   }
 
@@ -57,9 +55,9 @@ class BorderSideDto extends Dto<BorderSide> {
 
     return copyWith(
       color: other.color,
-      width: other.width,
-      style: other.style,
       strokeAlign: other.strokeAlign,
+      style: other.style,
+      width: other.width,
     );
   }
 
@@ -72,4 +70,7 @@ class BorderSideDto extends Dto<BorderSide> {
       strokeAlign: strokeAlign ?? _default.strokeAlign,
     );
   }
+
+  @override
+  get props => [color, width, style, strokeAlign];
 }

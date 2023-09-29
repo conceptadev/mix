@@ -15,11 +15,6 @@ class VariantAttribute<T extends StyleVariant> extends StyleAttribute
   StyleMix get value => _style;
 
   @override
-  int get hashCode => variant.hashCode ^ _style.hashCode;
-
-  @override
-  get props => [variant, value];
-  @override
   VariantAttribute<T> merge(covariant VariantAttribute<T> other) {
     if (other.variant != variant) {
       throw ArgumentError.value(
@@ -43,6 +38,12 @@ class VariantAttribute<T extends StyleVariant> extends StyleAttribute
         other.variant == variant &&
         other.value == value;
   }
+
+  @override
+  int get hashCode => variant.hashCode ^ _style.hashCode;
+
+  @override
+  get props => [variant, value];
 }
 
 class ContextVariantAttribute extends VariantAttribute<ContextStyleVariant> {

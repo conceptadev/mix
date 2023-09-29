@@ -8,15 +8,6 @@ abstract class EdgeInsetsGeometryDto<T extends EdgeInsetsGeometry>
     extends Dto<T> {
   const EdgeInsetsGeometryDto();
 
-  @override
-  get props => [_top, _bottom, _left, _right, _start, _end];
-  double? get _top;
-  double? get _bottom;
-  double? get _left;
-  double? get _right;
-  double? get _start;
-  double? get _end;
-
   //bool get _isDirectional =>
   //    (_start != null || _end != null) && (_left == null && _right == null);
 
@@ -43,6 +34,13 @@ abstract class EdgeInsetsGeometryDto<T extends EdgeInsetsGeometry>
     return from(edgeInsets);
   }
 
+  double? get _top;
+  double? get _bottom;
+  double? get _left;
+  double? get _right;
+  double? get _start;
+  double? get _end;
+
   EdgeInsetsGeometryDto merge(covariant EdgeInsetsGeometryDto? other) {
     if (other == null) return this;
 
@@ -67,6 +65,9 @@ abstract class EdgeInsetsGeometryDto<T extends EdgeInsetsGeometry>
       "${other.runtimeType} is not supported, use EdgeInsetsDto or EdgeInsetsDirectionalDto, and both mergeable types must be the same",
     );
   }
+
+  @override
+  get props => [_top, _bottom, _left, _right, _start, _end];
 }
 
 double? doubleNullIfZero(double? value) {

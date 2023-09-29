@@ -8,13 +8,13 @@ abstract class MixToken {
   const MixToken(this.name);
 
   @override
-  int get hashCode => runtimeType.hashCode ^ name.hashCode;
-  @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is MixToken &&
           runtimeType == other.runtimeType &&
           name == other.name;
+  @override
+  int get hashCode => runtimeType.hashCode ^ name.hashCode;
 }
 
 mixin WithReferenceMixin<T> on MixToken {

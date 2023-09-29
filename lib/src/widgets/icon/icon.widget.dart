@@ -83,6 +83,6 @@ class MixedIcon extends StatelessWidget {
       );
     }
 
-    return Semantics(child: iconWidget, label: semanticLabel);
+    return Semantics(label: semanticLabel, child: iconWidget);
   }
 }
