@@ -4,7 +4,7 @@ import 'package:mix/mix.dart';
 
 void main() {
   group("Test Mix Utilities", () {
-    test('Test Margin Utilities', () async {
+    test('Test Margin Utilities', () {
       expect(
         margin(20),
         ContainerStyleUtilities().marginInsets(
@@ -49,7 +49,7 @@ void main() {
       );
     });
 
-    test('Test Padding Utilities', () async {
+    test('Test Padding Utilities', () {
       expect(
         padding(20),
         ContainerStyleUtilities().paddingInsets(

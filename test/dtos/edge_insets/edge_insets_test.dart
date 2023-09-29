@@ -16,7 +16,7 @@ void main() {
     });
 
     test('from method creates EdgeInsetsDto from EdgeInsets', () {
-      const edgeInsets = EdgeInsets.only(top: 16.0, left: 8.0);
+      const edgeInsets = EdgeInsets.only(left: 8.0, top: 16.0);
       final edgeInsetsDto = EdgeInsetsDto.from(edgeInsets);
       expect(edgeInsetsDto.top, 16.0);
       expect(edgeInsetsDto.bottom, null);
@@ -61,15 +61,15 @@ void main() {
     ) async {
       final edgeInsetsDto = EdgeInsetsDto.only(
         top: $space.small,
-        left: $space.xlarge,
         bottom: 4.0,
+        left: $space.xlarge,
         right: 4.0,
       );
 
       final overrideEdgeInsets = EdgeInsetsDto.only(
         bottom: $space.medium,
-        right: $space.xxlarge,
         left: 20,
+        right: $space.xxlarge,
       );
 
       final mixTheme = MixThemeData();
@@ -81,8 +81,8 @@ void main() {
               style: StyleMix(),
               builder: (mix) {
                 return Container(
-                  margin: edgeInsetsDto.resolve(mix),
                   padding: edgeInsetsDto.merge(overrideEdgeInsets).resolve(mix),
+                  margin: edgeInsetsDto.resolve(mix),
                   child: const SizedBox(width: 50, height: 50),
                 );
               },
@@ -100,20 +100,20 @@ void main() {
       expect(
         container.margin,
         EdgeInsets.only(
-          top: MixTokenResolver(context).space($space.small),
           left: MixTokenResolver(context).space($space.xlarge),
-          bottom: 4.0,
+          top: MixTokenResolver(context).space($space.small),
           right: 4.0,
+          bottom: 4.0,
         ),
       );
 
       expect(
         container.padding,
         EdgeInsets.only(
-          top: MixTokenResolver(context).space($space.small),
-          bottom: MixTokenResolver(context).space($space.medium),
-          right: MixTokenResolver(context).space($space.xxlarge),
           left: 20,
+          top: MixTokenResolver(context).space($space.small),
+          right: MixTokenResolver(context).space($space.xxlarge),
+          bottom: MixTokenResolver(context).space($space.medium),
         ),
       );
     });

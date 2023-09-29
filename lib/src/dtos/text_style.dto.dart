@@ -107,13 +107,7 @@ class TextStyleDto extends Dto<TextStyle> {
       styleRef = TextStyleDto.from(textStyle);
     }
 
-    // If there is a style token, use it as a base
-    if (styleRef != null) {
-      styleRef = styleRef.merge(this);
-    } else {
-      // If not just reference itself
-      styleRef = this;
-    }
+    styleRef = styleRef != null ? styleRef.merge(this) : this;
 
     return TextStyle(
       inherit: styleRef.inherit ?? true,

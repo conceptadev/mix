@@ -58,36 +58,33 @@ class MixedContainer extends StatelessWidget {
     }
     var current = child;
 
-    if (common.animated) {
-      current = AnimatedContainer(
-        color: box.color,
-        decoration: box.decoration,
-        alignment: box.alignment,
-        constraints: box.constraints,
-        margin: box.margin,
-        padding: box.padding,
-        height: box.height,
-        width: box.width,
-        duration: common.animationDuration,
-        curve: common.animationCurve,
-        transform: box.transform,
-        child: current,
-      );
-    } else {
-      current = Container(
-        color: box.color,
-        decoration: box.decoration,
-        alignment: box.alignment,
-        constraints: box.constraints,
-        margin: box.margin,
-        padding: box.padding,
-        height: box.height,
-        width: box.width,
-        transform: box.transform,
-        child: current,
-      );
-    }
-
+    current = common.animated
+        ? AnimatedContainer(
+            color: box.color,
+            decoration: box.decoration,
+            alignment: box.alignment,
+            constraints: box.constraints,
+            margin: box.margin,
+            padding: box.padding,
+            height: box.height,
+            width: box.width,
+            duration: common.animationDuration,
+            curve: common.animationCurve,
+            transform: box.transform,
+            child: current,
+          )
+        : Container(
+            color: box.color,
+            decoration: box.decoration,
+            alignment: box.alignment,
+            constraints: box.constraints,
+            margin: box.margin,
+            padding: box.padding,
+            height: box.height,
+            width: box.width,
+            transform: box.transform,
+            child: current,
+          );
     if (mix.decorators != null) {
       // Wrap parent decorators
       current = WidgetDecoratorWrapper(

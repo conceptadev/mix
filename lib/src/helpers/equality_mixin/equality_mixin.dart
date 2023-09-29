@@ -131,10 +131,6 @@ mixin EqualityMixin {
 
   @override
   String toString() {
-    if (stringify) {
-      return mapPropsToString(runtimeType, props);
-    } else {
-      return '$runtimeType';
-    }
+    return stringify ? mapPropsToString(runtimeType, props) : '$runtimeType';
   }
 }

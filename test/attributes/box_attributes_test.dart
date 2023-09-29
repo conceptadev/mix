@@ -10,7 +10,7 @@ import 'package:mix/src/dtos/shadow/box_shadow.dto.dart';
 
 void main() {
   group("Box Attributes", () {
-    test('-> Margin', () async {
+    test('-> Margin', () {
       const marginAttribute =
           StyledContainerAttributes(margin: EdgeInsetsDto.all(20));
       final marginUtilityAttribute = margin(20);
@@ -34,7 +34,7 @@ void main() {
       );
     });
 
-    test('-> Padding', () async {
+    test('-> Padding', () {
       const paddingAttribute =
           StyledContainerAttributes(padding: EdgeInsetsDto.all(30));
       final paddingUtilityAttribute = padding(30);
@@ -58,7 +58,7 @@ void main() {
       );
     });
 
-    test('-> Width', () async {
+    test('-> Width', () {
       const widthAttribute = StyledContainerAttributes(width: 40);
       final widthUtilityAttribute = width(40);
 
@@ -81,7 +81,7 @@ void main() {
       );
     });
 
-    test('-> Height', () async {
+    test('-> Height', () {
       const heightAttribute = StyledContainerAttributes(height: 50);
       final heightUtilityAttribute = height(50);
 
@@ -104,7 +104,7 @@ void main() {
       );
     });
 
-    test('-> Min Width', () async {
+    test('-> Min Width', () {
       const minWidthAttribute = StyledContainerAttributes(minWidth: 60);
       final minWidthUtilityAttribute = minWidth(60);
 
@@ -127,7 +127,7 @@ void main() {
       );
     });
 
-    test('-> Min Height', () async {
+    test('-> Min Height', () {
       const minHeightAttribute = StyledContainerAttributes(minHeight: 70);
       final minHeightUtilityAttribute = minHeight(70);
 
@@ -150,7 +150,7 @@ void main() {
       );
     });
 
-    test('-> Max Width', () async {
+    test('-> Max Width', () {
       const maxWidthAttribute = StyledContainerAttributes(maxWidth: 80);
       final maxWidthUtilityAttribute = maxWidth(80);
 
@@ -173,7 +173,7 @@ void main() {
       );
     });
 
-    test('-> Max Height', () async {
+    test('-> Max Height', () {
       const maxHeightAttribute = StyledContainerAttributes(maxHeight: 90);
       final maxHeightUtilityAttribute = maxHeight(90);
 
@@ -196,7 +196,7 @@ void main() {
       );
     });
 
-    test('-> Alignment', () async {
+    test('-> Alignment', () {
       const alignmentAttribute =
           StyledContainerAttributes(alignment: Alignment.topLeft);
       final alignmentUtilityAttribute = alignment(Alignment.topLeft);
@@ -222,7 +222,7 @@ void main() {
 
     // Border Radius
 
-    test('-> Border Radius', () async {
+    test('-> Border Radius', () {
       const borderRadiusAttribute = StyledContainerAttributes(
         borderRadius: BorderRadiusDto.all(
           RadiusDto.circular(10),
@@ -278,7 +278,7 @@ void main() {
 
     // Border
 
-    test('-> Border', () async {
+    test('-> Border', () {
       final borderAttribute = StyledContainerAttributes(
         border: BorderDto.all(
           style: BorderStyle.solid,
@@ -317,7 +317,7 @@ void main() {
 
     // Shadows
 
-    test('-> Shadow', () async {
+    test('-> Shadow', () {
       const shadowAttribute = StyledContainerAttributes(
         boxShadow: [
           BoxShadowDto(
@@ -363,7 +363,7 @@ void main() {
 
     // Transform
 
-    test('-> Transform', () async {
+    test('-> Transform', () {
       final transformAttribute = StyledContainerAttributes(
         transform: Matrix4.rotationZ(0.1),
       );

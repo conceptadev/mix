@@ -364,15 +364,13 @@ class ContainerStyleUtilities {
     BorderStyle? style,
     BorderSide? as,
   }) {
-    if (as != null) {
-      return BorderSideDto.from(as);
-    } else {
-      return BorderSideDto.only(
-        color: ColorDto.maybeFrom(color),
-        width: width,
-        style: style,
-      );
-    }
+    return as != null
+        ? BorderSideDto.from(as)
+        : BorderSideDto.only(
+            color: ColorDto.maybeFrom(color),
+            width: width,
+            style: style,
+          );
   }
 
   StyledContainerAttributes border({
@@ -385,15 +383,13 @@ class ContainerStyleUtilities {
   }) {
     BoxBorderDto border;
 
-    if (as != null) {
-      border = BoxBorderDto.from(as);
-    } else {
-      border = BorderDto.all(
-        color: ColorDto.maybeFrom(color),
-        width: width,
-        style: style,
-      );
-    }
+    border = as != null
+        ? BoxBorderDto.from(as)
+        : BorderDto.all(
+            color: ColorDto.maybeFrom(color),
+            width: width,
+            style: style,
+          );
 
     return StyledContainerAttributes(border: border);
   }
@@ -402,7 +398,6 @@ class ContainerStyleUtilities {
     Color? color,
     double? width,
     BorderStyle? style,
-    BorderSide? as,
   }) {
     return StyledContainerAttributes(
       border: BorderDto.only(
@@ -419,7 +414,6 @@ class ContainerStyleUtilities {
     Color? color,
     double? width,
     BorderStyle? style,
-    BorderSide? as,
   }) {
     return StyledContainerAttributes(
       border: BorderDto.only(

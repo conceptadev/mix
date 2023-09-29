@@ -20,21 +20,19 @@ class OpacityDecorator extends WidgetDecorator<OpacityDecorator> {
   Widget build(MixData mix, Widget child) {
     final common = CommonDescriptor.fromContext(mix);
 
-    if (common.animated) {
-      return AnimatedOpacity(
-        key: key,
-        duration: common.animationDuration,
-        curve: common.animationCurve,
-        opacity: opacity,
-        child: child,
-      );
-    } else {
-      return Opacity(
-        key: key,
-        opacity: opacity,
-        child: child,
-      );
-    }
+    return common.animated
+        ? AnimatedOpacity(
+            key: key,
+            duration: common.animationDuration,
+            curve: common.animationCurve,
+            opacity: opacity,
+            child: child,
+          )
+        : Opacity(
+            key: key,
+            opacity: opacity,
+            child: child,
+          );
   }
 
   @override

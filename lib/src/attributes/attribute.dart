@@ -16,11 +16,11 @@ abstract class StyleAttribute with EqualityMixin {
 mixin Mergeable<T> {
   T merge(covariant T? other);
 
-  static List<T> mergeLists<T extends Mergeable>(
+  static List<T>? mergeLists<T extends Mergeable>(
     List<T>? list,
     List<T>? other,
   ) {
-    if (other == null || other.isEmpty) return list ?? [];
+    if (other == null || other.isEmpty) return list;
     if (list == null || list.isEmpty) return other;
 
     if (listEquals(list, other)) return list;

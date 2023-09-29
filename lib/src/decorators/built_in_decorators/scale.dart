@@ -19,27 +19,26 @@ class ScaleDecorator extends WidgetDecorator<ScaleDecorator> {
   @override
   Widget build(MixData mix, Widget child) {
     final common = CommonDescriptor.fromContext(mix);
-    if (common.animated) {
-      return TweenAnimationBuilder<double>(
-        tween: Tween<double>(begin: 1, end: scale),
-        duration: common.animationDuration,
-        curve: common.animationCurve,
-        builder: (context, value, child) {
-          return Transform.scale(
+
+    return common.animated
+        ? TweenAnimationBuilder<double>(
+            tween: Tween<double>(begin: 1, end: scale),
+            duration: common.animationDuration,
+            curve: common.animationCurve,
+            builder: (context, value, child) {
+              return Transform.scale(
+                key: key,
+                scale: value,
+                child: child,
+              );
+            },
+            child: child,
+          )
+        : Transform.scale(
             key: key,
-            scale: value,
+            scale: scale,
             child: child,
           );
-        },
-        child: child,
-      );
-    } else {
-      return Transform.scale(
-        key: key,
-        scale: scale,
-        child: child,
-      );
-    }
   }
 
   @override

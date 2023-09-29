@@ -29,9 +29,9 @@ class Gap extends StatelessWidget {
   /// The [crossAxisExtent] must be either null or positive.
   const Gap(
     this.mainAxisExtent, {
-    Key? key,
-    this.crossAxisExtent,
     this.color,
+    this.crossAxisExtent,
+    Key? key,
   })  : assert(mainAxisExtent >= 0 && mainAxisExtent < double.infinity),
         assert(crossAxisExtent == null || crossAxisExtent >= 0),
         super(key: key);
@@ -40,15 +40,12 @@ class Gap extends StatelessWidget {
   /// direction of its parent and expands in the cross axis direction.
   ///
   /// The [mainAxisExtent] must not be null and must be positive.
-  const Gap.expand(
-    double mainAxisExtent, {
-    Key? key,
-    Color? color,
-  }) : this(
+  const Gap.expand(double mainAxisExtent, {Color? color, Key? key})
+      : this(
           mainAxisExtent,
-          key: key,
-          crossAxisExtent: double.infinity,
           color: color,
+          crossAxisExtent: double.infinity,
+          key: key,
         );
 
   /// The amount of space this widget takes in the direction of its parent.
@@ -78,14 +75,14 @@ class Gap extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final scrollableState = Scrollable.maybeOf(context);
-    final AxisDirection? axisDirection = scrollableState?.axisDirection;
-    final Axis? fallbackDirection =
+    final axisDirection = scrollableState?.axisDirection;
+    final fallbackDirection =
         axisDirection == null ? null : axisDirectionToAxis(axisDirection);
 
     return _RawGap(
       mainAxisExtent,
-      crossAxisExtent: crossAxisExtent,
       color: color,
+      crossAxisExtent: crossAxisExtent,
       fallbackDirection: fallbackDirection,
     );
   }
@@ -110,9 +107,9 @@ class MaxGap extends StatelessWidget {
   /// The [crossAxisExtent] must be either null or positive.
   const MaxGap(
     this.mainAxisExtent, {
-    Key? key,
-    this.crossAxisExtent,
     this.color,
+    this.crossAxisExtent,
+    Key? key,
   }) : super(key: key);
 
   /// Creates a widget that takes, at most, the specified [mainAxisExtent] of
@@ -121,15 +118,12 @@ class MaxGap extends StatelessWidget {
   ///
   /// The [mainAxisExtent] must not be null and must be positive.
   /// The [crossAxisExtent] must be either null or positive.
-  const MaxGap.expand(
-    double mainAxisExtent, {
-    Key? key,
-    Color? color,
-  }) : this(
+  const MaxGap.expand(double mainAxisExtent, {Color? color, Key? key})
+      : this(
           mainAxisExtent,
-          key: key,
-          crossAxisExtent: double.infinity,
           color: color,
+          crossAxisExtent: double.infinity,
+          key: key,
         );
 
   /// The amount of space this widget takes in the direction of the parent.
@@ -159,8 +153,8 @@ class MaxGap extends StatelessWidget {
     return Flexible(
       child: _RawGap(
         mainAxisExtent,
-        crossAxisExtent: crossAxisExtent,
         color: color,
+        crossAxisExtent: crossAxisExtent,
       ),
     );
   }
@@ -169,10 +163,10 @@ class MaxGap extends StatelessWidget {
 class _RawGap extends LeafRenderObjectWidget {
   const _RawGap(
     this.mainAxisExtent, {
-    Key? key,
-    this.crossAxisExtent,
     this.color,
+    this.crossAxisExtent,
     this.fallbackDirection,
+    Key? key,
   })  : assert(mainAxisExtent >= 0 && mainAxisExtent < double.infinity),
         assert(crossAxisExtent == null || crossAxisExtent >= 0),
         super(key: key);
@@ -190,8 +184,8 @@ class _RawGap extends LeafRenderObjectWidget {
     return RenderGap(
       mainAxisExtent: mainAxisExtent,
       crossAxisExtent: crossAxisExtent ?? 0,
-      color: color,
       fallbackDirection: fallbackDirection,
+      color: color,
     );
   }
 

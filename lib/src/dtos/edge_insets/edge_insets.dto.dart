@@ -9,6 +9,16 @@ class EdgeInsetsDto extends EdgeInsetsGeometryDto<EdgeInsets> {
   final double? left;
   final double? right;
 
+  @override
+  get props => [top, bottom, left, right];
+  double? get _top => top;
+
+  double? get _bottom => bottom;
+
+  double? get _left => left;
+
+  double? get _right => right;
+
   const EdgeInsetsDto._({
     this.top,
     this.bottom,
@@ -46,20 +56,12 @@ class EdgeInsetsDto extends EdgeInsetsGeometryDto<EdgeInsets> {
     );
   }
 
-  // Helper utility for internal API use and cleaner conditional checking
+  // Helper utility for internal API use and cleaner conditional checking.
   static EdgeInsetsDto? maybeFrom(EdgeInsets? edgeInsets) {
     if (edgeInsets == null) return null;
 
     return EdgeInsetsDto.from(edgeInsets);
   }
-
-  double? get _top => top;
-
-  double? get _bottom => bottom;
-
-  double? get _left => left;
-
-  double? get _right => right;
 
   EdgeInsetsDto copyWith({
     double? top,
@@ -90,13 +92,10 @@ class EdgeInsetsDto extends EdgeInsetsGeometryDto<EdgeInsets> {
   @override
   EdgeInsets resolve(MixData mix) {
     return EdgeInsets.only(
-      top: mix.resolveToken.space(_top ?? 0.0),
-      bottom: mix.resolveToken.space(_bottom ?? 0.0),
       left: mix.resolveToken.space(_left ?? 0.0),
+      top: mix.resolveToken.space(_top ?? 0.0),
       right: mix.resolveToken.space(_right ?? 0.0),
+      bottom: mix.resolveToken.space(_bottom ?? 0.0),
     );
   }
-
-  @override
-  get props => [top, bottom, left, right];
 }

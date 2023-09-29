@@ -9,10 +9,7 @@ class ImageUtility {
   // ignore: long-parameter-list
   static StyledImageAttributes image({
     Color? color,
-    double? width,
-    double? height,
     double? scale,
-    BlendMode? colorBlendMode,
     BoxFit? fit,
     AlignmentGeometry? alignment,
     ImageRepeat? repeat,

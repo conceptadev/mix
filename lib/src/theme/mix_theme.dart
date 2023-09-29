@@ -5,7 +5,6 @@ import '../../mix.dart';
 import '../helpers/equality_mixin/equality_mixin.dart';
 import 'tokens/breakpoints.dart';
 import 'tokens/mix_token.dart';
-import 'tokens/radii_token.dart';
 
 class MixTheme extends InheritedWidget {
   const MixTheme({
@@ -13,8 +12,6 @@ class MixTheme extends InheritedWidget {
     required Widget child,
     required this.data,
   }) : super(key: key, child: child);
-
-  final MixThemeData data;
 
   static MixThemeData of(BuildContext context) {
     return context.dependOnInheritedWidgetOfExactType<MixTheme>()?.data ??
@@ -25,30 +22,32 @@ class MixTheme extends InheritedWidget {
     return context.dependOnInheritedWidgetOfExactType<MixTheme>()?.data;
   }
 
+  final MixThemeData data;
+
   @override
   bool updateShouldNotify(MixTheme oldWidget) {
     return data != oldWidget.data;
   }
 }
 
+@immutable
 class MixThemeData with EqualityMixin {
   final MixSpaceTokens space;
-  late MixSpaceTokensReference spaceRef;
+
   final MixBreakpointsTokens breakpoints;
 
   final MixColorTokens colors;
   final MixTextStyleTokens textStyles;
 
-  MixThemeData.raw({
+  @override
+  get props => [space, breakpoints, colors, textStyles];
+
+  const MixThemeData.raw({
     required this.space,
     required this.breakpoints,
     required this.colors,
     required this.textStyles,
-  }) {
-    // Creates a refernece map of the tokens
-    spaceRef = space.map((key, value) => MapEntry(key.ref, key));
-  }
-
+  });
   factory MixThemeData({
     MixSpaceTokens? space,
     MixBreakpointsTokens? breakpoints,
@@ -66,7 +65,6 @@ class MixThemeData with EqualityMixin {
   MixThemeData copyWith({
     MixSpaceTokens? space,
     MixBreakpointsTokens? breakpoints,
-    MixRadiiTokens? radii,
     MixColorTokens? colors,
     MixTextStyleTokens? textStyles,
   }) {
@@ -77,17 +75,14 @@ class MixThemeData with EqualityMixin {
       textStyles: {...this.textStyles, ...?textStyles},
     );
   }
-
-  @override
-  get props => [space, breakpoints, colors, textStyles];
 }
 
 class MixTokenResolver {
   final BuildContext context;
 
-  MixTokenResolver(this.context);
-
   MixThemeData get theme => MixTheme.of(context);
+
+  MixTokenResolver(this.context);
 
   Color color(ColorToken token) {
     final color = theme.colors[token]?.call(context);
@@ -112,10 +107,12 @@ class MixTokenResolver {
   double space(double value) {
     final mixTheme = theme;
 
-    // Check if value is a reference
-    final token = mixTheme.spaceRef[value];
+    final refs = mixTheme.space.map((key, value) => MapEntry(key.ref, key));
 
-    // if value is not a reference return value
+    // Check if value is a reference.
+    final token = refs[value];
+
+    // If value is not a reference return value.
     if (token == null) {
       return value;
     }

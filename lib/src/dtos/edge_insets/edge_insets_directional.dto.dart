@@ -10,49 +10,8 @@ class EdgeInsetsDirectionalDto
   final double? start;
   final double? end;
 
-  const EdgeInsetsDirectionalDto._({
-    this.top,
-    this.bottom,
-    this.start,
-    this.end,
-  });
-
-  const EdgeInsetsDirectionalDto.only({
-    this.top,
-    this.bottom,
-    this.start,
-    this.end,
-  });
-
-  const EdgeInsetsDirectionalDto.all(double value)
-      : this._(
-          top: value,
-          bottom: value,
-          start: value,
-          end: value,
-        );
-
-  const EdgeInsetsDirectionalDto.symmetric({
-    double? horizontal,
-    double? vertical,
-  }) : this._(
-          top: vertical,
-          bottom: vertical,
-          start: horizontal,
-          end: horizontal,
-        );
-
-  factory EdgeInsetsDirectionalDto.from(
-    EdgeInsetsDirectional edgeInsets,
-  ) {
-    return EdgeInsetsDirectionalDto._(
-      top: doubleNullIfZero(edgeInsets.top),
-      bottom: doubleNullIfZero(edgeInsets.bottom),
-      start: doubleNullIfZero(edgeInsets.start),
-      end: doubleNullIfZero(edgeInsets.end),
-    );
-  }
-
+  @override
+  get props => [top, bottom, start, end];
   double? get _top => top;
 
   double? get _bottom => bottom;
@@ -67,17 +26,53 @@ class EdgeInsetsDirectionalDto
 
   double? get _end => end;
 
+  const EdgeInsetsDirectionalDto._({
+    this.bottom,
+    this.end,
+    this.start,
+    this.top,
+  });
+
+  const EdgeInsetsDirectionalDto.only({
+    this.bottom,
+    this.end,
+    this.start,
+    this.top,
+  });
+
+  const EdgeInsetsDirectionalDto.all(double value)
+      : this._(bottom: value, end: value, start: value, top: value);
+
+  const EdgeInsetsDirectionalDto.symmetric({
+    double? horizontal,
+    double? vertical,
+  }) : this._(
+          bottom: vertical,
+          end: horizontal,
+          start: horizontal,
+          top: vertical,
+        );
+
+  factory EdgeInsetsDirectionalDto.from(EdgeInsetsDirectional edgeInsets) {
+    return EdgeInsetsDirectionalDto._(
+      bottom: doubleNullIfZero(edgeInsets.bottom),
+      end: doubleNullIfZero(edgeInsets.end),
+      start: doubleNullIfZero(edgeInsets.start),
+      top: doubleNullIfZero(edgeInsets.top),
+    );
+  }
+
   EdgeInsetsDirectionalDto copyWith({
-    double? top,
     double? bottom,
-    double? start,
     double? end,
+    double? start,
+    double? top,
   }) {
     return EdgeInsetsDirectionalDto._(
-      top: top ?? this.top,
       bottom: bottom ?? this.bottom,
-      start: start ?? this.start,
       end: end ?? this.end,
+      start: start ?? this.start,
+      top: top ?? this.top,
     );
   }
 
@@ -86,23 +81,20 @@ class EdgeInsetsDirectionalDto
     if (other == null) return this;
 
     return copyWith(
-      top: other.top,
       bottom: other.bottom,
-      start: other.start,
       end: other.end,
+      start: other.start,
+      top: other.top,
     );
   }
 
   @override
   EdgeInsetsDirectional resolve(MixData mix) {
     return EdgeInsetsDirectional.only(
-      top: mix.resolveToken.space(_top ?? 0.0),
-      bottom: mix.resolveToken.space(_bottom ?? 0.0),
       start: mix.resolveToken.space(_start ?? 0.0),
+      top: mix.resolveToken.space(_top ?? 0.0),
       end: mix.resolveToken.space(_end ?? 0.0),
+      bottom: mix.resolveToken.space(_bottom ?? 0.0),
     );
   }
-
-  @override
-  get props => [top, bottom, start, end];
 }

@@ -61,6 +61,7 @@ class TextUtility {
             height == null,
         'If asStyle is provided, all other parameters will be ignored.',
       );
+
       return StyledTextAttributes(style: TextStyleDto.from(as));
     }
 

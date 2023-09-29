@@ -80,22 +80,20 @@ class MixedText extends StatelessWidget {
       semanticsLabel: semanticsLabel,
     );
 
-    if (common.animated) {
-      return AnimatedDefaultTextStyle(
-        style: text.style ??
-            Theme.of(context).textTheme.bodyLarge ??
-            const TextStyle(),
-        duration: common.animationDuration,
-        curve: common.animationCurve,
-        softWrap: text.softWrap,
-        overflow: text.overflow,
-        textAlign: text.textAlign,
-        maxLines: text.maxLines,
-        child: textWidget,
-      );
-    } else {
-      return textWidget;
-    }
+    return common.animated
+        ? AnimatedDefaultTextStyle(
+            style: text.style ??
+                Theme.of(context).textTheme.bodyLarge ??
+                const TextStyle(),
+            duration: common.animationDuration,
+            curve: common.animationCurve,
+            softWrap: text.softWrap,
+            overflow: text.overflow,
+            textAlign: text.textAlign,
+            maxLines: text.maxLines,
+            child: textWidget,
+          )
+        : textWidget;
   }
 
   @override

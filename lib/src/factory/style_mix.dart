@@ -176,11 +176,7 @@ class StyleMix {
     required StyleMix ifTrue,
     required StyleMix ifFalse,
   }) {
-    if (condition) {
-      return ifTrue;
-    } else {
-      return ifFalse;
-    }
+    return condition ? ifTrue : ifFalse;
   }
 
   /// Combines a list of [mixes] into a single MixFactory.

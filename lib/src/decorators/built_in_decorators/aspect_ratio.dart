@@ -22,27 +22,25 @@ class AspectRatioDecorator extends WidgetDecorator<AspectRatioDecorator> {
   Widget build(MixData mix, Widget child) {
     final common = CommonDescriptor.fromContext(mix);
 
-    if (common.animated) {
-      return TweenAnimationBuilder<double>(
-        tween: Tween<double>(end: aspectRatio),
-        duration: common.animationDuration,
-        curve: common.animationCurve,
-        builder: (context, value, child) {
-          return AspectRatio(
+    return common.animated
+        ? TweenAnimationBuilder<double>(
+            tween: Tween<double>(end: aspectRatio),
+            duration: common.animationDuration,
+            curve: common.animationCurve,
+            builder: (context, value, child) {
+              return AspectRatio(
+                key: key,
+                aspectRatio: value,
+                child: child,
+              );
+            },
+            child: child,
+          )
+        : AspectRatio(
             key: key,
-            aspectRatio: value,
+            aspectRatio: aspectRatio,
             child: child,
           );
-        },
-        child: child,
-      );
-    } else {
-      return AspectRatio(
-        key: key,
-        aspectRatio: aspectRatio,
-        child: child,
-      );
-    }
   }
 
   @override

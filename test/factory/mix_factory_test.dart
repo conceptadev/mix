@@ -50,7 +50,7 @@ final nestedMix = StyleMix().mergeMany([
 
 void main() {
   group("Mix Factory", () {
-    test('Creates a Mix from positional Attributes', () async {
+    test('Creates a Mix from positional Attributes', () {
       final style = StyleMix(
         backgroundColor(Colors.red),
         margin(10),
@@ -66,7 +66,7 @@ void main() {
       expect(boxAttribute.margin, const EdgeInsetsDto.all(10));
     });
 
-    test('Creates a Mix from Attributes List', () async {
+    test('Creates a Mix from Attributes List', () {
       final mix = StyleMix.fromAttributes([
         backgroundColor(Colors.red),
         margin(10),
@@ -83,7 +83,7 @@ void main() {
     });
   });
 
-  test('Combines Mixes', () async {
+  test('Combines Mixes', () {
     const boxAttribute =
         StyledContainerAttributes(color: ColorDto(Colors.blue));
 
@@ -105,7 +105,7 @@ void main() {
     expect(modifiedFlexAttribute, equals(flexAttribute));
   });
 
-  test('Equality of Mix', () async {
+  test('Equality of Mix', () {
     final copyFirstMix = StyleMix.fromAttributes(firstMix.toAttributes());
     final copySecondMix = StyleMix.fromAttributes(secondMix.toAttributes());
     final combinedMixFirst = StyleMix.combine([firstMix, secondMix]);
@@ -116,7 +116,7 @@ void main() {
     expect(combinedMixFirst, equals(combinedMixSecond));
   });
 
-  test('Chooses Mixes based on conditional', () async {
+  test('Chooses Mixes based on conditional', () {
     final chooseFirstMix = StyleMix.chooser(
       condition: true,
       ifTrue: firstMix,

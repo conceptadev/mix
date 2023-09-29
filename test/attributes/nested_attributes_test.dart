@@ -6,7 +6,7 @@ import 'package:mix/src/dtos/edge_insets/edge_insets.dto.dart';
 
 void main() {
   group("Nested Attributes", () {
-    test('-> Apply Mixes', () async {
+    test('-> Apply Mixes', () {
       final styleMargin = StyleMix(
         const StyledContainerAttributes(
           margin: EdgeInsetsDto.all(20),

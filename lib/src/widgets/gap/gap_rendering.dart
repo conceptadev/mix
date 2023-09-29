@@ -40,11 +40,8 @@ class RenderGap extends RenderBox {
 
   Axis? get _direction {
     final parentNode = parent;
-    if (parentNode is RenderFlex) {
-      return parentNode.direction;
-    } else {
-      return fallbackDirection;
-    }
+
+    return parentNode is RenderFlex ? parentNode.direction : fallbackDirection;
   }
 
   Color? get color => _color;
@@ -90,15 +87,12 @@ class RenderGap extends RenderBox {
 
   double? _computeIntrinsicExtent(Axis axis, double Function() compute) {
     final Axis? direction = _direction;
-    if (direction == axis) {
-      return _mainAxisExtent;
-    } else {
-      if (_crossAxisExtent!.isFinite) {
-        return _crossAxisExtent;
-      } else {
-        return compute();
-      }
-    }
+
+    return direction == axis
+        ? _mainAxisExtent
+        : _crossAxisExtent!.isFinite
+            ? _crossAxisExtent
+            : compute();
   }
 
   @override
@@ -106,11 +100,9 @@ class RenderGap extends RenderBox {
     final Axis? direction = _direction;
 
     if (direction != null) {
-      if (direction == Axis.horizontal) {
-        return constraints.constrain(Size(mainAxisExtent, crossAxisExtent!));
-      } else {
-        return constraints.constrain(Size(crossAxisExtent!, mainAxisExtent));
-      }
+      return direction == Axis.horizontal
+          ? constraints.constrain(Size(mainAxisExtent, crossAxisExtent!))
+          : constraints.constrain(Size(crossAxisExtent!, mainAxisExtent));
     } else {
       throw FlutterError(
         'A Gap widget must be placed directly inside a Flex widget '

@@ -46,21 +46,19 @@ class ClipDecorator extends WidgetDecorator<ClipDecorator> {
     }
 
     if (clipType == ClipDecoratorType.rounded) {
-      if (common.animated) {
-        return AnimatedClipRRect(
-          key: key,
-          duration: common.animationDuration,
-          curve: common.animationCurve,
-          borderRadius: borderRadius,
-          child: child,
-        );
-      } else {
-        return ClipRRect(
-          key: key,
-          borderRadius: borderRadius,
-          child: child,
-        );
-      }
+      return common.animated
+          ? AnimatedClipRRect(
+              key: key,
+              duration: common.animationDuration,
+              curve: common.animationCurve,
+              borderRadius: borderRadius,
+              child: child,
+            )
+          : ClipRRect(
+              key: key,
+              borderRadius: borderRadius,
+              child: child,
+            );
     }
 
     if (clipType == ClipDecoratorType.oval) {
