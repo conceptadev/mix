@@ -41,8 +41,8 @@ class StyleMixData with EqualityMixin {
     }
 
     return StyleMixData(
-      attributes: MergeableMap(attributeList),
-      decorators: MergeableMap(decoratorList),
+      attributes: MergeableMap.fromList(attributeList),
+      decorators: MergeableMap.fromList(decoratorList),
       variants: variantList,
       contextVariants: contextVariantList,
     );
@@ -64,7 +64,7 @@ class StyleMixData with EqualityMixin {
 
   /// Returns an instance of the specified [StyledWidgetAttributes] type from the [MixData].
   A? attributesOfType<A extends StyledWidgetAttributes>() {
-    return attributes?[A] as A?;
+    return attributes?.get(A) as A?;
   }
 
   /// Returns an [Iterable] of [StyleAttribute]s containing all attributes, variants, and directives.

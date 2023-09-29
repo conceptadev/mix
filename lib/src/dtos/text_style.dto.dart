@@ -177,7 +177,7 @@ class TextStyleDto extends Dto<TextStyle> {
       textBaseline: textBaseline ?? this.textBaseline,
       color: color ?? this.color,
       backgroundColor: backgroundColor ?? this.backgroundColor,
-      shadows: this.shadows?.merge(shadows) ?? shadows,
+      shadows: Mergeable.mergeLists(this.shadows, shadows),
       fontFeatures: fontFeatures ?? this.fontFeatures,
       decoration: decoration ?? this.decoration,
       decorationColor: decorationColor ?? this.decorationColor,

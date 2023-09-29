@@ -207,7 +207,8 @@ void main() {
               StyleMix(
                 const StyledContainerAttributes(color: ColorDto(Colors.purple)),
                 const StyledContainerAttributes(
-                    borderRadius: borderRadiusProps,),
+                  borderRadius: borderRadiusProps,
+                ),
                 StyledContainerAttributes(border: borderProps),
               ),
             ),

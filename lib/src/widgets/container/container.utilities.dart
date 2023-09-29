@@ -148,7 +148,8 @@ class ContainerStyleUtilities {
 
   StyledContainerAttributes paddingInsets(EdgeInsetsGeometry insets) {
     return StyledContainerAttributes(
-        padding: EdgeInsetsGeometryDto.from(insets),);
+      padding: EdgeInsetsGeometryDto.from(insets),
+    );
   }
 
   StyledContainerAttributes paddingTop(double value) {

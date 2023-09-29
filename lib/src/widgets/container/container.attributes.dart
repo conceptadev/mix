@@ -74,7 +74,7 @@ class StyledContainerAttributes extends StyledWidgetAttributes {
       // Mergeble values
       border: this.border?.merge(border) ?? border,
       borderRadius: this.borderRadius?.merge(borderRadius) ?? borderRadius,
-      boxShadow: this.boxShadow?.merge(boxShadow) ?? boxShadow,
+      boxShadow: Mergeable.mergeLists(this.boxShadow, boxShadow),
       margin: this.margin?.merge(margin) ?? margin,
       padding: this.padding?.merge(padding) ?? padding,
       transform: this.transform?.merge(transform) ?? transform,

@@ -66,7 +66,6 @@ class EdgeInsetsDirectionalDto
   double? get _start => start;
 
   double? get _end => end;
-  
 
   EdgeInsetsDirectionalDto copyWith({
     double? top,

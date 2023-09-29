@@ -1,123 +1,129 @@
-import 'dart:collection';
+import 'package:flutter/foundation.dart';
 
 import '../attributes/attribute.dart';
 
-/// A map-like data structure that can merge values with the same key based on
-/// their runtime type. Maintains insertion order of keys.
+/// Represents a map that can merge values of type [Mergeable] based on their runtime type.
+/// Maintains the insertion order of keys.
 ///
-/// This is used to merge different attributes.
+/// The type parameter [T] must extend [Mergeable], ensuring that the values can be merged.
+///
+/// This class is useful for scenarios where you need to merge objects based on their types
+/// while preserving the order in which they were inserted.
+@immutable
 class MergeableMap<T extends Mergeable> {
-  final LinkedHashMap<Type, T> _map = LinkedHashMap<Type, T>();
+  // Internal list to hold the keys to maintain insertion order
+  final List<Type> _keys;
 
-  /// Creates a new [MergeableMap] instance with the given [iterable].
+  // Internal map to associate keys to values
+  final Map<Type, T> _map;
+
+  /// Private constructor used by factory methods.
   ///
-  /// The optional [keyMapper] function is used to map the iterable items to
-  /// their respective keys. If not provided, the runtime type of the item is
-  /// used as the key.
-  MergeableMap(List<T> iterable) {
+  /// Both [_keys] and [_map] must not be null.
+  const MergeableMap._(this._keys, this._map);
+
+  /// Factory constructor to create an empty [MergeableMap].
+  ///
+  /// Useful for initializing an empty map.
+  const MergeableMap.empty()
+      : _keys = const [],
+        _map = const {};
+
+  /// Creates a [MergeableMap] instance from an iterable of type [T].
+  ///
+  /// Iterates through each item in the [iterable], merging items of the same type.
+  factory MergeableMap.fromList(List<T> iterable) {
+    final keys = <Type>[];
+    final map = <Type, T>{};
     for (final item in iterable) {
-      _update(item);
+      final key = item.runtimeType;
+      if (map.containsKey(key)) {
+        map[key] = map[key]!.merge(item);
+      } else {
+        keys.add(key);
+        map[key] = item;
+      }
     }
+
+    return MergeableMap<T>._(keys, map);
   }
 
-  /// Creates an empty [MergeableMap] instance.
-  factory MergeableMap.empty() {
-    return MergeableMap([]);
-  }
-
-  void _update(T value) {
-    _map.update(
-      value.runtimeType,
-      (existingValue) => existingValue.merge(value),
-      ifAbsent: () => value,
-    );
-  }
-
-  /// Retrieves the value associated with the given [key] or `null` if not found.
-  T? operator [](Type key) => _map[key];
-
-  /// Associates the [value] with the given [key]. If the key already exists,
-  /// the value is merged with the existing value.
-  void operator []=(Type key, covariant T value) {
-    _update(value);
-  }
-
-  /// Merges this [MergeableMap] with another [MergeableMap] and returns a new
-  /// [MergeableMap] containing the merged elements.
+  /// Retrieves the value associated with the given [key].
   ///
-  /// If the `other` map is `null`, it returns a new [MergeableMap] that is
-  /// identical to the current map. If the `other` map is not `null`, it
-  /// iterates over the keys of both maps and creates a new [MergeableMap]
-  /// containing the union of both maps. In case of overlapping keys, the value
-  /// from the `other` map will overwrite the value from the current map.
+  /// Returns `null` if the [key] is not found.
+  T? get(Type key) => _map[key];
+
+  /// Merges this [MergeableMap] with another [MergeableMap].
+  ///
+  /// Returns a new instance containing the merged elements.
+  /// If [other] is null, returns the current instance.
   MergeableMap<T> merge(MergeableMap<T>? other) {
     if (other == null) return this;
 
-    final mergedMap = MergeableMap<T>.empty();
-    mergedMap._map.addAll(_map);
-    other._map.forEach((key, value) {
-      mergedMap[key] = value;
-    });
+    final mergedKeys = List<Type>.from(_keys);
+    final mergedMap = Map<Type, T>.from(_map);
 
-    return mergedMap;
+    for (var key in other._keys) {
+      if (mergedMap.containsKey(key)) {
+        mergedMap[key] = mergedMap[key]!.merge(other._map[key]!);
+      } else {
+        mergedKeys.add(key);
+        mergedMap[key] = other._map[key]!;
+      }
+    }
+
+    return MergeableMap<T>._(mergedKeys, mergedMap);
   }
 
-  /// Creates a new [MergeableMap] instance with the same key-value pairs as
-  /// this map.
-  MergeableMap<T> clone() {
-    final clonedMap = MergeableMap<T>.empty();
-    clonedMap._map.addAll(_map);
-
-    return clonedMap;
-  }
-
-  /// Returns an [Iterable] of the values in the map in insertion order.
-  Iterable<T> get values => _map.values;
-
-  /// Returns the number of key-value pairs in the map.
-  int get length => _map.length;
-
-  /// Removes all key-value pairs from the map.
-  void clear() {
-    _map.clear();
-  }
-
-  T firstWhere(bool Function(T) test) {
-    return _map.values.firstWhere(test);
-  }
-
-  /// Returns `true` if the map contains no key-value pairs.
-  bool get isEmpty => _map.isEmpty;
-
-  /// Returns `true` if the map contains at least one key-value pair.
-
-  bool get isNotEmpty => _map.isNotEmpty;
-
-  /// Determines the equality of two [MergeableMap] instances.
+  /// Creates a new [MergeableMap] instance identical to this instance.
   ///
-  /// Returns true if both instances have the same key-value pairs and
-  /// insertion order.
+  /// This method is typically used when a copy of the map is needed, so the original
+  /// map can be preserved while the copy is manipulated.
+  MergeableMap<T> clone() {
+    return MergeableMap._(List<Type>.from(_keys), Map<Type, T>.from(_map));
+  }
+
+  /// Returns an iterable of the values in the map, maintaining the order of insertion.
+  ///
+  /// The order of return is determined by the order the key/value pairs were inserted in the map.
+  Iterable<T> get values => _keys.map((key) => _map[key]!);
+
+  /// Returns the number of key/value pairs in the map.
+  ///
+  /// A length of zero means the map is empty.
+  int get length => _keys.length;
+
+  /// Finds the first value in the map that satisfies the given [test].
+  ///
+  /// This is a simplified way to find a value in the map without iterating manually.
+  ///
+  /// The [test] function should return `true` for the desired value.
+  T firstWhere(bool Function(T) test) => values.firstWhere(test);
+
+  /// Returns `true` if the map contains no key/value pairs.
+  ///
+  /// This is a quick way to verify if the map is empty or not.
+  bool get isEmpty => _keys.isEmpty;
+
+  /// Returns `true` if the map contains at least one key/value pair.
+  ///
+  /// This is a quick way to verify if the map has stored values.
+  bool get isNotEmpty => _keys.isNotEmpty;
+
+  /// Overrides the equality operator to compare [MergeableMap] instances.
+  ///
+  /// Two instances are considered equal if they have identical keys and values.
+  /// This checks the length of keys and then verifies that each key has identical values in both maps.
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    if (other is MergeableMap) {
-      if (other._map.length != _map.length) return false;
-
-      for (final key in _map.keys) {
-        if (!other._map.containsKey(key) || _map[key] != other._map[key]) {
-          return false;
-        }
-      }
-
-      return true;
-    }
-
-    return false;
+    return other is MergeableMap &&
+        _keys.length == other._keys.length &&
+        _keys.every((key) =>
+            other._map.containsKey(key) && _map[key] == other._map[key]);
   }
 
-  /// Generates the hash code for this [MergeableMap] instance based on its
-  /// key-value pairs.
   @override
-  int get hashCode => _map.hashCode;
+  int get hashCode => _keys.hashCode ^ _map.hashCode;
 }

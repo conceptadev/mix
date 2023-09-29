@@ -30,6 +30,7 @@ class StyleVariant {
   /// Applies the variant to a set of attributes and creates a [VariantAttribute] instance.
   /// Up to 12 optional [StyleAttribute] parameters can be provided.
   // ignore: long-parameter-list
+
   VariantAttribute call([
     StyleAttribute? p1,
     StyleAttribute? p2,

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../../mix.dart';
-import '../../dtos/shadow/box_shadow.dto.dart';
 import '../../helpers/equality_mixin/equality_mixin.dart';
 
 class StyledContainerDescriptor with EqualityMixin {
@@ -57,7 +56,7 @@ class StyledContainerDescriptor with EqualityMixin {
       height: attributes?.height,
       border: attributes?.border?.resolve(mix),
       borderRadius: attributes?.borderRadius?.resolve(mix),
-      boxShadow: attributes?.boxShadow?.resolve(mix),
+      boxShadow: attributes?.boxShadow?.map((e) => e.resolve(mix)).toList(),
       maxHeight: attributes?.maxHeight,
       maxWidth: attributes?.maxWidth,
       minHeight: attributes?.minHeight,

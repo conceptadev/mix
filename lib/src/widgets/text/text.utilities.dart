@@ -1,3 +1,5 @@
+// ignore_for_file: long-parameter-list
+
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -11,7 +13,6 @@ import 'text_directives/text_directives.dart';
 class TextUtility {
   const TextUtility._();
 
-  // ignore: long-parameter-list
   static StyledTextAttributes textStyle({
     String? fontFamily,
     FontWeight? fontWeight,

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../factory/mix_provider_data.dart';
-import '../../helpers/mergeable_list.dart';
 import '../color.dto.dart';
 import 'shadow.dto.dart';
 
@@ -65,14 +64,4 @@ class BoxShadowDto extends ShadowDto<BoxShadow> {
 
   @override
   get props => [color, offset, blurRadius, spreadRadius];
-}
-
-extension BoxShadowDtoExt on List<BoxShadowDto> {
-  List<BoxShadow> resolve(MixData mix) {
-    return map((e) => e.resolve(mix)).toList();
-  }
-
-  List<BoxShadowDto> merge(List<BoxShadowDto>? other) {
-    return combineMergeableLists(this, other);
-  }
 }
