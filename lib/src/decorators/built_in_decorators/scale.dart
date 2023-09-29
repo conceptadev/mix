@@ -6,11 +6,10 @@ import '../decorator.dart';
 
 class ScaleDecorator extends WidgetDecorator<ScaleDecorator> {
   final double scale;
-  const ScaleDecorator(
-    this.scale, {
-    super.key,
-  });
+  const ScaleDecorator(this.scale, {super.key});
 
+  @override
+  get props => [scale];
   @override
   ScaleDecorator merge(ScaleDecorator other) {
     return ScaleDecorator(other.scale);
@@ -26,21 +25,10 @@ class ScaleDecorator extends WidgetDecorator<ScaleDecorator> {
             duration: common.animationDuration,
             curve: common.animationCurve,
             builder: (context, value, child) {
-              return Transform.scale(
-                key: key,
-                scale: value,
-                child: child,
-              );
+              return Transform.scale(key: key, scale: value, child: child);
             },
             child: child,
           )
-        : Transform.scale(
-            key: key,
-            scale: scale,
-            child: child,
-          );
+        : Transform.scale(key: key, scale: scale, child: child);
   }
-
-  @override
-  get props => [scale];
 }

@@ -23,7 +23,7 @@ class DeepCollectionEquality {
       return _compareMaps(object1, object2);
     }
 
-    // Equality comparison for custom classes
+    // Equality comparison for custom classes.
     if (object1?.runtimeType == object2?.runtimeType) {
       return object1 == object2;
     }
@@ -43,16 +43,16 @@ class DeepCollectionEquality {
     var hashCode = 0;
     if (object is List) {
       for (var element in object) {
-        hashCode = 31 * hashCode + hash(element);
+        hashCode = hashCode * 31 + hash(element);
       }
     } else if (object is Set) {
       for (var element in object) {
-        hashCode = 31 * hashCode + hash(element);
+        hashCode = hashCode * 31 + hash(element);
       }
     } else if (object is Map) {
       for (var key in object.keys) {
-        hashCode = 31 * hashCode + hash(key);
-        hashCode = 31 * hashCode + hash(object[key]);
+        hashCode = hashCode * 31 + hash(key);
+        hashCode = hashCode * 31 + hash(object[key]);
       }
     } else {
       hashCode = object.hashCode;

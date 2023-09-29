@@ -6,11 +6,10 @@ import '../decorator.dart';
 
 class OpacityDecorator extends WidgetDecorator<OpacityDecorator> {
   final double opacity;
-  const OpacityDecorator({
-    required this.opacity,
-    super.key,
-  });
+  const OpacityDecorator({required this.opacity, super.key});
 
+  @override
+  get props => [opacity];
   @override
   OpacityDecorator merge(OpacityDecorator other) {
     return OpacityDecorator(opacity: other.opacity);
@@ -23,18 +22,11 @@ class OpacityDecorator extends WidgetDecorator<OpacityDecorator> {
     return common.animated
         ? AnimatedOpacity(
             key: key,
-            duration: common.animationDuration,
+            child: child,
+            opacity: opacity,
             curve: common.animationCurve,
-            opacity: opacity,
-            child: child,
+            duration: common.animationDuration,
           )
-        : Opacity(
-            key: key,
-            opacity: opacity,
-            child: child,
-          );
+        : Opacity(key: key, opacity: opacity, child: child);
   }
-
-  @override
-  get props => [opacity];
 }

@@ -38,8 +38,8 @@ extension StyleMixExt<T extends StyleAttribute> on StyleMix {
     return container(
       style: mergeNullable(style ?? mix),
       key: key,
-      variants: variants,
       inherit: inherit,
+      variants: variants,
       child: child,
     );
   }
@@ -54,8 +54,8 @@ extension StyleMixExt<T extends StyleAttribute> on StyleMix {
   }) {
     return HBox(
       style: mergeNullable(style ?? mix),
-      key: key,
       variants: variants,
+      key: key,
       inherit: inherit,
       children: children,
     );
@@ -91,8 +91,8 @@ extension StyleMixExt<T extends StyleAttribute> on StyleMix {
       text,
       style: mergeNullable(style ?? mix),
       key: key,
-      inherit: inherit,
       variants: variants,
+      inherit: inherit,
       semanticsLabel: semanticsLabel,
     );
   }
@@ -107,8 +107,8 @@ extension StyleMixExt<T extends StyleAttribute> on StyleMix {
   }) {
     return VBox(
       style: mergeNullable(style ?? mix),
-      key: key,
       variants: variants,
+      key: key,
       inherit: inherit,
       children: children,
     );
@@ -141,9 +141,9 @@ extension StyleMixExt<T extends StyleAttribute> on StyleMix {
   }) {
     return StyledIcon(
       icon,
-      style: mergeNullable(style ?? mix),
-      key: key,
       inherit: inherit,
+      key: key,
+      style: mergeNullable(style ?? mix),
       variants: variants,
     );
   }

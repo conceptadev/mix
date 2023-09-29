@@ -58,17 +58,11 @@ class MixedText extends StatelessWidget {
     super.debugFillProperties(properties);
 
     properties.add(
-      DiagnosticsProperty<String>(
-        'text',
-        content,
-      ),
+      DiagnosticsProperty<String>('text', content),
     );
 
     properties.add(
-      DiagnosticsProperty<MixData>(
-        'props',
-        mix,
-      ),
+      DiagnosticsProperty<MixData>('props', mix),
     );
   }
 

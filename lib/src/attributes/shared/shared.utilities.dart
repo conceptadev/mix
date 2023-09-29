@@ -12,27 +12,22 @@ class CommonUtility {
   }) {
     return SharedStyleAttributes(
       animated: true,
-      animationCurve: curve,
       animationDuration:
-          // Prioritize duration in milliseconds
+          // Prioritize duration in milliseconds.
           duration != null ? Duration(milliseconds: duration) : asDuration,
+      animationCurve: curve,
     );
   }
 
   static SharedStyleAttributes animationDuration(int milliseconds) {
     return SharedStyleAttributes(
       animated: true,
-      animationDuration: Duration(
-        milliseconds: milliseconds,
-      ),
+      animationDuration: Duration(milliseconds: milliseconds),
     );
   }
 
   static SharedStyleAttributes animationCurve(Curve curve) {
-    return SharedStyleAttributes(
-      animated: true,
-      animationCurve: curve,
-    );
+    return SharedStyleAttributes(animated: true, animationCurve: curve);
   }
 
   static SharedStyleAttributes textDirection(TextDirection? textDirection) {

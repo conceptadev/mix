@@ -7,11 +7,8 @@ import 'tokens/breakpoints.dart';
 import 'tokens/mix_token.dart';
 
 class MixTheme extends InheritedWidget {
-  const MixTheme({
-    Key? key,
-    required Widget child,
-    required this.data,
-  }) : super(key: key, child: child);
+  const MixTheme({Key? key, required Widget child, required this.data})
+      : super(key: key, child: child);
 
   static MixThemeData of(BuildContext context) {
     return context.dependOnInheritedWidgetOfExactType<MixTheme>()?.data ??
@@ -39,9 +36,6 @@ class MixThemeData with EqualityMixin {
   final MixColorTokens colors;
   final MixTextStyleTokens textStyles;
 
-  @override
-  get props => [space, breakpoints, colors, textStyles];
-
   const MixThemeData.raw({
     required this.space,
     required this.breakpoints,
@@ -62,6 +56,9 @@ class MixThemeData with EqualityMixin {
     );
   }
 
+  @override
+  get props => [space, breakpoints, colors, textStyles];
+
   MixThemeData copyWith({
     MixSpaceTokens? space,
     MixBreakpointsTokens? breakpoints,
@@ -80,9 +77,9 @@ class MixThemeData with EqualityMixin {
 class MixTokenResolver {
   final BuildContext context;
 
-  MixThemeData get theme => MixTheme.of(context);
+  const MixTokenResolver(this.context);
 
-  MixTokenResolver(this.context);
+  MixThemeData get theme => MixTheme.of(context);
 
   Color color(ColorToken token) {
     final color = theme.colors[token]?.call(context);

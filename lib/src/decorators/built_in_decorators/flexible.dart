@@ -6,12 +6,10 @@ import '../decorator.dart';
 class FlexibleDecorator extends WidgetDecorator<FlexibleDecorator> {
   final FlexFit? flexFit;
   final int? flex;
-  const FlexibleDecorator({
-    this.flexFit,
-    this.flex,
-    super.key,
-  });
+  const FlexibleDecorator({this.flexFit, this.flex, super.key});
 
+  @override
+  get props => [flexFit, flex];
   @override
   FlexibleDecorator merge(FlexibleDecorator other) {
     return FlexibleDecorator(
@@ -24,12 +22,9 @@ class FlexibleDecorator extends WidgetDecorator<FlexibleDecorator> {
   Widget build(MixData mix, Widget child) {
     return Flexible(
       key: key,
-      fit: flexFit ?? FlexFit.loose,
       flex: flex ?? 1,
+      fit: flexFit ?? FlexFit.loose,
       child: child,
     );
   }
-
-  @override
-  get props => [flexFit, flex];
 }

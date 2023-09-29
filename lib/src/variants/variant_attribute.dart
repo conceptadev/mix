@@ -7,16 +7,18 @@ import 'variant.dart';
 
 class VariantAttribute<T extends StyleVariant> extends StyleAttribute
     with Mergeable<VariantAttribute<T>> {
-  const VariantAttribute(
-    this.variant,
-    StyleMix style,
-  ) : _style = style;
-
   final T variant;
   final StyleMix _style;
 
+  const VariantAttribute(this.variant, StyleMix style) : _style = style;
+
   StyleMix get value => _style;
 
+  @override
+  int get hashCode => variant.hashCode ^ _style.hashCode;
+
+  @override
+  get props => [variant, value];
   @override
   VariantAttribute<T> merge(covariant VariantAttribute<T> other) {
     if (other.variant != variant) {
@@ -27,10 +29,7 @@ class VariantAttribute<T extends StyleVariant> extends StyleAttribute
       );
     }
 
-    return VariantAttribute(
-      variant,
-      _style.merge(other._style),
-    );
+    return VariantAttribute(variant, _style.merge(other._style));
   }
 
   @override
@@ -44,21 +43,12 @@ class VariantAttribute<T extends StyleVariant> extends StyleAttribute
         other.variant == variant &&
         other.value == value;
   }
-
-  @override
-  int get hashCode => variant.hashCode ^ _style.hashCode;
-
-  @override
-  get props => [variant, value];
 }
 
 class ContextVariantAttribute extends VariantAttribute<ContextStyleVariant> {
-  const ContextVariantAttribute(
-    super.variant,
-    super.style,
-  );
+  const ContextVariantAttribute(super.variant, super.style);
 
   bool shouldApply(BuildContext context) {
-    return variant.shouldApply.call(context);
+    return variant.shouldApply(context);
   }
 }

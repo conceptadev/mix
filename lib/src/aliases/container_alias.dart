@@ -48,46 +48,45 @@ final paddingDirectionalBottom = WrapWithSpaceTokens(
   ContainerStyleUtilities().paddingDirectionalBottom,
 );
 
-// Transform
+// Transform.
 final transform = ContainerStyleUtilities().transform;
 
-/// Background color attribute
+/// Background color attribute.
 final backgroundColor = ContainerStyleUtilities().backgroundColor;
 
-/// Height
+/// Height.
 final height = ContainerStyleUtilities().height;
 
-/// Width
+/// Width.
 final width = ContainerStyleUtilities().width;
 
-/// Max height attribute
+/// Max height attribute.
 final maxHeight = ContainerStyleUtilities().maxHeight;
 
-/// Max width attribute
+/// Max width attribute.
 final maxWidth = ContainerStyleUtilities().maxWidth;
 
-/// Min height attribute
+/// Min height attribute.
 final minHeight = ContainerStyleUtilities().minHeight;
 
-/// Min width attribute
+/// Min width attribute.
 final minWidth = ContainerStyleUtilities().minWidth;
 
-/// Border
+/// Border.
 final border = ContainerStyleUtilities().border;
 final borderTop = ContainerStyleUtilities().borderTop;
 final borderBottom = ContainerStyleUtilities().borderBottom;
 final borderLeft = ContainerStyleUtilities().borderLeft;
 final borderRight = ContainerStyleUtilities().borderRight;
 
-// Border Directional
-
+// Border Directional.
 final borderDirectionalTop = ContainerStyleUtilities().borderDirectionalTop;
 final borderDirectionalBottom =
     ContainerStyleUtilities().borderDirectionalBottom;
 final borderDirectionalStart = ContainerStyleUtilities().borderDirectionalStart;
 final borderDirectionalEnd = ContainerStyleUtilities().borderDirectionalEnd;
 
-/// Box shadow utility
+/// Box shadow utility.
 final shadow = ContainerStyleUtilities().shadow;
 
 final squared = ContainerStyleUtilities().squared;
@@ -103,10 +102,10 @@ final roundedDirectionalVertical =
 
 final alignment = ContainerStyleUtilities().alignment;
 
-/// Elevation
+/// Elevation.
 final elevation = ContainerStyleUtilities().elevation;
 
-/// Gradient
+/// Gradient.
 final linearGradient = ContainerStyleUtilities().linearGradient;
 final radialGradient = ContainerStyleUtilities().radialGradient;
 

@@ -5,6 +5,16 @@ class RenderGap extends RenderBox {
   double? _crossAxisExtent;
   Axis? _fallbackDirection;
   Color? _color;
+  RenderGap({
+    Color? color,
+    double? crossAxisExtent,
+    Axis? fallbackDirection,
+    required double mainAxisExtent,
+  })  : _mainAxisExtent = mainAxisExtent,
+        _crossAxisExtent = crossAxisExtent,
+        _color = color,
+        _fallbackDirection = fallbackDirection;
+
   double get mainAxisExtent => _mainAxisExtent;
   double? get crossAxisExtent => _crossAxisExtent;
   Axis? get fallbackDirection => _fallbackDirection;
@@ -42,16 +52,6 @@ class RenderGap extends RenderBox {
       markNeedsPaint();
     }
   }
-
-  RenderGap({
-    Color? color,
-    double? crossAxisExtent,
-    Axis? fallbackDirection,
-    required double mainAxisExtent,
-  })  : _mainAxisExtent = mainAxisExtent,
-        _crossAxisExtent = crossAxisExtent,
-        _color = color,
-        _fallbackDirection = fallbackDirection;
 
   @override
   double computeMinIntrinsicWidth(double height) {

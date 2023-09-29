@@ -16,14 +16,14 @@ typedef Mix = StyleMix;
 /// variants. This class provides a set of factory
 /// constructors and utility methods for working with mixes.
 class StyleMix {
+  /// A constant, empty mix for use with const constructor widgets.
+  static const constant = StyleMix._(StyleMixData.empty());
+
   final StyleMixData _values;
 
   const StyleMix._(StyleMixData values) : _values = values;
 
-  /// A constant, empty mix for use with const constructor widgets.
-  static const StyleMix constant = StyleMix._(StyleMixData.empty());
-
-  // Factory constructors
+  // Factory constructors.
   factory StyleMix([
     StyleAttribute? p1,
     StyleAttribute? p2,
@@ -56,18 +56,47 @@ class StyleMix {
     return StyleMix._(values);
   }
 
-  /// Returns an iterable of [StyleAttribute] instances from this MixFactory.
-  Iterable<StyleAttribute> toAttributes() {
-    return _values.toAttributes();
+  factory StyleMix.fromVariantAttributes(List<VariantAttribute> variants) {
+    return StyleMix.combine(variants.map((e) => e.value).toList());
+  }
+
+  /// Chooses a mix based on a [condition].
+  ///
+  /// Returns [ifTrue] if the [condition] is true, otherwise returns [ifFalse].
+  factory StyleMix.chooser({
+    required bool condition,
+    required StyleMix ifTrue,
+    required StyleMix ifFalse,
+  }) {
+    return condition ? ifTrue : ifFalse;
+  }
+
+  /// Combines a list of [mixes] into a single MixFactory.
+  ///
+  /// Iterates through the list of mixes, merging each mix with the previous mix
+  /// and returning the final combined MixFactory.
+  factory StyleMix.combine(List<StyleMix> mixes) {
+    StyleMixData combinedValues = const StyleMixData.empty();
+    for (final mix in mixes) {
+      combinedValues = combinedValues.merge(mix.values);
+    }
+
+    return StyleMix.fromValues(combinedValues);
   }
 
   /// Returns a [StyleMixData] instance representing the values in this MixFactory.
   StyleMixData get values => _values;
 
+  @override
+  int get hashCode => _values.hashCode;
+
+  /// Returns an iterable of [StyleAttribute] instances from this MixFactory.
+  Iterable<StyleAttribute> toAttributes() {
+    return _values.toAttributes();
+  }
+
   /// Returns a new mix with the provided [values] merged with this mix's values.
-  StyleMix copyWith({
-    StyleMixData? values,
-  }) {
+  StyleMix copyWith({StyleMixData? values}) {
     return StyleMix._(_values.merge(values));
   }
 
@@ -114,10 +143,10 @@ class StyleMix {
       });
     }
 
-    // Create a mix from the matched variants
+    // Create a mix from the matched variants.
     final mixToApply = StyleMix.fromVariantAttributes(matchedVariants);
 
-    // Create a mix with the existing values
+    // Create a mix with the existing values.
     final existingMix = StyleMix._(
       StyleMixData(
         attributes: _values.attributes,
@@ -127,7 +156,7 @@ class StyleMix {
       ),
     );
 
-    // Merge the existing mix with the mix to apply
+    // Merge the existing mix with the mix to apply.
     return existingMix.merge(mixToApply);
   }
 
@@ -142,14 +171,12 @@ class StyleMix {
       }
     }
 
-    // Create a mix from the matched variants
+    // Create a mix from the matched variants.
     return StyleMix.fromVariantAttributes(matchedVariants);
   }
 
   /// Selects variants based on a condition and returns a new mix with the selected variants.
-  StyleMix selectVariantCondition(
-    Map<bool, StyleVariant> cases,
-  ) {
+  StyleMix selectVariantCondition(Map<bool, StyleVariant> cases) {
     final keys = cases.keys.toList();
     final values = cases.values.toList();
 
@@ -164,47 +191,16 @@ class StyleMix {
     return selectVariants(variants);
   }
 
-  factory StyleMix.fromVariantAttributes(List<VariantAttribute> variants) {
-    return StyleMix.combine(variants.map((e) => e.value).toList());
-  }
-
-  /// Chooses a mix based on a [condition].
-  ///
-  /// Returns [ifTrue] if the [condition] is true, otherwise returns [ifFalse].
-  factory StyleMix.chooser({
-    required bool condition,
-    required StyleMix ifTrue,
-    required StyleMix ifFalse,
-  }) {
-    return condition ? ifTrue : ifFalse;
-  }
-
-  /// Combines a list of [mixes] into a single MixFactory.
-  ///
-  /// Iterates through the list of mixes, merging each mix with the previous mix
-  /// and returning the final combined MixFactory.
-  factory StyleMix.combine(List<StyleMix> mixes) {
-    StyleMixData combinedValues = const StyleMixData.empty();
-    for (final mix in mixes) {
-      combinedValues = combinedValues.merge(mix.values);
-    }
-
-    return StyleMix.fromValues(combinedValues);
-  }
-
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
     return other is StyleMix && other._values == _values;
   }
-
-  @override
-  int get hashCode => _values.hashCode;
 }
 
 extension DeprecatedMixExtension<T extends StyleAttribute> on StyleMix {
-  /// Adds an Attribute to a Mix
+  /// Adds an Attribute to a Mix.
   @Deprecated('Simplifying the mix API to avoid confusion. Use apply instead')
   SpreadPositionalParams<T, StyleMix> get mix {
     return SpreadPositionalParams(addAttributes);

@@ -26,25 +26,6 @@ class StyledTextAttributes extends StyledWidgetAttributes {
   final List<TextStyleDto>? _styles;
   final TextStyleDto? _style;
 
-  // Combines the text styles.
-  List<TextStyleDto> get styles {
-    return [if (_style != null) _style!, ...?_styles];
-  }
-
-  @override
-  get props => [
-        styles,
-        strutStyle,
-        textAlign,
-        locale,
-        softWrap,
-        overflow,
-        textScaleFactor,
-        maxLines,
-        textWidthBasis,
-        textHeightBehavior,
-        directives,
-      ];
   const StyledTextAttributes({
     this.directives = const [],
     this.locale,
@@ -89,6 +70,25 @@ class StyledTextAttributes extends StyledWidgetAttributes {
     );
   }
 
+  // Combines the text styles.
+  List<TextStyleDto> get styles {
+    return [if (_style != null) _style!, ...?_styles];
+  }
+
+  @override
+  get props => [
+        styles,
+        strutStyle,
+        textAlign,
+        locale,
+        softWrap,
+        overflow,
+        textScaleFactor,
+        maxLines,
+        textWidthBasis,
+        textHeightBehavior,
+        directives,
+      ];
   @override
   StyledTextAttributes merge(StyledTextAttributes? other) {
     if (other == null) return this;

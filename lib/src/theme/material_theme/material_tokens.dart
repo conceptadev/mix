@@ -2,9 +2,7 @@ import '../../../mix.dart';
 
 @Deprecated('This has been deprecated now use MD3, and MD2 tokens instead')
 class MaterialTextThemeTokens {
-  const MaterialTextThemeTokens();
-
-  // Material 3 TextTheme Tokens
+  // Material 3 TextTheme Tokens.
   @Deprecated('This has been deprecated now use MD3, and MD2 tokens instead')
   final displayLarge = $M3Text.displayLarge;
   @Deprecated('This has been deprecated now use MD3, and MD2 tokens instead')
@@ -36,7 +34,7 @@ class MaterialTextThemeTokens {
   @Deprecated('This has been deprecated now use MD3, and MD2 tokens instead')
   final labelSmall = $M3Text.labelSmall;
 
-  // Material 2 TextTheme Tokens
+  // Material 2 TextTheme Tokens.
   @Deprecated('This has been deprecated now use MD3, and MD2 tokens instead')
   final headline1 = $M2Text.headline1;
   @Deprecated('This has been deprecated now use MD3, and MD2 tokens instead')
@@ -63,12 +61,11 @@ class MaterialTextThemeTokens {
   final button = $M2Text.button;
   @Deprecated('This has been deprecated now use MD3, and MD2 tokens instead')
   final overline = $M2Text.overline;
+  const MaterialTextThemeTokens();
 }
 
 @Deprecated('This has been deprecated now use MD3, and MD2 tokens instead')
 class MaterialColorSchemeTokens {
-  const MaterialColorSchemeTokens();
-
   @Deprecated('This has been deprecated now use MD3, and MD2 tokens instead')
   final primary = $MDColorScheme.primary;
 
@@ -104,11 +101,12 @@ class MaterialColorSchemeTokens {
 
   @Deprecated('This has been deprecated now use MD3, and MD2 tokens instead')
   final onError = $MDColorScheme.onError;
+  const MaterialColorSchemeTokens();
 }
 
 @Deprecated('This has been deprecated now use MD3, and MD2 tokens instead')
 class MaterialTokens {
-  const MaterialTokens._();
   static const textTheme = MaterialTextThemeTokens();
   static const colorScheme = MaterialColorSchemeTokens();
+  const MaterialTokens._();
 }

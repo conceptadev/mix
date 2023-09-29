@@ -32,25 +32,6 @@ class StyledContainerAttributes extends StyledWidgetAttributes {
   final BoxShape? shape;
   final Gradient? gradient;
 
-  @override
-  get props => [
-        margin,
-        padding,
-        alignment,
-        height,
-        width,
-        color,
-        border,
-        borderRadius,
-        boxShadow,
-        transform,
-        maxHeight,
-        minHeight,
-        maxWidth,
-        minWidth,
-        shape,
-        gradient,
-      ];
   const StyledContainerAttributes({
     this.margin,
     this.padding,
@@ -112,6 +93,25 @@ class StyledContainerAttributes extends StyledWidgetAttributes {
     );
   }
 
+  @override
+  get props => [
+        margin,
+        padding,
+        alignment,
+        height,
+        width,
+        color,
+        border,
+        borderRadius,
+        boxShadow,
+        transform,
+        maxHeight,
+        minHeight,
+        maxWidth,
+        minWidth,
+        shape,
+        gradient,
+      ];
   @override
   StyledContainerAttributes copyWith({
     EdgeInsetsGeometryDto? margin,

@@ -11,6 +11,8 @@ class BorderSideDto extends Dto<BorderSide> {
 
   final double? strokeAlign;
 
+  final _default = const BorderSide();
+
   const BorderSideDto._({
     this.color,
     this.width,
@@ -34,6 +36,8 @@ class BorderSideDto extends Dto<BorderSide> {
     );
   }
 
+  @override
+  get props => [color, width, style, strokeAlign];
   BorderSideDto copyWith({
     ColorDto? color,
     double? width,
@@ -59,8 +63,6 @@ class BorderSideDto extends Dto<BorderSide> {
     );
   }
 
-  final BorderSide _default = const BorderSide();
-
   @override
   BorderSide resolve(MixData mix) {
     return BorderSide(
@@ -70,7 +72,4 @@ class BorderSideDto extends Dto<BorderSide> {
       strokeAlign: strokeAlign ?? _default.strokeAlign,
     );
   }
-
-  @override
-  get props => [color, width, style, strokeAlign];
 }

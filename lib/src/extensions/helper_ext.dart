@@ -28,7 +28,7 @@ extension Matrix4Ext on Matrix4 {
 
 extension IterableExt<T> on Iterable<T> {
   Iterable<T> sorted([Comparator<T>? compare]) {
-    List<T> newList = List.from(this);
+    List<T> newList = List.of(this);
     newList.sort(compare);
 
     return newList;

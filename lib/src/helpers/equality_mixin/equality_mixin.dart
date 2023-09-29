@@ -5,7 +5,7 @@ import 'deep_collection_equality.dart';
 int _mapPropsToHashCode(Iterable? props) =>
     _finish([...?props].fold(0, _combine));
 
-const DeepCollectionEquality _equality = DeepCollectionEquality();
+const _equality = DeepCollectionEquality();
 
 /// Determines whether [list1] and [list2] are equal.
 bool _equals(List? list1, List? list2) {
@@ -60,16 +60,16 @@ int _combine(int hash, dynamic object) {
   }
 
   hash = 0x1fffffff & (hash + object.hashCode);
-  hash = 0x1fffffff & (hash + ((0x0007ffff & hash) << 10));
+  hash = 0x1fffffff & (hash + ((hash & 0x0007ffff) << 10));
 
   return hash ^ (hash >> 6);
 }
 
 int _finish(int hash) {
-  hash = 0x1fffffff & (hash + ((0x03ffffff & hash) << 3));
+  hash = 0x1fffffff & (hash + ((hash & 0x03ffffff) << 3));
   hash = hash ^ (hash >> 11);
 
-  return 0x1fffffff & (hash + ((0x00003fff & hash) << 15));
+  return 0x1fffffff & (hash + ((hash & 0x00003fff) << 15));
 }
 
 /// Returns a string for [props].
@@ -101,7 +101,7 @@ mixin EqualityMixin {
   List<String> getDiff(Object other) {
     final diff = <String>[];
 
-    // Return if there are no diferences
+    // Return if there are no diferences.
     if (this == other) return diff;
 
     if (other is EqualityMixin) {
@@ -109,8 +109,8 @@ mixin EqualityMixin {
       final length = props.length;
 
       for (var i = 0; i < length; i++) {
-        final dynamic unit1 = props[i];
-        final dynamic unit2 = otherProps[i];
+        final unit1 = props[i];
+        final unit2 = otherProps[i];
 
         if (unit1 is Iterable || unit1 is Map) {
           if (!_equality.equals(unit1, unit2)) {

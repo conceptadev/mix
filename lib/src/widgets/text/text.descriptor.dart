@@ -21,21 +21,6 @@ class StyledTextDescriptor {
   final TextHeightBehavior? textHeightBehavior;
   final List<TextDirective> _directives;
 
-  @override
-  int get hashCode {
-    return softWrap.hashCode ^
-        overflow.hashCode ^
-        style.hashCode ^
-        strutStyle.hashCode ^
-        textAlign.hashCode ^
-        locale.hashCode ^
-        textScaleFactor.hashCode ^
-        maxLines.hashCode ^
-        textWidthBasis.hashCode ^
-        textHeightBehavior.hashCode ^
-        _directives.hashCode;
-  }
-
   const StyledTextDescriptor({
     required this.softWrap,
     required this.overflow,
@@ -77,6 +62,21 @@ class StyledTextDescriptor {
       // Directives.
       directives: textAttributes?.directives,
     );
+  }
+
+  @override
+  int get hashCode {
+    return softWrap.hashCode ^
+        overflow.hashCode ^
+        style.hashCode ^
+        strutStyle.hashCode ^
+        textAlign.hashCode ^
+        locale.hashCode ^
+        textScaleFactor.hashCode ^
+        maxLines.hashCode ^
+        textWidthBasis.hashCode ^
+        textHeightBehavior.hashCode ^
+        _directives.hashCode;
   }
 
   String applyTextDirectives(String? text) {

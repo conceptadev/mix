@@ -52,9 +52,9 @@ abstract class BoxBorderDto<T extends BoxBorder> extends Dto<T> {
     if (other is BorderDto) {
       return BorderDto.only(
         top: other.top ?? _top,
+        right: other.right ?? _right,
         bottom: other.bottom ?? _bottom,
         left: other.left ?? _left,
-        right: other.right ?? _right,
       );
     }
 

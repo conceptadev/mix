@@ -22,7 +22,12 @@ class MixBreakpointsTokens {
     this.large = 1440,
   });
 
-  /// Returns [ScreenSizeToken] based on Material breakpoints
+  @override
+  int get hashCode {
+    return xsmall.hashCode ^ small.hashCode ^ medium.hashCode ^ large.hashCode;
+  }
+
+  /// Returns [ScreenSizeToken] based on Material breakpoints.
   ScreenSizeToken getScreenSize(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
 
@@ -58,11 +63,6 @@ class MixBreakpointsTokens {
         other.small == small &&
         other.medium == medium &&
         other.large == large;
-  }
-
-  @override
-  int get hashCode {
-    return xsmall.hashCode ^ small.hashCode ^ medium.hashCode ^ large.hashCode;
   }
 
   @override

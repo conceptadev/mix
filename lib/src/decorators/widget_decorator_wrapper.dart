@@ -4,11 +4,7 @@ import '../factory/mix_provider_data.dart';
 import 'decorator.dart';
 
 class WidgetDecoratorWrapper extends StatelessWidget {
-  const WidgetDecoratorWrapper(
-    this.mix, {
-    super.key,
-    required this.child,
-  });
+  const WidgetDecoratorWrapper(this.mix, {super.key, required this.child});
 
   final MixData mix;
 
@@ -47,9 +43,6 @@ class _RenderDecoratorWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return decorator.render(
-      mix,
-      child,
-    );
+    return decorator.render(mix, child);
   }
 }

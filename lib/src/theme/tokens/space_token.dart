@@ -1,16 +1,16 @@
 import 'mix_token.dart';
 
-// Define default
+// Define default.
 class SpaceTokens {
-  SpaceTokens._();
-
-  // Define your tokens
+  // Define your tokens.
   static const xsmall = SpaceToken('--mix-space-xsmall');
   static const small = SpaceToken('--mix-space-small');
   static const medium = SpaceToken('--mix-space-medium');
   static const large = SpaceToken('--mix-space-large');
   static const xlarge = SpaceToken('--mix-space-xlarge');
   static const xxlarge = SpaceToken('--mix-space-xxlarge');
+
+  const SpaceTokens._();
 
   static MixSpaceTokens get tokens => {
         SpaceTokens.xsmall: (context) => 4.0,
@@ -42,11 +42,9 @@ typedef MixSpaceTokensReference = Map<double, SpaceToken>;
 // Helper class to wrap functions that can return
 // Space tokens in their methods
 class WrapWithSpaceTokens<T> {
-  const WrapWithSpaceTokens(T Function(double value) fn) : _fn = fn;
-
   final T Function(double value) _fn;
 
-  T call(double value) => _fn(value);
+  const WrapWithSpaceTokens(T Function(double value) fn) : _fn = fn;
 
   T get xsmall => call(SpaceTokens.xsmall.ref);
 
@@ -72,4 +70,5 @@ class WrapWithSpaceTokens<T> {
   T get xs => xsmall;
   @Deprecated('Use xxlarge instead')
   T get xxl => xxlarge;
+  T call(double value) => _fn(value);
 }

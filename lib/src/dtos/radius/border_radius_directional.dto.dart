@@ -22,12 +22,6 @@ class BorderRadiusDirectionalDto
     );
   }
 
-  static maybeFrom(BorderRadiusDirectional? borderRadiusDirectional) {
-    if (borderRadiusDirectional == null) return null;
-
-    return BorderRadiusDirectionalDto.from(borderRadiusDirectional);
-  }
-
   const BorderRadiusDirectionalDto.only({
     RadiusDto? topStart,
     RadiusDto? topEnd,
@@ -91,6 +85,14 @@ class BorderRadiusDirectionalDto
   RadiusDto? get topStart => _topStart;
 
   @override
+  List<Object?> get props => [topStart, topEnd, bottomStart, bottomEnd];
+  static maybeFrom(BorderRadiusDirectional? borderRadiusDirectional) {
+    if (borderRadiusDirectional == null) return null;
+
+    return BorderRadiusDirectionalDto.from(borderRadiusDirectional);
+  }
+
+  @override
   BorderRadiusDirectional resolve(MixData mix) {
     return BorderRadiusDirectional.only(
       topStart: topStart?.resolve(mix) ?? Radius.zero,
@@ -113,12 +115,4 @@ class BorderRadiusDirectionalDto
       bottomEnd: bottomEnd ?? this.bottomEnd,
     );
   }
-
-  @override
-  List<Object?> get props => [
-        topStart,
-        topEnd,
-        bottomStart,
-        bottomEnd,
-      ];
 }

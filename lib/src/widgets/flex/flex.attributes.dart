@@ -13,15 +13,6 @@ class StyledFlexAttributes extends StyledWidgetAttributes {
   final VerticalDirection? verticalDirection;
   final double? gapSize;
 
-  @override
-  get props => [
-        direction,
-        mainAxisAlignment,
-        crossAxisAlignment,
-        mainAxisSize,
-        verticalDirection,
-        gapSize,
-      ];
   const StyledFlexAttributes({
     this.crossAxisAlignment,
     this.direction,
@@ -31,6 +22,15 @@ class StyledFlexAttributes extends StyledWidgetAttributes {
     this.verticalDirection,
   });
 
+  @override
+  get props => [
+        direction,
+        mainAxisAlignment,
+        crossAxisAlignment,
+        mainAxisSize,
+        verticalDirection,
+        gapSize,
+      ];
   @override
   StyledFlexAttributes merge(StyledFlexAttributes? other) {
     if (other == null) return this;

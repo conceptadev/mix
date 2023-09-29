@@ -7,8 +7,6 @@ class StyledIconDescriptor {
   final Color? color;
   final double size;
 
-  @override
-  int get hashCode => color.hashCode ^ size.hashCode;
   const StyledIconDescriptor({this.color, required this.size});
 
   factory StyledIconDescriptor.fromContext(MixData mix) {
@@ -30,6 +28,8 @@ class StyledIconDescriptor {
     return props;
   }
 
+  @override
+  int get hashCode => color.hashCode ^ size.hashCode;
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;

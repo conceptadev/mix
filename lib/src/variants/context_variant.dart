@@ -12,6 +12,10 @@ typedef ShouldApplyFunc = bool Function(BuildContext);
 typedef ContextVariant = ContextStyleVariant;
 
 class ContextStyleVariant extends StyleVariant {
+  final bool _inverse;
+
+  final ShouldApplyFunc _shouldApply;
+
   const ContextStyleVariant(
     super.name, {
     required ShouldApplyFunc shouldApply,
@@ -19,10 +23,7 @@ class ContextStyleVariant extends StyleVariant {
   })  : _inverse = inverse,
         _shouldApply = shouldApply;
 
-  final bool _inverse;
-
-  final ShouldApplyFunc _shouldApply;
-
+  get props => [name, _inverse, _shouldApply];
   bool shouldApply(BuildContext context) {
     return _inverse ? !_shouldApply(context) : _shouldApply(context);
   }
@@ -59,6 +60,4 @@ class ContextStyleVariant extends StyleVariant {
       inverse: !_inverse,
     );
   }
-
-  get props => [name, _inverse, _shouldApply];
 }

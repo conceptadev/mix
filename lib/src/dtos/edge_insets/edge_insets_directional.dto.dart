@@ -10,22 +10,6 @@ class EdgeInsetsDirectionalDto
   final double? start;
   final double? end;
 
-  @override
-  get props => [top, bottom, start, end];
-  double? get _top => top;
-
-  double? get _bottom => bottom;
-
-  /*
-  double? get _left => null;
-
-  double? get _right => null;
-  */
-
-  double? get _start => start;
-
-  double? get _end => end;
-
   const EdgeInsetsDirectionalDto._({
     this.bottom,
     this.end,
@@ -61,6 +45,22 @@ class EdgeInsetsDirectionalDto
       top: doubleNullIfZero(edgeInsets.top),
     );
   }
+
+  @override
+  get props => [top, bottom, start, end];
+  double? get _top => top;
+
+  double? get _bottom => bottom;
+
+  /*
+  double? get _left => null;
+
+  double? get _right => null;
+  */
+
+  double? get _start => start;
+
+  double? get _end => end;
 
   EdgeInsetsDirectionalDto copyWith({
     double? bottom,

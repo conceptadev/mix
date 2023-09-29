@@ -1,4 +1,4 @@
-// Dynamic utilities
+// Dynamic utilities.
 import '../variants/utilities/context_variant_utilities.dart';
 
 final onXSmall = ContextVariantUtilities.onXsmall();

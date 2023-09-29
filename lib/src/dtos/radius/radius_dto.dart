@@ -12,11 +12,7 @@ class RadiusDto extends Dto<Radius> {
 
   const RadiusDto.circular(double radius) : this.elliptical(radius, radius);
 
-  const RadiusDto.zero()
-      : this.elliptical(
-          0,
-          0,
-        );
+  const RadiusDto.zero() : this.elliptical(0, 0);
 
   /// Constructs an elliptical radius with the given radii.
   const RadiusDto.elliptical(double x, double y)
@@ -25,17 +21,14 @@ class RadiusDto extends Dto<Radius> {
 
   factory RadiusDto.from(Radius radius) {
     if (radius.x == radius.y) {
-      return RadiusDto.circular(
-        radius.x,
-      );
+      return RadiusDto.circular(radius.x);
     }
 
-    return RadiusDto.elliptical(
-      radius.x,
-      radius.y,
-    );
+    return RadiusDto.elliptical(radius.x, radius.y);
   }
 
+  @override
+  get props => [_x, _y];
   static RadiusDto? maybeFrom(Radius? radius) {
     if (radius == null) return null;
 
@@ -53,7 +46,4 @@ class RadiusDto extends Dto<Radius> {
 
     return Radius.elliptical(resolvedX, resolvedY);
   }
-
-  @override
-  get props => [_x, _y];
 }

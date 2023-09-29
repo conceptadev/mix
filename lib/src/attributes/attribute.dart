@@ -4,8 +4,7 @@ import 'package:flutter/foundation.dart';
 
 import '../helpers/equality_mixin/equality_mixin.dart';
 
-/// Base attribute
-
+/// Base attribute.
 // Some classes have defaults
 // Facade allows us ot set all properties as optional
 // For improved merge and override of properties

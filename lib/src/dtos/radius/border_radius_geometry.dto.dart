@@ -18,6 +18,16 @@ abstract class BorderRadiusGeometryDto<T extends BorderRadiusGeometry>
   RadiusDto? get bottomStart => null;
   RadiusDto? get bottomEnd => null;
 
+  bool get isDirectional =>
+      (topStart != null ||
+          topEnd != null ||
+          bottomStart != null ||
+          bottomEnd != null) &&
+      (topLeft == null &&
+          topRight == null &&
+          bottomLeft == null &&
+          bottomRight == null);
+
   static Dto from<T extends BorderRadiusGeometry,
       Dto extends BorderRadiusGeometryDto<T>>(T borderRadius) {
     if (borderRadius is BorderRadius) {
@@ -39,16 +49,6 @@ abstract class BorderRadiusGeometryDto<T extends BorderRadiusGeometry>
 
     return BorderRadiusGeometryDto.from(borderRadius);
   }
-
-  bool get isDirectional =>
-      (topStart != null ||
-          topEnd != null ||
-          bottomStart != null ||
-          bottomEnd != null) &&
-      (topLeft == null &&
-          topRight == null &&
-          bottomLeft == null &&
-          bottomRight == null);
 
   BorderRadiusGeometryDto merge(BorderRadiusGeometryDto? other) {
     if (other == null || other == this) return this;

@@ -1,7 +1,7 @@
 import '../widgets/text/text.utilities.dart';
 import '../widgets/text/text_directives/text_directives.dart';
 
-/// Text align
+/// Text align.
 const textAlign = TextUtility.textAlign;
 
 const textWidthBasis = TextUtility.textWidthBasis;
@@ -13,13 +13,11 @@ const softWrap = TextUtility.softWrap;
 const textScaleFactor = TextUtility.textScaleFactor;
 const strutStyle = TextUtility.strutStyle;
 
-/// Friendly utilities
-
+/// Friendly utilities.
 const bold = TextFriendlyUtility.bold;
 const italic = TextFriendlyUtility.italic;
 
-/// Directives
-
+/// Directives.
 final capitalize = TextUtility.directive(const CapitalizeDirective());
 final upperCase = TextUtility.directive(const UppercaseDirective());
 final lowerCase = TextUtility.directive(const LowercaseDirective());

@@ -16,18 +16,6 @@ class StyledImageDescriptor {
   final AlignmentGeometry alignment;
   final ImageRepeat repeat;
 
-  @override
-  int get hashCode {
-    return color.hashCode ^
-        scale.hashCode ^
-        width.hashCode ^
-        height.hashCode ^
-        colorBlendMode.hashCode ^
-        fit.hashCode ^
-        alignment.hashCode ^
-        repeat.hashCode;
-  }
-
   const StyledImageDescriptor({
     required this.alignment,
     this.color,
@@ -52,6 +40,18 @@ class StyledImageDescriptor {
       scale: attributes?.scale,
       width: attributes?.width,
     );
+  }
+
+  @override
+  int get hashCode {
+    return color.hashCode ^
+        scale.hashCode ^
+        width.hashCode ^
+        height.hashCode ^
+        colorBlendMode.hashCode ^
+        fit.hashCode ^
+        alignment.hashCode ^
+        repeat.hashCode;
   }
 
   @override

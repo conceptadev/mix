@@ -2,8 +2,6 @@ import '../../extensions/build_context_ext.dart';
 import '../tokens/color_token.dart';
 
 class $MDColorScheme {
-  const $MDColorScheme._();
-
   static const primary = ColorToken('primary');
 
   static const secondary = ColorToken('secondary');
@@ -27,6 +25,8 @@ class $MDColorScheme {
   static const onBackground = ColorToken('onBackground');
 
   static const onError = ColorToken('onError');
+
+  const $MDColorScheme._();
 
   static MixColorTokens get tokens {
     return {

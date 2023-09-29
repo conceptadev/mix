@@ -31,7 +31,7 @@ class StyleMixData with EqualityMixin {
       } else if (attribute is WidgetDecorator) {
         decoratorList.add(attribute);
       } else if (attribute is VariantAttribute) {
-        // Breakdown different types of variant attributes
+        // Breakdown different types of variant attributes.
         if (attribute is ContextVariantAttribute) {
           contextVariantList.add(attribute);
         } else {
@@ -48,6 +48,13 @@ class StyleMixData with EqualityMixin {
     );
   }
 
+  /// An empty [StyleMixData] instance with no attributes, decorators, variants, or directives.
+  const StyleMixData.empty()
+      : attributes = null,
+        decorators = null,
+        variants = const [],
+        contextVariants = const [];
+
   bool get hasVariants => variants.isNotEmpty;
 
   bool get hasContextVariants => contextVariants.isNotEmpty;
@@ -62,6 +69,9 @@ class StyleMixData with EqualityMixin {
     return variants.length + contextVariants.length + (attributes?.length ?? 0);
   }
 
+  @override
+  get props => [attributes, decorators, variants, contextVariants];
+
   /// Returns an instance of the specified [StyledWidgetAttributes] type from the [MixData].
   A? attributesOfType<A extends StyledWidgetAttributes>() {
     return attributes?.get(A) as A?;
@@ -69,11 +79,7 @@ class StyleMixData with EqualityMixin {
 
   /// Returns an [Iterable] of [StyleAttribute]s containing all attributes, variants, and directives.
   Iterable<StyleAttribute> toAttributes() {
-    return [
-      ...?attributes?.values,
-      ...variants,
-      ...contextVariants,
-    ];
+    return [...?attributes?.values, ...variants, ...contextVariants];
   }
 
   /// Creates a new [StyleMixData] instance by replacing the specified attributes with new values.
@@ -112,14 +118,4 @@ class StyleMixData with EqualityMixin {
       contextVariants: [...contextVariants],
     );
   }
-
-  /// An empty [StyleMixData] instance with no attributes, decorators, variants, or directives.
-  const StyleMixData.empty()
-      : attributes = null,
-        decorators = null,
-        variants = const [],
-        contextVariants = const [];
-
-  @override
-  get props => [attributes, decorators, variants, contextVariants];
 }

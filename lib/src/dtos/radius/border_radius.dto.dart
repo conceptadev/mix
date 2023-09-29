@@ -5,6 +5,9 @@ import 'border_radius_geometry.dto.dart';
 import 'radius_dto.dart';
 
 class BorderRadiusDto extends BorderRadiusGeometryDto<BorderRadius> {
+  /// A border radius with all zero radii.
+  static const zero = BorderRadiusDto.all(RadiusDto.zero());
+
   final RadiusDto? _topLeft;
   final RadiusDto? _topRight;
   final RadiusDto? _bottomLeft;
@@ -29,9 +32,6 @@ class BorderRadiusDto extends BorderRadiusGeometryDto<BorderRadius> {
     );
   }
 
-  /// A border radius with all zero radii.
-  static const BorderRadiusDto zero = BorderRadiusDto.all(RadiusDto.zero());
-
   const BorderRadiusDto.all(RadiusDto radius)
       : this.only(
           topLeft: radius,
@@ -40,20 +40,16 @@ class BorderRadiusDto extends BorderRadiusGeometryDto<BorderRadius> {
           bottomRight: radius,
         );
 
-  const BorderRadiusDto.vertical({
-    RadiusDto? top,
-    RadiusDto? bottom,
-  }) : this.only(
+  const BorderRadiusDto.vertical({RadiusDto? top, RadiusDto? bottom})
+      : this.only(
           topLeft: top,
           topRight: top,
           bottomLeft: bottom,
           bottomRight: bottom,
         );
 
-  const BorderRadiusDto.horizontal({
-    RadiusDto? left,
-    RadiusDto? right,
-  }) : this.only(
+  const BorderRadiusDto.horizontal({RadiusDto? left, RadiusDto? right})
+      : this.only(
           topLeft: left,
           topRight: right,
           bottomLeft: left,
@@ -85,6 +81,8 @@ class BorderRadiusDto extends BorderRadiusGeometryDto<BorderRadius> {
   RadiusDto? get topStart => null;
 
   @override
+  get props => [topLeft, topRight, bottomLeft, bottomRight];
+  @override
   BorderRadius resolve(MixData mix) {
     return BorderRadius.only(
       topLeft: topLeft?.resolve(mix) ?? Radius.zero,
@@ -107,7 +105,4 @@ class BorderRadiusDto extends BorderRadiusGeometryDto<BorderRadius> {
       bottomRight: bottomRight ?? this.bottomRight,
     );
   }
-
-  @override
-  get props => [topLeft, topRight, bottomLeft, bottomRight];
 }

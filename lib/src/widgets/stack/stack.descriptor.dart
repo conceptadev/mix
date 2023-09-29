@@ -8,9 +8,6 @@ class StyledStackDescriptor {
   final StackFit fit;
   final Clip clipBehavior;
 
-  @override
-  int get hashCode => alignment.hashCode ^ fit.hashCode ^ clipBehavior.hashCode;
-
   const StyledStackDescriptor({
     required this.alignment,
     required this.fit,
@@ -26,6 +23,9 @@ class StyledStackDescriptor {
       clipBehavior: zBoxAttributes?.clipBehavior ?? Clip.none,
     );
   }
+
+  @override
+  int get hashCode => alignment.hashCode ^ fit.hashCode ^ clipBehavior.hashCode;
 
   @override
   bool operator ==(Object other) {

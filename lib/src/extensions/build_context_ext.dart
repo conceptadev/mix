@@ -19,10 +19,10 @@ extension BuildContextExt on BuildContext {
   /// MediaQueryData for context
   MediaQueryData get mq => MediaQuery.of(this);
 
-  /// Directionality of context
+  /// Directionality of context.
   TextDirection get directionality => Directionality.of(this);
 
-  /// Orientation of the device
+  /// Orientation of the device.
   Orientation get orientation => mq.orientation;
 
   /// Is device in landscape mode.
@@ -33,29 +33,28 @@ extension BuildContextExt on BuildContext {
 
   bool get isPortrait => orientation == Orientation.portrait;
 
-  /// Screen width
+  /// Screen width.
   double get screenWidth => mq.size.width;
 
-  /// Screen height
+  /// Screen height.
   double get screenHeight => mq.size.height;
 
-  // Theme Context Extensions
-
+  // Theme Context Extensions.
   Brightness get brightness => Theme.of(this).brightness;
 
-  /// Check if brightness is Brightness.dark
+  /// Check if brightness is Brightness.dark.
   bool get isDarkMode => brightness == Brightness.dark;
 
-  /// Theme context helpers
+  /// Theme context helpers.
   ThemeData get theme => Theme.of(this);
 
-  /// Theme color scheme
+  /// Theme color scheme.
   ColorScheme get colorScheme => theme.colorScheme;
 
-  /// Theme text theme
+  /// Theme text theme.
   TextTheme get textTheme => theme.textTheme;
 
-  /// Mix Theme Data
+  /// Mix Theme Data.
   MixThemeData get mixTheme => MixTheme.of(this);
 
   @Deprecated('use SharedProps.fromContext(context) instead')

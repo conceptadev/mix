@@ -242,9 +242,7 @@ class ContainerStyleUtilities {
   }
 
   StyledContainerAttributes rounded(double value) {
-    return _borderRadius(
-      BorderRadiusDto.all(RadiusDto.circular(value)),
-    );
+    return _borderRadius(BorderRadiusDto.all(RadiusDto.circular(value)));
   }
 
   StyledContainerAttributes squared() {

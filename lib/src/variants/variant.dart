@@ -17,6 +17,9 @@ class StyleVariant {
   /// Creates a new [StyleVariant] with a given [name] and an optional [inverse] flag.
   const StyleVariant(this.name);
 
+  @override
+  int get hashCode => name.hashCode;
+
   /// Combines this variant with another [variant] using a logical AND operation.
   VariantOperation operator &(StyleVariant variant) {
     return VariantOperation([this, variant], operator: EnumVariantOperator.and);
@@ -51,7 +54,7 @@ class StyleVariant {
       if (param != null) params.add(param);
     }
 
-    // Create a VariantAttribute using the collected parameters
+    // Create a VariantAttribute using the collected parameters.
     return VariantAttribute(this, StyleMix.fromAttributes(params));
   }
 
@@ -61,9 +64,6 @@ class StyleVariant {
 
     return other is StyleVariant && other.name == name;
   }
-
-  @override
-  int get hashCode => name.hashCode;
 
   @override
   String toString() => 'name: $name';

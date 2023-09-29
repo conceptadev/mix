@@ -11,16 +11,6 @@ class StyledFlexDescriptor {
   final VerticalDirection verticalDirection;
   final double? gapSize;
 
-  @override
-  int get hashCode {
-    return direction.hashCode ^
-        mainAxisAlignment.hashCode ^
-        crossAxisAlignment.hashCode ^
-        mainAxisSize.hashCode ^
-        verticalDirection.hashCode ^
-        gapSize.hashCode;
-  }
-
   const StyledFlexDescriptor({
     required this.crossAxisAlignment,
     this.direction,
@@ -44,6 +34,16 @@ class StyledFlexDescriptor {
       verticalDirection:
           flexAttributes?.verticalDirection ?? VerticalDirection.down,
     );
+  }
+
+  @override
+  int get hashCode {
+    return direction.hashCode ^
+        mainAxisAlignment.hashCode ^
+        crossAxisAlignment.hashCode ^
+        mainAxisSize.hashCode ^
+        verticalDirection.hashCode ^
+        gapSize.hashCode;
   }
 
   @override

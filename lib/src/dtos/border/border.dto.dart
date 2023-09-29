@@ -11,19 +11,9 @@ class BorderDto extends BoxBorderDto<Border> {
   final BorderSideDto? bottom;
   final BorderSideDto? left;
 
-  const BorderDto._({
-    this.bottom,
-    this.left,
-    this.right,
-    this.top,
-  });
+  const BorderDto._({this.bottom, this.left, this.right, this.top});
 
-  const BorderDto.only({
-    this.top,
-    this.right,
-    this.bottom,
-    this.left,
-  });
+  const BorderDto.only({this.top, this.right, this.bottom, this.left});
 
   const BorderDto.symmetric({
     BorderSideDto? vertical,
@@ -36,12 +26,7 @@ class BorderDto extends BoxBorderDto<Border> {
         );
 
   const BorderDto.fromBorderSide(BorderSideDto side)
-      : this.only(
-          top: side,
-          right: side,
-          bottom: side,
-          left: side,
-        );
+      : this.only(top: side, right: side, bottom: side, left: side);
 
   factory BorderDto.all({
     ColorDto? color,
@@ -49,11 +34,7 @@ class BorderDto extends BoxBorderDto<Border> {
     BorderStyle? style,
   }) {
     return BorderDto.fromBorderSide(
-      BorderSideDto.only(
-        color: color,
-        width: width,
-        style: style,
-      ),
+      BorderSideDto.only(color: color, width: width, style: style),
     );
   }
 
@@ -66,6 +47,8 @@ class BorderDto extends BoxBorderDto<Border> {
     );
   }
 
+  @override
+  get props => [_top, _right, _bottom, _left];
   BorderSideDto? get _top => top;
 
   BorderSideDto? get _bottom => bottom;
@@ -91,15 +74,12 @@ class BorderDto extends BoxBorderDto<Border> {
     BorderSideDto? left,
   }) {
     return BorderDto._(
-      top: _top?.merge(top) ?? top,
-      right: _right?.merge(right) ?? right,
       bottom: _bottom?.merge(bottom) ?? bottom,
       left: _left?.merge(left) ?? left,
+      right: _right?.merge(right) ?? right,
+      top: _top?.merge(top) ?? top,
     );
   }
-
-  @override
-  get props => [_top, _right, _bottom, _left];
 }
 
 class BorderDirectionalDto extends BoxBorderDto<BorderDirectional> {
@@ -124,14 +104,6 @@ class BorderDirectionalDto extends BoxBorderDto<BorderDirectional> {
     );
   }
 
-  static BorderDirectionalDto? maybeFrom(BorderDirectional? border) {
-    if (border == null) {
-      return null;
-    }
-
-    return BorderDirectionalDto.from(border);
-  }
-
   const BorderDirectionalDto.only({
     this.top,
     this.bottom,
@@ -140,12 +112,7 @@ class BorderDirectionalDto extends BoxBorderDto<BorderDirectional> {
   });
 
   const BorderDirectionalDto.fromBorderSide(BorderSideDto side)
-      : this.only(
-          top: side,
-          bottom: side,
-          start: side,
-          end: side,
-        );
+      : this.only(top: side, bottom: side, start: side, end: side);
 
   factory BorderDirectionalDto.all({
     ColorDto? color,
@@ -153,11 +120,7 @@ class BorderDirectionalDto extends BoxBorderDto<BorderDirectional> {
     BorderStyle? style,
   }) {
     return BorderDirectionalDto.fromBorderSide(
-      BorderSideDto.only(
-        color: color,
-        width: width,
-        style: style,
-      ),
+      BorderSideDto.only(color: color, width: width, style: style),
     );
   }
 
@@ -170,6 +133,8 @@ class BorderDirectionalDto extends BoxBorderDto<BorderDirectional> {
     );
   }
 
+  @override
+  get props => [_top, _bottom, _start, _end];
   BorderSideDto? get _top => top;
 
   BorderSideDto? get _bottom => bottom;
@@ -178,13 +143,21 @@ class BorderDirectionalDto extends BoxBorderDto<BorderDirectional> {
 
   BorderSideDto? get _end => end;
 
+  static BorderDirectionalDto? maybeFrom(BorderDirectional? border) {
+    if (border == null) {
+      return null;
+    }
+
+    return BorderDirectionalDto.from(border);
+  }
+
   @override
   BorderDirectional resolve(MixData mix) {
     return BorderDirectional(
       top: _top?.resolve(mix) ?? BorderSide.none,
-      bottom: _bottom?.resolve(mix) ?? BorderSide.none,
       start: _start?.resolve(mix) ?? BorderSide.none,
       end: _end?.resolve(mix) ?? BorderSide.none,
+      bottom: _bottom?.resolve(mix) ?? BorderSide.none,
     );
   }
 
@@ -201,7 +174,4 @@ class BorderDirectionalDto extends BoxBorderDto<BorderDirectional> {
       end: _end?.merge(end) ?? end,
     );
   }
-
-  @override
-  get props => [_top, _bottom, _start, _end];
 }

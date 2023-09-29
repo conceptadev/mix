@@ -7,10 +7,10 @@ typedef IconAttributes = StyledIconAttributes;
 class StyledIconAttributes extends StyledWidgetAttributes {
   final ColorDto? color;
   final double? size;
-  @override
-  get props => [color, size];
   const StyledIconAttributes({this.color, this.size});
 
+  @override
+  get props => [color, size];
   @override
   StyledIconAttributes copyWith({ColorDto? color, double? size}) {
     return StyledIconAttributes(

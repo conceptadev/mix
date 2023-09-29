@@ -1,10 +1,10 @@
 import 'package:flutter/foundation.dart';
 
 class Logger {
-  Logger(this.tag);
-
   final String tag;
-  final Stopwatch stopwatch = Stopwatch();
+  final stopwatch = Stopwatch();
+
+  Logger(this.tag);
 
   void start() {
     stopwatch.start();

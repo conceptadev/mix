@@ -4,10 +4,8 @@ import '../../extensions/build_context_ext.dart';
 import '../tokens/mix_token.dart';
 import '../tokens/text_style_token.dart';
 
-// Material 3 TextTheme Tokens
-
+// Material 3 TextTheme Tokens.
 class $M3Text {
-  const $M3Text._();
   static const displayLarge = TextStyleToken('displayLarge');
   static const displayMedium = TextStyleToken('displayMedium');
   static const displaySmall = TextStyleToken('displaySmall');
@@ -24,6 +22,7 @@ class $M3Text {
   static const labelMedium = TextStyleToken('labelMedium');
   static const labelSmall = TextStyleToken('labelSmall');
 
+  const $M3Text._();
   static MixTextStyleTokens get tokens {
     return {
       displayLarge: (context) => context.textTheme.displayLarge,
@@ -45,10 +44,8 @@ class $M3Text {
   }
 }
 
-// Material 2 TextTheme Tokens
+// Material 2 TextTheme Tokens.
 class $M2Text {
-  const $M2Text._();
-
   static const headline1 = TextStyleToken('headline1');
   static const headline2 = TextStyleToken('headline2');
   static const headline3 = TextStyleToken('headline3');
@@ -62,6 +59,8 @@ class $M2Text {
   static const caption = TextStyleToken('caption');
   static const button = TextStyleToken('button');
   static const overline = TextStyleToken('overline');
+
+  const $M2Text._();
 
   static MixTextStyleTokens get tokens {
     return {

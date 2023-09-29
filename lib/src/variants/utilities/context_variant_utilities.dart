@@ -10,14 +10,6 @@ import '../context_variant.dart';
 class ContextVariantUtilities {
   const ContextVariantUtilities._();
 
-  static _screenSizeCheck(ScreenSizeToken screenSize) {
-    return (BuildContext context) {
-      final breakpoints = MixTheme.of(context).breakpoints;
-
-      return breakpoints.getScreenSize(context).index <= screenSize.index;
-    };
-  }
-
   static ContextStyleVariant onSmall() {
     return ContextStyleVariant(
       'onSmall',
@@ -148,5 +140,13 @@ class ContextVariantUtilities {
         return context.directionality == TextDirection.rtl;
       },
     );
+  }
+
+  static _screenSizeCheck(ScreenSizeToken screenSize) {
+    return (BuildContext context) {
+      final breakpoints = MixTheme.of(context).breakpoints;
+
+      return breakpoints.getScreenSize(context).index <= screenSize.index;
+    };
   }
 }

@@ -15,14 +15,14 @@ class ClipDecorator extends WidgetDecorator<ClipDecorator> {
   final BorderRadius borderRadius;
   final ClipDecoratorType clipType;
 
-  @override
-  get props => [borderRadius, clipType];
   const ClipDecorator(
     this.clipType, {
     this.borderRadius = BorderRadius.zero,
     super.key,
   });
 
+  @override
+  get props => [borderRadius, clipType];
   @override
   ClipDecorator merge(ClipDecorator other) {
     return other;

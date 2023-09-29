@@ -13,10 +13,10 @@ class VariantOperation {
   final List<StyleVariant> variants;
   final EnumVariantOperator operator;
 
-  const VariantOperation(
-    this.variants, {
-    required this.operator,
-  });
+  const VariantOperation(this.variants, {required this.operator});
+
+  @override
+  int get hashCode => variants.hashCode ^ operator.hashCode;
 
   VariantOperation operator &(StyleVariant variant) {
     if (operator != EnumVariantOperator.and) {
@@ -36,41 +36,6 @@ class VariantOperation {
     variants.add(variant);
 
     return this;
-  }
-
-  List<VariantAttribute> _buildOrOperations(
-    List<StyleAttribute> attributes, {
-    Iterable<StyleVariant>? variants,
-  }) {
-    variants ??= this.variants;
-    final style = StyleMix.fromAttributes(attributes);
-    final attributeVariants = variants.map((variant) {
-      return variant is ContextStyleVariant
-          ? ContextVariantAttribute(variant, style)
-          : VariantAttribute(variant, style);
-    });
-
-    return attributeVariants.toList();
-  }
-
-  List<VariantAttribute> _buildAndOperations(
-    List<StyleAttribute> attributes,
-  ) {
-    final attributeVariants = variants.map((variant) {
-      final otherVariants = variants.where((otherV) => otherV != variant);
-      final mixToApply = StyleMix.fromAttributes(
-        _buildOrOperations(
-          attributes,
-          variants: otherVariants,
-        ),
-      );
-
-      return variant is ContextStyleVariant
-          ? ContextVariantAttribute(variant, mixToApply)
-          : VariantAttribute(variant, mixToApply);
-    });
-
-    return attributeVariants.toList();
   }
 
   // ignore: long-parameter-list
@@ -113,8 +78,36 @@ class VariantOperation {
   }
 
   @override
-  int get hashCode => variants.hashCode ^ operator.hashCode;
-
-  @override
   String toString() => 'MultiVariant(variants: $variants, operator: $operator)';
+  List<VariantAttribute> _buildOrOperations(
+    List<StyleAttribute> attributes, {
+    Iterable<StyleVariant>? variants,
+  }) {
+    variants ??= this.variants;
+    final style = StyleMix.fromAttributes(attributes);
+    final attributeVariants = variants.map((variant) {
+      return variant is ContextStyleVariant
+          ? ContextVariantAttribute(variant, style)
+          : VariantAttribute(variant, style);
+    });
+
+    return attributeVariants.toList();
+  }
+
+  List<VariantAttribute> _buildAndOperations(
+    List<StyleAttribute> attributes,
+  ) {
+    final attributeVariants = variants.map((variant) {
+      final otherVariants = variants.where((otherV) => otherV != variant);
+      final mixToApply = StyleMix.fromAttributes(
+        _buildOrOperations(attributes, variants: otherVariants),
+      );
+
+      return variant is ContextStyleVariant
+          ? ContextVariantAttribute(variant, mixToApply)
+          : VariantAttribute(variant, mixToApply);
+    });
+
+    return attributeVariants.toList();
+  }
 }

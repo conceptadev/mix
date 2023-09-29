@@ -13,14 +13,8 @@ class MixProvider extends InheritedWidget {
   /// The `data` parameter is the [MixData] object to store. [child]
   /// receives the element tree that will use this context, and [key] can be set
   /// to track changes.
-  const MixProvider(
-    this.data, {
-    Key? key,
-    required Widget child,
-  }) : super(key: key, child: child);
-
-  /// Contains the context data object.
-  final MixData? data;
+  const MixProvider(this.data, {Key? key, required Widget child})
+      : super(key: key, child: child);
 
   /// Returns the context data from the widget tree in [context].
   ///
@@ -46,6 +40,9 @@ class MixProvider extends InheritedWidget {
 
     return data;
   }
+
+  /// Contains the context data object.
+  final MixData? data;
 
   @override
   bool updateShouldNotify(MixProvider oldWidget) {

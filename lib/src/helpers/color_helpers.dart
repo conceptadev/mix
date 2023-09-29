@@ -19,9 +19,7 @@ enum ColorSchemeNames {
 
 extension ColorSchemeNamesExtension on ColorSchemeNames {
   Color get value {
-    final colorIndex = _colorSchemeTranslationValues[index];
-
-    return colorIndex;
+    return _colorSchemeTranslationValues[index];
   }
 }
 
@@ -41,7 +39,7 @@ const _colorSchemeTranslationValues = [
 ];
 
 extension ColorExt on Color {
-  Color darken([double amount = .1]) {
+  Color darken([double amount = 0.1]) {
     assert(amount >= 0 && amount <= 1);
 
     final hsl = HSLColor.fromColor(this);
@@ -50,7 +48,7 @@ extension ColorExt on Color {
     return hslDark.toColor();
   }
 
-  Color lighten([double amount = .1]) {
+  Color lighten([double amount = 0.1]) {
     assert(amount >= 0 && amount <= 1);
 
     final hsl = HSLColor.fromColor(this);
@@ -78,7 +76,5 @@ Color hexToColor(String hexString) {
   if (hexString.length == 6 || hexString.length == 7) buffer.write('ff');
   buffer.write(hexString.replaceFirst('#', ''));
 
-  return Color(
-    int.parse(buffer.toString(), radix: 16),
-  );
+  return Color(int.parse(buffer.toString(), radix: 16));
 }

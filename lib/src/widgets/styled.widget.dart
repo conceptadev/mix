@@ -11,7 +11,7 @@ import 'mix_context_builder.dart';
 typedef MixWidget = StyledWidget;
 
 abstract class StyledWidget extends StatelessWidget {
-  /// Constructor
+  /// Constructor.
   const StyledWidget({
     @Deprecated('Use the style parameter instead') StyleMix? mix,
     StyleMix? style,
@@ -63,37 +63,42 @@ abstract class StyledWidget extends StatelessWidget {
   Widget buildWithMix(BuildContext context, WidgetMixBuilder builder) {
     final mix = getMix(context);
 
-    return MixProvider(
-      mix,
-      child: builder(mix),
-    );
+    return MixProvider(mix, child: builder(mix));
   }
-
-  @override
-  Widget build(BuildContext context);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
 
     properties.add(
-      DiagnosticsProperty<StyleMix>('mix', _mix, defaultValue: null),
+      DiagnosticsProperty<StyleMix>(
+        'mix',
+        _mix,
+      ),
     );
 
     properties.add(
-      DiagnosticsProperty<StyleMix>('style', _style, defaultValue: null),
+      DiagnosticsProperty<StyleMix>(
+        'style',
+        _style,
+      ),
     );
 
     properties.add(
-      DiagnosticsProperty<bool>('inherit', _inherit, defaultValue: null),
+      DiagnosticsProperty<bool>(
+        'inherit',
+        _inherit,
+      ),
     );
 
     properties.add(
       DiagnosticsProperty<List<StyleVariant>>(
         'variants',
         variants,
-        defaultValue: null,
       ),
     );
   }
+
+  @override
+  Widget build(BuildContext context);
 }

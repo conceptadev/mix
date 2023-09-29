@@ -10,10 +10,10 @@ class StyledStackAttributes extends StyledWidgetAttributes {
   final StackFit? fit;
   final Clip? clipBehavior;
 
-  @override
-  get props => [alignment, fit, clipBehavior];
   const StyledStackAttributes({this.alignment, this.fit, this.clipBehavior});
 
+  @override
+  get props => [alignment, fit, clipBehavior];
   @override
   StyledStackAttributes copyWith({
     AlignmentGeometry? alignment,

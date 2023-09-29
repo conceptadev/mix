@@ -11,10 +11,10 @@ import '../attributes/attribute.dart';
 /// while preserving the order in which they were inserted.
 @immutable
 class MergeableMap<T extends Mergeable> {
-  // Internal list to hold the keys to maintain insertion order
+  // Internal list to hold the keys to maintain insertion order.
   final List<Type> _keys;
 
-  // Internal map to associate keys to values
+  // Internal map to associate keys to values.
   final Map<Type, T> _map;
 
   /// Private constructor used by factory methods.
@@ -48,6 +48,29 @@ class MergeableMap<T extends Mergeable> {
     return MergeableMap<T>._(keys, map);
   }
 
+  /// Returns an iterable of the values in the map, maintaining the order of insertion.
+  ///
+  /// The order of return is determined by the order the key/value pairs were inserted in the map.
+  Iterable<T> get values => _keys.map((key) => _map[key]!);
+
+  /// Returns the number of key/value pairs in the map.
+  ///
+  /// A length of zero means the map is empty.
+  int get length => _keys.length;
+
+  /// Returns `true` if the map contains no key/value pairs.
+  ///
+  /// This is a quick way to verify if the map is empty or not.
+  bool get isEmpty => _keys.isEmpty;
+
+  /// Returns `true` if the map contains at least one key/value pair.
+  ///
+  /// This is a quick way to verify if the map has stored values.
+  bool get isNotEmpty => _keys.isNotEmpty;
+
+  @override
+  int get hashCode => _keys.hashCode ^ _map.hashCode;
+
   /// Retrieves the value associated with the given [key].
   ///
   /// Returns `null` if the [key] is not found.
@@ -60,7 +83,7 @@ class MergeableMap<T extends Mergeable> {
   MergeableMap<T> merge(MergeableMap<T>? other) {
     if (other == null) return this;
 
-    final mergedKeys = List<Type>.from(_keys);
+    final mergedKeys = List<Type>.of(_keys);
     final mergedMap = Map<Type, T>.from(_map);
 
     for (var key in other._keys) {
@@ -80,18 +103,8 @@ class MergeableMap<T extends Mergeable> {
   /// This method is typically used when a copy of the map is needed, so the original
   /// map can be preserved while the copy is manipulated.
   MergeableMap<T> clone() {
-    return MergeableMap._(List<Type>.from(_keys), Map<Type, T>.from(_map));
+    return MergeableMap._(List<Type>.of(_keys), Map<Type, T>.from(_map));
   }
-
-  /// Returns an iterable of the values in the map, maintaining the order of insertion.
-  ///
-  /// The order of return is determined by the order the key/value pairs were inserted in the map.
-  Iterable<T> get values => _keys.map((key) => _map[key]!);
-
-  /// Returns the number of key/value pairs in the map.
-  ///
-  /// A length of zero means the map is empty.
-  int get length => _keys.length;
 
   /// Finds the first value in the map that satisfies the given [test].
   ///
@@ -99,16 +112,6 @@ class MergeableMap<T extends Mergeable> {
   ///
   /// The [test] function should return `true` for the desired value.
   T firstWhere(bool Function(T) test) => values.firstWhere(test);
-
-  /// Returns `true` if the map contains no key/value pairs.
-  ///
-  /// This is a quick way to verify if the map is empty or not.
-  bool get isEmpty => _keys.isEmpty;
-
-  /// Returns `true` if the map contains at least one key/value pair.
-  ///
-  /// This is a quick way to verify if the map has stored values.
-  bool get isNotEmpty => _keys.isNotEmpty;
 
   /// Overrides the equality operator to compare [MergeableMap] instances.
   ///
@@ -123,7 +126,4 @@ class MergeableMap<T extends Mergeable> {
         _keys.every((key) =>
             other._map.containsKey(key) && _map[key] == other._map[key]);
   }
-
-  @override
-  int get hashCode => _keys.hashCode ^ _map.hashCode;
 }

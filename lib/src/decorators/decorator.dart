@@ -4,12 +4,10 @@ import '../../mix.dart';
 
 abstract class Decorator<T extends Decorator<T>> extends StyleAttribute
     with Mergeable<Decorator<T>> {
-  const Decorator({
-    this.key,
-  });
-
-  /// Key is required in order for proper sorting
+  /// Key is required in order for proper sorting.
   final Key? key;
+
+  const Decorator({this.key});
 
   Widget build(MixData mix, Widget child);
 
@@ -23,12 +21,10 @@ abstract class Decorator<T extends Decorator<T>> extends StyleAttribute
 
 abstract class WidgetDecorator<T extends WidgetDecorator<T>>
     extends StyleAttribute with Mergeable<WidgetDecorator<T>> {
-  const WidgetDecorator({
-    this.key,
-  });
-
-  /// Key is required in order for proper sorting
+  /// Key is required in order for proper sorting.
   final Key? key;
+
+  const WidgetDecorator({this.key});
 
   Widget build(MixData mix, Widget child);
 

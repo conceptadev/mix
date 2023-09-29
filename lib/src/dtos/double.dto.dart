@@ -10,18 +10,16 @@ class DoubleDto extends Dto<double> {
   // Modifier is only used after value is resolved.
   final ValueModifier<double>? _modifier;
 
-  const DoubleDto(
-    double value, {
-    ValueModifier<double>? directive,
-  })  : _value = value,
+  const DoubleDto(double value, {ValueModifier<double>? directive})
+      : _value = value,
         _modifier = directive;
 
-  const DoubleDto.from(
-    double value, {
-    ValueModifier<double>? directiv,
-  })  : _value = value,
+  const DoubleDto.from(double value, {ValueModifier<double>? directiv})
+      : _value = value,
         _modifier = null;
 
+  @override
+  get props => [_value, _modifier];
   static DoubleDto? maybeFrom(double? value) {
     if (value == null) return null;
 
@@ -32,10 +30,7 @@ class DoubleDto extends Dto<double> {
   double resolve(MixData mix) {
     final modifier = _modifier;
 
-    // Apply modifier if it exists
+    // Apply modifier if it exists.
     return modifier != null ? modifier(_value) : _value;
   }
-
-  @override
-  get props => [_value, _modifier];
 }

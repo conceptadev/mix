@@ -6,16 +6,13 @@ import '../decorator.dart';
 
 class AspectRatioDecorator extends WidgetDecorator<AspectRatioDecorator> {
   final double aspectRatio;
-  const AspectRatioDecorator({
-    required this.aspectRatio,
-    super.key,
-  });
+  const AspectRatioDecorator({required this.aspectRatio, super.key});
 
   @override
+  get props => [aspectRatio];
+  @override
   AspectRatioDecorator merge(AspectRatioDecorator other) {
-    return AspectRatioDecorator(
-      aspectRatio: other.aspectRatio,
-    );
+    return AspectRatioDecorator(aspectRatio: other.aspectRatio);
   }
 
   @override
@@ -28,21 +25,10 @@ class AspectRatioDecorator extends WidgetDecorator<AspectRatioDecorator> {
             duration: common.animationDuration,
             curve: common.animationCurve,
             builder: (context, value, child) {
-              return AspectRatio(
-                key: key,
-                aspectRatio: value,
-                child: child,
-              );
+              return AspectRatio(key: key, aspectRatio: value, child: child);
             },
             child: child,
           )
-        : AspectRatio(
-            key: key,
-            aspectRatio: aspectRatio,
-            child: child,
-          );
+        : AspectRatio(key: key, aspectRatio: aspectRatio, child: child);
   }
-
-  @override
-  get props => [aspectRatio];
 }

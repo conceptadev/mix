@@ -25,75 +25,6 @@ class StyledContainerDescriptor with EqualityMixin {
   final BoxShape? shape;
 
   final Color? _color;
-  // Color is null decoration exists, color gets added to decoration.
-  Color? get color => decoration == null ? _color : null;
-
-  BoxDecoration? get decoration {
-    BoxDecoration? boxDecoration;
-    if (border != null ||
-        borderRadius != null ||
-        boxShadow != null ||
-        shape != null ||
-        gradient != null) {
-      boxDecoration = BoxDecoration(
-        color: _color,
-        border: border,
-        boxShadow: boxShadow,
-        gradient: gradient,
-      );
-
-      // Shape is added separately because it doesn't accept a nullable value.
-      if (shape != null) {
-        boxDecoration = boxDecoration.copyWith(shape: shape);
-      }
-
-      // Border radius is added if no shape exists.
-      if (shape == null && borderRadius != null) {
-        boxDecoration = boxDecoration.copyWith(borderRadius: borderRadius);
-      }
-
-      return boxDecoration;
-    }
-    return null;
-  }
-
-  BoxConstraints? get constraints {
-    BoxConstraints? constraints;
-
-    if (minWidth != null ||
-        maxWidth != null ||
-        minHeight != null ||
-        maxHeight != null) {
-      constraints = BoxConstraints(
-        minWidth: minWidth ?? 0.0,
-        maxWidth: maxWidth ?? double.infinity,
-        minHeight: minHeight ?? 0.0,
-        maxHeight: maxHeight ?? double.infinity,
-      );
-    }
-
-    return constraints;
-  }
-
-  @override
-  get props => [
-        _color,
-        alignment,
-        padding,
-        margin,
-        width,
-        height,
-        border,
-        borderRadius,
-        boxShadow,
-        maxHeight,
-        minHeight,
-        maxWidth,
-        minWidth,
-        shape,
-        transform,
-        gradient,
-      ];
   const StyledContainerDescriptor({
     Color? color,
     this.alignment,
@@ -135,4 +66,74 @@ class StyledContainerDescriptor with EqualityMixin {
       gradient: attributes?.gradient,
     );
   }
+  // Color is null decoration exists, color gets added to decoration.
+  Color? get color => decoration == null ? _color : null;
+
+  BoxDecoration? get decoration {
+    BoxDecoration? boxDecoration;
+    if (border != null ||
+        borderRadius != null ||
+        boxShadow != null ||
+        shape != null ||
+        gradient != null) {
+      boxDecoration = BoxDecoration(
+        color: _color,
+        border: border,
+        boxShadow: boxShadow,
+        gradient: gradient,
+      );
+
+      // Shape is added separately because it doesn't accept a nullable value.
+      if (shape != null) {
+        boxDecoration = boxDecoration.copyWith(shape: shape);
+      }
+
+      // Border radius is added if no shape exists.
+      if (shape == null && borderRadius != null) {
+        boxDecoration = boxDecoration.copyWith(borderRadius: borderRadius);
+      }
+
+      return boxDecoration;
+    }
+
+    return null;
+  }
+
+  BoxConstraints? get constraints {
+    BoxConstraints? constraints;
+
+    if (minWidth != null ||
+        maxWidth != null ||
+        minHeight != null ||
+        maxHeight != null) {
+      constraints = BoxConstraints(
+        minWidth: minWidth ?? 0.0,
+        maxWidth: maxWidth ?? double.infinity,
+        minHeight: minHeight ?? 0.0,
+        maxHeight: maxHeight ?? double.infinity,
+      );
+    }
+
+    return constraints;
+  }
+
+  @override
+  get props => [
+        _color,
+        alignment,
+        padding,
+        margin,
+        width,
+        height,
+        border,
+        borderRadius,
+        boxShadow,
+        maxHeight,
+        minHeight,
+        maxWidth,
+        minWidth,
+        shape,
+        transform,
+        gradient,
+      ];
 }

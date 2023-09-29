@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../mix.dart';
 
-typedef WidgetMixBuilder = Widget Function(
-  MixData mix,
-);
+typedef WidgetMixBuilder = Widget Function(MixData mix);
 
 class MixBuilder extends StyledWidget {
   const MixBuilder({

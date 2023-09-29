@@ -9,20 +9,18 @@ class ShadowDto<T extends Shadow> extends Dto<T> with Mergeable {
   final Offset? offset;
   final double? blurRadius;
 
-  const ShadowDto({
-    this.color,
-    this.offset,
-    this.blurRadius,
-  });
+  const ShadowDto({this.color, this.offset, this.blurRadius});
 
   factory ShadowDto.from(Shadow shadow) {
     return ShadowDto(
-      blurRadius: shadow.blurRadius,
       color: ColorDto.maybeFrom(shadow.color),
       offset: shadow.offset,
+      blurRadius: shadow.blurRadius,
     );
   }
 
+  @override
+  get props => [color, offset, blurRadius];
   static maybeFrom(Shadow? shadow) {
     if (shadow == null) {
       return null;
@@ -40,11 +38,7 @@ class ShadowDto<T extends Shadow> extends Dto<T> with Mergeable {
     ) as T;
   }
 
-  ShadowDto copyWith({
-    ColorDto? color,
-    Offset? offset,
-    double? blurRadius,
-  }) {
+  ShadowDto copyWith({ColorDto? color, Offset? offset, double? blurRadius}) {
     return ShadowDto(
       color: color ?? this.color,
       offset: offset ?? this.offset,
@@ -60,7 +54,4 @@ class ShadowDto<T extends Shadow> extends Dto<T> with Mergeable {
       blurRadius: other?.blurRadius,
     );
   }
-
-  @override
-  get props => [color, offset, blurRadius];
 }

@@ -8,14 +8,13 @@ abstract class MixToken {
   const MixToken(this.name);
 
   @override
+  int get hashCode => runtimeType.hashCode ^ name.hashCode;
+  @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is MixToken &&
           runtimeType == other.runtimeType &&
           name == other.name;
-
-  @override
-  int get hashCode => runtimeType.hashCode ^ name.hashCode;
 }
 
 mixin WithReferenceMixin<T> on MixToken {
@@ -24,7 +23,7 @@ mixin WithReferenceMixin<T> on MixToken {
 
   double get ref => hashCode.toDouble() * -1;
   double call() {
-    // Creates a reference from hashcode
+    // Creates a reference from hashcode.
     return ref;
   }
 }

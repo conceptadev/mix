@@ -66,43 +66,69 @@ class TextStyleDto extends Dto<TextStyle> {
     }
 
     return TextStyleDto(
-      fontFamily: style.fontFamily,
       inherit: style.inherit,
+      fontFamily: style.fontFamily,
       fontWeight: style.fontWeight,
       fontStyle: style.fontStyle,
       fontSize: style.fontSize,
-      background: style.background,
-      foreground: style.foreground,
       letterSpacing: style.letterSpacing,
       wordSpacing: style.wordSpacing,
       textBaseline: style.textBaseline,
       color: ColorDto.maybeFrom(style.color),
       backgroundColor: ColorDto.maybeFrom(style.backgroundColor),
-      decorationColor: ColorDto.maybeFrom(style.decorationColor),
       shadows: style.shadows?.map((e) => ShadowDto.from(e)).toList(),
       fontFeatures: style.fontFeatures,
       decoration: style.decoration,
+      decorationColor: ColorDto.maybeFrom(style.decorationColor),
       decorationStyle: style.decorationStyle,
       debugLabel: style.debugLabel,
       locale: style.locale,
       height: style.height,
+      foreground: style.foreground,
+      background: style.background,
       decorationThickness: style.decorationThickness,
       fontFamilyFallback: style.fontFamilyFallback,
     );
   }
 
+  bool get hasToken => styleToken != null;
+
+  @override
+  get props => [
+        fontFamily,
+        inherit,
+        fontWeight,
+        fontStyle,
+        fontSize,
+        letterSpacing,
+        wordSpacing,
+        textBaseline,
+        color,
+        backgroundColor,
+        shadows,
+        fontFeatures,
+        decoration,
+        decorationColor,
+        decorationStyle,
+        debugLabel,
+        locale,
+        height,
+        background,
+        foreground,
+        decorationThickness,
+        fontFamilyFallback,
+        styleToken,
+      ];
   static maybeFrom(TextStyle? style) {
     return style != null ? TextStyleDto.from(style) : null;
   }
-
-  bool get hasToken => styleToken != null;
 
   @override
   TextStyle resolve(MixData mix) {
     TextStyleDto? styleRef;
 
     if (styleToken != null) {
-      // Load as DTO for consistent merging behavior
+      // Load as DTO for consistent merging behavior.
       final textStyle = mix.resolveToken.textStyle(styleToken!);
       styleRef = TextStyleDto.from(textStyle);
     }
@@ -111,26 +137,26 @@ class TextStyleDto extends Dto<TextStyle> {
 
     return TextStyle(
       inherit: styleRef.inherit ?? true,
-      fontFamily: styleRef.fontFamily,
-      fontWeight: styleRef.fontWeight,
-      fontStyle: styleRef.fontStyle,
-      fontSize: styleRef.fontSize,
-      letterSpacing: styleRef.letterSpacing,
-      height: styleRef.height,
-      wordSpacing: styleRef.wordSpacing,
-      textBaseline: styleRef.textBaseline,
       color: styleRef.color?.resolve(mix),
       backgroundColor: styleRef.backgroundColor?.resolve(mix),
+      fontSize: styleRef.fontSize,
+      fontWeight: styleRef.fontWeight,
+      fontStyle: styleRef.fontStyle,
+      letterSpacing: styleRef.letterSpacing,
+      wordSpacing: styleRef.wordSpacing,
+      textBaseline: styleRef.textBaseline,
+      height: styleRef.height,
+      locale: styleRef.locale,
+      foreground: styleRef.foreground,
+      background: styleRef.background,
       shadows: styleRef.shadows?.map((e) => e.resolve(mix)).toList(),
       fontFeatures: styleRef.fontFeatures,
       decoration: styleRef.decoration,
       decorationColor: styleRef.decorationColor?.resolve(mix),
       decorationStyle: styleRef.decorationStyle,
-      debugLabel: styleRef.debugLabel,
-      background: styleRef.background,
-      foreground: styleRef.foreground,
-      locale: styleRef.locale,
       decorationThickness: styleRef.decorationThickness,
+      debugLabel: styleRef.debugLabel,
+      fontFamily: styleRef.fontFamily,
       fontFamilyFallback: styleRef.fontFamilyFallback,
     );
   }
@@ -179,8 +205,8 @@ class TextStyleDto extends Dto<TextStyle> {
       debugLabel: debugLabel ?? this.debugLabel,
       locale: locale ?? this.locale,
       height: height ?? this.height,
-      background: background ?? this.background,
       foreground: foreground ?? this.foreground,
+      background: background ?? this.background,
       decorationThickness: decorationThickness ?? this.decorationThickness,
       fontFamilyFallback: [...?this.fontFamilyFallback, ...?fontFamilyFallback],
       styleToken: styleToken ?? this.styleToken,
@@ -196,7 +222,6 @@ class TextStyleDto extends Dto<TextStyle> {
       fontWeight: other.fontWeight,
       fontStyle: other.fontStyle,
       fontSize: other.fontSize,
-      height: other.height,
       letterSpacing: other.letterSpacing,
       wordSpacing: other.wordSpacing,
       textBaseline: other.textBaseline,
@@ -209,6 +234,7 @@ class TextStyleDto extends Dto<TextStyle> {
       decorationStyle: other.decorationStyle,
       debugLabel: other.debugLabel,
       locale: other.locale,
+      height: other.height,
       background: other.background,
       foreground: other.foreground,
       decorationThickness: other.decorationThickness,
@@ -216,31 +242,4 @@ class TextStyleDto extends Dto<TextStyle> {
       styleToken: other.styleToken,
     );
   }
-
-  @override
-  get props => [
-        fontFamily,
-        inherit,
-        fontWeight,
-        fontStyle,
-        fontSize,
-        letterSpacing,
-        wordSpacing,
-        textBaseline,
-        color,
-        backgroundColor,
-        shadows,
-        fontFeatures,
-        decoration,
-        decorationColor,
-        decorationStyle,
-        debugLabel,
-        locale,
-        height,
-        background,
-        foreground,
-        decorationThickness,
-        fontFamilyFallback,
-        styleToken,
-      ];
 }

@@ -9,29 +9,9 @@ class EdgeInsetsDto extends EdgeInsetsGeometryDto<EdgeInsets> {
   final double? left;
   final double? right;
 
-  @override
-  get props => [top, bottom, left, right];
-  double? get _top => top;
+  const EdgeInsetsDto._({this.top, this.bottom, this.left, this.right});
 
-  double? get _bottom => bottom;
-
-  double? get _left => left;
-
-  double? get _right => right;
-
-  const EdgeInsetsDto._({
-    this.top,
-    this.bottom,
-    this.left,
-    this.right,
-  });
-
-  const EdgeInsetsDto.only({
-    this.top,
-    this.bottom,
-    this.left,
-    this.right,
-  });
+  const EdgeInsetsDto.only({this.top, this.bottom, this.left, this.right});
 
   const EdgeInsetsDto.all(double value)
       : top = value,
@@ -39,10 +19,8 @@ class EdgeInsetsDto extends EdgeInsetsGeometryDto<EdgeInsets> {
         left = value,
         right = value;
 
-  const EdgeInsetsDto.symmetric({
-    double? horizontal,
-    double? vertical,
-  })  : top = vertical,
+  const EdgeInsetsDto.symmetric({double? horizontal, double? vertical})
+      : top = vertical,
         bottom = vertical,
         left = horizontal,
         right = horizontal;
@@ -55,6 +33,16 @@ class EdgeInsetsDto extends EdgeInsetsGeometryDto<EdgeInsets> {
       right: doubleNullIfZero(edgeInsets.right),
     );
   }
+
+  @override
+  get props => [top, bottom, left, right];
+  double? get _top => top;
+
+  double? get _bottom => bottom;
+
+  double? get _left => left;
+
+  double? get _right => right;
 
   // Helper utility for internal API use and cleaner conditional checking.
   static EdgeInsetsDto? maybeFrom(EdgeInsets? edgeInsets) {
