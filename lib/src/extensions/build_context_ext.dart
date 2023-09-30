@@ -16,14 +16,11 @@ extension BuildContextExt on BuildContext {
 
   /// MEDIA QUERY EXTENSION METHODS
 
-  /// MediaQueryData for context
-  MediaQueryData get mq => MediaQuery.of(this);
-
   /// Directionality of context.
   TextDirection get directionality => Directionality.of(this);
 
   /// Orientation of the device.
-  Orientation get orientation => mq.orientation;
+  Orientation get orientation => MediaQuery.orientationOf(this);
 
   /// Is device in landscape mode.
 
@@ -33,11 +30,8 @@ extension BuildContextExt on BuildContext {
 
   bool get isPortrait => orientation == Orientation.portrait;
 
-  /// Screen width.
-  double get screenWidth => mq.size.width;
-
-  /// Screen height.
-  double get screenHeight => mq.size.height;
+  /// Screen size.
+  Size get screenSize => MediaQuery.sizeOf(this);
 
   // Theme Context Extensions.
   Brightness get brightness => Theme.of(this).brightness;

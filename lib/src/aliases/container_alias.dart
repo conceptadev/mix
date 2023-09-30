@@ -1,113 +1,121 @@
 import '../../mix.dart';
 
-final margin = WrapWithSpaceTokens(ContainerStyleUtilities().margin);
-final marginTop = WrapWithSpaceTokens(ContainerStyleUtilities().marginTop);
+final margin = WrapWithSpaceTokens(const ContainerStyleUtilities().margin);
+final marginTop =
+    WrapWithSpaceTokens(const ContainerStyleUtilities().marginTop);
 final marginBottom =
-    WrapWithSpaceTokens(ContainerStyleUtilities().marginBottom);
-final marginRight = WrapWithSpaceTokens(ContainerStyleUtilities().marginRight);
-final marginLeft = WrapWithSpaceTokens(ContainerStyleUtilities().marginLeft);
+    WrapWithSpaceTokens(const ContainerStyleUtilities().marginBottom);
+final marginRight =
+    WrapWithSpaceTokens(const ContainerStyleUtilities().marginRight);
+final marginLeft =
+    WrapWithSpaceTokens(const ContainerStyleUtilities().marginLeft);
 final marginDirectionalStart = WrapWithSpaceTokens(
-  ContainerStyleUtilities().marginDirectionalStart,
+  const ContainerStyleUtilities().marginDirectionalStart,
 );
 
 final marginDirectionalEnd = WrapWithSpaceTokens(
-  ContainerStyleUtilities().marginDirectionalEnd,
+  const ContainerStyleUtilities().marginDirectionalEnd,
 );
 
-final marginSymmetric = ContainerStyleUtilities().marginSymmetric;
-final marginHorizontal = ContainerStyleUtilities().marginHorizontal;
-final marginVertical = ContainerStyleUtilities().marginVertical;
+final marginSymmetric = const ContainerStyleUtilities().marginSymmetric;
+final marginHorizontal = const ContainerStyleUtilities().marginHorizontal;
+final marginVertical = const ContainerStyleUtilities().marginVertical;
 
-final marginInsets = ContainerStyleUtilities().marginInsets;
+final marginInsets = const ContainerStyleUtilities().marginInsets;
 
-final padding = WrapWithSpaceTokens(ContainerStyleUtilities().padding);
-final paddingTop = WrapWithSpaceTokens(ContainerStyleUtilities().paddingTop);
+final padding = WrapWithSpaceTokens(const ContainerStyleUtilities().padding);
+final paddingTop =
+    WrapWithSpaceTokens(const ContainerStyleUtilities().paddingTop);
 final paddingBottom =
-    WrapWithSpaceTokens(ContainerStyleUtilities().paddingBottom);
+    WrapWithSpaceTokens(const ContainerStyleUtilities().paddingBottom);
 final paddingRight =
-    WrapWithSpaceTokens(ContainerStyleUtilities().paddingRight);
-final paddingLeft = WrapWithSpaceTokens(ContainerStyleUtilities().paddingLeft);
+    WrapWithSpaceTokens(const ContainerStyleUtilities().paddingRight);
+final paddingLeft =
+    WrapWithSpaceTokens(const ContainerStyleUtilities().paddingLeft);
 
-final paddingSymmetric = ContainerStyleUtilities().paddingSymmetric;
-final paddingHorizontal = ContainerStyleUtilities().paddingHorizontal;
-final paddingVertical = ContainerStyleUtilities().paddingVertical;
-final paddingInsets = ContainerStyleUtilities().paddingInsets;
+final paddingSymmetric = const ContainerStyleUtilities().paddingSymmetric;
+final paddingHorizontal = const ContainerStyleUtilities().paddingHorizontal;
+final paddingVertical = const ContainerStyleUtilities().paddingVertical;
+final paddingInsets = const ContainerStyleUtilities().paddingInsets;
 
 final paddingDirectionalStart = WrapWithSpaceTokens(
-  ContainerStyleUtilities().paddingDirectionalStart,
+  const ContainerStyleUtilities().paddingDirectionalStart,
 );
 final paddingDirectionalEnd = WrapWithSpaceTokens(
-  ContainerStyleUtilities().paddingDirectionalEnd,
+  const ContainerStyleUtilities().paddingDirectionalEnd,
 );
 
 final paddingDirectionalTop = WrapWithSpaceTokens(
-  ContainerStyleUtilities().paddingDirectionalTop,
+  const ContainerStyleUtilities().paddingDirectionalTop,
 );
 
 final paddingDirectionalBottom = WrapWithSpaceTokens(
-  ContainerStyleUtilities().paddingDirectionalBottom,
+  const ContainerStyleUtilities().paddingDirectionalBottom,
 );
 
 // Transform.
-final transform = ContainerStyleUtilities().transform;
+final transform = const ContainerStyleUtilities().transform;
 
 /// Background color attribute.
-final backgroundColor = ContainerStyleUtilities().backgroundColor;
+final backgroundColor = const ContainerStyleUtilities().backgroundColor;
 
 /// Height.
-final height = ContainerStyleUtilities().height;
+final height = const ContainerStyleUtilities().height;
 
 /// Width.
-final width = ContainerStyleUtilities().width;
+final width = const ContainerStyleUtilities().width;
 
 /// Max height attribute.
-final maxHeight = ContainerStyleUtilities().maxHeight;
+final maxHeight = const ContainerStyleUtilities().maxHeight;
 
 /// Max width attribute.
-final maxWidth = ContainerStyleUtilities().maxWidth;
+final maxWidth = const ContainerStyleUtilities().maxWidth;
 
 /// Min height attribute.
-final minHeight = ContainerStyleUtilities().minHeight;
+final minHeight = const ContainerStyleUtilities().minHeight;
 
 /// Min width attribute.
-final minWidth = ContainerStyleUtilities().minWidth;
+final minWidth = const ContainerStyleUtilities().minWidth;
 
 /// Border.
-final border = ContainerStyleUtilities().border;
-final borderTop = ContainerStyleUtilities().borderTop;
-final borderBottom = ContainerStyleUtilities().borderBottom;
-final borderLeft = ContainerStyleUtilities().borderLeft;
-final borderRight = ContainerStyleUtilities().borderRight;
+final border = const ContainerStyleUtilities().border;
+final borderTop = const ContainerStyleUtilities().borderTop;
+final borderBottom = const ContainerStyleUtilities().borderBottom;
+final borderLeft = const ContainerStyleUtilities().borderLeft;
+final borderRight = const ContainerStyleUtilities().borderRight;
 
 // Border Directional.
-final borderDirectionalTop = ContainerStyleUtilities().borderDirectionalTop;
+final borderDirectionalTop =
+    const ContainerStyleUtilities().borderDirectionalTop;
 final borderDirectionalBottom =
-    ContainerStyleUtilities().borderDirectionalBottom;
-final borderDirectionalStart = ContainerStyleUtilities().borderDirectionalStart;
-final borderDirectionalEnd = ContainerStyleUtilities().borderDirectionalEnd;
+    const ContainerStyleUtilities().borderDirectionalBottom;
+final borderDirectionalStart =
+    const ContainerStyleUtilities().borderDirectionalStart;
+final borderDirectionalEnd =
+    const ContainerStyleUtilities().borderDirectionalEnd;
 
 /// Box shadow utility.
-final shadow = ContainerStyleUtilities().shadow;
+final shadow = const ContainerStyleUtilities().shadow;
 
-final squared = ContainerStyleUtilities().squared;
+final squared = const ContainerStyleUtilities().squared;
 
-final rounded = ContainerStyleUtilities().rounded;
-final roundedOnly = ContainerStyleUtilities().roundedOnly;
-final roundedHorizontal = ContainerStyleUtilities().roundedHorizontal;
-final roundedVertical = ContainerStyleUtilities().roundedVertical;
+final rounded = const ContainerStyleUtilities().rounded;
+final roundedOnly = const ContainerStyleUtilities().roundedOnly;
+final roundedHorizontal = const ContainerStyleUtilities().roundedHorizontal;
+final roundedVertical = const ContainerStyleUtilities().roundedVertical;
 final roundedDirectionalHorizontal =
-    ContainerStyleUtilities().roundedDirectionalHorizontal;
+    const ContainerStyleUtilities().roundedDirectionalHorizontal;
 final roundedDirectionalVertical =
-    ContainerStyleUtilities().roundedDirectionalVertical;
+    const ContainerStyleUtilities().roundedDirectionalVertical;
 
-final alignment = ContainerStyleUtilities().alignment;
+final alignment = const ContainerStyleUtilities().alignment;
 
 /// Elevation.
-final elevation = ContainerStyleUtilities().elevation;
+final elevation = const ContainerStyleUtilities().elevation;
 
 /// Gradient.
-final linearGradient = ContainerStyleUtilities().linearGradient;
-final radialGradient = ContainerStyleUtilities().radialGradient;
+final linearGradient = const ContainerStyleUtilities().linearGradient;
+final radialGradient = const ContainerStyleUtilities().radialGradient;
 
 const kShortAliasDeprecation =
     'Short aliases will be deprecated, you can create your own. Example: final p = padding;';
@@ -140,28 +148,29 @@ final px = paddingHorizontal;
 final py = paddingVertical;
 
 @Deprecated(kShortAliasDeprecation)
-final pi = ContainerStyleUtilities().paddingInsets;
+final pi = const ContainerStyleUtilities().paddingInsets;
 
 @Deprecated(kShortAliasDeprecation)
-final m = WrapWithSpaceTokens(ContainerStyleUtilities().margin);
+final m = WrapWithSpaceTokens(const ContainerStyleUtilities().margin);
 @Deprecated(kShortAliasDeprecation)
-final mt = WrapWithSpaceTokens(ContainerStyleUtilities().marginTop);
+final mt = WrapWithSpaceTokens(const ContainerStyleUtilities().marginTop);
 @Deprecated(kShortAliasDeprecation)
-final mb = WrapWithSpaceTokens(ContainerStyleUtilities().marginBottom);
+final mb = WrapWithSpaceTokens(const ContainerStyleUtilities().marginBottom);
 @Deprecated(kShortAliasDeprecation)
-final mr = WrapWithSpaceTokens(ContainerStyleUtilities().marginRight);
+final mr = WrapWithSpaceTokens(const ContainerStyleUtilities().marginRight);
 @Deprecated(kShortAliasDeprecation)
-final ml = WrapWithSpaceTokens(ContainerStyleUtilities().marginLeft);
+final ml = WrapWithSpaceTokens(const ContainerStyleUtilities().marginLeft);
 @Deprecated(kShortAliasDeprecation)
-final ms = WrapWithSpaceTokens(ContainerStyleUtilities().marginStart);
+final ms = WrapWithSpaceTokens(const ContainerStyleUtilities().marginStart);
 @Deprecated(kShortAliasDeprecation)
-final me = WrapWithSpaceTokens(ContainerStyleUtilities().marginEnd);
+final me = WrapWithSpaceTokens(const ContainerStyleUtilities().marginEnd);
 @Deprecated(kShortAliasDeprecation)
-final mx = WrapWithSpaceTokens(ContainerStyleUtilities().marginHorizontal);
+final mx =
+    WrapWithSpaceTokens(const ContainerStyleUtilities().marginHorizontal);
 @Deprecated(kShortAliasDeprecation)
-final my = WrapWithSpaceTokens(ContainerStyleUtilities().marginVertical);
+final my = WrapWithSpaceTokens(const ContainerStyleUtilities().marginVertical);
 @Deprecated(kShortAliasDeprecation)
-final mi = ContainerStyleUtilities().marginInsets;
+final mi = const ContainerStyleUtilities().marginInsets;
 
 @Deprecated(kShortAliasDeprecation)
 final marginX = marginHorizontal;
@@ -170,121 +179,127 @@ final marginX = marginHorizontal;
 final marginY = marginVertical;
 
 @Deprecated(kShortAliasDeprecation)
-final r = ContainerStyleUtilities().rounded;
+final r = const ContainerStyleUtilities().rounded;
 
 @Deprecated(kShortAliasDeprecation)
-final roundedH = ContainerStyleUtilities().roundedHorizontal;
+final roundedH = const ContainerStyleUtilities().roundedHorizontal;
 
 @Deprecated(kShortAliasDeprecation)
-final roundedV = ContainerStyleUtilities().roundedVertical;
+final roundedV = const ContainerStyleUtilities().roundedVertical;
 
 @Deprecated(kShortAliasDeprecation)
-final roundedDH = ContainerStyleUtilities().roundedDirectionalHorizontal;
+final roundedDH = const ContainerStyleUtilities().roundedDirectionalHorizontal;
 
 @Deprecated(kShortAliasDeprecation)
 StyledContainerAttributes roundedTL(double value) {
-  return ContainerStyleUtilities().roundedOnly(topLeft: value);
+  return const ContainerStyleUtilities().roundedOnly(topLeft: value);
 }
 
 @Deprecated(kShortAliasDeprecation)
 StyledContainerAttributes roundedTR(double value) {
-  return ContainerStyleUtilities().roundedOnly(topRight: value);
+  return const ContainerStyleUtilities().roundedOnly(topRight: value);
 }
 
 @Deprecated(kShortAliasDeprecation)
 StyledContainerAttributes roundedBL(double value) {
-  return ContainerStyleUtilities().roundedOnly(bottomLeft: value);
+  return const ContainerStyleUtilities().roundedOnly(bottomLeft: value);
 }
 
 @Deprecated(kShortAliasDeprecation)
 StyledContainerAttributes roundedBR(double value) {
-  return ContainerStyleUtilities().roundedOnly(bottomRight: value);
+  return const ContainerStyleUtilities().roundedOnly(bottomRight: value);
 }
 
 @Deprecated(kShortAliasDeprecation)
 StyledContainerAttributes roundedTS(double value) {
-  return ContainerStyleUtilities().roundedDirectionalOnly(topStart: value);
+  return const ContainerStyleUtilities()
+      .roundedDirectionalOnly(topStart: value);
 }
 
 @Deprecated(kShortAliasDeprecation)
 StyledContainerAttributes roundedTE(double value) {
-  return ContainerStyleUtilities().roundedDirectionalOnly(topEnd: value);
+  return const ContainerStyleUtilities().roundedDirectionalOnly(topEnd: value);
 }
 
 @Deprecated(kShortAliasDeprecation)
 StyledContainerAttributes roundedBS(double value) {
-  return ContainerStyleUtilities().roundedDirectionalOnly(bottomStart: value);
+  return const ContainerStyleUtilities()
+      .roundedDirectionalOnly(bottomStart: value);
 }
 
 @Deprecated(kShortAliasDeprecation)
 StyledContainerAttributes roundedBE(double value) {
-  return ContainerStyleUtilities().roundedDirectionalOnly(bottomEnd: value);
+  return const ContainerStyleUtilities()
+      .roundedDirectionalOnly(bottomEnd: value);
 }
 
 @Deprecated(kShortAliasDeprecation)
-final bgColor = ContainerStyleUtilities().backgroundColor;
+final bgColor = const ContainerStyleUtilities().backgroundColor;
 
 @Deprecated(kShortAliasDeprecation)
-final h = ContainerStyleUtilities().height;
+final h = const ContainerStyleUtilities().height;
 
 @Deprecated(kShortAliasDeprecation)
-final w = ContainerStyleUtilities().width;
+final w = const ContainerStyleUtilities().width;
 
 @Deprecated(kShortAliasDeprecation)
-final maxH = ContainerStyleUtilities().maxHeight;
+final maxH = const ContainerStyleUtilities().maxHeight;
 
 @Deprecated(kShortAliasDeprecation)
-final maxW = ContainerStyleUtilities().maxWidth;
+final maxW = const ContainerStyleUtilities().maxWidth;
 
 @Deprecated(kShortAliasDeprecation)
-final minH = ContainerStyleUtilities().minHeight;
+final minH = const ContainerStyleUtilities().minHeight;
 
 @Deprecated(kShortAliasDeprecation)
-final minW = ContainerStyleUtilities().minWidth;
+final minW = const ContainerStyleUtilities().minWidth;
 
 @Deprecated(kShortAliasDeprecation)
-final bt = ContainerStyleUtilities().borderTop;
+final bt = const ContainerStyleUtilities().borderTop;
 
 @Deprecated(kShortAliasDeprecation)
-final bb = ContainerStyleUtilities().borderBottom;
+final bb = const ContainerStyleUtilities().borderBottom;
 
 @Deprecated(kShortAliasDeprecation)
-final bl = ContainerStyleUtilities().borderLeft;
+final bl = const ContainerStyleUtilities().borderLeft;
 
 @Deprecated(kShortAliasDeprecation)
-final br = ContainerStyleUtilities().borderRight;
+final br = const ContainerStyleUtilities().borderRight;
 
 @Deprecated(kShortAliasDeprecation)
-final bs = ContainerStyleUtilities().borderStart;
+final bs = const ContainerStyleUtilities().borderStart;
 
 @Deprecated(kShortAliasDeprecation)
-final be = ContainerStyleUtilities().borderEnd;
+final be = const ContainerStyleUtilities().borderEnd;
 
 @Deprecated('Use paddingDirectionalStart instead')
 final paddingStart =
-    WrapWithSpaceTokens(ContainerStyleUtilities().paddingStart);
+    WrapWithSpaceTokens(const ContainerStyleUtilities().paddingStart);
 @Deprecated('Use paddingDirectionalEnd instead')
-final paddingEnd = WrapWithSpaceTokens(ContainerStyleUtilities().paddingEnd);
+final paddingEnd =
+    WrapWithSpaceTokens(const ContainerStyleUtilities().paddingEnd);
 
 @Deprecated('Use borderDirectionalStart instead')
-final borderStart = ContainerStyleUtilities().borderStart;
+final borderStart = const ContainerStyleUtilities().borderStart;
 
 @Deprecated('Use borderDirectionalEnd instead')
-final borderEnd = ContainerStyleUtilities().borderEnd;
+final borderEnd = const ContainerStyleUtilities().borderEnd;
 
 @Deprecated('Use border(color:color) instead')
-final borderColor = ContainerStyleUtilities().borderColor;
+final borderColor = const ContainerStyleUtilities().borderColor;
 
 @Deprecated('Use border(width:width) instead')
-final borderWidth = ContainerStyleUtilities().borderWidth;
+final borderWidth = const ContainerStyleUtilities().borderWidth;
 
 @Deprecated('Use border(color:color) instead')
-final borderStyle = ContainerStyleUtilities().borderStyle;
+final borderStyle = const ContainerStyleUtilities().borderStyle;
 
 @Deprecated('Use alignment instead')
 final align = alignment;
 
 @Deprecated('Use marginDirectionalStart instead')
-final marginStart = WrapWithSpaceTokens(ContainerStyleUtilities().marginStart);
+final marginStart =
+    WrapWithSpaceTokens(const ContainerStyleUtilities().marginStart);
 @Deprecated('Use marginDirectionalEnd instead')
-final marginEnd = WrapWithSpaceTokens(ContainerStyleUtilities().marginEnd);
+final marginEnd =
+    WrapWithSpaceTokens(const ContainerStyleUtilities().marginEnd);
