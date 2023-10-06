@@ -10,7 +10,7 @@ import '../attributes/attribute.dart';
 /// This class is useful for scenarios where you need to merge objects based on their types
 /// while preserving the order in which they were inserted.
 @immutable
-class MergeableMap<T extends Attribute> {
+class AttributesMap<T extends Attribute> {
   // Internal list to hold the keys to maintain insertion order.
   final List<Key> _keys;
 
@@ -20,19 +20,19 @@ class MergeableMap<T extends Attribute> {
   /// Private constructor used by factory methods.
   ///
   /// Both [_keys] and [_map] must not be null.
-  const MergeableMap._(this._keys, this._map);
+  const AttributesMap._(this._keys, this._map);
 
-  /// Factory constructor to create an empty [MergeableMap].
+  /// Factory constructor to create an empty [AttributesMap].
   ///
   /// Useful for initializing an empty map.
-  const MergeableMap.empty()
+  const AttributesMap.empty()
       : _keys = const [],
         _map = const {};
 
-  /// Creates a [MergeableMap] instance from an iterable of type [T].
+  /// Creates a [AttributesMap] instance from an iterable of type [T].
   ///
   /// Iterates through each item in the [iterable], merging items of the same type.
-  factory MergeableMap.fromIterable(List<T> iterable) {
+  factory AttributesMap.fromIterable(List<T> iterable) {
     final keys = <Key>[];
     final map = <Key, T>{};
     for (final item in iterable) {
@@ -45,7 +45,7 @@ class MergeableMap<T extends Attribute> {
       }
     }
 
-    return MergeableMap<T>._(keys, map);
+    return AttributesMap<T>._(keys, map);
   }
 
   /// Returns an iterable of the values in the map, maintaining the order of insertion.
@@ -81,11 +81,11 @@ class MergeableMap<T extends Attribute> {
   /// Get value from type.
   T? ofType<A>() => _map[ValueKey(A)];
 
-  /// Merges this [MergeableMap] with another [MergeableMap].
+  /// Merges this [AttributesMap] with another [AttributesMap].
   ///
   /// Returns a new instance containing the merged elements.
   /// If [other] is null, returns the current instance.
-  MergeableMap<T> merge(MergeableMap<T>? other) {
+  AttributesMap<T> merge(AttributesMap<T>? other) {
     if (other == null) return this;
 
     final mergedKeys = List<Key>.of(_keys);
@@ -100,15 +100,15 @@ class MergeableMap<T extends Attribute> {
       }
     }
 
-    return MergeableMap<T>._(mergedKeys, mergedMap);
+    return AttributesMap<T>._(mergedKeys, mergedMap);
   }
 
-  /// Creates a new [MergeableMap] instance identical to this instance.
+  /// Creates a new [AttributesMap] instance identical to this instance.
   ///
   /// This method is typically used when a copy of the map is needed, so the original
   /// map can be preserved while the copy is manipulated.
-  MergeableMap<T> clone() {
-    return MergeableMap._(List<Key>.of(_keys), Map<Key, T>.from(_map));
+  AttributesMap<T> clone() {
+    return AttributesMap._(List<Key>.of(_keys), Map<Key, T>.from(_map));
   }
 
   /// Finds the first value in the map that satisfies the given [test].
@@ -118,7 +118,7 @@ class MergeableMap<T extends Attribute> {
   /// The [test] function should return `true` for the desired value.
   T firstWhere(bool Function(T) test) => values.firstWhere(test);
 
-  /// Overrides the equality operator to compare [MergeableMap] instances.
+  /// Overrides the equality operator to compare [AttributesMap] instances.
   ///
   /// Two instances are considered equal if they have identical keys and values.
   /// This checks the length of keys and then verifies that each key has identical values in both maps.
@@ -126,7 +126,7 @@ class MergeableMap<T extends Attribute> {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is MergeableMap &&
+    return other is AttributesMap &&
         _keys.length == other._keys.length &&
         _keys.every((key) =>
             other._map.containsKey(key) && _map[key] == other._map[key]);

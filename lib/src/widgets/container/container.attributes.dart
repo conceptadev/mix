@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../attributes/attribute.dart';
+import '../../attributes/margin/margin_attribute.dart';
+import '../../attributes/padding/padding_attribute.dart';
 import '../../dtos/border/box_border.dto.dart';
 import '../../dtos/color.dto.dart';
 import '../../dtos/edge_insets/edge_insets_geometry.dto.dart';
@@ -12,8 +14,8 @@ import '../../extensions/helper_ext.dart';
 typedef BoxAttributes = StyledContainerAttributes;
 
 class StyledContainerAttributes extends StyledWidgetAttributes {
-  final EdgeInsetsGeometryDto? margin;
-  final EdgeInsetsGeometryDto? padding;
+  final MarginAttribute? margin;
+  final PaddingAttribute? padding;
   final AlignmentGeometry? alignment;
   final double? height;
   final double? width;
@@ -95,8 +97,8 @@ class StyledContainerAttributes extends StyledWidgetAttributes {
 
   @override
   StyledContainerAttributes copyWith({
-    EdgeInsetsGeometryDto? margin,
-    EdgeInsetsGeometryDto? padding,
+    MarginAttribute? margin,
+    PaddingAttribute? padding,
     AlignmentGeometry? alignment,
     ColorDto? color,
     BoxBorderDto? border,

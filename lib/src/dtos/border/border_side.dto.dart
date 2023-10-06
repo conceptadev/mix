@@ -50,6 +50,7 @@ class BorderSideDto extends ResolvableAttribute<BorderSide> {
     );
   }
 
+  @override
   BorderSideDto merge(BorderSideDto? other) {
     if (other == null) return this;
 

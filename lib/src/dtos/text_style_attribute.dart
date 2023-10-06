@@ -9,7 +9,7 @@ import 'color.dto.dart';
 import 'dto.dart';
 import 'shadow/shadow.dto.dart';
 
-class TextStyleDto extends ResolvableAttribute<TextStyle> {
+class TextStyleAttribute extends ResolvableAttribute<TextStyle> {
   final String? fontFamily;
   final FontWeight? fontWeight;
 
@@ -36,7 +36,7 @@ class TextStyleDto extends ResolvableAttribute<TextStyle> {
 
   final TextStyleToken? styleToken;
 
-  const TextStyleDto({
+  const TextStyleAttribute({
     this.background,
     this.backgroundColor,
     this.color,
@@ -62,10 +62,10 @@ class TextStyleDto extends ResolvableAttribute<TextStyle> {
     this.wordSpacing,
   });
 
-  factory TextStyleDto.from(TextStyle style) {
+  factory TextStyleAttribute.from(TextStyle style) {
     return style is TextStyleToken
-        ? TextStyleDto(styleToken: style)
-        : TextStyleDto(
+        ? TextStyleAttribute(styleToken: style)
+        : TextStyleAttribute(
             background: style.background,
             backgroundColor: ColorDto.maybeFrom(style.backgroundColor),
             color: ColorDto.maybeFrom(style.color),
@@ -92,12 +92,12 @@ class TextStyleDto extends ResolvableAttribute<TextStyle> {
   }
 
   static maybeFrom(TextStyle? style) {
-    return style == null ? null : TextStyleDto.from(style);
+    return style == null ? null : TextStyleAttribute.from(style);
   }
 
   bool get hasToken => styleToken != null;
 
-  TextStyleDto copyWith({
+  TextStyleAttribute copyWith({
     Paint? background,
     ColorDto? backgroundColor,
     ColorDto? color,
@@ -122,7 +122,7 @@ class TextStyleDto extends ResolvableAttribute<TextStyle> {
     TextBaseline? textBaseline,
     double? wordSpacing,
   }) {
-    return TextStyleDto(
+    return TextStyleAttribute(
       background: background ?? this.background,
       backgroundColor: backgroundColor ?? this.backgroundColor,
       color: color ?? this.color,
@@ -149,7 +149,8 @@ class TextStyleDto extends ResolvableAttribute<TextStyle> {
     );
   }
 
-  TextStyleDto merge(TextStyleDto? other) {
+  @override
+  TextStyleAttribute merge(TextStyleAttribute? other) {
     if (other == null) return this;
 
     return copyWith(
@@ -181,12 +182,12 @@ class TextStyleDto extends ResolvableAttribute<TextStyle> {
 
   @override
   TextStyle resolve(MixData mix) {
-    TextStyleDto? styleRef;
+    TextStyleAttribute? styleRef;
 
     if (styleToken != null) {
       // Load as DTO for consistent merging behavior.
       final textStyle = mix.resolveToken.textStyle(styleToken!);
-      styleRef = TextStyleDto.from(textStyle);
+      styleRef = TextStyleAttribute.from(textStyle);
     }
 
     styleRef = styleRef != null ? styleRef.merge(this) : this;

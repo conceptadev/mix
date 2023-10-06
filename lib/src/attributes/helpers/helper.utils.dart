@@ -55,3 +55,9 @@ class SpreadPositionalParams<ParamType, ReturnType> {
     return fn(params);
   }
 }
+
+double? doubleNullIfZero(double? value) {
+  if (value == null || value == 0.0) return null;
+
+  return value;
+}

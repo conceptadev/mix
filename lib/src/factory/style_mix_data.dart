@@ -1,21 +1,21 @@
 import '../attributes/exports.dart';
 import '../decorators/decorator.dart';
+import '../helpers/attributes_map.dart';
 import '../helpers/compare_mixin/compare_mixin.dart';
-import '../helpers/mergeable_map.dart';
 import '../variants/variant_attribute.dart';
 
 class StyleMixData with CompareMixin {
-  final MergeableMap<WidgetDecorator>? _decorators;
-  final MergeableMap<ContextVariantAttribute>? _contextVariants;
+  final AttributesMap<WidgetDecorator>? _decorators;
+  final AttributesMap<ContextVariantAttribute>? _contextVariants;
 
-  final MergeableMap<VariantAttribute>? _variants;
-  final MergeableMap<StyledWidgetAttributes>? _attributes;
+  final AttributesMap<VariantAttribute>? _variants;
+  final AttributesMap<StyledWidgetAttributes>? _attributes;
 
   const StyleMixData({
-    required MergeableMap<StyledWidgetAttributes>? attributes,
-    required MergeableMap<VariantAttribute>? variants,
-    required MergeableMap<WidgetDecorator>? decorators,
-    required MergeableMap<ContextVariantAttribute>? contextVariants,
+    required AttributesMap<StyledWidgetAttributes>? attributes,
+    required AttributesMap<VariantAttribute>? variants,
+    required AttributesMap<WidgetDecorator>? decorators,
+    required AttributesMap<ContextVariantAttribute>? contextVariants,
   })  : _attributes = attributes,
         _variants = variants,
         _decorators = decorators,
@@ -44,10 +44,10 @@ class StyleMixData with CompareMixin {
     }
 
     return StyleMixData(
-      attributes: MergeableMap.fromIterable(attributeList),
-      variants: MergeableMap.fromIterable(variantList),
-      decorators: MergeableMap.fromIterable(decoratorList),
-      contextVariants: MergeableMap.fromIterable(contextVariantList),
+      attributes: AttributesMap.fromIterable(attributeList),
+      variants: AttributesMap.fromIterable(variantList),
+      decorators: AttributesMap.fromIterable(decoratorList),
+      contextVariants: AttributesMap.fromIterable(contextVariantList),
     );
   }
 
@@ -58,20 +58,20 @@ class StyleMixData with CompareMixin {
         _variants = null,
         _contextVariants = null;
 
-  MergeableMap<StyledWidgetAttributes> get attributes {
-    return _attributes ?? const MergeableMap.empty();
+  AttributesMap<StyledWidgetAttributes> get attributes {
+    return _attributes ?? const AttributesMap.empty();
   }
 
-  MergeableMap<VariantAttribute> get variants {
-    return _variants ?? const MergeableMap.empty();
+  AttributesMap<VariantAttribute> get variants {
+    return _variants ?? const AttributesMap.empty();
   }
 
-  MergeableMap<WidgetDecorator> get decorators {
-    return _decorators ?? const MergeableMap.empty();
+  AttributesMap<WidgetDecorator> get decorators {
+    return _decorators ?? const AttributesMap.empty();
   }
 
-  MergeableMap<ContextVariantAttribute> get contextVariants {
-    return _contextVariants ?? const MergeableMap.empty();
+  AttributesMap<ContextVariantAttribute> get contextVariants {
+    return _contextVariants ?? const AttributesMap.empty();
   }
 
   bool get hasVariants => variants.isNotEmpty;
@@ -105,10 +105,10 @@ class StyleMixData with CompareMixin {
 
   /// Creates a new [StyleMixData] instance by replacing the specified attributes with new values.
   StyleMixData copyWith({
-    MergeableMap<StyledWidgetAttributes>? attributes,
-    MergeableMap<WidgetDecorator>? decorators,
-    MergeableMap<VariantAttribute>? variants,
-    MergeableMap<ContextVariantAttribute>? contextVariants,
+    AttributesMap<StyledWidgetAttributes>? attributes,
+    AttributesMap<WidgetDecorator>? decorators,
+    AttributesMap<VariantAttribute>? variants,
+    AttributesMap<ContextVariantAttribute>? contextVariants,
   }) {
     return StyleMixData(
       attributes: this.attributes.merge(attributes),

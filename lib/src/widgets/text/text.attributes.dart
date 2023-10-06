@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../attributes/attribute.dart';
-import '../../dtos/text_style.dto.dart';
+import '../../dtos/text_style_attribute.dart';
 import '../../extensions/helper_ext.dart';
 import 'text_directives/text_directives.dart';
 
@@ -23,8 +23,8 @@ class StyledTextAttributes extends StyledWidgetAttributes {
 
   final List<TextDirective> directives;
 
-  final List<TextStyleDto>? _styles;
-  final TextStyleDto? _style;
+  final List<TextStyleAttribute>? _styles;
+  final TextStyleAttribute? _style;
 
   const StyledTextAttributes({
     this.directives = const [],
@@ -33,8 +33,8 @@ class StyledTextAttributes extends StyledWidgetAttributes {
     this.overflow,
     this.softWrap,
     this.strutStyle,
-    TextStyleDto? style,
-    List<TextStyleDto>? styles,
+    TextStyleAttribute? style,
+    List<TextStyleAttribute>? styles,
     this.textAlign,
     this.textHeightBehavior,
     this.textScaleFactor,
@@ -62,7 +62,7 @@ class StyledTextAttributes extends StyledWidgetAttributes {
       overflow: overflow,
       softWrap: softWrap,
       strutStyle: strutStyle,
-      style: TextStyleDto.maybeFrom(style),
+      style: TextStyleAttribute.maybeFrom(style),
       textAlign: textAlign,
       textHeightBehavior: textHeightBehavior,
       textScaleFactor: textScaleFactor,
@@ -71,7 +71,7 @@ class StyledTextAttributes extends StyledWidgetAttributes {
   }
 
   // Combines the text styles.
-  List<TextStyleDto> get styles {
+  List<TextStyleAttribute> get styles {
     return [if (_style != null) _style!, ...?_styles];
   }
 
@@ -105,7 +105,7 @@ class StyledTextAttributes extends StyledWidgetAttributes {
     TextOverflow? overflow,
     bool? softWrap,
     StrutStyle? strutStyle,
-    List<TextStyleDto>? styles,
+    List<TextStyleAttribute>? styles,
     TextAlign? textAlign,
     TextHeightBehavior? textHeightBehavior,
     double? textScaleFactor,

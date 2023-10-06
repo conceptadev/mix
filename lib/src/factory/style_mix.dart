@@ -1,7 +1,7 @@
 // ignore_for_file: non_constant_identifier_names, constant_identifier_names, long-parameter-list
 
 import '../attributes/exports.dart';
-import '../helpers/mergeable_map.dart';
+import '../helpers/attributes_map.dart';
 import '../variants/variant.dart';
 import '../variants/variant_attribute.dart';
 import 'style_mix_data.dart';
@@ -152,7 +152,7 @@ class StyleMix {
     final existingMix = StyleMix._(
       StyleMixData(
         attributes: _values.attributes,
-        variants: MergeableMap.fromIterable(existingVariants),
+        variants: AttributesMap.fromIterable(existingVariants),
         decorators: _values.decorators,
         contextVariants: _values.contextVariants,
       ),

@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import '../../dtos/text_style.dto.dart';
+import '../../dtos/text_style_attribute.dart';
 import '../../factory/mix_provider_data.dart';
 import 'text.attributes.dart';
 import 'text_directives/text_directives.dart';
@@ -38,11 +38,11 @@ class StyledTextDescriptor {
   factory StyledTextDescriptor.fromContext(MixData mix) {
     final textAttributes = mix.attributesOfType<StyledTextAttributes>();
 
-    var mergedTextStyleDto = const TextStyleDto();
+    var mergedTextStyleDto = const TextStyleAttribute();
 
-    for (var style in textAttributes?.styles ?? <TextStyleDto>[]) {
+    for (var style in textAttributes?.styles ?? <TextStyleAttribute>[]) {
       // Convert into a DTO for consistent merge behavior.
-      final textStyleDto = TextStyleDto.from(style.resolve(mix));
+      final textStyleDto = TextStyleAttribute.from(style.resolve(mix));
       mergedTextStyleDto = mergedTextStyleDto.merge(textStyleDto);
     }
 

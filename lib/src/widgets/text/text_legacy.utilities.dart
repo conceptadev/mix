@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-import '../../dtos/text_style.dto.dart';
+import '../../dtos/text_style_attribute.dart';
 import 'text.attributes.dart';
 import 'text_directives/text_directives.dart';
 
@@ -16,7 +16,7 @@ class LegacyTextUtility {
   static StyledTextAttributes style(TextStyle? style) {
     if (style == null) return const StyledTextAttributes();
 
-    return StyledTextAttributes(style: TextStyleDto.from(style));
+    return StyledTextAttributes(style: TextStyleAttribute.from(style));
   }
 
   @Deprecated(kDeprecationMessage)

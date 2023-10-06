@@ -3,61 +3,12 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
 import 'package:mix/src/dtos/border/border.dto.dart';
 import 'package:mix/src/dtos/color.dto.dart';
-import 'package:mix/src/dtos/edge_insets/edge_insets.dto.dart';
 import 'package:mix/src/dtos/radius/border_radius.dto.dart';
 import 'package:mix/src/dtos/radius/radius_dto.dart';
 import 'package:mix/src/dtos/shadow/box_shadow.dto.dart';
 
 void main() {
   group("Box Attributes", () {
-    test('-> Margin', () {
-      const marginAttribute =
-          StyledContainerAttributes(margin: EdgeInsetsDto.all(20));
-      final marginUtilityAttribute = margin(20);
-
-      expect(
-        marginAttribute,
-        marginUtilityAttribute,
-        reason: 'Margin utility does not match attribute',
-      );
-
-      expect(
-        marginAttribute.margin,
-        marginUtilityAttribute.margin,
-        reason: 'Margin values on attribute do not match',
-      );
-
-      expect(
-        marginAttribute.margin,
-        const EdgeInsetsDto.all(20),
-        reason: 'Margin attribute does not match EdgeInsetsDto.all(20)',
-      );
-    });
-
-    test('-> Padding', () {
-      const paddingAttribute =
-          StyledContainerAttributes(padding: EdgeInsetsDto.all(30));
-      final paddingUtilityAttribute = padding(30);
-
-      expect(
-        paddingAttribute,
-        paddingUtilityAttribute,
-        reason: 'Padding utility does not match attribute',
-      );
-
-      expect(
-        paddingAttribute.padding,
-        paddingUtilityAttribute.padding,
-        reason: 'Padding values on attribute do not match',
-      );
-
-      expect(
-        paddingAttribute.padding,
-        const EdgeInsetsDto.all(30),
-        reason: 'Padding attribute does not match EdgeInsetsDto.all(30)',
-      );
-    });
-
     test('-> Width', () {
       const widthAttribute = StyledContainerAttributes(width: 40);
       final widthUtilityAttribute = width(40);

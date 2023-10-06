@@ -9,7 +9,7 @@ class EdgeInsetsDto extends EdgeInsetsGeometryDto<EdgeInsets> {
   final double? left;
   final double? right;
 
-  const EdgeInsetsDto._({this.top, this.bottom, this.left, this.right});
+  const EdgeInsetsDto({this.top, this.bottom, this.left, this.right});
 
   const EdgeInsetsDto.only({this.top, this.bottom, this.left, this.right});
 
@@ -25,15 +25,16 @@ class EdgeInsetsDto extends EdgeInsetsGeometryDto<EdgeInsets> {
         left = horizontal,
         right = horizontal;
 
+  @Deprecated('Dont use this anymore')
   factory EdgeInsetsDto.from(EdgeInsets edgeInsets) {
-    return EdgeInsetsDto._(
+    return EdgeInsetsDto(
       top: doubleNullIfZero(edgeInsets.top),
       bottom: doubleNullIfZero(edgeInsets.bottom),
       left: doubleNullIfZero(edgeInsets.left),
       right: doubleNullIfZero(edgeInsets.right),
     );
   }
-
+  @Deprecated('Dont use this anymore')
   // Helper utility for internal API use and cleaner conditional checking.
   static EdgeInsetsDto? maybeFrom(EdgeInsets? edgeInsets) {
     if (edgeInsets == null) return null;
@@ -55,7 +56,7 @@ class EdgeInsetsDto extends EdgeInsetsGeometryDto<EdgeInsets> {
     double? left,
     double? right,
   }) {
-    return EdgeInsetsDto._(
+    return EdgeInsetsDto(
       top: top ?? this.top,
       bottom: bottom ?? this.bottom,
       left: left ?? this.left,

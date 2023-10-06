@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import '../../../mix.dart';
 import '../../dtos/color.dto.dart';
 import '../../dtos/shadow/shadow.dto.dart';
-import '../../dtos/text_style.dto.dart';
+import '../../dtos/text_style_attribute.dart';
 import 'text_directives/text_directives.dart';
 
 class TextUtility {
@@ -62,7 +62,7 @@ class TextUtility {
         'If asStyle is provided, all other parameters will be ignored.',
       );
 
-      return StyledTextAttributes(style: TextStyleDto.from(as));
+      return StyledTextAttributes(style: TextStyleAttribute.from(as));
     }
 
     List<ShadowDto>? convertShadows() {
@@ -76,7 +76,7 @@ class TextUtility {
     }
 
     return StyledTextAttributes(
-      style: TextStyleDto(
+      style: TextStyleAttribute(
         background: background,
         backgroundColor: ColorDto.maybeFrom(backgroundColor),
         color: ColorDto.maybeFrom(color),

@@ -7,7 +7,7 @@ import 'edge_insets_directional.dto.dart';
 abstract class EdgeInsetsGeometryDto<T extends EdgeInsetsGeometry>
     extends ResolvableAttribute<T> {
   const EdgeInsetsGeometryDto();
-
+  @Deprecated('Dont use this anymore')
   static D
       from<T extends EdgeInsetsGeometry, D extends EdgeInsetsGeometryDto<T>>(
     T edgeInsets,
@@ -24,6 +24,7 @@ abstract class EdgeInsetsGeometryDto<T extends EdgeInsetsGeometry>
     );
   }
 
+  @Deprecated('Dont use this anymore')
   static D? maybeFrom<T extends EdgeInsetsGeometry,
       D extends EdgeInsetsGeometryDto<T>>(T? edgeInsets) {
     if (edgeInsets == null) return null;

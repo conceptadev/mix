@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 
 import '../attributes/attribute.dart';
 import '../decorators/decorator.dart';
+import '../helpers/attributes_map.dart';
 import '../helpers/compare_mixin/compare_mixin.dart';
-import '../helpers/mergeable_map.dart';
 import '../theme/mix_theme.dart';
 import '../variants/variant_attribute.dart';
 import 'style_mix.dart';
@@ -15,8 +15,8 @@ import 'style_mix_data.dart';
 /// decorators and token resolvers.
 class MixData with CompareMixin {
   // Instance variables for widget attributes, widget decorators and token resolver.
-  final MergeableMap<StyledWidgetAttributes> _widgetAttributes;
-  final MergeableMap<WidgetDecorator> _widgetDecorators;
+  final AttributesMap<StyledWidgetAttributes> _widgetAttributes;
+  final AttributesMap<WidgetDecorator> _widgetDecorators;
   final MixTokenResolver _tokenResolver;
 
   /// A Private constructor for the [MixData] class that initializes its main variables.
@@ -24,8 +24,8 @@ class MixData with CompareMixin {
   /// It takes in [widgetAttributes], [widgetDecorators] and [tokenResolver] as required parameters.
   MixData._({
     required MixTokenResolver tokenResolver,
-    required MergeableMap<StyledWidgetAttributes> widgetAttributes,
-    required MergeableMap<WidgetDecorator> widgetDecorators,
+    required AttributesMap<StyledWidgetAttributes> widgetAttributes,
+    required AttributesMap<WidgetDecorator> widgetDecorators,
   })  : _widgetAttributes = widgetAttributes,
         _widgetDecorators = widgetDecorators,
         _tokenResolver = tokenResolver;
