@@ -5,39 +5,43 @@ import 'package:flutter/foundation.dart';
 import '../helpers/equality_mixin/equality_mixin.dart';
 
 /// Base attribute.
-// Some classes have defaults
-// Facade allows us ot set all properties as optional
-// For improved merge and override of properties
-abstract class StyleAttribute with EqualityMixin {
-  const StyleAttribute();
+// Some classes have defaults.
+// Facade allows us ot set all properties as optional.
+// For improved merge and override of properties.
+abstract class StyleAttribute with CompareMixin, MergeMixin {
+  final Key? _key;
+  const StyleAttribute({Key? key}) : _key = key;
+  Key get mergeKey => _key == null ? ValueKey(runtimeType) : ValueKey(_key);
 }
 
-mixin Mergeable<T> {
+mixin MergeMixin<T> {
   T merge(covariant T? other);
 
-  static List<T>? mergeLists<T extends Mergeable>(
+  static List<T>? mergeLists<T extends MergeMixin>(
     List<T>? list,
     List<T>? other,
   ) {
     if (other == null || other.isEmpty) return list;
     if (list == null || list.isEmpty) return other;
 
-    if (listEquals(list, other)) return list;
-
-    final maxLength = max(list.length, other.length);
+    final listLength = list.length;
+    final otherLength = other.length;
+    final maxLength = max(listLength, otherLength);
 
     return List<T>.generate(maxLength, (int index) {
-      final otherValue = index < other.length ? other[index] : null;
-      final thisValue = index < list.length ? list[index] : null;
+      if (index < listLength && index < otherLength) {
+        return list[index].merge(other[index]);
+      } else if (index < listLength) {
+        return list[index];
+      }
 
-      return thisValue?.merge(otherValue) ?? otherValue!;
+      return other[index];
     });
   }
 }
 
 /// An interface that add support to custom attributes for [MixContext].
-abstract class StyledWidgetAttributes extends StyleAttribute
-    with Mergeable<StyledWidgetAttributes> {
+abstract class StyledWidgetAttributes extends StyleAttribute {
   const StyledWidgetAttributes();
 
   StyledWidgetAttributes copyWith();

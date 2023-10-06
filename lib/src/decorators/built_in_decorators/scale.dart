@@ -26,13 +26,13 @@ class ScaleDecorator extends WidgetDecorator<ScaleDecorator> {
             curve: common.animationCurve,
             builder: (context, value, childWidget) {
               return Transform.scale(
-                key: key,
+                key: mergeKey,
                 scale: value,
                 child: childWidget,
               );
             },
             child: child,
           )
-        : Transform.scale(key: key, scale: scale, child: child);
+        : Transform.scale(key: mergeKey, scale: scale, child: child);
   }
 }

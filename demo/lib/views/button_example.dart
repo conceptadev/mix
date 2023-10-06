@@ -11,7 +11,7 @@ enum SizeVariantEnum {
 enum LeadingPosition { left, center, right }
 
 @immutable
-class ButtonSizeVariant<T extends SizeVariantEnum> extends StyleVariant {
+class ButtonSizeVariant<T extends SizeVariantEnum> extends Variant {
   ButtonSizeVariant(T variant) : super(variant.name);
 }
 

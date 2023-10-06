@@ -1,8 +1,5 @@
 import 'package:flutter_test/flutter_test.dart'; // importing flutter_test package
-import 'package:mix/src/attributes/attribute.dart';
-import 'package:mix/src/factory/style_mix_data.dart';
-import 'package:mix/src/variants/utilities/context_variant_utilities.dart';
-import 'package:mix/src/variants/variant.dart';
+import 'package:mix/mix.dart';
 import 'package:mix/src/variants/variant_attribute.dart';
 
 import '../helpers/random_dto.dart';
@@ -11,7 +8,7 @@ void main() {
   group('MixValues', () {
     test('Creates empty values', () {
       const mixValues = StyleMixData.empty();
-      expect(mixValues.attributes, isNull);
+      expect(mixValues.attributes, isNotNull);
 
       expect(mixValues.variants, isEmpty);
       expect(mixValues.contextVariants, isEmpty);
@@ -29,20 +26,20 @@ void main() {
     ];
     final variantList = <VariantAttribute>[
       VariantAttribute(
-        const StyleVariant('testVariant'),
+        const Variant('testVariant'),
         RandomGenerator.mix(),
       ),
       VariantAttribute(
-        const StyleVariant('anotherTestVariant'),
+        const Variant('anotherTestVariant'),
         RandomGenerator.mix(),
       ),
     ];
     final contextVariantList = <ContextVariantAttribute>[
-      ContextVariantUtilities.onDark()(
+      onDark(
         RandomGenerator.textAttributes(),
         RandomGenerator.boxAttributes(),
       ),
-      ContextVariantUtilities.onLarge()(
+      onLarge(
         RandomGenerator.textAttributes(),
         RandomGenerator.boxAttributes(),
       ),
@@ -58,7 +55,7 @@ void main() {
       expect(mixValues.hasVariants, isTrue);
       expect(mixValues.hasContextVariants, isTrue);
 
-      expect(mixValues.attributes?.length, equals(2));
+      expect(mixValues.attributes.length, equals(2));
       expect(mixValues.variants.length, equals(2));
       expect(mixValues.contextVariants.length, equals(2));
     });
@@ -75,7 +72,7 @@ void main() {
       expect(mixValues.hasVariants, isTrue);
       expect(mixValues.hasContextVariants, isTrue);
 
-      expect(mixValues.attributes?.length, equals(2));
+      expect(mixValues.attributes.length, equals(2));
       expect(mixValues.variants.length, equals(2));
       expect(mixValues.contextVariants.length, equals(2));
     });
@@ -95,14 +92,14 @@ void main() {
 
       final mergedMixValues = mixValues.merge(otherMixValues);
 
-      expect(mergedMixValues.length, equals(10));
+      expect(mergedMixValues.length, equals(6));
       expect(mergedMixValues.hasAttributes, isTrue);
       expect(mergedMixValues.hasVariants, isTrue);
       expect(mergedMixValues.hasContextVariants, isTrue);
 
-      expect(mergedMixValues.attributes?.length, equals(2));
-      expect(mergedMixValues.variants.length, equals(4));
-      expect(mergedMixValues.contextVariants.length, equals(4));
+      expect(mergedMixValues.attributes.length, equals(2));
+      expect(mergedMixValues.variants.length, equals(2));
+      expect(mergedMixValues.contextVariants.length, equals(2));
     });
   });
 }

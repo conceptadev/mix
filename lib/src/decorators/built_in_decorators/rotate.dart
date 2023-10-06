@@ -21,7 +21,7 @@ class RotateDecorator extends WidgetDecorator<RotateDecorator> {
 
     if (common.animated) {
       return AnimatedRotation(
-        key: key,
+        key: mergeKey,
         turns: quarterTurns / 4,
         curve: common.animationCurve,
         duration: common.animationDuration,
@@ -29,6 +29,6 @@ class RotateDecorator extends WidgetDecorator<RotateDecorator> {
       );
     }
 
-    return RotatedBox(key: key, quarterTurns: quarterTurns, child: child);
+    return RotatedBox(key: mergeKey, quarterTurns: quarterTurns, child: child);
   }
 }

@@ -81,11 +81,11 @@ class RandomGenerator {
       boxShadowDto(),
     ];
 
-    final maxHeight = Random().nextMaxDouble(500);
+    const maxHeight = 500.0;
 
     final minHeight = Random().nextMaxDouble(maxHeight);
 
-    final maxWidth = Random().nextMaxDouble(500);
+    const maxWidth = 500.0;
 
     final minWidth = Random().nextMaxDouble(maxWidth);
 
@@ -128,6 +128,14 @@ class RandomGenerator {
     }
 
     return boxAttributes;
+  }
+
+  static List<StyledContainerAttributes> boxAttributesList({
+    int length = 10,
+    bool someNullable = true,
+  }) {
+    return List.generate(
+        length, (_) => boxAttributes(someNullable: someNullable));
   }
 
   static EdgeInsetsDto edgeInsetsDto() {

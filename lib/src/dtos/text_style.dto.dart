@@ -142,7 +142,7 @@ class TextStyleDto extends Dto<TextStyle> {
       inherit: inherit ?? this.inherit,
       letterSpacing: letterSpacing ?? this.letterSpacing,
       locale: locale ?? this.locale,
-      shadows: Mergeable.mergeLists(this.shadows, shadows),
+      shadows: MergeMixin.mergeLists(this.shadows, shadows),
       styleToken: styleToken ?? this.styleToken,
       textBaseline: textBaseline ?? this.textBaseline,
       wordSpacing: wordSpacing ?? this.wordSpacing,

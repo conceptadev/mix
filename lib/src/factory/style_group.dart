@@ -5,7 +5,7 @@ abstract class StyleGroup<T extends StyleGroup<T>> {
 
   StyleGroup<T> merge(covariant StyleGroup<T>? other);
 
-  StyleGroup<T> selectVariants(List<StyleVariant> variants);
+  StyleGroup<T> selectVariants(List<Variant> variants);
 
   StyleGroup<T> copyWith();
 }

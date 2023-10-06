@@ -28,6 +28,7 @@ class BorderDto extends BoxBorderDto<Border> {
         );
 
   const BorderDto.fromBorderSide(BorderSideDto side)
+      // ignore: no-equal-arguments
       : this.only(top: side, right: side, bottom: side, left: side);
 
   factory BorderDto.all({

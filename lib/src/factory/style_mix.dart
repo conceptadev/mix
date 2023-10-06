@@ -1,7 +1,10 @@
 // ignore_for_file: non_constant_identifier_names, constant_identifier_names, long-parameter-list
 
-import '/mix.dart';
+import '../attributes/exports.dart';
+import '../helpers/mergeable_map.dart';
+import '../variants/variant.dart';
 import '../variants/variant_attribute.dart';
+import 'style_mix_data.dart';
 
 @Deprecated(
   'Use StyleMix instead. '
@@ -78,8 +81,9 @@ class StyleMix {
   /// and returning the final combined MixFactory.
   factory StyleMix.combine(List<StyleMix> mixes) {
     StyleMixData combinedValues = const StyleMixData.empty();
+
     for (final mix in mixes) {
-      combinedValues = combinedValues.merge(mix.values);
+      combinedValues = combinedValues.merge(mix._values);
     }
 
     return StyleMix.fromValues(combinedValues);
@@ -114,19 +118,19 @@ class StyleMix {
   StyleMix mergeNullable(StyleMix? style) =>
       style == null ? this : merge(style);
 
-  /// Selects a single [StyleVariant] and returns a new mix with the selected variant.
-  StyleMix selectVariant(StyleVariant variant) {
+  /// Selects a single [Variant] and returns a new mix with the selected variant.
+  StyleMix selectVariant(Variant variant) {
     return selectVariants([variant]);
   }
 
-  /// Selects multiple [StyleVariant] instances and returns a new mix with the selected variants.
+  /// Selects multiple [Variant] instances and returns a new mix with the selected variants.
   ///
   /// If the [variants] list is empty, returns this mix without any changes.
-  StyleMix selectVariants(List<StyleVariant> variants) {
+  StyleMix selectVariants(List<Variant> variants) {
     if (variants.isEmpty) {
       return this;
     }
-    final existingVariants = [..._values.variants];
+    final existingVariants = _values.variants.toList();
     final matchedVariants = <VariantAttribute>[];
 
     for (final v in variants) {
@@ -148,8 +152,8 @@ class StyleMix {
     final existingMix = StyleMix._(
       StyleMixData(
         attributes: _values.attributes,
+        variants: MergeableMap.fromIterable(existingVariants),
         decorators: _values.decorators,
-        variants: existingVariants,
         contextVariants: _values.contextVariants,
       ),
     );
@@ -158,10 +162,10 @@ class StyleMix {
     return existingMix.merge(mixToApply);
   }
 
-  StyleMix pickVariants(List<StyleVariant> variants) {
+  StyleMix pickVariants(List<Variant> variants) {
     final matchedVariants = <VariantAttribute>[];
 
-    final currentVariants = _values.variants;
+    final currentVariants = _values.variants.toList();
 
     for (final variantAttr in currentVariants) {
       if (variants.contains(variantAttr.variant)) {
@@ -174,11 +178,11 @@ class StyleMix {
   }
 
   /// Selects variants based on a condition and returns a new mix with the selected variants.
-  StyleMix selectVariantCondition(Map<bool, StyleVariant> cases) {
+  StyleMix selectVariantCondition(Map<bool, Variant> cases) {
     final keys = cases.keys.toList();
     final values = cases.values.toList();
 
-    List<StyleVariant> variants = [];
+    List<Variant> variants = [];
 
     for (int i = 0; i < keys.length; i++) {
       if (keys[i]) {
@@ -198,64 +202,4 @@ class StyleMix {
 
   @override
   int get hashCode => _values.hashCode;
-}
-
-extension DeprecatedMixExtension<T extends StyleAttribute> on StyleMix {
-  /// Adds an Attribute to a Mix.
-  @Deprecated('Simplifying the mix API to avoid confusion. Use apply instead')
-  SpreadPositionalParams<T, StyleMix> get mix {
-    return SpreadPositionalParams(addAttributes);
-  }
-
-  @Deprecated('Use selectVariants now')
-  StyleMix withVariants(List<StyleVariant> variants) {
-    return withManyVariants(variants);
-  }
-
-  @Deprecated(
-    'Use merge() or mergeMany() now. You might have to turn into a Mix first. firstMixFactory.merge(secondMix)',
-  )
-  StyleMix addAttributes(List<StyleAttribute> attributes) {
-    final newValues = StyleMixData.create(attributes);
-
-    return StyleMix._(_values.merge(newValues));
-  }
-
-  @Deprecated('Use selectVariants now')
-  StyleMix withManyVariants(List<StyleVariant> variants) {
-    return selectVariants(variants);
-  }
-
-  @Deprecated('Use merge() or mergeMany() instead')
-  SpreadPositionalParams<StyleMix, StyleMix> get apply =>
-      SpreadPositionalParams(mergeMany);
-
-  @Deprecated('Use selectVariant now')
-  StyleMix withVariant(StyleVariant variant) {
-    return selectVariant(variant);
-  }
-
-  @Deprecated('Use combine now')
-  StyleMix combineAll(List<StyleMix> mixes) {
-    return StyleMix.combine(mixes);
-  }
-
-  @Deprecated('Use selectVariant now')
-  StyleMix withMaybeVariant(StyleVariant? variant) {
-    if (variant == null) return this;
-
-    return withVariant(variant);
-  }
-
-  @Deprecated('Use mergeNullable instead')
-  StyleMix maybeApply(StyleMix? mix) {
-    if (mix == null) return this;
-
-    return apply(mix);
-  }
-
-  @Deprecated('Use applyNullable instead')
-  StyleMix applyMaybe(StyleMix? mix) {
-    return maybeApply(mix);
-  }
 }

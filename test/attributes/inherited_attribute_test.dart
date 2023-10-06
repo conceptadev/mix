@@ -4,7 +4,7 @@ import 'package:mix/mix.dart' hide border, onEnabled, icon, iconColor;
 
 import '../helpers/testing_utils.dart';
 
-const activated = StyleVariant("activated");
+const activated = Variant("activated");
 
 const customIcon = InheritedIconAttribute.icon;
 const withSize = InheritedIconAttribute.withSize;
@@ -151,7 +151,7 @@ class CustomWidget extends StatelessWidget {
 
   final IconData? icon;
   final String? semanticLabel;
-  final List<StyleVariant> variants;
+  final List<Variant> variants;
 
   @override
   Widget build(BuildContext context) {
@@ -193,7 +193,7 @@ class TextFieldWidget extends StatelessWidget {
 
   final IconData? icon;
   final String? semanticLabel;
-  final List<StyleVariant> variants;
+  final List<Variant> variants;
 
   @override
   Widget build(BuildContext context) {

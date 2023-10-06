@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../mix.dart';
 import '../../helpers/equality_mixin/equality_mixin.dart';
 
-class StyledContainerDescriptor with EqualityMixin {
+class StyledContainerDescriptor with CompareMixin {
   final AlignmentGeometry? alignment;
   final EdgeInsetsGeometry? padding;
   final EdgeInsetsGeometry? margin;

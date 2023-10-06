@@ -3,27 +3,21 @@ import '../factory/style_mix.dart';
 import 'variant_attribute.dart';
 import 'variant_operation.dart';
 
-@Deprecated(
-  'Use StyleVariant instead. '
-  'This class will be removed in a future release.',
-)
-typedef Variant = StyleVariant;
-
 /// A class representing a variant, which is a combination of attributes.
 /// It can be combined with other variants using logical AND (&) and OR (|) operations.
-class StyleVariant {
+class Variant {
   final String name;
 
-  /// Creates a new [StyleVariant] with a given [name] and an optional [inverse] flag.
-  const StyleVariant(this.name);
+  /// Creates a new [Variant] with a given [name] and an optional [inverse] flag.
+  const Variant(this.name);
 
   /// Combines this variant with another [variant] using a logical AND operation.
-  VariantOperation operator &(StyleVariant variant) {
+  VariantOperation operator &(Variant variant) {
     return VariantOperation([this, variant], operator: EnumVariantOperator.and);
   }
 
   /// Combines this variant with another [variant] using a logical OR operation.
-  VariantOperation operator |(StyleVariant variant) {
+  VariantOperation operator |(Variant variant) {
     return VariantOperation([this, variant], operator: EnumVariantOperator.or);
   }
 
@@ -59,7 +53,7 @@ class StyleVariant {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is StyleVariant && other.name == name;
+    return other is Variant && other.name == name;
   }
 
   @override

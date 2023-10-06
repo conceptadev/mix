@@ -13,6 +13,7 @@ import 'package:mix/src/widgets/container/container.attributes.dart';
 import 'package:mix/src/widgets/container/container.utilities.dart';
 import 'package:mix/src/widgets/container/container.widget.dart';
 
+import '../helpers/random_dto.dart';
 import '../helpers/testing_utils.dart';
 
 void main() {
@@ -145,7 +146,7 @@ void main() {
         style: BorderStyle.solid,
       );
 
-      final border = const Border.fromBorderSide(BorderSide(
+      const border = Border.fromBorderSide(BorderSide(
         color: Colors.green,
       ));
       const borderRadiusProps = BorderRadiusDto.only(
@@ -172,7 +173,7 @@ void main() {
 
       final widgetDecoration = decoratedBoxWidget.decoration as BoxDecoration;
 
-      final decoration = BoxDecoration(
+      const decoration = BoxDecoration(
         color: Colors.purple,
         border: border,
         borderRadius: borderRadius,
@@ -257,5 +258,46 @@ void main() {
       expect(constraints.maxWidth, 155.0);
       expect(constraints.minWidth, 45.0);
     });
+  });
+
+  const int N = 1000; // Number of iterations for the benchmark
+
+  testWidgets('Benchmark StyledContainer build method', (
+    WidgetTester tester,
+  ) async {
+    final multipleMixes = List.generate(
+      N,
+      (index) => RandomGenerator.mix(),
+    );
+
+    final stopwatch = Stopwatch()..start();
+
+    final combinedMixes = StyleMix.combine(multipleMixes);
+
+    print('Combining $N mixes: ${stopwatch.elapsedMilliseconds} ms');
+
+    stopwatch.reset();
+
+    for (int i = 0; i < N; i++) {
+      await tester.pumpWidget(StyledContainer(
+        style: combinedMixes,
+      ));
+    }
+
+    stopwatch.stop();
+    final averageBuildTimeStyled = stopwatch.elapsedMilliseconds / N;
+    print('Average build time for StyledContainer: $averageBuildTimeStyled ms');
+  });
+
+  testWidgets('Benchmark Container build method', (WidgetTester tester) async {
+    final stopwatch = Stopwatch()..start();
+
+    for (int i = 0; i < N; i++) {
+      await tester.pumpWidget(Container());
+    }
+
+    stopwatch.stop();
+    final averageBuildTimeContainer = stopwatch.elapsedMilliseconds / N;
+    print('Average build time for Container: $averageBuildTimeContainer ms');
   });
 }

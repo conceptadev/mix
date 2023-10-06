@@ -10,14 +10,10 @@ import '../variants/variant_attribute.dart';
 import 'style_mix.dart';
 import 'style_mix_data.dart';
 
-/// This refers to the deprecated class MixData and it's here for the purpose of maintaining compatibility.
-@Deprecated('Use MixData instead.')
-typedef MixContext = MixData;
-
 /// This class is used for encapsulating all [MixData] related operations.
 /// It contains a mixture of properties and methods useful for handling different attributes,
 /// decorators and token resolvers.
-class MixData with EqualityMixin {
+class MixData with CompareMixin {
   // Instance variables for widget attributes, widget decorators and token resolver.
   final MergeableMap<StyledWidgetAttributes> _widgetAttributes;
   final MergeableMap<WidgetDecorator> _widgetDecorators;
@@ -44,13 +40,13 @@ class MixData with EqualityMixin {
     // attributes already expended to be expended again.
     final currentValues = StyleMixData(
       attributes: style.values.attributes,
+      variants: style.values.variants,
       decorators: style.values.decorators,
-      variants: [],
-      contextVariants: [],
+      contextVariants: style.values.contextVariants,
     );
 
     final attributes = _applyContextVariants(
-      style.values.contextVariants,
+      style.values.contextVariants.toList(),
       context,
     );
 
@@ -58,8 +54,8 @@ class MixData with EqualityMixin {
 
     return MixData._(
       tokenResolver: MixTokenResolver(context),
-      widgetAttributes: combinedValues.attributes ?? const MergeableMap.empty(),
-      widgetDecorators: combinedValues.decorators ?? const MergeableMap.empty(),
+      widgetAttributes: combinedValues.attributes,
+      widgetDecorators: combinedValues.decorators,
     );
   }
 
@@ -106,7 +102,7 @@ class MixData with EqualityMixin {
   ///
   /// Returns a list of all [WidgetDecorator].
   List<WidgetDecorator> get decorators {
-    return _widgetDecorators.values.toList();
+    return _widgetDecorators.toList();
   }
 
   /// Retrieves an instance of the specified [StyledWidgetAttributes] type from the [MixData].
@@ -114,7 +110,7 @@ class MixData with EqualityMixin {
   /// Accepts a type parameter [A] which extends [StyledWidgetAttributes].
   /// Returns the instance of type [A] if found, else returns null.
   A? attributesOfType<A extends StyledWidgetAttributes>() {
-    return _widgetAttributes.get(A) as A?;
+    return _widgetAttributes.ofType<A>() as A?;
   }
 
   /// Retrieves an instance of attributes based on the type provided.
@@ -148,7 +144,7 @@ class MixData with EqualityMixin {
     );
   }
 
-  /// Overrides the getter function of [props] from [EqualityMixin] to specify properties necessary for distinguishing instances.
+  /// Overrides the getter function of [props] from [CompareMixin] to specify properties necessary for distinguishing instances.
   ///
   /// Returns a list of properties [_widgetAttributes] & [_widgetDecorators].
   @override

@@ -33,7 +33,7 @@ bool _equals(List? list1, List? list2) {
 }
 
 bool _isEquatable(dynamic object) {
-  return object is EqualityMixin;
+  return object is CompareMixin;
 }
 
 /// Jenkins Hash Functions
@@ -82,7 +82,7 @@ String mapPropsToString(Type runtimeType, List<Object?> props) {
 /// A mixin that helps implement equality
 /// without needing to explicitly override [operator ==] and [hashCode].
 
-mixin EqualityMixin {
+mixin CompareMixin {
   List<Object?> get props;
 
   bool get stringify => true;
@@ -90,7 +90,7 @@ mixin EqualityMixin {
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        other is EqualityMixin &&
+        other is CompareMixin &&
             runtimeType == other.runtimeType &&
             _equals(props, other.props);
   }
@@ -104,7 +104,7 @@ mixin EqualityMixin {
     // Return if there are no diferences.
     if (this == other) return diff;
 
-    if (other is EqualityMixin) {
+    if (other is CompareMixin) {
       final otherProps = other.props;
       final length = props.length;
 

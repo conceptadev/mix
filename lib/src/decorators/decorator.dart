@@ -3,12 +3,8 @@ import 'package:flutter/material.dart';
 import '../attributes/exports.dart';
 import '../factory/exports.dart';
 
-abstract class Decorator<T extends Decorator<T>> extends StyleAttribute
-    with Mergeable<Decorator<T>> {
-  /// Key is required in order for proper sorting.
-  final Key? key;
-
-  const Decorator({this.key});
+abstract class Decorator<T extends Decorator<T>> extends StyleAttribute {
+  const Decorator({super.key});
 
   Widget render(Widget child, MixData mix) {
     return build(child, mix);
@@ -21,11 +17,10 @@ abstract class Decorator<T extends Decorator<T>> extends StyleAttribute
 }
 
 abstract class WidgetDecorator<T extends WidgetDecorator<T>>
-    extends StyleAttribute with Mergeable<WidgetDecorator<T>> {
+    extends StyleAttribute {
   /// Key is required in order for proper sorting.
-  final Key? key;
 
-  const WidgetDecorator({this.key});
+  const WidgetDecorator({super.key});
 
   Widget render(Widget child, MixData mix) {
     return build(child, mix);

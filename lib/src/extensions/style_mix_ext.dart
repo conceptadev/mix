@@ -16,7 +16,7 @@ extension StyleMixExt<T extends StyleAttribute> on StyleMix {
     bool inherit = false,
     Key? key,
     StyleMix? style,
-    List<StyleVariant>? variants,
+    List<Variant>? variants,
   }) {
     return StyledContainer(
       style: mergeNullable(style),
@@ -33,7 +33,7 @@ extension StyleMixExt<T extends StyleAttribute> on StyleMix {
     Key? key,
     @Deprecated('Use the style parameter instead') StyleMix? mix,
     StyleMix? style,
-    List<StyleVariant>? variants,
+    List<Variant>? variants,
   }) {
     return container(
       inherit: inherit,
@@ -50,7 +50,7 @@ extension StyleMixExt<T extends StyleAttribute> on StyleMix {
     Key? key,
     @Deprecated('Use the style parameter instead') StyleMix? mix,
     StyleMix? style,
-    List<StyleVariant>? variants,
+    List<Variant>? variants,
   }) {
     return HBox(
       style: mergeNullable(style ?? mix),
@@ -67,7 +67,7 @@ extension StyleMixExt<T extends StyleAttribute> on StyleMix {
     Key? key,
     @Deprecated('Use the style parameter instead') StyleMix? mix,
     StyleMix? style,
-    List<StyleVariant>? variants,
+    List<Variant>? variants,
   }) {
     return StyledRow(
       style: mergeNullable(style ?? mix),
@@ -85,7 +85,7 @@ extension StyleMixExt<T extends StyleAttribute> on StyleMix {
     @Deprecated('Use the style parameter instead') StyleMix? mix,
     String? semanticsLabel,
     StyleMix? style,
-    List<StyleVariant>? variants,
+    List<Variant>? variants,
   }) {
     return StyledText(
       text,
@@ -103,7 +103,7 @@ extension StyleMixExt<T extends StyleAttribute> on StyleMix {
     Key? key,
     @Deprecated('Use the style parameter instead') StyleMix? mix,
     StyleMix? style,
-    List<StyleVariant>? variants,
+    List<Variant>? variants,
   }) {
     return VBox(
       style: mergeNullable(style ?? mix),
@@ -120,7 +120,7 @@ extension StyleMixExt<T extends StyleAttribute> on StyleMix {
     Key? key,
     @Deprecated('Use the style parameter instead') StyleMix? mix,
     StyleMix? style,
-    List<StyleVariant>? variants,
+    List<Variant>? variants,
   }) {
     return StyledColumn(
       style: mergeNullable(style ?? mix),
@@ -137,7 +137,7 @@ extension StyleMixExt<T extends StyleAttribute> on StyleMix {
     Key? key,
     @Deprecated('Use the style parameter instead') StyleMix? mix,
     StyleMix? style,
-    List<StyleVariant>? variants,
+    List<Variant>? variants,
   }) {
     return StyledIcon(
       icon,

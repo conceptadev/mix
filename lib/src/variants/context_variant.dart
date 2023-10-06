@@ -1,39 +1,21 @@
 import 'package:flutter/material.dart';
 
-import '../../mix.dart';
+import '../attributes/attribute.dart';
+import '../factory/style_mix.dart';
+import 'variant.dart';
 import 'variant_attribute.dart';
 
-typedef ShouldApplyFunc = bool Function(BuildContext);
+typedef ShouldApplyFunc = bool Function(BuildContext context);
 
-@Deprecated(
-  'Use ContextStyleVariant instead. '
-  'This class will be removed in a future release.',
-)
-typedef ContextVariant = ContextStyleVariant;
-
-class ContextStyleVariant extends StyleVariant {
-  final bool _inverse;
-
+class ContextVariant extends Variant {
   final ShouldApplyFunc _shouldApply;
 
-  const ContextStyleVariant(
-    super.name, {
-    required ShouldApplyFunc shouldApply,
-    bool inverse = false,
-  })  : _inverse = inverse,
-        _shouldApply = shouldApply;
+  const ContextVariant(super.name, {required ShouldApplyFunc shouldApply})
+      : _shouldApply = shouldApply;
 
-  get props => [name, _inverse, _shouldApply];
+  get props => [name, _shouldApply];
   bool shouldApply(BuildContext context) {
-    return _inverse ? !_shouldApply(context) : _shouldApply(context);
-  }
-
-  ContextStyleVariant inverseInstance() {
-    return ContextStyleVariant(
-      name,
-      shouldApply: _shouldApply,
-      inverse: !_inverse,
-    );
+    return _shouldApply(context);
   }
 
   @override

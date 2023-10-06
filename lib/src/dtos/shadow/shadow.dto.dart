@@ -5,7 +5,7 @@ import '../../factory/exports.dart';
 import '../color.dto.dart';
 import '../dto.dart';
 
-class ShadowDto<T extends Shadow> extends Dto<T> with Mergeable {
+class ShadowDto<T extends Shadow> extends Dto<T> with MergeMixin {
   final ColorDto? color;
   final Offset? offset;
   final double? blurRadius;

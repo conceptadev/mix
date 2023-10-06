@@ -1,21 +1,25 @@
-import '../../mix.dart';
+import '../attributes/exports.dart';
 import '../decorators/decorator.dart';
 import '../helpers/equality_mixin/equality_mixin.dart';
 import '../helpers/mergeable_map.dart';
 import '../variants/variant_attribute.dart';
 
-class StyleMixData with EqualityMixin {
-  final MergeableMap<StyledWidgetAttributes>? attributes;
-  final MergeableMap<WidgetDecorator>? decorators;
-  final List<VariantAttribute> variants;
-  final List<ContextVariantAttribute> contextVariants;
+class StyleMixData with CompareMixin {
+  final MergeableMap<WidgetDecorator>? _decorators;
+  final MergeableMap<ContextVariantAttribute>? _contextVariants;
+
+  final MergeableMap<VariantAttribute>? _variants;
+  final MergeableMap<StyledWidgetAttributes>? _attributes;
 
   const StyleMixData({
-    required this.attributes,
-    required this.decorators,
-    required this.variants,
-    required this.contextVariants,
-  });
+    required MergeableMap<StyledWidgetAttributes>? attributes,
+    required MergeableMap<VariantAttribute>? variants,
+    required MergeableMap<WidgetDecorator>? decorators,
+    required MergeableMap<ContextVariantAttribute>? contextVariants,
+  })  : _attributes = attributes,
+        _variants = variants,
+        _decorators = decorators,
+        _contextVariants = contextVariants;
 
   /// Creates a new [StyleMixData] instance from the provided [Iterable] of [StyleAttribute]s.
   /// No longer expands nested attributes.
@@ -31,7 +35,6 @@ class StyleMixData with EqualityMixin {
       } else if (attribute is WidgetDecorator) {
         decoratorList.add(attribute);
       } else if (attribute is VariantAttribute) {
-        // Breakdown different types of variant attributes.
         if (attribute is ContextVariantAttribute) {
           contextVariantList.add(attribute);
         } else {
@@ -41,56 +44,87 @@ class StyleMixData with EqualityMixin {
     }
 
     return StyleMixData(
-      attributes: MergeableMap.fromList(attributeList),
-      decorators: MergeableMap.fromList(decoratorList),
-      variants: variantList,
-      contextVariants: contextVariantList,
+      attributes: MergeableMap.fromIterable(attributeList),
+      variants: MergeableMap.fromIterable(variantList),
+      decorators: MergeableMap.fromIterable(decoratorList),
+      contextVariants: MergeableMap.fromIterable(contextVariantList),
     );
   }
 
   /// An empty [StyleMixData] instance with no attributes, decorators, variants, or directives.
   const StyleMixData.empty()
-      : attributes = null,
-        decorators = null,
-        variants = const [],
-        contextVariants = const [];
+      : _attributes = null,
+        _decorators = null,
+        _variants = null,
+        _contextVariants = null;
+
+  MergeableMap<StyledWidgetAttributes> get attributes {
+    return _attributes ?? const MergeableMap.empty();
+  }
+
+  MergeableMap<VariantAttribute> get variants {
+    return _variants ?? const MergeableMap.empty();
+  }
+
+  MergeableMap<WidgetDecorator> get decorators {
+    return _decorators ?? const MergeableMap.empty();
+  }
+
+  MergeableMap<ContextVariantAttribute> get contextVariants {
+    return _contextVariants ?? const MergeableMap.empty();
+  }
 
   bool get hasVariants => variants.isNotEmpty;
 
   bool get hasContextVariants => contextVariants.isNotEmpty;
 
-  bool get hasAttributes => attributes?.isNotEmpty == true;
+  bool get hasAttributes => attributes.isNotEmpty;
 
   bool get isEmpty => !hasVariants && !hasContextVariants && !hasAttributes;
 
   bool get isNotEmpty => !isEmpty;
 
   int get length {
-    return variants.length + contextVariants.length + (attributes?.length ?? 0);
+    return variants.length + contextVariants.length + attributes.length;
   }
 
   /// Returns an instance of the specified [StyledWidgetAttributes] type from the [MixData].
   A? attributesOfType<A extends StyledWidgetAttributes>() {
-    return attributes?.get(A) as A?;
+    return attributes.ofType<A>() as A?;
   }
 
   /// Returns an [Iterable] of [StyleAttribute]s containing all attributes, variants, and directives.
+  /// TODO: Review if shoudl return decorartors
   Iterable<StyleAttribute> toAttributes() {
-    return [...?attributes?.values, ...variants, ...contextVariants];
+    return [
+      ...attributes.toList(),
+      ...variants.toList(),
+      ...contextVariants.toList(),
+    ];
   }
 
   /// Creates a new [StyleMixData] instance by replacing the specified attributes with new values.
   StyleMixData copyWith({
     MergeableMap<StyledWidgetAttributes>? attributes,
     MergeableMap<WidgetDecorator>? decorators,
-    List<VariantAttribute>? variants,
-    List<ContextVariantAttribute>? contextVariants,
+    MergeableMap<VariantAttribute>? variants,
+    MergeableMap<ContextVariantAttribute>? contextVariants,
   }) {
     return StyleMixData(
-      attributes: this.attributes?.merge(attributes) ?? attributes,
-      decorators: this.decorators?.merge(decorators) ?? decorators,
-      variants: [...this.variants, ...?variants],
-      contextVariants: [...this.contextVariants, ...?contextVariants],
+      attributes: this.attributes.merge(attributes),
+      variants: this.variants.merge(variants),
+      decorators: this.decorators.merge(decorators),
+      contextVariants: this.contextVariants.merge(contextVariants),
+    );
+  }
+
+  /// Creates a new [StyleMixData] instance with the same attributes, variants, and directives.
+  StyleMixData clone() {
+    return StyleMixData(
+      attributes: attributes.clone(),
+      variants: variants.clone(),
+      decorators: decorators.clone(),
+      contextVariants: contextVariants.clone(),
     );
   }
 
@@ -103,16 +137,6 @@ class StyleMixData with EqualityMixin {
       decorators: other.decorators,
       variants: other.variants,
       contextVariants: other.contextVariants,
-    );
-  }
-
-  /// Creates a new [StyleMixData] instance with the same attributes, variants, and directives.
-  StyleMixData clone() {
-    return StyleMixData(
-      attributes: attributes?.clone(),
-      decorators: decorators?.clone(),
-      variants: [...variants],
-      contextVariants: [...contextVariants],
     );
   }
 

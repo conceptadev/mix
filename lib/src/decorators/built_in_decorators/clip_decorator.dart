@@ -31,11 +31,15 @@ class ClipDecorator extends WidgetDecorator<ClipDecorator> {
   @override
   Widget build(Widget child, MixData mix) {
     if (clipType == ClipDecoratorType.triangle) {
-      return ClipPath(key: key, clipper: const TriangleClipper(), child: child);
+      return ClipPath(
+        key: mergeKey,
+        clipper: const TriangleClipper(),
+        child: child,
+      );
     }
 
     if (clipType == ClipDecoratorType.rect) {
-      return ClipRect(key: key, child: child);
+      return ClipRect(key: mergeKey, child: child);
     }
 
     if (clipType == ClipDecoratorType.rounded) {
@@ -46,14 +50,14 @@ class ClipDecorator extends WidgetDecorator<ClipDecorator> {
               duration: common.animationDuration,
               curve: common.animationCurve,
               borderRadius: borderRadius,
-              key: key,
+              key: mergeKey,
               child: child,
             )
-          : ClipRRect(key: key, borderRadius: borderRadius, child: child);
+          : ClipRRect(key: mergeKey, borderRadius: borderRadius, child: child);
     }
 
     if (clipType == ClipDecoratorType.oval) {
-      return ClipOval(key: key, child: child);
+      return ClipOval(key: mergeKey, child: child);
     }
 
     throw Exception('Unknown clip type: $clipType');

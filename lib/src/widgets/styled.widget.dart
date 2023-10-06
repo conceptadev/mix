@@ -21,7 +21,7 @@ abstract class StyledWidget extends StatelessWidget {
     /// Only WidgetAttributes are inherited. Decorators will not be inherited as
     /// decorators should have already been applied to the parent Widget.
     bool inherit = false,
-    List<StyleVariant>? variants,
+    List<Variant>? variants,
   })  : _mix = mix,
         _style = style,
         _variants = variants,
@@ -29,7 +29,7 @@ abstract class StyledWidget extends StatelessWidget {
 
   final StyleMix? _mix;
   final StyleMix? _style;
-  final List<StyleVariant>? _variants;
+  final List<Variant>? _variants;
   final bool _inherit;
 
   StyleMix get style {
@@ -42,7 +42,7 @@ abstract class StyledWidget extends StatelessWidget {
     return _style ?? _mix ?? StyleMix.constant;
   }
 
-  List<StyleVariant>? get variants => _variants;
+  List<Variant>? get variants => _variants;
 
   MixData getMix(BuildContext context) {
     final mix = MixData.create(
@@ -76,9 +76,7 @@ abstract class StyledWidget extends StatelessWidget {
 
     properties.add(DiagnosticsProperty<bool>('inherit', _inherit));
 
-    properties.add(
-      DiagnosticsProperty<List<StyleVariant>>('variants', variants),
-    );
+    properties.add(DiagnosticsProperty<List<Variant>>('variants', variants));
   }
 
   @override

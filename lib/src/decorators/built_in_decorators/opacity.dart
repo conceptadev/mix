@@ -21,12 +21,12 @@ class OpacityDecorator extends WidgetDecorator<OpacityDecorator> {
 
     return common.animated
         ? AnimatedOpacity(
-            key: key,
+            key: mergeKey,
             opacity: opacity,
             curve: common.animationCurve,
             duration: common.animationDuration,
             child: child,
           )
-        : Opacity(key: key, opacity: opacity, child: child);
+        : Opacity(key: mergeKey, opacity: opacity, child: child);
   }
 }

@@ -28,7 +28,7 @@ class MixTheme extends InheritedWidget {
 }
 
 @immutable
-class MixThemeData with EqualityMixin {
+class MixThemeData with CompareMixin {
   final MixSpaceTokens space;
 
   final MixBreakpointsTokens breakpoints;

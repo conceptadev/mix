@@ -10,12 +10,12 @@ import 'variant_attribute.dart';
 enum EnumVariantOperator { and, or }
 
 class VariantOperation {
-  final List<StyleVariant> variants;
+  final List<Variant> variants;
   final EnumVariantOperator operator;
 
   const VariantOperation(this.variants, {required this.operator});
 
-  VariantOperation operator &(StyleVariant variant) {
+  VariantOperation operator &(Variant variant) {
     if (operator != EnumVariantOperator.and) {
       throw ArgumentError('All the operators in the equation must be the same');
     }
@@ -25,7 +25,7 @@ class VariantOperation {
     return this;
   }
 
-  VariantOperation operator |(StyleVariant variant) {
+  VariantOperation operator |(Variant variant) {
     if (operator != EnumVariantOperator.or) {
       throw ArgumentError('All the operators in the equation must be the same');
     }
@@ -67,12 +67,12 @@ class VariantOperation {
 
   List<VariantAttribute> _buildOrOperations(
     List<StyleAttribute> attributes, {
-    Iterable<StyleVariant>? variants,
+    Iterable<Variant>? variants,
   }) {
     variants ??= this.variants;
     final style = StyleMix.fromAttributes(attributes);
     final attributeVariants = variants.map((variant) {
-      return variant is ContextStyleVariant
+      return variant is ContextVariant
           ? ContextVariantAttribute(variant, style)
           : VariantAttribute(variant, style);
     });
@@ -89,7 +89,7 @@ class VariantOperation {
         _buildOrOperations(attributes, variants: otherVariants),
       );
 
-      return variant is ContextStyleVariant
+      return variant is ContextVariant
           ? ContextVariantAttribute(variant, mixToApply)
           : VariantAttribute(variant, mixToApply);
     });

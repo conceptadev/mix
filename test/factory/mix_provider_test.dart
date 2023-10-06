@@ -5,7 +5,7 @@ import 'package:mix/src/factory/mix_provider.dart';
 
 import '../helpers/random_dto.dart';
 
-const textVariant = StyleVariant('textVariant');
+const textVariant = Variant('textVariant');
 
 final overrideTextAttribute = StyledTextAttributes.fromValues(
   style: const TextStyle(

@@ -26,13 +26,13 @@ class AspectRatioDecorator extends WidgetDecorator<AspectRatioDecorator> {
             curve: common.animationCurve,
             builder: (context, value, builderWidget) {
               return AspectRatio(
-                key: key,
+                key: mergeKey,
                 aspectRatio: value,
                 child: builderWidget,
               );
             },
             child: child,
           )
-        : AspectRatio(key: key, aspectRatio: aspectRatio, child: child);
+        : AspectRatio(key: mergeKey, aspectRatio: aspectRatio, child: child);
   }
 }

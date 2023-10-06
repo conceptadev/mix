@@ -7,146 +7,122 @@ import '../../widgets/pressable/pressable.notifier.dart';
 import '../../widgets/pressable/pressable_state.dart';
 import '../context_variant.dart';
 
-class ContextVariantUtilities {
-  const ContextVariantUtilities._();
+final onDisabled = ContextVariant(
+  'onDisabled',
+  shouldApply: (BuildContext context) {
+    final pressable = PressableNotifier.of(context);
 
-  static ContextStyleVariant onSmall() {
-    return ContextStyleVariant(
-      'onSmall',
-      shouldApply: _screenSizeCheck(ScreenSizeToken.small),
-    );
-  }
+    return pressable?.state == PressableState.disabled;
+  },
+);
 
-  static ContextStyleVariant onXsmall() {
-    return ContextStyleVariant(
-      'onXsmall',
-      shouldApply: _screenSizeCheck(ScreenSizeToken.xsmall),
-    );
-  }
+final onEnabled = onNot(onDisabled);
 
-  static ContextStyleVariant onMedium() {
-    return ContextStyleVariant(
-      'onMedium',
-      shouldApply: _screenSizeCheck(ScreenSizeToken.medium),
-    );
-  }
+final onSmall = _buildScreenSizeVariant('onSmall', ScreenSizeToken.small);
 
-  static ContextStyleVariant onLarge() {
-    return ContextStyleVariant(
-      'onLarge',
-      shouldApply: _screenSizeCheck(ScreenSizeToken.large),
-    );
-  }
+final onXSmall = _buildScreenSizeVariant('onXSmall', ScreenSizeToken.xsmall);
 
-  static ContextStyleVariant onPortrait() {
-    return ContextStyleVariant(
-      'onPortrait',
-      shouldApply: (BuildContext context) {
-        return context.orientation == Orientation.portrait;
-      },
-    );
-  }
+final onMedium = _buildScreenSizeVariant('onMedium', ScreenSizeToken.medium);
 
-  static ContextStyleVariant onLandscape() {
-    return ContextStyleVariant(
-      'onLandscape',
-      shouldApply: (BuildContext context) {
-        return context.orientation == Orientation.landscape;
-      },
-    );
-  }
+final onLarge = _buildScreenSizeVariant('onLarge', ScreenSizeToken.large);
 
-  static ContextStyleVariant onDark() {
-    return ContextStyleVariant(
-      'onDark',
-      shouldApply: (BuildContext context) {
-        return context.isDarkMode;
-      },
-    );
-  }
+final onPortrait = ContextVariant(
+  'onPortrait',
+  shouldApply: (BuildContext context) {
+    return context.orientation == Orientation.portrait;
+  },
+);
 
-  static ContextStyleVariant onLight() {
-    return ContextStyleVariant(
-      'onLight',
-      shouldApply: (BuildContext context) {
-        return Theme.of(context).brightness == Brightness.light;
-      },
-    );
-  }
+final onLandscape = ContextVariant(
+  'onLandscape',
+  shouldApply: (BuildContext context) {
+    return context.orientation == Orientation.landscape;
+  },
+);
 
-  static ContextStyleVariant onDisabled() {
-    return ContextStyleVariant(
-      'onDisabled',
-      shouldApply: (BuildContext context) {
-        final pressable = PressableNotifier.of(context);
+final onDark = ContextVariant(
+  'onDark',
+  shouldApply: (BuildContext context) {
+    return context.isDarkMode;
+  },
+);
 
-        return pressable?.state == PressableState.disabled;
-      },
-    );
-  }
+final onLight = ContextVariant(
+  'onLight',
+  shouldApply: (BuildContext context) {
+    return Theme.of(context).brightness == Brightness.light;
+  },
+);
 
-  static ContextStyleVariant onFocus() {
-    return ContextStyleVariant(
-      'onFocus',
-      shouldApply: (BuildContext context) {
-        final pressable = PressableNotifier.of(context);
+final onFocus = ContextVariant(
+  'onFocus',
+  shouldApply: (BuildContext context) {
+    final pressable = PressableNotifier.of(context);
 
-        return pressable?.focus == true;
-      },
-    );
-  }
+    return pressable?.focus == true;
+  },
+);
 
-  static ContextStyleVariant onPress() {
-    return ContextStyleVariant(
-      'onPress',
-      shouldApply: (BuildContext context) {
-        final pressable = PressableNotifier.of(context);
+final onPress = ContextVariant(
+  'onPress',
+  shouldApply: (BuildContext context) {
+    final pressable = PressableNotifier.of(context);
 
-        return pressable?.state == PressableState.pressed;
-      },
-    );
-  }
+    return pressable?.state == PressableState.pressed;
+  },
+);
 
-  static ContextStyleVariant onLongPress() {
-    return ContextStyleVariant(
-      'onLongPress',
-      shouldApply: (BuildContext context) {
-        final pressable = PressableNotifier.of(context);
+final onLongPress = ContextVariant(
+  'onLongPress',
+  shouldApply: (BuildContext context) {
+    final pressable = PressableNotifier.of(context);
 
-        return pressable?.state == PressableState.longPressed;
-      },
-    );
-  }
+    return pressable?.state == PressableState.longPressed;
+  },
+);
 
-  static ContextStyleVariant onHover() {
-    return ContextStyleVariant(
-      'onHover',
-      shouldApply: (BuildContext context) {
-        final pressable = PressableNotifier.of(context);
+final onHover = ContextVariant(
+  'onHover',
+  shouldApply: (BuildContext context) {
+    final pressable = PressableNotifier.of(context);
 
-        return pressable?.state == PressableState.hover;
-      },
-    );
-  }
+    return pressable?.state == PressableState.hover;
+  },
+);
 
-  static T onNot<T extends ContextStyleVariant>(T other) {
-    return other.inverseInstance() as T;
-  }
+final onRTL = ContextVariant(
+  'onRTL',
+  shouldApply: (BuildContext context) {
+    return context.directionality == TextDirection.rtl;
+  },
+);
 
-  static ContextStyleVariant onRTL() {
-    return ContextStyleVariant(
-      'onRTL',
-      shouldApply: (BuildContext context) {
-        return context.directionality == TextDirection.rtl;
-      },
-    );
-  }
+final onLTR = ContextVariant(
+  'onLTR',
+  shouldApply: (context) {
+    return context.directionality == TextDirection.ltr;
+  },
+);
 
-  static _screenSizeCheck(ScreenSizeToken screenSize) {
-    return (BuildContext context) {
+ContextVariant onNot(ContextVariant variant) {
+  return ContextVariant(
+    'not(${variant.name})',
+    shouldApply: (BuildContext context) {
+      return !variant.shouldApply(context);
+    },
+  );
+}
+
+ContextVariant _buildScreenSizeVariant(
+  String name,
+  ScreenSizeToken screenSize,
+) {
+  return ContextVariant(
+    name,
+    shouldApply: (BuildContext context) {
       final breakpoints = MixTheme.of(context).breakpoints;
 
       return breakpoints.getScreenSize(context).index <= screenSize.index;
-    };
-  }
+    },
+  );
 }

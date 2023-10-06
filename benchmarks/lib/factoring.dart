@@ -82,7 +82,7 @@ void main() {
   watch.reset();
 
   {
-    final hasError = StyleVariant('hasError');
+    final hasError = Variant('hasError');
     final mix = StyleMix(
       hasError(
         padding(20),

@@ -21,7 +21,7 @@ class FlexibleDecorator extends WidgetDecorator<FlexibleDecorator> {
   @override
   Widget build(Widget child, MixData mix) {
     return Flexible(
-      key: key,
+      key: mergeKey,
       flex: flex ?? 1,
       fit: flexFit ?? FlexFit.loose,
       child: child,

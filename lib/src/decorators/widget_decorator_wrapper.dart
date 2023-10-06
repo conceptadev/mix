@@ -18,7 +18,7 @@ class WidgetDecoratorWrapper extends StatelessWidget {
       for (final decorator in mix.decorators) {
         current = _RenderDecoratorWidget(
           decorator,
-          key: decorator.key,
+          key: decorator.mergeKey,
           mix: mix,
           child: current,
         );

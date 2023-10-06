@@ -2,20 +2,20 @@ import 'package:flutter/foundation.dart';
 
 import '../attributes/attribute.dart';
 
-/// Represents a map that can merge values of type [Mergeable] based on their runtime type.
+/// Represents a map that can merge values of type [MergeMixin] based on their runtime type.
 /// Maintains the insertion order of keys.
 ///
-/// The type parameter [T] must extend [Mergeable], ensuring that the values can be merged.
+/// The type parameter [T] must extend [MergeMixin], ensuring that the values can be merged.
 ///
 /// This class is useful for scenarios where you need to merge objects based on their types
 /// while preserving the order in which they were inserted.
 @immutable
-class MergeableMap<T extends Mergeable> {
+class MergeableMap<T extends StyleAttribute> {
   // Internal list to hold the keys to maintain insertion order.
-  final List<Type> _keys;
+  final List<Key> _keys;
 
   // Internal map to associate keys to values.
-  final Map<Type, T> _map;
+  final Map<Key, T> _map;
 
   /// Private constructor used by factory methods.
   ///
@@ -32,11 +32,11 @@ class MergeableMap<T extends Mergeable> {
   /// Creates a [MergeableMap] instance from an iterable of type [T].
   ///
   /// Iterates through each item in the [iterable], merging items of the same type.
-  factory MergeableMap.fromList(List<T> iterable) {
-    final keys = <Type>[];
-    final map = <Type, T>{};
+  factory MergeableMap.fromIterable(List<T> iterable) {
+    final keys = <Key>[];
+    final map = <Key, T>{};
     for (final item in iterable) {
-      final key = item.runtimeType;
+      final key = item.mergeKey;
       if (map.containsKey(key)) {
         map[key] = map[key]!.merge(item);
       } else {
@@ -68,10 +68,18 @@ class MergeableMap<T extends Mergeable> {
   /// This is a quick way to verify if the map has stored values.
   bool get isNotEmpty => _keys.isNotEmpty;
 
+  /// Returns an List of the values in the map, maintaining the order of insertion.
+  ///
+  /// The order of return is determined by the order the key/value pairs were inserted in the map.
+  List<T> toList() => _keys.map((key) => _map[key]!).toList();
+
   /// Retrieves the value associated with the given [key].
   ///
   /// Returns `null` if the [key] is not found.
-  T? get(Type key) => _map[key];
+  T? operator [](Key key) => _map[key];
+
+  /// Get value from type.
+  T? ofType<A>() => _map[ValueKey(A)];
 
   /// Merges this [MergeableMap] with another [MergeableMap].
   ///
@@ -80,10 +88,10 @@ class MergeableMap<T extends Mergeable> {
   MergeableMap<T> merge(MergeableMap<T>? other) {
     if (other == null) return this;
 
-    final mergedKeys = List<Type>.of(_keys);
-    final mergedMap = Map<Type, T>.from(_map);
+    final mergedKeys = List<Key>.of(_keys);
+    final mergedMap = Map<Key, T>.from(_map);
 
-    for (var key in other._keys) {
+    for (Key key in other._keys) {
       if (mergedMap.containsKey(key)) {
         mergedMap[key] = mergedMap[key]!.merge(other._map[key]!);
       } else {
@@ -100,7 +108,7 @@ class MergeableMap<T extends Mergeable> {
   /// This method is typically used when a copy of the map is needed, so the original
   /// map can be preserved while the copy is manipulated.
   MergeableMap<T> clone() {
-    return MergeableMap._(List<Type>.of(_keys), Map<Type, T>.from(_map));
+    return MergeableMap._(List<Key>.of(_keys), Map<Key, T>.from(_map));
   }
 
   /// Finds the first value in the map that satisfies the given [test].
