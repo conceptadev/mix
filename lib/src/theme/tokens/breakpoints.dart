@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// ignore: enum-constants-ordering
 enum ScreenSizeToken { xsmall, small, medium, large }
 
 class MixBreakpointsTokens {

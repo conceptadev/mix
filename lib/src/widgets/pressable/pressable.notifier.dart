@@ -10,6 +10,7 @@ class PressableNotifier extends InheritedWidget {
     this.focus = false,
   }) : super(key: key, child: child);
 
+  // ignore: prefer-widget-private-members
   static PressableNotifier? of(BuildContext context) {
     return context.dependOnInheritedWidgetOfExactType<PressableNotifier>();
   }

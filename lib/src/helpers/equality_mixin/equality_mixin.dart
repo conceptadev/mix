@@ -14,9 +14,9 @@ bool _equals(List? list1, List? list2) {
   final length = list1.length;
   if (length != list2.length) return false;
 
-  for (var i = 0; i < length; i++) {
-    final dynamic unit1 = list1[i];
-    final dynamic unit2 = list2[i];
+  for (int i = 0; i < length; i++) {
+    final unit1 = list1[i];
+    final unit2 = list2[i];
 
     if (_isEquatable(unit1) && _isEquatable(unit2)) {
       if (unit1 != unit2) return false;
@@ -42,8 +42,8 @@ int _combine(int hash, dynamic object) {
   if (object is Map) {
     object.keys
         .sorted((dynamic a, dynamic b) => a.hashCode - b.hashCode)
-        .forEach((dynamic key) {
-      hash = hash ^ _combine(hash, <dynamic>[key, object[key]]);
+        .forEach((key) {
+      hash = hash ^ _combine(hash, [key, object[key]]);
     });
 
     return hash;
@@ -74,7 +74,7 @@ int _finish(int hash) {
 
 /// Returns a string for [props].
 String mapPropsToString(Type runtimeType, List<Object?> props) {
-  var nonNullProps = props.where((prop) => prop != null).toList();
+  final nonNullProps = props.where((prop) => prop != null).toList();
 
   return '$runtimeType(${nonNullProps.map((prop) => prop.toString()).join(', ')})';
 }
@@ -108,7 +108,7 @@ mixin CompareMixin {
       final otherProps = other.props;
       final length = props.length;
 
-      for (var i = 0; i < length; i++) {
+      for (int i = 0; i < length; i++) {
         final unit1 = props[i];
         final unit2 = otherProps[i];
 

@@ -1,3 +1,3 @@
 export 'context_variant.dart';
-export 'utilities/context_variant_utilities.dart';
+export 'utilities/exports.dart';
 export 'variant.dart';
