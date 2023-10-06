@@ -12,18 +12,6 @@ final height = const ContainerStyleUtilities().height;
 /// Width.
 final width = const ContainerStyleUtilities().width;
 
-/// Max height attribute.
-final maxHeight = const ContainerStyleUtilities().maxHeight;
-
-/// Max width attribute.
-final maxWidth = const ContainerStyleUtilities().maxWidth;
-
-/// Min height attribute.
-final minHeight = const ContainerStyleUtilities().minHeight;
-
-/// Min width attribute.
-final minWidth = const ContainerStyleUtilities().minWidth;
-
 /// Border.
 final border = const ContainerStyleUtilities().border;
 final borderTop = const ContainerStyleUtilities().borderTop;

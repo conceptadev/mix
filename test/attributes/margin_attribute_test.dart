@@ -8,7 +8,7 @@ void main() {
   group('MarginAttribute', () {
     test('edgeInsets creates MarginAttribute from EdgeInsets', () {
       const edgeInsets = EdgeInsets.fromLTRB(10, 20, 30, 40);
-      final margin = MarginAttribute.edgeInsets(edgeInsets);
+      final margin = MarginAttribute.from(edgeInsets);
 
       expect(margin.top, 20.0);
       expect(margin.bottom, 40.0);
@@ -21,7 +21,7 @@ void main() {
     test('edgeInsets creates MarginAttribute from EdgeInsetsDirectional', () {
       const edgeInsetsDirectional =
           EdgeInsetsDirectional.fromSTEB(10, 20, 30, 40);
-      final margin = MarginAttribute.edgeInsets(edgeInsetsDirectional);
+      final margin = MarginAttribute.from(edgeInsetsDirectional);
 
       expect(margin.top, 20.0);
       expect(margin.bottom, 40.0);
@@ -187,7 +187,7 @@ void main() {
     test('marginInsets', () {
       expect(
         marginInsets(const EdgeInsets.all(20)),
-        MarginAttribute.edgeInsets(
+        MarginAttribute.from(
           const EdgeInsets.all(20),
         ),
       );

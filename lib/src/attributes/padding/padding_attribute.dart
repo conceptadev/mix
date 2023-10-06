@@ -83,7 +83,7 @@ class PaddingAttribute extends ResolvableAttribute<EdgeInsetsGeometry> {
         _left = null,
         _right = null;
 
-  factory PaddingAttribute.edgeInsets(EdgeInsetsGeometry edgeInsets) {
+  factory PaddingAttribute.from(EdgeInsetsGeometry edgeInsets) {
     if (edgeInsets is EdgeInsets) {
       return PaddingAttribute.only(
         top: edgeInsets.top,
@@ -149,21 +149,21 @@ class PaddingAttribute extends ResolvableAttribute<EdgeInsetsGeometry> {
 
   @override
   EdgeInsetsGeometry resolve(MixData mix) {
-    final top = mix.resolveToken.space(_top ?? 0.0);
-    final bottom = mix.resolveToken.space(_bottom ?? 0.0);
+    final resolvedTop = mix.resolveToken.space(_top ?? 0.0);
+    final resolvedBottom = mix.resolveToken.space(_bottom ?? 0.0);
 
     return _isDirectional
         ? EdgeInsetsDirectional.only(
             start: mix.resolveToken.space(_start ?? 0.0),
-            top: top,
+            top: resolvedTop,
             end: mix.resolveToken.space(_end ?? 0.0),
-            bottom: bottom,
+            bottom: resolvedBottom,
           )
         : EdgeInsets.only(
             left: mix.resolveToken.space(_left ?? 0.0),
-            top: top,
+            top: resolvedTop,
             right: mix.resolveToken.space(_right ?? 0.0),
-            bottom: bottom,
+            bottom: resolvedBottom,
           );
   }
 

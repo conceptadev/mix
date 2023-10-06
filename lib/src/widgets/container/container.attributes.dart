@@ -5,7 +5,6 @@ import '../../attributes/margin/margin_attribute.dart';
 import '../../attributes/padding/padding_attribute.dart';
 import '../../dtos/border/box_border.dto.dart';
 import '../../dtos/color.dto.dart';
-import '../../dtos/edge_insets/edge_insets_geometry.dto.dart';
 import '../../dtos/radius/border_radius_geometry.dto.dart';
 import '../../dtos/shadow/box_shadow.dto.dart';
 import '../../extensions/helper_ext.dart';
@@ -14,8 +13,8 @@ import '../../extensions/helper_ext.dart';
 typedef BoxAttributes = StyledContainerAttributes;
 
 class StyledContainerAttributes extends StyledWidgetAttributes {
-  final MarginAttribute? margin;
-  final PaddingAttribute? padding;
+  // final MarginAttribute? margin;
+  // final PaddingAttribute? padding;
   final AlignmentGeometry? alignment;
   final double? height;
   final double? width;
@@ -27,10 +26,10 @@ class StyledContainerAttributes extends StyledWidgetAttributes {
   final Matrix4? transform;
 
   // Constraints.
-  final double? maxHeight;
-  final double? minHeight;
-  final double? maxWidth;
-  final double? minWidth;
+  // final double? maxHeight;
+  // final double? minHeight;
+  // final double? maxWidth;
+  // final double? minWidth;
   final BoxShape? shape;
   final Gradient? gradient;
 

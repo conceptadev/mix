@@ -83,7 +83,7 @@ class MarginAttribute extends ResolvableAttribute<EdgeInsetsGeometry> {
         _left = null,
         _right = null;
 
-  factory MarginAttribute.edgeInsets(EdgeInsetsGeometry edgeInsets) {
+  factory MarginAttribute.from(EdgeInsetsGeometry edgeInsets) {
     if (edgeInsets is EdgeInsets) {
       return MarginAttribute.only(
         top: edgeInsets.top,

@@ -5,10 +5,7 @@ import '../../dtos/border/border.dto.dart';
 import '../../dtos/border/border_side.dto.dart';
 import '../../dtos/border/box_border.dto.dart';
 import '../../dtos/color.dto.dart';
-import '../../dtos/radius/border_radius.dto.dart';
-import '../../dtos/radius/border_radius_directional.dto.dart';
 import '../../dtos/radius/border_radius_geometry.dto.dart';
-import '../../dtos/radius/radius_dto.dart';
 import '../../dtos/shadow/box_shadow.dto.dart';
 
 class ContainerStyleUtilities {
@@ -24,106 +21,6 @@ class ContainerStyleUtilities {
 
   StyledContainerAttributes width(double width) {
     return StyledContainerAttributes(width: width);
-  }
-
-  StyledContainerAttributes maxHeight(double maxHeight) {
-    return StyledContainerAttributes(maxHeight: maxHeight);
-  }
-
-  StyledContainerAttributes maxWidth(double maxWidth) {
-    return StyledContainerAttributes(maxWidth: maxWidth);
-  }
-
-  StyledContainerAttributes minHeight(double minHeight) {
-    return StyledContainerAttributes(minHeight: minHeight);
-  }
-
-  StyledContainerAttributes minWidth(double minWidth) {
-    return StyledContainerAttributes(minWidth: minWidth);
-  }
-
-  StyledContainerAttributes rounded(double value) {
-    return _borderRadius(BorderRadiusDto.all(RadiusDto.circular(value)));
-  }
-
-  StyledContainerAttributes squared() {
-    return _borderRadius(BorderRadiusDto.zero);
-  }
-
-  StyledContainerAttributes roundedOnly({
-    double? topLeft,
-    double? topRight,
-    double? bottomLeft,
-    double? bottomRight,
-  }) {
-    return _borderRadius(
-      BorderRadiusDto.only(
-        bottomLeft: bottomLeft != null ? RadiusDto.circular(bottomLeft) : null,
-        bottomRight:
-            bottomRight != null ? RadiusDto.circular(bottomRight) : null,
-        topLeft: topLeft != null ? RadiusDto.circular(topLeft) : null,
-        topRight: topRight != null ? RadiusDto.circular(topRight) : null,
-      ),
-    );
-  }
-
-  StyledContainerAttributes roundedDirectionalOnly({
-    double? topStart,
-    double? topEnd,
-    double? bottomStart,
-    double? bottomEnd,
-  }) {
-    return _borderRadius(
-      BorderRadiusDirectionalDto.only(
-        bottomEnd: bottomEnd != null ? RadiusDto.circular(bottomEnd) : null,
-        bottomStart:
-            bottomStart != null ? RadiusDto.circular(bottomStart) : null,
-        topEnd: topEnd != null ? RadiusDto.circular(topEnd) : null,
-        topStart: topStart != null ? RadiusDto.circular(topStart) : null,
-      ),
-    );
-  }
-
-  StyledContainerAttributes roundedHorizontal({double? left, double? right}) {
-    return _borderRadius(
-      BorderRadiusDto.horizontal(
-        left: left != null ? RadiusDto.circular(left) : null,
-        right: right != null ? RadiusDto.circular(right) : null,
-      ),
-    );
-  }
-
-  StyledContainerAttributes roundedVertical({double? top, double? bottom}) {
-    return _borderRadius(
-      BorderRadiusDto.vertical(
-        bottom: bottom != null ? RadiusDto.circular(bottom) : null,
-        top: top != null ? RadiusDto.circular(top) : null,
-      ),
-    );
-  }
-
-  StyledContainerAttributes roundedDirectionalHorizontal({
-    double? start,
-    double? end,
-  }) {
-    return _borderRadius(
-      BorderRadiusDirectionalDto.horizontal(
-        end: end != null ? RadiusDto.circular(end) : null,
-        start: start != null ? RadiusDto.circular(start) : null,
-      ),
-    );
-  }
-
-  StyledContainerAttributes roundedDirectionalVertical({
-    double? top,
-    double? bottom,
-  }) {
-    return _borderRadius(
-      BorderRadiusDirectionalDto.vertical(
-        bottom: bottom != null ? RadiusDto.circular(bottom) : null,
-        top: top != null ? RadiusDto.circular(top) : null,
-      ),
-    );
   }
 
   StyledContainerAttributes border({
@@ -292,10 +189,6 @@ class ContainerStyleUtilities {
 
   StyledContainerAttributes transform(Matrix4 transform) {
     return StyledContainerAttributes(transform: transform);
-  }
-
-  StyledContainerAttributes alignment(AlignmentGeometry align) {
-    return StyledContainerAttributes(alignment: align);
   }
 
   // ignore: long-parameter-list

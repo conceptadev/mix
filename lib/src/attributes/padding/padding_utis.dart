@@ -30,7 +30,7 @@ PaddingAttribute paddingVertical(double value) {
   return PaddingAttribute.symmetric(vertical: value);
 }
 
-const paddingInsets = PaddingAttribute.edgeInsets;
+const paddingInsets = PaddingAttribute.from;
 
 PaddingAttribute paddingStart(double value) {
   return PaddingAttribute.directionalOnly(start: value);

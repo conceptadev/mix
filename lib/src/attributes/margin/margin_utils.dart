@@ -30,7 +30,7 @@ MarginAttribute marginVertical(double value) {
   return MarginAttribute.symmetric(vertical: value);
 }
 
-const marginInsets = MarginAttribute.edgeInsets;
+const marginInsets = MarginAttribute.from;
 
 MarginAttribute marginStart(double value) {
   return MarginAttribute.directionalOnly(start: value);

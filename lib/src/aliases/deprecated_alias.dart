@@ -245,16 +245,16 @@ final h = const ContainerStyleUtilities().height;
 final w = const ContainerStyleUtilities().width;
 
 @Deprecated(kShortAliasDeprecation)
-final maxH = const ContainerStyleUtilities().maxHeight;
+const maxH = maxHeight;
 
 @Deprecated(kShortAliasDeprecation)
-final maxW = const ContainerStyleUtilities().maxWidth;
+const maxW = maxWidth;
 
 @Deprecated(kShortAliasDeprecation)
-final minH = const ContainerStyleUtilities().minHeight;
+const minH = minHeight;
 
 @Deprecated(kShortAliasDeprecation)
-final minW = const ContainerStyleUtilities().minWidth;
+const minW = minWidth;
 
 @Deprecated(kShortAliasDeprecation)
 final bt = const ContainerStyleUtilities().borderTop;

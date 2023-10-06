@@ -8,7 +8,7 @@ void main() {
   group('PaddingAttribute', () {
     test('edgeInsets creates PaddingAttribute from EdgeInsets', () {
       const edgeInsets = EdgeInsets.fromLTRB(10, 20, 30, 40);
-      final margin = PaddingAttribute.edgeInsets(edgeInsets);
+      final margin = PaddingAttribute.from(edgeInsets);
 
       expect(margin.top, 20.0);
       expect(margin.bottom, 40.0);
@@ -21,7 +21,7 @@ void main() {
     test('edgeInsets creates PaddingAttribute from EdgeInsetsDirectional', () {
       const edgeInsetsDirectional =
           EdgeInsetsDirectional.fromSTEB(10, 20, 30, 40);
-      final margin = PaddingAttribute.edgeInsets(edgeInsetsDirectional);
+      final margin = PaddingAttribute.from(edgeInsetsDirectional);
 
       expect(margin.top, 20.0);
       expect(margin.bottom, 40.0);
@@ -189,7 +189,7 @@ void main() {
     test('paddingInsets', () {
       expect(
         paddingInsets(const EdgeInsets.all(20)),
-        PaddingAttribute.edgeInsets(
+        PaddingAttribute.from(
           const EdgeInsets.all(20),
         ),
       );
