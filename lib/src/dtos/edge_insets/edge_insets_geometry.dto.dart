@@ -5,11 +5,8 @@ import 'edge_insets.dto.dart';
 import 'edge_insets_directional.dto.dart';
 
 abstract class EdgeInsetsGeometryDto<T extends EdgeInsetsGeometry>
-    extends Dto<T> {
+    extends ResolvableAttribute<T> {
   const EdgeInsetsGeometryDto();
-
-  //bool get _isDirectional =>
-  //    (_start != null || _end != null) && (_left == null && _right == null);
 
   static D
       from<T extends EdgeInsetsGeometry, D extends EdgeInsetsGeometryDto<T>>(
@@ -41,6 +38,7 @@ abstract class EdgeInsetsGeometryDto<T extends EdgeInsetsGeometry>
   double? get _start;
   double? get _end;
 
+  @override
   EdgeInsetsGeometryDto merge(covariant EdgeInsetsGeometryDto? other) {
     if (other == null) return this;
 

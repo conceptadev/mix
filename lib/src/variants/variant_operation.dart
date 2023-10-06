@@ -37,20 +37,20 @@ class VariantOperation {
 
   // ignore: long-parameter-list
   NestedStyleAttribute call([
-    StyleAttribute? p1,
-    StyleAttribute? p2,
-    StyleAttribute? p3,
-    StyleAttribute? p4,
-    StyleAttribute? p5,
-    StyleAttribute? p6,
-    StyleAttribute? p7,
-    StyleAttribute? p8,
-    StyleAttribute? p9,
-    StyleAttribute? p10,
-    StyleAttribute? p11,
-    StyleAttribute? p12,
+    Attribute? p1,
+    Attribute? p2,
+    Attribute? p3,
+    Attribute? p4,
+    Attribute? p5,
+    Attribute? p6,
+    Attribute? p7,
+    Attribute? p8,
+    Attribute? p9,
+    Attribute? p10,
+    Attribute? p11,
+    Attribute? p12,
   ]) {
-    final params = <StyleAttribute>[];
+    final params = <Attribute>[];
     for (final param in [p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12]) {
       if (param != null) params.add(param);
     }
@@ -66,7 +66,7 @@ class VariantOperation {
   }
 
   List<VariantAttribute> _buildOrOperations(
-    List<StyleAttribute> attributes, {
+    List<Attribute> attributes, {
     Iterable<Variant>? variants,
   }) {
     variants ??= this.variants;
@@ -80,9 +80,7 @@ class VariantOperation {
     return attributeVariants.toList();
   }
 
-  List<VariantAttribute> _buildAndOperations(
-    List<StyleAttribute> attributes,
-  ) {
+  List<VariantAttribute> _buildAndOperations(List<Attribute> attributes) {
     final attributeVariants = variants.map((variant) {
       final otherVariants = variants.where((otherV) => otherV != variant);
       final mixToApply = StyleMix.fromAttributes(

@@ -1,8 +1,8 @@
+import '../attributes/attribute.dart';
 import '../factory/mix_provider_data.dart';
-import '../helpers/equality_mixin/equality_mixin.dart';
 
-abstract class Dto<T> with CompareMixin {
-  const Dto();
+abstract class ResolvableAttribute<T> extends Attribute {
+  const ResolvableAttribute({super.key});
 
   T resolve(MixData mix);
 }

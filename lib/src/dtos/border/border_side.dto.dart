@@ -4,7 +4,7 @@ import '../../factory/mix_provider_data.dart';
 import '../color.dto.dart';
 import '../dto.dart';
 
-class BorderSideDto extends Dto<BorderSide> {
+class BorderSideDto extends ResolvableAttribute<BorderSide> {
   final ColorDto? color;
   final double? width;
   final BorderStyle? style;

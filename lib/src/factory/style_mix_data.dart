@@ -1,6 +1,6 @@
 import '../attributes/exports.dart';
 import '../decorators/decorator.dart';
-import '../helpers/equality_mixin/equality_mixin.dart';
+import '../helpers/compare_mixin/compare_mixin.dart';
 import '../helpers/mergeable_map.dart';
 import '../variants/variant_attribute.dart';
 
@@ -21,9 +21,9 @@ class StyleMixData with CompareMixin {
         _decorators = decorators,
         _contextVariants = contextVariants;
 
-  /// Creates a new [StyleMixData] instance from the provided [Iterable] of [StyleAttribute]s.
+  /// Creates a new [StyleMixData] instance from the provided [Iterable] of [Attribute]s.
   /// No longer expands nested attributes.
-  factory StyleMixData.create(Iterable<StyleAttribute> attributes) {
+  factory StyleMixData.create(Iterable<Attribute> attributes) {
     final variantList = <VariantAttribute>[];
     final contextVariantList = <ContextVariantAttribute>[];
     final attributeList = <StyledWidgetAttributes>[];
@@ -93,9 +93,9 @@ class StyleMixData with CompareMixin {
     return attributes.ofType<A>() as A?;
   }
 
-  /// Returns an [Iterable] of [StyleAttribute]s containing all attributes, variants, and directives.
+  /// Returns an [Iterable] of [Attribute]s containing all attributes, variants, and directives.
   /// TODO: Review if shoudl return decorartors
-  Iterable<StyleAttribute> toAttributes() {
+  Iterable<Attribute> toAttributes() {
     return [
       ...attributes.toList(),
       ...variants.toList(),

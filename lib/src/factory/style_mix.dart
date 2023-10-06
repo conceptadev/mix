@@ -29,20 +29,20 @@ class StyleMix {
   // Factory constructors.
   // ignore: parameters-ordering
   factory StyleMix([
-    StyleAttribute? p1,
-    StyleAttribute? p2,
-    StyleAttribute? p3,
-    StyleAttribute? p4,
-    StyleAttribute? p5,
-    StyleAttribute? p6,
-    StyleAttribute? p7,
-    StyleAttribute? p8,
-    StyleAttribute? p9,
-    StyleAttribute? p10,
-    StyleAttribute? p11,
-    StyleAttribute? p12,
+    Attribute? p1,
+    Attribute? p2,
+    Attribute? p3,
+    Attribute? p4,
+    Attribute? p5,
+    Attribute? p6,
+    Attribute? p7,
+    Attribute? p8,
+    Attribute? p9,
+    Attribute? p10,
+    Attribute? p11,
+    Attribute? p12,
   ]) {
-    final params = <StyleAttribute>[];
+    final params = <Attribute>[];
 
     for (final param in [p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12]) {
       if (param != null) params.add(param);
@@ -51,8 +51,8 @@ class StyleMix {
     return StyleMix.fromAttributes(params);
   }
 
-  /// Constructs a mix from a non-null iterable of [StyleAttribute] instances.
-  factory StyleMix.fromAttributes(Iterable<StyleAttribute> attributes) {
+  /// Constructs a mix from a non-null iterable of [Attribute] instances.
+  factory StyleMix.fromAttributes(Iterable<Attribute> attributes) {
     return StyleMix._(StyleMixData.create(attributes));
   }
 
@@ -92,8 +92,8 @@ class StyleMix {
   /// Returns a [StyleMixData] instance representing the values in this MixFactory.
   StyleMixData get values => _values;
 
-  /// Returns an iterable of [StyleAttribute] instances from this MixFactory.
-  Iterable<StyleAttribute> toAttributes() {
+  /// Returns an iterable of [Attribute] instances from this MixFactory.
+  Iterable<Attribute> toAttributes() {
     return _values.toAttributes();
   }
 

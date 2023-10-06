@@ -10,7 +10,7 @@ import '../widgets/flex/flex.widget.dart';
 import '../widgets/icon/icon.widget.dart';
 import '../widgets/text/text.widget.dart';
 
-extension StyleMixExt<T extends StyleAttribute> on StyleMix {
+extension StyleMixExt<T extends Attribute> on StyleMix {
   StyledContainer container({
     required Widget child,
     bool inherit = false,

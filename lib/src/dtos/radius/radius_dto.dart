@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import '../../factory/mix_provider_data.dart';
 import '../dto.dart';
 
-class RadiusDto extends Dto<Radius> {
+class RadiusDto extends ResolvableAttribute<Radius> {
   /// The radius value on the horizontal axis.
   final double _x;
 
@@ -36,9 +36,16 @@ class RadiusDto extends Dto<Radius> {
   }
 
   @override
+  RadiusDto merge(covariant RadiusDto? other) {
+    if (other == null) return this;
+
+    return RadiusDto.elliptical(other._x, other._y);
+  }
+
+  @override
   Radius resolve(MixData mix) {
     final resolvedX = _x;
-    // ignore: avoid-similar-names
+
     final resolvedY = _y;
 
     return resolvedX == 0 && resolvedY == 0

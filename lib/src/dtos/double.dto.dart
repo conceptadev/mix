@@ -4,7 +4,7 @@ import 'dto.dart';
 typedef ValueModifier<T> = T Function(T value);
 
 @Deprecated('Remove this for now')
-class DoubleDto extends Dto<double> {
+class DoubleDto extends ResolvableAttribute<double> {
   final double _value;
 
   // Modifier is only used after value is resolved.
@@ -22,6 +22,13 @@ class DoubleDto extends Dto<double> {
     if (value == null) return null;
 
     return DoubleDto(value);
+  }
+
+  @override
+  DoubleDto merge(covariant DoubleDto? other) {
+    if (other == null) return this;
+
+    return DoubleDto(other._value, directive: other._modifier ?? _modifier);
   }
 
   @override

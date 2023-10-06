@@ -5,7 +5,7 @@ import '../factory/style_mix.dart';
 import 'context_variant.dart';
 import 'variant.dart';
 
-class VariantAttribute<T extends Variant> extends StyleAttribute {
+class VariantAttribute<T extends Variant> extends Attribute {
   final T variant;
   final StyleMix _style;
 

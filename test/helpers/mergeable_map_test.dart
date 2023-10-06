@@ -1,94 +1,97 @@
-// import 'package:flutter_test/flutter_test.dart';
-// import 'package:mix/src/attributes/exports.dart';
-// import 'package:mix/src/helpers/mergeable_map.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:mix/src/attributes/exports.dart';
+import 'package:mix/src/helpers/mergeable_map.dart';
 
-// import 'random_dto.dart';
+import 'random_dto.dart';
 
-// class MergeableInt with MergeMixin {
-//   final int value;
+class IntAttribute extends Attribute {
+  final int value;
 
-//   MergeableInt(this.value);
+  IntAttribute(this.value);
 
-//   @override
-//   MergeableInt merge(MergeableInt? other) {
-//     return MergeableInt(value + (other?.value ?? 0));
-//   }
-// }
+  @override
+  IntAttribute merge(IntAttribute? other) {
+    return IntAttribute(value + (other?.value ?? 0));
+  }
 
-// class MergeableInt2 extends MergeableInt {
-//   MergeableInt2(super.value);
-// }
+  @override
+  get props => [value];
+}
 
-// class MergeableInt3 extends MergeableInt {
-//   MergeableInt3(super.value);
-// }
+class Int2Attribute extends IntAttribute {
+  Int2Attribute(super.value);
+}
 
-// void main() {
-//   test('Initialization', () {
-//     final map = MergeableMap<MergeableInt>.empty();
-//     expect(map.isEmpty, true);
-//   });
+class Int3Attribute extends IntAttribute {
+  Int3Attribute(super.value);
+}
 
-//   test('FromList Constructor', () {
-//     final map = MergeableMap.fromIterable([MergeableInt(1), MergeableInt(2)]);
-//     expect(map.length, 1);
+void main() {
+  test('Initialization', () {
+    const map = MergeableMap<IntAttribute>.empty();
+    expect(map.isEmpty, true);
+  });
 
-//     final map2 =
-//         MergeableMap.fromIterable([MergeableInt2(1), MergeableInt3(2)]);
-//     expect(map2.length, 2);
+  test('FromList Constructor', () {
+    final map = MergeableMap.fromIterable([IntAttribute(1), IntAttribute(2)]);
+    expect(map.length, 1);
 
-//     final map3 = MergeableMap.fromIterable(
-//       [MergeableInt2(1), MergeableInt3(2), MergeableInt(3), MergeableInt2(0)],
-//     );
+    final map2 =
+        MergeableMap.fromIterable([Int2Attribute(1), Int3Attribute(2)]);
+    expect(map2.length, 2);
 
-//     expect(map3.length, 3);
-//   });
+    final map3 = MergeableMap.fromIterable(
+      [Int2Attribute(1), Int3Attribute(2), IntAttribute(3), Int2Attribute(0)],
+    );
 
-//   test('Merge Functionality', () {
-//     final map1 = MergeableMap.fromIterable([MergeableInt(1)]);
-//     final map2 = MergeableMap.fromIterable([MergeableInt(2)]);
-//     final merged = map1.merge(map2);
-//     expect(merged.length, 1);
-//   });
+    expect(map3.length, 3);
+  });
 
-//   test('Insertion Order', () {
-//     final map = MergeableMap.fromIterable(
-//       [MergeableInt(1), MergeableInt3(4), MergeableInt(2)],
-//     );
-//     // Check that first value is of type MergeableInt
-//     expect(map.values.first, isA<MergeableInt>());
-//     expect(map.values.first.value, 3);
-//     expect(map.values.last.value, 4);
-//   });
+  test('Merge Functionality', () {
+    final map1 = MergeableMap.fromIterable([IntAttribute(1)]);
+    final map2 = MergeableMap.fromIterable([IntAttribute(2)]);
+    final merged = map1.merge(map2);
+    expect(merged.length, 1);
+  });
 
-//   test('Clone Functionality', () {
-//     final map = MergeableMap.fromIterable([MergeableInt(1)]);
-//     final clone = map.clone();
-//     expect(clone, map);
-//   });
+  test('Insertion Order', () {
+    final map = MergeableMap.fromIterable(
+      [IntAttribute(1), Int3Attribute(4), IntAttribute(2)],
+    );
+    // Check that first value is of type MergeableInt
+    expect(map.values.first, isA<IntAttribute>());
+    expect(map.values.first.value, 3);
+    expect(map.values.last.value, 4);
+  });
 
-//   group('Merge benchmark', () {
-//     const N = 1000000;
+  test('Clone Functionality', () {
+    final map = MergeableMap.fromIterable([IntAttribute(1)]);
+    final clone = map.clone();
+    expect(clone, map);
+  });
 
-//     final map1 = MergeableMap.fromIterable(
-//         RandomGenerator.boxAttributesList(length: 100, someNullable: false));
+  group('Merge benchmark', () {
+    const N = 1000000;
 
-//     final map2 = MergeableMap.fromIterable(
-//         RandomGenerator.boxAttributesList(length: 100, someNullable: false));
+    final map1 = MergeableMap.fromIterable(
+        RandomGenerator.boxAttributesList(length: 100, someNullable: false));
 
-//     final mergedMap = map1.merge(map2);
+    final map2 = MergeableMap.fromIterable(
+        RandomGenerator.boxAttributesList(length: 100, someNullable: false));
 
-//     test('Benchmark merge method', () {
-//       var merged = map1;
-//       var stopwatch = Stopwatch()..start();
-//       for (int i = 0; i < N; i++) {
-//         merged = map1.merge(map2);
-//       }
+    final mergedMap = map1.merge(map2);
 
-//       stopwatch.stop();
+    test('Benchmark merge method', () {
+      var merged = map1;
+      var stopwatch = Stopwatch()..start();
+      for (int i = 0; i < N; i++) {
+        merged = map1.merge(map2);
+      }
 
-//       print('Average merge time: ${stopwatch.elapsedMilliseconds / N} ms');
-//       expect(merged, mergedMap);
-//     });
-//   });
-// }
+      stopwatch.stop();
+
+      print('Average merge time: ${stopwatch.elapsedMilliseconds / N} ms');
+      expect(merged, mergedMap);
+    });
+  });
+}

@@ -1,7 +1,7 @@
 // ignore: avoid-importing-entrypoint-exports
 import '../mix.dart';
 
-extension DeprecatedMixExtension<T extends StyleAttribute> on StyleMix {
+extension DeprecatedMixExtension<T extends Attribute> on StyleMix {
   /// Adds an Attribute to a Mix.
   @Deprecated('Simplifying the mix API to avoid confusion. Use apply instead')
   SpreadPositionalParams<T, StyleMix> get mix {
@@ -16,7 +16,7 @@ extension DeprecatedMixExtension<T extends StyleAttribute> on StyleMix {
   @Deprecated(
     'Use merge() or mergeMany() now. You might have to turn into a Mix first. firstMixFactory.merge(secondMix)',
   )
-  StyleMix addAttributes(List<StyleAttribute> attributes) {
+  StyleMix addAttributes(List<Attribute> attributes) {
     final newValues = StyleMixData.create(attributes);
 
     return StyleMix.fromValues(newValues);

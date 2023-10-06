@@ -6,7 +6,7 @@ import 'border_radius_directional.dto.dart';
 import 'radius_dto.dart';
 
 abstract class BorderRadiusGeometryDto<T extends BorderRadiusGeometry>
-    extends Dto<T> {
+    extends ResolvableAttribute<T> {
   const BorderRadiusGeometryDto();
 
   static D from<T extends BorderRadiusGeometry,

@@ -2,15 +2,15 @@ import 'dart:math';
 
 import 'package:flutter/foundation.dart';
 
-import '../helpers/equality_mixin/equality_mixin.dart';
+import '../helpers/compare_mixin/compare_mixin.dart';
 
 /// Base attribute.
 // Some classes have defaults.
 // Facade allows us ot set all properties as optional.
 // For improved merge and override of properties.
-abstract class StyleAttribute with CompareMixin, MergeMixin {
+abstract class Attribute with CompareMixin, MergeMixin {
   final Key? _key;
-  const StyleAttribute({Key? key}) : _key = key;
+  const Attribute({Key? key}) : _key = key;
   Key get mergeKey => _key == null ? ValueKey(runtimeType) : ValueKey(_key);
 }
 
@@ -41,7 +41,7 @@ mixin MergeMixin<T> {
 }
 
 /// An interface that add support to custom attributes for [MixContext].
-abstract class StyledWidgetAttributes extends StyleAttribute {
+abstract class StyledWidgetAttributes extends Attribute {
   const StyledWidgetAttributes();
 
   StyledWidgetAttributes copyWith();

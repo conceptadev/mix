@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import '../../mix.dart';
-import '../helpers/equality_mixin/equality_mixin.dart';
+import '../helpers/compare_mixin/compare_mixin.dart';
 import 'tokens/breakpoints.dart';
 import 'tokens/mix_token.dart';
 

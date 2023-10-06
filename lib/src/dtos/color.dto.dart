@@ -5,7 +5,7 @@ import '../theme/tokens/color_token.dart';
 import 'double.dto.dart';
 import 'dto.dart';
 
-class ColorDto extends Dto<Color> {
+class ColorDto extends ResolvableAttribute<Color> {
   final Color value;
 
   // Modifier is only used after value is resolved.
@@ -24,6 +24,13 @@ class ColorDto extends Dto<Color> {
     ValueModifier<Color>? directive,
   }) {
     return color == null ? null : ColorDto(color, directive: directive);
+  }
+
+  @override
+  ColorDto merge(covariant ColorDto? other) {
+    if (other == null) return this;
+
+    return ColorDto(other.value, directive: other._directive ?? _directive);
   }
 
   @override

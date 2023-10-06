@@ -10,7 +10,7 @@ import '../attributes/attribute.dart';
 /// This class is useful for scenarios where you need to merge objects based on their types
 /// while preserving the order in which they were inserted.
 @immutable
-class MergeableMap<T extends StyleAttribute> {
+class MergeableMap<T extends Attribute> {
   // Internal list to hold the keys to maintain insertion order.
   final List<Key> _keys;
 

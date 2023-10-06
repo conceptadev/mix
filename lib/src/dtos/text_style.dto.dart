@@ -9,7 +9,7 @@ import 'color.dto.dart';
 import 'dto.dart';
 import 'shadow/shadow.dto.dart';
 
-class TextStyleDto extends Dto<TextStyle> {
+class TextStyleDto extends ResolvableAttribute<TextStyle> {
   final String? fontFamily;
   final FontWeight? fontWeight;
 

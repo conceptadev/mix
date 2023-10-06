@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../mix.dart';
-import '../../helpers/equality_mixin/equality_mixin.dart';
+import '../../helpers/compare_mixin/compare_mixin.dart';
 
 class StyledContainerDescriptor with CompareMixin {
   final AlignmentGeometry? alignment;

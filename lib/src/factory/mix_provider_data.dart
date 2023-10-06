@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../attributes/attribute.dart';
 import '../decorators/decorator.dart';
-import '../helpers/equality_mixin/equality_mixin.dart';
+import '../helpers/compare_mixin/compare_mixin.dart';
 import '../helpers/mergeable_map.dart';
 import '../theme/mix_theme.dart';
 import '../variants/variant_attribute.dart';
@@ -62,13 +62,13 @@ class MixData with CompareMixin {
   /// Internal method to handle application of context variants to [attributes].
   ///
   /// It accepts the [context] and the list of [attributes] as parameters.
-  static List<StyleAttribute> _applyContextVariants(
-    Iterable<StyleAttribute> attributes,
+  static List<Attribute> _applyContextVariants(
+    Iterable<Attribute> attributes,
     BuildContext context,
   ) {
     // Use the fold method to reduce the input attributes list
     // into a single list of expanded attributes.
-    return attributes.fold<List<StyleAttribute>>(
+    return attributes.fold<List<Attribute>>(
       [], // Initial empty list to accumulate the result.
       (expanded, attribute) {
         // Check if the current attribute is a ContextVariantAttribute.

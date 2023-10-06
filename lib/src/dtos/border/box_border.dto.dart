@@ -4,7 +4,8 @@ import '../dto.dart';
 import 'border.dto.dart';
 import 'border_side.dto.dart';
 
-abstract class BoxBorderDto<T extends BoxBorder> extends Dto<T> {
+abstract class BoxBorderDto<T extends BoxBorder>
+    extends ResolvableAttribute<T> {
   const BoxBorderDto();
 
   static D from<T extends BoxBorder, D extends BoxBorderDto<T>>(T border) {
