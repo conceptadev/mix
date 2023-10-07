@@ -6,6 +6,8 @@ import '../../factory/mix_provider_data.dart';
 import '../resolvable_attribute.dart';
 
 class RadiusDto extends ResolvableDto<Radius> {
+  static const zero = RadiusDto.circular(0.0);
+
   /// The radius value on the horizontal axis.
   final double _x;
 
@@ -15,8 +17,6 @@ class RadiusDto extends ResolvableDto<Radius> {
   const RadiusDto.circular(double radius)
       : _x = radius,
         _y = radius;
-
-  const RadiusDto.zero() : this.elliptical(0, 0);
 
   /// Constructs an elliptical radius with the given radii.
   const RadiusDto.elliptical(double x, double y)

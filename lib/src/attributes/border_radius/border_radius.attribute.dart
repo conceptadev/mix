@@ -1,203 +1,87 @@
+// ignore_for_file: no-equal-arguments
+
 import 'package:flutter/material.dart';
 
 import '../../factory/exports.dart';
-import '../resolvable_attribute.dart';
+import 'border_radius_geometry.attribute.dart';
 import 'radius.dto.dart';
 
-class BorderRadiusAttribute extends ResolvableAttribute<BorderRadiusGeometry> {
-  final RadiusDto? _topLeft;
-  final RadiusDto? _topRight;
-  final RadiusDto? _bottomLeft;
-  final RadiusDto? _bottomRight;
-  final RadiusDto? _topStart;
-  final RadiusDto? _topEnd;
-  final RadiusDto? _bottomStart;
-  final RadiusDto? _bottomEnd;
+class BorderRadiusAttribute
+    extends BorderRadiusGeometryAttribute<BorderRadius> {
+  final RadiusDto? topLeft;
+  final RadiusDto? topRight;
+  final RadiusDto? bottomLeft;
+  final RadiusDto? bottomRight;
 
   const BorderRadiusAttribute._({
-    RadiusDto? topLeft,
-    RadiusDto? topRight,
-    RadiusDto? bottomLeft,
-    RadiusDto? bottomRight,
-    RadiusDto? topStart,
-    RadiusDto? topEnd,
-    RadiusDto? bottomStart,
-    RadiusDto? bottomEnd,
-  })  : _topLeft = topLeft,
-        _topRight = topRight,
-        _bottomLeft = bottomLeft,
-        _bottomRight = bottomRight,
-        _topStart = topStart,
-        _topEnd = topEnd,
-        _bottomStart = bottomStart,
-        _bottomEnd = bottomEnd;
+    this.topLeft,
+    this.topRight,
+    this.bottomLeft,
+    this.bottomRight,
+  });
 
-  factory BorderRadiusAttribute.circular(double radius) {
-    return BorderRadiusAttribute.all(RadiusDto.circular(radius));
-  }
-
-  const BorderRadiusAttribute.vertical({RadiusDto? bottom, RadiusDto? top})
-      : _topLeft = top,
-        _topRight = top,
-        _bottomLeft = bottom,
-        _bottomRight = bottom,
-        _topStart = null,
-        _topEnd = null,
-        _bottomStart = null,
-        _bottomEnd = null;
-
-  const BorderRadiusAttribute.horizontal({
-    RadiusDto? left,
-    RadiusDto? right,
-  })  : _topLeft = left,
-        _topRight = right,
-        _bottomLeft = left,
-        _bottomRight = right,
-        _topStart = null,
-        _topEnd = null,
-        _bottomStart = null,
-        _bottomEnd = null;
-
-  const BorderRadiusAttribute.only({
-    RadiusDto? bottomLeft,
-    RadiusDto? bottomRight,
-    RadiusDto? topLeft,
-    RadiusDto? topRight,
-  })  : _topLeft = topLeft,
-        _topRight = topRight,
-        _bottomLeft = bottomLeft,
-        _bottomRight = bottomRight,
-        _topStart = null,
-        _topEnd = null,
-        _bottomStart = null,
-        _bottomEnd = null;
-
-  const BorderRadiusAttribute.directionalOnly({
-    RadiusDto? bottomStart,
-    RadiusDto? bottomEnd,
-    RadiusDto? topStart,
-    RadiusDto? topEnd,
-  })  : _topLeft = null,
-        _topRight = null,
-        _bottomLeft = null,
-        _bottomRight = null,
-        _topStart = topStart,
-        _topEnd = topEnd,
-        _bottomStart = bottomStart,
-        _bottomEnd = bottomEnd;
-
+  /// Creates a border radius where all radii are [radius].
   const BorderRadiusAttribute.all(RadiusDto radius)
-      : _topLeft = radius,
-        _topRight = radius,
-        _bottomLeft = radius,
-        _bottomRight = radius,
-        _topStart = null,
-        _topEnd = null,
-        _bottomStart = null,
-        _bottomEnd = null;
+      : topLeft = radius,
+        topRight = radius,
+        bottomLeft = radius,
+        bottomRight = radius;
 
-  factory BorderRadiusAttribute.from(BorderRadiusGeometry borderRadius) {
-    if (borderRadius is BorderRadius) {
-      return BorderRadiusAttribute.only(
-        bottomLeft: RadiusDto.from(borderRadius.bottomLeft),
-        bottomRight: RadiusDto.from(borderRadius.bottomRight),
-        topLeft: RadiusDto.from(borderRadius.topLeft),
-        topRight: RadiusDto.from(borderRadius.topRight),
-      );
-    }
+  /// Creates a border radius where all radii are [Radius.circular(radius)].
+  BorderRadiusAttribute.circular(double radius)
+      : this.all(RadiusDto.circular(radius));
 
-    if (borderRadius is BorderRadiusDirectional) {
-      return BorderRadiusAttribute.directionalOnly(
-        bottomStart: RadiusDto.from(borderRadius.bottomStart),
-        bottomEnd: RadiusDto.from(borderRadius.bottomEnd),
-        topStart: RadiusDto.from(borderRadius.topStart),
-        topEnd: RadiusDto.from(borderRadius.topEnd),
-      );
-    }
+  /// Creates a vertically symmetric border radius where the top and bottom
+  /// sides of the rectangle have the same radii.
+  const BorderRadiusAttribute.vertical({
+    RadiusDto top = RadiusDto.zero,
+    RadiusDto bottom = RadiusDto.zero,
+  })  : topLeft = top,
+        topRight = top,
+        bottomLeft = bottom,
+        bottomRight = bottom;
 
-    throw UnsupportedError(
-      'Cannot create a border radius attribute from a border radius of type ${borderRadius.runtimeType}',
-    );
-  }
+  /// Creates a horizontally symmetrical border radius where the left and right
+  /// sides of the rectangle have the same radii.
+  const BorderRadiusAttribute.horizontal({
+    RadiusDto left = RadiusDto.zero,
+    RadiusDto right = RadiusDto.zero,
+  })  : topLeft = left,
+        topRight = right,
+        bottomLeft = left,
+        bottomRight = right;
 
-  @visibleForTesting
-  RadiusDto? get topLeft => _topLeft;
-
-  @visibleForTesting
-  RadiusDto? get topRight => _topRight;
-
-  @visibleForTesting
-  RadiusDto? get bottomLeft => _bottomLeft;
-
-  @visibleForTesting
-  RadiusDto? get bottomRight => _bottomRight;
-
-  @visibleForTesting
-  RadiusDto? get topStart => _topStart;
-
-  @visibleForTesting
-  RadiusDto? get topEnd => _topEnd;
-
-  @visibleForTesting
-  RadiusDto? get bottomStart => _bottomStart;
-
-  @visibleForTesting
-  RadiusDto? get bottomEnd => _bottomEnd;
-
-  bool get _isDirectional =>
-      _topStart != null ||
-      _topEnd != null ||
-      _bottomStart != null ||
-      _bottomEnd != null;
+  /// Creates a border radius with only the given non-zero values. The other
+  /// corners will be right angles.
+  const BorderRadiusAttribute.only({
+    this.topLeft = RadiusDto.zero,
+    this.topRight = RadiusDto.zero,
+    this.bottomLeft = RadiusDto.zero,
+    this.bottomRight = RadiusDto.zero,
+  });
 
   @override
   BorderRadiusAttribute merge(BorderRadiusAttribute? other) {
     if (other == null) return this;
 
-    if (_isDirectional != other._isDirectional) {
-      throw UnsupportedError(
-        'Cannot merge directional and non-directional border radiuses',
-      );
-    }
-
     return BorderRadiusAttribute._(
-      topLeft: other._topLeft ?? _topLeft,
-      topRight: other._topRight ?? _topRight,
-      bottomLeft: other._bottomLeft ?? _bottomLeft,
-      bottomRight: other._bottomRight ?? _bottomRight,
-      topStart: other._topStart ?? _topStart,
-      topEnd: other._topEnd ?? _topEnd,
-      bottomStart: other._bottomStart ?? _bottomStart,
-      bottomEnd: other._bottomEnd ?? _bottomEnd,
+      topLeft: topLeft?.merge(other.topLeft) ?? other.topLeft,
+      topRight: topRight?.merge(other.topRight) ?? other.topRight,
+      bottomLeft: bottomLeft?.merge(other.bottomLeft) ?? other.bottomLeft,
+      bottomRight: bottomRight?.merge(other.bottomRight) ?? other.bottomRight,
     );
   }
 
   @override
-  BorderRadiusGeometry resolve(MixData mix) {
-    return _isDirectional
-        ? BorderRadiusDirectional.only(
-            topStart: _topStart?.resolve(mix) ?? Radius.zero,
-            topEnd: _topEnd?.resolve(mix) ?? Radius.zero,
-            bottomStart: _bottomStart?.resolve(mix) ?? Radius.zero,
-            bottomEnd: _bottomEnd?.resolve(mix) ?? Radius.zero,
-          )
-        : BorderRadius.only(
-            topLeft: _topLeft?.resolve(mix) ?? Radius.zero,
-            topRight: _topRight?.resolve(mix) ?? Radius.zero,
-            bottomLeft: _bottomLeft?.resolve(mix) ?? Radius.zero,
-            bottomRight: _bottomRight?.resolve(mix) ?? Radius.zero,
-          );
+  BorderRadius resolve(MixData mix) {
+    return BorderRadius.only(
+      topLeft: topLeft?.resolve(mix) ?? Radius.zero,
+      topRight: topRight?.resolve(mix) ?? Radius.zero,
+      bottomLeft: bottomLeft?.resolve(mix) ?? Radius.zero,
+      bottomRight: bottomRight?.resolve(mix) ?? Radius.zero,
+    );
   }
 
   @override
-  get props => [
-        _topLeft,
-        _topRight,
-        _bottomLeft,
-        _bottomRight,
-        _topStart,
-        _topEnd,
-        _bottomStart,
-        _bottomEnd,
-      ];
+  get props => [topLeft, topRight, bottomLeft, bottomRight];
 }

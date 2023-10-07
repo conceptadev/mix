@@ -1,6 +1,6 @@
 // ignore_for_file: non_constant_identifier_names, constant_identifier_names, long-parameter-list
 
-import '../attributes/exports.dart';
+import '../attributes/attribute.dart';
 import '../helpers/attributes_map.dart';
 import '../variants/variant.dart';
 import '../variants/variant_attribute.dart';

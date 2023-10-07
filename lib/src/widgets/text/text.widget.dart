@@ -1,8 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import '../../attributes/exports.dart';
+import '../../attributes/animation/animation.attribute.dart';
 import '../../attributes/text/attributes/text_style.attribute.dart';
+import '../../attributes/text_direction/text_direction_attribute.dart';
+import '../../attributes/visible/visible_attribute.dart';
 import '../../factory/mix_provider_data.dart';
 import '../empty/empty.widget.dart';
 import '../styled.widget.dart';
@@ -64,11 +66,10 @@ class MixedText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textStyle = mix.maybeOf<TextStyleAttribute, TextStyle>();
-    final animation =
-        mix.maybeOf<AnimationAttribute, AnimationAttributeResolved>();
-    final textDirection = mix.maybeOf<TextDirectionAttribute, TextDirection>();
-    final visible = mix.of<VisibleAttribute, bool>(true);
+    final textStyle = mix.get<TextStyleAttribute, TextStyle>();
+    final animation = mix.get<AnimationAttribute, AnimationAttributeResolved>();
+    final textDirection = mix.get<TextDirectionAttribute, TextDirection>();
+    final visible = mix.mustGet<VisibleAttribute, bool>(true);
 
     final text = TextAttributesResolved.fromContext(mix);
 

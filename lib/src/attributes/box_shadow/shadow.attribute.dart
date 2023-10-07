@@ -4,15 +4,15 @@ import '../../factory/exports.dart';
 import '../color/color.dto.dart';
 import '../resolvable_attribute.dart';
 
-class ShadowDto<T extends Shadow> extends ResolvableDto<Shadow> {
+class ShadowAttribute<T extends Shadow> extends ResolvableAttribute<Shadow> {
   final ColorDto? color;
   final Offset? offset;
   final double? blurRadius;
 
-  const ShadowDto({this.blurRadius, this.color, this.offset});
+  const ShadowAttribute({this.blurRadius, this.color, this.offset});
 
-  factory ShadowDto.from(Shadow shadow) {
-    return ShadowDto(
+  factory ShadowAttribute.from(Shadow shadow) {
+    return ShadowAttribute(
       blurRadius: shadow.blurRadius,
       color: ColorDto.from(shadow.color),
       offset: shadow.offset,
@@ -21,16 +21,18 @@ class ShadowDto<T extends Shadow> extends ResolvableDto<Shadow> {
 
   @override
   T resolve(MixData mix) {
+    const defaultShadow = Shadow();
+
     return Shadow(
-      color: color?.resolve(mix) ?? const Shadow().color,
-      offset: offset ?? const Shadow().offset,
-      blurRadius: blurRadius ?? const Shadow().blurRadius,
+      color: color?.resolve(mix) ?? defaultShadow.color,
+      offset: offset ?? defaultShadow.offset,
+      blurRadius: blurRadius ?? defaultShadow.blurRadius,
     ) as T;
   }
 
   @override
-  ShadowDto merge(ShadowDto? other) {
-    return ShadowDto(
+  ShadowAttribute merge(ShadowAttribute? other) {
+    return ShadowAttribute(
       blurRadius: other?.blurRadius ?? blurRadius,
       color: color?.merge(other?.color) ?? color,
       offset: other?.offset ?? offset,

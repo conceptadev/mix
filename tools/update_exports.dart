@@ -13,8 +13,11 @@ void main() {
     '.attribute.dart',
     '.dto.dart',
     '.utilities.dart',
-    'util.dart',
-    'widget.dart',
+    '.util.dart',
+    '.widget.dart',
+    '.directive.dart',
+    '.variant.dart',
+    '.tokens.dart',
   ];
 
   if (!libDirectory.existsSync()) {
@@ -29,6 +32,7 @@ void main() {
   }
 
   final newExports = <String>{};
+  final notAdded = <String>[];
 
   // Traverse the /lib/ directory
   for (final entity in libDirectory.listSync(recursive: true)) {
@@ -37,11 +41,18 @@ void main() {
       // Get the relative path using the path package
       final relativePath = p.relative(entity.path, from: libDirectory.path);
       newExports.add('export \'$relativePath\';');
+    } else {
+      notAdded.add(entity.path);
     }
   }
 
   final mergedExports = newExports.toList();
   exportFile.writeAsStringSync(mergedExports.join('\n'));
 
-  print('Exports updated.');
+  final dartFilesNotadded = notAdded.where((path) => path.endsWith('.dart'));
+
+  print('Exports file updated, with ${mergedExports.length} exports.');
+  for (String file in dartFilesNotadded) {
+    print('Not added: $file');
+  }
 }

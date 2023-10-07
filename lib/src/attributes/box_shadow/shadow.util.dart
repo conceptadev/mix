@@ -1,41 +1,33 @@
 import 'package:flutter/material.dart';
 
 import '../color/color.dto.dart';
-import '../decoration/box_decoration.attribute.dart';
-import 'box_shadow.dto.dart';
+import '../helpers/list.attribute.dart';
+import 'box_shadow.attribute.dart';
+import 'shadow.attribute.dart';
 
-DecorationAttribute boxShadow({
+BoxShadowAttribute boxShadow({
   Color? color,
   Offset? offset,
   double? blurRadius,
   double? spreadRadius,
 }) {
-  final boxShadow = BoxShadowDto(
+  return BoxShadowAttribute(
     color: color == null ? null : ColorDto(color),
     offset: offset,
     blurRadius: blurRadius,
     spreadRadius: spreadRadius,
   );
-
-  return DecorationAttribute(boxShadow: [boxShadow]);
 }
 
-@Deprecated('Use boxShadow() instead')
-DecorationAttribute shadow({
-  Color? color,
-  Offset? offset,
-  double? blurRadius,
-  double? spreadRadius,
-}) {
-  return boxShadow(
-    color: color,
-    offset: offset,
+ShadowAttribute shadow({Color? color, Offset? offset, double? blurRadius}) {
+  return ShadowAttribute(
     blurRadius: blurRadius,
-    spreadRadius: spreadRadius,
+    color: color == null ? null : ColorDto(color),
+    offset: offset,
   );
 }
 
-DecorationAttribute elevation(int elevation) {
+ListAtttribute<BoxShadowAttribute> elevation(int elevation) {
   const elevationOptions = [0, 1, 2, 3, 4, 6, 8, 9, 12, 16, 24];
   assert(
     elevationOptions.contains(elevation),
@@ -45,19 +37,18 @@ DecorationAttribute elevation(int elevation) {
   final elevations = kElevationToShadow[elevation]!;
 
   if (elevation == 0) {
-    const boxShadow = BoxShadowDto(
+    const boxShadow = BoxShadowAttribute(
       color: ColorDto(Colors.transparent),
       offset: Offset(0, 0),
       blurRadius: 0,
       spreadRadius: 0,
     );
 
-    return const DecorationAttribute(
-      boxShadow: [boxShadow, boxShadow, boxShadow, boxShadow],
-    );
+    return const ListAtttribute([boxShadow]);
   }
+  // can you merge into 1 shadow?
 
-  return DecorationAttribute(
-    boxShadow: elevations.map(BoxShadowDto.fromBoxShadow).toList(),
-  );
+  final shadows = elevations.map(BoxShadowAttribute.fromBoxShadow).toList();
+
+  return ListAtttribute(shadows);
 }

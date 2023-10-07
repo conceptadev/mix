@@ -115,7 +115,7 @@ class MixedFlex extends StatelessWidget {
 
     // List of widgets with gap.
     final widgets = <Widget>[];
-    for (var idx = 0; idx < children.length; idx++) {
+    for (int idx = 0; idx < children.length; idx++) {
       final widget = children[idx];
       widgets.add(widget);
       // Add gap if not last item if its not last element.

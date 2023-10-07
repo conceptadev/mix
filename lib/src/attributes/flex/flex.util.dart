@@ -9,6 +9,9 @@ FlexAttributes flex(
   MainAxisSize? mainAxisSize,
   VerticalDirection? verticalDirection,
   double? gapSize,
+  TextDirection? textDirection,
+  TextBaseline? textBaseline,
+  Clip? clipBehavior,
 }) {
   return FlexAttributes(
     crossAxisAlignment: crossAxisAlignment,
@@ -17,6 +20,55 @@ FlexAttributes flex(
     mainAxisAlignment: mainAxisAlignment,
     mainAxisSize: mainAxisSize,
     verticalDirection: verticalDirection,
+    textDirection: textDirection,
+    textBaseline: textBaseline,
+    clipBehavior: clipBehavior,
+  );
+}
+
+FlexAttributes row({
+  MainAxisAlignment? mainAxisAlignment,
+  CrossAxisAlignment? crossAxisAlignment,
+  MainAxisSize? mainAxisSize,
+  VerticalDirection? verticalDirection,
+  double? gapSize,
+  TextDirection? textDirection,
+  TextBaseline? textBaseline,
+  Clip? clipBehavior,
+}) {
+  return FlexAttributes(
+    crossAxisAlignment: crossAxisAlignment,
+    direction: Axis.horizontal,
+    gapSize: gapSize,
+    mainAxisAlignment: mainAxisAlignment,
+    mainAxisSize: mainAxisSize,
+    verticalDirection: verticalDirection,
+    textDirection: textDirection,
+    textBaseline: textBaseline,
+    clipBehavior: clipBehavior,
+  );
+}
+
+FlexAttributes column({
+  MainAxisAlignment? mainAxisAlignment,
+  CrossAxisAlignment? crossAxisAlignment,
+  MainAxisSize? mainAxisSize,
+  VerticalDirection? verticalDirection,
+  double? gapSize,
+  TextDirection? textDirection,
+  TextBaseline? textBaseline,
+  Clip? clipBehavior,
+}) {
+  return FlexAttributes(
+    crossAxisAlignment: crossAxisAlignment,
+    direction: Axis.vertical,
+    gapSize: gapSize,
+    mainAxisAlignment: mainAxisAlignment,
+    mainAxisSize: mainAxisSize,
+    verticalDirection: verticalDirection,
+    textDirection: textDirection,
+    textBaseline: textBaseline,
+    clipBehavior: clipBehavior,
   );
 }
 

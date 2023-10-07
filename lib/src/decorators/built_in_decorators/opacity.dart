@@ -17,7 +17,7 @@ class OpacityDecorator extends Decorator {
   get props => [opacity];
   @override
   Widget build(Widget child, MixData mix) {
-    final animation = mix.of<AnimationAttribute, AnimationDto>(
+    final animation = mix.mustGet<AnimationAttribute, AnimationDto>(
       const AnimationDto.defaults(),
     );
 

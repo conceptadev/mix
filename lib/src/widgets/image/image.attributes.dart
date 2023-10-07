@@ -1,82 +1,91 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 import '../../attributes/attribute.dart';
-import '../../dtos/color.dto.dart';
+import '../../attributes/color/color.dto.dart';
+import '../../attributes/resolvable_attribute.dart';
+import '../../factory/mix_provider_data.dart';
 
-@Deprecated('Use StyledImageAttributes instead')
-typedef ImageAttributes = StyledImageAttributes;
-
-class StyledImageAttributes extends StyledWidgetAttributes {
+class ImageAttributes extends ResolvableAttribute<ImageAttributesResolved> {
+  final ImageProvider? image;
+  final double? width, height;
   final ColorDto? color;
-  final double? scale;
-
-  final double? width;
-  final double? height;
-
-  final BlendMode? colorBlendMode;
-  final BoxFit? fit;
-  final AlignmentGeometry? alignment;
   final ImageRepeat? repeat;
+  final BoxFit? fit;
 
-  const StyledImageAttributes({
-    this.color,
-    this.scale,
+  const ImageAttributes({
+    this.image,
     this.width,
     this.height,
-    this.colorBlendMode,
-    this.fit,
-    this.alignment,
+    this.color,
     this.repeat,
+    this.fit,
   });
 
-  @override
-  StyledImageAttributes copyWith({
-    ColorDto? color,
-    double? scale,
+  ImageAttributes copyWith({
+    ImageProvider? image,
     double? width,
     double? height,
-    BlendMode? colorBlendMode,
-    BoxFit? fit,
-    AlignmentGeometry? alignment,
+    ColorDto? color,
     ImageRepeat? repeat,
+    BoxFit? fit,
   }) {
-    return StyledImageAttributes(
-      color: color ?? this.color,
-      scale: scale ?? this.scale,
+    return ImageAttributes(
+      image: image ?? this.image,
       width: width ?? this.width,
       height: height ?? this.height,
-      colorBlendMode: colorBlendMode ?? this.colorBlendMode,
-      fit: fit ?? this.fit,
-      alignment: alignment ?? this.alignment,
+      color: color ?? this.color,
       repeat: repeat ?? this.repeat,
+      fit: fit ?? this.fit,
     );
   }
 
   @override
-  StyledImageAttributes merge(StyledImageAttributes? other) {
+  ImageAttributes merge(ImageAttributes? other) {
     if (other == null) return this;
 
     return copyWith(
-      color: other.color,
-      scale: other.scale,
+      image: other.image,
       width: other.width,
       height: other.height,
-      colorBlendMode: other.colorBlendMode,
-      fit: other.fit,
-      alignment: other.alignment,
+      color: other.color,
       repeat: other.repeat,
+      fit: other.fit,
     );
   }
 
   @override
-  get props => [
-        color,
-        scale,
-        width,
-        height,
-        colorBlendMode,
-        fit,
-        alignment,
-        repeat,
-      ];
+  ImageAttributesResolved resolve(MixData mix) {
+    return ImageAttributesResolved(
+      image: image,
+      width: width,
+      height: height,
+      color: color?.resolve(mix),
+      repeat: repeat ?? ImageRepeat.noRepeat,
+      fit: fit ?? BoxFit.contain,
+    );
+  }
+
+  @override
+  get props => [image, width, height, color, repeat, fit];
+}
+
+class ImageAttributesResolved extends Dto {
+  final ImageProvider? image;
+  final double? width, height;
+  final Color? color;
+  final ImageRepeat repeat;
+  final BoxFit fit;
+
+  const ImageAttributesResolved({
+    required this.image,
+    required this.width,
+    required this.height,
+    required this.color,
+    required this.repeat,
+    required this.fit,
+  });
+
+  @override
+  get props => [image, width, height, color, repeat, fit];
 }

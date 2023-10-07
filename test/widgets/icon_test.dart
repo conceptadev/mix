@@ -4,7 +4,7 @@ import 'package:mix/src/attributes/shared/shared.attributes.dart';
 import 'package:mix/src/dtos/color.dto.dart';
 import 'package:mix/src/extensions/style_mix_ext.dart';
 import 'package:mix/src/factory/style_mix.dart';
-import 'package:mix/src/widgets/icon/icon.attributes.dart';
+import 'package:mix/src/widgets/icon/icon.attribute.dart';
 
 import '../helpers/testing_utils.dart';
 

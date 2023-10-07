@@ -9,7 +9,7 @@ import 'package:mix/src/dtos/radius/border_radius.dto.dart';
 import 'package:mix/src/dtos/radius/radius_dto.dart';
 import 'package:mix/src/extensions/style_mix_ext.dart';
 import 'package:mix/src/factory/style_mix.dart';
-import 'package:mix/src/widgets/container/container.attributes.dart';
+import 'package:mix/src/widgets/container/container.attribute.dart';
 import 'package:mix/src/widgets/container/container.utilities.dart';
 import 'package:mix/src/widgets/container/container.widget.dart';
 

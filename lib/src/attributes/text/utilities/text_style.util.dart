@@ -2,10 +2,10 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-import '../../box_shadow/shadow.dto.dart';
+import '../../box_shadow/shadow.attribute.dart';
 import '../../color/color.dto.dart';
+import '../../helpers/list.attribute.dart';
 import '../attributes/text_style.attribute.dart';
-import '../dtos/text_style.dto.dart';
 
 TextStyleAttribute textStyle({
   String? fontFamily,
@@ -33,19 +33,19 @@ TextStyleAttribute textStyle({
   /// Other properties will override the as properties.
   TextStyle? as,
 }) {
-  List<ShadowDto>? convertShadows() {
+  ListAtttribute<ShadowAttribute>? convertShadows() {
     List<Shadow> combinedShadows = [...?shadows];
 
     if (shadow != null) combinedShadows.add(shadow);
 
-    final shadowDtos = combinedShadows.map(ShadowDto.from).toList();
+    final shadowDtos = combinedShadows.map(ShadowAttribute.from).toList();
 
     if (shadowDtos.isEmpty) return null;
 
-    return shadowDtos;
+    return ListAtttribute(shadowDtos);
   }
 
-  TextStyleDto textStyle = TextStyleDto(
+  TextStyleAttribute textStyle = TextStyleAttribute(
     background: background,
     backgroundColor: backgroundColor == null ? null : ColorDto(backgroundColor),
     color: color == null ? null : ColorDto(color),
@@ -68,10 +68,10 @@ TextStyleAttribute textStyle({
   );
 
   if (as != null) {
-    textStyle = TextStyleDto.from(as).merge(textStyle);
+    textStyle = TextStyleAttribute.from(as).merge(textStyle);
   }
 
-  return TextStyleAttribute.from(textStyle);
+  return textStyle;
 }
 
 TextStyleAttribute bold() {

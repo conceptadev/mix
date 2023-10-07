@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 
-import '../../attributes/shared/shared.descriptor.dart';
+import '../../attributes/animation/animation.attribute.dart';
+import '../../attributes/text_direction/text_direction_attribute.dart';
+import '../../attributes/visible/visible_attribute.dart';
 import '../../factory/mix_provider_data.dart';
 import '../empty/empty.widget.dart';
 import '../styled.widget.dart';
-import 'icon.descriptor.dart';
+import 'icon.attribute.dart';
 
 @Deprecated('Use StyledIcon now')
 typedef IconMix = StyledIcon;
+
+@Deprecated('Use MixedIcon now')
+typedef IconMixedWidget = MixedIcon;
 
 class StyledIcon extends StyledWidget {
   const StyledIcon(
@@ -29,9 +34,6 @@ class StyledIcon extends StyledWidget {
   }
 }
 
-@Deprecated('Use MixedIcon now')
-typedef IconMixedWidget = MixedIcon;
-
 class MixedIcon extends StatelessWidget {
   const MixedIcon({
     this.icon,
@@ -47,31 +49,33 @@ class MixedIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final commonProps = CommonDescriptor.fromContext(mix);
-    final iconProps = StyledIconDescriptor.fromContext(mix);
+    final visible = mix.mustGet<VisibleAttribute, bool>(true);
+    final attributes = mix.get<IconAttributes, IconAttributesResolved>();
+    final textDirection = mix.get<TextDirectionAttribute, TextDirection>();
+    final animation = mix.get<AnimationAttribute, AnimationAttributeResolved>();
 
-    if (!commonProps.visible) {
+    if (!visible) {
       return const Empty();
     }
     Widget iconWidget = Icon(
       icon,
-      size: iconProps.size,
-      color: iconProps.color,
-      textDirection: commonProps.textDirection,
+      size: attributes?.size,
+      color: attributes?.color,
+      textDirection: textDirection,
     );
 
-    if (commonProps.animated) {
+    if (animation != null) {
       iconWidget = TweenAnimationBuilder<double>(
-        tween: Tween<double>(end: iconProps.size),
-        duration: commonProps.animationDuration,
-        curve: commonProps.animationCurve,
+        tween: Tween<double>(end: attributes?.size),
+        duration: animation.duration,
+        curve: animation.curve,
         builder: (context, value, child) {
           final sizeValue = value;
 
           return TweenAnimationBuilder<Color?>(
-            tween: ColorTween(end: iconProps.color),
-            duration: commonProps.animationDuration,
-            curve: commonProps.animationCurve,
+            tween: ColorTween(end: attributes?.color),
+            duration: animation.duration,
+            curve: animation.curve,
             builder: (context, value, child) {
               final colorValue = value;
 

@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 
+import '../../helpers/list.attribute.dart';
 import '../attributes/text.attribute.dart';
 import '../attributes/text_style.attribute.dart';
 import '../directives/text.directive.dart';
@@ -21,6 +22,7 @@ TextAttributes text({
   TextWidthBasis? textWidthBasis,
 }) {
   final textDirectives = directives ?? [];
+  final styles = style == null ? null : [style];
 
   if (directive != null) textDirectives.add(directive);
 
@@ -31,7 +33,7 @@ TextAttributes text({
     overflow: overflow,
     softWrap: softWrap,
     strutStyle: strutStyle,
-    style: style,
+    styles: ListAtttribute.maybeFrom(styles),
     textAlign: textAlign,
     textHeightBehavior: textHeightBehavior,
     textScaleFactor: textScaleFactor,

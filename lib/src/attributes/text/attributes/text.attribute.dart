@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../factory/exports.dart';
 import '../../attribute.dart';
+import '../../helpers/list.attribute.dart';
 import '../../resolvable_attribute.dart';
 import '../directives/text.directive.dart';
 import 'text_style.attribute.dart';
@@ -17,7 +18,7 @@ class TextAttributes extends ResolvableAttribute<TextAttributesResolved> {
   final bool? _softWrap;
   final Locale? _locale;
   final StrutStyle? _strutStyle;
-  final TextStyleAttribute? _style;
+  final ListAtttribute<TextStyleAttribute>? _styles;
 
   const TextAttributes({
     List<TextDirective> directives = const [],
@@ -26,7 +27,7 @@ class TextAttributes extends ResolvableAttribute<TextAttributesResolved> {
     TextOverflow? overflow,
     bool? softWrap,
     StrutStyle? strutStyle,
-    TextStyleAttribute? style,
+    ListAtttribute<TextStyleAttribute>? styles,
     TextAlign? textAlign,
     TextHeightBehavior? textHeightBehavior,
     double? textScaleFactor,
@@ -41,7 +42,7 @@ class TextAttributes extends ResolvableAttribute<TextAttributesResolved> {
         _softWrap = softWrap,
         _locale = locale,
         _strutStyle = strutStyle,
-        _style = style;
+        _styles = styles;
 
   factory TextAttributes.from({
     List<TextDirective>? directives,
@@ -50,11 +51,11 @@ class TextAttributes extends ResolvableAttribute<TextAttributesResolved> {
     TextOverflow? overflow,
     bool? softWrap,
     StrutStyle? strutStyle,
-    TextStyle? style,
     TextAlign? textAlign,
     TextHeightBehavior? textHeightBehavior,
     double? textScaleFactor,
     TextWidthBasis? textWidthBasis,
+    List<TextStyle>? styles,
   }) {
     return TextAttributes(
       directives: directives ?? const [],
@@ -63,7 +64,7 @@ class TextAttributes extends ResolvableAttribute<TextAttributesResolved> {
       overflow: overflow,
       softWrap: softWrap,
       strutStyle: strutStyle,
-      style: style == null ? null : TextStyleAttribute.fromTextStyle(style),
+      styles: ListAtttribute.maybeFrom(styles?.map(TextStyleAttribute.from)),
       textAlign: textAlign,
       textHeightBehavior: textHeightBehavior,
       textScaleFactor: textScaleFactor,
@@ -86,7 +87,7 @@ class TextAttributes extends ResolvableAttribute<TextAttributesResolved> {
       softWrap: other._softWrap ?? _softWrap,
       strutStyle: other._strutStyle ?? _strutStyle,
       // Need to inherit to allow for overrides.
-      style: _style?.merge(other._style) ?? other._style,
+      styles: _styles?.merge(other._styles) ?? other._styles,
       textAlign: other._textAlign ?? _textAlign,
       textHeightBehavior: other._textHeightBehavior ?? _textHeightBehavior,
       textScaleFactor: other._textScaleFactor ?? _textScaleFactor,
@@ -104,7 +105,10 @@ class TextAttributes extends ResolvableAttribute<TextAttributesResolved> {
       locale: _locale,
       textScaleFactor: _textScaleFactor,
       maxLines: _maxLines,
-      style: _style?.resolve(mix),
+      style: _styles
+          ?.resolve(mix)
+          .map((e) => e.resolve(mix))
+          .reduce((a, b) => a.merge(b)),
       textWidthBasis: _textWidthBasis,
       textHeightBehavior: _textHeightBehavior,
       directives: _directives,
@@ -113,7 +117,7 @@ class TextAttributes extends ResolvableAttribute<TextAttributesResolved> {
 
   @override
   get props => [
-        _style,
+        _styles,
         _strutStyle,
         _textAlign,
         _locale,

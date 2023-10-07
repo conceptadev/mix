@@ -119,20 +119,20 @@ class MixData with Comparable {
     return _attributes.ofType<A>() as A?;
   }
 
-  R? maybeOf<A extends ResolvableAttribute<R>, R>() {
-    final attribute = attributeOf<A>();
+  R? get<Attr extends ResolvableAttribute<R>, R>() {
+    final attribute = attributeOf<Attr>();
 
     return attribute?.resolve(this);
   }
 
-  R of<A extends ResolvableAttribute<R>, R>([R? defaultValue]) {
-    final attribute = attributeOf<A>();
+  R mustGet<Attr extends ResolvableAttribute<R>, R>([R? defaultValue]) {
+    final attribute = attributeOf<Attr>();
 
-    if (attribute is! A && defaultValue == null) {
+    if (attribute is! Attr && defaultValue == null) {
       throw Exception(
-        'No $A could be found starting from MixContext '
-        'when call mixContext.of<$A>(). This can happen because you '
-        'have not created an attribute of type $A. '
+        'No $Attr could be found starting from MixContext '
+        'when call mixContext.of<$Attr>(). This can happen because you '
+        'have not created an attribute of type $Attr. '
         'You can also provide a default value to the of method.',
       );
     }

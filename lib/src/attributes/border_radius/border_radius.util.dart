@@ -1,18 +1,19 @@
 // ignore_for_file: no-equal-arguments
 
 import 'border_radius.attribute.dart';
+import 'border_radius_directional.attribute.dart';
 import 'radius.dto.dart';
 
 const borderRadius = BorderRadiusAttribute.all;
 const borderRadiusOnly = BorderRadiusAttribute.only;
-const borderRadiusDirectional = BorderRadiusAttribute.directionalOnly;
+const borderRadiusDirectional = BorderRadiusDirectionalAttribute.only;
 
 BorderRadiusAttribute rounded(double value) {
   return BorderRadiusAttribute.circular(value);
 }
 
 BorderRadiusAttribute squared() {
-  return borderRadius(const RadiusDto.zero());
+  return borderRadius(RadiusDto.zero);
 }
 
 BorderRadiusAttribute roundedOnly({
@@ -29,17 +30,17 @@ BorderRadiusAttribute roundedOnly({
   );
 }
 
-BorderRadiusAttribute roundedDirectionalOnly({
+BorderRadiusDirectionalAttribute roundedDirectionalOnly({
   double? topStart,
   double? topEnd,
   double? bottomStart,
   double? bottomEnd,
 }) {
   return borderRadiusDirectional(
-    bottomStart: bottomStart == null ? null : RadiusDto.circular(bottomStart),
     bottomEnd: bottomEnd == null ? null : RadiusDto.circular(bottomEnd),
-    topStart: topStart == null ? null : RadiusDto.circular(topStart),
+    bottomStart: bottomStart == null ? null : RadiusDto.circular(bottomStart),
     topEnd: topEnd == null ? null : RadiusDto.circular(topEnd),
+    topStart: topStart == null ? null : RadiusDto.circular(topStart),
   );
 }
 
@@ -52,15 +53,15 @@ BorderRadiusAttribute roundedHorizontal({double? left, double? right}) {
   );
 }
 
-BorderRadiusAttribute roundedDirectionalHorizontal({
+BorderRadiusDirectionalAttribute roundedDirectionalHorizontal({
   double? start,
   double? end,
 }) {
   return borderRadiusDirectional(
-    bottomStart: start == null ? null : RadiusDto.circular(start),
     bottomEnd: end == null ? null : RadiusDto.circular(end),
-    topStart: start == null ? null : RadiusDto.circular(start),
+    bottomStart: start == null ? null : RadiusDto.circular(start),
     topEnd: end == null ? null : RadiusDto.circular(end),
+    topStart: start == null ? null : RadiusDto.circular(start),
   );
 }
 
@@ -73,14 +74,14 @@ BorderRadiusAttribute roundedVertical({double? top, double? bottom}) {
   );
 }
 
-BorderRadiusAttribute roundedDirectionalVertical({
+BorderRadiusDirectionalAttribute roundedDirectionalVertical({
   double? top,
   double? bottom,
 }) {
   return borderRadiusDirectional(
-    bottomStart: bottom == null ? null : RadiusDto.circular(bottom),
     bottomEnd: bottom == null ? null : RadiusDto.circular(bottom),
-    topStart: top == null ? null : RadiusDto.circular(top),
+    bottomStart: bottom == null ? null : RadiusDto.circular(bottom),
     topEnd: top == null ? null : RadiusDto.circular(top),
+    topStart: top == null ? null : RadiusDto.circular(top),
   );
 }

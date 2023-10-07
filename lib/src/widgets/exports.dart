@@ -1,12 +1,12 @@
 export '../attributes/flex/flex.attribute.dart';
 export '../attributes/flex/flex.utilities.dart';
-export 'container/container.attributes.dart';
+export 'container/container.attribute.dart';
 export 'container/container.descriptor.dart';
 export 'container/container.utilities.dart';
 export 'container/container.widget.dart';
 export 'flex/flex.descriptor.dart';
 export 'flex/flex.widget.dart';
-export 'icon/icon.attributes.dart';
+export 'icon/icon.attribute.dart';
 export 'icon/icon.descriptor.dart';
 export 'icon/icon.utilities.dart';
 export 'icon/icon.widget.dart';

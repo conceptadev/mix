@@ -1,4 +1,4 @@
-import '../attributes/exports.dart';
+import '../attributes/attribute.dart';
 import '../attributes/resolvable_attribute.dart';
 import '../decorators/decorator.dart';
 import '../helpers/attributes_map.dart';

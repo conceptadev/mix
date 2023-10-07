@@ -3,23 +3,23 @@
 import 'package:flutter/rendering.dart';
 
 import '../../factory/exports.dart';
-import '../attribute.dart';
 import '../border/box_border.attribute.dart';
 import '../border_radius/border_radius.attribute.dart';
-import '../box_shadow/box_shadow.dto.dart';
+import '../box_shadow/box_shadow.attribute.dart';
 import '../color/color.dto.dart';
 import '../gradient/gradient.attribute.dart';
-import '../resolvable_attribute.dart';
+import '../helpers/list.attribute.dart';
+import 'decoration.attribute.dart';
 
-class DecorationAttribute extends ResolvableAttribute<Decoration> {
+class BoxDecorationAttribute extends DecorationAttribute<BoxDecoration> {
   final ColorDto? color;
   final BoxBorderAttribute? border;
   final BorderRadiusAttribute? borderRadius;
   final GradientAttribute? gradient;
-  final List<BoxShadowDto>? boxShadow;
+  final ListAtttribute<BoxShadowAttribute>? boxShadow;
   final BoxShape? shape;
 
-  const DecorationAttribute({
+  const BoxDecorationAttribute({
     this.border,
     this.borderRadius,
     this.gradient,
@@ -29,44 +29,39 @@ class DecorationAttribute extends ResolvableAttribute<Decoration> {
   });
 
   @override
-  DecorationAttribute merge(DecorationAttribute? other) {
+  BoxDecorationAttribute merge(BoxDecorationAttribute? other) {
     if (other == null) return this;
 
-    return DecorationAttribute(
-      border: border?.merge(other.border),
-      borderRadius: borderRadius?.merge(other.borderRadius),
-      gradient: gradient?.merge(other.gradient),
-      boxShadow: Mergeable.mergeLists(boxShadow, other.boxShadow),
+    return BoxDecorationAttribute(
+      border: border?.merge(other.border) ?? other.border,
+      borderRadius:
+          borderRadius?.merge(other.borderRadius) ?? other.borderRadius,
+      gradient: gradient?.merge(other.gradient) ?? other.gradient,
+      boxShadow: boxShadow?.merge(other.boxShadow) ?? other.boxShadow,
+      color: color?.merge(other.color) ?? other.color,
+      shape: other.shape ?? shape,
     );
   }
 
   @override
-  Decoration resolve(MixData mix) {
-// TODO: We might have to merge the values.
+  BoxDecoration resolve(MixData mix) {
     BorderRadiusGeometry? _borderRadius = borderRadius?.resolve(mix);
     BoxBorder? _border = border?.resolve(mix);
     Gradient? _gradient = gradient?.resolve(mix);
 
-    if (_borderRadius == null) {
-      final borderRadiusAttribute = mix.attributeOf<BorderRadiusAttribute>();
-      _borderRadius = borderRadiusAttribute?.resolve(mix);
-    }
+    _borderRadius ??= mix.get<BorderRadiusAttribute, BorderRadius>();
 
-    if (_border == null) {
-      final borderAttribute = mix.attributeOf<BoxBorderAttribute>();
-      _border = borderAttribute?.resolve(mix);
-    }
+    _border ??= mix.get<BoxBorderAttribute, BoxBorder>();
 
-    if (_gradient == null) {
-      final gradientAttribute = mix.attributeOf<GradientAttribute>();
-      _gradient = gradientAttribute?.resolve(mix);
-    }
+    _gradient ??= mix.get<GradientAttribute, Gradient>();
+
+    final boxShadowAttributes = boxShadow?.resolve(mix);
 
     BoxDecoration boxDecoration = BoxDecoration(
       color: color?.resolve(mix),
       border: _border,
       borderRadius: _borderRadius,
-      boxShadow: boxShadow?.map((e) => e.resolve(mix)).toList(),
+      boxShadow: boxShadowAttributes?.map((e) => e.resolve(mix)).toList(),
       gradient: _gradient,
     );
 
@@ -76,9 +71,7 @@ class DecorationAttribute extends ResolvableAttribute<Decoration> {
     }
 
     // Border radius is added if no shape exists.
-    if (shape == null) {
-      boxDecoration = boxDecoration.copyWith(borderRadius: _borderRadius);
-    }
+    boxDecoration = boxDecoration.copyWith(borderRadius: _borderRadius);
 
     return boxDecoration;
   }

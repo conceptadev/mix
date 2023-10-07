@@ -2,20 +2,20 @@ import 'package:flutter/material.dart';
 
 import '../../factory/mix_provider_data.dart';
 import '../color/color.dto.dart';
-import 'shadow.dto.dart';
+import 'shadow.attribute.dart';
 
-class BoxShadowDto extends ShadowDto<BoxShadow> {
+class BoxShadowAttribute extends ShadowAttribute<BoxShadow> {
   final double? spreadRadius;
 
-  const BoxShadowDto({
+  const BoxShadowAttribute({
     super.color,
     super.offset,
     super.blurRadius,
     this.spreadRadius,
   });
 
-  factory BoxShadowDto.fromBoxShadow(BoxShadow boxShadow) {
-    return BoxShadowDto(
+  factory BoxShadowAttribute.fromBoxShadow(BoxShadow boxShadow) {
+    return BoxShadowAttribute(
       color: ColorDto.from(boxShadow.color),
       offset: Offset(boxShadow.offset.dx, boxShadow.offset.dy),
       blurRadius: boxShadow.blurRadius,
@@ -25,17 +25,19 @@ class BoxShadowDto extends ShadowDto<BoxShadow> {
 
   @override
   BoxShadow resolve(MixData mix) {
+    const defaultShadow = BoxShadow();
+
     return BoxShadow(
-      color: color?.resolve(mix) ?? const BoxShadow().color,
-      offset: offset ?? const BoxShadow().offset,
-      blurRadius: blurRadius ?? const BoxShadow().blurRadius,
-      spreadRadius: spreadRadius ?? const BoxShadow().spreadRadius,
+      color: color?.resolve(mix) ?? defaultShadow.color,
+      offset: offset ?? defaultShadow.offset,
+      blurRadius: blurRadius ?? defaultShadow.blurRadius,
+      spreadRadius: spreadRadius ?? defaultShadow.spreadRadius,
     );
   }
 
   @override
-  BoxShadowDto merge(BoxShadowDto? other) {
-    return BoxShadowDto(
+  BoxShadowAttribute merge(BoxShadowAttribute? other) {
+    return BoxShadowAttribute(
       color: color?.merge(other?.color) ?? color,
       offset: other?.offset ?? offset,
       blurRadius: other?.blurRadius ?? blurRadius,
@@ -44,5 +46,5 @@ class BoxShadowDto extends ShadowDto<BoxShadow> {
   }
 
   @override
-  get props => [color, offset, blurRadius, spreadRadius];
+  get props => [...super.props, spreadRadius];
 }

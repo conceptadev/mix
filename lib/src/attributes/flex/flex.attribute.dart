@@ -9,6 +9,9 @@ class FlexAttributes extends ResolvableAttribute<FlexAttributesResolved> {
   final CrossAxisAlignment? crossAxisAlignment;
   final MainAxisSize? mainAxisSize;
   final VerticalDirection? verticalDirection;
+  final TextDirection? textDirection;
+  final TextBaseline? textBaseline;
+  final Clip? clipBehavior;
   final double? gapSize;
 
   const FlexAttributes({
@@ -18,6 +21,9 @@ class FlexAttributes extends ResolvableAttribute<FlexAttributesResolved> {
     this.mainAxisAlignment,
     this.mainAxisSize,
     this.verticalDirection,
+    this.textDirection,
+    this.textBaseline,
+    this.clipBehavior,
   });
 
   @override
@@ -31,6 +37,9 @@ class FlexAttributes extends ResolvableAttribute<FlexAttributesResolved> {
       mainAxisAlignment: other.mainAxisAlignment ?? mainAxisAlignment,
       mainAxisSize: other.mainAxisSize ?? mainAxisSize,
       verticalDirection: other.verticalDirection ?? verticalDirection,
+      textDirection: other.textDirection ?? textDirection,
+      textBaseline: other.textBaseline ?? textBaseline,
+      clipBehavior: other.clipBehavior ?? clipBehavior,
     );
   }
 
@@ -43,16 +52,22 @@ class FlexAttributes extends ResolvableAttribute<FlexAttributesResolved> {
       mainAxisAlignment: mainAxisAlignment ?? MainAxisAlignment.start,
       mainAxisSize: mainAxisSize ?? MainAxisSize.max,
       verticalDirection: verticalDirection ?? VerticalDirection.down,
+      textDirection: textDirection,
+      textBaseline: textBaseline,
+      clipBehavior: clipBehavior ?? Clip.hardEdge,
     );
   }
 
   @override
-  get props => [
+  List<Object?> get props => [
         direction,
         mainAxisAlignment,
         crossAxisAlignment,
         mainAxisSize,
         verticalDirection,
+        textDirection,
+        textBaseline,
+        clipBehavior,
         gapSize,
       ];
 }
@@ -60,13 +75,12 @@ class FlexAttributes extends ResolvableAttribute<FlexAttributesResolved> {
 class FlexAttributesResolved {
   final Axis? direction;
   final MainAxisAlignment mainAxisAlignment;
-
   final CrossAxisAlignment crossAxisAlignment;
-
   final MainAxisSize mainAxisSize;
-
   final VerticalDirection verticalDirection;
-
+  final TextDirection? textDirection;
+  final TextBaseline? textBaseline;
+  final Clip? clipBehavior;
   final double? gapSize;
 
   const FlexAttributesResolved({
@@ -76,5 +90,8 @@ class FlexAttributesResolved {
     required this.mainAxisAlignment,
     required this.mainAxisSize,
     required this.verticalDirection,
+    this.textDirection,
+    this.textBaseline,
+    this.clipBehavior,
   });
 }

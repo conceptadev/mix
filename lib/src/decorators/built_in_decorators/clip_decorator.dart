@@ -43,7 +43,7 @@ class ClipDecorator extends Decorator {
     }
 
     if (clipType == ClipDecoratorType.rounded) {
-      final animation = mix.of<AnimationAttribute, AnimationDto>(
+      final animation = mix.mustGet<AnimationAttribute, AnimationDto>(
         const AnimationDto.defaults(),
       );
 
