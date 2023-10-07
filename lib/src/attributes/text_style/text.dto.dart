@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../attributes/exports.dart';
-import 'text_directives/text_directives.dart';
+import '../../widgets/text/text_directives/text_directives.dart';
 
 class TextDto extends Dto {
   final bool softWrap;
@@ -15,8 +15,9 @@ class TextDto extends Dto {
 
   final TextWidthBasis? textWidthBasis;
   final TextHeightBehavior? textHeightBehavior;
-  final List<TextDirective> _directives;
+  final TextStyle? style;
 
+  final List<TextDirective> _directives;
   const TextDto({
     required this.softWrap,
     required this.overflow,
@@ -25,6 +26,7 @@ class TextDto extends Dto {
     this.locale,
     this.textScaleFactor,
     this.maxLines,
+    this.style,
     this.textWidthBasis,
     this.textHeightBehavior,
     List<TextDirective>? directives,
@@ -53,6 +55,7 @@ class TextDto extends Dto {
       locale: other.locale ?? locale,
       textScaleFactor: other.textScaleFactor ?? textScaleFactor,
       maxLines: other.maxLines ?? maxLines,
+      style: style?.merge(other.style) ?? other.style,
       textWidthBasis: other.textWidthBasis ?? textWidthBasis,
       textHeightBehavior: other.textHeightBehavior ?? textHeightBehavior,
       directives: [..._directives, ...other._directives],
@@ -71,5 +74,6 @@ class TextDto extends Dto {
         textWidthBasis,
         textHeightBehavior,
         _directives,
+        style,
       ];
 }

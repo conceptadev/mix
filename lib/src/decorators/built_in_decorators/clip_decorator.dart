@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../attributes/shared/shared.descriptor.dart';
+import '../../attributes/exports.dart';
 import '../../factory/mix_provider_data.dart';
 import '../decorator.dart';
 
@@ -11,7 +11,7 @@ enum ClipDecoratorType {
   triangle,
 }
 
-class ClipDecorator extends WidgetDecorator<ClipDecorator> {
+class ClipDecorator extends Decorator {
   final BorderRadius borderRadius;
   final ClipDecoratorType clipType;
 
@@ -43,12 +43,14 @@ class ClipDecorator extends WidgetDecorator<ClipDecorator> {
     }
 
     if (clipType == ClipDecoratorType.rounded) {
-      final common = CommonDescriptor.fromContext(mix);
+      final animation = mix.dependOf<AnimationAttribute, AnimationDto>(
+        const AnimationDto.defaults(),
+      );
 
-      return common.animated
+      return mix.animated
           ? AnimatedClipRRect(
-              duration: common.animationDuration,
-              curve: common.animationCurve,
+              duration: animation.duration,
+              curve: animation.curve,
               borderRadius: borderRadius,
               key: mergeKey,
               child: child,

@@ -6,7 +6,7 @@ import '../helpers/compare_mixin/compare_mixin.dart';
 import '../variants/variant_attribute.dart';
 
 class StyleMixData with CompareMixin {
-  final AttributesMap<WidgetDecorator>? _decorators;
+  final AttributesMap<Decorator>? _decorators;
   final AttributesMap<ContextVariantAttribute>? _contextVariants;
 
   final AttributesMap<VariantAttribute>? _variants;
@@ -15,7 +15,7 @@ class StyleMixData with CompareMixin {
   const StyleMixData({
     required AttributesMap<ResolvableAttribute>? attributes,
     required AttributesMap<VariantAttribute>? variants,
-    required AttributesMap<WidgetDecorator>? decorators,
+    required AttributesMap<Decorator>? decorators,
     required AttributesMap<ContextVariantAttribute>? contextVariants,
   })  : _attributes = attributes,
         _variants = variants,
@@ -28,12 +28,12 @@ class StyleMixData with CompareMixin {
     final variantList = <VariantAttribute>[];
     final contextVariantList = <ContextVariantAttribute>[];
     final attributeList = <ResolvableAttribute>[];
-    final decoratorList = <WidgetDecorator>[];
+    final decoratorList = <Decorator>[];
 
     for (final attribute in attributes) {
       if (attribute is ResolvableAttribute) {
         attributeList.add(attribute);
-      } else if (attribute is WidgetDecorator) {
+      } else if (attribute is Decorator) {
         decoratorList.add(attribute);
       } else if (attribute is VariantAttribute) {
         if (attribute is ContextVariantAttribute) {
@@ -67,7 +67,7 @@ class StyleMixData with CompareMixin {
     return _variants ?? const AttributesMap.empty();
   }
 
-  AttributesMap<WidgetDecorator> get decorators {
+  AttributesMap<Decorator> get decorators {
     return _decorators ?? const AttributesMap.empty();
   }
 
@@ -107,7 +107,7 @@ class StyleMixData with CompareMixin {
   /// Creates a new [StyleMixData] instance by replacing the specified attributes with new values.
   StyleMixData copyWith({
     AttributesMap<ResolvableAttribute>? attributes,
-    AttributesMap<WidgetDecorator>? decorators,
+    AttributesMap<Decorator>? decorators,
     AttributesMap<VariantAttribute>? variants,
     AttributesMap<ContextVariantAttribute>? contextVariants,
   }) {

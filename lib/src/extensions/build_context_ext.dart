@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../attributes/shared/shared.descriptor.dart';
 import '../factory/mix_provider.dart';
 import '../factory/mix_provider_data.dart';
 import '../theme/mix_theme.dart';
@@ -9,7 +8,6 @@ import '../widgets/flex/flex.descriptor.dart';
 import '../widgets/icon/icon.descriptor.dart';
 import '../widgets/image/image.descriptor.dart';
 import '../widgets/stack/stack.descriptor.dart';
-import '../widgets/text/text.dto.dart';
 
 extension BuildContextExt on BuildContext {
   MixData? get mix => MixProvider.of(this);

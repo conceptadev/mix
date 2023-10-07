@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../factory/mix_provider_data.dart';
 import '../decorator.dart';
 
-class FlexibleDecorator extends WidgetDecorator<FlexibleDecorator> {
+class FlexibleDecorator extends Decorator {
   final FlexFit? flexFit;
   final int? flex;
   const FlexibleDecorator({this.flex, this.flexFit, super.key});

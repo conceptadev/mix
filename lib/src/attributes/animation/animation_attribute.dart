@@ -24,7 +24,10 @@ class AnimationAttribute extends ResolvableAttribute<AnimationDto> {
 
   @override
   AnimationDto resolve(MixData mix) {
-    return AnimationDto(duration: _duration, curve: _curve);
+    return AnimationDto(
+      duration: _duration ?? Duration.zero,
+      curve: _curve ?? Curves.linear,
+    );
   }
 
   @override

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../../attributes/shared/shared.descriptor.dart';
+import '../../attributes/exports.dart';
 import '../../factory/mix_provider_data.dart';
 import '../decorator.dart';
 
-class ScaleDecorator extends WidgetDecorator<ScaleDecorator> {
+class ScaleDecorator extends Decorator {
   final double scale;
   const ScaleDecorator(this.scale, {super.key});
 
@@ -17,13 +17,15 @@ class ScaleDecorator extends WidgetDecorator<ScaleDecorator> {
   get props => [scale];
   @override
   Widget build(Widget child, MixData mix) {
-    final common = CommonDescriptor.fromContext(mix);
+    final animation = mix.dependOf<AnimationAttribute, AnimationDto>(
+      const AnimationDto.defaults(),
+    );
 
-    return common.animated
+    return mix.animated
         ? TweenAnimationBuilder<double>(
             tween: Tween<double>(begin: 1, end: scale),
-            duration: common.animationDuration,
-            curve: common.animationCurve,
+            duration: animation.duration,
+            curve: animation.curve,
             builder: (context, value, childWidget) {
               return Transform.scale(
                 key: mergeKey,

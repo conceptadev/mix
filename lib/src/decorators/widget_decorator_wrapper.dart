@@ -37,7 +37,7 @@ class _RenderDecoratorWidget extends StatelessWidget {
     required this.mix,
   });
 
-  final WidgetDecorator decorator;
+  final Decorator decorator;
   final MixData mix;
   final Widget child;
 

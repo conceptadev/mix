@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../../attributes/shared/shared.descriptor.dart';
+import '../../attributes/exports.dart';
 import '../../factory/mix_provider_data.dart';
 import '../decorator.dart';
 
-class RotateDecorator extends WidgetDecorator<RotateDecorator> {
+class RotateDecorator extends Decorator {
   final int quarterTurns;
   const RotateDecorator({super.key, required this.quarterTurns});
 
@@ -17,14 +17,16 @@ class RotateDecorator extends WidgetDecorator<RotateDecorator> {
   get props => [quarterTurns];
   @override
   Widget build(Widget child, MixData mix) {
-    final common = CommonDescriptor.fromContext(mix);
+    if (mix.animated) {
+      final animation = mix.dependOf<AnimationAttribute, AnimationDto>(
+        const AnimationDto.defaults(),
+      );
 
-    if (common.animated) {
       return AnimatedRotation(
         key: mergeKey,
         turns: quarterTurns / 4,
-        curve: common.animationCurve,
-        duration: common.animationDuration,
+        curve: animation.curve,
+        duration: animation.duration,
         child: child,
       );
     }

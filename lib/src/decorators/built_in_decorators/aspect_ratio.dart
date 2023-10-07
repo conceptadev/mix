@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../../attributes/shared/shared.descriptor.dart';
+import '../../attributes/animation/animation.dart';
 import '../../factory/mix_provider_data.dart';
 import '../decorator.dart';
 
-class AspectRatioDecorator extends WidgetDecorator<AspectRatioDecorator> {
+class AspectRatioDecorator extends Decorator {
   final double aspectRatio;
   const AspectRatioDecorator({required this.aspectRatio, super.key});
 
@@ -17,13 +17,15 @@ class AspectRatioDecorator extends WidgetDecorator<AspectRatioDecorator> {
   get props => [aspectRatio];
   @override
   Widget build(Widget child, MixData mix) {
-    final common = CommonDescriptor.fromContext(mix);
+    final animation = mix.dependOf<AnimationAttribute, AnimationDto>(
+      const AnimationDto.defaults(),
+    );
 
-    return common.animated
+    return mix.animated
         ? TweenAnimationBuilder<double>(
             tween: Tween<double>(end: aspectRatio),
-            duration: common.animationDuration,
-            curve: common.animationCurve,
+            duration: animation.duration,
+            curve: animation.curve,
             builder: (context, value, builderWidget) {
               return AspectRatio(
                 key: mergeKey,

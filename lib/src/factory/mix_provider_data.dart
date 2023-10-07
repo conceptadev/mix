@@ -15,9 +15,11 @@ import 'style_mix_data.dart';
 /// It contains a mixture of properties and methods useful for handling different attributes,
 /// decorators and token resolvers.
 class MixData with CompareMixin {
+  final bool animated;
+
   // Instance variables for widget attributes, widget decorators and token resolver.
   final AttributesMap<ResolvableAttribute> _attributes;
-  final AttributesMap<WidgetDecorator> _decorators;
+  final AttributesMap<Decorator> _decorators;
   final MixTokenResolver _tokenResolver;
 
   /// A Private constructor for the [MixData] class that initializes its main variables.
@@ -26,7 +28,8 @@ class MixData with CompareMixin {
   MixData._({
     required MixTokenResolver tokenResolver,
     required AttributesMap<ResolvableAttribute> attributes,
-    required AttributesMap<WidgetDecorator> decorators,
+    required AttributesMap<Decorator> decorators,
+    required this.animated,
   })  : _attributes = attributes,
         _decorators = decorators,
         _tokenResolver = tokenResolver;
@@ -36,6 +39,7 @@ class MixData with CompareMixin {
   factory MixData.create({
     required BuildContext context,
     required StyleMix style,
+    bool animated = false,
   }) {
     // Tracks the values selected and does not allow for
     // attributes already expended to be expended again.
@@ -57,6 +61,7 @@ class MixData with CompareMixin {
       tokenResolver: MixTokenResolver(context),
       attributes: combinedValues.attributes,
       decorators: combinedValues.decorators,
+      animated: animated,
     );
   }
 
@@ -101,8 +106,8 @@ class MixData with CompareMixin {
 
   /// A getter method for [_decorators].
   ///
-  /// Returns a list of all [WidgetDecorator].
-  List<WidgetDecorator> get decorators {
+  /// Returns a list of all [Decorator].
+  List<Decorator> get decorators {
     return _decorators.toList();
   }
 
@@ -163,6 +168,7 @@ class MixData with CompareMixin {
       tokenResolver: _tokenResolver,
       attributes: other._attributes.merge(_attributes),
       decorators: other._decorators.merge(_decorators),
+      animated: animated,
     );
   }
 
@@ -170,5 +176,5 @@ class MixData with CompareMixin {
   ///
   /// Returns a list of properties [_attributes] & [_decorators].
   @override
-  get props => [_attributes, _decorators];
+  get props => [_attributes, _decorators, animated];
 }

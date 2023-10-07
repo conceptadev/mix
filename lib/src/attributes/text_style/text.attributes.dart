@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../../attributes/resolvable_attribute.dart';
 import '../../attributes/text_style/text_style_attribute.dart';
-import '../../extensions/helper_ext.dart';
-import '../exports.dart';
-import 'text_directives/text_directives.dart';
+import '../../factory/exports.dart';
+import '../../widgets/text/text_directives/text_directives.dart';
+import 'text.dto.dart';
 
 class TextAttributes extends ResolvableAttribute<TextDto> {
   final StrutStyle? strutStyle;
@@ -21,7 +21,6 @@ class TextAttributes extends ResolvableAttribute<TextDto> {
 
   final List<TextDirective> directives;
 
-  final List<TextStyleAttribute>? _styles;
   final TextStyleAttribute? _style;
 
   const TextAttributes({
@@ -32,13 +31,11 @@ class TextAttributes extends ResolvableAttribute<TextDto> {
     this.softWrap,
     this.strutStyle,
     TextStyleAttribute? style,
-    List<TextStyleAttribute>? styles,
     this.textAlign,
     this.textHeightBehavior,
     this.textScaleFactor,
     this.textWidthBasis,
-  })  : _styles = styles,
-        _style = style;
+  }) : _style = style;
 
   factory TextAttributes.fromValues({
     List<TextDirective>? directives,
@@ -60,7 +57,7 @@ class TextAttributes extends ResolvableAttribute<TextDto> {
       overflow: overflow,
       softWrap: softWrap,
       strutStyle: strutStyle,
-      style: TextStyleAttribute.maybeFrom(style),
+      style: style == null ? null : TextStyleAttribute.from(style),
       textAlign: textAlign,
       textHeightBehavior: textHeightBehavior,
       textScaleFactor: textScaleFactor,
@@ -69,15 +66,12 @@ class TextAttributes extends ResolvableAttribute<TextDto> {
   }
 
   // Combines the text styles.
-  List<TextStyleAttribute> get styles {
-    return [if (_style != null) _style!, ...?_styles];
-  }
 
   @override
   TextAttributes merge(TextAttributes? other) {
     if (other == null) return this;
 
-    return copyWith(
+    return TextAttributes(
       directives: other.directives,
       locale: other.locale,
       maxLines: other.maxLines,
@@ -86,8 +80,7 @@ class TextAttributes extends ResolvableAttribute<TextDto> {
       softWrap: other.softWrap,
       strutStyle: other.strutStyle,
       // Need to inherit to allow for overrides.
-      styles: other.styles,
-
+      style: _style?.merge(other._style) ?? other._style,
       textAlign: other.textAlign,
       textHeightBehavior: other.textHeightBehavior,
       textScaleFactor: other.textScaleFactor,
@@ -96,56 +89,25 @@ class TextAttributes extends ResolvableAttribute<TextDto> {
   }
 
   @override
-  TextAttributes copyWith({
-    List<TextDirective>? directives,
-    Locale? locale,
-    int? maxLines,
-    TextOverflow? overflow,
-    bool? softWrap,
-    StrutStyle? strutStyle,
-    List<TextStyleAttribute>? styles,
-    TextAlign? textAlign,
-    TextHeightBehavior? textHeightBehavior,
-    double? textScaleFactor,
-    TextWidthBasis? textWidthBasis,
-  }) {
-    return TextAttributes(
-      directives: [...this.directives, ...?directives],
-      locale: locale ?? this.locale,
-      maxLines: maxLines ?? this.maxLines,
-      overflow: overflow ?? this.overflow,
-      softWrap: softWrap ?? this.softWrap,
-      strutStyle: this.strutStyle?.merge(strutStyle) ?? strutStyle,
-      styles: [...this.styles, ...?styles],
-      textAlign: textAlign ?? this.textAlign,
-      textHeightBehavior: textHeightBehavior ?? this.textHeightBehavior,
-      textScaleFactor: textScaleFactor ?? this.textScaleFactor,
-      textWidthBasis: textWidthBasis ?? this.textWidthBasis,
-    );
-  }
-
-  @override
   TextDto resolve(MixData mix) {
-    final resolvedStyles = styles.map((e) => e.resolve(mix)).toList();
-
     return TextDto(
-      styles: resolvedStyles,
-      softWrap: softWrap?.resolve(mix),
-      overflow: overflow?.resolve(mix),
-      strutStyle: strutStyle?.resolve(mix),
-      textAlign: textAlign?.resolve(mix),
-      locale: locale?.resolve(mix),
-      textScaleFactor: textScaleFactor?.resolve(mix),
-      maxLines: maxLines?.resolve(mix),
-      textWidthBasis: textWidthBasis?.resolve(mix),
-      textHeightBehavior: textHeightBehavior?.resolve(mix),
-      directives: resolvedDirectives,
+      softWrap: softWrap ?? true,
+      overflow: overflow ?? TextOverflow.clip,
+      strutStyle: strutStyle,
+      textAlign: textAlign,
+      locale: locale,
+      textScaleFactor: textScaleFactor,
+      maxLines: maxLines,
+      style: _style?.resolve(mix),
+      textWidthBasis: textWidthBasis,
+      textHeightBehavior: textHeightBehavior,
+      directives: directives,
     );
   }
 
   @override
   get props => [
-        styles,
+        _style,
         strutStyle,
         textAlign,
         locale,
