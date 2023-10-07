@@ -2,8 +2,8 @@
 
 import 'package:flutter/material.dart';
 
-import '../../dtos/dto.dart';
 import '../../factory/mix_provider_data.dart';
+import '../resolvable_attribute.dart';
 
 class RadiusAttribute extends ResolvableAttribute<Radius> {
   /// The radius value on the horizontal axis.

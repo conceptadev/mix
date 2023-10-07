@@ -1,11 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import '../../attributes/shared/shared.descriptor.dart';
+import '../../attributes/exports.dart';
+import '../../attributes/text_style/text_style_attribute.dart';
 import '../../factory/mix_provider_data.dart';
 import '../empty/empty.widget.dart';
 import '../styled.widget.dart';
-import 'text.descriptor.dart';
+import 'text.dto.dart';
 
 @Deprecated('Use StyledText now')
 typedef TextMix = StyledText;
@@ -64,10 +65,14 @@ class MixedText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final common = CommonDescriptor.fromContext(mix);
-    final text = StyledTextDescriptor.fromContext(mix);
+    final textStyle = mix.of<TextStyleAttribute, TextStyle>();
+    final animation = mix.of<AnimationAttribute, AnimationDto>();
+    final textDirection = mix.of<TextDirectionAttribute, TextDirection>();
+    final visible = mix.dependOf<VisibleAttribute, bool>(true);
 
-    if (!common.visible) {
+    final text = TextDto.fromContext(mix);
+
+    if (!visible) {
       return const Empty();
     }
 
@@ -75,10 +80,10 @@ class MixedText extends StatelessWidget {
 
     final textWidget = Text(
       modifiedContent,
-      style: text.style,
+      style: textStyle,
       strutStyle: text.strutStyle,
       textAlign: text.textAlign,
-      textDirection: common.textDirection,
+      textDirection: textDirection,
       locale: text.locale,
       softWrap: text.softWrap,
       overflow: text.overflow,
@@ -91,15 +96,15 @@ class MixedText extends StatelessWidget {
 
     return common.animated
         ? AnimatedDefaultTextStyle(
-            style: text.style ??
+            style: textStyle ??
                 Theme.of(context).textTheme.bodyLarge ??
                 const TextStyle(),
             textAlign: text.textAlign,
             softWrap: text.softWrap,
             overflow: text.overflow,
             maxLines: text.maxLines,
-            curve: common.animationCurve,
-            duration: common.animationDuration,
+            curve: animation?.curve ?? Curves.linear,
+            duration: animation?.duration ?? Duration.zero,
             child: textWidget,
           )
         : textWidget;

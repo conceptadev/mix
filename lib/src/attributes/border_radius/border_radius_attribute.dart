@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../dtos/dto.dart';
 import '../../factory/exports.dart';
+import '../resolvable_attribute.dart';
 import 'radius_attribute.dart';
 
 class BorderRadiusAttribute extends ResolvableAttribute<BorderRadiusGeometry> {
@@ -31,6 +31,34 @@ class BorderRadiusAttribute extends ResolvableAttribute<BorderRadiusGeometry> {
         _topEnd = topEnd,
         _bottomStart = bottomStart,
         _bottomEnd = bottomEnd;
+
+  factory BorderRadiusAttribute.circular(double radius) {
+    return BorderRadiusAttribute.all(RadiusAttribute.circular(radius));
+  }
+
+  const BorderRadiusAttribute.vertical({
+    RadiusAttribute? bottom,
+    RadiusAttribute? top,
+  })  : _topLeft = top,
+        _topRight = top,
+        _bottomLeft = bottom,
+        _bottomRight = bottom,
+        _topStart = null,
+        _topEnd = null,
+        _bottomStart = null,
+        _bottomEnd = null;
+
+  const BorderRadiusAttribute.horizontal({
+    RadiusAttribute? left,
+    RadiusAttribute? right,
+  })  : _topLeft = left,
+        _topRight = right,
+        _bottomLeft = left,
+        _bottomRight = right,
+        _topStart = null,
+        _topEnd = null,
+        _bottomStart = null,
+        _bottomEnd = null;
 
   const BorderRadiusAttribute.only({
     RadiusAttribute? bottomLeft,
@@ -65,10 +93,10 @@ class BorderRadiusAttribute extends ResolvableAttribute<BorderRadiusGeometry> {
         _topRight = radius,
         _bottomLeft = radius,
         _bottomRight = radius,
-        _topStart = radius,
-        _topEnd = radius,
-        _bottomStart = radius,
-        _bottomEnd = radius;
+        _topStart = null,
+        _topEnd = null,
+        _bottomStart = null,
+        _bottomEnd = null;
 
   factory BorderRadiusAttribute.from(BorderRadiusGeometry borderRadius) {
     if (borderRadius is BorderRadius) {
@@ -93,6 +121,30 @@ class BorderRadiusAttribute extends ResolvableAttribute<BorderRadiusGeometry> {
       'Cannot create a border radius attribute from a border radius of type ${borderRadius.runtimeType}',
     );
   }
+
+  @visibleForTesting
+  RadiusAttribute? get topLeft => _topLeft;
+
+  @visibleForTesting
+  RadiusAttribute? get topRight => _topRight;
+
+  @visibleForTesting
+  RadiusAttribute? get bottomLeft => _bottomLeft;
+
+  @visibleForTesting
+  RadiusAttribute? get bottomRight => _bottomRight;
+
+  @visibleForTesting
+  RadiusAttribute? get topStart => _topStart;
+
+  @visibleForTesting
+  RadiusAttribute? get topEnd => _topEnd;
+
+  @visibleForTesting
+  RadiusAttribute? get bottomStart => _bottomStart;
+
+  @visibleForTesting
+  RadiusAttribute? get bottomEnd => _bottomEnd;
 
   bool get _isDirectional =>
       _topStart != null ||

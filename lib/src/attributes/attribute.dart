@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/foundation.dart';
 
+import '../factory/exports.dart';
 import '../helpers/compare_mixin/compare_mixin.dart';
 
 /// Base attribute.
@@ -12,6 +13,14 @@ abstract class Attribute with CompareMixin, MergeMixin {
   final Key? _key;
   const Attribute({Key? key}) : _key = key;
   Key get mergeKey => _key == null ? ValueKey(runtimeType) : ValueKey(_key);
+}
+
+abstract class Dto with CompareMixin, MergeMixin {
+  const Dto();
+}
+
+mixin ResolveMixin<T> {
+  T resolve(MixData mix);
 }
 
 mixin MergeMixin<T> {
@@ -41,6 +50,7 @@ mixin MergeMixin<T> {
 }
 
 /// An interface that add support to custom attributes for [MixContext].
+@Deprecated('Use Attribute instead')
 abstract class StyledWidgetAttributes extends Attribute {
   const StyledWidgetAttributes();
 

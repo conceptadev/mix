@@ -1,10 +1,11 @@
-import '../../mix.dart';
+import '../attributes/exports.dart';
+import '../variants/exports.dart';
+import '../widgets/exports.dart';
 import '../widgets/text/text_legacy.utilities.dart';
+import 'exports.dart';
 
 /// ALL ALIASES HERE HAVE BEEN DEPRECATED AND WILL BE REMOVED IN THE FUTURE
 /// FEEL FREE TO BRING INTERNALLY TO YOUR OWN PROJECT
-@Deprecated('Use animation instead')
-const animated = CommonUtility.animation;
 
 @Deprecated('Use mainAxisAlignment instead')
 final mainAxis = mainAxisAlignment;
@@ -181,68 +182,65 @@ const marginX = marginHorizontal;
 const marginY = marginVertical;
 
 @Deprecated(kShortAliasDeprecation)
-final r = const ContainerStyleUtilities().rounded;
+const r = rounded;
 
 @Deprecated(kShortAliasDeprecation)
-final roundedH = const ContainerStyleUtilities().roundedHorizontal;
+const roundedH = roundedHorizontal;
 
 @Deprecated(kShortAliasDeprecation)
-final roundedV = const ContainerStyleUtilities().roundedVertical;
+const roundedV = roundedVertical;
 
 @Deprecated(kShortAliasDeprecation)
-final roundedDH = const ContainerStyleUtilities().roundedDirectionalHorizontal;
+const roundedDH = roundedDirectionalHorizontal;
 
 @Deprecated(kShortAliasDeprecation)
-StyledContainerAttributes roundedTL(double value) {
-  return const ContainerStyleUtilities().roundedOnly(topLeft: value);
+StyledContainerAttributes roundedTL() {
+  throw UnimplementedError();
 }
 
 @Deprecated(kShortAliasDeprecation)
-StyledContainerAttributes roundedTR(double value) {
-  return const ContainerStyleUtilities().roundedOnly(topRight: value);
+StyledContainerAttributes roundedTR() {
+  throw UnimplementedError();
 }
 
 @Deprecated(kShortAliasDeprecation)
-StyledContainerAttributes roundedBL(double value) {
-  return const ContainerStyleUtilities().roundedOnly(bottomLeft: value);
+StyledContainerAttributes roundedBL() {
+  throw UnimplementedError();
 }
 
 @Deprecated(kShortAliasDeprecation)
-StyledContainerAttributes roundedBR(double value) {
-  return const ContainerStyleUtilities().roundedOnly(bottomRight: value);
+StyledContainerAttributes roundedBR() {
+  throw UnimplementedError();
 }
 
 @Deprecated(kShortAliasDeprecation)
-StyledContainerAttributes roundedTS(double value) {
-  return const ContainerStyleUtilities()
-      .roundedDirectionalOnly(topStart: value);
+StyledContainerAttributes roundedTS() {
+  throw UnimplementedError();
 }
 
 @Deprecated(kShortAliasDeprecation)
-StyledContainerAttributes roundedTE(double value) {
-  return const ContainerStyleUtilities().roundedDirectionalOnly(topEnd: value);
+StyledContainerAttributes roundedTE() {
+  throw UnimplementedError();
 }
 
 @Deprecated(kShortAliasDeprecation)
-StyledContainerAttributes roundedBS(double value) {
-  return const ContainerStyleUtilities()
-      .roundedDirectionalOnly(bottomStart: value);
+StyledContainerAttributes roundedBS() {
+  throw UnimplementedError();
 }
 
 @Deprecated(kShortAliasDeprecation)
-StyledContainerAttributes roundedBE(double value) {
-  return const ContainerStyleUtilities()
-      .roundedDirectionalOnly(bottomEnd: value);
+StyledContainerAttributes roundedBE() {
+  throw UnimplementedError();
 }
 
 @Deprecated(kShortAliasDeprecation)
 final bgColor = const ContainerStyleUtilities().backgroundColor;
 
 @Deprecated(kShortAliasDeprecation)
-final h = const ContainerStyleUtilities().height;
+const h = height;
 
 @Deprecated(kShortAliasDeprecation)
-final w = const ContainerStyleUtilities().width;
+const w = width;
 
 @Deprecated(kShortAliasDeprecation)
 const maxH = maxHeight;
@@ -257,37 +255,22 @@ const minH = minHeight;
 const minW = minWidth;
 
 @Deprecated(kShortAliasDeprecation)
-final bt = const ContainerStyleUtilities().borderTop;
+const bt = borderTop;
 
 @Deprecated(kShortAliasDeprecation)
-final bb = const ContainerStyleUtilities().borderBottom;
+const bb = borderBottom;
 
 @Deprecated(kShortAliasDeprecation)
-final bl = const ContainerStyleUtilities().borderLeft;
+const bl = borderLeft;
 
 @Deprecated(kShortAliasDeprecation)
-final br = const ContainerStyleUtilities().borderRight;
+const br = borderRight;
 
 @Deprecated(kShortAliasDeprecation)
-final bs = const ContainerStyleUtilities().borderStart;
+const bs = borderStart;
 
 @Deprecated(kShortAliasDeprecation)
-final be = const ContainerStyleUtilities().borderEnd;
-
-@Deprecated('Use borderDirectionalStart instead')
-final borderStart = const ContainerStyleUtilities().borderStart;
-
-@Deprecated('Use borderDirectionalEnd instead')
-final borderEnd = const ContainerStyleUtilities().borderEnd;
-
-@Deprecated('Use border(color:color) instead')
-final borderColor = const ContainerStyleUtilities().borderColor;
-
-@Deprecated('Use border(width:width) instead')
-final borderWidth = const ContainerStyleUtilities().borderWidth;
-
-@Deprecated('Use border(color:color) instead')
-final borderStyle = const ContainerStyleUtilities().borderStyle;
+const be = borderEnd;
 
 @Deprecated('Use alignment instead')
-final align = alignment;
+const align = aligment;

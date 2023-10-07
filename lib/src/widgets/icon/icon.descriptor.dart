@@ -10,7 +10,7 @@ class StyledIconDescriptor {
   const StyledIconDescriptor({this.color, required this.size});
 
   factory StyledIconDescriptor.fromContext(MixData mix) {
-    final iconAttributes = mix.attributesOfType<StyledIconAttributes>();
+    final iconAttributes = mix.attributeOf<StyledIconAttributes>();
 
     StyledIconDescriptor props;
 

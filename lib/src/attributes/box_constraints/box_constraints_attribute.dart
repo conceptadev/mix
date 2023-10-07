@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../dtos/dto.dart';
 import '../../factory/exports.dart';
+import '../resolvable_attribute.dart';
 
 class BoxConstraintsAttribute extends ResolvableAttribute<BoxConstraints> {
   final double? minWidth;

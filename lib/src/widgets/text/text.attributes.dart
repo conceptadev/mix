@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 
-import '../../attributes/attribute.dart';
-import '../../dtos/text_style_attribute.dart';
+import '../../attributes/resolvable_attribute.dart';
+import '../../attributes/text_style/text_style_attribute.dart';
 import '../../extensions/helper_ext.dart';
+import '../exports.dart';
 import 'text_directives/text_directives.dart';
 
-@Deprecated('Use TextStyleAttributes instead')
-typedef TextAttributes = StyledTextAttributes;
-
-class StyledTextAttributes extends StyledWidgetAttributes {
+class TextAttributes extends ResolvableAttribute<TextDto> {
   final StrutStyle? strutStyle;
   final TextAlign? textAlign;
 
@@ -26,7 +24,7 @@ class StyledTextAttributes extends StyledWidgetAttributes {
   final List<TextStyleAttribute>? _styles;
   final TextStyleAttribute? _style;
 
-  const StyledTextAttributes({
+  const TextAttributes({
     this.directives = const [],
     this.locale,
     this.maxLines,
@@ -42,7 +40,7 @@ class StyledTextAttributes extends StyledWidgetAttributes {
   })  : _styles = styles,
         _style = style;
 
-  factory StyledTextAttributes.fromValues({
+  factory TextAttributes.fromValues({
     List<TextDirective>? directives,
     Locale? locale,
     int? maxLines,
@@ -55,7 +53,7 @@ class StyledTextAttributes extends StyledWidgetAttributes {
     double? textScaleFactor,
     TextWidthBasis? textWidthBasis,
   }) {
-    return StyledTextAttributes(
+    return TextAttributes(
       directives: directives ?? const [],
       locale: locale,
       maxLines: maxLines,
@@ -76,7 +74,7 @@ class StyledTextAttributes extends StyledWidgetAttributes {
   }
 
   @override
-  StyledTextAttributes merge(StyledTextAttributes? other) {
+  TextAttributes merge(TextAttributes? other) {
     if (other == null) return this;
 
     return copyWith(
@@ -98,7 +96,7 @@ class StyledTextAttributes extends StyledWidgetAttributes {
   }
 
   @override
-  StyledTextAttributes copyWith({
+  TextAttributes copyWith({
     List<TextDirective>? directives,
     Locale? locale,
     int? maxLines,
@@ -111,7 +109,7 @@ class StyledTextAttributes extends StyledWidgetAttributes {
     double? textScaleFactor,
     TextWidthBasis? textWidthBasis,
   }) {
-    return StyledTextAttributes(
+    return TextAttributes(
       directives: [...this.directives, ...?directives],
       locale: locale ?? this.locale,
       maxLines: maxLines ?? this.maxLines,
@@ -123,6 +121,25 @@ class StyledTextAttributes extends StyledWidgetAttributes {
       textHeightBehavior: textHeightBehavior ?? this.textHeightBehavior,
       textScaleFactor: textScaleFactor ?? this.textScaleFactor,
       textWidthBasis: textWidthBasis ?? this.textWidthBasis,
+    );
+  }
+
+  @override
+  TextDto resolve(MixData mix) {
+    final resolvedStyles = styles.map((e) => e.resolve(mix)).toList();
+
+    return TextDto(
+      styles: resolvedStyles,
+      softWrap: softWrap?.resolve(mix),
+      overflow: overflow?.resolve(mix),
+      strutStyle: strutStyle?.resolve(mix),
+      textAlign: textAlign?.resolve(mix),
+      locale: locale?.resolve(mix),
+      textScaleFactor: textScaleFactor?.resolve(mix),
+      maxLines: maxLines?.resolve(mix),
+      textWidthBasis: textWidthBasis?.resolve(mix),
+      textHeightBehavior: textHeightBehavior?.resolve(mix),
+      directives: resolvedDirectives,
     );
   }
 

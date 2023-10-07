@@ -159,7 +159,7 @@ class CustomWidget extends StatelessWidget {
       variants: variants,
       style: mix,
       builder: (mix) {
-        final attribute = mix.attributesOfType<InheritedIconAttribute>()!;
+        final attribute = mix.attributeOf<InheritedIconAttribute>()!;
 
         final sharedProps = CommonDescriptor.fromContext(mix);
 

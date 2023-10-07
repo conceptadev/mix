@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../dtos/dto.dart';
 import '../../factory/exports.dart';
+import '../resolvable_attribute.dart';
 
 class AlignmentAttribute extends ResolvableAttribute<AlignmentGeometry> {
   final double? x;

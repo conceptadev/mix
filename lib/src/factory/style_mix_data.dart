@@ -1,4 +1,5 @@
 import '../attributes/exports.dart';
+import '../attributes/resolvable_attribute.dart';
 import '../decorators/decorator.dart';
 import '../helpers/attributes_map.dart';
 import '../helpers/compare_mixin/compare_mixin.dart';
@@ -9,10 +10,10 @@ class StyleMixData with CompareMixin {
   final AttributesMap<ContextVariantAttribute>? _contextVariants;
 
   final AttributesMap<VariantAttribute>? _variants;
-  final AttributesMap<StyledWidgetAttributes>? _attributes;
+  final AttributesMap<ResolvableAttribute>? _attributes;
 
   const StyleMixData({
-    required AttributesMap<StyledWidgetAttributes>? attributes,
+    required AttributesMap<ResolvableAttribute>? attributes,
     required AttributesMap<VariantAttribute>? variants,
     required AttributesMap<WidgetDecorator>? decorators,
     required AttributesMap<ContextVariantAttribute>? contextVariants,
@@ -26,11 +27,11 @@ class StyleMixData with CompareMixin {
   factory StyleMixData.create(Iterable<Attribute> attributes) {
     final variantList = <VariantAttribute>[];
     final contextVariantList = <ContextVariantAttribute>[];
-    final attributeList = <StyledWidgetAttributes>[];
+    final attributeList = <ResolvableAttribute>[];
     final decoratorList = <WidgetDecorator>[];
 
     for (final attribute in attributes) {
-      if (attribute is StyledWidgetAttributes) {
+      if (attribute is ResolvableAttribute) {
         attributeList.add(attribute);
       } else if (attribute is WidgetDecorator) {
         decoratorList.add(attribute);
@@ -58,7 +59,7 @@ class StyleMixData with CompareMixin {
         _variants = null,
         _contextVariants = null;
 
-  AttributesMap<StyledWidgetAttributes> get attributes {
+  AttributesMap<ResolvableAttribute> get attributes {
     return _attributes ?? const AttributesMap.empty();
   }
 
@@ -88,8 +89,8 @@ class StyleMixData with CompareMixin {
     return variants.length + contextVariants.length + attributes.length;
   }
 
-  /// Returns an instance of the specified [StyledWidgetAttributes] type from the [MixData].
-  A? attributesOfType<A extends StyledWidgetAttributes>() {
+  /// Returns an instance of the specified [ResolvableAttribute] type from the [MixData].
+  A? attributesOfType<A extends ResolvableAttribute>() {
     return attributes.ofType<A>() as A?;
   }
 
@@ -105,7 +106,7 @@ class StyleMixData with CompareMixin {
 
   /// Creates a new [StyleMixData] instance by replacing the specified attributes with new values.
   StyleMixData copyWith({
-    AttributesMap<StyledWidgetAttributes>? attributes,
+    AttributesMap<ResolvableAttribute>? attributes,
     AttributesMap<WidgetDecorator>? decorators,
     AttributesMap<VariantAttribute>? variants,
     AttributesMap<ContextVariantAttribute>? contextVariants,

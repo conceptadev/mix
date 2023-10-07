@@ -1,7 +1,5 @@
-export 'common_alias.dart';
 export 'container_alias.dart';
 export 'decorator_alias.dart';
-export 'deprecated_alias.dart';
 export 'flex_alias.dart';
 export 'icon_alias.dart';
 export 'image_alias.dart';

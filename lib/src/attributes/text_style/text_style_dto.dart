@@ -2,14 +2,14 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-import '../attributes/exports.dart';
-import '../factory/exports.dart';
-import '../theme/exports.dart';
-import 'color.dto.dart';
-import 'dto.dart';
-import 'shadow/shadow.dto.dart';
+import '../../factory/exports.dart';
+import '../../theme/exports.dart';
+import '../box_shadow/shadow.dto.dart';
+import '../color/color_dto.dart';
+import '../exports.dart';
+import '../resolvable_attribute.dart';
 
-class TextStyleAttribute extends ResolvableAttribute<TextStyle> {
+class TextStyleDto extends ResolvableDto<TextStyle> {
   final String? fontFamily;
   final FontWeight? fontWeight;
 
@@ -36,7 +36,7 @@ class TextStyleAttribute extends ResolvableAttribute<TextStyle> {
 
   final TextStyleToken? styleToken;
 
-  const TextStyleAttribute({
+  const TextStyleDto({
     this.background,
     this.backgroundColor,
     this.color,
@@ -62,16 +62,22 @@ class TextStyleAttribute extends ResolvableAttribute<TextStyle> {
     this.wordSpacing,
   });
 
-  factory TextStyleAttribute.from(TextStyle style) {
+  factory TextStyleDto.from(TextStyle style) {
+    final color = style.color;
+    final backgroundColor = style.backgroundColor;
+    final decorationColor = style.decorationColor;
+
     return style is TextStyleToken
-        ? TextStyleAttribute(styleToken: style)
-        : TextStyleAttribute(
+        ? TextStyleDto(styleToken: style)
+        : TextStyleDto(
             background: style.background,
-            backgroundColor: ColorDto.maybeFrom(style.backgroundColor),
-            color: ColorDto.maybeFrom(style.color),
+            backgroundColor:
+                backgroundColor == null ? null : ColorDto.from(backgroundColor),
+            color: color == null ? null : ColorDto.from(color),
             debugLabel: style.debugLabel,
             decoration: style.decoration,
-            decorationColor: ColorDto.maybeFrom(style.decorationColor),
+            decorationColor:
+                decorationColor == null ? null : ColorDto.from(decorationColor),
             decorationStyle: style.decorationStyle,
             decorationThickness: style.decorationThickness,
             fontFamily: style.fontFamily,
@@ -85,112 +91,57 @@ class TextStyleAttribute extends ResolvableAttribute<TextStyle> {
             inherit: style.inherit,
             letterSpacing: style.letterSpacing,
             locale: style.locale,
-            shadows: style.shadows?.map((e) => ShadowDto.from(e)).toList(),
+            shadows: style.shadows?.map(ShadowDto.from).toList(),
             textBaseline: style.textBaseline,
             wordSpacing: style.wordSpacing,
           );
   }
 
-  static maybeFrom(TextStyle? style) {
-    return style == null ? null : TextStyleAttribute.from(style);
-  }
-
-  bool get hasToken => styleToken != null;
-
-  TextStyleAttribute copyWith({
-    Paint? background,
-    ColorDto? backgroundColor,
-    ColorDto? color,
-    String? debugLabel,
-    TextDecoration? decoration,
-    ColorDto? decorationColor,
-    TextDecorationStyle? decorationStyle,
-    double? decorationThickness,
-    String? fontFamily,
-    List<String>? fontFamilyFallback,
-    List<FontFeature>? fontFeatures,
-    double? fontSize,
-    FontStyle? fontStyle,
-    FontWeight? fontWeight,
-    Paint? foreground,
-    double? height,
-    bool? inherit,
-    double? letterSpacing,
-    Locale? locale,
-    List<ShadowDto>? shadows,
-    TextStyleToken? styleToken,
-    TextBaseline? textBaseline,
-    double? wordSpacing,
-  }) {
-    return TextStyleAttribute(
-      background: background ?? this.background,
-      backgroundColor: backgroundColor ?? this.backgroundColor,
-      color: color ?? this.color,
-      debugLabel: debugLabel ?? this.debugLabel,
-      decoration: decoration ?? this.decoration,
-      decorationColor: decorationColor ?? this.decorationColor,
-      decorationStyle: decorationStyle ?? this.decorationStyle,
-      decorationThickness: decorationThickness ?? this.decorationThickness,
-      fontFamily: fontFamily ?? this.fontFamily,
-      fontFamilyFallback: [...?this.fontFamilyFallback, ...?fontFamilyFallback],
-      fontFeatures: fontFeatures ?? this.fontFeatures,
-      fontSize: fontSize ?? this.fontSize,
-      fontStyle: fontStyle ?? this.fontStyle,
-      fontWeight: fontWeight ?? this.fontWeight,
-      foreground: foreground ?? this.foreground,
-      height: height ?? this.height,
-      inherit: inherit ?? this.inherit,
-      letterSpacing: letterSpacing ?? this.letterSpacing,
-      locale: locale ?? this.locale,
-      shadows: MergeMixin.mergeLists(this.shadows, shadows),
-      styleToken: styleToken ?? this.styleToken,
-      textBaseline: textBaseline ?? this.textBaseline,
-      wordSpacing: wordSpacing ?? this.wordSpacing,
-    );
-  }
-
   @override
-  TextStyleAttribute merge(TextStyleAttribute? other) {
+  TextStyleDto merge(TextStyleDto? other) {
     if (other == null) return this;
 
-    return copyWith(
-      background: other.background,
-      backgroundColor: other.backgroundColor,
-      color: other.color,
-      debugLabel: other.debugLabel,
-      decoration: other.decoration,
-      decorationColor: other.decorationColor,
-      decorationStyle: other.decorationStyle,
-      decorationThickness: other.decorationThickness,
-      fontFamily: other.fontFamily,
-      fontFamilyFallback: other.fontFamilyFallback,
-      fontFeatures: other.fontFeatures,
-      fontSize: other.fontSize,
-      fontStyle: other.fontStyle,
-      fontWeight: other.fontWeight,
-      foreground: other.foreground,
-      height: other.height,
-      inherit: other.inherit,
-      letterSpacing: other.letterSpacing,
-      locale: other.locale,
-      shadows: other.shadows,
-      styleToken: other.styleToken,
-      textBaseline: other.textBaseline,
-      wordSpacing: other.wordSpacing,
+    return TextStyleDto(
+      background: other.background ?? background,
+      backgroundColor: other.backgroundColor ?? backgroundColor,
+      color: other.color ?? color,
+      debugLabel: other.debugLabel ?? debugLabel,
+      decoration: other.decoration ?? decoration,
+      decorationColor: other.decorationColor ?? decorationColor,
+      decorationStyle: other.decorationStyle ?? decorationStyle,
+      decorationThickness: other.decorationThickness ?? decorationThickness,
+      fontFamily: other.fontFamily ?? fontFamily,
+      fontFamilyFallback: [
+        ...?fontFamilyFallback,
+        ...?other.fontFamilyFallback,
+      ],
+      fontFeatures: other.fontFeatures ?? fontFeatures,
+      fontSize: other.fontSize ?? fontSize,
+      fontStyle: other.fontStyle ?? fontStyle,
+      fontWeight: other.fontWeight ?? fontWeight,
+      foreground: other.foreground ?? foreground,
+      height: other.height ?? height,
+      inherit: other.inherit ?? inherit,
+      letterSpacing: other.letterSpacing ?? letterSpacing,
+      locale: other.locale ?? locale,
+      shadows: MergeMixin.mergeLists(shadows, other.shadows),
+      styleToken: other.styleToken ?? styleToken,
+      textBaseline: other.textBaseline ?? textBaseline,
+      wordSpacing: other.wordSpacing ?? wordSpacing,
     );
   }
 
   @override
   TextStyle resolve(MixData mix) {
-    TextStyleAttribute? styleRef;
+    TextStyleDto? styleRef;
 
     if (styleToken != null) {
       // Load as DTO for consistent merging behavior.
       final textStyle = mix.resolveToken.textStyle(styleToken!);
-      styleRef = TextStyleAttribute.from(textStyle);
+      styleRef = TextStyleDto.from(textStyle).merge(this);
     }
 
-    styleRef = styleRef != null ? styleRef.merge(this) : this;
+    styleRef ??= this;
 
     return TextStyle(
       inherit: styleRef.inherit ?? true,

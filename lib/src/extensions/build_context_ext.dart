@@ -9,7 +9,7 @@ import '../widgets/flex/flex.descriptor.dart';
 import '../widgets/icon/icon.descriptor.dart';
 import '../widgets/image/image.descriptor.dart';
 import '../widgets/stack/stack.descriptor.dart';
-import '../widgets/text/text.descriptor.dart';
+import '../widgets/text/text.dto.dart';
 
 extension BuildContextExt on BuildContext {
   MixData? get mix => MixProvider.of(this);
@@ -72,8 +72,7 @@ extension BuildContextExt on BuildContext {
       StyledIconDescriptor.fromContext(MixProvider.of(this)!);
 
   @Deprecated('use TextProps.fromContext(context) instead')
-  StyledTextDescriptor get textProps =>
-      StyledTextDescriptor.fromContext(MixProvider.of(this)!);
+  TextDto get textProps => TextDto.fromContext(MixProvider.of(this)!);
 
   @Deprecated('use ImageProps.fromContext(context) instead')
   StyledImageDescriptor get imageProps =>

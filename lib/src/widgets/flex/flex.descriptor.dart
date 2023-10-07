@@ -21,7 +21,7 @@ class StyledFlexDescriptor {
   });
 
   factory StyledFlexDescriptor.fromContext(MixData mix) {
-    final flexAttributes = mix.attributesOfType<StyledFlexAttributes>();
+    final flexAttributes = mix.attributeOf<StyledFlexAttributes>();
 
     return StyledFlexDescriptor(
       crossAxisAlignment:

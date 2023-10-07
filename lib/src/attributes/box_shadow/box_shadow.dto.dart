@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../factory/mix_provider_data.dart';
-import '../color.dto.dart';
+import '../color/color_dto.dart';
 import 'shadow.dto.dart';
 
 class BoxShadowDto extends ShadowDto<BoxShadow> {
@@ -14,13 +14,9 @@ class BoxShadowDto extends ShadowDto<BoxShadow> {
     this.spreadRadius,
   });
 
-  factory BoxShadowDto.fromBoxShadow(BoxShadow? boxShadow) {
-    if (boxShadow == null) {
-      return const BoxShadowDto();
-    }
-
+  factory BoxShadowDto.fromBoxShadow(BoxShadow boxShadow) {
     return BoxShadowDto(
-      color: ColorDto.maybeFrom(boxShadow.color),
+      color: ColorDto.from(boxShadow.color),
       offset: Offset(boxShadow.offset.dx, boxShadow.offset.dy),
       blurRadius: boxShadow.blurRadius,
       spreadRadius: boxShadow.spreadRadius,
@@ -38,27 +34,12 @@ class BoxShadowDto extends ShadowDto<BoxShadow> {
   }
 
   @override
-  BoxShadowDto copyWith({
-    ColorDto? color,
-    Offset? offset,
-    double? blurRadius,
-    double? spreadRadius,
-  }) {
-    return BoxShadowDto(
-      color: color ?? this.color,
-      offset: offset ?? this.offset,
-      blurRadius: blurRadius ?? this.blurRadius,
-      spreadRadius: spreadRadius ?? this.spreadRadius,
-    );
-  }
-
-  @override
   BoxShadowDto merge(BoxShadowDto? other) {
-    return copyWith(
-      color: other?.color,
-      offset: other?.offset,
-      blurRadius: other?.blurRadius,
-      spreadRadius: other?.spreadRadius,
+    return BoxShadowDto(
+      color: color?.merge(other?.color) ?? color,
+      offset: other?.offset ?? offset,
+      blurRadius: other?.blurRadius ?? blurRadius,
+      spreadRadius: other?.spreadRadius ?? spreadRadius,
     );
   }
 

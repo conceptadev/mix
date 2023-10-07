@@ -5,15 +5,15 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 import '../../../mix.dart';
+import '../../attributes/text_style/text_style_attribute.dart';
 import '../../dtos/color.dto.dart';
 import '../../dtos/shadow/shadow.dto.dart';
-import '../../dtos/text_style_attribute.dart';
 import 'text_directives/text_directives.dart';
 
 class TextUtility {
   const TextUtility._();
 
-  static StyledTextAttributes textStyle({
+  static TextAttributes textStyle({
     String? fontFamily,
     FontWeight? fontWeight,
     FontStyle? fontStyle,
@@ -62,20 +62,20 @@ class TextUtility {
         'If asStyle is provided, all other parameters will be ignored.',
       );
 
-      return StyledTextAttributes(style: TextStyleAttribute.from(as));
+      return TextAttributes(style: TextStyleAttribute.from(as));
     }
 
-    List<ShadowDto>? convertShadows() {
+    List<ShadowRef>? convertShadows() {
       List<Shadow> combinedShadows = [...?shadows, if (shadow != null) shadow];
 
-      final shadowDtos = combinedShadows.map((e) => ShadowDto.from(e)).toList();
+      final shadowDtos = combinedShadows.map((e) => ShadowRef.from(e)).toList();
 
       if (shadowDtos.isEmpty) return null;
 
       return shadowDtos;
     }
 
-    return StyledTextAttributes(
+    return TextAttributes(
       style: TextStyleAttribute(
         background: background,
         backgroundColor: ColorDto.maybeFrom(backgroundColor),
@@ -100,55 +100,55 @@ class TextUtility {
     );
   }
 
-  static StyledTextAttributes strutStyle(StrutStyle strutStyle) {
-    return StyledTextAttributes(strutStyle: strutStyle);
+  static TextAttributes strutStyle(StrutStyle strutStyle) {
+    return TextAttributes(strutStyle: strutStyle);
   }
 
-  static StyledTextAttributes textAlign(TextAlign textAlign) {
-    return StyledTextAttributes(textAlign: textAlign);
+  static TextAttributes textAlign(TextAlign textAlign) {
+    return TextAttributes(textAlign: textAlign);
   }
 
-  static StyledTextAttributes locale(Locale locale) {
-    return StyledTextAttributes(locale: locale);
+  static TextAttributes locale(Locale locale) {
+    return TextAttributes(locale: locale);
   }
 
-  static StyledTextAttributes softWrap(bool softWrap) {
-    return StyledTextAttributes(softWrap: softWrap);
+  static TextAttributes softWrap(bool softWrap) {
+    return TextAttributes(softWrap: softWrap);
   }
 
-  static StyledTextAttributes overflow(TextOverflow overflow) {
-    return StyledTextAttributes(overflow: overflow);
+  static TextAttributes overflow(TextOverflow overflow) {
+    return TextAttributes(overflow: overflow);
   }
 
-  static StyledTextAttributes textScaleFactor(double textScaleFactor) {
-    return StyledTextAttributes(textScaleFactor: textScaleFactor);
+  static TextAttributes textScaleFactor(double textScaleFactor) {
+    return TextAttributes(textScaleFactor: textScaleFactor);
   }
 
-  static StyledTextAttributes maxLines(int maxLines) {
-    return StyledTextAttributes(maxLines: maxLines);
+  static TextAttributes maxLines(int maxLines) {
+    return TextAttributes(maxLines: maxLines);
   }
 
-  static StyledTextAttributes textWidthBasis(TextWidthBasis textWidthBasis) {
-    return StyledTextAttributes(textWidthBasis: textWidthBasis);
+  static TextAttributes textWidthBasis(TextWidthBasis textWidthBasis) {
+    return TextAttributes(textWidthBasis: textWidthBasis);
   }
 
-  static StyledTextAttributes directives(List<TextDirective> directives) {
-    return StyledTextAttributes(directives: directives);
+  static TextAttributes directives(List<TextDirective> directives) {
+    return TextAttributes(directives: directives);
   }
 
-  static StyledTextAttributes directive(TextDirective directive) {
-    return StyledTextAttributes(directives: [directive]);
+  static TextAttributes directive(TextDirective directive) {
+    return TextAttributes(directives: [directive]);
   }
 }
 
 class TextFriendlyUtility {
   const TextFriendlyUtility._();
 
-  static StyledTextAttributes bold() {
+  static TextAttributes bold() {
     return TextUtility.textStyle(fontWeight: FontWeight.bold);
   }
 
-  static StyledTextAttributes italic() {
+  static TextAttributes italic() {
     return TextUtility.textStyle(fontStyle: FontStyle.italic);
   }
 }

@@ -130,8 +130,7 @@ void main() {
 
       final textProp = tester.widget<Text>(find.byType(Text));
 
-      final textAttributes =
-          merged.values.attributesOfType<StyledTextAttributes>();
+      final textAttributes = merged.values.attributesOfType<TextAttributes>();
 
       expect(textAttributes?.styles.length, 3);
 

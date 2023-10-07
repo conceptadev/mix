@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 import '../attributes/attribute.dart';
+import '../attributes/resolvable_attribute.dart';
 import '../decorators/decorator.dart';
 import '../helpers/attributes_map.dart';
 import '../helpers/compare_mixin/compare_mixin.dart';
@@ -15,19 +16,19 @@ import 'style_mix_data.dart';
 /// decorators and token resolvers.
 class MixData with CompareMixin {
   // Instance variables for widget attributes, widget decorators and token resolver.
-  final AttributesMap<StyledWidgetAttributes> _widgetAttributes;
-  final AttributesMap<WidgetDecorator> _widgetDecorators;
+  final AttributesMap<ResolvableAttribute> _attributes;
+  final AttributesMap<WidgetDecorator> _decorators;
   final MixTokenResolver _tokenResolver;
 
   /// A Private constructor for the [MixData] class that initializes its main variables.
   ///
-  /// It takes in [widgetAttributes], [widgetDecorators] and [tokenResolver] as required parameters.
+  /// It takes in [attributes], [decorators] and [tokenResolver] as required parameters.
   MixData._({
     required MixTokenResolver tokenResolver,
-    required AttributesMap<StyledWidgetAttributes> widgetAttributes,
-    required AttributesMap<WidgetDecorator> widgetDecorators,
-  })  : _widgetAttributes = widgetAttributes,
-        _widgetDecorators = widgetDecorators,
+    required AttributesMap<ResolvableAttribute> attributes,
+    required AttributesMap<WidgetDecorator> decorators,
+  })  : _attributes = attributes,
+        _decorators = decorators,
         _tokenResolver = tokenResolver;
 
   /// Factory constructor that uses the provided [context] and [style]
@@ -54,8 +55,8 @@ class MixData with CompareMixin {
 
     return MixData._(
       tokenResolver: MixTokenResolver(context),
-      widgetAttributes: combinedValues.attributes,
-      widgetDecorators: combinedValues.decorators,
+      attributes: combinedValues.attributes,
+      decorators: combinedValues.decorators,
     );
   }
 
@@ -98,27 +99,48 @@ class MixData with CompareMixin {
   /// Returns current [_tokenResolver].
   MixTokenResolver get resolveToken => _tokenResolver;
 
-  /// A getter method for [_widgetDecorators].
+  /// A getter method for [_decorators].
   ///
   /// Returns a list of all [WidgetDecorator].
   List<WidgetDecorator> get decorators {
-    return _widgetDecorators.toList();
+    return _decorators.toList();
   }
 
-  /// Retrieves an instance of the specified [StyledWidgetAttributes] type from the [MixData].
+  /// Retrieves an instance of the specified [ResolvableAttribute] type from the [MixData].
   ///
-  /// Accepts a type parameter [A] which extends [StyledWidgetAttributes].
+  /// Accepts a type parameter [A] which extends [ResolvableAttribute].
   /// Returns the instance of type [A] if found, else returns null.
-  A? attributesOfType<A extends StyledWidgetAttributes>() {
-    return _widgetAttributes.ofType<A>() as A?;
+  A? attributeOf<A extends ResolvableAttribute>() {
+    return _attributes.ofType<A>() as A?;
+  }
+
+  R? of<A extends ResolvableAttribute<R>, R>() {
+    final attribute = attributeOf<A>();
+
+    return attribute?.resolve(this);
+  }
+
+  R dependOf<A extends ResolvableAttribute<R>, R>([R? defaultValue]) {
+    final attribute = attributeOf<A>();
+
+    if (attribute is! A && defaultValue == null) {
+      throw Exception(
+        'No $A could be found starting from MixContext '
+        'when call mixContext.attributesOfType<$A>(). This can happen because you '
+        'have not create a Mix with $A.',
+      );
+    }
+
+    // ignore: avoid-non-null-assertion
+    return attribute?.resolve(this) ?? defaultValue!;
   }
 
   /// Retrieves an instance of attributes based on the type provided.
   ///
-  /// The type [T] here refers to the type extending [StyledWidgetAttributes].
+  /// The type [T] here refers to the type extending [ResolvableAttribute].
   /// An exception is thrown if no attribute of the required type is found.
-  T dependOnAttributesOfType<T extends StyledWidgetAttributes>() {
-    final attribute = attributesOfType<T>();
+  T dependOnAttributesOfType<T extends ResolvableAttribute>() {
+    final attribute = attributeOf<T>();
 
     if (attribute is! T) {
       throw Exception(
@@ -139,14 +161,14 @@ class MixData with CompareMixin {
   MixData inheritFrom(MixData other) {
     return MixData._(
       tokenResolver: _tokenResolver,
-      widgetAttributes: other._widgetAttributes.merge(_widgetAttributes),
-      widgetDecorators: other._widgetDecorators.merge(_widgetDecorators),
+      attributes: other._attributes.merge(_attributes),
+      decorators: other._decorators.merge(_decorators),
     );
   }
 
   /// Overrides the getter function of [props] from [CompareMixin] to specify properties necessary for distinguishing instances.
   ///
-  /// Returns a list of properties [_widgetAttributes] & [_widgetDecorators].
+  /// Returns a list of properties [_attributes] & [_decorators].
   @override
-  get props => [_widgetAttributes, _widgetDecorators];
+  get props => [_attributes, _decorators];
 }

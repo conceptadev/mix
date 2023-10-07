@@ -1,5 +1,5 @@
+import '../attributes/resolvable_attribute.dart';
 import '../factory/mix_provider_data.dart';
-import 'dto.dart';
 
 typedef ValueModifier<T> = T Function(T value);
 
@@ -17,12 +17,6 @@ class DoubleDto extends ResolvableAttribute<double> {
   const DoubleDto.from(double value, {ValueModifier<double>? directiv})
       : _value = value,
         _modifier = null;
-
-  static DoubleDto? maybeFrom(double? value) {
-    if (value == null) return null;
-
-    return DoubleDto(value);
-  }
 
   @override
   DoubleDto merge(covariant DoubleDto? other) {

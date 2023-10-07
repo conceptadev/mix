@@ -15,7 +15,7 @@ class StyledStackDescriptor {
   });
 
   factory StyledStackDescriptor.fromContext(MixData mix) {
-    final zBoxAttributes = mix.attributesOfType<StyledStackAttributes>();
+    final zBoxAttributes = mix.attributeOf<StyledStackAttributes>();
 
     return StyledStackDescriptor(
       alignment: zBoxAttributes?.alignment ?? Alignment.topLeft,

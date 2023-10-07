@@ -28,7 +28,7 @@ class StyledImageDescriptor {
   });
 
   factory StyledImageDescriptor.fromContext(MixData mix) {
-    final attributes = mix.attributesOfType<StyledImageAttributes>();
+    final attributes = mix.attributeOf<StyledImageAttributes>();
 
     return StyledImageDescriptor(
       alignment: attributes?.alignment ?? Alignment.center,

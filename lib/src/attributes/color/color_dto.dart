@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-import '../factory/mix_provider_data.dart';
-import '../theme/tokens/color_token.dart';
-import 'double.dto.dart';
-import 'dto.dart';
+import '../../dtos/double.dto.dart';
+import '../../factory/exports.dart';
+import '../../theme/exports.dart';
+import '../resolvable_attribute.dart';
 
-class ColorDto extends ResolvableAttribute<Color> {
+class ColorDto extends ResolvableDto<Color> {
   final Color value;
 
   // Modifier is only used after value is resolved.
@@ -17,14 +17,6 @@ class ColorDto extends ResolvableAttribute<Color> {
   const ColorDto.from(Color color, {ValueModifier<Color>? directive})
       : value = color,
         _directive = directive;
-
-  // Helper utility for internal API usage.
-  static ColorDto? maybeFrom(
-    Color? color, {
-    ValueModifier<Color>? directive,
-  }) {
-    return color == null ? null : ColorDto(color, directive: directive);
-  }
 
   @override
   ColorDto merge(covariant ColorDto? other) {

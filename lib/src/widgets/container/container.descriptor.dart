@@ -45,7 +45,7 @@ class StyledContainerDescriptor with CompareMixin {
   }) : _color = color;
 
   factory StyledContainerDescriptor.fromContext(MixData mix) {
-    final attributes = mix.attributesOfType<StyledContainerAttributes>();
+    final attributes = mix.attributeOf<StyledContainerAttributes>();
 
     return StyledContainerDescriptor(
       color: attributes?.color?.resolve(mix),

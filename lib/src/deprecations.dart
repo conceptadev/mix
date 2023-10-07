@@ -64,15 +64,3 @@ extension DeprecatedMixExtension<T extends Attribute> on StyleMix {
 /// This refers to the deprecated class MixData and it's here for the purpose of maintaining compatibility.
 @Deprecated('Use MixData instead.')
 typedef MixContext = MixData;
-
-// @Deprecated(
-//   'Use ContextStyleVariant instead. '
-//   'This class will be removed in a future release.',
-// )
-// typedef ContextVariant = ContextStyleVariant;
-
-// @Deprecated(
-//   'Use StyleVariant instead. '
-//   'This class will be removed in a future release.',
-// )
-// typedef Variant = Variant;

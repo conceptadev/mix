@@ -3,15 +3,14 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:mix/src/attributes/text_style/text_style_attribute.dart';
 import 'package:mix/src/dtos/border/border.dto.dart';
 import 'package:mix/src/dtos/border/border_side.dto.dart';
 import 'package:mix/src/dtos/color.dto.dart';
-import 'package:mix/src/dtos/edge_insets/edge_insets.dto.dart';
 import 'package:mix/src/dtos/radius/border_radius.dto.dart';
 import 'package:mix/src/dtos/radius/radius_dto.dart';
 import 'package:mix/src/dtos/shadow/box_shadow.dto.dart';
 import 'package:mix/src/dtos/shadow/shadow.dto.dart';
-import 'package:mix/src/dtos/text_style_attribute.dart';
 import 'package:mix/src/factory/style_mix.dart';
 import 'package:mix/src/widgets/container/container.attributes.dart';
 import 'package:mix/src/widgets/text/text.attributes.dart';
@@ -19,8 +18,8 @@ import 'package:mix/src/widgets/text/text_directives/text_directives.dart';
 
 class RandomGenerator {
   const RandomGenerator._();
-  static StyledTextAttributes textAttributes() {
-    return StyledTextAttributes(
+  static TextAttributes textAttributes() {
+    return TextAttributes(
       style: textStyleDto(),
       textAlign: TextAlign.values.random(),
       softWrap: Random().nextBool(),
@@ -190,8 +189,8 @@ class RandomGenerator {
     );
   }
 
-  static ShadowDto shadowDto() {
-    return ShadowDto(
+  static ShadowRef shadowDto() {
+    return ShadowRef(
       color: colorDto(),
       offset: Offset(
         Random().nextMaxDouble(10),
@@ -201,11 +200,11 @@ class RandomGenerator {
     );
   }
 
-  static BoxShadowDto boxShadowDto() {
+  static BoxShadowRef boxShadowDto() {
     // Use shadow as a starting point
     final shadow = shadowDto();
 
-    return BoxShadowDto(
+    return BoxShadowRef(
       color: shadow.color,
       offset: shadow.offset,
       blurRadius: shadow.blurRadius,

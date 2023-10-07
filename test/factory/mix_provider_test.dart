@@ -7,7 +7,7 @@ import '../helpers/random_dto.dart';
 
 const textVariant = Variant('textVariant');
 
-final overrideTextAttribute = StyledTextAttributes.fromValues(
+final overrideTextAttribute = TextAttributes.fromValues(
   style: const TextStyle(
     fontSize: 18,
     color: Colors.blue,

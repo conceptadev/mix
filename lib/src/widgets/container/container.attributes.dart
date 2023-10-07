@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
-import '../../attributes/attribute.dart';
-import '../../attributes/margin/margin_attribute.dart';
-import '../../attributes/padding/padding_attribute.dart';
+import '../../attributes/border/box_border_attribute.dart';
+import '../../attributes/color/color_dto.dart';
+import '../../attributes/exports.dart';
+import '../../attributes/width_height/height_attribute.dart';
+import '../../attributes/width_height/width_height_attribute.dart';
 import '../../dtos/border/box_border.dto.dart';
 import '../../dtos/color.dto.dart';
-import '../../dtos/radius/border_radius_geometry.dto.dart';
 import '../../dtos/shadow/box_shadow.dto.dart';
 import '../../extensions/helper_ext.dart';
 
@@ -13,25 +14,20 @@ import '../../extensions/helper_ext.dart';
 typedef BoxAttributes = StyledContainerAttributes;
 
 class StyledContainerAttributes extends StyledWidgetAttributes {
-  // final MarginAttribute? margin;
-  // final PaddingAttribute? padding;
+  final MarginAttribute? margin;
+  final PaddingAttribute? padding;
   final AlignmentGeometry? alignment;
-  final double? height;
-  final double? width;
+  final HeightAttribute? height;
+  final WidthAttribute? width;
   // Decoration.
   final ColorDto? color;
-  final BoxBorderDto? border;
-  final BorderRadiusGeometryDto? borderRadius;
-  final List<BoxShadowDto>? boxShadow;
+  final BoxBorderAttribute? border;
+  final BorderRadiusAttribute? borderRadius;
+  final List<BoxShadowRef>? boxShadow;
   final Matrix4? transform;
 
   // Constraints.
-  // final double? maxHeight;
-  // final double? minHeight;
-  // final double? maxWidth;
-  // final double? minWidth;
-  final BoxShape? shape;
-  final Gradient? gradient;
+  final BoxConstraintsAttribute? constraints;
 
   const StyledContainerAttributes({
     this.margin,
@@ -62,7 +58,7 @@ class StyledContainerAttributes extends StyledWidgetAttributes {
     Color? color,
     BoxBorder? border,
     BorderRadiusGeometry? borderRadius,
-    List<BoxShadowDto>? boxShadow,
+    List<BoxShadowRef>? boxShadow,
     Matrix4? transform,
 
     // Constraints.
@@ -74,11 +70,13 @@ class StyledContainerAttributes extends StyledWidgetAttributes {
     Gradient? gradient,
   }) {
     return StyledContainerAttributes(
-      margin: EdgeInsetsGeometryDto.maybeFrom(margin),
-      padding: EdgeInsetsGeometryDto.maybeFrom(padding),
+      margin: margin == null ? null : MarginAttribute.from(margin),
+      padding: padding == null ? null : PaddingAttribute.from(padding),
       alignment: alignment,
       border: BoxBorderDto.maybeFrom(border),
-      borderRadius: BorderRadiusGeometryDto.maybeFrom(borderRadius),
+      borderRadius: borderRadius == null
+          ? null
+          : BorderRadiusAttribute.from(borderRadius),
       // Decoration.
       color: ColorDto.maybeFrom(color),
       boxShadow: boxShadow,
@@ -100,9 +98,9 @@ class StyledContainerAttributes extends StyledWidgetAttributes {
     PaddingAttribute? padding,
     AlignmentGeometry? alignment,
     ColorDto? color,
-    BoxBorderDto? border,
-    BorderRadiusGeometryDto? borderRadius,
-    List<BoxShadowDto>? boxShadow,
+    BoxBorderAttribute? border,
+    BorderRadiusAttribute? borderRadius,
+    List<BoxShadowRef>? boxShadow,
     Matrix4? transform,
     double? height,
     double? width,

@@ -79,10 +79,8 @@ class MixedContainer extends StatelessWidget {
             transform: box.transform,
             child: current,
           );
-    if (mix.decorators != null) {
-      // Wrap parent decorators.
-      current = WidgetDecoratorWrapper(mix, child: current);
-    }
+    // Wrap parent decorators.
+    current = WidgetDecoratorWrapper(mix, child: current);
 
     return current;
   }

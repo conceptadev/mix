@@ -20,6 +20,6 @@ export 'stack/stack.utilities.dart';
 export 'stack/stack.widget.dart';
 export 'styled.widget.dart';
 export 'text/text.attributes.dart';
-export 'text/text.descriptor.dart';
+export 'text/text.dto.dart';
 export 'text/text.utilities.dart';
 export 'text/text.widget.dart';
