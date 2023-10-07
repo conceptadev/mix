@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'flex.attributes.dart';
+import 'flex.attribute.dart';
 
 FlexAttributes flex(
   Axis direction, {

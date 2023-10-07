@@ -1,5 +1,5 @@
 import '../directives/text.directive.dart';
-import 'text.utility.dart';
+import 'text.util.dart';
 
 /// Directives.
 final capitalize = text(directive: const CapitalizeDirective());

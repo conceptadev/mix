@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../attributes/exports.dart';
-import '../factory/exports.dart';
+import '../attributes/attribute.dart';
+import '../factory/mix_provider_data.dart';
 
 abstract class Decorator extends Attribute {
   const Decorator({super.key});

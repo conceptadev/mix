@@ -13,7 +13,7 @@ abstract class Dto with Comparable {
 // Some classes have defaults.
 // Facade allows us ot set all properties as optional.
 // For improved merge and override of properties.
-abstract class Attribute extends Dto {
+abstract class Attribute with Mergeable, Comparable {
   final Key? _key;
   const Attribute({Key? key}) : _key = key;
   Key get mergeKey => _key == null ? ValueKey(runtimeType) : ValueKey(_key);

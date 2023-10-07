@@ -7,7 +7,15 @@ import 'package:path/path.dart' as p;
 void main() {
   final libDirectory = Directory('lib');
   final exportFilePath = p.join('lib', 'exports.dart');
-  const indicatorComment = '// @exportRequired';
+
+  // List of suffixes and file names to check
+  final patterns = [
+    '.attribute.dart',
+    '.dto.dart',
+    '.utilities.dart',
+    'util.dart',
+    'widget.dart',
+  ];
 
   if (!libDirectory.existsSync()) {
     print('The lib directory was not found.');
@@ -24,16 +32,11 @@ void main() {
 
   // Traverse the /lib/ directory
   for (final entity in libDirectory.listSync(recursive: true)) {
-    if (entity is File && entity.path.endsWith('.dart')) {
-      final lines = entity.readAsLinesSync();
-
-      // Check if the file has the indicator comment at the top
-      if (lines.isNotEmpty && lines.first.trim() == indicatorComment) {
-        // Get the relative path using the path package
-        final relativePath = p.relative(entity.path, from: libDirectory.path);
-
-        newExports.add('export \'$relativePath\';');
-      }
+    if (entity is File &&
+        patterns.any((pattern) => entity.path.endsWith(pattern))) {
+      // Get the relative path using the path package
+      final relativePath = p.relative(entity.path, from: libDirectory.path);
+      newExports.add('export \'$relativePath\';');
     }
   }
 
