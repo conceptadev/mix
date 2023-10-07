@@ -5,7 +5,7 @@ import '../helpers/attributes_map.dart';
 import '../helpers/compare_mixin/compare_mixin.dart';
 import '../variants/variant_attribute.dart';
 
-class StyleMixData with CompareMixin {
+class StyleMixData with Comparable {
   final AttributesMap<Decorator>? _decorators;
   final AttributesMap<ContextVariantAttribute>? _contextVariants;
 

@@ -86,7 +86,7 @@ void main() {
     const boxAttribute =
         StyledContainerAttributes(color: ColorDto(Colors.blue));
 
-    const flexAttribute = StyledFlexAttributes(direction: Axis.horizontal);
+    const flexAttribute = FlexAttributes(direction: Axis.horizontal);
 
     final baseMix = StyleMix(boxAttribute);
     final appliedMix = baseMix.merge(StyleMix(flexAttribute));
@@ -95,7 +95,7 @@ void main() {
         appliedMix.values.attributesOfType<StyledContainerAttributes>();
 
     final modifiedFlexAttribute =
-        appliedMix.values.attributesOfType<StyledFlexAttributes>();
+        appliedMix.values.attributesOfType<FlexAttributes>();
 
     expect(baseMix.values.length, 1);
     expect(appliedMix.values.length, 2);

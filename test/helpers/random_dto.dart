@@ -3,7 +3,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:mix/src/attributes/text_style/text_style_attribute.dart';
+import 'package:mix/src/attributes/text/attributes/text_style.attribute.dart';
 import 'package:mix/src/dtos/border/border.dto.dart';
 import 'package:mix/src/dtos/border/border_side.dto.dart';
 import 'package:mix/src/dtos/color.dto.dart';

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../factory/exports.dart';
-import '../color/color_dto.dart';
+import '../color/color.dto.dart';
 import '../resolvable_attribute.dart';
 
 class ShadowDto<T extends Shadow> extends ResolvableDto<Shadow> {

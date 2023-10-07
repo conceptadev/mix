@@ -2,10 +2,10 @@ import 'package:flutter/foundation.dart';
 
 import '../attributes/attribute.dart';
 
-/// Represents a map that can merge values of type [MergeMixin] based on their runtime type.
+/// Represents a map that can merge values of type [Mergeable] based on their runtime type.
 /// Maintains the insertion order of keys.
 ///
-/// The type parameter [T] must extend [MergeMixin], ensuring that the values can be merged.
+/// The type parameter [T] must extend [Mergeable], ensuring that the values can be merged.
 ///
 /// This class is useful for scenarios where you need to merge objects based on their types
 /// while preserving the order in which they were inserted.

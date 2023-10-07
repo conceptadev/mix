@@ -3,11 +3,6 @@ import 'package:flutter/material.dart';
 import '../factory/mix_provider.dart';
 import '../factory/mix_provider_data.dart';
 import '../theme/mix_theme.dart';
-import '../widgets/container/container.descriptor.dart';
-import '../widgets/flex/flex.descriptor.dart';
-import '../widgets/icon/icon.descriptor.dart';
-import '../widgets/image/image.descriptor.dart';
-import '../widgets/stack/stack.descriptor.dart';
 
 extension BuildContextExt on BuildContext {
   MixData? get mix => MixProvider.of(this);
@@ -48,31 +43,4 @@ extension BuildContextExt on BuildContext {
 
   /// Mix Theme Data.
   MixThemeData get mixTheme => MixTheme.of(this);
-
-  @Deprecated('use SharedProps.fromContext(context) instead')
-  CommonDescriptor get sharedProps =>
-      CommonDescriptor.fromContext(MixProvider.of(this)!);
-
-  @Deprecated('use BoxProps.fromContext(context) instead')
-  StyledContainerDescriptor get boxProps =>
-      StyledContainerDescriptor.fromContext(MixProvider.of(this)!);
-
-  @Deprecated('use FlexProps.fromContext(context) instead')
-  StyledFlexDescriptor get flexProps =>
-      StyledFlexDescriptor.fromContext(MixProvider.of(this)!);
-
-  @Deprecated('use ZBoxProps.fromContext(context) instead')
-  StyledStackDescriptor get zBoxProps =>
-      StyledStackDescriptor.fromContext(MixProvider.of(this)!);
-
-  @Deprecated('use IconProps.fromContext(context) instead')
-  StyledIconDescriptor get iconProps =>
-      StyledIconDescriptor.fromContext(MixProvider.of(this)!);
-
-  @Deprecated('use TextProps.fromContext(context) instead')
-  TextDto get textProps => TextDto.fromContext(MixProvider.of(this)!);
-
-  @Deprecated('use ImageProps.fromContext(context) instead')
-  StyledImageDescriptor get imageProps =>
-      StyledImageDescriptor.fromContext(MixProvider.of(this)!);
 }

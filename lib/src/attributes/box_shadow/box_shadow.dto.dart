@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../factory/mix_provider_data.dart';
-import '../color/color_dto.dart';
+import '../color/color.dto.dart';
 import 'shadow.dto.dart';
 
 class BoxShadowDto extends ShadowDto<BoxShadow> {

@@ -1,14 +1,16 @@
+// @exportRequired
+
 import '../attributes/exports.dart';
+import '../attributes/text/utilities/text_style.utility.dart';
 import '../variants/exports.dart';
 import '../widgets/exports.dart';
-import '../widgets/text/text_legacy.utilities.dart';
 import 'exports.dart';
 
 /// ALL ALIASES HERE HAVE BEEN DEPRECATED AND WILL BE REMOVED IN THE FUTURE
 /// FEEL FREE TO BRING INTERNALLY TO YOUR OWN PROJECT
 
 @Deprecated('Use mainAxisAlignment instead')
-final mainAxis = mainAxisAlignment;
+const mainAxis = mainAxisAlignment;
 
 @Deprecated('use Mix.chooser instead')
 void when(bool _) => throw UnimplementedError();

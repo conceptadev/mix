@@ -5,28 +5,28 @@ import 'package:flutter/foundation.dart';
 import '../factory/exports.dart';
 import '../helpers/compare_mixin/compare_mixin.dart';
 
+abstract class Dto with Comparable {
+  const Dto();
+}
+
 /// Base attribute.
 // Some classes have defaults.
 // Facade allows us ot set all properties as optional.
 // For improved merge and override of properties.
-abstract class Attribute with CompareMixin, MergeMixin {
+abstract class Attribute extends Dto {
   final Key? _key;
   const Attribute({Key? key}) : _key = key;
   Key get mergeKey => _key == null ? ValueKey(runtimeType) : ValueKey(_key);
 }
 
-abstract class Dto with CompareMixin, MergeMixin {
-  const Dto();
-}
-
-mixin ResolveMixin<T> {
+mixin Resolvable<T> {
   T resolve(MixData mix);
 }
 
-mixin MergeMixin<T> {
+mixin Mergeable<T> {
   T merge(covariant T? other);
 
-  static List<T>? mergeLists<T extends MergeMixin>(
+  static List<T>? mergeLists<T extends Mergeable>(
     List<T>? list,
     List<T>? other,
   ) {

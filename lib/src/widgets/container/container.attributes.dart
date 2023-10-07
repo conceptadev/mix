@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../attributes/border/box_border_attribute.dart';
-import '../../attributes/color/color_dto.dart';
+import '../../attributes/border/box_border.attribute.dart';
+import '../../attributes/box_shadow/box_shadow.dto.dart';
+import '../../attributes/color/color.dto.dart';
 import '../../attributes/exports.dart';
 import '../../attributes/width_height/height_attribute.dart';
 import '../../attributes/width_height/width_height_attribute.dart';
@@ -23,8 +24,9 @@ class StyledContainerAttributes extends StyledWidgetAttributes {
   final ColorDto? color;
   final BoxBorderAttribute? border;
   final BorderRadiusAttribute? borderRadius;
-  final List<BoxShadowRef>? boxShadow;
+  final List<BoxShadowDto>? boxShadow;
   final Matrix4? transform;
+  final BoxConstraintsAttribute? constraints;
 
   // Constraints.
   final BoxConstraintsAttribute? constraints;
@@ -39,10 +41,6 @@ class StyledContainerAttributes extends StyledWidgetAttributes {
     this.boxShadow,
     this.height,
     this.width,
-    this.maxHeight,
-    this.minHeight,
-    this.maxWidth,
-    this.minWidth,
     this.shape,
     this.transform,
     this.gradient,
@@ -58,7 +56,7 @@ class StyledContainerAttributes extends StyledWidgetAttributes {
     Color? color,
     BoxBorder? border,
     BorderRadiusGeometry? borderRadius,
-    List<BoxShadowRef>? boxShadow,
+    List<BoxShadowDto>? boxShadow,
     Matrix4? transform,
 
     // Constraints.
@@ -70,6 +68,11 @@ class StyledContainerAttributes extends StyledWidgetAttributes {
     Gradient? gradient,
   }) {
     return StyledContainerAttributes(
+      // Constraints.
+      maxHeight: maxHeight,
+      minHeight: minHeight,
+      maxWidth: maxWidth,
+      minWidth: minWidth,
       margin: margin == null ? null : MarginAttribute.from(margin),
       padding: padding == null ? null : PaddingAttribute.from(padding),
       alignment: alignment,
@@ -81,13 +84,7 @@ class StyledContainerAttributes extends StyledWidgetAttributes {
       color: ColorDto.maybeFrom(color),
       boxShadow: boxShadow,
       height: height,
-      width: width,
-      // Constraints.
-      maxHeight: maxHeight,
-      minHeight: minHeight,
-      maxWidth: maxWidth,
-      minWidth: minWidth,
-      shape: shape,
+      width: width, shape: shape,
       transform: transform, gradient: gradient,
     );
   }
@@ -112,6 +109,11 @@ class StyledContainerAttributes extends StyledWidgetAttributes {
     Gradient? gradient,
   }) {
     return StyledContainerAttributes(
+      maxHeight: maxHeight ?? this.maxHeight,
+      minHeight: minHeight ?? this.minHeight,
+
+      maxWidth: maxWidth ?? this.maxWidth,
+      minWidth: minWidth ?? this.minWidth,
       margin: this.margin?.merge(margin) ?? margin,
       padding: this.padding?.merge(padding) ?? padding,
       // Override values.
@@ -120,14 +122,9 @@ class StyledContainerAttributes extends StyledWidgetAttributes {
       border: this.border?.merge(border) ?? border,
       borderRadius: this.borderRadius?.merge(borderRadius) ?? borderRadius,
       color: color ?? this.color,
-      boxShadow: MergeMixin.mergeLists(this.boxShadow, boxShadow),
+      boxShadow: Mergeable.mergeLists(this.boxShadow, boxShadow),
       height: height ?? this.height,
       width: width ?? this.width,
-      maxHeight: maxHeight ?? this.maxHeight,
-      minHeight: minHeight ?? this.minHeight,
-
-      maxWidth: maxWidth ?? this.maxWidth,
-      minWidth: minWidth ?? this.minWidth,
       shape: shape ?? this.shape,
       transform: this.transform?.merge(transform) ?? transform,
 

@@ -68,6 +68,17 @@ extension StringExt on String {
   String get snakeCase => words.lowercase.join(_snakeCaseSeparator);
 
   String get paramCase => words.lowercase.join(_paramCaseSeparator);
+
+  String get titleCase =>
+      words.map((word) => word.capitalize).join(_spaceSeparator);
+
+  String get sentenceCase {
+    if (words.isEmpty) return this;
+
+    words[0] = words.first.capitalize;
+
+    return words.join(_spaceSeparator);
+  }
 }
 
 extension ListStringExt on List<String> {

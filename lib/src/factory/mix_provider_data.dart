@@ -14,7 +14,7 @@ import 'style_mix_data.dart';
 /// This class is used for encapsulating all [MixData] related operations.
 /// It contains a mixture of properties and methods useful for handling different attributes,
 /// decorators and token resolvers.
-class MixData with CompareMixin {
+class MixData with Comparable {
   final bool animated;
 
   // Instance variables for widget attributes, widget decorators and token resolver.
@@ -119,20 +119,21 @@ class MixData with CompareMixin {
     return _attributes.ofType<A>() as A?;
   }
 
-  R? of<A extends ResolvableAttribute<R>, R>() {
+  R? maybeOf<A extends ResolvableAttribute<R>, R>() {
     final attribute = attributeOf<A>();
 
     return attribute?.resolve(this);
   }
 
-  R dependOf<A extends ResolvableAttribute<R>, R>([R? defaultValue]) {
+  R of<A extends ResolvableAttribute<R>, R>([R? defaultValue]) {
     final attribute = attributeOf<A>();
 
     if (attribute is! A && defaultValue == null) {
       throw Exception(
         'No $A could be found starting from MixContext '
-        'when call mixContext.attributesOfType<$A>(). This can happen because you '
-        'have not create a Mix with $A.',
+        'when call mixContext.of<$A>(). This can happen because you '
+        'have not created an attribute of type $A. '
+        'You can also provide a default value to the of method.',
       );
     }
 
@@ -172,7 +173,7 @@ class MixData with CompareMixin {
     );
   }
 
-  /// Overrides the getter function of [props] from [CompareMixin] to specify properties necessary for distinguishing instances.
+  /// Overrides the getter function of [props] from [Comparable] to specify properties necessary for distinguishing instances.
   ///
   /// Returns a list of properties [_attributes] & [_decorators].
   @override

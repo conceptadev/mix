@@ -105,7 +105,7 @@ void main() {
   });
 }
 
-class TestClass with CompareMixin {
+class TestClass with Comparable {
   final int id;
   final String name;
 
@@ -115,7 +115,7 @@ class TestClass with CompareMixin {
   List<Object?> get props => [id, name];
 }
 
-class DeepNestedClass with CompareMixin {
+class DeepNestedClass with Comparable {
   final Map<String, Map<String, int>> deepNestedMap;
   final List<List<List<String>>> deepNestedList;
 

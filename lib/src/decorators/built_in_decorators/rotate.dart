@@ -18,7 +18,7 @@ class RotateDecorator extends Decorator {
   @override
   Widget build(Widget child, MixData mix) {
     if (mix.animated) {
-      final animation = mix.dependOf<AnimationAttribute, AnimationDto>(
+      final animation = mix.of<AnimationAttribute, AnimationDto>(
         const AnimationDto.defaults(),
       );
 

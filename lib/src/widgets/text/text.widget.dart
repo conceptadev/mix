@@ -2,11 +2,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../attributes/exports.dart';
-import '../../attributes/text_style/text_style_attribute.dart';
+import '../../attributes/text/attributes/text_style.attribute.dart';
 import '../../factory/mix_provider_data.dart';
 import '../empty/empty.widget.dart';
 import '../styled.widget.dart';
-import 'text.dto.dart';
 
 @Deprecated('Use StyledText now')
 typedef TextMix = StyledText;
@@ -65,12 +64,13 @@ class MixedText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textStyle = mix.of<TextStyleAttribute, TextStyle>();
-    final animation = mix.of<AnimationAttribute, AnimationDto>();
-    final textDirection = mix.of<TextDirectionAttribute, TextDirection>();
-    final visible = mix.dependOf<VisibleAttribute, bool>(true);
+    final textStyle = mix.maybeOf<TextStyleAttribute, TextStyle>();
+    final animation =
+        mix.maybeOf<AnimationAttribute, AnimationAttributeResolved>();
+    final textDirection = mix.maybeOf<TextDirectionAttribute, TextDirection>();
+    final visible = mix.of<VisibleAttribute, bool>(true);
 
-    final text = TextDto.fromContext(mix);
+    final text = TextAttributesResolved.fromContext(mix);
 
     if (!visible) {
       return const Empty();

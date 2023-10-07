@@ -1,0 +1,1 @@
+export 'src/aliases/deprecated_alias.dart';

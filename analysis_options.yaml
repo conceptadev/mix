@@ -39,6 +39,7 @@ dart_code_metrics:
     prefer-correct-identifier-length: false
     avoid-unsafe-collection-methods: false
     avoid-similar-names: false
+    format-comment: false
     avoid-nested-conditional-expressions:
         acceptable-level: 3
     member-ordering:
