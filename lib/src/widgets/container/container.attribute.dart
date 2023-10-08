@@ -5,11 +5,12 @@ import '../../attributes/box_constraints/box_constraints.attribute.dart';
 import '../../attributes/color/background_color.attribute.dart';
 import '../../attributes/decoration/decoration.attribute.dart';
 import '../../attributes/enum/clip.attribute.dart';
-import '../../attributes/margin/margin_attribute.dart';
-import '../../attributes/matrix4/matrix4.attribute.dart';
-import '../../attributes/padding/padding.attribute.dart';
-import '../../attributes/resolvable_attribute.dart';
+import '../../attributes/size/height.attribute.dart';
 import '../../attributes/size/width.attribute.dart';
+import '../../attributes/space/margin_attribute.dart';
+import '../../attributes/space/padding.attribute.dart';
+import '../../attributes/style_attribute.dart';
+import '../../attributes/transform/matrix4.attribute.dart';
 import '../../factory/mix_provider_data.dart';
 
 class ContainerAttributes
@@ -45,18 +46,18 @@ class ContainerAttributes
     if (other == null) return this;
 
     return ContainerAttributes(
-      alignment: mergeAttribute(alignment, other.alignment),
-      padding: mergeAttribute(padding, other.padding),
-      margin: mergeAttribute(margin, other.margin),
-      constraints: mergeAttribute(constraints, other.constraints),
-      decoration: mergeAttribute(decoration, other.decoration),
-      width: mergeAttribute(width, other.width),
-      height: mergeAttribute(height, other.height),
-      transform: mergeAttribute(transform, other.transform),
-      color: mergeAttribute(color, other.color),
-      clipBehavior: mergeAttribute(clipBehavior, other.clipBehavior),
-      animation: mergeAttribute(animation, other.animation),
-      visible: mergeAttribute(visible, other.visible),
+      alignment: mergeProp(alignment, other.alignment),
+      padding: mergeProp(padding, other.padding),
+      margin: mergeProp(margin, other.margin),
+      constraints: mergeProp(constraints, other.constraints),
+      decoration: mergeProp(decoration, other.decoration),
+      width: mergeProp(width, other.width),
+      height: mergeProp(height, other.height),
+      transform: mergeProp(transform, other.transform),
+      color: mergeProp(color, other.color),
+      clipBehavior: mergeProp(clipBehavior, other.clipBehavior),
+      animation: mergeProp(animation, other.animation),
+      visible: mergeProp(visible, other.visible),
     );
   }
 

@@ -1,11 +1,8 @@
 import 'package:flutter/widgets.dart';
 
 import '../../factory/mix_provider.dart';
-import '../container/container.widget.dart';
-import '../gap/gap_widget.dart';
 import '../styled.widget.dart';
 import 'flex.attribute.dart';
-import 'flex.descriptor.dart';
 
 class StyledFlex extends StyledWidget {
   const StyledFlex({
@@ -24,7 +21,7 @@ class StyledFlex extends StyledWidget {
   Widget build(BuildContext context) {
     return withMix(
       context,
-      (mix) => MixedFlex(mix: mix, direction: direction, children: children),
+      MixedFlex(direction: direction, children: children),
     );
   }
 }
@@ -47,10 +44,7 @@ class FlexBox extends StyledWidget {
   Widget build(BuildContext context) {
     return withMix(
       context,
-      (mix) => MixedContainer(
-        mixData: mix,
-        child: MixedFlex(mix: mix, direction: direction, children: children),
-      ),
+      MixedFlex(direction: direction, children: children),
     );
   }
 }
@@ -107,23 +101,17 @@ class MixedFlex extends StatelessWidget {
   final List<Widget> children;
   final Axis direction;
 
-  // Creates gap to space in between.
-  List<Widget> _renderChildrenWithGap(double? gapSize, List<Widget> children) {
-    // If no gap is set return widgets.
-    if (gapSize == null) return children;
+  List<Widget> _prepareChildrenWithGap() {
+    final spacedChildren = <Widget>[];
 
-    // List of widgets with gap.
-    final widgets = <Widget>[];
-    for (int idx = 0; idx < children.length; idx++) {
-      final widget = children[idx];
-      widgets.add(widget);
-      // Add gap if not last item if its not last element.
-      if (idx != children.length - 1) {
-        widgets.add(Gap(gapSize));
+    for (int i = 0; i < children.length; i++) {
+      spacedChildren.add(children[i]);
+      if (i < children.length - 1) {
+        // spacedChildren.add(Gap(gap));
       }
     }
 
-    return widgets;
+    return spacedChildren;
   }
 
   @override
@@ -134,11 +122,11 @@ class MixedFlex extends StatelessWidget {
 
     return Flex(
       direction: direction,
-      mainAxisAlignment: flex.mainAxisAlignment,
-      mainAxisSize: flex.mainAxisSize,
-      crossAxisAlignment: flex.crossAxisAlignment,
-      verticalDirection: flex.verticalDirection,
-      children: _renderChildrenWithGap(flex.gapSize, children),
+      mainAxisAlignment: flex?.mainAxisAlignment ?? MainAxisAlignment.start,
+      mainAxisSize: flex?.mainAxisSize ?? MainAxisSize.max,
+      crossAxisAlignment: flex?.crossAxisAlignment ?? CrossAxisAlignment.center,
+      verticalDirection: flex?.verticalDirection ?? VerticalDirection.down,
+      children: _prepareChildrenWithGap(),
     );
   }
 }

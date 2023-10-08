@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../../attributes/enum/axis.attribute.dart';
 import '../../attributes/enum/clip.attribute.dart';
 import '../../attributes/enum/vertical_direction/vertical_direction.attribute.dart';
+import '../../attributes/flex/axis.attribute.dart';
 import '../../attributes/flex/cross_axis_alignment.attribute.dart';
-import '../../attributes/flex/gap_size.attribute.dart';
 import '../../attributes/flex/main_axis_alignment.attribute.dart';
 import '../../attributes/flex/main_axis_size.attribute.dart';
 import '../../attributes/text/text_baseline.attribute.dart';
@@ -17,7 +16,6 @@ FlexAttributes flex({
   CrossAxisAlignment? crossAxisAlignment,
   MainAxisSize? mainAxisSize,
   VerticalDirection? verticalDirection,
-  double? gapSize,
   TextDirection? textDirection,
   TextBaseline? textBaseline,
   Clip? clipBehavior,
@@ -27,7 +25,6 @@ FlexAttributes flex({
         ? null
         : CrossAxisAlignmentAttribute(crossAxisAlignment),
     direction: direction == null ? null : AxisAttribute(direction),
-    gapSize: gapSize == null ? null : GapSizeAttribute(gapSize),
     mainAxisAlignment: mainAxisAlignment == null
         ? null
         : MainAxisAlignmentAttribute(mainAxisAlignment),
@@ -49,7 +46,6 @@ FlexAttributes row({
   CrossAxisAlignment? crossAxisAlignment,
   MainAxisSize? mainAxisSize,
   VerticalDirection? verticalDirection,
-  double? gapSize,
   TextDirection? textDirection,
   TextBaseline? textBaseline,
   Clip? clipBehavior,
@@ -60,7 +56,6 @@ FlexAttributes row({
     crossAxisAlignment: crossAxisAlignment,
     mainAxisSize: mainAxisSize,
     verticalDirection: verticalDirection,
-    gapSize: gapSize,
     textDirection: textDirection,
     textBaseline: textBaseline,
     clipBehavior: clipBehavior,
@@ -72,7 +67,6 @@ FlexAttributes column({
   CrossAxisAlignment? crossAxisAlignment,
   MainAxisSize? mainAxisSize,
   VerticalDirection? verticalDirection,
-  double? gapSize,
   TextDirection? textDirection,
   TextBaseline? textBaseline,
   Clip? clipBehavior,
@@ -83,7 +77,6 @@ FlexAttributes column({
     crossAxisAlignment: crossAxisAlignment,
     mainAxisSize: mainAxisSize,
     verticalDirection: verticalDirection,
-    gapSize: gapSize,
     textDirection: textDirection,
     textBaseline: textBaseline,
     clipBehavior: clipBehavior,
@@ -124,12 +117,6 @@ FlexAttributes crossAxis(CrossAxisAlignment crossAxisAlignment) {
 @Deprecated('Use flex(crossAxisAlignment: crossAxisAlignment) instead')
 FlexAttributes crossAxisAlignment(CrossAxisAlignment crossAxisAlignment) {
   return flex(crossAxisAlignment: crossAxisAlignment);
-}
-
-// Create a FlexAttributes for gap size.
-@Deprecated('Use flex(gapSize: gapSize) instead')
-FlexAttributes gap(double gapSize) {
-  return flex(gapSize: gapSize);
 }
 
 @Deprecated('Use flex(mainAxisAlignment: mainAxis) instead')

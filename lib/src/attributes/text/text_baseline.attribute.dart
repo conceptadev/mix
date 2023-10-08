@@ -1,9 +1,9 @@
 import 'package:flutter/widgets.dart';
 
 import '../../factory/mix_provider_data.dart';
-import '../resolvable_attribute.dart';
+import '../style_attribute.dart';
 
-class TextBaselineAttribute extends ResolvableAttribute<TextBaseline> {
+class TextBaselineAttribute extends StyleAttribute<TextBaseline> {
   final TextBaseline baseline;
 
   const TextBaselineAttribute(this.baseline);

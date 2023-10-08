@@ -51,22 +51,14 @@ class ZBox extends StyledWidget {
   Widget build(BuildContext context) {
     return withMix(
       context,
-      (mix) => MixedContainer(
-        mixData: mix,
-        child: MixedStack(mix: mix, children: children),
-      ),
+      MixedContainer(child: MixedStack(children: children)),
     );
   }
 }
 
 class MixedStack extends StatelessWidget {
-  const MixedStack({
-    this.children = const <Widget>[],
-    super.key,
-    required this.mix,
-  });
+  const MixedStack({this.children = const <Widget>[], super.key});
 
-  final MixData mix;
   final List<Widget> children;
 
   @override

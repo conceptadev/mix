@@ -1,10 +1,9 @@
 import 'package:flutter/widgets.dart';
 
 import '../../../factory/mix_provider_data.dart';
-import '../../resolvable_attribute.dart';
+import '../../style_attribute.dart';
 
-class VerticalDirectionAttribute
-    extends ResolvableAttribute<VerticalDirection> {
+class VerticalDirectionAttribute extends StyleAttribute<VerticalDirection> {
   final VerticalDirection direction;
 
   const VerticalDirectionAttribute(this.direction);

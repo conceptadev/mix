@@ -29,6 +29,7 @@ dart_code_metrics:
     arguments-ordering:
       child-last: true
     prefer-getter-over-method: false
+    enum-constants-ordering: false
     prefer-static-class: false
     avoid-late-keyword: false
     avoid-barrel-files: false

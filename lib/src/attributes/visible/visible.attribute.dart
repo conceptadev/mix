@@ -1,7 +1,7 @@
 import '../../factory/mix_provider_data.dart';
-import '../resolvable_attribute.dart';
+import '../style_attribute.dart';
 
-class VisibleAttribute extends ResolvableAttribute<bool> {
+class VisibleAttribute extends StyleAttribute<bool> {
   final bool _visible;
 
   const VisibleAttribute(bool visible) : _visible = visible;

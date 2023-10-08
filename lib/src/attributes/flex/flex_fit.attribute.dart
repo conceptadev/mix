@@ -1,9 +1,9 @@
 import 'package:flutter/widgets.dart';
 
 import '../../factory/mix_provider_data.dart';
-import '../resolvable_attribute.dart';
+import '../style_attribute.dart';
 
-class FlexFitAttribute extends ResolvableAttribute<FlexFit> {
+class FlexFitAttribute extends StyleAttribute<FlexFit> {
   final FlexFit fit;
 
   const FlexFitAttribute(this.fit);

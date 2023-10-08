@@ -1,9 +1,9 @@
 import 'package:flutter/widgets.dart';
 
 import '../../../factory/mix_provider_data.dart';
-import '../../resolvable_attribute.dart';
+import '../../style_attribute.dart';
 
-class TextDirectionAttribute extends ResolvableAttribute<TextDirection> {
+class TextDirectionAttribute extends StyleAttribute<TextDirection> {
   final TextDirection direction;
 
   const TextDirectionAttribute(this.direction);

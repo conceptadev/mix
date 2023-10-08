@@ -3,13 +3,14 @@ import 'package:flutter/material.dart';
 import '../../attributes/alignment/alignment_geometry.attribute.dart';
 import '../../attributes/attribute.dart';
 import '../../attributes/enum/clip.attribute.dart';
-import '../../attributes/resolvable_attribute.dart';
+import '../../attributes/stack/stack_fit.attribute.dart';
+import '../../attributes/style_attribute.dart';
 import '../../attributes/text/text_direction/text_direction.attribute.dart';
 import '../../factory/mix_provider_data.dart';
 
-class StackAttributes extends ResolvableAttribute<StackAttributesResolved> {
+class StackAttributes extends StyleAttribute<StackAttributesResolved> {
   final AlignmentGeometryAttribute? alignment;
-  final StackFit? fit;
+  final StackFitAttribute? fit;
   final TextDirectionAttribute? textDirection;
   final ClipAttribute? clipBehavior;
 
@@ -25,20 +26,20 @@ class StackAttributes extends ResolvableAttribute<StackAttributesResolved> {
     if (other == null) return this;
 
     return StackAttributes(
-      alignment: other.alignment ?? alignment,
-      fit: other.fit ?? fit,
-      textDirection: other.textDirection ?? textDirection,
-      clipBehavior: other.clipBehavior ?? clipBehavior,
+      alignment: mergeProp(alignment, other.alignment),
+      fit: mergeProp(fit, other.fit),
+      textDirection: mergeProp(textDirection, other.textDirection),
+      clipBehavior: mergeProp(clipBehavior, other.clipBehavior),
     );
   }
 
   @override
   StackAttributesResolved resolve(MixData mix) {
     return StackAttributesResolved(
-      alignment: alignment?.resolve(mix),
-      fit: fit,
-      textDirection: textDirection?.resolve(mix),
-      clipBehavior: clipBehavior?.resolve(mix),
+      alignment: resolveAttribute(alignment, mix),
+      fit: resolveAttribute(fit, mix),
+      textDirection: resolveAttribute(textDirection, mix),
+      clipBehavior: resolveAttribute(clipBehavior, mix),
     );
   }
 
@@ -46,7 +47,7 @@ class StackAttributes extends ResolvableAttribute<StackAttributesResolved> {
   List<Object?> get props => [alignment, fit, textDirection, clipBehavior];
 }
 
-class StackAttributesResolved extends Dto {
+class StackAttributesResolved extends DataClass {
   final AlignmentGeometry? alignment;
   final StackFit? fit;
   final TextDirection? textDirection;

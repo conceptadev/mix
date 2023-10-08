@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 import '../../factory/exports.dart';
-import '../resolvable_attribute.dart';
+import '../style_attribute.dart';
 
 abstract class AlignmentGeometryAttribute<T extends AlignmentGeometry>
-    extends ResolvableAttribute<T> {
+    extends StyleAttribute<T> {
   const AlignmentGeometryAttribute();
 
   static AlignmentGeometryAttribute from(AlignmentGeometry alignment) {

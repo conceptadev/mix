@@ -1,6 +1,6 @@
-import '../base/double.attribute.dart';
+import '../base/double.dto.dart';
 
-class BorderWidthAttribute extends DoubleAttribute {
+class BorderWidthAttribute extends DoubleDto {
   const BorderWidthAttribute(super.value, {super.modifier});
 
   @override

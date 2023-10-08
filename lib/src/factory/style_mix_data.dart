@@ -1,19 +1,19 @@
 import '../attributes/attribute.dart';
-import '../attributes/resolvable_attribute.dart';
-import '../decorators/decorator.dart';
+import '../attributes/decorators/decorator.dart';
+import '../attributes/style_attribute.dart';
+import '../attributes/variants/variant_attribute.dart';
 import '../helpers/attributes_map.dart';
 import '../helpers/compare_mixin/compare_mixin.dart';
-import '../variants/variant_attribute.dart';
 
 class StyleMixData with Comparable {
   final AttributesMap<Decorator>? _decorators;
   final AttributesMap<ContextVariantAttribute>? _contextVariants;
 
   final AttributesMap<VariantAttribute>? _variants;
-  final AttributesMap<ResolvableAttribute>? _attributes;
+  final AttributesMap<StyleAttribute>? _attributes;
 
   const StyleMixData({
-    required AttributesMap<ResolvableAttribute>? attributes,
+    required AttributesMap<StyleAttribute>? attributes,
     required AttributesMap<VariantAttribute>? variants,
     required AttributesMap<Decorator>? decorators,
     required AttributesMap<ContextVariantAttribute>? contextVariants,
@@ -27,11 +27,11 @@ class StyleMixData with Comparable {
   factory StyleMixData.create(Iterable<Attribute> attributes) {
     final variantList = <VariantAttribute>[];
     final contextVariantList = <ContextVariantAttribute>[];
-    final attributeList = <ResolvableAttribute>[];
+    final attributeList = <StyleAttribute>[];
     final decoratorList = <Decorator>[];
 
     for (final attribute in attributes) {
-      if (attribute is ResolvableAttribute) {
+      if (attribute is StyleAttribute) {
         attributeList.add(attribute);
       } else if (attribute is Decorator) {
         decoratorList.add(attribute);
@@ -59,7 +59,7 @@ class StyleMixData with Comparable {
         _variants = null,
         _contextVariants = null;
 
-  AttributesMap<ResolvableAttribute> get attributes {
+  AttributesMap<StyleAttribute> get attributes {
     return _attributes ?? const AttributesMap.empty();
   }
 
@@ -89,8 +89,8 @@ class StyleMixData with Comparable {
     return variants.length + contextVariants.length + attributes.length;
   }
 
-  /// Returns an instance of the specified [ResolvableAttribute] type from the [MixData].
-  A? attributesOfType<A extends ResolvableAttribute>() {
+  /// Returns an instance of the specified [StyleAttribute] type from the [MixData].
+  A? attributesOfType<A extends StyleAttribute>() {
     return attributes.ofType<A>() as A?;
   }
 
@@ -106,7 +106,7 @@ class StyleMixData with Comparable {
 
   /// Creates a new [StyleMixData] instance by replacing the specified attributes with new values.
   StyleMixData copyWith({
-    AttributesMap<ResolvableAttribute>? attributes,
+    AttributesMap<StyleAttribute>? attributes,
     AttributesMap<Decorator>? decorators,
     AttributesMap<VariantAttribute>? variants,
     AttributesMap<ContextVariantAttribute>? contextVariants,

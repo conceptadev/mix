@@ -2,12 +2,12 @@
 import 'package:flutter/material.dart';
 
 import '../attributes/attribute.dart';
-import '../attributes/resolvable_attribute.dart';
-import '../decorators/decorator.dart';
+import '../attributes/decorators/decorator.dart';
+import '../attributes/style_attribute.dart';
+import '../attributes/variants/variant_attribute.dart';
 import '../helpers/attributes_map.dart';
 import '../helpers/compare_mixin/compare_mixin.dart';
 import '../theme/mix_theme.dart';
-import '../variants/variant_attribute.dart';
 import 'style_mix.dart';
 import 'style_mix_data.dart';
 
@@ -18,7 +18,7 @@ class MixData with Comparable {
   final bool animated;
 
   // Instance variables for widget attributes, widget decorators and token resolver.
-  final AttributesMap<ResolvableAttribute> _attributes;
+  final AttributesMap<StyleAttribute> _attributes;
   final AttributesMap<Decorator> _decorators;
   final MixTokenResolver _tokenResolver;
 
@@ -27,7 +27,7 @@ class MixData with Comparable {
   /// It takes in [attributes], [decorators] and [tokenResolver] as required parameters.
   MixData._({
     required MixTokenResolver tokenResolver,
-    required AttributesMap<ResolvableAttribute> attributes,
+    required AttributesMap<StyleAttribute> attributes,
     required AttributesMap<Decorator> decorators,
     required this.animated,
   })  : _attributes = attributes,
@@ -111,22 +111,23 @@ class MixData with Comparable {
     return _decorators.toList();
   }
 
-  /// Retrieves an instance of the specified [ResolvableAttribute] type from the [MixData].
+  /// Retrieves an instance of the specified [StyleAttribute] type from the [MixData].
   ///
-  /// Accepts a type parameter [A] which extends [ResolvableAttribute].
+  /// Accepts a type parameter [A] which extends [StyleAttribute].
   /// Returns the instance of type [A] if found, else returns null.
-  A? get<A extends ResolvableAttribute>() {
+  A? get<A extends StyleAttribute>() {
     return _attributes.ofType<A>() as A?;
   }
 
-  R? resolveAttributeOfType<Attr extends ResolvableAttribute<R>, R>() {
+  R? resolveAttributeOfType<Attr extends StyleAttribute<R>, R>() {
     final attribute = get<Attr>();
 
     return attribute?.resolve(this);
   }
 
-  R dependOnResolveAttributeOfType<Attr extends ResolvableAttribute<R>, R>(
-      R defaultValue) {
+  R dependOnResolveAttributeOfType<Attr extends StyleAttribute<R>, R>(
+    R defaultValue,
+  ) {
     final attribute = get<Attr>();
 
     return attribute?.resolve(this) ?? defaultValue;
@@ -134,9 +135,9 @@ class MixData with Comparable {
 
   /// Retrieves an instance of attributes based on the type provided.
   ///
-  /// The type [T] here refers to the type extending [ResolvableAttribute].
+  /// The type [T] here refers to the type extending [StyleAttribute].
   /// An exception is thrown if no attribute of the required type is found.
-  T dependOnAttributesOfType<T extends ResolvableAttribute>() {
+  T dependOnAttributesOfType<T extends StyleAttribute>() {
     final attribute = get<T>();
 
     if (attribute is! T) {

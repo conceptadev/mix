@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mix/src/attributes/decorators/decorators.util.dart';
 import 'package:mix/src/attributes/shared/shared.attributes.dart';
-import 'package:mix/src/decorators/decorators_utilities.dart';
 import 'package:mix/src/dtos/border/border.dto.dart';
 import 'package:mix/src/dtos/color.dto.dart';
 import 'package:mix/src/dtos/edge_insets/edge_insets.dto.dart';

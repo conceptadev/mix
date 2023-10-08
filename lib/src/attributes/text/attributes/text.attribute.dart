@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import '../../../factory/exports.dart';
 import '../../attribute.dart';
 import '../../helpers/list.attribute.dart';
-import '../../resolvable_attribute.dart';
+import '../../style_attribute.dart';
 import '../directives/text.directive.dart';
 import '../text_style/text_style.attribute.dart';
 
-class TextAttributes extends ResolvableAttribute<TextAttributesResolved> {
+class TextAttributes extends StyleAttribute<TextAttributesResolved> {
   final List<TextDirective> _directives;
   final TextHeightBehavior? _textHeightBehavior;
   final int? _maxLines;
@@ -131,7 +131,7 @@ class TextAttributes extends ResolvableAttribute<TextAttributesResolved> {
       ];
 }
 
-class TextAttributesResolved extends Dto {
+class TextAttributesResolved extends DataClass {
   final bool softWrap;
   final TextOverflow overflow;
 

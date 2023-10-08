@@ -1,9 +1,9 @@
 import 'package:flutter/widgets.dart';
 
 import '../../factory/mix_provider_data.dart';
-import '../resolvable_attribute.dart';
+import '../style_attribute.dart';
 
-class TextOverflowAttribute extends ResolvableAttribute<TextOverflow> {
+class TextOverflowAttribute extends StyleAttribute<TextOverflow> {
   final TextOverflow overflow;
 
   const TextOverflowAttribute(this.overflow);

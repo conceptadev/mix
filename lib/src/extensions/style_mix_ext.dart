@@ -3,8 +3,8 @@
 import 'package:flutter/material.dart';
 
 import '../attributes/attribute.dart';
+import '../attributes/variants/variant.dart';
 import '../factory/style_mix.dart';
-import '../variants/variant.dart';
 import '../widgets/container/container.widget.dart';
 import '../widgets/flex/flex.widget.dart';
 import '../widgets/icon/icon.widget.dart';

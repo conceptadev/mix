@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 import '../../factory/mix_provider_data.dart';
-import '../resolvable_attribute.dart';
+import '../style_attribute.dart';
 
-class GradientAttribute extends ResolvableAttribute<Gradient> {
+class GradientAttribute extends StyleAttribute<Gradient> {
   final Gradient _gradient;
   const GradientAttribute({required Gradient gradient}) : _gradient = gradient;
 

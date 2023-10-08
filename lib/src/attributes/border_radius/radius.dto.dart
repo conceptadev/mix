@@ -1,11 +1,9 @@
-// ignore_for_file: prefer-correct-identifier-length
-
 import 'package:flutter/material.dart';
 
 import '../../factory/mix_provider_data.dart';
-import '../resolvable_attribute.dart';
+import '../attribute.dart';
 
-class RadiusDto extends ResolvableDto<Radius> {
+class RadiusDto extends Dto<Radius> {
   static const zero = RadiusDto.circular(0.0);
 
   /// The radius value on the horizontal axis.

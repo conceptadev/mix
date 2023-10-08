@@ -1,9 +1,9 @@
 import 'dart:core';
 
 import '../../factory/mix_provider_data.dart';
-import '../resolvable_attribute.dart';
+import '../style_attribute.dart';
 
-abstract class DurationAttribute extends ResolvableAttribute<Duration> {
+abstract class DurationAttribute extends StyleAttribute<Duration> {
   final Duration duration;
 
   const DurationAttribute(this.duration);

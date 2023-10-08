@@ -1,10 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+import '../attributes/variants/variant.dart';
 import '../factory/mix_provider.dart';
 import '../factory/mix_provider_data.dart';
 import '../factory/style_mix.dart';
-import '../variants/variant.dart';
 import 'exports.dart';
 
 @Deprecated('Use MixWidget instead')

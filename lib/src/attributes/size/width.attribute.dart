@@ -1,17 +1,11 @@
-import '../base/double.attribute.dart';
+import '../base/double.dto.dart';
 
 class WidthAttribute extends DoubleAttribute {
   const WidthAttribute(super.value);
 
+  factory WidthAttribute.from(double width) => WidthAttribute(DoubleDto(width));
+
   @override
   WidthAttribute merge(WidthAttribute? other) =>
       WidthAttribute(other?.value ?? value);
-}
-
-class HeightAttribute extends DoubleAttribute {
-  const HeightAttribute(super.value);
-
-  @override
-  HeightAttribute merge(HeightAttribute? other) =>
-      HeightAttribute(other?.value ?? value);
 }

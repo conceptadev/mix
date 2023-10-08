@@ -1,9 +1,9 @@
 import 'package:flutter/widgets.dart';
 
 import '../../factory/mix_provider_data.dart';
-import '../resolvable_attribute.dart';
+import '../style_attribute.dart';
 
-class MainAxisSizeAttribute extends ResolvableAttribute<MainAxisSize> {
+class MainAxisSizeAttribute extends StyleAttribute<MainAxisSize> {
   final MainAxisSize size;
 
   const MainAxisSizeAttribute(this.size);

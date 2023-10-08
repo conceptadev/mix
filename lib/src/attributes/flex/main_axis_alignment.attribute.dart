@@ -1,10 +1,9 @@
 import 'package:flutter/widgets.dart';
 
 import '../../factory/mix_provider_data.dart';
-import '../resolvable_attribute.dart';
+import '../style_attribute.dart';
 
-class MainAxisAlignmentAttribute
-    extends ResolvableAttribute<MainAxisAlignment> {
+class MainAxisAlignmentAttribute extends StyleAttribute<MainAxisAlignment> {
   final MainAxisAlignment alignment;
 
   const MainAxisAlignmentAttribute(this.alignment);

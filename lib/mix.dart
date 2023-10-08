@@ -1,7 +1,7 @@
 library mix;
 
 export './exports.dart';
-export 'src/decorators/exports.dart';
+export 'src/attributes/decorators/exports.dart';
 export 'src/deprecations.dart';
 export 'src/extensions/exports.dart';
 export 'src/factory/exports.dart';

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
+import '../base/color.dto.dart';
 import '../helpers/list.attribute.dart';
 import 'box_shadow.attribute.dart';
 import 'shadow.attribute.dart';
-import 'shadow_color.attribute.dart';
 
 BoxShadowAttribute boxShadow({
   Color? color,
@@ -12,7 +12,7 @@ BoxShadowAttribute boxShadow({
   double? spreadRadius,
 }) {
   return BoxShadowAttribute(
-    color: color == null ? null : ShadowColorAttribute(color),
+    color: ColorDto.maybeFrom(color),
     offset: offset,
     blurRadius: blurRadius,
     spreadRadius: spreadRadius,
@@ -22,7 +22,7 @@ BoxShadowAttribute boxShadow({
 ShadowAttribute shadow({Color? color, Offset? offset, double? blurRadius}) {
   return ShadowAttribute(
     blurRadius: blurRadius,
-    color: color == null ? null : ShadowColorAttribute(color),
+    color: ColorDto.maybeFrom(color),
     offset: offset,
   );
 }
@@ -38,7 +38,7 @@ ListAtttribute<BoxShadowAttribute> elevation(int elevation) {
 
   if (elevation == 0) {
     const boxShadow = BoxShadowAttribute(
-      color: ShadowColorAttribute(Colors.transparent),
+      color: ColorDto(Colors.transparent),
       offset: Offset(0, 0),
       blurRadius: 0,
       spreadRadius: 0,

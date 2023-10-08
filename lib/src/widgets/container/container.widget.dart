@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 
-import '../../decorators/widget_decorator_wrapper.dart';
+import '../../attributes/decorators/widget_decorator_wrapper.dart';
 import '../../factory/mix_provider.dart';
 import '../empty/empty.widget.dart';
 import '../styled.widget.dart';
@@ -32,10 +32,11 @@ class StyledContainer extends StyledWidget {
 }
 
 class MixedContainer extends StatelessWidget {
-  const MixedContainer({this.child, Key? key}) : super(key: key);
+  const MixedContainer({this.child, super.key, this.animated = false});
 
   // Child Widget.
   final Widget? child;
+  final bool animated;
 
   @override
   Widget build(BuildContext context) {

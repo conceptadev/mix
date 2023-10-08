@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart'; // importing flutter_test package
 import 'package:mix/mix.dart';
-import 'package:mix/src/variants/variant_attribute.dart';
+import 'package:mix/src/attributes/variants/variant_attribute.dart';
 
 import '../helpers/random_dto.dart';
 

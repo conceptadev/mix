@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 import '../../attributes/attribute.dart';
-import '../../attributes/base/color.attribute.dart';
-import '../../attributes/resolvable_attribute.dart';
+import '../../attributes/base/color.dto.dart';
+import '../../attributes/style_attribute.dart';
 import '../../factory/mix_provider_data.dart';
 
-class IconAttributes extends ResolvableAttribute<IconAttributesResolved> {
-  final ColorAttribute? color;
+class IconAttributes extends StyleAttribute<IconAttributesResolved> {
+  final ColorDto? color;
   final double? size;
   final IconData? icon;
 
@@ -53,7 +53,7 @@ class IconAttributes extends ResolvableAttribute<IconAttributesResolved> {
   List<Object?> get props => [color, size, icon];
 }
 
-class IconAttributesResolved extends Dto {
+class IconAttributesResolved extends DataClass {
   final Color? color;
   final double? size;
   final IconData? icon;

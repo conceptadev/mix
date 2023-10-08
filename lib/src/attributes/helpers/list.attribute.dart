@@ -1,15 +1,15 @@
 import 'dart:math';
 
 import '../../factory/mix_provider_data.dart';
-import '../resolvable_attribute.dart';
+import '../style_attribute.dart';
 
-class ListAtttribute<Attr extends ResolvableAttribute>
-    extends ResolvableAttribute<List<Attr>> {
+class ListAtttribute<Attr extends StyleAttribute>
+    extends StyleAttribute<List<Attr>> {
   final List<Attr> _items;
 
   const ListAtttribute(List<Attr> items) : _items = items;
 
-  static ListAtttribute<Attr>? maybeFrom<Attr extends ResolvableAttribute>(
+  static ListAtttribute<Attr>? maybeFrom<Attr extends StyleAttribute>(
     Iterable<Attr>? items,
   ) {
     return items == null ? null : ListAtttribute(items.toList());

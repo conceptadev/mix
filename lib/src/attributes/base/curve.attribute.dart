@@ -1,9 +1,9 @@
 import 'package:flutter/animation.dart';
 
 import '../../factory/mix_provider_data.dart';
-import '../resolvable_attribute.dart';
+import '../style_attribute.dart';
 
-abstract class CurveAttribute extends ResolvableAttribute<Curve> {
+abstract class CurveAttribute extends StyleAttribute<Curve> {
   final Curve curve;
 
   const CurveAttribute(this.curve);

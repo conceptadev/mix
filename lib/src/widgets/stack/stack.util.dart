@@ -1,19 +1,36 @@
 import 'package:flutter/widgets.dart';
 
+import '../../attributes/alignment/alignment_geometry.attribute.dart';
+import '../../attributes/enum/clip.attribute.dart';
+import '../../attributes/stack/stack_fit.attribute.dart';
+import '../../attributes/text/text_direction/text_direction.attribute.dart';
 import 'stack.attributes.dart';
 
-class ZBoxUtility {
-  const ZBoxUtility._();
+StackAttributes stack({
+  AlignmentGeometryAttribute? alignment,
+  StackFitAttribute? fit,
+  TextDirectionAttribute? textDirection,
+  ClipAttribute? clipBehavior,
+}) {
+  return StackAttributes(
+    alignment: alignment,
+    fit: fit,
+    textDirection: textDirection,
+    clipBehavior: clipBehavior,
+  );
+}
 
-  static StyledStackAttributes alignment(AlignmentGeometry alignment) {
-    return StyledStackAttributes(alignment: alignment);
-  }
+@Deprecated('Use stack instead')
+StackAttributes zAligmnent(Alignment alignment) {
+  return StackAttributes(alignment: AlignmentGeometryAttribute.from(alignment));
+}
 
-  static StyledStackAttributes fit(StackFit fit) {
-    return StyledStackAttributes(fit: fit);
-  }
+@Deprecated('Use stack instead')
+StackAttributes zFit(StackFit fit) {
+  return StackAttributes(fit: StackFitAttribute(fit));
+}
 
-  static StyledStackAttributes clipBehavior(Clip clip) {
-    return StyledStackAttributes(clipBehavior: clip);
-  }
+@Deprecated('Use stack instead')
+StackAttributes zClip(Clip clip) {
+  return StackAttributes(clipBehavior: ClipAttribute(clip));
 }

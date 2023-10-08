@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
 import '../../factory/mix_provider_data.dart';
-import '../resolvable_attribute.dart';
+import '../style_attribute.dart';
 import 'border_radius.attribute.dart';
 import 'border_radius_directional.attribute.dart';
 import 'radius.dto.dart';
 
 abstract class BorderRadiusGeometryAttribute<T extends BorderRadiusGeometry>
-    extends ResolvableAttribute<T> {
+    extends StyleAttribute<T> {
   const BorderRadiusGeometryAttribute();
 
   static BorderRadiusGeometryAttribute from(

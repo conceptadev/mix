@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../attributes/animation/animation.attribute.dart';
 import '../../attributes/text/text_direction/text_direction.attribute.dart';
 import '../../attributes/visible/visible.attribute.dart';
-import '../../factory/mix_provider_data.dart';
+import '../../factory/mix_provider.dart';
 import '../empty/empty.widget.dart';
 import '../styled.widget.dart';
 import 'icon.attribute.dart';
@@ -30,25 +30,19 @@ class StyledIcon extends StyledWidget {
 
   @override
   Widget build(BuildContext context) {
-    return withMix(context, (mix) => MixedIcon(icon: icon, mix: mix));
+    return withMix(context, MixedIcon(icon: icon));
   }
 }
 
 class MixedIcon extends StatelessWidget {
-  const MixedIcon({
-    this.icon,
-    super.key,
-    required this.mix,
-    this.semanticLabel,
-  });
+  const MixedIcon({this.icon, super.key, this.semanticLabel});
 
   final IconData? icon;
-  final MixData mix;
-
   final String? semanticLabel;
 
   @override
   Widget build(BuildContext context) {
+    final mix = MixProvider.of(context);
     final visible = mix.resolveAttributeOfType<VisibleAttribute, bool>(true);
     final attributes =
         mix.resolveAttributeOfType<IconAttributes, IconAttributesResolved>();

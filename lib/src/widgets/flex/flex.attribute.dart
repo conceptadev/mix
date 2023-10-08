@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 
-import '../../attributes/enum/axis.attribute.dart';
 import '../../attributes/enum/clip.attribute.dart';
 import '../../attributes/enum/vertical_direction/vertical_direction.attribute.dart';
+import '../../attributes/flex/axis.attribute.dart';
 import '../../attributes/flex/cross_axis_alignment.attribute.dart';
-import '../../attributes/flex/gap_size.attribute.dart';
 import '../../attributes/flex/main_axis_alignment.attribute.dart';
 import '../../attributes/flex/main_axis_size.attribute.dart';
-import '../../attributes/resolvable_attribute.dart';
+import '../../attributes/style_attribute.dart';
 import '../../attributes/text/text_baseline.attribute.dart';
 import '../../attributes/text/text_direction/text_direction.attribute.dart';
 import '../../factory/mix_provider_data.dart';
@@ -21,12 +20,9 @@ class FlexAttributes extends WidgetAttributes<FlexAttributesResolved> {
   final TextDirectionAttribute? textDirection;
   final TextBaselineAttribute? textBaseline;
   final ClipAttribute? clipBehavior;
-  final GapSizeAttribute? gapSize;
-
   const FlexAttributes({
     this.crossAxisAlignment,
     this.direction,
-    this.gapSize,
     this.mainAxisAlignment,
     this.mainAxisSize,
     this.verticalDirection,
@@ -42,7 +38,6 @@ class FlexAttributes extends WidgetAttributes<FlexAttributesResolved> {
     return FlexAttributes(
       crossAxisAlignment: other.crossAxisAlignment ?? crossAxisAlignment,
       direction: other.direction ?? direction,
-      gapSize: other.gapSize ?? gapSize,
       mainAxisAlignment: other.mainAxisAlignment ?? mainAxisAlignment,
       mainAxisSize: other.mainAxisSize ?? mainAxisSize,
       verticalDirection: other.verticalDirection ?? verticalDirection,
@@ -60,7 +55,6 @@ class FlexAttributes extends WidgetAttributes<FlexAttributesResolved> {
       mainAxisSize: resolveAttribute(mainAxisSize, mix),
       verticalDirection: resolveAttribute(verticalDirection, mix),
       direction: resolveAttribute(direction, mix),
-      gapSize: resolveAttribute(gapSize, mix),
       textDirection: resolveAttribute(textDirection, mix),
       textBaseline: resolveAttribute(textBaseline, mix),
       clipBehavior: resolveAttribute(clipBehavior, mix),
@@ -79,7 +73,6 @@ class FlexAttributes extends WidgetAttributes<FlexAttributesResolved> {
         textDirection,
         textBaseline,
         clipBehavior,
-        gapSize,
       ];
 }
 
@@ -92,7 +85,6 @@ class FlexAttributesResolved extends WidgetAttributesResolved {
   final TextDirection? textDirection;
   final TextBaseline? textBaseline;
   final Clip? clipBehavior;
-  final double? gapSize;
 
   const FlexAttributesResolved({
     required this.crossAxisAlignment,
@@ -100,7 +92,6 @@ class FlexAttributesResolved extends WidgetAttributesResolved {
     required this.mainAxisSize,
     required this.verticalDirection,
     required this.direction,
-    required this.gapSize,
     required this.textDirection,
     required this.textBaseline,
     required this.clipBehavior,
@@ -115,7 +106,6 @@ class FlexAttributesResolved extends WidgetAttributesResolved {
         mainAxisSize,
         verticalDirection,
         direction,
-        gapSize,
         textDirection,
         textBaseline,
         clipBehavior,

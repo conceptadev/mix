@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 import '../../factory/exports.dart';
-import '../resolvable_attribute.dart';
+import '../style_attribute.dart';
 
-class BoxConstraintsAttribute extends ResolvableAttribute<BoxConstraints> {
+class BoxConstraintsAttribute extends StyleAttribute<BoxConstraints> {
   final double? minWidth;
   final double? maxWidth;
   final double? minHeight;

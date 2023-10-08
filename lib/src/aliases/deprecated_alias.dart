@@ -10,7 +10,7 @@ import 'exports.dart';
 /// FEEL FREE TO BRING INTERNALLY TO YOUR OWN PROJECT
 
 @Deprecated('Use mainAxisAlignment instead')
-const mainAxis = mainAxisAlignment;
+const mainAxis = mainAxisAlig;
 
 @Deprecated('use Mix.chooser instead')
 void when(bool _) => throw UnimplementedError();

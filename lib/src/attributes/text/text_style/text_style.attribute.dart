@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 
 import '../../../factory/exports.dart';
 import '../../../theme/exports.dart';
-import '../../base/color.attribute.dart';
+import '../../base/color.dto.dart';
 import '../../helpers/list.attribute.dart';
-import '../../resolvable_attribute.dart';
 import '../../shadow/shadow.attribute.dart';
+import '../../style_attribute.dart';
 
-class TextStyleAttribute extends ResolvableAttribute<TextStyle> {
+class TextStyleAttribute extends StyleAttribute<TextStyle> {
   final String? fontFamily;
   final FontWeight? fontWeight;
 
@@ -19,12 +19,12 @@ class TextStyleAttribute extends ResolvableAttribute<TextStyle> {
   final double? letterSpacing;
   final double? wordSpacing;
   final TextBaseline? textBaseline;
-  final ColorAttribute? color;
-  final ColorAttribute? backgroundColor;
+  final ColorDto? color;
+  final ColorDto? backgroundColor;
   final ListAtttribute<ShadowAttribute>? shadows;
   final List<FontFeature>? fontFeatures;
   final TextDecoration? decoration;
-  final ColorAttribute? decorationColor;
+  final ColorDto? decorationColor;
   final TextDecorationStyle? decorationStyle;
   final Locale? locale;
   final String? debugLabel;
@@ -71,15 +71,13 @@ class TextStyleAttribute extends ResolvableAttribute<TextStyle> {
         ? TextStyleAttribute(styleToken: style)
         : TextStyleAttribute(
             background: style.background,
-            backgroundColor: backgroundColor == null
-                ? null
-                : ColorAttribute(backgroundColor),
-            color: color == null ? null : ColorAttribute(color),
+            backgroundColor:
+                backgroundColor == null ? null : ColorDto(backgroundColor),
+            color: ColorDto.maybeFrom(color),
             debugLabel: style.debugLabel,
             decoration: style.decoration,
-            decorationColor: decorationColor == null
-                ? null
-                : ColorAttribute(decorationColor),
+            decorationColor:
+                decorationColor == null ? null : ColorDto(decorationColor),
             decorationStyle: style.decorationStyle,
             decorationThickness: style.decorationThickness,
             fontFamily: style.fontFamily,

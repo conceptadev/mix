@@ -61,7 +61,7 @@ void main() {
       // Length is only 1 because margin and color are BoxAttributes
       expect(style.values.length, 1);
 
-      expect(boxAttribute.color, const ColorAttribute(Colors.red));
+      expect(boxAttribute.color, const ColorDto(Colors.red));
       expect(boxAttribute.margin, const EdgeInsetsDto.all(10));
     });
 
@@ -77,14 +77,14 @@ void main() {
       // Length is only 1 because margin and color are BoxAttributes
       expect(mix.values.length, 1);
 
-      expect(boxAttribute.color, const ColorAttribute(Colors.red));
+      expect(boxAttribute.color, const ColorDto(Colors.red));
       expect(boxAttribute.margin, const EdgeInsetsDto.all(10));
     });
   });
 
   test('Combines Mixes', () {
     const boxAttribute =
-        StyledContainerAttributes(color: ColorAttribute(Colors.blue));
+        StyledContainerAttributes(color: ColorDto(Colors.blue));
 
     const flexAttribute = FlexAttributes(direction: Axis.horizontal);
 

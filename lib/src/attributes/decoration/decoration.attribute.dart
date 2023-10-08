@@ -2,10 +2,10 @@
 
 import 'package:flutter/rendering.dart';
 
-import '../resolvable_attribute.dart';
+import '../style_attribute.dart';
 
 abstract class DecorationAttribute<T extends Decoration>
-    extends ResolvableAttribute<T> {
+    extends StyleAttribute<T> {
   const DecorationAttribute();
 
   @override

@@ -3,7 +3,7 @@
 import 'package:flutter/rendering.dart';
 
 import '../../factory/exports.dart';
-import '../base/color.attribute.dart';
+import '../base/color.dto.dart';
 import '../border/box_border.attribute.dart';
 import '../border_radius/border_radius.attribute.dart';
 import '../gradient/gradient.attribute.dart';
@@ -12,7 +12,7 @@ import '../shadow/box_shadow.attribute.dart';
 import 'decoration.attribute.dart';
 
 class BoxDecorationAttribute extends DecorationAttribute<BoxDecoration> {
-  final ColorAttribute? color;
+  final ColorDto? color;
   final BoxBorderAttribute? border;
   final BorderRadiusAttribute? borderRadius;
   final GradientAttribute? gradient;

@@ -3,10 +3,10 @@
 import 'package:flutter/material.dart';
 
 import '../../factory/mix_provider_data.dart';
-import '../resolvable_attribute.dart';
+import '../style_attribute.dart';
 import 'border_side.dto.dart';
 
-class BoxBorderAttribute extends ResolvableAttribute<BoxBorder> {
+class BoxBorderAttribute extends StyleAttribute<BoxBorder> {
   final BorderSideDto? _top;
   final BorderSideDto? _right;
 
