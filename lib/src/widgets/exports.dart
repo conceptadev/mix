@@ -1,4 +1,4 @@
-export '../attributes/flex/flex.attribute.dart';
+export 'flex/flex.attribute.dart';
 export '../attributes/flex/flex.utilities.dart';
 export 'container/container.attribute.dart';
 export 'container/container.descriptor.dart';

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../mix.dart';
+import '../factory/mix_provider_data.dart';
+import 'styled.widget.dart';
 
 typedef WidgetMixBuilder = Widget Function(MixData mix);
 
@@ -18,6 +19,6 @@ class MixBuilder extends StyledWidget {
 
   @override
   Widget build(BuildContext context) {
-    return buildWithMix(context, _builder);
+    return withMixBuilder(context, _builder);
   }
 }

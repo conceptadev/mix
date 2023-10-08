@@ -1,9 +1,18 @@
 import 'package:flutter/material.dart';
 
+import '../../attributes/enum/axis.attribute.dart';
+import '../../attributes/enum/clip.attribute.dart';
+import '../../attributes/enum/vertical_direction/vertical_direction.attribute.dart';
+import '../../attributes/flex/cross_axis_alignment.attribute.dart';
+import '../../attributes/flex/gap_size.attribute.dart';
+import '../../attributes/flex/main_axis_alignment.attribute.dart';
+import '../../attributes/flex/main_axis_size.attribute.dart';
+import '../../attributes/text/text_baseline.attribute.dart';
+import '../../attributes/text/text_direction/text_direction.attribute.dart';
 import 'flex.attribute.dart';
 
-FlexAttributes flex(
-  Axis direction, {
+FlexAttributes flex({
+  Axis? direction,
   MainAxisAlignment? mainAxisAlignment,
   CrossAxisAlignment? crossAxisAlignment,
   MainAxisSize? mainAxisSize,
@@ -14,15 +23,24 @@ FlexAttributes flex(
   Clip? clipBehavior,
 }) {
   return FlexAttributes(
-    crossAxisAlignment: crossAxisAlignment,
-    direction: direction,
-    gapSize: gapSize,
-    mainAxisAlignment: mainAxisAlignment,
-    mainAxisSize: mainAxisSize,
-    verticalDirection: verticalDirection,
-    textDirection: textDirection,
-    textBaseline: textBaseline,
-    clipBehavior: clipBehavior,
+    crossAxisAlignment: crossAxisAlignment == null
+        ? null
+        : CrossAxisAlignmentAttribute(crossAxisAlignment),
+    direction: direction == null ? null : AxisAttribute(direction),
+    gapSize: gapSize == null ? null : GapSizeAttribute(gapSize),
+    mainAxisAlignment: mainAxisAlignment == null
+        ? null
+        : MainAxisAlignmentAttribute(mainAxisAlignment),
+    mainAxisSize:
+        mainAxisSize == null ? null : MainAxisSizeAttribute(mainAxisSize),
+    verticalDirection: verticalDirection == null
+        ? null
+        : VerticalDirectionAttribute(verticalDirection),
+    textDirection:
+        textDirection == null ? null : TextDirectionAttribute(textDirection),
+    textBaseline:
+        textBaseline == null ? null : TextBaselineAttribute(textBaseline),
+    clipBehavior: clipBehavior == null ? null : ClipAttribute(clipBehavior),
   );
 }
 
@@ -36,13 +54,13 @@ FlexAttributes row({
   TextBaseline? textBaseline,
   Clip? clipBehavior,
 }) {
-  return FlexAttributes(
-    crossAxisAlignment: crossAxisAlignment,
+  return flex(
     direction: Axis.horizontal,
-    gapSize: gapSize,
     mainAxisAlignment: mainAxisAlignment,
+    crossAxisAlignment: crossAxisAlignment,
     mainAxisSize: mainAxisSize,
     verticalDirection: verticalDirection,
+    gapSize: gapSize,
     textDirection: textDirection,
     textBaseline: textBaseline,
     clipBehavior: clipBehavior,
@@ -59,13 +77,13 @@ FlexAttributes column({
   TextBaseline? textBaseline,
   Clip? clipBehavior,
 }) {
-  return FlexAttributes(
-    crossAxisAlignment: crossAxisAlignment,
+  return flex(
     direction: Axis.vertical,
-    gapSize: gapSize,
     mainAxisAlignment: mainAxisAlignment,
+    crossAxisAlignment: crossAxisAlignment,
     mainAxisSize: mainAxisSize,
     verticalDirection: verticalDirection,
+    gapSize: gapSize,
     textDirection: textDirection,
     textBaseline: textBaseline,
     clipBehavior: clipBehavior,
@@ -75,43 +93,43 @@ FlexAttributes column({
 // Create a FlexAttributes for the direction axis.
 @Deprecated('Use flex(direction: direction) instead')
 FlexAttributes direction(Axis direction) {
-  return FlexAttributes(direction: direction);
+  return flex(direction: direction);
 }
 
 // Create a FlexAttributes for the direction vertical axis.
 @Deprecated('Use flex(direction: Axis.vertical) instead')
 FlexAttributes verticalDirection(VerticalDirection verticalDirection) {
-  return FlexAttributes(verticalDirection: verticalDirection);
+  return flex(verticalDirection: verticalDirection);
 }
 
 // Create a FlexAttributes for the main axis.
 @Deprecated('Use flex(mainAxisAlignment: mainAxisAlignment) instead')
 FlexAttributes mainAxisAlignment(MainAxisAlignment mainAxisAlignment) {
-  return FlexAttributes(mainAxisAlignment: mainAxisAlignment);
+  return flex(mainAxisAlignment: mainAxisAlignment);
 }
 
 // Create a FlexAttributes for the main axis size.
 @Deprecated('Use flex(mainAxisSize: mainAxisSize) instead')
 FlexAttributes mainAxisSize(MainAxisSize mainAxisSize) {
-  return FlexAttributes(mainAxisSize: mainAxisSize);
+  return flex(mainAxisSize: mainAxisSize);
 }
 
 // Create a FlexAttributes for the cross axis.
 @Deprecated('Use flex(crossAxisAlignment: crossAxisAlignment) instead')
 FlexAttributes crossAxis(CrossAxisAlignment crossAxisAlignment) {
-  return FlexAttributes(crossAxisAlignment: crossAxisAlignment);
+  return flex(crossAxisAlignment: crossAxisAlignment);
 }
 
 // Create a FlexAttributes for the cross axis.
 @Deprecated('Use flex(crossAxisAlignment: crossAxisAlignment) instead')
 FlexAttributes crossAxisAlignment(CrossAxisAlignment crossAxisAlignment) {
-  return FlexAttributes(crossAxisAlignment: crossAxisAlignment);
+  return flex(crossAxisAlignment: crossAxisAlignment);
 }
 
 // Create a FlexAttributes for gap size.
 @Deprecated('Use flex(gapSize: gapSize) instead')
 FlexAttributes gap(double gapSize) {
-  return FlexAttributes(gapSize: gapSize);
+  return flex(gapSize: gapSize);
 }
 
 @Deprecated('Use flex(mainAxisAlignment: mainAxis) instead')

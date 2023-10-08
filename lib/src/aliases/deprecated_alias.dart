@@ -1,7 +1,7 @@
 // @exportRequired
 
 import '../attributes/exports.dart';
-import '../attributes/text/utilities/text_style.util.dart';
+import '../attributes/text/text_style/text_style.util.dart';
 import '../variants/exports.dart';
 import '../widgets/exports.dart';
 import 'exports.dart';

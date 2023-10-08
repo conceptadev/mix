@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../factory/mix_provider_data.dart';
-import '../color/color.dto.dart';
 import 'shadow.attribute.dart';
+import 'shadow_color.attribute.dart';
 
 class BoxShadowAttribute extends ShadowAttribute<BoxShadow> {
   final double? spreadRadius;
@@ -16,7 +16,7 @@ class BoxShadowAttribute extends ShadowAttribute<BoxShadow> {
 
   factory BoxShadowAttribute.fromBoxShadow(BoxShadow boxShadow) {
     return BoxShadowAttribute(
-      color: ColorDto.from(boxShadow.color),
+      color: ShadowColorAttribute(boxShadow.color),
       offset: Offset(boxShadow.offset.dx, boxShadow.offset.dy),
       blurRadius: boxShadow.blurRadius,
       spreadRadius: boxShadow.spreadRadius,
@@ -28,7 +28,7 @@ class BoxShadowAttribute extends ShadowAttribute<BoxShadow> {
     const defaultShadow = BoxShadow();
 
     return BoxShadow(
-      color: color?.resolve(mix) ?? defaultShadow.color,
+      color: resolveAttribute(color, mix) ?? defaultShadow.color,
       offset: offset ?? defaultShadow.offset,
       blurRadius: blurRadius ?? defaultShadow.blurRadius,
       spreadRadius: spreadRadius ?? defaultShadow.spreadRadius,
@@ -38,7 +38,7 @@ class BoxShadowAttribute extends ShadowAttribute<BoxShadow> {
   @override
   BoxShadowAttribute merge(BoxShadowAttribute? other) {
     return BoxShadowAttribute(
-      color: color?.merge(other?.color) ?? color,
+      color: mergeAttribute(color, other?.color),
       offset: other?.offset ?? offset,
       blurRadius: other?.blurRadius ?? blurRadius,
       spreadRadius: other?.spreadRadius ?? spreadRadius,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../attributes/animation/animation.attribute.dart';
 import '../../attributes/animation/animation.dart';
 import '../../factory/mix_provider_data.dart';
 import '../decorator.dart';
@@ -17,9 +18,8 @@ class AspectRatioDecorator extends Decorator {
   get props => [aspectRatio];
   @override
   Widget build(Widget child, MixData mix) {
-    final animation = mix.mustGet<AnimationAttribute, AnimationDto>(
-      const AnimationDto.defaults(),
-    );
+    final animation = mix.resolveAttributeOfType<AnimationAttribute,
+        AnimationAttributeResolved>();
 
     return mix.animated
         ? TweenAnimationBuilder<double>(

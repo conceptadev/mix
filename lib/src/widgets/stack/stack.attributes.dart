@@ -1,41 +1,64 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 
+import '../../attributes/alignment/alignment_geometry.attribute.dart';
 import '../../attributes/attribute.dart';
+import '../../attributes/enum/clip.attribute.dart';
+import '../../attributes/resolvable_attribute.dart';
+import '../../attributes/text/text_direction/text_direction.attribute.dart';
+import '../../factory/mix_provider_data.dart';
 
-@Deprecated('Use StyledStackAttributes instead')
-typedef ZBoxAttributes = StyledStackAttributes;
-
-class StyledStackAttributes extends StyledWidgetAttributes {
-  final AlignmentGeometry? alignment;
+class StackAttributes extends ResolvableAttribute<StackAttributesResolved> {
+  final AlignmentGeometryAttribute? alignment;
   final StackFit? fit;
-  final Clip? clipBehavior;
+  final TextDirectionAttribute? textDirection;
+  final ClipAttribute? clipBehavior;
 
-  const StyledStackAttributes({this.alignment, this.fit, this.clipBehavior});
-
-  @override
-  StyledStackAttributes copyWith({
-    AlignmentGeometry? alignment,
-    StackFit? fit,
-    Clip? clipBehavior,
-  }) {
-    return StyledStackAttributes(
-      alignment: alignment ?? this.alignment,
-      fit: fit ?? this.fit,
-      clipBehavior: clipBehavior ?? this.clipBehavior,
-    );
-  }
+  const StackAttributes({
+    this.alignment,
+    this.fit,
+    this.textDirection,
+    this.clipBehavior,
+  });
 
   @override
-  StyledStackAttributes merge(StyledStackAttributes? other) {
+  StackAttributes merge(StackAttributes? other) {
     if (other == null) return this;
 
-    return copyWith(
-      alignment: other.alignment,
-      fit: other.fit,
-      clipBehavior: other.clipBehavior,
+    return StackAttributes(
+      alignment: other.alignment ?? alignment,
+      fit: other.fit ?? fit,
+      textDirection: other.textDirection ?? textDirection,
+      clipBehavior: other.clipBehavior ?? clipBehavior,
     );
   }
 
   @override
-  get props => [alignment, fit, clipBehavior];
+  StackAttributesResolved resolve(MixData mix) {
+    return StackAttributesResolved(
+      alignment: alignment?.resolve(mix),
+      fit: fit,
+      textDirection: textDirection?.resolve(mix),
+      clipBehavior: clipBehavior?.resolve(mix),
+    );
+  }
+
+  @override
+  List<Object?> get props => [alignment, fit, textDirection, clipBehavior];
+}
+
+class StackAttributesResolved extends Dto {
+  final AlignmentGeometry? alignment;
+  final StackFit? fit;
+  final TextDirection? textDirection;
+  final Clip? clipBehavior;
+
+  const StackAttributesResolved({
+    this.alignment,
+    this.fit,
+    this.textDirection,
+    this.clipBehavior,
+  });
+
+  @override
+  List<Object?> get props => [alignment, fit, textDirection, clipBehavior];
 }

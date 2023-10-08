@@ -115,30 +115,21 @@ class MixData with Comparable {
   ///
   /// Accepts a type parameter [A] which extends [ResolvableAttribute].
   /// Returns the instance of type [A] if found, else returns null.
-  A? attributeOf<A extends ResolvableAttribute>() {
+  A? get<A extends ResolvableAttribute>() {
     return _attributes.ofType<A>() as A?;
   }
 
-  R? get<Attr extends ResolvableAttribute<R>, R>() {
-    final attribute = attributeOf<Attr>();
+  R? resolveAttributeOfType<Attr extends ResolvableAttribute<R>, R>() {
+    final attribute = get<Attr>();
 
     return attribute?.resolve(this);
   }
 
-  R mustGet<Attr extends ResolvableAttribute<R>, R>([R? defaultValue]) {
-    final attribute = attributeOf<Attr>();
+  R dependOnResolveAttributeOfType<Attr extends ResolvableAttribute<R>, R>(
+      R defaultValue) {
+    final attribute = get<Attr>();
 
-    if (attribute is! Attr && defaultValue == null) {
-      throw Exception(
-        'No $Attr could be found starting from MixContext '
-        'when call mixContext.of<$Attr>(). This can happen because you '
-        'have not created an attribute of type $Attr. '
-        'You can also provide a default value to the of method.',
-      );
-    }
-
-    // ignore: avoid-non-null-assertion
-    return attribute?.resolve(this) ?? defaultValue!;
+    return attribute?.resolve(this) ?? defaultValue;
   }
 
   /// Retrieves an instance of attributes based on the type provided.
@@ -146,7 +137,7 @@ class MixData with Comparable {
   /// The type [T] here refers to the type extending [ResolvableAttribute].
   /// An exception is thrown if no attribute of the required type is found.
   T dependOnAttributesOfType<T extends ResolvableAttribute>() {
-    final attribute = attributeOf<T>();
+    final attribute = get<T>();
 
     if (attribute is! T) {
       throw Exception(

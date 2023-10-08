@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../attributes/animation/animation.attribute.dart';
-import '../../attributes/text_direction/text_direction_attribute.dart';
-import '../../attributes/visible/visible_attribute.dart';
+import '../../attributes/text/text_direction/text_direction.attribute.dart';
+import '../../attributes/visible/visible.attribute.dart';
 import '../../factory/mix_provider_data.dart';
 import '../empty/empty.widget.dart';
 import '../styled.widget.dart';
@@ -30,7 +30,7 @@ class StyledIcon extends StyledWidget {
 
   @override
   Widget build(BuildContext context) {
-    return buildWithMix(context, (mix) => MixedIcon(icon: icon, mix: mix));
+    return withMix(context, (mix) => MixedIcon(icon: icon, mix: mix));
   }
 }
 
@@ -49,10 +49,13 @@ class MixedIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final visible = mix.mustGet<VisibleAttribute, bool>(true);
-    final attributes = mix.get<IconAttributes, IconAttributesResolved>();
-    final textDirection = mix.get<TextDirectionAttribute, TextDirection>();
-    final animation = mix.get<AnimationAttribute, AnimationAttributeResolved>();
+    final visible = mix.resolveAttributeOfType<VisibleAttribute, bool>(true);
+    final attributes =
+        mix.resolveAttributeOfType<IconAttributes, IconAttributesResolved>();
+    final textDirection =
+        mix.resolveAttributeOfType<TextDirectionAttribute, TextDirection>();
+    final animation = mix.resolveAttributeOfType<AnimationAttribute,
+        AnimationAttributeResolved>();
 
     if (!visible) {
       return const Empty();

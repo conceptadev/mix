@@ -2,10 +2,10 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-import '../../box_shadow/shadow.attribute.dart';
-import '../../color/color.dto.dart';
+import '../../base/color.attribute.dart';
 import '../../helpers/list.attribute.dart';
-import '../attributes/text_style.attribute.dart';
+import '../../shadow/shadow.attribute.dart';
+import 'text_style.attribute.dart';
 
 TextStyleAttribute textStyle({
   String? fontFamily,
@@ -47,11 +47,13 @@ TextStyleAttribute textStyle({
 
   TextStyleAttribute textStyle = TextStyleAttribute(
     background: background,
-    backgroundColor: backgroundColor == null ? null : ColorDto(backgroundColor),
-    color: color == null ? null : ColorDto(color),
+    backgroundColor:
+        backgroundColor == null ? null : ColorAttribute(backgroundColor),
+    color: color == null ? null : ColorAttribute(color),
     debugLabel: debugLabel,
     decoration: decoration,
-    decorationColor: decorationColor == null ? null : ColorDto(decorationColor),
+    decorationColor:
+        decorationColor == null ? null : ColorAttribute(decorationColor),
     decorationStyle: decorationStyle,
     fontFamily: fontFamily,
     fontFeatures: fontFeatures,

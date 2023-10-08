@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 
 import '../../../factory/exports.dart';
 import '../../../theme/exports.dart';
-import '../../box_shadow/shadow.attribute.dart';
-import '../../color/color.dto.dart';
+import '../../base/color.attribute.dart';
 import '../../helpers/list.attribute.dart';
 import '../../resolvable_attribute.dart';
+import '../../shadow/shadow.attribute.dart';
 
 class TextStyleAttribute extends ResolvableAttribute<TextStyle> {
   final String? fontFamily;
@@ -19,12 +19,12 @@ class TextStyleAttribute extends ResolvableAttribute<TextStyle> {
   final double? letterSpacing;
   final double? wordSpacing;
   final TextBaseline? textBaseline;
-  final ColorDto? color;
-  final ColorDto? backgroundColor;
+  final ColorAttribute? color;
+  final ColorAttribute? backgroundColor;
   final ListAtttribute<ShadowAttribute>? shadows;
   final List<FontFeature>? fontFeatures;
   final TextDecoration? decoration;
-  final ColorDto? decorationColor;
+  final ColorAttribute? decorationColor;
   final TextDecorationStyle? decorationStyle;
   final Locale? locale;
   final String? debugLabel;
@@ -71,13 +71,15 @@ class TextStyleAttribute extends ResolvableAttribute<TextStyle> {
         ? TextStyleAttribute(styleToken: style)
         : TextStyleAttribute(
             background: style.background,
-            backgroundColor:
-                backgroundColor == null ? null : ColorDto.from(backgroundColor),
-            color: color == null ? null : ColorDto.from(color),
+            backgroundColor: backgroundColor == null
+                ? null
+                : ColorAttribute(backgroundColor),
+            color: color == null ? null : ColorAttribute(color),
             debugLabel: style.debugLabel,
             decoration: style.decoration,
-            decorationColor:
-                decorationColor == null ? null : ColorDto.from(decorationColor),
+            decorationColor: decorationColor == null
+                ? null
+                : ColorAttribute(decorationColor),
             decorationStyle: style.decorationStyle,
             decorationThickness: style.decorationThickness,
             fontFamily: style.fontFamily,

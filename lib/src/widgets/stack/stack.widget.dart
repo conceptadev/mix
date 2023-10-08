@@ -3,11 +3,6 @@ import 'package:flutter/widgets.dart';
 import '../../factory/mix_provider_data.dart';
 import '../container/container.widget.dart';
 import '../styled.widget.dart';
-import 'stack.descriptor.dart';
-
-// ZBox widget, a custom Box widget that has a Stack as a child. It combines
-// the features of a Box widget with a Stack widget, allowing developers to
-// create complex and responsive layouts.
 
 class StyledStack extends StyledWidget {
   const StyledStack({
@@ -23,7 +18,7 @@ class StyledStack extends StyledWidget {
 
   @override
   Widget build(BuildContext context) {
-    return buildWithMix(context, (mix) {
+    return withMix(context, (mix) {
       final zProps = StyledStackDescriptor.fromContext(mix);
 
       return Stack(
@@ -35,6 +30,10 @@ class StyledStack extends StyledWidget {
     });
   }
 }
+
+// ZBox widget, a custom Box widget that has a Stack as a child. It combines
+// the features of a Box widget with a Stack widget, allowing developers to
+// create complex and responsive layouts.
 
 class ZBox extends StyledWidget {
   const ZBox({
@@ -50,10 +49,10 @@ class ZBox extends StyledWidget {
 
   @override
   Widget build(BuildContext context) {
-    return buildWithMix(
+    return withMix(
       context,
       (mix) => MixedContainer(
-        mix: mix,
+        mixData: mix,
         child: MixedStack(mix: mix, children: children),
       ),
     );

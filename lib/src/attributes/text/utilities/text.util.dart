@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 
 import '../../helpers/list.attribute.dart';
 import '../attributes/text.attribute.dart';
-import '../attributes/text_style.attribute.dart';
 import '../directives/text.directive.dart';
+import '../text_style/text_style.attribute.dart';
 
 TextAttributes text({
   List<TextDirective>? directives,

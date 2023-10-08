@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 import '../../factory/exports.dart';
-import '../color/color.dto.dart';
+import '../base/color.attribute.dart';
 import '../resolvable_attribute.dart';
 
 class ShadowAttribute<T extends Shadow> extends ResolvableAttribute<Shadow> {
-  final ColorDto? color;
+  final ColorAttribute? color;
   final Offset? offset;
   final double? blurRadius;
 
@@ -14,7 +14,7 @@ class ShadowAttribute<T extends Shadow> extends ResolvableAttribute<Shadow> {
   factory ShadowAttribute.from(Shadow shadow) {
     return ShadowAttribute(
       blurRadius: shadow.blurRadius,
-      color: ColorDto.from(shadow.color),
+      color: ColorAttribute(shadow.color),
       offset: shadow.offset,
     );
   }
@@ -24,7 +24,7 @@ class ShadowAttribute<T extends Shadow> extends ResolvableAttribute<Shadow> {
     const defaultShadow = Shadow();
 
     return Shadow(
-      color: color?.resolve(mix) ?? defaultShadow.color,
+      color: resolveAttribute(color, mix) ?? defaultShadow.color,
       offset: offset ?? defaultShadow.offset,
       blurRadius: blurRadius ?? defaultShadow.blurRadius,
     ) as T;
@@ -34,7 +34,7 @@ class ShadowAttribute<T extends Shadow> extends ResolvableAttribute<Shadow> {
   ShadowAttribute merge(ShadowAttribute? other) {
     return ShadowAttribute(
       blurRadius: other?.blurRadius ?? blurRadius,
-      color: color?.merge(other?.color) ?? color,
+      color: mergeAttribute(color, other?.color),
       offset: other?.offset ?? offset,
     );
   }

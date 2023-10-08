@@ -1,15 +1,15 @@
 import 'package:flutter/rendering.dart';
 
 import '../../factory/exports.dart';
-import '../box_shadow/box_shadow.attribute.dart';
-import '../color/color.dto.dart';
+import '../base/color.attribute.dart';
 import '../gradient/gradient.attribute.dart';
 import '../helpers/list.attribute.dart';
+import '../shadow/box_shadow.attribute.dart';
 import 'decoration.attribute.dart';
 
 class ShapeDecorationAttribute extends DecorationAttribute<ShapeDecoration> {
   // The color to fill in the background of the shape.
-  final ColorDto? color;
+  final ColorAttribute? color;
 
   // The shape of the box.
   final ShapeBorder? shape;
@@ -42,7 +42,7 @@ class ShapeDecorationAttribute extends DecorationAttribute<ShapeDecoration> {
   ShapeDecoration resolve(MixData mix) {
     Gradient? resolvedGradient = gradient?.resolve(mix);
     if (resolvedGradient == null) {
-      final gradientAttribute = mix.attributeOf<GradientAttribute>();
+      final gradientAttribute = mix.get<GradientAttribute>();
       resolvedGradient = gradientAttribute?.resolve(mix);
     }
 

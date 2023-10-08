@@ -3,16 +3,16 @@
 import 'package:flutter/rendering.dart';
 
 import '../../factory/exports.dart';
+import '../base/color.attribute.dart';
 import '../border/box_border.attribute.dart';
 import '../border_radius/border_radius.attribute.dart';
-import '../box_shadow/box_shadow.attribute.dart';
-import '../color/color.dto.dart';
 import '../gradient/gradient.attribute.dart';
 import '../helpers/list.attribute.dart';
+import '../shadow/box_shadow.attribute.dart';
 import 'decoration.attribute.dart';
 
 class BoxDecorationAttribute extends DecorationAttribute<BoxDecoration> {
-  final ColorDto? color;
+  final ColorAttribute? color;
   final BoxBorderAttribute? border;
   final BorderRadiusAttribute? borderRadius;
   final GradientAttribute? gradient;
@@ -49,11 +49,12 @@ class BoxDecorationAttribute extends DecorationAttribute<BoxDecoration> {
     BoxBorder? _border = border?.resolve(mix);
     Gradient? _gradient = gradient?.resolve(mix);
 
-    _borderRadius ??= mix.get<BorderRadiusAttribute, BorderRadius>();
+    _borderRadius ??=
+        mix.resolveAttributeOfType<BorderRadiusAttribute, BorderRadius>();
 
-    _border ??= mix.get<BoxBorderAttribute, BoxBorder>();
+    _border ??= mix.resolveAttributeOfType<BoxBorderAttribute, BoxBorder>();
 
-    _gradient ??= mix.get<GradientAttribute, Gradient>();
+    _gradient ??= mix.resolveAttributeOfType<GradientAttribute, Gradient>();
 
     final boxShadowAttributes = boxShadow?.resolve(mix);
 

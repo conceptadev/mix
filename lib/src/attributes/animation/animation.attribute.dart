@@ -3,31 +3,42 @@ import 'package:flutter/animation.dart';
 import '../../factory/exports.dart';
 import '../attribute.dart';
 import '../resolvable_attribute.dart';
+import 'animation_curve.attribute.dart';
+import 'animation_duration.attribute.dart';
 
 class AnimationAttribute
     extends ResolvableAttribute<AnimationAttributeResolved> {
-  final Duration? _duration;
-  final Curve? _curve;
+  final AnimationDurationAttribute? _duration;
+  final AnimationCurveAttribute? _curve;
 
-  const AnimationAttribute({Duration? duration, Curve? curve})
-      : _duration = duration,
+  const AnimationAttribute({
+    AnimationDurationAttribute? duration,
+    AnimationCurveAttribute? curve,
+  })  : _duration = duration,
         _curve = curve;
+
+  factory AnimationAttribute.from({Duration? duration, Curve? curve}) {
+    return AnimationAttribute(
+      duration: duration == null ? null : AnimationDurationAttribute(duration),
+      curve: curve == null ? null : AnimationCurveAttribute(curve),
+    );
+  }
 
   @override
   AnimationAttribute merge(AnimationAttribute? other) {
     if (other == null) return this;
 
     return AnimationAttribute(
-      duration: other._duration ?? _duration,
-      curve: other._curve ?? _curve,
+      duration: mergeAttribute(_duration, other._duration),
+      curve: mergeAttribute(_curve, other._curve),
     );
   }
 
   @override
   AnimationAttributeResolved resolve(MixData mix) {
     return AnimationAttributeResolved(
-      duration: _duration ?? Duration.zero,
-      curve: _curve ?? Curves.linear,
+      duration: resolveAttribute(_duration, mix),
+      curve: resolveAttribute(_curve, mix),
     );
   }
 
@@ -36,16 +47,12 @@ class AnimationAttribute
 }
 
 class AnimationAttributeResolved extends Dto {
-  final Duration duration;
-  final Curve curve;
+  final Duration? duration;
+  final Curve? curve;
   const AnimationAttributeResolved({
     required this.duration,
     required this.curve,
   });
-
-  const AnimationAttributeResolved.defaults()
-      : duration = Duration.zero,
-        curve = Curves.linear;
 
   @override
   get props => [duration, curve];

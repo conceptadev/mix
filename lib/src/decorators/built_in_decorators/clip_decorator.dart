@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../attributes/animation/animation.attribute.dart';
 import '../../attributes/exports.dart';
 import '../../factory/mix_provider_data.dart';
 import '../decorator.dart';
@@ -43,9 +44,8 @@ class ClipDecorator extends Decorator {
     }
 
     if (clipType == ClipDecoratorType.rounded) {
-      final animation = mix.mustGet<AnimationAttribute, AnimationDto>(
-        const AnimationDto.defaults(),
-      );
+      final animation = mix.resolveAttributeOfType<AnimationAttribute,
+          AnimationAttributeResolved>();
 
       return mix.animated
           ? AnimatedClipRRect(

@@ -1,9 +1,10 @@
 import 'package:flutter/widgets.dart';
 
-import '../../factory/mix_provider_data.dart';
+import '../../factory/mix_provider.dart';
 import '../container/container.widget.dart';
 import '../gap/gap_widget.dart';
 import '../styled.widget.dart';
+import 'flex.attribute.dart';
 import 'flex.descriptor.dart';
 
 class StyledFlex extends StyledWidget {
@@ -21,7 +22,7 @@ class StyledFlex extends StyledWidget {
 
   @override
   Widget build(BuildContext context) {
-    return buildWithMix(
+    return withMix(
       context,
       (mix) => MixedFlex(mix: mix, direction: direction, children: children),
     );
@@ -44,10 +45,10 @@ class FlexBox extends StyledWidget {
 
   @override
   Widget build(BuildContext context) {
-    return buildWithMix(
+    return withMix(
       context,
       (mix) => MixedContainer(
-        mix: mix,
+        mixData: mix,
         child: MixedFlex(mix: mix, direction: direction, children: children),
       ),
     );
@@ -99,14 +100,12 @@ class VBox extends FlexBox {
 class MixedFlex extends StatelessWidget {
   const MixedFlex({
     super.key,
-    this.mix,
     required this.direction,
     required this.children,
   });
 
   final List<Widget> children;
   final Axis direction;
-  final MixData? mix;
 
   // Creates gap to space in between.
   List<Widget> _renderChildrenWithGap(double? gapSize, List<Widget> children) {
@@ -129,7 +128,9 @@ class MixedFlex extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final flex = StyledFlexDescriptor.fromContext(mix!);
+    final mix = MixProvider.of(context);
+    final flex =
+        mix?.resolveAttributeOfType<FlexAttributes, FlexAttributesResolved>();
 
     return Flex(
       direction: direction,

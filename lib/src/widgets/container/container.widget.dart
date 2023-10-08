@@ -1,11 +1,15 @@
+// ignore_for_file: avoid-unnecessary-reassignment
+
 import 'package:flutter/material.dart';
 
-import '../../attributes/shared/shared.descriptor.dart';
 import '../../decorators/widget_decorator_wrapper.dart';
-import '../../factory/mix_provider_data.dart';
+import '../../factory/mix_provider.dart';
 import '../empty/empty.widget.dart';
 import '../styled.widget.dart';
-import 'container.descriptor.dart';
+import 'container.attribute.dart';
+
+@Deprecated('Use MixedContainer now')
+typedef BoxMixedWidget = MixedContainer;
 
 typedef Box = StyledContainer;
 
@@ -23,60 +27,53 @@ class StyledContainer extends StyledWidget {
 
   @override
   Widget build(BuildContext context) {
-    return buildWithMix(
-      context,
-      (mix) => MixedContainer(mix: mix, child: child),
-    );
+    return withMix(context, MixedContainer(child: child));
   }
 }
 
-@Deprecated('Use MixedContainer now')
-typedef BoxMixedWidget = MixedContainer;
-
 class MixedContainer extends StatelessWidget {
-  const MixedContainer({required this.mix, this.child, Key? key})
-      : super(key: key);
+  const MixedContainer({this.child, Key? key}) : super(key: key);
 
   // Child Widget.
   final Widget? child;
 
-  final MixData mix;
-
   @override
   Widget build(BuildContext context) {
-    final common = CommonDescriptor.fromContext(mix);
-    final box = StyledContainerDescriptor.fromContext(mix);
+    final mix = MixProvider.ensureOf(context);
+    final attr = mix.resolveAttributeOfType<ContainerAttributes,
+        ContainerAttributesResolved>();
 
-    if (!common.visible) {
+    if (attr?.visible == false) {
       return const Empty();
     }
     Widget? current = child;
 
-    current = common.animated
+    current = mix.animated
         ? AnimatedContainer(
-            alignment: box.alignment,
-            padding: box.padding,
-            color: box.color,
-            decoration: box.decoration,
-            width: box.width,
-            height: box.height,
-            constraints: box.constraints,
-            margin: box.margin,
-            transform: box.transform,
-            curve: common.animationCurve,
-            duration: common.animationDuration,
+            alignment: attr?.alignment,
+            padding: attr?.padding,
+            color: attr?.color,
+            decoration: attr?.decoration,
+            width: attr?.width,
+            height: attr?.height,
+            constraints: attr?.constraints,
+            margin: attr?.margin,
+            transform: attr?.transform,
+            curve: attr?.animation?.curve ?? Curves.linear,
+            duration:
+                attr?.animation?.duration ?? const Duration(milliseconds: 300),
             child: current,
           )
         : Container(
-            alignment: box.alignment,
-            padding: box.padding,
-            color: box.color,
-            decoration: box.decoration,
-            width: box.width,
-            height: box.height,
-            constraints: box.constraints,
-            margin: box.margin,
-            transform: box.transform,
+            alignment: attr?.alignment,
+            padding: attr?.padding,
+            color: attr?.color,
+            decoration: attr?.decoration,
+            width: attr?.width,
+            height: attr?.height,
+            constraints: attr?.constraints,
+            margin: attr?.margin,
+            transform: attr?.transform,
             child: current,
           );
     // Wrap parent decorators.

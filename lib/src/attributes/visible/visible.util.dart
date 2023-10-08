@@ -1,4 +1,4 @@
-import 'visible_attribute.dart';
+import 'visible.attribute.dart';
 
 VisibleAttribute show([bool condition = true]) {
   return VisibleAttribute(condition);

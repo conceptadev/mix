@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import '../../attributes/attribute.dart';
-import '../../attributes/color/color.dto.dart';
+import '../../attributes/base/color.attribute.dart';
 import '../../attributes/resolvable_attribute.dart';
 import '../../factory/mix_provider_data.dart';
 
 class ImageAttributes extends ResolvableAttribute<ImageAttributesResolved> {
   final ImageProvider? image;
   final double? width, height;
-  final ColorDto? color;
+  final ColorAttribute? color;
   final ImageRepeat? repeat;
   final BoxFit? fit;
 
@@ -26,7 +26,7 @@ class ImageAttributes extends ResolvableAttribute<ImageAttributesResolved> {
     ImageProvider? image,
     double? width,
     double? height,
-    ColorDto? color,
+    ColorAttribute? color,
     ImageRepeat? repeat,
     BoxFit? fit,
   }) {

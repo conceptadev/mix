@@ -1,8 +1,6 @@
 library mix;
 
 export './exports.dart';
-export 'src/aliases/exports.dart';
-export 'src/attributes/exports.dart';
 export 'src/decorators/exports.dart';
 export 'src/deprecations.dart';
 export 'src/extensions/exports.dart';

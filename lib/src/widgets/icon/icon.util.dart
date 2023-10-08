@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-import '../../attributes/color/color.dto.dart';
+import '../../attributes/base/color.attribute.dart';
 import 'icon.attribute.dart';
 
 IconAttributes icon({Color? color, double? size}) {
   return IconAttributes(
-    color: color == null ? null : ColorDto(color),
+    color: color == null ? null : ColorAttribute(color),
     size: size,
   );
 }
@@ -17,5 +17,5 @@ IconAttributes iconSize(double size) {
 
 @Deprecated('Use icon() instead')
 IconAttributes iconColor(Color color) {
-  return IconAttributes(color: ColorDto(color));
+  return IconAttributes(color: ColorAttribute(color));
 }

@@ -23,6 +23,10 @@ mixin Resolvable<T> {
 
 mixin Mergeable<T> {
   T merge(covariant T? other);
+
+  M mergeAttribute<M extends Mergeable>(M? currentValue, M? newValue) {
+    return currentValue?.merge(newValue) ?? newValue;
+  }
 }
 
 /// An interface that add support to custom attributes for [MixContext].

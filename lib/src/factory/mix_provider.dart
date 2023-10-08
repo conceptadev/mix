@@ -37,7 +37,7 @@ class MixProvider extends InheritedWidget {
     final mixData = of(context);
 
     if (mixData == null) {
-      throw Exception('MixData not found in widget tree');
+      throw Exception('MixProvider not found in widget tree');
     }
 
     return mixData;

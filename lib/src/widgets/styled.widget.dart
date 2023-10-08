@@ -5,7 +5,7 @@ import '../factory/mix_provider.dart';
 import '../factory/mix_provider_data.dart';
 import '../factory/style_mix.dart';
 import '../variants/variant.dart';
-import 'mix_context_builder.dart';
+import 'exports.dart';
 
 @Deprecated('Use MixWidget instead')
 typedef MixWidget = StyledWidget;
@@ -22,25 +22,15 @@ abstract class StyledWidget extends StatelessWidget {
     /// decorators should have already been applied to the parent Widget.
     bool inherit = false,
     List<Variant>? variants,
-  })  : _mix = mix,
-        _style = style,
+  })  : _style = style ?? mix,
         _variants = variants,
         _inherit = inherit;
 
-  final StyleMix? _mix;
   final StyleMix? _style;
   final List<Variant>? _variants;
   final bool _inherit;
 
-  StyleMix get style {
-    if (_style != null && _mix != null) {
-      throw Exception(
-        'Please, give only one of the following parameters style OR mix',
-      );
-    }
-
-    return _style ?? _mix ?? StyleMix.constant;
-  }
+  StyleMix get style => _style ?? StyleMix.empty;
 
   List<Variant>? get variants => _variants;
 
@@ -60,7 +50,13 @@ abstract class StyledWidget extends StatelessWidget {
     return mix;
   }
 
-  Widget buildWithMix(BuildContext context, WidgetMixBuilder builder) {
+  Widget withMix(BuildContext context, Widget child) {
+    final mix = getMix(context);
+
+    return MixProvider(mix, child: child);
+  }
+
+  Widget withMixBuilder(BuildContext context, WidgetMixBuilder builder) {
     final mix = getMix(context);
 
     return MixProvider(mix, child: builder(mix));
@@ -69,8 +65,6 @@ abstract class StyledWidget extends StatelessWidget {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-
-    properties.add(DiagnosticsProperty<StyleMix>('mix', _mix));
 
     properties.add(DiagnosticsProperty<StyleMix>('style', _style));
 

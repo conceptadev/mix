@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-import '../color/color.dto.dart';
+import 'border_color.attribute.dart';
 import 'border_side.dto.dart';
 import 'box_border.attribute.dart';
 
 BoxBorderAttribute border({Color? color, double? width, BorderStyle? style}) {
   return BoxBorderAttribute.fromSide(
     BorderSideDto.only(
-      color: color == null ? null : ColorDto(color),
+      color: color == null ? null : BorderColorAttribute(color),
       style: style,
       width: width,
     ),
@@ -21,7 +21,7 @@ BoxBorderAttribute borderTop({
 }) {
   return BoxBorderAttribute.only(
     top: BorderSideDto.only(
-      color: color == null ? null : ColorDto(color),
+      color: color == null ? null : BorderColorAttribute(color),
       style: style,
       width: width,
     ),
@@ -35,7 +35,7 @@ BoxBorderAttribute borderBottom({
 }) {
   return BoxBorderAttribute.only(
     bottom: BorderSideDto.only(
-      color: color == null ? null : ColorDto(color),
+      color: color == null ? null : BorderColorAttribute(color),
       style: style,
       width: width,
     ),
@@ -49,7 +49,7 @@ BoxBorderAttribute borderLeft({
 }) {
   return BoxBorderAttribute.only(
     left: BorderSideDto.only(
-      color: color == null ? null : ColorDto(color),
+      color: color == null ? null : BorderColorAttribute(color),
       style: style,
       width: width,
     ),
@@ -63,7 +63,7 @@ BoxBorderAttribute borderRight({
 }) {
   return BoxBorderAttribute.only(
     right: BorderSideDto.only(
-      color: color == null ? null : ColorDto(color),
+      color: color == null ? null : BorderColorAttribute(color),
       style: style,
       width: width,
     ),
@@ -77,7 +77,7 @@ BoxBorderAttribute borderHorizontal({
 }) {
   return BoxBorderAttribute.symmetric(
     horizontal: BorderSideDto.only(
-      color: color == null ? null : ColorDto(color),
+      color: color == null ? null : BorderColorAttribute(color),
       style: style,
       width: width,
     ),
@@ -91,7 +91,7 @@ BoxBorderAttribute borderVertical({
 }) {
   return BoxBorderAttribute.symmetric(
     vertical: BorderSideDto.only(
-      color: color == null ? null : ColorDto(color),
+      color: color == null ? null : BorderColorAttribute(color),
       style: style,
       width: width,
     ),
@@ -105,7 +105,7 @@ BoxBorderAttribute borderStart({
 }) {
   return BoxBorderAttribute.directionalOnly(
     start: BorderSideDto.only(
-      color: color == null ? null : ColorDto(color),
+      color: color == null ? null : BorderColorAttribute(color),
       style: style,
       width: width,
     ),
@@ -119,7 +119,7 @@ BoxBorderAttribute borderEnd({
 }) {
   return BoxBorderAttribute.directionalOnly(
     end: BorderSideDto.only(
-      color: color == null ? null : ColorDto(color),
+      color: color == null ? null : BorderColorAttribute(color),
       style: style,
       width: width,
     ),

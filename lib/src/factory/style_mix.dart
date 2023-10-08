@@ -20,7 +20,7 @@ typedef Mix = StyleMix;
 /// constructors and utility methods for working with mixes.
 class StyleMix {
   /// A constant, empty mix for use with const constructor widgets.
-  static const constant = StyleMix._(StyleMixData.empty());
+  static const empty = StyleMix._(StyleMixData.empty());
 
   final StyleMixData _values;
 

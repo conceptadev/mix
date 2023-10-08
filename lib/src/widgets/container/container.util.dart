@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 import '../../attributes/alignment/alignment_geometry.attribute.dart';
-import '../../attributes/color/color.dto.dart';
+import '../../attributes/color/background_color.attribute.dart';
 import '../../attributes/matrix4/matrix4.attribute.dart';
 import 'container.attribute.dart';
 
 ContainerAttributes backgroundColor(Color color) {
-  return ContainerAttributes(color: ColorDto.from(color));
+  return ContainerAttributes(color: BackgroundColorAttribute(color));
 }
 
 Matrix4Attribute transform(Matrix4 transform) {
@@ -15,7 +15,7 @@ Matrix4Attribute transform(Matrix4 transform) {
 
 @Deprecated('Use backgroundColor(style:style) instead')
 ContainerAttributes bgColor(Color color) {
-  return ContainerAttributes(color: ColorDto.from(color));
+  return ContainerAttributes(color: BackgroundColorAttribute(color));
 }
 
 @Deprecated('Use alignment instead')

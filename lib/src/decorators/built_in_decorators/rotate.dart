@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../attributes/exports.dart';
+import '../../attributes/animation/animation.attribute.dart';
 import '../../factory/mix_provider_data.dart';
 import '../decorator.dart';
 
@@ -18,15 +18,14 @@ class RotateDecorator extends Decorator {
   @override
   Widget build(Widget child, MixData mix) {
     if (mix.animated) {
-      final animation = mix.mustGet<AnimationAttribute, AnimationDto>(
-        const AnimationDto.defaults(),
-      );
+      final animation = mix.resolveAttributeOfType<AnimationAttribute,
+          AnimationAttributeResolved>();
 
       return AnimatedRotation(
         key: mergeKey,
         turns: quarterTurns / 4,
-        curve: animation.curve,
-        duration: animation.duration,
+        curve: animation?.curve ?? Curves.linear,
+        duration: animation?.duration ?? const Duration(milliseconds: 300),
         child: child,
       );
     }

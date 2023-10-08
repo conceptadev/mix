@@ -2,9 +2,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../attributes/animation/animation.attribute.dart';
-import '../../attributes/text/attributes/text_style.attribute.dart';
-import '../../attributes/text_direction/text_direction_attribute.dart';
-import '../../attributes/visible/visible_attribute.dart';
+import '../../attributes/text/text_direction/text_direction.attribute.dart';
+import '../../attributes/text/text_style/text_style.attribute.dart';
+import '../../attributes/visible/visible.attribute.dart';
 import '../../factory/mix_provider_data.dart';
 import '../empty/empty.widget.dart';
 import '../styled.widget.dart';
@@ -28,7 +28,7 @@ class StyledText extends StyledWidget {
 
   @override
   Widget build(BuildContext context) {
-    return buildWithMix(
+    return withMix(
       context,
       (mix) => MixedText(
         mix: mix,
@@ -66,10 +66,13 @@ class MixedText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textStyle = mix.get<TextStyleAttribute, TextStyle>();
-    final animation = mix.get<AnimationAttribute, AnimationAttributeResolved>();
-    final textDirection = mix.get<TextDirectionAttribute, TextDirection>();
-    final visible = mix.mustGet<VisibleAttribute, bool>(true);
+    final textStyle =
+        mix.resolveAttributeOfType<TextStyleAttribute, TextStyle>();
+    final animation = mix.resolveAttributeOfType<AnimationAttribute,
+        AnimationAttributeResolved>();
+    final textDirection =
+        mix.resolveAttributeOfType<TextDirectionAttribute, TextDirection>();
+    final visible = mix.resolveAttributeOfType<VisibleAttribute, bool>(true);
 
     final text = TextAttributesResolved.fromContext(mix);
 

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 import '../../factory/mix_provider_data.dart';
-import '../color/color.dto.dart';
 import '../resolvable_attribute.dart';
+import 'border_color.attribute.dart';
 
 class BorderSideDto extends ResolvableDto<BorderSide> {
-  final ColorDto? color;
+  final BorderColorAttribute? color;
   final double? width;
   final BorderStyle? style;
 
@@ -29,7 +29,7 @@ class BorderSideDto extends ResolvableDto<BorderSide> {
 
   factory BorderSideDto.from(BorderSide side) {
     return BorderSideDto.only(
-      color: ColorDto(side.color),
+      color: BorderColorAttribute(side.color),
       strokeAlign: side.strokeAlign,
       style: side.style,
       width: side.width,

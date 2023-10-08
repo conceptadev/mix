@@ -5,7 +5,7 @@ import '../../attribute.dart';
 import '../../helpers/list.attribute.dart';
 import '../../resolvable_attribute.dart';
 import '../directives/text.directive.dart';
-import 'text_style.attribute.dart';
+import '../text_style/text_style.attribute.dart';
 
 class TextAttributes extends ResolvableAttribute<TextAttributesResolved> {
   final List<TextDirective> _directives;
