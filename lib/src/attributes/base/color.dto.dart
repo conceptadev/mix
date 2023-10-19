@@ -28,7 +28,7 @@ class ColorDto extends ModifiableDto<Color> {
     Color resolvedColor = value;
 
     if (resolvedColor is ColorToken) {
-      resolvedColor = mix.resolveToken.color(resolvedColor);
+      resolvedColor = mix.resolver.color(resolvedColor);
     }
 
     return modify(resolvedColor);

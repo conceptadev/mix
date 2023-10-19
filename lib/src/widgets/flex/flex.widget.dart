@@ -116,9 +116,8 @@ class MixedFlex extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mix = MixProvider.of(context);
-    final flex =
-        mix?.resolveAttributeOfType<FlexAttributes, FlexAttributesResolved>();
+    final mix = MixProvider.maybeOf(context);
+    final flex = mix?.maybeGet<FlexAttributes, FlexSpec>();
 
     return Flex(
       direction: direction,

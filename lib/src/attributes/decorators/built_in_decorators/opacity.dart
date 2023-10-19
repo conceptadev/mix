@@ -1,27 +1,34 @@
 import 'package:flutter/material.dart';
 
 import '../../../factory/mix_provider_data.dart';
+import '../../base/double.dto.dart';
 import '../decorator.dart';
 
 OpacityDecorator opacity(double opacity) {
-  return OpacityDecorator(opacity: opacity);
+  return OpacityDecorator(DoubleDto(opacity));
 }
 
-class OpacityDecorator extends Decorator {
-  final double opacity;
-  const OpacityDecorator({super.key, required this.opacity});
+class OpacityDecorator extends Decorator<double> {
+  final DoubleDto value;
+  const OpacityDecorator(this.value, {super.key});
 
   @override
-  OpacityDecorator merge(OpacityDecorator other) {
-    return OpacityDecorator(opacity: other.opacity);
+  OpacityDecorator merge(OpacityDecorator? other) {
+    return OpacityDecorator(other?.value ?? value);
   }
 
   @override
-  get props => [opacity];
+  double resolve(MixData mix) {
+    return value.resolve(mix);
+  }
+
   @override
-  Widget build(Widget child, MixData mix) {
-    final animation =
-        mix.resolveAttributeOfType<AnimationAttribute, AnimationDto>();
+  get props => [value];
+
+  @override
+  Widget build(child, mix) {
+    final animation = mix.commonSpec.animation;
+    final opacity = resolve(mix);
 
     return mix.animated
         ? AnimatedOpacity(

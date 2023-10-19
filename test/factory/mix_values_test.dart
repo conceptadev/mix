@@ -7,8 +7,8 @@ import '../helpers/random_dto.dart';
 void main() {
   group('MixValues', () {
     test('Creates empty values', () {
-      const mixValues = StyleMixData.empty();
-      expect(mixValues.attributes, isNotNull);
+      const mixValues = MixValues.empty();
+      expect(mixValues.styles, isNotNull);
 
       expect(mixValues.variants, isEmpty);
       expect(mixValues.contextVariants, isEmpty);
@@ -46,45 +46,45 @@ void main() {
     ];
 
     test('Valid Length Counts', () {
-      final mixValues = StyleMixData.create(
+      final mixValues = MixValues.create(
         [...attributeList, ...variantList, ...contextVariantList],
       );
 
       expect(mixValues.length, equals(6));
-      expect(mixValues.hasAttributes, isTrue);
+      expect(mixValues.hasStyles, isTrue);
       expect(mixValues.hasVariants, isTrue);
       expect(mixValues.hasContextVariants, isTrue);
 
-      expect(mixValues.attributes.length, equals(2));
+      expect(mixValues.styles.length, equals(2));
       expect(mixValues.variants.length, equals(2));
       expect(mixValues.contextVariants.length, equals(2));
     });
 
     test('Create from attribute list', () {
-      final mixValues = StyleMixData.create([
+      final mixValues = MixValues.create([
         ...attributeList,
         ...variantList,
         ...contextVariantList,
       ]);
 
       expect(mixValues.length, equals(6));
-      expect(mixValues.hasAttributes, isTrue);
+      expect(mixValues.hasStyles, isTrue);
       expect(mixValues.hasVariants, isTrue);
       expect(mixValues.hasContextVariants, isTrue);
 
-      expect(mixValues.attributes.length, equals(2));
+      expect(mixValues.styles.length, equals(2));
       expect(mixValues.variants.length, equals(2));
       expect(mixValues.contextVariants.length, equals(2));
     });
 
     test('Merge Mix values', () {
-      final mixValues = StyleMixData.create([
+      final mixValues = MixValues.create([
         ...attributeList,
         ...variantList,
         ...contextVariantList,
       ]);
 
-      final otherMixValues = StyleMixData.create([
+      final otherMixValues = MixValues.create([
         ...attributeList,
         ...variantList,
         ...contextVariantList,
@@ -93,11 +93,11 @@ void main() {
       final mergedMixValues = mixValues.merge(otherMixValues);
 
       expect(mergedMixValues.length, equals(6));
-      expect(mergedMixValues.hasAttributes, isTrue);
+      expect(mergedMixValues.hasStyles, isTrue);
       expect(mergedMixValues.hasVariants, isTrue);
       expect(mergedMixValues.hasContextVariants, isTrue);
 
-      expect(mergedMixValues.attributes.length, equals(2));
+      expect(mergedMixValues.styles.length, equals(2));
       expect(mergedMixValues.variants.length, equals(2));
       expect(mergedMixValues.contextVariants.length, equals(2));
     });

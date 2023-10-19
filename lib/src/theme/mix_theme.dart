@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import '../../mix.dart';
 import '../helpers/compare_mixin/compare_mixin.dart';
+import 'material_theme/color_scheme_tokens.dart';
+import 'material_theme/text_theme_tokens.dart';
 import 'tokens/breakpoints.dart';
+import 'tokens/color_token.dart';
 import 'tokens/mix_token.dart';
+import 'tokens/space_token.dart';
+import 'tokens/text_style_token.dart';
 
 class MixTheme extends InheritedWidget {
   const MixTheme({required Widget child, required this.data, Key? key})
@@ -74,12 +78,14 @@ class MixThemeData with Comparable {
   get props => [space, breakpoints, colors, textStyles];
 }
 
-class MixTokenResolver {
+class BuildContextResolver {
   final BuildContext context;
 
-  const MixTokenResolver(this.context);
+  const BuildContextResolver(this.context);
 
   MixThemeData get theme => MixTheme.of(context);
+
+  TextDirection get directionality => Directionality.of(context);
 
   Color color(ColorToken token) {
     final color = theme.colors[token]?.call(context);
@@ -104,7 +110,7 @@ class MixTokenResolver {
   double space(double value) {
     final mixTheme = theme;
 
-    final refs = mixTheme.space.map((key, value) => MapEntry(key.ref, key));
+    final refs = mixTheme.space.map((key, _) => MapEntry(key.ref, key));
 
     // Check if value is a reference.
     final token = refs[value];

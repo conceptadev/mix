@@ -13,8 +13,7 @@ import '../../attributes/style_attribute.dart';
 import '../../attributes/transform/matrix4.attribute.dart';
 import '../../factory/mix_provider_data.dart';
 
-class ContainerAttributes
-    extends WidgetAttributes<ContainerAttributesResolved> {
+class ContainerAttributes extends SpecAttribute<ContainerSpec> {
   final AlignmentGeometryAttribute? alignment;
   final PaddingAttribute? padding;
   final MarginAttribute? margin;
@@ -37,8 +36,6 @@ class ContainerAttributes
     this.transform,
     this.color,
     this.clipBehavior,
-    super.animation,
-    super.visible,
   });
 
   @override
@@ -56,14 +53,12 @@ class ContainerAttributes
       transform: mergeProp(transform, other.transform),
       color: mergeProp(color, other.color),
       clipBehavior: mergeProp(clipBehavior, other.clipBehavior),
-      animation: mergeProp(animation, other.animation),
-      visible: mergeProp(visible, other.visible),
     );
   }
 
   @override
-  ContainerAttributesResolved resolve(MixData mix) {
-    return ContainerAttributesResolved(
+  ContainerSpec resolve(MixData mix) {
+    return ContainerSpec(
       alignment: resolveAttribute(alignment, mix),
       padding: resolveAttribute(padding, mix),
       margin: resolveAttribute(margin, mix),
@@ -74,8 +69,6 @@ class ContainerAttributes
       transform: resolveAttribute(transform, mix),
       color: resolveAttribute(color, mix),
       clipBehavior: resolveAttribute(clipBehavior, mix),
-      animation: resolveAttribute(animation, mix),
-      visible: resolveAttribute(visible, mix),
     );
   }
 
@@ -91,12 +84,10 @@ class ContainerAttributes
         transform,
         color,
         clipBehavior,
-        super.animation,
-        super.visible,
       ];
 }
 
-class ContainerAttributesResolved extends WidgetAttributesResolved {
+class ContainerSpec extends Spec {
   final AlignmentGeometry? alignment;
   final EdgeInsetsGeometry? padding;
   final EdgeInsetsGeometry? margin;
@@ -109,7 +100,7 @@ class ContainerAttributesResolved extends WidgetAttributesResolved {
   final Color? color;
   final Clip? clipBehavior;
 
-  static const defaults = ContainerAttributesResolved(
+  static const defaults = ContainerSpec(
     alignment: null,
     padding: null,
     margin: null,
@@ -120,10 +111,8 @@ class ContainerAttributesResolved extends WidgetAttributesResolved {
     transform: null,
     color: null,
     clipBehavior: null,
-    animation: null,
-    visible: true,
   );
-  const ContainerAttributesResolved({
+  const ContainerSpec({
     required this.alignment,
     required this.padding,
     required this.margin,
@@ -134,8 +123,6 @@ class ContainerAttributesResolved extends WidgetAttributesResolved {
     required this.transform,
     required this.color,
     required this.clipBehavior,
-    required super.animation,
-    required super.visible,
   });
 
   @override
@@ -150,7 +137,5 @@ class ContainerAttributesResolved extends WidgetAttributesResolved {
         transform,
         color,
         clipBehavior,
-        super.animation,
-        super.visible,
       ];
 }

@@ -19,28 +19,46 @@ FlexibleDecorator _flexible({int? flex}) {
   return FlexibleDecorator(flex: flex, flexFit: FlexFit.loose);
 }
 
-class FlexibleDecorator extends Decorator {
-  final FlexFit? flexFit;
-  final int? flex;
-  const FlexibleDecorator({this.flex, this.flexFit});
+class FlexibleDecorator extends Decorator<FlexibleDecoratorSpec> {
+  final int? _flex;
+  final FlexFit? _flexFit;
+  const FlexibleDecorator({int? flex, FlexFit? flexFit})
+      : _flex = flex,
+        _flexFit = flexFit;
 
   @override
   FlexibleDecorator merge(FlexibleDecorator other) {
     return FlexibleDecorator(
-      flex: other.flex ?? flex,
-      flexFit: other.flexFit ?? flexFit,
+      flex: other._flex ?? _flex,
+      flexFit: other._flexFit ?? _flexFit,
     );
   }
 
   @override
-  get props => [flexFit, flex];
+  FlexibleDecoratorSpec resolve(MixData mix) {
+    return FlexibleDecoratorSpec(flex: _flex, flexFit: _flexFit);
+  }
+
   @override
-  Widget build(Widget child, MixData mix) {
+  get props => [_flexFit, _flex];
+
+  @override
+  Widget build(child, mix) {
+    final spec = resolve(mix);
+
     return Flexible(
       key: mergeKey,
-      flex: flex ?? 1,
-      fit: flexFit ?? FlexFit.loose,
+      flex: spec.flex,
+      fit: spec.flexFit,
       child: child,
     );
   }
+}
+
+class FlexibleDecoratorSpec {
+  final int flex;
+  final FlexFit flexFit;
+  const FlexibleDecoratorSpec({int? flex, FlexFit? flexFit})
+      : flex = flex ?? 1,
+        flexFit = flexFit ?? FlexFit.loose;
 }

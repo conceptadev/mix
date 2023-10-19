@@ -1,30 +1,35 @@
 import 'package:flutter/material.dart';
 
 import '../../../factory/mix_provider_data.dart';
-import '../../animation/animation.attribute.dart';
+import '../../base/double.dto.dart';
 import '../decorator.dart';
 
 const aspectRataion = _aspectRatio;
 
 AspectRatioDecorator _aspectRatio(double aspectRatio) {
-  return AspectRatioDecorator(aspectRatio: aspectRatio);
+  return AspectRatioDecorator(aspectRatio: DoubleDto(aspectRatio));
 }
 
-class AspectRatioDecorator extends Decorator {
-  final double aspectRatio;
-  const AspectRatioDecorator({required this.aspectRatio, super.key});
+class AspectRatioDecorator extends Decorator<double> {
+  final DoubleDto _aspectRatio;
+  const AspectRatioDecorator({required DoubleDto aspectRatio})
+      : _aspectRatio = aspectRatio;
 
   @override
   AspectRatioDecorator merge(AspectRatioDecorator other) {
-    return AspectRatioDecorator(aspectRatio: other.aspectRatio);
+    return AspectRatioDecorator(aspectRatio: other._aspectRatio);
   }
 
   @override
-  get props => [aspectRatio];
+  double resolve(MixData mix) => _aspectRatio.resolve(mix);
+
+  @override
+  get props => [_aspectRatio];
+
   @override
   Widget build(Widget child, MixData mix) {
-    final animation = mix.resolveAttributeOfType<AnimationAttribute,
-        AnimationAttributeResolved>();
+    final animation = mix.commonSpec.animation;
+    final aspectRatio = resolve(mix);
 
     return mix.animated
         ? TweenAnimationBuilder<double>(

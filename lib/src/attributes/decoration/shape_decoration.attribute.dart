@@ -42,7 +42,7 @@ class ShapeDecorationAttribute extends DecorationAttribute<ShapeDecoration> {
   ShapeDecoration resolve(MixData mix) {
     Gradient? resolvedGradient = gradient?.resolve(mix);
     if (resolvedGradient == null) {
-      final gradientAttribute = mix.get<GradientAttribute>();
+      final gradientAttribute = mix.attributeOf<GradientAttribute>();
       resolvedGradient = gradientAttribute?.resolve(mix);
     }
 

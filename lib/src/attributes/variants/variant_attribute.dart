@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../factory/style_mix.dart';
+import '../../factory/exports.dart';
 import '../attribute.dart';
 import 'context_variant.dart';
 import 'variant.dart';
@@ -11,7 +11,7 @@ class VariantAttribute<T extends Variant> extends Attribute<T> {
 
   const VariantAttribute(this.variant, StyleMix style) : _style = style;
 
-  StyleMix get value => _style;
+  MixValues get value => _style.values;
 
   @override
   VariantAttribute<T> merge(covariant VariantAttribute<T> other) {

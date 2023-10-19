@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 
 import '../../../factory/exports.dart';
-import '../../attribute.dart';
 import '../../helpers/list.attribute.dart';
 import '../../style_attribute.dart';
 import '../directives/text.directive.dart';
 import '../text_style/text_style.attribute.dart';
 
-class TextAttributes extends StyleAttribute<TextAttributesResolved> {
+class TextAttributes extends StyleAttribute<TextSpec> {
   final List<TextDirective> _directives;
   final TextHeightBehavior? _textHeightBehavior;
   final int? _maxLines;
@@ -96,8 +95,8 @@ class TextAttributes extends StyleAttribute<TextAttributesResolved> {
   }
 
   @override
-  TextAttributesResolved resolve(MixData mix) {
-    return TextAttributesResolved(
+  TextSpec resolve(MixData mix) {
+    return TextSpec(
       softWrap: _softWrap ?? true,
       overflow: _overflow ?? TextOverflow.clip,
       strutStyle: _strutStyle,
@@ -131,7 +130,7 @@ class TextAttributes extends StyleAttribute<TextAttributesResolved> {
       ];
 }
 
-class TextAttributesResolved extends DataClass {
+class TextSpec extends Spec {
   final bool softWrap;
   final TextOverflow overflow;
 
@@ -146,7 +145,7 @@ class TextAttributesResolved extends DataClass {
   final TextStyle? style;
 
   final List<TextDirective> _directives;
-  const TextAttributesResolved({
+  const TextSpec({
     required this.softWrap,
     required this.overflow,
     this.strutStyle,
@@ -172,10 +171,10 @@ class TextAttributesResolved extends DataClass {
   }
 
   @override
-  TextAttributesResolved merge(TextAttributesResolved? other) {
+  TextSpec merge(TextSpec? other) {
     if (other == null) return this;
 
-    return TextAttributesResolved(
+    return TextSpec(
       softWrap: other.softWrap,
       overflow: other.overflow,
       strutStyle: other.strutStyle ?? strutStyle,

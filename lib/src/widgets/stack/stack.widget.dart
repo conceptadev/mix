@@ -1,8 +1,9 @@
 import 'package:flutter/widgets.dart';
 
-import '../../factory/mix_provider_data.dart';
+import '../../factory/mix_provider.dart';
 import '../container/container.widget.dart';
 import '../styled.widget.dart';
+import 'stack.attributes.dart';
 
 class StyledStack extends StyledWidget {
   const StyledStack({
@@ -18,16 +19,7 @@ class StyledStack extends StyledWidget {
 
   @override
   Widget build(BuildContext context) {
-    return withMix(context, (mix) {
-      final zProps = StyledStackDescriptor.fromContext(mix);
-
-      return Stack(
-        alignment: zProps.alignment,
-        fit: zProps.fit,
-        clipBehavior: zProps.clipBehavior,
-        children: children,
-      );
-    });
+    return withMix(context, MixedStack(children: children));
   }
 }
 
@@ -63,12 +55,13 @@ class MixedStack extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final zProps = StyledStackDescriptor.fromContext(mix);
+    final mix = MixProvider.of(context);
+    final attributes = mix.spec<StackSpec>();
 
     return Stack(
-      alignment: zProps.alignment,
-      fit: zProps.fit,
-      clipBehavior: zProps.clipBehavior,
+      alignment: attributes.alignment ?? AlignmentDirectional.topStart,
+      fit: attributes.fit ?? StackFit.loose,
+      clipBehavior: attributes.clipBehavior ?? Clip.hardEdge,
       children: children,
     );
   }

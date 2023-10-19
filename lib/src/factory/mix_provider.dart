@@ -22,7 +22,7 @@ class MixProvider extends InheritedWidget {
   ///
   /// This method returns the first instance of [MixProvider] that it finds
   /// while searching up the widget tree. Returns null if not found.
-  static MixData? of(BuildContext context) {
+  static MixData? maybeOf(BuildContext context) {
     final widget = context.dependOnInheritedWidgetOfExactType<MixProvider>();
 
     return widget?.data;
@@ -33,8 +33,8 @@ class MixProvider extends InheritedWidget {
   ///
   /// Throws an exception if [MixProvider] is not found within the given widget
   /// tree containing [context].
-  static MixData ensureOf(BuildContext context) {
-    final mixData = of(context);
+  static MixData of(BuildContext context) {
+    final mixData = maybeOf(context);
 
     if (mixData == null) {
       throw Exception('MixProvider not found in widget tree');

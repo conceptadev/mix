@@ -1,38 +1,35 @@
 // Necessary packages are imported at the start of the file.
 import 'package:flutter/material.dart';
 
-import '../attributes/attribute.dart';
+import '../attributes/common/common.attribute.dart';
 import '../attributes/decorators/decorator.dart';
 import '../attributes/style_attribute.dart';
-import '../attributes/variants/variant_attribute.dart';
 import '../helpers/attributes_map.dart';
 import '../helpers/compare_mixin/compare_mixin.dart';
 import '../theme/mix_theme.dart';
-import 'style_mix.dart';
-import 'style_mix_data.dart';
+import 'exports.dart';
 
 /// This class is used for encapsulating all [MixData] related operations.
 /// It contains a mixture of properties and methods useful for handling different attributes,
 /// decorators and token resolvers.
+@immutable
 class MixData with Comparable {
   final bool animated;
 
   // Instance variables for widget attributes, widget decorators and token resolver.
-  final AttributesMap<StyleAttribute> _attributes;
-  final AttributesMap<Decorator> _decorators;
-  final MixTokenResolver _tokenResolver;
+  final StylesMap _styles;
+
+  final BuildContextResolver _resolver;
 
   /// A Private constructor for the [MixData] class that initializes its main variables.
   ///
-  /// It takes in [attributes], [decorators] and [tokenResolver] as required parameters.
+  /// It takes in [styles], [decorators] and [resolver] as required parameters.
   MixData._({
-    required MixTokenResolver tokenResolver,
-    required AttributesMap<StyleAttribute> attributes,
-    required AttributesMap<Decorator> decorators,
+    required BuildContextResolver resolver,
+    required StylesMap styles,
     required this.animated,
-  })  : _attributes = attributes,
-        _decorators = decorators,
-        _tokenResolver = tokenResolver;
+  })  : _styles = styles,
+        _resolver = resolver;
 
   /// Factory constructor that uses the provided [context] and [style]
   /// to create an instance of [MixData].
@@ -41,104 +38,67 @@ class MixData with Comparable {
     required StyleMix style,
     bool animated = false,
   }) {
-    // Tracks the values selected and does not allow for
-    // attributes already expended to be expended again.
-    final currentValues = StyleMixData(
-      attributes: style.values.attributes,
-      variants: style.values.variants,
-      decorators: style.values.decorators,
-      contextVariants: style.values.contextVariants,
-    );
-
-    final attributes = _applyContextVariants(
-      style.values.contextVariants.toList(),
-      context,
-    );
-
-    final combinedValues = currentValues.merge(StyleMixData.create(attributes));
+    final values = applyContextVariants(style.values, context);
 
     return MixData._(
-      tokenResolver: MixTokenResolver(context),
-      attributes: combinedValues.attributes,
-      decorators: combinedValues.decorators,
+      resolver: BuildContextResolver(context),
+      styles: values.styles,
       animated: animated,
     );
   }
 
-  /// Internal method to handle application of context variants to [attributes].
+  /// Getter method for [BuildContextResolver].
   ///
-  /// It accepts the [context] and the list of [attributes] as parameters.
-  static List<Attribute> _applyContextVariants(
-    Iterable<Attribute> attributes,
-    BuildContext context,
-  ) {
-    // Use the fold method to reduce the input attributes list
-    // into a single list of expanded attributes.
-    return attributes.fold<List<Attribute>>(
-      [], // Initial empty list to accumulate the result.
-      (expanded, attribute) {
-        // Check if the current attribute is a ContextVariantAttribute.
-        if (attribute is ContextVariantAttribute) {
-          // Determine if the attribute should be applied based on the context.
-          final shouldApply = attribute.shouldApply(context);
+  /// Returns current [_resolver].
+  BuildContextResolver get resolver => _resolver;
 
-          // If willApply is true, recursively apply context variants to
-          // the attribute's value and add the result to the expanded list.
-          // Otherwise, add the attribute itself to the list.
-          return expanded
-            ..addAll(shouldApply
-                // ignore: avoid-recursive-calls
-                ? _applyContextVariants(attribute.value.toAttributes(), context)
-                : [attribute]);
-        }
+  TextDirection get directionality => _resolver.directionality;
 
-        // If the current attribute is not a ContextVariantAttribute,
-        // simply add it to the expanded list.
-        return expanded..add(attribute);
-      },
-    );
+  CommonSpec get commonSpec {
+    return maybeGet<CommonAttributes, CommonSpec>() ?? CommonSpec.defaults;
   }
 
-  /// Getter method for [MixTokenResolver].
-  ///
-  /// Returns current [_tokenResolver].
-  MixTokenResolver get resolveToken => _tokenResolver;
+  List<Decorator> get decorators {
+    return _styles.whereType<Decorator>().toList();
+  }
 
   /// A getter method for [_decorators].
   ///
   /// Returns a list of all [Decorator].
-  List<Decorator> get decorators {
-    return _decorators.toList();
+  List<T> whereDecoratorsOfType<T extends Decorator>() {
+    return _styles.whereType<T>().toList();
   }
 
   /// Retrieves an instance of the specified [StyleAttribute] type from the [MixData].
   ///
   /// Accepts a type parameter [A] which extends [StyleAttribute].
   /// Returns the instance of type [A] if found, else returns null.
-  A? get<A extends StyleAttribute>() {
-    return _attributes.ofType<A>() as A?;
+  A? attributeOf<A extends StyleAttribute>() {
+    return _styles.whereType<A>() as A?;
   }
 
-  R? resolveAttributeOfType<Attr extends StyleAttribute<R>, R>() {
-    final attribute = get<Attr>();
-
-    return attribute?.resolve(this);
+  R? maybeGet<Attr extends StyleAttribute<R>, R>() {
+    return attributeOf<Attr>()?.resolve(this);
   }
 
-  R dependOnResolveAttributeOfType<Attr extends StyleAttribute<R>, R>(
-    R defaultValue,
-  ) {
-    final attribute = get<Attr>();
+  R get<Attr extends StyleAttribute<R>, R>(R defaultValue) {
+    final attribute = attributeOf<Attr>();
 
     return attribute?.resolve(this) ?? defaultValue;
+  }
+
+  S spec<S extends Spec>() {
+    final attribute = attributeOf<StyleAttribute<S>>();
+
+    return (attribute as SpecAttribute<S>).resolve(this);
   }
 
   /// Retrieves an instance of attributes based on the type provided.
   ///
   /// The type [T] here refers to the type extending [StyleAttribute].
   /// An exception is thrown if no attribute of the required type is found.
-  T dependOnAttributesOfType<T extends StyleAttribute>() {
-    final attribute = get<T>();
+  T dependOnAttributesOf<T extends StyleAttribute>() {
+    final attribute = attributeOf<T>();
 
     if (attribute is! T) {
       throw Exception(
@@ -156,18 +116,17 @@ class MixData with Comparable {
   ///
   /// [other] is the other [MixData] instance that is to be merged with current instance.
   /// Returns a new instance of [MixData] which is actually a merge of current and other instance.
-  MixData inheritFrom(MixData other) {
+  MixData merge(MixData other) {
     return MixData._(
-      tokenResolver: _tokenResolver,
-      attributes: other._attributes.merge(_attributes),
-      decorators: other._decorators.merge(_decorators),
+      resolver: _resolver,
+      styles: other._styles.merge(_styles),
       animated: animated,
     );
   }
 
   /// Overrides the getter function of [props] from [Comparable] to specify properties necessary for distinguishing instances.
   ///
-  /// Returns a list of properties [_attributes] & [_decorators].
+  /// Returns a list of properties [_styles] & [_decorators].
   @override
-  get props => [_attributes, _decorators, animated];
+  get props => [_styles, animated];
 }

@@ -1,5 +1,7 @@
 // ignore: avoid-importing-entrypoint-exports
 import '../mix.dart';
+import 'attributes/attribute.dart';
+import 'attributes/variants/variant.dart';
 
 extension DeprecatedMixExtension<T extends Attribute> on StyleMix {
   /// Adds an Attribute to a Mix.
@@ -17,7 +19,7 @@ extension DeprecatedMixExtension<T extends Attribute> on StyleMix {
     'Use merge() or mergeMany() now. You might have to turn into a Mix first. firstMixFactory.merge(secondMix)',
   )
   StyleMix addAttributes(List<Attribute> attributes) {
-    final newValues = StyleMixData.create(attributes);
+    final newValues = MixValues.create(attributes);
 
     return StyleMix.fromValues(newValues);
   }

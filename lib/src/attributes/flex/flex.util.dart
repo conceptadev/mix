@@ -1,16 +1,44 @@
 import 'package:flutter/material.dart';
 
-import '../../attributes/enum/clip.attribute.dart';
-import '../../attributes/enum/vertical_direction/vertical_direction.attribute.dart';
-import '../../attributes/flex/axis.attribute.dart';
-import '../../attributes/flex/cross_axis_alignment.attribute.dart';
-import '../../attributes/flex/main_axis_alignment.attribute.dart';
-import '../../attributes/flex/main_axis_size.attribute.dart';
-import '../../attributes/text/text_baseline.attribute.dart';
-import '../../attributes/text/text_direction/text_direction.attribute.dart';
-import 'flex.attribute.dart';
+import '../../widgets/flex/flex.attribute.dart';
+import '../enum/clip.attribute.dart';
+import '../enum/vertical_direction/vertical_direction.attribute.dart';
+import '../text/text_baseline.attribute.dart';
+import '../text/text_direction/text_direction.attribute.dart';
+import 'axis.attribute.dart';
+import 'cross_axis_alignment.attribute.dart';
+import 'flex_fit.attribute.dart';
+import 'main_axis_alignment.attribute.dart';
+import 'main_axis_size.attribute.dart';
 
-FlexAttributes flex({
+const row = _row;
+const column = _column;
+const flexFit = _flexFit;
+const axisDirection = _axisDirection;
+const mainAxisAlignment = _mainAxisAlignment;
+const crossAxisAlignment = _crossAxisAlignment;
+const mainAxisSize = _mainAxisSize;
+
+FlexFitAttribute _flexFit(FlexFit flexFit) => FlexFitAttribute(flexFit);
+AxisAttribute _axisDirection(Axis axis) => AxisAttribute(axis);
+
+MainAxisAlignmentAttribute _mainAxisAlignment(
+  MainAxisAlignment mainAxisAlignment,
+) {
+  return MainAxisAlignmentAttribute(mainAxisAlignment);
+}
+
+CrossAxisAlignmentAttribute _crossAxisAlignment(
+  CrossAxisAlignment crossAxisAlignment,
+) {
+  return CrossAxisAlignmentAttribute(crossAxisAlignment);
+}
+
+MainAxisSizeAttribute _mainAxisSize(MainAxisSize mainAxisSize) {
+  return MainAxisSizeAttribute(mainAxisSize);
+}
+
+FlexAttributes _flex({
   Axis? direction,
   MainAxisAlignment? mainAxisAlignment,
   CrossAxisAlignment? crossAxisAlignment,
@@ -41,7 +69,7 @@ FlexAttributes flex({
   );
 }
 
-FlexAttributes row({
+FlexAttributes _row({
   MainAxisAlignment? mainAxisAlignment,
   CrossAxisAlignment? crossAxisAlignment,
   MainAxisSize? mainAxisSize,
@@ -50,7 +78,7 @@ FlexAttributes row({
   TextBaseline? textBaseline,
   Clip? clipBehavior,
 }) {
-  return flex(
+  return _flex(
     direction: Axis.horizontal,
     mainAxisAlignment: mainAxisAlignment,
     crossAxisAlignment: crossAxisAlignment,
@@ -62,7 +90,7 @@ FlexAttributes row({
   );
 }
 
-FlexAttributes column({
+FlexAttributes _column({
   MainAxisAlignment? mainAxisAlignment,
   CrossAxisAlignment? crossAxisAlignment,
   MainAxisSize? mainAxisSize,
@@ -71,7 +99,7 @@ FlexAttributes column({
   TextBaseline? textBaseline,
   Clip? clipBehavior,
 }) {
-  return flex(
+  return _flex(
     direction: Axis.vertical,
     mainAxisAlignment: mainAxisAlignment,
     crossAxisAlignment: crossAxisAlignment,
@@ -86,40 +114,22 @@ FlexAttributes column({
 // Create a FlexAttributes for the direction axis.
 @Deprecated('Use flex(direction: direction) instead')
 FlexAttributes direction(Axis direction) {
-  return flex(direction: direction);
+  return _flex(direction: direction);
 }
 
 // Create a FlexAttributes for the direction vertical axis.
 @Deprecated('Use flex(direction: Axis.vertical) instead')
 FlexAttributes verticalDirection(VerticalDirection verticalDirection) {
-  return flex(verticalDirection: verticalDirection);
-}
-
-// Create a FlexAttributes for the main axis.
-@Deprecated('Use flex(mainAxisAlignment: mainAxisAlignment) instead')
-FlexAttributes mainAxisAlignment(MainAxisAlignment mainAxisAlignment) {
-  return flex(mainAxisAlignment: mainAxisAlignment);
-}
-
-// Create a FlexAttributes for the main axis size.
-@Deprecated('Use flex(mainAxisSize: mainAxisSize) instead')
-FlexAttributes mainAxisSize(MainAxisSize mainAxisSize) {
-  return flex(mainAxisSize: mainAxisSize);
+  return _flex(verticalDirection: verticalDirection);
 }
 
 // Create a FlexAttributes for the cross axis.
 @Deprecated('Use flex(crossAxisAlignment: crossAxisAlignment) instead')
 FlexAttributes crossAxis(CrossAxisAlignment crossAxisAlignment) {
-  return flex(crossAxisAlignment: crossAxisAlignment);
-}
-
-// Create a FlexAttributes for the cross axis.
-@Deprecated('Use flex(crossAxisAlignment: crossAxisAlignment) instead')
-FlexAttributes crossAxisAlignment(CrossAxisAlignment crossAxisAlignment) {
-  return flex(crossAxisAlignment: crossAxisAlignment);
+  return _flex(crossAxisAlignment: crossAxisAlignment);
 }
 
 @Deprecated('Use flex(mainAxisAlignment: mainAxis) instead')
-FlexAttributes mainAxis(MainAxisAlignment mainAxis) {
-  return mainAxisAlignment(mainAxis);
+MainAxisAlignmentAttribute mainAxis(MainAxisAlignment mainAxis) {
+  return _mainAxisAlignment(mainAxis);
 }

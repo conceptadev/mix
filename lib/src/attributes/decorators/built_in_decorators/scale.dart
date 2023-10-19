@@ -1,29 +1,34 @@
 import 'package:flutter/material.dart';
 
 import '../../../factory/mix_provider_data.dart';
+import '../../base/double.dto.dart';
 import '../decorator.dart';
 
 const scale = _scale;
 
 ScaleDecorator _scale(double scale) {
-  return ScaleDecorator(scale);
+  return ScaleDecorator(DoubleDto(scale));
 }
 
-class ScaleDecorator extends Decorator {
-  final double scale;
-  const ScaleDecorator(this.scale, {super.key});
+class ScaleDecorator extends Decorator<double> {
+  final DoubleDto _scale;
+  const ScaleDecorator(this._scale, {super.key});
 
   @override
-  ScaleDecorator merge(ScaleDecorator other) {
-    return ScaleDecorator(other.scale);
+  ScaleDecorator merge(ScaleDecorator? other) {
+    return ScaleDecorator(other?._scale ?? _scale);
   }
 
   @override
-  get props => [scale];
+  double resolve(MixData mix) => _scale.resolve(mix);
+
+  @override
+  get props => [_scale];
+
   @override
   Widget build(Widget child, MixData mix) {
-    final animation =
-        mix.resolveAttributeOfType<AnimationAttribute, AnimationDto>();
+    final animation = mix.commonSpec.animation;
+    final scale = resolve(mix);
 
     return mix.animated
         ? TweenAnimationBuilder<double>(

@@ -139,7 +139,7 @@ class TextStyleAttribute extends StyleAttribute<TextStyle> {
 
     if (styleToken != null) {
       // Load as DTO for consistent merging behavior.
-      final textStyle = mix.resolveToken.textStyle(styleToken!);
+      final textStyle = mix.resolver.textStyle(styleToken!);
       styleRef = TextStyleAttribute.from(textStyle).merge(this);
     }
 

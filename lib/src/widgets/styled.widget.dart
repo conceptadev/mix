@@ -5,10 +5,18 @@ import '../attributes/variants/variant.dart';
 import '../factory/mix_provider.dart';
 import '../factory/mix_provider_data.dart';
 import '../factory/style_mix.dart';
-import 'exports.dart';
+import 'mix_context_builder.dart';
 
 @Deprecated('Use MixWidget instead')
 typedef MixWidget = StyledWidget;
+
+abstract class StyledWidgetBuilder {
+  Widget build(BuildContext context, MixData mix) {
+    // Implement the custom build logic here.
+    // This method should be overridden by each StyledWidget subclass.
+    throw UnimplementedError();
+  }
+}
 
 abstract class StyledWidget extends StatelessWidget {
   /// Constructor.
@@ -41,9 +49,9 @@ abstract class StyledWidget extends StatelessWidget {
     );
 
     if (_inherit) {
-      final parentMix = MixProvider.of(context);
+      final parentMix = MixProvider.maybeOf(context);
       if (parentMix != null) {
-        return mix.inheritFrom(parentMix);
+        return mix.merge(parentMix);
       }
     }
 

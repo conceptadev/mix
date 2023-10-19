@@ -1,10 +1,9 @@
 import 'package:flutter/foundation.dart';
 
 import '../factory/mix_provider_data.dart';
-import 'animation/animation.attribute.dart';
+import '../helpers/compare_mixin/compare_mixin.dart';
 import 'attribute.dart';
 import 'helpers/list.attribute.dart';
-import 'visible/visible.attribute.dart';
 
 abstract class StyleAttribute<T> extends Attribute with Resolvable<T> {
   const StyleAttribute({super.key});
@@ -15,7 +14,7 @@ abstract class StyleAttribute<T> extends Attribute with Resolvable<T> {
   ) {
     R? selectedAttribute = resolvable;
 
-    selectedAttribute ??= mix.get<R>();
+    selectedAttribute ??= mix.attributeOf<R>();
 
     return selectedAttribute?.resolve(mix);
   }
@@ -40,23 +39,15 @@ abstract class ModifiableDto<T> extends Dto<T> {
   T modify(T valueToModify) => modifier?.call(valueToModify) ?? valueToModify;
 }
 
-abstract class WidgetAttributes<T extends WidgetAttributesResolved>
-    extends StyleAttribute<T> {
-  final AnimationAttribute? animation;
-  final VisibleAttribute? visible;
-  const WidgetAttributes({super.key, this.visible, this.animation});
+abstract class SpecAttribute<T extends Spec> extends StyleAttribute<T> {
+  const SpecAttribute({super.key});
 
   @override
   T resolve(MixData mix);
 }
 
-abstract class WidgetAttributesResolved extends DataClass {
-  final AnimationAttributeResolved? animation;
-  final bool visible;
-  const WidgetAttributesResolved({
-    required this.animation,
-    required this.visible,
-  });
+abstract class Spec with Comparable {
+  const Spec();
 }
 
 extension ListResolvableAttributeExt<T> on List<StyleAttribute<T>> {

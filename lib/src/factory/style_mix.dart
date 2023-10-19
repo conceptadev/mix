@@ -4,7 +4,7 @@ import '../attributes/attribute.dart';
 import '../attributes/variants/variant.dart';
 import '../attributes/variants/variant_attribute.dart';
 import '../helpers/attributes_map.dart';
-import 'style_mix_data.dart';
+import 'mix_values.dart';
 
 @Deprecated(
   'Use StyleMix instead. '
@@ -20,11 +20,11 @@ typedef Mix = StyleMix;
 /// constructors and utility methods for working with mixes.
 class StyleMix {
   /// A constant, empty mix for use with const constructor widgets.
-  static const empty = StyleMix._(StyleMixData.empty());
+  static const empty = StyleMix._(MixValues.empty);
 
-  final StyleMixData _values;
+  final MixValues _values;
 
-  const StyleMix._(StyleMixData values) : _values = values;
+  const StyleMix._(MixValues values) : _values = values;
 
   // Factory constructors.
   // ignore: parameters-ordering
@@ -53,15 +53,11 @@ class StyleMix {
 
   /// Constructs a mix from a non-null iterable of [Attribute] instances.
   factory StyleMix.fromAttributes(Iterable<Attribute> attributes) {
-    return StyleMix._(StyleMixData.create(attributes));
+    return StyleMix._(MixValues.create(attributes));
   }
 
-  factory StyleMix.fromValues(StyleMixData values) {
+  factory StyleMix.fromValues(MixValues values) {
     return StyleMix._(values);
-  }
-
-  factory StyleMix.fromVariantAttributes(List<VariantAttribute> variants) {
-    return StyleMix.combine(variants.map((e) => e.value).toList());
   }
 
   /// Chooses a mix based on a [condition].
@@ -80,7 +76,7 @@ class StyleMix {
   /// Iterates through the list of mixes, merging each mix with the previous mix
   /// and returning the final combined MixFactory.
   factory StyleMix.combine(List<StyleMix> mixes) {
-    StyleMixData combinedValues = const StyleMixData.empty();
+    MixValues combinedValues = MixValues.empty;
 
     for (final mix in mixes) {
       combinedValues = combinedValues.merge(mix._values);
@@ -89,21 +85,18 @@ class StyleMix {
     return StyleMix.fromValues(combinedValues);
   }
 
-  /// Returns a [StyleMixData] instance representing the values in this MixFactory.
-  StyleMixData get values => _values;
+  /// Returns a [MixValues] instance representing the values in this MixFactory.
+  MixValues get values => _values;
 
   /// Returns an iterable of [Attribute] instances from this MixFactory.
   Iterable<Attribute> toAttributes() {
-    return _values.toAttributes();
+    return _values.toValues();
   }
 
   /// Returns a new mix with the provided [values] merged with this mix's values.
-  StyleMix copyWith({StyleMixData? values}) {
+  StyleMix copyWith({MixValues? values}) {
     return StyleMix._(_values.merge(values));
   }
-
-  /// Clones this mix into a new instance.
-  StyleMix clone() => StyleMix._(_values.clone());
 
   /// Merges this mix with the provided [mix] and returns the resulting MixFactory.
   StyleMix merge(StyleMix mix) => StyleMix.combine([this, mix]);
@@ -130,7 +123,7 @@ class StyleMix {
     if (variants.isEmpty) {
       return this;
     }
-    final existingVariants = _values.variants.toList();
+    final existingVariants = _values.variants.values.toList();
     final matchedVariants = <VariantAttribute>[];
 
     for (final v in variants) {
@@ -146,26 +139,22 @@ class StyleMix {
     }
 
     // Create a mix from the matched variants.
-    final mixToApply = StyleMix.fromVariantAttributes(matchedVariants);
+    final valuesToApply = MixValues.create(matchedVariants);
 
     // Create a mix with the existing values.
-    final existingMix = StyleMix._(
-      StyleMixData(
-        attributes: _values.attributes,
-        variants: AttributesMap.fromIterable(existingVariants),
-        decorators: _values.decorators,
-        contextVariants: _values.contextVariants,
-      ),
+    final existingValues = MixValues(
+      styles: _values.styles,
+      variants: VariantAttributeMap.from(existingVariants),
     );
 
     // Merge the existing mix with the mix to apply.
-    return existingMix.merge(mixToApply);
+    return StyleMix._(existingValues.merge(valuesToApply));
   }
 
   StyleMix pickVariants(List<Variant> variants) {
     final matchedVariants = <VariantAttribute>[];
 
-    final currentVariants = _values.variants.toList();
+    final currentVariants = _values.variants.values;
 
     for (final variantAttr in currentVariants) {
       if (variants.contains(variantAttr.variant)) {
@@ -174,7 +163,7 @@ class StyleMix {
     }
 
     // Create a mix from the matched variants.
-    return StyleMix.fromVariantAttributes(matchedVariants);
+    return StyleMix.fromAttributes(matchedVariants);
   }
 
   /// Selects variants based on a condition and returns a new mix with the selected variants.

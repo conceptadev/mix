@@ -144,20 +144,20 @@ class MarginAttribute extends StyleAttribute<EdgeInsetsGeometry> {
 
   @override
   EdgeInsetsGeometry resolve(MixData mix) {
-    final resolvedTop = mix.resolveToken.space(_top ?? 0.0);
-    final resolvedBottom = mix.resolveToken.space(_bottom ?? 0.0);
+    final resolvedTop = mix.resolver.space(_top ?? 0.0);
+    final resolvedBottom = mix.resolver.space(_bottom ?? 0.0);
 
     return _isDirectional
         ? EdgeInsetsDirectional.only(
-            start: mix.resolveToken.space(_start ?? 0.0),
+            start: mix.resolver.space(_start ?? 0.0),
             top: resolvedTop,
-            end: mix.resolveToken.space(_end ?? 0.0),
+            end: mix.resolver.space(_end ?? 0.0),
             bottom: resolvedBottom,
           )
         : EdgeInsets.only(
-            left: mix.resolveToken.space(_left ?? 0.0),
+            left: mix.resolver.space(_left ?? 0.0),
             top: resolvedTop,
-            right: mix.resolveToken.space(_right ?? 0.0),
+            right: mix.resolver.space(_right ?? 0.0),
             bottom: resolvedBottom,
           );
   }

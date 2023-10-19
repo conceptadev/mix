@@ -1,137 +1,117 @@
-import 'package:flutter/foundation.dart';
+// ignore_for_file: prefer_collection_literals
+
+import 'dart:collection';
+
+import 'package:flutter/cupertino.dart';
 
 import '../attributes/attribute.dart';
+import '../attributes/style_attribute.dart';
+import '../attributes/variants/variant_attribute.dart';
+import '../factory/mix_provider_data.dart';
+import 'compare_mixin/compare_mixin.dart';
 
-/// Represents a map that can merge values of type [Mergeable] based on their runtime type.
-/// Maintains the insertion order of keys.
-///
-/// The type parameter [T] must extend [Mergeable], ensuring that the values can be merged.
-///
-/// This class is useful for scenarios where you need to merge objects based on their types
-/// while preserving the order in which they were inserted.
+typedef KeySelector<T, Attr extends Attribute> = T Function(Attr element);
+
 @immutable
-class AttributesMap<T extends Attribute> {
-  // Internal list to hold the keys to maintain insertion order.
-  final List<Key> _keys;
+class StylesMap extends MergeableMap<Type, StyleAttribute> {
+  static const empty = StylesMap._(null);
 
-  // Internal map to associate keys to values.
-  final Map<Key, T> _map;
+  const StylesMap._(super.map);
 
-  /// Private constructor used by factory methods.
-  ///
-  /// Both [_keys] and [_map] must not be null.
-  const AttributesMap._(this._keys, this._map);
+  factory StylesMap.from(List<StyleAttribute> iterable) {
+    final map = LinkedHashMap<Type, StyleAttribute>.fromIterable(
+      iterable,
+      key: (e) => e.runtimeType,
+      value: (e) => e,
+    );
 
-  /// Factory constructor to create an empty [AttributesMap].
-  ///
-  /// Useful for initializing an empty map.
-  const AttributesMap.empty()
-      : _keys = const [],
-        _map = const {};
+    return StylesMap._(map);
+  }
 
-  /// Creates a [AttributesMap] instance from an iterable of type [T].
-  ///
-  /// Iterates through each item in the [iterable], merging items of the same type.
-  factory AttributesMap.fromIterable(List<T> iterable) {
-    final keys = <Key>[];
-    final map = <Key, T>{};
-    for (final item in iterable) {
-      final key = item.mergeKey;
-      if (map.containsKey(key)) {
-        map[key] = map[key]!.merge(item);
-      } else {
-        keys.add(key);
-        map[key] = item;
-      }
+  Set<Spec> buildSpecs(MixData context) {
+    final resolvedMap = Set<Spec>();
+
+    for (final key in map.keys) {
+      resolvedMap.add(map[key]!.resolve(context));
     }
 
-    return AttributesMap<T>._(keys, map);
-  }
-
-  /// Returns an iterable of the values in the map, maintaining the order of insertion.
-  ///
-  /// The order of return is determined by the order the key/value pairs were inserted in the map.
-  Iterable<T> get values => _keys.map((key) => _map[key]!);
-
-  /// Returns the number of key/value pairs in the map.
-  ///
-  /// A length of zero means the map is empty.
-  int get length => _keys.length;
-
-  /// Returns `true` if the map contains no key/value pairs.
-  ///
-  /// This is a quick way to verify if the map is empty or not.
-  bool get isEmpty => _keys.isEmpty;
-
-  /// Returns `true` if the map contains at least one key/value pair.
-  ///
-  /// This is a quick way to verify if the map has stored values.
-  bool get isNotEmpty => _keys.isNotEmpty;
-
-  /// Returns an List of the values in the map, maintaining the order of insertion.
-  ///
-  /// The order of return is determined by the order the key/value pairs were inserted in the map.
-  List<T> toList() => _keys.map((key) => _map[key]!).toList();
-
-  /// Retrieves the value associated with the given [key].
-  ///
-  /// Returns `null` if the [key] is not found.
-  T? operator [](Key key) => _map[key];
-
-  /// Get value from type.
-  T? ofType<A>() => _map[ValueKey(A)];
-
-  /// Merges this [AttributesMap] with another [AttributesMap].
-  ///
-  /// Returns a new instance containing the merged elements.
-  /// If [other] is null, returns the current instance.
-  AttributesMap<T> merge(AttributesMap<T>? other) {
-    if (other == null) return this;
-
-    final mergedKeys = List<Key>.of(_keys);
-    final mergedMap = Map<Key, T>.from(_map);
-
-    for (Key key in other._keys) {
-      if (mergedMap.containsKey(key)) {
-        mergedMap[key] = mergedMap[key]!.merge(other._map[key]!);
-      } else {
-        mergedKeys.add(key);
-        mergedMap[key] = other._map[key]!;
-      }
-    }
-
-    return AttributesMap<T>._(mergedKeys, mergedMap);
-  }
-
-  /// Creates a new [AttributesMap] instance identical to this instance.
-  ///
-  /// This method is typically used when a copy of the map is needed, so the original
-  /// map can be preserved while the copy is manipulated.
-  AttributesMap<T> clone() {
-    return AttributesMap._(List<Key>.of(_keys), Map<Key, T>.from(_map));
-  }
-
-  /// Finds the first value in the map that satisfies the given [test].
-  ///
-  /// This is a simplified way to find a value in the map without iterating manually.
-  ///
-  /// The [test] function should return `true` for the desired value.
-  T firstWhere(bool Function(T) test) => values.firstWhere(test);
-
-  /// Overrides the equality operator to compare [AttributesMap] instances.
-  ///
-  /// Two instances are considered equal if they have identical keys and values.
-  /// This checks the length of keys and then verifies that each key has identical values in both maps.
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is AttributesMap &&
-        _keys.length == other._keys.length &&
-        _keys.every((key) =>
-            other._map.containsKey(key) && _map[key] == other._map[key]);
+    return resolvedMap;
   }
 
   @override
-  int get hashCode => _keys.hashCode ^ _map.hashCode;
+  StylesMap merge(StylesMap? other) {
+    return StylesMap._(super.mergeMap(other?.map));
+  }
+}
+
+@immutable
+class VariantAttributeMap extends MergeableMap<Key, VariantAttribute> {
+  static const empty = VariantAttributeMap._(null);
+  const VariantAttributeMap._(super.map);
+
+  factory VariantAttributeMap.from(List<VariantAttribute> iterable) {
+    final map = LinkedHashMap<Key, VariantAttribute>.fromIterable(
+      iterable,
+      key: (e) => e.mergeKey,
+      value: (e) => e,
+    );
+
+    return VariantAttributeMap._(map);
+  }
+
+  List<VariantAttribute> get namedVariants {
+    return whereRuntimeType<VariantAttribute>().toList();
+  }
+
+  List<ContextVariantAttribute> get contextVariants {
+    return whereType<ContextVariantAttribute>().toList();
+  }
+
+  @override
+  VariantAttributeMap merge(VariantAttributeMap? other) {
+    return VariantAttributeMap._(super.mergeMap(other?.map));
+  }
+}
+
+@immutable
+abstract class MergeableMap<K, T extends Attribute> with Comparable {
+  final LinkedHashMap<K, T>? _map;
+  const MergeableMap(this._map);
+
+  @protected
+  LinkedHashMap<K, T> get map => _map ?? LinkedHashMap<K, T>();
+
+  int get length => map.length;
+
+  bool get isEmpty => map.isEmpty;
+
+  bool get isNotEmpty => map.isNotEmpty;
+
+  Iterable<T> get values => map.values;
+
+  Iterable<R> whereType<R extends T>() => map.values.whereType<R>();
+
+  Iterable<R> whereRuntimeType<R extends T>() =>
+      map.values.where((element) => element.runtimeType == R) as Iterable<R>;
+
+  LinkedHashMap<K, T> mergeMap(LinkedHashMap<K, T>? otherMap) {
+    if (otherMap == null) return map;
+
+    final cloneMap = LinkedHashMap<K, T>.from(this.map);
+
+    for (K key in cloneMap.keys) {
+      if (cloneMap.containsKey(key)) {
+        cloneMap[key] = cloneMap[key]!.merge(otherMap[key]!);
+      } else {
+        cloneMap[key] = otherMap[key]!;
+      }
+    }
+
+    return cloneMap;
+  }
+
+  MergeableMap<K, T> merge(covariant MergeableMap<K, T>? other);
+
+  @override
+  List<Object> get props => [_map ?? {}];
 }

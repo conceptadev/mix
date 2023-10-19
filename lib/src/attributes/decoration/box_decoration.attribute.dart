@@ -49,12 +49,11 @@ class BoxDecorationAttribute extends DecorationAttribute<BoxDecoration> {
     BoxBorder? _border = border?.resolve(mix);
     Gradient? _gradient = gradient?.resolve(mix);
 
-    _borderRadius ??=
-        mix.resolveAttributeOfType<BorderRadiusAttribute, BorderRadius>();
+    _borderRadius ??= mix.maybeGet<BorderRadiusAttribute, BorderRadius>();
 
-    _border ??= mix.resolveAttributeOfType<BoxBorderAttribute, BoxBorder>();
+    _border ??= mix.maybeGet<BoxBorderAttribute, BoxBorder>();
 
-    _gradient ??= mix.resolveAttributeOfType<GradientAttribute, Gradient>();
+    _gradient ??= mix.maybeGet<GradientAttribute, Gradient>();
 
     final boxShadowAttributes = boxShadow?.resolve(mix);
 

@@ -1,16 +1,22 @@
 // @exportRequired
 
-import '../attributes/exports.dart';
-import '../attributes/text/text_style/text_style.util.dart';
-import '../variants/exports.dart';
-import '../widgets/exports.dart';
-import 'exports.dart';
+import '../attributes/border/border.util.dart';
+import '../attributes/border_radius/border_radius.util.dart';
+import '../attributes/box_constraints/box_constraints.util.dart';
+import '../attributes/flex/flex_util.dart';
+import '../attributes/pressable/pressable.util.dart';
+import '../attributes/size/height.util.dart';
+import '../attributes/size/width.util.dart';
+import '../attributes/space/margin_utils.dart';
+import '../attributes/space/padding.util.dart';
+import '../attributes/variants/context_variant.util.dart';
+import '../helpers/constants.dart';
 
 /// ALL ALIASES HERE HAVE BEEN DEPRECATED AND WILL BE REMOVED IN THE FUTURE
 /// FEEL FREE TO BRING INTERNALLY TO YOUR OWN PROJECT
 
 @Deprecated('Use mainAxisAlignment instead')
-const mainAxis = mainAxisAlig;
+const mainAxis = mainAxisAlignment;
 
 @Deprecated('use Mix.chooser instead')
 void when(bool _) => throw UnimplementedError();

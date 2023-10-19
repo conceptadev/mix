@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import '../../attributes/attribute.dart';
 import '../../attributes/base/color.dto.dart';
 import '../../attributes/style_attribute.dart';
 import '../../factory/mix_provider_data.dart';
 
-class ImageAttributes extends StyleAttribute<ImageAttributesResolved> {
+class ImageAttributes extends StyleAttribute<ImageSpec> {
   final ImageProvider? image;
   final double? width, height;
   final ColorDto? color;
@@ -55,8 +54,8 @@ class ImageAttributes extends StyleAttribute<ImageAttributesResolved> {
   }
 
   @override
-  ImageAttributesResolved resolve(MixData mix) {
-    return ImageAttributesResolved(
+  ImageSpec resolve(MixData mix) {
+    return ImageSpec(
       image: image,
       width: width,
       height: height,
@@ -70,14 +69,14 @@ class ImageAttributes extends StyleAttribute<ImageAttributesResolved> {
   get props => [image, width, height, color, repeat, fit];
 }
 
-class ImageAttributesResolved extends DataClass {
+class ImageSpec extends Spec {
   final ImageProvider? image;
   final double? width, height;
   final Color? color;
   final ImageRepeat repeat;
   final BoxFit fit;
 
-  const ImageAttributesResolved({
+  const ImageSpec({
     required this.image,
     required this.width,
     required this.height,

@@ -56,7 +56,7 @@ void main() {
       );
 
       final boxAttribute =
-          style.values.attributesOfType<StyledContainerAttributes>()!;
+          style.values.stylesOfType<StyledContainerAttributes>()!;
 
       // Length is only 1 because margin and color are BoxAttributes
       expect(style.values.length, 1);
@@ -72,7 +72,7 @@ void main() {
       ]);
 
       final boxAttribute =
-          mix.values.attributesOfType<StyledContainerAttributes>()!;
+          mix.values.stylesOfType<StyledContainerAttributes>()!;
 
       // Length is only 1 because margin and color are BoxAttributes
       expect(mix.values.length, 1);
@@ -92,10 +92,10 @@ void main() {
     final appliedMix = baseMix.merge(StyleMix(flexAttribute));
 
     final modifiedBoxAttribute =
-        appliedMix.values.attributesOfType<StyledContainerAttributes>();
+        appliedMix.values.stylesOfType<StyledContainerAttributes>();
 
     final modifiedFlexAttribute =
-        appliedMix.values.attributesOfType<FlexAttributes>();
+        appliedMix.values.stylesOfType<FlexAttributes>();
 
     expect(baseMix.values.length, 1);
     expect(appliedMix.values.length, 2);

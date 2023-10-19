@@ -35,7 +35,7 @@ void main() {
       BuildContext context = tester.element(widgetFinder);
 
       // Grab the MixContext from the BoxMixedWidget MixContext.of(context)
-      final mix = MixProvider.of(context);
+      final mix = MixProvider.maybeOf(context);
 
       final matchMix = MixData.create(
         context: context,

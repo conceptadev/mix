@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../attributes/animation/animation.attribute.dart';
 import '../../attributes/text/text_direction/text_direction.attribute.dart';
-import '../../attributes/visible/visible.attribute.dart';
 import '../../factory/mix_provider.dart';
 import '../empty/empty.widget.dart';
 import '../styled.widget.dart';
@@ -43,15 +41,12 @@ class MixedIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final mix = MixProvider.of(context);
-    final visible = mix.resolveAttributeOfType<VisibleAttribute, bool>(true);
-    final attributes =
-        mix.resolveAttributeOfType<IconAttributes, IconAttributesResolved>();
-    final textDirection =
-        mix.resolveAttributeOfType<TextDirectionAttribute, TextDirection>();
-    final animation = mix.resolveAttributeOfType<AnimationAttribute,
-        AnimationAttributeResolved>();
 
-    if (!visible) {
+    final attributes = mix.maybeGet<IconAttributes, IconSpec>();
+    final textDirection = mix.maybeGet<TextDirectionAttribute, TextDirection>();
+    final common = mix.commonSpec;
+
+    if (!common.visible) {
       return const Empty();
     }
     Widget iconWidget = Icon(
@@ -61,18 +56,18 @@ class MixedIcon extends StatelessWidget {
       textDirection: textDirection,
     );
 
-    if (animation != null) {
+    if (mix.animated) {
       iconWidget = TweenAnimationBuilder<double>(
         tween: Tween<double>(end: attributes?.size),
-        duration: animation.duration,
-        curve: animation.curve,
+        duration: common.animation.duration,
+        curve: common.animation.curve,
         builder: (context, value, child) {
           final sizeValue = value;
 
           return TweenAnimationBuilder<Color?>(
             tween: ColorTween(end: attributes?.color),
-            duration: animation.duration,
-            curve: animation.curve,
+            duration: common.animation.duration,
+            curve: common.animation.curve,
             builder: (context, value, child) {
               final colorValue = value;
 

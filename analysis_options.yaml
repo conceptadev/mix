@@ -28,6 +28,7 @@ dart_code_metrics:
     parameters-ordering: false
     arguments-ordering:
       child-last: true
+    avoid-dynamic: false
     prefer-getter-over-method: false
     enum-constants-ordering: false
     prefer-static-class: false
@@ -36,6 +37,7 @@ dart_code_metrics:
     avoid-declaring-call-method: false
     avoid-long-parameter-list: false
     no-magic-number: false
+    avoid-ignoring-return-values: false
     prefer-commenting-analyzer-ignores: false
     prefer-correct-identifier-length: false
     avoid-unsafe-collection-methods: false

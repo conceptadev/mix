@@ -40,41 +40,40 @@ class MixedContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mix = MixProvider.ensureOf(context);
-    final attr = mix.resolveAttributeOfType<ContainerAttributes,
-        ContainerAttributesResolved>();
+    final mix = MixProvider.of(context);
+    final spec = mix.spec<ContainerSpec>();
+    final common = mix.commonSpec;
 
-    if (attr?.visible == false) {
+    if (!common.visible) {
       return const Empty();
     }
     Widget? current = child;
 
     current = mix.animated
         ? AnimatedContainer(
-            alignment: attr?.alignment,
-            padding: attr?.padding,
-            color: attr?.color,
-            decoration: attr?.decoration,
-            width: attr?.width,
-            height: attr?.height,
-            constraints: attr?.constraints,
-            margin: attr?.margin,
-            transform: attr?.transform,
-            curve: attr?.animation?.curve ?? Curves.linear,
-            duration:
-                attr?.animation?.duration ?? const Duration(milliseconds: 300),
+            alignment: spec.alignment,
+            padding: spec.padding,
+            color: spec.color,
+            decoration: spec.decoration,
+            width: spec.width,
+            height: spec.height,
+            constraints: spec.constraints,
+            margin: spec.margin,
+            transform: spec.transform,
+            curve: common.animation.curve,
+            duration: common.animation.duration,
             child: current,
           )
         : Container(
-            alignment: attr?.alignment,
-            padding: attr?.padding,
-            color: attr?.color,
-            decoration: attr?.decoration,
-            width: attr?.width,
-            height: attr?.height,
-            constraints: attr?.constraints,
-            margin: attr?.margin,
-            transform: attr?.transform,
+            alignment: spec.alignment,
+            padding: spec.padding,
+            color: spec.color,
+            decoration: spec.decoration,
+            width: spec.width,
+            height: spec.height,
+            constraints: spec.constraints,
+            margin: spec.margin,
+            transform: spec.transform,
             child: current,
           );
     // Wrap parent decorators.

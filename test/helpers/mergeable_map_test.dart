@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/src/attributes/exports.dart';
 import 'package:mix/src/helpers/attributes_map.dart';
@@ -28,19 +30,19 @@ class Int3Attribute extends IntAttribute {
 
 void main() {
   test('Initialization', () {
-    const map = AttributesMap<IntAttribute>.empty();
+    const map = LinkedHashMap<IntAttribute>.empty();
     expect(map.isEmpty, true);
   });
 
   test('FromList Constructor', () {
-    final map = AttributesMap.fromIterable([IntAttribute(1), IntAttribute(2)]);
+    final map = LinkedHashMap.fromFactory([IntAttribute(1), IntAttribute(2)]);
     expect(map.length, 1);
 
     final map2 =
-        AttributesMap.fromIterable([Int2Attribute(1), Int3Attribute(2)]);
+        LinkedHashMap.fromFactory([Int2Attribute(1), Int3Attribute(2)]);
     expect(map2.length, 2);
 
-    final map3 = AttributesMap.fromIterable(
+    final map3 = LinkedHashMap.fromFactory(
       [Int2Attribute(1), Int3Attribute(2), IntAttribute(3), Int2Attribute(0)],
     );
 
@@ -48,14 +50,14 @@ void main() {
   });
 
   test('Merge Functionality', () {
-    final map1 = AttributesMap.fromIterable([IntAttribute(1)]);
-    final map2 = AttributesMap.fromIterable([IntAttribute(2)]);
+    final map1 = LinkedHashMap.fromFactory([IntAttribute(1)]);
+    final map2 = LinkedHashMap.fromFactory([IntAttribute(2)]);
     final merged = map1.merge(map2);
     expect(merged.length, 1);
   });
 
   test('Insertion Order', () {
-    final map = AttributesMap.fromIterable(
+    final map = LinkedHashMap.fromFactory(
       [IntAttribute(1), Int3Attribute(4), IntAttribute(2)],
     );
     // Check that first value is of type MergeableInt
@@ -65,7 +67,7 @@ void main() {
   });
 
   test('Clone Functionality', () {
-    final map = AttributesMap.fromIterable([IntAttribute(1)]);
+    final map = LinkedHashMap.fromFactory([IntAttribute(1)]);
     final clone = map.clone();
     expect(clone, map);
   });
@@ -73,10 +75,10 @@ void main() {
   group('Merge benchmark', () {
     const N = 1000000;
 
-    final map1 = AttributesMap.fromIterable(
+    final map1 = LinkedHashMap.fromFactory(
         RandomGenerator.boxAttributesList(length: 100, someNullable: false));
 
-    final map2 = AttributesMap.fromIterable(
+    final map2 = LinkedHashMap.fromFactory(
         RandomGenerator.boxAttributesList(length: 100, someNullable: false));
 
     final mergedMap = map1.merge(map2);

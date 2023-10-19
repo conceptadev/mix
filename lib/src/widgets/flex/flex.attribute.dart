@@ -11,7 +11,7 @@ import '../../attributes/text/text_baseline.attribute.dart';
 import '../../attributes/text/text_direction/text_direction.attribute.dart';
 import '../../factory/mix_provider_data.dart';
 
-class FlexAttributes extends WidgetAttributes<FlexAttributesResolved> {
+class FlexAttributes extends SpecAttribute<FlexSpec> {
   final AxisAttribute? direction;
   final MainAxisAlignmentAttribute? mainAxisAlignment;
   final CrossAxisAlignmentAttribute? crossAxisAlignment;
@@ -48,8 +48,8 @@ class FlexAttributes extends WidgetAttributes<FlexAttributesResolved> {
   }
 
   @override
-  FlexAttributesResolved resolve(MixData mix) {
-    return FlexAttributesResolved(
+  FlexSpec resolve(MixData mix) {
+    return FlexSpec(
       crossAxisAlignment: resolveAttribute(crossAxisAlignment, mix),
       mainAxisAlignment: resolveAttribute(mainAxisAlignment, mix),
       mainAxisSize: resolveAttribute(mainAxisSize, mix),
@@ -58,8 +58,6 @@ class FlexAttributes extends WidgetAttributes<FlexAttributesResolved> {
       textDirection: resolveAttribute(textDirection, mix),
       textBaseline: resolveAttribute(textBaseline, mix),
       clipBehavior: resolveAttribute(clipBehavior, mix),
-      animation: resolveAttribute(animation, mix),
-      visible: resolveAttribute(visible, mix),
     );
   }
 
@@ -76,7 +74,7 @@ class FlexAttributes extends WidgetAttributes<FlexAttributesResolved> {
       ];
 }
 
-class FlexAttributesResolved extends WidgetAttributesResolved {
+class FlexSpec extends Spec {
   final Axis? direction;
   final MainAxisAlignment? mainAxisAlignment;
   final CrossAxisAlignment? crossAxisAlignment;
@@ -86,7 +84,7 @@ class FlexAttributesResolved extends WidgetAttributesResolved {
   final TextBaseline? textBaseline;
   final Clip? clipBehavior;
 
-  const FlexAttributesResolved({
+  const FlexSpec({
     required this.crossAxisAlignment,
     required this.mainAxisAlignment,
     required this.mainAxisSize,
@@ -95,8 +93,6 @@ class FlexAttributesResolved extends WidgetAttributesResolved {
     required this.textDirection,
     required this.textBaseline,
     required this.clipBehavior,
-    required super.animation,
-    required super.visible,
   });
 
   @override
@@ -109,7 +105,5 @@ class FlexAttributesResolved extends WidgetAttributesResolved {
         textDirection,
         textBaseline,
         clipBehavior,
-        super.animation,
-        super.visible,
       ];
 }

@@ -1,43 +1,49 @@
-import 'package:flutter/animation.dart';
+import 'package:flutter/material.dart';
 
 import '../../factory/exports.dart';
-import '../attribute.dart';
 import '../style_attribute.dart';
 
-class AnimationAttribute extends StyleAttribute<AnimationAttributeResolved> {
-  final Duration? _duration;
-  final Curve? _curve;
+class AnimationAttribute extends StyleAttribute<AnimationSpec> {
+  @protected
+  final Duration? duration;
 
-  const AnimationAttribute({Duration? duration, Curve? curve})
-      : _duration = duration,
-        _curve = curve;
+  @protected
+  final Curve? curve;
+
+  const AnimationAttribute({this.duration, this.curve});
 
   @override
   AnimationAttribute merge(AnimationAttribute? other) {
     if (other == null) return this;
 
     return AnimationAttribute(
-      duration: other._duration ?? _duration,
-      curve: other._curve ?? _curve,
+      duration: other.duration ?? duration,
+      curve: other.curve ?? curve,
     );
   }
 
   @override
-  AnimationAttributeResolved resolve(MixData mix) {
-    return AnimationAttributeResolved(duration: _duration, curve: _curve);
+  AnimationSpec resolve(MixData mix) {
+    return AnimationSpec(
+      duration: duration ?? const Duration(milliseconds: 200),
+      curve: curve ?? Curves.linear,
+    );
   }
 
   @override
-  get props => [_duration, _curve];
+  get props => [duration, curve];
 }
 
-class AnimationAttributeResolved extends DataClass {
-  final Duration? duration;
-  final Curve? curve;
-  const AnimationAttributeResolved({
-    required this.duration,
-    required this.curve,
-  });
+class AnimationSpec extends Spec {
+  final Duration duration;
+  final Curve curve;
+
+  static const defaults = AnimationSpec(
+    duration: Duration(milliseconds: 200),
+    curve: Curves.linear,
+  );
+
+  const AnimationSpec({required this.duration, required this.curve});
 
   @override
   get props => [duration, curve];
