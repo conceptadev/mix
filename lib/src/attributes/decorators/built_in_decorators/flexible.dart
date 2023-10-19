@@ -46,12 +46,7 @@ class FlexibleDecorator extends Decorator<FlexibleDecoratorSpec> {
   Widget build(child, mix) {
     final spec = resolve(mix);
 
-    return Flexible(
-      key: mergeKey,
-      flex: spec.flex,
-      fit: spec.flexFit,
-      child: child,
-    );
+    return Flexible(flex: spec.flex, fit: spec.flexFit, child: child);
   }
 }
 

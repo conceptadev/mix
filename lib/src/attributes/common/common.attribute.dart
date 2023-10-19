@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 
-import '../../factory/mix_provider_data.dart';
-import '../animation/animation.attribute.dart';
+import '../../../mix.dart';
 import '../style_attribute.dart';
-import '../text/text_direction/text_direction.attribute.dart';
-import '../visible/visible.attribute.dart';
 
 @immutable
 class CommonAttributes extends StyleAttribute<CommonSpec> {
-  final AnimationAttribute? _animation;
+  final DurationAttribute? _animationDuration;
+  final CurveAttribute? _animationCurve;
   final TextDirectionAttribute? _textDirection;
   final VisibleAttribute? _visible;
   const CommonAttributes({
     VisibleAttribute? visible,
-    AnimationAttribute? animation,
+    DurationAttribute? animationDuration,
+    CurveAttribute? animationCurve,
     TextDirectionAttribute? textDirection,
   })  : _visible = visible,
-        _animation = animation,
+        _animationDuration = animationDuration,
+        _animationCurve = animationCurve,
         _textDirection = textDirection;
 
   @override
@@ -25,7 +25,9 @@ class CommonAttributes extends StyleAttribute<CommonSpec> {
 
     return CommonAttributes(
       visible: mergeProp(_visible, other._visible),
-      animation: mergeProp(_animation, other._animation),
+      animationDuration:
+          mergeProp(_animationDuration, other._animationDuration),
+      animationCurve: mergeProp(_animationCurve, other._animationCurve),
       textDirection: mergeProp(_textDirection, other._textDirection),
     );
   }
@@ -34,7 +36,8 @@ class CommonAttributes extends StyleAttribute<CommonSpec> {
   CommonSpec resolve(MixData mix) {
     return CommonSpec(
       visible: resolveAttribute(_visible, mix),
-      animation: resolveAttribute(_animation, mix),
+      animationCurve: resolveAttribute(_animationCurve, mix),
+      animationDuration: resolveAttribute(_animationDuration, mix),
       textDirection: resolveAttribute(_textDirection, mix),
     );
   }
@@ -43,23 +46,52 @@ class CommonAttributes extends StyleAttribute<CommonSpec> {
   get props => [_visible];
 }
 
-class CommonSpec extends Spec {
+class CommonSpec extends Spec<CommonSpec> {
   final bool visible;
   final TextDirection textDirection;
-  final AnimationSpec animation;
+  final Duration animationDuration;
+  final Curve animationCurve;
 
   static const defaults = CommonSpec(
     visible: true,
-    animation: AnimationSpec.defaults,
+    animationCurve: Curves.linear,
+    animationDuration: Duration(milliseconds: 200),
     textDirection: TextDirection.ltr,
   );
 
   const CommonSpec({
     required this.visible,
-    required this.animation,
+    required this.animationCurve,
+    required this.animationDuration,
     required this.textDirection,
   });
 
   @override
-  get props => [visible, animation];
+  CommonSpec copyWith({
+    bool? visible,
+    Duration? animationDuration,
+    Curve? animationCurve,
+    TextDirection? textDirection,
+  }) {
+    return CommonSpec(
+      visible: visible ?? this.visible,
+      animationCurve: animationCurve ?? this.animationCurve,
+      animationDuration: animationDuration ?? this.animationDuration,
+      textDirection: textDirection ?? this.textDirection,
+    );
+  }
+
+  @override
+  CommonSpec lerp(CommonSpec other, double t) {
+    return CommonSpec(
+      visible: t < 0.5 ? visible : other.visible,
+      animationCurve: t < 0.5 ? animationCurve : other.animationCurve,
+      animationDuration:
+          lerpDuration(animationDuration, other.animationDuration, t),
+      textDirection: t < 0.5 ? textDirection : other.textDirection,
+    );
+  }
+
+  @override
+  get props => [visible, animationDuration, animationCurve, textDirection];
 }

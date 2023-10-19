@@ -13,7 +13,7 @@ RotateDecorator rotate270() => rotate(3);
 
 class RotateDecorator extends Decorator<int> {
   final int quarterTurns;
-  const RotateDecorator({super.key, required this.quarterTurns});
+  const RotateDecorator({required this.quarterTurns});
 
   @override
   RotateDecorator merge(RotateDecorator other) {
@@ -31,7 +31,6 @@ class RotateDecorator extends Decorator<int> {
       final animation = mix.commonSpec.animation;
 
       return AnimatedRotation(
-        key: mergeKey,
         turns: quarterTurns / 4,
         curve: animation.curve,
         duration: animation.duration,
@@ -39,7 +38,7 @@ class RotateDecorator extends Decorator<int> {
       );
     }
 
-    return RotatedBox(key: mergeKey, quarterTurns: quarterTurns, child: child);
+    return RotatedBox(quarterTurns: quarterTurns, child: child);
   }
 }
 

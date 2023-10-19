@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 import '../../attributes/alignment/alignment_geometry.attribute.dart';
@@ -87,11 +89,10 @@ class ContainerAttributes extends SpecAttribute<ContainerSpec> {
       ];
 }
 
-class ContainerSpec extends Spec {
+class ContainerSpec extends Spec<ContainerSpec> {
   final AlignmentGeometry? alignment;
   final EdgeInsetsGeometry? padding;
   final EdgeInsetsGeometry? margin;
-
   final BoxConstraints? constraints;
   final Decoration? decoration;
   final double? width;
@@ -100,18 +101,6 @@ class ContainerSpec extends Spec {
   final Color? color;
   final Clip? clipBehavior;
 
-  static const defaults = ContainerSpec(
-    alignment: null,
-    padding: null,
-    margin: null,
-    constraints: null,
-    decoration: null,
-    width: null,
-    height: null,
-    transform: null,
-    color: null,
-    clipBehavior: null,
-  );
   const ContainerSpec({
     required this.alignment,
     required this.padding,
@@ -124,6 +113,49 @@ class ContainerSpec extends Spec {
     required this.color,
     required this.clipBehavior,
   });
+
+  @override
+  ContainerSpec copyWith({
+    AlignmentGeometry? alignment,
+    EdgeInsetsGeometry? padding,
+    EdgeInsetsGeometry? margin,
+    BoxConstraints? constraints,
+    Decoration? decoration,
+    double? width,
+    double? height,
+    Matrix4? transform,
+    Color? color,
+    Clip? clipBehavior,
+  }) {
+    return ContainerSpec(
+      alignment: alignment ?? this.alignment,
+      padding: padding ?? this.padding,
+      margin: margin ?? this.margin,
+      constraints: constraints ?? this.constraints,
+      decoration: decoration ?? this.decoration,
+      width: width ?? this.width,
+      height: height ?? this.height,
+      transform: transform ?? this.transform,
+      color: color ?? this.color,
+      clipBehavior: clipBehavior ?? this.clipBehavior,
+    );
+  }
+
+  @override
+  ContainerSpec lerp(ContainerSpec other, double t) {
+    return ContainerSpec(
+      alignment: AlignmentGeometry.lerp(alignment, other.alignment, t),
+      padding: EdgeInsetsGeometry.lerp(padding, other.padding, t),
+      margin: EdgeInsetsGeometry.lerp(margin, other.margin, t),
+      constraints: BoxConstraints.lerp(constraints, other.constraints, t),
+      decoration: Decoration.lerp(decoration, other.decoration, t),
+      width: lerpDouble(width, other.width, t),
+      height: lerpDouble(height, other.height, t),
+      transform: Matrix4Tween(begin: transform, end: other.transform).lerp(t),
+      color: Color.lerp(color, other.color, t),
+      clipBehavior: t < 0.5 ? clipBehavior : other.clipBehavior,
+    );
+  }
 
   @override
   get props => [

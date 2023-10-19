@@ -4,7 +4,7 @@ import '../../factory/mix_provider_data.dart';
 import '../style_attribute.dart';
 
 abstract class Decorator<T> extends StyleAttribute<T> {
-  const Decorator({super.key});
+  const Decorator();
 
   @override
   Decorator merge(covariant Decorator? other);

@@ -10,7 +10,7 @@ OpacityDecorator opacity(double opacity) {
 
 class OpacityDecorator extends Decorator<double> {
   final DoubleDto value;
-  const OpacityDecorator(this.value, {super.key});
+  const OpacityDecorator(this.value);
 
   @override
   OpacityDecorator merge(OpacityDecorator? other) {
@@ -32,12 +32,11 @@ class OpacityDecorator extends Decorator<double> {
 
     return mix.animated
         ? AnimatedOpacity(
-            key: mergeKey,
             opacity: opacity,
             curve: animation.curve,
             duration: animation.duration,
             child: child,
           )
-        : Opacity(key: mergeKey, opacity: opacity, child: child);
+        : Opacity(opacity: opacity, child: child);
   }
 }

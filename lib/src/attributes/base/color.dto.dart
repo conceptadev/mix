@@ -10,9 +10,7 @@ class ColorDto extends ModifiableDto<Color> {
   const ColorDto(super.value, {super.modifier});
 
   static ColorDto? maybeFrom(Color? color) {
-    if (color == null) return null;
-
-    return ColorDto(color);
+    return color == null ? null : ColorDto(color);
   }
 
   @override

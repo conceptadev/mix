@@ -1,57 +1,55 @@
-import 'package:flutter/material.dart';
+// ignore_for_file: long-parameter-list
 
-import '../../dtos/color.dto.dart';
-import 'image.attributes.dart';
+import '../../attributes/base/color.dto.dart';
+import '../../attributes/enum/box_fit.attribute.dart';
+import '../../attributes/size/height.attribute.dart';
+import '../../attributes/size/width.attribute.dart';
+import '../../image/image_provider.attribute.dart';
+import '../../image/image_repeat.attribute.dart';
+import '../image/image.attribute.dart';
 
-class ImageUtility {
-  const ImageUtility._();
+ImageAttributes image({
+  ImageProviderAttribute? imageProvider,
+  WidthAttribute? width,
+  HeightAttribute? height,
+  ColorDto? color,
+  ImageRepeatAttribute? repeat,
+  BoxFitAttribute? fit,
+}) {
+  return ImageAttributes(
+    image: imageProvider,
+    width: width,
+    height: height,
+    color: color,
+    repeat: repeat,
+    fit: fit,
+  );
+}
 
-  // ignore: long-parameter-list
-  static StyledImageAttributes image({
-    Color? color,
-    double? scale,
-    BoxFit? fit,
-    AlignmentGeometry? alignment,
-    ImageRepeat? repeat,
-  }) {
-    return StyledImageAttributes(
-      color: ColorDto.maybeFrom(color),
-      scale: scale,
-      fit: fit,
-      alignment: alignment,
-      repeat: repeat,
-    );
-  }
+ImageAttributes imageProvider(ImageProviderAttribute imageProvider) {
+  return ImageAttributes(image: imageProvider);
+}
 
-  static StyledImageAttributes color(Color color) {
-    return StyledImageAttributes(color: ColorDto.from(color));
-  }
+@Deprecated('Use image(width: width)')
+ImageAttributes imageWidth(WidthAttribute width) {
+  return ImageAttributes(width: width);
+}
 
-  static StyledImageAttributes scale(double scale) {
-    return StyledImageAttributes(scale: scale);
-  }
+ImageAttributes imageHeight(HeightAttribute height) {
+  return ImageAttributes(height: height);
+}
 
-  static StyledImageAttributes width(double width) {
-    return StyledImageAttributes(width: width);
-  }
+@Deprecated('Use image(color: color)')
+ImageAttributes imageColor(ColorDto color) {
+  return ImageAttributes(color: color);
+}
 
-  static StyledImageAttributes height(double height) {
-    return StyledImageAttributes(height: height);
-  }
+@Deprecated('Use image(repeat: repeat)')
+ImageAttributes imageRepeat(ImageRepeatAttribute repeat) {
+  return ImageAttributes(repeat: repeat);
+}
 
-  static StyledImageAttributes colorBlendMode(BlendMode colorBlendMode) {
-    return StyledImageAttributes(colorBlendMode: colorBlendMode);
-  }
-
-  static StyledImageAttributes fit(BoxFit fit) {
-    return StyledImageAttributes(fit: fit);
-  }
-
-  static StyledImageAttributes alignment(AlignmentGeometry alignment) {
-    return StyledImageAttributes(alignment: alignment);
-  }
-
-  static StyledImageAttributes repeat(ImageRepeat repeat) {
-    return StyledImageAttributes(repeat: repeat);
-  }
+@Deprecated('Use image(fit: fit)')
+ImageAttributes imageFit(BoxFitAttribute fit) {
+  return ImageAttributes(fit: fit);
 }

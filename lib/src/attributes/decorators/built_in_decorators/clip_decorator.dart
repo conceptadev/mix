@@ -32,7 +32,7 @@ class ClipDecorator extends Decorator<ClipDecoratorSpec> {
   final BorderRadiusAttribute? borderRadius;
   final ClipDecoratorType clipType;
 
-  const ClipDecorator(this.clipType, {this.borderRadius, super.key});
+  const ClipDecorator(this.clipType, {this.borderRadius});
 
   @override
   @override
@@ -60,14 +60,10 @@ class ClipDecorator extends Decorator<ClipDecoratorSpec> {
 
     switch (spec.clipType) {
       case ClipDecoratorType.triangle:
-        return ClipPath(
-          key: mergeKey,
-          clipper: const TriangleClipper(),
-          child: child,
-        );
+        return ClipPath(clipper: const TriangleClipper(), child: child);
 
       case ClipDecoratorType.rect:
-        return ClipRect(key: mergeKey, child: child);
+        return ClipRect(child: child);
 
       case ClipDecoratorType.rounded:
         final animation = mix.commonSpec.animation;
@@ -77,17 +73,12 @@ class ClipDecorator extends Decorator<ClipDecoratorSpec> {
                 duration: animation.duration,
                 curve: animation.curve,
                 borderRadius: spec.borderRadius.resolve(mix.directionality),
-                key: mergeKey,
                 child: child,
               )
-            : ClipRRect(
-                key: mergeKey,
-                borderRadius: spec.borderRadius,
-                child: child,
-              );
+            : ClipRRect(borderRadius: spec.borderRadius, child: child);
 
       case ClipDecoratorType.oval:
-        return ClipOval(key: mergeKey, child: child);
+        return ClipOval(child: child);
 
       default:
         throw Exception('Unknown clip type: $clipType');
@@ -95,13 +86,37 @@ class ClipDecorator extends Decorator<ClipDecoratorSpec> {
   }
 }
 
-class ClipDecoratorSpec extends Spec {
+class ClipDecoratorSpec extends Spec<ClipDecoratorSpec> {
   final BorderRadiusGeometry borderRadius;
   final ClipDecoratorType clipType;
   const ClipDecoratorSpec({
     required this.borderRadius,
     required this.clipType,
   });
+
+  @override
+  ClipDecoratorSpec lerp(ClipDecoratorSpec other, double t) {
+    // Define a helper method for snapping
+    T snap<T>(T from, T to) => t < 0.5 ? from : to;
+
+    return ClipDecoratorSpec(
+      borderRadius:
+          BorderRadiusGeometry.lerp(borderRadius, other.borderRadius, t) ??
+              BorderRadius.zero,
+      clipType: snap(clipType, other.clipType),
+    );
+  }
+
+  @override
+  ClipDecoratorSpec copyWith({
+    BorderRadiusGeometry? borderRadius,
+    ClipDecoratorType? clipType,
+  }) {
+    return ClipDecoratorSpec(
+      borderRadius: borderRadius ?? this.borderRadius,
+      clipType: clipType ?? this.clipType,
+    );
+  }
 
   @override
   get props => [borderRadius, clipType];

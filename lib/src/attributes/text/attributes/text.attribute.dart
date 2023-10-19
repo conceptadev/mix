@@ -130,21 +130,19 @@ class TextAttributes extends StyleAttribute<TextSpec> {
       ];
 }
 
-class TextSpec extends Spec {
+class TextSpec extends Spec<TextSpec> {
   final bool softWrap;
   final TextOverflow overflow;
-
   final StrutStyle? strutStyle;
   final TextAlign? textAlign;
   final Locale? locale;
   final double? textScaleFactor;
   final int? maxLines;
-
   final TextWidthBasis? textWidthBasis;
   final TextHeightBehavior? textHeightBehavior;
   final TextStyle? style;
-
   final List<TextDirective> _directives;
+
   const TextSpec({
     required this.softWrap,
     required this.overflow,
@@ -171,26 +169,58 @@ class TextSpec extends Spec {
   }
 
   @override
-  TextSpec merge(TextSpec? other) {
-    if (other == null) return this;
+  TextSpec lerp(TextSpec other, double t) {
+    // Define a helper method for snapping
+    T snap<T>(T from, T to) => t < 0.5 ? from : to;
 
     return TextSpec(
-      softWrap: other.softWrap,
-      overflow: other.overflow,
-      strutStyle: other.strutStyle ?? strutStyle,
-      textAlign: other.textAlign ?? textAlign,
-      locale: other.locale ?? locale,
-      textScaleFactor: other.textScaleFactor ?? textScaleFactor,
-      maxLines: other.maxLines ?? maxLines,
-      style: style?.merge(other.style) ?? other.style,
-      textWidthBasis: other.textWidthBasis ?? textWidthBasis,
-      textHeightBehavior: other.textHeightBehavior ?? textHeightBehavior,
-      directives: [..._directives, ...other._directives],
+      softWrap: snap(softWrap, other.softWrap),
+      overflow: snap(overflow, other.overflow),
+      strutStyle: snap(strutStyle, other.strutStyle),
+      textAlign: snap(textAlign, other.textAlign),
+      locale: snap(locale, other.locale),
+      textScaleFactor: t < 0.5
+          ? textScaleFactor
+          : (textScaleFactor! * t + other.textScaleFactor! * (1 - t)),
+      maxLines: snap(maxLines, other.maxLines),
+      style: TextStyle.lerp(style, other.style, t),
+      textWidthBasis: snap(textWidthBasis, other.textWidthBasis),
+      textHeightBehavior: snap(textHeightBehavior, other.textHeightBehavior),
+      directives: snap(_directives, other._directives),
     );
   }
 
   @override
-  get props => [
+  TextSpec copyWith({
+    bool? softWrap,
+    TextOverflow? overflow,
+    StrutStyle? strutStyle,
+    TextAlign? textAlign,
+    Locale? locale,
+    double? textScaleFactor,
+    int? maxLines,
+    TextStyle? style,
+    TextWidthBasis? textWidthBasis,
+    TextHeightBehavior? textHeightBehavior,
+    List<TextDirective>? directives,
+  }) {
+    return TextSpec(
+      softWrap: softWrap ?? this.softWrap,
+      overflow: overflow ?? this.overflow,
+      strutStyle: strutStyle ?? this.strutStyle,
+      textAlign: textAlign ?? this.textAlign,
+      locale: locale ?? this.locale,
+      textScaleFactor: textScaleFactor ?? this.textScaleFactor,
+      maxLines: maxLines ?? this.maxLines,
+      style: style ?? this.style,
+      textWidthBasis: textWidthBasis ?? this.textWidthBasis,
+      textHeightBehavior: textHeightBehavior ?? this.textHeightBehavior,
+      directives: directives ?? _directives,
+    );
+  }
+
+  @override
+  List<Object?> get props => [
         softWrap,
         overflow,
         strutStyle,
@@ -200,7 +230,7 @@ class TextSpec extends Spec {
         maxLines,
         textWidthBasis,
         textHeightBehavior,
-        _directives,
         style,
+        _directives,
       ];
 }

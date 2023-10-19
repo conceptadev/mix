@@ -20,7 +20,6 @@ export 'src/attributes/border_radius/radius.dto.dart';
 export 'src/attributes/box_constraints/box_constraints.attribute.dart';
 export 'src/attributes/box_constraints/box_constraints.util.dart';
 export 'src/attributes/color/background_color.attribute.dart';
-export 'src/attributes/decoration/box_decoration.attribute.dart';
 export 'src/attributes/decoration/decoration.attribute.dart';
 export 'src/attributes/decoration/shape_decoration.attribute.dart';
 export 'src/attributes/enum/clip.attribute.dart';

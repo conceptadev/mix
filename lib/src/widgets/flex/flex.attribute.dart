@@ -74,7 +74,7 @@ class FlexAttributes extends SpecAttribute<FlexSpec> {
       ];
 }
 
-class FlexSpec extends Spec {
+class FlexSpec extends Spec<FlexSpec> {
   final Axis? direction;
   final MainAxisAlignment? mainAxisAlignment;
   final CrossAxisAlignment? crossAxisAlignment;
@@ -96,7 +96,45 @@ class FlexSpec extends Spec {
   });
 
   @override
-  get props => [
+  FlexSpec lerp(FlexSpec other, double t) {
+    return FlexSpec(
+      crossAxisAlignment:
+          t < 0.5 ? crossAxisAlignment : other.crossAxisAlignment,
+      mainAxisAlignment: t < 0.5 ? mainAxisAlignment : other.mainAxisAlignment,
+      mainAxisSize: t < 0.5 ? mainAxisSize : other.mainAxisSize,
+      verticalDirection: t < 0.5 ? verticalDirection : other.verticalDirection,
+      direction: direction,
+      textDirection: t < 0.5 ? textDirection : other.textDirection,
+      textBaseline: t < 0.5 ? textBaseline : other.textBaseline,
+      clipBehavior: t < 0.5 ? clipBehavior : other.clipBehavior,
+    );
+  }
+
+  @override
+  FlexSpec copyWith({
+    Axis? direction,
+    MainAxisAlignment? mainAxisAlignment,
+    CrossAxisAlignment? crossAxisAlignment,
+    MainAxisSize? mainAxisSize,
+    VerticalDirection? verticalDirection,
+    TextDirection? textDirection,
+    TextBaseline? textBaseline,
+    Clip? clipBehavior,
+  }) {
+    return FlexSpec(
+      crossAxisAlignment: crossAxisAlignment ?? this.crossAxisAlignment,
+      mainAxisAlignment: mainAxisAlignment ?? this.mainAxisAlignment,
+      mainAxisSize: mainAxisSize ?? this.mainAxisSize,
+      verticalDirection: verticalDirection ?? this.verticalDirection,
+      direction: direction ?? this.direction,
+      textDirection: textDirection ?? this.textDirection,
+      textBaseline: textBaseline ?? this.textBaseline,
+      clipBehavior: clipBehavior ?? this.clipBehavior,
+    );
+  }
+
+  @override
+  List<Object?> get props => [
         crossAxisAlignment,
         mainAxisAlignment,
         mainAxisSize,

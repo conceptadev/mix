@@ -17,6 +17,10 @@ abstract class DoubleAttribute extends StyleAttribute<double> {
 class DoubleDto extends ModifiableDto<double> {
   const DoubleDto(super.value, {super.modifier});
 
+  static DoubleDto? maybeFrom(double? value) {
+    return value == null ? null : DoubleDto(value);
+  }
+
   @override
   DoubleDto merge(DoubleDto? other) {
     return DoubleDto(

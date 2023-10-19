@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 
 import '../../attributes/base/color.dto.dart';
+import '../../attributes/base/double.dto.dart';
+import '../../attributes/icon/icon_data.attribute.dart';
 import '../../attributes/style_attribute.dart';
 import '../../factory/mix_provider_data.dart';
 
 class IconAttributes extends StyleAttribute<IconSpec> {
   final ColorDto? color;
-  final double? size;
-  final IconData? icon;
+  final DoubleDto? size;
+  final IconDataAttribute? icon;
 
   const IconAttributes({this.color, this.size, this.icon});
 
@@ -24,24 +26,11 @@ class IconAttributes extends StyleAttribute<IconSpec> {
 
   @override
   IconSpec resolve(MixData mix) {
-    //    final iconAttributes = mix.attributeOf<StyledIconAttributes>();
-
-    // StyledIconDescriptor props;
-
-    // if (iconAttributes == null) {
-    //   props = const StyledIconDescriptor(size: 24);
-    // } else {
-    //   final theme = IconTheme.of(mix.resolveToken.context);
-
-    //   props = StyledIconDescriptor(
-    //     color: iconAttributes.color?.resolve(mix) ?? theme.color,
-    //     size: iconAttributes.size ?? theme.size ?? 24,
-    //   );
-    // }
-
-    // return props;
-
-    return IconSpec(color: color?.resolve(mix), size: size, icon: icon);
+    return IconSpec(
+      color: resolveDto(color, mix),
+      size: resolveDto(size, mix),
+      icon: resolveAttribute(icon, mix),
+    );
   }
 
   @override

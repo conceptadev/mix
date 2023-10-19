@@ -12,7 +12,7 @@ ScaleDecorator _scale(double scale) {
 
 class ScaleDecorator extends Decorator<double> {
   final DoubleDto _scale;
-  const ScaleDecorator(this._scale, {super.key});
+  const ScaleDecorator(this._scale);
 
   @override
   ScaleDecorator merge(ScaleDecorator? other) {
@@ -36,14 +36,10 @@ class ScaleDecorator extends Decorator<double> {
             duration: animation.duration,
             curve: animation.curve,
             builder: (context, value, childWidget) {
-              return Transform.scale(
-                key: mergeKey,
-                scale: value,
-                child: childWidget,
-              );
+              return Transform.scale(scale: value, child: childWidget);
             },
             child: child,
           )
-        : Transform.scale(key: mergeKey, scale: scale, child: child);
+        : Transform.scale(scale: scale, child: child);
   }
 }

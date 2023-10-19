@@ -1,5 +1,3 @@
-import 'package:flutter/widgets.dart';
-
 import '../factory/exports.dart';
 import '../helpers/compare_mixin/compare_mixin.dart';
 
@@ -12,9 +10,11 @@ abstract class Dto<T> with Comparable, Mergeable, Resolvable<T> {
 // Facade allows us ot set all properties as optional.
 // For improved merge and override of properties.
 abstract class Attribute<T> with Comparable, Mergeable {
-  final Key? _key;
-  const Attribute({Key? key}) : _key = key;
-  Key get mergeKey => _key == null ? ValueKey(runtimeType) : ValueKey(_key);
+  const Attribute();
+
+  /// The extension's type.
+  // ignore: no-object-declaration
+  Object get type => T;
 }
 
 mixin Resolvable<T> {
@@ -24,7 +24,7 @@ mixin Resolvable<T> {
 mixin Mergeable<T> {
   T merge(covariant T? other);
 
-  M mergeProp<M extends Mergeable>(M? currentValue, M? newValue) {
-    return currentValue?.merge(newValue) ?? newValue;
+  M mergeProp<M extends Mergeable>(M? current, M? other) {
+    return current?.merge(other) ?? other;
   }
 }

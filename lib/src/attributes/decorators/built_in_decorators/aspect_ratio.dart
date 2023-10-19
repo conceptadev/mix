@@ -37,14 +37,10 @@ class AspectRatioDecorator extends Decorator<double> {
             duration: animation.duration,
             curve: animation.curve,
             builder: (context, value, builderWidget) {
-              return AspectRatio(
-                key: mergeKey,
-                aspectRatio: value,
-                child: builderWidget,
-              );
+              return AspectRatio(aspectRatio: value, child: builderWidget);
             },
             child: child,
           )
-        : AspectRatio(key: mergeKey, aspectRatio: aspectRatio, child: child);
+        : AspectRatio(aspectRatio: aspectRatio, child: child);
   }
 }
