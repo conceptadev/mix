@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
 
+import '../../helpers/testing_utils.dart';
+
 void main() {
   group('AlignmentGeometryAttribute', () {
     test('maybeFrom returns null for null alignment', () {
@@ -54,45 +56,27 @@ void main() {
       expect(merged, attr1);
     });
 
-    testWidgets('resolve returns correct Alignment',
-        (WidgetTester tester) async {
-      await tester.pumpWidget(
-        Builder(
-          builder: (BuildContext context) {
-            const attr = AlignmentAttribute(x: 0.5, y: 0.5);
-            final alignment = attr.resolve(
-              MixData.create(
-                context: context,
-                style: StyleMix(),
-              ),
-            ); // As/ Assuming MixData takes a BuildContext
+    test(
+      'resolve returns correct Alignment',
+      () {
+        const attr = AlignmentAttribute(x: 0.5, y: 0.5);
+        final alignment = attr.resolve(EmptyMixData);
 
-            expect(alignment, const Alignment(0.5, 0.5));
-            return const Placeholder();
-          },
-        ),
-      );
-    });
+        expect(alignment, const Alignment(0.5, 0.5));
+        return const Placeholder();
+      },
+    );
 
-    testWidgets('resolve uses default values if null',
-        (WidgetTester tester) async {
-      await tester.pumpWidget(
-        Builder(
-          builder: (BuildContext context) {
-            const attr = AlignmentAttribute();
-            final alignment = attr.resolve(
-              MixData.create(
-                context: context,
-                style: StyleMix(),
-              ),
-            ); // Assuming MixData takes a BuildContext
+    test(
+      'resolve uses default values if null',
+      () {
+        const attr = AlignmentAttribute();
+        final alignment = attr.resolve(EmptyMixData);
 
-            expect(alignment, const Alignment(0.0, 0.0));
-            return const Placeholder();
-          },
-        ),
-      );
-    });
+        expect(alignment, const Alignment(0.0, 0.0));
+        return const Placeholder();
+      },
+    );
 
     test('Equality holds when properties are the same', () {
       const attr1 = AlignmentAttribute(x: 0.1, y: 0.2);
@@ -127,45 +111,27 @@ void main() {
       expect(merged, attr1);
     });
 
-    testWidgets('resolve returns correct AlignmentDirectional',
-        (WidgetTester tester) async {
-      await tester.pumpWidget(
-        Builder(
-          builder: (BuildContext context) {
-            const attr = AlignmentDirectionalAttribute(start: 0.5, y: 0.5);
-            final alignment = attr.resolve(
-              MixData.create(
-                context: context,
-                style: StyleMix(),
-              ),
-            ); // Assuming MixData takes a BuildContext
+    test(
+      'resolve returns correct AlignmentDirectional',
+      () {
+        const attr = AlignmentDirectionalAttribute(start: 0.5, y: 0.5);
+        final alignment = attr.resolve(EmptyMixData);
 
-            expect(alignment, const AlignmentDirectional(0.5, 0.5));
-            return const Placeholder();
-          },
-        ),
-      );
-    });
+        expect(alignment, const AlignmentDirectional(0.5, 0.5));
+        return const Placeholder();
+      },
+    );
 
-    testWidgets('resolve uses default values if null',
-        (WidgetTester tester) async {
-      await tester.pumpWidget(
-        Builder(
-          builder: (BuildContext context) {
-            const attr = AlignmentDirectionalAttribute();
-            final alignment = attr.resolve(
-              MixData.create(
-                context: context,
-                style: StyleMix(),
-              ),
-            ); // Assuming MixData takes a BuildContext
+    test(
+      'resolve uses default values if null',
+      () {
+        const attr = AlignmentDirectionalAttribute();
+        final alignment = attr.resolve(EmptyMixData);
 
-            expect(alignment, const AlignmentDirectional(0.0, 0.0));
-            return const Placeholder();
-          },
-        ),
-      );
-    });
+        expect(alignment, const AlignmentDirectional(0.0, 0.0));
+        return const Placeholder();
+      },
+    );
 
     test('Equality holds when properties are the same', () {
       const attr1 = AlignmentDirectionalAttribute(start: 0.1, y: 0.2);

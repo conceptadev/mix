@@ -97,6 +97,24 @@ class BoxBorderAttribute extends StyleAttribute<BoxBorder> {
     );
   }
 
+  @visibleForTesting
+  BorderSideDto? get top => _top;
+
+  @visibleForTesting
+  BorderSideDto? get right => _right;
+
+  @visibleForTesting
+  BorderSideDto? get bottom => _bottom;
+
+  @visibleForTesting
+  BorderSideDto? get left => _left;
+
+  @visibleForTesting
+  BorderSideDto? get start => _start;
+
+  @visibleForTesting
+  BorderSideDto? get end => _end;
+
   bool get _isDirectional => _start != null || _end != null;
 
   @override

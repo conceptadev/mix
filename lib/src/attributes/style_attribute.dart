@@ -65,9 +65,9 @@ abstract class StyleAttribute<T> extends Attribute with Resolvable<T> {
 typedef ValueModifier<T> = T Function(T value);
 
 abstract class ModifiableDto<T> extends Dto<T> {
-  @protected
+  @visibleForTesting
   final T value;
-  @protected
+  @visibleForTesting
   final ValueModifier<T>? modifier;
 
   const ModifiableDto(this.value, {this.modifier});

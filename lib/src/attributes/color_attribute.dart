@@ -23,3 +23,16 @@ class ColorAttribute extends StyleAttribute<Color> {
   @override
   get props => [color];
 }
+
+class BackgroundColorAttribute extends ColorAttribute {
+  const BackgroundColorAttribute(super.color);
+
+  factory BackgroundColorAttribute.from(Color color) {
+    return BackgroundColorAttribute(ColorDto(color));
+  }
+
+  @override
+  BackgroundColorAttribute merge(BackgroundColorAttribute? other) {
+    return BackgroundColorAttribute(color.merge(other?.color));
+  }
+}

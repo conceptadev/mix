@@ -1,3 +1,3 @@
-import '../attributes/width_attribute.dart';
+import '../attributes/size_attribute.dart';
 
 const width = WidthAttribute.from;

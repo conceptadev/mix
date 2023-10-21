@@ -12,6 +12,9 @@ class TextDirectionAttribute extends StyleAttribute<TextDirection> {
     return direction == null ? null : TextDirectionAttribute(direction);
   }
 
+  @visibleForTesting
+  TextDirection get value => direction;
+
   @override
   TextDirectionAttribute merge(TextDirectionAttribute? other) =>
       TextDirectionAttribute(other?.direction ?? direction);

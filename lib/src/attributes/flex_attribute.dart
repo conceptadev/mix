@@ -98,15 +98,14 @@ class FlexSpec extends Spec<FlexSpec> {
   @override
   FlexSpec lerp(FlexSpec other, double t) {
     return FlexSpec(
-      crossAxisAlignment:
-          t < 0.5 ? crossAxisAlignment : other.crossAxisAlignment,
-      mainAxisAlignment: t < 0.5 ? mainAxisAlignment : other.mainAxisAlignment,
-      mainAxisSize: t < 0.5 ? mainAxisSize : other.mainAxisSize,
-      verticalDirection: t < 0.5 ? verticalDirection : other.verticalDirection,
-      direction: direction,
-      textDirection: t < 0.5 ? textDirection : other.textDirection,
-      textBaseline: t < 0.5 ? textBaseline : other.textBaseline,
-      clipBehavior: t < 0.5 ? clipBehavior : other.clipBehavior,
+      crossAxisAlignment: snap(crossAxisAlignment, other.crossAxisAlignment, t),
+      mainAxisAlignment: snap(mainAxisAlignment, other.mainAxisAlignment, t),
+      mainAxisSize: snap(mainAxisSize, other.mainAxisSize, t),
+      verticalDirection: snap(verticalDirection, other.verticalDirection, t),
+      direction: snap(direction, other.direction, t),
+      textDirection: snap(textDirection, other.textDirection, t),
+      textBaseline: snap(textBaseline, other.textBaseline, t),
+      clipBehavior: snap(clipBehavior, other.clipBehavior, t),
     );
   }
 

@@ -7,10 +7,14 @@ class RadiusDto extends Dto<Radius> {
   static const zero = RadiusDto.circular(0.0);
 
   /// The radius value on the horizontal axis.
-  final double _x;
+  final double? _x;
 
   /// The radius value on the vertical axis.
-  final double _y;
+  final double? _y;
+
+  const RadiusDto._({double? x, double? y})
+      : _x = x,
+        _y = y;
 
   const RadiusDto.circular(double radius)
       : _x = radius,
@@ -33,22 +37,27 @@ class RadiusDto extends Dto<Radius> {
     return RadiusDto.from(radius);
   }
 
+  @visibleForTesting
+  double? get x => _x;
+
+  @visibleForTesting
+  double? get y => _y;
+
   @override
   RadiusDto merge(covariant RadiusDto? other) {
     if (other == null) return this;
 
-    return RadiusDto.elliptical(other._x, other._y);
+    return RadiusDto._(x: other._x ?? _x, y: other._y ?? _y);
   }
 
   @override
   Radius resolve(MixData mix) {
-    final resolvedX = _x;
+    const defaultRadius = Radius.zero;
+    final resolvedX = _x ?? defaultRadius.x;
 
-    final resolvedY = _y;
+    final resolvedY = _y ?? defaultRadius.y;
 
-    return resolvedX == 0 && resolvedY == 0
-        ? Radius.zero
-        : Radius.elliptical(resolvedX, resolvedY);
+    return Radius.elliptical(resolvedX, resolvedY);
   }
 
   @override

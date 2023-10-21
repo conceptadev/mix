@@ -173,7 +173,7 @@ class RandomGenerator {
   }
 
   static BorderSideDto borderSideDto() {
-    return BorderSideDto.only(
+    return BorderSideDto(
       color: colorDto(),
       width: Random().nextDouble() * 4,
       style: BorderStyle.values.random(),

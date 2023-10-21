@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../attributes/alignment_geometry_attribute.dart';
-import '../attributes/background_color_attribute.dart';
+import '../attributes/color_attribute.dart';
 import '../attributes/container_attribute.dart';
 
 ContainerAttributes backgroundColor(Color color) {

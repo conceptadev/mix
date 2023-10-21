@@ -5,153 +5,130 @@ Beginning of file: lib/mix.dart
 Beginning of file: lib/exports.dart
 
 
-Beginning of file: lib/src/directives/directive.attribute.dart
+Beginning of file: lib/src/core/directives/directives/glitch.dart
+
+class GlitchText extends StatefulWidget
+- String text
+- TextStyle style
+- _GlitchTextState createState()
+class _GlitchTextState extends State
+- Unknown _random
+- Timer _positionTimer
+- Timer _shadowTimer
+- double _offsetX
+- double _offsetY
+- double _shadowOffsetX
+- double _shadowOffsetY
+- double _scale
+- void initState()
+- void _randomizePosition(Timer timer)
+- void _randomizeShadow(Timer timer)
+- void dispose()
+- Widget build(BuildContext context)
+
+Beginning of file: lib/src/core/directives/directives/counter.dart
+
+class MyApp extends StatelessWidget
+- Widget build(BuildContext context)
+class NumberTickerExample extends StatefulWidget
+- _NumberTickerExampleState createState()
+class _NumberTickerExampleState extends State
+- Unknown _textController
+- double _value
+- void _updateValue()
+- Widget build(BuildContext context)
+class AnimatedNumberTicker extends StatefulWidget
+- double value
+- _AnimatedNumberTickerState createState()
+class _AnimatedNumberTickerState extends State with SingleTickerProviderStateMixin
+- AnimationController _controller
+- Animation<double> _animation
+- void initState()
+- void didUpdateWidget(AnimatedNumberTicker oldWidget)
+- void dispose()
+- Widget build(BuildContext context)
+
+Beginning of file: lib/src/core/directives/directives/controllers.dart
+
+class Character
+- String from
+- String to
+- int start
+- int end
+- String char
+class TextDecodingController
+-  Function(String value) _fn
+- String _data
+- int _frame
+- Unknown _chars
+- Unknown _queue
+- Unknown _random
+- Ticker? _ticker
+- void setData(String newText)
+- void dispose()
+- void _startTicker()
+- void _update(Duration elapsedTime)
+- String _randomChar()
+
+Beginning of file: lib/src/core/directives/color_dto_directives.dart
+
+
+Beginning of file: lib/src/core/directives/text_directive.dart
+
+class UppercaseDirective extends TextDirective
+- String modify(String value)
+class CapitalizeDirective extends TextDirective
+- String modify(String value)
+class LowercaseDirective extends TextDirective
+- String modify(String value)
+class SentenceCaseDirective extends TextDirective
+- String modify(String value)
+class TitleCaseDirective extends TextDirective
+- String modify(String value)
+class TextDirective extends Directive
+- String modify(String value)
+
+Beginning of file: lib/src/core/directives/directive_attribute.dart
 
 class Directive with Comparable
 - T modify(T value)
 - get null props
 
-Beginning of file: lib/src/directives/color_dto_directives.dart
+Beginning of file: lib/src/core/dto/radius_dto.dart
 
-
-Beginning of file: lib/src/deprecations.dart
-
-- get SpreadPositionalParams<T, StyleMix> mix
-- StyleMix withVariants(List<Variant> variants)
-- StyleMix addAttributes(List<Attribute> attributes)
-- StyleMix withManyVariants(List<Variant> variants)
-- get SpreadPositionalParams<StyleMix, StyleMix> apply
-- StyleMix withVariant(Variant variant)
-- StyleMix combineAll(List<StyleMix> mixes)
-- StyleMix withMaybeVariant(Variant? variant)
-- StyleMix maybeApply(StyleMix? mix)
-- StyleMix applyMaybe(StyleMix? mix)
-
-Beginning of file: lib/src/image/image_repeat.attribute.dart
-
-class ImageRepeatAttribute extends StyleAttribute
-- ImageRepeat imageRepeat
-- ImageRepeatAttribute merge(ImageRepeatAttribute? other)
-- ImageRepeat resolve(MixData mix)
-- get List<Object?> props
-
-Beginning of file: lib/src/image/image_provider.attribute.dart
-
-class ImageProviderAttribute extends StyleAttribute
-- ImageProviderAttribute<T> merge(ImageProviderAttribute<T>? other)
-- T resolve(MixData mix)
-class NetworkImageAttribute extends ImageProviderAttribute
-- String imageUrl
-- NetworkImageAttribute merge(NetworkImageAttribute? other)
-- NetworkImage resolve(MixData mix)
-- get List<Object?> props
-class AssetImageAttribute extends ImageProviderAttribute
-- String assetName
-- AssetImageAttribute merge(AssetImageAttribute? other)
-- AssetImage resolve(MixData mix)
-- get List<Object?> props
-class FileImageAttribute extends ImageProviderAttribute
-- File file
-- FileImageAttribute merge(FileImageAttribute? other)
-- FileImage resolve(MixData mix)
-- get List<Object?> props
-class MemoryImageAttribute extends ImageProviderAttribute
-- Uint8List bytes
-- MemoryImageAttribute merge(MemoryImageAttribute? other)
-- MemoryImage resolve(MixData mix)
-- get List<Object?> props
-class ExactAssetImageAttribute extends ImageProviderAttribute
-- String assetName
-- double scale
-- ExactAssetImageAttribute merge(ExactAssetImageAttribute? other)
-- ExactAssetImage resolve(MixData mix)
-- get List<Object?> props
-
-Beginning of file: lib/src/extensions/build_context_ext.dart
-
-- get MixData? mix
-- get TextDirection directionality
-- get Orientation orientation
-- get Size screenSize
-- get Brightness brightness
-- get ThemeData theme
-- get ColorScheme colorScheme
-- get TextTheme textTheme
-- get MixThemeData mixTheme
-- get bool isDarkMode
-- get bool isLandscape
-- get bool isPortrait
-
-Beginning of file: lib/src/extensions/style_mix_ext.dart
-
-- StyledContainer container()
-- StyledContainer box()
-- HBox hbox()
-- StyledRow row()
-- StyledText text(String text)
-- VBox vbox()
-- StyledColumn column()
-- StyledIcon icon(IconData icon)
-
-Beginning of file: lib/src/extensions/string_ext.dart
-
-- get List<String> words
-- get bool isUpperCase
-- get bool isLowerCase
-- get String camelCase
-- get String pascalCase
-- get String capitalize
-- get String constantCase
-- get String snakeCase
-- get String paramCase
-- get String titleCase
-- get String sentenceCase
-- get List<String> lowercase
-- get List<String> uppercase
-
-Beginning of file: lib/src/extensions/helper_ext.dart
-
-- StrutStyle merge(StrutStyle? other)
-- Matrix4 merge(Matrix4? other)
-- Iterable<T> sorted()
-- T? firstWhereOrNull(bool Function(T) test)
-
-Beginning of file: lib/src/attributes/decoration/decoration.attribute.dart
-
-class DecorationAttribute extends StyleAttribute
-- DecorationAttribute from(Decoration decoration)
-- DecorationAttribute<T> merge(DecorationAttribute<T>? other)
-class BoxDecorationAttribute extends DecorationAttribute
-- ColorDto? color
-- BoxBorderAttribute? border
-- BorderRadiusGeometryAttribute? borderRadius
-- GradientAttribute? gradient
-- List<BoxShadowAttribute>? boxShadow
-- BoxShape? shape
-- BoxDecorationAttribute merge(BoxDecorationAttribute? other)
-- BoxDecoration resolve(MixData mix)
-- get null props
-class ShapeDecorationAttribute extends DecorationAttribute
-- ColorDto? color
-- ShapeBorder? shape
-- GradientAttribute? gradient
-- List<BoxShadowAttribute>? boxShadow
-- ShapeDecorationAttribute merge(ShapeDecorationAttribute? other)
-- ShapeDecoration resolve(MixData mix)
-- get List<Object?> props
-
-Beginning of file: lib/src/attributes/gradient/gradient.attribute.dart
-
-class GradientAttribute extends StyleAttribute
-- Gradient _gradient
-- GradientAttribute merge(GradientAttribute? other)
-- Gradient resolve(MixData mix)
+class RadiusDto extends Dto
+- Unknown zero
+- double? _x
+- double? _y
+- RadiusDto? maybeFrom(Radius? radius)
+- get double? x
+- get double? y
+- RadiusDto merge(RadiusDto? other)
+- Radius resolve(MixData mix)
 - get null props
 
-Beginning of file: lib/src/attributes/gradient/gradient.util.dart
+Beginning of file: lib/src/core/dto/color_dto.dart
 
+class ColorDto extends ModifiableDto
+- ColorDto? maybeFrom(Color? color)
+- ColorDto merge(ColorDto? other)
+- Color resolve(MixData mix)
+- get null props
 
-Beginning of file: lib/src/attributes/border/border_side.dto.dart
+Beginning of file: lib/src/core/dto/double_dto.dart
+
+class DoubleAttribute extends StyleAttribute
+- DoubleDto value
+- DoubleAttribute merge(DoubleAttribute? other)
+- double resolve(MixData mix)
+- get List<Object?> props
+class DoubleDto extends ModifiableDto
+- DoubleDto? maybeFrom(double? value)
+- DoubleDto merge(DoubleDto? other)
+- double resolve(MixData mix)
+- get List<Object?> props
+
+Beginning of file: lib/src/core/dto/border_side_dto.dart
 
 class BorderSideDto extends Dto
 - ColorDto? color
@@ -163,49 +140,7 @@ class BorderSideDto extends Dto
 - BorderSide resolve(MixData mix)
 - get null props
 
-Beginning of file: lib/src/attributes/border/border.util.dart
-
-
-Beginning of file: lib/src/attributes/border/box_border.attribute.dart
-
-class BoxBorderAttribute extends StyleAttribute
-- BorderSideDto? _top
-- BorderSideDto? _right
-- BorderSideDto? _bottom
-- BorderSideDto? _left
-- BorderSideDto? _start
-- BorderSideDto? _end
-- get bool _isDirectional
-- BoxBorderAttribute merge(BoxBorderAttribute? other)
-- BoxBorder resolve(MixData mix)
-- get null props
-
-Beginning of file: lib/src/attributes/box_constraints/box_constraints.attribute.dart
-
-class BoxConstraintsAttribute extends StyleAttribute
-- double? minWidth
-- double? maxWidth
-- double? minHeight
-- double? maxHeight
-- BoxConstraintsAttribute merge(BoxConstraintsAttribute? other)
-- BoxConstraints resolve(MixData mix)
-- get null props
-
-Beginning of file: lib/src/attributes/box_constraints/box_constraints.util.dart
-
-
-Beginning of file: lib/src/attributes/visible/visible.attribute.dart
-
-class VisibleAttribute extends StyleAttribute
-- bool _visible
-- VisibleAttribute merge(VisibleAttribute? other)
-- bool resolve(MixData mix)
-- get null props
-
-Beginning of file: lib/src/attributes/visible/visible.util.dart
-
-
-Beginning of file: lib/src/attributes/variants/variant.dart
+Beginning of file: lib/src/core/variants/variant.dart
 
 class Variant
 - String name
@@ -216,21 +151,7 @@ class Variant
 - String toString()
 - get int hashCode
 
-Beginning of file: lib/src/attributes/variants/variant_attribute.dart
-
-class VariantAttribute extends Attribute
-- T variant
-- StyleMix _style
-- get MixValues value
-- VariantAttribute<T> merge(VariantAttribute<T> other)
-- String toString()
-- get Key mergeKey
-- get null props
-class ContextVariantAttribute extends VariantAttribute
-- bool shouldApply(BuildContext context)
-- ContextVariantAttribute merge(ContextVariantAttribute other)
-
-Beginning of file: lib/src/attributes/variants/context_variant.dart
+Beginning of file: lib/src/core/variants/context_variant.dart
 
 class ContextVariant extends Variant
 - ShouldApplyFunction _shouldApply
@@ -238,10 +159,7 @@ class ContextVariant extends Variant
 - bool shouldApply(BuildContext context)
 - ContextVariantAttribute call()
 
-Beginning of file: lib/src/attributes/variants/context_variant.util.dart
-
-
-Beginning of file: lib/src/attributes/variants/variant_operation.dart
+Beginning of file: lib/src/core/variants/variant_operation.dart
 
 class VariantOperation
 - List<Variant> variants
@@ -255,41 +173,20 @@ class VariantOperation
 - String toString()
 - get int hashCode
 
-Beginning of file: lib/src/attributes/style_attribute.dart
-
-class StyleAttribute extends Attribute with Resolvable
-- K? resolveAttr(R? resolvable, MixData mix)
-- K? resolveDto(R? resolvable, MixData mix)
-- List<M> combinedAttrList(List<M>? current, List<M>? other)
-- List<M> mergeAttrList(List<M>? current, List<M>? other)
-- M mergeAttr(M? current, M? other)
-class ModifiableDto extends Dto
-- T value
-- ValueModifier<T>? modifier
-- T modify(T valueToModify)
-class SpecAttribute extends StyleAttribute
-class Spec extends ThemeExtension with Comparable
-- Duration lerpDuration(Duration a, Duration b, double t)
-- int lerpInt(int a, int b, double t)
-- N? genericNumLerp(N? a, N? b, double t)
-- P snap(P from, P to, double t)
-- List<T> resolveAll(MixData mix)
-- get ListAtttribute<StyleAttribute<T>, T> list
-
-Beginning of file: lib/src/attributes/decorators/decorator.dart
+Beginning of file: lib/src/core/decorators/decorator.dart
 
 class Decorator extends StyleAttribute
 - Decorator merge(Decorator? other)
 - Widget build(Widget child, MixData mix)
 
-Beginning of file: lib/src/attributes/decorators/widget_decorator_wrapper.dart
+Beginning of file: lib/src/core/decorators/widget_decorator_wrapper.dart
 
 class WidgetDecoratorWrapper extends StatelessWidget
 - MixData mix
 - Widget child
 - Widget build(BuildContext context)
 
-Beginning of file: lib/src/attributes/decorators/built_in_decorators/clip_decorator.dart
+Beginning of file: lib/src/core/decorators/built_in_decorators/clip_decorator.dart
 
 class ClipDecorator extends Decorator
 - BorderRadiusAttribute? borderRadius
@@ -315,7 +212,7 @@ class TriangleClipper extends CustomClipper
 - Path getClip(Size size)
 - bool shouldReclip(TriangleClipper oldClipper)
 
-Beginning of file: lib/src/attributes/decorators/built_in_decorators/rotate.dart
+Beginning of file: lib/src/core/decorators/built_in_decorators/rotate.dart
 
 class RotateDecorator extends Decorator
 - int quarterTurns
@@ -326,7 +223,7 @@ class RotateDecorator extends Decorator
 class RotateSpec
 - int quarterTurns
 
-Beginning of file: lib/src/attributes/decorators/built_in_decorators/flexible.dart
+Beginning of file: lib/src/core/decorators/built_in_decorators/flexible.dart
 
 class FlexibleDecorator extends Decorator
 - int? _flex
@@ -339,7 +236,7 @@ class FlexibleDecoratorSpec
 - int flex
 - FlexFit flexFit
 
-Beginning of file: lib/src/attributes/decorators/built_in_decorators/aspect_ratio.dart
+Beginning of file: lib/src/core/decorators/built_in_decorators/aspect_ratio.dart
 
 class AspectRatioDecorator extends Decorator
 - DoubleDto _aspectRatio
@@ -348,7 +245,7 @@ class AspectRatioDecorator extends Decorator
 - get null props
 - Widget build(Widget child, MixData mix)
 
-Beginning of file: lib/src/attributes/decorators/built_in_decorators/opacity.dart
+Beginning of file: lib/src/core/decorators/built_in_decorators/opacity.dart
 
 class OpacityDecorator extends Decorator
 - DoubleDto value
@@ -357,7 +254,7 @@ class OpacityDecorator extends Decorator
 - get null props
 - Widget build()
 
-Beginning of file: lib/src/attributes/decorators/built_in_decorators/scale.dart
+Beginning of file: lib/src/core/decorators/built_in_decorators/scale.dart
 
 class ScaleDecorator extends Decorator
 - DoubleDto _scale
@@ -366,121 +263,205 @@ class ScaleDecorator extends Decorator
 - get null props
 - Widget build(Widget child, MixData mix)
 
-Beginning of file: lib/src/attributes/border_radius/border_radius_geometry.attribute.dart
+Beginning of file: lib/src/core/attribute.dart
 
-class BorderRadiusGeometryAttribute extends StyleAttribute
-- BorderRadiusGeometryAttribute from(BorderRadiusGeometry borderRadius)
-- BorderRadiusGeometryAttribute<T> merge(BorderRadiusGeometryAttribute<T>? other)
+class Dto with Comparable, Mergeable, Resolvable
+class Attribute with Comparable, Mergeable
+- get Object type
 - T resolve(MixData mix)
+- T merge(T? other)
+- M mergeAttr(M? current, M? other)
 
-Beginning of file: lib/src/attributes/border_radius/border_radius.attribute.dart
+Beginning of file: lib/src/deprecations.dart
 
-class BorderRadiusAttribute extends BorderRadiusGeometryAttribute
-- RadiusDto? topLeft
-- RadiusDto? topRight
-- RadiusDto? bottomLeft
-- RadiusDto? bottomRight
-- BorderRadiusAttribute merge(BorderRadiusAttribute? other)
-- BorderRadius resolve(MixData mix)
+- get SpreadPositionalParams<T, StyleMix> mix
+- StyleMix withVariants(List<Variant> variants)
+- StyleMix addAttributes(List<Attribute> attributes)
+- StyleMix withManyVariants(List<Variant> variants)
+- get SpreadPositionalParams<StyleMix, StyleMix> apply
+- StyleMix withVariant(Variant variant)
+- StyleMix combineAll(List<StyleMix> mixes)
+- StyleMix withMaybeVariant(Variant? variant)
+- StyleMix maybeApply(StyleMix? mix)
+- StyleMix applyMaybe(StyleMix? mix)
+
+Beginning of file: lib/src/utils/padding.util.dart
+
+
+Beginning of file: lib/src/utils/container_util.dart
+
+
+Beginning of file: lib/src/utils/height.util.dart
+
+
+Beginning of file: lib/src/utils/gradient_util.dart
+
+
+Beginning of file: lib/src/utils/border_util.dart
+
+
+Beginning of file: lib/src/utils/margin_util.dart
+
+
+Beginning of file: lib/src/utils/alignment_util.dart
+
+
+Beginning of file: lib/src/utils/image_util.dart
+
+
+Beginning of file: lib/src/utils/width_util.dart
+
+
+Beginning of file: lib/src/utils/text_util.dart
+
+
+Beginning of file: lib/src/utils/transform_util.dart
+
+
+Beginning of file: lib/src/utils/pressable_util.dart
+
+
+Beginning of file: lib/src/utils/box_constraints_util.dart
+
+
+Beginning of file: lib/src/utils/visible_util.dart
+
+
+Beginning of file: lib/src/utils/stack_fit_util.dart
+
+
+Beginning of file: lib/src/utils/text_style_util.dart
+
+
+Beginning of file: lib/src/utils/flex_util.dart
+
+
+Beginning of file: lib/src/utils/padding_util.dart
+
+
+Beginning of file: lib/src/utils/text_directives_util.dart
+
+
+Beginning of file: lib/src/utils/image.util.dart
+
+
+Beginning of file: lib/src/utils/text_direction_util.dart
+
+
+Beginning of file: lib/src/utils/height_util.dart
+
+
+Beginning of file: lib/src/utils/stack_util.dart
+
+
+Beginning of file: lib/src/utils/helper_util.dart
+
+class HelperUtility
+- NestedStyleAttribute apply(List<StyleMix> mixes)
+class SpreadNamedParams
+- FunctionWithMapParam<ParamType, ReturnType> _function
+- Map<String, dynamic> _initialParams
+class SpreadPositionalParams
+- FunctionWithListParam<ParamType, ReturnType> fn
+- ReturnType call()
+
+Beginning of file: lib/src/utils/context_variant_util.dart
+
+
+Beginning of file: lib/src/utils/border_radius_util.dart
+
+
+Beginning of file: lib/src/utils/icon_util.dart
+
+
+Beginning of file: lib/src/utils/vertical_direction_util.dart
+
+
+Beginning of file: lib/src/attributes/variant_attribute.dart
+
+class VariantAttribute extends Attribute
+- T variant
+- StyleMix _style
+- get MixValues value
+- VariantAttribute<T> merge(VariantAttribute<T> other)
+- String toString()
+- get Key mergeKey
 - get null props
+class ContextVariantAttribute extends VariantAttribute
+- bool shouldApply(BuildContext context)
+- ContextVariantAttribute merge(ContextVariantAttribute other)
 
-Beginning of file: lib/src/attributes/border_radius/border_radius_directional.attribute.dart
+Beginning of file: lib/src/attributes/flex_fit_attribute.dart
 
-class BorderRadiusDirectionalAttribute extends BorderRadiusGeometryAttribute
-- Unknown zero
-- RadiusDto? topStart
-- RadiusDto? topEnd
-- RadiusDto? bottomStart
-- RadiusDto? bottomEnd
-- BorderRadiusDirectionalAttribute merge(BorderRadiusDirectionalAttribute? other)
-- BorderRadiusDirectional resolve(MixData mix)
-- get null props
+class FlexFitAttribute extends StyleAttribute
+- FlexFit fit
+- FlexFitAttribute merge(FlexFitAttribute? other)
+- FlexFit resolve(MixData mix)
+- get List<Object?> props
 
-Beginning of file: lib/src/attributes/border_radius/border_radius.util.dart
+Beginning of file: lib/src/attributes/image_attribute.dart
 
-
-Beginning of file: lib/src/attributes/border_radius/radius.dto.dart
-
-class RadiusDto extends Dto
-- Unknown zero
-- double _x
-- double _y
-- RadiusDto? maybeFrom(Radius? radius)
-- RadiusDto merge(RadiusDto? other)
-- Radius resolve(MixData mix)
-- get null props
-
-Beginning of file: lib/src/attributes/color/background_color.attribute.dart
-
-class BackgroundColorAttribute extends ColorAttribute
-- BackgroundColorAttribute merge(BackgroundColorAttribute? other)
-
-Beginning of file: lib/src/attributes/color/color.attribute.dart
-
-class ColorAttribute extends StyleAttribute
-- ColorDto color
-- ColorAttribute merge(ColorAttribute? other)
-- Color resolve(MixData mix)
-- get null props
-
-Beginning of file: lib/src/attributes/shadow/box_shadow.attribute.dart
-
-class BoxShadowAttribute extends ShadowAttribute
-- double? spreadRadius
-- BoxShadow resolve(MixData mix)
-- BoxShadowAttribute merge(BoxShadowAttribute? other)
-- get null props
-
-Beginning of file: lib/src/attributes/shadow/shadow.util.dart
-
-
-Beginning of file: lib/src/attributes/shadow/shadow.attribute.dart
-
-class ShadowAttribute extends StyleAttribute
+class ImageAttributes extends SpecAttribute
+- ImageProviderAttribute? image
+- WidthAttribute? width
+- HeightAttribute? height
 - ColorDto? color
-- Offset? offset
-- double? blurRadius
-- T resolve(MixData mix)
-- ShadowAttribute merge(ShadowAttribute? other)
+- ImageRepeatAttribute? repeat
+- BoxFitAttribute? fit
+- ImageAttributes merge(ImageAttributes? other)
+- ImageSpec resolve(MixData mix)
+- get null props
+class ImageSpec extends Spec
+- ImageProvider? image
+- double? width
+- Color? color
+- ImageRepeat? repeat
+- BoxFit? fit
+- ImageSpec lerp(ImageSpec? other, double t)
+- ImageSpec copyWith()
 - get null props
 
-Beginning of file: lib/src/attributes/enum/clip.attribute.dart
+Beginning of file: lib/src/attributes/text_style_attribute.dart
 
-class ClipAttribute extends StyleAttribute
-- Clip clip
-- ClipAttribute merge(ClipAttribute? other)
-- Clip resolve(MixData mix)
+class TextStyleAttribute extends StyleAttribute
+- String? fontFamily
+- FontWeight? fontWeight
+- bool? inherit
+- FontStyle? fontStyle
+- double? fontSize
+- double? letterSpacing
+- double? wordSpacing
+- TextBaseline? textBaseline
+- ColorDto? color
+- ColorDto? backgroundColor
+- List<ShadowAttribute>? shadows
+- List<FontFeature>? fontFeatures
+- TextDecoration? decoration
+- ColorDto? decorationColor
+- TextDecorationStyle? decorationStyle
+- Locale? locale
+- String? debugLabel
+- double? height
+- Paint? foreground
+- Paint? background
+- double? decorationThickness
+- List<String>? fontFamilyFallback
+- TextStyleToken? styleToken
+- TextStyleAttribute merge(TextStyleAttribute? other)
+- TextStyle resolve(MixData mix)
+- get null props
+
+Beginning of file: lib/src/attributes/text_direction_attribute.dart
+
+class TextDirectionAttribute extends StyleAttribute
+- TextDirection direction
+- TextDirectionAttribute? maybeFrom(TextDirection? direction)
+- get TextDirection value
+- TextDirectionAttribute merge(TextDirectionAttribute? other)
+- TextDirection resolve(MixData mix)
 - get List<Object?> props
 
-Beginning of file: lib/src/attributes/enum/vertical_direction/vertical_direction.util.dart
-
-
-Beginning of file: lib/src/attributes/enum/vertical_direction/vertical_direction.attribute.dart
-
-class VerticalDirectionAttribute extends StyleAttribute
-- VerticalDirection direction
-- VerticalDirectionAttribute merge(VerticalDirectionAttribute? other)
-- VerticalDirection resolve(MixData mix)
-- get List<Object?> props
-
-Beginning of file: lib/src/attributes/enum/box_fit.attribute.dart
-
-class BoxFitAttribute extends StyleAttribute
-- BoxFit fit
-- BoxFitAttribute merge(BoxFitAttribute? other)
-- BoxFit resolve(MixData mix)
-- get List<Object?> props
-
-Beginning of file: lib/src/attributes/animation/animation.attribute.dart
-
-
-Beginning of file: lib/src/attributes/animation/animation.util.dart
-
-
-Beginning of file: lib/src/attributes/pressable/pressable.util.dart
-
-
-Beginning of file: lib/src/attributes/common/common.attribute.dart
+Beginning of file: lib/src/attributes/common_attribute.dart
 
 class CommonAttributes extends StyleAttribute
 - DurationAttribute? _animationDuration
@@ -500,174 +481,15 @@ class CommonSpec extends Spec
 - CommonSpec lerp(CommonSpec other, double t)
 - get null props
 
-Beginning of file: lib/src/attributes/alignment/alignment_geometry.attribute.dart
+Beginning of file: lib/src/attributes/vertical_direction_attribute.dart
 
-class AlignmentGeometryAttribute extends StyleAttribute
-- AlignmentGeometryAttribute? maybeFrom(AlignmentGeometry? alignment)
-- AlignmentGeometryAttribute from(AlignmentGeometry alignment)
-- AlignmentGeometryAttribute<T> merge(AlignmentGeometryAttribute<T>? other)
-- T resolve(MixData mix)
-class AlignmentAttribute extends AlignmentGeometryAttribute
-- double? x
-- double? y
-- AlignmentAttribute merge(AlignmentAttribute? other)
-- Alignment resolve(MixData mix)
-- get null props
-class AlignmentDirectionalAttribute extends AlignmentGeometryAttribute
-- double? start
-- double? y
-- AlignmentDirectionalAttribute merge(AlignmentDirectionalAttribute? other)
-- AlignmentDirectional resolve(MixData mix)
-- get null props
-
-Beginning of file: lib/src/attributes/alignment/alignment.util.dart
-
-
-Beginning of file: lib/src/attributes/text/directives/glitch.dart
-
-class GlitchText extends StatefulWidget
-- String text
-- TextStyle style
-- _GlitchTextState createState()
-class _GlitchTextState extends State
-- Unknown _random
-- Timer _positionTimer
-- Timer _shadowTimer
-- double _offsetX
-- double _offsetY
-- double _shadowOffsetX
-- double _shadowOffsetY
-- double _scale
-- void initState()
-- void _randomizePosition(Timer timer)
-- void _randomizeShadow(Timer timer)
-- void dispose()
-- Widget build(BuildContext context)
-
-Beginning of file: lib/src/attributes/text/directives/counter.dart
-
-class MyApp extends StatelessWidget
-- Widget build(BuildContext context)
-class NumberTickerExample extends StatefulWidget
-- _NumberTickerExampleState createState()
-class _NumberTickerExampleState extends State
-- Unknown _textController
-- double _value
-- void _updateValue()
-- Widget build(BuildContext context)
-class AnimatedNumberTicker extends StatefulWidget
-- double value
-- _AnimatedNumberTickerState createState()
-class _AnimatedNumberTickerState extends State with SingleTickerProviderStateMixin
-- AnimationController _controller
-- Animation<double> _animation
-- void initState()
-- void didUpdateWidget(AnimatedNumberTicker oldWidget)
-- void dispose()
-- Widget build(BuildContext context)
-
-Beginning of file: lib/src/attributes/text/directives/controllers.dart
-
-class Character
-- String from
-- String to
-- int start
-- int end
-- String char
-class TextDecodingController
--  Function(String value) _fn
-- String _data
-- int _frame
-- Unknown _chars
-- Unknown _queue
-- Unknown _random
-- Ticker? _ticker
-- void setData(String newText)
-- void dispose()
-- void _startTicker()
-- void _update(Duration elapsedTime)
-- String _randomChar()
-
-Beginning of file: lib/src/attributes/text/directives/text.directive.dart
-
-class UppercaseDirective extends TextDirective
-- String modify(String value)
-class CapitalizeDirective extends TextDirective
-- String modify(String value)
-class LowercaseDirective extends TextDirective
-- String modify(String value)
-class SentenceCaseDirective extends TextDirective
-- String modify(String value)
-class TitleCaseDirective extends TextDirective
-- String modify(String value)
-class TextDirective extends Directive
-- String modify(String value)
-
-Beginning of file: lib/src/attributes/text/text_direction/text_direction.util.dart
-
-
-Beginning of file: lib/src/attributes/text/text_direction/text_direction.attribute.dart
-
-class TextDirectionAttribute extends StyleAttribute
-- TextDirection direction
-- TextDirectionAttribute? maybeFrom(TextDirection? direction)
-- TextDirectionAttribute merge(TextDirectionAttribute? other)
-- TextDirection resolve(MixData mix)
+class VerticalDirectionAttribute extends StyleAttribute
+- VerticalDirection direction
+- VerticalDirectionAttribute merge(VerticalDirectionAttribute? other)
+- VerticalDirection resolve(MixData mix)
 - get List<Object?> props
 
-Beginning of file: lib/src/attributes/text/utilities/text_directives.util.dart
-
-
-Beginning of file: lib/src/attributes/text/utilities/text.util.dart
-
-
-Beginning of file: lib/src/attributes/text/utilities/text_style.util.dart
-
-
-Beginning of file: lib/src/attributes/text/attributes/text_overflow.attribute.dart
-
-class TextOverflowAttribute extends StyleAttribute
-- TextOverflow overflow
-- TextOverflowAttribute? maybeFrom(TextOverflow? overflow)
-- TextOverflowAttribute merge(TextOverflowAttribute? other)
-- TextOverflow resolve(MixData mix)
-- get List<Object?> props
-
-Beginning of file: lib/src/attributes/text/attributes/text_baseline.attribute.dart
-
-class TextBaselineAttribute extends StyleAttribute
-- TextBaseline baseline
-- TextBaselineAttribute merge(TextBaselineAttribute? other)
-- TextBaseline resolve(MixData mix)
-- get List<Object?> props
-
-Beginning of file: lib/src/attributes/text/attributes/text_align.attribute.dart
-
-class TextAlignAttribute extends StyleAttribute
-- TextAlign align
-- TextAlignAttribute? maybeFrom(TextAlign? align)
-- TextAlignAttribute merge(TextAlignAttribute? other)
-- TextAlign resolve(MixData mix)
-- get List<Object?> props
-
-Beginning of file: lib/src/attributes/text/attributes/strut_style.attribute.dart
-
-class StrutStyleAttribute extends StyleAttribute
-- String? fontFamily
-- List<String>? fontFamilyFallback
-- double? fontSize
-- FontWeight? fontWeight
-- FontStyle? fontStyle
-- double? height
-- double? leading
-- bool? forceStrutHeight
-- Unknown _default
-- StrutStyleAttribute? maybeFrom(StrutStyle? strutStyle)
-- StrutStyleAttribute merge(StrutStyleAttribute? other)
-- StrutStyle resolve(MixData mix)
-- get null props
-
-Beginning of file: lib/src/attributes/text/attributes/text.attribute.dart
+Beginning of file: lib/src/attributes/text_attribute.dart
 
 class TextAttributes extends StyleAttribute
 - List<TextDirective> _directives
@@ -703,53 +525,294 @@ class TextSpec extends Spec
 - TextSpec copyWith()
 - get List<Object?> props
 
-Beginning of file: lib/src/attributes/text/attributes/text_style.attribute.dart
+Beginning of file: lib/src/attributes/strut_style_attribute.dart
 
-class TextStyleAttribute extends StyleAttribute
+class StrutStyleAttribute extends StyleAttribute
 - String? fontFamily
-- FontWeight? fontWeight
-- bool? inherit
-- FontStyle? fontStyle
-- double? fontSize
-- double? letterSpacing
-- double? wordSpacing
-- TextBaseline? textBaseline
-- ColorDto? color
-- ColorDto? backgroundColor
-- ShadowAttributeList? shadows
-- List<FontFeature>? fontFeatures
-- TextDecoration? decoration
-- ColorDto? decorationColor
-- TextDecorationStyle? decorationStyle
-- Locale? locale
-- String? debugLabel
-- double? height
-- Paint? foreground
-- Paint? background
-- double? decorationThickness
 - List<String>? fontFamilyFallback
-- TextStyleToken? styleToken
-- TextStyleAttribute merge(TextStyleAttribute? other)
-- TextStyle resolve(MixData mix)
+- double? fontSize
+- FontWeight? fontWeight
+- FontStyle? fontStyle
+- double? height
+- double? leading
+- bool? forceStrutHeight
+- Unknown _default
+- StrutStyleAttribute? maybeFrom(StrutStyle? strutStyle)
+- StrutStyleAttribute merge(StrutStyleAttribute? other)
+- StrutStyle resolve(MixData mix)
 - get null props
 
-Beginning of file: lib/src/attributes/size/height.util.dart
+Beginning of file: lib/src/attributes/gradient_attribute.dart
 
+class GradientAttribute extends StyleAttribute
+- Gradient _gradient
+- get Gradient value
+- GradientAttribute merge(GradientAttribute? other)
+- Gradient resolve(MixData mix)
+- get null props
 
-Beginning of file: lib/src/attributes/size/width.attribute.dart
+Beginning of file: lib/src/attributes/main_axis_alignment_attribute.dart
 
-class WidthAttribute extends DoubleAttribute
-- WidthAttribute merge(WidthAttribute? other)
+class MainAxisAlignmentAttribute extends StyleAttribute
+- MainAxisAlignment alignment
+- MainAxisAlignmentAttribute merge(MainAxisAlignmentAttribute? other)
+- MainAxisAlignment resolve(MixData mix)
+- get List<Object?> props
 
-Beginning of file: lib/src/attributes/size/width.util.dart
+Beginning of file: lib/src/attributes/visible_attribute.dart
 
+class VisibleAttribute extends StyleAttribute
+- bool _visible
+- VisibleAttribute merge(VisibleAttribute? other)
+- bool resolve(MixData mix)
+- get null props
 
-Beginning of file: lib/src/attributes/size/height.attribute.dart
+Beginning of file: lib/src/attributes/box_fit_attribute.dart
 
-class HeightAttribute extends DoubleAttribute
-- HeightAttribute merge(HeightAttribute? other)
+class BoxFitAttribute extends StyleAttribute
+- BoxFit fit
+- BoxFitAttribute merge(BoxFitAttribute? other)
+- BoxFit resolve(MixData mix)
+- get List<Object?> props
 
-Beginning of file: lib/src/attributes/stack/stack_fit.attribute.dart
+Beginning of file: lib/src/attributes/cross_axis_alignment_attribute.dart
+
+class CrossAxisAlignmentAttribute extends StyleAttribute
+- CrossAxisAlignment alignment
+- CrossAxisAlignmentAttribute merge(CrossAxisAlignmentAttribute? other)
+- CrossAxisAlignment resolve(MixData mix)
+- get List<Object?> props
+
+Beginning of file: lib/src/attributes/matrix4_attribute.dart
+
+class Matrix4Attribute extends StyleAttribute
+- Matrix4 matrix
+- Matrix4 resolve(MixData mix)
+- Matrix4Attribute merge(Matrix4Attribute? other)
+- get null props
+
+Beginning of file: lib/src/attributes/image_provider_attribute.dart
+
+class ImageProviderAttribute extends StyleAttribute
+- ImageProviderAttribute<T> merge(ImageProviderAttribute<T>? other)
+- T resolve(MixData mix)
+class NetworkImageAttribute extends ImageProviderAttribute
+- String imageUrl
+- NetworkImageAttribute merge(NetworkImageAttribute? other)
+- NetworkImage resolve(MixData mix)
+- get List<Object?> props
+class AssetImageAttribute extends ImageProviderAttribute
+- String assetName
+- AssetImageAttribute merge(AssetImageAttribute? other)
+- AssetImage resolve(MixData mix)
+- get List<Object?> props
+class FileImageAttribute extends ImageProviderAttribute
+- File file
+- FileImageAttribute merge(FileImageAttribute? other)
+- FileImage resolve(MixData mix)
+- get List<Object?> props
+class MemoryImageAttribute extends ImageProviderAttribute
+- Uint8List bytes
+- MemoryImageAttribute merge(MemoryImageAttribute? other)
+- MemoryImage resolve(MixData mix)
+- get List<Object?> props
+class ExactAssetImageAttribute extends ImageProviderAttribute
+- String assetName
+- double scale
+- ExactAssetImageAttribute merge(ExactAssetImageAttribute? other)
+- ExactAssetImage resolve(MixData mix)
+- get List<Object?> props
+
+Beginning of file: lib/src/attributes/flex_attribute.dart
+
+class FlexAttributes extends SpecAttribute
+- AxisAttribute? direction
+- MainAxisAlignmentAttribute? mainAxisAlignment
+- CrossAxisAlignmentAttribute? crossAxisAlignment
+- MainAxisSizeAttribute? mainAxisSize
+- VerticalDirectionAttribute? verticalDirection
+- TextDirectionAttribute? textDirection
+- TextBaselineAttribute? textBaseline
+- ClipAttribute? clipBehavior
+- FlexAttributes merge(FlexAttributes? other)
+- FlexSpec resolve(MixData mix)
+- get List<Object?> props
+class FlexSpec extends Spec
+- Axis? direction
+- MainAxisAlignment? mainAxisAlignment
+- CrossAxisAlignment? crossAxisAlignment
+- MainAxisSize? mainAxisSize
+- VerticalDirection? verticalDirection
+- TextDirection? textDirection
+- TextBaseline? textBaseline
+- Clip? clipBehavior
+- FlexSpec lerp(FlexSpec other, double t)
+- FlexSpec copyWith()
+- get List<Object?> props
+
+Beginning of file: lib/src/attributes/style_attribute.dart
+
+class StyleAttribute extends Attribute with Resolvable
+- K? resolveAttr(R? resolvable, MixData mix)
+- K? resolveDto(R? resolvable, MixData mix)
+- List<M> combinedAttrList(List<M>? current, List<M>? other)
+- List<M> mergeAttrList(List<M>? current, List<M>? other)
+- M mergeAttr(M? current, M? other)
+class ModifiableDto extends Dto
+- T value
+- ValueModifier<T>? modifier
+- T modify(T valueToModify)
+class SpecAttribute extends StyleAttribute
+class Spec extends ThemeExtension with Comparable
+- Duration lerpDuration(Duration a, Duration b, double t)
+- int lerpInt(int a, int b, double t)
+- N? genericNumLerp(N? a, N? b, double t)
+- P snap(P from, P to, double t)
+- List<T> resolveAll(MixData mix)
+
+Beginning of file: lib/src/attributes/box_border_attribute.dart
+
+class BoxBorderAttribute extends StyleAttribute
+- BorderSideDto? _top
+- BorderSideDto? _right
+- BorderSideDto? _bottom
+- BorderSideDto? _left
+- BorderSideDto? _start
+- BorderSideDto? _end
+- get BorderSideDto? top
+- get BorderSideDto? right
+- get BorderSideDto? bottom
+- get BorderSideDto? left
+- get BorderSideDto? start
+- get BorderSideDto? end
+- get bool _isDirectional
+- BoxBorderAttribute merge(BoxBorderAttribute? other)
+- BoxBorder resolve(MixData mix)
+- get null props
+
+Beginning of file: lib/src/attributes/duration_attribute.dart
+
+class DurationAttribute extends StyleAttribute
+- Duration duration
+- DurationAttribute merge(DurationAttribute? other)
+- Duration resolve(MixData mix)
+- get List<Object?> props
+
+Beginning of file: lib/src/attributes/shadow_attribute.dart
+
+class ShadowAttribute extends StyleAttribute
+- ColorDto? color
+- Offset? offset
+- double? blurRadius
+- T resolve(MixData mix)
+- ShadowAttribute merge(ShadowAttribute? other)
+- get null props
+
+Beginning of file: lib/src/attributes/curve_attribute.dart
+
+class CurveAttribute extends StyleAttribute
+- Curve curve
+- CurveAttribute merge(CurveAttribute? other)
+- Curve resolve(MixData mix)
+- get List<Object?> props
+
+Beginning of file: lib/src/attributes/alignment_geometry_attribute.dart
+
+class AlignmentGeometryAttribute extends StyleAttribute
+- AlignmentGeometryAttribute? maybeFrom(AlignmentGeometry? alignment)
+- AlignmentGeometryAttribute from(AlignmentGeometry alignment)
+- AlignmentGeometryAttribute<T> merge(AlignmentGeometryAttribute<T>? other)
+- T resolve(MixData mix)
+class AlignmentAttribute extends AlignmentGeometryAttribute
+- double? x
+- double? y
+- AlignmentAttribute merge(AlignmentAttribute? other)
+- Alignment resolve(MixData mix)
+- get null props
+class AlignmentDirectionalAttribute extends AlignmentGeometryAttribute
+- double? start
+- double? y
+- AlignmentDirectionalAttribute merge(AlignmentDirectionalAttribute? other)
+- AlignmentDirectional resolve(MixData mix)
+- get null props
+
+Beginning of file: lib/src/attributes/box_shadow_attribute.dart
+
+class BoxShadowAttribute extends ShadowAttribute
+- double? spreadRadius
+- BoxShadow resolve(MixData mix)
+- BoxShadowAttribute merge(BoxShadowAttribute? other)
+- get null props
+
+Beginning of file: lib/src/attributes/clip_attribute.dart
+
+class ClipAttribute extends StyleAttribute
+- Clip clip
+- ClipAttribute merge(ClipAttribute? other)
+- Clip resolve(MixData mix)
+- get List<Object?> props
+
+Beginning of file: lib/src/attributes/border_radius_geometry_attribute.dart
+
+class BorderRadiusGeometryAttribute extends StyleAttribute
+- BorderRadiusGeometryAttribute from(BorderRadiusGeometry borderRadius)
+- BorderRadiusGeometryAttribute<T> merge(BorderRadiusGeometryAttribute<T>? other)
+- T resolve(MixData mix)
+class BorderRadiusAttribute extends BorderRadiusGeometryAttribute
+- RadiusDto? topLeft
+- RadiusDto? topRight
+- RadiusDto? bottomLeft
+- RadiusDto? bottomRight
+- BorderRadiusAttribute merge(BorderRadiusAttribute? other)
+- BorderRadius resolve(MixData mix)
+- get null props
+class BorderRadiusDirectionalAttribute extends BorderRadiusGeometryAttribute
+- Unknown zero
+- RadiusDto? topStart
+- RadiusDto? topEnd
+- RadiusDto? bottomStart
+- RadiusDto? bottomEnd
+- BorderRadiusDirectionalAttribute merge(BorderRadiusDirectionalAttribute? other)
+- BorderRadiusDirectional resolve(MixData mix)
+- get null props
+
+Beginning of file: lib/src/attributes/text_overflow_attribute.dart
+
+class TextOverflowAttribute extends StyleAttribute
+- TextOverflow overflow
+- TextOverflowAttribute? maybeFrom(TextOverflow? overflow)
+- TextOverflowAttribute merge(TextOverflowAttribute? other)
+- TextOverflow resolve(MixData mix)
+- get List<Object?> props
+
+Beginning of file: lib/src/attributes/axis_attribute.dart
+
+class AxisAttribute extends StyleAttribute
+- Axis axis
+- AxisAttribute merge(AxisAttribute? other)
+- Axis resolve(MixData mix)
+- get List<Object?> props
+
+Beginning of file: lib/src/attributes/image_repeat_attribute.dart
+
+class ImageRepeatAttribute extends StyleAttribute
+- ImageRepeat imageRepeat
+- ImageRepeatAttribute merge(ImageRepeatAttribute? other)
+- ImageRepeat resolve(MixData mix)
+- get List<Object?> props
+
+Beginning of file: lib/src/attributes/box_constraints_attribute.dart
+
+class BoxConstraintsAttribute extends StyleAttribute
+- double? minWidth
+- double? maxWidth
+- double? minHeight
+- double? maxHeight
+- BoxConstraintsAttribute merge(BoxConstraintsAttribute? other)
+- BoxConstraints resolve(MixData mix)
+- get null props
+
+Beginning of file: lib/src/attributes/stack_fit_attribute.dart
 
 class StackFitAttribute extends StyleAttribute
 - StackFit fit
@@ -757,16 +820,36 @@ class StackFitAttribute extends StyleAttribute
 - StackFit resolve(MixData mix)
 - get List<Object?> props
 
-Beginning of file: lib/src/attributes/stack/stack_fit.util.dart
+Beginning of file: lib/src/attributes/container_attribute.dart
 
-
-Beginning of file: lib/src/attributes/icon/icon_data.attribute.dart
-
-class IconDataAttribute extends StyleAttribute
-- IconData iconData
-- IconDataAttribute merge(IconDataAttribute? other)
-- IconData resolve(MixData mix)
+class ContainerAttributes extends SpecAttribute
+- AlignmentGeometryAttribute? alignment
+- PaddingAttribute? padding
+- MarginAttribute? margin
+- BoxConstraintsAttribute? constraints
+- DecorationAttribute? decoration
+- WidthAttribute? width
+- HeightAttribute? height
+- Matrix4Attribute? transform
+- BackgroundColorAttribute? color
+- ClipAttribute? clipBehavior
+- ContainerAttributes merge(ContainerAttributes? other)
+- ContainerSpec resolve(MixData mix)
 - get List<Object?> props
+class ContainerSpec extends Spec
+- AlignmentGeometry? alignment
+- EdgeInsetsGeometry? padding
+- EdgeInsetsGeometry? margin
+- BoxConstraints? constraints
+- Decoration? decoration
+- double? width
+- double? height
+- Matrix4? transform
+- Color? color
+- Clip? clipBehavior
+- ContainerSpec copyWith()
+- ContainerSpec lerp(ContainerSpec other, double t)
+- get null props
 
 Beginning of file: lib/src/attributes/nested_attribute.dart
 
@@ -775,13 +858,57 @@ class NestedStyleAttribute extends Attribute
 - NestedStyleAttribute merge(NestedStyleAttribute? other)
 - get null props
 
-Beginning of file: lib/src/attributes/space/padding.util.dart
+Beginning of file: lib/src/attributes/size_attribute.dart
 
+class HeightAttribute extends DoubleAttribute
+- HeightAttribute merge(HeightAttribute? other)
+class WidthAttribute extends DoubleAttribute
+- WidthAttribute merge(WidthAttribute? other)
 
-Beginning of file: lib/src/attributes/space/margin_utils.dart
+Beginning of file: lib/src/attributes/text_align_attribute.dart
 
+class TextAlignAttribute extends StyleAttribute
+- TextAlign align
+- TextAlignAttribute? maybeFrom(TextAlign? align)
+- TextAlignAttribute merge(TextAlignAttribute? other)
+- TextAlign resolve(MixData mix)
+- get List<Object?> props
 
-Beginning of file: lib/src/attributes/space/padding.attribute.dart
+Beginning of file: lib/src/attributes/color_attribute.dart
+
+class ColorAttribute extends StyleAttribute
+- ColorDto color
+- ColorAttribute merge(ColorAttribute? other)
+- Color resolve(MixData mix)
+- get null props
+class BackgroundColorAttribute extends ColorAttribute
+- BackgroundColorAttribute merge(BackgroundColorAttribute? other)
+
+Beginning of file: lib/src/attributes/decoration_attribute.dart
+
+class DecorationAttribute extends StyleAttribute
+- DecorationAttribute from(Decoration decoration)
+- DecorationAttribute<T> merge(DecorationAttribute<T>? other)
+class BoxDecorationAttribute extends DecorationAttribute
+- ColorDto? color
+- BoxBorderAttribute? border
+- BorderRadiusGeometryAttribute? borderRadius
+- GradientAttribute? gradient
+- List<BoxShadowAttribute>? boxShadow
+- BoxShape? shape
+- BoxDecorationAttribute merge(BoxDecorationAttribute? other)
+- BoxDecoration resolve(MixData mix)
+- get null props
+class ShapeDecorationAttribute extends DecorationAttribute
+- ColorDto? color
+- ShapeBorder? shape
+- GradientAttribute? gradient
+- List<BoxShadowAttribute>? boxShadow
+- ShapeDecorationAttribute merge(ShapeDecorationAttribute? other)
+- ShapeDecoration resolve(MixData mix)
+- get List<Object?> props
+
+Beginning of file: lib/src/attributes/space_attribute.dart
 
 class PaddingAttribute extends StyleAttribute
 - double? _top
@@ -800,9 +927,6 @@ class PaddingAttribute extends StyleAttribute
 - PaddingAttribute merge(PaddingAttribute? other)
 - EdgeInsetsGeometry resolve(MixData mix)
 - get null props
-
-Beginning of file: lib/src/attributes/space/margin_attribute.dart
-
 class MarginAttribute extends StyleAttribute
 - double? _top
 - double? _bottom
@@ -821,18 +945,34 @@ class MarginAttribute extends StyleAttribute
 - EdgeInsetsGeometry resolve(MixData mix)
 - get null props
 
-Beginning of file: lib/src/attributes/flex/flex.util.dart
+Beginning of file: lib/src/attributes/text_baseline_attribute.dart
 
-
-Beginning of file: lib/src/attributes/flex/axis.attribute.dart
-
-class AxisAttribute extends StyleAttribute
-- Axis axis
-- AxisAttribute merge(AxisAttribute? other)
-- Axis resolve(MixData mix)
+class TextBaselineAttribute extends StyleAttribute
+- TextBaseline baseline
+- TextBaselineAttribute merge(TextBaselineAttribute? other)
+- TextBaseline resolve(MixData mix)
 - get List<Object?> props
 
-Beginning of file: lib/src/attributes/flex/main_axis_size.attribute.dart
+Beginning of file: lib/src/attributes/stack_attribute.dart
+
+class StackAttributes extends SpecAttribute
+- AlignmentGeometryAttribute? alignment
+- StackFitAttribute? fit
+- TextDirectionAttribute? textDirection
+- ClipAttribute? clipBehavior
+- StackAttributes merge(StackAttributes? other)
+- StackSpec resolve(MixData mix)
+- get List<Object?> props
+class StackSpec extends Spec
+- AlignmentGeometry? alignment
+- StackFit? fit
+- TextDirection? textDirection
+- Clip? clipBehavior
+- StackSpec lerp(StackSpec other, double t)
+- StackSpec copyWith()
+- get List<Object?> props
+
+Beginning of file: lib/src/attributes/main_axis_size_attribute.dart
 
 class MainAxisSizeAttribute extends StyleAttribute
 - MainAxisSize size
@@ -840,109 +980,22 @@ class MainAxisSizeAttribute extends StyleAttribute
 - MainAxisSize resolve(MixData mix)
 - get List<Object?> props
 
-Beginning of file: lib/src/attributes/flex/flex_util.dart
+Beginning of file: lib/src/attributes/icon_attribute.dart
 
-
-Beginning of file: lib/src/attributes/flex/main_axis_alignment.attribute.dart
-
-class MainAxisAlignmentAttribute extends StyleAttribute
-- MainAxisAlignment alignment
-- MainAxisAlignmentAttribute merge(MainAxisAlignmentAttribute? other)
-- MainAxisAlignment resolve(MixData mix)
+class IconAttributes extends StyleAttribute
+- ColorDto? color
+- DoubleDto? size
+- IconData? icon
+- IconAttributes merge(IconAttributes? other)
+- IconSpec resolve(MixData mix)
 - get List<Object?> props
-
-Beginning of file: lib/src/attributes/flex/cross_axis_alignment.attribute.dart
-
-class CrossAxisAlignmentAttribute extends StyleAttribute
-- CrossAxisAlignment alignment
-- CrossAxisAlignmentAttribute merge(CrossAxisAlignmentAttribute? other)
-- CrossAxisAlignment resolve(MixData mix)
-- get List<Object?> props
-
-Beginning of file: lib/src/attributes/flex/flex_fit.attribute.dart
-
-class FlexFitAttribute extends StyleAttribute
-- FlexFit fit
-- FlexFitAttribute merge(FlexFitAttribute? other)
-- FlexFit resolve(MixData mix)
-- get List<Object?> props
-
-Beginning of file: lib/src/attributes/transform/matrix4.attribute.dart
-
-class Matrix4Attribute extends StyleAttribute
-- Matrix4 matrix
-- Matrix4 resolve(MixData mix)
-- Matrix4Attribute merge(Matrix4Attribute? other)
+class IconSpec extends Spec
+- Color? color
+- double? size
+- IconData? icon
+- IconSpec lerp(IconSpec other, double t)
+- IconSpec copyWith()
 - get null props
-
-Beginning of file: lib/src/attributes/transform/transform.util.dart
-
-
-Beginning of file: lib/src/attributes/attribute.dart
-
-class Dto with Comparable, Mergeable, Resolvable
-class Attribute with Comparable, Mergeable
-- get Object type
-- T resolve(MixData mix)
-- T merge(T? other)
-- M mergeAttr(M? current, M? other)
-
-Beginning of file: lib/src/attributes/helpers/helper.util.dart
-
-class HelperUtility
-- NestedStyleAttribute apply(List<StyleMix> mixes)
-class SpreadNamedParams
-- FunctionWithMapParam<ParamType, ReturnType> _function
-- Map<String, dynamic> _initialParams
-class SpreadPositionalParams
-- FunctionWithListParam<ParamType, ReturnType> fn
-- ReturnType call()
-
-Beginning of file: lib/src/attributes/helpers/list.attribute.dart
-
-class ListAtttribute extends StyleAttribute
-- List<Attr> _items
-- ListAtttribute<Attr, R>? maybeFrom(Iterable<Attr>? items)
-- List<R> resolve(MixData mix)
-- ListAtttribute<Attr, R> merge(ListAtttribute<Attr, R>? other)
-- get null props
-
-Beginning of file: lib/src/attributes/base/curve.attribute.dart
-
-class CurveAttribute extends StyleAttribute
-- Curve curve
-- CurveAttribute merge(CurveAttribute? other)
-- Curve resolve(MixData mix)
-- get List<Object?> props
-
-Beginning of file: lib/src/attributes/base/double.dto.dart
-
-class DoubleAttribute extends StyleAttribute
-- DoubleDto value
-- DoubleAttribute merge(DoubleAttribute? other)
-- double resolve(MixData mix)
-- get List<Object?> props
-class DoubleDto extends ModifiableDto
-- DoubleDto? maybeFrom(double? value)
-- DoubleDto merge(DoubleDto? other)
-- double resolve(MixData mix)
-- get List<Object?> props
-
-Beginning of file: lib/src/attributes/base/color.dto.dart
-
-class ColorDto extends ModifiableDto
-- ColorDto? maybeFrom(Color? color)
-- ColorDto merge(ColorDto? other)
-- Color resolve(MixData mix)
-- get null props
-
-Beginning of file: lib/src/attributes/base/duration.attribute.dart
-
-class DurationAttribute extends StyleAttribute
-- Duration duration
-- DurationAttribute merge(DurationAttribute? other)
-- Duration resolve(MixData mix)
-- get List<Object?> props
 
 Beginning of file: lib/src/theme/material_theme/material_tokens.dart
 
@@ -1044,9 +1097,6 @@ class $M2Text
 - Unknown overline
 - get MixTextStyleTokens tokens
 
-Beginning of file: lib/src/theme/exports.dart
-
-
 Beginning of file: lib/src/theme/mix_theme.dart
 
 class MixTheme extends InheritedWidget
@@ -1068,6 +1118,17 @@ class BuildContextResolver
 - Color color(ColorToken token)
 - TextStyle textStyle(TextStyleToken token)
 - double space(double value)
+
+Beginning of file: lib/src/theme/token_alias.dart
+
+class _SpaceTokensRef
+- Unknown instance
+- Unknown xsmall
+- Unknown small
+- Unknown medium
+- Unknown large
+- Unknown xlarge
+- Unknown xxlarge
 
 Beginning of file: lib/src/theme/tokens/text_style_token.dart
 
@@ -1140,18 +1201,7 @@ class WrapWithSpaceTokens
 - get T xxl
 - T call(double value)
 
-Beginning of file: lib/src/aliases/token_alias.dart
-
-class _SpaceTokensRef
-- Unknown instance
-- Unknown xsmall
-- Unknown small
-- Unknown medium
-- Unknown large
-- Unknown xlarge
-- Unknown xxlarge
-
-Beginning of file: lib/src/aliases/deprecated_alias.dart
+Beginning of file: lib/src/deprecated_alias.dart
 
 class LegacyTextStyleUtility
 - TextStyle textShadow(List<Shadow> shadows)
@@ -1175,6 +1225,24 @@ class LegacyTextStyleUtility
 - TextStyle textDecorationThickness(double decorationThickness)
 - TextStyle fontFamilyFallback(List<String> fontFamilyFallback)
 
+Beginning of file: lib/src/helpers/deep_collection_equality.dart
+
+class DeepCollectionEquality
+- bool equals(Object? object1, Object? object2)
+- int hash(Object? object)
+- bool _compareLists(List list1, List list2)
+- bool _compareSets(Set set1, Set set2)
+- bool _compareMaps(Map map1, Map map2)
+
+Beginning of file: lib/src/helpers/compare_mixin.dart
+
+- get List<Object?> props
+- get bool stringify
+- bool ==(Object other)
+- get int hashCode
+- List<String> getDiff(Object other)
+- String toString()
+
 Beginning of file: lib/src/helpers/logger.dart
 
 class Logger
@@ -1183,6 +1251,55 @@ class Logger
 - void start()
 - void stop()
 - void debug(String message)
+
+Beginning of file: lib/src/helpers/extensions/build_context_ext.dart
+
+- get MixData? mix
+- get TextDirection directionality
+- get Orientation orientation
+- get Size screenSize
+- get Brightness brightness
+- get ThemeData theme
+- get ColorScheme colorScheme
+- get TextTheme textTheme
+- get MixThemeData mixTheme
+- get bool isDarkMode
+- get bool isLandscape
+- get bool isPortrait
+
+Beginning of file: lib/src/helpers/extensions/style_mix_ext.dart
+
+- StyledContainer container()
+- StyledContainer box()
+- HBox hbox()
+- StyledRow row()
+- StyledText text(String text)
+- VBox vbox()
+- StyledColumn column()
+- StyledIcon icon(IconData icon)
+
+Beginning of file: lib/src/helpers/extensions/string_ext.dart
+
+- get List<String> words
+- get bool isUpperCase
+- get bool isLowerCase
+- get String camelCase
+- get String pascalCase
+- get String capitalize
+- get String constantCase
+- get String snakeCase
+- get String paramCase
+- get String titleCase
+- get String sentenceCase
+- get List<String> lowercase
+- get List<String> uppercase
+
+Beginning of file: lib/src/helpers/extensions/helper_ext.dart
+
+- StrutStyle merge(StrutStyle? other)
+- Matrix4 merge(Matrix4? other)
+- Iterable<T> sorted()
+- T? firstWhereOrNull(bool Function(T) test)
 
 Beginning of file: lib/src/helpers/attributes_map.dart
 
@@ -1207,27 +1324,6 @@ class MergeableMap with Comparable
 - LinkedHashMap<K, T> mergeMap(LinkedHashMap<K, T>? otherMap)
 - MergeableMap<K, T> merge(MergeableMap<K, T>? other)
 - get List<Object> props
-
-Beginning of file: lib/src/helpers/compare_mixin/deep_collection_equality.dart
-
-class DeepCollectionEquality
-- bool equals(Object? object1, Object? object2)
-- int hash(Object? object)
-- bool _compareLists(List list1, List list2)
-- bool _compareSets(Set set1, Set set2)
-- bool _compareMaps(Map map1, Map map2)
-
-Beginning of file: lib/src/helpers/compare_mixin/compare_mixin.dart
-
-- get List<Object?> props
-- get bool stringify
-- bool ==(Object other)
-- get int hashCode
-- List<String> getDiff(Object other)
-- String toString()
-
-Beginning of file: lib/src/helpers/exports.dart
-
 
 Beginning of file: lib/src/helpers/color_helpers.dart
 
@@ -1316,12 +1412,34 @@ class MixData with Comparable
 - MixData merge(MixData other)
 - get null props
 
-Beginning of file: lib/src/widgets/empty/empty.widget.dart
+Beginning of file: lib/src/widgets/container_widget.dart
+
+class StyledContainer extends StyledWidget
+- Widget? child
+- Widget build(BuildContext context)
+class MixedContainer extends StatelessWidget
+- Widget? child
+- bool animated
+- Widget build(BuildContext context)
+
+Beginning of file: lib/src/widgets/empty_widget.dart
 
 class Empty extends StatelessWidget
 - Widget build(BuildContext context)
 
-Beginning of file: lib/src/widgets/styled.widget.dart
+Beginning of file: lib/src/widgets/stack_widget.dart
+
+class StyledStack extends StyledWidget
+- List<Widget> children
+- Widget build(BuildContext context)
+class ZBox extends StyledWidget
+- List<Widget> children
+- Widget build(BuildContext context)
+class MixedStack extends StatelessWidget
+- List<Widget> children
+- Widget build(BuildContext context)
+
+Beginning of file: lib/src/widgets/styled_widget.dart
 
 class StyledWidgetBuilder
 - Widget build(BuildContext context, MixData mix)
@@ -1337,32 +1455,18 @@ class StyledWidget extends StatelessWidget
 - void debugFillProperties(DiagnosticPropertiesBuilder properties)
 - Widget build(BuildContext context)
 
-Beginning of file: lib/src/widgets/image/image.util.dart
+Beginning of file: lib/src/widgets/icon_widget.dart
 
+class StyledIcon extends StyledWidget
+- IconData? icon
+- String? semanticLabel
+- Widget build(BuildContext context)
+class MixedIcon extends StatelessWidget
+- IconData? icon
+- String? semanticLabel
+- Widget build(BuildContext context)
 
-Beginning of file: lib/src/widgets/image/image.attribute.dart
-
-class ImageAttributes extends SpecAttribute
-- ImageProviderAttribute? image
-- WidthAttribute? width
-- HeightAttribute? height
-- ColorDto? color
-- ImageRepeatAttribute? repeat
-- BoxFitAttribute? fit
-- ImageAttributes merge(ImageAttributes? other)
-- ImageSpec resolve(MixData mix)
-- get null props
-class ImageSpec extends Spec
-- ImageProvider? image
-- double? width
-- Color? color
-- ImageRepeat? repeat
-- BoxFit? fit
-- ImageSpec lerp(ImageSpec? other, double t)
-- ImageSpec copyWith()
-- get null props
-
-Beginning of file: lib/src/widgets/pressable/pressable.widget.dart
+Beginning of file: lib/src/widgets/pressable/pressable_widget.dart
 
 class Pressable extends StatefulWidget
 - Widget child
@@ -1400,134 +1504,13 @@ class PressableNotifier extends InheritedWidget
 - bool focus
 - bool updateShouldNotify(PressableNotifier oldWidget)
 
-Beginning of file: lib/src/widgets/container/container.widget.dart
-
-class StyledContainer extends StyledWidget
-- Widget? child
-- Widget build(BuildContext context)
-class MixedContainer extends StatelessWidget
-- Widget? child
-- bool animated
-- Widget build(BuildContext context)
-
-Beginning of file: lib/src/widgets/container/container.attribute.dart
-
-class ContainerAttributes extends SpecAttribute
-- AlignmentGeometryAttribute? alignment
-- PaddingAttribute? padding
-- MarginAttribute? margin
-- BoxConstraintsAttribute? constraints
-- DecorationAttribute? decoration
-- WidthAttribute? width
-- HeightAttribute? height
-- Matrix4Attribute? transform
-- BackgroundColorAttribute? color
-- ClipAttribute? clipBehavior
-- ContainerAttributes merge(ContainerAttributes? other)
-- ContainerSpec resolve(MixData mix)
-- get List<Object?> props
-class ContainerSpec extends Spec
-- AlignmentGeometry? alignment
-- EdgeInsetsGeometry? padding
-- EdgeInsetsGeometry? margin
-- BoxConstraints? constraints
-- Decoration? decoration
-- double? width
-- double? height
-- Matrix4? transform
-- Color? color
-- Clip? clipBehavior
-- ContainerSpec copyWith()
-- ContainerSpec lerp(ContainerSpec other, double t)
-- get null props
-
-Beginning of file: lib/src/widgets/container/container.util.dart
-
-
 Beginning of file: lib/src/widgets/mix_context_builder.dart
 
 class MixBuilder extends StyledWidget
 - WidgetMixBuilder _builder
 - Widget build(BuildContext context)
 
-Beginning of file: lib/src/widgets/text/text.widget.dart
-
-class StyledText extends StyledWidget
-- String text
-- String? semanticsLabel
-- Widget build(BuildContext context)
-class MixedText extends StatelessWidget
-- String content
-- String? semanticsLabel
-- void debugFillProperties(DiagnosticPropertiesBuilder properties)
-- Widget build(BuildContext context)
-
-Beginning of file: lib/src/widgets/stack/stack.attributes.dart
-
-class StackAttributes extends SpecAttribute
-- AlignmentGeometryAttribute? alignment
-- StackFitAttribute? fit
-- TextDirectionAttribute? textDirection
-- ClipAttribute? clipBehavior
-- StackAttributes merge(StackAttributes? other)
-- StackSpec resolve(MixData mix)
-- get List<Object?> props
-class StackSpec extends Spec
-- AlignmentGeometry? alignment
-- StackFit? fit
-- TextDirection? textDirection
-- Clip? clipBehavior
-- StackSpec lerp(StackSpec other, double t)
-- StackSpec copyWith()
-- get List<Object?> props
-
-Beginning of file: lib/src/widgets/stack/stack.widget.dart
-
-class StyledStack extends StyledWidget
-- List<Widget> children
-- Widget build(BuildContext context)
-class ZBox extends StyledWidget
-- List<Widget> children
-- Widget build(BuildContext context)
-class MixedStack extends StatelessWidget
-- List<Widget> children
-- Widget build(BuildContext context)
-
-Beginning of file: lib/src/widgets/stack/stack.util.dart
-
-
-Beginning of file: lib/src/widgets/icon/icon.attribute.dart
-
-class IconAttributes extends StyleAttribute
-- ColorDto? color
-- DoubleDto? size
-- IconDataAttribute? icon
-- IconAttributes merge(IconAttributes? other)
-- IconSpec resolve(MixData mix)
-- get List<Object?> props
-class IconSpec extends Spec
-- Color? color
-- double? size
-- IconData? icon
-- IconSpec lerp(IconSpec other, double t)
-- IconSpec copyWith()
-- get null props
-
-Beginning of file: lib/src/widgets/icon/icon.widget.dart
-
-class StyledIcon extends StyledWidget
-- IconData? icon
-- String? semanticLabel
-- Widget build(BuildContext context)
-class MixedIcon extends StatelessWidget
-- IconData? icon
-- String? semanticLabel
-- Widget build(BuildContext context)
-
-Beginning of file: lib/src/widgets/icon/icon.util.dart
-
-
-Beginning of file: lib/src/widgets/flex/flex.widget.dart
+Beginning of file: lib/src/widgets/flex_widget.dart
 
 class StyledFlex extends StyledWidget
 - List<Widget> children
@@ -1547,29 +1530,14 @@ class MixedFlex extends StatelessWidget
 - List<Widget> _prepareChildrenWithGap()
 - Widget build(BuildContext context)
 
-Beginning of file: lib/src/widgets/flex/flex.attribute.dart
+Beginning of file: lib/src/widgets/text_widget.dart
 
-class FlexAttributes extends SpecAttribute
-- AxisAttribute? direction
-- MainAxisAlignmentAttribute? mainAxisAlignment
-- CrossAxisAlignmentAttribute? crossAxisAlignment
-- MainAxisSizeAttribute? mainAxisSize
-- VerticalDirectionAttribute? verticalDirection
-- TextDirectionAttribute? textDirection
-- TextBaselineAttribute? textBaseline
-- ClipAttribute? clipBehavior
-- FlexAttributes merge(FlexAttributes? other)
-- FlexSpec resolve(MixData mix)
-- get List<Object?> props
-class FlexSpec extends Spec
-- Axis? direction
-- MainAxisAlignment? mainAxisAlignment
-- CrossAxisAlignment? crossAxisAlignment
-- MainAxisSize? mainAxisSize
-- VerticalDirection? verticalDirection
-- TextDirection? textDirection
-- TextBaseline? textBaseline
-- Clip? clipBehavior
-- FlexSpec lerp(FlexSpec other, double t)
-- FlexSpec copyWith()
-- get List<Object?> props
+class StyledText extends StyledWidget
+- String text
+- String? semanticsLabel
+- Widget build(BuildContext context)
+class MixedText extends StatelessWidget
+- String content
+- String? semanticsLabel
+- void debugFillProperties(DiagnosticPropertiesBuilder properties)
+- Widget build(BuildContext context)

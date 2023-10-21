@@ -10,14 +10,13 @@ void main() {
 
   // List of suffixes and file names to check
   final patterns = [
-    '.attribute.dart',
-    '.dto.dart',
-    '.utilities.dart',
-    '.util.dart',
-    '.widget.dart',
-    '.directive.dart',
-    '.variant.dart',
-    '.tokens.dart',
+    '_attribute.dart',
+    '_dto.dart',
+    '_util.dart',
+    '_widget.dart',
+    '_directive.dart',
+    '_variant.dart',
+    '_tokens.dart',
   ];
 
   if (!libDirectory.existsSync()) {

@@ -5,13 +5,12 @@ import 'package:flutter/material.dart';
 import '../core/dto/color_dto.dart';
 import '../core/dto/double_dto.dart';
 import '../factory/mix_provider_data.dart';
-import 'icon_data_attribute.dart';
 import 'style_attribute.dart';
 
 class IconAttributes extends StyleAttribute<IconSpec> {
   final ColorDto? color;
   final DoubleDto? size;
-  final IconDataAttribute? icon;
+  final IconData? icon;
 
   const IconAttributes({this.color, this.size, this.icon});
 
@@ -31,7 +30,7 @@ class IconAttributes extends StyleAttribute<IconSpec> {
     return IconSpec(
       color: resolveDto(color, mix),
       size: resolveDto(size, mix),
-      icon: resolveAttr(icon, mix),
+      icon: icon,
     );
   }
 

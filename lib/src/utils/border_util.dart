@@ -6,7 +6,7 @@ import '../core/dto/color_dto.dart';
 
 BoxBorderAttribute border({Color? color, double? width, BorderStyle? style}) {
   return BoxBorderAttribute.fromSide(
-    BorderSideDto.only(
+    BorderSideDto(
       color: ColorDto.maybeFrom(color),
       style: style,
       width: width,
@@ -20,7 +20,7 @@ BoxBorderAttribute borderTop({
   BorderStyle? style,
 }) {
   return BoxBorderAttribute.only(
-    top: BorderSideDto.only(
+    top: BorderSideDto(
       color: ColorDto.maybeFrom(color),
       style: style,
       width: width,
@@ -34,7 +34,7 @@ BoxBorderAttribute borderBottom({
   BorderStyle? style,
 }) {
   return BoxBorderAttribute.only(
-    bottom: BorderSideDto.only(
+    bottom: BorderSideDto(
       color: ColorDto.maybeFrom(color),
       style: style,
       width: width,
@@ -48,7 +48,7 @@ BoxBorderAttribute borderLeft({
   BorderStyle? style,
 }) {
   return BoxBorderAttribute.only(
-    left: BorderSideDto.only(
+    left: BorderSideDto(
       color: ColorDto.maybeFrom(color),
       style: style,
       width: width,
@@ -62,7 +62,7 @@ BoxBorderAttribute borderRight({
   BorderStyle? style,
 }) {
   return BoxBorderAttribute.only(
-    right: BorderSideDto.only(
+    right: BorderSideDto(
       color: ColorDto.maybeFrom(color),
       style: style,
       width: width,
@@ -76,7 +76,7 @@ BoxBorderAttribute borderHorizontal({
   BorderStyle? style,
 }) {
   return BoxBorderAttribute.symmetric(
-    horizontal: BorderSideDto.only(
+    horizontal: BorderSideDto(
       color: ColorDto.maybeFrom(color),
       style: style,
       width: width,
@@ -90,7 +90,7 @@ BoxBorderAttribute borderVertical({
   BorderStyle? style,
 }) {
   return BoxBorderAttribute.symmetric(
-    vertical: BorderSideDto.only(
+    vertical: BorderSideDto(
       color: ColorDto.maybeFrom(color),
       style: style,
       width: width,
@@ -104,7 +104,7 @@ BoxBorderAttribute borderStart({
   BorderStyle? style,
 }) {
   return BoxBorderAttribute.directionalOnly(
-    start: BorderSideDto.only(
+    start: BorderSideDto(
       color: ColorDto.maybeFrom(color),
       style: style,
       width: width,
@@ -118,7 +118,7 @@ BoxBorderAttribute borderEnd({
   BorderStyle? style,
 }) {
   return BoxBorderAttribute.directionalOnly(
-    end: BorderSideDto.only(
+    end: BorderSideDto(
       color: ColorDto.maybeFrom(color),
       style: style,
       width: width,

@@ -1,4 +1,4 @@
-import '../attributes/margin_attribute.dart';
+import '../attributes/space_attribute.dart';
 
 const margin = MarginAttribute.all;
 MarginAttribute marginTop(double value) {

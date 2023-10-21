@@ -6,11 +6,10 @@ import 'package:flutter/widgets.dart';
 import '../core/dto/color_dto.dart';
 import '../factory/mix_provider_data.dart';
 import 'box_fit_attribute.dart';
-import 'height_attribute.dart';
 import 'image_provider_attribute.dart';
 import 'image_repeat_attribute.dart';
+import 'size_attribute.dart';
 import 'style_attribute.dart';
-import 'width_attribute.dart';
 
 class ImageAttributes extends SpecAttribute<ImageSpec> {
   final ImageProviderAttribute? image;

@@ -4,16 +4,14 @@ import 'package:flutter/material.dart';
 
 import '../factory/mix_provider_data.dart';
 import 'alignment_geometry_attribute.dart';
-import 'background_color_attribute.dart';
 import 'box_constraints_attribute.dart';
 import 'clip_attribute.dart';
+import 'color_attribute.dart';
 import 'decoration_attribute.dart';
-import 'height_attribute.dart';
-import 'margin_attribute.dart';
 import 'matrix4_attribute.dart';
-import 'padding_attribute.dart';
+import 'size_attribute.dart';
+import 'space_attribute.dart';
 import 'style_attribute.dart';
-import 'width_attribute.dart';
 
 class ContainerAttributes extends SpecAttribute<ContainerSpec> {
   final AlignmentGeometryAttribute? alignment;

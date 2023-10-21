@@ -12,14 +12,7 @@ class BorderSideDto extends Dto<BorderSide> {
 
   final _default = const BorderSide();
 
-  const BorderSideDto._({
-    this.color,
-    this.strokeAlign,
-    this.style,
-    this.width,
-  });
-
-  const BorderSideDto.only({
+  const BorderSideDto({
     this.color,
     this.strokeAlign,
     this.style,
@@ -27,7 +20,7 @@ class BorderSideDto extends Dto<BorderSide> {
   });
 
   factory BorderSideDto.from(BorderSide side) {
-    return BorderSideDto.only(
+    return BorderSideDto(
       color: ColorDto(side.color),
       strokeAlign: side.strokeAlign,
       style: side.style,
@@ -39,7 +32,7 @@ class BorderSideDto extends Dto<BorderSide> {
   BorderSideDto merge(BorderSideDto? other) {
     if (other == null) return this;
 
-    return BorderSideDto._(
+    return BorderSideDto(
       color: color?.merge(other.color) ?? other.color,
       strokeAlign: other.strokeAlign ?? strokeAlign,
       style: other.style ?? style,

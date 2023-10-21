@@ -7,6 +7,9 @@ class GradientAttribute extends StyleAttribute<Gradient> {
   final Gradient _gradient;
   const GradientAttribute(Gradient gradient) : _gradient = gradient;
 
+  @visibleForTesting
+  Gradient get value => _gradient;
+
   @override
   GradientAttribute merge(GradientAttribute? other) {
     if (other == null) return this;

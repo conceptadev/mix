@@ -61,14 +61,14 @@ void main() {
 
       final result = BorderSideDto.from(borderSide);
 
-      const same = BorderSideDto.only(
+      const same = BorderSideDto(
         color: ColorDto.from(Colors.red),
         width: 2.0,
         style: BorderStyle.solid,
         strokeAlign: 12.0,
       );
 
-      const different = BorderSideDto.only(
+      const different = BorderSideDto(
         color: ColorDto(Colors.blue),
         width: 3.0,
         style: BorderStyle.solid,

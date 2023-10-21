@@ -19,4 +19,5 @@ dev_dependencies:
     sdk: flutter
   dart_code_metrics_presets: ^2.4.0
   path: ^1.8.3
+  mockito: ^5.4.2
 

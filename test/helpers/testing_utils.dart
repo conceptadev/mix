@@ -1,7 +1,49 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
+import 'package:mix/src/theme/mix_theme.dart';
+import 'package:mockito/mockito.dart';
 
 export 'package:mix/src/helpers/extensions/helper_ext.dart';
+
+class MockBuildContext extends Mock implements BuildContext {}
+
+// ignore: non_constant_identifier_names
+final EmptyMixData = MixData.create(
+  context: MockBuildContext(),
+  style: StyleMix.empty,
+);
+
+Future<void> pumpWithMixData(
+  WidgetTester tester, {
+  StyleMix style = StyleMix.empty,
+  required Function(MixData mix) builder,
+}) async {
+  final mixDataCompleter = Completer<MixData>();
+
+  await tester.pumpWidget(
+    MaterialApp(
+      home: Builder(
+        builder: (BuildContext context) {
+          // Populate MixData into the widget tree if needed
+          final mixData = MixData.create(
+            context: context,
+            style: style,
+          ); // Replace with your actual MixData setup
+          // For example, using InheritedWidget or Provider
+          mixDataCompleter.complete(mixData);
+          return Container();
+        },
+      ),
+    ),
+  );
+
+  // Call the test callback, passing in the MixData object
+  final mixData = await mixDataCompleter.future;
+  builder(mixData);
+}
 
 class TestMixWidget extends StatelessWidget {
   const TestMixWidget({
