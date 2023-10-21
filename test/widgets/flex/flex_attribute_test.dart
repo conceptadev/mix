@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mix/src/widgets/exports.dart';
+import 'package:mix/mix.dart';
 
 void main() {
   group('FlexAttributes', () {

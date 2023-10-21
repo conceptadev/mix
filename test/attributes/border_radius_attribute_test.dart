@@ -8,35 +8,41 @@ void main() {
     test('circular creates BorderRadiusAttribute with circular radius', () {
       const radius = 10.0;
       final borderRadius = BorderRadiusAttribute.circular(radius);
+      final borderRadiusDirectional =
+          BorderRadiusDirectionalAttribute.circular(radius);
 
-      expect(borderRadius.topLeft, const RadiusAttribute.circular(radius));
-      expect(borderRadius.topRight, const RadiusAttribute.circular(radius));
-      expect(borderRadius.bottomLeft, const RadiusAttribute.circular(radius));
-      expect(borderRadius.bottomRight, const RadiusAttribute.circular(radius));
-      expect(borderRadius.topStart, null);
-      expect(borderRadius.topEnd, null);
-      expect(borderRadius.bottomStart, null);
-      expect(borderRadius.bottomEnd, null);
+      expect(borderRadius.topLeft, const RadiusDto.circular(radius));
+      expect(borderRadius.topRight, const RadiusDto.circular(radius));
+      expect(borderRadius.bottomLeft, const RadiusDto.circular(radius));
+      expect(borderRadius.bottomRight, const RadiusDto.circular(radius));
+      expect(
+          borderRadiusDirectional.topStart, const RadiusDto.circular(radius));
+      expect(borderRadiusDirectional.topEnd, const RadiusDto.circular(radius));
+      expect(borderRadiusDirectional.bottomStart,
+          const RadiusDto.circular(radius));
+      expect(
+          borderRadiusDirectional.bottomEnd, const RadiusDto.circular(radius));
     });
 
     test('vertical creates BorderRadiusAttribute with vertical radius', () {
       const topRadius = 10.0;
       const bottomRadius = 20.0;
       const borderRadius = BorderRadiusAttribute.vertical(
-        top: RadiusAttribute.circular(topRadius),
-        bottom: RadiusAttribute.circular(bottomRadius),
+        top: RadiusDto.circular(topRadius),
+        bottom: RadiusDto.circular(bottomRadius),
       );
 
-      expect(borderRadius.topLeft, const RadiusAttribute.circular(topRadius));
-      expect(borderRadius.topRight, const RadiusAttribute.circular(topRadius));
+      expect(borderRadius.topLeft, const RadiusDto.circular(topRadius));
+      expect(borderRadius.topRight, const RadiusDto.circular(topRadius));
       expect(
         borderRadius.bottomLeft,
-        const RadiusAttribute.circular(bottomRadius),
+        const RadiusDto.circular(bottomRadius),
       );
       expect(
         borderRadius.bottomRight,
-        const RadiusAttribute.circular(bottomRadius),
+        const RadiusDto.circular(bottomRadius),
       );
+
       expect(borderRadius.topStart, null);
       expect(borderRadius.topEnd, null);
       expect(borderRadius.bottomStart, null);
@@ -47,20 +53,19 @@ void main() {
       const leftRadius = 10.0;
       const rightRadius = 20.0;
       const borderRadius = BorderRadiusAttribute.horizontal(
-        left: RadiusAttribute.circular(leftRadius),
-        right: RadiusAttribute.circular(rightRadius),
+        left: RadiusDto.circular(leftRadius),
+        right: RadiusDto.circular(rightRadius),
       );
 
-      expect(borderRadius.topLeft, const RadiusAttribute.circular(leftRadius));
+      expect(borderRadius.topLeft, const RadiusDto.circular(leftRadius));
       expect(
         borderRadius.topRight,
-        const RadiusAttribute.circular(rightRadius),
+        const RadiusDto.circular(rightRadius),
       );
-      expect(
-          borderRadius.bottomLeft, const RadiusAttribute.circular(leftRadius));
+      expect(borderRadius.bottomLeft, const RadiusDto.circular(leftRadius));
       expect(
         borderRadius.bottomRight,
-        const RadiusAttribute.circular(rightRadius),
+        const RadiusDto.circular(rightRadius),
       );
       expect(borderRadius.topStart, null);
       expect(borderRadius.topEnd, null);
@@ -74,27 +79,27 @@ void main() {
       const bottomLeftRadius = 30.0;
       const bottomRightRadius = 40.0;
       const borderRadius = BorderRadiusAttribute.only(
-        topLeft: RadiusAttribute.circular(topLeftRadius),
-        topRight: RadiusAttribute.circular(topRightRadius),
-        bottomLeft: RadiusAttribute.circular(bottomLeftRadius),
-        bottomRight: RadiusAttribute.circular(bottomRightRadius),
+        topLeft: RadiusDto.circular(topLeftRadius),
+        topRight: RadiusDto.circular(topRightRadius),
+        bottomLeft: RadiusDto.circular(bottomLeftRadius),
+        bottomRight: RadiusDto.circular(bottomRightRadius),
       );
 
       expect(
         borderRadius.topLeft,
-        const RadiusAttribute.circular(topLeftRadius),
+        const RadiusDto.circular(topLeftRadius),
       );
       expect(
         borderRadius.topRight,
-        const RadiusAttribute.circular(topRightRadius),
+        const RadiusDto.circular(topRightRadius),
       );
       expect(
         borderRadius.bottomLeft,
-        const RadiusAttribute.circular(bottomLeftRadius),
+        const RadiusDto.circular(bottomLeftRadius),
       );
       expect(
         borderRadius.bottomRight,
-        const RadiusAttribute.circular(bottomRightRadius),
+        const RadiusDto.circular(bottomRightRadius),
       );
       expect(borderRadius.topStart, null);
       expect(borderRadius.topEnd, null);
@@ -109,10 +114,10 @@ void main() {
       const bottomStartRadius = 30.0;
       const bottomEndRadius = 40.0;
       const borderRadius = BorderRadiusAttribute.directionalOnly(
-        topStart: RadiusAttribute.circular(topStartRadius),
-        topEnd: RadiusAttribute.circular(topEndRadius),
-        bottomStart: RadiusAttribute.circular(bottomStartRadius),
-        bottomEnd: RadiusAttribute.circular(bottomEndRadius),
+        topStart: RadiusDto.circular(topStartRadius),
+        topEnd: RadiusDto.circular(topEndRadius),
+        bottomStart: RadiusDto.circular(bottomStartRadius),
+        bottomEnd: RadiusDto.circular(bottomEndRadius),
       );
 
       expect(borderRadius.topLeft, null);
@@ -121,29 +126,29 @@ void main() {
       expect(borderRadius.bottomRight, null);
       expect(
         borderRadius.topStart,
-        const RadiusAttribute.circular(topStartRadius),
+        const RadiusDto.circular(topStartRadius),
       );
-      expect(borderRadius.topEnd, const RadiusAttribute.circular(topEndRadius));
+      expect(borderRadius.topEnd, const RadiusDto.circular(topEndRadius));
       expect(
         borderRadius.bottomStart,
-        const RadiusAttribute.circular(bottomStartRadius),
+        const RadiusDto.circular(bottomStartRadius),
       );
       expect(
         borderRadius.bottomEnd,
-        const RadiusAttribute.circular(bottomEndRadius),
+        const RadiusDto.circular(bottomEndRadius),
       );
     });
 
     test('all creates BorderRadiusAttribute with uniform radii', () {
       const radius = 10.0;
       const borderRadius = BorderRadiusAttribute.all(
-        RadiusAttribute.circular(radius),
+        RadiusDto.circular(radius),
       );
 
-      expect(borderRadius.topLeft, const RadiusAttribute.circular(radius));
-      expect(borderRadius.topRight, const RadiusAttribute.circular(radius));
-      expect(borderRadius.bottomLeft, const RadiusAttribute.circular(radius));
-      expect(borderRadius.bottomRight, const RadiusAttribute.circular(radius));
+      expect(borderRadius.topLeft, const RadiusDto.circular(radius));
+      expect(borderRadius.topRight, const RadiusDto.circular(radius));
+      expect(borderRadius.bottomLeft, const RadiusDto.circular(radius));
+      expect(borderRadius.bottomRight, const RadiusDto.circular(radius));
       expect(borderRadius.topStart, null);
       expect(borderRadius.topEnd, null);
       expect(borderRadius.bottomStart, null);
@@ -152,25 +157,22 @@ void main() {
 
     test('merge of non-directional attributes', () {
       const radius1 = BorderRadiusAttribute.only(
-        topLeft: RadiusAttribute.circular(10),
-        topRight: RadiusAttribute.circular(20),
-        bottomLeft: RadiusAttribute.circular(30),
-        bottomRight: RadiusAttribute.circular(40),
+        topLeft: RadiusDto.circular(10),
+        topRight: RadiusDto.circular(20),
+        bottomLeft: RadiusDto.circular(30),
+        bottomRight: RadiusDto.circular(40),
       );
       const radius2 = BorderRadiusAttribute.only(
-        topLeft: RadiusAttribute.circular(100),
-        bottomRight: RadiusAttribute.circular(400),
+        topLeft: RadiusDto.circular(100),
+        bottomRight: RadiusDto.circular(400),
       );
 
       final merged = radius1.merge(radius2);
 
-      expect(merged.topLeft, const RadiusAttribute.circular(100)); // Overridden
-      expect(
-          merged.topRight, const RadiusAttribute.circular(20)); // Kept original
-      expect(merged.bottomLeft,
-          const RadiusAttribute.circular(30)); // Kept original
-      expect(merged.bottomRight,
-          const RadiusAttribute.circular(400)); // Overridden
+      expect(merged.topLeft, const RadiusDto.circular(100)); // Overridden
+      expect(merged.topRight, const RadiusDto.circular(20)); // Kept original
+      expect(merged.bottomLeft, const RadiusDto.circular(30)); // Kept original
+      expect(merged.bottomRight, const RadiusDto.circular(400)); // Overridden
       expect(merged.topStart, null);
       expect(merged.topEnd, null);
       expect(merged.bottomStart, null);
@@ -179,14 +181,14 @@ void main() {
 
     test('merge of directional attributes', () {
       const radius1 = BorderRadiusAttribute.directionalOnly(
-        topStart: RadiusAttribute.circular(10),
-        topEnd: RadiusAttribute.circular(20),
-        bottomStart: RadiusAttribute.circular(30),
-        bottomEnd: RadiusAttribute.circular(40),
+        topStart: RadiusDto.circular(10),
+        topEnd: RadiusDto.circular(20),
+        bottomStart: RadiusDto.circular(30),
+        bottomEnd: RadiusDto.circular(40),
       );
       const radius2 = BorderRadiusAttribute.directionalOnly(
-        topEnd: RadiusAttribute.circular(400),
-        bottomStart: RadiusAttribute.circular(300),
+        topEnd: RadiusDto.circular(400),
+        bottomStart: RadiusDto.circular(300),
       );
 
       final merged = radius1.merge(radius2);
@@ -195,24 +197,24 @@ void main() {
       expect(merged.topRight, null);
       expect(merged.bottomLeft, null);
       expect(merged.bottomRight, null);
-      expect(merged.topStart, const RadiusAttribute.circular(10));
-      expect(merged.topEnd, const RadiusAttribute.circular(400));
-      expect(merged.bottomStart, const RadiusAttribute.circular(300));
-      expect(merged.bottomEnd, const RadiusAttribute.circular(40));
+      expect(merged.topStart, const RadiusDto.circular(10));
+      expect(merged.topEnd, const RadiusDto.circular(400));
+      expect(merged.bottomStart, const RadiusDto.circular(300));
+      expect(merged.bottomEnd, const RadiusDto.circular(40));
     });
 
     test('merge fails with directional and non-directional', () {
       const radius1 = BorderRadiusAttribute.only(
-        topLeft: RadiusAttribute.circular(10),
-        topRight: RadiusAttribute.circular(20),
-        bottomLeft: RadiusAttribute.circular(30),
-        bottomRight: RadiusAttribute.circular(40),
+        topLeft: RadiusDto.circular(10),
+        topRight: RadiusDto.circular(20),
+        bottomLeft: RadiusDto.circular(30),
+        bottomRight: RadiusDto.circular(40),
       );
       const radius2 = BorderRadiusAttribute.directionalOnly(
-        topStart: RadiusAttribute.circular(100),
-        topEnd: RadiusAttribute.circular(200),
-        bottomStart: RadiusAttribute.circular(300),
-        bottomEnd: RadiusAttribute.circular(400),
+        topStart: RadiusDto.circular(100),
+        topEnd: RadiusDto.circular(200),
+        bottomStart: RadiusDto.circular(300),
+        bottomEnd: RadiusDto.circular(400),
       );
 
       expect(() => radius1.merge(radius2), throwsUnsupportedError);
@@ -223,11 +225,10 @@ void main() {
         const radius = 10.0;
         final borderRadius = rounded(radius);
 
-        expect(borderRadius.topLeft, const RadiusAttribute.circular(radius));
-        expect(borderRadius.topRight, const RadiusAttribute.circular(radius));
-        expect(borderRadius.bottomLeft, const RadiusAttribute.circular(radius));
-        expect(
-            borderRadius.bottomRight, const RadiusAttribute.circular(radius));
+        expect(borderRadius.topLeft, const RadiusDto.circular(radius));
+        expect(borderRadius.topRight, const RadiusDto.circular(radius));
+        expect(borderRadius.bottomLeft, const RadiusDto.circular(radius));
+        expect(borderRadius.bottomRight, const RadiusDto.circular(radius));
         expect(borderRadius.topStart, null);
         expect(borderRadius.topEnd, null);
         expect(borderRadius.bottomStart, null);
@@ -237,10 +238,10 @@ void main() {
       test('squared creates BorderRadiusAttribute with zero radius', () {
         final borderRadius = squared();
 
-        expect(borderRadius.topLeft, const RadiusAttribute.zero());
-        expect(borderRadius.topRight, const RadiusAttribute.zero());
-        expect(borderRadius.bottomLeft, const RadiusAttribute.zero());
-        expect(borderRadius.bottomRight, const RadiusAttribute.zero());
+        expect(borderRadius.topLeft, const RadiusDto.zero());
+        expect(borderRadius.topRight, const RadiusDto.zero());
+        expect(borderRadius.bottomLeft, const RadiusDto.zero());
+        expect(borderRadius.bottomRight, const RadiusDto.zero());
         expect(borderRadius.topStart, null);
         expect(borderRadius.topEnd, null);
         expect(borderRadius.bottomStart, null);
@@ -262,19 +263,19 @@ void main() {
 
         expect(
           borderRadius.topLeft,
-          const RadiusAttribute.circular(topLeftRadius),
+          const RadiusDto.circular(topLeftRadius),
         );
         expect(
           borderRadius.topRight,
-          const RadiusAttribute.circular(topRightRadius),
+          const RadiusDto.circular(topRightRadius),
         );
         expect(
           borderRadius.bottomLeft,
-          const RadiusAttribute.circular(bottomLeftRadius),
+          const RadiusDto.circular(bottomLeftRadius),
         );
         expect(
           borderRadius.bottomRight,
-          const RadiusAttribute.circular(bottomRightRadius),
+          const RadiusDto.circular(bottomRightRadius),
         );
         expect(borderRadius.topStart, null);
         expect(borderRadius.topEnd, null);
@@ -302,19 +303,19 @@ void main() {
         expect(borderRadius.bottomRight, null);
         expect(
           borderRadius.topStart,
-          const RadiusAttribute.circular(topStartRadius),
+          const RadiusDto.circular(topStartRadius),
         );
         expect(
           borderRadius.topEnd,
-          const RadiusAttribute.circular(topEndRadius),
+          const RadiusDto.circular(topEndRadius),
         );
         expect(
           borderRadius.bottomStart,
-          const RadiusAttribute.circular(bottomStartRadius),
+          const RadiusDto.circular(bottomStartRadius),
         );
         expect(
           borderRadius.bottomEnd,
-          const RadiusAttribute.circular(bottomEndRadius),
+          const RadiusDto.circular(bottomEndRadius),
         );
       });
 
@@ -330,19 +331,19 @@ void main() {
 
         expect(
           borderRadius.topLeft,
-          const RadiusAttribute.circular(leftRadius),
+          const RadiusDto.circular(leftRadius),
         );
         expect(
           borderRadius.topRight,
-          const RadiusAttribute.circular(rightRadius),
+          const RadiusDto.circular(rightRadius),
         );
         expect(
           borderRadius.bottomLeft,
-          const RadiusAttribute.circular(leftRadius),
+          const RadiusDto.circular(leftRadius),
         );
         expect(
           borderRadius.bottomRight,
-          const RadiusAttribute.circular(rightRadius),
+          const RadiusDto.circular(rightRadius),
         );
         expect(borderRadius.topStart, null);
         expect(borderRadius.topEnd, null);
@@ -366,19 +367,19 @@ void main() {
         expect(borderRadius.bottomRight, null);
         expect(
           borderRadius.topStart,
-          const RadiusAttribute.circular(startRadius),
+          const RadiusDto.circular(startRadius),
         );
         expect(
           borderRadius.topEnd,
-          const RadiusAttribute.circular(endRadius),
+          const RadiusDto.circular(endRadius),
         );
         expect(
           borderRadius.bottomStart,
-          const RadiusAttribute.circular(startRadius),
+          const RadiusDto.circular(startRadius),
         );
         expect(
           borderRadius.bottomEnd,
-          const RadiusAttribute.circular(endRadius),
+          const RadiusDto.circular(endRadius),
         );
       });
 
@@ -394,19 +395,19 @@ void main() {
 
         expect(
           borderRadius.topLeft,
-          const RadiusAttribute.circular(topRadius),
+          const RadiusDto.circular(topRadius),
         );
         expect(
           borderRadius.topRight,
-          const RadiusAttribute.circular(topRadius),
+          const RadiusDto.circular(topRadius),
         );
         expect(
           borderRadius.bottomLeft,
-          const RadiusAttribute.circular(bottomRadius),
+          const RadiusDto.circular(bottomRadius),
         );
         expect(
           borderRadius.bottomRight,
-          const RadiusAttribute.circular(bottomRadius),
+          const RadiusDto.circular(bottomRadius),
         );
         expect(borderRadius.topStart, null);
         expect(borderRadius.topEnd, null);
@@ -430,19 +431,19 @@ void main() {
         expect(borderRadius.bottomRight, null);
         expect(
           borderRadius.topStart,
-          const RadiusAttribute.circular(topRadius),
+          const RadiusDto.circular(topRadius),
         );
         expect(
           borderRadius.topEnd,
-          const RadiusAttribute.circular(topRadius),
+          const RadiusDto.circular(topRadius),
         );
         expect(
           borderRadius.bottomStart,
-          const RadiusAttribute.circular(bottomRadius),
+          const RadiusDto.circular(bottomRadius),
         );
         expect(
           borderRadius.bottomEnd,
-          const RadiusAttribute.circular(bottomRadius),
+          const RadiusDto.circular(bottomRadius),
         );
       });
     });
