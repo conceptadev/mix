@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart' hide border, onEnabled, icon, iconColor;
-import 'package:mix/src/attributes/variants/variant.dart';
+import 'package:mix/src/core/variants/variant.dart';
 
 import '../helpers/testing_utils.dart';
 

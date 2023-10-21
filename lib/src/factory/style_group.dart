@@ -1,4 +1,4 @@
-import '../attributes/variants/variant.dart';
+import '../core/variants/variant.dart';
 
 abstract class StyleGroup<T extends StyleGroup<T>> {
   const StyleGroup();

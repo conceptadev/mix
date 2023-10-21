@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mix/src/attributes/container.attribute.dart';
 import 'package:mix/src/attributes/decorators/decorators.util.dart';
 import 'package:mix/src/attributes/shared/shared.attributes.dart';
 import 'package:mix/src/dtos/border/border.dto.dart';
@@ -7,11 +8,10 @@ import 'package:mix/src/dtos/color.dto.dart';
 import 'package:mix/src/dtos/edge_insets/edge_insets.dto.dart';
 import 'package:mix/src/dtos/radius/border_radius.dto.dart';
 import 'package:mix/src/dtos/radius/radius_dto.dart';
-import 'package:mix/src/extensions/style_mix_ext.dart';
 import 'package:mix/src/factory/style_mix.dart';
-import 'package:mix/src/widgets/container/container.attribute.dart';
+import 'package:mix/src/helpers/extensions/style_mix_ext.dart';
+import 'package:mix/src/widgets/container.widget.dart';
 import 'package:mix/src/widgets/container/container.utilities.dart';
-import 'package:mix/src/widgets/container/container.widget.dart';
 
 import '../helpers/random_dto.dart';
 import '../helpers/testing_utils.dart';

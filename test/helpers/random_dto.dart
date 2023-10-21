@@ -4,9 +4,9 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
+import 'package:mix/src/attributes/container.attribute.dart';
 import 'package:mix/src/attributes/text_style.attribute.dart';
 import 'package:mix/src/factory/style_mix.dart';
-import 'package:mix/src/widgets/container/container.attribute.dart';
 
 class RandomGenerator {
   const RandomGenerator._();

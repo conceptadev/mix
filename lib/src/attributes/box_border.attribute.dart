@@ -2,8 +2,8 @@
 
 import 'package:flutter/material.dart';
 
+import '../core/dto/border_side.dto.dart';
 import '../factory/mix_provider_data.dart';
-import 'border/border_side.dto.dart';
 import 'style_attribute.dart';
 
 class BoxBorderAttribute extends StyleAttribute<BoxBorder> {

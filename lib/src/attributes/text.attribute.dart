@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
+import '../core/directives/text.directive.dart';
 import '../factory/exports.dart';
 import 'strut_style.attribute.dart';
 import 'style_attribute.dart';
-import 'text/directives/text.directive.dart';
 import 'text_align.attribute.dart';
 import 'text_direction.attribute.dart';
 import 'text_overflow.attribute.dart';

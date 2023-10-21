@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import '../../../mix.dart';
+import 'text_style_token.dart';
 
 abstract class MixToken {
   final String name;
@@ -32,4 +32,4 @@ typedef TokenReferenceMap<T extends MixToken, V> = Map<T, TokenValueGetter<V?>>;
 
 typedef MixTextStyleTokens = TokenReferenceMap<TextStyleToken, TextStyle>;
 
-typedef TokenValueGetter<T> = T Function(BuildContext);
+typedef TokenValueGetter<T> = T Function(BuildContext context);

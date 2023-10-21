@@ -2,12 +2,12 @@
 
 import 'package:flutter/rendering.dart';
 
+import '../core/dto/color.dto.dart';
 import '../factory/mix_provider_data.dart';
-import 'base/color.dto.dart';
 import 'border_radius_geometry.attribute.dart';
 import 'box_border.attribute.dart';
-import 'gradient/gradient.attribute.dart';
-import 'shadow/box_shadow.attribute.dart';
+import 'box_shadow.attribute.dart';
+import 'gradient.attribute.dart';
 import 'style_attribute.dart';
 
 abstract class DecorationAttribute<T extends Decoration>

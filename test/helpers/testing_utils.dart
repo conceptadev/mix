@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
 
-export 'package:mix/src/extensions/helper_ext.dart';
+export 'package:mix/src/helpers/extensions/helper_ext.dart';
 
 class TestMixWidget extends StatelessWidget {
   const TestMixWidget({

@@ -1,7 +1,7 @@
 // ignore: avoid-importing-entrypoint-exports
 import '../mix.dart';
 import 'attributes/attribute.dart';
-import 'attributes/variants/variant.dart';
+import 'core/variants/variant.dart';
 
 extension DeprecatedMixExtension<T extends Attribute> on StyleMix {
   /// Adds an Attribute to a Mix.

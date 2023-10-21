@@ -7,9 +7,9 @@ import 'package:path/path.dart' as p;
 void main() {
   final dir = Directory('./lib'); // Starting directory
   const searchPattern =
-      '.utils.dart'; // The part of the filename you want to search for (including extension)
+      '.attribute.dart'; // The part of the filename you want to search for (including extension)
   const replacement =
-      '.utility.dart'; // The string with which you want to replace the searchPattern (including extension)
+      '_attribute.dart'; // The string with which you want to replace the searchPattern (including extension)
 
   // 1. Recursively get all the Dart files
   final allDartFiles = dir.listSync(recursive: true).where((entity) {

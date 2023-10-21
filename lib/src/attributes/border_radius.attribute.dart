@@ -2,8 +2,8 @@
 
 import 'package:flutter/material.dart';
 
+import '../core/dto/radius.dto.dart';
 import '../factory/exports.dart';
-import 'border_radius/radius.dto.dart';
 import 'border_radius_geometry.attribute.dart';
 
 class BorderRadiusAttribute

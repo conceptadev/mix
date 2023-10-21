@@ -6,7 +6,7 @@ import 'package:flutter/cupertino.dart';
 
 import '../attributes/attribute.dart';
 import '../attributes/style_attribute.dart';
-import '../attributes/variants/variant_attribute.dart';
+import '../attributes/variant_attribute.dart';
 import '../factory/mix_provider_data.dart';
 import 'compare_mixin/compare_mixin.dart';
 

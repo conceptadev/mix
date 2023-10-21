@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-import 'base/color.dto.dart';
+import '../core/dto/color.dto.dart';
 import 'color.attribute.dart';
 
 class BackgroundColorAttribute extends ColorAttribute {

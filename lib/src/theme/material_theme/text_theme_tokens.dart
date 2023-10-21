@@ -1,6 +1,6 @@
 // ignore_for_file: deprecated_member_use
 
-import '../../extensions/build_context_ext.dart';
+import '../../helpers/extensions/build_context_ext.dart';
 import '../tokens/mix_token.dart';
 import '../tokens/text_style_token.dart';
 

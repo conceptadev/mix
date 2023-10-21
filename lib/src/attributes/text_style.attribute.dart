@@ -2,10 +2,10 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
+import '../core/dto/color.dto.dart';
 import '../factory/exports.dart';
-import '../theme/exports.dart';
-import 'base/color.dto.dart';
-import 'shadow/shadow.attribute.dart';
+import '../theme/tokens/text_style_token.dart';
+import 'shadow.attribute.dart';
 import 'style_attribute.dart';
 
 class TextStyleAttribute extends StyleAttribute<TextStyle> {
