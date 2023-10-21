@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
+import '../../attributes/axis.attribute.dart';
 import '../../attributes/enum/clip.attribute.dart';
 import '../../attributes/enum/vertical_direction/vertical_direction.attribute.dart';
-import '../../attributes/flex/axis.attribute.dart';
 import '../../attributes/flex/cross_axis_alignment.attribute.dart';
 import '../../attributes/flex/main_axis_alignment.attribute.dart';
 import '../../attributes/flex/main_axis_size.attribute.dart';
 import '../../attributes/style_attribute.dart';
-import '../../attributes/text/text_baseline.attribute.dart';
-import '../../attributes/text/text_direction/text_direction.attribute.dart';
+import '../../attributes/text_baseline.attribute.dart';
+import '../../attributes/text_direction.attribute.dart';
 import '../../factory/mix_provider_data.dart';
 
 class FlexAttributes extends SpecAttribute<FlexSpec> {
@@ -50,14 +50,14 @@ class FlexAttributes extends SpecAttribute<FlexSpec> {
   @override
   FlexSpec resolve(MixData mix) {
     return FlexSpec(
-      crossAxisAlignment: resolveAttribute(crossAxisAlignment, mix),
-      mainAxisAlignment: resolveAttribute(mainAxisAlignment, mix),
-      mainAxisSize: resolveAttribute(mainAxisSize, mix),
-      verticalDirection: resolveAttribute(verticalDirection, mix),
-      direction: resolveAttribute(direction, mix),
-      textDirection: resolveAttribute(textDirection, mix),
-      textBaseline: resolveAttribute(textBaseline, mix),
-      clipBehavior: resolveAttribute(clipBehavior, mix),
+      crossAxisAlignment: resolveAttr(crossAxisAlignment, mix),
+      mainAxisAlignment: resolveAttr(mainAxisAlignment, mix),
+      mainAxisSize: resolveAttr(mainAxisSize, mix),
+      verticalDirection: resolveAttr(verticalDirection, mix),
+      direction: resolveAttr(direction, mix),
+      textDirection: resolveAttr(textDirection, mix),
+      textBaseline: resolveAttr(textBaseline, mix),
+      clipBehavior: resolveAttr(clipBehavior, mix),
     );
   }
 

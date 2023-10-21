@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../attributes/text/text_direction/text_direction.attribute.dart';
+import '../../attributes/text_direction.attribute.dart';
 import '../../factory/mix_provider.dart';
 import '../empty/empty.widget.dart';
 import '../styled.widget.dart';
@@ -44,9 +44,11 @@ class MixedIcon extends StatelessWidget {
 
     final attributes = mix.maybeGet<IconAttributes, IconSpec>();
     final textDirection = mix.maybeGet<TextDirectionAttribute, TextDirection>();
-    final common = mix.commonSpec;
+    final animationDuration = mix.commonSpec.animationDuration;
+    final animationCurve = mix.commonSpec.animationCurve;
+    final visible = mix.commonSpec.visible;
 
-    if (!common.visible) {
+    if (!visible) {
       return const Empty();
     }
     Widget iconWidget = Icon(
@@ -59,15 +61,15 @@ class MixedIcon extends StatelessWidget {
     if (mix.animated) {
       iconWidget = TweenAnimationBuilder<double>(
         tween: Tween<double>(end: attributes?.size),
-        duration: common.animation.duration,
-        curve: common.animation.curve,
+        duration: animationDuration,
+        curve: animationCurve,
         builder: (context, value, child) {
           final sizeValue = value;
 
           return TweenAnimationBuilder<Color?>(
             tween: ColorTween(end: attributes?.color),
-            duration: common.animation.duration,
-            curve: common.animation.curve,
+            duration: animationDuration,
+            curve: animationCurve,
             builder: (context, value, child) {
               final colorValue = value;
 

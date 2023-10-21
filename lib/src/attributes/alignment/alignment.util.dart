@@ -1,50 +1,50 @@
 import 'package:flutter/material.dart';
 
-import 'alignment_geometry.attribute.dart';
+import '../alignment_geometry.attribute.dart';
 
-const aligment = AlignmentGeometryAttribute.from;
+const alignment = AlignmentGeometryAttribute.from;
 
 /// The top left corner.
-final alignmentTopLeft = aligment(Alignment.topLeft);
+final alignmentTopLeft = alignment(Alignment.topLeft);
 
 /// The center point along the top edge.
-final alignmentTopCenter = aligment(Alignment.topCenter);
+final alignmentTopCenter = alignment(Alignment.topCenter);
 
 /// The top right corner.
-final alignmentTopRight = aligment(Alignment.topRight);
+final alignmentTopRight = alignment(Alignment.topRight);
 
 /// The center point along the left edge.
-final alignmentCenterLeft = aligment(Alignment.centerLeft);
+final alignmentCenterLeft = alignment(Alignment.centerLeft);
 
 /// The center point, both horizontally and vertically.
-final alignmentCenter = aligment(Alignment.center);
+final alignmentCenter = alignment(Alignment.center);
 
 /// The center point along the right edge.
-final alignmentCenterRight = aligment(Alignment.centerRight);
+final alignmentCenterRight = alignment(Alignment.centerRight);
 
 /// The bottom left corner.
-final alignmentBottomLeft = aligment(Alignment.bottomLeft);
+final alignmentBottomLeft = alignment(Alignment.bottomLeft);
 
 /// The center point along the bottom edge.
-final alignmentBottomCenter = aligment(Alignment.bottomCenter);
+final alignmentBottomCenter = alignment(Alignment.bottomCenter);
 
 /// The bottom right corner.
-final alignmentBottomRight = aligment(Alignment.bottomRight);
+final alignmentBottomRight = alignment(Alignment.bottomRight);
 
 /// The top corner on the "start" side.
-final alignmentTopStart = aligment(AlignmentDirectional.topStart);
+final alignmentTopStart = alignment(AlignmentDirectional.topStart);
 
 /// The top corner on the "end" side.
-final alignmentTopEnd = aligment(AlignmentDirectional.topEnd);
+final alignmentTopEnd = alignment(AlignmentDirectional.topEnd);
 
 /// The center point along the "start" edge.
-final alignmentCenterStart = aligment(AlignmentDirectional.centerStart);
+final alignmentCenterStart = alignment(AlignmentDirectional.centerStart);
 
 /// The center point along the "end" edge.
-final alignmentCenterEnd = aligment(AlignmentDirectional.centerEnd);
+final alignmentCenterEnd = alignment(AlignmentDirectional.centerEnd);
 
 /// The bottom corner on the "start" side.
-final alignmentBottomStart = aligment(AlignmentDirectional.bottomStart);
+final alignmentBottomStart = alignment(AlignmentDirectional.bottomStart);
 
 /// The bottom corner on the "end" side.
-final alignmentBottomEnd = aligment(AlignmentDirectional.bottomEnd);
+final alignmentBottomEnd = alignment(AlignmentDirectional.bottomEnd);

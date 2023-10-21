@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 import '../../widgets/flex/flex.attribute.dart';
+import '../axis.attribute.dart';
 import '../enum/clip.attribute.dart';
 import '../enum/vertical_direction/vertical_direction.attribute.dart';
-import '../text/text_baseline.attribute.dart';
-import '../text/text_direction/text_direction.attribute.dart';
-import 'axis.attribute.dart';
+import '../text_baseline.attribute.dart';
+import '../text_direction.attribute.dart';
 import 'cross_axis_alignment.attribute.dart';
 import 'flex_fit.attribute.dart';
 import 'main_axis_alignment.attribute.dart';
@@ -115,12 +115,6 @@ FlexAttributes _column({
 @Deprecated('Use flex(direction: direction) instead')
 FlexAttributes direction(Axis direction) {
   return _flex(direction: direction);
-}
-
-// Create a FlexAttributes for the direction vertical axis.
-@Deprecated('Use flex(direction: Axis.vertical) instead')
-FlexAttributes verticalDirection(VerticalDirection verticalDirection) {
-  return _flex(verticalDirection: verticalDirection);
 }
 
 // Create a FlexAttributes for the cross axis.

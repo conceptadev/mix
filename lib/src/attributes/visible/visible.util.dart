@@ -1,4 +1,4 @@
-import 'visible.attribute.dart';
+import '../visible.attribute.dart';
 
 const show = _show;
 const hide = _hide;

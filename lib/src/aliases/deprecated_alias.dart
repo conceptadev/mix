@@ -1,16 +1,26 @@
 // @exportRequired
 
+import 'dart:ui';
+
+import 'package:flutter/material.dart';
+
+import '../attributes/alignment/alignment.util.dart';
 import '../attributes/border/border.util.dart';
+import '../attributes/border_radius.attribute.dart';
 import '../attributes/border_radius/border_radius.util.dart';
 import '../attributes/box_constraints/box_constraints.util.dart';
 import '../attributes/flex/flex_util.dart';
+import '../attributes/helpers/helper.util.dart';
 import '../attributes/pressable/pressable.util.dart';
 import '../attributes/size/height.util.dart';
 import '../attributes/size/width.util.dart';
 import '../attributes/space/margin_utils.dart';
 import '../attributes/space/padding.util.dart';
+import '../attributes/text/utilities/text_style.util.dart';
+import '../attributes/text_style.attribute.dart';
 import '../attributes/variants/context_variant.util.dart';
 import '../helpers/constants.dart';
+import '../widgets/container/container.util.dart';
 
 /// ALL ALIASES HERE HAVE BEEN DEPRECATED AND WILL BE REMOVED IN THE FUTURE
 /// FEEL FREE TO BRING INTERNALLY TO YOUR OWN PROJECT
@@ -67,7 +77,9 @@ const not = onNot;
 const font = textStyle;
 
 @Deprecated('Use textStyle(textShadow: textShadow) instead')
-const textShadow = LegacyTextFriendlyUtility.textShadow;
+TextStyleAttribute textShadow(List<Shadow> textShadow) {
+  return textStyle(shadows: textShadow);
+}
 
 @Deprecated('Use textStyle(textShadow: textShadow) instead')
 const fontWeight = LegacyTextStyleUtility.fontWeight;
@@ -82,7 +94,7 @@ const letterSpacing = LegacyTextStyleUtility.letterSpacing;
 const debugLabel = LegacyTextStyleUtility.debugLabel;
 
 @Deprecated('Use textStyle(height: height) instead')
-const textHeight = LegacyTextStyleUtility.height;
+const textHeight = LegacyTextStyleUtility.textHeight;
 
 @Deprecated('Use textStyle(wordSpacing: wordSpacing) instead')
 const wordSpacing = LegacyTextStyleUtility.wordSpacing;
@@ -97,37 +109,119 @@ const fontSize = LegacyTextStyleUtility.fontSize;
 const inherit = LegacyTextStyleUtility.inherit;
 
 @Deprecated('Use textStyle(color: color) instead')
-const textColor = LegacyTextStyleUtility.color;
+const textColor = LegacyTextStyleUtility.textColor;
 
 @Deprecated('Use textStyle(backgroundColor: backgroundColor) instead')
-const textBgColor = LegacyTextStyleUtility.backgroundColor;
+const textBgColor = LegacyTextStyleUtility.textBgColor;
 
 @Deprecated('Use textStyle(foreground: foreground) instead')
-const textForeground = LegacyTextStyleUtility.foreground;
+const textForeground = LegacyTextStyleUtility.textForeground;
 
 @Deprecated('Use textStyle(background: background) instead')
-const textBackground = LegacyTextStyleUtility.background;
+const textBackground = LegacyTextStyleUtility.textBackground;
 
 @Deprecated('Use textStyle(shadows: shadows) instead')
-const textShadows = LegacyTextStyleUtility.shadows;
+const textShadows = LegacyTextStyleUtility.textShadow;
 
 @Deprecated('Use textStyle(fontFeatures: fontFeatures) instead')
 const fontFeatures = LegacyTextStyleUtility.fontFeatures;
 
 @Deprecated('Use textStyle(decoration: decoration) instead')
-const textDecoration = LegacyTextStyleUtility.decoration;
+const textDecoration = LegacyTextStyleUtility.textDecoration;
 
 @Deprecated('Use textStyle(decorationColor: decorationColor) instead')
-const textDecorationColor = LegacyTextStyleUtility.decorationColor;
+const textDecorationColor = LegacyTextStyleUtility.textDecorationColor;
 
 @Deprecated('Use textStyle(decorationStyle: decorationStyle) instead')
-const textDecorationStyle = LegacyTextStyleUtility.decorationStyle;
+const textDecorationStyle = LegacyTextStyleUtility.textDecorationStyle;
 
 @Deprecated('Use textStyle(decorationThickness: decorationThickness) instead')
-const textDecorationThickness = LegacyTextStyleUtility.decorationThickness;
+const textDecorationThickness = LegacyTextStyleUtility.textDecorationThickness;
 
 @Deprecated('Use textStyle(fontFamilyFallback: fontFamilyFallback) instead')
 const fontFamilyFallback = LegacyTextStyleUtility.fontFamilyFallback;
+
+class LegacyTextStyleUtility {
+  static TextStyle textShadow(List<Shadow> shadows) {
+    return TextStyle(shadows: shadows);
+  }
+
+  static TextStyle fontWeight(FontWeight weight) {
+    return TextStyle(fontWeight: weight);
+  }
+
+  static TextStyle textBaseline(TextBaseline baseline) {
+    return TextStyle(textBaseline: baseline);
+  }
+
+  static TextStyle letterSpacing(double spacing) {
+    return TextStyle(letterSpacing: spacing);
+  }
+
+  static TextStyle debugLabel(String label) {
+    return TextStyle(debugLabel: label);
+  }
+
+  static TextStyle textHeight(double height) {
+    return TextStyle(height: height);
+  }
+
+  static TextStyle wordSpacing(double spacing) {
+    return TextStyle(wordSpacing: spacing);
+  }
+
+  static TextStyle fontStyle(FontStyle style) {
+    return TextStyle(fontStyle: style);
+  }
+
+  static TextStyle fontSize(double size) {
+    return TextStyle(fontSize: size);
+  }
+
+  static TextStyle inherit(bool value) {
+    return TextStyle(inherit: value);
+  }
+
+  static TextStyle textColor(Color color) {
+    return TextStyle(color: color);
+  }
+
+  static TextStyle textBgColor(Color backgroundColor) {
+    return TextStyle(backgroundColor: backgroundColor);
+  }
+
+  static TextStyle textForeground(Paint foreground) {
+    return TextStyle(foreground: foreground);
+  }
+
+  static TextStyle textBackground(Paint background) {
+    return TextStyle(background: background);
+  }
+
+  static TextStyle fontFeatures(List<FontFeature> features) {
+    return TextStyle(fontFeatures: features);
+  }
+
+  static TextStyle textDecoration(TextDecoration decoration) {
+    return TextStyle(decoration: decoration);
+  }
+
+  static TextStyle textDecorationColor(Color decorationColor) {
+    return TextStyle(decorationColor: decorationColor);
+  }
+
+  static TextStyle textDecorationStyle(TextDecorationStyle decorationStyle) {
+    return TextStyle(decorationStyle: decorationStyle);
+  }
+
+  static TextStyle textDecorationThickness(double decorationThickness) {
+    return TextStyle(decorationThickness: decorationThickness);
+  }
+
+  static TextStyle fontFamilyFallback(List<String> fontFamilyFallback) {
+    return TextStyle(fontFamilyFallback: fontFamilyFallback);
+  }
+}
 
 @Deprecated('Use style.merge(otherStyle), instead')
 const apply = SpreadPositionalParams(HelperUtility.apply);
@@ -202,47 +296,47 @@ const roundedV = roundedVertical;
 const roundedDH = roundedDirectionalHorizontal;
 
 @Deprecated(kShortAliasDeprecation)
-StyledContainerAttributes roundedTL() {
+BorderRadiusAttribute roundedTL() {
   throw UnimplementedError();
 }
 
 @Deprecated(kShortAliasDeprecation)
-StyledContainerAttributes roundedTR() {
+BorderRadiusAttribute roundedTR() {
   throw UnimplementedError();
 }
 
 @Deprecated(kShortAliasDeprecation)
-StyledContainerAttributes roundedBL() {
+BorderRadiusAttribute roundedBL() {
   throw UnimplementedError();
 }
 
 @Deprecated(kShortAliasDeprecation)
-StyledContainerAttributes roundedBR() {
+BorderRadiusAttribute roundedBR() {
   throw UnimplementedError();
 }
 
 @Deprecated(kShortAliasDeprecation)
-StyledContainerAttributes roundedTS() {
+BorderRadiusAttribute roundedTS() {
   throw UnimplementedError();
 }
 
 @Deprecated(kShortAliasDeprecation)
-StyledContainerAttributes roundedTE() {
+BorderRadiusAttribute roundedTE() {
   throw UnimplementedError();
 }
 
 @Deprecated(kShortAliasDeprecation)
-StyledContainerAttributes roundedBS() {
+BorderRadiusAttribute roundedBS() {
   throw UnimplementedError();
 }
 
 @Deprecated(kShortAliasDeprecation)
-StyledContainerAttributes roundedBE() {
+BorderRadiusAttribute roundedBE() {
   throw UnimplementedError();
 }
 
 @Deprecated(kShortAliasDeprecation)
-final bgColor = const ContainerStyleUtilities().backgroundColor;
+const bgColor = backgroundColor;
 
 @Deprecated(kShortAliasDeprecation)
 const h = height;
@@ -281,4 +375,4 @@ const bs = borderStart;
 const be = borderEnd;
 
 @Deprecated('Use alignment instead')
-const align = aligment;
+const align = alignment;

@@ -38,7 +38,7 @@ class BoxShadowAttribute extends ShadowAttribute<BoxShadow> {
   @override
   BoxShadowAttribute merge(BoxShadowAttribute? other) {
     return BoxShadowAttribute(
-      color: mergeProp(color, other?.color),
+      color: mergeAttr(color, other?.color),
       offset: other?.offset ?? offset,
       blurRadius: other?.blurRadius ?? blurRadius,
       spreadRadius: other?.spreadRadius ?? spreadRadius,

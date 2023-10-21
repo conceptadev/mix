@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../base/color.dto.dart';
-import '../helpers/list.attribute.dart';
 import 'box_shadow.attribute.dart';
 import 'shadow.attribute.dart';
 
@@ -27,7 +26,7 @@ ShadowAttribute shadow({Color? color, Offset? offset, double? blurRadius}) {
   );
 }
 
-ListAtttribute<BoxShadowAttribute> elevation(int elevation) {
+List<BoxShadowAttribute> elevation(int elevation) {
   const elevationOptions = [0, 1, 2, 3, 4, 6, 8, 9, 12, 16, 24];
   assert(
     elevationOptions.contains(elevation),
@@ -44,11 +43,8 @@ ListAtttribute<BoxShadowAttribute> elevation(int elevation) {
       spreadRadius: 0,
     );
 
-    return const ListAtttribute([boxShadow]);
+    return [boxShadow];
   }
-  // can you merge into 1 shadow?
 
-  final shadows = elevations.map(BoxShadowAttribute.fromBoxShadow).toList();
-
-  return ListAtttribute(shadows);
+  return elevations.map(BoxShadowAttribute.fromBoxShadow).toList();
 }

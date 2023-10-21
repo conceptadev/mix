@@ -5,12 +5,12 @@ import 'package:flutter/widgets.dart';
 
 import '../../attributes/base/color.dto.dart';
 import '../../attributes/enum/box_fit.attribute.dart';
+import '../../attributes/image_provider.attribute.dart';
+import '../../attributes/image_repeat.attribute.dart';
 import '../../attributes/size/height.attribute.dart';
 import '../../attributes/size/width.attribute.dart';
 import '../../attributes/style_attribute.dart';
 import '../../factory/mix_provider_data.dart';
-import '../../image/image_provider.attribute.dart';
-import '../../image/image_repeat.attribute.dart';
 
 class ImageAttributes extends SpecAttribute<ImageSpec> {
   final ImageProviderAttribute? image;
@@ -35,23 +35,23 @@ class ImageAttributes extends SpecAttribute<ImageSpec> {
 
     return ImageAttributes(
       image: other.image,
-      width: mergeProp(width, other.width),
-      height: mergeProp(height, other.height),
-      color: mergeProp(color, other.color),
-      repeat: mergeProp(repeat, other.repeat),
-      fit: mergeProp(fit, other.fit),
+      width: mergeAttr(width, other.width),
+      height: mergeAttr(height, other.height),
+      color: mergeAttr(color, other.color),
+      repeat: mergeAttr(repeat, other.repeat),
+      fit: mergeAttr(fit, other.fit),
     );
   }
 
   @override
   ImageSpec resolve(MixData mix) {
     return ImageSpec(
-      image: resolveAttribute(image, mix),
-      width: resolveAttribute(width, mix),
-      height: resolveAttribute(height, mix),
+      image: resolveAttr(image, mix),
+      width: resolveAttr(width, mix),
+      height: resolveAttr(height, mix),
       color: resolveDto(color, mix),
-      repeat: resolveAttribute(repeat, mix) ?? ImageRepeat.noRepeat,
-      fit: resolveAttribute(fit, mix) ?? BoxFit.contain,
+      repeat: resolveAttr(repeat, mix) ?? ImageRepeat.noRepeat,
+      fit: resolveAttr(fit, mix) ?? BoxFit.contain,
     );
   }
 

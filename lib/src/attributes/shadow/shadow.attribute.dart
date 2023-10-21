@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../factory/exports.dart';
+import '../../factory/mix_provider_data.dart';
 import '../base/color.dto.dart';
 import '../style_attribute.dart';
 
@@ -34,7 +34,7 @@ class ShadowAttribute<T extends Shadow> extends StyleAttribute<Shadow> {
   ShadowAttribute merge(ShadowAttribute? other) {
     return ShadowAttribute(
       blurRadius: other?.blurRadius ?? blurRadius,
-      color: mergeProp(color, other?.color),
+      color: mergeAttr(color, other?.color),
       offset: other?.offset ?? offset,
     );
   }

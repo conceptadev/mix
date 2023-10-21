@@ -24,7 +24,7 @@ mixin Resolvable<T> {
 mixin Mergeable<T> {
   T merge(covariant T? other);
 
-  M mergeProp<M extends Mergeable>(M? current, M? other) {
+  M mergeAttr<M extends Mergeable>(M? current, M? other) {
     return current?.merge(other) ?? other;
   }
 }

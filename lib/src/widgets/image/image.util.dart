@@ -2,10 +2,10 @@
 
 import '../../attributes/base/color.dto.dart';
 import '../../attributes/enum/box_fit.attribute.dart';
+import '../../attributes/image_provider.attribute.dart';
+import '../../attributes/image_repeat.attribute.dart';
 import '../../attributes/size/height.attribute.dart';
 import '../../attributes/size/width.attribute.dart';
-import '../../image/image_provider.attribute.dart';
-import '../../image/image_repeat.attribute.dart';
 import '../image/image.attribute.dart';
 
 ImageAttributes image({
@@ -53,3 +53,10 @@ ImageAttributes imageRepeat(ImageRepeatAttribute repeat) {
 ImageAttributes imageFit(BoxFitAttribute fit) {
   return ImageAttributes(fit: fit);
 }
+
+// const imageColor = ImageUtility.color;
+// const imageScale = ImageUtility.scale;
+// const imageColorBlendMode = ImageUtility.colorBlendMode;
+// const imageFit = ImageUtility.fit;
+// const imageAlignment = ImageUtility.alignment;
+// const imageRepeat = ImageUtility.repeat;

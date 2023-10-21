@@ -2,53 +2,20 @@
 
 import 'package:flutter/material.dart';
 
-import '../../helpers/list.attribute.dart';
-import '../attributes/text.attribute.dart';
+import '../../strut_style.attribute.dart';
+import '../../text.attribute.dart';
 import '../directives/text.directive.dart';
-import '../text_style/text_style.attribute.dart';
 
-TextAttributes text({
-  List<TextDirective>? directives,
-  TextDirective? directive,
-  Locale? locale,
-  int? maxLines,
-  TextOverflow? overflow,
-  bool? softWrap,
-  StrutStyle? strutStyle,
-  TextStyleAttribute? style,
-  TextAlign? textAlign,
-  TextHeightBehavior? textHeightBehavior,
-  double? textScaleFactor,
-  TextWidthBasis? textWidthBasis,
-}) {
-  final textDirectives = directives ?? [];
-  final styles = style == null ? null : [style];
-
-  if (directive != null) textDirectives.add(directive);
-
-  return TextAttributes(
-    directives: textDirectives,
-    locale: locale,
-    maxLines: maxLines,
-    overflow: overflow,
-    softWrap: softWrap,
-    strutStyle: strutStyle,
-    styles: ListAtttribute.maybeFrom(styles),
-    textAlign: textAlign,
-    textHeightBehavior: textHeightBehavior,
-    textScaleFactor: textScaleFactor,
-    textWidthBasis: textWidthBasis,
-  );
-}
+const text = TextAttributes.from;
 
 @Deprecated('Use text(strutStyle: strutStyle)')
 TextAttributes strutStyle(StrutStyle strutStyle) {
-  return TextAttributes(strutStyle: strutStyle);
+  return TextAttributes(strutStyle: StrutStyleAttribute.from(strutStyle));
 }
 
 @Deprecated('Use text(textAlign: textAlign)')
 TextAttributes textAlign(TextAlign textAlign) {
-  return TextAttributes(textAlign: textAlign);
+  return TextAttributes.from(textAlign: textAlign);
 }
 
 @Deprecated('Use text(locale: locale)')
@@ -63,7 +30,7 @@ TextAttributes softWrap(bool softWrap) {
 
 @Deprecated('Use text(overflow: overflow)')
 TextAttributes overflow(TextOverflow overflow) {
-  return TextAttributes(overflow: overflow);
+  return TextAttributes.from(overflow: overflow);
 }
 
 @Deprecated('Use text(textScaleFactor: textScaleFactor)')

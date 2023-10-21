@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 import '../../attributes/base/color.dto.dart';
@@ -18,8 +20,8 @@ class IconAttributes extends StyleAttribute<IconSpec> {
     if (other == null) return this;
 
     return IconAttributes(
-      color: color?.merge(other.color) ?? other.color,
-      size: size ?? other.size,
+      color: mergeAttr(color, other.color),
+      size: mergeAttr(size, other.size),
       icon: icon ?? other.icon,
     );
   }
@@ -29,7 +31,7 @@ class IconAttributes extends StyleAttribute<IconSpec> {
     return IconSpec(
       color: resolveDto(color, mix),
       size: resolveDto(size, mix),
-      icon: resolveAttribute(icon, mix),
+      icon: resolveAttr(icon, mix),
     );
   }
 
@@ -37,7 +39,7 @@ class IconAttributes extends StyleAttribute<IconSpec> {
   List<Object?> get props => [color, size, icon];
 }
 
-class IconSpec extends Spec {
+class IconSpec extends Spec<IconSpec> {
   final Color? color;
   final double? size;
   final IconData? icon;
@@ -47,6 +49,24 @@ class IconSpec extends Spec {
     required this.size,
     required this.icon,
   });
+
+  @override
+  IconSpec lerp(IconSpec other, double t) {
+    return IconSpec(
+      color: Color.lerp(color, other.color, t),
+      size: lerpDouble(size, other.size, t),
+      icon: snap(icon, other.icon, t),
+    );
+  }
+
+  @override
+  IconSpec copyWith({Color? color, double? size, IconData? icon}) {
+    return IconSpec(
+      color: color ?? this.color,
+      size: size ?? this.size,
+      icon: icon ?? this.icon,
+    );
+  }
 
   @override
   get props => [color, size, icon];

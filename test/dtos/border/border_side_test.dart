@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mix/src/dtos/border/border_side.dto.dart';
-import 'package:mix/src/dtos/color.dto.dart';
+import 'package:mix/mix.dart';
 
 void main() {
   group('BorderSideDto', () {

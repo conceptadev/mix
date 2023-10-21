@@ -1,14 +1,15 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 import '../factory/mix_provider_data.dart';
 import '../helpers/compare_mixin/compare_mixin.dart';
 import 'attribute.dart';
-import 'helpers/list.attribute.dart';
 
 abstract class StyleAttribute<T> extends Attribute with Resolvable<T> {
   const StyleAttribute();
 
-  K? resolveAttribute<K, R extends StyleAttribute<K>>(
+  K? resolveAttr<K, R extends StyleAttribute<K>>(
     covariant R? resolvable,
     MixData mix,
   ) {
@@ -23,8 +24,40 @@ abstract class StyleAttribute<T> extends Attribute with Resolvable<T> {
     return resolvable?.resolve(mix);
   }
 
+  List<M> combinedAttrList<M extends Mergeable>(
+    List<M>? current,
+    List<M>? other,
+  ) {
+    return [...current ?? [], ...other ?? []];
+  }
+
+  List<M> mergeAttrList<M extends Mergeable>(
+    List<M>? current,
+    List<M>? other,
+  ) {
+    if (current == null && other == null) return [];
+    if (current == null) return other ?? [];
+    if (other == null) return current;
+
+    if (current.isEmpty) return other;
+
+    final listLength = current.length;
+    final otherLength = other.length;
+    final maxLength = max(listLength, otherLength);
+
+    return List<M>.generate(maxLength, (int index) {
+      if (index < listLength && index < otherLength) {
+        return mergeAttr(current[index], other[index]);
+      } else if (index < listLength) {
+        return current[index];
+      }
+
+      return other[index];
+    });
+  }
+
   @override
-  M mergeProp<M extends Mergeable>(M? current, M? other) {
+  M mergeAttr<M extends Mergeable>(M? current, M? other) {
     return current?.merge(other) ?? other;
   }
 }
@@ -61,7 +94,15 @@ abstract class Spec<T extends ThemeExtension<T>> extends ThemeExtension<T>
     return ((1 - t) * a + t * b).round();
   }
 
-  P? snap<P>(P? from, P? to, double t) {
+  N? genericNumLerp<N extends num>(N? a, N? b, double t) {
+    if (a == null && b == null) return null;
+    if (a == null) return b;
+    if (b == null) return a;
+
+    return (a * (1 - t) + b * t) as N;
+  }
+
+  P snap<P>(P from, P to, double t) {
     return t < 0.5 ? from : to;
   }
 }
@@ -70,8 +111,4 @@ extension ListResolvableAttributeExt<T> on List<StyleAttribute<T>> {
   List<T> resolveAll(MixData mix) {
     return map((e) => e.resolve(mix)).toList();
   }
-
-  // .list, gets a List of T and turns into a ListAttribute<ResolvableAttribute<T>>
-  ListAtttribute<StyleAttribute<T>> get list =>
-      ListAtttribute<StyleAttribute<T>>(this);
 }

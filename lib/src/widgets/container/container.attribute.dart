@@ -2,17 +2,17 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-import '../../attributes/alignment/alignment_geometry.attribute.dart';
-import '../../attributes/box_constraints/box_constraints.attribute.dart';
-import '../../attributes/color/background_color.attribute.dart';
-import '../../attributes/decoration/decoration.attribute.dart';
+import '../../attributes/alignment_geometry.attribute.dart';
+import '../../attributes/background_color.attribute.dart';
+import '../../attributes/box_constraints.attribute.dart';
+import '../../attributes/decoration.attribute.dart';
 import '../../attributes/enum/clip.attribute.dart';
+import '../../attributes/matrix4.attribute.dart';
 import '../../attributes/size/height.attribute.dart';
 import '../../attributes/size/width.attribute.dart';
 import '../../attributes/space/margin_attribute.dart';
 import '../../attributes/space/padding.attribute.dart';
 import '../../attributes/style_attribute.dart';
-import '../../attributes/transform/matrix4.attribute.dart';
 import '../../factory/mix_provider_data.dart';
 
 class ContainerAttributes extends SpecAttribute<ContainerSpec> {
@@ -40,37 +40,66 @@ class ContainerAttributes extends SpecAttribute<ContainerSpec> {
     this.clipBehavior,
   });
 
+  factory ContainerAttributes.from({
+    AlignmentGeometry? alignment,
+    EdgeInsets? padding,
+    EdgeInsets? margin,
+    BoxConstraints? constraints,
+    Decoration? decoration,
+    double? width,
+    double? height,
+    Matrix4? transform,
+    Color? color,
+    Clip? clipBehavior,
+  }) {
+    return ContainerAttributes(
+      alignment: AlignmentGeometryAttribute.maybeFrom(alignment),
+      padding: padding == null ? null : PaddingAttribute.from(padding),
+      margin: margin == null ? null : MarginAttribute.from(margin),
+      constraints: constraints == null
+          ? null
+          : BoxConstraintsAttribute.from(constraints),
+      decoration:
+          decoration == null ? null : DecorationAttribute.from(decoration),
+      width: width == null ? null : WidthAttribute.from(width),
+      height: height == null ? null : HeightAttribute.from(height),
+      transform: transform == null ? null : Matrix4Attribute(transform),
+      color: color == null ? null : BackgroundColorAttribute.from(color),
+      clipBehavior: clipBehavior == null ? null : ClipAttribute(clipBehavior),
+    );
+  }
+
   @override
   ContainerAttributes merge(ContainerAttributes? other) {
     if (other == null) return this;
 
     return ContainerAttributes(
-      alignment: mergeProp(alignment, other.alignment),
-      padding: mergeProp(padding, other.padding),
-      margin: mergeProp(margin, other.margin),
-      constraints: mergeProp(constraints, other.constraints),
-      decoration: mergeProp(decoration, other.decoration),
-      width: mergeProp(width, other.width),
-      height: mergeProp(height, other.height),
-      transform: mergeProp(transform, other.transform),
-      color: mergeProp(color, other.color),
-      clipBehavior: mergeProp(clipBehavior, other.clipBehavior),
+      alignment: mergeAttr(alignment, other.alignment),
+      padding: mergeAttr(padding, other.padding),
+      margin: mergeAttr(margin, other.margin),
+      constraints: mergeAttr(constraints, other.constraints),
+      decoration: mergeAttr(decoration, other.decoration),
+      width: mergeAttr(width, other.width),
+      height: mergeAttr(height, other.height),
+      transform: mergeAttr(transform, other.transform),
+      color: mergeAttr(color, other.color),
+      clipBehavior: mergeAttr(clipBehavior, other.clipBehavior),
     );
   }
 
   @override
   ContainerSpec resolve(MixData mix) {
     return ContainerSpec(
-      alignment: resolveAttribute(alignment, mix),
-      padding: resolveAttribute(padding, mix),
-      margin: resolveAttribute(margin, mix),
-      constraints: resolveAttribute(constraints, mix),
-      decoration: resolveAttribute(decoration, mix),
-      width: resolveAttribute(width, mix),
-      height: resolveAttribute(height, mix),
-      transform: resolveAttribute(transform, mix),
-      color: resolveAttribute(color, mix),
-      clipBehavior: resolveAttribute(clipBehavior, mix),
+      alignment: resolveAttr(alignment, mix),
+      padding: resolveAttr(padding, mix),
+      margin: resolveAttr(margin, mix),
+      constraints: resolveAttr(constraints, mix),
+      decoration: resolveAttr(decoration, mix),
+      width: resolveAttr(width, mix),
+      height: resolveAttr(height, mix),
+      transform: resolveAttr(transform, mix),
+      color: resolveAttr(color, mix),
+      clipBehavior: resolveAttr(clipBehavior, mix),
     );
   }
 

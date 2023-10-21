@@ -1,7 +1,7 @@
 // Necessary packages are imported at the start of the file.
 import 'package:flutter/material.dart';
 
-import '../attributes/common/common.attribute.dart';
+import '../attributes/common.attribute.dart';
 import '../attributes/decorators/decorator.dart';
 import '../attributes/style_attribute.dart';
 import '../helpers/attributes_map.dart';
@@ -87,7 +87,7 @@ class MixData with Comparable {
     return attribute?.resolve(this) ?? defaultValue;
   }
 
-  S spec<S extends Spec>() {
+  S spec<S extends Spec<S>>() {
     final attribute = attributeOf<StyleAttribute<S>>();
 
     return (attribute as SpecAttribute<S>).resolve(this);

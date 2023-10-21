@@ -42,9 +42,11 @@ class MixedContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     final mix = MixProvider.of(context);
     final spec = mix.spec<ContainerSpec>();
-    final common = mix.commonSpec;
+    final animationDuration = mix.commonSpec.animationDuration;
+    final animationCurve = mix.commonSpec.animationCurve;
+    final visible = mix.commonSpec.visible;
 
-    if (!common.visible) {
+    if (!visible) {
       return const Empty();
     }
     Widget? current = child;
@@ -60,8 +62,8 @@ class MixedContainer extends StatelessWidget {
             constraints: spec.constraints,
             margin: spec.margin,
             transform: spec.transform,
-            curve: common.animation.curve,
-            duration: common.animation.duration,
+            curve: animationCurve,
+            duration: animationDuration,
             child: current,
           )
         : Container(

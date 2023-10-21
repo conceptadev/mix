@@ -3,24 +3,15 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:mix/src/attributes/text/text_style/text_style.attribute.dart';
-import 'package:mix/src/dtos/border/border.dto.dart';
-import 'package:mix/src/dtos/border/border_side.dto.dart';
-import 'package:mix/src/dtos/color.dto.dart';
-import 'package:mix/src/dtos/radius/border_radius.dto.dart';
-import 'package:mix/src/dtos/radius/radius_dto.dart';
-import 'package:mix/src/dtos/shadow/box_shadow.dto.dart';
-import 'package:mix/src/dtos/shadow/shadow.dto.dart';
+import 'package:mix/mix.dart';
+import 'package:mix/src/attributes/text_style.attribute.dart';
 import 'package:mix/src/factory/style_mix.dart';
 import 'package:mix/src/widgets/container/container.attribute.dart';
-import 'package:mix/src/widgets/text/text.attributes.dart';
-import 'package:mix/src/widgets/text/text_directives/text_directives.dart';
 
 class RandomGenerator {
   const RandomGenerator._();
   static TextAttributes textAttributes() {
-    return TextAttributes(
-      style: textStyleDto(),
+    return TextAttributes.from(
       textAlign: TextAlign.values.random(),
       softWrap: Random().nextBool(),
       overflow: TextOverflow.values.random(),
@@ -44,7 +35,7 @@ class RandomGenerator {
     );
   }
 
-  static StyledContainerAttributes boxAttributes({
+  static ContainerAttributes boxAttributes({
     bool someNullable = true,
   }) {
     final margin = edgeInsetsDto();
@@ -90,13 +81,13 @@ class RandomGenerator {
 
     final shape = Random().randomElement(BoxShape.values);
 
-    final boxAttributes = StyledContainerAttributes(
+    final boxAttributes = ContainerAttributes(
       margin: margin,
       padding: padding,
       alignment: alignment,
       height: height,
       width: width,
-      color: color,
+      color: colorScheme.background,
       border: border,
       borderRadius: borderRadius,
       boxShadow: boxShadow,

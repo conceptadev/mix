@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../base/color.dto.dart';
+import '../box_border.attribute.dart';
 import 'border_side.dto.dart';
-import 'box_border.attribute.dart';
 
 BoxBorderAttribute border({Color? color, double? width, BorderStyle? style}) {
   return BoxBorderAttribute.fromSide(

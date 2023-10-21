@@ -1,7 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import '../../attributes/text/attributes/text.attribute.dart';
+import '../../attributes/text.attribute.dart';
+import '../../extensions/build_context_ext.dart';
 import '../../factory/mix_provider.dart';
 import '../empty/empty.widget.dart';
 import '../styled.widget.dart';
@@ -53,9 +54,16 @@ class MixedText extends StatelessWidget {
     final mix = MixProvider.of(context);
 
     final text = mix.maybeGet<TextAttributes, TextSpec>();
-    final common = mix.commonSpec;
+    final animationDuration = mix.commonSpec.animationDuration;
+    final animationCurve = mix.commonSpec.animationCurve;
+    final textDirection = mix.commonSpec.textDirection;
 
-    if (!common.visible) {
+    final textStyle =
+        text?.style ?? context.textTheme.bodyLarge ?? const TextStyle();
+
+    final visible = mix.commonSpec.visible;
+
+    if (!visible) {
       return const Empty();
     }
 
@@ -66,7 +74,7 @@ class MixedText extends StatelessWidget {
       style: text?.style,
       strutStyle: text?.strutStyle,
       textAlign: text?.textAlign,
-      textDirection: common.textDirection,
+      textDirection: text?.textDirection ?? context.directionality,
       locale: text?.locale,
       softWrap: text?.softWrap,
       overflow: text?.overflow,
@@ -86,8 +94,8 @@ class MixedText extends StatelessWidget {
             softWrap: text?.softWrap ?? true,
             overflow: text?.overflow ?? TextOverflow.clip,
             maxLines: text?.maxLines,
-            curve: common.animation.curve,
-            duration: common.animation.duration,
+            curve: animationCurve,
+            duration: animationDuration,
             child: textWidget,
           )
         : textWidget;

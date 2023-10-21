@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../factory/mix_provider_data.dart';
-import '../../border_radius/border_radius.attribute.dart';
+import '../../border_radius.attribute.dart';
 import '../../style_attribute.dart';
 import '../decorator.dart';
 
@@ -66,12 +66,13 @@ class ClipDecorator extends Decorator<ClipDecoratorSpec> {
         return ClipRect(child: child);
 
       case ClipDecoratorType.rounded:
-        final animation = mix.commonSpec.animation;
+        final animationCurve = mix.commonSpec.animationCurve;
+        final animationDuration = mix.commonSpec.animationDuration;
 
         return mix.animated
             ? AnimatedClipRRect(
-                duration: animation.duration,
-                curve: animation.curve,
+                duration: animationDuration,
+                curve: animationCurve,
                 borderRadius: spec.borderRadius.resolve(mix.directionality),
                 child: child,
               )

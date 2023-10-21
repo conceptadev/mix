@@ -5,13 +5,13 @@ import '../style_attribute.dart';
 
 class GradientAttribute extends StyleAttribute<Gradient> {
   final Gradient _gradient;
-  const GradientAttribute({required Gradient gradient}) : _gradient = gradient;
+  const GradientAttribute(Gradient gradient) : _gradient = gradient;
 
   @override
   GradientAttribute merge(GradientAttribute? other) {
     if (other == null) return this;
 
-    return GradientAttribute(gradient: other._gradient);
+    return GradientAttribute(other._gradient);
   }
 
   @override

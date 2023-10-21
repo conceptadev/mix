@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-import 'axis.attribute.dart';
+import '../axis.attribute.dart';
 import 'cross_axis_alignment.attribute.dart';
 import 'flex_fit.attribute.dart';
 import 'main_axis_alignment.attribute.dart';

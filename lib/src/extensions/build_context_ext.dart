@@ -15,22 +15,11 @@ extension BuildContextExt on BuildContext {
   /// Orientation of the device.
   Orientation get orientation => MediaQuery.orientationOf(this);
 
-  /// Is device in landscape mode.
-
-  bool get isLandscape => orientation == Orientation.landscape;
-
-  /// Is device in portrait mode.
-
-  bool get isPortrait => orientation == Orientation.portrait;
-
   /// Screen size.
   Size get screenSize => MediaQuery.sizeOf(this);
 
   // Theme Context Extensions.
   Brightness get brightness => Theme.of(this).brightness;
-
-  /// Check if brightness is Brightness.dark.
-  bool get isDarkMode => brightness == Brightness.dark;
 
   /// Theme context helpers.
   ThemeData get theme => Theme.of(this);
@@ -43,4 +32,13 @@ extension BuildContextExt on BuildContext {
 
   /// Mix Theme Data.
   MixThemeData get mixTheme => MixTheme.of(this);
+
+  /// Check if brightness is Brightness.dark.
+  bool get isDarkMode => brightness == Brightness.dark;
+
+  /// Is device in landscape mode.
+  bool get isLandscape => orientation == Orientation.landscape;
+
+  /// Is device in portrait mode.
+  bool get isPortrait => orientation == Orientation.portrait;
 }

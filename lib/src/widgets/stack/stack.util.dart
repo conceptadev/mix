@@ -1,9 +1,9 @@
 import 'package:flutter/widgets.dart';
 
-import '../../attributes/alignment/alignment_geometry.attribute.dart';
+import '../../attributes/alignment_geometry.attribute.dart';
 import '../../attributes/enum/clip.attribute.dart';
-import '../../attributes/stack/stack_fit.attribute.dart';
-import '../../attributes/text/text_direction/text_direction.attribute.dart';
+import '../../attributes/stack_fit.attribute.dart';
+import '../../attributes/text_direction.attribute.dart';
 import 'stack.attributes.dart';
 
 StackAttributes stack({
