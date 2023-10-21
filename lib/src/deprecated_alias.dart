@@ -4,23 +4,23 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-import 'attributes/border_radius.attribute.dart';
-import 'attributes/text_style.attribute.dart';
+import 'attributes/border_radius_attribute.dart';
+import 'attributes/text_style_attribute.dart';
 import 'helpers/constants.dart';
-import 'utils/alignment.util.dart';
-import 'utils/border.util.dart';
-import 'utils/border_radius.util.dart';
-import 'utils/box_constraints.util.dart';
-import 'utils/container.util.dart';
-import 'utils/context_variant.util.dart';
+import 'utils/alignment_util.dart';
+import 'utils/border_util.dart';
+import 'utils/border_radius_util.dart';
+import 'utils/box_constraints_util.dart';
+import 'utils/container_util.dart';
+import 'utils/context_variant_util.dart';
 import 'utils/flex_util.dart';
-import 'utils/height.util.dart';
-import 'utils/helper.util.dart';
-import 'utils/margin.utils.dart';
-import 'utils/padding.util.dart';
-import 'utils/pressable.util.dart';
-import 'utils/text_style.util.dart';
-import 'utils/width.util.dart';
+import 'utils/height_util.dart';
+import 'utils/helper_util.dart';
+import 'utils/margin_util.dart';
+import 'utils/padding_util.dart';
+import 'utils/pressable_util.dart';
+import 'utils/text_style_util.dart';
+import 'utils/width_util.dart';
 
 /// ALL ALIASES HERE HAVE BEEN DEPRECATED AND WILL BE REMOVED IN THE FUTURE
 /// FEEL FREE TO BRING INTERNALLY TO YOUR OWN PROJECT

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../attributes/border_radius.attribute.dart';
+import '../../../attributes/border_radius_attribute.dart';
 import '../../../attributes/style_attribute.dart';
 import '../../../factory/mix_provider_data.dart';
 import '../decorator.dart';

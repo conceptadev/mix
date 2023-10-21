@@ -4,8 +4,8 @@ import 'package:path/path.dart' as p;
 
 void main() {
   final dir = Directory('./lib'); // Starting directory
-  const searchPattern = '.attributes.dart';
-  const replacement = '_attribute.dart';
+  const searchPattern = '.dto.dart';
+  const replacement = '_dto.dart';
 
   // 1. Update imports in all Dart files
   final allDartFiles = dir.listSync(recursive: true).where((entity) {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../factory/mix_provider_data.dart';
-import '../../dto/double.dto.dart';
+import '../../dto/double_dto.dart';
 import '../decorator.dart';
 
 OpacityDecorator opacity(double opacity) {

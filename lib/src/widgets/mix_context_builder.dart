@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../factory/mix_provider_data.dart';
-import 'styled.widget.dart';
+import 'styled_widget.dart';
 
 typedef WidgetMixBuilder = Widget Function(MixData mix);
 
