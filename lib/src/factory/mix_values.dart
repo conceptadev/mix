@@ -1,11 +1,11 @@
 import 'package:flutter/widgets.dart';
 
-import '../attributes/attribute.dart';
 import '../attributes/style_attribute.dart';
 import '../attributes/variant_attribute.dart';
+import '../core/attribute.dart';
 import '../core/decorators/decorator.dart';
 import '../helpers/attributes_map.dart';
-import '../helpers/compare_mixin/compare_mixin.dart';
+import '../helpers/compare_mixin.dart';
 
 class MixValues with Comparable {
   /// An empty [MixValues] instance with no attributes, decorators, variants, or directives.

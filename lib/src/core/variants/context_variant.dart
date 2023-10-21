@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../attributes/attribute.dart';
 import '../../attributes/variant_attribute.dart';
 import '../../factory/style_mix.dart';
+import '../attribute.dart';
 import 'variant.dart';
 
 typedef ShouldApplyFunction = bool Function(BuildContext context);

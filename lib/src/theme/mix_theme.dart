@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import '../helpers/compare_mixin/compare_mixin.dart';
+import '../helpers/compare_mixin.dart';
 import 'material_theme/color_scheme_tokens.dart';
 import 'material_theme/text_theme_tokens.dart';
 import 'tokens/breakpoints.dart';

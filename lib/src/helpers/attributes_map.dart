@@ -4,11 +4,11 @@ import 'dart:collection';
 
 import 'package:flutter/cupertino.dart';
 
-import '../attributes/attribute.dart';
 import '../attributes/style_attribute.dart';
 import '../attributes/variant_attribute.dart';
+import '../core/attribute.dart';
 import '../factory/mix_provider_data.dart';
-import 'compare_mixin/compare_mixin.dart';
+import 'compare_mixin.dart';
 
 typedef KeySelector<T, Attr extends Attribute> = T Function(Attr element);
 

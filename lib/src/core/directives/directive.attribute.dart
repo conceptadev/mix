@@ -1,4 +1,4 @@
-import '../../helpers/compare_mixin/compare_mixin.dart';
+import '../../helpers/compare_mixin.dart';
 
 abstract class Directive<T> with Comparable {
   const Directive();

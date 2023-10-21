@@ -1,6 +1,6 @@
-import '../../attributes/attribute.dart';
 import '../../attributes/variant_attribute.dart';
 import '../../factory/style_mix.dart';
+import '../attribute.dart';
 import 'variant_operation.dart';
 
 /// A class representing a variant, which is a combination of attributes.

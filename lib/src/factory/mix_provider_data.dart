@@ -5,7 +5,7 @@ import '../attributes/common.attribute.dart';
 import '../attributes/style_attribute.dart';
 import '../core/decorators/decorator.dart';
 import '../helpers/attributes_map.dart';
-import '../helpers/compare_mixin/compare_mixin.dart';
+import '../helpers/compare_mixin.dart';
 import '../theme/mix_theme.dart';
 import 'exports.dart';
 

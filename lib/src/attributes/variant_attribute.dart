@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
+import '../core/attribute.dart';
 import '../core/variants/context_variant.dart';
 import '../core/variants/variant.dart';
 import '../factory/exports.dart';
-import 'attribute.dart';
 
 class VariantAttribute<T extends Variant> extends Attribute<T> {
   final T variant;

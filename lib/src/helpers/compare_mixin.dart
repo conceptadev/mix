@@ -1,5 +1,5 @@
-import '../extensions/helper_ext.dart';
 import 'deep_collection_equality.dart';
+import 'extensions/helper_ext.dart';
 
 /// Returns a `hashCode` for [props].
 int _mapPropsToHashCode(Iterable? props) =>

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../attributes/attribute.dart';
 import '../../factory/mix_provider_data.dart';
+import '../attribute.dart';
 import 'color.dto.dart';
 
 class BorderSideDto extends Dto<BorderSide> {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../attributes/attribute.dart';
 import '../../factory/mix_provider_data.dart';
+import '../attribute.dart';
 
 class RadiusDto extends Dto<Radius> {
   static const zero = RadiusDto.circular(0.0);

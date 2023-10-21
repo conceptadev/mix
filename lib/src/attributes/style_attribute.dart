@@ -2,9 +2,9 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
+import '../core/attribute.dart';
 import '../factory/mix_provider_data.dart';
-import '../helpers/compare_mixin/compare_mixin.dart';
-import 'attribute.dart';
+import '../helpers/compare_mixin.dart';
 
 abstract class StyleAttribute<T> extends Attribute with Resolvable<T> {
   const StyleAttribute();
