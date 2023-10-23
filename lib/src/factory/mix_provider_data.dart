@@ -1,12 +1,12 @@
 // Necessary packages are imported at the start of the file.
 import 'package:flutter/material.dart';
 
-import '../attributes/common_attribute.dart';
-import '../attributes/style_attribute.dart';
 import '../core/decorators/decorator.dart';
+import '../core/style_attribute.dart';
 import '../helpers/attributes_map.dart';
 import '../helpers/compare_mixin.dart';
 import '../helpers/extensions/iterable_ext.dart';
+import '../specs/common_attribute.dart';
 import '../theme/mix_theme.dart';
 import 'exports.dart';
 

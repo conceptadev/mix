@@ -1,8 +1,8 @@
 import 'package:flutter/widgets.dart';
 
 import '../core/dto/color_dto.dart';
+import '../core/style_attribute.dart';
 import '../factory/mix_provider_data.dart';
-import 'style_attribute.dart';
 
 class ColorAttribute extends StyleAttribute<Color> {
   final ColorDto color;

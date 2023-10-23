@@ -1,7 +1,7 @@
 import 'package:flutter/animation.dart';
 
+import '../core/style_attribute.dart';
 import '../factory/mix_provider_data.dart';
-import 'style_attribute.dart';
 
 class CurveAttribute extends StyleAttribute<Curve> {
   final Curve curve;

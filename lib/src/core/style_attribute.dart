@@ -2,9 +2,9 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-import '../core/attribute.dart';
 import '../factory/mix_provider_data.dart';
 import '../helpers/compare_mixin.dart';
+import 'attribute.dart';
 
 abstract class StyleAttribute<T> extends Attribute with Resolvable<T> {
   const StyleAttribute();
@@ -20,7 +20,10 @@ abstract class StyleAttribute<T> extends Attribute with Resolvable<T> {
     return selectedAttribute?.resolve(mix);
   }
 
-  K? resolveDto<K, R extends Dto<K>>(covariant R? resolvable, MixData mix) {
+  K? resolveDto<K, R extends StyleAttribute<K>>(
+    covariant R? resolvable,
+    MixData mix,
+  ) {
     return resolvable?.resolve(mix);
   }
 
@@ -64,7 +67,7 @@ abstract class StyleAttribute<T> extends Attribute with Resolvable<T> {
 
 typedef ValueModifier<T> = T Function(T value);
 
-abstract class ModifiableDto<T> extends Dto<T> {
+abstract class ModifiableDto<T> extends StyleAttribute<T> {
   @visibleForTesting
   final T value;
   @visibleForTesting

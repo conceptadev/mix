@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../attributes/icon_attribute.dart';
 import '../attributes/text_direction_attribute.dart';
 import '../factory/mix_provider.dart';
+import '../specs/icon_attribute.dart';
 import 'empty_widget.dart';
 import 'styled_widget.dart';
 

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../../attributes/border_radius_geometry_attribute.dart';
-import '../../../attributes/style_attribute.dart';
 import '../../../factory/mix_provider_data.dart';
+import '../../style_attribute.dart';
 import '../decorator.dart';
 
 const clipOval = _clipOval;

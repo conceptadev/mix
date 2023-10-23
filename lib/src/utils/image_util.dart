@@ -1,11 +1,11 @@
 // ignore_for_file: long-parameter-list
 
 import '../attributes/box_fit_attribute.dart';
-import '../attributes/image_attribute.dart';
 import '../attributes/image_provider_attribute.dart';
 import '../attributes/image_repeat_attribute.dart';
 import '../attributes/size_attribute.dart';
 import '../core/dto/color_dto.dart';
+import '../specs/image_attribute.dart';
 
 ImageAttributes image({
   ImageProviderAttribute? imageProvider,

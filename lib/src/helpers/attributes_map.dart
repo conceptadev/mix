@@ -4,9 +4,9 @@ import 'dart:collection';
 
 import 'package:flutter/cupertino.dart';
 
-import '../attributes/style_attribute.dart';
 import '../attributes/variant_attribute.dart';
 import '../core/attribute.dart';
+import '../core/style_attribute.dart';
 import '../factory/mix_provider_data.dart';
 import 'compare_mixin.dart';
 

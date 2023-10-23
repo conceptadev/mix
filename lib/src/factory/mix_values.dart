@@ -1,9 +1,9 @@
 import 'package:flutter/widgets.dart';
 
-import '../attributes/style_attribute.dart';
 import '../attributes/variant_attribute.dart';
 import '../core/attribute.dart';
 import '../core/decorators/decorator.dart';
+import '../core/style_attribute.dart';
 import '../helpers/attributes_map.dart';
 import '../helpers/compare_mixin.dart';
 

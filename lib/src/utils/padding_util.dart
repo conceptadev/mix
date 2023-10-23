@@ -1,41 +1,44 @@
+import 'package:flutter/material.dart';
+
 import '../attributes/space_attribute.dart';
 
-const padding = PaddingAttribute.all;
+PaddingAttribute padding(double value) {
+  return PaddingAttribute(EdgeInsetsDto.all(value));
+}
+
 PaddingAttribute paddingTop(double value) {
-  return PaddingAttribute.only(top: value);
+  return PaddingAttribute(EdgeInsetsDto.only(top: value));
 }
 
 PaddingAttribute paddingBottom(double value) {
-  return PaddingAttribute.only(bottom: value);
+  return PaddingAttribute(EdgeInsetsDto.only(bottom: value));
 }
 
 PaddingAttribute paddingLeft(double value) {
-  return PaddingAttribute.only(left: value);
+  return PaddingAttribute(EdgeInsetsDto.only(left: value));
 }
 
 PaddingAttribute paddingRight(double value) {
-  return PaddingAttribute.only(right: value);
+  return PaddingAttribute(EdgeInsetsDto.only(right: value));
 }
 
-PaddingAttribute paddingSymmetric({double? horizontal, double? vertical}) {
-  return PaddingAttribute.symmetric(horizontal: horizontal, vertical: vertical);
+PaddingAttribute paddingStart(double value) {
+  return PaddingAttribute(EdgeInsetsDto.directionalOnly(start: value));
+}
+
+PaddingAttribute paddingEnd(double value) {
+  return PaddingAttribute(EdgeInsetsDto.directionalOnly(end: value));
 }
 
 PaddingAttribute paddingHorizontal(double value) {
-  return PaddingAttribute.symmetric(horizontal: value);
+  return PaddingAttribute(EdgeInsetsDto.symmetric(horizontal: value));
 }
 
 PaddingAttribute paddingVertical(double value) {
   /// padding vertical.
-  return PaddingAttribute.symmetric(vertical: value);
+  return PaddingAttribute(EdgeInsetsDto.symmetric(vertical: value));
 }
 
-const paddingInsets = PaddingAttribute.from;
-
-PaddingAttribute paddingStart(double value) {
-  return PaddingAttribute.directionalOnly(start: value);
-}
-
-PaddingAttribute paddingEnd(double value) {
-  return PaddingAttribute.directionalOnly(end: value);
+PaddingAttribute paddingInsets(EdgeInsets insets) {
+  return PaddingAttribute(EdgeInsetsDto.from(insets));
 }

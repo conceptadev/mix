@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../core/style_attribute.dart';
 import '../factory/exports.dart';
-import 'style_attribute.dart';
 
 class BoxConstraintsAttribute extends StyleAttribute<BoxConstraints> {
   final double? minWidth;

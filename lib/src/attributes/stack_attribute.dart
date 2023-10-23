@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
+import '../core/style_attribute.dart';
 import '../factory/mix_provider_data.dart';
 import 'alignment_geometry_attribute.dart';
 import 'clip_attribute.dart';
 import 'stack_fit_attribute.dart';
-import 'style_attribute.dart';
 import 'text_direction_attribute.dart';
 
 class StackAttributes extends SpecAttribute<StackSpec> {

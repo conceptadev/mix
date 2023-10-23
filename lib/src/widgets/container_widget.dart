@@ -2,9 +2,9 @@
 
 import 'package:flutter/material.dart';
 
-import '../attributes/container_attribute.dart';
 import '../core/decorators/widget_decorator_wrapper.dart';
 import '../factory/mix_provider.dart';
+import '../specs/container_attribute.dart';
 import 'empty_widget.dart';
 import 'styled_widget.dart';
 

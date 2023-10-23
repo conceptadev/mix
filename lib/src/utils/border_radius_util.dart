@@ -22,10 +22,10 @@ BorderRadiusAttribute roundedOnly({
   double? bottomRight,
 }) {
   return borderRadiusOnly(
-    bottomLeft: bottomLeft == null ? null : RadiusDto.circular(bottomLeft),
-    bottomRight: bottomRight == null ? null : RadiusDto.circular(bottomRight),
     topLeft: topLeft == null ? null : RadiusDto.circular(topLeft),
     topRight: topRight == null ? null : RadiusDto.circular(topRight),
+    bottomLeft: bottomLeft == null ? null : RadiusDto.circular(bottomLeft),
+    bottomRight: bottomRight == null ? null : RadiusDto.circular(bottomRight),
   );
 }
 
@@ -36,19 +36,19 @@ BorderRadiusDirectionalAttribute roundedDirectionalOnly({
   double? bottomEnd,
 }) {
   return borderRadiusDirectional(
-    bottomEnd: bottomEnd == null ? null : RadiusDto.circular(bottomEnd),
-    bottomStart: bottomStart == null ? null : RadiusDto.circular(bottomStart),
-    topEnd: topEnd == null ? null : RadiusDto.circular(topEnd),
     topStart: topStart == null ? null : RadiusDto.circular(topStart),
+    topEnd: topEnd == null ? null : RadiusDto.circular(topEnd),
+    bottomStart: bottomStart == null ? null : RadiusDto.circular(bottomStart),
+    bottomEnd: bottomEnd == null ? null : RadiusDto.circular(bottomEnd),
   );
 }
 
 BorderRadiusAttribute roundedHorizontal({double? left, double? right}) {
   return borderRadiusOnly(
-    bottomLeft: left == null ? null : RadiusDto.circular(left),
-    bottomRight: right == null ? null : RadiusDto.circular(right),
     topLeft: left == null ? null : RadiusDto.circular(left),
     topRight: right == null ? null : RadiusDto.circular(right),
+    bottomLeft: left == null ? null : RadiusDto.circular(left),
+    bottomRight: right == null ? null : RadiusDto.circular(right),
   );
 }
 
@@ -57,19 +57,19 @@ BorderRadiusDirectionalAttribute roundedDirectionalHorizontal({
   double? end,
 }) {
   return borderRadiusDirectional(
-    bottomEnd: end == null ? null : RadiusDto.circular(end),
-    bottomStart: start == null ? null : RadiusDto.circular(start),
-    topEnd: end == null ? null : RadiusDto.circular(end),
     topStart: start == null ? null : RadiusDto.circular(start),
+    topEnd: end == null ? null : RadiusDto.circular(end),
+    bottomStart: start == null ? null : RadiusDto.circular(start),
+    bottomEnd: end == null ? null : RadiusDto.circular(end),
   );
 }
 
 BorderRadiusAttribute roundedVertical({double? top, double? bottom}) {
   return borderRadiusOnly(
-    bottomLeft: bottom == null ? null : RadiusDto.circular(bottom),
-    bottomRight: bottom == null ? null : RadiusDto.circular(bottom),
     topLeft: top == null ? null : RadiusDto.circular(top),
     topRight: top == null ? null : RadiusDto.circular(top),
+    bottomLeft: bottom == null ? null : RadiusDto.circular(bottom),
+    bottomRight: bottom == null ? null : RadiusDto.circular(bottom),
   );
 }
 
@@ -78,9 +78,9 @@ BorderRadiusDirectionalAttribute roundedDirectionalVertical({
   double? bottom,
 }) {
   return borderRadiusDirectional(
-    bottomEnd: bottom == null ? null : RadiusDto.circular(bottom),
-    bottomStart: bottom == null ? null : RadiusDto.circular(bottom),
-    topEnd: top == null ? null : RadiusDto.circular(top),
     topStart: top == null ? null : RadiusDto.circular(top),
+    topEnd: top == null ? null : RadiusDto.circular(top),
+    bottomStart: bottom == null ? null : RadiusDto.circular(bottom),
+    bottomEnd: bottom == null ? null : RadiusDto.circular(bottom),
   );
 }

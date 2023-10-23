@@ -3,13 +3,13 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+import '../attributes/box_fit_attribute.dart';
+import '../attributes/image_provider_attribute.dart';
+import '../attributes/image_repeat_attribute.dart';
+import '../attributes/size_attribute.dart';
 import '../core/dto/color_dto.dart';
+import '../core/style_attribute.dart';
 import '../factory/mix_provider_data.dart';
-import 'box_fit_attribute.dart';
-import 'image_provider_attribute.dart';
-import 'image_repeat_attribute.dart';
-import 'size_attribute.dart';
-import 'style_attribute.dart';
 
 class ImageAttributes extends SpecAttribute<ImageSpec> {
   final ImageProviderAttribute? image;

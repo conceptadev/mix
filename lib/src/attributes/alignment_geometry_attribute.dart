@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../core/style_attribute.dart';
 import '../factory/exports.dart';
-import 'style_attribute.dart';
 
 abstract class AlignmentGeometryAttribute<T extends AlignmentGeometry>
     extends StyleAttribute<T> {

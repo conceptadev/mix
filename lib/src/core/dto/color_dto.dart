@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../attributes/style_attribute.dart';
 import '../../factory/mix_provider_data.dart';
 import '../../theme/tokens/color_token.dart';
+import '../style_attribute.dart';
 
 class ColorDto extends ModifiableDto<Color> {
   // Modifier is only used after value is resolved.

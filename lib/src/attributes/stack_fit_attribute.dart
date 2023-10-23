@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 
+import '../core/style_attribute.dart';
 import '../factory/mix_provider_data.dart';
-import 'style_attribute.dart';
 
 class StackFitAttribute extends StyleAttribute<StackFit> {
   final StackFit fit;

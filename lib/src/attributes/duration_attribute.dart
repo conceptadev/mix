@@ -1,7 +1,7 @@
 import 'dart:core';
 
+import '../core/style_attribute.dart';
 import '../factory/mix_provider_data.dart';
-import 'style_attribute.dart';
 
 abstract class DurationAttribute extends StyleAttribute<Duration> {
   final Duration duration;

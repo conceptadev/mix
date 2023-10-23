@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../mix.dart';
-import 'style_attribute.dart';
 
 @immutable
 class CommonAttributes extends StyleAttribute<CommonSpec> {

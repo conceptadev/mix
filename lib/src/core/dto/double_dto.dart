@@ -1,5 +1,5 @@
-import '../../attributes/style_attribute.dart';
 import '../../factory/mix_provider_data.dart';
+import '../style_attribute.dart';
 
 abstract class DoubleAttribute extends StyleAttribute<double> {
   final DoubleDto value;

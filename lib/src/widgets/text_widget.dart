@@ -1,9 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import '../attributes/text_attribute.dart';
 import '../factory/mix_provider.dart';
 import '../helpers/extensions/build_context_ext.dart';
+import '../specs/text_attribute.dart';
 import 'empty_widget.dart';
 import 'styled_widget.dart';
 

@@ -1,41 +1,44 @@
+import 'package:flutter/material.dart';
+
 import '../attributes/space_attribute.dart';
 
-const margin = MarginAttribute.all;
+MarginAttribute margin(double value) {
+  return MarginAttribute(EdgeInsetsDto.all(value));
+}
+
 MarginAttribute marginTop(double value) {
-  return MarginAttribute.only(top: value);
+  return MarginAttribute(EdgeInsetsDto.only(top: value));
 }
 
 MarginAttribute marginBottom(double value) {
-  return MarginAttribute.only(bottom: value);
+  return MarginAttribute(EdgeInsetsDto.only(bottom: value));
 }
 
 MarginAttribute marginLeft(double value) {
-  return MarginAttribute.only(left: value);
+  return MarginAttribute(EdgeInsetsDto.only(left: value));
 }
 
 MarginAttribute marginRight(double value) {
-  return MarginAttribute.only(right: value);
+  return MarginAttribute(EdgeInsetsDto.only(right: value));
 }
-
-MarginAttribute marginSymmetric({double? horizontal, double? vertical}) {
-  return MarginAttribute.symmetric(horizontal: horizontal, vertical: vertical);
-}
-
-MarginAttribute marginHorizontal(double value) {
-  return MarginAttribute.symmetric(horizontal: value);
-}
-
-MarginAttribute marginVertical(double value) {
-  /// Margin vertical.
-  return MarginAttribute.symmetric(vertical: value);
-}
-
-const marginInsets = MarginAttribute.from;
 
 MarginAttribute marginStart(double value) {
-  return MarginAttribute.directionalOnly(start: value);
+  return MarginAttribute(EdgeInsetsDto.directionalOnly(start: value));
 }
 
 MarginAttribute marginEnd(double value) {
-  return MarginAttribute.directionalOnly(end: value);
+  return MarginAttribute(EdgeInsetsDto.directionalOnly(end: value));
+}
+
+MarginAttribute marginHorizontal(double value) {
+  return MarginAttribute(EdgeInsetsDto.symmetric(horizontal: value));
+}
+
+MarginAttribute marginVertical(double value) {
+  /// margin vertical.
+  return MarginAttribute(EdgeInsetsDto.symmetric(vertical: value));
+}
+
+MarginAttribute marginInsets(EdgeInsets insets) {
+  return MarginAttribute(EdgeInsetsDto.from(insets));
 }

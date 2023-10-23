@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
+import '../attributes/strut_style_attribute.dart';
+import '../attributes/text_align_attribute.dart';
+import '../attributes/text_direction_attribute.dart';
+import '../attributes/text_overflow_attribute.dart';
+import '../attributes/text_style_attribute.dart';
 import '../core/directives/text_directive.dart';
+import '../core/style_attribute.dart';
 import '../factory/exports.dart';
-import 'strut_style_attribute.dart';
-import 'style_attribute.dart';
-import 'text_align_attribute.dart';
-import 'text_direction_attribute.dart';
-import 'text_overflow_attribute.dart';
-import 'text_style_attribute.dart';
 
 class TextAttributes extends StyleAttribute<TextSpec> {
   final List<TextDirective> _directives;

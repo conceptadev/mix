@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../core/style_attribute.dart';
 import '../factory/mix_provider_data.dart';
-import 'style_attribute.dart';
 
 class GradientAttribute extends StyleAttribute<Gradient> {
   final Gradient _gradient;

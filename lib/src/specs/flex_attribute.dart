@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
+import '../attributes/axis_attribute.dart';
+import '../attributes/clip_attribute.dart';
+import '../attributes/cross_axis_alignment_attribute.dart';
+import '../attributes/main_axis_alignment_attribute.dart';
+import '../attributes/main_axis_size_attribute.dart';
+import '../attributes/text_baseline_attribute.dart';
+import '../attributes/text_direction_attribute.dart';
+import '../attributes/vertical_direction_attribute.dart';
+import '../core/style_attribute.dart';
 import '../factory/mix_provider_data.dart';
-import 'axis_attribute.dart';
-import 'clip_attribute.dart';
-import 'cross_axis_alignment_attribute.dart';
-import 'main_axis_alignment_attribute.dart';
-import 'main_axis_size_attribute.dart';
-import 'style_attribute.dart';
-import 'text_baseline_attribute.dart';
-import 'text_direction_attribute.dart';
-import 'vertical_direction_attribute.dart';
 
 class FlexAttributes extends SpecAttribute<FlexSpec> {
   final AxisAttribute? direction;

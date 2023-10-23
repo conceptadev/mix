@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 
 import '../core/dto/color_dto.dart';
 import '../core/dto/double_dto.dart';
+import '../core/style_attribute.dart';
 import '../factory/mix_provider_data.dart';
-import 'style_attribute.dart';
 
 class IconAttributes extends StyleAttribute<IconSpec> {
   final ColorDto? color;

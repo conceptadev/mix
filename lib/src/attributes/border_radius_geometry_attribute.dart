@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../core/dto/radius_dto.dart';
+import '../core/style_attribute.dart';
 import '../factory/mix_provider_data.dart';
-import 'style_attribute.dart';
 
 abstract class BorderRadiusGeometryAttribute<T extends BorderRadiusGeometry>
     extends StyleAttribute<T> {

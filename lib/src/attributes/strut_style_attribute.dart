@@ -1,7 +1,7 @@
 import 'package:flutter/painting.dart';
 
+import '../core/style_attribute.dart';
 import '../factory/mix_provider_data.dart';
-import 'style_attribute.dart';
 
 class StrutStyleAttribute extends StyleAttribute<StrutStyle> {
   final String? fontFamily;

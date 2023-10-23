@@ -3,8 +3,8 @@
 import 'package:flutter/material.dart';
 
 import '../attributes/strut_style_attribute.dart';
-import '../attributes/text_attribute.dart';
 import '../core/directives/text_directive.dart';
+import '../specs/text_attribute.dart';
 
 const text = TextAttributes.from;
 

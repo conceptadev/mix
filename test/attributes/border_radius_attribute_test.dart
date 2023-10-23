@@ -27,7 +27,7 @@ void main() {
     test('vertical creates BorderRadiusAttribute with vertical radius', () {
       const topRadius = 10.0;
       const bottomRadius = 20.0;
-      const borderRadius = BorderRadiusAttribute.vertical(
+      const borderRadius = BorderRadiusGeometryAttribute.vertical(
         top: RadiusDto.circular(topRadius),
         bottom: RadiusDto.circular(bottomRadius),
       );

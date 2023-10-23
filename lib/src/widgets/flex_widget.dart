@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 
-import '../attributes/flex_attribute.dart';
 import '../factory/mix_provider.dart';
+import '../specs/flex_attribute.dart';
 import 'styled_widget.dart';
 
 class StyledFlex extends StyledWidget {
