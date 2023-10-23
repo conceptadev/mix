@@ -5,7 +5,6 @@ StyleMix get button {
     textStyle(as: $M3Text.bodyMedium),
     bold(),
     textStyle(fontSize: 16.0),
-    animation(),
     backgroundColor($M3Color.primary),
     onHover(
       backgroundColor($M3Color.secondary),

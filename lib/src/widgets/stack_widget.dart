@@ -56,12 +56,12 @@ class MixedStack extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final mix = MixProvider.of(context);
-    final attributes = mix.spec<StackSpec>();
+    final spec = mix.spec<StackSpec>();
 
     return Stack(
-      alignment: attributes.alignment ?? AlignmentDirectional.topStart,
-      fit: attributes.fit ?? StackFit.loose,
-      clipBehavior: attributes.clipBehavior ?? Clip.hardEdge,
+      alignment: spec?.alignment ?? AlignmentDirectional.topStart,
+      fit: spec?.fit ?? StackFit.loose,
+      clipBehavior: spec?.clipBehavior ?? Clip.hardEdge,
       children: children,
     );
   }

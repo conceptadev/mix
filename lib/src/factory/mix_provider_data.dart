@@ -6,6 +6,7 @@ import '../attributes/style_attribute.dart';
 import '../core/decorators/decorator.dart';
 import '../helpers/attributes_map.dart';
 import '../helpers/compare_mixin.dart';
+import '../helpers/extensions/iterable_ext.dart';
 import '../theme/mix_theme.dart';
 import 'exports.dart';
 
@@ -74,7 +75,7 @@ class MixData with Comparable {
   /// Accepts a type parameter [A] which extends [StyleAttribute].
   /// Returns the instance of type [A] if found, else returns null.
   A? attributeOf<A extends StyleAttribute>() {
-    return _styles.whereType<A>() as A?;
+    return _styles.whereType<A>().firstMaybeNull;
   }
 
   R? maybeGet<Attr extends StyleAttribute<R>, R>() {
@@ -87,8 +88,9 @@ class MixData with Comparable {
     return attribute?.resolve(this) ?? defaultValue;
   }
 
-  S spec<S extends Spec<S>>() {
+  S? spec<S extends Spec<S>>() {
     final attribute = attributeOf<StyleAttribute<S>>();
+    if (attribute == null) return null;
 
     return (attribute as SpecAttribute<S>).resolve(this);
   }
