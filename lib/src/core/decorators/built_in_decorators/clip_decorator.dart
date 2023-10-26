@@ -87,7 +87,7 @@ class ClipDecorator extends Decorator<ClipDecoratorSpec> {
   }
 }
 
-class ClipDecoratorSpec extends Spec<ClipDecoratorSpec> {
+class ClipDecoratorSpec extends MixExtension<ClipDecoratorSpec> {
   final BorderRadiusGeometry borderRadius;
   final ClipDecoratorType clipType;
   const ClipDecoratorSpec({

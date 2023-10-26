@@ -11,70 +11,7 @@ import '../attributes/vertical_direction_attribute.dart';
 import '../core/style_attribute.dart';
 import '../factory/mix_provider_data.dart';
 
-class FlexAttributes extends SpecAttribute<FlexSpec> {
-  final AxisAttribute? direction;
-  final MainAxisAlignmentAttribute? mainAxisAlignment;
-  final CrossAxisAlignmentAttribute? crossAxisAlignment;
-  final MainAxisSizeAttribute? mainAxisSize;
-  final VerticalDirectionAttribute? verticalDirection;
-  final TextDirectionAttribute? textDirection;
-  final TextBaselineAttribute? textBaseline;
-  final ClipAttribute? clipBehavior;
-  const FlexAttributes({
-    this.crossAxisAlignment,
-    this.direction,
-    this.mainAxisAlignment,
-    this.mainAxisSize,
-    this.verticalDirection,
-    this.textDirection,
-    this.textBaseline,
-    this.clipBehavior,
-  });
-
-  @override
-  FlexAttributes merge(FlexAttributes? other) {
-    if (other == null) return this;
-
-    return FlexAttributes(
-      crossAxisAlignment: other.crossAxisAlignment ?? crossAxisAlignment,
-      direction: other.direction ?? direction,
-      mainAxisAlignment: other.mainAxisAlignment ?? mainAxisAlignment,
-      mainAxisSize: other.mainAxisSize ?? mainAxisSize,
-      verticalDirection: other.verticalDirection ?? verticalDirection,
-      textDirection: other.textDirection ?? textDirection,
-      textBaseline: other.textBaseline ?? textBaseline,
-      clipBehavior: other.clipBehavior ?? clipBehavior,
-    );
-  }
-
-  @override
-  FlexSpec resolve(MixData mix) {
-    return FlexSpec(
-      crossAxisAlignment: resolveAttr(crossAxisAlignment, mix),
-      mainAxisAlignment: resolveAttr(mainAxisAlignment, mix),
-      mainAxisSize: resolveAttr(mainAxisSize, mix),
-      verticalDirection: resolveAttr(verticalDirection, mix),
-      direction: resolveAttr(direction, mix),
-      textDirection: resolveAttr(textDirection, mix),
-      textBaseline: resolveAttr(textBaseline, mix),
-      clipBehavior: resolveAttr(clipBehavior, mix),
-    );
-  }
-
-  @override
-  List<Object?> get props => [
-        direction,
-        mainAxisAlignment,
-        crossAxisAlignment,
-        mainAxisSize,
-        verticalDirection,
-        textDirection,
-        textBaseline,
-        clipBehavior,
-      ];
-}
-
-class FlexSpec extends Spec<FlexSpec> {
+class FlexSpec extends MixExtension<FlexSpec> {
   final Axis? direction;
   final MainAxisAlignment? mainAxisAlignment;
   final CrossAxisAlignment? crossAxisAlignment;
@@ -94,6 +31,22 @@ class FlexSpec extends Spec<FlexSpec> {
     required this.textBaseline,
     required this.clipBehavior,
   });
+
+  static FlexSpec resolve(MixData mix) {
+    return FlexSpec(
+      crossAxisAlignment:
+          mix.get<CrossAxisAlignmentAttribute, CrossAxisAlignment>(),
+      mainAxisAlignment:
+          mix.get<MainAxisAlignmentAttribute, MainAxisAlignment>(),
+      mainAxisSize: mix.get<MainAxisSizeAttribute, MainAxisSize>(),
+      verticalDirection:
+          mix.get<VerticalDirectionAttribute, VerticalDirection>(),
+      direction: mix.get<AxisAttribute, Axis>(),
+      textDirection: mix.get<TextDirectionAttribute, TextDirection>(),
+      textBaseline: mix.get<TextBaselineAttribute, TextBaseline>(),
+      clipBehavior: mix.get<ClipAttribute, Clip>(),
+    );
+  }
 
   @override
   FlexSpec lerp(FlexSpec other, double t) {

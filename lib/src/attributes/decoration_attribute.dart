@@ -80,7 +80,7 @@ class BoxDecorationAttribute extends DecorationAttribute<BoxDecoration> {
   @override
   BoxDecoration resolve(MixData mix) {
     return BoxDecoration(
-      color: resolveDto(color, mix),
+      color: color?.resolve(mix),
       border: resolveAttr(border, mix),
       borderRadius: resolveAttr(borderRadius, mix),
       boxShadow: boxShadow?.map((e) => e.resolve(mix)).toList(),

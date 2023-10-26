@@ -95,33 +95,3 @@ class MixValues with Comparable {
   @override
   get props => [styles, variants];
 }
-
-MixValues applyContextVariants(MixValues values, BuildContext context) {
-  MixValues mergedValues = MixValues.empty.copyWith(
-    styles: values.styles,
-    variants: values.variants,
-  );
-
-  final unusedContextVariants = <ContextVariantAttribute>[];
-
-  final contextVariants = values.variants.contextVariants;
-
-  for (ContextVariantAttribute variant in contextVariants) {
-    final shouldApply = variant.shouldApply(context);
-    if (shouldApply) {
-      mergedValues = mergedValues.merge(variant.value);
-    } else {
-      unusedContextVariants.add(variant);
-    }
-  }
-
-  final unusedValues = MixValues.create(unusedContextVariants);
-
-  // ignore: avoid-unnecessary-reassignment
-  mergedValues = mergedValues.merge(unusedValues);
-
-  return contextVariants.length == unusedContextVariants.length
-      ? mergedValues
-      // ignore: avoid-recursive-calls
-      : applyContextVariants(mergedValues, context);
-}

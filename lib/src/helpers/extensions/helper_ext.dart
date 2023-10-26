@@ -5,7 +5,6 @@ import '../../attributes/axis_attribute.dart';
 import '../../attributes/blend_mode_attribute.dart';
 import '../../attributes/border_radius_geometry_attribute.dart';
 import '../../attributes/box_fit_attribute.dart';
-import '../../attributes/color_attribute.dart';
 import '../../attributes/cross_axis_alignment_attribute.dart';
 import '../../attributes/curve_attribute.dart';
 import '../../attributes/main_axis_alignment_attribute.dart';
@@ -60,11 +59,6 @@ extension TextDirectionExt on TextDirection {
 // Extension for Axis
 extension AxisExt on Axis {
   AxisAttribute get attr => AxisAttribute(this);
-}
-
-// Extension for Color
-extension ColorExt on Color {
-  ColorAttribute get attr => ColorAttribute.from(this);
 }
 
 // Extension for BlendMode

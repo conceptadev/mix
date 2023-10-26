@@ -1,26 +1,17 @@
 import 'package:flutter/material.dart';
 
+import '../../mix.dart';
 import '../attributes/text_direction_attribute.dart';
-import '../factory/mix_provider.dart';
-import '../specs/icon_attribute.dart';
-import 'empty_widget.dart';
+
 import 'styled_widget.dart';
-
-@Deprecated('Use StyledIcon now')
-typedef IconMix = StyledIcon;
-
-@Deprecated('Use MixedIcon now')
-typedef IconMixedWidget = MixedIcon;
 
 class StyledIcon extends StyledWidget {
   const StyledIcon(
     this.icon, {
-    super.inherit,
-    super.key,
-    @Deprecated('Use the style parameter instead') super.mix,
     this.semanticLabel,
     super.style,
-    super.variants,
+    super.key,
+    super.inherit,
   });
 
   final IconData? icon;
@@ -28,59 +19,65 @@ class StyledIcon extends StyledWidget {
 
   @override
   Widget build(BuildContext context) {
-    return withMix(context, MixedIcon(icon: icon));
+    return buildWithStyle(context, (data) {
+      // Resolve style attributes
+      final spec = IconSpec.resolve(data);
+      
+
+      return Icon(
+        icon,
+        size: spec.size,
+        color: spec.color,
+        textDirection: spec.textDirection,
+      );
+    });
   }
 }
 
-class MixedIcon extends StatelessWidget {
-  const MixedIcon({this.icon, super.key, this.semanticLabel});
+class AnimatedStyledIcon extends AnimatedStyledWidget {
+  const AnimatedStyledIcon(
+    this.icon, {
+    this.semanticLabel,
+    required super.duration,
+    required super.curve,
+    super.style,
+    super.key,
+    super.inherit,
+  });
 
   final IconData? icon;
   final String? semanticLabel;
 
   @override
   Widget build(BuildContext context) {
-    final mix = MixProvider.of(context);
+    return buildWithStyle(context, (data) {
+      // Resolve style attributes
+      final spec = IconSpec.resolve(data);
+      final textDirection = TextDirectionAttribute.resolve(data);
 
-    final attributes = mix.maybeGet<IconAttributes, IconSpec>();
-    final textDirection = mix.maybeGet<TextDirectionAttribute, TextDirection>();
-    final animationDuration = mix.commonSpec.animationDuration;
-    final animationCurve = mix.commonSpec.animationCurve;
-    final visible = mix.commonSpec.visible;
-
-    if (!visible) {
-      return const Empty();
-    }
-    Widget iconWidget = Icon(
-      icon,
-      size: attributes?.size,
-      color: attributes?.color,
-      textDirection: textDirection,
-    );
-
-    if (mix.animated) {
-      iconWidget = TweenAnimationBuilder<double>(
-        tween: Tween<double>(end: attributes?.size),
-        duration: animationDuration,
-        curve: animationCurve,
+      return TweenAnimationBuilder<double>(
+        tween: Tween<double>(end: spec.size),
+        duration: duration,
+        curve: curve,
         builder: (context, value, child) {
           final sizeValue = value;
 
           return TweenAnimationBuilder<Color?>(
-            tween: ColorTween(end: attributes?.color),
-            duration: animationDuration,
-            curve: animationCurve,
+            tween: ColorTween(end: spec.color),
+            duration: duration,
+            curve: curve,
             builder: (context, value, child) {
               final colorValue = value;
 
-              return Icon(icon, size: sizeValue, color: colorValue);
-            },
-            child: child,
-          );
-        },
+            return Icon(
+              icon, 
+              size: sizeValue, 
+              color: colorValue,
+              textDirection: textDirection,
+            );
+          },
+        child: child,
       );
-    }
-
-    return Semantics(label: semanticLabel, child: iconWidget);
+    });
   }
 }

@@ -16,12 +16,10 @@ extension StyleMixExt<T extends Attribute> on StyleMix {
     bool inherit = false,
     Key? key,
     StyleMix? style,
-    List<Variant>? variants,
   }) {
     return StyledContainer(
       style: mergeNullable(style),
       key: key,
-      variants: variants,
       inherit: inherit,
       child: child,
     );
@@ -33,13 +31,11 @@ extension StyleMixExt<T extends Attribute> on StyleMix {
     Key? key,
     @Deprecated('Use the style parameter instead') StyleMix? mix,
     StyleMix? style,
-    List<Variant>? variants,
   }) {
     return container(
       inherit: inherit,
       key: key,
       style: mergeNullable(style ?? mix),
-      variants: variants,
       child: child,
     );
   }
@@ -50,11 +46,9 @@ extension StyleMixExt<T extends Attribute> on StyleMix {
     Key? key,
     @Deprecated('Use the style parameter instead') StyleMix? mix,
     StyleMix? style,
-    List<Variant>? variants,
   }) {
     return HBox(
       style: mergeNullable(style ?? mix),
-      variants: variants,
       key: key,
       inherit: inherit,
       children: children,
@@ -67,12 +61,10 @@ extension StyleMixExt<T extends Attribute> on StyleMix {
     Key? key,
     @Deprecated('Use the style parameter instead') StyleMix? mix,
     StyleMix? style,
-    List<Variant>? variants,
   }) {
     return StyledRow(
       style: mergeNullable(style ?? mix),
       key: key,
-      variants: variants,
       inherit: inherit,
       children: children,
     );
@@ -85,13 +77,11 @@ extension StyleMixExt<T extends Attribute> on StyleMix {
     @Deprecated('Use the style parameter instead') StyleMix? mix,
     String? semanticsLabel,
     StyleMix? style,
-    List<Variant>? variants,
   }) {
     return StyledText(
       text,
       style: mergeNullable(style ?? mix),
       key: key,
-      variants: variants,
       inherit: inherit,
       semanticsLabel: semanticsLabel,
     );
@@ -103,11 +93,9 @@ extension StyleMixExt<T extends Attribute> on StyleMix {
     Key? key,
     @Deprecated('Use the style parameter instead') StyleMix? mix,
     StyleMix? style,
-    List<Variant>? variants,
   }) {
     return VBox(
       style: mergeNullable(style ?? mix),
-      variants: variants,
       key: key,
       inherit: inherit,
       children: children,
@@ -120,12 +108,10 @@ extension StyleMixExt<T extends Attribute> on StyleMix {
     Key? key,
     @Deprecated('Use the style parameter instead') StyleMix? mix,
     StyleMix? style,
-    List<Variant>? variants,
   }) {
     return StyledColumn(
       style: mergeNullable(style ?? mix),
       key: key,
-      variants: variants,
       inherit: inherit,
       children: children,
     );
@@ -137,14 +123,12 @@ extension StyleMixExt<T extends Attribute> on StyleMix {
     Key? key,
     @Deprecated('Use the style parameter instead') StyleMix? mix,
     StyleMix? style,
-    List<Variant>? variants,
   }) {
     return StyledIcon(
       icon,
-      inherit: inherit,
-      key: key,
       style: mergeNullable(style ?? mix),
-      variants: variants,
+      key: key,
+      inherit: inherit,
     );
   }
 }

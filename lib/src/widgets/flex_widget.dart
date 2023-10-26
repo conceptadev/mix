@@ -1,17 +1,16 @@
 import 'package:flutter/widgets.dart';
 
-import '../factory/mix_provider.dart';
 import '../specs/flex_attribute.dart';
+import 'container_widget.dart';
 import 'styled_widget.dart';
 
 class StyledFlex extends StyledWidget {
   const StyledFlex({
     super.style,
     super.key,
-    super.variants,
     super.inherit,
     required this.direction,
-    required this.children,
+    this.children = const <Widget>[],
   });
 
   final List<Widget> children;
@@ -19,33 +18,32 @@ class StyledFlex extends StyledWidget {
 
   @override
   Widget build(BuildContext context) {
-    return withMix(
-      context,
-      MixedFlex(direction: direction, children: children),
-    );
-  }
-}
+    return buildWithStyle(context, (data) {
+      final spec = FlexSpec.resolve(data);
+      List<Widget> _childrenWithGap() {
+        final spacedChildren = <Widget>[];
+        for (int i = 0; i < children.length; i++) {
+          spacedChildren.add(children[i]);
+          if (i < children.length - 1) {
+            // spacedChildren.add(Gap(gap));
+          }
+        }
 
-class FlexBox extends StyledWidget {
-  const FlexBox({
-    @Deprecated('Use the style parameter instead') super.mix,
-    super.style,
-    super.key,
-    super.variants,
-    super.inherit,
-    required this.direction,
-    required this.children,
-  });
+        return spacedChildren;
+      }
 
-  final List<Widget> children;
-  final Axis direction;
+      final fallback = Flex(direction: direction);
 
-  @override
-  Widget build(BuildContext context) {
-    return withMix(
-      context,
-      MixedFlex(direction: direction, children: children),
-    );
+      return Flex(
+        direction: direction,
+        mainAxisAlignment: spec.mainAxisAlignment ?? fallback.mainAxisAlignment,
+        mainAxisSize: spec.mainAxisSize ?? fallback.mainAxisSize,
+        crossAxisAlignment:
+            spec.crossAxisAlignment ?? fallback.crossAxisAlignment,
+        verticalDirection: spec.verticalDirection ?? fallback.verticalDirection,
+        children: _childrenWithGap(),
+      );
+    });
   }
 }
 
@@ -53,9 +51,8 @@ class StyledRow extends StyledFlex {
   const StyledRow({
     super.style,
     super.key,
-    super.variants,
     super.inherit,
-    super.children = const <Widget>[],
+    required super.children,
   }) : super(direction: Axis.horizontal);
 }
 
@@ -63,17 +60,41 @@ class StyledColumn extends StyledFlex {
   const StyledColumn({
     super.style,
     super.key,
-    super.variants,
     super.inherit,
-    super.children = const <Widget>[],
+    super.children,
   }) : super(direction: Axis.vertical);
+}
+
+class FlexBox extends StyledWidget {
+  const FlexBox({
+    super.style,
+    super.key,
+    super.inherit,
+    required this.direction,
+    required this.children,
+  });
+
+  final List<Widget> children;
+  final Axis direction;
+
+  @override
+  Widget build(BuildContext context) {
+    return buildWithStyle(context, (data) {
+      return StyledContainer(
+        inherit: true,
+        child: StyledFlex(
+          inherit: true,
+          direction: direction,
+          children: children,
+        ),
+      );
+    });
+  }
 }
 
 class HBox extends FlexBox {
   const HBox({
-    @Deprecated('Use the style parameter instead') super.mix,
     super.style,
-    super.variants,
     super.key,
     super.inherit,
     super.children = const <Widget>[],
@@ -82,50 +103,9 @@ class HBox extends FlexBox {
 
 class VBox extends FlexBox {
   const VBox({
-    @Deprecated('Use the style parameter instead') super.mix,
     super.style,
-    super.variants,
     super.key,
     super.inherit,
     super.children = const <Widget>[],
   }) : super(direction: Axis.vertical);
-}
-
-class MixedFlex extends StatelessWidget {
-  const MixedFlex({
-    super.key,
-    required this.direction,
-    required this.children,
-  });
-
-  final List<Widget> children;
-  final Axis direction;
-
-  List<Widget> _prepareChildrenWithGap() {
-    final spacedChildren = <Widget>[];
-
-    for (int i = 0; i < children.length; i++) {
-      spacedChildren.add(children[i]);
-      if (i < children.length - 1) {
-        // spacedChildren.add(Gap(gap));
-      }
-    }
-
-    return spacedChildren;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final mix = MixProvider.maybeOf(context);
-    final flex = mix?.maybeGet<FlexAttributes, FlexSpec>();
-
-    return Flex(
-      direction: direction,
-      mainAxisAlignment: flex?.mainAxisAlignment ?? MainAxisAlignment.start,
-      mainAxisSize: flex?.mainAxisSize ?? MainAxisSize.max,
-      crossAxisAlignment: flex?.crossAxisAlignment ?? CrossAxisAlignment.center,
-      verticalDirection: flex?.verticalDirection ?? VerticalDirection.down,
-      children: _prepareChildrenWithGap(),
-    );
-  }
 }

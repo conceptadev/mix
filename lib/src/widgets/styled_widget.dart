@@ -1,86 +1,41 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import '../core/variants/variant.dart';
 import '../factory/mix_provider.dart';
-import '../factory/mix_provider_data.dart';
 import '../factory/style_mix.dart';
-import 'mix_context_builder.dart';
-
-@Deprecated('Use MixWidget instead')
-typedef MixWidget = StyledWidget;
-
-abstract class StyledWidgetBuilder {
-  Widget build(BuildContext context, MixData mix) {
-    // Implement the custom build logic here.
-    // This method should be overridden by each StyledWidget subclass.
-    throw UnimplementedError();
-  }
-}
 
 abstract class StyledWidget extends StatelessWidget {
   /// Constructor.
   const StyledWidget({
-    @Deprecated('Use the style parameter instead') StyleMix? mix,
-    StyleMix? style,
+    this.style = StyleMix.empty,
     super.key,
 
     /// Inherit beavhior is off by default and allows to inherit the style from the parent Context.
     /// Only WidgetAttributes are inherited. Decorators will not be inherited as
     /// decorators should have already been applied to the parent Widget.
-    bool inherit = false,
-    List<Variant>? variants,
-  })  : _style = style ?? mix,
-        _variants = variants,
-        _inherit = inherit;
+    this.inherit = false,
+  });
 
-  final StyleMix? _style;
-  final List<Variant>? _variants;
-  final bool _inherit;
+  final StyleMix style;
 
-  StyleMix get style => _style ?? StyleMix.empty;
+  final bool inherit;
 
-  List<Variant>? get variants => _variants;
-
-  MixData getMix(BuildContext context) {
-    final mix = MixData.create(
-      context: context,
-      style: style.selectVariants(_variants ?? []),
-    );
-
-    if (_inherit) {
-      final parentMix = MixProvider.maybeOf(context);
-      if (parentMix != null) {
-        return mix.merge(parentMix);
-      }
-    }
-
-    return mix;
-  }
-
-  Widget withMix(BuildContext context, Widget child) {
-    final mix = getMix(context);
-
-    return MixProvider(mix, child: child);
-  }
-
-  Widget withMixBuilder(BuildContext context, WidgetMixBuilder builder) {
-    final mix = getMix(context);
-
-    return MixProvider(mix, child: builder(mix));
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-
-    properties.add(DiagnosticsProperty<StyleMix>('style', _style));
-
-    properties.add(DiagnosticsProperty<bool>('inherit', _inherit));
-
-    properties.add(DiagnosticsProperty<List<Variant>>('variants', variants));
+  Widget buildWithStyle(BuildContext context, MixBuilder builder) {
+    return Mix.build(context, style, builder);
   }
 
   @override
   Widget build(BuildContext context);
+}
+
+abstract class AnimatedStyledWidget extends StyledWidget {
+  const AnimatedStyledWidget({
+    super.key,
+    super.inherit,
+    super.style,
+    required this.curve,
+    required this.duration,
+  });
+
+  final Curve curve;
+  final Duration duration;
 }

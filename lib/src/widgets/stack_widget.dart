@@ -2,7 +2,6 @@ import 'package:flutter/widgets.dart';
 
 import '../attributes/stack_attribute.dart';
 import '../factory/mix_provider.dart';
-import 'container_widget.dart';
 import 'styled_widget.dart';
 
 class StyledStack extends StyledWidget {
@@ -12,7 +11,6 @@ class StyledStack extends StyledWidget {
     super.key,
     @Deprecated('Use the style parameter instead') super.mix,
     super.style,
-    super.variants,
   });
 
   final List<Widget> children;
@@ -32,9 +30,7 @@ class ZBox extends StyledWidget {
     this.children = const <Widget>[],
     super.inherit,
     super.key,
-    @Deprecated('Use the style parameter instead') super.mix,
     super.style,
-    super.variants,
   });
 
   final List<Widget> children;
@@ -55,7 +51,7 @@ class MixedStack extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mix = MixProvider.of(context);
+    final mix = Mix.of(context);
     final spec = mix.spec<StackSpec>();
 
     return Stack(

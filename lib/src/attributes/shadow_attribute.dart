@@ -27,9 +27,9 @@ class ShadowAttribute<T extends Shadow> extends StyleAttribute<Shadow> {
     const defaultShadow = Shadow();
 
     return Shadow(
-      color: resolveDto(color, mix),
+      color: color?.resolve(mix) ?? defaultShadow.color,
       offset: offset ?? defaultShadow.offset,
-      blurRadius: resolveDto(blurRadius, mix),
+      blurRadius: blurRadius?.resolve(mix) ?? defaultShadow.blurRadius,
     ) as T;
   }
 
@@ -70,10 +70,10 @@ class BoxShadowAttribute extends ShadowAttribute<BoxShadow> {
     const defaultShadow = BoxShadow();
 
     return BoxShadow(
-      color: resolveDto(color, mix) ?? defaultShadow.color,
+      color: color?.resolve(mix) ?? defaultShadow.color,
       offset: offset ?? defaultShadow.offset,
-      blurRadius: resolveDto(blurRadius, mix) ?? defaultShadow.blurRadius,
-      spreadRadius: resolveDto(spreadRadius, mix) ?? defaultShadow.spreadRadius,
+      blurRadius: blurRadius?.resolve(mix) ?? defaultShadow.blurRadius,
+      spreadRadius: spreadRadius?.resolve(mix) ?? defaultShadow.spreadRadius,
     );
   }
 

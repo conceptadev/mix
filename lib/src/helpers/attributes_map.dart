@@ -28,8 +28,8 @@ class StylesMap extends MergeableMap<Type, StyleAttribute> {
     return StylesMap._(map);
   }
 
-  Set<Spec> buildSpecs(MixData context) {
-    final resolvedMap = Set<Spec>();
+  Set<MixExtension> buildSpecs(MixData context) {
+    final resolvedMap = Set<MixExtension>();
 
     for (final key in map.keys) {
       resolvedMap.add(map[key]!.resolve(context));

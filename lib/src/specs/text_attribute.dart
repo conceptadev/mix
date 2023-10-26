@@ -140,7 +140,7 @@ class TextAttributes extends StyleAttribute<TextSpec> {
       ];
 }
 
-class TextSpec extends Spec<TextSpec> {
+class TextSpec extends MixExtension<TextSpec> {
   final bool softWrap;
   final TextOverflow overflow;
   final StrutStyle? strutStyle;

@@ -6,6 +6,66 @@ import '../factory/mix_provider_data.dart';
 import '../helpers/compare_mixin.dart';
 import 'attribute.dart';
 
+abstract class ValueAttribute<T extends ValueAttribute<T, R>, R>
+    extends StyleAttribute<R> {
+  final R value;
+
+  const ValueAttribute(this.value);
+
+// Factory for merge methods
+  T create(R value);
+
+  @override
+  R resolve(MixData mix) {
+    return value is Resolvable ? (value as Resolvable).resolve(mix) : value;
+  }
+
+  @override
+  T merge(T? other) {
+    if (other == null) return create(value);
+
+    return value is Mergeable
+        ? create((value as Mergeable).merge(other.value))
+        : create(other.value);
+  }
+
+  @override
+  get props => [value];
+}
+
+abstract class ModifiableDtoAttribute<D extends ModifiableDto<R>, R>
+    extends DtoAttribute<ModifiableDtoAttribute<D, R>, D, R> {
+  const ModifiableDtoAttribute(super.value);
+}
+
+abstract class DtoAttribute<
+    Attr extends DtoAttribute<Attr, Value, ResolvedValue>,
+    Value extends ModifiableDto<ResolvedValue>,
+    ResolvedValue> extends StyleAttribute<ResolvedValue> {
+  final Value value;
+
+  const DtoAttribute(this.value);
+
+// Factory for merge methods
+  // ignore: avoid-shadowing
+  Attr create(Value value);
+
+  @override
+  ResolvedValue resolve(MixData mix) {
+    return value.resolve(mix);
+  }
+
+  @override
+  Attr merge(Attr? other) {
+    if (other == null) return create(value);
+
+    return create((value).merge(other.value));
+  }
+
+  @override
+  get props => [value];
+}
+
 abstract class StyleAttribute<T> extends Attribute with Resolvable<T> {
   const StyleAttribute();
 
@@ -15,7 +75,7 @@ abstract class StyleAttribute<T> extends Attribute with Resolvable<T> {
   ) {
     R? selectedAttribute = resolvable;
 
-    selectedAttribute ??= mix.attributeOf<R>();
+    selectedAttribute ??= mix.attributeOfType<R>();
 
     return selectedAttribute?.resolve(mix);
   }
@@ -67,8 +127,7 @@ abstract class StyleAttribute<T> extends Attribute with Resolvable<T> {
 
 typedef ValueModifier<T> = T Function(T value);
 
-abstract class ModifiableDto<T> extends StyleAttribute<T> {
-  @visibleForTesting
+abstract class ModifiableDto<T> extends Dto<T> {
   final T value;
   @visibleForTesting
   final ValueModifier<T>? modifier;
@@ -79,13 +138,14 @@ abstract class ModifiableDto<T> extends StyleAttribute<T> {
   T modify(T valueToModify) => modifier?.call(valueToModify) ?? valueToModify;
 }
 
-abstract class SpecAttribute<T extends Spec<T>> extends StyleAttribute<T> {
+abstract class SpecAttribute<T extends MixExtension<T>>
+    extends StyleAttribute<T> {
   const SpecAttribute();
 }
 
-abstract class Spec<T extends ThemeExtension<T>> extends ThemeExtension<T>
+abstract class MixExtension<T extends MixExtension<T>> extends ThemeExtension<T>
     with Comparable {
-  const Spec();
+  const MixExtension();
 
   Duration lerpDuration(Duration a, Duration b, double t) {
     int lerpTicks = ((1 - t) * a.inMilliseconds + t * b.inMilliseconds).round();

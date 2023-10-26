@@ -5,7 +5,7 @@ import '../../factory/mix_provider_data.dart';
 import '../../theme/mix_theme.dart';
 
 extension BuildContextExt on BuildContext {
-  MixData? get mix => MixProvider.maybeOf(this);
+  MixData? get mix => Mix.maybeOf(this);
 
   /// MEDIA QUERY EXTENSION METHODS
 

@@ -46,7 +46,7 @@ class StackAttributes extends SpecAttribute<StackSpec> {
   List<Object?> get props => [alignment, fit, textDirection, clipBehavior];
 }
 
-class StackSpec extends Spec<StackSpec> {
+class StackSpec extends MixExtension<StackSpec> {
   final AlignmentGeometry? alignment;
   final StackFit? fit;
   final TextDirection? textDirection;

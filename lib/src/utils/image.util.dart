@@ -1,56 +1,31 @@
 // ignore_for_file: long-parameter-list
 
+import 'package:flutter/material.dart';
+
 import '../attributes/box_fit_attribute.dart';
-import '../attributes/image_provider_attribute.dart';
-import '../attributes/image_repeat_attribute.dart';
+import '../attributes/image_attribute.dart';
 import '../attributes/size_attribute.dart';
 import '../core/dto/color_dto.dart';
-import '../specs/image_attribute.dart';
+import '../core/dto/double_dto.dart';
 
-ImageAttributes image({
-  ImageProviderAttribute? imageProvider,
-  WidthAttribute? width,
-  HeightAttribute? height,
-  ColorDto? color,
-  ImageRepeatAttribute? repeat,
-  BoxFitAttribute? fit,
-}) {
-  return ImageAttributes(
-    image: imageProvider,
-    width: width,
-    height: height,
-    color: color,
-    repeat: repeat,
-    fit: fit,
-  );
+WidthAttribute imageWidth(double width) {
+  return WidthAttribute(DoubleDto(width));
 }
 
-ImageAttributes imageProvider(ImageProviderAttribute imageProvider) {
-  return ImageAttributes(image: imageProvider);
+HeightAttribute imageHeight(double height) {
+  return HeightAttribute(DoubleDto(height));
 }
 
-@Deprecated('Use image(width: width)')
-ImageAttributes imageWidth(WidthAttribute width) {
-  return ImageAttributes(width: width);
+ImageColorAttribute imageColor(Color color) {
+  return ImageColorAttribute(ColorDto(color));
 }
 
-ImageAttributes imageHeight(HeightAttribute height) {
-  return ImageAttributes(height: height);
+ImageRepeatAttribute imageRepeat(ImageRepeat repeat) {
+  return ImageRepeatAttribute(repeat);
 }
 
-@Deprecated('Use image(color: color)')
-ImageAttributes imageColor(ColorDto color) {
-  return ImageAttributes(color: color);
-}
-
-@Deprecated('Use image(repeat: repeat)')
-ImageAttributes imageRepeat(ImageRepeatAttribute repeat) {
-  return ImageAttributes(repeat: repeat);
-}
-
-@Deprecated('Use image(fit: fit)')
-ImageAttributes imageFit(BoxFitAttribute fit) {
-  return ImageAttributes(fit: fit);
+BoxFitAttribute imageFit(BoxFit fit) {
+  return BoxFitAttribute(fit);
 }
 
 // const imageColor = ImageUtility.color;

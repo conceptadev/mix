@@ -13,10 +13,8 @@ typedef TextMix = StyledText;
 class StyledText extends StyledWidget {
   const StyledText(
     this.text, {
-    @Deprecated('Use the style parameter instead') super.mix,
     super.style,
     super.key,
-    super.variants,
     super.inherit,
     this.semanticsLabel,
   });
@@ -51,9 +49,9 @@ class MixedText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mix = MixProvider.of(context);
+    final mix = Mix.of(context);
 
-    final text = mix.maybeGet<TextAttributes, TextSpec>();
+    final text = mix.get<TextAttributes, TextSpec>();
     final animationDuration = mix.commonSpec.animationDuration;
     final animationCurve = mix.commonSpec.animationCurve;
     final textDirection = mix.commonSpec.textDirection;

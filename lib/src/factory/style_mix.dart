@@ -6,11 +6,11 @@ import '../core/variants/variant.dart';
 import '../helpers/attributes_map.dart';
 import 'mix_values.dart';
 
-@Deprecated(
-  'Use StyleMix instead. '
-  'This class will be removed in a future release.',
-)
-typedef Mix = StyleMix;
+// @Deprecated(
+//   'Use StyleMix instead. '
+//   'This class will be removed in a future release.',
+// )
+// typedef Mix = StyleMix;
 
 /// A class representing a mix of attributes, decorators, variants, context
 /// variants, and directives.
