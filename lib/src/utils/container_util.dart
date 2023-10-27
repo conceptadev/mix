@@ -4,7 +4,7 @@ import '../attributes/decoration_attribute.dart';
 import '../helpers/extensions/helper_ext.dart';
 
 BoxDecorationAttribute backgroundColor(Color color) {
-  return BoxDecorationAttribute(color: color.dto);
+  return BoxDecorationAttribute(color: color.toDto);
 }
 
 @Deprecated('Use backgroundColor(style:style) instead')

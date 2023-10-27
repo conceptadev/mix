@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/src/attributes/icon.attribute.dart';
 import 'package:mix/src/attributes/shared/shared.attributes.dart';
-import 'package:mix/src/dtos/color.dto.dart';
+import 'package:mix/src/dtos/color.toDto.dart';
 import 'package:mix/src/factory/style_mix.dart';
 import 'package:mix/src/helpers/extensions/style_mix_ext.dart';
 

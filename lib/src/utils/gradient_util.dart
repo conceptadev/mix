@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../attributes/gradient_attribute.dart';
-
 const linearGradient = _linearGradient;
 const radialGradient = _radialGradient;
 

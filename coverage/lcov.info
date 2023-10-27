@@ -1972,7 +1972,7 @@ DA:195,0
 LF:70
 LH:18
 end_of_record
-SF:lib/src/dtos/color.dto.dart
+SF:lib/src/dtos/color.toDto.dart
 DA:10,24
 DA:12,7
 DA:15,7

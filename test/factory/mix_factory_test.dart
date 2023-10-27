@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
-import 'package:mix/src/dtos/color.dto.dart';
+import 'package:mix/src/dtos/color.toDto.dart';
 
 final firstMix = StyleMix(
   // Box attribute

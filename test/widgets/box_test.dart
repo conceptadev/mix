@@ -4,7 +4,7 @@ import 'package:mix/src/attributes/container.attribute.dart';
 import 'package:mix/src/attributes/decorators/decorators.util.dart';
 import 'package:mix/src/attributes/shared/shared.attributes.dart';
 import 'package:mix/src/dtos/border/border.dto.dart';
-import 'package:mix/src/dtos/color.dto.dart';
+import 'package:mix/src/dtos/color.toDto.dart';
 import 'package:mix/src/dtos/edge_insets/edge_insets.dto.dart';
 import 'package:mix/src/dtos/radius/border_radius.dto.dart';
 import 'package:mix/src/dtos/radius/radius_dto.dart';

@@ -187,6 +187,8 @@ class BoxBorderDto extends Dto<BoxBorder> {
         start = vertical,
         end = vertical;
 
+  BoxBorderAttribute get toAttribute => BoxBorderAttribute(this);
+
   @override
   BoxBorderDto merge(BoxBorderDto? other) {
     if (other == null) return this;
@@ -243,10 +245,10 @@ class BorderSideDto extends Dto<BorderSide> {
 
   factory BorderSideDto.from(BorderSide side) {
     return BorderSideDto(
-      color: side.color.dto,
-      strokeAlign: side.strokeAlign.dto,
+      color: side.color.toDto,
+      strokeAlign: side.strokeAlign.toDto,
       style: side.style,
-      width: side.width.dto,
+      width: side.width.toDto,
     );
   }
 

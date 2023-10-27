@@ -4,7 +4,7 @@ import '../attributes/value_attributes.dart';
 import '../helpers/extensions/helper_ext.dart';
 
 AlignmentGeometryAttribute alignment(AlignmentGeometry value) {
-  return AlignmentGeometryAttribute(value.dto);
+  return AlignmentGeometryAttribute(value.toDto);
 }
 
 /// The top left corner.

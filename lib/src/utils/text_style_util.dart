@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../attributes/shadow_attribute.dart';
 import '../attributes/text_style_attribute.dart';
-import '../core/dto/color_dto.dart';
+import '../helpers/extensions/helper_ext.dart';
 
 TextStyleAttribute textStyle({
   String? fontFamily,
@@ -46,11 +46,11 @@ TextStyleAttribute textStyle({
 
   TextStyleAttribute textStyle = TextStyleAttribute(
     background: background,
-    backgroundColor: backgroundColor == null ? null : ColorDto(backgroundColor),
-    color: ColorDto.maybeFrom(color),
+    backgroundColor: backgroundColor?.toDto,
+    color: color?.toDto,
     debugLabel: debugLabel,
     decoration: decoration,
-    decorationColor: decorationColor == null ? null : ColorDto(decorationColor),
+    decorationColor: decorationColor?.toDto,
     decorationStyle: decorationStyle,
     fontFamily: fontFamily,
     fontFeatures: fontFeatures,

@@ -51,11 +51,11 @@ class BoxDecorationAttribute extends DecorationAttribute<BoxDecoration> {
     final boxShadow = decoration.boxShadow;
 
     return BoxDecorationAttribute(
-      border: border?.attr,
-      borderRadius: borderRadius?.attr,
-      gradient: gradient?.attr,
+      border: border?.toAttribute,
+      borderRadius: borderRadius?.toAttribute,
+      gradient: gradient?.toAttribute,
       boxShadow: boxShadow?.map(BoxShadowAttribute.fromBoxShadow).toList(),
-      color: decoration.color?.dto,
+      color: decoration.color?.toDto,
       shape: decoration.shape,
     );
   }
