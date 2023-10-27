@@ -2,10 +2,7 @@
 
 import 'package:flutter/material.dart';
 
-import '../attributes/box_fit_attribute.dart';
-import '../attributes/image_attribute.dart';
-import '../attributes/size_attribute.dart';
-import '../core/dto/color_dto.dart';
+import '../attributes/value_attributes.dart';
 import '../core/dto/dtos.dart';
 
 WidthAttribute imageWidth(double width) {

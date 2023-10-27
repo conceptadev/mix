@@ -8,8 +8,10 @@ import '../style_attribute.dart';
 class DoubleDto extends ModifiableDto<double> {
   const DoubleDto(super.value, {super.modifier});
 
-  static DoubleDto? maybeFrom(double? value) {
-    return value == null ? null : DoubleDto(value);
+  double resolveAsSpace(MixData mix) {
+    final resolvedValue = mix.resolver.space(value);
+
+    return modify(resolvedValue);
   }
 
   @override
@@ -21,26 +23,10 @@ class DoubleDto extends ModifiableDto<double> {
   }
 
   @override
-  double resolve(MixData mix) => value;
+  double resolve(MixData mix) => modify(value);
 
   @override
   List<Object?> get props => [value];
-}
-
-class SpacingDto extends DoubleDto {
-  const SpacingDto(super.value, {super.modifier});
-
-  @override
-  SpacingDto merge(DoubleDto? other) {
-    return SpacingDto(other?.value ?? value);
-  }
-
-  @override
-  double resolve(MixData mix) {
-    final resolvedValue = mix.resolver.space(value);
-
-    return modify(resolvedValue);
-  }
 }
 
 class ColorDto extends ModifiableDto<Color> {
@@ -75,66 +61,64 @@ class ColorDto extends ModifiableDto<Color> {
   get props => [value, modifier];
 }
 
-class SpacingGeometryDto extends Dto<EdgeInsetsGeometry> {
-  final SpacingDto? _top;
-  final SpacingDto? _bottom;
-  final SpacingDto? _left;
-  final SpacingDto? _right;
+class EdgeInsetsGeometryDto extends Dto<EdgeInsetsGeometry> {
+  final DoubleDto? top;
+  final DoubleDto? bottom;
+  final DoubleDto? left;
+  final DoubleDto? right;
 
   // Directional
-  final SpacingDto? _start;
-  final SpacingDto? _end;
+  final DoubleDto? start;
+  final DoubleDto? end;
 
-  const SpacingGeometryDto({
-    SpacingDto? top,
-    SpacingDto? bottom,
-    SpacingDto? left,
-    SpacingDto? right,
-    SpacingDto? start,
-    SpacingDto? end,
-  })  : _top = top,
-        _bottom = bottom,
-        _left = left,
-        _right = right,
-        _start = start,
-        _end = end;
-  @visibleForTesting
-  SpacingDto? get top => _top;
+  final bool isDirectional;
 
-  @visibleForTesting
-  SpacingDto? get bottom => _bottom;
+  const EdgeInsetsGeometryDto({
+    this.top,
+    this.bottom,
+    this.left,
+    this.right,
+    this.start,
+    this.end,
+    this.isDirectional = false,
+  });
 
-  @visibleForTesting
-  SpacingDto? get left => _left;
+  const EdgeInsetsGeometryDto.all(DoubleDto all, {this.isDirectional = false})
+      : top = all,
+        bottom = all,
+        left = all,
+        right = all,
+        start = all,
+        end = all;
 
-  @visibleForTesting
-  SpacingDto? get right => _right;
-
-  @visibleForTesting
-  SpacingDto? get start => _start;
-
-  @visibleForTesting
-  SpacingDto? get end => _end;
-
-  bool get _isDirectional => _start != null || _end != null;
+  const EdgeInsetsGeometryDto.symmetric({
+    DoubleDto? vertical,
+    DoubleDto? horizontal,
+    this.isDirectional = false,
+  })  : top = vertical,
+        bottom = vertical,
+        left = horizontal,
+        right = horizontal,
+        start = horizontal,
+        end = horizontal;
 
   @override
-  SpacingGeometryDto merge(SpacingGeometryDto? other) {
+  EdgeInsetsGeometryDto merge(EdgeInsetsGeometryDto? other) {
     if (other == null) return this;
 
-    if (other._isDirectional != _isDirectional) {
+    if (other.isDirectional != isDirectional) {
       throw UnsupportedError(
         "Cannot merge directional and non-directional edgeinsets attributes",
       );
     }
 
-    return SpacingGeometryDto(
-      top: other._top ?? _top,
-      bottom: other._bottom ?? _bottom,
-      left: other._left ?? _left,
-      right: other._right ?? _right,
-      start: other._start ?? _start,
-      end: other._end ?? _end,
+    return EdgeInsetsGeometryDto(
+      top: other.top ?? top,
+      bottom: other.bottom ?? bottom,
+      left: other.left ?? left,
+      right: other.right ?? right,
+      start: other.start ?? start,
+      end: other.end ?? end,
     );
   }
 
@@ -143,23 +127,136 @@ class SpacingGeometryDto extends Dto<EdgeInsetsGeometry> {
     const defaultValue = EdgeInsets.zero;
     const defalutDirectionalvalue = EdgeInsetsDirectional.zero;
 
-    return _isDirectional
+    return isDirectional
         ? EdgeInsetsDirectional.only(
-            start: _start?.resolve(mix) ?? defalutDirectionalvalue.start,
-            top: _top?.resolve(mix) ?? defalutDirectionalvalue.top,
-            end: _end?.resolve(mix) ?? defalutDirectionalvalue.end,
-            bottom: _bottom?.resolve(mix) ?? defalutDirectionalvalue.bottom,
+            start: start?.resolve(mix) ?? defalutDirectionalvalue.start,
+            top: top?.resolve(mix) ?? defalutDirectionalvalue.top,
+            end: end?.resolve(mix) ?? defalutDirectionalvalue.end,
+            bottom: bottom?.resolve(mix) ?? defalutDirectionalvalue.bottom,
           )
         : EdgeInsets.only(
-            left: _left?.resolve(mix) ?? defaultValue.left,
-            top: _top?.resolve(mix) ?? defaultValue.top,
-            right: _right?.resolve(mix) ?? defaultValue.right,
-            bottom: _bottom?.resolve(mix) ?? defaultValue.bottom,
+            left: left?.resolve(mix) ?? defaultValue.left,
+            top: top?.resolve(mix) ?? defaultValue.top,
+            right: right?.resolve(mix) ?? defaultValue.right,
+            bottom: bottom?.resolve(mix) ?? defaultValue.bottom,
           );
   }
 
   @override
-  get props => [_top, _bottom, _left, _right, _start, _end];
+  get props => [top, bottom, left, right, start, end];
+}
+
+class SpaceGeometryDto extends EdgeInsetsGeometryDto {
+  const SpaceGeometryDto({
+    super.top,
+    super.bottom,
+    super.left,
+    super.right,
+    super.start,
+    super.end,
+    super.isDirectional = false,
+  });
+
+  const SpaceGeometryDto.all(DoubleDto all, {super.isDirectional = false})
+      : super.all(all);
+
+  factory SpaceGeometryDto.positional(
+    double p1, [
+    double? p2,
+    double? p3,
+    double? p4,
+  ]) {
+    double top = p1;
+    double bottom = p1;
+    double left = p1;
+    double right = p1;
+
+    if (p2 != null) {
+      left = p2;
+      right = p2;
+    }
+
+    if (p3 != null) bottom = p3;
+    if (p4 != null) right = p4;
+
+    return SpaceGeometryDto(
+      top: DoubleDto(top),
+      bottom: DoubleDto(bottom),
+      left: DoubleDto(left),
+      right: DoubleDto(right),
+      start: DoubleDto(left),
+      end: DoubleDto(right),
+    );
+  }
+
+  const SpaceGeometryDto.symmetric({
+    DoubleDto? vertical,
+    DoubleDto? horizontal,
+    super.isDirectional = false,
+  }) : super.symmetric(vertical: vertical, horizontal: horizontal);
+
+  SpaceGeometryDto get toDirectional => copyWith(isDirectional: true);
+
+  SpaceGeometryDto copyWith({
+    DoubleDto? top,
+    DoubleDto? bottom,
+    DoubleDto? left,
+    DoubleDto? right,
+    DoubleDto? start,
+    DoubleDto? end,
+    bool? isDirectional,
+  }) {
+    return SpaceGeometryDto(
+      top: top ?? this.top,
+      bottom: bottom ?? this.bottom,
+      left: left ?? this.left,
+      right: right ?? this.right,
+      start: start ?? this.start,
+      end: end ?? this.end,
+      isDirectional: isDirectional ?? this.isDirectional,
+    );
+  }
+
+  @override
+  SpaceGeometryDto merge(SpaceGeometryDto? other) {
+    if (other == null) return this;
+
+    if (other.isDirectional != isDirectional) {
+      throw UnsupportedError(
+        "Cannot merge directional and non-directional edgeinsets attributes",
+      );
+    }
+
+    return SpaceGeometryDto(
+      top: other.top ?? top,
+      bottom: other.bottom ?? bottom,
+      left: other.left ?? left,
+      right: other.right ?? right,
+      start: other.start ?? start,
+      end: other.end ?? end,
+    );
+  }
+
+  @override
+  EdgeInsetsGeometry resolve(MixData mix) {
+    const defaultValue = EdgeInsets.zero;
+    const defalutDirectionalvalue = EdgeInsetsDirectional.zero;
+
+    return isDirectional
+        ? EdgeInsetsDirectional.only(
+            start: start?.resolveAsSpace(mix) ?? defalutDirectionalvalue.start,
+            top: top?.resolveAsSpace(mix) ?? defalutDirectionalvalue.top,
+            end: end?.resolveAsSpace(mix) ?? defalutDirectionalvalue.end,
+            bottom:
+                bottom?.resolveAsSpace(mix) ?? defalutDirectionalvalue.bottom,
+          )
+        : EdgeInsets.only(
+            left: left?.resolveAsSpace(mix) ?? defaultValue.left,
+            top: top?.resolveAsSpace(mix) ?? defaultValue.top,
+            right: right?.resolveAsSpace(mix) ?? defaultValue.right,
+            bottom: bottom?.resolveAsSpace(mix) ?? defaultValue.bottom,
+          );
+  }
 }
 
 class AlignmentGeometryDto extends Dto<AlignmentGeometry> {

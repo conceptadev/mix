@@ -4,9 +4,16 @@ import 'package:flutter/widgets.dart';
 import '../core/dto/border_dto.dart';
 import '../core/dto/dtos.dart';
 import '../core/style_attribute.dart';
-import 'base/color_attribute.dart';
-import 'base/double_attribute.dart';
-import 'spacing_attribute.dart';
+
+abstract class DoubleAttribute
+    extends ModifiableDtoAttribute<DoubleAttribute, DoubleDto, double> {
+  const DoubleAttribute(super.value);
+}
+
+abstract class ColorAttribute
+    extends ModifiableDtoAttribute<ColorAttribute, ColorDto, Color> {
+  const ColorAttribute(super.value);
+}
 
 class AxisAttribute extends ValueAttribute<AxisAttribute, Axis> {
   const AxisAttribute(super.value);
@@ -226,12 +233,11 @@ class AlignmentAttribute extends ValueAttribute<AlignmentAttribute, Alignment> {
   AlignmentAttribute create(value) => AlignmentAttribute(value);
 }
 
-class DecorationAttribute
-    extends ValueAttribute<DecorationAttribute, Decoration> {
-  const DecorationAttribute(super.value);
+class FlexFitAttribute extends ValueAttribute<FlexFitAttribute, FlexFit> {
+  const FlexFitAttribute(super.value);
 
   @override
-  DecorationAttribute create(value) => DecorationAttribute(value);
+  FlexFitAttribute create(value) => FlexFitAttribute(value);
 }
 
 class ForegroundDecorationAttribute
@@ -313,4 +319,9 @@ class AlignmentGeometryAttribute extends DtoAttribute<
 
   @override
   AlignmentGeometryAttribute create(value) => AlignmentGeometryAttribute(value);
+}
+
+abstract class SpacingAttribute<T extends SpacingAttribute<T>>
+    extends DtoAttribute<T, SpaceGeometryDto, EdgeInsetsGeometry> {
+  const SpacingAttribute(super.value);
 }

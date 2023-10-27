@@ -2,10 +2,8 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-import '../attributes/alignment_geometry_attribute.dart';
 import '../attributes/box_constraints_attribute.dart';
 import '../attributes/decoration_attribute.dart';
-import '../attributes/spacing_attribute.dart';
 import '../attributes/value_attributes.dart';
 import '../core/style_attribute.dart';
 import '../factory/mix_provider_data.dart';
@@ -42,7 +40,7 @@ class ContainerSpec extends MixExtension<ContainerSpec> {
       decoration: mix.get<DecorationAttribute, Decoration>(),
       width: mix.get<WidthAttribute, double>(),
       height: mix.get<HeightAttribute, double>(),
-      transform: mix.get<Matrix4Attribute, Matrix4>(),
+      transform: mix.get<TransformAttribute, Matrix4>(),
       clipBehavior: mix.get<ClipAttribute, Clip>(),
     );
   }

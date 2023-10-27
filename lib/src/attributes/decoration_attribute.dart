@@ -53,9 +53,9 @@ class BoxDecorationAttribute extends DecorationAttribute<BoxDecoration> {
     return BoxDecorationAttribute(
       border: border?.attr,
       borderRadius: borderRadius?.attr,
-      gradient: gradient == null ? null : GradientAttribute(gradient),
+      gradient: gradient?.attr,
       boxShadow: boxShadow?.map(BoxShadowAttribute.fromBoxShadow).toList(),
-      color: decoration.color.dto,
+      color: decoration.color?.dto,
       shape: decoration.shape,
     );
   }

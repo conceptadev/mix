@@ -1,129 +1,23 @@
 import 'package:flutter/material.dart';
 
-import '../attributes/box_border_attribute.dart';
-import '../core/dto/border_side_dto.dart';
-import '../core/dto/color_dto.dart';
+import '../attributes/value_attributes.dart';
+import '../core/dto/border_dto.dart';
+import '../helpers/extensions/helper_ext.dart';
 
-BoxBorderAttribute border({Color? color, double? width, BorderStyle? style}) {
-  return BorderAttribute.all(
+BoxBorderAttribute border({
+  Color? color,
+  double? width,
+  BorderStyle? style,
+  double? strokeAlign,
+}) {
+  return BoxBorderDto.all(
     BorderSideDto(
-      color: ColorDto.maybeFrom(color),
+      color: color?.dto,
+      strokeAlign: strokeAlign?.dto,
       style: style,
-      width: width,
+      width: width?.dto,
     ),
-  );
-}
-
-BoxBorderAttribute borderTop({
-  Color? color,
-  double? width,
-  BorderStyle? style,
-}) {
-  return BorderAttribute(
-    top: BorderSideDto(
-      color: ColorDto.maybeFrom(color),
-      style: style,
-      width: width,
-    ),
-  );
-}
-
-BoxBorderAttribute borderBottom({
-  Color? color,
-  double? width,
-  BorderStyle? style,
-}) {
-  return BorderAttribute(
-    bottom: BorderSideDto(
-      color: ColorDto.maybeFrom(color),
-      style: style,
-      width: width,
-    ),
-  );
-}
-
-BoxBorderAttribute borderLeft({
-  Color? color,
-  double? width,
-  BorderStyle? style,
-}) {
-  return BorderAttribute(
-    left: BorderSideDto(
-      color: ColorDto.maybeFrom(color),
-      style: style,
-      width: width,
-    ),
-  );
-}
-
-BoxBorderAttribute borderRight({
-  Color? color,
-  double? width,
-  BorderStyle? style,
-}) {
-  return BorderAttribute(
-    right: BorderSideDto(
-      color: ColorDto.maybeFrom(color),
-      style: style,
-      width: width,
-    ),
-  );
-}
-
-BoxBorderAttribute borderHorizontal({
-  Color? color,
-  double? width,
-  BorderStyle? style,
-}) {
-  final horizontal = BorderSideDto(
-    color: ColorDto.maybeFrom(color),
-    style: style,
-    width: width,
-  );
-
-  return BorderAttribute(left: horizontal, right: horizontal);
-}
-
-BoxBorderAttribute borderVertical({
-  Color? color,
-  double? width,
-  BorderStyle? style,
-}) {
-  final vertical = BorderSideDto(
-    color: ColorDto.maybeFrom(color),
-    style: style,
-    width: width,
-  );
-
-  return BorderAttribute(top: vertical, bottom: vertical);
-}
-
-BorderDirectionalAttribute borderStart({
-  Color? color,
-  double? width,
-  BorderStyle? style,
-}) {
-  return BorderDirectionalAttribute(
-    start: BorderSideDto(
-      color: ColorDto.maybeFrom(color),
-      style: style,
-      width: width,
-    ),
-  );
-}
-
-BorderDirectionalAttribute borderEnd({
-  Color? color,
-  double? width,
-  BorderStyle? style,
-}) {
-  return BorderDirectionalAttribute(
-    end: BorderSideDto(
-      color: ColorDto.maybeFrom(color),
-      style: style,
-      width: width,
-    ),
-  );
+  ).attr;
 }
 
 BoxBorderAttribute borderColor(Color color) {
@@ -136,4 +30,264 @@ BoxBorderAttribute borderWidth(double width) {
 
 BoxBorderAttribute borderStyle(BorderStyle style) {
   return border(style: style);
+}
+
+BoxBorderAttribute borderStrokeAlign(double strokeAlign) {
+  return border(strokeAlign: strokeAlign);
+}
+
+BoxBorderAttribute borderTop({
+  Color? color,
+  double? width,
+  BorderStyle? style,
+  double? strokeAlign,
+}) {
+  return BoxBorderDto(
+    top: BorderSideDto(
+      color: color?.dto,
+      strokeAlign: strokeAlign?.dto,
+      style: style,
+      width: width?.dto,
+    ),
+  ).attr;
+}
+
+BoxBorderAttribute borderTopColor(Color color) {
+  return borderTop(color: color);
+}
+
+BoxBorderAttribute borderTopWidth(double width) {
+  return borderTop(width: width);
+}
+
+BoxBorderAttribute borderTopStyle(BorderStyle style) {
+  return borderTop(style: style);
+}
+
+BoxBorderAttribute borderTopStrokeAlign(double strokeAlign) {
+  return borderTop(strokeAlign: strokeAlign);
+}
+
+BoxBorderAttribute borderBottom({
+  Color? color,
+  double? width,
+  BorderStyle? style,
+  double? strokeAlign,
+}) {
+  return BoxBorderDto(
+    bottom: BorderSideDto(
+      color: color?.dto,
+      strokeAlign: strokeAlign?.dto,
+      style: style,
+      width: width?.dto,
+    ),
+  ).attr;
+}
+
+BoxBorderAttribute borderBottomColor(Color color) {
+  return borderBottom(color: color);
+}
+
+BoxBorderAttribute borderBottomWidth(double width) {
+  return borderBottom(width: width);
+}
+
+BoxBorderAttribute borderBottomStyle(BorderStyle style) {
+  return borderBottom(style: style);
+}
+
+BoxBorderAttribute borderBottomStrokeAlign(double strokeAlign) {
+  return borderBottom(strokeAlign: strokeAlign);
+}
+
+BoxBorderAttribute borderLeft({
+  Color? color,
+  double? width,
+  BorderStyle? style,
+  double? strokeAlign,
+}) {
+  return BoxBorderDto(
+    left: BorderSideDto(
+      color: color?.dto,
+      strokeAlign: strokeAlign?.dto,
+      style: style,
+      width: width?.dto,
+    ),
+  ).attr;
+}
+
+BoxBorderAttribute borderLeftColor(Color color) {
+  return borderLeft(color: color);
+}
+
+BoxBorderAttribute borderLeftWidth(double width) {
+  return borderLeft(width: width);
+}
+
+BoxBorderAttribute borderLeftStyle(BorderStyle style) {
+  return borderLeft(style: style);
+}
+
+BoxBorderAttribute borderLeftStrokeAlign(double strokeAlign) {
+  return borderLeft(strokeAlign: strokeAlign);
+}
+
+BoxBorderAttribute borderRight({
+  Color? color,
+  double? width,
+  BorderStyle? style,
+  double? strokeAlign,
+}) {
+  return BoxBorderDto(
+    right: BorderSideDto(
+      color: color?.dto,
+      strokeAlign: strokeAlign?.dto,
+      style: style,
+      width: width?.dto,
+    ),
+  ).attr;
+}
+
+BoxBorderAttribute borderRightColor(Color color) {
+  return borderRight(color: color);
+}
+
+BoxBorderAttribute borderRightWidth(double width) {
+  return borderRight(width: width);
+}
+
+BoxBorderAttribute borderRightStyle(BorderStyle style) {
+  return borderRight(style: style);
+}
+
+BoxBorderAttribute borderRightStrokeAlign(double strokeAlign) {
+  return borderRight(strokeAlign: strokeAlign);
+}
+
+BoxBorderAttribute borderStart({
+  Color? color,
+  double? width,
+  BorderStyle? style,
+  double? strokeAlign,
+}) {
+  return BoxBorderDto(
+    start: BorderSideDto(
+      color: color?.dto,
+      strokeAlign: strokeAlign?.dto,
+      style: style,
+      width: width?.dto,
+    ),
+  ).attr;
+}
+
+BoxBorderAttribute borderStartColor(Color color) {
+  return borderStart(color: color);
+}
+
+BoxBorderAttribute borderStartWidth(double width) {
+  return borderStart(width: width);
+}
+
+BoxBorderAttribute borderStartStyle(BorderStyle style) {
+  return borderStart(style: style);
+}
+
+BoxBorderAttribute borderStartStrokeAlign(double strokeAlign) {
+  return borderStart(strokeAlign: strokeAlign);
+}
+
+BoxBorderAttribute borderEnd({
+  Color? color,
+  double? width,
+  BorderStyle? style,
+  double? strokeAlign,
+}) {
+  return BoxBorderDto(
+    end: BorderSideDto(
+      color: color?.dto,
+      strokeAlign: strokeAlign?.dto,
+      style: style,
+      width: width?.dto,
+    ),
+  ).attr;
+}
+
+BoxBorderAttribute borderEndColor(Color color) {
+  return borderEnd(color: color);
+}
+
+BoxBorderAttribute borderEndWidth(double width) {
+  return borderEnd(width: width);
+}
+
+BoxBorderAttribute borderEndStyle(BorderStyle style) {
+  return borderEnd(style: style);
+}
+
+BoxBorderAttribute borderEndStrokeAlign(double strokeAlign) {
+  return borderEnd(strokeAlign: strokeAlign);
+}
+
+BoxBorderAttribute borderHorizontal({
+  Color? color,
+  double? width,
+  BorderStyle? style,
+  double? strokeAlign,
+}) {
+  return BoxBorderDto.symmetric(
+    horizontal: BorderSideDto(
+      color: color?.dto,
+      strokeAlign: strokeAlign?.dto,
+      style: style,
+      width: width?.dto,
+    ),
+  ).attr;
+}
+
+BoxBorderAttribute borderHorizontalColor(Color color) {
+  return borderHorizontal(color: color);
+}
+
+BoxBorderAttribute borderHorizontalWidth(double width) {
+  return borderHorizontal(width: width);
+}
+
+BoxBorderAttribute borderHorizontalStyle(BorderStyle style) {
+  return borderHorizontal(style: style);
+}
+
+BoxBorderAttribute borderHorizontalStrokeAlign(double strokeAlign) {
+  return borderHorizontal(strokeAlign: strokeAlign);
+}
+
+BoxBorderAttribute borderVertical({
+  Color? color,
+  double? width,
+  BorderStyle? style,
+  double? strokeAlign,
+}) {
+  return BoxBorderDto.symmetric(
+    vertical: BorderSideDto(
+      color: color?.dto,
+      strokeAlign: strokeAlign?.dto,
+      style: style,
+      width: width?.dto,
+    ),
+  ).attr;
+}
+
+BoxBorderAttribute borderVerticalColor(Color color) {
+  return borderVertical(color: color);
+}
+
+BoxBorderAttribute borderVerticalWidth(double width) {
+  return borderVertical(width: width);
+}
+
+BoxBorderAttribute borderVerticalStyle(BorderStyle style) {
+  return borderVertical(style: style);
+}
+
+BoxBorderAttribute borderVerticalStrokeAlign(double strokeAlign) {
+  return borderVertical(strokeAlign: strokeAlign);
 }

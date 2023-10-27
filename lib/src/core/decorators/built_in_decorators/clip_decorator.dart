@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../attributes/border_radius_geometry_attribute.dart';
+import '../../../attributes/value_attributes.dart';
 import '../../../factory/mix_provider_data.dart';
 import '../../style_attribute.dart';
 import '../decorator.dart';
@@ -29,7 +30,7 @@ enum ClipDecoratorType {
 }
 
 class ClipDecorator extends Decorator<ClipDecoratorSpec> {
-  final BorderRadiusAttribute? borderRadius;
+  final BorderRadiusGeometryAttribute? borderRadius;
   final ClipDecoratorType clipType;
 
   const ClipDecorator(this.clipType, {this.borderRadius});

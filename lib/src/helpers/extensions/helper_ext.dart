@@ -44,6 +44,10 @@ extension AlignmentGeometryExt on AlignmentGeometry {
   AlignmentGeometryAttribute get attr => AlignmentGeometryAttribute(dto);
 }
 
+extension GradientExt on Gradient {
+  GradientAttribute get attr => GradientAttribute(this);
+}
+
 extension ColorExt on Color {
   ColorDto get dto => ColorDto(this);
 }
@@ -139,6 +143,54 @@ extension Matrix4Ext on Matrix4 {
 
     return clone()..multiply(other);
   }
+}
+
+extension BorderSideExt on BorderSide {
+  BorderSideDto get dto => BorderSideDto(
+        color: color.dto,
+        style: style,
+        width: width.dto,
+      );
+}
+
+extension BoxBorderExt on BoxBorder {
+  BoxBorderDto get dto {
+    if (this is Border) return (this as Border).dto;
+    if (this is BorderDirectional) return (this as BorderDirectional).dto;
+
+    throw UnimplementedError();
+  }
+
+  BoxBorderAttribute get attr {
+    if (this is Border) return (this as Border).attr;
+    if (this is BorderDirectional) return (this as BorderDirectional).attr;
+
+    throw UnimplementedError();
+  }
+}
+
+extension BoxBorderDtoExt on BoxBorderDto {
+  BoxBorderAttribute get attr => BoxBorderAttribute(this);
+}
+
+extension BorderExt on Border {
+  BoxBorderDto get dto => BoxBorderDto(
+        top: top.dto,
+        bottom: bottom.dto,
+        left: left.dto,
+        right: right.dto,
+      );
+}
+
+extension BorderDirectionalExt on BorderDirectional {
+  BoxBorderDto get dto => BoxBorderDto(
+        top: top.dto,
+        start: start.dto,
+        end: end.dto,
+        bottom: bottom.dto,
+      );
+
+  BoxBorderAttribute get attr => BoxBorderAttribute(dto);
 }
 
 extension IterableExt<T> on Iterable<T> {

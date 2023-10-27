@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../attributes/value_attributes.dart';
 import '../../factory/mix_provider_data.dart';
 import '../../helpers/extensions/helper_ext.dart';
 import '../attribute.dart';
@@ -80,6 +81,9 @@ class BorderRadiusGeometryDto extends Dto<BorderRadiusGeometry> {
         topEnd = RadiusDto.circular(radius),
         bottomStart = RadiusDto.circular(radius),
         bottomEnd = RadiusDto.circular(radius);
+
+  BorderRadiusGeometryAttribute get asAttribute =>
+      BorderRadiusGeometryAttribute(this);
 
   @override
   BorderRadiusGeometryDto merge(BorderRadiusGeometryDto? other) {

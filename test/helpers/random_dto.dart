@@ -128,10 +128,10 @@ class RandomGenerator {
         length, (_) => boxAttributes(someNullable: someNullable));
   }
 
-  static SpacingGeometryDto edgeInsetsDto() {
+  static SpaceGeometryDto edgeInsetsDto() {
     final random = Random();
 
-    return SpacingGeometryDto.only(
+    return SpaceGeometryDto.only(
       top: random.nextDouble() * 100,
       bottom: random.nextDouble() * 100,
       left: random.nextDouble() * 100,
