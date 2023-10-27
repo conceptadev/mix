@@ -99,8 +99,9 @@ class TextStyleDto extends Dto<TextStyle> {
 
     // Load as DTO for consistent merging behavior.
     final textStyle = ref?.resolve(mix);
-    styleRef = TextStyleDto.from(textStyle).merge(this);
-    styleRef ??= this;
+    if (textStyle != null) {
+      return textStyle;
+    }
 
     return TextStyle(
       color: styleRef.color?.resolve(mix),
