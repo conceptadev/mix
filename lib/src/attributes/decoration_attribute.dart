@@ -3,25 +3,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
-import '../core/dto/dtos.dart';
-import '../core/style_attribute.dart';
-import '../factory/mix_provider_data.dart';
-import '../helpers/extensions/helper_ext.dart';
-import 'shadow_attribute.dart';
+import '../../mix.dart';
 import 'value_attributes.dart';
 
 abstract class DecorationAttribute<T extends Decoration>
     extends StyleAttribute<T> {
   const DecorationAttribute();
-
-  static DecorationAttribute from(Decoration decoration) {
-    if (decoration is BoxDecoration) {
-      return BoxDecorationAttribute.from(decoration);
-    } else if (decoration is ShapeDecoration) {
-      return ShapeDecorationAttribute.from(decoration);
-    }
-    throw UnimplementedError();
-  }
 
   @override
   DecorationAttribute<T> merge(covariant DecorationAttribute<T>? other);
@@ -32,7 +19,7 @@ class BoxDecorationAttribute extends DecorationAttribute<BoxDecoration> {
   final BoxBorderAttribute? border;
   final BorderRadiusGeometryAttribute? borderRadius;
   final GradientAttribute? gradient;
-  final List<BoxShadowAttribute>? boxShadow;
+  final List<BoxShadowDto>? boxShadow;
   final BoxShape? shape;
 
   const BoxDecorationAttribute({
@@ -44,22 +31,6 @@ class BoxDecorationAttribute extends DecorationAttribute<BoxDecoration> {
     this.shape,
   });
 
-  factory BoxDecorationAttribute.from(BoxDecoration decoration) {
-    final gradient = decoration.gradient;
-    final borderRadius = decoration.borderRadius;
-    final border = decoration.border;
-    final boxShadow = decoration.boxShadow;
-
-    return BoxDecorationAttribute(
-      border: border?.toAttribute,
-      borderRadius: borderRadius?.toAttribute,
-      gradient: gradient?.toAttribute,
-      boxShadow: boxShadow?.map(BoxShadowAttribute.fromBoxShadow).toList(),
-      color: decoration.color?.toDto,
-      shape: decoration.shape,
-    );
-  }
-
   @override
   BoxDecorationAttribute merge(BoxDecorationAttribute? other) {
     if (other == null) return this;
@@ -69,7 +40,7 @@ class BoxDecorationAttribute extends DecorationAttribute<BoxDecoration> {
       borderRadius:
           borderRadius?.merge(other.borderRadius) ?? other.borderRadius,
       gradient: gradient?.merge(other.gradient) ?? other.gradient,
-      boxShadow: mergeAttrList(boxShadow, other.boxShadow),
+      boxShadow: mergeMergeableList(boxShadow, other.boxShadow),
       color: color?.merge(other.color) ?? other.color,
       shape: other.shape ?? shape,
     );
@@ -100,7 +71,7 @@ class ShapeDecorationAttribute extends DecorationAttribute<ShapeDecoration> {
   final GradientAttribute? gradient;
 
   // Shadows cast by this box behind the box.
-  final List<BoxShadowAttribute>? boxShadow;
+  final List<BoxShadowDto>? boxShadow;
 
   const ShapeDecorationAttribute({
     this.color,
@@ -109,19 +80,6 @@ class ShapeDecorationAttribute extends DecorationAttribute<ShapeDecoration> {
     this.boxShadow,
   });
 
-  factory ShapeDecorationAttribute.from(ShapeDecoration decoration) {
-    final gradient = decoration.gradient;
-    final shape = decoration.shape;
-    final boxShadow = decoration.shadows;
-
-    return ShapeDecorationAttribute(
-      color: ColorDto.maybeFrom(decoration.color),
-      shape: shape,
-      gradient: gradient == null ? null : GradientAttribute(gradient),
-      boxShadow: boxShadow?.map(BoxShadowAttribute.fromBoxShadow).toList(),
-    );
-  }
-
   @override
   ShapeDecorationAttribute merge(ShapeDecorationAttribute? other) {
     if (other == null) return this;
@@ -129,8 +87,8 @@ class ShapeDecorationAttribute extends DecorationAttribute<ShapeDecoration> {
     return ShapeDecorationAttribute(
       color: color?.merge(other.color) ?? other.color,
       shape: other.shape ?? shape,
-      gradient: mergeAttr(gradient, other.gradient),
-      boxShadow: mergeAttrList(boxShadow, other.boxShadow),
+      gradient: mergeAttribute(gradient, other.gradient),
+      boxShadow: mergeMergeableList(boxShadow, other.boxShadow),
     );
   }
 

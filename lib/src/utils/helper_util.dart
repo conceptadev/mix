@@ -1,4 +1,7 @@
+import 'dart:math';
+
 import '../attributes/nested_attribute.dart';
+import '../core/attribute.dart';
 import '../factory/style_mix.dart';
 
 @Deprecated('Use style.merge(otherStyle), instead')
@@ -60,4 +63,34 @@ double? doubleNullIfZero(double? value) {
   if (value == null || value == 0.0) return null;
 
   return value;
+}
+
+List<M> mergeMergeableList<M extends Mergeable>(
+  List<M>? current,
+  List<M>? other,
+) {
+  if (current == null && other == null) return [];
+  if (current == null) return other ?? [];
+  if (other == null) return current;
+
+  if (current.isEmpty) return other;
+
+  final listLength = current.length;
+  final otherLength = other.length;
+  final maxLength = max(listLength, otherLength);
+
+  return List<M>.generate(maxLength, (int index) {
+    if (index < listLength && index < otherLength) {
+      return mergeAttribute(current[index], other[index]);
+    } else if (index < listLength) {
+      return current[index];
+    }
+
+    return other[index];
+  });
+}
+
+@override
+M mergeAttribute<M extends Mergeable>(M? current, M? other) {
+  return current?.merge(other) ?? other;
 }

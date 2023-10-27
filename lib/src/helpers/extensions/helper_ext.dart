@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
 import '../../attributes/strut_style_attribute.dart';
+import '../../attributes/text_style_attribute.dart';
 import '../../attributes/value_attributes.dart';
 import '../../core/dto/border_dto.dart';
 import '../../core/dto/dtos.dart';
 import '../../core/dto/radius_dto.dart';
+import '../../core/dto/shadow_dto.dart';
 
 extension StrutStyleExt on StrutStyle {
   StrutStyleAttribute get toAttribute => StrutStyleAttribute.from(this);
@@ -226,6 +228,50 @@ extension BoxBorderExt on BoxBorder {
 
     throw UnimplementedError();
   }
+
+  BoxBorderAttribute get toAttribute => BoxBorderAttribute(toDto);
+}
+
+extension ShadowExt on Shadow {
+  ShadowDto get toDto => ShadowDto(
+        blurRadius: blurRadius.toDto,
+        color: color.toDto,
+        offset: offset,
+      );
+}
+
+extension BoxShadowExt on BoxShadow {
+  BoxShadowDto get toDto => BoxShadowDto(
+        color: color.toDto,
+        offset: offset,
+        blurRadius: blurRadius.toDto,
+        spreadRadius: spreadRadius.toDto,
+      );
+}
+
+extension TextStyleExt on TextStyle {
+  TextStyleDto get toDto => TextStyleDto(
+        background: background,
+        color: color?.toDto,
+        debugLabel: debugLabel,
+        decoration: decoration,
+        decorationColor: decorationColor?.toDto,
+        decorationStyle: decorationStyle,
+        decorationThickness: decorationThickness?.toDto,
+        fontFamily: fontFamily,
+        fontFamilyFallback: fontFamilyFallback,
+        fontFeatures: fontFeatures,
+        fontSize: fontSize?.toDto,
+        fontStyle: fontStyle,
+        fontWeight: fontWeight,
+        foreground: foreground,
+        height: height?.toDto,
+        letterSpacing: letterSpacing?.toDto,
+        locale: locale,
+        shadows: shadows?.map((e) => e.toDto).toList(),
+        textBaseline: textBaseline,
+        wordSpacing: wordSpacing?.toDto,
+      );
 }
 
 extension BorderExt on Border {
@@ -235,6 +281,8 @@ extension BorderExt on Border {
         left: left.toDto,
         right: right.toDto,
       );
+
+  BoxBorderAttribute get toAttribute => BoxBorderAttribute(toDto);
 }
 
 extension BorderDirectionalExt on BorderDirectional {

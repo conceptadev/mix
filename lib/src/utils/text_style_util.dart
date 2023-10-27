@@ -2,11 +2,11 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-import '../attributes/shadow_attribute.dart';
 import '../attributes/text_style_attribute.dart';
+import '../core/dto/shadow_dto.dart';
 import '../helpers/extensions/helper_ext.dart';
 
-TextStyleAttribute textStyle({
+TextStyleDto textStyle({
   String? fontFamily,
   FontWeight? fontWeight,
   FontStyle? fontStyle,
@@ -32,19 +32,19 @@ TextStyleAttribute textStyle({
   /// Other properties will override the as properties.
   TextStyle? as,
 }) {
-  List<ShadowAttribute>? convertShadows() {
+  List<ShadowDto>? convertShadows() {
     List<Shadow> combinedShadows = [...?shadows];
 
     if (shadow != null) combinedShadows.add(shadow);
 
-    final shadowDtos = combinedShadows.map(ShadowAttribute.from).toList();
+    final shadowDtos = combinedShadows.map(ShadowDto.from).toList();
 
     if (shadowDtos.isEmpty) return null;
 
     return shadowDtos;
   }
 
-  TextStyleAttribute textStyle = TextStyleAttribute(
+  TextStyleDto textStyle = TextStyleDto(
     background: background,
     backgroundColor: backgroundColor?.toDto,
     color: color?.toDto,
@@ -67,16 +67,16 @@ TextStyleAttribute textStyle({
   );
 
   if (as != null) {
-    textStyle = TextStyleAttribute.from(as).merge(textStyle);
+    textStyle = TextStyleDto.from(as).merge(textStyle);
   }
 
   return textStyle;
 }
 
-TextStyleAttribute bold() {
+TextStyleDto bold() {
   return textStyle(fontWeight: FontWeight.bold);
 }
 
-TextStyleAttribute italic() {
+TextStyleDto italic() {
   return textStyle(fontStyle: FontStyle.italic);
 }

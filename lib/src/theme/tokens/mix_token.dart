@@ -1,23 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import 'text_style_token.dart';
+import '../../factory/mix_provider_data.dart';
+import 'text_style_ref.dart';
 
-abstract class MixToken {
+abstract class TokenRef<T> {
   final String name;
-  const MixToken(this.name);
+  const TokenRef(this.name);
 
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is MixToken &&
-          runtimeType == other.runtimeType &&
-          name == other.name;
-  @override
-  int get hashCode => runtimeType.hashCode ^ name.hashCode;
+  T resolve(MixData mix);
 }
 
-mixin WithReferenceMixin<T> on MixToken {
+mixin WithReferenceMixin<T> on TokenRef {
   // Refernce is negativce for tracking
   // Also reference are passed as double to DTOs
 
@@ -28,8 +22,8 @@ mixin WithReferenceMixin<T> on MixToken {
   }
 }
 
-typedef TokenReferenceMap<T extends MixToken, V> = Map<T, TokenValueGetter<V?>>;
+typedef TokenReferenceMap<T extends TokenRef, V> = Map<T, TokenValueGetter<V?>>;
 
-typedef MixTextStyleTokens = TokenReferenceMap<TextStyleToken, TextStyle>;
+typedef MixTextStyleTokens = TokenReferenceMap<TextStyleRef, TextStyle>;
 
 typedef TokenValueGetter<T> = T Function(BuildContext context);

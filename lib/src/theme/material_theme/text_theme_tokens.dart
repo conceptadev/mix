@@ -2,25 +2,25 @@
 
 import '../../helpers/extensions/build_context_ext.dart';
 import '../tokens/mix_token.dart';
-import '../tokens/text_style_token.dart';
+import '../tokens/text_style_ref.dart';
 
 // Material 3 TextTheme Tokens.
 class $M3Text {
-  static const displayLarge = TextStyleToken('displayLarge');
-  static const displayMedium = TextStyleToken('displayMedium');
-  static const displaySmall = TextStyleToken('displaySmall');
-  static const headlineLarge = TextStyleToken('headlineLarge');
-  static const headlineMedium = TextStyleToken('headlineMedium');
-  static const headlineSmall = TextStyleToken('headlineSmall');
-  static const titleLarge = TextStyleToken('titleLarge');
-  static const titleMedium = TextStyleToken('titleMedium');
-  static const titleSmall = TextStyleToken('titleSmall');
-  static const bodyLarge = TextStyleToken('bodyLarge');
-  static const bodyMedium = TextStyleToken('bodyMedium');
-  static const bodySmall = TextStyleToken('bodySmall');
-  static const labelLarge = TextStyleToken('labelLarge');
-  static const labelMedium = TextStyleToken('labelMedium');
-  static const labelSmall = TextStyleToken('labelSmall');
+  static const displayLarge = TextStyleRef('displayLarge');
+  static const displayMedium = TextStyleRef('displayMedium');
+  static const displaySmall = TextStyleRef('displaySmall');
+  static const headlineLarge = TextStyleRef('headlineLarge');
+  static const headlineMedium = TextStyleRef('headlineMedium');
+  static const headlineSmall = TextStyleRef('headlineSmall');
+  static const titleLarge = TextStyleRef('titleLarge');
+  static const titleMedium = TextStyleRef('titleMedium');
+  static const titleSmall = TextStyleRef('titleSmall');
+  static const bodyLarge = TextStyleRef('bodyLarge');
+  static const bodyMedium = TextStyleRef('bodyMedium');
+  static const bodySmall = TextStyleRef('bodySmall');
+  static const labelLarge = TextStyleRef('labelLarge');
+  static const labelMedium = TextStyleRef('labelMedium');
+  static const labelSmall = TextStyleRef('labelSmall');
 
   const $M3Text._();
   static MixTextStyleTokens get tokens {
@@ -46,19 +46,19 @@ class $M3Text {
 
 // Material 2 TextTheme Tokens.
 class $M2Text {
-  static const headline1 = TextStyleToken('headline1');
-  static const headline2 = TextStyleToken('headline2');
-  static const headline3 = TextStyleToken('headline3');
-  static const headline4 = TextStyleToken('headline4');
-  static const headline5 = TextStyleToken('headline5');
-  static const headline6 = TextStyleToken('headline6');
-  static const subtitle1 = TextStyleToken('subtitle1');
-  static const subtitle2 = TextStyleToken('subtitle2');
-  static const bodyText1 = TextStyleToken('bodyText1');
-  static const bodyText2 = TextStyleToken('bodyText2');
-  static const caption = TextStyleToken('caption');
-  static const button = TextStyleToken('button');
-  static const overline = TextStyleToken('overline');
+  static const headline1 = TextStyleRef('headline1');
+  static const headline2 = TextStyleRef('headline2');
+  static const headline3 = TextStyleRef('headline3');
+  static const headline4 = TextStyleRef('headline4');
+  static const headline5 = TextStyleRef('headline5');
+  static const headline6 = TextStyleRef('headline6');
+  static const subtitle1 = TextStyleRef('subtitle1');
+  static const subtitle2 = TextStyleRef('subtitle2');
+  static const bodyText1 = TextStyleRef('bodyText1');
+  static const bodyText2 = TextStyleRef('bodyText2');
+  static const caption = TextStyleRef('caption');
+  static const button = TextStyleRef('button');
+  static const overline = TextStyleRef('overline');
 
   const $M2Text._();
 

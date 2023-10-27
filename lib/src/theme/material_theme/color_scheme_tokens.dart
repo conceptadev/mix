@@ -1,30 +1,30 @@
 import '../../helpers/extensions/build_context_ext.dart';
-import '../tokens/color_token.dart';
+import '../tokens/color_ref.dart';
 
 class $MDColorScheme {
-  static const primary = ColorToken('primary');
+  static const primary = ColorRef('primary');
 
-  static const secondary = ColorToken('secondary');
+  static const secondary = ColorRef('secondary');
 
-  static const tertiary = ColorToken('tertiary');
+  static const tertiary = ColorRef('tertiary');
 
-  static const surface = ColorToken('surface');
+  static const surface = ColorRef('surface');
 
-  static const background = ColorToken('background');
+  static const background = ColorRef('background');
 
-  static const error = ColorToken('error');
+  static const error = ColorRef('error');
 
-  static const onPrimary = ColorToken('onPrimary');
+  static const onPrimary = ColorRef('onPrimary');
 
-  static const onSecondary = ColorToken('onSecondary');
+  static const onSecondary = ColorRef('onSecondary');
 
-  static const onTertiary = ColorToken('onTertiary');
+  static const onTertiary = ColorRef('onTertiary');
 
-  static const onSurface = ColorToken('onSurface');
+  static const onSurface = ColorRef('onSurface');
 
-  static const onBackground = ColorToken('onBackground');
+  static const onBackground = ColorRef('onBackground');
 
-  static const onError = ColorToken('onError');
+  static const onError = ColorRef('onError');
 
   const $MDColorScheme._();
 

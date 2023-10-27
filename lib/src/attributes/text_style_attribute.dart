@@ -2,40 +2,40 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
+import '../core/attribute.dart';
 import '../core/dto/dtos.dart';
-import '../core/style_attribute.dart';
+import '../core/dto/shadow_dto.dart';
 import '../factory/exports.dart';
-import '../theme/tokens/text_style_token.dart';
-import 'shadow_attribute.dart';
+import '../theme/tokens/text_style_ref.dart';
+import '../utils/helper_util.dart';
 
-class TextStyleAttribute extends StyleAttribute<TextStyle> {
+class TextStyleDto extends Dto<TextStyle> {
   final String? fontFamily;
   final FontWeight? fontWeight;
 
-  final bool? inherit;
   final FontStyle? fontStyle;
-  final double? fontSize;
-  final double? letterSpacing;
-  final double? wordSpacing;
+  final DoubleDto? fontSize;
+  final DoubleDto? letterSpacing;
+  final DoubleDto? wordSpacing;
   final TextBaseline? textBaseline;
   final ColorDto? color;
   final ColorDto? backgroundColor;
-  final List<ShadowAttribute>? shadows;
+  final List<ShadowDto>? shadows;
   final List<FontFeature>? fontFeatures;
   final TextDecoration? decoration;
   final ColorDto? decorationColor;
   final TextDecorationStyle? decorationStyle;
   final Locale? locale;
   final String? debugLabel;
-  final double? height;
+  final DoubleDto? height;
   final Paint? foreground;
   final Paint? background;
-  final double? decorationThickness;
+  final DoubleDto? decorationThickness;
   final List<String>? fontFamilyFallback;
 
-  final TextStyleToken? styleToken;
+  final TextStyleRef? ref;
 
-  const TextStyleAttribute({
+  const TextStyleDto({
     this.background,
     this.backgroundColor,
     this.color,
@@ -52,55 +52,19 @@ class TextStyleAttribute extends StyleAttribute<TextStyle> {
     this.fontWeight,
     this.foreground,
     this.height,
-    this.inherit,
     this.letterSpacing,
     this.locale,
     this.shadows,
-    this.styleToken,
+    this.ref,
     this.textBaseline,
     this.wordSpacing,
   });
 
-  factory TextStyleAttribute.from(TextStyle style) {
-    final color = style.color;
-    final backgroundColor = style.backgroundColor;
-    final decorationColor = style.decorationColor;
-
-    return style is TextStyleToken
-        ? TextStyleAttribute(styleToken: style)
-        : TextStyleAttribute(
-            background: style.background,
-            backgroundColor:
-                backgroundColor == null ? null : ColorDto(backgroundColor),
-            color: ColorDto.maybeFrom(color),
-            debugLabel: style.debugLabel,
-            decoration: style.decoration,
-            decorationColor:
-                decorationColor == null ? null : ColorDto(decorationColor),
-            decorationStyle: style.decorationStyle,
-            decorationThickness: style.decorationThickness,
-            fontFamily: style.fontFamily,
-            fontFamilyFallback: style.fontFamilyFallback,
-            fontFeatures: style.fontFeatures,
-            fontSize: style.fontSize,
-            fontStyle: style.fontStyle,
-            fontWeight: style.fontWeight,
-            foreground: style.foreground,
-            height: style.height,
-            inherit: style.inherit,
-            letterSpacing: style.letterSpacing,
-            locale: style.locale,
-            shadows: style.shadows?.map(ShadowAttribute.from).toList(),
-            textBaseline: style.textBaseline,
-            wordSpacing: style.wordSpacing,
-          );
-  }
-
   @override
-  TextStyleAttribute merge(TextStyleAttribute? other) {
+  TextStyleDto merge(TextStyleDto? other) {
     if (other == null) return this;
 
-    return TextStyleAttribute(
+    return TextStyleDto(
       background: other.background ?? background,
       backgroundColor: other.backgroundColor ?? backgroundColor,
       color: other.color ?? color,
@@ -120,11 +84,10 @@ class TextStyleAttribute extends StyleAttribute<TextStyle> {
       fontWeight: other.fontWeight ?? fontWeight,
       foreground: other.foreground ?? foreground,
       height: other.height ?? height,
-      inherit: other.inherit ?? inherit,
       letterSpacing: other.letterSpacing ?? letterSpacing,
       locale: other.locale ?? locale,
-      shadows: mergeAttrList(shadows, other.shadows),
-      styleToken: other.styleToken ?? styleToken,
+      shadows: mergeMergeableList(shadows, other.shadows),
+      ref: other.ref ?? ref,
       textBaseline: other.textBaseline ?? textBaseline,
       wordSpacing: other.wordSpacing ?? wordSpacing,
     );
@@ -132,18 +95,14 @@ class TextStyleAttribute extends StyleAttribute<TextStyle> {
 
   @override
   TextStyle resolve(MixData mix) {
-    TextStyleAttribute? styleRef;
+    TextStyleDto? styleRef;
 
-    if (styleToken != null) {
-      // Load as DTO for consistent merging behavior.
-      final textStyle = mix.resolver.textStyle(styleToken!);
-      styleRef = TextStyleAttribute.from(textStyle).merge(this);
-    }
-
+    // Load as DTO for consistent merging behavior.
+    final textStyle = ref?.resolve(mix);
+    styleRef = TextStyleDto.from(textStyle).merge(this);
     styleRef ??= this;
 
     return TextStyle(
-      inherit: styleRef.inherit ?? true,
       color: styleRef.color?.resolve(mix),
       backgroundColor: styleRef.backgroundColor?.resolve(mix),
       fontSize: styleRef.fontSize,
@@ -192,6 +151,6 @@ class TextStyleAttribute extends StyleAttribute<TextStyle> {
         foreground,
         decorationThickness,
         fontFamilyFallback,
-        styleToken,
+        ref,
       ];
 }

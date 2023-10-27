@@ -5,10 +5,10 @@ import '../helpers/compare_mixin.dart';
 import 'material_theme/color_scheme_tokens.dart';
 import 'material_theme/text_theme_tokens.dart';
 import 'tokens/breakpoints.dart';
-import 'tokens/color_token.dart';
+import 'tokens/color_ref.dart';
 import 'tokens/mix_token.dart';
 import 'tokens/space_token.dart';
-import 'tokens/text_style_token.dart';
+import 'tokens/text_style_ref.dart';
 
 class MixTheme extends InheritedWidget {
   const MixTheme({required Widget child, required this.data, Key? key})
@@ -87,7 +87,7 @@ class BuildContextResolver {
 
   TextDirection get directionality => Directionality.of(context);
 
-  Color color(ColorToken token) {
+  Color color(ColorRef token) {
     final color = theme.colors[token]?.call(context);
 
     if (color == null) {
@@ -97,7 +97,7 @@ class BuildContextResolver {
     return color;
   }
 
-  TextStyle textStyle(TextStyleToken token) {
+  TextStyle textStyle(TextStyleRef token) {
     final style = theme.textStyles[token]?.call(context);
 
     if (style == null) {

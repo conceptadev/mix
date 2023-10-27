@@ -1,25 +1,15 @@
 import 'package:flutter/material.dart';
 
-import '../core/dto/dtos.dart';
-import '../core/style_attribute.dart';
-import '../factory/mix_provider_data.dart';
+import '../../factory/mix_provider_data.dart';
+import '../attribute.dart';
+import 'dtos.dart';
 
-class ShadowAttribute<T extends Shadow> extends StyleAttribute<Shadow> {
+class ShadowDto<T extends Shadow> extends Dto<Shadow> {
   final ColorDto? color;
   final Offset? offset;
   final DoubleDto? blurRadius;
 
-  const ShadowAttribute({this.blurRadius, this.color, this.offset});
-
-  static ShadowAttribute from(Shadow shadow) {
-    return (shadow is BoxShadow)
-        ? BoxShadowAttribute.fromBoxShadow(shadow)
-        : ShadowAttribute(
-            blurRadius: DoubleDto(shadow.blurRadius),
-            color: ColorDto(shadow.color),
-            offset: shadow.offset,
-          );
-  }
+  const ShadowDto({this.blurRadius, this.color, this.offset});
 
   @override
   T resolve(MixData mix) {
@@ -33,8 +23,8 @@ class ShadowAttribute<T extends Shadow> extends StyleAttribute<Shadow> {
   }
 
   @override
-  ShadowAttribute merge(ShadowAttribute? other) {
-    return ShadowAttribute(
+  ShadowDto merge(ShadowDto? other) {
+    return ShadowDto(
       blurRadius: mergeAttr(blurRadius, other?.blurRadius),
       color: mergeAttr(color, other?.color),
       offset: other?.offset ?? offset,
@@ -45,24 +35,15 @@ class ShadowAttribute<T extends Shadow> extends StyleAttribute<Shadow> {
   get props => [color, offset, blurRadius];
 }
 
-class BoxShadowAttribute extends ShadowAttribute<BoxShadow> {
+class BoxShadowDto extends ShadowDto<BoxShadow> {
   final DoubleDto? spreadRadius;
 
-  const BoxShadowAttribute({
+  const BoxShadowDto({
     super.color,
     super.offset,
     super.blurRadius,
     this.spreadRadius,
   });
-
-  factory BoxShadowAttribute.fromBoxShadow(BoxShadow boxShadow) {
-    return BoxShadowAttribute(
-      color: ColorDto(boxShadow.color),
-      offset: boxShadow.offset,
-      blurRadius: DoubleDto(boxShadow.blurRadius),
-      spreadRadius: DoubleDto(boxShadow.spreadRadius),
-    );
-  }
 
   @override
   BoxShadow resolve(MixData mix) {
@@ -77,8 +58,8 @@ class BoxShadowAttribute extends ShadowAttribute<BoxShadow> {
   }
 
   @override
-  BoxShadowAttribute merge(BoxShadowAttribute? other) {
-    return BoxShadowAttribute(
+  BoxShadowDto merge(BoxShadowDto? other) {
+    return BoxShadowDto(
       color: mergeAttr(color, other?.color),
       offset: other?.offset ?? offset,
       blurRadius: mergeAttr(blurRadius, other?.blurRadius),

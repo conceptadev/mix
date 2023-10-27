@@ -203,8 +203,8 @@ class RandomGenerator {
     );
   }
 
-  static TextStyleAttribute textStyleDto() {
-    return TextStyleAttribute(
+  static TextStyleDto textStyleDto() {
+    return TextStyleDto(
       color: colorDto(),
       backgroundColor: colorDto(),
       decorationColor: colorDto(),

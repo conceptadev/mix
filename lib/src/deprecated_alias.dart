@@ -75,7 +75,7 @@ const not = onNot;
 const font = textStyle;
 
 @Deprecated('Use textStyle(textShadow: textShadow) instead')
-TextStyleAttribute textShadow(List<Shadow> textShadow) {
+TextStyleDto textShadow(List<Shadow> textShadow) {
   return textStyle(shadows: textShadow);
 }
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../factory/mix_provider_data.dart';
-import '../../theme/tokens/color_token.dart';
+import '../../theme/tokens/color_ref.dart';
 import '../attribute.dart';
 import '../style_attribute.dart';
 
@@ -50,7 +50,7 @@ class ColorDto extends ModifiableDto<Color> {
   Color resolve(MixData mix) {
     Color resolvedColor = value;
 
-    if (resolvedColor is ColorToken) {
+    if (resolvedColor is ColorRef) {
       resolvedColor = mix.resolver.color(resolvedColor);
     }
 

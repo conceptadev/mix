@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'mix_token.dart';
 
-class RadiiToken extends MixToken with WithReferenceMixin {
+class RadiiToken extends TokenRef with WithReferenceMixin {
   const RadiiToken(super.name);
 }
 
