@@ -1,14 +1,14 @@
 // ignore_for_file: no_leading_underscores_for_local_identifiers
 
+import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
-import '../core/dto/color_dto.dart';
+import '../core/dto/dtos.dart';
 import '../core/style_attribute.dart';
 import '../factory/mix_provider_data.dart';
-import 'border_radius_geometry_attribute.dart';
-import 'box_border_attribute.dart';
-import 'gradient_attribute.dart';
+import '../helpers/extensions/helper_ext.dart';
 import 'shadow_attribute.dart';
+import 'value_attributes.dart';
 
 abstract class DecorationAttribute<T extends Decoration>
     extends StyleAttribute<T> {
@@ -51,13 +51,11 @@ class BoxDecorationAttribute extends DecorationAttribute<BoxDecoration> {
     final boxShadow = decoration.boxShadow;
 
     return BoxDecorationAttribute(
-      border: border == null ? null : BoxBorderAttribute.from(border),
-      borderRadius: borderRadius == null
-          ? null
-          : BorderRadiusGeometryAttribute.from(borderRadius),
+      border: border?.attr,
+      borderRadius: borderRadius?.attr,
       gradient: gradient == null ? null : GradientAttribute(gradient),
       boxShadow: boxShadow?.map(BoxShadowAttribute.fromBoxShadow).toList(),
-      color: ColorDto.maybeFrom(decoration.color),
+      color: decoration.color.dto,
       shape: decoration.shape,
     );
   }

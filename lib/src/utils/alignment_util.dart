@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 
-import '../attributes/alignment_geometry_attribute.dart';
+import '../attributes/value_attributes.dart';
+import '../helpers/extensions/helper_ext.dart';
 
-const alignment = AlignmentGeometryAttribute.from;
+AlignmentGeometryAttribute alignment(AlignmentGeometry value) {
+  return AlignmentGeometryAttribute(value.dto);
+}
 
 /// The top left corner.
 final alignmentTopLeft = alignment(Alignment.topLeft);

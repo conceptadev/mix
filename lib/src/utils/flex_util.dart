@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../attributes/axis_attribute.dart';
 import '../attributes/cross_axis_alignment_attribute.dart';
-import '../attributes/flex_fit_attribute.dart';
+import '../attributes/flex_attribute.dart';
 import '../attributes/main_axis_alignment_attribute.dart';
 import '../attributes/main_axis_size_attribute.dart';
 

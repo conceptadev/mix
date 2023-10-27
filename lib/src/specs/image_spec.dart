@@ -3,9 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import '../attributes/box_fit_attribute.dart';
-import '../attributes/image_attribute.dart';
-import '../attributes/size_attribute.dart';
+import '../attributes/value_attributes.dart';
 import '../core/style_attribute.dart';
 import '../factory/mix_provider_data.dart';
 

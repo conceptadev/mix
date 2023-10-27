@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../factory/mix_provider_data.dart';
-import '../../dto/double_dto.dart';
+import '../../dto/dtos.dart';
 import '../decorator.dart';
 
 const aspectRataion = _aspectRatio;

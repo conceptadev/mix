@@ -33,18 +33,40 @@ abstract class ValueAttribute<T extends ValueAttribute<T, R>, R>
   get props => [value];
 }
 
-abstract class ModifiableDtoAttribute<D extends ModifiableDto<R>, R>
-    extends DtoAttribute<ModifiableDtoAttribute<D, R>, D, R> {
-  const ModifiableDtoAttribute(super.value);
-}
-
 abstract class DtoAttribute<
     Attr extends DtoAttribute<Attr, Value, ResolvedValue>,
-    Value extends ModifiableDto<ResolvedValue>,
+    Value extends Dto<ResolvedValue>,
     ResolvedValue> extends StyleAttribute<ResolvedValue> {
   final Value value;
 
   const DtoAttribute(this.value);
+
+  // Factory for merge methods
+  Attr create(Value value);
+
+  @override
+  ResolvedValue resolve(MixData mix) {
+    return value.resolve(mix);
+  }
+
+  @override
+  Attr merge(Attr? other) {
+    if (other == null) return create(value);
+
+    return create(value.merge(other.value));
+  }
+
+  @override
+  get props => [value];
+}
+
+abstract class ModifiableDtoAttribute<
+    Attr extends ModifiableDtoAttribute<Attr, Value, ResolvedValue>,
+    Value extends ModifiableDto<ResolvedValue>,
+    ResolvedValue> extends StyleAttribute<ResolvedValue> {
+  final Value value;
+
+  const ModifiableDtoAttribute(this.value);
 
 // Factory for merge methods
   // ignore: avoid-shadowing

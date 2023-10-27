@@ -80,10 +80,10 @@ extension StyleMixExt<T extends Attribute> on StyleMix {
   }) {
     return StyledText(
       text,
+      semanticsLabel: semanticsLabel,
       style: mergeNullable(style ?? mix),
       key: key,
       inherit: inherit,
-      semanticsLabel: semanticsLabel,
     );
   }
 

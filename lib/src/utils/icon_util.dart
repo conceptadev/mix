@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../attributes/icon_attribute.dart';
 import '../core/dto/color_dto.dart';
-import '../core/dto/double_dto.dart';
+import '../core/dto/dtos.dart';
 import '../core/style_attribute.dart';
 
 const iconSize = _iconSize;

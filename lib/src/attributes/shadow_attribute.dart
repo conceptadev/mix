@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../core/dto/color_dto.dart';
-import '../core/dto/double_dto.dart';
+import '../core/dto/dtos.dart';
 import '../core/style_attribute.dart';
 import '../factory/mix_provider_data.dart';
 

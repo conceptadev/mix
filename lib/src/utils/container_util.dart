@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 import '../attributes/decoration_attribute.dart';
-import '../core/dto/color_dto.dart';
+import '../helpers/extensions/helper_ext.dart';
 
 BoxDecorationAttribute backgroundColor(Color color) {
-  return BoxDecorationAttribute(color: ColorDto(color));
+  return BoxDecorationAttribute(color: color.dto);
 }
 
 @Deprecated('Use backgroundColor(style:style) instead')

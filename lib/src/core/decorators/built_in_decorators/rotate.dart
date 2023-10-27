@@ -25,6 +25,7 @@ class RotateDecorator extends Decorator<int> {
 
   @override
   get props => [quarterTurns];
+
   @override
   Widget build(Widget child, MixData mix) {
     if (mix.animated) {

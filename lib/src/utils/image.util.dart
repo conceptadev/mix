@@ -6,7 +6,7 @@ import '../attributes/box_fit_attribute.dart';
 import '../attributes/image_attribute.dart';
 import '../attributes/size_attribute.dart';
 import '../core/dto/color_dto.dart';
-import '../core/dto/double_dto.dart';
+import '../core/dto/dtos.dart';
 
 WidthAttribute imageWidth(double width) {
   return WidthAttribute(DoubleDto(width));

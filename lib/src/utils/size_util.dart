@@ -1,5 +1,5 @@
-import '../attributes/size_attribute.dart';
-import '../core/dto/double_dto.dart';
+import '../attributes/value_attributes.dart';
+import '../core/dto/dtos.dart';
 
 HeightAttribute height(double value) {
   return HeightAttribute(DoubleDto(value));

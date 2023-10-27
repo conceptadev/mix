@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 
-import '../attributes/stack_attribute.dart';
-import '../factory/mix_provider.dart';
+import '../specs/stack_spec.dart';
+import 'container_widget.dart';
 import 'styled_widget.dart';
 
 class StyledStack extends StyledWidget {
@@ -9,7 +9,6 @@ class StyledStack extends StyledWidget {
     this.children = const <Widget>[],
     super.inherit,
     super.key,
-    @Deprecated('Use the style parameter instead') super.mix,
     super.style,
   });
 
@@ -17,13 +16,20 @@ class StyledStack extends StyledWidget {
 
   @override
   Widget build(BuildContext context) {
-    return withMix(context, MixedStack(children: children));
+    return buildWithStyle(context, (data) {
+      final spec = StackSpec.resolve(data);
+
+      const fallback = Stack();
+
+      return Stack(
+        alignment: spec.alignment ?? fallback.alignment,
+        fit: spec.fit ?? fallback.fit,
+        clipBehavior: spec.clipBehavior ?? fallback.clipBehavior,
+        children: children,
+      );
+    });
   }
 }
-
-// ZBox widget, a custom Box widget that has a Stack as a child. It combines
-// the features of a Box widget with a Stack widget, allowing developers to
-// create complex and responsive layouts.
 
 class ZBox extends StyledWidget {
   const ZBox({
@@ -37,28 +43,11 @@ class ZBox extends StyledWidget {
 
   @override
   Widget build(BuildContext context) {
-    return withMix(
-      context,
-      MixedContainer(child: MixedStack(children: children)),
-    );
-  }
-}
-
-class MixedStack extends StatelessWidget {
-  const MixedStack({this.children = const <Widget>[], super.key});
-
-  final List<Widget> children;
-
-  @override
-  Widget build(BuildContext context) {
-    final mix = Mix.of(context);
-    final spec = mix.spec<StackSpec>();
-
-    return Stack(
-      alignment: spec?.alignment ?? AlignmentDirectional.topStart,
-      fit: spec?.fit ?? StackFit.loose,
-      clipBehavior: spec?.clipBehavior ?? Clip.hardEdge,
-      children: children,
-    );
+    return buildWithStyle(context, (data) {
+      return StyledContainer(
+        inherit: true,
+        child: StyledStack(inherit: true, children: children),
+      );
+    });
   }
 }

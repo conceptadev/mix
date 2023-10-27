@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-import '../core/dto/color_dto.dart';
+import '../core/dto/dtos.dart';
 import '../core/style_attribute.dart';
 import '../factory/exports.dart';
 import '../theme/tokens/text_style_token.dart';

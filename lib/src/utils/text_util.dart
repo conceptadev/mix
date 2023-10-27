@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../attributes/strut_style_attribute.dart';
 import '../core/directives/text_directive.dart';
-import '../specs/text_attribute.dart';
+import '../specs/text_spec.dart';
 
 const text = TextAttributes.from;
 

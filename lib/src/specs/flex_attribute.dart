@@ -2,12 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../attributes/axis_attribute.dart';
 import '../attributes/clip_attribute.dart';
-import '../attributes/cross_axis_alignment_attribute.dart';
-import '../attributes/main_axis_alignment_attribute.dart';
-import '../attributes/main_axis_size_attribute.dart';
-import '../attributes/text_baseline_attribute.dart';
-import '../attributes/text_direction_attribute.dart';
-import '../attributes/vertical_direction_attribute.dart';
+import '../attributes/flex_attribute.dart';
+import '../attributes/text_attribute.dart';
+import '../attributes/value_attributes.dart';
 import '../core/style_attribute.dart';
 import '../factory/mix_provider_data.dart';
 

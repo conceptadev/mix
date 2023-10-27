@@ -1,5 +1,3 @@
-// ignore_for_file: no-equal-arguments
-
 import 'package:flutter/material.dart';
 
 import '../attributes/box_border_attribute.dart';

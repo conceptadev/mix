@@ -1,17 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../../attributes/alignment_geometry_attribute.dart';
-import '../../attributes/axis_attribute.dart';
-import '../../attributes/blend_mode_attribute.dart';
-import '../../attributes/border_radius_geometry_attribute.dart';
-import '../../attributes/box_fit_attribute.dart';
-import '../../attributes/cross_axis_alignment_attribute.dart';
-import '../../attributes/curve_attribute.dart';
-import '../../attributes/main_axis_alignment_attribute.dart';
-import '../../attributes/matrix4_attribute.dart';
 import '../../attributes/strut_style_attribute.dart';
-import '../../attributes/text_align_attribute.dart';
-import '../../attributes/text_direction_attribute.dart';
+import '../../attributes/value_attributes.dart';
+import '../../core/dto/border_dto.dart';
+import '../../core/dto/dtos.dart';
+import '../../core/dto/radius_dto.dart';
 
 extension StrutStyleExt on StrutStyle {
   StrutStyleAttribute get attr => StrutStyleAttribute.from(this);
@@ -31,6 +24,10 @@ extension StrutStyleExt on StrutStyle {
   }
 }
 
+extension DoubleExt on double {
+  DoubleDto get dto => DoubleDto(this);
+}
+
 // Extension for TextAlign
 extension TextAlignExt on TextAlign {
   TextAlignAttribute get attr => TextAlignAttribute(this);
@@ -38,7 +35,30 @@ extension TextAlignExt on TextAlign {
 
 // Extension for Alignment
 extension AlignmentGeometryExt on AlignmentGeometry {
-  AlignmentGeometryAttribute get attr => AlignmentGeometryAttribute.from(this);
+  AlignmentGeometryDto get dto {
+    if (this is Alignment) return (this as Alignment).dto;
+    if (this is AlignmentDirectional) return (this as AlignmentDirectional).dto;
+    throw UnimplementedError();
+  }
+
+  AlignmentGeometryAttribute get attr => AlignmentGeometryAttribute(dto);
+}
+
+extension ColorExt on Color {
+  ColorDto get dto => ColorDto(this);
+}
+
+extension AlignmentExt on Alignment {
+  AlignmentGeometryDto get dto => AlignmentGeometryDto(x: x.dto, y: y.dto);
+  AlignmentGeometryAttribute get attr => AlignmentGeometryAttribute(dto);
+}
+
+extension AligmentDirectionalExt on AlignmentDirectional {
+  AlignmentGeometryDto get dto => AlignmentGeometryDto(
+        start: start.dto,
+        y: y.dto,
+      );
+  AlignmentGeometryAttribute get attr => AlignmentGeometryAttribute(dto);
 }
 
 // Extension for MainAxisAlignment
@@ -71,18 +91,47 @@ extension BoxFitExt on BoxFit {
   BoxFitAttribute get attr => BoxFitAttribute(this);
 }
 
-// Extension for BorderRadius
-extension BorderRadiusExt on BorderRadius {
-  BorderRadiusAttribute get attr => BorderRadiusAttribute.from(this);
+extension BorderRadiusGeometryExt on BorderRadiusGeometry {
+  BorderRadiusGeometryDto get dto {
+    if (this is BorderRadius) return (this as BorderRadius).dto;
+    if (this is BorderRadiusDirectional) {
+      return (this as BorderRadiusDirectional).dto;
+    }
+
+    throw UnimplementedError();
+  }
+
+  BorderRadiusGeometryAttribute get attr => BorderRadiusGeometryAttribute(dto);
 }
 
-// Extension for Curve
-extension CurveExt on Curve {
-  CurveAttribute get attr => CurveAttribute(this);
+extension BorderRadiusDirectionalExrt on BorderRadiusDirectional {
+  BorderRadiusGeometryDto get dto => BorderRadiusGeometryDto(
+        topStart: topStart.dto,
+        topEnd: topEnd.dto,
+        bottomStart: bottomStart.dto,
+        bottomEnd: bottomEnd.dto,
+      );
+
+  BorderRadiusGeometryAttribute get attr => BorderRadiusGeometryAttribute(dto);
+}
+
+// Extension for BorderRadius
+extension BorderRadiusExt on BorderRadius {
+  BorderRadiusGeometryDto get dto => BorderRadiusGeometryDto(
+        topLeft: topLeft.dto,
+        topRight: topRight.dto,
+        bottomLeft: bottomLeft.dto,
+        bottomRight: bottomRight.dto,
+      );
+  BorderRadiusGeometryAttribute get attr => BorderRadiusGeometryAttribute(dto);
+}
+
+extension RadiusExt on Radius {
+  RadiusDto get dto => RadiusDto(x: x.dto, y: y.dto);
 }
 
 extension Matrix4Ext on Matrix4 {
-  Matrix4Attribute get attr => Matrix4Attribute(this);
+  TransformAttribute get attr => TransformAttribute(this);
 
   /// Merge [other] into this matrix.
   Matrix4 merge(Matrix4? other) {

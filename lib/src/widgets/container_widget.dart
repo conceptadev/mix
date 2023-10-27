@@ -21,7 +21,6 @@ class StyledContainer extends StyledWidget {
       return Container(
         alignment: spec.alignment,
         padding: spec.padding,
-        color: spec.color,
         decoration: spec.decoration,
         width: spec.width,
         height: spec.height,
@@ -40,8 +39,6 @@ class AnimatedStyledContainer extends AnimatedStyledWidget {
     super.key,
     super.inherit,
     this.child,
-    required super.duration,
-    required super.curve,
     this.mix,
   });
 
@@ -58,7 +55,6 @@ class AnimatedStyledContainer extends AnimatedStyledWidget {
       return AnimatedContainer(
         alignment: spec.alignment,
         padding: spec.padding,
-        color: spec.color,
         decoration: spec.decoration,
         width: spec.width,
         height: spec.height,

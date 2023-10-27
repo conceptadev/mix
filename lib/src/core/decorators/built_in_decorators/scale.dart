@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../factory/mix_provider_data.dart';
-import '../../dto/double_dto.dart';
+import '../../dto/dtos.dart';
 import '../decorator.dart';
 
 const scale = _scale;
@@ -27,21 +27,8 @@ class ScaleDecorator extends Decorator<double> {
 
   @override
   Widget build(Widget child, MixData mix) {
-    final animationCurve = mix.commonSpec.animationCurve;
-    final animationDuration = mix.commonSpec.animationDuration;
-
     final scale = resolve(mix);
 
-    return mix.animated
-        ? TweenAnimationBuilder<double>(
-            tween: Tween<double>(begin: 1, end: scale),
-            duration: animationDuration,
-            curve: animationCurve,
-            builder: (context, value, childWidget) {
-              return Transform.scale(scale: value, child: childWidget);
-            },
-            child: child,
-          )
-        : Transform.scale(scale: scale, child: child);
+    return Transform.scale(scale: scale, child: child);
   }
 }

@@ -2,64 +2,42 @@ import 'package:flutter/material.dart';
 
 import '../../factory/mix_provider_data.dart';
 import '../attribute.dart';
+import 'dtos.dart';
 
 class RadiusDto extends Dto<Radius> {
-  static const zero = RadiusDto.circular(0.0);
+  static const zero = RadiusDto(x: DoubleDto(0), y: DoubleDto(0));
 
   /// The radius value on the horizontal axis.
-  final double? _x;
+  final DoubleDto? x;
 
   /// The radius value on the vertical axis.
-  final double? _y;
+  final DoubleDto? y;
 
-  const RadiusDto._({double? x, double? y})
-      : _x = x,
-        _y = y;
+  const RadiusDto({required this.x, required this.y});
 
-  const RadiusDto.circular(double radius)
-      : _x = radius,
-        _y = radius;
+  const RadiusDto.circular(DoubleDto radius)
+      : x = radius,
+        y = radius;
 
-  /// Constructs an elliptical radius with the given radii.
-  const RadiusDto.elliptical(double x, double y)
-      : _x = x,
-        _y = y;
-
-  factory RadiusDto.from(Radius radius) {
-    return radius.x == radius.y
-        ? RadiusDto.circular(radius.x)
-        : RadiusDto.elliptical(radius.x, radius.y);
-  }
-
-  static RadiusDto? maybeFrom(Radius? radius) {
-    if (radius == null) return null;
-
-    return RadiusDto.from(radius);
-  }
-
-  @visibleForTesting
-  double? get x => _x;
-
-  @visibleForTesting
-  double? get y => _y;
+  const RadiusDto.elliptical(this.x, this.y);
 
   @override
   RadiusDto merge(covariant RadiusDto? other) {
     if (other == null) return this;
 
-    return RadiusDto._(x: other._x ?? _x, y: other._y ?? _y);
+    return RadiusDto(x: other.x ?? x, y: other.y ?? y);
   }
 
   @override
   Radius resolve(MixData mix) {
     const defaultRadius = Radius.zero;
-    final resolvedX = _x ?? defaultRadius.x;
+    final resolvedX = x?.resolve(mix) ?? defaultRadius.x;
 
-    final resolvedY = _y ?? defaultRadius.y;
+    final resolvedY = y?.resolve(mix) ?? defaultRadius.y;
 
     return Radius.elliptical(resolvedX, resolvedY);
   }
 
   @override
-  get props => [_x, _y];
+  get props => [x, y];
 }

@@ -4,12 +4,9 @@ import 'package:flutter/material.dart';
 
 import '../attributes/alignment_geometry_attribute.dart';
 import '../attributes/box_constraints_attribute.dart';
-import '../attributes/clip_attribute.dart';
-import '../attributes/color_attribute.dart';
 import '../attributes/decoration_attribute.dart';
-import '../attributes/matrix4_attribute.dart';
-import '../attributes/size_attribute.dart';
-import '../attributes/space_attribute.dart';
+import '../attributes/spacing_attribute.dart';
+import '../attributes/value_attributes.dart';
 import '../core/style_attribute.dart';
 import '../factory/mix_provider_data.dart';
 
@@ -22,7 +19,6 @@ class ContainerSpec extends MixExtension<ContainerSpec> {
   final double? width;
   final double? height;
   final Matrix4? transform;
-  final Color? color;
   final Clip? clipBehavior;
 
   const ContainerSpec({
@@ -34,7 +30,6 @@ class ContainerSpec extends MixExtension<ContainerSpec> {
     required this.width,
     required this.height,
     required this.transform,
-    required this.color,
     required this.clipBehavior,
   });
 
@@ -48,7 +43,6 @@ class ContainerSpec extends MixExtension<ContainerSpec> {
       width: mix.get<WidthAttribute, double>(),
       height: mix.get<HeightAttribute, double>(),
       transform: mix.get<Matrix4Attribute, Matrix4>(),
-      color: mix.get<BackgroundColorAttribute, Color>(),
       clipBehavior: mix.get<ClipAttribute, Clip>(),
     );
   }
@@ -63,7 +57,6 @@ class ContainerSpec extends MixExtension<ContainerSpec> {
     double? width,
     double? height,
     Matrix4? transform,
-    Color? color,
     Clip? clipBehavior,
   }) {
     return ContainerSpec(
@@ -75,7 +68,6 @@ class ContainerSpec extends MixExtension<ContainerSpec> {
       width: width ?? this.width,
       height: height ?? this.height,
       transform: transform ?? this.transform,
-      color: color ?? this.color,
       clipBehavior: clipBehavior ?? this.clipBehavior,
     );
   }
@@ -91,7 +83,6 @@ class ContainerSpec extends MixExtension<ContainerSpec> {
       width: lerpDouble(width, other.width, t),
       height: lerpDouble(height, other.height, t),
       transform: Matrix4Tween(begin: transform, end: other.transform).lerp(t),
-      color: Color.lerp(color, other.color, t),
       clipBehavior: t < 0.5 ? clipBehavior : other.clipBehavior,
     );
   }
@@ -106,7 +97,6 @@ class ContainerSpec extends MixExtension<ContainerSpec> {
         width,
         height,
         transform,
-        color,
         clipBehavior,
       ];
 }

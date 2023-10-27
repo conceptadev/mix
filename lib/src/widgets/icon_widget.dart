@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../mix.dart';
-import '../attributes/text_direction_attribute.dart';
-
+import '../specs/icon_spec.dart';
 import 'styled_widget.dart';
 
 class StyledIcon extends StyledWidget {
@@ -22,61 +20,45 @@ class StyledIcon extends StyledWidget {
     return buildWithStyle(context, (data) {
       // Resolve style attributes
       final spec = IconSpec.resolve(data);
-      
 
       return Icon(
         icon,
         size: spec.size,
         color: spec.color,
+        semanticLabel: semanticLabel,
         textDirection: spec.textDirection,
       );
     });
   }
 }
 
-class AnimatedStyledIcon extends AnimatedStyledWidget {
+class AnimatedStyledIcon extends StyledWidget {
   const AnimatedStyledIcon(
     this.icon, {
     this.semanticLabel,
-    required super.duration,
-    required super.curve,
     super.style,
     super.key,
+    required this.progress,
     super.inherit,
   });
 
-  final IconData? icon;
+  final AnimatedIconData icon;
   final String? semanticLabel;
+  final Animation<double> progress;
 
   @override
   Widget build(BuildContext context) {
     return buildWithStyle(context, (data) {
       // Resolve style attributes
       final spec = IconSpec.resolve(data);
-      final textDirection = TextDirectionAttribute.resolve(data);
 
-      return TweenAnimationBuilder<double>(
-        tween: Tween<double>(end: spec.size),
-        duration: duration,
-        curve: curve,
-        builder: (context, value, child) {
-          final sizeValue = value;
-
-          return TweenAnimationBuilder<Color?>(
-            tween: ColorTween(end: spec.color),
-            duration: duration,
-            curve: curve,
-            builder: (context, value, child) {
-              final colorValue = value;
-
-            return Icon(
-              icon, 
-              size: sizeValue, 
-              color: colorValue,
-              textDirection: textDirection,
-            );
-          },
-        child: child,
+      return AnimatedIcon(
+        icon: icon,
+        progress: progress,
+        color: spec.color,
+        size: spec.size,
+        semanticLabel: semanticLabel,
+        textDirection: spec.textDirection,
       );
     });
   }
