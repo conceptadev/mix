@@ -1,7 +1,7 @@
 import '../factory/exports.dart';
 import '../helpers/compare_mixin.dart';
 
-abstract class Dto<T> with Comparable, Mergeable, Resolvable<T> {
+abstract class Dto<R> with Comparable, Mergeable, Resolvable<R> {
   const Dto();
 }
 
@@ -9,12 +9,8 @@ abstract class Dto<T> with Comparable, Mergeable, Resolvable<T> {
 // Some classes have defaults.
 // Facade allows us ot set all properties as optional.
 // For improved merge and override of properties.
-abstract class Attribute<T> with Comparable, Mergeable {
+abstract class Attribute with Comparable, Mergeable {
   const Attribute();
-
-  /// The extension's type.
-  // ignore: no-object-declaration
-  Object get type => T;
 }
 
 mixin Resolvable<T> {

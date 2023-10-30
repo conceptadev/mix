@@ -1,4 +1,5 @@
 import '../../helpers/extensions/string_ext.dart';
+import '../attribute.dart';
 import 'directive_attribute.dart';
 
 class UppercaseDirective extends TextDirective {
@@ -40,4 +41,37 @@ abstract class TextDirective extends Directive<String> {
 
   @override
   String modify(String value);
+
+  @override
+  get props => [modify];
+}
+
+class TextDirectiveAttribute
+    extends DirectiveAttribute<TextDirective, TextDirectiveAttribute> {
+  const TextDirectiveAttribute(super.value);
+
+  @override
+  TextDirectiveAttribute create(List<TextDirective> value) {
+    return TextDirectiveAttribute(value);
+  }
+}
+
+abstract class DirectiveAttribute<D extends Directive,
+    T extends DirectiveAttribute<D, T>> extends Attribute<T> {
+  final List<D> value;
+  const DirectiveAttribute(this.value);
+
+  // Create method
+  T create(List<D> value);
+
+  @override
+  T merge(covariant T? other) {
+    if (other == null) return this as T;
+    final combinedList = [...value, ...other.value];
+
+    return create(combinedList);
+  }
+
+  @override
+  get props => [value];
 }

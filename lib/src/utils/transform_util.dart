@@ -1,10 +1,10 @@
 import 'package:flutter/widgets.dart';
 
-import '../attributes/matrix4_attribute.dart';
+import '../attributes/value_attributes.dart';
 
 const matrix4 = _matrix4;
 const transform = _matrix4;
 
-Matrix4Attribute _matrix4(Matrix4 matrix) {
-  return Matrix4Attribute(matrix);
+TransformAttribute _matrix4(Matrix4 matrix) {
+  return TransformAttribute(matrix);
 }

@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 import '../core/decorators/decorator.dart';
+import '../core/directives/directive_attribute.dart';
 import '../core/style_attribute.dart';
 import '../helpers/attributes_map.dart';
 import '../helpers/compare_mixin.dart';
@@ -15,6 +16,7 @@ import '../theme/mix_theme.dart';
 class MixData with Comparable {
   // Instance variables for widget attributes, widget decorators and token resolver.
   final StylesMap _styles;
+  final List<Directive> _directives;
 
   final BuildContextResolver _resolver;
 
@@ -24,7 +26,9 @@ class MixData with Comparable {
   MixData({
     required BuildContextResolver resolver,
     required StylesMap styles,
+    required List<Directive> directives,
   })  : _styles = styles,
+        _directives = directives,
         _resolver = resolver;
 
   /// Getter method for [BuildContextResolver].
@@ -55,14 +59,6 @@ class MixData with Comparable {
 
   R? get<Attr extends StyleAttribute<R>, R>() {
     return attributeOfType<Attr>()?.resolve(this);
-  }
-
-  @Deprecated('Use get instead')
-  S? spec<S extends MixExtension<S>>() {
-    final attribute = attributeOfType<StyleAttribute<S>>();
-    if (attribute == null) return null;
-
-    return (attribute as SpecAttribute<S>).resolve(this);
   }
 
   /// This is similar to a merge behavior however it prioritizes the current properties

@@ -37,23 +37,6 @@ class StrutStyleAttribute extends StyleAttribute<StrutStyle> {
     this.forceStrutHeight,
   });
 
-  factory StrutStyleAttribute.from(StrutStyle strutStyle) {
-    return StrutStyleAttribute.only(
-      fontFamily: strutStyle.fontFamily,
-      fontFamilyFallback: strutStyle.fontFamilyFallback,
-      fontSize: strutStyle.fontSize,
-      fontWeight: strutStyle.fontWeight,
-      fontStyle: strutStyle.fontStyle,
-      height: strutStyle.height,
-      leading: strutStyle.leading,
-      forceStrutHeight: strutStyle.forceStrutHeight,
-    );
-  }
-
-  static StrutStyleAttribute? maybeFrom(StrutStyle? strutStyle) {
-    return strutStyle == null ? null : StrutStyleAttribute.from(strutStyle);
-  }
-
   @override
   StrutStyleAttribute merge(StrutStyleAttribute? other) {
     if (other == null) return this;

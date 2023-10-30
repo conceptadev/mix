@@ -2,8 +2,8 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-import '../attributes/text_style_attribute.dart';
 import '../core/dto/shadow_dto.dart';
+import '../core/dto/text_style_dto.dart';
 import '../helpers/extensions/helper_ext.dart';
 
 TextStyleDto textStyle({
@@ -14,10 +14,9 @@ TextStyleDto textStyle({
   double? letterSpacing,
   double? wordSpacing,
   TextBaseline? textBaseline,
+  List<Shadow>? shadows,
   Color? color,
   Color? backgroundColor,
-  Shadow? shadow,
-  List<Shadow>? shadows,
   List<FontFeature>? fontFeatures,
   TextDecoration? decoration,
   Color? decorationColor,
@@ -27,24 +26,8 @@ TextStyleDto textStyle({
   String? debugLabel,
   Locale? locale,
   double? height,
-
-  /// If as is provided, it will be merged with the other attributes.
-  /// Other properties will override the as properties.
-  TextStyle? as,
 }) {
-  List<ShadowDto>? convertShadows() {
-    List<Shadow> combinedShadows = [...?shadows];
-
-    if (shadow != null) combinedShadows.add(shadow);
-
-    final shadowDtos = combinedShadows.map(ShadowDto.from).toList();
-
-    if (shadowDtos.isEmpty) return null;
-
-    return shadowDtos;
-  }
-
-  TextStyleDto textStyle = TextStyleDto(
+  return TextStyleDto(
     background: background,
     backgroundColor: backgroundColor?.toDto,
     color: color?.toDto,
@@ -54,23 +37,17 @@ TextStyleDto textStyle({
     decorationStyle: decorationStyle,
     fontFamily: fontFamily,
     fontFeatures: fontFeatures,
-    fontSize: fontSize,
+    fontSize: fontSize?.toDto,
     fontStyle: fontStyle,
     fontWeight: fontWeight,
     foreground: foreground,
-    height: height,
-    letterSpacing: letterSpacing,
+    height: height?.toDto,
+    letterSpacing: letterSpacing?.toDto,
     locale: locale,
-    shadows: convertShadows(),
+    shadows: _shadowsFromDto(shadows),
     textBaseline: textBaseline,
-    wordSpacing: wordSpacing,
+    wordSpacing: wordSpacing?.toDto,
   );
-
-  if (as != null) {
-    textStyle = TextStyleDto.from(as).merge(textStyle);
-  }
-
-  return textStyle;
 }
 
 TextStyleDto bold() {
@@ -79,4 +56,43 @@ TextStyleDto bold() {
 
 TextStyleDto italic() {
   return textStyle(fontStyle: FontStyle.italic);
+}
+
+TextStyleDto _textStyleFromDto(TextStyle style) {
+  return TextStyleDto(
+    background: style.background,
+    backgroundColor: style.backgroundColor?.toDto,
+    color: style.color?.toDto,
+    debugLabel: style.debugLabel,
+    decoration: style.decoration,
+    decorationColor: style.decorationColor?.toDto,
+    decorationStyle: style.decorationStyle,
+    fontFamily: style.fontFamily,
+    fontFeatures: style.fontFeatures,
+    fontSize: style.fontSize?.toDto,
+    fontStyle: style.fontStyle,
+    fontWeight: style.fontWeight,
+    foreground: style.foreground,
+    height: style.height?.toDto,
+    letterSpacing: style.letterSpacing?.toDto,
+    locale: style.locale,
+    shadows: style.shadows?.map(_shadowFromDto).toList(),
+    textBaseline: style.textBaseline,
+    wordSpacing: style.wordSpacing?.toDto,
+  );
+}
+
+ShadowDto _shadowFromDto(Shadow shadow) {
+  return ShadowDto(
+    blurRadius: shadow.blurRadius.toDto,
+    color: shadow.color.toDto,
+    offset: shadow.offset,
+  );
+}
+
+List<ShadowDto>? _shadowsFromDto(List<Shadow>? shadows) {
+  if (shadows == null) return null;
+  if (shadows.isEmpty) return [];
+
+  return shadows.map(_shadowFromDto).toList();
 }

@@ -99,20 +99,6 @@ abstract class StyleAttribute<T> extends Attribute with Resolvable<T> {
 
     return selectedAttribute?.resolve(mix);
   }
-
-  K? resolveDto<K, R extends StyleAttribute<K>>(
-    covariant R? resolvable,
-    MixData mix,
-  ) {
-    return resolvable?.resolve(mix);
-  }
-
-  List<M> combinedAttrList<M extends Mergeable>(
-    List<M>? current,
-    List<M>? other,
-  ) {
-    return [...current ?? [], ...other ?? []];
-  }
 }
 
 typedef ValueModifier<T> = T Function(T value);

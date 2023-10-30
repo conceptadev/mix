@@ -1,15 +1,27 @@
 import 'package:flutter/material.dart';
 
 import '../../attributes/strut_style_attribute.dart';
-import '../../attributes/text_style_attribute.dart';
 import '../../attributes/value_attributes.dart';
 import '../../core/dto/border_dto.dart';
 import '../../core/dto/dtos.dart';
 import '../../core/dto/radius_dto.dart';
 import '../../core/dto/shadow_dto.dart';
+import '../../core/dto/text_style_dto.dart';
 
 extension StrutStyleExt on StrutStyle {
-  StrutStyleAttribute get toAttribute => StrutStyleAttribute.from(this);
+  StrutStyleAttribute get toAttribute {
+    return StrutStyleAttribute.only(
+      fontFamily: fontFamily,
+      fontFamilyFallback: fontFamilyFallback,
+      fontSize: fontSize,
+      fontWeight: fontWeight,
+      fontStyle: fontStyle,
+      height: height,
+      leading: leading,
+      forceStrutHeight: forceStrutHeight,
+    );
+  }
+
   StrutStyle merge(StrutStyle? other) {
     return StrutStyle(
       fontFamily: other?.fontFamily ?? fontFamily,

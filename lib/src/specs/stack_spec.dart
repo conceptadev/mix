@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../attributes/alignment_geometry_attribute.dart';
 import '../attributes/value_attributes.dart';
 import '../core/style_attribute.dart';
 import '../factory/mix_provider_data.dart';

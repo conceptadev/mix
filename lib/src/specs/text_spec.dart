@@ -1,38 +1,54 @@
 import 'package:flutter/material.dart';
 
+import '../attributes/strut_style_attribute.dart';
+import '../attributes/text_style_attribute.dart';
+import '../attributes/value_attributes.dart';
 import '../core/directives/text_directive.dart';
 import '../core/style_attribute.dart';
 import '../factory/exports.dart';
 
 class TextSpec extends MixExtension<TextSpec> {
-  final TextOverflow overflow;
+  final TextOverflow? overflow;
   final StrutStyle? strutStyle;
   final TextAlign? textAlign;
-  final Locale? locale;
   final double? textScaleFactor;
   final int? maxLines;
   final TextWidthBasis? textWidthBasis;
   final TextHeightBehavior? textHeightBehavior;
   final TextStyle? style;
   final TextDirection? textDirection;
+  final bool? softWrap;
 
   final List<TextDirective> directives;
   const TextSpec({
     required this.overflow,
     this.strutStyle,
     this.textAlign,
-    this.locale,
     this.textScaleFactor,
     this.maxLines,
     this.style,
     this.textWidthBasis,
     this.textHeightBehavior,
     this.textDirection,
+    this.softWrap,
     this.directives = const [],
   });
 
   static TextSpec resolve(MixData mix) {
-    return TextSpec(softWrap: mix.get<SoftWrapAttribute, bool>());
+    return TextSpec(
+      overflow: mix.get<TextOverflowAttribute, TextOverflow>(),
+      strutStyle: mix.get<StrutStyleAttribute, StrutStyle>(),
+      textAlign: mix.get<TextAlignAttribute, TextAlign>(),
+      textScaleFactor: mix.get<TextScaleFactorAttribute, double>(),
+      maxLines: mix.get<MaxLinesAttribute, int>(),
+      style: mix.get<TextStyleAttribute, TextStyle>(),
+      textWidthBasis: mix.get<TextWidthBasisAttribute, TextWidthBasis>(),
+      textHeightBehavior:
+          mix.get<TextHeightBehaviorAttribute, TextHeightBehavior>(),
+      textDirection: mix.get<TextDirectionAttribute, TextDirection>(),
+      softWrap: mix.get<SoftWrapAttribute, bool>(),
+      directives: mix.get<TextDirectiveAttribute, List<TextDirective>>(),
+    );
   }
 
   String applyTextDirectives(String? text) {
@@ -51,17 +67,16 @@ class TextSpec extends MixExtension<TextSpec> {
     // Define a helper method for snapping
 
     return TextSpec(
-      softWrap: snap(softWrap, other.softWrap, t),
       overflow: snap(overflow, other.overflow, t),
       strutStyle: snap(strutStyle, other.strutStyle, t),
       textAlign: snap(textAlign, other.textAlign, t),
-      locale: snap(locale, other.locale, t),
       textScaleFactor:
           genericNumLerp(textScaleFactor, other.textScaleFactor, t),
       maxLines: snap(maxLines, other.maxLines, t),
       style: TextStyle.lerp(style, other.style, t),
       textWidthBasis: snap(textWidthBasis, other.textWidthBasis, t),
       textHeightBehavior: snap(textHeightBehavior, other.textHeightBehavior, t),
+      softWrap: snap(softWrap, other.softWrap, t),
       directives: snap(directives, other.directives, t),
     );
   }
@@ -72,7 +87,6 @@ class TextSpec extends MixExtension<TextSpec> {
     TextOverflow? overflow,
     StrutStyle? strutStyle,
     TextAlign? textAlign,
-    Locale? locale,
     double? textScaleFactor,
     int? maxLines,
     TextStyle? style,
@@ -82,17 +96,16 @@ class TextSpec extends MixExtension<TextSpec> {
     TextDirection? textDirection,
   }) {
     return TextSpec(
-      softWrap: softWrap ?? this.softWrap,
       overflow: overflow ?? this.overflow,
       strutStyle: strutStyle ?? this.strutStyle,
       textAlign: textAlign ?? this.textAlign,
-      locale: locale ?? this.locale,
       textScaleFactor: textScaleFactor ?? this.textScaleFactor,
       maxLines: maxLines ?? this.maxLines,
       style: style ?? this.style,
       textWidthBasis: textWidthBasis ?? this.textWidthBasis,
       textHeightBehavior: textHeightBehavior ?? this.textHeightBehavior,
       textDirection: textDirection ?? this.textDirection,
+      softWrap: softWrap ?? this.softWrap,
       directives: [...this.directives, ...directives ?? []],
     );
   }
@@ -103,7 +116,6 @@ class TextSpec extends MixExtension<TextSpec> {
         overflow,
         strutStyle,
         textAlign,
-        locale,
         textScaleFactor,
         maxLines,
         textWidthBasis,

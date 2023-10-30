@@ -151,12 +151,11 @@ class TextDirectionAttribute
   TextDirectionAttribute create(value) => TextDirectionAttribute(value);
 }
 
-class TextSoftWrapAttribute
-    extends ValueAttribute<TextSoftWrapAttribute, bool> {
-  const TextSoftWrapAttribute(super.value);
+class SoftWrapAttribute extends ValueAttribute<SoftWrapAttribute, bool> {
+  const SoftWrapAttribute(super.value);
 
   @override
-  TextSoftWrapAttribute create(value) => TextSoftWrapAttribute(value);
+  SoftWrapAttribute create(value) => SoftWrapAttribute(value);
 }
 
 class TextOverflowAttribute
@@ -174,11 +173,11 @@ class TextScaleFactorAttribute extends DoubleAttribute {
   TextScaleFactorAttribute create(value) => TextScaleFactorAttribute(value);
 }
 
-class TextMaxLinesAttribute extends ValueAttribute<TextMaxLinesAttribute, int> {
-  const TextMaxLinesAttribute(super.value);
+class MaxLinesAttribute extends ValueAttribute<MaxLinesAttribute, int> {
+  const MaxLinesAttribute(super.value);
 
   @override
-  TextMaxLinesAttribute create(value) => TextMaxLinesAttribute(value);
+  MaxLinesAttribute create(value) => MaxLinesAttribute(value);
 }
 
 class TextWidthBasisAttribute
