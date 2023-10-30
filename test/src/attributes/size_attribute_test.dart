@@ -1,17 +1,19 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mix/mix.dart';
+import 'package:mix/src/attributes/value_attributes.dart';
+
+import '../../helpers/testing_utils.dart';
 
 void main() {
   group('HeightAttribute', () {
     test('from constructor sets value correctly', () {
-      final attr = HeightAttribute.from(100.0);
+      final attr = HeightAttribute(100.0.toDto);
 
       expect(attr.value.value, 100.0);
     });
 
     test('merge returns merged object correctly', () {
-      const attr1 = HeightAttribute(DoubleDto(100.0));
-      const attr2 = HeightAttribute(DoubleDto(200.0));
+      final attr1 = HeightAttribute(100.0.toDto);
+      final attr2 = HeightAttribute((200.0.toDto));
 
       final merged = attr1.merge(attr2);
 
@@ -21,14 +23,14 @@ void main() {
 
   group('WidthAttribute', () {
     test('from constructor sets value correctly', () {
-      final attr = WidthAttribute.from(100.0);
+      final attr = WidthAttribute(100.0.toDto);
 
       expect(attr.value.value, 100.0);
     });
 
     test('merge returns merged object correctly', () {
-      const attr1 = WidthAttribute(DoubleDto(100.0));
-      const attr2 = WidthAttribute(DoubleDto(200.0));
+      final attr1 = WidthAttribute(100.0.toDto);
+      final attr2 = WidthAttribute(200.0.toDto);
 
       final merged = attr1.merge(attr2);
 

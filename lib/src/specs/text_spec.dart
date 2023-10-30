@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import '../attributes/strut_style_attribute.dart';
 import '../attributes/text_style_attribute.dart';
 import '../attributes/value_attributes.dart';
+import '../core/attribute.dart';
 import '../core/directives/text_directive.dart';
-import '../core/style_attribute.dart';
 import '../factory/exports.dart';
 
 class TextSpec extends MixExtension<TextSpec> {
@@ -47,7 +47,7 @@ class TextSpec extends MixExtension<TextSpec> {
           mix.get<TextHeightBehaviorAttribute, TextHeightBehavior>(),
       textDirection: mix.get<TextDirectionAttribute, TextDirection>(),
       softWrap: mix.get<SoftWrapAttribute, bool>(),
-      directives: mix.get<TextDirectiveAttribute, List<TextDirective>>(),
+      directives: mix.attributeOfType<TextDirectiveAttribute>()?.value ?? [],
     );
   }
 

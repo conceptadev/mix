@@ -6,7 +6,7 @@ import '../attributes/strut_style_attribute.dart';
 import '../attributes/text_style_attribute.dart';
 import '../attributes/value_attributes.dart';
 import '../core/directives/text_directive.dart';
-import '../helpers/extensions/helper_ext.dart';
+import '../helpers/extensions/values_ext.dart';
 
 StrutStyleAttribute strutStyle(StrutStyle strutStyle) {
   return strutStyle.toAttribute;

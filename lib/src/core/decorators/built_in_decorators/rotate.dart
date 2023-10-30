@@ -28,18 +28,6 @@ class RotateDecorator extends Decorator<int> {
 
   @override
   Widget build(Widget child, MixData mix) {
-    if (mix.animated) {
-      final animationCurve = mix.commonSpec.animationCurve;
-      final animationDuration = mix.commonSpec.animationDuration;
-
-      return AnimatedRotation(
-        turns: quarterTurns / 4,
-        curve: animationCurve,
-        duration: animationDuration,
-        child: child,
-      );
-    }
-
     return RotatedBox(quarterTurns: quarterTurns, child: child);
   }
 }

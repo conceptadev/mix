@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../../../attributes/border_radius_geometry_attribute.dart';
 import '../../../attributes/value_attributes.dart';
 import '../../../factory/mix_provider_data.dart';
-import '../../style_attribute.dart';
+import '../../../helpers/extensions/values_ext.dart';
+import '../../attribute.dart';
+import '../../dto/border_dto.dart';
 import '../decorator.dart';
 
 const clipOval = _clipOval;
@@ -13,7 +14,9 @@ const clipRounded = _clipRounded;
 ClipDecorator _clipRounded(double radius) {
   return ClipDecorator(
     ClipDecoratorType.rounded,
-    borderRadius: BorderRadiusAttribute.circular(radius),
+    borderRadius: BorderRadiusGeometryAttribute(
+      BorderRadiusGeometryDto.circular(radius.toDto),
+    ),
   );
 }
 
@@ -67,17 +70,7 @@ class ClipDecorator extends Decorator<ClipDecoratorSpec> {
         return ClipRect(child: child);
 
       case ClipDecoratorType.rounded:
-        final animationCurve = mix.commonSpec.animationCurve;
-        final animationDuration = mix.commonSpec.animationDuration;
-
-        return mix.animated
-            ? AnimatedClipRRect(
-                duration: animationDuration,
-                curve: animationCurve,
-                borderRadius: spec.borderRadius.resolve(mix.directionality),
-                child: child,
-              )
-            : ClipRRect(borderRadius: spec.borderRadius, child: child);
+        return ClipRRect(borderRadius: spec.borderRadius, child: child);
 
       case ClipDecoratorType.oval:
         return ClipOval(child: child);

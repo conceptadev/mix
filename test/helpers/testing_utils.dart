@@ -1,48 +1,37 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:meta/meta.dart';
 import 'package:mix/mix.dart';
+import 'package:mix/src/core/attribute.dart';
+import 'package:mix/src/factory/mix_provider.dart';
 import 'package:mix/src/theme/mix_theme.dart';
 import 'package:mockito/mockito.dart';
 
-export 'package:mix/src/helpers/extensions/helper_ext.dart';
+export 'package:mix/src/helpers/extensions/values_ext.dart';
 
 class MockBuildContext extends Mock implements BuildContext {}
 
 // ignore: non_constant_identifier_names
-final EmptyMixData = MixData.create(
-  context: MockBuildContext(),
-  style: StyleMix.empty,
+final EmptyMixData = Mix.createMixData(
+  MockBuildContext(),
+  StyleMix.empty,
 );
 
 Future<void> pumpWithMixData(
   WidgetTester tester, {
   StyleMix style = StyleMix.empty,
-  required Function(MixData mix) builder,
+  required Widget Function(MixData mix) builder,
 }) async {
-  final mixDataCompleter = Completer<MixData>();
-
   await tester.pumpWidget(
     MaterialApp(
       home: Builder(
         builder: (BuildContext context) {
           // Populate MixData into the widget tree if needed
-          final mixData = MixData.create(
-            context: context,
-            style: style,
-          ); // Replace with your actual MixData setup
-          // For example, using InheritedWidget or Provider
-          mixDataCompleter.complete(mixData);
-          return Container();
+          return Mix.build(context, style, builder);
         },
       ),
     ),
   );
-
-  // Call the test callback, passing in the MixData object
-  final mixData = await mixDataCompleter.future;
-  builder(mixData);
 }
 
 class TestMixWidget extends StatelessWidget {
@@ -132,4 +121,82 @@ class BoxTestWidget extends StatelessWidget {
       ),
     );
   }
+}
+
+@isTestGroup
+void testSingleAttributeValue<T extends SingleValueAttribute<T, V>, V>(
+  String groupName,
+  T Function(V value) builder,
+  List<V> values,
+) {
+  group(groupName, () {
+    for (var value1 in values) {
+      for (var value2 in values.where((v) => v != value1)) {
+        test('merge $value1 with $value2', () {
+          final attr1 = builder(value1);
+          final attr2 = builder(value2);
+          final merged = attr1.merge(attr2);
+          expect(merged.value, equals(value2));
+        });
+
+        test('resolve $value1', () {
+          final attr = builder(value1);
+          final resolvedValue = attr.resolve(EmptyMixData);
+          expect(resolvedValue, equals(value1));
+        });
+
+        test('check equality between $value1 and $value2', () {
+          final attr1 = builder(value1);
+          final attr2 = builder(value2);
+          expect(attr1, isNot(equals(attr2)));
+        });
+
+        test('check self-equality for $value1', () {
+          final attr1 = builder(value1);
+          final attr2 = builder(value1);
+          expect(attr1, equals(attr2));
+        });
+      }
+
+      test('merge null with $value1 returns itself', () {
+        final attr1 = builder(value1);
+        final merged = attr1.merge(null);
+        expect(merged, equals(attr1));
+      });
+    }
+  });
+}
+
+@isTestGroup
+void testDoubleAttributeValue<T extends ModifiableDtoAttribute<T, D, R>,
+    D extends ModifiableDto<R>, R>({
+  required String groupName,
+  required T Function(D dto) builder,
+  required D Function(R value, ValueModifier<R> modifier) dtoBuilder,
+  required R Function(D dto, MixData mix) dtoResolver,
+  required List<R> values,
+  required ValueModifier<R> modifier,
+}) {
+  group('$groupName - DtoAttribute testing', () {
+    for (var value in values) {
+      test('merge with modifier', () {
+        final dto1 = dtoBuilder(value, modifier);
+        final dto2 = dtoBuilder(value, modifier);
+        final attr1 = builder(dto1);
+        final attr2 = builder(dto2);
+
+        final merged = attr1.merge(attr2);
+        expect(merged.value, equals(dto2));
+      });
+
+      test('resolve modified value', () {
+        final dto1 = dtoBuilder(value, modifier);
+        final attr1 = builder(dto1);
+        final resolvedValue = attr1.resolve(EmptyMixData);
+        final expectedValue = dtoResolver(dto1, EmptyMixData);
+
+        expect(resolvedValue, equals(expectedValue));
+      });
+    }
+  });
 }

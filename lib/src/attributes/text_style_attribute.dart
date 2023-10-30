@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../core/attribute.dart';
 import '../core/dto/text_style_dto.dart';
-import '../core/style_attribute.dart';
 import '../factory/exports.dart';
 
 class TextStyleAttribute extends StyleAttribute<TextStyle> {

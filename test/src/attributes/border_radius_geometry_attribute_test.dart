@@ -8,50 +8,58 @@ void main() {
   group('BorderRadiusGeometryAttribute', () {
     test('from factory returns BorderRadiusAttribute for BorderRadius', () {
       const borderRadius = BorderRadius.all(Radius.circular(10.0));
-      final result = BorderRadiusGeometryAttribute.from(borderRadius);
+      final result = borderRadius.toDto;
 
-      expect(result, isA<BorderRadiusAttribute>());
-      expect((result as BorderRadiusAttribute).topLeft!.y, 10.0);
-      expect((result).topRight!.y, 10.0);
-      expect((result).bottomLeft!.y, 10.0);
-      expect((result).bottomRight!.y, 10.0);
+      final resolvedValue = result.resolve(EmptyMixData) as BorderRadius;
+
+      expect(result, isA<BorderRadiusGeometryDto>());
+      expect(resolvedValue, isA<BorderRadius>());
+      expect((resolvedValue).topLeft.y, 10.0);
+      expect((resolvedValue).topRight.y, 10.0);
+      expect((resolvedValue).bottomLeft.y, 10.0);
+      expect((resolvedValue).bottomRight.y, 10.0);
     });
 
     test(
         'from factory returns BorderRadiusDirectionalAttribute for BorderRadiusDirectional',
         () {
-      const borderRadius = BorderRadiusDirectional.all(Radius.circular(10.0));
-      final result = BorderRadiusGeometryAttribute.from(borderRadius);
+      final result = BorderRadiusGeometryDto.circular(
+        10.0.toDto,
+      ).toDirectional;
 
-      expect(result, isA<BorderRadiusDirectionalAttribute>());
-      expect((result as BorderRadiusDirectionalAttribute).topStart!.y, 10.0);
-      expect((result).topEnd!.y, 10.0);
-      expect((result).bottomStart!.y, 10.0);
-      expect((result).bottomEnd!.y, 10.0);
+      final resolvedValue =
+          result.resolve(EmptyMixData) as BorderRadiusDirectional;
+
+      expect(result, isA<BorderRadiusGeometryDto>());
+      expect(resolvedValue, isA<BorderRadiusDirectional>());
+      expect((resolvedValue).topStart.y, 10.0);
+      expect((resolvedValue).topEnd.y, 10.0);
+      expect((resolvedValue).bottomStart.y, 10.0);
+      expect((resolvedValue).bottomEnd.y, 10.0);
     });
-  });
 
-  group('BorderRadiusAttribute', () {
     test('merge returns merged object correctly', () {
-      final attr1 = BorderRadiusAttribute.circular(10.0);
-      const attr2 =
-          BorderRadiusAttribute.only(topLeft: RadiusDto.elliptical(20, 20));
+      final attr1 = BorderRadiusGeometryDto.circular(10.0.toDto);
+      final attr2 = BorderRadiusGeometryDto(
+          topLeft: RadiusDto.elliptical(20.0.toDto, 20.0.toDto));
 
       final merged = attr1.merge(attr2);
 
-      expect(merged.topLeft!.x, 20.0);
-      expect(merged.topLeft!.y, 20.0);
-      expect(merged.topRight!.x, 10.0);
-      expect(merged.topRight!.y, 10.0);
-      expect(merged.bottomLeft!.x, 10.0);
-      expect(merged.bottomLeft!.y, 10.0);
-      expect(merged.bottomRight!.x, 10.0);
-      expect(merged.bottomRight!.y, 10.0);
+      final resolvedValue = merged.resolve(EmptyMixData) as BorderRadius;
+
+      expect(resolvedValue.topLeft.x, 20.0);
+      expect(resolvedValue.topLeft.y, 20.0);
+      expect(resolvedValue.topRight.x, 10.0);
+      expect(resolvedValue.topRight.y, 10.0);
+      expect(resolvedValue.bottomLeft.x, 10.0);
+      expect(resolvedValue.bottomLeft.y, 10.0);
+      expect(resolvedValue.bottomRight.x, 10.0);
+      expect(resolvedValue.bottomRight.y, 10.0);
     });
 
     test('resolve returns correct BorderRadius', () {
-      final attr = BorderRadiusAttribute.circular(10.0);
-      final borderRadius = attr.resolve(EmptyMixData);
+      final attr = BorderRadiusGeometryDto.circular(10.0.toDto);
+      final borderRadius = attr.resolve(EmptyMixData) as BorderRadius;
 
       expect(borderRadius.topLeft, const Radius.circular(10.0));
       expect(borderRadius.topRight, const Radius.circular(10.0));
@@ -60,62 +68,118 @@ void main() {
     });
 
     test('Equality holds when all attributes are the same', () {
-      final attr1 = BorderRadiusAttribute.circular(10.0);
-      final attr2 = BorderRadiusAttribute.circular(10.0);
+      final attr1 = BorderRadiusGeometryDto.circular(15.0.toDto);
+      final attr2 = BorderRadiusGeometryDto.circular(15.0.toDto);
 
       expect(attr1, attr2);
     });
 
     test('Equality fails when attributes are different', () {
-      final attr1 = BorderRadiusAttribute.circular(10.0);
-      const attr2 =
-          BorderRadiusAttribute.only(topLeft: RadiusDto.elliptical(10, 30));
+      final attr1 = BorderRadiusGeometryDto.circular(10.0.toDto);
+      final attr2 = BorderRadiusGeometryDto(
+        topLeft: RadiusDto.elliptical(
+          10.0.toDto,
+          30.0.toDto,
+        ),
+      );
 
       expect(attr1, isNot(attr2));
     });
   });
 
-  group('BorderRadiusDirectionalAttribute', () {
-    test('merge returns merged object correctly', () {
-      final attr1 = BorderRadiusDirectionalAttribute.circular(10.0);
-      const attr2 = BorderRadiusDirectionalAttribute.only(
-          topStart: RadiusDto.elliptical(20, 20));
+  group('BorderSideDto', () {
+    test('fromBorderSide() constructor', () {
+      BorderSide borderSide = const BorderSide(
+        color: Colors.red,
+        width: 2.0,
+        style: BorderStyle.solid,
+        // Removed for compatibility
+        // strokeAlign: 12.0,
+      );
 
-      final merged = attr1.merge(attr2);
+      BorderSideDto result = borderSide.toDto;
 
-      expect(merged.topStart!.x, 20.0);
-      expect(merged.topStart!.y, 20.0);
-      expect(merged.topEnd!.x, 10.0);
-      expect(merged.topEnd!.y, 10.0);
-      expect(merged.bottomStart!.x, 10.0);
-      expect(merged.bottomStart!.y, 10.0);
-      expect(merged.bottomEnd!.x, 10.0);
-      expect(merged.bottomEnd!.y, 10.0);
+      final resolvedValue = result.resolve(EmptyMixData);
+
+      expect(resolvedValue.color, borderSide.color);
+      expect(resolvedValue.width, borderSide.width);
+      expect(resolvedValue.style, borderSide.style);
+      expect(resolvedValue.strokeAlign, borderSide.strokeAlign);
     });
+    test('copyWith() & merge() method', () {
+      BorderSide borderSide = const BorderSide(
+        color: Colors.red,
+        width: 2.0,
+        style: BorderStyle.solid,
+        // Removed for compatibility
+        // strokeAlign: 12.0,
+      );
 
-    test('resolve returns correct BorderRadiusDirectional', () {
-      final attr = BorderRadiusDirectionalAttribute.circular(10.0);
-      final borderRadius = attr.resolve(EmptyMixData);
+      BorderSideDto result = borderSide.toDto;
 
-      expect(borderRadius.topStart, const Radius.circular(10.0));
-      expect(borderRadius.topEnd, const Radius.circular(10.0));
-      expect(borderRadius.bottomStart, const Radius.circular(10.0));
-      expect(borderRadius.bottomEnd, const Radius.circular(10.0));
-    });
+      BorderSideDto copy = result.copyWith(
+        color: Colors.blue.toDto,
+        width: 3.0.toDto,
+        strokeAlign: 13.0.toDto,
+      );
 
-    test('Equality holds when all attributes are the same', () {
-      final attr1 = BorderRadiusDirectionalAttribute.circular(10.0);
-      final attr2 = BorderRadiusDirectionalAttribute.circular(10.0);
+      BorderSideDto merge = result.merge(copy);
 
-      expect(attr1, attr2);
-    });
+      expect(copy.color?.value, Colors.blue);
+      expect(copy.width?.value, 3.0);
+      expect(copy.style, BorderStyle.solid);
+      // Removed for compatibility
+      // expect(copy.strokeAlign, 13.0);
 
-    test('Equality fails when attributes are different', () {
-      final attr1 = BorderRadiusDirectionalAttribute.circular(10.0);
-      const attr2 = BorderRadiusDirectionalAttribute.only(
-          topStart: RadiusDto.elliptical(10, 30));
-
-      expect(attr1, isNot(attr2));
+      expect(copy, merge);
     });
   });
+
+  test(
+    'BorderSideDto equality',
+    () {
+      const borderSide = BorderSide(
+        color: Colors.red,
+        width: 2.0,
+        style: BorderStyle.solid,
+        strokeAlign: 12.0,
+      );
+
+      final result = borderSide.toDto;
+
+      final same = BorderSideDto(
+        color: Colors.red.toDto,
+        width: 2.0.toDto,
+        style: BorderStyle.solid,
+        strokeAlign: 12.0.toDto,
+      );
+
+      final different = BorderSideDto(
+        color: Colors.blue.toDto,
+        width: 3.0.toDto,
+        style: BorderStyle.solid,
+        strokeAlign: 13.0.toDto,
+      );
+
+      final mergedDifferent = different.merge(same);
+
+      final mergedSame = result.merge(same);
+
+      expect(
+        result,
+        mergedSame,
+        reason: 'merge same objects should return the same object',
+      );
+      expect(
+        result,
+        isNot(different),
+        reason: 'different objects should not be equal',
+      );
+      expect(
+        mergedDifferent,
+        isNot(different),
+        reason: 'merged different objects should not be equal',
+      );
+    },
+  );
 }

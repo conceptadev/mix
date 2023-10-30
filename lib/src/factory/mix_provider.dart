@@ -46,6 +46,16 @@ class Mix extends InheritedWidget {
     return mixData;
   }
 
+  @visibleForTesting
+  static MixData createMixData(BuildContext context, StyleMix style) {
+    final values = applyContextVariants(style.values, context);
+
+    return MixData(
+      resolver: BuildContextResolver(context),
+      styles: values.styles,
+    );
+  }
+
   /// Contains the context data object.
   final MixData? data;
 
@@ -56,15 +66,10 @@ class Mix extends InheritedWidget {
     return data != oldWidget.data;
   }
 
-  static build(BuildContext context, StyleMix style, MixBuilder builder) {
-    final values = applyContextVariants(style.values, context);
+  static Mix build(BuildContext context, StyleMix style, MixBuilder builder) {
+    final mixData = createMixData(context, style);
 
-    final data = MixData(
-      resolver: BuildContextResolver(context),
-      styles: values.styles,
-    );
-
-    return Mix(data: data, child: builder(data));
+    return Mix(data: mixData, child: builder(mixData));
   }
 }
 

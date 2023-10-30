@@ -1,9 +1,16 @@
-import 'package:flutter/material.dart';
+// import 'package:flutter/material.dart';
 
-import 'mix_token.dart';
+// import '../../factory/mix_provider_data.dart';
+// import 'mix_token.dart';
 
-class RadiiToken extends TokenRef with WithReferenceMixin {
-  const RadiiToken(super.name);
-}
+// class RadiiToken extends TokenRef<Radius> with WithReferenceMixin {
+//   const RadiiToken(super.name);
 
-typedef MixRadiiTokens = TokenReferenceMap<RadiiToken, Radius>;
+//   @override
+//   Radius resolve(MixData mix) => mix.resolver.;
+
+//   @override
+//   Radius get ref => Radius.circular(hashCode.toDouble());
+// }
+
+// typedef MixRadiiTokens = TokenReferenceMap<RadiiToken, Radius>;

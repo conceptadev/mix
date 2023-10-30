@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../attributes/value_attributes.dart';
+import '../core/attribute.dart';
 import '../core/dto/dtos.dart';
-import '../core/style_attribute.dart';
 
 const iconSize = _iconSize;
 const iconColor = _iconColor;

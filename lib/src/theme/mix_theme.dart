@@ -108,9 +108,7 @@ class BuildContextResolver {
   }
 
   double space(double value) {
-    final mixTheme = theme;
-
-    final refs = mixTheme.space.map((key, _) => MapEntry(key.ref, key));
+    final refs = theme.space.map((key, _) => MapEntry(key.ref, key));
 
     // Check if value is a reference.
     final token = refs[value];
@@ -120,7 +118,7 @@ class BuildContextResolver {
       return value;
     }
 
-    final space = mixTheme.space[token]?.call(context);
+    final space = theme.space[token]?.call(context);
 
     if (space == null) {
       throw Exception('Spacetoken $token is not defined in Mix Theme');

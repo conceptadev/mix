@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 import '../../factory/exports.dart';
 import 'mix_token.dart';
 
-class TextStyleRef extends TextStyle implements TokenRef<TextStyle> {
+class TextStyleRef extends TextStyle implements ResolvableTokenRef<TextStyle> {
   @override
   final String name;
 

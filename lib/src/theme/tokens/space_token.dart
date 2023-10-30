@@ -27,15 +27,18 @@ class SpaceTokens {
 ///
 /// A space token defines a value for controlling the
 /// size of UI elements.
-class SpaceToken extends TokenRef with WithReferenceMixin {
+class SpaceToken extends TokenRef<double> {
   /// A constant constructor that accepts a `String` argument named [name].
   /// Name needs to be unique per token
   ///
   /// [name] is used to initialize the superclass `MixToken`.
   const SpaceToken(super.name);
+
+  @override
+  double get ref => hashCode.toDouble() * -1;
 }
 
-typedef MixSpaceTokens = TokenReferenceMap<SpaceToken, double>;
+typedef MixSpaceTokens = MixTokenMap<SpaceToken, double>;
 
 typedef MixSpaceTokensReference = Map<double, SpaceToken>;
 

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../attributes/value_attributes.dart';
 import '../core/dto/border_dto.dart';
-import '../helpers/extensions/helper_ext.dart';
+import '../helpers/extensions/values_ext.dart';
 
 BoxBorderAttribute border({
   Color? color,

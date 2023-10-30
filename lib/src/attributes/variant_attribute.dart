@@ -5,7 +5,7 @@ import '../core/variants/context_variant.dart';
 import '../core/variants/variant.dart';
 import '../factory/exports.dart';
 
-class VariantAttribute<T extends Variant> extends Attribute<T> {
+class VariantAttribute<T extends Variant> extends Attribute {
   final T variant;
   final StyleMix _style;
 
@@ -24,9 +24,6 @@ class VariantAttribute<T extends Variant> extends Attribute<T> {
 
   @override
   String toString() => 'VariantAttribute(variant: $variant, mix: $value)';
-
-  @override
-  Key get mergeKey => ValueKey(this.variant.name);
 
   @override
   get props => [variant, value];

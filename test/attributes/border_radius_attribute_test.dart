@@ -2,6 +2,7 @@
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
+import 'package:mix/src/helpers/extensions/values_ext.dart';
 
 void main() {
   group('BorderRadiusAttribute', () {
@@ -303,19 +304,19 @@ void main() {
         expect(borderRadius.bottomRight, null);
         expect(
           borderRadius.topStart,
-          const RadiusDto.circular(topStartRadius),
+          RadiusDto.circular(topStartRadius.toDto),
         );
         expect(
           borderRadius.topEnd,
-          const RadiusDto.circular(topEndRadius),
+          RadiusDto.circular(topEndRadius.toDto),
         );
         expect(
           borderRadius.bottomStart,
-          const RadiusDto.circular(bottomStartRadius),
+          RadiusDto.circular(bottomStartRadius.toDto),
         );
         expect(
           borderRadius.bottomEnd,
-          const RadiusDto.circular(bottomEndRadius),
+          RadiusDto.circular(bottomEndRadius.toDto),
         );
       });
 
@@ -331,19 +332,19 @@ void main() {
 
         expect(
           borderRadius.topLeft,
-          const RadiusDto.circular(leftRadius),
+          RadiusDto.circular(leftRadius.toDto),
         );
         expect(
           borderRadius.topRight,
-          const RadiusDto.circular(rightRadius),
+          RadiusDto.circular(rightRadius.toDto),
         );
         expect(
           borderRadius.bottomLeft,
-          const RadiusDto.circular(leftRadius),
+          RadiusDto.circular(leftRadius.toDto),
         );
         expect(
           borderRadius.bottomRight,
-          const RadiusDto.circular(rightRadius),
+          RadiusDto.circular(rightRadius.toDto),
         );
         expect(borderRadius.topStart, null);
         expect(borderRadius.topEnd, null);
@@ -367,19 +368,19 @@ void main() {
         expect(borderRadius.bottomRight, null);
         expect(
           borderRadius.topStart,
-          const RadiusDto.circular(startRadius),
+          RadiusDto.circular(startRadius.toDto),
         );
         expect(
           borderRadius.topEnd,
-          const RadiusDto.circular(endRadius),
+          RadiusDto.circular(endRadius.toDto),
         );
         expect(
           borderRadius.bottomStart,
-          const RadiusDto.circular(startRadius),
+          RadiusDto.circular(startRadius.toDto),
         );
         expect(
           borderRadius.bottomEnd,
-          const RadiusDto.circular(endRadius),
+          RadiusDto.circular(endRadius.toDto),
         );
       });
 
@@ -395,19 +396,19 @@ void main() {
 
         expect(
           borderRadius.topLeft,
-          const RadiusDto.circular(topRadius),
+          RadiusDto.circular(topRadius.toDto),
         );
         expect(
           borderRadius.topRight,
-          const RadiusDto.circular(topRadius),
+          RadiusDto.circular(topRadius.toDto),
         );
         expect(
           borderRadius.bottomLeft,
-          const RadiusDto.circular(bottomRadius),
+          RadiusDto.circular(bottomRadius.toDto),
         );
         expect(
           borderRadius.bottomRight,
-          const RadiusDto.circular(bottomRadius),
+          RadiusDto.circular(bottomRadius.toDto),
         );
         expect(borderRadius.topStart, null);
         expect(borderRadius.topEnd, null);
@@ -431,19 +432,19 @@ void main() {
         expect(borderRadius.bottomRight, null);
         expect(
           borderRadius.topStart,
-          const RadiusDto.circular(topRadius),
+          RadiusDto.circular(topRadius.toDto),
         );
         expect(
           borderRadius.topEnd,
-          const RadiusDto.circular(topRadius),
+          RadiusDto.circular(topRadius.toDto),
         );
         expect(
           borderRadius.bottomStart,
-          const RadiusDto.circular(bottomRadius),
+          RadiusDto.circular(bottomRadius.toDto),
         );
         expect(
           borderRadius.bottomEnd,
-          const RadiusDto.circular(bottomRadius),
+          RadiusDto.circular(bottomRadius.toDto),
         );
       });
     });

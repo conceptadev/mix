@@ -1,5 +1,5 @@
 import '../factory/mix_provider_data.dart';
-import 'style_attribute.dart';
+import 'attribute.dart';
 
 class VisibleAttribute extends StyleAttribute<bool> {
   final bool _visible;

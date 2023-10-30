@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import '../attributes/box_constraints_attribute.dart';
 import '../attributes/decoration_attribute.dart';
 import '../attributes/value_attributes.dart';
-import '../core/style_attribute.dart';
+import '../core/attribute.dart';
 import '../factory/mix_provider_data.dart';
 
 class ContainerSpec extends MixExtension<ContainerSpec> {
@@ -33,7 +33,7 @@ class ContainerSpec extends MixExtension<ContainerSpec> {
 
   static ContainerSpec resolve(MixData mix) {
     return ContainerSpec(
-      alignment: mix.get<AlignmentAttribute, Alignment>(),
+      alignment: mix.get<AlignmentGeometryAttribute, AlignmentGeometry>(),
       padding: mix.get<PaddingAttribute, EdgeInsetsGeometry>(),
       margin: mix.get<MarginAttribute, EdgeInsetsGeometry>(),
       constraints: mix.get<BoxConstraintsAttribute, BoxConstraints>(),

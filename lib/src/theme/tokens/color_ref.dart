@@ -16,7 +16,9 @@ import 'mix_token.dart';
 //   ColorSwatch resolve(MixData mix) => mix.resolver.colorSwatch(this);
 // }
 
-class ColorRef extends Color with Comparable implements TokenRef<Color> {
+class ColorRef extends Color
+    with Comparable
+    implements ResolvableTokenRef<Color> {
   @override
   final String name;
 
@@ -29,4 +31,4 @@ class ColorRef extends Color with Comparable implements TokenRef<Color> {
   get props => [name];
 }
 
-typedef MixColorTokens = TokenReferenceMap<ColorRef, Color>;
+typedef MixColorTokens = MixTokenMap<ColorRef, Color>;

@@ -57,7 +57,7 @@ class TextDirectiveAttribute
 }
 
 abstract class DirectiveAttribute<D extends Directive,
-    T extends DirectiveAttribute<D, T>> extends Attribute<T> {
+    T extends DirectiveAttribute<D, T>> extends Attribute {
   final List<D> value;
   const DirectiveAttribute(this.value);
 

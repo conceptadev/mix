@@ -1,18 +1,14 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mix/mix.dart';
+import 'package:mix/src/core/dto/dtos.dart';
 
 import '../../../helpers/testing_utils.dart';
 
 void main() {
   group('DoubleDto', () {
-    test('maybeFrom returns null for null value', () {
-      expect(DoubleDto.maybeFrom(null), isNull);
-    });
-
     test('maybeFrom returns DoubleDto for non-null value', () {
-      final result = DoubleDto.maybeFrom(5.0);
+      const result = DoubleDto(5.0);
       expect(result, isA<DoubleDto>());
-      expect(result!.value, 5.0);
+      expect(result.value, 5.0);
     });
 
     test('merge returns merged object correctly', () {

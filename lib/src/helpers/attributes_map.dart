@@ -6,41 +6,29 @@ import 'package:flutter/cupertino.dart';
 
 import '../attributes/variant_attribute.dart';
 import '../core/attribute.dart';
-import '../core/style_attribute.dart';
-import '../factory/mix_provider_data.dart';
 import 'compare_mixin.dart';
 
 typedef KeySelector<T, Attr extends Attribute> = T Function(Attr element);
 
 @immutable
-class StylesMap extends MergeableMap<Type, StyleAttribute> {
-  static const empty = StylesMap._(null);
+class AttributeMap extends MergeableMap<Type, Attribute> {
+  static const empty = AttributeMap._(null);
 
-  const StylesMap._(super.map);
+  const AttributeMap._(super.map);
 
-  factory StylesMap.from(List<StyleAttribute> iterable) {
-    final map = LinkedHashMap<Type, StyleAttribute>.fromIterable(
+  factory AttributeMap.from(List<Attribute> iterable) {
+    final map = LinkedHashMap<Type, Attribute>.fromIterable(
       iterable,
       key: (e) => e.runtimeType,
       value: (e) => e,
     );
 
-    return StylesMap._(map);
-  }
-
-  Set<MixExtension> buildSpecs(MixData context) {
-    final resolvedMap = Set<MixExtension>();
-
-    for (final key in map.keys) {
-      resolvedMap.add(map[key]!.resolve(context));
-    }
-
-    return resolvedMap;
+    return AttributeMap._(map);
   }
 
   @override
-  StylesMap merge(StylesMap? other) {
-    return StylesMap._(super.mergeMap(other?.map));
+  AttributeMap merge(AttributeMap? other) {
+    return AttributeMap._(super.mergeMap(other?.map));
   }
 }
 

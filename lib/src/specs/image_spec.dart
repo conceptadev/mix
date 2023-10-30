@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import '../attributes/value_attributes.dart';
-import '../core/style_attribute.dart';
+import '../core/attribute.dart';
 import '../factory/mix_provider_data.dart';
 
 class ImageSpec extends MixExtension<ImageSpec> {

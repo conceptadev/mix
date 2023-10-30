@@ -1,7 +1,6 @@
 import 'dart:collection';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mix/src/attributes/exports.dart';
 import 'package:mix/src/helpers/attributes_map.dart';
 
 import 'random_dto.dart';

@@ -3,18 +3,17 @@ import 'package:flutter/widgets.dart';
 import '../attributes/variant_attribute.dart';
 import '../core/attribute.dart';
 import '../core/decorators/decorator.dart';
-import '../core/style_attribute.dart';
 import '../helpers/attributes_map.dart';
 import '../helpers/compare_mixin.dart';
 
 class MixValues with Comparable {
   /// An empty [MixValues] instance with no attributes, decorators, variants, or directives.
   static const empty = MixValues(
-    styles: StylesMap.empty,
+    styles: AttributeMap.empty,
     variants: VariantAttributeMap.empty,
   );
 
-  final StylesMap styles;
+  final AttributeMap styles;
 
   final VariantAttributeMap variants;
 
@@ -36,7 +35,7 @@ class MixValues with Comparable {
     }
 
     return MixValues(
-      styles: StylesMap.from(styleList),
+      styles: AttributeMap.from(styleList),
       variants: VariantAttributeMap.from(variantList),
     );
   }
@@ -78,7 +77,7 @@ class MixValues with Comparable {
   }
 
   /// Creates a new [MixValues] instance by replacing the specified attributes with new values.
-  MixValues copyWith({StylesMap? styles, VariantAttributeMap? variants}) {
+  MixValues copyWith({AttributeMap? styles, VariantAttributeMap? variants}) {
     return MixValues(
       styles: this.styles.merge(styles),
       variants: this.variants.merge(variants),

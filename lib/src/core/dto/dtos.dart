@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../../factory/mix_provider_data.dart';
 import '../../theme/tokens/color_ref.dart';
 import '../attribute.dart';
-import '../style_attribute.dart';
 
 class DoubleDto extends ModifiableDto<double> {
   const DoubleDto(super.value, {super.modifier});

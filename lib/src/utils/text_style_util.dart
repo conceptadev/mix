@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../core/dto/shadow_dto.dart';
 import '../core/dto/text_style_dto.dart';
-import '../helpers/extensions/helper_ext.dart';
+import '../helpers/extensions/values_ext.dart';
 
 TextStyleDto textStyle({
   String? fontFamily,

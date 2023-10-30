@@ -1,6 +1,6 @@
 import 'package:flutter/painting.dart';
 
-import '../core/style_attribute.dart';
+import '../core/attribute.dart';
 import '../factory/mix_provider_data.dart';
 
 class StrutStyleAttribute extends StyleAttribute<StrutStyle> {

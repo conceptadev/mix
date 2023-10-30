@@ -13,12 +13,12 @@ class StyledText extends StyledWidget {
     super.style,
     super.key,
     super.inherit,
-    this.softWrap,
+    this.locale,
   });
 
   final String text;
   final String? semanticsLabel;
-  final bool? softWrap;
+  final Locale? locale;
 
   @override
   Widget build(BuildContext context) {
@@ -26,13 +26,13 @@ class StyledText extends StyledWidget {
       final spec = TextSpec.resolve(data);
 
       return Text(
-        text,
+        spec.applyTextDirectives(text),
         style: spec.style,
         strutStyle: spec.strutStyle,
         textAlign: spec.textAlign,
         textDirection: spec.textDirection ?? TextDirection.ltr,
-        locale: spec.locale,
-        softWrap: softWrap,
+        locale: locale,
+        softWrap: spec.softWrap,
         overflow: spec.overflow,
         textScaleFactor: spec.textScaleFactor,
         maxLines: spec.maxLines,

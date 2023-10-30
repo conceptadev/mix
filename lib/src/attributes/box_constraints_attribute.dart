@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../core/style_attribute.dart';
+import '../core/attribute.dart';
 import '../factory/exports.dart';
 
 class BoxConstraintsAttribute extends StyleAttribute<BoxConstraints> {

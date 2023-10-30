@@ -3,7 +3,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
-import '../../mix.dart';
+import '../core/attribute.dart';
+import '../core/dto/dtos.dart';
+import '../core/dto/shadow_dto.dart';
+import '../factory/mix_provider_data.dart';
+import '../utils/helper_util.dart';
 import 'value_attributes.dart';
 
 abstract class DecorationAttribute<T extends Decoration>

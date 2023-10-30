@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../../attributes/value_attributes.dart';
 import '../../factory/mix_provider_data.dart';
-import '../../helpers/extensions/helper_ext.dart';
 import '../attribute.dart';
 import 'dtos.dart';
 import 'radius_dto.dart';
@@ -84,6 +83,32 @@ class BorderRadiusGeometryDto extends Dto<BorderRadiusGeometry> {
 
   BorderRadiusGeometryAttribute get asAttribute =>
       BorderRadiusGeometryAttribute(this);
+
+  BorderRadiusGeometryDto get toDirectional => copyWith(isDirectional: true);
+
+  BorderRadiusGeometryDto copyWith({
+    RadiusDto? topLeft,
+    RadiusDto? topRight,
+    RadiusDto? bottomLeft,
+    RadiusDto? bottomRight,
+    RadiusDto? topStart,
+    RadiusDto? topEnd,
+    RadiusDto? bottomStart,
+    RadiusDto? bottomEnd,
+    bool? isDirectional,
+  }) {
+    return BorderRadiusGeometryDto(
+      topLeft: topLeft ?? this.topLeft,
+      topRight: topRight ?? this.topRight,
+      bottomLeft: bottomLeft ?? this.bottomLeft,
+      bottomRight: bottomRight ?? this.bottomRight,
+      topStart: topStart ?? this.topStart,
+      topEnd: topEnd ?? this.topEnd,
+      bottomStart: bottomStart ?? this.bottomStart,
+      bottomEnd: bottomEnd ?? this.bottomEnd,
+      isDirectional: isDirectional ?? this.isDirectional,
+    );
+  }
 
   @override
   BorderRadiusGeometryDto merge(BorderRadiusGeometryDto? other) {
@@ -243,12 +268,17 @@ class BorderSideDto extends Dto<BorderSide> {
     this.width,
   });
 
-  factory BorderSideDto.from(BorderSide side) {
+  BorderSideDto copyWith({
+    ColorDto? color,
+    DoubleDto? width,
+    BorderStyle? style,
+    DoubleDto? strokeAlign,
+  }) {
     return BorderSideDto(
-      color: side.color.toDto,
-      strokeAlign: side.strokeAlign.toDto,
-      style: side.style,
-      width: side.width.toDto,
+      color: color ?? this.color,
+      strokeAlign: strokeAlign ?? this.strokeAlign,
+      style: style ?? this.style,
+      width: width ?? this.width,
     );
   }
 
@@ -258,9 +288,9 @@ class BorderSideDto extends Dto<BorderSide> {
 
     return BorderSideDto(
       color: color?.merge(other.color) ?? other.color,
-      strokeAlign: other.strokeAlign ?? strokeAlign,
+      strokeAlign: strokeAlign?.merge(other.strokeAlign) ?? other.strokeAlign,
       style: other.style ?? style,
-      width: other.width ?? width,
+      width: width?.merge(other.width) ?? other.width,
     );
   }
 

@@ -228,6 +228,7 @@ extension Matrix4Ext on Matrix4 {
 extension BorderSideExt on BorderSide {
   BorderSideDto get toDto => BorderSideDto(
         color: color.toDto,
+        strokeAlign: strokeAlign.toDto,
         style: style,
         width: width.toDto,
       );

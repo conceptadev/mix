@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 
 import '../../core/attribute.dart';
-import '../../core/variants/variant.dart';
 import '../../factory/style_mix.dart';
 import '../../widgets/container_widget.dart';
 import '../../widgets/flex_widget.dart';

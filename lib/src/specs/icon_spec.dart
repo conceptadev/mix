@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import '../attributes/value_attributes.dart';
-import '../core/style_attribute.dart';
+import '../core/attribute.dart';
 import '../factory/mix_provider_data.dart';
 
 class IconSpec extends MixExtension<IconSpec> {

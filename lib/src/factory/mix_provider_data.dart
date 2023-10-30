@@ -1,9 +1,8 @@
 // Necessary packages are imported at the start of the file.
 import 'package:flutter/material.dart';
 
+import '../core/attribute.dart';
 import '../core/decorators/decorator.dart';
-import '../core/directives/directive_attribute.dart';
-import '../core/style_attribute.dart';
 import '../helpers/attributes_map.dart';
 import '../helpers/compare_mixin.dart';
 import '../helpers/extensions/iterable_ext.dart';
@@ -15,8 +14,7 @@ import '../theme/mix_theme.dart';
 @immutable
 class MixData with Comparable {
   // Instance variables for widget attributes, widget decorators and token resolver.
-  final StylesMap _styles;
-  final List<Directive> _directives;
+  final AttributeMap _attributes;
 
   final BuildContextResolver _resolver;
 
@@ -25,10 +23,8 @@ class MixData with Comparable {
   /// It takes in [styles], [decorators] and [resolver] as required parameters.
   MixData({
     required BuildContextResolver resolver,
-    required StylesMap styles,
-    required List<Directive> directives,
-  })  : _styles = styles,
-        _directives = directives,
+    required AttributeMap styles,
+  })  : _attributes = styles,
         _resolver = resolver;
 
   /// Getter method for [BuildContextResolver].
@@ -36,25 +32,23 @@ class MixData with Comparable {
   /// Returns current [_resolver].
   BuildContextResolver get resolver => _resolver;
 
-  TextDirection get directionality => _resolver.directionality;
-
   List<Decorator> get decorators {
-    return _styles.whereType<Decorator>().toList();
+    return _attributes.whereType<Decorator>().toList();
   }
 
   /// A getter method for [_decorators].
   ///
   /// Returns a list of all [Decorator].
   List<T> whereDecoratorsOfType<T extends Decorator>() {
-    return _styles.whereType<T>().toList();
+    return _attributes.whereType<T>().toList();
   }
 
   /// Retrieves an instance of the specified [StyleAttribute] type from the [MixData].
   ///
   /// Accepts a type parameter [Attr] which extends [StyleAttribute].
   /// Returns the instance of type [Attr] if found, else returns null.
-  Attr? attributeOfType<Attr extends StyleAttribute>() {
-    return _styles.whereType<Attr>().firstMaybeNull;
+  Attr? attributeOfType<Attr extends Attribute>() {
+    return _attributes.whereType<Attr>().firstMaybeNull;
   }
 
   R? get<Attr extends StyleAttribute<R>, R>() {
@@ -69,13 +63,13 @@ class MixData with Comparable {
   MixData merge(MixData other) {
     return MixData(
       resolver: _resolver,
-      styles: other._styles.merge(_styles),
+      styles: other._attributes.merge(_attributes),
     );
   }
 
   /// Overrides the getter function of [props] from [Comparable] to specify properties necessary for distinguishing instances.
   ///
-  /// Returns a list of properties [_styles] & [_decorators].
+  /// Returns a list of properties [_attributes] & [_decorators].
   @override
-  get props => [_styles];
+  get props => [_attributes];
 }

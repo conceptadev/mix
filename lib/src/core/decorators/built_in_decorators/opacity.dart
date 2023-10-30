@@ -27,18 +27,8 @@ class OpacityDecorator extends Decorator<double> {
 
   @override
   Widget build(child, mix) {
-    final animationCurve = mix.commonSpec.animationCurve;
-    final animationDuration = mix.commonSpec.animationDuration;
-
     final opacity = resolve(mix);
 
-    return mix.animated
-        ? AnimatedOpacity(
-            opacity: opacity,
-            curve: animationCurve,
-            duration: animationDuration,
-            child: child,
-          )
-        : Opacity(opacity: opacity, child: child);
+    return Opacity(opacity: opacity, child: child);
   }
 }

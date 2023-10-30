@@ -28,21 +28,8 @@ class AspectRatioDecorator extends Decorator<double> {
 
   @override
   Widget build(Widget child, MixData mix) {
-    final animationCurve = mix.commonSpec.animationCurve;
-    final animationDuration = mix.commonSpec.animationDuration;
-
     final aspectRatio = resolve(mix);
 
-    return mix.animated
-        ? TweenAnimationBuilder<double>(
-            tween: Tween<double>(end: aspectRatio),
-            duration: animationDuration,
-            curve: animationCurve,
-            builder: (context, value, builderWidget) {
-              return AspectRatio(aspectRatio: value, child: builderWidget);
-            },
-            child: child,
-          )
-        : AspectRatio(aspectRatio: aspectRatio, child: child);
+    return AspectRatio(aspectRatio: aspectRatio, child: child);
   }
 }
