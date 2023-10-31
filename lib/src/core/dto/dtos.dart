@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../factory/mix_provider_data.dart';
 import '../attribute.dart';
 
-class EdgeInsetsGeometryDto extends Dto<EdgeInsetsGeometry> {
+class EdgeInsetsGeometryDto extends Data<EdgeInsetsGeometry> {
   final double? top;
   final double? bottom;
   final double? left;
@@ -200,7 +200,7 @@ class SpaceGeometryDto extends EdgeInsetsGeometryDto {
   }
 }
 
-class AlignmentGeometryDto extends Dto<AlignmentGeometry> {
+class AlignmentGeometryDto extends Data<AlignmentGeometry> {
   final double? _start;
   final double? _x;
   final double? _y;

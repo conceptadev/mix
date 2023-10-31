@@ -4,7 +4,7 @@ import '../attributes/visual_attributes.dart';
 import '../core/dto/border_dto.dart';
 
 BorderRadiusGeometryAttribute borderRadius(Radius radius) {
-  return BorderRadiusGeometryDto.all(radius).asAttribute;
+  return BorderRadiusGeometryData.all(radius).asAttribute;
 }
 
 BorderRadiusGeometryAttribute rounded(double radius) {

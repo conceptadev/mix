@@ -6,7 +6,7 @@ import '../core/dto/shadow_dto.dart';
 import '../core/dto/text_style_dto.dart';
 import '../helpers/extensions/values_ext.dart';
 
-TextStyleDto textStyle({
+TextStyleData textStyle({
   String? fontFamily,
   FontWeight? fontWeight,
   FontStyle? fontStyle,
@@ -27,7 +27,7 @@ TextStyleDto textStyle({
   Locale? locale,
   double? height,
 }) {
-  return TextStyleDto(
+  return TextStyleData(
     background: background,
     backgroundColor: backgroundColor?.toDto,
     color: color?.toDto,
@@ -50,16 +50,16 @@ TextStyleDto textStyle({
   );
 }
 
-TextStyleDto bold() {
+TextStyleData bold() {
   return textStyle(fontWeight: FontWeight.bold);
 }
 
-TextStyleDto italic() {
+TextStyleData italic() {
   return textStyle(fontStyle: FontStyle.italic);
 }
 
-TextStyleDto _textStyleFromDto(TextStyle style) {
-  return TextStyleDto(
+TextStyleData _textStyleFromDto(TextStyle style) {
+  return TextStyleData(
     background: style.background,
     backgroundColor: style.backgroundColor?.toDto,
     color: style.color?.toDto,
@@ -82,15 +82,15 @@ TextStyleDto _textStyleFromDto(TextStyle style) {
   );
 }
 
-ShadowDto _shadowFromDto(Shadow shadow) {
-  return ShadowDto(
+ShadowData _shadowFromDto(Shadow shadow) {
+  return ShadowData(
     blurRadius: shadow.blurRadius,
     color: shadow.color.toDto,
     offset: shadow.offset,
   );
 }
 
-List<ShadowDto>? _shadowsFromDto(List<Shadow>? shadows) {
+List<ShadowData>? _shadowsFromDto(List<Shadow>? shadows) {
   if (shadows == null) return null;
   if (shadows.isEmpty) return [];
 

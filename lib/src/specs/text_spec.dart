@@ -37,7 +37,7 @@ class TextSpec extends MixExtension<TextSpec> {
   static TextSpec resolve(MixData mix) {
     return TextSpec(
       overflow: mix.get<TextOverflowAttribute, TextOverflow>(),
-      strutStyle: mix.get<StrutStyleDto, StrutStyle>(),
+      strutStyle: mix.get<StrutStyleData, StrutStyle>(),
       textAlign: mix.get<TextAlignAttribute, TextAlign>(),
       textScaleFactor: mix.get<TextScaleFactorAttribute, double>(),
       maxLines: mix.get<MaxLinesAttribute, int>(),

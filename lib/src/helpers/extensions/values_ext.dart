@@ -9,8 +9,8 @@ import '../../core/dto/strut_style_dto.dart';
 import '../../core/dto/text_style_dto.dart';
 
 extension StrutStyleExt on StrutStyle {
-  StrutStyleDto get toAttribute {
-    return StrutStyleDto.only(
+  StrutStyleData get toAttribute {
+    return StrutStyleData.only(
       fontFamily: fontFamily,
       fontFamilyFallback: fontFamilyFallback,
       fontSize: fontSize,
@@ -48,7 +48,7 @@ extension GradientExt on Gradient {
 }
 
 extension ColorExt on Color {
-  ColorDto get toDto => ColorDto(this);
+  ColorData get toDto => ColorData(this);
 }
 
 // Extension for Alignment
@@ -165,7 +165,7 @@ extension BoxFitExt on BoxFit {
 }
 
 extension BorderRadiusGeometryExt on BorderRadiusGeometry {
-  BorderRadiusGeometryDto get toDto {
+  BorderRadiusGeometryData get toDto {
     if (this is BorderRadius) return (this as BorderRadius).toDto;
     if (this is BorderRadiusDirectional) {
       return (this as BorderRadiusDirectional).toDto;
@@ -179,7 +179,7 @@ extension BorderRadiusGeometryExt on BorderRadiusGeometry {
 }
 
 extension BorderRadiusDirectionalExrt on BorderRadiusDirectional {
-  BorderRadiusGeometryDto get toDto => BorderRadiusGeometryDto(
+  BorderRadiusGeometryData get toDto => BorderRadiusGeometryData(
         topStart: topStart,
         topEnd: topEnd,
         bottomStart: bottomStart,
@@ -192,7 +192,7 @@ extension BorderRadiusDirectionalExrt on BorderRadiusDirectional {
 
 // Extension for BorderRadius
 extension BorderRadiusExt on BorderRadius {
-  BorderRadiusGeometryDto get toDto => BorderRadiusGeometryDto(
+  BorderRadiusGeometryData get toDto => BorderRadiusGeometryData(
         topLeft: topLeft,
         topRight: topRight,
         bottomLeft: bottomLeft,
@@ -214,7 +214,7 @@ extension Matrix4Ext on Matrix4 {
 }
 
 extension BorderSideExt on BorderSide {
-  BorderSideDto get toDto => BorderSideDto(
+  BorderSideData get toDto => BorderSideData(
         color: color.toDto,
         strokeAlign: strokeAlign,
         style: style,
@@ -234,7 +234,7 @@ extension BoxBorderExt on BoxBorder {
 }
 
 extension ShadowExt on Shadow {
-  ShadowDto get toDto => ShadowDto(
+  ShadowData get toDto => ShadowData(
         blurRadius: blurRadius,
         color: color.toDto,
         offset: offset,
@@ -242,7 +242,7 @@ extension ShadowExt on Shadow {
 }
 
 extension BoxShadowExt on BoxShadow {
-  BoxShadowDto get toDto => BoxShadowDto(
+  BoxShadowData get toDto => BoxShadowData(
         color: color.toDto,
         offset: offset,
         blurRadius: blurRadius,
@@ -251,7 +251,7 @@ extension BoxShadowExt on BoxShadow {
 }
 
 extension TextStyleExt on TextStyle {
-  TextStyleDto get toDto => TextStyleDto(
+  TextStyleData get toDto => TextStyleData(
         background: background,
         color: color?.toDto,
         debugLabel: debugLabel,

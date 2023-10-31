@@ -8,8 +8,8 @@ abstract class Attribute with Comparable, Mergeable {
   const Attribute();
 }
 
-abstract class Dto<R> with Comparable, Mergeable, Resolvable<R> {
-  const Dto();
+abstract class Data<R> with Comparable, Mergeable, Resolvable<R> {
+  const Data();
 }
 
 mixin Resolvable<T> {
@@ -24,11 +24,11 @@ mixin Mergeable<T> {
   }
 }
 
-abstract class ScalarVisualAttribute<T extends ScalarVisualAttribute<T, R>, R>
+abstract class ScalarAttribute<T extends ScalarAttribute<T, R>, R>
     extends VisualAttribute<R> {
   final R value;
 
-  const ScalarVisualAttribute(this.value);
+  const ScalarAttribute(this.value);
 
   // Factory for merge methods
   // ignore: avoid-shadowing
@@ -52,13 +52,13 @@ abstract class ScalarVisualAttribute<T extends ScalarVisualAttribute<T, R>, R>
   get props => [value];
 }
 
-abstract class DtoAttribute<
-    Attr extends DtoAttribute<Attr, Value, ResolvedValue>,
-    Value extends Dto<ResolvedValue>,
+abstract class DataAttribute<
+    Attr extends DataAttribute<Attr, Value, ResolvedValue>,
+    Value extends Data<ResolvedValue>,
     ResolvedValue> extends VisualAttribute<ResolvedValue> {
   final Value value;
 
-  const DtoAttribute(this.value);
+  const DataAttribute(this.value);
 
   // Factory for merge methods
   Attr create(Value value);

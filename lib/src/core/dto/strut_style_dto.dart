@@ -3,7 +3,7 @@ import 'package:flutter/painting.dart';
 import '../../factory/mix_provider_data.dart';
 import '../attribute.dart';
 
-class StrutStyleDto extends Dto<StrutStyle> {
+class StrutStyleData extends Data<StrutStyle> {
   final String? fontFamily;
   final List<String>? fontFamilyFallback;
   final double? fontSize;
@@ -13,7 +13,7 @@ class StrutStyleDto extends Dto<StrutStyle> {
   final double? leading;
   final bool? forceStrutHeight;
 
-  const StrutStyleDto._({
+  const StrutStyleData._({
     this.fontFamily,
     this.fontFamilyFallback,
     this.fontSize,
@@ -24,7 +24,7 @@ class StrutStyleDto extends Dto<StrutStyle> {
     this.forceStrutHeight,
   });
 
-  const StrutStyleDto.only({
+  const StrutStyleData.only({
     this.fontFamily,
     this.fontFamilyFallback,
     this.fontSize,
@@ -36,10 +36,10 @@ class StrutStyleDto extends Dto<StrutStyle> {
   });
 
   @override
-  StrutStyleDto merge(StrutStyleDto? other) {
+  StrutStyleData merge(StrutStyleData? other) {
     if (other == null) return this;
 
-    return StrutStyleDto._(
+    return StrutStyleData._(
       fontFamily: other.fontFamily ?? fontFamily,
       fontFamilyFallback: other.fontFamilyFallback ?? fontFamilyFallback,
       fontSize: other.fontSize ?? fontSize,

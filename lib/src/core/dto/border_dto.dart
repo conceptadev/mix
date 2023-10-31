@@ -5,7 +5,7 @@ import '../../factory/mix_provider_data.dart';
 import '../attribute.dart';
 import 'color_dto.dart';
 
-class BorderRadiusGeometryDto extends Dto<BorderRadiusGeometry> {
+class BorderRadiusGeometryData extends Data<BorderRadiusGeometry> {
   final Radius? topLeft;
   final Radius? topRight;
   final Radius? bottomLeft;
@@ -19,7 +19,7 @@ class BorderRadiusGeometryDto extends Dto<BorderRadiusGeometry> {
 
   final bool isDirectional;
 
-  const BorderRadiusGeometryDto({
+  const BorderRadiusGeometryData({
     this.topLeft,
     this.topRight,
     this.bottomLeft,
@@ -31,7 +31,7 @@ class BorderRadiusGeometryDto extends Dto<BorderRadiusGeometry> {
     this.isDirectional = false,
   });
 
-  const BorderRadiusGeometryDto.all(Radius radius)
+  const BorderRadiusGeometryData.all(Radius radius)
       : topLeft = radius,
         topRight = radius,
         bottomLeft = radius,
@@ -42,7 +42,7 @@ class BorderRadiusGeometryDto extends Dto<BorderRadiusGeometry> {
         bottomEnd = radius,
         isDirectional = false;
 
-  BorderRadiusGeometryDto.horizontal({
+  BorderRadiusGeometryData.horizontal({
     Radius? leftStart,
     Radius? rightEnd,
     this.isDirectional = false,
@@ -55,7 +55,7 @@ class BorderRadiusGeometryDto extends Dto<BorderRadiusGeometry> {
         bottomStart = leftStart,
         bottomEnd = rightEnd;
 
-  BorderRadiusGeometryDto.vertical({
+  BorderRadiusGeometryData.vertical({
     Radius? top,
     Radius? bottom,
     this.isDirectional = false,
@@ -68,7 +68,7 @@ class BorderRadiusGeometryDto extends Dto<BorderRadiusGeometry> {
         bottomStart = bottom,
         bottomEnd = bottom;
 
-  BorderRadiusGeometryDto.circular(
+  BorderRadiusGeometryData.circular(
     double radius, {
     this.isDirectional = false,
   })  : topLeft = Radius.circular(radius),
@@ -83,9 +83,9 @@ class BorderRadiusGeometryDto extends Dto<BorderRadiusGeometry> {
   BorderRadiusGeometryAttribute get asAttribute =>
       BorderRadiusGeometryAttribute(this);
 
-  BorderRadiusGeometryDto get toDirectional => copyWith(isDirectional: true);
+  BorderRadiusGeometryData get toDirectional => copyWith(isDirectional: true);
 
-  BorderRadiusGeometryDto copyWith({
+  BorderRadiusGeometryData copyWith({
     Radius? topLeft,
     Radius? topRight,
     Radius? bottomLeft,
@@ -96,7 +96,7 @@ class BorderRadiusGeometryDto extends Dto<BorderRadiusGeometry> {
     Radius? bottomEnd,
     bool? isDirectional,
   }) {
-    return BorderRadiusGeometryDto(
+    return BorderRadiusGeometryData(
       topLeft: topLeft ?? this.topLeft,
       topRight: topRight ?? this.topRight,
       bottomLeft: bottomLeft ?? this.bottomLeft,
@@ -110,7 +110,7 @@ class BorderRadiusGeometryDto extends Dto<BorderRadiusGeometry> {
   }
 
   @override
-  BorderRadiusGeometryDto merge(BorderRadiusGeometryDto? other) {
+  BorderRadiusGeometryData merge(BorderRadiusGeometryData? other) {
     if (other == null) return this;
     if (other.isDirectional != isDirectional) {
       throw UnsupportedError(
@@ -118,7 +118,7 @@ class BorderRadiusGeometryDto extends Dto<BorderRadiusGeometry> {
       );
     }
 
-    return BorderRadiusGeometryDto(
+    return BorderRadiusGeometryData(
       topLeft: other.topLeft ?? topLeft,
       topRight: other.topRight ?? topRight,
       bottomLeft: other.bottomLeft ?? bottomLeft,
@@ -162,13 +162,13 @@ class BorderRadiusGeometryDto extends Dto<BorderRadiusGeometry> {
       ];
 }
 
-class BoxBorderDto extends Dto<BoxBorder> {
-  final BorderSideDto? top;
-  final BorderSideDto? start;
-  final BorderSideDto? end;
-  final BorderSideDto? bottom;
-  final BorderSideDto? left;
-  final BorderSideDto? right;
+class BoxBorderDto extends Data<BoxBorder> {
+  final BorderSideData? top;
+  final BorderSideData? start;
+  final BorderSideData? end;
+  final BorderSideData? bottom;
+  final BorderSideData? left;
+  final BorderSideData? right;
 
   final bool isDirectional;
 
@@ -183,7 +183,7 @@ class BoxBorderDto extends Dto<BoxBorder> {
   });
 
   const BoxBorderDto.fromBorderSide(
-    BorderSideDto side, {
+    BorderSideData side, {
     this.isDirectional = false,
   })  : top = side,
         right = side,
@@ -192,7 +192,7 @@ class BoxBorderDto extends Dto<BoxBorder> {
         start = side,
         end = side;
 
-  const BoxBorderDto.all(BorderSideDto side, {this.isDirectional = false})
+  const BoxBorderDto.all(BorderSideData side, {this.isDirectional = false})
       : top = side,
         right = side,
         bottom = side,
@@ -201,8 +201,8 @@ class BoxBorderDto extends Dto<BoxBorder> {
         end = side;
 
   const BoxBorderDto.symmetric({
-    BorderSideDto? vertical,
-    BorderSideDto? horizontal,
+    BorderSideData? vertical,
+    BorderSideData? horizontal,
     this.isDirectional = false,
   })  : top = horizontal,
         right = vertical,
@@ -254,26 +254,26 @@ class BoxBorderDto extends Dto<BoxBorder> {
   get props => [top, start, end, bottom, left, right, isDirectional];
 }
 
-class BorderSideDto extends Dto<BorderSide> {
-  final ColorDto? color;
+class BorderSideData extends Data<BorderSide> {
+  final ColorData? color;
   final double? width;
   final BorderStyle? style;
   final double? strokeAlign;
 
-  const BorderSideDto({
+  const BorderSideData({
     this.color,
     this.strokeAlign,
     this.style,
     this.width,
   });
 
-  BorderSideDto copyWith({
-    ColorDto? color,
+  BorderSideData copyWith({
+    ColorData? color,
     double? width,
     BorderStyle? style,
     double? strokeAlign,
   }) {
-    return BorderSideDto(
+    return BorderSideData(
       color: color ?? this.color,
       strokeAlign: strokeAlign ?? this.strokeAlign,
       style: style ?? this.style,
@@ -282,10 +282,10 @@ class BorderSideDto extends Dto<BorderSide> {
   }
 
   @override
-  BorderSideDto merge(BorderSideDto? other) {
+  BorderSideData merge(BorderSideData? other) {
     if (other == null) return this;
 
-    return BorderSideDto(
+    return BorderSideData(
       color: color?.merge(other.color) ?? other.color,
       strokeAlign: other.strokeAlign ?? strokeAlign,
       style: other.style ?? style,

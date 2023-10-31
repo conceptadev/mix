@@ -7,7 +7,7 @@ import '../core/directives/text_directive.dart';
 import '../core/dto/strut_style_dto.dart';
 import '../helpers/extensions/values_ext.dart';
 
-StrutStyleDto strutStyle(StrutStyle strutStyle) {
+StrutStyleData strutStyle(StrutStyle strutStyle) {
   return strutStyle.toAttribute;
 }
 

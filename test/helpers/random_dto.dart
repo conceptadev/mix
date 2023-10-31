@@ -115,10 +115,10 @@ class RandomGenerator {
     );
   }
 
-  static BorderRadiusGeometryDto borderRadiusDto() {
+  static BorderRadiusGeometryData borderRadiusDto() {
     final random = Random();
 
-    return BorderRadiusGeometryDto(
+    return BorderRadiusGeometryData(
       topLeft: Radius.circular(random.nextDouble() * 20),
       topRight: Radius.circular(random.nextDouble() * 20),
       bottomLeft: Radius.circular(random.nextDouble() * 20),
@@ -148,16 +148,16 @@ class RandomGenerator {
     );
   }
 
-  static BorderSideDto borderSideDto() {
-    return BorderSideDto(
+  static BorderSideData borderSideDto() {
+    return BorderSideData(
       color: colorDto(),
       width: Random().nextDouble() * 4,
       style: BorderStyle.values.random(),
     );
   }
 
-  static ShadowDto shadowDto() {
-    return ShadowDto(
+  static ShadowData shadowDto() {
+    return ShadowData(
       color: colorDto(),
       offset: Offset(
         Random().nextMaxDouble(10),
@@ -181,11 +181,11 @@ class RandomGenerator {
     ]);
   }
 
-  static BoxShadowDto boxShadowDto() {
+  static BoxShadowData boxShadowDto() {
     // Use shadow as a starting point
     final shadow = shadowDto();
 
-    return BoxShadowDto(
+    return BoxShadowData(
       color: shadow.color,
       offset: shadow.offset,
       blurRadius: shadow.blurRadius,
@@ -193,8 +193,8 @@ class RandomGenerator {
     );
   }
 
-  static TextStyleDto textStyleDto() {
-    return TextStyleDto(
+  static TextStyleData textStyleDto() {
+    return TextStyleData(
       color: colorDto(),
       backgroundColor: colorDto(),
       decorationColor: colorDto(),

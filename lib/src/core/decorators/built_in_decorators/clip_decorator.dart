@@ -14,7 +14,7 @@ ClipDecorator _clipRounded(double radius) {
   return ClipDecorator(
     ClipDecoratorType.rounded,
     borderRadius: BorderRadiusGeometryAttribute(
-      BorderRadiusGeometryDto.circular(radius),
+      BorderRadiusGeometryData.circular(radius),
     ),
   );
 }

@@ -11,7 +11,7 @@ BoxBorderAttribute border({
   double? strokeAlign,
 }) {
   return BoxBorderDto.all(
-    BorderSideDto(
+    BorderSideData(
       color: color?.toDto,
       strokeAlign: strokeAlign,
       style: style,
@@ -43,7 +43,7 @@ BoxBorderAttribute borderTop({
   double? strokeAlign,
 }) {
   return BoxBorderDto(
-    top: BorderSideDto(
+    top: BorderSideData(
       color: color?.toDto,
       strokeAlign: strokeAlign,
       style: style,
@@ -75,7 +75,7 @@ BoxBorderAttribute borderBottom({
   double? strokeAlign,
 }) {
   return BoxBorderDto(
-    bottom: BorderSideDto(
+    bottom: BorderSideData(
       color: color?.toDto,
       strokeAlign: strokeAlign,
       style: style,
@@ -107,7 +107,7 @@ BoxBorderAttribute borderLeft({
   double? strokeAlign,
 }) {
   return BoxBorderDto(
-    left: BorderSideDto(
+    left: BorderSideData(
       color: color?.toDto,
       strokeAlign: strokeAlign,
       style: style,
@@ -139,7 +139,7 @@ BoxBorderAttribute borderRight({
   double? strokeAlign,
 }) {
   return BoxBorderDto(
-    right: BorderSideDto(
+    right: BorderSideData(
       color: color?.toDto,
       strokeAlign: strokeAlign,
       style: style,
@@ -171,7 +171,7 @@ BoxBorderAttribute borderStart({
   double? strokeAlign,
 }) {
   return BoxBorderDto(
-    start: BorderSideDto(
+    start: BorderSideData(
       color: color?.toDto,
       strokeAlign: strokeAlign,
       style: style,
@@ -203,7 +203,7 @@ BoxBorderAttribute borderEnd({
   double? strokeAlign,
 }) {
   return BoxBorderDto(
-    end: BorderSideDto(
+    end: BorderSideData(
       color: color?.toDto,
       strokeAlign: strokeAlign,
       style: style,
@@ -235,7 +235,7 @@ BoxBorderAttribute borderHorizontal({
   double? strokeAlign,
 }) {
   return BoxBorderDto.symmetric(
-    horizontal: BorderSideDto(
+    horizontal: BorderSideData(
       color: color?.toDto,
       strokeAlign: strokeAlign,
       style: style,
@@ -267,7 +267,7 @@ BoxBorderAttribute borderVertical({
   double? strokeAlign,
 }) {
   return BoxBorderDto.symmetric(
-    vertical: BorderSideDto(
+    vertical: BorderSideData(
       color: color?.toDto,
       strokeAlign: strokeAlign,
       style: style,

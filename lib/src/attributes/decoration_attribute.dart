@@ -22,11 +22,11 @@ abstract class DecorationAttribute<T extends Decoration>
 }
 
 class BoxDecorationAttribute extends DecorationAttribute<BoxDecoration> {
-  final ColorDto? color;
+  final ColorData? color;
   final BoxBorderAttribute? border;
   final BorderRadiusGeometryAttribute? borderRadius;
   final GradientAttribute? gradient;
-  final List<BoxShadowDto>? boxShadow;
+  final List<BoxShadowData>? boxShadow;
   final BoxShapeAttribute? shape;
 
   const BoxDecorationAttribute({
@@ -70,7 +70,7 @@ class BoxDecorationAttribute extends DecorationAttribute<BoxDecoration> {
 
 class ShapeDecorationDto extends DecorationAttribute<ShapeDecoration> {
   // The color to fill in the background of the shape.
-  final ColorDto? color;
+  final ColorData? color;
 
   // The shape of the box.
   final ShapeBorder? shape;
@@ -78,7 +78,7 @@ class ShapeDecorationDto extends DecorationAttribute<ShapeDecoration> {
   final GradientAttribute? gradient;
 
   // Shadows cast by this box behind the box.
-  final List<BoxShadowDto>? boxShadow;
+  final List<BoxShadowData>? boxShadow;
 
   const ShapeDecorationDto({
     this.color,

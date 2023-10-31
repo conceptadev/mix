@@ -4,12 +4,12 @@ import '../../factory/mix_provider_data.dart';
 import '../attribute.dart';
 import 'color_dto.dart';
 
-class ShadowDto<T extends Shadow> extends Dto<Shadow> {
-  final ColorDto? color;
+class ShadowData<T extends Shadow> extends Data<Shadow> {
+  final ColorData? color;
   final Offset? offset;
   final double? blurRadius;
 
-  const ShadowDto({this.blurRadius, this.color, this.offset});
+  const ShadowData({this.blurRadius, this.color, this.offset});
 
   @override
   T resolve(MixData mix) {
@@ -23,8 +23,8 @@ class ShadowDto<T extends Shadow> extends Dto<Shadow> {
   }
 
   @override
-  ShadowDto merge(ShadowDto? other) {
-    return ShadowDto(
+  ShadowData merge(ShadowData? other) {
+    return ShadowData(
       blurRadius: other?.blurRadius ?? blurRadius,
       color: mergeAttr(color, other?.color),
       offset: other?.offset ?? offset,
@@ -35,10 +35,10 @@ class ShadowDto<T extends Shadow> extends Dto<Shadow> {
   get props => [color, offset, blurRadius];
 }
 
-class BoxShadowDto extends ShadowDto<BoxShadow> {
+class BoxShadowData extends ShadowData<BoxShadow> {
   final double? spreadRadius;
 
-  const BoxShadowDto({
+  const BoxShadowData({
     super.color,
     super.offset,
     super.blurRadius,
@@ -60,8 +60,8 @@ class BoxShadowDto extends ShadowDto<BoxShadow> {
   }
 
   @override
-  BoxShadowDto merge(BoxShadowDto? other) {
-    return BoxShadowDto(
+  BoxShadowData merge(BoxShadowData? other) {
+    return BoxShadowData(
       color: mergeAttr(color, other?.color),
       offset: other?.offset ?? offset,
       blurRadius: other?.blurRadius ?? blurRadius,

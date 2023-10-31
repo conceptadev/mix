@@ -9,7 +9,7 @@ import '../attribute.dart';
 import 'color_dto.dart';
 import 'shadow_dto.dart';
 
-class TextStyleDto extends Dto<TextStyle> {
+class TextStyleData extends Data<TextStyle> {
   final String? fontFamily;
   final FontWeight? fontWeight;
   final FontStyle? fontStyle;
@@ -17,12 +17,12 @@ class TextStyleDto extends Dto<TextStyle> {
   final double? letterSpacing;
   final double? wordSpacing;
   final TextBaseline? textBaseline;
-  final ColorDto? color;
-  final ColorDto? backgroundColor;
-  final List<ShadowDto>? shadows;
+  final ColorData? color;
+  final ColorData? backgroundColor;
+  final List<ShadowData>? shadows;
   final List<FontFeature>? fontFeatures;
   final TextDecoration? decoration;
-  final ColorDto? decorationColor;
+  final ColorData? decorationColor;
   final TextDecorationStyle? decorationStyle;
   final Locale? locale;
   final String? debugLabel;
@@ -34,7 +34,7 @@ class TextStyleDto extends Dto<TextStyle> {
 
   final TextStyleRef? ref;
 
-  const TextStyleDto({
+  const TextStyleData({
     this.background,
     this.backgroundColor,
     this.color,
@@ -62,7 +62,7 @@ class TextStyleDto extends Dto<TextStyle> {
   bool isRef() => ref != null;
 
   @override
-  TextStyleDto merge(TextStyleDto? other) {
+  TextStyleData merge(TextStyleData? other) {
     if (other == null) return this;
 
     assert(
@@ -70,7 +70,7 @@ class TextStyleDto extends Dto<TextStyle> {
       'Cannot merge two different refs',
     );
 
-    return TextStyleDto(
+    return TextStyleData(
       background: other.background ?? background,
       backgroundColor: other.backgroundColor ?? backgroundColor,
       color: other.color ?? color,

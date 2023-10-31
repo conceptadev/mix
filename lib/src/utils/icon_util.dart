@@ -17,5 +17,5 @@ IconSizeAttribute _iconSize(double size) {
 }
 
 IconColorAttribute _iconColor(Color color) {
-  return IconColorAttribute(ColorDto(color));
+  return IconColorAttribute(ColorData(color));
 }

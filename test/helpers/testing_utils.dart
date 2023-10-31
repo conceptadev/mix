@@ -124,7 +124,7 @@ class BoxTestWidget extends StatelessWidget {
 }
 
 @isTestGroup
-void testSingleAttributeValue<T extends ScalarVisualAttribute<T, V>, V>(
+void testSingleAttributeValue<T extends ScalarAttribute<T, V>, V>(
   String groupName,
   T Function(V value) builder,
   List<V> values,

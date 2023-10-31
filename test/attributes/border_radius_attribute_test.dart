@@ -10,8 +10,9 @@ void main() {
   group('BorderRadiusAttribute', () {
     test('circular creates BorderRadiusAttribute with circular radius', () {
       const radius = 10.0;
-      final borderRadius = BorderRadiusGeometryDto.circular(radius).asAttribute;
-      final borderRadiusDirectional = BorderRadiusGeometryDto.circular(
+      final borderRadius =
+          BorderRadiusGeometryData.circular(radius).asAttribute;
+      final borderRadiusDirectional = BorderRadiusGeometryData.circular(
         radius,
       ).toDirectional.asAttribute;
 
@@ -38,7 +39,7 @@ void main() {
     test('vertical creates BorderRadiusAttribute with vertical radius', () {
       const topRadius = 10.0;
       const bottomRadius = 20.0;
-      final borderRadius = BorderRadiusGeometryDto.vertical(
+      final borderRadius = BorderRadiusGeometryData.vertical(
         top: const Radius.circular(topRadius),
         bottom: const Radius.circular(bottomRadius),
       );

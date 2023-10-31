@@ -14,7 +14,7 @@ HeightAttribute imageHeight(double height) {
 }
 
 ImageColorAttribute imageColor(Color color) {
-  return ImageColorAttribute(ColorDto(color));
+  return ImageColorAttribute(ColorData(color));
 }
 
 ImageRepeatAttribute imageRepeat(ImageRepeat repeat) {
