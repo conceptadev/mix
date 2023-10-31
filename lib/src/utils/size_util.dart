@@ -1,4 +1,4 @@
-import '../attributes/visual_attributes.dart';
+import '../attributes/scalar_attribute.dart';
 
 HeightAttribute height(double value) {
   return HeightAttribute(value);

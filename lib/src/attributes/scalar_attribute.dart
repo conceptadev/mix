@@ -2,11 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import '../core/attribute.dart';
-import '../core/dto/border_dto.dart';
-import '../core/dto/color_dto.dart';
-import '../core/dto/dtos.dart';
-import '../core/dto/strut_style_dto.dart';
-import '../core/dto/text_style_dto.dart';
 
 class AxisAttribute extends ScalarAttribute<AxisAttribute, Axis> {
   const AxisAttribute(super.value);
@@ -170,13 +165,6 @@ class TextHeightBehaviorAttribute
       TextHeightBehaviorAttribute(value);
 }
 
-class IconColorAttribute extends ColorAttribute {
-  const IconColorAttribute(super.color);
-
-  @override
-  IconColorAttribute create(value) => IconColorAttribute(value);
-}
-
 class IconSizeAttribute extends ScalarAttribute<IconSizeAttribute, double> {
   const IconSizeAttribute(super.value);
 
@@ -211,14 +199,6 @@ class TransformAttribute extends ScalarAttribute<TransformAttribute, Matrix4> {
   @override
   TransformAttribute create(value) => TransformAttribute(value);
 }
-// class ForegroundDecorationAttribute
-//     extends ScalarVisualAttribute<ForegroundDecorationAttribute, Decoration> {
-//   const ForegroundDecorationAttribute(super.value);
-
-//   @override
-//   ForegroundDecorationAttribute create(value) =>
-//       ForegroundDecorationAttribute(value);
-// }
 
 class BlendModeAttribute
     extends ScalarAttribute<BlendModeAttribute, BlendMode> {
@@ -233,94 +213,4 @@ class BoxShapeAttribute extends ScalarAttribute<BoxShapeAttribute, BoxShape> {
 
   @override
   BoxShapeAttribute create(value) => BoxShapeAttribute(value);
-}
-
-class PaddingAttribute extends SpacingAttribute<PaddingAttribute> {
-  const PaddingAttribute(super.value);
-
-  @override
-  PaddingAttribute create(value) => PaddingAttribute(value);
-}
-
-class MarginAttribute extends SpacingAttribute<MarginAttribute> {
-  const MarginAttribute(super.value);
-
-  @override
-  MarginAttribute create(value) => MarginAttribute(value);
-}
-
-class GradientAttribute extends ScalarAttribute<GradientAttribute, Gradient> {
-  const GradientAttribute(super.value);
-
-  @override
-  GradientAttribute create(value) => GradientAttribute(value);
-}
-
-class StrutStyleAttribute
-    extends DataAttribute<StrutStyleAttribute, StrutStyleData, StrutStyle> {
-  const StrutStyleAttribute(super.value);
-
-  @override
-  StrutStyleAttribute create(value) => StrutStyleAttribute(value);
-}
-
-class TextStyleAttribute
-    extends DataAttribute<TextStyleAttribute, TextStyleData, TextStyle> {
-  const TextStyleAttribute(super.value);
-
-  @override
-  TextStyleAttribute create(value) => TextStyleAttribute(value);
-}
-
-abstract class ColorAttribute
-    extends DataAttribute<ColorAttribute, ColorData, Color> {
-  const ColorAttribute(super.value);
-}
-
-class ImageColorAttribute extends ColorAttribute {
-  const ImageColorAttribute(super.color);
-
-  @override
-  ImageColorAttribute create(value) => ImageColorAttribute(value);
-}
-
-class TransformAlignmentAttribute
-    extends ScalarAttribute<TransformAlignmentAttribute, Alignment> {
-  const TransformAlignmentAttribute(super.value);
-
-  @override
-  TransformAlignmentAttribute create(value) =>
-      TransformAlignmentAttribute(value);
-}
-
-class BorderRadiusGeometryAttribute extends DataAttribute<
-    BorderRadiusGeometryAttribute,
-    BorderRadiusGeometryData,
-    BorderRadiusGeometry> {
-  const BorderRadiusGeometryAttribute(super.value);
-
-  @override
-  BorderRadiusGeometryAttribute create(value) =>
-      BorderRadiusGeometryAttribute(value);
-}
-
-class BoxBorderAttribute
-    extends DataAttribute<BoxBorderAttribute, BoxBorderDto, BoxBorder> {
-  const BoxBorderAttribute(super.value);
-
-  @override
-  BoxBorderAttribute create(value) => BoxBorderAttribute(value);
-}
-
-class AlignmentGeometryAttribute extends DataAttribute<
-    AlignmentGeometryAttribute, AlignmentGeometryDto, AlignmentGeometry> {
-  const AlignmentGeometryAttribute(super.value);
-
-  @override
-  AlignmentGeometryAttribute create(value) => AlignmentGeometryAttribute(value);
-}
-
-abstract class SpacingAttribute<T extends SpacingAttribute<T>>
-    extends DataAttribute<T, SpaceGeometryDto, EdgeInsetsGeometry> {
-  const SpacingAttribute(super.value);
 }

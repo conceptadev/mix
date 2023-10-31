@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../attributes/visual_attributes.dart';
+import '../attributes/data_attributes.dart';
 import '../core/dto/border_dto.dart';
 
 BorderRadiusGeometryAttribute borderRadius(Radius radius) {
-  return BorderRadiusGeometryData.all(radius).asAttribute;
+  return BorderRadiusGeometryData.all(radius).toAttribute();
 }
 
 BorderRadiusGeometryAttribute rounded(double radius) {

@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
-import 'package:mix/src/attributes/visual_attributes.dart';
+import 'package:mix/src/attributes/data_attributes.dart';
 import 'package:mix/src/helpers/extensions/values_ext.dart';
 
 void main() {

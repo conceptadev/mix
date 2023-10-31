@@ -9,10 +9,6 @@ class ColorData extends Data<Color> {
 
   const ColorData(this.value);
 
-  static ColorData? maybeFrom(Color? color) {
-    return color == null ? null : ColorData(color);
-  }
-
   @override
   ColorData merge(covariant ColorData? other) {
     return ColorData(other?.value ?? value);
@@ -20,10 +16,10 @@ class ColorData extends Data<Color> {
 
   @override
   Color resolve(MixData mix) {
-    Color resolvedColor = value;
+    final resolvedColor = value;
 
     return resolvedColor is ColorRef
-        ? resolvedColor = mix.resolver.color(resolvedColor)
+        ? mix.resolver.color(resolvedColor)
         : resolvedColor;
   }
 

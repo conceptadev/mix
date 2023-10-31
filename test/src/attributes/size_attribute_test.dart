@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mix/src/attributes/visual_attributes.dart';
+import 'package:mix/src/attributes/scalar_attribute.dart';
 
 void main() {
   group('HeightAttribute', () {

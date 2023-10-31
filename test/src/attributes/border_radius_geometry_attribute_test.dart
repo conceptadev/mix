@@ -14,10 +14,10 @@ void main() {
 
       expect(result, isA<BorderRadiusGeometryData>());
       expect(resolvedValue, isA<BorderRadius>());
-      expect((resolvedValue).topLeft.y, 10.0);
-      expect((resolvedValue).topRight.y, 10.0);
-      expect((resolvedValue).bottomLeft.y, 10.0);
-      expect((resolvedValue).bottomRight.y, 10.0);
+      expect(resolvedValue.topLeft.y, 10.0);
+      expect(resolvedValue.topRight.y, 10.0);
+      expect(resolvedValue.bottomLeft.y, 10.0);
+      expect(resolvedValue.bottomRight.y, 10.0);
     });
 
     test(
@@ -32,16 +32,16 @@ void main() {
 
       expect(result, isA<BorderRadiusGeometryData>());
       expect(resolvedValue, isA<BorderRadiusDirectional>());
-      expect((resolvedValue).topStart.y, 10.0);
-      expect((resolvedValue).topEnd.y, 10.0);
-      expect((resolvedValue).bottomStart.y, 10.0);
-      expect((resolvedValue).bottomEnd.y, 10.0);
+      expect(resolvedValue.topStart.y, 10.0);
+      expect(resolvedValue.topEnd.y, 10.0);
+      expect(resolvedValue.bottomStart.y, 10.0);
+      expect(resolvedValue.bottomEnd.y, 10.0);
     });
 
     test('merge returns merged object correctly', () {
       final attr1 = BorderRadiusGeometryData.circular(10.0);
       const attr2 =
-          BorderRadiusGeometryData(topLeft: RadiusDto.elliptical(20.0, 20.0));
+          BorderRadiusGeometryData(topLeft: Radius.elliptical(20.0, 20.0));
 
       final merged = attr1.merge(attr2);
 
@@ -77,7 +77,7 @@ void main() {
     test('Equality fails when attributes are different', () {
       final attr1 = BorderRadiusGeometryData.circular(10.0);
       const attr2 = BorderRadiusGeometryData(
-        topLeft: RadiusDto.elliptical(
+        topLeft: Radius.elliptical(
           10.0,
           30.0,
         ),

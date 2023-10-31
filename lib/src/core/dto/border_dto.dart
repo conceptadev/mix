@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../attributes/visual_attributes.dart';
+import '../../attributes/data_attributes.dart';
 import '../../factory/mix_provider_data.dart';
 import '../attribute.dart';
 import 'color_dto.dart';
@@ -80,10 +80,10 @@ class BorderRadiusGeometryData extends Data<BorderRadiusGeometry> {
         bottomStart = Radius.circular(radius),
         bottomEnd = Radius.circular(radius);
 
-  BorderRadiusGeometryAttribute get asAttribute =>
-      BorderRadiusGeometryAttribute(this);
-
   BorderRadiusGeometryData get toDirectional => copyWith(isDirectional: true);
+
+  BorderRadiusGeometryAttribute toAttribute() =>
+      BorderRadiusGeometryAttribute(this);
 
   BorderRadiusGeometryData copyWith({
     Radius? topLeft,

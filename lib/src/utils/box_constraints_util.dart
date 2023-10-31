@@ -1,4 +1,5 @@
-import '../attributes/constraints_attribute.dart';
+import '../attributes/data_attributes.dart';
+import '../core/dto/constraints_dto.dart';
 
 BoxConstraintsAttribute boxConstraints({
   double? minWidth,
@@ -6,12 +7,12 @@ BoxConstraintsAttribute boxConstraints({
   double? minHeight,
   double? maxHeight,
 }) {
-  return BoxConstraintsAttribute(
+  return BoxConstraintsData(
     minWidth: minWidth,
     maxWidth: maxWidth,
     minHeight: minHeight,
     maxHeight: maxHeight,
-  );
+  ).toAttribute();
 }
 
 BoxConstraintsAttribute minWidth(double width) =>

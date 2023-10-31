@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../attributes/visual_attributes.dart';
+import '../../../attributes/data_attributes.dart';
 import '../../../factory/mix_provider_data.dart';
 import '../../attribute.dart';
 import '../../dto/border_dto.dart';

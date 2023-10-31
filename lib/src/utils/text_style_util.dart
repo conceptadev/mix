@@ -1,12 +1,11 @@
 import 'dart:ui';
 
-import 'package:flutter/material.dart';
-
+import '../attributes/data_attributes.dart';
 import '../core/dto/shadow_dto.dart';
 import '../core/dto/text_style_dto.dart';
 import '../helpers/extensions/values_ext.dart';
 
-TextStyleData textStyle({
+TextStyleAttribute textStyle({
   String? fontFamily,
   FontWeight? fontWeight,
   FontStyle? fontStyle,
@@ -47,39 +46,15 @@ TextStyleData textStyle({
     shadows: _shadowsFromDto(shadows),
     textBaseline: textBaseline,
     wordSpacing: wordSpacing,
-  );
+  ).toAttribute();
 }
 
-TextStyleData bold() {
+TextStyleAttribute bold() {
   return textStyle(fontWeight: FontWeight.bold);
 }
 
-TextStyleData italic() {
+TextStyleAttribute italic() {
   return textStyle(fontStyle: FontStyle.italic);
-}
-
-TextStyleData _textStyleFromDto(TextStyle style) {
-  return TextStyleData(
-    background: style.background,
-    backgroundColor: style.backgroundColor?.toDto,
-    color: style.color?.toDto,
-    debugLabel: style.debugLabel,
-    decoration: style.decoration,
-    decorationColor: style.decorationColor?.toDto,
-    decorationStyle: style.decorationStyle,
-    fontFamily: style.fontFamily,
-    fontFeatures: style.fontFeatures,
-    fontSize: style.fontSize,
-    fontStyle: style.fontStyle,
-    fontWeight: style.fontWeight,
-    foreground: style.foreground,
-    height: style.height,
-    letterSpacing: style.letterSpacing,
-    locale: style.locale,
-    shadows: style.shadows?.map(_shadowFromDto).toList(),
-    textBaseline: style.textBaseline,
-    wordSpacing: style.wordSpacing,
-  );
 }
 
 ShadowData _shadowFromDto(Shadow shadow) {

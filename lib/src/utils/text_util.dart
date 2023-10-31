@@ -2,7 +2,8 @@
 
 import 'package:flutter/material.dart';
 
-import '../attributes/visual_attributes.dart';
+import '../attributes/data_attributes.dart';
+import '../attributes/scalar_attribute.dart';
 import '../core/directives/text_directive.dart';
 import '../core/dto/strut_style_dto.dart';
 import '../helpers/extensions/values_ext.dart';

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../factory/mix_provider_data.dart';
 import '../attribute.dart';
 
-class EdgeInsetsGeometryDto extends Data<EdgeInsetsGeometry> {
+class EdgeInsetsGeometryData extends Data<EdgeInsetsGeometry> {
   final double? top;
   final double? bottom;
   final double? left;
@@ -15,7 +15,7 @@ class EdgeInsetsGeometryDto extends Data<EdgeInsetsGeometry> {
 
   final bool isDirectional;
 
-  const EdgeInsetsGeometryDto({
+  const EdgeInsetsGeometryData({
     this.top,
     this.bottom,
     this.left,
@@ -25,7 +25,7 @@ class EdgeInsetsGeometryDto extends Data<EdgeInsetsGeometry> {
     this.isDirectional = false,
   });
 
-  const EdgeInsetsGeometryDto.all(double all, {this.isDirectional = false})
+  const EdgeInsetsGeometryData.all(double all, {this.isDirectional = false})
       : top = all,
         bottom = all,
         left = all,
@@ -33,7 +33,7 @@ class EdgeInsetsGeometryDto extends Data<EdgeInsetsGeometry> {
         start = all,
         end = all;
 
-  const EdgeInsetsGeometryDto.symmetric({
+  const EdgeInsetsGeometryData.symmetric({
     double? vertical,
     double? horizontal,
     this.isDirectional = false,
@@ -45,7 +45,7 @@ class EdgeInsetsGeometryDto extends Data<EdgeInsetsGeometry> {
         end = horizontal;
 
   @override
-  EdgeInsetsGeometryDto merge(EdgeInsetsGeometryDto? other) {
+  EdgeInsetsGeometryData merge(EdgeInsetsGeometryData? other) {
     if (other == null) return this;
 
     if (other.isDirectional != isDirectional) {
@@ -54,7 +54,7 @@ class EdgeInsetsGeometryDto extends Data<EdgeInsetsGeometry> {
       );
     }
 
-    return EdgeInsetsGeometryDto(
+    return EdgeInsetsGeometryData(
       top: other.top ?? top,
       bottom: other.bottom ?? bottom,
       left: other.left ?? left,
@@ -88,8 +88,8 @@ class EdgeInsetsGeometryDto extends Data<EdgeInsetsGeometry> {
   get props => [top, bottom, left, right, start, end];
 }
 
-class SpaceGeometryDto extends EdgeInsetsGeometryDto {
-  const SpaceGeometryDto({
+class SpacingGeometryData extends EdgeInsetsGeometryData {
+  const SpacingGeometryData({
     super.top,
     super.bottom,
     super.left,
@@ -99,10 +99,10 @@ class SpaceGeometryDto extends EdgeInsetsGeometryDto {
     super.isDirectional = false,
   });
 
-  const SpaceGeometryDto.all(double all, {super.isDirectional = false})
+  const SpacingGeometryData.all(double all, {super.isDirectional = false})
       : super.all(all);
 
-  factory SpaceGeometryDto.positional(
+  factory SpacingGeometryData.positional(
     double p1, [
     double? p2,
     double? p3,
@@ -121,7 +121,7 @@ class SpaceGeometryDto extends EdgeInsetsGeometryDto {
     if (p3 != null) bottom = p3;
     if (p4 != null) right = p4;
 
-    return SpaceGeometryDto(
+    return SpacingGeometryData(
       top: top,
       bottom: bottom,
       left: left,
@@ -131,15 +131,15 @@ class SpaceGeometryDto extends EdgeInsetsGeometryDto {
     );
   }
 
-  const SpaceGeometryDto.symmetric({
+  const SpacingGeometryData.symmetric({
     double? vertical,
     double? horizontal,
     super.isDirectional = false,
   }) : super.symmetric(vertical: vertical, horizontal: horizontal);
 
-  SpaceGeometryDto get toDirectional => copyWith(isDirectional: true);
+  SpacingGeometryData get toDirectional => copyWith(isDirectional: true);
 
-  SpaceGeometryDto copyWith({
+  SpacingGeometryData copyWith({
     double? top,
     double? bottom,
     double? left,
@@ -148,7 +148,7 @@ class SpaceGeometryDto extends EdgeInsetsGeometryDto {
     double? end,
     bool? isDirectional,
   }) {
-    return SpaceGeometryDto(
+    return SpacingGeometryData(
       top: top ?? this.top,
       bottom: bottom ?? this.bottom,
       left: left ?? this.left,
@@ -160,7 +160,7 @@ class SpaceGeometryDto extends EdgeInsetsGeometryDto {
   }
 
   @override
-  SpaceGeometryDto merge(SpaceGeometryDto? other) {
+  SpacingGeometryData merge(SpacingGeometryData? other) {
     if (other == null) return this;
 
     if (other.isDirectional != isDirectional) {
@@ -169,7 +169,7 @@ class SpaceGeometryDto extends EdgeInsetsGeometryDto {
       );
     }
 
-    return SpaceGeometryDto(
+    return SpacingGeometryData(
       top: other.top ?? top,
       bottom: other.bottom ?? bottom,
       left: other.left ?? left,
@@ -198,53 +198,4 @@ class SpaceGeometryDto extends EdgeInsetsGeometryDto {
             bottom: bottom ?? defaultValue.bottom,
           );
   }
-}
-
-class AlignmentGeometryDto extends Data<AlignmentGeometry> {
-  final double? _start;
-  final double? _x;
-  final double? _y;
-
-  const AlignmentGeometryDto({double? start, double? x, double? y})
-      : _start = start,
-        _x = x,
-        _y = y;
-
-  @visibleForTesting
-  double? get start => _start;
-
-  @visibleForTesting
-  double? get x => _x;
-
-  @visibleForTesting
-  double? get y => _y;
-
-  bool get _isDirectional => _start != null;
-
-  @override
-  AlignmentGeometryDto merge(AlignmentGeometryDto? other) {
-    if (other == null) return this;
-
-    if (other._isDirectional != _isDirectional) {
-      throw UnsupportedError(
-        "Cannot merge directional and non-directional alignment attributes",
-      );
-    }
-
-    return AlignmentGeometryDto(
-      start: other._start ?? _start,
-      x: other._x ?? _x,
-      y: other._y ?? _y,
-    );
-  }
-
-  @override
-  AlignmentGeometry resolve(MixData mix) {
-    return _isDirectional
-        ? AlignmentDirectional(_start ?? 0.0, _y ?? 0.0)
-        : Alignment(_x ?? 0.0, _y ?? 0.0);
-  }
-
-  @override
-  get props => [_start, _x, _y];
 }

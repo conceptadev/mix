@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 
-import '../../attributes/visual_attributes.dart';
+import '../../attributes/data_attributes.dart';
+import '../../attributes/scalar_attribute.dart';
+import '../../core/dto/alignment_dto.dart';
 import '../../core/dto/border_dto.dart';
 import '../../core/dto/color_dto.dart';
-import '../../core/dto/dtos.dart';
+import '../../core/dto/constraints_dto.dart';
+import '../../core/dto/edge_insets_dto.dart';
 import '../../core/dto/shadow_dto.dart';
 import '../../core/dto/strut_style_dto.dart';
 import '../../core/dto/text_style_dto.dart';
@@ -53,7 +56,7 @@ extension ColorExt on Color {
 
 // Extension for Alignment
 extension AlignmentGeometryExt on AlignmentGeometry {
-  AlignmentGeometryDto get toDto {
+  AlignmentGeometryData get toDto {
     if (this is Alignment) return (this as Alignment).toDto;
     if (this is AlignmentDirectional) {
       return (this as AlignmentDirectional).toDto;
@@ -66,20 +69,29 @@ extension AlignmentGeometryExt on AlignmentGeometry {
 }
 
 extension AlignmentExt on Alignment {
-  AlignmentGeometryDto get toDto => AlignmentGeometryDto(x: x, y: y);
+  AlignmentGeometryData get toDto => AlignmentGeometryData(x: x, y: y);
   AlignmentGeometryAttribute get toAttribute =>
       AlignmentGeometryAttribute(toDto);
 }
 
+extension BoxConstraintsExt on BoxConstraints {
+  BoxConstraintsData get toDto => BoxConstraintsData(
+        minWidth: minWidth,
+        maxWidth: maxWidth,
+        minHeight: minHeight,
+        maxHeight: maxHeight,
+      );
+}
+
 extension AligmentDirectionalExt on AlignmentDirectional {
-  AlignmentGeometryDto get toDto => AlignmentGeometryDto(start: start, y: y);
+  AlignmentGeometryData get toDto => AlignmentGeometryData(start: start, y: y);
   AlignmentGeometryAttribute get toAttribute =>
       AlignmentGeometryAttribute(toDto);
 }
 
 // Extensions for EdgeInsetsGeometry, similar to AlignmentGeometry
 extension EdgeInsetsGeometryExt on EdgeInsetsGeometry {
-  EdgeInsetsGeometryDto get toDto {
+  EdgeInsetsGeometryData get toDto {
     if (this is EdgeInsets) return (this as EdgeInsets).toDto;
     if (this is EdgeInsetsDirectional) {
       return (this as EdgeInsetsDirectional).toDto;
@@ -87,7 +99,7 @@ extension EdgeInsetsGeometryExt on EdgeInsetsGeometry {
     throw UnimplementedError();
   }
 
-  SpaceGeometryDto get toSpace {
+  SpacingGeometryData get toSpace {
     if (this is EdgeInsets) return (this as EdgeInsets).toSpace;
     if (this is EdgeInsetsDirectional) {
       return (this as EdgeInsetsDirectional).toSpace;
@@ -98,14 +110,14 @@ extension EdgeInsetsGeometryExt on EdgeInsetsGeometry {
 
 // Extensions for EdgeInsets, similar to Alignment
 extension EdgeInsetsExt on EdgeInsets {
-  EdgeInsetsGeometryDto get toDto => EdgeInsetsGeometryDto(
+  EdgeInsetsGeometryData get toDto => EdgeInsetsGeometryData(
         top: top,
         bottom: bottom,
         left: left,
         right: right,
       );
 
-  SpaceGeometryDto get toSpace => SpaceGeometryDto(
+  SpacingGeometryData get toSpace => SpacingGeometryData(
         top: top,
         bottom: bottom,
         left: left,
@@ -115,7 +127,7 @@ extension EdgeInsetsExt on EdgeInsets {
 
 // Extensions for EdgeInsetsDirectional, similar to AlignmentDirectional
 extension EdgeInsetsDirectionalExt on EdgeInsetsDirectional {
-  EdgeInsetsGeometryDto get toDto => EdgeInsetsGeometryDto(
+  EdgeInsetsGeometryData get toDto => EdgeInsetsGeometryData(
         top: top,
         bottom: bottom,
         start: start,
@@ -123,7 +135,7 @@ extension EdgeInsetsDirectionalExt on EdgeInsetsDirectional {
         isDirectional: true,
       );
 
-  SpaceGeometryDto get toSpace => SpaceGeometryDto(
+  SpacingGeometryData get toSpace => SpacingGeometryData(
         top: top,
         bottom: bottom,
         start: start,

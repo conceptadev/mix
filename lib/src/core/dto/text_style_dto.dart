@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
+import '../../attributes/data_attributes.dart';
 import '../../factory/exports.dart';
 import '../../theme/tokens/text_style_ref.dart';
 import '../../utils/helper_util.dart';
@@ -58,6 +59,8 @@ class TextStyleData extends Data<TextStyle> {
     this.textBaseline,
     this.wordSpacing,
   });
+
+  TextStyleAttribute toAttribute() => TextStyleAttribute(this);
 
   bool isRef() => ref != null;
 

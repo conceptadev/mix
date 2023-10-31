@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
 import 'package:mix/src/attributes/container.attribute.dart';
 import 'package:mix/src/attributes/text_style.attribute.dart';
-import 'package:mix/src/core/dto/dtos.dart';
+import 'package:mix/src/core/dto/edge_insets_dto.dart';
 import 'package:mix/src/factory/style_mix.dart';
 
 class RandomGenerator {
@@ -104,10 +104,10 @@ class RandomGenerator {
     return boxAttributes;
   }
 
-  static SpaceGeometryDto edgeInsetsDto() {
+  static SpacingGeometryData edgeInsetsDto() {
     final random = Random();
 
-    return SpaceGeometryDto(
+    return SpacingGeometryData(
       top: random.nextDouble() * 100,
       bottom: random.nextDouble() * 100,
       left: random.nextDouble() * 100,

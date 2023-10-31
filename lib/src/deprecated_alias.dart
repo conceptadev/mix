@@ -4,7 +4,8 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-import 'attributes/visual_attributes.dart';
+import 'attributes/data_attributes.dart';
+import 'attributes/scalar_attribute.dart';
 import 'core/dto/text_style_dto.dart';
 import 'helpers/constants.dart';
 import 'helpers/extensions/values_ext.dart';

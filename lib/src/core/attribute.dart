@@ -81,17 +81,6 @@ abstract class DataAttribute<
 
 abstract class VisualAttribute<T> extends Attribute with Resolvable<T> {
   const VisualAttribute();
-
-  K? resolveAttribute<K, R extends VisualAttribute<K>>(
-    covariant R? resolvable,
-    MixData mix,
-  ) {
-    R? selectedAttribute = resolvable;
-
-    selectedAttribute ??= mix.attributeOfType<R>();
-
-    return selectedAttribute?.resolve(mix);
-  }
 }
 
 abstract class MixExtension<T extends MixExtension<T>> extends ThemeExtension<T>

@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
 
-import '../attributes/visual_attributes.dart';
+import '../attributes/scalar_attribute.dart';
 
 StackFitAttribute stackFit(StackFit fit) => StackFitAttribute(fit);

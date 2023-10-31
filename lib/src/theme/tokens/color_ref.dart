@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import '../../factory/exports.dart';
-import '../../helpers/compare_mixin.dart';
 import 'mix_token.dart';
 
 // class ColorSwatchRef extends ColorSwatch<int> implements TokenRef<ColorSwatch> {
@@ -16,9 +15,7 @@ import 'mix_token.dart';
 //   ColorSwatch resolve(MixData mix) => mix.resolver.colorSwatch(this);
 // }
 
-class ColorRef extends Color
-    with Comparable
-    implements ResolvableTokenRef<Color> {
+class ColorRef extends Color implements ResolvableTokenRef<Color> {
   @override
   final String name;
 
@@ -28,7 +25,14 @@ class ColorRef extends Color
   Color resolve(MixData mix) => mix.resolver.color(this);
 
   @override
-  get props => [name];
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is ColorRef && other.name == name;
+  }
+
+  @override
+  int get hashCode => name.hashCode;
 }
 
 typedef MixColorTokens = MixTokenMap<ColorRef, Color>;

@@ -2,7 +2,8 @@
 
 import 'package:flutter/material.dart';
 
-import '../attributes/visual_attributes.dart';
+import '../attributes/data_attributes.dart';
+import '../attributes/scalar_attribute.dart';
 import '../core/dto/color_dto.dart';
 
 WidthAttribute imageWidth(double width) {

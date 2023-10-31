@@ -2,6 +2,7 @@ import 'dart:math';
 
 import '../attributes/wrapped_attribute.dart';
 import '../core/attribute.dart';
+import '../factory/mix_provider_data.dart';
 import '../factory/style_mix.dart';
 
 @Deprecated('Use style.merge(otherStyle), instead')
@@ -93,4 +94,15 @@ List<M> mergeMergeableList<M extends Mergeable>(
 @override
 M mergeAttribute<M extends Mergeable>(M? current, M? other) {
   return current?.merge(other) ?? other;
+}
+
+K? resolveAttribute<K, R extends VisualAttribute<K>>(
+  R? resolvable,
+  MixData mix,
+) {
+  R? selectedAttribute = resolvable;
+
+  selectedAttribute ??= mix.attributeOfType<R>();
+
+  return selectedAttribute?.resolve(mix);
 }
