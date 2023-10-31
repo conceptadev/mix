@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 
 import '../../../factory/mix_provider_data.dart';
-import '../../dto/dtos.dart';
 import '../decorator.dart';
 
 const scale = _scale;
 
 ScaleDecorator _scale(double scale) {
-  return ScaleDecorator(DoubleDto(scale));
+  return ScaleDecorator(scale);
 }
 
 class ScaleDecorator extends Decorator<double> {
-  final DoubleDto _scale;
+  final double _scale;
   const ScaleDecorator(this._scale);
 
   @override
@@ -20,7 +19,7 @@ class ScaleDecorator extends Decorator<double> {
   }
 
   @override
-  double resolve(MixData mix) => _scale.resolve(mix);
+  double resolve(MixData mix) => _scale;
 
   @override
   get props => [_scale];

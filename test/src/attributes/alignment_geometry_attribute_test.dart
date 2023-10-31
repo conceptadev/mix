@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mix/src/attributes/value_attributes.dart';
+import 'package:mix/src/attributes/visual_attributes.dart';
 import 'package:mix/src/core/dto/dtos.dart';
 
 import '../../helpers/testing_utils.dart';
@@ -35,11 +35,11 @@ void main() {
 
   group('AlignmentAttribute', () {
     test('merge returns merged object correctly', () {
-      final dto1 = AlignmentGeometryDto(x: 0.1.toDto, y: 0.2.toDto);
-      final dto2 = AlignmentGeometryDto(x: 0.3.toDto);
+      const dto1 = AlignmentGeometryDto(x: 0.1, y: 0.2);
+      const dto2 = AlignmentGeometryDto(x: 0.3);
 
-      final attr1 = AlignmentGeometryAttribute(dto1);
-      final attr2 = AlignmentGeometryAttribute(dto2);
+      const attr1 = AlignmentGeometryAttribute(dto1);
+      const attr2 = AlignmentGeometryAttribute(dto2);
 
       final merged = attr1.merge(attr2);
 
@@ -50,8 +50,8 @@ void main() {
     });
 
     test('merge returns itself if other is null', () {
-      final dto1 = AlignmentGeometryDto(x: 0.1.toDto, y: 0.2.toDto);
-      final attr1 = AlignmentGeometryAttribute(dto1);
+      const dto1 = AlignmentGeometryDto(x: 0.1, y: 0.2);
+      const attr1 = AlignmentGeometryAttribute(dto1);
       final merged = attr1.merge(null);
 
       expect(merged, attr1);
@@ -60,8 +60,8 @@ void main() {
     test(
       'resolve returns correct Alignment',
       () {
-        final dto1 = AlignmentGeometryDto(x: 0.5.toDto, y: 0.5.toDto);
-        final attr = AlignmentGeometryAttribute(dto1);
+        const dto1 = AlignmentGeometryDto(x: 0.5, y: 0.5);
+        const attr = AlignmentGeometryAttribute(dto1);
         final alignment = attr.resolve(EmptyMixData);
 
         expect(alignment, const Alignment(0.5, 0.5));
@@ -82,21 +82,21 @@ void main() {
     );
 
     test('Equality holds when properties are the same', () {
-      final dto1 = AlignmentGeometryDto(x: 0.1.toDto, y: 0.2.toDto);
-      final dto2 = AlignmentGeometryDto(x: 0.1.toDto, y: 0.2.toDto);
+      const dto1 = AlignmentGeometryDto(x: 0.1, y: 0.2);
+      const dto2 = AlignmentGeometryDto(x: 0.1, y: 0.2);
 
-      final attr1 = AlignmentGeometryAttribute(dto1);
-      final attr2 = AlignmentGeometryAttribute(dto2);
+      const attr1 = AlignmentGeometryAttribute(dto1);
+      const attr2 = AlignmentGeometryAttribute(dto2);
 
       expect(attr1, attr2);
     });
 
     test('Equality fails when properties are different', () {
-      final dto1 = AlignmentGeometryDto(x: 0.1.toDto, y: 0.2.toDto);
-      final dto2 = AlignmentGeometryDto(x: 0.2.toDto, y: 0.2.toDto);
+      const dto1 = AlignmentGeometryDto(x: 0.1, y: 0.2);
+      const dto2 = AlignmentGeometryDto(x: 0.2, y: 0.2);
 
-      final attr1 = AlignmentGeometryAttribute(dto1);
-      final attr2 = AlignmentGeometryAttribute(dto2);
+      const attr1 = AlignmentGeometryAttribute(dto1);
+      const attr2 = AlignmentGeometryAttribute(dto2);
 
       expect(attr1, isNot(attr2));
     });

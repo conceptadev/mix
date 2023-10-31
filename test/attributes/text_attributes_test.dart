@@ -9,10 +9,10 @@ void main() {
     test('Test merge method', () {
       final ta1 = RandomGenerator.textAttributes();
 
-      const ta2 = TextAttributes(
+      final ta2 = TextAttributes(
         textAlign: TextAlign.right,
         maxLines: 3,
-        strutStyle: StrutStyle(forceStrutHeight: true),
+        strutStyle: const StrutStyle(forceStrutHeight: true),
       );
 
       final merged = ta1.merge(ta2);

@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 
 import '../../../factory/mix_provider_data.dart';
-import '../../dto/dtos.dart';
 import '../decorator.dart';
 
 OpacityDecorator opacity(double opacity) {
-  return OpacityDecorator(DoubleDto(opacity));
+  return OpacityDecorator(opacity);
 }
 
 class OpacityDecorator extends Decorator<double> {
-  final DoubleDto value;
+  final double value;
   const OpacityDecorator(this.value);
 
   @override
@@ -18,9 +17,7 @@ class OpacityDecorator extends Decorator<double> {
   }
 
   @override
-  double resolve(MixData mix) {
-    return value.resolve(mix);
-  }
+  double resolve(MixData mix) => value;
 
   @override
   get props => [value];

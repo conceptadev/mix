@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../attributes/value_attributes.dart';
+import '../attributes/visual_attributes.dart';
 
 const flexFit = _flexFit;
 const axisDirection = _axisDirection;

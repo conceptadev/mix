@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 
 import '../../../factory/mix_provider_data.dart';
-import '../../dto/dtos.dart';
 import '../decorator.dart';
 
 const aspectRataion = _aspectRatio;
 
 AspectRatioDecorator _aspectRatio(double aspectRatio) {
-  return AspectRatioDecorator(aspectRatio: DoubleDto(aspectRatio));
+  return AspectRatioDecorator(aspectRatio: aspectRatio);
 }
 
 class AspectRatioDecorator extends Decorator<double> {
-  final DoubleDto _aspectRatio;
-  const AspectRatioDecorator({required DoubleDto aspectRatio})
+  final double _aspectRatio;
+  const AspectRatioDecorator({required double aspectRatio})
       : _aspectRatio = aspectRatio;
 
   @override
@@ -21,7 +20,7 @@ class AspectRatioDecorator extends Decorator<double> {
   }
 
   @override
-  double resolve(MixData mix) => _aspectRatio.resolve(mix);
+  double resolve(MixData mix) => _aspectRatio;
 
   @override
   get props => [_aspectRatio];

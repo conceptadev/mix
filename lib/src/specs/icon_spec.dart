@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import '../attributes/value_attributes.dart';
+import '../attributes/visual_attributes.dart';
 import '../core/attribute.dart';
 import '../factory/mix_provider_data.dart';
 

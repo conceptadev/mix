@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../factory/mix_provider_data.dart';
 import '../attribute.dart';
 
-abstract class Decorator<T> extends StyleAttribute<T> {
+abstract class Decorator<T> extends VisualAttribute<T> {
   const Decorator();
 
   @override

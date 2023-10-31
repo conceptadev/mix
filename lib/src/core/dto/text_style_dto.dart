@@ -6,17 +6,16 @@ import '../../factory/exports.dart';
 import '../../theme/tokens/text_style_ref.dart';
 import '../../utils/helper_util.dart';
 import '../attribute.dart';
-import 'dtos.dart';
+import 'color_dto.dart';
 import 'shadow_dto.dart';
 
 class TextStyleDto extends Dto<TextStyle> {
   final String? fontFamily;
   final FontWeight? fontWeight;
-
   final FontStyle? fontStyle;
-  final DoubleDto? fontSize;
-  final DoubleDto? letterSpacing;
-  final DoubleDto? wordSpacing;
+  final double? fontSize;
+  final double? letterSpacing;
+  final double? wordSpacing;
   final TextBaseline? textBaseline;
   final ColorDto? color;
   final ColorDto? backgroundColor;
@@ -27,10 +26,10 @@ class TextStyleDto extends Dto<TextStyle> {
   final TextDecorationStyle? decorationStyle;
   final Locale? locale;
   final String? debugLabel;
-  final DoubleDto? height;
+  final double? height;
   final Paint? foreground;
   final Paint? background;
-  final DoubleDto? decorationThickness;
+  final double? decorationThickness;
   final List<String>? fontFamilyFallback;
 
   final TextStyleRef? ref;
@@ -109,13 +108,13 @@ class TextStyleDto extends Dto<TextStyle> {
         TextStyle(
           color: color?.resolve(mix),
           backgroundColor: backgroundColor?.resolve(mix),
-          fontSize: fontSize?.resolve(mix),
+          fontSize: fontSize,
           fontWeight: fontWeight,
           fontStyle: fontStyle,
-          letterSpacing: letterSpacing?.resolve(mix),
-          wordSpacing: wordSpacing?.resolve(mix),
+          letterSpacing: letterSpacing,
+          wordSpacing: wordSpacing,
           textBaseline: textBaseline,
-          height: height?.resolve(mix),
+          height: height,
           locale: locale,
           foreground: foreground,
           background: background,
@@ -124,7 +123,7 @@ class TextStyleDto extends Dto<TextStyle> {
           decoration: decoration,
           decorationColor: decorationColor?.resolve(mix),
           decorationStyle: decorationStyle,
-          decorationThickness: decorationThickness?.resolve(mix),
+          decorationThickness: decorationThickness,
           debugLabel: debugLabel,
           fontFamily: fontFamily,
           fontFamilyFallback: fontFamilyFallback,

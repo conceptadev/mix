@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mix/src/attributes/value_attributes.dart';
+import 'package:mix/src/attributes/visual_attributes.dart';
 
 import '../../helpers/testing_utils.dart';
 

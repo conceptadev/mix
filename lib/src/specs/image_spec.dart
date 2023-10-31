@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import '../attributes/value_attributes.dart';
+import '../attributes/visual_attributes.dart';
 import '../core/attribute.dart';
 import '../factory/mix_provider_data.dart';
 

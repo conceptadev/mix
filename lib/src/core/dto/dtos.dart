@@ -1,74 +1,17 @@
 import 'package:flutter/material.dart';
 
 import '../../factory/mix_provider_data.dart';
-import '../../theme/tokens/color_ref.dart';
 import '../attribute.dart';
 
-class DoubleDto extends ModifiableDto<double> {
-  const DoubleDto(super.value, {super.modifier});
-
-  double resolveAsSpace(MixData mix) {
-    final resolvedValue = mix.resolver.space(value);
-
-    return modify(resolvedValue);
-  }
-
-  @override
-  DoubleDto merge(DoubleDto? other) {
-    return DoubleDto(
-      other?.value ?? value,
-      modifier: other?.modifier ?? modifier,
-    );
-  }
-
-  @override
-  double resolve(MixData mix) => modify(value);
-
-  @override
-  List<Object?> get props => [value];
-}
-
-class ColorDto extends ModifiableDto<Color> {
-  // Modifier is only used after value is resolved.
-
-  const ColorDto(super.value, {super.modifier});
-
-  static ColorDto? maybeFrom(Color? color) {
-    return color == null ? null : ColorDto(color);
-  }
-
-  @override
-  ColorDto merge(covariant ColorDto? other) {
-    return ColorDto(
-      other?.value ?? value,
-      modifier: other?.modifier ?? modifier,
-    );
-  }
-
-  @override
-  Color resolve(MixData mix) {
-    Color resolvedColor = value;
-
-    if (resolvedColor is ColorRef) {
-      resolvedColor = mix.resolver.color(resolvedColor);
-    }
-
-    return modify(resolvedColor);
-  }
-
-  @override
-  get props => [value, modifier];
-}
-
 class EdgeInsetsGeometryDto extends Dto<EdgeInsetsGeometry> {
-  final DoubleDto? top;
-  final DoubleDto? bottom;
-  final DoubleDto? left;
-  final DoubleDto? right;
+  final double? top;
+  final double? bottom;
+  final double? left;
+  final double? right;
 
   // Directional
-  final DoubleDto? start;
-  final DoubleDto? end;
+  final double? start;
+  final double? end;
 
   final bool isDirectional;
 
@@ -82,7 +25,7 @@ class EdgeInsetsGeometryDto extends Dto<EdgeInsetsGeometry> {
     this.isDirectional = false,
   });
 
-  const EdgeInsetsGeometryDto.all(DoubleDto all, {this.isDirectional = false})
+  const EdgeInsetsGeometryDto.all(double all, {this.isDirectional = false})
       : top = all,
         bottom = all,
         left = all,
@@ -91,8 +34,8 @@ class EdgeInsetsGeometryDto extends Dto<EdgeInsetsGeometry> {
         end = all;
 
   const EdgeInsetsGeometryDto.symmetric({
-    DoubleDto? vertical,
-    DoubleDto? horizontal,
+    double? vertical,
+    double? horizontal,
     this.isDirectional = false,
   })  : top = vertical,
         bottom = vertical,
@@ -128,16 +71,16 @@ class EdgeInsetsGeometryDto extends Dto<EdgeInsetsGeometry> {
 
     return isDirectional
         ? EdgeInsetsDirectional.only(
-            start: start?.resolve(mix) ?? defalutDirectionalvalue.start,
-            top: top?.resolve(mix) ?? defalutDirectionalvalue.top,
-            end: end?.resolve(mix) ?? defalutDirectionalvalue.end,
-            bottom: bottom?.resolve(mix) ?? defalutDirectionalvalue.bottom,
+            start: start ?? defalutDirectionalvalue.start,
+            top: top ?? defalutDirectionalvalue.top,
+            end: end ?? defalutDirectionalvalue.end,
+            bottom: bottom ?? defalutDirectionalvalue.bottom,
           )
         : EdgeInsets.only(
-            left: left?.resolve(mix) ?? defaultValue.left,
-            top: top?.resolve(mix) ?? defaultValue.top,
-            right: right?.resolve(mix) ?? defaultValue.right,
-            bottom: bottom?.resolve(mix) ?? defaultValue.bottom,
+            left: left ?? defaultValue.left,
+            top: top ?? defaultValue.top,
+            right: right ?? defaultValue.right,
+            bottom: bottom ?? defaultValue.bottom,
           );
   }
 
@@ -156,7 +99,7 @@ class SpaceGeometryDto extends EdgeInsetsGeometryDto {
     super.isDirectional = false,
   });
 
-  const SpaceGeometryDto.all(DoubleDto all, {super.isDirectional = false})
+  const SpaceGeometryDto.all(double all, {super.isDirectional = false})
       : super.all(all);
 
   factory SpaceGeometryDto.positional(
@@ -179,30 +122,30 @@ class SpaceGeometryDto extends EdgeInsetsGeometryDto {
     if (p4 != null) right = p4;
 
     return SpaceGeometryDto(
-      top: DoubleDto(top),
-      bottom: DoubleDto(bottom),
-      left: DoubleDto(left),
-      right: DoubleDto(right),
-      start: DoubleDto(left),
-      end: DoubleDto(right),
+      top: top,
+      bottom: bottom,
+      left: left,
+      right: right,
+      start: left,
+      end: right,
     );
   }
 
   const SpaceGeometryDto.symmetric({
-    DoubleDto? vertical,
-    DoubleDto? horizontal,
+    double? vertical,
+    double? horizontal,
     super.isDirectional = false,
   }) : super.symmetric(vertical: vertical, horizontal: horizontal);
 
   SpaceGeometryDto get toDirectional => copyWith(isDirectional: true);
 
   SpaceGeometryDto copyWith({
-    DoubleDto? top,
-    DoubleDto? bottom,
-    DoubleDto? left,
-    DoubleDto? right,
-    DoubleDto? start,
-    DoubleDto? end,
+    double? top,
+    double? bottom,
+    double? left,
+    double? right,
+    double? start,
+    double? end,
     bool? isDirectional,
   }) {
     return SpaceGeometryDto(
@@ -243,39 +186,38 @@ class SpaceGeometryDto extends EdgeInsetsGeometryDto {
 
     return isDirectional
         ? EdgeInsetsDirectional.only(
-            start: start?.resolveAsSpace(mix) ?? defalutDirectionalvalue.start,
-            top: top?.resolveAsSpace(mix) ?? defalutDirectionalvalue.top,
-            end: end?.resolveAsSpace(mix) ?? defalutDirectionalvalue.end,
-            bottom:
-                bottom?.resolveAsSpace(mix) ?? defalutDirectionalvalue.bottom,
+            start: start ?? defalutDirectionalvalue.start,
+            top: top ?? defalutDirectionalvalue.top,
+            end: end ?? defalutDirectionalvalue.end,
+            bottom: bottom ?? defalutDirectionalvalue.bottom,
           )
         : EdgeInsets.only(
-            left: left?.resolveAsSpace(mix) ?? defaultValue.left,
-            top: top?.resolveAsSpace(mix) ?? defaultValue.top,
-            right: right?.resolveAsSpace(mix) ?? defaultValue.right,
-            bottom: bottom?.resolveAsSpace(mix) ?? defaultValue.bottom,
+            left: left ?? defaultValue.left,
+            top: top ?? defaultValue.top,
+            right: right ?? defaultValue.right,
+            bottom: bottom ?? defaultValue.bottom,
           );
   }
 }
 
 class AlignmentGeometryDto extends Dto<AlignmentGeometry> {
-  final DoubleDto? _start;
-  final DoubleDto? _x;
-  final DoubleDto? _y;
+  final double? _start;
+  final double? _x;
+  final double? _y;
 
-  const AlignmentGeometryDto({DoubleDto? start, DoubleDto? x, DoubleDto? y})
+  const AlignmentGeometryDto({double? start, double? x, double? y})
       : _start = start,
         _x = x,
         _y = y;
 
   @visibleForTesting
-  DoubleDto? get start => _start;
+  double? get start => _start;
 
   @visibleForTesting
-  DoubleDto? get x => _x;
+  double? get x => _x;
 
   @visibleForTesting
-  DoubleDto? get y => _y;
+  double? get y => _y;
 
   bool get _isDirectional => _start != null;
 
@@ -299,11 +241,8 @@ class AlignmentGeometryDto extends Dto<AlignmentGeometry> {
   @override
   AlignmentGeometry resolve(MixData mix) {
     return _isDirectional
-        ? AlignmentDirectional(
-            _start?.resolve(mix) ?? 0.0,
-            _y?.resolve(mix) ?? 0.0,
-          )
-        : Alignment(_x?.resolve(mix) ?? 0.0, _y?.resolve(mix) ?? 0.0);
+        ? AlignmentDirectional(_start ?? 0.0, _y ?? 0.0)
+        : Alignment(_x ?? 0.0, _y ?? 0.0);
   }
 
   @override

@@ -1,4 +1,4 @@
-import '../attributes/box_constraints_attribute.dart';
+import '../attributes/constraints_attribute.dart';
 
 BoxConstraintsAttribute boxConstraints({
   double? minWidth,

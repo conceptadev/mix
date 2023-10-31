@@ -24,7 +24,7 @@ void main() {
         'from factory returns BorderRadiusDirectionalAttribute for BorderRadiusDirectional',
         () {
       final result = BorderRadiusGeometryDto.circular(
-        10.0.toDto,
+        10.0,
       ).toDirectional;
 
       final resolvedValue =
@@ -39,9 +39,9 @@ void main() {
     });
 
     test('merge returns merged object correctly', () {
-      final attr1 = BorderRadiusGeometryDto.circular(10.0.toDto);
-      final attr2 = BorderRadiusGeometryDto(
-          topLeft: RadiusDto.elliptical(20.0.toDto, 20.0.toDto));
+      final attr1 = BorderRadiusGeometryDto.circular(10.0);
+      const attr2 =
+          BorderRadiusGeometryDto(topLeft: RadiusDto.elliptical(20.0, 20.0));
 
       final merged = attr1.merge(attr2);
 
@@ -58,7 +58,7 @@ void main() {
     });
 
     test('resolve returns correct BorderRadius', () {
-      final attr = BorderRadiusGeometryDto.circular(10.0.toDto);
+      final attr = BorderRadiusGeometryDto.circular(10.0);
       final borderRadius = attr.resolve(EmptyMixData) as BorderRadius;
 
       expect(borderRadius.topLeft, const Radius.circular(10.0));
@@ -68,18 +68,18 @@ void main() {
     });
 
     test('Equality holds when all attributes are the same', () {
-      final attr1 = BorderRadiusGeometryDto.circular(15.0.toDto);
-      final attr2 = BorderRadiusGeometryDto.circular(15.0.toDto);
+      final attr1 = BorderRadiusGeometryDto.circular(15.0);
+      final attr2 = BorderRadiusGeometryDto.circular(15.0);
 
       expect(attr1, attr2);
     });
 
     test('Equality fails when attributes are different', () {
-      final attr1 = BorderRadiusGeometryDto.circular(10.0.toDto);
-      final attr2 = BorderRadiusGeometryDto(
+      final attr1 = BorderRadiusGeometryDto.circular(10.0);
+      const attr2 = BorderRadiusGeometryDto(
         topLeft: RadiusDto.elliptical(
-          10.0.toDto,
-          30.0.toDto,
+          10.0,
+          30.0,
         ),
       );
 
@@ -119,14 +119,14 @@ void main() {
 
       BorderSideDto copy = result.copyWith(
         color: Colors.blue.toDto,
-        width: 3.0.toDto,
-        strokeAlign: 13.0.toDto,
+        width: 3.0,
+        strokeAlign: 13.0,
       );
 
       BorderSideDto merge = result.merge(copy);
 
       expect(copy.color?.value, Colors.blue);
-      expect(copy.width?.value, 3.0);
+      expect(copy.width, 3.0);
       expect(copy.style, BorderStyle.solid);
       // Removed for compatibility
       // expect(copy.strokeAlign, 13.0);
@@ -149,16 +149,16 @@ void main() {
 
       final same = BorderSideDto(
         color: Colors.red.toDto,
-        width: 2.0.toDto,
+        width: 2.0,
         style: BorderStyle.solid,
-        strokeAlign: 12.0.toDto,
+        strokeAlign: 12.0,
       );
 
       final different = BorderSideDto(
         color: Colors.blue.toDto,
-        width: 3.0.toDto,
+        width: 3.0,
         style: BorderStyle.solid,
-        strokeAlign: 13.0.toDto,
+        strokeAlign: 13.0,
       );
 
       final mergedDifferent = different.merge(same);

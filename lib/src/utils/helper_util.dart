@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import '../attributes/nested_attribute.dart';
+import '../attributes/wrapped_attribute.dart';
 import '../core/attribute.dart';
 import '../factory/style_mix.dart';
 
@@ -9,8 +9,8 @@ class HelperUtility {
   const HelperUtility._();
 
   @Deprecated('Use style.merge(otherStyle), instead')
-  static NestedStyleAttribute apply(List<StyleMix> mixes) {
-    return NestedStyleAttribute(StyleMix.combine(mixes));
+  static WrappedStyleAttribute apply(List<StyleMix> mixes) {
+    return WrappedStyleAttribute(StyleMix.combine(mixes));
   }
 }
 

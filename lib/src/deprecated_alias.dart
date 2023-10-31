@@ -4,9 +4,10 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-import 'attributes/value_attributes.dart';
+import 'attributes/visual_attributes.dart';
 import 'core/dto/text_style_dto.dart';
 import 'helpers/constants.dart';
+import 'helpers/extensions/values_ext.dart';
 import 'utils/alignment_util.dart';
 import 'utils/border_radius_util.dart';
 import 'utils/border_util.dart';
@@ -16,6 +17,7 @@ import 'utils/context_variant_util.dart';
 import 'utils/flex_util.dart';
 import 'utils/helper_util.dart';
 import 'utils/pressable_util.dart';
+import 'utils/size_util.dart';
 import 'utils/space_util.dart';
 import 'utils/text_style_util.dart';
 
@@ -296,37 +298,37 @@ dynamic get roundedDH => UnimplementedError();
 final roundedTL = roundedTopLeft;
 
 @Deprecated(kShortAliasDeprecation)
-BorderRadiusAttribute roundedTR() {
+BorderRadiusGeometryAttribute roundedTR() {
   throw UnimplementedError();
 }
 
 @Deprecated(kShortAliasDeprecation)
-BorderRadiusAttribute roundedBL() {
+BorderRadiusGeometryAttribute roundedBL() {
   throw UnimplementedError();
 }
 
 @Deprecated(kShortAliasDeprecation)
-BorderRadiusAttribute roundedBR() {
+BorderRadiusGeometryAttribute roundedBR() {
   throw UnimplementedError();
 }
 
 @Deprecated(kShortAliasDeprecation)
-BorderRadiusAttribute roundedTS() {
+BorderRadiusGeometryAttribute roundedTS() {
   throw UnimplementedError();
 }
 
 @Deprecated(kShortAliasDeprecation)
-BorderRadiusAttribute roundedTE() {
+BorderRadiusGeometryAttribute roundedTE() {
   throw UnimplementedError();
 }
 
 @Deprecated(kShortAliasDeprecation)
-BorderRadiusAttribute roundedBS() {
+BorderRadiusGeometryAttribute roundedBS() {
   throw UnimplementedError();
 }
 
 @Deprecated(kShortAliasDeprecation)
-BorderRadiusAttribute roundedBE() {
+BorderRadiusGeometryAttribute roundedBE() {
   throw UnimplementedError();
 }
 
@@ -373,8 +375,8 @@ const be = borderEnd;
 const align = alignment;
 
 @Deprecated('Use stack instead')
-AlignmentAttribute zAligmnent(Alignment alignment) {
-  return AlignmentAttribute(alignment);
+AlignmentGeometryAttribute zAligmnent(Alignment alignment) {
+  return AlignmentGeometryAttribute(alignment.toDto);
 }
 
 @Deprecated('Use stack instead')

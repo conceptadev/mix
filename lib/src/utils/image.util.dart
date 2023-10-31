@@ -2,15 +2,15 @@
 
 import 'package:flutter/material.dart';
 
-import '../attributes/value_attributes.dart';
-import '../core/dto/dtos.dart';
+import '../attributes/visual_attributes.dart';
+import '../core/dto/color_dto.dart';
 
 WidthAttribute imageWidth(double width) {
-  return WidthAttribute(DoubleDto(width));
+  return WidthAttribute(width);
 }
 
 HeightAttribute imageHeight(double height) {
-  return HeightAttribute(DoubleDto(height));
+  return HeightAttribute(height);
 }
 
 ImageColorAttribute imageColor(Color color) {

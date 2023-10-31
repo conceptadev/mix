@@ -4,18 +4,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
 import '../core/attribute.dart';
-import '../core/dto/dtos.dart';
+import '../core/dto/color_dto.dart';
 import '../core/dto/shadow_dto.dart';
 import '../factory/mix_provider_data.dart';
 import '../utils/helper_util.dart';
-import 'value_attributes.dart';
+import 'visual_attributes.dart';
 
 abstract class DecorationAttribute<T extends Decoration>
-    extends StyleAttribute<T> {
+    extends VisualAttribute<T> {
   const DecorationAttribute();
 
   @override
   DecorationAttribute<T> merge(covariant DecorationAttribute<T>? other);
+
+  @override
+  T resolve(MixData mix);
 }
 
 class BoxDecorationAttribute extends DecorationAttribute<BoxDecoration> {
@@ -24,7 +27,7 @@ class BoxDecorationAttribute extends DecorationAttribute<BoxDecoration> {
   final BorderRadiusGeometryAttribute? borderRadius;
   final GradientAttribute? gradient;
   final List<BoxShadowDto>? boxShadow;
-  final BoxShape? shape;
+  final BoxShapeAttribute? shape;
 
   const BoxDecorationAttribute({
     this.border,
@@ -54,10 +57,10 @@ class BoxDecorationAttribute extends DecorationAttribute<BoxDecoration> {
   BoxDecoration resolve(MixData mix) {
     return BoxDecoration(
       color: color?.resolve(mix),
-      border: resolveAttr(border, mix),
-      borderRadius: resolveAttr(borderRadius, mix),
+      border: resolveAttribute(border, mix),
+      borderRadius: resolveAttribute(borderRadius, mix),
       boxShadow: boxShadow?.map((e) => e.resolve(mix)).toList(),
-      gradient: resolveAttr(gradient, mix),
+      gradient: resolveAttribute(gradient, mix),
     );
   }
 
@@ -65,7 +68,7 @@ class BoxDecorationAttribute extends DecorationAttribute<BoxDecoration> {
   get props => [border, borderRadius, gradient, boxShadow, color, shape];
 }
 
-class ShapeDecorationAttribute extends DecorationAttribute<ShapeDecoration> {
+class ShapeDecorationDto extends DecorationAttribute<ShapeDecoration> {
   // The color to fill in the background of the shape.
   final ColorDto? color;
 
@@ -77,7 +80,7 @@ class ShapeDecorationAttribute extends DecorationAttribute<ShapeDecoration> {
   // Shadows cast by this box behind the box.
   final List<BoxShadowDto>? boxShadow;
 
-  const ShapeDecorationAttribute({
+  const ShapeDecorationDto({
     this.color,
     this.shape,
     this.gradient,
@@ -85,10 +88,10 @@ class ShapeDecorationAttribute extends DecorationAttribute<ShapeDecoration> {
   });
 
   @override
-  ShapeDecorationAttribute merge(ShapeDecorationAttribute? other) {
+  ShapeDecorationDto merge(ShapeDecorationDto? other) {
     if (other == null) return this;
 
-    return ShapeDecorationAttribute(
+    return ShapeDecorationDto(
       color: color?.merge(other.color) ?? other.color,
       shape: other.shape ?? shape,
       gradient: mergeAttribute(gradient, other.gradient),
@@ -100,7 +103,7 @@ class ShapeDecorationAttribute extends DecorationAttribute<ShapeDecoration> {
   ShapeDecoration resolve(MixData mix) {
     return ShapeDecoration(
       color: color?.resolve(mix),
-      gradient: resolveAttr(gradient, mix),
+      gradient: resolveAttribute(gradient, mix),
       shadows: boxShadow?.map((e) => e.resolve(mix)).toList(),
       shape: shape ?? const RoundedRectangleBorder(),
     );

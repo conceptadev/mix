@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../attributes/value_attributes.dart';
+import '../attributes/visual_attributes.dart';
 import '../core/dto/border_dto.dart';
 import '../helpers/extensions/values_ext.dart';
 
@@ -13,9 +13,9 @@ BoxBorderAttribute border({
   return BoxBorderDto.all(
     BorderSideDto(
       color: color?.toDto,
-      strokeAlign: strokeAlign?.toDto,
+      strokeAlign: strokeAlign,
       style: style,
-      width: width?.toDto,
+      width: width,
     ),
   ).toAttribute;
 }
@@ -45,9 +45,9 @@ BoxBorderAttribute borderTop({
   return BoxBorderDto(
     top: BorderSideDto(
       color: color?.toDto,
-      strokeAlign: strokeAlign?.toDto,
+      strokeAlign: strokeAlign,
       style: style,
-      width: width?.toDto,
+      width: width,
     ),
   ).toAttribute;
 }
@@ -77,9 +77,9 @@ BoxBorderAttribute borderBottom({
   return BoxBorderDto(
     bottom: BorderSideDto(
       color: color?.toDto,
-      strokeAlign: strokeAlign?.toDto,
+      strokeAlign: strokeAlign,
       style: style,
-      width: width?.toDto,
+      width: width,
     ),
   ).toAttribute;
 }
@@ -109,9 +109,9 @@ BoxBorderAttribute borderLeft({
   return BoxBorderDto(
     left: BorderSideDto(
       color: color?.toDto,
-      strokeAlign: strokeAlign?.toDto,
+      strokeAlign: strokeAlign,
       style: style,
-      width: width?.toDto,
+      width: width,
     ),
   ).toAttribute;
 }
@@ -141,9 +141,9 @@ BoxBorderAttribute borderRight({
   return BoxBorderDto(
     right: BorderSideDto(
       color: color?.toDto,
-      strokeAlign: strokeAlign?.toDto,
+      strokeAlign: strokeAlign,
       style: style,
-      width: width?.toDto,
+      width: width,
     ),
   ).toAttribute;
 }
@@ -173,9 +173,9 @@ BoxBorderAttribute borderStart({
   return BoxBorderDto(
     start: BorderSideDto(
       color: color?.toDto,
-      strokeAlign: strokeAlign?.toDto,
+      strokeAlign: strokeAlign,
       style: style,
-      width: width?.toDto,
+      width: width,
     ),
   ).toAttribute;
 }
@@ -205,9 +205,9 @@ BoxBorderAttribute borderEnd({
   return BoxBorderDto(
     end: BorderSideDto(
       color: color?.toDto,
-      strokeAlign: strokeAlign?.toDto,
+      strokeAlign: strokeAlign,
       style: style,
-      width: width?.toDto,
+      width: width,
     ),
   ).toAttribute;
 }
@@ -237,9 +237,9 @@ BoxBorderAttribute borderHorizontal({
   return BoxBorderDto.symmetric(
     horizontal: BorderSideDto(
       color: color?.toDto,
-      strokeAlign: strokeAlign?.toDto,
+      strokeAlign: strokeAlign,
       style: style,
-      width: width?.toDto,
+      width: width,
     ),
   ).toAttribute;
 }
@@ -269,9 +269,9 @@ BoxBorderAttribute borderVertical({
   return BoxBorderDto.symmetric(
     vertical: BorderSideDto(
       color: color?.toDto,
-      strokeAlign: strokeAlign?.toDto,
+      strokeAlign: strokeAlign,
       style: style,
-      width: width?.toDto,
+      width: width,
     ),
   ).toAttribute;
 }

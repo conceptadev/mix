@@ -2,9 +2,9 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-import '../attributes/box_constraints_attribute.dart';
+import '../attributes/constraints_attribute.dart';
 import '../attributes/decoration_attribute.dart';
-import '../attributes/value_attributes.dart';
+import '../attributes/visual_attributes.dart';
 import '../core/attribute.dart';
 import '../factory/mix_provider_data.dart';
 

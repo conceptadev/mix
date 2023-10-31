@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../attributes/strut_style_attribute.dart';
 import '../attributes/text_style_attribute.dart';
-import '../attributes/value_attributes.dart';
+import '../attributes/visual_attributes.dart';
 import '../core/attribute.dart';
 import '../core/directives/text_directive.dart';
+import '../core/dto/strut_style_dto.dart';
 import '../factory/exports.dart';
 
 class TextSpec extends MixExtension<TextSpec> {
@@ -37,7 +37,7 @@ class TextSpec extends MixExtension<TextSpec> {
   static TextSpec resolve(MixData mix) {
     return TextSpec(
       overflow: mix.get<TextOverflowAttribute, TextOverflow>(),
-      strutStyle: mix.get<StrutStyleAttribute, StrutStyle>(),
+      strutStyle: mix.get<StrutStyleDto, StrutStyle>(),
       textAlign: mix.get<TextAlignAttribute, TextAlign>(),
       textScaleFactor: mix.get<TextScaleFactorAttribute, double>(),
       maxLines: mix.get<MaxLinesAttribute, int>(),

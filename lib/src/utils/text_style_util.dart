@@ -37,16 +37,16 @@ TextStyleDto textStyle({
     decorationStyle: decorationStyle,
     fontFamily: fontFamily,
     fontFeatures: fontFeatures,
-    fontSize: fontSize?.toDto,
+    fontSize: fontSize,
     fontStyle: fontStyle,
     fontWeight: fontWeight,
     foreground: foreground,
-    height: height?.toDto,
-    letterSpacing: letterSpacing?.toDto,
+    height: height,
+    letterSpacing: letterSpacing,
     locale: locale,
     shadows: _shadowsFromDto(shadows),
     textBaseline: textBaseline,
-    wordSpacing: wordSpacing?.toDto,
+    wordSpacing: wordSpacing,
   );
 }
 
@@ -69,22 +69,22 @@ TextStyleDto _textStyleFromDto(TextStyle style) {
     decorationStyle: style.decorationStyle,
     fontFamily: style.fontFamily,
     fontFeatures: style.fontFeatures,
-    fontSize: style.fontSize?.toDto,
+    fontSize: style.fontSize,
     fontStyle: style.fontStyle,
     fontWeight: style.fontWeight,
     foreground: style.foreground,
-    height: style.height?.toDto,
-    letterSpacing: style.letterSpacing?.toDto,
+    height: style.height,
+    letterSpacing: style.letterSpacing,
     locale: style.locale,
     shadows: style.shadows?.map(_shadowFromDto).toList(),
     textBaseline: style.textBaseline,
-    wordSpacing: style.wordSpacing?.toDto,
+    wordSpacing: style.wordSpacing,
   );
 }
 
 ShadowDto _shadowFromDto(Shadow shadow) {
   return ShadowDto(
-    blurRadius: shadow.blurRadius.toDto,
+    blurRadius: shadow.blurRadius,
     color: shadow.color.toDto,
     offset: shadow.offset,
   );

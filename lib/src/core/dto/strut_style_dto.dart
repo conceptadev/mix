@@ -1,9 +1,9 @@
 import 'package:flutter/painting.dart';
 
-import '../core/attribute.dart';
-import '../factory/mix_provider_data.dart';
+import '../../factory/mix_provider_data.dart';
+import '../attribute.dart';
 
-class StrutStyleAttribute extends StyleAttribute<StrutStyle> {
+class StrutStyleDto extends Dto<StrutStyle> {
   final String? fontFamily;
   final List<String>? fontFamilyFallback;
   final double? fontSize;
@@ -13,9 +13,7 @@ class StrutStyleAttribute extends StyleAttribute<StrutStyle> {
   final double? leading;
   final bool? forceStrutHeight;
 
-  final _default = const StrutStyle();
-
-  const StrutStyleAttribute._({
+  const StrutStyleDto._({
     this.fontFamily,
     this.fontFamilyFallback,
     this.fontSize,
@@ -26,7 +24,7 @@ class StrutStyleAttribute extends StyleAttribute<StrutStyle> {
     this.forceStrutHeight,
   });
 
-  const StrutStyleAttribute.only({
+  const StrutStyleDto.only({
     this.fontFamily,
     this.fontFamilyFallback,
     this.fontSize,
@@ -38,10 +36,10 @@ class StrutStyleAttribute extends StyleAttribute<StrutStyle> {
   });
 
   @override
-  StrutStyleAttribute merge(StrutStyleAttribute? other) {
+  StrutStyleDto merge(StrutStyleDto? other) {
     if (other == null) return this;
 
-    return StrutStyleAttribute._(
+    return StrutStyleDto._(
       fontFamily: other.fontFamily ?? fontFamily,
       fontFamilyFallback: other.fontFamilyFallback ?? fontFamilyFallback,
       fontSize: other.fontSize ?? fontSize,
@@ -55,15 +53,17 @@ class StrutStyleAttribute extends StyleAttribute<StrutStyle> {
 
   @override
   StrutStyle resolve(MixData mix) {
+    const defaultValue = StrutStyle();
+
     return StrutStyle(
-      fontFamily: fontFamily ?? _default.fontFamily,
-      fontFamilyFallback: fontFamilyFallback ?? _default.fontFamilyFallback,
-      fontSize: fontSize ?? _default.fontSize,
-      height: height ?? _default.height,
-      leading: leading ?? _default.leading,
-      fontWeight: fontWeight ?? _default.fontWeight,
-      fontStyle: fontStyle ?? _default.fontStyle,
-      forceStrutHeight: forceStrutHeight ?? _default.forceStrutHeight,
+      fontFamily: fontFamily ?? defaultValue.fontFamily,
+      fontFamilyFallback: fontFamilyFallback ?? defaultValue.fontFamilyFallback,
+      fontSize: fontSize ?? defaultValue.fontSize,
+      height: height ?? defaultValue.height,
+      leading: leading ?? defaultValue.leading,
+      fontWeight: fontWeight ?? defaultValue.fontWeight,
+      fontStyle: fontStyle ?? defaultValue.fontStyle,
+      forceStrutHeight: forceStrutHeight ?? defaultValue.forceStrutHeight,
     );
   }
 

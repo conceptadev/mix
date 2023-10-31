@@ -43,15 +43,15 @@ class MixData with Comparable {
     return _attributes.whereType<T>().toList();
   }
 
-  /// Retrieves an instance of the specified [StyleAttribute] type from the [MixData].
+  /// Retrieves an instance of the specified [VisualAttribute] type from the [MixData].
   ///
-  /// Accepts a type parameter [Attr] which extends [StyleAttribute].
+  /// Accepts a type parameter [Attr] which extends [VisualAttribute].
   /// Returns the instance of type [Attr] if found, else returns null.
   Attr? attributeOfType<Attr extends Attribute>() {
     return _attributes.whereType<Attr>().firstMaybeNull;
   }
 
-  R? get<Attr extends StyleAttribute<R>, R>() {
+  R? get<Attr extends VisualAttribute<R>, R>() {
     return attributeOfType<Attr>()?.resolve(this);
   }
 

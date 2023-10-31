@@ -1,9 +1,20 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 import '../core/attribute.dart';
 import '../factory/exports.dart';
 
-class BoxConstraintsAttribute extends StyleAttribute<BoxConstraints> {
+abstract class ConstraintsAttribute<T extends Constraints>
+    extends VisualAttribute<T> {
+  const ConstraintsAttribute();
+
+  @override
+  ConstraintsAttribute merge(covariant ConstraintsAttribute? other);
+
+  @override
+  T resolve(MixData mix);
+}
+
+class BoxConstraintsAttribute extends ConstraintsAttribute<BoxConstraints> {
   final double? minWidth;
   final double? maxWidth;
   final double? minHeight;
@@ -15,12 +26,6 @@ class BoxConstraintsAttribute extends StyleAttribute<BoxConstraints> {
     this.minHeight,
     this.maxHeight,
   });
-
-  BoxConstraintsAttribute.from(BoxConstraints constraints)
-      : minWidth = constraints.minWidth,
-        maxWidth = constraints.maxWidth,
-        minHeight = constraints.minHeight,
-        maxHeight = constraints.maxHeight;
 
   @override
   BoxConstraintsAttribute merge(covariant BoxConstraintsAttribute? other) {

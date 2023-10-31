@@ -1,22 +1,21 @@
 import 'package:flutter/material.dart';
 
-import '../../attributes/value_attributes.dart';
+import '../../attributes/visual_attributes.dart';
 import '../../factory/mix_provider_data.dart';
 import '../attribute.dart';
-import 'dtos.dart';
-import 'radius_dto.dart';
+import 'color_dto.dart';
 
 class BorderRadiusGeometryDto extends Dto<BorderRadiusGeometry> {
-  final RadiusDto? topLeft;
-  final RadiusDto? topRight;
-  final RadiusDto? bottomLeft;
-  final RadiusDto? bottomRight;
+  final Radius? topLeft;
+  final Radius? topRight;
+  final Radius? bottomLeft;
+  final Radius? bottomRight;
 
 // Directional values
-  final RadiusDto? topStart;
-  final RadiusDto? topEnd;
-  final RadiusDto? bottomStart;
-  final RadiusDto? bottomEnd;
+  final Radius? topStart;
+  final Radius? topEnd;
+  final Radius? bottomStart;
+  final Radius? bottomEnd;
 
   final bool isDirectional;
 
@@ -32,7 +31,7 @@ class BorderRadiusGeometryDto extends Dto<BorderRadiusGeometry> {
     this.isDirectional = false,
   });
 
-  const BorderRadiusGeometryDto.all(RadiusDto radius)
+  const BorderRadiusGeometryDto.all(Radius radius)
       : topLeft = radius,
         topRight = radius,
         bottomLeft = radius,
@@ -44,8 +43,8 @@ class BorderRadiusGeometryDto extends Dto<BorderRadiusGeometry> {
         isDirectional = false;
 
   BorderRadiusGeometryDto.horizontal({
-    RadiusDto? leftStart,
-    RadiusDto? rightEnd,
+    Radius? leftStart,
+    Radius? rightEnd,
     this.isDirectional = false,
   })  : topLeft = leftStart,
         topRight = rightEnd,
@@ -57,8 +56,8 @@ class BorderRadiusGeometryDto extends Dto<BorderRadiusGeometry> {
         bottomEnd = rightEnd;
 
   BorderRadiusGeometryDto.vertical({
-    RadiusDto? top,
-    RadiusDto? bottom,
+    Radius? top,
+    Radius? bottom,
     this.isDirectional = false,
   })  : topLeft = top,
         topRight = top,
@@ -70,16 +69,16 @@ class BorderRadiusGeometryDto extends Dto<BorderRadiusGeometry> {
         bottomEnd = bottom;
 
   BorderRadiusGeometryDto.circular(
-    DoubleDto radius, {
+    double radius, {
     this.isDirectional = false,
-  })  : topLeft = RadiusDto.circular(radius),
-        topRight = RadiusDto.circular(radius),
-        bottomLeft = RadiusDto.circular(radius),
-        bottomRight = RadiusDto.circular(radius),
-        topStart = RadiusDto.circular(radius),
-        topEnd = RadiusDto.circular(radius),
-        bottomStart = RadiusDto.circular(radius),
-        bottomEnd = RadiusDto.circular(radius);
+  })  : topLeft = Radius.circular(radius),
+        topRight = Radius.circular(radius),
+        bottomLeft = Radius.circular(radius),
+        bottomRight = Radius.circular(radius),
+        topStart = Radius.circular(radius),
+        topEnd = Radius.circular(radius),
+        bottomStart = Radius.circular(radius),
+        bottomEnd = Radius.circular(radius);
 
   BorderRadiusGeometryAttribute get asAttribute =>
       BorderRadiusGeometryAttribute(this);
@@ -87,14 +86,14 @@ class BorderRadiusGeometryDto extends Dto<BorderRadiusGeometry> {
   BorderRadiusGeometryDto get toDirectional => copyWith(isDirectional: true);
 
   BorderRadiusGeometryDto copyWith({
-    RadiusDto? topLeft,
-    RadiusDto? topRight,
-    RadiusDto? bottomLeft,
-    RadiusDto? bottomRight,
-    RadiusDto? topStart,
-    RadiusDto? topEnd,
-    RadiusDto? bottomStart,
-    RadiusDto? bottomEnd,
+    Radius? topLeft,
+    Radius? topRight,
+    Radius? bottomLeft,
+    Radius? bottomRight,
+    Radius? topStart,
+    Radius? topEnd,
+    Radius? bottomStart,
+    Radius? bottomEnd,
     bool? isDirectional,
   }) {
     return BorderRadiusGeometryDto(
@@ -120,14 +119,14 @@ class BorderRadiusGeometryDto extends Dto<BorderRadiusGeometry> {
     }
 
     return BorderRadiusGeometryDto(
-      topLeft: topLeft?.merge(other.topLeft) ?? other.topLeft,
-      topRight: topRight?.merge(other.topRight) ?? other.topRight,
-      bottomLeft: bottomLeft?.merge(other.bottomLeft) ?? other.bottomLeft,
-      bottomRight: bottomRight?.merge(other.bottomRight) ?? other.bottomRight,
-      topStart: topStart?.merge(other.topStart) ?? other.topStart,
-      topEnd: topEnd?.merge(other.topEnd) ?? other.topEnd,
-      bottomStart: bottomStart?.merge(other.bottomStart) ?? other.bottomStart,
-      bottomEnd: bottomEnd?.merge(other.bottomEnd) ?? other.bottomEnd,
+      topLeft: other.topLeft ?? topLeft,
+      topRight: other.topRight ?? topRight,
+      bottomLeft: other.bottomLeft ?? bottomLeft,
+      bottomRight: other.bottomRight ?? bottomRight,
+      topStart: other.topStart ?? topStart,
+      topEnd: other.topEnd ?? topEnd,
+      bottomStart: other.bottomStart ?? bottomStart,
+      bottomEnd: other.bottomEnd ?? bottomEnd,
       isDirectional: other.isDirectional,
     );
   }
@@ -136,16 +135,16 @@ class BorderRadiusGeometryDto extends Dto<BorderRadiusGeometry> {
   BorderRadiusGeometry resolve(MixData mix) {
     return isDirectional
         ? BorderRadiusDirectional.only(
-            topStart: topStart?.resolve(mix) ?? Radius.zero,
-            topEnd: topEnd?.resolve(mix) ?? Radius.zero,
-            bottomStart: bottomStart?.resolve(mix) ?? Radius.zero,
-            bottomEnd: bottomEnd?.resolve(mix) ?? Radius.zero,
+            topStart: topStart ?? Radius.zero,
+            topEnd: topEnd ?? Radius.zero,
+            bottomStart: bottomStart ?? Radius.zero,
+            bottomEnd: bottomEnd ?? Radius.zero,
           )
         : BorderRadius.only(
-            topLeft: topLeft?.resolve(mix) ?? Radius.zero,
-            topRight: topRight?.resolve(mix) ?? Radius.zero,
-            bottomLeft: bottomLeft?.resolve(mix) ?? Radius.zero,
-            bottomRight: bottomRight?.resolve(mix) ?? Radius.zero,
+            topLeft: topLeft ?? Radius.zero,
+            topRight: topRight ?? Radius.zero,
+            bottomLeft: bottomLeft ?? Radius.zero,
+            bottomRight: bottomRight ?? Radius.zero,
           );
   }
 
@@ -257,9 +256,9 @@ class BoxBorderDto extends Dto<BoxBorder> {
 
 class BorderSideDto extends Dto<BorderSide> {
   final ColorDto? color;
-  final DoubleDto? width;
+  final double? width;
   final BorderStyle? style;
-  final DoubleDto? strokeAlign;
+  final double? strokeAlign;
 
   const BorderSideDto({
     this.color,
@@ -270,9 +269,9 @@ class BorderSideDto extends Dto<BorderSide> {
 
   BorderSideDto copyWith({
     ColorDto? color,
-    DoubleDto? width,
+    double? width,
     BorderStyle? style,
-    DoubleDto? strokeAlign,
+    double? strokeAlign,
   }) {
     return BorderSideDto(
       color: color ?? this.color,
@@ -288,9 +287,9 @@ class BorderSideDto extends Dto<BorderSide> {
 
     return BorderSideDto(
       color: color?.merge(other.color) ?? other.color,
-      strokeAlign: strokeAlign?.merge(other.strokeAlign) ?? other.strokeAlign,
+      strokeAlign: other.strokeAlign ?? strokeAlign,
       style: other.style ?? style,
-      width: width?.merge(other.width) ?? other.width,
+      width: other.width ?? width,
     );
   }
 
@@ -300,9 +299,9 @@ class BorderSideDto extends Dto<BorderSide> {
 
     return BorderSide(
       color: color?.resolve(mix) ?? defaultValue.color,
-      width: width?.resolve(mix) ?? defaultValue.width,
+      width: width ?? defaultValue.width,
       style: style ?? defaultValue.style,
-      strokeAlign: strokeAlign?.resolve(mix) ?? defaultValue.strokeAlign,
+      strokeAlign: strokeAlign ?? defaultValue.strokeAlign,
     );
   }
 

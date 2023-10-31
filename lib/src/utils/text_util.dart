@@ -2,13 +2,12 @@
 
 import 'package:flutter/material.dart';
 
-import '../attributes/strut_style_attribute.dart';
-import '../attributes/text_style_attribute.dart';
-import '../attributes/value_attributes.dart';
+import '../attributes/visual_attributes.dart';
 import '../core/directives/text_directive.dart';
+import '../core/dto/strut_style_dto.dart';
 import '../helpers/extensions/values_ext.dart';
 
-StrutStyleAttribute strutStyle(StrutStyle strutStyle) {
+StrutStyleDto strutStyle(StrutStyle strutStyle) {
   return strutStyle.toAttribute;
 }
 
@@ -25,7 +24,7 @@ TextOverflowAttribute textOverflow(TextOverflow overflow) {
 }
 
 TextScaleFactorAttribute textScaleFactor(double textScaleFactor) {
-  return TextScaleFactorAttribute(textScaleFactor.toDto);
+  return TextScaleFactorAttribute(textScaleFactor);
 }
 
 MaxLinesAttribute maxLines(int maxLines) {

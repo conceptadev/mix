@@ -1,10 +1,9 @@
-import '../attributes/value_attributes.dart';
-import '../core/dto/dtos.dart';
+import '../attributes/visual_attributes.dart';
 
 HeightAttribute height(double value) {
-  return HeightAttribute(DoubleDto(value));
+  return HeightAttribute(value);
 }
 
 WidthAttribute width(double value) {
-  return WidthAttribute(DoubleDto(value));
+  return WidthAttribute(value);
 }

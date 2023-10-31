@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
 import 'package:mix/src/attributes/container.attribute.dart';
 import 'package:mix/src/attributes/text_style.attribute.dart';
+import 'package:mix/src/core/dto/dtos.dart';
 import 'package:mix/src/factory/style_mix.dart';
 
 class RandomGenerator {
@@ -81,23 +82,6 @@ class RandomGenerator {
 
     final shape = Random().randomElement(BoxShape.values);
 
-    final boxAttributes = ContainerAttributes(
-      margin: margin,
-      padding: padding,
-      alignment: alignment,
-      height: height,
-      width: width,
-      color: colorScheme.background,
-      border: border,
-      borderRadius: borderRadius,
-      boxShadow: boxShadow,
-      maxHeight: maxHeight,
-      minHeight: minHeight,
-      maxWidth: maxWidth,
-      minWidth: minWidth,
-      shape: shape,
-    );
-
     if (someNullable) {
       return StyledContainerAttributes(
         margin: Random().nextBool() ? margin : null,
@@ -120,18 +104,10 @@ class RandomGenerator {
     return boxAttributes;
   }
 
-  static List<StyledContainerAttributes> boxAttributesList({
-    int length = 10,
-    bool someNullable = true,
-  }) {
-    return List.generate(
-        length, (_) => boxAttributes(someNullable: someNullable));
-  }
-
   static SpaceGeometryDto edgeInsetsDto() {
     final random = Random();
 
-    return SpaceGeometryDto.only(
+    return SpaceGeometryDto(
       top: random.nextDouble() * 100,
       bottom: random.nextDouble() * 100,
       left: random.nextDouble() * 100,
@@ -139,21 +115,21 @@ class RandomGenerator {
     );
   }
 
-  static BorderRadiusDto borderRadiusDto() {
+  static BorderRadiusGeometryDto borderRadiusDto() {
     final random = Random();
 
-    return BorderRadiusDto.only(
-      topLeft: RadiusDto.circular(random.nextDouble() * 20),
-      topRight: RadiusDto.circular(random.nextDouble() * 20),
-      bottomLeft: RadiusDto.circular(random.nextDouble() * 20),
-      bottomRight: RadiusDto.circular(random.nextDouble() * 20),
+    return BorderRadiusGeometryDto(
+      topLeft: Radius.circular(random.nextDouble() * 20),
+      topRight: Radius.circular(random.nextDouble() * 20),
+      bottomLeft: Radius.circular(random.nextDouble() * 20),
+      bottomRight: Radius.circular(random.nextDouble() * 20),
     );
   }
 
-  static BorderDto borderDto() {
+  static BoxBorderDto borderDto() {
     final side = borderSideDto();
 
-    return BorderDto.only(
+    return BoxBorderDto(
       top: side,
       right: side,
       bottom: side,
@@ -180,8 +156,8 @@ class RandomGenerator {
     );
   }
 
-  static ShadowRef shadowDto() {
-    return ShadowRef(
+  static ShadowDto shadowDto() {
+    return ShadowDto(
       color: colorDto(),
       offset: Offset(
         Random().nextMaxDouble(10),
@@ -191,11 +167,25 @@ class RandomGenerator {
     );
   }
 
-  static BoxShadowRef boxShadowDto() {
+  static Alignment aligment() {
+    return Random().randomElement([
+      Alignment.center,
+      Alignment.centerLeft,
+      Alignment.centerRight,
+      Alignment.topCenter,
+      Alignment.topLeft,
+      Alignment.topRight,
+      Alignment.bottomCenter,
+      Alignment.bottomLeft,
+      Alignment.bottomRight,
+    ]);
+  }
+
+  static BoxShadowDto boxShadowDto() {
     // Use shadow as a starting point
     final shadow = shadowDto();
 
-    return BoxShadowRef(
+    return BoxShadowDto(
       color: shadow.color,
       offset: shadow.offset,
       blurRadius: shadow.blurRadius,

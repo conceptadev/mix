@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-import '../attributes/value_attributes.dart';
+import '../attributes/visual_attributes.dart';
 
 const matrix4 = _matrix4;
 const transform = _matrix4;

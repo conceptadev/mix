@@ -24,10 +24,10 @@ class MixValues with Comparable {
   factory MixValues.create(Iterable<Attribute> attributes) {
     final variantList = <VariantAttribute>[];
 
-    final styleList = <StyleAttribute>[];
+    final styleList = <VisualAttribute>[];
 
     for (final attribute in attributes) {
-      if (attribute is StyleAttribute) {
+      if (attribute is VisualAttribute) {
         styleList.add(attribute);
       } else if (attribute is VariantAttribute) {
         variantList.add(attribute);
@@ -65,8 +65,8 @@ class MixValues with Comparable {
     return styles.whereType<Decorator>().toList();
   }
 
-  /// Returns an instance of the specified [StyleAttribute] type from the [MixData].
-  A? stylesOfType<A extends StyleAttribute>() {
+  /// Returns an instance of the specified [VisualAttribute] type from the [MixData].
+  A? stylesOfType<A extends VisualAttribute>() {
     return styles.whereType<A>() as A?;
   }
 

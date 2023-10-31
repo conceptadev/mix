@@ -24,11 +24,11 @@ mixin Mergeable<T> {
   }
 }
 
-abstract class SingleValueAttribute<T extends SingleValueAttribute<T, R>, R>
-    extends StyleAttribute<R> {
+abstract class ScalarVisualAttribute<T extends ScalarVisualAttribute<T, R>, R>
+    extends VisualAttribute<R> {
   final R value;
 
-  const SingleValueAttribute(this.value);
+  const ScalarVisualAttribute(this.value);
 
   // Factory for merge methods
   // ignore: avoid-shadowing
@@ -55,7 +55,7 @@ abstract class SingleValueAttribute<T extends SingleValueAttribute<T, R>, R>
 abstract class DtoAttribute<
     Attr extends DtoAttribute<Attr, Value, ResolvedValue>,
     Value extends Dto<ResolvedValue>,
-    ResolvedValue> extends StyleAttribute<ResolvedValue> {
+    ResolvedValue> extends VisualAttribute<ResolvedValue> {
   final Value value;
 
   const DtoAttribute(this.value);
@@ -79,38 +79,10 @@ abstract class DtoAttribute<
   get props => [value];
 }
 
-abstract class ModifiableDtoAttribute<
-    Attr extends ModifiableDtoAttribute<Attr, DtoValue, ResolvedValue>,
-    DtoValue extends ModifiableDto<ResolvedValue>,
-    ResolvedValue> extends StyleAttribute<ResolvedValue> {
-  final DtoValue value;
+abstract class VisualAttribute<T> extends Attribute with Resolvable<T> {
+  const VisualAttribute();
 
-  const ModifiableDtoAttribute(this.value);
-
-// Factory for merge methods
-  // ignore: avoid-shadowing
-  Attr create(DtoValue value);
-
-  @override
-  ResolvedValue resolve(MixData mix) {
-    return value.resolve(mix);
-  }
-
-  @override
-  Attr merge(Attr? other) {
-    if (other == null) return create(value);
-
-    return create((value).merge(other.value));
-  }
-
-  @override
-  get props => [value];
-}
-
-abstract class StyleAttribute<T> extends Attribute with Resolvable<T> {
-  const StyleAttribute();
-
-  K? resolveAttr<K, R extends StyleAttribute<K>>(
+  K? resolveAttribute<K, R extends VisualAttribute<K>>(
     covariant R? resolvable,
     MixData mix,
   ) {
@@ -120,18 +92,6 @@ abstract class StyleAttribute<T> extends Attribute with Resolvable<T> {
 
     return selectedAttribute?.resolve(mix);
   }
-}
-
-typedef ValueModifier<T> = T Function(T value);
-
-abstract class ModifiableDto<T> extends Dto<T> {
-  final T value;
-
-  final ValueModifier<T>? modifier;
-
-  const ModifiableDto(this.value, {this.modifier});
-
-  T modify(T valueToModify) => modifier?.call(valueToModify) ?? valueToModify;
 }
 
 abstract class MixExtension<T extends MixExtension<T>> extends ThemeExtension<T>

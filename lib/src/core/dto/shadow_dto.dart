@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 import '../../factory/mix_provider_data.dart';
 import '../attribute.dart';
-import 'dtos.dart';
+import 'color_dto.dart';
 
 class ShadowDto<T extends Shadow> extends Dto<Shadow> {
   final ColorDto? color;
   final Offset? offset;
-  final DoubleDto? blurRadius;
+  final double? blurRadius;
 
   const ShadowDto({this.blurRadius, this.color, this.offset});
 
@@ -18,14 +18,14 @@ class ShadowDto<T extends Shadow> extends Dto<Shadow> {
     return Shadow(
       color: color?.resolve(mix) ?? defaultShadow.color,
       offset: offset ?? defaultShadow.offset,
-      blurRadius: blurRadius?.resolve(mix) ?? defaultShadow.blurRadius,
+      blurRadius: blurRadius ?? defaultShadow.blurRadius,
     ) as T;
   }
 
   @override
   ShadowDto merge(ShadowDto? other) {
     return ShadowDto(
-      blurRadius: mergeAttr(blurRadius, other?.blurRadius),
+      blurRadius: other?.blurRadius ?? blurRadius,
       color: mergeAttr(color, other?.color),
       offset: other?.offset ?? offset,
     );
@@ -36,7 +36,7 @@ class ShadowDto<T extends Shadow> extends Dto<Shadow> {
 }
 
 class BoxShadowDto extends ShadowDto<BoxShadow> {
-  final DoubleDto? spreadRadius;
+  final double? spreadRadius;
 
   const BoxShadowDto({
     super.color,
@@ -49,11 +49,13 @@ class BoxShadowDto extends ShadowDto<BoxShadow> {
   BoxShadow resolve(MixData mix) {
     const defaultShadow = BoxShadow();
 
+    final shadow = super.resolve(mix);
+
     return BoxShadow(
-      color: color?.resolve(mix) ?? defaultShadow.color,
-      offset: offset ?? defaultShadow.offset,
-      blurRadius: blurRadius?.resolve(mix) ?? defaultShadow.blurRadius,
-      spreadRadius: spreadRadius?.resolve(mix) ?? defaultShadow.spreadRadius,
+      color: shadow.color,
+      offset: shadow.offset,
+      blurRadius: shadow.blurRadius,
+      spreadRadius: spreadRadius ?? defaultShadow.spreadRadius,
     );
   }
 
@@ -62,7 +64,7 @@ class BoxShadowDto extends ShadowDto<BoxShadow> {
     return BoxShadowDto(
       color: mergeAttr(color, other?.color),
       offset: other?.offset ?? offset,
-      blurRadius: mergeAttr(blurRadius, other?.blurRadius),
+      blurRadius: other?.blurRadius ?? blurRadius,
       spreadRadius: other?.spreadRadius ?? spreadRadius,
     );
   }

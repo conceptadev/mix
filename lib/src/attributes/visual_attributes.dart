@@ -3,26 +3,29 @@ import 'package:flutter/widgets.dart';
 
 import '../core/attribute.dart';
 import '../core/dto/border_dto.dart';
+import '../core/dto/color_dto.dart';
 import '../core/dto/dtos.dart';
+import '../core/dto/strut_style_dto.dart';
+import '../core/dto/text_style_dto.dart';
 
-abstract class DoubleAttribute
-    extends ModifiableDtoAttribute<DoubleAttribute, DoubleDto, double> {
-  const DoubleAttribute(super.value);
-}
+// abstract class DoubleAttribute
+//     extends ModifiableDtoAttribute<DoubleAttribute, DoubleDto, double> {
+//   const DoubleAttribute(super.value);
+// }
 
 abstract class ColorAttribute
-    extends ModifiableDtoAttribute<ColorAttribute, ColorDto, Color> {
+    extends DtoAttribute<ColorAttribute, ColorDto, Color> {
   const ColorAttribute(super.value);
 }
 
-class AxisAttribute extends SingleValueAttribute<AxisAttribute, Axis> {
+class AxisAttribute extends ScalarVisualAttribute<AxisAttribute, Axis> {
   const AxisAttribute(super.value);
 
   @override
   AxisAttribute create(value) => AxisAttribute(value);
 }
 
-class MainAxisAlignmentAttribute extends SingleValueAttribute<
+class MainAxisAlignmentAttribute extends ScalarVisualAttribute<
     MainAxisAlignmentAttribute, MainAxisAlignment> {
   const MainAxisAlignmentAttribute(super.value);
 
@@ -31,14 +34,22 @@ class MainAxisAlignmentAttribute extends SingleValueAttribute<
 }
 
 class MainAxisSizeAttribute
-    extends SingleValueAttribute<MainAxisSizeAttribute, MainAxisSize> {
+    extends ScalarVisualAttribute<MainAxisSizeAttribute, MainAxisSize> {
   const MainAxisSizeAttribute(super.value);
 
   @override
   MainAxisSizeAttribute create(value) => MainAxisSizeAttribute(value);
 }
 
-class CrossAxisAlignmentAttribute extends SingleValueAttribute<
+class TextStyleAttribute
+    extends DtoAttribute<TextStyleAttribute, TextStyleDto, TextStyle> {
+  const TextStyleAttribute(super.value);
+
+  @override
+  TextStyleAttribute create(value) => TextStyleAttribute(value);
+}
+
+class CrossAxisAlignmentAttribute extends ScalarVisualAttribute<
     CrossAxisAlignmentAttribute, CrossAxisAlignment> {
   const CrossAxisAlignmentAttribute(super.value);
 
@@ -47,7 +58,7 @@ class CrossAxisAlignmentAttribute extends SingleValueAttribute<
       CrossAxisAlignmentAttribute(value);
 }
 
-class VerticalDirectionAttribute extends SingleValueAttribute<
+class VerticalDirectionAttribute extends ScalarVisualAttribute<
     VerticalDirectionAttribute, VerticalDirection> {
   const VerticalDirectionAttribute(super.value);
 
@@ -56,18 +67,26 @@ class VerticalDirectionAttribute extends SingleValueAttribute<
 }
 
 class TextBaselineAttribute
-    extends SingleValueAttribute<TextBaselineAttribute, TextBaseline> {
+    extends ScalarVisualAttribute<TextBaselineAttribute, TextBaseline> {
   const TextBaselineAttribute(super.value);
 
   @override
   TextBaselineAttribute create(value) => TextBaselineAttribute(value);
 }
 
-class ClipAttribute extends SingleValueAttribute<ClipAttribute, Clip> {
+class ClipAttribute extends ScalarVisualAttribute<ClipAttribute, Clip> {
   const ClipAttribute(super.value);
 
   @override
   ClipAttribute create(value) => ClipAttribute(value);
+}
+
+class StrutStyleAttribute
+    extends DtoAttribute<StrutStyleAttribute, StrutStyleDto, StrutStyle> {
+  const StrutStyleAttribute(super.value);
+
+  @override
+  StrutStyleAttribute create(value) => StrutStyleAttribute(value);
 }
 
 class ImageColorAttribute extends ColorAttribute {
@@ -78,14 +97,15 @@ class ImageColorAttribute extends ColorAttribute {
 }
 
 class ImageAlignmentAttribute
-    extends SingleValueAttribute<ImageAlignmentAttribute, Alignment> {
+    extends ScalarVisualAttribute<ImageAlignmentAttribute, Alignment> {
   const ImageAlignmentAttribute(super.value);
 
   @override
   ImageAlignmentAttribute create(value) => ImageAlignmentAttribute(value);
 }
 
-class ImageScaleAttribute extends DoubleAttribute {
+class ImageScaleAttribute
+    extends ScalarVisualAttribute<ImageScaleAttribute, double> {
   const ImageScaleAttribute(super.value);
 
   @override
@@ -93,7 +113,7 @@ class ImageScaleAttribute extends DoubleAttribute {
 }
 
 class ImageFitAttribute
-    extends SingleValueAttribute<ImageFitAttribute, BoxFit> {
+    extends ScalarVisualAttribute<ImageFitAttribute, BoxFit> {
   const ImageFitAttribute(super.value);
 
   @override
@@ -101,21 +121,21 @@ class ImageFitAttribute
 }
 
 class ImageRepeatAttribute
-    extends SingleValueAttribute<ImageRepeatAttribute, ImageRepeat> {
+    extends ScalarVisualAttribute<ImageRepeatAttribute, ImageRepeat> {
   const ImageRepeatAttribute(super.value);
 
   @override
   ImageRepeatAttribute create(value) => ImageRepeatAttribute(value);
 }
 
-class HeightAttribute extends DoubleAttribute {
+class HeightAttribute extends ScalarVisualAttribute<HeightAttribute, double> {
   const HeightAttribute(super.value);
 
   @override
   HeightAttribute create(value) => HeightAttribute(value);
 }
 
-class WidthAttribute extends DoubleAttribute {
+class WidthAttribute extends ScalarVisualAttribute<WidthAttribute, double> {
   const WidthAttribute(super.value);
 
   @override
@@ -123,7 +143,7 @@ class WidthAttribute extends DoubleAttribute {
 }
 
 class GradientAttribute
-    extends SingleValueAttribute<GradientAttribute, Gradient> {
+    extends ScalarVisualAttribute<GradientAttribute, Gradient> {
   const GradientAttribute(super.value);
 
   @override
@@ -131,7 +151,7 @@ class GradientAttribute
 }
 
 class TextStrutStyleAttribute
-    extends SingleValueAttribute<TextStrutStyleAttribute, StrutStyle> {
+    extends ScalarVisualAttribute<TextStrutStyleAttribute, StrutStyle> {
   const TextStrutStyleAttribute(super.value);
 
   @override
@@ -139,7 +159,7 @@ class TextStrutStyleAttribute
 }
 
 class TextAlignAttribute
-    extends SingleValueAttribute<TextAlignAttribute, TextAlign> {
+    extends ScalarVisualAttribute<TextAlignAttribute, TextAlign> {
   const TextAlignAttribute(super.value);
 
   @override
@@ -147,14 +167,14 @@ class TextAlignAttribute
 }
 
 class TextDirectionAttribute
-    extends SingleValueAttribute<TextDirectionAttribute, TextDirection> {
+    extends ScalarVisualAttribute<TextDirectionAttribute, TextDirection> {
   const TextDirectionAttribute(super.value);
 
   @override
   TextDirectionAttribute create(value) => TextDirectionAttribute(value);
 }
 
-class SoftWrapAttribute extends SingleValueAttribute<SoftWrapAttribute, bool> {
+class SoftWrapAttribute extends ScalarVisualAttribute<SoftWrapAttribute, bool> {
   const SoftWrapAttribute(super.value);
 
   @override
@@ -162,21 +182,22 @@ class SoftWrapAttribute extends SingleValueAttribute<SoftWrapAttribute, bool> {
 }
 
 class TextOverflowAttribute
-    extends SingleValueAttribute<TextOverflowAttribute, TextOverflow> {
+    extends ScalarVisualAttribute<TextOverflowAttribute, TextOverflow> {
   const TextOverflowAttribute(super.value);
 
   @override
   TextOverflowAttribute create(value) => TextOverflowAttribute(value);
 }
 
-class TextScaleFactorAttribute extends DoubleAttribute {
+class TextScaleFactorAttribute
+    extends ScalarVisualAttribute<TextScaleFactorAttribute, double> {
   const TextScaleFactorAttribute(super.value);
 
   @override
   TextScaleFactorAttribute create(value) => TextScaleFactorAttribute(value);
 }
 
-class MaxLinesAttribute extends SingleValueAttribute<MaxLinesAttribute, int> {
+class MaxLinesAttribute extends ScalarVisualAttribute<MaxLinesAttribute, int> {
   const MaxLinesAttribute(super.value);
 
   @override
@@ -184,14 +205,14 @@ class MaxLinesAttribute extends SingleValueAttribute<MaxLinesAttribute, int> {
 }
 
 class TextWidthBasisAttribute
-    extends SingleValueAttribute<TextWidthBasisAttribute, TextWidthBasis> {
+    extends ScalarVisualAttribute<TextWidthBasisAttribute, TextWidthBasis> {
   const TextWidthBasisAttribute(super.value);
 
   @override
   TextWidthBasisAttribute create(value) => TextWidthBasisAttribute(value);
 }
 
-class TextHeightBehaviorAttribute extends SingleValueAttribute<
+class TextHeightBehaviorAttribute extends ScalarVisualAttribute<
     TextHeightBehaviorAttribute, TextHeightBehavior> {
   const TextHeightBehaviorAttribute(super.value);
 
@@ -207,14 +228,15 @@ class IconColorAttribute extends ColorAttribute {
   IconColorAttribute create(value) => IconColorAttribute(value);
 }
 
-class IconSizeAttribute extends DoubleAttribute {
+class IconSizeAttribute
+    extends ScalarVisualAttribute<IconSizeAttribute, double> {
   const IconSizeAttribute(super.value);
 
   @override
   IconSizeAttribute create(value) => IconSizeAttribute(value);
 }
 
-class BoxFitAttribute extends SingleValueAttribute<BoxFitAttribute, BoxFit> {
+class BoxFitAttribute extends ScalarVisualAttribute<BoxFitAttribute, BoxFit> {
   const BoxFitAttribute(super.value);
 
   @override
@@ -222,14 +244,15 @@ class BoxFitAttribute extends SingleValueAttribute<BoxFitAttribute, BoxFit> {
 }
 
 class StackFitAttribute
-    extends SingleValueAttribute<StackFitAttribute, StackFit> {
+    extends ScalarVisualAttribute<StackFitAttribute, StackFit> {
   const StackFitAttribute(super.value);
 
   @override
   StackFitAttribute create(value) => StackFitAttribute(value);
 }
 
-class FlexFitAttribute extends SingleValueAttribute<FlexFitAttribute, FlexFit> {
+class FlexFitAttribute
+    extends ScalarVisualAttribute<FlexFitAttribute, FlexFit> {
   const FlexFitAttribute(super.value);
 
   @override
@@ -237,7 +260,7 @@ class FlexFitAttribute extends SingleValueAttribute<FlexFitAttribute, FlexFit> {
 }
 
 class ForegroundDecorationAttribute
-    extends SingleValueAttribute<ForegroundDecorationAttribute, Decoration> {
+    extends ScalarVisualAttribute<ForegroundDecorationAttribute, Decoration> {
   const ForegroundDecorationAttribute(super.value);
 
   @override
@@ -245,19 +268,19 @@ class ForegroundDecorationAttribute
       ForegroundDecorationAttribute(value);
 }
 
-class ConstraintsAttribute
-    extends SingleValueAttribute<ConstraintsAttribute, BoxConstraints> {
-  const ConstraintsAttribute(super.value);
-
-  @override
-  ConstraintsAttribute create(value) => ConstraintsAttribute(value);
-}
-
 class MarginAttribute extends SpacingAttribute<MarginAttribute> {
   const MarginAttribute(super.value);
 
   @override
   MarginAttribute create(value) => MarginAttribute(value);
+}
+
+class BoxShapeAttribute
+    extends ScalarVisualAttribute<BoxShapeAttribute, BoxShape> {
+  const BoxShapeAttribute(super.value);
+
+  @override
+  BoxShapeAttribute create(value) => BoxShapeAttribute(value);
 }
 
 class PaddingAttribute extends SpacingAttribute<PaddingAttribute> {
@@ -268,7 +291,7 @@ class PaddingAttribute extends SpacingAttribute<PaddingAttribute> {
 }
 
 class TransformAttribute
-    extends SingleValueAttribute<TransformAttribute, Matrix4> {
+    extends ScalarVisualAttribute<TransformAttribute, Matrix4> {
   const TransformAttribute(super.value);
 
   @override
@@ -276,7 +299,7 @@ class TransformAttribute
 }
 
 class TransformAlignmentAttribute
-    extends SingleValueAttribute<TransformAlignmentAttribute, Alignment> {
+    extends ScalarVisualAttribute<TransformAlignmentAttribute, Alignment> {
   const TransformAlignmentAttribute(super.value);
 
   @override
@@ -285,7 +308,7 @@ class TransformAlignmentAttribute
 }
 
 class BlendModeAttribute
-    extends SingleValueAttribute<BlendModeAttribute, BlendMode> {
+    extends ScalarVisualAttribute<BlendModeAttribute, BlendMode> {
   const BlendModeAttribute(super.value);
 
   @override

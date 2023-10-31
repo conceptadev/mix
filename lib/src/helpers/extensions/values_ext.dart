@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
-import '../../attributes/strut_style_attribute.dart';
-import '../../attributes/value_attributes.dart';
+import '../../attributes/visual_attributes.dart';
 import '../../core/dto/border_dto.dart';
+import '../../core/dto/color_dto.dart';
 import '../../core/dto/dtos.dart';
-import '../../core/dto/radius_dto.dart';
 import '../../core/dto/shadow_dto.dart';
+import '../../core/dto/strut_style_dto.dart';
 import '../../core/dto/text_style_dto.dart';
 
 extension StrutStyleExt on StrutStyle {
-  StrutStyleAttribute get toAttribute {
-    return StrutStyleAttribute.only(
+  StrutStyleDto get toAttribute {
+    return StrutStyleDto.only(
       fontFamily: fontFamily,
       fontFamilyFallback: fontFamilyFallback,
       fontSize: fontSize,
@@ -36,10 +36,6 @@ extension StrutStyleExt on StrutStyle {
       debugLabel: other?.debugLabel ?? debugLabel,
     );
   }
-}
-
-extension DoubleExt on double {
-  DoubleDto get toDto => DoubleDto(this);
 }
 
 // Extension for TextAlign
@@ -70,17 +66,13 @@ extension AlignmentGeometryExt on AlignmentGeometry {
 }
 
 extension AlignmentExt on Alignment {
-  AlignmentGeometryDto get toDto =>
-      AlignmentGeometryDto(x: x.toDto, y: y.toDto);
+  AlignmentGeometryDto get toDto => AlignmentGeometryDto(x: x, y: y);
   AlignmentGeometryAttribute get toAttribute =>
       AlignmentGeometryAttribute(toDto);
 }
 
 extension AligmentDirectionalExt on AlignmentDirectional {
-  AlignmentGeometryDto get toDto => AlignmentGeometryDto(
-        start: start.toDto,
-        y: y.toDto,
-      );
+  AlignmentGeometryDto get toDto => AlignmentGeometryDto(start: start, y: y);
   AlignmentGeometryAttribute get toAttribute =>
       AlignmentGeometryAttribute(toDto);
 }
@@ -107,35 +99,35 @@ extension EdgeInsetsGeometryExt on EdgeInsetsGeometry {
 // Extensions for EdgeInsets, similar to Alignment
 extension EdgeInsetsExt on EdgeInsets {
   EdgeInsetsGeometryDto get toDto => EdgeInsetsGeometryDto(
-        top: top.toDto,
-        bottom: bottom.toDto,
-        left: left.toDto,
-        right: right.toDto,
+        top: top,
+        bottom: bottom,
+        left: left,
+        right: right,
       );
 
   SpaceGeometryDto get toSpace => SpaceGeometryDto(
-        top: top.toDto,
-        bottom: bottom.toDto,
-        left: left.toDto,
-        right: right.toDto,
+        top: top,
+        bottom: bottom,
+        left: left,
+        right: right,
       );
 }
 
 // Extensions for EdgeInsetsDirectional, similar to AlignmentDirectional
 extension EdgeInsetsDirectionalExt on EdgeInsetsDirectional {
   EdgeInsetsGeometryDto get toDto => EdgeInsetsGeometryDto(
-        top: top.toDto,
-        bottom: bottom.toDto,
-        start: start.toDto,
-        end: end.toDto,
+        top: top,
+        bottom: bottom,
+        start: start,
+        end: end,
         isDirectional: true,
       );
 
   SpaceGeometryDto get toSpace => SpaceGeometryDto(
-        top: top.toDto,
-        bottom: bottom.toDto,
-        start: start.toDto,
-        end: end.toDto,
+        top: top,
+        bottom: bottom,
+        start: start,
+        end: end,
         isDirectional: true,
       );
 }
@@ -188,10 +180,10 @@ extension BorderRadiusGeometryExt on BorderRadiusGeometry {
 
 extension BorderRadiusDirectionalExrt on BorderRadiusDirectional {
   BorderRadiusGeometryDto get toDto => BorderRadiusGeometryDto(
-        topStart: topStart.toDto,
-        topEnd: topEnd.toDto,
-        bottomStart: bottomStart.toDto,
-        bottomEnd: bottomEnd.toDto,
+        topStart: topStart,
+        topEnd: topEnd,
+        bottomStart: bottomStart,
+        bottomEnd: bottomEnd,
       );
 
   BorderRadiusGeometryAttribute get toAttribute =>
@@ -201,17 +193,13 @@ extension BorderRadiusDirectionalExrt on BorderRadiusDirectional {
 // Extension for BorderRadius
 extension BorderRadiusExt on BorderRadius {
   BorderRadiusGeometryDto get toDto => BorderRadiusGeometryDto(
-        topLeft: topLeft.toDto,
-        topRight: topRight.toDto,
-        bottomLeft: bottomLeft.toDto,
-        bottomRight: bottomRight.toDto,
+        topLeft: topLeft,
+        topRight: topRight,
+        bottomLeft: bottomLeft,
+        bottomRight: bottomRight,
       );
   BorderRadiusGeometryAttribute get toAttribute =>
       BorderRadiusGeometryAttribute(toDto);
-}
-
-extension RadiusExt on Radius {
-  RadiusDto get toDto => RadiusDto(x: x.toDto, y: y.toDto);
 }
 
 extension Matrix4Ext on Matrix4 {
@@ -228,9 +216,9 @@ extension Matrix4Ext on Matrix4 {
 extension BorderSideExt on BorderSide {
   BorderSideDto get toDto => BorderSideDto(
         color: color.toDto,
-        strokeAlign: strokeAlign.toDto,
+        strokeAlign: strokeAlign,
         style: style,
-        width: width.toDto,
+        width: width,
       );
 }
 
@@ -247,7 +235,7 @@ extension BoxBorderExt on BoxBorder {
 
 extension ShadowExt on Shadow {
   ShadowDto get toDto => ShadowDto(
-        blurRadius: blurRadius.toDto,
+        blurRadius: blurRadius,
         color: color.toDto,
         offset: offset,
       );
@@ -257,8 +245,8 @@ extension BoxShadowExt on BoxShadow {
   BoxShadowDto get toDto => BoxShadowDto(
         color: color.toDto,
         offset: offset,
-        blurRadius: blurRadius.toDto,
-        spreadRadius: spreadRadius.toDto,
+        blurRadius: blurRadius,
+        spreadRadius: spreadRadius,
       );
 }
 
@@ -270,20 +258,20 @@ extension TextStyleExt on TextStyle {
         decoration: decoration,
         decorationColor: decorationColor?.toDto,
         decorationStyle: decorationStyle,
-        decorationThickness: decorationThickness?.toDto,
+        decorationThickness: decorationThickness,
         fontFamily: fontFamily,
         fontFamilyFallback: fontFamilyFallback,
         fontFeatures: fontFeatures,
-        fontSize: fontSize?.toDto,
+        fontSize: fontSize,
         fontStyle: fontStyle,
         fontWeight: fontWeight,
         foreground: foreground,
-        height: height?.toDto,
-        letterSpacing: letterSpacing?.toDto,
+        height: height,
+        letterSpacing: letterSpacing,
         locale: locale,
         shadows: shadows?.map((e) => e.toDto).toList(),
         textBaseline: textBaseline,
-        wordSpacing: wordSpacing?.toDto,
+        wordSpacing: wordSpacing,
       );
 }
 

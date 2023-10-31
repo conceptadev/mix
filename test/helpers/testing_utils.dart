@@ -124,7 +124,7 @@ class BoxTestWidget extends StatelessWidget {
 }
 
 @isTestGroup
-void testSingleAttributeValue<T extends SingleValueAttribute<T, V>, V>(
+void testSingleAttributeValue<T extends ScalarVisualAttribute<T, V>, V>(
   String groupName,
   T Function(V value) builder,
   List<V> values,
@@ -162,40 +162,6 @@ void testSingleAttributeValue<T extends SingleValueAttribute<T, V>, V>(
         final attr1 = builder(value1);
         final merged = attr1.merge(null);
         expect(merged, equals(attr1));
-      });
-    }
-  });
-}
-
-@isTestGroup
-void testDoubleAttributeValue<T extends ModifiableDtoAttribute<T, D, R>,
-    D extends ModifiableDto<R>, R>({
-  required String groupName,
-  required T Function(D dto) builder,
-  required D Function(R value, ValueModifier<R> modifier) dtoBuilder,
-  required R Function(D dto, MixData mix) dtoResolver,
-  required List<R> values,
-  required ValueModifier<R> modifier,
-}) {
-  group('$groupName - DtoAttribute testing', () {
-    for (var value in values) {
-      test('merge with modifier', () {
-        final dto1 = dtoBuilder(value, modifier);
-        final dto2 = dtoBuilder(value, modifier);
-        final attr1 = builder(dto1);
-        final attr2 = builder(dto2);
-
-        final merged = attr1.merge(attr2);
-        expect(merged.value, equals(dto2));
-      });
-
-      test('resolve modified value', () {
-        final dto1 = dtoBuilder(value, modifier);
-        final attr1 = builder(dto1);
-        final resolvedValue = attr1.resolve(EmptyMixData);
-        final expectedValue = dtoResolver(dto1, EmptyMixData);
-
-        expect(resolvedValue, equals(expectedValue));
       });
     }
   });
