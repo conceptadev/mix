@@ -9,7 +9,7 @@ ScaleDecorator _scale(double scale) {
   return ScaleDecorator(scale);
 }
 
-class ScaleDecorator extends Decorator<double> {
+class ScaleDecorator extends ParentDecorator<double> {
   final double _scale;
   const ScaleDecorator(this._scale);
 
@@ -25,9 +25,7 @@ class ScaleDecorator extends Decorator<double> {
   get props => [_scale];
 
   @override
-  Widget build(Widget child, MixData mix) {
-    final scale = resolve(mix);
-
-    return Transform.scale(scale: scale, child: child);
+  Widget build(child, value) {
+    return Transform.scale(scale: value, child: child);
   }
 }

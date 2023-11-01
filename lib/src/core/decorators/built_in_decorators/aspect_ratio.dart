@@ -9,7 +9,7 @@ AspectRatioDecorator _aspectRatio(double aspectRatio) {
   return AspectRatioDecorator(aspectRatio: aspectRatio);
 }
 
-class AspectRatioDecorator extends Decorator<double> {
+class AspectRatioDecorator extends ParentDecorator<double> {
   final double _aspectRatio;
   const AspectRatioDecorator({required double aspectRatio})
       : _aspectRatio = aspectRatio;
@@ -26,9 +26,7 @@ class AspectRatioDecorator extends Decorator<double> {
   get props => [_aspectRatio];
 
   @override
-  Widget build(Widget child, MixData mix) {
-    final aspectRatio = resolve(mix);
-
-    return AspectRatio(aspectRatio: aspectRatio, child: child);
+  Widget build(Widget child, double value) {
+    return AspectRatio(aspectRatio: value, child: child);
   }
 }

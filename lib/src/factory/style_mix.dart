@@ -4,7 +4,6 @@ import '../attributes/variant_attribute.dart';
 import '../attributes/wrapped_attribute.dart';
 import '../core/attribute.dart';
 import '../core/variants/variant.dart';
-import '../helpers/attributes_map.dart';
 
 /// A utility class for managing a collection of styling attributes and variants.
 ///
@@ -22,16 +21,13 @@ class StyleMix {
   /// A constant, empty mix for use with const constructor widgets.
   ///
   /// This can be used as a default or initial value where a `StyleMix` is required.
-  static const empty = StyleMix._(
-    styles: VisualAttributeMap.empty,
-    variants: VariantAttributeMap.empty,
-  );
+  static const empty = StyleMix._(styles: [], variants: []);
 
   /// A map of visual attributes contained in this mix.
-  final VisualAttributeMap styles;
+  final List<VisualAttribute> styles;
 
   /// A map of variant attributes contained in this mix.
-  final VariantAttributeMap variants;
+  final List<VariantAttribute> variants;
 
   const StyleMix._({required this.styles, required this.variants});
 
@@ -100,17 +96,14 @@ class StyleMix {
       } else if (attribute is VariantAttribute) {
         variantList.add(attribute);
       } else if (attribute is WrappedStyleAttribute) {
-        variantList.addAll(attribute.value.variants.values);
-        styleList.addAll(attribute.value.styles.values);
+        variantList.addAll(attribute.value.variants);
+        styleList.addAll(attribute.value.styles);
       } else {
         assert(false, 'Unsupported attribute type: $attribute');
       }
     }
 
-    return StyleMix._(
-      styles: VisualAttributeMap.from(styleList),
-      variants: VariantAttributeMap.from(variantList),
-    );
+    return StyleMix._(styles: styleList, variants: variantList);
   }
 
   /// Selects a mix based on a [condition].
@@ -145,7 +138,7 @@ class StyleMix {
   /// Returns a list of all attributes contained in this mix.
   ///
   /// This includes both visual and variant attributes.
-  Iterable<Attribute> get values => [...styles.values, ...variants.values];
+  Iterable<Attribute> get values => [...styles, ...variants];
 
   /// Returns true if this StyleMix does not contain any attributes or variants.
   bool get isEmpty => styles.isEmpty && variants.isEmpty;
@@ -157,12 +150,12 @@ class StyleMix {
   ///
   /// If [styles] or [variants] is null, the corresponding attribute map of this mix is used.
   StyleMix copyWith({
-    VisualAttributeMap? styles,
-    VariantAttributeMap? variants,
+    List<VisualAttribute>? styles,
+    List<VariantAttribute>? variants,
   }) {
     return StyleMix._(
-      styles: this.styles.merge(styles),
-      variants: this.variants.merge(variants),
+      styles: [...this.styles, ...?styles],
+      variants: [...this.variants, ...?variants],
     );
   }
 
@@ -245,7 +238,7 @@ class StyleMix {
     final remainingVariants = <VariantAttribute>[];
 
     for (final v in selectedVariants) {
-      for (VariantAttribute existingVariant in variants.values) {
+      for (VariantAttribute existingVariant in variants) {
         if (existingVariant.variant == v) {
           matchedVariants.add(existingVariant);
         } else {
@@ -265,20 +258,42 @@ class StyleMix {
     // Create a mix with the existing values.
     final updatedStyle = StyleMix._(
       styles: styles,
-      variants: VariantAttributeMap.from(remainingVariants),
+      variants: remainingVariants,
     ).merge(styleToApply);
 
     // Make sure to apply all nested variants
     return updatedStyle.selectManyVariants(selectedVariants);
   }
 
-  StyleMix pickVariants(List<Variant> selectVariants) {
+  /// Picks and applies only the attributes within the specified [Variant] instances, and returns a new `StyleMix`.
+  ///
+  /// Unlike `selectVariants`, `pickVariants` ignores all other attributes initially present in the `StyleMix`.
+  ///
+  /// If the list of [pickVariants] is empty, returns a new empty `StyleMix`.
+  ///
+  /// Example:
+  /// ```dart
+  /// final outlinedVariant = Variant('outlined');
+  /// final smallVariant = Variant('small');
+  /// final style = StyleMix(attr1, attr2, outlinedVariant(buttonAttr1, buttonAttr2), smallVariant(buttonAttr3));
+  /// final pickedMix = style.pickVariants([outlinedVariant, smallVariant]);
+  /// ```
+  ///
+  /// In this example:
+  /// - Two `Variant` instances `outlinedVariant` and `smallVariant` are created.
+  /// - An initial `StyleMix` instance `style` is created with `attr1` and `attr2`, along with the two variants.
+  /// - The `pickVariants` method is called on the `StyleMix` instance with a list of `outlinedVariant` and `smallVariant` as the argument.
+  /// - The `pickVariants` method returns a new `StyleMix` instance `pickedMix` with only the attributes of the selected variants, ignoring `attr1` and `attr2`.
+  /// - The resulting `pickedMix` is equivalent to `StyleMix(buttonAttr1, buttonAttr2, buttonAttr3)`.
+  ///
+  /// Note:
+  /// The attributes `attr1` and `attr2` from the initial `StyleMix` are ignored, and only the attributes within the specified variants are picked and applied to the new `StyleMix`.
+
+  StyleMix pickVariants(List<Variant> pickedVariants) {
     final matchedVariants = <VariantAttribute>[];
 
-    final currentVariants = variants.values;
-
-    for (final variantAttr in currentVariants) {
-      if (selectVariants.contains(variantAttr.variant)) {
+    for (final variantAttr in variants) {
+      if (pickedVariants.contains(variantAttr.variant)) {
         matchedVariants.add(variantAttr);
       }
     }

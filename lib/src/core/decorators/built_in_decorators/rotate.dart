@@ -4,35 +4,30 @@ import '../../../factory/mix_provider_data.dart';
 import '../decorator.dart';
 
 RotateDecorator rotate(int quarterTurns) {
-  return RotateDecorator(quarterTurns: quarterTurns);
+  return RotateDecorator(value: quarterTurns);
 }
 
 RotateDecorator rotate90() => rotate(1);
 RotateDecorator rotate180() => rotate(2);
 RotateDecorator rotate270() => rotate(3);
 
-class RotateDecorator extends Decorator<int> {
-  final int quarterTurns;
-  const RotateDecorator({required this.quarterTurns});
+class RotateDecorator extends ParentDecorator<int> {
+  final int value;
+  const RotateDecorator({required this.value});
 
   @override
   RotateDecorator merge(RotateDecorator other) {
-    return RotateDecorator(quarterTurns: other.quarterTurns);
+    return RotateDecorator(value: other.value);
   }
 
   @override
-  int resolve(MixData mix) => quarterTurns;
+  int resolve(MixData mix) => value;
 
   @override
-  get props => [quarterTurns];
+  get props => [value];
 
   @override
-  Widget build(Widget child, MixData mix) {
-    return RotatedBox(quarterTurns: quarterTurns, child: child);
+  Widget build(child, value) {
+    return RotatedBox(quarterTurns: value, child: child);
   }
-}
-
-class RotateSpec {
-  final int quarterTurns;
-  const RotateSpec({required this.quarterTurns});
 }

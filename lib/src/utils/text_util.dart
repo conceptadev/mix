@@ -9,7 +9,7 @@ import '../core/dto/strut_style_dto.dart';
 import '../helpers/extensions/values_ext.dart';
 
 StrutStyleData strutStyle(StrutStyle strutStyle) {
-  return strutStyle.toAttribute;
+  return strutStyle.toAttribute();
 }
 
 TextDirectiveAttribute textDirective(TextDirective directive) {

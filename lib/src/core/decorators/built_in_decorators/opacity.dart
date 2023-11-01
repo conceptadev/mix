@@ -7,7 +7,7 @@ OpacityDecorator opacity(double opacity) {
   return OpacityDecorator(opacity);
 }
 
-class OpacityDecorator extends Decorator<double> {
+class OpacityDecorator extends ParentDecorator<double> {
   final double value;
   const OpacityDecorator(this.value);
 
@@ -23,9 +23,7 @@ class OpacityDecorator extends Decorator<double> {
   get props => [value];
 
   @override
-  Widget build(child, mix) {
-    final opacity = resolve(mix);
-
-    return Opacity(opacity: opacity, child: child);
+  Widget build(child, value) {
+    return Opacity(opacity: value, child: child);
   }
 }

@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 import 'attributes/data_attributes.dart';
 import 'attributes/scalar_attribute.dart';
-import 'core/dto/text_style_dto.dart';
+import 'core/decorators/built_in_decorators/flexible.dart';
 import 'helpers/constants.dart';
 import 'helpers/extensions/values_ext.dart';
 import 'utils/alignment_util.dart';
@@ -20,6 +20,7 @@ import 'utils/helper_util.dart';
 import 'utils/pressable_util.dart';
 import 'utils/size_util.dart';
 import 'utils/space_util.dart';
+import 'utils/stack_fit_util.dart';
 import 'utils/text_style_util.dart';
 
 /// ALL ALIASES HERE HAVE BEEN DEPRECATED AND WILL BE REMOVED IN THE FUTURE
@@ -77,9 +78,12 @@ const not = onNot;
 const font = textStyle;
 
 @Deprecated('Use textStyle(textShadow: textShadow) instead')
-TextStyleData textShadow(List<Shadow> textShadow) {
+TextStyleAttribute textShadow(List<Shadow> textShadow) {
   return textStyle(shadows: textShadow);
 }
+
+@Deprecated('Use flexible or expanded')
+const flex = flexible;
 
 @Deprecated('Use textStyle(textShadow: textShadow) instead')
 const fontWeight = LegacyTextStyleUtility.fontWeight;
@@ -296,7 +300,7 @@ const roundedV = roundedVertical;
 dynamic get roundedDH => UnimplementedError();
 
 @Deprecated(kShortAliasDeprecation)
-final roundedTL = roundedTopLeft;
+const roundedTL = roundedTopLeft;
 
 @Deprecated(kShortAliasDeprecation)
 BorderRadiusGeometryAttribute roundedTR() {
@@ -380,12 +384,24 @@ AlignmentGeometryAttribute zAligmnent(Alignment alignment) {
   return AlignmentGeometryAttribute(alignment.toDto);
 }
 
-@Deprecated('Use stack instead')
+@Deprecated('Use stackFit instead')
 StackFitAttribute zFit(StackFit fit) {
-  return StackFitAttribute(fit);
+  return stackFit(fit);
 }
 
 @Deprecated('Use stack instead')
 ClipAttribute zClip(Clip clip) {
   return ClipAttribute(clip);
+}
+
+// Create a FlexAttributes for the direction axis.
+@Deprecated('Use axis() instead')
+AxisAttribute direction(Axis direction) {
+  return AxisAttribute(direction);
+}
+
+// Create a FlexAttributes for the cross axis.
+@Deprecated('Use crossAxisAlignment() instead')
+CrossAxisAlignmentAttribute crossAxis(CrossAxisAlignment crossAxisAlignment) {
+  return CrossAxisAlignmentAttribute(crossAxisAlignment);
 }

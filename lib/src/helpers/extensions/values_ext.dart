@@ -12,7 +12,7 @@ import '../../core/dto/strut_style_dto.dart';
 import '../../core/dto/text_style_dto.dart';
 
 extension StrutStyleExt on StrutStyle {
-  StrutStyleData get toAttribute {
+  StrutStyleData toAttribute() {
     return StrutStyleData.only(
       fontFamily: fontFamily,
       fontFamilyFallback: fontFamilyFallback,
@@ -43,11 +43,11 @@ extension StrutStyleExt on StrutStyle {
 
 // Extension for TextAlign
 extension TextAlignExt on TextAlign {
-  TextAlignAttribute get toAttribute => TextAlignAttribute(this);
+  TextAlignAttribute toAttribute() => TextAlignAttribute(this);
 }
 
 extension GradientExt on Gradient {
-  GradientAttribute get toAttribute => GradientAttribute(this);
+  GradientAttribute toAttribute() => GradientAttribute(this);
 }
 
 extension ColorExt on Color {
@@ -64,14 +64,12 @@ extension AlignmentGeometryExt on AlignmentGeometry {
     throw UnimplementedError();
   }
 
-  AlignmentGeometryAttribute get toAttribute =>
-      AlignmentGeometryAttribute(toDto);
+  AlignmentGeometryAttribute toAttribute() => AlignmentGeometryAttribute(toDto);
 }
 
 extension AlignmentExt on Alignment {
   AlignmentGeometryData get toDto => AlignmentGeometryData(x: x, y: y);
-  AlignmentGeometryAttribute get toAttribute =>
-      AlignmentGeometryAttribute(toDto);
+  AlignmentGeometryAttribute toAttribute() => AlignmentGeometryAttribute(toDto);
 }
 
 extension BoxConstraintsExt on BoxConstraints {
@@ -85,8 +83,7 @@ extension BoxConstraintsExt on BoxConstraints {
 
 extension AligmentDirectionalExt on AlignmentDirectional {
   AlignmentGeometryData get toDto => AlignmentGeometryData(start: start, y: y);
-  AlignmentGeometryAttribute get toAttribute =>
-      AlignmentGeometryAttribute(toDto);
+  AlignmentGeometryAttribute toAttribute() => AlignmentGeometryAttribute(toDto);
 }
 
 // Extensions for EdgeInsetsGeometry, similar to AlignmentGeometry
@@ -106,6 +103,10 @@ extension EdgeInsetsGeometryExt on EdgeInsetsGeometry {
     }
     throw UnimplementedError();
   }
+
+  PaddingAttribute get toPadding => PaddingAttribute(toSpace);
+
+  MarginAttribute get toMargin => MarginAttribute(toSpace);
 }
 
 // Extensions for EdgeInsets, similar to Alignment
@@ -146,34 +147,33 @@ extension EdgeInsetsDirectionalExt on EdgeInsetsDirectional {
 
 // Extension for MainAxisAlignment
 extension MainAxisAlignmentExt on MainAxisAlignment {
-  MainAxisAlignmentAttribute get toAttribute =>
-      MainAxisAlignmentAttribute(this);
+  MainAxisAlignmentAttribute toAttribute() => MainAxisAlignmentAttribute(this);
 }
 
 // Extension for CrossAxisAlignment
 extension CrossAxisAlignmentExt on CrossAxisAlignment {
-  CrossAxisAlignmentAttribute get toAttribute =>
+  CrossAxisAlignmentAttribute toAttribute() =>
       CrossAxisAlignmentAttribute(this);
 }
 
 // Extension for TextDirection
 extension TextDirectionExt on TextDirection {
-  TextDirectionAttribute get toAttribute => TextDirectionAttribute(this);
+  TextDirectionAttribute toAttribute() => TextDirectionAttribute(this);
 }
 
 // Extension for Axis
 extension AxisExt on Axis {
-  AxisAttribute get toAttribute => AxisAttribute(this);
+  AxisAttribute toAttribute() => AxisAttribute(this);
 }
 
 // Extension for BlendMode
 extension BlendModeExt on BlendMode {
-  BlendModeAttribute get toAttribute => BlendModeAttribute(this);
+  BlendModeAttribute toAttribute() => BlendModeAttribute(this);
 }
 
 // Extension for BoxFit
 extension BoxFitExt on BoxFit {
-  BoxFitAttribute get toAttribute => BoxFitAttribute(this);
+  BoxFitAttribute toAttribute() => BoxFitAttribute(this);
 }
 
 extension BorderRadiusGeometryExt on BorderRadiusGeometry {
@@ -186,7 +186,7 @@ extension BorderRadiusGeometryExt on BorderRadiusGeometry {
     throw UnimplementedError();
   }
 
-  BorderRadiusGeometryAttribute get toAttribute =>
+  BorderRadiusGeometryAttribute toAttribute() =>
       BorderRadiusGeometryAttribute(toDto);
 }
 
@@ -198,7 +198,7 @@ extension BorderRadiusDirectionalExrt on BorderRadiusDirectional {
         bottomEnd: bottomEnd,
       );
 
-  BorderRadiusGeometryAttribute get toAttribute =>
+  BorderRadiusGeometryAttribute toAttribute() =>
       BorderRadiusGeometryAttribute(toDto);
 }
 
@@ -210,12 +210,12 @@ extension BorderRadiusExt on BorderRadius {
         bottomLeft: bottomLeft,
         bottomRight: bottomRight,
       );
-  BorderRadiusGeometryAttribute get toAttribute =>
+  BorderRadiusGeometryAttribute toAttribute() =>
       BorderRadiusGeometryAttribute(toDto);
 }
 
 extension Matrix4Ext on Matrix4 {
-  TransformAttribute get toAttribute => TransformAttribute(this);
+  TransformAttribute toAttribute() => TransformAttribute(this);
 
   /// Merge [other] into this matrix.
   Matrix4 merge(Matrix4? other) {
@@ -235,14 +235,14 @@ extension BorderSideExt on BorderSide {
 }
 
 extension BoxBorderExt on BoxBorder {
-  BoxBorderDto get toDto {
+  BoxBorderData get toDto {
     if (this is Border) return (this as Border).toDto;
     if (this is BorderDirectional) return (this as BorderDirectional).toDto;
 
     throw UnimplementedError();
   }
 
-  BoxBorderAttribute get toAttribute => BoxBorderAttribute(toDto);
+  BoxBorderAttribute toAttribute() => BoxBorderAttribute(toDto);
 }
 
 extension ShadowExt on Shadow {
@@ -288,25 +288,25 @@ extension TextStyleExt on TextStyle {
 }
 
 extension BorderExt on Border {
-  BoxBorderDto get toDto => BoxBorderDto(
+  BoxBorderData get toDto => BoxBorderData(
         top: top.toDto,
         bottom: bottom.toDto,
         left: left.toDto,
         right: right.toDto,
       );
 
-  BoxBorderAttribute get toAttribute => BoxBorderAttribute(toDto);
+  BoxBorderAttribute toAttribute() => BoxBorderAttribute(toDto);
 }
 
 extension BorderDirectionalExt on BorderDirectional {
-  BoxBorderDto get toDto => BoxBorderDto(
+  BoxBorderData get toDto => BoxBorderData(
         top: top.toDto,
         start: start.toDto,
         end: end.toDto,
         bottom: bottom.toDto,
       );
 
-  BoxBorderAttribute get toAttribute => BoxBorderAttribute(toDto);
+  BoxBorderAttribute toAttribute() => BoxBorderAttribute(toDto);
 }
 
 extension IterableExt<T> on Iterable<T> {

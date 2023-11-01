@@ -7,6 +7,3 @@ import '../helpers/extensions/values_ext.dart';
 DecorationAttribute backgroundColor(Color color) {
   return BoxDecorationData(color: color.toDto).toAttribute();
 }
-
-@Deprecated('Use backgroundColor(style:style) instead')
-DecorationAttribute bgColor(Color color) => backgroundColor(color);

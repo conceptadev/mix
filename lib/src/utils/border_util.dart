@@ -10,14 +10,14 @@ BoxBorderAttribute border({
   BorderStyle? style,
   double? strokeAlign,
 }) {
-  return BoxBorderDto.all(
+  return BoxBorderData.all(
     BorderSideData(
       color: color?.toDto,
       strokeAlign: strokeAlign,
       style: style,
       width: width,
     ),
-  ).toAttribute;
+  ).toAttribute();
 }
 
 BoxBorderAttribute borderColor(Color color) {
@@ -42,14 +42,14 @@ BoxBorderAttribute borderTop({
   BorderStyle? style,
   double? strokeAlign,
 }) {
-  return BoxBorderDto(
+  return BoxBorderData(
     top: BorderSideData(
       color: color?.toDto,
       strokeAlign: strokeAlign,
       style: style,
       width: width,
     ),
-  ).toAttribute;
+  ).toAttribute();
 }
 
 BoxBorderAttribute borderTopColor(Color color) {
@@ -74,14 +74,14 @@ BoxBorderAttribute borderBottom({
   BorderStyle? style,
   double? strokeAlign,
 }) {
-  return BoxBorderDto(
+  return BoxBorderData(
     bottom: BorderSideData(
       color: color?.toDto,
       strokeAlign: strokeAlign,
       style: style,
       width: width,
     ),
-  ).toAttribute;
+  ).toAttribute();
 }
 
 BoxBorderAttribute borderBottomColor(Color color) {
@@ -106,14 +106,14 @@ BoxBorderAttribute borderLeft({
   BorderStyle? style,
   double? strokeAlign,
 }) {
-  return BoxBorderDto(
+  return BoxBorderData(
     left: BorderSideData(
       color: color?.toDto,
       strokeAlign: strokeAlign,
       style: style,
       width: width,
     ),
-  ).toAttribute;
+  ).toAttribute();
 }
 
 BoxBorderAttribute borderLeftColor(Color color) {
@@ -138,14 +138,14 @@ BoxBorderAttribute borderRight({
   BorderStyle? style,
   double? strokeAlign,
 }) {
-  return BoxBorderDto(
+  return BoxBorderData(
     right: BorderSideData(
       color: color?.toDto,
       strokeAlign: strokeAlign,
       style: style,
       width: width,
     ),
-  ).toAttribute;
+  ).toAttribute();
 }
 
 BoxBorderAttribute borderRightColor(Color color) {
@@ -170,14 +170,14 @@ BoxBorderAttribute borderStart({
   BorderStyle? style,
   double? strokeAlign,
 }) {
-  return BoxBorderDto(
+  return BoxBorderData(
     start: BorderSideData(
       color: color?.toDto,
       strokeAlign: strokeAlign,
       style: style,
       width: width,
     ),
-  ).toAttribute;
+  ).toAttribute();
 }
 
 BoxBorderAttribute borderStartColor(Color color) {
@@ -202,14 +202,14 @@ BoxBorderAttribute borderEnd({
   BorderStyle? style,
   double? strokeAlign,
 }) {
-  return BoxBorderDto(
+  return BoxBorderData(
     end: BorderSideData(
       color: color?.toDto,
       strokeAlign: strokeAlign,
       style: style,
       width: width,
     ),
-  ).toAttribute;
+  ).toAttribute();
 }
 
 BoxBorderAttribute borderEndColor(Color color) {
@@ -234,14 +234,14 @@ BoxBorderAttribute borderHorizontal({
   BorderStyle? style,
   double? strokeAlign,
 }) {
-  return BoxBorderDto.symmetric(
+  return BoxBorderData.symmetric(
     horizontal: BorderSideData(
       color: color?.toDto,
       strokeAlign: strokeAlign,
       style: style,
       width: width,
     ),
-  ).toAttribute;
+  ).toAttribute();
 }
 
 BoxBorderAttribute borderHorizontalColor(Color color) {
@@ -266,14 +266,14 @@ BoxBorderAttribute borderVertical({
   BorderStyle? style,
   double? strokeAlign,
 }) {
-  return BoxBorderDto.symmetric(
+  return BoxBorderData.symmetric(
     vertical: BorderSideData(
       color: color?.toDto,
       strokeAlign: strokeAlign,
       style: style,
       width: width,
     ),
-  ).toAttribute;
+  ).toAttribute();
 }
 
 BoxBorderAttribute borderVerticalColor(Color color) {

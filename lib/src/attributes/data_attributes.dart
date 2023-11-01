@@ -54,7 +54,7 @@ class BorderRadiusGeometryAttribute extends DataAttribute<
 }
 
 class BoxBorderAttribute
-    extends DataAttribute<BoxBorderAttribute, BoxBorderDto, BoxBorder> {
+    extends DataAttribute<BoxBorderAttribute, BoxBorderData, BoxBorder> {
   const BoxBorderAttribute(super.value);
 
   @override

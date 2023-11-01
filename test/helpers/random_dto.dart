@@ -126,10 +126,10 @@ class RandomGenerator {
     );
   }
 
-  static BoxBorderDto borderDto() {
+  static BoxBorderData borderDto() {
     final side = borderSideDto();
 
-    return BoxBorderDto(
+    return BoxBorderData(
       top: side,
       right: side,
       bottom: side,

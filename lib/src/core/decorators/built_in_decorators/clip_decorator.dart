@@ -31,7 +31,7 @@ enum ClipDecoratorType {
   triangle,
 }
 
-class ClipDecorator extends Decorator<ClipDecoratorSpec> {
+class ClipDecorator extends ParentDecorator<ClipDecoratorSpec> {
   final BorderRadiusGeometryAttribute? borderRadius;
   final ClipDecoratorType clipType;
 
@@ -58,10 +58,8 @@ class ClipDecorator extends Decorator<ClipDecoratorSpec> {
   get props => [borderRadius, clipType];
 
   @override
-  Widget build(Widget child, MixData mix) {
-    final spec = resolve(mix);
-
-    switch (spec.clipType) {
+  Widget build(Widget child, ClipDecoratorSpec value) {
+    switch (value.clipType) {
       case ClipDecoratorType.triangle:
         return ClipPath(clipper: const TriangleClipper(), child: child);
 
@@ -69,7 +67,7 @@ class ClipDecorator extends Decorator<ClipDecoratorSpec> {
         return ClipRect(child: child);
 
       case ClipDecoratorType.rounded:
-        return ClipRRect(borderRadius: spec.borderRadius, child: child);
+        return ClipRRect(borderRadius: value.borderRadius, child: child);
 
       case ClipDecoratorType.oval:
         return ClipOval(child: child);

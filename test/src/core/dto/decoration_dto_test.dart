@@ -12,7 +12,7 @@ void main() {
     test('should merge non-null values correctly', () {
       final data1 = BoxDecorationData(
         color: const ColorData(Color(0xFF000000)),
-        border: const BoxBorderAttribute(BoxBorderDto.all(width: 2.0)),
+        border: const BoxBorderAttribute(BoxBorderData.all(width: 2.0)),
         borderRadius: BorderRadiusGeometryAttribute(BorderRadius.circular(4.0)),
         gradient: const GradientAttribute(LinearGradient(
           colors: [Color(0xFF000000), Color(0xFFFFFFFF)],

@@ -2,6 +2,8 @@
 import '../mix.dart';
 import 'core/attribute.dart';
 import 'core/variants/variant.dart';
+import 'factory/mix_provider_data.dart';
+import 'factory/style_mix.dart';
 
 extension DeprecatedMixExtension<T extends Attribute> on StyleMix {
   /// Adds an Attribute to a Mix.

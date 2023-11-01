@@ -4,11 +4,6 @@ import '../../../factory/mix_provider_data.dart';
 import '../decorator.dart';
 
 const flexible = _flexible;
-
-@Deprecated('Use flexible or expanded')
-const flex = _flexible;
-
-@Deprecated('Use flexible instead')
 const expanded = _expanded;
 
 FlexibleDecorator _expanded({int? flex}) {
@@ -19,7 +14,7 @@ FlexibleDecorator _flexible({int? flex}) {
   return FlexibleDecorator(flex: flex, flexFit: FlexFit.loose);
 }
 
-class FlexibleDecorator extends Decorator<FlexibleDecoratorSpec> {
+class FlexibleDecorator extends ParentDecorator<FlexibleDecoratorSpec> {
   final int? _flex;
   final FlexFit? _flexFit;
   const FlexibleDecorator({int? flex, FlexFit? flexFit})
@@ -43,10 +38,8 @@ class FlexibleDecorator extends Decorator<FlexibleDecoratorSpec> {
   get props => [_flexFit, _flex];
 
   @override
-  Widget build(child, mix) {
-    final spec = resolve(mix);
-
-    return Flexible(flex: spec.flex, fit: spec.flexFit, child: child);
+  Widget build(child, value) {
+    return Flexible(flex: value.flex, fit: value.flexFit, child: child);
   }
 }
 

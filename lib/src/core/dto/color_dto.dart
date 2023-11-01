@@ -4,6 +4,7 @@ import '../../factory/mix_provider_data.dart';
 import '../../theme/tokens/color_ref.dart';
 import '../attribute.dart';
 
+@immutable
 class ColorData extends Data<Color> {
   final Color value;
 

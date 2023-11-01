@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 
 import '../attributes/variant_attribute.dart';
+import '../core/attribute.dart';
 import '../helpers/attributes_map.dart';
 import '../theme/mix_theme.dart';
 import 'mix_provider_data.dart';
@@ -28,9 +29,7 @@ class Mix extends InheritedWidget {
   /// This method returns the first instance of [Mix] that it finds
   /// while searching up the widget tree. Returns null if not found.
   static MixData? maybeOf(BuildContext context) {
-    final widget = context.dependOnInheritedWidgetOfExactType<Mix>();
-
-    return widget?.data;
+    return context.dependOnInheritedWidgetOfExactType<Mix>()?.data;
   }
 
   /// Ensures that [Mix] is available on the widget tree starting at
@@ -48,13 +47,12 @@ class Mix extends InheritedWidget {
     return mixData;
   }
 
-  @visibleForTesting
   static MixData createMixData(BuildContext context, StyleMix style) {
-    final styleMix = ResolvedStyleMix.from(style, context);
+    final styleMix = _applyContextToVisualAttributes(context, style);
 
     return MixData(
       resolver: BuildContextResolver(context),
-      styles: styleMix.values,
+      attributes: VisualAttributeMap(styleMix),
     );
   }
 
@@ -73,4 +71,26 @@ class Mix extends InheritedWidget {
 
     return Mix(data: mixData, child: builder(mixData));
   }
+}
+
+List<VisualAttribute> _applyContextToVisualAttributes(
+  BuildContext context,
+  StyleMix mix,
+) {
+  StyleMix mergedMix = mix;
+
+  final contextVariants = mix.variants.whereType<ContextVariantAttribute>();
+
+  // Once there are no more context variants to apply, return the mix
+  if (contextVariants.isEmpty) {
+    return mix.styles;
+  }
+
+  for (ContextVariantAttribute variant in contextVariants) {
+    if (variant.when(context)) {
+      mergedMix = mergedMix.merge(variant.value);
+    }
+  }
+
+  return _applyContextToVisualAttributes(context, mergedMix);
 }

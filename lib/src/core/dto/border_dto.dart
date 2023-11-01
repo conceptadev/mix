@@ -17,7 +17,9 @@ class BorderRadiusGeometryData extends Data<BorderRadiusGeometry> {
   final Radius? bottomStart;
   final Radius? bottomEnd;
 
-  final bool isDirectional;
+  final bool _isDirectional;
+
+  bool get isDirectional => _isDirectional;
 
   const BorderRadiusGeometryData({
     this.topLeft,
@@ -28,25 +30,28 @@ class BorderRadiusGeometryData extends Data<BorderRadiusGeometry> {
     this.topEnd,
     this.bottomStart,
     this.bottomEnd,
-    this.isDirectional = false,
-  });
+    bool isDirectional = false,
+  }) : _isDirectional = isDirectional;
 
-  const BorderRadiusGeometryData.all(Radius radius)
-      : topLeft = radius,
+  const BorderRadiusGeometryData.all(
+    Radius radius, {
+    bool isDirectional = false,
+  })  : _isDirectional = isDirectional,
+        topLeft = radius,
         topRight = radius,
         bottomLeft = radius,
         bottomRight = radius,
         topStart = radius,
         topEnd = radius,
         bottomStart = radius,
-        bottomEnd = radius,
-        isDirectional = false;
+        bottomEnd = radius;
 
   BorderRadiusGeometryData.horizontal({
     Radius? leftStart,
     Radius? rightEnd,
-    this.isDirectional = false,
-  })  : topLeft = leftStart,
+    bool isDirectional = false,
+  })  : _isDirectional = isDirectional,
+        topLeft = leftStart,
         topRight = rightEnd,
         bottomLeft = leftStart,
         bottomRight = rightEnd,
@@ -58,8 +63,9 @@ class BorderRadiusGeometryData extends Data<BorderRadiusGeometry> {
   BorderRadiusGeometryData.vertical({
     Radius? top,
     Radius? bottom,
-    this.isDirectional = false,
-  })  : topLeft = top,
+    bool isDirectional = false,
+  })  : _isDirectional = isDirectional,
+        topLeft = top,
         topRight = top,
         bottomLeft = bottom,
         bottomRight = bottom,
@@ -70,8 +76,9 @@ class BorderRadiusGeometryData extends Data<BorderRadiusGeometry> {
 
   BorderRadiusGeometryData.circular(
     double radius, {
-    this.isDirectional = false,
-  })  : topLeft = Radius.circular(radius),
+    bool isDirectional = false,
+  })  : _isDirectional = isDirectional,
+        topLeft = Radius.circular(radius),
         topRight = Radius.circular(radius),
         bottomLeft = Radius.circular(radius),
         bottomRight = Radius.circular(radius),
@@ -105,14 +112,14 @@ class BorderRadiusGeometryData extends Data<BorderRadiusGeometry> {
       topEnd: topEnd ?? this.topEnd,
       bottomStart: bottomStart ?? this.bottomStart,
       bottomEnd: bottomEnd ?? this.bottomEnd,
-      isDirectional: isDirectional ?? this.isDirectional,
+      isDirectional: isDirectional ?? _isDirectional,
     );
   }
 
   @override
   BorderRadiusGeometryData merge(BorderRadiusGeometryData? other) {
     if (other == null) return this;
-    if (other.isDirectional != isDirectional) {
+    if (other._isDirectional != _isDirectional) {
       throw UnsupportedError(
         "Cannot merge directional and non-directional border radius attributes",
       );
@@ -127,13 +134,13 @@ class BorderRadiusGeometryData extends Data<BorderRadiusGeometry> {
       topEnd: other.topEnd ?? topEnd,
       bottomStart: other.bottomStart ?? bottomStart,
       bottomEnd: other.bottomEnd ?? bottomEnd,
-      isDirectional: other.isDirectional,
+      isDirectional: other._isDirectional,
     );
   }
 
   @override
   BorderRadiusGeometry resolve(MixData mix) {
-    return isDirectional
+    return _isDirectional
         ? BorderRadiusDirectional.only(
             topStart: topStart ?? Radius.zero,
             topEnd: topEnd ?? Radius.zero,
@@ -158,11 +165,11 @@ class BorderRadiusGeometryData extends Data<BorderRadiusGeometry> {
         topEnd,
         bottomStart,
         bottomEnd,
-        isDirectional,
+        _isDirectional,
       ];
 }
 
-class BoxBorderDto extends Data<BoxBorder> {
+class BoxBorderData extends Data<BoxBorder> {
   final BorderSideData? top;
   final BorderSideData? start;
   final BorderSideData? end;
@@ -170,60 +177,65 @@ class BoxBorderDto extends Data<BoxBorder> {
   final BorderSideData? left;
   final BorderSideData? right;
 
-  final bool isDirectional;
+  final bool _isDirectional;
 
-  const BoxBorderDto({
+  bool get isDirectional => _isDirectional;
+
+  const BoxBorderData({
     this.top,
     this.start,
     this.end,
     this.bottom,
     this.left,
     this.right,
-    this.isDirectional = false,
-  });
+    bool isDirectional = false,
+  }) : _isDirectional = isDirectional;
 
-  const BoxBorderDto.fromBorderSide(
+  const BoxBorderData.fromBorderSide(
     BorderSideData side, {
-    this.isDirectional = false,
-  })  : top = side,
+    bool isDirectional = false,
+  })  : _isDirectional = isDirectional,
+        top = side,
         right = side,
         bottom = side,
         left = side,
         start = side,
         end = side;
 
-  const BoxBorderDto.all(BorderSideData side, {this.isDirectional = false})
-      : top = side,
+  const BoxBorderData.all(BorderSideData side, {bool isDirectional = false})
+      : _isDirectional = isDirectional,
+        top = side,
         right = side,
         bottom = side,
         left = side,
         start = side,
         end = side;
 
-  const BoxBorderDto.symmetric({
+  const BoxBorderData.symmetric({
     BorderSideData? vertical,
     BorderSideData? horizontal,
-    this.isDirectional = false,
-  })  : top = horizontal,
+    bool isDirectional = false,
+  })  : _isDirectional = isDirectional,
+        top = horizontal,
         right = vertical,
         bottom = horizontal,
         left = vertical,
         start = vertical,
         end = vertical;
 
-  BoxBorderAttribute get toAttribute => BoxBorderAttribute(this);
+  BoxBorderAttribute toAttribute() => BoxBorderAttribute(this);
 
   @override
-  BoxBorderDto merge(BoxBorderDto? other) {
+  BoxBorderData merge(BoxBorderData? other) {
     if (other == null) return this;
 
-    if (other.isDirectional != isDirectional) {
+    if (other._isDirectional != _isDirectional) {
       throw UnsupportedError(
         "Cannot merge directional and non-directional box border attributes",
       );
     }
 
-    return BoxBorderDto(
+    return BoxBorderData(
       top: other.top ?? top,
       start: other.start ?? start,
       end: other.end ?? end,
@@ -235,7 +247,7 @@ class BoxBorderDto extends Data<BoxBorder> {
 
   @override
   BoxBorder resolve(MixData mix) {
-    return isDirectional
+    return _isDirectional
         ? BorderDirectional(
             top: top?.resolve(mix) ?? BorderSide.none,
             start: start?.resolve(mix) ?? BorderSide.none,
@@ -251,7 +263,7 @@ class BoxBorderDto extends Data<BoxBorder> {
   }
 
   @override
-  get props => [top, start, end, bottom, left, right, isDirectional];
+  get props => [top, start, end, bottom, left, right, _isDirectional];
 }
 
 class BorderSideData extends Data<BorderSide> {
