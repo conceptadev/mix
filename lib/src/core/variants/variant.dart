@@ -46,7 +46,7 @@ class Variant {
     }
 
     // Create a VariantAttribute using the collected parameters.
-    return VariantAttribute(this, StyleMix.fromAttributes(params));
+    return VariantAttribute(this, StyleMix.create(params));
   }
 
   @override

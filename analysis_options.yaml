@@ -36,6 +36,7 @@ dart_code_metrics:
     avoid-barrel-files: false
     avoid-declaring-call-method: false
     avoid-long-parameter-list: false
+    avoid-recursive-calls: false
     no-magic-number: false
     avoid-ignoring-return-values: false
     prefer-commenting-analyzer-ignores: false

@@ -62,7 +62,7 @@ class VariantOperation {
       attributes = _buildOrOperations(params);
     }
 
-    return WrappedStyleAttribute(StyleMix.fromAttributes(attributes));
+    return WrappedStyleAttribute(StyleMix.create(attributes));
   }
 
   List<VariantAttribute> _buildOrOperations(
@@ -70,7 +70,7 @@ class VariantOperation {
     Iterable<Variant>? variants,
   }) {
     variants ??= this.variants;
-    final style = StyleMix.fromAttributes(attributes);
+    final style = StyleMix.create(attributes);
     final attributeVariants = variants.map((variant) {
       return variant is ContextVariant
           ? ContextVariantAttribute(variant, style)
@@ -83,7 +83,7 @@ class VariantOperation {
   List<VariantAttribute> _buildAndOperations(List<Attribute> attributes) {
     final attributeVariants = variants.map((variant) {
       final otherVariants = variants.where((otherV) => otherV != variant);
-      final mixToApply = StyleMix.fromAttributes(
+      final mixToApply = StyleMix.create(
         _buildOrOperations(attributes, variants: otherVariants),
       );
 

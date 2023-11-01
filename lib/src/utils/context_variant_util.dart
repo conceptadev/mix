@@ -35,25 +35,21 @@ final onLandscape = _orientationVariant(Orientation.landscape);
 ContextVariant _directionalityVariant(TextDirection direction) {
   return ContextVariant(
     'on-${direction.name.paramCase}',
-    shouldApply: (BuildContext context) {
-      return Directionality.of(context) == direction;
-    },
+    when: (BuildContext context) => Directionality.of(context) == direction,
   );
 }
 
 ContextVariant _brightnessVariant(Brightness brightness) {
   return ContextVariant(
     'on-${brightness.name.paramCase}',
-    shouldApply: (BuildContext context) {
-      return Theme.of(context).brightness == brightness;
-    },
+    when: (BuildContext context) => Theme.of(context).brightness == brightness,
   );
 }
 
 ContextVariant _breakpointVariant(ScreenSizeToken screenSize) {
   return ContextVariant(
     'on-${screenSize.name.paramCase}',
-    shouldApply: (BuildContext context) {
+    when: (BuildContext context) {
       final breakpoints = MixTheme.of(context).breakpoints;
 
       return breakpoints.getScreenSize(context).index <= screenSize.index;
@@ -64,17 +60,14 @@ ContextVariant _breakpointVariant(ScreenSizeToken screenSize) {
 ContextVariant _onNot(ContextVariant variant) {
   return ContextVariant(
     'not-(${variant.name})',
-    shouldApply: (BuildContext context) {
-      return !variant.shouldApply(context);
-    },
+    when: (BuildContext context) => !variant.when(context),
   );
 }
 
 ContextVariant _orientationVariant(Orientation orientation) {
   return ContextVariant(
     'on-${orientation.name.paramCase}',
-    shouldApply: (BuildContext context) {
-      return MediaQuery.orientationOf(context) == orientation;
-    },
+    when: (BuildContext context) =>
+        MediaQuery.orientationOf(context) == orientation,
   );
 }

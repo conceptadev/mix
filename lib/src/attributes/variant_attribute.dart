@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../core/attribute.dart';
 import '../core/variants/context_variant.dart';
 import '../core/variants/variant.dart';
-import '../factory/exports.dart';
+import '../factory/style_mix.dart';
 
 class VariantAttribute<T extends Variant> extends Attribute {
   final T variant;
@@ -11,7 +11,7 @@ class VariantAttribute<T extends Variant> extends Attribute {
 
   const VariantAttribute(this.variant, StyleMix style) : _style = style;
 
-  MixValues get value => _style.values;
+  StyleMix get value => _style;
 
   @override
   VariantAttribute<T> merge(covariant VariantAttribute<T> other) {
@@ -32,8 +32,8 @@ class VariantAttribute<T extends Variant> extends Attribute {
 class ContextVariantAttribute extends VariantAttribute<ContextVariant> {
   const ContextVariantAttribute(super.variant, super.style);
 
-  bool shouldApply(BuildContext context) {
-    return variant.shouldApply(context);
+  bool when(BuildContext context) {
+    return variant.when(context);
   }
 
   @override

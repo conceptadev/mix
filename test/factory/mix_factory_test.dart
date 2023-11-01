@@ -71,7 +71,7 @@ void main() {
     });
 
     test('Creates a Mix from Attributes List', () {
-      final mix = StyleMix.fromAttributes([
+      final mix = StyleMix.create([
         backgroundColor(Colors.red),
         margin(10),
       ]);
@@ -97,10 +97,10 @@ void main() {
     final appliedMix = baseMix.merge(StyleMix(flexAttribute));
 
     final modifiedBoxAttribute =
-        appliedMix.values.stylesOfType<StyledContainerAttributes>();
+        appliedMix.styles.attributeOfType<StyledContainerAttributes>();
 
     final modifiedFlexAttribute =
-        appliedMix.values.stylesOfType<FlexAttributes>();
+        appliedMix.styles.attributeOfType<FlexAttributes>();
 
     expect(baseMix.values.length, 1);
     expect(appliedMix.values.length, 2);
@@ -110,8 +110,8 @@ void main() {
   });
 
   test('Equality of Mix', () {
-    final copyFirstMix = StyleMix.fromAttributes(firstMix.toAttributes());
-    final copySecondMix = StyleMix.fromAttributes(secondMix.toAttributes());
+    final copyFirstMix = StyleMix.create(firstMix.values);
+    final copySecondMix = StyleMix.create(secondMix.values);
     final combinedMixFirst = StyleMix.combine([firstMix, secondMix]);
     final combinedMixSecond = firstMix.merge(secondMix);
 

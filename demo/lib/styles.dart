@@ -10,9 +10,9 @@ StyleMix get onSurfaceMix => StyleMix(
       ),
     );
 
-StyleMix get headingMix => StyleMix.fromAttributes([
+StyleMix get headingMix => StyleMix.create([
       textStyle(fontSize: 24),
-      ...onSurfaceMix.toAttributes(),
+      ...onSurfaceMix.values,
     ]);
 
 StyleMix get flexAlign => StyleMix(

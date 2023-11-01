@@ -14,7 +14,7 @@ final overrideTextAttribute = TextAttributes.fromValues(
   ),
 );
 
-final pressableMix = StyleMix.fromAttributes([
+final pressableMix = StyleMix.create([
   RandomGenerator.boxAttributes(),
   RandomGenerator.textAttributes(),
   textVariant(overrideTextAttribute),

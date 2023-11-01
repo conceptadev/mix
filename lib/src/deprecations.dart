@@ -19,14 +19,12 @@ extension DeprecatedMixExtension<T extends Attribute> on StyleMix {
     'Use merge() or mergeMany() now. You might have to turn into a Mix first. firstMixFactory.merge(secondMix)',
   )
   StyleMix addAttributes(List<Attribute> attributes) {
-    final newValues = MixValues.create(attributes);
-
-    return StyleMix.fromValues(newValues);
+    return merge(StyleMix.create(attributes));
   }
 
   @Deprecated('Use selectVariants now')
   StyleMix withManyVariants(List<Variant> variants) {
-    return selectVariants(variants);
+    return selectManyVariants(variants);
   }
 
   @Deprecated('Use merge() or mergeMany() instead')

@@ -7,28 +7,37 @@ import 'package:flutter/cupertino.dart';
 import '../attributes/variant_attribute.dart';
 import '../core/attribute.dart';
 import 'compare_mixin.dart';
+import 'extensions/iterable_ext.dart';
 
 typedef KeySelector<T, Attr extends Attribute> = T Function(Attr element);
 
 @immutable
-class AttributeMap extends MergeableMap<Type, Attribute> {
-  static const empty = AttributeMap._(null);
+class VisualAttributeMap extends MergeableMap<Type, VisualAttribute> {
+  static const empty = VisualAttributeMap._(null);
 
-  const AttributeMap._(super.map);
+  const VisualAttributeMap._(super.map);
 
-  factory AttributeMap.from(List<Attribute> iterable) {
-    final map = LinkedHashMap<Type, Attribute>.fromIterable(
+  factory VisualAttributeMap.from(List<Attribute> iterable) {
+    final map = LinkedHashMap<Type, VisualAttribute>.fromIterable(
       iterable,
       key: (e) => e.runtimeType,
       value: (e) => e,
     );
 
-    return AttributeMap._(map);
+    return VisualAttributeMap._(map);
+  }
+
+  /// Retrieves an instance of the specified [VisualAttribute] type from the [MixData].
+  ///
+  /// Accepts a type parameter [Attr] which extends [VisualAttribute].
+  /// Returns the instance of type [Attr] if found, else returns null.
+  Attr? attributeOfType<Attr extends VisualAttribute>() {
+    return whereType<Attr>().firstMaybeNull;
   }
 
   @override
-  AttributeMap merge(AttributeMap? other) {
-    return AttributeMap._(super.mergeMap(other?.map));
+  VisualAttributeMap merge(VisualAttributeMap? other) {
+    return VisualAttributeMap._(super.mergeMap(other?.map));
   }
 }
 

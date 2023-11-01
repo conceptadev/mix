@@ -3,8 +3,10 @@
 import 'package:flutter/material.dart';
 
 import '../attributes/variant_attribute.dart';
+import '../helpers/attributes_map.dart';
 import '../theme/mix_theme.dart';
-import 'exports.dart';
+import 'mix_provider_data.dart';
+import 'style_mix.dart';
 
 typedef MixBuilder = Widget Function(MixData mixData);
 
@@ -48,11 +50,11 @@ class Mix extends InheritedWidget {
 
   @visibleForTesting
   static MixData createMixData(BuildContext context, StyleMix style) {
-    final values = applyContextVariants(style.values, context);
+    final styleMix = ResolvedStyleMix.from(style, context);
 
     return MixData(
       resolver: BuildContextResolver(context),
-      styles: values.styles,
+      styles: styleMix.values,
     );
   }
 
@@ -71,34 +73,4 @@ class Mix extends InheritedWidget {
 
     return Mix(data: mixData, child: builder(mixData));
   }
-}
-
-MixValues applyContextVariants(MixValues values, BuildContext context) {
-  MixValues mergedValues = MixValues.empty.copyWith(
-    styles: values.styles,
-    variants: values.variants,
-  );
-
-  final unusedContextVariants = <ContextVariantAttribute>[];
-
-  final contextVariants = values.variants.contextVariants;
-
-  for (ContextVariantAttribute variant in contextVariants) {
-    final shouldApply = variant.shouldApply(context);
-    if (shouldApply) {
-      mergedValues = mergedValues.merge(variant.value);
-    } else {
-      unusedContextVariants.add(variant);
-    }
-  }
-
-  final unusedValues = MixValues.create(unusedContextVariants);
-
-  // ignore: avoid-unnecessary-reassignment
-  mergedValues = mergedValues.merge(unusedValues);
-
-  return contextVariants.length == unusedContextVariants.length
-      ? mergedValues
-      // ignore: avoid-recursive-calls
-      : applyContextVariants(mergedValues, context);
 }

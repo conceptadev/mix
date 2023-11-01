@@ -5,18 +5,17 @@ import '../../factory/style_mix.dart';
 import '../attribute.dart';
 import 'variant.dart';
 
-typedef ShouldApplyFunction = bool Function(BuildContext context);
+typedef WhenContextFunction = bool Function(BuildContext context);
 
 class ContextVariant extends Variant {
-  final ShouldApplyFunction _shouldApply;
+  final WhenContextFunction _when;
 
-  const ContextVariant(super.name, {required ShouldApplyFunction shouldApply})
-      : _shouldApply = shouldApply;
+  const ContextVariant(super.name, {required WhenContextFunction when})
+      : _when = when;
 
-  get props => [name, _shouldApply];
-  bool shouldApply(BuildContext context) {
-    return _shouldApply(context);
-  }
+  get props => [name, _when];
+
+  bool when(BuildContext context) => _when(context);
 
   @override
   // ignore: long-parameter-list
@@ -40,6 +39,6 @@ class ContextVariant extends Variant {
       if (param != null) params.add(param);
     }
 
-    return ContextVariantAttribute(this, StyleMix.fromAttributes(params));
+    return ContextVariantAttribute(this, StyleMix.create(params));
   }
 }

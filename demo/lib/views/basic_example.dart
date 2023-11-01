@@ -9,7 +9,7 @@ class BasicExample extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mix = StyleMix.fromAttributes([
+    final mix = StyleMix.create([
       height(300),
       width(300),
       rounded(10),

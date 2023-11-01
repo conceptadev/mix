@@ -16,7 +16,7 @@ final onEnabled = onNot(onDisabled);
 
 final _onFocus = ContextVariant(
   'on-focus',
-  shouldApply: (BuildContext context) {
+  when: (BuildContext context) {
     final pressable = PressableNotifier.of(context);
 
     return pressable?.focus == true;
@@ -26,7 +26,7 @@ final _onFocus = ContextVariant(
 ContextVariant _pressableVariant(PressableState state) {
   return ContextVariant(
     'on-${state.name.paramCase}',
-    shouldApply: (BuildContext context) {
+    when: (BuildContext context) {
       final pressable = PressableNotifier.of(context);
 
       return pressable?.state == state;

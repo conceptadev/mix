@@ -4,7 +4,7 @@ import '../attributes/data_attributes.dart';
 import '../attributes/scalar_attribute.dart';
 import '../core/attribute.dart';
 import '../core/directives/text_directive.dart';
-import '../factory/exports.dart';
+import '../factory/mix_provider_data.dart';
 
 class TextSpec extends MixExtension<TextSpec> {
   final TextOverflow? overflow;
@@ -46,7 +46,7 @@ class TextSpec extends MixExtension<TextSpec> {
           mix.get<TextHeightBehaviorAttribute, TextHeightBehavior>(),
       textDirection: mix.get<TextDirectionAttribute, TextDirection>(),
       softWrap: mix.get<SoftWrapAttribute, bool>(),
-      directives: mix.attributeOfType<TextDirectiveAttribute>()?.value ?? [],
+      directives: mix.get<TextDirectiveAttribute, List<TextDirective>>() ?? [],
     );
   }
 

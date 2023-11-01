@@ -1,3 +1,4 @@
+import '../../factory/mix_provider_data.dart';
 import '../../helpers/extensions/string_ext.dart';
 import '../attribute.dart';
 import 'directive_attribute.dart';
@@ -57,12 +58,15 @@ class TextDirectiveAttribute
 }
 
 abstract class DirectiveAttribute<D extends Directive,
-    T extends DirectiveAttribute<D, T>> extends Attribute {
+    T extends DirectiveAttribute<D, T>> extends VisualAttribute<List<D>> {
   final List<D> value;
   const DirectiveAttribute(this.value);
 
   // Create method
   T create(List<D> value);
+
+  @override
+  List<D> resolve(MixData mix) => value;
 
   @override
   T merge(covariant T? other) {

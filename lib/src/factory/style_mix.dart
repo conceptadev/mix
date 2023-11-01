@@ -1,33 +1,54 @@
 // ignore_for_file: non_constant_identifier_names, constant_identifier_names, long-parameter-list
 
 import '../attributes/variant_attribute.dart';
+import '../attributes/wrapped_attribute.dart';
 import '../core/attribute.dart';
 import '../core/variants/variant.dart';
 import '../helpers/attributes_map.dart';
-import 'mix_values.dart';
 
-// @Deprecated(
-//   'Use StyleMix instead. '
-//   'This class will be removed in a future release.',
-// )
-// typedef Mix = StyleMix;
-
-/// A class representing a mix of attributes, decorators, variants, context
-/// variants, and directives.
+/// A utility class for managing a collection of styling attributes and variants.
 ///
-/// The `MixFactory` class is primarily used for constructing styling attributes and
-/// variants. This class provides a set of factory
-/// constructors and utility methods for working with mixes.
+/// The `StyleMix` class is used to encapsulate a set of styling attributes and
+/// variants which can be applied to a widget. This class provides several
+/// factory constructors and utility methods to help create, manipulate, and
+/// merge collections of styling attributes and variants.
+///
+/// Example:
+/// ```dart
+/// final style = StyleMix.create([...]);
+/// final updatedStyle = style.selectVariant(myVariant);
+/// ```
 class StyleMix {
   /// A constant, empty mix for use with const constructor widgets.
-  static const empty = StyleMix._(MixValues.empty);
+  ///
+  /// This can be used as a default or initial value where a `StyleMix` is required.
+  static const empty = StyleMix._(
+    styles: VisualAttributeMap.empty,
+    variants: VariantAttributeMap.empty,
+  );
 
-  final MixValues _values;
+  /// A map of visual attributes contained in this mix.
+  final VisualAttributeMap styles;
 
-  const StyleMix._(MixValues values) : _values = values;
+  /// A map of variant attributes contained in this mix.
+  final VariantAttributeMap variants;
 
-  // Factory constructors.
-  // ignore: parameters-ordering
+  const StyleMix._({required this.styles, required this.variants});
+
+  /// Creates a new `StyleMix` instance with a specified list of [Attribute]s.
+  ///
+  /// This factory constructor initializes a `StyleMix` with a list of
+  /// attributes provided as individual parameters. Only non-null attributes
+  /// are included in the resulting `StyleMix`.
+  ///
+  /// There is no specific reason for only 20 parameters. This is just a
+  /// reasonable number of parameters to support. If you need more than 20,
+  /// consider breaking up your mixes into many style mixes that can be applied
+  ///
+  /// Example:
+  /// ```dart
+  /// final style = StyleMix(attribute1, attribute2, attribute3);
+  /// ```
   factory StyleMix([
     Attribute? p1,
     Attribute? p2,
@@ -41,28 +62,65 @@ class StyleMix {
     Attribute? p10,
     Attribute? p11,
     Attribute? p12,
+    Attribute? p13,
+    Attribute? p14,
+    Attribute? p15,
+    Attribute? p16,
+    Attribute? p17,
+    Attribute? p18,
+    Attribute? p19,
+    Attribute? p20,
   ]) {
-    final params = <Attribute>[];
+    final params = [
+      p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, //
+      p11, p12, p13, p14, p15, p16, p17, p18, p19, p20,
+    ];
 
-    for (final param in [p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12]) {
-      if (param != null) params.add(param);
+    final nonNullParams = params.where((p) => p != null) as Iterable<Attribute>;
+
+    return StyleMix.create(nonNullParams);
+  }
+
+  /// Constructs a `StyleMix` from an iterable of [Attribute] instances.
+  ///
+  /// This factory constructor segregates the attributes into visual and variant
+  /// attributes, initializing a new `StyleMix` with these segregated collections.
+  ///
+  /// Example:
+  /// ```dart
+  /// final style = StyleMix.create([attribute1, attribute2]);
+  /// ```
+  factory StyleMix.create(Iterable<Attribute> attributes) {
+    final variantList = <VariantAttribute>[];
+    final styleList = <VisualAttribute>[];
+
+    for (final attribute in attributes) {
+      if (attribute is VisualAttribute) {
+        styleList.add(attribute);
+      } else if (attribute is VariantAttribute) {
+        variantList.add(attribute);
+      } else if (attribute is WrappedStyleAttribute) {
+        variantList.addAll(attribute.value.variants.values);
+        styleList.addAll(attribute.value.styles.values);
+      } else {
+        assert(false, 'Unsupported attribute type: $attribute');
+      }
     }
 
-    return StyleMix.fromAttributes(params);
+    return StyleMix._(
+      styles: VisualAttributeMap.from(styleList),
+      variants: VariantAttributeMap.from(variantList),
+    );
   }
 
-  /// Constructs a mix from a non-null iterable of [Attribute] instances.
-  factory StyleMix.fromAttributes(Iterable<Attribute> attributes) {
-    return StyleMix._(MixValues.create(attributes));
-  }
-
-  factory StyleMix.fromValues(MixValues values) {
-    return StyleMix._(values);
-  }
-
-  /// Chooses a mix based on a [condition].
+  /// Selects a mix based on a [condition].
   ///
   /// Returns [ifTrue] if the [condition] is true, otherwise returns [ifFalse].
+  ///
+  /// Example:
+  /// ```dart
+  /// final style = StyleMix.chooser(condition: isItTrue, ifTrue: trueStyle, ifFalse: falseStyle);
+  /// ```
   factory StyleMix.chooser({
     required bool condition,
     required StyleMix ifFalse,
@@ -71,124 +129,210 @@ class StyleMix {
     return condition ? ifTrue : ifFalse;
   }
 
-  /// Combines a list of [mixes] into a single MixFactory.
+  /// Combines a list of [mixes] into a single `StyleMix`.
   ///
-  /// Iterates through the list of mixes, merging each mix with the previous mix
-  /// and returning the final combined MixFactory.
+  /// This factory constructor iterates through the list of [mixes], merging
+  /// each mix with the previous mix and returning the final combined `StyleMix`.
+  ///
+  /// Example:
+  /// ```dart
+  /// final combinedStyle = StyleMix.combine([style1, style2, style3]);
+  /// ```
   factory StyleMix.combine(List<StyleMix> mixes) {
-    MixValues combinedValues = MixValues.empty;
-
-    for (final mix in mixes) {
-      combinedValues = combinedValues.merge(mix._values);
-    }
-
-    return StyleMix.fromValues(combinedValues);
+    return mixes.reduce((combinedStyle, mix) => combinedStyle.merge(mix));
   }
 
-  /// Returns a [MixValues] instance representing the values in this MixFactory.
-  MixValues get values => _values;
+  /// Returns a list of all attributes contained in this mix.
+  ///
+  /// This includes both visual and variant attributes.
+  Iterable<Attribute> get values => [...styles.values, ...variants.values];
 
-  /// Returns an iterable of [Attribute] instances from this MixFactory.
-  Iterable<Attribute> toAttributes() {
-    return _values.toValues();
+  /// Returns true if this StyleMix does not contain any attributes or variants.
+  bool get isEmpty => styles.isEmpty && variants.isEmpty;
+
+  /// Returns false if this StyleMix contains any attributes or variants.
+  bool get isNotEmpty => !isEmpty;
+
+  /// Returns a new `StyleMix` with the provided [styles] and [variants] merged with this mix's values.
+  ///
+  /// If [styles] or [variants] is null, the corresponding attribute map of this mix is used.
+  StyleMix copyWith({
+    VisualAttributeMap? styles,
+    VariantAttributeMap? variants,
+  }) {
+    return StyleMix._(
+      styles: this.styles.merge(styles),
+      variants: this.variants.merge(variants),
+    );
   }
 
-  /// Returns a new mix with the provided [values] merged with this mix's values.
-  StyleMix copyWith({MixValues? values}) {
-    return StyleMix._(_values.merge(values));
-  }
-
-  /// Merges this mix with the provided [mix] and returns the resulting MixFactory.
+  /// Merges this mix with the provided [mix] and returns the resulting `StyleMix`.
+  ///
+  /// This method combines the visual and variant attributes of this mix and the provided [mix].
   StyleMix merge(StyleMix mix) => StyleMix.combine([this, mix]);
 
-  StyleMix mergeMany(List<StyleMix> mixes) {
-    return StyleMix.combine([this, ...mixes]);
-  }
-
-  /// Merges this mix with the provided nullable [style].
+  /// Merges this mix with the provided list of [mixes] and returns the resulting `StyleMix`.
   ///
-  /// If [style] is null, returns this MixFactory. Otherwise, merges [style] with this MixFactory.
+  /// This method combines the visual and variant attributes of this mix and the provided list of [mixes].
+  StyleMix mergeMany(List<StyleMix> mixes) =>
+      StyleMix.combine([this, ...mixes]);
+
+  /// Merges this mix with the provided nullable [style] and returns the resulting `StyleMix`.
+  ///
+  /// If [style] is null, returns this `StyleMix`. Otherwise, merges [style] with this `StyleMix`.
   StyleMix mergeNullable(StyleMix? style) =>
       style == null ? this : merge(style);
 
-  /// Selects a single [Variant] and returns a new mix with the selected variant.
-  StyleMix selectVariant(Variant variant) {
-    return selectVariants([variant]);
-  }
-
-  /// Selects multiple [Variant] instances and returns a new mix with the selected variants.
+  /// Selects a single [Variant] and returns a new `StyleMix` with the selected variant.
   ///
-  /// If the [variants] list is empty, returns this mix without any changes.
-  StyleMix selectVariants(List<Variant> variants) {
-    if (variants.isEmpty) {
+  /// If the [variant] is not initially part of the `StyleMix`, this method returns this mix without any changes.
+  /// Otherwise, the method merges the attributes of the selected [variant] into a new `StyleMix` instance.
+  ///
+  /// Example:
+  /// ```dart
+  /// final outlined = Variant('outlined-button');
+  /// final style = StyleMix(
+  ///   attr1,
+  ///   attr2,
+  ///   outlined(attr4, attr5),
+  /// );
+  /// final updatedStyle = style.selectVariant(outlined);
+  /// ```
+  ///
+  /// In this example:
+  /// - An `outlined` instance `outlined` is created to represent an outlined button styling.
+  /// - An initial `StyleMix` instance `style` is created with `attr1` and `attr2`, along with the `outlined`.
+  /// - The `selectVariant` method is called on the `StyleMix` instance with `outlined` as the argument.
+  /// - The `selectVariant` method returns a new `StyleMix` instance `updatedStyle` with the attributes of the selected variant merged.
+  /// - The resulting `updatedStyle` is equivalent to `StyleMix(attr1, attr2, attr4, attr5)`.
+  ///
+  /// Note:
+  /// The attributes from the selected variant (`attr4` and `attr5`) are not applied to the `StyleMix` instance until the `selectVariant` method is called.
+  StyleMix selectVariant(Variant variant) => selectManyVariants([variant]);
+
+  /// Selects multiple [Variant] instances and returns a new `StyleMix` with the selected variants.
+  ///
+  /// If the [selectedVariants] list is empty, returns this mix without any changes.
+  /// Otherwise, the method merges the attributes of the selected variants into a new `StyleMix` instance.
+  ///
+  /// Example:
+  /// final outlinedVariant = Variant('outlined');
+  /// final smallVariant = Variant('small');
+  /// final style = StyleMix(
+  ///   attr1,
+  ///   attr2,
+  ///   outlinedVariant(attr3, attr4),
+  ///   smallVariant(attr5),
+  /// );
+  /// final outlinedSmallMix = style.selectVariants([outlinedVariant, smallVariant]);
+  /// ```
+  ///
+  /// In this example:
+  /// - Two `Variant` instances `outlinedVariant` and `smallVariant` are created.
+  /// - An initial `StyleMix` instance `style` is created with `attr1` and `attr2`, along with the two variants.
+  /// - The `selectVariants` method is called on the `StyleMix` instance with a list of `outlinedVariant` and `smallVariant` as the argument.
+  /// - The `selectVariants` method returns a new `StyleMix` instance `outlinedSmallMix` with the attributes of the selected variants merged.
+  /// - The resulting `outlinedSmallMix` is equivalent to `StyleMix(attr1, attr2, attr3, attr4, attr5)`.
+  ///
+  /// Note:
+  /// The attributes from the selected variants (`attr3`, `attr4`, and `attr5`) are not applied to the `StyleMix` instance until the `selectVariants` method is called.
+  StyleMix selectManyVariants(List<Variant> selectedVariants) {
+    if (selectedVariants.isEmpty) {
       return this;
     }
-    final existingVariants = _values.variants.values.toList();
+
     final matchedVariants = <VariantAttribute>[];
+    final remainingVariants = <VariantAttribute>[];
 
-    for (final v in variants) {
-      existingVariants.removeWhere((e) {
-        if (e.variant == v) {
-          matchedVariants.add(e);
-
-          return true;
+    for (final v in selectedVariants) {
+      for (VariantAttribute existingVariant in variants.values) {
+        if (existingVariant.variant == v) {
+          matchedVariants.add(existingVariant);
+        } else {
+          remainingVariants.add(existingVariant);
         }
+      }
+    }
 
-        return false;
-      });
+    // Return the current mix if no variants were matched.
+    if (matchedVariants.isEmpty) {
+      return this;
     }
 
     // Create a mix from the matched variants.
-    final valuesToApply = MixValues.create(matchedVariants);
+    final styleToApply = StyleMix.create(matchedVariants);
 
     // Create a mix with the existing values.
-    final existingValues = MixValues(
-      styles: _values.styles,
-      variants: VariantAttributeMap.from(existingVariants),
-    );
+    final updatedStyle = StyleMix._(
+      styles: styles,
+      variants: VariantAttributeMap.from(remainingVariants),
+    ).merge(styleToApply);
 
-    // Merge the existing mix with the mix to apply.
-    return StyleMix._(existingValues.merge(valuesToApply));
+    // Make sure to apply all nested variants
+    return updatedStyle.selectManyVariants(selectedVariants);
   }
 
-  StyleMix pickVariants(List<Variant> variants) {
+  StyleMix pickVariants(List<Variant> selectVariants) {
     final matchedVariants = <VariantAttribute>[];
 
-    final currentVariants = _values.variants.values;
+    final currentVariants = variants.values;
 
     for (final variantAttr in currentVariants) {
-      if (variants.contains(variantAttr.variant)) {
+      if (selectVariants.contains(variantAttr.variant)) {
         matchedVariants.add(variantAttr);
       }
     }
 
-    // Create a mix from the matched variants.
-    return StyleMix.fromAttributes(matchedVariants);
+    return StyleMix.create(matchedVariants);
   }
 
-  /// Selects variants based on a condition and returns a new mix with the selected variants.
+  /// Selects variants based on a [cases] map and returns a new `StyleMix` with the selected variants.
+  ///
+  /// The [cases] map contains boolean conditions as keys and [Variant] instances as values.
+  /// If a condition is true, the corresponding [Variant] is selected.
+  ///
+  /// Example:
+  /// ```dart
+  /// final highContrastVariant = Variant('highContrast');
+  /// final largeFontVariant = Variant('largeFont');
+  ///
+  /// final style = StyleMix();
+  /// final updatedStyle = style.selectVariantCondition({
+  ///   useHighContratst: highContrastVariant,
+  ///   useLargeFont: largeFontVariant,
+  /// });
+  /// ```
+  ///
+  /// In this example:
+  /// - Two `Variant` instances are created to represent high contrast and large font styling preferences.
+  /// - An initial `StyleMix` instance is created.
+  /// - The `selectVariantCondition` method is called on the `StyleMix` instance with a map of conditions and variants.
+  /// - The conditions `useHighContratst` and `useLargeFont` are hypothetical boolean values representing user preferences.
+  /// - If a condition is true, the corresponding `Variant` is selected and applied to the `StyleMix` instance, creating an `updatedStyle` instance with the selected variants.
   StyleMix selectVariantCondition(Map<bool, Variant> cases) {
     final keys = cases.keys.toList();
-    final values = cases.values.toList();
+    final variantList = cases.values.toList();
 
-    List<Variant> variants = [];
+    List<Variant> variantsToApply = [];
 
     for (int i = 0; i < keys.length; i++) {
       if (keys[i]) {
-        variants.add(values[i]);
+        variantsToApply.add(variantList[i]);
       }
     }
 
-    return selectVariants(variants);
+    return selectManyVariants(variantsToApply);
   }
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is StyleMix && other._values == _values;
+    return other is StyleMix &&
+        other.styles == styles &&
+        other.variants == variants;
   }
 
   @override
-  int get hashCode => _values.hashCode;
+  int get hashCode => styles.hashCode ^ variants.hashCode;
 }
