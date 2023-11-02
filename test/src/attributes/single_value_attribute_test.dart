@@ -5,48 +5,48 @@ import 'package:mix/src/attributes/scalar_attribute.dart';
 import '../../helpers/testing_utils.dart';
 
 void main() {
-  testSingleAttributeValue<AxisAttribute, Axis>(
+  testScalarAttribute<AxisAttribute, Axis>(
     'AxisAttribute',
     (value) => AxisAttribute(value),
     Axis.values,
   );
 
-  testSingleAttributeValue<MainAxisAlignmentAttribute, MainAxisAlignment>(
+  testScalarAttribute<MainAxisAlignmentAttribute, MainAxisAlignment>(
       'MainAxisAlignmentAttribute',
       (value) => MainAxisAlignmentAttribute(value),
       MainAxisAlignment.values);
 
-  testSingleAttributeValue<MainAxisSizeAttribute, MainAxisSize>(
+  testScalarAttribute<MainAxisSizeAttribute, MainAxisSize>(
     'MainAxisSizeAttribute',
     (value) => MainAxisSizeAttribute(value),
     MainAxisSize.values,
   );
 
-  testSingleAttributeValue<CrossAxisAlignmentAttribute, CrossAxisAlignment>(
+  testScalarAttribute<CrossAxisAlignmentAttribute, CrossAxisAlignment>(
     'CrossAxisAlignmentAttribute',
     (value) => CrossAxisAlignmentAttribute(value),
     CrossAxisAlignment.values,
   );
 
-  testSingleAttributeValue<VerticalDirectionAttribute, VerticalDirection>(
+  testScalarAttribute<VerticalDirectionAttribute, VerticalDirection>(
     'VerticalDirectionAttribute',
     (value) => VerticalDirectionAttribute(value),
     VerticalDirection.values,
   );
 
-  testSingleAttributeValue<TextBaselineAttribute, TextBaseline>(
+  testScalarAttribute<TextBaselineAttribute, TextBaseline>(
     'TextBaselineAttribute',
     (value) => TextBaselineAttribute(value),
     TextBaseline.values,
   );
 
-  testSingleAttributeValue<ClipAttribute, Clip>(
+  testScalarAttribute<ClipAttribute, Clip>(
     'ClipAttribute',
     (value) => ClipAttribute(value),
     Clip.values,
   );
 
-  testSingleAttributeValue<ImageAlignmentAttribute, Alignment>(
+  testScalarAttribute<ImageAlignmentAttribute, Alignment>(
       'ImageAlignmentAttribute', (value) => ImageAlignmentAttribute(value), [
     Alignment.topLeft,
     Alignment.topCenter,
@@ -59,43 +59,43 @@ void main() {
     Alignment.bottomRight,
   ]);
 
-  testSingleAttributeValue<ImageFitAttribute, BoxFit>(
+  testScalarAttribute<ImageFitAttribute, BoxFit>(
     'ImageFitAttribute',
     (value) => ImageFitAttribute(value),
     BoxFit.values,
   );
 
-  testSingleAttributeValue<ImageRepeatAttribute, ImageRepeat>(
+  testScalarAttribute<ImageRepeatAttribute, ImageRepeat>(
     'ImageRepeatAttribute',
     (value) => ImageRepeatAttribute(value),
     ImageRepeat.values,
   );
 
-  testSingleAttributeValue<SoftWrapAttribute, bool>(
+  testScalarAttribute<SoftWrapAttribute, bool>(
       'SoftWrapAttribute', (value) => SoftWrapAttribute(value), [
     false,
     true,
   ]);
 
-  testSingleAttributeValue<TextOverflowAttribute, TextOverflow>(
+  testScalarAttribute<TextOverflowAttribute, TextOverflow>(
     'TextOverflowAttribute',
     (value) => TextOverflowAttribute(value),
     TextOverflow.values,
   );
 
-  testSingleAttributeValue<MaxLinesAttribute, int>(
+  testScalarAttribute<MaxLinesAttribute, int>(
       'MaxLinesAttribute', (value) => MaxLinesAttribute(value), [
     1,
     2,
   ]);
 
-  testSingleAttributeValue<TextWidthBasisAttribute, TextWidthBasis>(
+  testScalarAttribute<TextWidthBasisAttribute, TextWidthBasis>(
     'TextWidthBasisAttribute',
     (value) => TextWidthBasisAttribute(value),
     TextWidthBasis.values,
   );
 
-  testSingleAttributeValue<TextHeightBehaviorAttribute, TextHeightBehavior>(
+  testScalarAttribute<TextHeightBehaviorAttribute, TextHeightBehavior>(
       'TextHeightBehaviorAttribute',
       (value) => TextHeightBehaviorAttribute(value), [
     const TextHeightBehavior(
@@ -110,14 +110,14 @@ void main() {
     ),
   ]);
 
-  testSingleAttributeValue<TransformAttribute, Matrix4>(
+  testScalarAttribute<TransformAttribute, Matrix4>(
       'TransformAttribute', (value) => TransformAttribute(value), [
     Matrix4.identity(),
     Matrix4.rotationZ(0.1),
     Matrix4.rotationY(0.2),
   ]);
 
-  testSingleAttributeValue<TransformAlignmentAttribute, Alignment>(
+  testScalarAttribute<TransformAlignmentAttribute, Alignment>(
       'TransformAlignmentAttribute',
       (value) => TransformAlignmentAttribute(value), [
     Alignment.topLeft,
@@ -131,7 +131,7 @@ void main() {
     Alignment.bottomRight,
   ]);
 
-  testSingleAttributeValue<BlendModeAttribute, BlendMode>(
+  testScalarAttribute<BlendModeAttribute, BlendMode>(
     'BlendModeAttribute',
     (value) => BlendModeAttribute(value),
     BlendMode.values,

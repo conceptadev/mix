@@ -72,7 +72,7 @@ class StyleMix {
       p11, p12, p13, p14, p15, p16, p17, p18, p19, p20,
     ];
 
-    final nonNullParams = params.where((p) => p != null) as Iterable<Attribute>;
+    final nonNullParams = params.where((p) => p != null).cast<Attribute>();
 
     return StyleMix.create(nonNullParams);
   }

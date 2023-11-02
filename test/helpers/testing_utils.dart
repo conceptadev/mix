@@ -3,7 +3,10 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:meta/meta.dart';
 import 'package:mix/mix.dart';
 import 'package:mix/src/core/attribute.dart';
+import 'package:mix/src/core/variants/variant.dart';
 import 'package:mix/src/factory/mix_provider.dart';
+import 'package:mix/src/factory/mix_provider_data.dart';
+import 'package:mix/src/factory/style_mix.dart';
 import 'package:mix/src/theme/mix_theme.dart';
 import 'package:mockito/mockito.dart';
 
@@ -123,8 +126,36 @@ class BoxTestWidget extends StatelessWidget {
   }
 }
 
+class MockDoubleScalarAttribute
+    extends ScalarAttribute<MockDoubleScalarAttribute, double> {
+  const MockDoubleScalarAttribute(super.value);
+
+  @override
+  MockDoubleScalarAttribute create(double value) =>
+      MockDoubleScalarAttribute(value);
+}
+
+class MockIntScalarAttribute
+    extends ScalarAttribute<MockIntScalarAttribute, int> {
+  const MockIntScalarAttribute(super.value);
+
+  @override
+  MockIntScalarAttribute create(int value) => MockIntScalarAttribute(value);
+}
+
+class MockBooleanScalarAttribute
+    extends ScalarAttribute<MockBooleanScalarAttribute, bool> {
+  const MockBooleanScalarAttribute(super.value);
+
+  @override
+  MockBooleanScalarAttribute create(bool value) =>
+      MockBooleanScalarAttribute(value);
+}
+
+const mockVariant = Variant('mock-variant');
+
 @isTestGroup
-void testSingleAttributeValue<T extends ScalarAttribute<T, V>, V>(
+void testScalarAttribute<T extends ScalarAttribute<T, V>, V>(
   String groupName,
   T Function(V value) builder,
   List<V> values,

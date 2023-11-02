@@ -25,7 +25,7 @@ final firstMix = StyleMix(
   minWidth(100),
 );
 
-final secondMix = StyleMix(
+final secondMix = StyleM(
   // Box attribute
   padding(10),
   // Text attribute

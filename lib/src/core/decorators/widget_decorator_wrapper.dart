@@ -13,11 +13,11 @@ class WidgetDecoratorWrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     Widget current = child;
     // TODO: review the use of key for re-render
-    if (mix.decorators.isNotEmpty) {
-      for (final decorator in mix.decorators) {
-        current = decorator.build(current, mix);
-      }
-    }
+    // if (mix.decorators.isNotEmpty) {
+    //   for (final decorator in mix.decorators) {
+    //     current = decorator.build(current, mix);
+    //   }
+    // }
 
     return current;
   }

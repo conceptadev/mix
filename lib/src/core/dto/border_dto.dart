@@ -19,8 +19,6 @@ class BorderRadiusGeometryData extends Data<BorderRadiusGeometry> {
 
   final bool _isDirectional;
 
-  bool get isDirectional => _isDirectional;
-
   const BorderRadiusGeometryData({
     this.topLeft,
     this.topRight,
@@ -87,7 +85,9 @@ class BorderRadiusGeometryData extends Data<BorderRadiusGeometry> {
         bottomStart = Radius.circular(radius),
         bottomEnd = Radius.circular(radius);
 
-  BorderRadiusGeometryData get toDirectional => copyWith(isDirectional: true);
+  bool get isDirectional => _isDirectional;
+
+  BorderRadiusGeometryData toDirectional() => copyWith(isDirectional: true);
 
   BorderRadiusGeometryAttribute toAttribute() =>
       BorderRadiusGeometryAttribute(this);
@@ -179,8 +179,6 @@ class BoxBorderData extends Data<BoxBorder> {
 
   final bool _isDirectional;
 
-  bool get isDirectional => _isDirectional;
-
   const BoxBorderData({
     this.top,
     this.start,
@@ -222,6 +220,8 @@ class BoxBorderData extends Data<BoxBorder> {
         left = vertical,
         start = vertical,
         end = vertical;
+
+  bool get isDirectional => _isDirectional;
 
   BoxBorderAttribute toAttribute() => BoxBorderAttribute(this);
 
