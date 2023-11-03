@@ -18,13 +18,11 @@ import 'utils/border_util.dart';
 import 'utils/box_constraints_util.dart';
 import 'utils/context_variant_util.dart';
 import 'utils/decoration_util.dart';
-import 'utils/flex_util.dart';
 import 'utils/helper_util.dart';
 import 'utils/pressable_util.dart';
-import 'utils/scalar_utils.dart';
-import 'utils/size_util.dart';
+import 'utils/scalar_util.dart';
 import 'utils/space_util.dart';
-import 'utils/text_style_util.dart';
+import 'utils/text_util.dart';
 
 /// ALL ALIASES HERE HAVE BEEN DEPRECATED AND WILL BE REMOVED IN THE FUTURE
 /// FEEL FREE TO BRING INTERNALLY TO YOUR OWN PROJECT

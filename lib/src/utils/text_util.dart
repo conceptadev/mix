@@ -1,9 +1,12 @@
 // ignore_for_file: long-parameter-list
 
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
-import '../attributes/scalar_attribute.dart';
+import '../attributes/shadow_attribute.dart';
 import '../attributes/strut_style_attribute.dart';
+import '../attributes/text_style_attribute.dart';
 import '../core/directives/text_directive.dart';
 import '../helpers/extensions/values_ext.dart';
 
@@ -15,26 +18,69 @@ TextDirectiveAttribute textDirective(TextDirective directive) {
   return TextDirectiveAttribute([directive]);
 }
 
-SoftWrapAttribute softWrap(bool softWrap) {
-  return SoftWrapAttribute(softWrap);
+TextStyleAttribute textStyle({
+  String? fontFamily,
+  FontWeight? fontWeight,
+  FontStyle? fontStyle,
+  double? fontSize,
+  double? letterSpacing,
+  double? wordSpacing,
+  TextBaseline? textBaseline,
+  List<Shadow>? shadows,
+  Color? color,
+  Color? backgroundColor,
+  List<FontFeature>? fontFeatures,
+  TextDecoration? decoration,
+  Color? decorationColor,
+  TextDecorationStyle? decorationStyle,
+  Paint? foreground,
+  Paint? background,
+  String? debugLabel,
+  Locale? locale,
+  double? height,
+}) {
+  return TextStyleAttribute(
+    background: background,
+    backgroundColor: backgroundColor?.toDto,
+    color: color?.toDto,
+    debugLabel: debugLabel,
+    decoration: decoration,
+    decorationColor: decorationColor?.toDto,
+    decorationStyle: decorationStyle,
+    fontFamily: fontFamily,
+    fontFeatures: fontFeatures,
+    fontSize: fontSize,
+    fontStyle: fontStyle,
+    fontWeight: fontWeight,
+    foreground: foreground,
+    height: height,
+    letterSpacing: letterSpacing,
+    locale: locale,
+    shadows: _shadowsFromDto(shadows),
+    textBaseline: textBaseline,
+    wordSpacing: wordSpacing,
+  );
 }
 
-TextOverflowAttribute textOverflow(TextOverflow overflow) {
-  return TextOverflowAttribute(overflow);
+TextStyleAttribute bold() {
+  return textStyle(fontWeight: FontWeight.bold);
 }
 
-TextScaleFactorAttribute textScaleFactor(double textScaleFactor) {
-  return TextScaleFactorAttribute(textScaleFactor);
+TextStyleAttribute italic() {
+  return textStyle(fontStyle: FontStyle.italic);
 }
 
-MaxLinesAttribute maxLines(int maxLines) {
-  return MaxLinesAttribute(maxLines);
+ShadowAttribute _shadowFromDto(Shadow shadow) {
+  return ShadowAttribute(
+    blurRadius: shadow.blurRadius,
+    color: shadow.color.toDto,
+    offset: shadow.offset,
+  );
 }
 
-TextWidthBasisAttribute textWidthBasis(TextWidthBasis textWidthBasis) {
-  return TextWidthBasisAttribute(textWidthBasis);
-}
+List<ShadowAttribute>? _shadowsFromDto(List<Shadow>? shadows) {
+  if (shadows == null) return null;
+  if (shadows.isEmpty) return [];
 
-TextAlignAttribute textAlign(TextAlign textAlign) {
-  return TextAlignAttribute(textAlign);
+  return shadows.map(_shadowFromDto).toList();
 }

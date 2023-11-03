@@ -6,8 +6,10 @@ BorderRadiusGeometryAttribute borderRadius(
   Radius radius, {
   bool isDirectional = false,
 }) {
-  return BorderRadiusGeometryAttribute.all(radius,
-      isDirectional: isDirectional);
+  return BorderRadiusGeometryAttribute.all(
+    radius,
+    isDirectional: isDirectional,
+  );
 }
 
 BorderRadiusGeometryAttribute rounded(
