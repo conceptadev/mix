@@ -12,7 +12,7 @@ void main() {
 
       final resolvedValue = result.resolve(EmptyMixData) as BorderRadius;
 
-      expect(result, isA<BorderRadiusGeometryData>());
+      expect(result, isA<BorderRadiusGeometryAttribute>());
       expect(resolvedValue, isA<BorderRadius>());
       expect(resolvedValue.topLeft.y, 10.0);
       expect(resolvedValue.topRight.y, 10.0);
@@ -23,14 +23,14 @@ void main() {
     test(
         'from factory returns BorderRadiusDirectionalAttribute for BorderRadiusDirectional',
         () {
-      final result = BorderRadiusGeometryData.circular(
+      final result = BorderRadiusGeometryAttribute.circular(
         10.0,
       ).toDirectional();
 
       final resolvedValue =
           result.resolve(EmptyMixData) as BorderRadiusDirectional;
 
-      expect(result, isA<BorderRadiusGeometryData>());
+      expect(result, isA<BorderRadiusGeometryAttribute>());
       expect(resolvedValue, isA<BorderRadiusDirectional>());
       expect(resolvedValue.topStart.y, 10.0);
       expect(resolvedValue.topEnd.y, 10.0);
@@ -39,9 +39,9 @@ void main() {
     });
 
     test('merge returns merged object correctly', () {
-      final attr1 = BorderRadiusGeometryData.circular(10.0);
+      final attr1 = BorderRadiusGeometryAttribute.circular(10.0);
       const attr2 =
-          BorderRadiusGeometryData(topLeft: Radius.elliptical(20.0, 20.0));
+          BorderRadiusGeometryAttribute(topLeft: Radius.elliptical(20.0, 20.0));
 
       final merged = attr1.merge(attr2);
 
@@ -58,7 +58,7 @@ void main() {
     });
 
     test('resolve returns correct BorderRadius', () {
-      final attr = BorderRadiusGeometryData.circular(10.0);
+      final attr = BorderRadiusGeometryAttribute.circular(10.0);
       final borderRadius = attr.resolve(EmptyMixData) as BorderRadius;
 
       expect(borderRadius.topLeft, const Radius.circular(10.0));
@@ -68,15 +68,15 @@ void main() {
     });
 
     test('Equality holds when all attributes are the same', () {
-      final attr1 = BorderRadiusGeometryData.circular(15.0);
-      final attr2 = BorderRadiusGeometryData.circular(15.0);
+      final attr1 = BorderRadiusGeometryAttribute.circular(15.0);
+      final attr2 = BorderRadiusGeometryAttribute.circular(15.0);
 
       expect(attr1, attr2);
     });
 
     test('Equality fails when attributes are different', () {
-      final attr1 = BorderRadiusGeometryData.circular(10.0);
-      const attr2 = BorderRadiusGeometryData(
+      final attr1 = BorderRadiusGeometryAttribute.circular(10.0);
+      const attr2 = BorderRadiusGeometryAttribute(
         topLeft: Radius.elliptical(
           10.0,
           30.0,
@@ -97,7 +97,7 @@ void main() {
         // strokeAlign: 12.0,
       );
 
-      BorderSideData result = borderSide.toDto;
+      BorderSideAttribute result = borderSide.toDto;
 
       final resolvedValue = result.resolve(EmptyMixData);
 
@@ -115,15 +115,15 @@ void main() {
         // strokeAlign: 12.0,
       );
 
-      BorderSideData result = borderSide.toDto;
+      BorderSideAttribute result = borderSide.toDto;
 
-      BorderSideData copy = result.copyWith(
+      BorderSideAttribute copy = result.copyWith(
         color: Colors.blue.toDto,
         width: 3.0,
         strokeAlign: 13.0,
       );
 
-      BorderSideData merge = result.merge(copy);
+      BorderSideAttribute merge = result.merge(copy);
 
       expect(copy.color?.value, Colors.blue);
       expect(copy.width, 3.0);
@@ -147,14 +147,14 @@ void main() {
 
       final result = borderSide.toDto;
 
-      final same = BorderSideData(
+      final same = BorderSideAttribute(
         color: Colors.red.toDto,
         width: 2.0,
         style: BorderStyle.solid,
         strokeAlign: 12.0,
       );
 
-      final different = BorderSideData(
+      final different = BorderSideAttribute(
         color: Colors.blue.toDto,
         width: 3.0,
         style: BorderStyle.solid,

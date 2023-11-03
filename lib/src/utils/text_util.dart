@@ -2,13 +2,12 @@
 
 import 'package:flutter/material.dart';
 
-import '../attributes/data_attributes.dart';
 import '../attributes/scalar_attribute.dart';
+import '../attributes/strut_style_attribute.dart';
 import '../core/directives/text_directive.dart';
-import '../core/dto/strut_style_dto.dart';
 import '../helpers/extensions/values_ext.dart';
 
-StrutStyleData strutStyle(StrutStyle strutStyle) {
+StrutStyleAttribute strutStyle(StrutStyle strutStyle) {
   return strutStyle.toAttribute();
 }
 
@@ -38,24 +37,4 @@ TextWidthBasisAttribute textWidthBasis(TextWidthBasis textWidthBasis) {
 
 TextAlignAttribute textAlign(TextAlign textAlign) {
   return TextAlignAttribute(textAlign);
-}
-
-@Deprecated('Use textDirective(directive)')
-TextDirectiveAttribute directives(List<TextDirective> directives) {
-  return TextDirectiveAttribute(directives);
-}
-
-@Deprecated('Use textDirective(directive)')
-TextDirectiveAttribute directive(TextDirective directive) {
-  return TextDirectiveAttribute([directive]);
-}
-
-@Deprecated('Locale is now passed to StyledText widget')
-TextStyleAttribute locale() {
-  throw UnimplementedError();
-}
-
-@Deprecated('Use text(overflow: overflow)')
-TextOverflowAttribute overflow(TextOverflow overflow) {
-  return TextOverflowAttribute(overflow);
 }

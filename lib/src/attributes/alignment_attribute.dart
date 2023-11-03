@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 
-import '../../factory/mix_provider_data.dart';
-import '../attribute.dart';
+import '../core/attribute.dart';
+import '../factory/mix_provider_data.dart';
 
-class AlignmentGeometryData extends Data<AlignmentGeometry> {
+@immutable
+class AlignmentGeometryAttribute extends VisualAttribute<AlignmentGeometry> {
   final double? start;
   final double? x;
   final double? y;
 
   final bool isDirectional;
 
-  const AlignmentGeometryData({
+  const AlignmentGeometryAttribute({
     this.start,
     this.x,
     this.y,
@@ -18,7 +19,7 @@ class AlignmentGeometryData extends Data<AlignmentGeometry> {
   });
 
   @override
-  AlignmentGeometryData merge(AlignmentGeometryData? other) {
+  AlignmentGeometryAttribute merge(AlignmentGeometryAttribute? other) {
     if (other == null) return this;
 
     if (other.isDirectional != isDirectional) {
@@ -27,7 +28,7 @@ class AlignmentGeometryData extends Data<AlignmentGeometry> {
       );
     }
 
-    return AlignmentGeometryData(
+    return AlignmentGeometryAttribute(
       start: other.start ?? start,
       x: other.x ?? x,
       y: other.y ?? y,

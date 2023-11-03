@@ -1,39 +1,40 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
-import '../../attributes/data_attributes.dart';
-import '../../factory/mix_provider_data.dart';
-import '../attribute.dart';
+import '../core/attribute.dart';
+import '../factory/mix_provider_data.dart';
 
-abstract class ConstraintsData<T extends Constraints> extends Data<T> {
-  const ConstraintsData();
+@immutable
+abstract class ConstraintsAttribute<T extends Constraints>
+    extends VisualAttribute<T> {
+  const ConstraintsAttribute();
 
   @override
-  ConstraintsData merge(covariant ConstraintsData? other);
+  ConstraintsAttribute merge(covariant ConstraintsAttribute? other);
 
   @override
   T resolve(MixData mix);
 }
 
-class BoxConstraintsData extends ConstraintsData<BoxConstraints> {
+@immutable
+class BoxConstraintsAttribute extends ConstraintsAttribute<BoxConstraints> {
   final double? minWidth;
   final double? maxWidth;
   final double? minHeight;
   final double? maxHeight;
 
-  const BoxConstraintsData({
+  const BoxConstraintsAttribute({
     this.minWidth,
     this.maxWidth,
     this.minHeight,
     this.maxHeight,
   });
 
-  BoxConstraintsAttribute toAttribute() => BoxConstraintsAttribute(this);
-
   @override
-  BoxConstraintsData merge(covariant BoxConstraintsData? other) {
+  BoxConstraintsAttribute merge(covariant BoxConstraintsAttribute? other) {
     if (other == null) return this;
 
-    return BoxConstraintsData(
+    return BoxConstraintsAttribute(
       minWidth: other.minWidth ?? minWidth,
       maxWidth: other.maxWidth ?? maxWidth,
       minHeight: other.minHeight ?? minHeight,

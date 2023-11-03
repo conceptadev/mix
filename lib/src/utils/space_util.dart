@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
-import '../attributes/data_attributes.dart';
-import '../core/dto/edge_insets_dto.dart';
-import '../helpers/extensions/values_ext.dart';
+import '../attributes/edge_insets_attribute.dart';
+
+SpacingDataFactory<PaddingAttribute> _paddingFactory =
+    const SpacingDataFactory<PaddingAttribute>(PaddingAttribute.new);
 
 PaddingAttribute padding(double p1, [double? p2, double? p3, double? p4]) {
-  return PaddingAttribute(SpacingGeometryData.positional(p1, p2, p3, p4));
+  return _paddingFactory.positional(p1, p2, p3, p4);
 }
 
 PaddingAttribute paddingDirectional(
@@ -14,52 +15,51 @@ PaddingAttribute paddingDirectional(
   double? p3,
   double? p4,
 ]) {
-  return PaddingAttribute(
-    SpacingGeometryData.positional(p1, p2, p3, p4).toDirectional,
-  );
+  return _paddingFactory.positional(p1, p2, p3, p4).toDirectional;
 }
 
 PaddingAttribute paddingTop(double value) {
-  return PaddingAttribute(SpacingGeometryData(top: value));
+  return _paddingFactory.create(top: value);
 }
 
 PaddingAttribute paddingBottom(double value) {
-  return PaddingAttribute(SpacingGeometryData(bottom: value));
+  return _paddingFactory.create(bottom: value);
 }
 
 PaddingAttribute paddingLeft(double value) {
-  return PaddingAttribute(SpacingGeometryData(left: value));
+  return _paddingFactory.create(left: value);
 }
 
 PaddingAttribute paddingRight(double value) {
-  return PaddingAttribute(SpacingGeometryData(right: value));
+  return _paddingFactory.create(right: value);
 }
 
 PaddingAttribute paddingStart(double value) {
-  return PaddingAttribute(
-    SpacingGeometryData(start: value, isDirectional: true),
-  );
+  return _paddingFactory.create(isDirectional: true, start: value);
 }
 
 PaddingAttribute paddingEnd(double value) {
-  return PaddingAttribute(SpacingGeometryData(end: value, isDirectional: true));
+  return _paddingFactory.create(end: value, isDirectional: true);
 }
 
 PaddingAttribute paddingHorizontal(double value) {
-  return PaddingAttribute(SpacingGeometryData.symmetric(horizontal: value));
+  return _paddingFactory.symmetric(horizontal: value);
 }
 
 PaddingAttribute paddingVertical(double value) {
   /// padding vertical.
-  return PaddingAttribute(SpacingGeometryData.symmetric(vertical: value));
+  return _paddingFactory.symmetric(vertical: value);
 }
 
 PaddingAttribute paddingInsets(EdgeInsetsGeometry insets) {
-  return PaddingAttribute(insets.toSpace);
+  return _paddingFactory.fromEdgeInsets(insets);
 }
 
+SpacingDataFactory<MarginAttribute> _marginFactory =
+    const SpacingDataFactory<MarginAttribute>(MarginAttribute.new);
+
 MarginAttribute margin(double p1, [double? p2, double? p3, double? p4]) {
-  return MarginAttribute(SpacingGeometryData.positional(p1, p2, p3, p4));
+  return _marginFactory.positional(p1, p2, p3, p4);
 }
 
 MarginAttribute marginDirectional(
@@ -68,45 +68,41 @@ MarginAttribute marginDirectional(
   double? p3,
   double? p4,
 ]) {
-  return MarginAttribute(
-    SpacingGeometryData.positional(p1, p2, p3, p4).toDirectional,
-  );
+  return _marginFactory.positional(p1, p2, p3, p4).toDirectional;
 }
 
 MarginAttribute marginTop(double value) {
-  return MarginAttribute(SpacingGeometryData(top: value));
+  return MarginAttribute(top: value);
 }
 
 MarginAttribute marginBottom(double value) {
-  return MarginAttribute(SpacingGeometryData(bottom: value));
+  return MarginAttribute(bottom: value);
 }
 
 MarginAttribute marginLeft(double value) {
-  return MarginAttribute(SpacingGeometryData(left: value));
+  return MarginAttribute(left: value);
 }
 
 MarginAttribute marginRight(double value) {
-  return MarginAttribute(SpacingGeometryData(right: value));
+  return MarginAttribute(right: value);
 }
 
 MarginAttribute marginStart(double value) {
-  return MarginAttribute(
-    SpacingGeometryData(start: value, isDirectional: true),
-  );
+  return MarginAttribute(start: value, isDirectional: true);
 }
 
 MarginAttribute marginEnd(double value) {
-  return MarginAttribute(SpacingGeometryData(end: value, isDirectional: true));
+  return MarginAttribute(end: value, isDirectional: true);
 }
 
 MarginAttribute marginHorizontal(double value) {
-  return MarginAttribute(SpacingGeometryData.symmetric(horizontal: value));
+  return _marginFactory.symmetric(horizontal: value);
 }
 
 MarginAttribute marginVertical(double value) {
-  return MarginAttribute(SpacingGeometryData.symmetric(vertical: value));
+  return _marginFactory.symmetric(vertical: value);
 }
 
-MarginAttribute marginInsets(EdgeInsets insets) {
-  return MarginAttribute(insets.toSpace);
+MarginAttribute marginInsets(EdgeInsets edgeInsets) {
+  return _marginFactory.fromEdgeInsets(edgeInsets);
 }

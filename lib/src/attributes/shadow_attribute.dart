@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 
-import '../../factory/mix_provider_data.dart';
-import '../attribute.dart';
-import 'color_dto.dart';
+import '../core/attribute.dart';
+import '../factory/mix_provider_data.dart';
+import 'color_attribute.dart';
 
-class ShadowData<T extends Shadow> extends Data<Shadow> {
-  final ColorData? color;
+@immutable
+class ShadowAttribute<T extends Shadow> extends VisualAttribute<Shadow> {
+  final ColorAttribute? color;
   final Offset? offset;
   final double? blurRadius;
 
-  const ShadowData({this.blurRadius, this.color, this.offset});
+  const ShadowAttribute({this.blurRadius, this.color, this.offset});
 
   @override
   T resolve(MixData mix) {
@@ -23,8 +24,8 @@ class ShadowData<T extends Shadow> extends Data<Shadow> {
   }
 
   @override
-  ShadowData merge(ShadowData? other) {
-    return ShadowData(
+  ShadowAttribute merge(ShadowAttribute? other) {
+    return ShadowAttribute(
       blurRadius: other?.blurRadius ?? blurRadius,
       color: mergeAttr(color, other?.color),
       offset: other?.offset ?? offset,
@@ -35,10 +36,10 @@ class ShadowData<T extends Shadow> extends Data<Shadow> {
   get props => [color, offset, blurRadius];
 }
 
-class BoxShadowData extends ShadowData<BoxShadow> {
+class BoxShadowAttribute extends ShadowAttribute<BoxShadow> {
   final double? spreadRadius;
 
-  const BoxShadowData({
+  const BoxShadowAttribute({
     super.color,
     super.offset,
     super.blurRadius,
@@ -60,8 +61,8 @@ class BoxShadowData extends ShadowData<BoxShadow> {
   }
 
   @override
-  BoxShadowData merge(BoxShadowData? other) {
-    return BoxShadowData(
+  BoxShadowAttribute merge(BoxShadowAttribute? other) {
+    return BoxShadowAttribute(
       color: mergeAttr(color, other?.color),
       offset: other?.offset ?? offset,
       blurRadius: other?.blurRadius ?? blurRadius,

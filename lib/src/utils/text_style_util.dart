@@ -1,8 +1,7 @@
 import 'dart:ui';
 
-import '../attributes/data_attributes.dart';
-import '../core/dto/shadow_dto.dart';
-import '../core/dto/text_style_dto.dart';
+import '../attributes/shadow_attribute.dart';
+import '../attributes/text_style_attribute.dart';
 import '../helpers/extensions/values_ext.dart';
 
 TextStyleAttribute textStyle({
@@ -26,7 +25,7 @@ TextStyleAttribute textStyle({
   Locale? locale,
   double? height,
 }) {
-  return TextStyleData(
+  return TextStyleAttribute(
     background: background,
     backgroundColor: backgroundColor?.toDto,
     color: color?.toDto,
@@ -46,7 +45,7 @@ TextStyleAttribute textStyle({
     shadows: _shadowsFromDto(shadows),
     textBaseline: textBaseline,
     wordSpacing: wordSpacing,
-  ).toAttribute();
+  );
 }
 
 TextStyleAttribute bold() {
@@ -57,15 +56,15 @@ TextStyleAttribute italic() {
   return textStyle(fontStyle: FontStyle.italic);
 }
 
-ShadowData _shadowFromDto(Shadow shadow) {
-  return ShadowData(
+ShadowAttribute _shadowFromDto(Shadow shadow) {
+  return ShadowAttribute(
     blurRadius: shadow.blurRadius,
     color: shadow.color.toDto,
     offset: shadow.offset,
   );
 }
 
-List<ShadowData>? _shadowsFromDto(List<Shadow>? shadows) {
+List<ShadowAttribute>? _shadowsFromDto(List<Shadow>? shadows) {
   if (shadows == null) return null;
   if (shadows.isEmpty) return [];
 

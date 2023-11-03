@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
+import 'package:mix/src/core/variants/variant.dart';
 import 'package:mix/src/factory/mix_provider.dart';
+import 'package:mix/src/factory/style_mix.dart';
 
 import '../helpers/random_dto.dart';
 

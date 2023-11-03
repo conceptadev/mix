@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../attributes/data_attributes.dart';
+import '../attributes/alignment_attribute.dart';
 import '../helpers/extensions/values_ext.dart';
 
 AlignmentGeometryAttribute alignment(AlignmentGeometry value) {
-  return AlignmentGeometryAttribute(value.toDto);
+  return value.toAttribute();
 }
 
 /// The top left corner.

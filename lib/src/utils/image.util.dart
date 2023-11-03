@@ -1,30 +1,18 @@
 // ignore_for_file: long-parameter-list
 
-import 'package:flutter/material.dart';
-
-import '../attributes/data_attributes.dart';
+import '../attributes/color_attribute.dart';
 import '../attributes/scalar_attribute.dart';
-import '../core/dto/color_dto.dart';
 
-WidthAttribute imageWidth(double width) {
-  return WidthAttribute(width);
-}
+const imageWidth = ImageWidthAttribute.new;
+const imageHeight = ImageHeightAttribute.new;
+const imageColor = ImageColorAttribute.new;
+const imageRepeat = ImageRepeatAttribute.new;
+const imageFit = BoxFitAttribute.new;
+const imageBlendMode = BlendModeAttribute.new;
 
-HeightAttribute imageHeight(double height) {
-  return HeightAttribute(height);
-}
 
-ImageColorAttribute imageColor(Color color) {
-  return ImageColorAttribute(ColorData(color));
-}
 
-ImageRepeatAttribute imageRepeat(ImageRepeat repeat) {
-  return ImageRepeatAttribute(repeat);
-}
 
-BoxFitAttribute imageFit(BoxFit fit) {
-  return BoxFitAttribute(fit);
-}
 
 // const imageColor = ImageUtility.color;
 // const imageScale = ImageUtility.scale;

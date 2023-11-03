@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mix/src/attributes/data_attributes.dart';
+import 'package:mix/src/attributes/scalar_attribute.dart';
 
 import '../../helpers/testing_utils.dart';
 

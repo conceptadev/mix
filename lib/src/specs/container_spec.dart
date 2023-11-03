@@ -2,7 +2,10 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-import '../attributes/data_attributes.dart';
+import '../attributes/alignment_attribute.dart';
+import '../attributes/constraints_attribute.dart';
+import '../attributes/decoration_attribute.dart';
+import '../attributes/edge_insets_attribute.dart';
 import '../attributes/scalar_attribute.dart';
 import '../core/attribute.dart';
 import '../factory/mix_provider_data.dart';

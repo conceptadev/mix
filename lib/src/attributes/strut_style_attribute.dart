@@ -1,9 +1,10 @@
-import 'package:flutter/painting.dart';
+import 'package:flutter/material.dart';
 
-import '../../factory/mix_provider_data.dart';
-import '../attribute.dart';
+import '../core/attribute.dart';
+import '../factory/mix_provider_data.dart';
 
-class StrutStyleData extends Data<StrutStyle> {
+@immutable
+class StrutStyleAttribute extends VisualAttribute<StrutStyle> {
   final String? fontFamily;
   final List<String>? fontFamilyFallback;
   final double? fontSize;
@@ -13,7 +14,7 @@ class StrutStyleData extends Data<StrutStyle> {
   final double? leading;
   final bool? forceStrutHeight;
 
-  const StrutStyleData._({
+  const StrutStyleAttribute._({
     this.fontFamily,
     this.fontFamilyFallback,
     this.fontSize,
@@ -24,7 +25,7 @@ class StrutStyleData extends Data<StrutStyle> {
     this.forceStrutHeight,
   });
 
-  const StrutStyleData.only({
+  const StrutStyleAttribute.only({
     this.fontFamily,
     this.fontFamilyFallback,
     this.fontSize,
@@ -36,10 +37,10 @@ class StrutStyleData extends Data<StrutStyle> {
   });
 
   @override
-  StrutStyleData merge(StrutStyleData? other) {
+  StrutStyleAttribute merge(StrutStyleAttribute? other) {
     if (other == null) return this;
 
-    return StrutStyleData._(
+    return StrutStyleAttribute._(
       fontFamily: other.fontFamily ?? fontFamily,
       fontFamilyFallback: other.fontFamilyFallback ?? fontFamilyFallback,
       fontSize: other.fontSize ?? fontSize,

@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
 
-import '../../attributes/data_attributes.dart';
+import '../../attributes/alignment_attribute.dart';
+import '../../attributes/border_attribute.dart';
+import '../../attributes/color_attribute.dart';
+import '../../attributes/constraints_attribute.dart';
 import '../../attributes/scalar_attribute.dart';
-import '../../core/dto/alignment_dto.dart';
-import '../../core/dto/border_dto.dart';
-import '../../core/dto/color_dto.dart';
-import '../../core/dto/constraints_dto.dart';
-import '../../core/dto/edge_insets_dto.dart';
-import '../../core/dto/shadow_dto.dart';
-import '../../core/dto/strut_style_dto.dart';
-import '../../core/dto/text_style_dto.dart';
+import '../../attributes/shadow_attribute.dart';
+import '../../attributes/strut_style_attribute.dart';
+import '../../attributes/text_style_attribute.dart';
 
 extension StrutStyleExt on StrutStyle {
-  StrutStyleData toAttribute() {
-    return StrutStyleData.only(
+  StrutStyleAttribute toAttribute() {
+    return StrutStyleAttribute.only(
       fontFamily: fontFamily,
       fontFamilyFallback: fontFamilyFallback,
       fontSize: fontSize,
@@ -51,97 +49,36 @@ extension GradientExt on Gradient {
 }
 
 extension ColorExt on Color {
-  ColorData get toDto => ColorData(this);
+  ColorAttribute get toDto => ColorAttribute(this);
 }
 
 // Extension for Alignment
 extension AlignmentGeometryExt on AlignmentGeometry {
-  AlignmentGeometryData get toDto {
-    if (this is Alignment) return (this as Alignment).toDto;
+  AlignmentGeometryAttribute toAttribute() {
+    if (this is Alignment) return (this as Alignment).toAttribute();
     if (this is AlignmentDirectional) {
-      return (this as AlignmentDirectional).toDto;
+      return (this as AlignmentDirectional).toAttribute();
     }
     throw UnimplementedError();
   }
-
-  AlignmentGeometryAttribute toAttribute() => AlignmentGeometryAttribute(toDto);
 }
 
 extension AlignmentExt on Alignment {
-  AlignmentGeometryData get toDto => AlignmentGeometryData(x: x, y: y);
-  AlignmentGeometryAttribute toAttribute() => AlignmentGeometryAttribute(toDto);
+  AlignmentGeometryAttribute toAttribute() =>
+      AlignmentGeometryAttribute(x: x, y: y);
+}
+
+extension AligmentDirectionalExt on AlignmentDirectional {
+  AlignmentGeometryAttribute toAttribute() =>
+      AlignmentGeometryAttribute(start: start, y: y);
 }
 
 extension BoxConstraintsExt on BoxConstraints {
-  BoxConstraintsData get toDto => BoxConstraintsData(
+  BoxConstraintsAttribute get toDto => BoxConstraintsAttribute(
         minWidth: minWidth,
         maxWidth: maxWidth,
         minHeight: minHeight,
         maxHeight: maxHeight,
-      );
-}
-
-extension AligmentDirectionalExt on AlignmentDirectional {
-  AlignmentGeometryData get toDto => AlignmentGeometryData(start: start, y: y);
-  AlignmentGeometryAttribute toAttribute() => AlignmentGeometryAttribute(toDto);
-}
-
-// Extensions for EdgeInsetsGeometry, similar to AlignmentGeometry
-extension EdgeInsetsGeometryExt on EdgeInsetsGeometry {
-  EdgeInsetsGeometryData get toDto {
-    if (this is EdgeInsets) return (this as EdgeInsets).toDto;
-    if (this is EdgeInsetsDirectional) {
-      return (this as EdgeInsetsDirectional).toDto;
-    }
-    throw UnimplementedError();
-  }
-
-  SpacingGeometryData get toSpace {
-    if (this is EdgeInsets) return (this as EdgeInsets).toSpace;
-    if (this is EdgeInsetsDirectional) {
-      return (this as EdgeInsetsDirectional).toSpace;
-    }
-    throw UnimplementedError();
-  }
-
-  PaddingAttribute get toPadding => PaddingAttribute(toSpace);
-
-  MarginAttribute get toMargin => MarginAttribute(toSpace);
-}
-
-// Extensions for EdgeInsets, similar to Alignment
-extension EdgeInsetsExt on EdgeInsets {
-  EdgeInsetsGeometryData get toDto => EdgeInsetsGeometryData(
-        top: top,
-        bottom: bottom,
-        left: left,
-        right: right,
-      );
-
-  SpacingGeometryData get toSpace => SpacingGeometryData(
-        top: top,
-        bottom: bottom,
-        left: left,
-        right: right,
-      );
-}
-
-// Extensions for EdgeInsetsDirectional, similar to AlignmentDirectional
-extension EdgeInsetsDirectionalExt on EdgeInsetsDirectional {
-  EdgeInsetsGeometryData get toDto => EdgeInsetsGeometryData(
-        top: top,
-        bottom: bottom,
-        start: start,
-        end: end,
-        isDirectional: true,
-      );
-
-  SpacingGeometryData get toSpace => SpacingGeometryData(
-        top: top,
-        bottom: bottom,
-        start: start,
-        end: end,
-        isDirectional: true,
       );
 }
 
@@ -177,7 +114,7 @@ extension BoxFitExt on BoxFit {
 }
 
 extension BorderRadiusGeometryExt on BorderRadiusGeometry {
-  BorderRadiusGeometryData get toDto {
+  BorderRadiusGeometryAttribute get toDto {
     if (this is BorderRadius) return (this as BorderRadius).toDto;
     if (this is BorderRadiusDirectional) {
       return (this as BorderRadiusDirectional).toDto;
@@ -185,33 +122,25 @@ extension BorderRadiusGeometryExt on BorderRadiusGeometry {
 
     throw UnimplementedError();
   }
-
-  BorderRadiusGeometryAttribute toAttribute() =>
-      BorderRadiusGeometryAttribute(toDto);
 }
 
 extension BorderRadiusDirectionalExrt on BorderRadiusDirectional {
-  BorderRadiusGeometryData get toDto => BorderRadiusGeometryData(
+  BorderRadiusGeometryAttribute get toDto => BorderRadiusGeometryAttribute(
         topStart: topStart,
         topEnd: topEnd,
         bottomStart: bottomStart,
         bottomEnd: bottomEnd,
       );
-
-  BorderRadiusGeometryAttribute toAttribute() =>
-      BorderRadiusGeometryAttribute(toDto);
 }
 
 // Extension for BorderRadius
 extension BorderRadiusExt on BorderRadius {
-  BorderRadiusGeometryData get toDto => BorderRadiusGeometryData(
+  BorderRadiusGeometryAttribute get toDto => BorderRadiusGeometryAttribute(
         topLeft: topLeft,
         topRight: topRight,
         bottomLeft: bottomLeft,
         bottomRight: bottomRight,
       );
-  BorderRadiusGeometryAttribute toAttribute() =>
-      BorderRadiusGeometryAttribute(toDto);
 }
 
 extension Matrix4Ext on Matrix4 {
@@ -226,7 +155,7 @@ extension Matrix4Ext on Matrix4 {
 }
 
 extension BorderSideExt on BorderSide {
-  BorderSideData get toDto => BorderSideData(
+  BorderSideAttribute get toDto => BorderSideAttribute(
         color: color.toDto,
         strokeAlign: strokeAlign,
         style: style,
@@ -235,18 +164,16 @@ extension BorderSideExt on BorderSide {
 }
 
 extension BoxBorderExt on BoxBorder {
-  BoxBorderData get toDto {
+  BoxBorderAttribute get toDto {
     if (this is Border) return (this as Border).toDto;
     if (this is BorderDirectional) return (this as BorderDirectional).toDto;
 
     throw UnimplementedError();
   }
-
-  BoxBorderAttribute toAttribute() => BoxBorderAttribute(toDto);
 }
 
 extension ShadowExt on Shadow {
-  ShadowData get toDto => ShadowData(
+  ShadowAttribute get toDto => ShadowAttribute(
         blurRadius: blurRadius,
         color: color.toDto,
         offset: offset,
@@ -254,7 +181,7 @@ extension ShadowExt on Shadow {
 }
 
 extension BoxShadowExt on BoxShadow {
-  BoxShadowData get toDto => BoxShadowData(
+  BoxShadowAttribute get toDto => BoxShadowAttribute(
         color: color.toDto,
         offset: offset,
         blurRadius: blurRadius,
@@ -263,7 +190,7 @@ extension BoxShadowExt on BoxShadow {
 }
 
 extension TextStyleExt on TextStyle {
-  TextStyleData get toDto => TextStyleData(
+  TextStyleAttribute get toDto => TextStyleAttribute(
         background: background,
         color: color?.toDto,
         debugLabel: debugLabel,
@@ -288,25 +215,21 @@ extension TextStyleExt on TextStyle {
 }
 
 extension BorderExt on Border {
-  BoxBorderData get toDto => BoxBorderData(
+  BoxBorderAttribute get toDto => BoxBorderAttribute(
         top: top.toDto,
         bottom: bottom.toDto,
         left: left.toDto,
         right: right.toDto,
       );
-
-  BoxBorderAttribute toAttribute() => BoxBorderAttribute(toDto);
 }
 
 extension BorderDirectionalExt on BorderDirectional {
-  BoxBorderData get toDto => BoxBorderData(
+  BoxBorderAttribute get toDto => BoxBorderAttribute(
         top: top.toDto,
         start: start.toDto,
         end: end.toDto,
         bottom: bottom.toDto,
       );
-
-  BoxBorderAttribute toAttribute() => BoxBorderAttribute(toDto);
 }
 
 extension IterableExt<T> on Iterable<T> {

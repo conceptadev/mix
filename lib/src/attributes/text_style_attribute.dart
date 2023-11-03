@@ -2,15 +2,15 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-import '../../attributes/data_attributes.dart';
-import '../../factory/mix_provider_data.dart';
-import '../../theme/tokens/text_style_ref.dart';
-import '../../utils/helper_util.dart';
-import '../attribute.dart';
-import 'color_dto.dart';
-import 'shadow_dto.dart';
+import '../core/attribute.dart';
+import '../factory/mix_provider_data.dart';
+import '../theme/tokens/text_style_ref.dart';
+import '../utils/helper_util.dart';
+import 'color_attribute.dart';
+import 'shadow_attribute.dart';
 
-class TextStyleData extends Data<TextStyle> {
+@immutable
+class TextStyleAttribute extends VisualAttribute<TextStyle> {
   final String? fontFamily;
   final FontWeight? fontWeight;
   final FontStyle? fontStyle;
@@ -18,12 +18,12 @@ class TextStyleData extends Data<TextStyle> {
   final double? letterSpacing;
   final double? wordSpacing;
   final TextBaseline? textBaseline;
-  final ColorData? color;
-  final ColorData? backgroundColor;
-  final List<ShadowData>? shadows;
+  final ColorAttribute? color;
+  final ColorAttribute? backgroundColor;
+  final List<ShadowAttribute>? shadows;
   final List<FontFeature>? fontFeatures;
   final TextDecoration? decoration;
-  final ColorData? decorationColor;
+  final ColorAttribute? decorationColor;
   final TextDecorationStyle? decorationStyle;
   final Locale? locale;
   final String? debugLabel;
@@ -35,7 +35,7 @@ class TextStyleData extends Data<TextStyle> {
 
   final TextStyleRef? ref;
 
-  const TextStyleData({
+  const TextStyleAttribute({
     this.background,
     this.backgroundColor,
     this.color,
@@ -60,12 +60,10 @@ class TextStyleData extends Data<TextStyle> {
     this.wordSpacing,
   });
 
-  TextStyleAttribute toAttribute() => TextStyleAttribute(this);
-
   bool isRef() => ref != null;
 
   @override
-  TextStyleData merge(TextStyleData? other) {
+  TextStyleAttribute merge(TextStyleAttribute? other) {
     if (other == null) return this;
 
     assert(
@@ -73,7 +71,7 @@ class TextStyleData extends Data<TextStyle> {
       'Cannot merge two different refs',
     );
 
-    return TextStyleData(
+    return TextStyleAttribute(
       background: other.background ?? background,
       backgroundColor: other.backgroundColor ?? backgroundColor,
       color: other.color ?? color,

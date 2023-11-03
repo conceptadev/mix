@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
-import 'package:mix/src/attributes/data_attributes.dart';
-import 'package:mix/src/dtos/color.toDto.dart';
+import 'package:mix/src/attributes/spacing_attributes.dart';
+import 'package:mix/src/factory/style_mix.dart';
 
 final firstMix = StyleMix(
   // Box attribute
@@ -25,7 +25,7 @@ final firstMix = StyleMix(
   minWidth(100),
 );
 
-final secondMix = StyleM(
+final secondMix = StyleMix(
   // Box attribute
   padding(10),
   // Text attribute
@@ -43,10 +43,10 @@ final secondMix = StyleM(
   iconColor(Colors.red),
 );
 
-final nestedMix = StyleMix().mergeMany([
+final nestedMix = StyleMix.combine(
   firstMix,
   secondMix,
-]);
+);
 
 void main() {
   group("Mix Factory", () {
@@ -62,11 +62,11 @@ void main() {
       // Length is only 1 because margin and color are BoxAttributes
       expect(style.values.length, 1);
 
-      expect(boxAttribute.color, const ColorData(Colors.red));
+      expect(boxAttribute.color, const ColorAttribute(Colors.red));
       expect(
           boxAttribute.margin,
           const MarginAttribute(
-            SpacingGeometryData.all(10),
+            SpacingGeometryAttribute.all(10),
           ));
     });
 
@@ -82,7 +82,7 @@ void main() {
       // Length is only 1 because margin and color are BoxAttributes
       expect(mix.values.length, 1);
 
-      expect(boxAttribute.color, const ColorData(Colors.red));
+      expect(boxAttribute.color, const ColorAttribute(Colors.red));
       expect(boxAttribute.margin, const EdgeInsetsDto.all(10));
     });
   });

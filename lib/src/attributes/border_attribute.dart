@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
-import '../../attributes/data_attributes.dart';
-import '../../factory/mix_provider_data.dart';
-import '../attribute.dart';
-import 'color_dto.dart';
+import '../core/attribute.dart';
+import '../factory/mix_provider_data.dart';
+import 'color_attribute.dart';
 
-class BorderRadiusGeometryData extends Data<BorderRadiusGeometry> {
+@immutable
+class BorderRadiusGeometryAttribute
+    extends VisualAttribute<BorderRadiusGeometry> {
   final Radius? topLeft;
   final Radius? topRight;
   final Radius? bottomLeft;
@@ -19,7 +20,7 @@ class BorderRadiusGeometryData extends Data<BorderRadiusGeometry> {
 
   final bool _isDirectional;
 
-  const BorderRadiusGeometryData({
+  const BorderRadiusGeometryAttribute({
     this.topLeft,
     this.topRight,
     this.bottomLeft,
@@ -31,7 +32,7 @@ class BorderRadiusGeometryData extends Data<BorderRadiusGeometry> {
     bool isDirectional = false,
   }) : _isDirectional = isDirectional;
 
-  const BorderRadiusGeometryData.all(
+  const BorderRadiusGeometryAttribute.all(
     Radius radius, {
     bool isDirectional = false,
   })  : _isDirectional = isDirectional,
@@ -44,7 +45,7 @@ class BorderRadiusGeometryData extends Data<BorderRadiusGeometry> {
         bottomStart = radius,
         bottomEnd = radius;
 
-  BorderRadiusGeometryData.horizontal({
+  const BorderRadiusGeometryAttribute.horizontal({
     Radius? leftStart,
     Radius? rightEnd,
     bool isDirectional = false,
@@ -58,7 +59,7 @@ class BorderRadiusGeometryData extends Data<BorderRadiusGeometry> {
         bottomStart = leftStart,
         bottomEnd = rightEnd;
 
-  BorderRadiusGeometryData.vertical({
+  const BorderRadiusGeometryAttribute.vertical({
     Radius? top,
     Radius? bottom,
     bool isDirectional = false,
@@ -72,7 +73,7 @@ class BorderRadiusGeometryData extends Data<BorderRadiusGeometry> {
         bottomStart = bottom,
         bottomEnd = bottom;
 
-  BorderRadiusGeometryData.circular(
+  BorderRadiusGeometryAttribute.circular(
     double radius, {
     bool isDirectional = false,
   })  : _isDirectional = isDirectional,
@@ -87,12 +88,10 @@ class BorderRadiusGeometryData extends Data<BorderRadiusGeometry> {
 
   bool get isDirectional => _isDirectional;
 
-  BorderRadiusGeometryData toDirectional() => copyWith(isDirectional: true);
+  BorderRadiusGeometryAttribute toDirectional() =>
+      copyWith(isDirectional: true);
 
-  BorderRadiusGeometryAttribute toAttribute() =>
-      BorderRadiusGeometryAttribute(this);
-
-  BorderRadiusGeometryData copyWith({
+  BorderRadiusGeometryAttribute copyWith({
     Radius? topLeft,
     Radius? topRight,
     Radius? bottomLeft,
@@ -103,7 +102,7 @@ class BorderRadiusGeometryData extends Data<BorderRadiusGeometry> {
     Radius? bottomEnd,
     bool? isDirectional,
   }) {
-    return BorderRadiusGeometryData(
+    return BorderRadiusGeometryAttribute(
       topLeft: topLeft ?? this.topLeft,
       topRight: topRight ?? this.topRight,
       bottomLeft: bottomLeft ?? this.bottomLeft,
@@ -117,7 +116,7 @@ class BorderRadiusGeometryData extends Data<BorderRadiusGeometry> {
   }
 
   @override
-  BorderRadiusGeometryData merge(BorderRadiusGeometryData? other) {
+  BorderRadiusGeometryAttribute merge(BorderRadiusGeometryAttribute? other) {
     if (other == null) return this;
     if (other._isDirectional != _isDirectional) {
       throw UnsupportedError(
@@ -125,7 +124,7 @@ class BorderRadiusGeometryData extends Data<BorderRadiusGeometry> {
       );
     }
 
-    return BorderRadiusGeometryData(
+    return BorderRadiusGeometryAttribute(
       topLeft: other.topLeft ?? topLeft,
       topRight: other.topRight ?? topRight,
       bottomLeft: other.bottomLeft ?? bottomLeft,
@@ -169,17 +168,18 @@ class BorderRadiusGeometryData extends Data<BorderRadiusGeometry> {
       ];
 }
 
-class BoxBorderData extends Data<BoxBorder> {
-  final BorderSideData? top;
-  final BorderSideData? start;
-  final BorderSideData? end;
-  final BorderSideData? bottom;
-  final BorderSideData? left;
-  final BorderSideData? right;
+@immutable
+class BoxBorderAttribute extends VisualAttribute<BoxBorder> {
+  final BorderSideAttribute? top;
+  final BorderSideAttribute? start;
+  final BorderSideAttribute? end;
+  final BorderSideAttribute? bottom;
+  final BorderSideAttribute? left;
+  final BorderSideAttribute? right;
 
   final bool _isDirectional;
 
-  const BoxBorderData({
+  const BoxBorderAttribute({
     this.top,
     this.start,
     this.end,
@@ -189,8 +189,8 @@ class BoxBorderData extends Data<BoxBorder> {
     bool isDirectional = false,
   }) : _isDirectional = isDirectional;
 
-  const BoxBorderData.fromBorderSide(
-    BorderSideData side, {
+  const BoxBorderAttribute.fromBorderSide(
+    BorderSideAttribute side, {
     bool isDirectional = false,
   })  : _isDirectional = isDirectional,
         top = side,
@@ -200,8 +200,10 @@ class BoxBorderData extends Data<BoxBorder> {
         start = side,
         end = side;
 
-  const BoxBorderData.all(BorderSideData side, {bool isDirectional = false})
-      : _isDirectional = isDirectional,
+  const BoxBorderAttribute.all(
+    BorderSideAttribute side, {
+    bool isDirectional = false,
+  })  : _isDirectional = isDirectional,
         top = side,
         right = side,
         bottom = side,
@@ -209,9 +211,9 @@ class BoxBorderData extends Data<BoxBorder> {
         start = side,
         end = side;
 
-  const BoxBorderData.symmetric({
-    BorderSideData? vertical,
-    BorderSideData? horizontal,
+  const BoxBorderAttribute.symmetric({
+    BorderSideAttribute? vertical,
+    BorderSideAttribute? horizontal,
     bool isDirectional = false,
   })  : _isDirectional = isDirectional,
         top = horizontal,
@@ -223,10 +225,8 @@ class BoxBorderData extends Data<BoxBorder> {
 
   bool get isDirectional => _isDirectional;
 
-  BoxBorderAttribute toAttribute() => BoxBorderAttribute(this);
-
   @override
-  BoxBorderData merge(BoxBorderData? other) {
+  BoxBorderAttribute merge(BoxBorderAttribute? other) {
     if (other == null) return this;
 
     if (other._isDirectional != _isDirectional) {
@@ -235,7 +235,7 @@ class BoxBorderData extends Data<BoxBorder> {
       );
     }
 
-    return BoxBorderData(
+    return BoxBorderAttribute(
       top: other.top ?? top,
       start: other.start ?? start,
       end: other.end ?? end,
@@ -266,26 +266,27 @@ class BoxBorderData extends Data<BoxBorder> {
   get props => [top, start, end, bottom, left, right, _isDirectional];
 }
 
-class BorderSideData extends Data<BorderSide> {
-  final ColorData? color;
+@immutable
+class BorderSideAttribute extends VisualAttribute<BorderSide> {
+  final ColorAttribute? color;
   final double? width;
   final BorderStyle? style;
   final double? strokeAlign;
 
-  const BorderSideData({
+  const BorderSideAttribute({
     this.color,
     this.strokeAlign,
     this.style,
     this.width,
   });
 
-  BorderSideData copyWith({
-    ColorData? color,
+  BorderSideAttribute copyWith({
+    ColorAttribute? color,
     double? width,
     BorderStyle? style,
     double? strokeAlign,
   }) {
-    return BorderSideData(
+    return BorderSideAttribute(
       color: color ?? this.color,
       strokeAlign: strokeAlign ?? this.strokeAlign,
       style: style ?? this.style,
@@ -294,10 +295,10 @@ class BorderSideData extends Data<BorderSide> {
   }
 
   @override
-  BorderSideData merge(BorderSideData? other) {
+  BorderSideAttribute merge(BorderSideAttribute? other) {
     if (other == null) return this;
 
-    return BorderSideData(
+    return BorderSideAttribute(
       color: color?.merge(other.color) ?? other.color,
       strokeAlign: other.strokeAlign ?? strokeAlign,
       style: other.style ?? style,

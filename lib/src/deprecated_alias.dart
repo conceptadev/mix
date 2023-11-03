@@ -4,23 +4,26 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-import 'attributes/data_attributes.dart';
+import 'attributes/alignment_attribute.dart';
+import 'attributes/border_attribute.dart';
 import 'attributes/scalar_attribute.dart';
+import 'attributes/text_style_attribute.dart';
 import 'core/decorators/built_in_decorators/flexible.dart';
+import 'core/directives/text_directive.dart';
 import 'helpers/constants.dart';
 import 'helpers/extensions/values_ext.dart';
 import 'utils/alignment_util.dart';
 import 'utils/border_radius_util.dart';
 import 'utils/border_util.dart';
 import 'utils/box_constraints_util.dart';
-import 'utils/container_util.dart';
 import 'utils/context_variant_util.dart';
+import 'utils/decoration_util.dart';
 import 'utils/flex_util.dart';
 import 'utils/helper_util.dart';
 import 'utils/pressable_util.dart';
+import 'utils/scalar_utils.dart';
 import 'utils/size_util.dart';
 import 'utils/space_util.dart';
-import 'utils/stack_fit_util.dart';
 import 'utils/text_style_util.dart';
 
 /// ALL ALIASES HERE HAVE BEEN DEPRECATED AND WILL BE REMOVED IN THE FUTURE
@@ -381,7 +384,7 @@ const align = alignment;
 
 @Deprecated('Use stack instead')
 AlignmentGeometryAttribute zAligmnent(Alignment alignment) {
-  return AlignmentGeometryAttribute(alignment.toDto);
+  return alignment.toAttribute();
 }
 
 @Deprecated('Use stackFit instead')
@@ -404,4 +407,24 @@ AxisAttribute direction(Axis direction) {
 @Deprecated('Use crossAxisAlignment() instead')
 CrossAxisAlignmentAttribute crossAxis(CrossAxisAlignment crossAxisAlignment) {
   return CrossAxisAlignmentAttribute(crossAxisAlignment);
+}
+
+@Deprecated('Use textDirective(directive)')
+TextDirectiveAttribute directives(List<TextDirective> directives) {
+  return TextDirectiveAttribute(directives);
+}
+
+@Deprecated('Use textDirective(directive)')
+TextDirectiveAttribute directive(TextDirective directive) {
+  return TextDirectiveAttribute([directive]);
+}
+
+@Deprecated('Locale is now passed to StyledText widget')
+TextStyleAttribute locale() {
+  throw UnimplementedError();
+}
+
+@Deprecated('Use text(overflow: overflow)')
+TextOverflowAttribute overflow(TextOverflow overflow) {
+  return TextOverflowAttribute(overflow);
 }

@@ -3,12 +3,9 @@ import 'package:flutter/material.dart';
 import '../factory/mix_provider_data.dart';
 import '../helpers/compare_mixin.dart';
 
+@immutable
 abstract class Attribute with Comparable, Mergeable {
   const Attribute();
-}
-
-abstract class Data<R> with Comparable, Mergeable, Resolvable<R> {
-  const Data();
 }
 
 mixin Resolvable<T> {
@@ -23,6 +20,7 @@ mixin Mergeable<T> {
   }
 }
 
+@immutable
 abstract class ScalarAttribute<T extends ScalarAttribute<T, R>, R>
     extends VisualAttribute<R> {
   final R value;
@@ -51,38 +49,12 @@ abstract class ScalarAttribute<T extends ScalarAttribute<T, R>, R>
   get props => [value];
 }
 
-abstract class DataAttribute<
-    Attr extends DataAttribute<Attr, Value, ResolvedValue>,
-    Value extends Data<ResolvedValue>,
-    ResolvedValue> extends VisualAttribute<ResolvedValue> {
-  final Value value;
-
-  const DataAttribute(this.value);
-
-  // Factory for merge methods
-  // ignore: avoid-shadowing
-  Attr create(Value value);
-
-  @override
-  ResolvedValue resolve(MixData mix) {
-    return value.resolve(mix);
-  }
-
-  @override
-  Attr merge(Attr? other) {
-    if (other == null) return create(value);
-
-    return create(value.merge(other.value));
-  }
-
-  @override
-  get props => [value];
-}
-
+@immutable
 abstract class VisualAttribute<T> extends Attribute with Resolvable<T> {
   const VisualAttribute();
 }
 
+@immutable
 abstract class MixExtension<T extends MixExtension<T>> extends ThemeExtension<T>
     with Comparable {
   const MixExtension();

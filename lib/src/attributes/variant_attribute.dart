@@ -5,6 +5,7 @@ import '../core/variants/context_variant.dart';
 import '../core/variants/variant.dart';
 import '../factory/style_mix.dart';
 
+@immutable
 class VariantAttribute<T extends Variant> extends Attribute {
   final T variant;
   final StyleMix _style;
@@ -23,12 +24,10 @@ class VariantAttribute<T extends Variant> extends Attribute {
   }
 
   @override
-  String toString() => 'VariantAttribute(variant: $variant, mix: $value)';
-
-  @override
   get props => [variant, value];
 }
 
+@immutable
 class ContextVariantAttribute extends VariantAttribute<ContextVariant> {
   const ContextVariantAttribute(super.variant, super.style);
 

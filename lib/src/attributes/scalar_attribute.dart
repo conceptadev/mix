@@ -10,12 +10,28 @@ class AxisAttribute extends ScalarAttribute<AxisAttribute, Axis> {
   AxisAttribute create(value) => AxisAttribute(value);
 }
 
+class GradientAttribute extends ScalarAttribute<GradientAttribute, Gradient> {
+  const GradientAttribute(super.value);
+
+  @override
+  GradientAttribute create(value) => GradientAttribute(value);
+}
+
 class MainAxisAlignmentAttribute
     extends ScalarAttribute<MainAxisAlignmentAttribute, MainAxisAlignment> {
   const MainAxisAlignmentAttribute(super.value);
 
   @override
   MainAxisAlignmentAttribute create(value) => MainAxisAlignmentAttribute(value);
+}
+
+class TransformAlignmentAttribute
+    extends ScalarAttribute<TransformAlignmentAttribute, Alignment> {
+  const TransformAlignmentAttribute(super.value);
+
+  @override
+  TransformAlignmentAttribute create(value) =>
+      TransformAlignmentAttribute(value);
 }
 
 class MainAxisSizeAttribute
@@ -100,6 +116,21 @@ class WidthAttribute extends ScalarAttribute<WidthAttribute, double> {
 
   @override
   WidthAttribute create(value) => WidthAttribute(value);
+}
+
+class ImageWidthAttribute extends ScalarAttribute<ImageWidthAttribute, double> {
+  const ImageWidthAttribute(super.value);
+
+  @override
+  ImageWidthAttribute create(value) => ImageWidthAttribute(value);
+}
+
+class ImageHeightAttribute
+    extends ScalarAttribute<ImageHeightAttribute, double> {
+  const ImageHeightAttribute(super.value);
+
+  @override
+  ImageHeightAttribute create(value) => ImageHeightAttribute(value);
 }
 
 class TextAlignAttribute
@@ -213,4 +244,14 @@ class BoxShapeAttribute extends ScalarAttribute<BoxShapeAttribute, BoxShape> {
 
   @override
   BoxShapeAttribute create(value) => BoxShapeAttribute(value);
+}
+
+class VisibleAttribute extends ScalarAttribute<VisibleAttribute, bool> {
+  const VisibleAttribute(super.value);
+
+  const VisibleAttribute.hidden() : super(false);
+  const VisibleAttribute.visible() : super(true);
+
+  @override
+  VisibleAttribute create(value) => VisibleAttribute(value);
 }

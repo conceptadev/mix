@@ -1,3 +1,5 @@
+import 'dart:core';
+
 import 'package:flutter/material.dart';
 
 import '../../attributes/variant_attribute.dart';
@@ -7,13 +9,12 @@ import 'variant.dart';
 
 typedef WhenContextFunction = bool Function(BuildContext context);
 
+@immutable
 class ContextVariant extends Variant {
   final WhenContextFunction _when;
 
   const ContextVariant(super.name, {required WhenContextFunction when})
       : _when = when;
-
-  get props => [name, _when];
 
   bool when(BuildContext context) => _when(context);
 
@@ -41,4 +42,7 @@ class ContextVariant extends Variant {
 
     return ContextVariantAttribute(this, StyleMix.create(params));
   }
+
+  @override
+  get props => [name, _when];
 }

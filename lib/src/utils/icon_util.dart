@@ -1,22 +1,5 @@
-import 'package:flutter/material.dart';
-
-import '../attributes/data_attributes.dart';
+import '../attributes/color_attribute.dart';
 import '../attributes/scalar_attribute.dart';
-import '../core/attribute.dart';
-import '../core/dto/color_dto.dart';
 
-const iconSize = _iconSize;
-const iconColor = _iconColor;
-
-@Deprecated('use iconSize, iconColor')
-VisualAttribute icon() {
-  throw UnimplementedError();
-}
-
-IconSizeAttribute _iconSize(double size) {
-  return IconSizeAttribute(size);
-}
-
-IconColorAttribute _iconColor(Color color) {
-  return IconColorAttribute(ColorData(color));
-}
+const iconSize = IconSizeAttribute.new;
+const iconColor = IconColorAttribute.new;

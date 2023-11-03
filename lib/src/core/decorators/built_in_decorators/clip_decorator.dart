@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../../attributes/data_attributes.dart';
+import '../../../attributes/border_attribute.dart';
 import '../../../factory/mix_provider_data.dart';
 import '../../attribute.dart';
-import '../../dto/border_dto.dart';
 import '../decorator.dart';
 
 const clipOval = _clipOval;
@@ -13,9 +12,7 @@ const clipRounded = _clipRounded;
 ClipDecorator _clipRounded(double radius) {
   return ClipDecorator(
     ClipDecoratorType.rounded,
-    borderRadius: BorderRadiusGeometryAttribute(
-      BorderRadiusGeometryData.circular(radius),
-    ),
+    borderRadius: BorderRadiusGeometryAttribute.circular(radius),
   );
 }
 

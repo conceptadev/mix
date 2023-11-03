@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 import '../../attributes/variant_attribute.dart';
 import '../../factory/style_mix.dart';
 import '../../helpers/compare_mixin.dart';
@@ -6,6 +8,7 @@ import 'variant_operation.dart';
 
 /// A class representing a variant, which is a combination of attributes.
 /// It can be combined with other variants using logical AND (&) and OR (|) operations.
+@immutable
 class Variant with Comparable {
   final String name;
 

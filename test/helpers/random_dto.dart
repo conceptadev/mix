@@ -5,8 +5,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
 import 'package:mix/src/attributes/container.attribute.dart';
+import 'package:mix/src/attributes/edge_insets_attribute.dart';
 import 'package:mix/src/attributes/text_style.attribute.dart';
-import 'package:mix/src/core/dto/edge_insets_dto.dart';
 import 'package:mix/src/factory/style_mix.dart';
 
 class RandomGenerator {
@@ -104,10 +104,10 @@ class RandomGenerator {
     return boxAttributes;
   }
 
-  static SpacingGeometryData edgeInsetsDto() {
+  static SpacingGeometryAttribute edgeInsetsDto() {
     final random = Random();
 
-    return SpacingGeometryData(
+    return SpacingGeometryAttribute(
       top: random.nextDouble() * 100,
       bottom: random.nextDouble() * 100,
       left: random.nextDouble() * 100,
@@ -115,10 +115,10 @@ class RandomGenerator {
     );
   }
 
-  static BorderRadiusGeometryData borderRadiusDto() {
+  static BorderRadiusGeometryAttribute borderRadiusDto() {
     final random = Random();
 
-    return BorderRadiusGeometryData(
+    return BorderRadiusGeometryAttribute(
       topLeft: Radius.circular(random.nextDouble() * 20),
       topRight: Radius.circular(random.nextDouble() * 20),
       bottomLeft: Radius.circular(random.nextDouble() * 20),
@@ -126,10 +126,10 @@ class RandomGenerator {
     );
   }
 
-  static BoxBorderData borderDto() {
+  static BoxBorderAttribute borderDto() {
     final side = borderSideDto();
 
-    return BoxBorderData(
+    return BoxBorderAttribute(
       top: side,
       right: side,
       bottom: side,
@@ -148,16 +148,16 @@ class RandomGenerator {
     );
   }
 
-  static BorderSideData borderSideDto() {
-    return BorderSideData(
+  static BorderSideAttribute borderSideDto() {
+    return BorderSideAttribute(
       color: colorDto(),
       width: Random().nextDouble() * 4,
       style: BorderStyle.values.random(),
     );
   }
 
-  static ShadowData shadowDto() {
-    return ShadowData(
+  static ShadowAttribute shadowDto() {
+    return ShadowAttribute(
       color: colorDto(),
       offset: Offset(
         Random().nextMaxDouble(10),
@@ -181,11 +181,11 @@ class RandomGenerator {
     ]);
   }
 
-  static BoxShadowData boxShadowDto() {
+  static BoxShadowAttribute boxShadowDto() {
     // Use shadow as a starting point
     final shadow = shadowDto();
 
-    return BoxShadowData(
+    return BoxShadowAttribute(
       color: shadow.color,
       offset: shadow.offset,
       blurRadius: shadow.blurRadius,
@@ -193,8 +193,8 @@ class RandomGenerator {
     );
   }
 
-  static TextStyleData textStyleDto() {
-    return TextStyleData(
+  static TextStyleAttribute textStyleDto() {
+    return TextStyleAttribute(
       color: colorDto(),
       backgroundColor: colorDto(),
       decorationColor: colorDto(),

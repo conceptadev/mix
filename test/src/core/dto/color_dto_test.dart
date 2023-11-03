@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mix/src/core/dto/color_dto.dart';
+import 'package:mix/src/attributes/color_attribute.dart';
 
 import '../../../helpers/testing_utils.dart';
 
@@ -8,8 +8,8 @@ void main() {
   group('ColorData', () {
     group('merge', () {
       test('should merge colors correctly', () {
-        const data1 = ColorData(Color(0xFF000000));
-        const data2 = ColorData(Color(0xFFFFFFFF));
+        const data1 = ColorAttribute(Color(0xFF000000));
+        const data2 = ColorAttribute(Color(0xFFFFFFFF));
         final result = data1.merge(data2);
         expect(result.value, const Color(0xFFFFFFFF));
       });
@@ -27,7 +27,7 @@ void main() {
 
       test('should return the color value when it is not a ColorRef', () {
         const color = Color(0xFFFFFFFF);
-        const data = ColorData(color);
+        const data = ColorAttribute(color);
         final result = data.resolve(EmptyMixData);
         expect(result, color);
       });
@@ -35,9 +35,9 @@ void main() {
 
     group('equality', () {
       test('should compare equality correctly', () {
-        const data1 = ColorData(Color(0xFF000000));
-        const data2 = ColorData(Color(0xFF000000));
-        const data3 = ColorData(Color(0xFFFFFFFF));
+        const data1 = ColorAttribute(Color(0xFF000000));
+        const data2 = ColorAttribute(Color(0xFF000000));
+        const data3 = ColorAttribute(Color(0xFFFFFFFF));
         expect(data1, data2);
         expect(data1, isNot(data3));
       });
