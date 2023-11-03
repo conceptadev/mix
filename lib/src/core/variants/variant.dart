@@ -1,11 +1,12 @@
 import '../../attributes/variant_attribute.dart';
 import '../../factory/style_mix.dart';
+import '../../helpers/compare_mixin.dart';
 import '../attribute.dart';
 import 'variant_operation.dart';
 
 /// A class representing a variant, which is a combination of attributes.
 /// It can be combined with other variants using logical AND (&) and OR (|) operations.
-class Variant {
+class Variant with Comparable {
   final String name;
 
   /// Creates a new [Variant] with a given [name] and an optional [inverse] flag.
@@ -50,14 +51,5 @@ class Variant {
   }
 
   @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is Variant && other.name == name;
-  }
-
-  @override
-  String toString() => 'name: $name';
-  @override
-  int get hashCode => name.hashCode;
+  get props => [name];
 }

@@ -25,7 +25,7 @@ void main() {
         () {
       final result = BorderRadiusGeometryData.circular(
         10.0,
-      ).toDirectional;
+      ).toDirectional();
 
       final resolvedValue =
           result.resolve(EmptyMixData) as BorderRadiusDirectional;

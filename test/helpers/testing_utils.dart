@@ -152,6 +152,15 @@ class MockBooleanScalarAttribute
       MockBooleanScalarAttribute(value);
 }
 
+class MockStringScalarAttribute
+    extends ScalarAttribute<MockStringScalarAttribute, String> {
+  const MockStringScalarAttribute(super.value);
+
+  @override
+  MockStringScalarAttribute create(String value) =>
+      MockStringScalarAttribute(value);
+}
+
 const mockVariant = Variant('mock-variant');
 
 @isTestGroup

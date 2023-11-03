@@ -7,13 +7,16 @@ import 'package:mix/src/core/dto/color_dto.dart';
 import 'package:mix/src/core/dto/decoration_dto.dart';
 import 'package:mix/src/core/dto/shadow_dto.dart';
 
+import '../../../helpers/testing_utils.dart';
+
 void main() {
   group('BoxDecorationData merge', () {
     test('should merge non-null values correctly', () {
       final data1 = BoxDecorationData(
         color: const ColorData(Color(0xFF000000)),
-        border: const BoxBorderAttribute(BoxBorderData.all(width: 2.0)),
-        borderRadius: BorderRadiusGeometryAttribute(BorderRadius.circular(4.0)),
+        border:
+            const BoxBorderData.all(BorderSideData(width: 2.0)).toAttribute(),
+        borderRadius: BorderRadiusGeometryData.circular(4.0).toAttribute(),
         gradient: const GradientAttribute(LinearGradient(
           colors: [Color(0xFF000000), Color(0xFFFFFFFF)],
         )),
@@ -26,8 +29,10 @@ void main() {
 
       final data2 = BoxDecorationData(
         color: const ColorData(Color(0xFFFFFFFF)),
-        border: BoxBorderAttribute(Border.all(width: 4.0)),
-        borderRadius: BorderRadiusGeometryAttribute(BorderRadius.circular(8.0)),
+        border: const BoxBorderData.all(BorderSideData(
+          width: 4.0,
+        )).toAttribute(),
+        borderRadius: BorderRadiusGeometryData.circular(8.0).toAttribute(),
         gradient: const GradientAttribute(LinearGradient(
           colors: [Color(0xFF0000FF), Color(0xFFFF0000)],
         )),
@@ -41,8 +46,15 @@ void main() {
       final result = data1.merge(data2);
 
       expect(result.color?.value, const Color(0xFFFFFFFF));
-      expect(result.border?.value.width, 4.0);
-      expect(result.borderRadius?.value, BorderRadius.circular(8.0));
+      expect(result.border?.value.top?.width, 4.0);
+      expect(result.border?.value.bottom?.width, 4.0);
+      expect(result.border?.value.left?.width, 4.0);
+      expect(result.border?.value.right?.width, 4.0);
+      expect(result.border?.value.end?.width, 4.0);
+      expect(result.border?.value.start?.width, 4.0);
+
+      expect(result.borderRadius?.resolve(EmptyMixData),
+          BorderRadius.circular(8.0));
       expect(
         (result.gradient?.value as LinearGradient).colors,
         [const Color(0xFF0000FF), const Color(0xFFFF0000)],

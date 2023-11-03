@@ -60,6 +60,7 @@ abstract class DataAttribute<
   const DataAttribute(this.value);
 
   // Factory for merge methods
+  // ignore: avoid-shadowing
   Attr create(Value value);
 
   @override

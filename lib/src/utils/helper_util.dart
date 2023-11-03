@@ -11,7 +11,7 @@ class HelperUtility {
 
   @Deprecated('Use style.merge(otherStyle), instead')
   static WrappedStyleAttribute apply(List<StyleMix> mixes) {
-    return WrappedStyleAttribute(StyleMix.combine(mixes));
+    return WrappedStyleAttribute(StyleMix.combineList(mixes));
   }
 }
 

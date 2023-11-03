@@ -17,7 +17,7 @@ extension StyleMixExt<T extends Attribute> on StyleMix {
     StyleMix? style,
   }) {
     return StyledContainer(
-      style: mergeNullable(style),
+      style: merge(style),
       key: key,
       inherit: inherit,
       child: child,
@@ -34,7 +34,7 @@ extension StyleMixExt<T extends Attribute> on StyleMix {
     return container(
       inherit: inherit,
       key: key,
-      style: mergeNullable(style ?? mix),
+      style: merge(style ?? mix),
       child: child,
     );
   }
@@ -47,7 +47,7 @@ extension StyleMixExt<T extends Attribute> on StyleMix {
     StyleMix? style,
   }) {
     return HBox(
-      style: mergeNullable(style ?? mix),
+      style: merge(style ?? mix),
       key: key,
       inherit: inherit,
       children: children,
@@ -62,7 +62,7 @@ extension StyleMixExt<T extends Attribute> on StyleMix {
     StyleMix? style,
   }) {
     return StyledRow(
-      style: mergeNullable(style ?? mix),
+      style: merge(style ?? mix),
       key: key,
       inherit: inherit,
       children: children,
@@ -80,7 +80,7 @@ extension StyleMixExt<T extends Attribute> on StyleMix {
     return StyledText(
       text,
       semanticsLabel: semanticsLabel,
-      style: mergeNullable(style ?? mix),
+      style: merge(style ?? mix),
       key: key,
       inherit: inherit,
     );
@@ -94,7 +94,7 @@ extension StyleMixExt<T extends Attribute> on StyleMix {
     StyleMix? style,
   }) {
     return VBox(
-      style: mergeNullable(style ?? mix),
+      style: merge(style ?? mix),
       key: key,
       inherit: inherit,
       children: children,
@@ -109,7 +109,7 @@ extension StyleMixExt<T extends Attribute> on StyleMix {
     StyleMix? style,
   }) {
     return StyledColumn(
-      style: mergeNullable(style ?? mix),
+      style: merge(style ?? mix),
       key: key,
       inherit: inherit,
       children: children,
@@ -125,7 +125,7 @@ extension StyleMixExt<T extends Attribute> on StyleMix {
   }) {
     return StyledIcon(
       icon,
-      style: mergeNullable(style ?? mix),
+      style: merge(style ?? mix),
       key: key,
       inherit: inherit,
     );

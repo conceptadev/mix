@@ -26,12 +26,12 @@ extension DeprecatedMixExtension<T extends Attribute> on StyleMix {
 
   @Deprecated('Use selectVariants now')
   StyleMix withManyVariants(List<Variant> variants) {
-    return selectManyVariants(variants);
+    return selectVariantList(variants);
   }
 
   @Deprecated('Use merge() or mergeMany() instead')
   SpreadPositionalParams<StyleMix, StyleMix> get apply =>
-      SpreadPositionalParams(mergeMany);
+      SpreadPositionalParams(mergeList);
 
   @Deprecated('Use selectVariant now')
   StyleMix withVariant(Variant variant) {
@@ -40,7 +40,7 @@ extension DeprecatedMixExtension<T extends Attribute> on StyleMix {
 
   @Deprecated('Use combine now')
   StyleMix combineAll(List<StyleMix> mixes) {
-    return StyleMix.combine(mixes);
+    return StyleMix.combineList(mixes);
   }
 
   @Deprecated('Use selectVariant now')

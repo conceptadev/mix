@@ -272,7 +272,7 @@ void main() {
 
     final stopwatch = Stopwatch()..start();
 
-    final combinedMixes = StyleMix.combine(multipleMixes);
+    final combinedMixes = StyleMix.combineList(multipleMixes);
 
     print('Combining $N mixes: ${stopwatch.elapsedMilliseconds} ms');
 
