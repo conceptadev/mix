@@ -135,4 +135,122 @@ void main() {
     (value) => BlendModeAttribute(value),
     BlendMode.values,
   );
+
+  testScalarAttribute<ImageWidthAttribute, double>(
+    'ImageWidthAttribute',
+    (value) => ImageWidthAttribute(value),
+    [
+      1.0,
+      2.0,
+    ],
+  );
+
+  testScalarAttribute<ImageHeightAttribute, double>(
+    'ImageHeightAttribute',
+    (value) => ImageHeightAttribute(value),
+    [
+      1.0,
+      2.0,
+    ],
+  );
+
+  testScalarAttribute<TextAlignAttribute, TextAlign>(
+    'TextAlignAttribute',
+    (value) => TextAlignAttribute(value),
+    TextAlign.values,
+  );
+
+  testScalarAttribute<TextDirectionAttribute, TextDirection>(
+    'TextDirectionAttribute',
+    (value) => TextDirectionAttribute(value),
+    TextDirection.values,
+  );
+
+//   class IconSizeAttribute extends ScalarAttribute<IconSizeAttribute, double> {
+//   const IconSizeAttribute(super.value);
+
+//   @override
+//   IconSizeAttribute create(value) => IconSizeAttribute(value);
+// }
+
+// class BoxFitAttribute extends ScalarAttribute<BoxFitAttribute, BoxFit> {
+//   const BoxFitAttribute(super.value);
+
+//   @override
+//   BoxFitAttribute create(value) => BoxFitAttribute(value);
+// }
+
+// class StackFitAttribute extends ScalarAttribute<StackFitAttribute, StackFit> {
+//   const StackFitAttribute(super.value);
+
+//   @override
+//   StackFitAttribute create(value) => StackFitAttribute(value);
+// }
+
+// class FlexFitAttribute extends ScalarAttribute<FlexFitAttribute, FlexFit> {
+//   const FlexFitAttribute(super.value);
+
+//   @override
+//   FlexFitAttribute create(value) => FlexFitAttribute(value);
+// }
+
+  testScalarAttribute<IconSizeAttribute, double>(
+    'IconSizeAttribute',
+    (value) => IconSizeAttribute(value),
+    [
+      1.0,
+      2.0,
+    ],
+  );
+
+  testScalarAttribute<BoxFitAttribute, BoxFit>(
+    'BoxFitAttribute',
+    (value) => BoxFitAttribute(value),
+    BoxFit.values,
+  );
+
+  testScalarAttribute<StackFitAttribute, StackFit>(
+    'StackFitAttribute',
+    (value) => StackFitAttribute(value),
+    StackFit.values,
+  );
+
+  testScalarAttribute<FlexFitAttribute, FlexFit>(
+    'FlexFitAttribute',
+    (value) => FlexFitAttribute(value),
+    FlexFit.values,
+  );
+
+  testScalarAttribute<BoxShapeAttribute, BoxShape>(
+    'BoxShapeAttribute',
+    (value) => BoxShapeAttribute(value),
+    BoxShape.values,
+  );
+
+  testScalarAttribute<VisibleAttribute, bool>(
+    'VisibleAttribute',
+    (value) => VisibleAttribute(value),
+    [
+      false,
+      true,
+    ],
+  );
+
+  testScalarAttribute<ImageScaleAttribute, double>(
+    'ImageScaleAttribute',
+    (value) => ImageScaleAttribute(value),
+    [
+      1.0,
+      2.0,
+    ],
+  );
+
+  testScalarAttribute<TextScaleFactorAttribute, double>(
+    'TextScaleFactorAttribute',
+    (value) => TextScaleFactorAttribute(value),
+    [
+      1.0,
+      2.0,
+    ],
+  );
 }

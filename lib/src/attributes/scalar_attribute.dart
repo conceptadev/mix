@@ -249,9 +249,6 @@ class BoxShapeAttribute extends ScalarAttribute<BoxShapeAttribute, BoxShape> {
 class VisibleAttribute extends ScalarAttribute<VisibleAttribute, bool> {
   const VisibleAttribute(super.value);
 
-  const VisibleAttribute.hidden() : super(false);
-  const VisibleAttribute.visible() : super(true);
-
   @override
   VisibleAttribute create(value) => VisibleAttribute(value);
 }
