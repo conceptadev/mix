@@ -123,14 +123,14 @@ void main() {
   test('Chooses Mixes based on conditional', () {
     final chooseFirstMix = StyleMix.chooser(
       condition: true,
-      ifTrue: firstMix,
-      ifFalse: secondMix,
+      fallback: firstMix,
+      style: secondMix,
     );
 
     final chooseSecondMix = StyleMix.chooser(
       condition: false,
-      ifTrue: firstMix,
-      ifFalse: secondMix,
+      fallback: firstMix,
+      style: secondMix,
     );
 
     expect(chooseFirstMix, firstMix);

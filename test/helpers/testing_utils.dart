@@ -161,6 +161,18 @@ class MockStringScalarAttribute
       MockStringScalarAttribute(value);
 }
 
+class MockInvalidAttribute extends Attribute {
+  const MockInvalidAttribute();
+
+  @override
+  get props => [];
+
+  @override
+  MockInvalidAttribute merge(MockInvalidAttribute? other) {
+    return this;
+  }
+}
+
 const mockVariant = Variant('mock-variant');
 
 @isTestGroup

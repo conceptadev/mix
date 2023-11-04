@@ -1,4 +1,4 @@
-// ignore_for_file: non_constant_identifier_names, constant_identifier_names, long-parameter-list
+// ignore_for_file: non_constant_identifier_names, constant_identifier_names, long-parameter-list, prefer-named-boolean-parameters
 
 import 'package:flutter/foundation.dart';
 
@@ -106,35 +106,20 @@ class StyleMix {
     return StyleMix._(styles: styleList, variants: variantList);
   }
 
-  /// Constructs a `StyleMix` from a nullable list of [Attribute] instances.
-  ///
-  /// This factory constructor segregates the attributes into visual and variant
-  /// attributes, initializing a new `StyleMix` with these segregated collections.
-  /// This is primarily used as a helper for internal APIs
-  ///
-  /// Example:
-  /// ```dart
-  /// final style = StyleMix.fromNullableList([attribute1, null, attribute2]);
-  /// ```
-
-  factory StyleMix.fromNullableList(Iterable<Attribute?> attributes) {
-    return StyleMix.create(attributes.whereType<Attribute>());
-  }
-
   /// Selects a mix based on a [condition].
   ///
-  /// Returns [ifTrue] if the [condition] is true, otherwise returns [ifFalse].
+  /// Returns [fallback] if the [condition] is true, otherwise returns [style].
   ///
   /// Example:
   /// ```dart
-  /// final style = StyleMix.chooser(condition: isItTrue, ifTrue: trueStyle, ifFalse: falseStyle);
+  /// final style = StyleMix.chooser(condition, style, fallbackStyle);
   /// ```
-  factory StyleMix.chooser({
-    required bool condition,
-    required StyleMix ifFalse,
-    required StyleMix ifTrue,
-  }) {
-    return condition ? ifTrue : ifFalse;
+  factory StyleMix.chooser(
+    bool condition,
+    StyleMix style, [
+    StyleMix? fallback,
+  ]) {
+    return condition ? style : fallback ?? StyleMix.empty;
   }
 
   /// Combines an optional positional list of [StyleMix] instances into a single `StyleMix`.
@@ -396,7 +381,7 @@ class StyleMix {
 
   /// Selects variants based on a [cases] map and returns a new `StyleMix` with the selected variants.
   ///
-  /// The [cases] map contains boolean conditions as keys and [Variant] instances as values.
+  /// The [cases] list contains [SwitchCondition] instances, each of which contains a boolean [condition] and a [Variant].
   /// If a condition is true, the corresponding [Variant] is selected.
   ///
   /// Example:
@@ -405,27 +390,24 @@ class StyleMix {
   /// final largeFontVariant = Variant('largeFont');
   ///
   /// final style = StyleMix();
-  /// final updatedStyle = style.variantChooser({
-  ///   useHighContratst: highContrastVariant,
-  ///   useLargeFont: largeFontVariant,
-  /// });
+  /// final updatedStyle = style.variantSwitcher([
+  ///   const ConditionChooser(useHighContrast, highContrastVariant),
+  ///   const ConditionChooser(useLargeFont, largeFontVariant)
+  /// ]);
   /// ```
   ///
   /// In this example:
   /// - Two `Variant` instances are created to represent high contrast and large font styling preferences.
   /// - An initial `StyleMix` instance is created.
-  /// - The `variantChooser` method is called on the `StyleMix` instance with a map of conditions and variants.
+  /// - The `variantSwitcher` method is called on the `StyleMix` instance with a map of conditions and variants.
   /// - The conditions `useHighContratst` and `useLargeFont` are hypothetical boolean values representing user preferences.
   /// - If a condition is true, the corresponding `Variant` is selected and applied to the `StyleMix` instance, creating an `updatedStyle` instance with the selected variants.
-  StyleMix variantChooser(Map<bool, Variant> cases) {
-    final keys = cases.keys.toList();
-    final variantList = cases.values.toList();
-
+  StyleMix variantSwitcher(List<SwitchCondition<Variant>> cases) {
     List<Variant> variantsToApply = [];
 
-    for (int i = 0; i < keys.length; i++) {
-      if (keys[i]) {
-        variantsToApply.add(variantList[i]);
+    for (SwitchCondition<Variant> conditionCase in cases) {
+      if (conditionCase.condition) {
+        variantsToApply.add(conditionCase.value);
       }
     }
 
@@ -443,4 +425,11 @@ class StyleMix {
 
   @override
   int get hashCode => styles.hashCode ^ variants.hashCode;
+}
+
+class SwitchCondition<T> {
+  final bool condition;
+  final T value;
+
+  const SwitchCondition(this.condition, this.value);
 }

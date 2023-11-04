@@ -110,21 +110,19 @@ void main() {
       var list2 = [1, 2, 3];
       expect(deepEquality.hash(list1), deepEquality.hash(list2));
     });
-    // Test Case 3: Hash Code for Set`
+
     test('sets with the same values produce the same hash code', () {
       var set1 = {1, 2, 3};
       var set2 = {3, 2, 1};
       expect(deepEquality.hash(set1), deepEquality.hash(set2));
     });
 
-    // Test Case 4: Hash Code for Map
     test('maps with the same key-value pairs produce the same hash code', () {
       var map1 = {'a': 1, 'b': 2};
       var map2 = {'b': 2, 'a': 1};
       expect(deepEquality.hash(map1), deepEquality.hash(map2));
     });
 
-    // Test Case 5: Hash Code for Nested Collections
     test(
         'nested collections with identical contents produce the same hash code',
         () {
@@ -139,14 +137,12 @@ void main() {
       expect(deepEquality.hash(nestedList1), deepEquality.hash(nestedList2));
     });
 
-    // Test Case 6: Unordered Collections Hash Code
     test('unordered collections produce consistent hash codes', () {
       var iterable1 = {3, 2, 1};
       var iterable2 = {1, 2, 3};
       expect(deepEquality.hash(iterable1), deepEquality.hash(iterable2));
     });
 
-    // Test Case 7: Custom Object Hash Code
     test('custom objects with the same properties produce the same hash code',
         () {
       var object1 = CustomObject(id: 1, value: 'test');
@@ -154,7 +150,6 @@ void main() {
       expect(deepEquality.hash(object1), deepEquality.hash(object2));
     });
 
-    // Test Case 8: Different Collections Hash Code
     test('different collections do not produce the same hash code', () {
       var list = [1, 2, 3];
       var set = {1, 2, 3};
@@ -162,7 +157,6 @@ void main() {
       expect(deepEquality.hash(list), isNot(deepEquality.hash(set)));
     });
 
-    // Test Case 9: Null Values Hash Code
     test(
         'collections with null values handled properly in hash code computation',
         () {
@@ -174,7 +168,6 @@ void main() {
           isNot(deepEquality.hash(listWithoutNull)));
     });
 
-    // Test Case 10: Performance of Hash Code Computation
     test('hash code computation is efficient for large collections', () {
       var largeList = List.generate(100000, (index) => index);
       var timeStart = DateTime.now();
