@@ -27,16 +27,6 @@ class VisualAttributeMap<Attr extends VisualAttribute> with Comparable {
     return VisualAttributeMap._(attributeMap);
   }
 
-  T? attributeOfType<T extends VisualAttribute>() => map[T] as T?;
-
-  Iterable<T> whereType<T extends VisualAttribute>() {
-    return map.values.whereType<T>();
-  }
-
-  VisualAttributeMap<Attr> merge(VisualAttributeMap<Attr> other) {
-    return VisualAttributeMap._(_attributeMap);
-  }
-
   @protected
   LinkedHashMap<Type, Attr> get map =>
       _attributeMap ?? LinkedHashMap<Type, Attr>();
@@ -46,6 +36,20 @@ class VisualAttributeMap<Attr extends VisualAttribute> with Comparable {
   bool get isEmpty => map.isEmpty;
 
   bool get isNotEmpty => map.isNotEmpty;
+
+  Iterable<Attr> get values => map.values;
+
+  T? attributeOfType<T extends VisualAttribute>() => map[T] as T?;
+
+  Iterable<T> whereType<T extends VisualAttribute>() {
+    return map.values.whereType<T>();
+  }
+
+  VisualAttributeMap<Attr> merge(VisualAttributeMap<Attr> other) {
+    final list = [...values, ...other.values];
+
+    return VisualAttributeMap(list);
+  }
 
   @override
   List<Object> get props => [_attributeMap ?? {}];

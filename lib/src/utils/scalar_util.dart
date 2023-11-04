@@ -1,6 +1,6 @@
 import '../attributes/color_attribute.dart';
 import '../attributes/scalar_attribute.dart';
-import '../attributes/wrapped_attribute.dart';
+import '../attributes/style_mix_attribute.dart';
 import '../factory/style_mix.dart';
 
 const visible = VisibleAttribute.new;
@@ -61,9 +61,13 @@ const textHeightBehavior = TextHeightBehaviorAttribute.new;
 const boxFit = BoxFitAttribute.new;
 const blendMode = BlendModeAttribute.new;
 const boxShape = BoxShapeAttribute.new;
+const imageColor = ImageColorAttribute.new;
 
-WrappedStyleAttribute imageSize({double? width, double? height}) {
-  final styles = StyleMix(imageWidth(width), imageHeight(height));
+StyleMixAttribute imageSize({double? width, double? height}) {
+  final style = StyleMix(
+    width == null ? null : imageWidth(width),
+    height == null ? null : imageHeight(height),
+  );
 
-  return WrappedStyleAttribute(styles);
+  return StyleMixAttribute(style);
 }

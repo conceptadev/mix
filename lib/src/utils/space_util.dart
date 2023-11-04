@@ -72,27 +72,27 @@ MarginAttribute marginDirectional(
 }
 
 MarginAttribute marginTop(double value) {
-  return MarginAttribute(top: value);
+  return _marginFactory.create(top: value);
 }
 
 MarginAttribute marginBottom(double value) {
-  return MarginAttribute(bottom: value);
+  return _marginFactory.create(bottom: value);
 }
 
 MarginAttribute marginLeft(double value) {
-  return MarginAttribute(left: value);
+  return _marginFactory.create(left: value);
 }
 
 MarginAttribute marginRight(double value) {
-  return MarginAttribute(right: value);
+  return _marginFactory.create(right: value);
 }
 
 MarginAttribute marginStart(double value) {
-  return MarginAttribute(start: value, isDirectional: true);
+  return _marginFactory.create(isDirectional: true, start: value);
 }
 
 MarginAttribute marginEnd(double value) {
-  return MarginAttribute(end: value, isDirectional: true);
+  return _marginFactory.create(end: value, isDirectional: true);
 }
 
 MarginAttribute marginHorizontal(double value) {

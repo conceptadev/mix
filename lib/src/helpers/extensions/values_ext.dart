@@ -98,6 +98,10 @@ extension TextDirectionExt on TextDirection {
   TextDirectionAttribute toAttribute() => TextDirectionAttribute(this);
 }
 
+extension ImageRepeatExt on ImageRepeat {
+  ImageRepeatAttribute toAttribute() => ImageRepeatAttribute(this);
+}
+
 // Extension for Axis
 extension AxisExt on Axis {
   AxisAttribute toAttribute() => AxisAttribute(this);

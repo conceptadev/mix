@@ -1,7 +1,9 @@
 // ignore_for_file: non_constant_identifier_names, constant_identifier_names, long-parameter-list
 
+import 'package:flutter/foundation.dart';
+
+import '../attributes/style_mix_attribute.dart';
 import '../attributes/variant_attribute.dart';
-import '../attributes/wrapped_attribute.dart';
 import '../core/attribute.dart';
 import '../core/variants/variant.dart';
 
@@ -72,9 +74,7 @@ class StyleMix {
       p11, p12, p13, p14, p15, p16, p17, p18, p19, p20,
     ];
 
-    final nonNullParams = params.where((p) => p != null).cast<Attribute>();
-
-    return StyleMix.create(nonNullParams);
+    return StyleMix.create(params.whereType<Attribute>());
   }
 
   /// Constructs a `StyleMix` from an iterable of [Attribute] instances.
@@ -95,7 +95,7 @@ class StyleMix {
         styleList.add(attribute);
       } else if (attribute is VariantAttribute) {
         variantList.add(attribute);
-      } else if (attribute is WrappedStyleAttribute) {
+      } else if (attribute is StyleMixAttribute) {
         variantList.addAll(attribute.value.variants);
         styleList.addAll(attribute.value.styles);
       } else {
@@ -104,6 +104,21 @@ class StyleMix {
     }
 
     return StyleMix._(styles: styleList, variants: variantList);
+  }
+
+  /// Constructs a `StyleMix` from a nullable list of [Attribute] instances.
+  ///
+  /// This factory constructor segregates the attributes into visual and variant
+  /// attributes, initializing a new `StyleMix` with these segregated collections.
+  /// This is primarily used as a helper for internal APIs
+  ///
+  /// Example:
+  /// ```dart
+  /// final style = StyleMix.fromNullableList([attribute1, null, attribute2]);
+  /// ```
+
+  factory StyleMix.fromNullableList(Iterable<Attribute?> attributes) {
+    return StyleMix.create(attributes.whereType<Attribute>());
   }
 
   /// Selects a mix based on a [condition].
@@ -149,10 +164,9 @@ class StyleMix {
     StyleMix? style5,
     StyleMix? style6,
   ]) {
-    final nonNullParams =
-        [style1, style2, style3, style4, style5, style6].whereType<StyleMix>();
+    final params = [style1, style2, style3, style4, style5, style6];
 
-    return StyleMix.combineList(nonNullParams);
+    return StyleMix.combineList(params.whereType<StyleMix>());
   }
 
   /// Combines an optional positional list of [mixes] into a single `StyleMix`.
@@ -423,8 +437,8 @@ class StyleMix {
     if (identical(this, other)) return true;
 
     return other is StyleMix &&
-        other.styles == styles &&
-        other.variants == variants;
+        listEquals(styles, other.styles) &&
+        listEquals(variants, other.variants);
   }
 
   @override

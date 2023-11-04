@@ -72,11 +72,23 @@ int _finish(int hash) {
   return 0x1fffffff & (hash + ((hash & 0x00003fff) << 15));
 }
 
-/// Returns a string for [props].
+/// Returns a string representation of [props] with property names and values.
+/// Only includes properties that are not null.
 String mapPropsToString(Type runtimeType, List<Object?> props) {
-  final nonNullProps = props.where((prop) => prop != null).toList();
+  final buffer = StringBuffer()..write('$runtimeType(');
 
-  return '$runtimeType(${nonNullProps.map((prop) => prop.toString()).join(', ')})';
+  for (var value in props) {
+    if (value != null) {
+      if (buffer.length > runtimeType.toString().length + 1) {
+        buffer.write(', ');
+      }
+      buffer.write(value);
+    }
+  }
+
+  buffer.write(')');
+
+  return buffer.toString();
 }
 
 /// A mixin that helps implement equality

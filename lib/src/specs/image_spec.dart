@@ -25,8 +25,8 @@ class ImageSpec extends MixExtension<ImageSpec> {
 
   static ImageSpec resolve(MixData mix) {
     return ImageSpec(
-      width: mix.get<WidthAttribute, double>(),
-      height: mix.get<HeightAttribute, double>(),
+      width: mix.get<ImageWidthAttribute, double>(),
+      height: mix.get<ImageHeightAttribute, double>(),
       color: mix.get<ImageColorAttribute, Color>(),
       repeat: mix.get<ImageRepeatAttribute, ImageRepeat>(),
       fit: mix.get<BoxFitAttribute, BoxFit>(),

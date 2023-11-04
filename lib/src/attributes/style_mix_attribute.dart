@@ -2,16 +2,16 @@ import '../core/attribute.dart';
 import '../factory/style_mix.dart';
 
 /// Allows to pass down Mixes as attributes for use with helpers.
-class WrappedStyleAttribute extends Attribute {
+class StyleMixAttribute extends Attribute {
   final StyleMix value;
 
-  const WrappedStyleAttribute(this.value);
+  const StyleMixAttribute(this.value);
 
   @override
-  WrappedStyleAttribute merge(WrappedStyleAttribute? other) {
+  StyleMixAttribute merge(StyleMixAttribute? other) {
     if (other == null) return this;
 
-    return WrappedStyleAttribute(value.merge(other.value));
+    return StyleMixAttribute(value.merge(other.value));
   }
 
   @override

@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 
+import '../../attributes/style_mix_attribute.dart';
 import '../../attributes/variant_attribute.dart';
-import '../../attributes/wrapped_attribute.dart';
 import '../../factory/style_mix.dart';
 import '../attribute.dart';
 import 'context_variant.dart';
@@ -36,7 +36,7 @@ class VariantOperation {
   }
 
   // ignore: long-parameter-list
-  WrappedStyleAttribute call([
+  StyleMixAttribute call([
     Attribute? p1,
     Attribute? p2,
     Attribute? p3,
@@ -62,7 +62,7 @@ class VariantOperation {
       attributes = _buildOrOperations(params);
     }
 
-    return WrappedStyleAttribute(StyleMix.create(attributes));
+    return StyleMixAttribute(StyleMix.create(attributes));
   }
 
   List<VariantAttribute> _buildOrOperations(
