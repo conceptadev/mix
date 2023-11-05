@@ -87,7 +87,7 @@ void main() {
         const MockStringScalarAttribute('test'));
     expect(mergedMixData.attributeOfType<MockDoubleScalarAttribute>(),
         const MockDoubleScalarAttribute(4.0));
-    expect(mergedMixData.decoratorOfType<MockDoubleDecoratorAttribute>(),
-        [const MockDoubleDecoratorAttribute(0.6)]);
+    expect(mergedMixData.decoratorOfType<MockDoubleDecoratorAttribute>().first,
+        const MockDoubleDecoratorAttribute(0.6));
   });
 }
