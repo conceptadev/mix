@@ -1,8 +1,11 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:meta/meta.dart';
 import 'package:mix/mix.dart';
 import 'package:mix/src/core/attribute.dart';
+import 'package:mix/src/core/decorators/decorator.dart';
 import 'package:mix/src/core/variants/variant.dart';
 import 'package:mix/src/factory/mix_provider.dart';
 import 'package:mix/src/factory/mix_provider_data.dart';
@@ -14,8 +17,16 @@ export 'package:mix/src/helpers/extensions/values_ext.dart';
 
 class MockBuildContext extends Mock implements BuildContext {}
 
-// ignore: non_constant_identifier_names
-final EmptyMixData = Mix.createMixData(
+MixData MockMixData(
+  StyleMix style,
+) {
+  return MixData.create(
+    MockBuildContext(),
+    style,
+  );
+}
+
+final EmptyMixData = MixData.create(
   MockBuildContext(),
   StyleMix.empty,
 );
@@ -141,6 +152,31 @@ class MockIntScalarAttribute
 
   @override
   MockIntScalarAttribute create(int value) => MockIntScalarAttribute(value);
+}
+
+class MockDoubleDecoratorAttribute extends Decorator<double> {
+  final double value;
+  const MockDoubleDecoratorAttribute(this.value);
+
+  @override
+  MockDoubleDecoratorAttribute merge(MockDoubleDecoratorAttribute? other) {
+    return MockDoubleDecoratorAttribute(other?.value ?? value);
+  }
+
+  @override
+  double resolve(MixData mix) => value;
+
+  @override
+  get props => [value];
+
+  @override
+  Widget build(child, value) {
+    return SizedBox(
+      height: value,
+      width: value,
+      child: child,
+    );
+  }
 }
 
 class MockBooleanScalarAttribute

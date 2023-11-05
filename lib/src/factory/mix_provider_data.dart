@@ -1,11 +1,13 @@
 // Necessary packages are imported at the start of the file.
 import 'package:flutter/material.dart';
 
+import '../attributes/variant_attribute.dart';
 import '../core/attribute.dart';
 import '../core/decorators/decorator.dart';
 import '../helpers/attributes_map.dart';
 import '../helpers/compare_mixin.dart';
 import '../theme/mix_theme.dart';
+import 'style_mix.dart';
 
 /// This class is used for encapsulating all [MixData] related operations.
 /// It contains a mixture of properties and methods useful for handling different attributes,
@@ -20,16 +22,31 @@ class MixData with Comparable {
   /// A Private constructor for the [MixData] class t hat initializes its main variables.
   ///
   /// It takes in [attributes], [decorators] and [resolver] as required parameters.
-  MixData({
+  MixData._({
     required BuildContextResolver resolver,
     required VisualAttributeMap attributes,
   })  : _attributes = attributes,
         _resolver = resolver;
 
+  factory MixData.create(BuildContext context, StyleMix style) {
+    final styleMix = applyContextToVisualAttributes(context, style);
+
+    return MixData._(
+      resolver: BuildContextResolver(context),
+      attributes: VisualAttributeMap(styleMix),
+    );
+  }
+
   /// Getter method for [BuildContextResolver].
   ///
   /// Returns current [_resolver].
   BuildContextResolver get resolver => _resolver;
+
+  /// A getter method for [_attributes].
+  ///
+  /// Returns a list of all [VisualAttribute].
+  @visibleForTesting
+  VisualAttributeMap get attributes => _attributes;
 
   /// A getter method for [_decorators].
   ///
@@ -55,9 +72,9 @@ class MixData with Comparable {
   /// [other] is the other [MixData] instance that is to be merged with current instance.
   /// Returns a new instance of [MixData] which is actually a merge of current and other instance.
   MixData merge(MixData other) {
-    return MixData(
+    return MixData._(
       resolver: _resolver,
-      attributes: other._attributes.merge(_attributes),
+      attributes: _attributes.merge(other._attributes),
     );
   }
 
@@ -66,4 +83,27 @@ class MixData with Comparable {
   /// Returns a list of properties [_attributes] & [_decorators].
   @override
   get props => [_attributes];
+}
+
+@visibleForTesting
+List<VisualAttribute> applyContextToVisualAttributes(
+  BuildContext context,
+  StyleMix mix,
+) {
+  StyleMix mergedMix = StyleMix.create(mix.styles);
+
+  final contextVariants = mix.variants.whereType<ContextVariantAttribute>();
+
+  // Once there are no more context variants to apply, return the mix
+  if (contextVariants.isEmpty) {
+    return mix.styles;
+  }
+
+  for (ContextVariantAttribute variant in contextVariants) {
+    if (variant.when(context)) {
+      mergedMix = mergedMix.merge(variant.value);
+    }
+  }
+
+  return applyContextToVisualAttributes(context, mergedMix);
 }

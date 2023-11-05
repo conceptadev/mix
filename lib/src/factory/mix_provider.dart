@@ -2,10 +2,6 @@
 
 import 'package:flutter/material.dart';
 
-import '../attributes/variant_attribute.dart';
-import '../core/attribute.dart';
-import '../helpers/attributes_map.dart';
-import '../theme/mix_theme.dart';
 import 'mix_provider_data.dart';
 import 'style_mix.dart';
 
@@ -47,15 +43,6 @@ class Mix extends InheritedWidget {
     return mixData;
   }
 
-  static MixData createMixData(BuildContext context, StyleMix style) {
-    final styleMix = _applyContextToVisualAttributes(context, style);
-
-    return MixData(
-      resolver: BuildContextResolver(context),
-      attributes: VisualAttributeMap(styleMix),
-    );
-  }
-
   /// Contains the context data object.
   final MixData? data;
 
@@ -67,30 +54,8 @@ class Mix extends InheritedWidget {
   }
 
   static Mix build(BuildContext context, StyleMix style, MixBuilder builder) {
-    final mixData = createMixData(context, style);
+    final mixData = MixData.create(context, style);
 
     return Mix(data: mixData, child: builder(mixData));
   }
-}
-
-List<VisualAttribute> _applyContextToVisualAttributes(
-  BuildContext context,
-  StyleMix mix,
-) {
-  StyleMix mergedMix = mix;
-
-  final contextVariants = mix.variants.whereType<ContextVariantAttribute>();
-
-  // Once there are no more context variants to apply, return the mix
-  if (contextVariants.isEmpty) {
-    return mix.styles;
-  }
-
-  for (ContextVariantAttribute variant in contextVariants) {
-    if (variant.when(context)) {
-      mergedMix = mergedMix.merge(variant.value);
-    }
-  }
-
-  return _applyContextToVisualAttributes(context, mergedMix);
 }
