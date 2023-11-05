@@ -13,14 +13,14 @@ class ShadowAttribute<T extends Shadow> extends VisualAttribute<Shadow> {
   const ShadowAttribute({this.blurRadius, this.color, this.offset});
 
   @override
-  T resolve(MixData mix) {
+  Shadow resolve(MixData mix) {
     const defaultShadow = Shadow();
 
     return Shadow(
       color: color?.resolve(mix) ?? defaultShadow.color,
       offset: offset ?? defaultShadow.offset,
       blurRadius: blurRadius ?? defaultShadow.blurRadius,
-    ) as T;
+    );
   }
 
   @override

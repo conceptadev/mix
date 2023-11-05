@@ -58,6 +58,19 @@ void main() {
     Alignment.bottomRight,
   ]);
 
+  testScalarAttribute<GradientAttribute, Gradient>(
+      'GradientAttribute', (value) => GradientAttribute(value), [
+    const LinearGradient(
+      colors: [Colors.red, Colors.blue],
+    ),
+    const RadialGradient(
+      colors: [Colors.red, Colors.blue],
+    ),
+    const SweepGradient(
+      colors: [Colors.red, Colors.blue],
+    ),
+  ]);
+
   testScalarAttribute<ImageFitAttribute, BoxFit>(
     'ImageFitAttribute',
     (value) => ImageFitAttribute(value),

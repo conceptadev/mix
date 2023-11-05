@@ -14,18 +14,7 @@ class StrutStyleAttribute extends VisualAttribute<StrutStyle> {
   final double? leading;
   final bool? forceStrutHeight;
 
-  const StrutStyleAttribute._({
-    this.fontFamily,
-    this.fontFamilyFallback,
-    this.fontSize,
-    this.fontWeight,
-    this.fontStyle,
-    this.height,
-    this.leading,
-    this.forceStrutHeight,
-  });
-
-  const StrutStyleAttribute.only({
+  const StrutStyleAttribute({
     this.fontFamily,
     this.fontFamilyFallback,
     this.fontSize,
@@ -40,7 +29,7 @@ class StrutStyleAttribute extends VisualAttribute<StrutStyle> {
   StrutStyleAttribute merge(StrutStyleAttribute? other) {
     if (other == null) return this;
 
-    return StrutStyleAttribute._(
+    return StrutStyleAttribute(
       fontFamily: other.fontFamily ?? fontFamily,
       fontFamilyFallback: other.fontFamilyFallback ?? fontFamilyFallback,
       fontSize: other.fontSize ?? fontSize,

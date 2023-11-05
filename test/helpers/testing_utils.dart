@@ -251,6 +251,12 @@ void testScalarAttribute<T extends ScalarAttribute<T, V>, V>(
         final merged = attr1.merge(null);
         expect(merged, equals(attr1));
       });
+
+      test('resolves correctly', () {
+        final attr = builder(value1);
+        final resolvedValue = attr.resolve(EmptyMixData);
+        expect(resolvedValue, equals(value1));
+      });
     }
   });
 }

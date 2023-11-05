@@ -17,7 +17,10 @@ void main() {
     Colors.grey,
   ];
   testScalarAttribute<ColorAttribute, Color>(
-      'ColorAttribute', (value) => ColorAttribute(value), colorList);
+    'ColorAttribute',
+    (value) => ColorAttribute(value),
+    colorList,
+  );
 
   testScalarAttribute<ColorAttribute, Color>(
     'ImageColorAttribute',

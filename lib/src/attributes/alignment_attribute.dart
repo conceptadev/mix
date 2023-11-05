@@ -9,20 +9,24 @@ class AlignmentGeometryAttribute extends VisualAttribute<AlignmentGeometry> {
   final double? x;
   final double? y;
 
-  final bool isDirectional;
+  final bool _isDirectional;
 
   const AlignmentGeometryAttribute({
     this.start,
     this.x,
     this.y,
-    this.isDirectional = false,
-  });
+    bool isDirectional = false,
+  }) : _isDirectional = isDirectional;
+
+  bool get isDirectional {
+    return start != null || _isDirectional;
+  }
 
   @override
   AlignmentGeometryAttribute merge(AlignmentGeometryAttribute? other) {
     if (other == null) return this;
 
-    if (other.isDirectional != isDirectional) {
+    if (other._isDirectional != _isDirectional) {
       throw UnsupportedError(
         "Cannot merge directional and non-directional alignment attributes",
       );
@@ -43,5 +47,5 @@ class AlignmentGeometryAttribute extends VisualAttribute<AlignmentGeometry> {
   }
 
   @override
-  get props => [start, x, y, isDirectional];
+  get props => [start, x, y, _isDirectional];
 }

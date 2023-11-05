@@ -12,7 +12,7 @@ class BorderRadiusGeometryAttribute
   final Radius? bottomLeft;
   final Radius? bottomRight;
 
-// Directional values
+  // Directional values
   final Radius? topStart;
   final Radius? topEnd;
   final Radius? bottomStart;
@@ -223,13 +223,15 @@ class BoxBorderAttribute extends VisualAttribute<BoxBorder> {
         start = vertical,
         end = vertical;
 
-  bool get isDirectional => _isDirectional;
+  bool get isDirectional {
+    return start != null || end != null || _isDirectional;
+  }
 
   @override
   BoxBorderAttribute merge(BoxBorderAttribute? other) {
     if (other == null) return this;
 
-    if (other._isDirectional != _isDirectional) {
+    if (other.isDirectional != isDirectional) {
       throw UnsupportedError(
         "Cannot merge directional and non-directional box border attributes",
       );
@@ -247,7 +249,7 @@ class BoxBorderAttribute extends VisualAttribute<BoxBorder> {
 
   @override
   BoxBorder resolve(MixData mix) {
-    return _isDirectional
+    return isDirectional
         ? BorderDirectional(
             top: top?.resolve(mix) ?? BorderSide.none,
             start: start?.resolve(mix) ?? BorderSide.none,

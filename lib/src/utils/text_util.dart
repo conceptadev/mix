@@ -41,11 +41,11 @@ TextStyleAttribute textStyle({
 }) {
   return TextStyleAttribute(
     background: background,
-    backgroundColor: backgroundColor?.toDto,
-    color: color?.toDto,
+    backgroundColor: backgroundColor?.toAttribute(),
+    color: color?.toAttribute(),
     debugLabel: debugLabel,
     decoration: decoration,
-    decorationColor: decorationColor?.toDto,
+    decorationColor: decorationColor?.toAttribute(),
     decorationStyle: decorationStyle,
     fontFamily: fontFamily,
     fontFeatures: fontFeatures,
@@ -73,7 +73,7 @@ TextStyleAttribute italic() {
 ShadowAttribute _shadowFromDto(Shadow shadow) {
   return ShadowAttribute(
     blurRadius: shadow.blurRadius,
-    color: shadow.color.toDto,
+    color: shadow.color.toAttribute(),
     offset: shadow.offset,
   );
 }

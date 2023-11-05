@@ -11,7 +11,7 @@ BoxBorderAttribute border({
 }) {
   return BoxBorderAttribute.all(
     BorderSideAttribute(
-      color: color?.toDto,
+      color: color?.toAttribute(),
       strokeAlign: strokeAlign,
       style: style,
       width: width,
@@ -43,7 +43,7 @@ BoxBorderAttribute borderTop({
 }) {
   return BoxBorderAttribute(
     top: BorderSideAttribute(
-      color: color?.toDto,
+      color: color?.toAttribute(),
       strokeAlign: strokeAlign,
       style: style,
       width: width,
@@ -75,7 +75,7 @@ BoxBorderAttribute borderBottom({
 }) {
   return BoxBorderAttribute(
     bottom: BorderSideAttribute(
-      color: color?.toDto,
+      color: color?.toAttribute(),
       strokeAlign: strokeAlign,
       style: style,
       width: width,
@@ -107,7 +107,7 @@ BoxBorderAttribute borderLeft({
 }) {
   return BoxBorderAttribute(
     left: BorderSideAttribute(
-      color: color?.toDto,
+      color: color?.toAttribute(),
       strokeAlign: strokeAlign,
       style: style,
       width: width,
@@ -139,7 +139,7 @@ BoxBorderAttribute borderRight({
 }) {
   return BoxBorderAttribute(
     right: BorderSideAttribute(
-      color: color?.toDto,
+      color: color?.toAttribute(),
       strokeAlign: strokeAlign,
       style: style,
       width: width,
@@ -171,7 +171,7 @@ BoxBorderAttribute borderStart({
 }) {
   return BoxBorderAttribute(
     start: BorderSideAttribute(
-      color: color?.toDto,
+      color: color?.toAttribute(),
       strokeAlign: strokeAlign,
       style: style,
       width: width,
@@ -203,7 +203,7 @@ BoxBorderAttribute borderEnd({
 }) {
   return BoxBorderAttribute(
     end: BorderSideAttribute(
-      color: color?.toDto,
+      color: color?.toAttribute(),
       strokeAlign: strokeAlign,
       style: style,
       width: width,
@@ -233,9 +233,9 @@ BoxBorderAttribute borderHorizontal({
   BorderStyle? style,
   double? strokeAlign,
 }) {
-  return BoxBorderAttribute.symmetric(
+  return boxBorderSymetric(
     horizontal: BorderSideAttribute(
-      color: color?.toDto,
+      color: color?.toAttribute(),
       strokeAlign: strokeAlign,
       style: style,
       width: width,
@@ -265,9 +265,9 @@ BoxBorderAttribute borderVertical({
   BorderStyle? style,
   double? strokeAlign,
 }) {
-  return BoxBorderAttribute.symmetric(
+  return boxBorderSymetric(
     vertical: BorderSideAttribute(
-      color: color?.toDto,
+      color: color?.toAttribute(),
       strokeAlign: strokeAlign,
       style: style,
       width: width,
@@ -289,4 +289,30 @@ BoxBorderAttribute borderVerticalStyle(BorderStyle style) {
 
 BoxBorderAttribute borderVerticalStrokeAlign(double strokeAlign) {
   return borderVertical(strokeAlign: strokeAlign);
+}
+
+BoxBorderAttribute boxBorderSymetric({
+  BorderSideAttribute? vertical,
+  BorderSideAttribute? horizontal,
+}) {
+  return BoxBorderAttribute(
+    top: horizontal,
+    start: vertical,
+    end: vertical,
+    bottom: horizontal,
+    left: vertical,
+    right: vertical,
+  );
+}
+
+BoxBorderAttribute boxBorderDirectionalSymetric({
+  BorderSideAttribute? vertical,
+  BorderSideAttribute? horizontal,
+}) {
+  return BoxBorderAttribute(
+    top: horizontal,
+    start: vertical,
+    end: vertical,
+    bottom: horizontal,
+  );
 }

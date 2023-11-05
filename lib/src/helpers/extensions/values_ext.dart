@@ -4,6 +4,7 @@ import '../../attributes/alignment_attribute.dart';
 import '../../attributes/border_attribute.dart';
 import '../../attributes/color_attribute.dart';
 import '../../attributes/constraints_attribute.dart';
+import '../../attributes/decoration_attribute.dart';
 import '../../attributes/scalar_attribute.dart';
 import '../../attributes/shadow_attribute.dart';
 import '../../attributes/strut_style_attribute.dart';
@@ -11,7 +12,7 @@ import '../../attributes/text_style_attribute.dart';
 
 extension StrutStyleExt on StrutStyle {
   StrutStyleAttribute toAttribute() {
-    return StrutStyleAttribute.only(
+    return StrutStyleAttribute(
       fontFamily: fontFamily,
       fontFamilyFallback: fontFamilyFallback,
       fontSize: fontSize,
@@ -49,7 +50,7 @@ extension GradientExt on Gradient {
 }
 
 extension ColorExt on Color {
-  ColorAttribute get toDto => ColorAttribute(this);
+  ColorAttribute toAttribute() => ColorAttribute(this);
 }
 
 // Extension for Alignment
@@ -63,6 +64,15 @@ extension AlignmentGeometryExt on AlignmentGeometry {
   }
 }
 
+extension ShapeDecorationExt on ShapeDecoration {
+  ShapeDecorationAttribute toAttribute() => ShapeDecorationAttribute(
+        color: color?.toAttribute(),
+        shape: shape,
+        gradient: gradient?.toAttribute(),
+        boxShadow: shadows?.map((e) => e.toAttribute()).toList(),
+      );
+}
+
 extension AlignmentExt on Alignment {
   AlignmentGeometryAttribute toAttribute() =>
       AlignmentGeometryAttribute(x: x, y: y);
@@ -74,7 +84,7 @@ extension AligmentDirectionalExt on AlignmentDirectional {
 }
 
 extension BoxConstraintsExt on BoxConstraints {
-  BoxConstraintsAttribute get toDto => BoxConstraintsAttribute(
+  BoxConstraintsAttribute toAttribute() => BoxConstraintsAttribute(
         minWidth: minWidth,
         maxWidth: maxWidth,
         minHeight: minHeight,
@@ -91,6 +101,31 @@ extension MainAxisAlignmentExt on MainAxisAlignment {
 extension CrossAxisAlignmentExt on CrossAxisAlignment {
   CrossAxisAlignmentAttribute toAttribute() =>
       CrossAxisAlignmentAttribute(this);
+}
+
+extension MainAxisSizeExt on MainAxisSize {
+  MainAxisSizeAttribute toAttribute() => MainAxisSizeAttribute(this);
+}
+
+extension TextOverflowExt on TextOverflow {
+  TextOverflowAttribute toAttribute() => TextOverflowAttribute(this);
+}
+
+extension VerticalDirectionExt on VerticalDirection {
+  VerticalDirectionAttribute toAttribute() => VerticalDirectionAttribute(this);
+}
+
+extension ClipExt on Clip {
+  ClipAttribute toAttribute() => ClipAttribute(this);
+}
+
+extension TextWidthBasisExt on TextWidthBasis {
+  TextWidthBasisAttribute toAttribute() => TextWidthBasisAttribute(this);
+}
+
+extension TextHeightBehaviorExt on TextHeightBehavior {
+  TextHeightBehaviorAttribute toAttribute() =>
+      TextHeightBehaviorAttribute(this);
 }
 
 // Extension for TextDirection
@@ -117,11 +152,26 @@ extension BoxFitExt on BoxFit {
   BoxFitAttribute toAttribute() => BoxFitAttribute(this);
 }
 
+extension BoxDecorationExt on BoxDecoration {
+  BoxDecorationAttribute toAttribute() => BoxDecorationAttribute(
+        border: border?.toAttribute(),
+        borderRadius: borderRadius?.toAttribute(),
+        gradient: gradient?.toAttribute(),
+        boxShadow: boxShadow?.map((e) => e.toAttribute()).toList(),
+        color: color?.toAttribute(),
+        shape: shape.toAttribute(),
+      );
+}
+
+extension BoxShapeExt on BoxShape {
+  BoxShapeAttribute toAttribute() => BoxShapeAttribute(this);
+}
+
 extension BorderRadiusGeometryExt on BorderRadiusGeometry {
-  BorderRadiusGeometryAttribute get toDto {
-    if (this is BorderRadius) return (this as BorderRadius).toDto;
+  BorderRadiusGeometryAttribute toAttribute() {
+    if (this is BorderRadius) return (this as BorderRadius).toAttribute();
     if (this is BorderRadiusDirectional) {
-      return (this as BorderRadiusDirectional).toDto;
+      return (this as BorderRadiusDirectional).toAttribute();
     }
 
     throw UnimplementedError();
@@ -129,7 +179,7 @@ extension BorderRadiusGeometryExt on BorderRadiusGeometry {
 }
 
 extension BorderRadiusDirectionalExrt on BorderRadiusDirectional {
-  BorderRadiusGeometryAttribute get toDto => BorderRadiusGeometryAttribute(
+  BorderRadiusGeometryAttribute toAttribute() => BorderRadiusGeometryAttribute(
         topStart: topStart,
         topEnd: topEnd,
         bottomStart: bottomStart,
@@ -139,12 +189,16 @@ extension BorderRadiusDirectionalExrt on BorderRadiusDirectional {
 
 // Extension for BorderRadius
 extension BorderRadiusExt on BorderRadius {
-  BorderRadiusGeometryAttribute get toDto => BorderRadiusGeometryAttribute(
+  BorderRadiusGeometryAttribute toAttribute() => BorderRadiusGeometryAttribute(
         topLeft: topLeft,
         topRight: topRight,
         bottomLeft: bottomLeft,
         bottomRight: bottomRight,
       );
+}
+
+extension TextBaseLineExt on TextBaseline {
+  TextBaselineAttribute toAttribute() => TextBaselineAttribute(this);
 }
 
 extension Matrix4Ext on Matrix4 {
@@ -159,8 +213,8 @@ extension Matrix4Ext on Matrix4 {
 }
 
 extension BorderSideExt on BorderSide {
-  BorderSideAttribute get toDto => BorderSideAttribute(
-        color: color.toDto,
+  BorderSideAttribute toAttribute() => BorderSideAttribute(
+        color: color.toAttribute(),
         strokeAlign: strokeAlign,
         style: style,
         width: width,
@@ -168,25 +222,27 @@ extension BorderSideExt on BorderSide {
 }
 
 extension BoxBorderExt on BoxBorder {
-  BoxBorderAttribute get toDto {
-    if (this is Border) return (this as Border).toDto;
-    if (this is BorderDirectional) return (this as BorderDirectional).toDto;
+  BoxBorderAttribute toAttribute() {
+    if (this is Border) return (this as Border).toAttribute();
+    if (this is BorderDirectional) {
+      return (this as BorderDirectional).toAttribute();
+    }
 
     throw UnimplementedError();
   }
 }
 
 extension ShadowExt on Shadow {
-  ShadowAttribute get toDto => ShadowAttribute(
+  ShadowAttribute toAttribute() => ShadowAttribute(
         blurRadius: blurRadius,
-        color: color.toDto,
+        color: color.toAttribute(),
         offset: offset,
       );
 }
 
 extension BoxShadowExt on BoxShadow {
-  BoxShadowAttribute get toDto => BoxShadowAttribute(
-        color: color.toDto,
+  BoxShadowAttribute toAttribute() => BoxShadowAttribute(
+        color: color.toAttribute(),
         offset: offset,
         blurRadius: blurRadius,
         spreadRadius: spreadRadius,
@@ -194,12 +250,12 @@ extension BoxShadowExt on BoxShadow {
 }
 
 extension TextStyleExt on TextStyle {
-  TextStyleAttribute get toDto => TextStyleAttribute(
+  TextStyleAttribute toAttribute() => TextStyleAttribute(
         background: background,
-        color: color?.toDto,
+        color: color?.toAttribute(),
         debugLabel: debugLabel,
         decoration: decoration,
-        decorationColor: decorationColor?.toDto,
+        decorationColor: decorationColor?.toAttribute(),
         decorationStyle: decorationStyle,
         decorationThickness: decorationThickness,
         fontFamily: fontFamily,
@@ -212,27 +268,27 @@ extension TextStyleExt on TextStyle {
         height: height,
         letterSpacing: letterSpacing,
         locale: locale,
-        shadows: shadows?.map((e) => e.toDto).toList(),
+        shadows: shadows?.map((e) => e.toAttribute()).toList(),
         textBaseline: textBaseline,
         wordSpacing: wordSpacing,
       );
 }
 
 extension BorderExt on Border {
-  BoxBorderAttribute get toDto => BoxBorderAttribute(
-        top: top.toDto,
-        bottom: bottom.toDto,
-        left: left.toDto,
-        right: right.toDto,
+  BoxBorderAttribute toAttribute() => BoxBorderAttribute(
+        top: top.toAttribute(),
+        bottom: bottom.toAttribute(),
+        left: left.toAttribute(),
+        right: right.toAttribute(),
       );
 }
 
 extension BorderDirectionalExt on BorderDirectional {
-  BoxBorderAttribute get toDto => BoxBorderAttribute(
-        top: top.toDto,
-        start: start.toDto,
-        end: end.toDto,
-        bottom: bottom.toDto,
+  BoxBorderAttribute toAttribute() => BoxBorderAttribute(
+        top: top.toAttribute(),
+        start: start.toAttribute(),
+        end: end.toAttribute(),
+        bottom: bottom.toAttribute(),
       );
 }
 
