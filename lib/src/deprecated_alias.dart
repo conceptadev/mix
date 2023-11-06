@@ -5,7 +5,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 import 'attributes/alignment_attribute.dart';
-import 'attributes/border_attribute.dart';
+import 'attributes/border/border_radius_attribute.dart';
 import 'attributes/scalar_attribute.dart';
 import 'attributes/text_style_attribute.dart';
 import 'core/constants.dart';
@@ -306,32 +306,32 @@ BorderRadiusGeometryAttribute roundedTR() {
 }
 
 @Deprecated(kShortAliasDeprecation)
-BorderRadiusGeometryAttribute roundedBL() {
+BorderRadiusAttribute roundedBL() {
   throw UnimplementedError();
 }
 
 @Deprecated(kShortAliasDeprecation)
-BorderRadiusGeometryAttribute roundedBR() {
+BorderRadiusAttribute roundedBR() {
   throw UnimplementedError();
 }
 
 @Deprecated(kShortAliasDeprecation)
-BorderRadiusGeometryAttribute roundedTS() {
+BorderRadiusDirectionalAttribute roundedTS() {
   throw UnimplementedError();
 }
 
 @Deprecated(kShortAliasDeprecation)
-BorderRadiusGeometryAttribute roundedTE() {
+BorderRadiusDirectionalAttribute roundedTE() {
   throw UnimplementedError();
 }
 
 @Deprecated(kShortAliasDeprecation)
-BorderRadiusGeometryAttribute roundedBS() {
+BorderRadiusDirectionalAttribute roundedBS() {
   throw UnimplementedError();
 }
 
 @Deprecated(kShortAliasDeprecation)
-BorderRadiusGeometryAttribute roundedBE() {
+BorderRadiusDirectionalAttribute roundedBE() {
   throw UnimplementedError();
 }
 

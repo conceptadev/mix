@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../attributes/border_attribute.dart';
+import '../attributes/border/border_attribute.dart';
 import '../helpers/extensions/values_ext.dart';
 
-BoxBorderAttribute border({
+BorderAttribute border({
   Color? color,
   double? width,
   BorderStyle? style,
@@ -16,15 +16,10 @@ BoxBorderAttribute border({
     width: width,
   );
 
-  return BoxBorderAttribute(
-    top: side,
-    bottom: side,
-    left: side,
-    right: side,
-  );
+  return BorderAttribute(left: side, right: side, top: side, bottom: side);
 }
 
-BoxBorderAttribute borderDirectional({
+BorderDirectionalAttribute borderDirectional({
   Color? color,
   double? width,
   BorderStyle? style,
@@ -37,7 +32,12 @@ BoxBorderAttribute borderDirectional({
     width: width,
   );
 
-  return BoxBorderAttribute(top: side, start: side, end: side, bottom: side);
+  return BorderDirectionalAttribute(
+    start: side,
+    end: side,
+    top: side,
+    bottom: side,
+  );
 }
 
 BoxBorderAttribute borderColor(Color color) {
@@ -72,13 +72,13 @@ BoxBorderAttribute borderDirectionalStrokeAlign(double strokeAlign) {
   return borderDirectional(strokeAlign: strokeAlign);
 }
 
-BoxBorderAttribute borderTop({
+BorderAttribute borderTop({
   Color? color,
   double? width,
   BorderStyle? style,
   double? strokeAlign,
 }) {
-  return BoxBorderAttribute(
+  return BorderAttribute(
     top: BorderSideAttribute(
       color: color?.toAttribute(),
       strokeAlign: strokeAlign,
@@ -104,13 +104,13 @@ BoxBorderAttribute borderTopStrokeAlign(double strokeAlign) {
   return borderTop(strokeAlign: strokeAlign);
 }
 
-BoxBorderAttribute borderBottom({
+BorderAttribute borderBottom({
   Color? color,
   double? width,
   BorderStyle? style,
   double? strokeAlign,
 }) {
-  return BoxBorderAttribute(
+  return BorderAttribute(
     bottom: BorderSideAttribute(
       color: color?.toAttribute(),
       strokeAlign: strokeAlign,
@@ -136,13 +136,13 @@ BoxBorderAttribute borderBottomStrokeAlign(double strokeAlign) {
   return borderBottom(strokeAlign: strokeAlign);
 }
 
-BoxBorderAttribute borderLeft({
+BorderAttribute borderLeft({
   Color? color,
   double? width,
   BorderStyle? style,
   double? strokeAlign,
 }) {
-  return BoxBorderAttribute(
+  return BorderAttribute(
     left: BorderSideAttribute(
       color: color?.toAttribute(),
       strokeAlign: strokeAlign,
@@ -168,13 +168,13 @@ BoxBorderAttribute borderLeftStrokeAlign(double strokeAlign) {
   return borderLeft(strokeAlign: strokeAlign);
 }
 
-BoxBorderAttribute borderRight({
+BorderAttribute borderRight({
   Color? color,
   double? width,
   BorderStyle? style,
   double? strokeAlign,
 }) {
-  return BoxBorderAttribute(
+  return BorderAttribute(
     right: BorderSideAttribute(
       color: color?.toAttribute(),
       strokeAlign: strokeAlign,
@@ -200,13 +200,13 @@ BoxBorderAttribute borderRightStrokeAlign(double strokeAlign) {
   return borderRight(strokeAlign: strokeAlign);
 }
 
-BoxBorderAttribute borderStart({
+BorderDirectionalAttribute borderStart({
   Color? color,
   double? width,
   BorderStyle? style,
   double? strokeAlign,
 }) {
-  return BoxBorderAttribute(
+  return BorderDirectionalAttribute(
     start: BorderSideAttribute(
       color: color?.toAttribute(),
       strokeAlign: strokeAlign,
@@ -232,13 +232,13 @@ BoxBorderAttribute borderStartStrokeAlign(double strokeAlign) {
   return borderStart(strokeAlign: strokeAlign);
 }
 
-BoxBorderAttribute borderEnd({
+BorderDirectionalAttribute borderEnd({
   Color? color,
   double? width,
   BorderStyle? style,
   double? strokeAlign,
 }) {
-  return BoxBorderAttribute(
+  return BorderDirectionalAttribute(
     end: BorderSideAttribute(
       color: color?.toAttribute(),
       strokeAlign: strokeAlign,
@@ -248,19 +248,19 @@ BoxBorderAttribute borderEnd({
   );
 }
 
-BoxBorderAttribute borderEndColor(Color color) {
+BorderDirectionalAttribute borderEndColor(Color color) {
   return borderEnd(color: color);
 }
 
-BoxBorderAttribute borderEndWidth(double width) {
+BorderDirectionalAttribute borderEndWidth(double width) {
   return borderEnd(width: width);
 }
 
-BoxBorderAttribute borderEndStyle(BorderStyle style) {
+BorderDirectionalAttribute borderEndStyle(BorderStyle style) {
   return borderEnd(style: style);
 }
 
-BoxBorderAttribute borderEndStrokeAlign(double strokeAlign) {
+BorderDirectionalAttribute borderEndStrokeAlign(double strokeAlign) {
   return borderEnd(strokeAlign: strokeAlign);
 }
 
@@ -270,7 +270,7 @@ BoxBorderAttribute borderHorizontal({
   BorderStyle? style,
   double? strokeAlign,
 }) {
-  return boxBorderSymetric(
+  return borderSymetric(
     horizontal: BorderSideAttribute(
       color: color?.toAttribute(),
       strokeAlign: strokeAlign,
@@ -302,7 +302,7 @@ BoxBorderAttribute borderVertical({
   BorderStyle? style,
   double? strokeAlign,
 }) {
-  return boxBorderSymetric(
+  return borderSymetric(
     vertical: BorderSideAttribute(
       color: color?.toAttribute(),
       strokeAlign: strokeAlign,
@@ -328,26 +328,26 @@ BoxBorderAttribute borderVerticalStrokeAlign(double strokeAlign) {
   return borderVertical(strokeAlign: strokeAlign);
 }
 
-BoxBorderAttribute boxBorderSymetric({
+BorderAttribute borderSymetric({
   BorderSideAttribute? vertical,
   BorderSideAttribute? horizontal,
 }) {
-  return BoxBorderAttribute(
-    top: horizontal,
-    bottom: horizontal,
+  return BorderAttribute(
     left: vertical,
     right: vertical,
+    top: horizontal,
+    bottom: horizontal,
   );
 }
 
-BoxBorderAttribute boxBorderDirectionalSymetric({
+BorderDirectionalAttribute borderDirectionalSymetric({
   BorderSideAttribute? vertical,
   BorderSideAttribute? horizontal,
 }) {
-  return BoxBorderAttribute(
-    top: horizontal,
+  return BorderDirectionalAttribute(
     start: vertical,
     end: vertical,
+    top: horizontal,
     bottom: horizontal,
   );
 }

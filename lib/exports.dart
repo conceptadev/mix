@@ -1,7 +1,7 @@
 export 'mix.dart';
 export 'src/attributes/alignment_attribute.dart';
 export 'src/attributes/attribute.dart';
-export 'src/attributes/border_attribute.dart';
+export 'src/attributes/border/border_attribute.dart';
 export 'src/attributes/color_attribute.dart';
 export 'src/attributes/constraints_attribute.dart';
 export 'src/attributes/decoration_attribute.dart';

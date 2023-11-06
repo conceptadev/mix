@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../attributes/attribute.dart';
-import '../../attributes/border_attribute.dart';
+import '../../attributes/border/border_radius_attribute.dart';
 import '../../factory/mix_provider_data.dart';
 import '../../utils/border_radius_util.dart';
 import '../decorator.dart';

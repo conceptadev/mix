@@ -30,14 +30,25 @@ class RandomGenerator {
     );
   }
 
-  static BorderRadiusGeometryAttribute borderRadiusAttribute() {
+  static BorderRadiusAttribute borderRadiusAttribute() {
     final random = Random();
 
-    return BorderRadiusGeometryAttribute(
+    return BorderRadiusAttribute(
       topLeft: Radius.circular(random.nextDouble() * 20),
       topRight: Radius.circular(random.nextDouble() * 20),
       bottomLeft: Radius.circular(random.nextDouble() * 20),
       bottomRight: Radius.circular(random.nextDouble() * 20),
+    );
+  }
+
+  static BorderRadiusDirectionalAttribute borderRadiusDirectionalAttribute() {
+    final random = Random();
+
+    return BorderRadiusDirectionalAttribute(
+      topStart: Radius.circular(random.nextDouble() * 20),
+      topEnd: Radius.circular(random.nextDouble() * 20),
+      bottomStart: Radius.circular(random.nextDouble() * 20),
+      bottomEnd: Radius.circular(random.nextDouble() * 20),
     );
   }
 

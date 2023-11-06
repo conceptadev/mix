@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../attributes/alignment_attribute.dart';
-import '../../attributes/border_attribute.dart';
+import '../../attributes/border/border_attribute.dart';
+import '../../attributes/border/border_radius_attribute.dart';
 import '../../attributes/color_attribute.dart';
 import '../../attributes/constraints_attribute.dart';
 import '../../attributes/decoration_attribute.dart';
@@ -209,7 +210,8 @@ extension BorderRadiusGeometryExt on BorderRadiusGeometry {
 }
 
 extension BorderRadiusDirectionalExrt on BorderRadiusDirectional {
-  BorderRadiusGeometryAttribute toAttribute() => BorderRadiusGeometryAttribute(
+  BorderRadiusDirectionalAttribute toAttribute() =>
+      BorderRadiusDirectionalAttribute(
         topStart: topStart,
         topEnd: topEnd,
         bottomStart: bottomStart,
@@ -219,7 +221,7 @@ extension BorderRadiusDirectionalExrt on BorderRadiusDirectional {
 
 // Extension for BorderRadius
 extension BorderRadiusExt on BorderRadius {
-  BorderRadiusGeometryAttribute toAttribute() => BorderRadiusGeometryAttribute(
+  BorderRadiusAttribute toAttribute() => BorderRadiusAttribute(
         topLeft: topLeft,
         topRight: topRight,
         bottomLeft: bottomLeft,
@@ -305,19 +307,19 @@ extension TextStyleExt on TextStyle {
 }
 
 extension BorderExt on Border {
-  BoxBorderAttribute toAttribute() => BoxBorderAttribute(
-        top: top.toAttribute(),
-        bottom: bottom.toAttribute(),
+  BorderAttribute toAttribute() => BorderAttribute(
         left: left.toAttribute(),
         right: right.toAttribute(),
+        top: top.toAttribute(),
+        bottom: bottom.toAttribute(),
       );
 }
 
 extension BorderDirectionalExt on BorderDirectional {
-  BoxBorderAttribute toAttribute() => BoxBorderAttribute(
-        top: top.toAttribute(),
+  BorderDirectionalAttribute toAttribute() => BorderDirectionalAttribute(
         start: start.toAttribute(),
         end: end.toAttribute(),
+        top: top.toAttribute(),
         bottom: bottom.toAttribute(),
       );
 }
