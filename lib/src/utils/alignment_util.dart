@@ -1,53 +1,81 @@
 import 'package:flutter/material.dart';
 
+// Import custom attributes and extension methods
 import '../attributes/alignment_attribute.dart';
 import '../helpers/extensions/values_ext.dart';
 
-AlignmentGeometryAttribute alignment(AlignmentGeometry value) {
-  return value.toAttribute();
+/// Converts an [x] and [y] value into an [AlignmentGeometryAttribute] object.
+///
+/// The [x] and [y] values are used to create an [Alignment] object.
+/// The [Alignment] object is then converted into an [AlignmentGeometryAttribute] object.
+AlignmentGeometryAttribute alignment(double x, double y) {
+  return Alignment(x, y).toAttribute();
 }
 
-/// The top left corner.
-final alignmentTopLeft = alignment(Alignment.topLeft);
+/// Convers a [start] and [y] value into an [AlignmentGeometryAttribute] object.
+AlignmentGeometry alignmentDirectional(double start, double y) {
+  return AlignmentDirectional(start, y);
+}
 
-/// The center point along the top edge.
-final alignmentTopCenter = alignment(Alignment.topCenter);
+// Convenience methods follow below, providing predefined [AlignmentGeometryAttribute]s for common alignments.
+// These methods simplify the creation of [AlignmentGeometryAttribute] objects by abstracting away
+// the need to directly use the [Alignment] class.
 
-/// The top right corner.
-final alignmentTopRight = alignment(Alignment.topRight);
+/// Provides an [AlignmentGeometryAttribute] for top-left alignment.
+AlignmentGeometryAttribute alignmentTopLeft() =>
+    Alignment.topLeft.toAttribute();
 
-/// The center point along the left edge.
-final alignmentCenterLeft = alignment(Alignment.centerLeft);
+/// Provides an [AlignmentGeometryAttribute] for top-center alignment.
+AlignmentGeometryAttribute alignmentTopCenter() =>
+    Alignment.topCenter.toAttribute();
 
-/// The center point, both horizontally and vertically.
-final alignmentCenter = alignment(Alignment.center);
+/// Provides an [AlignmentGeometryAttribute] for top-right alignment.
+AlignmentGeometryAttribute alignmentTopRight() =>
+    Alignment.topRight.toAttribute();
 
-/// The center point along the right edge.
-final alignmentCenterRight = alignment(Alignment.centerRight);
+/// Provides an [AlignmentGeometryAttribute] for center-left alignment.
+AlignmentGeometryAttribute alignmentCenterLeft() =>
+    Alignment.centerLeft.toAttribute();
 
-/// The bottom left corner.
-final alignmentBottomLeft = alignment(Alignment.bottomLeft);
+/// Provides an [AlignmentGeometryAttribute] for center alignment.
+AlignmentGeometryAttribute alignmentCenter() => Alignment.center.toAttribute();
 
-/// The center point along the bottom edge.
-final alignmentBottomCenter = alignment(Alignment.bottomCenter);
+/// Provides an [AlignmentGeometryAttribute] for center-right alignment.
+AlignmentGeometryAttribute alignmentCenterRight() =>
+    Alignment.centerRight.toAttribute();
 
-/// The bottom right corner.
-final alignmentBottomRight = alignment(Alignment.bottomRight);
+/// Provides an [AlignmentGeometryAttribute] for bottom-left alignment.
+AlignmentGeometryAttribute alignmentBottomLeft() =>
+    Alignment.bottomLeft.toAttribute();
 
-/// The top corner on the "start" side.
-final alignmentTopStart = alignment(AlignmentDirectional.topStart);
+/// Provides an [AlignmentGeometryAttribute] for bottom-center alignment.
+AlignmentGeometryAttribute alignmentBottomCenter() =>
+    Alignment.bottomCenter.toAttribute();
 
-/// The top corner on the "end" side.
-final alignmentTopEnd = alignment(AlignmentDirectional.topEnd);
+/// Provides an [AlignmentGeometryAttribute] for bottom-right alignment.
+AlignmentGeometryAttribute alignmentBottomRight() =>
+    Alignment.bottomRight.toAttribute();
 
-/// The center point along the "start" edge.
-final alignmentCenterStart = alignment(AlignmentDirectional.centerStart);
+/// Provides an [AlignmentGeometryAttribute] for top-start alignment considering text direction.
+AlignmentGeometryAttribute alignmentTopStart() =>
+    AlignmentDirectional.topStart.toAttribute();
 
-/// The center point along the "end" edge.
-final alignmentCenterEnd = alignment(AlignmentDirectional.centerEnd);
+/// Provides an [AlignmentGeometryAttribute] for top-end alignment considering text direction.
+AlignmentGeometryAttribute alignmentTopEnd() =>
+    AlignmentDirectional.topEnd.toAttribute();
 
-/// The bottom corner on the "start" side.
-final alignmentBottomStart = alignment(AlignmentDirectional.bottomStart);
+/// Provides an [AlignmentGeometryAttribute] for center-start alignment considering text direction.
+AlignmentGeometryAttribute alignmentCenterStart() =>
+    AlignmentDirectional.centerStart.toAttribute();
 
-/// The bottom corner on the "end" side.
-final alignmentBottomEnd = alignment(AlignmentDirectional.bottomEnd);
+/// Provides an [AlignmentGeometryAttribute] for center-end alignment considering text direction.
+AlignmentGeometryAttribute alignmentCenterEnd() =>
+    AlignmentDirectional.centerEnd.toAttribute();
+
+/// Provides an [AlignmentGeometryAttribute] for bottom-start alignment considering text direction.
+AlignmentGeometryAttribute alignmentBottomStart() =>
+    AlignmentDirectional.bottomStart.toAttribute();
+
+/// Provides an [AlignmentGeometryAttribute] for bottom-end alignment considering text direction.
+AlignmentGeometryAttribute alignmentBottomEnd() =>
+    AlignmentDirectional.bottomEnd.toAttribute();

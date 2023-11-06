@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../../attributes/variant_attribute.dart';
-import '../../factory/style_mix.dart';
-import '../../helpers/compare_mixin.dart';
-import '../attribute.dart';
+import '../attributes/attribute.dart';
+import '../attributes/variant_attribute.dart';
+import '../core/equality/compare_mixin.dart';
+import '../factory/style_mix.dart';
 import 'variant_operation.dart';
 
 /// A class representing a variant, which is a combination of attributes.

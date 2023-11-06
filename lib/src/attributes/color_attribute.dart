@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../core/attribute.dart';
 import '../factory/mix_provider_data.dart';
 import '../theme/tokens/color_ref.dart';
+import 'attribute.dart';
 
 @immutable
 class ColorAttribute extends ScalarAttribute<ColorAttribute, Color> {

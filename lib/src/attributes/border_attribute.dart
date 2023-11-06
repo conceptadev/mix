@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../core/attribute.dart';
 import '../factory/mix_provider_data.dart';
+import 'attribute.dart';
 import 'color_attribute.dart';
 
 @immutable
@@ -18,8 +18,6 @@ class BorderRadiusGeometryAttribute
   final Radius? bottomStart;
   final Radius? bottomEnd;
 
-  final bool _isDirectional;
-
   const BorderRadiusGeometryAttribute({
     this.topLeft,
     this.topRight,
@@ -29,67 +27,9 @@ class BorderRadiusGeometryAttribute
     this.topEnd,
     this.bottomStart,
     this.bottomEnd,
-    bool isDirectional = false,
-  }) : _isDirectional = isDirectional;
+  });
 
-  const BorderRadiusGeometryAttribute.all(
-    Radius radius, {
-    bool isDirectional = false,
-  })  : _isDirectional = isDirectional,
-        topLeft = radius,
-        topRight = radius,
-        bottomLeft = radius,
-        bottomRight = radius,
-        topStart = radius,
-        topEnd = radius,
-        bottomStart = radius,
-        bottomEnd = radius;
-
-  const BorderRadiusGeometryAttribute.horizontal({
-    Radius? leftStart,
-    Radius? rightEnd,
-    bool isDirectional = false,
-  })  : _isDirectional = isDirectional,
-        topLeft = leftStart,
-        topRight = rightEnd,
-        bottomLeft = leftStart,
-        bottomRight = rightEnd,
-        topStart = leftStart,
-        topEnd = rightEnd,
-        bottomStart = leftStart,
-        bottomEnd = rightEnd;
-
-  const BorderRadiusGeometryAttribute.vertical({
-    Radius? top,
-    Radius? bottom,
-    bool isDirectional = false,
-  })  : _isDirectional = isDirectional,
-        topLeft = top,
-        topRight = top,
-        bottomLeft = bottom,
-        bottomRight = bottom,
-        topStart = top,
-        topEnd = top,
-        bottomStart = bottom,
-        bottomEnd = bottom;
-
-  BorderRadiusGeometryAttribute.circular(
-    double radius, {
-    bool isDirectional = false,
-  })  : _isDirectional = isDirectional,
-        topLeft = Radius.circular(radius),
-        topRight = Radius.circular(radius),
-        bottomLeft = Radius.circular(radius),
-        bottomRight = Radius.circular(radius),
-        topStart = Radius.circular(radius),
-        topEnd = Radius.circular(radius),
-        bottomStart = Radius.circular(radius),
-        bottomEnd = Radius.circular(radius);
-
-  bool get isDirectional => _isDirectional;
-
-  BorderRadiusGeometryAttribute toDirectional() =>
-      copyWith(isDirectional: true);
+  bool get isDirectional => topStart != null || topEnd != null;
 
   BorderRadiusGeometryAttribute copyWith({
     Radius? topLeft,
@@ -100,7 +40,6 @@ class BorderRadiusGeometryAttribute
     Radius? topEnd,
     Radius? bottomStart,
     Radius? bottomEnd,
-    bool? isDirectional,
   }) {
     return BorderRadiusGeometryAttribute(
       topLeft: topLeft ?? this.topLeft,
@@ -111,14 +50,13 @@ class BorderRadiusGeometryAttribute
       topEnd: topEnd ?? this.topEnd,
       bottomStart: bottomStart ?? this.bottomStart,
       bottomEnd: bottomEnd ?? this.bottomEnd,
-      isDirectional: isDirectional ?? _isDirectional,
     );
   }
 
   @override
   BorderRadiusGeometryAttribute merge(BorderRadiusGeometryAttribute? other) {
     if (other == null) return this;
-    if (other._isDirectional != _isDirectional) {
+    if (other.isDirectional != isDirectional) {
       throw UnsupportedError(
         "Cannot merge directional and non-directional border radius attributes",
       );
@@ -133,13 +71,12 @@ class BorderRadiusGeometryAttribute
       topEnd: other.topEnd ?? topEnd,
       bottomStart: other.bottomStart ?? bottomStart,
       bottomEnd: other.bottomEnd ?? bottomEnd,
-      isDirectional: other._isDirectional,
     );
   }
 
   @override
   BorderRadiusGeometry resolve(MixData mix) {
-    return _isDirectional
+    return isDirectional
         ? BorderRadiusDirectional.only(
             topStart: topStart ?? Radius.zero,
             topEnd: topEnd ?? Radius.zero,
@@ -164,7 +101,6 @@ class BorderRadiusGeometryAttribute
         topEnd,
         bottomStart,
         bottomEnd,
-        _isDirectional,
       ];
 }
 
@@ -177,8 +113,6 @@ class BoxBorderAttribute extends VisualAttribute<BoxBorder> {
   final BorderSideAttribute? left;
   final BorderSideAttribute? right;
 
-  final bool _isDirectional;
-
   const BoxBorderAttribute({
     this.top,
     this.start,
@@ -186,46 +120,9 @@ class BoxBorderAttribute extends VisualAttribute<BoxBorder> {
     this.bottom,
     this.left,
     this.right,
-    bool isDirectional = false,
-  }) : _isDirectional = isDirectional;
+  });
 
-  const BoxBorderAttribute.fromBorderSide(
-    BorderSideAttribute side, {
-    bool isDirectional = false,
-  })  : _isDirectional = isDirectional,
-        top = side,
-        right = side,
-        bottom = side,
-        left = side,
-        start = side,
-        end = side;
-
-  const BoxBorderAttribute.all(
-    BorderSideAttribute side, {
-    bool isDirectional = false,
-  })  : _isDirectional = isDirectional,
-        top = side,
-        right = side,
-        bottom = side,
-        left = side,
-        start = side,
-        end = side;
-
-  const BoxBorderAttribute.symmetric({
-    BorderSideAttribute? vertical,
-    BorderSideAttribute? horizontal,
-    bool isDirectional = false,
-  })  : _isDirectional = isDirectional,
-        top = horizontal,
-        right = vertical,
-        bottom = horizontal,
-        left = vertical,
-        start = vertical,
-        end = vertical;
-
-  bool get isDirectional {
-    return start != null || end != null || _isDirectional;
-  }
+  bool get isDirectional => start != null || end != null;
 
   @override
   BoxBorderAttribute merge(BoxBorderAttribute? other) {
@@ -265,7 +162,7 @@ class BoxBorderAttribute extends VisualAttribute<BoxBorder> {
   }
 
   @override
-  get props => [top, start, end, bottom, left, right, _isDirectional];
+  get props => [top, start, end, bottom, left, right];
 }
 
 @immutable

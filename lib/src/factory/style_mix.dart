@@ -2,10 +2,10 @@
 
 import 'package:flutter/foundation.dart';
 
+import '../attributes/attribute.dart';
 import '../attributes/style_mix_attribute.dart';
 import '../attributes/variant_attribute.dart';
-import '../core/attribute.dart';
-import '../core/variants/variant.dart';
+import '../variants/variant.dart';
 
 /// A utility class for managing a collection of styling attributes and variants.
 ///

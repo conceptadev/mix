@@ -2,7 +2,7 @@
 // ignore_for_file: long-parameter-list
 import 'package:flutter/material.dart';
 
-import '../../core/attribute.dart';
+import '../../attributes/attribute.dart';
 import '../../factory/style_mix.dart';
 import '../../widgets/container_widget.dart';
 import '../../widgets/flex_widget.dart';

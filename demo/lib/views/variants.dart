@@ -15,7 +15,7 @@ class VariantsExample extends HookWidget {
       rounded(10),
       elevation(2),
       margin(10),
-      alignment(Alignment.center),
+      alignmentCenter(),
     );
 
     final style = StyleMix(

@@ -1,7 +1,7 @@
 import 'dart:math';
 
+import '../attributes/attribute.dart';
 import '../attributes/style_mix_attribute.dart';
-import '../core/attribute.dart';
 import '../factory/mix_provider_data.dart';
 import '../factory/style_mix.dart';
 

@@ -9,6 +9,7 @@ import '../../attributes/scalar_attribute.dart';
 import '../../attributes/shadow_attribute.dart';
 import '../../attributes/strut_style_attribute.dart';
 import '../../attributes/text_style_attribute.dart';
+import '../color_helpers.dart';
 
 extension StrutStyleExt on StrutStyle {
   StrutStyleAttribute toAttribute() {
@@ -50,6 +51,35 @@ extension GradientExt on Gradient {
 }
 
 extension ColorExt on Color {
+  Color darken([double amount = 0.1]) {
+    assert(amount >= 0 && amount <= 1);
+
+    final hsl = HSLColor.fromColor(this);
+    final hslDark = hsl.withLightness((hsl.lightness - amount).clamp(0.0, 1.0));
+
+    return hslDark.toColor();
+  }
+
+  Color lighten([double amount = 0.1]) {
+    assert(amount >= 0 && amount <= 1);
+
+    final hsl = HSLColor.fromColor(this);
+    final hslLight =
+        hsl.withLightness((hsl.lightness + amount).clamp(0.0, 1.0));
+
+    return hslLight.toColor();
+  }
+
+  /// String is in the format "aabbcc" or "ffaabbcc" with an optional leading "#".
+  static Color fromHex(String hexString) => hexToColor(hexString);
+
+  /// Prefixes a hash sign if [leadingHashSign] is set to `true` (default is `true`).
+  String toHex({bool leadingHashSign = true}) => '${leadingHashSign ? '#' : ''}'
+      '${alpha.toRadixString(16).padLeft(2, '0')}'
+      '${red.toRadixString(16).padLeft(2, '0')}'
+      '${green.toRadixString(16).padLeft(2, '0')}'
+      '${blue.toRadixString(16).padLeft(2, '0')}';
+
   ColorAttribute toAttribute() => ColorAttribute(this);
 }
 
@@ -290,25 +320,4 @@ extension BorderDirectionalExt on BorderDirectional {
         end: end.toAttribute(),
         bottom: bottom.toAttribute(),
       );
-}
-
-extension IterableExt<T> on Iterable<T> {
-  Iterable<T> sorted([Comparator<T>? compare]) {
-    List<T> newList = List.of(this);
-    newList.sort(compare);
-
-    return newList;
-  }
-}
-
-extension ListExt<T> on List<T> {
-  T? firstWhereOrNull(bool Function(T) test) {
-    for (T element in this) {
-      if (test(element)) {
-        return element;
-      }
-    }
-
-    return null;
-  }
 }

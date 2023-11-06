@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../core/variants/context_variant.dart';
 import '../helpers/extensions/string_ext.dart';
 import '../theme/mix_theme.dart';
 import '../theme/tokens/breakpoints.dart';
+import '../variants/context_variant.dart';
 
 // Breakpoint context variants
 final onSmall = _breakpointVariant(ScreenSizeToken.small);

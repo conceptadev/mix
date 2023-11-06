@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:meta/meta.dart';
 import 'package:mix/mix.dart';
-import 'package:mix/src/core/attribute.dart';
-import 'package:mix/src/core/decorators/decorator.dart';
-import 'package:mix/src/core/variants/variant.dart';
+import 'package:mix/src/attributes/attribute.dart';
+import 'package:mix/src/decorators/decorator.dart';
 import 'package:mix/src/factory/mix_provider.dart';
 import 'package:mix/src/factory/mix_provider_data.dart';
 import 'package:mix/src/factory/style_mix.dart';
 import 'package:mix/src/theme/mix_theme.dart';
+import 'package:mix/src/variants/variant.dart';
 import 'package:mockito/mockito.dart';
 
 export 'package:mix/src/helpers/extensions/values_ext.dart';

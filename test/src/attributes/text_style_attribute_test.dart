@@ -27,18 +27,19 @@ void main() {
       );
 
       final attr2 = TextStyleAttribute(
-          color: Colors.blue.toAttribute(),
-          fontSize: 30.0,
-          decoration: TextDecoration.lineThrough,
-          decorationColor: Colors.red.toAttribute(),
-          decorationStyle: TextDecorationStyle.dotted,
-          fontWeight: FontWeight.w100,
-          fontStyle: FontStyle.normal,
-          letterSpacing: 2.0,
-          wordSpacing: 3.0,
-          height: 3.0,
-          locale: const Locale('en', 'US'),
-          textBaseline: TextBaseline.alphabetic);
+        color: Colors.blue.toAttribute(),
+        fontSize: 30.0,
+        decoration: TextDecoration.lineThrough,
+        decorationColor: Colors.red.toAttribute(),
+        decorationStyle: TextDecorationStyle.dotted,
+        fontWeight: FontWeight.w100,
+        fontStyle: FontStyle.normal,
+        letterSpacing: 2.0,
+        wordSpacing: 3.0,
+        height: 3.0,
+        locale: const Locale('en', 'US'),
+        textBaseline: TextBaseline.alphabetic,
+      );
 
       final merged = attr1.merge(attr2);
 

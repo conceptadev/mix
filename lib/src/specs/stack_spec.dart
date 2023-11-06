@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../attributes/alignment_attribute.dart';
+import '../attributes/attribute.dart';
 import '../attributes/scalar_attribute.dart';
-import '../core/attribute.dart';
 import '../factory/mix_provider_data.dart';
 
 class StackSpec extends MixExtension<StackSpec> {

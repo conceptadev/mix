@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import '../attributes/shadow_attribute.dart';
 import '../attributes/strut_style_attribute.dart';
 import '../attributes/text_style_attribute.dart';
-import '../core/directives/text_directive.dart';
+import '../directives/text_directive.dart';
 import '../helpers/extensions/values_ext.dart';
 
 StrutStyleAttribute strutStyle(StrutStyle strutStyle) {

@@ -4,110 +4,14 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
-import 'package:mix/src/attributes/container.attribute.dart';
-import 'package:mix/src/attributes/edge_insets_attribute.dart';
-import 'package:mix/src/attributes/text_style.attribute.dart';
-import 'package:mix/src/factory/style_mix.dart';
 
 class RandomGenerator {
   const RandomGenerator._();
-  static TextAttributes textAttributes() {
-    return TextAttributes.from(
-      textAlign: TextAlign.values.random(),
-      softWrap: Random().nextBool(),
-      overflow: TextOverflow.values.random(),
-      textWidthBasis: TextWidthBasis.values.random(),
-      textHeightBehavior: const TextHeightBehavior(),
-      directives: [
-        const UppercaseDirective(),
-        const LowercaseDirective(),
-        const CapitalizeDirective(),
-        const SentenceCaseDirective(),
-      ],
-    );
-  }
 
-  static StyleMix mix() {
-    return StyleMix(
-      textAttributes(),
-      textAttributes(),
-      boxAttributes(),
-      boxAttributes(),
-    );
-  }
-
-  static ContainerAttributes boxAttributes({
-    bool someNullable = true,
-  }) {
-    final margin = edgeInsetsDto();
-
-    final padding = edgeInsetsDto();
-
-    final alignment = Random().randomElement([
-      Alignment.center,
-      Alignment.centerLeft,
-      Alignment.centerRight,
-      Alignment.topCenter,
-      Alignment.topLeft,
-      Alignment.topRight,
-      Alignment.bottomCenter,
-      Alignment.bottomLeft,
-      Alignment.bottomRight,
-    ]);
-
-    final height = Random().nextMaxDouble(500);
-
-    final width = Random().nextMaxDouble(500);
-
-    final color = colorDto();
-
-    final border = borderDto();
-
-    final borderRadius = borderRadiusDto();
-
-    final boxShadow = [
-      boxShadowDto(),
-      boxShadowDto(),
-      boxShadowDto(),
-      boxShadowDto(),
-    ];
-
-    const maxHeight = 500.0;
-
-    final minHeight = Random().nextMaxDouble(maxHeight);
-
-    const maxWidth = 500.0;
-
-    final minWidth = Random().nextMaxDouble(maxWidth);
-
-    final shape = Random().randomElement(BoxShape.values);
-
-    if (someNullable) {
-      return StyledContainerAttributes(
-        margin: Random().nextBool() ? margin : null,
-        padding: Random().nextBool() ? padding : null,
-        alignment: Random().nextBool() ? alignment : null,
-        height: Random().nextBool() ? height : null,
-        width: Random().nextBool() ? width : null,
-        color: Random().nextBool() ? color : null,
-        border: Random().nextBool() ? border : null,
-        borderRadius: Random().nextBool() ? borderRadius : null,
-        boxShadow: Random().nextBool() ? boxShadow : null,
-        maxHeight: Random().nextBool() ? maxHeight : null,
-        minHeight: Random().nextBool() ? minHeight : null,
-        maxWidth: Random().nextBool() ? maxWidth : null,
-        minWidth: Random().nextBool() ? minWidth : null,
-        shape: Random().nextBool() ? shape : null,
-      );
-    }
-
-    return boxAttributes;
-  }
-
-  static SpacingGeometryAttribute edgeInsetsDto() {
+  static PaddingAttribute paddingAttribute() {
     final random = Random();
 
-    return SpacingGeometryAttribute(
+    return PaddingAttribute(
       top: random.nextDouble() * 100,
       bottom: random.nextDouble() * 100,
       left: random.nextDouble() * 100,
@@ -115,7 +19,18 @@ class RandomGenerator {
     );
   }
 
-  static BorderRadiusGeometryAttribute borderRadiusDto() {
+  static MarginAttribute marginAttribute() {
+    final random = Random();
+
+    return MarginAttribute(
+      top: random.nextDouble() * 100,
+      bottom: random.nextDouble() * 100,
+      left: random.nextDouble() * 100,
+      right: random.nextDouble() * 100,
+    );
+  }
+
+  static BorderRadiusGeometryAttribute borderRadiusAttribute() {
     final random = Random();
 
     return BorderRadiusGeometryAttribute(
@@ -126,8 +41,8 @@ class RandomGenerator {
     );
   }
 
-  static BoxBorderAttribute borderDto() {
-    final side = borderSideDto();
+  static BoxBorderAttribute borderAttribute() {
+    final side = borderSideAttribute();
 
     return BoxBorderAttribute(
       top: side,
@@ -137,8 +52,8 @@ class RandomGenerator {
     );
   }
 
-  static ColorDto colorDto() {
-    return ColorDto(
+  static ColorAttribute collorAttribute() {
+    return ColorAttribute(
       Color.fromARGB(
         255,
         Random().nextInt(255),
@@ -148,17 +63,17 @@ class RandomGenerator {
     );
   }
 
-  static BorderSideAttribute borderSideDto() {
+  static BorderSideAttribute borderSideAttribute() {
     return BorderSideAttribute(
-      color: colorDto(),
+      color: collorAttribute(),
       width: Random().nextDouble() * 4,
       style: BorderStyle.values.random(),
     );
   }
 
-  static ShadowAttribute shadowDto() {
+  static ShadowAttribute shadowAttribute() {
     return ShadowAttribute(
-      color: colorDto(),
+      color: collorAttribute(),
       offset: Offset(
         Random().nextMaxDouble(10),
         Random().nextMaxDouble(10),
@@ -167,7 +82,7 @@ class RandomGenerator {
     );
   }
 
-  static Alignment aligment() {
+  static Alignment alignmentAttribute() {
     return Random().randomElement([
       Alignment.center,
       Alignment.centerLeft,
@@ -181,9 +96,9 @@ class RandomGenerator {
     ]);
   }
 
-  static BoxShadowAttribute boxShadowDto() {
+  static BoxShadowAttribute boxShadowAttribute() {
     // Use shadow as a starting point
-    final shadow = shadowDto();
+    final shadow = shadowAttribute();
 
     return BoxShadowAttribute(
       color: shadow.color,
@@ -193,11 +108,11 @@ class RandomGenerator {
     );
   }
 
-  static TextStyleAttribute textStyleDto() {
+  static TextStyleAttribute textStyleAttribute() {
     return TextStyleAttribute(
-      color: colorDto(),
-      backgroundColor: colorDto(),
-      decorationColor: colorDto(),
+      color: collorAttribute(),
+      backgroundColor: collorAttribute(),
+      decorationColor: collorAttribute(),
       decorationStyle: TextDecorationStyle.values.random(),
       fontFamily: 'Roboto',
       fontSize: Random().nextDoubleInRange(12, 32),
@@ -208,10 +123,10 @@ class RandomGenerator {
       height: Random().nextDoubleInRange(0, 2),
       locale: const Locale('en', 'US'),
       shadows: [
-        shadowDto(),
-        shadowDto(),
-        shadowDto(),
-        shadowDto(),
+        shadowAttribute(),
+        shadowAttribute(),
+        shadowAttribute(),
+        shadowAttribute(),
       ],
       decoration: [
         TextDecoration.none,

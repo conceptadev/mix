@@ -16,9 +16,8 @@ class BasicExample extends HookWidget {
       animation(),
       elevation(2),
       margin(10),
-      alignment(Alignment.center),
+      alignmentCenter(),
       backgroundColor(Colors.purple),
-      alignment(Alignment.center),
       textStyle(color: Colors.white),
       onPress(
         backgroundColor(Colors.black),

@@ -8,9 +8,9 @@ import 'attributes/alignment_attribute.dart';
 import 'attributes/border_attribute.dart';
 import 'attributes/scalar_attribute.dart';
 import 'attributes/text_style_attribute.dart';
-import 'core/decorators/built_in_decorators/flexible.dart';
-import 'core/directives/text_directive.dart';
-import 'helpers/constants.dart';
+import 'core/constants.dart';
+import 'decorators/built_in_decorators/flexible.dart';
+import 'directives/text_directive.dart';
 import 'helpers/extensions/values_ext.dart';
 import 'utils/alignment_util.dart';
 import 'utils/border_radius_util.dart';
@@ -88,9 +88,6 @@ const flex = flexible;
 
 @Deprecated('Use textStyle(textShadow: textShadow) instead')
 const fontWeight = LegacyTextStyleUtility.fontWeight;
-
-@Deprecated('Use textStyle(textBaseline: textBaseline) instead')
-const textBaseline = LegacyTextStyleUtility.textBaseline;
 
 @Deprecated('Use textStyle(letterSpacing: letterSpacing) instead')
 const letterSpacing = LegacyTextStyleUtility.letterSpacing;

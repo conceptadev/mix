@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+import '../../core/equality/compare_mixin.dart';
 import '../../factory/mix_provider_data.dart';
-import '../../helpers/compare_mixin.dart';
 import 'text_style_ref.dart';
 
 abstract class MixToken {

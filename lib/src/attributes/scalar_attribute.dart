@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import '../core/attribute.dart';
+import 'attribute.dart';
 
 class AxisAttribute extends ScalarAttribute<AxisAttribute, Axis> {
   const AxisAttribute(super.value);

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
-import '../core/attribute.dart';
 import '../factory/mix_provider_data.dart';
+import 'attribute.dart';
 
 @immutable
 abstract class ConstraintsAttribute<T extends Constraints>

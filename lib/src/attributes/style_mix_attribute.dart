@@ -1,5 +1,5 @@
-import '../core/attribute.dart';
 import '../factory/style_mix.dart';
+import 'attribute.dart';
 
 /// Allows to pass down Mixes as attributes for use with helpers.
 class StyleMixAttribute extends Attribute {

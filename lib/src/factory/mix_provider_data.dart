@@ -1,11 +1,11 @@
 // Necessary packages are imported at the start of the file.
 import 'package:flutter/material.dart';
 
+import '../attributes/attribute.dart';
 import '../attributes/variant_attribute.dart';
-import '../core/attribute.dart';
-import '../core/decorators/decorator.dart';
-import '../helpers/attributes_map.dart';
-import '../helpers/compare_mixin.dart';
+import '../core/attributes_map.dart';
+import '../core/equality/compare_mixin.dart';
+import '../decorators/decorator.dart';
 import '../theme/mix_theme.dart';
 import 'style_mix.dart';
 

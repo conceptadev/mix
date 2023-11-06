@@ -1,4 +1,4 @@
-import '../core/directives/text_directive.dart';
+import '../directives/text_directive.dart';
 
 /// Directives.
 const capitalize = CapitalizeDirective.new;

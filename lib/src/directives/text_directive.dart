@@ -1,6 +1,6 @@
-import '../../factory/mix_provider_data.dart';
-import '../../helpers/extensions/string_ext.dart';
-import '../attribute.dart';
+import '../attributes/attribute.dart';
+import '../factory/mix_provider_data.dart';
+import '../helpers/extensions/string_ext.dart';
 import 'directive_attribute.dart';
 
 class UppercaseDirective extends TextDirective {

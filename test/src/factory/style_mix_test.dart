@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mix/src/core/variants/variant.dart';
 import 'package:mix/src/factory/style_mix.dart';
+import 'package:mix/src/variants/variant.dart';
 
 import '../../helpers/testing_utils.dart';
 
@@ -70,13 +70,14 @@ void main() {
         attribute2,
         attribute3,
         attribute4,
+        variantAttr1(),
       ];
       final mix = StyleMix.create(attributes);
       expect(mix.styles.isEmpty, false);
       expect(mix.variants.isEmpty, false);
-      expect(mix.styles.length, 2);
+      expect(mix.styles.length, 4);
       expect(mix.variants.length, 1);
-      expect(mix.length, 3);
+      expect(mix.length, 5);
     });
 
     test('Initialization with invalid attribute triggers assertion', () {

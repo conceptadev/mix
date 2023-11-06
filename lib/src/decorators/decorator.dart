@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
-import '../../factory/mix_provider_data.dart';
-import '../attribute.dart';
+import '../attributes/attribute.dart';
+import '../factory/mix_provider_data.dart';
 
 abstract class Decorator<T> extends VisualAttribute<T> {
   const Decorator();
 
-  @override
-  Decorator merge(covariant Decorator? other);
-
   Widget render(Widget child, MixData mix) {
     return build(child, resolve(mix));
   }
+
+  @override
+  Decorator merge(covariant Decorator? other);
 
   Widget build(Widget child, T value);
 }

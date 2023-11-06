@@ -1,9 +1,9 @@
 import 'package:flutter/foundation.dart';
 
-import '../../attributes/style_mix_attribute.dart';
-import '../../attributes/variant_attribute.dart';
-import '../../factory/style_mix.dart';
-import '../attribute.dart';
+import '../attributes/attribute.dart';
+import '../attributes/style_mix_attribute.dart';
+import '../attributes/variant_attribute.dart';
+import '../factory/style_mix.dart';
 import 'context_variant.dart';
 import 'variant.dart';
 

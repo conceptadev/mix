@@ -9,30 +9,67 @@ BoxBorderAttribute border({
   BorderStyle? style,
   double? strokeAlign,
 }) {
-  return BoxBorderAttribute.all(
-    BorderSideAttribute(
-      color: color?.toAttribute(),
-      strokeAlign: strokeAlign,
-      style: style,
-      width: width,
-    ),
+  final side = BorderSideAttribute(
+    color: color?.toAttribute(),
+    strokeAlign: strokeAlign,
+    style: style,
+    width: width,
   );
+
+  return BoxBorderAttribute(
+    top: side,
+    bottom: side,
+    left: side,
+    right: side,
+  );
+}
+
+BoxBorderAttribute borderDirectional({
+  Color? color,
+  double? width,
+  BorderStyle? style,
+  double? strokeAlign,
+}) {
+  final side = BorderSideAttribute(
+    color: color?.toAttribute(),
+    strokeAlign: strokeAlign,
+    style: style,
+    width: width,
+  );
+
+  return BoxBorderAttribute(top: side, start: side, end: side, bottom: side);
 }
 
 BoxBorderAttribute borderColor(Color color) {
   return border(color: color);
 }
 
+BoxBorderAttribute borderDirectionalColor(Color color) {
+  return borderDirectional(color: color);
+}
+
 BoxBorderAttribute borderWidth(double width) {
   return border(width: width);
+}
+
+BoxBorderAttribute borderDirectionalWidth(double width) {
+  return borderDirectional(width: width);
 }
 
 BoxBorderAttribute borderStyle(BorderStyle style) {
   return border(style: style);
 }
 
+BoxBorderAttribute borderDirectionalStyle(BorderStyle style) {
+  return borderDirectional(style: style);
+}
+
 BoxBorderAttribute borderStrokeAlign(double strokeAlign) {
   return border(strokeAlign: strokeAlign);
+}
+
+BoxBorderAttribute borderDirectionalStrokeAlign(double strokeAlign) {
+  return borderDirectional(strokeAlign: strokeAlign);
 }
 
 BoxBorderAttribute borderTop({
@@ -297,8 +334,6 @@ BoxBorderAttribute boxBorderSymetric({
 }) {
   return BoxBorderAttribute(
     top: horizontal,
-    start: vertical,
-    end: vertical,
     bottom: horizontal,
     left: vertical,
     right: vertical,

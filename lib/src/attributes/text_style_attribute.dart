@@ -2,10 +2,10 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-import '../core/attribute.dart';
 import '../factory/mix_provider_data.dart';
 import '../theme/tokens/text_style_ref.dart';
 import '../utils/helper_util.dart';
+import 'attribute.dart';
 import 'color_attribute.dart';
 import 'shadow_attribute.dart';
 
@@ -66,8 +66,10 @@ class TextStyleAttribute extends VisualAttribute<TextStyle> {
   TextStyleAttribute merge(TextStyleAttribute? other) {
     if (other == null) return this;
 
+    final haveRefs = ref == null || other.ref == null;
+
     assert(
-      ref != null || other.ref != null,
+      haveRefs,
       'Cannot merge two different refs',
     );
 

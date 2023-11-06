@@ -2,9 +2,9 @@ import 'dart:core';
 
 import 'package:flutter/material.dart';
 
-import '../../attributes/variant_attribute.dart';
-import '../../factory/style_mix.dart';
-import '../attribute.dart';
+import '../attributes/attribute.dart';
+import '../attributes/variant_attribute.dart';
+import '../factory/style_mix.dart';
 import 'variant.dart';
 
 typedef WhenContextFunction = bool Function(BuildContext context);
