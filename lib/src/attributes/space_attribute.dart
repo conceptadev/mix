@@ -310,7 +310,7 @@ class SpaceDirectionalUtilityFactory<T extends SpaceDirectionalAttribute> {
     );
   }
 
-  T positional(double p1, [double? p2, double? p3]) {
+  T positional(double p1, [double? p2, double? p3, double? p4]) {
     double top = p1;
     double bottom = p1;
     double start = p1;
@@ -322,6 +322,8 @@ class SpaceDirectionalUtilityFactory<T extends SpaceDirectionalAttribute> {
     }
 
     if (p3 != null) bottom = p3;
+
+    if (p4 != null) end = p4;
 
     return create(bottom: bottom, end: end, start: start, top: top);
   }
