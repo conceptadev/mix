@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-import '../specs/flex_attribute.dart';
+import '../specs/flex_spec.dart';
 import 'container_widget.dart';
 import 'styled_widget.dart';
 

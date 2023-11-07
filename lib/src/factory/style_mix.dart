@@ -193,8 +193,8 @@ class StyleMix {
     List<VariantAttribute>? variants,
   }) {
     return StyleMix._(
-      styles: [...this.styles, ...?styles],
-      variants: [...this.variants, ...?variants],
+      styles: styles ?? this.styles,
+      variants: variants ?? this.variants,
     );
   }
 
@@ -207,7 +207,10 @@ class StyleMix {
   StyleMix merge([StyleMix? mix]) {
     if (mix == null) return this;
 
-    return copyWith(styles: mix.styles, variants: mix.variants);
+    final mergedStyles = [...styles, ...mix.styles];
+    final mergedVariants = [...variants, ...mix.variants];
+
+    return copyWith(styles: mergedStyles, variants: mergedVariants);
   }
 
   /// Merges this mix with the provided list of [mixes] and returns the resulting `StyleMix`.

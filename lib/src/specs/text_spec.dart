@@ -76,6 +76,7 @@ class TextSpec extends MixExtension<TextSpec> {
       style: TextStyle.lerp(style, other.style, t),
       textWidthBasis: snap(textWidthBasis, other.textWidthBasis, t),
       textHeightBehavior: snap(textHeightBehavior, other.textHeightBehavior, t),
+      textDirection: snap(textDirection, other.textDirection, t),
       softWrap: snap(softWrap, other.softWrap, t),
       directives: snap(directives, other.directives, t),
     );
@@ -106,7 +107,7 @@ class TextSpec extends MixExtension<TextSpec> {
       textHeightBehavior: textHeightBehavior ?? this.textHeightBehavior,
       textDirection: textDirection ?? this.textDirection,
       softWrap: softWrap ?? this.softWrap,
-      directives: [...this.directives, ...directives ?? []],
+      directives: directives ?? this.directives,
     );
   }
 

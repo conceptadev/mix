@@ -68,9 +68,9 @@ class MixThemeData with Comparable {
   }) {
     return MixThemeData.raw(
       breakpoints: breakpoints ?? this.breakpoints,
-      colors: {...this.colors, ...?colors},
-      space: {...this.space, ...?space},
-      textStyles: {...this.textStyles, ...?textStyles},
+      colors: colors ?? this.colors,
+      space: space ?? this.space,
+      textStyles: textStyles ?? this.textStyles,
     );
   }
 

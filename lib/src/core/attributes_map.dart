@@ -5,6 +5,7 @@ import 'dart:collection';
 import 'package:flutter/cupertino.dart';
 
 import '../attributes/attribute.dart';
+import '../helpers/extensions/iterable_ext.dart';
 import 'equality/compare_mixin.dart';
 
 @immutable
@@ -39,7 +40,8 @@ class VisualAttributeMap<Attr extends VisualAttribute> with Comparable {
 
   Iterable<Attr> get values => map.values;
 
-  T? attributeOfType<T extends VisualAttribute>() => map[T] as T?;
+  T? attributeOfType<T extends VisualAttribute>() =>
+      map.values.whereType<T>().firstMaybeNull;
 
   Iterable<T> whereType<T extends VisualAttribute>() {
     return map.values.whereType<T>();

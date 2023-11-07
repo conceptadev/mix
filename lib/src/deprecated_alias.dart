@@ -256,7 +256,7 @@ const px = paddingHorizontal;
 const py = paddingVertical;
 
 @Deprecated(kShortAliasDeprecation)
-const pi = paddingInsets;
+const pi = paddingFrom;
 
 @Deprecated(kShortAliasDeprecation)
 const m = margin;
@@ -277,7 +277,7 @@ const mx = marginHorizontal;
 @Deprecated(kShortAliasDeprecation)
 const my = marginVertical;
 @Deprecated(kShortAliasDeprecation)
-const mi = marginInsets;
+const mi = marginFrom;
 
 @Deprecated(kShortAliasDeprecation)
 const marginX = marginHorizontal;

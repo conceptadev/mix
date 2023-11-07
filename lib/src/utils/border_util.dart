@@ -40,35 +40,35 @@ BorderDirectionalAttribute borderDirectional({
   );
 }
 
-BoxBorderAttribute borderColor(Color color) {
+BorderAttribute borderColor(Color color) {
   return border(color: color);
 }
 
-BoxBorderAttribute borderDirectionalColor(Color color) {
+BorderDirectionalAttribute borderDirectionalColor(Color color) {
   return borderDirectional(color: color);
 }
 
-BoxBorderAttribute borderWidth(double width) {
+BorderAttribute borderWidth(double width) {
   return border(width: width);
 }
 
-BoxBorderAttribute borderDirectionalWidth(double width) {
+BorderDirectionalAttribute borderDirectionalWidth(double width) {
   return borderDirectional(width: width);
 }
 
-BoxBorderAttribute borderStyle(BorderStyle style) {
+BorderAttribute borderStyle(BorderStyle style) {
   return border(style: style);
 }
 
-BoxBorderAttribute borderDirectionalStyle(BorderStyle style) {
+BorderDirectionalAttribute borderDirectionalStyle(BorderStyle style) {
   return borderDirectional(style: style);
 }
 
-BoxBorderAttribute borderStrokeAlign(double strokeAlign) {
+BorderAttribute borderStrokeAlign(double strokeAlign) {
   return border(strokeAlign: strokeAlign);
 }
 
-BoxBorderAttribute borderDirectionalStrokeAlign(double strokeAlign) {
+BorderDirectionalAttribute borderDirectionalStrokeAlign(double strokeAlign) {
   return borderDirectional(strokeAlign: strokeAlign);
 }
 
@@ -88,19 +88,19 @@ BorderAttribute borderTop({
   );
 }
 
-BoxBorderAttribute borderTopColor(Color color) {
+BorderAttribute borderTopColor(Color color) {
   return borderTop(color: color);
 }
 
-BoxBorderAttribute borderTopWidth(double width) {
+BorderAttribute borderTopWidth(double width) {
   return borderTop(width: width);
 }
 
-BoxBorderAttribute borderTopStyle(BorderStyle style) {
+BorderAttribute borderTopStyle(BorderStyle style) {
   return borderTop(style: style);
 }
 
-BoxBorderAttribute borderTopStrokeAlign(double strokeAlign) {
+BorderAttribute borderTopStrokeAlign(double strokeAlign) {
   return borderTop(strokeAlign: strokeAlign);
 }
 
@@ -120,19 +120,19 @@ BorderAttribute borderBottom({
   );
 }
 
-BoxBorderAttribute borderBottomColor(Color color) {
+BorderAttribute borderBottomColor(Color color) {
   return borderBottom(color: color);
 }
 
-BoxBorderAttribute borderBottomWidth(double width) {
+BorderAttribute borderBottomWidth(double width) {
   return borderBottom(width: width);
 }
 
-BoxBorderAttribute borderBottomStyle(BorderStyle style) {
+BorderAttribute borderBottomStyle(BorderStyle style) {
   return borderBottom(style: style);
 }
 
-BoxBorderAttribute borderBottomStrokeAlign(double strokeAlign) {
+BorderAttribute borderBottomStrokeAlign(double strokeAlign) {
   return borderBottom(strokeAlign: strokeAlign);
 }
 
@@ -152,19 +152,19 @@ BorderAttribute borderLeft({
   );
 }
 
-BoxBorderAttribute borderLeftColor(Color color) {
+BorderAttribute borderLeftColor(Color color) {
   return borderLeft(color: color);
 }
 
-BoxBorderAttribute borderLeftWidth(double width) {
+BorderAttribute borderLeftWidth(double width) {
   return borderLeft(width: width);
 }
 
-BoxBorderAttribute borderLeftStyle(BorderStyle style) {
+BorderAttribute borderLeftStyle(BorderStyle style) {
   return borderLeft(style: style);
 }
 
-BoxBorderAttribute borderLeftStrokeAlign(double strokeAlign) {
+BorderAttribute borderLeftStrokeAlign(double strokeAlign) {
   return borderLeft(strokeAlign: strokeAlign);
 }
 
@@ -184,19 +184,19 @@ BorderAttribute borderRight({
   );
 }
 
-BoxBorderAttribute borderRightColor(Color color) {
+BorderAttribute borderRightColor(Color color) {
   return borderRight(color: color);
 }
 
-BoxBorderAttribute borderRightWidth(double width) {
+BorderAttribute borderRightWidth(double width) {
   return borderRight(width: width);
 }
 
-BoxBorderAttribute borderRightStyle(BorderStyle style) {
+BorderAttribute borderRightStyle(BorderStyle style) {
   return borderRight(style: style);
 }
 
-BoxBorderAttribute borderRightStrokeAlign(double strokeAlign) {
+BorderAttribute borderRightStrokeAlign(double strokeAlign) {
   return borderRight(strokeAlign: strokeAlign);
 }
 
@@ -216,19 +216,19 @@ BorderDirectionalAttribute borderStart({
   );
 }
 
-BoxBorderAttribute borderStartColor(Color color) {
+BorderDirectionalAttribute borderStartColor(Color color) {
   return borderStart(color: color);
 }
 
-BoxBorderAttribute borderStartWidth(double width) {
+BorderDirectionalAttribute borderStartWidth(double width) {
   return borderStart(width: width);
 }
 
-BoxBorderAttribute borderStartStyle(BorderStyle style) {
+BorderDirectionalAttribute borderStartStyle(BorderStyle style) {
   return borderStart(style: style);
 }
 
-BoxBorderAttribute borderStartStrokeAlign(double strokeAlign) {
+BorderDirectionalAttribute borderStartStrokeAlign(double strokeAlign) {
   return borderStart(strokeAlign: strokeAlign);
 }
 
@@ -264,7 +264,7 @@ BorderDirectionalAttribute borderEndStrokeAlign(double strokeAlign) {
   return borderEnd(strokeAlign: strokeAlign);
 }
 
-BoxBorderAttribute borderHorizontal({
+BorderAttribute borderHorizontal({
   Color? color,
   double? width,
   BorderStyle? style,
@@ -280,23 +280,23 @@ BoxBorderAttribute borderHorizontal({
   );
 }
 
-BoxBorderAttribute borderHorizontalColor(Color color) {
+BorderAttribute borderHorizontalColor(Color color) {
   return borderHorizontal(color: color);
 }
 
-BoxBorderAttribute borderHorizontalWidth(double width) {
+BorderAttribute borderHorizontalWidth(double width) {
   return borderHorizontal(width: width);
 }
 
-BoxBorderAttribute borderHorizontalStyle(BorderStyle style) {
+BorderAttribute borderHorizontalStyle(BorderStyle style) {
   return borderHorizontal(style: style);
 }
 
-BoxBorderAttribute borderHorizontalStrokeAlign(double strokeAlign) {
+BorderAttribute borderHorizontalStrokeAlign(double strokeAlign) {
   return borderHorizontal(strokeAlign: strokeAlign);
 }
 
-BoxBorderAttribute borderVertical({
+BorderAttribute borderVertical({
   Color? color,
   double? width,
   BorderStyle? style,
@@ -312,19 +312,19 @@ BoxBorderAttribute borderVertical({
   );
 }
 
-BoxBorderAttribute borderVerticalColor(Color color) {
+BorderAttribute borderVerticalColor(Color color) {
   return borderVertical(color: color);
 }
 
-BoxBorderAttribute borderVerticalWidth(double width) {
+BorderAttribute borderVerticalWidth(double width) {
   return borderVertical(width: width);
 }
 
-BoxBorderAttribute borderVerticalStyle(BorderStyle style) {
+BorderAttribute borderVerticalStyle(BorderStyle style) {
   return borderVertical(style: style);
 }
 
-BoxBorderAttribute borderVerticalStrokeAlign(double strokeAlign) {
+BorderAttribute borderVerticalStrokeAlign(double strokeAlign) {
   return borderVertical(strokeAlign: strokeAlign);
 }
 

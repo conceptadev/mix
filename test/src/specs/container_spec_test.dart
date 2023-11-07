@@ -1,4 +1,6 @@
-import 'package:flutter/rendering.dart';
+import 'dart:ui';
+
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
 
@@ -9,17 +11,27 @@ void main() {
     test('resolve', () {
       final mix = MixData.create(
         MockBuildContext(),
-        StyleMix(Alignment.center.toAttribute(), PaddingA()),
+        StyleMix(
+          const AlignmentAttribute(x: 0.0, y: 0.0),
+          const PaddingAttribute(top: 8, bottom: 16),
+          const MarginAttribute(top: 10.0, bottom: 12.0),
+          const BoxConstraintsAttribute(maxWidth: 300.0, minHeight: 200.0),
+          const BoxDecorationAttribute(color: ColorAttribute(Colors.blue)),
+          const WidthAttribute(200.0),
+          const HeightAttribute(100.0),
+          TransformAttribute(Matrix4.translationValues(10.0, 10.0, 0.0)),
+          const ClipAttribute(Clip.antiAlias),
+        ),
       );
 
       final spec = ContainerSpec.resolve(mix);
 
       expect(spec.alignment, Alignment.center);
-      expect(spec.padding, const EdgeInsets.all(16.0));
-      expect(spec.margin, const EdgeInsets.only(top: 8.0, bottom: 8.0));
+      expect(spec.padding, const EdgeInsets.only(bottom: 16.0, top: 8.0));
+      expect(spec.margin, const EdgeInsets.only(top: 10.0, bottom: 12.0));
       expect(spec.constraints,
           const BoxConstraints(maxWidth: 300.0, minHeight: 200.0));
-      expect(spec.decoration, BoxDecoration(color: Colors.blue));
+      expect(spec.decoration, const BoxDecoration(color: Colors.blue));
       expect(spec.width, 200.0);
       expect(spec.height, 100.0);
       expect(spec.transform, Matrix4.translationValues(10.0, 10.0, 0.0));
@@ -32,7 +44,7 @@ void main() {
         padding: const EdgeInsets.all(16.0),
         margin: const EdgeInsets.only(top: 8.0, bottom: 8.0),
         constraints: const BoxConstraints(maxWidth: 300.0, minHeight: 200.0),
-        decoration: BoxDecoration(color: Colors.blue),
+        decoration: const BoxDecoration(color: Colors.blue),
         width: 200.0,
         height: 100.0,
         transform: Matrix4.translationValues(10.0, 10.0, 0.0),
@@ -46,7 +58,7 @@ void main() {
       expect(copiedSpec.margin, const EdgeInsets.only(top: 8.0, bottom: 8.0));
       expect(copiedSpec.constraints,
           const BoxConstraints(maxWidth: 300.0, minHeight: 200.0));
-      expect(copiedSpec.decoration, BoxDecoration(color: Colors.blue));
+      expect(copiedSpec.decoration, const BoxDecoration(color: Colors.blue));
       expect(copiedSpec.width, 250.0);
       expect(copiedSpec.height, 150.0);
       expect(copiedSpec.transform, Matrix4.translationValues(10.0, 10.0, 0.0));
@@ -59,7 +71,7 @@ void main() {
         padding: const EdgeInsets.all(8.0),
         margin: const EdgeInsets.only(top: 4.0),
         constraints: const BoxConstraints(maxWidth: 200.0),
-        decoration: BoxDecoration(color: Colors.red),
+        decoration: const BoxDecoration(color: Colors.red),
         width: 100.0,
         height: 100.0,
         transform: Matrix4.identity(),
@@ -71,7 +83,7 @@ void main() {
         padding: const EdgeInsets.all(16.0),
         margin: const EdgeInsets.only(top: 8.0),
         constraints: const BoxConstraints(maxWidth: 400.0),
-        decoration: BoxDecoration(color: Colors.blue),
+        decoration: const BoxDecoration(color: Colors.blue),
         width: 200.0,
         height: 150.0,
         transform: Matrix4.rotationZ(0.5),
@@ -98,8 +110,8 @@ void main() {
       expect(
           lerpedSpec.decoration,
           DecorationTween(
-                  begin: BoxDecoration(color: Colors.red),
-                  end: BoxDecoration(color: Colors.blue))
+                  begin: const BoxDecoration(color: Colors.red),
+                  end: const BoxDecoration(color: Colors.blue))
               .lerp(t));
       expect(lerpedSpec.width, lerpDouble(100.0, 200.0, t));
       expect(lerpedSpec.height, lerpDouble(100.0, 150.0, t));
