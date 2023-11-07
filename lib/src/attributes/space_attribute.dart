@@ -255,20 +255,7 @@ class SpaceUtilityFactory<T extends SpaceAttribute> {
 
   const SpaceUtilityFactory(this.create);
 
-  T all(double all) {
-    return create(bottom: all, left: all, right: all, top: all);
-  }
-
-  T symmetric({double? vertical, double? horizontal}) {
-    return create(
-      bottom: vertical,
-      left: horizontal,
-      right: horizontal,
-      top: vertical,
-    );
-  }
-
-  T positional(double p1, [double? p2, double? p3, double? p4]) {
+  T call(double p1, [double? p2, double? p3, double? p4]) {
     double top = p1;
     double bottom = p1;
     double left = p1;
@@ -283,6 +270,29 @@ class SpaceUtilityFactory<T extends SpaceAttribute> {
     if (p4 != null) right = p4;
 
     return create(bottom: bottom, left: left, right: right, top: top);
+  }
+
+  T from(EdgeInsets edgeInsets) {
+    return create(
+      bottom: edgeInsets.bottom,
+      left: edgeInsets.left,
+      right: edgeInsets.right,
+      top: edgeInsets.top,
+    );
+  }
+
+  T top(double value) => create(top: value);
+  T bottom(double value) => create(bottom: value);
+  T left(double value) => create(left: value);
+  T right(double value) => create(right: value);
+
+  T symmetric({double? vertical, double? horizontal}) {
+    return create(
+      bottom: vertical,
+      left: horizontal,
+      right: horizontal,
+      top: vertical,
+    );
   }
 }
 
@@ -301,6 +311,20 @@ class SpaceDirectionalUtilityFactory<T extends SpaceDirectionalAttribute> {
     return create(bottom: all, end: all, start: all, top: all);
   }
 
+  T from(EdgeInsetsDirectional edgeInsets) {
+    return create(
+      bottom: edgeInsets.bottom,
+      end: edgeInsets.end,
+      start: edgeInsets.start,
+      top: edgeInsets.top,
+    );
+  }
+
+  T start(double value) => create(start: value);
+  T end(double value) => create(end: value);
+  T top(double value) => create(top: value);
+  T bottom(double value) => create(bottom: value);
+
   T symmetric({double? vertical, double? horizontal}) {
     return create(
       bottom: vertical,
@@ -310,7 +334,7 @@ class SpaceDirectionalUtilityFactory<T extends SpaceDirectionalAttribute> {
     );
   }
 
-  T positional(double p1, [double? p2, double? p3, double? p4]) {
+  T call(double p1, [double? p2, double? p3, double? p4]) {
     double top = p1;
     double bottom = p1;
     double start = p1;

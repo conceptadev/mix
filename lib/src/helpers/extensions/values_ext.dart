@@ -6,8 +6,10 @@ import '../../attributes/border/border_radius_attribute.dart';
 import '../../attributes/color_attribute.dart';
 import '../../attributes/constraints_attribute.dart';
 import '../../attributes/decoration_attribute.dart';
+import '../../attributes/edge_insets_attribute.dart';
 import '../../attributes/scalar_attribute.dart';
 import '../../attributes/shadow_attribute.dart';
+import '../../attributes/space_attribute.dart';
 import '../../attributes/strut_style_attribute.dart';
 import '../../attributes/text_style_attribute.dart';
 import '../color_helpers.dart';
@@ -49,6 +51,82 @@ extension TextAlignExt on TextAlign {
 
 extension GradientExt on Gradient {
   GradientAttribute toAttribute() => GradientAttribute(this);
+}
+
+extension EdgeInsetsGeometryExt on EdgeInsetsGeometry {
+  EdgeInsetsGeometryAttribute toAttribute() {
+    if (this is EdgeInsets) return (this as EdgeInsets).toAttribute();
+    if (this is EdgeInsetsDirectional) {
+      return (this as EdgeInsetsDirectional).toAttribute();
+    }
+
+    throw UnimplementedError();
+  }
+
+  PaddingGeometryAttribute toPadding() {
+    if (this is EdgeInsets) return (this as EdgeInsets).toPadding();
+    if (this is EdgeInsetsDirectional) {
+      return (this as EdgeInsetsDirectional).toPadding();
+    }
+
+    throw UnimplementedError();
+  }
+
+  MarginGeometryAttribute toMargin() {
+    if (this is EdgeInsets) return (this as EdgeInsets).toMargin();
+    if (this is EdgeInsetsDirectional) {
+      return (this as EdgeInsetsDirectional).toMargin();
+    }
+
+    throw UnimplementedError();
+  }
+}
+
+extension EdgeInsetsExt on EdgeInsets {
+  EdgeInsetsAttribute toAttribute() => EdgeInsetsAttribute(
+        top: top,
+        bottom: bottom,
+        left: left,
+        right: right,
+      );
+
+  PaddingAttribute toPadding() => PaddingAttribute(
+        top: top,
+        bottom: bottom,
+        left: left,
+        right: right,
+      );
+
+  MarginAttribute toMargin() => MarginAttribute(
+        top: top,
+        bottom: bottom,
+        left: left,
+        right: right,
+      );
+}
+
+extension EdgeInsetsDirectionalExt on EdgeInsetsDirectional {
+  EdgeInsetsDirectionalAttribute toAttribute() =>
+      EdgeInsetsDirectionalAttribute(
+        top: top,
+        bottom: bottom,
+        start: start,
+        end: end,
+      );
+
+  PaddingDirectionalAttribute toPadding() => PaddingDirectionalAttribute(
+        top: top,
+        bottom: bottom,
+        start: start,
+        end: end,
+      );
+
+  MarginDirectionalAttribute toMargin() => MarginDirectionalAttribute(
+        top: top,
+        bottom: bottom,
+        start: start,
+        end: end,
+      );
 }
 
 extension ColorExt on Color {
