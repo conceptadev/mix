@@ -255,7 +255,7 @@ class SpaceUtilityFactory<T extends SpaceAttribute> {
 
   const SpaceUtilityFactory(this.create);
 
-  T call(double p1, [double? p2, double? p3, double? p4]) {
+  T positional(double p1, [double? p2, double? p3, double? p4]) {
     double top = p1;
     double bottom = p1;
     double left = p1;
@@ -320,11 +320,6 @@ class SpaceDirectionalUtilityFactory<T extends SpaceDirectionalAttribute> {
     );
   }
 
-  T start(double value) => create(start: value);
-  T end(double value) => create(end: value);
-  T top(double value) => create(top: value);
-  T bottom(double value) => create(bottom: value);
-
   T symmetric({double? vertical, double? horizontal}) {
     return create(
       bottom: vertical,
@@ -334,7 +329,7 @@ class SpaceDirectionalUtilityFactory<T extends SpaceDirectionalAttribute> {
     );
   }
 
-  T call(double p1, [double? p2, double? p3, double? p4]) {
+  T positional(double p1, [double? p2, double? p3, double? p4]) {
     double top = p1;
     double bottom = p1;
     double start = p1;
