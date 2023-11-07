@@ -4,48 +4,53 @@ import '../factory/mix_provider_data.dart';
 import 'attribute.dart';
 
 @immutable
-class AlignmentGeometryAttribute extends VisualAttribute<AlignmentGeometry> {
+abstract class AlignmentGeometryAttribute<T extends AlignmentGeometry>
+    extends VisualAttribute<T> {
   final double? start;
   final double? x;
   final double? y;
 
-  final bool _isDirectional;
+  const AlignmentGeometryAttribute({this.start, this.x, this.y});
 
-  const AlignmentGeometryAttribute({
-    this.start,
-    this.x,
-    this.y,
-    bool isDirectional = false,
-  }) : _isDirectional = isDirectional;
+  @override
+  AlignmentGeometryAttribute<T> merge(
+    covariant AlignmentGeometryAttribute<T>? other,
+  );
 
-  bool get isDirectional {
-    return start != null || _isDirectional;
+  @override
+  T resolve(MixData mix);
+
+  @override
+  get props => [start, x, y];
+}
+
+@immutable
+class AlignmentAttribute extends AlignmentGeometryAttribute<Alignment> {
+  const AlignmentAttribute({super.x, super.y});
+  @override
+  AlignmentAttribute merge(AlignmentAttribute? other) {
+    return AlignmentAttribute(x: other?.x ?? x, y: other?.y ?? y);
   }
 
   @override
-  AlignmentGeometryAttribute merge(AlignmentGeometryAttribute? other) {
-    if (other == null) return this;
+  Alignment resolve(MixData mix) {
+    return Alignment(x ?? 0, y ?? 0);
+  }
+}
 
-    if (other._isDirectional != _isDirectional) {
-      throw UnsupportedError(
-        "Cannot merge directional and non-directional alignment attributes",
-      );
-    }
-
-    return AlignmentGeometryAttribute(
-      start: other.start ?? start,
-      x: other.x ?? x,
-      y: other.y ?? y,
+@immutable
+class AlignmentDirectionalAttribute
+    extends AlignmentGeometryAttribute<AlignmentDirectional> {
+  const AlignmentDirectionalAttribute({super.start, super.y});
+  @override
+  AlignmentDirectionalAttribute merge(AlignmentDirectionalAttribute? other) {
+    return AlignmentDirectionalAttribute(
+      start: other?.start ?? start,
+      y: other?.y ?? y,
     );
   }
 
   @override
-  AlignmentGeometry resolve(MixData mix) {
-    return isDirectional
-        ? AlignmentDirectional(start ?? 0.0, y ?? 0.0)
-        : Alignment(x ?? 0.0, y ?? 0.0);
-  }
-
-  @override
-  get props => [start, x, y, _isDirectional];
+  AlignmentDirectional resolve(MixData mix) =>
+      AlignmentDirectional(start ?? 0, y ?? 0);
 }

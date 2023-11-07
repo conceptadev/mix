@@ -6,8 +6,8 @@ import '../attributes/alignment_attribute.dart';
 import '../attributes/attribute.dart';
 import '../attributes/constraints_attribute.dart';
 import '../attributes/decoration_attribute.dart';
-import '../attributes/edge_insets_attribute.dart';
 import '../attributes/scalar_attribute.dart';
+import '../attributes/space_attribute.dart';
 import '../factory/mix_provider_data.dart';
 
 class ContainerSpec extends MixExtension<ContainerSpec> {
@@ -36,8 +36,8 @@ class ContainerSpec extends MixExtension<ContainerSpec> {
   static ContainerSpec resolve(MixData mix) {
     return ContainerSpec(
       alignment: mix.get<AlignmentGeometryAttribute, AlignmentGeometry>(),
-      padding: mix.get<PaddingAttribute, EdgeInsetsGeometry>(),
-      margin: mix.get<MarginAttribute, EdgeInsetsGeometry>(),
+      padding: mix.get<PaddingGeometryAttribute, EdgeInsetsGeometry>(),
+      margin: mix.get<MarginGeometryAttribute, EdgeInsetsGeometry>(),
       constraints: mix.get<BoxConstraintsAttribute, BoxConstraints>(),
       decoration: mix.get<DecorationAttribute, Decoration>(),
       width: mix.get<WidthAttribute, double>(),

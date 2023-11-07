@@ -105,13 +105,12 @@ extension ShapeDecorationExt on ShapeDecoration {
 }
 
 extension AlignmentExt on Alignment {
-  AlignmentGeometryAttribute toAttribute() =>
-      AlignmentGeometryAttribute(x: x, y: y);
+  AlignmentAttribute toAttribute() => AlignmentAttribute(x: x, y: y);
 }
 
 extension AligmentDirectionalExt on AlignmentDirectional {
-  AlignmentGeometryAttribute toAttribute() =>
-      AlignmentGeometryAttribute(start: start, y: y);
+  AlignmentDirectionalAttribute toAttribute() =>
+      AlignmentDirectionalAttribute(start: start, y: y);
 }
 
 extension BoxConstraintsExt on BoxConstraints {

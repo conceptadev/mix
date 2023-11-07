@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 
-import '../attributes/edge_insets_attribute.dart';
+import '../attributes/space_attribute.dart';
 
-SpacingDataFactory<PaddingAttribute> _paddingFactory =
-    const SpacingDataFactory<PaddingAttribute>(PaddingAttribute.new);
+const _paddingFactory =
+    SpaceUtilityFactory<PaddingAttribute>(PaddingAttribute.new);
+
+const _paddingDirectionalFactory = SpaceDirectionalUtilityFactory(
+  PaddingDirectionalAttribute.new,
+);
 
 PaddingAttribute padding(double p1, [double? p2, double? p3, double? p4]) {
   return _paddingFactory.positional(p1, p2, p3, p4);
@@ -55,8 +59,8 @@ PaddingAttribute paddingInsets(EdgeInsetsGeometry insets) {
   return _paddingFactory.fromEdgeInsets(insets);
 }
 
-SpacingDataFactory<MarginAttribute> _marginFactory =
-    const SpacingDataFactory<MarginAttribute>(MarginAttribute.new);
+SpaceUtilityFactory<MarginAttribute> _marginFactory =
+    const SpaceUtilityFactory<MarginAttribute>(MarginAttribute.new);
 
 MarginAttribute margin(double p1, [double? p2, double? p3, double? p4]) {
   return _marginFactory.positional(p1, p2, p3, p4);

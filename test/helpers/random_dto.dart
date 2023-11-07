@@ -4,6 +4,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
+import 'package:mix/src/attributes/border/border_radius_attribute.dart';
+import 'package:mix/src/attributes/space_attribute.dart';
 
 class RandomGenerator {
   const RandomGenerator._();
@@ -52,10 +54,10 @@ class RandomGenerator {
     );
   }
 
-  static BoxBorderAttribute borderAttribute() {
+  static BorderAttribute borderAttribute() {
     final side = borderSideAttribute();
 
-    return BoxBorderAttribute(
+    return BorderAttribute(
       top: side,
       right: side,
       bottom: side,
