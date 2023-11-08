@@ -46,6 +46,15 @@ class MixThemeData with Comparable {
     required this.space,
     required this.textStyles,
   });
+
+  const MixThemeData.empty()
+      : this.raw(
+          breakpoints: const MixBreakpointsTokens(),
+          colors: const {},
+          space: const {},
+          textStyles: const {},
+        );
+
   factory MixThemeData({
     MixBreakpointsTokens? breakpoints,
     MixColorTokens? colors,

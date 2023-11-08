@@ -18,12 +18,16 @@ abstract class ConstraintsAttribute<T extends Constraints>
 
 @immutable
 class BoxConstraintsAttribute extends ConstraintsAttribute<BoxConstraints> {
+  final double? width;
+  final double? height;
   final double? minWidth;
   final double? maxWidth;
   final double? minHeight;
   final double? maxHeight;
 
   const BoxConstraintsAttribute({
+    this.width,
+    this.height,
     this.minWidth,
     this.maxWidth,
     this.minHeight,
@@ -35,6 +39,8 @@ class BoxConstraintsAttribute extends ConstraintsAttribute<BoxConstraints> {
     if (other == null) return this;
 
     return BoxConstraintsAttribute(
+      width: other.width ?? width,
+      height: other.height ?? height,
       minWidth: other.minWidth ?? minWidth,
       maxWidth: other.maxWidth ?? maxWidth,
       minHeight: other.minHeight ?? minHeight,
@@ -44,12 +50,28 @@ class BoxConstraintsAttribute extends ConstraintsAttribute<BoxConstraints> {
 
   @override
   BoxConstraints resolve(MixData mix) {
-    return BoxConstraints(
-      minWidth: minWidth ?? 0,
-      maxWidth: maxWidth ?? double.infinity,
-      minHeight: minHeight ?? 0,
-      maxHeight: maxHeight ?? double.infinity,
-    );
+    BoxConstraints? constraints;
+
+    if (minWidth != null ||
+        maxWidth != null ||
+        minHeight != null ||
+        maxHeight != null) {
+      constraints = BoxConstraints(
+        minWidth: minWidth ?? 0,
+        maxWidth: maxWidth ?? double.infinity,
+        minHeight: minHeight ?? 0,
+        maxHeight: maxHeight ?? double.infinity,
+      );
+    }
+
+    constraints = (width != null || height != null)
+        ? constraints?.tighten(width: width, height: height) ??
+            BoxConstraints.tightFor(width: width, height: height)
+        : constraints;
+
+    assert(constraints != null, 'constraints is null');
+
+    return constraints ?? const BoxConstraints();
   }
 
   @override

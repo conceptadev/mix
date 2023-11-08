@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 
 import '../attributes/alignment_attribute.dart';
@@ -16,8 +14,7 @@ class ContainerSpec extends MixExtension<ContainerSpec> {
   final EdgeInsetsGeometry? margin;
   final BoxConstraints? constraints;
   final Decoration? decoration;
-  final double? width;
-  final double? height;
+
   final Matrix4? transform;
   final Clip? clipBehavior;
 
@@ -27,8 +24,6 @@ class ContainerSpec extends MixExtension<ContainerSpec> {
     required this.margin,
     required this.constraints,
     required this.decoration,
-    required this.width,
-    required this.height,
     required this.transform,
     required this.clipBehavior,
   });
@@ -40,8 +35,6 @@ class ContainerSpec extends MixExtension<ContainerSpec> {
       margin: mix.get<MarginGeometryAttribute, EdgeInsetsGeometry>(),
       constraints: mix.get<BoxConstraintsAttribute, BoxConstraints>(),
       decoration: mix.get<DecorationAttribute, Decoration>(),
-      width: mix.get<WidthAttribute, double>(),
-      height: mix.get<HeightAttribute, double>(),
       transform: mix.get<TransformAttribute, Matrix4>(),
       clipBehavior: mix.get<ClipAttribute, Clip>(),
     );
@@ -65,8 +58,6 @@ class ContainerSpec extends MixExtension<ContainerSpec> {
       margin: margin ?? this.margin,
       constraints: constraints ?? this.constraints,
       decoration: decoration ?? this.decoration,
-      width: width ?? this.width,
-      height: height ?? this.height,
       transform: transform ?? this.transform,
       clipBehavior: clipBehavior ?? this.clipBehavior,
     );
@@ -80,8 +71,6 @@ class ContainerSpec extends MixExtension<ContainerSpec> {
       margin: EdgeInsetsGeometry.lerp(margin, other.margin, t),
       constraints: BoxConstraints.lerp(constraints, other.constraints, t),
       decoration: Decoration.lerp(decoration, other.decoration, t),
-      width: lerpDouble(width, other.width, t),
-      height: lerpDouble(height, other.height, t),
       transform: Matrix4Tween(begin: transform, end: other.transform).lerp(t),
       clipBehavior: t < 0.5 ? clipBehavior : other.clipBehavior,
     );
@@ -94,8 +83,6 @@ class ContainerSpec extends MixExtension<ContainerSpec> {
         margin,
         constraints,
         decoration,
-        width,
-        height,
         transform,
         clipBehavior,
       ];

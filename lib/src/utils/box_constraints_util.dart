@@ -2,6 +2,12 @@ import '../attributes/constraints_attribute.dart';
 
 const boxConstraints = BoxConstraintsAttribute.new;
 
+BoxConstraintsAttribute width(double width) =>
+    BoxConstraintsAttribute(width: width);
+
+BoxConstraintsAttribute height(double height) =>
+    BoxConstraintsAttribute(height: height);
+
 BoxConstraintsAttribute minWidth(double width) =>
     BoxConstraintsAttribute(minWidth: width);
 

@@ -104,20 +104,6 @@ class ImageRepeatAttribute
   ImageRepeatAttribute create(value) => ImageRepeatAttribute(value);
 }
 
-class HeightAttribute extends ScalarAttribute<HeightAttribute, double> {
-  const HeightAttribute(super.value);
-
-  @override
-  HeightAttribute create(value) => HeightAttribute(value);
-}
-
-class WidthAttribute extends ScalarAttribute<WidthAttribute, double> {
-  const WidthAttribute(super.value);
-
-  @override
-  WidthAttribute create(value) => WidthAttribute(value);
-}
-
 class ImageWidthAttribute extends ScalarAttribute<ImageWidthAttribute, double> {
   const ImageWidthAttribute(super.value);
 

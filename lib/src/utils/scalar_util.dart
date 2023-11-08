@@ -45,8 +45,7 @@ const imageAlignment = ImageAlignmentAttribute.new;
 const imageScale = ImageScaleAttribute.new;
 const imageFit = ImageFitAttribute.new;
 const imageRepeat = ImageRepeatAttribute.new;
-const height = HeightAttribute.new;
-const width = WidthAttribute.new;
+
 const imageWidth = ImageWidthAttribute.new;
 const imageHeight = ImageHeightAttribute.new;
 const textHeightBehavior = TextHeightBehaviorAttribute.new;

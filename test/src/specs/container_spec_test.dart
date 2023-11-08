@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
@@ -17,8 +15,6 @@ void main() {
           const MarginAttribute(top: 10.0, bottom: 12.0),
           const BoxConstraintsAttribute(maxWidth: 300.0, minHeight: 200.0),
           const BoxDecorationAttribute(color: ColorAttribute(Colors.blue)),
-          const WidthAttribute(200.0),
-          const HeightAttribute(100.0),
           TransformAttribute(Matrix4.translationValues(10.0, 10.0, 0.0)),
           const ClipAttribute(Clip.antiAlias),
         ),
@@ -32,8 +28,7 @@ void main() {
       expect(spec.constraints,
           const BoxConstraints(maxWidth: 300.0, minHeight: 200.0));
       expect(spec.decoration, const BoxDecoration(color: Colors.blue));
-      expect(spec.width, 200.0);
-      expect(spec.height, 100.0);
+
       expect(spec.transform, Matrix4.translationValues(10.0, 10.0, 0.0));
       expect(spec.clipBehavior, Clip.antiAlias);
     });
@@ -45,8 +40,6 @@ void main() {
         margin: const EdgeInsets.only(top: 8.0, bottom: 8.0),
         constraints: const BoxConstraints(maxWidth: 300.0, minHeight: 200.0),
         decoration: const BoxDecoration(color: Colors.blue),
-        width: 200.0,
-        height: 100.0,
         transform: Matrix4.translationValues(10.0, 10.0, 0.0),
         clipBehavior: Clip.antiAlias,
       );
@@ -59,8 +52,7 @@ void main() {
       expect(copiedSpec.constraints,
           const BoxConstraints(maxWidth: 300.0, minHeight: 200.0));
       expect(copiedSpec.decoration, const BoxDecoration(color: Colors.blue));
-      expect(copiedSpec.width, 250.0);
-      expect(copiedSpec.height, 150.0);
+
       expect(copiedSpec.transform, Matrix4.translationValues(10.0, 10.0, 0.0));
       expect(copiedSpec.clipBehavior, Clip.antiAlias);
     });
@@ -72,8 +64,6 @@ void main() {
         margin: const EdgeInsets.only(top: 4.0),
         constraints: const BoxConstraints(maxWidth: 200.0),
         decoration: const BoxDecoration(color: Colors.red),
-        width: 100.0,
-        height: 100.0,
         transform: Matrix4.identity(),
         clipBehavior: Clip.none,
       );
@@ -84,8 +74,6 @@ void main() {
         margin: const EdgeInsets.only(top: 8.0),
         constraints: const BoxConstraints(maxWidth: 400.0),
         decoration: const BoxDecoration(color: Colors.blue),
-        width: 200.0,
-        height: 150.0,
         transform: Matrix4.rotationZ(0.5),
         clipBehavior: Clip.antiAlias,
       );
@@ -113,8 +101,7 @@ void main() {
                   begin: const BoxDecoration(color: Colors.red),
                   end: const BoxDecoration(color: Colors.blue))
               .lerp(t));
-      expect(lerpedSpec.width, lerpDouble(100.0, 200.0, t));
-      expect(lerpedSpec.height, lerpDouble(100.0, 150.0, t));
+
       expect(
           lerpedSpec.transform,
           Matrix4Tween(begin: Matrix4.identity(), end: Matrix4.rotationZ(0.5))

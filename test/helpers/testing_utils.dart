@@ -4,13 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:meta/meta.dart';
 import 'package:mix/mix.dart';
-import 'package:mix/src/attributes/attribute.dart';
-import 'package:mix/src/decorators/decorator.dart';
-import 'package:mix/src/factory/mix_provider.dart';
-import 'package:mix/src/factory/mix_provider_data.dart';
-import 'package:mix/src/factory/style_mix.dart';
-import 'package:mix/src/theme/mix_theme.dart';
-import 'package:mix/src/variants/variant.dart';
 import 'package:mockito/mockito.dart';
 
 export 'package:mix/src/helpers/extensions/values_ext.dart';
@@ -31,36 +24,38 @@ final EmptyMixData = MixData.create(
   StyleMix.empty,
 );
 
-Future<void> pumpWithMixData(
-  WidgetTester tester, {
-  StyleMix style = StyleMix.empty,
-  required Widget Function(MixData mix) builder,
-}) async {
-  await tester.pumpWidget(
-    MaterialApp(
-      home: Builder(
-        builder: (BuildContext context) {
-          // Populate MixData into the widget tree if needed
-          return Mix.build(context, style, builder);
-        },
+extension WidgetTesterExt on WidgetTester {
+  Future<void> pumpWithMix(
+    Widget widget, {
+    StyleMix style = StyleMix.empty,
+    MixThemeData theme = const MixThemeData.empty(),
+  }) async {
+    await pumpWidget(
+      MaterialApp(
+        home: MixTheme(
+          data: theme,
+          child: Builder(
+            builder: (BuildContext context) {
+              // Populate MixData into the widget tree if needed
+              return Mix.build(context, style, (_) => widget);
+            },
+          ),
+        ),
       ),
-    ),
-  );
-}
+    );
+  }
 
-class TestMixWidget extends StatelessWidget {
-  const TestMixWidget({
-    required this.child,
-    Key? key,
-  }) : super(key: key);
-
-  final Widget child;
-
-  @override
-  Widget build(BuildContext context) {
-    return Directionality(
-      textDirection: TextDirection.ltr,
-      child: child,
+  Future<void> pumpStyledWidget(
+    StyledWidget widget, {
+    MixThemeData theme = const MixThemeData.empty(),
+  }) async {
+    await pumpWidget(
+      MaterialApp(
+        home: MixTheme(
+          data: theme,
+          child: widget,
+        ),
+      ),
     );
   }
 }
@@ -88,50 +83,6 @@ class WrapMixThemeWidget extends StatelessWidget {
       child: Directionality(
         textDirection: TextDirection.ltr,
         child: child,
-      ),
-    );
-  }
-}
-
-class BoxInsideFlexWidget extends StatelessWidget {
-  const BoxInsideFlexWidget(this.mix, {Key? key}) : super(key: key);
-
-  final StyleMix mix;
-
-  @override
-  Widget build(BuildContext context) {
-    return TestMixWidget(
-      child: Column(
-        children: [
-          StyledContainer(
-            style: mix,
-            child: FillWidget,
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class BoxTestWidget extends StatelessWidget {
-  const BoxTestWidget(
-    this.mix, {
-    Key? key,
-    double? height,
-    double? width,
-  }) : super(key: key);
-
-  final StyleMix mix;
-
-  @override
-  Widget build(BuildContext context) {
-    return TestMixWidget(
-      child: StyledContainer(
-        style: mix,
-        child: const SizedBox(
-          height: 25,
-          width: 25,
-        ),
       ),
     );
   }

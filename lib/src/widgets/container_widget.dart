@@ -21,11 +21,10 @@ class StyledContainer extends StyledWidget {
         alignment: spec.alignment,
         padding: spec.padding,
         decoration: spec.decoration,
-        width: spec.width,
-        height: spec.height,
         constraints: spec.constraints,
         margin: spec.margin,
         transform: spec.transform,
+        clipBehavior: spec.clipBehavior ?? Clip.none,
         child: child,
       );
     });
