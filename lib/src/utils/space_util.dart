@@ -1,7 +1,4 @@
-import 'package:flutter/material.dart';
-
 import '../attributes/space_attribute.dart';
-import '../helpers/extensions/values_ext.dart';
 
 const _paddingFactory =
     SpaceUtilityFactory<PaddingAttribute>(PaddingAttribute.new);
@@ -11,54 +8,22 @@ const _paddingDirectionalFactory =
   PaddingDirectionalAttribute.new,
 );
 
-PaddingAttribute padding(double p1, [double? p2, double? p3, double? p4]) {
-  return _paddingFactory.positional(p1, p2, p3, p4);
-}
+final padding = _paddingFactory.shorthand;
+final paddingOnly = _paddingFactory.only;
+final paddingDirectional = _paddingDirectionalFactory.shorthand;
+final paddingDirectionalOnly = _paddingDirectionalFactory.only;
 
-PaddingDirectionalAttribute paddingDirectional(
-  double p1, [
-  double? p2,
-  double? p3,
-  double? p4,
-]) {
-  return _paddingDirectionalFactory.positional(p1, p2, p3, p4);
-}
+final paddingTop = _paddingFactory.top;
+final paddingBottom = _paddingFactory.bottom;
+final paddingLeft = _paddingFactory.left;
+final paddingRight = _paddingFactory.right;
+final paddingStart = _paddingDirectionalFactory.start;
+final paddingEnd = _paddingDirectionalFactory.end;
 
-PaddingAttribute paddingTop(double value) {
-  return _paddingFactory.create(top: value);
-}
-
-PaddingAttribute paddingBottom(double value) {
-  return _paddingFactory.create(bottom: value);
-}
-
-PaddingAttribute paddingLeft(double value) {
-  return _paddingFactory.create(left: value);
-}
-
-PaddingAttribute paddingRight(double value) {
-  return _paddingFactory.create(right: value);
-}
-
-PaddingDirectionalAttribute paddingStart(double value) {
-  return _paddingDirectionalFactory.create(start: value);
-}
-
-PaddingDirectionalAttribute paddingEnd(double value) {
-  return _paddingDirectionalFactory.create(end: value);
-}
-
-PaddingAttribute paddingHorizontal(double value) {
-  return _paddingFactory.symmetric(horizontal: value);
-}
-
-PaddingAttribute paddingVertical(double value) {
-  return _paddingFactory.symmetric(vertical: value);
-}
-
-PaddingGeometryAttribute paddingFrom(EdgeInsets edgeInsets) {
-  return edgeInsets.toPadding();
-}
+final paddingSymmetric = _paddingFactory.symmetric;
+final paddingHorizontal = _paddingFactory.horizontal;
+final paddingVertical = _paddingFactory.vertical;
+final paddingFrom = _paddingFactory.from;
 
 const _marginFactory =
     SpaceUtilityFactory<MarginAttribute>(MarginAttribute.new);
@@ -68,57 +33,17 @@ const _marginDirectionalFactory =
   MarginDirectionalAttribute.new,
 );
 
-MarginAttribute margin(double p1, [double? p2, double? p3, double? p4]) {
-  return _marginFactory.positional(p1, p2, p3, p4);
-}
-
-MarginDirectionalAttribute marginDirectional(
-  double p1, [
-  double? p2,
-  double? p3,
-  double? p4,
-]) {
-  return _marginDirectionalFactory.positional(p1, p2, p3, p4);
-}
-
-MarginAttribute marginTop(double value) {
-  return _marginFactory.create(top: value);
-}
-
-MarginAttribute marginBottom(double value) {
-  return _marginFactory.create(bottom: value);
-}
-
-MarginAttribute marginLeft(double value) {
-  return _marginFactory.create(left: value);
-}
-
-MarginAttribute marginRight(double value) {
-  return _marginFactory.create(right: value);
-}
-
-MarginDirectionalAttribute marginStart(double value) {
-  return _marginDirectionalFactory.create(start: value);
-}
-
-MarginDirectionalAttribute marginEnd(double value) {
-  return _marginDirectionalFactory.create(end: value);
-}
-
-MarginAttribute marginHorizontal(double value) {
-  return _marginFactory.symmetric(horizontal: value);
-}
-
-MarginAttribute marginVertical(double value) {
-  return _marginFactory.symmetric(vertical: value);
-}
-
-MarginGeometryAttribute marginFrom(EdgeInsets edgeInsets) {
-  return _marginFactory.from(edgeInsets);
-}
-
-MarginDirectionalAttribute marginDirectionalFrom(
-  EdgeInsetsDirectional edgeInsets,
-) {
-  return _marginDirectionalFactory.from(edgeInsets);
-}
+final margin = _marginFactory.shorthand;
+final marginOnly = _marginFactory.only;
+final marginDirectional = _marginDirectionalFactory.shorthand;
+final marginDirectionalOnly = _marginDirectionalFactory.only;
+final marginTop = _marginFactory.top;
+final marginBottom = _marginFactory.bottom;
+final marginLeft = _marginFactory.left;
+final marginRight = _marginFactory.right;
+final marginStart = _marginDirectionalFactory.start;
+final marginEnd = _marginDirectionalFactory.end;
+final marginSymmetric = _marginFactory.symmetric;
+final marginHorizontal = _marginFactory.horizontal;
+final marginVertical = _marginFactory.vertical;
+final marginFrom = _marginFactory.from;

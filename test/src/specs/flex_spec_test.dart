@@ -67,5 +67,52 @@ void main() {
 
       expect(copiedSpec, isNot(spec));
     });
+
+    test('lerp', () {
+      const spec1 = FlexSpec(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        verticalDirection: VerticalDirection.down,
+        direction: Axis.horizontal,
+        textDirection: TextDirection.ltr,
+        textBaseline: TextBaseline.alphabetic,
+        clipBehavior: Clip.none,
+      );
+
+      const spec2 = FlexSpec(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        mainAxisAlignment: MainAxisAlignment.end,
+        mainAxisSize: MainAxisSize.max,
+        verticalDirection: VerticalDirection.up,
+        direction: Axis.vertical,
+        textDirection: TextDirection.rtl,
+        textBaseline: TextBaseline.ideographic,
+        clipBehavior: Clip.antiAlias,
+      );
+
+      const t = 0.5;
+      final lerpedSpec = spec1.lerp(spec2, t);
+
+      expect(lerpedSpec.crossAxisAlignment, CrossAxisAlignment.end);
+      expect(
+        lerpedSpec.mainAxisAlignment,
+        MainAxisAlignment.end,
+      );
+      expect(
+        lerpedSpec.mainAxisSize,
+        MainAxisSize.max,
+      );
+      expect(
+        lerpedSpec.verticalDirection,
+        VerticalDirection.up,
+      );
+      expect(lerpedSpec.direction, Axis.vertical);
+      expect(lerpedSpec.textDirection, TextDirection.rtl);
+      expect(lerpedSpec.textBaseline, TextBaseline.ideographic);
+      expect(lerpedSpec.clipBehavior, Clip.antiAlias);
+
+      expect(lerpedSpec, isNot(spec1));
+    });
   });
 }

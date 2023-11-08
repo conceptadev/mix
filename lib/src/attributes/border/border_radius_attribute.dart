@@ -80,6 +80,44 @@ class BorderRadiusAttribute
           bottomRight: right,
         );
 
+  factory BorderRadiusAttribute.positional(
+    Radius p1, [
+    Radius? p2,
+    Radius? p3,
+    Radius? p4,
+  ]) {
+    Radius topLeft = p1;
+    Radius topRight = p1;
+    Radius bottomLeft = p1;
+    Radius bottomRight = p1;
+
+    if (p2 != null) {
+      bottomRight = p2;
+      bottomLeft = p2;
+    }
+
+    if (p3 != null) {
+      topLeft = p1;
+      topRight = p2!;
+      bottomLeft = p2;
+      bottomRight = p3;
+    }
+
+    if (p4 != null) {
+      topLeft = p1;
+      topRight = p2!;
+      bottomLeft = p3!;
+      bottomRight = p4;
+    }
+
+    return BorderRadiusAttribute(
+      topLeft: topLeft,
+      topRight: topRight,
+      bottomLeft: bottomLeft,
+      bottomRight: bottomRight,
+    );
+  }
+
   const BorderRadiusAttribute.vertical({Radius? top, Radius? bottom})
       : super(
           topLeft: top,
@@ -121,6 +159,49 @@ class BorderRadiusDirectionalAttribute
     super.bottomEnd,
   });
 
+  factory BorderRadiusDirectionalAttribute.positional(
+    Radius p1, [
+    Radius? p2,
+    Radius? p3,
+    Radius? p4,
+  ]) {
+    Radius topStart = p1;
+    Radius topEnd = p1;
+    Radius bottomStart = p1;
+    Radius bottomEnd = p1;
+
+    if (p2 != null) {
+      bottomEnd = p2;
+      bottomStart = p2;
+    }
+
+    if (p3 != null) {
+      topStart = p1;
+      topEnd = p2!;
+      bottomStart = p2;
+      bottomEnd = p3;
+    }
+
+    if (p4 != null) {
+      topStart = p1;
+      topEnd = p2!;
+      bottomStart = p3!;
+      bottomEnd = p4;
+    }
+
+    return BorderRadiusDirectionalAttribute(
+      topStart: topStart,
+      topEnd: topEnd,
+      bottomStart: bottomStart,
+      bottomEnd: bottomEnd,
+    );
+  }
+
+  BorderRadiusDirectionalAttribute.circular(double radius)
+      : this.all(Radius.circular(radius));
+
+  const BorderRadiusDirectionalAttribute.zero() : this.all(Radius.zero);
+
   const BorderRadiusDirectionalAttribute.all(Radius radius)
       : super(
           topStart: radius,
@@ -128,9 +209,6 @@ class BorderRadiusDirectionalAttribute
           bottomStart: radius,
           bottomEnd: radius,
         );
-
-  BorderRadiusDirectionalAttribute.circular(double radius)
-      : this.all(Radius.circular(radius));
 
   const BorderRadiusDirectionalAttribute.horizontal({
     Radius? start,
@@ -151,8 +229,6 @@ class BorderRadiusDirectionalAttribute
           bottomStart: bottom,
           bottomEnd: bottom,
         );
-
-  const BorderRadiusDirectionalAttribute.zero() : this.all(Radius.zero);
 
   @override
   BorderRadiusDirectionalAttribute merge(

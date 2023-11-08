@@ -117,6 +117,15 @@ class PaddingAttribute extends PaddingGeometryAttribute<EdgeInsets>
     implements SpaceAttribute {
   const PaddingAttribute({super.top, super.bottom, super.left, super.right});
 
+  PaddingDirectionalAttribute toDirectional() {
+    return PaddingDirectionalAttribute(
+      top: top,
+      bottom: bottom,
+      start: left,
+      end: right,
+    );
+  }
+
   @override
   PaddingAttribute merge(PaddingAttribute? other) {
     return PaddingAttribute(
@@ -191,6 +200,15 @@ class MarginAttribute extends MarginGeometryAttribute<EdgeInsets>
     implements SpaceAttribute {
   const MarginAttribute({super.top, super.bottom, super.left, super.right});
 
+  MarginDirectionalAttribute toDirectional() {
+    return MarginDirectionalAttribute(
+      top: top,
+      bottom: bottom,
+      start: left,
+      end: right,
+    );
+  }
+
   @override
   MarginAttribute merge(MarginAttribute? other) {
     return MarginAttribute(
@@ -244,18 +262,25 @@ class MarginDirectionalAttribute
   }
 }
 
+typedef SpaceUtility<T extends SpaceGeometryAttribute> = T Function({
+  double? top,
+  double? bottom,
+  double? left,
+  double? right,
+});
+
 @immutable
-class SpaceUtilityFactory<T extends SpaceAttribute> {
+class SpaceUtilityFactory<T extends SpaceGeometryAttribute> {
   final T Function({
     double? top,
     double? bottom,
     double? left,
     double? right,
-  }) create;
+  }) _builder;
 
-  const SpaceUtilityFactory(this.create);
+  const SpaceUtilityFactory(this._builder);
 
-  T positional(double p1, [double? p2, double? p3, double? p4]) {
+  T shorthand(double p1, [double? p2, double? p3, double? p4]) {
     double top = p1;
     double bottom = p1;
     double left = p1;
@@ -269,11 +294,11 @@ class SpaceUtilityFactory<T extends SpaceAttribute> {
     if (p3 != null) bottom = p3;
     if (p4 != null) right = p4;
 
-    return create(bottom: bottom, left: left, right: right, top: top);
+    return _builder(bottom: bottom, left: left, right: right, top: top);
   }
 
   T from(EdgeInsets edgeInsets) {
-    return create(
+    return _builder(
       bottom: edgeInsets.bottom,
       left: edgeInsets.left,
       right: edgeInsets.right,
@@ -281,18 +306,30 @@ class SpaceUtilityFactory<T extends SpaceAttribute> {
     );
   }
 
-  T top(double value) => create(top: value);
-  T bottom(double value) => create(bottom: value);
-  T left(double value) => create(left: value);
-  T right(double value) => create(right: value);
+  T only(double? top, double? bottom, double? left, double? right) {
+    return _builder(bottom: bottom, left: left, right: right, top: top);
+  }
+
+  T top(double value) => _builder(top: value);
+  T bottom(double value) => _builder(bottom: value);
+  T left(double value) => _builder(left: value);
+  T right(double value) => _builder(right: value);
 
   T symmetric({double? vertical, double? horizontal}) {
-    return create(
+    return _builder(
       bottom: vertical,
       left: horizontal,
       right: horizontal,
       top: vertical,
     );
+  }
+
+  T horizontal({double? left, double? right}) {
+    return _builder(left: left, right: right);
+  }
+
+  T vertical({double? top, double? bottom}) {
+    return _builder(bottom: bottom, top: top);
   }
 }
 
@@ -303,16 +340,21 @@ class SpaceDirectionalUtilityFactory<T extends SpaceDirectionalAttribute> {
     double? bottom,
     double? start,
     double? end,
-  }) create;
+  }) _builder;
 
-  const SpaceDirectionalUtilityFactory(this.create);
+  const SpaceDirectionalUtilityFactory(this._builder);
 
   T all(double all) {
-    return create(bottom: all, end: all, start: all, top: all);
+    return _builder(bottom: all, end: all, start: all, top: all);
   }
 
+  T top(double value) => _builder(top: value);
+  T bottom(double value) => _builder(bottom: value);
+  T start(double value) => _builder(start: value);
+  T end(double value) => _builder(end: value);
+
   T from(EdgeInsetsDirectional edgeInsets) {
-    return create(
+    return _builder(
       bottom: edgeInsets.bottom,
       end: edgeInsets.end,
       start: edgeInsets.start,
@@ -320,8 +362,12 @@ class SpaceDirectionalUtilityFactory<T extends SpaceDirectionalAttribute> {
     );
   }
 
+  T only(double? top, double? bottom, double? start, double? end) {
+    return _builder(bottom: bottom, end: end, start: start, top: top);
+  }
+
   T symmetric({double? vertical, double? horizontal}) {
-    return create(
+    return _builder(
       bottom: vertical,
       end: horizontal,
       start: horizontal,
@@ -329,7 +375,15 @@ class SpaceDirectionalUtilityFactory<T extends SpaceDirectionalAttribute> {
     );
   }
 
-  T positional(double p1, [double? p2, double? p3, double? p4]) {
+  T vertical({double? top, double? bottom}) {
+    return _builder(bottom: bottom, top: top);
+  }
+
+  T horizontal({double? start, double? end}) {
+    return _builder(end: end, start: start);
+  }
+
+  T shorthand(double p1, [double? p2, double? p3, double? p4]) {
     double top = p1;
     double bottom = p1;
     double start = p1;
@@ -344,6 +398,6 @@ class SpaceDirectionalUtilityFactory<T extends SpaceDirectionalAttribute> {
 
     if (p4 != null) end = p4;
 
-    return create(bottom: bottom, end: end, start: start, top: top);
+    return _builder(bottom: bottom, end: end, start: start, top: top);
   }
 }

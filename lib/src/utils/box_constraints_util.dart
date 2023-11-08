@@ -1,27 +1,15 @@
 import '../attributes/constraints_attribute.dart';
 
-BoxConstraintsAttribute boxConstraints({
-  double? minWidth,
-  double? maxWidth,
-  double? minHeight,
-  double? maxHeight,
-}) {
-  return BoxConstraintsAttribute(
-    minWidth: minWidth,
-    maxWidth: maxWidth,
-    minHeight: minHeight,
-    maxHeight: maxHeight,
-  );
-}
+const boxConstraints = BoxConstraintsAttribute.new;
 
 BoxConstraintsAttribute minWidth(double width) =>
-    boxConstraints(minWidth: width);
+    BoxConstraintsAttribute(minWidth: width);
 
 BoxConstraintsAttribute maxWidth(double width) =>
-    boxConstraints(maxWidth: width);
+    BoxConstraintsAttribute(maxWidth: width);
 
 BoxConstraintsAttribute minHeight(double height) =>
-    boxConstraints(minHeight: height);
+    BoxConstraintsAttribute(minHeight: height);
 
 BoxConstraintsAttribute maxHeight(double height) =>
-    boxConstraints(maxHeight: height);
+    BoxConstraintsAttribute(maxHeight: height);

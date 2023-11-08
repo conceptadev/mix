@@ -1,15 +1,7 @@
 import '../attributes/color_attribute.dart';
 import '../attributes/scalar_attribute.dart';
-import '../attributes/style_mix_attribute.dart';
-import '../factory/style_mix.dart';
 
 const visible = VisibleAttribute.new;
-
-VisibleAttribute show([bool condition = true]) {
-  return VisibleAttribute(condition);
-}
-
-VisibleAttribute hide([bool condition = true]) => show(!condition);
 
 const stackFit = StackFitAttribute.new;
 
@@ -62,12 +54,3 @@ const boxFit = BoxFitAttribute.new;
 const blendMode = BlendModeAttribute.new;
 const boxShape = BoxShapeAttribute.new;
 const imageColor = ImageColorAttribute.new;
-
-StyleMixAttribute imageSize({double? width, double? height}) {
-  final style = StyleMix(
-    width == null ? null : imageWidth(width),
-    height == null ? null : imageHeight(height),
-  );
-
-  return StyleMixAttribute(style);
-}

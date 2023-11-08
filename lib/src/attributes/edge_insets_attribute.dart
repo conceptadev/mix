@@ -47,6 +47,15 @@ class EdgeInsetsAttribute extends EdgeInsetsGeometryAttribute<EdgeInsets> {
     super.right,
   });
 
+  EdgeInsetsDirectionalAttribute toDirectional() {
+    return EdgeInsetsDirectionalAttribute(
+      top: top,
+      bottom: bottom,
+      start: left,
+      end: right,
+    );
+  }
+
   @override
   EdgeInsetsAttribute merge(EdgeInsetsAttribute? other) {
     return EdgeInsetsAttribute(

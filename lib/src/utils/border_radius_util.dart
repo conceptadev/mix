@@ -2,49 +2,47 @@ import 'package:flutter/material.dart';
 
 import '../attributes/border/border_radius_attribute.dart';
 
-// Provides a constant for creating a uniform BorderRadiusAttribute for all corners.
-const borderRadius = BorderRadiusAttribute.all;
+// Provides an utility for creating a uniform BorderRadiusAttribute for all corners.
+const borderRadius = BorderRadiusAttribute.positional;
 
-// Provides a constant for creating a uniform circular BorderRadiusAttribute for all corners.
-const borderRadiusCircular = BorderRadiusAttribute.circular;
+// Border Radius Directional
+// Provides a utility BorderRadiusDirectionalAttribute for all corners, considering text direction.
+const borderRadiusDirectional = BorderRadiusDirectionalAttribute.positional;
 
-// Provides a constant for creating a vertical BorderRadiusAttribute with independent radii for top and bottom sides.
+// Provides an utility for creating a vertical BorderRadiusAttribute with independent radii for top and bottom sides.
 const borderRadiusVertical = BorderRadiusAttribute.vertical;
 
-// Provides a constant for creating a horizontal BorderRadiusAttribute with independent radii for left and right sides.
+// Provides an utility for creating a horizontal BorderRadiusAttribute with independent radii for left and right sides.
 const borderRadiusHorizontal = BorderRadiusAttribute.horizontal;
 
-// Provides a constant for creating a BorderRadiusAttribute with zero radius, resulting in square corners.
-const borderRadiusZero = BorderRadiusAttribute.zero;
-
-// Provides a constructor for creating a BorderRadiusAttribute with custom radii for individual corners.
+// Provides an utility for creating a BorderRadiusAttribute with zero radius, resulting in square corners.
 const borderRadiusOnly = BorderRadiusAttribute.new;
 
-// Border Radius Directional Constants
-// Provides a constant for creating a uniform BorderRadiusDirectionalAttribute for all corners, considering text direction.
-const borderRadiusDirectional = BorderRadiusDirectionalAttribute.all;
-
-// Provides a constant for creating a uniform circular BorderRadiusDirectionalAttribute for all corners, considering text direction.
-const borderRadiusDirectionalCircular =
-    BorderRadiusDirectionalAttribute.circular;
-
-// Provides a constant for creating a vertical BorderRadiusDirectionalAttribute with independent radii for top and bottom sides, considering text direction.
-const borderRadiusDirectionalVertical =
-    BorderRadiusDirectionalAttribute.vertical;
-
-// Provides a constant for creating a horizontal BorderRadiusDirectionalAttribute with independent radii for start and end sides, considering text direction.
-const borderRadiusDirectionalHorizontal =
-    BorderRadiusDirectionalAttribute.horizontal;
-
-// Provides a constructor for creating a BorderRadiusDirectionalAttribute with custom radii for individual corners, considering text direction.
 const borderRadiusDirectionalOnly = BorderRadiusDirectionalAttribute.new;
 
-// Aliases for quick access
-// Alias for creating a uniform circular BorderRadiusAttribute.
-const rounded = borderRadiusCircular;
+// Alias for creating a uniform circular BorderRadiusDirectionalAttribute.
+BorderRadiusAttribute rounded(double p1, [double? p2, double? p3, double? p4]) {
+  final r1 = Radius.circular(p1);
+  Radius? r2 = p2 == null ? null : Radius.circular(p2);
+  Radius? r3 = p3 == null ? null : Radius.circular(p3);
+  Radius? r4 = p4 == null ? null : Radius.circular(p4);
 
-// Alias for creating a uniform circular BorderRadiusDirectionalAttribute, considering text direction.
-const roundedDirectional = borderRadiusDirectionalCircular;
+  return BorderRadiusAttribute.positional(r1, r2, r3, r4);
+}
+
+BorderRadiusDirectionalAttribute roundedDirectional(
+  double p1, [
+  double? p2,
+  double? p3,
+  double? p4,
+]) {
+  final r1 = Radius.circular(p1);
+  Radius? r2 = p2 == null ? null : Radius.circular(p2);
+  Radius? r3 = p3 == null ? null : Radius.circular(p3);
+  Radius? r4 = p4 == null ? null : Radius.circular(p4);
+
+  return BorderRadiusDirectionalAttribute.positional(r1, r2, r3, r4);
+}
 
 // Corner-specific BorderRadiusAttributes
 // Creates a BorderRadiusAttribute with a circular radius applied to the top-left corner.

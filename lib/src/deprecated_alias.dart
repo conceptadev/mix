@@ -229,61 +229,61 @@ class LegacyTextStyleUtility {
 const apply = SpreadPositionalParams(HelperUtility.apply);
 
 @Deprecated(kShortAliasDeprecation)
-const p = padding;
+final p = padding;
 
 @Deprecated(kShortAliasDeprecation)
-const pt = paddingTop;
+final pt = paddingTop;
 
 @Deprecated(kShortAliasDeprecation)
-const pb = paddingBottom;
+final pb = paddingBottom;
 
 @Deprecated(kShortAliasDeprecation)
-const pr = paddingRight;
+final pr = paddingRight;
 
 @Deprecated(kShortAliasDeprecation)
-const pl = paddingLeft;
+final pl = paddingLeft;
 
 @Deprecated(kShortAliasDeprecation)
-const ps = paddingStart;
+final ps = paddingStart;
 
 @Deprecated(kShortAliasDeprecation)
-const pe = paddingEnd;
+final pe = paddingEnd;
 
 @Deprecated(kShortAliasDeprecation)
-const px = paddingHorizontal;
+final px = paddingHorizontal;
 
 @Deprecated(kShortAliasDeprecation)
-const py = paddingVertical;
+final py = paddingVertical;
 
 @Deprecated(kShortAliasDeprecation)
-const pi = paddingFrom;
+final pi = paddingFrom;
 
 @Deprecated(kShortAliasDeprecation)
-const m = margin;
+final m = margin;
 @Deprecated(kShortAliasDeprecation)
-const mt = marginTop;
+final mt = marginTop;
 @Deprecated(kShortAliasDeprecation)
-const mb = marginBottom;
+final mb = marginBottom;
 @Deprecated(kShortAliasDeprecation)
-const mr = marginRight;
+final mr = marginRight;
 @Deprecated(kShortAliasDeprecation)
-const ml = marginLeft;
+final ml = marginLeft;
 @Deprecated(kShortAliasDeprecation)
-const ms = marginStart;
+final ms = marginStart;
 @Deprecated(kShortAliasDeprecation)
-const me = marginEnd;
+final me = marginEnd;
 @Deprecated(kShortAliasDeprecation)
-const mx = marginHorizontal;
+final mx = marginHorizontal;
 @Deprecated(kShortAliasDeprecation)
-const my = marginVertical;
+final my = marginVertical;
 @Deprecated(kShortAliasDeprecation)
-const mi = marginFrom;
+final mi = marginFrom;
 
 @Deprecated(kShortAliasDeprecation)
-const marginX = marginHorizontal;
+final marginX = marginHorizontal;
 
 @Deprecated(kShortAliasDeprecation)
-const marginY = marginVertical;
+final marginY = marginVertical;
 
 @Deprecated(kShortAliasDeprecation)
 const r = rounded;

@@ -11,7 +11,7 @@ class TextStyleRef extends TextStyle implements ResolvableTokenRef<TextStyle> {
 
   @override
   TextStyle resolve(MixData mix) {
-    return mix.resolver.textStyle(this);
+    return mix.resolver.textStyleToken(this);
   }
 
   @override

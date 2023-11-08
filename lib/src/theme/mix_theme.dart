@@ -78,16 +78,16 @@ class MixThemeData with Comparable {
   get props => [space, breakpoints, colors, textStyles];
 }
 
-class BuildContextResolver {
+class MixThemeResolver {
   final BuildContext context;
 
-  const BuildContextResolver(this.context);
+  const MixThemeResolver(this.context);
 
   MixThemeData get theme => MixTheme.of(context);
 
   TextDirection get directionality => Directionality.of(context);
 
-  Color color(ColorRef token) {
+  Color colorToken(ColorRef token) {
     final color = theme.colors[token]?.call(context);
 
     if (color == null) {
@@ -97,7 +97,7 @@ class BuildContextResolver {
     return color;
   }
 
-  TextStyle textStyle(TextStyleRef token) {
+  TextStyle textStyleToken(TextStyleRef token) {
     final style = theme.textStyles[token]?.call(context);
 
     if (style == null) {
@@ -107,7 +107,7 @@ class BuildContextResolver {
     return style;
   }
 
-  double space(double value) {
+  double spaceToken(double value) {
     final refs = theme.space.map((key, _) => MapEntry(key.ref, key));
 
     // Check if value is a reference.

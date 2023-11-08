@@ -92,6 +92,16 @@ class BorderDirectionalAttribute extends BoxBorderAttribute<BorderDirectional> {
           top: vertical,
           bottom: vertical,
         );
+
+  BorderAttribute toBorder() {
+    return BorderAttribute(
+      left: start,
+      right: end,
+      top: top,
+      bottom: bottom,
+    );
+  }
+
   @override
   BorderDirectionalAttribute merge(
     BoxBorderAttribute<BorderDirectional>? other,

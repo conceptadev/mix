@@ -16,7 +16,7 @@ class ColorAttribute extends ScalarAttribute<ColorAttribute, Color> {
     final resolvedColor = value;
 
     return resolvedColor is ColorRef
-        ? mix.resolver.color(resolvedColor)
+        ? mix.resolver.colorToken(resolvedColor)
         : resolvedColor;
   }
 }

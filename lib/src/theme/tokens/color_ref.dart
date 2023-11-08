@@ -22,7 +22,7 @@ class ColorRef extends Color implements ResolvableTokenRef<Color> {
   const ColorRef(this.name) : super(0);
 
   @override
-  Color resolve(MixData mix) => mix.resolver.color(this);
+  Color resolve(MixData mix) => mix.resolver.colorToken(this);
 
   @override
   bool operator ==(Object other) {
