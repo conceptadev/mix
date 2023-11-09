@@ -24,7 +24,7 @@ abstract class TokenRef<T> extends MixToken with Comparable {
   T call() => ref;
 
   @override
-  get props => [name, ref];
+  get props => [name];
 }
 
 typedef MixTokenMap<T extends MixToken, V> = Map<T, TokenValueGetter<V?>>;

@@ -35,7 +35,6 @@ void main() {
       expect(constraints.maxWidth, double.infinity);
       expect(constraints.minHeight, 0);
       expect(constraints.maxHeight, double.infinity);
-      return const Placeholder();
     });
     test('resolve returns correct BoxConstraints with specific values', () {
       const attr = BoxConstraintsAttribute(minWidth: 50, minHeight: 100);

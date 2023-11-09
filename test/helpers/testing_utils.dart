@@ -24,6 +24,58 @@ final EmptyMixData = MixData.create(
   StyleMix.empty,
 );
 
+MediaQuery createMediaQuery(Size size) {
+  return MediaQuery(
+    data: MediaQueryData(size: size),
+    child: MixTheme(
+      data: MixThemeData(),
+      child: MaterialApp(
+        home: Scaffold(
+          body: Builder(
+            builder: (BuildContext context) {
+              return Container();
+            },
+          ),
+        ),
+      ),
+    ),
+  );
+}
+
+Widget createBrightnessTheme(Brightness brightness) {
+  return MixTheme(
+    data: MixThemeData(),
+    child: MaterialApp(
+      theme: ThemeData(brightness: brightness),
+      home: Scaffold(
+        body: Builder(
+          builder: (BuildContext context) {
+            return Container();
+          },
+        ),
+      ),
+    ),
+  );
+}
+
+Widget createDirectionality(TextDirection direction) {
+  return MixTheme(
+    data: MixThemeData(),
+    child: MaterialApp(
+      home: Directionality(
+        textDirection: direction,
+        child: Scaffold(
+          body: Builder(
+            builder: (BuildContext context) {
+              return Container();
+            },
+          ),
+        ),
+      ),
+    ),
+  );
+}
+
 extension WidgetTesterExt on WidgetTester {
   Future<void> pumpWithMix(
     Widget widget, {

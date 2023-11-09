@@ -30,9 +30,6 @@ import 'utils/text_util.dart';
 @Deprecated('Use mainAxisAlignment instead')
 const mainAxis = mainAxisAlignment;
 
-@Deprecated('use Mix.chooser instead')
-void when(bool _) => throw UnimplementedError();
-
 @Deprecated('Use onXSmall instead')
 final xsmall = onXSmall;
 

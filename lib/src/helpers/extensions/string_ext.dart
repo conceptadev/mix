@@ -73,11 +73,12 @@ extension StringExt on String {
       words.map((word) => word.capitalize).join(_spaceSeparator);
 
   String get sentenceCase {
-    if (words.isEmpty) return this;
+    final wordList = [...words];
+    if (wordList.isEmpty) return this;
 
-    words[0] = words.first.capitalize;
+    wordList[0] = wordList.first.capitalize;
 
-    return words.join(_spaceSeparator);
+    return wordList.join(_spaceSeparator);
   }
 }
 

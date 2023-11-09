@@ -42,7 +42,9 @@ ContextVariant _directionalityVariant(TextDirection direction) {
 ContextVariant _brightnessVariant(Brightness brightness) {
   return ContextVariant(
     'on-${brightness.name.paramCase}',
-    when: (BuildContext context) => Theme.of(context).brightness == brightness,
+    when: (BuildContext context) {
+      return Theme.of(context).brightness == brightness;
+    },
   );
 }
 
@@ -52,7 +54,9 @@ ContextVariant _breakpointVariant(ScreenSizeToken screenSize) {
     when: (BuildContext context) {
       final breakpoints = MixTheme.of(context).breakpoints;
 
-      return breakpoints.getScreenSize(context).index <= screenSize.index;
+      final screenSizeContextToken = breakpoints.getScreenSize(context);
+
+      return screenSizeContextToken.index <= screenSize.index;
     },
   );
 }

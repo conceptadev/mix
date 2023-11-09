@@ -69,8 +69,6 @@ class BoxConstraintsAttribute extends ConstraintsAttribute<BoxConstraints> {
             BoxConstraints.tightFor(width: width, height: height)
         : constraints;
 
-    assert(constraints != null, 'constraints is null');
-
     return constraints ?? const BoxConstraints();
   }
 
