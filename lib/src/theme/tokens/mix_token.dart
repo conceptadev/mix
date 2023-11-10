@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 
 abstract class MixToken<T> {
   final String name;
+
   const MixToken(this.name);
 
   @override
@@ -11,25 +12,17 @@ abstract class MixToken<T> {
 
     if (runtimeType != other.runtimeType) return false;
 
-    return other is MixToken && other.name == name;
+    return other is MixToken<T> && other.name == name;
   }
 
   @override
-  int get hashCode => name.hashCode;
+  int get hashCode => Object.hash(name, runtimeType);
 }
 
-abstract class ResolvableMixToken<T> extends MixToken<T> {
-  final T Function(BuildContext context) _resolver;
-  const ResolvableMixToken(super.name, this._resolver);
-
-  T resolve(BuildContext context) => _resolver(context);
+mixin TokenResolver<T> on MixToken<T> {
+  T Function(BuildContext context) get tokenResolver;
+  T resolve(BuildContext context) => tokenResolver(context);
 }
 
-mixin TokenValueRef<T> on MixToken<T> {
-  T get ref;
-
-  T call() => ref;
-}
-
-typedef DesignTokenMap<T extends MixToken<V>, V>
+typedef DesignTokenMap<T extends MixToken, V>
     = Map<T, V Function(BuildContext context)>;

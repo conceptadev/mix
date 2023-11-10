@@ -3,21 +3,23 @@ import 'mix_token.dart';
 final $space = _SpaceTokenUtil();
 
 class _SpaceTokenUtil {
-  final xsmall = SpaceToken.xsmall.ref;
-  final small = SpaceToken.small.ref;
-  final medium = SpaceToken.medium.ref;
-  final large = SpaceToken.large.ref;
-  final xlarge = SpaceToken.xlarge.ref;
-  final xxlarge = SpaceToken.xxlarge.ref;
+  final xsmall = SpaceToken.xsmall();
+  final small = SpaceToken.small();
+  final medium = SpaceToken.medium();
+  final large = SpaceToken.large();
+  final xlarge = SpaceToken.xlarge();
+  final xxlarge = SpaceToken.xxlarge();
   _SpaceTokenUtil();
 }
+
+typedef SpaceTokenRef = double;
 
 /// A class representing a space token, which extends `MixToken` class
 /// and uses the `SizeTokenMixin` mixin.
 ///
 /// A space token defines a value for controlling the
 /// size of UI elements.
-class SpaceToken extends MixToken<double> with TokenValueRef {
+class SpaceToken extends MixToken<SpaceTokenRef> {
   static const xsmall = SpaceToken('--mix-space-xsmall');
   static const small = SpaceToken('--mix-space-small');
   static const medium = SpaceToken('--mix-space-medium');
@@ -31,8 +33,7 @@ class SpaceToken extends MixToken<double> with TokenValueRef {
   /// [name] is used to initialize the superclass `MixToken`.
   const SpaceToken(super.name);
 
-  @override
-  double get ref => hashCode.toDouble() * -1;
+  double call() => hashCode * -1.0;
 }
 
 // Helper class to wrap functions that can return
@@ -42,17 +43,17 @@ class WithSpaceTokens<T> {
 
   const WithSpaceTokens(T Function(double value) fn) : _fn = fn;
 
-  T get xsmall => call(SpaceToken.xsmall.ref);
+  T get xsmall => call(SpaceToken.xsmall());
 
-  T get small => call(SpaceToken.small.ref);
+  T get small => call(SpaceToken.small());
 
-  T get medium => call(SpaceToken.medium.ref);
+  T get medium => call(SpaceToken.medium());
 
-  T get large => call(SpaceToken.large.ref);
+  T get large => call(SpaceToken.large());
 
-  T get xlarge => call(SpaceToken.xlarge.ref);
+  T get xlarge => call(SpaceToken.xlarge());
 
-  T get xxlarge => call(SpaceToken.xxlarge.ref);
+  T get xxlarge => call(SpaceToken.xxlarge());
 
   @Deprecated('Use xsmall instead')
   T get xs => xsmall;

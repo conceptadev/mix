@@ -2,73 +2,67 @@
 
 import 'package:flutter/material.dart';
 
-import '../../helpers/extensions/build_context_ext.dart';
-import 'mix_token.dart';
 import 'refs.dart';
 
-class MaterialColorToken extends MixToken<Color> {
-  const MaterialColorToken(super.name);
-}
-
 class _MaterialDesignColors {
-  final primary = ResolvableColorToken(
+  final primary = ColorTokenResolver(
     '--md-color-primary',
-    (context) => context.colorScheme.primary,
+    (context) => Theme.of(context).colorScheme.primary,
   );
 
-  final secondary = ResolvableColorToken(
+  final secondary = ColorTokenResolver(
     '--md-color-secondary',
-    (context) => context.colorScheme.secondary,
+    (context) => Theme.of(context).colorScheme.secondary,
   );
 
-  final tertiary = ResolvableColorToken(
+  final tertiary = ColorTokenResolver(
     '--md-color-tertiary',
-    (context) => context.colorScheme.tertiary,
+    (context) => Theme.of(context).colorScheme.tertiary,
   );
 
-  final surface = ResolvableColorToken(
+  final surface = ColorTokenResolver(
     '--md-color-surface',
-    (context) => context.colorScheme.surface,
+    (context) => Theme.of(context).colorScheme.surface,
   );
 
-  final background = ResolvableColorToken(
+  final background = ColorTokenResolver(
     '--md-color-background',
-    (context) => context.colorScheme.background,
+    (context) => Theme.of(context).colorScheme.background,
   );
 
-  final error = ResolvableColorToken(
+  final error = ColorTokenResolver(
     '--md-color-error',
-    (context) => context.colorScheme.error,
+    (context) => Theme.of(context).colorScheme.error,
   );
 
-  final onPrimary = ResolvableColorToken(
+  final onPrimary = ColorTokenResolver(
     '--md-color-on-primary',
-    (context) => context.colorScheme.onPrimary,
+    (context) => Theme.of(context).colorScheme.onPrimary,
   );
 
-  final onSecondary = ResolvableColorToken(
+  final onSecondary = ColorTokenResolver(
     '--md-color-on-secondary',
-    (context) => context.colorScheme.onSecondary,
+    (context) => Theme.of(context).colorScheme.onSecondary,
   );
 
-  final onTertiary = ResolvableColorToken(
+  final onTertiary = ColorTokenResolver(
     '--md-color-on-tertiary',
-    (context) => context.colorScheme.onTertiary,
+    (context) => Theme.of(context).colorScheme.onTertiary,
   );
 
-  final onSurface = ResolvableColorToken(
+  final onSurface = ColorTokenResolver(
     '--md-color-on-surface',
-    (context) => context.colorScheme.onSurface,
+    (context) => Theme.of(context).colorScheme.onSurface,
   );
 
-  final onBackground = ResolvableColorToken(
+  final onBackground = ColorTokenResolver(
     '--md-color-on-background',
-    (context) => context.colorScheme.onBackground,
+    (context) => Theme.of(context).colorScheme.onBackground,
   );
 
-  final onError = ResolvableColorToken(
+  final onError = ColorTokenResolver(
     '--md-color-on-error',
-    (context) => context.colorScheme.onError,
+    (context) => Theme.of(context).colorScheme.onError,
   );
 
   _MaterialDesignColors();
@@ -77,118 +71,118 @@ class _MaterialDesignColors {
 // Material 3 TextTheme Tokens.
 class MaterialTextStyles {
   //  Material 3 text styles
-  final displayLarge = ResolvableTextStyleToken(
-    '--md3-displa-large',
-    (context) => context.textTheme.displayLarge!,
+  final displayLarge = TextStyleTokenResolver(
+    '--md3-display-large',
+    (context) => Theme.of(context).textTheme.displayLarge!,
   );
-  final displayMedium = ResolvableTextStyleToken(
-    '--md3-displaymedium',
-    (context) => context.textTheme.displayMedium!,
+  final displayMedium = TextStyleTokenResolver(
+    '--md3-display-medium',
+    (context) => Theme.of(context).textTheme.displayMedium!,
   );
-  final displaySmall = ResolvableTextStyleToken(
+  final displaySmall = TextStyleTokenResolver(
     '--md3-display-small',
-    (context) => context.textTheme.displaySmall!,
+    (context) => Theme.of(context).textTheme.displaySmall!,
   );
-  final headlineLarge = ResolvableTextStyleToken(
+  final headlineLarge = TextStyleTokenResolver(
     '--md3-headline-large',
-    (context) => context.textTheme.headlineLarge!,
+    (context) => Theme.of(context).textTheme.headlineLarge!,
   );
-  final headlineMedium = ResolvableTextStyleToken(
+  final headlineMedium = TextStyleTokenResolver(
     '--md3-headline-medium',
-    (context) => context.textTheme.headlineMedium!,
+    (context) => Theme.of(context).textTheme.headlineMedium!,
   );
-  final headlineSmall = ResolvableTextStyleToken(
+  final headlineSmall = TextStyleTokenResolver(
     '--md3-headline-small',
-    (context) => context.textTheme.headlineSmall!,
+    (context) => Theme.of(context).textTheme.headlineSmall!,
   );
-  final titleLarge = ResolvableTextStyleToken(
+  final titleLarge = TextStyleTokenResolver(
     '--md3-title-large',
-    (context) => context.textTheme.titleLarge!,
+    (context) => Theme.of(context).textTheme.titleLarge!,
   );
-  final titleMedium = ResolvableTextStyleToken(
+  final titleMedium = TextStyleTokenResolver(
     '--md3-title-medium',
-    (context) => context.textTheme.titleMedium!,
+    (context) => Theme.of(context).textTheme.titleMedium!,
   );
-  final titleSmall = ResolvableTextStyleToken(
+  final titleSmall = TextStyleTokenResolver(
     '--md3-title-small',
-    (context) => context.textTheme.titleSmall!,
+    (context) => Theme.of(context).textTheme.titleSmall!,
   );
-  final bodyLarge = ResolvableTextStyleToken(
+  final bodyLarge = TextStyleTokenResolver(
     '--md3-body-large',
-    (context) => context.textTheme.bodyLarge!,
+    (context) => Theme.of(context).textTheme.bodyLarge!,
   );
-  final bodyMedium = ResolvableTextStyleToken(
+  final bodyMedium = TextStyleTokenResolver(
     '--md3-body-medium',
-    (context) => context.textTheme.bodyMedium!,
+    (context) => Theme.of(context).textTheme.bodyMedium!,
   );
-  final bodySmall = ResolvableTextStyleToken(
+  final bodySmall = TextStyleTokenResolver(
     '--md3-body-small',
-    (context) => context.textTheme.bodySmall!,
+    (context) => Theme.of(context).textTheme.bodySmall!,
   );
-  final labelLarge = ResolvableTextStyleToken(
+  final labelLarge = TextStyleTokenResolver(
     '--md3-label-large',
-    (context) => context.textTheme.labelLarge!,
+    (context) => Theme.of(context).textTheme.labelLarge!,
   );
-  final labelMedium = ResolvableTextStyleToken(
+  final labelMedium = TextStyleTokenResolver(
     '--md3-label-medium',
-    (context) => context.textTheme.labelMedium!,
+    (context) => Theme.of(context).textTheme.labelMedium!,
   );
-  final labelSmall = ResolvableTextStyleToken(
+  final labelSmall = TextStyleTokenResolver(
     '--md3-label-small',
-    (context) => context.textTheme.labelSmall!,
+    (context) => Theme.of(context).textTheme.labelSmall!,
   );
   // Material 2 text styles
-  final headline1 = ResolvableTextStyleToken(
+  final headline1 = TextStyleTokenResolver(
     '--md2-text-style-headline1',
-    (context) => context.textTheme.headline1!,
+    (context) => Theme.of(context).textTheme.headline1!,
   );
-  final headline2 = ResolvableTextStyleToken(
+  final headline2 = TextStyleTokenResolver(
     '--md2-text-style-headline2',
-    (context) => context.textTheme.headline2!,
+    (context) => Theme.of(context).textTheme.headline2!,
   );
-  final headline3 = ResolvableTextStyleToken(
+  final headline3 = TextStyleTokenResolver(
     '--md2-text-style-headline3',
-    (context) => context.textTheme.headline3!,
+    (context) => Theme.of(context).textTheme.headline3!,
   );
-  final headline4 = ResolvableTextStyleToken(
+  final headline4 = TextStyleTokenResolver(
     '--md2-text-style-headline4',
-    (context) => context.textTheme.headline4!,
+    (context) => Theme.of(context).textTheme.headline4!,
   );
-  final headline5 = ResolvableTextStyleToken(
+  final headline5 = TextStyleTokenResolver(
     '--md2-text-style-headline5',
-    (context) => context.textTheme.headline5!,
+    (context) => Theme.of(context).textTheme.headline5!,
   );
-  final headline6 = ResolvableTextStyleToken(
+  final headline6 = TextStyleTokenResolver(
     '--md2-text-style-headline6',
-    (context) => context.textTheme.headline6!,
+    (context) => Theme.of(context).textTheme.headline6!,
   );
-  final subtitle1 = ResolvableTextStyleToken(
+  final subtitle1 = TextStyleTokenResolver(
     '--md2-text-style-subtitle1',
-    (context) => context.textTheme.subtitle1!,
+    (context) => Theme.of(context).textTheme.subtitle1!,
   );
-  final subtitle2 = ResolvableTextStyleToken(
+  final subtitle2 = TextStyleTokenResolver(
     '--md2-text-style-subtitle2',
-    (context) => context.textTheme.subtitle2!,
+    (context) => Theme.of(context).textTheme.subtitle2!,
   );
-  final bodyText1 = ResolvableTextStyleToken(
+  final bodyText1 = TextStyleTokenResolver(
     '--md2-text-style-bodyText1',
-    (context) => context.textTheme.bodyText1!,
+    (context) => Theme.of(context).textTheme.bodyText1!,
   );
-  final bodyText2 = ResolvableTextStyleToken(
+  final bodyText2 = TextStyleTokenResolver(
     '--md2-text-style-bodyText2',
-    (context) => context.textTheme.bodyText2!,
+    (context) => Theme.of(context).textTheme.bodyText2!,
   );
-  final caption = ResolvableTextStyleToken(
+  final caption = TextStyleTokenResolver(
     '--md2-text-style-caption',
-    (context) => context.textTheme.caption!,
+    (context) => Theme.of(context).textTheme.caption!,
   );
-  final button = ResolvableTextStyleToken(
+  final button = TextStyleTokenResolver(
     '--md2-text-style-button',
-    (context) => context.textTheme.button!,
+    (context) => Theme.of(context).textTheme.button!,
   );
-  final overline = ResolvableTextStyleToken(
+  final overline = TextStyleTokenResolver(
     '--md2-text-style-overline',
-    (context) => context.textTheme.overline!,
+    (context) => Theme.of(context).textTheme.overline!,
   );
 
   MaterialTextStyles();

@@ -31,10 +31,10 @@ class MixThemeData with Comparable {
   final DesignTokenMap<SpaceToken, double> space;
 
   final DesignTokenMap<BreakpointToken, BreakpointConstraint> breakpoints;
-
   final DesignTokenMap<ColorToken, Color> colors;
+
   final DesignTokenMap<TextStyleToken, TextStyle> textStyles;
-  final DesignTokenMap<RadiiToken, Radius> radii;
+  final DesignTokenMap<RadiusToken, Radius> radii;
 
   const MixThemeData.raw({
     required this.breakpoints,
@@ -58,7 +58,7 @@ class MixThemeData with Comparable {
     DesignTokenMap<ColorToken, Color>? colors,
     DesignTokenMap<SpaceToken, double>? space,
     DesignTokenMap<TextStyleToken, TextStyle>? textStyles,
-    DesignTokenMap<RadiiToken, Radius>? radii,
+    DesignTokenMap<RadiusToken, Radius>? radii,
   }) {
     return MixThemeData.raw(
       breakpoints: {..._defaultBreakpoints, ...?breakpoints},
@@ -74,7 +74,7 @@ class MixThemeData with Comparable {
     DesignTokenMap<ColorToken, Color>? colors,
     DesignTokenMap<SpaceToken, double>? space,
     DesignTokenMap<TextStyleToken, TextStyle>? textStyles,
-    DesignTokenMap<RadiiToken, Radius>? radii,
+    DesignTokenMap<RadiusToken, Radius>? radii,
   }) {
     return MixThemeData.raw(
       breakpoints: breakpoints ?? this.breakpoints,
@@ -118,29 +118,43 @@ class MixTokenResolver {
   MixThemeData get _theme => MixTheme.of(context);
 
   Color colorToken(ColorToken token) {
-    if (token is ResolvableColorToken) {
+    final color = _theme.colors[token]?.call(context);
+
+    if (color != null) return color;
+
+    if (token is ColorTokenResolver) {
       return token.resolve(context);
     }
-    final color = _theme.colors[token]?.call(context);
 
     assert(color != null, 'Color token $token is not defined in Mix Theme');
 
     return color ?? Colors.transparent;
   }
 
-  Radius radiiToken(RadiiToken token) {
+  Radius radiiToken(RadiusToken token) {
     final radius = _theme.radii[token]?.call(context);
 
-    assert(radius != null, 'Radii token $token is not defined in Mix Theme');
+    if (radius != null) return radius;
+
+    if (token is RadiusTokenResolver) {
+      return token.resolve(context);
+    }
+
+    assert(
+      radius != null,
+      'Radii token $token is not defined in Mix Themem or it needs to have a token resolver',
+    );
 
     return radius ?? Radius.zero;
   }
 
   TextStyle textStyleToken(TextStyleToken token) {
-    if (token is ResolvableTextStyleToken) {
+    final style = _theme.textStyles[token]?.call(context);
+    if (style != null) return style;
+
+    if (token is TextStyleTokenResolver) {
       return token.resolve(context);
     }
-    final style = _theme.textStyles[token]?.call(context);
 
     assert(style != null, 'TextStyle token $token is not defined in Mix Theme');
 
@@ -150,6 +164,8 @@ class MixTokenResolver {
   double spaceToken(SpaceToken token) {
     final space = _theme.space[token]?.call(context);
 
+    if (space != null) return space;
+
     assert(space != null, 'Spacetoken $token is not defined in Mix Theme');
 
     return space ?? 0;
@@ -157,7 +173,7 @@ class MixTokenResolver {
 
   double spaceTokenRef(double value) {
     final token = _theme.space.keys.firstWhereOrNull(
-      (key) => key.ref == value,
+      (key) => key() == value,
     );
 
     return token == null ? value : spaceToken(token);

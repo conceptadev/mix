@@ -13,8 +13,6 @@ class ColorToken extends Color implements MixToken<Color> {
   operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    if (runtimeType != other.runtimeType) return false;
-
     return other is ColorToken && other.name == name;
   }
 
@@ -22,23 +20,11 @@ class ColorToken extends Color implements MixToken<Color> {
   int get hashCode => name.hashCode;
 }
 
-class ResolvableColorToken extends ColorToken {
-  final Color Function(BuildContext context) _resolver;
-  const ResolvableColorToken(String name, this._resolver) : super(name);
-
-  Color resolve(BuildContext context) => _resolver(context);
-
+class ColorTokenResolver extends ColorToken with TokenResolver<Color> {
   @override
-  operator ==(Object other) {
-    if (identical(this, other)) return true;
+  final Color Function(BuildContext context) tokenResolver;
 
-    if (runtimeType != other.runtimeType) return false;
-
-    return other is ResolvableColorToken && other.name == name;
-  }
-
-  @override
-  int get hashCode => name.hashCode;
+  const ColorTokenResolver(super.name, this.tokenResolver);
 }
 
 class TextStyleToken extends TextStyle implements MixToken<TextStyle> {
@@ -51,8 +37,6 @@ class TextStyleToken extends TextStyle implements MixToken<TextStyle> {
   operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    if (runtimeType != other.runtimeType) return false;
-
     return other is TextStyleToken && other.name == name;
   }
 
@@ -60,59 +44,34 @@ class TextStyleToken extends TextStyle implements MixToken<TextStyle> {
   int get hashCode => name.hashCode;
 }
 
-class ResolvableTextStyleToken extends TextStyleToken {
-  final TextStyle Function(BuildContext context) _resolver;
-  const ResolvableTextStyleToken(super.name, this._resolver);
-
-  TextStyle resolve(BuildContext context) => _resolver(context);
-
+class TextStyleTokenResolver extends TextStyleToken
+    with TokenResolver<TextStyle> {
   @override
-  operator ==(Object other) {
-    if (identical(this, other)) return true;
+  final TextStyle Function(BuildContext context) tokenResolver;
 
-    if (runtimeType != other.runtimeType) return false;
-
-    return other is ResolvableTextStyleToken && other.name == name;
-  }
-
-  @override
-  int get hashCode => name.hashCode;
+  const TextStyleTokenResolver(super.name, this.tokenResolver);
 }
 
-class RadiiToken extends Radius implements MixToken<Radius> {
+class RadiusToken extends Radius implements MixToken<Radius> {
   @override
   final String name;
 
-  const RadiiToken(this.name) : super.circular(0);
+  const RadiusToken(this.name) : super.circular(0);
 
   @override
   operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    if (runtimeType != other.runtimeType) return false;
-
-    return other is RadiiToken && other.name == name;
+    return other is RadiusToken && other.name == name;
   }
 
   @override
   int get hashCode => name.hashCode;
 }
 
-class ResolvableRadiiToken extends RadiiToken {
-  final Radius Function(BuildContext context) _resolver;
-  const ResolvableRadiiToken(super.name, this._resolver);
-
-  Radius resolve(BuildContext context) => _resolver(context);
-
+class RadiusTokenResolver extends RadiusToken with TokenResolver<Radius> {
   @override
-  operator ==(Object other) {
-    if (identical(this, other)) return true;
+  final Radius Function(BuildContext context) tokenResolver;
 
-    if (runtimeType != other.runtimeType) return false;
-
-    return other is ResolvableRadiiToken && other.name == name;
-  }
-
-  @override
-  int get hashCode => name.hashCode;
+  const RadiusTokenResolver(super.name, this.tokenResolver);
 }

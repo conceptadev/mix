@@ -114,6 +114,14 @@ extension WidgetTesterExt on WidgetTester {
     );
   }
 
+  Future<void> pumpMaterialApp(Widget widget) async {
+    await pumpWidget(
+      MaterialApp(
+        home: widget,
+      ),
+    );
+  }
+
   Future<void> pumpStyledWidget(
     StyledWidget widget, {
     MixThemeData theme = const MixThemeData.empty(),
