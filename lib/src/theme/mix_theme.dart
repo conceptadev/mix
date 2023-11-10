@@ -5,10 +5,9 @@ import '../core/equality/compare_mixin.dart';
 import 'material_theme/color_scheme_tokens.dart';
 import 'material_theme/text_theme_tokens.dart';
 import 'tokens/breakpoints.dart';
-import 'tokens/color_ref.dart';
 import 'tokens/mix_token.dart';
+import 'tokens/refs.dart';
 import 'tokens/space_token.dart';
-import 'tokens/text_style_ref.dart';
 
 class MixTheme extends InheritedWidget {
   const MixTheme({required Widget child, required this.data, Key? key})
@@ -33,12 +32,12 @@ class MixTheme extends InheritedWidget {
 
 @immutable
 class MixThemeData with Comparable {
-  final MixSpaceTokens space;
+  final DesignTokenMap<SpaceToken, double> space;
 
   final MixBreakpointsTokens breakpoints;
 
-  final MixColorTokens colors;
-  final MixTextStyleTokens textStyles;
+  final DesignTokenMap<ColorRef, Color> colors;
+  final DesignTokenMap<TextStyleRef, TextStyle> textStyles;
 
   const MixThemeData.raw({
     required this.breakpoints,
@@ -57,9 +56,9 @@ class MixThemeData with Comparable {
 
   factory MixThemeData({
     MixBreakpointsTokens? breakpoints,
-    MixColorTokens? colors,
-    MixSpaceTokens? space,
-    MixTextStyleTokens? textStyles,
+    DesignTokenMap<ColorRef, Color>? colors,
+    DesignTokenMap<SpaceToken, double>? space,
+    DesignTokenMap<TextStyleRef, TextStyle>? textStyles,
   }) {
     return MixThemeData.raw(
       breakpoints: breakpoints ?? const MixBreakpointsTokens(),
@@ -71,9 +70,9 @@ class MixThemeData with Comparable {
 
   MixThemeData copyWith({
     MixBreakpointsTokens? breakpoints,
-    MixColorTokens? colors,
-    MixSpaceTokens? space,
-    MixTextStyleTokens? textStyles,
+    DesignTokenMap<ColorRef, Color>? colors,
+    DesignTokenMap<SpaceToken, double>? space,
+    DesignTokenMap<TextStyleRef, TextStyle>? textStyles,
   }) {
     return MixThemeData.raw(
       breakpoints: breakpoints ?? this.breakpoints,

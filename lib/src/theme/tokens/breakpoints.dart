@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
+import '../../core/equality/compare_mixin.dart';
+
 // ignore: enum-constants-ordering
 enum ScreenSizeToken { xsmall, small, medium, large }
 
-class MixBreakpointsTokens {
+class MixBreakpointsTokens with Comparable {
   final double xsmall;
   final double small;
   final double medium;
@@ -51,23 +53,5 @@ class MixBreakpointsTokens {
   }
 
   @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is MixBreakpointsTokens &&
-        other.xsmall == xsmall &&
-        other.small == small &&
-        other.medium == medium &&
-        other.large == large;
-  }
-
-  @override
-  String toString() {
-    return 'MixThemeBreakpoints(xsmall: $xsmall, small: $small, medium: $medium, large: $large)';
-  }
-
-  @override
-  int get hashCode {
-    return xsmall.hashCode ^ small.hashCode ^ medium.hashCode ^ large.hashCode;
-  }
+  get props => [large, medium, small, xsmall];
 }

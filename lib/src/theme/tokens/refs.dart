@@ -15,7 +15,7 @@ import 'mix_token.dart';
 //   ColorSwatch resolve(MixData mix) => mix.resolver.colorSwatch(this);
 // }
 
-class ColorRef extends Color implements ResolvableTokenRef<Color> {
+class ColorRef extends Color implements MixToken<Color> {
   @override
   final String name;
 
@@ -35,4 +35,24 @@ class ColorRef extends Color implements ResolvableTokenRef<Color> {
   int get hashCode => name.hashCode;
 }
 
-typedef MixColorTokens = MixTokenMap<ColorRef, Color>;
+class TextStyleRef extends TextStyle implements MixToken<TextStyle> {
+  @override
+  final String name;
+
+  const TextStyleRef(this.name);
+
+  @override
+  TextStyle resolve(MixData mix) {
+    return mix.resolver.textStyleToken(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is TextStyleRef && other.name == name;
+  }
+
+  @override
+  int get hashCode => name.hashCode;
+}

@@ -76,6 +76,23 @@ Widget createDirectionality(TextDirection direction) {
   );
 }
 
+Widget createWithMixTheme(
+  MixThemeData theme,
+) {
+  return MixTheme(
+    data: theme,
+    child: MaterialApp(
+      home: Scaffold(
+        body: Builder(
+          builder: (BuildContext context) {
+            return Container();
+          },
+        ),
+      ),
+    ),
+  );
+}
+
 extension WidgetTesterExt on WidgetTester {
   Future<void> pumpWithMix(
     Widget widget, {

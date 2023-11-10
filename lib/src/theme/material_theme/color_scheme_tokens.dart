@@ -1,5 +1,8 @@
+import 'package:flutter/material.dart';
+
 import '../../helpers/extensions/build_context_ext.dart';
-import '../tokens/color_ref.dart';
+import '../tokens/mix_token.dart';
+import '../tokens/refs.dart';
 
 class $MDColorScheme {
   static const primary = ColorRef('primary');
@@ -28,7 +31,7 @@ class $MDColorScheme {
 
   const $MDColorScheme._();
 
-  static MixColorTokens get tokens {
+  static DesignTokenMap<ColorRef, Color> get tokens {
     return {
       primary: (context) => context.colorScheme.primary,
       secondary: (context) => context.colorScheme.secondary,

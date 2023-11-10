@@ -1,34 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import '../../core/equality/compare_mixin.dart';
 import '../../factory/mix_provider_data.dart';
-import 'text_style_ref.dart';
 
-abstract class MixToken {
+abstract class MixToken<T> {
   final String name;
   const MixToken(this.name);
-}
-
-abstract class ResolvableTokenRef<T> extends MixToken {
-  const ResolvableTokenRef(super.name);
 
   T resolve(MixData mix);
+
+  @override
+  operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    if (runtimeType != other.runtimeType) return false;
+
+    return other is MixToken && other.name == name;
+  }
+
+  @override
+  int get hashCode => name.hashCode;
 }
 
-abstract class TokenRef<T> extends MixToken with Comparable {
-  const TokenRef(super.name);
-
+mixin TokenValueRef<T> on MixToken<T> {
   T get ref;
 
   T call() => ref;
-
-  @override
-  get props => [name];
 }
 
-typedef MixTokenMap<T extends MixToken, V> = Map<T, TokenValueGetter<V?>>;
-
-typedef MixTextStyleTokens = MixTokenMap<TextStyleRef, TextStyle>;
-
-typedef TokenValueGetter<T> = T Function(BuildContext context);
+typedef DesignTokenMap<T extends MixToken<V>, V>
+    = Map<T, V Function(BuildContext context)>;

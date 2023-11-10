@@ -1,3 +1,4 @@
+import '../../factory/mix_provider_data.dart';
 import 'mix_token.dart';
 
 // Define default.
@@ -12,7 +13,7 @@ class SpaceTokens {
 
   const SpaceTokens._();
 
-  static MixSpaceTokens get tokens => {
+  static DesignTokenMap<SpaceToken, double> get tokens => {
         SpaceTokens.xsmall: (context) => 4.0,
         SpaceTokens.small: (context) => 8.0,
         SpaceTokens.medium: (context) => 16.0,
@@ -27,7 +28,7 @@ class SpaceTokens {
 ///
 /// A space token defines a value for controlling the
 /// size of UI elements.
-class SpaceToken extends TokenRef<double> {
+class SpaceToken extends MixToken<double> with TokenValueRef {
   /// A constant constructor that accepts a `String` argument named [name].
   /// Name needs to be unique per token
   ///
@@ -35,10 +36,11 @@ class SpaceToken extends TokenRef<double> {
   const SpaceToken(super.name);
 
   @override
+  double resolve(MixData mix) => mix.resolver.spaceToken(ref);
+
+  @override
   double get ref => hashCode.toDouble() * -1;
 }
-
-typedef MixSpaceTokens = MixTokenMap<SpaceToken, double>;
 
 typedef MixSpaceTokensReference = Map<double, SpaceToken>;
 

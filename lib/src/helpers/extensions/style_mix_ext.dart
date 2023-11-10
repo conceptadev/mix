@@ -28,13 +28,13 @@ extension StyleMixExt<T extends Attribute> on StyleMix {
     required Widget child,
     bool inherit = false,
     Key? key,
-    @Deprecated('Use the style parameter instead') StyleMix? mix,
     StyleMix? style,
+    @Deprecated('Use the style parameter instead') StyleMix? mix,
   }) {
     return container(
       inherit: inherit,
       key: key,
-      style: merge(style ?? mix),
+      style: style ?? mix,
       child: child,
     );
   }

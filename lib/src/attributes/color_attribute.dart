@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../factory/mix_provider_data.dart';
-import '../theme/tokens/color_ref.dart';
+import '../theme/tokens/refs.dart';
 import 'attribute.dart';
 
 @immutable
