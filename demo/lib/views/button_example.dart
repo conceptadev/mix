@@ -35,7 +35,7 @@ StyleMix get _baseStyle => StyleMix(
         // added because of lack of style parameters (yellow lines)
         decoration: TextDecoration.none,
         fontWeight: FontWeight.w600,
-        fontFamily: $M3Text.bodySmall.fontFamily,
+        fontFamily: MaterialTextStyles.bodySmall.fontFamily,
       ),
       mainAxisSize(MainAxisSize.min), // For flexbox
       ButtonSizeVariants.small(
@@ -148,11 +148,11 @@ StyleMix get _style => StyleMix(
         color: const Color(0xFFFF004C),
       ),
       backgroundColor(const Color(0x0F07E2FF)),
-      iconColor($MDColorScheme.onBackground),
+      iconColor(_MaterialDesignColors.onBackground),
       onDisabled(
-        backgroundColor($MDColorScheme.background.withOpacity(0.3)),
-        textStyle(color: $MDColorScheme.onBackground.withOpacity(0.3)),
-        iconColor($MDColorScheme.onBackground.withOpacity(0.3)),
+        backgroundColor(_MaterialDesignColors.background.withOpacity(0.3)),
+        textStyle(color: _MaterialDesignColors.onBackground.withOpacity(0.3)),
+        iconColor(_MaterialDesignColors.onBackground.withOpacity(0.3)),
       ),
     );
 

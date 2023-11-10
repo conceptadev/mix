@@ -33,7 +33,7 @@ class TextStyleAttribute extends VisualAttribute<TextStyle> {
   final double? decorationThickness;
   final List<String>? fontFamilyFallback;
 
-  final TextStyleRef? ref;
+  final TextStyleToken? ref;
 
   const TextStyleAttribute({
     this.background,
@@ -104,8 +104,8 @@ class TextStyleAttribute extends VisualAttribute<TextStyle> {
 
   @override
   TextStyle resolve(MixData mix) {
-    // Load as DTO for consistent merging behavior.
-    final textStyle = ref?.resolve(mix);
+    // ignore: avoid-non-null-assertion
+    final textStyle = ref == null ? null : mix.resolver.textStyleToken(ref!);
 
     return textStyle ??
         TextStyle(

@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import '../../factory/mix_provider_data.dart';
-
 abstract class MixToken<T> {
   final String name;
   const MixToken(this.name);
-
-  T resolve(MixData mix);
 
   @override
   operator ==(Object other) {
@@ -20,6 +16,13 @@ abstract class MixToken<T> {
 
   @override
   int get hashCode => name.hashCode;
+}
+
+abstract class ResolvableMixToken<T> extends MixToken<T> {
+  final T Function(BuildContext context) _resolver;
+  const ResolvableMixToken(super.name, this._resolver);
+
+  T resolve(BuildContext context) => _resolver(context);
 }
 
 mixin TokenValueRef<T> on MixToken<T> {

@@ -6,13 +6,36 @@ import '../theme/tokens/breakpoints.dart';
 import '../variants/context_variant.dart';
 
 // Breakpoint context variants
-final onSmall = _breakpointVariant(ScreenSizeToken.small);
+final onSmall = _screenSizeVariant(BreakpointToken.small);
 
-final onXSmall = _breakpointVariant(ScreenSizeToken.xsmall);
+final onXSmall = _screenSizeVariant(BreakpointToken.xsmall);
 
-final onMedium = _breakpointVariant(ScreenSizeToken.medium);
+final onMedium = _screenSizeVariant(BreakpointToken.medium);
 
-final onLarge = _breakpointVariant(ScreenSizeToken.large);
+final onLarge = _screenSizeVariant(BreakpointToken.large);
+
+ContextVariant onBreakpoint({
+  minWidth = 0,
+  maxWidth = double.infinity,
+  orientation = BreakpointOrientation.all,
+}) {
+  final constraints = BreakpointConstraint(
+    minWidth: minWidth,
+    maxWidth: maxWidth,
+    orientation: orientation,
+  );
+  final constraintName =
+      'minWidth-${constraints.minWidth}-maxWidth-${constraints.maxWidth}-orientation-${constraints.orientation}';
+
+  return ContextVariant(
+    'on-$constraintName',
+    when: (BuildContext context) {
+      final size = MediaQuery.sizeOf(context);
+
+      return constraints.matches(size);
+    },
+  );
+}
 
 // Brighness context variants
 final onDark = _brightnessVariant(Brightness.dark);
@@ -48,15 +71,22 @@ ContextVariant _brightnessVariant(Brightness brightness) {
   );
 }
 
-ContextVariant _breakpointVariant(ScreenSizeToken screenSize) {
+ContextVariant _screenSizeVariant(BreakpointToken screenSize) {
   return ContextVariant(
     'on-${screenSize.name.paramCase}',
     when: (BuildContext context) {
       final breakpoints = MixTheme.of(context).breakpoints;
 
-      final screenSizeContextToken = breakpoints.getScreenSize(context);
+      final size = MediaQuery.sizeOf(context);
 
-      return screenSizeContextToken.index <= screenSize.index;
+      final selectedbreakpoint = breakpoints[screenSize];
+
+      assert(
+        selectedbreakpoint != null,
+        'Breakpoint ${screenSize.name} is not defined in the theme',
+      );
+
+      return selectedbreakpoint?.call(context).matches(size) ?? false;
     },
   );
 }

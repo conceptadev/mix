@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../core/equality/compare_mixin.dart';
 import '../factory/mix_provider_data.dart';
-import '../factory/style_mix.dart';
 
 @immutable
 abstract class Attribute with Comparable, Mergeable {
@@ -81,13 +80,4 @@ abstract class MixExtension<T extends MixExtension<T>> extends ThemeExtension<T>
   P snap<P>(P from, P to, double t) {
     return t < 0.5 ? from : to;
   }
-}
-
-abstract class StyleMixBuilder<T extends StyleMixBuilder<T>> with Comparable {
-  final StyleMix value;
-  const StyleMixBuilder(this.value);
-
-  T merge(T other);
-
-  Widget render(Widget child);
 }

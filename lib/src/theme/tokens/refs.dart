@@ -1,56 +1,116 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import '../../factory/mix_provider_data.dart';
 import 'mix_token.dart';
 
-// class ColorSwatchRef extends ColorSwatch<int> implements TokenRef<ColorSwatch> {
-//   @override
-//   final String name;
-
-//   const ColorSwatchRef(this.name) : super(0, const {});
-
-//   get props => [name];
-//   @override
-//   ColorSwatch resolve(MixData mix) => mix.resolver.colorSwatch(this);
-// }
-
-class ColorRef extends Color implements MixToken<Color> {
+class ColorToken extends Color implements MixToken<Color> {
   @override
   final String name;
 
-  const ColorRef(this.name) : super(0);
+  const ColorToken(this.name) : super(0);
 
   @override
-  Color resolve(MixData mix) => mix.resolver.colorToken(this);
-
-  @override
-  bool operator ==(Object other) {
+  operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is ColorRef && other.name == name;
+    if (runtimeType != other.runtimeType) return false;
+
+    return other is ColorToken && other.name == name;
   }
 
   @override
   int get hashCode => name.hashCode;
 }
 
-class TextStyleRef extends TextStyle implements MixToken<TextStyle> {
-  @override
-  final String name;
+class ResolvableColorToken extends ColorToken {
+  final Color Function(BuildContext context) _resolver;
+  const ResolvableColorToken(String name, this._resolver) : super(name);
 
-  const TextStyleRef(this.name);
+  Color resolve(BuildContext context) => _resolver(context);
 
   @override
-  TextStyle resolve(MixData mix) {
-    return mix.resolver.textStyleToken(this);
+  operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    if (runtimeType != other.runtimeType) return false;
+
+    return other is ResolvableColorToken && other.name == name;
   }
 
   @override
-  bool operator ==(Object other) {
+  int get hashCode => name.hashCode;
+}
+
+class TextStyleToken extends TextStyle implements MixToken<TextStyle> {
+  @override
+  final String name;
+
+  const TextStyleToken(this.name);
+
+  @override
+  operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is TextStyleRef && other.name == name;
+    if (runtimeType != other.runtimeType) return false;
+
+    return other is TextStyleToken && other.name == name;
+  }
+
+  @override
+  int get hashCode => name.hashCode;
+}
+
+class ResolvableTextStyleToken extends TextStyleToken {
+  final TextStyle Function(BuildContext context) _resolver;
+  const ResolvableTextStyleToken(super.name, this._resolver);
+
+  TextStyle resolve(BuildContext context) => _resolver(context);
+
+  @override
+  operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    if (runtimeType != other.runtimeType) return false;
+
+    return other is ResolvableTextStyleToken && other.name == name;
+  }
+
+  @override
+  int get hashCode => name.hashCode;
+}
+
+class RadiiToken extends Radius implements MixToken<Radius> {
+  @override
+  final String name;
+
+  const RadiiToken(this.name) : super.circular(0);
+
+  @override
+  operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    if (runtimeType != other.runtimeType) return false;
+
+    return other is RadiiToken && other.name == name;
+  }
+
+  @override
+  int get hashCode => name.hashCode;
+}
+
+class ResolvableRadiiToken extends RadiiToken {
+  final Radius Function(BuildContext context) _resolver;
+  const ResolvableRadiiToken(super.name, this._resolver);
+
+  Radius resolve(BuildContext context) => _resolver(context);
+
+  @override
+  operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    if (runtimeType != other.runtimeType) return false;
+
+    return other is ResolvableRadiiToken && other.name == name;
   }
 
   @override

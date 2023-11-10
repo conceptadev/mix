@@ -67,7 +67,7 @@ class CustomMixWidget extends StatelessWidget {
       elevation(10),
       rounded(10),
       backgroundColor($M3Color.primary),
-      textStyle(as: $M3Text.bodyMedium),
+      textStyle(as: MaterialTextStyles.bodyMedium),
       textStyle(color: $M3Color.onPrimary),
       onHover(
         elevation(2),

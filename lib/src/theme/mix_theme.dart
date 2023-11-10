@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 import '../core/equality/compare_mixin.dart';
-import 'material_theme/color_scheme_tokens.dart';
-import 'material_theme/text_theme_tokens.dart';
+import '../helpers/extensions/iterable_ext.dart';
 import 'tokens/breakpoints.dart';
 import 'tokens/mix_token.dart';
 import 'tokens/refs.dart';
@@ -25,113 +23,143 @@ class MixTheme extends InheritedWidget {
   final MixThemeData data;
 
   @override
-  bool updateShouldNotify(MixTheme oldWidget) {
-    return data != oldWidget.data;
-  }
+  bool updateShouldNotify(MixTheme oldWidget) => data != oldWidget.data;
 }
 
 @immutable
 class MixThemeData with Comparable {
   final DesignTokenMap<SpaceToken, double> space;
 
-  final MixBreakpointsTokens breakpoints;
+  final DesignTokenMap<BreakpointToken, BreakpointConstraint> breakpoints;
 
-  final DesignTokenMap<ColorRef, Color> colors;
-  final DesignTokenMap<TextStyleRef, TextStyle> textStyles;
+  final DesignTokenMap<ColorToken, Color> colors;
+  final DesignTokenMap<TextStyleToken, TextStyle> textStyles;
+  final DesignTokenMap<RadiiToken, Radius> radii;
 
   const MixThemeData.raw({
     required this.breakpoints,
     required this.colors,
     required this.space,
     required this.textStyles,
+    required this.radii,
   });
 
   const MixThemeData.empty()
       : this.raw(
-          breakpoints: const MixBreakpointsTokens(),
+          breakpoints: const {},
           colors: const {},
           space: const {},
           textStyles: const {},
+          radii: const {},
         );
 
   factory MixThemeData({
-    MixBreakpointsTokens? breakpoints,
-    DesignTokenMap<ColorRef, Color>? colors,
+    DesignTokenMap<BreakpointToken, BreakpointConstraint>? breakpoints,
+    DesignTokenMap<ColorToken, Color>? colors,
     DesignTokenMap<SpaceToken, double>? space,
-    DesignTokenMap<TextStyleRef, TextStyle>? textStyles,
+    DesignTokenMap<TextStyleToken, TextStyle>? textStyles,
+    DesignTokenMap<RadiiToken, Radius>? radii,
   }) {
     return MixThemeData.raw(
-      breakpoints: breakpoints ?? const MixBreakpointsTokens(),
-      colors: {...?colors, ...$MDColorScheme.tokens},
-      space: {...?space, ...SpaceTokens.tokens},
-      textStyles: {...?textStyles, ...$M3Text.tokens, ...$M2Text.tokens},
+      breakpoints: {..._defaultBreakpoints, ...?breakpoints},
+      colors: {...?colors},
+      space: {..._defaultSpace, ...?space},
+      textStyles: {...?textStyles},
+      radii: {...?radii},
     );
   }
 
   MixThemeData copyWith({
-    MixBreakpointsTokens? breakpoints,
-    DesignTokenMap<ColorRef, Color>? colors,
+    DesignTokenMap<BreakpointToken, BreakpointConstraint>? breakpoints,
+    DesignTokenMap<ColorToken, Color>? colors,
     DesignTokenMap<SpaceToken, double>? space,
-    DesignTokenMap<TextStyleRef, TextStyle>? textStyles,
+    DesignTokenMap<TextStyleToken, TextStyle>? textStyles,
+    DesignTokenMap<RadiiToken, Radius>? radii,
   }) {
     return MixThemeData.raw(
       breakpoints: breakpoints ?? this.breakpoints,
       colors: colors ?? this.colors,
       space: space ?? this.space,
       textStyles: textStyles ?? this.textStyles,
+      radii: radii ?? this.radii,
     );
   }
 
   @override
-  get props => [space, breakpoints, colors, textStyles];
+  get props => [space, breakpoints, colors, textStyles, radii];
 }
 
-class MixThemeResolver {
+final DesignTokenMap<SpaceToken, double> _defaultSpace = {
+  SpaceToken.xsmall: (context) => 4.0,
+  SpaceToken.small: (context) => 8.0,
+  SpaceToken.medium: (context) => 16.0,
+  SpaceToken.large: (context) => 24.0,
+  SpaceToken.xlarge: (context) => 36.0,
+  SpaceToken.xxlarge: (context) => 72.0,
+};
+
+final DesignTokenMap<BreakpointToken, BreakpointConstraint>
+    _defaultBreakpoints = {
+  BreakpointToken.xsmall: (context) =>
+      const BreakpointConstraint(maxWidth: 599),
+  BreakpointToken.small: (context) =>
+      const BreakpointConstraint(minWidth: 600, maxWidth: 1023),
+  BreakpointToken.medium: (context) =>
+      const BreakpointConstraint(minWidth: 1024, maxWidth: 1439),
+  BreakpointToken.large: (context) =>
+      const BreakpointConstraint(minWidth: 1440, maxWidth: double.infinity),
+};
+
+class MixTokenResolver {
   final BuildContext context;
 
-  const MixThemeResolver(this.context);
+  const MixTokenResolver(this.context);
 
-  MixThemeData get theme => MixTheme.of(context);
+  MixThemeData get _theme => MixTheme.of(context);
 
-  TextDirection get directionality => Directionality.of(context);
-
-  Color colorToken(ColorRef token) {
-    final color = theme.colors[token]?.call(context);
-
-    if (color == null) {
-      throw Exception('Color token $token is not defined in Mix Theme');
+  Color colorToken(ColorToken token) {
+    if (token is ResolvableColorToken) {
+      return token.resolve(context);
     }
+    final color = _theme.colors[token]?.call(context);
 
-    return color;
+    assert(color != null, 'Color token $token is not defined in Mix Theme');
+
+    return color ?? Colors.transparent;
   }
 
-  TextStyle textStyleToken(TextStyleRef token) {
-    final style = theme.textStyles[token]?.call(context);
+  Radius radiiToken(RadiiToken token) {
+    final radius = _theme.radii[token]?.call(context);
 
-    if (style == null) {
-      throw Exception('TextStyle token $token is not defined in Mix Theme');
-    }
+    assert(radius != null, 'Radii token $token is not defined in Mix Theme');
 
-    return style;
+    return radius ?? Radius.zero;
   }
 
-  double spaceToken(double value) {
-    final refs = theme.space.map((key, _) => MapEntry(key.ref, key));
-
-    // Check if value is a reference.
-    final token = refs[value];
-
-    // If value is not a reference return value.
-    if (token == null) {
-      return value;
+  TextStyle textStyleToken(TextStyleToken token) {
+    if (token is ResolvableTextStyleToken) {
+      return token.resolve(context);
     }
+    final style = _theme.textStyles[token]?.call(context);
 
-    final space = theme.space[token]?.call(context);
+    assert(style != null, 'TextStyle token $token is not defined in Mix Theme');
 
-    if (space == null) {
-      throw Exception('Spacetoken $token is not defined in Mix Theme');
-    }
+    return style ?? const TextStyle();
+  }
 
-    return space;
+  double spaceToken(SpaceToken token) {
+    final space = _theme.space[token]?.call(context);
+
+    assert(space != null, 'Spacetoken $token is not defined in Mix Theme');
+
+    return space ?? 0;
+  }
+
+  double spaceTokenRef(double value) {
+    final token = _theme.space.keys.firstWhereOrNull(
+      (key) => key.ref == value,
+    );
+
+    return token == null ? value : spaceToken(token);
   }
 }

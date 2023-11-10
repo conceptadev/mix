@@ -1,4 +1,4 @@
-import '../attributes/space_attribute.dart';
+import '../../mix.dart';
 
 const _paddingFactory =
     SpaceUtilityFactory<PaddingAttribute>(PaddingAttribute.new);
@@ -37,7 +37,7 @@ final margin = _marginFactory.shorthand;
 final marginOnly = _marginFactory.only;
 final marginDirectional = _marginDirectionalFactory.shorthand;
 final marginDirectionalOnly = _marginDirectionalFactory.only;
-final marginTop = _marginFactory.top;
+final marginTop = WithSpaceTokens(_marginFactory.top);
 final marginBottom = _marginFactory.bottom;
 final marginLeft = _marginFactory.left;
 final marginRight = _marginFactory.right;

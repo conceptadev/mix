@@ -15,6 +15,8 @@ There has been some considerable changes on the inter workings of Mix Context, t
 
 This does not impact the current behavior of Mix, but if you were building internal widgets or using the Builder most like this will be changed.
 
+## Material Theme Tokens have been changed also
+
 ## Inherit Mix has been removed
 
 Inheritance of Mix was turned on by default for Text and Icon widgets. However best practice now is to be explicit on which Mix to pass down, by passing the Mix itself. All inheritance has now been turn off to facilitate debugging and troubleshooting. Also we do plan better tooling for migration, and automation that makes a more explicit inheritance a much more favorable approach.

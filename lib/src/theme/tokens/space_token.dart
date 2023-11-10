@@ -1,26 +1,15 @@
-import '../../factory/mix_provider_data.dart';
 import 'mix_token.dart';
 
-// Define default.
-class SpaceTokens {
-  // Define your tokens.
-  static const xsmall = SpaceToken('--mix-space-xsmall');
-  static const small = SpaceToken('--mix-space-small');
-  static const medium = SpaceToken('--mix-space-medium');
-  static const large = SpaceToken('--mix-space-large');
-  static const xlarge = SpaceToken('--mix-space-xlarge');
-  static const xxlarge = SpaceToken('--mix-space-xxlarge');
+final $space = _SpaceTokenUtil();
 
-  const SpaceTokens._();
-
-  static DesignTokenMap<SpaceToken, double> get tokens => {
-        SpaceTokens.xsmall: (context) => 4.0,
-        SpaceTokens.small: (context) => 8.0,
-        SpaceTokens.medium: (context) => 16.0,
-        SpaceTokens.large: (context) => 24.0,
-        SpaceTokens.xlarge: (context) => 36.0,
-        SpaceTokens.xxlarge: (context) => 72.0,
-      };
+class _SpaceTokenUtil {
+  final xsmall = SpaceToken.xsmall.ref;
+  final small = SpaceToken.small.ref;
+  final medium = SpaceToken.medium.ref;
+  final large = SpaceToken.large.ref;
+  final xlarge = SpaceToken.xlarge.ref;
+  final xxlarge = SpaceToken.xxlarge.ref;
+  _SpaceTokenUtil();
 }
 
 /// A class representing a space token, which extends `MixToken` class
@@ -29,6 +18,13 @@ class SpaceTokens {
 /// A space token defines a value for controlling the
 /// size of UI elements.
 class SpaceToken extends MixToken<double> with TokenValueRef {
+  static const xsmall = SpaceToken('--mix-space-xsmall');
+  static const small = SpaceToken('--mix-space-small');
+  static const medium = SpaceToken('--mix-space-medium');
+  static const large = SpaceToken('--mix-space-large');
+  static const xlarge = SpaceToken('--mix-space-xlarge');
+  static const xxlarge = SpaceToken('--mix-space-xxlarge');
+
   /// A constant constructor that accepts a `String` argument named [name].
   /// Name needs to be unique per token
   ///
@@ -36,44 +32,40 @@ class SpaceToken extends MixToken<double> with TokenValueRef {
   const SpaceToken(super.name);
 
   @override
-  double resolve(MixData mix) => mix.resolver.spaceToken(ref);
-
-  @override
   double get ref => hashCode.toDouble() * -1;
 }
 
-typedef MixSpaceTokensReference = Map<double, SpaceToken>;
-
 // Helper class to wrap functions that can return
 // Space tokens in their methods
-class WrapWithSpaceTokens<T> {
+class WithSpaceTokens<T> {
   final T Function(double value) _fn;
 
-  const WrapWithSpaceTokens(T Function(double value) fn) : _fn = fn;
+  const WithSpaceTokens(T Function(double value) fn) : _fn = fn;
 
-  T get xsmall => call(SpaceTokens.xsmall.ref);
+  T get xsmall => call(SpaceToken.xsmall.ref);
 
-  T get small => call(SpaceTokens.small.ref);
+  T get small => call(SpaceToken.small.ref);
 
-  T get medium => call(SpaceTokens.medium.ref);
+  T get medium => call(SpaceToken.medium.ref);
 
-  T get large => call(SpaceTokens.large.ref);
+  T get large => call(SpaceToken.large.ref);
 
-  T get xlarge => call(SpaceTokens.xlarge.ref);
+  T get xlarge => call(SpaceToken.xlarge.ref);
 
-  T get xxlarge => call(SpaceTokens.xxlarge.ref);
+  T get xxlarge => call(SpaceToken.xxlarge.ref);
 
-  @Deprecated('Use medium instead')
-  T get md => medium;
+  @Deprecated('Use xsmall instead')
+  T get xs => xsmall;
   @Deprecated('Use small instead')
   T get sm => small;
+  @Deprecated('Use medium instead')
+  T get md => medium;
   @Deprecated('Use large instead')
   T get lg => large;
   @Deprecated('Use xlarge instead')
   T get xl => xlarge;
-  @Deprecated('Use xsmall instead')
-  T get xs => xsmall;
   @Deprecated('Use xxlarge instead')
   T get xxl => xxlarge;
+
   T call(double value) => _fn(value);
 }

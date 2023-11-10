@@ -27,7 +27,7 @@ class M3TokensTypographyExampleTile extends HookWidget {
       ),
       tilePadding: const EdgeInsets.all(0),
       children: [
-        ...$M3Text.tokens
+        ...MaterialTextStyles.tokens
             .map(
               (token, style) => MapEntry(
                 token,

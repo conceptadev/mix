@@ -17,13 +17,13 @@ class MixData with Comparable {
   // Instance variables for widget attributes, widget decorators and token resolver.
   final VisualAttributeMap _attributes;
 
-  final MixThemeResolver _resolver;
+  final MixTokenResolver _resolver;
 
   /// A Private constructor for the [MixData] class t hat initializes its main variables.
   ///
   /// It takes in [attributes], [decorators] and [resolver] as required parameters.
   MixData._({
-    required MixThemeResolver resolver,
+    required MixTokenResolver resolver,
     required VisualAttributeMap attributes,
   })  : _attributes = attributes,
         _resolver = resolver;
@@ -32,15 +32,15 @@ class MixData with Comparable {
     final styleMix = applyContextToVisualAttributes(context, style);
 
     return MixData._(
-      resolver: MixThemeResolver(context),
+      resolver: MixTokenResolver(context),
       attributes: VisualAttributeMap(styleMix),
     );
   }
 
-  /// Getter method for [MixThemeResolver].
+  /// Getter method for [MixTokenResolver].
   ///
   /// Returns current [_resolver].
-  MixThemeResolver get resolver => _resolver;
+  MixTokenResolver get resolver => _resolver;
 
   /// A getter method for [_attributes].
   ///

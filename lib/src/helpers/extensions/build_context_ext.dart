@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../factory/mix_provider.dart';
-import '../../factory/mix_provider_data.dart';
-import '../../theme/mix_theme.dart';
+import '../../../mix.dart';
 
 extension BuildContextExt on BuildContext {
   MixData? get mix => Mix.maybeOf(this);
