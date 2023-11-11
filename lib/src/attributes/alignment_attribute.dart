@@ -27,9 +27,6 @@ abstract class AlignmentGeometryAttribute<T extends AlignmentGeometry>
 @immutable
 class AlignmentAttribute extends AlignmentGeometryAttribute<Alignment> {
   const AlignmentAttribute({super.x, super.y});
-  AlignmentDirectionalAttribute toDirectional() {
-    return AlignmentDirectionalAttribute(start: x, y: y);
-  }
 
   @override
   AlignmentAttribute merge(AlignmentAttribute? other) {

@@ -2,8 +2,10 @@
 
 import 'package:flutter/material.dart';
 
-import 'refs.dart';
+import 'color_token.dart';
+import 'text_style_token.dart';
 
+@immutable
 class _MaterialDesignColors {
   final primary = ColorTokenResolver(
     '--md-color-primary',
@@ -68,6 +70,7 @@ class _MaterialDesignColors {
   _MaterialDesignColors();
 }
 
+@immutable
 // Material 3 TextTheme Tokens.
 class MaterialTextStyles {
   //  Material 3 text styles
@@ -188,10 +191,11 @@ class MaterialTextStyles {
   MaterialTextStyles();
 }
 
-final $md = _MaterialTokens();
+final $md = MaterialTokens();
 
-class _MaterialTokens {
+@immutable
+class MaterialTokens {
   final colors = _MaterialDesignColors();
   final textStyles = MaterialTextStyles();
-  _MaterialTokens();
+  MaterialTokens();
 }

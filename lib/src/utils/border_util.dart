@@ -9,7 +9,7 @@ BorderAttribute border({
   BorderStyle? style,
   double? strokeAlign,
 }) {
-  final side = _borderSide(
+  final side = borderSide(
     color: color,
     width: width,
     style: style,
@@ -19,13 +19,15 @@ BorderAttribute border({
   return BorderAttribute(left: side, right: side, top: side, bottom: side);
 }
 
+const borderOnly = BorderAttribute.new;
+
 BorderDirectionalAttribute borderDirectional({
   Color? color,
   double? width,
   BorderStyle? style,
   double? strokeAlign,
 }) {
-  final side = _borderSide(
+  final side = borderSide(
     color: color,
     width: width,
     style: style,
@@ -40,6 +42,8 @@ BorderDirectionalAttribute borderDirectional({
   );
 }
 
+const borderDirectionalOnly = BorderDirectionalAttribute.new;
+
 BorderAttribute borderTop({
   Color? color,
   double? width,
@@ -47,7 +51,7 @@ BorderAttribute borderTop({
   double? strokeAlign,
 }) {
   return BorderAttribute(
-    top: _borderSide(
+    top: borderSide(
       color: color,
       width: width,
       style: style,
@@ -63,7 +67,7 @@ BorderAttribute borderBottom({
   double? strokeAlign,
 }) {
   return BorderAttribute(
-    bottom: _borderSide(
+    bottom: borderSide(
       color: color,
       width: width,
       style: style,
@@ -79,7 +83,7 @@ BorderAttribute borderLeft({
   double? strokeAlign,
 }) {
   return BorderAttribute(
-    left: _borderSide(
+    left: borderSide(
       color: color,
       width: width,
       style: style,
@@ -95,7 +99,7 @@ BorderAttribute borderRight({
   double? strokeAlign,
 }) {
   return BorderAttribute(
-    right: _borderSide(
+    right: borderSide(
       color: color,
       width: width,
       style: style,
@@ -111,7 +115,7 @@ BorderDirectionalAttribute borderStart({
   double? strokeAlign,
 }) {
   return BorderDirectionalAttribute(
-    start: _borderSide(
+    start: borderSide(
       color: color,
       width: width,
       style: style,
@@ -127,7 +131,7 @@ BorderDirectionalAttribute borderEnd({
   double? strokeAlign,
 }) {
   return BorderDirectionalAttribute(
-    end: _borderSide(
+    end: borderSide(
       color: color,
       width: width,
       style: style,
@@ -143,7 +147,7 @@ BorderAttribute borderHorizontal({
   double? strokeAlign,
 }) {
   return _borderSymetric(
-    horizontal: _borderSide(
+    horizontal: borderSide(
       color: color,
       width: width,
       style: style,
@@ -159,7 +163,7 @@ BorderAttribute borderVertical({
   double? strokeAlign,
 }) {
   return _borderSymetric(
-    vertical: _borderSide(
+    vertical: borderSide(
       color: color,
       width: width,
       style: style,
@@ -180,7 +184,7 @@ BorderAttribute _borderSymetric({
   );
 }
 
-BorderSideAttribute _borderSide({
+BorderSideAttribute borderSide({
   Color? color,
   double? width,
   BorderStyle? style,

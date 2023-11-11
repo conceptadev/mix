@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+@immutable
 abstract class MixToken<T> {
   final String name;
 
@@ -22,6 +23,10 @@ abstract class MixToken<T> {
 mixin TokenResolver<T> on MixToken<T> {
   T Function(BuildContext context) get tokenResolver;
   T resolve(BuildContext context) => tokenResolver(context);
+}
+
+mixin TokenValueReference<T> on MixToken<T> {
+  T call();
 }
 
 typedef DesignTokenMap<T extends MixToken, V>

@@ -32,39 +32,50 @@ abstract class SpaceGeometryAttribute<T extends EdgeInsetsGeometry>
   );
 
   @override
-  T resolve(MixData mix);
+  T resolve(MixData mix) {
+    final top = this.top ?? 0;
+    final bottom = this.bottom ?? 0;
+
+    if (this is SpaceAttribute) {
+      final left = this.left ?? 0;
+      final right = this.right ?? 0;
+
+      return EdgeInsets.only(
+        left: mix.resolver.spaceTokenRef(left),
+        top: mix.resolver.spaceTokenRef(top),
+        right: mix.resolver.spaceTokenRef(right),
+        bottom: mix.resolver.spaceTokenRef(bottom),
+      ) as T;
+    } else if (this is SpaceDirectionalAttribute) {
+      final start = this.start ?? 0;
+      final end = this.end ?? 0;
+
+      return EdgeInsetsDirectional.only(
+        start: mix.resolver.spaceTokenRef(start),
+        top: mix.resolver.spaceTokenRef(top),
+        end: mix.resolver.spaceTokenRef(end),
+        bottom: mix.resolver.spaceTokenRef(bottom),
+      ) as T;
+    }
+    throw UnsupportedError(
+      'SpaceGeometryAttribute must be either SpaceAttribute or SpaceDirectionalAttribute',
+    );
+  }
 
   @override
   get props => [top, bottom, left, right, start, end];
 }
 
 @immutable
-class SpaceAttribute extends SpaceGeometryAttribute<EdgeInsets> {
+abstract class SpaceAttribute extends SpaceGeometryAttribute<EdgeInsets> {
   const SpaceAttribute({super.top, super.bottom, super.left, super.right});
 
   @override
-  SpaceAttribute merge(SpaceAttribute? other) {
-    return SpaceAttribute(
-      top: other?.top ?? top,
-      bottom: other?.bottom ?? bottom,
-      left: other?.left ?? left,
-      right: other?.right ?? right,
-    );
-  }
-
-  @override
-  EdgeInsets resolve(MixData mix) {
-    return EdgeInsets.only(
-      left: left ?? 0,
-      top: top ?? 0,
-      right: right ?? 0,
-      bottom: bottom ?? 0,
-    );
-  }
+  SpaceAttribute merge(covariant SpaceAttribute? other);
 }
 
 @immutable
-class SpaceDirectionalAttribute
+abstract class SpaceDirectionalAttribute
     extends SpaceGeometryAttribute<EdgeInsetsDirectional> {
   const SpaceDirectionalAttribute({
     super.top,
@@ -74,24 +85,7 @@ class SpaceDirectionalAttribute
   });
 
   @override
-  SpaceDirectionalAttribute merge(SpaceDirectionalAttribute? other) {
-    return SpaceDirectionalAttribute(
-      top: other?.top ?? top,
-      bottom: other?.bottom ?? bottom,
-      start: other?.start ?? start,
-      end: other?.end ?? end,
-    );
-  }
-
-  @override
-  EdgeInsetsDirectional resolve(MixData mix) {
-    return EdgeInsetsDirectional.only(
-      start: start ?? 0,
-      top: top ?? 0,
-      end: end ?? 0,
-      bottom: bottom ?? 0,
-    );
-  }
+  SpaceDirectionalAttribute merge(covariant SpaceDirectionalAttribute? other);
 }
 
 @immutable
@@ -117,15 +111,6 @@ class PaddingAttribute extends PaddingGeometryAttribute<EdgeInsets>
     implements SpaceAttribute {
   const PaddingAttribute({super.top, super.bottom, super.left, super.right});
 
-  PaddingDirectionalAttribute toDirectional() {
-    return PaddingDirectionalAttribute(
-      top: top,
-      bottom: bottom,
-      start: left,
-      end: right,
-    );
-  }
-
   @override
   PaddingAttribute merge(PaddingAttribute? other) {
     return PaddingAttribute(
@@ -133,16 +118,6 @@ class PaddingAttribute extends PaddingGeometryAttribute<EdgeInsets>
       bottom: other?.bottom ?? bottom,
       left: other?.left ?? left,
       right: other?.right ?? right,
-    );
-  }
-
-  @override
-  EdgeInsets resolve(MixData mix) {
-    return EdgeInsets.only(
-      left: left ?? 0,
-      top: top ?? 0,
-      right: right ?? 0,
-      bottom: bottom ?? 0,
     );
   }
 }
@@ -165,16 +140,6 @@ class PaddingDirectionalAttribute
       bottom: other?.bottom ?? bottom,
       start: other?.start ?? start,
       end: other?.end ?? end,
-    );
-  }
-
-  @override
-  EdgeInsetsDirectional resolve(MixData mix) {
-    return EdgeInsetsDirectional.only(
-      start: start ?? 0,
-      top: top ?? 0,
-      end: end ?? 0,
-      bottom: bottom ?? 0,
     );
   }
 }
@@ -200,15 +165,6 @@ class MarginAttribute extends MarginGeometryAttribute<EdgeInsets>
     implements SpaceAttribute {
   const MarginAttribute({super.top, super.bottom, super.left, super.right});
 
-  MarginDirectionalAttribute toDirectional() {
-    return MarginDirectionalAttribute(
-      top: top,
-      bottom: bottom,
-      start: left,
-      end: right,
-    );
-  }
-
   @override
   MarginAttribute merge(MarginAttribute? other) {
     return MarginAttribute(
@@ -216,16 +172,6 @@ class MarginAttribute extends MarginGeometryAttribute<EdgeInsets>
       bottom: other?.bottom ?? bottom,
       left: other?.left ?? left,
       right: other?.right ?? right,
-    );
-  }
-
-  @override
-  EdgeInsets resolve(MixData mix) {
-    return EdgeInsets.only(
-      left: left ?? 0,
-      top: top ?? 0,
-      right: right ?? 0,
-      bottom: bottom ?? 0,
     );
   }
 }
@@ -248,16 +194,6 @@ class MarginDirectionalAttribute
       bottom: other?.bottom ?? bottom,
       start: other?.start ?? start,
       end: other?.end ?? end,
-    );
-  }
-
-  @override
-  EdgeInsetsDirectional resolve(MixData mix) {
-    return EdgeInsetsDirectional.only(
-      start: start ?? 0,
-      top: top ?? 0,
-      end: end ?? 0,
-      bottom: bottom ?? 0,
     );
   }
 }
@@ -315,22 +251,9 @@ class SpaceUtilityFactory<T extends SpaceGeometryAttribute> {
   T left(double value) => _builder(left: value);
   T right(double value) => _builder(right: value);
 
-  T symmetric({double? vertical, double? horizontal}) {
-    return _builder(
-      bottom: vertical,
-      left: horizontal,
-      right: horizontal,
-      top: vertical,
-    );
-  }
+  T horizontal(double value) => _builder(left: value, right: value);
 
-  T horizontal({double? left, double? right}) {
-    return _builder(left: left, right: right);
-  }
-
-  T vertical({double? top, double? bottom}) {
-    return _builder(bottom: bottom, top: top);
-  }
+  T vertical(double value) => _builder(bottom: value, top: value);
 }
 
 @immutable
@@ -366,22 +289,9 @@ class SpaceDirectionalUtilityFactory<T extends SpaceDirectionalAttribute> {
     return _builder(bottom: bottom, end: end, start: start, top: top);
   }
 
-  T symmetric({double? vertical, double? horizontal}) {
-    return _builder(
-      bottom: vertical,
-      end: horizontal,
-      start: horizontal,
-      top: vertical,
-    );
-  }
+  T vertical(double value) => _builder(bottom: value, top: value);
 
-  T vertical({double? top, double? bottom}) {
-    return _builder(bottom: bottom, top: top);
-  }
-
-  T horizontal({double? start, double? end}) {
-    return _builder(end: end, start: start);
-  }
+  T horizontal(double value) => _builder(end: value, start: value);
 
   T shorthand(double p1, [double? p2, double? p3, double? p4]) {
     double top = p1;

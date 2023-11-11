@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import '../core/equality/compare_mixin.dart';
 import '../helpers/extensions/iterable_ext.dart';
 import 'tokens/breakpoints.dart';
+import 'tokens/color_token.dart';
 import 'tokens/mix_token.dart';
-import 'tokens/refs.dart';
+import 'tokens/radius_token.dart';
 import 'tokens/space_token.dart';
+import 'tokens/text_style_token.dart';
 
 class MixTheme extends InheritedWidget {
   const MixTheme({required Widget child, required this.data, Key? key})
@@ -166,15 +168,18 @@ class MixTokenResolver {
 
     if (space != null) return space;
 
-    assert(space != null, 'Spacetoken $token is not defined in Mix Theme');
+    assert(space != null, 'SpaceToken: $token is not defined in Mix Theme');
 
     return space ?? 0;
   }
 
   double spaceTokenRef(double value) {
+    if (value == 0 || value > 0) return value;
     final token = _theme.space.keys.firstWhereOrNull(
       (key) => key() == value,
     );
+
+    assert(token != null, 'SpaceToken: $value is not defined in Mix Theme');
 
     return token == null ? value : spaceToken(token);
   }

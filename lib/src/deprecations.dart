@@ -3,6 +3,7 @@
 import 'attributes/attribute.dart';
 import 'factory/mix_provider_data.dart';
 import 'factory/style_mix.dart';
+import 'theme/tokens/space_token.dart';
 import 'utils/helper_util.dart';
 import 'variants/variant.dart';
 
@@ -67,3 +68,18 @@ extension DeprecatedMixExtension<T extends Attribute> on StyleMix {
 /// This refers to the deprecated class MixData and it's here for the purpose of maintaining compatibility.
 @Deprecated('Use MixData instead.')
 typedef MixContext = MixData;
+
+extension WithSpaceTokensExt<T> on UtilityWithSpaceTokens<T> {
+  @Deprecated('Use xsmall instead')
+  T get xs => xsmall;
+  @Deprecated('Use small instead')
+  T get sm => small;
+  @Deprecated('Use medium instead')
+  T get md => medium;
+  @Deprecated('Use large instead')
+  T get lg => large;
+  @Deprecated('Use xlarge instead')
+  T get xl => xlarge;
+  @Deprecated('Use xxlarge instead')
+  T get xxl => xxlarge;
+}
