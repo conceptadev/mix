@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
+import 'package:mix/src/variants/multi_variant.dart';
 
 import '../../helpers/testing_utils.dart';
 
@@ -156,35 +157,6 @@ void main() {
       expect(combinedStyle.variants.isEmpty, true);
 
       expect(combinedStyle.length, 0);
-    });
-  });
-
-  group('StyleMix.mergeList', () {
-    final style = StyleMix(attribute1);
-    test('should return a StyleMix with all instances combined', () {
-      final styleList = [
-        StyleMix(attribute2),
-        StyleMix(attribute3),
-        StyleMix(variantAttr1(attribute4)),
-      ];
-
-      final combinedStyle = style.mergeList(styleList);
-
-      // Expect that combinedStyle contains all attributes of style1, style2, and style3
-      expect(combinedStyle.styles.length, 3);
-      expect(combinedStyle.variants.length, 1);
-      expect(combinedStyle.length, 4);
-
-      expect(combinedStyle.values.contains(attribute1), true);
-      expect(combinedStyle.values.contains(attribute2), true);
-      expect(combinedStyle.values.contains(attribute3), true);
-      expect(combinedStyle.values.contains(variantAttr1(attribute4)), true);
-    });
-
-    test('should return an empty StyleMix when the list is empty', () {
-      final combinedStyle = style.mergeList([]);
-
-      expect(style, combinedStyle);
     });
   });
 

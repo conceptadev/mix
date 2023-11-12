@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../factory/style_mix.dart';
 import '../variants/context_variant.dart';
+import '../variants/multi_variant.dart';
 import '../variants/variant.dart';
 import 'attribute.dart';
 

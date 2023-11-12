@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 
 import '../factory/mix_provider_data.dart';
-import '../utils/helper_util.dart';
 import 'attribute.dart';
 import 'border/border_attribute.dart';
 import 'border/border_radius_attribute.dart';
@@ -59,10 +58,10 @@ class BoxDecorationAttribute extends DecorationAttribute<BoxDecoration> {
   BoxDecoration resolve(MixData mix) {
     return BoxDecoration(
       color: color?.resolve(mix),
-      border: resolveAttribute(border, mix),
-      borderRadius: resolveAttribute(borderRadius, mix),
+      border: border?.resolve(mix),
+      borderRadius: borderRadius?.resolve(mix),
       boxShadow: boxShadow?.map((e) => e.resolve(mix)).toList(),
-      gradient: resolveAttribute(gradient, mix),
+      gradient: gradient?.resolve(mix),
     );
   }
 
@@ -97,7 +96,7 @@ class ShapeDecorationAttribute extends DecorationAttribute<ShapeDecoration> {
     return ShapeDecorationAttribute(
       color: color?.merge(other.color) ?? other.color,
       shape: other.shape ?? shape,
-      gradient: mergeAttribute(gradient, other.gradient),
+      gradient: gradient?.merge(other.gradient) ?? other.gradient,
       boxShadow: mergeMergeableList(boxShadow, other.boxShadow),
     );
   }
@@ -106,7 +105,7 @@ class ShapeDecorationAttribute extends DecorationAttribute<ShapeDecoration> {
   ShapeDecoration resolve(MixData mix) {
     return ShapeDecoration(
       color: color?.resolve(mix),
-      gradient: resolveAttribute(gradient, mix),
+      gradient: gradient?.resolve(mix),
       shadows: boxShadow?.map((e) => e.resolve(mix)).toList(),
       shape: shape ?? const RoundedRectangleBorder(),
     );

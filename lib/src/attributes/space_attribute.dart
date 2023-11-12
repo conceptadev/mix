@@ -26,10 +26,28 @@ abstract class SpaceGeometryAttribute<T extends EdgeInsetsGeometry>
     this.end,
   });
 
+  SpaceGeometryAttribute<T> create({
+    double? top,
+    double? bottom,
+    double? left,
+    double? right,
+    double? start,
+    double? end,
+  });
+
   @override
   SpaceGeometryAttribute<T> merge(
     covariant SpaceGeometryAttribute<T>? other,
-  );
+  ) {
+    return create(
+      top: other?.top ?? top,
+      bottom: other?.bottom ?? bottom,
+      left: other?.left ?? left,
+      right: other?.right ?? right,
+      start: other?.start ?? start,
+      end: other?.end ?? end,
+    );
+  }
 
   @override
   T resolve(MixData mix) {
@@ -69,9 +87,6 @@ abstract class SpaceGeometryAttribute<T extends EdgeInsetsGeometry>
 @immutable
 abstract class SpaceAttribute extends SpaceGeometryAttribute<EdgeInsets> {
   const SpaceAttribute({super.top, super.bottom, super.left, super.right});
-
-  @override
-  SpaceAttribute merge(covariant SpaceAttribute? other);
 }
 
 @immutable
@@ -83,9 +98,6 @@ abstract class SpaceDirectionalAttribute
     super.start,
     super.end,
   });
-
-  @override
-  SpaceDirectionalAttribute merge(covariant SpaceDirectionalAttribute? other);
 }
 
 @immutable
@@ -99,11 +111,6 @@ abstract class PaddingGeometryAttribute<T extends EdgeInsetsGeometry>
     super.start,
     super.end,
   });
-
-  @override
-  PaddingGeometryAttribute<T> merge(
-    covariant PaddingGeometryAttribute<T>? other,
-  );
 }
 
 @immutable
@@ -112,12 +119,19 @@ class PaddingAttribute extends PaddingGeometryAttribute<EdgeInsets>
   const PaddingAttribute({super.top, super.bottom, super.left, super.right});
 
   @override
-  PaddingAttribute merge(PaddingAttribute? other) {
+  PaddingAttribute create({
+    double? top,
+    double? bottom,
+    double? left,
+    double? right,
+    double? start,
+    double? end,
+  }) {
     return PaddingAttribute(
-      top: other?.top ?? top,
-      bottom: other?.bottom ?? bottom,
-      left: other?.left ?? left,
-      right: other?.right ?? right,
+      top: top ?? this.top,
+      bottom: bottom ?? this.bottom,
+      left: left ?? this.left,
+      right: right ?? this.right,
     );
   }
 }
@@ -134,12 +148,19 @@ class PaddingDirectionalAttribute
   });
 
   @override
-  PaddingDirectionalAttribute merge(PaddingDirectionalAttribute? other) {
+  PaddingDirectionalAttribute create({
+    double? top,
+    double? bottom,
+    double? left,
+    double? right,
+    double? start,
+    double? end,
+  }) {
     return PaddingDirectionalAttribute(
-      top: other?.top ?? top,
-      bottom: other?.bottom ?? bottom,
-      start: other?.start ?? start,
-      end: other?.end ?? end,
+      top: top ?? this.top,
+      bottom: bottom ?? this.bottom,
+      start: start ?? this.start,
+      end: end ?? this.end,
     );
   }
 }
@@ -155,9 +176,6 @@ abstract class MarginGeometryAttribute<T extends EdgeInsetsGeometry>
     super.start,
     super.end,
   });
-
-  @override
-  MarginGeometryAttribute<T> merge(covariant MarginGeometryAttribute<T>? other);
 }
 
 @immutable
@@ -166,12 +184,19 @@ class MarginAttribute extends MarginGeometryAttribute<EdgeInsets>
   const MarginAttribute({super.top, super.bottom, super.left, super.right});
 
   @override
-  MarginAttribute merge(MarginAttribute? other) {
+  MarginAttribute create({
+    double? top,
+    double? bottom,
+    double? left,
+    double? right,
+    double? start,
+    double? end,
+  }) {
     return MarginAttribute(
-      top: other?.top ?? top,
-      bottom: other?.bottom ?? bottom,
-      left: other?.left ?? left,
-      right: other?.right ?? right,
+      top: top ?? this.top,
+      bottom: bottom ?? this.bottom,
+      left: left ?? this.left,
+      right: right ?? this.right,
     );
   }
 }
@@ -188,19 +213,19 @@ class MarginDirectionalAttribute
   });
 
   @override
-  MarginDirectionalAttribute merge(MarginDirectionalAttribute? other) {
+  MarginDirectionalAttribute create({
+    double? top,
+    double? bottom,
+    double? left,
+    double? right,
+    double? start,
+    double? end,
+  }) {
     return MarginDirectionalAttribute(
-      top: other?.top ?? top,
-      bottom: other?.bottom ?? bottom,
-      start: other?.start ?? start,
-      end: other?.end ?? end,
+      top: top ?? this.top,
+      bottom: bottom ?? this.bottom,
+      start: start ?? this.start,
+      end: end ?? this.end,
     );
   }
 }
-
-typedef SpaceUtility<T extends SpaceGeometryAttribute> = T Function({
-  double? top,
-  double? bottom,
-  double? left,
-  double? right,
-});

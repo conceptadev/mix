@@ -2,10 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../attributes/scalar_attribute.dart';
 
-const linearGradient = _linearGradient;
-const radialGradient = _radialGradient;
-
-GradientAttribute _linearGradient({
+GradientAttribute linearGradient({
   AlignmentGeometry? begin,
   AlignmentGeometry? end,
   required List<Color> colors,
@@ -27,7 +24,7 @@ GradientAttribute _linearGradient({
   );
 }
 
-GradientAttribute _radialGradient({
+GradientAttribute radialGradient({
   AlignmentGeometry? center,
   double? radius,
   required List<Color> colors,

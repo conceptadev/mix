@@ -3,64 +3,97 @@ import 'package:flutter/material.dart';
 import '../attributes/space_attribute.dart';
 import '../theme/tokens/space_token.dart';
 
-const _padding = SpaceUtilityFactory<PaddingAttribute>(PaddingAttribute.new);
+const _paddingUtil = SpaceUtilityFactory(PaddingAttribute.new);
+const _paddingDirectionalUtil =
+    SpaceDirectionalUtilityFactory(PaddingDirectionalAttribute.new);
 
-const _paddingDirectional =
-    SpaceDirectionalUtilityFactory<PaddingDirectionalAttribute>(
-  PaddingDirectionalAttribute.new,
-);
+final padding = _paddingUtil.shorthand;
+final paddingDirectional = _paddingDirectionalUtil.shorthand;
+final paddingOnly = _paddingUtil.only;
+final paddingDirectionalOnly = _paddingDirectionalUtil.only;
+final paddingAll = UtilityWithSpaceTokens(_paddingUtil.all);
+final paddingTop = UtilityWithSpaceTokens(_paddingUtil.top);
+final paddingBottom = UtilityWithSpaceTokens(_paddingUtil.bottom);
+final paddingLeft = UtilityWithSpaceTokens(_paddingUtil.left);
+final paddingRight = UtilityWithSpaceTokens(_paddingUtil.right);
+final paddingStart = UtilityWithSpaceTokens(_paddingDirectionalUtil.start);
+final paddingEnd = UtilityWithSpaceTokens(_paddingDirectionalUtil.end);
+final paddingHorizontal = UtilityWithSpaceTokens(_paddingUtil.horizontal);
+final paddingVertical = UtilityWithSpaceTokens(_paddingUtil.vertical);
 
-final padding = UtilityWithSpaceTokens.shorthand(_padding.shorthand);
-final paddingOnly = _padding.only;
-final paddingDirectional =
-    UtilityWithSpaceTokens.shorthand(_paddingDirectional.shorthand);
-final paddingDirectionalOnly = _paddingDirectional.only;
+PaddingGeometryAttribute paddingFrom(EdgeInsetsGeometry edgeInsets) {
+  if (edgeInsets is EdgeInsets) {
+    return _paddingUtil.from(edgeInsets);
+  } else if (edgeInsets is EdgeInsetsDirectional) {
+    return _paddingDirectionalUtil.from(edgeInsets);
+  }
+  throw UnimplementedError(
+    'paddingFrom is not implemented for ${edgeInsets.runtimeType}',
+  );
+}
 
-final paddingTop = UtilityWithSpaceTokens(_padding.top);
-final paddingBottom = UtilityWithSpaceTokens(_padding.bottom);
-final paddingLeft = UtilityWithSpaceTokens(_padding.left);
-final paddingRight = UtilityWithSpaceTokens(_padding.right);
-final paddingStart = UtilityWithSpaceTokens(_paddingDirectional.start);
-final paddingEnd = UtilityWithSpaceTokens(_paddingDirectional.end);
+const _marginUtil = SpaceUtilityFactory(MarginAttribute.new);
+const _marginDirectionalUtil =
+    SpaceDirectionalUtilityFactory(MarginDirectionalAttribute.new);
 
-final paddingHorizontal = UtilityWithSpaceTokens(_padding.horizontal);
-final paddingVertical = UtilityWithSpaceTokens(_padding.vertical);
-final paddingFrom = _padding.from;
+final margin = _marginUtil.shorthand;
+final marginDirectional = _marginDirectionalUtil.shorthand;
+final marginOnly = _marginUtil.only;
+final marginDirectionalOnly = _marginDirectionalUtil.only;
+final marginAll = UtilityWithSpaceTokens(_marginUtil.all);
+final marginTop = UtilityWithSpaceTokens(_marginUtil.top);
+final marginBottom = UtilityWithSpaceTokens(_marginUtil.bottom);
+final marginLeft = UtilityWithSpaceTokens(_marginUtil.left);
+final marginRight = UtilityWithSpaceTokens(_marginUtil.right);
+final marginStart = UtilityWithSpaceTokens(_marginDirectionalUtil.start);
+final marginEnd = UtilityWithSpaceTokens(_marginDirectionalUtil.end);
+final marginHorizontal = UtilityWithSpaceTokens(_marginUtil.horizontal);
+final marginVertical = UtilityWithSpaceTokens(_marginUtil.vertical);
 
-const _marginFactory =
-    SpaceUtilityFactory<MarginAttribute>(MarginAttribute.new);
+MarginGeometryAttribute marginFrom(EdgeInsetsGeometry edgeInsets) {
+  if (edgeInsets is EdgeInsets) {
+    return _marginUtil.from(edgeInsets);
+  } else if (edgeInsets is EdgeInsetsDirectional) {
+    return _marginDirectionalUtil.from(edgeInsets);
+  }
+  throw UnimplementedError(
+    'marginFrom is not implemented for ${edgeInsets.runtimeType}',
+  );
+}
 
-const _marginDirectionalFactory =
-    SpaceDirectionalUtilityFactory<MarginDirectionalAttribute>(
-  MarginDirectionalAttribute.new,
-);
-
-final margin = UtilityWithSpaceTokens.shorthand(_marginFactory.shorthand);
-final marginOnly = _marginFactory.only;
-final marginDirectional =
-    UtilityWithSpaceTokens.shorthand(_marginDirectionalFactory.shorthand);
-final marginDirectionalOnly = _marginDirectionalFactory.only;
-final marginTop = UtilityWithSpaceTokens(_marginFactory.top);
-final marginBottom = UtilityWithSpaceTokens(_marginFactory.bottom);
-final marginLeft = UtilityWithSpaceTokens(_marginFactory.left);
-final marginRight = UtilityWithSpaceTokens(_marginFactory.right);
-final marginStart = UtilityWithSpaceTokens(_marginDirectionalFactory.start);
-final marginEnd = UtilityWithSpaceTokens(_marginDirectionalFactory.end);
-
-final marginHorizontal = UtilityWithSpaceTokens(_marginFactory.horizontal);
-final marginVertical = UtilityWithSpaceTokens(_marginFactory.vertical);
-final marginFrom = _marginFactory.from;
+typedef SpaceAttributeBuilder<T extends SpaceAttribute> = T Function({
+  double? top,
+  double? bottom,
+  double? left,
+  double? right,
+});
 
 @immutable
-class SpaceUtilityFactory<T extends SpaceGeometryAttribute> {
-  final T Function({
-    double? top,
-    double? bottom,
-    double? left,
-    double? right,
-  }) _builder;
+class SpaceUtilityFactory<T extends SpaceAttribute> {
+  final SpaceAttributeBuilder<T> _builder;
 
   const SpaceUtilityFactory(this._builder);
+
+  SpaceAttributeBuilder<T> get only => _builder;
+
+  T all(double all) => _builder(bottom: all, left: all, right: all, top: all);
+
+  T top(double value) => _builder(top: value);
+  T bottom(double value) => _builder(bottom: value);
+  T left(double value) => _builder(left: value);
+  T right(double value) => _builder(right: value);
+
+  T horizontal(double value) => _builder(left: value, right: value);
+  T vertical(double value) => _builder(bottom: value, top: value);
+
+  T from(EdgeInsets edgeInsets) {
+    return _builder(
+      bottom: edgeInsets.bottom,
+      left: edgeInsets.left,
+      right: edgeInsets.right,
+      top: edgeInsets.top,
+    );
+  }
 
   T shorthand(double p1, [double? p2, double? p3, double? p4]) {
     double top = p1;
@@ -74,51 +107,23 @@ class SpaceUtilityFactory<T extends SpaceGeometryAttribute> {
     }
 
     if (p3 != null) bottom = p3;
-    if (p4 != null) right = p4;
+    if (p4 != null) left = p4;
 
     return _builder(bottom: bottom, left: left, right: right, top: top);
   }
-
-  T from(EdgeInsets edgeInsets) {
-    return _builder(
-      bottom: edgeInsets.bottom,
-      left: edgeInsets.left,
-      right: edgeInsets.right,
-      top: edgeInsets.top,
-    );
-  }
-
-  T only(double? top, double? bottom, double? left, double? right) {
-    return _builder(bottom: bottom, left: left, right: right, top: top);
-  }
-
-  T top(double value) => _builder(top: value);
-  T bottom(double value) => _builder(bottom: value);
-  T left(double value) => _builder(left: value);
-  T right(double value) => _builder(right: value);
-
-  T horizontal(double value) => _builder(left: value, right: value);
-
-  T vertical(double value) => _builder(bottom: value, top: value);
 }
+
+typedef SpaceDirectionalBuilder<T extends SpaceDirectionalAttribute> = T
+    Function({double? top, double? bottom, double? start, double? end});
 
 @immutable
 class SpaceDirectionalUtilityFactory<T extends SpaceDirectionalAttribute> {
-  final T Function({
-    double? top,
-    double? bottom,
-    double? start,
-    double? end,
-  }) _builder;
+  final SpaceDirectionalBuilder<T> _builder;
 
   const SpaceDirectionalUtilityFactory(this._builder);
 
-  T all(double all) {
-    return _builder(bottom: all, end: all, start: all, top: all);
-  }
+  SpaceDirectionalBuilder<T> get only => _builder;
 
-  T top(double value) => _builder(top: value);
-  T bottom(double value) => _builder(bottom: value);
   T start(double value) => _builder(start: value);
   T end(double value) => _builder(end: value);
 
@@ -130,14 +135,6 @@ class SpaceDirectionalUtilityFactory<T extends SpaceDirectionalAttribute> {
       top: edgeInsets.top,
     );
   }
-
-  T only(double? top, double? bottom, double? start, double? end) {
-    return _builder(bottom: bottom, end: end, start: start, top: top);
-  }
-
-  T vertical(double value) => _builder(bottom: value, top: value);
-
-  T horizontal(double value) => _builder(end: value, start: value);
 
   T shorthand(double p1, [double? p2, double? p3, double? p4]) {
     double top = p1;
@@ -152,7 +149,7 @@ class SpaceDirectionalUtilityFactory<T extends SpaceDirectionalAttribute> {
 
     if (p3 != null) bottom = p3;
 
-    if (p4 != null) end = p4;
+    if (p4 != null) start = p4;
 
     return _builder(bottom: bottom, end: end, start: start, top: top);
   }

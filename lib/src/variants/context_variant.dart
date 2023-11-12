@@ -8,13 +8,10 @@ typedef WhenContextFunction = bool Function(BuildContext context);
 
 @immutable
 class ContextVariant extends Variant {
-  final WhenContextFunction _when;
+  final WhenContextFunction when;
 
-  const ContextVariant(super.name, {required WhenContextFunction when})
-      : _when = when;
-
-  bool when(BuildContext context) => _when(context);
+  const ContextVariant(super.name, {required this.when});
 
   @override
-  get props => [name, _when];
+  get props => [name, when];
 }

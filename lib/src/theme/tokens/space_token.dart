@@ -47,13 +47,6 @@ class UtilityWithSpaceTokens<T> {
 
   const UtilityWithSpaceTokens(T Function(double value) fn) : _fn = fn;
 
-  factory UtilityWithSpaceTokens.shorthand(
-    T Function(double p1, [double? p2, double? p3, double? p4]) fn,
-  ) {
-    // Need to accept a type with positional params, and convert it into a function that accepts a double and returns T
-    return UtilityWithSpaceTokens((double value) => fn(value));
-  }
-
   T get xsmall => call(SpaceToken.xsmall());
 
   T get small => call(SpaceToken.small());

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'attribute.dart';
 import '../factory/mix_provider_data.dart';
+import 'attribute.dart';
 import 'color_attribute.dart';
 
 @immutable
@@ -27,7 +27,7 @@ class ShadowAttribute<T extends Shadow> extends VisualAttribute<Shadow> {
   ShadowAttribute merge(ShadowAttribute? other) {
     return ShadowAttribute(
       blurRadius: other?.blurRadius ?? blurRadius,
-      color: mergeAttr(color, other?.color),
+      color: color?.merge(other?.color) ?? other?.color,
       offset: other?.offset ?? offset,
     );
   }
@@ -63,7 +63,7 @@ class BoxShadowAttribute extends ShadowAttribute<BoxShadow> {
   @override
   BoxShadowAttribute merge(BoxShadowAttribute? other) {
     return BoxShadowAttribute(
-      color: mergeAttr(color, other?.color),
+      color: color?.merge(other?.color) ?? other?.color,
       offset: other?.offset ?? offset,
       blurRadius: other?.blurRadius ?? blurRadius,
       spreadRadius: other?.spreadRadius ?? spreadRadius,

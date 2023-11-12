@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 import '../core/equality/compare_mixin.dart';
@@ -15,8 +17,32 @@ mixin Resolvable<T> {
 mixin Mergeable<T> {
   T merge(covariant T? other);
 
-  M mergeAttr<M extends Mergeable>(M? current, M? other) {
-    return current?.merge(other) ?? other;
+  List<M> mergeMergeableList<M extends Mergeable>(
+    List<M>? current,
+    List<M>? other,
+  ) {
+    if (current == null && other == null) return [];
+    if (current == null) return other ?? [];
+    if (other == null) return current;
+
+    if (current.isEmpty) return other;
+
+    final listLength = current.length;
+    final otherLength = other.length;
+    final maxLength = max(listLength, otherLength);
+
+    return List<M>.generate(maxLength, (int index) {
+      if (index < listLength && index < otherLength) {
+        final currentValue = current[index];
+        final otherValue = other[index];
+
+        return currentValue.merge(otherValue);
+      } else if (index < listLength) {
+        return current[index];
+      }
+
+      return other[index];
+    });
   }
 }
 
