@@ -90,20 +90,23 @@ List<VisualAttribute> applyContextToVisualAttributes(
   BuildContext context,
   StyleMix mix,
 ) {
-  StyleMix mergedMix = StyleMix.create(mix.styles);
+  StyleMix style = StyleMix.create(mix.styles);
 
   final contextVariants = mix.variants.whereType<ContextVariantAttribute>();
+  final multiVariants = mix.variants.whereType<MultiVariantAttribute>();
 
   // Once there are no more context variants to apply, return the mix
   if (contextVariants.isEmpty) {
     return mix.styles;
   }
 
-  for (ContextVariantAttribute variant in contextVariants) {
-    if (variant.when(context)) {
-      mergedMix = mergedMix.merge(variant.value);
-    }
+  for (ContextVariantAttribute attr in contextVariants) {
+    if (attr.when(context)) style = style.merge(attr.value);
   }
 
-  return applyContextToVisualAttributes(context, mergedMix);
+  for (MultiVariantAttribute attr in multiVariants) {
+    if (attr.when(context)) style = style.merge(attr.value);
+  }
+
+  return applyContextToVisualAttributes(context, style);
 }

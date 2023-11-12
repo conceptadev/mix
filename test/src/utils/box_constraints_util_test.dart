@@ -47,5 +47,28 @@ void main() {
       expect(result.minHeight, isNull);
       expect(result.maxHeight, 200.0);
     });
+
+    // width
+    test('width()', () {
+      final result = width(50.0);
+
+      expect(result.minWidth, isNull);
+      expect(result.maxWidth, isNull);
+      expect(result.width, 50.0);
+      expect(result.minHeight, isNull);
+      expect(result.maxHeight, isNull);
+      expect(result.height, isNull);
+    });
+
+    // height
+    test('height()', () {
+      final result = height(50.0);
+      expect(result.minWidth, isNull);
+      expect(result.maxWidth, isNull);
+      expect(result.height, 50.0);
+      expect(result.minHeight, isNull);
+      expect(result.maxHeight, isNull);
+      expect(result.width, isNull);
+    });
   });
 }

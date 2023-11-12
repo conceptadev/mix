@@ -72,7 +72,7 @@ class _MaterialDesignColors {
 
 @immutable
 // Material 3 TextTheme Tokens.
-class MaterialTextStyles {
+class _MaterialTextStyles {
   //  Material 3 text styles
   final displayLarge = TextStyleTokenResolver(
     '--md3-display-large',
@@ -188,14 +188,12 @@ class MaterialTextStyles {
     (context) => Theme.of(context).textTheme.overline!,
   );
 
-  MaterialTextStyles();
+  _MaterialTextStyles();
 }
-
-final $md = MaterialTokens();
 
 @immutable
 class MaterialTokens {
   final colors = _MaterialDesignColors();
-  final textStyles = MaterialTextStyles();
+  final textStyles = _MaterialTextStyles();
   MaterialTokens();
 }

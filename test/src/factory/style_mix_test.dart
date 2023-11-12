@@ -1,6 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mix/src/factory/style_mix.dart';
-import 'package:mix/src/variants/variant.dart';
+import 'package:mix/mix.dart';
 
 import '../../helpers/testing_utils.dart';
 
@@ -247,6 +246,25 @@ void main() {
       expect(style.variants.length, 1);
     });
 
+    test('with matching multi variant', () {
+      final multiVariant = MultiVariant(const [variantAttr1, variantAttr2]);
+      final style = StyleMix(attr1, attr2, multiVariant(attr3));
+      final firstStyle = style.selectVariant(variantAttr1);
+      final secondStyle = firstStyle.selectVariant(variantAttr2);
+      final thirdStyle = style.selectVariant(variantAttr1, variantAttr2);
+
+      expect(firstStyle.styles.length, 2);
+      expect(firstStyle.variants.length, 1);
+
+      expect(secondStyle.styles.length, 3);
+      expect(secondStyle.variants.length, 0);
+
+      expect(thirdStyle.styles.length, 3);
+      expect(thirdStyle.variants.length, 0);
+
+      expect(secondStyle, thirdStyle);
+    });
+
     test('with an Unmatched Variant', () {
       final style = StyleMix(attr1, attr2);
       final updatedStyle = style.selectVariant(variantAttr1);
@@ -272,6 +290,15 @@ void main() {
       expect(style.variants.length, 2);
       expect(updatedStyle.styles.length, 3);
       expect(updatedStyle.variants.length, 0);
+    });
+
+    test('with matching multi variant', () {
+      final multiVariant = MultiVariant(const [variantAttr1, variantAttr2]);
+      final style = StyleMix(attr1, attr2, multiVariant(attr3));
+      final thirdStyle = style.selectVariantList([variantAttr1, variantAttr2]);
+
+      expect(thirdStyle.styles.length, 3);
+      expect(thirdStyle.variants.length, 0);
     });
 
     test('with Unmatched Variants', () {

@@ -308,17 +308,34 @@ class StyleMix {
     /// Loop over all VariantAttributes in variants only once instead of a nested loop,
     /// checking if each one matches with the selected variants.
     /// If it does, add it to the matchedVariants, else add it to remainingVariants.
-    for (final existingVariant in variants) {
-      if (selectedVariantSet.contains(existingVariant.variant)) {
-        matchedVariants.add(existingVariant);
+    for (final attr in variants) {
+      if (attr is MultiVariantAttribute) {
+        if (attr.matches(selectedVariants)) {
+          // if all variants match, add it to the matchedVariants
+          matchedVariants.add(attr);
+        } else {
+          // Remove any matching variants and add it as a new MultiVariantAttribute
+          // This allows to multiple matching variants to be removed
+          // For multi pass matching
+          remainingVariants.add(attr.remove(selectedVariants));
+        }
       } else {
-        remainingVariants.add(existingVariant);
+        if (selectedVariantSet.contains(attr.variant)) {
+          matchedVariants.add(attr);
+        } else {
+          remainingVariants.add(attr);
+        }
       }
     }
 
+    final updatedStyle = StyleMix._(
+      styles: styles,
+      variants: remainingVariants,
+    );
+
     /// If not a single variant was matched, return the original StyleMix.
     if (matchedVariants.isEmpty) {
-      return this;
+      return updatedStyle;
     }
 
     /// Create a StyleMix from the matched variants.
@@ -326,13 +343,10 @@ class StyleMix {
         StyleMix.combineList(matchedVariants.map((e) => e.value).toList());
 
     /// Merge the new StyleMix created with the existing StyleMix, excluding the matched variants.
-    final updatedStyle = StyleMix._(
-      styles: styles,
-      variants: remainingVariants,
-    ).merge(styleToApply);
+    final mergedStyle = updatedStyle.merge(styleToApply);
 
     /// Apply all variants and return the final StyleMix.
-    return updatedStyle.selectVariantList(selectedVariants);
+    return mergedStyle.selectVariantList(selectedVariants);
   }
 
   /// Picks and applies only the attributes within the specified [Variant] instances, and returns a new `StyleMix`.

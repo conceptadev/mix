@@ -46,7 +46,6 @@ void main() {
         final alignment = attr.resolve(EmptyMixData);
 
         expect(alignment, const Alignment(0.5, 0.5));
-        return const Placeholder();
       },
     );
 
@@ -58,7 +57,6 @@ void main() {
         final alignment = attr.resolve(EmptyMixData);
 
         expect(alignment, const Alignment(0.0, 0.0));
-        return const Placeholder();
       },
     );
 
@@ -121,7 +119,6 @@ void main() {
         final alignment = attr.resolve(EmptyMixData);
 
         expect(alignment, const AlignmentDirectional(0.5, 0.5));
-        return const Placeholder();
       },
     );
 
@@ -133,7 +130,6 @@ void main() {
         final alignment = attr.resolve(EmptyMixData);
 
         expect(alignment, const AlignmentDirectional(0.0, 0.0));
-        return const Placeholder();
       },
     );
 

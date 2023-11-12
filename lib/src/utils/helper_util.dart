@@ -36,7 +36,7 @@ class SpreadPositionalParams<ParamType, ReturnType> {
   const SpreadPositionalParams(this.fn);
 
 // Ignore needed for API design.
-  // ignore: long-parameter-list
+
   ReturnType call([
     ParamType? p1,
     ParamType? p2,

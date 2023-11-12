@@ -213,7 +213,7 @@ void main() {
         MaterialApp(theme: theme, home: Container()),
       );
       final context = tester.element(find.byType(Container));
-      final colors = $md.colors;
+      final colors = MaterialTokens().colors;
       expect(colors.primary.resolve(context), theme.colorScheme.primary);
       expect(colors.secondary.resolve(context), theme.colorScheme.secondary);
       expect(colors.tertiary.resolve(context), theme.colorScheme.tertiary);
@@ -241,7 +241,7 @@ void main() {
 
       final theme = Theme.of(context);
 
-      final textStyles = $md.textStyles;
+      final textStyles = MaterialTokens().textStyles;
       expect(textStyles.displayLarge.resolve(context),
           theme.textTheme.displayLarge);
       expect(textStyles.displayMedium.resolve(context),
@@ -280,7 +280,7 @@ void main() {
 
       final theme = Theme.of(context);
 
-      final textStyles = $md.textStyles;
+      final textStyles = MaterialTokens().textStyles;
       expect(textStyles.headline1.resolve(context), theme.textTheme.headline1);
       expect(textStyles.headline2.resolve(context), theme.textTheme.headline2);
       expect(textStyles.headline3.resolve(context), theme.textTheme.headline3);

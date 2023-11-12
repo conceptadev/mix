@@ -1,41 +1,26 @@
-import 'package:flutter/foundation.dart';
-
 import '../attributes/attribute.dart';
 import '../attributes/style_mix_attribute.dart';
 import '../attributes/variant_attribute.dart';
+import '../core/equality/compare_mixin.dart';
 import '../factory/style_mix.dart';
 import 'context_variant.dart';
 import 'variant.dart';
 
-enum EnumVariantOperator { and, or }
-
-class VariantOperation {
+abstract class VariantOperation with Comparable {
   final List<Variant> variants;
-  final EnumVariantOperator operator;
 
-  const VariantOperation(this.variants, {required this.operator});
+  const VariantOperation(this.variants);
 
-  VariantOperation operator &(Variant variant) {
-    if (operator != EnumVariantOperator.and) {
-      throw ArgumentError('All the operators in the equation must be the same');
-    }
+  StyleMixAttribute buildAttributes(Iterable<Attribute> attributes);
 
-    variants.add(variant);
-
-    return this;
+  VariantAndOperation operator &(Variant variant) {
+    return VariantAndOperation([...variants, variant]);
   }
 
-  VariantOperation operator |(Variant variant) {
-    if (operator != EnumVariantOperator.or) {
-      throw ArgumentError('All the operators in the equation must be the same');
-    }
-
-    variants.add(variant);
-
-    return this;
+  VariantOrOperation operator |(Variant variant) {
+    return VariantOrOperation([...variants, variant]);
   }
 
-  // ignore: long-parameter-list
   StyleMixAttribute call([
     Attribute? p1,
     Attribute? p2,
@@ -50,62 +35,55 @@ class VariantOperation {
     Attribute? p11,
     Attribute? p12,
   ]) {
-    final params = <Attribute>[];
-    for (final param in [p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12]) {
-      if (param != null) params.add(param);
+    final params = [p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12];
+
+    final nonNullableParams = params.whereType<Attribute>();
+
+    return buildAttributes(nonNullableParams);
+  }
+
+  VariantAttribute createVariantAttribute(Variant variant, StyleMix style) {
+    if (variant is ContextVariant) {
+      return ContextVariantAttribute(variant, style);
     }
 
-    List<VariantAttribute> attributes = [];
-    if (operator == EnumVariantOperator.and) {
-      attributes = _buildAndOperations(params);
-    } else if (operator == EnumVariantOperator.or) {
-      attributes = _buildOrOperations(params);
+    if (variant is MultiVariant) {
+      return MultiVariantAttribute(variant, style);
     }
 
-    return StyleMixAttribute(StyleMix.create(attributes));
-  }
-
-  List<VariantAttribute> _buildOrOperations(
-    List<Attribute> attributes, {
-    Iterable<Variant>? variants,
-  }) {
-    variants ??= this.variants;
-    final style = StyleMix.create(attributes);
-    final attributeVariants = variants.map((variant) {
-      return variant is ContextVariant
-          ? ContextVariantAttribute(variant, style)
-          : VariantAttribute(variant, style);
-    });
-
-    return attributeVariants.toList();
-  }
-
-  List<VariantAttribute> _buildAndOperations(List<Attribute> attributes) {
-    final attributeVariants = variants.map((variant) {
-      final otherVariants = variants.where((otherV) => otherV != variant);
-      final mixToApply = StyleMix.create(
-        _buildOrOperations(attributes, variants: otherVariants),
-      );
-
-      return variant is ContextVariant
-          ? ContextVariantAttribute(variant, mixToApply)
-          : VariantAttribute(variant, mixToApply);
-    });
-
-    return attributeVariants.toList();
+    // ignore: prefer-returning-conditional-expressions
+    return VariantAttribute(variant, style);
   }
 
   @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
+  get props => [variants];
+}
 
-    return other is VariantOperation &&
-        listEquals(other.variants, variants) &&
-        other.operator == operator;
+class VariantAndOperation extends VariantOperation {
+  const VariantAndOperation(super.variants);
+  @override
+  StyleMixAttribute buildAttributes(Iterable<Attribute> attributes) {
+    //  Create an Attribute that both variants have to be true to apply
+
+    return StyleMixAttribute(
+      StyleMix(
+        createVariantAttribute(
+          MultiVariant(variants),
+          StyleMix.create(attributes),
+        ),
+      ),
+    );
   }
+}
+
+class VariantOrOperation extends VariantOperation {
+  const VariantOrOperation(super.variants);
 
   @override
-  String toString() => 'MultiVariant(variants: $variants, operator: $operator)';
-  @override
-  int get hashCode => variants.hashCode ^ operator.hashCode;
+  StyleMixAttribute buildAttributes(Iterable<Attribute> attributes) {
+    final variantAttributes = variants.map((variant) =>
+        createVariantAttribute(variant, StyleMix.create(attributes)));
+
+    return StyleMixAttribute(StyleMix.create(variantAttributes));
+  }
 }

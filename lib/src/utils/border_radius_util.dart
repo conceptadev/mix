@@ -71,6 +71,11 @@ BorderRadiusDirectionalAttribute roundedTopStart(double radius) {
   return BorderRadiusDirectionalAttribute(topStart: Radius.circular(radius));
 }
 
+// Creates a BorderRadiusDirectionalAttribute with a circular radius applied to the top-end corner, considering text direction.
+BorderRadiusDirectionalAttribute roundedTopEnd(double radius) {
+  return BorderRadiusDirectionalAttribute(topEnd: Radius.circular(radius));
+}
+
 BorderRadiusAttribute roundedHorizontal({double? left, double? right}) {
   return BorderRadiusAttribute.horizontal(
     left: left == null ? null : Radius.circular(left),
@@ -83,11 +88,6 @@ BorderRadiusAttribute roundedVertical({double? top, double? bottom}) {
     top: top == null ? null : Radius.circular(top),
     bottom: bottom == null ? null : Radius.circular(bottom),
   );
-}
-
-// Creates a BorderRadiusDirectionalAttribute with a circular radius applied to the top-end corner, considering text direction.
-BorderRadiusDirectionalAttribute roundedTopEnd(double radius) {
-  return BorderRadiusDirectionalAttribute(topEnd: Radius.circular(radius));
 }
 
 // Creates a BorderRadiusDirectionalAttribute with a circular radius applied to the bottom-start corner, considering text direction.

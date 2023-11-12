@@ -12,7 +12,6 @@ import '../../attributes/shadow_attribute.dart';
 import '../../attributes/space_attribute.dart';
 import '../../attributes/strut_style_attribute.dart';
 import '../../attributes/text_style_attribute.dart';
-import '../color_helpers.dart';
 
 extension StrutStyleExt on StrutStyle {
   StrutStyleAttribute toAttribute() {
@@ -150,7 +149,12 @@ extension ColorExt on Color {
   }
 
   /// String is in the format "aabbcc" or "ffaabbcc" with an optional leading "#".
-  static Color fromHex(String hexString) => hexToColor(hexString);
+  static Color fromHex(String hexString) {
+    String updatedHexString = hexString.replaceFirst('#', '');
+    if (updatedHexString.length == 6) updatedHexString = 'ff$updatedHexString';
+
+    return Color(int.parse(updatedHexString, radix: 16));
+  }
 
   /// Prefixes a hash sign if [leadingHashSign] is set to `true` (default is `true`).
   String toHex({bool leadingHashSign = true}) => '${leadingHashSign ? '#' : ''}'

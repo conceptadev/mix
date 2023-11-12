@@ -31,7 +31,6 @@ export 'src/factory/mix_provider.dart';
 export 'src/factory/mix_provider_data.dart';
 export 'src/factory/style_group.dart';
 export 'src/factory/style_mix.dart';
-export 'src/helpers/color_helpers.dart';
 export 'src/helpers/extensions/build_context_ext.dart';
 export 'src/helpers/extensions/iterable_ext.dart';
 export 'src/helpers/extensions/string_ext.dart';

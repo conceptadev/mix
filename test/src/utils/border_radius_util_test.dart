@@ -76,4 +76,122 @@ void main() {
           ));
     });
   });
+
+  group('Rounded utilities', () {
+    test('rounded()', () {
+      final attr = rounded(10, 20, 30, 40);
+      expect(
+          attr.resolve(EmptyMixData),
+          const BorderRadius.only(
+            topLeft: Radius.circular(10),
+            topRight: Radius.circular(20),
+            bottomLeft: Radius.circular(30),
+            bottomRight: Radius.circular(40),
+          ));
+    });
+
+    test('roundedDirectional()', () {
+      final attr = roundedDirectional(10, 20, 30, 40);
+      expect(
+          attr.resolve(EmptyMixData),
+          const BorderRadiusDirectional.only(
+            topStart: Radius.circular(10),
+            topEnd: Radius.circular(20),
+            bottomStart: Radius.circular(30),
+            bottomEnd: Radius.circular(40),
+          ));
+    });
+
+    test('roundedTopLeft()', () {
+      final attr = roundedTopLeft(10);
+      expect(
+          attr.resolve(EmptyMixData),
+          const BorderRadius.only(
+            topLeft: Radius.circular(10),
+          ));
+    });
+
+    test('roundedTopRight()', () {
+      final attr = roundedTopRight(10);
+      expect(
+          attr.resolve(EmptyMixData),
+          const BorderRadius.only(
+            topRight: Radius.circular(10),
+          ));
+    });
+
+    test('roundedBottomLeft()', () {
+      final attr = roundedBottomLeft(10);
+      expect(
+          attr.resolve(EmptyMixData),
+          const BorderRadius.only(
+            bottomLeft: Radius.circular(10),
+          ));
+    });
+
+    test('roundedBottomRight()', () {
+      final attr = roundedBottomRight(10);
+      expect(
+          attr.resolve(EmptyMixData),
+          const BorderRadius.only(
+            bottomRight: Radius.circular(10),
+          ));
+    });
+
+    test('roundedTopStart()', () {
+      final attr = roundedTopStart(10);
+      expect(
+          attr.resolve(EmptyMixData),
+          const BorderRadiusDirectional.only(
+            topStart: Radius.circular(10),
+          ));
+    });
+
+    test('roundedTopEnd()', () {
+      final attr = roundedTopEnd(10);
+      expect(
+          attr.resolve(EmptyMixData),
+          const BorderRadiusDirectional.only(
+            topEnd: Radius.circular(10),
+          ));
+    });
+
+    test('roundedBottomStart()', () {
+      final attr = roundedBottomStart(10);
+      expect(
+          attr.resolve(EmptyMixData),
+          const BorderRadiusDirectional.only(
+            bottomStart: Radius.circular(10),
+          ));
+    });
+
+    test('roundedBottomEnd()', () {
+      final attr = roundedBottomEnd(10);
+      expect(
+          attr.resolve(EmptyMixData),
+          const BorderRadiusDirectional.only(
+            bottomEnd: Radius.circular(10),
+          ));
+    });
+
+    test('roundedHorizontal()', () {
+      final attr = roundedHorizontal(left: 10, right: 20);
+      expect(
+          attr.resolve(EmptyMixData),
+          const BorderRadius.horizontal(
+            left: Radius.circular(10),
+            right: Radius.circular(20),
+          ));
+    });
+
+    test('roundedVertical()', () {
+      final attr = roundedVertical(top: 10, bottom: 20);
+      expect(
+          attr.resolve(EmptyMixData),
+          const BorderRadius.vertical(
+            top: Radius.circular(10),
+            bottom: Radius.circular(20),
+          ));
+    });
+  });
 }
