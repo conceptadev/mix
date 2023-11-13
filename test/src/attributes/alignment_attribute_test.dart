@@ -7,7 +7,7 @@ import '../../helpers/testing_utils.dart';
 void main() {
   group('AlignmentAttribute', () {
     test('class resolves correctly', () {
-      const alignment = AlignmentAttribute(x: 0.5, y: 0.6);
+      const alignment = AlignmentAttribute(0.5, 0.6);
 
       final resolvedValue = alignment.resolve(EmptyMixData);
 
@@ -18,20 +18,20 @@ void main() {
       expect(resolvedValue.y, 0.6);
     });
     test('merge returns merged object correctly', () {
-      const attr1 = AlignmentAttribute(x: 0.1, y: 0.2);
-      const attr2 = AlignmentAttribute(x: 0.3);
+      const attr1 = AlignmentAttribute(0.1, 0.2);
+      const attr2 = AlignmentAttribute(0.3, 0.4);
 
       final merged = attr1.merge(attr2);
 
       final resolvedValue = merged.resolve(EmptyMixData);
 
       expect(resolvedValue.x, 0.3); // should take from attr2
-      expect(resolvedValue.y, 0.2); // should take from attr1
+      expect(resolvedValue.y, 0.4); // should take from attr1
       expect(resolvedValue, isA<Alignment>());
     });
 
     test('AlignmentAttribute merge returns itself if other is null', () {
-      const attr1 = AlignmentAttribute(x: 0.1, y: 0.2);
+      const attr1 = AlignmentAttribute(0.1, 0.2);
 
       final merged = attr1.merge(null);
 
@@ -41,7 +41,7 @@ void main() {
     test(
       'AlignmentAttribute resolve returns correct Alignment',
       () {
-        const attr = AlignmentAttribute(x: 0.5, y: 0.5);
+        const attr = AlignmentAttribute(0.5, 0.5);
 
         final alignment = attr.resolve(EmptyMixData);
 
@@ -52,7 +52,7 @@ void main() {
     test(
       'AlignmentAttribute resolve uses default values if null',
       () {
-        const attr = AlignmentAttribute();
+        const attr = AlignmentAttribute(0.0, 0.0);
 
         final alignment = attr.resolve(EmptyMixData);
 
@@ -61,15 +61,15 @@ void main() {
     );
 
     test('AlignmentAttribute equality holds when properties are the same', () {
-      const attr1 = AlignmentAttribute(x: 0.1, y: 0.2);
-      const attr2 = AlignmentAttribute(x: 0.1, y: 0.2);
+      const attr1 = AlignmentAttribute(0.1, 0.2);
+      const attr2 = AlignmentAttribute(0.1, 0.2);
 
       expect(attr1, attr2);
     });
 
     test('AlignmentAttribute equality fails when properties are different', () {
-      const attr1 = AlignmentAttribute(x: 0.1, y: 0.2);
-      const attr2 = AlignmentAttribute(x: 0.2, y: 0.2);
+      const attr1 = AlignmentAttribute(0.1, 0.2);
+      const attr2 = AlignmentAttribute(0.2, 0.2);
 
       expect(attr1, isNot(attr2));
     });
@@ -77,7 +77,7 @@ void main() {
 
   group('AlignmentDirectionalAttribute', () {
     test('class resolves correctly', () {
-      const alignment = AlignmentDirectionalAttribute(start: 0.5, y: 0.6);
+      const alignment = AlignmentDirectionalAttribute(0.5, 0.6);
 
       final resolvedValue = alignment.resolve(EmptyMixData);
 
@@ -90,21 +90,21 @@ void main() {
     });
 
     test('merge returns merged object correctly', () {
-      const attr1 = AlignmentDirectionalAttribute(start: 0.1, y: 0.2);
-      const attr2 = AlignmentDirectionalAttribute(start: 0.3);
+      const attr1 = AlignmentDirectionalAttribute(0.1, 0.2);
+      const attr2 = AlignmentDirectionalAttribute(0.3, 0.4);
 
       final merged = attr1.merge(attr2);
 
       final resolvedValue = merged.resolve(EmptyMixData);
 
       expect(resolvedValue.start, 0.3); // should take from attr2
-      expect(resolvedValue.y, 0.2); // should take from attr1
+      expect(resolvedValue.y, 0.4); // should take from attr1
       expect(resolvedValue, isA<AlignmentDirectional>());
     });
 
     test('AlignmentDirectionalAttribute merge returns itself if other is null',
         () {
-      const attr1 = AlignmentDirectionalAttribute(start: 0.1, y: 0.2);
+      const attr1 = AlignmentDirectionalAttribute(0.1, 0.2);
 
       final merged = attr1.merge(null);
 
@@ -114,7 +114,7 @@ void main() {
     test(
       'AlignmentDirectionalAttribute resolve returns correct AlignmentDirectional',
       () {
-        const attr = AlignmentDirectionalAttribute(start: 0.5, y: 0.5);
+        const attr = AlignmentDirectionalAttribute(0.5, 0.5);
 
         final alignment = attr.resolve(EmptyMixData);
 
@@ -125,7 +125,7 @@ void main() {
     test(
       'AlignmentDirectionalAttribute resolve uses default values if null',
       () {
-        const attr = AlignmentDirectionalAttribute();
+        const attr = AlignmentDirectionalAttribute(0.0, 0.0);
 
         final alignment = attr.resolve(EmptyMixData);
 
@@ -136,8 +136,8 @@ void main() {
     test(
         'AlignmentDirectionalAttribute equality holds when properties are the same',
         () {
-      const attr1 = AlignmentDirectionalAttribute(start: 0.1, y: 0.2);
-      const attr2 = AlignmentDirectionalAttribute(start: 0.1, y: 0.2);
+      const attr1 = AlignmentDirectionalAttribute(0.1, 0.2);
+      const attr2 = AlignmentDirectionalAttribute(0.1, 0.2);
 
       expect(attr1, attr2);
     });
@@ -145,8 +145,8 @@ void main() {
     test(
         'AlignmentDirectionalAttribute equality fails when properties are different',
         () {
-      const attr1 = AlignmentDirectionalAttribute(start: 0.1, y: 0.2);
-      const attr2 = AlignmentDirectionalAttribute(start: 0.2, y: 0.2);
+      const attr1 = AlignmentDirectionalAttribute(0.1, 0.2);
+      const attr2 = AlignmentDirectionalAttribute(0.2, 0.2);
 
       expect(attr1, isNot(attr2));
     });

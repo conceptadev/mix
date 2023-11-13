@@ -10,7 +10,7 @@ void main() {
       final mix = MixData.create(
         MockBuildContext(),
         StyleMix(
-          const AlignmentAttribute(x: 0.0, y: 0.0),
+          const AlignmentAttribute(0.0, 0.0),
           const StackFitAttribute(StackFit.expand),
           const TextDirectionAttribute(TextDirection.ltr),
           const ClipAttribute(Clip.antiAlias),

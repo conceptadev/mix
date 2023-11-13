@@ -60,7 +60,7 @@ void main() {
   testWidgets('Stack', (tester) async {
     final style = StyleMix(
       stackFit(StackFit.expand),
-      alignmentTopCenter(),
+      alignment.topCenter,
       clip(Clip.antiAlias),
       textDirection(TextDirection.ltr),
     );
@@ -95,7 +95,7 @@ void main() {
   testWidgets('ZBox', (tester) async {
     final style = StyleMix(
       stackFit(StackFit.expand),
-      alignmentTopCenter(),
+      alignment.topCenter,
       clip(Clip.antiAlias),
       textDirection(TextDirection.ltr),
       backgroundColor(Colors.red),

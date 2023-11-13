@@ -187,12 +187,12 @@ extension ShapeDecorationExt on ShapeDecoration {
 }
 
 extension AlignmentExt on Alignment {
-  AlignmentAttribute toAttribute() => AlignmentAttribute(x: x, y: y);
+  AlignmentAttribute toAttribute() => AlignmentAttribute(x, y);
 }
 
 extension AligmentDirectionalExt on AlignmentDirectional {
   AlignmentDirectionalAttribute toAttribute() =>
-      AlignmentDirectionalAttribute(start: start, y: y);
+      AlignmentDirectionalAttribute(start, y);
 }
 
 extension BoxConstraintsExt on BoxConstraints {

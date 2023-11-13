@@ -9,7 +9,7 @@ void main() {
     final paddingAttr = padding(10);
     final marginAttr = margin(10);
     final backgroundColorAttr = backgroundColor(Colors.red);
-    final alignmentAttr = alignmentCenter();
+    final alignmentAttr = alignment.center;
     final clipAttr = clip(Clip.hardEdge);
 
     final boxDecorationAttr = boxDecoration(

@@ -10,7 +10,7 @@ void main() {
       final mix = MixData.create(
         MockBuildContext(),
         StyleMix(
-          const AlignmentAttribute(x: 0.0, y: 0.0),
+          const AlignmentAttribute(0.0, 0.0),
           const PaddingAttribute(top: 8, bottom: 16),
           const MarginAttribute(top: 10.0, bottom: 12.0),
           const BoxConstraintsAttribute(maxWidth: 300.0, minHeight: 200.0),

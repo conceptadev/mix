@@ -1,3 +1,5 @@
+// ignore_for_file: unused_element
+
 import 'package:flutter/material.dart';
 
 import '../factory/mix_provider_data.dart';
@@ -6,12 +8,11 @@ import 'attribute.dart';
 @immutable
 abstract class AlignmentGeometryAttribute<T extends AlignmentGeometry>
     extends VisualAttribute<T> {
-  final double? start;
-  final double? x;
-  final double? y;
+  const AlignmentGeometryAttribute();
+  double? get _x;
+  double? get _y;
 
-  const AlignmentGeometryAttribute({this.start, this.x, this.y});
-
+  double? get _start;
   @override
   AlignmentGeometryAttribute<T> merge(
     covariant AlignmentGeometryAttribute<T>? other,
@@ -19,105 +20,126 @@ abstract class AlignmentGeometryAttribute<T extends AlignmentGeometry>
 
   @override
   T resolve(MixData mix);
-
-  @override
-  get props => [start, x, y];
 }
 
 @immutable
 class AlignmentAttribute extends AlignmentGeometryAttribute<Alignment> {
   /// The top left corner.
-  static const topLeft = AlignmentAttribute.pos(-1.0, -1.0);
+  static const topLeft = AlignmentAttribute(-1.0, -1.0);
 
   /// The center point along the top edge.
-  static const topCenter = AlignmentAttribute.pos(0.0, -1.0);
+  static const topCenter = AlignmentAttribute(0.0, -1.0);
 
   /// The top right corner.
-  static const topRight = AlignmentAttribute.pos(1.0, -1.0);
+  static const topRight = AlignmentAttribute(1.0, -1.0);
 
   /// The center point along the left edge.
-  static const centerLeft = AlignmentAttribute.pos(-1.0, 0.0);
+  static const centerLeft = AlignmentAttribute(-1.0, 0.0);
 
   /// The center point, both horizontally and vertically.
-  static const center = AlignmentAttribute.pos(0.0, 0.0);
+  static const center = AlignmentAttribute(0.0, 0.0);
 
   /// The center point along the right edge.
-  static const centerRight = AlignmentAttribute.pos(1.0, 0.0);
+  static const centerRight = AlignmentAttribute(1.0, 0.0);
 
   /// The bottom left corner.
-  static const bottomLeft = AlignmentAttribute.pos(-1.0, 1.0);
+  static const bottomLeft = AlignmentAttribute(-1.0, 1.0);
 
   /// The center point along the bottom edge.
-  static const bottomCenter = AlignmentAttribute.pos(0.0, 1.0);
+  static const bottomCenter = AlignmentAttribute(0.0, 1.0);
 
   /// The bottom right corner.
-  static const bottomRight = AlignmentAttribute.pos(1.0, 1.0);
+  static const bottomRight = AlignmentAttribute(1.0, 1.0);
 
-  const AlignmentAttribute({super.x, super.y});
+  final double y;
 
-  const AlignmentAttribute.pos(double x, double y) : this(x: x, y: y);
+  final double x;
+
+  const AlignmentAttribute(this.x, this.y);
+
+  @override
+  double get _x => x;
+
+  @override
+  double get _y => y;
+
+  @override
+  double get _start => 0.0;
 
   @override
   AlignmentAttribute merge(AlignmentAttribute? other) {
-    return AlignmentAttribute(x: other?.x ?? x, y: other?.y ?? y);
+    return AlignmentAttribute(other?.x ?? x, other?.y ?? y);
   }
 
   @override
-  Alignment resolve(MixData mix) => Alignment(x ?? 0, y ?? 0);
+  Alignment resolve(MixData mix) => Alignment(x, y);
+
+  @override
+  get props => [x, y];
 }
 
 @immutable
 class AlignmentDirectionalAttribute
     extends AlignmentGeometryAttribute<AlignmentDirectional> {
   /// The top corner on the "start" side.
-  static const topStart = AlignmentDirectionalAttribute.pos(-1.0, -1.0);
+  static const topStart = AlignmentDirectionalAttribute(-1.0, -1.0);
 
   /// The center point along the top edge.
   ///
   /// Consider using [Alignment.topCenter] instead, as it does not need
   /// to be [resolve]d to be used.
-  static const topCenter = AlignmentDirectionalAttribute.pos(0.0, -1.0);
+  static const topCenter = AlignmentDirectionalAttribute(0.0, -1.0);
 
   /// The top corner on the "end" side.
-  static const topEnd = AlignmentDirectionalAttribute.pos(1.0, -1.0);
+  static const topEnd = AlignmentDirectionalAttribute(1.0, -1.0);
 
   /// The center point along the "start" edge.
-  static const centerStart = AlignmentDirectionalAttribute.pos(-1.0, 0.0);
+  static const centerStart = AlignmentDirectionalAttribute(-1.0, 0.0);
 
   /// The center point, both horizontally and vertically.
   ///
   /// Consider using [Alignment.center] instead, as it does not need to
   /// be [resolve]d to be used.
-  static const center = AlignmentDirectionalAttribute.pos(0.0, 0.0);
+  static const center = AlignmentDirectionalAttribute(0.0, 0.0);
 
   /// The center point along the "end" edge.
-  static const centerEnd = AlignmentDirectionalAttribute.pos(1.0, 0.0);
+  static const centerEnd = AlignmentDirectionalAttribute(1.0, 0.0);
 
   /// The bottom corner on the "start" side.
-  static const bottomStart = AlignmentDirectionalAttribute.pos(-1.0, 1.0);
+  static const bottomStart = AlignmentDirectionalAttribute(-1.0, 1.0);
 
   /// The center point along the bottom edge.
   ///
   /// Consider using [Alignment.bottomCenter] instead, as it does not
   /// need to be [resolve]d to be used.
-  static const bottomCenter = AlignmentDirectionalAttribute.pos(0.0, 1.0);
+  static const bottomCenter = AlignmentDirectionalAttribute(0.0, 1.0);
 
   /// The bottom corner on the "end" side.
-  static const bottomEnd = AlignmentDirectionalAttribute.pos(1.0, 1.0);
+  static const bottomEnd = AlignmentDirectionalAttribute(1.0, 1.0);
 
-  const AlignmentDirectionalAttribute({super.start, super.y});
+  final double y;
+  final double start;
+  const AlignmentDirectionalAttribute(this.start, this.y);
 
-  const AlignmentDirectionalAttribute.pos(double start, double y)
-      : this(start: start, y: y);
+  @override
+  double get _y => y;
+
+  @override
+  double get _start => start;
+
+  @override
+  double get _x => 0.0;
+
   @override
   AlignmentDirectionalAttribute merge(AlignmentDirectionalAttribute? other) {
     return AlignmentDirectionalAttribute(
-      start: other?.start ?? start,
-      y: other?.y ?? y,
+      other?.start ?? start,
+      other?.y ?? y,
     );
   }
 
   @override
-  AlignmentDirectional resolve(MixData mix) =>
-      AlignmentDirectional(start ?? 0, y ?? 0);
+  AlignmentDirectional resolve(MixData mix) => AlignmentDirectional(start, y);
+  @override
+  get props => [start, y];
 }
