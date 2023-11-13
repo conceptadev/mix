@@ -16,7 +16,7 @@ void main() {
     });
 
     test('borderRadiusVertical()', () {
-      final attr = borderRadiusVertical(
+      final attr = borderRadius.vertical(
         top: const Radius.circular(10),
         bottom: const Radius.circular(20),
       );
@@ -29,7 +29,7 @@ void main() {
     });
 
     test('borderRadiusHorizontal()', () {
-      final attr = borderRadiusHorizontal(
+      final attr = borderRadius.horizontal(
         left: const Radius.circular(10),
         right: const Radius.circular(20),
       );
@@ -51,7 +51,7 @@ void main() {
     });
 
     test('borderRadiusOnly()', () {
-      final attr = borderRadiusOnly(
+      final attr = borderRadius.only(
         topLeft: const Radius.circular(10),
         topRight: const Radius.circular(20),
         bottomLeft: const Radius.circular(30),
@@ -103,7 +103,7 @@ void main() {
     });
 
     test('roundedTopLeft()', () {
-      final attr = roundedTopLeft(10);
+      final attr = rounded.topLeft(10);
       expect(
           attr.resolve(EmptyMixData),
           const BorderRadius.only(
@@ -112,7 +112,7 @@ void main() {
     });
 
     test('roundedTopRight()', () {
-      final attr = roundedTopRight(10);
+      final attr = rounded.topRight(10);
       expect(
           attr.resolve(EmptyMixData),
           const BorderRadius.only(
@@ -121,7 +121,7 @@ void main() {
     });
 
     test('roundedBottomLeft()', () {
-      final attr = roundedBottomLeft(10);
+      final attr = rounded.bottomLeft(10);
       expect(
           attr.resolve(EmptyMixData),
           const BorderRadius.only(
@@ -130,7 +130,7 @@ void main() {
     });
 
     test('roundedBottomRight()', () {
-      final attr = roundedBottomRight(10);
+      final attr = rounded.bottomRight(10);
       expect(
           attr.resolve(EmptyMixData),
           const BorderRadius.only(
@@ -139,7 +139,7 @@ void main() {
     });
 
     test('roundedTopStart()', () {
-      final attr = roundedTopStart(10);
+      final attr = rounded.topStart(10);
       expect(
           attr.resolve(EmptyMixData),
           const BorderRadiusDirectional.only(
@@ -148,7 +148,7 @@ void main() {
     });
 
     test('roundedTopEnd()', () {
-      final attr = roundedTopEnd(10);
+      final attr = rounded.topEnd(10);
       expect(
           attr.resolve(EmptyMixData),
           const BorderRadiusDirectional.only(
@@ -157,7 +157,7 @@ void main() {
     });
 
     test('roundedBottomStart()', () {
-      final attr = roundedBottomStart(10);
+      final attr = rounded.bottomStart(10);
       expect(
           attr.resolve(EmptyMixData),
           const BorderRadiusDirectional.only(
@@ -166,7 +166,7 @@ void main() {
     });
 
     test('roundedBottomEnd()', () {
-      final attr = roundedBottomEnd(10);
+      final attr = rounded.bottomEnd(10);
       expect(
           attr.resolve(EmptyMixData),
           const BorderRadiusDirectional.only(
@@ -175,7 +175,7 @@ void main() {
     });
 
     test('roundedHorizontal()', () {
-      final attr = roundedHorizontal(left: 10, right: 20);
+      final attr = rounded.horizontal(left: 10, right: 20);
       expect(
           attr.resolve(EmptyMixData),
           const BorderRadius.horizontal(
@@ -185,7 +185,7 @@ void main() {
     });
 
     test('roundedVertical()', () {
-      final attr = roundedVertical(top: 10, bottom: 20);
+      final attr = rounded.vertical(top: 10, bottom: 20);
       expect(
           attr.resolve(EmptyMixData),
           const BorderRadius.vertical(

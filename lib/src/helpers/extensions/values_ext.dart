@@ -128,6 +128,10 @@ extension EdgeInsetsDirectionalExt on EdgeInsetsDirectional {
       );
 }
 
+extension DoubleExt on double {
+  Radius toRadius() => Radius.circular(this);
+}
+
 extension ColorExt on Color {
   Color darken([double amount = 0.1]) {
     assert(amount >= 0 && amount <= 1);
