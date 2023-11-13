@@ -7,18 +7,19 @@ import Code from "../../../components/Code.js";
 
 # Variants
 
-While building your design system you will find have the need to create certain variations
-of a Widget. This makes the design system more flexible and reusable, by leveraging shared
-visual properties between them.
+## Overview
 
-In the following example `hover()` is a `Variant` that will be applied when a `Pressable`
-triggers the hover state. The `backgroundColor` and `textColor` properties will be overridden with the new value when the variant applies
+Variants in Mix are a foundational concept for creating dynamic and modular style definitions. They enable developers to encapsulate and manage groups of styling attributes, which can be applied to various aspects of a Flutter application's UI.
+
+## The Role of Variants
+
+Variants allow for the efficient organization of style attributes, facilitating the easy application and switching between different style sets. This approach provides a streamlined method for handling diverse styling requirements across different components, contributing to a more maintainable and consistent design system within your applications. By using Variants, developers can craft adaptable and cohesive UI components, enhancing both the functionality and aesthetic of their Flutter projects.
 
 ```dart highlight="10-13"
 final style = StyleMix(
   backgroundColor(MaterialTokens.colorScheme.primary),
   textStyle(color: $onPrimary),
-  hover(
+  onHover(
     backgroundColor(MaterialTokens.colorScheme.primary),
     textStyle(color: $onPrimary),
   ),
@@ -38,11 +39,11 @@ Widgets.
 To use a variant, call it on a _Mix_
 
 ```dart
-final mix = StyleMix(
-  dark(
+final style = StyleMix(
+  onDark(
     textStyle(color: Colors.white),
   ),
-  light(
+  onLight(
     textStyle(color: Colors.black),
   ),
 );
@@ -55,9 +56,9 @@ The operators `|` and `&` can be used to add conditions to your mix:
 - `|`: whether one of the variants apply
 
 ```dart highlight="3-7"
-final mix = StyleMix(
-  padding(20.0),
-  (small | medium)( // Whether it's small OR medium
+final style = StyleMix(
+  padding(20),
+  (onSmall | onMedium)( // Whether it's small OR medium
     width(300),
     height(400),
     backgroundColor(Colors.white),
@@ -70,51 +71,20 @@ final mix = StyleMix(
 ```dart highlight="3-6"
 final mix = StyleMix(
   padding(20.0),
-  (hover & press)( // When it's hovering AND pressing
+  (onHover & onPress)( // When it's hovering AND pressing
     textStyle(color: Colors.black),
     bold(),
   ),
 );
 ```
 
-The `not` operator can also be called to execute the variant content only when the given
+The `onNot` operator can also be called to execute the variant content only when the given
 variant is not called. For example:
 
 ```dart highlight="2-4"
 final mix = StyleMix(
-  (not(disabled))(
+  onNot(disabled)(
     scale(1.2),
-  ),
-);
-```
-
-### Conditional variants
-
-The `when` variant lets you concisely evaluate expressions within a mix or a within variant list.
-
-```dart highlight="5-7"
-bool hasError = true;
-
-final mix = StyleMix(
-  backgroundColor(Colors.green),
-  when(hasError)(
-    backgroundColor(Colors.red),
-  ),
-);
-```
-
-If the `hasError` condition is true, the attributes inside the statement are applied and, if necessary, will override previous attributes.
-To ensure specific control over the flow, you can use the else statement by adding another statement right after it:
-
-```dart highlight="4-8"
-bool hasError = true;
-
-final mix = StyleMix(
-  when(hasError)(
-    backgroundColor(Colors.red),
-  )(
-    // will be executed if `hasError` is false
-    backgroundColor(Colors.green),
   ),
 );
 ```

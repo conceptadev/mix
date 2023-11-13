@@ -1,6 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
-import 'package:mix/src/variants/multi_variant.dart';
 
 import '../../helpers/testing_utils.dart';
 
@@ -219,7 +218,7 @@ void main() {
     });
 
     test('with matching multi variant', () {
-      final multiVariant = MultiVariant(const [variantAttr1, variantAttr2]);
+      final multiVariant = MultiVariant.and(const [variantAttr1, variantAttr2]);
       final style = StyleMix(attr1, attr2, multiVariant(attr3));
       final firstStyle = style.selectVariant(variantAttr1);
       final secondStyle = firstStyle.selectVariant(variantAttr2);
@@ -265,7 +264,7 @@ void main() {
     });
 
     test('with matching multi variant', () {
-      final multiVariant = MultiVariant(const [variantAttr1, variantAttr2]);
+      final multiVariant = MultiVariant.and(const [variantAttr1, variantAttr2]);
       final style = StyleMix(attr1, attr2, multiVariant(attr3));
       final thirdStyle = style.selectVariantList([variantAttr1, variantAttr2]);
 

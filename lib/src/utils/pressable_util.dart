@@ -4,7 +4,7 @@ import '../helpers/extensions/string_ext.dart';
 import '../variants/context_variant.dart';
 import '../widgets/pressable/pressable.notifier.dart';
 import '../widgets/pressable/pressable_state.dart';
-import 'context_variant_util.dart';
+import 'context_variant_util/on_helper_util.dart';
 
 final onPress = _pressableVariant(PressableState.pressed);
 final onLongPress = _pressableVariant(PressableState.longPressed);
