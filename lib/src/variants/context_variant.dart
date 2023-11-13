@@ -1,64 +1,52 @@
+import 'dart:core';
+
 import 'package:flutter/material.dart';
 
-import '../../mix.dart';
-import 'variant_attribute.dart';
+import '../attributes/attribute.dart';
+import '../attributes/variant_attribute.dart';
+import '../factory/style_mix.dart';
+import 'variant.dart';
 
-typedef ShouldApplyFunc = bool Function(BuildContext);
+typedef WhenContextFunction = bool Function(BuildContext context);
 
-@Deprecated(
-  'Use ContextStyleVariant instead. '
-  'This class will be removed in a future release.',
-)
-typedef ContextVariant = ContextStyleVariant;
+@immutable
+class ContextVariant extends Variant {
+  final WhenContextFunction when;
 
-class ContextStyleVariant extends StyleVariant {
-  const ContextStyleVariant(
-    super.name, {
-    required ShouldApplyFunc shouldApply,
-    bool inverse = false,
-  })  : _inverse = inverse,
-        _shouldApply = shouldApply;
+  const ContextVariant(super.name, {required this.when});
 
-  final bool _inverse;
+  @override
+  ContextVariantAttribute call([
+    Attribute? p1,
+    Attribute? p2,
+    Attribute? p3,
+    Attribute? p4,
+    Attribute? p5,
+    Attribute? p6,
+    Attribute? p7,
+    Attribute? p8,
+    Attribute? p9,
+    Attribute? p10,
+    Attribute? p11,
+    Attribute? p12,
+    Attribute? p13,
+    Attribute? p14,
+    Attribute? p15,
+    Attribute? p16,
+    Attribute? p17,
+    Attribute? p18,
+    Attribute? p19,
+    Attribute? p20,
+  ]) {
+    final params = [
+      p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, //
+      p11, p12, p13, p14, p15, p16, p17, p18, p19, p20,
+    ].whereType<Attribute>();
 
-  final ShouldApplyFunc _shouldApply;
-
-  bool shouldApply(BuildContext context) {
-    return _inverse ? !_shouldApply(context) : _shouldApply(context);
+    // Create a ContextVariantAttribute using the collected parameters.
+    return ContextVariantAttribute(this, StyleMix.create(params));
   }
 
   @override
-  // ignore: long-parameter-list
-  ContextVariantAttribute call([
-    StyleAttribute? p1,
-    StyleAttribute? p2,
-    StyleAttribute? p3,
-    StyleAttribute? p4,
-    StyleAttribute? p5,
-    StyleAttribute? p6,
-    StyleAttribute? p7,
-    StyleAttribute? p8,
-    StyleAttribute? p9,
-    StyleAttribute? p10,
-    StyleAttribute? p11,
-    StyleAttribute? p12,
-  ]) {
-    final params = <StyleAttribute>[];
-
-    for (final param in [p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12]) {
-      if (param != null) params.add(param);
-    }
-
-    return ContextVariantAttribute(this, StyleMix.fromAttributes(params));
-  }
-
-  ContextStyleVariant inverseInstance() {
-    return ContextStyleVariant(
-      name,
-      shouldApply: _shouldApply,
-      inverse: !_inverse,
-    );
-  }
-
-  get props => [name, _inverse, _shouldApply];
+  get props => [name, when];
 }

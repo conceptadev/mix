@@ -1,36 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import '../../../mix.dart';
-
-abstract class MixToken {
+@immutable
+abstract class MixToken<T> {
   final String name;
+
   const MixToken(this.name);
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is MixToken &&
-          runtimeType == other.runtimeType &&
-          name == other.name;
+  operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    if (runtimeType != other.runtimeType) return false;
+
+    return other is MixToken<T> && other.name == name;
+  }
 
   @override
-  int get hashCode => runtimeType.hashCode ^ name.hashCode;
+  int get hashCode => Object.hash(name, runtimeType);
 }
 
-mixin WithReferenceMixin<T> on MixToken {
-  // Refernce is negativce for tracking
-  // Also reference are passed as double to DTOs
-
-  double get ref => hashCode.toDouble() * -1;
-  double call() {
-    // Creates a reference from hashcode
-    return ref;
-  }
+mixin TokenResolver<T> on MixToken<T> {
+  T Function(BuildContext context) get tokenResolver;
+  T resolve(BuildContext context) => tokenResolver(context);
 }
 
-typedef TokenReferenceMap<T extends MixToken, V> = Map<T, TokenValueGetter<V?>>;
+mixin TokenValueReference<T> on MixToken<T> {
+  T call();
+}
 
-typedef MixTextStyleTokens = TokenReferenceMap<TextStyleToken, TextStyle>;
-
-typedef TokenValueGetter<T> = T Function(BuildContext);
+typedef DesignTokenMap<T extends MixToken, V>
+    = Map<T, V Function(BuildContext context)>;

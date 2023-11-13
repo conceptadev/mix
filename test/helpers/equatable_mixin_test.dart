@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mix/src/helpers/equality_mixin/equality_mixin.dart';
+import 'package:mix/src/core/equality/compare_mixin.dart';
 
 void main() {
   group('EquatableMixin', () {
@@ -105,7 +105,7 @@ void main() {
   });
 }
 
-class TestClass with EqualityMixin {
+class TestClass with Comparable {
   final int id;
   final String name;
 
@@ -115,7 +115,7 @@ class TestClass with EqualityMixin {
   List<Object?> get props => [id, name];
 }
 
-class DeepNestedClass with EqualityMixin {
+class DeepNestedClass with Comparable {
   final Map<String, Map<String, int>> deepNestedMap;
   final List<List<List<String>>> deepNestedList;
 

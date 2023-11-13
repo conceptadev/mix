@@ -9,7 +9,7 @@ StyleMix get mix => StyleMix(
       rounded(10),
       elevation(2),
       backgroundColor($M3Color.surface),
-      alignment(Alignment.center),
+      alignmentCenter(),
       textStyle(color: $M3Color.onSurface),
     );
 

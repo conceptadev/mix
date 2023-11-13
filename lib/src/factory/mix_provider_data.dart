@@ -1,122 +1,112 @@
+// Necessary packages are imported at the start of the file.
 import 'package:flutter/material.dart';
 
 import '../attributes/attribute.dart';
+import '../attributes/variant_attribute.dart';
+import '../core/attributes_map.dart';
+import '../core/equality/compare_mixin.dart';
 import '../decorators/decorator.dart';
-import '../helpers/equality_mixin/equality_mixin.dart';
-import '../helpers/mergeable_map.dart';
 import '../theme/mix_theme.dart';
-import '../variants/variant_attribute.dart';
 import 'style_mix.dart';
-import 'style_mix_data.dart';
 
-@Deprecated('Use MixData instead.')
-typedef MixContext = MixData;
+/// This class is used for encapsulating all [MixData] related operations.
+/// It contains a mixture of properties and methods useful for handling different attributes,
+/// decorators and token resolvers.
+@immutable
+class MixData with Comparable {
+  // Instance variables for widget attributes, widget decorators and token resolver.
+  final VisualAttributeMap _attributes;
 
-class MixData with EqualityMixin {
-  final MergeableMap<StyledWidgetAttributes> _widgetAttributes;
-  final MergeableMap<WidgetDecorator> _widgetDecorators;
-  final MixTokenResolver _tokenResolver;
+  final MixTokenResolver _resolver;
 
+  /// A Private constructor for the [MixData] class t hat initializes its main variables.
+  ///
+  /// It takes in [attributes], [decorators] and [resolver] as required parameters.
   MixData._({
-    required MergeableMap<StyledWidgetAttributes> widgetAttributes,
-    required MergeableMap<WidgetDecorator> widgetDecorators,
-    required MixTokenResolver tokenResolver,
-  })  : _widgetAttributes = widgetAttributes,
-        _widgetDecorators = widgetDecorators,
-        _tokenResolver = tokenResolver;
+    required MixTokenResolver resolver,
+    required VisualAttributeMap attributes,
+  })  : _attributes = attributes,
+        _resolver = resolver;
 
-  factory MixData.create({
-    required BuildContext context,
-    required StyleMix style,
-  }) {
-    // Tracks the values selected and does not allow for
-    // attributes already expended to be expended again.
-    final currentValues = StyleMixData(
-      attributes: style.values.attributes,
-      decorators: style.values.decorators,
-      variants: [],
-      contextVariants: [],
-    );
-
-    final attributes = _applyContextVariants(
-      context,
-      style.values.contextVariants,
-    );
-
-    final combinedValues = currentValues.merge(StyleMixData.create(attributes));
+  factory MixData.create(BuildContext context, StyleMix style) {
+    final styleMix = applyContextToVisualAttributes(context, style);
 
     return MixData._(
-      widgetAttributes: combinedValues.attributes ?? MergeableMap([]),
-      widgetDecorators: combinedValues.decorators ?? MergeableMap([]),
-      tokenResolver: MixTokenResolver(context),
+      resolver: MixTokenResolver(context),
+      attributes: VisualAttributeMap(styleMix),
     );
   }
 
-  MixTokenResolver get resolveToken => _tokenResolver;
+  /// Getter method for [MixTokenResolver].
+  ///
+  /// Returns current [_resolver].
+  MixTokenResolver get resolver => _resolver;
 
-  static List<StyleAttribute> _applyContextVariants(
-    BuildContext context,
-    Iterable<StyleAttribute> attributes,
-  ) {
-    // Use the fold method to reduce the input attributes list
-    // into a single list of expanded attributes.
-    return attributes.fold<List<StyleAttribute>>(
-      [], // Initial empty list to accumulate the result.
-      (expanded, attribute) {
-        // Check if the current attribute is a ContextVariantAttribute.
-        if (attribute is ContextVariantAttribute) {
-          // Determine if the attribute should be applied based on the context.
-          final shouldApply = attribute.shouldApply(context);
+  /// A getter method for [_attributes].
+  ///
+  /// Returns a list of all [VisualAttribute].
+  @visibleForTesting
+  VisualAttributeMap get attributes => _attributes;
 
-          // If willApply is true, recursively apply context variants to
-          // the attribute's value and add the result to the expanded list.
-          // Otherwise, add the attribute itself to the list.
-          return expanded
-            ..addAll(shouldApply
-                ? _applyContextVariants(context, attribute.value.toAttributes())
-                : [attribute]);
-        } else {
-          // If the current attribute is not a ContextVariantAttribute,
-          // simply add it to the expanded list.
-          return expanded..add(attribute);
-        }
-      },
-    );
+  /// A getter method for [_decorators].
+  ///
+  /// Returns a list of all [Decorator].
+  List<T> decoratorOfType<T extends Decorator>() =>
+      _attributes.whereType<T>().toList();
+
+  /// Retrieves an instance of the specified [VisualAttribute] type from the [MixData].
+  /// d
+  /// Accepts a type parameter [Attr] which extends [VisualAttribute].
+  /// Returns the instance of type [Attr] if found, else returns null.
+  T? attributeOfType<T extends VisualAttribute>() {
+    return _attributes.attributeOfType<T>();
   }
 
-  /// Returns an instance of the specified [StyledWidgetAttributes] type from the [MixData].
-  A? attributesOfType<A extends StyledWidgetAttributes>() {
-    return _widgetAttributes[A] as A?;
-  }
-
-  T dependOnAttributesOfType<T extends StyledWidgetAttributes>() {
-    final attribute = attributesOfType<T>();
-
-    if (attribute is! T) {
-      throw '''
-      No $T could be found starting from MixContext 
-      when call mixContext.attributesOfType<$T>(). This can happen because you 
-      have not create a Mix with $T.
-      ''';
-    }
-
-    return attribute;
-  }
-
-  List<WidgetDecorator>? get decorators {
-    return _widgetDecorators.values.toList();
+  R? get<Attr extends VisualAttribute<R>, R>() {
+    return attributeOfType<Attr>()?.resolve(this);
   }
 
   /// This is similar to a merge behavior however it prioritizes the current properties
   /// over the other properties, essentially using [MixData] `other` as the base for this instance.
-  MixData inheritFrom(MixData other) {
+  ///
+  /// [other] is the other [MixData] instance that is to be merged with current instance.
+  /// Returns a new instance of [MixData] which is actually a merge of current and other instance.
+  MixData merge(MixData other) {
     return MixData._(
-      widgetAttributes: other._widgetAttributes.merge(_widgetAttributes),
-      widgetDecorators: other._widgetDecorators.merge(_widgetDecorators),
-      tokenResolver: _tokenResolver,
+      resolver: _resolver,
+      attributes: _attributes.merge(other._attributes),
     );
   }
 
+  /// Overrides the getter function of [props] from [Comparable] to specify properties necessary for distinguishing instances.
+  ///
+  /// Returns a list of properties [_attributes] & [_decorators].
   @override
-  get props => [_widgetAttributes, _widgetDecorators];
+  get props => [_attributes];
+}
+
+@visibleForTesting
+List<VisualAttribute> applyContextToVisualAttributes(
+  BuildContext context,
+  StyleMix mix,
+) {
+  StyleMix style = StyleMix.create(mix.styles);
+
+  final contextVariants = mix.variants.whereType<ContextVariantAttribute>();
+  final multiVariants = mix.variants.whereType<MultiVariantAttribute>();
+
+  // Once there are no more context variants to apply, return the mix
+  if (contextVariants.isEmpty) {
+    return mix.styles;
+  }
+
+  for (ContextVariantAttribute attr in contextVariants) {
+    if (attr.when(context)) style = style.merge(attr.value);
+  }
+
+  for (MultiVariantAttribute attr in multiVariants) {
+    if (attr.when(context)) style = style.merge(attr.value);
+  }
+
+  return applyContextToVisualAttributes(context, style);
 }

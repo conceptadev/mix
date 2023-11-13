@@ -9,16 +9,15 @@ class BasicExample extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mix = StyleMix.fromAttributes([
+    final mix = StyleMix.create([
       height(300),
       width(300),
       rounded(10),
       animation(),
       elevation(2),
       margin(10),
-      alignment(Alignment.center),
+      alignmentCenter(),
       backgroundColor(Colors.purple),
-      alignment(Alignment.center),
       textStyle(color: Colors.white),
       onPress(
         backgroundColor(Colors.black),

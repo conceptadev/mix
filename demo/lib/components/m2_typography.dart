@@ -13,9 +13,9 @@ class M2TokensTypographyExampleTile extends HookWidget {
       ),
     );
 
-    final headingMix = StyleMix.fromAttributes([
+    final headingMix = StyleMix.create([
       textStyle(fontSize: 22),
-      ...onSurfaceMix.toAttributes(),
+      ...onSurfaceMix.values,
     ]);
 
     return ExpansionTile(

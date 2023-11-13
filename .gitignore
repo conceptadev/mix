@@ -16,9 +16,7 @@ doc/
 *.iws
 .idea/
 
-
 # FVM
-.fvm/flutter_sdk
 
 # The .vscode folder contains launch configuration and tasks you configure in
 # VS Code which you may wish to be included in version control, so this line
@@ -83,4 +81,7 @@ yarn.lock
 node_modules
 
 # FVM 
-.fvm/flutter_sdk
+
+# FVM Version Cache
+.fvm/
+**/**.context.md

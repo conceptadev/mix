@@ -6,7 +6,7 @@ import '../components/m3_typography.dart';
 import '../styles.dart';
 
 StyleMix get button => StyleMix(
-      textStyle(as: $M3Text.bodyMedium),
+      textStyle(as: MaterialTextStyles.bodyMedium),
       bold(),
       textStyle(fontSize: 6.0),
       backgroundColor($M3Color.primary),

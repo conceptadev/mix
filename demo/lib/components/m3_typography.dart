@@ -13,9 +13,9 @@ class M3TokensTypographyExampleTile extends HookWidget {
       ),
     );
 
-    final headingMix = StyleMix.fromAttributes([
+    final headingMix = StyleMix.create([
       textStyle(fontSize: 22),
-      ...onSurfaceMix.toAttributes(),
+      ...onSurfaceMix.values,
     ]);
 
     return ExpansionTile(
@@ -27,7 +27,7 @@ class M3TokensTypographyExampleTile extends HookWidget {
       ),
       tilePadding: const EdgeInsets.all(0),
       children: [
-        ...$M3Text.tokens
+        ...MaterialTextStyles.tokens
             .map(
               (token, style) => MapEntry(
                 token,

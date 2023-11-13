@@ -1,72 +1,41 @@
 import 'package:flutter/material.dart';
 
-enum ScreenSizeToken { xsmall, small, medium, large }
+import 'mix_token.dart';
 
-class MixBreakpointsTokens {
-  final double xsmall;
-  final double small;
-  final double medium;
-  final double large;
+enum BreakpointOrientation {
+  portrait,
+  landscape,
+  all,
+}
 
-  const MixBreakpointsTokens.raw({
-    required this.xsmall,
-    required this.small,
-    required this.medium,
-    required this.large,
+class BreakpointConstraint {
+  final double minWidth;
+  final double maxWidth;
+  final BreakpointOrientation orientation;
+
+  const BreakpointConstraint({
+    this.minWidth = 0,
+    this.maxWidth = double.infinity,
+    this.orientation = BreakpointOrientation.all,
   });
 
-  const MixBreakpointsTokens({
-    this.xsmall = 0,
-    this.small = 600,
-    this.medium = 1240,
-    this.large = 1440,
-  });
+  bool matches(Size size) {
+    final matchesWidth = size.width >= minWidth && size.width <= maxWidth;
+    final matchesOrientation = orientation == BreakpointOrientation.all ||
+        (orientation == BreakpointOrientation.portrait &&
+            size.height > size.width) ||
+        (orientation == BreakpointOrientation.landscape &&
+            size.width > size.height);
 
-  /// Returns [ScreenSizeToken] based on Material breakpoints
-  ScreenSizeToken getScreenSize(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-
-    return screenWidth >= large
-        ? ScreenSizeToken.large
-        : screenWidth >= medium
-            ? ScreenSizeToken.medium
-            : screenWidth >= small
-                ? ScreenSizeToken.small
-                : ScreenSizeToken.xsmall;
+    return matchesWidth && matchesOrientation;
   }
+}
 
-  MixBreakpointsTokens copyWith({
-    double? xsmall,
-    double? small,
-    double? medium,
-    double? large,
-  }) {
-    return MixBreakpointsTokens.raw(
-      xsmall: xsmall ?? this.xsmall,
-      small: small ?? this.small,
-      medium: medium ?? this.medium,
-      large: large ?? this.large,
-    );
-  }
+class BreakpointToken extends MixToken<BreakpointConstraint> {
+  static const xsmall = BreakpointToken('--mix-breakpoint-xsmall');
+  static const small = BreakpointToken('--mix-breakpoint-small');
+  static const medium = BreakpointToken('--mix-breakpoint-medium');
+  static const large = BreakpointToken('--mix-breakpoint-large');
 
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is MixBreakpointsTokens &&
-        other.xsmall == xsmall &&
-        other.small == small &&
-        other.medium == medium &&
-        other.large == large;
-  }
-
-  @override
-  int get hashCode {
-    return xsmall.hashCode ^ small.hashCode ^ medium.hashCode ^ large.hashCode;
-  }
-
-  @override
-  String toString() {
-    return 'MixThemeBreakpoints(xsmall: $xsmall, small: $small, medium: $medium, large: $large)';
-  }
+  const BreakpointToken(super.name);
 }

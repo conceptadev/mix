@@ -1,6 +1,4 @@
-# Defines a default set of lint rules enforced for
-# projects at Google. For details and rationale,
-# see https://github.com/dart-lang/pedantic#enabled-lints.
+
 include: package:flutter_lints/flutter.yaml
 
 # For lint rules and documentation, see http://dart-lang.github.io/linter/lints.
@@ -11,23 +9,63 @@ linter:
     prefer_relative_imports: true
 
 analyzer:
-  plugins:
-    - dart_code_metrics
+  exclude: 
+    - "**/*.g.dart"
+    - "**/*.freezed.dart"
+    
+
 
 dart_code_metrics:
-  metrics:
-    cyclomatic-complexity: 20
-    number-of-parameters: 4
-    maximum-nesting-level: 5
+  extends:
+    - package:dart_code_metrics_presets/all.yaml
   metrics-exclude:
     - test/**
+  rules-exclude:
+    - "test/**"
   rules:
-    - newline-before-return
-    - no-boolean-literal-compare
-    - no-empty-block
-    - prefer-trailing-comma
-    - no-equal-then-else
+    prefer-match-file-name: false
+    prefer-single-widget-per-file: false
+    parameters-ordering: false
+    arguments-ordering:
+      child-last: true
+    avoid-dynamic: false
+    prefer-getter-over-method: false
+    enum-constants-ordering: false
+    prefer-widget-private-members: false
+    prefer-static-class: false
+    avoid-late-keyword: false
+    avoid-barrel-files: false
+    avoid-declaring-call-method: false
+    avoid-long-parameter-list: false
+    avoid-recursive-calls: false
+    no-magic-number: false
+    avoid-ignoring-return-values: false
+    prefer-commenting-analyzer-ignores: false
+    prefer-correct-identifier-length: false
+    avoid-unsafe-collection-methods: false
+    avoid-similar-names: false
+    format-comment: false
+    no-equal-arguments: false
+    prefer_initializing_formals: false
+    avoid-nested-conditional-expressions:
+        acceptable-level: 3
+    member-ordering:
+        order:
+          - public-fields
+          - private-fields
+          - constructors
+          - static-methods
+          - public-getters
+          - private-getters
+          - public-setters
+          - private-setters
+          - public-methods
+          - private-methods
+          - overridden-public-methods
+          - overridden-public-getters
+          - build-method
+    prefer-named-boolean-parameters:
+      ignore-single: true
 
-  anti-patterns:
-    - long-method
-    - long-parameter-list
+
+      

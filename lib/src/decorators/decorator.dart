@@ -1,41 +1,27 @@
 import 'package:flutter/material.dart';
 
-import '../../mix.dart';
+import '../attributes/attribute.dart';
+import '../factory/mix_provider_data.dart';
 
-abstract class Decorator<T extends Decorator<T>> extends StyleAttribute
-    with Mergeable<Decorator<T>> {
-  const Decorator({
-    this.key,
-  });
+abstract class Decorator<T> extends VisualAttribute<T> {
+  const Decorator();
 
-  /// Key is required in order for proper sorting
-  final Key? key;
-
-  Widget build(MixData mix, Widget child);
+  Widget render(Widget child, MixData mix) {
+    return build(child, resolve(mix));
+  }
 
   @override
-  Decorator<T> merge(covariant Decorator<T> other);
+  Decorator merge(covariant Decorator? other);
 
-  Widget render(MixData mix, Widget child) {
-    return build(mix, child);
-  }
+  Widget build(Widget child, T data);
 }
 
-abstract class WidgetDecorator<T extends WidgetDecorator<T>>
-    extends StyleAttribute with Mergeable<WidgetDecorator<T>> {
-  const WidgetDecorator({
-    this.key,
-  });
-
-  /// Key is required in order for proper sorting
-  final Key? key;
-
-  Widget build(MixData mix, Widget child);
+abstract class ParentDecorator<T> extends Decorator<T> {
+  const ParentDecorator();
 
   @override
-  WidgetDecorator<T> merge(covariant WidgetDecorator<T> other);
+  ParentDecorator<T> merge(covariant ParentDecorator<T>? other);
 
-  Widget render(MixData mix, Widget child) {
-    return build(mix, child);
-  }
+  @override
+  Widget build(Widget child, T data);
 }

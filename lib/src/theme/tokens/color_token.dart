@@ -3,38 +3,26 @@ import 'package:flutter/widgets.dart';
 
 import 'mix_token.dart';
 
-class ColorSwatchToken extends ColorSwatch<int> implements MixToken {
-  const ColorSwatchToken(this.name) : super(0, const {});
-
+class ColorToken extends Color implements MixToken<Color> {
   @override
   final String name;
 
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is ColorSwatchToken &&
-          runtimeType == other.runtimeType &&
-          name == other.name;
-
-  @override
-  int get hashCode => runtimeType.hashCode ^ name.hashCode;
-}
-
-class ColorToken extends Color implements MixToken {
   const ColorToken(this.name) : super(0);
 
   @override
-  final String name;
+  operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is ColorToken && other.name == name;
+  }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is ColorToken &&
-          runtimeType == other.runtimeType &&
-          name == other.name;
-
-  @override
-  int get hashCode => runtimeType.hashCode ^ name.hashCode;
+  int get hashCode => name.hashCode;
 }
 
-typedef MixColorTokens = TokenReferenceMap<ColorToken, Color>;
+class ColorTokenResolver extends ColorToken with TokenResolver<Color> {
+  @override
+  final Color Function(BuildContext context) tokenResolver;
+
+  const ColorTokenResolver(super.name, this.tokenResolver);
+}

@@ -2,10 +2,9 @@ import 'package:mix/mix.dart';
 
 StyleMix get button {
   return StyleMix(
-    textStyle(as: $M3Text.bodyMedium),
+    textStyle(as: MaterialTextStyles.bodyMedium),
     bold(),
     textStyle(fontSize: 16.0),
-    animation(),
     backgroundColor($M3Color.primary),
     onHover(
       backgroundColor($M3Color.secondary),

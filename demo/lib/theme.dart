@@ -39,7 +39,7 @@ MaterialStateProperty<Color?> getPropertyForTrack(ThemeData theme) {
     if (states.contains(MaterialState.selected)) {
       return theme.colorScheme.secondary;
     }
-    
+
     return null;
   });
 }
@@ -59,7 +59,7 @@ ThemeData get darkTheme {
           if (states.contains(MaterialState.hovered)) {
             return Colors.white;
           }
-          
+
           return Colors.white.withAlpha(230);
         }),
       ),
