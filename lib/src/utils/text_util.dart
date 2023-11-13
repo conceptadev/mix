@@ -14,9 +14,8 @@ StrutStyleAttribute strutStyle(StrutStyle strutStyle) {
   return strutStyle.toAttribute();
 }
 
-TextDirectiveAttribute textDirective(TextDirective directive) {
-  return TextDirectiveAttribute([directive]);
-}
+TextDirectiveAttribute textDirective(TextDirective directive) =>
+    TextDirectiveAttribute([directive]);
 
 TextStyleAttribute textStyle({
   String? fontFamily,
@@ -62,13 +61,9 @@ TextStyleAttribute textStyle({
   );
 }
 
-TextStyleAttribute bold() {
-  return textStyle(fontWeight: FontWeight.bold);
-}
+TextStyleAttribute bold() => textStyle(fontWeight: FontWeight.bold);
 
-TextStyleAttribute italic() {
-  return textStyle(fontStyle: FontStyle.italic);
-}
+TextStyleAttribute italic() => textStyle(fontStyle: FontStyle.italic);
 
 ShadowAttribute _shadowFromDto(Shadow shadow) {
   return ShadowAttribute(

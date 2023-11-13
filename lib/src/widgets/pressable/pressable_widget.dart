@@ -82,6 +82,7 @@ class _PressableWidgetState extends State<Pressable> {
       return PressableState.hover;
     }
 
+    // ignore: prefer-returning-conditional-expressions
     return PressableState.inactive;
   }
 
@@ -106,39 +107,21 @@ class _PressableWidgetState extends State<Pressable> {
         focusable: _onEnabled && _node.canRequestFocus,
         focused: _node.hasFocus,
         child: GestureDetector(
-          onTapDown: (_) {
-            updateState(() => _pressed = true);
-          },
-          onTapUp: (_) {
-            handleUnpress();
-          },
-          onTap: () {
-            widget.onPressed?.call();
-          },
-          onTapCancel: () {
-            handleUnpress();
-          },
-          onLongPressCancel: () {
-            updateState(() => _longpressed = false);
-          },
+          onTapDown: (_) => updateState(() => _pressed = true),
+          onTapUp: (_) => handleUnpress(),
+          onTap: () => widget.onPressed?.call(),
+          onTapCancel: () => handleUnpress(),
+          onLongPressCancel: () => updateState(() => _longpressed = false),
           onLongPress: widget.onLongPress,
-          onLongPressStart: (_) {
-            updateState(() => _longpressed = true);
-          },
-          onLongPressEnd: (_) {
-            updateState(() => _longpressed = false);
-          },
+          onLongPressStart: (_) => updateState(() => _longpressed = true),
+          onLongPressEnd: (_) => updateState(() => _longpressed = false),
           behavior: widget.behavior,
           child: FocusableActionDetector(
             enabled: _onEnabled,
             focusNode: _node,
             autofocus: widget.autofocus,
-            onShowFocusHighlight: (v) {
-              updateState(() => _focus = v);
-            },
-            onShowHoverHighlight: (v) {
-              updateState(() => _hover = v);
-            },
+            onShowFocusHighlight: (v) => updateState(() => _focus = v),
+            onShowHoverHighlight: (v) => updateState(() => _hover = v),
             onFocusChange: widget.onFocusChange,
             child: PressableNotifier(
               state: _state,

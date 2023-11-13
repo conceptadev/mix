@@ -106,9 +106,25 @@ extension WidgetTesterExt on WidgetTester {
           child: Builder(
             builder: (BuildContext context) {
               // Populate MixData into the widget tree if needed
-              return Mix.build(context, style, (_) => widget);
+              return Mix.build(context, style: style, builder: (_) => widget);
             },
           ),
+        ),
+      ),
+    );
+  }
+
+  Future<void> pumpWithPressable(
+    Widget widget, {
+    PressableState state = PressableState.pressed,
+    bool focus = false,
+  }) async {
+    await pumpWidget(
+      MaterialApp(
+        home: PressableNotifier(
+          state: state,
+          focus: focus,
+          child: widget,
         ),
       ),
     );

@@ -23,6 +23,7 @@ class StyledStack extends StyledWidget {
 
       return Stack(
         alignment: spec.alignment ?? fallback.alignment,
+        textDirection: spec.textDirection,
         fit: spec.fit ?? fallback.fit,
         clipBehavior: spec.clipBehavior ?? fallback.clipBehavior,
         children: children,

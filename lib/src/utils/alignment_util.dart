@@ -8,14 +8,10 @@ import '../helpers/extensions/values_ext.dart';
 ///
 /// The [x] and [y] values are used to create an [Alignment] object.
 /// The [Alignment] object is then converted into an [AlignmentAttribute] object.
-AlignmentAttribute alignment(double x, double y) {
-  return AlignmentAttribute(x: x, y: y);
-}
+const alignment = AlignmentAttribute.pos;
 
 /// Convers a [start] and [y] value into an [AlignmentDirectionalAttribute] object.
-AlignmentDirectionalAttribute alignmentDirectional(double start, double y) {
-  return AlignmentDirectionalAttribute(start: start, y: y);
-}
+const alignmentDirectional = AlignmentDirectionalAttribute.pos;
 
 // Convenience methods follow below, providing predefined [AlignmentGeometryAttribute]s for common alignments.
 // These methods simplify the creation of [AlignmentGeometryAttribute] objects by abstracting away

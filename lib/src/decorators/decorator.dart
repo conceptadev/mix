@@ -13,7 +13,7 @@ abstract class Decorator<T> extends VisualAttribute<T> {
   @override
   Decorator merge(covariant Decorator? other);
 
-  Widget build(Widget child, T value);
+  Widget build(Widget child, T data);
 }
 
 abstract class ParentDecorator<T> extends Decorator<T> {
@@ -23,5 +23,5 @@ abstract class ParentDecorator<T> extends Decorator<T> {
   ParentDecorator<T> merge(covariant ParentDecorator<T>? other);
 
   @override
-  Widget build(Widget child, T value);
+  Widget build(Widget child, T data);
 }

@@ -20,7 +20,12 @@ abstract class StyledWidget extends StatelessWidget {
   final bool inherit;
 
   Widget buildWithStyle(BuildContext context, MixBuilder builder) {
-    return Mix.build(context, style, builder);
+    return Mix.build(
+      context,
+      style: style,
+      builder: builder,
+      inherit: inherit,
+    );
   }
 
   @override

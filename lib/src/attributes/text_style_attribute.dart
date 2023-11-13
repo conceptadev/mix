@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 
 import '../factory/mix_provider_data.dart';
 import '../theme/tokens/text_style_token.dart';
-import '../utils/helper_util.dart';
 import 'attribute.dart';
 import 'color_attribute.dart';
 import 'shadow_attribute.dart';

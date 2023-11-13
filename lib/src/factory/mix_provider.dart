@@ -53,8 +53,19 @@ class Mix extends InheritedWidget {
     return data != oldWidget.data;
   }
 
-  static Mix build(BuildContext context, StyleMix style, MixBuilder builder) {
-    final mixData = MixData.create(context, style);
+  static Mix build(
+    BuildContext context, {
+    required StyleMix style,
+    required MixBuilder builder,
+    bool inherit = false,
+  }) {
+    MixData mixData = MixData.create(context, style);
+    if (inherit) {
+      final contextMixData = Mix.maybeOf(context);
+      if (contextMixData != null) {
+        mixData = contextMixData.merge(mixData);
+      }
+    }
 
     return Mix(data: mixData, child: builder(mixData));
   }

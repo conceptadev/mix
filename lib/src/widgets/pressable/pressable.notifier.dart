@@ -4,13 +4,12 @@ import 'pressable_state.dart';
 
 class PressableNotifier extends InheritedWidget {
   const PressableNotifier({
-    Key? key,
-    required Widget child,
+    super.key,
+    required super.child,
     required this.state,
     this.focus = false,
-  }) : super(key: key, child: child);
+  });
 
-  // ignore: prefer-widget-private-members
   static PressableNotifier? of(BuildContext context) {
     return context.dependOnInheritedWidgetOfExactType<PressableNotifier>();
   }

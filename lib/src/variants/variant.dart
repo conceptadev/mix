@@ -4,7 +4,6 @@ import '../attributes/attribute.dart';
 import '../attributes/variant_attribute.dart';
 import '../core/equality/compare_mixin.dart';
 import '../factory/style_mix.dart';
-import 'context_variant.dart';
 import 'multi_variant.dart';
 
 /// A class representing a variant, which is a combination of attributes.
@@ -52,18 +51,8 @@ class Variant with Comparable {
       p11, p12, p13, p14, p15, p16, p17, p18, p19, p20,
     ].whereType<Attribute>();
 
-    final style = StyleMix.create(params);
-
-    if (this is ContextVariant) {
-      return ContextVariantAttribute(this as ContextVariant, style);
-    }
-
-    if (this is MultiVariant) {
-      return MultiVariantAttribute(this as MultiVariant, style);
-    }
-
     // Create a VariantAttribute using the collected parameters.
-    // ignore: prefer-returning-conditional-expressions
+
     return VariantAttribute(this, StyleMix.create(params));
   }
 

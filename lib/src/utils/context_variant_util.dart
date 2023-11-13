@@ -46,9 +46,6 @@ final onLight = _brightnessVariant(Brightness.light);
 final onRTL = _directionalityVariant(TextDirection.rtl);
 final onLTR = _directionalityVariant(TextDirection.ltr);
 
-// Not variant
-const onNot = _onNot;
-
 // Orientation context variants
 
 final onPortrait = _orientationVariant(Orientation.portrait);
@@ -91,9 +88,9 @@ ContextVariant _screenSizeVariant(BreakpointToken screenSize) {
   );
 }
 
-ContextVariant _onNot(ContextVariant variant) {
+ContextVariant onNot(ContextVariant variant) {
   return ContextVariant(
-    'not-(${variant.name})',
+    'not(${variant.name})',
     when: (BuildContext context) => !variant.when(context),
   );
 }
