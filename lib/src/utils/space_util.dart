@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 
+import '../attributes/scalar_attribute.dart';
 import '../attributes/space_attribute.dart';
 import '../theme/tokens/space_token.dart';
 
@@ -14,6 +15,8 @@ const paddingDirectional =
 const margin = SpaceUtility(MarginAttribute.new);
 const marginDirectional =
     SpaceDirectionalUtility(MarginDirectionalAttribute.new);
+
+const gap = WithSpaceToken(GapAttribute.new);
 
 /// Type definition for a function that creates space attributes.
 typedef SpaceUtilityFn<T extends SpaceAttribute> = T Function({

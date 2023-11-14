@@ -234,5 +234,3 @@ class BoxShapeUtility {
 }
 
 const imageColor = ImageColorAttribute.new;
-
-const gap = WithSpaceToken(GapAttribute.new);
