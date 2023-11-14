@@ -59,10 +59,10 @@ import '../../helpers/testing_utils.dart';
 void main() {
   testWidgets('Stack', (tester) async {
     final style = StyleMix(
-      stackFit(StackFit.expand),
+      stackFit.expand,
       alignment.topCenter,
-      clip(Clip.antiAlias),
-      textDirection(TextDirection.ltr),
+      clip.antiAlias,
+      textDirection.ltr,
     );
     await tester.pumpMaterialApp(
       StyledStack(
@@ -94,7 +94,7 @@ void main() {
 
   testWidgets('ZBox', (tester) async {
     final style = StyleMix(
-      stackFit(StackFit.expand),
+      stackFit.expand,
       alignment.topCenter,
       clip(Clip.antiAlias),
       textDirection(TextDirection.ltr),

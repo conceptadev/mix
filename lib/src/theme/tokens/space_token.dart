@@ -38,26 +38,3 @@ class SpaceToken extends MixToken<SpaceTokenRef> with TokenValueReference {
   @override
   double call() => hashCode * -1.0;
 }
-
-// Helper class to wrap functions that can return
-// Space tokens in their methods
-@immutable
-class UtilityWithSpaceTokens<T> {
-  final T Function(double value) _fn;
-
-  const UtilityWithSpaceTokens(T Function(double value) fn) : _fn = fn;
-
-  T get xsmall => call(SpaceToken.xsmall());
-
-  T get small => call(SpaceToken.small());
-
-  T get medium => call(SpaceToken.medium());
-
-  T get large => call(SpaceToken.large());
-
-  T get xlarge => call(SpaceToken.xlarge());
-
-  T get xxlarge => call(SpaceToken.xxlarge());
-
-  T call(double value) => _fn(value);
-}

@@ -13,7 +13,6 @@ import 'directives/text_directive.dart';
 import 'factory/mix_provider_data.dart';
 import 'factory/style_mix.dart';
 import 'helpers/extensions/values_ext.dart';
-import 'theme/tokens/space_token.dart';
 import 'utils/alignment_util.dart';
 import 'utils/border_radius_util.dart';
 import 'utils/border_util.dart';
@@ -93,7 +92,7 @@ extension DeprecatedMixExtension<T extends Attribute> on StyleMix {
 @Deprecated('Use MixData instead.')
 typedef MixContext = MixData;
 
-extension WithSpaceTokensExt<T> on UtilityWithSpaceTokens<T> {
+extension WithSpaceTokensExt<T> on WithSpaceToken<T> {
   @Deprecated('Use xsmall instead')
   T get xs => this.xsmall;
   @Deprecated('Use small instead')
@@ -311,7 +310,7 @@ StyleMixAttribute _apply(Iterable<StyleMix> mixes) {
 }
 
 @Deprecated(kShortAliasDeprecation)
-final p = padding;
+const p = padding;
 
 @Deprecated(kShortAliasDeprecation)
 final pt = paddingTop;
@@ -338,10 +337,10 @@ final px = paddingHorizontal;
 final py = paddingVertical;
 
 @Deprecated(kShortAliasDeprecation)
-const pi = paddingFrom;
+final pi = padding.from;
 
 @Deprecated(kShortAliasDeprecation)
-final m = margin;
+const m = margin;
 @Deprecated(kShortAliasDeprecation)
 final mt = marginTop;
 @Deprecated(kShortAliasDeprecation)
@@ -359,7 +358,7 @@ final mx = marginHorizontal;
 @Deprecated(kShortAliasDeprecation)
 final my = marginVertical;
 @Deprecated(kShortAliasDeprecation)
-const mi = marginFrom;
+final mi = margin.from;
 
 @Deprecated(kShortAliasDeprecation)
 final marginX = marginHorizontal;
@@ -367,20 +366,23 @@ final marginX = marginHorizontal;
 @Deprecated(kShortAliasDeprecation)
 final marginY = marginVertical;
 
-@Deprecated(kShortAliasDeprecation)
-const r = rounded;
+@Deprecated('Use borderRadius instead')
+const rounded = borderRadius;
 
-@Deprecated(kShortAliasDeprecation)
-const roundedH = roundedHorizontal;
+@Deprecated('Use borderRadius instead')
+const r = borderRadius;
 
-@Deprecated(kShortAliasDeprecation)
-const roundedV = roundedVertical;
+@Deprecated('Use borderRadius.horizontal instead')
+final roundedH = borderRadius.horizontal;
+
+@Deprecated('use borderRadius.vertical instead')
+final roundedV = borderRadius.vertical;
 
 @Deprecated(kShortAliasDeprecation)
 dynamic get roundedDH => UnimplementedError();
 
 @Deprecated(kShortAliasDeprecation)
-const roundedTL = roundedTopLeft;
+final roundedTL = borderRadius.topLeft;
 
 @Deprecated(kShortAliasDeprecation)
 BorderRadiusGeometryAttribute roundedTR() {
@@ -439,22 +441,22 @@ const minH = minHeight;
 const minW = minWidth;
 
 @Deprecated(kShortAliasDeprecation)
-const bt = borderTop;
+final bt = border.top;
 
 @Deprecated(kShortAliasDeprecation)
-const bb = borderBottom;
+final bb = border.bottom;
 
 @Deprecated(kShortAliasDeprecation)
-const bl = borderLeft;
+final bl = border.left;
 
 @Deprecated(kShortAliasDeprecation)
-const br = borderRight;
+final br = border.right;
 
 @Deprecated(kShortAliasDeprecation)
-const bs = borderStart;
+final bs = border.start;
 
 @Deprecated(kShortAliasDeprecation)
-const be = borderEnd;
+final be = border.end;
 
 @Deprecated('Use alignment instead')
 const align = alignment;
@@ -505,3 +507,102 @@ TextStyleAttribute locale() {
 TextOverflowAttribute overflow(TextOverflow overflow) {
   return TextOverflowAttribute(overflow);
 }
+
+@Deprecated('use margin.only instead')
+final marginOnly = margin.only;
+
+@Deprecated('use marginDirectional.only instead')
+final marginDirectionalOnly = marginDirectional.only;
+
+@Deprecated('use margin.all instead')
+final marginAll = margin.all;
+
+@Deprecated('use margin.top instead')
+final marginTop = margin.top;
+
+@Deprecated('use margin.bottom instead')
+final marginBottom = margin.bottom;
+
+@Deprecated('use margin.left instead')
+final marginLeft = margin.left;
+
+@Deprecated('use margin.right instead')
+final marginRight = margin.right;
+
+@Deprecated('use marginDirectional.start instead')
+final marginStart = marginDirectional.start;
+
+@Deprecated('use marginDirectional.end instead')
+final marginEnd = marginDirectional.end;
+
+@Deprecated('use margin.horizontal instead')
+final marginHorizontal = margin.horizontal;
+
+@Deprecated('use margin.vertical instead')
+final marginVertical = margin.vertical;
+
+@Deprecated('use marginFrom instead')
+final marginFrom = margin.from;
+
+@Deprecated('use padding.only instead')
+final paddingOnly = padding.only;
+
+@Deprecated('use paddingDirectional.only instead')
+final paddingDirectionalOnly = paddingDirectional.only;
+
+@Deprecated('use padding.all instead')
+final paddingAll = padding.all;
+
+@Deprecated('use padding.top instead')
+final paddingTop = padding.top;
+
+@Deprecated('use padding.bottom instead')
+final paddingBottom = padding.bottom;
+
+@Deprecated('use padding.left instead')
+final paddingLeft = padding.left;
+
+@Deprecated('use padding.right instead')
+final paddingRight = padding.right;
+
+@Deprecated('use paddingDirectional.start instead')
+final paddingStart = paddingDirectional.start;
+
+@Deprecated('use paddingDirectional.end instead')
+final paddingEnd = paddingDirectional.end;
+
+@Deprecated('use padding.horizontal instead')
+final paddingHorizontal = padding.horizontal;
+
+@Deprecated('use padding.vertical instead')
+final paddingVertical = padding.vertical;
+
+@Deprecated('use paddingFrom instead')
+final paddingFrom = padding.from;
+
+@Deprecated('use border.top instead')
+final borderTop = border.top;
+
+@Deprecated('use border.bottom instead')
+final borderBottom = border.bottom;
+
+@Deprecated('use border.left instead')
+final borderLeft = border.left;
+
+@Deprecated('use border.right instead')
+final borderRight = border.right;
+
+@Deprecated('use border.start instead')
+final borderStart = border.start;
+
+@Deprecated('use border.end instead')
+final borderEnd = border.end;
+
+@Deprecated('use border.horizontal instead')
+final borderHorizontal = border.horizontal;
+
+@Deprecated('use border.vertical instead')
+final borderVertical = border.vertical;
+
+@Deprecated('use border.all instead')
+final borderAll = border.all;

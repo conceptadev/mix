@@ -10,13 +10,11 @@ void main() {
     final marginAttr = margin(10);
     final backgroundColorAttr = backgroundColor(Colors.red);
     final alignmentAttr = alignment.center;
-    final clipAttr = clip(Clip.hardEdge);
+    final clipAttr = clip.hardEdge;
 
     final boxDecorationAttr = boxDecoration(
       border: border(color: Colors.red, width: 1, style: BorderStyle.solid),
-      borderRadius: borderRadius(
-        const Radius.circular(10),
-      ),
+      borderRadius: borderRadius(10),
       color: const ColorAttribute(Colors.red),
     );
 

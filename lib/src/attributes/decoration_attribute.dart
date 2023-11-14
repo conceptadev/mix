@@ -39,6 +39,9 @@ class BoxDecorationAttribute extends DecorationAttribute<BoxDecoration> {
     this.shape,
   });
 
+  BoxDecorationAttribute.color(Color color)
+      : this(color: ColorAttribute(color));
+
   @override
   BoxDecorationAttribute merge(BoxDecorationAttribute? other) {
     if (other == null) return this;

@@ -1,4 +1,7 @@
+import 'package:flutter/material.dart';
+
 import '../attributes/alignment_attribute.dart';
+import '../helpers/extensions/values_ext.dart';
 
 /// Generates an [AlignmentAttribute] from given [x] and [y] values.
 const alignment = AlignmentUtility();
@@ -30,7 +33,6 @@ class AlignmentUtility {
       const AlignmentDirectionalAttribute(1.0, 1.0);
 
   // Callable interface
-  AlignmentAttribute call(double x, double y) => AlignmentAttribute(x, y);
-  AlignmentDirectionalAttribute directional(double start, double y) =>
-      AlignmentDirectionalAttribute(start, y);
+  AlignmentGeometryAttribute call(AlignmentGeometry value) =>
+      value.toAttribute();
 }

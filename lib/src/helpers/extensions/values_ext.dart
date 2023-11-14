@@ -194,7 +194,7 @@ extension AlignmentExt on Alignment {
   AlignmentAttribute toAttribute() => AlignmentAttribute(x, y);
 }
 
-extension AligmentDirectionalExt on AlignmentDirectional {
+extension AlignmentDirectionalExt on AlignmentDirectional {
   AlignmentDirectionalAttribute toAttribute() =>
       AlignmentDirectionalAttribute(start, y);
 }

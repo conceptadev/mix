@@ -1,199 +1,132 @@
+// ignore_for_file: avoid-shadowing
+
 import 'package:flutter/material.dart';
 
 import '../attributes/border/border_attribute.dart';
 import '../helpers/extensions/values_ext.dart';
 
-BorderAttribute border({
+const border = BorderUtility();
+
+typedef BorderSideUtilityFn = BorderSideAttribute Function({
   Color? color,
   double? width,
   BorderStyle? style,
-  double? strokeAlign,
-}) {
-  final side = borderSide(
-    color: color,
-    width: width,
-    style: style,
-    strokeAlign: strokeAlign,
-  );
+});
 
-  return BorderAttribute(left: side, right: side, top: side, bottom: side);
-}
+class BorderSideUtility<T extends BoxBorderAttribute> {
+  final T Function(BorderSideAttribute side) fn;
 
-const borderOnly = BorderAttribute.new;
+  const BorderSideUtility(this.fn);
 
-BorderDirectionalAttribute borderDirectional({
-  Color? color,
-  double? width,
-  BorderStyle? style,
-  double? strokeAlign,
-}) {
-  final side = borderSide(
-    color: color,
-    width: width,
-    style: style,
-    strokeAlign: strokeAlign,
-  );
+  T color(Color color) => call(color: color);
 
-  return BorderDirectionalAttribute(
-    start: side,
-    end: side,
-    top: side,
-    bottom: side,
-  );
-}
+  T width(double width) => call(width: width);
 
-const borderDirectionalOnly = BorderDirectionalAttribute.new;
+  T style(BorderStyle style) => call(style: style);
 
-BorderAttribute borderTop({
-  Color? color,
-  double? width,
-  BorderStyle? style,
-  double? strokeAlign,
-}) {
-  return BorderAttribute(
-    top: borderSide(
-      color: color,
-      width: width,
-      style: style,
+  T call({
+    Color? color,
+    double? width,
+    BorderStyle? style,
+    double? strokeAlign,
+  }) {
+    final side = BorderSideAttribute(
+      color: color?.toAttribute(),
       strokeAlign: strokeAlign,
-    ),
-  );
-}
-
-BorderAttribute borderBottom({
-  Color? color,
-  double? width,
-  BorderStyle? style,
-  double? strokeAlign,
-}) {
-  return BorderAttribute(
-    bottom: borderSide(
-      color: color,
-      width: width,
       style: style,
-      strokeAlign: strokeAlign,
-    ),
-  );
-}
-
-BorderAttribute borderLeft({
-  Color? color,
-  double? width,
-  BorderStyle? style,
-  double? strokeAlign,
-}) {
-  return BorderAttribute(
-    left: borderSide(
-      color: color,
       width: width,
-      style: style,
-      strokeAlign: strokeAlign,
-    ),
-  );
+    );
+
+    return fn(side);
+  }
 }
 
-BorderAttribute borderRight({
-  Color? color,
-  double? width,
-  BorderStyle? style,
-  double? strokeAlign,
-}) {
-  return BorderAttribute(
-    right: borderSide(
-      color: color,
+class BorderUtility {
+  const BorderUtility();
+
+  BorderSideUtility<BorderAttribute> get all => BorderSideUtility(_all);
+  BorderSideUtility<BorderAttribute> get bottom => BorderSideUtility(_bottom);
+
+  BorderSideUtility<BorderAttribute> get top => BorderSideUtility(_top);
+
+  BorderSideUtility<BorderAttribute> get left => BorderSideUtility(_left);
+
+  BorderSideUtility<BorderAttribute> get right => BorderSideUtility(_right);
+
+  BorderSideUtility<BorderAttribute> get horizontal =>
+      BorderSideUtility(_horizontal);
+
+  BorderSideUtility<BorderAttribute> get vertical =>
+      BorderSideUtility(_vertical);
+
+  BorderSideUtility<BorderDirectionalAttribute> get start =>
+      BorderSideUtility(_start);
+
+  BorderSideUtility<BorderDirectionalAttribute> get end =>
+      BorderSideUtility(_end);
+
+  // Only method
+  BorderAttribute only({
+    BorderSideAttribute? top,
+    BorderSideAttribute? bottom,
+    BorderSideAttribute? left,
+    BorderSideAttribute? right,
+  }) {
+    return BorderAttribute(left: left, right: right, top: top, bottom: bottom);
+  }
+
+  BorderAttribute call({
+    Color? color,
+    double? width,
+    BorderStyle? style,
+    double? strokeAlign,
+  }) {
+    final side = BorderSideAttribute(
+      color: color?.toAttribute(),
+      strokeAlign: strokeAlign,
+      style: style,
       width: width,
-      style: style,
-      strokeAlign: strokeAlign,
-    ),
-  );
-}
+    );
 
-BorderDirectionalAttribute borderStart({
-  Color? color,
-  double? width,
-  BorderStyle? style,
-  double? strokeAlign,
-}) {
-  return BorderDirectionalAttribute(
-    start: borderSide(
-      color: color,
-      width: width,
-      style: style,
-      strokeAlign: strokeAlign,
-    ),
-  );
-}
+    return BorderAttribute.all(side);
+  }
 
-BorderDirectionalAttribute borderEnd({
-  Color? color,
-  double? width,
-  BorderStyle? style,
-  double? strokeAlign,
-}) {
-  return BorderDirectionalAttribute(
-    end: borderSide(
-      color: color,
-      width: width,
-      style: style,
-      strokeAlign: strokeAlign,
-    ),
-  );
-}
+  // Unified border for all sides
+  BorderAttribute _all(BorderSideAttribute side) {
+    return BorderAttribute.all(side);
+  }
 
-BorderAttribute borderHorizontal({
-  Color? color,
-  double? width,
-  BorderStyle? style,
-  double? strokeAlign,
-}) {
-  return _borderSymetric(
-    horizontal: borderSide(
-      color: color,
-      width: width,
-      style: style,
-      strokeAlign: strokeAlign,
-    ),
-  );
-}
+  // Specific sides
+  BorderAttribute _top(BorderSideAttribute side) {
+    return BorderAttribute(top: side);
+  }
 
-BorderAttribute borderVertical({
-  Color? color,
-  double? width,
-  BorderStyle? style,
-  double? strokeAlign,
-}) {
-  return _borderSymetric(
-    vertical: borderSide(
-      color: color,
-      width: width,
-      style: style,
-      strokeAlign: strokeAlign,
-    ),
-  );
-}
+  BorderAttribute _bottom(BorderSideAttribute side) {
+    return BorderAttribute(bottom: side);
+  }
 
-BorderAttribute _borderSymetric({
-  BorderSideAttribute? vertical,
-  BorderSideAttribute? horizontal,
-}) {
-  return BorderAttribute(
-    left: vertical,
-    right: vertical,
-    top: horizontal,
-    bottom: horizontal,
-  );
-}
+  BorderAttribute _left(BorderSideAttribute side) {
+    return BorderAttribute(left: side);
+  }
 
-BorderSideAttribute borderSide({
-  Color? color,
-  double? width,
-  BorderStyle? style,
-  double? strokeAlign,
-}) {
-  return BorderSideAttribute(
-    color: color?.toAttribute(),
-    strokeAlign: strokeAlign,
-    style: style,
-    width: width,
-  );
+  BorderAttribute _right(BorderSideAttribute side) {
+    return BorderAttribute(right: side);
+  }
+
+  BorderDirectionalAttribute _start(BorderSideAttribute side) {
+    return BorderDirectionalAttribute(start: side);
+  }
+
+  BorderDirectionalAttribute _end(BorderSideAttribute side) {
+    return BorderDirectionalAttribute(end: side);
+  }
+
+  // Symetric sides
+  BorderAttribute _horizontal(BorderSideAttribute side) {
+    return BorderAttribute.symmetric(horizontal: side);
+  }
+
+  BorderAttribute _vertical(BorderSideAttribute side) {
+    return BorderAttribute.symmetric(vertical: side);
+  }
 }

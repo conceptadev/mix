@@ -7,23 +7,23 @@ import '../../helpers/testing_utils.dart';
 void main() {
   group('AlignmentGeometryAttribute utilities:', () {
     test('"alignment" takes in x and y and returns AlignmentAttribute', () {
-      var result = alignment(0, 1);
+      var result = alignment(const Alignment(0, 1));
 
       expect(result, isA<AlignmentGeometryAttribute>());
       expect(result, isA<AlignmentAttribute>());
-      expect(result.x, 0);
-      expect(result.y, 1);
+      expect((result as AlignmentAttribute).x, 0);
+      expect((result).y, 1);
     });
 
     test(
         "alignmentDirectional takes in start and y and returns AlignmentDirectionalAttribute",
         () {
-      var result = alignment.directional(0, 1);
+      var result = alignment(const AlignmentDirectional(0, 1));
 
       expect(result, isA<AlignmentGeometryAttribute>());
       expect(result, isA<AlignmentDirectionalAttribute>());
-      expect(result.start, 0);
-      expect(result.y, 1);
+      expect((result as AlignmentDirectionalAttribute).start, 0);
+      expect((result).y, 1);
     });
 
     test(

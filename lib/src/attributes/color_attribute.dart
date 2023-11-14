@@ -12,6 +12,11 @@ class ColorAttribute extends ScalarAttribute<ColorAttribute, Color> {
   ColorAttribute create(Color value) => ColorAttribute(value);
 
   @override
+  ColorAttribute merge(covariant ColorAttribute? other) {
+    return create(other?.value ?? value);
+  }
+
+  @override
   Color resolve(MixData mix) {
     final resolvedColor = value;
 
@@ -35,4 +40,12 @@ class ImageColorAttribute extends ColorAttribute {
 
   @override
   ImageColorAttribute create(value) => ImageColorAttribute(value);
+}
+
+@immutable
+class ColorUtility<T extends VisualAttribute> {
+  final T Function(Color color) fn;
+  const ColorUtility(this.fn);
+
+  T call(Color color) => fn(color);
 }

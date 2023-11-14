@@ -10,11 +10,15 @@ const flexible = FlexibleDecorator.loose;
 
 const opacity = OpacityDecorator.new;
 
-const rotate = RotateDecorator.new;
+const rotate = RotateUtility();
 
-RotateDecorator rotate90() => rotate(1);
-RotateDecorator rotate180() => rotate(2);
-RotateDecorator rotate270() => rotate(3);
+class RotateUtility {
+  const RotateUtility();
+  RotateDecorator get d90 => call(1);
+  RotateDecorator get d180 => call(2);
+  RotateDecorator get d270 => call(3);
+  RotateDecorator call(int quarterTurns) => RotateDecorator(quarterTurns);
+}
 
 const scale = ScaleDecorator.new;
 

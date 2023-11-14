@@ -24,6 +24,7 @@ abstract class BoxBorderAttribute<T extends BoxBorder>
 }
 
 class BorderAttribute extends BoxBorderAttribute<Border> {
+  @visibleForTesting
   final BorderSideAttribute? left;
   final BorderSideAttribute? right;
 

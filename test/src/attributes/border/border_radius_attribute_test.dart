@@ -65,7 +65,12 @@ void main() {
     });
 
     test('merge should combine two BorderRadiusAttributes correctly', () {
-      const borderRadius1 = BorderRadiusAttribute.all(Radius.circular(10));
+      const borderRadius1 = BorderRadiusAttribute(
+        bottomLeft: Radius.circular(10),
+        bottomRight: Radius.circular(20),
+        topLeft: Radius.circular(30),
+        topRight: Radius.circular(40),
+      );
       const borderRadius2 = BorderRadiusAttribute(
         topLeft: Radius.circular(20),
       );
@@ -73,9 +78,9 @@ void main() {
       final mergedBorderRadius = borderRadius1.merge(borderRadius2);
 
       expect(mergedBorderRadius.topLeft, const Radius.circular(20));
-      expect(mergedBorderRadius.topRight, const Radius.circular(10));
+      expect(mergedBorderRadius.topRight, const Radius.circular(40));
       expect(mergedBorderRadius.bottomLeft, const Radius.circular(10));
-      expect(mergedBorderRadius.bottomRight, const Radius.circular(10));
+      expect(mergedBorderRadius.bottomRight, const Radius.circular(20));
     });
 
     test('resolve should create a BorderRadius with the correct values', () {

@@ -4,8 +4,8 @@ import 'package:mix/mix.dart';
 
 void main() {
   group('Border Util Tests', () {
-    test('borderTop()', () {
-      final result = borderTop(
+    test('border.top()', () {
+      final result = border.top(
           color: Colors.red,
           width: 10.0,
           style: BorderStyle.solid,
@@ -19,8 +19,8 @@ void main() {
       expect(result.left, null);
     });
 
-    test('borderBottom()', () {
-      final result = borderBottom(
+    test('border.bottom()', () {
+      final result = border.bottom(
           color: Colors.red,
           width: 10.0,
           style: BorderStyle.solid,
@@ -34,8 +34,8 @@ void main() {
       expect(result.left, null);
     });
 
-    test('borderLeft()', () {
-      final result = borderLeft(
+    test('border.left()', () {
+      final result = border.left(
           color: Colors.red,
           width: 10.0,
           style: BorderStyle.solid,
@@ -49,12 +49,13 @@ void main() {
       expect(result.bottom, null);
     });
 
-    test('borderRight()', () {
-      final result = borderRight(
-          color: Colors.red,
-          width: 10.0,
-          style: BorderStyle.solid,
-          strokeAlign: 0.5);
+    test('border.right()', () {
+      final result = border.right(
+        color: Colors.red,
+        width: 10.0,
+        style: BorderStyle.solid,
+        strokeAlign: 0.5,
+      );
       expect(result.right?.color?.value, Colors.red);
       expect(result.right?.width, 10.0);
       expect(result.right?.style, BorderStyle.solid);
@@ -64,8 +65,8 @@ void main() {
       expect(result.bottom, null);
     });
 
-    test('borderHorizontal()', () {
-      final result = borderHorizontal(
+    test('border.horizontal()', () {
+      final result = border.horizontal(
           color: Colors.blue,
           width: 5.0,
           style: BorderStyle.solid,
@@ -82,8 +83,8 @@ void main() {
       expect(result.right, null);
     });
 
-    test('borderVertical()', () {
-      final result = borderVertical(
+    test('border.vertical()', () {
+      final result = border.vertical(
           color: Colors.green,
           width: 7.0,
           style: BorderStyle.solid,
@@ -101,13 +102,13 @@ void main() {
     });
 
     test('borderSymetric()', () {
-      final verticalSide = borderVertical(
+      final verticalSide = border.vertical(
         color: Colors.purple,
         width: 4.0,
         style: BorderStyle.none,
         strokeAlign: 1.0,
       );
-      final horizontalSide = borderHorizontal(
+      final horizontalSide = border.horizontal(
         color: Colors.orange,
         width: 2.0,
         style: BorderStyle.none,
