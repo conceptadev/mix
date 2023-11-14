@@ -17,6 +17,13 @@ class GradientAttribute extends ScalarAttribute<GradientAttribute, Gradient> {
   GradientAttribute create(value) => GradientAttribute(value);
 }
 
+class GapAttribute extends ScalarAttribute<GapAttribute, double> {
+  const GapAttribute(super.value);
+
+  @override
+  GapAttribute create(value) => GapAttribute(value);
+}
+
 class MainAxisAlignmentAttribute
     extends ScalarAttribute<MainAxisAlignmentAttribute, MainAxisAlignment> {
   const MainAxisAlignmentAttribute(super.value);

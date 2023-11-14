@@ -85,12 +85,29 @@ abstract class SpaceGeometryAttribute<T extends EdgeInsetsGeometry>
 }
 
 @immutable
-abstract class SpaceAttribute extends SpaceGeometryAttribute<EdgeInsets> {
+class SpaceAttribute extends SpaceGeometryAttribute<EdgeInsets> {
   const SpaceAttribute({super.top, super.bottom, super.left, super.right});
+
+  @override
+  SpaceAttribute create({
+    double? top,
+    double? bottom,
+    double? left,
+    double? right,
+    double? start,
+    double? end,
+  }) {
+    return SpaceAttribute(
+      top: top ?? this.top,
+      bottom: bottom ?? this.bottom,
+      left: left ?? this.left,
+      right: right ?? this.right,
+    );
+  }
 }
 
 @immutable
-abstract class SpaceDirectionalAttribute
+class SpaceDirectionalAttribute
     extends SpaceGeometryAttribute<EdgeInsetsDirectional> {
   const SpaceDirectionalAttribute({
     super.top,
@@ -98,6 +115,23 @@ abstract class SpaceDirectionalAttribute
     super.start,
     super.end,
   });
+
+  @override
+  SpaceDirectionalAttribute create({
+    double? top,
+    double? bottom,
+    double? left,
+    double? right,
+    double? start,
+    double? end,
+  }) {
+    return SpaceDirectionalAttribute(
+      top: top ?? this.top,
+      bottom: bottom ?? this.bottom,
+      start: start ?? this.start,
+      end: end ?? this.end,
+    );
+  }
 }
 
 @immutable

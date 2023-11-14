@@ -2,6 +2,7 @@ import 'package:flutter/widgets.dart';
 
 import '../specs/flex_spec.dart';
 import 'container_widget.dart';
+import 'gap_widget.dart';
 import 'styled_widget.dart';
 
 class StyledFlex extends StyledWidget {
@@ -20,28 +21,20 @@ class StyledFlex extends StyledWidget {
   Widget build(BuildContext context) {
     return buildWithStyle(context, (data) {
       final spec = FlexSpec.resolve(data);
-      List<Widget> _childrenWithGap() {
-        final spacedChildren = <Widget>[];
-        for (int i = 0; i < children.length; i++) {
-          spacedChildren.add(children[i]);
-          if (i < children.length - 1) {
-            // spacedChildren.add(Gap(gap));
-          }
-        }
 
-        return spacedChildren;
-      }
-
-      final fallback = Flex(direction: direction);
+      final spacedChildren = List<Widget>.generate(
+        children.length * 2 - 1,
+        (index) => index % 2 == 0 ? children[index ~/ 2] : Gap(spec.gap!),
+      );
 
       return Flex(
         direction: direction,
-        mainAxisAlignment: spec.mainAxisAlignment ?? fallback.mainAxisAlignment,
-        mainAxisSize: spec.mainAxisSize ?? fallback.mainAxisSize,
+        mainAxisAlignment: spec.mainAxisAlignment ?? MainAxisAlignment.start,
+        mainAxisSize: spec.mainAxisSize ?? MainAxisSize.max,
         crossAxisAlignment:
-            spec.crossAxisAlignment ?? fallback.crossAxisAlignment,
-        verticalDirection: spec.verticalDirection ?? fallback.verticalDirection,
-        children: _childrenWithGap(),
+            spec.crossAxisAlignment ?? CrossAxisAlignment.center,
+        verticalDirection: spec.verticalDirection ?? VerticalDirection.down,
+        children: spacedChildren,
       );
     });
   }

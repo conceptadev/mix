@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../attributes/color_attribute.dart';
-import '../attributes/scalar_attribute.dart';
+import '../../mix.dart';
 
 const visible = VisibleAttribute.new;
 
@@ -235,3 +234,5 @@ class BoxShapeUtility {
 }
 
 const imageColor = ImageColorAttribute.new;
+
+const gap = WithSpaceToken(GapAttribute.new);

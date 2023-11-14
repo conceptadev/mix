@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 import '../attributes/attribute.dart';
@@ -13,6 +15,7 @@ class FlexSpec extends MixExtension<FlexSpec> {
   final TextDirection? textDirection;
   final TextBaseline? textBaseline;
   final Clip? clipBehavior;
+  final double? gap;
 
   const FlexSpec({
     required this.crossAxisAlignment,
@@ -23,6 +26,7 @@ class FlexSpec extends MixExtension<FlexSpec> {
     required this.textDirection,
     required this.textBaseline,
     required this.clipBehavior,
+    required this.gap,
   });
 
   static FlexSpec resolve(MixData mix) {
@@ -38,6 +42,7 @@ class FlexSpec extends MixExtension<FlexSpec> {
       textDirection: mix.get<TextDirectionAttribute, TextDirection>(),
       textBaseline: mix.get<TextBaselineAttribute, TextBaseline>(),
       clipBehavior: mix.get<ClipAttribute, Clip>(),
+      gap: mix.get<GapAttribute, double>(),
     );
   }
 
@@ -52,6 +57,7 @@ class FlexSpec extends MixExtension<FlexSpec> {
       textDirection: snap(textDirection, other.textDirection, t),
       textBaseline: snap(textBaseline, other.textBaseline, t),
       clipBehavior: snap(clipBehavior, other.clipBehavior, t),
+      gap: lerpDouble(gap, other.gap, t),
     );
   }
 
@@ -65,6 +71,7 @@ class FlexSpec extends MixExtension<FlexSpec> {
     TextDirection? textDirection,
     TextBaseline? textBaseline,
     Clip? clipBehavior,
+    double? gap,
   }) {
     return FlexSpec(
       crossAxisAlignment: crossAxisAlignment ?? this.crossAxisAlignment,
@@ -75,6 +82,7 @@ class FlexSpec extends MixExtension<FlexSpec> {
       textDirection: textDirection ?? this.textDirection,
       textBaseline: textBaseline ?? this.textBaseline,
       clipBehavior: clipBehavior ?? this.clipBehavior,
+      gap: gap ?? this.gap,
     );
   }
 
@@ -88,5 +96,6 @@ class FlexSpec extends MixExtension<FlexSpec> {
         textDirection,
         textBaseline,
         clipBehavior,
+        gap,
       ];
 }

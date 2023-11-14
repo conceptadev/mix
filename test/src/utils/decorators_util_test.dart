@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
-import 'package:mix/src/decorators/clip_decorator.dart';
-import 'package:mix/src/utils/decorators_util.dart';
 
 import '../../helpers/testing_utils.dart';
 
@@ -39,19 +37,19 @@ void main() {
     });
 
     test('rotate90 creates RotateDecorator correctly', () {
-      final rotateDecorator = rotate90();
+      final rotateDecorator = rotate.d90;
 
       expect(rotateDecorator.value, 1);
     });
 
     test('rotate180 creates RotateDecorator correctly', () {
-      final rotateDecorator = rotate180();
+      final rotateDecorator = rotate.d180;
 
       expect(rotateDecorator.value, 2);
     });
 
     test('rotate270 creates RotateDecorator correctly', () {
-      final rotateDecorator = rotate270();
+      final rotateDecorator = rotate.d270;
 
       expect(rotateDecorator.value, 3);
     });
