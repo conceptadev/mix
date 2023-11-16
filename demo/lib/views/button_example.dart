@@ -22,11 +22,8 @@ class ButtonSizeVariants {
 }
 
 StyleMix get _baseStyle => StyleMix(
-      rounded(4),
-      animation(
-        curve: Curves.easeIn,
-        duration: 100,
-      ),
+      borderRadius(4),
+
       onPress(
         scale(0.95),
       ),
@@ -35,28 +32,28 @@ StyleMix get _baseStyle => StyleMix(
         // added because of lack of style parameters (yellow lines)
         decoration: TextDecoration.none,
         fontWeight: FontWeight.w600,
-        fontFamily: MaterialTextStyles.bodySmall.fontFamily,
+        fontFamily: $textStyles.bodySmall.fontFamily,
       ),
       mainAxisSize(MainAxisSize.min), // For flexbox
       ButtonSizeVariants.small(
-        paddingHorizontal(10),
-        paddingVertical(10),
+        padding.horizontal(10),
+        padding.vertical(10),
         textStyle(
           fontSize: 16,
         ),
         iconSize(24),
       ),
       ButtonSizeVariants.medium(
-        paddingHorizontal(4),
-        paddingVertical(16),
+        padding.horizontal(4),
+        padding.vertical(16),
         textStyle(
           fontSize: 16,
         ),
         iconSize(24),
       ),
       ButtonSizeVariants.large(
-        paddingHorizontal(4),
-        paddingVertical(2),
+        padding.horizontal(4),
+        padding.vertical(2),
         textStyle(
           fontSize: 16,
         ),
@@ -148,11 +145,11 @@ StyleMix get _style => StyleMix(
         color: const Color(0xFFFF004C),
       ),
       backgroundColor(const Color(0x0F07E2FF)),
-      iconColor(_MaterialDesignColors.onBackground),
+      iconColor($colors.onBackground),
       onDisabled(
-        backgroundColor(_MaterialDesignColors.background.withOpacity(0.3)),
-        textStyle(color: _MaterialDesignColors.onBackground.withOpacity(0.3)),
-        iconColor(_MaterialDesignColors.onBackground.withOpacity(0.3)),
+        backgroundColor($colors.background.withOpacity(0.3)),
+        textStyle(color: $colors.onBackground.withOpacity(0.3)),
+        iconColor($colors.onBackground.withOpacity(0.3)),
       ),
     );
 

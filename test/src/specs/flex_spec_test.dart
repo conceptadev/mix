@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
@@ -43,6 +45,7 @@ void main() {
         textDirection: TextDirection.ltr,
         textBaseline: TextBaseline.alphabetic,
         clipBehavior: Clip.antiAlias,
+        gap: 10,
       );
 
       final copiedSpec = spec.copyWith(
@@ -54,6 +57,7 @@ void main() {
         textDirection: TextDirection.rtl,
         textBaseline: TextBaseline.ideographic,
         clipBehavior: Clip.none,
+        gap: 20,
       );
 
       expect(copiedSpec.crossAxisAlignment, CrossAxisAlignment.start);
@@ -64,6 +68,7 @@ void main() {
       expect(copiedSpec.textDirection, TextDirection.rtl);
       expect(copiedSpec.textBaseline, TextBaseline.ideographic);
       expect(copiedSpec.clipBehavior, Clip.none);
+      expect(copiedSpec.gap, 20);
 
       expect(copiedSpec, isNot(spec));
     });
@@ -78,6 +83,7 @@ void main() {
         textDirection: TextDirection.ltr,
         textBaseline: TextBaseline.alphabetic,
         clipBehavior: Clip.none,
+        gap: 10,
       );
 
       const spec2 = FlexSpec(
@@ -89,6 +95,7 @@ void main() {
         textDirection: TextDirection.rtl,
         textBaseline: TextBaseline.ideographic,
         clipBehavior: Clip.antiAlias,
+        gap: 20,
       );
 
       const t = 0.5;
@@ -111,6 +118,7 @@ void main() {
       expect(lerpedSpec.textDirection, TextDirection.rtl);
       expect(lerpedSpec.textBaseline, TextBaseline.ideographic);
       expect(lerpedSpec.clipBehavior, Clip.antiAlias);
+      expect(lerpedSpec.gap, lerpDouble(spec1.gap, spec2.gap, t));
 
       expect(lerpedSpec, isNot(spec1));
     });

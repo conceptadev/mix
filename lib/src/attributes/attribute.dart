@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../core/equality/compare_mixin.dart';
 import '../factory/mix_provider_data.dart';
+import '../theme/tokens/mix_token.dart';
 
 @immutable
 abstract class Attribute with Comparable, Mergeable {
@@ -78,6 +79,10 @@ abstract class ScalarAttribute<T extends ScalarAttribute<T, R>, R>
 @immutable
 abstract class VisualAttribute<T> extends Attribute with Resolvable<T> {
   const VisualAttribute();
+}
+
+mixin WithTokenAttribute<T> on VisualAttribute<T> {
+  MixToken<T> get token;
 }
 
 @immutable

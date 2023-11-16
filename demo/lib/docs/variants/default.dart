@@ -7,11 +7,11 @@ class VariantsDefaultExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final style = StyleMix(
-      backgroundColor($M3Color.secondary),
-      textStyle(color: $M3Color.onSecondary),
+      backgroundColor($colors.secondary),
+      textStyle(color: $colors.onSecondary),
       onHover(
-        backgroundColor($M3Color.primary),
-        textStyle(color: $M3Color.onPrimary),
+        backgroundColor($colors.primary),
+        textStyle(color: $colors.onPrimary),
       ),
     );
 

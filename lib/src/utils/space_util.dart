@@ -1,5 +1,3 @@
-// ignore_for_file: avoid-shadowing
-
 import 'package:flutter/material.dart';
 
 import '../attributes/scalar_attribute.dart';
@@ -84,7 +82,7 @@ class SpaceDirectionalUtility<T extends SpaceDirectionalAttribute> {
   /// Converts `EdgeInsetsDirectional` to a corresponding `SpaceDirectionalAttribute`.
   ///
   /// This method enables the use of Flutter's built-in directional edge insets for defining space.
-  T from(EdgeInsetsDirectional edgeInsets) {
+  T as(EdgeInsetsDirectional edgeInsets) {
     return fn(
       bottom: edgeInsets.bottom,
       end: edgeInsets.end,
@@ -229,17 +227,17 @@ class WithSpaceToken<T> {
 
   const WithSpaceToken(T Function(double value) fn) : _fn = fn;
 
-  T get xsmall => call(SpaceToken.xsmall());
+  T xsmall() => call(SpaceToken.xsmall());
 
-  T get small => call(SpaceToken.small());
+  T small() => call(SpaceToken.small());
 
-  T get medium => call(SpaceToken.medium());
+  T medium() => call(SpaceToken.medium());
 
-  T get large => call(SpaceToken.large());
+  T large() => call(SpaceToken.large());
 
-  T get xlarge => call(SpaceToken.xlarge());
+  T xlarge() => call(SpaceToken.xlarge());
 
-  T get xxlarge => call(SpaceToken.xxlarge());
+  T xxlarge() => call(SpaceToken.xxlarge());
 
   T call(double value) => _fn(value);
 }

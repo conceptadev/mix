@@ -1,5 +1,3 @@
-// ignore_for_file: avoid-shadowing
-
 import 'package:flutter/material.dart';
 
 import '../factory/mix_provider_data.dart';
@@ -59,20 +57,20 @@ abstract class SpaceGeometryAttribute<T extends EdgeInsetsGeometry>
       final right = this.right ?? 0;
 
       return EdgeInsets.only(
-        left: mix.resolver.spaceTokenRef(left),
-        top: mix.resolver.spaceTokenRef(top),
-        right: mix.resolver.spaceTokenRef(right),
-        bottom: mix.resolver.spaceTokenRef(bottom),
+        left: mix.tokens.spaceTokenRef(left),
+        top: mix.tokens.spaceTokenRef(top),
+        right: mix.tokens.spaceTokenRef(right),
+        bottom: mix.tokens.spaceTokenRef(bottom),
       ) as T;
     } else if (this is SpaceDirectionalAttribute) {
       final start = this.start ?? 0;
       final end = this.end ?? 0;
 
       return EdgeInsetsDirectional.only(
-        start: mix.resolver.spaceTokenRef(start),
-        top: mix.resolver.spaceTokenRef(top),
-        end: mix.resolver.spaceTokenRef(end),
-        bottom: mix.resolver.spaceTokenRef(bottom),
+        start: mix.tokens.spaceTokenRef(start),
+        top: mix.tokens.spaceTokenRef(top),
+        end: mix.tokens.spaceTokenRef(end),
+        bottom: mix.tokens.spaceTokenRef(bottom),
       ) as T;
     }
     throw UnsupportedError(

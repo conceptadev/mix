@@ -51,10 +51,10 @@ void main() {
     });
 
     test('have correct variant names', () {
-      expect(onXSmall.name, 'on-mix-breakpoint-xsmall');
-      expect(onSmall.name, 'on-mix-breakpoint-small');
-      expect(onMedium.name, 'on-mix-breakpoint-medium');
-      expect(onLarge.name, 'on-mix-breakpoint-large');
+      expect(onXSmall.name, 'on-mix.breakpoint.xsmall');
+      expect(onSmall.name, 'on-mix.breakpoint.small');
+      expect(onMedium.name, 'on-mix.breakpoint.medium');
+      expect(onLarge.name, 'on-mix.breakpoint.large');
     });
   });
 }

@@ -1,28 +1,30 @@
 import 'package:flutter/material.dart';
 
-import '../../mix.dart';
+import '../attributes/color_attribute.dart';
+import '../attributes/scalar_attribute.dart';
 
 const visible = VisibleAttribute.new;
 
 const stackFit = StackFitUtility();
 
 class StackFitUtility {
-  final loose = const StackFitAttribute(StackFit.loose);
-  final expand = const StackFitAttribute(StackFit.expand);
-  final passthrough = const StackFitAttribute(StackFit.passthrough);
   const StackFitUtility();
+  StackFitAttribute loose() => const StackFitAttribute(StackFit.loose);
+  StackFitAttribute expand() => const StackFitAttribute(StackFit.expand);
+  StackFitAttribute passthrough() =>
+      const StackFitAttribute(StackFit.passthrough);
   StackFitAttribute call(StackFit stackFit) => StackFitAttribute(stackFit);
 }
 
 const clip = ClipUtility();
 
 class ClipUtility {
-  final none = const ClipAttribute(Clip.none);
-  final hardEdge = const ClipAttribute(Clip.hardEdge);
-  final antiAlias = const ClipAttribute(Clip.antiAlias);
-  final antiAliasWithSaveLayer =
-      const ClipAttribute(Clip.antiAliasWithSaveLayer);
   const ClipUtility();
+  ClipAttribute antiAliasWithSaveLayer() =>
+      const ClipAttribute(Clip.antiAliasWithSaveLayer);
+  ClipAttribute none() => const ClipAttribute(Clip.none);
+  ClipAttribute hardEdge() => const ClipAttribute(Clip.hardEdge);
+  ClipAttribute antiAlias() => const ClipAttribute(Clip.antiAlias);
   ClipAttribute call(Clip clip) => ClipAttribute(clip);
 }
 
@@ -31,9 +33,11 @@ const transform = TransformAttribute.new;
 const verticalDirection = VerticalDirectionUtility();
 
 class VerticalDirectionUtility {
-  final up = const VerticalDirectionAttribute(VerticalDirection.up);
-  final down = const VerticalDirectionAttribute(VerticalDirection.down);
   const VerticalDirectionUtility();
+  VerticalDirectionAttribute up() =>
+      const VerticalDirectionAttribute(VerticalDirection.up);
+  VerticalDirectionAttribute down() =>
+      const VerticalDirectionAttribute(VerticalDirection.down);
   VerticalDirectionAttribute call(VerticalDirection verticalDirection) =>
       VerticalDirectionAttribute(verticalDirection);
 }
@@ -41,9 +45,11 @@ class VerticalDirectionUtility {
 const textDirection = TextDirectionUtility();
 
 class TextDirectionUtility {
-  final rtl = const TextDirectionAttribute(TextDirection.rtl);
-  final ltr = const TextDirectionAttribute(TextDirection.ltr);
   const TextDirectionUtility();
+  TextDirectionAttribute rtl() =>
+      const TextDirectionAttribute(TextDirection.rtl);
+  TextDirectionAttribute ltr() =>
+      const TextDirectionAttribute(TextDirection.ltr);
   TextDirectionAttribute call(TextDirection textDirection) =>
       TextDirectionAttribute(textDirection);
 }
@@ -51,19 +57,22 @@ class TextDirectionUtility {
 const softWrap = SoftWrapUtility();
 
 class SoftWrapUtility {
-  final on = const SoftWrapAttribute(true);
-  final off = const SoftWrapAttribute(false);
   const SoftWrapUtility();
+  SoftWrapAttribute on() => const SoftWrapAttribute(true);
+  SoftWrapAttribute off() => const SoftWrapAttribute(false);
   SoftWrapAttribute call(bool value) => SoftWrapAttribute(value);
 }
 
 const textOverflow = TextOverflowUtility();
 
 class TextOverflowUtility {
-  final clip = const TextOverflowAttribute(TextOverflow.clip);
-  final ellipsis = const TextOverflowAttribute(TextOverflow.ellipsis);
-  final fade = const TextOverflowAttribute(TextOverflow.fade);
   const TextOverflowUtility();
+  TextOverflowAttribute clip() =>
+      const TextOverflowAttribute(TextOverflow.clip);
+  TextOverflowAttribute ellipsis() =>
+      const TextOverflowAttribute(TextOverflow.ellipsis);
+  TextOverflowAttribute fade() =>
+      const TextOverflowAttribute(TextOverflow.fade);
   TextOverflowAttribute call(TextOverflow textOverflow) =>
       TextOverflowAttribute(textOverflow);
 }
@@ -75,9 +84,11 @@ const maxLines = MaxLinesAttribute.new;
 const textWidthBasis = TextWidthBasisUtility();
 
 class TextWidthBasisUtility {
-  final parent = const TextWidthBasisAttribute(TextWidthBasis.parent);
-  final longestLine = const TextWidthBasisAttribute(TextWidthBasis.longestLine);
   const TextWidthBasisUtility();
+  TextWidthBasisAttribute parent() =>
+      const TextWidthBasisAttribute(TextWidthBasis.parent);
+  TextWidthBasisAttribute longestLine() =>
+      const TextWidthBasisAttribute(TextWidthBasis.longestLine);
   TextWidthBasisAttribute call(TextWidthBasis textWidthBasis) =>
       TextWidthBasisAttribute(textWidthBasis);
 }
@@ -85,48 +96,51 @@ class TextWidthBasisUtility {
 const textAlign = TextAlignUtility();
 
 class TextAlignUtility {
-  final left = const TextAlignAttribute(TextAlign.left);
-  final right = const TextAlignAttribute(TextAlign.right);
-  final center = const TextAlignAttribute(TextAlign.center);
-  final justify = const TextAlignAttribute(TextAlign.justify);
-  final start = const TextAlignAttribute(TextAlign.start);
-  final end = const TextAlignAttribute(TextAlign.end);
   const TextAlignUtility();
+  TextAlignAttribute left() => const TextAlignAttribute(TextAlign.left);
+  TextAlignAttribute right() => const TextAlignAttribute(TextAlign.right);
+  TextAlignAttribute center() => const TextAlignAttribute(TextAlign.center);
+  TextAlignAttribute justify() => const TextAlignAttribute(TextAlign.justify);
+  TextAlignAttribute start() => const TextAlignAttribute(TextAlign.start);
+  TextAlignAttribute end() => const TextAlignAttribute(TextAlign.end);
   TextAlignAttribute call(TextAlign textAlign) => TextAlignAttribute(textAlign);
 }
 
 const flexFit = FlexFitUtility();
 
 class FlexFitUtility {
-  final tight = const FlexFitAttribute(FlexFit.tight);
-  final loose = const FlexFitAttribute(FlexFit.loose);
   const FlexFitUtility();
+  FlexFitAttribute tight() => const FlexFitAttribute(FlexFit.tight);
+  FlexFitAttribute loose() => const FlexFitAttribute(FlexFit.loose);
   FlexFitAttribute call(FlexFit flexFit) => FlexFitAttribute(flexFit);
 }
 
 const axisDirection = AxisUtility();
 
 class AxisUtility {
-  final horizontal = const AxisAttribute(Axis.horizontal);
-  final vertical = const AxisAttribute(Axis.vertical);
   const AxisUtility();
+  AxisAttribute horizontal() => const AxisAttribute(Axis.horizontal);
+  AxisAttribute vertical() => const AxisAttribute(Axis.vertical);
   AxisAttribute call(Axis axis) => AxisAttribute(axis);
 }
 
 const mainAxisAlignment = MainAxisAlignmentUtility();
 
 class MainAxisAlignmentUtility {
-  final start = const MainAxisAlignmentAttribute(MainAxisAlignment.start);
-  final end = const MainAxisAlignmentAttribute(MainAxisAlignment.end);
-  final center = const MainAxisAlignmentAttribute(MainAxisAlignment.center);
-  final spaceBetween =
+  const MainAxisAlignmentUtility();
+  MainAxisAlignmentAttribute spaceBetween() =>
       const MainAxisAlignmentAttribute(MainAxisAlignment.spaceBetween);
-  final spaceAround =
+  MainAxisAlignmentAttribute spaceAround() =>
       const MainAxisAlignmentAttribute(MainAxisAlignment.spaceAround);
-  final spaceEvenly =
+  MainAxisAlignmentAttribute spaceEvenly() =>
       const MainAxisAlignmentAttribute(MainAxisAlignment.spaceEvenly);
 
-  const MainAxisAlignmentUtility();
+  MainAxisAlignmentAttribute start() =>
+      const MainAxisAlignmentAttribute(MainAxisAlignment.start);
+  MainAxisAlignmentAttribute end() =>
+      const MainAxisAlignmentAttribute(MainAxisAlignment.end);
+  MainAxisAlignmentAttribute center() =>
+      const MainAxisAlignmentAttribute(MainAxisAlignment.center);
   MainAxisAlignmentAttribute call(MainAxisAlignment mainAxisAlignment) =>
       MainAxisAlignmentAttribute(mainAxisAlignment);
 }
@@ -134,13 +148,17 @@ class MainAxisAlignmentUtility {
 const crossAxisAlignment = CrossAxisAlignmentUtility();
 
 class CrossAxisAlignmentUtility {
-  final start = const CrossAxisAlignmentAttribute(CrossAxisAlignment.start);
-  final end = const CrossAxisAlignmentAttribute(CrossAxisAlignment.end);
-  final center = const CrossAxisAlignmentAttribute(CrossAxisAlignment.center);
-  final stretch = const CrossAxisAlignmentAttribute(CrossAxisAlignment.stretch);
-  final baseline =
-      const CrossAxisAlignmentAttribute(CrossAxisAlignment.baseline);
   const CrossAxisAlignmentUtility();
+  CrossAxisAlignmentAttribute start() =>
+      const CrossAxisAlignmentAttribute(CrossAxisAlignment.start);
+  CrossAxisAlignmentAttribute end() =>
+      const CrossAxisAlignmentAttribute(CrossAxisAlignment.end);
+  CrossAxisAlignmentAttribute center() =>
+      const CrossAxisAlignmentAttribute(CrossAxisAlignment.center);
+  CrossAxisAlignmentAttribute stretch() =>
+      const CrossAxisAlignmentAttribute(CrossAxisAlignment.stretch);
+  CrossAxisAlignmentAttribute baseline() =>
+      const CrossAxisAlignmentAttribute(CrossAxisAlignment.baseline);
   CrossAxisAlignmentAttribute call(CrossAxisAlignment crossAxisAlignment) =>
       CrossAxisAlignmentAttribute(crossAxisAlignment);
 }
@@ -148,9 +166,9 @@ class CrossAxisAlignmentUtility {
 const mainAxisSize = MainAxisSizeUtility();
 
 class MainAxisSizeUtility {
-  final min = const MainAxisSizeAttribute(MainAxisSize.min);
-  final max = const MainAxisSizeAttribute(MainAxisSize.max);
   const MainAxisSizeUtility();
+  MainAxisSizeAttribute min() => const MainAxisSizeAttribute(MainAxisSize.min);
+  MainAxisSizeAttribute max() => const MainAxisSizeAttribute(MainAxisSize.max);
   MainAxisSizeAttribute call(MainAxisSize mainAxisSize) =>
       MainAxisSizeAttribute(mainAxisSize);
 }
@@ -164,9 +182,11 @@ const transformAlignment = TransformAlignmentAttribute.new;
 const textBaseline = TextBaselineUtility();
 
 class TextBaselineUtility {
-  final alphabetic = const TextBaselineAttribute(TextBaseline.alphabetic);
-  final ideographic = const TextBaselineAttribute(TextBaseline.ideographic);
   const TextBaselineUtility();
+  TextBaselineAttribute alphabetic() =>
+      const TextBaselineAttribute(TextBaseline.alphabetic);
+  TextBaselineAttribute ideographic() =>
+      const TextBaselineAttribute(TextBaseline.ideographic);
   TextBaselineAttribute call(TextBaseline textBaseline) =>
       TextBaselineAttribute(textBaseline);
 }
@@ -176,25 +196,29 @@ const imageScale = ImageScaleAttribute.new;
 const imageFit = ImageFitUtility();
 
 class ImageFitUtility {
-  final fill = const ImageFitAttribute(BoxFit.fill);
-  final contain = const ImageFitAttribute(BoxFit.contain);
-  final cover = const ImageFitAttribute(BoxFit.cover);
-  final fitWidth = const ImageFitAttribute(BoxFit.fitWidth);
-  final fitHeight = const ImageFitAttribute(BoxFit.fitHeight);
-  final none = const ImageFitAttribute(BoxFit.none);
-  final scaleDown = const ImageFitAttribute(BoxFit.scaleDown);
   const ImageFitUtility();
+  ImageFitAttribute fill() => const ImageFitAttribute(BoxFit.fill);
+  ImageFitAttribute contain() => const ImageFitAttribute(BoxFit.contain);
+  ImageFitAttribute cover() => const ImageFitAttribute(BoxFit.cover);
+  ImageFitAttribute fitWidth() => const ImageFitAttribute(BoxFit.fitWidth);
+  ImageFitAttribute fitHeight() => const ImageFitAttribute(BoxFit.fitHeight);
+  ImageFitAttribute none() => const ImageFitAttribute(BoxFit.none);
+  ImageFitAttribute scaleDown() => const ImageFitAttribute(BoxFit.scaleDown);
   ImageFitAttribute call(BoxFit boxFit) => ImageFitAttribute(boxFit);
 }
 
 const imageRepeat = ImageRepeatUtility();
 
 class ImageRepeatUtility {
-  final noRepeat = const ImageRepeatAttribute(ImageRepeat.noRepeat);
-  final repeat = const ImageRepeatAttribute(ImageRepeat.repeat);
-  final repeatX = const ImageRepeatAttribute(ImageRepeat.repeatX);
-  final repeatY = const ImageRepeatAttribute(ImageRepeat.repeatY);
   const ImageRepeatUtility();
+  ImageRepeatAttribute noRepeat() =>
+      const ImageRepeatAttribute(ImageRepeat.noRepeat);
+  ImageRepeatAttribute repeat() =>
+      const ImageRepeatAttribute(ImageRepeat.repeat);
+  ImageRepeatAttribute repeatX() =>
+      const ImageRepeatAttribute(ImageRepeat.repeatX);
+  ImageRepeatAttribute repeatY() =>
+      const ImageRepeatAttribute(ImageRepeat.repeatY);
   ImageRepeatAttribute call(ImageRepeat imageRepeat) =>
       ImageRepeatAttribute(imageRepeat);
 }
@@ -206,14 +230,14 @@ const textHeightBehavior = TextHeightBehaviorAttribute.new;
 const boxFit = BoxFitUtility();
 
 class BoxFitUtility {
-  final fill = const BoxFitAttribute(BoxFit.fill);
-  final contain = const BoxFitAttribute(BoxFit.contain);
-  final cover = const BoxFitAttribute(BoxFit.cover);
-  final fitWidth = const BoxFitAttribute(BoxFit.fitWidth);
-  final fitHeight = const BoxFitAttribute(BoxFit.fitHeight);
-  final none = const BoxFitAttribute(BoxFit.none);
-  final scaleDown = const BoxFitAttribute(BoxFit.scaleDown);
   const BoxFitUtility();
+  BoxFitAttribute fill() => const BoxFitAttribute(BoxFit.fill);
+  BoxFitAttribute contain() => const BoxFitAttribute(BoxFit.contain);
+  BoxFitAttribute cover() => const BoxFitAttribute(BoxFit.cover);
+  BoxFitAttribute fitWidth() => const BoxFitAttribute(BoxFit.fitWidth);
+  BoxFitAttribute fitHeight() => const BoxFitAttribute(BoxFit.fitHeight);
+  BoxFitAttribute none() => const BoxFitAttribute(BoxFit.none);
+  BoxFitAttribute scaleDown() => const BoxFitAttribute(BoxFit.scaleDown);
   BoxFitAttribute call(BoxFit boxFit) => BoxFitAttribute(boxFit);
 }
 
@@ -227,9 +251,9 @@ class BlendModeUtility {
 const boxShape = BoxShapeUtility();
 
 class BoxShapeUtility {
-  final circle = const BoxShapeAttribute(BoxShape.circle);
-  final rectangle = const BoxShapeAttribute(BoxShape.rectangle);
   const BoxShapeUtility();
+  BoxShapeAttribute circle() => const BoxShapeAttribute(BoxShape.circle);
+  BoxShapeAttribute rectangle() => const BoxShapeAttribute(BoxShape.rectangle);
   BoxShapeAttribute call(BoxShape boxShape) => BoxShapeAttribute(boxShape);
 }
 

@@ -15,8 +15,6 @@ const borderRadiusDirectional = BorderRadiusDirectionalUtility();
 class BorderRadiusUtility {
   const BorderRadiusUtility();
 
-  BorderRadiusAttribute get zero => const BorderRadiusAttribute.zero();
-
   // Specific corners
   RadiusUtility<BorderRadiusAttribute> get bottomLeft =>
       RadiusUtility((value) => BorderRadiusAttribute(bottomLeft: value));
@@ -46,6 +44,8 @@ class BorderRadiusUtility {
   BorderRadiusDirectionalUtility get _directional {
     return const BorderRadiusDirectionalUtility();
   }
+
+  BorderRadiusAttribute zero() => const BorderRadiusAttribute.zero();
 
   // Only method
   BorderRadiusAttribute only({
@@ -92,7 +92,7 @@ class RadiusUtility<T extends BorderRadiusGeometryAttribute> {
   final T Function(Radius value) fn;
   const RadiusUtility(this.fn);
 
-  T get zero => fn(Radius.zero);
+  T zero() => fn(Radius.zero);
 
   T elliptical(double x, double y) => fn(Radius.elliptical(x, y));
 
@@ -174,37 +174,28 @@ class BorderRadiusDirectionalUtility {
 
   // Vertical and Horizontal
   BorderRadiusDirectionalAttribute vertical({Radius? top, Radius? bottom}) {
-    return BorderRadiusDirectionalAttribute(
-      topStart: top,
-      topEnd: top,
-      bottomStart: bottom,
-      bottomEnd: bottom,
+    return BorderRadiusDirectionalAttribute.vertical(
+      top: top,
+      bottom: bottom,
     );
   }
 
   BorderRadiusDirectionalAttribute horizontal({Radius? start, Radius? end}) {
-    return BorderRadiusDirectionalAttribute(
-      topStart: start,
-      topEnd: end,
-      bottomStart: start,
-      bottomEnd: end,
+    return BorderRadiusDirectionalAttribute.horizontal(
+      start: start,
+      end: end,
     );
   }
 
   BorderRadiusDirectionalAttribute all(Radius radius) {
-    return BorderRadiusDirectionalAttribute(
-      topStart: radius,
-      topEnd: radius,
-      bottomStart: radius,
-      bottomEnd: radius,
-    );
+    return BorderRadiusDirectionalAttribute.all(radius);
   }
 
   BorderRadiusDirectionalAttribute circular(double radius) {
-    return all(Radius.circular(radius));
+    return BorderRadiusDirectionalAttribute.circular(radius);
   }
 
   BorderRadiusDirectionalAttribute zero() {
-    return all(Radius.zero);
+    return const BorderRadiusDirectionalAttribute.zero();
   }
 }

@@ -12,11 +12,10 @@ class BasicExample extends HookWidget {
     final mix = StyleMix.create([
       height(300),
       width(300),
-      rounded(10),
-      animation(),
+      borderRadius(10),
       elevation(2),
       margin(10),
-      alignmentCenter(),
+      alignment.center(),
       backgroundColor(Colors.purple),
       textStyle(color: Colors.white),
       onPress(
@@ -74,10 +73,10 @@ class BasicExample extends HookWidget {
             style: onSurfaceMix.merge(
               StyleMix(
                 onLight(
-                  textStyle(color: $M3Color.error),
+                  textStyle(color: $colors.error),
                 ),
                 onDark(
-                  textStyle(color: $M3Color.primary),
+                  textStyle(color: $colors.primary),
                 ),
               ),
             ),
@@ -112,7 +111,7 @@ class BasicExample extends HookWidget {
                 style: onSurfaceMix.merge(
                   StyleMix(
                     iconSize(70),
-                    iconColor($M3Color.secondary),
+                    iconColor($colors.secondary),
                   ),
                 ),
               ),

@@ -12,27 +12,27 @@ class VariantsExample extends HookWidget {
     final baseStyle = StyleMix(
       height(300),
       width(300),
-      rounded(10),
+      borderRadius(10),
       elevation(2),
       margin(10),
-      alignmentCenter(),
+      alignment.center(),
     );
 
     final style = StyleMix(
-      backgroundColor($M3Color.primary),
-      textStyle(color: $M3Color.onPrimary),
+      bgColor($colors.primary),
+      textStyle(color: $colors.onPrimary),
       onHover(
-        backgroundColor($M3Color.secondary),
-        textStyle(color: $M3Color.onPrimary),
+        bgColor($colors.secondary),
+        textStyle(color: $colors.onPrimary),
       ),
     ).merge(baseStyle);
 
     final onDarkStyle = StyleMix(
-      backgroundColor($M3Color.primary),
-      textStyle(color: $M3Color.onPrimary),
+      bgColor($colors.primary),
+      textStyle(color: $colors.onPrimary),
       onDark(
-        backgroundColor(Colors.red),
-        textStyle(color: $M3Color.onPrimary),
+        bgColor(Colors.red),
+        textStyle(color: $colors.onPrimary),
       ),
     ).merge(baseStyle);
 

@@ -18,11 +18,9 @@ class ColorAttribute extends ScalarAttribute<ColorAttribute, Color> {
 
   @override
   Color resolve(MixData mix) {
-    final resolvedColor = value;
+    final colorRef = value;
 
-    return resolvedColor is ColorToken
-        ? mix.resolver.colorToken(resolvedColor)
-        : resolvedColor;
+    return colorRef is ColorRef ? mix.tokens.colorRef(colorRef) : colorRef;
   }
 }
 

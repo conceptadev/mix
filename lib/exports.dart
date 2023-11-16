@@ -69,6 +69,7 @@ export 'src/variants/variant.dart';
 export 'src/widgets/container_widget.dart';
 export 'src/widgets/empty_widget.dart';
 export 'src/widgets/flex_widget.dart';
+export 'src/widgets/gap_widget.dart';
 export 'src/widgets/icon_widget.dart';
 export 'src/widgets/pressable/pressable.notifier.dart';
 export 'src/widgets/pressable/pressable_state.dart';

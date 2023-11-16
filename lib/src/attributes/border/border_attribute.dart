@@ -33,6 +33,10 @@ class BorderAttribute extends BoxBorderAttribute<Border> {
   const BorderAttribute.all(BorderSideAttribute side)
       : this(left: side, right: side, top: side, bottom: side);
 
+  /// Creates a border with symmetrical vertical and horizontal sides.
+  ///
+  /// The `vertical` argument applies to the [left] and [right] sides, and the
+  /// `horizontal` argument applies to the [top] and [bottom] sides.
   const BorderAttribute.symmetric({
     BorderSideAttribute? vertical,
     BorderSideAttribute? horizontal,

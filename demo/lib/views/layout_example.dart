@@ -6,11 +6,11 @@ import '../styles.dart';
 StyleMix get mix => StyleMix(
       height(300),
       width(300),
-      rounded(10),
+      borderRadius(10),
       elevation(2),
-      backgroundColor($M3Color.surface),
-      alignmentCenter(),
-      textStyle(color: $M3Color.onSurface),
+      bgColor($colors.surface),
+      alignment.center(),
+      textStyle.color($colors.onSurface),
     );
 
 class LayoutExample extends StatelessWidget {

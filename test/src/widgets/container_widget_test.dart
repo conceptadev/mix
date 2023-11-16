@@ -9,8 +9,8 @@ void main() {
     final paddingAttr = padding(10);
     final marginAttr = margin(10);
     final backgroundColorAttr = backgroundColor(Colors.red);
-    final alignmentAttr = alignment.center;
-    final clipAttr = clip.hardEdge;
+    final alignmentAttr = alignment.center();
+    final clipAttr = clip.hardEdge();
 
     final boxDecorationAttr = boxDecoration(
       border: border(color: Colors.red, width: 1, style: BorderStyle.solid),

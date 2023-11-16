@@ -2,15 +2,15 @@ import 'package:mix/mix.dart';
 
 StyleMix get button {
   return StyleMix(
-    textStyle(as: MaterialTextStyles.bodyMedium),
+    textStyle.as($textStyles.bodyMedium),
     bold(),
     textStyle(fontSize: 16.0),
-    backgroundColor($M3Color.primary),
+    backgroundColor($colors.primary),
     onHover(
-      backgroundColor($M3Color.secondary),
+      backgroundColor($colors.secondary),
     ),
-    paddingHorizontal(15.0),
-    paddingVertical(8.0),
-    rounded(5),
+    padding.horizontal(15.0),
+    padding.vertical(8.0),
+    borderRadius(5),
   );
 }

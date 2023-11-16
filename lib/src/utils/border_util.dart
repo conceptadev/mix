@@ -1,5 +1,3 @@
-// ignore_for_file: avoid-shadowing
-
 import 'package:flutter/material.dart';
 
 import '../attributes/border/border_attribute.dart';
@@ -23,6 +21,8 @@ class BorderSideUtility<T extends BoxBorderAttribute> {
   T width(double width) => call(width: width);
 
   T style(BorderStyle style) => call(style: style);
+
+  T strokeAlign(double strokeAlign) => call(strokeAlign: strokeAlign);
 
   T call({
     Color? color,

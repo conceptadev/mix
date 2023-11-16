@@ -12,8 +12,6 @@ analyzer:
   exclude: 
     - "**/*.g.dart"
     - "**/*.freezed.dart"
-    
-
 
 dart_code_metrics:
   extends:
@@ -29,6 +27,7 @@ dart_code_metrics:
     arguments-ordering:
       child-last: true
     avoid-dynamic: false
+    avoid-shadowing: false
     prefer-getter-over-method: false
     enum-constants-ordering: false
     prefer-widget-private-members: false

@@ -28,7 +28,7 @@ void main() {
     // Add any other additional assertions that are specific to your use case.
     // If you become able to access properties _attributes and _resolver you would assert:
     expect(mixData.attributes, isInstanceOf<VisualAttributeMap>());
-    expect(mixData.resolver, isInstanceOf<MixTokenResolver>());
+    expect(mixData.tokens, isInstanceOf<MixTokenResolver>());
     expect(mixData.attributes.length, 4);
     expect(mixData.attributeOfType<MockIntScalarAttribute>(),
         isInstanceOf<MockIntScalarAttribute>());

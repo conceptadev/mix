@@ -21,7 +21,6 @@ import 'utils/context_variant_util/on_breakpoint_util.dart';
 import 'utils/context_variant_util/on_brightness_util.dart';
 import 'utils/context_variant_util/on_helper_util.dart';
 import 'utils/context_variant_util/on_orientation_util.dart';
-import 'utils/decoration_util.dart';
 import 'utils/decorators_util.dart';
 import 'utils/helper_util.dart';
 import 'utils/pressable_util.dart';
@@ -94,17 +93,17 @@ typedef MixContext = MixData;
 
 extension WithSpaceTokensExt<T> on WithSpaceToken<T> {
   @Deprecated('Use xsmall instead')
-  T get xs => this.xsmall;
+  T get xs => this.xsmall();
   @Deprecated('Use small instead')
-  T get sm => this.small;
+  T get sm => this.small();
   @Deprecated('Use medium instead')
-  T get md => this.medium;
+  T get md => this.medium();
   @Deprecated('Use large instead')
-  T get lg => this.large;
+  T get lg => this.large();
   @Deprecated('Use xlarge instead')
-  T get xl => xlarge;
+  T get xl => xlarge();
   @Deprecated('Use xxlarge instead')
-  T get xxl => xxlarge;
+  T get xxl => xxlarge();
 }
 
 @Deprecated('Use mainAxisAlignment instead')
@@ -418,9 +417,6 @@ BorderRadiusDirectionalAttribute roundedBS() {
 BorderRadiusDirectionalAttribute roundedBE() {
   throw UnimplementedError();
 }
-
-@Deprecated(kShortAliasDeprecation)
-const bgColor = backgroundColor;
 
 @Deprecated(kShortAliasDeprecation)
 const h = height;

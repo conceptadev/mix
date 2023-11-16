@@ -1,5 +1,3 @@
-// ignore_for_file: avoid-shadowing
-
 import 'package:flutter/material.dart';
 
 import '../factory/mix_provider_data.dart';

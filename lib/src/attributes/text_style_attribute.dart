@@ -32,7 +32,7 @@ class TextStyleAttribute extends VisualAttribute<TextStyle> {
   final double? decorationThickness;
   final List<String>? fontFamilyFallback;
 
-  final TextStyleToken? ref;
+  final TextStyleToken? token;
 
   const TextStyleAttribute({
     this.background,
@@ -54,18 +54,18 @@ class TextStyleAttribute extends VisualAttribute<TextStyle> {
     this.letterSpacing,
     this.locale,
     this.shadows,
-    this.ref,
+    this.token,
     this.textBaseline,
     this.wordSpacing,
   });
 
-  bool isRef() => ref != null;
+  bool isRef() => token != null;
 
   @override
   TextStyleAttribute merge(TextStyleAttribute? other) {
     if (other == null) return this;
 
-    final haveRefs = ref == null || other.ref == null;
+    final haveRefs = token == null || other.token == null;
 
     assert(
       haveRefs,
@@ -95,7 +95,7 @@ class TextStyleAttribute extends VisualAttribute<TextStyle> {
       letterSpacing: other.letterSpacing ?? letterSpacing,
       locale: other.locale ?? locale,
       shadows: mergeMergeableList(shadows, other.shadows),
-      ref: other.ref ?? ref,
+      token: other.token ?? token,
       textBaseline: other.textBaseline ?? textBaseline,
       wordSpacing: other.wordSpacing ?? wordSpacing,
     );
@@ -104,7 +104,7 @@ class TextStyleAttribute extends VisualAttribute<TextStyle> {
   @override
   TextStyle resolve(MixData mix) {
     // ignore: avoid-non-null-assertion
-    final textStyle = ref == null ? null : mix.resolver.textStyleToken(ref!);
+    final textStyle = token == null ? null : mix.tokens.textStyleToken(token!);
 
     return textStyle ??
         TextStyle(
@@ -155,6 +155,6 @@ class TextStyleAttribute extends VisualAttribute<TextStyle> {
         foreground,
         decorationThickness,
         fontFamilyFallback,
-        ref,
+        token,
       ];
 }

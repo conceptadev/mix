@@ -1,28 +1,35 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 import 'mix_token.dart';
 
-class ColorToken extends Color implements MixToken<Color> {
-  @override
-  final String name;
+class ColorToken extends MixToken<Color> {
+  const ColorToken(super.name, super.value);
 
-  const ColorToken(this.name) : super(0);
+  const ColorToken.name(String name) : this(name, Colors.transparent);
+
+  factory ColorToken.resolvable(String name, Resolver<Color> resolver) {
+    return ColorToken(name, ColorRef(name, resolver));
+  }
+}
+
+typedef ColorResolverFn = Color Function(BuildContext context);
+
+class ColorRef extends Color with MixTokenRef<Color> {
+  @override
+  final String tokenName;
+
+  @override
+  final Resolver<Color> resolve;
+
+  const ColorRef(this.tokenName, this.resolve) : super(0);
 
   @override
   operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is ColorToken && other.name == name;
+    return other is ColorRef && other.tokenName == tokenName;
   }
 
   @override
-  int get hashCode => name.hashCode;
-}
-
-class ColorTokenResolver extends ColorToken with TokenResolver<Color> {
-  @override
-  final Color Function(BuildContext context) tokenResolver;
-
-  const ColorTokenResolver(super.name, this.tokenResolver);
+  int get hashCode => tokenName.hashCode;
 }

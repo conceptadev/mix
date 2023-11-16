@@ -42,7 +42,7 @@ void main() {
     });
 
     test('borderRadius.zero', () {
-      final attr = borderRadius.zero;
+      final attr = borderRadius.zero();
       expect(
           attr.resolve(EmptyMixData),
           const BorderRadius.all(

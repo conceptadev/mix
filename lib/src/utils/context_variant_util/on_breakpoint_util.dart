@@ -9,34 +9,29 @@ import '../../variants/context_variant.dart';
 /// These can be used to apply styles or layouts conditionally depending on the screen size.
 
 /// Variant for small screens.
-final onSmall = onScreenSize(BreakpointToken.small);
+final onSmall = onBreakpointToken(BreakpointToken.small);
 
 /// Variant for extra small screens.
-final onXSmall = onScreenSize(BreakpointToken.xsmall);
+final onXSmall = onBreakpointToken(BreakpointToken.xsmall);
 
 /// Variant for medium screens.
-final onMedium = onScreenSize(BreakpointToken.medium);
+final onMedium = onBreakpointToken(BreakpointToken.medium);
 
 /// Variant for large screens.
-final onLarge = onScreenSize(BreakpointToken.large);
+final onLarge = onBreakpointToken(BreakpointToken.large);
 
 /// Creates a [ContextVariant] for custom breakpoint constraints.
 ///
 /// [minWidth] and [maxWidth] define the width constraints, while [orientation] specifies
 /// the orientation constraint. This function returns a [ContextVariant] which will apply
 /// when the screen size matches these constraints.
-ContextVariant onBreakpoint({
-  minWidth = 0,
-  maxWidth = double.infinity,
-  orientation = BreakpointOrientation.all,
-}) {
+ContextVariant onBreakpoint({minWidth = 0, maxWidth = double.infinity}) {
   final constraints = BreakpointConstraint(
     minWidth: minWidth,
     maxWidth: maxWidth,
-    orientation: orientation,
   );
   final constraintName =
-      'minWidth-${constraints.minWidth}-maxWidth-${constraints.maxWidth}-orientation-${constraints.orientation}';
+      'minWidth-${constraints.minWidth}-maxWidth-${constraints.maxWidth}';
 
   return ContextVariant(
     'on-$constraintName',
@@ -48,27 +43,22 @@ ContextVariant onBreakpoint({
   );
 }
 
-/// Creates a [ContextVariant] based on a specific [screenSize].
+/// Creates a [ContextVariant] based on a specific [token].
 ///
-/// This function uses the [screenSize] to retrieve breakpoint settings from [MixTheme],
+/// This function uses the [token] to retrieve breakpoint settings from [MixTheme],
 /// and returns a [ContextVariant] that applies when the current screen size matches
 /// the specified breakpoint.
-ContextVariant onScreenSize(BreakpointToken screenSize) {
+ContextVariant onBreakpointToken(BreakpointToken token) {
   return ContextVariant(
-    'on-${screenSize.name.paramCase}',
+    'on-${token.name.paramCase}',
     when: (BuildContext context) {
       final breakpoints = MixTheme.of(context).breakpoints;
 
       final size = MediaQuery.sizeOf(context);
 
-      final selectedbreakpoint = breakpoints[screenSize];
+      final selectedbreakpoint = breakpoints(token, context);
 
-      assert(
-        selectedbreakpoint != null,
-        'Breakpoint ${screenSize.name} is not defined in the theme',
-      );
-
-      return selectedbreakpoint?.call(context).matches(size) ?? false;
+      return selectedbreakpoint.matches(size);
     },
   );
 }
