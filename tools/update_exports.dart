@@ -7,8 +7,6 @@ import 'package:path/path.dart' as p;
 void main() {
   final libDirectory = Directory('lib');
   final exportFilePath = p.join('lib', 'exports.dart');
-  final coreDirectoryPath =
-      p.join('lib', 'src', 'core'); // Directory to exclude
 
   if (!libDirectory.existsSync()) {
     print('The lib directory was not found.');

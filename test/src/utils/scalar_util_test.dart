@@ -319,8 +319,8 @@ void main() {
   });
 
   group('TextBaselineUtility Tests', () {
+    const utility = TextBaselineUtility(TextBaselineAttribute.new);
     test('Properties are initialized correctly', () {
-      const utility = TextBaselineUtility();
       expect(utility.alphabetic(), isA<TextBaselineAttribute>());
       expect(utility.ideographic(), isA<TextBaselineAttribute>());
       expect(utility.alphabetic().value, TextBaseline.alphabetic);
@@ -328,7 +328,6 @@ void main() {
     });
 
     test('Call method returns correct TextBaselineAttribute', () {
-      const utility = TextBaselineUtility();
       expect(utility(TextBaseline.alphabetic), isA<TextBaselineAttribute>());
       expect(utility(TextBaseline.ideographic), isA<TextBaselineAttribute>());
       expect(utility(TextBaseline.alphabetic).value, TextBaseline.alphabetic);

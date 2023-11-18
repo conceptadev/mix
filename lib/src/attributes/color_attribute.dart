@@ -2,17 +2,19 @@ import 'package:flutter/material.dart';
 
 import '../factory/mix_provider_data.dart';
 import '../theme/tokens/color_token.dart';
+import '../utils/scalar_util.dart';
 import 'attribute.dart';
 
 @immutable
-class ColorAttribute extends ScalarAttribute<ColorAttribute, Color> {
-  const ColorAttribute(super.value);
+abstract class ScalarColorAttribute<T extends ScalarColorAttribute<T>>
+    extends ScalarAttribute<T, Color> {
+  const ScalarColorAttribute(super.value);
 
   @override
-  ColorAttribute create(Color value) => ColorAttribute(value);
+  T Function(Color) get create;
 
   @override
-  ColorAttribute merge(covariant ColorAttribute? other) {
+  T merge(covariant T? other) {
     return create(other?.value ?? value);
   }
 
@@ -25,25 +27,30 @@ class ColorAttribute extends ScalarAttribute<ColorAttribute, Color> {
 }
 
 @immutable
-class IconColorAttribute extends ColorAttribute {
+class ColorAttribute extends ScalarColorAttribute<ColorAttribute> {
+  const ColorAttribute(super.color);
+
+  @override
+  final create = ColorAttribute.new;
+}
+
+@immutable
+class IconColorAttribute extends ScalarColorAttribute<IconColorAttribute> {
   const IconColorAttribute(super.color);
 
   @override
-  IconColorAttribute create(value) => IconColorAttribute(value);
+  final create = IconColorAttribute.new;
 }
 
 @immutable
-class ImageColorAttribute extends ColorAttribute {
+class ImageColorAttribute extends ScalarColorAttribute<ImageColorAttribute> {
   const ImageColorAttribute(super.color);
 
   @override
-  ImageColorAttribute create(value) => ImageColorAttribute(value);
+  final create = ImageColorAttribute.new;
 }
 
 @immutable
-class ColorUtility<T extends VisualAttribute> {
-  final T Function(Color color) fn;
-  const ColorUtility(this.fn);
-
-  T call(Color color) => fn(color);
+class ColorUtility<T> extends ScalarUtility<Color, T> {
+  const ColorUtility(super.builder);
 }

@@ -16,19 +16,19 @@ void main() {
     Colors.white,
     Colors.grey,
   ];
-  testScalarAttribute<ColorAttribute, Color>(
+  testScalarAttribute<ScalarColorAttribute, Color>(
     'ColorAttribute',
-    (value) => ColorAttribute(value),
+    (value) => ScalarColorAttribute(value),
     colorList,
   );
 
-  testScalarAttribute<ColorAttribute, Color>(
+  testScalarAttribute<ScalarColorAttribute, Color>(
     'ImageColorAttribute',
     (value) => ImageColorAttribute(value),
     colorList,
   );
 
-  testScalarAttribute<ColorAttribute, Color>(
+  testScalarAttribute<ScalarColorAttribute, Color>(
     'IconColorAttribute',
     (value) => IconColorAttribute(value),
     colorList,

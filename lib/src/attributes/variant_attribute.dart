@@ -28,10 +28,16 @@ class VariantAttribute<T extends Variant> extends Attribute {
   get props => [variant, value];
 }
 
+mixin WhenVariant<T extends Variant> on VariantAttribute<T> {
+  bool when(BuildContext context);
+}
+
 @immutable
-class ContextVariantAttribute extends VariantAttribute<ContextVariant> {
+class ContextVariantAttribute extends VariantAttribute<ContextVariant>
+    with WhenVariant<ContextVariant> {
   const ContextVariantAttribute(super.variant, super.style);
 
+  @override
   bool when(BuildContext context) => variant.when(context);
 
   @override
@@ -53,10 +59,9 @@ ArgumentError throwArgumentError<T extends VariantAttribute>(T other) {
 }
 
 @immutable
-class MultiVariantAttribute extends VariantAttribute<MultiVariant> {
+class MultiVariantAttribute extends VariantAttribute<MultiVariant>
+    with WhenVariant<MultiVariant> {
   const MultiVariantAttribute(super.variant, super.style);
-
-  bool when(BuildContext context) => variant.when(context);
 
   // Remove all variants in given a list
   VariantAttribute remove(Iterable<Variant> variantsToRemove) {
@@ -72,6 +77,9 @@ class MultiVariantAttribute extends VariantAttribute<MultiVariant> {
 
   bool matches(Iterable<Variant> otherVariants) =>
       variant.matches(otherVariants);
+
+  @override
+  bool when(BuildContext context) => variant.when(context);
 
   @override
   MultiVariantAttribute merge(MultiVariantAttribute other) {

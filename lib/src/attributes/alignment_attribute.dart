@@ -11,8 +11,26 @@ abstract class AlignmentGeometryAttribute<T extends AlignmentGeometry>
   const AlignmentGeometryAttribute();
   double? get _x;
   double? get _y;
-
   double? get _start;
+
+  static AlignmentGeometryAttribute<T> from<T extends AlignmentGeometry>(
+    T value,
+  ) {
+    if (value is Alignment) {
+      return AlignmentAttribute(value.x, value.y)
+          as AlignmentGeometryAttribute<T>;
+    } else if (value is AlignmentDirectional) {
+      return AlignmentDirectionalAttribute(value.start, value.y)
+          as AlignmentGeometryAttribute<T>;
+    } else {
+      throw ArgumentError.value(
+        value,
+        'value',
+        'AlignmentGeometryAttribute must be Alignment or AlignmentDirectional',
+      );
+    }
+  }
+
   @override
   AlignmentGeometryAttribute<T> merge(
     covariant AlignmentGeometryAttribute<T>? other,
@@ -24,33 +42,6 @@ abstract class AlignmentGeometryAttribute<T extends AlignmentGeometry>
 
 @immutable
 class AlignmentAttribute extends AlignmentGeometryAttribute<Alignment> {
-  /// The top left corner.
-  static const topLeft = AlignmentAttribute(-1.0, -1.0);
-
-  /// The center point along the top edge.
-  static const topCenter = AlignmentAttribute(0.0, -1.0);
-
-  /// The top right corner.
-  static const topRight = AlignmentAttribute(1.0, -1.0);
-
-  /// The center point along the left edge.
-  static const centerLeft = AlignmentAttribute(-1.0, 0.0);
-
-  /// The center point, both horizontally and vertically.
-  static const center = AlignmentAttribute(0.0, 0.0);
-
-  /// The center point along the right edge.
-  static const centerRight = AlignmentAttribute(1.0, 0.0);
-
-  /// The bottom left corner.
-  static const bottomLeft = AlignmentAttribute(-1.0, 1.0);
-
-  /// The center point along the bottom edge.
-  static const bottomCenter = AlignmentAttribute(0.0, 1.0);
-
-  /// The bottom right corner.
-  static const bottomRight = AlignmentAttribute(1.0, 1.0);
-
   final double y;
 
   final double x;
@@ -81,42 +72,6 @@ class AlignmentAttribute extends AlignmentGeometryAttribute<Alignment> {
 @immutable
 class AlignmentDirectionalAttribute
     extends AlignmentGeometryAttribute<AlignmentDirectional> {
-  /// The top corner on the "start" side.
-  static const topStart = AlignmentDirectionalAttribute(-1.0, -1.0);
-
-  /// The center point along the top edge.
-  ///
-  /// Consider using [Alignment.topCenter] instead, as it does not need
-  /// to be [resolve]d to be used.
-  static const topCenter = AlignmentDirectionalAttribute(0.0, -1.0);
-
-  /// The top corner on the "end" side.
-  static const topEnd = AlignmentDirectionalAttribute(1.0, -1.0);
-
-  /// The center point along the "start" edge.
-  static const centerStart = AlignmentDirectionalAttribute(-1.0, 0.0);
-
-  /// The center point, both horizontally and vertically.
-  ///
-  /// Consider using [Alignment.center] instead, as it does not need to
-  /// be [resolve]d to be used.
-  static const center = AlignmentDirectionalAttribute(0.0, 0.0);
-
-  /// The center point along the "end" edge.
-  static const centerEnd = AlignmentDirectionalAttribute(1.0, 0.0);
-
-  /// The bottom corner on the "start" side.
-  static const bottomStart = AlignmentDirectionalAttribute(-1.0, 1.0);
-
-  /// The center point along the bottom edge.
-  ///
-  /// Consider using [Alignment.bottomCenter] instead, as it does not
-  /// need to be [resolve]d to be used.
-  static const bottomCenter = AlignmentDirectionalAttribute(0.0, 1.0);
-
-  /// The bottom corner on the "end" side.
-  static const bottomEnd = AlignmentDirectionalAttribute(1.0, 1.0);
-
   final double y;
   final double start;
   const AlignmentDirectionalAttribute(this.start, this.y);

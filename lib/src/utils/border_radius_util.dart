@@ -1,4 +1,4 @@
-// ignore_for_file: avoid-non-null-assertion, avoid-shadowing
+// ignore_for_file: avoid-non-null-assertion
 
 import 'package:flutter/material.dart';
 
@@ -28,26 +28,24 @@ class BorderRadiusUtility {
       RadiusUtility((value) => BorderRadiusAttribute(topRight: value));
 
   RadiusUtility<BorderRadiusDirectionalAttribute> get topStart =>
-      RadiusUtility(_directional.topStart);
+      _directional.topStart;
   RadiusUtility<BorderRadiusDirectionalAttribute> get topEnd =>
-      RadiusUtility(_directional.topEnd);
+      _directional.topEnd;
   RadiusUtility<BorderRadiusDirectionalAttribute> get bottomStart =>
-      RadiusUtility(_directional.bottomStart);
+      _directional.bottomStart;
 
   RadiusUtility<BorderRadiusDirectionalAttribute> get bottomEnd =>
-      RadiusUtility(_directional.bottomEnd);
-  // all
+      _directional.bottomEnd;
+
   RadiusUtility<BorderRadiusAttribute> get all =>
       const RadiusUtility<BorderRadiusAttribute>(BorderRadiusAttribute.all);
 
-  // zero
   BorderRadiusDirectionalUtility get _directional {
     return const BorderRadiusDirectionalUtility();
   }
 
   BorderRadiusAttribute zero() => const BorderRadiusAttribute.zero();
 
-  // Only method
   BorderRadiusAttribute only({
     Radius? topLeft,
     Radius? topRight,
@@ -77,6 +75,11 @@ class BorderRadiusUtility {
     );
   }
 
+  // Circular
+  BorderRadiusAttribute circular(double radius) {
+    return BorderRadiusAttribute.all(Radius.circular(radius));
+  }
+
   // Positional
   BorderRadiusAttribute call(double p1, [double? p2, double? p3, double? p4]) {
     return BorderRadiusAttribute.positional(
@@ -103,21 +106,19 @@ class BorderRadiusDirectionalUtility {
   const BorderRadiusDirectionalUtility();
 
   // Specific corners
-  BorderRadiusDirectionalAttribute topStart(Radius radius) {
-    return BorderRadiusDirectionalAttribute(topStart: radius);
-  }
+  RadiusUtility<BorderRadiusDirectionalAttribute> get bottomStart =>
+      RadiusUtility(
+          (value) => BorderRadiusDirectionalAttribute(bottomStart: value));
 
-  BorderRadiusDirectionalAttribute topEnd(Radius radius) {
-    return BorderRadiusDirectionalAttribute(topEnd: radius);
-  }
+  RadiusUtility<BorderRadiusDirectionalAttribute> get bottomEnd =>
+      RadiusUtility(
+          (value) => BorderRadiusDirectionalAttribute(bottomEnd: value));
 
-  BorderRadiusDirectionalAttribute bottomStart(Radius radius) {
-    return BorderRadiusDirectionalAttribute(bottomStart: radius);
-  }
+  RadiusUtility<BorderRadiusDirectionalAttribute> get topStart => RadiusUtility(
+      (value) => BorderRadiusDirectionalAttribute(topStart: value));
 
-  BorderRadiusDirectionalAttribute bottomEnd(Radius radius) {
-    return BorderRadiusDirectionalAttribute(bottomEnd: radius);
-  }
+  RadiusUtility<BorderRadiusDirectionalAttribute> get topEnd =>
+      RadiusUtility((value) => BorderRadiusDirectionalAttribute(topEnd: value));
 
   BorderRadiusDirectionalAttribute call(
     Radius p1, [

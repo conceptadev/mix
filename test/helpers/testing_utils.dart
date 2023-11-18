@@ -106,7 +106,8 @@ extension WidgetTesterExt on WidgetTester {
           child: Builder(
             builder: (BuildContext context) {
               // Populate MixData into the widget tree if needed
-              return Mix.build(context, style: style, builder: (_) => widget);
+              return MixProvider.build(context,
+                  style: style, builder: (_) => widget);
             },
           ),
         ),

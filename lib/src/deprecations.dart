@@ -8,7 +8,6 @@ import 'attributes/border/border_radius_attribute.dart';
 import 'attributes/scalar_attribute.dart';
 import 'attributes/style_mix_attribute.dart';
 import 'attributes/text_style_attribute.dart';
-import 'core/constants.dart';
 import 'directives/text_directive.dart';
 import 'factory/mix_provider_data.dart';
 import 'factory/style_mix.dart';
@@ -28,6 +27,9 @@ import 'utils/scalar_util.dart';
 import 'utils/space_util.dart';
 import 'utils/text_util.dart';
 import 'variants/variant.dart';
+
+const kShortAliasDeprecation =
+    'Short aliases will be deprecated, you can create your own. Example: final p = padding;';
 
 extension DeprecatedMixExtension<T extends Attribute> on StyleMix {
   /// Adds an Attribute to a Mix.

@@ -1,13 +1,8 @@
-// Necessary packages are imported at the start of the file.
 import 'package:flutter/material.dart';
 
-import '../attributes/attribute.dart';
-import '../attributes/variant_attribute.dart';
+import '../../mix.dart';
 import '../core/attributes_map.dart';
 import '../core/equality/compare_mixin.dart';
-import '../decorators/decorator.dart';
-import '../theme/mix_theme.dart';
-import 'style_mix.dart';
 
 /// This class is used for encapsulating all [MixData] related operations.
 /// It contains a mixture of properties and methods useful for handling different attributes,
@@ -19,9 +14,9 @@ class MixData with Comparable {
 
   final MixTokenResolver _tokenResolver;
 
-  /// A Private constructor for the [MixData] class t hat initializes its main variables.
+  /// A Private constructor for the [MixData] class that initializes its main variables.
   ///
-  /// It takes in [attributes], [decorators] and [resolver] as required parameters.
+  /// It takes in [attributes] and [resolver] as required parameters.
   MixData._({
     required MixTokenResolver resolver,
     required VisualAttributeMap attributes,
@@ -37,40 +32,34 @@ class MixData with Comparable {
     );
   }
 
-  /// Getter method for [MixTokenResolver].
+  /// Getter for [MixTokenResolver].
   ///
-  /// Returns current [_tokenResolver].
+  /// Returns [_tokenResolver].
   MixTokenResolver get tokens => _tokenResolver;
 
-  /// A getter method for [_attributes].
+  /// Getter for [_attributes].
   ///
-  /// Returns a list of all [VisualAttribute].
+  /// Returns [_attributes].
   @visibleForTesting
   VisualAttributeMap get attributes => _attributes;
 
-  /// A getter method for [_decorators].
+  /// Getter for [_decorators].
   ///
-  /// Returns a list of all [Decorator].
+  /// Returns a list of attributes of type [Decorator].
   List<T> decoratorOfType<T extends Decorator>() =>
       _attributes.whereType<T>().toList();
 
-  /// Retrieves an instance of the specified [VisualAttribute] type from the [MixData].
-  /// d
-  /// Accepts a type parameter [Attr] which extends [VisualAttribute].
-  /// Returns the instance of type [Attr] if found, else returns null.
-  T? attributeOfType<T extends VisualAttribute>() {
-    return _attributes.attributeOfType<T>();
+  /// Finds and returns an [VisualAttribute] of type [A], or null if not found.
+  A? attributeOfType<A extends VisualAttribute>() {
+    return _attributes.attributeOfType<A>();
   }
 
-  R? get<Attr extends VisualAttribute<R>, R>() {
-    return attributeOfType<Attr>()?.resolve(this);
+  /// Resolves and returns the value of the [VisualAttribute] of type [A].
+  R? get<A extends VisualAttribute<R>, R>() {
+    return attributeOfType<A>()?.resolve(this);
   }
 
-  /// This is similar to a merge behavior however it prioritizes the current properties
-  /// over the other properties, essentially using [MixData] `other` as the base for this instance.
-  ///
-  /// [other] is the other [MixData] instance that is to be merged with current instance.
-  /// Returns a new instance of [MixData] which is actually a merge of current and other instance.
+  /// Merges this [MixData] with another, prioritizing this instance's properties.
   MixData merge(MixData other) {
     return MixData._(
       resolver: _tokenResolver,
@@ -78,9 +67,7 @@ class MixData with Comparable {
     );
   }
 
-  /// Overrides the getter function of [props] from [Comparable] to specify properties necessary for distinguishing instances.
-  ///
-  /// Returns a list of properties [_attributes] & [_decorators].
+  /// Used for Comparable mixin.
   @override
   get props => [_attributes];
 }
@@ -101,12 +88,20 @@ List<VisualAttribute> applyContextToVisualAttributes(
   }
 
   for (ContextVariantAttribute attr in contextVariants) {
-    if (attr.when(context)) style = style.merge(attr.value);
+    style = _applyVariants(context, style, attr);
   }
 
   for (MultiVariantAttribute attr in multiVariants) {
-    if (attr.when(context)) style = style.merge(attr.value);
+    style = _applyVariants(context, style, attr);
   }
 
   return applyContextToVisualAttributes(context, style);
+}
+
+StyleMix _applyVariants<T extends WhenVariant>(
+  BuildContext context,
+  StyleMix style,
+  T variant,
+) {
+  return variant.when(context) ? style.merge(variant.value) : style;
 }

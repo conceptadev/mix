@@ -87,7 +87,7 @@ void main() {
         attribute4,
         const MockInvalidAttribute(),
       ];
-      expect(() => StyleMix.create(attributes), throwsAssertionError);
+      expect(() => StyleMix.create(attributes), throwsUnsupportedError);
     });
   });
 

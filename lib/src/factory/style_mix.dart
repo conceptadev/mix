@@ -8,6 +8,8 @@ import '../attributes/variant_attribute.dart';
 import '../utils/helper_util.dart';
 import '../variants/variant.dart';
 
+typedef Mix = StyleMix;
+
 /// A utility class for managing a collection of styling attributes and variants.
 ///
 /// The `StyleMix` class is used to encapsulate a set of styling attributes and
@@ -17,7 +19,7 @@ import '../variants/variant.dart';
 ///
 /// Example:
 /// ```dart
-/// final style = StyleMix.create([...]);
+/// final style = StyleMix(attribute1, attribute2, attribute3);
 /// final updatedStyle = style.selectVariant(myVariant);
 /// ```
 class StyleMix {
@@ -26,10 +28,10 @@ class StyleMix {
   /// This can be used as a default or initial value where a `StyleMix` is required.
   static const empty = StyleMix._(styles: [], variants: []);
 
-  /// A map of visual attributes contained in this mix.
+  /// Visual attributes contained in this mix.
   final List<VisualAttribute> styles;
 
-  /// A map of variant attributes contained in this mix.
+  /// The variant attributes contained in this mix.
   final List<VariantAttribute> variants;
 
   const StyleMix._({required this.styles, required this.variants});
@@ -100,7 +102,7 @@ class StyleMix {
         variantList.addAll(attribute.value.variants);
         styleList.addAll(attribute.value.styles);
       } else {
-        assert(false, 'Unsupported attribute type: $attribute');
+        throw UnsupportedError('Unsupported attribute type: $attribute');
       }
     }
 
@@ -411,6 +413,12 @@ class StyleMix {
   int get hashCode => styles.hashCode ^ variants.hashCode;
 }
 
+/// A class representing a condition-value pair.
+///
+/// This class is immutable, meaning that once an instance is created, it cannot be changed.
+/// This is useful in cases where you want to ensure that the condition-value pair remains constant,
+/// such as when using it in a switch statement.
+@immutable
 class SwitchCondition<T> {
   final bool condition;
   final T value;

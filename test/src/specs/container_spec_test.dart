@@ -14,7 +14,8 @@ void main() {
           const PaddingAttribute(top: 8, bottom: 16),
           const MarginAttribute(top: 10.0, bottom: 12.0),
           const BoxConstraintsAttribute(maxWidth: 300.0, minHeight: 200.0),
-          const BoxDecorationAttribute(color: ColorAttribute(Colors.blue)),
+          const BoxDecorationAttribute(
+              color: ScalarColorAttribute(Colors.blue)),
           TransformAttribute(Matrix4.translationValues(10.0, 10.0, 0.0)),
           const ClipAttribute(Clip.antiAlias),
         ),

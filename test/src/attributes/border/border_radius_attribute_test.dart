@@ -38,14 +38,6 @@ void main() {
       expect(attr.bottomRight, const Radius.circular(10.0));
     });
 
-    test('BorderRadiusAttribute.circular', () {
-      final attr = BorderRadiusAttribute.circular(5.0);
-      expect(attr.topLeft, const Radius.circular(5.0));
-      expect(attr.topRight, const Radius.circular(5.0));
-      expect(attr.bottomLeft, const Radius.circular(5.0));
-      expect(attr.bottomRight, const Radius.circular(5.0));
-    });
-
     test('merge returns merged object correctly', () {
       const attr1 = BorderRadiusAttribute.horizontal(
         left: Radius.circular(5.0),
@@ -168,7 +160,7 @@ void main() {
 
       expect(resolvedVerticalValue, verticalValue);
 
-      final circularAttr = BorderRadiusAttribute.circular(5.0);
+      final circularAttr = const BorderRadiusUtility().circular(5.0);
       final circularValue = BorderRadius.circular(5.0);
 
       final resolvedCircularValue = circularAttr.resolve(EmptyMixData);

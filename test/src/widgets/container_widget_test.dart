@@ -15,7 +15,7 @@ void main() {
     final boxDecorationAttr = boxDecoration(
       border: border(color: Colors.red, width: 1, style: BorderStyle.solid),
       borderRadius: borderRadius(10),
-      color: const ColorAttribute(Colors.red),
+      color: const ScalarColorAttribute(Colors.red),
     );
 
     await tester.pumpStyledWidget(

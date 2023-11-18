@@ -40,10 +40,15 @@ class StyledFlex extends StyledWidget {
     return buildWithStyle(context, (data) {
       final spec = FlexSpec.resolve(data);
 
-      final spacedChildren = List<Widget>.generate(
-        children.length * 2 - 1,
-        (index) => index % 2 == 0 ? children[index ~/ 2] : Gap(spec.gap!),
-      );
+      List<Widget> renderSpacedChildren() {
+        return spec.gap == null
+            ? children
+            : List<Widget>.generate(
+                children.length * 2 - 1,
+                (index) =>
+                    index % 2 == 0 ? children[index ~/ 2] : Gap(spec.gap!),
+              );
+      }
 
       return Flex(
         direction: direction,
@@ -52,7 +57,7 @@ class StyledFlex extends StyledWidget {
         crossAxisAlignment:
             spec.crossAxisAlignment ?? CrossAxisAlignment.center,
         verticalDirection: spec.verticalDirection ?? VerticalDirection.down,
-        children: spacedChildren,
+        children: renderSpacedChildren(),
       );
     });
   }

@@ -69,9 +69,6 @@ class BorderRadiusAttribute
           bottomRight: radius,
         );
 
-  BorderRadiusAttribute.circular(double radius)
-      : this.all(Radius.circular(radius));
-
   const BorderRadiusAttribute.horizontal({Radius? left, Radius? right})
       : super(
           topLeft: left,

@@ -1,5 +1,3 @@
-// ignore_for_file: prefer-widget-private-members
-
 import 'package:flutter/material.dart';
 
 import 'mix_provider_data.dart';
@@ -7,53 +5,45 @@ import 'style_mix.dart';
 
 typedef MixBuilder = Widget Function(MixData mixData);
 
-/// Context data widget for Mix data.
-///
-/// Inherits from [InheritedWidget] and stores [data], a value that can be
-/// accessed by widgets through the static method `of()` or by ensuring it is
-/// present with `ensureOf()`.
-class Mix extends InheritedWidget {
-  /// Initializes a new instance of [Mix].
-  ///
-  /// The `data` parameter is the [MixData] object to store. [child]
-  /// receives the element tree that will use this context, and [key] can be set
-  /// to track changes.
-  const Mix({required this.data, required super.child, super.key});
+/// Provides [MixData] to the widget tree.
+class MixProvider extends InheritedWidget {
+  /// Stores [MixData] and wraps a [child] widget.
+  const MixProvider({required this.data, required super.child, super.key});
 
-  /// Returns the context data from the widget tree in [context].
-  ///
-  /// This method returns the first instance of [Mix] that it finds
-  /// while searching up the widget tree. Returns null if not found.
+  /// Retrieves the nearest [MixData] from the widget tree. Returns null if not found.
   static MixData? maybeOf(BuildContext context) {
-    return context.dependOnInheritedWidgetOfExactType<Mix>()?.data;
+    return context.dependOnInheritedWidgetOfExactType<MixProvider>()?.data;
   }
 
-  /// Ensures that [Mix] is available on the widget tree starting at
-  /// the given [context].
-  ///
-  /// Throws an exception if [Mix] is not found within the given widget
-  /// tree containing [context].
+  /// Retrieves the nearest [MixData] from the widget tree. Throws if not found.
   static MixData of(BuildContext context) {
     final mixData = maybeOf(context);
-
     if (mixData == null) {
-      throw Exception('MixProvider not found in widget tree');
+      throw StateError('MixProvider not found in widget tree. '
+          'Ensure that Mix is present in the widget tree and try again.');
     }
 
     return mixData;
   }
 
-  /// Contains the context data object.
   final MixData? data;
 
   @override
-  bool updateShouldNotify(Mix oldWidget) {
-    // Returns true if the `mixProvider` inside the widget has changed since
-    // the last time a dependent overridden method was called.
-    return data != oldWidget.data;
-  }
+  bool updateShouldNotify(MixProvider oldWidget) => data != oldWidget.data;
 
-  static Mix build(
+  /// Builds a [MixProvider] widget.
+  ///
+  /// The [context] and [style] are used to create a [MixData] instance.
+  /// The [builder] is a function that takes the created [MixData] and returns a widget.
+  ///
+  /// If [inherit] is set to true (default is false), the method will attempt to find the nearest
+  /// [MixProvider] widget up the tree from the provided [context] and merge its [MixData] with the newly created one.
+  /// This allows the new [MixProvider] widget to inherit styles from its ancestors.
+  ///
+  /// Returns a [MixProvider] widget with the given [MixData] and child widget built by the [builder].
+  /// If [inherit] is true and a [MixProvider] widget is found up the tree, the returned [MixProvider] widget's
+  /// [MixData] will be a merge of the ancestor's and the newly created one.
+  static MixProvider build(
     BuildContext context, {
     required StyleMix style,
     required MixBuilder builder,
@@ -61,12 +51,15 @@ class Mix extends InheritedWidget {
   }) {
     MixData mixData = MixData.create(context, style);
     if (inherit) {
-      final contextMixData = Mix.maybeOf(context);
+      final contextMixData = MixProvider.maybeOf(context);
       if (contextMixData != null) {
         mixData = contextMixData.merge(mixData);
       }
     }
 
-    return Mix(data: mixData, child: builder(mixData));
+    // Returns a Mix widget with the given data and child.
+    // If `inherit` is true, the data from the nearest Mix widget in the widget tree
+    // (if any) is merged with the provided data.
+    return MixProvider(data: mixData, child: builder(mixData));
   }
 }

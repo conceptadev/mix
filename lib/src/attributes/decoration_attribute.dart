@@ -123,6 +123,5 @@ class ForegroundDecorationAttribute
   const ForegroundDecorationAttribute(super.value);
 
   @override
-  ForegroundDecorationAttribute create(value) =>
-      ForegroundDecorationAttribute(value);
+  final create = ForegroundDecorationAttribute.new;
 }

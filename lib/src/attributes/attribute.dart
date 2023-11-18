@@ -54,9 +54,7 @@ abstract class ScalarAttribute<T extends ScalarAttribute<T, R>, R>
 
   const ScalarAttribute(this.value);
 
-  // Factory for merge methods
-  // ignore: avoid-shadowing
-  T create(R value);
+  T Function(R) get create;
 
   @override
   R resolve(MixData mix) {

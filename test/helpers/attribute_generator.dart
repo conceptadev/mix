@@ -208,8 +208,8 @@ class AttributeGenerator {
     );
   }
 
-  ColorAttribute color([Color? color]) {
-    return ColorAttribute(
+  ScalarColorAttribute color([Color? color]) {
+    return ScalarColorAttribute(
       color ??
           Color.fromARGB(
             255,
@@ -221,7 +221,7 @@ class AttributeGenerator {
   }
 
   BorderSideAttribute borderSide({
-    ColorAttribute? color,
+    ScalarColorAttribute? color,
     double? width,
     BorderStyle? style,
   }) {
@@ -233,7 +233,7 @@ class AttributeGenerator {
   }
 
   ShadowAttribute shadow({
-    ColorAttribute? color,
+    ScalarColorAttribute? color,
     Offset? offset,
     double? blurRadius,
   }) {
@@ -259,7 +259,7 @@ class AttributeGenerator {
   }
 
   BoxDecorationAttribute boxDecoration({
-    ColorAttribute? color,
+    ScalarColorAttribute? color,
     BorderAttribute? border,
     BorderRadiusAttribute? borderRadius,
     List<BoxShadowAttribute>? boxShadow,
@@ -278,7 +278,7 @@ class AttributeGenerator {
   }
 
   BoxShadowAttribute boxShadow({
-    ColorAttribute? color,
+    ScalarColorAttribute? color,
     Offset? offset,
     double? blurRadius,
     double? spreadRadius,
