@@ -6,29 +6,29 @@ import '../factory/mix_provider_data.dart';
 import '../theme/tokens/text_style_token.dart';
 import 'attribute.dart';
 import 'color_attribute.dart';
-import 'scalar_attribute.dart';
 import 'shadow_attribute.dart';
 
 @immutable
 class TextStyleAttribute extends VisualAttribute<TextStyle> {
-  final FontFamilyAttribute? fontFamily;
-  final FontWeightAttribute? fontWeight;
-  final FontStyleAttribute? fontStyle;
-  final FontSizeAttribute? fontSize;
-  final LetterSpacingAttribute? letterSpacing;
-  final WordSpacingAttribute? wordSpacing;
-  final TextBaselineAttribute? textBaseline;
-  final ScalarColorAttribute? color;
-  final ScalarColorAttribute? backgroundColor;
+  final String? fontFamily;
+  final FontWeight? fontWeight;
+  final FontStyle? fontStyle;
+  final double? fontSize;
+  final double? letterSpacing;
+  final double? wordSpacing;
+  final TextBaseline? textBaseline;
+  final ColorAttribute? color;
+  final ColorAttribute? backgroundColor;
   final List<ShadowAttribute>? shadows;
   final List<FontFeature>? fontFeatures;
-  final TextDecorationAttribute? decoration;
-  final ScalarColorAttribute? decorationColor;
-  final TextDecorationStyleAttribute? decorationStyle;
-
+  final TextDecoration? decoration;
+  final ColorAttribute? decorationColor;
+  final TextDecorationStyle? decorationStyle;
+  final Locale? locale;
+  final String? debugLabel;
   final double? height;
-  final PaintAttribute? foreground;
-  final PaintAttribute? background;
+  final Paint? foreground;
+  final Paint? background;
   final double? decorationThickness;
   final List<String>? fontFamilyFallback;
 
@@ -38,6 +38,7 @@ class TextStyleAttribute extends VisualAttribute<TextStyle> {
     this.background,
     this.backgroundColor,
     this.color,
+    this.debugLabel,
     this.decoration,
     this.decorationColor,
     this.decorationStyle,
@@ -51,6 +52,7 @@ class TextStyleAttribute extends VisualAttribute<TextStyle> {
     this.foreground,
     this.height,
     this.letterSpacing,
+    this.locale,
     this.shadows,
     this.token,
     this.textBaseline,
@@ -74,6 +76,7 @@ class TextStyleAttribute extends VisualAttribute<TextStyle> {
       background: other.background ?? background,
       backgroundColor: other.backgroundColor ?? backgroundColor,
       color: other.color ?? color,
+      debugLabel: other.debugLabel ?? debugLabel,
       decoration: other.decoration ?? decoration,
       decorationColor: other.decorationColor ?? decorationColor,
       decorationStyle: other.decorationStyle ?? decorationStyle,
@@ -90,6 +93,7 @@ class TextStyleAttribute extends VisualAttribute<TextStyle> {
       foreground: other.foreground ?? foreground,
       height: other.height ?? height,
       letterSpacing: other.letterSpacing ?? letterSpacing,
+      locale: other.locale ?? locale,
       shadows: mergeMergeableList(shadows, other.shadows),
       token: other.token ?? token,
       textBaseline: other.textBaseline ?? textBaseline,
@@ -106,23 +110,25 @@ class TextStyleAttribute extends VisualAttribute<TextStyle> {
         TextStyle(
           color: color?.resolve(mix),
           backgroundColor: backgroundColor?.resolve(mix),
-          fontSize: fontSize?.resolve(mix),
-          wordSpacing: wordSpacing?.resolve(mix),
-          textBaseline: textBaseline?.resolve(mix),
-          fontWeight: fontWeight?.resolve(mix),
-          fontStyle: fontStyle?.resolve(mix),
-          letterSpacing: letterSpacing?.resolve(mix),
+          fontSize: fontSize,
+          fontWeight: fontWeight,
+          fontStyle: fontStyle,
+          letterSpacing: letterSpacing,
+          wordSpacing: wordSpacing,
+          textBaseline: textBaseline,
+          height: height,
+          locale: locale,
+          foreground: foreground,
+          background: background,
           shadows: shadows?.map((e) => e.resolve(mix)).toList(),
           fontFeatures: fontFeatures,
+          decoration: decoration,
           decorationColor: decorationColor?.resolve(mix),
+          decorationStyle: decorationStyle,
           decorationThickness: decorationThickness,
+          debugLabel: debugLabel,
+          fontFamily: fontFamily,
           fontFamilyFallback: fontFamilyFallback,
-          decorationStyle: decorationStyle?.resolve(mix),
-          decoration: decoration?.resolve(mix),
-          fontFamily: fontFamily?.resolve(mix),
-          height: height,
-          foreground: foreground?.resolve(mix),
-          background: background?.resolve(mix),
         );
   }
 
@@ -142,6 +148,8 @@ class TextStyleAttribute extends VisualAttribute<TextStyle> {
         decoration,
         decorationColor,
         decorationStyle,
+        debugLabel,
+        locale,
         height,
         background,
         foreground,

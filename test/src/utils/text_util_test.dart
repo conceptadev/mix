@@ -34,8 +34,6 @@ void main() {
         decorationStyle: TextDecorationStyle.dashed,
         foreground: yellowPaint,
         background: purplePaint,
-        debugLabel: 'debugLabel',
-        locale: const Locale('en', 'US'),
         height: 2.0,
       );
 

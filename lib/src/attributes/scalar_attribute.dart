@@ -5,9 +5,11 @@ import 'package:flutter/widgets.dart';
 
 import 'attribute.dart';
 
-abstract class DoubleAttribute<T extends DoubleAttribute<T>>
-    extends ScalarAttribute<T, double> {
+class DoubleAttribute extends ScalarAttribute<DoubleAttribute, double> {
   const DoubleAttribute(super.value);
+
+  @override
+  final create = DoubleAttribute.new;
 }
 
 class AxisAttribute extends ScalarAttribute<AxisAttribute, Axis> {
@@ -30,7 +32,7 @@ class GradientAttribute extends ScalarAttribute<GradientAttribute, Gradient> {
   final create = GradientAttribute.new;
 }
 
-class GapAttribute extends DoubleAttribute<GapAttribute> {
+class GapAttribute extends ScalarAttribute<GapAttribute, double> {
   const GapAttribute(super.value);
 
   static GapAttribute? maybe(double? value) =>
@@ -149,17 +151,6 @@ class FontStyleAttribute
   final create = FontStyleAttribute.new;
 }
 
-class FontWeightAttribute
-    extends ScalarAttribute<FontWeightAttribute, FontWeight> {
-  const FontWeightAttribute(super.value);
-
-  static FontWeightAttribute? maybe(FontWeight? value) =>
-      value == null ? null : FontWeightAttribute(value);
-
-  @override
-  final create = FontWeightAttribute.new;
-}
-
 class FontFeatureAttribute
     extends ScalarAttribute<FontFeatureAttribute, FontFeature> {
   const FontFeatureAttribute(super.value);
@@ -181,7 +172,7 @@ class FontFamilyAttribute extends ScalarAttribute<FontFamilyAttribute, String> {
   final create = FontFamilyAttribute.new;
 }
 
-class FontSizeAttribute extends DoubleAttribute<FontSizeAttribute> {
+class FontSizeAttribute extends ScalarAttribute<FontSizeAttribute, double> {
   const FontSizeAttribute(super.value);
 
   static FontSizeAttribute? maybe(double? value) =>
@@ -189,36 +180,6 @@ class FontSizeAttribute extends DoubleAttribute<FontSizeAttribute> {
 
   @override
   final create = FontSizeAttribute.new;
-}
-
-class LetterSpacingAttribute extends DoubleAttribute<LetterSpacingAttribute> {
-  const LetterSpacingAttribute(super.value);
-
-  static LetterSpacingAttribute? maybe(double? value) =>
-      value == null ? null : LetterSpacingAttribute(value);
-
-  @override
-  final create = LetterSpacingAttribute.new;
-}
-
-class WordSpacingAttribute extends DoubleAttribute<WordSpacingAttribute> {
-  const WordSpacingAttribute(super.value);
-
-  static WordSpacingAttribute? maybe(double? value) =>
-      value == null ? null : WordSpacingAttribute(value);
-
-  @override
-  final create = WordSpacingAttribute.new;
-}
-
-class LineHeightAttribute extends DoubleAttribute<LineHeightAttribute> {
-  const LineHeightAttribute(super.value);
-
-  static LineHeightAttribute? maybe(double? value) =>
-      value == null ? null : LineHeightAttribute(value);
-
-  @override
-  final create = LineHeightAttribute.new;
 }
 
 class ImageAlignmentAttribute
@@ -242,16 +203,6 @@ class PaintAttribute extends ScalarAttribute<PaintAttribute, Paint> {
   final create = PaintAttribute.new;
 }
 
-class ImageScaleAttribute extends DoubleAttribute<ImageScaleAttribute> {
-  const ImageScaleAttribute(super.value);
-
-  static ImageScaleAttribute? maybe(double? value) =>
-      value == null ? null : ImageScaleAttribute(value);
-
-  @override
-  final create = ImageScaleAttribute.new;
-}
-
 class ImageFitAttribute extends ScalarAttribute<ImageFitAttribute, BoxFit> {
   const ImageFitAttribute(super.value);
 
@@ -273,7 +224,7 @@ class ImageRepeatAttribute
   final create = ImageRepeatAttribute.new;
 }
 
-class ImageWidthAttribute extends DoubleAttribute<ImageWidthAttribute> {
+class ImageWidthAttribute extends ScalarAttribute<ImageWidthAttribute, double> {
   const ImageWidthAttribute(super.value);
 
   static ImageWidthAttribute? maybe(double? value) =>
@@ -283,7 +234,8 @@ class ImageWidthAttribute extends DoubleAttribute<ImageWidthAttribute> {
   final create = ImageWidthAttribute.new;
 }
 
-class ImageHeightAttribute extends DoubleAttribute<ImageHeightAttribute> {
+class ImageHeightAttribute
+    extends ScalarAttribute<ImageHeightAttribute, double> {
   const ImageHeightAttribute(super.value);
 
   static ImageHeightAttribute? maybe(double? value) =>
@@ -302,6 +254,17 @@ class TextAlignAttribute
 
   @override
   final create = TextAlignAttribute.new;
+}
+
+class TextScaleFactorAttribute
+    extends ScalarAttribute<TextScaleFactorAttribute, double> {
+  const TextScaleFactorAttribute(super.value);
+
+  static TextScaleFactorAttribute? maybe(double? value) =>
+      value == null ? null : TextScaleFactorAttribute(value);
+
+  @override
+  final create = TextScaleFactorAttribute.new;
 }
 
 class TextDirectionAttribute
@@ -336,17 +299,6 @@ class TextOverflowAttribute
   final create = TextOverflowAttribute.new;
 }
 
-class TextScaleFactorAttribute
-    extends DoubleAttribute<TextScaleFactorAttribute> {
-  const TextScaleFactorAttribute(super.value);
-
-  static TextScaleFactorAttribute? maybe(double? value) =>
-      value == null ? null : TextScaleFactorAttribute(value);
-
-  @override
-  final create = TextScaleFactorAttribute.new;
-}
-
 class MaxLinesAttribute extends ScalarAttribute<MaxLinesAttribute, int> {
   const MaxLinesAttribute(super.value);
 
@@ -379,7 +331,7 @@ class TextHeightBehaviorAttribute
   final create = TextHeightBehaviorAttribute.new;
 }
 
-class IconSizeAttribute extends DoubleAttribute<IconSizeAttribute> {
+class IconSizeAttribute extends ScalarAttribute<IconSizeAttribute, double> {
   const IconSizeAttribute(super.value);
 
   static IconSizeAttribute? maybe(double? value) =>

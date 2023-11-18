@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 
 import '../../attributes/alignment_attribute.dart';
@@ -184,7 +182,7 @@ extension AlignmentGeometryExt on AlignmentGeometry {
 }
 
 extension PaintExt on Paint {
-  PaintAttribute toAttribute() => PaintAttribute(this);
+  ColorAttribute toAttribute() => ColorAttribute(color);
 }
 
 extension ShapeDecorationExt on ShapeDecoration {
@@ -372,39 +370,29 @@ extension BoxShadowExt on BoxShadow {
       );
 }
 
-extension TextDecorationExt on TextDecoration {
-  TextDecorationAttribute toAttribute() => TextDecorationAttribute(this);
-}
-
-extension TextDecorationStyleExt on TextDecorationStyle {
-  TextDecorationStyleAttribute toAttribute() =>
-      TextDecorationStyleAttribute(this);
-}
-
 extension TextStyleExt on TextStyle {
   TextStyleAttribute toAttribute() => TextStyleAttribute(
-        background: background?.toAttribute(),
+        background: background,
         color: color?.toAttribute(),
-        decoration: decoration?.toAttribute(),
+        debugLabel: debugLabel,
+        decoration: decoration,
         decorationColor: decorationColor?.toAttribute(),
-        decorationStyle: decorationStyle?.toAttribute(),
+        decorationStyle: decorationStyle,
         decorationThickness: decorationThickness,
-        foreground: foreground?.toAttribute(),
-        height: height,
-        shadows: shadows?.map((e) => e.toAttribute()).toList(),
-        fontFamily: FontFamilyAttribute.maybe(fontFamily),
-        fontSize: FontSizeAttribute.maybe(fontSize),
-        fontStyle: FontStyleAttribute.maybe(fontStyle),
-        fontWeight: FontWeightAttribute.maybe(fontWeight),
-        letterSpacing: LetterSpacingAttribute.maybe(letterSpacing),
-        wordSpacing: WordSpacingAttribute.maybe(wordSpacing),
-        textBaseline: textBaseline?.toAttribute(),
+        fontFamily: fontFamily,
+        fontFamilyFallback: fontFamilyFallback,
         fontFeatures: fontFeatures,
+        fontSize: fontSize,
+        fontStyle: fontStyle,
+        fontWeight: fontWeight,
+        foreground: foreground,
+        height: height,
+        letterSpacing: letterSpacing,
+        locale: locale,
+        shadows: shadows?.map((e) => e.toAttribute()).toList(),
+        textBaseline: textBaseline,
+        wordSpacing: wordSpacing,
       );
-}
-
-extension FontFeatureExt on FontFeature {
-  FontFeatureAttribute toAttribute() => FontFeatureAttribute(this);
 }
 
 extension BorderExt on Border {

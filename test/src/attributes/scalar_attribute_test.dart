@@ -249,15 +249,6 @@ void main() {
     ],
   );
 
-  testScalarAttribute<ImageScaleAttribute, double>(
-    'ImageScaleAttribute',
-    (value) => ImageScaleAttribute(value),
-    [
-      1.0,
-      2.0,
-    ],
-  );
-
   testScalarAttribute<TextScaleFactorAttribute, double>(
     'TextScaleFactorAttribute',
     (value) => TextScaleFactorAttribute(value),

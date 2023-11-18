@@ -38,27 +38,43 @@ class TextStyleUtility {
   ColorUtility<TextStyleAttribute> get color =>
       ColorUtility((Color color) => textStyle(color: color));
 
-  FontWeightUtility get fontWeight => const FontWeightUtility();
-  FontStyleUtility get fontStyle => const FontStyleUtility();
-  TextDecorationUtility get decoration => const TextDecorationUtility();
-  FontSizeUtility get fontSize => const FontSizeUtility();
-  LetterSpacingUtility get letterSpacing => const LetterSpacingUtility();
-  WordSpacingUtility get wordSpacing => const WordSpacingUtility();
+  TextStyleAttribute shadows(List<Shadow> shadows) =>
+      TextStyleAttribute(shadows: _shadowsFromDto(shadows));
+
+  FontWeightUtility get fontWeight =>
+      FontWeightUtility((value) => call(fontWeight: value));
+  FontStyleUtility get fontStyle =>
+      FontStyleUtility((value) => call(fontStyle: value));
+  TextDecorationUtility get decoration =>
+      TextDecorationUtility((value) => call(decoration: value));
+  FontSizeUtility get fontSize =>
+      FontSizeUtility((value) => call(fontSize: value));
+  DoubleUtility<TextStyleAttribute> get letterSpacing =>
+      DoubleUtility((value) => call(letterSpacing: value));
+  DoubleUtility<TextStyleAttribute> get wordSpacing =>
+      DoubleUtility((value) => call(wordSpacing: value));
   ColorUtility<TextStyleAttribute> get backgroundColor =>
       ColorUtility((value) => call(backgroundColor: value));
   ColorUtility<TextStyleAttribute> get decorationColor =>
       ColorUtility((value) => call(decorationColor: value));
 
   TextDecorationStyleUtility get decorationStyle =>
-      const TextDecorationStyleUtility();
+      TextDecorationStyleUtility((value) => call(decorationStyle: value));
   TextBaselineUtility<TextStyleAttribute> get textBaseline {
     return TextBaselineUtility((value) => call(textBaseline: value));
   }
 
-  FontFamilyUtility get fontFamily => const FontFamilyUtility();
+  TextStyleAttribute foreground(Paint foreground) =>
+      call(foreground: foreground);
 
-  FontFeatureUtility get fontFeatures => const FontFeatureUtility();
-  TextStyleShadowsUtility get shadows => const TextStyleShadowsUtility();
+  TextStyleAttribute background(Paint background) =>
+      call(background: background);
+
+  FontFamilyUtility get fontFamily =>
+      FontFamilyUtility(((value) => call(fontFamily: value)));
+
+  TextStyleAttribute fontFeatures(List<FontFeature> fontFeatures) =>
+      call(fontFeatures: fontFeatures);
 
   TextStyleAttribute as(TextStyle style) => style.toAttribute();
 
@@ -82,7 +98,7 @@ class TextStyleUtility {
     double? height,
   }) =>
       TextStyleAttribute(
-        background: background?.toAttribute(),
+        background: background,
         backgroundColor: backgroundColor?.toAttribute(),
         color: color?.toAttribute(),
         decoration: decoration,

@@ -9,7 +9,7 @@ void main() {
   group('ShadowAttribute and BoxShadowAttribute', () {
     test('ShadowAttribute correctly resolves attributes', () {
       const shadowAttribute = ShadowAttribute(
-        color: ScalarColorAttribute(Colors.green),
+        color: ColorAttribute(Colors.green),
         offset: Offset(1, 1),
         blurRadius: 2.0,
       );
@@ -23,13 +23,13 @@ void main() {
 
     test('ShadowAttribute correctly merges attributes', () {
       const shadowAttribute1 = ShadowAttribute(
-        color: ScalarColorAttribute(Colors.green),
+        color: ColorAttribute(Colors.green),
         offset: Offset(1, 1),
         blurRadius: 2.0,
       );
 
       const shadowAttribute2 = ShadowAttribute(
-        color: ScalarColorAttribute(Colors.blue),
+        color: ColorAttribute(Colors.blue),
         offset: Offset(2, 2),
         blurRadius: 4.0,
       );
@@ -43,7 +43,7 @@ void main() {
 
     test('BoxShadowAttribute correctly resolves attributes', () {
       const boxShadowAttribute = BoxShadowAttribute(
-        color: ScalarColorAttribute(Colors.green),
+        color: ColorAttribute(Colors.green),
         offset: Offset(1, 1),
         blurRadius: 2.0,
         spreadRadius: 3.0,
@@ -59,14 +59,14 @@ void main() {
 
     test('BoxShadowAttribute correctly merges attributes', () {
       const boxShadowAttribute1 = BoxShadowAttribute(
-        color: ScalarColorAttribute(Colors.green),
+        color: ColorAttribute(Colors.green),
         offset: Offset(1, 1),
         blurRadius: 2.0,
         spreadRadius: 3.0,
       );
 
       const boxShadowAttribute2 = BoxShadowAttribute(
-        color: ScalarColorAttribute(Colors.blue),
+        color: ColorAttribute(Colors.blue),
         offset: Offset(2, 2),
         blurRadius: 4.0,
         spreadRadius: 5.0,

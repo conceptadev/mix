@@ -187,8 +187,7 @@ class MockDoubleScalarAttribute
   const MockDoubleScalarAttribute(super.value);
 
   @override
-  MockDoubleScalarAttribute create(double value) =>
-      MockDoubleScalarAttribute(value);
+  final create = MockDoubleScalarAttribute.new;
 }
 
 class MockIntScalarAttribute
@@ -196,7 +195,7 @@ class MockIntScalarAttribute
   const MockIntScalarAttribute(super.value);
 
   @override
-  MockIntScalarAttribute create(int value) => MockIntScalarAttribute(value);
+  final create = MockIntScalarAttribute.new;
 }
 
 class MockDoubleDecoratorAttribute extends Decorator<double> {
@@ -229,8 +228,7 @@ class MockBooleanScalarAttribute
   const MockBooleanScalarAttribute(super.value);
 
   @override
-  MockBooleanScalarAttribute create(bool value) =>
-      MockBooleanScalarAttribute(value);
+  final create = MockBooleanScalarAttribute.new;
 }
 
 class MockStringScalarAttribute
@@ -238,8 +236,7 @@ class MockStringScalarAttribute
   const MockStringScalarAttribute(super.value);
 
   @override
-  MockStringScalarAttribute create(String value) =>
-      MockStringScalarAttribute(value);
+  final create = MockStringScalarAttribute.new;
 }
 
 class MockInvalidAttribute extends Attribute {

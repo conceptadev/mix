@@ -15,7 +15,7 @@ void main() {
           const TextAlignAttribute(TextAlign.center),
           const TextScaleFactorAttribute(1.0),
           const MaxLinesAttribute(2),
-          const TextStyleAttribute(color: ScalarColorAttribute(Colors.red)),
+          const TextStyleAttribute(color: ColorAttribute(Colors.red)),
           const TextWidthBasisAttribute(TextWidthBasis.longestLine),
           const TextHeightBehaviorAttribute(
               TextHeightBehavior(applyHeightToFirstAscent: true)),

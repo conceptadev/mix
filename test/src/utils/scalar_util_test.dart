@@ -4,8 +4,8 @@ import 'package:mix/mix.dart';
 
 void main() {
   group('StackFitUtility Tests', () {
+    const utility = StackFitUtility(StackFitAttribute.new);
     test('Properties are initialized correctly', () {
-      const utility = StackFitUtility();
       expect(utility.loose(), isA<StackFitAttribute>());
       expect(utility.expand(), isA<StackFitAttribute>());
       expect(utility.passthrough(), isA<StackFitAttribute>());
@@ -15,7 +15,6 @@ void main() {
     });
 
     test('Call method returns correct StackFitAttribute', () {
-      const utility = StackFitUtility();
       expect(utility(StackFit.loose), isA<StackFitAttribute>());
       expect(utility(StackFit.expand), isA<StackFitAttribute>());
       expect(utility(StackFit.passthrough), isA<StackFitAttribute>());
@@ -26,8 +25,8 @@ void main() {
   });
 
   group('ClipUtility Tests', () {
+    const utility = ClipUtility(ClipAttribute.new);
     test('Properties are initialized correctly', () {
-      const utility = ClipUtility();
       expect(utility.none(), isA<ClipAttribute>());
       expect(utility.hardEdge(), isA<ClipAttribute>());
       expect(utility.antiAlias(), isA<ClipAttribute>());
@@ -40,7 +39,6 @@ void main() {
     });
 
     test('Call method returns correct ClipAttribute', () {
-      const utility = ClipUtility();
       expect(utility(Clip.none), isA<ClipAttribute>());
       expect(utility(Clip.hardEdge), isA<ClipAttribute>());
       expect(utility(Clip.antiAlias), isA<ClipAttribute>());
@@ -54,8 +52,8 @@ void main() {
   });
 
   group('VerticalDirectionUtility Tests', () {
+    const utility = VerticalDirectionUtility(VerticalDirectionAttribute.new);
     test('Properties are initialized correctly', () {
-      const utility = VerticalDirectionUtility();
       expect(utility.up(), isA<VerticalDirectionAttribute>());
       expect(utility.down(), isA<VerticalDirectionAttribute>());
       expect(utility.up().value, VerticalDirection.up);
@@ -63,7 +61,6 @@ void main() {
     });
 
     test('Call method returns correct VerticalDirectionAttribute', () {
-      const utility = VerticalDirectionUtility();
       expect(utility(VerticalDirection.up), isA<VerticalDirectionAttribute>());
       expect(
           utility(VerticalDirection.down), isA<VerticalDirectionAttribute>());
@@ -73,8 +70,8 @@ void main() {
   });
 
   group('TextDirectionUtility Tests', () {
+    const utility = TextDirectionUtility(TextDirectionAttribute.new);
     test('Properties are initialized correctly', () {
-      const utility = TextDirectionUtility();
       expect(utility.rtl(), isA<TextDirectionAttribute>());
       expect(utility.ltr(), isA<TextDirectionAttribute>());
       expect(utility.rtl().value, TextDirection.rtl);
@@ -82,7 +79,6 @@ void main() {
     });
 
     test('Call method returns correct TextDirectionAttribute', () {
-      const utility = TextDirectionUtility();
       expect(utility(TextDirection.rtl), isA<TextDirectionAttribute>());
       expect(utility(TextDirection.ltr), isA<TextDirectionAttribute>());
       expect(utility(TextDirection.rtl).value, TextDirection.rtl);
@@ -91,8 +87,8 @@ void main() {
   });
 
   group('SoftWrapUtility Tests', () {
+    const utility = SoftWrapUtility(SoftWrapAttribute.new);
     test('Properties are initialized correctly', () {
-      const utility = SoftWrapUtility();
       expect(utility.on(), isA<SoftWrapAttribute>());
       expect(utility.off(), isA<SoftWrapAttribute>());
       expect(utility.on().value, true);
@@ -100,7 +96,6 @@ void main() {
     });
 
     test('Call method returns correct SoftWrapAttribute', () {
-      const utility = SoftWrapUtility();
       expect(utility(true), isA<SoftWrapAttribute>());
       expect(utility(false), isA<SoftWrapAttribute>());
       expect(utility(true).value, true);
@@ -109,8 +104,8 @@ void main() {
   });
 
   group('TextOverflowUtility Tests', () {
+    const utility = TextOverflowUtility(TextOverflowAttribute.new);
     test('Properties are initialized correctly', () {
-      const utility = TextOverflowUtility();
       expect(utility.clip(), isA<TextOverflowAttribute>());
       expect(utility.ellipsis(), isA<TextOverflowAttribute>());
       expect(utility.fade(), isA<TextOverflowAttribute>());
@@ -120,7 +115,6 @@ void main() {
     });
 
     test('Call method returns correct TextOverflowAttribute', () {
-      const utility = TextOverflowUtility();
       expect(utility(TextOverflow.clip), isA<TextOverflowAttribute>());
       expect(utility(TextOverflow.ellipsis), isA<TextOverflowAttribute>());
       expect(utility(TextOverflow.fade), isA<TextOverflowAttribute>());
@@ -131,8 +125,8 @@ void main() {
   });
 
   group('TextWidthBasisUtility Tests', () {
+    const utility = TextWidthBasisUtility(TextWidthBasisAttribute.new);
     test('Properties are initialized correctly', () {
-      const utility = TextWidthBasisUtility();
       expect(utility.parent(), isA<TextWidthBasisAttribute>());
       expect(utility.longestLine(), isA<TextWidthBasisAttribute>());
       expect(utility.parent().value, TextWidthBasis.parent);
@@ -140,7 +134,6 @@ void main() {
     });
 
     test('Call method returns correct TextWidthBasisAttribute', () {
-      const utility = TextWidthBasisUtility();
       expect(utility(TextWidthBasis.parent), isA<TextWidthBasisAttribute>());
       expect(
           utility(TextWidthBasis.longestLine), isA<TextWidthBasisAttribute>());
@@ -151,8 +144,8 @@ void main() {
   });
 
   group('TextAlignUtility Tests', () {
+    const utility = TextAlignUtility(TextAlignAttribute.new);
     test('Properties are initialized correctly', () {
-      const utility = TextAlignUtility();
       expect(utility.left(), isA<TextAlignAttribute>());
       expect(utility.right(), isA<TextAlignAttribute>());
       expect(utility.center(), isA<TextAlignAttribute>());
@@ -168,7 +161,6 @@ void main() {
     });
 
     test('Call method returns correct TextAlignAttribute', () {
-      const utility = TextAlignUtility();
       expect(utility(TextAlign.left), isA<TextAlignAttribute>());
       expect(utility(TextAlign.right), isA<TextAlignAttribute>());
       expect(utility(TextAlign.center), isA<TextAlignAttribute>());
@@ -185,8 +177,8 @@ void main() {
   });
 
   group('FlexFitUtility Tests', () {
+    const utility = FlexFitUtility(FlexFitAttribute.new);
     test('Properties are initialized correctly', () {
-      const utility = FlexFitUtility();
       expect(utility.tight(), isA<FlexFitAttribute>());
       expect(utility.loose(), isA<FlexFitAttribute>());
       expect(utility.tight().value, FlexFit.tight);
@@ -194,7 +186,6 @@ void main() {
     });
 
     test('Call method returns correct FlexFitAttribute', () {
-      const utility = FlexFitUtility();
       expect(utility(FlexFit.tight), isA<FlexFitAttribute>());
       expect(utility(FlexFit.loose), isA<FlexFitAttribute>());
       expect(utility(FlexFit.tight).value, FlexFit.tight);
@@ -203,8 +194,8 @@ void main() {
   });
 
   group('AxisUtility Tests', () {
+    const utility = AxisUtility(AxisAttribute.new);
     test('Properties are initialized correctly', () {
-      const utility = AxisUtility();
       expect(utility.horizontal(), isA<AxisAttribute>());
       expect(utility.vertical(), isA<AxisAttribute>());
       expect(utility.horizontal().value, Axis.horizontal);
@@ -212,7 +203,6 @@ void main() {
     });
 
     test('Call method returns correct AxisAttribute', () {
-      const utility = AxisUtility();
       expect(utility(Axis.horizontal), isA<AxisAttribute>());
       expect(utility(Axis.vertical), isA<AxisAttribute>());
       expect(utility(Axis.horizontal).value, Axis.horizontal);
@@ -221,8 +211,8 @@ void main() {
   });
 
   group('MainAxisAlignmentUtility Tests', () {
+    const utility = MainAxisAlignmentUtility(MainAxisAlignmentAttribute.new);
     test('Properties are initialized correctly', () {
-      const utility = MainAxisAlignmentUtility();
       expect(utility.start(), isA<MainAxisAlignmentAttribute>());
       expect(utility.end(), isA<MainAxisAlignmentAttribute>());
       expect(utility.center(), isA<MainAxisAlignmentAttribute>());
@@ -238,7 +228,6 @@ void main() {
     });
 
     test('Call method returns correct MainAxisAlignmentAttribute', () {
-      const utility = MainAxisAlignmentUtility();
       expect(
           utility(MainAxisAlignment.start), isA<MainAxisAlignmentAttribute>());
       expect(utility(MainAxisAlignment.end), isA<MainAxisAlignmentAttribute>());
@@ -263,8 +252,8 @@ void main() {
   });
 
   group('CrossAxisAlignmentUtility Tests', () {
+    const utility = CrossAxisAlignmentUtility(CrossAxisAlignmentAttribute.new);
     test('Properties are initialized correctly', () {
-      const utility = CrossAxisAlignmentUtility();
       expect(utility.start(), isA<CrossAxisAlignmentAttribute>());
       expect(utility.end(), isA<CrossAxisAlignmentAttribute>());
       expect(utility.center(), isA<CrossAxisAlignmentAttribute>());
@@ -278,7 +267,6 @@ void main() {
     });
 
     test('Call method returns correct CrossAxisAlignmentAttribute', () {
-      const utility = CrossAxisAlignmentUtility();
       expect(utility(CrossAxisAlignment.start),
           isA<CrossAxisAlignmentAttribute>());
       expect(
@@ -301,8 +289,8 @@ void main() {
   });
 
   group('MainAxisSizeUtility Tests', () {
+    const utility = MainAxisSizeUtility(MainAxisSizeAttribute.new);
     test('Properties are initialized correctly', () {
-      const utility = MainAxisSizeUtility();
       expect(utility.min(), isA<MainAxisSizeAttribute>());
       expect(utility.max(), isA<MainAxisSizeAttribute>());
       expect(utility.min().value, MainAxisSize.min);
@@ -310,7 +298,6 @@ void main() {
     });
 
     test('Call method returns correct MainAxisSizeAttribute', () {
-      const utility = MainAxisSizeUtility();
       expect(utility(MainAxisSize.min), isA<MainAxisSizeAttribute>());
       expect(utility(MainAxisSize.max), isA<MainAxisSizeAttribute>());
       expect(utility(MainAxisSize.min).value, MainAxisSize.min);
@@ -336,8 +323,8 @@ void main() {
   });
 
   group('ImageFitUtility Tests', () {
+    const utility = BoxFitUtility(ImageFitAttribute.new);
     test('Properties are initialized correctly', () {
-      const utility = ImageFitUtility();
       expect(utility.fill(), isA<ImageFitAttribute>());
       expect(utility.contain(), isA<ImageFitAttribute>());
       expect(utility.cover(), isA<ImageFitAttribute>());
@@ -355,7 +342,6 @@ void main() {
     });
 
     test('Call method returns correct ImageFitAttribute', () {
-      const utility = ImageFitUtility();
       expect(utility(BoxFit.fill), isA<ImageFitAttribute>());
       expect(utility(BoxFit.contain), isA<ImageFitAttribute>());
       expect(utility(BoxFit.cover), isA<ImageFitAttribute>());
@@ -373,7 +359,6 @@ void main() {
     });
 
     test('Call method returns correct ImageFitAttribute', () {
-      const utility = ImageFitUtility();
       expect(utility(BoxFit.fill), isA<ImageFitAttribute>());
       expect(utility(BoxFit.contain), isA<ImageFitAttribute>());
       expect(utility(BoxFit.cover), isA<ImageFitAttribute>());
@@ -392,8 +377,8 @@ void main() {
   });
 
   group('ImageRepeatUtility Tests', () {
+    const utility = ImageRepeatUtility(ImageRepeatAttribute.new);
     test('Properties are initialized correctly', () {
-      const utility = ImageRepeatUtility();
       expect(utility.noRepeat(), isA<ImageRepeatAttribute>());
       expect(utility.repeat(), isA<ImageRepeatAttribute>());
       expect(utility.repeatX(), isA<ImageRepeatAttribute>());
@@ -405,7 +390,6 @@ void main() {
     });
 
     test('Call method returns correct ImageRepeatAttribute', () {
-      const utility = ImageRepeatUtility();
       expect(utility(ImageRepeat.noRepeat), isA<ImageRepeatAttribute>());
       expect(utility(ImageRepeat.repeat), isA<ImageRepeatAttribute>());
       expect(utility(ImageRepeat.repeatX), isA<ImageRepeatAttribute>());
@@ -418,8 +402,8 @@ void main() {
   });
 
   group('BoxFitUtility Tests', () {
+    const utility = BoxFitUtility(BoxFitAttribute.new);
     test('Properties are initialized correctly', () {
-      const utility = BoxFitUtility();
       expect(utility.fill(), isA<BoxFitAttribute>());
       expect(utility.contain(), isA<BoxFitAttribute>());
       expect(utility.cover(), isA<BoxFitAttribute>());
@@ -437,7 +421,6 @@ void main() {
     });
 
     test('Call method returns correct BoxFitAttribute', () {
-      const utility = BoxFitUtility();
       expect(utility(BoxFit.fill), isA<BoxFitAttribute>());
       expect(utility(BoxFit.contain), isA<BoxFitAttribute>());
       expect(utility(BoxFit.cover), isA<BoxFitAttribute>());
@@ -456,8 +439,8 @@ void main() {
   });
 
   group('BoxShapeUtility Tests', () {
+    const utility = BoxShapeUtility(BoxShapeAttribute.new);
     test('Properties are initialized correctly', () {
-      const utility = BoxShapeUtility();
       expect(utility.circle(), isA<BoxShapeAttribute>());
       expect(utility.rectangle(), isA<BoxShapeAttribute>());
       expect(utility.circle().value, BoxShape.circle);
@@ -465,7 +448,6 @@ void main() {
     });
 
     test('Call method returns correct BoxShapeAttribute', () {
-      const utility = BoxShapeUtility();
       expect(utility(BoxShape.circle), isA<BoxShapeAttribute>());
       expect(utility(BoxShape.rectangle), isA<BoxShapeAttribute>());
       expect(utility(BoxShape.circle).value, BoxShape.circle);
@@ -475,7 +457,7 @@ void main() {
 
   group('BlendModeUtility Tests', () {
     test('Properties are initialized correctly', () {
-      const utility = BlendModeUtility();
+      const utility = BlendModeUtility(BlendModeAttribute.new);
       expect(utility(BlendMode.clear), isA<BlendModeAttribute>());
       expect(utility(BlendMode.src), isA<BlendModeAttribute>());
       expect(utility(BlendMode.clear).value, BlendMode.clear);

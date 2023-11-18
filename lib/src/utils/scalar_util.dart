@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 
 import '../attributes/color_attribute.dart';
@@ -16,69 +14,57 @@ class StackFitUtility<T> extends ScalarUtility<StackFit, T> {
   T passthrough() => builder(StackFit.passthrough);
 }
 
-const clip = ClipUtility();
+const clip = ClipUtility(ClipAttribute.new);
 
-class ClipUtility {
-  const ClipUtility();
-  ClipAttribute antiAliasWithSaveLayer() =>
-      const ClipAttribute(Clip.antiAliasWithSaveLayer);
-  ClipAttribute none() => const ClipAttribute(Clip.none);
-  ClipAttribute hardEdge() => const ClipAttribute(Clip.hardEdge);
-  ClipAttribute antiAlias() => const ClipAttribute(Clip.antiAlias);
-  ClipAttribute call(Clip clip) => ClipAttribute(clip);
+class ClipUtility<T> extends ScalarUtility<Clip, T> {
+  const ClipUtility(super.builder);
+  T antiAliasWithSaveLayer() => builder(Clip.antiAliasWithSaveLayer);
+  T none() => builder(Clip.none);
+  T hardEdge() => builder(Clip.hardEdge);
+  T antiAlias() => builder(Clip.antiAlias);
 }
 
 const transform = TransformAttribute.new;
 
-const verticalDirection = VerticalDirectionUtility();
+const verticalDirection =
+    VerticalDirectionUtility(VerticalDirectionAttribute.new);
 
-class VerticalDirectionUtility {
-  const VerticalDirectionUtility();
-  VerticalDirectionAttribute up() =>
-      const VerticalDirectionAttribute(VerticalDirection.up);
-  VerticalDirectionAttribute down() =>
-      const VerticalDirectionAttribute(VerticalDirection.down);
-  VerticalDirectionAttribute call(VerticalDirection verticalDirection) =>
-      VerticalDirectionAttribute(verticalDirection);
+class VerticalDirectionUtility<T> extends ScalarUtility<VerticalDirection, T> {
+  const VerticalDirectionUtility(super.builder);
+  T up() => builder(VerticalDirection.up);
+  T down() => builder(VerticalDirection.down);
 }
 
-const textDirection = TextDirectionUtility();
+const textDirection = TextDirectionUtility(TextDirectionAttribute.new);
 
-class TextDirectionUtility {
-  const TextDirectionUtility();
-  TextDirectionAttribute rtl() =>
-      const TextDirectionAttribute(TextDirection.rtl);
-  TextDirectionAttribute ltr() =>
-      const TextDirectionAttribute(TextDirection.ltr);
-  TextDirectionAttribute call(TextDirection textDirection) =>
-      TextDirectionAttribute(textDirection);
+class TextDirectionUtility<T> extends ScalarUtility<TextDirection, T> {
+  const TextDirectionUtility(super.builder);
+  T rtl() => builder(TextDirection.rtl);
+  T ltr() => builder(TextDirection.ltr);
 }
 
-const softWrap = SoftWrapUtility();
+const softWrap = SoftWrapUtility(SoftWrapAttribute.new);
 
-class SoftWrapUtility {
-  const SoftWrapUtility();
-  SoftWrapAttribute on() => const SoftWrapAttribute(true);
-  SoftWrapAttribute off() => const SoftWrapAttribute(false);
-  SoftWrapAttribute call(bool value) => SoftWrapAttribute(value);
+class SoftWrapUtility<T> extends ScalarUtility<bool, T> {
+  const SoftWrapUtility(super.builder);
+  T on() => builder(true);
+  T off() => builder(false);
 }
 
-const flexFit = FlexFitUtility();
+const flexFit = FlexFitUtility(FlexFitAttribute.new);
 
-class FlexFitUtility {
-  const FlexFitUtility();
-  FlexFitAttribute tight() => const FlexFitAttribute(FlexFit.tight);
-  FlexFitAttribute loose() => const FlexFitAttribute(FlexFit.loose);
-  FlexFitAttribute call(FlexFit flexFit) => FlexFitAttribute(flexFit);
+class FlexFitUtility<T> extends ScalarUtility<FlexFit, T> {
+  const FlexFitUtility(super.builder);
+  T tight() => builder(FlexFit.tight);
+  T loose() => builder(FlexFit.loose);
 }
 
-const axisDirection = AxisUtility();
+const axisDirection = AxisUtility(AxisAttribute.new);
 
-class AxisUtility {
-  const AxisUtility();
-  AxisAttribute horizontal() => const AxisAttribute(Axis.horizontal);
-  AxisAttribute vertical() => const AxisAttribute(Axis.vertical);
-  AxisAttribute call(Axis axis) => AxisAttribute(axis);
+class AxisUtility<T> extends ScalarUtility<Axis, T> {
+  const AxisUtility(super.builder);
+  T horizontal() => builder(Axis.horizontal);
+  T vertical() => builder(Axis.vertical);
 }
 
 const mainAxisAlignment =
@@ -108,14 +94,12 @@ class CrossAxisAlignmentUtility<T>
   T baseline() => builder(CrossAxisAlignment.baseline);
 }
 
-const mainAxisSize = MainAxisSizeUtility();
+const mainAxisSize = MainAxisSizeUtility(MainAxisSizeAttribute.new);
 
-class MainAxisSizeUtility {
-  const MainAxisSizeUtility();
-  MainAxisSizeAttribute min() => const MainAxisSizeAttribute(MainAxisSize.min);
-  MainAxisSizeAttribute max() => const MainAxisSizeAttribute(MainAxisSize.max);
-  MainAxisSizeAttribute call(MainAxisSize mainAxisSize) =>
-      MainAxisSizeAttribute(mainAxisSize);
+class MainAxisSizeUtility<T> extends ScalarUtility<MainAxisSize, T> {
+  const MainAxisSizeUtility(super.builder);
+  T min() => builder(MainAxisSize.min);
+  T max() => builder(MainAxisSize.max);
 }
 
 const iconSize = IconSizeAttribute.new;
@@ -129,15 +113,14 @@ abstract class ScalarUtility<V, A> {
   const ScalarUtility(this.builder);
 
   A call(V value) => builder(value);
-  A? nullable(V? value) => value == null ? null : builder(value);
 }
 
-abstract class DoubleUtility<T> extends ScalarUtility<double, T> {
+class DoubleUtility<T> extends ScalarUtility<double, T> {
   const DoubleUtility(super.builder);
 }
 
 const imageAlignment = ImageAlignmentAttribute.new;
-const imageScale = ImageScaleAttribute.new;
+
 const imageFit = BoxFitUtility(ImageFitAttribute.new);
 
 const imageRepeat = ImageRepeatUtility(ImageRepeatAttribute.new);
@@ -150,6 +133,14 @@ class ImageRepeatUtility<T> extends ScalarUtility<ImageRepeat, T> {
   T repeatY() => builder(ImageRepeat.repeatY);
 }
 
+class SizeUtility<T> extends DoubleUtility<T> {
+  const SizeUtility(super.builder);
+}
+
+class FontSizeUtility<T> extends SizeUtility<T> {
+  const FontSizeUtility(super.builder);
+}
+
 const imageWidth = ImageWidthAttribute.new;
 const imageHeight = ImageHeightAttribute.new;
 const textHeightBehavior = TextHeightBehaviorAttribute.new;
@@ -158,13 +149,13 @@ const boxFit = BoxFitUtility(BoxFitAttribute.new);
 
 class BoxFitUtility<T> extends ScalarUtility<BoxFit, T> {
   const BoxFitUtility(super.builder);
-  BoxFitAttribute fill() => const BoxFitAttribute(BoxFit.fill);
-  BoxFitAttribute contain() => const BoxFitAttribute(BoxFit.contain);
-  BoxFitAttribute cover() => const BoxFitAttribute(BoxFit.cover);
-  BoxFitAttribute fitWidth() => const BoxFitAttribute(BoxFit.fitWidth);
-  BoxFitAttribute fitHeight() => const BoxFitAttribute(BoxFit.fitHeight);
-  BoxFitAttribute none() => const BoxFitAttribute(BoxFit.none);
-  BoxFitAttribute scaleDown() => const BoxFitAttribute(BoxFit.scaleDown);
+  T fill() => builder(BoxFit.fill);
+  T contain() => builder(BoxFit.contain);
+  T cover() => builder(BoxFit.cover);
+  T fitWidth() => builder(BoxFit.fitWidth);
+  T fitHeight() => builder(BoxFit.fitHeight);
+  T none() => builder(BoxFit.none);
+  T scaleDown() => builder(BoxFit.scaleDown);
 }
 
 const blendMode = BlendModeUtility(BlendModeAttribute.new);
@@ -183,15 +174,11 @@ class BoxShapeUtility<T> extends ScalarUtility<BoxShape, T> {
 
 const imageColor = ImageColorAttribute.new;
 
-const fontWeight = FontWeightUtility(FontWeightAttribute.new);
-
 class FontWeightUtility<T> extends ScalarUtility<FontWeight, T> {
   const FontWeightUtility(super.builder);
   T bold() => builder(FontWeight.bold);
   T normal() => builder(FontWeight.normal);
 }
-
-const textDecoration = TextDecorationUtility(TextDecorationAttribute.new);
 
 class TextDecorationUtility<T> extends ScalarUtility<TextDecoration, T> {
   const TextDecorationUtility(super.builder);
@@ -202,17 +189,12 @@ class TextDecorationUtility<T> extends ScalarUtility<TextDecoration, T> {
   T none() => builder(TextDecoration.none);
 }
 
-const fontStyle = FontStyleUtility(FontStyleAttribute.new);
-
 class FontStyleUtility<T> extends ScalarUtility<FontStyle, T> {
   const FontStyleUtility(super.builder);
 
   T italic() => builder(FontStyle.italic);
   T normal() => builder(FontStyle.normal);
 }
-
-const textDecorationStyle =
-    TextDecorationStyleUtility(TextDecorationStyleAttribute.new);
 
 class TextDecorationStyleUtility<T>
     extends ScalarUtility<TextDecorationStyle, T> {
@@ -225,22 +207,13 @@ class TextDecorationStyleUtility<T>
   T wavy() => builder(TextDecorationStyle.wavy);
 }
 
-const fontFeature = FontFeatureUtility(FontFeatureAttribute.new);
-
-class FontFeatureUtility<T> extends ScalarUtility<FontFeature, T> {
-  const FontFeatureUtility(super.builder);
-
-  T enable(String feature) => builder(FontFeature.enable(feature));
-  T disable(String feature) => builder(FontFeature.disable(feature));
-}
-
 const textBaseline = TextBaselineUtility(TextBaselineAttribute.new);
 
-class TextBaselineUtility<A> extends ScalarUtility<TextBaseline, A> {
+class TextBaselineUtility<T> extends ScalarUtility<TextBaseline, T> {
   const TextBaselineUtility(super.builder);
 
-  A alphabetic() => builder(TextBaseline.alphabetic);
-  A ideographic() => builder(TextBaseline.ideographic);
+  T alphabetic() => builder(TextBaseline.alphabetic);
+  T ideographic() => builder(TextBaseline.ideographic);
 }
 
 const fontFamily = FontFamilyUtility(FontFamilyAttribute.new);
