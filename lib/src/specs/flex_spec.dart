@@ -6,7 +6,7 @@ import '../attributes/attribute.dart';
 import '../attributes/scalar_attribute.dart';
 import '../factory/mix_provider_data.dart';
 
-class FlexSpec extends MixExtension<FlexSpec> {
+class FlexSpec extends MixRecipe<FlexSpec> {
   final Axis? direction;
   final MainAxisAlignment? mainAxisAlignment;
   final CrossAxisAlignment? crossAxisAlignment;

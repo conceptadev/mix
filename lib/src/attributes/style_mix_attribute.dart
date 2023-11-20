@@ -2,7 +2,7 @@ import '../factory/style_mix.dart';
 import 'attribute.dart';
 
 /// Allows to pass down Mixes as attributes for use with helpers.
-class StyleMixAttribute extends Attribute {
+class StyleMixAttribute extends Attribute with Mergeable<StyleMixAttribute> {
   final StyleMix value;
 
   const StyleMixAttribute(this.value);

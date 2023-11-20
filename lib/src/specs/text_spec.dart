@@ -4,10 +4,10 @@ import '../attributes/attribute.dart';
 import '../attributes/scalar_attribute.dart';
 import '../attributes/strut_style_attribute.dart';
 import '../attributes/text_style_attribute.dart';
-import '../directives/text_directive.dart';
+import '../directives/directive.dart';
 import '../factory/mix_provider_data.dart';
 
-class TextSpec extends MixExtension<TextSpec> {
+class TextRecipe extends MixRecipe<TextRecipe> {
   final TextOverflow? overflow;
   final StrutStyle? strutStyle;
   final TextAlign? textAlign;
@@ -20,7 +20,7 @@ class TextSpec extends MixExtension<TextSpec> {
   final bool? softWrap;
 
   final List<TextDirective> directives;
-  const TextSpec({
+  const TextRecipe({
     required this.overflow,
     this.strutStyle,
     this.textAlign,
@@ -34,8 +34,8 @@ class TextSpec extends MixExtension<TextSpec> {
     this.directives = const [],
   });
 
-  static TextSpec resolve(MixData mix) {
-    return TextSpec(
+  static TextRecipe resolve(MixData mix) {
+    return TextRecipe(
       overflow: mix.get<TextOverflowAttribute, TextOverflow>(),
       strutStyle: mix.get<StrutStyleAttribute, StrutStyle>(),
       textAlign: mix.get<TextAlignAttribute, TextAlign>(),
@@ -63,10 +63,10 @@ class TextSpec extends MixExtension<TextSpec> {
   }
 
   @override
-  TextSpec lerp(TextSpec other, double t) {
+  TextRecipe lerp(TextRecipe other, double t) {
     // Define a helper method for snapping
 
-    return TextSpec(
+    return TextRecipe(
       overflow: snap(overflow, other.overflow, t),
       strutStyle: snap(strutStyle, other.strutStyle, t),
       textAlign: snap(textAlign, other.textAlign, t),
@@ -83,7 +83,7 @@ class TextSpec extends MixExtension<TextSpec> {
   }
 
   @override
-  TextSpec copyWith({
+  TextRecipe copyWith({
     bool? softWrap,
     TextOverflow? overflow,
     StrutStyle? strutStyle,
@@ -96,7 +96,7 @@ class TextSpec extends MixExtension<TextSpec> {
     List<TextDirective>? directives,
     TextDirection? textDirection,
   }) {
-    return TextSpec(
+    return TextRecipe(
       overflow: overflow ?? this.overflow,
       strutStyle: strutStyle ?? this.strutStyle,
       textAlign: textAlign ?? this.textAlign,

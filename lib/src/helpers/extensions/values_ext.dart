@@ -172,17 +172,42 @@ extension ColorExt on Color {
 
 // Extension for Alignment
 extension AlignmentGeometryExt on AlignmentGeometry {
+  AlignmentGeometryDto toDto() {
+    if (this is Alignment) return (this as Alignment).toDto();
+    if (this is AlignmentDirectional) {
+      return (this as AlignmentDirectional).toDto();
+    }
+
+    throw UnimplementedError();
+  }
+
   AlignmentGeometryAttribute toAttribute() {
     if (this is Alignment) return (this as Alignment).toAttribute();
     if (this is AlignmentDirectional) {
       return (this as AlignmentDirectional).toAttribute();
     }
+
     throw UnimplementedError();
   }
 }
 
-extension PaintExt on Paint {
-  ColorAttribute toAttribute() => ColorAttribute(color);
+extension AlignmentExt on Alignment {
+  AlignmentDto toDto() => AlignmentDto(
+        x: x,
+        y: y,
+      );
+
+  AlignmentAttribute toAttribute() => AlignmentAttribute(toDto());
+}
+
+extension AlignmentDirectionalExt on AlignmentDirectional {
+  AligmentDirectionalDto toDto() => AligmentDirectionalDto(
+        start: start,
+        y: y,
+      );
+
+  AlignmentDirectionalAttribute toAttribute() =>
+      AlignmentDirectionalAttribute(toDto());
 }
 
 extension ShapeDecorationExt on ShapeDecoration {
@@ -192,15 +217,6 @@ extension ShapeDecorationExt on ShapeDecoration {
         gradient: gradient?.toAttribute(),
         boxShadow: shadows?.map((e) => e.toAttribute()).toList(),
       );
-}
-
-extension AlignmentExt on Alignment {
-  AlignmentAttribute toAttribute() => AlignmentAttribute(x, y);
-}
-
-extension AlignmentDirectionalExt on AlignmentDirectional {
-  AlignmentDirectionalAttribute toAttribute() =>
-      AlignmentDirectionalAttribute(start, y);
 }
 
 extension BoxConstraintsExt on BoxConstraints {
@@ -354,20 +370,23 @@ extension BoxBorderExt on BoxBorder {
 }
 
 extension ShadowExt on Shadow {
-  ShadowAttribute toAttribute() => ShadowAttribute(
+  ShadowDto toDto() => ShadowDto(
         blurRadius: blurRadius,
         color: color.toAttribute(),
         offset: offset,
       );
+  ShadowAttribute toAttribute() => ShadowAttribute(toDto());
 }
 
 extension BoxShadowExt on BoxShadow {
-  BoxShadowAttribute toAttribute() => BoxShadowAttribute(
+  BoxShadowDto toDto() => BoxShadowDto(
         color: color.toAttribute(),
         offset: offset,
         blurRadius: blurRadius,
         spreadRadius: spreadRadius,
       );
+
+  BoxShadowAttribute toAttribute() => BoxShadowAttribute(toDto());
 }
 
 extension TextStyleExt on TextStyle {

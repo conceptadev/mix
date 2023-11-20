@@ -6,17 +6,9 @@ import '../utils/scalar_util.dart';
 import 'attribute.dart';
 
 @immutable
-abstract class ScalarColorAttribute<T extends ScalarColorAttribute<T>>
-    extends ScalarAttribute<T, Color> {
-  const ScalarColorAttribute(super.value);
-
-  @override
-  T Function(Color) get create;
-
-  @override
-  T merge(covariant T? other) {
-    return create(other?.value ?? value);
-  }
+class ColorDto extends Dto<ColorDto> with Resolver<Color> {
+  final Color value;
+  const ColorDto(this.value);
 
   @override
   Color resolve(MixData mix) {
@@ -24,30 +16,31 @@ abstract class ScalarColorAttribute<T extends ScalarColorAttribute<T>>
 
     return colorRef is ColorRef ? mix.tokens.colorRef(colorRef) : colorRef;
   }
+
+  @override
+  ColorDto merge(covariant ColorDto? other) {
+    if (other == null) return this;
+    return ColorDto(other.value);
+  }
+
+  @override
+  get props => [value];
 }
 
 @immutable
-class ColorAttribute extends ScalarColorAttribute<ColorAttribute> {
-  const ColorAttribute(super.color);
+class ColorAttribute extends StyleAttribute with Resolver<Color> {
+  final Color value;
+  const ColorAttribute(this.value);
 
   @override
-  final create = ColorAttribute.new;
-}
+  Color resolve(MixData mix) {
+    final colorRef = value;
 
-@immutable
-class IconColorAttribute extends ScalarColorAttribute<IconColorAttribute> {
-  const IconColorAttribute(super.color);
-
-  @override
-  final create = IconColorAttribute.new;
-}
-
-@immutable
-class ImageColorAttribute extends ScalarColorAttribute<ImageColorAttribute> {
-  const ImageColorAttribute(super.color);
+    return colorRef is ColorRef ? mix.tokens.colorRef(colorRef) : colorRef;
+  }
 
   @override
-  final create = ImageColorAttribute.new;
+  get props => [value];
 }
 
 @immutable

@@ -9,7 +9,8 @@ import 'color_attribute.dart';
 import 'shadow_attribute.dart';
 
 @immutable
-class TextStyleAttribute extends VisualAttribute<TextStyle> {
+class TextStyleAttribute extends MergeableStyleAttribute
+    with Resolver<TextStyle> {
   final String? fontFamily;
   final FontWeight? fontWeight;
   final FontStyle? fontStyle;
@@ -19,7 +20,7 @@ class TextStyleAttribute extends VisualAttribute<TextStyle> {
   final TextBaseline? textBaseline;
   final ColorAttribute? color;
   final ColorAttribute? backgroundColor;
-  final List<ShadowAttribute>? shadows;
+  final List<ShadowDto>? shadows;
   final List<FontFeature>? fontFeatures;
   final TextDecoration? decoration;
   final ColorAttribute? decorationColor;
@@ -94,7 +95,7 @@ class TextStyleAttribute extends VisualAttribute<TextStyle> {
       height: other.height ?? height,
       letterSpacing: other.letterSpacing ?? letterSpacing,
       locale: other.locale ?? locale,
-      shadows: mergeMergeableList(shadows, other.shadows),
+      shadows: shadows?.merge(other.shadows) ?? other.shadows,
       token: other.token ?? token,
       textBaseline: other.textBaseline ?? textBaseline,
       wordSpacing: other.wordSpacing ?? wordSpacing,

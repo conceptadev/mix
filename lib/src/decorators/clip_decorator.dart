@@ -4,47 +4,25 @@ import '../attributes/attribute.dart';
 import '../factory/mix_provider_data.dart';
 import 'decorator.dart';
 
-abstract class ClipDecorator<T> extends ParentDecorator<ClipDecoratorData<T>> {
-  final CustomClipper<T>? clipper;
-  final Clip? clipBehavior;
-
-  const ClipDecorator({this.clipper, this.clipBehavior});
+abstract class ClipDecorator<T> extends WrapDecorator<ClipDto<T>>
+    with Mergeable<ClipDecorator> {
+  const ClipDecorator(super.value);
 
   @override
-  ClipDecorator<T> merge(covariant ClipDecorator<T> other);
-
-  @override
-  ClipDecoratorData<T> resolve(MixData mix);
-
-  @override
-  get props => [clipper, clipBehavior];
-
-  @override
-  Widget build(Widget child, covariant ClipDecoratorData<T> data);
+  ClipDecorator merge(covariant ClipDecorator? other);
 }
 
-class ClipDecoratorData<T> extends MixExtension<ClipDecoratorData<T>> {
+class ClipDto<T> extends Dto<ClipDto> {
   final Clip? clipBehavior;
   final CustomClipper<T>? clipper;
 
-  const ClipDecoratorData({this.clipper, this.clipBehavior});
+  const ClipDto({this.clipper, this.clipBehavior});
 
   @override
-  ClipDecoratorData<T> lerp(ClipDecoratorData<T> other, double t) {
-    return ClipDecoratorData(
-      clipper: snap(clipper, other.clipper, t),
-      clipBehavior: snap(clipBehavior, other.clipBehavior, t),
-    );
-  }
-
-  @override
-  ClipDecoratorData<T> copyWith({
-    Clip? clipBehavior,
-    CustomClipper<T>? clipper,
-  }) {
-    return ClipDecoratorData(
-      clipper: clipper ?? this.clipper,
-      clipBehavior: clipBehavior ?? this.clipBehavior,
+  ClipDto<T> merge(covariant ClipDto<T>? other) {
+    return ClipDto(
+      clipBehavior: other?.clipBehavior ?? clipBehavior,
+      clipper: other?.clipper ?? clipper,
     );
   }
 
@@ -52,27 +30,20 @@ class ClipDecoratorData<T> extends MixExtension<ClipDecoratorData<T>> {
   get props => [clipper, clipBehavior];
 }
 
-class ClipOvalDecorator extends ClipDecorator<Rect> {
-  const ClipOvalDecorator({super.clipper, super.clipBehavior});
+class ClipOvalDecorator extends WrapDecorator<ClipDto<Rect>>
+    with Mergeable<ClipOvalDecorator> {
+  const ClipOvalDecorator(super.value);
 
   @override
-  ClipOvalDecorator merge(ClipOvalDecorator other) {
-    return ClipOvalDecorator(
-      clipper: other.clipper ?? clipper,
-      clipBehavior: other.clipBehavior ?? clipBehavior,
-    );
+  ClipOvalDecorator merge(ClipOvalDecorator? other) {
+    return ClipOvalDecorator(value.merge(other?.value));
   }
 
   @override
-  ClipDecoratorData<Rect> resolve(MixData mix) {
-    return ClipDecoratorData(clipper: clipper, clipBehavior: clipBehavior);
-  }
-
-  @override
-  Widget build(Widget child, ClipDecoratorData<Rect> data) {
+  Widget build(Widget child, ClipDto<Rect> value) {
     return ClipOval(
-      clipper: data.clipper,
-      clipBehavior: data.clipBehavior ?? Clip.antiAlias,
+      clipper: value.clipper,
+      clipBehavior: value.clipBehavior ?? Clip.antiAlias,
       child: child,
     );
   }
@@ -85,20 +56,20 @@ class ClipPathDecorator extends ClipDecorator<Path> {
   ClipPathDecorator merge(ClipPathDecorator other) {
     return ClipPathDecorator(
       clipper: other.clipper,
-      clipBehavior: other.clipBehavior ?? clipBehavior,
+      clipBehavior: other.clipBehavior ?? decorationClipBehavior,
     );
   }
 
   @override
-  ClipDecoratorData<Path> resolve(MixData mix) {
-    return ClipDecoratorData(
+  ClipDto<Path> resolve(MixData mix) {
+    return ClipDto(
       clipper: clipper,
-      clipBehavior: clipBehavior ?? Clip.antiAlias,
+      clipBehavior: decorationClipBehavior ?? Clip.antiAlias,
     );
   }
 
   @override
-  Widget build(Widget child, ClipDecoratorData<Path> data) {
+  Widget build(Widget child, ClipDto<Path> data) {
     return ClipPath(
       clipper: data.clipper,
       clipBehavior: data.clipBehavior ?? Clip.antiAlias,
@@ -107,7 +78,7 @@ class ClipPathDecorator extends ClipDecorator<Path> {
   }
 }
 
-class ClipRRectDecoratorData extends ClipDecoratorData<RRect> {
+class ClipRRectDecoratorData extends ClipDto<RRect> {
   final BorderRadius? borderRadius;
 
   const ClipRRectDecoratorData({
@@ -149,23 +120,23 @@ class ClipRectDecorator extends ClipDecorator<Rect> {
   ClipRectDecorator merge(ClipRectDecorator other) {
     return ClipRectDecorator(
       clipper: other.clipper,
-      clipBehavior: other.clipBehavior ?? clipBehavior,
+      clipBehavior: other.clipBehavior ?? decorationClipBehavior,
     );
   }
 
   @override
-  ClipDecoratorData<Rect> resolve(MixData mix) {
-    return ClipDecoratorData(
+  ClipDto<Rect> resolve(MixData mix) {
+    return ClipDto(
       clipper: clipper,
-      clipBehavior: clipBehavior ?? Clip.hardEdge,
+      clipBehavior: decorationClipBehavior ?? Clip.hardEdge,
     );
   }
 
   @override
-  get props => [clipper, clipBehavior];
+  get props => [clipper, decorationClipBehavior];
 
   @override
-  Widget build(Widget child, ClipDecoratorData<Rect> data) {
+  Widget build(Widget child, ClipDto<Rect> data) {
     return ClipRect(
       clipper: data.clipper,
       clipBehavior: data.clipBehavior ?? Clip.hardEdge,
@@ -186,7 +157,7 @@ class ClipRRectDecorator extends ClipDecorator<RRect> {
   ClipRRectDecorator merge(ClipRRectDecorator other) {
     return ClipRRectDecorator(
       clipper: other.clipper,
-      clipBehavior: other.clipBehavior ?? clipBehavior,
+      clipBehavior: other.clipBehavior ?? decorationClipBehavior,
       borderRadius: other.borderRadius ?? borderRadius,
     );
   }
@@ -195,13 +166,13 @@ class ClipRRectDecorator extends ClipDecorator<RRect> {
   ClipRRectDecoratorData resolve(MixData mix) {
     return ClipRRectDecoratorData(
       borderRadius: borderRadius ?? BorderRadius.zero,
-      clipBehavior: clipBehavior ?? Clip.antiAlias,
+      clipBehavior: decorationClipBehavior ?? Clip.antiAlias,
       clipper: clipper,
     );
   }
 
   @override
-  get props => [clipper, clipBehavior, borderRadius];
+  get props => [clipper, decorationClipBehavior, borderRadius];
 
   @override
   Widget build(Widget child, ClipRRectDecoratorData data) {

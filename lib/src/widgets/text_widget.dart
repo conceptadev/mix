@@ -23,7 +23,7 @@ class StyledText extends StyledWidget {
   @override
   Widget build(BuildContext context) {
     return buildWithStyle(context, (data) {
-      final spec = TextSpec.resolve(data);
+      final spec = TextRecipe.resolve(data);
 
       return Text(
         spec.applyTextDirectives(text),

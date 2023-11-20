@@ -17,15 +17,15 @@ class BorderRadiusUtility {
 
   // Specific corners
   RadiusUtility<BorderRadiusAttribute> get bottomLeft =>
-      RadiusUtility((value) => BorderRadiusAttribute(bottomLeft: value));
+      RadiusUtility((value) => only(bottomLeft: value));
 
   RadiusUtility<BorderRadiusAttribute> get bottomRight =>
-      RadiusUtility((value) => BorderRadiusAttribute(bottomRight: value));
+      RadiusUtility((value) => only(bottomRight: value));
 
   RadiusUtility<BorderRadiusAttribute> get topLeft =>
-      RadiusUtility((value) => BorderRadiusAttribute(topLeft: value));
+      RadiusUtility((value) => only(topLeft: value));
   RadiusUtility<BorderRadiusAttribute> get topRight =>
-      RadiusUtility((value) => BorderRadiusAttribute(topRight: value));
+      RadiusUtility((value) => only(topRight: value));
 
   RadiusUtility<BorderRadiusDirectionalAttribute> get topStart =>
       _directional.topStart;
@@ -38,13 +38,20 @@ class BorderRadiusUtility {
       _directional.bottomEnd;
 
   RadiusUtility<BorderRadiusAttribute> get all =>
-      const RadiusUtility<BorderRadiusAttribute>(BorderRadiusAttribute.all);
+      RadiusUtility<BorderRadiusAttribute>((value) {
+        return only(
+          topLeft: value,
+          topRight: value,
+          bottomLeft: value,
+          bottomRight: value,
+        );
+      });
 
   BorderRadiusDirectionalUtility get _directional {
     return const BorderRadiusDirectionalUtility();
   }
 
-  BorderRadiusAttribute zero() => const BorderRadiusAttribute.zero();
+  BorderRadiusAttribute zero() => all.zero();
 
   BorderRadiusAttribute only({
     Radius? topLeft,
@@ -53,10 +60,12 @@ class BorderRadiusUtility {
     Radius? bottomRight,
   }) {
     return BorderRadiusAttribute(
-      topLeft: topLeft,
-      topRight: topRight,
-      bottomLeft: bottomLeft,
-      bottomRight: bottomRight,
+      BorderRadiusDto(
+        topLeft: topLeft,
+        topRight: topRight,
+        bottomLeft: bottomLeft,
+        bottomRight: bottomRight,
+      ),
     );
   }
 

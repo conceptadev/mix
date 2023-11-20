@@ -8,7 +8,7 @@ import '../attributes/scalar_attribute.dart';
 import '../attributes/space_attribute.dart';
 import '../factory/mix_provider_data.dart';
 
-class ContainerSpec extends MixExtension<ContainerSpec> {
+class ContainerSpec extends MixRecipe<ContainerSpec> {
   final AlignmentGeometry? alignment;
   final EdgeInsetsGeometry? padding;
   final EdgeInsetsGeometry? margin;

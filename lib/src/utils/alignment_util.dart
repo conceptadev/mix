@@ -1,28 +1,48 @@
 import 'package:flutter/material.dart';
 
-import '../attributes/alignment_attribute.dart';
-import 'scalar_util.dart';
+import '../../mix.dart';
 
 /// Generates an [AlignmentAttribute] from given [x] and [y] values.
 const alignment = AlignmentUtility(AlignmentGeometryAttribute.from);
 
-class AlignmentUtility<T> extends ScalarUtility<AlignmentGeometry, T> {
+class AlignmentUtility
+    extends MixUtility<AlignmentGeometryDto, AlignmentGeometryAttribute> {
   const AlignmentUtility(super.builder);
 
-  T topLeft() => builder(Alignment.topLeft);
-  T topCenter() => builder(Alignment.topCenter);
-  T topRight() => builder(Alignment.topRight);
-  T centerLeft() => builder(Alignment.centerLeft);
-  T center() => builder(Alignment.center);
-  T centerRight() => builder(Alignment.centerRight);
-  T bottomLeft() => builder(Alignment.bottomLeft);
-  T bottomCenter() => builder(Alignment.bottomCenter);
-  T bottomRight() => builder(Alignment.bottomRight);
+  AlignmentGeometryAttribute topLeft() => builder(Alignment.topLeft.toDto());
+  AlignmentGeometryAttribute topCenter() =>
+      builder(Alignment.topCenter.toDto());
+  AlignmentGeometryAttribute topRight() => builder(Alignment.topRight.toDto());
+  AlignmentGeometryAttribute centerLeft() =>
+      builder(Alignment.centerLeft.toDto());
+  AlignmentGeometryAttribute center() => builder(Alignment.center.toDto());
+  AlignmentGeometryAttribute centerRight() =>
+      builder(Alignment.centerRight.toDto());
+  AlignmentGeometryAttribute bottomLeft() =>
+      builder(Alignment.bottomLeft.toDto());
+  AlignmentGeometryAttribute bottomCenter() =>
+      builder(Alignment.bottomCenter.toDto());
+  AlignmentGeometryAttribute bottomRight() =>
+      builder(Alignment.bottomRight.toDto());
 
-  T topStart() => builder(AlignmentDirectional.topStart);
-  T topEnd() => builder(AlignmentDirectional.topEnd);
-  T centerStart() => builder(AlignmentDirectional.centerStart);
-  T centerEnd() => builder(AlignmentDirectional.centerEnd);
-  T bottomStart() => builder(AlignmentDirectional.bottomStart);
-  T bottomEnd() => builder(AlignmentDirectional.bottomEnd);
+  AlignmentGeometryAttribute topStart() =>
+      builder(AlignmentDirectional.topStart.toDto());
+  AlignmentGeometryAttribute topEnd() =>
+      builder(AlignmentDirectional.topEnd.toDto());
+  AlignmentGeometryAttribute centerStart() =>
+      builder(AlignmentDirectional.centerStart.toDto());
+  AlignmentGeometryAttribute centerEnd() =>
+      builder(AlignmentDirectional.centerEnd.toDto());
+  AlignmentGeometryAttribute bottomStart() =>
+      builder(AlignmentDirectional.bottomStart.toDto());
+  AlignmentGeometryAttribute bottomEnd() =>
+      builder(AlignmentDirectional.bottomEnd.toDto());
+
+  AlignmentGeometryAttribute y(double y) => builder(AlignmentDto(y: y));
+  AlignmentGeometryAttribute x(double x) => builder(AlignmentDto(x: x));
+  AlignmentGeometryAttribute start(double start) =>
+      builder(AligmentDirectionalDto(start: start));
+
+  AlignmentGeometryAttribute call(AlignmentGeometry value) =>
+      builder(value.toDto());
 }

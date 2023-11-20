@@ -50,12 +50,12 @@ class MixData with Comparable {
       _attributes.whereType<T>().toList();
 
   /// Finds and returns an [VisualAttribute] of type [A], or null if not found.
-  A? attributeOfType<A extends VisualAttribute>() {
+  A? attributeOfType<A extends StyleAttribute>() {
     return _attributes.attributeOfType<A>();
   }
 
-  /// Resolves and returns the value of the [VisualAttribute] of type [A].
-  R? get<A extends VisualAttribute<R>, R>() {
+  // /// Resolves and returns the value of the [VisualAttribute] of type [A].
+  R get<A extends StyleAttribute<R>, R>() {
     return attributeOfType<A>()?.resolve(this);
   }
 
@@ -73,7 +73,7 @@ class MixData with Comparable {
 }
 
 @visibleForTesting
-List<VisualAttribute> applyContextToVisualAttributes(
+List<StyleAttribute> applyContextToVisualAttributes(
   BuildContext context,
   StyleMix mix,
 ) {

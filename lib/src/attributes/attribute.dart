@@ -4,42 +4,52 @@ import 'package:flutter/material.dart';
 
 import '../core/equality/compare_mixin.dart';
 import '../factory/mix_provider_data.dart';
-import '../theme/tokens/mix_token.dart';
 
 @immutable
-abstract class Attribute with Comparable, Mergeable {
+abstract class Attribute with Comparable {
   const Attribute();
 }
 
-mixin Resolvable<T> {
-  T resolve(MixData mix);
+abstract class StyleAttribute extends Attribute {
+  const StyleAttribute();
 }
 
+abstract class Dto<Self extends Dto<Self>> with Comparable, Mergeable<Self> {
+  const Dto();
+}
+
+abstract class MergeableStyleAttribute extends StyleAttribute
+    with Mergeable<MergeableStyleAttribute> {
+  const MergeableStyleAttribute();
+}
+
+mixin Resolver<Value> {
+  Value resolve(MixData mix);
+}
+
+// TODO: Mergeable to do Attribute only
 mixin Mergeable<T> {
   T merge(covariant T? other);
+}
 
-  List<M> mergeMergeableList<M extends Mergeable>(
-    List<M>? current,
-    List<M>? other,
-  ) {
-    if (current == null && other == null) return [];
-    if (current == null) return other ?? [];
-    if (other == null) return current;
+extension MergeableListExt<T extends Mergeable> on List<T> {
+  List<T> merge(List<T>? other) {
+    if (other == null) return this;
 
-    if (current.isEmpty) return other;
+    if (isEmpty) return other;
 
-    final listLength = current.length;
+    final listLength = length;
     final otherLength = other.length;
     final maxLength = max(listLength, otherLength);
 
-    return List<M>.generate(maxLength, (int index) {
+    return List<T>.generate(maxLength, (int index) {
       if (index < listLength && index < otherLength) {
-        final currentValue = current[index];
+        final currentValue = this[index];
         final otherValue = other[index];
 
         return currentValue.merge(otherValue);
       } else if (index < listLength) {
-        return current[index];
+        return this[index];
       }
 
       return other[index];
@@ -47,22 +57,18 @@ mixin Mergeable<T> {
   }
 }
 
+// TODO: Rename ValueAttribute
 @immutable
-abstract class ScalarAttribute<T extends ScalarAttribute<T, R>, R>
-    extends VisualAttribute<R> {
-  final R value;
+abstract class ScalarAttribute<Self extends ScalarAttribute<Self, Value>, Value>
+    extends StyleAttribute with Mergeable<Self> {
+  final Value value;
 
   const ScalarAttribute(this.value);
 
-  T Function(R) get create;
+  Self Function(Value) get create;
 
   @override
-  R resolve(MixData mix) {
-    return value is Resolvable ? (value as Resolvable).resolve(mix) : value;
-  }
-
-  @override
-  T merge(T? other) {
+  Self merge(covariant Self? other) {
     if (other == null) return create(value);
 
     return value is Mergeable
@@ -75,18 +81,29 @@ abstract class ScalarAttribute<T extends ScalarAttribute<T, R>, R>
 }
 
 @immutable
-abstract class VisualAttribute<T> extends Attribute with Resolvable<T> {
-  const VisualAttribute();
-}
+abstract class ResolvableAttribute<
+    Self extends ResolvableAttribute<Self, Data, Value>,
+    Data extends Resolver<Value>,
+    Value> extends ScalarAttribute<Self, Data> with Resolver<Value> {
+  const ResolvableAttribute(super.value);
 
-mixin WithTokenAttribute<T> on VisualAttribute<T> {
-  MixToken<T> get token;
+  @override
+  Value resolve(MixData mix) => value.resolve(mix);
+
+  @override
+  Self Function(Data) get create;
 }
 
 @immutable
-abstract class MixExtension<T extends MixExtension<T>> extends ThemeExtension<T>
+abstract class RecipeAttribute<Value extends MixRecipe<Value>>
+    extends StyleAttribute with Resolver<Value> {
+  const RecipeAttribute();
+}
+
+@immutable
+abstract class MixRecipe<T extends MixRecipe<T>> extends ThemeExtension<T>
     with Comparable {
-  const MixExtension();
+  const MixRecipe();
 
   Duration lerpDuration(Duration a, Duration b, double t) {
     int lerpTicks = ((1 - t) * a.inMilliseconds + t * b.inMilliseconds).round();

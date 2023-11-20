@@ -5,7 +5,7 @@ import '../attributes/attribute.dart';
 import '../attributes/scalar_attribute.dart';
 import '../factory/mix_provider_data.dart';
 
-class StackSpec extends MixExtension<StackSpec> {
+class StackSpec extends MixRecipe<StackSpec> {
   final AlignmentGeometry? alignment;
   final StackFit? fit;
   final TextDirection? textDirection;

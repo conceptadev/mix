@@ -25,7 +25,7 @@ void main() {
         ),
       );
 
-      final spec = TextSpec.resolve(mix);
+      final spec = TextRecipe.resolve(mix);
 
       expect(spec.overflow, TextOverflow.ellipsis);
       expect(spec.strutStyle, const StrutStyle(fontSize: 20.0));
@@ -46,7 +46,7 @@ void main() {
     });
 
     test('copyWith', () {
-      const spec = TextSpec(
+      const spec = TextRecipe(
         overflow: TextOverflow.ellipsis,
         strutStyle: StrutStyle(fontSize: 20.0),
         textAlign: TextAlign.center,
@@ -95,7 +95,7 @@ void main() {
     });
 
     test('lerp', () {
-      const spec1 = TextSpec(
+      const spec1 = TextRecipe(
         overflow: TextOverflow.ellipsis,
         strutStyle: StrutStyle(fontSize: 20.0),
         textAlign: TextAlign.center,
@@ -112,7 +112,7 @@ void main() {
         directives: [UppercaseDirective()],
       );
 
-      const spec2 = TextSpec(
+      const spec2 = TextRecipe(
         overflow: TextOverflow.fade,
         strutStyle: StrutStyle(fontSize: 30.0),
         textAlign: TextAlign.start,

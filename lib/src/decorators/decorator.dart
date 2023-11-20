@@ -3,25 +3,24 @@ import 'package:flutter/material.dart';
 import '../attributes/attribute.dart';
 import '../factory/mix_provider_data.dart';
 
-abstract class Decorator<T> extends VisualAttribute<T> {
-  const Decorator();
-
-  Widget render(Widget child, MixData mix) {
-    return build(child, resolve(mix));
-  }
+abstract class Decorator<T> extends Attribute {
+  final T value;
+  const Decorator(this.value);
 
   @override
-  Decorator merge(covariant Decorator? other);
-
-  Widget build(Widget child, T data);
+  get props => [value];
 }
 
-abstract class ParentDecorator<T> extends Decorator<T> {
-  const ParentDecorator();
+abstract class WrapDecorator<T> extends Decorator<T> {
+  const WrapDecorator(super.value);
 
-  @override
-  ParentDecorator<T> merge(covariant ParentDecorator<T>? other);
+  Widget render(Widget child, MixData mix) {
+    if (this is Resolver<T>) {
+      return build(child, (this as Resolver<T>).resolve(mix));
+    }
 
-  @override
-  Widget build(Widget child, T data);
+    return build(child, value);
+  }
+
+  Widget build(Widget child, T value);
 }

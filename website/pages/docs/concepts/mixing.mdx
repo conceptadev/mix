@@ -3,7 +3,6 @@ id: mixing
 title: "Mixing"
 ---
 
-import Code from "../../../components/Code.js";
 import { Callout } from "nextra-theme-docs";
 
 # Mixing
@@ -32,12 +31,12 @@ final mix = StyleMix(
 
 ```
 
-### `Mix.fromAttributes()`
+### `StyleMix.create()`
 
 Allows you to create a Mix from a List of attributes. This has the same behavior but provides the ability to receive a List instead of positional arguments.
 
 ```dart
-final mix = Mix.fromAttributes([
+final mix = StyleMix.create([
   height(100),
   width(100),
   backgroundColor(Colors.purple),
@@ -48,7 +47,7 @@ final mix = Mix.fromAttributes([
 It also provides the possibility to use optional attributes using `if/else`:
 
 ```dart
-final mix = Mix.fromAttributes([
+final mix = StyleMix.fromAttributes([
   if (hasError)
     backgroundColor(Colors.red)
   else
@@ -69,7 +68,7 @@ Mixes are immutable. The new Mix created will inherit all attributes of the orig
 If you have an existing Mix you can add attributes to it by calling the `mix` method. This will return a new Mix with the new attributes added.
 
 ```dart
-final newMix = mix.apply(
+final newMix = StyleMix.apply(
   height(200),
   width(200),
   backgroundColor(Colors.red),
@@ -81,7 +80,7 @@ final newMix = mix.apply(
 Similar to `apply` but allows you to pass a List of attributes.
 
 ```dart
-final newMix = mix.addAttributes([
+final newMix = StyleMix.addAttributes([
   height(200),
   width(200),
   backgroundColor(Colors.red),
@@ -111,17 +110,17 @@ final thirdMix = firstMix.applyNullable(secondMix);
 final thirdMix = firstMix.merge(secondMix);
 ```
 
-#### Mix.combine()
+#### StyleMix.combine()
 
 Creates a new Mix from a positional arguments of Mixes.
 
 ```dart
-final thirdMix = Mix.combine(firstMix, secondMix);
+final thirdMix = StyleMix.combine(firstMix, secondMix);
 ```
 
 ## Utility Helpers
 
-### Mix.chooser()
+### StyleMix.chooser()
 
 Uses a _Mix_ based on a condition
 
@@ -129,7 +128,7 @@ Uses a _Mix_ based on a condition
 final errorMix = StyleMix(backgroundColor(Colors.red));
 final successMix = StyleMix(backgroundColor(Colors.green));
 
-final mix = Mix.chooser(
+final mix = StyleMix.chooser(
   condition: hasError,
   ifTrue: errorMix,
   ifFalse: succesMix,

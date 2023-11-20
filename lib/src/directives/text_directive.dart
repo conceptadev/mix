@@ -1,7 +1,6 @@
 import '../attributes/attribute.dart';
 import '../factory/mix_provider_data.dart';
 import '../helpers/extensions/string_ext.dart';
-import 'directive_attribute.dart';
 
 class UppercaseDirective extends TextDirective {
   const UppercaseDirective();
@@ -55,27 +54,4 @@ class TextDirectiveAttribute
   TextDirectiveAttribute create(List<TextDirective> value) {
     return TextDirectiveAttribute(value);
   }
-}
-
-abstract class DirectiveAttribute<D extends Directive,
-    T extends DirectiveAttribute<D, T>> extends VisualAttribute<List<D>> {
-  final List<D> value;
-  const DirectiveAttribute(this.value);
-
-  // Create method
-  T create(List<D> value);
-
-  @override
-  List<D> resolve(MixData mix) => value;
-
-  @override
-  T merge(covariant T? other) {
-    if (other == null) return this as T;
-    final combinedList = [...value, ...other.value];
-
-    return create(combinedList);
-  }
-
-  @override
-  get props => [value];
 }

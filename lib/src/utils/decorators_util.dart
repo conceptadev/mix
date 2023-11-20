@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../decorators/clip_decorator.dart';
 import '../decorators/default_decorators.dart';
+import 'scalar_util.dart';
 
 const aspectRatio = AspectRatioDecorator.new;
 
@@ -10,14 +11,13 @@ const flexible = FlexibleDecorator.loose;
 
 const opacity = OpacityDecorator.new;
 
-const rotate = RotateUtility();
+const rotate = RotateUtility(RotateDecorator.new);
 
-class RotateUtility {
-  const RotateUtility();
-  RotateDecorator get d90 => call(1);
-  RotateDecorator get d180 => call(2);
-  RotateDecorator get d270 => call(3);
-  RotateDecorator call(int quarterTurns) => RotateDecorator(quarterTurns);
+class RotateUtility<T> extends ScalarUtility<int, T> {
+  const RotateUtility(super.builder);
+  T get d90 => call(1);
+  T get d180 => call(2);
+  T get d270 => call(3);
 }
 
 const scale = ScaleDecorator.new;

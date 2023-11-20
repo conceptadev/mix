@@ -11,15 +11,9 @@ import 'scalar_attribute.dart';
 import 'shadow_attribute.dart';
 
 @immutable
-abstract class DecorationAttribute<T extends Decoration>
-    extends VisualAttribute<T> {
+abstract class DecorationAttribute<Value extends Decoration>
+    extends MergeableStyleAttribute with Resolver<Value> {
   const DecorationAttribute();
-
-  @override
-  DecorationAttribute<T> merge(covariant DecorationAttribute<T>? other);
-
-  @override
-  T resolve(MixData mix);
 }
 
 @immutable
@@ -28,7 +22,7 @@ class BoxDecorationAttribute extends DecorationAttribute<BoxDecoration> {
   final BoxBorderAttribute? border;
   final BorderRadiusGeometryAttribute? borderRadius;
   final GradientAttribute? gradient;
-  final List<BoxShadowAttribute>? boxShadow;
+  final List<BoxShadowDto>? boxShadow;
   final BoxShapeAttribute? shape;
   const BoxDecorationAttribute({
     this.border,
@@ -39,9 +33,6 @@ class BoxDecorationAttribute extends DecorationAttribute<BoxDecoration> {
     this.shape,
   });
 
-  BoxDecorationAttribute.color(Color color)
-      : this(color: ColorAttribute(color));
-
   @override
   BoxDecorationAttribute merge(BoxDecorationAttribute? other) {
     if (other == null) return this;
@@ -50,9 +41,9 @@ class BoxDecorationAttribute extends DecorationAttribute<BoxDecoration> {
       border: border?.merge(other.border) ?? other.border,
       borderRadius:
           borderRadius?.merge(other.borderRadius) ?? other.borderRadius,
-      gradient: gradient?.merge(other.gradient) ?? other.gradient,
-      boxShadow: mergeMergeableList(boxShadow, other.boxShadow),
-      color: color?.merge(other.color) ?? other.color,
+      gradient: other.gradient ?? gradient,
+      boxShadow: boxShadow?.merge(other.boxShadow),
+      color: other.color ?? color,
       shape: other.shape ?? shape,
     );
   }
@@ -64,7 +55,7 @@ class BoxDecorationAttribute extends DecorationAttribute<BoxDecoration> {
       border: border?.resolve(mix),
       borderRadius: borderRadius?.resolve(mix),
       boxShadow: boxShadow?.map((e) => e.resolve(mix)).toList(),
-      gradient: gradient?.resolve(mix),
+      gradient: gradient?.value,
     );
   }
 
@@ -83,7 +74,7 @@ class ShapeDecorationAttribute extends DecorationAttribute<ShapeDecoration> {
   final GradientAttribute? gradient;
 
   // Shadows cast by this box behind the box.
-  final List<BoxShadowAttribute>? boxShadow;
+  final List<BoxShadowDto>? boxShadow;
 
   const ShapeDecorationAttribute({
     this.color,
@@ -97,10 +88,10 @@ class ShapeDecorationAttribute extends DecorationAttribute<ShapeDecoration> {
     if (other == null) return this;
 
     return ShapeDecorationAttribute(
-      color: color?.merge(other.color) ?? other.color,
+      color: other.color ?? color,
       shape: other.shape ?? shape,
-      gradient: gradient?.merge(other.gradient) ?? other.gradient,
-      boxShadow: mergeMergeableList(boxShadow, other.boxShadow),
+      gradient: other.gradient ?? gradient,
+      boxShadow: boxShadow?.merge(other.boxShadow) ?? other.boxShadow,
     );
   }
 
@@ -108,7 +99,7 @@ class ShapeDecorationAttribute extends DecorationAttribute<ShapeDecoration> {
   ShapeDecoration resolve(MixData mix) {
     return ShapeDecoration(
       color: color?.resolve(mix),
-      gradient: gradient?.resolve(mix),
+      gradient: gradient?.value,
       shadows: boxShadow?.map((e) => e.resolve(mix)).toList(),
       shape: shape ?? const RoundedRectangleBorder(),
     );
@@ -120,8 +111,7 @@ class ShapeDecorationAttribute extends DecorationAttribute<ShapeDecoration> {
 
 class ForegroundDecorationAttribute
     extends ScalarAttribute<ForegroundDecorationAttribute, Decoration> {
-  const ForegroundDecorationAttribute(super.value);
-
   @override
   final create = ForegroundDecorationAttribute.new;
+  const ForegroundDecorationAttribute(super.value);
 }

@@ -1,11 +1,13 @@
+// ignore_for_file: unnecessary_overrides
+
 import 'package:flutter/material.dart';
 
 import '../factory/mix_provider_data.dart';
 import 'attribute.dart';
 
 @immutable
-abstract class SpaceGeometryAttribute<T extends EdgeInsetsGeometry>
-    extends VisualAttribute<T> {
+abstract class SpaceGeometryAttribute<Value extends EdgeInsetsGeometry>
+    extends MergeableStyleAttribute with Resolver<Value> {
   final double? top;
   final double? bottom;
   final double? left;
@@ -24,7 +26,7 @@ abstract class SpaceGeometryAttribute<T extends EdgeInsetsGeometry>
     this.end,
   });
 
-  SpaceGeometryAttribute<T> create({
+  SpaceGeometryAttribute create({
     double? top,
     double? bottom,
     double? left,
@@ -34,8 +36,8 @@ abstract class SpaceGeometryAttribute<T extends EdgeInsetsGeometry>
   });
 
   @override
-  SpaceGeometryAttribute<T> merge(
-    covariant SpaceGeometryAttribute<T>? other,
+  SpaceGeometryAttribute merge(
+    covariant SpaceGeometryAttribute? other,
   ) {
     return create(
       top: other?.top ?? top,
@@ -48,7 +50,7 @@ abstract class SpaceGeometryAttribute<T extends EdgeInsetsGeometry>
   }
 
   @override
-  T resolve(MixData mix) {
+  Value resolve(MixData mix) {
     final top = this.top ?? 0;
     final bottom = this.bottom ?? 0;
 
@@ -61,7 +63,7 @@ abstract class SpaceGeometryAttribute<T extends EdgeInsetsGeometry>
         top: mix.tokens.spaceTokenRef(top),
         right: mix.tokens.spaceTokenRef(right),
         bottom: mix.tokens.spaceTokenRef(bottom),
-      ) as T;
+      ) as Value;
     } else if (this is SpaceDirectionalAttribute) {
       final start = this.start ?? 0;
       final end = this.end ?? 0;
@@ -71,7 +73,7 @@ abstract class SpaceGeometryAttribute<T extends EdgeInsetsGeometry>
         top: mix.tokens.spaceTokenRef(top),
         end: mix.tokens.spaceTokenRef(end),
         bottom: mix.tokens.spaceTokenRef(bottom),
-      ) as T;
+      ) as Value;
     }
     throw UnsupportedError(
       'SpaceGeometryAttribute must be either SpaceAttribute or SpaceDirectionalAttribute',
@@ -133,8 +135,9 @@ class SpaceDirectionalAttribute
 }
 
 @immutable
-abstract class PaddingGeometryAttribute<T extends EdgeInsetsGeometry>
-    extends SpaceGeometryAttribute<T> {
+abstract class PaddingGeometryAttribute<
+    Self extends PaddingGeometryAttribute<Self, Value>,
+    Value extends EdgeInsetsGeometry> extends SpaceGeometryAttribute<Value> {
   const PaddingGeometryAttribute({
     super.top,
     super.bottom,
@@ -146,8 +149,8 @@ abstract class PaddingGeometryAttribute<T extends EdgeInsetsGeometry>
 }
 
 @immutable
-class PaddingAttribute extends PaddingGeometryAttribute<EdgeInsets>
-    implements SpaceAttribute {
+class PaddingAttribute
+    extends PaddingGeometryAttribute<PaddingAttribute, EdgeInsets> {
   const PaddingAttribute({super.top, super.bottom, super.left, super.right});
 
   @override
@@ -169,9 +172,8 @@ class PaddingAttribute extends PaddingGeometryAttribute<EdgeInsets>
 }
 
 @immutable
-class PaddingDirectionalAttribute
-    extends PaddingGeometryAttribute<EdgeInsetsDirectional>
-    implements SpaceDirectionalAttribute {
+class PaddingDirectionalAttribute extends PaddingGeometryAttribute<
+    PaddingDirectionalAttribute, EdgeInsetsDirectional> {
   const PaddingDirectionalAttribute({
     super.top,
     super.bottom,

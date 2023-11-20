@@ -5,7 +5,7 @@ import '../attributes/color_attribute.dart';
 import '../attributes/scalar_attribute.dart';
 import '../factory/mix_provider_data.dart';
 
-class IconSpec extends MixExtension<IconSpec> {
+class IconSpec extends MixRecipe<IconSpec> {
   final Color? color;
   final double? size;
 

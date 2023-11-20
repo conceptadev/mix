@@ -9,17 +9,21 @@ import '../helpers/extensions/iterable_ext.dart';
 import 'equality/compare_mixin.dart';
 
 @immutable
-class VisualAttributeMap<Attr extends VisualAttribute> with Comparable {
-  final LinkedHashMap<Type, Attr>? _attributeMap;
+class VisualAttributeMap with Comparable {
+  final LinkedHashMap<Type, StyleAttribute>? _attributeMap;
 
   VisualAttributeMap._(this._attributeMap);
 
-  factory VisualAttributeMap(List<Attr> attributes) {
-    final attributeMap = LinkedHashMap<Type, Attr>();
+  factory VisualAttributeMap(List<StyleAttribute> attributes) {
+    final attributeMap = LinkedHashMap<Type, StyleAttribute>();
     for (final attribute in attributes) {
       final type = attribute.runtimeType;
       if (attributeMap.containsKey(type)) {
-        attributeMap[type] = attributeMap[type]!.merge(attribute);
+        final attr = attributeMap[type];
+
+        if (attr is Mergeable) {
+          attributeMap[type] = (attr as Mergeable).merge(attr);
+        }
       } else {
         attributeMap[type] = attribute;
       }
@@ -29,8 +33,8 @@ class VisualAttributeMap<Attr extends VisualAttribute> with Comparable {
   }
 
   @protected
-  LinkedHashMap<Type, Attr> get map =>
-      _attributeMap ?? LinkedHashMap<Type, Attr>();
+  LinkedHashMap<Type, StyleAttribute> get map =>
+      _attributeMap ?? LinkedHashMap<Type, StyleAttribute>();
 
   int get length => map.length;
 
@@ -38,16 +42,16 @@ class VisualAttributeMap<Attr extends VisualAttribute> with Comparable {
 
   bool get isNotEmpty => map.isNotEmpty;
 
-  Iterable<Attr> get values => map.values;
+  Iterable<StyleAttribute> get values => map.values;
 
-  T? attributeOfType<T extends VisualAttribute>() =>
+  T? attributeOfType<T extends StyleAttribute>() =>
       map.values.whereType<T>().firstMaybeNull;
 
-  Iterable<T> whereType<T extends VisualAttribute>() {
+  Iterable<T> whereType<T extends StyleAttribute>() {
     return map.values.whereType<T>();
   }
 
-  VisualAttributeMap<Attr> merge(VisualAttributeMap<Attr> other) {
+  VisualAttributeMap merge(VisualAttributeMap other) {
     final list = [...values, ...other.values];
 
     return VisualAttributeMap(list);

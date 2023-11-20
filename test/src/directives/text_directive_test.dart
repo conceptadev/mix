@@ -9,7 +9,7 @@ void main() {
       const attr1 = TextDirectiveAttribute([UppercaseDirective()]);
       const attr2 = TextDirectiveAttribute([CapitalizeDirective()]);
       final merged = attr1.merge(attr2);
-      expect(merged.value,
+      expect(merged.directives,
           [const UppercaseDirective(), const CapitalizeDirective()]);
     });
     test('resolve returns correct TextDirective with default values', () {

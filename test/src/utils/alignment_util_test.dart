@@ -11,8 +11,8 @@ void main() {
 
       expect(result, isA<AlignmentGeometryAttribute>());
       expect(result, isA<AlignmentAttribute>());
-      expect((result as AlignmentAttribute).x, 0);
-      expect((result).y, 1);
+      expect(result.x, 0);
+      expect(result.y, 1);
     });
 
     test(

@@ -5,19 +5,16 @@ import '../factory/mix_provider_data.dart';
 import 'attribute.dart';
 
 @immutable
-abstract class ConstraintsAttribute<T extends Constraints>
-    extends VisualAttribute<T> {
+abstract class ConstraintsAttribute<
+        Self extends ConstraintsAttribute<Self, Value>,
+        Value extends Constraints> extends MergeableStyleAttribute
+    with Resolver<Value> {
   const ConstraintsAttribute();
-
-  @override
-  ConstraintsAttribute merge(covariant ConstraintsAttribute? other);
-
-  @override
-  T resolve(MixData mix);
 }
 
 @immutable
-class BoxConstraintsAttribute extends ConstraintsAttribute<BoxConstraints> {
+class BoxConstraintsAttribute
+    extends ConstraintsAttribute<BoxConstraintsAttribute, BoxConstraints> {
   final double? width;
   final double? height;
   final double? minWidth;

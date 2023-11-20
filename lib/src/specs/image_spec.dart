@@ -9,7 +9,7 @@ import '../attributes/scalar_attribute.dart';
 import '../factory/mix_provider_data.dart';
 
 @immutable
-class ImageSpec extends MixExtension<ImageSpec> {
+class ImageSpec extends MixRecipe<ImageSpec> {
   final double? width, height;
   final Color? color;
   final ImageRepeat? repeat;

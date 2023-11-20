@@ -5,159 +5,176 @@ import '../attribute.dart';
 import '../color_attribute.dart';
 
 @immutable
-abstract class BoxBorderAttribute<T extends BoxBorder>
-    extends VisualAttribute<T> {
-  final BorderSideAttribute? top;
+abstract class BoxBorderDto<Value extends BoxBorder> extends Dto<BoxBorderDto>
+    with Resolver<Value> {
+  final BorderSideDto? _top;
+  final BorderSideDto? _bottom;
 
-  final BorderSideAttribute? bottom;
+  final BorderSideDto? _left;
+  final BorderSideDto? _right;
 
-  const BoxBorderAttribute({this.top, this.bottom});
+  // Directional
+  final BorderSideDto? _start;
+  final BorderSideDto? _end;
+
+  const BoxBorderDto({
+    BorderSideDto? top,
+    BorderSideDto? bottom,
+    BorderSideDto? left,
+    BorderSideDto? right,
+    BorderSideDto? start,
+    BorderSideDto? end,
+  })  : _top = top,
+        _bottom = bottom,
+        _left = left,
+        _right = right,
+        _start = start,
+        _end = end;
+
+  bool get hasStartOrEnd => _start != null || _end != null;
+
+  bool get hasLeftOrRight => _left != null || _right != null;
+
+  Type? canMergeType(covariant BoxBorderDto other) {
+    if (other is BorderDto && this is BorderDto) return BorderDto;
+    if (other is BorderDirectionalDto && this is BorderDirectionalDto) {
+      return BorderDirectionalDto;
+    }
+
+    if (hasLeftOrRight && !other.hasStartOrEnd) {
+      return BorderDto;
+    }
+    if (hasStartOrEnd && !other.hasLeftOrRight) {
+      return BorderDirectionalDto;
+    }
+
+    return null;
+  }
 
   @override
-  BoxBorderAttribute merge(covariant BoxBorderAttribute? other);
+  BoxBorderDto merge(covariant BoxBorderDto? other) {
+    if (other == null) return this;
+
+    final mergeableType = canMergeType(other);
+
+    if (mergeableType == BorderDto) {
+      return BorderDto(
+        left: other._left ?? _left,
+        right: other._right ?? _right,
+        top: other._top ?? _top,
+        bottom: other._bottom ?? _bottom,
+      );
+    }
+
+    if (mergeableType == BorderDirectionalDto) {
+      return BorderDirectionalDto(
+        start: other._start ?? _start,
+        end: other._end ?? _end,
+        top: other._top ?? _top,
+        bottom: other._bottom ?? _bottom,
+      );
+    }
+
+    return other;
+  }
 
   @override
-  T resolve(MixData mix);
+  Value resolve(MixData mix) {
+    if (this is BorderDto) {
+      return Border(
+        top: _top?.resolve(mix) ?? BorderSide.none,
+        right: _right?.resolve(mix) ?? BorderSide.none,
+        bottom: _bottom?.resolve(mix) ?? BorderSide.none,
+        left: _left?.resolve(mix) ?? BorderSide.none,
+      );
+    }
+
+    if (this is BorderDirectionalDto) {
+      return BorderDirectional(
+        top: _top?.resolve(mix) ?? BorderSide.none,
+        start: _start?.resolve(mix) ?? BorderSide.none,
+        end: _end?.resolve(mix) ?? BorderSide.none,
+        bottom: _bottom?.resolve(mix) ?? BorderSide.none,
+      );
+    }
+
+    throw UnimplementedError('Cannot resolve $this');
+  }
 
   @override
-  get props => [top, bottom];
+  get props => [_top, _bottom, _left, _right, _start, _end];
 }
 
-class BorderAttribute extends BoxBorderAttribute<Border> {
-  @visibleForTesting
-  final BorderSideAttribute? left;
-  final BorderSideAttribute? right;
+class BorderDto extends BoxBorderDto<Border> {
+  final BorderSideDto? left;
+  final BorderSideDto? right;
 
-  const BorderAttribute({this.left, this.right, super.top, super.bottom});
+  const BorderDto({this.left, this.right, super.top, super.bottom});
 
-  const BorderAttribute.all(BorderSideAttribute side)
+  const BorderDto.all(BorderSideDto side)
       : this(left: side, right: side, top: side, bottom: side);
 
   /// Creates a border with symmetrical vertical and horizontal sides.
   ///
   /// The `vertical` argument applies to the [left] and [right] sides, and the
-  /// `horizontal` argument applies to the [top] and [bottom] sides.
-  const BorderAttribute.symmetric({
-    BorderSideAttribute? vertical,
-    BorderSideAttribute? horizontal,
+  /// `horizontal` argument applies to the [_top] and [_bottom] sides.
+  const BorderDto.symmetric({
+    BorderSideDto? vertical,
+    BorderSideDto? horizontal,
   }) : this(
           left: vertical,
           right: vertical,
           top: horizontal,
           bottom: horizontal,
         );
-
-  @override
-  BorderAttribute merge(BoxBorderAttribute<Border>? other) {
-    if (other == null) return this;
-    final otherAttribute = other as BorderAttribute; // cast the other instance
-
-    return BorderAttribute(
-      left: left?.merge(otherAttribute.left) ?? otherAttribute.left,
-      right: right?.merge(otherAttribute.right) ?? otherAttribute.right,
-      top: top?.merge(other.top) ?? other.top,
-      bottom: bottom?.merge(other.bottom) ?? other.bottom,
-    );
-  }
-
-  @override
-  Border resolve(MixData mix) {
-    return Border(
-      top: top?.resolve(mix) ?? BorderSide.none,
-      right: right?.resolve(mix) ?? BorderSide.none,
-      bottom: bottom?.resolve(mix) ?? BorderSide.none,
-      left: left?.resolve(mix) ?? BorderSide.none,
-    );
-  }
-
-  @override
-  List<Object?> get props => [top, bottom, left, right];
 }
 
-class BorderDirectionalAttribute extends BoxBorderAttribute<BorderDirectional> {
-  final BorderSideAttribute? start;
-  final BorderSideAttribute? end;
+class BorderDirectionalDto extends BoxBorderDto<BorderDirectional> {
+  final BorderSideDto? start;
+  final BorderSideDto? end;
 
-  const BorderDirectionalAttribute({
+  const BorderDirectionalDto({
     this.start,
     this.end,
     super.top,
     super.bottom,
   });
 
-  const BorderDirectionalAttribute.all(BorderSideAttribute side)
+  const BorderDirectionalDto.all(BorderSideDto side)
       : this(start: side, end: side, top: side, bottom: side);
 
-  const BorderDirectionalAttribute.symmetric({
-    BorderSideAttribute? vertical,
-    BorderSideAttribute? horizontal,
+  const BorderDirectionalDto.symmetric({
+    BorderSideDto? vertical,
+    BorderSideDto? horizontal,
   }) : this(
           start: horizontal,
           end: horizontal,
           top: vertical,
           bottom: vertical,
         );
-
-  BorderAttribute toBorder() {
-    return BorderAttribute(
-      left: start,
-      right: end,
-      top: top,
-      bottom: bottom,
-    );
-  }
-
-  @override
-  BorderDirectionalAttribute merge(
-    BoxBorderAttribute<BorderDirectional>? other,
-  ) {
-    if (other == null) return this;
-    final otherAttribute =
-        other as BorderDirectionalAttribute; // cast the other instance
-
-    return BorderDirectionalAttribute(
-      start: start?.merge(otherAttribute.start) ?? otherAttribute.start,
-      end: end?.merge(otherAttribute.end) ?? otherAttribute.end,
-      top: top?.merge(other.top) ?? other.top,
-      bottom: bottom?.merge(other.bottom) ?? other.bottom,
-    );
-  }
-
-  @override
-  BorderDirectional resolve(MixData mix) {
-    return BorderDirectional(
-      top: top?.resolve(mix) ?? BorderSide.none,
-      start: start?.resolve(mix) ?? BorderSide.none,
-      end: end?.resolve(mix) ?? BorderSide.none,
-      bottom: bottom?.resolve(mix) ?? BorderSide.none,
-    );
-  }
-
-  @override
-  List<Object?> get props => [top, bottom, start, end];
 }
 
 @immutable
-class BorderSideAttribute extends VisualAttribute<BorderSide> {
+class BorderSideDto extends Dto<BorderSideDto> with Resolver<BorderSide> {
   final ColorAttribute? color;
   final double? width;
   final BorderStyle? style;
   final double? strokeAlign;
 
-  const BorderSideAttribute({
+  const BorderSideDto({
     this.color,
     this.strokeAlign,
     this.style,
     this.width,
   });
 
-  BorderSideAttribute copyWith({
+  BorderSideDto copyWith({
     ColorAttribute? color,
     double? width,
     BorderStyle? style,
     double? strokeAlign,
   }) {
-    return BorderSideAttribute(
+    return BorderSideDto(
       color: color ?? this.color,
       strokeAlign: strokeAlign ?? this.strokeAlign,
       style: style ?? this.style,
@@ -166,11 +183,11 @@ class BorderSideAttribute extends VisualAttribute<BorderSide> {
   }
 
   @override
-  BorderSideAttribute merge(BorderSideAttribute? other) {
+  BorderSideDto merge(BorderSideDto? other) {
     if (other == null) return this;
 
-    return BorderSideAttribute(
-      color: color?.merge(other.color) ?? other.color,
+    return BorderSideDto(
+      color: other.color ?? color,
       strokeAlign: other.strokeAlign ?? strokeAlign,
       style: other.style ?? style,
       width: other.width ?? width,
@@ -191,4 +208,46 @@ class BorderSideAttribute extends VisualAttribute<BorderSide> {
 
   @override
   get props => [color, width, style, strokeAlign];
+}
+
+abstract class BoxBorderAttribute<T extends BoxBorderDto<Value>,
+        Value extends BoxBorder>
+    extends ResolvableAttribute<BoxBorderAttribute<T, Value>, T, Value> {
+  @override
+  BoxBorderAttribute<T, Value> Function(T) get create;
+
+  const BoxBorderAttribute(super.value);
+
+  @visibleForTesting
+  BorderSideDto? get top => value._top;
+
+  @visibleForTesting
+  BorderSideDto? get bottom => value._bottom;
+}
+
+class BorderAttribute extends BoxBorderAttribute<BorderDto, Border> {
+  const BorderAttribute(super.value);
+
+  @override
+  final create = BorderAttribute.new;
+
+  @visibleForTesting
+  BorderSideDto? get left => value.left;
+
+  @visibleForTesting
+  BorderSideDto? get right => value.right;
+}
+
+class BorderDirectionalAttribute
+    extends BoxBorderAttribute<BorderDirectionalDto, BorderDirectional> {
+  const BorderDirectionalAttribute(super.value);
+
+  @override
+  final create = BorderDirectionalAttribute.new;
+
+  @visibleForTesting
+  BorderSideDto? get start => value.start;
+
+  @visibleForTesting
+  BorderSideDto? get end => value.end;
 }

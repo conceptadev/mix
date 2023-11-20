@@ -108,9 +108,13 @@ const iconColor = IconColorAttribute.new;
 const gradient = GradientAttribute.new;
 const transformAlignment = TransformAlignmentAttribute.new;
 
-abstract class ScalarUtility<V, A> {
+abstract class MixUtility<V, A> {
   final A Function(V value) builder;
-  const ScalarUtility(this.builder);
+  const MixUtility(this.builder);
+}
+
+abstract class ScalarUtility<V, A> extends MixUtility<V, A> {
+  const ScalarUtility(super.builder);
 
   A call(V value) => builder(value);
 }

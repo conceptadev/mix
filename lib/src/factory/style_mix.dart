@@ -29,7 +29,7 @@ class StyleMix {
   static const empty = StyleMix._(styles: [], variants: []);
 
   /// Visual attributes contained in this mix.
-  final List<VisualAttribute> styles;
+  final List<StyleAttribute> styles;
 
   /// The variant attributes contained in this mix.
   final List<VariantAttribute> variants;
@@ -91,10 +91,10 @@ class StyleMix {
   /// ```
   factory StyleMix.create(Iterable<Attribute> attributes) {
     final variantList = <VariantAttribute>[];
-    final styleList = <VisualAttribute>[];
+    final styleList = <StyleAttribute>[];
 
     for (final attribute in attributes) {
-      if (attribute is VisualAttribute) {
+      if (attribute is StyleAttribute) {
         styleList.add(attribute);
       } else if (attribute is VariantAttribute) {
         variantList.add(attribute);
@@ -211,7 +211,7 @@ class StyleMix {
   ///
   /// If [styles] or [variants] is null, the corresponding attribute map of this mix is used.
   StyleMix copyWith({
-    List<VisualAttribute>? styles,
+    List<StyleAttribute>? styles,
     List<VariantAttribute>? variants,
   }) {
     return StyleMix._(
