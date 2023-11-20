@@ -4,17 +4,11 @@ import 'package:flutter/rendering.dart';
 import '../factory/mix_provider_data.dart';
 import 'attribute.dart';
 
-@immutable
-abstract class ConstraintsAttribute<
-        Self extends ConstraintsAttribute<Self, Value>,
-        Value extends Constraints> extends MergeableStyleAttribute
-    with Resolver<Value> {
-  const ConstraintsAttribute();
+abstract class ConstraintsDto<T extends Constraints> extends Dto<T> {
+  const ConstraintsDto();
 }
 
-@immutable
-class BoxConstraintsAttribute
-    extends ConstraintsAttribute<BoxConstraintsAttribute, BoxConstraints> {
+class BoxConstraintsDto extends ConstraintsDto<BoxConstraints> {
   final double? width;
   final double? height;
   final double? minWidth;
@@ -22,7 +16,7 @@ class BoxConstraintsAttribute
   final double? minHeight;
   final double? maxHeight;
 
-  const BoxConstraintsAttribute({
+  const BoxConstraintsDto({
     this.width,
     this.height,
     this.minWidth,
@@ -30,20 +24,6 @@ class BoxConstraintsAttribute
     this.minHeight,
     this.maxHeight,
   });
-
-  @override
-  BoxConstraintsAttribute merge(covariant BoxConstraintsAttribute? other) {
-    if (other == null) return this;
-
-    return BoxConstraintsAttribute(
-      width: other.width ?? width,
-      height: other.height ?? height,
-      minWidth: other.minWidth ?? minWidth,
-      maxWidth: other.maxWidth ?? maxWidth,
-      minHeight: other.minHeight ?? minHeight,
-      maxHeight: other.maxHeight ?? maxHeight,
-    );
-  }
 
   @override
   BoxConstraints resolve(MixData mix) {
@@ -70,5 +50,41 @@ class BoxConstraintsAttribute
   }
 
   @override
-  get props => [minWidth, maxWidth, minHeight, maxHeight];
+  BoxConstraintsDto merge(BoxConstraintsDto? other) {
+    if (other == null) return this;
+
+    return BoxConstraintsDto(
+      width: other.width ?? width,
+      height: other.height ?? height,
+      minWidth: other.minWidth ?? minWidth,
+      maxWidth: other.maxWidth ?? maxWidth,
+      minHeight: other.minHeight ?? minHeight,
+      maxHeight: other.maxHeight ?? maxHeight,
+    );
+  }
+
+  @override
+  get props => [width, height, minWidth, maxWidth, minHeight, maxHeight];
+}
+
+@immutable
+abstract class ConstraintsAttribute<D extends ConstraintsDto<Value>,
+    Value extends Constraints> extends DtoStyleAttribute<D, Value> {
+  const ConstraintsAttribute(super.value);
+}
+
+@immutable
+class BoxConstraintsAttribute
+    extends ConstraintsAttribute<BoxConstraintsDto, BoxConstraints> {
+  const BoxConstraintsAttribute(super.value);
+
+  @override
+  BoxConstraintsAttribute merge(covariant BoxConstraintsAttribute? other) {
+    return other == null
+        ? this
+        : BoxConstraintsAttribute(value.merge(other.value));
+  }
+
+  @override
+  BoxConstraints resolve(MixData mix) => value;
 }

@@ -5,7 +5,7 @@ import '../attribute.dart';
 import '../color_attribute.dart';
 
 @immutable
-abstract class BoxBorderDto<Value extends BoxBorder> extends Dto<BoxBorderDto>
+abstract class BoxBorderDto<Value extends BoxBorder> extends Dto<Value>
     with Resolver<Value> {
   final BorderSideDto? _top;
   final BorderSideDto? _bottom;
@@ -30,6 +30,9 @@ abstract class BoxBorderDto<Value extends BoxBorder> extends Dto<BoxBorderDto>
         _right = right,
         _start = start,
         _end = end;
+
+  BorderSideDto? get top => _top;
+  BorderSideDto? get bottom => _bottom;
 
   bool get hasStartOrEnd => _start != null || _end != null;
 
@@ -79,44 +82,31 @@ abstract class BoxBorderDto<Value extends BoxBorder> extends Dto<BoxBorderDto>
   }
 
   @override
-  Value resolve(MixData mix) {
-    if (this is BorderDto) {
-      return Border(
-        top: _top?.resolve(mix) ?? BorderSide.none,
-        right: _right?.resolve(mix) ?? BorderSide.none,
-        bottom: _bottom?.resolve(mix) ?? BorderSide.none,
-        left: _left?.resolve(mix) ?? BorderSide.none,
-      );
-    }
-
-    if (this is BorderDirectionalDto) {
-      return BorderDirectional(
-        top: _top?.resolve(mix) ?? BorderSide.none,
-        start: _start?.resolve(mix) ?? BorderSide.none,
-        end: _end?.resolve(mix) ?? BorderSide.none,
-        bottom: _bottom?.resolve(mix) ?? BorderSide.none,
-      );
-    }
-
-    throw UnimplementedError('Cannot resolve $this');
-  }
-
-  @override
   get props => [_top, _bottom, _left, _right, _start, _end];
 }
 
 class BorderDto extends BoxBorderDto<Border> {
-  final BorderSideDto? left;
-  final BorderSideDto? right;
+  const BorderDto({
+    BorderSideDto? top,
+    BorderSideDto? bottom,
+    BorderSideDto? left,
+    BorderSideDto? right,
+  }) : super(
+          top: top,
+          bottom: bottom,
+          left: left,
+          right: right,
+        );
 
-  const BorderDto({this.left, this.right, super.top, super.bottom});
+  BorderSideDto? get left => _left;
+  BorderSideDto? get right => _right;
 
   const BorderDto.all(BorderSideDto side)
       : this(left: side, right: side, top: side, bottom: side);
 
   /// Creates a border with symmetrical vertical and horizontal sides.
   ///
-  /// The `vertical` argument applies to the [left] and [right] sides, and the
+  /// The `vertical` argument applies to the [_left] and [right] sides, and the
   /// `horizontal` argument applies to the [_top] and [_bottom] sides.
   const BorderDto.symmetric({
     BorderSideDto? vertical,
@@ -127,18 +117,35 @@ class BorderDto extends BoxBorderDto<Border> {
           top: horizontal,
           bottom: horizontal,
         );
+
+  @override
+  Border resolve(MixData mix) {
+    const defaultValue = Border();
+
+    return Border(
+      top: _top?.resolve(mix) ?? defaultValue.top,
+      bottom: _bottom?.resolve(mix) ?? defaultValue.bottom,
+      left: _left?.resolve(mix) ?? defaultValue.left,
+      right: _right?.resolve(mix) ?? defaultValue.right,
+    );
+  }
 }
 
 class BorderDirectionalDto extends BoxBorderDto<BorderDirectional> {
-  final BorderSideDto? start;
-  final BorderSideDto? end;
-
   const BorderDirectionalDto({
-    this.start,
-    this.end,
-    super.top,
-    super.bottom,
-  });
+    BorderSideDto? start,
+    BorderSideDto? end,
+    BorderSideDto? top,
+    BorderSideDto? bottom,
+  }) : super(
+          top: top,
+          bottom: bottom,
+          start: start,
+          end: end,
+        );
+
+  BorderSideDto? get start => _start;
+  BorderSideDto? get end => _end;
 
   const BorderDirectionalDto.all(BorderSideDto side)
       : this(start: side, end: side, top: side, bottom: side);
@@ -152,11 +159,23 @@ class BorderDirectionalDto extends BoxBorderDto<BorderDirectional> {
           top: vertical,
           bottom: vertical,
         );
+
+  @override
+  BorderDirectional resolve(MixData mix) {
+    const defaultValue = BorderDirectional();
+
+    return BorderDirectional(
+      top: _top?.resolve(mix) ?? defaultValue.top,
+      bottom: _bottom?.resolve(mix) ?? defaultValue.bottom,
+      start: _start?.resolve(mix) ?? defaultValue.start,
+      end: _end?.resolve(mix) ?? defaultValue.end,
+    );
+  }
 }
 
 @immutable
-class BorderSideDto extends Dto<BorderSideDto> with Resolver<BorderSide> {
-  final ColorAttribute? color;
+class BorderSideDto extends Dto<BorderSide> {
+  final ColorDto? color;
   final double? width;
   final BorderStyle? style;
   final double? strokeAlign;
@@ -169,7 +188,7 @@ class BorderSideDto extends Dto<BorderSideDto> with Resolver<BorderSide> {
   });
 
   BorderSideDto copyWith({
-    ColorAttribute? color,
+    ColorDto? color,
     double? width,
     BorderStyle? style,
     double? strokeAlign,
@@ -211,15 +230,26 @@ class BorderSideDto extends Dto<BorderSideDto> with Resolver<BorderSide> {
 }
 
 abstract class BoxBorderAttribute<T extends BoxBorderDto<Value>,
-        Value extends BoxBorder>
-    extends ResolvableAttribute<BoxBorderAttribute<T, Value>, T, Value> {
-  @override
-  BoxBorderAttribute<T, Value> Function(T) get create;
-
+    Value extends BoxBorder> extends DtoStyleAttribute<T, Value> {
   const BoxBorderAttribute(super.value);
 
+  static BoxBorderAttribute from(BoxBorderDto dto) {
+    if (dto is BorderDto) return BorderAttribute(dto);
+    if (dto is BorderDirectionalDto) return BorderDirectionalAttribute(dto);
+
+    throw Exception('Cannot create BoxBorderAttribute from $dto');
+  }
+
+  @override
+  BoxBorderAttribute merge(covariant BoxBorderAttribute? other) {
+    return other == null ? this : from(value.merge(other.value));
+  }
+
+  @override
+  Value resolve(MixData mix) => value.resolve(mix);
+
   @visibleForTesting
-  BorderSideDto? get top => value._top;
+  BorderSideDto? get top => value.top;
 
   @visibleForTesting
   BorderSideDto? get bottom => value._bottom;
@@ -228,11 +258,8 @@ abstract class BoxBorderAttribute<T extends BoxBorderDto<Value>,
 class BorderAttribute extends BoxBorderAttribute<BorderDto, Border> {
   const BorderAttribute(super.value);
 
-  @override
-  final create = BorderAttribute.new;
-
   @visibleForTesting
-  BorderSideDto? get left => value.left;
+  BorderSideDto? get left => value._left;
 
   @visibleForTesting
   BorderSideDto? get right => value.right;
@@ -242,12 +269,9 @@ class BorderDirectionalAttribute
     extends BoxBorderAttribute<BorderDirectionalDto, BorderDirectional> {
   const BorderDirectionalAttribute(super.value);
 
-  @override
-  final create = BorderDirectionalAttribute.new;
+  @visibleForTesting
+  BorderSideDto? get start => value._start;
 
   @visibleForTesting
-  BorderSideDto? get start => value.start;
-
-  @visibleForTesting
-  BorderSideDto? get end => value.end;
+  BorderSideDto? get end => value._end;
 }

@@ -6,7 +6,7 @@ import 'attribute.dart';
 @immutable
 abstract class EdgeInsetsGeometryAttribute<
         Self extends EdgeInsetsGeometryAttribute<Self, Value>,
-        Value extends EdgeInsetsGeometry> extends MergeableStyleAttribute
+        Value extends EdgeInsetsGeometry> extends DtoStyleAttribute
     with Resolver<Value> {
   final double? top;
   final double? bottom;

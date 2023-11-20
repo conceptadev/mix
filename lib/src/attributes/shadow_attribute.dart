@@ -4,8 +4,7 @@ import '../factory/mix_provider_data.dart';
 import 'attribute.dart';
 import 'color_attribute.dart';
 
-class ShadowDto<Value extends Shadow> extends Dto<ShadowDto>
-    with Resolver<Value> {
+class ShadowDto<Value extends Shadow> extends Dto<Value> {
   final ColorAttribute? color;
   final Offset? offset;
   final double? blurRadius;
@@ -77,19 +76,25 @@ class BoxShadowDto extends ShadowDto<BoxShadow> {
 }
 
 @immutable
-class ShadowAttribute
-    extends ResolvableAttribute<ShadowAttribute, ShadowDto, Shadow> {
-  const ShadowAttribute(ShadowDto value) : super(value);
+class ShadowAttribute<T extends ShadowDto<Value>, Value extends Shadow>
+    extends DtoStyleAttribute<T, Value> {
+  const ShadowAttribute(super.value);
 
   @override
-  final create = ShadowAttribute.new;
+  ShadowAttribute merge(ShadowAttribute? other) {
+    return other == null ? this : ShadowAttribute(value.merge(other.value));
+  }
+
+  @override
+  Value resolve(MixData mix) => value.resolve(mix);
 }
 
 @immutable
-class BoxShadowAttribute
-    extends ResolvableAttribute<BoxShadowAttribute, BoxShadowDto, BoxShadow> {
-  const BoxShadowAttribute(BoxShadowDto value) : super(value);
+class BoxShadowAttribute extends ShadowAttribute<BoxShadowDto, BoxShadow> {
+  const BoxShadowAttribute(super.value);
 
   @override
-  final create = BoxShadowAttribute.new;
+  BoxShadowAttribute merge(BoxShadowAttribute? other) {
+    return other == null ? this : BoxShadowAttribute(value.merge(other.value));
+  }
 }

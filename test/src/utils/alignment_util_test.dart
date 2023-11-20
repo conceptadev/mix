@@ -32,7 +32,8 @@ void main() {
       //  alignmentTopLeft
       expect(alignment.topLeft(), isA<AlignmentGeometryAttribute>());
       expect(alignment.topLeft(), isA<AlignmentAttribute>());
-      expect(alignment.topLeft().resolve(EmptyMixData), Alignment.topLeft);
+      expect(
+          alignment.topLeft().value.resolve(EmptyMixData), Alignment.topLeft);
 
       //  alignmentTopCenter
       expect(alignment.topCenter(), isA<AlignmentGeometryAttribute>());

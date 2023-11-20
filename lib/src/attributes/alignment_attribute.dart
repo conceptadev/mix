@@ -5,7 +5,7 @@ import 'attribute.dart';
 
 @immutable
 abstract class AlignmentGeometryDto<Value extends AlignmentGeometry>
-    extends Dto<AlignmentGeometryDto> with Resolver<Value> {
+    extends Dto<Value> {
   final double? _x;
   final double? _y;
   final double? _start;
@@ -108,9 +108,7 @@ class AligmentDirectionalDto
 
 @immutable
 abstract class AlignmentGeometryAttribute<T extends AlignmentGeometryDto<Value>,
-        Value extends AlignmentGeometry>
-    extends ScalarAttribute<AlignmentGeometryAttribute<T, Value>, T>
-    with Resolver<Value> {
+    Value extends AlignmentGeometry> extends DtoStyleAttribute<T, Value> {
   const AlignmentGeometryAttribute(super.value);
 
   static AlignmentGeometryAttribute from(AlignmentGeometryDto dto) {
@@ -126,9 +124,14 @@ abstract class AlignmentGeometryAttribute<T extends AlignmentGeometryDto<Value>,
   }
 
   @override
-  Value resolve(MixData mix) {
-    return value.resolve(mix);
+  AlignmentGeometryAttribute merge(
+    covariant AlignmentGeometryAttribute? other,
+  ) {
+    return other == null ? this : from(value.merge(other.value));
   }
+
+  @override
+  Value resolve(MixData mix) => value.resolve(mix);
 
   @visibleForTesting
   double? get x => value._x;
@@ -144,16 +147,10 @@ abstract class AlignmentGeometryAttribute<T extends AlignmentGeometryDto<Value>,
 class AlignmentAttribute
     extends AlignmentGeometryAttribute<AlignmentDto, Alignment> {
   const AlignmentAttribute(super.value);
-
-  @override
-  final create = AlignmentAttribute.new;
 }
 
 @immutable
 class AlignmentDirectionalAttribute extends AlignmentGeometryAttribute<
     AligmentDirectionalDto, AlignmentDirectional> {
   const AlignmentDirectionalAttribute(super.value);
-
-  @override
-  final create = AlignmentDirectionalAttribute.new;
 }

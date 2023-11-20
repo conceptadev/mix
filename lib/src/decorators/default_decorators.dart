@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../attributes/attribute.dart';
+import '../factory/mix_provider_data.dart';
 import 'decorator.dart';
 
 class AspectRatioDecorator extends WrapDecorator<double> {
@@ -30,7 +31,7 @@ class FlexibleDecorator extends WrapDecorator<FlexibleDto>
   }
 }
 
-class FlexibleDto extends Dto<FlexibleDto> {
+class FlexibleDto extends Dto<Flexible> {
   final int? flex;
   final FlexFit? flexFit;
   const FlexibleDto({required this.flex, required this.flexFit});
@@ -40,6 +41,15 @@ class FlexibleDto extends Dto<FlexibleDto> {
     return FlexibleDto(
       flex: other?.flex ?? flex,
       flexFit: other?.flexFit ?? flexFit,
+    );
+  }
+
+  @override
+  Flexible resolve(MixData mix) {
+    return Flexible(
+      flex: flex ?? 1,
+      fit: flexFit ?? FlexFit.loose,
+      child: const SizedBox(),
     );
   }
 

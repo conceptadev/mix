@@ -9,8 +9,7 @@ import 'color_attribute.dart';
 import 'shadow_attribute.dart';
 
 @immutable
-class TextStyleAttribute extends MergeableStyleAttribute
-    with Resolver<TextStyle> {
+class TextStyleDto extends Dto<TextStyle> {
   final String? fontFamily;
   final FontWeight? fontWeight;
   final FontStyle? fontStyle;
@@ -18,12 +17,12 @@ class TextStyleAttribute extends MergeableStyleAttribute
   final double? letterSpacing;
   final double? wordSpacing;
   final TextBaseline? textBaseline;
-  final ColorAttribute? color;
-  final ColorAttribute? backgroundColor;
+  final ColorDto? color;
+  final ColorDto? backgroundColor;
   final List<ShadowDto>? shadows;
   final List<FontFeature>? fontFeatures;
   final TextDecoration? decoration;
-  final ColorAttribute? decorationColor;
+  final ColorDto? decorationColor;
   final TextDecorationStyle? decorationStyle;
   final Locale? locale;
   final String? debugLabel;
@@ -35,7 +34,7 @@ class TextStyleAttribute extends MergeableStyleAttribute
 
   final TextStyleToken? token;
 
-  const TextStyleAttribute({
+  const TextStyleDto({
     this.background,
     this.backgroundColor,
     this.color,
@@ -63,7 +62,7 @@ class TextStyleAttribute extends MergeableStyleAttribute
   bool isRef() => token != null;
 
   @override
-  TextStyleAttribute merge(TextStyleAttribute? other) {
+  TextStyleDto merge(TextStyleDto? other) {
     if (other == null) return this;
 
     final haveRefs = token == null || other.token == null;
@@ -73,7 +72,7 @@ class TextStyleAttribute extends MergeableStyleAttribute
       'Cannot merge two different refs',
     );
 
-    return TextStyleAttribute(
+    return TextStyleDto(
       background: other.background ?? background,
       backgroundColor: other.backgroundColor ?? backgroundColor,
       color: other.color ?? color,
@@ -158,4 +157,45 @@ class TextStyleAttribute extends MergeableStyleAttribute
         fontFamilyFallback,
         token,
       ];
+}
+
+class TextStyleListDto extends Dto<TextStyle> {
+  final List<TextStyleDto> values;
+  const TextStyleListDto(this.values);
+
+  @override
+  TextStyleListDto merge(TextStyleListDto? other) {
+    if (other == null) return this;
+
+    return TextStyleListDto(
+      [
+        ...values,
+        ...other.values,
+      ],
+    );
+  }
+
+  @override
+  TextStyle resolve(MixData mix) {
+    return values
+        .map((e) => e.resolve(mix))
+        .reduce((value, element) => value.merge(element));
+  }
+
+  @override
+  get props => [values];
+}
+
+@immutable
+class TextStyleAttribute
+    extends DtoStyleAttribute<TextStyleListDto, TextStyle> {
+  const TextStyleAttribute(super.value);
+
+  @override
+  TextStyleAttribute merge(TextStyleAttribute? other) {
+    return other == null ? this : TextStyleAttribute(value.merge(other.value));
+  }
+
+  @override
+  TextStyle resolve(MixData mix) => value.resolve(mix);
 }

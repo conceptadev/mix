@@ -10,43 +10,26 @@ import 'color_attribute.dart';
 import 'scalar_attribute.dart';
 import 'shadow_attribute.dart';
 
-@immutable
-abstract class DecorationAttribute<Value extends Decoration>
-    extends MergeableStyleAttribute with Resolver<Value> {
-  const DecorationAttribute();
+abstract class DecorationDto<T extends Decoration> extends Dto<T> {
+  const DecorationDto();
 }
 
-@immutable
-class BoxDecorationAttribute extends DecorationAttribute<BoxDecoration> {
+class BoxDecorationDto extends DecorationDto<BoxDecoration> {
   final ColorAttribute? color;
   final BoxBorderAttribute? border;
   final BorderRadiusGeometryAttribute? borderRadius;
   final GradientAttribute? gradient;
   final List<BoxShadowDto>? boxShadow;
   final BoxShapeAttribute? shape;
-  const BoxDecorationAttribute({
+
+  const BoxDecorationDto({
+    this.color,
     this.border,
     this.borderRadius,
     this.gradient,
     this.boxShadow,
-    this.color,
     this.shape,
   });
-
-  @override
-  BoxDecorationAttribute merge(BoxDecorationAttribute? other) {
-    if (other == null) return this;
-
-    return BoxDecorationAttribute(
-      border: border?.merge(other.border) ?? other.border,
-      borderRadius:
-          borderRadius?.merge(other.borderRadius) ?? other.borderRadius,
-      gradient: other.gradient ?? gradient,
-      boxShadow: boxShadow?.merge(other.boxShadow),
-      color: other.color ?? color,
-      shape: other.shape ?? shape,
-    );
-  }
 
   @override
   BoxDecoration resolve(MixData mix) {
@@ -56,27 +39,58 @@ class BoxDecorationAttribute extends DecorationAttribute<BoxDecoration> {
       borderRadius: borderRadius?.resolve(mix),
       boxShadow: boxShadow?.map((e) => e.resolve(mix)).toList(),
       gradient: gradient?.value,
+      shape: shape?.value ?? BoxShape.rectangle,
     );
   }
 
   @override
-  get props => [border, borderRadius, gradient, boxShadow, color, shape];
+  BoxDecorationDto merge(BoxDecorationDto? other) {
+    if (other == null) return this;
+
+    return BoxDecorationDto(
+      color: other.color ?? color,
+      border: other.border ?? border,
+      borderRadius: other.borderRadius ?? borderRadius,
+      gradient: other.gradient ?? gradient,
+      boxShadow: other.boxShadow ?? boxShadow,
+      shape: other.shape ?? shape,
+    );
+  }
+
+  @override
+  List<Object?> get props =>
+      [color, border, borderRadius, gradient, boxShadow, shape];
 }
 
 @immutable
-class ShapeDecorationAttribute extends DecorationAttribute<ShapeDecoration> {
-  // The color to fill in the background of the shape.
-  final ColorAttribute? color;
+abstract class DecorationAttribute<D extends DecorationDto<Value>,
+    Value extends Decoration> extends DtoStyleAttribute<D, Value> {
+  const DecorationAttribute(super.value);
+}
 
-  // The shape of the box.
+@immutable
+class BoxDecorationAttribute
+    extends DecorationAttribute<BoxDecorationDto, BoxDecoration> {
+  const BoxDecorationAttribute(super.value);
+
+  @override
+  BoxDecorationAttribute merge(covariant BoxDecorationAttribute? other) {
+    return other == null
+        ? this
+        : BoxDecorationAttribute(value.merge(other.value));
+  }
+
+  @override
+  BoxDecoration resolve(MixData mix) => value.resolve(mix);
+}
+
+class ShapeDecorationDto extends DecorationDto<ShapeDecoration> {
+  final ColorDto? color;
   final ShapeBorder? shape;
-  // A gradient to use when filling the box.
   final GradientAttribute? gradient;
-
-  // Shadows cast by this box behind the box.
   final List<BoxShadowDto>? boxShadow;
 
-  const ShapeDecorationAttribute({
+  const ShapeDecorationDto({
     this.color,
     this.shape,
     this.gradient,
@@ -84,24 +98,24 @@ class ShapeDecorationAttribute extends DecorationAttribute<ShapeDecoration> {
   });
 
   @override
-  ShapeDecorationAttribute merge(ShapeDecorationAttribute? other) {
-    if (other == null) return this;
-
-    return ShapeDecorationAttribute(
-      color: other.color ?? color,
-      shape: other.shape ?? shape,
-      gradient: other.gradient ?? gradient,
-      boxShadow: boxShadow?.merge(other.boxShadow) ?? other.boxShadow,
+  ShapeDecoration resolve(MixData mix) {
+    return ShapeDecoration(
+      color: color?.resolve(mix),
+      shape: shape ?? const RoundedRectangleBorder(),
+      gradient: gradient?.value,
+      shadows: boxShadow?.map((e) => e.resolve(mix)).toList(),
     );
   }
 
   @override
-  ShapeDecoration resolve(MixData mix) {
-    return ShapeDecoration(
-      color: color?.resolve(mix),
-      gradient: gradient?.value,
-      shadows: boxShadow?.map((e) => e.resolve(mix)).toList(),
-      shape: shape ?? const RoundedRectangleBorder(),
+  ShapeDecorationDto merge(ShapeDecorationDto? other) {
+    if (other == null) return this;
+
+    return ShapeDecorationDto(
+      color: other.color ?? color,
+      shape: other.shape ?? shape,
+      gradient: other.gradient ?? gradient,
+      boxShadow: other.boxShadow ?? boxShadow,
     );
   }
 
@@ -109,9 +123,8 @@ class ShapeDecorationAttribute extends DecorationAttribute<ShapeDecoration> {
   List<Object?> get props => [color, shape, gradient, boxShadow];
 }
 
-class ForegroundDecorationAttribute
-    extends ScalarAttribute<ForegroundDecorationAttribute, Decoration> {
-  @override
-  final create = ForegroundDecorationAttribute.new;
-  const ForegroundDecorationAttribute(super.value);
+@immutable
+abstract class ShapeDecorationAttribute<D extends ShapeDecorationDto>
+    extends DecorationAttribute<D, ShapeDecoration> {
+  const ShapeDecorationAttribute(super.value);
 }

@@ -14,13 +14,13 @@ abstract class StyleAttribute extends Attribute {
   const StyleAttribute();
 }
 
-abstract class Dto<Self extends Dto<Self>> with Comparable, Mergeable<Self> {
+abstract class Dto<Value> with Comparable, Mergeable<Dto>, Resolver<Value> {
   const Dto();
 }
 
-abstract class MergeableStyleAttribute extends StyleAttribute
-    with Mergeable<MergeableStyleAttribute> {
-  const MergeableStyleAttribute();
+abstract class DtoStyleAttribute<D extends Dto<Value>, Value>
+    extends ValueAttribute with Mergeable<DtoStyleAttribute>, Resolver<Value> {
+  const DtoStyleAttribute(super.value);
 }
 
 mixin Resolver<Value> {
@@ -57,41 +57,16 @@ extension MergeableListExt<T extends Mergeable> on List<T> {
   }
 }
 
-// TODO: Rename ValueAttribute
 @immutable
-abstract class ScalarAttribute<Self extends ScalarAttribute<Self, Value>, Value>
-    extends StyleAttribute with Mergeable<Self> {
+abstract class ValueAttribute<Value> extends StyleAttribute {
   final Value value;
+  const ValueAttribute(this.value);
 
-  const ScalarAttribute(this.value);
-
-  Self Function(Value) get create;
-
-  @override
-  Self merge(covariant Self? other) {
-    if (other == null) return create(value);
-
-    return value is Mergeable
-        ? create((value as Mergeable).merge(other.value))
-        : create(other.value);
-  }
+  static Attr? maybe<Attr, Value>(Attr Function(Value) builder, Value? value) =>
+      value == null ? null : builder(value);
 
   @override
   get props => [value];
-}
-
-@immutable
-abstract class ResolvableAttribute<
-    Self extends ResolvableAttribute<Self, Data, Value>,
-    Data extends Resolver<Value>,
-    Value> extends ScalarAttribute<Self, Data> with Resolver<Value> {
-  const ResolvableAttribute(super.value);
-
-  @override
-  Value resolve(MixData mix) => value.resolve(mix);
-
-  @override
-  Self Function(Data) get create;
 }
 
 @immutable

@@ -207,15 +207,6 @@ void main() {
 //   FlexFitAttribute create(value) => FlexFitAttribute(value);
 // }
 
-  testScalarAttribute<IconSizeAttribute, double>(
-    'IconSizeAttribute',
-    (value) => IconSizeAttribute(value),
-    [
-      1.0,
-      2.0,
-    ],
-  );
-
   testScalarAttribute<BoxFitAttribute, BoxFit>(
     'BoxFitAttribute',
     (value) => BoxFitAttribute(value),

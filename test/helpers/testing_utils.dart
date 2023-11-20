@@ -183,7 +183,7 @@ class WrapMixThemeWidget extends StatelessWidget {
 }
 
 class MockDoubleScalarAttribute
-    extends ScalarAttribute<MockDoubleScalarAttribute, double> {
+    extends ValueAttribute<MockDoubleScalarAttribute, double> {
   const MockDoubleScalarAttribute(super.value);
 
   @override
@@ -191,7 +191,7 @@ class MockDoubleScalarAttribute
 }
 
 class MockIntScalarAttribute
-    extends ScalarAttribute<MockIntScalarAttribute, int> {
+    extends ValueAttribute<MockIntScalarAttribute, int> {
   const MockIntScalarAttribute(super.value);
 
   @override
@@ -224,7 +224,7 @@ class MockDoubleDecoratorAttribute extends Decorator<double> {
 }
 
 class MockBooleanScalarAttribute
-    extends ScalarAttribute<MockBooleanScalarAttribute, bool> {
+    extends ValueAttribute<MockBooleanScalarAttribute, bool> {
   const MockBooleanScalarAttribute(super.value);
 
   @override
@@ -232,7 +232,7 @@ class MockBooleanScalarAttribute
 }
 
 class MockStringScalarAttribute
-    extends ScalarAttribute<MockStringScalarAttribute, String> {
+    extends ValueAttribute<MockStringScalarAttribute, String> {
   const MockStringScalarAttribute(super.value);
 
   @override
@@ -254,7 +254,7 @@ class MockInvalidAttribute extends Attribute {
 const mockVariant = Variant('mock-variant');
 
 @isTestGroup
-void testScalarAttribute<T extends ScalarAttribute<T, V>, V>(
+void testScalarAttribute<T extends ValueAttribute<T, V>, V>(
   String groupName,
   T Function(V value) builder,
   List<V> values,

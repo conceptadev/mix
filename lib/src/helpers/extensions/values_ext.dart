@@ -167,7 +167,7 @@ extension ColorExt on Color {
       '${green.toRadixString(16).padLeft(2, '0')}'
       '${blue.toRadixString(16).padLeft(2, '0')}';
 
-  ColorAttribute toAttribute() => ColorAttribute(this);
+  ColorDto toDto() => ColorDto(this);
 }
 
 // Extension for Alignment
@@ -212,7 +212,7 @@ extension AlignmentDirectionalExt on AlignmentDirectional {
 
 extension ShapeDecorationExt on ShapeDecoration {
   ShapeDecorationAttribute toAttribute() => ShapeDecorationAttribute(
-        color: color?.toAttribute(),
+        color: color?.toDto(),
         shape: shape,
         gradient: gradient?.toAttribute(),
         boxShadow: shadows?.map((e) => e.toAttribute()).toList(),
@@ -294,7 +294,7 @@ extension BoxDecorationExt on BoxDecoration {
         borderRadius: borderRadius?.toAttribute(),
         gradient: gradient?.toAttribute(),
         boxShadow: boxShadow?.map((e) => e.toAttribute()).toList(),
-        color: color?.toAttribute(),
+        color: color?.toDto(),
         shape: shape.toAttribute(),
       );
 }
@@ -392,10 +392,10 @@ extension BoxShadowExt on BoxShadow {
 extension TextStyleExt on TextStyle {
   TextStyleAttribute toAttribute() => TextStyleAttribute(
         background: background,
-        color: color?.toAttribute(),
+        color: color?.toDto(),
         debugLabel: debugLabel,
         decoration: decoration,
-        decorationColor: decorationColor?.toAttribute(),
+        decorationColor: decorationolor?.toDto(),
         decorationStyle: decorationStyle,
         decorationThickness: decorationThickness,
         fontFamily: fontFamily,
@@ -415,19 +415,24 @@ extension TextStyleExt on TextStyle {
 }
 
 extension BorderExt on Border {
-  BorderAttribute toAttribute() => BorderAttribute(
+  BorderDto toDto() => BorderDto(
         left: left.toAttribute(),
         right: right.toAttribute(),
         top: top.toAttribute(),
         bottom: bottom.toAttribute(),
       );
+
+  BorderAttribute toAttribute() => BorderAttribute(toDto());
 }
 
 extension BorderDirectionalExt on BorderDirectional {
-  BorderDirectionalAttribute toAttribute() => BorderDirectionalAttribute(
+  BorderDirectionalDto toDto() => BorderDirectionalDto(
         start: start.toAttribute(),
         end: end.toAttribute(),
         top: top.toAttribute(),
         bottom: bottom.toAttribute(),
       );
+
+  BorderDirectionalAttribute toAttribute() =>
+      BorderDirectionalAttribute(toDto());
 }

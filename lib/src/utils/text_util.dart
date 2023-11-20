@@ -99,10 +99,10 @@ class TextStyleUtility {
   }) =>
       TextStyleAttribute(
         background: background,
-        backgroundColor: backgroundColor?.toAttribute(),
-        color: color?.toAttribute(),
+        backgroundColor: backgroundolor?.toDto(),
+        color: color?.toDto(),
         decoration: decoration,
-        decorationColor: decorationColor?.toAttribute(),
+        decorationColor: decorationolor?.toDto(),
         decorationStyle: decorationStyle,
         fontFamily: fontFamily,
         fontFeatures: fontFeatures,

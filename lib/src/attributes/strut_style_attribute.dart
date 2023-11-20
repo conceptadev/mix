@@ -4,8 +4,7 @@ import '../factory/mix_provider_data.dart';
 import 'attribute.dart';
 
 @immutable
-class StrutStyleAttribute extends MergeableStyleAttribute
-    with Resolver<StrutStyle> {
+class StrutStyleAttribute extends DtoStyleAttribute with Resolver<StrutStyle> {
   final String? fontFamily;
   final List<String>? fontFamilyFallback;
   final double? fontSize;

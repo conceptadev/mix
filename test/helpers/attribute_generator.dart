@@ -170,7 +170,7 @@ class AttributeGenerator {
   }) {
     final random = Random();
 
-    return BorderRadiusAttribute(
+    return BorderRadiusDto(
       topLeft: Radius.circular(topLeft ?? random.nextDouble() * 20),
       topRight: Radius.circular(topRight ?? random.nextDouble() * 20),
       bottomLeft: Radius.circular(bottomLeft ?? random.nextDouble() * 20),
@@ -221,7 +221,7 @@ class AttributeGenerator {
   }
 
   BorderSideAttribute borderSide({
-    ColorAttribute? color,
+    ColorDto? color,
     double? width,
     BorderStyle? style,
   }) {

@@ -5,7 +5,7 @@ import '../attribute.dart';
 
 @immutable
 abstract class BorderRadiusGeometryDto<T extends BorderRadiusGeometry>
-    extends Dto<BorderRadiusGeometryDto> with Resolver<T> {
+    extends Dto<T> {
   final Radius? topLeft;
   final Radius? topRight;
   final Radius? bottomLeft;
@@ -140,8 +140,7 @@ class BorderRadiusDto extends BorderRadiusGeometryDto<BorderRadius>
 
 @immutable
 class BorderRadiusDirectionalDto
-    extends BorderRadiusGeometryDto<BorderRadiusDirectional>
-    with Resolver<BorderRadiusDirectional> {
+    extends BorderRadiusGeometryDto<BorderRadiusDirectional> {
   const BorderRadiusDirectionalDto({
     super.topStart,
     super.topEnd,
@@ -245,11 +244,12 @@ class BorderRadiusDirectionalDto
 
 @immutable
 abstract class BorderRadiusGeometryAttribute<
-        T extends BorderRadiusGeometryDto<Value>,
-        Value extends BorderRadiusGeometry>
-    extends ResolvableAttribute<BorderRadiusGeometryAttribute<T, Value>, T,
-        Value> {
+    T extends BorderRadiusGeometryDto<Value>,
+    Value extends BorderRadiusGeometry> extends DtoStyleAttribute<T, Value> {
   const BorderRadiusGeometryAttribute(super.value);
+
+  @override
+  Value resolve(MixData mix) => value.resolve(mix);
 
   @visibleForTesting
   Radius? get topLeft => value.topLeft;
@@ -282,7 +282,11 @@ class BorderRadiusAttribute
   const BorderRadiusAttribute(super.value);
 
   @override
-  final create = BorderRadiusAttribute.new;
+  BorderRadiusAttribute merge(BorderRadiusAttribute? other) {
+    return other == null
+        ? this
+        : BorderRadiusAttribute(value.merge(other.value));
+  }
 }
 
 @immutable
@@ -291,5 +295,10 @@ class BorderRadiusDirectionalAttribute extends BorderRadiusGeometryAttribute<
   const BorderRadiusDirectionalAttribute(super.value);
 
   @override
-  final create = BorderRadiusDirectionalAttribute.new;
+  BorderRadiusDirectionalAttribute merge(
+      BorderRadiusDirectionalAttribute? other) {
+    return other == null
+        ? this
+        : BorderRadiusDirectionalAttribute(value.merge(other.value));
+  }
 }

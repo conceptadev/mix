@@ -32,7 +32,7 @@ class BorderSideUtility {
     double? strokeAlign,
   }) {
     final side = BorderSideDto(
-      color: color?.toAttribute(),
+      color: color?.toDto(),
       strokeAlign: strokeAlign,
       style: style,
       width: width,
@@ -82,7 +82,7 @@ class BorderUtility<T extends BoxBorderAttribute<Dto, Value>,
     double? strokeAlign,
   }) {
     final side = BorderSideDto(
-      color: color?.toAttribute(),
+      color: color?.toDto(),
       strokeAlign: strokeAlign,
       style: style,
       width: width,

@@ -7,7 +7,7 @@ import 'attribute.dart';
 
 @immutable
 abstract class SpaceGeometryAttribute<Value extends EdgeInsetsGeometry>
-    extends MergeableStyleAttribute with Resolver<Value> {
+    extends DtoStyleAttribute with Resolver<Value> {
   final double? top;
   final double? bottom;
   final double? left;
