@@ -10,11 +10,8 @@ abstract class AlignmentGeometryDto<Value extends AlignmentGeometry>
   final double? _y;
   final double? _start;
 
-  const AlignmentGeometryDto({
-    double? x,
-    double? y,
-    double? start,
-  })  : _start = start,
+  const AlignmentGeometryDto({double? x, double? y, double? start})
+      : _start = start,
         _y = y,
         _x = x;
 
@@ -32,6 +29,7 @@ abstract class AlignmentGeometryDto<Value extends AlignmentGeometry>
 
     if (_x != null && other._start == null) return AlignmentDto;
     if (_start != null && other._x == null) return AligmentDirectionalDto;
+
     return null;
   }
 
@@ -55,10 +53,7 @@ abstract class AlignmentGeometryDto<Value extends AlignmentGeometry>
     final mergeableType = canMergeType(other);
 
     if (mergeableType == AlignmentDto) {
-      return AlignmentDto(
-        x: other._x ?? _x,
-        y: other._y ?? _y,
-      );
+      return AlignmentDto(x: other._x ?? _x, y: other._y ?? _y);
     }
 
     if (mergeableType == AligmentDirectionalDto) {
@@ -78,19 +73,13 @@ abstract class AlignmentGeometryDto<Value extends AlignmentGeometry>
 
 @immutable
 class AlignmentDto extends AlignmentGeometryDto<Alignment> {
-  const AlignmentDto({
-    super.x,
-    super.y,
-  });
+  const AlignmentDto({super.x, super.y});
 }
 
 @immutable
 class AligmentDirectionalDto
     extends AlignmentGeometryDto<AlignmentDirectional> {
-  const AligmentDirectionalDto({
-    super.start,
-    super.y,
-  });
+  const AligmentDirectionalDto({super.start, super.y});
 
   @override
   AlignmentDirectional resolve(MixData mix) {
@@ -123,6 +112,14 @@ abstract class AlignmentGeometryAttribute<T extends AlignmentGeometryDto<Value>,
     );
   }
 
+  @visibleForTesting
+  double? get x => value._x;
+
+  @visibleForTesting
+  double? get y => value._y;
+
+  @visibleForTesting
+  double? get start => value._start;
   @override
   AlignmentGeometryAttribute merge(
     covariant AlignmentGeometryAttribute? other,
@@ -132,15 +129,6 @@ abstract class AlignmentGeometryAttribute<T extends AlignmentGeometryDto<Value>,
 
   @override
   Value resolve(MixData mix) => value.resolve(mix);
-
-  @visibleForTesting
-  double? get x => value._x;
-
-  @visibleForTesting
-  double? get y => value._y;
-
-  @visibleForTesting
-  double? get start => value._start;
 }
 
 @immutable

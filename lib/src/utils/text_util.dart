@@ -38,9 +38,6 @@ class TextStyleUtility {
   ColorUtility<TextStyleAttribute> get color =>
       ColorUtility((Color color) => textStyle(color: color));
 
-  TextStyleAttribute shadows(List<Shadow> shadows) =>
-      TextStyleAttribute(shadows: _shadowsFromDto(shadows));
-
   FontWeightUtility get fontWeight =>
       FontWeightUtility((value) => call(fontWeight: value));
   FontStyleUtility get fontStyle =>
@@ -64,14 +61,17 @@ class TextStyleUtility {
     return TextBaselineUtility((value) => call(textBaseline: value));
   }
 
+  FontFamilyUtility get fontFamily =>
+      FontFamilyUtility(((value) => call(fontFamily: value)));
+
+  TextStyleAttribute shadows(List<Shadow> shadows) =>
+      TextStyleAttribute(shadows: _shadowsFromDto(shadows));
+
   TextStyleAttribute foreground(Paint foreground) =>
       call(foreground: foreground);
 
   TextStyleAttribute background(Paint background) =>
       call(background: background);
-
-  FontFamilyUtility get fontFamily =>
-      FontFamilyUtility(((value) => call(fontFamily: value)));
 
   TextStyleAttribute fontFeatures(List<FontFeature> fontFeatures) =>
       call(fontFeatures: fontFeatures);
@@ -88,10 +88,8 @@ class TextStyleUtility {
     TextBaseline? textBaseline,
     List<Shadow>? shadows,
     Color? color,
-    Color? backgroundColor,
     List<FontFeature>? fontFeatures,
     TextDecoration? decoration,
-    Color? decorationColor,
     TextDecorationStyle? decorationStyle,
     Paint? foreground,
     Paint? background,

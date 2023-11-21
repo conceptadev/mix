@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../attributes/border/border_attribute.dart';
 import '../helpers/extensions/values_ext.dart';
+import 'scalar_util.dart';
 
-const border = BorderUtility();
+const border = BorderUtility(BoxBorderAttribute.from);
 
 typedef BorderSideUtilityFn = BorderSideDto Function({
   Color? color,
@@ -11,10 +12,8 @@ typedef BorderSideUtilityFn = BorderSideDto Function({
   BorderStyle? style,
 });
 
-class BorderSideUtility {
-  final BoxBorderAttribute Function(BorderSideDto side) fn;
-
-  const BorderSideUtility(this.fn);
+class BorderSideUtility extends MixUtility<BoxBorderAttribute, BorderSideDto> {
+  const BorderSideUtility(super.builder);
 
   BoxBorderAttribute color(Color color) => call(color: color);
 
@@ -38,13 +37,12 @@ class BorderSideUtility {
       width: width,
     );
 
-    return fn(side);
+    return builder(side);
   }
 }
 
-class BorderUtility<T extends BoxBorderAttribute<Dto, Value>,
-    Dto extends BoxBorderDto<Value>, Value extends BoxBorder> {
-  const BorderUtility();
+class BorderUtility extends MixUtility<BoxBorderAttribute, BoxBorderDto> {
+  const BorderUtility(super.builder);
 
   BorderSideUtility get all => BorderSideUtility(_all);
   BorderSideUtility get bottom => BorderSideUtility(_bottom);
@@ -64,15 +62,27 @@ class BorderUtility<T extends BoxBorderAttribute<Dto, Value>,
   BorderSideUtility get end => BorderSideUtility(_end);
 
   // Only method
-  BorderAttribute only({
+  BoxBorderAttribute only({
     BorderSideDto? top,
     BorderSideDto? bottom,
     BorderSideDto? left,
     BorderSideDto? right,
+    BorderSideDto? start,
+    BorderSideDto? end,
   }) {
-    return BorderAttribute(
-      BorderDto(left: left, right: right, top: top, bottom: bottom),
-    );
+    assert((right == null && left == null) || (start == null && end == null),
+        'Cannot have both right and left and start and end parameters');
+
+    BoxBorderDto dto;
+    dto = start != null || end != null
+        ? BorderDirectionalDto(
+            start: start,
+            end: end,
+            top: top,
+            bottom: bottom,
+          )
+        : BorderDto(top: top, bottom: bottom, left: left, right: right);
+    return builder(dto);
   }
 
   BoxBorderAttribute call({
@@ -123,10 +133,14 @@ class BorderUtility<T extends BoxBorderAttribute<Dto, Value>,
 
   // Symetric sides
   BoxBorderAttribute _horizontal(BorderSideDto side) {
-    return BorderDto.symmetric(horizontal: side);
+    final dto = BorderDto.symmetric(horizontal: side);
+
+    return builder(dto);
   }
 
   BoxBorderAttribute _vertical(BorderSideDto side) {
-    return BoxBorderAttribute.symmetric(vertical: side);
+    final dto = BorderDto.symmetric(vertical: side);
+
+    return builder(dto);
   }
 }

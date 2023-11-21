@@ -5,17 +5,21 @@ import '../attributes/decoration_attribute.dart';
 import '../attributes/shadow_attribute.dart';
 import '../helpers/extensions/values_ext.dart';
 
-const backgroundColor = ColorUtility(BoxDecorationAttribute.color);
-const bgColor = backgroundColor;
+final backgroundColor = ColorUtility((value) {
+  return BoxDecorationAttribute(
+    BoxDecorationDto(color: value.toDto()),
+  );
+});
+final bgColor = backgroundColor;
 
 const boxDecoration = BoxDecorationAttribute.new;
 
 BoxDecorationAttribute elevation(int value) {
   assert([1, 2, 3, 4, 6, 8, 9, 12, 16, 24].contains(value));
 
-  return BoxDecorationAttribute(
-    boxShadow: elevationToShadow[value]!.toAttribute(),
-  );
+  final dto = BoxDecorationDto(boxShadow: elevationToShadow[value]!.toDto());
+
+  return BoxDecorationAttribute(dto);
 }
 
 // Custom naming that suits the context of your package
@@ -38,7 +42,10 @@ const _elevationToShadow = <int, List<BoxShadow>>{
       spreadRadius: -1.0,
     ),
     BoxShadow(
-        color: _kKeyPenumbraOpacity, offset: Offset(0.0, 1.0), blurRadius: 1.0),
+      color: _kKeyPenumbraOpacity,
+      offset: Offset(0.0, 1.0),
+      blurRadius: 1.0,
+    ),
     BoxShadow(
       color: _kAmbientShadowOpacity,
       offset: Offset(0.0, 1.0),
@@ -54,7 +61,10 @@ const _elevationToShadow = <int, List<BoxShadow>>{
       spreadRadius: -2.0,
     ),
     BoxShadow(
-        color: _kKeyPenumbraOpacity, offset: Offset(0.0, 2.0), blurRadius: 2.0),
+      color: _kKeyPenumbraOpacity,
+      offset: Offset(0.0, 2.0),
+      blurRadius: 2.0,
+    ),
     BoxShadow(
       color: _kAmbientShadowOpacity,
       offset: Offset(0.0, 1.0),
@@ -70,7 +80,10 @@ const _elevationToShadow = <int, List<BoxShadow>>{
       spreadRadius: -2.0,
     ),
     BoxShadow(
-        color: _kKeyPenumbraOpacity, offset: Offset(0.0, 3.0), blurRadius: 4.0),
+      color: _kKeyPenumbraOpacity,
+      offset: Offset(0.0, 3.0),
+      blurRadius: 4.0,
+    ),
     BoxShadow(
       color: _kAmbientShadowOpacity,
       offset: Offset(0.0, 1.0),
@@ -86,7 +99,10 @@ const _elevationToShadow = <int, List<BoxShadow>>{
       spreadRadius: -1.0,
     ),
     BoxShadow(
-        color: _kKeyPenumbraOpacity, offset: Offset(0.0, 4.0), blurRadius: 5.0),
+      color: _kKeyPenumbraOpacity,
+      offset: Offset(0.0, 4.0),
+      blurRadius: 5.0,
+    ),
     BoxShadow(
       color: _kAmbientShadowOpacity,
       offset: Offset(0.0, 1.0),
@@ -220,9 +236,9 @@ const _elevationToShadow = <int, List<BoxShadow>>{
 };
 
 extension on List<BoxShadow> {
-  List<BoxShadowAttribute> toAttribute() {
-    return map((e) => BoxShadowAttribute(
-          color: e.color.toAttribute(),
+  List<BoxShadowDto> toDto() {
+    return map((e) => BoxShadowDto(
+          color: e.color.toDto(),
           offset: e.offset,
           blurRadius: e.blurRadius,
           spreadRadius: e.spreadRadius,

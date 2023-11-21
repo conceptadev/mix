@@ -1,9 +1,10 @@
 import '../attributes/constraints_attribute.dart';
+import 'scalar_util.dart';
 
 /// Provides a default instance of [BoxConstraintsAttribute] with no constraints.
 ///
 /// This constant can be used as a starting point before specifying particular constraints.
-const boxConstraints = BoxConstraintsAttribute.new;
+const boxConstraints = BoxConstraintsUtility();
 
 /// Creates a [BoxConstraintsAttribute] with a specific [width].
 ///
@@ -11,8 +12,7 @@ const boxConstraints = BoxConstraintsAttribute.new;
 /// a fixed size, ignoring any minimum or maximum width constraints.
 ///
 /// [width]: The fixed width value for the constraints.
-BoxConstraintsAttribute width(double width) =>
-    BoxConstraintsAttribute(width: width);
+BoxConstraintsAttribute width(double width) => boxConstraints(width: width);
 
 /// Creates a [BoxConstraintsAttribute] with a specific [height].
 ///
@@ -20,8 +20,7 @@ BoxConstraintsAttribute width(double width) =>
 /// overriding any minimum or maximum height constraints.
 ///
 /// [height]: The fixed height value for the constraints.
-BoxConstraintsAttribute height(double height) =>
-    BoxConstraintsAttribute(height: height);
+BoxConstraintsAttribute height(double height) => boxConstraints(height: height);
 
 /// Defines a [BoxConstraintsAttribute] with a minimum width [minWidth].
 ///
@@ -30,7 +29,7 @@ BoxConstraintsAttribute height(double height) =>
 ///
 /// [minWidth]: The minimum width value for the constraints.
 BoxConstraintsAttribute minWidth(double width) =>
-    BoxConstraintsAttribute(minWidth: width);
+    boxConstraints(minWidth: width);
 
 /// Defines a [BoxConstraintsAttribute] with a maximum width [maxWidth].
 ///
@@ -39,7 +38,7 @@ BoxConstraintsAttribute minWidth(double width) =>
 ///
 /// [maxWidth]: The maximum width value for the constraints.
 BoxConstraintsAttribute maxWidth(double width) =>
-    BoxConstraintsAttribute(maxWidth: width);
+    boxConstraints(maxWidth: width);
 
 /// Creates a [BoxConstraintsAttribute] with a minimum height [minHeight].
 ///
@@ -48,7 +47,7 @@ BoxConstraintsAttribute maxWidth(double width) =>
 ///
 /// [minHeight]: The minimum height value for the constraints.
 BoxConstraintsAttribute minHeight(double height) =>
-    BoxConstraintsAttribute(minHeight: height);
+    boxConstraints(minHeight: height);
 
 /// Creates a [BoxConstraintsAttribute] with a maximum height [maxHeight].
 ///
@@ -57,4 +56,29 @@ BoxConstraintsAttribute minHeight(double height) =>
 ///
 /// [maxHeight]: The maximum height value for the constraints.
 BoxConstraintsAttribute maxHeight(double height) =>
-    BoxConstraintsAttribute(maxHeight: height);
+    boxConstraints(maxHeight: height);
+
+class BoxConstraintsUtility
+    extends MixUtility<BoxConstraintsAttribute, BoxConstraintsDto> {
+  const BoxConstraintsUtility() : super(BoxConstraintsAttribute.new);
+
+  BoxConstraintsAttribute call({
+    double? width,
+    double? height,
+    double? minWidth,
+    double? maxWidth,
+    double? minHeight,
+    double? maxHeight,
+  }) {
+    final dto = BoxConstraintsDto(
+      width: width,
+      height: height,
+      minWidth: minWidth,
+      maxWidth: maxWidth,
+      minHeight: minHeight,
+      maxHeight: maxHeight,
+    );
+
+    return builder(dto);
+  }
+}

@@ -168,10 +168,7 @@ class TextStyleListDto extends Dto<TextStyle> {
     if (other == null) return this;
 
     return TextStyleListDto(
-      [
-        ...values,
-        ...other.values,
-      ],
+      [...values, ...other.values],
     );
   }
 

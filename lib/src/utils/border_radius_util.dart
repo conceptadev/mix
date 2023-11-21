@@ -2,8 +2,7 @@
 
 import 'package:flutter/material.dart';
 
-import '../attributes/border/border_radius_attribute.dart';
-import '../helpers/extensions/values_ext.dart';
+import '../../mix.dart';
 
 // Provides an utility for creating a uniform BorderRadiusAttribute for all corners.
 const borderRadius = BorderRadiusUtility();
@@ -12,123 +11,178 @@ const borderRadius = BorderRadiusUtility();
 // Provides a utility BorderRadiusDirectionalAttribute for all corners, considering text direction.
 const borderRadiusDirectional = BorderRadiusDirectionalUtility();
 
-class BorderRadiusUtility {
-  const BorderRadiusUtility();
+class BorderRadiusUtility
+    extends MixUtility<BorderRadiusGeometryAttribute, BorderRadiusGeometryDto> {
+  const BorderRadiusUtility() : super(BorderRadiusGeometryAttribute.from);
 
   // Specific corners
-  RadiusUtility<BorderRadiusAttribute> get bottomLeft =>
-      RadiusUtility((value) => only(bottomLeft: value));
+  RadiusUtility get bottomLeft => RadiusUtility(_bottomLeft);
+  RadiusUtility get bottomRight => RadiusUtility(_bottomRight);
+  RadiusUtility get topLeft => RadiusUtility(_topLeft);
+  RadiusUtility get topRight => RadiusUtility(_topRight);
+  RadiusUtility get topStart => RadiusUtility(_topStart);
 
-  RadiusUtility<BorderRadiusAttribute> get bottomRight =>
-      RadiusUtility((value) => only(bottomRight: value));
-
-  RadiusUtility<BorderRadiusAttribute> get topLeft =>
-      RadiusUtility((value) => only(topLeft: value));
-  RadiusUtility<BorderRadiusAttribute> get topRight =>
-      RadiusUtility((value) => only(topRight: value));
-
-  RadiusUtility<BorderRadiusDirectionalAttribute> get topStart =>
-      _directional.topStart;
-  RadiusUtility<BorderRadiusDirectionalAttribute> get topEnd =>
-      _directional.topEnd;
-  RadiusUtility<BorderRadiusDirectionalAttribute> get bottomStart =>
-      _directional.bottomStart;
-
-  RadiusUtility<BorderRadiusDirectionalAttribute> get bottomEnd =>
-      _directional.bottomEnd;
-
-  RadiusUtility<BorderRadiusAttribute> get all =>
-      RadiusUtility<BorderRadiusAttribute>((value) {
-        return only(
-          topLeft: value,
-          topRight: value,
-          bottomLeft: value,
-          bottomRight: value,
-        );
-      });
+  RadiusUtility get all => RadiusUtility(_all);
 
   BorderRadiusDirectionalUtility get _directional {
     return const BorderRadiusDirectionalUtility();
   }
 
-  BorderRadiusAttribute zero() => all.zero();
+  BorderRadiusGeometryAttribute zero() => _all(Radius.zero);
 
-  BorderRadiusAttribute only({
+  BorderRadiusGeometryAttribute only({
     Radius? topLeft,
     Radius? topRight,
     Radius? bottomLeft,
     Radius? bottomRight,
+    Radius? topStart,
+    Radius? topEnd,
+    Radius? bottomStart,
+    Radius? bottomEnd,
   }) {
-    return BorderRadiusAttribute(
-      BorderRadiusDto(
+    final isDirectional = topStart != null ||
+        topEnd != null ||
+        bottomStart != null ||
+        bottomEnd != null;
+    final nonDirectional = topLeft != null ||
+        topRight != null ||
+        bottomLeft != null ||
+        bottomRight != null;
+
+    // Assert that can only have left right, params or start, and end params but not both
+    // so can only have either topLeft, topRight, bottomLeft, bottomRight or topStart, topEnd, bottomStart, bottomEnd
+    assert(
+      isDirectional && nonDirectional,
+      'Cannot have both directional and non-directional parameters',
+    );
+
+    BorderRadiusGeometryDto borderRadius;
+    // ignore: prefer-conditional-expressions
+    if (isDirectional) {
+      borderRadius = BorderRadiusDirectionalDto(
+        topStart: topStart,
+        topEnd: topEnd,
+        bottomStart: bottomStart,
+        bottomEnd: bottomEnd,
+      );
+    } else {
+      borderRadius = BorderRadiusDto(
         topLeft: topLeft,
         topRight: topRight,
         bottomLeft: bottomLeft,
         bottomRight: bottomRight,
-      ),
-    );
+      );
+    }
+
+    return BorderRadiusGeometryAttribute.from(borderRadius);
   }
 
   // Vertical and Horizontal
   BorderRadiusAttribute vertical({double? top, double? bottom}) {
-    return BorderRadiusAttribute.vertical(
+    final borderRadius = BorderRadiusDto.vertical(
       top: top?.toRadius(),
       bottom: bottom?.toRadius(),
     );
+
+    return BorderRadiusAttribute(borderRadius);
   }
 
   BorderRadiusAttribute horizontal({double? left, double? right}) {
-    return BorderRadiusAttribute.horizontal(
+    final borderRadius = BorderRadiusDto.horizontal(
       left: left?.toRadius(),
       right: right?.toRadius(),
     );
+
+    return BorderRadiusAttribute(borderRadius);
   }
 
   // Circular
   BorderRadiusAttribute circular(double radius) {
-    return BorderRadiusAttribute.all(Radius.circular(radius));
+    final borderRadius = BorderRadiusDto.all(Radius.circular(radius));
+
+    return BorderRadiusAttribute(borderRadius);
   }
 
   // Positional
-  BorderRadiusAttribute call(double p1, [double? p2, double? p3, double? p4]) {
-    return BorderRadiusAttribute.positional(
-      p1.toRadius(),
-      p2?.toRadius(),
-      p3?.toRadius(),
-      p4?.toRadius(),
+  BorderRadiusAttribute call(Radius p1, [Radius? p2, Radius? p3, Radius? p4]) {
+    Radius topLeft = p1;
+    Radius topRight = p1;
+    Radius bottomLeft = p1;
+    Radius bottomRight = p1;
+
+    if (p2 != null) {
+      bottomRight = p2;
+      bottomLeft = p2;
+    }
+
+    if (p3 != null) {
+      topLeft = p1;
+      topRight = p2!;
+      bottomLeft = p2;
+      bottomRight = p3;
+    }
+
+    if (p4 != null) {
+      topLeft = p1;
+      topRight = p2!;
+      bottomLeft = p3!;
+      bottomRight = p4;
+    }
+
+    final borderRadius = BorderRadiusDto(
+      topLeft: topLeft,
+      topRight: topRight,
+      bottomLeft: bottomLeft,
+      bottomRight: bottomRight,
     );
+
+    return BorderRadiusAttribute(borderRadius);
   }
+
+  BorderRadiusGeometryAttribute _bottomLeft(Radius radius) =>
+      only(bottomLeft: radius);
+
+  BorderRadiusGeometryAttribute _bottomRight(Radius radius) =>
+      only(bottomRight: radius);
+
+  BorderRadiusGeometryAttribute _topLeft(Radius radius) =>
+      only(topLeft: radius);
+
+  BorderRadiusGeometryAttribute _topRight(Radius radius) =>
+      only(topRight: radius);
+
+  BorderRadiusGeometryAttribute _topStart(Radius radius) =>
+      only(topStart: radius);
+
+  BorderRadiusGeometryAttribute _all(Radius radius) => only(
+        topLeft: radius,
+        topRight: radius,
+        bottomLeft: radius,
+        bottomRight: radius,
+      );
 }
 
-class RadiusUtility<T extends BorderRadiusGeometryAttribute> {
-  final T Function(Radius value) fn;
-  const RadiusUtility(this.fn);
+class RadiusUtility extends MixUtility<BorderRadiusGeometryAttribute, Radius> {
+  const RadiusUtility(super.builder);
 
-  T zero() => fn(Radius.zero);
+  BorderRadiusGeometryAttribute zero() => builder(Radius.zero);
 
-  T elliptical(double x, double y) => fn(Radius.elliptical(x, y));
+  BorderRadiusGeometryAttribute elliptical(double x, double y) =>
+      builder(Radius.elliptical(x, y));
 
-  T call(double radius) => fn(Radius.circular(radius));
+  BorderRadiusGeometryAttribute call(double radius) =>
+      builder(Radius.circular(radius));
 }
 
-class BorderRadiusDirectionalUtility {
-  const BorderRadiusDirectionalUtility();
+class BorderRadiusDirectionalUtility extends MixUtility<
+    BorderRadiusDirectionalAttribute, BorderRadiusDirectionalDto> {
+  const BorderRadiusDirectionalUtility()
+      : super(BorderRadiusDirectionalAttribute.new);
 
-  // Specific corners
-  RadiusUtility<BorderRadiusDirectionalAttribute> get bottomStart =>
-      RadiusUtility(
-          (value) => BorderRadiusDirectionalAttribute(bottomStart: value));
-
-  RadiusUtility<BorderRadiusDirectionalAttribute> get bottomEnd =>
-      RadiusUtility(
-          (value) => BorderRadiusDirectionalAttribute(bottomEnd: value));
-
-  RadiusUtility<BorderRadiusDirectionalAttribute> get topStart => RadiusUtility(
-      (value) => BorderRadiusDirectionalAttribute(topStart: value));
-
-  RadiusUtility<BorderRadiusDirectionalAttribute> get topEnd =>
-      RadiusUtility((value) => BorderRadiusDirectionalAttribute(topEnd: value));
-
+  RadiusUtility get bottomStart => RadiusUtility(_bottomStart);
+  RadiusUtility get bottomEnd => RadiusUtility(_bottomEnd);
+  RadiusUtility get topStart => RadiusUtility(_topStart);
+  RadiusUtility get topEnd => RadiusUtility(_topEnd);
   BorderRadiusDirectionalAttribute call(
     Radius p1, [
     Radius? p2,
@@ -159,12 +213,14 @@ class BorderRadiusDirectionalUtility {
       bottomEnd = p4;
     }
 
-    return BorderRadiusDirectionalAttribute(
+    final borderRadius = BorderRadiusDirectionalDto(
       topStart: topStart,
       topEnd: topEnd,
       bottomStart: bottomStart,
       bottomEnd: bottomEnd,
     );
+
+    return BorderRadiusDirectionalAttribute(borderRadius);
   }
 
   // Only specific corners
@@ -174,38 +230,70 @@ class BorderRadiusDirectionalUtility {
     Radius? bottomStart,
     Radius? bottomEnd,
   }) {
-    return BorderRadiusDirectionalAttribute(
+    final borderRadius = BorderRadiusDirectionalDto(
       topStart: topStart,
       topEnd: topEnd,
       bottomStart: bottomStart,
       bottomEnd: bottomEnd,
     );
+
+    return BorderRadiusDirectionalAttribute(borderRadius);
   }
 
   // Vertical and Horizontal
   BorderRadiusDirectionalAttribute vertical({Radius? top, Radius? bottom}) {
-    return BorderRadiusDirectionalAttribute.vertical(
+    final borderRadius = BorderRadiusDirectionalDto.vertical(
       top: top,
       bottom: bottom,
     );
+
+    return BorderRadiusDirectionalAttribute(borderRadius);
   }
 
   BorderRadiusDirectionalAttribute horizontal({Radius? start, Radius? end}) {
-    return BorderRadiusDirectionalAttribute.horizontal(
+    final borderRadius = BorderRadiusDirectionalDto.horizontal(
       start: start,
       end: end,
     );
+
+    return BorderRadiusDirectionalAttribute(borderRadius);
   }
 
   BorderRadiusDirectionalAttribute all(Radius radius) {
-    return BorderRadiusDirectionalAttribute.all(radius);
+    final borderRadius = BorderRadiusDirectionalDto.all(radius);
+
+    return BorderRadiusDirectionalAttribute(borderRadius);
   }
 
   BorderRadiusDirectionalAttribute circular(double radius) {
-    return BorderRadiusDirectionalAttribute.circular(radius);
+    final borderRadius =
+        BorderRadiusDirectionalDto.all(Radius.circular(radius));
+
+    return BorderRadiusDirectionalAttribute(borderRadius);
   }
 
   BorderRadiusDirectionalAttribute zero() {
-    return const BorderRadiusDirectionalAttribute.zero();
+    const borderRadius = BorderRadiusDirectionalDto.zero();
+
+    return const BorderRadiusDirectionalAttribute(borderRadius);
   }
+
+  BorderRadiusDirectionalAttribute _bottomStart(Radius radius) =>
+      only(bottomStart: radius);
+
+  BorderRadiusDirectionalAttribute _bottomEnd(Radius radius) =>
+      only(bottomEnd: radius);
+
+  BorderRadiusDirectionalAttribute _topStart(Radius radius) =>
+      only(topStart: radius);
+
+  BorderRadiusDirectionalAttribute _topEnd(Radius radius) =>
+      only(topEnd: radius);
+
+  BorderRadiusDirectionalAttribute _all(Radius radius) => only(
+        topStart: radius,
+        topEnd: radius,
+        bottomStart: radius,
+        bottomEnd: radius,
+      );
 }

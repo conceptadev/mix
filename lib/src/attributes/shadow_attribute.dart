@@ -5,7 +5,7 @@ import 'attribute.dart';
 import 'color_attribute.dart';
 
 class ShadowDto<Value extends Shadow> extends Dto<Value> {
-  final ColorAttribute? color;
+  final ColorDto? color;
   final Offset? offset;
   final double? blurRadius;
 
@@ -25,6 +25,7 @@ class ShadowDto<Value extends Shadow> extends Dto<Value> {
   @override
   ShadowDto<Value> merge(covariant ShadowDto<Value>? other) {
     if (other == null) return this;
+
     return ShadowDto(
       blurRadius: other.blurRadius ?? blurRadius,
       color: other.color ?? color,
@@ -63,6 +64,7 @@ class BoxShadowDto extends ShadowDto<BoxShadow> {
   @override
   BoxShadowDto merge(BoxShadowDto? other) {
     if (other == null) return this;
+
     return BoxShadowDto(
       color: other.color ?? color,
       offset: other.offset ?? offset,

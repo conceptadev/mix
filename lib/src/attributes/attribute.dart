@@ -19,7 +19,8 @@ abstract class Dto<Value> with Comparable, Mergeable<Dto>, Resolver<Value> {
 }
 
 abstract class DtoStyleAttribute<D extends Dto<Value>, Value>
-    extends ValueAttribute with Mergeable<DtoStyleAttribute>, Resolver<Value> {
+    extends ValueAttribute<D>
+    with Mergeable<DtoStyleAttribute>, Resolver<Value> {
   const DtoStyleAttribute(super.value);
 }
 

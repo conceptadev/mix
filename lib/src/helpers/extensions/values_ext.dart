@@ -192,10 +192,7 @@ extension AlignmentGeometryExt on AlignmentGeometry {
 }
 
 extension AlignmentExt on Alignment {
-  AlignmentDto toDto() => AlignmentDto(
-        x: x,
-        y: y,
-      );
+  AlignmentDto toDto() => AlignmentDto(x: x, y: y);
 
   AlignmentAttribute toAttribute() => AlignmentAttribute(toDto());
 }
@@ -211,21 +208,24 @@ extension AlignmentDirectionalExt on AlignmentDirectional {
 }
 
 extension ShapeDecorationExt on ShapeDecoration {
-  ShapeDecorationAttribute toAttribute() => ShapeDecorationAttribute(
+  ShapeDecorationDto toDto() => ShapeDecorationDto(
         color: color?.toDto(),
         shape: shape,
         gradient: gradient?.toAttribute(),
-        boxShadow: shadows?.map((e) => e.toAttribute()).toList(),
+        boxShadow: shadows?.map((e) => e.toDto()).toList(),
       );
+
+  ShapeDecorationAttribute toAttribute() => ShapeDecorationAttribute(toDto());
 }
 
 extension BoxConstraintsExt on BoxConstraints {
-  BoxConstraintsAttribute toAttribute() => BoxConstraintsAttribute(
+  BoxConstraintsDto toDto() => BoxConstraintsDto(
         minWidth: minWidth,
         maxWidth: maxWidth,
         minHeight: minHeight,
         maxHeight: maxHeight,
       );
+  BoxConstraintsAttribute toAttribute() => BoxConstraintsAttribute(toDto());
 }
 
 // Extension for MainAxisAlignment
@@ -289,14 +289,16 @@ extension BoxFitExt on BoxFit {
 }
 
 extension BoxDecorationExt on BoxDecoration {
-  BoxDecorationAttribute toAttribute() => BoxDecorationAttribute(
+  BoxDecorationDto toDto() => BoxDecorationDto(
+        color: color?.toDto(),
         border: border?.toAttribute(),
         borderRadius: borderRadius?.toAttribute(),
         gradient: gradient?.toAttribute(),
-        boxShadow: boxShadow?.map((e) => e.toAttribute()).toList(),
-        color: color?.toDto(),
+        boxShadow: boxShadow?.map((e) => e.toDto()).toList(),
         shape: shape.toAttribute(),
       );
+
+  BoxDecorationAttribute toAttribute() => BoxDecorationAttribute(toDto());
 }
 
 extension BoxShapeExt on BoxShape {
@@ -315,23 +317,27 @@ extension BorderRadiusGeometryExt on BorderRadiusGeometry {
 }
 
 extension BorderRadiusDirectionalExrt on BorderRadiusDirectional {
-  BorderRadiusDirectionalAttribute toAttribute() =>
-      BorderRadiusDirectionalAttribute(
+  BorderRadiusDirectionalDto toDto() => BorderRadiusDirectionalDto(
         topStart: topStart,
         topEnd: topEnd,
         bottomStart: bottomStart,
         bottomEnd: bottomEnd,
       );
+
+  BorderRadiusDirectionalAttribute toAttribute() =>
+      BorderRadiusDirectionalAttribute(toDto());
 }
 
 // Extension for BorderRadius
 extension BorderRadiusExt on BorderRadius {
-  BorderRadiusAttribute toAttribute() => BorderRadiusAttribute(
+  BorderRadiusDto toDto() => BorderRadiusDto(
         topLeft: topLeft,
         topRight: topRight,
         bottomLeft: bottomLeft,
         bottomRight: bottomRight,
       );
+
+  BorderRadiusAttribute toAttribute() => BorderRadiusAttribute(toDto());
 }
 
 extension TextBaseLineExt on TextBaseline {
@@ -350,8 +356,8 @@ extension Matrix4Ext on Matrix4 {
 }
 
 extension BorderSideExt on BorderSide {
-  BorderSideAttribute toAttribute() => BorderSideAttribute(
-        color: color.toAttribute(),
+  BorderSideDto toDto() => BorderSideDto(
+        color: color.toDto(),
         strokeAlign: strokeAlign,
         style: style,
         width: width,
@@ -372,7 +378,7 @@ extension BoxBorderExt on BoxBorder {
 extension ShadowExt on Shadow {
   ShadowDto toDto() => ShadowDto(
         blurRadius: blurRadius,
-        color: color.toAttribute(),
+        color: color.toDto(),
         offset: offset,
       );
   ShadowAttribute toAttribute() => ShadowAttribute(toDto());
@@ -380,7 +386,7 @@ extension ShadowExt on Shadow {
 
 extension BoxShadowExt on BoxShadow {
   BoxShadowDto toDto() => BoxShadowDto(
-        color: color.toAttribute(),
+        color: color.toDto(),
         offset: offset,
         blurRadius: blurRadius,
         spreadRadius: spreadRadius,
@@ -390,12 +396,12 @@ extension BoxShadowExt on BoxShadow {
 }
 
 extension TextStyleExt on TextStyle {
-  TextStyleAttribute toAttribute() => TextStyleAttribute(
+  TextStyleDto toDto() => TextStyleDto(
         background: background,
         color: color?.toDto(),
         debugLabel: debugLabel,
         decoration: decoration,
-        decorationColor: decorationolor?.toDto(),
+        decorationColor: decorationColor?.toDto(),
         decorationStyle: decorationStyle,
         decorationThickness: decorationThickness,
         fontFamily: fontFamily,
@@ -408,18 +414,20 @@ extension TextStyleExt on TextStyle {
         height: height,
         letterSpacing: letterSpacing,
         locale: locale,
-        shadows: shadows?.map((e) => e.toAttribute()).toList(),
+        shadows: shadows?.map((e) => e.toDto()).toList(),
         textBaseline: textBaseline,
         wordSpacing: wordSpacing,
       );
+
+  TextStyleAttribute toAttribute() => TextStyleAttribute(toDto());
 }
 
 extension BorderExt on Border {
   BorderDto toDto() => BorderDto(
-        left: left.toAttribute(),
-        right: right.toAttribute(),
-        top: top.toAttribute(),
-        bottom: bottom.toAttribute(),
+        top: top.toDto(),
+        bottom: bottom.toDto(),
+        left: left.toDto(),
+        right: right.toDto(),
       );
 
   BorderAttribute toAttribute() => BorderAttribute(toDto());
@@ -427,10 +435,10 @@ extension BorderExt on Border {
 
 extension BorderDirectionalExt on BorderDirectional {
   BorderDirectionalDto toDto() => BorderDirectionalDto(
-        start: start.toAttribute(),
-        end: end.toAttribute(),
-        top: top.toAttribute(),
-        bottom: bottom.toAttribute(),
+        start: start.toDto(),
+        end: end.toDto(),
+        top: top.toDto(),
+        bottom: bottom.toDto(),
       );
 
   BorderDirectionalAttribute toAttribute() =>

@@ -6,14 +6,29 @@ import 'scalar_util.dart';
 
 const aspectRatio = AspectRatioDecorator.new;
 
-const expanded = FlexibleDecorator.tight;
-const flexible = FlexibleDecorator.loose;
-
 const opacity = OpacityDecorator.new;
+const flexible = FlexibleDecoratorUtility(FlexibleDecorator.new);
 
 const rotate = RotateUtility(RotateDecorator.new);
 
-class RotateUtility<T> extends ScalarUtility<int, T> {
+class FlexibleDecoratorUtility
+    extends MixUtility<FlexibleDecorator, FlexibleDto> {
+  const FlexibleDecoratorUtility(super.builder);
+
+  FlexibleDecorator flexFit(FlexFit fit) => call(fit: fit);
+  FlexibleDecorator flex(int flex) => call(flex: flex);
+
+  FlexibleDecorator tight([int? flex]) => call(flex: flex, fit: FlexFit.tight);
+  FlexibleDecorator loose([int? flex]) => call(flex: flex, fit: FlexFit.loose);
+
+  FlexibleDecorator expanded([int? flex]) => tight(flex);
+
+  FlexibleDecorator call({int? flex, FlexFit? fit}) {
+    return builder(FlexibleDto(flex: flex, flexFit: fit));
+  }
+}
+
+class RotateUtility<T> extends ScalarUtility<T, int> {
   const RotateUtility(super.builder);
   T get d90 => call(1);
   T get d180 => call(2);

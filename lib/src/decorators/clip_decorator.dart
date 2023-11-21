@@ -12,7 +12,7 @@ abstract class ClipDecorator<T> extends WrapDecorator<ClipDto<T>>
   ClipDecorator merge(covariant ClipDecorator? other);
 }
 
-class ClipDto<T> extends Dto<ClipDto> {
+class ClipDto<T> extends Dto<T> {
   final Clip? clipBehavior;
   final CustomClipper<T>? clipper;
 
@@ -21,8 +21,8 @@ class ClipDto<T> extends Dto<ClipDto> {
   @override
   ClipDto<T> merge(covariant ClipDto<T>? other) {
     return ClipDto(
-      clipBehavior: other?.clipBehavior ?? clipBehavior,
       clipper: other?.clipper ?? clipper,
+      clipBehavior: other?.clipBehavior ?? clipBehavior,
     );
   }
 

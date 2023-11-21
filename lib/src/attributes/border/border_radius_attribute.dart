@@ -69,44 +69,6 @@ class BorderRadiusDto extends BorderRadiusGeometryDto<BorderRadius>
           bottomRight: right,
         );
 
-  factory BorderRadiusDto.positional(
-    Radius p1, [
-    Radius? p2,
-    Radius? p3,
-    Radius? p4,
-  ]) {
-    Radius topLeft = p1;
-    Radius topRight = p1;
-    Radius bottomLeft = p1;
-    Radius bottomRight = p1;
-
-    if (p2 != null) {
-      bottomRight = p2;
-      bottomLeft = p2;
-    }
-
-    if (p3 != null) {
-      topLeft = p1;
-      topRight = p2!;
-      bottomLeft = p2;
-      bottomRight = p3;
-    }
-
-    if (p4 != null) {
-      topLeft = p1;
-      topRight = p2!;
-      bottomLeft = p3!;
-      bottomRight = p4;
-    }
-
-    return BorderRadiusDto(
-      topLeft: topLeft,
-      topRight: topRight,
-      bottomLeft: bottomLeft,
-      bottomRight: bottomRight,
-    );
-  }
-
   const BorderRadiusDto.vertical({Radius? top, Radius? bottom})
       : super(
           topLeft: top,
@@ -199,20 +161,16 @@ class BorderRadiusDirectionalDto
           bottomEnd: radius,
         );
 
-  const BorderRadiusDirectionalDto.horizontal({
-    Radius? start,
-    Radius? end,
-  }) : super(
+  const BorderRadiusDirectionalDto.horizontal({Radius? start, Radius? end})
+      : super(
           topStart: start,
           topEnd: end,
           bottomStart: start,
           bottomEnd: end,
         );
 
-  const BorderRadiusDirectionalDto.vertical({
-    Radius? top,
-    Radius? bottom,
-  }) : super(
+  const BorderRadiusDirectionalDto.vertical({Radius? top, Radius? bottom})
+      : super(
           topStart: top,
           topEnd: top,
           bottomStart: bottom,
@@ -248,8 +206,19 @@ abstract class BorderRadiusGeometryAttribute<
     Value extends BorderRadiusGeometry> extends DtoStyleAttribute<T, Value> {
   const BorderRadiusGeometryAttribute(super.value);
 
-  @override
-  Value resolve(MixData mix) => value.resolve(mix);
+  static BorderRadiusGeometryAttribute from(
+    BorderRadiusGeometryDto borderRadius,
+  ) {
+    if (borderRadius is BorderRadiusDto) {
+      return BorderRadiusAttribute(borderRadius);
+    }
+
+    if (borderRadius is BorderRadiusDirectionalDto) {
+      return BorderRadiusDirectionalAttribute(borderRadius);
+    }
+
+    throw UnimplementedError();
+  }
 
   @visibleForTesting
   Radius? get topLeft => value.topLeft;
@@ -274,6 +243,8 @@ abstract class BorderRadiusGeometryAttribute<
 
   @visibleForTesting
   Radius? get bottomEnd => value.bottomEnd;
+  @override
+  Value resolve(MixData mix) => value.resolve(mix);
 }
 
 @immutable
@@ -296,7 +267,8 @@ class BorderRadiusDirectionalAttribute extends BorderRadiusGeometryAttribute<
 
   @override
   BorderRadiusDirectionalAttribute merge(
-      BorderRadiusDirectionalAttribute? other) {
+    BorderRadiusDirectionalAttribute? other,
+  ) {
     return other == null
         ? this
         : BorderRadiusDirectionalAttribute(value.merge(other.value));

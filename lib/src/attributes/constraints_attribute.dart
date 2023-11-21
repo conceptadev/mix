@@ -86,5 +86,5 @@ class BoxConstraintsAttribute
   }
 
   @override
-  BoxConstraints resolve(MixData mix) => value;
+  BoxConstraints resolve(MixData mix) => value.resolve(mix);
 }

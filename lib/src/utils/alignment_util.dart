@@ -6,7 +6,7 @@ import '../../mix.dart';
 const alignment = AlignmentUtility(AlignmentGeometryAttribute.from);
 
 class AlignmentUtility
-    extends MixUtility<AlignmentGeometryDto, AlignmentGeometryAttribute> {
+    extends MixUtility<AlignmentGeometryAttribute, AlignmentGeometryDto> {
   const AlignmentUtility(super.builder);
 
   AlignmentGeometryAttribute topLeft() => builder(Alignment.topLeft.toDto());
@@ -42,6 +42,14 @@ class AlignmentUtility
   AlignmentGeometryAttribute x(double x) => builder(AlignmentDto(x: x));
   AlignmentGeometryAttribute start(double start) =>
       builder(AligmentDirectionalDto(start: start));
+
+  AlignmentGeometryAttribute only({double? y, double? x, double? start}) {
+    assert(x == null || start == null, 'Cannot have both x and start');
+
+    return start == null
+        ? builder(AlignmentDto(x: x, y: y))
+        : builder(AligmentDirectionalDto(start: start, y: y));
+  }
 
   AlignmentGeometryAttribute call(AlignmentGeometry value) =>
       builder(value.toDto());

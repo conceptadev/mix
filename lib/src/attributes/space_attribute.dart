@@ -6,8 +6,8 @@ import '../factory/mix_provider_data.dart';
 import 'attribute.dart';
 
 @immutable
-abstract class SpaceGeometryAttribute<Value extends EdgeInsetsGeometry>
-    extends DtoStyleAttribute with Resolver<Value> {
+abstract class SpacingGeometryDto<Value extends EdgeInsetsGeometry>
+    extends Dto<Value> {
   final double? top;
   final double? bottom;
   final double? left;
@@ -17,7 +17,7 @@ abstract class SpaceGeometryAttribute<Value extends EdgeInsetsGeometry>
   final double? start;
   final double? end;
 
-  const SpaceGeometryAttribute({
+  const SpacingGeometryDto({
     this.top,
     this.bottom,
     this.left,
@@ -26,7 +26,7 @@ abstract class SpaceGeometryAttribute<Value extends EdgeInsetsGeometry>
     this.end,
   });
 
-  SpaceGeometryAttribute create({
+  SpacingGeometryDto create({
     double? top,
     double? bottom,
     double? left,
@@ -36,9 +36,7 @@ abstract class SpaceGeometryAttribute<Value extends EdgeInsetsGeometry>
   });
 
   @override
-  SpaceGeometryAttribute merge(
-    covariant SpaceGeometryAttribute? other,
-  ) {
+  SpacingGeometryDto merge(covariant SpacingGeometryDto? other) {
     return create(
       top: other?.top ?? top,
       bottom: other?.bottom ?? bottom,
