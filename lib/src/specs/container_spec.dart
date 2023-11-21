@@ -8,7 +8,7 @@ import '../attributes/scalar_attribute.dart';
 import '../attributes/space_attribute.dart';
 import '../factory/mix_provider_data.dart';
 
-class ContainerSpec extends MixRecipe<ContainerSpec> {
+class ContainerSpec extends StyleRecipe<ContainerSpec> {
   final AlignmentGeometry? alignment;
   final EdgeInsetsGeometry? padding;
   final EdgeInsetsGeometry? margin;
@@ -30,13 +30,14 @@ class ContainerSpec extends MixRecipe<ContainerSpec> {
 
   static ContainerSpec resolve(MixData mix) {
     return ContainerSpec(
-      alignment: mix.get<AlignmentGeometryAttribute, AlignmentGeometry>(),
-      padding: mix.get<PaddingGeometryAttribute, EdgeInsetsGeometry>(),
-      margin: mix.get<MarginGeometryAttribute, EdgeInsetsGeometry>(),
-      constraints: mix.get<BoxConstraintsAttribute, BoxConstraints>(),
-      decoration: mix.get<DecorationAttribute, Decoration>(),
-      transform: mix.get<TransformAttribute, Matrix4>(),
-      clipBehavior: mix.get<ClipAttribute, Clip>(),
+      alignment:
+          mix.attributeOfType<AlignmentGeometryAttribute>()?.resolve(mix),
+      padding: mix.attributeOfType<PaddingAttribute>()?.resolve(mix),
+      margin: mix.attributeOfType<MarginAttribute>()?.resolve(mix),
+      constraints: mix.attributeOfType<BoxConstraintsAttribute>()?.resolve(mix),
+      decoration: mix.attributeOfType<DecorationAttribute>()?.resolve(mix),
+      transform: mix.attributeOfType<TransformAttribute>()?.value,
+      clipBehavior: mix.attributeOfType<ClipAttribute>()?.value,
     );
   }
 

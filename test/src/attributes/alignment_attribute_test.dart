@@ -23,7 +23,7 @@ void main() {
 
       final merged = attr1.merge(attr2);
 
-      final resolvedValue = merged.resolve(EmptyMixData);
+      final resolvedValue = merged.resolve(EmptyMixData) as Alignment;
 
       expect(resolvedValue.x, 0.3); // should take from attr2
       expect(resolvedValue.y, 0.4); // should take from attr1
@@ -98,7 +98,8 @@ void main() {
 
       final merged = attr1.merge(attr2);
 
-      final resolvedValue = merged.resolve(EmptyMixData);
+      final resolvedValue =
+          merged.resolve(EmptyMixData) as AlignmentDirectional;
 
       expect(resolvedValue.start, 0.3); // should take from attr2
       expect(resolvedValue.y, 0.4); // should take from attr1

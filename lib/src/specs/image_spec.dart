@@ -9,7 +9,7 @@ import '../attributes/scalar_attribute.dart';
 import '../factory/mix_provider_data.dart';
 
 @immutable
-class ImageSpec extends MixRecipe<ImageSpec> {
+class ImageSpec extends StyleRecipe<ImageSpec> {
   final double? width, height;
   final Color? color;
   final ImageRepeat? repeat;
@@ -25,11 +25,11 @@ class ImageSpec extends MixRecipe<ImageSpec> {
 
   static ImageSpec resolve(MixData mix) {
     return ImageSpec(
-      width: mix.get<ImageWidthAttribute, double>(),
-      height: mix.get<ImageHeightAttribute, double>(),
-      color: mix.get<ImageColorAttribute, Color>(),
-      repeat: mix.get<ImageRepeatAttribute, ImageRepeat>(),
-      fit: mix.get<BoxFitAttribute, BoxFit>(),
+      width: mix.attributeOfType<ImageWidthAttribute>()?.resolve(mix),
+      height: mix.attributeOfType<ImageHeightAttribute>()?.resolve(mix),
+      color: mix.attributeOfType<ImageColorAttribute>()?.resolve(mix),
+      repeat: mix.attributeOfType<ImageRepeatAttribute>()?.resolve(mix),
+      fit: mix.attributeOfType<BoxFitAttribute>()?.resolve(mix),
     );
   }
 

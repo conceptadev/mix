@@ -7,57 +7,48 @@ import 'scalar_util.dart';
 const aspectRatio = AspectRatioDecorator.new;
 
 const opacity = OpacityDecorator.new;
-const flexible = FlexibleDecoratorUtility(FlexibleDecorator.new);
+const flexible = FlexibleDecoratorUtility();
 
-const rotate = RotateUtility(RotateDecorator.new);
-
-class FlexibleDecoratorUtility
-    extends MixUtility<FlexibleDecorator, FlexibleDto> {
-  const FlexibleDecoratorUtility(super.builder);
-
-  FlexibleDecorator flexFit(FlexFit fit) => call(fit: fit);
-  FlexibleDecorator flex(int flex) => call(flex: flex);
-
-  FlexibleDecorator tight([int? flex]) => call(flex: flex, fit: FlexFit.tight);
-  FlexibleDecorator loose([int? flex]) => call(flex: flex, fit: FlexFit.loose);
-
-  FlexibleDecorator expanded([int? flex]) => tight(flex);
-
-  FlexibleDecorator call({int? flex, FlexFit? fit}) {
-    return builder(FlexibleDto(flex: flex, flexFit: fit));
-  }
-}
-
-class RotateUtility<T> extends ScalarUtility<T, int> {
-  const RotateUtility(super.builder);
-  T get d90 => call(1);
-  T get d180 => call(2);
-  T get d270 => call(3);
-}
+const rotate = RotateUtility();
 
 const scale = ScaleDecorator.new;
 
-const clipRounded = clipRRect;
-const clipOval = ClipOvalDecorator.new;
 const clipPath = ClipPathDecorator.new;
+const clipOval = ClipOvalDecorator.new;
+const clipRect = ClipRectDecorator.new;
+const clipRRect = ClipRRectDecorator.new;
 
-ClipRRectDecorator clipRRect(
-  double radius, {
-  CustomClipper<RRect>? clipper,
-  Clip? clipBehavior,
-}) {
-  return ClipRRectDecorator(
-    clipper: clipper,
+ClipPathDecorator clipTriangle({Clip? clipBehavior}) {
+  return ClipPathDecorator(
     clipBehavior: clipBehavior,
-    borderRadius: BorderRadius.circular(radius),
+    clipper: const TriangleClipper(),
   );
 }
 
-// ClipDecorator clipOval() => const ClipDecorator(ClipDecoratorType.oval);
+typedef FlexibleDecoratorBuilder = FlexibleDecorator Function({
+  int? flex,
+  FlexFit? fit,
+  Key? key,
+});
 
-ClipDecorator clipTriangle({Clip? clipBehavior}) {
-  return ClipPathDecorator(
-    clipper: const TriangleClipper(),
-    clipBehavior: clipBehavior,
-  );
+class FlexibleDecoratorUtility {
+  const FlexibleDecoratorUtility();
+
+  // FlexibleDecorator flexFit(FlexFit fit) => call(fit: fit);
+  // FlexibleDecorator flex(int flex) => call(flex: flex);
+
+  FlexibleDecorator tight([int? flex]) => call(flex: flex, fit: FlexFit.tight);
+  FlexibleDecorator loose([int? flex]) => call(flex: flex, fit: FlexFit.loose);
+  FlexibleDecorator expanded([int? flex]) => tight(flex);
+
+  FlexibleDecorator call({int? flex, FlexFit? fit, Key? key}) {
+    return FlexibleDecorator(flex: flex, fit: fit, key: key);
+  }
+}
+
+class RotateUtility extends ScalarUtility<RotateDecorator, int> {
+  const RotateUtility() : super(RotateDecorator.new);
+  RotateDecorator get d90 => call(1);
+  RotateDecorator get d180 => call(2);
+  RotateDecorator get d270 => call(3);
 }

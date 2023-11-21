@@ -16,7 +16,7 @@ class RadiusToken extends MixToken<Radius> {
 
   const RadiusToken.name(String name) : this(name, Radius.zero);
 
-  factory RadiusToken.resolvable(String name, Resolver<Radius> resolver) {
+  factory RadiusToken.resolvable(String name, TokenResolver<Radius> resolver) {
     return RadiusToken(name, RadiusRef(name, resolver));
   }
 }
@@ -27,7 +27,7 @@ class RadiusRef extends Radius with MixTokenRef<Radius> {
   final String tokenName;
 
   @override
-  final Resolver<Radius> resolve;
+  final TokenResolver<Radius> resolve;
 
   const RadiusRef(this.tokenName, this.resolve) : super.circular(0);
 

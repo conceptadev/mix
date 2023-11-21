@@ -1,6 +1,9 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 import '../../attributes/alignment_attribute.dart';
+import '../../attributes/attribute.dart';
 import '../../attributes/border/border_attribute.dart';
 import '../../attributes/border/border_radius_attribute.dart';
 import '../../attributes/color_attribute.dart';
@@ -9,7 +12,6 @@ import '../../attributes/decoration_attribute.dart';
 import '../../attributes/edge_insets_attribute.dart';
 import '../../attributes/scalar_attribute.dart';
 import '../../attributes/shadow_attribute.dart';
-import '../../attributes/space_attribute.dart';
 import '../../attributes/strut_style_attribute.dart';
 import '../../attributes/text_style_attribute.dart';
 
@@ -53,28 +55,10 @@ extension GradientExt on Gradient {
 }
 
 extension EdgeInsetsGeometryExt on EdgeInsetsGeometry {
-  EdgeInsetsGeometryAttribute toAttribute() {
-    if (this is EdgeInsets) return (this as EdgeInsets).toAttribute();
+  EdgeInsetsGeometryDto toDto() {
+    if (this is EdgeInsets) return (this as EdgeInsets).toDto();
     if (this is EdgeInsetsDirectional) {
-      return (this as EdgeInsetsDirectional).toAttribute();
-    }
-
-    throw UnimplementedError();
-  }
-
-  PaddingGeometryAttribute toPadding() {
-    if (this is EdgeInsets) return (this as EdgeInsets).toPadding();
-    if (this is EdgeInsetsDirectional) {
-      return (this as EdgeInsetsDirectional).toPadding();
-    }
-
-    throw UnimplementedError();
-  }
-
-  MarginGeometryAttribute toMargin() {
-    if (this is EdgeInsets) return (this as EdgeInsets).toMargin();
-    if (this is EdgeInsetsDirectional) {
-      return (this as EdgeInsetsDirectional).toMargin();
+      return (this as EdgeInsetsDirectional).toDto();
     }
 
     throw UnimplementedError();
@@ -82,21 +66,7 @@ extension EdgeInsetsGeometryExt on EdgeInsetsGeometry {
 }
 
 extension EdgeInsetsExt on EdgeInsets {
-  EdgeInsetsAttribute toAttribute() => EdgeInsetsAttribute(
-        top: top,
-        bottom: bottom,
-        left: left,
-        right: right,
-      );
-
-  PaddingAttribute toPadding() => PaddingAttribute(
-        top: top,
-        bottom: bottom,
-        left: left,
-        right: right,
-      );
-
-  MarginAttribute toMargin() => MarginAttribute(
+  EdgeInsetsDto toDto() => EdgeInsetsDto(
         top: top,
         bottom: bottom,
         left: left,
@@ -105,22 +75,7 @@ extension EdgeInsetsExt on EdgeInsets {
 }
 
 extension EdgeInsetsDirectionalExt on EdgeInsetsDirectional {
-  EdgeInsetsDirectionalAttribute toAttribute() =>
-      EdgeInsetsDirectionalAttribute(
-        top: top,
-        bottom: bottom,
-        start: start,
-        end: end,
-      );
-
-  PaddingDirectionalAttribute toPadding() => PaddingDirectionalAttribute(
-        top: top,
-        bottom: bottom,
-        start: start,
-        end: end,
-      );
-
-  MarginDirectionalAttribute toMargin() => MarginDirectionalAttribute(
+  EdgeInsetsDirectionalDto toDto() => EdgeInsetsDirectionalDto(
         top: top,
         bottom: bottom,
         start: start,
@@ -419,7 +374,9 @@ extension TextStyleExt on TextStyle {
         wordSpacing: wordSpacing,
       );
 
-  TextStyleAttribute toAttribute() => TextStyleAttribute(toDto());
+  TextStyleAttribute toAttribute() => TextStyleAttribute(
+        TextStyleListDto([toDto()]),
+      );
 }
 
 extension BorderExt on Border {
@@ -443,4 +400,32 @@ extension BorderDirectionalExt on BorderDirectional {
 
   BorderDirectionalAttribute toAttribute() =>
       BorderDirectionalAttribute(toDto());
+}
+
+extension ListExt<T> on List<T> {
+  List<T> merge(List<T>? other) {
+    if (other == null) return this;
+
+    if (isEmpty) return other;
+
+    final listLength = length;
+    final otherLength = other.length;
+    final maxLength = max(listLength, otherLength);
+
+    return List<T>.generate(maxLength, (int index) {
+      if (index < listLength && index < otherLength) {
+        final currentValue = this[index];
+        final otherValue = other[index];
+        if (currentValue is Mergeable) {
+          return currentValue.merge(otherValue);
+        }
+
+        return otherValue ?? currentValue;
+      } else if (index < listLength) {
+        return this[index];
+      }
+
+      return other[index];
+    });
+  }
 }

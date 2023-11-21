@@ -1,12 +1,10 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 
 import '../core/equality/compare_mixin.dart';
 import '../factory/mix_provider_data.dart';
 
 @immutable
-abstract class Attribute with Comparable {
+abstract class Attribute with Comparable, Mergeable<Attribute> {
   const Attribute();
 }
 
@@ -18,10 +16,9 @@ abstract class Dto<Value> with Comparable, Mergeable<Dto>, Resolver<Value> {
   const Dto();
 }
 
-abstract class DtoStyleAttribute<D extends Dto<Value>, Value>
-    extends ValueAttribute<D>
-    with Mergeable<DtoStyleAttribute>, Resolver<Value> {
-  const DtoStyleAttribute(super.value);
+abstract class ValueAttribute<Value> extends StyleAttribute
+    with Resolver<Value> {
+  const ValueAttribute();
 }
 
 mixin Resolver<Value> {
@@ -33,53 +30,34 @@ mixin Mergeable<T> {
   T merge(covariant T? other);
 }
 
-extension MergeableListExt<T extends Mergeable> on List<T> {
-  List<T> merge(List<T>? other) {
-    if (other == null) return this;
+@immutable
+abstract class ScalarAttribute<Value> extends ValueAttribute<Value> {
+  final Value value;
+  const ScalarAttribute(this.value);
 
-    if (isEmpty) return other;
+  @override
+  Value resolve(MixData mix) => value;
 
-    final listLength = length;
-    final otherLength = other.length;
-    final maxLength = max(listLength, otherLength);
-
-    return List<T>.generate(maxLength, (int index) {
-      if (index < listLength && index < otherLength) {
-        final currentValue = this[index];
-        final otherValue = other[index];
-
-        return currentValue.merge(otherValue);
-      } else if (index < listLength) {
-        return this[index];
-      }
-
-      return other[index];
-    });
-  }
+  @override
+  get props => [value];
 }
 
-@immutable
-abstract class ValueAttribute<Value> extends StyleAttribute {
-  final Value value;
-  const ValueAttribute(this.value);
+abstract class ResolvableAttribute<ResolvableValue extends Resolver<Value>,
+    Value> extends ValueAttribute<Value> {
+  final ResolvableValue value;
+  const ResolvableAttribute(this.value);
 
-  static Attr? maybe<Attr, Value>(Attr Function(Value) builder, Value? value) =>
-      value == null ? null : builder(value);
+  @override
+  Value resolve(MixData mix) => value.resolve(mix);
 
   @override
   get props => [value];
 }
 
 @immutable
-abstract class RecipeAttribute<Value extends MixRecipe<Value>>
-    extends StyleAttribute with Resolver<Value> {
-  const RecipeAttribute();
-}
-
-@immutable
-abstract class MixRecipe<T extends MixRecipe<T>> extends ThemeExtension<T>
+abstract class StyleRecipe<T extends StyleRecipe<T>> extends ThemeExtension<T>
     with Comparable {
-  const MixRecipe();
+  const StyleRecipe();
 
   Duration lerpDuration(Duration a, Duration b, double t) {
     int lerpTicks = ((1 - t) * a.inMilliseconds + t * b.inMilliseconds).round();

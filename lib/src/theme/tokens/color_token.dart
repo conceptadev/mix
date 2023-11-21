@@ -7,7 +7,7 @@ class ColorToken extends MixToken<Color> {
 
   const ColorToken.name(String name) : this(name, Colors.transparent);
 
-  factory ColorToken.resolvable(String name, Resolver<Color> resolver) {
+  factory ColorToken.resolvable(String name, TokenResolver<Color> resolver) {
     return ColorToken(name, ColorRef(name, resolver));
   }
 }
@@ -19,7 +19,7 @@ class ColorRef extends Color with MixTokenRef<Color> {
   final String tokenName;
 
   @override
-  final Resolver<Color> resolve;
+  final TokenResolver<Color> resolve;
 
   const ColorRef(this.tokenName, this.resolve) : super(0);
 

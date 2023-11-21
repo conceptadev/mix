@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../attributes/attribute.dart';
 import '../attributes/scalar_attribute.dart';
 
 const visible = VisibleAttribute.new;
@@ -114,13 +113,6 @@ abstract class ScalarUtility<Attr, Value> extends MixUtility<Attr, Value> {
   const ScalarUtility(super.builder);
 
   Attr call(Value value) => builder(value);
-}
-
-abstract class DtoUtility<Attr, D extends Dto<Value>, Value>
-    extends MixUtility<Attr, D> {
-  const DtoUtility(super.builder);
-
-  Attr call(Value value);
 }
 
 class DoubleUtility<T> extends ScalarUtility<T, double> {

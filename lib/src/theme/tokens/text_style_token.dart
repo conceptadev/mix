@@ -10,7 +10,8 @@ class TextStyleToken extends MixToken<TextStyle> {
 
   const TextStyleToken.name(String name) : this(name, const TextStyle());
 
-  factory TextStyleToken.resolvable(String name, Resolver<TextStyle> resolver) {
+  factory TextStyleToken.resolvable(
+      String name, TokenResolver<TextStyle> resolver) {
     return TextStyleToken(name, TextStyleRef(name, resolver));
   }
 }
@@ -21,7 +22,7 @@ class TextStyleRef extends TextStyle with MixTokenRef<TextStyle> {
   final String tokenName;
 
   @override
-  final Resolver<TextStyle> resolve;
+  final TokenResolver<TextStyle> resolve;
 
   const TextStyleRef(this.tokenName, this.resolve);
 

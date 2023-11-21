@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../mix.dart';
+import '../attributes/alignment_attribute.dart';
+import '../helpers/extensions/values_ext.dart';
+import 'scalar_util.dart';
 
 /// Generates an [AlignmentAttribute] from given [x] and [y] values.
 const alignment = AlignmentUtility(AlignmentGeometryAttribute.from);

@@ -5,7 +5,7 @@ import '../attributes/attribute.dart';
 import '../attributes/scalar_attribute.dart';
 import '../factory/mix_provider_data.dart';
 
-class StackSpec extends MixRecipe<StackSpec> {
+class StackSpec extends StyleRecipe<StackSpec> {
   final AlignmentGeometry? alignment;
   final StackFit? fit;
   final TextDirection? textDirection;
@@ -20,10 +20,12 @@ class StackSpec extends MixRecipe<StackSpec> {
 
   static StackSpec resolve(MixData mix) {
     return StackSpec(
-      alignment: mix.get<AlignmentGeometryAttribute, AlignmentGeometry>(),
-      fit: mix.get<StackFitAttribute, StackFit>(),
-      textDirection: mix.get<TextDirectionAttribute, TextDirection>(),
-      clipBehavior: mix.get<ClipAttribute, Clip>(),
+      alignment:
+          mix.attributeOfType<AlignmentGeometryAttribute>()?.resolve(mix),
+      fit: mix.attributeOfType<StackFitAttribute>()?.resolve(mix),
+      textDirection:
+          mix.attributeOfType<TextDirectionAttribute>()?.resolve(mix),
+      clipBehavior: mix.attributeOfType<ClipAttribute>()?.resolve(mix),
     );
   }
 

@@ -8,10 +8,10 @@ import 'attributes/border/border_radius_attribute.dart';
 import 'attributes/scalar_attribute.dart';
 import 'attributes/style_mix_attribute.dart';
 import 'attributes/text_style_attribute.dart';
-import 'directives/text_directive.dart';
+import 'core/extensions/values_ext.dart';
+import 'directives/directive.dart';
 import 'factory/mix_provider_data.dart';
 import 'factory/style_mix.dart';
-import 'helpers/extensions/values_ext.dart';
 import 'utils/alignment_util.dart';
 import 'utils/border_radius_util.dart';
 import 'utils/border_util.dart';
@@ -93,7 +93,7 @@ extension DeprecatedMixExtension<T extends Attribute> on StyleMix {
 @Deprecated('Use MixData instead.')
 typedef MixContext = MixData;
 
-extension WithSpaceTokensExt<T> on WithSpaceToken<T> {
+extension WithSpaceTokensExt<T> on WithSpacingTokens<T> {
   @Deprecated('Use xsmall instead')
   T get xs => this.xsmall();
   @Deprecated('Use small instead')
@@ -338,7 +338,7 @@ final px = paddingHorizontal;
 final py = paddingVertical;
 
 @Deprecated(kShortAliasDeprecation)
-final pi = padding.from;
+final pi = padding.as;
 
 @Deprecated(kShortAliasDeprecation)
 const m = margin;
@@ -359,7 +359,7 @@ final mx = marginHorizontal;
 @Deprecated(kShortAliasDeprecation)
 final my = marginVertical;
 @Deprecated(kShortAliasDeprecation)
-final mi = margin.from;
+final mi = margin.as;
 
 @Deprecated(kShortAliasDeprecation)
 final marginX = marginHorizontal;
@@ -374,10 +374,10 @@ const rounded = borderRadius;
 const r = borderRadius;
 
 @Deprecated('Use borderRadius.horizontal instead')
-final roundedH = borderRadius.horizontal;
+dynamic get roundedH => UnimplementedError();
 
 @Deprecated('use borderRadius.vertical instead')
-final roundedV = borderRadius.vertical;
+dynamic get roundedV => UnimplementedError();
 
 @Deprecated(kShortAliasDeprecation)
 dynamic get roundedDH => UnimplementedError();
@@ -487,13 +487,13 @@ CrossAxisAlignmentAttribute crossAxis(CrossAxisAlignment crossAxisAlignment) {
 }
 
 @Deprecated('Use textDirective(directive)')
-TextDirectiveAttribute directives(List<TextDirective> directives) {
-  return TextDirectiveAttribute(directives);
+TextDirective directives(List<TextDirective> directives) {
+  return directives.reduce((value, element) => value.merge(element));
 }
 
 @Deprecated('Use textDirective(directive)')
-TextDirectiveAttribute directive(TextDirective directive) {
-  return TextDirectiveAttribute([directive]);
+TextDirective directive(TextDirective directive) {
+  return directive;
 }
 
 @Deprecated('Locale is now passed to StyledText widget')
@@ -540,7 +540,7 @@ final marginHorizontal = margin.horizontal;
 final marginVertical = margin.vertical;
 
 @Deprecated('use marginFrom instead')
-final marginFrom = margin.from;
+final marginFrom = margin.as;
 
 @Deprecated('use padding.only instead')
 final paddingOnly = padding.only;
@@ -576,7 +576,7 @@ final paddingHorizontal = padding.horizontal;
 final paddingVertical = padding.vertical;
 
 @Deprecated('use paddingFrom instead')
-final paddingFrom = padding.from;
+final paddingFrom = padding.as;
 
 @Deprecated('use border.top instead')
 final borderTop = border.top;

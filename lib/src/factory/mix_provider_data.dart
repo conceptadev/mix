@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 
-import '../../mix.dart';
+import '../attributes/attribute.dart';
+import '../attributes/variant_attribute.dart';
 import '../core/attributes_map.dart';
 import '../core/equality/compare_mixin.dart';
+import '../decorators/decorator.dart';
+import '../theme/mix_theme.dart';
+import 'style_mix.dart';
 
 /// This class is used for encapsulating all [MixData] related operations.
 /// It contains a mixture of properties and methods useful for handling different attributes,
@@ -55,11 +59,11 @@ class MixData with Comparable {
   }
 
   // /// Resolves and returns the value of the [VisualAttribute] of type [A].
-  R get<A extends StyleAttribute<R>, R>() {
-    return attributeOfType<A>()?.resolve(this);
-  }
+  // R get<A extends Resolver<R>, R>() {
+  //   return attributeOfType<A>()?.resolve(this);
+  // }
 
-  /// Merges this [MixData] with another, prioritizing this instance's properties.
+  // /// Merges this [MixData] with another, prioritizing this instance's properties.
   MixData merge(MixData other) {
     return MixData._(
       resolver: _tokenResolver,

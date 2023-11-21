@@ -27,11 +27,11 @@ void main() {
   group('ClipDecoratorData', () {
     // equality
     test('equality', () {
-      const decoratorData = ClipDto(
+      const decoratorData = ClipData(
         clipBehavior: Clip.antiAlias,
         clipper: null,
       );
-      const otherDecoratorData = ClipDto(
+      const otherDecoratorData = ClipData(
         clipBehavior: Clip.antiAlias,
         clipper: null,
       );
@@ -39,7 +39,7 @@ void main() {
     });
 
     test('copyWith', () {
-      const decoratorData = ClipDto(
+      const decoratorData = ClipData(
         clipBehavior: Clip.antiAlias,
         clipper: null,
       );
@@ -58,11 +58,11 @@ void main() {
     });
 
     test('lerp', () {
-      const clipDecorator = ClipDto(
+      const clipDecorator = ClipData(
         clipBehavior: Clip.antiAlias,
         clipper: null,
       );
-      const other = ClipDto(
+      const other = ClipData(
         clipBehavior: Clip.hardEdge,
         clipper: CustomRRectClipper(),
       );

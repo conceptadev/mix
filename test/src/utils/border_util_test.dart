@@ -10,7 +10,7 @@ void main() {
         width: 10.0,
         style: BorderStyle.solid,
         strokeAlign: 0.5,
-      );
+      ) as BorderAttribute;
 
       expect(result.top?.color?.value, Colors.red);
       expect(result.top?.width, 10.0);

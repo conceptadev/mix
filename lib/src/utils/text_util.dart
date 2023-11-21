@@ -2,35 +2,25 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-import '../../mix.dart';
+import '../attributes/color_attribute.dart';
+import '../attributes/strut_style_attribute.dart';
+import '../attributes/text_style_attribute.dart';
+import '../core/extensions/values_ext.dart';
+import '../directives/directive.dart';
+import 'scalar_util.dart';
 
 StrutStyleAttribute strutStyle(StrutStyle strutStyle) {
   return strutStyle.toAttribute();
 }
 
-TextDirectiveAttribute textDirective(TextDirective directive) =>
-    TextDirectiveAttribute([directive]);
+TextDirective textDirective(Modifier<String> modifier) =>
+    TextDirective([modifier]);
 
 const textStyle = TextStyleUtility();
 
 TextStyleAttribute bold() => textStyle.fontWeight.bold();
 
 TextStyleAttribute italic() => textStyle.fontStyle.italic();
-
-ShadowAttribute _shadowFromDto(Shadow shadow) {
-  return ShadowAttribute(
-    blurRadius: shadow.blurRadius,
-    color: shadow.color.toAttribute(),
-    offset: shadow.offset,
-  );
-}
-
-List<ShadowAttribute>? _shadowsFromDto(List<Shadow>? shadows) {
-  if (shadows == null) return null;
-  if (shadows.isEmpty) return [];
-
-  return shadows.map(_shadowFromDto).toList();
-}
 
 class TextStyleUtility {
   const TextStyleUtility();
@@ -64,8 +54,7 @@ class TextStyleUtility {
   FontFamilyUtility get fontFamily =>
       FontFamilyUtility(((value) => call(fontFamily: value)));
 
-  TextStyleAttribute shadows(List<Shadow> shadows) =>
-      TextStyleAttribute(shadows: _shadowsFromDto(shadows));
+  TextStyleAttribute shadows(List<Shadow> shadows) => call(shadows: shadows);
 
   TextStyleAttribute foreground(Paint foreground) =>
       call(foreground: foreground);
@@ -88,30 +77,35 @@ class TextStyleUtility {
     TextBaseline? textBaseline,
     List<Shadow>? shadows,
     Color? color,
+    Color? backgroundColor,
     List<FontFeature>? fontFeatures,
     TextDecoration? decoration,
     TextDecorationStyle? decorationStyle,
     Paint? foreground,
     Paint? background,
+    Color? decorationColor,
     double? height,
-  }) =>
-      TextStyleAttribute(
-        background: background,
-        backgroundColor: backgroundolor?.toDto(),
-        color: color?.toDto(),
-        decoration: decoration,
-        decorationColor: decorationolor?.toDto(),
-        decorationStyle: decorationStyle,
-        fontFamily: fontFamily,
-        fontFeatures: fontFeatures,
-        fontSize: fontSize,
-        fontStyle: fontStyle,
-        fontWeight: fontWeight,
-        foreground: foreground,
-        height: height,
-        letterSpacing: letterSpacing,
-        shadows: _shadowsFromDto(shadows),
-        textBaseline: textBaseline,
-        wordSpacing: wordSpacing,
-      );
+  }) {
+    final textStyle = TextStyleDto(
+      background: background,
+      backgroundColor: backgroundColor?.toDto(),
+      color: color?.toDto(),
+      decoration: decoration,
+      decorationColor: decorationColor?.toDto(),
+      decorationStyle: decorationStyle,
+      fontFamily: fontFamily,
+      fontFeatures: fontFeatures,
+      fontSize: fontSize,
+      fontStyle: fontStyle,
+      fontWeight: fontWeight,
+      foreground: foreground,
+      height: height,
+      letterSpacing: letterSpacing,
+      shadows: shadows?.map((e) => e.toDto()).toList(),
+      textBaseline: textBaseline,
+      wordSpacing: wordSpacing,
+    );
+
+    return TextStyleAttribute(TextStyleListDto([textStyle]));
+  }
 }

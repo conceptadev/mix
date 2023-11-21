@@ -78,12 +78,12 @@ class BoxShadowDto extends ShadowDto<BoxShadow> {
 }
 
 @immutable
-class ShadowAttribute<T extends ShadowDto<Value>, Value extends Shadow>
-    extends DtoStyleAttribute<T, Value> {
+class ShadowAttribute<D extends ShadowDto<Value>, Value extends Shadow>
+    extends ResolvableAttribute<D, Value> {
   const ShadowAttribute(super.value);
 
   @override
-  ShadowAttribute merge(ShadowAttribute? other) {
+  ShadowAttribute merge(ShadowAttribute<D, Value>? other) {
     return other == null ? this : ShadowAttribute(value.merge(other.value));
   }
 

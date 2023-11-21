@@ -4,10 +4,8 @@ import '../factory/mix_provider_data.dart';
 import 'attribute.dart';
 
 @immutable
-abstract class EdgeInsetsGeometryAttribute<
-        Self extends EdgeInsetsGeometryAttribute<Self, Value>,
-        Value extends EdgeInsetsGeometry> extends DtoStyleAttribute
-    with Resolver<Value> {
+abstract class EdgeInsetsGeometryDto<Value extends EdgeInsetsGeometry>
+    extends Dto<Value> {
   final double? top;
   final double? bottom;
   final double? left;
@@ -17,7 +15,7 @@ abstract class EdgeInsetsGeometryAttribute<
   final double? start;
   final double? end;
 
-  const EdgeInsetsGeometryAttribute({
+  const EdgeInsetsGeometryDto({
     this.top,
     this.bottom,
     this.left,
@@ -26,23 +24,44 @@ abstract class EdgeInsetsGeometryAttribute<
     this.end,
   });
 
+  static EdgeInsetsGeometryDto? from(EdgeInsetsGeometry? value) {
+    if (value == null) return null;
+
+    if (value is EdgeInsets) {
+      return EdgeInsetsDto(
+        top: value.top,
+        bottom: value.bottom,
+        left: value.left,
+        right: value.right,
+      );
+    }
+
+    if (value is EdgeInsetsDirectional) {
+      return EdgeInsetsDirectionalDto(
+        top: value.top,
+        bottom: value.bottom,
+        start: value.start,
+        end: value.end,
+      );
+    }
+
+    throw UnimplementedError('Cannot convert $value to EdgeInsetsDto');
+  }
+
+  @override
+  EdgeInsetsGeometryDto merge(covariant EdgeInsetsGeometryDto? other);
+
   @override
   get props => [top, bottom, left, right, start, end];
 }
 
 @immutable
-class EdgeInsetsAttribute
-    extends EdgeInsetsGeometryAttribute<EdgeInsetsAttribute, EdgeInsets> {
-  const EdgeInsetsAttribute({
-    super.top,
-    super.bottom,
-    super.left,
-    super.right,
-  });
+class EdgeInsetsDto extends EdgeInsetsGeometryDto<EdgeInsets> {
+  const EdgeInsetsDto({super.top, super.bottom, super.left, super.right});
 
   @override
-  EdgeInsetsAttribute merge(EdgeInsetsAttribute? other) {
-    return EdgeInsetsAttribute(
+  EdgeInsetsDto merge(EdgeInsetsDto? other) {
+    return EdgeInsetsDto(
       top: other?.top ?? top,
       bottom: other?.bottom ?? bottom,
       left: other?.left ?? left,
@@ -62,9 +81,9 @@ class EdgeInsetsAttribute
 }
 
 @immutable
-class EdgeInsetsDirectionalAttribute extends EdgeInsetsGeometryAttribute<
-    EdgeInsetsDirectionalAttribute, EdgeInsetsDirectional> {
-  const EdgeInsetsDirectionalAttribute({
+class EdgeInsetsDirectionalDto
+    extends EdgeInsetsGeometryDto<EdgeInsetsDirectional> {
+  const EdgeInsetsDirectionalDto({
     super.top,
     super.bottom,
     super.start,
@@ -72,8 +91,8 @@ class EdgeInsetsDirectionalAttribute extends EdgeInsetsGeometryAttribute<
   });
 
   @override
-  EdgeInsetsDirectionalAttribute merge(EdgeInsetsDirectionalAttribute? other) {
-    return EdgeInsetsDirectionalAttribute(
+  EdgeInsetsDirectionalDto merge(EdgeInsetsDirectionalDto? other) {
+    return EdgeInsetsDirectionalDto(
       top: other?.top ?? top,
       bottom: other?.bottom ?? bottom,
       start: other?.start ?? start,
@@ -89,5 +108,36 @@ class EdgeInsetsDirectionalAttribute extends EdgeInsetsGeometryAttribute<
       end: end ?? 0,
       bottom: bottom ?? 0,
     );
+  }
+}
+
+@immutable
+abstract class EdgeInsetsGeometryAttribute<
+    T extends EdgeInsetsGeometryDto<Value>,
+    Value extends EdgeInsetsGeometry> extends ResolvableAttribute<T, Value> {
+  const EdgeInsetsGeometryAttribute(super.value);
+}
+
+@immutable
+class EdgeInsetsAttribute
+    extends EdgeInsetsGeometryAttribute<EdgeInsetsDto, EdgeInsets> {
+  const EdgeInsetsAttribute(super.value);
+
+  @override
+  EdgeInsetsAttribute merge(EdgeInsetsAttribute? other) {
+    return EdgeInsetsAttribute(value.merge(other?.value));
+  }
+}
+
+@immutable
+class EdgeInsetsDirectionalAttribute extends EdgeInsetsGeometryAttribute<
+    EdgeInsetsDirectionalDto, EdgeInsetsDirectional> {
+  const EdgeInsetsDirectionalAttribute(super.value);
+
+  @override
+  EdgeInsetsDirectionalAttribute merge(
+    EdgeInsetsDirectionalAttribute? other,
+  ) {
+    return EdgeInsetsDirectionalAttribute(value.merge(other?.value));
   }
 }

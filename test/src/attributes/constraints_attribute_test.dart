@@ -5,7 +5,7 @@ import 'package:mix/src/attributes/constraints_attribute.dart';
 import '../../helpers/testing_utils.dart';
 
 void main() {
-  group('BoxConstraintsAttribute', () {
+  group('BoxConstraintsDto', () {
     test('from constructor sets all values correctly', () {
       const constraints = BoxConstraints(
         minWidth: 50,
@@ -13,15 +13,15 @@ void main() {
         minHeight: 100,
         maxHeight: 200,
       );
-      final attr = constraints.toAttribute();
+      final attr = constraints.toDto();
       expect(attr.minWidth, 50);
       expect(attr.maxWidth, 150);
       expect(attr.minHeight, 100);
       expect(attr.maxHeight, 200);
     });
     test('merge returns merged object correctly', () {
-      const attr1 = BoxConstraintsAttribute(minWidth: 50, minHeight: 100);
-      const attr2 = BoxConstraintsAttribute(minWidth: 60, minHeight: 110);
+      const attr1 = BoxConstraintsDto(minWidth: 50, minHeight: 100);
+      const attr2 = BoxConstraintsDto(minWidth: 60, minHeight: 110);
       final merged = attr1.merge(attr2);
       expect(merged.minWidth, 60);
       expect(merged.minHeight, 110);
@@ -29,7 +29,7 @@ void main() {
       expect(merged.maxHeight, isNull);
     });
     test('resolve returns correct BoxConstraints with default values', () {
-      const attr = BoxConstraintsAttribute();
+      const attr = BoxConstraintsDto();
       final constraints = attr.resolve(EmptyMixData);
       expect(constraints.minWidth, 0);
       expect(constraints.maxWidth, double.infinity);
@@ -37,7 +37,7 @@ void main() {
       expect(constraints.maxHeight, double.infinity);
     });
     test('resolve returns correct BoxConstraints with specific values', () {
-      const attr = BoxConstraintsAttribute(minWidth: 50, minHeight: 100);
+      const attr = BoxConstraintsDto(minWidth: 50, minHeight: 100);
       final constraints = attr.resolve(EmptyMixData);
       expect(constraints.minWidth, 50);
       expect(constraints.maxWidth, double.infinity);
@@ -46,13 +46,13 @@ void main() {
       return const Placeholder();
     });
     test('Equality holds when all properties are the same', () {
-      const attr1 = BoxConstraintsAttribute(minWidth: 50, minHeight: 100);
-      const attr2 = BoxConstraintsAttribute(minWidth: 50, minHeight: 100);
+      const attr1 = BoxConstraintsDto(minWidth: 50, minHeight: 100);
+      const attr2 = BoxConstraintsDto(minWidth: 50, minHeight: 100);
       expect(attr1, attr2);
     });
     test('Equality fails when properties are different', () {
-      const attr1 = BoxConstraintsAttribute(minWidth: 50, minHeight: 100);
-      const attr2 = BoxConstraintsAttribute(minWidth: 60, minHeight: 100);
+      const attr1 = BoxConstraintsDto(minWidth: 50, minHeight: 100);
+      const attr2 = BoxConstraintsDto(minWidth: 60, minHeight: 100);
       expect(attr1, isNot(attr2));
     });
   });

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import '../../core/equality/compare_mixin.dart';
-import '../../helpers/extensions/iterable_ext.dart';
+import '../../core/extensions/iterable_ext.dart';
 import 'color_token.dart';
 import 'radius_token.dart';
 import 'text_style_token.dart';
@@ -43,15 +43,15 @@ abstract class MixToken<T> {
 
 mixin MixTokenRef<T> {
   String get tokenName;
-  Resolver<T> get resolve;
+  TokenResolver<T> get resolve;
 }
 
-typedef Resolver<T> = T Function(BuildContext context);
+typedef TokenResolver<T> = T Function(BuildContext context);
 
-typedef TokenMap<T extends MixToken<V>, V> = Map<T, Resolver<V>>;
+typedef TokenMap<T extends MixToken<V>, V> = Map<T, TokenResolver<V>>;
 
 class StyledTokens<T extends MixToken<V>, V> with Comparable {
-  final Map<T, Resolver<V>> _map;
+  final Map<T, TokenResolver<V>> _map;
 
   const StyledTokens(this._map);
 

@@ -7,7 +7,7 @@ import '../attributes/text_style_attribute.dart';
 import '../directives/directive.dart';
 import '../factory/mix_provider_data.dart';
 
-class TextRecipe extends MixRecipe<TextRecipe> {
+class TextRecipe extends StyleRecipe<TextRecipe> {
   final TextOverflow? overflow;
   final StrutStyle? strutStyle;
   final TextAlign? textAlign;
@@ -36,18 +36,21 @@ class TextRecipe extends MixRecipe<TextRecipe> {
 
   static TextRecipe resolve(MixData mix) {
     return TextRecipe(
-      overflow: mix.get<TextOverflowAttribute, TextOverflow>(),
-      strutStyle: mix.get<StrutStyleAttribute, StrutStyle>(),
-      textAlign: mix.get<TextAlignAttribute, TextAlign>(),
-      textScaleFactor: mix.get<TextScaleFactorAttribute, double>(),
-      maxLines: mix.get<MaxLinesAttribute, int>(),
-      style: mix.get<TextStyleAttribute, TextStyle>(),
-      textWidthBasis: mix.get<TextWidthBasisAttribute, TextWidthBasis>(),
+      overflow: mix.attributeOfType<TextOverflowAttribute>()?.resolve(mix),
+      strutStyle: mix.attributeOfType<StrutStyleAttribute>()?.resolve(mix),
+      textAlign: mix.attributeOfType<TextAlignAttribute>()?.resolve(mix),
+      textScaleFactor:
+          mix.attributeOfType<TextScaleFactorAttribute>()?.resolve(mix),
+      maxLines: mix.attributeOfType<MaxLinesAttribute>()?.resolve(mix),
+      style: mix.attributeOfType<TextStyleAttribute>()?.resolve(mix),
+      textWidthBasis:
+          mix.attributeOfType<TextWidthBasisAttribute>()?.resolve(mix),
       textHeightBehavior:
-          mix.get<TextHeightBehaviorAttribute, TextHeightBehavior>(),
-      textDirection: mix.get<TextDirectionAttribute, TextDirection>(),
-      softWrap: mix.get<SoftWrapAttribute, bool>(),
-      directives: mix.get<TextDirectiveAttribute, List<TextDirective>>() ?? [],
+          mix.attributeOfType<TextHeightBehaviorAttribute>()?.resolve(mix),
+      textDirection:
+          mix.attributeOfType<TextDirectionAttribute>()?.resolve(mix),
+      softWrap: mix.attributeOfType<SoftWrapAttribute>()?.resolve(mix),
+      directives: mix.attributeOfType<TextDirectiveAttribute>()?.resolve(mix),
     );
   }
 

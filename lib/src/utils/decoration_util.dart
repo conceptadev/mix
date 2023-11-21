@@ -6,9 +6,7 @@ import '../attributes/shadow_attribute.dart';
 import '../helpers/extensions/values_ext.dart';
 
 final backgroundColor = ColorUtility((value) {
-  return BoxDecorationAttribute(
-    BoxDecorationDto(color: value.toDto()),
-  );
+  return BoxDecorationAttribute(BoxDecorationDto(color: value.toDto()));
 });
 final bgColor = backgroundColor;
 

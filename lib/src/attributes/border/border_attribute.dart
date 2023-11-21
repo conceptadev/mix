@@ -5,8 +5,7 @@ import '../attribute.dart';
 import '../color_attribute.dart';
 
 @immutable
-abstract class BoxBorderDto<Value extends BoxBorder> extends Dto<Value>
-    with Resolver<Value> {
+abstract class BoxBorderDto<Value extends BoxBorder> extends Dto<Value> {
   final BorderSideDto? _top;
   final BorderSideDto? _bottom;
 
@@ -220,7 +219,7 @@ class BorderSideDto extends Dto<BorderSide> {
 }
 
 abstract class BoxBorderAttribute<T extends BoxBorderDto<Value>,
-    Value extends BoxBorder> extends DtoStyleAttribute<T, Value> {
+    Value extends BoxBorder> extends ResolvableAttribute<T, Value> {
   const BoxBorderAttribute(super.value);
 
   static BoxBorderAttribute from(BoxBorderDto dto) {
@@ -248,7 +247,7 @@ class BorderAttribute extends BoxBorderAttribute<BorderDto, Border> {
   const BorderAttribute(super.value);
 
   @visibleForTesting
-  BorderSideDto? get left => value._left;
+  BorderSideDto? get left => value.left;
 
   @visibleForTesting
   BorderSideDto? get right => value.right;
@@ -259,8 +258,8 @@ class BorderDirectionalAttribute
   const BorderDirectionalAttribute(super.value);
 
   @visibleForTesting
-  BorderSideDto? get start => value._start;
+  BorderSideDto? get start => value.start;
 
   @visibleForTesting
-  BorderSideDto? get end => value._end;
+  BorderSideDto? get end => value.end;
 }

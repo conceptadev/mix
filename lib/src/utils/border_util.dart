@@ -4,27 +4,21 @@ import '../attributes/border/border_attribute.dart';
 import '../helpers/extensions/values_ext.dart';
 import 'scalar_util.dart';
 
-const border = BorderUtility(BoxBorderAttribute.from);
+const border = BorderUtility();
 
-typedef BorderSideUtilityFn = BorderSideDto Function({
-  Color? color,
-  double? width,
-  BorderStyle? style,
-});
-
-class BorderSideUtility extends MixUtility<BoxBorderAttribute, BorderSideDto> {
+class BorderSideUtility<T extends BoxBorderAttribute<BoxBorderDto, BoxBorder>>
+    extends MixUtility<T, BorderSideDto> {
   const BorderSideUtility(super.builder);
 
-  BoxBorderAttribute color(Color color) => call(color: color);
+  T color(Color color) => call(color: color);
 
-  BoxBorderAttribute width(double width) => call(width: width);
+  T width(double width) => call(width: width);
 
-  BoxBorderAttribute style(BorderStyle style) => call(style: style);
+  T style(BorderStyle style) => call(style: style);
 
-  BoxBorderAttribute strokeAlign(double strokeAlign) =>
-      call(strokeAlign: strokeAlign);
+  T strokeAlign(double strokeAlign) => call(strokeAlign: strokeAlign);
 
-  BoxBorderAttribute call({
+  T call({
     Color? color,
     double? width,
     BorderStyle? style,
@@ -41,106 +35,158 @@ class BorderSideUtility extends MixUtility<BoxBorderAttribute, BorderSideDto> {
   }
 }
 
-class BorderUtility extends MixUtility<BoxBorderAttribute, BoxBorderDto> {
-  const BorderUtility(super.builder);
+class BorderUtility extends MixUtility<BorderAttribute, BorderDto> {
+  final _directional = const BorderDirectionalUtility();
+  const BorderUtility() : super(BorderAttribute.new);
 
-  BorderSideUtility get all => BorderSideUtility(_all);
-  BorderSideUtility get bottom => BorderSideUtility(_bottom);
+  BorderSideUtility<BorderAttribute> get all => BorderSideUtility(_all);
+  BorderSideUtility<BorderAttribute> get bottom => BorderSideUtility(_bottom);
 
-  BorderSideUtility get top => BorderSideUtility(_top);
+  BorderSideUtility<BorderAttribute> get top => BorderSideUtility(_top);
 
-  BorderSideUtility get left => BorderSideUtility(_left);
+  BorderSideUtility<BorderAttribute> get left => BorderSideUtility(_left);
 
-  BorderSideUtility get right => BorderSideUtility(_right);
+  BorderSideUtility<BorderAttribute> get right => BorderSideUtility(_right);
 
-  BorderSideUtility get horizontal => BorderSideUtility(_horizontal);
+  BorderSideUtility<BorderAttribute> get horizontal =>
+      BorderSideUtility(_horizontal);
 
-  BorderSideUtility get vertical => BorderSideUtility(_vertical);
+  BorderSideUtility<BorderAttribute> get vertical =>
+      BorderSideUtility(_vertical);
 
-  BorderSideUtility get start => BorderSideUtility(_start);
+  BorderSideUtility<BorderDirectionalAttribute> get start => _directional.start;
 
-  BorderSideUtility get end => BorderSideUtility(_end);
+  BorderSideUtility<BorderDirectionalAttribute> get end => _directional.end;
 
-  // Only method
-  BoxBorderAttribute only({
+  BorderAttribute only({
     BorderSideDto? top,
     BorderSideDto? bottom,
     BorderSideDto? left,
     BorderSideDto? right,
-    BorderSideDto? start,
-    BorderSideDto? end,
   }) {
-    assert((right == null && left == null) || (start == null && end == null),
-        'Cannot have both right and left and start and end parameters');
-
-    BoxBorderDto dto;
-    dto = start != null || end != null
-        ? BorderDirectionalDto(
-            start: start,
-            end: end,
-            top: top,
-            bottom: bottom,
-          )
-        : BorderDto(top: top, bottom: bottom, left: left, right: right);
-    return builder(dto);
+    return builder(
+      BorderDto(top: top, bottom: bottom, left: left, right: right),
+    );
   }
 
-  BoxBorderAttribute call({
+  BorderAttribute call({
     Color? color,
     double? width,
     BorderStyle? style,
     double? strokeAlign,
   }) {
-    final side = BorderSideDto(
-      color: color?.toDto(),
+    return all(
+      color: color,
       strokeAlign: strokeAlign,
       style: style,
       width: width,
     );
-
-    return _all(side);
   }
 
   // Unified border for all sides
-  BoxBorderAttribute _all(BorderSideDto side) {
-    return only(top: side, bottom: side, left: side, right: side);
-  }
+  BorderAttribute _all(BorderSideDto side) =>
+      only(top: side, bottom: side, left: side, right: side);
 
   // Specific sides
-  BoxBorderAttribute _top(BorderSideDto side) {
-    return only(top: side);
-  }
+  BorderAttribute _top(BorderSideDto side) => only(top: side);
 
-  BoxBorderAttribute _bottom(BorderSideDto side) {
-    return only(bottom: side);
-  }
+  BorderAttribute _bottom(BorderSideDto side) => only(bottom: side);
 
-  BoxBorderAttribute _left(BorderSideDto side) {
-    return only(left: side);
-  }
+  BorderAttribute _left(BorderSideDto side) => only(left: side);
 
-  BoxBorderAttribute _right(BorderSideDto side) {
-    return only(right: side);
-  }
-
-  BoxBorderAttribute _start(BorderSideDto side) {
-    return only(start: side);
-  }
-
-  BoxBorderAttribute _end(BorderSideDto side) {
-    return only(end: side);
-  }
+  BorderAttribute _right(BorderSideDto side) => only(right: side);
 
   // Symetric sides
-  BoxBorderAttribute _horizontal(BorderSideDto side) {
+  BorderAttribute _horizontal(BorderSideDto side) {
     final dto = BorderDto.symmetric(horizontal: side);
 
-    return builder(dto);
+    return BorderAttribute(dto);
   }
 
-  BoxBorderAttribute _vertical(BorderSideDto side) {
+  BorderAttribute _vertical(BorderSideDto side) {
     final dto = BorderDto.symmetric(vertical: side);
 
-    return builder(dto);
+    return BorderAttribute(dto);
+  }
+}
+
+class BorderDirectionalUtility
+    extends MixUtility<BorderDirectionalAttribute, BorderDirectionalDto> {
+  const BorderDirectionalUtility() : super(BorderDirectionalAttribute.new);
+
+  BorderSideUtility<BorderDirectionalAttribute> get start =>
+      BorderSideUtility(_start);
+
+  BorderSideUtility<BorderDirectionalAttribute> get end =>
+      BorderSideUtility(_end);
+
+  BorderSideUtility<BorderDirectionalAttribute> get top =>
+      BorderSideUtility(_top);
+
+  BorderSideUtility<BorderDirectionalAttribute> get bottom =>
+      BorderSideUtility(_bottom);
+
+  BorderSideUtility<BorderDirectionalAttribute> get horizontal =>
+      BorderSideUtility(_horizontal);
+
+  BorderSideUtility<BorderDirectionalAttribute> get vertical =>
+      BorderSideUtility(_vertical);
+
+  BorderSideUtility<BorderDirectionalAttribute> get all =>
+      BorderSideUtility(_all);
+
+  BorderDirectionalAttribute only({
+    BorderSideDto? start,
+    BorderSideDto? end,
+    BorderSideDto? top,
+    BorderSideDto? bottom,
+  }) {
+    final border = BorderDirectionalDto(
+      start: start,
+      end: end,
+      top: top,
+      bottom: bottom,
+    );
+
+    return BorderDirectionalAttribute(border);
+  }
+
+  BorderDirectionalAttribute call({
+    Color? color,
+    double? width,
+    BorderStyle? style,
+    double? strokeAlign,
+  }) {
+    return all(
+      color: color,
+      strokeAlign: strokeAlign,
+      style: style,
+      width: width,
+    );
+  }
+
+  BorderDirectionalAttribute _all(BorderSideDto side) {
+    return BorderDirectionalAttribute(BorderDirectionalDto.all(side));
+  }
+
+  BorderDirectionalAttribute _top(BorderSideDto side) => only(top: side);
+
+  BorderDirectionalAttribute _bottom(BorderSideDto side) => only(bottom: side);
+
+  BorderDirectionalAttribute _start(BorderSideDto side) => only(start: side);
+
+  BorderDirectionalAttribute _end(BorderSideDto side) => only(end: side);
+
+  // Symetric sides
+  BorderDirectionalAttribute _horizontal(BorderSideDto side) {
+    return BorderDirectionalAttribute(
+      BorderDirectionalDto.symmetric(horizontal: side),
+    );
+  }
+
+  BorderDirectionalAttribute _vertical(BorderSideDto side) {
+    return BorderDirectionalAttribute(
+      BorderDirectionalDto.symmetric(vertical: side),
+    );
   }
 }

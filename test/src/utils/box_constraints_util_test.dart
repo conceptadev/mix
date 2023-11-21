@@ -10,65 +10,65 @@ void main() {
         minHeight: 100.0,
         maxHeight: 200.0,
       );
-      expect(result.minWidth, 50.0);
-      expect(result.maxWidth, 150.0);
-      expect(result.minHeight, 100.0);
-      expect(result.maxHeight, 200.0);
+      expect(result.value.minWidth, 50.0);
+      expect(result.value.maxWidth, 150.0);
+      expect(result.value.minHeight, 100.0);
+      expect(result.value.maxHeight, 200.0);
     });
 
     test('minWidth()', () {
       final result = minWidth(50.0);
-      expect(result.minWidth, 50.0);
-      expect(result.maxWidth, isNull);
-      expect(result.minHeight, isNull);
-      expect(result.maxHeight, isNull);
+      expect(result.value.minWidth, 50.0);
+      expect(result.value.maxWidth, isNull);
+      expect(result.value.minHeight, isNull);
+      expect(result.value.maxHeight, isNull);
     });
 
     test('maxWidth()', () {
       final result = maxWidth(150.0);
-      expect(result.minWidth, isNull);
-      expect(result.maxWidth, 150.0);
-      expect(result.minHeight, isNull);
-      expect(result.maxHeight, isNull);
+      expect(result.value.minWidth, isNull);
+      expect(result.value.maxWidth, 150.0);
+      expect(result.value.minHeight, isNull);
+      expect(result.value.maxHeight, isNull);
     });
 
     test('minHeight()', () {
       final result = minHeight(100.0);
-      expect(result.minWidth, isNull);
-      expect(result.maxWidth, isNull);
-      expect(result.minHeight, 100.0);
-      expect(result.maxHeight, isNull);
+      expect(result.value.minWidth, isNull);
+      expect(result.value.maxWidth, isNull);
+      expect(result.value.minHeight, 100.0);
+      expect(result.value.maxHeight, isNull);
     });
 
     test('maxHeight()', () {
       final result = maxHeight(200.0);
-      expect(result.minWidth, isNull);
-      expect(result.maxWidth, isNull);
-      expect(result.minHeight, isNull);
-      expect(result.maxHeight, 200.0);
+      expect(result.value.minWidth, isNull);
+      expect(result.value.maxWidth, isNull);
+      expect(result.value.minHeight, isNull);
+      expect(result.value.maxHeight, 200.0);
     });
 
     // width
     test('width()', () {
       final result = width(50.0);
 
-      expect(result.minWidth, isNull);
-      expect(result.maxWidth, isNull);
-      expect(result.width, 50.0);
-      expect(result.minHeight, isNull);
-      expect(result.maxHeight, isNull);
-      expect(result.height, isNull);
+      expect(result.value.minWidth, isNull);
+      expect(result.value.maxWidth, isNull);
+      expect(result.value.width, 50.0);
+      expect(result.value.minHeight, isNull);
+      expect(result.value.maxHeight, isNull);
+      expect(result.value.height, isNull);
     });
 
     // height
     test('height()', () {
       final result = height(50.0);
-      expect(result.minWidth, isNull);
-      expect(result.maxWidth, isNull);
-      expect(result.height, 50.0);
-      expect(result.minHeight, isNull);
-      expect(result.maxHeight, isNull);
-      expect(result.width, isNull);
+      expect(result.value.minWidth, isNull);
+      expect(result.value.maxWidth, isNull);
+      expect(result.value.height, 50.0);
+      expect(result.value.minHeight, isNull);
+      expect(result.value.maxHeight, isNull);
+      expect(result.value.width, isNull);
     });
   });
 }

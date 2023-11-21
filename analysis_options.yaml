@@ -54,12 +54,12 @@ dart_code_metrics:
           - private-fields
           - constructors
           - static-methods
-          - public-getters
-          - private-getters
-          - public-setters
-          - private-setters
-          - public-methods
           - private-methods
+          - private-getters
+          - private-setters
+          - public-getters
+          - public-setters
+          - public-methods
           - overridden-public-methods
           - overridden-public-getters
           - build-method

@@ -18,32 +18,14 @@ void main() {
       Colors.white,
       Colors.grey,
     ];
-    test('ColorAttribute resolves correctly', () {
-      const colorAttribute = ColorAttribute(Colors.red);
-      final resolvedValue = colorAttribute.resolve(EmptyMixData);
-      expect(resolvedValue, Colors.red);
-    });
-    test('ColorAttribute merge returns merged object correctly', () {
-      const attr1 = ColorAttribute(Colors.red);
-      const attr2 = ColorAttribute(Colors.green);
-      final merged = attr1.merge(attr2);
-      final resolvedValue = merged.resolve(EmptyMixData);
-      expect(resolvedValue, Colors.green);
-    });
-    test('ColorAttribute merge returns itself if other is null', () {
-      const attr1 = ColorAttribute(Colors.red);
-      final merged = attr1.merge(null);
-      expect(merged, attr1);
-    });
-    test('ColorAttribute equality holds when properties are the same', () {
-      const attr1 = ColorAttribute(Colors.red);
-      const attr2 = ColorAttribute(Colors.red);
-      expect(attr1, attr2);
-    });
-    test('ColorAttribute equality fails when properties are different', () {
-      const attr1 = ColorAttribute(Colors.red);
-      const attr2 = ColorAttribute(Colors.green);
-      expect(attr1, isNot(attr2));
+
+    // ignore: avoid_function_literals_in_foreach_calls
+    return colorList.forEach((color) {
+      test('ColorAttribute.from resolves correctly', () {
+        final colorAttribute = ColorDto(color);
+        final resolvedValue = colorAttribute.resolve(EmptyMixData);
+        expect(resolvedValue, color);
+      });
     });
   });
 }

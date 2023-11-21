@@ -29,7 +29,7 @@ class ColorDto extends Dto<Color> {
 }
 
 @immutable
-abstract class ColorAttribute extends DtoStyleAttribute<ColorDto, Color> {
+abstract class ColorAttribute extends ResolvableAttribute<ColorDto, Color> {
   const ColorAttribute(super.value);
 
   @override
@@ -40,6 +40,7 @@ abstract class ColorAttribute extends DtoStyleAttribute<ColorDto, Color> {
 }
 
 @immutable
-class ColorUtility<T> extends ScalarUtility<T, Color> {
+class ColorUtility<Attr extends StyleAttribute>
+    extends ScalarUtility<Attr, Color> {
   const ColorUtility(super.builder);
 }

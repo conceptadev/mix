@@ -97,7 +97,7 @@ class AligmentDirectionalDto
 
 @immutable
 abstract class AlignmentGeometryAttribute<T extends AlignmentGeometryDto<Value>,
-    Value extends AlignmentGeometry> extends DtoStyleAttribute<T, Value> {
+    Value extends AlignmentGeometry> extends ResolvableAttribute<T, Value> {
   const AlignmentGeometryAttribute(super.value);
 
   static AlignmentGeometryAttribute from(AlignmentGeometryDto dto) {

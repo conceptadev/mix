@@ -18,7 +18,7 @@ void main() {
         ),
       );
 
-      final spec = IconSpec.resolve(mix);
+      final spec = StyledIconRecipe.resolve(mix);
 
       expect(spec.color, Colors.red);
       expect(spec.size, 20.0);
@@ -26,7 +26,7 @@ void main() {
     });
 
     test('copyWith', () {
-      const spec = IconSpec(
+      const spec = StyledIconRecipe(
         color: Colors.red,
         size: 20.0,
         textDirection: TextDirection.ltr,
@@ -40,13 +40,13 @@ void main() {
     });
 
     test('lerp', () {
-      const spec1 = IconSpec(
+      const spec1 = StyledIconRecipe(
         color: Colors.red,
         size: 20.0,
         textDirection: TextDirection.ltr,
       );
 
-      const spec2 = IconSpec(
+      const spec2 = StyledIconRecipe(
         color: Colors.blue,
         size: 30.0,
         textDirection: TextDirection.rtl,

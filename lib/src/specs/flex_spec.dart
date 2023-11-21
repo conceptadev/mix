@@ -6,7 +6,7 @@ import '../attributes/attribute.dart';
 import '../attributes/scalar_attribute.dart';
 import '../factory/mix_provider_data.dart';
 
-class FlexSpec extends MixRecipe<FlexSpec> {
+class FlexSpec extends StyleRecipe<FlexSpec> {
   final Axis? direction;
   final MainAxisAlignment? mainAxisAlignment;
   final CrossAxisAlignment? crossAxisAlignment;
@@ -32,17 +32,18 @@ class FlexSpec extends MixRecipe<FlexSpec> {
   static FlexSpec resolve(MixData mix) {
     return FlexSpec(
       crossAxisAlignment:
-          mix.get<CrossAxisAlignmentAttribute, CrossAxisAlignment>(),
+          mix.attributeOfType<CrossAxisAlignmentAttribute>()?.resolve(mix),
       mainAxisAlignment:
-          mix.get<MainAxisAlignmentAttribute, MainAxisAlignment>(),
-      mainAxisSize: mix.get<MainAxisSizeAttribute, MainAxisSize>(),
+          mix.attributeOfType<MainAxisAlignmentAttribute>()?.resolve(mix),
+      mainAxisSize: mix.attributeOfType<MainAxisSizeAttribute>()?.resolve(mix),
       verticalDirection:
-          mix.get<VerticalDirectionAttribute, VerticalDirection>(),
-      direction: mix.get<AxisAttribute, Axis>(),
-      textDirection: mix.get<TextDirectionAttribute, TextDirection>(),
-      textBaseline: mix.get<TextBaselineAttribute, TextBaseline>(),
-      clipBehavior: mix.get<ClipAttribute, Clip>(),
-      gap: mix.get<GapAttribute, double>(),
+          mix.attributeOfType<VerticalDirectionAttribute>()?.resolve(mix),
+      direction: mix.attributeOfType<AxisAttribute>()?.resolve(mix),
+      textDirection:
+          mix.attributeOfType<TextDirectionAttribute>()?.resolve(mix),
+      textBaseline: mix.attributeOfType<TextBaselineAttribute>()?.resolve(mix),
+      clipBehavior: mix.attributeOfType<ClipAttribute>()?.resolve(mix),
+      gap: mix.attributeOfType<GapAttribute>()?.resolve(mix),
     );
   }
 

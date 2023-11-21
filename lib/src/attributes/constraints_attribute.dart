@@ -69,7 +69,7 @@ class BoxConstraintsDto extends ConstraintsDto<BoxConstraints> {
 
 @immutable
 abstract class ConstraintsAttribute<D extends ConstraintsDto<Value>,
-    Value extends Constraints> extends DtoStyleAttribute<D, Value> {
+    Value extends Constraints> extends ResolvableAttribute<D, Value> {
   const ConstraintsAttribute(super.value);
 }
 

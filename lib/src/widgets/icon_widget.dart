@@ -10,23 +10,25 @@ class StyledIcon extends StyledWidget {
     super.style,
     super.key,
     super.inherit,
+    this.textDirection,
   });
 
   final IconData? icon;
   final String? semanticLabel;
+  final TextDirection? textDirection;
 
   @override
   Widget build(BuildContext context) {
     return buildWithStyle(context, (data) {
       // Resolve style attributes
-      final spec = IconSpec.resolve(data);
+      final spec = StyledIconRecipe.resolve(data);
 
       return Icon(
         icon,
         size: spec.size,
         color: spec.color,
         semanticLabel: semanticLabel,
-        textDirection: spec.textDirection,
+        textDirection: textDirection,
       );
     });
   }
@@ -40,17 +42,19 @@ class AnimatedStyledIcon extends StyledWidget {
     super.key,
     required this.progress,
     super.inherit,
+    this.textDirection,
   });
 
   final AnimatedIconData icon;
   final String? semanticLabel;
   final Animation<double> progress;
+  final TextDirection? textDirection;
 
   @override
   Widget build(BuildContext context) {
     return buildWithStyle(context, (data) {
       // Resolve style attributes
-      final spec = IconSpec.resolve(data);
+      final spec = StyledIconRecipe.resolve(data);
 
       return AnimatedIcon(
         icon: icon,
@@ -58,7 +62,7 @@ class AnimatedStyledIcon extends StyledWidget {
         color: spec.color,
         size: spec.size,
         semanticLabel: semanticLabel,
-        textDirection: spec.textDirection,
+        textDirection: textDirection,
       );
     });
   }

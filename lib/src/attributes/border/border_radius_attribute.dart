@@ -1,3 +1,5 @@
+// ignore_for_file: avoid-non-null-assertion
+
 import 'package:flutter/material.dart';
 
 import '../../factory/mix_provider_data.dart';
@@ -42,8 +44,7 @@ abstract class BorderRadiusGeometryDto<T extends BorderRadiusGeometry>
 }
 
 @immutable
-class BorderRadiusDto extends BorderRadiusGeometryDto<BorderRadius>
-    with Resolver<BorderRadius> {
+class BorderRadiusDto extends BorderRadiusGeometryDto<BorderRadius> {
   const BorderRadiusDto({
     super.topLeft,
     super.topRight,
@@ -203,7 +204,7 @@ class BorderRadiusDirectionalDto
 @immutable
 abstract class BorderRadiusGeometryAttribute<
     T extends BorderRadiusGeometryDto<Value>,
-    Value extends BorderRadiusGeometry> extends DtoStyleAttribute<T, Value> {
+    Value extends BorderRadiusGeometry> extends ResolvableAttribute<T, Value> {
   const BorderRadiusGeometryAttribute(super.value);
 
   static BorderRadiusGeometryAttribute from(

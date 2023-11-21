@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 import '../factory/mix_provider_data.dart';
+import '../helpers/extensions/values_ext.dart';
 import '../theme/tokens/text_style_token.dart';
 import 'attribute.dart';
 import 'color_attribute.dart';
@@ -167,9 +168,7 @@ class TextStyleListDto extends Dto<TextStyle> {
   TextStyleListDto merge(TextStyleListDto? other) {
     if (other == null) return this;
 
-    return TextStyleListDto(
-      [...values, ...other.values],
-    );
+    return TextStyleListDto([...values, ...other.values]);
   }
 
   @override
@@ -185,7 +184,7 @@ class TextStyleListDto extends Dto<TextStyle> {
 
 @immutable
 class TextStyleAttribute
-    extends DtoStyleAttribute<TextStyleListDto, TextStyle> {
+    extends ResolvableAttribute<TextStyleListDto, TextStyle> {
   const TextStyleAttribute(super.value);
 
   @override

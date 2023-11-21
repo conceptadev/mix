@@ -6,7 +6,7 @@ import 'package:meta/meta.dart';
 import 'package:mix/mix.dart';
 import 'package:mockito/mockito.dart';
 
-export 'package:mix/src/helpers/extensions/values_ext.dart';
+export 'package:mix/src/core/extensions/values_ext.dart';
 
 class MockBuildContext extends Mock implements BuildContext {}
 
@@ -183,7 +183,7 @@ class WrapMixThemeWidget extends StatelessWidget {
 }
 
 class MockDoubleScalarAttribute
-    extends ValueAttribute<MockDoubleScalarAttribute, double> {
+    extends ScalarAttribute<MockDoubleScalarAttribute, double> {
   const MockDoubleScalarAttribute(super.value);
 
   @override
@@ -191,7 +191,7 @@ class MockDoubleScalarAttribute
 }
 
 class MockIntScalarAttribute
-    extends ValueAttribute<MockIntScalarAttribute, int> {
+    extends ScalarAttribute<MockIntScalarAttribute, int> {
   const MockIntScalarAttribute(super.value);
 
   @override
@@ -224,7 +224,7 @@ class MockDoubleDecoratorAttribute extends Decorator<double> {
 }
 
 class MockBooleanScalarAttribute
-    extends ValueAttribute<MockBooleanScalarAttribute, bool> {
+    extends ScalarAttribute<MockBooleanScalarAttribute, bool> {
   const MockBooleanScalarAttribute(super.value);
 
   @override
@@ -232,7 +232,7 @@ class MockBooleanScalarAttribute
 }
 
 class MockStringScalarAttribute
-    extends ValueAttribute<MockStringScalarAttribute, String> {
+    extends ScalarAttribute<MockStringScalarAttribute, String> {
   const MockStringScalarAttribute(super.value);
 
   @override
@@ -254,7 +254,7 @@ class MockInvalidAttribute extends Attribute {
 const mockVariant = Variant('mock-variant');
 
 @isTestGroup
-void testScalarAttribute<T extends ValueAttribute<T, V>, V>(
+void testScalarAttribute<T extends ScalarAttribute<T, V>, V>(
   String groupName,
   T Function(V value) builder,
   List<V> values,
