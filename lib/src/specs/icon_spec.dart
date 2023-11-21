@@ -10,10 +10,14 @@ class StyledIconRecipe extends StyleRecipe<StyledIconRecipe> {
 
   const StyledIconRecipe({required this.color, required this.size});
 
+  const StyledIconRecipe.empty()
+      : color = null,
+        size = null;
+
   static StyledIconRecipe resolve(MixData mix) {
     final recipe = mix.attributeOfType<IconAttribute>()?.resolve(mix);
 
-    return StyledIconRecipe(color: recipe?.color, size: recipe?.size);
+    return recipe ?? const StyledIconRecipe.empty();
   }
 
   @override

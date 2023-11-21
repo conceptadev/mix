@@ -32,18 +32,17 @@ class FlexSpec extends StyleRecipe<FlexSpec> {
   static FlexSpec resolve(MixData mix) {
     return FlexSpec(
       crossAxisAlignment:
-          mix.attributeOfType<CrossAxisAlignmentAttribute>()?.resolve(mix),
+          mix.attributeOfType<CrossAxisAlignmentAttribute>()?.value,
       mainAxisAlignment:
-          mix.attributeOfType<MainAxisAlignmentAttribute>()?.resolve(mix),
-      mainAxisSize: mix.attributeOfType<MainAxisSizeAttribute>()?.resolve(mix),
+          mix.attributeOfType<MainAxisAlignmentAttribute>()?.value,
+      mainAxisSize: mix.attributeOfType<MainAxisSizeAttribute>()?.value,
       verticalDirection:
-          mix.attributeOfType<VerticalDirectionAttribute>()?.resolve(mix),
-      direction: mix.attributeOfType<AxisAttribute>()?.resolve(mix),
-      textDirection:
-          mix.attributeOfType<TextDirectionAttribute>()?.resolve(mix),
-      textBaseline: mix.attributeOfType<TextBaselineAttribute>()?.resolve(mix),
-      clipBehavior: mix.attributeOfType<ClipAttribute>()?.resolve(mix),
-      gap: mix.attributeOfType<GapAttribute>()?.resolve(mix),
+          mix.attributeOfType<VerticalDirectionAttribute>()?.value,
+      direction: mix.attributeOfType<AxisAttribute>()?.value,
+      textDirection: mix.attributeOfType<TextDirectionAttribute>()?.value,
+      textBaseline: mix.attributeOfType<TextBaselineAttribute>()?.value,
+      clipBehavior: mix.attributeOfType<ClipAttribute>()?.value,
+      gap: mix.attributeOfType<GapAttribute>()?.value,
     );
   }
 

@@ -487,12 +487,12 @@ CrossAxisAlignmentAttribute crossAxis(CrossAxisAlignment crossAxisAlignment) {
 }
 
 @Deprecated('Use textDirective(directive)')
-TextDirective directives(List<TextDirective> directives) {
+TextDirectiveAttribute directives(List<TextDirectiveAttribute> directives) {
   return directives.reduce((value, element) => value.merge(element));
 }
 
 @Deprecated('Use textDirective(directive)')
-TextDirective directive(TextDirective directive) {
+TextDirectiveAttribute directive(TextDirectiveAttribute directive) {
   return directive;
 }
 

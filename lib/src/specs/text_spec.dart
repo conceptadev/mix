@@ -36,33 +36,25 @@ class TextRecipe extends StyleRecipe<TextRecipe> {
 
   static TextRecipe resolve(MixData mix) {
     return TextRecipe(
-      overflow: mix.attributeOfType<TextOverflowAttribute>()?.resolve(mix),
+      overflow: mix.attributeOfType<TextOverflowAttribute>()?.value,
       strutStyle: mix.attributeOfType<StrutStyleAttribute>()?.resolve(mix),
-      textAlign: mix.attributeOfType<TextAlignAttribute>()?.resolve(mix),
-      textScaleFactor:
-          mix.attributeOfType<TextScaleFactorAttribute>()?.resolve(mix),
-      maxLines: mix.attributeOfType<MaxLinesAttribute>()?.resolve(mix),
+      textAlign: mix.attributeOfType<TextAlignAttribute>()?.value,
+      textScaleFactor: mix.attributeOfType<TextScaleFactorAttribute>()?.value,
+      maxLines: mix.attributeOfType<MaxLinesAttribute>()?.value,
       style: mix.attributeOfType<TextStyleAttribute>()?.resolve(mix),
-      textWidthBasis:
-          mix.attributeOfType<TextWidthBasisAttribute>()?.resolve(mix),
+      textWidthBasis: mix.attributeOfType<TextWidthBasisAttribute>()?.value,
       textHeightBehavior:
-          mix.attributeOfType<TextHeightBehaviorAttribute>()?.resolve(mix),
-      textDirection:
-          mix.attributeOfType<TextDirectionAttribute>()?.resolve(mix),
-      softWrap: mix.attributeOfType<SoftWrapAttribute>()?.resolve(mix),
-      directives: mix.attributeOfType<TextDirectiveAttribute>()?.resolve(mix),
+          mix.attributeOfType<TextHeightBehaviorAttribute>()?.value,
+      textDirection: mix.attributeOfType<TextDirectionAttribute>()?.value,
+      softWrap: mix.attributeOfType<SoftWrapAttribute>()?.value,
+      directives: mix.attributeOfType<TextDirectiveAttribute>()?.value ?? [],
     );
   }
 
   String applyTextDirectives(String? text) {
     if (text == null) return '';
 
-    String modifiedText = text;
-    for (final directive in directives) {
-      modifiedText = directive.modify(modifiedText);
-    }
-
-    return modifiedText;
+    return directives.fold(text, (text, directive) => directive(text));
   }
 
   @override

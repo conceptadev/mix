@@ -22,10 +22,9 @@ class StackSpec extends StyleRecipe<StackSpec> {
     return StackSpec(
       alignment:
           mix.attributeOfType<AlignmentGeometryAttribute>()?.resolve(mix),
-      fit: mix.attributeOfType<StackFitAttribute>()?.resolve(mix),
-      textDirection:
-          mix.attributeOfType<TextDirectionAttribute>()?.resolve(mix),
-      clipBehavior: mix.attributeOfType<ClipAttribute>()?.resolve(mix),
+      fit: mix.attributeOfType<StackFitAttribute>()?.value,
+      textDirection: mix.attributeOfType<TextDirectionAttribute>()?.value,
+      clipBehavior: mix.attributeOfType<ClipAttribute>()?.value,
     );
   }
 

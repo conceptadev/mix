@@ -165,7 +165,7 @@ void main() {
         // Build our app and trigger a frame
         await tester.pumpWidget(
           MaterialApp(
-            home: clipDecorator.render(
+            home: clipDecorator.build(
               Container(color: Colors.blue),
               EmptyMixData,
             ),
@@ -214,7 +214,7 @@ void main() {
         // Build our app and trigger a frame
         await tester.pumpWidget(
           MaterialApp(
-            home: clipDecorator.render(
+            home: clipDecorator.build(
               Container(color: Colors.blue),
               EmptyMixData,
             ),
@@ -273,7 +273,7 @@ void main() {
         // Build our app and trigger a frame
         await tester.pumpWidget(
           MaterialApp(
-            home: clipDecorator.render(
+            home: clipDecorator.build(
               Container(color: Colors.blue),
               EmptyMixData,
             ),
@@ -318,7 +318,7 @@ void main() {
 
         await tester.pumpWidget(
           MaterialApp(
-            home: clipPathDecorator.render(
+            home: clipPathDecorator.build(
               Container(color: Colors.blue),
               EmptyMixData,
             ),

@@ -16,8 +16,8 @@ import '../../attributes/strut_style_attribute.dart';
 import '../../attributes/text_style_attribute.dart';
 
 extension StrutStyleExt on StrutStyle {
-  StrutStyleAttribute toAttribute() {
-    return StrutStyleAttribute(
+  StrutStyleDto toAttribute() {
+    return StrutStyleDto(
       fontFamily: fontFamily,
       fontFamilyFallback: fontFamilyFallback,
       fontSize: fontSize,

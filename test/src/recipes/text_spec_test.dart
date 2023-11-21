@@ -11,7 +11,7 @@ void main() {
         MockBuildContext(),
         StyleMix(
           const TextOverflowAttribute(TextOverflow.ellipsis),
-          const StrutStyleAttribute(fontSize: 20.0),
+          const StrutStyleDto(fontSize: 20.0),
           const TextAlignAttribute(TextAlign.center),
           const TextScaleFactorAttribute(1.0),
           const MaxLinesAttribute(2),

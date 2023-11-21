@@ -38,8 +38,8 @@ class BoxDecorationDto extends DecorationDto<BoxDecoration> {
       border: border?.resolve(mix),
       borderRadius: borderRadius?.resolve(mix),
       boxShadow: boxShadow?.map((e) => e.resolve(mix)).toList(),
-      gradient: gradient?.resolve(mix),
-      shape: shape?.resolve(mix) ?? BoxShape.rectangle,
+      gradient: gradient?.value,
+      shape: shape?.value ?? BoxShape.rectangle,
     );
   }
 
@@ -101,7 +101,7 @@ class ShapeDecorationDto extends DecorationDto<ShapeDecoration> {
   ShapeDecoration resolve(MixData mix) {
     return ShapeDecoration(
       color: color?.resolve(mix),
-      gradient: gradient?.resolve(mix),
+      gradient: gradient?.value,
       shadows: boxShadow?.map((e) => e.resolve(mix)).toList(),
       shape: shape ?? const RoundedRectangleBorder(),
     );

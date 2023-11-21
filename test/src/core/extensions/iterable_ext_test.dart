@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mix/mix.dart';
+import 'package:mix/src/core/extensions/iterable_ext.dart';
 
 void main() {
   test('Mock Iterable extension methods', () {

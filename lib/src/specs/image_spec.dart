@@ -4,8 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import '../attributes/attribute.dart';
-import '../attributes/color_attribute.dart';
-import '../attributes/scalar_attribute.dart';
+import '../attributes/image/image_attribute.dart';
 import '../factory/mix_provider_data.dart';
 
 @immutable
@@ -23,14 +22,17 @@ class ImageSpec extends StyleRecipe<ImageSpec> {
     required this.fit,
   });
 
+  const ImageSpec.empty()
+      : width = null,
+        height = null,
+        color = null,
+        repeat = null,
+        fit = null;
+
   static ImageSpec resolve(MixData mix) {
-    return ImageSpec(
-      width: mix.attributeOfType<ImageWidthAttribute>()?.resolve(mix),
-      height: mix.attributeOfType<ImageHeightAttribute>()?.resolve(mix),
-      color: mix.attributeOfType<ImageColorAttribute>()?.resolve(mix),
-      repeat: mix.attributeOfType<ImageRepeatAttribute>()?.resolve(mix),
-      fit: mix.attributeOfType<BoxFitAttribute>()?.resolve(mix),
-    );
+    final recipe = mix.attributeOfType<ImageAttribute>()?.resolve(mix);
+
+    return recipe ?? const ImageSpec.empty();
   }
 
   @override

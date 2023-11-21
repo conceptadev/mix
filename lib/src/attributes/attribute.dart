@@ -16,8 +16,7 @@ abstract class Dto<Value> with Comparable, Mergeable<Dto>, Resolver<Value> {
   const Dto();
 }
 
-abstract class ValueAttribute<Value> extends StyleAttribute
-    with Resolver<Value> {
+abstract class ValueAttribute<Value> extends StyleAttribute {
   const ValueAttribute();
 }
 
@@ -36,14 +35,11 @@ abstract class ScalarAttribute<Value> extends ValueAttribute<Value> {
   const ScalarAttribute(this.value);
 
   @override
-  Value resolve(MixData mix) => value;
-
-  @override
   get props => [value];
 }
 
 abstract class ResolvableAttribute<ResolvableValue extends Resolver<Value>,
-    Value> extends ValueAttribute<Value> {
+    Value> extends ValueAttribute<Value> with Resolver<Value> {
   final ResolvableValue value;
   const ResolvableAttribute(this.value);
 

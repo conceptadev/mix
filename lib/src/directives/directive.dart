@@ -20,38 +20,31 @@ abstract class Directive<T> with Comparable {
   get props => [_modifier];
 }
 
-abstract class DirectiveAttribute<T> extends StyleAttribute {
-  final List<Directive<T>> _directives;
+abstract class DirectiveAttribute<T extends Directive> extends StyleAttribute {
+  final List<T> _directives;
   const DirectiveAttribute(this._directives);
 
-  // An abstract method modify that takes a covariant parameter of type T
-  // This method is used to modify the value of type T
-  // The implementation of this method will be provided by the subclasses of Directive
-  T modify(T value) =>
-      _directives.fold(value, (value, directive) => directive(value));
+  List<T> get value => _directives;
 
   @override
   get props => [_directives];
 }
 
-class TextDirective extends DirectiveAttribute<String> {
-  const TextDirective(super.directives);
-
-  @override
-  TextDirective merge(covariant TextDirective? other) {
-    return other == null
-        ? this
-        : TextDirective([..._directives, ...other._directives]);
-  }
+class TextDirective extends Directive<String> {
+  const TextDirective(super.modifier);
 }
 
 class ColorDirective extends Directive<Color> {
   const ColorDirective(super.modifier);
+}
+
+class TextDirectiveAttribute extends DirectiveAttribute<TextDirective> {
+  const TextDirectiveAttribute(super.directives);
 
   @override
-  ColorDirective merge(covariant ColorDirective? other) {
+  TextDirectiveAttribute merge(covariant TextDirectiveAttribute? other) {
     return other == null
         ? this
-        : ColorDirective([..._modifier, ...other._modifier]);
+        : TextDirectiveAttribute([..._directives, ...other._directives]);
   }
 }

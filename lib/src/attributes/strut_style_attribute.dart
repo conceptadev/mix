@@ -4,7 +4,7 @@ import '../factory/mix_provider_data.dart';
 import 'attribute.dart';
 
 @immutable
-class StrutStyleAttribute extends Dto<StrutStyle> {
+class StrutStyleDto extends Dto<StrutStyle> {
   final String? fontFamily;
   final List<String>? fontFamilyFallback;
   final double? fontSize;
@@ -14,7 +14,7 @@ class StrutStyleAttribute extends Dto<StrutStyle> {
   final double? leading;
   final bool? forceStrutHeight;
 
-  const StrutStyleAttribute({
+  const StrutStyleDto({
     this.fontFamily,
     this.fontFamilyFallback,
     this.fontSize,
@@ -26,10 +26,10 @@ class StrutStyleAttribute extends Dto<StrutStyle> {
   });
 
   @override
-  StrutStyleAttribute merge(StrutStyleAttribute? other) {
+  StrutStyleDto merge(StrutStyleDto? other) {
     if (other == null) return this;
 
-    return StrutStyleAttribute(
+    return StrutStyleDto(
       fontFamily: other.fontFamily ?? fontFamily,
       fontFamilyFallback: other.fontFamilyFallback ?? fontFamilyFallback,
       fontSize: other.fontSize ?? fontSize,
@@ -68,4 +68,14 @@ class StrutStyleAttribute extends Dto<StrutStyle> {
         leading,
         forceStrutHeight,
       ];
+}
+
+class StrutStyleAttribute
+    extends ResolvableAttribute<StrutStyleDto, StrutStyle> {
+  const StrutStyleAttribute(StrutStyleDto value) : super(value);
+
+  @override
+  StrutStyleAttribute merge(covariant StrutStyleAttribute? other) {
+    return StrutStyleAttribute(value.merge(other?.value));
+  }
 }

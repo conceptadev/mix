@@ -8,7 +8,7 @@ import '../../helpers/testing_utils.dart';
 void main() {
   group('StrutStyleAttribute', () {
     test('from constructor sets all values correctly', () {
-      const attr = StrutStyleAttribute(
+      const attr = StrutStyleDto(
         fontFamily: 'Roboto',
         fontSize: 24.0,
         height: 2.0,
@@ -29,9 +29,9 @@ void main() {
 
     // Test to check if the merge function returns a merged object correctly
     test('merge returns merged object correctly', () {
-      const attr1 = StrutStyleAttribute(fontFamily: 'Roboto', fontSize: 24.0);
-      const attr2 = StrutStyleAttribute(
-          height: 2.0, leading: 1.0, fontWeight: FontWeight.bold);
+      const attr1 = StrutStyleDto(fontFamily: 'Roboto', fontSize: 24.0);
+      const attr2 =
+          StrutStyleDto(height: 2.0, leading: 1.0, fontWeight: FontWeight.bold);
       final merged = attr1.merge(attr2);
 
       expect(merged.fontFamily, 'Roboto');
@@ -43,7 +43,7 @@ void main() {
 
     // Test to check if the resolve function returns the correct StrutStyle
     test('resolve returns correct StrutStyle', () {
-      const attr = StrutStyleAttribute(
+      const attr = StrutStyleDto(
         fontFamily: 'Roboto',
         fontSize: 24.0,
         height: 2.0,
@@ -63,16 +63,16 @@ void main() {
 
     // Test to check if two StrutStyleAttributes with the same properties are equal
     test('Equality holds when all properties are the same', () {
-      const attr1 = StrutStyleAttribute(fontFamily: 'Roboto', fontSize: 24.0);
-      const attr2 = StrutStyleAttribute(fontFamily: 'Roboto', fontSize: 24.0);
+      const attr1 = StrutStyleDto(fontFamily: 'Roboto', fontSize: 24.0);
+      const attr2 = StrutStyleDto(fontFamily: 'Roboto', fontSize: 24.0);
 
       expect(attr1, attr2);
     });
 
     // Test to check if two StrutStyleAttributes with different properties are not equal
     test('Equality fails when properties are different', () {
-      const attr1 = StrutStyleAttribute(fontFamily: 'Roboto', fontSize: 24.0);
-      const attr2 = StrutStyleAttribute(fontFamily: 'Lato', fontSize: 24.0);
+      const attr1 = StrutStyleDto(fontFamily: 'Roboto', fontSize: 24.0);
+      const attr2 = StrutStyleDto(fontFamily: 'Lato', fontSize: 24.0);
 
       expect(attr1, isNot(attr2));
     });

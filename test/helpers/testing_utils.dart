@@ -182,25 +182,27 @@ class WrapMixThemeWidget extends StatelessWidget {
   }
 }
 
-class MockDoubleScalarAttribute
-    extends ScalarAttribute<MockDoubleScalarAttribute, double> {
+class MockDoubleScalarAttribute extends ScalarAttribute<double> {
   const MockDoubleScalarAttribute(super.value);
 
   @override
-  final create = MockDoubleScalarAttribute.new;
+  MockDoubleScalarAttribute merge(MockDoubleScalarAttribute? other) {
+    return MockDoubleScalarAttribute(other?.value ?? value);
+  }
 }
 
-class MockIntScalarAttribute
-    extends ScalarAttribute<MockIntScalarAttribute, int> {
+class MockIntScalarAttribute extends ScalarAttribute<int> {
   const MockIntScalarAttribute(super.value);
 
   @override
-  final create = MockIntScalarAttribute.new;
+  MockIntScalarAttribute merge(MockIntScalarAttribute? other) {
+    return MockIntScalarAttribute(other?.value ?? value);
+  }
 }
 
-class MockDoubleDecoratorAttribute extends Decorator<double> {
+class MockDoubleDecoratorAttribute extends Decorator {
   final double value;
-  const MockDoubleDecoratorAttribute(this.value);
+  const MockDoubleDecoratorAttribute(this.value, {super.key});
 
   @override
   MockDoubleDecoratorAttribute merge(MockDoubleDecoratorAttribute? other) {
@@ -223,20 +225,22 @@ class MockDoubleDecoratorAttribute extends Decorator<double> {
   }
 }
 
-class MockBooleanScalarAttribute
-    extends ScalarAttribute<MockBooleanScalarAttribute, bool> {
+class MockBooleanScalarAttribute extends ScalarAttribute<bool> {
   const MockBooleanScalarAttribute(super.value);
 
   @override
-  final create = MockBooleanScalarAttribute.new;
+  MockBooleanScalarAttribute merge(MockBooleanScalarAttribute? other) {
+    return MockBooleanScalarAttribute(other?.value ?? value);
+  }
 }
 
-class MockStringScalarAttribute
-    extends ScalarAttribute<MockStringScalarAttribute, String> {
+class MockStringScalarAttribute extends ScalarAttribute<String> {
   const MockStringScalarAttribute(super.value);
 
   @override
-  final create = MockStringScalarAttribute.new;
+  MockStringScalarAttribute merge(MockStringScalarAttribute? other) {
+    return MockStringScalarAttribute(other?.value ?? value);
+  }
 }
 
 class MockInvalidAttribute extends Attribute {
@@ -254,7 +258,7 @@ class MockInvalidAttribute extends Attribute {
 const mockVariant = Variant('mock-variant');
 
 @isTestGroup
-void testScalarAttribute<T extends ScalarAttribute<T, V>, V>(
+void testScalarAttribute<T extends ScalarAttribute<V>, V>(
   String groupName,
   T Function(V value) builder,
   List<V> values,

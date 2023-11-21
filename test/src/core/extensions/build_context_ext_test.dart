@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
+import 'package:mix/src/core/extensions/build_context_ext.dart';
 
 // extension BuildContextExt on BuildContext {
 //   MixData? get mix => Mix.maybeOf(this);

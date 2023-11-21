@@ -9,12 +9,12 @@ import '../core/extensions/values_ext.dart';
 import '../directives/directive.dart';
 import 'scalar_util.dart';
 
-StrutStyleAttribute strutStyle(StrutStyle strutStyle) {
+StrutStyleDto strutStyle(StrutStyle strutStyle) {
   return strutStyle.toAttribute();
 }
 
-TextDirective textDirective(Modifier<String> modifier) =>
-    TextDirective([modifier]);
+TextDirectiveAttribute textDirective(Modifier<String> modifier) =>
+    TextDirectiveAttribute([TextDirective(modifier)]);
 
 const textStyle = TextStyleUtility();
 
