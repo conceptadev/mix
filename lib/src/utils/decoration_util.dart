@@ -20,8 +20,8 @@ final elevation = boxDecoration.elevation;
 class BoxDecorationUtility {
   const BoxDecorationUtility();
 
-  BoxDecorationAttribute _color(Color color) => BoxDecorationAttribute(
-        color: color.toAttribute(),
+  BoxDecorationAttribute _color(ColorAttribute color) => BoxDecorationAttribute(
+        color: color,
       );
 
   BoxDecorationAttribute _shape(BoxShape shape) => BoxDecorationAttribute(

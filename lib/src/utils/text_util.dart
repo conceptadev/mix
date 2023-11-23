@@ -3,9 +3,11 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 import '../attributes/color_attribute.dart';
+import '../attributes/shadow_attribute.dart';
 import '../attributes/strut_style_attribute.dart';
 import '../attributes/text_style_attribute.dart';
 import '../core/extensions/values_ext.dart';
+import '../theme/tokens/text_style_token.dart';
 import 'scalar_util.dart';
 
 StrutStyleAttribute strutStyle(StrutStyle strutStyle) {
@@ -21,46 +23,101 @@ TextStyleAttribute italic() => textStyle.fontStyle.italic();
 class TextStyleUtility {
   const TextStyleUtility();
 
-  ColorUtility<TextStyleAttribute> get color => ColorUtility(
-        (Color color) => call(color: color),
-      );
+  TextStyleAttribute _color(ColorAttribute color) =>
+      TextStyleAttribute.only(color: color);
+
+  TextStyleAttribute _fontWeight(FontWeight weight) =>
+      TextStyleAttribute.only(fontWeight: weight);
+  TextStyleAttribute _fontStyle(FontStyle style) =>
+      TextStyleAttribute.only(fontStyle: style);
+
+  TextStyleAttribute _decoration(TextDecoration decoration) =>
+      TextStyleAttribute.only(decoration: decoration);
+
+  TextStyleAttribute _fontSize(double size) =>
+      TextStyleAttribute.only(fontSize: size);
+
+  TextStyleAttribute _letterSpacing(double spacing) =>
+      TextStyleAttribute.only(letterSpacing: spacing);
+
+  TextStyleAttribute _wordSpacing(double spacing) =>
+      TextStyleAttribute.only(wordSpacing: spacing);
+
+  TextStyleAttribute _backgroundColor(ColorAttribute color) =>
+      TextStyleAttribute.only(backgroundColor: color);
+
+  TextStyleAttribute _decorationColor(ColorAttribute color) =>
+      TextStyleAttribute.only(decorationColor: color);
+
+  TextStyleAttribute _decorationStyle(TextDecorationStyle style) =>
+      TextStyleAttribute.only(decorationStyle: style);
+
+  TextStyleAttribute _textBaseline(TextBaseline baseline) =>
+      TextStyleAttribute.only(textBaseline: baseline);
+
+  TextStyleAttribute _shadows(List<ShadowAttribute> shadows) =>
+      TextStyleAttribute.only(shadows: shadows);
+
+  ColorUtility<TextStyleAttribute> get color => ColorUtility(_color);
 
   FontWeightUtility<TextStyleAttribute> get fontWeight =>
-      FontWeightUtility((value) => call(fontWeight: value));
+      FontWeightUtility(_fontWeight);
+
   FontStyleUtility<TextStyleAttribute> get fontStyle =>
-      FontStyleUtility((value) => call(fontStyle: value));
+      FontStyleUtility(_fontStyle);
+
   TextDecorationUtility<TextStyleAttribute> get decoration =>
-      TextDecorationUtility((value) => call(decoration: value));
+      TextDecorationUtility(_decoration);
+
   FontSizeUtility<TextStyleAttribute> get fontSize =>
-      FontSizeUtility((value) => call(fontSize: value));
+      FontSizeUtility(_fontSize);
+
   DoubleUtility<TextStyleAttribute> get letterSpacing =>
-      DoubleUtility((value) => call(letterSpacing: value));
+      DoubleUtility(_letterSpacing);
+
   DoubleUtility<TextStyleAttribute> get wordSpacing =>
-      DoubleUtility((value) => call(wordSpacing: value));
+      DoubleUtility(_wordSpacing);
+
   ColorUtility<TextStyleAttribute> get backgroundColor =>
-      ColorUtility((value) => call(backgroundColor: value));
+      ColorUtility(_backgroundColor);
+
   ColorUtility<TextStyleAttribute> get decorationColor =>
-      ColorUtility((value) => call(decorationColor: value));
+      ColorUtility(_decorationColor);
 
   TextDecorationStyleUtility<TextStyleAttribute> get decorationStyle =>
-      TextDecorationStyleUtility((value) => call(decorationStyle: value));
-  TextBaselineUtility<TextStyleAttribute> get textBaseline {
-    return TextBaselineUtility((value) => call(textBaseline: value));
-  }
+      TextDecorationStyleUtility(_decorationStyle);
 
-  FontFamilyUtility<TextStyleAttribute> get fontFamily =>
-      FontFamilyUtility(((value) => call(fontFamily: value)));
+  TextBaselineUtility<TextStyleAttribute> get textBaseline =>
+      TextBaselineUtility(_textBaseline);
 
-  TextStyleAttribute shadows(List<Shadow> shadows) => call(shadows: shadows);
+  TextStyleAttribute fontFamily(String family) =>
+      TextStyleAttribute.only(fontFamily: family);
 
   TextStyleAttribute foreground(Paint foreground) =>
-      call(foreground: foreground);
+      TextStyleAttribute.only(foreground: foreground);
 
   TextStyleAttribute background(Paint background) =>
-      call(background: background);
+      TextStyleAttribute.only(background: background);
 
   TextStyleAttribute fontFeatures(List<FontFeature> fontFeatures) =>
-      call(fontFeatures: fontFeatures);
+      TextStyleAttribute.only(fontFeatures: fontFeatures);
+
+  TextStyleAttribute height(double height) =>
+      TextStyleAttribute.only(height: height);
+
+  TextStyleAttribute locale(Locale locale) =>
+      TextStyleAttribute.only(locale: locale);
+
+  TextStyleAttribute debugLabel(String label) =>
+      TextStyleAttribute.only(debugLabel: label);
+
+  TextStyleAttribute decorationThickness(double thickness) =>
+      TextStyleAttribute.only(decorationThickness: thickness);
+  TextStyleAttribute fontFamilyFallback(List<String> fallback) =>
+      TextStyleAttribute.only(fontFamilyFallback: fallback);
+
+  TextStyleAttribute token(TextStyleToken token) =>
+      TextStyleAttribute.token(token);
 
   TextStyleAttribute as(TextStyle style) => style.toAttribute();
 

@@ -6,10 +6,10 @@ import '../../attributes/attribute.dart';
 import '../../attributes/border/border_attribute.dart';
 import '../../attributes/border/border_radius_attribute.dart';
 import '../../attributes/color_attribute.dart';
+import '../../attributes/constraints/constraints_attribute.dart';
 import '../../attributes/edge_insets_attribute.dart';
 import '../../attributes/gradient_attribute.dart';
 import '../../attributes/render/alignment_attribute.dart';
-import '../../attributes/render/constraints_attribute.dart';
 import '../../attributes/render/decoration_attribute.dart';
 import '../../attributes/scalar_attribute.dart';
 import '../../attributes/shadow_attribute.dart';
@@ -24,7 +24,7 @@ extension StrutStyleExt on StrutStyle {
       fontSize: fontSize,
       fontWeight: fontWeight,
       fontStyle: fontStyle,
-      height: height,
+      height: this.height,
       leading: leading,
       forceStrutHeight: forceStrutHeight,
     );
@@ -35,7 +35,7 @@ extension StrutStyleExt on StrutStyle {
       fontFamily: other?.fontFamily ?? fontFamily,
       fontFamilyFallback: other?.fontFamilyFallback ?? fontFamilyFallback,
       fontSize: other?.fontSize ?? fontSize,
-      height: other?.height ?? height,
+      height: other?.height ?? this.height,
       leadingDistribution: other?.leadingDistribution ?? leadingDistribution,
       leading: other?.leading ?? leading,
       fontWeight: other?.fontWeight ?? fontWeight,
@@ -214,11 +214,11 @@ extension ShapeDecorationExt on ShapeDecoration {
 }
 
 extension BoxConstraintsExt on BoxConstraints {
-  BoxConstraintsAttribute toAttribute() => const BoxConstraintsAttribute(
-        minWidth: minWidth,
-        maxWidth: maxWidth,
-        minHeight: minHeight,
-        maxHeight: maxHeight,
+  BoxConstraintsAttribute toAttribute() => BoxConstraintsAttribute(
+        minWidth: this.minWidth,
+        maxWidth: this.maxWidth,
+        minHeight: this.minHeight,
+        maxHeight: this.maxHeight,
       );
 }
 
@@ -274,10 +274,6 @@ extension BoxDecorationExt on BoxDecoration {
       );
 }
 
-extension BoxShapeExt on BoxShape {
-  BoxShapeAttribute toAttribute() => BoxShapeAttribute(this);
-}
-
 extension BorderRadiusGeometryExt on BorderRadiusGeometry {
   BorderRadiusGeometryAttribute toAttribute() {
     if (this is BorderRadius) return (this as BorderRadius).toAttribute();
@@ -329,7 +325,7 @@ extension BorderSideExt on BorderSide {
         color: color.toAttribute(),
         strokeAlign: strokeAlign,
         style: style,
-        width: width,
+        width: this.width,
       );
 }
 
@@ -378,7 +374,7 @@ extension TextStyleExt on TextStyle {
         fontStyle: fontStyle,
         fontWeight: fontWeight,
         foreground: foreground,
-        height: height,
+        height: this.height,
         letterSpacing: letterSpacing,
         locale: locale,
         shadows: shadows?.map((e) => e.toAttribute()).toList(),

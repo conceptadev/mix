@@ -108,24 +108,6 @@ void main() {
       expect(attribute.maxHeight, 250.0);
     });
 
-    test('MainAxisAlignment toAttribute', () {
-      const mainAxisAlignment = MainAxisAlignment.center;
-      final attribute = mainAxisAlignment.toAttribute();
-      expect(attribute.value, MainAxisAlignment.center);
-    });
-
-    test('CrossAxisAlignment toAttribute', () {
-      const crossAxisAlignment = CrossAxisAlignment.center;
-      final attribute = crossAxisAlignment.toAttribute();
-      expect(attribute.value, CrossAxisAlignment.center);
-    });
-
-    test('MainAxisSize toAttribute', () {
-      const mainAxisSize = MainAxisSize.max;
-      final attribute = mainAxisSize.toAttribute();
-      expect(attribute.value, MainAxisSize.max);
-    });
-
     test('TextOverflow toAttribute', () {
       const textOverflow = TextOverflow.ellipsis;
       final attribute = textOverflow.toAttribute();
@@ -162,12 +144,6 @@ void main() {
       const textDirection = TextDirection.ltr;
       final attribute = textDirection.toAttribute();
       expect(attribute.value, TextDirection.ltr);
-    });
-
-    test('ImageRepeat toAttribute', () {
-      const imageRepeat = ImageRepeat.repeat;
-      final attribute = imageRepeat.toAttribute();
-      expect(attribute.value, ImageRepeat.repeat);
     });
 
     test('Axis toAttribute', () {

@@ -9,7 +9,8 @@ const icon = IconUtility();
 class IconUtility {
   const IconUtility();
 
-  IconMixAttribute _color(Color color) => call(color: color);
+  IconMixAttribute _color(ColorAttribute color) =>
+      IconMixAttribute(color: color);
   ColorUtility<IconMixAttribute> get color =>
       ColorUtility<IconMixAttribute>(_color);
 

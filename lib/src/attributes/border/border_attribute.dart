@@ -1,3 +1,5 @@
+// ignore_for_file: prefer-conditional-expressions, prefer-returning-conditional-expressions
+
 import 'package:flutter/material.dart';
 
 import '../../core/extensions/values_ext.dart';

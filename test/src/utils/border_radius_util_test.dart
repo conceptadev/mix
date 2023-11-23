@@ -4,7 +4,7 @@ import 'package:mix/mix.dart';
 
 void main() {
   group('BorderRadiusUtility', () {
-    const borderRadiusUtility = BorderRadiusUtility();
+    final borderRadiusUtility = BorderRadiusUtility.selfBuilder;
 
     test('zero should return BorderRadiusAttribute with zero radius', () {
       final result = borderRadiusUtility.zero();

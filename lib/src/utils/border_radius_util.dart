@@ -7,13 +7,14 @@ import '../core/extensions/values_ext.dart';
 import 'scalar_util.dart';
 
 // Provides an utility for creating a uniform BorderRadiusAttribute for all corners.
-final borderRadius = BorderRadiusUtility((radius) => radius);
+final borderRadius = BorderRadiusUtility.selfBuilder;
 
 // Border Radius Directional
 // Provides a utility BorderRadiusDirectionalAttribute for all corners, considering text direction.
 const borderRadiusDirectional = BorderRadiusDirectionalUtility();
 
 class BorderRadiusUtility<T> extends MixUtility<T, BorderRadiusAttribute> {
+  static final selfBuilder = BorderRadiusUtility((value) => value);
   const BorderRadiusUtility(super.builder);
 
   T _bottomLeft(Radius radius) => only(bottomLeft: radius);

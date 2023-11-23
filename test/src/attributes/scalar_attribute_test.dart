@@ -112,56 +112,16 @@ void main() {
     TextDirection.values,
   );
 
-//   class IconSizeAttribute extends ScalarAttribute<IconSizeAttribute, double> {
-//   const IconSizeAttribute(super.value);
-
-//   @override
-//   IconSizeAttribute create(value) => IconSizeAttribute(value);
-// }
-
-// class BoxFitAttribute extends ScalarAttribute<BoxFitAttribute, BoxFit> {
-//   const BoxFitAttribute(super.value);
-
-//   @override
-//   BoxFitAttribute create(value) => BoxFitAttribute(value);
-// }
-
-// class StackFitAttribute extends ScalarAttribute<StackFitAttribute, StackFit> {
-//   const StackFitAttribute(super.value);
-
-//   @override
-//   StackFitAttribute create(value) => StackFitAttribute(value);
-// }
-
-// class FlexFitAttribute extends ScalarAttribute<FlexFitAttribute, FlexFit> {
-//   const FlexFitAttribute(super.value);
-
-//   @override
-//   FlexFitAttribute create(value) => FlexFitAttribute(value);
-// }
-
   testScalarAttribute<BoxFitAttribute, BoxFit>(
     'BoxFitAttribute',
     (value) => BoxFitAttribute(value),
     BoxFit.values,
   );
 
-  testScalarAttribute<StackFitAttribute, StackFit>(
-    'StackFitAttribute',
-    (value) => StackFitAttribute(value),
-    StackFit.values,
-  );
-
   testScalarAttribute<FlexFitAttribute, FlexFit>(
     'FlexFitAttribute',
     (value) => FlexFitAttribute(value),
     FlexFit.values,
-  );
-
-  testScalarAttribute<BoxShapeAttribute, BoxShape>(
-    'BoxShapeAttribute',
-    (value) => BoxShapeAttribute(value),
-    BoxShape.values,
   );
 
   testScalarAttribute<VisibleAttribute, bool>(

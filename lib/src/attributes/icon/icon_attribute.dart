@@ -1,17 +1,17 @@
 import '../../attributes/attribute.dart';
 import '../../attributes/color_attribute.dart';
 import '../../factory/mix_provider_data.dart';
-import 'icon_recipe.dart';
+import '../../recipes/icon/icon_recipe.dart';
 
-class IconMixAttribute extends ResolvableAttribute<IconMix> {
+class IconMixAttribute extends ResolvableAttribute<IconRecipeMix> {
   final double? size;
   final ColorAttribute? color;
 
   const IconMixAttribute({this.size, this.color});
 
   @override
-  IconMix resolve(MixData mix) {
-    return IconMix(color: color?.resolve(mix), size: size);
+  IconRecipeMix resolve(MixData mix) {
+    return IconRecipeMix(color: color?.resolve(mix), size: size);
   }
 
   @override

@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import '../../attributes/attribute.dart';
 import '../../attributes/color_attribute.dart';
 import '../../factory/mix_provider_data.dart';
-import 'image_recipe.dart';
+import '../../recipes/image/image_recipe.dart';
 
-class ImageAttribute extends ResolvableAttribute<ImageMix> {
+class ImageAttribute extends ResolvableAttribute<ImageRecipeMix> {
   final double? width;
   final double? height;
   final ColorAttribute? color;
@@ -21,8 +21,8 @@ class ImageAttribute extends ResolvableAttribute<ImageMix> {
   });
 
   @override
-  ImageMix resolve(MixData mix) {
-    return ImageMix(
+  ImageRecipeMix resolve(MixData mix) {
+    return ImageRecipeMix(
       width: width,
       height: height,
       color: color?.resolve(mix),

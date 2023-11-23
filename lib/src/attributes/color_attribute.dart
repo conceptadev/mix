@@ -6,9 +6,9 @@ import '../utils/scalar_util.dart';
 import 'attribute.dart';
 
 @immutable
-class ColorDto extends Dto<Color> {
+class ColorAttribute extends Dto<Color> {
   final Color value;
-  const ColorDto(this.value);
+  const ColorAttribute(this.value);
 
   @override
   Color resolve(MixData mix) {
@@ -18,28 +18,6 @@ class ColorDto extends Dto<Color> {
   }
 
   @override
-  ColorDto merge(covariant ColorDto? other) {
-    if (other == null) return this;
-
-    return ColorDto(other.value);
-  }
-
-  @override
-  get props => [value];
-}
-
-@immutable
-class ColorUtility<Attr extends StyleAttribute>
-    extends ScalarUtility<Attr, Color> {
-  const ColorUtility(super.builder);
-}
-
-@immutable
-class ColorAttribute extends ResolvableAttribute<Color> {
-  final ColorDto value;
-  const ColorAttribute(this.value);
-
-  @override
   ColorAttribute merge(covariant ColorAttribute? other) {
     if (other == null) return this;
 
@@ -47,8 +25,12 @@ class ColorAttribute extends ResolvableAttribute<Color> {
   }
 
   @override
-  Color resolve(MixData mix) => value.resolve(mix);
-
-  @override
   get props => [value];
+}
+
+@immutable
+class ColorUtility<T> extends MixUtility<T, ColorAttribute> {
+  const ColorUtility(super.builder);
+
+  T call(Color color) => builder(ColorAttribute(color));
 }
