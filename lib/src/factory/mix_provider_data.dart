@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../attributes/attribute.dart';
 import '../attributes/variant_attribute.dart';
+import '../core/attribute.dart';
 import '../core/attributes_map.dart';
 import '../core/equality/compare_mixin.dart';
 import '../decorators/decorator.dart';

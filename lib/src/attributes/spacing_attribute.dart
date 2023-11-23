@@ -2,8 +2,8 @@
 
 import 'package:flutter/material.dart';
 
-import '../../factory/mix_provider_data.dart';
-import '../attribute.dart';
+import '../core/attribute.dart';
+import '../factory/mix_provider_data.dart';
 
 /// Represents a function that can be used to build a [SpacingAttribute].
 ///

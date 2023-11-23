@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../core/attribute.dart';
 import '../core/extensions/values_ext.dart';
 import '../factory/mix_provider_data.dart';
-import 'attribute.dart';
 import 'color_attribute.dart';
 
 abstract class GradientAttribute<Value extends Gradient>

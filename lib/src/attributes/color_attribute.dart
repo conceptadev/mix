@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
+import '../core/attribute.dart';
 import '../factory/mix_provider_data.dart';
 import '../theme/tokens/color_token.dart';
 import '../utils/scalar_util.dart';
-import 'attribute.dart';
 
 @immutable
 class ColorAttribute extends Dto<Color> {

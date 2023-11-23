@@ -4,7 +4,7 @@ import 'dart:collection';
 
 import 'package:flutter/cupertino.dart';
 
-import '../attributes/attribute.dart';
+import 'attribute.dart';
 import 'equality/compare_mixin.dart';
 import 'extensions/iterable_ext.dart';
 

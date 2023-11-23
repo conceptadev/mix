@@ -4,7 +4,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
-import 'package:mix/src/attributes/render/alignment_attribute.dart';
+import 'package:mix/src/attributes/alignment_attribute.dart';
 import 'package:mix/src/core/extensions/values_ext.dart';
 
 class AttributeGenerator {

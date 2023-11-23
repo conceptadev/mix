@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
-import '../../attributes/attribute.dart';
+import '../../attributes/alignment_attribute.dart';
+import '../../attributes/clip_attribute.dart';
 import '../../attributes/constraints/constraints_attribute.dart';
-import '../../attributes/render/alignment_attribute.dart';
-import '../../attributes/render/decoration_attribute.dart';
-import '../../attributes/render/spacing_attribute.dart';
-import '../../attributes/scalar_attribute.dart';
+import '../../attributes/decoration/decoration_attribute.dart';
+import '../../attributes/spacing_attribute.dart';
+import '../../attributes/transform_attribute.dart';
+import '../../core/attribute.dart';
 import '../../factory/mix_provider_data.dart';
 import 'container_recipe.dart';
 

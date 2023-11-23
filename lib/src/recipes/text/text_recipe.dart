@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../../attributes/attribute.dart';
-import '../../attributes/scalar_attribute.dart';
-import '../../attributes/strut_style_attribute.dart';
-import '../../attributes/text_style_attribute.dart';
-import '../../directives/directive.dart';
+import '../../core/attribute.dart';
+import '../../core/directive.dart';
 import '../../factory/mix_provider_data.dart';
+import 'text_attribute.dart';
 
 class TextRecipe extends RecipeMix<TextRecipe> {
   final TextOverflow? overflow;
@@ -34,21 +32,24 @@ class TextRecipe extends RecipeMix<TextRecipe> {
     this.directives = const [],
   });
 
+  // empty
+  const TextRecipe.empty()
+      : overflow = null,
+        strutStyle = null,
+        textAlign = null,
+        textScaleFactor = null,
+        maxLines = null,
+        style = null,
+        textWidthBasis = null,
+        textHeightBehavior = null,
+        textDirection = null,
+        softWrap = null,
+        directives = const [];
+
   static TextRecipe resolve(MixData mix) {
-    return TextRecipe(
-      overflow: mix.attributeOfType<TextOverflowAttribute>()?.value,
-      strutStyle: mix.attributeOfType<StrutStyleAttribute>()?.resolve(mix),
-      textAlign: mix.attributeOfType<TextAlignAttribute>()?.value,
-      textScaleFactor: mix.attributeOfType<TextScaleFactorAttribute>()?.value,
-      maxLines: mix.attributeOfType<MaxLinesAttribute>()?.value,
-      style: mix.attributeOfType<TextStyleAttribute>()?.resolve(mix),
-      textWidthBasis: mix.attributeOfType<TextWidthBasisAttribute>()?.value,
-      textHeightBehavior:
-          mix.attributeOfType<TextHeightBehaviorAttribute>()?.value,
-      textDirection: mix.attributeOfType<TextDirectionAttribute>()?.value,
-      softWrap: mix.attributeOfType<SoftWrapAttribute>()?.value,
-      directives: mix.attributeOfType<TextDirectiveAttribute>()?.value ?? [],
-    );
+    final recipe = mix.attributeOfType<TextAttribute>()?.resolve(mix);
+
+    return recipe ?? const TextRecipe.empty();
   }
 
   String applyTextDirectives(String? text) {

@@ -2,19 +2,21 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-import '../../attributes/attribute.dart';
+import '../../attributes/alignment_attribute.dart';
+import '../../attributes/axis_attribute.dart';
 import '../../attributes/border/border_attribute.dart';
 import '../../attributes/border/border_radius_attribute.dart';
+import '../../attributes/clip_attribute.dart';
 import '../../attributes/color_attribute.dart';
 import '../../attributes/constraints/constraints_attribute.dart';
+import '../../attributes/decoration/decoration_attribute.dart';
 import '../../attributes/edge_insets_attribute.dart';
 import '../../attributes/gradient_attribute.dart';
-import '../../attributes/render/alignment_attribute.dart';
-import '../../attributes/render/decoration_attribute.dart';
-import '../../attributes/scalar_attribute.dart';
 import '../../attributes/shadow_attribute.dart';
 import '../../attributes/strut_style_attribute.dart';
 import '../../attributes/text_style_attribute.dart';
+import '../../attributes/transform_attribute.dart';
+import '../attribute.dart';
 
 extension StrutStyleExt on StrutStyle {
   StrutStyleAttribute toAttribute() {
@@ -24,7 +26,7 @@ extension StrutStyleExt on StrutStyle {
       fontSize: fontSize,
       fontWeight: fontWeight,
       fontStyle: fontStyle,
-      height: this.height,
+      height: height,
       leading: leading,
       forceStrutHeight: forceStrutHeight,
     );
@@ -35,7 +37,7 @@ extension StrutStyleExt on StrutStyle {
       fontFamily: other?.fontFamily ?? fontFamily,
       fontFamilyFallback: other?.fontFamilyFallback ?? fontFamilyFallback,
       fontSize: other?.fontSize ?? fontSize,
-      height: other?.height ?? this.height,
+      height: other?.height ?? height,
       leadingDistribution: other?.leadingDistribution ?? leadingDistribution,
       leading: other?.leading ?? leading,
       fontWeight: other?.fontWeight ?? fontWeight,
@@ -44,11 +46,6 @@ extension StrutStyleExt on StrutStyle {
       debugLabel: other?.debugLabel ?? debugLabel,
     );
   }
-}
-
-// Extension for TextAlign
-extension TextAlignExt on TextAlign {
-  TextAlignAttribute toAttribute() => TextAlignAttribute(this);
 }
 
 extension GradientExt on Gradient {
@@ -215,52 +212,20 @@ extension ShapeDecorationExt on ShapeDecoration {
 
 extension BoxConstraintsExt on BoxConstraints {
   BoxConstraintsAttribute toAttribute() => BoxConstraintsAttribute(
-        minWidth: this.minWidth,
-        maxWidth: this.maxWidth,
-        minHeight: this.minHeight,
-        maxHeight: this.maxHeight,
+        minWidth: minWidth,
+        maxWidth: maxWidth,
+        minHeight: minHeight,
+        maxHeight: maxHeight,
       );
-}
-
-extension TextOverflowExt on TextOverflow {
-  TextOverflowAttribute toAttribute() => TextOverflowAttribute(this);
-}
-
-extension VerticalDirectionExt on VerticalDirection {
-  VerticalDirectionAttribute toAttribute() => VerticalDirectionAttribute(this);
 }
 
 extension ClipExt on Clip {
   ClipAttribute toAttribute() => ClipAttribute(this);
 }
 
-extension TextWidthBasisExt on TextWidthBasis {
-  TextWidthBasisAttribute toAttribute() => TextWidthBasisAttribute(this);
-}
-
-extension TextHeightBehaviorExt on TextHeightBehavior {
-  TextHeightBehaviorAttribute toAttribute() =>
-      TextHeightBehaviorAttribute(this);
-}
-
-// Extension for TextDirection
-extension TextDirectionExt on TextDirection {
-  TextDirectionAttribute toAttribute() => TextDirectionAttribute(this);
-}
-
 // Extension for Axis
 extension AxisExt on Axis {
   AxisAttribute toAttribute() => AxisAttribute(this);
-}
-
-// Extension for BlendMode
-extension BlendModeExt on BlendMode {
-  BlendModeAttribute toAttribute() => BlendModeAttribute(this);
-}
-
-// Extension for BoxFit
-extension BoxFitExt on BoxFit {
-  BoxFitAttribute toAttribute() => BoxFitAttribute(this);
 }
 
 extension BoxDecorationExt on BoxDecoration {
@@ -304,11 +269,6 @@ extension BorderRadiusDirectionalExrt on BorderRadiusDirectional {
       );
 }
 
-// Extension for BorderRadius
-extension TextBaseLineExt on TextBaseline {
-  TextBaselineAttribute toAttribute() => TextBaselineAttribute(this);
-}
-
 extension Matrix4Ext on Matrix4 {
   TransformAttribute toAttribute() => TransformAttribute(this);
 
@@ -325,7 +285,7 @@ extension BorderSideExt on BorderSide {
         color: color.toAttribute(),
         strokeAlign: strokeAlign,
         style: style,
-        width: this.width,
+        width: width,
       );
 }
 
@@ -374,7 +334,7 @@ extension TextStyleExt on TextStyle {
         fontStyle: fontStyle,
         fontWeight: fontWeight,
         foreground: foreground,
-        height: this.height,
+        height: height,
         letterSpacing: letterSpacing,
         locale: locale,
         shadows: shadows?.map((e) => e.toAttribute()).toList(),

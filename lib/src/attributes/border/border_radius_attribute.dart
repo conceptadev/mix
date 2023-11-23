@@ -2,8 +2,8 @@
 
 import 'package:flutter/material.dart';
 
+import '../../core/attribute.dart';
 import '../../factory/mix_provider_data.dart';
-import '../attribute.dart';
 
 @immutable
 abstract class BorderRadiusGeometryAttribute<T extends BorderRadiusGeometry>
@@ -79,6 +79,10 @@ class BorderRadiusAttribute
           bottomRight: bottom,
         );
 
+  // circular
+  BorderRadiusAttribute.circular(double radius)
+      : this.all(Radius.circular(radius));
+
   @override
   BorderRadiusAttribute merge(BorderRadiusAttribute? other) {
     if (other == null) return this;
@@ -111,44 +115,6 @@ class BorderRadiusDirectionalAttribute
     super.bottomStart,
     super.bottomEnd,
   });
-
-  factory BorderRadiusDirectionalAttribute.positional(
-    Radius p1, [
-    Radius? p2,
-    Radius? p3,
-    Radius? p4,
-  ]) {
-    Radius topStart = p1;
-    Radius topEnd = p1;
-    Radius bottomStart = p1;
-    Radius bottomEnd = p1;
-
-    if (p2 != null) {
-      bottomEnd = p2;
-      bottomStart = p2;
-    }
-
-    if (p3 != null) {
-      topStart = p1;
-      topEnd = p2!;
-      bottomStart = p2;
-      bottomEnd = p3;
-    }
-
-    if (p4 != null) {
-      topStart = p1;
-      topEnd = p2!;
-      bottomStart = p3!;
-      bottomEnd = p4;
-    }
-
-    return BorderRadiusDirectionalAttribute(
-      topStart: topStart,
-      topEnd: topEnd,
-      bottomStart: bottomStart,
-      bottomEnd: bottomEnd,
-    );
-  }
 
   BorderRadiusDirectionalAttribute.circular(double radius)
       : this.all(Radius.circular(radius));

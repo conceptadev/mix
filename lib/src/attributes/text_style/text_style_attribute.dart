@@ -4,12 +4,12 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-import '../core/extensions/values_ext.dart';
-import '../factory/mix_provider_data.dart';
-import '../theme/tokens/text_style_token.dart';
-import 'attribute.dart';
-import 'color_attribute.dart';
-import 'shadow_attribute.dart';
+import '../../core/attribute.dart';
+import '../../core/extensions/values_ext.dart';
+import '../../factory/mix_provider_data.dart';
+import '../../theme/tokens/text_style_token.dart';
+import '../color_attribute.dart';
+import '../shadow_attribute.dart';
 
 @immutable
 class TextStyleDto extends Dto<TextStyle> {
@@ -250,8 +250,11 @@ class TextStyleAttribute extends ResolvableAttribute<TextStyle> {
   // Then it reduces the list of TextStyleDto objects to a single TextStyleDto by merging them.
   // Finally, it resolves the resulting TextStyleDto to a TextStyle.
   TextStyle resolve(MixData mix) {
-    return values
-        .map((e) => e.isTokenRef ? e.resolve(mix).toDto() : e)
+    final textStylesDtos =
+        values.map((e) => e.isTokenRef ? e.resolve(mix).toDto() : e)
+            as Iterable<TextStyleDto>;
+
+    return textStylesDtos
         .reduce((value, element) => value.merge(element))
         .resolve(mix);
   }

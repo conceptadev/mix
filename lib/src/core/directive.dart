@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../attributes/attribute.dart';
-import '../core/equality/compare_mixin.dart';
+import 'attribute.dart';
+import 'equality/compare_mixin.dart';
 
 typedef Modifier<T> = T Function(T value);
 

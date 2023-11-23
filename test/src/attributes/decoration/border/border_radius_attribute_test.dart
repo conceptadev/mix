@@ -160,7 +160,7 @@ void main() {
 
       expect(resolvedVerticalValue, verticalValue);
 
-      final circularAttr = const BorderRadiusUtility().all(5.0);
+      final circularAttr = BorderRadiusAttribute.circular(5.0);
       final circularValue = BorderRadius.circular(5.0);
 
       final resolvedCircularValue = circularAttr.resolve(EmptyMixData);

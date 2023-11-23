@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../attributes/attribute.dart';
+import '../../core/attribute.dart';
 import '../../factory/mix_provider_data.dart';
 import 'stack_recipe.dart';
 

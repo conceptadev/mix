@@ -2,16 +2,17 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-import 'attributes/attribute.dart';
+import 'attributes/alignment_attribute.dart';
+import 'attributes/axis_attribute.dart';
 import 'attributes/border/border_radius_attribute.dart';
-import 'attributes/render/alignment_attribute.dart';
-import 'attributes/scalar_attribute.dart';
 import 'attributes/style_mix_attribute.dart';
 import 'attributes/text_style_attribute.dart';
+import 'core/attribute.dart';
+import 'core/directive.dart';
 import 'core/extensions/values_ext.dart';
-import 'directives/directive.dart';
 import 'factory/mix_provider_data.dart';
 import 'factory/style_mix.dart';
+import 'recipes/stack/stack_attribute.dart';
 import 'utils/border_radius_util.dart';
 import 'utils/border_util.dart';
 import 'utils/box_constraints_util.dart';
@@ -24,7 +25,7 @@ import 'utils/helper_util.dart';
 import 'utils/pressable_util.dart';
 import 'utils/spacing_util.dart';
 import 'utils/text_directives_util.dart';
-import 'utils/text_util.dart';
+import 'utils/text_style_util.dart';
 import 'variants/variant.dart';
 
 const kShortAliasDeprecation =
@@ -466,13 +467,13 @@ AlignmentGeometryAttribute zAligmnent(Alignment alignment) {
 }
 
 @Deprecated('Use stackFit instead')
-StackFitAttribute zFit(StackFit fit) {
-  return StackFitAttribute(fit);
+StackAttribute zFit(StackFit fit) {
+  return StackAttribute(fit: fit);
 }
 
 @Deprecated('Use stack instead')
-ClipAttribute zClip(Clip clip) {
-  return ClipAttribute(clip);
+StackAttribute zClip(Clip clip) {
+  return StackAttribute(clipBehavior: clip);
 }
 
 // Create a FlexAttributes for the direction axis.

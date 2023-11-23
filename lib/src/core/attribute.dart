@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../core/equality/compare_mixin.dart';
 import '../factory/mix_provider_data.dart';
+import 'equality/compare_mixin.dart';
 
 @immutable
 abstract class Attribute with Comparable, Mergeable<Attribute> {

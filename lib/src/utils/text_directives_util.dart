@@ -1,4 +1,4 @@
-import '../directives/directive.dart';
+import '../core/directive.dart';
 
 const capitalize = TextDirectiveUtility(TextModifiers.capitalize);
 const uppercase = TextDirectiveUtility(TextModifiers.uppercase);

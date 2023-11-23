@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../mix.dart';
-
 class StackFitUtility<T> extends ScalarUtility<T, StackFit> {
   const StackFitUtility(super.builder);
   T loose() => builder(StackFit.loose);
@@ -60,6 +58,11 @@ class FlexFitUtility<T> extends ScalarUtility<T, FlexFit> {
   T loose() => builder(FlexFit.loose);
 }
 
+class TextHeightBehaviorUtility<T>
+    extends ScalarUtility<T, TextHeightBehavior> {
+  const TextHeightBehaviorUtility(super.builder);
+}
+
 class AxisUtility<T> extends ScalarUtility<T, Axis> {
   const AxisUtility(super.builder);
   T horizontal() => builder(Axis.horizontal);
@@ -106,6 +109,19 @@ abstract class ScalarUtility<Return, Param> extends MixUtility<Return, Param> {
 
 class DoubleUtility<T> extends ScalarUtility<T, double> {
   const DoubleUtility(super.builder);
+}
+
+class IntUtility<T> extends ScalarUtility<T, int> {
+  const IntUtility(super.builder);
+}
+
+class BoolUtility<T> extends ScalarUtility<T, bool> {
+  const BoolUtility(super.builder);
+}
+
+class ListUtility<T, V> extends MixUtility<T, List<V>> {
+  const ListUtility(super.builder);
+  T call(List<V> value) => builder(value);
 }
 
 class ImageRepeatUtility<T> extends ScalarUtility<T, ImageRepeat> {
@@ -211,8 +227,6 @@ class TextWidthBasisUtility<T> extends ScalarUtility<T, TextWidthBasis> {
   T parent() => builder(TextWidthBasis.parent);
   T longestLine() => builder(TextWidthBasis.longestLine);
 }
-
-const textAlign = TextAlignUtility(TextAlignAttribute.new);
 
 class TextAlignUtility<T> extends ScalarUtility<T, TextAlign> {
   const TextAlignUtility(super.builder);

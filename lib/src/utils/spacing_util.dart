@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../attributes/render/spacing_attribute.dart';
+import '../attributes/spacing_attribute.dart';
 import '../theme/tokens/space_token.dart';
 import 'scalar_util.dart';
 
