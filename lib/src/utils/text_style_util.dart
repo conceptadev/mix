@@ -50,21 +50,20 @@ class TextStyleUtility<T> extends MixUtility<T, TextStyleAttribute> {
 
   FontSizeUtility<T> get fontSize => FontSizeUtility(_fontSize);
 
-  DoubleUtility<Table> get letterSpacing => DoubleUtility(_letterSpacing);
+  DoubleUtility<T> get letterSpacing => DoubleUtility(_letterSpacing);
 
-  DoubleUtility<Table> get wordSpacing => DoubleUtility(_wordSpacing);
+  DoubleUtility<T> get wordSpacing => DoubleUtility(_wordSpacing);
 
-  ColorUtility<Table> get backgroundColor => ColorUtility(_backgroundColor);
+  ColorUtility<T> get backgroundColor => ColorUtility(_backgroundColor);
 
-  ColorUtility<Table> get decorationColor => ColorUtility(_decorationColor);
+  ColorUtility<T> get decorationColor => ColorUtility(_decorationColor);
 
-  TextDecorationStyleUtility<Table> get decorationStyle =>
+  TextDecorationStyleUtility<T> get decorationStyle =>
       TextDecorationStyleUtility(_decorationStyle);
 
-  TextBaselineUtility<Table> get textBaseline =>
-      TextBaselineUtility(_textBaseline);
+  TextBaselineUtility<T> get textBaseline => TextBaselineUtility(_textBaseline);
 
-  Table fontFamily(String family) => call(fontFamily: family);
+  T fontFamily(String family) => call(fontFamily: family);
 
   T foreground(Paint foreground) => call(foreground: foreground);
 
@@ -84,9 +83,9 @@ class TextStyleUtility<T> extends MixUtility<T, TextStyleAttribute> {
   T fontFamilyFallback(List<String> fallback) =>
       call(fontFamilyFallback: fallback);
 
-  T token(TextStyleToken token) => TextStyleAttribute.token(token);
+  T token(TextStyleToken token) => builder(TextStyleAttribute.token(token));
 
-  T as(TextStyle style) => style.toAttribute();
+  T as(TextStyle style) => builder(style.toAttribute());
   T call({
     String? fontFamily,
     FontWeight? fontWeight,
@@ -138,10 +137,32 @@ class TextStyleUtility<T> extends MixUtility<T, TextStyleAttribute> {
   }
 }
 
-class StrutStyleUtility {
-  const StrutStyleUtility();
+class StrutStyleUtility<T> extends MixUtility<T, StrutStyleAttribute> {
+  const StrutStyleUtility(super.builder);
 
-  StrutStyleAttribute call({
+  T _fontFamily(String fontFamily) => call(fontFamily: fontFamily);
+  T _fontFamilyFallback(List<String> fontFamilyFallback) =>
+      call(fontFamilyFallback: fontFamilyFallback);
+  T _fontSize(double fontSize) => call(fontSize: fontSize);
+  T _fontWeight(FontWeight fontWeight) => call(fontWeight: fontWeight);
+  T _fontStyle(FontStyle fontStyle) => call(fontStyle: fontStyle);
+  T _height(double height) => call(height: height);
+  T _leading(double leading) => call(leading: leading);
+  T _forceStrutHeight(bool forceStrutHeight) =>
+      call(forceStrutHeight: forceStrutHeight);
+
+  FontFamilyUtility<T> get fontFamily => FontFamilyUtility(_fontFamily);
+  ListUtility<T, String> get fontFamilyFallback =>
+      ListUtility(_fontFamilyFallback);
+
+  DoubleUtility<T> get fontSize => DoubleUtility(_fontSize);
+  FontWeightUtility<T> get fontWeight => FontWeightUtility(_fontWeight);
+  FontStyleUtility<T> get fontStyle => FontStyleUtility(_fontStyle);
+  DoubleUtility<T> get height => DoubleUtility(_height);
+  DoubleUtility<T> get leading => DoubleUtility(_leading);
+  BoolUtility<T> get forceStrutHeight => BoolUtility(_forceStrutHeight);
+
+  T call({
     String? fontFamily,
     List<String>? fontFamilyFallback,
     double? fontSize,
@@ -151,7 +172,7 @@ class StrutStyleUtility {
     double? leading,
     bool? forceStrutHeight,
   }) {
-    return StrutStyleAttribute(
+    final strutStyle = StrutStyleAttribute(
       fontFamily: fontFamily,
       fontFamilyFallback: fontFamilyFallback,
       fontSize: fontSize,
@@ -161,5 +182,7 @@ class StrutStyleUtility {
       leading: leading,
       forceStrutHeight: forceStrutHeight,
     );
+
+    return builder(strutStyle);
   }
 }
