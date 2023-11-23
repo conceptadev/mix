@@ -1,245 +1,88 @@
 import 'package:flutter/material.dart';
 
+import '../attributes/border/border_attribute.dart';
+import '../attributes/border/border_radius_attribute.dart';
 import '../attributes/color_attribute.dart';
-import '../attributes/decoration_attribute.dart';
+import '../attributes/gradient_attribute.dart';
+import '../attributes/render/decoration_attribute.dart';
 import '../attributes/shadow_attribute.dart';
-import '../helpers/extensions/values_ext.dart';
+import '../core/extensions/values_ext.dart';
+import 'border_radius_util.dart';
+import 'border_util.dart';
+import 'scalar_util.dart';
 
-final backgroundColor = ColorUtility((value) {
-  return BoxDecorationAttribute(BoxDecorationDto(color: value.toDto()));
-});
-final bgColor = backgroundColor;
+const boxDecoration = BoxDecorationUtility();
 
-const boxDecoration = BoxDecorationAttribute.new;
+final backgroundColor = boxDecoration.color;
+final bgColor = boxDecoration.color;
+final elevation = boxDecoration.elevation;
 
-BoxDecorationAttribute elevation(int value) {
-  assert([1, 2, 3, 4, 6, 8, 9, 12, 16, 24].contains(value));
+class BoxDecorationUtility {
+  const BoxDecorationUtility();
 
-  final dto = BoxDecorationDto(boxShadow: elevationToShadow[value]!.toDto());
+  BoxDecorationAttribute _color(Color color) => BoxDecorationAttribute(
+        color: color.toAttribute(),
+      );
 
-  return BoxDecorationAttribute(dto);
-}
+  BoxDecorationAttribute _shape(BoxShape shape) => BoxDecorationAttribute(
+        shape: shape,
+      );
 
-// Custom naming that suits the context of your package
-const elevationToShadow = _elevationToShadow;
+  BoxDecorationAttribute _border(BoxBorderAttribute border) =>
+      BoxDecorationAttribute(border: border);
 
-const _kKeyUmbraOpacity = Color(0x33000000); // alpha = 0.2
-const _kKeyPenumbraOpacity = Color(0x24000000); // alpha = 0.14
-const _kAmbientShadowOpacity = Color(0x1F000000); // alpha = 0.12
+  BoxDecorationAttribute _borderRadius(
+    BorderRadiusGeometryAttribute borderRadius,
+  ) =>
+      BoxDecorationAttribute(borderRadius: borderRadius);
 
-// Customized shadow map
-const _elevationToShadow = <int, List<BoxShadow>>{
-  // The empty list depicts no elevation.
-  0: <BoxShadow>[],
+  BoxDecorationAttribute _gradient(GradientAttribute gradient) =>
+      BoxDecorationAttribute(gradient: gradient);
 
-  1: <BoxShadow>[
-    BoxShadow(
-      color: _kKeyUmbraOpacity,
-      offset: Offset(0.0, 2.0),
-      blurRadius: 1.0,
-      spreadRadius: -1.0,
-    ),
-    BoxShadow(
-      color: _kKeyPenumbraOpacity,
-      offset: Offset(0.0, 1.0),
-      blurRadius: 1.0,
-    ),
-    BoxShadow(
-      color: _kAmbientShadowOpacity,
-      offset: Offset(0.0, 1.0),
-      blurRadius: 3.0,
-    ),
-  ],
+  BoxDecorationAttribute _boxShadow(List<BoxShadowAttribute> boxShadow) =>
+      BoxDecorationAttribute(boxShadow: boxShadow);
 
-  2: <BoxShadow>[
-    BoxShadow(
-      color: _kKeyUmbraOpacity,
-      offset: Offset(0.0, 3.0),
-      blurRadius: 1.0,
-      spreadRadius: -2.0,
-    ),
-    BoxShadow(
-      color: _kKeyPenumbraOpacity,
-      offset: Offset(0.0, 2.0),
-      blurRadius: 2.0,
-    ),
-    BoxShadow(
-      color: _kAmbientShadowOpacity,
-      offset: Offset(0.0, 1.0),
-      blurRadius: 5.0,
-    ),
-  ],
+  ColorUtility<BoxDecorationAttribute> get color => ColorUtility(_color);
+  BorderUtility<BoxDecorationAttribute> get border => BorderUtility(_border);
+  BorderRadiusUtility<BoxDecorationAttribute> get borderRadius =>
+      BorderRadiusUtility(_borderRadius);
 
-  3: <BoxShadow>[
-    BoxShadow(
-      color: _kKeyUmbraOpacity,
-      offset: Offset(0.0, 3.0),
-      blurRadius: 3.0,
-      spreadRadius: -2.0,
-    ),
-    BoxShadow(
-      color: _kKeyPenumbraOpacity,
-      offset: Offset(0.0, 3.0),
-      blurRadius: 4.0,
-    ),
-    BoxShadow(
-      color: _kAmbientShadowOpacity,
-      offset: Offset(0.0, 1.0),
-      blurRadius: 8.0,
-    ),
-  ],
+  BoxShapeUtility<BoxDecorationAttribute> get shape => BoxShapeUtility(_shape);
 
-  4: <BoxShadow>[
-    BoxShadow(
-      color: _kKeyUmbraOpacity,
-      offset: Offset(0.0, 2.0),
-      blurRadius: 4.0,
-      spreadRadius: -1.0,
-    ),
-    BoxShadow(
-      color: _kKeyPenumbraOpacity,
-      offset: Offset(0.0, 4.0),
-      blurRadius: 5.0,
-    ),
-    BoxShadow(
-      color: _kAmbientShadowOpacity,
-      offset: Offset(0.0, 1.0),
-      blurRadius: 10.0,
-    ),
-  ],
+  BoxDecorationAttribute elevation(int value) {
+    assert(kElevationToShadow.containsKey(value), 'Invalid elevation value');
 
-  6: <BoxShadow>[
-    BoxShadow(
-      color: _kKeyUmbraOpacity,
-      offset: Offset(0.0, 3.0),
-      blurRadius: 5.0,
-      spreadRadius: -1.0,
-    ),
-    BoxShadow(
-      color: _kKeyPenumbraOpacity,
-      offset: Offset(0.0, 6.0),
-      blurRadius: 10.0,
-    ),
-    BoxShadow(
-      color: _kAmbientShadowOpacity,
-      offset: Offset(0.0, 1.0),
-      blurRadius: 18.0,
-    ),
-  ],
+    return BoxDecorationAttribute(
+      boxShadow: kElevationToShadow[value]!.toAttribute(),
+    );
+  }
 
-  8: <BoxShadow>[
-    BoxShadow(
-      color: _kKeyUmbraOpacity,
-      offset: Offset(0.0, 5.0),
-      blurRadius: 5.0,
-      spreadRadius: -3.0,
-    ),
-    BoxShadow(
-      color: _kKeyPenumbraOpacity,
-      offset: Offset(0.0, 8.0),
-      blurRadius: 10.0,
-      spreadRadius: 1.0,
-    ),
-    BoxShadow(
-      color: _kAmbientShadowOpacity,
-      offset: Offset(0.0, 3.0),
-      blurRadius: 14.0,
-      spreadRadius: 2.0,
-    ),
-  ],
+  BoxDecorationAttribute as(BoxDecoration decoration) {
+    return BoxDecorationAttribute(
+      color: decoration.color?.toAttribute(),
+      border: decoration.border?.toAttribute(),
+      borderRadius: decoration.borderRadius?.toAttribute(),
+      gradient: decoration.gradient?.toAttribute(),
+      boxShadow: decoration.boxShadow?.toAttribute(),
+      shape: decoration.shape,
+    );
+  }
 
-  9: <BoxShadow>[
-    BoxShadow(
-      color: _kKeyUmbraOpacity,
-      offset: Offset(0.0, 5.0),
-      blurRadius: 6.0,
-      spreadRadius: -3.0,
-    ),
-    BoxShadow(
-      color: _kKeyPenumbraOpacity,
-      offset: Offset(0.0, 9.0),
-      blurRadius: 12.0,
-      spreadRadius: 1.0,
-    ),
-    BoxShadow(
-      color: _kAmbientShadowOpacity,
-      offset: Offset(0.0, 3.0),
-      blurRadius: 16.0,
-      spreadRadius: 2.0,
-    ),
-  ],
-
-  12: <BoxShadow>[
-    BoxShadow(
-      color: _kKeyUmbraOpacity,
-      offset: Offset(0.0, 7.0),
-      blurRadius: 8.0,
-      spreadRadius: -4.0,
-    ),
-    BoxShadow(
-      color: _kKeyPenumbraOpacity,
-      offset: Offset(0.0, 12.0),
-      blurRadius: 17.0,
-      spreadRadius: 2.0,
-    ),
-    BoxShadow(
-      color: _kAmbientShadowOpacity,
-      offset: Offset(0.0, 5.0),
-      blurRadius: 22.0,
-      spreadRadius: 4.0,
-    ),
-  ],
-
-  16: <BoxShadow>[
-    BoxShadow(
-      color: _kKeyUmbraOpacity,
-      offset: Offset(0.0, 8.0),
-      blurRadius: 10.0,
-      spreadRadius: -5.0,
-    ),
-    BoxShadow(
-      color: _kKeyPenumbraOpacity,
-      offset: Offset(0.0, 16.0),
-      blurRadius: 24.0,
-      spreadRadius: 2.0,
-    ),
-    BoxShadow(
-      color: _kAmbientShadowOpacity,
-      offset: Offset(0.0, 6.0),
-      blurRadius: 30.0,
-      spreadRadius: 5.0,
-    ),
-  ],
-
-  24: <BoxShadow>[
-    BoxShadow(
-      color: _kKeyUmbraOpacity,
-      offset: Offset(0.0, 11.0),
-      blurRadius: 15.0,
-      spreadRadius: -7.0,
-    ),
-    BoxShadow(
-      color: _kKeyPenumbraOpacity,
-      offset: Offset(0.0, 24.0),
-      blurRadius: 38.0,
-      spreadRadius: 3.0,
-    ),
-    BoxShadow(
-      color: _kAmbientShadowOpacity,
-      offset: Offset(0.0, 9.0),
-      blurRadius: 46.0,
-      spreadRadius: 8.0,
-    ),
-  ],
-};
-
-extension on List<BoxShadow> {
-  List<BoxShadowDto> toDto() {
-    return map((e) => BoxShadowDto(
-          color: e.color.toDto(),
-          offset: e.offset,
-          blurRadius: e.blurRadius,
-          spreadRadius: e.spreadRadius,
-        )).toList();
+  BoxDecorationAttribute call({
+    Color? color,
+    BoxBorderAttribute? border,
+    BorderRadiusAttribute? borderRadius,
+    GradientAttribute? gradient,
+    List<BoxShadowAttribute>? boxShadow,
+    BoxShape? shape,
+  }) {
+    return BoxDecorationAttribute(
+      color: color?.toAttribute(),
+      border: border,
+      borderRadius: borderRadius,
+      gradient: gradient,
+      boxShadow: boxShadow,
+      shape: shape,
+    );
   }
 }

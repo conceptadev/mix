@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../specs/text_spec.dart';
+import '../recipes/text/text_recipe.dart';
 import 'styled_widget.dart';
 
 @Deprecated('Use StyledText now')

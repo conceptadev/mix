@@ -5,8 +5,8 @@ import 'dart:collection';
 import 'package:flutter/cupertino.dart';
 
 import '../attributes/attribute.dart';
-import '../helpers/extensions/iterable_ext.dart';
 import 'equality/compare_mixin.dart';
+import 'extensions/iterable_ext.dart';
 
 @immutable
 class VisualAttributeMap with Comparable {

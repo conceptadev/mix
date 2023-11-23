@@ -56,22 +56,10 @@ void main() {
       expect(attribute.value, TextAlign.center);
     });
 
-    test('Gradient toAttribute', () {
-      const gradient = LinearGradient(
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-        colors: [Colors.red, Colors.blue],
-      );
-
-      final attribute = gradient.toAttribute();
-
-      expect(attribute.value, gradient);
-    });
-
     test('AlignmentGeometry toAttribute', () {
       const alignment = Alignment.center;
       final attribute = alignment.toAttribute();
-      expect(attribute.resolve(EmptyMixData), Alignment.center);
+      expect(attribute.value, Alignment.center);
     });
 
     test('ShapeDecoration toAttribute', () {
@@ -83,25 +71,27 @@ void main() {
 
       final attribute = shapeDecoration.toAttribute();
 
-      expect(attribute.value.shape, Border.all());
-      expect(attribute.value.gradient?.value,
+      expect(attribute.shape, Border.all());
+      expect(attribute.gradient?.resolve(EmptyMixData),
           const RadialGradient(colors: [Colors.red, Colors.blue]));
-      expect(attribute.value.boxShadow?.map((e) => e.resolve(EmptyMixData)),
+      expect(attribute.boxShadow?.map((e) => e.resolve(EmptyMixData)),
           [const BoxShadow(blurRadius: 5.0)]);
     });
 
     test('Alignment toAttribute', () {
       const alignment = Alignment(0.5, 0.5);
       final attribute = alignment.toAttribute();
-      expect(attribute.x, 0.5);
-      expect(attribute.y, 0.5);
+      final result = attribute.value as Alignment;
+      expect(result.x, 0.5);
+      expect(result.y, 0.5);
     });
 
     test('AlignmentDirectional toAttribute', () {
       const alignmentDirectional = AlignmentDirectional(0.5, 0.5);
       final attribute = alignmentDirectional.toAttribute();
-      expect(attribute.start, 0.5);
-      expect(attribute.y, 0.5);
+      final result = attribute.value as AlignmentDirectional;
+      expect(result.start, 0.5);
+      expect(result.y, 0.5);
     });
 
     test('BoxConstraints toAttribute', () {
@@ -112,10 +102,10 @@ void main() {
         maxHeight: 250.0,
       );
       final attribute = boxConstraints.toAttribute();
-      expect(attribute.value.minWidth, 100.0);
-      expect(attribute.value.maxWidth, 200.0);
-      expect(attribute.value.minHeight, 150.0);
-      expect(attribute.value.maxHeight, 250.0);
+      expect(attribute.minWidth, 100.0);
+      expect(attribute.maxWidth, 200.0);
+      expect(attribute.minHeight, 150.0);
+      expect(attribute.maxHeight, 250.0);
     });
 
     test('MainAxisAlignment toAttribute', () {
@@ -209,14 +199,14 @@ void main() {
 
       final attribute = boxDecoration.toAttribute();
 
-      expect(attribute.value.color?.value, Colors.blue);
-      expect(attribute.value.border?.resolve(EmptyMixData), Border.all());
-      expect(attribute.value.borderRadius?.resolve(EmptyMixData),
+      expect(attribute.color?.value, Colors.blue);
+      expect(attribute.border?.resolve(EmptyMixData), Border.all());
+      expect(attribute.borderRadius?.resolve(EmptyMixData),
           BorderRadius.circular(10.0));
-      expect(attribute.value.gradient?.value,
+      expect(attribute.gradient?.resolve(EmptyMixData),
           const LinearGradient(colors: [Colors.red, Colors.blue]));
       expect(
-          attribute.value.boxShadow?.map(
+          attribute.boxShadow?.map(
             (e) => e.resolve(EmptyMixData),
           ),
           [const BoxShadow(blurRadius: 5.0)]);
@@ -259,7 +249,7 @@ void main() {
         width: 2.0,
         style: BorderStyle.solid,
       );
-      final attribute = borderSide.toDto();
+      final attribute = borderSide.toAttribute();
       expect(attribute.color?.resolve(EmptyMixData), Colors.blue);
       expect(attribute.width, 2.0);
       expect(attribute.style, BorderStyle.solid);
@@ -290,15 +280,15 @@ void main() {
     test('Shadow toAttribute', () {
       const shadow = BoxShadow(blurRadius: 10.0, color: Colors.black);
       final attribute = shadow.toAttribute();
-      expect(attribute.value.blurRadius, 10.0);
-      expect(attribute.value.color?.resolve(EmptyMixData), Colors.black);
+      expect(attribute.blurRadius, 10.0);
+      expect(attribute.color?.resolve(EmptyMixData), Colors.black);
     });
 
     test('BoxShadow toAttribute', () {
       const boxShadow = BoxShadow(blurRadius: 5.0, color: Colors.grey);
       final attribute = boxShadow.toAttribute();
-      expect(attribute.value.blurRadius, 5.0);
-      expect(attribute.value.color?.resolve(EmptyMixData), Colors.grey);
+      expect(attribute.blurRadius, 5.0);
+      expect(attribute.color?.resolve(EmptyMixData), Colors.grey);
     });
 
     test('TextStyle toDto', () {

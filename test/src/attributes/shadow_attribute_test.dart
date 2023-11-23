@@ -8,8 +8,8 @@ import '../../helpers/testing_utils.dart';
 void main() {
   group('ShadowDto and BoxShadowDto', () {
     test('ShadowDto correctly resolves attributes', () {
-      const shadowDto = ShadowDto(
-        color: ColorDto(Colors.green),
+      const shadowDto = ShadowAttribute(
+        color: ColorAttribute(Colors.green),
         offset: Offset(1, 1),
         blurRadius: 2.0,
       );
@@ -22,14 +22,14 @@ void main() {
     });
 
     test('ShadowDto correctly merges attributes', () {
-      const shadowDto1 = ShadowDto(
-        color: ColorDto(Colors.green),
+      const shadowDto1 = ShadowAttribute(
+        color: ColorAttribute(Colors.green),
         offset: Offset(1, 1),
         blurRadius: 2.0,
       );
 
-      const shadowDto2 = ShadowDto(
-        color: ColorDto(Colors.blue),
+      const shadowDto2 = ShadowAttribute(
+        color: ColorAttribute(Colors.blue),
         offset: Offset(2, 2),
         blurRadius: 4.0,
       );
@@ -42,8 +42,8 @@ void main() {
     });
 
     test('BoxShadowDto correctly resolves attributes', () {
-      const boxShadowDto = BoxShadowDto(
-        color: ColorDto(Colors.green),
+      const boxShadowDto = BoxShadowAttribute(
+        color: ColorAttribute(Colors.green),
         offset: Offset(1, 1),
         blurRadius: 2.0,
         spreadRadius: 3.0,
@@ -58,15 +58,15 @@ void main() {
     });
 
     test('BoxShadowDto correctly merges attributes', () {
-      const boxShadowDto1 = BoxShadowDto(
-        color: ColorDto(Colors.green),
+      const boxShadowDto1 = BoxShadowAttribute(
+        color: ColorAttribute(Colors.green),
         offset: Offset(1, 1),
         blurRadius: 2.0,
         spreadRadius: 3.0,
       );
 
-      const boxShadowDto2 = BoxShadowDto(
-        color: ColorDto(Colors.blue),
+      const boxShadowDto2 = BoxShadowAttribute(
+        color: ColorAttribute(Colors.blue),
         offset: Offset(2, 2),
         blurRadius: 4.0,
         spreadRadius: 5.0,

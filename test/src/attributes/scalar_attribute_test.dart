@@ -10,23 +10,6 @@ void main() {
     Axis.values,
   );
 
-  testScalarAttribute<MainAxisAlignmentAttribute, MainAxisAlignment>(
-      'MainAxisAlignmentAttribute',
-      (value) => MainAxisAlignmentAttribute(value),
-      MainAxisAlignment.values);
-
-  testScalarAttribute<MainAxisSizeAttribute, MainAxisSize>(
-    'MainAxisSizeAttribute',
-    (value) => MainAxisSizeAttribute(value),
-    MainAxisSize.values,
-  );
-
-  testScalarAttribute<CrossAxisAlignmentAttribute, CrossAxisAlignment>(
-    'CrossAxisAlignmentAttribute',
-    (value) => CrossAxisAlignmentAttribute(value),
-    CrossAxisAlignment.values,
-  );
-
   testScalarAttribute<VerticalDirectionAttribute, VerticalDirection>(
     'VerticalDirectionAttribute',
     (value) => VerticalDirectionAttribute(value),
@@ -45,42 +28,10 @@ void main() {
     Clip.values,
   );
 
-  testScalarAttribute<ImageAlignmentAttribute, Alignment>(
-      'ImageAlignmentAttribute', (value) => ImageAlignmentAttribute(value), [
-    Alignment.topLeft,
-    Alignment.topCenter,
-    Alignment.topRight,
-    Alignment.centerLeft,
-    Alignment.center,
-    Alignment.centerRight,
-    Alignment.bottomLeft,
-    Alignment.bottomCenter,
-    Alignment.bottomRight,
-  ]);
-
-  testScalarAttribute<GradientAttribute, Gradient>(
-      'GradientAttribute', (value) => GradientAttribute(value), [
-    const LinearGradient(
-      colors: [Colors.red, Colors.blue],
-    ),
-    const RadialGradient(
-      colors: [Colors.red, Colors.blue],
-    ),
-    const SweepGradient(
-      colors: [Colors.red, Colors.blue],
-    ),
-  ]);
-
   testScalarAttribute<ImageFitAttribute, BoxFit>(
     'ImageFitAttribute',
     (value) => ImageFitAttribute(value),
     BoxFit.values,
-  );
-
-  testScalarAttribute<ImageRepeatAttribute, ImageRepeat>(
-    'ImageRepeatAttribute',
-    (value) => ImageRepeatAttribute(value),
-    ImageRepeat.values,
   );
 
   testScalarAttribute<SoftWrapAttribute, bool>(
@@ -147,24 +98,6 @@ void main() {
     'BlendModeAttribute',
     (value) => BlendModeAttribute(value),
     BlendMode.values,
-  );
-
-  testScalarAttribute<ImageWidthAttribute, double>(
-    'ImageWidthAttribute',
-    (value) => ImageWidthAttribute(value),
-    [
-      1.0,
-      2.0,
-    ],
-  );
-
-  testScalarAttribute<ImageHeightAttribute, double>(
-    'ImageHeightAttribute',
-    (value) => ImageHeightAttribute(value),
-    [
-      1.0,
-      2.0,
-    ],
   );
 
   testScalarAttribute<TextAlignAttribute, TextAlign>(

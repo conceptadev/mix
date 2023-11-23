@@ -275,8 +275,8 @@ void testScalarAttribute<T extends ScalarAttribute<V>, V>(
 
         test('resolve $value1', () {
           final attr = builder(value1);
-          final resolvedValue = attr.resolve(EmptyMixData);
-          expect(resolvedValue, equals(value1));
+
+          expect(attr.value, equals(value1));
         });
 
         test('check equality between $value1 and $value2', () {
@@ -300,8 +300,8 @@ void testScalarAttribute<T extends ScalarAttribute<V>, V>(
 
       test('resolves correctly', () {
         final attr = builder(value1);
-        final resolvedValue = attr.resolve(EmptyMixData);
-        expect(resolvedValue, equals(value1));
+
+        expect(attr.value, equals(value1));
       });
     }
   });

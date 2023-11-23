@@ -29,18 +29,26 @@ class ColorDto extends Dto<Color> {
 }
 
 @immutable
-abstract class ColorAttribute extends ResolvableAttribute<ColorDto, Color> {
-  const ColorAttribute(super.value);
+class ColorUtility<Attr extends StyleAttribute>
+    extends ScalarUtility<Attr, Color> {
+  const ColorUtility(super.builder);
+}
+
+@immutable
+class ColorAttribute extends ResolvableAttribute<Color> {
+  final ColorDto value;
+  const ColorAttribute(this.value);
+
+  @override
+  ColorAttribute merge(covariant ColorAttribute? other) {
+    if (other == null) return this;
+
+    return ColorAttribute(other.value);
+  }
 
   @override
   Color resolve(MixData mix) => value.resolve(mix);
 
   @override
   get props => [value];
-}
-
-@immutable
-class ColorUtility<Attr extends StyleAttribute>
-    extends ScalarUtility<Attr, Color> {
-  const ColorUtility(super.builder);
 }

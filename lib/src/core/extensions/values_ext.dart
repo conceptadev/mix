@@ -2,22 +2,23 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-import '../../attributes/alignment_attribute.dart';
 import '../../attributes/attribute.dart';
 import '../../attributes/border/border_attribute.dart';
 import '../../attributes/border/border_radius_attribute.dart';
 import '../../attributes/color_attribute.dart';
-import '../../attributes/constraints_attribute.dart';
-import '../../attributes/decoration_attribute.dart';
 import '../../attributes/edge_insets_attribute.dart';
+import '../../attributes/gradient_attribute.dart';
+import '../../attributes/render/alignment_attribute.dart';
+import '../../attributes/render/constraints_attribute.dart';
+import '../../attributes/render/decoration_attribute.dart';
 import '../../attributes/scalar_attribute.dart';
 import '../../attributes/shadow_attribute.dart';
 import '../../attributes/strut_style_attribute.dart';
 import '../../attributes/text_style_attribute.dart';
 
 extension StrutStyleExt on StrutStyle {
-  StrutStyleDto toAttribute() {
-    return StrutStyleDto(
+  StrutStyleAttribute toAttribute() {
+    return StrutStyleAttribute(
       fontFamily: fontFamily,
       fontFamilyFallback: fontFamilyFallback,
       fontSize: fontSize,
@@ -51,14 +52,84 @@ extension TextAlignExt on TextAlign {
 }
 
 extension GradientExt on Gradient {
-  GradientAttribute toAttribute() => GradientAttribute(this);
+  GradientAttribute toAttribute() {
+    if (this is LinearGradient) return (this as LinearGradient).toAttribute();
+    if (this is RadialGradient) return (this as RadialGradient).toAttribute();
+    if (this is SweepGradient) return (this as SweepGradient).toAttribute();
+
+    throw UnimplementedError();
+  }
+}
+
+extension LinearGradientExt on LinearGradient {
+  LinearGradientAttribute toAttribute() => LinearGradientAttribute(
+        begin: begin,
+        end: end,
+        colors: colors.map((e) => e.toAttribute()).toList(),
+        stops: stops,
+        tileMode: tileMode,
+        transform: transform,
+      );
+}
+
+extension RadialGradientExt on RadialGradient {
+  RadialGradientAttribute toAttribute() => RadialGradientAttribute(
+        center: center,
+        radius: radius,
+        colors: colors.map((e) => e.toAttribute()).toList(),
+        stops: stops,
+        tileMode: tileMode,
+        focal: focal,
+        transform: transform,
+      );
+}
+
+extension SweepGradientExt on SweepGradient {
+  SweepGradientAttribute toAttribute() => SweepGradientAttribute(
+        center: center,
+        startAngle: startAngle,
+        endAngle: endAngle,
+        colors: colors.map((e) => e.toAttribute()).toList(),
+        stops: stops,
+        tileMode: tileMode,
+        transform: transform,
+      );
+}
+
+extension BoxBorderExt on BoxBorder {
+  BoxBorderAttribute toAttribute() {
+    if (this is Border) return (this as Border).toAttribute();
+    if (this is BorderDirectional) {
+      return (this as BorderDirectional).toAttribute();
+    }
+
+    throw UnimplementedError();
+  }
+}
+
+extension BorderExt on Border {
+  BorderAttribute toAttribute() => BorderAttribute(
+        top: top.toAttribute(),
+        bottom: bottom.toAttribute(),
+        left: left.toAttribute(),
+        right: right.toAttribute(),
+      );
+}
+
+extension BorderDirectionalExt on BorderDirectional {
+  BorderDirectionalAttribute toAttribute() => BorderDirectionalAttribute(
+        start: start.toAttribute(),
+        end: end.toAttribute(),
+        top: top.toAttribute(),
+        bottom: bottom.toAttribute(),
+      );
 }
 
 extension EdgeInsetsGeometryExt on EdgeInsetsGeometry {
-  EdgeInsetsGeometryDto toDto() {
-    if (this is EdgeInsets) return (this as EdgeInsets).toDto();
+  EdgeInsetsGeometryAttribute toAttribute() {
+    if (this is EdgeInsets) return (this as EdgeInsets).toAttribute();
     if (this is EdgeInsetsDirectional) {
-      return (this as EdgeInsetsDirectional).toDto();
+      return (this as EdgeInsetsDirectional).toAttribute();
     }
 
     throw UnimplementedError();
@@ -66,7 +137,7 @@ extension EdgeInsetsGeometryExt on EdgeInsetsGeometry {
 }
 
 extension EdgeInsetsExt on EdgeInsets {
-  EdgeInsetsDto toDto() => EdgeInsetsDto(
+  EdgeInsetsAttribute toAttribute() => EdgeInsetsAttribute(
         top: top,
         bottom: bottom,
         left: left,
@@ -75,7 +146,8 @@ extension EdgeInsetsExt on EdgeInsets {
 }
 
 extension EdgeInsetsDirectionalExt on EdgeInsetsDirectional {
-  EdgeInsetsDirectionalDto toDto() => EdgeInsetsDirectionalDto(
+  EdgeInsetsDirectionalAttribute toAttribute() =>
+      EdgeInsetsDirectionalAttribute(
         top: top,
         bottom: bottom,
         start: start,
@@ -122,80 +194,32 @@ extension ColorExt on Color {
       '${green.toRadixString(16).padLeft(2, '0')}'
       '${blue.toRadixString(16).padLeft(2, '0')}';
 
-  ColorDto toDto() => ColorDto(this);
+  ColorAttribute toAttribute() => ColorAttribute(this);
 }
 
 // Extension for Alignment
 extension AlignmentGeometryExt on AlignmentGeometry {
-  AlignmentGeometryDto toDto() {
-    if (this is Alignment) return (this as Alignment).toDto();
-    if (this is AlignmentDirectional) {
-      return (this as AlignmentDirectional).toDto();
-    }
-
-    throw UnimplementedError();
-  }
-
   AlignmentGeometryAttribute toAttribute() {
-    if (this is Alignment) return (this as Alignment).toAttribute();
-    if (this is AlignmentDirectional) {
-      return (this as AlignmentDirectional).toAttribute();
-    }
-
-    throw UnimplementedError();
+    return AlignmentGeometryAttribute(this);
   }
-}
-
-extension AlignmentExt on Alignment {
-  AlignmentDto toDto() => AlignmentDto(x: x, y: y);
-
-  AlignmentAttribute toAttribute() => AlignmentAttribute(toDto());
-}
-
-extension AlignmentDirectionalExt on AlignmentDirectional {
-  AligmentDirectionalDto toDto() => AligmentDirectionalDto(
-        start: start,
-        y: y,
-      );
-
-  AlignmentDirectionalAttribute toAttribute() =>
-      AlignmentDirectionalAttribute(toDto());
 }
 
 extension ShapeDecorationExt on ShapeDecoration {
-  ShapeDecorationDto toDto() => ShapeDecorationDto(
-        color: color?.toDto(),
+  ShapeDecorationAttribute toAttribute() => ShapeDecorationAttribute(
+        color: color?.toAttribute(),
         shape: shape,
         gradient: gradient?.toAttribute(),
-        boxShadow: shadows?.map((e) => e.toDto()).toList(),
+        boxShadow: shadows?.map((e) => e.toAttribute()).toList(),
       );
-
-  ShapeDecorationAttribute toAttribute() => ShapeDecorationAttribute(toDto());
 }
 
 extension BoxConstraintsExt on BoxConstraints {
-  BoxConstraintsDto toDto() => BoxConstraintsDto(
+  BoxConstraintsAttribute toAttribute() => const BoxConstraintsAttribute(
         minWidth: minWidth,
         maxWidth: maxWidth,
         minHeight: minHeight,
         maxHeight: maxHeight,
       );
-  BoxConstraintsAttribute toAttribute() => BoxConstraintsAttribute(toDto());
-}
-
-// Extension for MainAxisAlignment
-extension MainAxisAlignmentExt on MainAxisAlignment {
-  MainAxisAlignmentAttribute toAttribute() => MainAxisAlignmentAttribute(this);
-}
-
-// Extension for CrossAxisAlignment
-extension CrossAxisAlignmentExt on CrossAxisAlignment {
-  CrossAxisAlignmentAttribute toAttribute() =>
-      CrossAxisAlignmentAttribute(this);
-}
-
-extension MainAxisSizeExt on MainAxisSize {
-  MainAxisSizeAttribute toAttribute() => MainAxisSizeAttribute(this);
 }
 
 extension TextOverflowExt on TextOverflow {
@@ -224,10 +248,6 @@ extension TextDirectionExt on TextDirection {
   TextDirectionAttribute toAttribute() => TextDirectionAttribute(this);
 }
 
-extension ImageRepeatExt on ImageRepeat {
-  ImageRepeatAttribute toAttribute() => ImageRepeatAttribute(this);
-}
-
 // Extension for Axis
 extension AxisExt on Axis {
   AxisAttribute toAttribute() => AxisAttribute(this);
@@ -244,16 +264,14 @@ extension BoxFitExt on BoxFit {
 }
 
 extension BoxDecorationExt on BoxDecoration {
-  BoxDecorationDto toDto() => BoxDecorationDto(
-        color: color?.toDto(),
+  BoxDecorationAttribute toAttribute() => BoxDecorationAttribute(
+        color: color?.toAttribute(),
         border: border?.toAttribute(),
         borderRadius: borderRadius?.toAttribute(),
         gradient: gradient?.toAttribute(),
-        boxShadow: boxShadow?.map((e) => e.toDto()).toList(),
-        shape: shape.toAttribute(),
+        boxShadow: boxShadow?.map((e) => e.toAttribute()).toList(),
+        shape: shape,
       );
-
-  BoxDecorationAttribute toAttribute() => BoxDecorationAttribute(toDto());
 }
 
 extension BoxShapeExt on BoxShape {
@@ -271,30 +289,26 @@ extension BorderRadiusGeometryExt on BorderRadiusGeometry {
   }
 }
 
-extension BorderRadiusDirectionalExrt on BorderRadiusDirectional {
-  BorderRadiusDirectionalDto toDto() => BorderRadiusDirectionalDto(
-        topStart: topStart,
-        topEnd: topEnd,
-        bottomStart: bottomStart,
-        bottomEnd: bottomEnd,
-      );
-
-  BorderRadiusDirectionalAttribute toAttribute() =>
-      BorderRadiusDirectionalAttribute(toDto());
-}
-
-// Extension for BorderRadius
 extension BorderRadiusExt on BorderRadius {
-  BorderRadiusDto toDto() => BorderRadiusDto(
+  BorderRadiusAttribute toAttribute() => BorderRadiusAttribute(
         topLeft: topLeft,
         topRight: topRight,
         bottomLeft: bottomLeft,
         bottomRight: bottomRight,
       );
-
-  BorderRadiusAttribute toAttribute() => BorderRadiusAttribute(toDto());
 }
 
+extension BorderRadiusDirectionalExrt on BorderRadiusDirectional {
+  BorderRadiusDirectionalAttribute toAttribute() =>
+      BorderRadiusDirectionalAttribute(
+        topStart: topStart,
+        topEnd: topEnd,
+        bottomStart: bottomStart,
+        bottomEnd: bottomEnd,
+      );
+}
+
+// Extension for BorderRadius
 extension TextBaseLineExt on TextBaseline {
   TextBaselineAttribute toAttribute() => TextBaselineAttribute(this);
 }
@@ -311,52 +325,50 @@ extension Matrix4Ext on Matrix4 {
 }
 
 extension BorderSideExt on BorderSide {
-  BorderSideDto toDto() => BorderSideDto(
-        color: color.toDto(),
+  BorderSideAttribute toAttribute() => BorderSideAttribute(
+        color: color.toAttribute(),
         strokeAlign: strokeAlign,
         style: style,
         width: width,
       );
 }
 
-extension BoxBorderExt on BoxBorder {
-  BoxBorderAttribute toAttribute() {
-    if (this is Border) return (this as Border).toAttribute();
-    if (this is BorderDirectional) {
-      return (this as BorderDirectional).toAttribute();
-    }
+extension ShadowExt on Shadow {
+  ShadowAttribute toAttribute() => ShadowAttribute(
+        blurRadius: blurRadius,
+        color: color.toAttribute(),
+        offset: offset,
+      );
+}
 
-    throw UnimplementedError();
+extension ListShadowExt on List<Shadow> {
+  List<ShadowAttribute> toAttribute() {
+    return map((e) => e.toAttribute()).toList();
   }
 }
 
-extension ShadowExt on Shadow {
-  ShadowDto toDto() => ShadowDto(
-        blurRadius: blurRadius,
-        color: color.toDto(),
-        offset: offset,
-      );
-  ShadowAttribute toAttribute() => ShadowAttribute(toDto());
-}
-
 extension BoxShadowExt on BoxShadow {
-  BoxShadowDto toDto() => BoxShadowDto(
-        color: color.toDto(),
+  BoxShadowAttribute toAttribute() => BoxShadowAttribute(
+        color: color.toAttribute(),
         offset: offset,
         blurRadius: blurRadius,
         spreadRadius: spreadRadius,
       );
+}
 
-  BoxShadowAttribute toAttribute() => BoxShadowAttribute(toDto());
+extension ListBoxShadowExt on List<BoxShadow> {
+  List<BoxShadowAttribute> toAttribute() {
+    return map((e) => e.toAttribute()).toList();
+  }
 }
 
 extension TextStyleExt on TextStyle {
   TextStyleDto toDto() => TextStyleDto(
         background: background,
-        color: color?.toDto(),
+        color: color?.toAttribute(),
         debugLabel: debugLabel,
         decoration: decoration,
-        decorationColor: decorationColor?.toDto(),
+        decorationColor: decorationColor?.toAttribute(),
         decorationStyle: decorationStyle,
         decorationThickness: decorationThickness,
         fontFamily: fontFamily,
@@ -369,37 +381,12 @@ extension TextStyleExt on TextStyle {
         height: height,
         letterSpacing: letterSpacing,
         locale: locale,
-        shadows: shadows?.map((e) => e.toDto()).toList(),
+        shadows: shadows?.map((e) => e.toAttribute()).toList(),
         textBaseline: textBaseline,
         wordSpacing: wordSpacing,
       );
 
-  TextStyleAttribute toAttribute() => TextStyleAttribute(
-        TextStyleListDto([toDto()]),
-      );
-}
-
-extension BorderExt on Border {
-  BorderDto toDto() => BorderDto(
-        top: top.toDto(),
-        bottom: bottom.toDto(),
-        left: left.toDto(),
-        right: right.toDto(),
-      );
-
-  BorderAttribute toAttribute() => BorderAttribute(toDto());
-}
-
-extension BorderDirectionalExt on BorderDirectional {
-  BorderDirectionalDto toDto() => BorderDirectionalDto(
-        start: start.toDto(),
-        end: end.toDto(),
-        top: top.toDto(),
-        bottom: bottom.toDto(),
-      );
-
-  BorderDirectionalAttribute toAttribute() =>
-      BorderDirectionalAttribute(toDto());
+  TextStyleAttribute toAttribute() => TextStyleAttribute(toDto());
 }
 
 extension ListExt<T> on List<T> {

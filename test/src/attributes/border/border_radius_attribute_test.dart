@@ -5,8 +5,8 @@ import 'package:mix/mix.dart';
 import '../../../helpers/testing_utils.dart';
 
 void main() {
-  group('BorderRadiusAttribute', () {
-    test('BorderRadiusAttribute.all', () {
+  group('BorderRadiusDto', () {
+    test('BorderRadiusDto.all', () {
       const attr = BorderRadiusAttribute.all(Radius.circular(5.0));
       expect(attr.topLeft, const Radius.circular(5.0));
       expect(attr.topRight, const Radius.circular(5.0));
@@ -14,7 +14,7 @@ void main() {
       expect(attr.bottomRight, const Radius.circular(5.0));
     });
 
-    test('BorderRadiusAttribute.horizontal', () {
+    test('BorderRadiusDto.horizontal', () {
       const attr = BorderRadiusAttribute.horizontal(
         left: Radius.circular(5.0),
         right: Radius.circular(10.0),
@@ -26,7 +26,7 @@ void main() {
       expect(attr.bottomRight, const Radius.circular(10.0));
     });
 
-    test('BorderRadiusAttribute.vertical', () {
+    test('BorderRadiusDto.vertical', () {
       const attr = BorderRadiusAttribute.vertical(
         top: Radius.circular(5.0),
         bottom: Radius.circular(10.0),
@@ -56,7 +56,7 @@ void main() {
       expect(merged.bottomRight, attr2.bottomRight);
     });
 
-    test('merge should combine two BorderRadiusAttributes correctly', () {
+    test('merge should combine two BorderRadiusDtos correctly', () {
       const borderRadius1 = BorderRadiusAttribute(
         bottomLeft: Radius.circular(10),
         bottomRight: Radius.circular(20),
@@ -160,7 +160,7 @@ void main() {
 
       expect(resolvedVerticalValue, verticalValue);
 
-      final circularAttr = const BorderRadiusUtility().circular(5.0);
+      final circularAttr = const BorderRadiusUtility().all(5.0);
       final circularValue = BorderRadius.circular(5.0);
 
       final resolvedCircularValue = circularAttr.resolve(EmptyMixData);
@@ -187,8 +187,8 @@ void main() {
     });
   });
 
-  group('BorderRadiusDirectionalAttribute', () {
-    test('BorderRadiusDirectionalAttribute.all', () {
+  group('BorderRadiusDirectionalDto', () {
+    test('BorderRadiusDirectionalDto.all', () {
       const attr = BorderRadiusDirectionalAttribute.all(Radius.circular(5.0));
       expect(attr.topStart, const Radius.circular(5.0));
       expect(attr.topEnd, const Radius.circular(5.0));
@@ -196,7 +196,7 @@ void main() {
       expect(attr.bottomEnd, const Radius.circular(5.0));
     });
 
-    test('BorderRadiusDirectionalAttribute.horizontal', () {
+    test('BorderRadiusDirectionalDto.horizontal', () {
       const attr = BorderRadiusDirectionalAttribute.horizontal(
         start: Radius.circular(5.0),
         end: Radius.circular(10.0),
@@ -208,7 +208,7 @@ void main() {
       expect(attr.bottomEnd, const Radius.circular(10.0));
     });
 
-    test('BorderRadiusDirectionalAttribute.vertical', () {
+    test('BorderRadiusDirectionalDto.vertical', () {
       const attr = BorderRadiusDirectionalAttribute.vertical(
         top: Radius.circular(5.0),
         bottom: Radius.circular(10.0),
@@ -220,7 +220,7 @@ void main() {
       expect(attr.bottomEnd, const Radius.circular(10.0));
     });
 
-    test('BorderRadiusDirectionalAttribute.circular', () {
+    test('BorderRadiusDirectionalDto.circular', () {
       final attr = BorderRadiusDirectionalAttribute.circular(5.0);
       expect(attr.topStart, const Radius.circular(5.0));
       expect(attr.topEnd, const Radius.circular(5.0));
@@ -375,7 +375,7 @@ void main() {
     });
   });
 
-  group('BorderSideAttribute', () {
+  group('BorderSideDto', () {
     test('from constructor sets all values correctly', () {
       final attr = BorderSideAttribute(
           color: Colors.red.toAttribute(),

@@ -241,7 +241,7 @@ void main() {
 
   testWidgets('StyleMix.icon matches StyledIcon(style:StyleMix)',
       (tester) async {
-    final style = StyleMix(iconColor(Colors.black));
+    final style = StyleMix(icon(color: Colors.black));
 
     await tester.pumpWidget(
       MaterialApp(

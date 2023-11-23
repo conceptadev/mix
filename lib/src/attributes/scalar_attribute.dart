@@ -14,35 +14,6 @@ class AxisAttribute extends ScalarAttribute<Axis> {
   AxisAttribute merge(AxisAttribute? other) => other ?? this;
 }
 
-class GradientAttribute extends ScalarAttribute<Gradient> {
-  const GradientAttribute(super.value);
-
-  static GradientAttribute? maybe(Gradient? value) =>
-      value == null ? null : GradientAttribute(value);
-  @override
-  GradientAttribute merge(GradientAttribute? other) => other ?? this;
-}
-
-class GapAttribute extends ScalarAttribute<double> {
-  const GapAttribute(super.value);
-
-  static GapAttribute? maybe(double? value) =>
-      value == null ? null : GapAttribute(value);
-  @override
-  GapAttribute merge(GapAttribute? other) => other ?? this;
-}
-
-class MainAxisAlignmentAttribute extends ScalarAttribute<MainAxisAlignment> {
-  const MainAxisAlignmentAttribute(super.value);
-
-  static MainAxisAlignmentAttribute? maybe(MainAxisAlignment? value) =>
-      value == null ? null : MainAxisAlignmentAttribute(value);
-
-  @override
-  MainAxisAlignmentAttribute merge(MainAxisAlignmentAttribute? other) =>
-      other ?? this;
-}
-
 class TransformAlignmentAttribute extends ScalarAttribute<Alignment> {
   const TransformAlignmentAttribute(super.value);
 
@@ -50,25 +21,6 @@ class TransformAlignmentAttribute extends ScalarAttribute<Alignment> {
       value == null ? null : TransformAlignmentAttribute(value);
   @override
   TransformAlignmentAttribute merge(TransformAlignmentAttribute? other) =>
-      other ?? this;
-}
-
-class MainAxisSizeAttribute extends ScalarAttribute<MainAxisSize> {
-  const MainAxisSizeAttribute(super.value);
-
-  static MainAxisSizeAttribute? maybe(MainAxisSize? value) =>
-      value == null ? null : MainAxisSizeAttribute(value);
-  @override
-  MainAxisSizeAttribute merge(MainAxisSizeAttribute? other) => other ?? this;
-}
-
-class CrossAxisAlignmentAttribute extends ScalarAttribute<CrossAxisAlignment> {
-  const CrossAxisAlignmentAttribute(super.value);
-
-  static CrossAxisAlignmentAttribute? maybe(CrossAxisAlignment? value) =>
-      value == null ? null : CrossAxisAlignmentAttribute(value);
-  @override
-  CrossAxisAlignmentAttribute merge(CrossAxisAlignmentAttribute? other) =>
       other ?? this;
 }
 
@@ -157,16 +109,6 @@ class FontSizeAttribute extends ScalarAttribute<double> {
   FontSizeAttribute merge(FontSizeAttribute? other) => other ?? this;
 }
 
-class ImageAlignmentAttribute extends ScalarAttribute<Alignment> {
-  const ImageAlignmentAttribute(super.value);
-
-  static ImageAlignmentAttribute? maybe(Alignment? value) =>
-      value == null ? null : ImageAlignmentAttribute(value);
-  @override
-  ImageAlignmentAttribute merge(ImageAlignmentAttribute? other) =>
-      other ?? this;
-}
-
 class PaintAttribute extends ScalarAttribute<Paint> {
   const PaintAttribute(super.value);
 
@@ -183,33 +125,6 @@ class ImageFitAttribute extends ScalarAttribute<BoxFit> {
       value == null ? null : ImageFitAttribute(value);
   @override
   ImageFitAttribute merge(ImageFitAttribute? other) => other ?? this;
-}
-
-class ImageRepeatAttribute extends ScalarAttribute<ImageRepeat> {
-  const ImageRepeatAttribute(super.value);
-
-  static ImageRepeatAttribute? maybe(ImageRepeat? value) =>
-      value == null ? null : ImageRepeatAttribute(value);
-  @override
-  ImageRepeatAttribute merge(ImageRepeatAttribute? other) => other ?? this;
-}
-
-class ImageWidthAttribute extends ScalarAttribute<double> {
-  const ImageWidthAttribute(super.value);
-
-  static ImageWidthAttribute? maybe(double? value) =>
-      value == null ? null : ImageWidthAttribute(value);
-  @override
-  ImageWidthAttribute merge(ImageWidthAttribute? other) => other ?? this;
-}
-
-class ImageHeightAttribute extends ScalarAttribute<double> {
-  const ImageHeightAttribute(super.value);
-
-  static ImageHeightAttribute? maybe(double? value) =>
-      value == null ? null : ImageHeightAttribute(value);
-  @override
-  ImageHeightAttribute merge(ImageHeightAttribute? other) => other ?? this;
 }
 
 class TextAlignAttribute extends ScalarAttribute<TextAlign> {
@@ -299,16 +214,6 @@ class BoxFitAttribute extends ScalarAttribute<BoxFit> {
   BoxFitAttribute merge(BoxFitAttribute? other) => other ?? this;
 }
 
-class StackFitAttribute extends ScalarAttribute<StackFit> {
-  const StackFitAttribute(super.value);
-
-  static StackFitAttribute? maybe(StackFit? value) =>
-      value == null ? null : StackFitAttribute(value);
-
-  @override
-  StackFitAttribute merge(StackFitAttribute? other) => other ?? this;
-}
-
 class FlexFitAttribute extends ScalarAttribute<FlexFit> {
   const FlexFitAttribute(super.value);
 
@@ -337,16 +242,6 @@ class BlendModeAttribute extends ScalarAttribute<BlendMode> {
 
   @override
   BlendModeAttribute merge(BlendModeAttribute? other) => other ?? this;
-}
-
-class BoxShapeAttribute extends ScalarAttribute<BoxShape> {
-  const BoxShapeAttribute(super.value);
-
-  static BoxShapeAttribute? maybe(BoxShape? value) =>
-      value == null ? null : BoxShapeAttribute(value);
-
-  @override
-  BoxShapeAttribute merge(BoxShapeAttribute? other) => other ?? this;
 }
 
 class VisibleAttribute extends ScalarAttribute<bool> {

@@ -5,8 +5,8 @@ import 'package:mix/src/attributes/border/border_attribute.dart';
 import '../../../helpers/testing_utils.dart';
 
 void main() {
-  group('BorderAttribute', () {
-    test('merge should combine two BorderAttributes correctly', () {
+  group('BorderDto', () {
+    test('merge should combine two BorderDtos correctly', () {
       const borderAttr1 = BorderAttribute(
         top: BorderSideAttribute(width: 5.0),
         bottom: BorderSideAttribute(width: 10.0),
@@ -76,7 +76,7 @@ void main() {
   });
 
   test('Matches Border constructors', () {
-    const allAttr = BorderAttribute.all(BorderSideAttribute(width: 10.0));
+    final allAttr = BorderAttribute.all(width: 10.0);
     final allValue = Border.all(width: 10.0);
 
     final resolvedAllValue = allAttr.resolve(EmptyMixData);
@@ -116,8 +116,8 @@ void main() {
     expect(resolvedOnlyValue, onlyValue);
   });
 
-  group('BorderDirectionalAttribute', () {
-    test('merge should combine two BorderDirectionalAttributes correctly', () {
+  group('BorderDirectionalDto', () {
+    test('merge should combine two BorderDirectionalDtos correctly', () {
       const borderAttr1 = BorderDirectionalAttribute(
         top: BorderSideAttribute(width: 5.0),
         bottom: BorderSideAttribute(width: 10.0),
@@ -187,8 +187,7 @@ void main() {
     });
 
     test('Matches Border constructors', () {
-      const allAttr =
-          BorderDirectionalAttribute.all(BorderSideAttribute(width: 10.0));
+      final allAttr = BorderDirectionalAttribute.all(width: 10.0);
       const allValue = BorderDirectional(
         bottom: BorderSide(width: 10.0),
         end: BorderSide(width: 10.0),

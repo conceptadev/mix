@@ -11,7 +11,9 @@ class TextStyleToken extends MixToken<TextStyle> {
   const TextStyleToken.name(String name) : this(name, const TextStyle());
 
   factory TextStyleToken.resolvable(
-      String name, TokenResolver<TextStyle> resolver) {
+    String name,
+    TokenResolver<TextStyle> resolver,
+  ) {
     return TextStyleToken(name, TextStyleRef(name, resolver));
   }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 
-import '../specs/stack_spec.dart';
-import 'container_widget.dart';
+import '../recipes/container/container_widget.dart';
+import '../recipes/stack/stack_recipe.dart';
 import 'styled_widget.dart';
 
 class StyledStack extends StyledWidget {
@@ -17,7 +17,7 @@ class StyledStack extends StyledWidget {
   @override
   Widget build(BuildContext context) {
     return buildWithStyle(context, (data) {
-      final spec = StackSpec.resolve(data);
+      final spec = StackRecipeMix.resolve(data);
 
       const fallback = Stack();
 

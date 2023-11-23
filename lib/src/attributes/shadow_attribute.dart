@@ -4,29 +4,42 @@ import '../factory/mix_provider_data.dart';
 import 'attribute.dart';
 import 'color_attribute.dart';
 
-class ShadowDto<Value extends Shadow> extends Dto<Value> {
-  final ColorDto? color;
+@immutable
+abstract class ShadowAttributeImpl<Value extends Shadow>
+    extends ResolvableAttribute<Value> {
+  final ColorAttribute? color;
   final Offset? offset;
   final double? blurRadius;
 
-  const ShadowDto({this.blurRadius, this.color, this.offset});
+  const ShadowAttributeImpl({this.blurRadius, this.color, this.offset});
 
   @override
-  Value resolve(MixData mix) {
+  Value resolve(MixData mix);
+
+  @override
+  ShadowAttributeImpl<Value> merge(covariant ShadowAttributeImpl<Value>? other);
+}
+
+@immutable
+class ShadowAttribute extends ShadowAttributeImpl<Shadow> {
+  const ShadowAttribute({super.blurRadius, super.color, super.offset});
+
+  @override
+  Shadow resolve(MixData mix) {
     const defaultShadow = Shadow();
 
     return Shadow(
       color: color?.resolve(mix) ?? defaultShadow.color,
       offset: offset ?? defaultShadow.offset,
       blurRadius: blurRadius ?? defaultShadow.blurRadius,
-    ) as Value;
+    );
   }
 
   @override
-  ShadowDto<Value> merge(covariant ShadowDto<Value>? other) {
+  ShadowAttribute merge(covariant ShadowAttribute? other) {
     if (other == null) return this;
 
-    return ShadowDto(
+    return ShadowAttribute(
       blurRadius: other.blurRadius ?? blurRadius,
       color: other.color ?? color,
       offset: other.offset ?? offset,
@@ -37,10 +50,10 @@ class ShadowDto<Value extends Shadow> extends Dto<Value> {
   get props => [color, offset, blurRadius];
 }
 
-class BoxShadowDto extends ShadowDto<BoxShadow> {
+class BoxShadowAttribute extends ShadowAttributeImpl<BoxShadow> {
   final double? spreadRadius;
 
-  const BoxShadowDto({
+  const BoxShadowAttribute({
     super.color,
     super.offset,
     super.blurRadius,
@@ -51,21 +64,19 @@ class BoxShadowDto extends ShadowDto<BoxShadow> {
   BoxShadow resolve(MixData mix) {
     const defaultShadow = BoxShadow();
 
-    final shadow = super.resolve(mix);
-
     return BoxShadow(
-      color: shadow.color,
-      offset: shadow.offset,
-      blurRadius: shadow.blurRadius,
+      color: color?.resolve(mix) ?? defaultShadow.color,
+      offset: offset ?? defaultShadow.offset,
+      blurRadius: blurRadius ?? defaultShadow.blurRadius,
       spreadRadius: spreadRadius ?? defaultShadow.spreadRadius,
     );
   }
 
   @override
-  BoxShadowDto merge(BoxShadowDto? other) {
+  BoxShadowAttribute merge(BoxShadowAttribute? other) {
     if (other == null) return this;
 
-    return BoxShadowDto(
+    return BoxShadowAttribute(
       color: other.color ?? color,
       offset: other.offset ?? offset,
       blurRadius: other.blurRadius ?? blurRadius,
@@ -74,29 +85,5 @@ class BoxShadowDto extends ShadowDto<BoxShadow> {
   }
 
   @override
-  get props => [...super.props, spreadRadius];
-}
-
-@immutable
-class ShadowAttribute<D extends ShadowDto<Value>, Value extends Shadow>
-    extends ResolvableAttribute<D, Value> {
-  const ShadowAttribute(super.value);
-
-  @override
-  ShadowAttribute merge(ShadowAttribute<D, Value>? other) {
-    return other == null ? this : ShadowAttribute(value.merge(other.value));
-  }
-
-  @override
-  Value resolve(MixData mix) => value.resolve(mix);
-}
-
-@immutable
-class BoxShadowAttribute extends ShadowAttribute<BoxShadowDto, BoxShadow> {
-  const BoxShadowAttribute(super.value);
-
-  @override
-  BoxShadowAttribute merge(BoxShadowAttribute? other) {
-    return other == null ? this : BoxShadowAttribute(value.merge(other.value));
-  }
+  get props => [color, offset, blurRadius, spreadRadius];
 }

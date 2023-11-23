@@ -20,7 +20,7 @@ void main() {
           // Build our app and trigger a frame
           await tester.pumpWidget(
             MaterialApp(
-              home: aspectRatioDecorator.render(
+              home: aspectRatioDecorator.build(
                 Container(color: Colors.blue),
                 EmptyMixData,
               ),
@@ -56,7 +56,7 @@ void main() {
           // Build a widget with the merged decorator and trigger a frame
           await tester.pumpWidget(
             MaterialApp(
-              home: mergedDecorator.render(
+              home: mergedDecorator.build(
                 Container(color: Colors.red),
                 EmptyMixData,
               ),
@@ -90,7 +90,7 @@ void main() {
           // Build our app and trigger a frame
           await tester.pumpWidget(
             MaterialApp(
-              home: opacityDecorator.render(
+              home: opacityDecorator.build(
                 Container(color: Colors.blue),
                 EmptyMixData,
               ),
@@ -124,7 +124,7 @@ void main() {
           // Build a widget with the merged decorator and trigger a frame
           await tester.pumpWidget(
             MaterialApp(
-              home: mergedDecorator.render(
+              home: mergedDecorator.build(
                 Container(color: Colors.red),
                 EmptyMixData,
               ),
@@ -158,7 +158,7 @@ void main() {
           // Build our app and trigger a frame
           await tester.pumpWidget(
             MaterialApp(
-              home: rotateDecorator.render(
+              home: rotateDecorator.build(
                 Container(color: Colors.blue),
                 EmptyMixData,
               ),
@@ -192,7 +192,7 @@ void main() {
           // Build a widget with the merged decorator and trigger a frame
           await tester.pumpWidget(
             MaterialApp(
-              home: mergedDecorator.render(
+              home: mergedDecorator.build(
                 Container(color: Colors.red),
                 EmptyMixData,
               ),
@@ -226,7 +226,7 @@ void main() {
           // Build our app and trigger a frame
           await tester.pumpWidget(
             MaterialApp(
-              home: scaleDecorator.render(
+              home: scaleDecorator.build(
                 Container(color: Colors.blue),
                 EmptyMixData,
               ),
@@ -261,7 +261,7 @@ void main() {
           // Build a widget with the merged decorator and trigger a frame
           await tester.pumpWidget(
             MaterialApp(
-              home: mergedDecorator.render(
+              home: mergedDecorator.build(
                 Container(color: Colors.red),
                 EmptyMixData,
               ),
@@ -301,7 +301,7 @@ void main() {
             MaterialApp(
               home: Column(
                 children: [
-                  flexibleDecorator.render(
+                  flexibleDecorator.build(
                     Container(color: Colors.blue),
                     EmptyMixData,
                   ),
@@ -339,7 +339,7 @@ void main() {
             MaterialApp(
               home: Column(
                 children: [
-                  mergedDecorator.render(
+                  mergedDecorator.build(
                     Container(color: Colors.red),
                     EmptyMixData,
                   ),

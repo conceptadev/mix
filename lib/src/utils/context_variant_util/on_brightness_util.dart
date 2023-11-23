@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../helpers/extensions/string_ext.dart';
+import '../../core/extensions/string_ext.dart';
 import '../../variants/context_variant.dart';
 
 /// Global brightness context variants.

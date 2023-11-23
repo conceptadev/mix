@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 
+import '../../attributes/attribute.dart';
+import '../../attributes/color_attribute.dart';
 import '../../factory/mix_provider_data.dart';
-import '../../specs/image_spec.dart';
-import '../attribute.dart';
-import '../color_attribute.dart';
+import 'image_recipe.dart';
 
-class ImageDto extends Dto<ImageSpec> {
+class ImageAttribute extends ResolvableAttribute<ImageMix> {
   final double? width;
   final double? height;
-  final ColorDto? color;
+  final ColorAttribute? color;
   final ImageRepeat? repeat;
   final BoxFit? fit;
 
-  const ImageDto({
+  const ImageAttribute({
     required this.width,
     required this.height,
     required this.color,
@@ -21,8 +21,8 @@ class ImageDto extends Dto<ImageSpec> {
   });
 
   @override
-  ImageSpec resolve(MixData mix) {
-    return ImageSpec(
+  ImageMix resolve(MixData mix) {
+    return ImageMix(
       width: width,
       height: height,
       color: color?.resolve(mix),
@@ -32,10 +32,10 @@ class ImageDto extends Dto<ImageSpec> {
   }
 
   @override
-  ImageDto merge(covariant ImageDto? other) {
+  ImageAttribute merge(covariant ImageAttribute? other) {
     if (other == null) return this;
 
-    return ImageDto(
+    return ImageAttribute(
       width: width ?? other.width,
       height: height ?? other.height,
       color: color ?? other.color,
@@ -46,13 +46,4 @@ class ImageDto extends Dto<ImageSpec> {
 
   @override
   get props => [width, height, color, repeat, fit];
-}
-
-class ImageAttribute extends ResolvableAttribute<ImageDto, ImageSpec> {
-  const ImageAttribute(super.value);
-
-  @override
-  ImageAttribute merge(covariant ImageAttribute? other) {
-    return ImageAttribute(value.merge(other?.value));
-  }
 }

@@ -1,35 +1,29 @@
+import '../../attributes/attribute.dart';
+import '../../attributes/color_attribute.dart';
 import '../../factory/mix_provider_data.dart';
-import '../../specs/icon_spec.dart';
-import '../attribute.dart';
-import '../color_attribute.dart';
+import 'icon_recipe.dart';
 
-class IconDto extends Dto<StyledIconRecipe> {
+class IconMixAttribute extends ResolvableAttribute<IconMix> {
   final double? size;
-  final ColorDto? color;
+  final ColorAttribute? color;
 
-  const IconDto({required this.size, required this.color});
+  const IconMixAttribute({this.size, this.color});
 
   @override
-  StyledIconRecipe resolve(MixData mix) {
-    return StyledIconRecipe(color: color?.resolve(mix), size: size);
+  IconMix resolve(MixData mix) {
+    return IconMix(color: color?.resolve(mix), size: size);
   }
 
   @override
-  IconDto merge(covariant IconDto? other) {
+  IconMixAttribute merge(covariant IconMixAttribute? other) {
     if (other == null) return this;
 
-    return IconDto(size: size ?? other.size, color: color ?? other.color);
+    return IconMixAttribute(
+      size: size ?? other.size,
+      color: color ?? other.color,
+    );
   }
 
   @override
   get props => [size, color];
-}
-
-class IconAttribute extends ResolvableAttribute<IconDto, StyledIconRecipe> {
-  const IconAttribute(super.value);
-
-  @override
-  IconAttribute merge(covariant IconAttribute? other) {
-    return IconAttribute(value.merge(other?.value));
-  }
 }

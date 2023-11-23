@@ -39,12 +39,19 @@ class ColorDirective extends Directive<Color> {
 }
 
 class TextDirectiveAttribute extends DirectiveAttribute<TextDirective> {
-  const TextDirectiveAttribute(super.directives);
+  const TextDirectiveAttribute.raw(super.directives);
+
+  factory TextDirectiveAttribute(TextDirective directive) {
+    return TextDirectiveAttribute.raw([directive]);
+  }
+
+  String modify(String text) =>
+      value.fold(text, (value, directive) => directive(value));
 
   @override
   TextDirectiveAttribute merge(covariant TextDirectiveAttribute? other) {
     return other == null
         ? this
-        : TextDirectiveAttribute([..._directives, ...other._directives]);
+        : TextDirectiveAttribute.raw([..._directives, ...other._directives]);
   }
 }

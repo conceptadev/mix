@@ -7,49 +7,42 @@ import 'package:mix/mix.dart';
 import '../../helpers/testing_utils.dart';
 
 void main() {
-  group('IconSpec', () {
+  group('IconMix', () {
     test('resolve', () {
       final mix = MixData.create(
         MockBuildContext(),
         StyleMix(
-          const IconColorAttribute(Colors.red),
-          const IconSizeAttribute(20.0),
-          const TextDirectionAttribute(TextDirection.ltr),
+          IconMixAttribute(color: Colors.red.toAttribute(), size: 20.0),
         ),
       );
 
-      final spec = StyledIconRecipe.resolve(mix);
+      final spec = IconRecipeMix.resolve(mix);
 
       expect(spec.color, Colors.red);
       expect(spec.size, 20.0);
-      expect(spec.textDirection, TextDirection.ltr);
     });
 
     test('copyWith', () {
-      const spec = StyledIconRecipe(
+      const spec = IconRecipeMix(
         color: Colors.red,
         size: 20.0,
-        textDirection: TextDirection.ltr,
       );
 
       final copiedSpec = spec.copyWith(color: Colors.blue, size: 30.0);
 
       expect(copiedSpec.color, Colors.blue);
       expect(copiedSpec.size, 30.0);
-      expect(copiedSpec.textDirection, TextDirection.ltr);
     });
 
     test('lerp', () {
-      const spec1 = StyledIconRecipe(
+      const spec1 = IconRecipeMix(
         color: Colors.red,
         size: 20.0,
-        textDirection: TextDirection.ltr,
       );
 
-      const spec2 = StyledIconRecipe(
+      const spec2 = IconRecipeMix(
         color: Colors.blue,
         size: 30.0,
-        textDirection: TextDirection.rtl,
       );
 
       const t = 0.5;
@@ -57,7 +50,6 @@ void main() {
 
       expect(lerpedSpec.color, Color.lerp(Colors.red, Colors.blue, t));
       expect(lerpedSpec.size, lerpDouble(20.0, 30.0, t));
-      expect(lerpedSpec.textDirection, TextDirection.rtl);
     });
   });
 }

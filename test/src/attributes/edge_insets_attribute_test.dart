@@ -7,7 +7,7 @@ import '../../helpers/testing_utils.dart';
 void main() {
   group('EdgeInsetsAttribute', () {
     test('resolves to EdgeInsets.only with correct values', () {
-      const attribute = EdgeInsetsDto(
+      const attribute = EdgeInsetsAttribute(
         top: 10,
         bottom: 20,
         left: 30,
@@ -25,13 +25,13 @@ void main() {
     });
 
     test('merges correctly with another EdgeInsetsAttribute', () {
-      const attribute1 = EdgeInsetsDto(
+      const attribute1 = EdgeInsetsAttribute(
         top: 10,
         bottom: 20,
         left: 30,
         right: 40,
       );
-      const attribute2 = EdgeInsetsDto(
+      const attribute2 = EdgeInsetsAttribute(
         top: 5,
         bottom: 15,
         left: 25,
@@ -40,7 +40,7 @@ void main() {
       final mergedAttribute = attribute1.merge(attribute2);
       expect(
           mergedAttribute,
-          const EdgeInsetsDto(
+          const EdgeInsetsAttribute(
             top: 5,
             bottom: 15,
             left: 25,
@@ -51,7 +51,7 @@ void main() {
 
   group('EdgeInsetsDirectionalAttribute', () {
     test('resolves to EdgeInsetsDirectional.only with correct values', () {
-      const attribute = EdgeInsetsDirectionalDto(
+      const attribute = EdgeInsetsDirectionalAttribute(
         top: 10,
         bottom: 20,
         start: 30,
@@ -69,13 +69,13 @@ void main() {
     });
 
     test('merges correctly with another EdgeInsetsDirectionalAttribute', () {
-      const attribute1 = EdgeInsetsDirectionalDto(
+      const attribute1 = EdgeInsetsDirectionalAttribute(
         top: 10,
         bottom: 20,
         start: 30,
         end: 40,
       );
-      const attribute2 = EdgeInsetsDirectionalDto(
+      const attribute2 = EdgeInsetsDirectionalAttribute(
         top: 5,
         bottom: 15,
         start: 25,
@@ -84,7 +84,7 @@ void main() {
       final mergedAttribute = attribute1.merge(attribute2);
       expect(
           mergedAttribute,
-          const EdgeInsetsDirectionalDto(
+          const EdgeInsetsDirectionalAttribute(
             top: 5,
             bottom: 15,
             start: 25,

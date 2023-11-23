@@ -4,8 +4,8 @@ import '../factory/mix_provider_data.dart';
 import 'attribute.dart';
 
 @immutable
-abstract class EdgeInsetsGeometryDto<Value extends EdgeInsetsGeometry>
-    extends Dto<Value> {
+abstract class EdgeInsetsGeometryAttribute<Value extends EdgeInsetsGeometry>
+    extends ResolvableAttribute<Value> {
   final double? top;
   final double? bottom;
   final double? left;
@@ -15,7 +15,7 @@ abstract class EdgeInsetsGeometryDto<Value extends EdgeInsetsGeometry>
   final double? start;
   final double? end;
 
-  const EdgeInsetsGeometryDto({
+  const EdgeInsetsGeometryAttribute({
     this.top,
     this.bottom,
     this.left,
@@ -24,11 +24,11 @@ abstract class EdgeInsetsGeometryDto<Value extends EdgeInsetsGeometry>
     this.end,
   });
 
-  static EdgeInsetsGeometryDto? from(EdgeInsetsGeometry? value) {
+  static EdgeInsetsGeometryAttribute? from(EdgeInsetsGeometry? value) {
     if (value == null) return null;
 
     if (value is EdgeInsets) {
-      return EdgeInsetsDto(
+      return EdgeInsetsAttribute(
         top: value.top,
         bottom: value.bottom,
         left: value.left,
@@ -37,7 +37,7 @@ abstract class EdgeInsetsGeometryDto<Value extends EdgeInsetsGeometry>
     }
 
     if (value is EdgeInsetsDirectional) {
-      return EdgeInsetsDirectionalDto(
+      return EdgeInsetsDirectionalAttribute(
         top: value.top,
         bottom: value.bottom,
         start: value.start,
@@ -49,19 +49,30 @@ abstract class EdgeInsetsGeometryDto<Value extends EdgeInsetsGeometry>
   }
 
   @override
-  EdgeInsetsGeometryDto merge(covariant EdgeInsetsGeometryDto? other);
+  EdgeInsetsGeometryAttribute<Value> merge(
+    covariant EdgeInsetsGeometryAttribute<Value>? other,
+  );
 
   @override
   get props => [top, bottom, left, right, start, end];
 }
 
 @immutable
-class EdgeInsetsDto extends EdgeInsetsGeometryDto<EdgeInsets> {
-  const EdgeInsetsDto({super.top, super.bottom, super.left, super.right});
+class EdgeInsetsAttribute extends EdgeInsetsGeometryAttribute<EdgeInsets> {
+  const EdgeInsetsAttribute({super.top, super.bottom, super.left, super.right});
+
+  factory EdgeInsetsAttribute.all(double value) {
+    return EdgeInsetsAttribute(
+      top: value,
+      bottom: value,
+      left: value,
+      right: value,
+    );
+  }
 
   @override
-  EdgeInsetsDto merge(EdgeInsetsDto? other) {
-    return EdgeInsetsDto(
+  EdgeInsetsAttribute merge(EdgeInsetsAttribute? other) {
+    return EdgeInsetsAttribute(
       top: other?.top ?? top,
       bottom: other?.bottom ?? bottom,
       left: other?.left ?? left,
@@ -81,9 +92,9 @@ class EdgeInsetsDto extends EdgeInsetsGeometryDto<EdgeInsets> {
 }
 
 @immutable
-class EdgeInsetsDirectionalDto
-    extends EdgeInsetsGeometryDto<EdgeInsetsDirectional> {
-  const EdgeInsetsDirectionalDto({
+class EdgeInsetsDirectionalAttribute
+    extends EdgeInsetsGeometryAttribute<EdgeInsetsDirectional> {
+  const EdgeInsetsDirectionalAttribute({
     super.top,
     super.bottom,
     super.start,
@@ -91,8 +102,8 @@ class EdgeInsetsDirectionalDto
   });
 
   @override
-  EdgeInsetsDirectionalDto merge(EdgeInsetsDirectionalDto? other) {
-    return EdgeInsetsDirectionalDto(
+  EdgeInsetsDirectionalAttribute merge(EdgeInsetsDirectionalAttribute? other) {
+    return EdgeInsetsDirectionalAttribute(
       top: other?.top ?? top,
       bottom: other?.bottom ?? bottom,
       start: other?.start ?? start,
@@ -108,36 +119,5 @@ class EdgeInsetsDirectionalDto
       end: end ?? 0,
       bottom: bottom ?? 0,
     );
-  }
-}
-
-@immutable
-abstract class EdgeInsetsGeometryAttribute<
-    T extends EdgeInsetsGeometryDto<Value>,
-    Value extends EdgeInsetsGeometry> extends ResolvableAttribute<T, Value> {
-  const EdgeInsetsGeometryAttribute(super.value);
-}
-
-@immutable
-class EdgeInsetsAttribute
-    extends EdgeInsetsGeometryAttribute<EdgeInsetsDto, EdgeInsets> {
-  const EdgeInsetsAttribute(super.value);
-
-  @override
-  EdgeInsetsAttribute merge(EdgeInsetsAttribute? other) {
-    return EdgeInsetsAttribute(value.merge(other?.value));
-  }
-}
-
-@immutable
-class EdgeInsetsDirectionalAttribute extends EdgeInsetsGeometryAttribute<
-    EdgeInsetsDirectionalDto, EdgeInsetsDirectional> {
-  const EdgeInsetsDirectionalAttribute(super.value);
-
-  @override
-  EdgeInsetsDirectionalAttribute merge(
-    EdgeInsetsDirectionalAttribute? other,
-  ) {
-    return EdgeInsetsDirectionalAttribute(value.merge(other?.value));
   }
 }

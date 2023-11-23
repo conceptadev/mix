@@ -4,6 +4,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
+import 'package:mix/src/attributes/render/alignment_attribute.dart';
+import 'package:mix/src/core/extensions/values_ext.dart';
 
 class AttributeGenerator {
   const AttributeGenerator();
@@ -170,7 +172,7 @@ class AttributeGenerator {
   }) {
     final random = Random();
 
-    return BorderRadiusDto(
+    return BorderRadiusAttribute(
       topLeft: Radius.circular(topLeft ?? random.nextDouble() * 20),
       topRight: Radius.circular(topRight ?? random.nextDouble() * 20),
       bottomLeft: Radius.circular(bottomLeft ?? random.nextDouble() * 20),
@@ -221,7 +223,7 @@ class AttributeGenerator {
   }
 
   BorderSideAttribute borderSide({
-    ColorDto? color,
+    ColorAttribute? color,
     double? width,
     BorderStyle? style,
   }) {
@@ -244,7 +246,7 @@ class AttributeGenerator {
     );
   }
 
-  AlignmentAttribute alignment() {
+  AlignmentGeometryAttribute alignment() {
     return Random().randomElement([
       Alignment.center,
       Alignment.centerLeft,
@@ -263,7 +265,7 @@ class AttributeGenerator {
     BorderAttribute? border,
     BorderRadiusAttribute? borderRadius,
     List<BoxShadowAttribute>? boxShadow,
-    BoxShapeAttribute? shape,
+    BoxShape? shape,
   }) {
     return BoxDecorationAttribute(
       color: color ?? this.color(),
@@ -273,7 +275,7 @@ class AttributeGenerator {
           [
             this.boxShadow(),
           ],
-      shape: shape ?? BoxShape.values.random().toAttribute(),
+      shape: shape ?? BoxShape.values.random(),
     );
   }
 
@@ -296,7 +298,7 @@ class AttributeGenerator {
   }
 
   TextStyleAttribute textStyle() {
-    return TextStyleAttribute(
+    return TextStyleAttribute.only(
       color: color(),
       backgroundColor: color(),
       decorationColor: color(),

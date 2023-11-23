@@ -1,9 +1,11 @@
+// ignore_for_file: avoid-non-null-assertion
+
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
+import '../core/extensions/values_ext.dart';
 import '../factory/mix_provider_data.dart';
-import '../helpers/extensions/values_ext.dart';
 import '../theme/tokens/text_style_token.dart';
 import 'attribute.dart';
 import 'color_attribute.dart';
@@ -18,12 +20,12 @@ class TextStyleDto extends Dto<TextStyle> {
   final double? letterSpacing;
   final double? wordSpacing;
   final TextBaseline? textBaseline;
-  final ColorDto? color;
-  final ColorDto? backgroundColor;
-  final List<ShadowDto>? shadows;
+  final ColorAttribute? color;
+  final ColorAttribute? backgroundColor;
+  final List<ShadowAttribute>? shadows;
   final List<FontFeature>? fontFeatures;
   final TextDecoration? decoration;
-  final ColorDto? decorationColor;
+  final ColorAttribute? decorationColor;
   final TextDecorationStyle? decorationStyle;
   final Locale? locale;
   final String? debugLabel;
@@ -55,22 +57,41 @@ class TextStyleDto extends Dto<TextStyle> {
     this.letterSpacing,
     this.locale,
     this.shadows,
-    this.token,
     this.textBaseline,
     this.wordSpacing,
-  });
+  }) : token = null;
 
-  bool isRef() => token != null;
+  const TextStyleDto.token(this.token)
+      : background = null,
+        backgroundColor = null,
+        color = null,
+        debugLabel = null,
+        decoration = null,
+        decorationColor = null,
+        decorationStyle = null,
+        decorationThickness = null,
+        fontFamily = null,
+        fontFamilyFallback = null,
+        fontFeatures = null,
+        fontSize = null,
+        fontStyle = null,
+        fontWeight = null,
+        foreground = null,
+        height = null,
+        letterSpacing = null,
+        locale = null,
+        shadows = null,
+        textBaseline = null,
+        wordSpacing = null;
+
+  bool get isTokenRef => token != null;
 
   @override
   TextStyleDto merge(TextStyleDto? other) {
     if (other == null) return this;
-
-    final haveRefs = token == null || other.token == null;
-
     assert(
-      haveRefs,
-      'Cannot merge two different refs',
+      token == null && other.token == null,
+      'Cannot merge token refs',
     );
 
     return TextStyleDto(
@@ -96,7 +117,6 @@ class TextStyleDto extends Dto<TextStyle> {
       letterSpacing: other.letterSpacing ?? letterSpacing,
       locale: other.locale ?? locale,
       shadows: shadows?.merge(other.shadows) ?? other.shadows,
-      token: other.token ?? token,
       textBaseline: other.textBaseline ?? textBaseline,
       wordSpacing: other.wordSpacing ?? wordSpacing,
     );
@@ -104,33 +124,31 @@ class TextStyleDto extends Dto<TextStyle> {
 
   @override
   TextStyle resolve(MixData mix) {
-    // ignore: avoid-non-null-assertion
-    final textStyle = token == null ? null : mix.tokens.textStyleToken(token!);
-
-    return textStyle ??
-        TextStyle(
-          color: color?.resolve(mix),
-          backgroundColor: backgroundColor?.resolve(mix),
-          fontSize: fontSize,
-          fontWeight: fontWeight,
-          fontStyle: fontStyle,
-          letterSpacing: letterSpacing,
-          wordSpacing: wordSpacing,
-          textBaseline: textBaseline,
-          height: height,
-          locale: locale,
-          foreground: foreground,
-          background: background,
-          shadows: shadows?.map((e) => e.resolve(mix)).toList(),
-          fontFeatures: fontFeatures,
-          decoration: decoration,
-          decorationColor: decorationColor?.resolve(mix),
-          decorationStyle: decorationStyle,
-          decorationThickness: decorationThickness,
-          debugLabel: debugLabel,
-          fontFamily: fontFamily,
-          fontFamilyFallback: fontFamilyFallback,
-        );
+    return isTokenRef
+        ? mix.tokens.textStyleToken(token!)
+        : TextStyle(
+            color: color?.resolve(mix),
+            backgroundColor: backgroundColor?.resolve(mix),
+            fontSize: fontSize,
+            fontWeight: fontWeight,
+            fontStyle: fontStyle,
+            letterSpacing: letterSpacing,
+            wordSpacing: wordSpacing,
+            textBaseline: textBaseline,
+            height: height,
+            locale: locale,
+            foreground: foreground,
+            background: background,
+            shadows: shadows?.map((e) => e.resolve(mix)).toList(),
+            fontFeatures: fontFeatures,
+            decoration: decoration,
+            decorationColor: decorationColor?.resolve(mix),
+            decorationStyle: decorationStyle,
+            decorationThickness: decorationThickness,
+            debugLabel: debugLabel,
+            fontFamily: fontFamily,
+            fontFamilyFallback: fontFamilyFallback,
+          );
   }
 
   @override
@@ -160,38 +178,94 @@ class TextStyleDto extends Dto<TextStyle> {
       ];
 }
 
-class TextStyleListDto extends Dto<TextStyle> {
+class TextStyleAttribute extends ResolvableAttribute<TextStyle> {
+  // A list of TextStyleDto objects.
   final List<TextStyleDto> values;
-  const TextStyleListDto(this.values);
 
-  @override
-  TextStyleListDto merge(TextStyleListDto? other) {
-    if (other == null) return this;
+  const TextStyleAttribute.raw(this.values);
 
-    return TextStyleListDto([...values, ...other.values]);
+  factory TextStyleAttribute(TextStyleDto style) {
+    return TextStyleAttribute.raw([style]);
+  }
+
+  factory TextStyleAttribute.token(TextStyleToken token) {
+    return TextStyleAttribute(TextStyleDto.token(token));
+  }
+
+  factory TextStyleAttribute.only({
+    final String? fontFamily,
+    FontWeight? fontWeight,
+    FontStyle? fontStyle,
+    double? fontSize,
+    double? letterSpacing,
+    double? wordSpacing,
+    TextBaseline? textBaseline,
+    ColorAttribute? color,
+    ColorAttribute? backgroundColor,
+    List<ShadowAttribute>? shadows,
+    List<FontFeature>? fontFeatures,
+    TextDecoration? decoration,
+    ColorAttribute? decorationColor,
+    TextDecorationStyle? decorationStyle,
+    Locale? locale,
+    String? debugLabel,
+    double? height,
+    Paint? foreground,
+    Paint? background,
+    double? decorationThickness,
+    List<String>? fontFamilyFallback,
+  }) {
+    final textStyle = TextStyleDto(
+      background: background,
+      backgroundColor: backgroundColor,
+      color: color,
+      debugLabel: debugLabel,
+      decoration: decoration,
+      decorationColor: decorationColor,
+      decorationStyle: decorationStyle,
+      decorationThickness: decorationThickness,
+      fontFamily: fontFamily,
+      fontFamilyFallback: fontFamilyFallback,
+      fontFeatures: fontFeatures,
+      fontSize: fontSize,
+      fontStyle: fontStyle,
+      fontWeight: fontWeight,
+      foreground: foreground,
+      height: height,
+      letterSpacing: letterSpacing,
+      locale: locale,
+      shadows: shadows,
+      textBaseline: textBaseline,
+      wordSpacing: wordSpacing,
+    );
+
+    return TextStyleAttribute.raw([textStyle]);
   }
 
   @override
+  // This method resolves the TextStyleAttribute to a TextStyle.
+  // It maps over the values list and checks if each TextStyleDto is a token reference.
+  // If it is, it resolves the token reference and converts it to a TextStyleDto.
+  // If it's not a token reference, it leaves the TextStyleDto as is.
+  // Then it reduces the list of TextStyleDto objects to a single TextStyleDto by merging them.
+  // Finally, it resolves the resulting TextStyleDto to a TextStyle.
   TextStyle resolve(MixData mix) {
     return values
-        .map((e) => e.resolve(mix))
-        .reduce((value, element) => value.merge(element));
+        .map((e) => e.isTokenRef ? e.resolve(mix).toDto() : e)
+        .reduce((value, element) => value.merge(element))
+        .resolve(mix);
+  }
+
+  @override
+  // This method merges this TextStyleAttribute with another TextStyleAttribute.
+  // If the other TextStyleAttribute is null, it returns this TextStyleAttribute.
+  // Otherwise, it returns a new TextStyleAttribute with the values of both TextStyleAttributes.
+  TextStyleAttribute merge(TextStyleAttribute? other) {
+    if (other == null) return this;
+
+    return TextStyleAttribute.raw([...values, ...other.values]);
   }
 
   @override
   get props => [values];
-}
-
-@immutable
-class TextStyleAttribute
-    extends ResolvableAttribute<TextStyleListDto, TextStyle> {
-  const TextStyleAttribute(super.value);
-
-  @override
-  TextStyleAttribute merge(TextStyleAttribute? other) {
-    return other == null ? this : TextStyleAttribute(value.merge(other.value));
-  }
-
-  @override
-  TextStyle resolve(MixData mix) => value.resolve(mix);
 }

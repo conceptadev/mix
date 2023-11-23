@@ -1,53 +1,172 @@
 import 'package:flutter/material.dart';
 
+import '../core/extensions/values_ext.dart';
 import '../factory/mix_provider_data.dart';
-import '../helpers/extensions/values_ext.dart';
-import 'alignment_attribute.dart';
 import 'attribute.dart';
 import 'color_attribute.dart';
 
-abstract class GradientDto<Value extends Gradient> extends Dto<Value> {
-  const GradientDto();
+abstract class GradientAttribute<Value extends Gradient>
+    extends ResolvableAttribute<Value> {
+  const GradientAttribute();
 
   @override
-  GradientDto merge(covariant GradientDto? other);
+  GradientAttribute<Value> merge(covariant GradientAttribute<Value>? other);
 }
 
-class LinearGradientDto extends GradientDto<LinearGradient> {
-  final AlignmentGeometryDto? begin;
-  final AlignmentGeometryDto? end;
-  final List<ColorDto>? colors;
+class LinearGradientAttribute extends GradientAttribute<LinearGradient> {
+  final AlignmentGeometry? begin;
+  final AlignmentGeometry? end;
+  final List<ColorAttribute>? colors;
   final List<double>? stops;
+  final TileMode? tileMode;
+  final GradientTransform? transform;
 
-  const LinearGradientDto({
-    required this.begin,
-    required this.end,
-    required this.colors,
-    required this.stops,
+  const LinearGradientAttribute({
+    this.begin,
+    this.end,
+    this.colors,
+    this.stops,
+    this.tileMode,
+    this.transform,
   });
 
   @override
   LinearGradient resolve(MixData mix) {
     return LinearGradient(
-      begin: begin?.resolve(mix) ?? Alignment.centerLeft,
-      end: end?.resolve(mix) ?? Alignment.centerRight,
+      begin: begin ?? Alignment.centerLeft,
+      end: end ?? Alignment.centerRight,
       colors: colors?.map((e) => e.resolve(mix)).toList() ?? [],
       stops: stops?.map((e) => e).toList(),
+      tileMode: tileMode ?? TileMode.clamp,
+      transform: transform,
     );
   }
 
   @override
-  LinearGradientDto merge(LinearGradientDto? other) {
+  LinearGradientAttribute merge(LinearGradientAttribute? other) {
     if (other == null) return this;
 
-    return LinearGradientDto(
-      begin: begin?.merge(other.begin),
-      end: end?.merge(other.end),
+    return LinearGradientAttribute(
+      begin: other.begin ?? begin,
+      end: other.end ?? end,
       colors: colors?.merge(other.colors),
       stops: stops?.merge(other.stops),
+      tileMode: other.tileMode ?? tileMode,
+      transform: other.transform ?? transform,
     );
   }
 
   @override
-  List<Object?> get props => [begin, end, colors, stops];
+  List<Object?> get props => [begin, end, colors, stops, tileMode, transform];
+}
+
+@immutable
+class RadialGradientAttribute extends GradientAttribute<RadialGradient> {
+  final AlignmentGeometry? center;
+  final double? radius;
+  final List<ColorAttribute>? colors;
+  final List<double>? stops;
+  // focalRadius
+  final TileMode? tileMode;
+  final AlignmentGeometry? focal;
+  final GradientTransform? transform;
+  final double? focalRadius;
+
+  const RadialGradientAttribute({
+    this.center,
+    this.radius,
+    this.colors,
+    this.stops,
+    this.tileMode,
+    this.focal,
+    this.transform,
+    this.focalRadius,
+  });
+
+  @override
+  RadialGradient resolve(MixData mix) {
+    return RadialGradient(
+      center: center ?? Alignment.center,
+      radius: radius ?? 0.5,
+      colors: colors?.map((e) => e.resolve(mix)).toList() ?? [],
+      stops: stops?.map((e) => e).toList(),
+      tileMode: tileMode ?? TileMode.clamp,
+      focal: focal,
+      focalRadius: focalRadius ?? 0.0,
+      transform: transform,
+    );
+  }
+
+  @override
+  RadialGradientAttribute merge(RadialGradientAttribute? other) {
+    if (other == null) return this;
+
+    return RadialGradientAttribute(
+      center: center,
+      radius: radius ?? other.radius,
+      colors: colors?.merge(other.colors),
+      stops: stops?.merge(other.stops),
+      tileMode: other.tileMode ?? tileMode,
+      focal: focal,
+      transform: other.transform ?? transform,
+      focalRadius: other.focalRadius ?? focalRadius,
+    );
+  }
+
+  @override
+  List<Object?> get props =>
+      [center, radius, colors, stops, tileMode, focal, transform, focalRadius];
+}
+
+@immutable
+class SweepGradientAttribute extends GradientAttribute<SweepGradient> {
+  final AlignmentGeometry? center;
+  final double? startAngle;
+  final double? endAngle;
+  final List<ColorAttribute>? colors;
+  final List<double>? stops;
+  final TileMode? tileMode;
+  final GradientTransform? transform;
+
+  const SweepGradientAttribute({
+    this.center,
+    this.startAngle,
+    this.endAngle,
+    this.colors,
+    this.stops,
+    this.tileMode,
+    this.transform,
+  });
+
+  @override
+  SweepGradient resolve(MixData mix) {
+    return SweepGradient(
+      center: center ?? Alignment.center,
+      startAngle: startAngle ?? 0.0,
+      endAngle: endAngle ?? 0.0,
+      colors: colors?.map((e) => e.resolve(mix)).toList() ?? [],
+      stops: stops?.map((e) => e).toList(),
+      tileMode: tileMode ?? TileMode.clamp,
+      transform: transform,
+    );
+  }
+
+  @override
+  SweepGradientAttribute merge(SweepGradientAttribute? other) {
+    if (other == null) return this;
+
+    return SweepGradientAttribute(
+      center: other.center ?? center,
+      startAngle: startAngle ?? other.startAngle,
+      endAngle: endAngle ?? other.endAngle,
+      colors: colors?.merge(other.colors),
+      stops: stops?.merge(other.stops),
+      tileMode: other.tileMode ?? tileMode,
+      transform: other.transform ?? transform,
+    );
+  }
+
+  @override
+  List<Object?> get props =>
+      [center, startAngle, endAngle, colors, stops, tileMode, transform];
 }

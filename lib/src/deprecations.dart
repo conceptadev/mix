@@ -2,9 +2,9 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-import 'attributes/alignment_attribute.dart';
 import 'attributes/attribute.dart';
 import 'attributes/border/border_radius_attribute.dart';
+import 'attributes/render/alignment_attribute.dart';
 import 'attributes/scalar_attribute.dart';
 import 'attributes/style_mix_attribute.dart';
 import 'attributes/text_style_attribute.dart';
@@ -12,7 +12,6 @@ import 'core/extensions/values_ext.dart';
 import 'directives/directive.dart';
 import 'factory/mix_provider_data.dart';
 import 'factory/style_mix.dart';
-import 'utils/alignment_util.dart';
 import 'utils/border_radius_util.dart';
 import 'utils/border_util.dart';
 import 'utils/box_constraints_util.dart';
@@ -23,8 +22,8 @@ import 'utils/context_variant_util/on_orientation_util.dart';
 import 'utils/decorators_util.dart';
 import 'utils/helper_util.dart';
 import 'utils/pressable_util.dart';
-import 'utils/scalar_util.dart';
-import 'utils/space_util.dart';
+import 'utils/spacing_util.dart';
+import 'utils/text_directives_util.dart';
 import 'utils/text_util.dart';
 import 'variants/variant.dart';
 
@@ -93,7 +92,7 @@ extension DeprecatedMixExtension<T extends Attribute> on StyleMix {
 @Deprecated('Use MixData instead.')
 typedef MixContext = MixData;
 
-extension WithSpaceTokensExt<T> on WithSpacingTokens<T> {
+extension WithSpaceTokensExt<T> on SpacingUtility<T> {
   @Deprecated('Use xsmall instead')
   T get xs => this.xsmall();
   @Deprecated('Use small instead')
@@ -109,7 +108,9 @@ extension WithSpaceTokensExt<T> on WithSpacingTokens<T> {
 }
 
 @Deprecated('Use mainAxisAlignment instead')
-const mainAxis = mainAxisAlignment;
+MainAxisAlignmentAttribute mainAxis(MainAxisAlignment mainAxisAlignment) {
+  return MainAxisAlignmentAttribute(mainAxisAlignment);
+}
 
 @Deprecated('Use onXSmall instead')
 final xsmall = onXSmall;
@@ -466,7 +467,7 @@ AlignmentGeometryAttribute zAligmnent(Alignment alignment) {
 
 @Deprecated('Use stackFit instead')
 StackFitAttribute zFit(StackFit fit) {
-  return stackFit(fit);
+  return StackFitAttribute(fit);
 }
 
 @Deprecated('Use stack instead')
@@ -500,6 +501,10 @@ TextDirectiveAttribute directive(TextDirectiveAttribute directive) {
 TextStyleAttribute locale() {
   throw UnimplementedError();
 }
+
+@Deprecated('Use TextDirectiveUtility()')
+TextDirectiveUtility textDirective(String Function(String value) modifier) =>
+    TextDirectiveUtility(modifier);
 
 @Deprecated('Use text(overflow: overflow)')
 TextOverflowAttribute overflow(TextOverflow overflow) {
