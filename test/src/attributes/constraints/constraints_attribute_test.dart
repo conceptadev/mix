@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/src/attributes/constraints/constraints_attribute.dart';
+import 'package:mix/src/attributes/constraints/constraints_util.dart';
 
 import '../../../helpers/testing_utils.dart';
 

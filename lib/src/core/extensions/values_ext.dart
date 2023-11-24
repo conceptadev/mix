@@ -6,7 +6,7 @@ import '../../attributes/alignment_attribute.dart';
 import '../../attributes/axis_attribute.dart';
 import '../../attributes/border/border_attribute.dart';
 import '../../attributes/border/border_radius_attribute.dart';
-import '../../attributes/clip_attribute.dart';
+import '../../attributes/clip_behavior_attribute.dart';
 import '../../attributes/color_attribute.dart';
 import '../../attributes/constraints/constraints_attribute.dart';
 import '../../attributes/decoration/decoration_attribute.dart';
@@ -220,7 +220,7 @@ extension BoxConstraintsExt on BoxConstraints {
 }
 
 extension ClipExt on Clip {
-  ClipAttribute toAttribute() => ClipAttribute(this);
+  ClipBehaviorAttribute toAttribute() => ClipBehaviorAttribute(this);
 }
 
 // Extension for Axis

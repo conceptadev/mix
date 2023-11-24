@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
 import '../../attributes/alignment_attribute.dart';
-import '../../attributes/clip_attribute.dart';
+import '../../attributes/clip_behavior_attribute.dart';
 import '../../attributes/constraints/constraints_attribute.dart';
 import '../../attributes/decoration/decoration_attribute.dart';
 import '../../attributes/spacing_attribute.dart';
@@ -18,7 +18,7 @@ class ContainerAttribute extends ResolvableAttribute<ContainerRecipeMix> {
   final BoxConstraintsAttribute? constraints;
   final DecorationAttribute? decoration;
   final TransformAttribute? transform;
-  final ClipAttribute? clipBehavior;
+  final ClipBehaviorAttribute? clipBehavior;
 
   const ContainerAttribute({
     this.alignment,
@@ -48,7 +48,7 @@ class ContainerAttribute extends ResolvableAttribute<ContainerRecipeMix> {
         decoration,
       ),
       transform: getValue<TransformAttribute, Matrix4>(mix, transform),
-      clipBehavior: getValue<ClipAttribute, Clip>(mix, clipBehavior),
+      clipBehavior: getValue<ClipBehaviorAttribute, Clip>(mix, clipBehavior),
     );
   }
 

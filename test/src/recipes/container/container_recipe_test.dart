@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
 import 'package:mix/src/attributes/alignment_attribute.dart';
+import 'package:mix/src/attributes/clip_behavior_attribute.dart';
+import 'package:mix/src/attributes/transform_attribute.dart';
 
 import '../../../helpers/testing_utils.dart';
 
@@ -17,7 +19,7 @@ void main() {
           const BoxConstraintsAttribute(maxWidth: 300.0, minHeight: 200.0),
           const BoxDecorationAttribute(color: ColorAttribute(Colors.blue)),
           TransformAttribute(Matrix4.translationValues(10.0, 10.0, 0.0)),
-          const ClipAttribute(Clip.antiAlias),
+          const ClipBehaviorAttribute(Clip.antiAlias),
         ),
       );
 

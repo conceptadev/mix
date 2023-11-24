@@ -10,7 +10,11 @@ import '../core/extensions/values_ext.dart';
 import '../theme/tokens/text_style_token.dart';
 import 'scalar_util.dart';
 
+final textStyle = TextStyleUtility.selfBuilder;
+
 class TextStyleUtility<T> extends MixUtility<T, TextStyleAttribute> {
+  static final selfBuilder = TextStyleUtility((value) => value);
+
   const TextStyleUtility(super.builder);
 
   T _color(ColorAttribute color) =>
@@ -63,6 +67,10 @@ class TextStyleUtility<T> extends MixUtility<T, TextStyleAttribute> {
 
   TextBaselineUtility<T> get textBaseline => TextBaselineUtility(_textBaseline);
 
+  T italic() => fontStyle(FontStyle.italic);
+
+  T bold() => fontWeight(FontWeight.bold);
+
   T fontFamily(String family) => call(fontFamily: family);
 
   T foreground(Paint foreground) => call(foreground: foreground);
@@ -86,6 +94,7 @@ class TextStyleUtility<T> extends MixUtility<T, TextStyleAttribute> {
   T token(TextStyleToken token) => builder(TextStyleAttribute.token(token));
 
   T as(TextStyle style) => builder(style.toAttribute());
+
   T call({
     String? fontFamily,
     FontWeight? fontWeight,

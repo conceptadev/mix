@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'attributes/alignment_attribute.dart';
 import 'attributes/axis_attribute.dart';
 import 'attributes/border/border_radius_attribute.dart';
+import 'attributes/constraints/constraints_util.dart';
 import 'attributes/style_mix_attribute.dart';
 import 'attributes/text_style_attribute.dart';
 import 'core/attribute.dart';
@@ -12,10 +13,11 @@ import 'core/directive.dart';
 import 'core/extensions/values_ext.dart';
 import 'factory/mix_provider_data.dart';
 import 'factory/style_mix.dart';
+import 'recipes/flex/flex_attribute.dart';
 import 'recipes/stack/stack_attribute.dart';
+import 'recipes/text/text_attribute.dart';
 import 'utils/border_radius_util.dart';
 import 'utils/border_util.dart';
-import 'utils/box_constraints_util.dart';
 import 'utils/context_variant_util/on_breakpoint_util.dart';
 import 'utils/context_variant_util/on_brightness_util.dart';
 import 'utils/context_variant_util/on_helper_util.dart';
@@ -109,8 +111,8 @@ extension WithSpaceTokensExt<T> on SpacingUtility<T> {
 }
 
 @Deprecated('Use mainAxisAlignment instead')
-MainAxisAlignmentAttribute mainAxis(MainAxisAlignment mainAxisAlignment) {
-  return MainAxisAlignmentAttribute(mainAxisAlignment);
+FlexAttribute mainAxis(MainAxisAlignment mainAxisAlignment) {
+  return FlexAttribute(mainAxisAlignment: mainAxisAlignment);
 }
 
 @Deprecated('Use onXSmall instead')
@@ -156,7 +158,7 @@ final press = onPress;
 const not = onNot;
 
 @Deprecated('Use textStyle instead')
-const font = textStyle;
+final font = textStyle;
 
 @Deprecated('Use textStyle(textShadow: textShadow) instead')
 TextStyleAttribute textShadow(List<Shadow> textShadow) {
@@ -370,10 +372,10 @@ final marginX = marginHorizontal;
 final marginY = marginVertical;
 
 @Deprecated('Use borderRadius instead')
-const rounded = borderRadius;
+final rounded = borderRadius;
 
 @Deprecated('Use borderRadius instead')
-const r = borderRadius;
+final r = borderRadius;
 
 @Deprecated('Use borderRadius.horizontal instead')
 dynamic get roundedH => UnimplementedError();
@@ -423,22 +425,22 @@ BorderRadiusDirectionalAttribute roundedBE() {
 }
 
 @Deprecated(kShortAliasDeprecation)
-const h = height;
+final h = height;
 
 @Deprecated(kShortAliasDeprecation)
-const w = width;
+final w = width;
 
 @Deprecated(kShortAliasDeprecation)
-const maxH = maxHeight;
+final maxH = maxHeight;
 
 @Deprecated(kShortAliasDeprecation)
-const maxW = maxWidth;
+final maxW = maxWidth;
 
 @Deprecated(kShortAliasDeprecation)
-const minH = minHeight;
+final minH = minHeight;
 
 @Deprecated(kShortAliasDeprecation)
-const minW = minWidth;
+final minW = minWidth;
 
 @Deprecated(kShortAliasDeprecation)
 final bt = border.top;
@@ -484,8 +486,8 @@ AxisAttribute direction(Axis direction) {
 
 // Create a FlexAttributes for the cross axis.
 @Deprecated('Use crossAxisAlignment() instead')
-CrossAxisAlignmentAttribute crossAxis(CrossAxisAlignment crossAxisAlignment) {
-  return CrossAxisAlignmentAttribute(crossAxisAlignment);
+FlexAttribute crossAxis(CrossAxisAlignment crossAxisAlignment) {
+  return FlexAttribute(crossAxisAlignment: crossAxisAlignment);
 }
 
 @Deprecated('Use textDirective(directive)')
@@ -508,8 +510,8 @@ TextDirectiveUtility textDirective(String Function(String value) modifier) =>
     TextDirectiveUtility(modifier);
 
 @Deprecated('Use text(overflow: overflow)')
-TextOverflowAttribute overflow(TextOverflow overflow) {
-  return TextOverflowAttribute(overflow);
+TextAttribute overflow(TextOverflow overflow) {
+  return TextAttribute(overflow: overflow);
 }
 
 @Deprecated('use margin.only instead')

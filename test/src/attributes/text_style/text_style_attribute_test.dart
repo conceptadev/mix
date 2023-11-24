@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mix/src/attributes/text_style/text_style_attribute.dart';
+import 'package:mix/src/attributes/text_style_attribute.dart';
 
-import '../../helpers/testing_utils.dart';
+import '../../../helpers/testing_utils.dart';
 
 void main() {
   group('TextStyleDto', () {

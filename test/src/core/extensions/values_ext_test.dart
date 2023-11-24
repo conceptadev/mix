@@ -50,12 +50,6 @@ void main() {
       expect(mergedStyle.forceStrutHeight, true);
     });
 
-    test('TextAlign toAttribute', () {
-      const align = TextAlign.center;
-      final attribute = align.toAttribute();
-      expect(attribute.value, TextAlign.center);
-    });
-
     test('AlignmentGeometry toAttribute', () {
       const alignment = Alignment.center;
       final attribute = alignment.toAttribute();
@@ -108,60 +102,16 @@ void main() {
       expect(attribute.maxHeight, 250.0);
     });
 
-    test('TextOverflow toAttribute', () {
-      const textOverflow = TextOverflow.ellipsis;
-      final attribute = textOverflow.toAttribute();
-      expect(attribute.value, TextOverflow.ellipsis);
-    });
-
-    test('VerticalDirection toAttribute', () {
-      const verticalDirection = VerticalDirection.up;
-      final attribute = verticalDirection.toAttribute();
-      expect(attribute.value, VerticalDirection.up);
-    });
-
     test('Clip toAttribute', () {
       const clip = Clip.hardEdge;
       final attribute = clip.toAttribute();
       expect(attribute.value, Clip.hardEdge);
     });
 
-    test('TextWidthBasis toAttribute', () {
-      const textWidthBasis = TextWidthBasis.longestLine;
-      final attribute = textWidthBasis.toAttribute();
-      expect(attribute.value, TextWidthBasis.longestLine);
-    });
-
-    test('TextHeightBehavior toAttribute', () {
-      const textHeightBehavior =
-          TextHeightBehavior(applyHeightToFirstAscent: true);
-      final attribute = textHeightBehavior.toAttribute();
-      expect(attribute.value,
-          const TextHeightBehavior(applyHeightToFirstAscent: true));
-    });
-
-    test('TextDirection toAttribute', () {
-      const textDirection = TextDirection.ltr;
-      final attribute = textDirection.toAttribute();
-      expect(attribute.value, TextDirection.ltr);
-    });
-
     test('Axis toAttribute', () {
       const axis = Axis.horizontal;
       final attribute = axis.toAttribute();
       expect(attribute.value, Axis.horizontal);
-    });
-
-    test('BlendMode toAttribute', () {
-      const blendMode = BlendMode.srcOver;
-      final attribute = blendMode.toAttribute();
-      expect(attribute.value, BlendMode.srcOver);
-    });
-
-    test('BoxFit toAttribute', () {
-      const boxFit = BoxFit.cover;
-      final attribute = boxFit.toAttribute();
-      expect(attribute.value, BoxFit.cover);
     });
 
     test('BoxDecoration toAttribute', () {
@@ -205,12 +155,6 @@ void main() {
       const borderRadius = BorderRadius.all(Radius.circular(10.0));
       final attribute = borderRadius.toAttribute();
       expect(attribute.resolve(EmptyMixData), borderRadius);
-    });
-
-    test('TextBaseline toAttribute', () {
-      const textBaseline = TextBaseline.alphabetic;
-      final attribute = textBaseline.toAttribute();
-      expect(attribute.value, TextBaseline.alphabetic);
     });
 
     test('Matrix4 toAttribute', () {
