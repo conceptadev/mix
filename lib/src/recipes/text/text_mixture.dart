@@ -5,7 +5,7 @@ import '../../core/directive.dart';
 import '../../factory/mix_provider_data.dart';
 import 'text_attribute.dart';
 
-class TextRecipe extends RecipeMix<TextRecipe> {
+class TextMixture extends Mixture<TextMixture> {
   final TextOverflow? overflow;
   final StrutStyle? strutStyle;
   final TextAlign? textAlign;
@@ -18,7 +18,7 @@ class TextRecipe extends RecipeMix<TextRecipe> {
   final bool? softWrap;
 
   final List<TextDirective> directives;
-  const TextRecipe({
+  const TextMixture({
     required this.overflow,
     this.strutStyle,
     this.textAlign,
@@ -33,7 +33,7 @@ class TextRecipe extends RecipeMix<TextRecipe> {
   });
 
   // empty
-  const TextRecipe.empty()
+  const TextMixture.empty()
       : overflow = null,
         strutStyle = null,
         textAlign = null,
@@ -46,10 +46,10 @@ class TextRecipe extends RecipeMix<TextRecipe> {
         softWrap = null,
         directives = const [];
 
-  static TextRecipe resolve(MixData mix) {
-    final recipe = mix.attributeOfType<TextAttribute>()?.resolve(mix);
+  static TextMixture resolve(MixData mix) {
+    final recipe = mix.attributeOfType<TextMixtureAttribute>()?.resolve(mix);
 
-    return recipe ?? const TextRecipe.empty();
+    return recipe ?? const TextMixtureAttribute().resolve(mix);
   }
 
   String applyTextDirectives(String? text) {
@@ -59,10 +59,10 @@ class TextRecipe extends RecipeMix<TextRecipe> {
   }
 
   @override
-  TextRecipe lerp(TextRecipe other, double t) {
+  TextMixture lerp(TextMixture other, double t) {
     // Define a helper method for snapping
 
-    return TextRecipe(
+    return TextMixture(
       overflow: snap(overflow, other.overflow, t),
       strutStyle: snap(strutStyle, other.strutStyle, t),
       textAlign: snap(textAlign, other.textAlign, t),
@@ -79,7 +79,7 @@ class TextRecipe extends RecipeMix<TextRecipe> {
   }
 
   @override
-  TextRecipe copyWith({
+  TextMixture copyWith({
     bool? softWrap,
     TextOverflow? overflow,
     StrutStyle? strutStyle,
@@ -92,7 +92,7 @@ class TextRecipe extends RecipeMix<TextRecipe> {
     List<TextDirective>? directives,
     TextDirection? textDirection,
   }) {
-    return TextRecipe(
+    return TextMixture(
       overflow: overflow ?? this.overflow,
       strutStyle: strutStyle ?? this.strutStyle,
       textAlign: textAlign ?? this.textAlign,

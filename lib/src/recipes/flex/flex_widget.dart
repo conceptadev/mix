@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 import '../../widgets/gap_widget.dart';
 import '../../widgets/styled_widget.dart';
 import '../container/container_widget.dart';
-import 'flex_recipe.dart';
+import 'flex_mixture.dart';
 
 /// A flexible layout widget enhanced with `StyleMix` for simplified styling.
 ///
@@ -38,7 +38,7 @@ class StyledFlex extends StyledWidget {
   @override
   Widget build(BuildContext context) {
     return buildWithStyle(context, (data) {
-      final spec = FlexRecipeMix.resolve(data);
+      final spec = FlexMixture.resolve(data);
 
       List<Widget> renderSpacedChildren() {
         return spec.gap == null

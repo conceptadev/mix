@@ -4,15 +4,15 @@ import 'dart:collection';
 
 import 'package:flutter/cupertino.dart';
 
+import '../helpers/compare_mixin.dart';
 import 'attribute.dart';
-import 'equality/compare_mixin.dart';
 import 'extensions/iterable_ext.dart';
 
 @immutable
 class VisualAttributeMap with Comparable {
   final LinkedHashMap<Type, StyleAttribute>? _attributeMap;
 
-  VisualAttributeMap._(this._attributeMap);
+  const VisualAttributeMap._(this._attributeMap);
 
   factory VisualAttributeMap(List<StyleAttribute> attributes) {
     final attributeMap = LinkedHashMap<Type, StyleAttribute>();

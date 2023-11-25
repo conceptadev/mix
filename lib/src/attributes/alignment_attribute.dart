@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../core/attribute.dart';
-import '../utils/scalar_util.dart';
-
-const alignment = AlignmentUtility(AlignmentGeometryAttribute.new);
 
 class AlignmentGeometryAttribute extends ScalarAttribute<AlignmentGeometry>
     with SingleChildRenderAttributeMixin<Align> {

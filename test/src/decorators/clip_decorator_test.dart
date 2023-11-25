@@ -116,7 +116,7 @@ void main() {
       final merged = clipDecorator.merge(other);
       expect(merged, isNotNull);
       expect(merged.clipBehavior, Clip.antiAlias);
-      expect(merged.clipper, isA<_CustomRectClipper>());
+      expect(merged.clipper, isA<_CustomPathClipper>());
     });
   });
 

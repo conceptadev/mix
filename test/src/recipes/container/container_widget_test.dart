@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
-import 'package:mix/src/attributes/alignment_attribute.dart';
 
 import '../../../helpers/testing_utils.dart';
 
@@ -11,11 +10,11 @@ void main() {
     final marginAttr = margin(10);
     final backgroundColorAttr = backgroundColor(Colors.red);
     final alignmentAttr = alignment.center();
-    final clipAttr = clip.hardEdge();
+    final clipAttr = clipBehavior.hardEdge();
 
     final boxDecorationAttr = boxDecoration(
-      border: border(color: Colors.red, width: 1, style: BorderStyle.solid),
-      borderRadius: borderRadius(10),
+      border: Border.all(color: Colors.red, width: 1, style: BorderStyle.solid),
+      borderRadius: BorderRadius.circular(10),
       color: Colors.red,
     );
 
@@ -43,7 +42,7 @@ void main() {
     expect(containerWidget.margin, marginAttr.resolve(EmptyMixData));
     expect(containerWidget.padding, paddingAttr.resolve(EmptyMixData));
     expect(containerWidget.clipBehavior, clipAttr.value);
-    expect(containerWidget.alignment, alignmentAttr.resolve(EmptyMixData));
+    expect(containerWidget.alignment, alignmentAttr.value);
     expect(containerWidget.clipBehavior, clipAttr.value);
     expect(containerDecoration.border, resolvedDecoration.border);
     expect(containerDecoration.color, resolvedDecoration.color);

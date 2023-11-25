@@ -106,8 +106,8 @@ void main() {
 
       expect(merged.top, 10);
       expect(merged.bottom, 5);
-      expect(merged.start, 3);
       expect(merged.end, 7);
+      expect(merged.start, 3);
     });
 
     test('merge returns itself if other is null', () {

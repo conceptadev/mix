@@ -4,7 +4,7 @@ import '../../core/attribute.dart';
 import '../../factory/mix_provider_data.dart';
 import 'container_attribute.dart';
 
-class ContainerRecipeMix extends RecipeMix<ContainerRecipeMix> {
+class ContainerMixture extends Mixture<ContainerMixture> {
   final AlignmentGeometry? alignment;
   final EdgeInsetsGeometry? padding;
   final EdgeInsetsGeometry? margin;
@@ -14,7 +14,7 @@ class ContainerRecipeMix extends RecipeMix<ContainerRecipeMix> {
   final Matrix4? transform;
   final Clip? clipBehavior;
 
-  const ContainerRecipeMix({
+  const ContainerMixture({
     required this.alignment,
     required this.padding,
     required this.margin,
@@ -25,7 +25,7 @@ class ContainerRecipeMix extends RecipeMix<ContainerRecipeMix> {
   });
 
   // empty
-  const ContainerRecipeMix.empty()
+  const ContainerMixture.empty()
       : alignment = null,
         padding = null,
         margin = null,
@@ -34,14 +34,15 @@ class ContainerRecipeMix extends RecipeMix<ContainerRecipeMix> {
         transform = null,
         clipBehavior = null;
 
-  static ContainerRecipeMix resolve(MixData mix) {
-    final recipe = mix.attributeOfType<ContainerAttribute>()?.resolve(mix);
+  static ContainerMixture resolve(MixData mix) {
+    final recipe =
+        mix.attributeOfType<ContainerMixtureAttribute>()?.resolve(mix);
 
-    return recipe ?? const ContainerRecipeMix.empty();
+    return recipe ?? const ContainerMixtureAttribute().resolve(mix);
   }
 
   @override
-  ContainerRecipeMix copyWith({
+  ContainerMixture copyWith({
     AlignmentGeometry? alignment,
     EdgeInsetsGeometry? padding,
     EdgeInsetsGeometry? margin,
@@ -52,7 +53,7 @@ class ContainerRecipeMix extends RecipeMix<ContainerRecipeMix> {
     Matrix4? transform,
     Clip? clipBehavior,
   }) {
-    return ContainerRecipeMix(
+    return ContainerMixture(
       alignment: alignment ?? this.alignment,
       padding: padding ?? this.padding,
       margin: margin ?? this.margin,
@@ -64,8 +65,8 @@ class ContainerRecipeMix extends RecipeMix<ContainerRecipeMix> {
   }
 
   @override
-  ContainerRecipeMix lerp(ContainerRecipeMix other, double t) {
-    return ContainerRecipeMix(
+  ContainerMixture lerp(ContainerMixture other, double t) {
+    return ContainerMixture(
       alignment: AlignmentGeometry.lerp(alignment, other.alignment, t),
       padding: EdgeInsetsGeometry.lerp(padding, other.padding, t),
       margin: EdgeInsetsGeometry.lerp(margin, other.margin, t),

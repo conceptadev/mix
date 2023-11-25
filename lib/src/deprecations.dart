@@ -2,33 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-import 'attributes/alignment_attribute.dart';
-import 'attributes/axis_attribute.dart';
-import 'attributes/border/border_radius_attribute.dart';
-import 'attributes/constraints/constraints_util.dart';
-import 'attributes/style_mix_attribute.dart';
-import 'attributes/text_style_attribute.dart';
-import 'core/attribute.dart';
-import 'core/directive.dart';
-import 'core/extensions/values_ext.dart';
-import 'factory/mix_provider_data.dart';
-import 'factory/style_mix.dart';
-import 'recipes/flex/flex_attribute.dart';
-import 'recipes/stack/stack_attribute.dart';
-import 'recipes/text/text_attribute.dart';
-import 'utils/border_radius_util.dart';
-import 'utils/border_util.dart';
-import 'utils/context_variant_util/on_breakpoint_util.dart';
-import 'utils/context_variant_util/on_brightness_util.dart';
-import 'utils/context_variant_util/on_helper_util.dart';
-import 'utils/context_variant_util/on_orientation_util.dart';
-import 'utils/decorators_util.dart';
-import 'utils/helper_util.dart';
-import 'utils/pressable_util.dart';
-import 'utils/spacing_util.dart';
-import 'utils/text_directives_util.dart';
-import 'utils/text_style_util.dart';
-import 'variants/variant.dart';
+import '../mix.dart';
 
 const kShortAliasDeprecation =
     'Short aliases will be deprecated, you can create your own. Example: final p = padding;';
@@ -158,15 +132,12 @@ final press = onPress;
 const not = onNot;
 
 @Deprecated('Use textStyle instead')
-final font = textStyle;
+const font = textStyle;
 
 @Deprecated('Use textStyle(textShadow: textShadow) instead')
 TextStyleAttribute textShadow(List<Shadow> textShadow) {
   return textStyle(shadows: textShadow);
 }
-
-@Deprecated('Use flexible or expanded')
-const flex = flexible;
 
 @Deprecated('Use textStyle(textShadow: textShadow) instead')
 const fontWeight = LegacyTextStyleUtility.fontWeight;
@@ -469,13 +440,13 @@ AlignmentGeometryAttribute zAligmnent(Alignment alignment) {
 }
 
 @Deprecated('Use stackFit instead')
-StackAttribute zFit(StackFit fit) {
-  return StackAttribute(fit: fit);
+StackMixtureAttribute zFit(StackFit fit) {
+  return StackMixtureAttribute(fit: fit.toAttribute());
 }
 
 @Deprecated('Use stack instead')
-StackAttribute zClip(Clip clip) {
-  return StackAttribute(clipBehavior: clip);
+StackMixtureAttribute zClip(Clip clip) {
+  return StackMixtureAttribute(clipBehavior: clip.toAttribute());
 }
 
 // Create a FlexAttributes for the direction axis.
@@ -510,8 +481,8 @@ TextDirectiveUtility textDirective(String Function(String value) modifier) =>
     TextDirectiveUtility(modifier);
 
 @Deprecated('Use text(overflow: overflow)')
-TextAttribute overflow(TextOverflow overflow) {
-  return TextAttribute(overflow: overflow);
+TextMixtureAttribute overflow(TextOverflow overflow) {
+  return TextMixtureAttribute(overflow: overflow);
 }
 
 @Deprecated('use margin.only instead')

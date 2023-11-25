@@ -9,79 +9,82 @@ import '../attributes/shadow_attribute.dart';
 import '../core/extensions/values_ext.dart';
 import 'border_radius_util.dart';
 import 'border_util.dart';
+import 'helper_util.dart';
 import 'scalar_util.dart';
 
-const boxDecoration = BoxDecorationUtility();
+const boxDecoration = BoxDecorationUtility.selfBuilder;
 
 final backgroundColor = boxDecoration.color;
 final bgColor = boxDecoration.color;
 final elevation = boxDecoration.elevation;
 
-class BoxDecorationUtility {
-  const BoxDecorationUtility();
+class BoxDecorationUtility<T> extends MixUtility<T, BoxDecorationAttribute> {
+  static const selfBuilder = BoxDecorationUtility(MixUtility.selfBuilder);
 
-  BoxDecorationAttribute _color(ColorAttribute color) => BoxDecorationAttribute(
-        color: color,
-      );
+  const BoxDecorationUtility(super.builder);
 
-  BoxDecorationAttribute _shape(BoxShape shape) => BoxDecorationAttribute(
-        shape: shape,
-      );
+  T _color(ColorAttribute color) => _only(color: color);
 
-  BoxDecorationAttribute _border(BoxBorderAttribute border) =>
-      BoxDecorationAttribute(border: border);
+  T _shape(BoxShape shape) => _only(shape: shape);
 
-  BoxDecorationAttribute _borderRadius(
-    BorderRadiusGeometryAttribute borderRadius,
-  ) =>
-      BoxDecorationAttribute(borderRadius: borderRadius);
+  T _border(BoxBorderAttribute border) => _only(border: border);
 
-  BoxDecorationAttribute _gradient(GradientAttribute gradient) =>
-      BoxDecorationAttribute(gradient: gradient);
+  T _borderRadius(BorderRadiusGeometryAttribute borderRadius) =>
+      _only(borderRadius: borderRadius);
 
-  BoxDecorationAttribute _boxShadow(List<BoxShadowAttribute> boxShadow) =>
-      BoxDecorationAttribute(boxShadow: boxShadow);
+  T _gradient(GradientAttribute gradient) => _only(gradient: gradient);
 
-  ColorUtility<BoxDecorationAttribute> get color => ColorUtility(_color);
-  BorderUtility<BoxDecorationAttribute> get border => BorderUtility(_border);
-  BorderRadiusUtility<BoxDecorationAttribute> get borderRadius =>
-      BorderRadiusUtility(_borderRadius);
+  T _boxShadow(Iterable<BoxShadowAttribute> boxShadow) =>
+      _only(boxShadow: boxShadow.toList());
 
-  BoxShapeUtility<BoxDecorationAttribute> get shape => BoxShapeUtility(_shape);
-
-  BoxDecorationAttribute elevation(int value) {
-    assert(kElevationToShadow.containsKey(value), 'Invalid elevation value');
-
-    return BoxDecorationAttribute(
-      boxShadow: kElevationToShadow[value]!.toAttribute(),
-    );
-  }
-
-  BoxDecorationAttribute as(BoxDecoration decoration) {
-    return BoxDecorationAttribute(
-      color: decoration.color?.toAttribute(),
-      border: decoration.border?.toAttribute(),
-      borderRadius: decoration.borderRadius?.toAttribute(),
-      gradient: decoration.gradient?.toAttribute(),
-      boxShadow: decoration.boxShadow?.toAttribute(),
-      shape: decoration.shape,
-    );
-  }
-
-  BoxDecorationAttribute call({
-    Color? color,
+  T _only({
+    ColorAttribute? color,
     BoxBorderAttribute? border,
-    BorderRadiusAttribute? borderRadius,
+    BorderRadiusGeometryAttribute? borderRadius,
     GradientAttribute? gradient,
     List<BoxShadowAttribute>? boxShadow,
     BoxShape? shape,
   }) {
-    return BoxDecorationAttribute(
-      color: color?.toAttribute(),
+    final decoration = BoxDecorationAttribute(
+      color: color,
       border: border,
       borderRadius: borderRadius,
       gradient: gradient,
       boxShadow: boxShadow,
+      shape: shape,
+    );
+
+    return as(decoration);
+  }
+
+  ColorUtility<T> get color => ColorUtility(_color);
+  BorderUtility<T> get border => BorderUtility(_border);
+  BorderRadiusUtility<T> get borderRadius => BorderRadiusUtility(_borderRadius);
+
+  BoxShapeUtility<T> get shape => BoxShapeUtility(_shape);
+  SpreadFunctionParams<BoxShadowAttribute, T> get boxShadow =>
+      SpreadFunctionParams(_boxShadow);
+
+  T elevation(int value) {
+    assert(kElevationToShadow.containsKey(value), 'Invalid elevation value');
+
+    return _only(boxShadow: kElevationToShadow[value]!.toAttribute());
+  }
+
+  T call({
+    Color? color,
+    BoxBorder? border,
+    BorderRadius? borderRadius,
+    Gradient? gradient,
+    List<BoxShadow>? boxShadow,
+    BoxShape? shape,
+  }) {
+    return _only(
+      color: color?.toAttribute(),
+      border: border?.toAttribute(),
+      borderRadius: borderRadius?.toAttribute(),
+      gradient: gradient?.toAttribute(),
+      boxShadow: boxShadow?.toAttribute(),
       shape: shape,
     );
   }

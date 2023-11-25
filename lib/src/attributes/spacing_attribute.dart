@@ -89,6 +89,8 @@ class PaddingAttribute extends SpacingAttribute {
             bottom: other.bottom ?? bottom,
             left: other.left ?? left,
             right: other.right ?? right,
+            start: other.start ?? start,
+            end: other.end ?? end,
           );
   }
 }

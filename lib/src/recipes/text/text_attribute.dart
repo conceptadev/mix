@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 
 import '../../attributes/strut_style_attribute.dart';
-import '../../attributes/text_style_attribute.dart';
+import '../../attributes/text_direction_attribute.dart';
+import '../../attributes/text_style/text_style_attribute.dart';
 import '../../core/attribute.dart';
 import '../../core/directive.dart';
 import '../../factory/mix_provider_data.dart';
-import 'text_recipe.dart';
+import 'text_mixture.dart';
 
-class TextAttribute extends ResolvableAttribute<TextRecipe> {
+class TextMixtureAttribute extends ResolvableAttribute<TextMixture> {
   final TextOverflow? overflow;
   final StrutStyleAttribute? strutStyle;
   final TextAlign? textAlign;
@@ -16,11 +17,11 @@ class TextAttribute extends ResolvableAttribute<TextRecipe> {
   final TextStyleAttribute? style;
   final TextWidthBasis? textWidthBasis;
   final TextHeightBehavior? textHeightBehavior;
-  final TextDirection? textDirection;
+  final TextDirectionAttribute? textDirection;
   final bool? softWrap;
   final List<TextDirective>? directives;
 
-  const TextAttribute({
+  const TextMixtureAttribute({
     this.overflow,
     this.strutStyle,
     this.textAlign,
@@ -35,8 +36,8 @@ class TextAttribute extends ResolvableAttribute<TextRecipe> {
   });
 
   @override
-  TextRecipe resolve(MixData mix) {
-    return TextRecipe(
+  TextMixture resolve(MixData mix) {
+    return TextMixture(
       overflow: overflow,
       strutStyle: strutStyle?.resolve(mix),
       textAlign: textAlign,
@@ -45,17 +46,17 @@ class TextAttribute extends ResolvableAttribute<TextRecipe> {
       style: style?.resolve(mix),
       textWidthBasis: textWidthBasis,
       textHeightBehavior: textHeightBehavior,
-      textDirection: textDirection,
+      textDirection: textDirection?.value,
       softWrap: softWrap,
       directives: directives ?? [],
     );
   }
 
   @override
-  TextAttribute merge(covariant TextAttribute? other) {
+  TextMixtureAttribute merge(covariant TextMixtureAttribute? other) {
     if (other == null) return this;
 
-    return TextAttribute(
+    return TextMixtureAttribute(
       overflow: overflow ?? other.overflow,
       strutStyle: strutStyle ?? other.strutStyle,
       textAlign: textAlign ?? other.textAlign,

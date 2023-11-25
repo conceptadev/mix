@@ -5,6 +5,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 import '../../core/attribute.dart';
+import '../../core/extensions/iterable_ext.dart';
 import '../../core/extensions/values_ext.dart';
 import '../../factory/mix_provider_data.dart';
 import '../../theme/tokens/text_style_token.dart';
@@ -251,8 +252,7 @@ class TextStyleAttribute extends ResolvableAttribute<TextStyle> {
   // Finally, it resolves the resulting TextStyleDto to a TextStyle.
   TextStyle resolve(MixData mix) {
     final textStylesDtos =
-        values.map((e) => e.isTokenRef ? e.resolve(mix).toDto() : e)
-            as Iterable<TextStyleDto>;
+        values.map((e) => e.isTokenRef ? e.resolve(mix).toDto() : e);
 
     return textStylesDtos
         .reduce((value, element) => value.merge(element))

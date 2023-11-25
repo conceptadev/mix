@@ -32,5 +32,5 @@ class ColorAttribute extends Dto<Color> {
 class ColorUtility<T> extends MixUtility<T, ColorAttribute> {
   const ColorUtility(super.builder);
 
-  T call(Color color) => builder(ColorAttribute(color));
+  T call(Color color) => as(ColorAttribute(color));
 }

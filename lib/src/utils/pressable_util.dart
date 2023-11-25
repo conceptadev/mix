@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../core/extensions/string_ext.dart';
+import '../helpers/string_ext.dart';
 import '../variants/context_variant.dart';
 import '../widgets/pressable/pressable.notifier.dart';
 import '../widgets/pressable/pressable_state.dart';

@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
+import 'package:mix/src/attributes/alignment_attribute.dart';
+import 'package:mix/src/attributes/clip_behavior_attribute.dart';
+import 'package:mix/src/attributes/text_direction_attribute.dart';
+import 'package:mix/src/recipes/stack/stack_attribute.dart';
 
 import '../../../helpers/testing_utils.dart';
 
 void main() {
-  group('StackSpec', () {
+  group('StackMixture', () {
     test('resolve', () {
       final mix = MixData.create(
         MockBuildContext(),
@@ -13,11 +17,11 @@ void main() {
           const AlignmentGeometryAttribute(Alignment.center),
           const StackFitAttribute(StackFit.expand),
           const TextDirectionAttribute(TextDirection.ltr),
-          const ClipAttribute(Clip.antiAlias),
+          const ClipBehaviorAttribute(Clip.antiAlias),
         ),
       );
 
-      final spec = StackRecipeMix.resolve(mix);
+      final spec = StackMixture.resolve(mix);
 
       expect(spec.alignment, Alignment.center);
       expect(spec.fit, StackFit.expand);
@@ -26,7 +30,7 @@ void main() {
     });
 
     test('copyWith', () {
-      const spec = StackRecipeMix(
+      const spec = StackMixture(
         alignment: Alignment.center,
         fit: StackFit.expand,
         textDirection: TextDirection.ltr,
@@ -47,14 +51,14 @@ void main() {
     });
 
     test('lerp', () {
-      const spec1 = StackRecipeMix(
+      const spec1 = StackMixture(
         alignment: Alignment.topLeft,
         fit: StackFit.loose,
         textDirection: TextDirection.ltr,
         clipBehavior: Clip.none,
       );
 
-      const spec2 = StackRecipeMix(
+      const spec2 = StackMixture(
         alignment: Alignment.bottomRight,
         fit: StackFit.expand,
         textDirection: TextDirection.rtl,

@@ -22,7 +22,7 @@ class RadiusToken extends MixToken<Radius> {
 }
 
 @immutable
-class RadiusRef extends Radius with MixTokenRef<Radius> {
+class RadiusRef extends Radius with ValueRef<Radius> {
   @override
   final String tokenName;
 

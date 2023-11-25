@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
-import 'package:mix/src/core/extensions/style_mix_ext.dart';
 
 void main() {
   final keyOne = UniqueKey();
@@ -9,7 +8,8 @@ void main() {
   final keyThree = UniqueKey();
   testWidgets('StyleMix.container matches StyledContainer(style:StyleMix)',
       (tester) async {
-    final style = StyleMix(boxDecoration(border: border(color: Colors.red)));
+    final style =
+        StyleMix(boxDecoration(border: Border.all(color: Colors.red)));
 
     await tester.pumpWidget(
       MaterialApp(
@@ -44,7 +44,7 @@ void main() {
       (tester) async {
     final style = StyleMix(
       boxDecoration(
-        border: border(color: Colors.red),
+        border: Border.all(color: Colors.red),
       ),
     );
 
@@ -78,7 +78,8 @@ void main() {
   });
 
   testWidgets('StyleMix.hbox matches HBox(style:StyleMix)', (tester) async {
-    final style = StyleMix(boxDecoration(border: border(color: Colors.red)));
+    final style =
+        StyleMix(boxDecoration(border: Border.all(color: Colors.red)));
 
     await tester.pumpWidget(
       MaterialApp(
@@ -110,7 +111,8 @@ void main() {
   });
 
   testWidgets('StyleMix.row matches StyledRow(style:StyleMix)', (tester) async {
-    final style = StyleMix(boxDecoration(border: border(color: Colors.red)));
+    final style =
+        StyleMix(boxDecoration(border: Border.all(color: Colors.red)));
 
     await tester.pumpWidget(
       MaterialApp(
@@ -175,7 +177,8 @@ void main() {
   });
 
   testWidgets('StyleMix.vbox matches VBox(style:StyleMix)', (tester) async {
-    final style = StyleMix(boxDecoration(border: border(color: Colors.red)));
+    final style =
+        StyleMix(boxDecoration(border: Border.all(color: Colors.red)));
 
     await tester.pumpWidget(
       MaterialApp(
@@ -208,7 +211,8 @@ void main() {
 
   testWidgets('StyleMix.column matches StyledColumn(style:StyleMix)',
       (tester) async {
-    final style = StyleMix(boxDecoration(border: border(color: Colors.red)));
+    final style =
+        StyleMix(boxDecoration(border: Border.all(color: Colors.red)));
 
     await tester.pumpWidget(
       MaterialApp(

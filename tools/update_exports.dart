@@ -25,11 +25,20 @@ void main() {
   for (final entity in libDirectory.listSync(recursive: true)) {
     // Get the relative path using the path package
     final relativePath = p.relative(entity.path, from: libDirectory.path);
-    // Exclude files from the core directory
-    if (!relativePath.startsWith(p.join('src', 'core')) &&
-        relativePath.endsWith('.dart')) {
-      newExports.add('export \'$relativePath\';');
+
+    if (relativePath.startsWith(p.join('src', 'helpers'))) {
+      continue;
     }
+
+    if (!relativePath.endsWith('.dart')) {
+      continue;
+    }
+
+    if (relativePath.startsWith('mix.dart')) {
+      continue;
+    }
+
+    newExports.add('export \'$relativePath\';');
   }
 
   exportFile.writeAsStringSync(newExports.join('\n'));

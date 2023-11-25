@@ -8,13 +8,13 @@ import '../../factory/mix_provider_data.dart';
 import 'image_attribute.dart';
 
 @immutable
-class ImageRecipeMix extends RecipeMix<ImageRecipeMix> {
+class ImageMixture extends Mixture<ImageMixture> {
   final double? width, height;
   final Color? color;
   final ImageRepeat? repeat;
   final BoxFit? fit;
 
-  const ImageRecipeMix({
+  const ImageMixture({
     required this.width,
     required this.height,
     required this.color,
@@ -22,22 +22,22 @@ class ImageRecipeMix extends RecipeMix<ImageRecipeMix> {
     required this.fit,
   });
 
-  const ImageRecipeMix.empty()
+  const ImageMixture.empty()
       : width = null,
         height = null,
         color = null,
         repeat = null,
         fit = null;
 
-  static ImageRecipeMix resolve(MixData mix) {
-    final recipe = mix.attributeOfType<ImageMixAttribute>()?.resolve(mix);
+  static ImageMixture resolve(MixData mix) {
+    final recipe = mix.attributeOfType<ImageMixtureAttribute>()?.resolve(mix);
 
-    return recipe ?? const ImageRecipeMix.empty();
+    return recipe ?? const ImageMixtureAttribute().resolve(mix);
   }
 
   @override
-  ImageRecipeMix lerp(ImageRecipeMix? other, double t) {
-    return ImageRecipeMix(
+  ImageMixture lerp(ImageMixture? other, double t) {
+    return ImageMixture(
       width: lerpDouble(width, other?.width, t),
       height: lerpDouble(height, other?.height, t),
       color: Color.lerp(color, other?.color, t),
@@ -47,7 +47,7 @@ class ImageRecipeMix extends RecipeMix<ImageRecipeMix> {
   }
 
   @override
-  ImageRecipeMix copyWith({
+  ImageMixture copyWith({
     ImageProvider? image,
     double? width,
     double? height,
@@ -55,7 +55,7 @@ class ImageRecipeMix extends RecipeMix<ImageRecipeMix> {
     ImageRepeat? repeat,
     BoxFit? fit,
   }) {
-    return ImageRecipeMix(
+    return ImageMixture(
       width: width ?? this.width,
       height: height ?? this.height,
       color: color ?? this.color,

@@ -1,6 +1,6 @@
 // ignore_for_file: avoid-mutating-parameters
 
-import '../extensions/iterable_ext.dart';
+import '../core/extensions/iterable_ext.dart';
 import 'deep_collection_equality.dart';
 
 /// Returns a `hashCode` for [props].

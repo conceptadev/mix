@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'decorator.dart';
 
-class AspectRatioDecorator extends WrapDecorator {
+class AspectRatioDecorator extends WrapDecorator<AspectRatioDecorator> {
   final double value;
   const AspectRatioDecorator(this.value, {super.key});
 
@@ -17,7 +17,7 @@ class AspectRatioDecorator extends WrapDecorator {
       AspectRatio(key: key, aspectRatio: value, child: child);
 }
 
-class FlexibleDecorator extends WrapDecorator {
+class FlexibleDecorator extends WrapDecorator<FlexibleDecorator> {
   final int? flex;
   final FlexFit? fit;
   const FlexibleDecorator({this.flex, this.fit, super.key});
@@ -44,7 +44,7 @@ class FlexibleDecorator extends WrapDecorator {
   }
 }
 
-class OpacityDecorator extends WrapDecorator {
+class OpacityDecorator extends WrapDecorator<OpacityDecorator> {
   final double value;
   const OpacityDecorator(this.value, {super.key});
 
@@ -58,7 +58,7 @@ class OpacityDecorator extends WrapDecorator {
   Widget build(child, mix) => Opacity(key: key, opacity: value, child: child);
 }
 
-class RotateDecorator extends WrapDecorator {
+class RotateDecorator extends WrapDecorator<RotateDecorator> {
   final int value;
   const RotateDecorator(this.value, {super.key});
 
@@ -73,7 +73,7 @@ class RotateDecorator extends WrapDecorator {
       RotatedBox(key: key, quarterTurns: value, child: child);
 }
 
-class ScaleDecorator extends WrapDecorator {
+class ScaleDecorator extends WrapDecorator<ScaleDecorator> {
   final double value;
   const ScaleDecorator(this.value, {super.key});
 

@@ -18,10 +18,15 @@ void main() {
       expect(flexibleDecorator.fit, FlexFit.tight);
     });
 
-    test('flexible creates FlexibleDecorator correctly', () {
+    test('default flexible creates FlexibleDecorator correctly', () {
       final flexibleDecorator = flexible();
+      final widget =
+          flexibleDecorator.build(const Empty(), EmptyMixData) as Flexible;
 
-      expect(flexibleDecorator.fit, FlexFit.loose);
+      expect(flexibleDecorator.fit, null);
+      expect(widget, isA<Flexible>());
+      expect(widget.fit, FlexFit.loose);
+      expect(widget.flex, 1);
     });
 
     test('opacity creates OpacityDecorator correctly', () {

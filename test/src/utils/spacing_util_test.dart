@@ -7,7 +7,7 @@ void main() {
     test('padding()', () {
       expect(
         padding(10),
-        const PaddingAttribute(),
+        const PaddingAttribute(top: 10, bottom: 10, left: 10, right: 10),
       );
       expect(
         padding(10, 20),

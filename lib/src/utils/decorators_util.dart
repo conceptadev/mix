@@ -25,12 +25,6 @@ ClipPathDecorator clipTriangle({Clip? clipBehavior}) {
   );
 }
 
-typedef FlexibleDecoratorBuilder = FlexibleDecorator Function({
-  int? flex,
-  FlexFit? fit,
-  Key? key,
-});
-
 class FlexibleDecoratorUtility {
   const FlexibleDecoratorUtility();
 

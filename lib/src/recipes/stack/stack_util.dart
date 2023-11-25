@@ -1,40 +1,60 @@
 import 'package:flutter/material.dart';
 
+import '../../attributes/alignment_attribute.dart';
+import '../../attributes/clip_behavior_attribute.dart';
+import '../../attributes/text_direction_attribute.dart';
+import '../../core/extensions/values_ext.dart';
+import '../../utils/alignment_util.dart';
 import '../../utils/scalar_util.dart';
 import 'stack_attribute.dart';
 
-const stack = StackUtility();
+const stack = StackMixtureUtility.selfBuilder;
 
-class StackUtility {
-  const StackUtility();
+class StackMixtureUtility<T> extends MixUtility<T, StackMixtureAttribute> {
+  static const selfBuilder = StackMixtureUtility(MixUtility.selfBuilder);
 
-  StackAttribute _alignment(AlignmentGeometry alignment) =>
-      call(alignment: alignment);
-  StackAttribute _fit(StackFit fit) => call(fit: fit);
-  StackAttribute _textDirection(TextDirection textDirection) =>
+  const StackMixtureUtility(super.builder);
+
+  T _alignment(AlignmentGeometry alignment) => call(alignment: alignment);
+  T _fit(StackFit fit) => call(fit: fit);
+  T _textDirection(TextDirection textDirection) =>
       call(textDirection: textDirection);
-  StackAttribute _clipBehavior(Clip clipBehavior) =>
-      call(clipBehavior: clipBehavior);
+  T _clipBehavior(Clip clipBehavior) => call(clipBehavior: clipBehavior);
 
-  AlignmentUtility<StackAttribute> get alignment =>
-      AlignmentUtility(_alignment);
-  StackFitUtility<StackAttribute> get fit => StackFitUtility(_fit);
-  TextDirectionUtility<StackAttribute> get textDirection =>
+  T _only({
+    AlignmentGeometryAttribute? alignment,
+    StackFitAttribute? fit,
+    TextDirectionAttribute? textDirection,
+    ClipBehaviorAttribute? clipBehavior,
+  }) {
+    final stack = StackMixtureAttribute(
+      alignment: alignment,
+      fit: fit,
+      textDirection: textDirection,
+      clipBehavior: clipBehavior,
+    );
+
+    return as(stack);
+  }
+
+  AlignmentUtility<T> get alignment => AlignmentUtility(_alignment);
+  StackFitUtility<T> get fit => StackFitUtility(_fit);
+  TextDirectionUtility<T> get textDirection =>
       TextDirectionUtility(_textDirection);
 
-  ClipUtility<StackAttribute> get clipBehavior => ClipUtility(_clipBehavior);
+  ClipUtility<T> get clipBehavior => ClipUtility(_clipBehavior);
 
-  StackAttribute call({
+  T call({
     AlignmentGeometry? alignment,
     StackFit? fit,
     TextDirection? textDirection,
     Clip? clipBehavior,
   }) {
-    return StackAttribute(
-      alignment: alignment,
-      fit: fit,
-      textDirection: textDirection,
-      clipBehavior: clipBehavior,
+    return _only(
+      alignment: alignment?.toAttribute(),
+      fit: fit?.toAttribute(),
+      textDirection: textDirection?.toAttribute(),
+      clipBehavior: clipBehavior?.toAttribute(),
     );
   }
 }

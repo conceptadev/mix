@@ -19,7 +19,7 @@ class TextStyleToken extends MixToken<TextStyle> {
 }
 
 @immutable
-class TextStyleRef extends TextStyle with MixTokenRef<TextStyle> {
+class TextStyleRef extends TextStyle with ValueRef<TextStyle> {
   @override
   final String tokenName;
 

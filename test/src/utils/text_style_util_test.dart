@@ -9,17 +9,17 @@ import '../../helpers/testing_utils.dart';
 
 void main() {
   group('TextStyleUtility', () {
-    const textStyleUtility = TextStyleUtility();
     test('call() creates TextStyleAttribute correctly', () {
       final yellowPaint = Paint()..color = Colors.yellow;
       final purplePaint = Paint()..color = Colors.purple;
-      final textStyleAttribute = textStyleUtility(
+      final attr = textStyle(
         fontFamily: 'Roboto',
         fontWeight: FontWeight.bold,
         fontStyle: FontStyle.italic,
         fontSize: 16.0,
         letterSpacing: 1.0,
         wordSpacing: 2.0,
+        debugLabel: 'debugLabel',
         textBaseline: TextBaseline.ideographic,
         shadows: [
           const Shadow(
@@ -34,133 +34,140 @@ void main() {
         decoration: TextDecoration.underline,
         decorationColor: Colors.green,
         decorationStyle: TextDecorationStyle.dashed,
-        foreground: yellowPaint,
-        background: purplePaint,
+        locale: const Locale('en', 'US'),
         height: 2.0,
       );
 
+      final attrWithPaint = textStyle(
+        background: purplePaint,
+        foreground: yellowPaint,
+      );
+
+      final resolvedValue = attr.resolve(EmptyMixData);
+      final resolvedWithPaint = attrWithPaint.resolve(EmptyMixData);
+
+      expect(resolvedValue.fontWeight, FontWeight.bold);
+      expect(resolvedValue.fontStyle, FontStyle.italic);
+      expect(resolvedValue.fontSize, 16.0);
+      expect(resolvedValue.letterSpacing, 1.0);
+      expect(resolvedValue.wordSpacing, 2.0);
+      expect(resolvedValue.textBaseline, TextBaseline.ideographic);
+      expect(resolvedValue.shadows?.length, 1);
+      expect(resolvedValue.shadows?.first.blurRadius, 1.0);
       expect(
-          textStyleAttribute.resolve(EmptyMixData).fontWeight, FontWeight.bold);
+        resolvedValue.shadows?.first.color,
+        Colors.black,
+      );
+      expect(resolvedValue.shadows?.first.offset, const Offset(1.0, 1.0));
+      expect(resolvedValue.color, Colors.red);
+      expect(resolvedValue.backgroundColor, Colors.blue);
+      expect(resolvedValue.fontFeatures?.length, 1);
       expect(
-          textStyleAttribute.resolve(EmptyMixData).fontStyle, FontStyle.italic);
-      expect(textStyleAttribute.resolve(EmptyMixData).fontSize, 16.0);
-      expect(textStyleAttribute.resolve(EmptyMixData).letterSpacing, 1.0);
-      expect(textStyleAttribute.resolve(EmptyMixData).wordSpacing, 2.0);
-      expect(textStyleAttribute.resolve(EmptyMixData).textBaseline,
-          TextBaseline.ideographic);
-      expect(textStyleAttribute.resolve(EmptyMixData).shadows?.length, 1);
-      expect(textStyleAttribute.resolve(EmptyMixData).shadows?.first.blurRadius,
-          1.0);
-      expect(
-          textStyleAttribute.resolve(EmptyMixData).shadows?.first.color.value,
-          Colors.black);
-      expect(textStyleAttribute.resolve(EmptyMixData).shadows?.first.offset,
-          const Offset(1.0, 1.0));
-      expect(textStyleAttribute.resolve(EmptyMixData).color?.value, Colors.red);
-      expect(textStyleAttribute.resolve(EmptyMixData).backgroundColor?.value,
-          Colors.blue);
-      expect(textStyleAttribute.resolve(EmptyMixData).fontFeatures?.length, 1);
-      expect(
-        textStyleAttribute.resolve(EmptyMixData).fontFeatures?.first,
+        resolvedValue.fontFeatures?.first,
         const FontFeature.alternative(4),
       );
-      expect(textStyleAttribute.resolve(EmptyMixData).decoration,
-          TextDecoration.underline);
-      expect(textStyleAttribute.resolve(EmptyMixData).decorationColor?.value,
-          Colors.green);
-      expect(textStyleAttribute.resolve(EmptyMixData).decorationStyle,
-          TextDecorationStyle.dashed);
-      expect(textStyleAttribute.resolve(EmptyMixData).foreground, yellowPaint);
-      expect(textStyleAttribute.resolve(EmptyMixData).background, purplePaint);
-      expect(textStyleAttribute.resolve(EmptyMixData).debugLabel, 'debugLabel');
-      expect(textStyleAttribute.resolve(EmptyMixData).locale,
-          const Locale('en', 'US'));
-      expect(textStyleAttribute.resolve(EmptyMixData).height, 2.0);
+      expect(
+        resolvedValue.decoration,
+        TextDecoration.underline,
+      );
+      expect(
+        resolvedValue.decorationColor,
+        Colors.green,
+      );
+      expect(resolvedValue.decorationStyle, TextDecorationStyle.dashed);
+      // expect(textStyleAttribute.resolve(EmptyMixData).foreground, yellowPaint);
+      // expect(textStyleAttribute.resolve(EmptyMixData).background, purplePaint);
+      expect(resolvedValue.debugLabel, 'debugLabel');
+      expect(
+        resolvedValue.locale,
+        const Locale('en', 'US'),
+      );
+      expect(resolvedValue.height, 2.0);
+      expect(resolvedWithPaint.foreground, yellowPaint);
+      expect(resolvedWithPaint.background, purplePaint);
     });
 
     test('color() creates TextStyleAttribute correctly', () {
-      final textStyleAttribute = textStyleUtility.color(Colors.red);
+      final textStyleAttribute = textStyle.color(Colors.red);
       final resolvedValue = textStyleAttribute.resolve(EmptyMixData);
 
-      expect(resolvedValue.color?.value, Colors.red);
+      expect(resolvedValue.color, Colors.red);
     });
 
     test('backgroundColor() creates TextStyleAttribute correctly', () {
-      final textStyleAttribute = textStyleUtility.backgroundColor(Colors.blue);
+      final textStyleAttribute = textStyle.backgroundColor(Colors.blue);
       final resolvedValue = textStyleAttribute.resolve(EmptyMixData);
 
-      expect(resolvedValue.backgroundColor?.value, Colors.blue);
+      expect(resolvedValue.backgroundColor, Colors.blue);
     });
 
     test('fontFamily() creates TextStyleAttribute correctly', () {
-      final textStyleAttribute = textStyleUtility.fontFamily('Roboto');
+      final textStyleAttribute = textStyle.fontFamily('Roboto');
       final resolvedValue = textStyleAttribute.resolve(EmptyMixData);
 
       expect(resolvedValue.fontFamily, 'Roboto');
     });
 
     test('fontSize() creates TextStyleAttribute correctly', () {
-      final textStyleAttribute = textStyleUtility.fontSize(16.0);
+      final textStyleAttribute = textStyle.fontSize(16.0);
       final resolvedValue = textStyleAttribute.resolve(EmptyMixData);
 
       expect(resolvedValue.fontSize, 16.0);
     });
 
     test('fontWeight() creates TextStyleAttribute correctly', () {
-      final textStyleAttribute = textStyleUtility.fontWeight(FontWeight.bold);
+      final textStyleAttribute = textStyle.fontWeight.bold();
       final resolvedValue = textStyleAttribute.resolve(EmptyMixData);
 
       expect(resolvedValue.fontWeight, FontWeight.bold);
     });
 
     test('fontStyle() creates TextStyleAttribute correctly', () {
-      final textStyleAttribute = textStyleUtility.fontStyle(FontStyle.italic);
+      final textStyleAttribute = textStyle.fontStyle.italic();
       final resolvedValue = textStyleAttribute.resolve(EmptyMixData);
 
       expect(resolvedValue.fontStyle, FontStyle.italic);
     });
 
     test('letterSpacing() creates TextStyleAttribute correctly', () {
-      final textStyleAttribute = textStyleUtility.letterSpacing(1.0);
+      final textStyleAttribute = textStyle.letterSpacing(1.0);
       final resolvedValue = textStyleAttribute.resolve(EmptyMixData);
 
       expect(resolvedValue.letterSpacing, 1.0);
     });
 
     test('wordSpacing() creates TextStyleAttribute correctly', () {
-      final textStyleAttribute = textStyleUtility.wordSpacing(2.0);
+      final textStyleAttribute = textStyle.wordSpacing(2.0);
       final resolvedValue = textStyleAttribute.resolve(EmptyMixData);
 
       expect(resolvedValue.wordSpacing, 2.0);
     });
 
     test('textBaseline() creates TextStyleAttribute correctly', () {
-      final textStyleAttribute =
-          textStyleUtility.textBaseline(TextBaseline.ideographic);
+      final textStyleAttribute = textStyle.textBaseline.ideographic();
       final resolvedValue = textStyleAttribute.resolve(EmptyMixData);
 
       expect(resolvedValue.textBaseline, TextBaseline.ideographic);
     });
 
     test('shadows() creates TextStyleAttribute correctly', () {
-      final textStyleAttribute = textStyleUtility.shadows([
-        const Shadow(
-          blurRadius: 1.0,
-          color: Colors.black,
-          offset: Offset(1.0, 1.0),
-        ),
-      ]);
+      final blackShadow = shadow(
+        blurRadius: 1.0,
+        color: Colors.black,
+        offset: const Offset(1.0, 1.0),
+      );
+      final textStyleAttribute = textStyle.shadow.as(blackShadow);
 
       final resolvedValue = textStyleAttribute.resolve(EmptyMixData);
 
       expect(resolvedValue.shadows?.length, 1);
       expect(resolvedValue.shadows?.first.blurRadius, 1.0);
-      expect(resolvedValue.shadows?.first.color.value, Colors.black);
+      expect(resolvedValue.shadows?.first.color, Colors.black);
       expect(resolvedValue.shadows?.first.offset, const Offset(1.0, 1.0));
     });
 
     test('fontFeatures() creates TextStyleAttribute correctly', () {
-      final textStyleAttribute = textStyleUtility.fontFeatures([
+      final textStyleAttribute = textStyle.fontFeatures([
         const FontFeature.alternative(4),
       ]);
 
@@ -174,8 +181,7 @@ void main() {
     });
 
     test('decoration() creates TextStyleAttribute correctly', () {
-      final textStyleAttribute =
-          textStyleUtility.decoration(TextDecoration.underline);
+      final textStyleAttribute = textStyle.decoration.underline();
 
       final resolvedValue = textStyleAttribute.resolve(EmptyMixData);
 
@@ -183,15 +189,14 @@ void main() {
     });
 
     test('decorationColor() creates TextStyleAttribute correctly', () {
-      final textStyleAttribute = textStyleUtility.decorationColor(Colors.green);
+      final textStyleAttribute = textStyle.decorationColor(Colors.green);
       final resolvedValue = textStyleAttribute.resolve(EmptyMixData);
 
-      expect(resolvedValue.decorationColor?.value, Colors.green);
+      expect(resolvedValue.decorationColor, Colors.green);
     });
 
     test('decorationStyle() creates TextStyleAttribute correctly', () {
-      final textStyleAttribute =
-          textStyleUtility.decorationStyle(TextDecorationStyle.dashed);
+      final textStyleAttribute = textStyle.decorationStyle.dashed();
 
       final resolvedValue = textStyleAttribute.resolve(EmptyMixData);
 
@@ -200,7 +205,7 @@ void main() {
 
     test('foreground() creates TextStyleAttribute correctly', () {
       final yellowPaint = Paint()..color = Colors.yellow;
-      final textStyleAttribute = textStyleUtility.foreground(yellowPaint);
+      final textStyleAttribute = textStyle.foreground(yellowPaint);
 
       final resolvedValue = textStyleAttribute.resolve(EmptyMixData);
 
@@ -209,7 +214,7 @@ void main() {
 
     test('background() creates TextStyleAttribute correctly', () {
       final purplePaint = Paint()..color = Colors.purple;
-      final textStyleAttribute = textStyleUtility.background(purplePaint);
+      final textStyleAttribute = textStyle.background(purplePaint);
 
       final resolvedValue = textStyleAttribute.resolve(EmptyMixData);
 

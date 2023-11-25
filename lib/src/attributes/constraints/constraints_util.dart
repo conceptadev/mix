@@ -1,7 +1,7 @@
 import '../../utils/scalar_util.dart';
 import 'constraints_attribute.dart';
 
-final boxConstraints = BoxConstraintsUtility.selfBuilder;
+const boxConstraints = BoxConstraintsUtility.selfBuilder;
 
 final width = boxConstraints.width;
 
@@ -17,7 +17,7 @@ final maxHeight = boxConstraints.maxHeight;
 
 class BoxConstraintsUtility<T> extends MixUtility<T, BoxConstraintsAttribute> {
   /// Provides a builder that returns an instance of BoxConstraintsAttribute.
-  static final selfBuilder = BoxConstraintsUtility((attr) => attr);
+  static const selfBuilder = BoxConstraintsUtility(MixUtility.selfBuilder);
 
   const BoxConstraintsUtility(super.builder);
 
@@ -77,7 +77,7 @@ class BoxConstraintsUtility<T> extends MixUtility<T, BoxConstraintsAttribute> {
     double? minHeight,
     double? maxHeight,
   }) {
-    return builder(
+    return as(
       BoxConstraintsAttribute(
         width: width,
         height: height,

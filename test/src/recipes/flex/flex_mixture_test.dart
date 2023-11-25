@@ -3,6 +3,9 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
+import 'package:mix/src/attributes/clip_behavior_attribute.dart';
+import 'package:mix/src/attributes/text_direction_attribute.dart';
+import 'package:mix/src/recipes/flex/flex_attribute.dart';
 
 import '../../../helpers/testing_utils.dart';
 
@@ -12,18 +15,21 @@ void main() {
       final mix = MixData.create(
         MockBuildContext(),
         StyleMix(
-          const CrossAxisAlignmentAttribute(CrossAxisAlignment.center),
-          const MainAxisAlignmentAttribute(MainAxisAlignment.center),
-          const MainAxisSizeAttribute(MainAxisSize.min),
-          const VerticalDirectionAttribute(VerticalDirection.down),
-          const AxisAttribute(Axis.horizontal),
-          const TextDirectionAttribute(TextDirection.ltr),
-          const TextBaselineAttribute(TextBaseline.alphabetic),
-          const ClipAttribute(Clip.antiAlias),
+          const FlexAttribute(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            verticalDirection: VerticalDirection.down,
+            direction: Axis.horizontal,
+            textDirection: TextDirectionAttribute(TextDirection.ltr),
+            textBaseline: TextBaseline.alphabetic,
+            clipBehavior: ClipBehaviorAttribute(Clip.antiAlias),
+            gap: 10,
+          ),
         ),
       );
 
-      final spec = FlexRecipeMix.resolve(mix);
+      final spec = FlexMixture.resolve(mix);
 
       expect(spec.crossAxisAlignment, CrossAxisAlignment.center);
       expect(spec.mainAxisAlignment, MainAxisAlignment.center);
@@ -33,10 +39,11 @@ void main() {
       expect(spec.textDirection, TextDirection.ltr);
       expect(spec.textBaseline, TextBaseline.alphabetic);
       expect(spec.clipBehavior, Clip.antiAlias);
+      expect(spec.gap, 10);
     });
 
     test('copyWith', () {
-      const spec = FlexRecipeMix(
+      const spec = FlexMixture(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
@@ -74,7 +81,7 @@ void main() {
     });
 
     test('lerp', () {
-      const spec1 = FlexRecipeMix(
+      const spec1 = FlexMixture(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
@@ -86,7 +93,7 @@ void main() {
         gap: 10,
       );
 
-      const spec2 = FlexRecipeMix(
+      const spec2 = FlexMixture(
         crossAxisAlignment: CrossAxisAlignment.end,
         mainAxisAlignment: MainAxisAlignment.end,
         mainAxisSize: MainAxisSize.max,

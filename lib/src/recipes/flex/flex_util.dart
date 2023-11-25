@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 
+import '../../core/extensions/values_ext.dart';
 import '../../utils/scalar_util.dart';
 import '../../utils/spacing_util.dart';
 import 'flex_attribute.dart';
 
 /// A utility class for building [FlexAttribute]s.
-const flex = FlexUtility();
+final flex = FlexMixtureUtility.selfBuilder;
 
-class FlexUtility {
-  const FlexUtility();
+class FlexMixtureUtility<T> extends MixUtility<T, FlexAttribute> {
+  static final selfBuilder = FlexMixtureUtility((value) => value);
+
+  const FlexMixtureUtility(super.builder);
 
   FlexAttribute _direction(Axis direction) => call(direction: direction);
   FlexAttribute _mainAxisAlignment(MainAxisAlignment mainAxisAlignment) =>
@@ -63,9 +66,9 @@ class FlexUtility {
       crossAxisAlignment: crossAxisAlignment,
       mainAxisSize: mainAxisSize,
       verticalDirection: verticalDirection,
-      textDirection: textDirection,
+      textDirection: textDirection?.toAttribute(),
       textBaseline: textBaseline,
-      clipBehavior: clipBehavior,
+      clipBehavior: clipBehavior?.toAttribute(),
       gap: gap,
     );
   }

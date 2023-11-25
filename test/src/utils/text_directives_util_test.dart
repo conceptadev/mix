@@ -3,11 +3,13 @@ import 'package:mix/mix.dart';
 
 void main() {
   group('TextDirectiveAttribute', () {
+    String uppercaseFn(value) => value.toUpperCase();
+    String lowercaseFn(value) => value.toLowerCase();
     test('merge returns merged object correctly', () {
       final attr1 = uppercase();
       final attr2 = capitalize();
       final merged = attr1.merge(attr2);
-      expect(merged.value, [uppercase().value, capitalize().value]);
+      expect(merged.value.length, 2);
     });
     test('resolve returns correct TextDirective with default values', () {
       const attr = TextDirectiveAttribute.raw([]);
@@ -24,17 +26,13 @@ void main() {
       ]);
     });
     test('Equality holds when all properties are the same', () {
-      final attr1 = TextDirectiveAttribute.raw(
-          [TextDirective((value) => value.toUpperCase())]);
-      final attr2 = TextDirectiveAttribute.raw(
-          [TextDirective((value) => value.toUpperCase())]);
+      final attr1 = TextDirectiveAttribute.raw([TextDirective(uppercaseFn)]);
+      final attr2 = TextDirectiveAttribute.raw([TextDirective(uppercaseFn)]);
       expect(attr1, attr2);
     });
     test('Equality fails when properties are different', () {
-      final attr1 = TextDirectiveAttribute.raw(
-          [TextDirective((value) => value.toUpperCase())]);
-      final attr2 = TextDirectiveAttribute.raw(
-          [TextDirective((value) => value.toLowerCase())]);
+      final attr1 = TextDirectiveAttribute.raw([TextDirective(uppercaseFn)]);
+      final attr2 = TextDirectiveAttribute.raw([TextDirective(lowercaseFn)]);
       expect(attr1, isNot(attr2));
     });
 

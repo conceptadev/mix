@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 
+import '../../attributes/clip_behavior_attribute.dart';
+import '../../attributes/text_direction_attribute.dart';
 import '../../core/attribute.dart';
 import '../../factory/mix_provider_data.dart';
-import 'flex_recipe.dart';
+import 'flex_mixture.dart';
 
-class FlexAttribute extends ResolvableAttribute<FlexRecipeMix> {
+class FlexAttribute extends ResolvableAttribute<FlexMixture> {
   final Axis? direction;
   final MainAxisAlignment? mainAxisAlignment;
   final CrossAxisAlignment? crossAxisAlignment;
   final MainAxisSize? mainAxisSize;
   final VerticalDirection? verticalDirection;
-  final TextDirection? textDirection;
+  final TextDirectionAttribute? textDirection;
   final TextBaseline? textBaseline;
-  final Clip? clipBehavior;
+  final ClipBehaviorAttribute? clipBehavior;
   final double? gap;
 
   const FlexAttribute({
@@ -28,16 +30,16 @@ class FlexAttribute extends ResolvableAttribute<FlexRecipeMix> {
   });
 
   @override
-  FlexRecipeMix resolve(MixData mix) {
-    return FlexRecipeMix(
+  FlexMixture resolve(MixData mix) {
+    return FlexMixture(
       crossAxisAlignment: crossAxisAlignment,
       mainAxisAlignment: mainAxisAlignment,
       mainAxisSize: mainAxisSize,
       verticalDirection: verticalDirection,
       direction: direction,
-      textDirection: textDirection,
+      textDirection: textDirection?.value,
       textBaseline: textBaseline,
-      clipBehavior: clipBehavior,
+      clipBehavior: clipBehavior?.value,
       gap: gap,
     );
   }

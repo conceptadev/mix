@@ -9,9 +9,9 @@ import '../../attributes/spacing_attribute.dart';
 import '../../attributes/transform_attribute.dart';
 import '../../core/attribute.dart';
 import '../../factory/mix_provider_data.dart';
-import 'container_recipe.dart';
+import 'container_mixture.dart';
 
-class ContainerAttribute extends ResolvableAttribute<ContainerRecipeMix> {
+class ContainerMixtureAttribute extends ResolvableAttribute<ContainerMixture> {
   final AlignmentGeometryAttribute? alignment;
   final PaddingAttribute? padding;
   final MarginAttribute? margin;
@@ -20,7 +20,7 @@ class ContainerAttribute extends ResolvableAttribute<ContainerRecipeMix> {
   final TransformAttribute? transform;
   final ClipBehaviorAttribute? clipBehavior;
 
-  const ContainerAttribute({
+  const ContainerMixtureAttribute({
     this.alignment,
     this.padding,
     this.margin,
@@ -31,8 +31,8 @@ class ContainerAttribute extends ResolvableAttribute<ContainerRecipeMix> {
   });
 
   @override
-  ContainerRecipeMix resolve(MixData mix) {
-    return ContainerRecipeMix(
+  ContainerMixture resolve(MixData mix) {
+    return ContainerMixture(
       alignment: getValue<AlignmentGeometryAttribute, AlignmentGeometry>(
         mix,
         alignment,
@@ -53,10 +53,10 @@ class ContainerAttribute extends ResolvableAttribute<ContainerRecipeMix> {
   }
 
   @override
-  ContainerAttribute merge(covariant ContainerAttribute? other) {
+  ContainerMixtureAttribute merge(covariant ContainerMixtureAttribute? other) {
     if (other == null) return this;
 
-    return ContainerAttribute(
+    return ContainerMixtureAttribute(
       alignment: alignment ?? other.alignment,
       padding: padding ?? other.padding,
       margin: margin ?? other.margin,

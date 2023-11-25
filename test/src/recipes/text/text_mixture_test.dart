@@ -5,29 +5,31 @@ import 'package:mix/mix.dart';
 import '../../../helpers/testing_utils.dart';
 
 void main() {
-  group('TextSpec', () {
+  group('TextMixture', () {
     const uppercaseDirective = TextDirective(TextModifiers.uppercase);
     const lowercaseDirective = TextDirective(TextModifiers.lowercase);
     test('resolve', () {
       final mix = MixData.create(
         MockBuildContext(),
         StyleMix(
-          const TextOverflowAttribute(TextOverflow.ellipsis),
           const StrutStyleAttribute(fontSize: 20.0),
-          const TextAlignAttribute(TextAlign.center),
-          const TextScaleFactorAttribute(1.0),
-          const MaxLinesAttribute(2),
           TextStyleAttribute.only(color: const ColorAttribute(Colors.red)),
-          const TextWidthBasisAttribute(TextWidthBasis.longestLine),
-          const TextHeightBehaviorAttribute(
-              TextHeightBehavior(applyHeightToFirstAscent: true)),
           const TextDirectionAttribute(TextDirection.ltr),
-          const SoftWrapAttribute(true),
           TextDirectiveAttribute(uppercaseDirective),
+          const TextMixtureAttribute(
+            overflow: TextOverflow.ellipsis,
+            textAlign: TextAlign.center,
+            textScaleFactor: 1.0,
+            maxLines: 2,
+            textWidthBasis: TextWidthBasis.longestLine,
+            textHeightBehavior: TextHeightBehavior(
+                applyHeightToFirstAscent: true, applyHeightToLastDescent: true),
+            softWrap: true,
+          ),
         ),
       );
 
-      final spec = TextRecipe.resolve(mix);
+      final spec = TextMixture.resolve(mix);
 
       expect(spec.overflow, TextOverflow.ellipsis);
       expect(spec.strutStyle, const StrutStyle(fontSize: 20.0));
@@ -48,7 +50,7 @@ void main() {
     });
 
     test('copyWith', () {
-      const spec = TextRecipe(
+      const spec = TextMixture(
         overflow: TextOverflow.ellipsis,
         strutStyle: StrutStyle(fontSize: 20.0),
         textAlign: TextAlign.center,
@@ -97,7 +99,7 @@ void main() {
     });
 
     test('lerp', () {
-      const spec1 = TextRecipe(
+      const spec1 = TextMixture(
         overflow: TextOverflow.ellipsis,
         strutStyle: StrutStyle(fontSize: 20.0),
         textAlign: TextAlign.center,
@@ -114,7 +116,7 @@ void main() {
         directives: [uppercaseDirective],
       );
 
-      const spec2 = TextRecipe(
+      const spec2 = TextMixture(
         overflow: TextOverflow.fade,
         strutStyle: StrutStyle(fontSize: 30.0),
         textAlign: TextAlign.start,

@@ -1,12 +1,12 @@
 // ignore_for_file: long-parameter-list
 import 'package:flutter/material.dart';
 
-import '../../factory/style_mix.dart';
-import '../../recipes/container/container_widget.dart';
-import '../../recipes/flex/flex_widget.dart';
-import '../../widgets/icon_widget.dart';
-import '../../widgets/text_widget.dart';
-import '../attribute.dart';
+import '../core/attribute.dart';
+import '../recipes/container/container_widget.dart';
+import '../recipes/flex/flex_widget.dart';
+import '../widgets/icon_widget.dart';
+import '../widgets/text_widget.dart';
+import 'style_mix.dart';
 
 extension StyleMixExt<T extends Attribute> on StyleMix {
   StyledContainer container({

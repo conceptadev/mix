@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../attributes/variant_attribute.dart';
 import '../core/attribute.dart';
-import '../core/equality/compare_mixin.dart';
 import '../factory/style_mix.dart';
+import '../helpers/compare_mixin.dart';
 import 'multi_variant.dart';
 
 /// An immutable class representing a styling variant.

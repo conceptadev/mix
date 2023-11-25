@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
-import 'package:mix/src/attributes/alignment_attribute.dart';
-import 'package:mix/src/attributes/clip_behavior_attribute.dart';
-import 'package:mix/src/attributes/transform_attribute.dart';
 
 import '../../../helpers/testing_utils.dart';
 
@@ -23,7 +20,7 @@ void main() {
         ),
       );
 
-      final spec = ContainerRecipeMix.resolve(mix);
+      final spec = ContainerMixture.resolve(mix);
 
       expect(spec.alignment, Alignment.center);
       expect(spec.padding, const EdgeInsets.only(bottom: 16.0, top: 8.0));
@@ -37,7 +34,7 @@ void main() {
     });
 
     test('copyWith', () {
-      final spec = ContainerRecipeMix(
+      final spec = ContainerMixture(
         alignment: Alignment.center,
         padding: const EdgeInsets.all(16.0),
         margin: const EdgeInsets.only(top: 8.0, bottom: 8.0),
@@ -61,7 +58,7 @@ void main() {
     });
 
     test('lerp', () {
-      final spec1 = ContainerRecipeMix(
+      final spec1 = ContainerMixture(
         alignment: Alignment.topLeft,
         padding: const EdgeInsets.all(8.0),
         margin: const EdgeInsets.only(top: 4.0),
@@ -71,7 +68,7 @@ void main() {
         clipBehavior: Clip.none,
       );
 
-      final spec2 = ContainerRecipeMix(
+      final spec2 = ContainerMixture(
         alignment: Alignment.bottomRight,
         padding: const EdgeInsets.all(16.0),
         margin: const EdgeInsets.only(top: 8.0),

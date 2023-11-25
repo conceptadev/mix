@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 import '../factory/mix_provider_data.dart';
-import 'equality/compare_mixin.dart';
+import '../helpers/compare_mixin.dart';
 
 @immutable
-abstract class Attribute with Comparable, Mergeable<Attribute> {
+abstract class Attribute with Comparable {
   const Attribute();
 }
 
@@ -31,15 +31,12 @@ abstract class ScalarAttribute<Value> extends StyleAttribute {
   const ScalarAttribute(this.value);
 
   @override
-  ScalarAttribute<Value> merge(covariant ScalarAttribute<Value>? other);
-
-  @override
   get props => [value];
 }
 
 // TODO: Should all ResolvableAttribute be the Style Attribute high level?
 abstract class ResolvableAttribute<Value> extends StyleAttribute
-    with Resolver<Value> {
+    with Resolver<Value>, Mergeable<StyleAttribute> {
   const ResolvableAttribute();
 
   V? getValue<T extends ScalarAttribute<V>, V>(MixData mix, T? attr) {
@@ -69,9 +66,9 @@ mixin MultiChildRenderAttributeMixin<W extends MultiChildRenderObjectWidget>
 }
 
 @immutable
-abstract class RecipeMix<T extends RecipeMix<T>> extends ThemeExtension<T>
+abstract class Mixture<T extends Mixture<T>> extends ThemeExtension<T>
     with Comparable {
-  const RecipeMix();
+  const Mixture();
 
   Duration lerpDuration(Duration a, Duration b, double t) {
     int lerpTicks = ((1 - t) * a.inMilliseconds + t * b.inMilliseconds).round();

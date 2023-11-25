@@ -4,28 +4,28 @@ import '../../core/attribute.dart';
 import '../../factory/mix_provider_data.dart';
 import 'stack_attribute.dart';
 
-class StackRecipeMix extends RecipeMix<StackRecipeMix> {
+class StackMixture extends Mixture<StackMixture> {
   final AlignmentGeometry? alignment;
   final StackFit? fit;
   final TextDirection? textDirection;
   final Clip? clipBehavior;
 
-  const StackRecipeMix({
+  const StackMixture({
     this.alignment,
     this.fit,
     this.textDirection,
     this.clipBehavior,
   });
 
-  static StackRecipeMix resolve(MixData mix) {
-    final recipe = mix.attributeOfType<StackAttribute>()?.resolve(mix);
+  static StackMixture resolve(MixData mix) {
+    final recipe = mix.attributeOfType<StackMixtureAttribute>()?.resolve(mix);
 
-    return recipe ?? const StackRecipeMix();
+    return recipe ?? const StackMixtureAttribute().resolve(mix);
   }
 
   @override
-  StackRecipeMix lerp(StackRecipeMix other, double t) {
-    return StackRecipeMix(
+  StackMixture lerp(StackMixture other, double t) {
+    return StackMixture(
       alignment: AlignmentGeometry.lerp(alignment, other.alignment, t),
       fit: t < 0.5 ? fit : other.fit,
       textDirection: t < 0.5 ? textDirection : other.textDirection,
@@ -34,13 +34,13 @@ class StackRecipeMix extends RecipeMix<StackRecipeMix> {
   }
 
   @override
-  StackRecipeMix copyWith({
+  StackMixture copyWith({
     AlignmentGeometry? alignment,
     StackFit? fit,
     TextDirection? textDirection,
     Clip? clipBehavior,
   }) {
-    return StackRecipeMix(
+    return StackMixture(
       alignment: alignment ?? this.alignment,
       fit: fit ?? this.fit,
       textDirection: textDirection ?? this.textDirection,

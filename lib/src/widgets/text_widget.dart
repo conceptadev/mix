@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../recipes/text/text_recipe.dart';
+import '../recipes/text/text_mixture.dart';
 import 'styled_widget.dart';
 
 @Deprecated('Use StyledText now')
@@ -23,7 +23,7 @@ class StyledText extends StyledWidget {
   @override
   Widget build(BuildContext context) {
     return buildWithStyle(context, (data) {
-      final spec = TextRecipe.resolve(data);
+      final spec = TextMixture.resolve(data);
 
       return Text(
         spec.applyTextDirectives(text),

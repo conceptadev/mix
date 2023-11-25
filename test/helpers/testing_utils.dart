@@ -193,54 +193,28 @@ class MockDoubleScalarAttribute extends ScalarAttribute<double> {
 
 class MockIntScalarAttribute extends ScalarAttribute<int> {
   const MockIntScalarAttribute(super.value);
-
-  @override
-  MockIntScalarAttribute merge(MockIntScalarAttribute? other) {
-    return MockIntScalarAttribute(other?.value ?? value);
-  }
 }
 
-class MockDoubleDecoratorAttribute extends Decorator {
+class MockDoubleDecoratorAttribute
+    extends Decorator<MockDoubleDecoratorAttribute> {
   final double value;
   const MockDoubleDecoratorAttribute(this.value, {super.key});
-
-  @override
-  MockDoubleDecoratorAttribute merge(MockDoubleDecoratorAttribute? other) {
-    return MockDoubleDecoratorAttribute(other?.value ?? value);
-  }
-
-  @override
-  double resolve(MixData mix) => value;
 
   @override
   get props => [value];
 
   @override
-  Widget build(child, value) {
-    return SizedBox(
-      height: value,
-      width: value,
-      child: child,
-    );
+  MockDoubleDecoratorAttribute merge(MockDoubleDecoratorAttribute? other) {
+    return MockDoubleDecoratorAttribute(other?.value ?? value);
   }
 }
 
 class MockBooleanScalarAttribute extends ScalarAttribute<bool> {
   const MockBooleanScalarAttribute(super.value);
-
-  @override
-  MockBooleanScalarAttribute merge(MockBooleanScalarAttribute? other) {
-    return MockBooleanScalarAttribute(other?.value ?? value);
-  }
 }
 
 class MockStringScalarAttribute extends ScalarAttribute<String> {
   const MockStringScalarAttribute(super.value);
-
-  @override
-  MockStringScalarAttribute merge(MockStringScalarAttribute? other) {
-    return MockStringScalarAttribute(other?.value ?? value);
-  }
 }
 
 class MockInvalidAttribute extends Attribute {
@@ -248,11 +222,6 @@ class MockInvalidAttribute extends Attribute {
 
   @override
   get props => [];
-
-  @override
-  MockInvalidAttribute merge(MockInvalidAttribute? other) {
-    return this;
-  }
 }
 
 const mockVariant = Variant('mock-variant');
@@ -266,13 +235,6 @@ void testScalarAttribute<T extends ScalarAttribute<V>, V>(
   group(groupName, () {
     for (var value1 in values) {
       for (var value2 in values.where((v) => v != value1)) {
-        test('merge $value1 with $value2', () {
-          final attr1 = builder(value1);
-          final attr2 = builder(value2);
-          final merged = attr1.merge(attr2);
-          expect(merged.value, equals(value2));
-        });
-
         test('resolve $value1', () {
           final attr = builder(value1);
 
@@ -291,18 +253,6 @@ void testScalarAttribute<T extends ScalarAttribute<V>, V>(
           expect(attr1, equals(attr2));
         });
       }
-
-      test('merge null with $value1 returns itself', () {
-        final attr1 = builder(value1);
-        final merged = attr1.merge(null);
-        expect(merged, equals(attr1));
-      });
-
-      test('resolves correctly', () {
-        final attr = builder(value1);
-
-        expect(attr.value, equals(value1));
-      });
     }
   });
 }

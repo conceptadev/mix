@@ -5,6 +5,11 @@ import 'package:flutter/foundation.dart';
 import '../attributes/style_mix_attribute.dart';
 import '../attributes/variant_attribute.dart';
 import '../core/attribute.dart';
+import '../recipes/container/container_attribute.dart';
+import '../recipes/flex/flex_attribute.dart';
+import '../recipes/image/image_attribute.dart';
+import '../recipes/stack/stack_attribute.dart';
+import '../recipes/text/text_attribute.dart';
 import '../utils/helper_util.dart';
 import '../variants/variant.dart';
 
@@ -33,6 +38,15 @@ class StyleMix {
 
   /// The variant attributes contained in this mix.
   final List<VariantAttribute> variants;
+
+  static final stack =
+      SpreadFunctionParams(_styleType<StackMixtureAttribute>());
+  static final text = SpreadFunctionParams(_styleType<TextMixtureAttribute>());
+  static final image =
+      SpreadFunctionParams(_styleType<ImageMixtureAttribute>());
+  static final container =
+      SpreadFunctionParams(_styleType<ContainerMixtureAttribute>());
+  static final flex = SpreadFunctionParams(_styleType<FlexAttribute>());
 
   const StyleMix._({required this.styles, required this.variants});
 
@@ -424,4 +438,14 @@ class SwitchCondition<T> {
   final T value;
 
   const SwitchCondition(this.condition, this.value);
+}
+
+StyleMix Function(Iterable<T> attributes)
+    _styleType<T extends ResolvableAttribute>() {
+  return (Iterable<T> attributes) {
+    final merged =
+        attributes.reduce((value, element) => value.merge(element) as T);
+
+    return StyleMix(merged);
+  };
 }

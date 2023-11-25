@@ -1,34 +1,36 @@
 import 'package:flutter/material.dart';
 
 import '../../attributes/strut_style_attribute.dart';
-import '../../attributes/text_style_attribute.dart';
+import '../../attributes/text_direction_attribute.dart';
+import '../../attributes/text_style/text_style_attribute.dart';
 import '../../core/directive.dart';
+import '../../core/extensions/values_ext.dart';
 import '../../utils/scalar_util.dart';
 import '../../utils/text_style_util.dart';
 import 'text_attribute.dart';
 
 final text = TextUtility.selfBuilder;
 
-class TextUtility<T> extends MixUtility<T, TextAttribute> {
+class TextUtility<T> extends MixUtility<T, TextMixtureAttribute> {
   static final selfBuilder = TextUtility((value) => value);
 
   const TextUtility(super.builder);
 
-  T _overflow(TextOverflow overflow) => call(overflow: overflow);
-  T _strutStyle(StrutStyleAttribute strutStyle) => call(strutStyle: strutStyle);
-  T _textAlign(TextAlign textAlign) => call(textAlign: textAlign);
+  T _overflow(TextOverflow overflow) => only(overflow: overflow);
+  T _strutStyle(StrutStyleAttribute strutStyle) => only(strutStyle: strutStyle);
+  T _textAlign(TextAlign textAlign) => only(textAlign: textAlign);
   T _textScaleFactor(double textScaleFactor) =>
-      call(textScaleFactor: textScaleFactor);
-  T _maxLines(int maxLines) => call(maxLines: maxLines);
-  T _style(TextStyleAttribute style) => call(style: style);
+      only(textScaleFactor: textScaleFactor);
+  T _maxLines(int maxLines) => only(maxLines: maxLines);
+  T _style(TextStyleAttribute style) => only(style: style);
   T _textWidthBasis(TextWidthBasis textWidthBasis) =>
-      call(textWidthBasis: textWidthBasis);
+      only(textWidthBasis: textWidthBasis);
   T _textHeightBehavior(TextHeightBehavior textHeightBehavior) =>
-      call(textHeightBehavior: textHeightBehavior);
+      only(textHeightBehavior: textHeightBehavior);
   T _textDirection(TextDirection textDirection) =>
       call(textDirection: textDirection);
   T _softWrap(bool softWrap) => call(softWrap: softWrap);
-  T _directives(List<TextDirective> directives) => call(directives: directives);
+  T _directives(List<TextDirective> directives) => only(directives: directives);
 
   TextOverflowUtility<T> get overflow => TextOverflowUtility(_overflow);
   StrutStyleUtility<T> get strutStyle => StrutStyleUtility(_strutStyle);
@@ -45,7 +47,7 @@ class TextUtility<T> extends MixUtility<T, TextAttribute> {
   BoolUtility<T> get softWrap => BoolUtility(_softWrap);
   ListUtility<T, TextDirective> get directives => ListUtility(_directives);
 
-  T call({
+  T only({
     TextOverflow? overflow,
     StrutStyleAttribute? strutStyle,
     TextAlign? textAlign,
@@ -54,11 +56,11 @@ class TextUtility<T> extends MixUtility<T, TextAttribute> {
     TextStyleAttribute? style,
     TextWidthBasis? textWidthBasis,
     TextHeightBehavior? textHeightBehavior,
-    TextDirection? textDirection,
+    TextDirectionAttribute? textDirection,
     bool? softWrap,
     List<TextDirective>? directives,
   }) {
-    final text = TextAttribute(
+    final text = TextMixtureAttribute(
       overflow: overflow,
       strutStyle: strutStyle,
       textAlign: textAlign,
@@ -72,6 +74,36 @@ class TextUtility<T> extends MixUtility<T, TextAttribute> {
       directives: directives,
     );
 
-    return builder(text);
+    return as(text);
+  }
+
+  T call({
+    TextOverflow? overflow,
+    StrutStyle? strutStyle,
+    TextAlign? textAlign,
+    double? textScaleFactor,
+    int? maxLines,
+    TextStyle? style,
+    TextWidthBasis? textWidthBasis,
+    TextHeightBehavior? textHeightBehavior,
+    TextDirection? textDirection,
+    bool? softWrap,
+    List<TextDirective>? directives,
+  }) {
+    final text = TextMixtureAttribute(
+      overflow: overflow,
+      strutStyle: strutStyle?.toAttribute(),
+      textAlign: textAlign,
+      textScaleFactor: textScaleFactor,
+      maxLines: maxLines,
+      style: style?.toAttribute(),
+      textWidthBasis: textWidthBasis,
+      textHeightBehavior: textHeightBehavior,
+      textDirection: textDirection?.toAttribute(),
+      softWrap: softWrap,
+      directives: directives,
+    );
+
+    return as(text);
   }
 }

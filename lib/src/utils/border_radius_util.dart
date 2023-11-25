@@ -84,7 +84,7 @@ class BorderRadiusUtility<T> extends MixUtility<T, BorderRadiusAttribute> {
       bottomRight: bottomRight,
     );
 
-    return builder(borderRadius);
+    return as(borderRadius);
   }
 
   T call(double p1, [double? p2, double? p3, double? p4]) {
@@ -119,7 +119,7 @@ class BorderRadiusUtility<T> extends MixUtility<T, BorderRadiusAttribute> {
       bottomRight: bottomRight.toRadius(),
     );
 
-    return builder(borderRadius);
+    return as(borderRadius);
   }
 }
 

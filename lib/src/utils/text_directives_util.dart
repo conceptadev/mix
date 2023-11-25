@@ -1,4 +1,5 @@
 import '../core/directive.dart';
+import '../helpers/string_ext.dart';
 
 const capitalize = TextDirectiveUtility(TextModifiers.capitalize);
 const uppercase = TextDirectiveUtility(TextModifiers.uppercase);
@@ -19,9 +20,9 @@ class TextDirectiveUtility {
 class TextModifiers {
   const TextModifiers._();
 
-  static String capitalize(value) => value.capitalize;
-  static String uppercase(value) => value.toUpperCase();
-  static String lowercase(value) => value.toLowerCase();
-  static String titleCase(value) => value.titleCase;
-  static String sentenceCase(value) => value.sentenceCase;
+  static String capitalize(String value) => value.capitalize;
+  static String uppercase(String value) => value.toUpperCase();
+  static String lowercase(String value) => value.toLowerCase();
+  static String titleCase(String value) => value.titleCase;
+  static String sentenceCase(String value) => value.sentenceCase;
 }

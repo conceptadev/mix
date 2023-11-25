@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
 
+import '../../helpers/testing_utils.dart';
+
 void main() {
   group('Gradient Creation Tests', () {
     test('LinearGradient is created with correct parameters', () {
@@ -12,7 +14,7 @@ void main() {
         end: Alignment.bottomRight,
       );
 
-      final linearGradientValue = attr.value as LinearGradient;
+      final linearGradientValue = attr.resolve(EmptyMixData);
       expect(linearGradientValue, isA<LinearGradient>());
 
       expect(linearGradientValue.begin, Alignment.topLeft);
@@ -25,7 +27,7 @@ void main() {
       final colors = [Colors.red, Colors.blue];
       final attr = linearGradient(colors: colors);
 
-      final linearGradientValue = attr.value as LinearGradient;
+      final linearGradientValue = attr.resolve(EmptyMixData);
       expect(linearGradientValue, isA<LinearGradient>());
       expect(linearGradientValue.begin, LinearGradient(colors: colors).begin);
       expect(linearGradientValue.end, LinearGradient(colors: colors).end);
@@ -35,7 +37,7 @@ void main() {
       final colors = [Colors.red, Colors.blue];
       final attr =
           radialGradient(colors: colors, center: Alignment.center, radius: 0.5);
-      final radialGradientValue = attr.value as RadialGradient;
+      final radialGradientValue = attr.resolve(EmptyMixData);
       expect(radialGradientValue, isA<RadialGradient>());
 
       expect(radialGradientValue.center, Alignment.center);
@@ -48,7 +50,7 @@ void main() {
       final colors = [Colors.red, Colors.blue];
       final attr = radialGradient(colors: colors);
 
-      final radialGradientValue = attr.value as RadialGradient;
+      final radialGradientValue = attr.resolve(EmptyMixData);
       expect(radialGradientValue, isA<RadialGradient>());
       expect(radialGradientValue.center, RadialGradient(colors: colors).center);
       expect(radialGradientValue.radius, RadialGradient(colors: colors).radius);

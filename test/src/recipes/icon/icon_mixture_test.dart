@@ -16,14 +16,14 @@ void main() {
         ),
       );
 
-      final spec = IconRecipeMix.resolve(mix);
+      final spec = IconMixture.resolve(mix);
 
       expect(spec.color, Colors.red);
       expect(spec.size, 20.0);
     });
 
     test('copyWith', () {
-      const spec = IconRecipeMix(
+      const spec = IconMixture(
         color: Colors.red,
         size: 20.0,
       );
@@ -35,12 +35,12 @@ void main() {
     });
 
     test('lerp', () {
-      const spec1 = IconRecipeMix(
+      const spec1 = IconMixture(
         color: Colors.red,
         size: 20.0,
       );
 
-      const spec2 = IconRecipeMix(
+      const spec2 = IconMixture(
         color: Colors.blue,
         size: 30.0,
       );

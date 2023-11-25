@@ -12,9 +12,7 @@ class ColorToken extends MixToken<Color> {
   }
 }
 
-typedef ColorResolverFn = Color Function(BuildContext context);
-
-class ColorRef extends Color with MixTokenRef<Color> {
+class ColorRef extends Color with ValueRef<Color> {
   @override
   final String tokenName;
 

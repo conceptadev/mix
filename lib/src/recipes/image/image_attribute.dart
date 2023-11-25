@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 import '../../attributes/color_attribute.dart';
 import '../../core/attribute.dart';
 import '../../factory/mix_provider_data.dart';
-import 'image_recipe.dart';
+import 'image_mixture.dart';
 
-class ImageMixAttribute extends ResolvableAttribute<ImageRecipeMix> {
+class ImageMixtureAttribute extends ResolvableAttribute<ImageMixture> {
   final double? width;
   final double? height;
   final ColorAttribute? color;
   final ImageRepeat? repeat;
   final BoxFit? fit;
 
-  const ImageMixAttribute({
+  const ImageMixtureAttribute({
     this.width,
     this.height,
     this.color,
@@ -21,8 +21,8 @@ class ImageMixAttribute extends ResolvableAttribute<ImageRecipeMix> {
   });
 
   @override
-  ImageRecipeMix resolve(MixData mix) {
-    return ImageRecipeMix(
+  ImageMixture resolve(MixData mix) {
+    return ImageMixture(
       width: width,
       height: height,
       color: color?.resolve(mix),
@@ -32,10 +32,10 @@ class ImageMixAttribute extends ResolvableAttribute<ImageRecipeMix> {
   }
 
   @override
-  ImageMixAttribute merge(covariant ImageMixAttribute? other) {
+  ImageMixtureAttribute merge(covariant ImageMixtureAttribute? other) {
     if (other == null) return this;
 
-    return ImageMixAttribute(
+    return ImageMixtureAttribute(
       width: width ?? other.width,
       height: height ?? other.height,
       color: color ?? other.color,

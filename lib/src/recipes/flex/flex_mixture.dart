@@ -6,7 +6,7 @@ import '../../core/attribute.dart';
 import '../../factory/mix_provider_data.dart';
 import 'flex_attribute.dart';
 
-class FlexRecipeMix extends RecipeMix<FlexRecipeMix> {
+class FlexMixture extends Mixture<FlexMixture> {
   final Axis? direction;
   final MainAxisAlignment? mainAxisAlignment;
   final CrossAxisAlignment? crossAxisAlignment;
@@ -17,7 +17,7 @@ class FlexRecipeMix extends RecipeMix<FlexRecipeMix> {
   final Clip? clipBehavior;
   final double? gap;
 
-  const FlexRecipeMix({
+  const FlexMixture({
     required this.crossAxisAlignment,
     required this.mainAxisAlignment,
     required this.mainAxisSize,
@@ -29,7 +29,7 @@ class FlexRecipeMix extends RecipeMix<FlexRecipeMix> {
     required this.gap,
   });
 
-  const FlexRecipeMix.empty()
+  const FlexMixture.empty()
       : crossAxisAlignment = null,
         mainAxisAlignment = null,
         mainAxisSize = null,
@@ -40,15 +40,15 @@ class FlexRecipeMix extends RecipeMix<FlexRecipeMix> {
         clipBehavior = null,
         gap = null;
 
-  static FlexRecipeMix resolve(MixData mix) {
+  static FlexMixture resolve(MixData mix) {
     final recipe = mix.attributeOfType<FlexAttribute>()?.resolve(mix);
 
-    return recipe ?? const FlexRecipeMix.empty();
+    return recipe ?? const FlexAttribute().resolve(mix);
   }
 
   @override
-  FlexRecipeMix lerp(FlexRecipeMix other, double t) {
-    return FlexRecipeMix(
+  FlexMixture lerp(FlexMixture other, double t) {
+    return FlexMixture(
       crossAxisAlignment: snap(crossAxisAlignment, other.crossAxisAlignment, t),
       mainAxisAlignment: snap(mainAxisAlignment, other.mainAxisAlignment, t),
       mainAxisSize: snap(mainAxisSize, other.mainAxisSize, t),
@@ -62,7 +62,7 @@ class FlexRecipeMix extends RecipeMix<FlexRecipeMix> {
   }
 
   @override
-  FlexRecipeMix copyWith({
+  FlexMixture copyWith({
     Axis? direction,
     MainAxisAlignment? mainAxisAlignment,
     CrossAxisAlignment? crossAxisAlignment,
@@ -73,7 +73,7 @@ class FlexRecipeMix extends RecipeMix<FlexRecipeMix> {
     Clip? clipBehavior,
     double? gap,
   }) {
-    return FlexRecipeMix(
+    return FlexMixture(
       crossAxisAlignment: crossAxisAlignment ?? this.crossAxisAlignment,
       mainAxisAlignment: mainAxisAlignment ?? this.mainAxisAlignment,
       mainAxisSize: mainAxisSize ?? this.mainAxisSize,

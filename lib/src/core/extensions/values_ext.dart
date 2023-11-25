@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 
 import '../../attributes/alignment_attribute.dart';
@@ -14,9 +12,10 @@ import '../../attributes/edge_insets_attribute.dart';
 import '../../attributes/gradient_attribute.dart';
 import '../../attributes/shadow_attribute.dart';
 import '../../attributes/strut_style_attribute.dart';
-import '../../attributes/text_style_attribute.dart';
+import '../../attributes/text_direction_attribute.dart';
+import '../../attributes/text_style/text_style_attribute.dart';
 import '../../attributes/transform_attribute.dart';
-import '../attribute.dart';
+import '../../recipes/stack/stack_attribute.dart';
 
 extension StrutStyleExt on StrutStyle {
   StrutStyleAttribute toAttribute() {
@@ -91,6 +90,10 @@ extension SweepGradientExt on SweepGradient {
         tileMode: tileMode,
         transform: transform,
       );
+}
+
+extension TextDirectionExt on TextDirection {
+  TextDirectionAttribute toAttribute() => TextDirectionAttribute(this);
 }
 
 extension BoxBorderExt on BoxBorder {
@@ -199,6 +202,10 @@ extension AlignmentGeometryExt on AlignmentGeometry {
   AlignmentGeometryAttribute toAttribute() {
     return AlignmentGeometryAttribute(this);
   }
+}
+
+extension StackFitExt on StackFit {
+  StackFitAttribute toAttribute() => StackFitAttribute(this);
 }
 
 extension ShapeDecorationExt on ShapeDecoration {
@@ -343,32 +350,4 @@ extension TextStyleExt on TextStyle {
       );
 
   TextStyleAttribute toAttribute() => TextStyleAttribute(toDto());
-}
-
-extension ListExt<T> on List<T> {
-  List<T> merge(List<T>? other) {
-    if (other == null) return this;
-
-    if (isEmpty) return other;
-
-    final listLength = length;
-    final otherLength = other.length;
-    final maxLength = max(listLength, otherLength);
-
-    return List<T>.generate(maxLength, (int index) {
-      if (index < listLength && index < otherLength) {
-        final currentValue = this[index];
-        final otherValue = other[index];
-        if (currentValue is Mergeable) {
-          return currentValue.merge(otherValue);
-        }
-
-        return otherValue ?? currentValue;
-      } else if (index < listLength) {
-        return this[index];
-      }
-
-      return other[index];
-    });
-  }
 }

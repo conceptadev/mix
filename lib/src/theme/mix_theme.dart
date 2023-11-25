@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../core/equality/compare_mixin.dart';
+import '../helpers/compare_mixin.dart';
 import 'tokens/breakpoints.dart';
 import 'tokens/color_token.dart';
 import 'tokens/mix_token.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../core/extensions/string_ext.dart';
+import '../../helpers/string_ext.dart';
 import '../../variants/context_variant.dart';
 
 /// Variant for Right-To-Left (RTL) text direction.

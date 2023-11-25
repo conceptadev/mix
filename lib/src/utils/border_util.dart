@@ -9,14 +9,14 @@ import 'scalar_util.dart';
 final border = BoxBorderUtility.selfBuilder;
 
 class BoxBorderUtility<T> extends MixUtility<T, BoxBorderAttribute> {
-  static final selfBuilder = BoxBorderUtility((value) => value);
+  static final selfBuilder = BoxBorderUtility(MixUtility.selfBuilder);
 
   late BorderUtility<T> _borderBuilder;
   late BorderDirectionalUtility<T> _borderDirectionalBuilder;
 
   BoxBorderUtility(super.builder) {
-    _borderBuilder = BorderUtility(builder);
-    _borderDirectionalBuilder = BorderDirectionalUtility(builder);
+    _borderBuilder = BorderUtility(as);
+    _borderDirectionalBuilder = BorderDirectionalUtility(as);
   }
 
   BorderSideUtility<T> get all => _borderBuilder.all;
@@ -76,7 +76,7 @@ class BoxBorderUtility<T> extends MixUtility<T, BoxBorderAttribute> {
 }
 
 class BorderUtility<T> extends MixUtility<T, BorderAttribute> {
-  static final selfBuilder = BorderUtility((value) => value);
+  static const selfBuilder = BorderUtility(MixUtility.selfBuilder);
 
   const BorderUtility(super.builder);
 
@@ -98,11 +98,11 @@ class BorderUtility<T> extends MixUtility<T, BorderAttribute> {
 
   // Symetric sides
   T _horizontal(BorderSideAttribute side) {
-    return builder(BorderAttribute.symmetric(horizontal: side));
+    return as(BorderAttribute.symmetric(horizontal: side));
   }
 
   T _vertical(BorderSideAttribute side) {
-    return builder(BorderAttribute.symmetric(vertical: side));
+    return as(BorderAttribute.symmetric(vertical: side));
   }
 
   BorderSideUtility<T> get all => BorderSideUtility(_all);
@@ -131,7 +131,7 @@ class BorderUtility<T> extends MixUtility<T, BorderAttribute> {
       right: right,
     );
 
-    return builder(border);
+    return as(border);
   }
 
   T call({
@@ -158,7 +158,7 @@ class BorderDirectionalUtility<T>
   T _all(BorderSideAttribute side) {
     final border = BorderDirectionalAttribute.fromBorderSide(side);
 
-    return builder(border);
+    return as(border);
   }
 
   T _top(BorderSideAttribute side) => only(top: side);
@@ -173,13 +173,13 @@ class BorderDirectionalUtility<T>
   T _horizontal(BorderSideAttribute side) {
     final border = BorderDirectionalAttribute.symmetric(horizontal: side);
 
-    return builder(border);
+    return as(border);
   }
 
   T _vertical(BorderSideAttribute side) {
     final border = BorderDirectionalAttribute.symmetric(vertical: side);
 
-    return builder(border);
+    return as(border);
   }
 
   BorderSideUtility<T> get start => BorderSideUtility(_start);
@@ -209,7 +209,7 @@ class BorderDirectionalUtility<T>
       bottom: bottom,
     );
 
-    return builder(border);
+    return as(border);
   }
 
   T call({
@@ -251,6 +251,6 @@ class BorderSideUtility<T> extends MixUtility<T, BorderSideAttribute> {
       width: width,
     );
 
-    return builder(side) as Value;
+    return as(side) as Value;
   }
 }

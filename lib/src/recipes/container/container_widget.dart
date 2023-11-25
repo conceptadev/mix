@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 
 import '../../widgets/styled_widget.dart';
-import 'container_recipe.dart';
+import 'container_mixture.dart';
 
 typedef Box = StyledContainer;
 
@@ -15,7 +15,7 @@ class StyledContainer extends StyledWidget {
   @override
   Widget build(BuildContext context) {
     return buildWithStyle(context, (data) {
-      final spec = ContainerRecipeMix.resolve(data);
+      final spec = ContainerMixture.resolve(data);
 
       return Container(
         alignment: spec.alignment,

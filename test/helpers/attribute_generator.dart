@@ -4,8 +4,6 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
-import 'package:mix/src/attributes/alignment_attribute.dart';
-import 'package:mix/src/core/extensions/values_ext.dart';
 
 class AttributeGenerator {
   const AttributeGenerator();
@@ -68,7 +66,7 @@ class AttributeGenerator {
     );
   }
 
-  TransformAttribute transform({
+  TransformAttribute transformAttribute({
     double? x,
     double? y,
     double? z,
@@ -82,7 +80,7 @@ class AttributeGenerator {
     ).toAttribute();
   }
 
-  ClipAttribute clip([Clip? clip]) {
+  ClipBehaviorAttribute clipBehaviorAttribute([Clip? clip]) {
     return clip?.toAttribute() ??
         Random().randomElement([
           Clip.none,
@@ -92,32 +90,32 @@ class AttributeGenerator {
         ]).toAttribute();
   }
 
-  TextOverflowAttribute overflow([TextOverflow? overflow]) {
-    return overflow?.toAttribute() ??
+  TextOverflow textOverflow([TextOverflow? overflow]) {
+    return overflow ??
         Random().randomElement([
           TextOverflow.clip,
           TextOverflow.visible,
-        ]).toAttribute();
+        ]);
   }
 
-  TextDirectionAttribute textDirection([TextDirection? direction]) {
-    return direction?.toAttribute() ??
+  TextDirection textDirection([TextDirection? direction]) {
+    return direction ??
         Random().randomElement([
           TextDirection.ltr,
           TextDirection.rtl,
-        ]).toAttribute();
+        ]);
   }
 
-  AxisAttribute axis([Axis? axis]) {
-    return axis?.toAttribute() ??
+  Axis axis([Axis? axis]) {
+    return axis ??
         Random().randomElement([
           Axis.horizontal,
           Axis.vertical,
-        ]).toAttribute();
+        ]);
   }
 
-  MainAxisAlignmentAttribute mainAxisAlignment([MainAxisAlignment? alignment]) {
-    return alignment?.toAttribute() ??
+  MainAxisAlignment mainAxisAlignment([MainAxisAlignment? alignment]) {
+    return alignment ??
         Random().randomElement([
           MainAxisAlignment.start,
           MainAxisAlignment.end,
@@ -125,43 +123,42 @@ class AttributeGenerator {
           MainAxisAlignment.spaceBetween,
           MainAxisAlignment.spaceAround,
           MainAxisAlignment.spaceEvenly,
-        ]).toAttribute();
+        ]);
   }
 
-  MainAxisSizeAttribute mainAxisSize([MainAxisSize? size]) {
-    return size?.toAttribute() ??
+  MainAxisSize mainAxisSize([MainAxisSize? size]) {
+    return size ??
         Random().randomElement([
           MainAxisSize.max,
           MainAxisSize.min,
-        ]).toAttribute();
+        ]);
   }
 
-  CrossAxisAlignmentAttribute crossAxisAlignment(
-      [CrossAxisAlignment? alignment]) {
-    return alignment?.toAttribute() ??
+  CrossAxisAlignment crossAxisAlignment([CrossAxisAlignment? alignment]) {
+    return alignment ??
         Random().randomElement([
           CrossAxisAlignment.start,
           CrossAxisAlignment.end,
           CrossAxisAlignment.center,
           CrossAxisAlignment.stretch,
           CrossAxisAlignment.baseline,
-        ]).toAttribute();
+        ]);
   }
 
-  TextBaselineAttribute textBaseline([TextBaseline? baseline]) {
-    return baseline?.toAttribute() ??
+  TextBaseline textBaseline([TextBaseline? baseline]) {
+    return baseline ??
         Random().randomElement([
           TextBaseline.alphabetic,
           TextBaseline.ideographic,
-        ]).toAttribute();
+        ]);
   }
 
-  VerticalDirectionAttribute verticalDirection([VerticalDirection? direction]) {
-    return direction?.toAttribute() ??
+  VerticalDirection verticalDirection([VerticalDirection? direction]) {
+    return direction ??
         Random().randomElement([
           VerticalDirection.down,
           VerticalDirection.up,
-        ]).toAttribute();
+        ]);
   }
 
   BorderRadiusAttribute borderRadius({
