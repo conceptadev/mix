@@ -5,7 +5,8 @@ import '../../core/attribute.dart';
 import '../../factory/mix_provider_data.dart';
 import 'image_mixture.dart';
 
-class ImageMixtureAttribute extends ResolvableAttribute<ImageMixture> {
+class ImageMixtureAttribute
+    extends ResolvableAttribute<ImageMixtureAttribute, ImageMixture> {
   final double? width;
   final double? height;
   final ColorAttribute? color;

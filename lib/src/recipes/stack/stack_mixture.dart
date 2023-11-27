@@ -18,9 +18,7 @@ class StackMixture extends Mixture<StackMixture> {
   });
 
   static StackMixture resolve(MixData mix) {
-    final recipe = mix.attributeOfType<StackMixtureAttribute>()?.resolve(mix);
-
-    return recipe ?? const StackMixtureAttribute().resolve(mix);
+    return mix.resolvableOf(const StackMixtureAttribute());
   }
 
   @override
@@ -30,6 +28,16 @@ class StackMixture extends Mixture<StackMixture> {
       fit: t < 0.5 ? fit : other.fit,
       textDirection: t < 0.5 ? textDirection : other.textDirection,
       clipBehavior: t < 0.5 ? clipBehavior : other.clipBehavior,
+    );
+  }
+
+  @override
+  StackMixture merge(StackMixture? other) {
+    return copyWith(
+      alignment: other?.alignment,
+      fit: other?.fit,
+      textDirection: other?.textDirection,
+      clipBehavior: other?.clipBehavior,
     );
   }
 

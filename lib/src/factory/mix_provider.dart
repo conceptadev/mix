@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
+import '../core/attribute.dart';
 import 'mix_provider_data.dart';
 import 'style_mix.dart';
 
 typedef MixBuilder = Widget Function(MixData mixData);
+typedef MixtureBuidler<X extends Mixture<X>> = X Function(BuildContext context);
 
 /// Provides [MixData] to the widget tree.
 class MixProvider extends InheritedWidget {
@@ -47,15 +49,8 @@ class MixProvider extends InheritedWidget {
     BuildContext context, {
     required StyleMix style,
     required MixBuilder builder,
-    bool inherit = false,
   }) {
     MixData mixData = MixData.create(context, style);
-    if (inherit) {
-      final contextMixData = MixProvider.maybeOf(context);
-      if (contextMixData != null) {
-        mixData = contextMixData.merge(mixData);
-      }
-    }
 
     // Returns a Mix widget with the given data and child.
     // If `inherit` is true, the data from the nearest Mix widget in the widget tree

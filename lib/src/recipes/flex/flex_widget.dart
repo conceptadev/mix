@@ -37,7 +37,7 @@ class StyledFlex extends StyledWidget {
 
   @override
   Widget build(BuildContext context) {
-    return buildWithStyle(context, (data) {
+    return withMix(context, (data) {
       final spec = FlexMixture.resolve(data);
 
       List<Widget> renderSpacedChildren() {
@@ -145,7 +145,7 @@ class FlexBox extends StyledWidget {
 
   @override
   Widget build(BuildContext context) {
-    return buildWithStyle(context, (data) {
+    return withMix(context, (data) {
       return StyledContainer(
         inherit: true,
         child: StyledFlex(

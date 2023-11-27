@@ -1,6 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-
 import '../../attributes/alignment_attribute.dart';
 import '../../attributes/clip_behavior_attribute.dart';
 import '../../attributes/constraints/constraints_attribute.dart';
@@ -11,7 +8,8 @@ import '../../core/attribute.dart';
 import '../../factory/mix_provider_data.dart';
 import 'container_mixture.dart';
 
-class ContainerMixtureAttribute extends ResolvableAttribute<ContainerMixture> {
+class ContainerMixtureAttribute
+    extends ResolvableAttribute<ContainerMixtureAttribute, ContainerMixture> {
   final AlignmentGeometryAttribute? alignment;
   final PaddingAttribute? padding;
   final MarginAttribute? margin;
@@ -33,22 +31,13 @@ class ContainerMixtureAttribute extends ResolvableAttribute<ContainerMixture> {
   @override
   ContainerMixture resolve(MixData mix) {
     return ContainerMixture(
-      alignment: getValue<AlignmentGeometryAttribute, AlignmentGeometry>(
-        mix,
-        alignment,
-      ),
-      padding: getResolved<PaddingAttribute, EdgeInsetsGeometry>(mix, padding),
-      margin: getResolved<MarginAttribute, EdgeInsetsGeometry>(mix, margin),
-      constraints: getResolved<BoxConstraintsAttribute, BoxConstraints>(
-        mix,
-        constraints,
-      ),
-      decoration: getResolved<DecorationAttribute, Decoration>(
-        mix,
-        decoration,
-      ),
-      transform: getValue<TransformAttribute, Matrix4>(mix, transform),
-      clipBehavior: getValue<ClipBehaviorAttribute, Clip>(mix, clipBehavior),
+      alignment: get<AlignmentGeometryAttribute>(mix, alignment)?.value,
+      padding: get<PaddingAttribute>(mix, padding)?.resolve(mix),
+      margin: get<MarginAttribute>(mix, margin)?.resolve(mix),
+      constraints: get<BoxConstraintsAttribute>(mix, constraints)?.resolve(mix),
+      decoration: get<DecorationAttribute>(mix, decoration)?.resolve(mix),
+      transform: get<TransformAttribute>(mix, transform)?.value,
+      clipBehavior: get<ClipBehaviorAttribute>(mix, clipBehavior)?.value,
     );
   }
 

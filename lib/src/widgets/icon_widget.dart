@@ -19,7 +19,7 @@ class StyledIcon extends StyledWidget {
 
   @override
   Widget build(BuildContext context) {
-    return buildWithStyle(context, (data) {
+    return withMix(context, (data) {
       // Resolve style attributes
       final spec = IconMixture.resolve(data);
 
@@ -52,7 +52,7 @@ class AnimatedStyledIcon extends StyledWidget {
 
   @override
   Widget build(BuildContext context) {
-    return buildWithStyle(context, (data) {
+    return withMix(context, (data) {
       // Resolve style attributes
       final spec = IconMixture.resolve(data);
 

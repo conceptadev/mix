@@ -2,8 +2,26 @@ import 'package:flutter/material.dart';
 
 import '../../core/attribute.dart';
 import '../../core/directive.dart';
-import '../../factory/mix_provider_data.dart';
-import 'text_attribute.dart';
+
+class TextMixtureProvider extends InheritedWidget {
+  const TextMixtureProvider({
+    Key? key,
+    required this.data,
+    required Widget child,
+  }) : super(key: key, child: child);
+
+  static TextMixture? of(BuildContext context) {
+    return context
+        .dependOnInheritedWidgetOfExactType<TextMixtureProvider>()
+        ?.data;
+  }
+
+  final TextMixture data;
+
+  @override
+  bool updateShouldNotify(TextMixtureProvider oldWidget) =>
+      oldWidget.data != data;
+}
 
 class TextMixture extends Mixture<TextMixture> {
   final TextOverflow? overflow;
@@ -46,16 +64,29 @@ class TextMixture extends Mixture<TextMixture> {
         softWrap = null,
         directives = const [];
 
-  static TextMixture resolve(MixData mix) {
-    final recipe = mix.attributeOfType<TextMixtureAttribute>()?.resolve(mix);
-
-    return recipe ?? const TextMixtureAttribute().resolve(mix);
-  }
-
   String applyTextDirectives(String? text) {
     if (text == null) return '';
 
     return directives.fold(text, (text, directive) => directive(text));
+  }
+
+  @override
+  TextMixture merge(TextMixture? other) {
+    if (other == null) return this;
+
+    return copyWith(
+      softWrap: other.softWrap,
+      overflow: other.overflow,
+      strutStyle: other.strutStyle,
+      textAlign: other.textAlign,
+      textScaleFactor: other.textScaleFactor,
+      maxLines: other.maxLines,
+      style: other.style,
+      textWidthBasis: other.textWidthBasis,
+      textHeightBehavior: other.textHeightBehavior,
+      directives: other.directives,
+      textDirection: other.textDirection,
+    );
   }
 
   @override

@@ -4,12 +4,14 @@ import 'package:flutter/rendering.dart';
 import '../../core/attribute.dart';
 import '../../factory/mix_provider_data.dart';
 
-abstract class ConstraintsAttribute<T extends Constraints>
-    extends ResolvableAttribute<T> {
+abstract class ConstraintsAttribute<
+    Self extends ConstraintsAttribute<Self, Value>,
+    Value extends Constraints> extends ResolvableAttribute<Self, Value> {
   const ConstraintsAttribute();
 }
 
-class BoxConstraintsAttribute extends ConstraintsAttribute<BoxConstraints>
+class BoxConstraintsAttribute
+    extends ConstraintsAttribute<BoxConstraintsAttribute, BoxConstraints>
     with SingleChildRenderAttributeMixin<ConstrainedBox> {
   final double? width;
   final double? height;

@@ -179,7 +179,8 @@ class TextStyleDto extends Dto<TextStyle> {
       ];
 }
 
-class TextStyleAttribute extends ResolvableAttribute<TextStyle> {
+class TextStyleAttribute
+    extends ResolvableAttribute<TextStyleAttribute, TextStyle> {
   // A list of TextStyleDto objects.
   final List<TextStyleDto> values;
 

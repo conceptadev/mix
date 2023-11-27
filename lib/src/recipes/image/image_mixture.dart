@@ -36,6 +36,17 @@ class ImageMixture extends Mixture<ImageMixture> {
   }
 
   @override
+  ImageMixture merge(ImageMixture? other) {
+    return copyWith(
+      width: other?.width,
+      height: other?.height,
+      color: other?.color,
+      repeat: other?.repeat,
+      fit: other?.fit,
+    );
+  }
+
+  @override
   ImageMixture lerp(ImageMixture? other, double t) {
     return ImageMixture(
       width: lerpDouble(width, other?.width, t),

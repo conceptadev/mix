@@ -1,19 +1,19 @@
 import '../core/directive.dart';
 import '../helpers/string_ext.dart';
+import '../recipes/text/text_attribute.dart';
+import 'scalar_util.dart';
 
-const capitalize = TextDirectiveUtility(TextModifiers.capitalize);
-const uppercase = TextDirectiveUtility(TextModifiers.uppercase);
-const lowercase = TextDirectiveUtility(TextModifiers.lowercase);
-const titleCase = TextDirectiveUtility(TextModifiers.titleCase);
-const sentenceCase = TextDirectiveUtility(TextModifiers.sentenceCase);
+final capitalize = _textDirective(TextModifiers.capitalize);
+final uppercase = _textDirective(TextModifiers.uppercase);
+final lowercase = _textDirective(TextModifiers.lowercase);
+final titleCase = _textDirective(TextModifiers.titleCase);
+final sentenceCase = _textDirective(TextModifiers.sentenceCase);
 
-class TextDirectiveUtility {
-  final Modifier<String> value;
-  const TextDirectiveUtility(this.value);
+TextMixtureAttribute Function() _textDirective(Modifier<String> modifier) =>
+    () => TextMixtureAttribute(directives: [TextDirective(modifier)]);
 
-  TextDirectiveAttribute call() {
-    return TextDirectiveAttribute(TextDirective(value));
-  }
+class TextDirectiveUtility<T> extends ScalarUtility<T, TextDirective> {
+  const TextDirectiveUtility(super.builder);
 }
 
 //  This is mostly used for testing, and easy reference of the modifier itself.

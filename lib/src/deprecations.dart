@@ -462,23 +462,19 @@ FlexAttribute crossAxis(CrossAxisAlignment crossAxisAlignment) {
 }
 
 @Deprecated('Use textDirective(directive)')
-TextDirectiveAttribute directives(List<TextDirectiveAttribute> directives) {
-  return directives.reduce((value, element) => value.merge(element));
+TextMixtureAttribute directives(List<TextDirective> directives) {
+  return TextMixtureAttribute(directives: directives);
 }
 
 @Deprecated('Use textDirective(directive)')
-TextDirectiveAttribute directive(TextDirectiveAttribute directive) {
-  return directive;
+TextMixtureAttribute directive(TextDirective directive) {
+  return TextMixtureAttribute(directives: [directive]);
 }
 
 @Deprecated('Locale is now passed to StyledText widget')
 TextStyleAttribute locale() {
   throw UnimplementedError();
 }
-
-@Deprecated('Use TextDirectiveUtility()')
-TextDirectiveUtility textDirective(String Function(String value) modifier) =>
-    TextDirectiveUtility(modifier);
 
 @Deprecated('Use text(overflow: overflow)')
 TextMixtureAttribute overflow(TextOverflow overflow) {

@@ -6,7 +6,7 @@ import '../../core/attribute.dart';
 import '../../factory/mix_provider_data.dart';
 import 'flex_mixture.dart';
 
-class FlexAttribute extends ResolvableAttribute<FlexMixture> {
+class FlexAttribute extends ResolvableAttribute<FlexAttribute, FlexMixture> {
   final Axis? direction;
   final MainAxisAlignment? mainAxisAlignment;
   final CrossAxisAlignment? crossAxisAlignment;

@@ -441,10 +441,9 @@ class SwitchCondition<T> {
 }
 
 StyleMix Function(Iterable<T> attributes)
-    _styleType<T extends ResolvableAttribute>() {
+    _styleType<T extends ResolvableAttribute<T, dynamic>>() {
   return (Iterable<T> attributes) {
-    final merged =
-        attributes.reduce((value, element) => value.merge(element) as T);
+    final merged = attributes.reduce((value, element) => value.merge(element));
 
     return StyleMix(merged);
   };

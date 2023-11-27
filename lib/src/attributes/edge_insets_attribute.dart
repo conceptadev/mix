@@ -4,8 +4,9 @@ import '../core/attribute.dart';
 import '../factory/mix_provider_data.dart';
 
 @immutable
-abstract class EdgeInsetsGeometryAttribute<Value extends EdgeInsetsGeometry>
-    extends ResolvableAttribute<Value> {
+abstract class EdgeInsetsGeometryAttribute<
+    Self extends EdgeInsetsGeometryAttribute<Self, Value>,
+    Value extends EdgeInsetsGeometry> extends ResolvableAttribute<Self, Value> {
   final double? top;
   final double? bottom;
   final double? left;
@@ -49,16 +50,15 @@ abstract class EdgeInsetsGeometryAttribute<Value extends EdgeInsetsGeometry>
   }
 
   @override
-  EdgeInsetsGeometryAttribute<Value> merge(
-    covariant EdgeInsetsGeometryAttribute<Value>? other,
-  );
+  Self merge(covariant Self? other);
 
   @override
   get props => [top, bottom, left, right, start, end];
 }
 
 @immutable
-class EdgeInsetsAttribute extends EdgeInsetsGeometryAttribute<EdgeInsets> {
+class EdgeInsetsAttribute
+    extends EdgeInsetsGeometryAttribute<EdgeInsetsAttribute, EdgeInsets> {
   const EdgeInsetsAttribute({super.top, super.bottom, super.left, super.right});
 
   factory EdgeInsetsAttribute.all(double value) {
@@ -92,8 +92,8 @@ class EdgeInsetsAttribute extends EdgeInsetsGeometryAttribute<EdgeInsets> {
 }
 
 @immutable
-class EdgeInsetsDirectionalAttribute
-    extends EdgeInsetsGeometryAttribute<EdgeInsetsDirectional> {
+class EdgeInsetsDirectionalAttribute extends EdgeInsetsGeometryAttribute<
+    EdgeInsetsDirectionalAttribute, EdgeInsetsDirectional> {
   const EdgeInsetsDirectionalAttribute({
     super.top,
     super.bottom,

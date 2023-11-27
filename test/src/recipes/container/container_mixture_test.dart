@@ -20,7 +20,7 @@ void main() {
         ),
       );
 
-      final spec = ContainerMixture.resolve(mix);
+      final spec = ContainerMixture.maybeOf(mix);
 
       expect(spec.alignment, Alignment.center);
       expect(spec.padding, const EdgeInsets.only(bottom: 16.0, top: 8.0));

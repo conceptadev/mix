@@ -8,8 +8,8 @@ import '../../factory/mix_provider_data.dart';
 import '../color_attribute.dart';
 
 @immutable
-abstract class BoxBorderAttribute<Value extends BoxBorder>
-    extends ResolvableAttribute<Value> {
+abstract class BoxBorderAttribute<Self extends BoxBorderAttribute<Self, Value>,
+    Value extends BoxBorder> extends ResolvableAttribute<Self, Value> {
   final BorderSideAttribute? _top;
   final BorderSideAttribute? _bottom;
 
@@ -61,13 +61,13 @@ abstract class BoxBorderAttribute<Value extends BoxBorder>
   }
 
   @override
-  BoxBorderAttribute<Value> merge(covariant BoxBorderAttribute<Value>? other);
+  Self merge(covariant Self other);
 
   @override
   get props => [_top, _bottom, _left, _right, _start, _end];
 }
 
-class BorderAttribute extends BoxBorderAttribute<Border> {
+class BorderAttribute extends BoxBorderAttribute<BorderAttribute, Border> {
   const BorderAttribute({
     BorderSideAttribute? top,
     BorderSideAttribute? bottom,
@@ -132,7 +132,8 @@ class BorderAttribute extends BoxBorderAttribute<Border> {
   }
 }
 
-class BorderDirectionalAttribute extends BoxBorderAttribute<BorderDirectional> {
+class BorderDirectionalAttribute
+    extends BoxBorderAttribute<BorderDirectionalAttribute, BorderDirectional> {
   const BorderDirectionalAttribute({
     BorderSideAttribute? start,
     BorderSideAttribute? end,
@@ -196,7 +197,8 @@ class BorderDirectionalAttribute extends BoxBorderAttribute<BorderDirectional> {
 }
 
 @immutable
-class BorderSideAttribute extends ResolvableAttribute<BorderSide> {
+class BorderSideAttribute
+    extends ResolvableAttribute<BorderSideAttribute, BorderSide> {
   final ColorAttribute? color;
   final double? width;
   final BorderStyle? style;

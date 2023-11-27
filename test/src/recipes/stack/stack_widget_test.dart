@@ -43,8 +43,7 @@ void main() {
   testWidgets('ZBox', (tester) async {
     final style = StyleMix(
       stack.fit.expand(),
-      alignment.topCenter(),
-      clipBehavior.antiAlias(),
+      stack.alignment.topCenter(),
       textDirection.ltr(),
       backgroundColor(Colors.red),
     );

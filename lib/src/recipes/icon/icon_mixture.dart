@@ -29,6 +29,11 @@ class IconMixture extends Mixture<IconMixture> {
   }
 
   @override
+  IconMixture merge(IconMixture? other) {
+    return copyWith(color: other?.color, size: other?.size);
+  }
+
+  @override
   IconMixture copyWith({
     Color? color,
     double? size,

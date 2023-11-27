@@ -3,7 +3,8 @@ import '../../core/attribute.dart';
 import '../../factory/mix_provider_data.dart';
 import 'icon_mixture.dart';
 
-class IconMixAttribute extends ResolvableAttribute<IconMixture> {
+class IconMixAttribute
+    extends ResolvableAttribute<IconMixAttribute, IconMixture> {
   final double? size;
   final ColorAttribute? color;
 

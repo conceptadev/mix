@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../core/attribute.dart';
-import '../../factory/mix_provider_data.dart';
+import '../../factory/mix_provider.dart';
 import 'container_attribute.dart';
 
 class ContainerMixture extends Mixture<ContainerMixture> {
@@ -10,7 +10,6 @@ class ContainerMixture extends Mixture<ContainerMixture> {
   final EdgeInsetsGeometry? margin;
   final BoxConstraints? constraints;
   final Decoration? decoration;
-
   final Matrix4? transform;
   final Clip? clipBehavior;
 
@@ -24,7 +23,6 @@ class ContainerMixture extends Mixture<ContainerMixture> {
     required this.clipBehavior,
   });
 
-  // empty
   const ContainerMixture.empty()
       : alignment = null,
         padding = null,
@@ -34,11 +32,29 @@ class ContainerMixture extends Mixture<ContainerMixture> {
         transform = null,
         clipBehavior = null;
 
-  static ContainerMixture resolve(MixData mix) {
-    final recipe =
-        mix.attributeOfType<ContainerMixtureAttribute>()?.resolve(mix);
+  static ContainerMixture? maybeOf(BuildContext context) {
+    final mix = MixProvider.maybeOf(context);
 
-    return recipe ?? const ContainerMixtureAttribute().resolve(mix);
+    return mix?.resolvableOf(const ContainerMixtureAttribute());
+  }
+
+  static ContainerMixture of(BuildContext context) {
+    return maybeOf(context) ?? const ContainerMixture.empty();
+  }
+
+  @override
+  ContainerMixture merge(ContainerMixture? other) {
+    if (other == null) return this;
+
+    return copyWith(
+      alignment: other.alignment,
+      padding: other.padding,
+      margin: other.margin,
+      constraints: other.constraints,
+      decoration: other.decoration,
+      transform: other.transform,
+      clipBehavior: other.clipBehavior,
+    );
   }
 
   @override

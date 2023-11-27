@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../helpers/compare_mixin.dart';
-import 'attribute.dart';
 
 typedef Modifier<T> = T Function(T value);
 
@@ -20,15 +19,15 @@ abstract class Directive<T> with Comparable {
   get props => [_modifier];
 }
 
-abstract class DirectiveAttribute<T extends Directive> extends StyleAttribute {
-  final List<T> _directives;
-  const DirectiveAttribute(this._directives);
+// abstract class DirectiveAttribute<T extends Directive> with Comparable {
+//   final List<T> _directives;
+//   const DirectiveAttribute(this._directives);
 
-  List<T> get value => _directives;
+//   List<T> get value => _directives;
 
-  @override
-  get props => [_directives];
-}
+//   @override
+//   get props => [_directives];
+// }
 
 class TextDirective extends Directive<String> {
   const TextDirective(super.modifier);
@@ -38,20 +37,20 @@ class ColorDirective extends Directive<Color> {
   const ColorDirective(super.modifier);
 }
 
-class TextDirectiveAttribute extends DirectiveAttribute<TextDirective> {
-  const TextDirectiveAttribute.raw(super.directives);
+// class TextDirectiveAttribute extends DirectiveAttribute<TextDirective> {
+//   const TextDirectiveAttribute.raw(super.directives);
 
-  factory TextDirectiveAttribute(TextDirective directive) {
-    return TextDirectiveAttribute.raw([directive]);
-  }
+//   factory TextDirectiveAttribute(TextDirective directive) {
+//     return TextDirectiveAttribute.raw([directive]);
+//   }
 
-  String modify(String text) =>
-      value.fold(text, (value, directive) => directive(value));
+//   String modify(String text) =>
+//       value.fold(text, (value, directive) => directive(value));
 
-  @override
-  TextDirectiveAttribute merge(covariant TextDirectiveAttribute? other) {
-    return other == null
-        ? this
-        : TextDirectiveAttribute.raw([..._directives, ...other._directives]);
-  }
-}
+//   @override
+//   TextDirectiveAttribute merge(covariant TextDirectiveAttribute? other) {
+//     return other == null
+//         ? this
+//         : TextDirectiveAttribute.raw([..._directives, ...other._directives]);
+//   }
+// }

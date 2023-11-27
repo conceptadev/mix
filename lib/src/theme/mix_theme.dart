@@ -9,12 +9,15 @@ import 'tokens/space_token.dart';
 import 'tokens/text_style_token.dart';
 
 class MixTheme extends InheritedWidget {
-  const MixTheme({required Widget child, required this.data, Key? key})
-      : super(key: key, child: child);
+  const MixTheme({required super.child, required this.data, super.key});
 
   static MixThemeData of(BuildContext context) {
     return context.dependOnInheritedWidgetOfExactType<MixTheme>()?.data ??
         MixThemeData();
+  }
+
+  static MixTokenResolver resolverOf(BuildContext context) {
+    return MixTokenResolver(context, of(context));
   }
 
   static MixThemeData? maybeOf(BuildContext context) {
@@ -100,51 +103,74 @@ class MixThemeData with Comparable {
     );
   }
 
+  Color colorToken(BuildContext context, ColorToken token) {
+    return colors(token, context);
+  }
+
+  Color colorRef(BuildContext context, ColorRef ref) => ref.resolve(context);
+
+  Radius radiiToken(BuildContext context, RadiusToken token) {
+    return radii(token, context);
+  }
+
+  Radius radiiRef(BuildContext context, RadiusRef ref) => ref.resolve(context);
+
+  TextStyle textStyleToken(BuildContext context, TextStyleToken token) {
+    return textStyles(token, context);
+  }
+
+  TextStyle textStyleRef(BuildContext context, TextStyleRef ref) =>
+      ref.resolve(context);
+
+  double spaceTokenRef(BuildContext context, SpaceRef value) {
+    if (value >= 0) return value;
+    final token = space.findByValue(value);
+
+    return token == null ? 0.0 : spaceToken(context, token);
+  }
+
+  double spaceToken(BuildContext context, SpaceToken token) {
+    final value = space(token, context);
+
+    return value >= 0 ? value : token.value;
+  }
+
   @override
   get props => [space, breakpoints, colors, textStyles, radii];
 }
 
 class MixTokenResolver {
-  final BuildContext context;
+  final BuildContext _context;
+  final MixThemeData _theme;
 
-  const MixTokenResolver(this.context);
-
-  MixThemeData get _theme => MixTheme.of(context);
+  const MixTokenResolver(this._context, this._theme);
 
   Color colorToken(ColorToken token) {
-    final value = _theme.colors(token, context);
-
-    return value is ColorRef ? colorRef(value) : value;
+    return _theme.colors(token, _context);
   }
 
-  Color colorRef(ColorRef ref) => ref.resolve(context);
+  Color colorRef(ColorRef ref) => ref.resolve(_context);
 
   Radius radiiToken(RadiusToken token) {
-    final value = _theme.radii(token, context);
-
-    return value is RadiusRef ? value.resolve(context) : value;
+    return _theme.radii(token, _context);
   }
 
-  Radius radiiRef(RadiusRef ref) => ref.resolve(context);
+  Radius radiiRef(RadiusRef ref) => ref.resolve(_context);
 
   TextStyle textStyleToken(TextStyleToken token) {
-    final value = _theme.textStyles(token, context);
-
-    return value is TextStyleRef ? textStyleRef(value) : value;
+    return _theme.textStyles(token, _context);
   }
 
-  TextStyle textStyleRef(TextStyleRef ref) => ref.resolve(context);
+  TextStyle textStyleRef(TextStyleRef ref) => ref.resolve(_context);
 
   double spaceTokenRef(SpaceRef value) {
     if (value >= 0) return value;
     final token = _theme.space.findByValue(value);
 
-    return token == null ? 0.0 : spaceToken(token);
+    return token == null ? 0.0 : spaceToken(_context, token);
   }
 
-  double spaceToken(SpaceToken token) {
-    final value = _theme.space(token, context);
-
-    return value >= 0 ? value : token.value;
+  double spaceToken(BuildContext context, SpaceToken token) {
+    return _theme.space(token, context);
   }
 }

@@ -6,30 +6,35 @@ import 'package:flutter/cupertino.dart';
 
 import '../helpers/compare_mixin.dart';
 import 'attribute.dart';
-import 'extensions/iterable_ext.dart';
 
 @immutable
-class VisualAttributeMap with Comparable {
+class StyleAttributeMap<T extends StyleAttribute> with Comparable {
   final LinkedHashMap<Type, StyleAttribute>? _attributeMap;
 
-  const VisualAttributeMap._(this._attributeMap);
+  const StyleAttributeMap._(this._attributeMap);
 
-  factory VisualAttributeMap(List<StyleAttribute> attributes) {
-    final attributeMap = LinkedHashMap<Type, StyleAttribute>();
+  factory StyleAttributeMap(List<T> attributes) {
+    final map = LinkedHashMap<Type, T>();
     for (final attribute in attributes) {
       final type = attribute.runtimeType;
-      if (attributeMap.containsKey(type)) {
-        final attr = attributeMap[type];
 
-        if (attr is Mergeable) {
-          attributeMap[type] = (attr as Mergeable).merge(attr);
-        }
+      // If value cannot be merged just overwrite it
+      if (attribute is! Mergeable) {
+        map[type] = attribute;
+        continue;
+      }
+
+      // If there is no saved attribute, just add it
+      final savedAttribute = map[type] as Mergeable<T>?;
+      if (savedAttribute == null) {
+        map[type] = attribute;
       } else {
-        attributeMap[type] = attribute;
+        // If there is a saved attribute, merge it with the new one
+        map[type] = savedAttribute.merge(attribute);
       }
     }
 
-    return VisualAttributeMap._(attributeMap);
+    return StyleAttributeMap._(map);
   }
 
   @protected
@@ -44,17 +49,15 @@ class VisualAttributeMap with Comparable {
 
   Iterable<StyleAttribute> get values => map.values;
 
-  T? attributeOfType<T extends StyleAttribute>() =>
-      map.values.whereType<T>().firstMaybeNull;
+  T? attributeOfType<T extends StyleAttribute>() => map[T] as T?;
 
-  Iterable<T> whereType<T extends StyleAttribute>() {
-    return map.values.whereType<T>();
-  }
+  Iterable<T> whereType<T extends StyleAttribute>() =>
+      map.values.whereType<T>();
 
-  VisualAttributeMap merge(VisualAttributeMap other) {
+  StyleAttributeMap merge(StyleAttributeMap other) {
     final list = [...values, ...other.values];
 
-    return VisualAttributeMap(list);
+    return StyleAttributeMap(list);
   }
 
   @override

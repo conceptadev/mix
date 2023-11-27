@@ -5,15 +5,16 @@ import '../core/extensions/iterable_ext.dart';
 import '../factory/mix_provider_data.dart';
 import 'color_attribute.dart';
 
-abstract class GradientAttribute<Value extends Gradient>
-    extends ResolvableAttribute<Value> {
+abstract class GradientAttribute<Self extends GradientAttribute<Self, Value>,
+    Value extends Gradient> extends ResolvableAttribute<Self, Value> {
   const GradientAttribute();
 
   @override
-  GradientAttribute<Value> merge(covariant GradientAttribute<Value>? other);
+  Self merge(covariant Self? other);
 }
 
-class LinearGradientAttribute extends GradientAttribute<LinearGradient> {
+class LinearGradientAttribute
+    extends GradientAttribute<LinearGradientAttribute, LinearGradient> {
   final AlignmentGeometry? begin;
   final AlignmentGeometry? end;
   final List<ColorAttribute>? colors;
@@ -61,7 +62,8 @@ class LinearGradientAttribute extends GradientAttribute<LinearGradient> {
 }
 
 @immutable
-class RadialGradientAttribute extends GradientAttribute<RadialGradient> {
+class RadialGradientAttribute
+    extends GradientAttribute<RadialGradientAttribute, RadialGradient> {
   final AlignmentGeometry? center;
   final double? radius;
   final List<ColorAttribute>? colors;
@@ -119,7 +121,8 @@ class RadialGradientAttribute extends GradientAttribute<RadialGradient> {
 }
 
 @immutable
-class SweepGradientAttribute extends GradientAttribute<SweepGradient> {
+class SweepGradientAttribute
+    extends GradientAttribute<SweepGradientAttribute, SweepGradient> {
   final AlignmentGeometry? center;
   final double? startAngle;
   final double? endAngle;

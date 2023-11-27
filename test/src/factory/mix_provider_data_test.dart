@@ -27,7 +27,7 @@ void main() {
 
     // Add any other additional assertions that are specific to your use case.
     // If you become able to access properties _attributes and _resolver you would assert:
-    expect(mixData.attributes, isInstanceOf<VisualAttributeMap>());
+    expect(mixData.attributes, isInstanceOf<StyleAttributeMap>());
     expect(mixData.tokens, isInstanceOf<MixTokenResolver>());
     expect(mixData.attributes.length, 4);
     expect(mixData.attributeOfType<MockIntScalarAttribute>(),
@@ -40,7 +40,7 @@ void main() {
         const MockDoubleScalarAttribute(2.0));
 
     expect(mixData.decoratorOfType<MockDoubleDecoratorAttribute>(),
-        isInstanceOf<List<MockDoubleDecoratorAttribute>>());
+        isInstanceOf<Iterable<MockDoubleDecoratorAttribute>>());
     expect(mixData.attributeOfType<MockDoubleDecoratorAttribute>(),
         const MockDoubleDecoratorAttribute(0.5));
   });
@@ -79,7 +79,7 @@ void main() {
     expect(mergedMixData.attributeOfType<MockDoubleScalarAttribute>(),
         isInstanceOf<MockDoubleScalarAttribute>());
     expect(mergedMixData.decoratorOfType<MockDoubleDecoratorAttribute>(),
-        isInstanceOf<List<MockDoubleDecoratorAttribute>>());
+        isInstanceOf<Iterable<MockDoubleDecoratorAttribute>>());
 
     expect(mergedMixData.attributeOfType<MockIntScalarAttribute>(),
         const MockIntScalarAttribute(1));

@@ -59,7 +59,9 @@ class StyledTokens<T extends MixToken<V>, V> with Comparable {
   const StyledTokens.empty() : this(const {});
 
   V call(T token, BuildContext context) {
-    return _map[token]?.call(context) ?? token.value;
+    final value = _map[token]?.call(context) ?? token.value;
+
+    return value is ValueRef ? value.resolve(context) : value;
   }
 
   // Looks for the token the value set within the MixToken

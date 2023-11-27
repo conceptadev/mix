@@ -16,7 +16,7 @@ class StyledStack extends StyledWidget {
 
   @override
   Widget build(BuildContext context) {
-    return buildWithStyle(context, (data) {
+    return withMix(context, (data) {
       final spec = StackMixture.resolve(data);
 
       const fallback = Stack();
@@ -44,7 +44,7 @@ class ZBox extends StyledWidget {
 
   @override
   Widget build(BuildContext context) {
-    return buildWithStyle(context, (data) {
+    return withMix(context, (data) {
       return StyledContainer(
         inherit: true,
         child: StyledStack(inherit: true, children: children),

@@ -15,7 +15,6 @@ void main() {
           const StrutStyleAttribute(fontSize: 20.0),
           TextStyleAttribute.only(color: const ColorAttribute(Colors.red)),
           const TextDirectionAttribute(TextDirection.ltr),
-          TextDirectiveAttribute(uppercaseDirective),
           const TextMixtureAttribute(
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.center,
@@ -25,11 +24,12 @@ void main() {
             textHeightBehavior: TextHeightBehavior(
                 applyHeightToFirstAscent: true, applyHeightToLastDescent: true),
             softWrap: true,
+            directives: [uppercaseDirective],
           ),
         ),
       );
 
-      final spec = TextMixture.resolve(mix);
+      final spec = TextMixture.of(mix);
 
       expect(spec.overflow, TextOverflow.ellipsis);
       expect(spec.strutStyle, const StrutStyle(fontSize: 20.0));

@@ -18,7 +18,8 @@ typedef SpacingAttributeBuilder<T extends SpacingAttribute> = T Function({
 });
 
 @immutable
-abstract class SpacingAttribute extends ResolvableAttribute<EdgeInsetsGeometry>
+abstract class SpacingAttribute
+    extends ResolvableAttribute<SpacingAttribute, EdgeInsetsGeometry>
     with SingleChildRenderAttributeMixin<Padding> {
   final double? top;
   final double? bottom;

@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import '../attributes/variant_attribute.dart';
 import '../core/attribute.dart';
 import '../core/attributes_map.dart';
-import '../helpers/compare_mixin.dart';
 import '../decorators/decorator.dart';
+import '../helpers/compare_mixin.dart';
 import '../theme/mix_theme.dart';
 import 'style_mix.dart';
 
@@ -14,7 +14,7 @@ import 'style_mix.dart';
 @immutable
 class MixData with Comparable {
   // Instance variables for widget attributes, widget decorators and token resolver.
-  final VisualAttributeMap _attributes;
+  final StyleAttributeMap _attributes;
 
   final MixTokenResolver _tokenResolver;
 
@@ -23,16 +23,18 @@ class MixData with Comparable {
   /// It takes in [attributes] and [resolver] as required parameters.
   MixData._({
     required MixTokenResolver resolver,
-    required VisualAttributeMap attributes,
+    required StyleAttributeMap attributes,
   })  : _attributes = attributes,
         _tokenResolver = resolver;
 
   factory MixData.create(BuildContext context, StyleMix style) {
     final styleMix = applyContextToVisualAttributes(context, style);
 
+    final resolver = MixTokenResolver(context, MixTheme.of(context));
+
     return MixData._(
-      resolver: MixTokenResolver(context),
-      attributes: VisualAttributeMap(styleMix),
+      resolver: resolver,
+      attributes: StyleAttributeMap(styleMix),
     );
   }
 
@@ -45,17 +47,32 @@ class MixData with Comparable {
   ///
   /// Returns [_attributes].
   @visibleForTesting
-  VisualAttributeMap get attributes => _attributes;
+  StyleAttributeMap get attributes => _attributes;
 
   /// Getter for [_decorators].
   ///
   /// Returns a list of attributes of type [Decorator].
-  List<T> decoratorOfType<T extends Decorator>() =>
-      _attributes.whereType<T>().toList();
+  Iterable<T> decoratorOfType<T extends Decorator>() =>
+      _attributes.whereType<T>();
 
   /// Finds and returns an [VisualAttribute] of type [A], or null if not found.
   A? attributeOfType<A extends StyleAttribute>() {
     return _attributes.attributeOfType<A>();
+  }
+
+  Iterable<A> whereType<A extends StyleAttribute>() {
+    return _attributes.whereType<A>();
+  }
+
+  Value resolvableOf<Value, A extends ResolvableAttribute<A, Value>>(
+    A attribute,
+  ) {
+    final attributes = _attributes.whereType<A>();
+    if (attributes.isEmpty) return attribute.resolve(this);
+
+    return [attribute, ...attributes]
+        .reduce((value, element) => value.merge(element))
+        .resolve(this);
   }
 
   // /// Resolves and returns the value of the [VisualAttribute] of type [A].
@@ -108,4 +125,10 @@ StyleMix _applyVariants<T extends WhenVariant>(
   T variant,
 ) {
   return variant.when(context) ? style.merge(variant.value) : style;
+}
+
+M? _mergeAttributes<M extends Mergeable>(Iterable<M> mergeables) {
+  if (mergeables.isEmpty) return null;
+
+  return mergeables.reduce((a, b) => a.merge(b));
 }

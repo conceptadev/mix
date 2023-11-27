@@ -6,8 +6,10 @@ import '../../core/attribute.dart';
 import '../../factory/mix_provider_data.dart';
 
 @immutable
-abstract class BorderRadiusGeometryAttribute<T extends BorderRadiusGeometry>
-    extends ResolvableAttribute<T> {
+abstract class BorderRadiusGeometryAttribute<
+        Self extends BorderRadiusGeometryAttribute<Self, Value>,
+        Value extends BorderRadiusGeometry>
+    extends ResolvableAttribute<Self, Value> {
   final Radius? topLeft;
   final Radius? topRight;
   final Radius? bottomLeft;
@@ -45,7 +47,7 @@ abstract class BorderRadiusGeometryAttribute<T extends BorderRadiusGeometry>
 
 @immutable
 class BorderRadiusAttribute
-    extends BorderRadiusGeometryAttribute<BorderRadius> {
+    extends BorderRadiusGeometryAttribute<BorderRadiusAttribute, BorderRadius> {
   const BorderRadiusAttribute({
     super.topLeft,
     super.topRight,
@@ -107,8 +109,8 @@ class BorderRadiusAttribute
 }
 
 @immutable
-class BorderRadiusDirectionalAttribute
-    extends BorderRadiusGeometryAttribute<BorderRadiusDirectional> {
+class BorderRadiusDirectionalAttribute extends BorderRadiusGeometryAttribute<
+    BorderRadiusDirectionalAttribute, BorderRadiusDirectional> {
   const BorderRadiusDirectionalAttribute({
     super.topStart,
     super.topEnd,

@@ -7,7 +7,8 @@ import '../../core/attribute.dart';
 import '../../factory/mix_provider_data.dart';
 import 'stack_mixture.dart';
 
-class StackMixtureAttribute extends ResolvableAttribute<StackMixture> {
+class StackMixtureAttribute
+    extends ResolvableAttribute<StackMixtureAttribute, StackMixture> {
   final ClipBehaviorAttribute? _clipBehavior;
 
   final TextDirectionAttribute? _textDirection;
@@ -26,10 +27,10 @@ class StackMixtureAttribute extends ResolvableAttribute<StackMixture> {
   @override
   StackMixture resolve(MixData mix) {
     return StackMixture(
-      alignment: _alignment?.value,
-      fit: _fit?.value,
-      textDirection: _textDirection?.value,
-      clipBehavior: _clipBehavior?.value,
+      alignment: get<AlignmentGeometryAttribute>(mix, _alignment)?.value,
+      fit: get<StackFitAttribute>(mix, _fit)?.value,
+      textDirection: get<TextDirectionAttribute>(mix, _textDirection)?.value,
+      clipBehavior: get<ClipBehaviorAttribute>(mix, _clipBehavior)?.value,
     );
   }
 
@@ -38,10 +39,10 @@ class StackMixtureAttribute extends ResolvableAttribute<StackMixture> {
     if (other == null) return this;
 
     return StackMixtureAttribute(
-      alignment: _alignment ?? other._alignment,
-      fit: _fit ?? other._fit,
-      textDirection: _textDirection ?? other._textDirection,
-      clipBehavior: _clipBehavior ?? other._clipBehavior,
+      alignment: other._alignment ?? _alignment,
+      fit: other._fit ?? _fit,
+      textDirection: other._textDirection ?? _textDirection,
+      clipBehavior: other._clipBehavior ?? _clipBehavior,
     );
   }
 
@@ -51,9 +52,4 @@ class StackMixtureAttribute extends ResolvableAttribute<StackMixture> {
 
 class StackFitAttribute extends ScalarAttribute<StackFit> {
   const StackFitAttribute(super.value);
-
-  @override
-  StackFitAttribute merge(covariant StackFitAttribute? other) {
-    return other == null ? this : StackFitAttribute(other.value);
-  }
 }

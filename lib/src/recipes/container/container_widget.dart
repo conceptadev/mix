@@ -14,17 +14,22 @@ class StyledContainer extends StyledWidget {
 
   @override
   Widget build(BuildContext context) {
-    return buildWithStyle(context, (data) {
-      final spec = ContainerMixture.resolve(data);
+    ContainerMixture? inheritedMixture;
+    if (inherit) {
+      inheritedMixture = ContainerMixture.maybeOf(context);
+    }
+
+    return withMix(context, (data) {
+      final mixture = ContainerMixture.of(context).merge(inheritedMixture);
 
       return Container(
-        alignment: spec.alignment,
-        padding: spec.padding,
-        decoration: spec.decoration,
-        constraints: spec.constraints,
-        margin: spec.margin,
-        transform: spec.transform,
-        clipBehavior: spec.clipBehavior ?? Clip.none,
+        alignment: mixture.alignment,
+        padding: mixture.padding,
+        decoration: mixture.decoration,
+        constraints: mixture.constraints,
+        margin: mixture.margin,
+        transform: mixture.transform,
+        clipBehavior: mixture.clipBehavior ?? Clip.none,
         child: child,
       );
     });

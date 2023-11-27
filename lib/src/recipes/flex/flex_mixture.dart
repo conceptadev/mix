@@ -62,6 +62,21 @@ class FlexMixture extends Mixture<FlexMixture> {
   }
 
   @override
+  FlexMixture merge(FlexMixture? other) {
+    return copyWith(
+      direction: other?.direction,
+      mainAxisAlignment: other?.mainAxisAlignment,
+      crossAxisAlignment: other?.crossAxisAlignment,
+      mainAxisSize: other?.mainAxisSize,
+      verticalDirection: other?.verticalDirection,
+      textDirection: other?.textDirection,
+      textBaseline: other?.textBaseline,
+      clipBehavior: other?.clipBehavior,
+      gap: other?.gap,
+    );
+  }
+
+  @override
   FlexMixture copyWith({
     Axis? direction,
     MainAxisAlignment? mainAxisAlignment,

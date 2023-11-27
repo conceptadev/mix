@@ -8,7 +8,8 @@ import '../../core/directive.dart';
 import '../../factory/mix_provider_data.dart';
 import 'text_mixture.dart';
 
-class TextMixtureAttribute extends ResolvableAttribute<TextMixture> {
+class TextMixtureAttribute
+    extends ResolvableAttribute<TextMixtureAttribute, TextMixture> {
   final TextOverflow? overflow;
   final StrutStyleAttribute? strutStyle;
   final TextAlign? textAlign;
@@ -39,14 +40,14 @@ class TextMixtureAttribute extends ResolvableAttribute<TextMixture> {
   TextMixture resolve(MixData mix) {
     return TextMixture(
       overflow: overflow,
-      strutStyle: strutStyle?.resolve(mix),
+      strutStyle: get<StrutStyleAttribute>(mix, strutStyle)?.resolve(mix),
       textAlign: textAlign,
       textScaleFactor: textScaleFactor,
       maxLines: maxLines,
-      style: style?.resolve(mix),
+      style: get<TextStyleAttribute>(mix, style)?.resolve(mix),
       textWidthBasis: textWidthBasis,
       textHeightBehavior: textHeightBehavior,
-      textDirection: textDirection?.value,
+      textDirection: get<TextDirectionAttribute>(mix, textDirection)?.value,
       softWrap: softWrap,
       directives: directives ?? [],
     );
@@ -57,16 +58,17 @@ class TextMixtureAttribute extends ResolvableAttribute<TextMixture> {
     if (other == null) return this;
 
     return TextMixtureAttribute(
-      overflow: overflow ?? other.overflow,
-      strutStyle: strutStyle ?? other.strutStyle,
-      textAlign: textAlign ?? other.textAlign,
-      textScaleFactor: textScaleFactor ?? other.textScaleFactor,
-      maxLines: maxLines ?? other.maxLines,
-      style: style ?? other.style,
-      textWidthBasis: textWidthBasis ?? other.textWidthBasis,
-      textHeightBehavior: textHeightBehavior ?? other.textHeightBehavior,
-      textDirection: textDirection ?? other.textDirection,
-      softWrap: softWrap ?? other.softWrap,
+      overflow: other.overflow ?? overflow,
+      strutStyle: strutStyle?.merge(other.strutStyle) ?? other.strutStyle,
+      textAlign: other.textAlign ?? textAlign,
+      textScaleFactor: other.textScaleFactor ?? textScaleFactor,
+      maxLines: other.maxLines ?? maxLines,
+      style: style?.merge(other.style) ?? other.style,
+      textWidthBasis: other.textWidthBasis ?? textWidthBasis,
+      textHeightBehavior: other.textHeightBehavior ?? textHeightBehavior,
+      textDirection:
+          textDirection?.merge(other.textDirection) ?? other.textDirection,
+      softWrap: other.softWrap ?? softWrap,
       directives: directives ?? other.directives,
     );
   }

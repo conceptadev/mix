@@ -10,8 +10,9 @@ import '../color_attribute.dart';
 import '../gradient_attribute.dart';
 import '../shadow_attribute.dart';
 
-abstract class DecorationAttribute<T extends Decoration>
-    extends ResolvableAttribute<T>
+abstract class DecorationAttribute<
+        Self extends DecorationAttribute<Self, Value>,
+        Value extends Decoration> extends ResolvableAttribute<Self, Value>
     with SingleChildRenderAttributeMixin<DecoratedBox> {
   const DecorationAttribute();
 
@@ -21,7 +22,8 @@ abstract class DecorationAttribute<T extends Decoration>
   }
 }
 
-class BoxDecorationAttribute extends DecorationAttribute<BoxDecoration> {
+class BoxDecorationAttribute
+    extends DecorationAttribute<BoxDecorationAttribute, BoxDecoration> {
   final ColorAttribute? color;
   final BoxBorderAttribute? border;
   final BorderRadiusGeometryAttribute? borderRadius;
@@ -69,7 +71,8 @@ class BoxDecorationAttribute extends DecorationAttribute<BoxDecoration> {
       [color, border, borderRadius, gradient, boxShadow, shape];
 }
 
-class ShapeDecorationAttribute extends DecorationAttribute<ShapeDecoration> {
+class ShapeDecorationAttribute
+    extends DecorationAttribute<ShapeDecorationAttribute, ShapeDecoration> {
   final ColorAttribute? color;
   final ShapeBorder? shape;
   final GradientAttribute? gradient;

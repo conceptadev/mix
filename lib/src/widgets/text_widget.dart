@@ -22,7 +22,7 @@ class StyledText extends StyledWidget {
 
   @override
   Widget build(BuildContext context) {
-    return buildWithStyle(context, (data) {
+    return withMix(context, (data) {
       final spec = TextMixture.resolve(data);
 
       return Text(

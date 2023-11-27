@@ -5,7 +5,7 @@ import 'package:mix/mix.dart';
 import '../../helpers/testing_utils.dart';
 
 void main() {
-  group('Decorators', () {
+  group('Decorators: ', () {
     test('aspectRatio creates AspectRatioDecorator correctly', () {
       final aspectRatioDecorator = aspectRatio(2.0);
 

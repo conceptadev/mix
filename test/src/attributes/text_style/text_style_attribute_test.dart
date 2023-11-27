@@ -44,10 +44,10 @@ void main() {
 
       final merged = attr1.merge(attr2).resolve(EmptyMixData);
 
-      expect(merged.color?.value, Colors.blue);
+      expect(merged.color, Colors.blue);
       expect(merged.fontSize, 30.0);
       expect(merged.decoration, TextDecoration.lineThrough);
-      expect(merged.decorationColor?.value, Colors.red);
+      expect(merged.decorationColor, Colors.red);
       expect(merged.decorationStyle, TextDecorationStyle.dotted);
       expect(merged.fontWeight, FontWeight.w100);
       expect(merged.fontStyle, FontStyle.normal);

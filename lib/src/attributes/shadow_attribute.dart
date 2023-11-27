@@ -5,8 +5,9 @@ import '../factory/mix_provider_data.dart';
 import 'color_attribute.dart';
 
 @immutable
-abstract class ShadowAttributeImpl<Value extends Shadow>
-    extends ResolvableAttribute<Value> {
+abstract class ShadowAttributeImpl<
+    Self extends ShadowAttributeImpl<Self, Value>,
+    Value extends Shadow> extends ResolvableAttribute<Self, Value> {
   final ColorAttribute? color;
   final Offset? offset;
   final double? blurRadius;
@@ -17,11 +18,11 @@ abstract class ShadowAttributeImpl<Value extends Shadow>
   Value resolve(MixData mix);
 
   @override
-  ShadowAttributeImpl<Value> merge(covariant ShadowAttributeImpl<Value>? other);
+  Self merge(covariant Self? other);
 }
 
 @immutable
-class ShadowAttribute extends ShadowAttributeImpl<Shadow> {
+class ShadowAttribute extends ShadowAttributeImpl<ShadowAttribute, Shadow> {
   const ShadowAttribute({super.blurRadius, super.color, super.offset});
 
   @override
@@ -50,7 +51,8 @@ class ShadowAttribute extends ShadowAttributeImpl<Shadow> {
   get props => [color, offset, blurRadius];
 }
 
-class BoxShadowAttribute extends ShadowAttributeImpl<BoxShadow> {
+class BoxShadowAttribute
+    extends ShadowAttributeImpl<BoxShadowAttribute, BoxShadow> {
   final double? spreadRadius;
 
   const BoxShadowAttribute({
