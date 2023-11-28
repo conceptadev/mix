@@ -25,8 +25,6 @@ class AttributeGenerator {
   }
 
   BoxConstraintsAttribute boxConstraints({
-    double? width,
-    double? height,
     double? minWidth,
     double? maxWidth,
     double? minHeight,
@@ -41,8 +39,6 @@ class AttributeGenerator {
     maxWidth ??= minHeight + random.nextDouble() * 200;
 
     return BoxConstraintsAttribute(
-      width: width,
-      height: height,
       minWidth: minWidth,
       maxWidth: maxWidth,
       minHeight: minHeight,

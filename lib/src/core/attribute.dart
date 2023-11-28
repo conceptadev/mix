@@ -96,7 +96,7 @@ abstract class Mixture<T extends Mixture<T>> extends ThemeExtension<T>
     return (a * (1 - t) + b * t) as N;
   }
 
-  P snap<P>(P from, P to, double t) {
+  P lerpSnap<P>(P from, P to, double t) {
     return t < 0.5 ? from : to;
   }
 }

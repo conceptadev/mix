@@ -30,9 +30,9 @@ class ImageMixture extends Mixture<ImageMixture> {
         fit = null;
 
   static ImageMixture resolve(MixData mix) {
-    final recipe = mix.attributeOfType<ImageMixtureAttribute>()?.resolve(mix);
+    final recipe = mix.attributeOf<ImageMixAttribute>()?.resolve(mix);
 
-    return recipe ?? const ImageMixtureAttribute().resolve(mix);
+    return recipe ?? const ImageMixAttribute().resolve(mix);
   }
 
   @override

@@ -4,13 +4,19 @@ import '../attributes/spacing_attribute.dart';
 import '../theme/tokens/space_token.dart';
 import 'scalar_util.dart';
 
-/// Predefined utility constants for creating padding attributes.
-const padding = SpacingGeometryUtility(PaddingAttribute.new);
-const paddingDirectional = SpacingDirectionalUtility(PaddingAttribute.new);
+@immutable
+class PaddingUtility<T> extends SpacingUtility<T, PaddingAttribute> {
+  static const selfBuilder = PaddingUtility(MixUtility.selfBuilder);
+  const PaddingUtility(super.builder)
+      : super(spacingBuilder: PaddingAttribute.new);
+}
 
-/// Predefined utility constants for creating margin attributes.
-const margin = SpacingGeometryUtility(MarginAttribute.new);
-const marginDirectional = SpacingDirectionalUtility(MarginAttribute.new);
+@immutable
+class MarginUtility<T> extends SpacingUtility<T, MarginAttribute> {
+  static const selfBuilder = MarginUtility(MixUtility.selfBuilder);
+  const MarginUtility(super.builder)
+      : super(spacingBuilder: MarginAttribute.new);
+}
 
 /// A utility class for defining spacing attributes like padding and margin in Flutter widgets.
 ///
@@ -33,14 +39,14 @@ const marginDirectional = SpacingDirectionalUtility(MarginAttribute.new);
 ///   final horizontalSpacing = spacing.horizontal(20);
 /// ```
 @immutable
-class SpacingGeometryUtility<T extends SpacingAttribute> {
-  final SpacingAttributeBuilder<T> builder;
-
-  const SpacingGeometryUtility(this.builder);
+abstract class SpacingUtility<T, Attr extends SpacingAttribute>
+    extends MixUtility<T, Attr> {
+  final SpacingAttributeBuilder<Attr> spacingBuilder;
+  const SpacingUtility(super.builder, {required this.spacingBuilder});
 
   /// Private helper methods to simplify the creation of SpacingAttribute with utility functions.
   T _all(double value) =>
-      only(bottom: value, left: value, right: value, top: value);
+      only(top: value, bottom: value, left: value, right: value);
   T _top(double value) => only(top: value);
   T _bottom(double value) => only(bottom: value);
   T _left(double value) => only(left: value);
@@ -49,61 +55,82 @@ class SpacingGeometryUtility<T extends SpacingAttribute> {
   T _end(double value) => only(end: value);
 
   T _horizontal(double value) => only(left: value, right: value);
-  T _vertical(double value) => only(bottom: value, top: value);
+  T _vertical(double value) => only(top: value, bottom: value);
 
   //  Methods for creating attributes with uniform values for specific orientations or directions.
 
   /// Applies uniform spacing on top and bottom sides.
-  SpacingUtility<T> get vertical => SpacingUtility(_vertical);
+  SpacingSideUtility<T> get vertical => SpacingSideUtility(_vertical);
+
+  SpacingDirectionalUtility<T, Attr> get directional =>
+      SpacingDirectionalUtility(as, spacingBuilder: spacingBuilder);
 
   /// Applies uniform spacing on left and right sides.
-  SpacingUtility<T> get horizontal => SpacingUtility(_horizontal);
+  SpacingSideUtility<T> get horizontal => SpacingSideUtility(_horizontal);
 
   /// Applies uniform spacing on all sides.
-  SpacingUtility<T> get all => SpacingUtility(_all);
+  SpacingSideUtility<T> get all => SpacingSideUtility(_all);
 
   /// Applies uniform spacing on top side.
-  SpacingUtility<T> get top => SpacingUtility(_top);
+  SpacingSideUtility<T> get top => SpacingSideUtility(_top);
 
   /// Applies uniform spacing on bottom side.
-  SpacingUtility<T> get bottom => SpacingUtility(_bottom);
+  SpacingSideUtility<T> get bottom => SpacingSideUtility(_bottom);
 
   /// Applies uniform spacing on left side.
-  SpacingUtility<T> get left => SpacingUtility(_left);
+  SpacingSideUtility<T> get left => SpacingSideUtility(_left);
 
   /// Applies uniform spacing on right side.
-  SpacingUtility<T> get right => SpacingUtility(_right);
+  SpacingSideUtility<T> get right => SpacingSideUtility(_right);
 
   /// Applies uniform spacing on start side.
-  SpacingUtility<T> get start => SpacingUtility(_start);
+  SpacingSideUtility<T> get start => SpacingSideUtility(_start);
 
   /// Applies uniform spacing on end side.
-  SpacingUtility<T> get end => SpacingUtility(_end);
+  SpacingSideUtility<T> get end => SpacingSideUtility(_end);
+
+  T from(EdgeInsetsGeometry value) {
+    if (value is EdgeInsets) {
+      return only(
+        top: value.top,
+        bottom: value.bottom,
+        left: value.left,
+        right: value.right,
+      );
+    } else if (value is EdgeInsetsDirectional) {
+      return only(
+        top: value.top,
+        bottom: value.bottom,
+        start: value.start,
+        end: value.end,
+      );
+    }
+
+    throw Exception(
+      'Unsupported EdgeInsetsGeometry type: ${value.runtimeType}',
+    );
+  }
 
   /// Provides a method to create an attribute with custom values for each side.
   ///
   /// Use this method when you want to be explicit about the spacing values for each side.
-  SpacingAttributeBuilder<T> get only => builder;
-
-  /// Creates a spacing attribute from an `EdgeInsetsGeometry` instance.
-  T as(EdgeInsetsGeometry edgeInsets) {
-    if (edgeInsets is EdgeInsets) {
-      return only(
-        bottom: edgeInsets.bottom,
-        left: edgeInsets.left,
-        right: edgeInsets.right,
-        top: edgeInsets.top,
-      );
-    } else if (edgeInsets is EdgeInsetsDirectional) {
-      return only(
-        bottom: edgeInsets.bottom,
-        end: edgeInsets.end,
-        start: edgeInsets.start,
-        top: edgeInsets.top,
-      );
-    }
-    throw Exception(
-      'Unsupported EdgeInsetsGeometry type: ${edgeInsets.runtimeType}',
+  T only({
+    double? top,
+    double? bottom,
+    double? left,
+    double? right,
+    double? start,
+    double? end,
+  }) {
+    return as(
+      spacingBuilder(
+        bottom: bottom,
+        end: end,
+        left: left,
+        right: right,
+        start: start,
+        top: top,
+      ),
     );
   }
 
@@ -125,15 +152,15 @@ class SpacingGeometryUtility<T extends SpacingAttribute> {
     if (p3 != null) bottom = p3;
     if (p4 != null) left = p4;
 
-    return only(bottom: bottom, left: left, right: right, top: top);
+    return only(top: top, bottom: bottom, left: left, right: right);
   }
 }
 
 // Helper class to wrap functions that can return
 // Space tokens in their methods
 @immutable
-class SpacingUtility<T> extends ScalarUtility<T, double> {
-  const SpacingUtility(super.builder);
+class SpacingSideUtility<T> extends ScalarUtility<T, double> {
+  const SpacingSideUtility(super.builder);
 
   T xsmall() => call(SpaceToken.xsmall());
 
@@ -172,62 +199,45 @@ class SpacingUtility<T> extends ScalarUtility<T, double> {
 ///   final horizontalDirectionalSpacing = directionalSpacing.horizontal(20);
 /// ```
 @immutable
-class SpacingDirectionalUtility<T extends SpacingAttribute> {
-  final SpacingAttributeBuilder<T> builder;
-
-  const SpacingDirectionalUtility(this.builder);
+class SpacingDirectionalUtility<T, Attr extends SpacingAttribute>
+    extends SpacingUtility<T, Attr> {
+  const SpacingDirectionalUtility(
+    super.builder, {
+    required super.spacingBuilder,
+  });
 
   // Private helper methods to simplify the creation of SpacingAttribute with utility functions.
+  @override
   T _all(double value) =>
-      only(bottom: value, end: value, start: value, top: value);
+      only(top: value, bottom: value, start: value, end: value);
+  @override
   T _start(double value) => only(start: value);
+  @override
   T _end(double value) => only(end: value);
+  @override
   T _top(double value) => only(top: value);
+  @override
   T _bottom(double value) => only(bottom: value);
-  T _vertical(double value) => only(bottom: value, top: value);
-  T _horizontal(double value) => only(end: value, start: value);
+  @override
+  T _vertical(double value) => only(top: value, bottom: value);
+  @override
+  T _horizontal(double value) => only(start: value, end: value);
 
-  // Methods for creating attributes with uniform values for specific orientations or directions.
-
-  /// Applies uniform spacing on all directional sides.
-  SpacingUtility<T> get all => SpacingUtility(_all);
-
-  /// Applies uniform spacing on start side.
-  SpacingUtility<T> get start => SpacingUtility(_start);
-
-  /// Applies uniform spacing on end side.
-  SpacingUtility<T> get end => SpacingUtility(_end);
-
-  /// Applies uniform spacing on top side.
-  SpacingUtility<T> get top => SpacingUtility(_top);
-
-  /// Applies uniform spacing on bottom side.
-  SpacingUtility<T> get bottom => SpacingUtility(_bottom);
-
-  /// Applies uniform spacing on top and bottom sides.
-  SpacingUtility<T> get vertical => SpacingUtility(_vertical);
-
-  /// Applies uniform spacing on left and right sides.
-  SpacingUtility<T> get horizontal => SpacingUtility(_horizontal);
-
-  /// Provides a method to create an attribute with custom values for each side.
-  /// Use this method when you want to be explicit about the spacing values for each side.
-  SpacingAttributeBuilder<T> get only => builder;
-
-  T as(EdgeInsetsGeometry edgeInsets) {
+  @override
+  T from(EdgeInsetsGeometry edgeInsets) {
     if (edgeInsets is EdgeInsets) {
       return only(
-        bottom: edgeInsets.bottom,
-        end: edgeInsets.right,
-        start: edgeInsets.left,
         top: edgeInsets.top,
+        bottom: edgeInsets.bottom,
+        start: edgeInsets.left,
+        end: edgeInsets.right,
       );
     } else if (edgeInsets is EdgeInsetsDirectional) {
       return only(
-        bottom: edgeInsets.bottom,
-        end: edgeInsets.end,
-        start: edgeInsets.start,
         top: edgeInsets.top,
+        bottom: edgeInsets.bottom,
+        start: edgeInsets.start,
+        end: edgeInsets.end,
       );
     }
     throw Exception(
@@ -239,6 +249,7 @@ class SpacingDirectionalUtility<T extends SpacingAttribute> {
   ///
   /// Allows defining space by passing up to four parameters, representing top, bottom, start,
   /// and end spacing, respectively. Parameters are optional and default to the first parameter's value.
+  @override
   T call(double p1, [double? p2, double? p3, double? p4]) {
     double top = p1;
     double bottom = p1;
@@ -254,6 +265,36 @@ class SpacingDirectionalUtility<T extends SpacingAttribute> {
 
     if (p4 != null) start = p4;
 
-    return only(bottom: bottom, end: end, start: start, top: top);
+    return only(top: top, bottom: bottom, start: start, end: end);
   }
+
+  // Methods for creating attributes with uniform values for specific orientations or directions.
+
+  /// Applies uniform spacing on all directional sides.
+  @override
+  SpacingSideUtility<T> get all => SpacingSideUtility(_all);
+
+  /// Applies uniform spacing on start side.
+  @override
+  SpacingSideUtility<T> get start => SpacingSideUtility(_start);
+
+  /// Applies uniform spacing on end side.
+  @override
+  SpacingSideUtility<T> get end => SpacingSideUtility(_end);
+
+  /// Applies uniform spacing on top side.
+  @override
+  SpacingSideUtility<T> get top => SpacingSideUtility(_top);
+
+  /// Applies uniform spacing on bottom side.
+  @override
+  SpacingSideUtility<T> get bottom => SpacingSideUtility(_bottom);
+
+  /// Applies uniform spacing on top and bottom sides.
+  @override
+  SpacingSideUtility<T> get vertical => SpacingSideUtility(_vertical);
+
+  /// Applies uniform spacing on left and right sides.
+  @override
+  SpacingSideUtility<T> get horizontal => SpacingSideUtility(_horizontal);
 }

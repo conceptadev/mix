@@ -3,9 +3,6 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
-import 'package:mix/src/attributes/clip_behavior_attribute.dart';
-import 'package:mix/src/attributes/text_direction_attribute.dart';
-import 'package:mix/src/recipes/flex/flex_attribute.dart';
 
 import '../../../helpers/testing_utils.dart';
 
@@ -15,7 +12,7 @@ void main() {
       final mix = MixData.create(
         MockBuildContext(),
         StyleMix(
-          const FlexAttribute(
+          const FlexMixAttribute(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,

@@ -13,16 +13,12 @@ abstract class ConstraintsAttribute<
 class BoxConstraintsAttribute
     extends ConstraintsAttribute<BoxConstraintsAttribute, BoxConstraints>
     with SingleChildRenderAttributeMixin<ConstrainedBox> {
-  final double? width;
-  final double? height;
   final double? minWidth;
   final double? maxWidth;
   final double? minHeight;
   final double? maxHeight;
 
   const BoxConstraintsAttribute({
-    this.width,
-    this.height,
     this.minWidth,
     this.maxWidth,
     this.minHeight,
@@ -45,11 +41,6 @@ class BoxConstraintsAttribute
       );
     }
 
-    constraints = (width != null || height != null)
-        ? constraints?.tighten(width: width, height: height) ??
-            BoxConstraints.tightFor(width: width, height: height)
-        : constraints;
-
     return constraints ?? const BoxConstraints();
   }
 
@@ -58,8 +49,6 @@ class BoxConstraintsAttribute
     if (other == null) return this;
 
     return BoxConstraintsAttribute(
-      width: other.width ?? width,
-      height: other.height ?? height,
       minWidth: other.minWidth ?? minWidth,
       maxWidth: other.maxWidth ?? maxWidth,
       minHeight: other.minHeight ?? minHeight,
@@ -68,10 +57,20 @@ class BoxConstraintsAttribute
   }
 
   @override
-  get props => [width, height, minWidth, maxWidth, minHeight, maxHeight];
+  get props => [minWidth, maxWidth, minHeight, maxHeight];
 
   @override
   ConstrainedBox build(MixData mix, Widget child) {
     return ConstrainedBox(constraints: resolve(mix), child: child);
   }
+}
+
+@immutable
+class WidthAttribute extends ScalarAttribute {
+  const WidthAttribute(super.value);
+}
+
+@immutable
+class HeightAttribute extends ScalarAttribute {
+  const HeightAttribute(super.value);
 }

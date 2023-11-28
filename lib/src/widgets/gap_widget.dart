@@ -27,7 +27,6 @@ class RenderGap extends RenderBox {
   RenderGap({required double mainAxisExtent})
       : _mainAxisExtent = mainAxisExtent;
 
-  double get mainAxisExtent => _mainAxisExtent;
   Axis? get _direction {
     final parentRenderObject = parent;
 
@@ -36,6 +35,7 @@ class RenderGap extends RenderBox {
         : null;
   }
 
+  double get mainAxisExtent => _mainAxisExtent;
   set mainAxisExtent(double value) {
     if (_mainAxisExtent == value) return;
     _mainAxisExtent = value;

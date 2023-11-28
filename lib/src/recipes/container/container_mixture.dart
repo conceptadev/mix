@@ -1,7 +1,9 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 import '../../core/attribute.dart';
-import '../../factory/mix_provider.dart';
+import '../../factory/mix_provider_data.dart';
 import 'container_attribute.dart';
 
 class ContainerMixture extends Mixture<ContainerMixture> {
@@ -12,6 +14,8 @@ class ContainerMixture extends Mixture<ContainerMixture> {
   final Decoration? decoration;
   final Matrix4? transform;
   final Clip? clipBehavior;
+  final Color? color;
+  final double? width, height;
 
   const ContainerMixture({
     required this.alignment,
@@ -21,6 +25,9 @@ class ContainerMixture extends Mixture<ContainerMixture> {
     required this.decoration,
     required this.transform,
     required this.clipBehavior,
+    required this.color,
+    required this.width,
+    required this.height,
   });
 
   const ContainerMixture.empty()
@@ -30,16 +37,13 @@ class ContainerMixture extends Mixture<ContainerMixture> {
         constraints = null,
         decoration = null,
         transform = null,
+        color = null,
+        width = null,
+        height = null,
         clipBehavior = null;
 
-  static ContainerMixture? maybeOf(BuildContext context) {
-    final mix = MixProvider.maybeOf(context);
-
-    return mix?.resolvableOf(const ContainerMixtureAttribute());
-  }
-
-  static ContainerMixture of(BuildContext context) {
-    return maybeOf(context) ?? const ContainerMixture.empty();
+  static ContainerMixture of(MixData mix) {
+    return mix.resolvableOf(const ContainerMixAttribute());
   }
 
   @override
@@ -52,8 +56,11 @@ class ContainerMixture extends Mixture<ContainerMixture> {
       margin: other.margin,
       constraints: other.constraints,
       decoration: other.decoration,
+      width: other.width,
+      height: other.height,
       transform: other.transform,
       clipBehavior: other.clipBehavior,
+      color: other.color,
     );
   }
 
@@ -68,6 +75,7 @@ class ContainerMixture extends Mixture<ContainerMixture> {
     double? height,
     Matrix4? transform,
     Clip? clipBehavior,
+    Color? color,
   }) {
     return ContainerMixture(
       alignment: alignment ?? this.alignment,
@@ -77,6 +85,9 @@ class ContainerMixture extends Mixture<ContainerMixture> {
       decoration: decoration ?? this.decoration,
       transform: transform ?? this.transform,
       clipBehavior: clipBehavior ?? this.clipBehavior,
+      color: color ?? this.color,
+      width: width ?? this.width,
+      height: height ?? this.height,
     );
   }
 
@@ -90,17 +101,23 @@ class ContainerMixture extends Mixture<ContainerMixture> {
       decoration: Decoration.lerp(decoration, other.decoration, t),
       transform: Matrix4Tween(begin: transform, end: other.transform).lerp(t),
       clipBehavior: t < 0.5 ? clipBehavior : other.clipBehavior,
+      color: Color.lerp(color, other.color, t),
+      width: lerpDouble(width, other.width, t),
+      height: lerpDouble(height, other.height, t),
     );
   }
 
   @override
   get props => [
         alignment,
+        width,
+        height,
         padding,
         margin,
         constraints,
         decoration,
         transform,
         clipBehavior,
+        color,
       ];
 }

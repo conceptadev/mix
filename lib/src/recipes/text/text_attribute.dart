@@ -8,8 +8,8 @@ import '../../core/directive.dart';
 import '../../factory/mix_provider_data.dart';
 import 'text_mixture.dart';
 
-class TextMixtureAttribute
-    extends ResolvableAttribute<TextMixtureAttribute, TextMixture> {
+class TextMixAttribute
+    extends ResolvableAttribute<TextMixAttribute, TextMixture> {
   final TextOverflow? overflow;
   final StrutStyleAttribute? strutStyle;
   final TextAlign? textAlign;
@@ -22,7 +22,7 @@ class TextMixtureAttribute
   final bool? softWrap;
   final List<TextDirective>? directives;
 
-  const TextMixtureAttribute({
+  const TextMixAttribute({
     this.overflow,
     this.strutStyle,
     this.textAlign,
@@ -54,10 +54,10 @@ class TextMixtureAttribute
   }
 
   @override
-  TextMixtureAttribute merge(covariant TextMixtureAttribute? other) {
+  TextMixAttribute merge(covariant TextMixAttribute? other) {
     if (other == null) return this;
 
-    return TextMixtureAttribute(
+    return TextMixAttribute(
       overflow: other.overflow ?? overflow,
       strutStyle: strutStyle?.merge(other.strutStyle) ?? other.strutStyle,
       textAlign: other.textAlign ?? textAlign,

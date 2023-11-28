@@ -23,9 +23,9 @@ void main() {
       );
     });
 
-    test('paddingDirectional()', () {
+    test('padding.directional()', () {
       expect(
-        paddingDirectional(10),
+        padding.directional(10),
         const PaddingAttribute(
           start: 10,
           end: 10,
@@ -35,7 +35,7 @@ void main() {
         reason: '1',
       );
       expect(
-        paddingDirectional(10, 20),
+        padding.directional(10, 20),
         const PaddingAttribute(
           top: 10,
           bottom: 10,
@@ -45,7 +45,7 @@ void main() {
         reason: '2',
       );
       expect(
-        paddingDirectional(10, 20, 30),
+        padding.directional(10, 20, 30),
         const PaddingAttribute(
           top: 10,
           bottom: 30,
@@ -55,7 +55,7 @@ void main() {
         reason: '3',
       );
       expect(
-        paddingDirectional(10, 20, 30, 40),
+        padding.directional(10, 20, 30, 40),
         const PaddingAttribute(
           top: 10,
           end: 20,
@@ -66,76 +66,76 @@ void main() {
       );
     });
 
-    test('padding.as', () {
+    test('padding.from', () {
       expect(
-        padding.as(const EdgeInsets.all(10)),
+        padding.from(const EdgeInsets.all(10)),
         const PaddingAttribute(top: 10, bottom: 10, left: 10, right: 10),
         reason: '1',
       );
 
       expect(
-        padding.as(const EdgeInsets.only(top: 10)),
+        padding.from(const EdgeInsets.only(top: 10)),
         const PaddingAttribute(top: 10, bottom: 0, left: 0, right: 0),
         reason: '2',
       );
 
       expect(
-        padding.as(const EdgeInsets.only(left: 10)),
+        padding.from(const EdgeInsets.only(left: 10)),
         const PaddingAttribute(left: 10, bottom: 0, top: 0, right: 0),
         reason: '3',
       );
 
       expect(
-        padding.as(const EdgeInsets.only(right: 10)),
+        padding.from(const EdgeInsets.only(right: 10)),
         const PaddingAttribute(right: 10, bottom: 0, top: 0, left: 0),
         reason: '4',
       );
 
       expect(
-        padding.as(const EdgeInsets.only(bottom: 10)),
+        padding.from(const EdgeInsets.only(bottom: 10)),
         const PaddingAttribute(bottom: 10, top: 0, left: 0, right: 0),
         reason: '5',
       );
 
       expect(
-        padding.as(const EdgeInsets.symmetric(horizontal: 10)),
+        padding.from(const EdgeInsets.symmetric(horizontal: 10)),
         const PaddingAttribute(left: 10, right: 10, top: 0, bottom: 0),
         reason: '6',
       );
 
       expect(
-        padding.as(const EdgeInsets.symmetric(vertical: 10)),
+        padding.from(const EdgeInsets.symmetric(vertical: 10)),
         const PaddingAttribute(top: 10, bottom: 10, left: 0, right: 0),
         reason: '7',
       );
 
       expect(
-        paddingDirectional.as(const EdgeInsetsDirectional.only(start: 10)),
+        padding.directional.from(const EdgeInsetsDirectional.only(start: 10)),
         const PaddingAttribute(start: 10, end: 0, top: 0, bottom: 0),
         reason: '8',
       );
 
       expect(
-        paddingDirectional.as(const EdgeInsetsDirectional.only(end: 10)),
+        padding.directional.from(const EdgeInsetsDirectional.only(end: 10)),
         const PaddingAttribute(end: 10, start: 0, top: 0, bottom: 0),
         reason: '9',
       );
 
       expect(
-        paddingDirectional.as(const EdgeInsetsDirectional.only(top: 10)),
+        padding.directional.from(const EdgeInsetsDirectional.only(top: 10)),
         const PaddingAttribute(top: 10, bottom: 0, start: 0, end: 0),
         reason: '10',
       );
 
       expect(
-        paddingDirectional.as(const EdgeInsetsDirectional.only(bottom: 10)),
+        padding.directional.from(const EdgeInsetsDirectional.only(bottom: 10)),
         const PaddingAttribute(bottom: 10, top: 0, start: 0, end: 0),
         reason: '11',
       );
 
       expect(
-        paddingDirectional
-            .as(const EdgeInsetsDirectional.only(start: 10, end: 20)),
+        padding.directional
+            .from(const EdgeInsetsDirectional.only(start: 10, end: 20)),
         const PaddingAttribute(
           start: 10,
           end: 20,
@@ -146,8 +146,8 @@ void main() {
       );
 
       expect(
-        paddingDirectional
-            .as(const EdgeInsetsDirectional.only(start: 10, end: 20, top: 30)),
+        padding.directional.from(
+            const EdgeInsetsDirectional.only(start: 10, end: 20, top: 30)),
         const PaddingAttribute(
           start: 10,
           end: 20,
@@ -158,7 +158,7 @@ void main() {
       );
 
       expect(
-        paddingDirectional.as(
+        padding.directional.from(
           const EdgeInsetsDirectional.only(
             start: 10,
             end: 20,
@@ -176,7 +176,7 @@ void main() {
       );
     });
 
-    // paddingDirectionalFrom
+    // padding.directionalFrom
 
     test('padding.only', () {
       expect(
@@ -228,16 +228,16 @@ void main() {
       );
     });
 
-    test('paddingDirectional.start', () {
+    test('padding.directional.start', () {
       expect(
-        paddingDirectional.start(10),
+        padding.directional.start(10),
         const PaddingAttribute(start: 10),
       );
     });
 
-    test('paddingDirectional.end', () {
+    test('padding.directional.end', () {
       expect(
-        paddingDirectional.end(10),
+        padding.directional.end(10),
         const PaddingAttribute(end: 10),
       );
     });
@@ -263,29 +263,29 @@ void main() {
       );
     });
 
-    test('paddingDirectional.only', () {
+    test('padding.directional.only', () {
       expect(
-        paddingDirectional.only(start: 10),
+        padding.directional.only(start: 10),
         const PaddingAttribute(start: 10),
       );
 
       expect(
-        paddingDirectional.only(end: 10),
+        padding.directional.only(end: 10),
         const PaddingAttribute(end: 10),
       );
 
       expect(
-        paddingDirectional.only(start: 10, end: 20),
+        padding.directional.only(start: 10, end: 20),
         const PaddingAttribute(start: 10, end: 20),
       );
 
       expect(
-        paddingDirectional.only(start: 10, end: 20, top: 30),
+        padding.directional.only(start: 10, end: 20, top: 30),
         const PaddingAttribute(start: 10, end: 20, top: 30),
       );
 
       expect(
-        paddingDirectional.only(start: 10, end: 20, top: 30, bottom: 40),
+        padding.directional.only(start: 10, end: 20, top: 30, bottom: 40),
         const PaddingAttribute(start: 10, end: 20, top: 30, bottom: 40),
       );
     });
@@ -311,10 +311,10 @@ void main() {
       );
     });
 
-    // marginDirectional()
-    test('marginDirectional()', () {
+    // margin.directional()
+    test('margin.directional()', () {
       expect(
-        marginDirectional(10),
+        margin.directional(10),
         const MarginAttribute(
           start: 10,
           end: 10,
@@ -324,7 +324,7 @@ void main() {
         reason: '1',
       );
       expect(
-        marginDirectional(10, 20),
+        margin.directional(10, 20),
         const MarginAttribute(
           top: 10,
           bottom: 10,
@@ -334,7 +334,7 @@ void main() {
         reason: '2',
       );
       expect(
-        marginDirectional(10, 20, 30),
+        margin.directional(10, 20, 30),
         const MarginAttribute(
           top: 10,
           bottom: 30,
@@ -344,7 +344,7 @@ void main() {
         reason: '3',
       );
       expect(
-        marginDirectional(10, 20, 30, 40),
+        margin.directional(10, 20, 30, 40),
         const MarginAttribute(
           top: 10,
           end: 20,
@@ -405,16 +405,16 @@ void main() {
       );
     });
 
-    test('marginDirectional.start', () {
+    test('margin.directional.start', () {
       expect(
-        marginDirectional.start(10),
+        margin.directional.start(10),
         const MarginAttribute(start: 10),
       );
     });
 
-    test('marginDirectional.end', () {
+    test('margin.directional.end', () {
       expect(
-        marginDirectional.end(10),
+        margin.directional.end(10),
         const MarginAttribute(end: 10),
       );
     });
@@ -442,102 +442,102 @@ void main() {
 
     test('margin.as', () {
       expect(
-        margin.as(const EdgeInsets.all(10)),
+        margin.from(const EdgeInsets.all(10)),
         const MarginAttribute(top: 10, bottom: 10, left: 10, right: 10),
       );
 
       expect(
-        margin.as(const EdgeInsets.only(top: 10)),
+        margin.from(const EdgeInsets.only(top: 10)),
         const MarginAttribute(top: 10, bottom: 0, left: 0, right: 0),
       );
 
       expect(
-        margin.as(const EdgeInsets.only(left: 10)),
+        margin.from(const EdgeInsets.only(left: 10)),
         const MarginAttribute(left: 10, bottom: 0, top: 0, right: 0),
       );
 
       expect(
-        margin.as(const EdgeInsets.only(right: 10)),
+        margin.from(const EdgeInsets.only(right: 10)),
         const MarginAttribute(right: 10, bottom: 0, top: 0, left: 0),
       );
 
       expect(
-        margin.as(const EdgeInsets.only(bottom: 10)),
+        margin.from(const EdgeInsets.only(bottom: 10)),
         const MarginAttribute(bottom: 10, top: 0, left: 0, right: 0),
       );
 
       expect(
-        margin.as(const EdgeInsets.symmetric(horizontal: 10)),
+        margin.from(const EdgeInsets.symmetric(horizontal: 10)),
         const MarginAttribute(left: 10, right: 10, top: 0, bottom: 0),
       );
 
       expect(
-        margin.as(const EdgeInsets.symmetric(vertical: 10)),
+        margin.from(const EdgeInsets.symmetric(vertical: 10)),
         const MarginAttribute(top: 10, bottom: 10, left: 0, right: 0),
       );
 
       expect(
-        marginDirectional.as(const EdgeInsetsDirectional.only(start: 10)),
+        margin.directional.from(const EdgeInsetsDirectional.only(start: 10)),
         const MarginAttribute(start: 10, end: 0, top: 0, bottom: 0),
       );
 
       expect(
-        marginDirectional.as(const EdgeInsetsDirectional.only(end: 10)),
+        margin.directional.from(const EdgeInsetsDirectional.only(end: 10)),
         const MarginAttribute(end: 10, start: 0, top: 0, bottom: 0),
       );
 
       expect(
-        marginDirectional.as(const EdgeInsetsDirectional.only(top: 10)),
+        margin.directional.from(const EdgeInsetsDirectional.only(top: 10)),
         const MarginAttribute(top: 10, bottom: 0, start: 0, end: 0),
       );
 
       expect(
-        marginDirectional.as(const EdgeInsetsDirectional.only(bottom: 10)),
+        margin.directional.from(const EdgeInsetsDirectional.only(bottom: 10)),
         const MarginAttribute(bottom: 10, top: 0, start: 0, end: 0),
       );
 
       expect(
-        marginDirectional
-            .as(const EdgeInsetsDirectional.only(start: 10, end: 20)),
+        margin.directional
+            .from(const EdgeInsetsDirectional.only(start: 10, end: 20)),
         const MarginAttribute(start: 10, end: 20, top: 0, bottom: 0),
       );
 
       expect(
-        marginDirectional
-            .as(const EdgeInsetsDirectional.only(start: 10, end: 20, top: 30)),
+        margin.directional.from(
+            const EdgeInsetsDirectional.only(start: 10, end: 20, top: 30)),
         const MarginAttribute(start: 10, end: 20, top: 30, bottom: 0),
       );
 
       expect(
-        marginDirectional.as(const EdgeInsetsDirectional.only(
+        margin.directional.from(const EdgeInsetsDirectional.only(
             start: 10, end: 20, top: 30, bottom: 40)),
         const MarginAttribute(start: 10, end: 20, top: 30, bottom: 40),
       );
     });
 
-    test('marginDirectional.only', () {
+    test('margin.directional.only', () {
       expect(
-        marginDirectional.only(start: 10),
+        margin.directional.only(start: 10),
         const MarginAttribute(start: 10),
       );
 
       expect(
-        marginDirectional.only(end: 10),
+        margin.directional.only(end: 10),
         const MarginAttribute(end: 10),
       );
 
       expect(
-        marginDirectional.only(start: 10, end: 20),
+        margin.directional.only(start: 10, end: 20),
         const MarginAttribute(start: 10, end: 20),
       );
 
       expect(
-        marginDirectional.only(start: 10, end: 20, top: 30),
+        margin.directional.only(start: 10, end: 20, top: 30),
         const MarginAttribute(start: 10, end: 20, top: 30),
       );
 
       expect(
-        marginDirectional.only(start: 10, end: 20, top: 30, bottom: 40),
+        margin.directional.only(start: 10, end: 20, top: 30, bottom: 40),
         const MarginAttribute(start: 10, end: 20, top: 30, bottom: 40),
       );
     });

@@ -1,8 +1,9 @@
 import 'package:flutter/widgets.dart';
 
+import '../../helpers/build_context_ext.dart';
 import '../../widgets/styled_widget.dart';
 import '../container/container_widget.dart';
-import 'stack_mixture.dart';
+import 'stack_attribute.dart';
 
 class StyledStack extends StyledWidget {
   const StyledStack({
@@ -16,16 +17,20 @@ class StyledStack extends StyledWidget {
 
   @override
   Widget build(BuildContext context) {
-    return withMix(context, (data) {
-      final spec = StackMixture.resolve(data);
+    final attribute = inherit
+        ? context.mix?.attributeOf<StackMixAttribute>() ??
+            const StackMixAttribute()
+        : const StackMixAttribute();
 
-      const fallback = Stack();
+    return withMix(context, (mix) {
+      final mixture =
+          attribute.merge(mix.attributeOf<StackMixAttribute>()).resolve(mix);
 
       return Stack(
-        alignment: spec.alignment ?? fallback.alignment,
-        textDirection: spec.textDirection,
-        fit: spec.fit ?? fallback.fit,
-        clipBehavior: spec.clipBehavior ?? fallback.clipBehavior,
+        alignment: mixture.alignment ?? _defaultStack.alignment,
+        textDirection: mixture.textDirection,
+        fit: mixture.fit ?? _defaultStack.fit,
+        clipBehavior: mixture.clipBehavior ?? _defaultStack.clipBehavior,
         children: children,
       );
     });
@@ -44,7 +49,7 @@ class ZBox extends StyledWidget {
 
   @override
   Widget build(BuildContext context) {
-    return withMix(context, (data) {
+    return withMix(context, (mix) {
       return StyledContainer(
         inherit: true,
         child: StyledStack(inherit: true, children: children),
@@ -52,3 +57,5 @@ class ZBox extends StyledWidget {
     });
   }
 }
+
+const _defaultStack = Stack();

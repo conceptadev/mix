@@ -1,9 +1,8 @@
-// ignore_for_file: avoid-unnecessary-reassignment
-
 import 'package:flutter/material.dart';
 
+import '../../helpers/build_context_ext.dart';
 import '../../widgets/styled_widget.dart';
-import 'container_mixture.dart';
+import 'container_attribute.dart';
 
 typedef Box = StyledContainer;
 
@@ -14,13 +13,15 @@ class StyledContainer extends StyledWidget {
 
   @override
   Widget build(BuildContext context) {
-    ContainerMixture? inheritedMixture;
-    if (inherit) {
-      inheritedMixture = ContainerMixture.maybeOf(context);
-    }
+    final attribute = inherit
+        ? context.mix?.attributeOf<ContainerMixAttribute>() ??
+            const ContainerMixAttribute()
+        : const ContainerMixAttribute();
 
-    return withMix(context, (data) {
-      final mixture = ContainerMixture.of(context).merge(inheritedMixture);
+    return withMix(context, (mix) {
+      final mixture = attribute
+          .merge(mix.attributeOf<ContainerMixAttribute>())
+          .resolve(mix);
 
       return Container(
         alignment: mixture.alignment,
@@ -35,39 +36,3 @@ class StyledContainer extends StyledWidget {
     });
   }
 }
-
-// class AnimatedStyledContainer extends AnimatedStyledWidget {
-//   const AnimatedStyledContainer({
-//     super.style,
-//     super.key,
-//     super.inherit,
-//     this.child,
-//     this.mix,
-//   });
-
-//   @override
-//   @Deprecated('Use the style parameter instead')
-//   final StyleMix? mix;
-//   final Widget? child;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return buildWithStyle(context, (data) {
-//       final spec = ContainerSpec.resolve(data);
-
-//       return AnimatedContainer(
-//         alignment: spec.alignment,
-//         padding: spec.padding,
-//         decoration: spec.decoration,
-//         width: spec.width,
-//         height: spec.height,
-//         constraints: spec.constraints,
-//         margin: spec.margin,
-//         transform: spec.transform,
-//         curve: curve,
-//         duration: duration,
-//         child: child,
-//       );
-//     });
-//   }
-// }

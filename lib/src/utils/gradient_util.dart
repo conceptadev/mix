@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../attributes/gradient_attribute.dart';
 import '../core/extensions/values_ext.dart';
-import 'alignment_util.dart';
 import 'scalar_util.dart';
 
 const radialGradient = RadialGradientAttributeUtility.selfBuilder;

@@ -1,9 +1,10 @@
 import 'package:flutter/widgets.dart';
 
+import '../../helpers/build_context_ext.dart';
 import '../../widgets/gap_widget.dart';
 import '../../widgets/styled_widget.dart';
 import '../container/container_widget.dart';
-import 'flex_mixture.dart';
+import 'flex_attribute.dart';
 
 /// A flexible layout widget enhanced with `StyleMix` for simplified styling.
 ///
@@ -37,26 +38,32 @@ class StyledFlex extends StyledWidget {
 
   @override
   Widget build(BuildContext context) {
-    return withMix(context, (data) {
-      final spec = FlexMixture.resolve(data);
+    final attribute = inherit
+        ? context.mix?.attributeOf<FlexMixAttribute>() ??
+            const FlexMixAttribute()
+        : const FlexMixAttribute();
+
+    return withMix(context, (mix) {
+      final mixture =
+          attribute.merge(mix.attributeOf<FlexMixAttribute>()).resolve(mix);
 
       List<Widget> renderSpacedChildren() {
-        return spec.gap == null
+        return mixture.gap == null
             ? children
             : List<Widget>.generate(
                 children.length * 2 - 1,
                 (index) =>
-                    index % 2 == 0 ? children[index ~/ 2] : Gap(spec.gap!),
+                    index % 2 == 0 ? children[index ~/ 2] : Gap(mixture.gap!),
               );
       }
 
       return Flex(
         direction: direction,
-        mainAxisAlignment: spec.mainAxisAlignment ?? MainAxisAlignment.start,
-        mainAxisSize: spec.mainAxisSize ?? MainAxisSize.max,
+        mainAxisAlignment: mixture.mainAxisAlignment ?? MainAxisAlignment.start,
+        mainAxisSize: mixture.mainAxisSize ?? MainAxisSize.max,
         crossAxisAlignment:
-            spec.crossAxisAlignment ?? CrossAxisAlignment.center,
-        verticalDirection: spec.verticalDirection ?? VerticalDirection.down,
+            mixture.crossAxisAlignment ?? CrossAxisAlignment.center,
+        verticalDirection: mixture.verticalDirection ?? VerticalDirection.down,
         children: renderSpacedChildren(),
       );
     });
@@ -145,7 +152,7 @@ class FlexBox extends StyledWidget {
 
   @override
   Widget build(BuildContext context) {
-    return withMix(context, (data) {
+    return withMix(context, (mix) {
       return StyledContainer(
         inherit: true,
         child: StyledFlex(

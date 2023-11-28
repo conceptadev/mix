@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../recipes/icon/icon_mixture.dart';
-import 'styled_widget.dart';
+import '../../widgets/styled_widget.dart';
+import 'icon_mixture.dart';
 
 class StyledIcon extends StyledWidget {
   const StyledIcon(
@@ -19,9 +19,9 @@ class StyledIcon extends StyledWidget {
 
   @override
   Widget build(BuildContext context) {
-    return withMix(context, (data) {
+    return withMix(context, (mix) {
       // Resolve style attributes
-      final spec = IconMixture.resolve(data);
+      final spec = IconMixture.resolve(mix);
 
       return Icon(
         icon,
@@ -52,9 +52,9 @@ class AnimatedStyledIcon extends StyledWidget {
 
   @override
   Widget build(BuildContext context) {
-    return withMix(context, (data) {
+    return withMix(context, (mix) {
       // Resolve style attributes
-      final spec = IconMixture.resolve(data);
+      final spec = IconMixture.resolve(mix);
 
       return AnimatedIcon(
         icon: icon,

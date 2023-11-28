@@ -5,15 +5,15 @@ import '../../core/attribute.dart';
 import '../../factory/mix_provider_data.dart';
 import 'image_mixture.dart';
 
-class ImageMixtureAttribute
-    extends ResolvableAttribute<ImageMixtureAttribute, ImageMixture> {
+class ImageMixAttribute
+    extends ResolvableAttribute<ImageMixAttribute, ImageMixture> {
   final double? width;
   final double? height;
   final ColorAttribute? color;
   final ImageRepeat? repeat;
   final BoxFit? fit;
 
-  const ImageMixtureAttribute({
+  const ImageMixAttribute({
     this.width,
     this.height,
     this.color,
@@ -33,10 +33,10 @@ class ImageMixtureAttribute
   }
 
   @override
-  ImageMixtureAttribute merge(covariant ImageMixtureAttribute? other) {
+  ImageMixAttribute merge(covariant ImageMixAttribute? other) {
     if (other == null) return this;
 
-    return ImageMixtureAttribute(
+    return ImageMixAttribute(
       width: width ?? other.width,
       height: height ?? other.height,
       color: color ?? other.color,

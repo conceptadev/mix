@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mix/src/attributes/constraints/constraints_attribute.dart';
-import 'package:mix/src/attributes/constraints/constraints_util.dart';
+import 'package:mix/mix.dart';
 
 import '../../../helpers/testing_utils.dart';
 
@@ -102,29 +101,6 @@ void main() {
       expect(result.maxWidth, isNull);
       expect(result.minHeight, isNull);
       expect(result.maxHeight, 200.0);
-    });
-
-    // width
-    test('width()', () {
-      final result = width(50.0);
-
-      expect(result.minWidth, isNull);
-      expect(result.maxWidth, isNull);
-      expect(result.width, 50.0);
-      expect(result.minHeight, isNull);
-      expect(result.maxHeight, isNull);
-      expect(result.height, isNull);
-    });
-
-    // height
-    test('height()', () {
-      final result = height(50.0);
-      expect(result.minWidth, isNull);
-      expect(result.maxWidth, isNull);
-      expect(result.height, 50.0);
-      expect(result.minHeight, isNull);
-      expect(result.maxHeight, isNull);
-      expect(result.width, isNull);
     });
   });
 }

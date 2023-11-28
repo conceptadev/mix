@@ -1,41 +1,11 @@
 import '../../utils/scalar_util.dart';
 import 'constraints_attribute.dart';
 
-const boxConstraints = BoxConstraintsUtility.selfBuilder;
-
-final width = boxConstraints.width;
-
-final height = boxConstraints.height;
-
-final minWidth = boxConstraints.minWidth;
-
-final maxWidth = boxConstraints.maxWidth;
-
-final minHeight = boxConstraints.minHeight;
-
-final maxHeight = boxConstraints.maxHeight;
-
 class BoxConstraintsUtility<T> extends MixUtility<T, BoxConstraintsAttribute> {
   /// Provides a builder that returns an instance of BoxConstraintsAttribute.
   static const selfBuilder = BoxConstraintsUtility(MixUtility.selfBuilder);
 
   const BoxConstraintsUtility(super.builder);
-
-  /// Creates a [BoxConstraintsAttribute] with a specific [width].
-  ///
-  /// The returned [BoxConstraintsAttribute] instance imposes the given [width] as
-  /// a fixed size, ignoring any minimum or maximum width constraints.
-  ///
-  /// [width]: The fixed width value for the constraints.
-  T width(double width) => call(width: width);
-
-  /// Creates a [BoxConstraintsAttribute] with a specific [height].
-  ///
-  /// Similar to [width], this function sets a fixed [height] for the constraints,
-  /// overriding any minimum or maximum height constraints.
-  ///
-  /// [height]: The fixed height value for the constraints.
-  T height(double height) => call(height: height);
 
   /// Defines a [BoxConstraintsAttribute] with a minimum width [minWidth].
   ///
@@ -70,8 +40,6 @@ class BoxConstraintsUtility<T> extends MixUtility<T, BoxConstraintsAttribute> {
   T maxHeight(double height) => call(maxHeight: height);
 
   T call({
-    double? width,
-    double? height,
     double? minWidth,
     double? maxWidth,
     double? minHeight,
@@ -79,8 +47,6 @@ class BoxConstraintsUtility<T> extends MixUtility<T, BoxConstraintsAttribute> {
   }) {
     return as(
       BoxConstraintsAttribute(
-        width: width,
-        height: height,
         minWidth: minWidth,
         maxWidth: maxWidth,
         minHeight: minHeight,

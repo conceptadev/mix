@@ -41,22 +41,25 @@ class FlexMixture extends Mixture<FlexMixture> {
         gap = null;
 
   static FlexMixture resolve(MixData mix) {
-    final recipe = mix.attributeOfType<FlexAttribute>()?.resolve(mix);
+    final recipe = mix.attributeOf<FlexMixAttribute>()?.resolve(mix);
 
-    return recipe ?? const FlexAttribute().resolve(mix);
+    return recipe ?? const FlexMixAttribute().resolve(mix);
   }
 
   @override
   FlexMixture lerp(FlexMixture other, double t) {
     return FlexMixture(
-      crossAxisAlignment: snap(crossAxisAlignment, other.crossAxisAlignment, t),
-      mainAxisAlignment: snap(mainAxisAlignment, other.mainAxisAlignment, t),
-      mainAxisSize: snap(mainAxisSize, other.mainAxisSize, t),
-      verticalDirection: snap(verticalDirection, other.verticalDirection, t),
-      direction: snap(direction, other.direction, t),
-      textDirection: snap(textDirection, other.textDirection, t),
-      textBaseline: snap(textBaseline, other.textBaseline, t),
-      clipBehavior: snap(clipBehavior, other.clipBehavior, t),
+      crossAxisAlignment:
+          lerpSnap(crossAxisAlignment, other.crossAxisAlignment, t),
+      mainAxisAlignment:
+          lerpSnap(mainAxisAlignment, other.mainAxisAlignment, t),
+      mainAxisSize: lerpSnap(mainAxisSize, other.mainAxisSize, t),
+      verticalDirection:
+          lerpSnap(verticalDirection, other.verticalDirection, t),
+      direction: lerpSnap(direction, other.direction, t),
+      textDirection: lerpSnap(textDirection, other.textDirection, t),
+      textBaseline: lerpSnap(textBaseline, other.textBaseline, t),
+      clipBehavior: lerpSnap(clipBehavior, other.clipBehavior, t),
       gap: lerpDouble(gap, other.gap, t),
     );
   }

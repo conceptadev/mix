@@ -18,7 +18,7 @@ class StackMixture extends Mixture<StackMixture> {
   });
 
   static StackMixture resolve(MixData mix) {
-    return mix.resolvableOf(const StackMixtureAttribute());
+    return mix.resolvableOf(const StackMixAttribute());
   }
 
   @override

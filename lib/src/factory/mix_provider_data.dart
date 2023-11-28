@@ -56,7 +56,7 @@ class MixData with Comparable {
       _attributes.whereType<T>();
 
   /// Finds and returns an [VisualAttribute] of type [A], or null if not found.
-  A? attributeOfType<A extends StyleAttribute>() {
+  A? attributeOf<A extends StyleAttribute>() {
     return _attributes.attributeOfType<A>();
   }
 

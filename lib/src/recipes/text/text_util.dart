@@ -6,13 +6,16 @@ import '../../attributes/text_style/text_style_attribute.dart';
 import '../../core/directive.dart';
 import '../../core/extensions/values_ext.dart';
 import '../../utils/scalar_util.dart';
+import '../../utils/shadow_util.dart';
 import '../../utils/text_style_util.dart';
 import 'text_attribute.dart';
 
-final text = TextUtility.selfBuilder;
+const text = TextUtility.selfBuilder;
+const textStyle = TextStyleUtility.selfBuilder;
+const shadow = ShadowUtility.selfBuilder;
 
-class TextUtility<T> extends MixUtility<T, TextMixtureAttribute> {
-  static final selfBuilder = TextUtility((value) => value);
+class TextUtility<T> extends MixUtility<T, TextMixAttribute> {
+  static const selfBuilder = TextUtility(MixUtility.selfBuilder);
 
   const TextUtility(super.builder);
 
@@ -60,7 +63,7 @@ class TextUtility<T> extends MixUtility<T, TextMixtureAttribute> {
     bool? softWrap,
     List<TextDirective>? directives,
   }) {
-    final text = TextMixtureAttribute(
+    final text = TextMixAttribute(
       overflow: overflow,
       strutStyle: strutStyle,
       textAlign: textAlign,
@@ -90,7 +93,7 @@ class TextUtility<T> extends MixUtility<T, TextMixtureAttribute> {
     bool? softWrap,
     List<TextDirective>? directives,
   }) {
-    final text = TextMixtureAttribute(
+    final text = TextMixAttribute(
       overflow: overflow,
       strutStyle: strutStyle?.toAttribute(),
       textAlign: textAlign,

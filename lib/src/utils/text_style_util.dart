@@ -10,8 +10,6 @@ import 'helper_util.dart';
 import 'scalar_util.dart';
 import 'shadow_util.dart';
 
-const textStyle = TextStyleUtility.selfBuilder;
-
 class TextStyleUtility<T> extends MixUtility<T, TextStyleAttribute> {
   static const selfBuilder = TextStyleUtility(MixUtility.selfBuilder);
 

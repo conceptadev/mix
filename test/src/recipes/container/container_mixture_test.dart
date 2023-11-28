@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
@@ -20,7 +22,7 @@ void main() {
         ),
       );
 
-      final spec = ContainerMixture.maybeOf(mix);
+      final spec = ContainerMixture.of(mix);
 
       expect(spec.alignment, Alignment.center);
       expect(spec.padding, const EdgeInsets.only(bottom: 16.0, top: 8.0));
@@ -36,6 +38,9 @@ void main() {
     test('copyWith', () {
       final spec = ContainerMixture(
         alignment: Alignment.center,
+        color: null,
+        width: 300,
+        height: 200,
         padding: const EdgeInsets.all(16.0),
         margin: const EdgeInsets.only(top: 8.0, bottom: 8.0),
         constraints: const BoxConstraints(maxWidth: 300.0, minHeight: 200.0),
@@ -60,6 +65,9 @@ void main() {
     test('lerp', () {
       final spec1 = ContainerMixture(
         alignment: Alignment.topLeft,
+        color: null,
+        width: 300,
+        height: 200,
         padding: const EdgeInsets.all(8.0),
         margin: const EdgeInsets.only(top: 4.0),
         constraints: const BoxConstraints(maxWidth: 200.0),
@@ -70,6 +78,9 @@ void main() {
 
       final spec2 = ContainerMixture(
         alignment: Alignment.bottomRight,
+        color: null,
+        width: 400,
+        height: 300,
         padding: const EdgeInsets.all(16.0),
         margin: const EdgeInsets.only(top: 8.0),
         constraints: const BoxConstraints(maxWidth: 400.0),
@@ -101,6 +112,9 @@ void main() {
                   begin: const BoxDecoration(color: Colors.red),
                   end: const BoxDecoration(color: Colors.blue))
               .lerp(t));
+
+      expect(lerpedSpec.width, lerpDouble(300, 400, t));
+      expect(lerpedSpec.height, lerpDouble(200, 300, t));
 
       expect(
           lerpedSpec.transform,

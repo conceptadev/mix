@@ -5,35 +5,34 @@ import '../../core/extensions/values_ext.dart';
 import '../../utils/scalar_util.dart';
 import 'image_attribute.dart';
 
-const image = ImageUtility();
+const image = ImageUtility.selfBuilder;
 
-class ImageUtility<T> {
-  const ImageUtility();
+class ImageUtility<T> extends MixUtility<T, ImageMixAttribute> {
+  static const selfBuilder = ImageUtility(MixUtility.selfBuilder);
+  const ImageUtility(super.builder);
 
-  ImageMixtureAttribute _color(ColorAttribute color) =>
-      ImageMixtureAttribute(color: color);
-  ImageMixtureAttribute _repeat(ImageRepeat repeat) =>
-      ImageMixtureAttribute(repeat: repeat);
-  ImageMixtureAttribute _fit(BoxFit fit) => ImageMixtureAttribute(fit: fit);
+  ImageMixAttribute _color(ColorAttribute color) =>
+      ImageMixAttribute(color: color);
+  ImageMixAttribute _repeat(ImageRepeat repeat) =>
+      ImageMixAttribute(repeat: repeat);
+  ImageMixAttribute _fit(BoxFit fit) => ImageMixAttribute(fit: fit);
 
-  ColorUtility<ImageMixtureAttribute> get color => ColorUtility(_color);
-  ImageRepeatUtility<ImageMixtureAttribute> get repeat =>
+  ColorUtility<ImageMixAttribute> get color => ColorUtility(_color);
+  ImageRepeatUtility<ImageMixAttribute> get repeat =>
       ImageRepeatUtility(_repeat);
-  BoxFitUtility<ImageMixtureAttribute> get fit => BoxFitUtility(_fit);
+  BoxFitUtility<ImageMixAttribute> get fit => BoxFitUtility(_fit);
 
-  ImageMixtureAttribute width(double width) =>
-      ImageMixtureAttribute(width: width);
-  ImageMixtureAttribute height(double height) =>
-      ImageMixtureAttribute(height: height);
+  ImageMixAttribute width(double width) => ImageMixAttribute(width: width);
+  ImageMixAttribute height(double height) => ImageMixAttribute(height: height);
 
-  ImageMixtureAttribute call({
+  ImageMixAttribute call({
     double? width,
     double? height,
     Color? color,
     ImageRepeat? repeat,
     BoxFit? fit,
   }) {
-    return ImageMixtureAttribute(
+    return ImageMixAttribute(
       width: width,
       height: height,
       color: color?.toAttribute(),

@@ -12,12 +12,6 @@ import 'border_util.dart';
 import 'helper_util.dart';
 import 'scalar_util.dart';
 
-const boxDecoration = BoxDecorationUtility.selfBuilder;
-
-final backgroundColor = boxDecoration.color;
-final bgColor = boxDecoration.color;
-final elevation = boxDecoration.elevation;
-
 class BoxDecorationUtility<T> extends MixUtility<T, BoxDecorationAttribute> {
   static const selfBuilder = BoxDecorationUtility(MixUtility.selfBuilder);
 

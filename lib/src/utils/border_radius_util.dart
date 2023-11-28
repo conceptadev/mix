@@ -6,15 +6,9 @@ import '../attributes/border/border_radius_attribute.dart';
 import '../core/extensions/values_ext.dart';
 import 'scalar_util.dart';
 
-// Provides an utility for creating a uniform BorderRadiusAttribute for all corners.
-final borderRadius = BorderRadiusUtility.selfBuilder;
-
-// Border Radius Directional
-// Provides a utility BorderRadiusDirectionalAttribute for all corners, considering text direction.
-const borderRadiusDirectional = BorderRadiusDirectionalUtility();
-
-class BorderRadiusUtility<T> extends MixUtility<T, BorderRadiusAttribute> {
-  static final selfBuilder = BorderRadiusUtility((value) => value);
+class BorderRadiusUtility<T>
+    extends MixUtility<T, BorderRadiusGeometryAttribute> {
+  static const selfBuilder = BorderRadiusUtility(MixUtility.selfBuilder);
   const BorderRadiusUtility(super.builder);
 
   T _bottomLeft(Radius radius) => only(bottomLeft: radius);
@@ -39,6 +33,13 @@ class BorderRadiusUtility<T> extends MixUtility<T, BorderRadiusAttribute> {
         bottomLeft: radius,
         bottomRight: radius,
       );
+
+  T _directional(BorderRadiusDirectionalAttribute borderRadiusDirectional) {
+    return as(borderRadiusDirectional);
+  }
+
+  BorderRadiusDirectionalUtility<T> get directional =>
+      BorderRadiusDirectionalUtility(_directional);
 
   /// Applied radius only to bottomLeft corner.
   RadiusUtility<T> get bottomLeft => RadiusUtility(_bottomLeft);
@@ -123,8 +124,9 @@ class BorderRadiusUtility<T> extends MixUtility<T, BorderRadiusAttribute> {
   }
 }
 
-class BorderRadiusDirectionalUtility {
-  const BorderRadiusDirectionalUtility();
+class BorderRadiusDirectionalUtility<T>
+    extends MixUtility<T, BorderRadiusDirectionalAttribute> {
+  const BorderRadiusDirectionalUtility(super.builder);
 
   BorderRadiusDirectionalAttribute _bottomStart(Radius radius) =>
       only(bottomStart: radius);

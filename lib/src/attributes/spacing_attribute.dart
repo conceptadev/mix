@@ -81,6 +81,30 @@ class PaddingAttribute extends SpacingAttribute {
     super.end,
   });
 
+  static PaddingAttribute from(EdgeInsetsGeometry edgeInsets) {
+    if (edgeInsets is EdgeInsetsDirectional) {
+      return PaddingAttribute(
+        top: edgeInsets.top,
+        bottom: edgeInsets.bottom,
+        start: edgeInsets.start,
+        end: edgeInsets.end,
+      );
+    } else if (edgeInsets is EdgeInsets) {
+      return PaddingAttribute(
+        top: edgeInsets.top,
+        bottom: edgeInsets.bottom,
+        left: edgeInsets.left,
+        right: edgeInsets.right,
+      );
+    }
+
+    throw ArgumentError.value(
+      edgeInsets,
+      'edgeInsets',
+      'Must be either EdgeInsets or EdgeInsetsDirectional',
+    );
+  }
+
   @override
   PaddingAttribute merge(PaddingAttribute? other) {
     return other == null
@@ -106,6 +130,30 @@ class MarginAttribute extends SpacingAttribute {
     super.start,
     super.end,
   });
+
+  static MarginAttribute from(EdgeInsetsGeometry edgeInsets) {
+    if (edgeInsets is EdgeInsetsDirectional) {
+      return MarginAttribute(
+        top: edgeInsets.top,
+        bottom: edgeInsets.bottom,
+        start: edgeInsets.start,
+        end: edgeInsets.end,
+      );
+    } else if (edgeInsets is EdgeInsets) {
+      return MarginAttribute(
+        top: edgeInsets.top,
+        bottom: edgeInsets.bottom,
+        left: edgeInsets.left,
+        right: edgeInsets.right,
+      );
+    }
+
+    throw ArgumentError.value(
+      edgeInsets,
+      'edgeInsets',
+      'Must be either EdgeInsets or EdgeInsetsDirectional',
+    );
+  }
 
   @override
   MarginAttribute merge(MarginAttribute? other) {

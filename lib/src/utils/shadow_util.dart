@@ -5,9 +5,6 @@ import '../attributes/shadow_attribute.dart';
 import '../core/extensions/values_ext.dart';
 import 'scalar_util.dart';
 
-const shadow = ShadowUtility.selfBuilder;
-const boxShadow = BoxShadowUtility.selfBuilder;
-
 class ShadowUtility<T> extends MixUtility<T, ShadowAttribute> {
   static const selfBuilder = ShadowUtility(MixUtility.selfBuilder);
   const ShadowUtility(super.builder);

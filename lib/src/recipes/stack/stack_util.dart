@@ -4,13 +4,12 @@ import '../../attributes/alignment_attribute.dart';
 import '../../attributes/clip_behavior_attribute.dart';
 import '../../attributes/text_direction_attribute.dart';
 import '../../core/extensions/values_ext.dart';
-import '../../utils/alignment_util.dart';
 import '../../utils/scalar_util.dart';
 import 'stack_attribute.dart';
 
 const stack = StackMixtureUtility.selfBuilder;
 
-class StackMixtureUtility<T> extends MixUtility<T, StackMixtureAttribute> {
+class StackMixtureUtility<T> extends MixUtility<T, StackMixAttribute> {
   static const selfBuilder = StackMixtureUtility(MixUtility.selfBuilder);
 
   const StackMixtureUtility(super.builder);
@@ -27,7 +26,7 @@ class StackMixtureUtility<T> extends MixUtility<T, StackMixtureAttribute> {
     TextDirectionAttribute? textDirection,
     ClipBehaviorAttribute? clipBehavior,
   }) {
-    final stack = StackMixtureAttribute(
+    final stack = StackMixAttribute(
       alignment: alignment,
       fit: fit,
       textDirection: textDirection,

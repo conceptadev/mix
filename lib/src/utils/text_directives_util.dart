@@ -9,8 +9,8 @@ final lowercase = _textDirective(TextModifiers.lowercase);
 final titleCase = _textDirective(TextModifiers.titleCase);
 final sentenceCase = _textDirective(TextModifiers.sentenceCase);
 
-TextMixtureAttribute Function() _textDirective(Modifier<String> modifier) =>
-    () => TextMixtureAttribute(directives: [TextDirective(modifier)]);
+TextMixAttribute Function() _textDirective(Modifier<String> modifier) =>
+    () => TextMixAttribute(directives: [TextDirective(modifier)]);
 
 class TextDirectiveUtility<T> extends ScalarUtility<T, TextDirective> {
   const TextDirectiveUtility(super.builder);

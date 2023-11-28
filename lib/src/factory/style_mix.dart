@@ -39,14 +39,12 @@ class StyleMix {
   /// The variant attributes contained in this mix.
   final List<VariantAttribute> variants;
 
-  static final stack =
-      SpreadFunctionParams(_styleType<StackMixtureAttribute>());
-  static final text = SpreadFunctionParams(_styleType<TextMixtureAttribute>());
-  static final image =
-      SpreadFunctionParams(_styleType<ImageMixtureAttribute>());
+  static final stack = SpreadFunctionParams(_styleType<StackMixAttribute>());
+  static final text = SpreadFunctionParams(_styleType<TextMixAttribute>());
+  static final image = SpreadFunctionParams(_styleType<ImageMixAttribute>());
   static final container =
-      SpreadFunctionParams(_styleType<ContainerMixtureAttribute>());
-  static final flex = SpreadFunctionParams(_styleType<FlexAttribute>());
+      SpreadFunctionParams(_styleType<ContainerMixAttribute>());
+  static final flex = SpreadFunctionParams(_styleType<FlexMixAttribute>());
 
   const StyleMix._({required this.styles, required this.variants});
 

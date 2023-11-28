@@ -8,9 +8,9 @@ void main() {
   testWidgets('Stack', (tester) async {
     final style = StyleMix(
       stack.fit.expand(),
-      alignment.topCenter(),
-      clipBehavior.antiAlias(),
-      textDirection.ltr(),
+      stack.alignment.topCenter(),
+      stack.clipBehavior.antiAlias(),
+      stack.textDirection.ltr(),
     );
     await tester.pumpMaterialApp(
       StyledStack(
@@ -44,7 +44,7 @@ void main() {
     final style = StyleMix(
       stack.fit.expand(),
       stack.alignment.topCenter(),
-      textDirection.ltr(),
+      stack.textDirection.ltr(),
       backgroundColor(Colors.red),
     );
 

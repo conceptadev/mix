@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import '../core/attribute.dart';
 import '../recipes/container/container_widget.dart';
 import '../recipes/flex/flex_widget.dart';
-import '../widgets/icon_widget.dart';
-import '../widgets/text_widget.dart';
+import '../recipes/icon/icon_widget.dart';
+import '../recipes/text/text_widget.dart';
 import 'style_mix.dart';
 
 extension StyleMixExt<T extends Attribute> on StyleMix {

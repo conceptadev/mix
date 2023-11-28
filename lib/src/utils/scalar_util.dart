@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../attributes/alignment_attribute.dart';
+
 abstract class MixUtility<Attr, Value> {
   final Attr Function(Value value) _builder;
   const MixUtility(this._builder);
@@ -19,10 +21,42 @@ abstract class ScalarUtility<Return, Param> extends MixUtility<Return, Param> {
   Return call(Param value) => _builder(value);
 }
 
+class AlignmentUtility<T> extends MixUtility<T, AlignmentGeometry> {
+  static const selfBuilder = AlignmentUtility(AlignmentGeometryAttribute.new);
+  const AlignmentUtility(super.builder);
+
+  T _topLeft() => as(Alignment.topLeft);
+  T _topCenter() => as(Alignment.topCenter);
+  T _topRight() => as(Alignment.topRight);
+  T _centerLeft() => as(Alignment.centerLeft);
+  T _center() => as(Alignment.center);
+  T _centerRight() => as(Alignment.centerRight);
+  T _bottomLeft() => as(Alignment.bottomLeft);
+  T _bottomCenter() => as(Alignment.bottomCenter);
+  T _bottomRight() => as(Alignment.bottomRight);
+  T _only(double? x, double? y, double? start) {
+    return start == null
+        ? as(Alignment(x ?? 0, y ?? 0))
+        : as(AlignmentDirectional(start, y ?? 0));
+  }
+
+  T topLeft() => _topLeft();
+  T topCenter() => _topCenter();
+  T topRight() => _topRight();
+  T centerLeft() => _centerLeft();
+  T center() => _center();
+  T centerRight() => _centerRight();
+  T bottomLeft() => _bottomLeft();
+  T bottomCenter() => _bottomCenter();
+  T bottomRight() => _bottomRight();
+  T only(double? x, double? y, double? start) => _only(x, y, start);
+}
+
 class DoubleUtility<T> extends ScalarUtility<T, double> {
   const DoubleUtility(super.builder);
 
   T zero() => _builder(0);
+  T infinity() => _builder(double.infinity);
 }
 
 class IntUtility<T> extends ScalarUtility<T, int> {
@@ -143,11 +177,11 @@ class OffsetUtility<T> extends MixUtility<T, Offset> {
   const OffsetUtility(super.builder);
 }
 
-abstract class SizeUtility<T> extends DoubleUtility<T> {
-  const SizeUtility(super.builder);
+class SizingUtility<T> extends DoubleUtility<T> {
+  const SizingUtility(super.builder);
 }
 
-class FontSizeUtility<T> extends SizeUtility<T> {
+class FontSizeUtility<T> extends SizingUtility<T> {
   const FontSizeUtility(super.builder);
 }
 

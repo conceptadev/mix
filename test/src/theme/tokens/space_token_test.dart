@@ -63,7 +63,7 @@ void main() {
 
   group('WithSpaceTokens tests', () {
     test('WithSpaceTokens returns correct value', () {
-      final withSpaceTokens = SpacingUtility((value) => value);
+      final withSpaceTokens = SpacingSideUtility((value) => value);
       expect(withSpaceTokens.xsmall(), SpaceToken.xsmall());
       expect(withSpaceTokens.small(), SpaceToken.small());
       expect(withSpaceTokens.medium(), SpaceToken.medium());

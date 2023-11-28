@@ -69,7 +69,7 @@ extension DeprecatedMixExtension<T extends Attribute> on StyleMix {
 @Deprecated('Use MixData instead.')
 typedef MixContext = MixData;
 
-extension WithSpaceTokensExt<T> on SpacingUtility<T> {
+extension WithSpaceTokensExt<T> on SpacingSideUtility<T> {
   @Deprecated('Use xsmall instead')
   T get xs => this.xsmall();
   @Deprecated('Use small instead')
@@ -85,8 +85,8 @@ extension WithSpaceTokensExt<T> on SpacingUtility<T> {
 }
 
 @Deprecated('Use mainAxisAlignment instead')
-FlexAttribute mainAxis(MainAxisAlignment mainAxisAlignment) {
-  return FlexAttribute(mainAxisAlignment: mainAxisAlignment);
+FlexMixAttribute mainAxis(MainAxisAlignment mainAxisAlignment) {
+  return FlexMixAttribute(mainAxisAlignment: mainAxisAlignment);
 }
 
 @Deprecated('Use onXSmall instead')
@@ -343,10 +343,10 @@ final marginX = marginHorizontal;
 final marginY = marginVertical;
 
 @Deprecated('Use borderRadius instead')
-final rounded = borderRadius;
+const rounded = borderRadius;
 
 @Deprecated('Use borderRadius instead')
-final r = borderRadius;
+const r = borderRadius;
 
 @Deprecated('Use borderRadius.horizontal instead')
 dynamic get roundedH => UnimplementedError();
@@ -440,13 +440,13 @@ AlignmentGeometryAttribute zAligmnent(Alignment alignment) {
 }
 
 @Deprecated('Use stackFit instead')
-StackMixtureAttribute zFit(StackFit fit) {
-  return StackMixtureAttribute(fit: fit.toAttribute());
+StackMixAttribute zFit(StackFit fit) {
+  return StackMixAttribute(fit: fit.toAttribute());
 }
 
 @Deprecated('Use stack instead')
-StackMixtureAttribute zClip(Clip clip) {
-  return StackMixtureAttribute(clipBehavior: clip.toAttribute());
+StackMixAttribute zClip(Clip clip) {
+  return StackMixAttribute(clipBehavior: clip.toAttribute());
 }
 
 // Create a FlexAttributes for the direction axis.
@@ -457,18 +457,18 @@ AxisAttribute direction(Axis direction) {
 
 // Create a FlexAttributes for the cross axis.
 @Deprecated('Use crossAxisAlignment() instead')
-FlexAttribute crossAxis(CrossAxisAlignment crossAxisAlignment) {
-  return FlexAttribute(crossAxisAlignment: crossAxisAlignment);
+FlexMixAttribute crossAxis(CrossAxisAlignment crossAxisAlignment) {
+  return FlexMixAttribute(crossAxisAlignment: crossAxisAlignment);
 }
 
 @Deprecated('Use textDirective(directive)')
-TextMixtureAttribute directives(List<TextDirective> directives) {
-  return TextMixtureAttribute(directives: directives);
+TextMixAttribute directives(List<TextDirective> directives) {
+  return TextMixAttribute(directives: directives);
 }
 
 @Deprecated('Use textDirective(directive)')
-TextMixtureAttribute directive(TextDirective directive) {
-  return TextMixtureAttribute(directives: [directive]);
+TextMixAttribute directive(TextDirective directive) {
+  return TextMixAttribute(directives: [directive]);
 }
 
 @Deprecated('Locale is now passed to StyledText widget')
@@ -477,15 +477,15 @@ TextStyleAttribute locale() {
 }
 
 @Deprecated('Use text(overflow: overflow)')
-TextMixtureAttribute overflow(TextOverflow overflow) {
-  return TextMixtureAttribute(overflow: overflow);
+TextMixAttribute overflow(TextOverflow overflow) {
+  return TextMixAttribute(overflow: overflow);
 }
 
 @Deprecated('use margin.only instead')
 final marginOnly = margin.only;
 
-@Deprecated('use marginDirectional.only instead')
-final marginDirectionalOnly = marginDirectional.only;
+@Deprecated('use margin.only instead')
+final marginDirectionalOnly = margin.only;
 
 @Deprecated('use margin.all instead')
 final marginAll = margin.all;
@@ -502,11 +502,11 @@ final marginLeft = margin.left;
 @Deprecated('use margin.right instead')
 final marginRight = margin.right;
 
-@Deprecated('use marginDirectional.start instead')
-final marginStart = marginDirectional.start;
+@Deprecated('use margin.start instead')
+final marginStart = margin.start;
 
-@Deprecated('use marginDirectional.end instead')
-final marginEnd = marginDirectional.end;
+@Deprecated('use margin.end instead')
+final marginEnd = margin.end;
 
 @Deprecated('use margin.horizontal instead')
 final marginHorizontal = margin.horizontal;
@@ -520,8 +520,8 @@ final marginFrom = margin.as;
 @Deprecated('use padding.only instead')
 final paddingOnly = padding.only;
 
-@Deprecated('use paddingDirectional.only instead')
-final paddingDirectionalOnly = paddingDirectional.only;
+@Deprecated('use padding.only instead')
+final paddingDirectionalOnly = padding.only;
 
 @Deprecated('use padding.all instead')
 final paddingAll = padding.all;
@@ -538,11 +538,11 @@ final paddingLeft = padding.left;
 @Deprecated('use padding.right instead')
 final paddingRight = padding.right;
 
-@Deprecated('use paddingDirectional.start instead')
-final paddingStart = paddingDirectional.start;
+@Deprecated('use padding.start instead')
+final paddingStart = padding.start;
 
-@Deprecated('use paddingDirectional.end instead')
-final paddingEnd = paddingDirectional.end;
+@Deprecated('use padding.end instead')
+final paddingEnd = padding.end;
 
 @Deprecated('use padding.horizontal instead')
 final paddingHorizontal = padding.horizontal;
@@ -579,3 +579,6 @@ final borderVertical = border.vertical;
 
 @Deprecated('use border.all instead')
 final borderAll = border.all;
+
+@Deprecated('Use StyledText now')
+typedef TextMix = StyledText;

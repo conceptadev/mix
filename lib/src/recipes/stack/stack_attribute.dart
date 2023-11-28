@@ -7,14 +7,13 @@ import '../../core/attribute.dart';
 import '../../factory/mix_provider_data.dart';
 import 'stack_mixture.dart';
 
-class StackMixtureAttribute
-    extends ResolvableAttribute<StackMixtureAttribute, StackMixture> {
+class StackMixAttribute
+    extends ResolvableAttribute<StackMixAttribute, StackMixture> {
   final ClipBehaviorAttribute? _clipBehavior;
-
   final TextDirectionAttribute? _textDirection;
   final StackFitAttribute? _fit;
   final AlignmentGeometryAttribute? _alignment;
-  const StackMixtureAttribute({
+  const StackMixAttribute({
     AlignmentGeometryAttribute? alignment,
     StackFitAttribute? fit,
     TextDirectionAttribute? textDirection,
@@ -27,18 +26,18 @@ class StackMixtureAttribute
   @override
   StackMixture resolve(MixData mix) {
     return StackMixture(
-      alignment: get<AlignmentGeometryAttribute>(mix, _alignment)?.value,
-      fit: get<StackFitAttribute>(mix, _fit)?.value,
-      textDirection: get<TextDirectionAttribute>(mix, _textDirection)?.value,
-      clipBehavior: get<ClipBehaviorAttribute>(mix, _clipBehavior)?.value,
+      alignment: _alignment?.value,
+      fit: _fit?.value,
+      textDirection: _textDirection?.value,
+      clipBehavior: _clipBehavior?.value,
     );
   }
 
   @override
-  StackMixtureAttribute merge(covariant StackMixtureAttribute? other) {
+  StackMixAttribute merge(covariant StackMixAttribute? other) {
     if (other == null) return this;
 
-    return StackMixtureAttribute(
+    return StackMixAttribute(
       alignment: other._alignment ?? _alignment,
       fit: other._fit ?? _fit,
       textDirection: other._textDirection ?? _textDirection,

@@ -2,26 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../core/attribute.dart';
 import '../../core/directive.dart';
-
-class TextMixtureProvider extends InheritedWidget {
-  const TextMixtureProvider({
-    Key? key,
-    required this.data,
-    required Widget child,
-  }) : super(key: key, child: child);
-
-  static TextMixture? of(BuildContext context) {
-    return context
-        .dependOnInheritedWidgetOfExactType<TextMixtureProvider>()
-        ?.data;
-  }
-
-  final TextMixture data;
-
-  @override
-  bool updateShouldNotify(TextMixtureProvider oldWidget) =>
-      oldWidget.data != data;
-}
+import '../../factory/mix_provider.dart';
+import 'text_attribute.dart';
 
 class TextMixture extends Mixture<TextMixture> {
   final TextOverflow? overflow;
@@ -64,6 +46,26 @@ class TextMixture extends Mixture<TextMixture> {
         softWrap = null,
         directives = const [];
 
+  //  static ContainerMixture? maybeOf(BuildContext context) {
+  //   final mix = MixProvider.maybeOf(context);
+
+  //   return mix?.resolvableOf(const ContainerMixtureAttribute());
+  // }
+
+  // static ContainerMixture of(BuildContext context) {
+  //   return maybeOf(context) ?? const ContainerMixture.empty();
+  // }
+
+  static TextMixture? maybeOf(BuildContext context) {
+    final mix = MixProvider.maybeOf(context);
+
+    return mix?.resolvableOf(const TextMixAttribute());
+  }
+
+  static TextMixture of(BuildContext context) {
+    return maybeOf(context) ?? const TextMixture.empty();
+  }
+
   String applyTextDirectives(String? text) {
     if (text == null) return '';
 
@@ -94,18 +96,19 @@ class TextMixture extends Mixture<TextMixture> {
     // Define a helper method for snapping
 
     return TextMixture(
-      overflow: snap(overflow, other.overflow, t),
-      strutStyle: snap(strutStyle, other.strutStyle, t),
-      textAlign: snap(textAlign, other.textAlign, t),
+      overflow: lerpSnap(overflow, other.overflow, t),
+      strutStyle: lerpSnap(strutStyle, other.strutStyle, t),
+      textAlign: lerpSnap(textAlign, other.textAlign, t),
       textScaleFactor:
           genericNumLerp(textScaleFactor, other.textScaleFactor, t),
-      maxLines: snap(maxLines, other.maxLines, t),
+      maxLines: lerpSnap(maxLines, other.maxLines, t),
       style: TextStyle.lerp(style, other.style, t),
-      textWidthBasis: snap(textWidthBasis, other.textWidthBasis, t),
-      textHeightBehavior: snap(textHeightBehavior, other.textHeightBehavior, t),
-      textDirection: snap(textDirection, other.textDirection, t),
-      softWrap: snap(softWrap, other.softWrap, t),
-      directives: snap(directives, other.directives, t),
+      textWidthBasis: lerpSnap(textWidthBasis, other.textWidthBasis, t),
+      textHeightBehavior:
+          lerpSnap(textHeightBehavior, other.textHeightBehavior, t),
+      textDirection: lerpSnap(textDirection, other.textDirection, t),
+      softWrap: lerpSnap(softWrap, other.softWrap, t),
+      directives: lerpSnap(directives, other.directives, t),
     );
   }
 

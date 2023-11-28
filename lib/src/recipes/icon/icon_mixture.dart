@@ -15,7 +15,7 @@ class IconMixture extends Mixture<IconMixture> {
         size = null;
 
   static IconMixture resolve(MixData mix) {
-    final recipe = mix.attributeOfType<IconMixAttribute>()?.resolve(mix);
+    final recipe = mix.attributeOf<IconMixAttribute>()?.resolve(mix);
 
     return recipe ?? const IconMixAttribute().resolve(mix);
   }

@@ -15,7 +15,7 @@ void main() {
           const StrutStyleAttribute(fontSize: 20.0),
           TextStyleAttribute.only(color: const ColorAttribute(Colors.red)),
           const TextDirectionAttribute(TextDirection.ltr),
-          const TextMixtureAttribute(
+          const TextMixAttribute(
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.center,
             textScaleFactor: 1.0,
@@ -29,7 +29,7 @@ void main() {
         ),
       );
 
-      final spec = TextMixture.of(mix);
+      final spec = const TextMixAttribute().resolve(mix);
 
       expect(spec.overflow, TextOverflow.ellipsis);
       expect(spec.strutStyle, const StrutStyle(fontSize: 20.0));
