@@ -16,23 +16,23 @@ void main() {
           const PaddingAttribute(top: 8, bottom: 16),
           const MarginAttribute(top: 10.0, bottom: 12.0),
           const BoxConstraintsAttribute(maxWidth: 300.0, minHeight: 200.0),
-          const BoxDecorationAttribute(color: ColorAttribute(Colors.blue)),
+          const BoxDecorationAttribute(color: ColorDto(Colors.blue)),
           TransformAttribute(Matrix4.translationValues(10.0, 10.0, 0.0)),
           const ClipBehaviorAttribute(Clip.antiAlias),
         ),
       );
 
-      final spec = ContainerMixture.of(mix);
+      final mixture = ContainerMixAttribute.of(mix).resolve(mix);
 
-      expect(spec.alignment, Alignment.center);
-      expect(spec.padding, const EdgeInsets.only(bottom: 16.0, top: 8.0));
-      expect(spec.margin, const EdgeInsets.only(top: 10.0, bottom: 12.0));
-      expect(spec.constraints,
+      expect(mixture.alignment, Alignment.center);
+      expect(mixture.padding, const EdgeInsets.only(bottom: 16.0, top: 8.0));
+      expect(mixture.margin, const EdgeInsets.only(top: 10.0, bottom: 12.0));
+      expect(mixture.constraints,
           const BoxConstraints(maxWidth: 300.0, minHeight: 200.0));
-      expect(spec.decoration, const BoxDecoration(color: Colors.blue));
+      expect(mixture.decoration, const BoxDecoration(color: Colors.blue));
 
-      expect(spec.transform, Matrix4.translationValues(10.0, 10.0, 0.0));
-      expect(spec.clipBehavior, Clip.antiAlias);
+      expect(mixture.transform, Matrix4.translationValues(10.0, 10.0, 0.0));
+      expect(mixture.clipBehavior, Clip.antiAlias);
     });
 
     test('copyWith', () {

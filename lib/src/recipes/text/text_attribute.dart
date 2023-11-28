@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../attributes/strut_style_attribute.dart';
-import '../../attributes/text_direction_attribute.dart';
 import '../../attributes/text_style/text_style_attribute.dart';
 import '../../core/attribute.dart';
 import '../../core/directive.dart';
@@ -18,7 +17,7 @@ class TextMixAttribute
   final TextStyleAttribute? style;
   final TextWidthBasis? textWidthBasis;
   final TextHeightBehavior? textHeightBehavior;
-  final TextDirectionAttribute? textDirection;
+  final TextDirection? textDirection;
   final bool? softWrap;
   final List<TextDirective>? directives;
 
@@ -36,22 +35,17 @@ class TextMixAttribute
     this.directives,
   });
 
-  @override
-  TextMixture resolve(MixData mix) {
-    return TextMixture(
-      overflow: overflow,
-      strutStyle: get<StrutStyleAttribute>(mix, strutStyle)?.resolve(mix),
-      textAlign: textAlign,
-      textScaleFactor: textScaleFactor,
-      maxLines: maxLines,
-      style: get<TextStyleAttribute>(mix, style)?.resolve(mix),
-      textWidthBasis: textWidthBasis,
-      textHeightBehavior: textHeightBehavior,
-      textDirection: get<TextDirectionAttribute>(mix, textDirection)?.value,
-      softWrap: softWrap,
-      directives: directives ?? [],
-    );
+  static TextMixAttribute of(MixData mix) {
+    final attribute = mix.attributeOf<TextMixAttribute>();
+
+    return TextMixAttribute(
+      strutStyle: mix.attributeOf<StrutStyleAttribute>(),
+      style: mix.attributeOf<TextStyleAttribute>(),
+    ).merge(attribute);
   }
+
+  @override
+  TextMixture resolve(MixData mix) => of(mix).resolve(mix);
 
   @override
   TextMixAttribute merge(covariant TextMixAttribute? other) {
@@ -66,10 +60,9 @@ class TextMixAttribute
       style: style?.merge(other.style) ?? other.style,
       textWidthBasis: other.textWidthBasis ?? textWidthBasis,
       textHeightBehavior: other.textHeightBehavior ?? textHeightBehavior,
-      textDirection:
-          textDirection?.merge(other.textDirection) ?? other.textDirection,
+      textDirection: other.textDirection ?? textDirection,
       softWrap: other.softWrap ?? softWrap,
-      directives: directives ?? other.directives,
+      directives: [...(directives ?? []), ...(other.directives ?? [])],
     );
   }
 

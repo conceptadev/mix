@@ -10,39 +10,41 @@ void main() {
       final mix = MixData.create(
         MockBuildContext(),
         StyleMix(
-          const AlignmentGeometryAttribute(Alignment.center),
-          const StackFitAttribute(StackFit.expand),
-          const TextDirectionAttribute(TextDirection.ltr),
-          const ClipBehaviorAttribute(Clip.antiAlias),
+          const StackMixAttribute(
+            fit: StackFit.expand,
+            clipBehavior: Clip.antiAlias,
+            alignment: Alignment.center,
+          ),
+          const TextDirectionAttribute(TextDirectionAttribute.ltr),
         ),
       );
 
-      final spec = StackMixture.resolve(mix);
+      final mixture = StackMixAttribute.of(mix).resolve(mix);
 
-      expect(spec.alignment, Alignment.center);
-      expect(spec.fit, StackFit.expand);
-      expect(spec.textDirection, TextDirection.ltr);
-      expect(spec.clipBehavior, Clip.antiAlias);
+      expect(mixture.alignment, Alignment.center);
+      expect(mixture.fit, StackFit.expand);
+      expect(mixture.textDirection, TextDirectionAttribute.ltr);
+      expect(mixture.clipBehavior, Clip.antiAlias);
     });
 
     test('copyWith', () {
       const spec = StackMixture(
         alignment: Alignment.center,
         fit: StackFit.expand,
-        textDirection: TextDirection.ltr,
+        textDirection: TextDirectionAttribute.ltr,
         clipBehavior: Clip.antiAlias,
       );
 
       final copiedSpec = spec.copyWith(
         alignment: Alignment.topLeft,
         fit: StackFit.loose,
-        textDirection: TextDirection.rtl,
+        textDirection: TextDirectionAttribute.rtl,
         clipBehavior: Clip.none,
       );
 
       expect(copiedSpec.alignment, Alignment.topLeft);
       expect(copiedSpec.fit, StackFit.loose);
-      expect(copiedSpec.textDirection, TextDirection.rtl);
+      expect(copiedSpec.textDirection, TextDirectionAttribute.rtl);
       expect(copiedSpec.clipBehavior, Clip.none);
     });
 
@@ -50,14 +52,14 @@ void main() {
       const spec1 = StackMixture(
         alignment: Alignment.topLeft,
         fit: StackFit.loose,
-        textDirection: TextDirection.ltr,
+        textDirection: TextDirectionAttribute.ltr,
         clipBehavior: Clip.none,
       );
 
       const spec2 = StackMixture(
         alignment: Alignment.bottomRight,
         fit: StackFit.expand,
-        textDirection: TextDirection.rtl,
+        textDirection: TextDirectionAttribute.rtl,
         clipBehavior: Clip.antiAlias,
       );
 
@@ -67,7 +69,7 @@ void main() {
       expect(lerpedSpec.alignment,
           Alignment.lerp(Alignment.topLeft, Alignment.bottomRight, t));
       expect(lerpedSpec.fit, StackFit.expand);
-      expect(lerpedSpec.textDirection, TextDirection.rtl);
+      expect(lerpedSpec.textDirection, TextDirectionAttribute.rtl);
       expect(lerpedSpec.clipBehavior, Clip.antiAlias);
 
       expect(lerpedSpec, isNot(spec1));

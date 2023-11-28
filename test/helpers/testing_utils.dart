@@ -184,11 +184,6 @@ class WrapMixThemeWidget extends StatelessWidget {
 
 class MockDoubleScalarAttribute extends ScalarAttribute<double> {
   const MockDoubleScalarAttribute(super.value);
-
-  @override
-  MockDoubleScalarAttribute merge(MockDoubleScalarAttribute? other) {
-    return MockDoubleScalarAttribute(other?.value ?? value);
-  }
 }
 
 class MockIntScalarAttribute extends ScalarAttribute<int> {

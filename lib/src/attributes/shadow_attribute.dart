@@ -8,7 +8,7 @@ import 'color_attribute.dart';
 abstract class ShadowAttributeImpl<
     Self extends ShadowAttributeImpl<Self, Value>,
     Value extends Shadow> extends ResolvableAttribute<Self, Value> {
-  final ColorAttribute? color;
+  final ColorDto? color;
   final Offset? offset;
   final double? blurRadius;
 

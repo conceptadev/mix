@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../attributes/alignment_attribute.dart';
-import '../../attributes/clip_behavior_attribute.dart';
 import '../../attributes/color_attribute.dart';
 import '../../attributes/constraints/constraints_attribute.dart';
 import '../../attributes/constraints/constraints_util.dart';
@@ -30,7 +29,7 @@ const margin = MarginUtility.selfBuilder;
 final backgroundColor = boxDecoration.color;
 
 final elevation = boxDecoration.elevation;
-const clipBehavior = ClipUtility(ClipBehaviorAttribute.new);
+
 // Provides an utility for creating a uniform BorderRadiusAttribute for all corners.
 const borderRadius = BorderRadiusUtility.selfBuilder;
 const alignment = AlignmentUtility.selfBuilder;
@@ -72,29 +71,28 @@ class ContainerUtility<T> extends MixUtility<T, ContainerMixAttribute> {
   T _margin(MarginAttribute margin) => as(ContainerMixAttribute(
         margin: margin,
       ));
-  T _color(ColorAttribute color) => _only(color: color);
+  T _color(ColorDto color) => _only(color: color);
   T _decoration(BoxDecorationAttribute decoration) =>
       _only(decoration: decoration);
 
   T _constraints(BoxConstraintsAttribute constraints) =>
       _only(constraints: constraints);
-  T _width(double width) => _only(width: width);
-  T _height(double height) => _only(height: height);
+  T _width(double width) => call(width: width);
+  T _height(double height) => call(height: height);
   T _transform(Matrix4 transform) => _only(transform: transform.toAttribute());
-  T _clipBehavior(Clip clipBehavior) =>
-      _only(clipBehavior: clipBehavior.toAttribute());
+  T _clipBehavior(Clip clipBehavior) => _only(clipBehavior: clipBehavior);
 
   T _only({
     AlignmentGeometryAttribute? alignment,
     PaddingAttribute? padding,
     MarginAttribute? margin,
-    ColorAttribute? color,
+    ColorDto? color,
     DecorationAttribute? decoration,
     BoxConstraintsAttribute? constraints,
-    double? width,
-    double? height,
+    WidthAttribute? width,
+    HeightAttribute? height,
     TransformAttribute? transform,
-    ClipBehaviorAttribute? clipBehavior,
+    Clip? clipBehavior,
   }) {
     return as(
       ContainerMixAttribute(
@@ -142,10 +140,10 @@ class ContainerUtility<T> extends MixUtility<T, ContainerMixAttribute> {
       margin: margin == null ? null : MarginAttribute.from(margin),
       constraints: constraints?.toAttribute(),
       transform: transform?.toAttribute(),
-      clipBehavior: clipBehavior?.toAttribute(),
+      clipBehavior: clipBehavior,
       color: color?.toAttribute(),
-      width: width,
-      height: height,
+      width: WidthAttribute.maybeFrom(width),
+      height: HeightAttribute.maybeFrom(height),
     );
 
     return as(attribute);

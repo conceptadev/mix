@@ -11,8 +11,7 @@ class ImageUtility<T> extends MixUtility<T, ImageMixAttribute> {
   static const selfBuilder = ImageUtility(MixUtility.selfBuilder);
   const ImageUtility(super.builder);
 
-  ImageMixAttribute _color(ColorAttribute color) =>
-      ImageMixAttribute(color: color);
+  ImageMixAttribute _color(ColorDto color) => ImageMixAttribute(color: color);
   ImageMixAttribute _repeat(ImageRepeat repeat) =>
       ImageMixAttribute(repeat: repeat);
   ImageMixAttribute _fit(BoxFit fit) => ImageMixAttribute(fit: fit);

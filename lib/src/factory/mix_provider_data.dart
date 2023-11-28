@@ -57,7 +57,13 @@ class MixData with Comparable {
 
   /// Finds and returns an [VisualAttribute] of type [A], or null if not found.
   A? attributeOf<A extends StyleAttribute>() {
-    return _attributes.attributeOfType<A>();
+    final attributes = _attributes.whereType<A>();
+    if (attributes.isEmpty) return null;
+
+    final attributeItem = _mergeAttributes(attributes) ?? attributes.last;
+    //
+
+    return attributeItem;
   }
 
   Iterable<A> whereType<A extends StyleAttribute>() {
@@ -127,8 +133,10 @@ StyleMix _applyVariants<T extends WhenVariant>(
   return variant.when(context) ? style.merge(variant.value) : style;
 }
 
-M? _mergeAttributes<M extends Mergeable>(Iterable<M> mergeables) {
+M? _mergeAttributes<M extends StyleAttribute>(Iterable<M> mergeables) {
   if (mergeables.isEmpty) return null;
 
-  return mergeables.reduce((a, b) => a.merge(b));
+  return mergeables.reduce((a, b) {
+    return a is Mergeable ? (a as Mergeable).merge(b) : b;
+  });
 }

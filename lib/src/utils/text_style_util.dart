@@ -15,7 +15,7 @@ class TextStyleUtility<T> extends MixUtility<T, TextStyleAttribute> {
 
   const TextStyleUtility(super.builder);
 
-  T _color(ColorAttribute color) => mix(color: color);
+  T _color(ColorDto color) => mix(color: color);
   T _fontWeight(FontWeight weight) => mix(fontWeight: weight);
   T _fontStyle(FontStyle style) => mix(fontStyle: style);
 
@@ -27,9 +27,9 @@ class TextStyleUtility<T> extends MixUtility<T, TextStyleAttribute> {
 
   T _wordSpacing(double spacing) => mix(wordSpacing: spacing);
 
-  T _backgroundColor(ColorAttribute color) => mix(backgroundColor: color);
+  T _backgroundColor(ColorDto color) => mix(backgroundColor: color);
 
-  T _decorationColor(ColorAttribute color) => mix(decorationColor: color);
+  T _decorationColor(ColorDto color) => mix(decorationColor: color);
 
   T _decorationStyle(TextDecorationStyle style) => mix(decorationStyle: style);
 
@@ -95,15 +95,15 @@ class TextStyleUtility<T> extends MixUtility<T, TextStyleAttribute> {
   T token(TextStyleToken token) => as(TextStyleAttribute.token(token));
 
   T mix({
-    ColorAttribute? color,
+    ColorDto? color,
     FontWeight? fontWeight,
     FontStyle? fontStyle,
     TextDecoration? decoration,
     double? fontSize,
     double? letterSpacing,
     double? wordSpacing,
-    ColorAttribute? backgroundColor,
-    ColorAttribute? decorationColor,
+    ColorDto? backgroundColor,
+    ColorDto? decorationColor,
     TextDecorationStyle? decorationStyle,
     TextBaseline? textBaseline,
     List<ShadowAttribute>? shadows,

@@ -2,19 +2,15 @@
 
 import 'package:flutter/material.dart';
 
-import '../../core/attribute.dart';
-import '../../factory/mix_provider_data.dart';
-import '../border/border_attribute.dart';
-import '../border/border_radius_attribute.dart';
-import '../color_attribute.dart';
-import '../gradient_attribute.dart';
-import '../shadow_attribute.dart';
+import '../../../mix.dart';
 
-abstract class DecorationAttribute<
-        Self extends DecorationAttribute<Self, Value>,
-        Value extends Decoration> extends ResolvableAttribute<Self, Value>
+abstract class DecorationAttribute<T, Value extends Decoration>
+    extends ResolvableAttribute<T, Value>
     with SingleChildRenderAttributeMixin<DecoratedBox> {
   const DecorationAttribute();
+
+  @override
+  T merge(covariant T other);
 
   @override
   DecoratedBox build(mix, child) {
@@ -24,7 +20,7 @@ abstract class DecorationAttribute<
 
 class BoxDecorationAttribute
     extends DecorationAttribute<BoxDecorationAttribute, BoxDecoration> {
-  final ColorAttribute? color;
+  final ColorDto? color;
   final BoxBorderAttribute? border;
   final BorderRadiusGeometryAttribute? borderRadius;
   final GradientAttribute? gradient;
@@ -57,12 +53,12 @@ class BoxDecorationAttribute
     if (other == null) return this;
 
     return BoxDecorationAttribute(
-      color: other.color ?? color,
-      border: other.border ?? border,
-      borderRadius: other.borderRadius ?? borderRadius,
-      gradient: other.gradient ?? gradient,
-      boxShadow: other.boxShadow ?? boxShadow,
-      shape: other.shape ?? shape,
+      color: color?.merge(other.color) ?? other.color,
+      border: border?.merge(other.border) ?? other.border,
+      borderRadius:
+          borderRadius?.merge(other.borderRadius) ?? other.borderRadius,
+      gradient: gradient?.merge(other.gradient) ?? other.gradient,
+      boxShadow: boxShadow?.merge(other.boxShadow) ?? other.boxShadow,
     );
   }
 
@@ -73,7 +69,7 @@ class BoxDecorationAttribute
 
 class ShapeDecorationAttribute
     extends DecorationAttribute<ShapeDecorationAttribute, ShapeDecoration> {
-  final ColorAttribute? color;
+  final ColorDto? color;
   final ShapeBorder? shape;
   final GradientAttribute? gradient;
   final List<BoxShadowAttribute>? boxShadow;

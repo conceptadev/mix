@@ -18,7 +18,7 @@ void main() {
             mainAxisSize: MainAxisSize.min,
             verticalDirection: VerticalDirection.down,
             direction: Axis.horizontal,
-            textDirection: TextDirectionAttribute(TextDirection.ltr),
+            textDirection: TextDirectionAttribute(TextDirectionAttribute.ltr),
             textBaseline: TextBaseline.alphabetic,
             clipBehavior: ClipBehaviorAttribute(Clip.antiAlias),
             gap: 10,
@@ -33,7 +33,7 @@ void main() {
       expect(spec.mainAxisSize, MainAxisSize.min);
       expect(spec.verticalDirection, VerticalDirection.down);
       expect(spec.direction, Axis.horizontal);
-      expect(spec.textDirection, TextDirection.ltr);
+      expect(spec.textDirection, TextDirectionAttribute.ltr);
       expect(spec.textBaseline, TextBaseline.alphabetic);
       expect(spec.clipBehavior, Clip.antiAlias);
       expect(spec.gap, 10);
@@ -46,7 +46,7 @@ void main() {
         mainAxisSize: MainAxisSize.min,
         verticalDirection: VerticalDirection.down,
         direction: Axis.horizontal,
-        textDirection: TextDirection.ltr,
+        textDirection: TextDirectionAttribute.ltr,
         textBaseline: TextBaseline.alphabetic,
         clipBehavior: Clip.antiAlias,
         gap: 10,
@@ -58,7 +58,7 @@ void main() {
         mainAxisSize: MainAxisSize.max,
         verticalDirection: VerticalDirection.up,
         direction: Axis.vertical,
-        textDirection: TextDirection.rtl,
+        textDirection: TextDirectionAttribute.rtl,
         textBaseline: TextBaseline.ideographic,
         clipBehavior: Clip.none,
         gap: 20,
@@ -69,7 +69,7 @@ void main() {
       expect(copiedSpec.mainAxisSize, MainAxisSize.max);
       expect(copiedSpec.verticalDirection, VerticalDirection.up);
       expect(copiedSpec.direction, Axis.vertical);
-      expect(copiedSpec.textDirection, TextDirection.rtl);
+      expect(copiedSpec.textDirection, TextDirectionAttribute.rtl);
       expect(copiedSpec.textBaseline, TextBaseline.ideographic);
       expect(copiedSpec.clipBehavior, Clip.none);
       expect(copiedSpec.gap, 20);
@@ -84,7 +84,7 @@ void main() {
         mainAxisSize: MainAxisSize.min,
         verticalDirection: VerticalDirection.down,
         direction: Axis.horizontal,
-        textDirection: TextDirection.ltr,
+        textDirection: TextDirectionAttribute.ltr,
         textBaseline: TextBaseline.alphabetic,
         clipBehavior: Clip.none,
         gap: 10,
@@ -96,7 +96,7 @@ void main() {
         mainAxisSize: MainAxisSize.max,
         verticalDirection: VerticalDirection.up,
         direction: Axis.vertical,
-        textDirection: TextDirection.rtl,
+        textDirection: TextDirectionAttribute.rtl,
         textBaseline: TextBaseline.ideographic,
         clipBehavior: Clip.antiAlias,
         gap: 20,
@@ -119,7 +119,7 @@ void main() {
         VerticalDirection.up,
       );
       expect(lerpedSpec.direction, Axis.vertical);
-      expect(lerpedSpec.textDirection, TextDirection.rtl);
+      expect(lerpedSpec.textDirection, TextDirectionAttribute.rtl);
       expect(lerpedSpec.textBaseline, TextBaseline.ideographic);
       expect(lerpedSpec.clipBehavior, Clip.antiAlias);
       expect(lerpedSpec.gap, lerpDouble(spec1.gap, spec2.gap, t));

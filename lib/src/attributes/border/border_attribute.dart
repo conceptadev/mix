@@ -8,8 +8,8 @@ import '../../factory/mix_provider_data.dart';
 import '../color_attribute.dart';
 
 @immutable
-abstract class BoxBorderAttribute<Self extends BoxBorderAttribute<Self, Value>,
-    Value extends BoxBorder> extends ResolvableAttribute<Self, Value> {
+abstract class BoxBorderAttribute<Self, Value extends BoxBorder>
+    extends ResolvableAttribute<Self, Value> {
   final BorderSideAttribute? _top;
   final BorderSideAttribute? _bottom;
 
@@ -199,7 +199,7 @@ class BorderDirectionalAttribute
 @immutable
 class BorderSideAttribute
     extends ResolvableAttribute<BorderSideAttribute, BorderSide> {
-  final ColorAttribute? color;
+  final ColorDto? color;
   final double? width;
   final BorderStyle? style;
   final double? strokeAlign;
@@ -212,7 +212,7 @@ class BorderSideAttribute
   });
 
   BorderSideAttribute copyWith({
-    ColorAttribute? color,
+    ColorDto? color,
     double? width,
     BorderStyle? style,
     double? strokeAlign,

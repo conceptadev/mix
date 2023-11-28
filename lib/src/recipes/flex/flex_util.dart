@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../core/extensions/values_ext.dart';
 import '../../utils/scalar_util.dart';
 import '../../utils/spacing_util.dart';
 import 'flex_attribute.dart';
@@ -66,9 +65,9 @@ class FlexMixtureUtility<T> extends MixUtility<T, FlexMixAttribute> {
       crossAxisAlignment: crossAxisAlignment,
       mainAxisSize: mainAxisSize,
       verticalDirection: verticalDirection,
-      textDirection: textDirection?.toAttribute(),
+      textDirection: textDirection,
       textBaseline: textBaseline,
-      clipBehavior: clipBehavior?.toAttribute(),
+      clipBehavior: clipBehavior,
       gap: gap,
     );
   }

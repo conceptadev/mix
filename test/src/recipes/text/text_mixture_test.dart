@@ -13,8 +13,8 @@ void main() {
         MockBuildContext(),
         StyleMix(
           const StrutStyleAttribute(fontSize: 20.0),
-          TextStyleAttribute.only(color: const ColorAttribute(Colors.red)),
-          const TextDirectionAttribute(TextDirection.ltr),
+          TextStyleAttribute.only(color: const ColorDto(Colors.red)),
+          const TextDirectionAttribute(TextDirectionAttribute.ltr),
           const TextMixAttribute(
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.center,
@@ -29,24 +29,24 @@ void main() {
         ),
       );
 
-      final spec = const TextMixAttribute().resolve(mix);
+      final mixture = const TextMixAttribute().resolve(mix);
 
-      expect(spec.overflow, TextOverflow.ellipsis);
-      expect(spec.strutStyle, const StrutStyle(fontSize: 20.0));
-      expect(spec.textAlign, TextAlign.center);
-      expect(spec.textScaleFactor, 1.0);
-      expect(spec.maxLines, 2);
-      expect(spec.style, const TextStyle(color: Colors.red));
-      expect(spec.textWidthBasis, TextWidthBasis.longestLine);
+      expect(mixture.overflow, TextOverflow.ellipsis);
+      expect(mixture.strutStyle, const StrutStyle(fontSize: 20.0));
+      expect(mixture.textAlign, TextAlign.center);
+      expect(mixture.textScaleFactor, 1.0);
+      expect(mixture.maxLines, 2);
+      expect(mixture.style, const TextStyle(color: Colors.red));
+      expect(mixture.textWidthBasis, TextWidthBasis.longestLine);
       expect(
-          spec.textHeightBehavior,
+          mixture.textHeightBehavior,
           const TextHeightBehavior(
               applyHeightToFirstAscent: true, applyHeightToLastDescent: true));
-      expect(spec.textDirection, TextDirection.ltr);
-      expect(spec.softWrap, true);
-      expect(spec.directives, [uppercaseDirective]);
+      expect(mixture.textDirection, TextDirectionAttribute.ltr);
+      expect(mixture.softWrap, true);
+      expect(mixture.directives, [uppercaseDirective]);
 
-      expect(spec.applyTextDirectives('hello'), 'HELLO');
+      expect(mixture.applyTextDirectives('hello'), 'HELLO');
     });
 
     test('copyWith', () {
@@ -60,7 +60,7 @@ void main() {
         textWidthBasis: TextWidthBasis.longestLine,
         textHeightBehavior: TextHeightBehavior(
             applyHeightToFirstAscent: true, applyHeightToLastDescent: true),
-        textDirection: TextDirection.ltr,
+        textDirection: TextDirectionAttribute.ltr,
         softWrap: true,
         directives: [uppercaseDirective],
       );
@@ -75,7 +75,7 @@ void main() {
         textWidthBasis: TextWidthBasis.parent,
         textHeightBehavior: const TextHeightBehavior(
             applyHeightToFirstAscent: false, applyHeightToLastDescent: false),
-        textDirection: TextDirection.rtl,
+        textDirection: TextDirectionAttribute.rtl,
         softWrap: false,
         directives: [lowercaseDirective],
       );
@@ -93,7 +93,7 @@ void main() {
               applyHeightToFirstAscent: false,
               applyHeightToLastDescent: false));
 
-      expect(copiedSpec.textDirection, TextDirection.rtl);
+      expect(copiedSpec.textDirection, TextDirectionAttribute.rtl);
       expect(copiedSpec.softWrap, false);
       expect(copiedSpec.directives, [lowercaseDirective]);
     });
@@ -111,7 +111,7 @@ void main() {
           applyHeightToFirstAscent: true,
           applyHeightToLastDescent: true,
         ),
-        textDirection: TextDirection.ltr,
+        textDirection: TextDirectionAttribute.ltr,
         softWrap: true,
         directives: [uppercaseDirective],
       );
@@ -128,7 +128,7 @@ void main() {
           applyHeightToFirstAscent: false,
           applyHeightToLastDescent: false,
         ),
-        textDirection: TextDirection.rtl,
+        textDirection: TextDirectionAttribute.rtl,
         softWrap: false,
         directives: [lowercaseDirective],
       );
@@ -154,7 +154,7 @@ void main() {
             applyHeightToFirstAscent: false,
             applyHeightToLastDescent: false,
           ));
-      expect(lerpedSpec.textDirection, TextDirection.rtl);
+      expect(lerpedSpec.textDirection, TextDirectionAttribute.rtl);
       expect(lerpedSpec.softWrap, false);
       expect(lerpedSpec.directives, [lowercaseDirective]);
 

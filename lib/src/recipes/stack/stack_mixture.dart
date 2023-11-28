@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../core/attribute.dart';
-import '../../factory/mix_provider_data.dart';
-import 'stack_attribute.dart';
 
 class StackMixture extends Mixture<StackMixture> {
   final AlignmentGeometry? alignment;
@@ -16,10 +14,6 @@ class StackMixture extends Mixture<StackMixture> {
     this.textDirection,
     this.clipBehavior,
   });
-
-  static StackMixture resolve(MixData mix) {
-    return mix.resolvableOf(const StackMixAttribute());
-  }
 
   @override
   StackMixture lerp(StackMixture other, double t) {

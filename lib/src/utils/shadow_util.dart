@@ -9,11 +9,11 @@ class ShadowUtility<T> extends MixUtility<T, ShadowAttribute> {
   static const selfBuilder = ShadowUtility(MixUtility.selfBuilder);
   const ShadowUtility(super.builder);
 
-  T _color(ColorAttribute color) => _only(color: color);
+  T _color(ColorDto color) => _only(color: color);
   T _offset(Offset offset) => _only(offset: offset);
   T _blurRadius(double blurRadius) => _only(blurRadius: blurRadius);
 
-  T _only({ColorAttribute? color, Offset? offset, double? blurRadius}) {
+  T _only({ColorDto? color, Offset? offset, double? blurRadius}) {
     final shadow = ShadowAttribute(
       blurRadius: blurRadius,
       color: color,
@@ -41,7 +41,7 @@ class BoxShadowUtility<T> extends MixUtility<T, BoxShadowAttribute> {
 
   const BoxShadowUtility(super.builder);
 
-  T _color(ColorAttribute color) => call(color: color);
+  T _color(ColorDto color) => call(color: color);
   T _offset(Offset offset) => call(offset: offset);
   T _blurRadius(double blurRadius) => call(blurRadius: blurRadius);
   T _spreadRadius(double spreadRadius) => call(spreadRadius: spreadRadius);
@@ -52,7 +52,7 @@ class BoxShadowUtility<T> extends MixUtility<T, BoxShadowAttribute> {
   DoubleUtility<T> get spreadRadius => DoubleUtility(_spreadRadius);
 
   T call({
-    ColorAttribute? color,
+    ColorDto? color,
     Offset? offset,
     double? blurRadius,
     double? spreadRadius,

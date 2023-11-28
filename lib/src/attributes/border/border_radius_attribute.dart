@@ -6,8 +6,7 @@ import '../../core/attribute.dart';
 import '../../factory/mix_provider_data.dart';
 
 @immutable
-abstract class BorderRadiusGeometryAttribute<
-        Self extends BorderRadiusGeometryAttribute<Self, Value>,
+abstract class BorderRadiusGeometryAttribute<Self,
         Value extends BorderRadiusGeometry>
     extends ResolvableAttribute<Self, Value> {
   final Radius? topLeft;

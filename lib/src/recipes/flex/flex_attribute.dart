@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../attributes/clip_behavior_attribute.dart';
-import '../../attributes/text_direction_attribute.dart';
 import '../../core/attribute.dart';
 import '../../factory/mix_provider_data.dart';
 import 'flex_mixture.dart';
@@ -13,9 +11,9 @@ class FlexMixAttribute
   final CrossAxisAlignment? crossAxisAlignment;
   final MainAxisSize? mainAxisSize;
   final VerticalDirection? verticalDirection;
-  final TextDirectionAttribute? textDirection;
+  final TextDirection? textDirection;
   final TextBaseline? textBaseline;
-  final ClipBehaviorAttribute? clipBehavior;
+  final Clip? clipBehavior;
   final double? gap;
 
   const FlexMixAttribute({
@@ -30,6 +28,10 @@ class FlexMixAttribute
     this.gap,
   });
 
+  static FlexMixAttribute of(MixData mix) {
+    return mix.attributeOf<FlexMixAttribute>() ?? const FlexMixAttribute();
+  }
+
   @override
   FlexMixture resolve(MixData mix) {
     return FlexMixture(
@@ -38,9 +40,9 @@ class FlexMixAttribute
       mainAxisSize: mainAxisSize,
       verticalDirection: verticalDirection,
       direction: direction,
-      textDirection: textDirection?.value,
+      textDirection: textDirection,
       textBaseline: textBaseline,
-      clipBehavior: clipBehavior?.value,
+      clipBehavior: clipBehavior,
       gap: gap,
     );
   }

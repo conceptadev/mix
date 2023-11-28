@@ -22,7 +22,7 @@ void main() {
     // ignore: avoid_function_literals_in_foreach_calls
     return colorList.forEach((color) {
       test('ColorAttribute.from resolves correctly', () {
-        final colorAttribute = ColorAttribute(color);
+        final colorAttribute = ColorDto(color);
         final resolvedValue = colorAttribute.resolve(EmptyMixData);
         expect(resolvedValue, color);
       });

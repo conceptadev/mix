@@ -1,5 +1,6 @@
+import 'package:flutter/material.dart';
+
 import '../../attributes/alignment_attribute.dart';
-import '../../attributes/clip_behavior_attribute.dart';
 import '../../attributes/color_attribute.dart';
 import '../../attributes/constraints/constraints_attribute.dart';
 import '../../attributes/decoration/decoration_attribute.dart';
@@ -17,9 +18,10 @@ class ContainerMixAttribute
   final BoxConstraintsAttribute? constraints;
   final DecorationAttribute? decoration;
   final TransformAttribute? transform;
-  final ClipBehaviorAttribute? clipBehavior;
-  final ColorAttribute? color;
-  final double? width, height;
+  final Clip? clipBehavior;
+  final ColorDto? color;
+  final WidthAttribute? width;
+  final HeightAttribute? height;
 
   const ContainerMixAttribute({
     this.alignment,
@@ -34,32 +36,47 @@ class ContainerMixAttribute
     this.height,
   });
 
+  static ContainerMixAttribute of(MixData mix) {
+    final attribute = mix.attributeOf<ContainerMixAttribute>();
+
+    return ContainerMixAttribute(
+      alignment: mix.attributeOf<AlignmentGeometryAttribute>(),
+      padding: mix.attributeOf<PaddingAttribute>(),
+      margin: mix.attributeOf<MarginAttribute>(),
+      constraints: mix.attributeOf<BoxConstraintsAttribute>(),
+      decoration: mix.attributeOf<DecorationAttribute>(),
+      transform: mix.attributeOf<TransformAttribute>(),
+      width: mix.attributeOf<WidthAttribute>(),
+      height: mix.attributeOf<HeightAttribute>(),
+    ).merge(attribute);
+  }
+
   @override
   ContainerMixture resolve(MixData mix) {
     return ContainerMixture(
-      alignment: get<AlignmentGeometryAttribute>(mix, alignment)?.value,
-      padding: get<PaddingAttribute>(mix, padding)?.resolve(mix),
-      margin: get<MarginAttribute>(mix, margin)?.resolve(mix),
-      constraints: get<BoxConstraintsAttribute>(mix, constraints)?.resolve(mix),
-      decoration: get<DecorationAttribute>(mix, decoration)?.resolve(mix),
-      transform: get<TransformAttribute>(mix, transform)?.value,
-      clipBehavior: get<ClipBehaviorAttribute>(mix, clipBehavior)?.value,
+      alignment: alignment?.value,
+      padding: padding?.resolve(mix),
+      margin: margin?.resolve(mix),
+      constraints: constraints?.resolve(mix),
+      decoration: decoration?.resolve(mix),
+      transform: transform?.value,
+      clipBehavior: clipBehavior,
       color: color?.resolve(mix),
-      width: width,
-      height: height,
+      width: width?.value,
+      height: height?.value,
     );
   }
 
   @override
-  ContainerMixAttribute merge(covariant ContainerMixAttribute? other) {
+  ContainerMixAttribute merge(ContainerMixAttribute? other) {
     if (other == null) return this;
 
     return ContainerMixAttribute(
       alignment: other.alignment ?? alignment,
       padding: padding?.merge(other.padding) ?? other.padding,
       margin: margin?.merge(other.margin) ?? other.margin,
-      constraints: other.constraints ?? constraints,
-      decoration: other.decoration ?? decoration,
+      constraints: constraints?.merge(other.constraints) ?? other.constraints,
+      decoration: decoration?.merge(other.decoration) ?? other.decoration,
       transform: other.transform ?? transform,
       clipBehavior: other.clipBehavior ?? clipBehavior,
       color: color?.merge(other.color) ?? other.color,

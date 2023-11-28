@@ -9,7 +9,7 @@ class ImageMixAttribute
     extends ResolvableAttribute<ImageMixAttribute, ImageMixture> {
   final double? width;
   final double? height;
-  final ColorAttribute? color;
+  final ColorDto? color;
   final ImageRepeat? repeat;
   final BoxFit? fit;
 

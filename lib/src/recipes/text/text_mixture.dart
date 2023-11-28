@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../../core/attribute.dart';
 import '../../core/directive.dart';
-import '../../factory/mix_provider.dart';
-import 'text_attribute.dart';
 
 class TextMixture extends Mixture<TextMixture> {
   final TextOverflow? overflow;
@@ -55,16 +53,6 @@ class TextMixture extends Mixture<TextMixture> {
   // static ContainerMixture of(BuildContext context) {
   //   return maybeOf(context) ?? const ContainerMixture.empty();
   // }
-
-  static TextMixture? maybeOf(BuildContext context) {
-    final mix = MixProvider.maybeOf(context);
-
-    return mix?.resolvableOf(const TextMixAttribute());
-  }
-
-  static TextMixture of(BuildContext context) {
-    return maybeOf(context) ?? const TextMixture.empty();
-  }
 
   String applyTextDirectives(String? text) {
     if (text == null) return '';

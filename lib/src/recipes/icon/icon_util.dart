@@ -11,8 +11,7 @@ class IconUtility<T> extends MixUtility<T, IconMixAttribute> {
   static const selfBuilder = IconUtility(MixUtility.selfBuilder);
   const IconUtility(super.builder);
 
-  IconMixAttribute _color(ColorAttribute color) =>
-      IconMixAttribute(color: color);
+  IconMixAttribute _color(ColorDto color) => IconMixAttribute(color: color);
   IconMixAttribute _size(double size) => IconMixAttribute(size: size);
   ColorUtility<IconMixAttribute> get color =>
       ColorUtility<IconMixAttribute>(_color);

@@ -21,12 +21,12 @@ class TextStyleDto extends Dto<TextStyle> {
   final double? letterSpacing;
   final double? wordSpacing;
   final TextBaseline? textBaseline;
-  final ColorAttribute? color;
-  final ColorAttribute? backgroundColor;
+  final ColorDto? color;
+  final ColorDto? backgroundColor;
   final List<ShadowAttribute>? shadows;
   final List<FontFeature>? fontFeatures;
   final TextDecoration? decoration;
-  final ColorAttribute? decorationColor;
+  final ColorDto? decorationColor;
   final TextDecorationStyle? decorationStyle;
   final Locale? locale;
   final String? debugLabel;
@@ -202,12 +202,12 @@ class TextStyleAttribute
     double? letterSpacing,
     double? wordSpacing,
     TextBaseline? textBaseline,
-    ColorAttribute? color,
-    ColorAttribute? backgroundColor,
+    ColorDto? color,
+    ColorDto? backgroundColor,
     List<ShadowAttribute>? shadows,
     List<FontFeature>? fontFeatures,
     TextDecoration? decoration,
-    ColorAttribute? decorationColor,
+    ColorDto? decorationColor,
     TextDecorationStyle? decorationStyle,
     Locale? locale,
     String? debugLabel,

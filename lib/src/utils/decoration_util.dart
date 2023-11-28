@@ -17,7 +17,7 @@ class BoxDecorationUtility<T> extends MixUtility<T, BoxDecorationAttribute> {
 
   const BoxDecorationUtility(super.builder);
 
-  T _color(ColorAttribute color) => _only(color: color);
+  T _color(ColorDto color) => _only(color: color);
 
   T _shape(BoxShape shape) => _only(shape: shape);
 
@@ -32,7 +32,7 @@ class BoxDecorationUtility<T> extends MixUtility<T, BoxDecorationAttribute> {
       _only(boxShadow: boxShadow.toList());
 
   T _only({
-    ColorAttribute? color,
+    ColorDto? color,
     BoxBorderAttribute? border,
     BorderRadiusGeometryAttribute? borderRadius,
     GradientAttribute? gradient,

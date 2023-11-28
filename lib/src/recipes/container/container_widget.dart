@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../helpers/build_context_ext.dart';
 import '../../widgets/styled_widget.dart';
 import 'container_attribute.dart';
+import 'container_mixture.dart';
 
 typedef Box = StyledContainer;
 
@@ -13,26 +14,42 @@ class StyledContainer extends StyledWidget {
 
   @override
   Widget build(BuildContext context) {
-    final attribute = inherit
-        ? context.mix?.attributeOf<ContainerMixAttribute>() ??
-            const ContainerMixAttribute()
+    final inheritedAttribute = inherit && context.mix != null
+        // ignore: avoid-non-null-assertion
+        ? ContainerMixAttribute.of(context.mix!)
         : const ContainerMixAttribute();
 
     return withMix(context, (mix) {
-      final mixture = attribute
-          .merge(mix.attributeOf<ContainerMixAttribute>())
-          .resolve(mix);
+      final attribute = ContainerMixAttribute.of(mix);
+      final merged = inheritedAttribute.merge(attribute);
 
-      return Container(
-        alignment: mixture.alignment,
-        padding: mixture.padding,
-        decoration: mixture.decoration,
-        constraints: mixture.constraints,
-        margin: mixture.margin,
-        transform: mixture.transform,
-        clipBehavior: mixture.clipBehavior ?? Clip.none,
-        child: child,
-      );
+      final mixture = merged.resolve(mix);
+
+      return MixedContainer(mixture, child: child);
     });
+  }
+}
+
+class MixedContainer extends StatelessWidget {
+  const MixedContainer(this.mixture, {super.key, this.child});
+
+  final Widget? child;
+  final ContainerMixture mixture;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      alignment: mixture.alignment,
+      padding: mixture.padding,
+      color: mixture.color,
+      decoration: mixture.decoration,
+      width: mixture.width,
+      height: mixture.height,
+      constraints: mixture.constraints,
+      margin: mixture.margin,
+      transform: mixture.transform,
+      clipBehavior: mixture.clipBehavior ?? Clip.none,
+      child: child,
+    );
   }
 }

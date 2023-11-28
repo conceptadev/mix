@@ -4,7 +4,6 @@ import '../../attributes/alignment_attribute.dart';
 import '../../attributes/axis_attribute.dart';
 import '../../attributes/border/border_attribute.dart';
 import '../../attributes/border/border_radius_attribute.dart';
-import '../../attributes/clip_behavior_attribute.dart';
 import '../../attributes/color_attribute.dart';
 import '../../attributes/constraints/constraints_attribute.dart';
 import '../../attributes/decoration/decoration_attribute.dart';
@@ -12,10 +11,8 @@ import '../../attributes/edge_insets_attribute.dart';
 import '../../attributes/gradient_attribute.dart';
 import '../../attributes/shadow_attribute.dart';
 import '../../attributes/strut_style_attribute.dart';
-import '../../attributes/text_direction_attribute.dart';
 import '../../attributes/text_style/text_style_attribute.dart';
 import '../../attributes/transform_attribute.dart';
-import '../../recipes/stack/stack_attribute.dart';
 
 extension StrutStyleExt on StrutStyle {
   StrutStyleAttribute toAttribute() {
@@ -90,10 +87,6 @@ extension SweepGradientExt on SweepGradient {
         tileMode: tileMode,
         transform: transform,
       );
-}
-
-extension TextDirectionExt on TextDirection {
-  TextDirectionAttribute toAttribute() => TextDirectionAttribute(this);
 }
 
 extension BoxBorderExt on BoxBorder {
@@ -194,7 +187,7 @@ extension ColorExt on Color {
       '${green.toRadixString(16).padLeft(2, '0')}'
       '${blue.toRadixString(16).padLeft(2, '0')}';
 
-  ColorAttribute toAttribute() => ColorAttribute(this);
+  ColorDto toAttribute() => ColorDto(this);
 }
 
 // Extension for Alignment
@@ -202,10 +195,6 @@ extension AlignmentGeometryExt on AlignmentGeometry {
   AlignmentGeometryAttribute toAttribute() {
     return AlignmentGeometryAttribute(this);
   }
-}
-
-extension StackFitExt on StackFit {
-  StackFitAttribute toAttribute() => StackFitAttribute(this);
 }
 
 extension ShapeDecorationExt on ShapeDecoration {
@@ -224,10 +213,6 @@ extension BoxConstraintsExt on BoxConstraints {
         minHeight: minHeight,
         maxHeight: maxHeight,
       );
-}
-
-extension ClipExt on Clip {
-  ClipBehaviorAttribute toAttribute() => ClipBehaviorAttribute(this);
 }
 
 // Extension for Axis

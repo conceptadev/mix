@@ -6,7 +6,7 @@ import 'icon_mixture.dart';
 class IconMixAttribute
     extends ResolvableAttribute<IconMixAttribute, IconMixture> {
   final double? size;
-  final ColorAttribute? color;
+  final ColorDto? color;
 
   const IconMixAttribute({this.size, this.color});
 

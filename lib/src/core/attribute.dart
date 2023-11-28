@@ -35,9 +35,8 @@ abstract class ScalarAttribute<Value> extends StyleAttribute {
 }
 
 // TODO: Should all ResolvableAttribute be the Style Attribute high level?
-abstract class ResolvableAttribute<
-    Self extends ResolvableAttribute<Self, Value>,
-    Value> extends StyleAttribute with Resolver<Value>, Mergeable<Self> {
+abstract class ResolvableAttribute<Self, Value> extends StyleAttribute
+    with Resolver<Value>, Mergeable<Self> {
   const ResolvableAttribute();
 
   T? get<T extends StyleAttribute>(MixData mix, T? attribute) {

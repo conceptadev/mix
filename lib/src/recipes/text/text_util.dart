@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../attributes/strut_style_attribute.dart';
-import '../../attributes/text_direction_attribute.dart';
 import '../../attributes/text_style/text_style_attribute.dart';
 import '../../core/directive.dart';
 import '../../core/extensions/values_ext.dart';
@@ -59,7 +58,7 @@ class TextUtility<T> extends MixUtility<T, TextMixAttribute> {
     TextStyleAttribute? style,
     TextWidthBasis? textWidthBasis,
     TextHeightBehavior? textHeightBehavior,
-    TextDirectionAttribute? textDirection,
+    TextDirection? textDirection,
     bool? softWrap,
     List<TextDirective>? directives,
   }) {
@@ -102,7 +101,7 @@ class TextUtility<T> extends MixUtility<T, TextMixAttribute> {
       style: style?.toAttribute(),
       textWidthBasis: textWidthBasis,
       textHeightBehavior: textHeightBehavior,
-      textDirection: textDirection?.toAttribute(),
+      textDirection: textDirection,
       softWrap: softWrap,
       directives: directives,
     );

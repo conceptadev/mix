@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../attributes/alignment_attribute.dart';
-import '../../attributes/clip_behavior_attribute.dart';
-import '../../attributes/text_direction_attribute.dart';
-import '../../core/extensions/values_ext.dart';
 import '../../utils/scalar_util.dart';
 import 'stack_attribute.dart';
 
@@ -21,10 +17,10 @@ class StackMixtureUtility<T> extends MixUtility<T, StackMixAttribute> {
   T _clipBehavior(Clip clipBehavior) => call(clipBehavior: clipBehavior);
 
   T _only({
-    AlignmentGeometryAttribute? alignment,
-    StackFitAttribute? fit,
-    TextDirectionAttribute? textDirection,
-    ClipBehaviorAttribute? clipBehavior,
+    AlignmentGeometry? alignment,
+    StackFit? fit,
+    TextDirection? textDirection,
+    Clip? clipBehavior,
   }) {
     final stack = StackMixAttribute(
       alignment: alignment,
@@ -50,10 +46,10 @@ class StackMixtureUtility<T> extends MixUtility<T, StackMixAttribute> {
     Clip? clipBehavior,
   }) {
     return _only(
-      alignment: alignment?.toAttribute(),
-      fit: fit?.toAttribute(),
-      textDirection: textDirection?.toAttribute(),
-      clipBehavior: clipBehavior?.toAttribute(),
+      alignment: alignment,
+      fit: fit,
+      textDirection: textDirection,
+      clipBehavior: clipBehavior,
     );
   }
 }

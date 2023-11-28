@@ -76,29 +76,11 @@ class AttributeGenerator {
     ).toAttribute();
   }
 
-  ClipBehaviorAttribute clipBehaviorAttribute([Clip? clip]) {
-    return clip?.toAttribute() ??
-        Random().randomElement([
-          Clip.none,
-          Clip.antiAlias,
-          Clip.antiAliasWithSaveLayer,
-          Clip.hardEdge,
-        ]).toAttribute();
-  }
-
   TextOverflow textOverflow([TextOverflow? overflow]) {
     return overflow ??
         Random().randomElement([
           TextOverflow.clip,
           TextOverflow.visible,
-        ]);
-  }
-
-  TextDirection textDirection([TextDirection? direction]) {
-    return direction ??
-        Random().randomElement([
-          TextDirection.ltr,
-          TextDirection.rtl,
         ]);
   }
 
@@ -203,8 +185,8 @@ class AttributeGenerator {
     );
   }
 
-  ColorAttribute color([Color? color]) {
-    return ColorAttribute(
+  ColorDto color([Color? color]) {
+    return ColorDto(
       color ??
           Color.fromARGB(
             255,
@@ -216,7 +198,7 @@ class AttributeGenerator {
   }
 
   BorderSideAttribute borderSide({
-    ColorAttribute? color,
+    ColorDto? color,
     double? width,
     BorderStyle? style,
   }) {
@@ -228,7 +210,7 @@ class AttributeGenerator {
   }
 
   ShadowAttribute shadow({
-    ColorAttribute? color,
+    ColorDto? color,
     Offset? offset,
     double? blurRadius,
   }) {
@@ -254,7 +236,7 @@ class AttributeGenerator {
   }
 
   BoxDecorationAttribute boxDecoration({
-    ColorAttribute? color,
+    ColorDto? color,
     BorderAttribute? border,
     BorderRadiusAttribute? borderRadius,
     List<BoxShadowAttribute>? boxShadow,
@@ -273,7 +255,7 @@ class AttributeGenerator {
   }
 
   BoxShadowAttribute boxShadow({
-    ColorAttribute? color,
+    ColorDto? color,
     Offset? offset,
     double? blurRadius,
     double? spreadRadius,

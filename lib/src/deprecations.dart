@@ -396,10 +396,10 @@ BorderRadiusDirectionalAttribute roundedBE() {
 }
 
 @Deprecated(kShortAliasDeprecation)
-final h = height;
+const h = height;
 
 @Deprecated(kShortAliasDeprecation)
-final w = width;
+const w = width;
 
 @Deprecated(kShortAliasDeprecation)
 final maxH = maxHeight;
@@ -441,12 +441,12 @@ AlignmentGeometryAttribute zAligmnent(Alignment alignment) {
 
 @Deprecated('Use stackFit instead')
 StackMixAttribute zFit(StackFit fit) {
-  return StackMixAttribute(fit: fit.toAttribute());
+  return StackMixAttribute(fit: fit);
 }
 
 @Deprecated('Use stack instead')
 StackMixAttribute zClip(Clip clip) {
-  return StackMixAttribute(clipBehavior: clip.toAttribute());
+  return StackMixAttribute(clipBehavior: clip);
 }
 
 // Create a FlexAttributes for the direction axis.

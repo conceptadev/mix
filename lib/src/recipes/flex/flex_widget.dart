@@ -5,6 +5,7 @@ import '../../widgets/gap_widget.dart';
 import '../../widgets/styled_widget.dart';
 import '../container/container_widget.dart';
 import 'flex_attribute.dart';
+import 'flex_mixture.dart';
 
 /// A flexible layout widget enhanced with `StyleMix` for simplified styling.
 ///
@@ -57,16 +58,40 @@ class StyledFlex extends StyledWidget {
               );
       }
 
-      return Flex(
+      return MixedFlex(
+        mixture,
         direction: direction,
-        mainAxisAlignment: mixture.mainAxisAlignment ?? MainAxisAlignment.start,
-        mainAxisSize: mixture.mainAxisSize ?? MainAxisSize.max,
-        crossAxisAlignment:
-            mixture.crossAxisAlignment ?? CrossAxisAlignment.center,
-        verticalDirection: mixture.verticalDirection ?? VerticalDirection.down,
         children: renderSpacedChildren(),
       );
     });
+  }
+}
+
+class MixedFlex extends StatelessWidget {
+  const MixedFlex(
+    this.mixture, {
+    super.key,
+    required this.children,
+    required this.direction,
+  });
+
+  final List<Widget> children;
+  final Axis direction;
+  final FlexMixture mixture;
+
+  @override
+  Widget build(BuildContext context) {
+    return Flex(
+      direction: direction,
+      mainAxisAlignment:
+          mixture.mainAxisAlignment ?? _defaultFlex.mainAxisAlignment,
+      mainAxisSize: mixture.mainAxisSize ?? _defaultFlex.mainAxisSize,
+      crossAxisAlignment:
+          mixture.crossAxisAlignment ?? _defaultFlex.crossAxisAlignment,
+      verticalDirection:
+          mixture.verticalDirection ?? _defaultFlex.verticalDirection,
+      children: children,
+    );
   }
 }
 
@@ -213,3 +238,5 @@ class VBox extends FlexBox {
     super.children = const <Widget>[],
   }) : super(direction: Axis.vertical);
 }
+
+const _defaultFlex = Flex(direction: Axis.horizontal, children: <Widget>[]);

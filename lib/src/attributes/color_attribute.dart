@@ -6,9 +6,9 @@ import '../theme/tokens/color_token.dart';
 import '../utils/scalar_util.dart';
 
 @immutable
-class ColorAttribute extends Dto<Color> {
+class ColorDto extends Dto<Color> {
   final Color value;
-  const ColorAttribute(this.value);
+  const ColorDto(this.value);
 
   @override
   Color resolve(MixData mix) {
@@ -18,10 +18,10 @@ class ColorAttribute extends Dto<Color> {
   }
 
   @override
-  ColorAttribute merge(covariant ColorAttribute? other) {
+  ColorDto merge(covariant ColorDto? other) {
     if (other == null) return this;
 
-    return ColorAttribute(other.value);
+    return ColorDto(other.value);
   }
 
   @override
@@ -29,8 +29,8 @@ class ColorAttribute extends Dto<Color> {
 }
 
 @immutable
-class ColorUtility<T> extends MixUtility<T, ColorAttribute> {
+class ColorUtility<T> extends MixUtility<T, ColorDto> {
   const ColorUtility(super.builder);
 
-  T call(Color color) => as(ColorAttribute(color));
+  T call(Color color) => as(ColorDto(color));
 }

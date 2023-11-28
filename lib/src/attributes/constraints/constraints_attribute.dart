@@ -68,9 +68,17 @@ class BoxConstraintsAttribute
 @immutable
 class WidthAttribute extends ScalarAttribute {
   const WidthAttribute(super.value);
+
+  static WidthAttribute? maybeFrom(double? value) {
+    return value == null ? null : WidthAttribute(value);
+  }
 }
 
 @immutable
 class HeightAttribute extends ScalarAttribute {
   const HeightAttribute(super.value);
+
+  static HeightAttribute? maybeFrom(double? value) {
+    return value == null ? null : HeightAttribute(value);
+  }
 }

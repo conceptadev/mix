@@ -3,8 +3,6 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 import '../../core/attribute.dart';
-import '../../factory/mix_provider_data.dart';
-import 'container_attribute.dart';
 
 class ContainerMixture extends Mixture<ContainerMixture> {
   final AlignmentGeometry? alignment;
@@ -41,10 +39,6 @@ class ContainerMixture extends Mixture<ContainerMixture> {
         width = null,
         height = null,
         clipBehavior = null;
-
-  static ContainerMixture of(MixData mix) {
-    return mix.resolvableOf(const ContainerMixAttribute());
-  }
 
   @override
   ContainerMixture merge(ContainerMixture? other) {

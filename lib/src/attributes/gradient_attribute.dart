@@ -5,8 +5,8 @@ import '../core/extensions/iterable_ext.dart';
 import '../factory/mix_provider_data.dart';
 import 'color_attribute.dart';
 
-abstract class GradientAttribute<Self extends GradientAttribute<Self, Value>,
-    Value extends Gradient> extends ResolvableAttribute<Self, Value> {
+abstract class GradientAttribute<Self, Value extends Gradient>
+    extends ResolvableAttribute<Self, Value> {
   const GradientAttribute();
 
   @override
@@ -17,7 +17,7 @@ class LinearGradientAttribute
     extends GradientAttribute<LinearGradientAttribute, LinearGradient> {
   final AlignmentGeometry? begin;
   final AlignmentGeometry? end;
-  final List<ColorAttribute>? colors;
+  final List<ColorDto>? colors;
   final List<double>? stops;
   final TileMode? tileMode;
   final GradientTransform? transform;
@@ -66,7 +66,7 @@ class RadialGradientAttribute
     extends GradientAttribute<RadialGradientAttribute, RadialGradient> {
   final AlignmentGeometry? center;
   final double? radius;
-  final List<ColorAttribute>? colors;
+  final List<ColorDto>? colors;
   final List<double>? stops;
   // focalRadius
   final TileMode? tileMode;
@@ -126,7 +126,7 @@ class SweepGradientAttribute
   final AlignmentGeometry? center;
   final double? startAngle;
   final double? endAngle;
-  final List<ColorAttribute>? colors;
+  final List<ColorDto>? colors;
   final List<double>? stops;
   final TileMode? tileMode;
   final GradientTransform? transform;
