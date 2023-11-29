@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-import '../core/attribute.dart';
-import '../factory/mix_provider_data.dart';
-import '../theme/tokens/color_token.dart';
-import '../utils/scalar_util.dart';
+import '../../core/attribute.dart';
+import '../../factory/mix_provider_data.dart';
+import '../../theme/tokens/color_token.dart';
+import '../scalars/scalar_util.dart';
 
 @immutable
-class ColorDto extends Dto<Color> {
+class ColorDto extends Dto<ColorDto, Color> {
   final Color value;
   const ColorDto(this.value);
 

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../attributes/color_attribute.dart';
+import '../../attributes/color/color_attribute.dart';
+import '../../attributes/scalars/scalar_util.dart';
 import '../../core/extensions/values_ext.dart';
-import '../../utils/scalar_util.dart';
 import 'icon_attribute.dart';
 
 const icon = IconUtility.selfBuilder;

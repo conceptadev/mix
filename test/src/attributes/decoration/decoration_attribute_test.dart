@@ -1,16 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
+import 'package:mix/src/attributes/gradient/gradient_dto.dart';
 
 import '../../../helpers/testing_utils.dart';
 
 void main() {
-  const linearGradient = LinearGradient(colors: Colors.accents);
-  final gradientDto = linearGradient.toAttribute();
+  const gradient = LinearGradient(
+    colors: Colors.accents,
+  );
+  final linearGradient = LinearGradientDto(
+    colors: Colors.accents.map(ColorDto.new).toList(),
+  );
+
+  final gradientAttribute = GradientAttribute(linearGradient);
+
   group('BoxDecorationDto', () {
     test('merge returns merged object correctly', () {
       final attr1 = BoxDecorationAttribute(color: Colors.red.toDto());
-      final attr2 = BoxDecorationAttribute(gradient: gradientDto);
+      final attr2 = BoxDecorationAttribute(gradient: gradientAttribute);
       final merged = attr1.merge(attr2);
       expect(merged.color, attr1.color);
       expect(merged.gradient, attr2.gradient);
@@ -23,10 +31,10 @@ void main() {
     });
     test('resolve returns correct BoxDecoration with specific values', () {
       final attr = BoxDecorationAttribute(
-          color: Colors.red.toDto(), gradient: gradientDto);
+          color: Colors.red.toDto(), gradient: gradientAttribute);
       final decoration = attr.resolve(EmptyMixData);
       expect(decoration.color, Colors.red);
-      expect(decoration.gradient, linearGradient);
+      expect(decoration.gradient, gradient);
       return const Placeholder();
     });
     test('Equality holds when all properties are the same', () {
@@ -44,7 +52,7 @@ void main() {
   group('ShapeDecorationDto', () {
     test('merge returns merged object correctly', () {
       final attr1 = ShapeDecorationAttribute(color: Colors.red.toDto());
-      final attr2 = ShapeDecorationAttribute(gradient: gradientDto);
+      final attr2 = ShapeDecorationAttribute(gradient: gradientAttribute);
       final merged = attr1.merge(attr2);
       expect(merged.color, attr1.color);
       expect(merged.gradient, attr2.gradient);
@@ -58,7 +66,7 @@ void main() {
     });
     test('resolve returns correct ShapeDecoration with specific values', () {
       final attr1 = ShapeDecorationAttribute(
-        gradient: linearGradient.toAttribute(),
+        gradient: gradientAttribute,
       );
 
       final attr2 = ShapeDecorationAttribute(
@@ -67,7 +75,7 @@ void main() {
       final decoration1 = attr1.resolve(EmptyMixData);
       final decoration2 = attr2.resolve(EmptyMixData);
 
-      expect(decoration1.gradient, linearGradient);
+      expect(decoration1.gradient, linearGradient.resolve(EmptyMixData));
       expect(decoration2.color, Colors.red);
     });
     test('Equality holds when all properties are the same', () {

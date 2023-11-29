@@ -7,9 +7,9 @@ import '../../core/extensions/iterable_ext.dart';
 import '../../factory/mix_provider_data.dart';
 import '../border/border_attribute.dart';
 import '../border/border_radius_attribute.dart';
-import '../color_attribute.dart';
-import '../gradient_attribute.dart';
-import '../shadow_attribute.dart';
+import '../color/color_attribute.dart';
+import '../gradient/gradient_attribute.dart';
+import '../shadow/shadow_attribute.dart';
 
 @immutable
 abstract class DecorationAttribute<Value extends Decoration>

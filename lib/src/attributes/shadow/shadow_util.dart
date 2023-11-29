@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../attributes/color_attribute.dart';
-import '../attributes/shadow_attribute.dart';
-import '../core/extensions/values_ext.dart';
-import 'scalar_util.dart';
+import '../../core/extensions/values_ext.dart';
+import '../color/color_attribute.dart';
+import '../scalars/scalar_util.dart';
+import 'shadow_attribute.dart';
 
 class ShadowUtility<T> extends MixUtility<T, ShadowAttribute> {
   static const selfBuilder = ShadowUtility(MixUtility.selfBuilder);
@@ -33,6 +33,15 @@ class ShadowUtility<T> extends MixUtility<T, ShadowAttribute> {
       offset: offset,
       blurRadius: blurRadius,
     );
+  }
+}
+
+class BoxShadowListUtility<T> extends MixUtility<T, List<BoxShadowAttribute>> {
+  static const selfBuilder = BoxShadowListUtility(MixUtility.selfBuilder);
+  const BoxShadowListUtility(super.builder);
+
+  T call(List<BoxShadow> shadows) {
+    return as(shadows.map(BoxShadowAttribute.from).toList());
   }
 }
 
@@ -68,12 +77,6 @@ class BoxShadowUtility<T> extends MixUtility<T, BoxShadowAttribute> {
   }
 }
 
-//  T elevation(int value) {
-//     assert(kElevationToShadow.containsKey(value), 'Invalid elevation value');
-
-//     return call(boxShadow: kElevationToShadow[value]!);
-//   }
-
 class ElevationUtility<T> extends MixUtility<T, List<BoxShadow>> {
   static const selfBuilder = ElevationUtility(MixUtility.selfBuilder);
 
@@ -85,7 +88,6 @@ class ElevationUtility<T> extends MixUtility<T, List<BoxShadow>> {
     return as(kElevationToShadow[value]!);
   }
 
-  // 1, 2, 3, 4, 6, 8, 9, 12, 16, 24.
   T none() => call(0);
   T one() => call(1);
   T two() => call(2);

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../attributes/scalars/scalar_util.dart';
 import '../decorators/clip_decorator.dart';
 import '../decorators/default_decorators.dart';
-import 'scalar_util.dart';
 
 const aspectRatio = AspectRatioDecorator.new;
 

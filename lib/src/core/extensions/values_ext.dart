@@ -3,14 +3,15 @@ import 'package:flutter/material.dart';
 import '../../attributes/border/border_attribute.dart';
 import '../../attributes/border/border_dto.dart';
 import '../../attributes/border/border_radius_attribute.dart';
-import '../../attributes/color_attribute.dart';
+import '../../attributes/color/color_attribute.dart';
 import '../../attributes/constraints/constraints_attribute.dart';
 import '../../attributes/decoration/decoration_attribute.dart';
-import '../../attributes/edge_insets_attribute.dart';
-import '../../attributes/gradient_attribute.dart';
+import '../../attributes/gradient/gradient_attribute.dart';
+import '../../attributes/gradient/gradient_dto.dart';
 import '../../attributes/scalars/scalars_attribute.dart';
-import '../../attributes/shadow_attribute.dart';
-import '../../attributes/strut_style_attribute.dart';
+import '../../attributes/shadow/shadow_attribute.dart';
+import '../../attributes/spacing/spacing_dto.dart';
+import '../../attributes/strut_style/strut_style_attribute.dart';
 import '../../attributes/text_style/text_style_attribute.dart';
 
 extension StrutStyleExt on StrutStyle {
@@ -44,48 +45,19 @@ extension StrutStyleExt on StrutStyle {
 }
 
 extension GradientExt on Gradient {
-  GradientAttribute toAttribute() {
-    if (this is LinearGradient) return (this as LinearGradient).toAttribute();
-    if (this is RadialGradient) return (this as RadialGradient).toAttribute();
-    if (this is SweepGradient) return (this as SweepGradient).toAttribute();
-
-    throw UnimplementedError();
-  }
+  GradientAttribute toAttribute() => GradientAttribute.from(this);
 }
 
 extension LinearGradientExt on LinearGradient {
-  LinearGradientAttribute toAttribute() => LinearGradientAttribute(
-        begin: begin,
-        end: end,
-        colors: colors.map((e) => e.toDto()).toList(),
-        stops: stops,
-        tileMode: tileMode,
-        transform: transform,
-      );
+  LinearGradientDto toDto() => LinearGradientDto.from(this);
 }
 
 extension RadialGradientExt on RadialGradient {
-  RadialGradientAttribute toAttribute() => RadialGradientAttribute(
-        center: center,
-        radius: radius,
-        colors: colors.map((e) => e.toDto()).toList(),
-        stops: stops,
-        tileMode: tileMode,
-        focal: focal,
-        transform: transform,
-      );
+  RadialGradientDto toDto() => RadialGradientDto.from(this);
 }
 
 extension SweepGradientExt on SweepGradient {
-  SweepGradientAttribute toAttribute() => SweepGradientAttribute(
-        center: center,
-        startAngle: startAngle,
-        endAngle: endAngle,
-        colors: colors.map((e) => e.toDto()).toList(),
-        stops: stops,
-        tileMode: tileMode,
-        transform: transform,
-      );
+  SweepGradientDto toDto() => SweepGradientDto.from(this);
 }
 
 extension BoxBorderExt on BoxBorder {
@@ -118,10 +90,10 @@ extension BorderDirectionalExt on BorderDirectional {
 }
 
 extension EdgeInsetsGeometryExt on EdgeInsetsGeometry {
-  EdgeInsetsGeometryAttribute toAttribute() {
-    if (this is EdgeInsets) return (this as EdgeInsets).toAttribute();
+  SpacingDto toDto() {
+    if (this is EdgeInsets) return (this as EdgeInsets).toDto();
     if (this is EdgeInsetsDirectional) {
-      return (this as EdgeInsetsDirectional).toAttribute();
+      return (this as EdgeInsetsDirectional).toDto();
     }
 
     throw UnimplementedError();
@@ -129,7 +101,7 @@ extension EdgeInsetsGeometryExt on EdgeInsetsGeometry {
 }
 
 extension EdgeInsetsExt on EdgeInsets {
-  EdgeInsetsAttribute toAttribute() => EdgeInsetsAttribute(
+  SpacingDto toDto() => SpacingDto(
         top: top,
         bottom: bottom,
         left: left,
@@ -138,13 +110,8 @@ extension EdgeInsetsExt on EdgeInsets {
 }
 
 extension EdgeInsetsDirectionalExt on EdgeInsetsDirectional {
-  EdgeInsetsDirectionalAttribute toAttribute() =>
-      EdgeInsetsDirectionalAttribute(
-        top: top,
-        bottom: bottom,
-        start: start,
-        end: end,
-      );
+  SpacingDto toDto() =>
+      SpacingDto(top: top, bottom: bottom, start: start, end: end);
 }
 
 extension DoubleExt on double {

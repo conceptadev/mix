@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 
 import '../../core/attribute.dart';
 import '../../factory/mix_provider_data.dart';
-import '../color_attribute.dart';
+import '../color/color_attribute.dart';
 
 @immutable
-class BoxBorderDto extends Dto<BoxBorder> {
+class BoxBorderDto extends Dto<BoxBorderDto, BoxBorder> {
   final BorderSideDto? top;
   final BorderSideDto? bottom;
 
@@ -94,7 +94,7 @@ class BoxBorderDto extends Dto<BoxBorder> {
 }
 
 @immutable
-class BorderSideDto extends Dto<BorderSide> {
+class BorderSideDto extends Dto<BorderSideDto, BorderSide> {
   final ColorDto? color;
   final double? width;
   final BorderStyle? style;

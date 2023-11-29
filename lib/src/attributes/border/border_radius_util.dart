@@ -2,9 +2,9 @@
 
 import 'package:flutter/material.dart';
 
-import '../attributes/border/border_radius_attribute.dart';
-import '../core/extensions/values_ext.dart';
-import 'scalar_util.dart';
+import '../../core/extensions/values_ext.dart';
+import '../scalars/scalar_util.dart';
+import 'border_radius_attribute.dart';
 
 class BorderRadiusGeometryUtility<T>
     extends MixUtility<T, BorderRadiusGeometryAttribute> {

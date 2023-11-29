@@ -1,8 +1,8 @@
-import '../../attributes/color_attribute.dart';
+import '../../attributes/color/color_attribute.dart';
 import '../../attributes/constraints/constraints_attribute.dart';
 import '../../attributes/decoration/decoration_attribute.dart';
 import '../../attributes/scalars/scalars_attribute.dart';
-import '../../attributes/spacing_attribute.dart';
+import '../../attributes/spacing/spacing_attribute.dart';
 import '../../core/attribute.dart';
 import '../../factory/mix_provider_data.dart';
 import 'container_mixture.dart';

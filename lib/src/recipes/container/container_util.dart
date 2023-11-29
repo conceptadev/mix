@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
-import '../../attributes/color_attribute.dart';
+import '../../attributes/border/border_radius_util.dart';
+import '../../attributes/border/border_util.dart';
+import '../../attributes/color/color_attribute.dart';
 import '../../attributes/constraints/constraints_attribute.dart';
 import '../../attributes/constraints/constraints_util.dart';
 import '../../attributes/decoration/decoration_attribute.dart';
+import '../../attributes/decoration/decoration_util.dart';
+import '../../attributes/scalars/scalar_util.dart';
 import '../../attributes/scalars/scalars_attribute.dart';
-import '../../attributes/spacing_attribute.dart';
-import '../../utils/border_radius_util.dart';
-import '../../utils/border_util.dart';
-import '../../utils/decoration_util.dart';
-import '../../utils/scalar_util.dart';
-import '../../utils/shadow_util.dart';
-import '../../utils/spacing_util.dart';
+import '../../attributes/shadow/shadow_util.dart';
+import '../../attributes/spacing/spacing_attribute.dart';
+import '../../attributes/spacing/spacing_util.dart';
 import 'container_attribute.dart';
 
 const container = ContainerUtility.selfBuilder;

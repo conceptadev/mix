@@ -1,4 +1,4 @@
-import '../../attributes/color_attribute.dart';
+import '../../attributes/color/color_attribute.dart';
 import '../../core/attribute.dart';
 import '../../factory/mix_provider_data.dart';
 import 'icon_mixture.dart';

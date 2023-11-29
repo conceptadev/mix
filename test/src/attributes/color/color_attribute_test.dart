@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mix/src/attributes/color_attribute.dart';
+import 'package:mix/src/attributes/color/color_attribute.dart';
 
-import '../../helpers/testing_utils.dart';
+import '../../../helpers/testing_utils.dart';
 
 void main() {
   group('ColorAttribute', () {

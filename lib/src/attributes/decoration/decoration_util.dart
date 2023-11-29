@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 
-import '../attributes/border/border_attribute.dart';
-import '../attributes/border/border_radius_attribute.dart';
-import '../attributes/color_attribute.dart';
-import '../attributes/decoration/decoration_attribute.dart';
-import '../attributes/gradient_attribute.dart';
-import '../attributes/shadow_attribute.dart';
-import '../core/extensions/values_ext.dart';
-import 'border_radius_util.dart';
-import 'border_util.dart';
-import 'helper_util.dart';
-import 'scalar_util.dart';
-import 'shadow_util.dart';
+import '../../core/extensions/values_ext.dart';
+import '../border/border_attribute.dart';
+import '../border/border_radius_attribute.dart';
+import '../border/border_radius_util.dart';
+import '../border/border_util.dart';
+import '../color/color_attribute.dart';
+import '../gradient/gradient_attribute.dart';
+import '../gradient/gradient_dto.dart';
+import '../gradient/gradient_util.dart';
+import '../scalars/scalar_util.dart';
+import '../shadow/shadow_attribute.dart';
+import '../shadow/shadow_util.dart';
+import 'decoration_attribute.dart';
 
 class BoxDecorationUtility<T> extends MixUtility<T, BoxDecorationAttribute> {
   static const selfBuilder = BoxDecorationUtility(MixUtility.selfBuilder);
@@ -27,10 +28,8 @@ class BoxDecorationUtility<T> extends MixUtility<T, BoxDecorationAttribute> {
   T _borderRadius(BorderRadiusGeometryAttribute borderRadius) =>
       _only(borderRadius: borderRadius);
 
-  T _gradient(GradientAttribute gradient) => _only(gradient: gradient);
-
-  T _boxShadow(Iterable<BoxShadowAttribute> boxShadow) =>
-      _only(boxShadow: boxShadow.toList());
+  T _gradient(GradientDto gradient) =>
+      _only(gradient: GradientAttribute(gradient));
 
   T _only({
     ColorDto? color,
@@ -54,6 +53,9 @@ class BoxDecorationUtility<T> extends MixUtility<T, BoxDecorationAttribute> {
 
   T _elevation(List<BoxShadow> shadows) => call(boxShadow: shadows);
 
+  T _boxShadow(List<BoxShadowAttribute> boxShadow) =>
+      _only(boxShadow: boxShadow);
+
   ColorUtility<T> get color => ColorUtility(_color);
   BorderUtility<T> get border => BorderUtility(_border);
   BorderRadiusGeometryUtility<T> get borderRadius =>
@@ -61,10 +63,10 @@ class BoxDecorationUtility<T> extends MixUtility<T, BoxDecorationAttribute> {
 
   BoxShapeUtility<T> get shape => BoxShapeUtility(_shape);
 
-  SpreadFunctionParams<BoxShadowAttribute, T> get boxShadow =>
-      SpreadFunctionParams(_boxShadow);
-
   ElevationUtility<T> get elevation => ElevationUtility(_elevation);
+  GradientUtility<T> get gradient => GradientUtility(_gradient);
+
+  BoxShadowListUtility<T> get boxShadow => BoxShadowListUtility(_boxShadow);
 
   T call({
     Color? color,

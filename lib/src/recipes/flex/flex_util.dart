@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../utils/scalar_util.dart';
-import '../../utils/spacing_util.dart';
+import '../../attributes/scalars/scalar_util.dart';
+import '../../attributes/spacing/spacing_util.dart';
 import 'flex_attribute.dart';
 
 /// A utility class for building [FlexMixAttribute]s.

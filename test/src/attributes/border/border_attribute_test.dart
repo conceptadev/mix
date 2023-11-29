@@ -6,8 +6,8 @@ import 'package:mix/src/attributes/border/border_dto.dart';
 import '../../../helpers/testing_utils.dart';
 
 void main() {
-  group('BorderDto', () {
-    test('merge should combine two BorderDtos correctly', () {
+  group('BorderAttribute', () {
+    test('merge should combine two BorderAttributes correctly', () {
       final borderAttr1 = BorderAttribute.only(
         top: const BorderSideDto(width: 5.0),
         bottom: const BorderSideDto(width: 10.0),
@@ -118,8 +118,8 @@ void main() {
     expect(resolvedOnlyValue, onlyValue);
   });
 
-  group('BorderDirectionalDto', () {
-    test('merge should combine two BorderDirectionalDtos correctly', () {
+  group('BorderDirectionalAttribute', () {
+    test('merge should combine two BorderDirectionalAttributes correctly', () {
       final borderAttr1 = BorderDirectionalAttribute.only(
         top: const BorderSideDto(width: 5.0),
         bottom: const BorderSideDto(width: 10.0),

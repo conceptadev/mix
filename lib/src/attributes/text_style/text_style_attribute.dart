@@ -9,11 +9,11 @@ import '../../core/extensions/iterable_ext.dart';
 import '../../core/extensions/values_ext.dart';
 import '../../factory/mix_provider_data.dart';
 import '../../theme/tokens/text_style_token.dart';
-import '../color_attribute.dart';
-import '../shadow_attribute.dart';
+import '../color/color_attribute.dart';
+import '../shadow/shadow_attribute.dart';
 
 @immutable
-class TextStyleDto extends Dto<TextStyle> {
+class TextStyleDto extends Dto<TextStyleDto, TextStyle> {
   final String? fontFamily;
   final FontWeight? fontWeight;
   final FontStyle? fontStyle;

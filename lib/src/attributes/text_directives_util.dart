@@ -1,7 +1,7 @@
 import '../core/directive.dart';
 import '../helpers/string_ext.dart';
 import '../recipes/text/text_attribute.dart';
-import 'scalar_util.dart';
+import 'scalars/scalar_util.dart';
 
 final capitalize = _textDirective(TextModifiers.capitalize);
 final uppercase = _textDirective(TextModifiers.uppercase);

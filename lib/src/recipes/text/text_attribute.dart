@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../attributes/strut_style_attribute.dart';
+import '../../attributes/strut_style/strut_style_attribute.dart';
 import '../../attributes/text_style/text_style_attribute.dart';
 import '../../core/attribute.dart';
 import '../../core/directive.dart';

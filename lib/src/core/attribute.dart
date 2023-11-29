@@ -15,7 +15,8 @@ abstract class StyleAttribute extends Attribute {
   Type get type;
 }
 
-abstract class Dto<T> with Comparable, Mergeable<Dto>, Resolver<T> {
+abstract class Dto<Self extends Dto<Self, Value>, Value>
+    with Comparable, Mergeable<Self>, Resolver<Value> {
   const Dto();
 }
 

@@ -7,7 +7,8 @@ import '../variants/multi_variant.dart';
 import '../variants/variant.dart';
 
 @immutable
-class VariantAttribute<T extends Variant> extends Attribute {
+class VariantAttribute<T extends Variant> extends Attribute
+    with Mergeable<VariantAttribute<T>> {
   final T variant;
   final StyleMix _style;
 

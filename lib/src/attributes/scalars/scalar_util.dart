@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../attributes/scalars/scalars_attribute.dart';
+import 'scalars_attribute.dart';
 
 abstract class MixUtility<Attr, Value> {
   final Attr Function(Value value) _builder;

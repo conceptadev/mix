@@ -3,7 +3,6 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
-import 'package:mix/src/attributes/scalars/scalars_attribute.dart';
 
 import '../../../helpers/testing_utils.dart';
 
@@ -14,8 +13,8 @@ void main() {
         MockBuildContext(),
         StyleMix(
           const AlignmentGeometryAttribute(Alignment.center),
-          const PaddingAttribute(top: 8, bottom: 16),
-          const MarginAttribute(top: 10.0, bottom: 12.0),
+          PaddingAttribute.only(top: 8, bottom: 16),
+          MarginAttribute.only(top: 10.0, bottom: 12.0),
           const BoxConstraintsAttribute(maxWidth: 300.0, minHeight: 200.0),
           const BoxDecorationAttribute(color: ColorDto(Colors.blue)),
           TransformAttribute(Matrix4.translationValues(10.0, 10.0, 0.0)),

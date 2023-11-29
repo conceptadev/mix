@@ -1,60 +1,36 @@
 import 'package:flutter/material.dart';
 
-import '../core/attribute.dart';
-import '../core/extensions/iterable_ext.dart';
-import '../factory/mix_provider_data.dart';
-import 'color_attribute.dart';
+import '../../core/attribute.dart';
+import '../../core/extensions/iterable_ext.dart';
+import '../../factory/mix_provider_data.dart';
+import '../color/color_attribute.dart';
 
-abstract class GradientAttribute<Value extends Gradient>
-    extends ResolvableAttribute<GradientAttribute, Value> {
-  const GradientAttribute();
+@immutable
+abstract class GradientDto<T extends Gradient> extends Dto<GradientDto<T>, T> {
+  const GradientDto();
 
-  static GradientAttribute from(Gradient gradient) {
+  static GradientDto from(Gradient gradient) {
     if (gradient is LinearGradient) {
-      return LinearGradientAttribute(
-        begin: gradient.begin,
-        end: gradient.end,
-        colors: gradient.colors.map(ColorDto.new).toList(),
-        stops: gradient.stops,
-        tileMode: gradient.tileMode,
-        transform: gradient.transform,
-      );
-    } else if (gradient is RadialGradient) {
-      return RadialGradientAttribute(
-        center: gradient.center,
-        radius: gradient.radius,
-        colors: gradient.colors.map(ColorDto.new).toList(),
-        stops: gradient.stops,
-        tileMode: gradient.tileMode,
-        focal: gradient.focal,
-        transform: gradient.transform,
-        focalRadius: gradient.focalRadius,
-      );
-    } else if (gradient is SweepGradient) {
-      return SweepGradientAttribute(
-        center: gradient.center,
-        startAngle: gradient.startAngle,
-        endAngle: gradient.endAngle,
-        colors: gradient.colors.map(ColorDto.new).toList(),
-        stops: gradient.stops,
-        tileMode: gradient.tileMode,
-        transform: gradient.transform,
-      );
+      return LinearGradientDto.from(gradient);
     }
-    throw UnimplementedError(
-      'Cannot create GradientAttribute from gradient of type ${gradient.runtimeType}',
-    );
-  }
+    if (gradient is RadialGradient) {
+      return RadialGradientDto.from(gradient);
+    }
+    if (gradient is SweepGradient) {
+      return SweepGradientDto.from(gradient);
+    }
 
-  static GradientAttribute? maybeFrom(Gradient? gradient) {
-    return gradient == null ? null : from(gradient);
+    throw UnimplementedError('Unknown gradient type: $gradient');
   }
 
   @override
-  GradientAttribute merge(covariant GradientAttribute? other);
+  T resolve(MixData mix);
+
+  @override
+  GradientDto<T> merge(covariant GradientDto<T>? other);
 }
 
-class LinearGradientAttribute extends GradientAttribute<LinearGradient> {
+class LinearGradientDto extends GradientDto<LinearGradient> {
   final AlignmentGeometry? begin;
   final AlignmentGeometry? end;
   final List<ColorDto>? colors;
@@ -62,7 +38,7 @@ class LinearGradientAttribute extends GradientAttribute<LinearGradient> {
   final TileMode? tileMode;
   final GradientTransform? transform;
 
-  const LinearGradientAttribute({
+  const LinearGradientDto({
     this.begin,
     this.end,
     this.colors,
@@ -70,6 +46,21 @@ class LinearGradientAttribute extends GradientAttribute<LinearGradient> {
     this.tileMode,
     this.transform,
   });
+
+  static LinearGradientDto from(LinearGradient gradient) {
+    return LinearGradientDto(
+      begin: gradient.begin,
+      end: gradient.end,
+      colors: gradient.colors.map(ColorDto.new).toList(),
+      stops: gradient.stops,
+      tileMode: gradient.tileMode,
+      transform: gradient.transform,
+    );
+  }
+
+  static LinearGradientDto? maybeFrom(LinearGradient? gradient) {
+    return gradient == null ? null : from(gradient);
+  }
 
   @override
   LinearGradient resolve(MixData mix) {
@@ -84,10 +75,10 @@ class LinearGradientAttribute extends GradientAttribute<LinearGradient> {
   }
 
   @override
-  LinearGradientAttribute merge(LinearGradientAttribute? other) {
+  LinearGradientDto merge(LinearGradientDto? other) {
     if (other == null) return this;
 
-    return LinearGradientAttribute(
+    return LinearGradientDto(
       begin: other.begin ?? begin,
       end: other.end ?? end,
       colors: colors?.merge(other.colors),
@@ -102,7 +93,7 @@ class LinearGradientAttribute extends GradientAttribute<LinearGradient> {
 }
 
 @immutable
-class RadialGradientAttribute extends GradientAttribute<RadialGradient> {
+class RadialGradientDto extends GradientDto<RadialGradient> {
   final AlignmentGeometry? center;
   final double? radius;
   final List<ColorDto>? colors;
@@ -113,7 +104,7 @@ class RadialGradientAttribute extends GradientAttribute<RadialGradient> {
   final GradientTransform? transform;
   final double? focalRadius;
 
-  const RadialGradientAttribute({
+  const RadialGradientDto({
     this.center,
     this.radius,
     this.colors,
@@ -123,6 +114,23 @@ class RadialGradientAttribute extends GradientAttribute<RadialGradient> {
     this.transform,
     this.focalRadius,
   });
+
+  static RadialGradientDto from(RadialGradient gradient) {
+    return RadialGradientDto(
+      center: gradient.center,
+      radius: gradient.radius,
+      colors: gradient.colors.map(ColorDto.new).toList(),
+      stops: gradient.stops,
+      tileMode: gradient.tileMode,
+      focal: gradient.focal,
+      transform: gradient.transform,
+      focalRadius: gradient.focalRadius,
+    );
+  }
+
+  static RadialGradientDto? maybeFrom(RadialGradient? gradient) {
+    return gradient == null ? null : from(gradient);
+  }
 
   @override
   RadialGradient resolve(MixData mix) {
@@ -139,10 +147,10 @@ class RadialGradientAttribute extends GradientAttribute<RadialGradient> {
   }
 
   @override
-  RadialGradientAttribute merge(RadialGradientAttribute? other) {
+  RadialGradientDto merge(RadialGradientDto? other) {
     if (other == null) return this;
 
-    return RadialGradientAttribute(
+    return RadialGradientDto(
       center: center,
       radius: radius ?? other.radius,
       colors: colors?.merge(other.colors),
@@ -160,7 +168,7 @@ class RadialGradientAttribute extends GradientAttribute<RadialGradient> {
 }
 
 @immutable
-class SweepGradientAttribute extends GradientAttribute<SweepGradient> {
+class SweepGradientDto extends GradientDto<SweepGradient> {
   final AlignmentGeometry? center;
   final double? startAngle;
   final double? endAngle;
@@ -169,7 +177,7 @@ class SweepGradientAttribute extends GradientAttribute<SweepGradient> {
   final TileMode? tileMode;
   final GradientTransform? transform;
 
-  const SweepGradientAttribute({
+  const SweepGradientDto({
     this.center,
     this.startAngle,
     this.endAngle,
@@ -178,6 +186,22 @@ class SweepGradientAttribute extends GradientAttribute<SweepGradient> {
     this.tileMode,
     this.transform,
   });
+
+  static SweepGradientDto from(SweepGradient gradient) {
+    return SweepGradientDto(
+      center: gradient.center,
+      startAngle: gradient.startAngle,
+      endAngle: gradient.endAngle,
+      colors: gradient.colors.map(ColorDto.new).toList(),
+      stops: gradient.stops,
+      tileMode: gradient.tileMode,
+      transform: gradient.transform,
+    );
+  }
+
+  static SweepGradientDto? maybeFrom(SweepGradient? gradient) {
+    return gradient == null ? null : from(gradient);
+  }
 
   @override
   SweepGradient resolve(MixData mix) {
@@ -193,10 +217,10 @@ class SweepGradientAttribute extends GradientAttribute<SweepGradient> {
   }
 
   @override
-  SweepGradientAttribute merge(SweepGradientAttribute? other) {
+  SweepGradientDto merge(SweepGradientDto? other) {
     if (other == null) return this;
 
-    return SweepGradientAttribute(
+    return SweepGradientDto(
       center: other.center ?? center,
       startAngle: startAngle ?? other.startAngle,
       endAngle: endAngle ?? other.endAngle,

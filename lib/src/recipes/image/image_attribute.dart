@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../attributes/color_attribute.dart';
+import '../../attributes/color/color_attribute.dart';
 import '../../core/attribute.dart';
 import '../../factory/mix_provider_data.dart';
 import 'image_mixture.dart';

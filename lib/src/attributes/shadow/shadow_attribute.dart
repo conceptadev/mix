@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../core/attribute.dart';
-import '../factory/mix_provider_data.dart';
-import 'color_attribute.dart';
+import '../../core/attribute.dart';
+import '../../factory/mix_provider_data.dart';
+import '../color/color_attribute.dart';
 
 @immutable
 abstract class ShadowAttributeImpl<

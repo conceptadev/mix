@@ -1,4 +1,4 @@
-import '../../utils/scalar_util.dart';
+import '../scalars/scalar_util.dart';
 import 'constraints_attribute.dart';
 
 class BoxConstraintsUtility<T> extends MixUtility<T, BoxConstraintsAttribute> {

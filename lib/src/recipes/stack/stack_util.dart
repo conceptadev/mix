@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../utils/scalar_util.dart';
+import '../../attributes/scalars/scalar_util.dart';
 import 'stack_attribute.dart';
 
 const stack = StackMixtureUtility.selfBuilder;

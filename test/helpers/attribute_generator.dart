@@ -4,7 +4,6 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
-import 'package:mix/src/attributes/scalars/scalars_attribute.dart';
 
 class AttributeGenerator {
   const AttributeGenerator();
@@ -17,7 +16,7 @@ class AttributeGenerator {
   }) {
     final random = Random();
 
-    return PaddingAttribute(
+    return PaddingAttribute.only(
       top: top ?? random.nextDouble() * 20,
       bottom: bottom ?? random.nextDouble() * 20,
       left: left ?? random.nextDouble() * 20,
@@ -55,7 +54,7 @@ class AttributeGenerator {
   }) {
     final random = Random();
 
-    return MarginAttribute(
+    return MarginAttribute.only(
       top: top ?? random.nextDouble() * 20,
       bottom: bottom ?? random.nextDouble() * 20,
       left: left ?? random.nextDouble() * 20,

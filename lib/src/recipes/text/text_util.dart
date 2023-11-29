@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-import '../../attributes/strut_style_attribute.dart';
+import '../../attributes/scalars/scalar_util.dart';
+import '../../attributes/shadow/shadow_util.dart';
+import '../../attributes/strut_style/strut_style_attribute.dart';
 import '../../attributes/text_style/text_style_attribute.dart';
+import '../../attributes/text_style/text_style_util.dart';
 import '../../core/directive.dart';
 import '../../core/extensions/values_ext.dart';
-import '../../utils/scalar_util.dart';
-import '../../utils/shadow_util.dart';
-import '../../utils/text_style_util.dart';
 import 'text_attribute.dart';
 
 const text = TextUtility.selfBuilder;

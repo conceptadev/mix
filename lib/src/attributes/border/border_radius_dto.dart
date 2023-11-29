@@ -4,7 +4,8 @@ import '../../core/attribute.dart';
 import '../../factory/mix_provider_data.dart';
 
 @immutable
-class BorderRadiusGeometryDto extends Dto<BorderRadiusGeometry> {
+class BorderRadiusGeometryDto
+    extends Dto<BorderRadiusGeometryDto, BorderRadiusGeometry> {
   final Radius? topLeft;
   final Radius? topRight;
   final Radius? bottomLeft;

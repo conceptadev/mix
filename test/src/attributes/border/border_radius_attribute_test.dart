@@ -5,8 +5,8 @@ import 'package:mix/mix.dart';
 import '../../../helpers/testing_utils.dart';
 
 void main() {
-  group('BorderRadiusDto', () {
-    test('BorderRadiusDto.all', () {
+  group('BorderRadiusAttribute', () {
+    test('BorderRadiusAttribute.all', () {
       final attr = BorderRadiusAttribute.all(const Radius.circular(5.0));
       expect(attr.topLeft, const Radius.circular(5.0));
       expect(attr.topRight, const Radius.circular(5.0));
@@ -14,7 +14,7 @@ void main() {
       expect(attr.bottomRight, const Radius.circular(5.0));
     });
 
-    test('BorderRadiusDto.horizontal', () {
+    test('BorderRadiusAttribute.horizontal', () {
       final attr = BorderRadiusAttribute.horizontal(
         left: const Radius.circular(5.0),
         right: const Radius.circular(10.0),
@@ -26,7 +26,7 @@ void main() {
       expect(attr.bottomRight, const Radius.circular(10.0));
     });
 
-    test('BorderRadiusDto.vertical', () {
+    test('BorderRadiusAttribute.vertical', () {
       final attr = BorderRadiusAttribute.vertical(
         top: const Radius.circular(5.0),
         bottom: const Radius.circular(10.0),
@@ -56,7 +56,7 @@ void main() {
       expect(merged.bottomRight, attr2.bottomRight);
     });
 
-    test('merge should combine two BorderRadiusDtos correctly', () {
+    test('merge should combine two BorderRadiusAttributes correctly', () {
       final borderRadius1 = BorderRadiusAttribute.only(
         bottomLeft: const Radius.circular(10),
         bottomRight: const Radius.circular(20),

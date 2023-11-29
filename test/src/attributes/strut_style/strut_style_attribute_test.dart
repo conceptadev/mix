@@ -1,9 +1,9 @@
 import 'dart:ui';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mix/src/attributes/strut_style_attribute.dart';
+import 'package:mix/src/attributes/strut_style/strut_style_attribute.dart';
 
-import '../../helpers/testing_utils.dart';
+import '../../../helpers/testing_utils.dart';
 
 void main() {
   group('StrutStyleAttribute', () {

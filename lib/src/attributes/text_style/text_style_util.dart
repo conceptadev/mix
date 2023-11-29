@@ -1,14 +1,14 @@
 import 'dart:ui';
 
-import '../attributes/color_attribute.dart';
-import '../attributes/shadow_attribute.dart';
-import '../attributes/strut_style_attribute.dart';
-import '../attributes/text_style/text_style_attribute.dart';
-import '../core/extensions/values_ext.dart';
-import '../theme/tokens/text_style_token.dart';
-import 'helper_util.dart';
-import 'scalar_util.dart';
-import 'shadow_util.dart';
+import '../../core/extensions/values_ext.dart';
+import '../../theme/tokens/text_style_token.dart';
+import '../../utils/helper_util.dart';
+import '../color/color_attribute.dart';
+import '../scalars/scalar_util.dart';
+import '../shadow/shadow_attribute.dart';
+import '../shadow/shadow_util.dart';
+import '../strut_style/strut_style_attribute.dart';
+import 'text_style_attribute.dart';
 
 class TextStyleUtility<T> extends MixUtility<T, TextStyleAttribute> {
   static const selfBuilder = TextStyleUtility(MixUtility.selfBuilder);

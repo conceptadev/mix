@@ -2,10 +2,10 @@
 
 import 'package:flutter/material.dart';
 
-import '../attributes/border/border_attribute.dart';
-import '../attributes/border/border_dto.dart';
-import '../core/extensions/values_ext.dart';
-import 'scalar_util.dart';
+import '../../core/extensions/values_ext.dart';
+import '../scalars/scalar_util.dart';
+import 'border_attribute.dart';
+import 'border_dto.dart';
 
 class BoxBorderUtility<T> extends MixUtility<T, BoxBorderAttribute> {
   static const selfBuilder = BoxBorderUtility(MixUtility.selfBuilder);

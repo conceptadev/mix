@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
 
-import '../attributes/spacing_attribute.dart';
-import '../theme/tokens/space_token.dart';
-import 'scalar_util.dart';
+import '../../theme/tokens/space_token.dart';
+import '../scalars/scalar_util.dart';
+import 'spacing_attribute.dart';
+import 'spacing_dto.dart';
 
 @immutable
 class PaddingUtility<T> extends SpacingUtility<T, PaddingAttribute> {
   static const selfBuilder = PaddingUtility(MixUtility.selfBuilder);
   const PaddingUtility(super.builder)
-      : super(spacingBuilder: PaddingAttribute.new);
+      : super(spacingBuilder: PaddingAttribute.raw);
 }
 
 @immutable
 class MarginUtility<T> extends SpacingUtility<T, MarginAttribute> {
   static const selfBuilder = MarginUtility(MixUtility.selfBuilder);
   const MarginUtility(super.builder)
-      : super(spacingBuilder: MarginAttribute.new);
+      : super(spacingBuilder: MarginAttribute.raw);
 }
 
 /// A utility class for defining spacing attributes like padding and margin in Flutter widgets.
@@ -124,12 +125,14 @@ abstract class SpacingUtility<T, Attr extends SpacingAttribute<Attr>>
   }) {
     return as(
       spacingBuilder(
-        bottom: bottom,
-        end: end,
-        left: left,
-        right: right,
-        start: start,
-        top: top,
+        SpacingDto(
+          top: top,
+          bottom: bottom,
+          left: left,
+          right: right,
+          start: start,
+          end: end,
+        ),
       ),
     );
   }
