@@ -62,6 +62,19 @@ class BoxShadowAttribute
     this.spreadRadius,
   });
 
+  static BoxShadowAttribute from(BoxShadow shadow) {
+    return BoxShadowAttribute(
+      color: ColorDto.maybeFrom(shadow.color),
+      offset: shadow.offset,
+      blurRadius: shadow.blurRadius,
+      spreadRadius: shadow.spreadRadius,
+    );
+  }
+
+  static BoxShadowAttribute? maybeFrom(BoxShadow? shadow) {
+    return shadow == null ? null : from(shadow);
+  }
+
   @override
   BoxShadow resolve(MixData mix) {
     const defaultShadow = BoxShadow();

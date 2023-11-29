@@ -34,7 +34,7 @@ class ImageUtility<T> extends MixUtility<T, ImageMixAttribute> {
     return ImageMixAttribute(
       width: width,
       height: height,
-      color: color?.toAttribute(),
+      color: color?.toDto(),
       repeat: repeat,
       fit: fit,
     );

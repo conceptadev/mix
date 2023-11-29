@@ -9,7 +9,7 @@ void main() {
   final gradientDto = linearGradient.toAttribute();
   group('BoxDecorationDto', () {
     test('merge returns merged object correctly', () {
-      final attr1 = BoxDecorationAttribute(color: Colors.red.toAttribute());
+      final attr1 = BoxDecorationAttribute(color: Colors.red.toDto());
       final attr2 = BoxDecorationAttribute(gradient: gradientDto);
       final merged = attr1.merge(attr2);
       expect(merged.color, attr1.color);
@@ -23,27 +23,27 @@ void main() {
     });
     test('resolve returns correct BoxDecoration with specific values', () {
       final attr = BoxDecorationAttribute(
-          color: Colors.red.toAttribute(), gradient: gradientDto);
+          color: Colors.red.toDto(), gradient: gradientDto);
       final decoration = attr.resolve(EmptyMixData);
       expect(decoration.color, Colors.red);
       expect(decoration.gradient, linearGradient);
       return const Placeholder();
     });
     test('Equality holds when all properties are the same', () {
-      final attr1 = BoxDecorationAttribute(color: Colors.red.toAttribute());
-      final attr2 = BoxDecorationAttribute(color: Colors.red.toAttribute());
+      final attr1 = BoxDecorationAttribute(color: Colors.red.toDto());
+      final attr2 = BoxDecorationAttribute(color: Colors.red.toDto());
       expect(attr1, attr2);
     });
     test('Equality fails when properties are different', () {
-      final attr1 = BoxDecorationAttribute(color: Colors.red.toAttribute());
-      final attr2 = BoxDecorationAttribute(color: Colors.blue.toAttribute());
+      final attr1 = BoxDecorationAttribute(color: Colors.red.toDto());
+      final attr2 = BoxDecorationAttribute(color: Colors.blue.toDto());
       expect(attr1, isNot(attr2));
     });
   });
 
   group('ShapeDecorationDto', () {
     test('merge returns merged object correctly', () {
-      final attr1 = ShapeDecorationAttribute(color: Colors.red.toAttribute());
+      final attr1 = ShapeDecorationAttribute(color: Colors.red.toDto());
       final attr2 = ShapeDecorationAttribute(gradient: gradientDto);
       final merged = attr1.merge(attr2);
       expect(merged.color, attr1.color);
@@ -62,7 +62,7 @@ void main() {
       );
 
       final attr2 = ShapeDecorationAttribute(
-        color: Colors.red.toAttribute(),
+        color: Colors.red.toDto(),
       );
       final decoration1 = attr1.resolve(EmptyMixData);
       final decoration2 = attr2.resolve(EmptyMixData);
@@ -71,13 +71,13 @@ void main() {
       expect(decoration2.color, Colors.red);
     });
     test('Equality holds when all properties are the same', () {
-      final attr1 = ShapeDecorationAttribute(color: Colors.red.toAttribute());
-      final attr2 = ShapeDecorationAttribute(color: Colors.red.toAttribute());
+      final attr1 = ShapeDecorationAttribute(color: Colors.red.toDto());
+      final attr2 = ShapeDecorationAttribute(color: Colors.red.toDto());
       expect(attr1, attr2);
     });
     test('Equality fails when properties are different', () {
-      final attr1 = ShapeDecorationAttribute(color: Colors.red.toAttribute());
-      final attr2 = ShapeDecorationAttribute(color: Colors.blue.toAttribute());
+      final attr1 = ShapeDecorationAttribute(color: Colors.red.toDto());
+      final attr2 = ShapeDecorationAttribute(color: Colors.blue.toDto());
       expect(attr1, isNot(attr2));
     });
   });

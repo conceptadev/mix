@@ -3,6 +3,7 @@ import 'package:flutter/rendering.dart';
 
 import '../../core/attribute.dart';
 import '../../factory/mix_provider_data.dart';
+import '../scalars/scalars_attribute.dart';
 
 abstract class ConstraintsAttribute<
     Self extends ConstraintsAttribute<Self, Value>,
@@ -24,6 +25,19 @@ class BoxConstraintsAttribute
     this.minHeight,
     this.maxHeight,
   });
+
+  static BoxConstraintsAttribute from(BoxConstraints constraints) {
+    return BoxConstraintsAttribute(
+      minWidth: constraints.minWidth,
+      maxWidth: constraints.maxWidth,
+      minHeight: constraints.minHeight,
+      maxHeight: constraints.maxHeight,
+    );
+  }
+
+  static BoxConstraintsAttribute? maybeFrom(BoxConstraints? constraints) {
+    return constraints == null ? null : from(constraints);
+  }
 
   @override
   BoxConstraints resolve(MixData mix) {
@@ -66,19 +80,25 @@ class BoxConstraintsAttribute
 }
 
 @immutable
-class WidthAttribute extends ScalarAttribute {
+class WidthAttribute extends ScalarAttribute<WidthAttribute, double> {
   const WidthAttribute(super.value);
 
   static WidthAttribute? maybeFrom(double? value) {
     return value == null ? null : WidthAttribute(value);
   }
+
+  @override
+  WidthAttribute merge(WidthAttribute? other) => other ?? this;
 }
 
 @immutable
-class HeightAttribute extends ScalarAttribute {
+class HeightAttribute extends ScalarAttribute<HeightAttribute, double> {
   const HeightAttribute(super.value);
 
   static HeightAttribute? maybeFrom(double? value) {
     return value == null ? null : HeightAttribute(value);
   }
+
+  @override
+  HeightAttribute merge(HeightAttribute? other) => other ?? this;
 }

@@ -14,8 +14,8 @@ void main() {
             fit: StackFit.expand,
             clipBehavior: Clip.antiAlias,
             alignment: Alignment.center,
+            textDirection: TextDirection.ltr,
           ),
-          const TextDirectionAttribute(TextDirectionAttribute.ltr),
         ),
       );
 
@@ -23,7 +23,7 @@ void main() {
 
       expect(mixture.alignment, Alignment.center);
       expect(mixture.fit, StackFit.expand);
-      expect(mixture.textDirection, TextDirectionAttribute.ltr);
+      expect(mixture.textDirection, TextDirection.ltr);
       expect(mixture.clipBehavior, Clip.antiAlias);
     });
 
@@ -31,20 +31,20 @@ void main() {
       const spec = StackMixture(
         alignment: Alignment.center,
         fit: StackFit.expand,
-        textDirection: TextDirectionAttribute.ltr,
+        textDirection: TextDirection.ltr,
         clipBehavior: Clip.antiAlias,
       );
 
       final copiedSpec = spec.copyWith(
         alignment: Alignment.topLeft,
         fit: StackFit.loose,
-        textDirection: TextDirectionAttribute.rtl,
+        textDirection: TextDirection.rtl,
         clipBehavior: Clip.none,
       );
 
       expect(copiedSpec.alignment, Alignment.topLeft);
       expect(copiedSpec.fit, StackFit.loose);
-      expect(copiedSpec.textDirection, TextDirectionAttribute.rtl);
+      expect(copiedSpec.textDirection, TextDirection.rtl);
       expect(copiedSpec.clipBehavior, Clip.none);
     });
 
@@ -52,14 +52,14 @@ void main() {
       const spec1 = StackMixture(
         alignment: Alignment.topLeft,
         fit: StackFit.loose,
-        textDirection: TextDirectionAttribute.ltr,
+        textDirection: TextDirection.ltr,
         clipBehavior: Clip.none,
       );
 
       const spec2 = StackMixture(
         alignment: Alignment.bottomRight,
         fit: StackFit.expand,
-        textDirection: TextDirectionAttribute.rtl,
+        textDirection: TextDirection.rtl,
         clipBehavior: Clip.antiAlias,
       );
 
@@ -69,7 +69,7 @@ void main() {
       expect(lerpedSpec.alignment,
           Alignment.lerp(Alignment.topLeft, Alignment.bottomRight, t));
       expect(lerpedSpec.fit, StackFit.expand);
-      expect(lerpedSpec.textDirection, TextDirectionAttribute.rtl);
+      expect(lerpedSpec.textDirection, TextDirection.rtl);
       expect(lerpedSpec.clipBehavior, Clip.antiAlias);
 
       expect(lerpedSpec, isNot(spec1));

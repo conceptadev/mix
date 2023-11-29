@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../factory/mix_provider_data.dart';
 import 'decorator.dart';
 
-class ClipPathDecorator extends WrapDecorator {
+class ClipPathDecorator extends WrapDecorator<ClipPathDecorator> {
   final Clip? clipBehavior;
   final CustomClipper<Path>? clipper;
 
@@ -31,7 +31,7 @@ class ClipPathDecorator extends WrapDecorator {
   }
 }
 
-class ClipOvalDecorator extends WrapDecorator {
+class ClipOvalDecorator extends WrapDecorator<ClipOvalDecorator> {
   final Clip? clipBehavior;
   final CustomClipper<Rect>? clipper;
 
@@ -59,7 +59,7 @@ class ClipOvalDecorator extends WrapDecorator {
   }
 }
 
-class ClipRectDecorator extends WrapDecorator {
+class ClipRectDecorator extends WrapDecorator<ClipRectDecorator> {
   final Clip? clipBehavior;
   final CustomClipper<Rect>? clipper;
 
@@ -87,7 +87,7 @@ class ClipRectDecorator extends WrapDecorator {
   }
 }
 
-class ClipRRectDecorator extends WrapDecorator {
+class ClipRRectDecorator extends WrapDecorator<ClipRRectDecorator> {
   final Clip? clipBehavior;
   final BorderRadius? borderRadius;
   final CustomClipper<RRect>? clipper;

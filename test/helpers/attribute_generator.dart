@@ -4,6 +4,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
+import 'package:mix/src/attributes/scalars/scalars_attribute.dart';
 
 class AttributeGenerator {
   const AttributeGenerator();
@@ -147,7 +148,7 @@ class AttributeGenerator {
   }) {
     final random = Random();
 
-    return BorderRadiusAttribute(
+    return BorderRadiusAttribute.only(
       topLeft: Radius.circular(topLeft ?? random.nextDouble() * 20),
       topRight: Radius.circular(topRight ?? random.nextDouble() * 20),
       bottomLeft: Radius.circular(bottomLeft ?? random.nextDouble() * 20),
@@ -163,7 +164,7 @@ class AttributeGenerator {
   }) {
     final random = Random();
 
-    return BorderRadiusDirectionalAttribute(
+    return BorderRadiusDirectionalAttribute.only(
       topStart: Radius.circular(topStart ?? random.nextDouble() * 20),
       topEnd: Radius.circular(topEnd ?? random.nextDouble() * 20),
       bottomStart: Radius.circular(bottomStart ?? random.nextDouble() * 20),
@@ -172,12 +173,12 @@ class AttributeGenerator {
   }
 
   BorderAttribute border({
-    BorderSideAttribute? left,
-    BorderSideAttribute? right,
-    BorderSideAttribute? top,
-    BorderSideAttribute? bottom,
+    BorderSideDto? left,
+    BorderSideDto? right,
+    BorderSideDto? top,
+    BorderSideDto? bottom,
   }) {
-    return BorderAttribute(
+    return BorderAttribute.only(
       left: left ?? borderSide(),
       right: right ?? borderSide(),
       top: top ?? borderSide(),
@@ -197,12 +198,12 @@ class AttributeGenerator {
     );
   }
 
-  BorderSideAttribute borderSide({
+  BorderSideDto borderSide({
     ColorDto? color,
     double? width,
     BorderStyle? style,
   }) {
-    return BorderSideAttribute(
+    return BorderSideDto(
       color: color ?? this.color(),
       width: width ?? Random().nextDouble() * 4,
       style: style ?? BorderStyle.values.random(),

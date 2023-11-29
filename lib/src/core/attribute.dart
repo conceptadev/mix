@@ -10,6 +10,9 @@ abstract class Attribute with Comparable {
 
 abstract class StyleAttribute extends Attribute {
   const StyleAttribute();
+
+  // Type used for combining attributes
+  Type get type;
 }
 
 abstract class Dto<T> with Comparable, Mergeable<Dto>, Resolver<T> {
@@ -23,15 +26,6 @@ mixin Resolver<Value> {
 // TODO: Mergeable to do Attribute only
 mixin Mergeable<T> {
   T merge(covariant T? other);
-}
-
-@immutable
-abstract class ScalarAttribute<Value> extends StyleAttribute {
-  final Value value;
-  const ScalarAttribute(this.value);
-
-  @override
-  get props => [value];
 }
 
 // TODO: Should all ResolvableAttribute be the Style Attribute high level?
@@ -60,6 +54,9 @@ abstract class ResolvableAttribute<Self, Value> extends StyleAttribute
 
   @override
   Self merge(covariant Self? other);
+
+  @override
+  Type get type => Self;
 }
 
 mixin SingleChildRenderAttributeMixin<W extends RenderObjectWidget>

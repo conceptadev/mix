@@ -1,11 +1,8 @@
-import 'package:flutter/material.dart';
-
-import '../../attributes/alignment_attribute.dart';
 import '../../attributes/color_attribute.dart';
 import '../../attributes/constraints/constraints_attribute.dart';
 import '../../attributes/decoration/decoration_attribute.dart';
+import '../../attributes/scalars/scalars_attribute.dart';
 import '../../attributes/spacing_attribute.dart';
-import '../../attributes/transform_attribute.dart';
 import '../../core/attribute.dart';
 import '../../factory/mix_provider_data.dart';
 import 'container_mixture.dart';
@@ -18,8 +15,8 @@ class ContainerMixAttribute
   final BoxConstraintsAttribute? constraints;
   final DecorationAttribute? decoration;
   final TransformAttribute? transform;
-  final Clip? clipBehavior;
-  final ColorDto? color;
+  final ClipBehaviorAttribute? clipBehavior;
+  final BackgroundColorAttribute? color;
   final WidthAttribute? width;
   final HeightAttribute? height;
 
@@ -46,6 +43,8 @@ class ContainerMixAttribute
       constraints: mix.attributeOf<BoxConstraintsAttribute>(),
       decoration: mix.attributeOf<DecorationAttribute>(),
       transform: mix.attributeOf<TransformAttribute>(),
+      clipBehavior: mix.attributeOf<ClipBehaviorAttribute>(),
+      color: mix.attributeOf<BackgroundColorAttribute>(),
       width: mix.attributeOf<WidthAttribute>(),
       height: mix.attributeOf<HeightAttribute>(),
     ).merge(attribute);
@@ -60,7 +59,7 @@ class ContainerMixAttribute
       constraints: constraints?.resolve(mix),
       decoration: decoration?.resolve(mix),
       transform: transform?.value,
-      clipBehavior: clipBehavior,
+      clipBehavior: clipBehavior?.value,
       color: color?.resolve(mix),
       width: width?.value,
       height: height?.value,

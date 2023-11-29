@@ -182,16 +182,17 @@ class WrapMixThemeWidget extends StatelessWidget {
   }
 }
 
-class MockDoubleScalarAttribute extends ScalarAttribute<double> {
+class MockDoubleScalarAttribute
+    extends ScalarAttribute<MockDoubleScalarAttribute, double> {
   const MockDoubleScalarAttribute(super.value);
 }
 
-class MockIntScalarAttribute extends ScalarAttribute<int> {
+class MockIntScalarAttribute
+    extends ScalarAttribute<MockIntScalarAttribute, int> {
   const MockIntScalarAttribute(super.value);
 }
 
-class MockDoubleDecoratorAttribute
-    extends Decorator<MockDoubleDecoratorAttribute> {
+class MockDoubleDecoratorAttribute extends Decorator {
   final double value;
   const MockDoubleDecoratorAttribute(this.value, {super.key});
 
@@ -199,16 +200,16 @@ class MockDoubleDecoratorAttribute
   get props => [value];
 
   @override
-  MockDoubleDecoratorAttribute merge(MockDoubleDecoratorAttribute? other) {
-    return MockDoubleDecoratorAttribute(other?.value ?? value);
-  }
+  Type get type => MockDoubleDecoratorAttribute;
 }
 
-class MockBooleanScalarAttribute extends ScalarAttribute<bool> {
+class MockBooleanScalarAttribute
+    extends ScalarAttribute<MockBooleanScalarAttribute, bool> {
   const MockBooleanScalarAttribute(super.value);
 }
 
-class MockStringScalarAttribute extends ScalarAttribute<String> {
+class MockStringScalarAttribute
+    extends ScalarAttribute<MockStringScalarAttribute, String> {
   const MockStringScalarAttribute(super.value);
 }
 
@@ -222,7 +223,7 @@ class MockInvalidAttribute extends Attribute {
 const mockVariant = Variant('mock-variant');
 
 @isTestGroup
-void testScalarAttribute<T extends ScalarAttribute<V>, V>(
+void testScalarAttribute<T extends ScalarAttribute<T, V>, V>(
   String groupName,
   T Function(V value) builder,
   List<V> values,

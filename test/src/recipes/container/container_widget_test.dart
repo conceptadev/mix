@@ -8,7 +8,6 @@ void main() {
   testWidgets('StyledContainer', (WidgetTester tester) async {
     final paddingAttr = padding(10);
     final marginAttr = margin(10);
-    final backgroundColorAttr = backgroundColor(Colors.red);
     final alignmentAttr = alignment.center();
     final clipAttr = clipBehavior.hardEdge();
 
@@ -23,7 +22,6 @@ void main() {
         style: StyleMix(
           paddingAttr,
           marginAttr,
-          backgroundColorAttr,
           alignmentAttr,
           clipAttr,
           boxDecorationAttr,

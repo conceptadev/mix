@@ -16,7 +16,7 @@ class StyleAttributeMap<T extends StyleAttribute> with Comparable {
   factory StyleAttributeMap(List<T> attributes) {
     final map = LinkedHashMap<Type, T>();
     for (final attribute in attributes) {
-      final type = attribute.runtimeType;
+      final type = attribute.type;
 
       // If value cannot be merged just overwrite it
       if (attribute is! Mergeable) {

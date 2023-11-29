@@ -4,7 +4,7 @@ import 'package:mix/mix.dart';
 
 void main() {
   group('BorderUtility', () {
-    final border = BorderUtility.selfBuilder;
+    const border = BorderUtility.selfBuilder;
 
     test('border.top()', () {
       final result = border.top(
@@ -348,55 +348,21 @@ void main() {
         style: BorderStyle.solid,
         strokeAlign: 0.3,
       );
-      expect(result.start?.color?.value, Colors.blue);
-      expect(result.start?.width, 5.0);
-      expect(result.start?.style, BorderStyle.solid);
-      expect(result.start?.strokeAlign, 0.3);
-      expect(result.end?.color?.value, Colors.blue);
-      expect(result.end?.width, 5.0);
-      expect(result.end?.style, BorderStyle.solid);
-      expect(result.end?.strokeAlign, 0.3);
-      expect(result.top, null);
-      expect(result.bottom, null);
+      expect(result.top?.color?.value, Colors.blue);
+      expect(result.top?.width, 5.0);
+      expect(result.top?.style, BorderStyle.solid);
+      expect(result.top?.strokeAlign, 0.3);
+      expect(result.bottom?.color?.value, Colors.blue);
+      expect(result.bottom?.width, 5.0);
+      expect(result.bottom?.style, BorderStyle.solid);
+      expect(result.bottom?.strokeAlign, 0.3);
+      expect(result.start, null);
+      expect(result.end, null);
 
       final resultColor = borderDirectional.horizontal.color(Colors.yellow);
       final resultWidth = borderDirectional.horizontal.width(20.0);
       final resultStyle = borderDirectional.horizontal.style(BorderStyle.solid);
       final resultStrokeAlign = borderDirectional.horizontal.strokeAlign(0.2);
-
-      expect(resultColor.start?.color?.value, Colors.yellow);
-      expect(resultWidth.start?.width, 20.0);
-      expect(resultStyle.start?.style, BorderStyle.solid);
-      expect(resultStrokeAlign.start?.strokeAlign, 0.2);
-
-      expect(resultColor.end?.color?.value, Colors.yellow);
-      expect(resultWidth.end?.width, 20.0);
-      expect(resultStyle.end?.style, BorderStyle.solid);
-      expect(resultStrokeAlign.end?.strokeAlign, 0.2);
-    });
-
-    test('borderDirectional.vertical()', () {
-      final result = borderDirectional.vertical(
-        color: Colors.green,
-        width: 7.0,
-        style: BorderStyle.solid,
-        strokeAlign: 0.2,
-      );
-      expect(result.top?.color?.value, Colors.green);
-      expect(result.top?.width, 7.0);
-      expect(result.top?.style, BorderStyle.solid);
-      expect(result.top?.strokeAlign, 0.2);
-      expect(result.bottom?.color?.value, Colors.green);
-      expect(result.bottom?.width, 7.0);
-      expect(result.bottom?.style, BorderStyle.solid);
-      expect(result.bottom?.strokeAlign, 0.2);
-      expect(result.start, null);
-      expect(result.end, null);
-
-      final resultColor = borderDirectional.vertical.color(Colors.yellow);
-      final resultWidth = borderDirectional.vertical.width(20.0);
-      final resultStyle = borderDirectional.vertical.style(BorderStyle.solid);
-      final resultStrokeAlign = borderDirectional.vertical.strokeAlign(0.2);
 
       expect(resultColor.top?.color?.value, Colors.yellow);
       expect(resultWidth.top?.width, 20.0);
@@ -407,6 +373,40 @@ void main() {
       expect(resultWidth.bottom?.width, 20.0);
       expect(resultStyle.bottom?.style, BorderStyle.solid);
       expect(resultStrokeAlign.bottom?.strokeAlign, 0.2);
+    });
+
+    test('borderDirectional.vertical()', () {
+      final result = borderDirectional.vertical(
+        color: Colors.green,
+        width: 7.0,
+        style: BorderStyle.solid,
+        strokeAlign: 0.2,
+      );
+      expect(result.start?.color?.value, Colors.green);
+      expect(result.start?.width, 7.0);
+      expect(result.start?.style, BorderStyle.solid);
+      expect(result.start?.strokeAlign, 0.2);
+      expect(result.end?.color?.value, Colors.green);
+      expect(result.end?.width, 7.0);
+      expect(result.end?.style, BorderStyle.solid);
+      expect(result.end?.strokeAlign, 0.2);
+      expect(result.top, null);
+      expect(result.bottom, null);
+
+      final resultColor = borderDirectional.vertical.color(Colors.yellow);
+      final resultWidth = borderDirectional.vertical.width(20.0);
+      final resultStyle = borderDirectional.vertical.style(BorderStyle.solid);
+      final resultStrokeAlign = borderDirectional.vertical.strokeAlign(0.2);
+
+      expect(resultColor.start?.color?.value, Colors.yellow);
+      expect(resultWidth.start?.width, 20.0);
+      expect(resultStyle.start?.style, BorderStyle.solid);
+      expect(resultStrokeAlign.start?.strokeAlign, 0.2);
+
+      expect(resultColor.end?.color?.value, Colors.yellow);
+      expect(resultWidth.end?.width, 20.0);
+      expect(resultStyle.end?.style, BorderStyle.solid);
+      expect(resultStrokeAlign.end?.strokeAlign, 0.2);
     });
 
     test('borderDirectional.all()', () {

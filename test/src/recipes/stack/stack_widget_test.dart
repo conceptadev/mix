@@ -37,7 +37,7 @@ void main() {
     expect(stackWidget.alignment, Alignment.topCenter);
     expect(stackWidget.fit, StackFit.expand);
     expect(stackWidget.clipBehavior, Clip.antiAlias);
-    expect(stackWidget.textDirection, TextDirectionAttribute.ltr);
+    expect(stackWidget.textDirection, TextDirection.ltr);
   });
 
   testWidgets('ZBox', (tester) async {
@@ -63,11 +63,11 @@ void main() {
 
     expect(find.byType(Container), findsOneWidget);
 
-    expect((container.decoration as BoxDecoration).color, Colors.red);
+    expect(container.color, Colors.red);
 
     expect(stackWidget.alignment, Alignment.topCenter);
     expect(stackWidget.fit, StackFit.expand);
     expect(stackWidget.clipBehavior, Clip.antiAlias);
-    expect(stackWidget.textDirection, TextDirectionAttribute.ltr);
+    expect(stackWidget.textDirection, TextDirection.ltr);
   });
 }

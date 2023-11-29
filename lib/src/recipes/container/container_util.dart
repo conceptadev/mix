@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 
-import '../../attributes/alignment_attribute.dart';
 import '../../attributes/color_attribute.dart';
 import '../../attributes/constraints/constraints_attribute.dart';
 import '../../attributes/constraints/constraints_util.dart';
 import '../../attributes/decoration/decoration_attribute.dart';
+import '../../attributes/scalars/scalars_attribute.dart';
 import '../../attributes/spacing_attribute.dart';
-import '../../attributes/transform_attribute.dart';
-import '../../core/extensions/values_ext.dart';
 import '../../utils/border_radius_util.dart';
+import '../../utils/border_util.dart';
 import '../../utils/decoration_util.dart';
 import '../../utils/scalar_util.dart';
 import '../../utils/shadow_util.dart';
@@ -19,6 +18,8 @@ const container = ContainerUtility.selfBuilder;
 const box = ContainerUtility.selfBuilder;
 const boxShadow = BoxShadowUtility.selfBuilder;
 const boxDecoration = BoxDecorationUtility.selfBuilder;
+const border = BoxBorderUtility.selfBuilder;
+const clipBehavior = ClipUtility.selfBuilder;
 
 /// Predefined utility constants for creating padding attributes.
 const padding = PaddingUtility.selfBuilder;
@@ -26,12 +27,12 @@ const padding = PaddingUtility.selfBuilder;
 /// Predefined utility constants for creating margin attributes.
 const margin = MarginUtility.selfBuilder;
 
-final backgroundColor = boxDecoration.color;
+const backgroundColor = ColorUtility(BackgroundColorAttribute.new);
 
-final elevation = boxDecoration.elevation;
+const elevation = ElevationUtility.selfBuilder;
 
 // Provides an utility for creating a uniform BorderRadiusAttribute for all corners.
-const borderRadius = BorderRadiusUtility.selfBuilder;
+const borderRadius = BorderRadiusGeometryUtility.selfBuilder;
 const alignment = AlignmentUtility.selfBuilder;
 
 const boxConstraints = BoxConstraintsUtility.selfBuilder;
@@ -65,13 +66,13 @@ class ContainerUtility<T> extends MixUtility<T, ContainerMixAttribute> {
   const ContainerUtility(super.builder);
 
   T _alignment(AlignmentGeometry alignment) => call(alignment: alignment);
-  T _padding(PaddingAttribute padding) => as(ContainerMixAttribute(
-        padding: padding,
-      ));
-  T _margin(MarginAttribute margin) => as(ContainerMixAttribute(
-        margin: margin,
-      ));
-  T _color(ColorDto color) => _only(color: color);
+  T _padding(PaddingAttribute padding) => as(
+        ContainerMixAttribute(padding: padding),
+      );
+  T _margin(MarginAttribute margin) => as(
+        ContainerMixAttribute(margin: margin),
+      );
+  T _color(ColorDto color) => _only(color: BackgroundColorAttribute(color));
   T _decoration(BoxDecorationAttribute decoration) =>
       _only(decoration: decoration);
 
@@ -79,20 +80,20 @@ class ContainerUtility<T> extends MixUtility<T, ContainerMixAttribute> {
       _only(constraints: constraints);
   T _width(double width) => call(width: width);
   T _height(double height) => call(height: height);
-  T _transform(Matrix4 transform) => _only(transform: transform.toAttribute());
-  T _clipBehavior(Clip clipBehavior) => _only(clipBehavior: clipBehavior);
+  T _transform(Matrix4 transform) => call(transform: transform);
+  T _clipBehavior(Clip clipBehavior) => call(clipBehavior: clipBehavior);
 
   T _only({
     AlignmentGeometryAttribute? alignment,
     PaddingAttribute? padding,
     MarginAttribute? margin,
-    ColorDto? color,
+    BackgroundColorAttribute? color,
     DecorationAttribute? decoration,
     BoxConstraintsAttribute? constraints,
     WidthAttribute? width,
     HeightAttribute? height,
     TransformAttribute? transform,
-    Clip? clipBehavior,
+    ClipBehaviorAttribute? clipBehavior,
   }) {
     return as(
       ContainerMixAttribute(
@@ -109,6 +110,8 @@ class ContainerUtility<T> extends MixUtility<T, ContainerMixAttribute> {
       ),
     );
   }
+
+  ElevationUtility<T> get elevation => decoration.elevation;
 
   AlignmentUtility<T> get alignment => AlignmentUtility(_alignment);
   PaddingUtility<T> get padding => PaddingUtility(_padding);
@@ -127,21 +130,23 @@ class ContainerUtility<T> extends MixUtility<T, ContainerMixAttribute> {
     AlignmentGeometry? alignment,
     EdgeInsets? padding,
     EdgeInsets? margin,
-    Color? color,
     BoxConstraints? constraints,
     double? width,
     double? height,
+    BoxDecoration? decoration,
     Matrix4? transform,
     Clip? clipBehavior,
+    Color? color,
   }) {
     final attribute = ContainerMixAttribute(
-      alignment: alignment?.toAttribute(),
-      padding: padding == null ? null : PaddingAttribute.from(padding),
-      margin: margin == null ? null : MarginAttribute.from(margin),
-      constraints: constraints?.toAttribute(),
-      transform: transform?.toAttribute(),
-      clipBehavior: clipBehavior,
-      color: color?.toAttribute(),
+      alignment: AlignmentGeometryAttribute.maybeFrom(alignment),
+      padding: PaddingAttribute.maybeFrom(padding),
+      margin: MarginAttribute.maybeFrom(margin),
+      constraints: BoxConstraintsAttribute.maybeFrom(constraints),
+      decoration: BoxDecorationAttribute.maybeFrom(decoration),
+      transform: TransformAttribute.maybeFrom(transform),
+      clipBehavior: ClipBehaviorAttribute.maybeFrom(clipBehavior),
+      color: BackgroundColorAttribute.maybeFrom(color),
       width: WidthAttribute.maybeFrom(width),
       height: HeightAttribute.maybeFrom(height),
     );

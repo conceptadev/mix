@@ -39,7 +39,7 @@ class MarginUtility<T> extends SpacingUtility<T, MarginAttribute> {
 ///   final horizontalSpacing = spacing.horizontal(20);
 /// ```
 @immutable
-abstract class SpacingUtility<T, Attr extends SpacingAttribute>
+abstract class SpacingUtility<T, Attr extends SpacingAttribute<Attr>>
     extends MixUtility<T, Attr> {
   final SpacingAttributeBuilder<Attr> spacingBuilder;
   const SpacingUtility(super.builder, {required this.spacingBuilder});
@@ -199,7 +199,7 @@ class SpacingSideUtility<T> extends ScalarUtility<T, double> {
 ///   final horizontalDirectionalSpacing = directionalSpacing.horizontal(20);
 /// ```
 @immutable
-class SpacingDirectionalUtility<T, Attr extends SpacingAttribute>
+class SpacingDirectionalUtility<T, Attr extends SpacingAttribute<Attr>>
     extends SpacingUtility<T, Attr> {
   const SpacingDirectionalUtility(
     super.builder, {
@@ -224,24 +224,24 @@ class SpacingDirectionalUtility<T, Attr extends SpacingAttribute>
   T _horizontal(double value) => only(start: value, end: value);
 
   @override
-  T from(EdgeInsetsGeometry edgeInsets) {
-    if (edgeInsets is EdgeInsets) {
+  T from(EdgeInsetsGeometry value) {
+    if (value is EdgeInsets) {
       return only(
-        top: edgeInsets.top,
-        bottom: edgeInsets.bottom,
-        start: edgeInsets.left,
-        end: edgeInsets.right,
+        top: value.top,
+        bottom: value.bottom,
+        start: value.left,
+        end: value.right,
       );
-    } else if (edgeInsets is EdgeInsetsDirectional) {
+    } else if (value is EdgeInsetsDirectional) {
       return only(
-        top: edgeInsets.top,
-        bottom: edgeInsets.bottom,
-        start: edgeInsets.start,
-        end: edgeInsets.end,
+        top: value.top,
+        bottom: value.bottom,
+        start: value.start,
+        end: value.end,
       );
     }
     throw Exception(
-      'Unsupported EdgeInsetsGeometry type: ${edgeInsets.runtimeType}',
+      'Unsupported EdgeInsetsGeometry type: ${value.runtimeType}',
     );
   }
 

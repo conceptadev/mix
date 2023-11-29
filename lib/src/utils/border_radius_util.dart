@@ -6,10 +6,11 @@ import '../attributes/border/border_radius_attribute.dart';
 import '../core/extensions/values_ext.dart';
 import 'scalar_util.dart';
 
-class BorderRadiusUtility<T>
+class BorderRadiusGeometryUtility<T>
     extends MixUtility<T, BorderRadiusGeometryAttribute> {
-  static const selfBuilder = BorderRadiusUtility(MixUtility.selfBuilder);
-  const BorderRadiusUtility(super.builder);
+  static const selfBuilder =
+      BorderRadiusGeometryUtility(MixUtility.selfBuilder);
+  const BorderRadiusGeometryUtility(super.builder);
 
   T _bottomLeft(Radius radius) => only(bottomLeft: radius);
 
@@ -78,7 +79,7 @@ class BorderRadiusUtility<T>
     Radius? bottomLeft,
     Radius? bottomRight,
   }) {
-    final borderRadius = BorderRadiusAttribute(
+    final borderRadius = BorderRadiusAttribute.only(
       topLeft: topLeft,
       topRight: topRight,
       bottomLeft: bottomLeft,
@@ -113,7 +114,7 @@ class BorderRadiusUtility<T>
       bottomRight = p4;
     }
 
-    final borderRadius = BorderRadiusAttribute(
+    final borderRadius = BorderRadiusAttribute.only(
       topLeft: topLeft.toRadius(),
       topRight: topRight.toRadius(),
       bottomLeft: bottomLeft.toRadius(),
@@ -187,7 +188,7 @@ class BorderRadiusDirectionalUtility<T>
       bottomEnd = p4;
     }
 
-    return BorderRadiusDirectionalAttribute(
+    return BorderRadiusDirectionalAttribute.only(
       topStart: topStart.toRadius(),
       topEnd: topEnd.toRadius(),
       bottomStart: bottomStart.toRadius(),
@@ -202,7 +203,7 @@ class BorderRadiusDirectionalUtility<T>
     Radius? bottomStart,
     Radius? bottomEnd,
   }) {
-    return BorderRadiusDirectionalAttribute(
+    return BorderRadiusDirectionalAttribute.only(
       topStart: topStart,
       topEnd: topEnd,
       bottomStart: bottomStart,

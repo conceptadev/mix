@@ -11,6 +11,7 @@ import 'border_radius_util.dart';
 import 'border_util.dart';
 import 'helper_util.dart';
 import 'scalar_util.dart';
+import 'shadow_util.dart';
 
 class BoxDecorationUtility<T> extends MixUtility<T, BoxDecorationAttribute> {
   static const selfBuilder = BoxDecorationUtility(MixUtility.selfBuilder);
@@ -51,19 +52,19 @@ class BoxDecorationUtility<T> extends MixUtility<T, BoxDecorationAttribute> {
     return as(decoration);
   }
 
+  T _elevation(List<BoxShadow> shadows) => call(boxShadow: shadows);
+
   ColorUtility<T> get color => ColorUtility(_color);
   BorderUtility<T> get border => BorderUtility(_border);
-  BorderRadiusUtility<T> get borderRadius => BorderRadiusUtility(_borderRadius);
+  BorderRadiusGeometryUtility<T> get borderRadius =>
+      BorderRadiusGeometryUtility(_borderRadius);
 
   BoxShapeUtility<T> get shape => BoxShapeUtility(_shape);
+
   SpreadFunctionParams<BoxShadowAttribute, T> get boxShadow =>
       SpreadFunctionParams(_boxShadow);
 
-  T elevation(int value) {
-    assert(kElevationToShadow.containsKey(value), 'Invalid elevation value');
-
-    return _only(boxShadow: kElevationToShadow[value]!.toAttribute());
-  }
+  ElevationUtility<T> get elevation => ElevationUtility(_elevation);
 
   T call({
     Color? color,
@@ -74,7 +75,7 @@ class BoxDecorationUtility<T> extends MixUtility<T, BoxDecorationAttribute> {
     BoxShape? shape,
   }) {
     return _only(
-      color: color?.toAttribute(),
+      color: color?.toDto(),
       border: border?.toAttribute(),
       borderRadius: borderRadius?.toAttribute(),
       gradient: gradient?.toAttribute(),

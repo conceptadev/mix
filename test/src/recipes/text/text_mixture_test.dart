@@ -14,9 +14,9 @@ void main() {
         StyleMix(
           const StrutStyleAttribute(fontSize: 20.0),
           TextStyleAttribute.only(color: const ColorDto(Colors.red)),
-          const TextDirectionAttribute(TextDirectionAttribute.ltr),
           const TextMixAttribute(
             overflow: TextOverflow.ellipsis,
+            textDirection: TextDirection.ltr,
             textAlign: TextAlign.center,
             textScaleFactor: 1.0,
             maxLines: 2,
@@ -29,7 +29,7 @@ void main() {
         ),
       );
 
-      final mixture = const TextMixAttribute().resolve(mix);
+      final mixture = TextMixAttribute.of(mix).resolve(mix);
 
       expect(mixture.overflow, TextOverflow.ellipsis);
       expect(mixture.strutStyle, const StrutStyle(fontSize: 20.0));
@@ -42,7 +42,7 @@ void main() {
           mixture.textHeightBehavior,
           const TextHeightBehavior(
               applyHeightToFirstAscent: true, applyHeightToLastDescent: true));
-      expect(mixture.textDirection, TextDirectionAttribute.ltr);
+      expect(mixture.textDirection, TextDirection.ltr);
       expect(mixture.softWrap, true);
       expect(mixture.directives, [uppercaseDirective]);
 
@@ -60,7 +60,7 @@ void main() {
         textWidthBasis: TextWidthBasis.longestLine,
         textHeightBehavior: TextHeightBehavior(
             applyHeightToFirstAscent: true, applyHeightToLastDescent: true),
-        textDirection: TextDirectionAttribute.ltr,
+        textDirection: TextDirection.ltr,
         softWrap: true,
         directives: [uppercaseDirective],
       );
@@ -75,7 +75,7 @@ void main() {
         textWidthBasis: TextWidthBasis.parent,
         textHeightBehavior: const TextHeightBehavior(
             applyHeightToFirstAscent: false, applyHeightToLastDescent: false),
-        textDirection: TextDirectionAttribute.rtl,
+        textDirection: TextDirection.rtl,
         softWrap: false,
         directives: [lowercaseDirective],
       );
@@ -93,7 +93,7 @@ void main() {
               applyHeightToFirstAscent: false,
               applyHeightToLastDescent: false));
 
-      expect(copiedSpec.textDirection, TextDirectionAttribute.rtl);
+      expect(copiedSpec.textDirection, TextDirection.rtl);
       expect(copiedSpec.softWrap, false);
       expect(copiedSpec.directives, [lowercaseDirective]);
     });
@@ -111,7 +111,7 @@ void main() {
           applyHeightToFirstAscent: true,
           applyHeightToLastDescent: true,
         ),
-        textDirection: TextDirectionAttribute.ltr,
+        textDirection: TextDirection.ltr,
         softWrap: true,
         directives: [uppercaseDirective],
       );
@@ -128,7 +128,7 @@ void main() {
           applyHeightToFirstAscent: false,
           applyHeightToLastDescent: false,
         ),
-        textDirection: TextDirectionAttribute.rtl,
+        textDirection: TextDirection.rtl,
         softWrap: false,
         directives: [lowercaseDirective],
       );
@@ -154,7 +154,7 @@ void main() {
             applyHeightToFirstAscent: false,
             applyHeightToLastDescent: false,
           ));
-      expect(lerpedSpec.textDirection, TextDirectionAttribute.rtl);
+      expect(lerpedSpec.textDirection, TextDirection.rtl);
       expect(lerpedSpec.softWrap, false);
       expect(lerpedSpec.directives, [lowercaseDirective]);
 

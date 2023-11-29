@@ -45,7 +45,21 @@ class TextMixAttribute
   }
 
   @override
-  TextMixture resolve(MixData mix) => of(mix).resolve(mix);
+  TextMixture resolve(MixData mix) {
+    return TextMixture(
+      overflow: overflow,
+      strutStyle: strutStyle?.resolve(mix),
+      textAlign: textAlign,
+      textScaleFactor: textScaleFactor,
+      maxLines: maxLines,
+      style: style?.resolve(mix),
+      textWidthBasis: textWidthBasis,
+      textHeightBehavior: textHeightBehavior,
+      textDirection: textDirection,
+      softWrap: softWrap,
+      directives: directives ?? [],
+    );
+  }
 
   @override
   TextMixAttribute merge(covariant TextMixAttribute? other) {

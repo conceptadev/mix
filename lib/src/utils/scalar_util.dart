@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../attributes/alignment_attribute.dart';
+import '../attributes/scalars/scalars_attribute.dart';
 
 abstract class MixUtility<Attr, Value> {
   final Attr Function(Value value) _builder;
@@ -61,6 +61,8 @@ class DoubleUtility<T> extends ScalarUtility<T, double> {
 
 class IntUtility<T> extends ScalarUtility<T, int> {
   const IntUtility(super.builder);
+
+  T zero() => _builder(0);
 }
 
 class BoolUtility<T> extends ScalarUtility<T, bool> {
@@ -77,6 +79,7 @@ class VerticalDirectionUtility<T> extends EnumUtility<T, VerticalDirection> {
 }
 
 class ClipUtility<T> extends EnumUtility<T, Clip> {
+  static const selfBuilder = ClipUtility(ClipBehaviorAttribute.new);
   const ClipUtility(super.builder);
   T antiAliasWithSaveLayer() => _builder(Clip.antiAliasWithSaveLayer);
   T none() => _builder(Clip.none);

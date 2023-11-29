@@ -19,6 +19,6 @@ class IconUtility<T> extends MixUtility<T, IconMixAttribute> {
   SizingUtility<IconMixAttribute> get size => SizingUtility(_size);
 
   IconMixAttribute call({double? size, Color? color}) {
-    return IconMixAttribute(size: size, color: color?.toAttribute());
+    return IconMixAttribute(size: size, color: color?.toDto());
   }
 }

@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 
-import '../../attributes/alignment_attribute.dart';
-import '../../attributes/axis_attribute.dart';
 import '../../attributes/border/border_attribute.dart';
+import '../../attributes/border/border_dto.dart';
 import '../../attributes/border/border_radius_attribute.dart';
 import '../../attributes/color_attribute.dart';
 import '../../attributes/constraints/constraints_attribute.dart';
 import '../../attributes/decoration/decoration_attribute.dart';
 import '../../attributes/edge_insets_attribute.dart';
 import '../../attributes/gradient_attribute.dart';
+import '../../attributes/scalars/scalars_attribute.dart';
 import '../../attributes/shadow_attribute.dart';
 import '../../attributes/strut_style_attribute.dart';
 import '../../attributes/text_style/text_style_attribute.dart';
-import '../../attributes/transform_attribute.dart';
 
 extension StrutStyleExt on StrutStyle {
   StrutStyleAttribute toAttribute() {
@@ -58,7 +57,7 @@ extension LinearGradientExt on LinearGradient {
   LinearGradientAttribute toAttribute() => LinearGradientAttribute(
         begin: begin,
         end: end,
-        colors: colors.map((e) => e.toAttribute()).toList(),
+        colors: colors.map((e) => e.toDto()).toList(),
         stops: stops,
         tileMode: tileMode,
         transform: transform,
@@ -69,7 +68,7 @@ extension RadialGradientExt on RadialGradient {
   RadialGradientAttribute toAttribute() => RadialGradientAttribute(
         center: center,
         radius: radius,
-        colors: colors.map((e) => e.toAttribute()).toList(),
+        colors: colors.map((e) => e.toDto()).toList(),
         stops: stops,
         tileMode: tileMode,
         focal: focal,
@@ -82,7 +81,7 @@ extension SweepGradientExt on SweepGradient {
         center: center,
         startAngle: startAngle,
         endAngle: endAngle,
-        colors: colors.map((e) => e.toAttribute()).toList(),
+        colors: colors.map((e) => e.toDto()).toList(),
         stops: stops,
         tileMode: tileMode,
         transform: transform,
@@ -101,20 +100,20 @@ extension BoxBorderExt on BoxBorder {
 }
 
 extension BorderExt on Border {
-  BorderAttribute toAttribute() => BorderAttribute(
-        top: top.toAttribute(),
-        bottom: bottom.toAttribute(),
-        left: left.toAttribute(),
-        right: right.toAttribute(),
+  BorderAttribute toAttribute() => BorderAttribute.only(
+        top: top.toDto(),
+        bottom: bottom.toDto(),
+        left: left.toDto(),
+        right: right.toDto(),
       );
 }
 
 extension BorderDirectionalExt on BorderDirectional {
-  BorderDirectionalAttribute toAttribute() => BorderDirectionalAttribute(
-        start: start.toAttribute(),
-        end: end.toAttribute(),
-        top: top.toAttribute(),
-        bottom: bottom.toAttribute(),
+  BorderDirectionalAttribute toAttribute() => BorderDirectionalAttribute.only(
+        top: top.toDto(),
+        bottom: bottom.toDto(),
+        start: start.toDto(),
+        end: end.toDto(),
       );
 }
 
@@ -187,7 +186,7 @@ extension ColorExt on Color {
       '${green.toRadixString(16).padLeft(2, '0')}'
       '${blue.toRadixString(16).padLeft(2, '0')}';
 
-  ColorDto toAttribute() => ColorDto(this);
+  ColorDto toDto() => ColorDto(this);
 }
 
 // Extension for Alignment
@@ -199,7 +198,7 @@ extension AlignmentGeometryExt on AlignmentGeometry {
 
 extension ShapeDecorationExt on ShapeDecoration {
   ShapeDecorationAttribute toAttribute() => ShapeDecorationAttribute(
-        color: color?.toAttribute(),
+        color: color?.toDto(),
         shape: shape,
         gradient: gradient?.toAttribute(),
         boxShadow: shadows?.map((e) => e.toAttribute()).toList(),
@@ -222,7 +221,7 @@ extension AxisExt on Axis {
 
 extension BoxDecorationExt on BoxDecoration {
   BoxDecorationAttribute toAttribute() => BoxDecorationAttribute(
-        color: color?.toAttribute(),
+        color: color?.toDto(),
         border: border?.toAttribute(),
         borderRadius: borderRadius?.toAttribute(),
         gradient: gradient?.toAttribute(),
@@ -243,7 +242,7 @@ extension BorderRadiusGeometryExt on BorderRadiusGeometry {
 }
 
 extension BorderRadiusExt on BorderRadius {
-  BorderRadiusAttribute toAttribute() => BorderRadiusAttribute(
+  BorderRadiusAttribute toAttribute() => BorderRadiusAttribute.only(
         topLeft: topLeft,
         topRight: topRight,
         bottomLeft: bottomLeft,
@@ -253,7 +252,7 @@ extension BorderRadiusExt on BorderRadius {
 
 extension BorderRadiusDirectionalExrt on BorderRadiusDirectional {
   BorderRadiusDirectionalAttribute toAttribute() =>
-      BorderRadiusDirectionalAttribute(
+      BorderRadiusDirectionalAttribute.only(
         topStart: topStart,
         topEnd: topEnd,
         bottomStart: bottomStart,
@@ -272,9 +271,13 @@ extension Matrix4Ext on Matrix4 {
   }
 }
 
+extension ClipExt on Clip {
+  ClipBehaviorAttribute toAttribute() => ClipBehaviorAttribute(this);
+}
+
 extension BorderSideExt on BorderSide {
-  BorderSideAttribute toAttribute() => BorderSideAttribute(
-        color: color.toAttribute(),
+  BorderSideDto toDto() => BorderSideDto(
+        color: color.toDto(),
         strokeAlign: strokeAlign,
         style: style,
         width: width,
@@ -284,7 +287,7 @@ extension BorderSideExt on BorderSide {
 extension ShadowExt on Shadow {
   ShadowAttribute toAttribute() => ShadowAttribute(
         blurRadius: blurRadius,
-        color: color.toAttribute(),
+        color: color.toDto(),
         offset: offset,
       );
 }
@@ -297,7 +300,7 @@ extension ListShadowExt on List<Shadow> {
 
 extension BoxShadowExt on BoxShadow {
   BoxShadowAttribute toAttribute() => BoxShadowAttribute(
-        color: color.toAttribute(),
+        color: color.toDto(),
         offset: offset,
         blurRadius: blurRadius,
         spreadRadius: spreadRadius,
@@ -313,10 +316,10 @@ extension ListBoxShadowExt on List<BoxShadow> {
 extension TextStyleExt on TextStyle {
   TextStyleDto toDto() => TextStyleDto(
         background: background,
-        color: color?.toAttribute(),
+        color: color?.toDto(),
         debugLabel: debugLabel,
         decoration: decoration,
-        decorationColor: decorationColor?.toAttribute(),
+        decorationColor: decorationColor?.toDto(),
         decorationStyle: decorationStyle,
         decorationThickness: decorationThickness,
         fontFamily: fontFamily,

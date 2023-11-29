@@ -1,145 +1,126 @@
-// ignore_for_file: prefer-conditional-expressions, prefer-returning-conditional-expressions
-
 import 'package:flutter/material.dart';
 
 import '../../core/attribute.dart';
 import '../../core/extensions/values_ext.dart';
 import '../../factory/mix_provider_data.dart';
-import '../color_attribute.dart';
+import 'border_dto.dart';
 
 @immutable
-abstract class BoxBorderAttribute<Self, Value extends BoxBorder>
-    extends ResolvableAttribute<Self, Value> {
-  final BorderSideAttribute? _top;
-  final BorderSideAttribute? _bottom;
+abstract class BoxBorderAttribute
+    extends ResolvableAttribute<BoxBorderAttribute, BoxBorder> {
+  final BoxBorderDto value;
 
-  final BorderSideAttribute? _left;
-  final BorderSideAttribute? _right;
+  const BoxBorderAttribute(this.value);
 
-  // Directional
-  final BorderSideAttribute? _start;
-  final BorderSideAttribute? _end;
-
-  const BoxBorderAttribute({
-    BorderSideAttribute? top,
-    BorderSideAttribute? bottom,
-    BorderSideAttribute? left,
-    BorderSideAttribute? right,
-    BorderSideAttribute? start,
-    BorderSideAttribute? end,
-  })  : _top = top,
-        _bottom = bottom,
-        _left = left,
-        _right = right,
-        _start = start,
-        _end = end;
-
-  BorderSideAttribute? get top => _top;
-  BorderSideAttribute? get bottom => _bottom;
-
-  bool get hasStartOrEnd => _start != null || _end != null;
-
-  bool get hasLeftOrRight => _left != null || _right != null;
-
-  Type? canMergeType(covariant BoxBorderAttribute other) {
-    if (other is BorderAttribute && this is BorderAttribute) {
-      return BorderAttribute;
-    }
-    if (other is BorderDirectionalAttribute &&
-        this is BorderDirectionalAttribute) {
-      return BorderDirectionalAttribute;
+  static BoxBorderAttribute from(BoxBorder border) {
+    if (border is Border) {
+      return BorderAttribute.only(
+        top: BorderSideDto.from(border.top),
+        bottom: BorderSideDto.from(border.bottom),
+        left: BorderSideDto.from(border.left),
+        right: BorderSideDto.from(border.right),
+      );
     }
 
-    if (hasLeftOrRight && !other.hasStartOrEnd) {
-      return BorderAttribute;
-    }
-    if (hasStartOrEnd && !other.hasLeftOrRight) {
-      return BorderDirectionalAttribute;
+    if (border is BorderDirectional) {
+      return BorderDirectionalAttribute.only(
+        top: BorderSideDto.from(border.top),
+        bottom: BorderSideDto.from(border.bottom),
+        start: BorderSideDto.from(border.start),
+        end: BorderSideDto.from(border.end),
+      );
     }
 
-    return null;
+    throw UnimplementedError(
+      'Cannot create BoxBorderAttribute from border of type ${border.runtimeType}',
+    );
+  }
+
+  static BoxBorderAttribute? maybeFrom(BoxBorder? border) {
+    if (border == null) return null;
+
+    return from(border);
+  }
+
+  BorderSideDto? get top => value.top;
+
+  BorderSideDto? get bottom => value.bottom;
+
+  BoxBorderAttribute Function(BoxBorderDto) get create;
+
+  @override
+  BoxBorderAttribute merge(covariant BoxBorderAttribute? other) {
+    return other == null ? this : create(value.merge(other.value));
   }
 
   @override
-  Self merge(covariant Self other);
+  BoxBorder resolve(MixData mix) => value.resolve(mix);
 
   @override
-  get props => [_top, _bottom, _left, _right, _start, _end];
+  List<Object?> get props => [value];
 }
 
-class BorderAttribute extends BoxBorderAttribute<BorderAttribute, Border> {
-  const BorderAttribute({
-    BorderSideAttribute? top,
-    BorderSideAttribute? bottom,
-    BorderSideAttribute? left,
-    BorderSideAttribute? right,
-  }) : super(top: top, bottom: bottom, left: left, right: right);
+class BorderAttribute extends BoxBorderAttribute {
+  @override
+  final create = BorderAttribute.raw;
+
+  const BorderAttribute.raw(super.value);
 
   factory BorderAttribute.all({
     Color? color,
     double? width,
     BorderStyle? style,
   }) {
-    final side = BorderSideAttribute(
-      color: color?.toAttribute(),
-      style: style,
-      width: width,
+    return BorderAttribute.fromBorderSide(
+      BorderSideDto(color: color?.toDto(), style: style, width: width),
     );
+  }
 
-    return BorderAttribute.fromBorderSide(side);
+  factory BorderAttribute.only({
+    BorderSideDto? top,
+    BorderSideDto? bottom,
+    BorderSideDto? left,
+    BorderSideDto? right,
+  }) {
+    return BorderAttribute.raw(
+      BoxBorderDto(top: top, bottom: bottom, left: left, right: right),
+    );
   }
 
   /// Creates a border with symmetrical vertical and horizontal sides.
   ///
   /// The `vertical` argument applies to the [_left] and [right] sides, and the
   /// `horizontal` argument applies to the [_top] and [_bottom] sides.
-  const BorderAttribute.symmetric({
-    BorderSideAttribute? vertical,
-    BorderSideAttribute? horizontal,
-  }) : this(
-          top: horizontal,
-          bottom: horizontal,
-          left: vertical,
-          right: vertical,
-        );
-
-  const BorderAttribute.fromBorderSide(BorderSideAttribute side)
-      : this(top: side, bottom: side, left: side, right: side);
-
-  BorderSideAttribute? get left => _left;
-  BorderSideAttribute? get right => _right;
-
-  @override
-  BorderAttribute merge(covariant BorderAttribute? other) {
-    return BorderAttribute(
-      top: other?.top ?? _top,
-      bottom: other?.bottom ?? _bottom,
-      left: other?.left ?? _left,
-      right: other?.right ?? _right,
+  factory BorderAttribute.symmetric({
+    BorderSideDto? vertical,
+    BorderSideDto? horizontal,
+  }) {
+    return BorderAttribute.only(
+      top: horizontal,
+      bottom: horizontal,
+      left: vertical,
+      right: vertical,
     );
   }
 
-  @override
-  Border resolve(MixData mix) {
-    const defaultValue = Border();
-
-    return Border(
-      top: _top?.resolve(mix) ?? defaultValue.top,
-      right: _right?.resolve(mix) ?? defaultValue.right,
-      bottom: _bottom?.resolve(mix) ?? defaultValue.bottom,
-      left: _left?.resolve(mix) ?? defaultValue.left,
+  factory BorderAttribute.fromBorderSide(BorderSideDto side) {
+    return BorderAttribute.only(
+      top: side,
+      bottom: side,
+      left: side,
+      right: side,
     );
   }
+
+  BorderSideDto? get left => value.left;
+  BorderSideDto? get right => value.right;
 }
 
-class BorderDirectionalAttribute
-    extends BoxBorderAttribute<BorderDirectionalAttribute, BorderDirectional> {
-  const BorderDirectionalAttribute({
-    BorderSideAttribute? start,
-    BorderSideAttribute? end,
-    BorderSideAttribute? top,
-    BorderSideAttribute? bottom,
-  }) : super(top: top, bottom: bottom, start: start, end: end);
+class BorderDirectionalAttribute extends BoxBorderAttribute {
+  @override
+  final create = BorderDirectionalAttribute.raw;
+
+  const BorderDirectionalAttribute.raw(super.value);
 
   factory BorderDirectionalAttribute.all({
     Color? color,
@@ -147,108 +128,42 @@ class BorderDirectionalAttribute
     BorderStyle? style,
   }) {
     return BorderDirectionalAttribute.fromBorderSide(
-      BorderSideAttribute(
-        color: color?.toAttribute(),
-        style: style,
-        width: width,
-      ),
+      BorderSideDto(color: color?.toDto(), style: style, width: width),
     );
   }
 
-  const BorderDirectionalAttribute.symmetric({
-    BorderSideAttribute? vertical,
-    BorderSideAttribute? horizontal,
-  }) : this(
-          start: horizontal,
-          end: horizontal,
-          top: vertical,
-          bottom: vertical,
-        );
-
-  const BorderDirectionalAttribute.fromBorderSide(BorderSideAttribute side)
-      : this(start: side, end: side, top: side, bottom: side);
-
-  BorderSideAttribute? get start => _start;
-  BorderSideAttribute? get end => _end;
-
-  @override
-  BorderDirectionalAttribute merge(
-    covariant BorderDirectionalAttribute? other,
-  ) {
-    return BorderDirectionalAttribute(
-      start: other?.start ?? _start,
-      end: other?.end ?? _end,
-      top: other?.top ?? _top,
-      bottom: other?.bottom ?? _bottom,
-    );
-  }
-
-  @override
-  BorderDirectional resolve(MixData mix) {
-    const defaultValue = BorderDirectional();
-
-    return BorderDirectional(
-      top: _top?.resolve(mix) ?? defaultValue.top,
-      start: _start?.resolve(mix) ?? defaultValue.start,
-      end: _end?.resolve(mix) ?? defaultValue.end,
-      bottom: _bottom?.resolve(mix) ?? defaultValue.bottom,
-    );
-  }
-}
-
-@immutable
-class BorderSideAttribute
-    extends ResolvableAttribute<BorderSideAttribute, BorderSide> {
-  final ColorDto? color;
-  final double? width;
-  final BorderStyle? style;
-  final double? strokeAlign;
-
-  const BorderSideAttribute({
-    this.color,
-    this.strokeAlign,
-    this.style,
-    this.width,
-  });
-
-  BorderSideAttribute copyWith({
-    ColorDto? color,
-    double? width,
-    BorderStyle? style,
-    double? strokeAlign,
+  factory BorderDirectionalAttribute.only({
+    BorderSideDto? top,
+    BorderSideDto? bottom,
+    BorderSideDto? start,
+    BorderSideDto? end,
   }) {
-    return BorderSideAttribute(
-      color: color ?? this.color,
-      strokeAlign: strokeAlign ?? this.strokeAlign,
-      style: style ?? this.style,
-      width: width ?? this.width,
+    return BorderDirectionalAttribute.raw(
+      BoxBorderDto(top: top, bottom: bottom, start: start, end: end),
     );
   }
 
-  @override
-  BorderSideAttribute merge(BorderSideAttribute? other) {
-    if (other == null) return this;
-
-    return BorderSideAttribute(
-      color: other.color ?? color,
-      strokeAlign: other.strokeAlign ?? strokeAlign,
-      style: other.style ?? style,
-      width: other.width ?? width,
+  factory BorderDirectionalAttribute.symmetric({
+    BorderSideDto? vertical,
+    BorderSideDto? horizontal,
+  }) {
+    return BorderDirectionalAttribute.only(
+      top: horizontal,
+      bottom: horizontal,
+      start: vertical,
+      end: vertical,
     );
   }
 
-  @override
-  BorderSide resolve(MixData mix) {
-    const defaultValue = BorderSide();
-
-    return BorderSide(
-      color: color?.resolve(mix) ?? defaultValue.color,
-      width: width ?? defaultValue.width,
-      style: style ?? defaultValue.style,
-      strokeAlign: strokeAlign ?? defaultValue.strokeAlign,
+  factory BorderDirectionalAttribute.fromBorderSide(BorderSideDto side) {
+    return BorderDirectionalAttribute.only(
+      top: side,
+      bottom: side,
+      start: side,
+      end: side,
     );
   }
 
-  @override
-  get props => [color, width, style, strokeAlign];
+  BorderSideDto? get start => value.start;
+  BorderSideDto? get end => value.end;
 }

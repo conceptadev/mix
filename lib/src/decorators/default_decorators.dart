@@ -1,3 +1,5 @@
+// ignore_for_file: prefer-named-boolean-parameters
+
 import 'package:flutter/material.dart';
 
 import 'decorator.dart';
@@ -15,6 +17,21 @@ class AspectRatioDecorator extends WrapDecorator<AspectRatioDecorator> {
   @override
   Widget build(child, mix) =>
       AspectRatio(key: key, aspectRatio: value, child: child);
+}
+
+class VisibilityDecorator extends WrapDecorator<VisibilityDecorator> {
+  final bool value;
+  const VisibilityDecorator(this.value, {super.key});
+
+  @override
+  VisibilityDecorator merge(VisibilityDecorator? other) => other ?? this;
+
+  @override
+  get props => [value];
+
+  @override
+  Widget build(child, mix) =>
+      Visibility(key: key, visible: value, child: child);
 }
 
 class FlexibleDecorator extends WrapDecorator<FlexibleDecorator> {

@@ -8,7 +8,7 @@ import '../factory/mix_provider_data.dart';
 /// Represents a function that can be used to build a [SpacingAttribute].
 ///
 /// Matches SpacingAttribute.new
-typedef SpacingAttributeBuilder<T extends SpacingAttribute> = T Function({
+typedef SpacingAttributeBuilder<T extends SpacingAttribute<T>> = T Function({
   double? top,
   double? bottom,
   double? left,
@@ -18,8 +18,8 @@ typedef SpacingAttributeBuilder<T extends SpacingAttribute> = T Function({
 });
 
 @immutable
-abstract class SpacingAttribute
-    extends ResolvableAttribute<SpacingAttribute, EdgeInsetsGeometry>
+abstract class SpacingAttribute<Self extends SpacingAttribute<Self>>
+    extends ResolvableAttribute<Self, EdgeInsetsGeometry>
     with SingleChildRenderAttributeMixin<Padding> {
   final double? top;
   final double? bottom;
@@ -42,7 +42,7 @@ abstract class SpacingAttribute
   bool get isDirectional => start != null || end != null;
 
   @override
-  SpacingAttribute merge(covariant SpacingAttribute? other);
+  Self merge(Self? other);
 
   @override
   EdgeInsetsGeometry resolve(MixData mix) {
@@ -71,7 +71,7 @@ abstract class SpacingAttribute
 }
 
 @immutable
-class PaddingAttribute extends SpacingAttribute {
+class PaddingAttribute extends SpacingAttribute<PaddingAttribute> {
   const PaddingAttribute({
     super.top,
     super.bottom,
@@ -105,6 +105,10 @@ class PaddingAttribute extends SpacingAttribute {
     );
   }
 
+  static PaddingAttribute? maybeFrom(EdgeInsetsGeometry? edgeInsets) {
+    return edgeInsets == null ? null : from(edgeInsets);
+  }
+
   @override
   PaddingAttribute merge(PaddingAttribute? other) {
     return other == null
@@ -121,7 +125,7 @@ class PaddingAttribute extends SpacingAttribute {
 }
 
 @immutable
-class MarginAttribute extends SpacingAttribute {
+class MarginAttribute extends SpacingAttribute<MarginAttribute> {
   const MarginAttribute({
     super.top,
     super.bottom,
@@ -153,6 +157,10 @@ class MarginAttribute extends SpacingAttribute {
       'edgeInsets',
       'Must be either EdgeInsets or EdgeInsetsDirectional',
     );
+  }
+
+  static MarginAttribute? maybeFrom(EdgeInsetsGeometry? edgeInsets) {
+    return edgeInsets == null ? null : from(edgeInsets);
   }
 
   @override

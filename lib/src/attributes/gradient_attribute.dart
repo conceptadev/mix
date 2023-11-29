@@ -5,16 +5,56 @@ import '../core/extensions/iterable_ext.dart';
 import '../factory/mix_provider_data.dart';
 import 'color_attribute.dart';
 
-abstract class GradientAttribute<Self, Value extends Gradient>
-    extends ResolvableAttribute<Self, Value> {
+abstract class GradientAttribute<Value extends Gradient>
+    extends ResolvableAttribute<GradientAttribute, Value> {
   const GradientAttribute();
 
+  static GradientAttribute from(Gradient gradient) {
+    if (gradient is LinearGradient) {
+      return LinearGradientAttribute(
+        begin: gradient.begin,
+        end: gradient.end,
+        colors: gradient.colors.map(ColorDto.new).toList(),
+        stops: gradient.stops,
+        tileMode: gradient.tileMode,
+        transform: gradient.transform,
+      );
+    } else if (gradient is RadialGradient) {
+      return RadialGradientAttribute(
+        center: gradient.center,
+        radius: gradient.radius,
+        colors: gradient.colors.map(ColorDto.new).toList(),
+        stops: gradient.stops,
+        tileMode: gradient.tileMode,
+        focal: gradient.focal,
+        transform: gradient.transform,
+        focalRadius: gradient.focalRadius,
+      );
+    } else if (gradient is SweepGradient) {
+      return SweepGradientAttribute(
+        center: gradient.center,
+        startAngle: gradient.startAngle,
+        endAngle: gradient.endAngle,
+        colors: gradient.colors.map(ColorDto.new).toList(),
+        stops: gradient.stops,
+        tileMode: gradient.tileMode,
+        transform: gradient.transform,
+      );
+    }
+    throw UnimplementedError(
+      'Cannot create GradientAttribute from gradient of type ${gradient.runtimeType}',
+    );
+  }
+
+  static GradientAttribute? maybeFrom(Gradient? gradient) {
+    return gradient == null ? null : from(gradient);
+  }
+
   @override
-  Self merge(covariant Self? other);
+  GradientAttribute merge(covariant GradientAttribute? other);
 }
 
-class LinearGradientAttribute
-    extends GradientAttribute<LinearGradientAttribute, LinearGradient> {
+class LinearGradientAttribute extends GradientAttribute<LinearGradient> {
   final AlignmentGeometry? begin;
   final AlignmentGeometry? end;
   final List<ColorDto>? colors;
@@ -62,8 +102,7 @@ class LinearGradientAttribute
 }
 
 @immutable
-class RadialGradientAttribute
-    extends GradientAttribute<RadialGradientAttribute, RadialGradient> {
+class RadialGradientAttribute extends GradientAttribute<RadialGradient> {
   final AlignmentGeometry? center;
   final double? radius;
   final List<ColorDto>? colors;
@@ -121,8 +160,7 @@ class RadialGradientAttribute
 }
 
 @immutable
-class SweepGradientAttribute
-    extends GradientAttribute<SweepGradientAttribute, SweepGradient> {
+class SweepGradientAttribute extends GradientAttribute<SweepGradient> {
   final AlignmentGeometry? center;
   final double? startAngle;
   final double? endAngle;

@@ -102,12 +102,6 @@ void main() {
       expect(attribute.maxHeight, 250.0);
     });
 
-    test('Clip toAttribute', () {
-      const clip = Clip.hardEdge;
-      final attribute = clip.toAttribute();
-      expect(attribute.value, Clip.hardEdge);
-    });
-
     test('Axis toAttribute', () {
       const axis = Axis.horizontal;
       final attribute = axis.toAttribute();
@@ -169,7 +163,7 @@ void main() {
         width: 2.0,
         style: BorderStyle.solid,
       );
-      final attribute = borderSide.toAttribute();
+      final attribute = borderSide.toDto();
       expect(attribute.color?.resolve(EmptyMixData), Colors.blue);
       expect(attribute.width, 2.0);
       expect(attribute.style, BorderStyle.solid);

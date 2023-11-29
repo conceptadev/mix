@@ -7,16 +7,16 @@ import '../../../helpers/testing_utils.dart';
 void main() {
   group('TextStyleDto', () {
     test('from constructor sets all values correctly', () {
-      final attr = TextStyleAttribute.only(color: Colors.red.toAttribute());
+      final attr = TextStyleAttribute.only(color: Colors.red.toDto());
       final result = attr.resolve(EmptyMixData);
       expect(result.color, Colors.red);
     });
     test('merge returns merged object correctly', () {
       final attr1 = TextStyleAttribute.only(
-        color: Colors.red.toAttribute(),
+        color: Colors.red.toDto(),
         fontSize: 24.0,
         decoration: TextDecoration.underline,
-        decorationColor: Colors.blue.toAttribute(),
+        decorationColor: Colors.blue.toDto(),
         decorationStyle: TextDecorationStyle.dashed,
         fontWeight: FontWeight.bold,
         fontStyle: FontStyle.italic,
@@ -28,10 +28,10 @@ void main() {
       );
 
       final attr2 = TextStyleAttribute.only(
-        color: Colors.blue.toAttribute(),
+        color: Colors.blue.toDto(),
         fontSize: 30.0,
         decoration: TextDecoration.lineThrough,
-        decorationColor: Colors.red.toAttribute(),
+        decorationColor: Colors.red.toDto(),
         decorationStyle: TextDecorationStyle.dotted,
         fontWeight: FontWeight.w100,
         fontStyle: FontStyle.normal,
@@ -59,10 +59,10 @@ void main() {
     });
     test('resolve returns correct TextStyle with specific values', () {
       final attr = TextStyleAttribute.only(
-        color: Colors.red.toAttribute(),
+        color: Colors.red.toDto(),
         fontSize: 24.0,
         decoration: TextDecoration.underline,
-        decorationColor: Colors.blue.toAttribute(),
+        decorationColor: Colors.blue.toDto(),
         decorationStyle: TextDecorationStyle.dashed,
         fontWeight: FontWeight.bold,
         fontStyle: FontStyle.italic,
@@ -91,13 +91,13 @@ void main() {
       return const Placeholder();
     });
     test('Equality holds when all attributes are the same', () {
-      final attr1 = TextStyleAttribute.only(color: Colors.red.toAttribute());
-      final attr2 = TextStyleAttribute.only(color: Colors.red.toAttribute());
+      final attr1 = TextStyleAttribute.only(color: Colors.red.toDto());
+      final attr2 = TextStyleAttribute.only(color: Colors.red.toDto());
       expect(attr1, attr2);
     });
     test('Equality fails when attributes are different', () {
-      final attr1 = TextStyleAttribute.only(color: Colors.red.toAttribute());
-      final attr2 = TextStyleAttribute.only(color: Colors.blue.toAttribute());
+      final attr1 = TextStyleAttribute.only(color: Colors.red.toDto());
+      final attr2 = TextStyleAttribute.only(color: Colors.blue.toDto());
       expect(attr1, isNot(attr2));
     });
   });

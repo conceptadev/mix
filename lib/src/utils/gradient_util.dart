@@ -60,7 +60,7 @@ class RadialGradientAttributeUtility<T>
     final gradient = RadialGradientAttribute(
       center: center,
       radius: radius,
-      colors: colors?.map((e) => e.toAttribute()).toList(),
+      colors: colors?.map((e) => e.toDto()).toList(),
       stops: stops,
       tileMode: tileMode,
       focal: focal,
@@ -118,7 +118,7 @@ class LinearGradientAttributeUtility<T>
     final gradient = LinearGradientAttribute(
       begin: begin,
       end: end,
-      colors: colors?.map((e) => e.toAttribute()).toList(),
+      colors: colors?.map((e) => e.toDto()).toList(),
       stops: stops,
       tileMode: tileMode,
       transform: transform,

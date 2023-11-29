@@ -17,6 +17,9 @@ const clipPath = ClipPathDecorator.new;
 const clipOval = ClipOvalDecorator.new;
 const clipRect = ClipRectDecorator.new;
 const clipRRect = ClipRRectDecorator.new;
+const visibility = VisibilityUtility();
+final hidden = visibility.off;
+final visible = visibility.on;
 
 ClipPathDecorator clipTriangle({Clip? clipBehavior}) {
   return ClipPathDecorator(
@@ -40,9 +43,13 @@ class FlexibleDecoratorUtility {
   }
 }
 
-class RotateUtility extends ScalarUtility<RotateDecorator, int> {
+class RotateUtility extends IntUtility<RotateDecorator> {
   const RotateUtility() : super(RotateDecorator.new);
   RotateDecorator get d90 => call(1);
   RotateDecorator get d180 => call(2);
   RotateDecorator get d270 => call(3);
+}
+
+class VisibilityUtility extends BoolUtility<VisibilityDecorator> {
+  const VisibilityUtility() : super(VisibilityDecorator.new);
 }

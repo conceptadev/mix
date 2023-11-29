@@ -2,15 +2,23 @@
 
 import 'package:flutter/material.dart';
 
-import '../../../mix.dart';
+import '../../core/attribute.dart';
+import '../../core/extensions/iterable_ext.dart';
+import '../../factory/mix_provider_data.dart';
+import '../border/border_attribute.dart';
+import '../border/border_radius_attribute.dart';
+import '../color_attribute.dart';
+import '../gradient_attribute.dart';
+import '../shadow_attribute.dart';
 
-abstract class DecorationAttribute<T, Value extends Decoration>
-    extends ResolvableAttribute<T, Value>
+@immutable
+abstract class DecorationAttribute<Value extends Decoration>
+    extends ResolvableAttribute<DecorationAttribute, Value>
     with SingleChildRenderAttributeMixin<DecoratedBox> {
   const DecorationAttribute();
 
   @override
-  T merge(covariant T other);
+  DecorationAttribute merge(covariant DecorationAttribute? other);
 
   @override
   DecoratedBox build(mix, child) {
@@ -18,8 +26,8 @@ abstract class DecorationAttribute<T, Value extends Decoration>
   }
 }
 
-class BoxDecorationAttribute
-    extends DecorationAttribute<BoxDecorationAttribute, BoxDecoration> {
+@immutable
+class BoxDecorationAttribute extends DecorationAttribute<BoxDecoration> {
   final ColorDto? color;
   final BoxBorderAttribute? border;
   final BorderRadiusGeometryAttribute? borderRadius;
@@ -35,6 +43,22 @@ class BoxDecorationAttribute
     this.boxShadow,
     this.shape,
   });
+
+  static BoxDecorationAttribute from(BoxDecoration decoration) {
+    return BoxDecorationAttribute(
+      color: ColorDto.maybeFrom(decoration.color),
+      border: BoxBorderAttribute.maybeFrom(decoration.border),
+      borderRadius:
+          BorderRadiusGeometryAttribute.maybeFrom(decoration.borderRadius),
+      gradient: GradientAttribute.maybeFrom(decoration.gradient),
+      boxShadow: decoration.boxShadow?.map(BoxShadowAttribute.from).toList(),
+      shape: decoration.shape,
+    );
+  }
+
+  static BoxDecorationAttribute? maybeFrom(BoxDecoration? decoration) {
+    return decoration == null ? null : from(decoration);
+  }
 
   @override
   BoxDecoration resolve(MixData mix) {
@@ -67,8 +91,8 @@ class BoxDecorationAttribute
       [color, border, borderRadius, gradient, boxShadow, shape];
 }
 
-class ShapeDecorationAttribute
-    extends DecorationAttribute<ShapeDecorationAttribute, ShapeDecoration> {
+@immutable
+class ShapeDecorationAttribute extends DecorationAttribute<ShapeDecoration> {
   final ColorDto? color;
   final ShapeBorder? shape;
   final GradientAttribute? gradient;

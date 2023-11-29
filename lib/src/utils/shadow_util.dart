@@ -1,4 +1,4 @@
-import 'dart:ui';
+import 'package:flutter/material.dart';
 
 import '../attributes/color_attribute.dart';
 import '../attributes/shadow_attribute.dart';
@@ -29,7 +29,7 @@ class ShadowUtility<T> extends MixUtility<T, ShadowAttribute> {
 
   T call({Color? color, Offset? offset, double? blurRadius}) {
     return _only(
-      color: color?.toAttribute(),
+      color: color?.toDto(),
       offset: offset,
       blurRadius: blurRadius,
     );
@@ -66,4 +66,35 @@ class BoxShadowUtility<T> extends MixUtility<T, BoxShadowAttribute> {
 
     return as(shadow);
   }
+}
+
+//  T elevation(int value) {
+//     assert(kElevationToShadow.containsKey(value), 'Invalid elevation value');
+
+//     return call(boxShadow: kElevationToShadow[value]!);
+//   }
+
+class ElevationUtility<T> extends MixUtility<T, List<BoxShadow>> {
+  static const selfBuilder = ElevationUtility(MixUtility.selfBuilder);
+
+  const ElevationUtility(super.builder);
+
+  T call(int value) {
+    assert(kElevationToShadow.containsKey(value), 'Invalid elevation value');
+
+    return as(kElevationToShadow[value]!);
+  }
+
+  // 1, 2, 3, 4, 6, 8, 9, 12, 16, 24.
+  T none() => call(0);
+  T one() => call(1);
+  T two() => call(2);
+  T three() => call(3);
+  T four() => call(4);
+  T six() => call(6);
+  T eight() => call(8);
+  T nine() => call(9);
+  T twelve() => call(12);
+  T sixteen() => call(16);
+  T twentyFour() => call(24);
 }

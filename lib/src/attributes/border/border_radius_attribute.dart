@@ -1,174 +1,204 @@
-// ignore_for_file: avoid-non-null-assertion
-
 import 'package:flutter/material.dart';
 
 import '../../core/attribute.dart';
 import '../../factory/mix_provider_data.dart';
+import 'border_radius_dto.dart';
 
 @immutable
-abstract class BorderRadiusGeometryAttribute<Self,
-        Value extends BorderRadiusGeometry>
-    extends ResolvableAttribute<Self, Value> {
-  final Radius? topLeft;
-  final Radius? topRight;
-  final Radius? bottomLeft;
-  final Radius? bottomRight;
+abstract class BorderRadiusGeometryAttribute extends ResolvableAttribute<
+    BorderRadiusGeometryAttribute, BorderRadiusGeometry> {
+  final BorderRadiusGeometryDto value;
 
-  // Directional values
-  final Radius? topStart;
-  final Radius? topEnd;
-  final Radius? bottomStart;
-  final Radius? bottomEnd;
+  const BorderRadiusGeometryAttribute(this.value);
 
-  const BorderRadiusGeometryAttribute({
-    this.topLeft,
-    this.topRight,
-    this.bottomLeft,
-    this.bottomRight,
-    this.topStart,
-    this.topEnd,
-    this.bottomStart,
-    this.bottomEnd,
-  });
+  static BorderRadiusGeometryAttribute from(
+    BorderRadiusGeometry borderRadius,
+  ) {
+    if (borderRadius is BorderRadius) {
+      return BorderRadiusAttribute.only(
+        topLeft: borderRadius.topLeft,
+        topRight: borderRadius.topRight,
+        bottomLeft: borderRadius.bottomLeft,
+        bottomRight: borderRadius.bottomRight,
+      );
+    }
 
-  @override
-  get props => [
-        topLeft,
-        topRight,
-        bottomLeft,
-        bottomRight,
-        topStart,
-        topEnd,
-        bottomStart,
-        bottomEnd,
-      ];
-}
+    if (borderRadius is BorderRadiusDirectional) {
+      return BorderRadiusDirectionalAttribute.only(
+        topStart: borderRadius.topStart,
+        topEnd: borderRadius.topEnd,
+        bottomStart: borderRadius.bottomStart,
+        bottomEnd: borderRadius.bottomEnd,
+      );
+    }
 
-@immutable
-class BorderRadiusAttribute
-    extends BorderRadiusGeometryAttribute<BorderRadiusAttribute, BorderRadius> {
-  const BorderRadiusAttribute({
-    super.topLeft,
-    super.topRight,
-    super.bottomLeft,
-    super.bottomRight,
-  });
-
-  const BorderRadiusAttribute.zero() : this.all(Radius.zero);
-
-  const BorderRadiusAttribute.all(Radius radius)
-      : super(
-          topLeft: radius,
-          topRight: radius,
-          bottomLeft: radius,
-          bottomRight: radius,
-        );
-
-  const BorderRadiusAttribute.horizontal({Radius? left, Radius? right})
-      : super(
-          topLeft: left,
-          topRight: right,
-          bottomLeft: left,
-          bottomRight: right,
-        );
-
-  const BorderRadiusAttribute.vertical({Radius? top, Radius? bottom})
-      : super(
-          topLeft: top,
-          topRight: top,
-          bottomLeft: bottom,
-          bottomRight: bottom,
-        );
-
-  // circular
-  BorderRadiusAttribute.circular(double radius)
-      : this.all(Radius.circular(radius));
-
-  @override
-  BorderRadiusAttribute merge(BorderRadiusAttribute? other) {
-    if (other == null) return this;
-
-    return BorderRadiusAttribute(
-      topLeft: other.topLeft ?? topLeft,
-      topRight: other.topRight ?? topRight,
-      bottomLeft: other.bottomLeft ?? bottomLeft,
-      bottomRight: other.bottomRight ?? bottomRight,
+    throw UnimplementedError(
+      'Cannot create BorderRadiusGeometryAttribute from borderRadius of type ${borderRadius.runtimeType}',
     );
   }
 
+  static BorderRadiusGeometryAttribute? maybeFrom(
+    BorderRadiusGeometry? borderRadius,
+  ) {
+    if (borderRadius == null) return null;
+
+    return from(borderRadius);
+  }
+
+  @visibleForTesting
+  Radius? get topLeft => value.topLeft;
+
+  @visibleForTesting
+  Radius? get topRight => value.topRight;
+
+  @visibleForTesting
+  Radius? get bottomLeft => value.bottomLeft;
+
+  @visibleForTesting
+  Radius? get bottomRight => value.bottomRight;
+
+  @visibleForTesting
+  Radius? get topStart => value.topStart;
+
+  @visibleForTesting
+  Radius? get topEnd => value.topEnd;
+
+  @visibleForTesting
+  Radius? get bottomStart => value.bottomStart;
+
+  @visibleForTesting
+  Radius? get bottomEnd => value.bottomEnd;
+
+  BorderRadiusGeometryAttribute Function(BorderRadiusGeometryDto) get create;
+
   @override
-  BorderRadius resolve(MixData mix) {
-    return BorderRadius.only(
-      topLeft: topLeft ?? Radius.zero,
-      topRight: topRight ?? Radius.zero,
-      bottomLeft: bottomLeft ?? Radius.zero,
-      bottomRight: bottomRight ?? Radius.zero,
+  BorderRadiusGeometryAttribute merge(
+    covariant BorderRadiusGeometryAttribute? other,
+  ) {
+    return other == null ? this : create(value.merge(other.value));
+  }
+
+  @override
+  BorderRadiusGeometry resolve(MixData mix) => value.resolve(mix);
+
+  @override
+  List<Object?> get props => [value];
+}
+
+class BorderRadiusAttribute extends BorderRadiusGeometryAttribute {
+  @override
+  final create = BorderRadiusAttribute.raw;
+
+  const BorderRadiusAttribute.raw(super.value);
+
+  factory BorderRadiusAttribute.all(Radius radius) {
+    return BorderRadiusAttribute.raw(
+      BorderRadiusGeometryDto(
+        topLeft: radius,
+        topRight: radius,
+        bottomLeft: radius,
+        bottomRight: radius,
+      ),
     );
+  }
+
+  factory BorderRadiusAttribute.only({
+    Radius? topLeft,
+    Radius? topRight,
+    Radius? bottomLeft,
+    Radius? bottomRight,
+  }) {
+    return BorderRadiusAttribute.raw(
+      BorderRadiusGeometryDto(
+        topLeft: topLeft,
+        topRight: topRight,
+        bottomLeft: bottomLeft,
+        bottomRight: bottomRight,
+      ),
+    );
+  }
+
+  factory BorderRadiusAttribute.horizontal({Radius? left, Radius? right}) {
+    return BorderRadiusAttribute.only(
+      topLeft: left,
+      topRight: right,
+      bottomLeft: left,
+      bottomRight: right,
+    );
+  }
+
+  factory BorderRadiusAttribute.vertical({Radius? top, Radius? bottom}) {
+    return BorderRadiusAttribute.only(
+      topLeft: top,
+      topRight: top,
+      bottomLeft: bottom,
+      bottomRight: bottom,
+    );
+  }
+
+  factory BorderRadiusAttribute.circular(double radius) {
+    return BorderRadiusAttribute.all(Radius.circular(radius));
   }
 }
 
-@immutable
-class BorderRadiusDirectionalAttribute extends BorderRadiusGeometryAttribute<
-    BorderRadiusDirectionalAttribute, BorderRadiusDirectional> {
-  const BorderRadiusDirectionalAttribute({
-    super.topStart,
-    super.topEnd,
-    super.bottomStart,
-    super.bottomEnd,
-  });
+class BorderRadiusDirectionalAttribute extends BorderRadiusGeometryAttribute {
+  @override
+  final create = BorderRadiusDirectionalAttribute.raw;
 
-  BorderRadiusDirectionalAttribute.circular(double radius)
-      : this.all(Radius.circular(radius));
+  const BorderRadiusDirectionalAttribute.raw(super.value);
 
-  const BorderRadiusDirectionalAttribute.zero() : this.all(Radius.zero);
+  factory BorderRadiusDirectionalAttribute.all(Radius radius) {
+    return BorderRadiusDirectionalAttribute.raw(
+      BorderRadiusGeometryDto(
+        topStart: radius,
+        topEnd: radius,
+        bottomStart: radius,
+        bottomEnd: radius,
+      ),
+    );
+  }
 
-  const BorderRadiusDirectionalAttribute.all(Radius radius)
-      : super(
-          topStart: radius,
-          topEnd: radius,
-          bottomStart: radius,
-          bottomEnd: radius,
-        );
+  factory BorderRadiusDirectionalAttribute.only({
+    Radius? topStart,
+    Radius? topEnd,
+    Radius? bottomStart,
+    Radius? bottomEnd,
+  }) {
+    return BorderRadiusDirectionalAttribute.raw(
+      BorderRadiusGeometryDto(
+        topStart: topStart,
+        topEnd: topEnd,
+        bottomStart: bottomStart,
+        bottomEnd: bottomEnd,
+      ),
+    );
+  }
 
-  const BorderRadiusDirectionalAttribute.horizontal({
+  factory BorderRadiusDirectionalAttribute.horizontal({
     Radius? start,
     Radius? end,
-  }) : super(
-          topStart: start,
-          topEnd: end,
-          bottomStart: start,
-          bottomEnd: end,
-        );
-
-  const BorderRadiusDirectionalAttribute.vertical({Radius? top, Radius? bottom})
-      : super(
-          topStart: top,
-          topEnd: top,
-          bottomStart: bottom,
-          bottomEnd: bottom,
-        );
-
-  @override
-  BorderRadiusDirectionalAttribute merge(
-    BorderRadiusDirectionalAttribute? other,
-  ) {
-    if (other == null) return this;
-
-    return BorderRadiusDirectionalAttribute(
-      topStart: other.topStart ?? topStart,
-      topEnd: other.topEnd ?? topEnd,
-      bottomStart: other.bottomStart ?? bottomStart,
-      bottomEnd: other.bottomEnd ?? bottomEnd,
+  }) {
+    return BorderRadiusDirectionalAttribute.only(
+      topStart: start,
+      topEnd: end,
+      bottomStart: start,
+      bottomEnd: end,
     );
   }
 
-  @override
-  BorderRadiusDirectional resolve(MixData mix) {
-    return BorderRadiusDirectional.only(
-      topStart: topStart ?? Radius.zero,
-      topEnd: topEnd ?? Radius.zero,
-      bottomStart: bottomStart ?? Radius.zero,
-      bottomEnd: bottomEnd ?? Radius.zero,
+  factory BorderRadiusDirectionalAttribute.vertical({
+    Radius? top,
+    Radius? bottom,
+  }) {
+    return BorderRadiusDirectionalAttribute.only(
+      topStart: top,
+      topEnd: top,
+      bottomStart: bottom,
+      bottomEnd: bottom,
     );
+  }
+
+  factory BorderRadiusDirectionalAttribute.circular(double radius) {
+    return BorderRadiusDirectionalAttribute.all(Radius.circular(radius));
   }
 }
