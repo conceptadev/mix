@@ -37,20 +37,18 @@ abstract class BoxBorderAttribute
   }
 
   static BoxBorderAttribute? maybeFrom(BoxBorder? border) {
-    if (border == null) return null;
-
-    return from(border);
+    return border == null ? null : from(border);
   }
+
+  BoxBorderAttribute _mergeWith(BoxBorderDto otherValue);
 
   BorderSideDto? get top => value.top;
 
   BorderSideDto? get bottom => value.bottom;
 
-  BoxBorderAttribute Function(BoxBorderDto) get create;
-
   @override
   BoxBorderAttribute merge(covariant BoxBorderAttribute? other) {
-    return other == null ? this : create(value.merge(other.value));
+    return other == null ? this : _mergeWith(other.value);
   }
 
   @override
@@ -61,9 +59,6 @@ abstract class BoxBorderAttribute
 }
 
 class BorderAttribute extends BoxBorderAttribute {
-  @override
-  final create = BorderAttribute.raw;
-
   const BorderAttribute.raw(super.value);
 
   factory BorderAttribute.all({
@@ -112,14 +107,16 @@ class BorderAttribute extends BoxBorderAttribute {
     );
   }
 
+  @override
+  BoxBorderAttribute _mergeWith(BoxBorderDto otherValue) {
+    return BorderAttribute.raw(value.merge(otherValue));
+  }
+
   BorderSideDto? get left => value.left;
   BorderSideDto? get right => value.right;
 }
 
 class BorderDirectionalAttribute extends BoxBorderAttribute {
-  @override
-  final create = BorderDirectionalAttribute.raw;
-
   const BorderDirectionalAttribute.raw(super.value);
 
   factory BorderDirectionalAttribute.all({
@@ -162,6 +159,11 @@ class BorderDirectionalAttribute extends BoxBorderAttribute {
       start: side,
       end: side,
     );
+  }
+
+  @override
+  BoxBorderAttribute _mergeWith(BoxBorderDto otherValue) {
+    return BorderDirectionalAttribute.raw(value.merge(otherValue));
   }
 
   BorderSideDto? get start => value.start;

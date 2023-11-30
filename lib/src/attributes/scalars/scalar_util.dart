@@ -13,6 +13,8 @@ abstract class MixUtility<Attr, Value> {
 
 abstract class EnumUtility<Return, Param> extends MixUtility<Return, Param> {
   const EnumUtility(super.builder);
+
+  Return call(Param value) => _builder(value);
 }
 
 abstract class ScalarUtility<Return, Param> extends MixUtility<Return, Param> {

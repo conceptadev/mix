@@ -38,7 +38,7 @@ class GradientUtility<T> extends MixUtility<T, GradientDto> {
 }
 
 class RadialGradientUtility<T> extends MixUtility<T, RadialGradientDto> {
-  static const selfBuilder = RadialGradientUtility(MixUtility.selfBuilder);
+  static const selfBuilder = RadialGradientUtility(GradientAttribute.new);
 
   const RadialGradientUtility(super.builder);
 
@@ -92,12 +92,12 @@ class RadialGradientUtility<T> extends MixUtility<T, RadialGradientDto> {
     final gradient = RadialGradientDto(
       center: center,
       radius: radius,
-      colors: colors?.map((e) => e.toDto()).toList(),
-      stops: stops,
       tileMode: tileMode,
       focal: focal,
-      transform: transform,
       focalRadius: focalRadius,
+      transform: transform,
+      colors: colors?.map((e) => e.toDto()).toList(),
+      stops: stops,
     );
 
     return as(gradient);
@@ -150,10 +150,10 @@ class LinearGradientUtility<T> extends MixUtility<T, LinearGradientDto> {
     final gradient = LinearGradientDto(
       begin: begin,
       end: end,
-      colors: colors?.map(ColorDto.new).toList(),
-      stops: stops,
       tileMode: tileMode,
       transform: transform,
+      colors: colors?.map(ColorDto.new).toList(),
+      stops: stops,
     );
 
     return as(gradient);
@@ -194,6 +194,10 @@ class SweepGradientUtility<T> extends MixUtility<T, SweepGradientDto> {
   GradientTransformUtility<T> get transform =>
       GradientTransformUtility(_transform);
 
+  T from(SweepGradient gradient) {
+    return as(SweepGradientDto.from(gradient));
+  }
+
   T call({
     List<Color>? colors,
     List<double>? stops,
@@ -207,10 +211,10 @@ class SweepGradientUtility<T> extends MixUtility<T, SweepGradientDto> {
       center: center,
       startAngle: startAngle,
       endAngle: endAngle,
-      colors: colors?.map(ColorDto.new).toList(),
-      stops: stops,
       tileMode: tileMode,
       transform: transform,
+      colors: colors?.map(ColorDto.new).toList(),
+      stops: stops,
     );
 
     return as(gradient);

@@ -45,6 +45,10 @@ abstract class BorderRadiusGeometryAttribute extends ResolvableAttribute<
     return from(borderRadius);
   }
 
+  BorderRadiusGeometryAttribute _mergeWith(
+    BorderRadiusGeometryDto borderRadius,
+  );
+
   @visibleForTesting
   Radius? get topLeft => value.topLeft;
 
@@ -69,13 +73,11 @@ abstract class BorderRadiusGeometryAttribute extends ResolvableAttribute<
   @visibleForTesting
   Radius? get bottomEnd => value.bottomEnd;
 
-  BorderRadiusGeometryAttribute Function(BorderRadiusGeometryDto) get create;
-
   @override
   BorderRadiusGeometryAttribute merge(
     covariant BorderRadiusGeometryAttribute? other,
   ) {
-    return other == null ? this : create(value.merge(other.value));
+    return other == null ? this : _mergeWith(other.value);
   }
 
   @override
@@ -86,9 +88,6 @@ abstract class BorderRadiusGeometryAttribute extends ResolvableAttribute<
 }
 
 class BorderRadiusAttribute extends BorderRadiusGeometryAttribute {
-  @override
-  final create = BorderRadiusAttribute.raw;
-
   const BorderRadiusAttribute.raw(super.value);
 
   factory BorderRadiusAttribute.all(Radius radius) {
@@ -139,12 +138,16 @@ class BorderRadiusAttribute extends BorderRadiusGeometryAttribute {
   factory BorderRadiusAttribute.circular(double radius) {
     return BorderRadiusAttribute.all(Radius.circular(radius));
   }
+
+  @override
+  BorderRadiusGeometryAttribute _mergeWith(
+    BorderRadiusGeometryDto borderRadius,
+  ) {
+    return BorderRadiusAttribute.raw(value.merge(borderRadius));
+  }
 }
 
 class BorderRadiusDirectionalAttribute extends BorderRadiusGeometryAttribute {
-  @override
-  final create = BorderRadiusDirectionalAttribute.raw;
-
   const BorderRadiusDirectionalAttribute.raw(super.value);
 
   factory BorderRadiusDirectionalAttribute.all(Radius radius) {
@@ -200,5 +203,12 @@ class BorderRadiusDirectionalAttribute extends BorderRadiusGeometryAttribute {
 
   factory BorderRadiusDirectionalAttribute.circular(double radius) {
     return BorderRadiusDirectionalAttribute.all(Radius.circular(radius));
+  }
+
+  @override
+  BorderRadiusGeometryAttribute _mergeWith(
+    BorderRadiusGeometryDto borderRadius,
+  ) {
+    return BorderRadiusDirectionalAttribute.raw(value.merge(borderRadius));
   }
 }

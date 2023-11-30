@@ -8,11 +8,12 @@ abstract class Decorator extends StyleAttribute {
   const Decorator({required this.key});
 }
 
-abstract class WrapDecorator<Self extends WrapDecorator<Self>>
-    extends Decorator {
+abstract class WrapDecorator<Self extends WrapDecorator<Self>> extends Decorator
+    with Mergeable<Self> {
   const WrapDecorator({super.key});
 
   @override
   Type get type => Self;
+
   Widget build(Widget child, MixData mix);
 }

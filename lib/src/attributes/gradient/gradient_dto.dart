@@ -7,7 +7,10 @@ import '../color/color_attribute.dart';
 
 @immutable
 abstract class GradientDto<T extends Gradient> extends Dto<GradientDto<T>, T> {
-  const GradientDto();
+  final List<double>? stops;
+  final List<ColorDto>? colors;
+  final GradientTransform? transform;
+  const GradientDto({this.stops, this.colors, this.transform});
 
   static GradientDto from(Gradient gradient) {
     if (gradient is LinearGradient) {
@@ -28,33 +31,34 @@ abstract class GradientDto<T extends Gradient> extends Dto<GradientDto<T>, T> {
 
   @override
   GradientDto<T> merge(covariant GradientDto<T>? other);
+
+  @override
+  get props => [stops, colors, transform];
 }
 
 class LinearGradientDto extends GradientDto<LinearGradient> {
   final AlignmentGeometry? begin;
   final AlignmentGeometry? end;
-  final List<ColorDto>? colors;
-  final List<double>? stops;
+
   final TileMode? tileMode;
-  final GradientTransform? transform;
 
   const LinearGradientDto({
     this.begin,
     this.end,
-    this.colors,
-    this.stops,
     this.tileMode,
-    this.transform,
+    super.transform,
+    super.colors,
+    super.stops,
   });
 
   static LinearGradientDto from(LinearGradient gradient) {
     return LinearGradientDto(
       begin: gradient.begin,
       end: gradient.end,
-      colors: gradient.colors.map(ColorDto.new).toList(),
-      stops: gradient.stops,
       tileMode: gradient.tileMode,
       transform: gradient.transform,
+      colors: gradient.colors.map(ColorDto.new).toList(),
+      stops: gradient.stops,
     );
   }
 
@@ -81,10 +85,10 @@ class LinearGradientDto extends GradientDto<LinearGradient> {
     return LinearGradientDto(
       begin: other.begin ?? begin,
       end: other.end ?? end,
-      colors: colors?.merge(other.colors),
-      stops: stops?.merge(other.stops),
       tileMode: other.tileMode ?? tileMode,
       transform: other.transform ?? transform,
+      colors: colors?.merge(other.colors),
+      stops: stops?.merge(other.stops),
     );
   }
 
@@ -96,35 +100,34 @@ class LinearGradientDto extends GradientDto<LinearGradient> {
 class RadialGradientDto extends GradientDto<RadialGradient> {
   final AlignmentGeometry? center;
   final double? radius;
-  final List<ColorDto>? colors;
-  final List<double>? stops;
+
   // focalRadius
   final TileMode? tileMode;
   final AlignmentGeometry? focal;
-  final GradientTransform? transform;
+
   final double? focalRadius;
 
   const RadialGradientDto({
     this.center,
     this.radius,
-    this.colors,
-    this.stops,
     this.tileMode,
     this.focal,
-    this.transform,
     this.focalRadius,
+    super.transform,
+    super.colors,
+    super.stops,
   });
 
   static RadialGradientDto from(RadialGradient gradient) {
     return RadialGradientDto(
       center: gradient.center,
       radius: gradient.radius,
-      colors: gradient.colors.map(ColorDto.new).toList(),
-      stops: gradient.stops,
       tileMode: gradient.tileMode,
       focal: gradient.focal,
-      transform: gradient.transform,
       focalRadius: gradient.focalRadius,
+      transform: gradient.transform,
+      colors: gradient.colors.map(ColorDto.new).toList(),
+      stops: gradient.stops,
     );
   }
 
@@ -153,12 +156,12 @@ class RadialGradientDto extends GradientDto<RadialGradient> {
     return RadialGradientDto(
       center: center,
       radius: radius ?? other.radius,
-      colors: colors?.merge(other.colors),
-      stops: stops?.merge(other.stops),
       tileMode: other.tileMode ?? tileMode,
       focal: focal,
-      transform: other.transform ?? transform,
       focalRadius: other.focalRadius ?? focalRadius,
+      transform: other.transform ?? transform,
+      colors: colors?.merge(other.colors),
+      stops: stops?.merge(other.stops),
     );
   }
 
@@ -172,19 +175,17 @@ class SweepGradientDto extends GradientDto<SweepGradient> {
   final AlignmentGeometry? center;
   final double? startAngle;
   final double? endAngle;
-  final List<ColorDto>? colors;
-  final List<double>? stops;
+
   final TileMode? tileMode;
-  final GradientTransform? transform;
 
   const SweepGradientDto({
     this.center,
     this.startAngle,
     this.endAngle,
-    this.colors,
-    this.stops,
     this.tileMode,
-    this.transform,
+    super.transform,
+    super.colors,
+    super.stops,
   });
 
   static SweepGradientDto from(SweepGradient gradient) {
@@ -192,10 +193,10 @@ class SweepGradientDto extends GradientDto<SweepGradient> {
       center: gradient.center,
       startAngle: gradient.startAngle,
       endAngle: gradient.endAngle,
-      colors: gradient.colors.map(ColorDto.new).toList(),
-      stops: gradient.stops,
       tileMode: gradient.tileMode,
       transform: gradient.transform,
+      colors: gradient.colors.map(ColorDto.new).toList(),
+      stops: gradient.stops,
     );
   }
 
@@ -224,10 +225,10 @@ class SweepGradientDto extends GradientDto<SweepGradient> {
       center: other.center ?? center,
       startAngle: startAngle ?? other.startAngle,
       endAngle: endAngle ?? other.endAngle,
-      colors: colors?.merge(other.colors),
-      stops: stops?.merge(other.stops),
       tileMode: other.tileMode ?? tileMode,
       transform: other.transform ?? transform,
+      colors: colors?.merge(other.colors),
+      stops: stops?.merge(other.stops),
     );
   }
 

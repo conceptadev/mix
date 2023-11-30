@@ -16,10 +16,6 @@ class MixTheme extends InheritedWidget {
         MixThemeData();
   }
 
-  static MixTokenResolver resolverOf(BuildContext context) {
-    return MixTokenResolver(context, of(context));
-  }
-
   static MixThemeData? maybeOf(BuildContext context) {
     return context.dependOnInheritedWidgetOfExactType<MixTheme>()?.data;
   }

@@ -99,17 +99,29 @@ extension WidgetTesterExt on WidgetTester {
     StyleMix style = StyleMix.empty,
     MixThemeData theme = const MixThemeData.empty(),
   }) async {
+    await pumpWithMixTheme(
+      Builder(
+        builder: (BuildContext context) {
+          // Populate MixData into the widget tree if needed
+          return MixProvider.build(
+            context,
+            style: style,
+            builder: (_) => widget,
+          );
+        },
+      ),
+    );
+  }
+
+  Future<void> pumpWithMixTheme(
+    Widget widget, {
+    MixThemeData theme = const MixThemeData.empty(),
+  }) async {
     await pumpWidget(
       MaterialApp(
         home: MixTheme(
           data: theme,
-          child: Builder(
-            builder: (BuildContext context) {
-              // Populate MixData into the widget tree if needed
-              return MixProvider.build(context,
-                  style: style, builder: (_) => widget);
-            },
-          ),
+          child: widget,
         ),
       ),
     );

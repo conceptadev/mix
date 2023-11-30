@@ -5,6 +5,8 @@ import 'package:flutter/foundation.dart';
 import '../attributes/style_mix_attribute.dart';
 import '../attributes/variant_attribute.dart';
 import '../core/attribute.dart';
+import '../core/attributes_map.dart';
+import '../helpers/compare_mixin.dart';
 import '../recipes/container/container_attribute.dart';
 import '../recipes/flex/flex_attribute.dart';
 import '../recipes/image/image_attribute.dart';
@@ -27,14 +29,15 @@ typedef Mix = StyleMix;
 /// final style = StyleMix(attribute1, attribute2, attribute3);
 /// final updatedStyle = style.selectVariant(myVariant);
 /// ```
-class StyleMix {
+class StyleMix with Comparable {
   /// A constant, empty mix for use with const constructor widgets.
   ///
   /// This can be used as a default or initial value where a `StyleMix` is required.
-  static const empty = StyleMix._(styles: [], variants: []);
+  static const empty =
+      StyleMix._(styles: StyleAttributeMap.empty(), variants: []);
 
   /// Visual attributes contained in this mix.
-  final List<StyleAttribute> styles;
+  final StyleAttributeMap styles;
 
   /// The variant attributes contained in this mix.
   final List<VariantAttribute> variants;
@@ -112,13 +115,16 @@ class StyleMix {
         variantList.add(attribute);
       } else if (attribute is StyleMixAttribute) {
         variantList.addAll(attribute.value.variants);
-        styleList.addAll(attribute.value.styles);
+        styleList.addAll(attribute.value.styles.values);
       } else {
         throw UnsupportedError('Unsupported attribute type: $attribute');
       }
     }
 
-    return StyleMix._(styles: styleList, variants: variantList);
+    return StyleMix._(
+      styles: StyleAttributeMap(styleList),
+      variants: variantList,
+    );
   }
 
   /// Selects a mix based on a [condition].
@@ -177,7 +183,7 @@ class StyleMix {
   /// Returns a list of all attributes contained in this mix.
   ///
   /// This includes both visual and variant attributes.
-  Iterable<Attribute> get values => [...styles, ...variants];
+  Iterable<Attribute> get values => [...styles.values, ...variants];
 
   /// Returns true if this StyleMix does not contain any attributes or variants.
   bool get isEmpty => styles.isEmpty && variants.isEmpty;
@@ -223,7 +229,7 @@ class StyleMix {
   ///
   /// If [styles] or [variants] is null, the corresponding attribute map of this mix is used.
   StyleMix copyWith({
-    List<StyleAttribute>? styles,
+    StyleAttributeMap? styles,
     List<VariantAttribute>? variants,
   }) {
     return StyleMix._(
@@ -238,10 +244,10 @@ class StyleMix {
   /// If a null value is provided for any of the parameters, it is ignored.
   ///
   /// This method combines the visual and variant attributes of this mix and the provided [mix].
-  StyleMix merge([StyleMix? mix]) {
+  StyleMix merge(StyleMix? mix) {
     if (mix == null) return this;
 
-    final mergedStyles = [...styles, ...mix.styles];
+    final mergedStyles = styles.merge(mix.styles);
     final mergedVariants = [...variants, ...mix.variants];
 
     return copyWith(styles: mergedStyles, variants: mergedVariants);
@@ -413,16 +419,7 @@ class StyleMix {
   }
 
   @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is StyleMix &&
-        listEquals(styles, other.styles) &&
-        listEquals(variants, other.variants);
-  }
-
-  @override
-  int get hashCode => styles.hashCode ^ variants.hashCode;
+  get props => [styles, variants];
 }
 
 /// A class representing a condition-value pair.

@@ -22,7 +22,9 @@ void main() {
             maxLines: 2,
             textWidthBasis: TextWidthBasis.longestLine,
             textHeightBehavior: TextHeightBehavior(
-                applyHeightToFirstAscent: true, applyHeightToLastDescent: true),
+              applyHeightToFirstAscent: true,
+              applyHeightToLastDescent: true,
+            ),
             softWrap: true,
             directives: [uppercaseDirective],
           ),
