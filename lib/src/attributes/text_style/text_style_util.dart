@@ -1,5 +1,7 @@
 import 'dart:ui';
 
+import 'package:flutter/material.dart';
+
 import '../../core/extensions/values_ext.dart';
 import '../../theme/tokens/text_style_token.dart';
 import '../color/color_dto.dart';
@@ -114,6 +116,8 @@ class TextStyleUtility<T> extends MixUtility<T, TextStyleAttribute> {
       TextDecorationStyleUtility(_decorationStyle);
 
   TextBaselineUtility<T> get textBaseline => TextBaselineUtility(_textBaseline);
+
+  T as(TextStyle style) => builder(TextStyleAttribute.from(style));
 
   T italic() => fontStyle.italic();
 

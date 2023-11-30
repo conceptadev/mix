@@ -49,12 +49,6 @@ void main() {
       expect(utility.on(), true);
       expect(utility.off(), false);
     });
-    test('Call method returns correct bool', () {
-      expect(utility.as(true), isA<bool>());
-      expect(utility.as(false), isA<bool>());
-      expect(utility.as(true), true);
-      expect(utility.as(false), false);
-    });
   });
 
   group('TextOverflowUtility Tests', () {

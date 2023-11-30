@@ -62,6 +62,33 @@ class TextStyleDto extends Dto<TextStyleDto, TextStyle> {
     this.wordSpacing,
   }) : token = null;
 
+  // from
+  factory TextStyleDto.from(TextStyle style) {
+    return TextStyleDto(
+      background: style.background,
+      backgroundColor: style.backgroundColor?.toDto(),
+      color: style.color?.toDto(),
+      debugLabel: style.debugLabel,
+      decoration: style.decoration,
+      decorationColor: style.decorationColor?.toDto(),
+      decorationStyle: style.decorationStyle,
+      decorationThickness: style.decorationThickness,
+      fontFamily: style.fontFamily,
+      fontFamilyFallback: style.fontFamilyFallback,
+      fontFeatures: style.fontFeatures,
+      fontSize: style.fontSize,
+      fontStyle: style.fontStyle,
+      fontWeight: style.fontWeight,
+      foreground: style.foreground,
+      height: style.height,
+      letterSpacing: style.letterSpacing,
+      locale: style.locale,
+      shadows: style.shadows?.map((e) => e.toDto()).toList(),
+      textBaseline: style.textBaseline,
+      wordSpacing: style.wordSpacing,
+    );
+  }
+
   const TextStyleDto.token(this.token)
       : background = null,
         backgroundColor = null,
@@ -188,6 +215,11 @@ class TextStyleAttribute
 
   factory TextStyleAttribute(TextStyleDto style) {
     return TextStyleAttribute.raw([style]);
+  }
+
+  // from
+  factory TextStyleAttribute.from(TextStyle other) {
+    return TextStyleAttribute(TextStyleDto.from(other));
   }
 
   factory TextStyleAttribute.token(TextStyleToken token) {

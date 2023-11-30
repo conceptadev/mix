@@ -74,28 +74,6 @@ abstract class SpacingUtility<T>
   /// Applies uniform spacing on end side.
   SpacingSideUtility<T> get end => SpacingSideUtility(_end);
 
-  T from(EdgeInsetsGeometry value) {
-    if (value is EdgeInsets) {
-      return only(
-        top: value.top,
-        bottom: value.bottom,
-        left: value.left,
-        right: value.right,
-      );
-    } else if (value is EdgeInsetsDirectional) {
-      return only(
-        top: value.top,
-        bottom: value.bottom,
-        start: value.start,
-        end: value.end,
-      );
-    }
-
-    throw Exception(
-      'Unsupported EdgeInsetsGeometry type: ${value.runtimeType}',
-    );
-  }
-
   /// Provides a method to create an attribute with custom values for each side.
   ///
   /// Use this method when you want to be explicit about the spacing values for each side.
