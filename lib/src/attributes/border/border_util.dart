@@ -12,10 +12,10 @@ class BoxBorderUtility<T> extends MixUtility<T, BoxBorderAttribute> {
 
   const BoxBorderUtility(super.builder);
 
-  BorderUtility<T> get _border => BorderUtility(as);
+  BorderUtility<T> get _border => BorderUtility(builder);
 
   BorderDirectionalUtility<T> get _borderDirectional =>
-      BorderDirectionalUtility(as);
+      BorderDirectionalUtility(builder);
 
   BorderSideUtility<T> get all => _border.all;
 
@@ -93,11 +93,11 @@ class BorderUtility<T> extends MixUtility<T, BorderAttribute> {
 
   // Symetric sides
   T _horizontal(BorderSideDto side) {
-    return as(BorderAttribute.symmetric(horizontal: side));
+    return builder(BorderAttribute.symmetric(horizontal: side));
   }
 
   T _vertical(BorderSideDto side) {
-    return as(BorderAttribute.symmetric(vertical: side));
+    return builder(BorderAttribute.symmetric(vertical: side));
   }
 
   BorderSideUtility<T> get all => BorderSideUtility(_all);
@@ -126,7 +126,7 @@ class BorderUtility<T> extends MixUtility<T, BorderAttribute> {
       right: right,
     );
 
-    return as(border);
+    return builder(border);
   }
 
   T call({
@@ -153,7 +153,7 @@ class BorderDirectionalUtility<T>
   T _all(BorderSideDto side) {
     final border = BorderDirectionalAttribute.fromBorderSide(side);
 
-    return as(border);
+    return builder(border);
   }
 
   T _top(BorderSideDto side) => only(top: side);
@@ -168,13 +168,13 @@ class BorderDirectionalUtility<T>
   T _horizontal(BorderSideDto side) {
     final border = BorderDirectionalAttribute.symmetric(horizontal: side);
 
-    return as(border);
+    return builder(border);
   }
 
   T _vertical(BorderSideDto side) {
     final border = BorderDirectionalAttribute.symmetric(vertical: side);
 
-    return as(border);
+    return builder(border);
   }
 
   BorderSideUtility<T> get start => BorderSideUtility(_start);
@@ -204,7 +204,7 @@ class BorderDirectionalUtility<T>
       end: end,
     );
 
-    return as(border);
+    return builder(border);
   }
 
   T call({
@@ -246,6 +246,6 @@ class BorderSideUtility<T> extends MixUtility<T, BorderSideDto> {
       width: width,
     );
 
-    return as(side) as Value;
+    return builder(side) as Value;
   }
 }

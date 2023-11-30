@@ -27,7 +27,7 @@ void main() {
     });
 
     test('all should return BorderRadiusAttribute with specified radius', () {
-      final result = borderRadius.all(10);
+      final result = borderRadius.all.circular(10);
       expect(result.topLeft, const Radius.circular(10));
       expect(result.topRight, const Radius.circular(10));
       expect(result.bottomLeft, const Radius.circular(10));
@@ -37,8 +37,8 @@ void main() {
     test(
         'vertical should return BorderRadiusAttribute with specified top and bottom radius',
         () {
-      final resultTop = borderRadius.top(10);
-      final resultBottom = borderRadius.bottom(20);
+      final resultTop = borderRadius.top.circular(10);
+      final resultBottom = borderRadius.bottom.circular(20);
       expect(resultTop.topLeft, const Radius.circular(10));
       expect(resultTop.topRight, const Radius.circular(10));
       expect(resultBottom.bottomLeft, const Radius.circular(20));
@@ -48,8 +48,8 @@ void main() {
     test(
         'horizontal should return BorderRadiusAttribute with specified left and right radius',
         () {
-      final resultLeft = borderRadius.left(10);
-      final resultRight = borderRadius.right(20);
+      final resultLeft = borderRadius.left.circular(10);
+      final resultRight = borderRadius.right.circular(20);
       expect(resultLeft.topLeft, const Radius.circular(10));
       expect(resultLeft.bottomLeft, const Radius.circular(10));
       expect(resultRight.topRight, const Radius.circular(20));
@@ -78,7 +78,7 @@ void main() {
     // topLeft
     test('topLeft should return BorderRadiusAttribute with specified radius',
         () {
-      final result = borderRadius.topLeft(10);
+      final result = borderRadius.topLeft.circular(10);
       expect(result.topLeft, const Radius.circular(10));
       expect(result.topRight, isNull);
       expect(result.bottomLeft, isNull);
@@ -88,7 +88,7 @@ void main() {
     // topRight
     test('topRight should return BorderRadiusAttribute with specified radius',
         () {
-      final result = borderRadius.topRight(10);
+      final result = borderRadius.topRight.circular(10);
       expect(result.topLeft, isNull);
       expect(result.topRight, const Radius.circular(10));
       expect(result.bottomLeft, isNull);
@@ -98,7 +98,7 @@ void main() {
     // bottomLeft
     test('bottomLeft should return BorderRadiusAttribute with specified radius',
         () {
-      final result = borderRadius.bottomLeft(10);
+      final result = borderRadius.bottomLeft.circular(10);
       expect(result.topLeft, isNull);
       expect(result.topRight, isNull);
       expect(result.bottomLeft, const Radius.circular(10));
@@ -109,7 +109,7 @@ void main() {
     test(
         'bottomRight should return BorderRadiusAttribute with specified radius',
         () {
-      final result = borderRadius.bottomRight(10);
+      final result = borderRadius.bottomRight.circular(10);
       expect(result.topLeft, isNull);
       expect(result.topRight, isNull);
       expect(result.bottomLeft, isNull);
@@ -145,7 +145,7 @@ void main() {
     test(
         'all should return BorderRadiusDirectionalAttribute with specified radius',
         () {
-      final result = borderRadius.directional.all(10);
+      final result = borderRadius.directional.all.circular(10);
       expect(result.topStart, const Radius.circular(10));
       expect(result.topEnd, const Radius.circular(10));
       expect(result.bottomStart, const Radius.circular(10));
@@ -165,7 +165,7 @@ void main() {
     test(
         'topStart should return BorderRadiusDirectionalAttribute with specified radius',
         () {
-      final result = borderRadius.directional.topStart(10);
+      final result = borderRadius.directional.topStart.circular(10);
       expect(result.topStart, const Radius.circular(10));
       expect(result.topEnd, isNull);
       expect(result.bottomStart, isNull);
@@ -176,7 +176,7 @@ void main() {
     test(
         'topEnd should return BorderRadiusDirectionalAttribute with specified radius',
         () {
-      final result = borderRadius.directional.topEnd(10);
+      final result = borderRadius.directional.topEnd.circular(10);
       expect(result.topStart, isNull);
       expect(result.topEnd, const Radius.circular(10));
       expect(result.bottomStart, isNull);
@@ -187,7 +187,7 @@ void main() {
     test(
         'bottomStart should return BorderRadiusDirectionalAttribute with specified radius',
         () {
-      final result = borderRadius.directional.bottomStart(10);
+      final result = borderRadius.directional.bottomStart.circular(10);
       expect(result.topStart, isNull);
       expect(result.topEnd, isNull);
       expect(result.bottomStart, const Radius.circular(10));
@@ -198,7 +198,7 @@ void main() {
     test(
         'bottomEnd should return BorderRadiusDirectionalAttribute with specified radius',
         () {
-      final result = borderRadius.directional.bottomEnd(10);
+      final result = borderRadius.directional.bottomEnd.circular(10);
       expect(result.topStart, isNull);
       expect(result.topEnd, isNull);
       expect(result.bottomStart, isNull);

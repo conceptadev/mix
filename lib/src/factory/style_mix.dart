@@ -33,14 +33,14 @@ class StyleMix with Comparable {
   /// A constant, empty mix for use with const constructor widgets.
   ///
   /// This can be used as a default or initial value where a `StyleMix` is required.
-  static const empty =
-      StyleMix._(styles: StyleAttributeMap.empty(), variants: []);
+  static const empty = StyleMix._(
+      styles: StyleAttributeMap.empty(), variants: VariantAttributeMap.empty());
 
   /// Visual attributes contained in this mix.
   final StyleAttributeMap styles;
 
   /// The variant attributes contained in this mix.
-  final List<VariantAttribute> variants;
+  final VariantAttributeMap variants;
 
   static final stack = SpreadFunctionParams(_styleType<StackMixAttribute>());
   static final text = SpreadFunctionParams(_styleType<TextMixAttribute>());
@@ -114,7 +114,7 @@ class StyleMix with Comparable {
       } else if (attribute is VariantAttribute) {
         variantList.add(attribute);
       } else if (attribute is StyleMixAttribute) {
-        variantList.addAll(attribute.value.variants);
+        variantList.addAll(attribute.value.variants.values);
         styleList.addAll(attribute.value.styles.values);
       } else {
         throw UnsupportedError('Unsupported attribute type: $attribute');
@@ -123,7 +123,7 @@ class StyleMix with Comparable {
 
     return StyleMix._(
       styles: StyleAttributeMap(styleList),
-      variants: variantList,
+      variants: VariantAttributeMap(variantList),
     );
   }
 
@@ -183,7 +183,7 @@ class StyleMix with Comparable {
   /// Returns a list of all attributes contained in this mix.
   ///
   /// This includes both visual and variant attributes.
-  Iterable<Attribute> get values => [...styles.values, ...variants];
+  Iterable<Attribute> get values => [...styles.values, ...variants.values];
 
   /// Returns true if this StyleMix does not contain any attributes or variants.
   bool get isEmpty => styles.isEmpty && variants.isEmpty;
@@ -230,7 +230,7 @@ class StyleMix with Comparable {
   /// If [styles] or [variants] is null, the corresponding attribute map of this mix is used.
   StyleMix copyWith({
     StyleAttributeMap? styles,
-    List<VariantAttribute>? variants,
+    VariantAttributeMap? variants,
   }) {
     return StyleMix._(
       styles: styles ?? this.styles,
@@ -248,7 +248,7 @@ class StyleMix with Comparable {
     if (mix == null) return this;
 
     final mergedStyles = styles.merge(mix.styles);
-    final mergedVariants = [...variants, ...mix.variants];
+    final mergedVariants = variants.merge(mix.variants);
 
     return copyWith(styles: mergedStyles, variants: mergedVariants);
   }
@@ -296,7 +296,7 @@ class StyleMix with Comparable {
     /// Loop over all VariantAttributes in variants only once instead of a nested loop,
     /// checking if each one matches with the selected variants.
     /// If it does, add it to the matchedVariants, else add it to remainingVariants.
-    for (final attr in variants) {
+    for (final attr in variants.values) {
       if (attr is MultiVariantAttribute) {
         if (attr.matches(selectedVariants)) {
           // if all variants match, add it to the matchedVariants
@@ -318,7 +318,7 @@ class StyleMix with Comparable {
 
     final updatedStyle = StyleMix._(
       styles: styles,
-      variants: remainingVariants,
+      variants: VariantAttributeMap(remainingVariants),
     );
 
     /// If not a single variant was matched, return the original StyleMix.
@@ -368,7 +368,7 @@ class StyleMix with Comparable {
 
     // Return an empty StyleMix if the list of picked variants is empty
 
-    for (final variantAttr in variants) {
+    for (final variantAttr in variants.values) {
       if (pickedVariants.contains(variantAttr.variant)) {
         matchedVariants.add(variantAttr);
       }

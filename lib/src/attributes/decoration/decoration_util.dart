@@ -5,12 +5,13 @@ import '../border/border_attribute.dart';
 import '../border/border_radius_attribute.dart';
 import '../border/border_radius_util.dart';
 import '../border/border_util.dart';
-import '../color/color_attribute.dart';
+import '../color/color_dto.dart';
+import '../color/color_util.dart';
 import '../gradient/gradient_attribute.dart';
 import '../gradient/gradient_dto.dart';
 import '../gradient/gradient_util.dart';
 import '../scalars/scalar_util.dart';
-import '../shadow/shadow_attribute.dart';
+import '../shadow/shadow_dto.dart';
 import '../shadow/shadow_util.dart';
 import 'decoration_attribute.dart';
 
@@ -36,7 +37,7 @@ class BoxDecorationUtility<T> extends MixUtility<T, BoxDecorationAttribute> {
     BoxBorderAttribute? border,
     BorderRadiusGeometryAttribute? borderRadius,
     GradientAttribute? gradient,
-    List<BoxShadowAttribute>? boxShadow,
+    List<BoxShadowDto>? boxShadow,
     BoxShape? shape,
   }) {
     final decoration = BoxDecorationAttribute(
@@ -48,13 +49,10 @@ class BoxDecorationUtility<T> extends MixUtility<T, BoxDecorationAttribute> {
       shape: shape,
     );
 
-    return as(decoration);
+    return builder(decoration);
   }
 
-  T _elevation(List<BoxShadow> shadows) => call(boxShadow: shadows);
-
-  T _boxShadow(List<BoxShadowAttribute> boxShadow) =>
-      _only(boxShadow: boxShadow);
+  T _boxShadow(List<BoxShadowDto> boxShadow) => _only(boxShadow: boxShadow);
 
   ColorUtility<T> get color => ColorUtility(_color);
   BorderUtility<T> get border => BorderUtility(_border);
@@ -63,7 +61,7 @@ class BoxDecorationUtility<T> extends MixUtility<T, BoxDecorationAttribute> {
 
   BoxShapeUtility<T> get shape => BoxShapeUtility(_shape);
 
-  ElevationUtility<T> get elevation => ElevationUtility(_elevation);
+  ElevationUtility<T> get elevation => ElevationUtility(_boxShadow);
   GradientUtility<T> get gradient => GradientUtility(_gradient);
 
   BoxShadowListUtility<T> get boxShadow => BoxShadowListUtility(_boxShadow);
@@ -81,7 +79,7 @@ class BoxDecorationUtility<T> extends MixUtility<T, BoxDecorationAttribute> {
       border: border?.toAttribute(),
       borderRadius: borderRadius?.toAttribute(),
       gradient: gradient?.toAttribute(),
-      boxShadow: boxShadow?.toAttribute(),
+      boxShadow: boxShadow?.toDto(),
       shape: shape,
     );
   }

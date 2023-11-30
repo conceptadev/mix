@@ -49,12 +49,11 @@ void main() {
       expect(utility.on(), true);
       expect(utility.off(), false);
     });
-
     test('Call method returns correct bool', () {
-      expect(utility(true), isA<bool>());
-      expect(utility(false), isA<bool>());
-      expect(utility(true), true);
-      expect(utility(false), false);
+      expect(utility.as(true), isA<bool>());
+      expect(utility.as(false), isA<bool>());
+      expect(utility.as(true), true);
+      expect(utility.as(false), false);
     });
   });
 

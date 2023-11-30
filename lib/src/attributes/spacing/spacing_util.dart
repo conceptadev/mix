@@ -2,22 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../theme/tokens/space_token.dart';
 import '../scalars/scalar_util.dart';
-import 'spacing_attribute.dart';
 import 'spacing_dto.dart';
-
-@immutable
-class PaddingUtility<T> extends SpacingUtility<T, PaddingAttribute> {
-  static const selfBuilder = PaddingUtility(MixUtility.selfBuilder);
-  const PaddingUtility(super.builder)
-      : super(spacingBuilder: PaddingAttribute.raw);
-}
-
-@immutable
-class MarginUtility<T> extends SpacingUtility<T, MarginAttribute> {
-  static const selfBuilder = MarginUtility(MixUtility.selfBuilder);
-  const MarginUtility(super.builder)
-      : super(spacingBuilder: MarginAttribute.raw);
-}
 
 /// A utility class for defining spacing attributes like padding and margin in Flutter widgets.
 ///
@@ -40,10 +25,9 @@ class MarginUtility<T> extends SpacingUtility<T, MarginAttribute> {
 ///   final horizontalSpacing = spacing.horizontal(20);
 /// ```
 @immutable
-abstract class SpacingUtility<T, Attr extends SpacingAttribute<Attr>>
-    extends MixUtility<T, Attr> {
-  final SpacingAttributeBuilder<Attr> spacingBuilder;
-  const SpacingUtility(super.builder, {required this.spacingBuilder});
+abstract class SpacingUtility<T>
+    extends DtoUtility<T, SpacingDto, EdgeInsetsGeometry> {
+  const SpacingUtility(super.builder) : super(dtoBuilder: SpacingDto.from);
 
   /// Private helper methods to simplify the creation of SpacingAttribute with utility functions.
   T _all(double value) =>
@@ -63,8 +47,8 @@ abstract class SpacingUtility<T, Attr extends SpacingAttribute<Attr>>
   /// Applies uniform spacing on top and bottom sides.
   SpacingSideUtility<T> get vertical => SpacingSideUtility(_vertical);
 
-  SpacingDirectionalUtility<T, Attr> get directional =>
-      SpacingDirectionalUtility(as, spacingBuilder: spacingBuilder);
+  SpacingDirectionalUtility<T> get directional =>
+      SpacingDirectionalUtility(builder);
 
   /// Applies uniform spacing on left and right sides.
   SpacingSideUtility<T> get horizontal => SpacingSideUtility(_horizontal);
@@ -123,16 +107,14 @@ abstract class SpacingUtility<T, Attr extends SpacingAttribute<Attr>>
     double? start,
     double? end,
   }) {
-    return as(
-      spacingBuilder(
-        SpacingDto(
-          top: top,
-          bottom: bottom,
-          left: left,
-          right: right,
-          start: start,
-          end: end,
-        ),
+    return builder(
+      SpacingDto(
+        top: top,
+        bottom: bottom,
+        left: left,
+        right: right,
+        start: start,
+        end: end,
       ),
     );
   }
@@ -162,20 +144,22 @@ abstract class SpacingUtility<T, Attr extends SpacingAttribute<Attr>>
 // Helper class to wrap functions that can return
 // Space tokens in their methods
 @immutable
-class SpacingSideUtility<T> extends ScalarUtility<T, double> {
+class SpacingSideUtility<T> extends MixUtility<T, double> {
   const SpacingSideUtility(super.builder);
 
-  T xsmall() => call(SpaceToken.xsmall());
+  T xsmall() => builder(SpaceToken.xsmall());
 
-  T small() => call(SpaceToken.small());
+  T small() => builder(SpaceToken.small());
 
-  T medium() => call(SpaceToken.medium());
+  T medium() => builder(SpaceToken.medium());
 
-  T large() => call(SpaceToken.large());
+  T large() => builder(SpaceToken.large());
 
-  T xlarge() => call(SpaceToken.xlarge());
+  T xlarge() => builder(SpaceToken.xlarge());
 
-  T xxlarge() => call(SpaceToken.xxlarge());
+  T xxlarge() => builder(SpaceToken.xxlarge());
+
+  T call(double value) => builder(value);
 }
 
 /// A utility class for creating directional spacing attributes in Flutter widgets.
@@ -202,12 +186,8 @@ class SpacingSideUtility<T> extends ScalarUtility<T, double> {
 ///   final horizontalDirectionalSpacing = directionalSpacing.horizontal(20);
 /// ```
 @immutable
-class SpacingDirectionalUtility<T, Attr extends SpacingAttribute<Attr>>
-    extends SpacingUtility<T, Attr> {
-  const SpacingDirectionalUtility(
-    super.builder, {
-    required super.spacingBuilder,
-  });
+class SpacingDirectionalUtility<T> extends SpacingUtility<T> {
+  const SpacingDirectionalUtility(super.builder);
 
   // Private helper methods to simplify the creation of SpacingAttribute with utility functions.
   @override

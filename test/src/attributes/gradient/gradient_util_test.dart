@@ -81,7 +81,7 @@ void main() {
       final colors = [Colors.red, Colors.blue];
       final colorsDto = colors.map(ColorDto.new).toList();
 
-      final attribute = radialUtility.colors(colors);
+      final attribute = radialUtility(colors: colors);
 
       final resolvedGradient = attribute.resolve(EmptyMixData);
       final dto = attribute.value as RadialGradientDto;
@@ -94,7 +94,7 @@ void main() {
     // stops
     test('.stops', () {
       final stops = [0.0, 0.5];
-      final attribute = radialUtility.stops(stops);
+      final attribute = radialUtility(stops: stops);
 
       final resolvedGradient = attribute.resolve(EmptyMixData);
       final dto = attribute.value as RadialGradientDto;
@@ -106,7 +106,7 @@ void main() {
     // center
     test('.center', () {
       const center = Alignment.center;
-      final attribute = radialUtility.center.as(center);
+      final attribute = radialUtility(center: center);
       final attributeFn = radialUtility.center.center();
 
       final resolvedGradient =
@@ -121,7 +121,7 @@ void main() {
     // radius
     test('.radius', () {
       const radius = 20.0;
-      final attribute = radialUtility.radius(radius);
+      final attribute = radialUtility(radius: radius);
 
       final resolvedGradient =
           attribute.resolve(EmptyMixData) as RadialGradient;
@@ -134,7 +134,7 @@ void main() {
     // focal
     test('.focal', () {
       const focal = Alignment.center;
-      final attribute = radialUtility.focal.as(focal);
+      final attribute = radialUtility.focal.builder(focal);
       final attributeFn = radialUtility.focal.center();
 
       final resolvedGradient =
@@ -149,7 +149,7 @@ void main() {
     // focalRadius
     test('.focalRadius', () {
       const focalRadius = 10.0;
-      final attribute = radialUtility.focalRadius(focalRadius);
+      final attribute = radialUtility(focalRadius: focalRadius);
 
       final resolvedGradient =
           attribute.resolve(EmptyMixData) as RadialGradient;
@@ -163,7 +163,7 @@ void main() {
 
     test('.tileMode', () {
       const tileMode = TileMode.clamp;
-      final attribute = radialUtility.tileMode(tileMode);
+      final attribute = radialUtility(tileMode: tileMode);
       final attributeFn = radialUtility.tileMode.clamp();
 
       final resolvedGradient =
@@ -178,7 +178,7 @@ void main() {
     // transform
     test('.transform', () {
       const transform = GradientRotation(0.0);
-      final attribute = radialUtility.transform(transform);
+      final attribute = radialUtility(transform: transform);
 
       final resolvedGradient =
           attribute.resolve(EmptyMixData) as RadialGradient;
@@ -278,7 +278,7 @@ void main() {
       final colors = [Colors.red, Colors.blue];
       final colorsDto = colors.map(ColorDto.new).toList();
 
-      final attribute = linearUtility.colors(colors);
+      final attribute = linearUtility(colors: colors);
 
       final resolvedGradient = attribute.resolve(EmptyMixData);
       final dto = attribute.value as LinearGradientDto;
@@ -290,7 +290,7 @@ void main() {
     // stops
     test('.stops', () {
       final stops = [0.0, 0.5];
-      final attribute = linearUtility.stops(stops);
+      final attribute = linearUtility(stops: stops);
 
       final resolvedGradient = attribute.resolve(EmptyMixData);
       final dto = attribute.value as LinearGradientDto;
@@ -302,7 +302,7 @@ void main() {
     // begin
     test('.begin', () {
       const begin = Alignment.centerLeft;
-      final attribute = linearUtility.begin.as(begin);
+      final attribute = linearUtility(begin: begin);
       final attributeFn = linearUtility.begin.centerLeft();
 
       final resolvedGradient =
@@ -317,7 +317,7 @@ void main() {
     // end
     test('.end', () {
       const end = Alignment.centerRight;
-      final attribute = linearUtility.end.as(end);
+      final attribute = linearUtility(end: end);
       final attributeFn = linearUtility.end.centerRight();
 
       final resolvedGradient =
@@ -333,7 +333,7 @@ void main() {
     // tileMode
     test('.tileMode', () {
       const tileMode = TileMode.clamp;
-      final attribute = linearUtility.tileMode(tileMode);
+      final attribute = linearUtility(tileMode: tileMode);
       final attributeFn = linearUtility.tileMode.clamp();
 
       final resolvedGradient =
@@ -348,7 +348,7 @@ void main() {
     // transform
     test('.transform', () {
       const transform = GradientRotation(0.0);
-      final attribute = linearUtility.transform(transform);
+      final attribute = linearUtility(transform: transform);
 
       final resolvedGradient =
           attribute.resolve(EmptyMixData) as LinearGradient;
@@ -439,7 +439,7 @@ void main() {
       final colors = [Colors.red, Colors.blue];
       final colorsDto = colors.map(ColorDto.new).toList();
 
-      final attribute = sweepUtility.colors(colors);
+      final attribute = sweepUtility(colors: colors);
 
       final resolvedGradient = attribute.resolve(EmptyMixData);
       final dto = attribute.value as SweepGradientDto;
@@ -451,7 +451,7 @@ void main() {
     // stops
     test('.stops', () {
       final stops = [0.0, 0.5];
-      final attribute = sweepUtility.stops(stops);
+      final attribute = sweepUtility(stops: stops);
 
       final resolvedGradient = attribute.resolve(EmptyMixData);
       final dto = attribute.value as SweepGradientDto;
@@ -463,7 +463,7 @@ void main() {
     // center
     test('.center', () {
       const center = Alignment.center;
-      final attribute = sweepUtility.center.as(center);
+      final attribute = sweepUtility(center: center);
       final attributeFn = sweepUtility.center.center();
 
       final resolvedGradient = attribute.resolve(EmptyMixData) as SweepGradient;
@@ -477,7 +477,7 @@ void main() {
     // startAngle
     test('.startAngle', () {
       const startAngle = 0.0;
-      final attribute = sweepUtility.startAngle(startAngle);
+      final attribute = sweepUtility(startAngle: startAngle);
 
       final resolvedGradient = attribute.resolve(EmptyMixData) as SweepGradient;
       final dto = attribute.value as SweepGradientDto;
@@ -489,7 +489,7 @@ void main() {
     // endAngle
     test('.endAngle', () {
       const endAngle = 0.5;
-      final attribute = sweepUtility.endAngle(endAngle);
+      final attribute = sweepUtility(endAngle: endAngle);
 
       final resolvedGradient = attribute.resolve(EmptyMixData) as SweepGradient;
       final dto = attribute.value as SweepGradientDto;
@@ -501,7 +501,7 @@ void main() {
     // tileMode
     test('.tileMode', () {
       const tileMode = TileMode.clamp;
-      final attribute = sweepUtility.tileMode(tileMode);
+      final attribute = sweepUtility(tileMode: tileMode);
       final attributeFn = sweepUtility.tileMode.clamp();
 
       final resolvedGradient = attribute.resolve(EmptyMixData) as SweepGradient;
@@ -515,7 +515,7 @@ void main() {
     // transform
     test('.transform', () {
       const transform = GradientRotation(0.0);
-      final attribute = sweepUtility.transform(transform);
+      final attribute = sweepUtility(transform: transform);
 
       final resolvedGradient = attribute.resolve(EmptyMixData) as SweepGradient;
       final dto = attribute.value as SweepGradientDto;

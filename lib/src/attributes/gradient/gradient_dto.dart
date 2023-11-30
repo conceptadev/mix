@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../core/attribute.dart';
 import '../../core/extensions/iterable_ext.dart';
 import '../../factory/mix_provider_data.dart';
-import '../color/color_attribute.dart';
+import '../color/color_dto.dart';
 
 @immutable
 abstract class GradientDto<T extends Gradient> extends Dto<GradientDto<T>, T> {

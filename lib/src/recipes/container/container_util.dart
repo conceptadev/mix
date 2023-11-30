@@ -2,40 +2,44 @@ import 'package:flutter/material.dart';
 
 import '../../attributes/border/border_radius_util.dart';
 import '../../attributes/border/border_util.dart';
-import '../../attributes/color/color_attribute.dart';
+import '../../attributes/color/color_dto.dart';
+import '../../attributes/color/color_util.dart';
 import '../../attributes/constraints/constraints_attribute.dart';
 import '../../attributes/constraints/constraints_util.dart';
 import '../../attributes/decoration/decoration_attribute.dart';
 import '../../attributes/decoration/decoration_util.dart';
+import '../../attributes/scalars/scalar_attribute_util.dart';
 import '../../attributes/scalars/scalar_util.dart';
 import '../../attributes/scalars/scalars_attribute.dart';
 import '../../attributes/shadow/shadow_util.dart';
 import '../../attributes/spacing/spacing_attribute.dart';
-import '../../attributes/spacing/spacing_util.dart';
+import '../../attributes/spacing/spacing_dto.dart';
 import 'container_attribute.dart';
 
 const container = ContainerUtility.selfBuilder;
 const box = ContainerUtility.selfBuilder;
 const boxShadow = BoxShadowUtility.selfBuilder;
-const boxDecoration = BoxDecorationUtility.selfBuilder;
+
 const border = BoxBorderUtility.selfBuilder;
-const clipBehavior = ClipUtility.selfBuilder;
+const clipBehavior = ClipBehaviorAttributeUtility.selfBuilder;
 
 /// Predefined utility constants for creating padding attributes.
-const padding = PaddingUtility.selfBuilder;
+const padding = PaddingAttributeUtility.selfBuilder;
 
 /// Predefined utility constants for creating margin attributes.
-const margin = MarginUtility.selfBuilder;
-
-const backgroundColor = ColorUtility(BackgroundColorAttribute.new);
+const margin = MarginAttributeUtility.selfBuilder;
 
 const elevation = ElevationUtility.selfBuilder;
 
 // Provides an utility for creating a uniform BorderRadiusAttribute for all corners.
 const borderRadius = BorderRadiusGeometryUtility.selfBuilder;
-const alignment = AlignmentUtility.selfBuilder;
+const alignment = AlignmentGeometryAttributeUtility.selfBuilder;
 
 const boxConstraints = BoxConstraintsUtility.selfBuilder;
+
+const boxDecoration = BoxDecorationUtility.selfBuilder;
+
+const backgroundColor = BackgroundColorAttributeUtility.selfBuilder;
 
 final minWidth = boxConstraints.minWidth;
 
@@ -66,11 +70,11 @@ class ContainerUtility<T> extends MixUtility<T, ContainerMixAttribute> {
   const ContainerUtility(super.builder);
 
   T _alignment(AlignmentGeometry alignment) => call(alignment: alignment);
-  T _padding(PaddingAttribute padding) => as(
-        ContainerMixAttribute(padding: padding),
+  T _padding(SpacingDto value) => builder(
+        ContainerMixAttribute(padding: PaddingAttribute.raw(value)),
       );
-  T _margin(MarginAttribute margin) => as(
-        ContainerMixAttribute(margin: margin),
+  T _margin(SpacingDto value) => builder(
+        ContainerMixAttribute(margin: MarginAttribute.raw(value)),
       );
   T _color(ColorDto color) => _only(color: BackgroundColorAttribute(color));
   T _decoration(BoxDecorationAttribute decoration) =>
@@ -95,7 +99,7 @@ class ContainerUtility<T> extends MixUtility<T, ContainerMixAttribute> {
     TransformAttribute? transform,
     ClipBehaviorAttribute? clipBehavior,
   }) {
-    return as(
+    return builder(
       ContainerMixAttribute(
         alignment: alignment,
         padding: padding,
@@ -114,8 +118,8 @@ class ContainerUtility<T> extends MixUtility<T, ContainerMixAttribute> {
   ElevationUtility<T> get elevation => decoration.elevation;
 
   AlignmentUtility<T> get alignment => AlignmentUtility(_alignment);
-  PaddingUtility<T> get padding => PaddingUtility(_padding);
-  MarginUtility<T> get margin => MarginUtility(_margin);
+  PaddingAttributeUtility<T> get padding => PaddingAttributeUtility(_padding);
+  MarginAttributeUtility<T> get margin => MarginAttributeUtility(_margin);
   ColorUtility<T> get color => ColorUtility(_color);
 
   BoxConstraintsUtility<T> get constraints =>
@@ -151,6 +155,6 @@ class ContainerUtility<T> extends MixUtility<T, ContainerMixAttribute> {
       height: HeightAttribute.maybeFrom(height),
     );
 
-    return as(attribute);
+    return builder(attribute);
   }
 }

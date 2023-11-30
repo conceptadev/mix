@@ -36,7 +36,7 @@ class BorderRadiusGeometryUtility<T>
       );
 
   T _directional(BorderRadiusDirectionalAttribute borderRadiusDirectional) {
-    return as(borderRadiusDirectional);
+    return builder(borderRadiusDirectional);
   }
 
   BorderRadiusDirectionalUtility<T> get directional =>
@@ -86,7 +86,7 @@ class BorderRadiusGeometryUtility<T>
       bottomRight: bottomRight,
     );
 
-    return as(borderRadius);
+    return builder(borderRadius);
   }
 
   T call(double p1, [double? p2, double? p3, double? p4]) {
@@ -121,7 +121,7 @@ class BorderRadiusGeometryUtility<T>
       bottomRight: bottomRight.toRadius(),
     );
 
-    return as(borderRadius);
+    return builder(borderRadius);
   }
 }
 

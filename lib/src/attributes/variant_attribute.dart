@@ -14,13 +14,13 @@ class VariantAttribute<T extends Variant> extends Attribute
 
   const VariantAttribute(this.variant, StyleMix style) : _style = style;
 
+  Key get mergeKey => ObjectKey(variant);
+
   StyleMix get value => _style;
 
   @override
   VariantAttribute<T> merge(covariant VariantAttribute<T> other) {
-    if (other.variant != variant) {
-      throw throwArgumentError(other);
-    }
+    if (other.variant != variant) throw throwArgumentError(other);
 
     return VariantAttribute(variant, _style.merge(other._style));
   }
@@ -43,9 +43,7 @@ class ContextVariantAttribute extends VariantAttribute<ContextVariant>
 
   @override
   ContextVariantAttribute merge(ContextVariantAttribute other) {
-    if (other.variant != variant) {
-      throw throwArgumentError(other);
-    }
+    if (other.variant != variant) throw throwArgumentError(other);
 
     return ContextVariantAttribute(variant, _style.merge(other._style));
   }
@@ -84,9 +82,7 @@ class MultiVariantAttribute extends VariantAttribute<MultiVariant>
 
   @override
   MultiVariantAttribute merge(MultiVariantAttribute other) {
-    if (other.variant != variant) {
-      throw throwArgumentError(other);
-    }
+    if (other.variant != variant) throw throwArgumentError(other);
 
     return MultiVariantAttribute(variant, _style.merge(other._style));
   }

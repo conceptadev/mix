@@ -86,9 +86,6 @@ class WidthAttribute extends ScalarAttribute<WidthAttribute, double> {
   static WidthAttribute? maybeFrom(double? value) {
     return value == null ? null : WidthAttribute(value);
   }
-
-  @override
-  WidthAttribute merge(WidthAttribute? other) => other ?? this;
 }
 
 @immutable
@@ -98,7 +95,4 @@ class HeightAttribute extends ScalarAttribute<HeightAttribute, double> {
   static HeightAttribute? maybeFrom(double? value) {
     return value == null ? null : HeightAttribute(value);
   }
-
-  @override
-  HeightAttribute merge(HeightAttribute? other) => other ?? this;
 }

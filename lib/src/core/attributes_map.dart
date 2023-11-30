@@ -2,19 +2,20 @@
 
 import 'dart:collection';
 
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
+import '../attributes/variant_attribute.dart';
 import '../helpers/compare_mixin.dart';
 import 'attribute.dart';
 
-class StyleAttributeMap<T extends StyleAttribute> with Comparable {
-  final LinkedHashMap<Type, StyleAttribute>? _attributeMap;
+class StyleAttributeMap with Comparable {
+  final LinkedHashMap<Type, StyleAttribute>? _map;
 
-  const StyleAttributeMap._(this._attributeMap);
+  const StyleAttributeMap._(this._map);
 
-  const StyleAttributeMap.empty() : _attributeMap = null;
+  const StyleAttributeMap.empty() : _map = null;
 
-  factory StyleAttributeMap(Iterable<T> attributes) {
+  factory StyleAttributeMap(Iterable<StyleAttribute> attributes) {
     return StyleAttributeMap._(_mergeMap(attributes));
   }
 
@@ -44,31 +45,79 @@ class StyleAttributeMap<T extends StyleAttribute> with Comparable {
     return map;
   }
 
-  int get length => map.length;
+  int get length => _map?.length ?? 0;
 
-  bool get isEmpty => map.isEmpty;
+  bool get isEmpty => _map?.isEmpty ?? true;
 
-  bool get isNotEmpty => map.isNotEmpty;
+  bool get isNotEmpty => _map?.isNotEmpty ?? false;
 
-  List<StyleAttribute> get values => map.values.toList();
+  List<StyleAttribute> get values => _map?.values.toList() ?? [];
 
-  @protected
-  LinkedHashMap<Type, StyleAttribute> get map =>
-      _attributeMap ?? LinkedHashMap<Type, StyleAttribute>();
+  bool contains(StyleAttribute attribute) =>
+      _map?.containsKey(attribute.type) ?? false;
 
-  bool contains(T attribute) => map.containsKey(attribute.type);
-
-  Attr? attributeOfType<Attr extends StyleAttribute>() => map[Attr] as Attr?;
+  Attr? attributeOfType<Attr extends StyleAttribute>() => _map?[Attr] as Attr?;
 
   Iterable<Attr> whereType<Attr extends StyleAttribute>() =>
-      map.values.whereType<Attr>();
+      _map?.values.whereType<Attr>() ?? [];
 
   StyleAttributeMap merge(StyleAttributeMap other) {
-    final list = [...values, ...other.values];
-
-    return StyleAttributeMap(list);
+    return StyleAttributeMap([...values, ...other.values]);
   }
 
   @override
-  List<Object> get props => [_attributeMap ?? {}];
+  List<Object> get props => [_map ?? {}];
+}
+
+class VariantAttributeMap with Comparable {
+  final LinkedHashMap<Key, VariantAttribute>? _map;
+
+  const VariantAttributeMap._(this._map);
+
+  const VariantAttributeMap.empty() : _map = null;
+
+  factory VariantAttributeMap(Iterable<VariantAttribute> attributes) {
+    return VariantAttributeMap._(_mergeMap(attributes));
+  }
+
+  static LinkedHashMap<Key, Attr> _mergeMap<Attr extends VariantAttribute>(
+    Iterable<Attr> attributes,
+  ) {
+    final map = LinkedHashMap<Key, Attr>();
+    for (final attribute in attributes) {
+      final type = attribute.mergeKey;
+
+      // If there is no saved attribute, just add it
+      final savedAttribute = map[type] as Mergeable<Attr>?;
+      if (savedAttribute == null) {
+        map[type] = attribute;
+      } else {
+        // If there is a saved attribute, merge it with the new one
+        map[type] = savedAttribute.merge(attribute);
+      }
+    }
+
+    return map;
+  }
+
+  int get length => _map?.length ?? 0;
+
+  bool get isEmpty => _map?.isEmpty ?? true;
+
+  bool get isNotEmpty => _map?.isNotEmpty ?? false;
+
+  List<VariantAttribute> get values => _map?.values.toList() ?? [];
+
+  Iterable<Attr> whereType<Attr extends VariantAttribute>() =>
+      _map?.values.whereType<Attr>() ?? [];
+
+  bool contains(VariantAttribute attribute) =>
+      _map?.containsKey(attribute.mergeKey) ?? false;
+
+  VariantAttributeMap merge(VariantAttributeMap other) {
+    return VariantAttributeMap([...values, ...other.values]);
+  }
+
+  @override
+  List<Object> get props => [_map ?? {}];
 }

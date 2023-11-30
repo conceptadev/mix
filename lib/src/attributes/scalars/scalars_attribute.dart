@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import '../../core/attribute.dart';
+import '../color/color_attribute.dart';
+import '../color/color_dto.dart';
 
 @immutable
 abstract class ScalarAttribute<Self extends ScalarAttribute<Self, Value>, Value>
@@ -60,4 +62,22 @@ class ClipBehaviorAttribute
 
   static ClipBehaviorAttribute? maybeFrom(Clip? value) =>
       value == null ? null : ClipBehaviorAttribute(value);
+}
+
+@immutable
+class BackgroundColorAttribute extends ColorAttribute<BackgroundColorAttribute>
+    with SingleChildRenderAttributeMixin<ColoredBox> {
+  const BackgroundColorAttribute(super.value);
+
+  static BackgroundColorAttribute? maybeFrom(Color? value) =>
+      value == null ? null : BackgroundColorAttribute(ColorDto(value));
+
+  @override
+  BackgroundColorAttribute mergeWith(ColorDto otherValue) =>
+      BackgroundColorAttribute(value.merge(otherValue));
+
+  @override
+  ColoredBox build(mix, child) {
+    return ColoredBox(color: resolve(mix), child: child);
+  }
 }

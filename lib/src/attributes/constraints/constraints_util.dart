@@ -45,7 +45,7 @@ class BoxConstraintsUtility<T> extends MixUtility<T, BoxConstraintsAttribute> {
     double? minHeight,
     double? maxHeight,
   }) {
-    return as(
+    return builder(
       BoxConstraintsAttribute(
         minWidth: minWidth,
         maxWidth: maxWidth,

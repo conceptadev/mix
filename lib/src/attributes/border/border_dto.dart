@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../../core/attribute.dart';
 import '../../factory/mix_provider_data.dart';
-import '../color/color_attribute.dart';
+import '../color/color_dto.dart';
 
 @immutable
 class BoxBorderDto extends Dto<BoxBorderDto, BoxBorder> {

@@ -7,9 +7,9 @@ import '../../core/extensions/iterable_ext.dart';
 import '../../factory/mix_provider_data.dart';
 import '../border/border_attribute.dart';
 import '../border/border_radius_attribute.dart';
-import '../color/color_attribute.dart';
+import '../color/color_dto.dart';
 import '../gradient/gradient_attribute.dart';
-import '../shadow/shadow_attribute.dart';
+import '../shadow/shadow_dto.dart';
 
 @immutable
 abstract class DecorationAttribute<Value extends Decoration>
@@ -32,7 +32,7 @@ class BoxDecorationAttribute extends DecorationAttribute<BoxDecoration> {
   final BoxBorderAttribute? border;
   final BorderRadiusGeometryAttribute? borderRadius;
   final GradientAttribute? gradient;
-  final List<BoxShadowAttribute>? boxShadow;
+  final List<BoxShadowDto>? boxShadow;
   final BoxShape? shape;
 
   const BoxDecorationAttribute({
@@ -51,7 +51,7 @@ class BoxDecorationAttribute extends DecorationAttribute<BoxDecoration> {
       borderRadius:
           BorderRadiusGeometryAttribute.maybeFrom(decoration.borderRadius),
       gradient: GradientAttribute.maybeFrom(decoration.gradient),
-      boxShadow: decoration.boxShadow?.map(BoxShadowAttribute.from).toList(),
+      boxShadow: decoration.boxShadow?.map(BoxShadowDto.from).toList(),
       shape: decoration.shape,
     );
   }
@@ -96,7 +96,7 @@ class ShapeDecorationAttribute extends DecorationAttribute<ShapeDecoration> {
   final ColorDto? color;
   final ShapeBorder? shape;
   final GradientAttribute? gradient;
-  final List<BoxShadowAttribute>? boxShadow;
+  final List<BoxShadowDto>? boxShadow;
 
   const ShapeDecorationAttribute({
     this.color,

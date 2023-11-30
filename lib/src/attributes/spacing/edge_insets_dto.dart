@@ -4,8 +4,8 @@ import '../../core/attribute.dart';
 import '../../factory/mix_provider_data.dart';
 
 @immutable
-abstract class EdgeInsetsGeometryDto
-    extends Dto<EdgeInsetsGeometryDto, EdgeInsetsGeometry> {
+abstract class EdgeInsetsGeometryDto<Self extends EdgeInsetsGeometryDto<Self>>
+    extends Dto<Self, EdgeInsetsGeometry> {
   final double? top;
   final double? bottom;
   final double? left;

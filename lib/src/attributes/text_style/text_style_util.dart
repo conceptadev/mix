@@ -2,10 +2,10 @@ import 'dart:ui';
 
 import '../../core/extensions/values_ext.dart';
 import '../../theme/tokens/text_style_token.dart';
-import '../../utils/helper_util.dart';
-import '../color/color_attribute.dart';
+import '../color/color_dto.dart';
+import '../color/color_util.dart';
 import '../scalars/scalar_util.dart';
-import '../shadow/shadow_attribute.dart';
+import '../shadow/shadow_dto.dart';
 import '../shadow/shadow_util.dart';
 import '../strut_style/strut_style_attribute.dart';
 import 'text_style_attribute.dart';
@@ -15,86 +15,32 @@ class TextStyleUtility<T> extends MixUtility<T, TextStyleAttribute> {
 
   const TextStyleUtility(super.builder);
 
-  T _color(ColorDto color) => mix(color: color);
-  T _fontWeight(FontWeight weight) => mix(fontWeight: weight);
-  T _fontStyle(FontStyle style) => mix(fontStyle: style);
+  T _color(ColorDto color) => _only(color: color);
+  T _fontWeight(FontWeight weight) => _only(fontWeight: weight);
+  T _fontStyle(FontStyle style) => _only(fontStyle: style);
 
-  T _decoration(TextDecoration decoration) => mix(decoration: decoration);
+  T _decoration(TextDecoration decoration) => _only(decoration: decoration);
 
-  T _fontSize(double size) => mix(fontSize: size);
+  T _fontSize(double size) => _only(fontSize: size);
 
-  T _letterSpacing(double spacing) => mix(letterSpacing: spacing);
+  T _letterSpacing(double spacing) => _only(letterSpacing: spacing);
 
-  T _wordSpacing(double spacing) => mix(wordSpacing: spacing);
+  T _wordSpacing(double spacing) => _only(wordSpacing: spacing);
 
-  T _backgroundColor(ColorDto color) => mix(backgroundColor: color);
+  T _backgroundColor(ColorDto color) => _only(backgroundColor: color);
 
-  T _decorationColor(ColorDto color) => mix(decorationColor: color);
+  T _decorationColor(ColorDto color) => _only(decorationColor: color);
 
-  T _decorationStyle(TextDecorationStyle style) => mix(decorationStyle: style);
+  T _decorationStyle(TextDecorationStyle style) =>
+      _only(decorationStyle: style);
 
-  T _textBaseline(TextBaseline baseline) => mix(textBaseline: baseline);
+  T _textBaseline(TextBaseline baseline) => _only(textBaseline: baseline);
 
-  T _shadow(ShadowAttribute shadow) => mix(shadows: [shadow]);
+  T _shadow(ShadowDto shadow) => _only(shadows: [shadow]);
 
-  T _shadows(Iterable<ShadowAttribute> shadows) =>
-      mix(shadows: shadows.toList());
+  T _shadows(List<Shadow> shadows) => call(shadows: shadows);
 
-  ColorUtility<T> get color => ColorUtility(_color);
-
-  FontWeightUtility<T> get fontWeight => FontWeightUtility(_fontWeight);
-
-  FontStyleUtility<T> get fontStyle => FontStyleUtility(_fontStyle);
-
-  TextDecorationUtility<T> get decoration => TextDecorationUtility(_decoration);
-
-  FontSizeUtility<T> get fontSize => FontSizeUtility(_fontSize);
-
-  DoubleUtility<T> get letterSpacing => DoubleUtility(_letterSpacing);
-
-  DoubleUtility<T> get wordSpacing => DoubleUtility(_wordSpacing);
-
-  ColorUtility<T> get backgroundColor => ColorUtility(_backgroundColor);
-
-  ColorUtility<T> get decorationColor => ColorUtility(_decorationColor);
-
-  SpreadFunctionParams<ShadowAttribute, T> get shadows =>
-      SpreadFunctionParams<ShadowAttribute, T>(_shadows);
-
-  ShadowUtility<T> get shadow => ShadowUtility(_shadow);
-
-  TextDecorationStyleUtility<T> get decorationStyle =>
-      TextDecorationStyleUtility(_decorationStyle);
-
-  TextBaselineUtility<T> get textBaseline => TextBaselineUtility(_textBaseline);
-
-  T italic() => fontStyle.italic();
-
-  T bold() => fontWeight.bold();
-
-  T fontFamily(String family) => call(fontFamily: family);
-
-  T foreground(Paint foreground) => call(foreground: foreground);
-
-  T background(Paint background) => call(background: background);
-
-  T fontFeatures(List<FontFeature> fontFeatures) =>
-      call(fontFeatures: fontFeatures);
-
-  T height(double height) => call(height: height);
-
-  T locale(Locale locale) => call(locale: locale);
-
-  T debugLabel(String label) => call(debugLabel: label);
-
-  T decorationThickness(double thickness) =>
-      call(decorationThickness: thickness);
-  T fontFamilyFallback(List<String> fallback) =>
-      call(fontFamilyFallback: fallback);
-
-  T token(TextStyleToken token) => as(TextStyleAttribute.token(token));
-
-  T mix({
+  T _only({
     ColorDto? color,
     FontWeight? fontWeight,
     FontStyle? fontStyle,
@@ -106,7 +52,7 @@ class TextStyleUtility<T> extends MixUtility<T, TextStyleAttribute> {
     ColorDto? decorationColor,
     TextDecorationStyle? decorationStyle,
     TextBaseline? textBaseline,
-    List<ShadowAttribute>? shadows,
+    List<ShadowDto>? shadows,
     List<FontFeature>? fontFeatures,
     Paint? foreground,
     Paint? background,
@@ -139,8 +85,61 @@ class TextStyleUtility<T> extends MixUtility<T, TextStyleAttribute> {
       fontFamilyFallback: fontFamilyFallback,
     );
 
-    return as(textStyle);
+    return builder(textStyle);
   }
+
+  ColorUtility<T> get color => ColorUtility(_color);
+
+  FontWeightUtility<T> get fontWeight => FontWeightUtility(_fontWeight);
+
+  FontStyleUtility<T> get fontStyle => FontStyleUtility(_fontStyle);
+
+  TextDecorationUtility<T> get decoration => TextDecorationUtility(_decoration);
+
+  FontSizeUtility<T> get fontSize => FontSizeUtility(_fontSize);
+
+  DoubleUtility<T> get letterSpacing => DoubleUtility(_letterSpacing);
+
+  DoubleUtility<T> get wordSpacing => DoubleUtility(_wordSpacing);
+
+  ColorUtility<T> get backgroundColor => ColorUtility(_backgroundColor);
+
+  ColorUtility<T> get decorationColor => ColorUtility(_decorationColor);
+
+  ListUtility<T, Shadow> get shadows => ListUtility<T, Shadow>(_shadows);
+
+  ShadowUtility<T> get shadow => ShadowUtility(_shadow);
+
+  TextDecorationStyleUtility<T> get decorationStyle =>
+      TextDecorationStyleUtility(_decorationStyle);
+
+  TextBaselineUtility<T> get textBaseline => TextBaselineUtility(_textBaseline);
+
+  T italic() => fontStyle.italic();
+
+  T bold() => fontWeight.bold();
+
+  T fontFamily(String family) => call(fontFamily: family);
+
+  T foreground(Paint foreground) => call(foreground: foreground);
+
+  T background(Paint background) => call(background: background);
+
+  T fontFeatures(List<FontFeature> fontFeatures) =>
+      call(fontFeatures: fontFeatures);
+
+  T height(double height) => call(height: height);
+
+  T locale(Locale locale) => call(locale: locale);
+
+  T debugLabel(String label) => call(debugLabel: label);
+
+  T decorationThickness(double thickness) =>
+      call(decorationThickness: thickness);
+  T fontFamilyFallback(List<String> fallback) =>
+      call(fontFamilyFallback: fallback);
+
+  T token(TextStyleToken token) => builder(TextStyleAttribute.token(token));
 
   T call({
     String? fontFamily,
@@ -175,7 +174,7 @@ class TextStyleUtility<T> extends MixUtility<T, TextStyleAttribute> {
       textBaseline: textBaseline,
       color: color?.toDto(),
       backgroundColor: backgroundColor?.toDto(),
-      shadows: shadows?.map((e) => e.toAttribute()).toList(),
+      shadows: shadows?.map((e) => e.toDto()).toList(),
       fontFeatures: fontFeatures,
       decoration: decoration,
       decorationColor: decorationColor?.toDto(),
@@ -189,7 +188,7 @@ class TextStyleUtility<T> extends MixUtility<T, TextStyleAttribute> {
       fontFamilyFallback: fontFamilyFallback,
     );
 
-    return as(textStyle);
+    return builder(textStyle);
   }
 }
 
@@ -239,6 +238,6 @@ class StrutStyleUtility<T> extends MixUtility<T, StrutStyleAttribute> {
       forceStrutHeight: forceStrutHeight,
     );
 
-    return as(strutStyle);
+    return builder(strutStyle);
   }
 }

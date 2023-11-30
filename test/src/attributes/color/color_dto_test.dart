@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mix/src/attributes/color/color_attribute.dart';
+import 'package:mix/src/attributes/color/color_dto.dart';
 
 import '../../../helpers/testing_utils.dart';
 

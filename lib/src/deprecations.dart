@@ -3,7 +3,6 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 import '../mix.dart';
-import 'attributes/scalars/scalars_attribute.dart';
 
 const kShortAliasDeprecation =
     'Short aliases will be deprecated, you can create your own. Example: final p = padding;';
@@ -133,68 +132,70 @@ final press = onPress;
 const not = onNot;
 
 @Deprecated('Use textStyle instead')
-const font = textStyle;
+final font = text.style;
 
-@Deprecated('Use textStyle(textShadow: textShadow) instead')
-TextStyleAttribute textShadow(List<Shadow> textShadow) {
-  return textStyle(shadows: textShadow);
+@Deprecated(
+  'Use text.style(shadows: shadows) or text.style.shadows(shadows) instead',
+)
+TextMixAttribute textShadow(List<Shadow> shadows) {
+  return text.style(shadows: shadows);
 }
 
-@Deprecated('Use textStyle(textShadow: textShadow) instead')
+@Deprecated('Use text.style(shadow: shadow) instead')
 const fontWeight = LegacyTextStyleUtility.fontWeight;
 
-@Deprecated('Use textStyle(letterSpacing: letterSpacing) instead')
+@Deprecated('Use text.style(letterSpacing: letterSpacing) instead')
 const letterSpacing = LegacyTextStyleUtility.letterSpacing;
 
-@Deprecated('Use textStyle(debugLabel: debugLabel) instead')
+@Deprecated('Use text.style(debugLabel: debugLabel) instead')
 const debugLabel = LegacyTextStyleUtility.debugLabel;
 
-@Deprecated('Use textStyle(height: height) instead')
+@Deprecated('Use text.style(height: height) instead')
 const textHeight = LegacyTextStyleUtility.textHeight;
 
-@Deprecated('Use textStyle(wordSpacing: wordSpacing) instead')
+@Deprecated('Use text.style(wordSpacing: wordSpacing) instead')
 const wordSpacing = LegacyTextStyleUtility.wordSpacing;
 
-@Deprecated('Use textStyle(fontStyle: fontStyle) instead')
+@Deprecated('Use text.style(fontStyle: fontStyle) instead')
 const fontStyle = LegacyTextStyleUtility.fontStyle;
 
-@Deprecated('Use textStyle(fontSize: fontSize) instead')
+@Deprecated('Use text.style(fontSize: fontSize) instead')
 const fontSize = LegacyTextStyleUtility.fontSize;
 
-@Deprecated('Use textStyle(inherit: inherit) instead')
+@Deprecated('Use text.style(inherit: inherit) instead')
 const inherit = LegacyTextStyleUtility.inherit;
 
-@Deprecated('Use textStyle(color: color) instead')
+@Deprecated('Use text.style(color: color) instead')
 const textColor = LegacyTextStyleUtility.textColor;
 
-@Deprecated('Use textStyle(backgroundColor: backgroundColor) instead')
+@Deprecated('Use text.style(backgroundColor: backgroundColor) instead')
 const textBgColor = LegacyTextStyleUtility.textBgColor;
 
-@Deprecated('Use textStyle(foreground: foreground) instead')
+@Deprecated('Use text.style(foreground: foreground) instead')
 const textForeground = LegacyTextStyleUtility.textForeground;
 
-@Deprecated('Use textStyle(background: background) instead')
+@Deprecated('Use text.style(background: background) instead')
 const textBackground = LegacyTextStyleUtility.textBackground;
 
-@Deprecated('Use textStyle(shadows: shadows) instead')
+@Deprecated('Use text.style(shadows: shadows) instead')
 const textShadows = LegacyTextStyleUtility.textShadow;
 
-@Deprecated('Use textStyle(fontFeatures: fontFeatures) instead')
+@Deprecated('Use text.style(fontFeatures: fontFeatures) instead')
 const fontFeatures = LegacyTextStyleUtility.fontFeatures;
 
-@Deprecated('Use textStyle(decoration: decoration) instead')
+@Deprecated('Use text.style(decoration: decoration) instead')
 const textDecoration = LegacyTextStyleUtility.textDecoration;
 
-@Deprecated('Use textStyle(decorationColor: decorationColor) instead')
+@Deprecated('Use text.style(decorationColor: decorationColor) instead')
 const textDecorationColor = LegacyTextStyleUtility.textDecorationColor;
 
-@Deprecated('Use textStyle(decorationStyle: decorationStyle) instead')
+@Deprecated('Use text.style(decorationStyle: decorationStyle) instead')
 const textDecorationStyle = LegacyTextStyleUtility.textDecorationStyle;
 
-@Deprecated('Use textStyle(decorationThickness: decorationThickness) instead')
+@Deprecated('Use text.style(decorationThickness: decorationThickness) instead')
 const textDecorationThickness = LegacyTextStyleUtility.textDecorationThickness;
 
-@Deprecated('Use textStyle(fontFamilyFallback: fontFamilyFallback) instead')
+@Deprecated('Use text.style(fontFamilyFallback: fontFamilyFallback) instead')
 const fontFamilyFallback = LegacyTextStyleUtility.fontFamilyFallback;
 
 class LegacyTextStyleUtility {
@@ -583,3 +584,9 @@ final borderAll = border.all;
 
 @Deprecated('Use StyledText now')
 typedef TextMix = StyledText;
+
+@Deprecated('Use text.style instead')
+final textStyle = text.style;
+
+@Deprecated('Use text.style.shadow instead')
+final shadow = text.style.shadow;

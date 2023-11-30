@@ -18,7 +18,7 @@ typedef SpacingAttributeBuilder<T extends SpacingAttribute<T>> = T Function(
 abstract class SpacingAttribute<Self extends SpacingAttribute<Self>>
     extends ResolvableAttribute<Self, EdgeInsetsGeometry>
     with SingleChildRenderAttributeMixin<Padding> {
-  final EdgeInsetsGeometryDto value;
+  final SpacingDto value;
 
   const SpacingAttribute(this.value);
 

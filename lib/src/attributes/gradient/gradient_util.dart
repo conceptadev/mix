@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../core/extensions/values_ext.dart';
-import '../color/color_attribute.dart';
+import '../color/color_dto.dart';
 import '../scalars/scalar_util.dart';
 import 'gradient_attribute.dart';
 import 'gradient_dto.dart';
@@ -11,11 +11,11 @@ class GradientUtility<T> extends MixUtility<T, GradientDto> {
 
   const GradientUtility(super.builder);
 
-  T _radial(RadialGradientDto radial) => as(radial);
+  T _radial(RadialGradientDto radial) => builder(radial);
 
-  T _linear(LinearGradientDto linear) => as(linear);
+  T _linear(LinearGradientDto linear) => builder(linear);
 
-  T _sweep(SweepGradientDto sweep) => as(sweep);
+  T _sweep(SweepGradientDto sweep) => builder(sweep);
 
   RadialGradientUtility<T> get radial => RadialGradientUtility(_radial);
 
@@ -76,7 +76,7 @@ class RadialGradientUtility<T> extends MixUtility<T, RadialGradientDto> {
       GradientTransformUtility(_transform);
 
   T from(RadialGradient gradient) {
-    return as(RadialGradientDto.from(gradient));
+    return builder(RadialGradientDto.from(gradient));
   }
 
   T call({
@@ -100,7 +100,7 @@ class RadialGradientUtility<T> extends MixUtility<T, RadialGradientDto> {
       stops: stops,
     );
 
-    return as(gradient);
+    return builder(gradient);
   }
 }
 
@@ -111,16 +111,17 @@ class LinearGradientUtility<T> extends MixUtility<T, LinearGradientDto> {
 
   T _colors(List<Color> colors) => call(colors: colors);
 
-  T _stops(List<double> stops) => as(LinearGradientDto(stops: stops));
+  T _stops(List<double> stops) => builder(LinearGradientDto(stops: stops));
 
-  T _begin(AlignmentGeometry begin) => as(LinearGradientDto(begin: begin));
+  T _begin(AlignmentGeometry begin) => builder(LinearGradientDto(begin: begin));
 
-  T _end(AlignmentGeometry end) => as(LinearGradientDto(end: end));
+  T _end(AlignmentGeometry end) => builder(LinearGradientDto(end: end));
 
-  T _tileMode(TileMode tileMode) => as(LinearGradientDto(tileMode: tileMode));
+  T _tileMode(TileMode tileMode) =>
+      builder(LinearGradientDto(tileMode: tileMode));
 
   T _transform(GradientTransform transform) =>
-      as(LinearGradientDto(transform: transform));
+      builder(LinearGradientDto(transform: transform));
 
   ListUtility<T, Color> get colors => ListUtility(_colors);
 
@@ -136,7 +137,7 @@ class LinearGradientUtility<T> extends MixUtility<T, LinearGradientDto> {
       GradientTransformUtility(_transform);
 
   T from(LinearGradient gradient) {
-    return as(LinearGradientDto.from(gradient));
+    return builder(LinearGradientDto.from(gradient));
   }
 
   T call({
@@ -156,7 +157,7 @@ class LinearGradientUtility<T> extends MixUtility<T, LinearGradientDto> {
       stops: stops,
     );
 
-    return as(gradient);
+    return builder(gradient);
   }
 }
 
@@ -195,7 +196,7 @@ class SweepGradientUtility<T> extends MixUtility<T, SweepGradientDto> {
       GradientTransformUtility(_transform);
 
   T from(SweepGradient gradient) {
-    return as(SweepGradientDto.from(gradient));
+    return builder(SweepGradientDto.from(gradient));
   }
 
   T call({
@@ -217,6 +218,6 @@ class SweepGradientUtility<T> extends MixUtility<T, SweepGradientDto> {
       stops: stops,
     );
 
-    return as(gradient);
+    return builder(gradient);
   }
 }

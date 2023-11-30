@@ -209,12 +209,12 @@ class AttributeGenerator {
     );
   }
 
-  ShadowAttribute shadow({
+  ShadowDto shadow({
     ColorDto? color,
     Offset? offset,
     double? blurRadius,
   }) {
-    return ShadowAttribute(
+    return ShadowDto(
       color: color ?? this.color(),
       offset: offset ?? const Offset(0, 0),
       blurRadius: blurRadius ?? Random().nextDouble() * 4,
@@ -239,7 +239,7 @@ class AttributeGenerator {
     ColorDto? color,
     BorderAttribute? border,
     BorderRadiusAttribute? borderRadius,
-    List<BoxShadowAttribute>? boxShadow,
+    List<BoxShadowDto>? boxShadow,
     BoxShape? shape,
   }) {
     return BoxDecorationAttribute(
@@ -254,13 +254,13 @@ class AttributeGenerator {
     );
   }
 
-  BoxShadowAttribute boxShadow({
+  BoxShadowDto boxShadow({
     ColorDto? color,
     Offset? offset,
     double? blurRadius,
     double? spreadRadius,
   }) {
-    return BoxShadowAttribute(
+    return BoxShadowDto(
       color: color ?? this.color(),
       offset: offset ??
           Offset(

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
 import '../../core/extensions/values_ext.dart';
-import '../color/color_attribute.dart';
+import '../color/color_dto.dart';
+import '../color/color_util.dart';
 import '../scalars/scalar_util.dart';
-import 'shadow_attribute.dart';
+import 'shadow_dto.dart';
 
-class ShadowUtility<T> extends MixUtility<T, ShadowAttribute> {
+class ShadowUtility<T> extends MixUtility<T, ShadowDto> {
   static const selfBuilder = ShadowUtility(MixUtility.selfBuilder);
   const ShadowUtility(super.builder);
 
@@ -14,13 +15,13 @@ class ShadowUtility<T> extends MixUtility<T, ShadowAttribute> {
   T _blurRadius(double blurRadius) => _only(blurRadius: blurRadius);
 
   T _only({ColorDto? color, Offset? offset, double? blurRadius}) {
-    final shadow = ShadowAttribute(
+    final shadow = ShadowDto(
       blurRadius: blurRadius,
       color: color,
       offset: offset,
     );
 
-    return as(shadow);
+    return builder(shadow);
   }
 
   ColorUtility<T> get color => ColorUtility(_color);
@@ -36,16 +37,16 @@ class ShadowUtility<T> extends MixUtility<T, ShadowAttribute> {
   }
 }
 
-class BoxShadowListUtility<T> extends MixUtility<T, List<BoxShadowAttribute>> {
+class BoxShadowListUtility<T> extends MixUtility<T, List<BoxShadowDto>> {
   static const selfBuilder = BoxShadowListUtility(MixUtility.selfBuilder);
   const BoxShadowListUtility(super.builder);
 
   T call(List<BoxShadow> shadows) {
-    return as(shadows.map(BoxShadowAttribute.from).toList());
+    return builder(shadows.map(BoxShadowDto.from).toList());
   }
 }
 
-class BoxShadowUtility<T> extends MixUtility<T, BoxShadowAttribute> {
+class BoxShadowUtility<T> extends MixUtility<T, BoxShadowDto> {
   static const selfBuilder = BoxShadowUtility(MixUtility.selfBuilder);
 
   const BoxShadowUtility(super.builder);
@@ -66,18 +67,18 @@ class BoxShadowUtility<T> extends MixUtility<T, BoxShadowAttribute> {
     double? blurRadius,
     double? spreadRadius,
   }) {
-    final shadow = BoxShadowAttribute(
+    final shadow = BoxShadowDto(
       color: color,
       offset: offset,
       blurRadius: blurRadius,
       spreadRadius: spreadRadius,
     );
 
-    return as(shadow);
+    return builder(shadow);
   }
 }
 
-class ElevationUtility<T> extends MixUtility<T, List<BoxShadow>> {
+class ElevationUtility<T> extends MixUtility<T, List<BoxShadowDto>> {
   static const selfBuilder = ElevationUtility(MixUtility.selfBuilder);
 
   const ElevationUtility(super.builder);
@@ -85,7 +86,7 @@ class ElevationUtility<T> extends MixUtility<T, List<BoxShadow>> {
   T call(int value) {
     assert(kElevationToShadow.containsKey(value), 'Invalid elevation value');
 
-    return as(kElevationToShadow[value]!);
+    return builder(kElevationToShadow[value]!.toDto());
   }
 
   T none() => call(0);

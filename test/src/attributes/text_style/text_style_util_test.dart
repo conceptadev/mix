@@ -12,7 +12,7 @@ void main() {
     test('call() creates TextStyleAttribute correctly', () {
       final yellowPaint = Paint()..color = Colors.yellow;
       final purplePaint = Paint()..color = Colors.purple;
-      final attr = textStyle(
+      final attr = text.style(
         fontFamily: 'Roboto',
         fontWeight: FontWeight.bold,
         fontStyle: FontStyle.italic,
@@ -38,7 +38,7 @@ void main() {
         height: 2.0,
       );
 
-      final attrWithPaint = textStyle(
+      final attrWithPaint = text.style(
         background: purplePaint,
         foreground: yellowPaint,
       );
@@ -46,179 +46,185 @@ void main() {
       final resolvedValue = attr.resolve(EmptyMixData);
       final resolvedWithPaint = attrWithPaint.resolve(EmptyMixData);
 
-      expect(resolvedValue.fontWeight, FontWeight.bold);
-      expect(resolvedValue.fontStyle, FontStyle.italic);
-      expect(resolvedValue.fontSize, 16.0);
-      expect(resolvedValue.letterSpacing, 1.0);
-      expect(resolvedValue.wordSpacing, 2.0);
-      expect(resolvedValue.textBaseline, TextBaseline.ideographic);
-      expect(resolvedValue.shadows?.length, 1);
-      expect(resolvedValue.shadows?.first.blurRadius, 1.0);
+      expect(resolvedValue.style?.fontWeight, FontWeight.bold);
+      expect(resolvedValue.style?.fontStyle, FontStyle.italic);
+      expect(resolvedValue.style?.fontSize, 16.0);
+      expect(resolvedValue.style?.letterSpacing, 1.0);
+      expect(resolvedValue.style?.wordSpacing, 2.0);
+      expect(resolvedValue.style?.textBaseline, TextBaseline.ideographic);
+      expect(resolvedValue.style?.shadows?.length, 1);
+      expect(resolvedValue.style?.shadows?.first.blurRadius, 1.0);
       expect(
-        resolvedValue.shadows?.first.color,
+        resolvedValue.style?.shadows?.first.color,
         Colors.black,
       );
-      expect(resolvedValue.shadows?.first.offset, const Offset(1.0, 1.0));
-      expect(resolvedValue.color, Colors.red);
-      expect(resolvedValue.backgroundColor, Colors.blue);
-      expect(resolvedValue.fontFeatures?.length, 1);
       expect(
-        resolvedValue.fontFeatures?.first,
+          resolvedValue.style?.shadows?.first.offset, const Offset(1.0, 1.0));
+      expect(resolvedValue.style?.color, Colors.red);
+      expect(resolvedValue.style?.backgroundColor, Colors.blue);
+      expect(resolvedValue.style?.fontFeatures?.length, 1);
+      expect(
+        resolvedValue.style?.fontFeatures?.first,
         const FontFeature.alternative(4),
       );
       expect(
-        resolvedValue.decoration,
+        resolvedValue.style?.decoration,
         TextDecoration.underline,
       );
       expect(
-        resolvedValue.decorationColor,
+        resolvedValue.style?.decorationColor,
         Colors.green,
       );
-      expect(resolvedValue.decorationStyle, TextDecorationStyle.dashed);
+      expect(resolvedValue.style?.decorationStyle, TextDecorationStyle.dashed);
       // expect(textStyleAttribute.resolve(EmptyMixData).foreground, yellowPaint);
       // expect(textStyleAttribute.resolve(EmptyMixData).background, purplePaint);
-      expect(resolvedValue.debugLabel, 'debugLabel');
+      expect(resolvedValue.style?.debugLabel, 'debugLabel');
       expect(
-        resolvedValue.locale,
+        resolvedValue.style?.locale,
         const Locale('en', 'US'),
       );
-      expect(resolvedValue.height, 2.0);
-      expect(resolvedWithPaint.foreground, yellowPaint);
-      expect(resolvedWithPaint.background, purplePaint);
+      expect(resolvedValue.style?.height, 2.0);
+      expect(resolvedWithPaint.style?.foreground, yellowPaint);
+      expect(resolvedWithPaint.style?.background, purplePaint);
     });
 
     test('color() creates TextStyleAttribute correctly', () {
-      final textStyleAttribute = textStyle.color(Colors.red);
+      final textStyleAttribute = text.style(color: Colors.red);
       final resolvedValue = textStyleAttribute.resolve(EmptyMixData);
 
-      expect(resolvedValue.color, Colors.red);
+      expect(resolvedValue.style?.color, Colors.red);
     });
 
     test('backgroundColor() creates TextStyleAttribute correctly', () {
-      final textStyleAttribute = textStyle.backgroundColor(Colors.blue);
+      final textStyleAttribute = text.style(backgroundColor: Colors.blue);
       final resolvedValue = textStyleAttribute.resolve(EmptyMixData);
 
-      expect(resolvedValue.backgroundColor, Colors.blue);
+      expect(resolvedValue.style?.backgroundColor, Colors.blue);
     });
 
     test('fontFamily() creates TextStyleAttribute correctly', () {
-      final textStyleAttribute = textStyle.fontFamily('Roboto');
+      final textStyleAttribute = text.style.fontFamily('Roboto');
       final resolvedValue = textStyleAttribute.resolve(EmptyMixData);
 
-      expect(resolvedValue.fontFamily, 'Roboto');
+      expect(resolvedValue.style?.fontFamily, 'Roboto');
     });
 
     test('fontSize() creates TextStyleAttribute correctly', () {
-      final textStyleAttribute = textStyle.fontSize(16.0);
+      final textStyleAttribute = text.style(fontSize: 16.0);
       final resolvedValue = textStyleAttribute.resolve(EmptyMixData);
 
-      expect(resolvedValue.fontSize, 16.0);
+      expect(resolvedValue.style?.fontSize, 16.0);
     });
 
     test('fontWeight() creates TextStyleAttribute correctly', () {
-      final textStyleAttribute = textStyle.fontWeight.bold();
+      final textStyleAttribute = text.style.fontWeight.bold();
       final resolvedValue = textStyleAttribute.resolve(EmptyMixData);
 
-      expect(resolvedValue.fontWeight, FontWeight.bold);
+      expect(resolvedValue.style?.fontWeight, FontWeight.bold);
     });
 
     test('fontStyle() creates TextStyleAttribute correctly', () {
-      final textStyleAttribute = textStyle.fontStyle.italic();
+      final textStyleAttribute = text.style.fontStyle.italic();
       final resolvedValue = textStyleAttribute.resolve(EmptyMixData);
 
-      expect(resolvedValue.fontStyle, FontStyle.italic);
+      expect(resolvedValue.style?.fontStyle, FontStyle.italic);
     });
 
     test('letterSpacing() creates TextStyleAttribute correctly', () {
-      final textStyleAttribute = textStyle.letterSpacing(1.0);
+      final textStyleAttribute = text.style(letterSpacing: 1.0);
       final resolvedValue = textStyleAttribute.resolve(EmptyMixData);
 
-      expect(resolvedValue.letterSpacing, 1.0);
+      expect(resolvedValue.style?.letterSpacing, 1.0);
     });
 
     test('wordSpacing() creates TextStyleAttribute correctly', () {
-      final textStyleAttribute = textStyle.wordSpacing(2.0);
+      final textStyleAttribute = text.style(wordSpacing: 2.0);
       final resolvedValue = textStyleAttribute.resolve(EmptyMixData);
 
-      expect(resolvedValue.wordSpacing, 2.0);
+      expect(resolvedValue.style?.wordSpacing, 2.0);
     });
 
     test('textBaseline() creates TextStyleAttribute correctly', () {
-      final textStyleAttribute = textStyle.textBaseline.ideographic();
+      final textStyleAttribute = text.style.textBaseline.ideographic();
       final resolvedValue = textStyleAttribute.resolve(EmptyMixData);
 
-      expect(resolvedValue.textBaseline, TextBaseline.ideographic);
+      expect(resolvedValue.style?.textBaseline, TextBaseline.ideographic);
     });
 
     test('shadows() creates TextStyleAttribute correctly', () {
-      final blackShadow = shadow(
+      const shadow = Shadow(
+        blurRadius: 1.0,
+        color: Colors.black,
+        offset: Offset(1.0, 1.0),
+      );
+      final attribute = text.style.shadow(
         blurRadius: 1.0,
         color: Colors.black,
         offset: const Offset(1.0, 1.0),
       );
-      final textStyleAttribute = textStyle.shadow.as(blackShadow);
 
-      final resolvedValue = textStyleAttribute.resolve(EmptyMixData);
+      final resolved = attribute.resolve(EmptyMixData);
 
-      expect(resolvedValue.shadows?.length, 1);
-      expect(resolvedValue.shadows?.first.blurRadius, 1.0);
-      expect(resolvedValue.shadows?.first.color, Colors.black);
-      expect(resolvedValue.shadows?.first.offset, const Offset(1.0, 1.0));
+      expect(resolved.style?.shadows?.length, 1);
+      expect(resolved.style?.shadows?.first.blurRadius, 1.0);
+      expect(resolved.style?.shadows?.first.color, Colors.black);
+      expect(resolved.style?.shadows?.first.offset, const Offset(1.0, 1.0));
+      expect(resolved.style?.shadows?.first, shadow);
     });
 
     test('fontFeatures() creates TextStyleAttribute correctly', () {
-      final textStyleAttribute = textStyle.fontFeatures([
+      final textStyleAttribute = text.style.fontFeatures([
         const FontFeature.alternative(4),
       ]);
 
       final resolvedValue = textStyleAttribute.resolve(EmptyMixData);
 
-      expect(resolvedValue.fontFeatures?.length, 1);
+      expect(resolvedValue.style?.fontFeatures?.length, 1);
       expect(
-        resolvedValue.fontFeatures?.first,
+        resolvedValue.style?.fontFeatures?.first,
         const FontFeature.alternative(4),
       );
     });
 
     test('decoration() creates TextStyleAttribute correctly', () {
-      final textStyleAttribute = textStyle.decoration.underline();
+      final textStyleAttribute = text.style.decoration.underline();
 
       final resolvedValue = textStyleAttribute.resolve(EmptyMixData);
 
-      expect(resolvedValue.decoration, TextDecoration.underline);
+      expect(resolvedValue.style?.decoration, TextDecoration.underline);
     });
 
     test('decorationColor() creates TextStyleAttribute correctly', () {
-      final textStyleAttribute = textStyle.decorationColor(Colors.green);
+      final textStyleAttribute = text.style(decorationColor: Colors.green);
       final resolvedValue = textStyleAttribute.resolve(EmptyMixData);
 
-      expect(resolvedValue.decorationColor, Colors.green);
+      expect(resolvedValue.style?.decorationColor, Colors.green);
     });
 
     test('decorationStyle() creates TextStyleAttribute correctly', () {
-      final textStyleAttribute = textStyle.decorationStyle.dashed();
+      final textStyleAttribute = text.style.decorationStyle.dashed();
 
       final resolvedValue = textStyleAttribute.resolve(EmptyMixData);
 
-      expect(resolvedValue.decorationStyle, TextDecorationStyle.dashed);
+      expect(resolvedValue.style?.decorationStyle, TextDecorationStyle.dashed);
     });
 
     test('foreground() creates TextStyleAttribute correctly', () {
       final yellowPaint = Paint()..color = Colors.yellow;
-      final textStyleAttribute = textStyle.foreground(yellowPaint);
+      final textStyleAttribute = text.style.foreground(yellowPaint);
 
       final resolvedValue = textStyleAttribute.resolve(EmptyMixData);
 
-      expect(resolvedValue.foreground, yellowPaint);
+      expect(resolvedValue.style?.foreground, yellowPaint);
     });
 
     test('background() creates TextStyleAttribute correctly', () {
       final purplePaint = Paint()..color = Colors.purple;
-      final textStyleAttribute = textStyle.background(purplePaint);
+      final textStyleAttribute = text.style.background(purplePaint);
 
       final resolvedValue = textStyleAttribute.resolve(EmptyMixData);
 
-      expect(resolvedValue.background, purplePaint);
+      expect(resolvedValue.style?.background, purplePaint);
     });
   });
 }

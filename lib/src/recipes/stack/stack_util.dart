@@ -29,7 +29,7 @@ class StackMixtureUtility<T> extends MixUtility<T, StackMixAttribute> {
       clipBehavior: clipBehavior,
     );
 
-    return as(stack);
+    return builder(stack);
   }
 
   AlignmentUtility<T> get alignment => AlignmentUtility(_alignment);

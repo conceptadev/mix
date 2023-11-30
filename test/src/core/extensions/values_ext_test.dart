@@ -193,14 +193,14 @@ void main() {
 
     test('Shadow toAttribute', () {
       const shadow = BoxShadow(blurRadius: 10.0, color: Colors.black);
-      final attribute = shadow.toAttribute();
+      final attribute = shadow.toDto();
       expect(attribute.blurRadius, 10.0);
       expect(attribute.color?.resolve(EmptyMixData), Colors.black);
     });
 
     test('BoxShadow toAttribute', () {
       const boxShadow = BoxShadow(blurRadius: 5.0, color: Colors.grey);
-      final attribute = boxShadow.toAttribute();
+      final attribute = boxShadow.toDto();
       expect(attribute.blurRadius, 5.0);
       expect(attribute.color?.resolve(EmptyMixData), Colors.grey);
     });

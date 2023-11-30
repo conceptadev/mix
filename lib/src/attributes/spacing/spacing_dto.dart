@@ -6,7 +6,7 @@ import '../../factory/mix_provider_data.dart';
 import 'edge_insets_dto.dart';
 
 @immutable
-class SpacingDto extends EdgeInsetsGeometryDto {
+class SpacingDto extends EdgeInsetsGeometryDto<SpacingDto> {
   const SpacingDto({
     super.top,
     super.bottom,

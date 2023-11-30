@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import '../../attributes/border/border_attribute.dart';
 import '../../attributes/border/border_dto.dart';
 import '../../attributes/border/border_radius_attribute.dart';
-import '../../attributes/color/color_attribute.dart';
+import '../../attributes/color/color_dto.dart';
 import '../../attributes/constraints/constraints_attribute.dart';
 import '../../attributes/decoration/decoration_attribute.dart';
 import '../../attributes/gradient/gradient_attribute.dart';
 import '../../attributes/gradient/gradient_dto.dart';
 import '../../attributes/scalars/scalars_attribute.dart';
-import '../../attributes/shadow/shadow_attribute.dart';
+import '../../attributes/shadow/shadow_dto.dart';
 import '../../attributes/spacing/spacing_dto.dart';
 import '../../attributes/strut_style/strut_style_attribute.dart';
 import '../../attributes/text_style/text_style_attribute.dart';
@@ -168,7 +168,7 @@ extension ShapeDecorationExt on ShapeDecoration {
         color: color?.toDto(),
         shape: shape,
         gradient: gradient?.toAttribute(),
-        boxShadow: shadows?.map((e) => e.toAttribute()).toList(),
+        boxShadow: shadows?.map((e) => e.toDto()).toList(),
       );
 }
 
@@ -192,7 +192,7 @@ extension BoxDecorationExt on BoxDecoration {
         border: border?.toAttribute(),
         borderRadius: borderRadius?.toAttribute(),
         gradient: gradient?.toAttribute(),
-        boxShadow: boxShadow?.map((e) => e.toAttribute()).toList(),
+        boxShadow: boxShadow?.map((e) => e.toDto()).toList(),
         shape: shape,
       );
 }
@@ -252,7 +252,7 @@ extension BorderSideExt on BorderSide {
 }
 
 extension ShadowExt on Shadow {
-  ShadowAttribute toAttribute() => ShadowAttribute(
+  ShadowDto toDto() => ShadowDto(
         blurRadius: blurRadius,
         color: color.toDto(),
         offset: offset,
@@ -260,13 +260,13 @@ extension ShadowExt on Shadow {
 }
 
 extension ListShadowExt on List<Shadow> {
-  List<ShadowAttribute> toAttribute() {
-    return map((e) => e.toAttribute()).toList();
+  List<ShadowDto> toDto() {
+    return map((e) => e.toDto()).toList();
   }
 }
 
 extension BoxShadowExt on BoxShadow {
-  BoxShadowAttribute toAttribute() => BoxShadowAttribute(
+  BoxShadowDto toDto() => BoxShadowDto(
         color: color.toDto(),
         offset: offset,
         blurRadius: blurRadius,
@@ -275,8 +275,8 @@ extension BoxShadowExt on BoxShadow {
 }
 
 extension ListBoxShadowExt on List<BoxShadow> {
-  List<BoxShadowAttribute> toAttribute() {
-    return map((e) => e.toAttribute()).toList();
+  List<BoxShadowDto> toDto() {
+    return map((e) => e.toDto()).toList();
   }
 }
 
@@ -299,7 +299,7 @@ extension TextStyleExt on TextStyle {
         height: height,
         letterSpacing: letterSpacing,
         locale: locale,
-        shadows: shadows?.map((e) => e.toAttribute()).toList(),
+        shadows: shadows?.map((e) => e.toDto()).toList(),
         textBaseline: textBaseline,
         wordSpacing: wordSpacing,
       );

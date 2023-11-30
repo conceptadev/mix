@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../attributes/scalars/scalar_util.dart';
-import '../../attributes/shadow/shadow_util.dart';
 import '../../attributes/strut_style/strut_style_attribute.dart';
 import '../../attributes/text_style/text_style_attribute.dart';
 import '../../attributes/text_style/text_style_util.dart';
@@ -10,8 +9,6 @@ import '../../core/extensions/values_ext.dart';
 import 'text_attribute.dart';
 
 const text = TextUtility.selfBuilder;
-const textStyle = TextStyleUtility.selfBuilder;
-const shadow = ShadowUtility.selfBuilder;
 
 class TextUtility<T> extends MixUtility<T, TextMixAttribute> {
   static const selfBuilder = TextUtility(MixUtility.selfBuilder);
@@ -76,7 +73,7 @@ class TextUtility<T> extends MixUtility<T, TextMixAttribute> {
       directives: directives,
     );
 
-    return as(text);
+    return builder(text);
   }
 
   T call({
@@ -106,6 +103,6 @@ class TextUtility<T> extends MixUtility<T, TextMixAttribute> {
       directives: directives,
     );
 
-    return as(text);
+    return builder(text);
   }
 }

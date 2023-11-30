@@ -43,11 +43,13 @@ class FlexibleDecoratorUtility {
   }
 }
 
-class RotateUtility extends IntUtility<RotateDecorator> {
+class RotateUtility extends MixUtility<RotateDecorator, int> {
   const RotateUtility() : super(RotateDecorator.new);
-  RotateDecorator get d90 => call(1);
-  RotateDecorator get d180 => call(2);
-  RotateDecorator get d270 => call(3);
+  RotateDecorator get d90 => builder(1);
+  RotateDecorator get d180 => builder(2);
+  RotateDecorator get d270 => builder(3);
+
+  RotateDecorator call(int value) => builder(value);
 }
 
 class VisibilityUtility extends BoolUtility<VisibilityDecorator> {

@@ -9,7 +9,7 @@ void main() {
   const boxDecoration = BoxDecorationUtility.selfBuilder;
   group('BoxDecorationUtility', () {
     test('color setting', () {
-      final result = boxDecoration.color(Colors.red);
+      final result = boxDecoration(color: Colors.red);
       expect(result.color, equals(Colors.red.toDto()));
     });
 
@@ -49,7 +49,7 @@ void main() {
         )
       ];
       final result = boxDecoration.boxShadow(boxShadow);
-      expect(result.boxShadow, equals(boxShadow.toAttribute()));
+      expect(result.boxShadow, equals(boxShadow.toDto()));
     });
 
     test('elevation setting', () {

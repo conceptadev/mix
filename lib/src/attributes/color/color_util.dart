@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 
 import '../scalars/scalar_util.dart';
-import 'color_attribute.dart';
+import 'color_dto.dart';
 
 @immutable
-class ColorUtility<T> extends MixUtility<T, ColorDto> {
-  const ColorUtility(super.builder);
+class ColorUtility<T> extends DtoUtility<T, ColorDto, Color> {
+  const ColorUtility(super.builder) : super(dtoBuilder: ColorDto.new);
+}
 
-  T call(Color color) => as(ColorDto(color));
+@immutable
+class ColorAttributeUtility<T> extends ColorUtility<T> {
+  const ColorAttributeUtility(super.builder);
+
+  T call(Color value) => builder(ColorDto(value));
 }

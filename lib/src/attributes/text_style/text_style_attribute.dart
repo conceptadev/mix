@@ -9,8 +9,8 @@ import '../../core/extensions/iterable_ext.dart';
 import '../../core/extensions/values_ext.dart';
 import '../../factory/mix_provider_data.dart';
 import '../../theme/tokens/text_style_token.dart';
-import '../color/color_attribute.dart';
-import '../shadow/shadow_attribute.dart';
+import '../color/color_dto.dart';
+import '../shadow/shadow_dto.dart';
 
 @immutable
 class TextStyleDto extends Dto<TextStyleDto, TextStyle> {
@@ -23,7 +23,7 @@ class TextStyleDto extends Dto<TextStyleDto, TextStyle> {
   final TextBaseline? textBaseline;
   final ColorDto? color;
   final ColorDto? backgroundColor;
-  final List<ShadowAttribute>? shadows;
+  final List<ShadowDto>? shadows;
   final List<FontFeature>? fontFeatures;
   final TextDecoration? decoration;
   final ColorDto? decorationColor;
@@ -204,7 +204,7 @@ class TextStyleAttribute
     TextBaseline? textBaseline,
     ColorDto? color,
     ColorDto? backgroundColor,
-    List<ShadowAttribute>? shadows,
+    List<ShadowDto>? shadows,
     List<FontFeature>? fontFeatures,
     TextDecoration? decoration,
     ColorDto? decorationColor,
