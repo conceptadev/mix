@@ -8,9 +8,9 @@ StyleMix get mix => StyleMix(
       width(300),
       borderRadius(10),
       elevation(2),
-      bgColor($colors.surface),
+      backgroundColor($colors.surface),
       alignment.center(),
-      textStyle.color($colors.onSurface),
+      text.style(color: $colors.onSurface),
     );
 
 class LayoutExample extends StatelessWidget {

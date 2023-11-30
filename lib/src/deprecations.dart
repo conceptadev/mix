@@ -590,3 +590,33 @@ final textStyle = text.style;
 
 @Deprecated('Use text.style.shadow instead')
 final shadow = text.style.shadow;
+
+@Deprecated('use backgroundColor instead')
+const bgColor = backgroundColor;
+
+// do no tuse main axisaligmnet use flex.mainAxisAlignment instead
+@Deprecated(
+  'use flex(mainAxisAlignment:value) instead or flex.mainAxisAlignment',
+)
+FlexMixAttribute mainAxisAlignment(MainAxisAlignment mainAxisAlignment) {
+  return FlexMixAttribute(mainAxisAlignment: mainAxisAlignment);
+}
+
+@Deprecated(
+  'use flex(crossAxisAlignment:value) instead or flex.crossAxisAlignment',
+)
+FlexMixAttribute crossAlignment(CrossAxisAlignment crossAxisAlignment) {
+  return FlexMixAttribute(crossAxisAlignment: crossAxisAlignment);
+}
+
+@Deprecated('use flex(mainAxisSize:value) instead or flex.mainAxisSize')
+FlexMixAttribute mainAxisSize(MainAxisSize mainAxisSize) {
+  return flex(mainAxisSize: mainAxisSize);
+}
+
+@Deprecated('use text.style.bold() instead')
+TextMixAttribute bold() {
+  return TextMixAttribute(
+    style: TextStyleAttribute.only(fontWeight: FontWeight.bold),
+  );
+}

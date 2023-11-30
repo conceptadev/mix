@@ -18,7 +18,6 @@ import 'container_attribute.dart';
 
 const container = ContainerUtility.selfBuilder;
 const box = ContainerUtility.selfBuilder;
-const boxShadow = BoxShadowUtility.selfBuilder;
 
 const border = BoxBorderUtility.selfBuilder;
 const clipBehavior = ClipBehaviorAttributeUtility.selfBuilder;
@@ -29,17 +28,18 @@ const padding = PaddingAttributeUtility.selfBuilder;
 /// Predefined utility constants for creating margin attributes.
 const margin = MarginAttributeUtility.selfBuilder;
 
-const elevation = ElevationUtility.selfBuilder;
-
 // Provides an utility for creating a uniform BorderRadiusAttribute for all corners.
 const borderRadius = BorderRadiusGeometryUtility.selfBuilder;
 const alignment = AlignmentGeometryAttributeUtility.selfBuilder;
 
-const boxConstraints = BoxConstraintsUtility.selfBuilder;
-
 const boxDecoration = BoxDecorationUtility.selfBuilder;
 
+final elevation = boxDecoration.elevation;
+final boxShadow = boxDecoration.boxShadow;
+
 const backgroundColor = BackgroundColorAttributeUtility.selfBuilder;
+
+const boxConstraints = BoxConstraintsUtility.selfBuilder;
 
 final minWidth = boxConstraints.minWidth;
 
@@ -55,15 +55,14 @@ final maxHeight = boxConstraints.maxHeight;
 /// a fixed size, ignoring any minimum or maximum width constraints.
 ///
 /// [width]: The fixed width value for the constraints.
-const width = DoubleUtility(WidthAttribute.new);
+const width = WidthAttributeUtility.selfBuilder;
 
-/// Creates a [BoxConstraintsAttribute] with a specific [height].
+/// Creates a [HeightAttriubte] with a specific [height].
 ///
-/// Similar to [width], this function sets a fixed [height] for the constraints,
-/// overriding any minimum or maximum height constraints.
-///
+/// The returned [HeightAttribute] instance imposes the given [height] as
+/// a fixed size, ignoring any minimum or maximum height constraints.
 /// [height]: The fixed height value for the constraints.
-const height = DoubleUtility(HeightAttribute.new);
+const height = HeightAttributeUtility.selfBuilder;
 
 class ContainerUtility<T> extends MixUtility<T, ContainerMixAttribute> {
   static const selfBuilder = ContainerUtility(MixUtility.selfBuilder);

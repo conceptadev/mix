@@ -65,14 +65,14 @@ class CustomMixWidget extends StatelessWidget {
       margin.vertical(10),
       elevation(10),
       borderRadius(10),
-      bgColor($colors.primary),
-      textStyle.as($textStyles.bodyMedium),
-      textStyle(color: $colors.onPrimary),
+      backgroundColor($colors.primary),
+      text.style.as($textStyles.bodyMedium),
+      text.style(color: $colors.onPrimary),
       onHover(
         elevation(2),
         padding(20),
-        bgColor($colors.secondary),
-        textStyle(color: $colors.onSecondary),
+        backgroundColor($colors.secondary),
+        text.style(color: $colors.onSecondary),
       ),
     );
 

@@ -4,10 +4,10 @@ import 'package:mix/mix.dart';
 import '../styles.dart';
 
 StyleMix get button => StyleMix(
-      textStyle.as($textStyles.bodyMedium),
+      text.style.as($textStyles.bodyMedium),
       padding.top(10),
-      bold(),
-      textStyle(fontSize: 6.0),
+      text.style.bold(),
+      text.style(fontSize: 6.0),
       backgroundColor($colors.primary),
       onHover(
         backgroundColor($colors.secondary),

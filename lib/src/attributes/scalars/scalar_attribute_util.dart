@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../color/color_dto.dart';
 import '../color/color_util.dart';
+import '../constraints/constraints_attribute.dart';
 import '../spacing/spacing_attribute.dart';
 import '../spacing/spacing_dto.dart';
 import '../spacing/spacing_util.dart';
@@ -61,4 +62,18 @@ class PaddingAttributeUtility<T> extends SpacingUtility<T> {
 class MarginAttributeUtility<T> extends SpacingUtility<T> {
   static const selfBuilder = MarginAttributeUtility(MarginAttribute.raw);
   const MarginAttributeUtility(super.builder);
+}
+
+@immutable
+class WidthAttributeUtility<T> extends DoubleUtility<T>
+    with CallableUtilityMixin<T, double> {
+  static const selfBuilder = WidthAttributeUtility(WidthAttribute.new);
+  const WidthAttributeUtility(super.builder);
+}
+
+@immutable
+class HeightAttributeUtility<T> extends DoubleUtility<T>
+    with CallableUtilityMixin<T, double> {
+  static const selfBuilder = HeightAttributeUtility(HeightAttribute.new);
+  const HeightAttributeUtility(super.builder);
 }

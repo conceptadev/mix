@@ -19,20 +19,20 @@ class VariantsExample extends HookWidget {
     );
 
     final style = StyleMix(
-      bgColor($colors.primary),
-      textStyle(color: $colors.onPrimary),
+      backgroundColor($colors.primary),
+      text.style(color: $colors.onPrimary),
       onHover(
-        bgColor($colors.secondary),
-        textStyle(color: $colors.onPrimary),
+        backgroundColor($colors.secondary),
+        text.style(color: $colors.onPrimary),
       ),
     ).merge(baseStyle);
 
     final onDarkStyle = StyleMix(
-      bgColor($colors.primary),
-      textStyle(color: $colors.onPrimary),
+      backgroundColor($colors.primary),
+      text.style(color: $colors.onPrimary),
       onDark(
-        bgColor(Colors.red),
-        textStyle(color: $colors.onPrimary),
+        backgroundColor(Colors.red),
+        text.style(color: $colors.onPrimary),
       ),
     ).merge(baseStyle);
 
