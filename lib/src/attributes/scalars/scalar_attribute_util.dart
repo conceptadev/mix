@@ -45,6 +45,7 @@ class BackgroundColorAttributeUtility<T> extends ColorUtility<T> {
       BackgroundColorAttributeUtility(BackgroundColorAttribute.new);
   const BackgroundColorAttributeUtility(super.builder);
 
+  @override
   T call(Color color) => builder(ColorDto(color));
 }
 
@@ -65,15 +66,13 @@ class MarginAttributeUtility<T> extends SpacingUtility<T> {
 }
 
 @immutable
-class WidthAttributeUtility<T> extends DoubleUtility<T>
-    with CallableUtilityMixin<T, double> {
+class WidthAttributeUtility<T> extends DoubleUtility<T> {
   static const selfBuilder = WidthAttributeUtility(WidthAttribute.new);
   const WidthAttributeUtility(super.builder);
 }
 
 @immutable
-class HeightAttributeUtility<T> extends DoubleUtility<T>
-    with CallableUtilityMixin<T, double> {
+class HeightAttributeUtility<T> extends DoubleUtility<T> {
   static const selfBuilder = HeightAttributeUtility(HeightAttribute.new);
   const HeightAttributeUtility(super.builder);
 }
