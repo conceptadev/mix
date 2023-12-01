@@ -6,7 +6,7 @@ import '../../widgets/styled_widget.dart';
 import '../container/container_attribute.dart';
 import '../container/container_widget.dart';
 import 'flex_attribute.dart';
-import 'flex_mixture.dart';
+import 'flex_spec.dart';
 
 /// A flexible layout widget enhanced with `StyleMix` for simplified styling.
 ///
@@ -81,7 +81,7 @@ class MixedFlex extends StatelessWidget {
 
   final List<Widget> children;
   final Axis direction;
-  final FlexMixture mixture;
+  final FlexSpec mixture;
 
   @override
   Widget build(BuildContext context) {
@@ -182,7 +182,7 @@ class FlexBox extends StyledWidget {
   @override
   Widget build(BuildContext context) {
     return withMix(context, (mix) {
-      final containerStyle = ContainerMixAttribute.of(mix).resolve(mix);
+      final containerStyle = ContainerSpecAttribute.of(mix).resolve(mix);
       final flexStyle = FlexMixAttribute.of(mix).resolve(mix);
 
       return MixedContainer(

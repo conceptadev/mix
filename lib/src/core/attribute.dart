@@ -16,42 +16,64 @@ abstract class StyleAttribute extends Attribute {
 }
 
 abstract class Dto<Self extends Dto<Self, Value>, Value>
-    with Comparable, Mergeable<Self>, Resolver<Value> {
+    with Comparable, Mergeable<Self>, Resolvable<Value> {
   const Dto();
 }
 
-mixin Resolver<Value> {
+/// A mixin used when a [Dto] or [Attribute] can be resolved.
+///
+/// This mixin provides a `resolve` method that accepts a [MixData] object and returns a value of type [Value].
+///
+/// Classes that use this mixin should implement the `resolve` method to define the resolution logic.
+///
+/// Example usage:
+///
+/// ```dart
+/// class MyClass with Resolvable<String> {
+///   @override
+///   String resolve(MixData mix) {
+///     // Resolution logic goes here
+///   }
+/// }
+/// ```
+///
+mixin Resolvable<Value> {
   Value resolve(MixData mix);
 }
 
-// TODO: Mergeable to do Attribute only
+/// A mixin that provides the ability to merge with another object of the same type.
+///
+/// The `Mergeable` mixin defines a single method `merge` that takes another object
+/// of the same type and returns a new object that represents the merged result.
+///
+/// This mixin is typically used by [Dto] or [Attribute] that
+/// need to be merged with other instances of the same type.
+///
+/// Example usage:
+/// ```dart
+/// class MyClass with Mergeable<MyClass> {
+///   int id;
+///   String name;
+///
+///   MyClass merge(covariant MyClass other) {
+///     return MyClass()
+///       ..id = other.id ?? id
+///       ..name = other.name ?? name;
+///   }
+/// }
+/// ```
+/// The `merge` method should be implemented by classes that mix in this mixin.
 mixin Mergeable<T> {
   T merge(covariant T? other);
 }
 
-// TODO: Should all ResolvableAttribute be the Style Attribute high level?
+/// An abstract class representing a resolvable attribute.
+///
+/// This class extends the [StyleAttribute] class and provides a generic type [Self] and [Value].
+/// The [Self] type represents the concrete implementation of the attribute, while the [Value] type represents the resolvable value.
 abstract class ResolvableAttribute<Self, Value> extends StyleAttribute
-    with Resolver<Value>, Mergeable<Self> {
+    with Resolvable<Value>, Mergeable<Self> {
   const ResolvableAttribute();
-
-  T? get<T extends StyleAttribute>(MixData mix, T? attribute) {
-    // If the attribute is not mergeable, it means it is a scalar attribute
-    // If its not null just return it as its priority
-    if (attribute != null && attribute is! Mergeable) return attribute;
-
-    final mixAttributes = mix.whereType<T>();
-
-    // If its empty just return attribute
-    if (mixAttributes.isEmpty) return attribute;
-
-    // If its not mergeable return itself which has priority or the last of mix attributes
-    if (attribute is! Mergeable) return attribute ?? mixAttributes.last;
-
-    final mergeableList = [attribute, ...mixAttributes] as List<Mergeable>;
-
-    //  If its mergeable
-    return mergeableList.reduce((value, element) => value.merge(element)) as T?;
-  }
 
   @override
   Self merge(covariant Self? other);
@@ -71,9 +93,9 @@ mixin MultiChildRenderAttributeMixin<W extends MultiChildRenderObjectWidget>
 }
 
 @immutable
-abstract class Mixture<T extends Mixture<T>> extends ThemeExtension<T>
+abstract class Spec<T extends Spec<T>> extends ThemeExtension<T>
     with Comparable, Mergeable<T> {
-  const Mixture();
+  const Spec();
 
   Duration lerpDuration(Duration a, Duration b, double t) {
     int lerpTicks = ((1 - t) * a.inMilliseconds + t * b.inMilliseconds).round();

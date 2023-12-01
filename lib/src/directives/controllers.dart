@@ -40,31 +40,6 @@ class TextDecodingController {
   // Constructor for the [TextDecodingController] class.
   TextDecodingController(Function(String value) fn) : _fn = fn;
 
-  /// Updates the data to be decoded in animation.
-  ///
-  /// The given string [newText] is the target result of the animation and signifies the end-state.
-  void setData(String newText) {
-    final length = max(_data.length, newText.length);
-    final oldText = _data.padRight(length);
-    newText = newText.padRight(length);
-
-    // Clear previous queue and populate it with characters from the new string.
-    _queue.clear();
-    for (int i = 0; i < length; i++) {
-      final from = oldText[i];
-      final to = newText[i];
-      final start = _random.nextInt(200);
-      final end = start + _random.nextInt(200);
-      _queue.add(Character(from, to, end, start));
-    }
-    _startTicker();
-  }
-
-  /// Stops the animation and releases allocated ticker resources.
-  void dispose() {
-    _ticker?.stop(canceled: true); // Stop the ticker safely.
-  }
-
   /// Initializes the ticker that drives the animation.
   void _startTicker() {
     _ticker?.stop(canceled: true);
@@ -103,5 +78,30 @@ class TextDecodingController {
   /// Returns a random character from the pool of possible characters.
   String _randomChar() {
     return _chars[_random.nextInt(_chars.length)];
+  }
+
+  /// Updates the data to be decoded in animation.
+  ///
+  /// The given string [newText] is the target result of the animation and signifies the end-state.
+  void setData(String newText) {
+    final length = max(_data.length, newText.length);
+    final oldText = _data.padRight(length);
+    newText = newText.padRight(length);
+
+    // Clear previous queue and populate it with characters from the new string.
+    _queue.clear();
+    for (int i = 0; i < length; i++) {
+      final from = oldText[i];
+      final to = newText[i];
+      final start = _random.nextInt(200);
+      final end = start + _random.nextInt(200);
+      _queue.add(Character(from, to, end, start));
+    }
+    _startTicker();
+  }
+
+  /// Stops the animation and releases allocated ticker resources.
+  void dispose() {
+    _ticker?.stop(canceled: true); // Stop the ticker safely.
   }
 }

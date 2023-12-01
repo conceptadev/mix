@@ -4,13 +4,15 @@ import '../../attributes/scalars/scalar_util.dart';
 import '../../attributes/strut_style/strut_style_attribute.dart';
 import '../../attributes/text_style/text_style_attribute.dart';
 import '../../attributes/text_style/text_style_util.dart';
+import '../../core/attribute.dart';
 import '../../core/directive.dart';
 import '../../core/extensions/values_ext.dart';
 import 'text_attribute.dart';
 
 const text = TextUtility.selfBuilder;
 
-class TextUtility<T> extends MixUtility<T, TextMixAttribute> {
+class TextUtility<T extends StyleAttribute>
+    extends MixUtility<T, TextMixAttribute> {
   static const selfBuilder = TextUtility(MixUtility.selfBuilder);
 
   const TextUtility(super.builder);
@@ -25,12 +27,6 @@ class TextUtility<T> extends MixUtility<T, TextMixAttribute> {
 
   TextAlignUtility<T> get textAlign {
     return TextAlignUtility((textAlign) => only(textAlign: textAlign));
-  }
-
-  DoubleUtility<T> get textScaleFactor {
-    return DoubleUtility(
-      (textScaleFactor) => only(textScaleFactor: textScaleFactor),
-    );
   }
 
   IntUtility<T> get maxLines {
@@ -61,6 +57,10 @@ class TextUtility<T> extends MixUtility<T, TextMixAttribute> {
 
   BoolUtility<T> get softWrap {
     return BoolUtility((softWrap) => only(softWrap: softWrap));
+  }
+
+  T textScaleFactor(double textScaleFactor) {
+    return only(textScaleFactor: textScaleFactor);
   }
 
   T directive(TextDirective directive) {

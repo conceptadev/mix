@@ -5,7 +5,7 @@ import 'package:mix/mix.dart';
 import '../../../helpers/testing_utils.dart';
 
 void main() {
-  group('TextMixture', () {
+  group('TextSpec', () {
     const uppercaseDirective = TextDirective(TextModifiers.uppercase);
     const lowercaseDirective = TextDirective(TextModifiers.lowercase);
     test('resolve', () {
@@ -52,7 +52,7 @@ void main() {
     });
 
     test('copyWith', () {
-      const spec = TextMixture(
+      const spec = TextSpec(
         overflow: TextOverflow.ellipsis,
         strutStyle: StrutStyle(fontSize: 20.0),
         textAlign: TextAlign.center,
@@ -101,7 +101,7 @@ void main() {
     });
 
     test('lerp', () {
-      const spec1 = TextMixture(
+      const spec1 = TextSpec(
         overflow: TextOverflow.ellipsis,
         strutStyle: StrutStyle(fontSize: 20.0),
         textAlign: TextAlign.center,
@@ -118,7 +118,7 @@ void main() {
         directives: [uppercaseDirective],
       );
 
-      const spec2 = TextMixture(
+      const spec2 = TextSpec(
         overflow: TextOverflow.fade,
         strutStyle: StrutStyle(fontSize: 30.0),
         textAlign: TextAlign.start,

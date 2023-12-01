@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 
 import '../../attributes/color/color_util.dart';
 import '../../attributes/scalars/scalar_util.dart';
+import '../../core/attribute.dart';
 import '../../core/extensions/values_ext.dart';
 import 'image_attribute.dart';
 
 const image = ImageUtility.selfBuilder;
 
-class ImageUtility<T> extends MixUtility<T, ImageMixAttribute> {
+class ImageUtility<T extends StyleAttribute>
+    extends MixUtility<T, ImageMixAttribute> {
   static const selfBuilder = ImageUtility(MixUtility.selfBuilder);
   const ImageUtility(super.builder);
 

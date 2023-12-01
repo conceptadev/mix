@@ -34,7 +34,9 @@ class StyleMix with Comparable {
   ///
   /// This can be used as a default or initial value where a `StyleMix` is required.
   static const empty = StyleMix._(
-      styles: StyleAttributeMap.empty(), variants: VariantAttributeMap.empty());
+    styles: StyleAttributeMap.empty(),
+    variants: VariantAttributeMap.empty(),
+  );
 
   /// Visual attributes contained in this mix.
   final StyleAttributeMap styles;
@@ -46,7 +48,7 @@ class StyleMix with Comparable {
   static final text = SpreadFunctionParams(_styleType<TextMixAttribute>());
   static final image = SpreadFunctionParams(_styleType<ImageMixAttribute>());
   static final container =
-      SpreadFunctionParams(_styleType<ContainerMixAttribute>());
+      SpreadFunctionParams(_styleType<ContainerSpecAttribute>());
   static final flex = SpreadFunctionParams(_styleType<FlexMixAttribute>());
 
   const StyleMix._({required this.styles, required this.variants});

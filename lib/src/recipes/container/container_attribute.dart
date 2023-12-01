@@ -1,14 +1,13 @@
-import '../../attributes/color/color_attribute.dart';
 import '../../attributes/constraints/constraints_attribute.dart';
 import '../../attributes/decoration/decoration_attribute.dart';
 import '../../attributes/scalars/scalars_attribute.dart';
 import '../../attributes/spacing/spacing_attribute.dart';
 import '../../core/attribute.dart';
 import '../../factory/mix_provider_data.dart';
-import 'container_mixture.dart';
+import 'container_spec.dart';
 
-class ContainerMixAttribute
-    extends ResolvableAttribute<ContainerMixAttribute, ContainerMixture> {
+class ContainerSpecAttribute
+    extends ResolvableAttribute<ContainerSpecAttribute, ContainerSpec> {
   final AlignmentGeometryAttribute? alignment;
   final PaddingAttribute? padding;
   final MarginAttribute? margin;
@@ -20,7 +19,7 @@ class ContainerMixAttribute
   final WidthAttribute? width;
   final HeightAttribute? height;
 
-  const ContainerMixAttribute({
+  const ContainerSpecAttribute({
     this.alignment,
     this.padding,
     this.margin,
@@ -33,10 +32,10 @@ class ContainerMixAttribute
     this.height,
   });
 
-  static ContainerMixAttribute of(MixData mix) {
-    final attribute = mix.attributeOf<ContainerMixAttribute>();
+  static ContainerSpecAttribute of(MixData mix) {
+    final attribute = mix.attributeOf<ContainerSpecAttribute>();
 
-    return ContainerMixAttribute(
+    return ContainerSpecAttribute(
       alignment: mix.attributeOf<AlignmentGeometryAttribute>(),
       padding: mix.attributeOf<PaddingAttribute>(),
       margin: mix.attributeOf<MarginAttribute>(),
@@ -51,8 +50,8 @@ class ContainerMixAttribute
   }
 
   @override
-  ContainerMixture resolve(MixData mix) {
-    return ContainerMixture(
+  ContainerSpec resolve(MixData mix) {
+    return ContainerSpec(
       alignment: alignment?.value,
       padding: padding?.resolve(mix),
       margin: margin?.resolve(mix),
@@ -67,10 +66,10 @@ class ContainerMixAttribute
   }
 
   @override
-  ContainerMixAttribute merge(ContainerMixAttribute? other) {
+  ContainerSpecAttribute merge(ContainerSpecAttribute? other) {
     if (other == null) return this;
 
-    return ContainerMixAttribute(
+    return ContainerSpecAttribute(
       alignment: other.alignment ?? alignment,
       padding: padding?.merge(other.padding) ?? other.padding,
       margin: margin?.merge(other.margin) ?? other.margin,

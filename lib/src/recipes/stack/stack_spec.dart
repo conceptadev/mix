@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 
 import '../../core/attribute.dart';
 
-class StackMixture extends Mixture<StackMixture> {
+class StackSpec extends Spec<StackSpec> {
   final AlignmentGeometry? alignment;
   final StackFit? fit;
   final TextDirection? textDirection;
   final Clip? clipBehavior;
 
-  const StackMixture({
+  const StackSpec({
     this.alignment,
     this.fit,
     this.textDirection,
@@ -16,8 +16,8 @@ class StackMixture extends Mixture<StackMixture> {
   });
 
   @override
-  StackMixture lerp(StackMixture other, double t) {
-    return StackMixture(
+  StackSpec lerp(StackSpec other, double t) {
+    return StackSpec(
       alignment: AlignmentGeometry.lerp(alignment, other.alignment, t),
       fit: t < 0.5 ? fit : other.fit,
       textDirection: t < 0.5 ? textDirection : other.textDirection,
@@ -26,7 +26,7 @@ class StackMixture extends Mixture<StackMixture> {
   }
 
   @override
-  StackMixture merge(StackMixture? other) {
+  StackSpec merge(StackSpec? other) {
     return copyWith(
       alignment: other?.alignment,
       fit: other?.fit,
@@ -36,13 +36,13 @@ class StackMixture extends Mixture<StackMixture> {
   }
 
   @override
-  StackMixture copyWith({
+  StackSpec copyWith({
     AlignmentGeometry? alignment,
     StackFit? fit,
     TextDirection? textDirection,
     Clip? clipBehavior,
   }) {
-    return StackMixture(
+    return StackSpec(
       alignment: alignment ?? this.alignment,
       fit: fit ?? this.fit,
       textDirection: textDirection ?? this.textDirection,

@@ -5,10 +5,9 @@ import '../../attributes/text_style/text_style_attribute.dart';
 import '../../core/attribute.dart';
 import '../../core/directive.dart';
 import '../../factory/mix_provider_data.dart';
-import 'text_mixture.dart';
+import 'text_spec.dart';
 
-class TextMixAttribute
-    extends ResolvableAttribute<TextMixAttribute, TextMixture> {
+class TextMixAttribute extends ResolvableAttribute<TextMixAttribute, TextSpec> {
   final TextOverflow? overflow;
   final StrutStyleAttribute? strutStyle;
   final TextAlign? textAlign;
@@ -45,8 +44,8 @@ class TextMixAttribute
   }
 
   @override
-  TextMixture resolve(MixData mix) {
-    return TextMixture(
+  TextSpec resolve(MixData mix) {
+    return TextSpec(
       overflow: overflow,
       strutStyle: strutStyle?.resolve(mix),
       textAlign: textAlign,

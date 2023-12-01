@@ -69,7 +69,8 @@ extension DeprecatedMixExtension<T extends Attribute> on StyleMix {
 @Deprecated('Use MixData instead.')
 typedef MixContext = MixData;
 
-extension WithSpaceTokensExt<T> on SpacingSideUtility<T> {
+extension WithSpaceTokensExt<T extends StyleAttribute>
+    on SpacingSideUtility<T> {
   @Deprecated('Use xsmall instead')
   T get xs => this.xsmall();
   @Deprecated('Use small instead')

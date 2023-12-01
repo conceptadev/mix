@@ -10,6 +10,7 @@ import '../../attributes/scalars/scalar_attribute_util.dart';
 import '../../attributes/scalars/scalar_util.dart';
 import '../../attributes/scalars/scalars_attribute.dart';
 import '../../attributes/spacing/spacing_attribute.dart';
+import '../../core/attribute.dart';
 import 'container_attribute.dart';
 
 const container = ContainerUtility.selfBuilder;
@@ -231,7 +232,8 @@ const width = WidthAttribute.new;
 /// [height]: The fixed height value for the constraints.
 const height = HeightAttribute.new;
 
-class ContainerUtility<T> extends MixUtility<T, ContainerMixAttribute> {
+class ContainerUtility<T extends StyleAttribute>
+    extends MixUtility<T, ContainerSpecAttribute> {
   static const selfBuilder = ContainerUtility(MixUtility.selfBuilder);
   const ContainerUtility(super.builder);
 
@@ -248,7 +250,7 @@ class ContainerUtility<T> extends MixUtility<T, ContainerMixAttribute> {
     ClipBehaviorAttribute? clipBehavior,
   }) {
     return builder(
-      ContainerMixAttribute(
+      ContainerSpecAttribute(
         alignment: alignment,
         padding: padding,
         margin: margin,
@@ -325,7 +327,7 @@ class ContainerUtility<T> extends MixUtility<T, ContainerMixAttribute> {
     Clip? clipBehavior,
     Color? color,
   }) {
-    final attribute = ContainerMixAttribute(
+    final attribute = ContainerSpecAttribute(
       alignment: AlignmentGeometryAttribute.maybeFrom(alignment),
       padding: PaddingAttribute.maybeFrom(padding),
       margin: MarginAttribute.maybeFrom(margin),

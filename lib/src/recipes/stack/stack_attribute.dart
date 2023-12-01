@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 import '../../core/attribute.dart';
 import '../../factory/mix_provider_data.dart';
-import 'stack_mixture.dart';
+import 'stack_spec.dart';
 
 class StackMixAttribute
-    extends ResolvableAttribute<StackMixAttribute, StackMixture> {
+    extends ResolvableAttribute<StackMixAttribute, StackSpec> {
   final Clip? _clipBehavior;
   final TextDirection? _textDirection;
   final StackFit? _fit;
@@ -25,8 +25,8 @@ class StackMixAttribute
   }
 
   @override
-  StackMixture resolve(MixData mix) {
-    return StackMixture(
+  StackSpec resolve(MixData mix) {
+    return StackSpec(
       alignment: _alignment,
       fit: _fit,
       textDirection: _textDirection,

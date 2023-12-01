@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../core/attribute.dart';
 import '../../core/directive.dart';
 
-class TextMixture extends Mixture<TextMixture> {
+class TextSpec extends Spec<TextSpec> {
   final TextOverflow? overflow;
   final StrutStyle? strutStyle;
   final TextAlign? textAlign;
@@ -16,7 +16,7 @@ class TextMixture extends Mixture<TextMixture> {
   final bool? softWrap;
 
   final List<TextDirective> directives;
-  const TextMixture({
+  const TextSpec({
     required this.overflow,
     this.strutStyle,
     this.textAlign,
@@ -31,7 +31,7 @@ class TextMixture extends Mixture<TextMixture> {
   });
 
   // empty
-  const TextMixture.empty()
+  const TextSpec.empty()
       : overflow = null,
         strutStyle = null,
         textAlign = null,
@@ -44,14 +44,14 @@ class TextMixture extends Mixture<TextMixture> {
         softWrap = null,
         directives = const [];
 
-  //  static ContainerMixture? maybeOf(BuildContext context) {
+  //  static ContainerSpec? maybeOf(BuildContext context) {
   //   final mix = MixProvider.maybeOf(context);
 
-  //   return mix?.resolvableOf(const ContainerMixtureAttribute());
+  //   return mix?.resolvableOf(const ContainerSpecAttribute());
   // }
 
-  // static ContainerMixture of(BuildContext context) {
-  //   return maybeOf(context) ?? const ContainerMixture.empty();
+  // static ContainerSpec of(BuildContext context) {
+  //   return maybeOf(context) ?? const ContainerSpec.empty();
   // }
 
   String applyTextDirectives(String? text) {
@@ -61,7 +61,7 @@ class TextMixture extends Mixture<TextMixture> {
   }
 
   @override
-  TextMixture merge(TextMixture? other) {
+  TextSpec merge(TextSpec? other) {
     if (other == null) return this;
 
     return copyWith(
@@ -80,10 +80,10 @@ class TextMixture extends Mixture<TextMixture> {
   }
 
   @override
-  TextMixture lerp(TextMixture other, double t) {
+  TextSpec lerp(TextSpec other, double t) {
     // Define a helper method for snapping
 
-    return TextMixture(
+    return TextSpec(
       overflow: lerpSnap(overflow, other.overflow, t),
       strutStyle: lerpSnap(strutStyle, other.strutStyle, t),
       textAlign: lerpSnap(textAlign, other.textAlign, t),
@@ -101,7 +101,7 @@ class TextMixture extends Mixture<TextMixture> {
   }
 
   @override
-  TextMixture copyWith({
+  TextSpec copyWith({
     bool? softWrap,
     TextOverflow? overflow,
     StrutStyle? strutStyle,
@@ -114,7 +114,7 @@ class TextMixture extends Mixture<TextMixture> {
     List<TextDirective>? directives,
     TextDirection? textDirection,
   }) {
-    return TextMixture(
+    return TextSpec(
       overflow: overflow ?? this.overflow,
       strutStyle: strutStyle ?? this.strutStyle,
       textAlign: textAlign ?? this.textAlign,

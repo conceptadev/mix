@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../helpers/build_context_ext.dart';
 import '../../widgets/styled_widget.dart';
 import 'container_attribute.dart';
-import 'container_mixture.dart';
+import 'container_spec.dart';
 
 typedef Box = StyledContainer;
 
@@ -16,11 +16,11 @@ class StyledContainer extends StyledWidget {
   Widget build(BuildContext context) {
     final contextMix = context.mix;
     final inheritedAttribute = inherit && contextMix != null
-        ? ContainerMixAttribute.of(contextMix)
-        : const ContainerMixAttribute();
+        ? ContainerSpecAttribute.of(contextMix)
+        : const ContainerSpecAttribute();
 
     return withMix(context, (mix) {
-      final attribute = ContainerMixAttribute.of(mix);
+      final attribute = ContainerSpecAttribute.of(mix);
       final merged = inheritedAttribute.merge(attribute);
 
       final mixture = merged.resolve(mix);
@@ -34,7 +34,7 @@ class MixedContainer extends StatelessWidget {
   const MixedContainer(this.mixture, {super.key, this.child});
 
   final Widget? child;
-  final ContainerMixture mixture;
+  final ContainerSpec mixture;
 
   @override
   Widget build(BuildContext context) {

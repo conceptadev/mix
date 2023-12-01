@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../core/attribute.dart';
 import '../../theme/tokens/space_token.dart';
 import '../scalars/scalar_util.dart';
 import 'spacing_dto.dart';
@@ -25,7 +26,7 @@ import 'spacing_dto.dart';
 ///   final horizontal = spacing.horizontal(20);
 /// ```
 @immutable
-abstract class SpacingUtility<T>
+abstract class SpacingUtility<T extends StyleAttribute>
     extends DtoUtility<T, SpacingDto, EdgeInsetsGeometry> {
   const SpacingUtility(super.builder) : super(dtoBuilder: SpacingDto.from);
 
@@ -229,7 +230,8 @@ abstract class SpacingUtility<T>
 ///   final horizontal = spacing.horizontal(20);
 /// ```
 @immutable
-class SpacingDirectionalUtility<T> extends SpacingUtility<T> {
+class SpacingDirectionalUtility<T extends StyleAttribute>
+    extends SpacingUtility<T> {
   const SpacingDirectionalUtility(super.builder);
 
   /// Callable method for creating space attributes with flexible parameter input.
@@ -372,7 +374,8 @@ class SpacingDirectionalUtility<T> extends SpacingUtility<T> {
 // Helper class to wrap functions that can return
 // Space tokens in their methods
 @immutable
-class SpacingSideUtility<T> extends MixUtility<T, double> {
+class SpacingSideUtility<T extends StyleAttribute>
+    extends MixUtility<T, double> {
   const SpacingSideUtility(super.builder);
 
   T xsmall() => builder(SpaceToken.xsmall());

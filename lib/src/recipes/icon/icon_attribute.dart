@@ -1,10 +1,9 @@
 import '../../attributes/color/color_dto.dart';
 import '../../core/attribute.dart';
 import '../../factory/mix_provider_data.dart';
-import 'icon_mixture.dart';
+import 'icon_spec.dart';
 
-class IconMixAttribute
-    extends ResolvableAttribute<IconMixAttribute, IconMixture> {
+class IconMixAttribute extends ResolvableAttribute<IconMixAttribute, IconSpec> {
   final double? size;
   final ColorDto? color;
 
@@ -15,8 +14,8 @@ class IconMixAttribute
   }
 
   @override
-  IconMixture resolve(MixData mix) {
-    return IconMixture(color: color?.resolve(mix), size: size);
+  IconSpec resolve(MixData mix) {
+    return IconSpec(color: color?.resolve(mix), size: size);
   }
 
   @override

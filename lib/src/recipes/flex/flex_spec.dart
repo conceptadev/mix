@@ -6,7 +6,7 @@ import '../../core/attribute.dart';
 import '../../factory/mix_provider_data.dart';
 import 'flex_attribute.dart';
 
-class FlexMixture extends Mixture<FlexMixture> {
+class FlexSpec extends Spec<FlexSpec> {
   final Axis? direction;
   final MainAxisAlignment? mainAxisAlignment;
   final CrossAxisAlignment? crossAxisAlignment;
@@ -17,7 +17,7 @@ class FlexMixture extends Mixture<FlexMixture> {
   final Clip? clipBehavior;
   final double? gap;
 
-  const FlexMixture({
+  const FlexSpec({
     required this.crossAxisAlignment,
     required this.mainAxisAlignment,
     required this.mainAxisSize,
@@ -29,7 +29,7 @@ class FlexMixture extends Mixture<FlexMixture> {
     required this.gap,
   });
 
-  const FlexMixture.empty()
+  const FlexSpec.empty()
       : crossAxisAlignment = null,
         mainAxisAlignment = null,
         mainAxisSize = null,
@@ -40,15 +40,15 @@ class FlexMixture extends Mixture<FlexMixture> {
         clipBehavior = null,
         gap = null;
 
-  static FlexMixture resolve(MixData mix) {
+  static FlexSpec resolve(MixData mix) {
     final recipe = mix.attributeOf<FlexMixAttribute>()?.resolve(mix);
 
     return recipe ?? const FlexMixAttribute().resolve(mix);
   }
 
   @override
-  FlexMixture lerp(FlexMixture other, double t) {
-    return FlexMixture(
+  FlexSpec lerp(FlexSpec other, double t) {
+    return FlexSpec(
       crossAxisAlignment:
           lerpSnap(crossAxisAlignment, other.crossAxisAlignment, t),
       mainAxisAlignment:
@@ -65,7 +65,7 @@ class FlexMixture extends Mixture<FlexMixture> {
   }
 
   @override
-  FlexMixture merge(FlexMixture? other) {
+  FlexSpec merge(FlexSpec? other) {
     return copyWith(
       direction: other?.direction,
       mainAxisAlignment: other?.mainAxisAlignment,
@@ -80,7 +80,7 @@ class FlexMixture extends Mixture<FlexMixture> {
   }
 
   @override
-  FlexMixture copyWith({
+  FlexSpec copyWith({
     Axis? direction,
     MainAxisAlignment? mainAxisAlignment,
     CrossAxisAlignment? crossAxisAlignment,
@@ -91,7 +91,7 @@ class FlexMixture extends Mixture<FlexMixture> {
     Clip? clipBehavior,
     double? gap,
   }) {
-    return FlexMixture(
+    return FlexSpec(
       crossAxisAlignment: crossAxisAlignment ?? this.crossAxisAlignment,
       mainAxisAlignment: mainAxisAlignment ?? this.mainAxisAlignment,
       mainAxisSize: mainAxisSize ?? this.mainAxisSize,

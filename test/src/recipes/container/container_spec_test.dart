@@ -22,7 +22,7 @@ void main() {
         ),
       );
 
-      final mixture = ContainerMixAttribute.of(mix).resolve(mix);
+      final mixture = ContainerSpecAttribute.of(mix).resolve(mix);
 
       expect(mixture.alignment, Alignment.center);
       expect(mixture.padding, const EdgeInsets.only(bottom: 16.0, top: 8.0));
@@ -36,7 +36,7 @@ void main() {
     });
 
     test('copyWith', () {
-      final spec = ContainerMixture(
+      final spec = ContainerSpec(
         alignment: Alignment.center,
         color: null,
         width: 300,
@@ -63,7 +63,7 @@ void main() {
     });
 
     test('lerp', () {
-      final spec1 = ContainerMixture(
+      final spec1 = ContainerSpec(
         alignment: Alignment.topLeft,
         color: null,
         width: 300,
@@ -76,7 +76,7 @@ void main() {
         clipBehavior: Clip.none,
       );
 
-      final spec2 = ContainerMixture(
+      final spec2 = ContainerSpec(
         alignment: Alignment.bottomRight,
         color: null,
         width: 400,

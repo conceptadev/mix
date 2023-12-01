@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 
 import '../../attributes/scalars/scalar_util.dart';
+import '../../core/attribute.dart';
 import 'stack_attribute.dart';
 
-const stack = StackMixtureUtility.selfBuilder;
+const stack = StackSpecUtility.selfBuilder;
 
-class StackMixtureUtility<T> extends MixUtility<T, StackMixAttribute> {
-  static const selfBuilder = StackMixtureUtility(MixUtility.selfBuilder);
+class StackSpecUtility<T extends StyleAttribute>
+    extends MixUtility<T, StackMixAttribute> {
+  static const selfBuilder = StackSpecUtility(MixUtility.selfBuilder);
 
-  const StackMixtureUtility(super.builder);
+  const StackSpecUtility(super.builder);
 
   T _only({
     AlignmentGeometry? alignment,

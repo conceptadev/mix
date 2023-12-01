@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../core/attribute.dart';
 import 'mix_provider_data.dart';
 import 'style_mix.dart';
 
 typedef MixBuilder = Widget Function(MixData mix);
-typedef MixtureBuilder<X extends Mixture<X>> = X Function(BuildContext context);
 
 /// Provides [MixData] to the widget tree.
 class MixProvider extends InheritedWidget {

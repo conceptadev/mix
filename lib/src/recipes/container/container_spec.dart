@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../../core/attribute.dart';
 
-class ContainerMixture extends Mixture<ContainerMixture> {
+class ContainerSpec extends Spec<ContainerSpec> {
   final AlignmentGeometry? alignment;
   final EdgeInsetsGeometry? padding;
   final EdgeInsetsGeometry? margin;
@@ -15,7 +15,7 @@ class ContainerMixture extends Mixture<ContainerMixture> {
   final Color? color;
   final double? width, height;
 
-  const ContainerMixture({
+  const ContainerSpec({
     required this.alignment,
     required this.padding,
     required this.margin,
@@ -28,7 +28,7 @@ class ContainerMixture extends Mixture<ContainerMixture> {
     required this.height,
   });
 
-  const ContainerMixture.empty()
+  const ContainerSpec.empty()
       : alignment = null,
         padding = null,
         margin = null,
@@ -41,7 +41,7 @@ class ContainerMixture extends Mixture<ContainerMixture> {
         clipBehavior = null;
 
   @override
-  ContainerMixture merge(ContainerMixture? other) {
+  ContainerSpec merge(ContainerSpec? other) {
     if (other == null) return this;
 
     return copyWith(
@@ -59,7 +59,7 @@ class ContainerMixture extends Mixture<ContainerMixture> {
   }
 
   @override
-  ContainerMixture copyWith({
+  ContainerSpec copyWith({
     AlignmentGeometry? alignment,
     EdgeInsetsGeometry? padding,
     EdgeInsetsGeometry? margin,
@@ -71,7 +71,7 @@ class ContainerMixture extends Mixture<ContainerMixture> {
     Clip? clipBehavior,
     Color? color,
   }) {
-    return ContainerMixture(
+    return ContainerSpec(
       alignment: alignment ?? this.alignment,
       padding: padding ?? this.padding,
       margin: margin ?? this.margin,
@@ -86,8 +86,8 @@ class ContainerMixture extends Mixture<ContainerMixture> {
   }
 
   @override
-  ContainerMixture lerp(ContainerMixture other, double t) {
-    return ContainerMixture(
+  ContainerSpec lerp(ContainerSpec other, double t) {
+    return ContainerSpec(
       alignment: AlignmentGeometry.lerp(alignment, other.alignment, t),
       padding: EdgeInsetsGeometry.lerp(padding, other.padding, t),
       margin: EdgeInsetsGeometry.lerp(margin, other.margin, t),

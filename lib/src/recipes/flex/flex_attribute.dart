@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../../core/attribute.dart';
 import '../../factory/mix_provider_data.dart';
-import 'flex_mixture.dart';
+import 'flex_spec.dart';
 
-class FlexMixAttribute
-    extends ResolvableAttribute<FlexMixAttribute, FlexMixture> {
+class FlexMixAttribute extends ResolvableAttribute<FlexMixAttribute, FlexSpec> {
   final Axis? direction;
   final MainAxisAlignment? mainAxisAlignment;
   final CrossAxisAlignment? crossAxisAlignment;
@@ -33,8 +32,8 @@ class FlexMixAttribute
   }
 
   @override
-  FlexMixture resolve(MixData mix) {
-    return FlexMixture(
+  FlexSpec resolve(MixData mix) {
+    return FlexSpec(
       crossAxisAlignment: crossAxisAlignment,
       mainAxisAlignment: mainAxisAlignment,
       mainAxisSize: mainAxisSize,

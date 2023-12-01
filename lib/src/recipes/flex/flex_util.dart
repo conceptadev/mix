@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
-import '../../attributes/scalars/scalar_util.dart';
-import 'flex_attribute.dart';
+import '../../../mix.dart';
 
 /// A utility class for building [FlexMixAttribute]s.
-final flex = FlexMixtureUtility.selfBuilder;
+final flex = FlexSpecUtility.selfBuilder;
 
-class FlexMixtureUtility<T> extends MixUtility<T, FlexMixAttribute> {
-  static final selfBuilder = FlexMixtureUtility((value) => value);
+class FlexSpecUtility<T extends StyleAttribute>
+    extends MixUtility<T, FlexMixAttribute> {
+  static final selfBuilder = FlexSpecUtility((value) => value);
 
-  const FlexMixtureUtility(super.builder);
+  const FlexSpecUtility(super.builder);
 
   AxisUtility<T> get direction {
     return AxisUtility((direction) => call(direction: direction));
@@ -55,8 +55,8 @@ class FlexMixtureUtility<T> extends MixUtility<T, FlexMixAttribute> {
     return ClipUtility((clipBehavior) => call(clipBehavior: clipBehavior));
   }
 
-  DoubleUtility<T> get gap {
-    return DoubleUtility((gap) => call(gap: gap));
+  SpacingSideUtility<T> get gap {
+    return SpacingSideUtility((gap) => call(gap: gap));
   }
 
   T row() => direction.horizontal();

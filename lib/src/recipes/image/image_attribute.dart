@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import '../../attributes/color/color_dto.dart';
 import '../../core/attribute.dart';
 import '../../factory/mix_provider_data.dart';
-import 'image_mixture.dart';
+import 'image_spec.dart';
 
 class ImageMixAttribute
-    extends ResolvableAttribute<ImageMixAttribute, ImageMixture> {
+    extends ResolvableAttribute<ImageMixAttribute, ImageSpec> {
   final double? width;
   final double? height;
   final ColorDto? color;
@@ -22,8 +22,8 @@ class ImageMixAttribute
   });
 
   @override
-  ImageMixture resolve(MixData mix) {
-    return ImageMixture(
+  ImageSpec resolve(MixData mix) {
+    return ImageSpec(
       width: width,
       height: height,
       color: color?.resolve(mix),

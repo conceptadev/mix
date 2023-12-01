@@ -1,6 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
 
+import '../../../helpers/testing_utils.dart';
+
 void main() {
   group('SpaceToken tests', () {
     test('SpaceToken.xsmall() returns correct value', () {
@@ -63,13 +65,13 @@ void main() {
 
   group('WithSpaceTokens tests', () {
     test('WithSpaceTokens returns correct value', () {
-      final withSpaceTokens = SpacingSideUtility((value) => value);
-      expect(withSpaceTokens.xsmall(), SpaceToken.xsmall());
-      expect(withSpaceTokens.small(), SpaceToken.small());
-      expect(withSpaceTokens.medium(), SpaceToken.medium());
-      expect(withSpaceTokens.large(), SpaceToken.large());
-      expect(withSpaceTokens.xlarge(), SpaceToken.xlarge());
-      expect(withSpaceTokens.xxlarge(), SpaceToken.xxlarge());
+      const withSpaceTokens = SpacingSideUtility(ValueHolderAttribute.new);
+      expect(withSpaceTokens.xsmall().value, SpaceToken.xsmall());
+      expect(withSpaceTokens.small().value, SpaceToken.small());
+      expect(withSpaceTokens.medium().value, SpaceToken.medium());
+      expect(withSpaceTokens.large().value, SpaceToken.large());
+      expect(withSpaceTokens.xlarge().value, SpaceToken.xlarge());
+      expect(withSpaceTokens.xxlarge().value, SpaceToken.xxlarge());
     });
   });
 

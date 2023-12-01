@@ -1,3 +1,4 @@
+import '../core/attribute.dart';
 import '../core/directive.dart';
 import '../helpers/string_ext.dart';
 import '../recipes/text/text_attribute.dart';
@@ -12,7 +13,8 @@ final sentenceCase = _textDirective(TextModifiers.sentenceCase);
 TextMixAttribute Function() _textDirective(Modifier<String> modifier) =>
     () => TextMixAttribute(directives: [TextDirective(modifier)]);
 
-class TextDirectiveUtility<T> extends ScalarUtility<T, TextDirective> {
+class TextDirectiveUtility<T extends StyleAttribute>
+    extends ScalarUtility<T, TextDirective> {
   const TextDirectiveUtility(super.builder);
 }
 

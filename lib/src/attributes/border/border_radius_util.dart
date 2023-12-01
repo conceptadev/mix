@@ -2,11 +2,12 @@
 
 import 'package:flutter/material.dart';
 
+import '../../core/attribute.dart';
 import '../../core/extensions/values_ext.dart';
 import '../scalars/scalar_util.dart';
 import 'border_radius_attribute.dart';
 
-class BorderRadiusGeometryUtility<T>
+class BorderRadiusGeometryUtility<T extends StyleAttribute>
     extends MixUtility<T, BorderRadiusGeometryAttribute> {
   static const selfBuilder =
       BorderRadiusGeometryUtility(MixUtility.selfBuilder);
@@ -130,7 +131,7 @@ class BorderRadiusGeometryUtility<T>
   }
 }
 
-class BorderRadiusDirectionalUtility<T>
+class BorderRadiusDirectionalUtility<T extends StyleAttribute>
     extends MixUtility<T, BorderRadiusDirectionalAttribute> {
   const BorderRadiusDirectionalUtility(super.builder);
 

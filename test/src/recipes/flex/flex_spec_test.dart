@@ -26,7 +26,7 @@ void main() {
         ),
       );
 
-      final spec = FlexMixture.resolve(mix);
+      final spec = FlexSpec.resolve(mix);
 
       expect(spec.crossAxisAlignment, CrossAxisAlignment.center);
       expect(spec.mainAxisAlignment, MainAxisAlignment.center);
@@ -40,7 +40,7 @@ void main() {
     });
 
     test('copyWith', () {
-      const spec = FlexMixture(
+      const spec = FlexSpec(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
@@ -78,7 +78,7 @@ void main() {
     });
 
     test('lerp', () {
-      const spec1 = FlexMixture(
+      const spec1 = FlexSpec(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
@@ -90,7 +90,7 @@ void main() {
         gap: 10,
       );
 
-      const spec2 = FlexMixture(
+      const spec2 = FlexSpec(
         crossAxisAlignment: CrossAxisAlignment.end,
         mainAxisAlignment: MainAxisAlignment.end,
         mainAxisSize: MainAxisSize.max,

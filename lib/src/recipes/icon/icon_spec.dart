@@ -4,42 +4,42 @@ import '../../core/attribute.dart';
 import '../../factory/mix_provider_data.dart';
 import 'icon_attribute.dart';
 
-class IconMixture extends Mixture<IconMixture> {
+class IconSpec extends Spec<IconSpec> {
   final Color? color;
   final double? size;
 
-  const IconMixture({required this.color, required this.size});
+  const IconSpec({required this.color, required this.size});
 
-  const IconMixture.empty()
+  const IconSpec.empty()
       : color = null,
         size = null;
 
-  static IconMixture resolve(MixData mix) {
+  static IconSpec resolve(MixData mix) {
     final recipe = mix.attributeOf<IconMixAttribute>()?.resolve(mix);
 
     return recipe ?? const IconMixAttribute().resolve(mix);
   }
 
   @override
-  IconMixture lerp(IconMixture other, double t) {
-    return IconMixture(
+  IconSpec lerp(IconSpec other, double t) {
+    return IconSpec(
       color: Color.lerp(color, other.color, t),
       size: lerpDouble(size, other.size, t),
     );
   }
 
   @override
-  IconMixture merge(IconMixture? other) {
+  IconSpec merge(IconSpec? other) {
     return copyWith(color: other?.color, size: other?.size);
   }
 
   @override
-  IconMixture copyWith({
+  IconSpec copyWith({
     Color? color,
     double? size,
     TextDirection? textDirection,
   }) {
-    return IconMixture(color: color ?? this.color, size: size ?? this.size);
+    return IconSpec(color: color ?? this.color, size: size ?? this.size);
   }
 
   @override

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../core/attribute.dart';
 import '../../core/extensions/values_ext.dart';
 import '../border/border_attribute.dart';
 import '../border/border_radius_attribute.dart';
@@ -15,7 +16,8 @@ import '../shadow/shadow_dto.dart';
 import '../shadow/shadow_util.dart';
 import 'decoration_attribute.dart';
 
-class BoxDecorationUtility<T> extends MixUtility<T, BoxDecorationAttribute> {
+class BoxDecorationUtility<T extends StyleAttribute>
+    extends MixUtility<T, BoxDecorationAttribute> {
   static const selfBuilder = BoxDecorationUtility(MixUtility.selfBuilder);
 
   const BoxDecorationUtility(super.builder);

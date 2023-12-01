@@ -5,7 +5,7 @@ import '../../widgets/styled_widget.dart';
 import '../container/container_attribute.dart';
 import '../container/container_widget.dart';
 import 'stack_attribute.dart';
-import 'stack_mixture.dart';
+import 'stack_spec.dart';
 
 class StyledStack extends StyledWidget {
   const StyledStack({
@@ -38,7 +38,7 @@ class MixedStack extends StatelessWidget {
   const MixedStack(this.mixture, {super.key, this.children});
 
   final List<Widget>? children;
-  final StackMixture mixture;
+  final StackSpec mixture;
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +65,7 @@ class ZBox extends StyledWidget {
   @override
   Widget build(BuildContext context) {
     return withMix(context, (mix) {
-      final containerMix = ContainerMixAttribute.of(mix).resolve(mix);
+      final containerMix = ContainerSpecAttribute.of(mix).resolve(mix);
       final stackMix = StackMixAttribute.of(mix).resolve(mix);
 
       return MixedContainer(

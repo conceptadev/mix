@@ -5,7 +5,7 @@ import 'package:mix/mix.dart';
 import '../../../helpers/testing_utils.dart';
 
 void main() {
-  group('StackMixture', () {
+  group('StackSpec', () {
     test('resolve', () {
       final mix = MixData.create(
         MockBuildContext(),
@@ -28,7 +28,7 @@ void main() {
     });
 
     test('copyWith', () {
-      const spec = StackMixture(
+      const spec = StackSpec(
         alignment: Alignment.center,
         fit: StackFit.expand,
         textDirection: TextDirection.ltr,
@@ -49,14 +49,14 @@ void main() {
     });
 
     test('lerp', () {
-      const spec1 = StackMixture(
+      const spec1 = StackSpec(
         alignment: Alignment.topLeft,
         fit: StackFit.loose,
         textDirection: TextDirection.ltr,
         clipBehavior: Clip.none,
       );
 
-      const spec2 = StackMixture(
+      const spec2 = StackSpec(
         alignment: Alignment.bottomRight,
         fit: StackFit.expand,
         textDirection: TextDirection.rtl,
