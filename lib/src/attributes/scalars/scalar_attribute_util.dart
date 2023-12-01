@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../color/color_dto.dart';
 import '../color/color_util.dart';
-import '../constraints/constraints_attribute.dart';
 import '../spacing/spacing_attribute.dart';
 import '../spacing/spacing_dto.dart';
 import '../spacing/spacing_util.dart';
@@ -44,9 +42,6 @@ class BackgroundColorAttributeUtility<T> extends ColorUtility<T> {
   static const selfBuilder =
       BackgroundColorAttributeUtility(BackgroundColorAttribute.new);
   const BackgroundColorAttributeUtility(super.builder);
-
-  @override
-  T call(Color color) => builder(ColorDto(color));
 }
 
 typedef SpacingUtilityBuilder<T extends SpacingAttribute<T>> = T Function(
@@ -63,16 +58,4 @@ class PaddingAttributeUtility<T> extends SpacingUtility<T> {
 class MarginAttributeUtility<T> extends SpacingUtility<T> {
   static const selfBuilder = MarginAttributeUtility(MarginAttribute.raw);
   const MarginAttributeUtility(super.builder);
-}
-
-@immutable
-class WidthAttributeUtility<T> extends DoubleUtility<T> {
-  static const selfBuilder = WidthAttributeUtility(WidthAttribute.new);
-  const WidthAttributeUtility(super.builder);
-}
-
-@immutable
-class HeightAttributeUtility<T> extends DoubleUtility<T> {
-  static const selfBuilder = HeightAttributeUtility(HeightAttribute.new);
-  const HeightAttributeUtility(super.builder);
 }

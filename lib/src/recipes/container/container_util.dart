@@ -16,6 +16,21 @@ const container = ContainerUtility.selfBuilder;
 const box = ContainerUtility.selfBuilder;
 
 const border = BoxBorderUtility.selfBuilder;
+
+/// Utility of `ClipUtility` that returns a `ClipBehaviorAttribute` instance
+///
+/// Useful for defining the clipping behavior of widgets.
+/// Includes predefined values of `Clip` such as `none`, `hardEdge`, and `antiAlias`.
+/// Example:
+/// ```dart
+/// final noneClip = clipBehavior.none();
+/// final hardEdge = clipBehavior.hardEdge();
+/// final antiAlias = clipBehavior.antiAlias();
+/// ```
+/// See also:
+/// - [ClipBehaviorAttribute]
+/// - [Clip]
+/// - [ClipUtility]
 const clipBehavior = ClipBehaviorAttributeUtility.selfBuilder;
 
 /// `padding` - Provides a comprehensive utility for defining padding attribute
@@ -149,12 +164,56 @@ const backgroundColor = BackgroundColorAttributeUtility.selfBuilder;
 
 const boxConstraints = BoxConstraintsUtility.selfBuilder;
 
+/// Defines a [BoxConstraintsAttribute] with a minimum width [minWidth].
+///
+/// This function sets a lower bound on the width of the box constraints but
+/// doesn't set a fixed width. It allows flexibility above the specified [minWidth].
+///
+/// Equivalent to BoxConstraints(minWidth: minWidth).
+///
+/// See also:
+/// - [BoxConstraintsAttribute]
+/// - [BoxConstraints]
+/// - [BoxConstraintsUtility]
 final minWidth = boxConstraints.minWidth;
 
+/// Defines a [BoxConstraintsAttribute] with a maximum width [maxWidth].
+///
+/// This function sets an upper limit on the width of the box constraints. The width
+/// can be any value up to [maxWidth], offering flexibility in sizing.
+///
+/// Equivalent to BoxConstraints(maxWidth: maxWidth).
+///
+/// See also:
+/// - [BoxConstraintsAttribute]
+/// - [BoxConstraints]
+/// - [BoxConstraintsUtility]
 final maxWidth = boxConstraints.maxWidth;
 
+/// Creates a [BoxConstraintsAttribute] with a minimum height [minHeight].
+///
+/// This function sets a lower limit on the height of the box constraints, allowing
+/// any height above the specified [minHeight], thereby providing vertical sizing flexibility.
+///
+/// Equivalent to BoxConstraints(minHeight: minHeight).
+///
+/// See also:
+/// - [BoxConstraintsAttribute]
+/// - [BoxConstraints]
+/// - [BoxConstraintsUtility]
 final minHeight = boxConstraints.minHeight;
 
+/// Creates a [BoxConstraintsAttribute] with a maximum height [maxHeight].
+///
+/// This function sets an upper bound on the height of the box constraints. The height
+/// can be any value up to [maxHeight], enabling flexibility in vertical sizing.
+///
+/// Equivalent to BoxConstraints(maxHeight: maxHeight).
+///
+/// See also:
+/// - [BoxConstraintsAttribute]
+/// - [BoxConstraints]
+/// - [BoxConstraintsUtility]
 final maxHeight = boxConstraints.maxHeight;
 
 /// Creates a [WidthAttribute] with a specific [width].
@@ -163,14 +222,14 @@ final maxHeight = boxConstraints.maxHeight;
 /// a fixed size, ignoring any minimum or maximum width constraints.
 ///
 /// [width]: The fixed width value for the constraints.
-const width = WidthAttributeUtility.selfBuilder;
+const width = WidthAttribute.new;
 
 /// Creates a [HeightAttriubte] with a specific [height].
 ///
 /// The returned [HeightAttribute] instance imposes the given [height] as
 /// a fixed size, ignoring any minimum or maximum height constraints.
 /// [height]: The fixed height value for the constraints.
-const height = HeightAttributeUtility.selfBuilder;
+const height = HeightAttribute.new;
 
 class ContainerUtility<T> extends MixUtility<T, ContainerMixAttribute> {
   static const selfBuilder = ContainerUtility(MixUtility.selfBuilder);
@@ -236,14 +295,6 @@ class ContainerUtility<T> extends MixUtility<T, ContainerMixAttribute> {
     );
   }
 
-  WidthAttributeUtility<T> get width {
-    return WidthAttributeUtility((width) => call(width: width));
-  }
-
-  HeightAttributeUtility<T> get height {
-    return HeightAttributeUtility((height) => call(height: height));
-  }
-
   TransformAttributeUtility<T> get transform {
     return TransformAttributeUtility((transform) => call(transform: transform));
   }
@@ -252,6 +303,14 @@ class ContainerUtility<T> extends MixUtility<T, ContainerMixAttribute> {
     return ClipBehaviorAttributeUtility(
       (clipBehavior) => call(clipBehavior: clipBehavior),
     );
+  }
+
+  T height(double height) {
+    return _only(height: HeightAttribute(height));
+  }
+
+  T width(double width) {
+    return _only(width: WidthAttribute(width));
   }
 
   T call({

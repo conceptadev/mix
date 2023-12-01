@@ -42,31 +42,20 @@ abstract class ScalarUtility<Return, Param> extends MixUtility<Return, Param> {
 class AlignmentUtility<T> extends ScalarUtility<T, AlignmentGeometry> {
   const AlignmentUtility(super.builder);
 
-  T _topLeft() => builder(Alignment.topLeft);
-  T _topCenter() => builder(Alignment.topCenter);
-  T _topRight() => builder(Alignment.topRight);
-  T _centerLeft() => builder(Alignment.centerLeft);
-  T _center() => builder(Alignment.center);
-  T _centerRight() => builder(Alignment.centerRight);
-  T _bottomLeft() => builder(Alignment.bottomLeft);
-  T _bottomCenter() => builder(Alignment.bottomCenter);
-  T _bottomRight() => builder(Alignment.bottomRight);
-  T _only(double? x, double? y, double? start) {
+  T topLeft() => builder(Alignment.topLeft);
+  T topCenter() => builder(Alignment.topCenter);
+  T topRight() => builder(Alignment.topRight);
+  T centerLeft() => builder(Alignment.centerLeft);
+  T center() => builder(Alignment.center);
+  T centerRight() => builder(Alignment.centerRight);
+  T bottomLeft() => builder(Alignment.bottomLeft);
+  T bottomCenter() => builder(Alignment.bottomCenter);
+  T bottomRight() => builder(Alignment.bottomRight);
+  T only(double? x, double? y, double? start) {
     return start == null
         ? builder(Alignment(x ?? 0, y ?? 0))
         : builder(AlignmentDirectional(start, y ?? 0));
   }
-
-  T topLeft() => _topLeft();
-  T topCenter() => _topCenter();
-  T topRight() => _topRight();
-  T centerLeft() => _centerLeft();
-  T center() => _center();
-  T centerRight() => _centerRight();
-  T bottomLeft() => _bottomLeft();
-  T bottomCenter() => _bottomCenter();
-  T bottomRight() => _bottomRight();
-  T only(double? x, double? y, double? start) => _only(x, y, start);
 }
 
 /// Utility for creating `double` values.

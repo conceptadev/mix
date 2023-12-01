@@ -12,7 +12,11 @@ class BoxConstraintsUtility<T> extends MixUtility<T, BoxConstraintsAttribute> {
   /// This function sets a lower bound on the width of the box constraints but
   /// doesn't set a fixed width. It allows flexibility above the specified [minWidth].
   ///
-  /// [minWidth]: The minimum width value for the constraints.
+  /// Equivalent to BoxConstraints(minWidth: minWidth).
+  ///
+  /// See also:
+  /// - [BoxConstraintsAttribute]
+  /// - [BoxConstraints]
   T minWidth(double width) => call(minWidth: width);
 
   /// Defines a [BoxConstraintsAttribute] with a maximum width [maxWidth].
@@ -20,7 +24,11 @@ class BoxConstraintsUtility<T> extends MixUtility<T, BoxConstraintsAttribute> {
   /// This function sets an upper limit on the width of the box constraints. The width
   /// can be any value up to [maxWidth], offering flexibility in sizing.
   ///
-  /// [maxWidth]: The maximum width value for the constraints.
+  /// Equivalent to BoxConstraints(maxWidth: maxWidth).
+  ///
+  /// See also:
+  /// - [BoxConstraintsAttribute]
+  /// - [BoxConstraints]
   T maxWidth(double width) => call(maxWidth: width);
 
   /// Creates a [BoxConstraintsAttribute] with a minimum height [minHeight].
@@ -28,7 +36,11 @@ class BoxConstraintsUtility<T> extends MixUtility<T, BoxConstraintsAttribute> {
   /// This function sets a lower limit on the height of the box constraints, allowing
   /// any height above the specified [minHeight], thereby providing vertical sizing flexibility.
   ///
-  /// [minHeight]: The minimum height value for the constraints.
+  /// Equivalent to BoxConstraints(minHeight: minHeight).
+  ///
+  /// See also:
+  /// - [BoxConstraintsAttribute]
+  /// - [BoxConstraints]
   T minHeight(double height) => call(minHeight: height);
 
   /// Creates a [BoxConstraintsAttribute] with a maximum height [maxHeight].
@@ -36,7 +48,11 @@ class BoxConstraintsUtility<T> extends MixUtility<T, BoxConstraintsAttribute> {
   /// This function sets an upper bound on the height of the box constraints. The height
   /// can be any value up to [maxHeight], enabling flexibility in vertical sizing.
   ///
-  /// [maxHeight]: The maximum height value for the constraints.
+  /// Equivalent to BoxConstraints(maxHeight: maxHeight).
+  ///
+  /// See also:
+  /// - [BoxConstraintsAttribute]
+  /// - [BoxConstraints]
   T maxHeight(double height) => call(maxHeight: height);
 
   T call({
