@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../helpers/build_context_ext.dart';
 import '../../widgets/styled_widget.dart';
 import 'text_attribute.dart';
 
@@ -19,8 +20,16 @@ class StyledText extends StyledWidget {
 
   @override
   Widget build(BuildContext context) {
+    final inheritedAttribute = inherit && context.mix != null
+        // ignore: avoid-non-null-assertion
+        ? TextMixAttribute.of(context.mix!)
+        : const TextMixAttribute();
+
     return withMix(context, (mix) {
-      final mixture = mix.resolvableOf(const TextMixAttribute());
+      final attribute = TextMixAttribute.of(mix);
+      final merged = inheritedAttribute.merge(attribute);
+
+      final mixture = merged.resolve(mix);
 
       return Text(
         mixture.applyTextDirectives(text),

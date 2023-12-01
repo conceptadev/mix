@@ -18,9 +18,9 @@ class StyledStack extends StyledWidget {
   final List<Widget> children;
   @override
   Widget build(BuildContext context) {
-    final inheritedAttribute = inherit && context.mix != null
-        // ignore: avoid-non-null-assertion
-        ? StackMixAttribute.of(context.mix!)
+    final contextMix = context.mix;
+    final inheritedAttribute = inherit && contextMix != null
+        ? StackMixAttribute.of(contextMix)
         : const StackMixAttribute();
 
     return withMix(context, (mix) {

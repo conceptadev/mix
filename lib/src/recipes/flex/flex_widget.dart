@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import '../../helpers/build_context_ext.dart';
 import '../../widgets/gap_widget.dart';
 import '../../widgets/styled_widget.dart';
+import '../container/container_attribute.dart';
 import '../container/container_widget.dart';
 import 'flex_attribute.dart';
 import 'flex_mixture.dart';
@@ -39,22 +40,25 @@ class StyledFlex extends StyledWidget {
 
   @override
   Widget build(BuildContext context) {
-    final attribute = inherit
-        ? context.mix?.attributeOf<FlexMixAttribute>() ??
-            const FlexMixAttribute()
+    final contextMix = context.mix;
+    final inheritedAttribute = inherit && contextMix != null
+        ? FlexMixAttribute.of(contextMix)
         : const FlexMixAttribute();
 
     return withMix(context, (mix) {
-      final mixture =
-          attribute.merge(mix.attributeOf<FlexMixAttribute>()).resolve(mix);
+      final attribute = FlexMixAttribute.of(mix);
+      final merged = inheritedAttribute.merge(attribute);
+
+      final mixture = merged.resolve(mix);
 
       List<Widget> renderSpacedChildren() {
-        return mixture.gap == null
+        final gap = mixture.gap;
+
+        return gap == null
             ? children
             : List<Widget>.generate(
                 children.length * 2 - 1,
-                (index) =>
-                    index % 2 == 0 ? children[index ~/ 2] : Gap(mixture.gap!),
+                (index) => index % 2 == 0 ? children[index ~/ 2] : Gap(gap),
               );
       }
 
@@ -178,10 +182,13 @@ class FlexBox extends StyledWidget {
   @override
   Widget build(BuildContext context) {
     return withMix(context, (mix) {
-      return StyledContainer(
-        inherit: true,
-        child: StyledFlex(
-          inherit: true,
+      final containerStyle = ContainerMixAttribute.of(mix).resolve(mix);
+      final flexStyle = FlexMixAttribute.of(mix).resolve(mix);
+
+      return MixedContainer(
+        containerStyle,
+        child: MixedFlex(
+          flexStyle,
           direction: direction,
           children: children,
         ),

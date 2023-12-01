@@ -64,32 +64,100 @@ class AlignmentUtility<T> extends ScalarUtility<T, AlignmentGeometry> {
   T only(double? x, double? y, double? start) => _only(x, y, start);
 }
 
-class DoubleUtility<T> extends ScalarUtility<T, double> {
+/// Utility for creating `double` values.
+///
+/// Includes predefined values such as zero and infinity.
+///
+/// Example:
+/// ```dart
+/// final utility = DoubleUtility(builder);
+/// final infinityValue = utility.infinity();
+///
+/// final tenValue = utility(10);
+/// final zeroValue = utility.zero();
+/// ```
+class DoubleUtility<T> extends ScalarUtility<T, double>
+    with CallableUtilityMixin<T, double> {
   const DoubleUtility(super.builder);
 
   T zero() => builder(0);
   T infinity() => builder(double.infinity);
 }
 
-class IntUtility<T> extends ScalarUtility<T, int> {
+/// Utility for creating `int` values.
+///
+/// Includes a predefined value for zero.
+///
+/// Example:
+/// ```dart
+/// final utility = IntUtility(builder);
+/// final zeroValue = utility.zero();
+/// final tenValue = utility(10);
+/// // zeroValue is 0
+/// ```
+class IntUtility<T> extends ScalarUtility<T, int>
+    with CallableUtilityMixin<T, int> {
   const IntUtility(super.builder);
 
   T zero() => builder(0);
 }
 
-class BoolUtility<T> extends ScalarUtility<T, bool> {
+/// Utility for creating `bool` values.
+///
+/// Simplifies setting boolean values to true or false.
+///
+/// Example:
+/// ```dart
+/// final boolUtility = BoolUtility(builder);
+/// final enabled = boolUtility.on();
+/// final disabled = boolUtility.off();
+/// final boolValue = boolUtility(true);
+/// ```
+class BoolUtility<T> extends ScalarUtility<T, bool>
+    with CallableUtilityMixin<T, bool> {
   const BoolUtility(super.builder);
 
   T on() => builder(true);
   T off() => builder(false);
 }
 
+class ListUtility<T, V> extends MixUtility<T, List<V>> {
+  const ListUtility(super.builder);
+}
+
+/// Utility for setting `VerticalDirection` values.
+///
+/// Useful for defining the direction of vertical arrangements.
+///
+/// Example:
+/// ```dart
+/// final verticalDirection = VerticalDirectionUtility(builder);
+///
+/// VerticalDirection.up:
+/// final up = verticalDirection.up();
+///
+/// VerticalDirection.down:
+/// final down = verticalDirection.down();
+/// ```
+/// See [VerticalDirection] for more information.
 class VerticalDirectionUtility<T> extends ScalarUtility<T, VerticalDirection> {
   const VerticalDirectionUtility(super.builder);
   T up() => builder(VerticalDirection.up);
   T down() => builder(VerticalDirection.down);
 }
 
+/// Utility for setting `Clip` values.
+///
+/// Useful for defining the clipping behavior of widgets.
+/// Includes predefined values of `Clip` such as `none`, `hardEdge`, and `antiAlias`.
+/// Example:
+/// ```dart
+/// final clip = ClipUtility(builder);
+/// final noneClip = clip.none();
+/// final hardEdge = clip.hardEdge();
+/// final antiAlias = clip.antiAlias();
+/// ```
+/// See [Clip] for more information.
 class ClipUtility<T> extends ScalarUtility<T, Clip> {
   const ClipUtility(super.builder);
   T antiAliasWithSaveLayer() => builder(Clip.antiAliasWithSaveLayer);
@@ -98,10 +166,17 @@ class ClipUtility<T> extends ScalarUtility<T, Clip> {
   T antiAlias() => builder(Clip.antiAlias);
 }
 
-class SoftWrapUtility<T> extends BoolUtility<T> {
-  const SoftWrapUtility(super.builder);
-}
-
+/// Utility for setting `FlexFit` values.
+///
+/// Useful for defining the fit of a widget within a flex layout.
+/// Includes predefined values of `FlexFit` such as `tight` and `loose`.
+/// Example:
+/// ```dart
+/// final flexFit = FlexFitUtility(builder);
+/// final tight = flexFit.tight();
+/// final loose = flexFit.loose();
+/// ```
+/// See [FlexFit] for more information.
 class FlexFitUtility<T> extends ScalarUtility<T, FlexFit> {
   const FlexFitUtility(super.builder);
   T tight() => builder(FlexFit.tight);
@@ -113,12 +188,34 @@ class TextHeightBehaviorUtility<T>
   const TextHeightBehaviorUtility(super.builder);
 }
 
+/// Utility for setting `Axis` values.
+///
+/// Useful for defining the direction of flex layouts.
+/// Includes predefined values of `Axis` such as `horizontal` and `vertical`.
+/// Example:
+/// ```dart
+/// final axis = AxisUtility(builder);
+/// final horizontal = axis.horizontal();
+/// final vertical = axis.vertical();
+/// ```
+/// See [Axis] for more information.
 class AxisUtility<T> extends ScalarUtility<T, Axis> {
   const AxisUtility(super.builder);
   T horizontal() => builder(Axis.horizontal);
   T vertical() => builder(Axis.vertical);
 }
 
+/// Utility for setting `StackFit` values.
+///
+/// Useful for defining the fit of a widget within a stack layout.
+/// Includes predefined values of `StackFit` such as `loose` and `expand`.
+/// Example:
+/// ```dart
+/// final stackFit = StackFitUtility(builder);
+/// final loose = stackFit.loose();
+/// final expand = stackFit.expand();
+/// ```
+/// See [StackFit] for more information.
 class StackFitUtility<T> extends ScalarUtility<T, StackFit> {
   const StackFitUtility(super.builder);
   T loose() => builder(StackFit.loose);
@@ -126,12 +223,34 @@ class StackFitUtility<T> extends ScalarUtility<T, StackFit> {
   T passthrough() => builder(StackFit.passthrough);
 }
 
+/// Utility for setting `TextDirection` values.
+///
+/// Useful for defining the direction of text.
+/// Includes predefined values of `TextDirection` such as `ltr` and `rtl`.
+/// Example:
+/// ```dart
+/// final textDirection = TextDirectionUtility(builder);
+/// final ltr = textDirection.ltr();
+/// final rtl = textDirection.rtl();
+/// ```
+/// See [TextDirection] for more information.
 class TextDirectionUtility<T> extends ScalarUtility<T, TextDirection> {
   const TextDirectionUtility(super.builder);
   T rtl() => builder(TextDirection.rtl);
   T ltr() => builder(TextDirection.ltr);
 }
 
+/// Utility for setting `TileMode` values.
+///
+/// Useful for defining the tiling behavior of images.
+/// Includes predefined values of `TileMode` such as `clamp` and `mirror`.
+/// Example:
+/// ```dart
+/// final tileMode = TileModeUtility(builder);
+/// final clamp = tileMode.clamp();
+/// final mirror = tileMode.mirror();
+/// ```
+/// See [TileMode] for more information.
 class TileModeUtility<T> extends ScalarUtility<T, TileMode> {
   const TileModeUtility(super.builder);
   T clamp() => builder(TileMode.clamp);
@@ -140,14 +259,59 @@ class TileModeUtility<T> extends ScalarUtility<T, TileMode> {
   T decal() => builder(TileMode.decal);
 }
 
+/// Utility for setting `GradientTransform` values.
+///
+/// Useful for defining the transformation of gradients.
+/// Includes subclasses of `GradientTransform` such `GradientRotation`.
+/// Example:
+/// ```dart
+/// final gradientTransform = GradientTransformUtility(builder);
+/// final rotate90 = gradientTransform.rotate(90);
+/// ```
+/// See [GradientTransform] for more information.
+
 class GradientTransformUtility<T> extends ScalarUtility<T, GradientTransform> {
   const GradientTransformUtility(super.builder);
+
+  T rotate(double radians) => builder(GradientRotation(radians));
 }
 
+/// Utility for setting `Matrix4` values.
+///
+/// Useful for defining the transformation of widgets.
+/// Example:
+/// ```dart
+/// final matrix4 = Matrix4Utility(builder);
+/// final identity = matrix4.identity();
+/// final rotateX = matrix4.rotationX(0.5);
+/// final rotateY = matrix4.rotationY(0.5);
+/// final rotateZ = matrix4.rotationZ(0.5);
+/// final translation = matrix4.translationValues(10, 10, 10);
+/// final scale = matrix4.scale(2, 2, 2);
+/// ```
+/// See [Matrix4] for more information.
 class Matrix4Utility<T> extends ScalarUtility<T, Matrix4> {
   const Matrix4Utility(super.builder);
+
+  T identity() => builder(Matrix4.identity());
+  T rotationX(double radians) => builder(Matrix4.rotationX(radians));
+  T rotationY(double radians) => builder(Matrix4.rotationY(radians));
+  T rotationZ(double radians) => builder(Matrix4.rotationZ(radians));
+  T translationValues(double x, double y, double z) =>
+      builder(Matrix4.translationValues(x, y, z));
 }
 
+/// Utility for setting `MainAxisAlignment` values.
+///
+/// Useful for defining the alignment of widgets within a flex layout.
+/// Includes predefined values of `MainAxisAlignment` such as `start` and `end`.
+/// Example:
+/// ```dart
+/// final mainAxisAlignment = MainAxisAlignmentUtility(builder);
+/// final start = mainAxisAlignment.start();
+/// final end = mainAxisAlignment.end();
+/// ```
+/// See [MainAxisAlignment] for more information.
 class MainAxisAlignmentUtility<T> extends ScalarUtility<T, MainAxisAlignment> {
   const MainAxisAlignmentUtility(super.builder);
   T spaceBetween() => builder(MainAxisAlignment.spaceBetween);
@@ -159,6 +323,17 @@ class MainAxisAlignmentUtility<T> extends ScalarUtility<T, MainAxisAlignment> {
   T center() => builder(MainAxisAlignment.center);
 }
 
+/// Utility for setting `CrossAxisAlignment` values.
+///
+/// Useful for defining the alignment of widgets within a flex layout.
+/// Includes predefined values of `CrossAxisAlignment` such as `start` and `end`.
+/// Example:
+/// ```dart
+/// final crossAxisAlignment = CrossAxisAlignmentUtility(builder);
+/// final start = crossAxisAlignment.start();
+/// final end = crossAxisAlignment.end();
+/// ```
+/// See [CrossAxisAlignment] for more information.
 class CrossAxisAlignmentUtility<T>
     extends ScalarUtility<T, CrossAxisAlignment> {
   const CrossAxisAlignmentUtility(super.builder);
@@ -169,20 +344,47 @@ class CrossAxisAlignmentUtility<T>
   T baseline() => builder(CrossAxisAlignment.baseline);
 }
 
+/// Utility for setting `MainAxisSize` values.
+///
+/// Useful for defining the size of widgets within a flex layout.
+/// Includes predefined values of `MainAxisSize` such as `min` and `max`.
+/// Example:
+/// ```dart
+/// final mainAxisSize = MainAxisSizeUtility(builder);
+/// final min = mainAxisSize.min();
+/// final max = mainAxisSize.max();
+/// ```
+/// See [MainAxisSize] for more information.
 class MainAxisSizeUtility<T> extends ScalarUtility<T, MainAxisSize> {
   const MainAxisSizeUtility(super.builder);
   T min() => builder(MainAxisSize.min);
   T max() => builder(MainAxisSize.max);
 }
 
-class ListUtility<T, V> extends MixUtility<T, List<V>> {
-  const ListUtility(super.builder);
-}
-
+/// Utility for setting FontFamily names in other attributes
+///
+/// Example:
+/// ```dart
+/// final fontFamily = FontFamilyUtility(builder);
+/// final fontFamilyValue = fontFamily("Roboto");
+/// ```
 class FontFamilyUtility<T> extends ScalarUtility<T, String> {
   const FontFamilyUtility(super.builder);
 }
 
+/// Utility for setting `ImageRepeat` values.
+///
+/// Useful for defining the tiling behavior of images.
+/// Includes predefined values of `ImageRepeat` such as `repeat` and `repeatX`.
+/// Example:
+/// ```dart
+/// final imageRepeat = ImageRepeatUtility(builder);
+/// final repeat = imageRepeat.repeat();
+/// final repeatX = imageRepeat.repeatX();
+/// final repeatY = imageRepeat.repeatY();
+/// final noRepeat = imageRepeat.noRepeat();
+/// ```
+/// See [ImageRepeat] for more information.
 class ImageRepeatUtility<T> extends ScalarUtility<T, ImageRepeat> {
   const ImageRepeatUtility(super.builder);
   T noRepeat() => builder(ImageRepeat.noRepeat);
@@ -191,11 +393,22 @@ class ImageRepeatUtility<T> extends ScalarUtility<T, ImageRepeat> {
   T repeatY() => builder(ImageRepeat.repeatY);
 }
 
+/// Utility for setting `Offset` values.
+///
+/// Useful for defining the offset of widgets.
+/// Example:
+/// ```dart
+/// final offset = OffsetUtility(builder);
+/// final offsetValue = offset(10, 10);
+/// ```
+
 class OffsetUtility<T> extends MixUtility<T, Offset> {
   const OffsetUtility(super.builder);
+
+  T call(double dx, double dy) => builder(Offset(dx, dy));
 }
 
-class SizingUtility<T> extends DoubleUtility<T> {
+abstract class SizingUtility<T> extends DoubleUtility<T> {
   const SizingUtility(super.builder);
 }
 
@@ -203,6 +416,21 @@ class FontSizeUtility<T> extends SizingUtility<T> {
   const FontSizeUtility(super.builder);
 }
 
+/// Utility for setting `BoxFit` values.
+///
+/// Useful for defining BoxFit values for widgets
+/// Example:
+/// ```dart
+/// final boxFit = BoxFitUtility(builder);
+/// final fill = boxFit.fill();
+/// final contain = boxFit.contain();
+/// final cover = boxFit.cover();
+/// final fitWidth = boxFit.fitWidth();
+/// final fitHeight = boxFit.fitHeight();
+/// final none = boxFit.none();
+/// final scaleDown = boxFit.scaleDown();
+/// ```
+/// See [BoxFit] for more information.
 class BoxFitUtility<T> extends ScalarUtility<T, BoxFit> {
   const BoxFitUtility(super.builder);
   T fill() => builder(BoxFit.fill);
@@ -214,6 +442,16 @@ class BoxFitUtility<T> extends ScalarUtility<T, BoxFit> {
   T scaleDown() => builder(BoxFit.scaleDown);
 }
 
+/// Utility for setting `BlendMode` values.
+///
+/// Useful for defining BlendMode values for widgets
+/// Example:
+/// ```dart
+/// final blendMode = BlendModeUtility(builder);
+/// final clear = blendMode.clear();
+/// final src = blendMode.src();
+/// ```
+///
 class BlendModeUtility<T> extends ScalarUtility<T, BlendMode> {
   const BlendModeUtility(super.builder);
 
@@ -248,18 +486,59 @@ class BlendModeUtility<T> extends ScalarUtility<T, BlendMode> {
   T luminosity() => builder(BlendMode.luminosity);
 }
 
+/// Utility for setting `BoxShape` values.
+///
+/// Useful for defining BoxShape values for widgets
+///
+/// Example:
+///
+/// ```dart
+/// final boxShape = BoxShapeUtility(builder);
+/// final circle = boxShape.circle();
+/// final rectangle = boxShape.rectangle();
+/// ```
+///
+/// See [BoxShape] for more information.
 class BoxShapeUtility<T> extends ScalarUtility<T, BoxShape> {
   const BoxShapeUtility(super.builder);
   T circle() => _builder(BoxShape.circle);
   T rectangle() => _builder(BoxShape.rectangle);
 }
 
+/// Utility for setting `FontWeight` values.
+///
+/// Useful for defining FontWeight values for widgets
+///
+/// Example:
+///
+/// ```dart
+/// final fontWeight = FontWeightUtility(builder);
+/// final bold = fontWeight.bold();
+/// final normal = fontWeight.normal();
+/// ```
+///
+/// See [FontWeight] for more information.
 class FontWeightUtility<T> extends ScalarUtility<T, FontWeight> {
   const FontWeightUtility(super.builder);
   T bold() => _builder(FontWeight.bold);
   T normal() => _builder(FontWeight.normal);
 }
 
+/// Utility for setting `TextDecoration` values.
+///
+/// Useful for defining TextDecoration values for widgets
+///
+/// Example:
+///
+/// ```dart
+/// final textDecoration = TextDecorationUtility(builder);
+/// final underline = textDecoration.underline();
+/// final overline = textDecoration.overline();
+/// final lineThrough = textDecoration.lineThrough();
+/// final none = textDecoration.none();
+/// ```
+///
+/// See [TextDecoration] for more information.
 class TextDecorationUtility<T> extends ScalarUtility<T, TextDecoration> {
   const TextDecorationUtility(super.builder);
 
@@ -269,6 +548,19 @@ class TextDecorationUtility<T> extends ScalarUtility<T, TextDecoration> {
   T none() => _builder(TextDecoration.none);
 }
 
+/// Utility for setting `FontStyle` values.
+///
+/// Useful for defining FontStyle values for widgets
+///
+/// Example:
+///
+/// ```dart
+/// final fontStyle = FontStyleUtility(builder);
+/// final italic = fontStyle.italic();
+/// final normal = fontStyle.normal();
+/// ```
+///
+/// See [FontStyle] for more information.
 class FontStyleUtility<T> extends ScalarUtility<T, FontStyle> {
   const FontStyleUtility(super.builder);
 
@@ -276,6 +568,20 @@ class FontStyleUtility<T> extends ScalarUtility<T, FontStyle> {
   T normal() => _builder(FontStyle.normal);
 }
 
+/// Utility for setting `Radius` values.
+///
+/// Useful for defining Radius values for widgets
+///
+/// Example:
+///
+/// ```dart
+/// final radius = RadiusUtility(builder);
+/// final zero = radius.zero();
+/// final circular = radius.circular(10);
+/// final elliptical = radius.elliptical(10, 10);
+/// ```
+///
+/// See [Radius] for more information.
 class RadiusUtility<T> extends MixUtility<T, Radius> {
   const RadiusUtility(super.builder);
 
@@ -286,6 +592,22 @@ class RadiusUtility<T> extends MixUtility<T, Radius> {
   T circular(double radius) => _builder(Radius.circular(radius));
 }
 
+/// Utility for setting `TextDecorationStyle` values.
+///
+/// Useful for defining TextDecorationStyle values for widgets
+///
+/// Example:
+///
+/// ```dart
+/// final textDecorationStyle = TextDecorationStyleUtility(builder);
+/// final solid = textDecorationStyle.solid();
+/// final double = textDecorationStyle.double();
+/// final dotted = textDecorationStyle.dotted();
+/// final dashed = textDecorationStyle.dashed();
+/// final wavy = textDecorationStyle.wavy();
+/// ```
+///
+/// See [TextDecorationStyle] for more information.
 class TextDecorationStyleUtility<T>
     extends ScalarUtility<T, TextDecorationStyle> {
   const TextDecorationStyleUtility(super.builder);
@@ -297,6 +619,19 @@ class TextDecorationStyleUtility<T>
   T wavy() => _builder(TextDecorationStyle.wavy);
 }
 
+/// Utility for setting `TextBaseline` values.
+///
+/// Useful for defining TextBaseline values for widgets
+///
+/// Example:
+///
+/// ```dart
+/// final textBaseline = TextBaselineUtility(builder);
+/// final alphabetic = textBaseline.alphabetic();
+/// final ideographic = textBaseline.ideographic();
+/// ```
+///
+/// See [TextBaseline] for more information.
 class TextBaselineUtility<T> extends ScalarUtility<T, TextBaseline> {
   const TextBaselineUtility(super.builder);
 
@@ -304,6 +639,20 @@ class TextBaselineUtility<T> extends ScalarUtility<T, TextBaseline> {
   T ideographic() => _builder(TextBaseline.ideographic);
 }
 
+/// Utility for setting `TextOverflow` values.
+///
+/// Useful for defining TextOverflow values for widgets
+///
+/// Example:
+///
+/// ```dart
+/// final textOverflow = TextOverflowUtility(builder);
+/// final clip = textOverflow.clip();
+/// final ellipsis = textOverflow.ellipsis();
+/// final fade = textOverflow.fade();
+/// ```
+///
+/// See [TextOverflow] for more information.
 class TextOverflowUtility<T> extends ScalarUtility<T, TextOverflow> {
   const TextOverflowUtility(super.builder);
   T clip() => _builder(TextOverflow.clip);
@@ -311,12 +660,42 @@ class TextOverflowUtility<T> extends ScalarUtility<T, TextOverflow> {
   T fade() => _builder(TextOverflow.fade);
 }
 
+/// Utility for setting `TextWidthBasis` values.
+///
+/// Useful for defining TextWidthBasis values for widgets
+///
+/// Example:
+///
+/// ```dart
+/// final textWidthBasis = TextWidthBasisUtility(builder);
+/// final parent = textWidthBasis.parent();
+/// final longestLine = textWidthBasis.longestLine();
+/// ```
+///
+/// See [TextWidthBasis] for more information.
 class TextWidthBasisUtility<T> extends ScalarUtility<T, TextWidthBasis> {
   const TextWidthBasisUtility(super.builder);
   T parent() => _builder(TextWidthBasis.parent);
   T longestLine() => _builder(TextWidthBasis.longestLine);
 }
 
+/// Utility for setting `TextAlign` values.
+///
+/// Useful for defining TextAlign values for widgets
+///
+/// Example:
+///
+/// ```dart
+/// final textAlign = TextAlignUtility(builder);
+/// final left = textAlign.left();
+/// final right = textAlign.right();
+/// final center = textAlign.center();
+/// final justify = textAlign.justify();
+/// final start = textAlign.start();
+/// final end = textAlign.end();
+/// ```
+///
+/// See [TextAlign] for more information.
 class TextAlignUtility<T> extends ScalarUtility<T, TextAlign> {
   const TextAlignUtility(super.builder);
   T left() => _builder(TextAlign.left);

@@ -14,9 +14,9 @@ class StyledContainer extends StyledWidget {
 
   @override
   Widget build(BuildContext context) {
-    final inheritedAttribute = inherit && context.mix != null
-        // ignore: avoid-non-null-assertion
-        ? ContainerMixAttribute.of(context.mix!)
+    final contextMix = context.mix;
+    final inheritedAttribute = inherit && contextMix != null
+        ? ContainerMixAttribute.of(contextMix)
         : const ContainerMixAttribute();
 
     return withMix(context, (mix) {

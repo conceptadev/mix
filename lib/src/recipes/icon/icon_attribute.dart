@@ -10,6 +10,10 @@ class IconMixAttribute
 
   const IconMixAttribute({this.size, this.color});
 
+  static IconMixAttribute of(MixData mix) {
+    return mix.attributeOf<IconMixAttribute>() ?? const IconMixAttribute();
+  }
+
   @override
   IconMixture resolve(MixData mix) {
     return IconMixture(color: color?.resolve(mix), size: size);

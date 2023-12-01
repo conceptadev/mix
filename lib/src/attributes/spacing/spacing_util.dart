@@ -44,39 +44,104 @@ abstract class SpacingUtility<T>
 
   //  Methods for creating attributes with uniform values for specific orientations or directions.
 
-  /// Applies uniform spacing on top and bottom sides.
-  SpacingSideUtility<T> get vertical => SpacingSideUtility(_vertical);
-
   SpacingDirectionalUtility<T> get directional =>
       SpacingDirectionalUtility(builder);
 
-  /// Applies uniform spacing on left and right sides.
+  /// Applies uniform horizontal spacing to the widget.
+  ///
+  /// This method is useful for setting equal spacing on the left and right sides of a widget.
+  ///
+  /// Example:
+  /// ```dart
+  /// final myHorizontalPadding = spacing.horizontal(15);
+  /// ```
   SpacingSideUtility<T> get horizontal => SpacingSideUtility(_horizontal);
 
-  /// Applies uniform spacing on all sides.
+  /// Applies uniform vertical spacing to the widget.
+  ///
+  /// Use this method when you want equal spacing on the top and bottom sides of a widget.
+  ///
+  /// Example:
+  /// ```dart
+  /// final myVerticalPadding = spacing.vertical(20);
+  /// ```
+  SpacingSideUtility<T> get vertical => SpacingSideUtility(_vertical);
+
+  /// Applies uniform spacing to all sides of the widget.
+  ///
+  /// Use this method when you want equal spacing on all sides of a widget.
+  ///
+  /// Example:
+  /// ```dart
+  /// final myUniformPadding = spacing.all(10);
+  /// ```
   SpacingSideUtility<T> get all => SpacingSideUtility(_all);
 
-  /// Applies uniform spacing on top side.
+  /// Applies spacing to the top side of the widget.
+  ///
+  /// Use this method to add padding or margin to the top edge of a widget.
+  ///
+  /// Example:
+  /// ```dart
+  /// final myTopPadding = spacing.top(5);
+  /// ```
   SpacingSideUtility<T> get top => SpacingSideUtility(_top);
 
-  /// Applies uniform spacing on bottom side.
+  /// Applies spacing to the bottom side of the widget.
+  ///
+  /// Use this method to add padding or margin to the bottom edge of a widget.
+  ///
+  /// Example:
+  /// ```dart
+  /// final myBottomPadding = spacing.bottom(5);
+  /// ```
   SpacingSideUtility<T> get bottom => SpacingSideUtility(_bottom);
 
-  /// Applies uniform spacing on left side.
+  /// Applies spacing to the left side of the widget.
+  ///
+  /// Ideal for adding padding or margin to the left edge of a widget.
+  ///
+  /// Example:
+  /// ```dart
+  /// final myLeftPadding = spacing.left(8);
+  /// ```
   SpacingSideUtility<T> get left => SpacingSideUtility(_left);
 
-  /// Applies uniform spacing on right side.
+  /// Applies spacing to the right side of the widget.
+  ///
+  /// Use this method for padding or margin on the right edge of a widget.
+  ///
+  /// Example:
+  /// ```dart
+  /// final myRightPadding = spacing.right(8);
+  /// ```
   SpacingSideUtility<T> get right => SpacingSideUtility(_right);
 
-  /// Applies uniform spacing on start side.
+  /// Applies spacing to the start side of the widget (considering text direction).
+  ///
+  /// This method is particularly useful in RTL (Right-to-Left) layouts.
+  ///
+  /// Example:
+  /// ```dart
+  /// final myStartPadding = spacing.start(10);
+  /// ```
   SpacingSideUtility<T> get start => SpacingSideUtility(_start);
 
-  /// Applies uniform spacing on end side.
+  /// Applies spacing to the end side of the widget (considering text direction).
+  ///
+  /// This is helpful in RTL layouts for padding or margin on the end side of a widget.
+  ///
+  /// Example:
+  /// ```dart
+  /// final myEndPadding = spacing.end(10);
+  /// ```
   SpacingSideUtility<T> get end => SpacingSideUtility(_end);
 
   /// Provides a method to create an attribute with custom values for each side.
   ///
   /// Use this method when you want to be explicit about the spacing values for each side.
+  /// Method also allows for specifying directional spacing (e.g., `start` and `end`). and non-directional
+  /// spacing (e.g., `left` and `right`) in the same attribute.
   T only({
     double? top,
     double? bottom,
@@ -99,8 +164,17 @@ abstract class SpacingUtility<T>
 
   /// Callable method for creating space attributes with flexible parameter input.
   ///
-  /// This method allows defining space by passing up to four parameters, representing top, bottom,
-  /// left, and right spacing, respectively. Parameters are optional and default to the first parameter's value.
+  /// This method allows defining space by passing up to four parameters. The behavior is as follows:
+  /// - 1 parameter: uniform spacing on all sides.
+  /// - 2 parameters: first for top and bottom, second for left and right.
+  /// - 3 parameters: first for top, second for left and right, third for bottom.
+  /// - 4 parameters: applied to top, right, bottom, and left respectively.
+  ///
+  /// Examples:
+  /// - `spacing(10)`: uniform spacing of 10 units on all sides.
+  /// - `spacing(10, 20)`: top and bottom spacing of 10 units, left and right spacing of 20 units.
+  /// - `spacing(10, 20, 30)`: top spacing of 10 units, left and right spacing of 20 units, bottom spacing of 30 units.
+  /// - `spacing(10, 20, 30, 40)`: top spacing of 10 units, right spacing of 20 units, bottom spacing of 30 units, left spacing of 40 units.
   T call(double p1, [double? p2, double? p3, double? p4]) {
     double top = p1;
     double bottom = p1;
@@ -183,28 +257,6 @@ class SpacingDirectionalUtility<T> extends SpacingUtility<T> {
   T _vertical(double value) => only(top: value, bottom: value);
   @override
   T _horizontal(double value) => only(start: value, end: value);
-
-  @override
-  T from(EdgeInsetsGeometry value) {
-    if (value is EdgeInsets) {
-      return only(
-        top: value.top,
-        bottom: value.bottom,
-        start: value.left,
-        end: value.right,
-      );
-    } else if (value is EdgeInsetsDirectional) {
-      return only(
-        top: value.top,
-        bottom: value.bottom,
-        start: value.start,
-        end: value.end,
-      );
-    }
-    throw Exception(
-      'Unsupported EdgeInsetsGeometry type: ${value.runtimeType}',
-    );
-  }
 
   /// Callable method for creating directional space attributes with flexible parameter input.
   ///
