@@ -10,12 +10,6 @@ class StackMixtureUtility<T> extends MixUtility<T, StackMixAttribute> {
 
   const StackMixtureUtility(super.builder);
 
-  T _alignment(AlignmentGeometry alignment) => call(alignment: alignment);
-  T _fit(StackFit fit) => call(fit: fit);
-  T _textDirection(TextDirection textDirection) =>
-      call(textDirection: textDirection);
-  T _clipBehavior(Clip clipBehavior) => call(clipBehavior: clipBehavior);
-
   T _only({
     AlignmentGeometry? alignment,
     StackFit? fit,
@@ -32,12 +26,23 @@ class StackMixtureUtility<T> extends MixUtility<T, StackMixAttribute> {
     return builder(stack);
   }
 
-  AlignmentUtility<T> get alignment => AlignmentUtility(_alignment);
-  StackFitUtility<T> get fit => StackFitUtility(_fit);
-  TextDirectionUtility<T> get textDirection =>
-      TextDirectionUtility(_textDirection);
+  AlignmentUtility<T> get alignment {
+    return AlignmentUtility((alignment) => _only(alignment: alignment));
+  }
 
-  ClipUtility<T> get clipBehavior => ClipUtility(_clipBehavior);
+  StackFitUtility<T> get fit {
+    return StackFitUtility((fit) => _only(fit: fit));
+  }
+
+  TextDirectionUtility<T> get textDirection {
+    return TextDirectionUtility(
+      (textDirection) => _only(textDirection: textDirection),
+    );
+  }
+
+  ClipUtility<T> get clipBehavior {
+    return ClipUtility((clipBehavior) => _only(clipBehavior: clipBehavior));
+  }
 
   T call({
     AlignmentGeometry? alignment,

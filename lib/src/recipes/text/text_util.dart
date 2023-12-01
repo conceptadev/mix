@@ -15,36 +15,57 @@ class TextUtility<T> extends MixUtility<T, TextMixAttribute> {
 
   const TextUtility(super.builder);
 
-  T _overflow(TextOverflow overflow) => only(overflow: overflow);
-  T _strutStyle(StrutStyleAttribute strutStyle) => only(strutStyle: strutStyle);
-  T _textAlign(TextAlign textAlign) => only(textAlign: textAlign);
-  T _textScaleFactor(double textScaleFactor) =>
-      only(textScaleFactor: textScaleFactor);
-  T _maxLines(int maxLines) => only(maxLines: maxLines);
-  T _style(TextStyleAttribute style) => only(style: style);
-  T _textWidthBasis(TextWidthBasis textWidthBasis) =>
-      only(textWidthBasis: textWidthBasis);
-  T _textHeightBehavior(TextHeightBehavior textHeightBehavior) =>
-      only(textHeightBehavior: textHeightBehavior);
-  T _textDirection(TextDirection textDirection) =>
-      call(textDirection: textDirection);
-  T _softWrap(bool softWrap) => call(softWrap: softWrap);
-  T _directives(List<TextDirective> directives) => only(directives: directives);
+  TextOverflowUtility<T> get overflow {
+    return TextOverflowUtility((overflow) => only(overflow: overflow));
+  }
 
-  TextOverflowUtility<T> get overflow => TextOverflowUtility(_overflow);
-  StrutStyleUtility<T> get strutStyle => StrutStyleUtility(_strutStyle);
-  TextAlignUtility<T> get textAlign => TextAlignUtility(_textAlign);
-  DoubleUtility<T> get textScaleFactor => DoubleUtility(_textScaleFactor);
-  IntUtility<T> get maxLines => IntUtility(_maxLines);
-  TextStyleUtility<T> get style => TextStyleUtility(_style);
-  TextWidthBasisUtility<T> get textWidthBasis =>
-      TextWidthBasisUtility(_textWidthBasis);
-  TextHeightBehaviorUtility<T> get textHeightBehavior =>
-      TextHeightBehaviorUtility(_textHeightBehavior);
-  TextDirectionUtility<T> get textDirection =>
-      TextDirectionUtility(_textDirection);
-  BoolUtility<T> get softWrap => BoolUtility(_softWrap);
-  ListUtility<T, TextDirective> get directives => ListUtility(_directives);
+  StrutStyleUtility<T> get strutStyle {
+    return StrutStyleUtility((strutStyle) => only(strutStyle: strutStyle));
+  }
+
+  TextAlignUtility<T> get textAlign {
+    return TextAlignUtility((textAlign) => only(textAlign: textAlign));
+  }
+
+  DoubleUtility<T> get textScaleFactor {
+    return DoubleUtility(
+      (textScaleFactor) => only(textScaleFactor: textScaleFactor),
+    );
+  }
+
+  IntUtility<T> get maxLines {
+    return IntUtility((maxLines) => only(maxLines: maxLines));
+  }
+
+  TextStyleUtility<T> get style {
+    return TextStyleUtility((style) => only(style: style));
+  }
+
+  TextWidthBasisUtility<T> get textWidthBasis {
+    return TextWidthBasisUtility(
+      (textWidthBasis) => only(textWidthBasis: textWidthBasis),
+    );
+  }
+
+  TextHeightBehaviorUtility<T> get textHeightBehavior {
+    return TextHeightBehaviorUtility(
+      (textHeightBehavior) => only(textHeightBehavior: textHeightBehavior),
+    );
+  }
+
+  TextDirectionUtility<T> get textDirection {
+    return TextDirectionUtility(
+      (textDirection) => only(textDirection: textDirection),
+    );
+  }
+
+  BoolUtility<T> get softWrap {
+    return BoolUtility((softWrap) => only(softWrap: softWrap));
+  }
+
+  T directive(TextDirective directive) {
+    return only(directives: [directive]);
+  }
 
   T only({
     TextOverflow? overflow,

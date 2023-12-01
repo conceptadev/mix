@@ -20,18 +20,6 @@ class BoxDecorationUtility<T> extends MixUtility<T, BoxDecorationAttribute> {
 
   const BoxDecorationUtility(super.builder);
 
-  T _color(ColorDto color) => _only(color: color);
-
-  T _shape(BoxShape shape) => _only(shape: shape);
-
-  T _border(BoxBorderAttribute border) => _only(border: border);
-
-  T _borderRadius(BorderRadiusGeometryAttribute borderRadius) =>
-      _only(borderRadius: borderRadius);
-
-  T _gradient(GradientDto gradient) =>
-      _only(gradient: GradientAttribute(gradient));
-
   T _only({
     ColorDto? color,
     BoxBorderAttribute? border,
@@ -52,19 +40,42 @@ class BoxDecorationUtility<T> extends MixUtility<T, BoxDecorationAttribute> {
     return builder(decoration);
   }
 
-  T _boxShadow(List<BoxShadowDto> boxShadow) => _only(boxShadow: boxShadow);
+  ColorUtility<T> get color {
+    return ColorUtility((ColorDto color) => _only(color: color));
+  }
 
-  ColorUtility<T> get color => ColorUtility(_color);
-  BorderUtility<T> get border => BorderUtility(_border);
-  BorderRadiusGeometryUtility<T> get borderRadius =>
-      BorderRadiusGeometryUtility(_borderRadius);
+  BorderUtility<T> get border {
+    return BorderUtility((BoxBorderAttribute border) => _only(border: border));
+  }
 
-  BoxShapeUtility<T> get shape => BoxShapeUtility(_shape);
+  BorderRadiusGeometryUtility<T> get borderRadius {
+    return BorderRadiusGeometryUtility(
+      (BorderRadiusGeometryAttribute borderRadius) =>
+          _only(borderRadius: borderRadius),
+    );
+  }
 
-  ElevationUtility<T> get elevation => ElevationUtility(_boxShadow);
-  GradientUtility<T> get gradient => GradientUtility(_gradient);
+  BoxShapeUtility<T> get shape {
+    return BoxShapeUtility((BoxShape shape) => _only(shape: shape));
+  }
 
-  BoxShadowListUtility<T> get boxShadow => BoxShadowListUtility(_boxShadow);
+  ElevationUtility<T> get elevation {
+    return ElevationUtility((List<BoxShadowDto> boxShadow) {
+      return _only(boxShadow: boxShadow);
+    });
+  }
+
+  GradientUtility<T> get gradient {
+    return GradientUtility((GradientDto gradient) {
+      return _only(gradient: GradientAttribute(gradient));
+    });
+  }
+
+  BoxShadowListUtility<T> get boxShadow {
+    return BoxShadowListUtility((List<BoxShadowDto> boxShadow) {
+      return _only(boxShadow: boxShadow);
+    });
+  }
 
   T call({
     Color? color,

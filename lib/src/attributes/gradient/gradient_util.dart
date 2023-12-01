@@ -11,25 +11,31 @@ class GradientUtility<T> extends MixUtility<T, GradientDto> {
 
   const GradientUtility(super.builder);
 
-  T _radial(RadialGradientDto radial) => builder(radial);
+  // T _radial(RadialGradientDto radial) => builder(radial);
 
-  T _linear(LinearGradientDto linear) => builder(linear);
+  // T _linear(LinearGradientDto linear) => builder(linear);
 
-  T _sweep(SweepGradientDto sweep) => builder(sweep);
+  // T _sweep(SweepGradientDto sweep) => builder(sweep);
 
-  RadialGradientUtility<T> get radial => RadialGradientUtility(_radial);
+  RadialGradientUtility<T> get radial {
+    return RadialGradientUtility(builder);
+  }
 
-  LinearGradientUtility<T> get linear => LinearGradientUtility(_linear);
+  LinearGradientUtility<T> get linear {
+    return LinearGradientUtility(builder);
+  }
 
-  SweepGradientUtility<T> get sweep => SweepGradientUtility(_sweep);
+  SweepGradientUtility<T> get sweep {
+    return SweepGradientUtility(builder);
+  }
 
-  T from(Gradient gradient) {
+  T as(Gradient gradient) {
     if (gradient is RadialGradient) {
-      return _radial(RadialGradientDto.from(gradient));
+      return radial.as(gradient);
     } else if (gradient is LinearGradient) {
-      return _linear(LinearGradientDto.from(gradient));
+      return linear.as(gradient);
     } else if (gradient is SweepGradient) {
-      return _sweep(SweepGradientDto.from(gradient));
+      return sweep.as(gradient);
     }
     throw UnimplementedError(
       'Cannot create GradientAttribute from gradient of type ${gradient.runtimeType}',
@@ -42,40 +48,35 @@ class RadialGradientUtility<T> extends MixUtility<T, RadialGradientDto> {
 
   const RadialGradientUtility(super.builder);
 
-  T _colors(List<Color> colors) => call(colors: colors);
+  AlignmentUtility<T> get center {
+    return AlignmentUtility((center) => call(center: center));
+  }
 
-  T _stops(List<double> stops) => call(stops: stops);
+  DoubleUtility<T> get radius {
+    return DoubleUtility((radius) => call(radius: radius));
+  }
 
-  T _center(AlignmentGeometry center) => call(center: center);
+  AlignmentUtility<T> get focal {
+    return AlignmentUtility((focal) => call(focal: focal));
+  }
 
-  T _radius(double radius) => call(radius: radius);
+  DoubleUtility<T> get focalRadius {
+    return DoubleUtility((focalRadius) => call(focalRadius: focalRadius));
+  }
 
-  T _focal(AlignmentGeometry focal) => call(focal: focal);
+  TileModeUtility<T> get tileMode {
+    return TileModeUtility((tileMode) => call(tileMode: tileMode));
+  }
 
-  T _focalRadius(double focalRadius) => call(focalRadius: focalRadius);
+  GradientTransformUtility<T> get transform {
+    return GradientTransformUtility((transform) => call(transform: transform));
+  }
 
-  T _tileMode(TileMode tileMode) => call(tileMode: tileMode);
+  T colors(List<Color> colors) => call(colors: colors);
 
-  T _transform(GradientTransform transform) => call(transform: transform);
+  T stops(List<double> stops) => call(stops: stops);
 
-  ListUtility<T, Color> get colors => ListUtility(_colors);
-
-  ListUtility<T, double> get stops => ListUtility(_stops);
-
-  AlignmentUtility<T> get center => AlignmentUtility(_center);
-
-  DoubleUtility<T> get radius => DoubleUtility(_radius);
-
-  AlignmentUtility<T> get focal => AlignmentUtility(_focal);
-
-  DoubleUtility<T> get focalRadius => DoubleUtility(_focalRadius);
-
-  TileModeUtility<T> get tileMode => TileModeUtility(_tileMode);
-
-  GradientTransformUtility<T> get transform =>
-      GradientTransformUtility(_transform);
-
-  T from(RadialGradient gradient) {
+  T as(RadialGradient gradient) {
     return builder(RadialGradientDto.from(gradient));
   }
 
@@ -109,34 +110,35 @@ class LinearGradientUtility<T> extends MixUtility<T, LinearGradientDto> {
 
   const LinearGradientUtility(super.builder);
 
-  T _colors(List<Color> colors) => call(colors: colors);
+  AlignmentUtility<T> get begin {
+    return AlignmentUtility((AlignmentGeometry begin) {
+      return builder(LinearGradientDto(begin: begin));
+    });
+  }
 
-  T _stops(List<double> stops) => builder(LinearGradientDto(stops: stops));
+  AlignmentUtility<T> get end {
+    return AlignmentUtility((AlignmentGeometry end) {
+      return builder(LinearGradientDto(end: end));
+    });
+  }
 
-  T _begin(AlignmentGeometry begin) => builder(LinearGradientDto(begin: begin));
+  TileModeUtility<T> get tileMode {
+    return TileModeUtility(
+      (TileMode tileMode) => builder(LinearGradientDto(tileMode: tileMode)),
+    );
+  }
 
-  T _end(AlignmentGeometry end) => builder(LinearGradientDto(end: end));
+  GradientTransformUtility<T> get transform {
+    return GradientTransformUtility((GradientTransform transform) {
+      return builder(LinearGradientDto(transform: transform));
+    });
+  }
 
-  T _tileMode(TileMode tileMode) =>
-      builder(LinearGradientDto(tileMode: tileMode));
+  T colors(List<Color> colors) => call(colors: colors);
 
-  T _transform(GradientTransform transform) =>
-      builder(LinearGradientDto(transform: transform));
+  T stops(List<double> stops) => builder(LinearGradientDto(stops: stops));
 
-  ListUtility<T, Color> get colors => ListUtility(_colors);
-
-  ListUtility<T, double> get stops => ListUtility(_stops);
-
-  AlignmentUtility<T> get begin => AlignmentUtility(_begin);
-
-  AlignmentUtility<T> get end => AlignmentUtility(_end);
-
-  TileModeUtility<T> get tileMode => TileModeUtility(_tileMode);
-
-  GradientTransformUtility<T> get transform =>
-      GradientTransformUtility(_transform);
-
-  T from(LinearGradient gradient) {
+  T as(LinearGradient gradient) {
     return builder(LinearGradientDto.from(gradient));
   }
 
@@ -166,36 +168,41 @@ class SweepGradientUtility<T> extends MixUtility<T, SweepGradientDto> {
 
   const SweepGradientUtility(super.builder);
 
-  T _colors(List<Color> colors) => call(colors: colors);
+  AlignmentUtility<T> get center {
+    return AlignmentUtility((AlignmentGeometry center) {
+      return builder(SweepGradientDto(center: center));
+    });
+  }
 
-  T _stops(List<double> stops) => call(stops: stops);
+  DoubleUtility<T> get startAngle {
+    return DoubleUtility((double startAngle) {
+      return builder(SweepGradientDto(startAngle: startAngle));
+    });
+  }
 
-  T _center(AlignmentGeometry center) => call(center: center);
+  DoubleUtility<T> get endAngle {
+    return DoubleUtility((double endAngle) {
+      return builder(SweepGradientDto(endAngle: endAngle));
+    });
+  }
 
-  T _startAngle(double startAngle) => call(startAngle: startAngle);
+  TileModeUtility<T> get tileMode {
+    return TileModeUtility((TileMode tileMode) {
+      return builder(SweepGradientDto(tileMode: tileMode));
+    });
+  }
 
-  T _endAngle(double endAngle) => call(endAngle: endAngle);
+  GradientTransformUtility<T> get transform {
+    return GradientTransformUtility((GradientTransform transform) {
+      return builder(SweepGradientDto(transform: transform));
+    });
+  }
 
-  T _tileMode(TileMode tileMode) => call(tileMode: tileMode);
+  T colors(List<Color> colors) => call(colors: colors);
 
-  T _transform(GradientTransform transform) => call(transform: transform);
+  T stops(List<double> stops) => call(stops: stops);
 
-  ListUtility<T, Color> get colors => ListUtility(_colors);
-
-  ListUtility<T, double> get stops => ListUtility(_stops);
-
-  AlignmentUtility<T> get center => AlignmentUtility(_center);
-
-  DoubleUtility<T> get startAngle => DoubleUtility(_startAngle);
-
-  DoubleUtility<T> get endAngle => DoubleUtility(_endAngle);
-
-  TileModeUtility<T> get tileMode => TileModeUtility(_tileMode);
-
-  GradientTransformUtility<T> get transform =>
-      GradientTransformUtility(_transform);
-
-  T from(SweepGradient gradient) {
+  T as(SweepGradient gradient) {
     return builder(SweepGradientDto.from(gradient));
   }
 

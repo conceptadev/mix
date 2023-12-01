@@ -36,7 +36,7 @@ void main() {
         end: Alignment.bottomRight,
         colors: [Colors.red, Colors.blue],
       );
-      final result = boxDecoration.gradient.from(gradient);
+      final result = boxDecoration.gradient.as(gradient);
       expect(result.gradient, equals(gradient.toAttribute()));
     });
 

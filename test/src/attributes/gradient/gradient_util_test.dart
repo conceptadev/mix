@@ -10,7 +10,7 @@ void main() {
     const utility = GradientUtility.selfBuilder;
     test('GradientUtility.from for RadialGradient', () {
       const gradient = RadialGradient(colors: []);
-      final attribute = utility.from(gradient);
+      final attribute = utility.as(gradient);
 
       expect(attribute, isA<GradientAttribute>());
       expect(attribute.value, isA<RadialGradientDto>());
@@ -19,7 +19,7 @@ void main() {
 
     test('GradientUtility.from for LinearGradient', () {
       const gradient = LinearGradient(colors: []);
-      final attribute = utility.from(gradient);
+      final attribute = utility.as(gradient);
 
       expect(attribute, isA<GradientAttribute>());
       expect(attribute.value, isA<LinearGradientDto>());
@@ -28,7 +28,7 @@ void main() {
 
     test('GradientUtility.from for SweepGradient', () {
       const gradient = SweepGradient(colors: []);
-      final attribute = utility.from(gradient);
+      final attribute = utility.as(gradient);
 
       expect(attribute, isA<GradientAttribute>());
       expect(attribute.value, isA<SweepGradientDto>());
@@ -41,7 +41,7 @@ void main() {
 
     test('.from for RadialGradient', () {
       const gradient = RadialGradient(colors: []);
-      final attribute = radialUtility.from(gradient);
+      final attribute = radialUtility.as(gradient);
 
       final resolvedGradient = attribute.resolve(EmptyMixData);
 
@@ -241,7 +241,7 @@ void main() {
 
     test('.from for LinearGradient', () {
       const gradient = LinearGradient(colors: []);
-      final attribute = linearUtility.from(gradient);
+      final attribute = linearUtility.as(gradient);
 
       final resolvedGradient = attribute.resolve(EmptyMixData);
       final dto = attribute.value as LinearGradientDto;
@@ -403,7 +403,7 @@ void main() {
 
     test('.from for SweepGradient', () {
       const gradient = SweepGradient(colors: []);
-      final attribute = sweepUtility.from(gradient);
+      final attribute = sweepUtility.as(gradient);
 
       expect(attribute, isA<GradientAttribute>());
       expect(attribute.value, isA<SweepGradientDto>());

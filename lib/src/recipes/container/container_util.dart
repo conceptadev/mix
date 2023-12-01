@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../../attributes/border/border_radius_util.dart';
 import '../../attributes/border/border_util.dart';
-import '../../attributes/color/color_dto.dart';
-import '../../attributes/color/color_util.dart';
 import '../../attributes/constraints/constraints_attribute.dart';
 import '../../attributes/constraints/constraints_util.dart';
 import '../../attributes/decoration/decoration_attribute.dart';
@@ -11,9 +9,7 @@ import '../../attributes/decoration/decoration_util.dart';
 import '../../attributes/scalars/scalar_attribute_util.dart';
 import '../../attributes/scalars/scalar_util.dart';
 import '../../attributes/scalars/scalars_attribute.dart';
-import '../../attributes/shadow/shadow_util.dart';
 import '../../attributes/spacing/spacing_attribute.dart';
-import '../../attributes/spacing/spacing_dto.dart';
 import 'container_attribute.dart';
 
 const container = ContainerUtility.selfBuilder;
@@ -68,24 +64,6 @@ class ContainerUtility<T> extends MixUtility<T, ContainerMixAttribute> {
   static const selfBuilder = ContainerUtility(MixUtility.selfBuilder);
   const ContainerUtility(super.builder);
 
-  T _alignment(AlignmentGeometry alignment) => call(alignment: alignment);
-  T _padding(SpacingDto value) => builder(
-        ContainerMixAttribute(padding: PaddingAttribute.raw(value)),
-      );
-  T _margin(SpacingDto value) => builder(
-        ContainerMixAttribute(margin: MarginAttribute.raw(value)),
-      );
-  T _color(ColorDto color) => _only(color: BackgroundColorAttribute(color));
-  T _decoration(BoxDecorationAttribute decoration) =>
-      _only(decoration: decoration);
-
-  T _constraints(BoxConstraintsAttribute constraints) =>
-      _only(constraints: constraints);
-  T _width(double width) => call(width: width);
-  T _height(double height) => call(height: height);
-  T _transform(Matrix4 transform) => call(transform: transform);
-  T _clipBehavior(Clip clipBehavior) => call(clipBehavior: clipBehavior);
-
   T _only({
     AlignmentGeometryAttribute? alignment,
     PaddingAttribute? padding,
@@ -114,20 +92,55 @@ class ContainerUtility<T> extends MixUtility<T, ContainerMixAttribute> {
     );
   }
 
-  ElevationUtility<T> get elevation => decoration.elevation;
+  BoxDecorationUtility<T> get decoration {
+    return BoxDecorationUtility((decoration) => _only(decoration: decoration));
+  }
 
-  AlignmentUtility<T> get alignment => AlignmentUtility(_alignment);
-  PaddingAttributeUtility<T> get padding => PaddingAttributeUtility(_padding);
-  MarginAttributeUtility<T> get margin => MarginAttributeUtility(_margin);
-  ColorUtility<T> get color => ColorUtility(_color);
+  AlignmentUtility<T> get alignment {
+    return AlignmentUtility((alignment) => call(alignment: alignment));
+  }
 
-  BoxConstraintsUtility<T> get constraints =>
-      BoxConstraintsUtility(_constraints);
-  DoubleUtility<T> get width => DoubleUtility(_width);
-  DoubleUtility<T> get height => DoubleUtility(_height);
-  Matrix4Utility<T> get transform => Matrix4Utility(_transform);
-  ClipUtility<T> get clipBehavior => ClipUtility(_clipBehavior);
-  BoxDecorationUtility<T> get decoration => BoxDecorationUtility(_decoration);
+  PaddingAttributeUtility<T> get padding {
+    return PaddingAttributeUtility(
+      (padding) => _only(padding: PaddingAttribute.raw(padding)),
+    );
+  }
+
+  MarginAttributeUtility<T> get margin {
+    return MarginAttributeUtility(
+      (margin) => _only(margin: MarginAttribute.raw(margin)),
+    );
+  }
+
+  BackgroundColorAttributeUtility<T> get color {
+    return BackgroundColorAttributeUtility(
+      (color) => _only(color: BackgroundColorAttribute(color)),
+    );
+  }
+
+  BoxConstraintsUtility<T> get constraints {
+    return BoxConstraintsUtility(
+      (constraints) => _only(constraints: constraints),
+    );
+  }
+
+  WidthAttributeUtility<T> get width {
+    return WidthAttributeUtility((width) => call(width: width));
+  }
+
+  HeightAttributeUtility<T> get height {
+    return HeightAttributeUtility((height) => call(height: height));
+  }
+
+  TransformAttributeUtility<T> get transform {
+    return TransformAttributeUtility((transform) => call(transform: transform));
+  }
+
+  ClipBehaviorAttributeUtility<T> get clipBehavior {
+    return ClipBehaviorAttributeUtility(
+      (clipBehavior) => call(clipBehavior: clipBehavior),
+    );
+  }
 
   T call({
     AlignmentGeometry? alignment,

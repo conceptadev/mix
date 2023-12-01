@@ -12,35 +12,36 @@ import '../shadow/shadow_util.dart';
 import '../strut_style/strut_style_attribute.dart';
 import 'text_style_attribute.dart';
 
+/// A utility class for handling `TextStyle` for `Attribute`s.
+///
+/// This class is part of a larger system for styling UI components. It extends `MixUtility` to leverage the flexibility and reusability of mixed utilities in a type-safe manner, focusing specifically on `TextStyleAttribute`.
+///
+/// The `TextStyleUtility` provides methods for setting various text style attributes like color, font weight, font style, and more. These methods return the generic type `T`, allow to be used within multiple `Attribute` classes.
+///
+/// The utility also includes specialized getters (e.g., `color`, `fontWeight`) that return specific utility classes. These classes offer more focused methods for manipulating individual aspects of a text style.
+///
+/// Example:
+/// ```dart
+/// // Creating a TextStyleUtility instance for styling.
+/// final textStyle = TextStyleUtility(builder);
+///
+/// // You can use the call method to set multiple values at once.
+/// final styledText = textStyle(fontWeight: FontWeight.bold, fontStyle: FontStyle.italic);
+///
+/// // You can also use the specialized getters to manipulate specific aspects of the text style.
+/// final bold = textStyle.fontWeight.bold();
+/// final italic = textStyle.fontStyle.italic();
+/// ```
+///
+/// See also:
+/// - [MixUtility]
+/// - [TextStyleAttribute]
+/// - [TextStyle]
+
 class TextStyleUtility<T> extends MixUtility<T, TextStyleAttribute> {
   static const selfBuilder = TextStyleUtility(MixUtility.selfBuilder);
 
   const TextStyleUtility(super.builder);
-
-  T _color(ColorDto color) => _only(color: color);
-  T _fontWeight(FontWeight weight) => _only(fontWeight: weight);
-  T _fontStyle(FontStyle style) => _only(fontStyle: style);
-
-  T _decoration(TextDecoration decoration) => _only(decoration: decoration);
-
-  T _fontSize(double size) => _only(fontSize: size);
-
-  T _letterSpacing(double spacing) => _only(letterSpacing: spacing);
-
-  T _wordSpacing(double spacing) => _only(wordSpacing: spacing);
-
-  T _backgroundColor(ColorDto color) => _only(backgroundColor: color);
-
-  T _decorationColor(ColorDto color) => _only(decorationColor: color);
-
-  T _decorationStyle(TextDecorationStyle style) =>
-      _only(decorationStyle: style);
-
-  T _textBaseline(TextBaseline baseline) => _only(textBaseline: baseline);
-
-  T _shadow(ShadowDto shadow) => _only(shadows: [shadow]);
-
-  T _shadows(List<Shadow> shadows) => call(shadows: shadows);
 
   T _only({
     ColorDto? color,
@@ -90,40 +91,184 @@ class TextStyleUtility<T> extends MixUtility<T, TextStyleAttribute> {
     return builder(textStyle);
   }
 
-  ColorUtility<T> get color => ColorUtility(_color);
+  /// Returns a [ColorUtility] for manipulating the color of the text style.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// final textStyle = TextStyleUtility(builder);
+  ColorUtility<T> get color {
+    return ColorUtility((ColorDto color) => _only(color: color));
+  }
 
-  FontWeightUtility<T> get fontWeight => FontWeightUtility(_fontWeight);
+  /// Returns a [FontWeightUtility] for manipulating the font weight of the text style.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// final textStyle = TextStyleUtility(builder);
+  /// final bold = textStyle.fontWeight.bold();
+  /// ```
+  ///
+  /// See also:
+  /// - [FontWeightUtility]
+  FontWeightUtility<T> get fontWeight {
+    return FontWeightUtility((weight) => _only(fontWeight: weight));
+  }
 
-  FontStyleUtility<T> get fontStyle => FontStyleUtility(_fontStyle);
+  /// Returns a [FontStyleUtility] for manipulating the font style of the text style.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// final textStyle = TextStyleUtility(builder);
+  /// final italic = textStyle.fontStyle.italic();
+  /// ```
+  ///
+  /// See also:
+  /// - [FontStyleUtility]
+  FontStyleUtility<T> get fontStyle {
+    return FontStyleUtility((style) => _only(fontStyle: style));
+  }
 
-  TextDecorationUtility<T> get decoration => TextDecorationUtility(_decoration);
+  /// Returns a [TextDecorationUtility] for manipulating the text decoration of the text style.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// final textStyle = TextStyleUtility(builder);
+  /// final underline = textStyle.decoration.underline();
+  /// ```
+  TextDecorationUtility<T> get decoration {
+    return TextDecorationUtility(
+      (decoration) => _only(decoration: decoration),
+    );
+  }
 
-  FontSizeUtility<T> get fontSize => FontSizeUtility(_fontSize);
+  /// Returns a [FontSizeUtility] for manipulating the font size of the text style.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// final textStyle = TextStyleUtility(builder);
+  /// final customFont = textStyle.fontSize(16);
+  /// ```
+  /// See also:
+  /// - [FontSizeUtility]
+  FontSizeUtility<T> get fontSize {
+    return FontSizeUtility((size) => _only(fontSize: size));
+  }
 
-  DoubleUtility<T> get letterSpacing => DoubleUtility(_letterSpacing);
+  /// Returns a [DoubleUtility] for manipulating the letter spacing of the text style.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// final textStyle = TextStyleUtility(builder);
+  /// final customLetterSpacing = textStyle.letterSpacing(1.5);
+  /// ```
+  ///
+  /// See also:
+  /// - [DoubleUtility]
+  DoubleUtility<T> get letterSpacing {
+    return DoubleUtility((spacing) => _only(letterSpacing: spacing));
+  }
 
-  DoubleUtility<T> get wordSpacing => DoubleUtility(_wordSpacing);
+  /// Returns a [DoubleUtility] for manipulating the word spacing of the text style.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// final textStyle = TextStyleUtility(builder);
+  /// final customWordSpacing = textStyle.wordSpacing(1.5);
+  /// ```
+  ///
+  /// See also:
+  /// - [DoubleUtility]
+  DoubleUtility<T> get wordSpacing {
+    return DoubleUtility((spacing) => _only(wordSpacing: spacing));
+  }
 
-  ColorUtility<T> get backgroundColor => ColorUtility(_backgroundColor);
+  /// Returns a [ColorUtility] for manipulating the background color of the text style.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// final textStyle = TextStyleUtility(builder);
+  /// final customBackgroundColor = textStyle.backgroundColor(Colors.red);
+  /// ```
+  ///
+  /// See also:
+  /// - [ColorUtility]
+  ColorUtility<T> get backgroundColor {
+    return ColorUtility((color) => _only(backgroundColor: color));
+  }
 
-  ColorUtility<T> get decorationColor => ColorUtility(_decorationColor);
+  /// Returns a [ColorUtility] for manipulating the decoration color of the text style.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// final textStyle = TextStyleUtility(builder);
+  /// final decorationColor = textStyle.decorationColor(Colors.red);
+  /// ```
+  ///
+  /// See also:
+  /// - [ColorUtility]
+  ColorUtility<T> get decorationColor {
+    return ColorUtility((color) => _only(decorationColor: color));
+  }
 
-  ListUtility<T, Shadow> get shadows => ListUtility<T, Shadow>(_shadows);
+  /// Returns a [ShadowUtility] for manipulating the shadow of the text style.
+  ///
+  /// This utility allows you to modify the color, offset, and blur radius
+  /// of the shadow. It uses the [ShadowUtility] class which provides
+  /// an interface to build upon the [ShadowDto] object.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// final textStyle = TextStyleUtility(builder);
+  /// final shadowed = textStyle.shadow(color: Colors.red, offset: Offset(1, 1), blurRadius: 1);
+  /// final offset = textStyle.shadow.offset(1, 1);
+  ///
+  /// ```
+  ///
+  /// See also:
+  /// - [ColorUtility]
+  /// - [OffsetUtility]
+  /// - [DoubleUtility]
+  ShadowUtility<T> get shadow {
+    return ShadowUtility((shadow) => _only(shadows: [shadow]));
+  }
 
-  ShadowUtility<T> get shadow => ShadowUtility(_shadow);
+  TextDecorationStyleUtility<T> get decorationStyle {
+    return TextDecorationStyleUtility(
+      (style) => _only(decorationStyle: style),
+    );
+  }
 
-  TextDecorationStyleUtility<T> get decorationStyle =>
-      TextDecorationStyleUtility(_decorationStyle);
+  TextBaselineUtility<T> get textBaseline {
+    return TextBaselineUtility((baseline) => _only(textBaseline: baseline));
+  }
 
-  TextBaselineUtility<T> get textBaseline => TextBaselineUtility(_textBaseline);
+  FontFamilyUtility<T> get fontFamily {
+    return FontFamilyUtility((fontFamily) => call(fontFamily: fontFamily));
+  }
+
+  DoubleUtility<T> get height {
+    return DoubleUtility((height) => call(height: height));
+  }
+
+  T shadows(List<Shadow> shadows) {
+    return _only(shadows: shadows.map((e) => e.toDto()).toList());
+  }
 
   T as(TextStyle style) => builder(TextStyleAttribute.from(style));
 
   T italic() => fontStyle.italic();
 
   T bold() => fontWeight.bold();
-
-  T fontFamily(String family) => call(fontFamily: family);
 
   T foreground(Paint foreground) => call(foreground: foreground);
 
@@ -132,14 +277,13 @@ class TextStyleUtility<T> extends MixUtility<T, TextStyleAttribute> {
   T fontFeatures(List<FontFeature> fontFeatures) =>
       call(fontFeatures: fontFeatures);
 
-  T height(double height) => call(height: height);
-
   T locale(Locale locale) => call(locale: locale);
 
   T debugLabel(String label) => call(debugLabel: label);
 
   T decorationThickness(double thickness) =>
       call(decorationThickness: thickness);
+
   T fontFamilyFallback(List<String> fallback) =>
       call(fontFamilyFallback: fallback);
 
@@ -199,27 +343,38 @@ class TextStyleUtility<T> extends MixUtility<T, TextStyleAttribute> {
 class StrutStyleUtility<T> extends MixUtility<T, StrutStyleAttribute> {
   const StrutStyleUtility(super.builder);
 
-  T _fontFamily(String fontFamily) => call(fontFamily: fontFamily);
-  T _fontFamilyFallback(List<String> fontFamilyFallback) =>
+  FontFamilyUtility<T> get fontFamily {
+    return FontFamilyUtility((fontFamily) => call(fontFamily: fontFamily));
+  }
+
+  DoubleUtility<T> get fontSize {
+    return DoubleUtility((fontSize) => call(fontSize: fontSize));
+  }
+
+  FontWeightUtility<T> get fontWeight {
+    return FontWeightUtility((fontWeight) => call(fontWeight: fontWeight));
+  }
+
+  FontStyleUtility<T> get fontStyle {
+    return FontStyleUtility((fontStyle) => call(fontStyle: fontStyle));
+  }
+
+  DoubleUtility<T> get height {
+    return DoubleUtility((height) => call(height: height));
+  }
+
+  DoubleUtility<T> get leading {
+    return DoubleUtility((leading) => call(leading: leading));
+  }
+
+  BoolUtility<T> get forceStrutHeight {
+    return BoolUtility(
+      (forceStrutHeight) => call(forceStrutHeight: forceStrutHeight),
+    );
+  }
+
+  T fontFamilyFallback(List<String> fontFamilyFallback) =>
       call(fontFamilyFallback: fontFamilyFallback);
-  T _fontSize(double fontSize) => call(fontSize: fontSize);
-  T _fontWeight(FontWeight fontWeight) => call(fontWeight: fontWeight);
-  T _fontStyle(FontStyle fontStyle) => call(fontStyle: fontStyle);
-  T _height(double height) => call(height: height);
-  T _leading(double leading) => call(leading: leading);
-  T _forceStrutHeight(bool forceStrutHeight) =>
-      call(forceStrutHeight: forceStrutHeight);
-
-  FontFamilyUtility<T> get fontFamily => FontFamilyUtility(_fontFamily);
-  ListUtility<T, String> get fontFamilyFallback =>
-      ListUtility(_fontFamilyFallback);
-
-  DoubleUtility<T> get fontSize => DoubleUtility(_fontSize);
-  FontWeightUtility<T> get fontWeight => FontWeightUtility(_fontWeight);
-  FontStyleUtility<T> get fontStyle => FontStyleUtility(_fontStyle);
-  DoubleUtility<T> get height => DoubleUtility(_height);
-  DoubleUtility<T> get leading => DoubleUtility(_leading);
-  BoolUtility<T> get forceStrutHeight => BoolUtility(_forceStrutHeight);
 
   T call({
     String? fontFamily,

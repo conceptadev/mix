@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../attributes/color/color_dto.dart';
 import '../../attributes/color/color_util.dart';
 import '../../attributes/scalars/scalar_util.dart';
 import '../../core/extensions/values_ext.dart';
@@ -12,18 +11,19 @@ class ImageUtility<T> extends MixUtility<T, ImageMixAttribute> {
   static const selfBuilder = ImageUtility(MixUtility.selfBuilder);
   const ImageUtility(super.builder);
 
-  ImageMixAttribute _color(ColorDto color) => ImageMixAttribute(color: color);
-  ImageMixAttribute _repeat(ImageRepeat repeat) =>
-      ImageMixAttribute(repeat: repeat);
-  ImageMixAttribute _fit(BoxFit fit) => ImageMixAttribute(fit: fit);
+  ColorUtility<T> get color {
+    return ColorUtility((color) => builder(ImageMixAttribute(color: color)));
+  }
 
-  ColorUtility<ImageMixAttribute> get color => ColorUtility(_color);
-  ImageRepeatUtility<ImageMixAttribute> get repeat =>
-      ImageRepeatUtility(_repeat);
-  BoxFitUtility<ImageMixAttribute> get fit => BoxFitUtility(_fit);
+  ImageRepeatUtility<T> get repeat {
+    return ImageRepeatUtility(
+      (repeat) => builder(ImageMixAttribute(repeat: repeat)),
+    );
+  }
 
-  ImageMixAttribute width(double width) => ImageMixAttribute(width: width);
-  ImageMixAttribute height(double height) => ImageMixAttribute(height: height);
+  BoxFitUtility<T> get fit {
+    return BoxFitUtility((fit) => builder(ImageMixAttribute(fit: fit)));
+  }
 
   ImageMixAttribute call({
     double? width,

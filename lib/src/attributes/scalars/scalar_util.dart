@@ -30,6 +30,11 @@ mixin CallableUtilityMixin<Attr, Value> on MixUtility<Attr, Value> {
   Attr call(Value value) => _builder(value);
 }
 
+mixin CallableDtoUtilityMixin<Attr, D extends Dto<D, Value>, Value>
+    on DtoUtility<Attr, D, Value> {
+  Attr call(Value value) => _builder(dtoBuilder(value));
+}
+
 abstract class ScalarUtility<Return, Param> extends MixUtility<Return, Param> {
   const ScalarUtility(super.builder);
 }
@@ -71,17 +76,24 @@ class AlignmentUtility<T> extends ScalarUtility<T, AlignmentGeometry> {
 /// Example:
 /// ```dart
 /// final utility = DoubleUtility(builder);
-/// final infinityValue = utility.infinity();
-///
 /// final tenValue = utility(10);
-/// final zeroValue = utility.zero();
 /// ```
 class DoubleUtility<T> extends ScalarUtility<T, double>
     with CallableUtilityMixin<T, double> {
   const DoubleUtility(super.builder);
+}
 
-  T zero() => builder(0);
-  T infinity() => builder(double.infinity);
+/// Utility for Size values. Includes predefined values such as zero and infinity.
+///
+/// Example:
+/// ```dart
+/// final utility = SizeUtility(builder);
+/// final oneHundred = utility(100);
+/// ```
+/// See also:
+/// * [DoubleUtility]
+abstract class SizingUtility<T> extends DoubleUtility<T> {
+  const SizingUtility(super.builder);
 }
 
 /// Utility for creating `int` values.
@@ -119,10 +131,6 @@ class BoolUtility<T> extends ScalarUtility<T, bool>
 
   T on() => builder(true);
   T off() => builder(false);
-}
-
-class ListUtility<T, V> extends MixUtility<T, List<V>> {
-  const ListUtility(super.builder);
 }
 
 /// Utility for setting `VerticalDirection` values.
@@ -406,10 +414,6 @@ class OffsetUtility<T> extends MixUtility<T, Offset> {
   const OffsetUtility(super.builder);
 
   T call(double dx, double dy) => builder(Offset(dx, dy));
-}
-
-abstract class SizingUtility<T> extends DoubleUtility<T> {
-  const SizingUtility(super.builder);
 }
 
 class FontSizeUtility<T> extends SizingUtility<T> {

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../attributes/scalars/scalar_util.dart';
-import '../../attributes/spacing/spacing_util.dart';
 import 'flex_attribute.dart';
 
 /// A utility class for building [FlexMixAttribute]s.
@@ -12,43 +11,58 @@ class FlexMixtureUtility<T> extends MixUtility<T, FlexMixAttribute> {
 
   const FlexMixtureUtility(super.builder);
 
-  FlexMixAttribute _direction(Axis direction) => call(direction: direction);
-  FlexMixAttribute _mainAxisAlignment(MainAxisAlignment mainAxisAlignment) =>
-      call(mainAxisAlignment: mainAxisAlignment);
-  FlexMixAttribute _crossAxisAlignment(CrossAxisAlignment crossAxisAlignment) =>
-      call(crossAxisAlignment: crossAxisAlignment);
-  FlexMixAttribute _mainAxisSize(MainAxisSize mainAxisSize) =>
-      call(mainAxisSize: mainAxisSize);
-  FlexMixAttribute _verticalDirection(VerticalDirection verticalDirection) =>
-      call(verticalDirection: verticalDirection);
-  FlexMixAttribute _textDirection(TextDirection textDirection) =>
-      call(textDirection: textDirection);
-  FlexMixAttribute _textBaseline(TextBaseline textBaseline) =>
-      call(textBaseline: textBaseline);
-  FlexMixAttribute _clipBehavior(Clip clipBehavior) =>
-      call(clipBehavior: clipBehavior);
-  FlexMixAttribute _gap(double gap) => call(gap: gap);
+  AxisUtility<T> get direction {
+    return AxisUtility((direction) => call(direction: direction));
+  }
 
-  AxisUtility<FlexMixAttribute> get direction => AxisUtility(_direction);
-  MainAxisAlignmentUtility<FlexMixAttribute> get mainAxisAlignment =>
-      MainAxisAlignmentUtility(_mainAxisAlignment);
-  CrossAxisAlignmentUtility<FlexMixAttribute> get crossAxisAlignment =>
-      CrossAxisAlignmentUtility(_crossAxisAlignment);
-  MainAxisSizeUtility<FlexMixAttribute> get mainAxisSize =>
-      MainAxisSizeUtility(_mainAxisSize);
-  VerticalDirectionUtility<FlexMixAttribute> get verticalDirection =>
-      VerticalDirectionUtility(_verticalDirection);
-  TextDirectionUtility<FlexMixAttribute> get textDirection =>
-      TextDirectionUtility(_textDirection);
-  TextBaselineUtility<FlexMixAttribute> get textBaseline =>
-      TextBaselineUtility(_textBaseline);
-  ClipUtility<FlexMixAttribute> get clipBehavior => ClipUtility(_clipBehavior);
-  SpacingSideUtility<FlexMixAttribute> get gap => SpacingSideUtility(_gap);
+  MainAxisAlignmentUtility<T> get mainAxisAlignment {
+    return MainAxisAlignmentUtility(
+      (mainAxisAlignment) => call(mainAxisAlignment: mainAxisAlignment),
+    );
+  }
 
-  FlexMixAttribute row() => _direction(Axis.horizontal);
-  FlexMixAttribute column() => _direction(Axis.vertical);
+  CrossAxisAlignmentUtility<T> get crossAxisAlignment {
+    return CrossAxisAlignmentUtility(
+      (crossAxisAlignment) => call(crossAxisAlignment: crossAxisAlignment),
+    );
+  }
 
-  FlexMixAttribute call({
+  MainAxisSizeUtility<T> get mainAxisSize {
+    return MainAxisSizeUtility(
+      (mainAxisSize) => call(mainAxisSize: mainAxisSize),
+    );
+  }
+
+  VerticalDirectionUtility<T> get verticalDirection {
+    return VerticalDirectionUtility(
+      (verticalDirection) => call(verticalDirection: verticalDirection),
+    );
+  }
+
+  TextDirectionUtility<T> get textDirection {
+    return TextDirectionUtility(
+      (textDirection) => call(textDirection: textDirection),
+    );
+  }
+
+  TextBaselineUtility<T> get textBaseline {
+    return TextBaselineUtility(
+      (textBaseline) => call(textBaseline: textBaseline),
+    );
+  }
+
+  ClipUtility<T> get clipBehavior {
+    return ClipUtility((clipBehavior) => call(clipBehavior: clipBehavior));
+  }
+
+  DoubleUtility<T> get gap {
+    return DoubleUtility((gap) => call(gap: gap));
+  }
+
+  T row() => direction.horizontal();
+  T column() => direction.vertical();
+
+  T call({
     Axis? direction,
     MainAxisAlignment? mainAxisAlignment,
     CrossAxisAlignment? crossAxisAlignment,
@@ -59,7 +73,7 @@ class FlexMixtureUtility<T> extends MixUtility<T, FlexMixAttribute> {
     Clip? clipBehavior,
     double? gap,
   }) {
-    return FlexMixAttribute(
+    final attriubte = FlexMixAttribute(
       direction: direction,
       mainAxisAlignment: mainAxisAlignment,
       crossAxisAlignment: crossAxisAlignment,
@@ -70,5 +84,7 @@ class FlexMixtureUtility<T> extends MixUtility<T, FlexMixAttribute> {
       clipBehavior: clipBehavior,
       gap: gap,
     );
+
+    return builder(attriubte);
   }
 }

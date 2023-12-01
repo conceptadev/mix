@@ -41,16 +41,6 @@ void main() {
     });
   });
 
-  group('SoftWrapUtility Tests', () {
-    const utility = SoftWrapUtility(_selfCaller);
-    test('Properties are initialized correctly', () {
-      expect(utility.on(), isA<bool>());
-      expect(utility.off(), isA<bool>());
-      expect(utility.on(), true);
-      expect(utility.off(), false);
-    });
-  });
-
   group('TextOverflowUtility Tests', () {
     const utility = TextOverflowUtility(_selfCaller);
     test('Properties are initialized correctly', () {

@@ -10,10 +10,6 @@ class ShadowUtility<T> extends MixUtility<T, ShadowDto> {
   static const selfBuilder = ShadowUtility(MixUtility.selfBuilder);
   const ShadowUtility(super.builder);
 
-  T _color(ColorDto color) => _only(color: color);
-  T _offset(Offset offset) => _only(offset: offset);
-  T _blurRadius(double blurRadius) => _only(blurRadius: blurRadius);
-
   T _only({ColorDto? color, Offset? offset, double? blurRadius}) {
     final shadow = ShadowDto(
       blurRadius: blurRadius,
@@ -24,9 +20,17 @@ class ShadowUtility<T> extends MixUtility<T, ShadowDto> {
     return builder(shadow);
   }
 
-  ColorUtility<T> get color => ColorUtility(_color);
-  OffsetUtility<T> get offset => OffsetUtility(_offset);
-  DoubleUtility<T> get blurRadius => DoubleUtility(_blurRadius);
+  ColorUtility<T> get color {
+    return ColorUtility((color) => _only(color: color));
+  }
+
+  OffsetUtility<T> get offset {
+    return OffsetUtility((offset) => _only(offset: offset));
+  }
+
+  DoubleUtility<T> get blurRadius {
+    return DoubleUtility((blurRadius) => _only(blurRadius: blurRadius));
+  }
 
   T call({Color? color, Offset? offset, double? blurRadius}) {
     return _only(
@@ -51,15 +55,21 @@ class BoxShadowUtility<T> extends MixUtility<T, BoxShadowDto> {
 
   const BoxShadowUtility(super.builder);
 
-  T _color(ColorDto color) => call(color: color);
-  T _offset(Offset offset) => call(offset: offset);
-  T _blurRadius(double blurRadius) => call(blurRadius: blurRadius);
-  T _spreadRadius(double spreadRadius) => call(spreadRadius: spreadRadius);
+  ColorUtility<T> get color {
+    return ColorUtility((color) => call(color: color));
+  }
 
-  ColorUtility<T> get color => ColorUtility(_color);
-  OffsetUtility<T> get offset => OffsetUtility(_offset);
-  DoubleUtility<T> get blurRadius => DoubleUtility(_blurRadius);
-  DoubleUtility<T> get spreadRadius => DoubleUtility(_spreadRadius);
+  OffsetUtility<T> get offset {
+    return OffsetUtility((offset) => call(offset: offset));
+  }
+
+  DoubleUtility<T> get blurRadius {
+    return DoubleUtility((blurRadius) => call(blurRadius: blurRadius));
+  }
+
+  DoubleUtility<T> get spreadRadius {
+    return DoubleUtility((spreadRadius) => call(spreadRadius: spreadRadius));
+  }
 
   T call({
     ColorDto? color,

@@ -103,7 +103,7 @@ void main() {
     });
 
     test('fontFamily() creates TextStyleAttribute correctly', () {
-      final textStyleAttribute = text.style.fontFamily('Roboto');
+      final textStyleAttribute = text.style(fontFamily: 'Roboto');
       final resolvedValue = textStyleAttribute.resolve(EmptyMixData);
 
       expect(resolvedValue.style?.fontFamily, 'Roboto');

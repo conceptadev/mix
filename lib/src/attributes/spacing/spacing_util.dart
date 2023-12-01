@@ -15,107 +15,113 @@ import 'spacing_dto.dart';
 ///   final spacing = SpacingGeometryUtility(SpacingAttribute.new);
 ///
 ///   // Apply uniform spacing of 10 units on all sides.
-///   final uniformSpacing = spacing.all(10);
+///   final uniform = spacing.all(10);
 ///
 ///   // Apply different spacing values for each side.
-///   final customSpacing = spacing.only(top: 10, bottom: 20, left: 30, right: 40);
+///   final custom = spacing.only(top: 10, bottom: 20, left: 30, right: 40);
 ///
 ///   // Apply 15 units of vertical and 20 units of horizontal spacing.
-///   final verticalSpacing = spacing.vertical(15);
-///   final horizontalSpacing = spacing.horizontal(20);
+///   final vertical = spacing.vertical(15);
+///   final horizontal = spacing.horizontal(20);
 /// ```
 @immutable
 abstract class SpacingUtility<T>
     extends DtoUtility<T, SpacingDto, EdgeInsetsGeometry> {
   const SpacingUtility(super.builder) : super(dtoBuilder: SpacingDto.from);
 
-  /// Private helper methods to simplify the creation of SpacingAttribute with utility functions.
-  T _all(double value) =>
-      only(top: value, bottom: value, left: value, right: value);
-  T _top(double value) => only(top: value);
-  T _bottom(double value) => only(bottom: value);
-  T _left(double value) => only(left: value);
-  T _right(double value) => only(right: value);
-  T _start(double value) => only(start: value);
-  T _end(double value) => only(end: value);
-
-  T _horizontal(double value) => only(left: value, right: value);
-  T _vertical(double value) => only(top: value, bottom: value);
-
-  //  Methods for creating attributes with uniform values for specific orientations or directions.
-
   SpacingDirectionalUtility<T> get directional =>
       SpacingDirectionalUtility(builder);
 
-  /// Applies uniform horizontal spacing to the widget.
+  /// Applies uniform horizontal spacing.
   ///
-  /// This method is useful for setting equal spacing on the left and right sides of a widget.
-  ///
-  /// Example:
-  /// ```dart
-  /// final myHorizontalPadding = spacing.horizontal(15);
-  /// ```
-  SpacingSideUtility<T> get horizontal => SpacingSideUtility(_horizontal);
-
-  /// Applies uniform vertical spacing to the widget.
-  ///
-  /// Use this method when you want equal spacing on the top and bottom sides of a widget.
+  /// This method is useful for setting equal spacing on the left and right sides.
   ///
   /// Example:
   /// ```dart
-  /// final myVerticalPadding = spacing.vertical(20);
+  /// final horizontalPadding = spacing.horizontal(15);
   /// ```
-  SpacingSideUtility<T> get vertical => SpacingSideUtility(_vertical);
+  SpacingSideUtility<T> get horizontal {
+    return SpacingSideUtility(
+      (double value) => only(left: value, right: value),
+    );
+  }
 
-  /// Applies uniform spacing to all sides of the widget.
+  /// Applies uniform vertical spacing.
   ///
-  /// Use this method when you want equal spacing on all sides of a widget.
+  /// Use this method when you want equal spacing on the top and bottom sides.
   ///
   /// Example:
   /// ```dart
-  /// final myUniformPadding = spacing.all(10);
+  /// final verticalPadding = spacing.vertical(20);
   /// ```
-  SpacingSideUtility<T> get all => SpacingSideUtility(_all);
+  SpacingSideUtility<T> get vertical {
+    return SpacingSideUtility(
+      (double value) => only(top: value, bottom: value),
+    );
+  }
 
-  /// Applies spacing to the top side of the widget.
+  /// Applies uniform spacing to all sides.
   ///
-  /// Use this method to add padding or margin to the top edge of a widget.
+  /// Use this method when you want equal spacing on all sides.
   ///
   /// Example:
   /// ```dart
-  /// final myTopPadding = spacing.top(5);
+  /// final uniformPadding = spacing.all(10);
   /// ```
-  SpacingSideUtility<T> get top => SpacingSideUtility(_top);
+  SpacingSideUtility<T> get all {
+    return SpacingSideUtility(
+      (double value) =>
+          only(top: value, bottom: value, left: value, right: value),
+    );
+  }
 
-  /// Applies spacing to the bottom side of the widget.
+  /// Applies spacing to the top side.
   ///
-  /// Use this method to add padding or margin to the bottom edge of a widget.
+  /// Use this method to add padding or margin to the top edge.
+  ///
+  /// Example:
+  /// ```dart
+  /// final topPadding = spacing.top(5);
+  /// ```
+  SpacingSideUtility<T> get top {
+    return SpacingSideUtility((value) => only(top: value));
+  }
+
+  /// Applies spacing to the bottom side.
+  ///
+  /// Use this method to add padding or margin to the bottom edge.
   ///
   /// Example:
   /// ```dart
   /// final myBottomPadding = spacing.bottom(5);
   /// ```
-  SpacingSideUtility<T> get bottom => SpacingSideUtility(_bottom);
+  SpacingSideUtility<T> get bottom {
+    return SpacingSideUtility((value) => only(bottom: value));
+  }
 
-  /// Applies spacing to the left side of the widget.
+  /// Applies spacing to the left side.
   ///
-  /// Ideal for adding padding or margin to the left edge of a widget.
+  /// Ideal for adding padding or margin to the left edge.
   ///
   /// Example:
   /// ```dart
   /// final myLeftPadding = spacing.left(8);
   /// ```
-  SpacingSideUtility<T> get left => SpacingSideUtility(_left);
+  SpacingSideUtility<T> get left {
+    return SpacingSideUtility((value) => only(left: value));
+  }
 
-  /// Applies spacing to the right side of the widget.
+  /// Applies spacing to the right side.
   ///
-  /// Use this method for padding or margin on the right edge of a widget.
+  /// Use this method for padding or margin on the right edge.
   ///
   /// Example:
   /// ```dart
   /// final myRightPadding = spacing.right(8);
   /// ```
-  SpacingSideUtility<T> get right => SpacingSideUtility(_right);
+  SpacingSideUtility<T> get right {
+    return SpacingSideUtility((value) => only(right: value));
+  }
 
   /// Applies spacing to the start side of the widget (considering text direction).
   ///
@@ -123,19 +129,23 @@ abstract class SpacingUtility<T>
   ///
   /// Example:
   /// ```dart
-  /// final myStartPadding = spacing.start(10);
+  /// final startPadding = spacing.start(10);
   /// ```
-  SpacingSideUtility<T> get start => SpacingSideUtility(_start);
+  SpacingSideUtility<T> get start {
+    return SpacingSideUtility((value) => only(start: value));
+  }
 
   /// Applies spacing to the end side of the widget (considering text direction).
   ///
-  /// This is helpful in RTL layouts for padding or margin on the end side of a widget.
+  /// This is helpful in RTL layouts for padding or margin on the end side.
   ///
   /// Example:
   /// ```dart
-  /// final myEndPadding = spacing.end(10);
+  /// final endPadding = spacing.end(10);
   /// ```
-  SpacingSideUtility<T> get end => SpacingSideUtility(_end);
+  SpacingSideUtility<T> get end {
+    return SpacingSideUtility((double value) => only(end: value));
+  }
 
   /// Provides a method to create an attribute with custom values for each side.
   ///
@@ -175,6 +185,8 @@ abstract class SpacingUtility<T>
   /// - `spacing(10, 20)`: top and bottom spacing of 10 units, left and right spacing of 20 units.
   /// - `spacing(10, 20, 30)`: top spacing of 10 units, left and right spacing of 20 units, bottom spacing of 30 units.
   /// - `spacing(10, 20, 30, 40)`: top spacing of 10 units, right spacing of 20 units, bottom spacing of 30 units, left spacing of 40 units.
+  ///
+  /// Note: This method is only available for `SpacingUtility` and `SpacingDirectionalUtility`.
   T call(double p1, [double? p2, double? p3, double? p4]) {
     double top = p1;
     double bottom = p1;
@@ -193,27 +205,6 @@ abstract class SpacingUtility<T>
   }
 }
 
-// Helper class to wrap functions that can return
-// Space tokens in their methods
-@immutable
-class SpacingSideUtility<T> extends MixUtility<T, double> {
-  const SpacingSideUtility(super.builder);
-
-  T xsmall() => builder(SpaceToken.xsmall());
-
-  T small() => builder(SpaceToken.small());
-
-  T medium() => builder(SpaceToken.medium());
-
-  T large() => builder(SpaceToken.large());
-
-  T xlarge() => builder(SpaceToken.xlarge());
-
-  T xxlarge() => builder(SpaceToken.xxlarge());
-
-  T call(double value) => builder(value);
-}
-
 /// A utility class for creating directional spacing attributes in Flutter widgets.
 ///
 /// `SpacingDirectionalUtility` is tailored for managing spacing attributes with directional properties,
@@ -225,43 +216,35 @@ class SpacingSideUtility<T> extends MixUtility<T, double> {
 /// Example:
 /// ```dart
 ///   // Instantiate SpacingDirectionalUtility with a custom SpacingAttributeBuilder.
-///   final directionalSpacing = SpacingDirectionalUtility(SpacingAttribute.new);
+///   final spacing = SpacingDirectionalUtility(SpacingAttribute.new);
 ///
 ///   // Apply uniform spacing of 10 units on all directional sides.
-///   final uniformDirectionalSpacing = directionalSpacing.all(10);
+///   final uniform = spacing.all(10);
 ///
 ///   // Apply different spacing values for top, bottom, start, and end.
-///   final customDirectionalSpacing = directionalSpacing.only(top: 10, bottom: 20, start: 30, end: 40);
+///   final custom = spacing.only(top: 10, bottom: 20, start: 30, end: 40);
 ///
 ///   // Apply 15 units of vertical and 20 units of horizontal directional spacing.
-///   final verticalDirectionalSpacing = directionalSpacing.vertical(15);
-///   final horizontalDirectionalSpacing = directionalSpacing.horizontal(20);
+///   final vertical = spacing.vertical(15);
+///   final horizontal = spacing.horizontal(20);
 /// ```
 @immutable
 class SpacingDirectionalUtility<T> extends SpacingUtility<T> {
   const SpacingDirectionalUtility(super.builder);
 
-  // Private helper methods to simplify the creation of SpacingAttribute with utility functions.
-  @override
-  T _all(double value) =>
-      only(top: value, bottom: value, start: value, end: value);
-  @override
-  T _start(double value) => only(start: value);
-  @override
-  T _end(double value) => only(end: value);
-  @override
-  T _top(double value) => only(top: value);
-  @override
-  T _bottom(double value) => only(bottom: value);
-  @override
-  T _vertical(double value) => only(top: value, bottom: value);
-  @override
-  T _horizontal(double value) => only(start: value, end: value);
-
-  /// Callable method for creating directional space attributes with flexible parameter input.
+  /// Callable method for creating space attributes with flexible parameter input.
   ///
-  /// Allows defining space by passing up to four parameters, representing top, bottom, start,
-  /// and end spacing, respectively. Parameters are optional and default to the first parameter's value.
+  /// This method allows defining space by passing up to four parameters. The behavior is as follows:
+  /// - 1 parameter: uniform spacing on all directional sides.
+  /// - 2 parameters: first for top and bottom, second for start and end.
+  /// - 3 parameters: first for top, second for start and end, third for bottom.
+  /// - 4 parameters: applied to top, end, bottom, and start respectively.
+  ///
+  /// Examples:
+  /// - `spacing(10)`: uniform spacing of 10 units on all directional sides.
+  /// - `spacing(10, 20)`: top and bottom spacing of 10 units, start and end spacing of 20 units.
+  /// - `spacing(10, 20, 30)`: top spacing of 10 units, start and end spacing of 20 units, bottom spacing of 30 units.
+  /// - `spacing(10, 20, 30, 40)`: top spacing of 10 units, end spacing of 20 units, bottom spacing of 30 units, start spacing of 40 units.
   @override
   T call(double p1, [double? p2, double? p3, double? p4]) {
     double top = p1;
@@ -284,30 +267,125 @@ class SpacingDirectionalUtility<T> extends SpacingUtility<T> {
   // Methods for creating attributes with uniform values for specific orientations or directions.
 
   /// Applies uniform spacing on all directional sides.
+  ///
+  /// Use this method when you want equal spacing on all sides.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// final uniformPadding = spacing.all(10);
+  /// ```
   @override
-  SpacingSideUtility<T> get all => SpacingSideUtility(_all);
+  SpacingSideUtility<T> get all {
+    return SpacingSideUtility(
+      (value) => only(top: value, bottom: value, start: value, end: value),
+    );
+  }
 
   /// Applies uniform spacing on start side.
+  ///
+  /// This is helpful in RTL layouts for padding or margin on the start side.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// final startPadding = spacing.start(10);
+  /// ```
   @override
-  SpacingSideUtility<T> get start => SpacingSideUtility(_start);
+  SpacingSideUtility<T> get start {
+    return SpacingSideUtility((value) => only(start: value));
+  }
 
-  /// Applies uniform spacing on end side.
+  /// Applies spacing to the end side of the widget (considering text direction).
+  ///
+  /// This is helpful in RTL layouts for padding or margin on the end side.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// final endPadding = spacing.end(10);
+  /// ```
   @override
-  SpacingSideUtility<T> get end => SpacingSideUtility(_end);
+  SpacingSideUtility<T> get end {
+    return SpacingSideUtility((value) => only(end: value));
+  }
 
   /// Applies uniform spacing on top side.
+  ///
+  /// Use this method to add padding or margin to the top edge.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// final topPadding = spacing.top(5);
+  /// ```
   @override
-  SpacingSideUtility<T> get top => SpacingSideUtility(_top);
+  SpacingSideUtility<T> get top {
+    return SpacingSideUtility((value) => only(top: value));
+  }
 
   /// Applies uniform spacing on bottom side.
+  ///
+  /// Use this method to add padding or margin to the bottom edge.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// final bottomPadding = spacing.bottom(5);
+  /// ```
   @override
-  SpacingSideUtility<T> get bottom => SpacingSideUtility(_bottom);
+  SpacingSideUtility<T> get bottom {
+    return SpacingSideUtility((value) => only(bottom: value));
+  }
 
   /// Applies uniform spacing on top and bottom sides.
+  ///
+  /// Use this method when you want equal spacing on the top and bottom sides.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// final verticalPadding = spacing.vertical(20);
+  /// ```
   @override
-  SpacingSideUtility<T> get vertical => SpacingSideUtility(_vertical);
+  SpacingSideUtility<T> get vertical {
+    return SpacingSideUtility((value) => only(top: value, bottom: value));
+  }
 
   /// Applies uniform spacing on left and right sides.
+  ///
+  /// This method is useful for setting equal spacing on the start and end sides.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// final horizontalPadding = spacing.horizontal(15);
+  /// ```
   @override
-  SpacingSideUtility<T> get horizontal => SpacingSideUtility(_horizontal);
+  SpacingSideUtility<T> get horizontal {
+    return SpacingSideUtility(
+      (double value) => only(start: value, end: value),
+    );
+  }
+}
+
+// Helper class to wrap functions that can return
+// Space tokens in their methods
+@immutable
+class SpacingSideUtility<T> extends MixUtility<T, double> {
+  const SpacingSideUtility(super.builder);
+
+  T xsmall() => builder(SpaceToken.xsmall());
+
+  T small() => builder(SpaceToken.small());
+
+  T medium() => builder(SpaceToken.medium());
+
+  T large() => builder(SpaceToken.large());
+
+  T xlarge() => builder(SpaceToken.xlarge());
+
+  T xxlarge() => builder(SpaceToken.xxlarge());
+
+  T call(double value) => builder(value);
 }
