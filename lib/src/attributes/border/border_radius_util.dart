@@ -7,37 +7,118 @@ import '../../core/extensions/values_ext.dart';
 import '../scalars/scalar_util.dart';
 import 'border_radius_attribute.dart';
 
+/// Utility class for creating and manipulating attributes with [BorderRadiusGeometry]
+///
+/// Allows setting of radius for a border. This class provides a convenient way to configure and apply border radius to [T]
+///
+/// Accepts a builder function that returns [T] and takes a [BorderRadiusGeometryAttribute] as a parameter.
+///
+/// Example usage:
+///
+/// ```dart
+/// final borderRadius = BorderRadiusGeometryUtility<StyleAttribute>(builder);
+/// final attribute = borderRadius(10.0);
+/// ```
+///
+/// See also:
+/// * [BorderRadiusGeometryAttribute], the attribute class for [BorderRadiusGeometry]
+/// * [MixUtility], the utility class that [BorderRadiusGeometryUtility] extends
+/// * [RadiusUtility], the utility class for manipulating [Radius]
+/// * [RadiusAttribute], the attribute class for [Radius]
+/// * [BorderRadiusDirectionalUtility], the utility class for manipulating [BorderRadiusDirectional]
 class BorderRadiusGeometryUtility<T extends StyleAttribute>
     extends MixUtility<T, BorderRadiusGeometryAttribute> {
   static const selfBuilder =
       BorderRadiusGeometryUtility(MixUtility.selfBuilder);
   const BorderRadiusGeometryUtility(super.builder);
 
+  /// Returns a [BorderRadiusDirectionalUtility] to manipulate [BorderRadiusDirectional].
+  ///
+  /// Example usage:
+  ///
+  /// ```dart
+  /// final borderRadius = BorderRadiusGeometryUtility<StyleAttribute>(builder);
+  /// final attribute = borderRadius.directional(10.0);
+  /// ```
+  ///
+  /// See also:
+  /// * [BorderRadiusDirectionalUtility], the utility class for manipulating [BorderRadiusDirectional]
+  /// * [BorderRadiusDirectionalAttribute], the attribute class for [BorderRadiusDirectional]
   BorderRadiusDirectionalUtility<T> get directional {
     return BorderRadiusDirectionalUtility(builder);
   }
 
-  /// Applied radius only to bottomLeft corner.
+  /// Returns a [RadiusUtility] to manipulate [Radius].
+  ///
+  /// Example usage:
+  ///
+  /// ```dart
+  /// final borderRadius = BorderRadiusGeometryUtility<StyleAttribute>(builder);
+  /// final attribute = borderRadius.circular(10.0);
+  /// ```
+  ///
+  /// See also:
+  /// * [RadiusUtility], the utility class for manipulating [Radius]
   RadiusUtility<T> get bottomLeft {
     return RadiusUtility((radius) => only(bottomLeft: radius));
   }
 
-  /// Applied radius only to bottomRight corner.
+  /// Returns a [RadiusUtility] to manipulate [Radius].
+  ///
+  /// Example usage:
+  ///
+  /// ```dart
+  /// final borderRadius = BorderRadiusGeometryUtility<StyleAttribute>(builder);
+  /// final attribute = borderRadius.circular(10.0);
+  /// ```
+  ///
+  /// See also:
+  /// * [RadiusUtility], the utility class for manipulating [Radius]
   RadiusUtility<T> get bottomRight {
     return RadiusUtility((radius) => only(bottomRight: radius));
   }
 
-  /// Applied radius only to topLeft corner.
+  /// Returns a [RadiusUtility] to manipulate [Radius].
+  ///
+  /// Example usage:
+  ///
+  /// ```dart
+  /// final borderRadius = BorderRadiusGeometryUtility<StyleAttribute>(builder);
+  /// final attribute = borderRadius.circular(10.0);
+  /// ```
+  ///
+  /// See also:
+  /// * [RadiusUtility], the utility class for manipulating [Radius]
   RadiusUtility<T> get topLeft {
     return RadiusUtility((radius) => only(topLeft: radius));
   }
 
-  /// Applied radius only to topRight corner.
+  /// Returns a [RadiusUtility] to manipulate [Radius].
+  ///
+  /// Example usage:
+  ///
+  /// ```dart
+  /// final borderRadius = BorderRadiusGeometryUtility<StyleAttribute>(builder);
+  /// final attribute = borderRadius.circular(10.0);
+  /// ```
+  ///
+  /// See also:
+  /// * [RadiusUtility], the utility class for manipulating [Radius]
   RadiusUtility<T> get topRight {
     return RadiusUtility((radius) => only(topRight: radius));
   }
 
   /// Applies radius to all corners.
+  ///
+  /// Example usage:
+  ///
+  /// ```dart
+  /// final borderRadius = BorderRadiusGeometryUtility<StyleAttribute>(builder);
+  /// final attribute = borderRadius.all(10.0);
+  /// ```
+  ///
+  /// See also:
+  /// * [RadiusUtility], the utility class for manipulating [Radius]
   RadiusUtility<T> get all {
     return RadiusUtility((radius) => only(
           topLeft: radius,
@@ -48,6 +129,16 @@ class BorderRadiusGeometryUtility<T extends StyleAttribute>
   }
 
   /// Applies radius to topRight and topLeft corners.
+  ///
+  /// Example usage:
+  ///
+  /// ```dart
+  /// final borderRadius = BorderRadiusGeometryUtility<StyleAttribute>(builder);
+  /// final attribute = borderRadius.top(10.0);
+  /// ```
+  ///
+  /// See also:
+  /// * [RadiusUtility], the utility class for manipulating [Radius]
   RadiusUtility<T> get top {
     return RadiusUtility(
       (radius) => only(topLeft: radius, topRight: radius),
@@ -55,6 +146,16 @@ class BorderRadiusGeometryUtility<T extends StyleAttribute>
   }
 
   /// Applies radius to bottomRight and bottomLeft corners.
+  ///
+  /// Example usage:
+  ///
+  /// ```dart
+  /// final borderRadius = BorderRadiusGeometryUtility<StyleAttribute>(builder);
+  /// final attribute = borderRadius.bottom(10.0);
+  /// ```
+  ///
+  /// See also:
+  /// * [RadiusUtility], the utility class for manipulating [Radius]
   RadiusUtility<T> get bottom {
     return RadiusUtility(
       (radius) => only(bottomLeft: radius, bottomRight: radius),
@@ -62,6 +163,16 @@ class BorderRadiusGeometryUtility<T extends StyleAttribute>
   }
 
   /// Applies radius to topLeft and bottomLeft corners.
+  ///
+  /// Example usage:
+  ///
+  /// ```dart
+  /// final borderRadius = BorderRadiusGeometryUtility<StyleAttribute>(builder);
+  /// final attribute = borderRadius.left(10.0);
+  /// ```
+  ///
+  /// See also:
+  /// * [RadiusUtility], the utility class for manipulating [Radius]
   RadiusUtility<T> get left {
     return RadiusUtility(
       (radius) => only(topLeft: radius, bottomLeft: radius),
@@ -69,6 +180,16 @@ class BorderRadiusGeometryUtility<T extends StyleAttribute>
   }
 
   /// Applies radius to topRight and bottomRight corners.
+  ///
+  /// Example usage:
+  ///
+  /// ```dart
+  /// final borderRadius = BorderRadiusGeometryUtility<StyleAttribute>(builder);
+  /// final attribute = borderRadius.right(10.0);
+  /// ```
+  ///
+  /// See also:
+  /// * [RadiusUtility], the utility class for manipulating [Radius]
   RadiusUtility<T> get right {
     return RadiusUtility(
       (radius) => only(topRight: radius, bottomRight: radius),
@@ -135,22 +256,77 @@ class BorderRadiusDirectionalUtility<T extends StyleAttribute>
     extends MixUtility<T, BorderRadiusDirectionalAttribute> {
   const BorderRadiusDirectionalUtility(super.builder);
 
+  /// Returns a [RadiusUtility] to manipulate [Radius].
+  ///
+  /// Example usage:
+  ///
+  /// ```dart
+  /// final borderRadius = BorderRadiusDirectionalUtility<StyleAttribute>(builder);
+  /// final attribute = borderRadius.bottomStart(10.0);
+  /// ```
+  ///
+  /// See also:
+  /// * [RadiusUtility], the utility class for manipulating [Radius]
   RadiusUtility<BorderRadiusDirectionalAttribute> get bottomStart {
     return RadiusUtility((radius) => only(bottomStart: radius));
   }
 
+  /// Returns a [RadiusUtility] to manipulate [Radius].
+  ///
+  /// Example usage:
+  ///
+  /// ```dart
+  /// final borderRadius = BorderRadiusDirectionalUtility<StyleAttribute>(builder);
+  /// final attribute = borderRadius.bottomEnd(10.0);
+  /// ```
+  ///
+  /// See also:
+  /// * [RadiusUtility], the utility class for manipulating [Radius]
   RadiusUtility<BorderRadiusDirectionalAttribute> get bottomEnd {
     return RadiusUtility((radius) => only(bottomEnd: radius));
   }
 
+  /// Returns a [RadiusUtility] to manipulate [Radius].
+  ///
+  /// Example usage:
+  ///
+  /// ```dart
+  /// final borderRadius = BorderRadiusDirectionalUtility<StyleAttribute>(builder);
+  /// final attribute = borderRadius.topStart(10.0);
+  /// ```
+  ///
+  /// See also:
+  /// * [RadiusUtility], the utility class for manipulating [Radius]
   RadiusUtility<BorderRadiusDirectionalAttribute> get topStart {
     return RadiusUtility((radius) => only(topStart: radius));
   }
 
+  /// Returns a [RadiusUtility] to manipulate [Radius].
+  ///
+  /// Example usage:
+  ///
+  /// ```dart
+  /// final borderRadius = BorderRadiusDirectionalUtility<StyleAttribute>(builder);
+  /// final attribute = borderRadius.topEnd(10.0);
+  /// ```
+  ///
+  /// See also:
+  /// * [RadiusUtility], the utility class for manipulating [Radius]
   RadiusUtility<BorderRadiusDirectionalAttribute> get topEnd {
     return RadiusUtility((radius) => only(topEnd: radius));
   }
 
+  /// Applies radius to all corners.
+  ///
+  /// Example usage:
+  ///
+  /// ```dart
+  /// final borderRadius = BorderRadiusDirectionalUtility<StyleAttribute>(builder);
+  /// final attribute = borderRadius.all(10.0);
+  /// ```
+  ///
+  /// See also:
+  /// * [RadiusUtility], the utility class for manipulating [Radius]
   RadiusUtility<BorderRadiusDirectionalAttribute> get all {
     return RadiusUtility((radius) => only(
           topStart: radius,
