@@ -4,7 +4,7 @@ import 'package:mix/mix.dart';
 
 void main() {
   group('BorderUtility', () {
-    const border = BorderUtility.selfBuilder;
+    const border = BoxBorderUtility.selfBuilder;
 
     test('border.top()', () {
       final result = border.top(

@@ -16,14 +16,14 @@ abstract class MixUtility<Attr extends StyleAttribute, Value> {
   UtilityBuilder<Attr, Value> get builder => _builder;
 }
 
-abstract class DtoUtility<Attr extends StyleAttribute, D extends Dto<D, Value>,
+abstract class DtoUtility<Attr extends StyleAttribute, D extends Dto<Value>,
     Value> extends MixUtility<Attr, D> {
   @protected
-  final UtilityBuilder<D, Value> dtoBuilder;
+  final UtilityBuilder<D, Value> valueToDto;
 
-  const DtoUtility(super.builder, {required this.dtoBuilder});
+  const DtoUtility(super.builder, {required this.valueToDto});
 
-  Attr as(Value value) => _builder(dtoBuilder(value));
+  Attr as(Value value) => _builder(valueToDto(value));
 }
 
 mixin CallableUtilityMixin<Attr extends StyleAttribute, Value>
@@ -31,14 +31,16 @@ mixin CallableUtilityMixin<Attr extends StyleAttribute, Value>
   Attr call(Value value) => _builder(value);
 }
 
-mixin CallableDtoUtilityMixin<Attr extends StyleAttribute,
-    D extends Dto<D, Value>, Value> on DtoUtility<Attr, D, Value> {
-  Attr call(Value value) => _builder(dtoBuilder(value));
+mixin CallableDtoUtilityMixin<Attr extends StyleAttribute, D extends Dto<Value>,
+    Value> on DtoUtility<Attr, D, Value> {
+  Attr call(Value value) => _builder(valueToDto(value));
 }
 
 abstract class ScalarUtility<Return extends StyleAttribute, Param>
     extends MixUtility<Return, Param> {
   const ScalarUtility(super.builder);
+
+  Return call(Param value) => _builder(value);
 }
 
 class AlignmentUtility<T extends StyleAttribute>
@@ -196,6 +198,32 @@ class FlexFitUtility<T extends StyleAttribute>
 class TextHeightBehaviorUtility<T extends StyleAttribute>
     extends ScalarUtility<T, TextHeightBehavior> {
   const TextHeightBehaviorUtility(super.builder);
+}
+
+/// Utility for setting `ShapeBorder` values.
+///
+/// Useful for defining the shape of widgets.
+/// Includes subclasses of `ShapeBorder` such as `RoundedRectangleBorder`.
+///
+/// Example:
+///
+/// ```dart
+/// final shapeBorder = ShapeBorderUtility(builder);
+/// final roundedRectangle = shapeBorder.roundedRectangle(10);
+/// ```
+///
+/// See [ShapeBorder] for more information.
+class ShapeBorderUtility<T extends StyleAttribute>
+    extends ScalarUtility<T, ShapeBorder> {
+  const ShapeBorderUtility(super.builder);
+
+  T rounded(double radius) => builder(
+        RoundedRectangleBorder(borderRadius: BorderRadius.circular(radius)),
+      );
+
+  T circle() => builder(const CircleBorder());
+  T stadium() => builder(const StadiumBorder());
+  T beveled() => builder(const BeveledRectangleBorder());
 }
 
 /// Utility for setting `Axis` values.

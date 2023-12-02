@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 import '../mix.dart';
+import 'attributes/text_style/text_style_dto.dart';
 
 const kShortAliasDeprecation =
     'Short aliases will be deprecated, you can create your own. Example: final p = padding;';
@@ -618,6 +619,6 @@ FlexMixAttribute mainAxisSize(MainAxisSize mainAxisSize) {
 @Deprecated('use text.style.bold() instead')
 TextMixAttribute bold() {
   return TextMixAttribute(
-    style: TextStyleAttribute.only(fontWeight: FontWeight.bold),
+    style: TextStyleDto.only(fontWeight: FontWeight.bold),
   );
 }

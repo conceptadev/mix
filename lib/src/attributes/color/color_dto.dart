@@ -5,7 +5,7 @@ import '../../factory/mix_provider_data.dart';
 import '../../theme/tokens/color_token.dart';
 
 @immutable
-class ColorDto extends Dto<ColorDto, Color> {
+class ColorDto extends Dto<Color> with Mergeable<ColorDto> {
   final Color value;
   const ColorDto(this.value);
 

@@ -19,7 +19,8 @@ import '../color/color_dto.dart';
 /// * [SweepGradientDto], which is a type of gradient DTO.
 /// * [Gradient], which is the Flutter counterpart of this class.
 @immutable
-abstract class GradientDto<T extends Gradient> extends Dto<GradientDto<T>, T> {
+abstract class GradientDto<T extends Gradient> extends Dto<T>
+    with Mergeable<GradientDto<T>> {
   /// The list of stops for the gradient.
   final List<double>? stops;
 
@@ -46,6 +47,14 @@ abstract class GradientDto<T extends Gradient> extends Dto<GradientDto<T>, T> {
     }
 
     throw UnimplementedError('Unknown gradient type: $gradient');
+  }
+
+  /// Creates a [GradientDto] from a given [gradient].
+  ///
+  /// Utility method for internal implementation
+  /// Returns null if the gradient is null.
+  static GradientDto? maybeFrom(Gradient? gradient) {
+    return gradient == null ? null : from(gradient);
   }
 
   /// Resolves the gradient DTO into a concrete gradient based on the given [mix] data.

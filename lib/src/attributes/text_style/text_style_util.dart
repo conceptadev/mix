@@ -10,12 +10,11 @@ import '../color/color_util.dart';
 import '../scalars/scalar_util.dart';
 import '../shadow/shadow_dto.dart';
 import '../shadow/shadow_util.dart';
-import '../strut_style/strut_style_attribute.dart';
-import 'text_style_attribute.dart';
+import 'text_style_dto.dart';
 
 /// A utility class for handling `TextStyle` for `Attribute`s.
 ///
-/// This class is part of a larger system for styling UI components. It extends `MixUtility` to leverage the flexibility and reusability of mixed utilities in a type-safe manner, focusing specifically on `TextStyleAttribute`.
+/// This class is part of a larger system for styling UI components. It extends `MixUtility` to leverage the flexibility and reusability of mixed utilities in a type-safe manner, focusing specifically on `TextStyleDto`.
 ///
 /// The `TextStyleUtility` provides methods for setting various text style attributes like color, font weight, font style, and more. These methods return the generic type `T`, allow to be used within multiple `Attribute` classes.
 ///
@@ -36,14 +35,12 @@ import 'text_style_attribute.dart';
 ///
 /// See also:
 /// - [MixUtility]
-/// - [TextStyleAttribute]
+/// - [TextStyleDto]
 /// - [TextStyle]
 
 class TextStyleUtility<T extends StyleAttribute>
-    extends MixUtility<T, TextStyleAttribute> {
-  static const selfBuilder = TextStyleUtility(MixUtility.selfBuilder);
-
-  const TextStyleUtility(super.builder);
+    extends DtoUtility<T, TextStyleDto, TextStyle> {
+  const TextStyleUtility(super.builder) : super(valueToDto: TextStyleDto.from);
 
   T _only({
     ColorDto? color,
@@ -67,27 +64,29 @@ class TextStyleUtility<T extends StyleAttribute>
     String? debugLabel,
     double? height,
   }) {
-    final textStyle = TextStyleAttribute.only(
-      fontWeight: fontWeight,
-      fontStyle: fontStyle,
-      fontSize: fontSize,
-      letterSpacing: letterSpacing,
-      wordSpacing: wordSpacing,
-      textBaseline: textBaseline,
-      color: color,
-      backgroundColor: backgroundColor,
-      shadows: shadows,
-      fontFeatures: fontFeatures,
-      decoration: decoration,
-      decorationColor: decorationColor,
-      decorationStyle: decorationStyle,
-      locale: locale,
-      debugLabel: debugLabel,
-      height: height,
-      foreground: foreground,
-      background: background,
-      decorationThickness: decorationThickness,
-      fontFamilyFallback: fontFamilyFallback,
+    final textStyle = TextStyleDto(
+      TextStyleDataDto(
+        background: background,
+        backgroundColor: backgroundColor,
+        color: color,
+        debugLabel: debugLabel,
+        decoration: decoration,
+        decorationColor: decorationColor,
+        decorationStyle: decorationStyle,
+        decorationThickness: decorationThickness,
+        fontFamilyFallback: fontFamilyFallback,
+        fontFeatures: fontFeatures,
+        fontSize: fontSize,
+        fontStyle: fontStyle,
+        fontWeight: fontWeight,
+        foreground: foreground,
+        height: height,
+        letterSpacing: letterSpacing,
+        locale: locale,
+        shadows: shadows,
+        textBaseline: textBaseline,
+        wordSpacing: wordSpacing,
+      ),
     );
 
     return builder(textStyle);
@@ -314,20 +313,6 @@ class TextStyleUtility<T extends StyleAttribute>
     return _only(shadows: shadows.map((e) => e.toDto()).toList());
   }
 
-  /// Method for setting the font features of the text style.
-  ///
-  /// Example:
-  ///
-  /// ```dart
-  /// final textStyleUtility = TextStyleUtility(builder);
-  /// final textStyle = TextStyle(fontStyle: FontStyle.italic);
-  ///
-  /// final attribute = textStyleUtility.as(textStyle);
-  ///
-  /// See also:
-  /// * [TextStyle]
-  T as(TextStyle style) => builder(TextStyleAttribute.from(style));
-
   /// Method alias for [FontStyle.italic].
   ///
   /// Example:
@@ -447,7 +432,7 @@ class TextStyleUtility<T extends StyleAttribute>
   ///
   /// See also:
   /// * [TextStyleToken]
-  T token(TextStyleToken token) => builder(TextStyleAttribute.token(token));
+  T token(TextStyleToken token) => builder(TextStyleDto.token(token));
 
   /// Callable method for setting multiple values at once.
   ///
@@ -490,88 +475,30 @@ class TextStyleUtility<T extends StyleAttribute>
     Color? decorationColor,
     double? height,
   }) {
-    final textStyle = TextStyleAttribute.only(
-      fontFamily: fontFamily,
-      fontWeight: fontWeight,
-      fontStyle: fontStyle,
-      fontSize: fontSize,
-      letterSpacing: letterSpacing,
-      wordSpacing: wordSpacing,
-      textBaseline: textBaseline,
+    final textStyle = TextStyleDto.only(
       color: color?.toDto(),
       backgroundColor: backgroundColor?.toDto(),
+      fontSize: fontSize,
+      fontWeight: fontWeight,
+      fontStyle: fontStyle,
+      letterSpacing: letterSpacing,
+      debugLabel: debugLabel,
+      wordSpacing: wordSpacing,
+      textBaseline: textBaseline,
       shadows: shadows?.map((e) => e.toDto()).toList(),
       fontFeatures: fontFeatures,
       decoration: decoration,
       decorationColor: decorationColor?.toDto(),
       decorationStyle: decorationStyle,
       locale: locale,
-      debugLabel: debugLabel,
       height: height,
       foreground: foreground,
       background: background,
       decorationThickness: decorationThickness,
+      fontFamily: fontFamily,
       fontFamilyFallback: fontFamilyFallback,
     );
 
     return builder(textStyle);
-  }
-}
-
-class StrutStyleUtility<T extends StyleAttribute>
-    extends MixUtility<T, StrutStyleAttribute> {
-  const StrutStyleUtility(super.builder);
-
-  FontFamilyUtility<T> get fontFamily {
-    return FontFamilyUtility((fontFamily) => call(fontFamily: fontFamily));
-  }
-
-  FontSizeUtility<T> get fontSize {
-    return FontSizeUtility((fontSize) => call(fontSize: fontSize));
-  }
-
-  FontWeightUtility<T> get fontWeight {
-    return FontWeightUtility((fontWeight) => call(fontWeight: fontWeight));
-  }
-
-  FontStyleUtility<T> get fontStyle {
-    return FontStyleUtility((fontStyle) => call(fontStyle: fontStyle));
-  }
-
-  BoolUtility<T> get forceStrutHeight {
-    return BoolUtility(
-      (forceStrutHeight) => call(forceStrutHeight: forceStrutHeight),
-    );
-  }
-
-  T height(double height) => call(height: height);
-
-  T leading(double leading) => call(leading: leading);
-
-  T fontFamilyFallback(List<String> fontFamilyFallback) =>
-      call(fontFamilyFallback: fontFamilyFallback);
-
-  T call({
-    String? fontFamily,
-    List<String>? fontFamilyFallback,
-    double? fontSize,
-    FontWeight? fontWeight,
-    FontStyle? fontStyle,
-    double? height,
-    double? leading,
-    bool? forceStrutHeight,
-  }) {
-    final strutStyle = StrutStyleAttribute(
-      fontFamily: fontFamily,
-      fontFamilyFallback: fontFamilyFallback,
-      fontSize: fontSize,
-      fontWeight: fontWeight,
-      fontStyle: fontStyle,
-      height: height,
-      leading: leading,
-      forceStrutHeight: forceStrutHeight,
-    );
-
-    return builder(strutStyle);
   }
 }

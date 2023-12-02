@@ -1,22 +1,16 @@
 import 'package:flutter/material.dart';
 
-import '../../attributes/border/border_radius_util.dart';
-import '../../attributes/border/border_util.dart';
-import '../../attributes/constraints/constraints_attribute.dart';
-import '../../attributes/constraints/constraints_util.dart';
-import '../../attributes/decoration/decoration_attribute.dart';
-import '../../attributes/decoration/decoration_util.dart';
+import '../../../exports.dart';
+import '../../attributes/color/color_util.dart';
+import '../../attributes/constraints/constraints_dto.dart';
+import '../../attributes/decoration/decoration_dto.dart';
 import '../../attributes/scalars/scalar_attribute_util.dart';
-import '../../attributes/scalars/scalar_util.dart';
-import '../../attributes/scalars/scalars_attribute.dart';
-import '../../attributes/spacing/spacing_attribute.dart';
-import '../../core/attribute.dart';
-import 'container_attribute.dart';
+import '../../attributes/spacing/spacing_dto.dart';
 
 const container = ContainerUtility.selfBuilder;
 const box = ContainerUtility.selfBuilder;
 
-const border = BoxBorderUtility.selfBuilder;
+const border = BoxBorderUtility(BoxBorderAttribute.new);
 
 /// Utility of `ClipUtility` that returns a `ClipBehaviorAttribute` instance
 ///
@@ -32,7 +26,7 @@ const border = BoxBorderUtility.selfBuilder;
 /// - [ClipBehaviorAttribute]
 /// - [Clip]
 /// - [ClipUtility]
-const clipBehavior = ClipBehaviorAttributeUtility.selfBuilder;
+const clipBehavior = ClipBehaviorAttributeUtility();
 
 /// `padding` - Provides a comprehensive utility for defining padding attribute
 ///
@@ -91,7 +85,7 @@ const clipBehavior = ClipBehaviorAttributeUtility.selfBuilder;
 ///
 /// `padding` effectively leverages `SpacingUtility<T>` to create a versatile and readable way of applying padding,
 /// making it easier to manage spacing in Flutter's layout system.
-const padding = PaddingAttributeUtility.selfBuilder;
+const padding = SpacingUtility(PaddingAttribute.new);
 
 /// `margin` - Provides a comprehensive utility for defining margin attribute
 ///
@@ -150,20 +144,19 @@ const padding = PaddingAttributeUtility.selfBuilder;
 ///
 /// `margin` effectively leverages `SpacingUtility<T>` to create a versatile and readable way of applying margin,
 /// making it easier to manage spacing in Flutter's layout system.
-const margin = MarginAttributeUtility.selfBuilder;
+const margin = SpacingUtility(MarginAttribute.new);
 
 // Provides an utility for creating a uniform BorderRadiusAttribute for all corners.
-const borderRadius = BorderRadiusGeometryUtility.selfBuilder;
-const alignment = AlignmentGeometryAttributeUtility.selfBuilder;
+const borderRadius =
+    BorderRadiusGeometryUtility(BorderRadiusGeometryAttribute.new);
+const alignment = AlignmentUtility(AlignmentGeometryAttribute.new);
 
-const boxDecoration = BoxDecorationUtility.selfBuilder;
+const backgroundColor = ColorUtility(BackgroundColorAttribute.new);
 
-final elevation = boxDecoration.elevation;
-final boxShadow = boxDecoration.boxShadow;
+const _decoration = DecorationUtility(DecorationAttribute.new);
 
-const backgroundColor = BackgroundColorAttributeUtility.selfBuilder;
-
-const boxConstraints = BoxConstraintsUtility.selfBuilder;
+final elevation = _decoration.box.elevation;
+final boxShadow = _decoration.box.boxShadow;
 
 /// Defines a [BoxConstraintsAttribute] with a minimum width [minWidth].
 ///
@@ -176,7 +169,7 @@ const boxConstraints = BoxConstraintsUtility.selfBuilder;
 /// - [BoxConstraintsAttribute]
 /// - [BoxConstraints]
 /// - [BoxConstraintsUtility]
-final minWidth = boxConstraints.minWidth;
+final minWidth = box.constraints.minWidth;
 
 /// Defines a [BoxConstraintsAttribute] with a maximum width [maxWidth].
 ///
@@ -189,7 +182,7 @@ final minWidth = boxConstraints.minWidth;
 /// - [BoxConstraintsAttribute]
 /// - [BoxConstraints]
 /// - [BoxConstraintsUtility]
-final maxWidth = boxConstraints.maxWidth;
+final maxWidth = box.constraints.maxWidth;
 
 /// Creates a [BoxConstraintsAttribute] with a minimum height [minHeight].
 ///
@@ -202,7 +195,7 @@ final maxWidth = boxConstraints.maxWidth;
 /// - [BoxConstraintsAttribute]
 /// - [BoxConstraints]
 /// - [BoxConstraintsUtility]
-final minHeight = boxConstraints.minHeight;
+final minHeight = box.constraints.minHeight;
 
 /// Creates a [BoxConstraintsAttribute] with a maximum height [maxHeight].
 ///
@@ -215,7 +208,7 @@ final minHeight = boxConstraints.minHeight;
 /// - [BoxConstraintsAttribute]
 /// - [BoxConstraints]
 /// - [BoxConstraintsUtility]
-final maxHeight = boxConstraints.maxHeight;
+final maxHeight = box.constraints.maxHeight;
 
 /// Creates a [WidthAttribute] with a specific [width].
 ///
@@ -238,16 +231,16 @@ class ContainerUtility<T extends StyleAttribute>
   const ContainerUtility(super.builder);
 
   T _only({
-    AlignmentGeometryAttribute? alignment,
-    PaddingAttribute? padding,
-    MarginAttribute? margin,
-    BackgroundColorAttribute? color,
-    DecorationAttribute? decoration,
-    BoxConstraintsAttribute? constraints,
-    WidthAttribute? width,
-    HeightAttribute? height,
-    TransformAttribute? transform,
-    ClipBehaviorAttribute? clipBehavior,
+    AlignmentGeometry? alignment,
+    SpacingDto? padding,
+    SpacingDto? margin,
+    DecorationDto? decoration,
+    BoxConstraintsDto? constraints,
+    double? width,
+    double? height,
+    Matrix4? transform,
+    Clip? clipBehavior,
+    ColorDto? color,
   }) {
     return builder(
       ContainerSpecAttribute(
@@ -273,22 +266,16 @@ class ContainerUtility<T extends StyleAttribute>
     return AlignmentUtility((alignment) => call(alignment: alignment));
   }
 
-  PaddingAttributeUtility<T> get padding {
-    return PaddingAttributeUtility(
-      (padding) => _only(padding: PaddingAttribute.raw(padding)),
-    );
+  SpacingUtility<T> get padding {
+    return SpacingUtility((padding) => _only(padding: padding));
   }
 
-  MarginAttributeUtility<T> get margin {
-    return MarginAttributeUtility(
-      (margin) => _only(margin: MarginAttribute.raw(margin)),
-    );
+  SpacingUtility<T> get margin {
+    return SpacingUtility((margin) => _only(margin: margin));
   }
 
-  BackgroundColorAttributeUtility<T> get color {
-    return BackgroundColorAttributeUtility(
-      (color) => _only(color: BackgroundColorAttribute(color)),
-    );
+  ColorUtility<T> get color {
+    return ColorUtility((color) => _only(color: color));
   }
 
   BoxConstraintsUtility<T> get constraints {
@@ -297,23 +284,17 @@ class ContainerUtility<T extends StyleAttribute>
     );
   }
 
-  TransformAttributeUtility<T> get transform {
-    return TransformAttributeUtility((transform) => call(transform: transform));
+  Matrix4Utility<T> get transform {
+    return Matrix4Utility((transform) => call(transform: transform));
   }
 
-  ClipBehaviorAttributeUtility<T> get clipBehavior {
-    return ClipBehaviorAttributeUtility(
-      (clipBehavior) => call(clipBehavior: clipBehavior),
-    );
+  ClipUtility<T> get clipBehavior {
+    return ClipUtility((clipBehavior) => call(clipBehavior: clipBehavior));
   }
 
-  T height(double height) {
-    return _only(height: HeightAttribute(height));
-  }
+  T height(double height) => _only(height: height);
 
-  T width(double width) {
-    return _only(width: WidthAttribute(width));
-  }
+  T width(double width) => _only(width: width);
 
   T call({
     AlignmentGeometry? alignment,
@@ -328,16 +309,16 @@ class ContainerUtility<T extends StyleAttribute>
     Color? color,
   }) {
     final attribute = ContainerSpecAttribute(
-      alignment: AlignmentGeometryAttribute.maybeFrom(alignment),
-      padding: PaddingAttribute.maybeFrom(padding),
-      margin: MarginAttribute.maybeFrom(margin),
-      constraints: BoxConstraintsAttribute.maybeFrom(constraints),
-      decoration: BoxDecorationAttribute.maybeFrom(decoration),
-      transform: TransformAttribute.maybeFrom(transform),
-      clipBehavior: ClipBehaviorAttribute.maybeFrom(clipBehavior),
-      color: BackgroundColorAttribute.maybeFrom(color),
-      width: WidthAttribute.maybeFrom(width),
-      height: HeightAttribute.maybeFrom(height),
+      alignment: alignment,
+      padding: SpacingDto.maybeFrom(padding),
+      margin: SpacingDto.maybeFrom(margin),
+      constraints: constraints?.toDto(),
+      decoration: decoration?.toDto(),
+      transform: transform,
+      clipBehavior: clipBehavior,
+      color: color?.toDto(),
+      width: width,
+      height: height,
     );
 
     return builder(attribute);

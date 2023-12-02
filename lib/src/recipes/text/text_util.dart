@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
 import '../../attributes/scalars/scalar_util.dart';
-import '../../attributes/strut_style/strut_style_attribute.dart';
-import '../../attributes/text_style/text_style_attribute.dart';
+import '../../attributes/strut_style/strut_style_dto.dart';
+import '../../attributes/strut_style/strut_style_util.dart';
+import '../../attributes/text_style/text_style_dto.dart';
 import '../../attributes/text_style/text_style_util.dart';
 import '../../core/attribute.dart';
 import '../../core/directive.dart';
@@ -69,11 +70,11 @@ class TextUtility<T extends StyleAttribute>
 
   T only({
     TextOverflow? overflow,
-    StrutStyleAttribute? strutStyle,
+    StrutStyleDto? strutStyle,
     TextAlign? textAlign,
     double? textScaleFactor,
     int? maxLines,
-    TextStyleAttribute? style,
+    TextStyleDto? style,
     TextWidthBasis? textWidthBasis,
     TextHeightBehavior? textHeightBehavior,
     TextDirection? textDirection,
@@ -112,11 +113,11 @@ class TextUtility<T extends StyleAttribute>
   }) {
     final text = TextMixAttribute(
       overflow: overflow,
-      strutStyle: strutStyle?.toAttribute(),
+      strutStyle: strutStyle?.toDto(),
       textAlign: textAlign,
       textScaleFactor: textScaleFactor,
       maxLines: maxLines,
-      style: style?.toAttribute(),
+      style: style?.toDto(),
       textWidthBasis: textWidthBasis,
       textHeightBehavior: textHeightBehavior,
       textDirection: textDirection,

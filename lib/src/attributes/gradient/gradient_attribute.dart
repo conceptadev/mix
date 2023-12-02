@@ -16,21 +16,6 @@ class GradientAttribute
   /// Creates a new [GradientAttribute] with the given [value].
   const GradientAttribute(this.value);
 
-  /// Creates a [GradientAttribute] from a [Gradient] object.
-  ///
-  /// This method converts the [Gradient] object into a [GradientDto] object and creates a [GradientAttribute] with it.
-  static GradientAttribute from(Gradient gradient) {
-    return GradientAttribute(GradientDto.from(gradient));
-  }
-
-  /// Creates a [GradientAttribute] from a nullable [Gradient] object.
-  ///
-  /// If the [gradient] is null, this method returns null.
-  /// Otherwise, it converts the [Gradient] object into a [GradientDto] object and creates a [GradientAttribute] with it.
-  static GradientAttribute? maybeFrom(Gradient? gradient) {
-    return gradient == null ? null : from(gradient);
-  }
-
   /// Checks if this [GradientAttribute] can be merged with another [GradientAttribute].
   ///
   /// Two attributes can be merged if they have the same runtime type.

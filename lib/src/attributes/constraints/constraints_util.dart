@@ -1,6 +1,9 @@
+import 'package:flutter/material.dart';
+
 import '../../core/attribute.dart';
 import '../scalars/scalar_util.dart';
 import 'constraints_attribute.dart';
+import 'constraints_dto.dart';
 
 /// Utility class for building box constraints-related style attributes.
 ///
@@ -14,9 +17,7 @@ import 'constraints_attribute.dart';
 /// BoxConstraintsUtility().minWidth(100).maxHeight(200)
 /// ```
 class BoxConstraintsUtility<T extends StyleAttribute>
-    extends MixUtility<T, BoxConstraintsAttribute> {
-  static const selfBuilder = BoxConstraintsUtility(MixUtility.selfBuilder);
-
+    extends DtoUtility<T, BoxConstraintsDto, BoxConstraints> {
   /// Creates a [BoxConstraintsUtility] with a builder function.
   ///
   /// The builder function takes a [BoxConstraintsAttribute] as a parameter and returns [T].
@@ -25,7 +26,8 @@ class BoxConstraintsUtility<T extends StyleAttribute>
   /// ```dart
   /// final boxConstraints = BoxConstraintsUtility<StyleAttribute>(builder);
   /// ```
-  const BoxConstraintsUtility(super.builder);
+  const BoxConstraintsUtility(super.builder)
+      : super(valueToDto: BoxConstraintsDto.from);
 
   /// Sets the minimum width of the box constraints.
   ///
@@ -89,7 +91,7 @@ class BoxConstraintsUtility<T extends StyleAttribute>
     double? maxHeight,
   }) {
     return builder(
-      BoxConstraintsAttribute(
+      BoxConstraintsDto(
         minWidth: minWidth,
         maxWidth: maxWidth,
         minHeight: minHeight,

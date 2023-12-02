@@ -4,23 +4,13 @@ import 'package:flutter/material.dart';
 
 import '../../core/attribute.dart';
 import '../../factory/mix_provider_data.dart';
-import 'edge_insets_dto.dart';
 import 'spacing_dto.dart';
-
-/// Represents a function that can be used to build a [SpacingAttribute].
-///
-/// Matches SpacingAttribute.new
-typedef SpacingAttributeBuilder<T extends SpacingAttribute<T>> = T Function(
-  EdgeInsetsGeometryDto value,
-);
 
 @immutable
 abstract class SpacingAttribute<Self extends SpacingAttribute<Self>>
-    extends ResolvableAttribute<Self, EdgeInsetsGeometry>
+    extends DtoAttribute<Self, SpacingDto, EdgeInsetsGeometry>
     with SingleChildRenderAttributeMixin<Padding> {
-  final SpacingDto value;
-
-  const SpacingAttribute(this.value);
+  const SpacingAttribute(super.value);
 
   bool get isDirectional => value.isDirectional;
 
@@ -32,15 +22,6 @@ abstract class SpacingAttribute<Self extends SpacingAttribute<Self>>
   double? get end => value.end;
 
   @override
-  Self merge(Self? other);
-
-  @override
-  EdgeInsetsGeometry resolve(MixData mix) => value.resolve(mix);
-
-  @override
-  get props => [value];
-
-  @override
   Padding build(MixData mix, Widget child) {
     return Padding(padding: resolve(mix), child: child);
   }
@@ -48,7 +29,7 @@ abstract class SpacingAttribute<Self extends SpacingAttribute<Self>>
 
 @immutable
 class PaddingAttribute extends SpacingAttribute<PaddingAttribute> {
-  const PaddingAttribute.raw(super.value);
+  const PaddingAttribute(super.value);
 
   factory PaddingAttribute.only({
     double? top,
@@ -58,7 +39,7 @@ class PaddingAttribute extends SpacingAttribute<PaddingAttribute> {
     double? start,
     double? end,
   }) {
-    return PaddingAttribute.raw(
+    return PaddingAttribute(
       SpacingDto(
         top: top,
         bottom: bottom,
@@ -71,7 +52,7 @@ class PaddingAttribute extends SpacingAttribute<PaddingAttribute> {
   }
 
   static PaddingAttribute from(EdgeInsetsGeometry edgeInsets) {
-    return PaddingAttribute.raw(SpacingDto.from(edgeInsets));
+    return PaddingAttribute(SpacingDto.from(edgeInsets));
   }
 
   static PaddingAttribute? maybeFrom(EdgeInsetsGeometry? edgeInsets) {
@@ -80,15 +61,13 @@ class PaddingAttribute extends SpacingAttribute<PaddingAttribute> {
 
   @override
   PaddingAttribute merge(PaddingAttribute? other) {
-    return other == null
-        ? this
-        : PaddingAttribute.raw(value.merge(other.value));
+    return other == null ? this : PaddingAttribute(value.merge(other.value));
   }
 }
 
 @immutable
 class MarginAttribute extends SpacingAttribute<MarginAttribute> {
-  const MarginAttribute.raw(super.value);
+  const MarginAttribute(super.value);
 
   factory MarginAttribute.only({
     double? top,
@@ -98,7 +77,7 @@ class MarginAttribute extends SpacingAttribute<MarginAttribute> {
     double? start,
     double? end,
   }) {
-    return MarginAttribute.raw(
+    return MarginAttribute(
       SpacingDto(
         top: top,
         bottom: bottom,
@@ -111,7 +90,7 @@ class MarginAttribute extends SpacingAttribute<MarginAttribute> {
   }
 
   static MarginAttribute from(EdgeInsetsGeometry edgeInsets) {
-    return MarginAttribute.raw(SpacingDto.from(edgeInsets));
+    return MarginAttribute(SpacingDto.from(edgeInsets));
   }
 
   static MarginAttribute? maybeFrom(EdgeInsetsGeometry? edgeInsets) {
@@ -120,6 +99,6 @@ class MarginAttribute extends SpacingAttribute<MarginAttribute> {
 
   @override
   MarginAttribute merge(MarginAttribute? other) {
-    return other == null ? this : MarginAttribute.raw(value.merge(other.value));
+    return other == null ? this : MarginAttribute(value.merge(other.value));
   }
 }

@@ -6,12 +6,13 @@ import '../../core/attribute.dart';
 import '../../core/extensions/values_ext.dart';
 import '../scalars/scalar_util.dart';
 import 'border_radius_attribute.dart';
+import 'border_radius_dto.dart';
 
 /// Utility class for creating and manipulating attributes with [BorderRadiusGeometry]
 ///
 /// Allows setting of radius for a border. This class provides a convenient way to configure and apply border radius to [T]
 ///
-/// Accepts a builder function that returns [T] and takes a [BorderRadiusGeometryAttribute] as a parameter.
+/// Accepts a builder function that returns [T] and takes a [BorderRadiusGeometryDto] as a parameter.
 ///
 /// Example usage:
 ///
@@ -21,16 +22,15 @@ import 'border_radius_attribute.dart';
 /// ```
 ///
 /// See also:
-/// * [BorderRadiusGeometryAttribute], the attribute class for [BorderRadiusGeometry]
+/// * [BorderRadiusGeometryDto], the data transfer object for [BorderRadiusGeometry]
 /// * [MixUtility], the utility class that [BorderRadiusGeometryUtility] extends
 /// * [RadiusUtility], the utility class for manipulating [Radius]
 /// * [RadiusAttribute], the attribute class for [Radius]
 /// * [BorderRadiusDirectionalUtility], the utility class for manipulating [BorderRadiusDirectional]
 class BorderRadiusGeometryUtility<T extends StyleAttribute>
-    extends MixUtility<T, BorderRadiusGeometryAttribute> {
-  static const selfBuilder =
-      BorderRadiusGeometryUtility(MixUtility.selfBuilder);
-  const BorderRadiusGeometryUtility(super.builder);
+    extends DtoUtility<T, BorderRadiusGeometryDto, BorderRadiusGeometry> {
+  const BorderRadiusGeometryUtility(super.builder)
+      : super(valueToDto: BorderRadiusGeometryDto.from);
 
   /// Returns a [BorderRadiusDirectionalUtility] to manipulate [BorderRadiusDirectional].
   ///
@@ -206,15 +206,37 @@ class BorderRadiusGeometryUtility<T extends StyleAttribute>
     Radius? bottomLeft,
     Radius? bottomRight,
   }) {
-    final borderRadius = BorderRadiusAttribute.only(
-      topLeft: topLeft,
-      topRight: topRight,
-      bottomLeft: bottomLeft,
-      bottomRight: bottomRight,
+    return builder(
+      BorderRadiusGeometryDto(
+        topLeft: topLeft,
+        topRight: topRight,
+        bottomLeft: bottomLeft,
+        bottomRight: bottomRight,
+      ),
     );
-
-    return builder(borderRadius);
   }
+
+  /// Sets the border radius for each corner of a [BorderRadiusGeometry].
+  ///
+  /// This method allows setting distinct radii for each corner. Each parameter
+  /// represents a corner's radius, starting from top-left and moving clockwise.
+  ///
+  /// Parameters:
+  /// - [topLeft]: Radius for the top-left corner.
+  /// - [topRight]: Radius for the top-right corner. Defaults to [topLeft] if not provided.
+  /// - [bottomLeft]: Radius for the bottom-left corner. Defaults to [topLeft] if not provided.
+  /// - [bottomRight]: Radius for the bottom-right corner. Defaults to [topLeft] if not provided.
+  ///
+  /// Example usage:
+  /// ```dart
+  /// final borderRadiusUtility = BorderRadiusGeometryUtility<StyleAttribute>(builder);
+  /// final attribute = borderRadiusUtility(
+  ///   topLeft: 10.0,
+  ///   topRight: 12.0,
+  ///   bottomLeft: 8.0,
+  ///   bottomRight: 10.0,
+  /// );
+  /// ```
 
   T call(double p1, [double? p2, double? p3, double? p4]) {
     double topLeft = p1;
@@ -241,20 +263,19 @@ class BorderRadiusGeometryUtility<T extends StyleAttribute>
       bottomRight = p4;
     }
 
-    final borderRadius = BorderRadiusAttribute.only(
+    return only(
       topLeft: topLeft.toRadius(),
       topRight: topRight.toRadius(),
       bottomLeft: bottomLeft.toRadius(),
       bottomRight: bottomRight.toRadius(),
     );
-
-    return builder(borderRadius);
   }
 }
 
 class BorderRadiusDirectionalUtility<T extends StyleAttribute>
-    extends MixUtility<T, BorderRadiusDirectionalAttribute> {
-  const BorderRadiusDirectionalUtility(super.builder);
+    extends DtoUtility<T, BorderRadiusGeometryDto, BorderRadiusGeometry> {
+  const BorderRadiusDirectionalUtility(super.builder)
+      : super(valueToDto: BorderRadiusGeometryDto.from);
 
   /// Returns a [RadiusUtility] to manipulate [Radius].
   ///
@@ -267,7 +288,7 @@ class BorderRadiusDirectionalUtility<T extends StyleAttribute>
   ///
   /// See also:
   /// * [RadiusUtility], the utility class for manipulating [Radius]
-  RadiusUtility<BorderRadiusDirectionalAttribute> get bottomStart {
+  RadiusUtility<T> get bottomStart {
     return RadiusUtility((radius) => only(bottomStart: radius));
   }
 
@@ -282,7 +303,7 @@ class BorderRadiusDirectionalUtility<T extends StyleAttribute>
   ///
   /// See also:
   /// * [RadiusUtility], the utility class for manipulating [Radius]
-  RadiusUtility<BorderRadiusDirectionalAttribute> get bottomEnd {
+  RadiusUtility<T> get bottomEnd {
     return RadiusUtility((radius) => only(bottomEnd: radius));
   }
 
@@ -297,7 +318,7 @@ class BorderRadiusDirectionalUtility<T extends StyleAttribute>
   ///
   /// See also:
   /// * [RadiusUtility], the utility class for manipulating [Radius]
-  RadiusUtility<BorderRadiusDirectionalAttribute> get topStart {
+  RadiusUtility<T> get topStart {
     return RadiusUtility((radius) => only(topStart: radius));
   }
 
@@ -312,7 +333,7 @@ class BorderRadiusDirectionalUtility<T extends StyleAttribute>
   ///
   /// See also:
   /// * [RadiusUtility], the utility class for manipulating [Radius]
-  RadiusUtility<BorderRadiusDirectionalAttribute> get topEnd {
+  RadiusUtility<T> get topEnd {
     return RadiusUtility((radius) => only(topEnd: radius));
   }
 
@@ -327,7 +348,7 @@ class BorderRadiusDirectionalUtility<T extends StyleAttribute>
   ///
   /// See also:
   /// * [RadiusUtility], the utility class for manipulating [Radius]
-  RadiusUtility<BorderRadiusDirectionalAttribute> get all {
+  RadiusUtility<T> get all {
     return RadiusUtility((radius) => only(
           topStart: radius,
           topEnd: radius,
@@ -336,12 +357,7 @@ class BorderRadiusDirectionalUtility<T extends StyleAttribute>
         ));
   }
 
-  BorderRadiusDirectionalAttribute call(
-    double p1, [
-    double? p2,
-    double? p3,
-    double? p4,
-  ]) {
+  T call(double p1, [double? p2, double? p3, double? p4]) {
     double topStart = p1;
     double topEnd = p1;
     double bottomStart = p1;
@@ -366,28 +382,32 @@ class BorderRadiusDirectionalUtility<T extends StyleAttribute>
       bottomEnd = p4;
     }
 
-    return BorderRadiusDirectionalAttribute.only(
-      topStart: topStart.toRadius(),
-      topEnd: topEnd.toRadius(),
-      bottomStart: bottomStart.toRadius(),
-      bottomEnd: bottomEnd.toRadius(),
+    return builder(
+      BorderRadiusGeometryDto(
+        topStart: topStart.toRadius(),
+        topEnd: topEnd.toRadius(),
+        bottomStart: bottomStart.toRadius(),
+        bottomEnd: bottomEnd.toRadius(),
+      ),
     );
   }
 
   // Only specific corners
-  BorderRadiusDirectionalAttribute only({
+  T only({
     Radius? topStart,
     Radius? topEnd,
     Radius? bottomStart,
     Radius? bottomEnd,
   }) {
-    return BorderRadiusDirectionalAttribute.only(
-      topStart: topStart,
-      topEnd: topEnd,
-      bottomStart: bottomStart,
-      bottomEnd: bottomEnd,
+    return builder(
+      BorderRadiusGeometryDto(
+        topStart: topStart,
+        topEnd: topEnd,
+        bottomStart: bottomStart,
+        bottomEnd: bottomEnd,
+      ),
     );
   }
 
-  BorderRadiusDirectionalAttribute zero() => all.zero();
+  T zero() => all.zero();
 }

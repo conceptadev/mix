@@ -59,7 +59,7 @@ void main() {
 
   group('BoxConstraintsUtility', () {
     test('boxConstraints()', () {
-      final result = boxConstraints(
+      final result = _boxConstraints(
         minWidth: 50.0,
         maxWidth: 150.0,
         minHeight: 100.0,

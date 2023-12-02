@@ -15,8 +15,7 @@ abstract class StyleAttribute extends Attribute {
   Type get type;
 }
 
-abstract class Dto<Self extends Dto<Self, Value>, Value>
-    with Comparable, Mergeable<Self>, Resolvable<Value> {
+abstract class Dto<Value> with Comparable, Resolvable<Value> {
   const Dto();
 }
 
@@ -80,6 +79,21 @@ abstract class ResolvableAttribute<Self, Value> extends StyleAttribute
 
   @override
   Type get type => Self;
+}
+
+abstract class DtoAttribute<Self, D extends Dto<Value>, Value>
+    extends StyleAttribute with Resolvable<Value>, Mergeable<Self> {
+  final D value;
+  const DtoAttribute(this.value);
+
+  @override
+  Value resolve(MixData mix) => value.resolve(mix);
+
+  @override
+  Type get type => Self;
+
+  @override
+  get props => [value];
 }
 
 mixin SingleChildRenderAttributeMixin<W extends RenderObjectWidget>

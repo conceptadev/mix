@@ -6,33 +6,39 @@ import 'package:mix/src/attributes/border/border_dto.dart';
 import '../../../helpers/testing_utils.dart';
 
 void main() {
-  group('BorderAttribute', () {
-    test('merge should combine two BorderAttributes correctly', () {
-      final borderAttr1 = BorderAttribute.only(
-        top: const BorderSideDto(width: 5.0),
-        bottom: const BorderSideDto(width: 10.0),
-        left: const BorderSideDto(width: 15.0),
-        right: const BorderSideDto(width: 20.0),
+  group('BoxBorderAttribute', () {
+    test('merge should combine two BoxBorderAttributes correctly', () {
+      const borderAttr1 = BoxBorderAttribute(
+        BoxBorderDto(
+          top: BorderSideDto(width: 5.0),
+          bottom: BorderSideDto(width: 10.0),
+          left: BorderSideDto(width: 15.0),
+          right: BorderSideDto(width: 20.0),
+        ),
       );
-      final borderAttr2 = BorderAttribute.only(
-        left: const BorderSideDto(width: 25.0),
+      const borderAttr2 = BoxBorderAttribute(
+        BoxBorderDto(
+          left: BorderSideDto(width: 25.0),
+        ),
       );
 
-      final mergedBorderAttr =
-          borderAttr1.merge(borderAttr2) as BorderAttribute;
+      final mergedBorderAttr = borderAttr1.merge(borderAttr2);
 
+      expect(mergedBorderAttr.value.top, borderAttr1.value.top);
       expect(mergedBorderAttr.top, borderAttr1.top);
       expect(mergedBorderAttr.bottom, borderAttr1.bottom);
-      expect(mergedBorderAttr.left, borderAttr2.left);
-      expect(mergedBorderAttr.right, borderAttr1.right);
+      expect(mergedBorderAttr.value.left, borderAttr2.value.left);
+      expect(mergedBorderAttr.value.right, borderAttr1.value.right);
     });
 
-    test('resolve should create a Border with the correct values', () {
-      final borderAttr = BorderAttribute.only(
-        top: const BorderSideDto(width: 5.0),
-        bottom: const BorderSideDto(width: 10.0),
-        left: const BorderSideDto(width: 15.0),
-        right: const BorderSideDto(width: 20.0),
+    test('resolve should create a BoxBorder with the correct values', () {
+      const borderAttr = BoxBorderAttribute(
+        BoxBorderDto(
+          top: BorderSideDto(width: 5.0),
+          bottom: BorderSideDto(width: 10.0),
+          left: BorderSideDto(width: 15.0),
+          right: BorderSideDto(width: 20.0),
+        ),
       );
 
       final resolvedBorder = borderAttr.resolve(EmptyMixData) as Border;
@@ -44,48 +50,63 @@ void main() {
     });
 
     test('Equality holds when properties are the same', () {
-      final attr1 = BorderAttribute.only(
-        top: const BorderSideDto(width: 5.0),
-        bottom: const BorderSideDto(width: 10.0),
-        left: const BorderSideDto(width: 15.0),
-        right: const BorderSideDto(width: 20.0),
+      const attr1 = BoxBorderAttribute(
+        BoxBorderDto(
+          top: BorderSideDto(width: 5.0),
+          bottom: BorderSideDto(width: 10.0),
+          left: BorderSideDto(width: 15.0),
+          right: BorderSideDto(width: 20.0),
+        ),
       );
-      final attr2 = BorderAttribute.only(
-        top: const BorderSideDto(width: 5.0),
-        bottom: const BorderSideDto(width: 10.0),
-        left: const BorderSideDto(width: 15.0),
-        right: const BorderSideDto(width: 20.0),
+      const attr2 = BoxBorderAttribute(
+        BoxBorderDto(
+          top: BorderSideDto(width: 5.0),
+          bottom: BorderSideDto(width: 10.0),
+          left: BorderSideDto(width: 15.0),
+          right: BorderSideDto(width: 20.0),
+        ),
       );
       expect(attr1, attr2);
     });
 
     test('Equality fails when properties are different', () {
-      final attr1 = BorderAttribute.only(
-        top: const BorderSideDto(width: 5.0),
-        bottom: const BorderSideDto(width: 10.0),
-        left: const BorderSideDto(width: 15.0),
-        right: const BorderSideDto(width: 20.0),
+      const attr1 = BoxBorderAttribute(
+        BoxBorderDto(
+          top: BorderSideDto(width: 5.0),
+          bottom: BorderSideDto(width: 10.0),
+          left: BorderSideDto(width: 15.0),
+          right: BorderSideDto(width: 20.0),
+        ),
       );
 
-      final attr2 = BorderAttribute.only(
-        top: const BorderSideDto(width: 5.0),
-        bottom: const BorderSideDto(width: 10.0),
-        left: const BorderSideDto(width: 15.0),
-        right: const BorderSideDto(width: 25.0),
+      const attr2 = BoxBorderAttribute(
+        BoxBorderDto(
+          top: BorderSideDto(width: 5.0),
+          bottom: BorderSideDto(width: 10.0),
+          left: BorderSideDto(width: 15.0),
+          right: BorderSideDto(width: 25.0),
+        ),
       );
       expect(attr1, isNot(attr2));
     });
   });
 
   test('Matches Border constructors', () {
-    final allAttr = BorderAttribute.all(width: 10.0);
+    const allAttr = BoxBorderAttribute(
+      BoxBorderDto(
+        top: BorderSideDto(width: 10.0),
+        bottom: BorderSideDto(width: 10.0),
+        left: BorderSideDto(width: 10.0),
+        right: BorderSideDto(width: 10.0),
+      ),
+    )
     final allValue = Border.all(width: 10.0);
 
     final resolvedAllValue = allAttr.resolve(EmptyMixData);
 
     expect(resolvedAllValue, allValue);
 
-    final symmetricAttr = BorderAttribute.symmetric(
+    final symmetricAttr = BoxBorderAttribute.symmetric(
       vertical: const BorderSideDto(width: 5.0),
       horizontal: const BorderSideDto(width: 10.0),
     );
@@ -99,7 +120,7 @@ void main() {
 
     expect(resolvedSymmetricValue, symmetricValue);
 
-    final onlyAttr = BorderAttribute.only(
+    final onlyAttr = BoxBorderAttribute.only(
       top: const BorderSideDto(width: 5.0),
       right: const BorderSideDto(width: 10.0),
       bottom: const BorderSideDto(width: 15.0),
@@ -118,20 +139,23 @@ void main() {
     expect(resolvedOnlyValue, onlyValue);
   });
 
-  group('BorderDirectionalAttribute', () {
-    test('merge should combine two BorderDirectionalAttributes correctly', () {
-      final borderAttr1 = BorderDirectionalAttribute.only(
-        top: const BorderSideDto(width: 5.0),
-        bottom: const BorderSideDto(width: 10.0),
-        start: const BorderSideDto(width: 15.0),
-        end: const BorderSideDto(width: 20.0),
+  group('BoxBorderAttribute', () {
+    test('merge should combine two BoxBorderAttributes correctly', () {
+      const borderAttr1 = BoxBorderAttribute(
+        BoxBorderDto(
+          top: BorderSideDto(width: 5.0),
+          bottom: BorderSideDto(width: 10.0),
+          start: BorderSideDto(width: 15.0),
+          end: BorderSideDto(width: 20.0),
+        ),
       );
-      final borderAttr2 = BorderDirectionalAttribute.only(
-        start: const BorderSideDto(width: 25.0),
+      const borderAttr2 = BoxBorderAttribute(
+        BoxBorderDto(
+          start: BorderSideDto(width: 25.0),
+        ),
       );
 
-      final mergedBorderAttr =
-          borderAttr1.merge(borderAttr2) as BorderDirectionalAttribute;
+      final mergedBorderAttr = borderAttr1.merge(borderAttr2);
 
       expect(mergedBorderAttr.top, borderAttr1.top);
       expect(mergedBorderAttr.bottom, borderAttr1.bottom);
@@ -141,11 +165,13 @@ void main() {
 
     test('resolve should create a BorderDirectional with the correct values',
         () {
-      final borderAttr = BorderDirectionalAttribute.only(
-        top: const BorderSideDto(width: 5.0),
-        bottom: const BorderSideDto(width: 10.0),
-        start: const BorderSideDto(width: 15.0),
-        end: const BorderSideDto(width: 20.0),
+      const borderAttr = BoxBorderAttribute(
+        BoxBorderDto(
+          top: BorderSideDto(width: 5.0),
+          bottom: BorderSideDto(width: 10.0),
+          start: BorderSideDto(width: 15.0),
+          end: BorderSideDto(width: 20.0),
+        ),
       );
 
       final resolvedBorder =
@@ -158,40 +184,53 @@ void main() {
     });
 
     test('Equality holds when properties are the same', () {
-      final attr1 = BorderDirectionalAttribute.only(
-        top: const BorderSideDto(width: 5.0),
-        bottom: const BorderSideDto(width: 10.0),
-        start: const BorderSideDto(width: 15.0),
-        end: const BorderSideDto(width: 20.0),
+      const attr1 = BoxBorderAttribute(
+        BoxBorderDto(
+          top: BorderSideDto(width: 5.0),
+          bottom: BorderSideDto(width: 10.0),
+          start: BorderSideDto(width: 15.0),
+          end: BorderSideDto(width: 20.0),
+        ),
       );
-      final attr2 = BorderDirectionalAttribute.only(
-        top: const BorderSideDto(width: 5.0),
-        bottom: const BorderSideDto(width: 10.0),
-        start: const BorderSideDto(width: 15.0),
-        end: const BorderSideDto(width: 20.0),
+      const attr2 = BoxBorderAttribute(
+        BoxBorderDto(
+          top: BorderSideDto(width: 5.0),
+          bottom: BorderSideDto(width: 10.0),
+          start: BorderSideDto(width: 15.0),
+          end: BorderSideDto(width: 20.0),
+        ),
       );
       expect(attr1, attr2);
     });
 
     test('Equality fails when properties are different', () {
-      final attr1 = BorderDirectionalAttribute.only(
-        top: const BorderSideDto(width: 5.0),
-        bottom: const BorderSideDto(width: 10.0),
-        start: const BorderSideDto(width: 15.0),
-        end: const BorderSideDto(width: 20.0),
+      const attr1 = BoxBorderAttribute(
+        BoxBorderDto(
+          top: BorderSideDto(width: 5.0),
+          bottom: BorderSideDto(width: 10.0),
+          start: BorderSideDto(width: 15.0),
+          end: BorderSideDto(width: 20.0),
+        ),
       );
 
-      final attr2 = BorderDirectionalAttribute.only(
-        top: const BorderSideDto(width: 5.0),
-        bottom: const BorderSideDto(width: 10.0),
-        start: const BorderSideDto(width: 15.0),
-        end: const BorderSideDto(width: 25.0),
+      const attr2 = BoxBorderAttribute(
+        BoxBorderDto(
+          top: BorderSideDto(width: 5.0),
+          bottom: BorderSideDto(width: 10.0),
+          start: BorderSideDto(width: 15.0),
+          end: BorderSideDto(width: 25.0),
+        ),
       );
       expect(attr1, isNot(attr2));
     });
 
     test('Matches Border constructors', () {
-      final allAttr = BorderDirectionalAttribute.all(width: 10.0);
+      const allAttr = BoxBorderDto(
+        bottom: BorderSideDto(width: 10.0),
+        end: BorderSideDto(width: 10.0),
+        start: BorderSideDto(width: 10.0),
+        top: BorderSideDto(width: 10.0),
+      );
       const allValue = BorderDirectional(
         bottom: BorderSide(width: 10.0),
         end: BorderSide(width: 10.0),
@@ -202,11 +241,13 @@ void main() {
       final resolvedAllValue = allAttr.resolve(EmptyMixData);
       expect(resolvedAllValue, allValue);
 
-      final onlyAttr = BorderDirectionalAttribute.only(
-        top: const BorderSideDto(width: 5.0),
-        start: const BorderSideDto(width: 10.0),
-        end: const BorderSideDto(width: 15.0),
-        bottom: const BorderSideDto(width: 20.0),
+      const onlyAttr = BoxBorderAttribute(
+        BoxBorderDto(
+          top: BorderSideDto(width: 5.0),
+          start: BorderSideDto(width: 10.0),
+          end: BorderSideDto(width: 15.0),
+          bottom: BorderSideDto(width: 20.0),
+        ),
       );
 
       const onlyValue = BorderDirectional(

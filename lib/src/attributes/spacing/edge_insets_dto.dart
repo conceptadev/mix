@@ -5,7 +5,7 @@ import '../../factory/mix_provider_data.dart';
 
 @immutable
 abstract class EdgeInsetsGeometryDto<Self extends EdgeInsetsGeometryDto<Self>>
-    extends Dto<Self, EdgeInsetsGeometry> {
+    extends Dto<EdgeInsetsGeometry> with Mergeable<Self> {
   final double? top;
   final double? bottom;
   final double? left;

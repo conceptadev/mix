@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 import '../../attributes/strut_style/strut_style_attribute.dart';
+import '../../attributes/strut_style/strut_style_dto.dart';
 import '../../attributes/text_style/text_style_attribute.dart';
+import '../../attributes/text_style/text_style_dto.dart';
 import '../../core/attribute.dart';
 import '../../core/directive.dart';
 import '../../factory/mix_provider_data.dart';
@@ -9,11 +11,11 @@ import 'text_spec.dart';
 
 class TextMixAttribute extends ResolvableAttribute<TextMixAttribute, TextSpec> {
   final TextOverflow? overflow;
-  final StrutStyleAttribute? strutStyle;
+  final StrutStyleDto? strutStyle;
   final TextAlign? textAlign;
   final double? textScaleFactor;
   final int? maxLines;
-  final TextStyleAttribute? style;
+  final TextStyleDto? style;
   final TextWidthBasis? textWidthBasis;
   final TextHeightBehavior? textHeightBehavior;
   final TextDirection? textDirection;
@@ -38,8 +40,8 @@ class TextMixAttribute extends ResolvableAttribute<TextMixAttribute, TextSpec> {
     final attribute = mix.attributeOf<TextMixAttribute>();
 
     return TextMixAttribute(
-      strutStyle: mix.attributeOf<StrutStyleAttribute>(),
-      style: mix.attributeOf<TextStyleAttribute>(),
+      strutStyle: mix.attributeOf<StrutStyleAttribute>()?.value,
+      style: mix.attributeOf<TextStyleAttribute>()?.value,
     ).merge(attribute);
   }
 

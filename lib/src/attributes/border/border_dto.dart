@@ -7,7 +7,7 @@ import '../../factory/mix_provider_data.dart';
 import '../color/color_dto.dart';
 
 @immutable
-class BoxBorderDto extends Dto<BoxBorderDto, BoxBorder> {
+class BoxBorderDto extends Dto<BoxBorder> with Mergeable<BoxBorderDto> {
   final BorderSideDto? top;
   final BorderSideDto? bottom;
 
@@ -26,6 +26,36 @@ class BoxBorderDto extends Dto<BoxBorderDto, BoxBorder> {
     this.start,
     this.end,
   });
+
+  static BoxBorderDto from(BoxBorder border) {
+    if (border is Border) {
+      return BoxBorderDto(
+        top: BorderSideDto.from(border.top),
+        bottom: BorderSideDto.from(border.bottom),
+        left: BorderSideDto.from(border.left),
+        right: BorderSideDto.from(border.right),
+      );
+    }
+
+    if (border is BorderDirectional) {
+      return BoxBorderDto(
+        top: BorderSideDto.from(border.top),
+        bottom: BorderSideDto.from(border.bottom),
+        start: BorderSideDto.from(border.start),
+        end: BorderSideDto.from(border.end),
+      );
+    }
+
+    throw ArgumentError.value(
+      border,
+      'border',
+      'Border type is not supported',
+    );
+  }
+
+  static BoxBorderDto? maybeFrom(BoxBorder? border) {
+    return border == null ? null : from(border);
+  }
 
   bool get _hasStartOrEnd => start != null || end != null;
 
@@ -94,7 +124,7 @@ class BoxBorderDto extends Dto<BoxBorderDto, BoxBorder> {
 }
 
 @immutable
-class BorderSideDto extends Dto<BorderSideDto, BorderSide> {
+class BorderSideDto extends Dto<BorderSide> with Mergeable<BorderSideDto> {
   final ColorDto? color;
   final double? width;
   final BorderStyle? style;

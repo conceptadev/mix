@@ -100,7 +100,6 @@ class GradientUtility<T extends StyleAttribute>
 /// * [GradientAttribute], a class for creating gradient attributes.
 /// * [GradientDto], a class for creating gradient values.
 @immutable
-@immutable
 class RadialGradientUtility<T extends StyleAttribute>
     extends MixUtility<T, RadialGradientDto> {
   static const selfBuilder = RadialGradientUtility(GradientAttribute.new);

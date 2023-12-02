@@ -6,7 +6,7 @@ import '../color/color_dto.dart';
 
 @immutable
 abstract class ShadowDtoImpl<Self extends ShadowDtoImpl<Self, Value>,
-    Value extends Shadow> extends Dto<Self, Value> {
+    Value extends Shadow> extends Dto<Value> with Mergeable<Self> {
   final ColorDto? color;
   final Offset? offset;
   final double? blurRadius;
@@ -23,6 +23,18 @@ abstract class ShadowDtoImpl<Self extends ShadowDtoImpl<Self, Value>,
 @immutable
 class ShadowDto extends ShadowDtoImpl<ShadowDto, Shadow> {
   const ShadowDto({super.blurRadius, super.color, super.offset});
+
+  static ShadowDto from(Shadow shadow) {
+    return ShadowDto(
+      blurRadius: shadow.blurRadius,
+      color: ColorDto.maybeFrom(shadow.color),
+      offset: shadow.offset,
+    );
+  }
+
+  static ShadowDto? maybeFrom(Shadow? shadow) {
+    return shadow == null ? null : from(shadow);
+  }
 
   @override
   Shadow resolve(MixData mix) {

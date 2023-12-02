@@ -4,6 +4,10 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
+import 'package:mix/src/attributes/constraints/constraints_dto.dart';
+import 'package:mix/src/attributes/decoration/decoration_dto.dart';
+import 'package:mix/src/attributes/spacing/spacing_dto.dart';
+import 'package:mix/src/attributes/text_style/text_style_dto.dart';
 
 class AttributeGenerator {
   const AttributeGenerator();
@@ -24,7 +28,7 @@ class AttributeGenerator {
     );
   }
 
-  BoxConstraintsAttribute boxConstraints({
+  BoxConstraintsDto boxConstraints({
     double? minWidth,
     double? maxWidth,
     double? minHeight,
@@ -38,7 +42,7 @@ class AttributeGenerator {
     maxHeight ??= minWidth + random.nextDouble() * 200;
     maxWidth ??= minHeight + random.nextDouble() * 200;
 
-    return BoxConstraintsAttribute(
+    return BoxConstraintsDto(
       minWidth: minWidth,
       maxWidth: maxWidth,
       minHeight: minHeight,
@@ -55,6 +59,22 @@ class AttributeGenerator {
     final random = Random();
 
     return MarginAttribute.only(
+      top: top ?? random.nextDouble() * 20,
+      bottom: bottom ?? random.nextDouble() * 20,
+      left: left ?? random.nextDouble() * 20,
+      right: right ?? random.nextDouble() * 20,
+    );
+  }
+
+  SpacingDto spacing({
+    double? top,
+    double? bottom,
+    double? left,
+    double? right,
+  }) {
+    final random = Random();
+
+    return SpacingDto(
       top: top ?? random.nextDouble() * 20,
       bottom: bottom ?? random.nextDouble() * 20,
       left: left ?? random.nextDouble() * 20,
@@ -139,7 +159,7 @@ class AttributeGenerator {
         ]);
   }
 
-  BorderRadiusAttribute borderRadius({
+  BorderRadiusGeometryDto borderRadius({
     double? topLeft,
     double? topRight,
     double? bottomLeft,
@@ -147,7 +167,7 @@ class AttributeGenerator {
   }) {
     final random = Random();
 
-    return BorderRadiusAttribute.only(
+    return BorderRadiusGeometryDto(
       topLeft: Radius.circular(topLeft ?? random.nextDouble() * 20),
       topRight: Radius.circular(topRight ?? random.nextDouble() * 20),
       bottomLeft: Radius.circular(bottomLeft ?? random.nextDouble() * 20),
@@ -155,7 +175,7 @@ class AttributeGenerator {
     );
   }
 
-  BorderRadiusDirectionalAttribute borderRadiusDirectional({
+  BorderRadiusGeometryDto borderRadiusDirectional({
     double? topStart,
     double? topEnd,
     double? bottomStart,
@@ -163,7 +183,7 @@ class AttributeGenerator {
   }) {
     final random = Random();
 
-    return BorderRadiusDirectionalAttribute.only(
+    return BorderRadiusGeometryDto(
       topStart: Radius.circular(topStart ?? random.nextDouble() * 20),
       topEnd: Radius.circular(topEnd ?? random.nextDouble() * 20),
       bottomStart: Radius.circular(bottomStart ?? random.nextDouble() * 20),
@@ -171,13 +191,13 @@ class AttributeGenerator {
     );
   }
 
-  BorderAttribute border({
+  BoxBorderDto border({
     BorderSideDto? left,
     BorderSideDto? right,
     BorderSideDto? top,
     BorderSideDto? bottom,
   }) {
-    return BorderAttribute.only(
+    return BoxBorderDto(
       left: left ?? borderSide(),
       right: right ?? borderSide(),
       top: top ?? borderSide(),
@@ -235,14 +255,14 @@ class AttributeGenerator {
     ]).toAttribute();
   }
 
-  BoxDecorationAttribute boxDecoration({
+  BoxDecorationDto boxDecoration({
     ColorDto? color,
-    BorderAttribute? border,
-    BorderRadiusAttribute? borderRadius,
+    BoxBorderDto? border,
+    BorderRadiusGeometryDto? borderRadius,
     List<BoxShadowDto>? boxShadow,
     BoxShape? shape,
   }) {
-    return BoxDecorationAttribute(
+    return BoxDecorationDto(
       color: color ?? this.color(),
       border: border ?? this.border(),
       borderRadius: borderRadius ?? this.borderRadius(),
@@ -272,8 +292,8 @@ class AttributeGenerator {
     );
   }
 
-  TextStyleAttribute textStyle() {
-    return TextStyleAttribute.only(
+  TextStyleDto textStyle() {
+    return TextStyleDto.only(
       color: color(),
       backgroundColor: color(),
       decorationColor: color(),

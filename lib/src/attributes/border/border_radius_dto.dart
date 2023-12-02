@@ -4,8 +4,8 @@ import '../../core/attribute.dart';
 import '../../factory/mix_provider_data.dart';
 
 @immutable
-class BorderRadiusGeometryDto
-    extends Dto<BorderRadiusGeometryDto, BorderRadiusGeometry> {
+class BorderRadiusGeometryDto extends Dto<BorderRadiusGeometry>
+    with Mergeable<BorderRadiusGeometryDto> {
   final Radius? topLeft;
   final Radius? topRight;
   final Radius? bottomLeft;
@@ -27,6 +27,36 @@ class BorderRadiusGeometryDto
     this.bottomStart,
     this.bottomEnd,
   });
+
+  static BorderRadiusGeometryDto from(BorderRadiusGeometry radius) {
+    if (radius is BorderRadius) {
+      return BorderRadiusGeometryDto(
+        topLeft: radius.topLeft,
+        topRight: radius.topRight,
+        bottomLeft: radius.bottomLeft,
+        bottomRight: radius.bottomRight,
+      );
+    }
+
+    if (radius is BorderRadiusDirectional) {
+      return BorderRadiusGeometryDto(
+        topStart: radius.topStart,
+        topEnd: radius.topEnd,
+        bottomStart: radius.bottomStart,
+        bottomEnd: radius.bottomEnd,
+      );
+    }
+
+    throw ArgumentError.value(
+      radius,
+      'radius',
+      'BorderRadiusGeometry type is not supported',
+    );
+  }
+
+  static BorderRadiusGeometryDto? maybeFrom(BorderRadiusGeometry? radius) {
+    return radius == null ? null : from(radius);
+  }
 
   bool get isDirectional =>
       topStart != null ||

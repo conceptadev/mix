@@ -5,49 +5,25 @@ import '../../factory/mix_provider_data.dart';
 import 'border_radius_dto.dart';
 
 @immutable
-abstract class BorderRadiusGeometryAttribute extends ResolvableAttribute<
-    BorderRadiusGeometryAttribute, BorderRadiusGeometry> {
-  final BorderRadiusGeometryDto value;
-
-  const BorderRadiusGeometryAttribute(this.value);
+class BorderRadiusGeometryAttribute extends DtoAttribute<
+    BorderRadiusGeometryAttribute,
+    BorderRadiusGeometryDto,
+    BorderRadiusGeometry> {
+  const BorderRadiusGeometryAttribute(super.value);
 
   static BorderRadiusGeometryAttribute from(
     BorderRadiusGeometry borderRadius,
   ) {
-    if (borderRadius is BorderRadius) {
-      return BorderRadiusAttribute.only(
-        topLeft: borderRadius.topLeft,
-        topRight: borderRadius.topRight,
-        bottomLeft: borderRadius.bottomLeft,
-        bottomRight: borderRadius.bottomRight,
-      );
-    }
-
-    if (borderRadius is BorderRadiusDirectional) {
-      return BorderRadiusDirectionalAttribute.only(
-        topStart: borderRadius.topStart,
-        topEnd: borderRadius.topEnd,
-        bottomStart: borderRadius.bottomStart,
-        bottomEnd: borderRadius.bottomEnd,
-      );
-    }
-
-    throw UnimplementedError(
-      'Cannot create BorderRadiusGeometryAttribute from borderRadius of type ${borderRadius.runtimeType}',
+    return BorderRadiusGeometryAttribute(
+      BorderRadiusGeometryDto.from(borderRadius),
     );
   }
 
   static BorderRadiusGeometryAttribute? maybeFrom(
     BorderRadiusGeometry? borderRadius,
   ) {
-    if (borderRadius == null) return null;
-
-    return from(borderRadius);
+    return borderRadius == null ? null : from(borderRadius);
   }
-
-  BorderRadiusGeometryAttribute _mergeWith(
-    BorderRadiusGeometryDto borderRadius,
-  );
 
   @visibleForTesting
   Radius? get topLeft => value.topLeft;
@@ -74,10 +50,10 @@ abstract class BorderRadiusGeometryAttribute extends ResolvableAttribute<
   Radius? get bottomEnd => value.bottomEnd;
 
   @override
-  BorderRadiusGeometryAttribute merge(
-    covariant BorderRadiusGeometryAttribute? other,
-  ) {
-    return other == null ? this : _mergeWith(other.value);
+  BorderRadiusGeometryAttribute merge(BorderRadiusGeometryAttribute? other) {
+    return other == null
+        ? this
+        : BorderRadiusGeometryAttribute(value.merge(other.value));
   }
 
   @override
@@ -88,10 +64,10 @@ abstract class BorderRadiusGeometryAttribute extends ResolvableAttribute<
 }
 
 class BorderRadiusAttribute extends BorderRadiusGeometryAttribute {
-  const BorderRadiusAttribute.raw(super.value);
+  const BorderRadiusAttribute(super.value);
 
   factory BorderRadiusAttribute.all(Radius radius) {
-    return BorderRadiusAttribute.raw(
+    return BorderRadiusAttribute(
       BorderRadiusGeometryDto(
         topLeft: radius,
         topRight: radius,
@@ -107,7 +83,7 @@ class BorderRadiusAttribute extends BorderRadiusGeometryAttribute {
     Radius? bottomLeft,
     Radius? bottomRight,
   }) {
-    return BorderRadiusAttribute.raw(
+    return BorderRadiusAttribute(
       BorderRadiusGeometryDto(
         topLeft: topLeft,
         topRight: topRight,
@@ -137,13 +113,6 @@ class BorderRadiusAttribute extends BorderRadiusGeometryAttribute {
 
   factory BorderRadiusAttribute.circular(double radius) {
     return BorderRadiusAttribute.all(Radius.circular(radius));
-  }
-
-  @override
-  BorderRadiusGeometryAttribute _mergeWith(
-    BorderRadiusGeometryDto borderRadius,
-  ) {
-    return BorderRadiusAttribute.raw(value.merge(borderRadius));
   }
 }
 
@@ -203,12 +172,5 @@ class BorderRadiusDirectionalAttribute extends BorderRadiusGeometryAttribute {
 
   factory BorderRadiusDirectionalAttribute.circular(double radius) {
     return BorderRadiusDirectionalAttribute.all(Radius.circular(radius));
-  }
-
-  @override
-  BorderRadiusGeometryAttribute _mergeWith(
-    BorderRadiusGeometryDto borderRadius,
-  ) {
-    return BorderRadiusDirectionalAttribute.raw(value.merge(borderRadius));
   }
 }

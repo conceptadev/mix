@@ -2,58 +2,73 @@ import 'package:flutter/material.dart';
 
 import '../../core/attribute.dart';
 import '../../core/extensions/values_ext.dart';
-import '../border/border_attribute.dart';
-import '../border/border_radius_attribute.dart';
+import '../border/border_dto.dart';
+import '../border/border_radius_dto.dart';
 import '../border/border_radius_util.dart';
 import '../border/border_util.dart';
 import '../color/color_dto.dart';
 import '../color/color_util.dart';
-import '../gradient/gradient_attribute.dart';
 import '../gradient/gradient_dto.dart';
 import '../gradient/gradient_util.dart';
 import '../scalars/scalar_util.dart';
 import '../shadow/shadow_dto.dart';
 import '../shadow/shadow_util.dart';
-import 'decoration_attribute.dart';
+import 'decoration_dto.dart';
+
+class DecorationUtility<T extends StyleAttribute>
+    extends DtoUtility<T, DecorationDto, Decoration> {
+  const DecorationUtility(super.builder)
+      : super(valueToDto: DecorationDto.from);
+
+  BoxDecorationUtility<T> get box {
+    return BoxDecorationUtility((BoxDecorationDto boxDecoration) {
+      return builder(boxDecoration);
+    });
+  }
+
+  ShapeDecorationUtility<T> get shape {
+    return ShapeDecorationUtility((ShapeDecorationDto shapeDecoration) {
+      return builder(shapeDecoration);
+    });
+  }
+}
 
 class BoxDecorationUtility<T extends StyleAttribute>
-    extends MixUtility<T, BoxDecorationAttribute> {
-  static const selfBuilder = BoxDecorationUtility(MixUtility.selfBuilder);
-
-  const BoxDecorationUtility(super.builder);
+    extends DtoUtility<T, BoxDecorationDto, BoxDecoration> {
+  const BoxDecorationUtility(super.builder)
+      : super(valueToDto: BoxDecorationDto.from);
 
   T _only({
     ColorDto? color,
-    BoxBorderAttribute? border,
-    BorderRadiusGeometryAttribute? borderRadius,
-    GradientAttribute? gradient,
+    BoxBorderDto? border,
+    BorderRadiusGeometryDto? borderRadius,
+    GradientDto? gradient,
     List<BoxShadowDto>? boxShadow,
     BoxShape? shape,
   }) {
-    final decoration = BoxDecorationAttribute(
-      color: color,
-      border: border,
-      borderRadius: borderRadius,
-      gradient: gradient,
-      boxShadow: boxShadow,
-      shape: shape,
+    return builder(
+      BoxDecorationDto(
+        color: color,
+        border: border,
+        borderRadius: borderRadius,
+        gradient: gradient,
+        boxShadow: boxShadow,
+        shape: shape,
+      ),
     );
-
-    return builder(decoration);
   }
 
   ColorUtility<T> get color {
     return ColorUtility((ColorDto color) => _only(color: color));
   }
 
-  BorderUtility<T> get border {
-    return BorderUtility((BoxBorderAttribute border) => _only(border: border));
+  BoxBorderUtility<T> get border {
+    return BoxBorderUtility((border) => _only(border: border));
   }
 
   BorderRadiusGeometryUtility<T> get borderRadius {
     return BorderRadiusGeometryUtility(
-      (BorderRadiusGeometryAttribute borderRadius) =>
-          _only(borderRadius: borderRadius),
+      (borderRadius) => _only(borderRadius: borderRadius),
     );
   }
 
@@ -69,7 +84,7 @@ class BoxDecorationUtility<T extends StyleAttribute>
 
   GradientUtility<T> get gradient {
     return GradientUtility((GradientDto gradient) {
-      return _only(gradient: GradientAttribute(gradient));
+      return _only(gradient: gradient);
     });
   }
 
@@ -89,10 +104,64 @@ class BoxDecorationUtility<T extends StyleAttribute>
   }) {
     return _only(
       color: color?.toDto(),
-      border: border?.toAttribute(),
-      borderRadius: borderRadius?.toAttribute(),
-      gradient: gradient?.toAttribute(),
+      border: border?.toDto(),
+      borderRadius: borderRadius?.toDto(),
+      gradient: gradient?.toDto(),
       boxShadow: boxShadow?.toDto(),
+      shape: shape,
+    );
+  }
+}
+
+class ShapeDecorationUtility<T extends StyleAttribute>
+    extends DtoUtility<T, ShapeDecorationDto, ShapeDecoration> {
+  const ShapeDecorationUtility(super.builder)
+      : super(valueToDto: ShapeDecorationDto.from);
+
+  T _only({
+    ColorDto? color,
+    GradientDto? gradient,
+    List<BoxShadowDto>? shadows,
+    ShapeBorder? shape,
+  }) {
+    return builder(
+      ShapeDecorationDto(
+        color: color,
+        shape: shape,
+        gradient: gradient,
+        shadows: shadows,
+      ),
+    );
+  }
+
+  ColorUtility<T> get color {
+    return ColorUtility((ColorDto color) => _only(color: color));
+  }
+
+  GradientUtility<T> get gradient {
+    return GradientUtility((GradientDto gradient) => _only(gradient: gradient));
+  }
+
+  BoxShadowListUtility<T> get shadows {
+    return BoxShadowListUtility(
+      (List<BoxShadowDto> shadows) => _only(shadows: shadows),
+    );
+  }
+
+  ShapeBorderUtility<T> get shape {
+    return ShapeBorderUtility((ShapeBorder shape) => _only(shape: shape));
+  }
+
+  T call({
+    Color? color,
+    Gradient? gradient,
+    List<BoxShadow>? shadows,
+    ShapeBorder? shape,
+  }) {
+    return _only(
+      color: color?.toDto(),
+      gradient: gradient?.toDto(),
+      shadows: shadows?.map((e) => e.toDto()).toList(),
       shape: shape,
     );
   }

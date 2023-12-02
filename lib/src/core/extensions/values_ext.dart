@@ -3,30 +3,26 @@ import 'package:flutter/material.dart';
 import '../../attributes/border/border_attribute.dart';
 import '../../attributes/border/border_dto.dart';
 import '../../attributes/border/border_radius_attribute.dart';
+import '../../attributes/border/border_radius_dto.dart';
 import '../../attributes/color/color_dto.dart';
 import '../../attributes/constraints/constraints_attribute.dart';
+import '../../attributes/constraints/constraints_dto.dart';
 import '../../attributes/decoration/decoration_attribute.dart';
+import '../../attributes/decoration/decoration_dto.dart';
 import '../../attributes/gradient/gradient_attribute.dart';
 import '../../attributes/gradient/gradient_dto.dart';
 import '../../attributes/scalars/scalars_attribute.dart';
 import '../../attributes/shadow/shadow_dto.dart';
 import '../../attributes/spacing/spacing_dto.dart';
 import '../../attributes/strut_style/strut_style_attribute.dart';
+import '../../attributes/strut_style/strut_style_dto.dart';
 import '../../attributes/text_style/text_style_attribute.dart';
+import '../../attributes/text_style/text_style_dto.dart';
 
 extension StrutStyleExt on StrutStyle {
-  StrutStyleAttribute toAttribute() {
-    return StrutStyleAttribute(
-      fontFamily: fontFamily,
-      fontFamilyFallback: fontFamilyFallback,
-      fontSize: fontSize,
-      fontWeight: fontWeight,
-      fontStyle: fontStyle,
-      height: height,
-      leading: leading,
-      forceStrutHeight: forceStrutHeight,
-    );
-  }
+  StrutStyleDto toDto() => StrutStyleDto.from(this);
+
+  StrutStyleAttribute toAttribute() => StrutStyleAttribute(toDto());
 
   StrutStyle merge(StrutStyle? other) {
     return StrutStyle(
@@ -45,7 +41,16 @@ extension StrutStyleExt on StrutStyle {
 }
 
 extension GradientExt on Gradient {
-  GradientAttribute toAttribute() => GradientAttribute.from(this);
+  GradientAttribute toAttribute() => GradientAttribute(toDto());
+
+  // toDto
+  GradientDto toDto() {
+    if (this is LinearGradient) return (this as LinearGradient).toDto();
+    if (this is RadialGradient) return (this as RadialGradient).toDto();
+    if (this is SweepGradient) return (this as SweepGradient).toDto();
+
+    throw UnimplementedError();
+  }
 }
 
 extension LinearGradientExt on LinearGradient {
@@ -61,57 +66,15 @@ extension SweepGradientExt on SweepGradient {
 }
 
 extension BoxBorderExt on BoxBorder {
+  BoxBorderDto toDto() => BoxBorderDto.from(this);
+
   BoxBorderAttribute toAttribute() {
-    if (this is Border) return (this as Border).toAttribute();
-    if (this is BorderDirectional) {
-      return (this as BorderDirectional).toAttribute();
-    }
-
-    throw UnimplementedError();
+    return BoxBorderAttribute(toDto());
   }
-}
-
-extension BorderExt on Border {
-  BorderAttribute toAttribute() => BorderAttribute.only(
-        top: top.toDto(),
-        bottom: bottom.toDto(),
-        left: left.toDto(),
-        right: right.toDto(),
-      );
-}
-
-extension BorderDirectionalExt on BorderDirectional {
-  BorderDirectionalAttribute toAttribute() => BorderDirectionalAttribute.only(
-        top: top.toDto(),
-        bottom: bottom.toDto(),
-        start: start.toDto(),
-        end: end.toDto(),
-      );
 }
 
 extension EdgeInsetsGeometryExt on EdgeInsetsGeometry {
-  SpacingDto toDto() {
-    if (this is EdgeInsets) return (this as EdgeInsets).toDto();
-    if (this is EdgeInsetsDirectional) {
-      return (this as EdgeInsetsDirectional).toDto();
-    }
-
-    throw UnimplementedError();
-  }
-}
-
-extension EdgeInsetsExt on EdgeInsets {
-  SpacingDto toDto() => SpacingDto(
-        top: top,
-        bottom: bottom,
-        left: left,
-        right: right,
-      );
-}
-
-extension EdgeInsetsDirectionalExt on EdgeInsetsDirectional {
-  SpacingDto toDto() =>
-      SpacingDto(top: top, bottom: bottom, start: start, end: end);
+  SpacingDto toDto() => SpacingDto.from(this);
 }
 
 extension DoubleExt on double {
@@ -119,40 +82,6 @@ extension DoubleExt on double {
 }
 
 extension ColorExt on Color {
-  Color darken([double amount = 0.1]) {
-    assert(amount >= 0 && amount <= 1);
-
-    final hsl = HSLColor.fromColor(this);
-    final hslDark = hsl.withLightness((hsl.lightness - amount).clamp(0.0, 1.0));
-
-    return hslDark.toColor();
-  }
-
-  Color lighten([double amount = 0.1]) {
-    assert(amount >= 0 && amount <= 1);
-
-    final hsl = HSLColor.fromColor(this);
-    final hslLight =
-        hsl.withLightness((hsl.lightness + amount).clamp(0.0, 1.0));
-
-    return hslLight.toColor();
-  }
-
-  /// String is in the format "aabbcc" or "ffaabbcc" with an optional leading "#".
-  static Color fromHex(String hexString) {
-    String updatedHexString = hexString.replaceFirst('#', '');
-    if (updatedHexString.length == 6) updatedHexString = 'ff$updatedHexString';
-
-    return Color(int.parse(updatedHexString, radix: 16));
-  }
-
-  /// Prefixes a hash sign if [leadingHashSign] is set to `true` (default is `true`).
-  String toHex({bool leadingHashSign = true}) => '${leadingHashSign ? '#' : ''}'
-      '${alpha.toRadixString(16).padLeft(2, '0')}'
-      '${red.toRadixString(16).padLeft(2, '0')}'
-      '${green.toRadixString(16).padLeft(2, '0')}'
-      '${blue.toRadixString(16).padLeft(2, '0')}';
-
   ColorDto toDto() => ColorDto(this);
 }
 
@@ -163,22 +92,10 @@ extension AlignmentGeometryExt on AlignmentGeometry {
   }
 }
 
-extension ShapeDecorationExt on ShapeDecoration {
-  ShapeDecorationAttribute toAttribute() => ShapeDecorationAttribute(
-        color: color?.toDto(),
-        shape: shape,
-        gradient: gradient?.toAttribute(),
-        boxShadow: shadows?.map((e) => e.toDto()).toList(),
-      );
-}
-
 extension BoxConstraintsExt on BoxConstraints {
-  BoxConstraintsAttribute toAttribute() => BoxConstraintsAttribute(
-        minWidth: minWidth,
-        maxWidth: maxWidth,
-        minHeight: minHeight,
-        maxHeight: maxHeight,
-      );
+  BoxConstraintsDto toDto() => BoxConstraintsDto.from(this);
+
+  BoxConstraintsAttribute toAttribute() => BoxConstraintsAttribute(toDto());
 }
 
 // Extension for Axis
@@ -186,45 +103,33 @@ extension AxisExt on Axis {
   AxisAttribute toAttribute() => AxisAttribute(this);
 }
 
+extension DecorationExt on Decoration {
+  DecorationDto toDto() {
+    if (this is BoxDecoration) return (this as BoxDecoration).toDto();
+    if (this is ShapeDecoration) return (this as ShapeDecoration).toDto();
+
+    throw UnimplementedError('$runtimeType is not implemented.');
+  }
+
+  DecorationAttribute toAttribute() => DecorationAttribute(toDto());
+}
+
 extension BoxDecorationExt on BoxDecoration {
-  BoxDecorationAttribute toAttribute() => BoxDecorationAttribute(
-        color: color?.toDto(),
-        border: border?.toAttribute(),
-        borderRadius: borderRadius?.toAttribute(),
-        gradient: gradient?.toAttribute(),
-        boxShadow: boxShadow?.map((e) => e.toDto()).toList(),
-        shape: shape,
-      );
+  BoxDecorationDto toDto() => BoxDecorationDto.from(this);
+}
+
+extension ShapeDecorationExt on ShapeDecoration {
+  ShapeDecorationDto toDto() => ShapeDecorationDto.from(this);
 }
 
 extension BorderRadiusGeometryExt on BorderRadiusGeometry {
   BorderRadiusGeometryAttribute toAttribute() {
-    if (this is BorderRadius) return (this as BorderRadius).toAttribute();
-    if (this is BorderRadiusDirectional) {
-      return (this as BorderRadiusDirectional).toAttribute();
-    }
-
-    throw UnimplementedError();
+    return BorderRadiusGeometryAttribute(toDto());
   }
-}
 
-extension BorderRadiusExt on BorderRadius {
-  BorderRadiusAttribute toAttribute() => BorderRadiusAttribute.only(
-        topLeft: topLeft,
-        topRight: topRight,
-        bottomLeft: bottomLeft,
-        bottomRight: bottomRight,
-      );
-}
-
-extension BorderRadiusDirectionalExrt on BorderRadiusDirectional {
-  BorderRadiusDirectionalAttribute toAttribute() =>
-      BorderRadiusDirectionalAttribute.only(
-        topStart: topStart,
-        topEnd: topEnd,
-        bottomStart: bottomStart,
-        bottomEnd: bottomEnd,
-      );
+  BorderRadiusGeometryDto toDto() {
+    return BorderRadiusGeometryDto.from(this);
+  }
 }
 
 extension Matrix4Ext on Matrix4 {
@@ -243,20 +148,11 @@ extension ClipExt on Clip {
 }
 
 extension BorderSideExt on BorderSide {
-  BorderSideDto toDto() => BorderSideDto(
-        color: color.toDto(),
-        strokeAlign: strokeAlign,
-        style: style,
-        width: width,
-      );
+  BorderSideDto toDto() => BorderSideDto.from(this);
 }
 
 extension ShadowExt on Shadow {
-  ShadowDto toDto() => ShadowDto(
-        blurRadius: blurRadius,
-        color: color.toDto(),
-        offset: offset,
-      );
+  ShadowDto toDto() => ShadowDto.from(this);
 }
 
 extension ListShadowExt on List<Shadow> {
@@ -266,12 +162,7 @@ extension ListShadowExt on List<Shadow> {
 }
 
 extension BoxShadowExt on BoxShadow {
-  BoxShadowDto toDto() => BoxShadowDto(
-        color: color.toDto(),
-        offset: offset,
-        blurRadius: blurRadius,
-        spreadRadius: spreadRadius,
-      );
+  BoxShadowDto toDto() => BoxShadowDto.from(this);
 }
 
 extension ListBoxShadowExt on List<BoxShadow> {
@@ -281,28 +172,7 @@ extension ListBoxShadowExt on List<BoxShadow> {
 }
 
 extension TextStyleExt on TextStyle {
-  TextStyleDto toDto() => TextStyleDto(
-        background: background,
-        color: color?.toDto(),
-        debugLabel: debugLabel,
-        decoration: decoration,
-        decorationColor: decorationColor?.toDto(),
-        decorationStyle: decorationStyle,
-        decorationThickness: decorationThickness,
-        fontFamily: fontFamily,
-        fontFamilyFallback: fontFamilyFallback,
-        fontFeatures: fontFeatures,
-        fontSize: fontSize,
-        fontStyle: fontStyle,
-        fontWeight: fontWeight,
-        foreground: foreground,
-        height: height,
-        letterSpacing: letterSpacing,
-        locale: locale,
-        shadows: shadows?.map((e) => e.toDto()).toList(),
-        textBaseline: textBaseline,
-        wordSpacing: wordSpacing,
-      );
+  TextStyleDto toDto() => TextStyleDto.from(this);
 
   TextStyleAttribute toAttribute() => TextStyleAttribute(toDto());
 }
