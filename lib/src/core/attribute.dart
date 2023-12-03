@@ -75,7 +75,7 @@ abstract class ResolvableAttribute<Self, Value> extends StyleAttribute
   const ResolvableAttribute();
 
   @override
-  Self merge(covariant Self? other);
+  Self merge(Self? other);
 
   @override
   Type get type => Self;

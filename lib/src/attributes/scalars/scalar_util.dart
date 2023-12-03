@@ -31,14 +31,11 @@ mixin CallableUtilityMixin<Attr extends StyleAttribute, Value>
   Attr call(Value value) => _builder(value);
 }
 
-mixin CallableDtoUtilityMixin<Attr extends StyleAttribute, D extends Dto<Value>,
-    Value> on DtoUtility<Attr, D, Value> {
-  Attr call(Value value) => _builder(valueToDto(value));
-}
-
 abstract class ScalarUtility<Return extends StyleAttribute, Param>
     extends MixUtility<Return, Param> {
   const ScalarUtility(super.builder);
+
+  Return as(Param value) => _builder(value);
 
   Return call(Param value) => _builder(value);
 }

@@ -6,8 +6,7 @@ import 'color_dto.dart';
 
 @immutable
 class ColorUtility<T extends StyleAttribute>
-    extends DtoUtility<T, ColorDto, Color>
-    with CallableDtoUtilityMixin<T, ColorDto, Color> {
+    extends DtoUtility<T, ColorDto, Color> {
   const ColorUtility(super.builder) : super(valueToDto: ColorDto.new);
 }
 

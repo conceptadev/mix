@@ -8,8 +8,13 @@ void main() {
   final keyThree = UniqueKey();
   testWidgets('StyleMix.container matches StyledContainer(style:StyleMix)',
       (tester) async {
-    final style =
-        StyleMix(boxDecoration(border: Border.all(color: Colors.red)));
+    final style = StyleMix(
+      box.decoration(
+        border: Border.all(
+          color: Colors.red,
+        ),
+      ),
+    );
 
     await tester.pumpWidget(
       MaterialApp(
@@ -43,7 +48,7 @@ void main() {
   testWidgets('StyleMix.box matches StyledContainer(style:StyleMix)',
       (tester) async {
     final style = StyleMix(
-      boxDecoration(
+      box.decoration(
         border: Border.all(color: Colors.red),
       ),
     );
@@ -79,7 +84,7 @@ void main() {
 
   testWidgets('StyleMix.hbox matches HBox(style:StyleMix)', (tester) async {
     final style =
-        StyleMix(boxDecoration(border: Border.all(color: Colors.red)));
+        StyleMix(box.decoration(border: Border.all(color: Colors.red)));
 
     await tester.pumpWidget(
       MaterialApp(
@@ -112,7 +117,7 @@ void main() {
 
   testWidgets('StyleMix.row matches StyledRow(style:StyleMix)', (tester) async {
     final style =
-        StyleMix(boxDecoration(border: Border.all(color: Colors.red)));
+        StyleMix(box.decoration(border: Border.all(color: Colors.red)));
 
     await tester.pumpWidget(
       MaterialApp(
@@ -178,7 +183,7 @@ void main() {
 
   testWidgets('StyleMix.vbox matches VBox(style:StyleMix)', (tester) async {
     final style =
-        StyleMix(boxDecoration(border: Border.all(color: Colors.red)));
+        StyleMix(box.decoration(border: Border.all(color: Colors.red)));
 
     await tester.pumpWidget(
       MaterialApp(
@@ -212,7 +217,7 @@ void main() {
   testWidgets('StyleMix.column matches StyledColumn(style:StyleMix)',
       (tester) async {
     final style =
-        StyleMix(boxDecoration(border: Border.all(color: Colors.red)));
+        StyleMix(box.decoration(border: Border.all(color: Colors.red)));
 
     await tester.pumpWidget(
       MaterialApp(

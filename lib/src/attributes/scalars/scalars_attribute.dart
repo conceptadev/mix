@@ -73,8 +73,11 @@ class BackgroundColorAttribute extends ColorAttribute<BackgroundColorAttribute>
       value == null ? null : BackgroundColorAttribute(ColorDto(value));
 
   @override
-  BackgroundColorAttribute mergeWith(ColorDto otherValue) =>
-      BackgroundColorAttribute(value.merge(otherValue));
+  BackgroundColorAttribute merge(BackgroundColorAttribute? other) {
+    return other == null
+        ? this
+        : BackgroundColorAttribute(value.merge(other.value));
+  }
 
   @override
   ColoredBox build(mix, child) {

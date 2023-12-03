@@ -265,7 +265,7 @@ void testScalarAttribute<T extends ScalarAttribute<T, V>, V>(
   });
 }
 
-class ValueHolderAttribute<T>
-    extends ScalarAttribute<ValueHolderAttribute<T>, T> {
-  const ValueHolderAttribute(super.value);
+class UtilityTestAttribute<T>
+    extends ScalarAttribute<UtilityTestAttribute<T>, T> {
+  const UtilityTestAttribute(super.value);
 }

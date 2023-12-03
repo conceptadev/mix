@@ -1,80 +1,71 @@
-import 'dart:ui';
-
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/src/attributes/strut_style/strut_style_attribute.dart';
+import 'package:mix/src/attributes/strut_style/strut_style_dto.dart';
 
+import '../../../helpers/attribute_generator.dart';
 import '../../../helpers/testing_utils.dart';
 
 void main() {
   group('StrutStyleAttribute', () {
-    test('from constructor sets all values correctly', () {
-      const attr = StrutStyleAttribute(
-        fontFamily: 'Roboto',
-        fontSize: 24.0,
-        height: 2.0,
-        leading: 1.0,
-        fontWeight: FontWeight.bold,
-        fontStyle: FontStyle.italic,
-        forceStrutHeight: true,
-      );
+    test('initializes correctly', () {
+      final strutStyle = RandomGenerator.strutStyle();
+      final strutStyleDto = StrutStyleDto.from(strutStyle);
 
-      expect(attr.fontFamily, 'Roboto');
-      expect(attr.fontSize, 24.0);
-      expect(attr.height, 2.0);
-      expect(attr.leading, 1.0);
-      expect(attr.fontWeight, FontWeight.bold);
-      expect(attr.fontStyle, FontStyle.italic);
-      expect(attr.forceStrutHeight, true);
+      final attribute = StrutStyleAttribute(strutStyleDto);
+
+      expect(attribute.value, equals(strutStyleDto));
+      expect(attribute.value, isA<StrutStyleDto>());
+      expect(attribute.value.fontFamily, equals(strutStyle.fontFamily));
+      expect(attribute.value.fontFamilyFallback,
+          equals(strutStyle.fontFamilyFallback));
+      expect(attribute.value.fontSize, equals(strutStyle.fontSize));
+      expect(attribute.value.fontWeight, equals(strutStyle.fontWeight));
+      expect(attribute.value.fontStyle, equals(strutStyle.fontStyle));
+      expect(attribute.value.height, equals(strutStyle.height));
+      expect(attribute.value.leading, equals(strutStyle.leading));
+      expect(attribute.value.forceStrutHeight,
+          equals(strutStyle.forceStrutHeight));
     });
 
-    // Test to check if the merge function returns a merged object correctly
-    test('merge returns merged object correctly', () {
-      const attr1 = StrutStyleAttribute(fontFamily: 'Roboto', fontSize: 24.0);
-      const attr2 = StrutStyleAttribute(
-          height: 2.0, leading: 1.0, fontWeight: FontWeight.bold);
-      final merged = attr1.merge(attr2);
+    test('merge returns the same attribute if other is null', () {
+      final strutStyle = RandomGenerator.strutStyle();
+      final strutStyleDto = StrutStyleDto.from(strutStyle);
 
-      expect(merged.fontFamily, 'Roboto');
-      expect(merged.fontSize, 24.0);
-      expect(merged.height, 2.0);
-      expect(merged.leading, 1.0);
-      expect(merged.fontWeight, FontWeight.bold);
+      final attribute = StrutStyleAttribute(strutStyleDto);
+      final mergedAttribute = attribute.merge(null);
+
+      expect(mergedAttribute, equals(attribute));
     });
 
-    // Test to check if the resolve function returns the correct StrutStyle
-    test('resolve returns correct StrutStyle', () {
-      const attr = StrutStyleAttribute(
-        fontFamily: 'Roboto',
-        fontSize: 24.0,
-        height: 2.0,
-        leading: 1.0,
-        fontWeight: FontWeight.bold,
-        fontStyle: FontStyle.italic,
-      );
-      final strutStyle = attr.resolve(EmptyMixData);
+    test('merge returns the same attribute if value types are different', () {
+      const strutStyle1 = StrutStyleDto(fontFamily: 'Roboto');
+      const strutStyle2 = StrutStyleDto(fontFamily: 'Arial');
+      const attribute1 = StrutStyleAttribute(strutStyle1);
+      const attribute2 = StrutStyleAttribute(strutStyle2);
+      final mergedAttribute = attribute1.merge(attribute2);
 
-      expect(strutStyle.fontFamily, 'Roboto');
-      expect(strutStyle.fontSize, 24.0);
-      expect(strutStyle.height, 2.0);
-      expect(strutStyle.leading, 1.0);
-      expect(strutStyle.fontWeight, FontWeight.bold);
-      expect(strutStyle.fontStyle, FontStyle.italic);
+      expect(mergedAttribute, equals(attribute2));
     });
 
-    // Test to check if two StrutStyleAttributes with the same properties are equal
-    test('Equality holds when all properties are the same', () {
-      const attr1 = StrutStyleAttribute(fontFamily: 'Roboto', fontSize: 24.0);
-      const attr2 = StrutStyleAttribute(fontFamily: 'Roboto', fontSize: 24.0);
+    test('merge returns a new attribute with merged value', () {
+      final strutStyle1 = StrutStyleDto.from(RandomGenerator.strutStyle());
+      final strutStyle2 = StrutStyleDto.from(RandomGenerator.strutStyle());
 
-      expect(attr1, attr2);
+      final attribute1 = StrutStyleAttribute(strutStyle1);
+      final attribute2 = StrutStyleAttribute(strutStyle2);
+      final mergedAttribute = attribute1.merge(attribute2);
+
+      expect(mergedAttribute.value, equals(strutStyle1.merge(strutStyle2)));
     });
 
-    // Test to check if two StrutStyleAttributes with different properties are not equal
-    test('Equality fails when properties are different', () {
-      const attr1 = StrutStyleAttribute(fontFamily: 'Roboto', fontSize: 24.0);
-      const attr2 = StrutStyleAttribute(fontFamily: 'Lato', fontSize: 24.0);
+    test('resolve returns the correct StrutStyle', () {
+      final strutStyle = RandomGenerator.strutStyle();
+      final strutStyleDto = StrutStyleDto.from(strutStyle);
 
-      expect(attr1, isNot(attr2));
+      final attribute = StrutStyleAttribute(strutStyleDto);
+      final resolvedStrutStyle = attribute.resolve(EmptyMixData);
+
+      expect(resolvedStrutStyle, equals(strutStyle));
     });
   });
 }

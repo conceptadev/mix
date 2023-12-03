@@ -3,7 +3,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
 
 void main() {
-  const borderRadius = BorderRadiusGeometryUtility.selfBuilder;
+  const borderRadius =
+      BorderRadiusGeometryUtility(BorderRadiusGeometryAttribute.new);
   group('BorderRadiusUtility', () {
     test('zero should return BorderRadiusAttribute with zero radius', () {
       final result = borderRadius.zero();

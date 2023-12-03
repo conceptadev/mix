@@ -31,34 +31,6 @@ abstract class SpacingAttribute<Self extends SpacingAttribute<Self>>
 class PaddingAttribute extends SpacingAttribute<PaddingAttribute> {
   const PaddingAttribute(super.value);
 
-  factory PaddingAttribute.only({
-    double? top,
-    double? bottom,
-    double? left,
-    double? right,
-    double? start,
-    double? end,
-  }) {
-    return PaddingAttribute(
-      SpacingDto(
-        top: top,
-        bottom: bottom,
-        left: left,
-        right: right,
-        start: start,
-        end: end,
-      ),
-    );
-  }
-
-  static PaddingAttribute from(EdgeInsetsGeometry edgeInsets) {
-    return PaddingAttribute(SpacingDto.from(edgeInsets));
-  }
-
-  static PaddingAttribute? maybeFrom(EdgeInsetsGeometry? edgeInsets) {
-    return edgeInsets == null ? null : from(edgeInsets);
-  }
-
   @override
   PaddingAttribute merge(PaddingAttribute? other) {
     return other == null ? this : PaddingAttribute(value.merge(other.value));
@@ -68,34 +40,6 @@ class PaddingAttribute extends SpacingAttribute<PaddingAttribute> {
 @immutable
 class MarginAttribute extends SpacingAttribute<MarginAttribute> {
   const MarginAttribute(super.value);
-
-  factory MarginAttribute.only({
-    double? top,
-    double? bottom,
-    double? left,
-    double? right,
-    double? start,
-    double? end,
-  }) {
-    return MarginAttribute(
-      SpacingDto(
-        top: top,
-        bottom: bottom,
-        left: left,
-        right: right,
-        start: start,
-        end: end,
-      ),
-    );
-  }
-
-  static MarginAttribute from(EdgeInsetsGeometry edgeInsets) {
-    return MarginAttribute(SpacingDto.from(edgeInsets));
-  }
-
-  static MarginAttribute? maybeFrom(EdgeInsetsGeometry? edgeInsets) {
-    return edgeInsets == null ? null : from(edgeInsets);
-  }
 
   @override
   MarginAttribute merge(MarginAttribute? other) {

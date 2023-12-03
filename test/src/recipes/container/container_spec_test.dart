@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
+import 'package:mix/src/attributes/decoration/decoration_dto.dart';
 
 import '../../../helpers/testing_utils.dart';
 
@@ -15,8 +16,10 @@ void main() {
           const AlignmentGeometryAttribute(Alignment.center),
           PaddingAttribute.only(top: 8, bottom: 16),
           MarginAttribute.only(top: 10.0, bottom: 12.0),
-          const BoxConstraintsAttribute(maxWidth: 300.0, minHeight: 200.0),
-          const BoxDecorationAttribute(color: ColorDto(Colors.blue)),
+          BoxConstraintsAttribute.only(maxWidth: 300.0, minHeight: 200.0),
+          const DecorationAttribute(
+            BoxDecorationDto(color: ColorDto(Colors.blue)),
+          ),
           TransformAttribute(Matrix4.translationValues(10.0, 10.0, 0.0)),
           const ClipBehaviorAttribute(Clip.antiAlias),
         ),

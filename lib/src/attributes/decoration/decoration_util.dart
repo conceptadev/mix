@@ -97,7 +97,7 @@ class BoxDecorationUtility<T extends StyleAttribute>
   T call({
     Color? color,
     BoxBorder? border,
-    BorderRadius? borderRadius,
+    BorderRadiusGeometry? borderRadius,
     Gradient? gradient,
     List<BoxShadow>? boxShadow,
     BoxShape? shape,

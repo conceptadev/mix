@@ -1,92 +1,75 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
-import 'package:mix/src/attributes/gradient/gradient_dto.dart';
+import 'package:mix/src/attributes/decoration/decoration_dto.dart';
 
+import '../../../helpers/attribute_generator.dart';
 import '../../../helpers/testing_utils.dart';
 
 void main() {
-  const gradient = LinearGradient(
-    colors: Colors.accents,
-  );
-  final linearGradient = LinearGradientDto(
-    colors: Colors.accents.map(ColorDto.new).toList(),
-  );
+  group('DecorationAttribute', () {
+    final border = RandomGenerator.border();
+    final boxDecorationDto = BoxDecorationDto(
+      color: const ColorDto(Colors.red),
+      shape: BoxShape.circle,
+      border: BoxBorderDto.from(border),
+    );
+    test('constructor should set the value correctly', () {
+      final attribute = DecorationAttribute(boxDecorationDto);
 
-  final gradientAttribute = GradientAttribute(linearGradient);
+      expect(attribute.value, isA<BoxDecorationDto>());
+      expect(attribute.value, equals(boxDecorationDto));
+    });
 
-  group('BoxDecorationDto', () {
-    test('merge returns merged object correctly', () {
-      final attr1 = BoxDecorationAttribute(color: Colors.red.toDto());
-      final attr2 = BoxDecorationAttribute(gradient: gradientAttribute);
-      final merged = attr1.merge(attr2);
-      expect(merged.color, attr1.color);
-      expect(merged.gradient, attr2.gradient);
-    });
-    test('resolve returns correct BoxDecoration with default values', () {
-      const attr = BoxDecorationAttribute();
-      final decoration = attr.resolve(EmptyMixData);
-      expect(decoration, const BoxDecoration());
-      return const Placeholder();
-    });
-    test('resolve returns correct BoxDecoration with specific values', () {
-      final attr = BoxDecorationAttribute(
-          color: Colors.red.toDto(), gradient: gradientAttribute);
-      final decoration = attr.resolve(EmptyMixData);
-      expect(decoration.color, Colors.red);
-      expect(decoration.gradient, gradient);
-      return const Placeholder();
-    });
-    test('Equality holds when all properties are the same', () {
-      final attr1 = BoxDecorationAttribute(color: Colors.red.toDto());
-      final attr2 = BoxDecorationAttribute(color: Colors.red.toDto());
-      expect(attr1, attr2);
-    });
-    test('Equality fails when properties are different', () {
-      final attr1 = BoxDecorationAttribute(color: Colors.red.toDto());
-      final attr2 = BoxDecorationAttribute(color: Colors.blue.toDto());
-      expect(attr1, isNot(attr2));
-    });
-  });
+    test('merge should return the same attribute if other is null', () {
+      final attribute = DecorationAttribute(boxDecorationDto);
+      final mergedAttribute = attribute.merge(null);
 
-  group('ShapeDecorationDto', () {
-    test('merge returns merged object correctly', () {
-      final attr1 = ShapeDecorationAttribute(color: Colors.red.toDto());
-      final attr2 = ShapeDecorationAttribute(gradient: gradientAttribute);
-      final merged = attr1.merge(attr2);
-      expect(merged.color, attr1.color);
-      expect(merged.gradient, attr2.gradient);
+      expect(mergedAttribute, equals(attribute));
     });
-    test('resolve returns correct ShapeDecoration with default values', () {
-      const shapeDecoration = ShapeDecoration(shape: CircleBorder());
-      const attr = ShapeDecorationAttribute(shape: CircleBorder());
 
-      final decoration = attr.resolve(EmptyMixData);
-      expect(decoration, shapeDecoration);
-    });
-    test('resolve returns correct ShapeDecoration with specific values', () {
-      final attr1 = ShapeDecorationAttribute(
-        gradient: gradientAttribute,
-      );
+    test('merge should return the same attribute if value types are different',
+        () {
+      const decoration1 = BoxDecorationDto(color: ColorDto(Colors.red));
+      const decoration2 = BoxDecorationDto(color: ColorDto(Colors.blue));
+      const attribute1 = DecorationAttribute(decoration1);
+      const attribute2 = DecorationAttribute(decoration2);
+      final mergedAttribute = attribute1.merge(attribute2);
 
-      final attr2 = ShapeDecorationAttribute(
-        color: Colors.red.toDto(),
-      );
-      final decoration1 = attr1.resolve(EmptyMixData);
-      final decoration2 = attr2.resolve(EmptyMixData);
+      expect(mergedAttribute, equals(attribute2));
+    });
 
-      expect(decoration1.gradient, linearGradient.resolve(EmptyMixData));
-      expect(decoration2.color, Colors.red);
+    test('merge should return a new attribute with merged value', () {
+      final decoration1 =
+          BoxDecorationDto.from(RandomGenerator.boxDecoration());
+      final decoration2 =
+          BoxDecorationDto.from(RandomGenerator.boxDecoration());
+
+      final attribute1 = DecorationAttribute(decoration1);
+      final attribute2 = DecorationAttribute(decoration2);
+      final mergedAttribute = attribute1.merge(attribute2);
+
+      expect(mergedAttribute.value, equals(decoration1.merge(decoration2)));
     });
-    test('Equality holds when all properties are the same', () {
-      final attr1 = ShapeDecorationAttribute(color: Colors.red.toDto());
-      final attr2 = ShapeDecorationAttribute(color: Colors.red.toDto());
-      expect(attr1, attr2);
+
+    test('resolve should return the decoration value', () {
+      const decoration = BoxDecorationDto(color: ColorDto(Colors.red));
+      const attribute = DecorationAttribute(decoration);
+      final resolvedDecoration = attribute.resolve(EmptyMixData);
+
+      expect(resolvedDecoration, equals(decoration));
     });
-    test('Equality fails when properties are different', () {
-      final attr1 = ShapeDecorationAttribute(color: Colors.red.toDto());
-      final attr2 = ShapeDecorationAttribute(color: Colors.blue.toDto());
-      expect(attr1, isNot(attr2));
+
+    testWidgets('build', (widgetTester) async {
+      const decoration = BoxDecorationDto(color: ColorDto(Colors.red));
+      const attribute = DecorationAttribute(decoration);
+      final widget = attribute.build(EmptyMixData, Container());
+
+      await widgetTester.pumpWidget(widget);
+      final decorationBox =
+          widgetTester.widget<DecoratedBox>(find.byType(DecoratedBox));
+      expect(
+          decorationBox.decoration, equals(decoration.resolve(EmptyMixData)));
     });
   });
 }

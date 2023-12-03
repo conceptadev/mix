@@ -6,7 +6,7 @@ import '../../../helpers/testing_utils.dart';
 
 void main() {
   group('StackFitUtility Tests', () {
-    const utility = StackFitUtility(ValueHolderAttribute.new);
+    const utility = StackFitUtility(UtilityTestAttribute.new);
     test('Properties are initialized correctly', () {
       expect(utility.loose().value, isA<StackFit>());
       expect(utility.expand().value, isA<StackFit>());
@@ -18,7 +18,7 @@ void main() {
   });
 
   group('ClipUtility Tests', () {
-    const utility = ClipUtility(ValueHolderAttribute.new);
+    const utility = ClipUtility(UtilityTestAttribute.new);
     test('Properties are initialized correctly', () {
       expect(utility.none().value, isA<Clip>());
       expect(utility.hardEdge().value, isA<Clip>());
@@ -33,7 +33,7 @@ void main() {
   });
 
   group('VerticalDirectionUtility Tests', () {
-    const utility = VerticalDirectionUtility(ValueHolderAttribute.new);
+    const utility = VerticalDirectionUtility(UtilityTestAttribute.new);
     test('Properties are initialized correctly', () {
       expect(utility.up().value, isA<VerticalDirection>());
       expect(utility.down().value, isA<VerticalDirection>());
@@ -43,7 +43,7 @@ void main() {
   });
 
   group('TextOverflowUtility Tests', () {
-    const utility = TextOverflowUtility(ValueHolderAttribute.new);
+    const utility = TextOverflowUtility(UtilityTestAttribute.new);
     test('Properties are initialized correctly', () {
       expect(utility.clip().value, isA<TextOverflow>());
       expect(utility.ellipsis().value, isA<TextOverflow>());
@@ -55,7 +55,7 @@ void main() {
   });
 
   group('TextWidthBasisUtility Tests', () {
-    const utility = TextWidthBasisUtility(ValueHolderAttribute.new);
+    const utility = TextWidthBasisUtility(UtilityTestAttribute.new);
     test('Properties are initialized correctly', () {
       expect(utility.parent().value, isA<TextWidthBasis>());
       expect(utility.longestLine().value, isA<TextWidthBasis>());
@@ -65,7 +65,7 @@ void main() {
   });
 
   group('TextAlignUtility Tests', () {
-    const utility = TextAlignUtility(ValueHolderAttribute.new);
+    const utility = TextAlignUtility(UtilityTestAttribute.new);
     test('Properties are initialized correctly', () {
       expect(utility.left().value, isA<TextAlign>());
       expect(utility.right().value, isA<TextAlign>());
@@ -83,7 +83,7 @@ void main() {
   });
 
   group('FlexFitUtility Tests', () {
-    const utility = FlexFitUtility(ValueHolderAttribute.new);
+    const utility = FlexFitUtility(UtilityTestAttribute.new);
     test('Properties are initialized correctly', () {
       expect(utility.tight().value, isA<FlexFit>());
       expect(utility.loose().value, isA<FlexFit>());
@@ -93,7 +93,7 @@ void main() {
   });
 
   group('AxisUtility Tests', () {
-    const utility = AxisUtility(ValueHolderAttribute.new);
+    const utility = AxisUtility(UtilityTestAttribute.new);
     test('Properties are initialized correctly', () {
       expect(utility.horizontal().value, isA<Axis>());
       expect(utility.vertical().value, isA<Axis>());
@@ -103,7 +103,7 @@ void main() {
   });
 
   group('MainAxisAlignmentUtility Tests', () {
-    const utility = MainAxisAlignmentUtility(ValueHolderAttribute.new);
+    const utility = MainAxisAlignmentUtility(UtilityTestAttribute.new);
     test('Properties are initialized correctly', () {
       expect(utility.start().value, isA<MainAxisAlignment>());
       expect(utility.end().value, isA<MainAxisAlignment>());
@@ -121,7 +121,7 @@ void main() {
   });
 
   group('CrossAxisAlignmentUtility Tests', () {
-    const utility = CrossAxisAlignmentUtility(ValueHolderAttribute.new);
+    const utility = CrossAxisAlignmentUtility(UtilityTestAttribute.new);
     test('Properties are initialized correctly', () {
       expect(utility.start().value, isA<CrossAxisAlignment>());
       expect(utility.end().value, isA<CrossAxisAlignment>());
@@ -137,7 +137,7 @@ void main() {
   });
 
   group('MainAxisSizeUtility Tests', () {
-    const utility = MainAxisSizeUtility(ValueHolderAttribute.new);
+    const utility = MainAxisSizeUtility(UtilityTestAttribute.new);
     test('Properties are initialized correctly', () {
       expect(utility.min().value, isA<MainAxisSize>());
       expect(utility.max().value, isA<MainAxisSize>());
@@ -147,7 +147,7 @@ void main() {
   });
 
   group('TextBaselineUtility Tests', () {
-    const utility = TextBaselineUtility(ValueHolderAttribute.new);
+    const utility = TextBaselineUtility(UtilityTestAttribute.new);
     test('Properties are initialized correctly', () {
       expect(utility.alphabetic().value, isA<TextBaseline>());
       expect(utility.ideographic().value, isA<TextBaseline>());
@@ -157,7 +157,7 @@ void main() {
   });
 
   group('ImageRepeatUtility Tests', () {
-    const utility = ImageRepeatUtility(ValueHolderAttribute.new);
+    const utility = ImageRepeatUtility(UtilityTestAttribute.new);
     test('Properties are initialized correctly', () {
       expect(utility.noRepeat().value, isA<ImageRepeat>());
       expect(utility.repeat().value, isA<ImageRepeat>());
@@ -171,7 +171,7 @@ void main() {
   });
 
   group('BoxFitUtility Tests', () {
-    const utility = BoxFitUtility(ValueHolderAttribute.new);
+    const utility = BoxFitUtility(UtilityTestAttribute.new);
     test('Properties are initialized correctly', () {
       expect(utility.fill().value, isA<BoxFit>());
       expect(utility.contain().value, isA<BoxFit>());
@@ -191,7 +191,7 @@ void main() {
   });
 
   group('BoxShapeUtility Tests', () {
-    const utility = BoxShapeUtility(ValueHolderAttribute.new);
+    const utility = BoxShapeUtility(UtilityTestAttribute.new);
     test('Properties are initialized correctly', () {
       expect(utility.circle().value, isA<BoxShape>());
       expect(utility.rectangle().value, isA<BoxShape>());
@@ -202,7 +202,7 @@ void main() {
 
   group('BlendModeUtility Tests', () {
     test('Properties are initialized correctly', () {
-      const utility = BlendModeUtility(ValueHolderAttribute.new);
+      const utility = BlendModeUtility(UtilityTestAttribute.new);
       expect(utility.clear().value, BlendMode.clear);
       expect(utility.src().value, BlendMode.src);
       expect(utility.dst().value, BlendMode.dst);

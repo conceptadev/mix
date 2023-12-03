@@ -23,21 +23,6 @@ extension StrutStyleExt on StrutStyle {
   StrutStyleDto toDto() => StrutStyleDto.from(this);
 
   StrutStyleAttribute toAttribute() => StrutStyleAttribute(toDto());
-
-  StrutStyle merge(StrutStyle? other) {
-    return StrutStyle(
-      fontFamily: other?.fontFamily ?? fontFamily,
-      fontFamilyFallback: other?.fontFamilyFallback ?? fontFamilyFallback,
-      fontSize: other?.fontSize ?? fontSize,
-      height: other?.height ?? height,
-      leadingDistribution: other?.leadingDistribution ?? leadingDistribution,
-      leading: other?.leading ?? leading,
-      fontWeight: other?.fontWeight ?? fontWeight,
-      fontStyle: other?.fontStyle ?? fontStyle,
-      forceStrutHeight: other?.forceStrutHeight ?? forceStrutHeight,
-      debugLabel: other?.debugLabel ?? debugLabel,
-    );
-  }
 }
 
 extension GradientExt on Gradient {

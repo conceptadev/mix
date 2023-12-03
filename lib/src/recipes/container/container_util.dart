@@ -4,7 +4,6 @@ import '../../../exports.dart';
 import '../../attributes/color/color_util.dart';
 import '../../attributes/constraints/constraints_dto.dart';
 import '../../attributes/decoration/decoration_dto.dart';
-import '../../attributes/scalars/scalar_attribute_util.dart';
 import '../../attributes/spacing/spacing_dto.dart';
 
 const container = ContainerUtility.selfBuilder;
@@ -26,7 +25,7 @@ const border = BoxBorderUtility(BoxBorderAttribute.new);
 /// - [ClipBehaviorAttribute]
 /// - [Clip]
 /// - [ClipUtility]
-const clipBehavior = ClipBehaviorAttributeUtility();
+const clipBehavior = ClipUtility(ClipBehaviorAttribute.new);
 
 /// `padding` - Provides a comprehensive utility for defining padding attribute
 ///
@@ -155,6 +154,8 @@ const backgroundColor = ColorUtility(BackgroundColorAttribute.new);
 
 const _decoration = DecorationUtility(DecorationAttribute.new);
 
+const _constraints = BoxConstraintsUtility(BoxConstraintsAttribute.new);
+
 final elevation = _decoration.box.elevation;
 final boxShadow = _decoration.box.boxShadow;
 
@@ -169,7 +170,7 @@ final boxShadow = _decoration.box.boxShadow;
 /// - [BoxConstraintsAttribute]
 /// - [BoxConstraints]
 /// - [BoxConstraintsUtility]
-final minWidth = box.constraints.minWidth;
+final minWidth = _constraints.minWidth;
 
 /// Defines a [BoxConstraintsAttribute] with a maximum width [maxWidth].
 ///
@@ -182,7 +183,7 @@ final minWidth = box.constraints.minWidth;
 /// - [BoxConstraintsAttribute]
 /// - [BoxConstraints]
 /// - [BoxConstraintsUtility]
-final maxWidth = box.constraints.maxWidth;
+final maxWidth = _constraints.maxWidth;
 
 /// Creates a [BoxConstraintsAttribute] with a minimum height [minHeight].
 ///
@@ -195,7 +196,7 @@ final maxWidth = box.constraints.maxWidth;
 /// - [BoxConstraintsAttribute]
 /// - [BoxConstraints]
 /// - [BoxConstraintsUtility]
-final minHeight = box.constraints.minHeight;
+final minHeight = _constraints.minHeight;
 
 /// Creates a [BoxConstraintsAttribute] with a maximum height [maxHeight].
 ///
@@ -208,7 +209,7 @@ final minHeight = box.constraints.minHeight;
 /// - [BoxConstraintsAttribute]
 /// - [BoxConstraints]
 /// - [BoxConstraintsUtility]
-final maxHeight = box.constraints.maxHeight;
+final maxHeight = _constraints.maxHeight;
 
 /// Creates a [WidthAttribute] with a specific [width].
 ///

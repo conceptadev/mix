@@ -10,14 +10,8 @@ abstract class ColorAttribute<Self extends ColorAttribute<Self>>
   final ColorDto value;
   const ColorAttribute(this.value);
 
-  // mergeWith
-  Self mergeWith(ColorDto otherValue);
-
-  // merge
   @override
-  Self merge(covariant Self? other) {
-    return other == null ? this as Self : mergeWith(other.value);
-  }
+  Self merge(Self? other);
 
   @override
   Color resolve(MixData mix) => value.resolve(mix);
