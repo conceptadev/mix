@@ -3,9 +3,6 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
-import 'package:mix/src/attributes/constraints/constraints_dto.dart';
-import 'package:mix/src/attributes/decoration/decoration_dto.dart';
-import 'package:mix/src/attributes/spacing/spacing_dto.dart';
 
 import '../../../helpers/testing_utils.dart';
 
@@ -67,6 +64,8 @@ void main() {
 
       expect(copiedSpec.transform, Matrix4.translationValues(10.0, 10.0, 0.0));
       expect(copiedSpec.clipBehavior, Clip.antiAlias);
+      expect(copiedSpec.width, 250.0);
+      expect(copiedSpec.height, 150.0);
     });
 
     test('lerp', () {
@@ -128,6 +127,106 @@ void main() {
           Matrix4Tween(begin: Matrix4.identity(), end: Matrix4.rotationZ(0.5))
               .lerp(t));
       expect(lerpedSpec.clipBehavior, t < 0.5 ? Clip.none : Clip.antiAlias);
+    });
+
+    // equality
+    test('equality', () {
+      final spec1 = ContainerSpec(
+        alignment: Alignment.topLeft,
+        color: null,
+        width: 300,
+        height: 200,
+        padding: const EdgeInsets.all(8.0),
+        margin: const EdgeInsets.only(top: 4.0),
+        constraints: const BoxConstraints(maxWidth: 200.0),
+        decoration: const BoxDecoration(color: Colors.red),
+        transform: Matrix4.identity(),
+        clipBehavior: Clip.none,
+      );
+
+      final spec2 = ContainerSpec(
+        alignment: Alignment.topLeft,
+        color: null,
+        width: 300,
+        height: 200,
+        padding: const EdgeInsets.all(8.0),
+        margin: const EdgeInsets.only(top: 4.0),
+        constraints: const BoxConstraints(maxWidth: 200.0),
+        decoration: const BoxDecoration(color: Colors.red),
+        transform: Matrix4.identity(),
+        clipBehavior: Clip.none,
+      );
+
+      expect(spec1, spec2);
+    });
+
+    // merge()
+    test('merge() returns correct instance', () {
+      final containerSpecAttribute = ContainerSpecAttribute(
+        alignment: Alignment.center,
+        clipBehavior: Clip.antiAlias,
+        color: Colors.blue.toDto(),
+        constraints: const BoxConstraintsDto(maxHeight: 100),
+        decoration: const BoxDecorationDto(color: ColorDto(Colors.blue)),
+        height: 100,
+        margin: const SpacingDto(
+          bottom: 10,
+          left: 10,
+          right: 10,
+          top: 10,
+        ),
+        padding: const SpacingDto(bottom: 20, left: 20, right: 20, top: 20),
+        transform: Matrix4.identity(),
+        width: 100,
+      );
+
+      final mergedContainerSpecAttribute = containerSpecAttribute.merge(
+        ContainerSpecAttribute(
+          alignment: Alignment.centerLeft,
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          color: Colors.red.toDto(),
+          constraints: const BoxConstraintsDto(maxHeight: 200),
+          decoration: const BoxDecorationDto(color: ColorDto(Colors.red)),
+          height: 200,
+          margin: const SpacingDto(
+            bottom: 20,
+            left: 20,
+            right: 20,
+            top: 20,
+          ),
+          padding: const SpacingDto(bottom: 30, left: 30, right: 30, top: 30),
+          transform: Matrix4.identity(),
+          width: 200,
+        ),
+      );
+
+      expect(mergedContainerSpecAttribute.alignment, Alignment.centerLeft);
+      expect(mergedContainerSpecAttribute.clipBehavior,
+          Clip.antiAliasWithSaveLayer);
+      expect(mergedContainerSpecAttribute.color, Colors.red.toDto());
+      expect(mergedContainerSpecAttribute.constraints,
+          const BoxConstraintsDto(maxHeight: 200));
+      expect(mergedContainerSpecAttribute.decoration,
+          const BoxDecorationDto(color: ColorDto(Colors.red)));
+      expect(mergedContainerSpecAttribute.height, 200);
+      expect(
+          mergedContainerSpecAttribute.margin,
+          const SpacingDto(
+            bottom: 20,
+            left: 20,
+            right: 20,
+            top: 20,
+          ));
+      expect(
+          mergedContainerSpecAttribute.padding,
+          const SpacingDto(
+            bottom: 30,
+            left: 30,
+            right: 30,
+            top: 30,
+          ));
+      expect(mergedContainerSpecAttribute.transform, Matrix4.identity());
+      expect(mergedContainerSpecAttribute.width, 200);
     });
   });
 }

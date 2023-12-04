@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../../../mix.dart';
+import '../../attributes/scalars/scalar_util.dart';
+import '../../attributes/spacing/spacing_util.dart';
+import '../../core/attribute.dart';
+import 'flex_attribute.dart';
 
 /// A utility class for building [FlexMixAttribute]s.
 final flex = FlexSpecUtility.selfBuilder;

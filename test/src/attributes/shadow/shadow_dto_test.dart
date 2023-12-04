@@ -6,78 +6,167 @@ import 'package:mix/src/attributes/shadow/shadow_dto.dart';
 import '../../../helpers/testing_utils.dart';
 
 void main() {
-  group('ShadowDto and BoxShadowDto', () {
-    test('ShadowDto correctly resolves attributes', () {
+  //  ShadowDto
+  group('ShadowDto', () {
+    test('Constructor assigns correct properties', () {
       const shadowDto = ShadowDto(
-        color: ColorDto(Colors.green),
-        offset: Offset(1, 1),
-        blurRadius: 2.0,
-      );
-
-      final resultShadow = shadowDto.resolve(EmptyMixData);
-
-      expect(resultShadow.color, Colors.green);
-      expect(resultShadow.offset, const Offset(1, 1));
-      expect(resultShadow.blurRadius, 2.0);
-    });
-
-    test('ShadowDto correctly merges attributes', () {
-      const shadowDto1 = ShadowDto(
-        color: ColorDto(Colors.green),
-        offset: Offset(1, 1),
-        blurRadius: 2.0,
-      );
-
-      const shadowDto2 = ShadowDto(
+        blurRadius: 10.0,
         color: ColorDto(Colors.blue),
-        offset: Offset(2, 2),
-        blurRadius: 4.0,
+        offset: Offset(10, 10),
       );
 
-      final resultShadow = shadowDto1.merge(shadowDto2);
-
-      expect(resultShadow.color?.value, Colors.blue);
-      expect(resultShadow.offset, const Offset(2, 2));
-      expect(resultShadow.blurRadius, 4.0);
+      expect(shadowDto.blurRadius, 10.0);
+      expect(shadowDto.color?.resolve(EmptyMixData), Colors.blue);
+      expect(shadowDto.offset, const Offset(10, 10));
     });
 
-    test('BoxShadowDto correctly resolves attributes', () {
+    test('from() creates correct instance', () {
+      const shadow = Shadow(
+        blurRadius: 10.0,
+        color: Colors.blue,
+        offset: Offset(10, 10),
+      );
+
+      final shadowDto = ShadowDto.from(shadow);
+
+      expect(shadowDto.blurRadius, 10.0);
+      expect(shadowDto.color?.resolve(EmptyMixData), Colors.blue);
+      expect(shadowDto.offset, const Offset(10, 10));
+    });
+
+    test('maybeFrom() creates correct instance', () {
+      const shadow = Shadow(
+        blurRadius: 10.0,
+        color: Colors.blue,
+        offset: Offset(10, 10),
+      );
+
+      final shadowDto = ShadowDto.maybeFrom(shadow);
+
+      expect(shadowDto?.blurRadius, 10.0);
+      expect(shadowDto?.color?.resolve(EmptyMixData), Colors.blue);
+      expect(shadowDto?.offset, const Offset(10, 10));
+    });
+
+    test('resolve() returns correct instance', () {
+      const shadowDto = ShadowDto(
+        blurRadius: 10.0,
+        color: ColorDto(Colors.blue),
+        offset: Offset(10, 10),
+      );
+
+      final shadow = shadowDto.resolve(EmptyMixData);
+
+      expect(shadow.blurRadius, 10.0);
+      expect(shadow.color, Colors.blue);
+      expect(shadow.offset, const Offset(10, 10));
+    });
+
+    test('merge() returns correct instance', () {
+      const shadowDto = ShadowDto(
+        blurRadius: 10.0,
+        color: ColorDto(Colors.blue),
+        offset: Offset(10, 10),
+      );
+
+      final mergedShadowDto = shadowDto.merge(
+        const ShadowDto(
+          blurRadius: 20.0,
+          color: ColorDto(Colors.red),
+          offset: Offset(20, 20),
+        ),
+      );
+
+      expect(mergedShadowDto.blurRadius, 20.0);
+      expect(mergedShadowDto.color?.resolve(EmptyMixData), Colors.red);
+      expect(mergedShadowDto.offset, const Offset(20, 20));
+    });
+  });
+
+  group('BoxShadowDto', () {
+    test('Constructor assigns correct properties', () {
       const boxShadowDto = BoxShadowDto(
-        color: ColorDto(Colors.green),
-        offset: Offset(1, 1),
-        blurRadius: 2.0,
-        spreadRadius: 3.0,
-      );
-
-      final resultBoxShadow = boxShadowDto.resolve(EmptyMixData);
-
-      expect(resultBoxShadow.color, Colors.green, reason: 'color');
-      expect(resultBoxShadow.offset, const Offset(1, 1), reason: 'offset');
-      expect(resultBoxShadow.blurRadius, 2.0, reason: 'blurRadius');
-      expect(resultBoxShadow.spreadRadius, 3.0, reason: 'spreadRadius');
-    });
-
-    test('BoxShadowDto correctly merges attributes', () {
-      const boxShadowDto1 = BoxShadowDto(
-        color: ColorDto(Colors.green),
-        offset: Offset(1, 1),
-        blurRadius: 2.0,
-        spreadRadius: 3.0,
-      );
-
-      const boxShadowDto2 = BoxShadowDto(
+        blurRadius: 10.0,
         color: ColorDto(Colors.blue),
-        offset: Offset(2, 2),
-        blurRadius: 4.0,
+        offset: Offset(10, 10),
         spreadRadius: 5.0,
       );
 
-      final resultBoxShadow = boxShadowDto1.merge(boxShadowDto2);
+      expect(boxShadowDto.blurRadius, 10.0);
+      expect(boxShadowDto.color?.resolve(EmptyMixData), Colors.blue);
+      expect(boxShadowDto.offset, const Offset(10, 10));
+      expect(boxShadowDto.spreadRadius, 5.0);
+    });
 
-      expect(resultBoxShadow.color?.value, Colors.blue);
-      expect(resultBoxShadow.offset, const Offset(2, 2));
-      expect(resultBoxShadow.blurRadius, 4.0);
-      expect(resultBoxShadow.spreadRadius, 5.0);
+    test('from() creates correct instance', () {
+      const boxShadow = BoxShadow(
+        blurRadius: 10.0,
+        color: Colors.blue,
+        offset: Offset(10, 10),
+        spreadRadius: 5.0,
+      );
+
+      final boxShadowDto = BoxShadowDto.from(boxShadow);
+
+      expect(boxShadowDto.blurRadius, 10.0);
+      expect(boxShadowDto.color?.resolve(EmptyMixData), Colors.blue);
+      expect(boxShadowDto.offset, const Offset(10, 10));
+      expect(boxShadowDto.spreadRadius, 5.0);
+    });
+
+    test('maybeFrom() creates correct instance', () {
+      const boxShadow = BoxShadow(
+        blurRadius: 10.0,
+        color: Colors.blue,
+        offset: Offset(10, 10),
+        spreadRadius: 5.0,
+      );
+
+      final boxShadowDto = BoxShadowDto.maybeFrom(boxShadow);
+
+      expect(boxShadowDto?.blurRadius, 10.0);
+      expect(boxShadowDto?.color?.resolve(EmptyMixData), Colors.blue);
+      expect(boxShadowDto?.offset, const Offset(10, 10));
+      expect(boxShadowDto?.spreadRadius, 5.0);
+    });
+
+    test('resolve() returns correct instance', () {
+      const boxShadowDto = BoxShadowDto(
+        blurRadius: 10.0,
+        color: ColorDto(Colors.blue),
+        offset: Offset(10, 10),
+        spreadRadius: 5.0,
+      );
+
+      final boxShadow = boxShadowDto.resolve(EmptyMixData);
+
+      expect(boxShadow.blurRadius, 10.0);
+      expect(boxShadow.color, Colors.blue);
+      expect(boxShadow.offset, const Offset(10, 10));
+      expect(boxShadow.spreadRadius, 5.0);
+    });
+
+    test('merge() returns correct instance', () {
+      const boxShadowDto = BoxShadowDto(
+        blurRadius: 10.0,
+        color: ColorDto(Colors.blue),
+        offset: Offset(10, 10),
+        spreadRadius: 5.0,
+      );
+
+      final mergedBoxShadowDto = boxShadowDto.merge(
+        const BoxShadowDto(
+          blurRadius: 20.0,
+          color: ColorDto(Colors.red),
+          offset: Offset(20, 20),
+          spreadRadius: 10.0,
+        ),
+      );
+
+      expect(mergedBoxShadowDto.blurRadius, 20.0);
+      expect(mergedBoxShadowDto.color?.resolve(EmptyMixData), Colors.red);
+      expect(mergedBoxShadowDto.offset, const Offset(20, 20));
+      expect(mergedBoxShadowDto.spreadRadius, 10.0);
     });
   });
 }

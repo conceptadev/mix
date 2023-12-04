@@ -58,7 +58,10 @@ class AlignmentUtility<T extends StyleAttribute>
   T bottomLeft() => builder(Alignment.bottomLeft);
   T bottomCenter() => builder(Alignment.bottomCenter);
   T bottomRight() => builder(Alignment.bottomRight);
-  T only(double? x, double? y, double? start) {
+  T only({double? x, double? y, double? start}) {
+    assert(x == null || start == null,
+        'Cannot provide both an x and a start parameter.');
+
     return start == null
         ? builder(Alignment(x ?? 0, y ?? 0))
         : builder(AlignmentDirectional(start, y ?? 0));
@@ -298,7 +301,7 @@ class TileModeUtility<T extends StyleAttribute>
   const TileModeUtility(super.builder);
   T clamp() => builder(TileMode.clamp);
   T mirror() => builder(TileMode.mirror);
-  T repeat() => builder(TileMode.repeated);
+  T repeated() => builder(TileMode.repeated);
   T decal() => builder(TileMode.decal);
 }
 
@@ -562,6 +565,7 @@ class BoxShapeUtility<T extends StyleAttribute>
 /// final fontWeight = FontWeightUtility(builder);
 /// final bold = fontWeight.bold();
 /// final normal = fontWeight.normal();
+/// final w100 = fontWeight.w100();
 /// ```
 ///
 /// See [FontWeight] for more information.
@@ -570,6 +574,15 @@ class FontWeightUtility<T extends StyleAttribute>
   const FontWeightUtility(super.builder);
   T bold() => _builder(FontWeight.bold);
   T normal() => _builder(FontWeight.normal);
+  T w100() => _builder(FontWeight.w100);
+  T w200() => _builder(FontWeight.w200);
+  T w300() => _builder(FontWeight.w300);
+  T w400() => _builder(FontWeight.w400);
+  T w500() => _builder(FontWeight.w500);
+  T w600() => _builder(FontWeight.w600);
+  T w700() => _builder(FontWeight.w700);
+  T w800() => _builder(FontWeight.w800);
+  T w900() => _builder(FontWeight.w900);
 }
 
 /// Utility for setting `TextDecoration` values.

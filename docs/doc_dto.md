@@ -1,3 +1,153 @@
+# DTOs
+
+DTO's or Data Transfer Objects are references to other `data classes` within flutter. However the main difference is that they set all the fields as optional which allow for better composability and composition by the utilities, while also allow for better support for value tokens.
+
+## Example
+
+Shadow and BoxShadow, they normally have default values which are set when constructed. By using DTO's we can have nullablev values for each, and also have value tokens like `ColorDto`.
+
+```dart
+import 'package:flutter/material.dart';
+
+import '../../core/attribute.dart';
+import '../../factory/mix_provider_data.dart';
+import '../color/color_dto.dart';
+
+@immutable
+abstract class ShadowDtoImpl<Self extends ShadowDtoImpl<Self, Value>,
+    Value extends Shadow> extends Dto<Value> with Mergeable<Self> {
+  final ColorDto? color;
+  final Offset? offset;
+  final double? blurRadius;
+
+  const ShadowDtoImpl({this.blurRadius, this.color, this.offset});
+
+  @override
+  Value resolve(MixData mix);
+
+  @override
+  Self merge(Self? other);
+}
+
+@immutable
+class ShadowDto extends ShadowDtoImpl<ShadowDto, Shadow> {
+  const ShadowDto({super.blurRadius, super.color, super.offset});
+
+  static ShadowDto from(Shadow shadow) {
+    return ShadowDto(
+      blurRadius: shadow.blurRadius,
+      color: ColorDto.maybeFrom(shadow.color),
+      offset: shadow.offset,
+    );
+  }
+
+  static ShadowDto? maybeFrom(Shadow? shadow) {
+    return shadow == null ? null : from(shadow);
+  }
+
+  @override
+  Shadow resolve(MixData mix) {
+    const defaultShadow = Shadow();
+
+    return Shadow(
+      color: color?.resolve(mix) ?? defaultShadow.color,
+      offset: offset ?? defaultShadow.offset,
+      blurRadius: blurRadius ?? defaultShadow.blurRadius,
+    );
+  }
+
+  @override
+  ShadowDto merge(covariant ShadowDto? other) {
+    if (other == null) return this;
+
+    return ShadowDto(
+      blurRadius: other.blurRadius ?? blurRadius,
+      color: other.color ?? color,
+      offset: other.offset ?? offset,
+    );
+  }
+
+  @override
+  get props => [color, offset, blurRadius];
+}
+
+class BoxShadowDto extends ShadowDtoImpl<BoxShadowDto, BoxShadow> {
+  final double? spreadRadius;
+
+  const BoxShadowDto({
+    super.color,
+    super.offset,
+    super.blurRadius,
+    this.spreadRadius,
+  });
+
+  static BoxShadowDto from(BoxShadow shadow) {
+    return BoxShadowDto(
+      color: ColorDto.maybeFrom(shadow.color),
+      offset: shadow.offset,
+      blurRadius: shadow.blurRadius,
+      spreadRadius: shadow.spreadRadius,
+    );
+  }
+
+  static BoxShadowDto? maybeFrom(BoxShadow? shadow) {
+    return shadow == null ? null : from(shadow);
+  }
+
+  @override
+  BoxShadow resolve(MixData mix) {
+    const defaultShadow = BoxShadow();
+
+    return BoxShadow(
+      color: color?.resolve(mix) ?? defaultShadow.color,
+      offset: offset ?? defaultShadow.offset,
+      blurRadius: blurRadius ?? defaultShadow.blurRadius,
+      spreadRadius: spreadRadius ?? defaultShadow.spreadRadius,
+    );
+  }
+
+  @override
+  BoxShadowDto merge(BoxShadowDto? other) {
+    if (other == null) return this;
+
+    return BoxShadowDto(
+      color: other.color ?? color,
+      offset: other.offset ?? offset,
+      blurRadius: other.blurRadius ?? blurRadius,
+      spreadRadius: other.spreadRadius ?? spreadRadius,
+    );
+  }
+
+  @override
+  get props => [color, offset, blurRadius, spreadRadius];
+}
+
+```
+
+### Mergeable
+
+- It is important that DTO's are mergeable and allow for values to be set by default to the `other` DTO, unles it does not exist then it should use the current value.
+- Also is importantt o know that some fields can be DTO's themselves. In that case we need to merge them as well.
+
+### Resolvable
+
+- It is important that DTO's are resolvable, this means that they can be resolved to their respective data class.
+
+## Tests
+
+It's is very important that DTOs are tested, since they are the main building blocks of the utilities. They are the ones that will be used to create the `Mix` class and the `MixData` class.
+
+Important tests to have are:
+
+- Construct DTO using the constructor.
+- Has a from method that creates the DTO from the data class.
+- Has a maybeFrom method that creates the DTO from the data class if it is not null.
+- Has a resolve method that resolves the DTO to the data class.
+- Has a merge method that merges the DTO with another DTO.
+
+## Utilities
+
+```dart
 import 'package:flutter/material.dart';
 
 import '../../core/attribute.dart';
@@ -135,22 +285,6 @@ class BoxShadowUtility<T extends StyleAttribute>
     extends MixUtility<T, BoxShadowDto> {
   const BoxShadowUtility(super.builder);
 
-  T _only({
-    ColorDto? color,
-    Offset? offset,
-    double? blurRadius,
-    double? spreadRadius,
-  }) {
-    final shadow = BoxShadowDto(
-      color: color,
-      offset: offset,
-      blurRadius: blurRadius,
-      spreadRadius: spreadRadius,
-    );
-
-    return builder(shadow);
-  }
-
   /// Returns a [ColorUtility] for setting the color of the box shadow.
   ///
   /// Example usage:
@@ -162,7 +296,7 @@ class BoxShadowUtility<T extends StyleAttribute>
   ///
   /// Attribute now holds a [BoxShadowAttribute] with a [BoxShadowDto] that has a color value of `Colors.black`.
   ColorUtility<T> get color {
-    return ColorUtility((color) => _only(color: color));
+    return ColorUtility((color) => call(color: color));
   }
 
   /// Returns an [OffsetUtility] for setting the offset of the box shadow.
@@ -205,54 +339,22 @@ class BoxShadowUtility<T extends StyleAttribute>
 
   /// Method to create a box shadow with provided parameters.
   T call({
-    Color? color,
+    ColorDto? color,
     Offset? offset,
     double? blurRadius,
     double? spreadRadius,
   }) {
-    return _only(
-      color: color?.toDto(),
+    final shadow = BoxShadowDto(
+      color: color,
       offset: offset,
       blurRadius: blurRadius,
       spreadRadius: spreadRadius,
     );
+
+    return builder(shadow);
   }
 }
 
-/// Utility class for setting elevation using predefined shadows.
-///
-/// Provides convenience methods for standard material design elevations. This class
-/// simplifies the process of applying consistent elevation effects across the application.
-class ElevationUtility<T extends StyleAttribute>
-    extends MixUtility<T, List<BoxShadowDto>> {
-  const ElevationUtility(super.builder);
 
-  /// Method to set elevation based on material design standards.
-  ///
-  /// Example usage:
-  ///
-  /// ```dart
-  /// final elevation = ElevationUtility<StyleAttribute>(builder);
-  /// final attribute = elevation.two();
-  /// ```
-  ///
-  /// Attribute now holds a list of [BoxShadowAttribute] corresponding to a material elevation of `2`.
-  T call(int value) {
-    assert(kElevationToShadow.containsKey(value), 'Invalid elevation value');
 
-    return builder(kElevationToShadow[value]!.toDto());
-  }
-
-  // Convenience methods for common elevation values.
-  T none() => call(0);
-  T one() => call(1);
-  T two() => call(2);
-  T three() => call(3);
-  T four() => call(4);
-  T six() => call(6);
-  T eight() => call(8);
-  T nine() => call(9);
-  T twelve() => call(12);
-  T sixteen() => call(16);
-  T twentyFour() => call(24);
-}
+```
