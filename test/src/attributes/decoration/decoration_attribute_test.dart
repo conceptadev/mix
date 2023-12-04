@@ -57,7 +57,11 @@ void main() {
       const attribute = DecorationAttribute(decoration);
       final resolvedDecoration = attribute.resolve(EmptyMixData);
 
-      expect(resolvedDecoration, equals(decoration));
+      expect(
+          resolvedDecoration,
+          equals(
+            const BoxDecoration(color: Colors.red),
+          ));
     });
 
     testWidgets('build', (widgetTester) async {

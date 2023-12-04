@@ -43,8 +43,8 @@ class BoxBorderUtility<T extends StyleAttribute>
     return BoxBorderDto(
       top: horizontal,
       bottom: horizontal,
-      start: vertical,
-      end: vertical,
+      left: vertical,
+      right: vertical,
     );
   }
 

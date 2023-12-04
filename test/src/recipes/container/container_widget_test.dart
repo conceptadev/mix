@@ -11,7 +11,7 @@ void main() {
     final alignmentAttr = alignment.center();
     final clipAttr = clipBehavior.hardEdge();
 
-    final boxDecorationAttr = boxDecoration(
+    final boxDecorationAttr = box.decoration(
       border: Border.all(color: Colors.red, width: 1, style: BorderStyle.solid),
       borderRadius: BorderRadius.circular(10),
       color: Colors.red,
@@ -30,20 +30,15 @@ void main() {
     );
 
     final containerFinder = find.byType(Container);
-    Container containerWidget = tester.widget<Container>(containerFinder);
+    final containerWidget = tester.widget<Container>(containerFinder);
 
-    final containerDecoration = containerWidget.decoration as BoxDecoration;
+    final containerSpec = boxDecorationAttr.resolve(EmptyMixData);
 
-    final resolvedDecoration = boxDecorationAttr.resolve(EmptyMixData);
-
-    expect(containerFinder, findsOneWidget);
-    expect(containerWidget.margin, marginAttr.resolve(EmptyMixData));
-    expect(containerWidget.padding, paddingAttr.resolve(EmptyMixData));
-    expect(containerWidget.clipBehavior, clipAttr.value);
-    expect(containerWidget.alignment, alignmentAttr.value);
-    expect(containerWidget.clipBehavior, clipAttr.value);
-    expect(containerDecoration.border, resolvedDecoration.border);
-    expect(containerDecoration.color, resolvedDecoration.color);
-    expect(containerDecoration.borderRadius, resolvedDecoration.borderRadius);
+    expect(containerWidget.padding, containerSpec.padding);
+    expect(containerWidget.margin, containerSpec.margin);
+    expect(containerWidget.alignment, containerSpec.alignment);
+    expect(containerWidget.clipBehavior, containerSpec.clipBehavior);
+    expect(containerWidget.decoration, isA<BoxDecoration>());
+    expect(containerWidget.decoration, equals(containerSpec.decoration));
   });
 }

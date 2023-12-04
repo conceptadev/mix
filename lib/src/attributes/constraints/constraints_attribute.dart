@@ -17,19 +17,6 @@ class BoxConstraintsAttribute extends ConstraintsAttribute<
     BoxConstraints> with SingleChildRenderAttributeMixin<ConstrainedBox> {
   const BoxConstraintsAttribute(super.value);
 
-  factory BoxConstraintsAttribute.only({
-    double? minWidth,
-    double? maxWidth,
-    double? minHeight,
-    double? maxHeight,
-  }) =>
-      BoxConstraintsAttribute(BoxConstraintsDto(
-        minWidth: minWidth,
-        maxWidth: maxWidth,
-        minHeight: minHeight,
-        maxHeight: maxHeight,
-      ));
-
   static BoxConstraintsAttribute from(BoxConstraints constraints) =>
       BoxConstraintsAttribute(BoxConstraintsDto.from(constraints));
 

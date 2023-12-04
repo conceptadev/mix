@@ -65,7 +65,7 @@ void main() {
 
   group('WithSpaceTokens tests', () {
     test('WithSpaceTokens returns correct value', () {
-      const withSpaceTokens = SpacingSideUtility(ValueHolderAttribute.new);
+      const withSpaceTokens = SpacingSideUtility(UtilityTestAttribute.new);
       expect(withSpaceTokens.xsmall().value, SpaceToken.xsmall());
       expect(withSpaceTokens.small().value, SpaceToken.small());
       expect(withSpaceTokens.medium().value, SpaceToken.medium());

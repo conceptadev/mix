@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
+import 'package:mix/src/attributes/spacing/spacing_dto.dart';
 
 import '../../../helpers/testing_utils.dart';
 
@@ -8,8 +9,8 @@ void main() {
   group('PaddingAttribute', () {
     // Constructor Tests
     test('constructs correctly with all properties', () {
-      final padding =
-          PaddingAttribute.only(top: 10, bottom: 5, left: 3, right: 7);
+      const padding =
+          PaddingAttribute(SpacingDto(top: 10, bottom: 5, left: 3, right: 7));
 
       expect(padding.top, 10);
       expect(padding.bottom, 5);
@@ -20,7 +21,7 @@ void main() {
     });
 
     test('constructs correctly with no properties', () {
-      final padding = PaddingAttribute.only();
+      const padding = PaddingAttribute(SpacingDto());
       expect(padding.top, null);
       expect(padding.bottom, null);
       expect(padding.left, null);
@@ -31,9 +32,9 @@ void main() {
 
     // Merge Function Tests
     test('merge function merges correctly', () {
-      final padding1 = PaddingAttribute.only(top: 10, bottom: 5);
+      const padding1 = PaddingAttribute(SpacingDto(top: 10, bottom: 5));
 
-      final padding2 = PaddingAttribute.only(left: 3, right: 7);
+      const padding2 = PaddingAttribute(SpacingDto(left: 3, right: 7));
 
       final merged = padding1.merge(padding2);
 
@@ -44,7 +45,7 @@ void main() {
     });
 
     test('merge returns itself if other is null', () {
-      final padding = PaddingAttribute.only(top: 10, bottom: 5);
+      const padding = PaddingAttribute(SpacingDto(top: 10, bottom: 5));
       final merged = padding.merge(null);
 
       expect(merged, equals(padding));
@@ -52,16 +53,16 @@ void main() {
 
     // Equality Tests
     test('equality holds when properties are the same', () {
-      final padding1 = PaddingAttribute.only(top: 10, bottom: 5);
+      const padding1 = PaddingAttribute(SpacingDto(top: 10, bottom: 5));
 
-      final padding2 = PaddingAttribute.only(top: 10, bottom: 5);
+      const padding2 = PaddingAttribute(SpacingDto(top: 10, bottom: 5));
 
       expect(padding1, equals(padding2));
     });
 
     test('equality fails when properties are different', () {
-      final padding1 = PaddingAttribute.only(top: 10, bottom: 5);
-      final padding2 = PaddingAttribute.only(top: 5, bottom: 10);
+      const padding1 = PaddingAttribute(SpacingDto(top: 10, bottom: 5));
+      const padding2 = PaddingAttribute(SpacingDto(top: 5, bottom: 10));
 
       expect(padding1, isNot(equals(padding2)));
     });
@@ -70,8 +71,8 @@ void main() {
   group('PaddingAttribute Directional', () {
     // Constructor Tests
     test('constructs correctly with all properties', () {
-      final padding =
-          PaddingAttribute.only(top: 10, bottom: 5, start: 3, end: 7);
+      const padding =
+          PaddingAttribute(SpacingDto(top: 10, bottom: 5, start: 3, end: 7));
 
       expect(padding.top, 10);
       expect(padding.bottom, 5);
@@ -79,7 +80,7 @@ void main() {
       expect(padding.end, 7);
     });
     test('constructs correctly with no properties', () {
-      final padding = PaddingAttribute.only();
+      const padding = PaddingAttribute(SpacingDto());
       expect(padding.top, isNull);
       expect(padding.bottom, isNull);
       expect(padding.start, isNull);
@@ -88,9 +89,9 @@ void main() {
 
     // Merge Function Tests
     test('merge function merges correctly', () {
-      final padding1 = PaddingAttribute.only(top: 10, bottom: 5);
+      const padding1 = PaddingAttribute(SpacingDto(top: 10, bottom: 5));
 
-      final padding2 = PaddingAttribute.only(start: 3, end: 7);
+      const padding2 = PaddingAttribute(SpacingDto(start: 3, end: 7));
 
       final merged = padding1.merge(padding2);
 
@@ -101,7 +102,7 @@ void main() {
     });
 
     test('merge returns itself if other is null', () {
-      final padding = PaddingAttribute.only(top: 10, bottom: 5);
+      const padding = PaddingAttribute(SpacingDto(top: 10, bottom: 5));
       final merged = padding.merge(null);
 
       expect(merged, equals(padding));
@@ -110,8 +111,8 @@ void main() {
     // Resolve Function Tests
     // Assuming a mock for MixData and its resolver
     test('resolve function returns correct EdgeInsetsDirectional', () {
-      final padding =
-          PaddingAttribute.only(top: 10, bottom: 5, start: 3, end: 7);
+      const padding =
+          PaddingAttribute(SpacingDto(top: 10, bottom: 5, start: 3, end: 7));
 
       final resolvedValue = padding.resolve(EmptyMixData);
 
@@ -126,16 +127,16 @@ void main() {
 
     // Equality Tests
     test('equality holds when properties are the same', () {
-      final padding1 = PaddingAttribute.only(top: 10, bottom: 5);
-      final padding2 = PaddingAttribute.only(top: 10, bottom: 5);
+      const padding1 = PaddingAttribute(SpacingDto(top: 10, bottom: 5));
+      const padding2 = PaddingAttribute(SpacingDto(top: 10, bottom: 5));
 
       expect(padding1, equals(padding2));
     });
 
     test('equality fails when properties are different', () {
-      final padding1 = PaddingAttribute.only(top: 10, bottom: 5);
+      const padding1 = PaddingAttribute(SpacingDto(top: 10, bottom: 5));
 
-      final padding2 = PaddingAttribute.only(top: 5, bottom: 10);
+      const padding2 = PaddingAttribute(SpacingDto(top: 5, bottom: 10));
 
       expect(padding1, isNot(equals(padding2)));
     });
@@ -145,8 +146,8 @@ void main() {
   group('MarginAttribute', () {
     // Constructor Tests
     test('constructs correctly with all properties', () {
-      final margin =
-          MarginAttribute.only(top: 10, bottom: 5, left: 3, right: 7);
+      const margin =
+          MarginAttribute(SpacingDto(top: 10, bottom: 5, left: 3, right: 7));
 
       expect(margin.top, 10);
       expect(margin.bottom, 5);
@@ -157,7 +158,7 @@ void main() {
     });
 
     test('constructs correctly with no properties', () {
-      final margin = MarginAttribute.only();
+      const margin = MarginAttribute(SpacingDto());
       expect(margin.top, null);
       expect(margin.bottom, null);
       expect(margin.left, null);
@@ -168,9 +169,9 @@ void main() {
 
     // Merge Function Tests
     test('merge function merges correctly', () {
-      final margin1 = MarginAttribute.only(top: 10, bottom: 5);
+      const margin1 = MarginAttribute(SpacingDto(top: 10, bottom: 5));
 
-      final margin2 = MarginAttribute.only(left: 3, right: 7);
+      const margin2 = MarginAttribute(SpacingDto(left: 3, right: 7));
 
       final merged = margin1.merge(margin2);
 
@@ -181,7 +182,7 @@ void main() {
     });
 
     test('merge returns itself if other is null', () {
-      final margin = MarginAttribute.only(top: 10, bottom: 5);
+      const margin = MarginAttribute(SpacingDto(top: 10, bottom: 5));
       final merged = margin.merge(null);
 
       expect(merged, equals(margin));
@@ -190,8 +191,8 @@ void main() {
     // Resolve Function Tests
     // Assuming a mock for MixData and its resolver
     test('resolve function returns correct EdgeInsets', () {
-      final margin =
-          MarginAttribute.only(top: 10, bottom: 5, left: 3, right: 7);
+      const margin =
+          MarginAttribute(SpacingDto(top: 10, bottom: 5, left: 3, right: 7));
 
       final resolvedValue = margin.resolve(EmptyMixData);
 
@@ -205,24 +206,25 @@ void main() {
 
     // Equality Tests
     test('equality holds when properties are the same', () {
-      final margin1 = MarginAttribute.only(top: 10, bottom: 5);
+      const margin1 = MarginAttribute(SpacingDto(top: 10, bottom: 5));
 
-      final margin2 = MarginAttribute.only(top: 10, bottom: 5);
+      const margin2 = MarginAttribute(SpacingDto(top: 10, bottom: 5));
 
       expect(margin1, equals(margin2));
     });
 
     test(' equality fails when properties are different', () {
-      final margin1 = MarginAttribute.only(top: 10, bottom: 5);
+      const margin1 = MarginAttribute(SpacingDto(top: 10, bottom: 5));
 
-      final margin2 = MarginAttribute.only(top: 5, bottom: 10);
+      const margin2 = MarginAttribute(SpacingDto(top: 5, bottom: 10));
 
       expect(margin1, isNot(equals(margin2)));
     });
 
     // Directional MarginAttribute
     test('constructs correctly with all properties', () {
-      final margin = MarginAttribute.only(top: 10, bottom: 5, start: 3, end: 7);
+      const margin =
+          MarginAttribute(SpacingDto(top: 10, bottom: 5, start: 3, end: 7));
 
       expect(margin.top, 10);
       expect(margin.bottom, 5);

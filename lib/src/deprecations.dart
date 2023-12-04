@@ -370,32 +370,32 @@ BorderRadiusGeometryAttribute roundedTR() {
 }
 
 @Deprecated(kShortAliasDeprecation)
-BorderRadiusAttribute roundedBL() {
+BorderRadiusGeometryAttribute roundedBL() {
   throw UnimplementedError();
 }
 
 @Deprecated(kShortAliasDeprecation)
-BorderRadiusAttribute roundedBR() {
+BorderRadiusGeometryAttribute roundedBR() {
   throw UnimplementedError();
 }
 
 @Deprecated(kShortAliasDeprecation)
-BorderRadiusDirectionalAttribute roundedTS() {
+BorderRadiusGeometryAttribute roundedTS() {
   throw UnimplementedError();
 }
 
 @Deprecated(kShortAliasDeprecation)
-BorderRadiusDirectionalAttribute roundedTE() {
+BorderRadiusGeometryAttribute roundedTE() {
   throw UnimplementedError();
 }
 
 @Deprecated(kShortAliasDeprecation)
-BorderRadiusDirectionalAttribute roundedBS() {
+BorderRadiusGeometryAttribute roundedBS() {
   throw UnimplementedError();
 }
 
 @Deprecated(kShortAliasDeprecation)
-BorderRadiusDirectionalAttribute roundedBE() {
+BorderRadiusGeometryAttribute roundedBE() {
   throw UnimplementedError();
 }
 

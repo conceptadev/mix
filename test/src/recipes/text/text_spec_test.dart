@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
+import 'package:mix/src/attributes/strut_style/strut_style_dto.dart';
+import 'package:mix/src/attributes/text_style/text_style_dto.dart';
 
 import '../../../helpers/testing_utils.dart';
 
@@ -12,8 +14,9 @@ void main() {
       final mix = MixData.create(
         MockBuildContext(),
         StyleMix(
-          const StrutStyleAttribute(fontSize: 20.0),
-          TextStyleAttribute.only(color: const ColorDto(Colors.red)),
+          const StrutStyleAttribute(StrutStyleDto(fontSize: 20.0)),
+          TextStyleAttribute(
+              TextStyleDto.only(color: const ColorDto(Colors.red))),
           const TextMixAttribute(
             overflow: TextOverflow.ellipsis,
             textDirection: TextDirection.ltr,

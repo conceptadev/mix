@@ -3,7 +3,9 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
+import 'package:mix/src/attributes/constraints/constraints_dto.dart';
 import 'package:mix/src/attributes/decoration/decoration_dto.dart';
+import 'package:mix/src/attributes/spacing/spacing_dto.dart';
 
 import '../../../helpers/testing_utils.dart';
 
@@ -14,9 +16,11 @@ void main() {
         MockBuildContext(),
         StyleMix(
           const AlignmentGeometryAttribute(Alignment.center),
-          PaddingAttribute.only(top: 8, bottom: 16),
-          MarginAttribute.only(top: 10.0, bottom: 12.0),
-          BoxConstraintsAttribute.only(maxWidth: 300.0, minHeight: 200.0),
+          const PaddingAttribute(SpacingDto(top: 8, bottom: 16)),
+          const MarginAttribute(SpacingDto(top: 10.0, bottom: 12.0)),
+          const BoxConstraintsAttribute(
+            BoxConstraintsDto(maxWidth: 300.0, minHeight: 200.0),
+          ),
           const DecorationAttribute(
             BoxDecorationDto(color: ColorDto(Colors.blue)),
           ),
