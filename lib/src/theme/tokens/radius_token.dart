@@ -3,43 +3,43 @@ import 'package:flutter/widgets.dart';
 
 import 'mix_token.dart';
 
-@immutable
-class RadiiTokenUtil {
-  final small = RadiusToken.small;
-  final medium = RadiusToken.medium;
-  final large = RadiusToken.large;
+const _small = RadiusToken('mix.radii.small', Radius.circular(4));
+const _medium = RadiusToken('mix.radii.medium', Radius.circular(8));
+const _large = RadiusToken('mix.radii.large', Radius.circular(16));
 
-  const RadiiTokenUtil();
+class RadiusToken extends MixToken<Radius> {
+  static const small = _small;
+  static const medium = _medium;
+  static const large = _large;
+
+  const RadiusToken(super.name, super.value);
+
+  const RadiusToken.name(String name) : this(name, Radius.zero);
+
+  factory RadiusToken.resolvable(String name, TokenResolver<Radius> resolver) {
+    return RadiusToken(name, RadiusRef(name, resolver));
+  }
 }
 
 @immutable
-class RadiusToken extends Radius implements MixToken<Radius> {
-  static const small = RadiusToken('--mix-radii-small');
-  static const medium = RadiusToken('--mix-radii-medium');
-  static const large = RadiusToken('--mix-radii-large');
+class RadiusRef extends Radius with ValueRef<Radius> {
+  @override
+  final String tokenName;
 
   @override
-  final String name;
+  final TokenResolver<Radius> resolve;
 
-  const RadiusToken(this.name) : super.circular(0);
+  const RadiusRef(this.tokenName, this.resolve) : super.circular(0);
 
   @override
   operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is RadiusToken && other.name == name;
+    return other is RadiusRef && other.tokenName == tokenName;
   }
 
   @override
-  int get hashCode => name.hashCode;
-}
-
-@immutable
-class RadiusTokenResolver extends RadiusToken with TokenResolver<Radius> {
-  @override
-  final Radius Function(BuildContext context) tokenResolver;
-
-  const RadiusTokenResolver(super.name, this.tokenResolver);
+  int get hashCode => tokenName.hashCode;
 }
 
 // // Helper class to wrap functions that can return
@@ -57,11 +57,11 @@ class UtilityWithRadiusTokens<T> {
     return UtilityWithRadiusTokens((Radius value) => fn(value));
   }
 
-  T get small => call(RadiusToken.small);
+  T small() => call(RadiusToken.small());
 
-  T get medium => call(RadiusToken.medium);
+  T medium() => call(RadiusToken.medium());
 
-  T get large => call(RadiusToken.large);
+  T large() => call(RadiusToken.large());
 
   T call(Radius value) => _fn(value);
 }

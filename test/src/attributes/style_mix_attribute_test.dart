@@ -42,6 +42,7 @@ void main() {
           const MockIntScalarAttribute(2),
         );
         final styleMix2 = StyleMix(const MockDoubleScalarAttribute(2.0));
+
         final attribute1 = StyleMixAttribute(styleMix1);
         final attribute2 = StyleMixAttribute(styleMix2);
 
@@ -69,8 +70,8 @@ void main() {
 
     test('should contain all attributes after multiple merges', () {
       const attr1 = MockIntScalarAttribute(3);
-      const attr2 = MockIntScalarAttribute(1);
-      const attr3 = MockIntScalarAttribute(5);
+      const attr2 = MockDoubleScalarAttribute(1);
+      const attr3 = MockBooleanScalarAttribute(false);
 
       final styleMix1 = StyleMix(attr1);
       final styleMix2 = StyleMix(attr2);
@@ -96,8 +97,8 @@ void main() {
 
     test('should handle nested StyleMixAttributes properly', () {
       const attr1 = MockIntScalarAttribute(3);
-      const attr2 = MockIntScalarAttribute(1);
-      const attr3 = MockIntScalarAttribute(5);
+      const attr2 = MockDoubleScalarAttribute(1);
+      const attr3 = MockBooleanScalarAttribute(false);
 
       final style = StyleMix(attr1, attr2, attr3);
 
@@ -114,12 +115,18 @@ void main() {
       expect(level3Attribute.value.values, containsAll([attr1, attr2, attr3]));
 
       expect(
-          level1Attribute.value.values.whereType<StyleMixAttribute>(), isEmpty);
+        level1Attribute.value.values.whereType<StyleMixAttribute>(),
+        isEmpty,
+      );
 
       expect(
-          level2Attribute.value.values.whereType<StyleMixAttribute>(), isEmpty);
+        level2Attribute.value.values.whereType<StyleMixAttribute>(),
+        isEmpty,
+      );
       expect(
-          level3Attribute.value.values.whereType<StyleMixAttribute>(), isEmpty);
+        level3Attribute.value.values.whereType<StyleMixAttribute>(),
+        isEmpty,
+      );
 
       expect(level1Attribute.value.values.length, 3);
       expect(level2Attribute.value.values.length, 3);

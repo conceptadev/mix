@@ -30,7 +30,7 @@ Container(height: 100);
 You can think of `Utilities` as shortcuts to defining visual properties. Thus:
 
 ```dart
-Box(style: StyleMix(rounded(100)));
+Box(style: StyleMix(borderRadius(100)));
 ```
 
 will become the following:
@@ -56,10 +56,10 @@ Box(
   style: StyleMix(
     height(100),
     width(300),
-    rounded(15),
+    borderRadius(15),
     backgroundColor(Colors.amber),
     alignment(Alignment.center),
-    elevation(4), // can be 0, 1, 2, 3, 4, 6, 8, 9, 12, 16, 24
+    elevation(4)
   ),
 ),
 ```
@@ -138,7 +138,7 @@ Pressable(
         // when pressing, bg color is a darker grey
         backgroundColor(Colors.grey.shade600),
       ),
-      rounded(8),
+      borderRadius(8),
       padding(10),
       alignment(Alignment.center),
     ),

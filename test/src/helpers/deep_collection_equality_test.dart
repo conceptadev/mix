@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mix/src/core/equality/deep_collection_equality.dart';
+import 'package:mix/src/helpers/deep_collection_equality.dart';
 
 void main() {
   group('DeepEqualityChecker hash code', () {
@@ -32,6 +32,7 @@ void main() {
       expect(deepEquality.equals({1, 2}, {1, 2, 3}), isFalse);
       expect(deepEquality.equals({3, 2, 1}, {1, 2, 3}),
           isTrue); // Order should not matter in sets
+      // ignore: equal_elements_in_set
       expect(deepEquality.equals({1}, {1, 1, 1}),
           isTrue); // Duplicate elements in a set
     });

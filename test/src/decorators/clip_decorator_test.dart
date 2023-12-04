@@ -4,8 +4,8 @@ import 'package:mix/src/decorators/clip_decorator.dart';
 
 import '../../helpers/testing_utils.dart';
 
-class CustomRectClipper extends CustomClipper<Rect> {
-  const CustomRectClipper();
+class _CustomRectClipper extends CustomClipper<Rect> {
+  const _CustomRectClipper();
   @override
   Rect getClip(Size size) => Rect.fromLTWH(0, 0, size.width, size.height);
 
@@ -13,8 +13,8 @@ class CustomRectClipper extends CustomClipper<Rect> {
   bool shouldReclip(CustomClipper<Rect> oldClipper) => false;
 }
 
-class CustomRRectClipper extends CustomClipper<RRect> {
-  const CustomRRectClipper();
+class _CustomRRectClipper extends CustomClipper<RRect> {
+  const _CustomRRectClipper();
   @override
   RRect getClip(Size size) =>
       RRect.fromLTRBR(0, 0, size.width, size.height, const Radius.circular(10));
@@ -23,138 +23,24 @@ class CustomRRectClipper extends CustomClipper<RRect> {
   bool shouldReclip(CustomClipper<RRect> oldClipper) => false;
 }
 
+class _CustomPathClipper extends CustomClipper<Path> {
+  const _CustomPathClipper();
+  @override
+  Path getClip(Size size) {
+    final path = Path();
+    path.moveTo(size.width / 2, 0.0);
+    path.lineTo(size.width, size.height);
+    path.lineTo(0.0, size.height);
+    path.close();
+
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
+}
+
 void main() {
-  group('ClipDecoratorData', () {
-    // equality
-    test('equality', () {
-      const decoratorData = ClipDecoratorData(
-        clipBehavior: Clip.antiAlias,
-        clipper: null,
-      );
-      const otherDecoratorData = ClipDecoratorData(
-        clipBehavior: Clip.antiAlias,
-        clipper: null,
-      );
-      expect(decoratorData, otherDecoratorData);
-    });
-
-    test('copyWith', () {
-      const decoratorData = ClipDecoratorData(
-        clipBehavior: Clip.antiAlias,
-        clipper: null,
-      );
-
-      final copied = decoratorData.copyWith(
-        clipBehavior: Clip.hardEdge,
-        clipper: const CustomRRectClipper(),
-      );
-
-      expect(decoratorData, isNotNull);
-      expect(decoratorData.clipBehavior, Clip.antiAlias);
-      expect(decoratorData.clipper, isNull);
-      expect(copied, isNotNull);
-      expect(copied.clipBehavior, Clip.hardEdge);
-      expect(copied.clipper, isA<CustomRRectClipper>());
-    });
-
-    test('lerp', () {
-      const clipDecorator = ClipDecoratorData(
-        clipBehavior: Clip.antiAlias,
-        clipper: null,
-      );
-      const other = ClipDecoratorData(
-        clipBehavior: Clip.hardEdge,
-        clipper: CustomRRectClipper(),
-      );
-
-      final lerped = clipDecorator.lerp(other, 0.4);
-
-      expect(lerped, isNotNull);
-      expect(lerped.clipBehavior, Clip.antiAlias);
-      expect(lerped.clipper, isNull);
-    });
-  });
-
-  group('ClipRRectDecoratorData', () {
-    // equality
-    test('equality', () {
-      const decoratorData = ClipRRectDecoratorData(
-        clipBehavior: Clip.antiAlias,
-        clipper: null,
-        borderRadius: BorderRadius.zero,
-      );
-      const otherDecoratorData = ClipRRectDecoratorData(
-        clipBehavior: Clip.antiAlias,
-        clipper: null,
-        borderRadius: BorderRadius.zero,
-      );
-      expect(decoratorData, otherDecoratorData);
-    });
-
-    test('copyWith', () {
-      const decoratorData = ClipRRectDecoratorData(
-        clipBehavior: Clip.antiAlias,
-        clipper: null,
-        borderRadius: BorderRadius.zero,
-      );
-
-      final copied = decoratorData.copyWith(
-        clipBehavior: Clip.hardEdge,
-        clipper: const CustomRRectClipper(),
-        borderRadius: BorderRadius.circular(10.0),
-      );
-
-      expect(decoratorData, isNotNull);
-      expect(decoratorData.clipBehavior, Clip.antiAlias);
-      expect(decoratorData.clipper, isNull);
-      expect(decoratorData.borderRadius, BorderRadius.zero);
-      expect(copied, isNotNull);
-      expect(copied.clipBehavior, Clip.hardEdge);
-      expect(copied.clipper, isA<CustomRRectClipper>());
-      expect(copied.borderRadius, BorderRadius.circular(10.0));
-    });
-
-    test('lerp', () {
-      const clipDecorator = ClipRRectDecoratorData(
-        clipBehavior: Clip.antiAlias,
-        clipper: null,
-        borderRadius: BorderRadius.zero,
-      );
-      final other = ClipRRectDecoratorData(
-        clipBehavior: Clip.hardEdge,
-        clipper: const CustomRRectClipper(),
-        borderRadius: BorderRadius.circular(10.0),
-      );
-
-      final lerped = clipDecorator.lerp(other, 0.4);
-
-      expect(lerped, isNotNull);
-      expect(lerped.clipBehavior, Clip.antiAlias);
-      expect(lerped.clipper, isNull);
-      expect(
-        lerped.borderRadius,
-        BorderRadius.lerp(
-          BorderRadius.zero,
-          BorderRadius.circular(10.0),
-          0.4,
-        ),
-      );
-
-      final lerped2 = clipDecorator.lerp(other, 0.6);
-
-      expect(lerped2, isNotNull);
-      expect(lerped2.clipBehavior, Clip.hardEdge);
-      expect(lerped2.clipper, isA<CustomRRectClipper>());
-      expect(
-        lerped2.borderRadius,
-        BorderRadius.lerp(
-          BorderRadius.zero,
-          BorderRadius.circular(10.0),
-          0.6,
-        ),
-      );
-    });
-  });
   group('ClipOvalDecorator', () {
     testWidgets(
       'renders',
@@ -165,7 +51,7 @@ void main() {
         // Build our app and trigger a frame
         await tester.pumpWidget(
           MaterialApp(
-            home: clipDecorator.render(
+            home: clipDecorator.build(
               Container(color: Colors.blue),
               EmptyMixData,
             ),
@@ -185,95 +71,69 @@ void main() {
 
     test('merge', () {
       const clipDecorator = ClipOvalDecorator(clipBehavior: Clip.antiAlias);
-      const other = ClipOvalDecorator(clipper: CustomRectClipper());
+      const other = ClipOvalDecorator(clipper: _CustomRectClipper());
       final merged = clipDecorator.merge(other);
       expect(merged, isNotNull);
       expect(merged.clipBehavior, Clip.antiAlias);
-      expect(merged.clipper, isA<CustomRectClipper>());
-    });
-
-    test('resolve', () {
-      const clipDecorator = ClipOvalDecorator(
-          clipBehavior: Clip.hardEdge, clipper: CustomRectClipper());
-      final resolved = clipDecorator.resolve(EmptyMixData);
-      expect(resolved, isNotNull);
-      expect(resolved.clipBehavior, Clip.hardEdge);
-      expect(resolved.clipper, isA<CustomRectClipper>());
+      expect(merged.clipper, isA<_CustomRectClipper>());
     });
   });
-  group('ClipRRectDecorator', () {
+
+  // ClipPathDecorator
+  group('ClipPathDecorator', () {
     testWidgets(
       'renders',
       (WidgetTester tester) async {
-        // Define the radius you want to test
-        final testRadius = BorderRadius.circular(10.0);
-
         // Create a ClipDecorator
-        final clipDecorator = ClipRRectDecorator(borderRadius: testRadius);
+        const clipDecorator = ClipPathDecorator(
+          clipper: _CustomPathClipper(),
+        );
 
         // Build our app and trigger a frame
         await tester.pumpWidget(
           MaterialApp(
-            home: clipDecorator.render(
+            home: clipDecorator.build(
               Container(color: Colors.blue),
               EmptyMixData,
             ),
           ),
         );
 
-        final finder = find.byType(ClipRRect);
+        final finder = find.byType(ClipPath);
         final context = tester.element(finder);
-        final clipRRectWidget = context.widget as ClipRRect;
+        final clipPathWidget = context.widget as ClipPath;
 
-        // Verify that the ClipRRect widget is in the tree and has the correct radius
+        // Verify that the ClipPath widget is in the tree
         expect(finder, findsOneWidget);
-        expect(clipRRectWidget.borderRadius, testRadius);
-        expect(clipRRectWidget, isA<ClipRRect>());
+        expect(clipPathWidget, isNotNull);
+        expect(clipPathWidget, isA<ClipPath>());
       },
     );
 
     test('merge', () {
-      const clipDecorator = ClipRRectDecorator(
-        clipBehavior: Clip.antiAlias,
-        borderRadius: BorderRadius.zero,
-      );
-      final other = ClipRRectDecorator(
-        clipper: const CustomRRectClipper(),
-        clipBehavior: Clip.hardEdge,
-        borderRadius: BorderRadius.circular(10.0),
-      );
+      const clipDecorator = ClipPathDecorator(clipBehavior: Clip.antiAlias);
+      const other = ClipPathDecorator(clipper: _CustomPathClipper());
       final merged = clipDecorator.merge(other);
       expect(merged, isNotNull);
-      expect(merged.clipBehavior, Clip.hardEdge);
-      expect(merged.borderRadius, BorderRadius.circular(10.0));
-      expect(merged.clipper, isA<CustomRRectClipper>());
-    });
-
-    test('resolve', () {
-      final clipDecorator = ClipRRectDecorator(
-        clipper: const CustomRRectClipper(),
-        clipBehavior: Clip.hardEdge,
-        borderRadius: BorderRadius.circular(10.0),
-      );
-      final resolved = clipDecorator.resolve(EmptyMixData);
-      expect(resolved, isNotNull);
-      expect(resolved.clipBehavior, Clip.hardEdge);
-      expect(resolved.borderRadius, BorderRadius.circular(10.0));
-      expect(resolved.clipper, isA<CustomRRectClipper>());
+      expect(merged.clipBehavior, Clip.antiAlias);
+      expect(merged.clipper, isA<_CustomPathClipper>());
     });
   });
 
-  group('ClipRectDecorator test', () {
+  // ClipRectDecorator
+  group('ClipRectDecorator', () {
     testWidgets(
       'renders',
       (WidgetTester tester) async {
         // Create a ClipDecorator
-        const clipDecorator = ClipRectDecorator();
+        const clipDecorator = ClipRectDecorator(
+          clipper: _CustomRectClipper(),
+        );
 
         // Build our app and trigger a frame
         await tester.pumpWidget(
           MaterialApp(
-            home: clipDecorator.render(
+            home: clipDecorator.build(
               Container(color: Colors.blue),
               EmptyMixData,
             ),
@@ -293,70 +153,52 @@ void main() {
 
     test('merge', () {
       const clipDecorator = ClipRectDecorator(clipBehavior: Clip.antiAlias);
-      const other = ClipRectDecorator(clipper: CustomRectClipper());
+      const other = ClipRectDecorator(clipper: _CustomRectClipper());
       final merged = clipDecorator.merge(other);
       expect(merged, isNotNull);
       expect(merged.clipBehavior, Clip.antiAlias);
-      expect(merged.clipper, isA<CustomRectClipper>());
-    });
-
-    test('resolve', () {
-      const clipDecorator = ClipRectDecorator(
-          clipBehavior: Clip.hardEdge, clipper: CustomRectClipper());
-      final resolved = clipDecorator.resolve(EmptyMixData);
-      expect(resolved, isNotNull);
-      expect(resolved.clipBehavior, Clip.hardEdge);
-      expect(resolved.clipper, isA<CustomRectClipper>());
+      expect(merged.clipper, isA<_CustomRectClipper>());
     });
   });
 
-  group('ClipPathDecorator', () {
+  // ClipRRectDecorator
+  group('ClipRRectDecorator', () {
     testWidgets(
       'renders',
       (WidgetTester tester) async {
-        const clipPathDecorator = ClipPathDecorator(clipper: TriangleClipper());
+        // Create a ClipDecorator
+        const clipDecorator = ClipRRectDecorator(
+          clipper: _CustomRRectClipper(),
+        );
 
+        // Build our app and trigger a frame
         await tester.pumpWidget(
           MaterialApp(
-            home: clipPathDecorator.render(
+            home: clipDecorator.build(
               Container(color: Colors.blue),
               EmptyMixData,
             ),
           ),
         );
 
-        final finder = find.byType(ClipPath);
+        final finder = find.byType(ClipRRect);
         final context = tester.element(finder);
-        final clipPathWidget = context.widget as ClipPath;
+        final clipRRectWidget = context.widget as ClipRRect;
 
-        // Verify that the ClipPath widget is in the tree and has the correct path
+        // Verify that the ClipRRect widget is in the tree
         expect(finder, findsOneWidget);
-        expect(clipPathWidget.clipper, isA<TriangleClipper>());
-        expect(clipPathWidget, isA<ClipPath>());
+        expect(clipRRectWidget, isNotNull);
+        expect(clipRRectWidget, isA<ClipRRect>());
       },
     );
 
     test('merge', () {
-      const clipPathDecorator = ClipPathDecorator(
-        clipper: TriangleClipper(),
-        clipBehavior: Clip.antiAlias,
-      );
-      const other = ClipPathDecorator(clipper: TriangleClipper());
-      final merged = clipPathDecorator.merge(other);
+      const clipDecorator = ClipRRectDecorator(clipBehavior: Clip.antiAlias);
+      const other = ClipRRectDecorator(clipper: _CustomRRectClipper());
+      final merged = clipDecorator.merge(other);
       expect(merged, isNotNull);
       expect(merged.clipBehavior, Clip.antiAlias);
-      expect(merged.clipper, isA<TriangleClipper>());
-    });
-
-    test('resolve', () {
-      const clipPathDecorator = ClipPathDecorator(
-        clipBehavior: Clip.hardEdge,
-        clipper: TriangleClipper(),
-      );
-      final resolved = clipPathDecorator.resolve(EmptyMixData);
-      expect(resolved, isNotNull);
-      expect(resolved.clipBehavior, Clip.hardEdge);
-      expect(resolved.clipper, isA<TriangleClipper>());
+      expect(merged.clipper, isA<_CustomRRectClipper>());
     });
   });
 }

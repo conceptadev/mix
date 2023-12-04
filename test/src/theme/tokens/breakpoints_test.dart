@@ -8,10 +8,10 @@ void main() {
   test('MixBreakpointsTokens', () {
     final breakpoints = MixThemeData().breakpoints;
     final context = MockBuildContext();
-    final large = breakpoints[BreakpointToken.large]!(context);
-    final medium = breakpoints[BreakpointToken.medium]!(context);
-    final small = breakpoints[BreakpointToken.small]!(context);
-    final xsmall = breakpoints[BreakpointToken.xsmall]!(context);
+    final large = breakpoints(BreakpointToken.large, context);
+    final medium = breakpoints(BreakpointToken.medium, context);
+    final small = breakpoints(BreakpointToken.small, context);
+    final xsmall = breakpoints(BreakpointToken.xsmall, context);
 
     expect(
       large,
@@ -34,7 +34,7 @@ void main() {
   test('MixBreakpointsTokens large matches correctly', () {
     final breakpoints = MixThemeData().breakpoints;
     final context = MockBuildContext();
-    final large = breakpoints[BreakpointToken.large]!(context);
+    final large = breakpoints(BreakpointToken.large, context);
 
     expect(
       large.matches(const Size(1440, 1024)),
@@ -47,44 +47,51 @@ void main() {
     );
   });
 
-  test('Test orientation for Breakpoint tokens', () {
-    const portraitBreakpoint = BreakpointToken('--custom-breakpoint');
-    const landscapeBreakpoint = BreakpointToken('--another-breakpoint');
-    final breakpoints = MixThemeData(
-      breakpoints: {
-        portraitBreakpoint: (context) => const BreakpointConstraint(
-              orientation: BreakpointOrientation.portrait,
-            ),
-        landscapeBreakpoint: (context) => const BreakpointConstraint(
-              orientation: BreakpointOrientation.landscape,
-            )
-      },
-    ).breakpoints;
+  test('MixBreakpointsTokens medium matches correctly', () {
+    final breakpoints = MixThemeData().breakpoints;
     final context = MockBuildContext();
-    final portrait = breakpoints[portraitBreakpoint]!(context);
-    final landscape = breakpoints[landscapeBreakpoint]!(context);
-
-    const portraitSize = Size(2000, 3000);
-    const landscapeSize = Size(3000, 2000);
+    final medium = breakpoints(BreakpointToken.medium, context);
 
     expect(
-      portrait.matches(portraitSize),
+      medium.matches(const Size(1024, 1024)),
       true,
     );
 
     expect(
-      landscape.matches(portraitSize),
+      medium.matches(const Size(1023, 1024)),
       false,
     );
+  });
+
+  test('MixBreakpointsTokens small matches correctly', () {
+    final breakpoints = MixThemeData().breakpoints;
+    final context = MockBuildContext();
+    final small = breakpoints(BreakpointToken.small, context);
 
     expect(
-      portrait.matches(landscapeSize),
-      false,
-    );
-
-    expect(
-      landscape.matches(landscapeSize),
+      small.matches(const Size(600, 1024)),
       true,
+    );
+
+    expect(
+      small.matches(const Size(599, 1024)),
+      false,
+    );
+  });
+
+  test('MixBreakpointsTokens xsmall matches correctly', () {
+    final breakpoints = MixThemeData().breakpoints;
+    final context = MockBuildContext();
+    final xsmall = breakpoints(BreakpointToken.xsmall, context);
+
+    expect(
+      xsmall.matches(const Size(0, 1024)),
+      true,
+    );
+
+    expect(
+      xsmall.matches(const Size(-1, 1024)),
+      false,
     );
   });
 }

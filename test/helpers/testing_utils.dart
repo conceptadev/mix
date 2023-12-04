@@ -6,7 +6,7 @@ import 'package:meta/meta.dart';
 import 'package:mix/mix.dart';
 import 'package:mockito/mockito.dart';
 
-export 'package:mix/src/helpers/extensions/values_ext.dart';
+export 'package:mix/src/core/extensions/values_ext.dart';
 
 class MockBuildContext extends Mock implements BuildContext {}
 
@@ -99,16 +99,29 @@ extension WidgetTesterExt on WidgetTester {
     StyleMix style = StyleMix.empty,
     MixThemeData theme = const MixThemeData.empty(),
   }) async {
+    await pumpWithMixTheme(
+      Builder(
+        builder: (BuildContext context) {
+          // Populate MixData into the widget tree if needed
+          return MixProvider.build(
+            context,
+            style: style,
+            builder: (_) => widget,
+          );
+        },
+      ),
+    );
+  }
+
+  Future<void> pumpWithMixTheme(
+    Widget widget, {
+    MixThemeData theme = const MixThemeData.empty(),
+  }) async {
     await pumpWidget(
       MaterialApp(
         home: MixTheme(
           data: theme,
-          child: Builder(
-            builder: (BuildContext context) {
-              // Populate MixData into the widget tree if needed
-              return Mix.build(context, style: style, builder: (_) => widget);
-            },
-          ),
+          child: widget,
         ),
       ),
     );
@@ -184,61 +197,32 @@ class WrapMixThemeWidget extends StatelessWidget {
 class MockDoubleScalarAttribute
     extends ScalarAttribute<MockDoubleScalarAttribute, double> {
   const MockDoubleScalarAttribute(super.value);
-
-  @override
-  MockDoubleScalarAttribute create(double value) =>
-      MockDoubleScalarAttribute(value);
 }
 
 class MockIntScalarAttribute
     extends ScalarAttribute<MockIntScalarAttribute, int> {
   const MockIntScalarAttribute(super.value);
-
-  @override
-  MockIntScalarAttribute create(int value) => MockIntScalarAttribute(value);
 }
 
-class MockDoubleDecoratorAttribute extends Decorator<double> {
+class MockDoubleDecoratorAttribute extends Decorator {
   final double value;
-  const MockDoubleDecoratorAttribute(this.value);
-
-  @override
-  MockDoubleDecoratorAttribute merge(MockDoubleDecoratorAttribute? other) {
-    return MockDoubleDecoratorAttribute(other?.value ?? value);
-  }
-
-  @override
-  double resolve(MixData mix) => value;
+  const MockDoubleDecoratorAttribute(this.value, {super.key});
 
   @override
   get props => [value];
 
   @override
-  Widget build(child, value) {
-    return SizedBox(
-      height: value,
-      width: value,
-      child: child,
-    );
-  }
+  Type get type => MockDoubleDecoratorAttribute;
 }
 
 class MockBooleanScalarAttribute
     extends ScalarAttribute<MockBooleanScalarAttribute, bool> {
   const MockBooleanScalarAttribute(super.value);
-
-  @override
-  MockBooleanScalarAttribute create(bool value) =>
-      MockBooleanScalarAttribute(value);
 }
 
 class MockStringScalarAttribute
     extends ScalarAttribute<MockStringScalarAttribute, String> {
   const MockStringScalarAttribute(super.value);
-
-  @override
-  MockStringScalarAttribute create(String value) =>
-      MockStringScalarAttribute(value);
 }
 
 class MockInvalidAttribute extends Attribute {
@@ -246,11 +230,6 @@ class MockInvalidAttribute extends Attribute {
 
   @override
   get props => [];
-
-  @override
-  MockInvalidAttribute merge(MockInvalidAttribute? other) {
-    return this;
-  }
 }
 
 const mockVariant = Variant('mock-variant');
@@ -264,17 +243,10 @@ void testScalarAttribute<T extends ScalarAttribute<T, V>, V>(
   group(groupName, () {
     for (var value1 in values) {
       for (var value2 in values.where((v) => v != value1)) {
-        test('merge $value1 with $value2', () {
-          final attr1 = builder(value1);
-          final attr2 = builder(value2);
-          final merged = attr1.merge(attr2);
-          expect(merged.value, equals(value2));
-        });
-
         test('resolve $value1', () {
           final attr = builder(value1);
-          final resolvedValue = attr.resolve(EmptyMixData);
-          expect(resolvedValue, equals(value1));
+
+          expect(attr.value, equals(value1));
         });
 
         test('check equality between $value1 and $value2', () {
@@ -289,18 +261,11 @@ void testScalarAttribute<T extends ScalarAttribute<T, V>, V>(
           expect(attr1, equals(attr2));
         });
       }
-
-      test('merge null with $value1 returns itself', () {
-        final attr1 = builder(value1);
-        final merged = attr1.merge(null);
-        expect(merged, equals(attr1));
-      });
-
-      test('resolves correctly', () {
-        final attr = builder(value1);
-        final resolvedValue = attr.resolve(EmptyMixData);
-        expect(resolvedValue, equals(value1));
-      });
     }
   });
+}
+
+class UtilityTestAttribute<T>
+    extends ScalarAttribute<UtilityTestAttribute<T>, T> {
+  const UtilityTestAttribute(super.value);
 }

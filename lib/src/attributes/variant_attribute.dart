@@ -1,25 +1,26 @@
 import 'package:flutter/material.dart';
 
+import '../core/attribute.dart';
 import '../factory/style_mix.dart';
 import '../variants/context_variant.dart';
 import '../variants/multi_variant.dart';
 import '../variants/variant.dart';
-import 'attribute.dart';
 
 @immutable
-class VariantAttribute<T extends Variant> extends Attribute {
+class VariantAttribute<T extends Variant> extends Attribute
+    with Mergeable<VariantAttribute<T>> {
   final T variant;
   final StyleMix _style;
 
   const VariantAttribute(this.variant, StyleMix style) : _style = style;
 
+  Key get mergeKey => ObjectKey(variant);
+
   StyleMix get value => _style;
 
   @override
   VariantAttribute<T> merge(covariant VariantAttribute<T> other) {
-    if (other.variant != variant) {
-      throw throwArgumentError(other);
-    }
+    if (other.variant != variant) throw throwArgumentError(other);
 
     return VariantAttribute(variant, _style.merge(other._style));
   }
@@ -28,17 +29,21 @@ class VariantAttribute<T extends Variant> extends Attribute {
   get props => [variant, value];
 }
 
+mixin WhenVariant<T extends Variant> on VariantAttribute<T> {
+  bool when(BuildContext context);
+}
+
 @immutable
-class ContextVariantAttribute extends VariantAttribute<ContextVariant> {
+class ContextVariantAttribute extends VariantAttribute<ContextVariant>
+    with WhenVariant<ContextVariant> {
   const ContextVariantAttribute(super.variant, super.style);
 
+  @override
   bool when(BuildContext context) => variant.when(context);
 
   @override
   ContextVariantAttribute merge(ContextVariantAttribute other) {
-    if (other.variant != variant) {
-      throw throwArgumentError(other);
-    }
+    if (other.variant != variant) throw throwArgumentError(other);
 
     return ContextVariantAttribute(variant, _style.merge(other._style));
   }
@@ -53,10 +58,9 @@ ArgumentError throwArgumentError<T extends VariantAttribute>(T other) {
 }
 
 @immutable
-class MultiVariantAttribute extends VariantAttribute<MultiVariant> {
+class MultiVariantAttribute extends VariantAttribute<MultiVariant>
+    with WhenVariant<MultiVariant> {
   const MultiVariantAttribute(super.variant, super.style);
-
-  bool when(BuildContext context) => variant.when(context);
 
   // Remove all variants in given a list
   VariantAttribute remove(Iterable<Variant> variantsToRemove) {
@@ -74,10 +78,11 @@ class MultiVariantAttribute extends VariantAttribute<MultiVariant> {
       variant.matches(otherVariants);
 
   @override
+  bool when(BuildContext context) => variant.when(context);
+
+  @override
   MultiVariantAttribute merge(MultiVariantAttribute other) {
-    if (other.variant != variant) {
-      throw throwArgumentError(other);
-    }
+    if (other.variant != variant) throw throwArgumentError(other);
 
     return MultiVariantAttribute(variant, _style.merge(other._style));
   }

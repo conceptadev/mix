@@ -2,31 +2,11 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-import 'attributes/alignment_attribute.dart';
-import 'attributes/attribute.dart';
-import 'attributes/border/border_radius_attribute.dart';
-import 'attributes/scalar_attribute.dart';
-import 'attributes/style_mix_attribute.dart';
-import 'attributes/text_style_attribute.dart';
-import 'core/constants.dart';
-import 'directives/text_directive.dart';
-import 'factory/mix_provider_data.dart';
-import 'factory/style_mix.dart';
-import 'helpers/extensions/values_ext.dart';
-import 'theme/tokens/space_token.dart';
-import 'utils/alignment_util.dart';
-import 'utils/border_radius_util.dart';
-import 'utils/border_util.dart';
-import 'utils/box_constraints_util.dart';
-import 'utils/context_variant_util.dart';
-import 'utils/decoration_util.dart';
-import 'utils/decorators_util.dart';
-import 'utils/helper_util.dart';
-import 'utils/pressable_util.dart';
-import 'utils/scalar_util.dart';
-import 'utils/space_util.dart';
-import 'utils/text_util.dart';
-import 'variants/variant.dart';
+import '../mix.dart';
+import 'attributes/text_style/text_style_dto.dart';
+
+const kShortAliasDeprecation =
+    'Short aliases will be deprecated, you can create your own. Example: final p = padding;';
 
 extension DeprecatedMixExtension<T extends Attribute> on StyleMix {
   /// Adds an Attribute to a Mix.
@@ -90,23 +70,26 @@ extension DeprecatedMixExtension<T extends Attribute> on StyleMix {
 @Deprecated('Use MixData instead.')
 typedef MixContext = MixData;
 
-extension WithSpaceTokensExt<T> on UtilityWithSpaceTokens<T> {
+extension WithSpaceTokensExt<T extends StyleAttribute>
+    on SpacingSideUtility<T> {
   @Deprecated('Use xsmall instead')
-  T get xs => this.xsmall;
+  T get xs => this.xsmall();
   @Deprecated('Use small instead')
-  T get sm => this.small;
+  T get sm => this.small();
   @Deprecated('Use medium instead')
-  T get md => this.medium;
+  T get md => this.medium();
   @Deprecated('Use large instead')
-  T get lg => this.large;
+  T get lg => this.large();
   @Deprecated('Use xlarge instead')
-  T get xl => xlarge;
+  T get xl => xlarge();
   @Deprecated('Use xxlarge instead')
-  T get xxl => xxlarge;
+  T get xxl => xxlarge();
 }
 
 @Deprecated('Use mainAxisAlignment instead')
-const mainAxis = mainAxisAlignment;
+FlexMixAttribute mainAxis(MainAxisAlignment mainAxisAlignment) {
+  return FlexMixAttribute(mainAxisAlignment: mainAxisAlignment);
+}
 
 @Deprecated('Use onXSmall instead')
 final xsmall = onXSmall;
@@ -151,71 +134,70 @@ final press = onPress;
 const not = onNot;
 
 @Deprecated('Use textStyle instead')
-const font = textStyle;
+final font = text.style;
 
-@Deprecated('Use textStyle(textShadow: textShadow) instead')
-TextStyleAttribute textShadow(List<Shadow> textShadow) {
-  return textStyle(shadows: textShadow);
+@Deprecated(
+  'Use text.style(shadows: shadows) or text.style.shadows(shadows) instead',
+)
+TextMixAttribute textShadow(List<Shadow> shadows) {
+  return text.style(shadows: shadows);
 }
 
-@Deprecated('Use flexible or expanded')
-const flex = flexible;
-
-@Deprecated('Use textStyle(textShadow: textShadow) instead')
+@Deprecated('Use text.style(shadow: shadow) instead')
 const fontWeight = LegacyTextStyleUtility.fontWeight;
 
-@Deprecated('Use textStyle(letterSpacing: letterSpacing) instead')
+@Deprecated('Use text.style(letterSpacing: letterSpacing) instead')
 const letterSpacing = LegacyTextStyleUtility.letterSpacing;
 
-@Deprecated('Use textStyle(debugLabel: debugLabel) instead')
+@Deprecated('Use text.style(debugLabel: debugLabel) instead')
 const debugLabel = LegacyTextStyleUtility.debugLabel;
 
-@Deprecated('Use textStyle(height: height) instead')
+@Deprecated('Use text.style(height: height) instead')
 const textHeight = LegacyTextStyleUtility.textHeight;
 
-@Deprecated('Use textStyle(wordSpacing: wordSpacing) instead')
+@Deprecated('Use text.style(wordSpacing: wordSpacing) instead')
 const wordSpacing = LegacyTextStyleUtility.wordSpacing;
 
-@Deprecated('Use textStyle(fontStyle: fontStyle) instead')
+@Deprecated('Use text.style(fontStyle: fontStyle) instead')
 const fontStyle = LegacyTextStyleUtility.fontStyle;
 
-@Deprecated('Use textStyle(fontSize: fontSize) instead')
+@Deprecated('Use text.style(fontSize: fontSize) instead')
 const fontSize = LegacyTextStyleUtility.fontSize;
 
-@Deprecated('Use textStyle(inherit: inherit) instead')
+@Deprecated('Use text.style(inherit: inherit) instead')
 const inherit = LegacyTextStyleUtility.inherit;
 
-@Deprecated('Use textStyle(color: color) instead')
+@Deprecated('Use text.style(color: color) instead')
 const textColor = LegacyTextStyleUtility.textColor;
 
-@Deprecated('Use textStyle(backgroundColor: backgroundColor) instead')
+@Deprecated('Use text.style(backgroundColor: backgroundColor) instead')
 const textBgColor = LegacyTextStyleUtility.textBgColor;
 
-@Deprecated('Use textStyle(foreground: foreground) instead')
+@Deprecated('Use text.style(foreground: foreground) instead')
 const textForeground = LegacyTextStyleUtility.textForeground;
 
-@Deprecated('Use textStyle(background: background) instead')
+@Deprecated('Use text.style(background: background) instead')
 const textBackground = LegacyTextStyleUtility.textBackground;
 
-@Deprecated('Use textStyle(shadows: shadows) instead')
+@Deprecated('Use text.style(shadows: shadows) instead')
 const textShadows = LegacyTextStyleUtility.textShadow;
 
-@Deprecated('Use textStyle(fontFeatures: fontFeatures) instead')
+@Deprecated('Use text.style(fontFeatures: fontFeatures) instead')
 const fontFeatures = LegacyTextStyleUtility.fontFeatures;
 
-@Deprecated('Use textStyle(decoration: decoration) instead')
+@Deprecated('Use text.style(decoration: decoration) instead')
 const textDecoration = LegacyTextStyleUtility.textDecoration;
 
-@Deprecated('Use textStyle(decorationColor: decorationColor) instead')
+@Deprecated('Use text.style(decorationColor: decorationColor) instead')
 const textDecorationColor = LegacyTextStyleUtility.textDecorationColor;
 
-@Deprecated('Use textStyle(decorationStyle: decorationStyle) instead')
+@Deprecated('Use text.style(decorationStyle: decorationStyle) instead')
 const textDecorationStyle = LegacyTextStyleUtility.textDecorationStyle;
 
-@Deprecated('Use textStyle(decorationThickness: decorationThickness) instead')
+@Deprecated('Use text.style(decorationThickness: decorationThickness) instead')
 const textDecorationThickness = LegacyTextStyleUtility.textDecorationThickness;
 
-@Deprecated('Use textStyle(fontFamilyFallback: fontFamilyFallback) instead')
+@Deprecated('Use text.style(fontFamilyFallback: fontFamilyFallback) instead')
 const fontFamilyFallback = LegacyTextStyleUtility.fontFamilyFallback;
 
 class LegacyTextStyleUtility {
@@ -308,7 +290,7 @@ StyleMixAttribute _apply(Iterable<StyleMix> mixes) {
 }
 
 @Deprecated(kShortAliasDeprecation)
-final p = padding;
+const p = padding;
 
 @Deprecated(kShortAliasDeprecation)
 final pt = paddingTop;
@@ -335,10 +317,10 @@ final px = paddingHorizontal;
 final py = paddingVertical;
 
 @Deprecated(kShortAliasDeprecation)
-const pi = paddingFrom;
+final pi = padding.as;
 
 @Deprecated(kShortAliasDeprecation)
-final m = margin;
+const m = margin;
 @Deprecated(kShortAliasDeprecation)
 final mt = marginTop;
 @Deprecated(kShortAliasDeprecation)
@@ -356,7 +338,7 @@ final mx = marginHorizontal;
 @Deprecated(kShortAliasDeprecation)
 final my = marginVertical;
 @Deprecated(kShortAliasDeprecation)
-const mi = marginFrom;
+final mi = margin.as;
 
 @Deprecated(kShortAliasDeprecation)
 final marginX = marginHorizontal;
@@ -364,20 +346,23 @@ final marginX = marginHorizontal;
 @Deprecated(kShortAliasDeprecation)
 final marginY = marginVertical;
 
-@Deprecated(kShortAliasDeprecation)
-const r = rounded;
+@Deprecated('Use borderRadius instead')
+const rounded = borderRadius;
 
-@Deprecated(kShortAliasDeprecation)
-const roundedH = roundedHorizontal;
+@Deprecated('Use borderRadius instead')
+const r = borderRadius;
 
-@Deprecated(kShortAliasDeprecation)
-const roundedV = roundedVertical;
+@Deprecated('Use borderRadius.horizontal instead')
+dynamic get roundedH => UnimplementedError();
+
+@Deprecated('use borderRadius.vertical instead')
+dynamic get roundedV => UnimplementedError();
 
 @Deprecated(kShortAliasDeprecation)
 dynamic get roundedDH => UnimplementedError();
 
 @Deprecated(kShortAliasDeprecation)
-const roundedTL = roundedTopLeft;
+final roundedTL = borderRadius.topLeft;
 
 @Deprecated(kShortAliasDeprecation)
 BorderRadiusGeometryAttribute roundedTR() {
@@ -385,37 +370,34 @@ BorderRadiusGeometryAttribute roundedTR() {
 }
 
 @Deprecated(kShortAliasDeprecation)
-BorderRadiusAttribute roundedBL() {
+BorderRadiusGeometryAttribute roundedBL() {
   throw UnimplementedError();
 }
 
 @Deprecated(kShortAliasDeprecation)
-BorderRadiusAttribute roundedBR() {
+BorderRadiusGeometryAttribute roundedBR() {
   throw UnimplementedError();
 }
 
 @Deprecated(kShortAliasDeprecation)
-BorderRadiusDirectionalAttribute roundedTS() {
+BorderRadiusGeometryAttribute roundedTS() {
   throw UnimplementedError();
 }
 
 @Deprecated(kShortAliasDeprecation)
-BorderRadiusDirectionalAttribute roundedTE() {
+BorderRadiusGeometryAttribute roundedTE() {
   throw UnimplementedError();
 }
 
 @Deprecated(kShortAliasDeprecation)
-BorderRadiusDirectionalAttribute roundedBS() {
+BorderRadiusGeometryAttribute roundedBS() {
   throw UnimplementedError();
 }
 
 @Deprecated(kShortAliasDeprecation)
-BorderRadiusDirectionalAttribute roundedBE() {
+BorderRadiusGeometryAttribute roundedBE() {
   throw UnimplementedError();
 }
-
-@Deprecated(kShortAliasDeprecation)
-const bgColor = backgroundColor;
 
 @Deprecated(kShortAliasDeprecation)
 const h = height;
@@ -424,34 +406,34 @@ const h = height;
 const w = width;
 
 @Deprecated(kShortAliasDeprecation)
-const maxH = maxHeight;
+final maxH = maxHeight;
 
 @Deprecated(kShortAliasDeprecation)
-const maxW = maxWidth;
+final maxW = maxWidth;
 
 @Deprecated(kShortAliasDeprecation)
-const minH = minHeight;
+final minH = minHeight;
 
 @Deprecated(kShortAliasDeprecation)
-const minW = minWidth;
+final minW = minWidth;
 
 @Deprecated(kShortAliasDeprecation)
-const bt = borderTop;
+final bt = border.top;
 
 @Deprecated(kShortAliasDeprecation)
-const bb = borderBottom;
+final bb = border.bottom;
 
 @Deprecated(kShortAliasDeprecation)
-const bl = borderLeft;
+final bl = border.left;
 
 @Deprecated(kShortAliasDeprecation)
-const br = borderRight;
+final br = border.right;
 
 @Deprecated(kShortAliasDeprecation)
-const bs = borderStart;
+final bs = border.start;
 
 @Deprecated(kShortAliasDeprecation)
-const be = borderEnd;
+final be = border.end;
 
 @Deprecated('Use alignment instead')
 const align = alignment;
@@ -462,13 +444,13 @@ AlignmentGeometryAttribute zAligmnent(Alignment alignment) {
 }
 
 @Deprecated('Use stackFit instead')
-StackFitAttribute zFit(StackFit fit) {
-  return stackFit(fit);
+StackMixAttribute zFit(StackFit fit) {
+  return StackMixAttribute(fit: fit);
 }
 
 @Deprecated('Use stack instead')
-ClipAttribute zClip(Clip clip) {
-  return ClipAttribute(clip);
+StackMixAttribute zClip(Clip clip) {
+  return StackMixAttribute(clipBehavior: clip);
 }
 
 // Create a FlexAttributes for the direction axis.
@@ -479,18 +461,18 @@ AxisAttribute direction(Axis direction) {
 
 // Create a FlexAttributes for the cross axis.
 @Deprecated('Use crossAxisAlignment() instead')
-CrossAxisAlignmentAttribute crossAxis(CrossAxisAlignment crossAxisAlignment) {
-  return CrossAxisAlignmentAttribute(crossAxisAlignment);
+FlexMixAttribute crossAxis(CrossAxisAlignment crossAxisAlignment) {
+  return FlexMixAttribute(crossAxisAlignment: crossAxisAlignment);
 }
 
 @Deprecated('Use textDirective(directive)')
-TextDirectiveAttribute directives(List<TextDirective> directives) {
-  return TextDirectiveAttribute(directives);
+TextMixAttribute directives(List<TextDirective> directives) {
+  return TextMixAttribute(directives: directives);
 }
 
 @Deprecated('Use textDirective(directive)')
-TextDirectiveAttribute directive(TextDirective directive) {
-  return TextDirectiveAttribute([directive]);
+TextMixAttribute directive(TextDirective directive) {
+  return TextMixAttribute(directives: [directive]);
 }
 
 @Deprecated('Locale is now passed to StyledText widget')
@@ -499,6 +481,144 @@ TextStyleAttribute locale() {
 }
 
 @Deprecated('Use text(overflow: overflow)')
-TextOverflowAttribute overflow(TextOverflow overflow) {
-  return TextOverflowAttribute(overflow);
+TextMixAttribute overflow(TextOverflow overflow) {
+  return TextMixAttribute(overflow: overflow);
+}
+
+@Deprecated('use margin.only instead')
+final marginOnly = margin.only;
+
+@Deprecated('use margin.only instead')
+final marginDirectionalOnly = margin.only;
+
+@Deprecated('use margin.all instead')
+final marginAll = margin.all;
+
+@Deprecated('use margin.top instead')
+final marginTop = margin.top;
+
+@Deprecated('use margin.bottom instead')
+final marginBottom = margin.bottom;
+
+@Deprecated('use margin.left instead')
+final marginLeft = margin.left;
+
+@Deprecated('use margin.right instead')
+final marginRight = margin.right;
+
+@Deprecated('use margin.start instead')
+final marginStart = margin.start;
+
+@Deprecated('use margin.end instead')
+final marginEnd = margin.end;
+
+@Deprecated('use margin.horizontal instead')
+final marginHorizontal = margin.horizontal;
+
+@Deprecated('use margin.vertical instead')
+final marginVertical = margin.vertical;
+
+@Deprecated('use marginFrom instead')
+final marginFrom = margin.as;
+
+@Deprecated('use padding.only instead')
+final paddingOnly = padding.only;
+
+@Deprecated('use padding.only instead')
+final paddingDirectionalOnly = padding.only;
+
+@Deprecated('use padding.all instead')
+final paddingAll = padding.all;
+
+@Deprecated('use padding.top instead')
+final paddingTop = padding.top;
+
+@Deprecated('use padding.bottom instead')
+final paddingBottom = padding.bottom;
+
+@Deprecated('use padding.left instead')
+final paddingLeft = padding.left;
+
+@Deprecated('use padding.right instead')
+final paddingRight = padding.right;
+
+@Deprecated('use padding.start instead')
+final paddingStart = padding.start;
+
+@Deprecated('use padding.end instead')
+final paddingEnd = padding.end;
+
+@Deprecated('use padding.horizontal instead')
+final paddingHorizontal = padding.horizontal;
+
+@Deprecated('use padding.vertical instead')
+final paddingVertical = padding.vertical;
+
+@Deprecated('use paddingFrom instead')
+final paddingFrom = padding.as;
+
+@Deprecated('use border.top instead')
+final borderTop = border.top;
+
+@Deprecated('use border.bottom instead')
+final borderBottom = border.bottom;
+
+@Deprecated('use border.left instead')
+final borderLeft = border.left;
+
+@Deprecated('use border.right instead')
+final borderRight = border.right;
+
+@Deprecated('use border.start instead')
+final borderStart = border.start;
+
+@Deprecated('use border.end instead')
+final borderEnd = border.end;
+
+@Deprecated('use border.horizontal instead')
+final borderHorizontal = border.horizontal;
+
+@Deprecated('use border.vertical instead')
+final borderVertical = border.vertical;
+
+@Deprecated('use border.all instead')
+final borderAll = border.all;
+
+@Deprecated('Use StyledText now')
+typedef TextMix = StyledText;
+
+@Deprecated('Use text.style instead')
+final textStyle = text.style;
+
+@Deprecated('Use text.style.shadow instead')
+final shadow = text.style.shadow;
+
+@Deprecated('use backgroundColor instead')
+const bgColor = backgroundColor;
+
+// do no tuse main axisaligmnet use flex.mainAxisAlignment instead
+@Deprecated(
+  'use flex(mainAxisAlignment:value) instead or flex.mainAxisAlignment',
+)
+FlexMixAttribute mainAxisAlignment(MainAxisAlignment mainAxisAlignment) {
+  return FlexMixAttribute(mainAxisAlignment: mainAxisAlignment);
+}
+
+@Deprecated(
+  'use flex(crossAxisAlignment:value) instead or flex.crossAxisAlignment',
+)
+FlexMixAttribute crossAlignment(CrossAxisAlignment crossAxisAlignment) {
+  return FlexMixAttribute(crossAxisAlignment: crossAxisAlignment);
+}
+
+@Deprecated('use flex(mainAxisSize:value) instead or flex.mainAxisSize')
+FlexMixAttribute mainAxisSize(MainAxisSize mainAxisSize) {
+  return flex(mainAxisSize: mainAxisSize);
+}
+
+@Deprecated('use text.style.bold() instead')
+TextMixAttribute bold() {
+  return TextMixAttribute(
+    style: TextStyleDto.only(fontWeight: FontWeight.bold),
+  );
 }

@@ -1,6 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
-import 'package:mix/src/variants/multi_variant.dart';
 
 import '../../helpers/testing_utils.dart';
 
@@ -22,7 +21,7 @@ void main() {
       final mix = StyleMix(null, attribute1, null);
       expect(mix.styles.length, 1);
       expect(mix.variants.isEmpty, true);
-      expect(mix.styles[0], attribute1);
+      expect(mix.styles.values[0], attribute1);
     });
 
     test('Initialization with All Non-Null ScalarAttributes', () {
@@ -88,7 +87,7 @@ void main() {
         attribute4,
         const MockInvalidAttribute(),
       ];
-      expect(() => StyleMix.create(attributes), throwsAssertionError);
+      expect(() => StyleMix.create(attributes), throwsUnsupportedError);
     });
   });
 
@@ -171,7 +170,7 @@ void main() {
       final mix = StyleMix.chooser(true, trueStyle, falseStyle);
 
       expect(mix.styles.length, 1);
-      expect(mix.styles[0], trueAttribute);
+      expect(mix.styles.values[0], trueAttribute);
     });
 
     test('Condition is False', () {
@@ -184,7 +183,7 @@ void main() {
       final mix = StyleMix.chooser(false, trueStyle, falseStyle);
 
       expect(mix.styles.length, 1);
-      expect(mix.styles[0], falseAttribute);
+      expect(mix.styles.values[0], falseAttribute);
     });
 
     test('Both ifTrue and ifFalse Are Same', () {
@@ -196,7 +195,7 @@ void main() {
       final style = StyleMix.chooser(true, sameStyle, otherStyle);
 
       expect(style.styles.length, 1);
-      expect(style.styles[0], sameAttribute);
+      expect(style.styles.values[0], sameAttribute);
       expect(sameStyle, style);
     });
   });
@@ -219,7 +218,7 @@ void main() {
     });
 
     test('with matching multi variant', () {
-      final multiVariant = MultiVariant(const [variantAttr1, variantAttr2]);
+      final multiVariant = MultiVariant.and(const [variantAttr1, variantAttr2]);
       final style = StyleMix(attr1, attr2, multiVariant(attr3));
       final firstStyle = style.selectVariant(variantAttr1);
       final secondStyle = firstStyle.selectVariant(variantAttr2);
@@ -265,7 +264,7 @@ void main() {
     });
 
     test('with matching multi variant', () {
-      final multiVariant = MultiVariant(const [variantAttr1, variantAttr2]);
+      final multiVariant = MultiVariant.and(const [variantAttr1, variantAttr2]);
       final style = StyleMix(attr1, attr2, multiVariant(attr3));
       final thirdStyle = style.selectVariantList([variantAttr1, variantAttr2]);
 
@@ -343,7 +342,7 @@ void main() {
       final style1 = StyleMix(attribute1, attribute2);
       final style2 = StyleMix(attribute1, attribute2);
 
-      expect(style1.hashCode, isNot(style2.hashCode));
+      expect(style1.hashCode, equals(style2.hashCode));
     });
 
     test('should return different hashcode for different attributes', () {

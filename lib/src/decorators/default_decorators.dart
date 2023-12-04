@@ -1,121 +1,106 @@
+// ignore_for_file: prefer-named-boolean-parameters
+
 import 'package:flutter/material.dart';
 
-import '../factory/mix_provider_data.dart';
 import 'decorator.dart';
 
-class AspectRatioDecorator extends ParentDecorator<double> {
-  final double aspectRatio;
-  const AspectRatioDecorator(this.aspectRatio);
+class AspectRatioDecorator extends WrapDecorator<AspectRatioDecorator> {
+  final double value;
+  const AspectRatioDecorator(this.value, {super.key});
 
   @override
-  AspectRatioDecorator merge(AspectRatioDecorator other) {
-    return AspectRatioDecorator(other.aspectRatio);
-  }
+  AspectRatioDecorator merge(AspectRatioDecorator? other) => other ?? this;
 
   @override
-  double resolve(MixData mix) => aspectRatio;
+  get props => [value];
 
   @override
-  get props => [aspectRatio];
-
-  @override
-  Widget build(Widget child, double data) =>
-      AspectRatio(aspectRatio: data, child: child);
+  Widget build(child, mix) =>
+      AspectRatio(key: key, aspectRatio: value, child: child);
 }
 
-class FlexibleDecorator extends ParentDecorator<FlexibleDecoratorSpec> {
-  final int? flex;
-  final FlexFit? flexFit;
-  const FlexibleDecorator({this.flex, this.flexFit});
-
-  const FlexibleDecorator.tight([this.flex]) : flexFit = FlexFit.tight;
-  const FlexibleDecorator.loose([this.flex]) : flexFit = FlexFit.loose;
+class VisibilityDecorator extends WrapDecorator<VisibilityDecorator> {
+  final bool value;
+  const VisibilityDecorator(this.value, {super.key});
 
   @override
-  FlexibleDecorator merge(FlexibleDecorator other) {
+  VisibilityDecorator merge(VisibilityDecorator? other) => other ?? this;
+
+  @override
+  get props => [value];
+
+  @override
+  Widget build(child, mix) =>
+      Visibility(key: key, visible: value, child: child);
+}
+
+class FlexibleDecorator extends WrapDecorator<FlexibleDecorator> {
+  final int? flex;
+  final FlexFit? fit;
+  const FlexibleDecorator({this.flex, this.fit, super.key});
+
+  @override
+  FlexibleDecorator merge(FlexibleDecorator? other) {
     return FlexibleDecorator(
-      flex: other.flex ?? flex,
-      flexFit: other.flexFit ?? flexFit,
+      flex: other?.flex ?? flex,
+      fit: other?.fit ?? fit,
     );
   }
 
   @override
-  FlexibleDecoratorSpec resolve(MixData mix) {
-    return FlexibleDecoratorSpec(flex: flex, flexFit: flexFit);
-  }
+  get props => [flex, fit];
 
   @override
-  get props => [flexFit, flex];
-
-  @override
-  Widget build(child, data) {
+  Widget build(child, mix) {
     return Flexible(
-      flex: data.flex ?? 1,
-      fit: data.flexFit ?? FlexFit.loose,
+      key: key,
+      flex: flex ?? 1,
+      fit: fit ?? FlexFit.loose,
       child: child,
     );
   }
 }
 
-class FlexibleDecoratorSpec {
-  final int? flex;
-  final FlexFit? flexFit;
-  const FlexibleDecoratorSpec({required this.flex, required this.flexFit});
-}
-
-class OpacityDecorator extends ParentDecorator<double> {
+class OpacityDecorator extends WrapDecorator<OpacityDecorator> {
   final double value;
-  const OpacityDecorator(this.value);
+  const OpacityDecorator(this.value, {super.key});
 
   @override
-  OpacityDecorator merge(OpacityDecorator? other) {
-    return OpacityDecorator(other?.value ?? value);
-  }
-
-  @override
-  double resolve(MixData mix) => value;
+  OpacityDecorator merge(OpacityDecorator? other) => other ?? this;
 
   @override
   get props => [value];
 
   @override
-  Widget build(child, data) => Opacity(opacity: data, child: child);
+  Widget build(child, mix) => Opacity(key: key, opacity: value, child: child);
 }
 
-class RotateDecorator extends ParentDecorator<int> {
+class RotateDecorator extends WrapDecorator<RotateDecorator> {
   final int value;
-  const RotateDecorator(this.value);
+  const RotateDecorator(this.value, {super.key});
 
   @override
-  RotateDecorator merge(RotateDecorator other) {
-    return RotateDecorator(other.value);
-  }
-
-  @override
-  int resolve(MixData mix) => value;
+  RotateDecorator merge(RotateDecorator? other) => other ?? this;
 
   @override
   get props => [value];
 
   @override
-  Widget build(child, data) => RotatedBox(quarterTurns: data, child: child);
+  Widget build(child, mix) =>
+      RotatedBox(key: key, quarterTurns: value, child: child);
 }
 
-class ScaleDecorator extends ParentDecorator<double> {
-  final double scale;
-  const ScaleDecorator(this.scale);
+class ScaleDecorator extends WrapDecorator<ScaleDecorator> {
+  final double value;
+  const ScaleDecorator(this.value, {super.key});
 
   @override
-  ScaleDecorator merge(ScaleDecorator? other) {
-    return ScaleDecorator(other?.scale ?? scale);
-  }
+  ScaleDecorator merge(ScaleDecorator? other) => other ?? this;
 
   @override
-  double resolve(MixData mix) => scale;
+  get props => [value];
 
   @override
-  get props => [scale];
-
-  @override
-  Widget build(child, data) => Transform.scale(scale: data, child: child);
+  Widget build(child, mix) =>
+      Transform.scale(key: key, scale: value, child: child);
 }

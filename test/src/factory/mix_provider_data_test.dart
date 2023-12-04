@@ -27,21 +27,21 @@ void main() {
 
     // Add any other additional assertions that are specific to your use case.
     // If you become able to access properties _attributes and _resolver you would assert:
-    expect(mixData.attributes, isInstanceOf<VisualAttributeMap>());
-    expect(mixData.resolver, isInstanceOf<MixTokenResolver>());
+    expect(mixData.attributes, isInstanceOf<StyleAttributeMap>());
+    expect(mixData.tokens, isInstanceOf<MixTokenResolver>());
     expect(mixData.attributes.length, 4);
-    expect(mixData.attributeOfType<MockIntScalarAttribute>(),
+    expect(mixData.attributeOf<MockIntScalarAttribute>(),
         isInstanceOf<MockIntScalarAttribute>());
-    expect(mixData.attributeOfType<MockStringScalarAttribute>(),
+    expect(mixData.attributeOf<MockStringScalarAttribute>(),
         const MockStringScalarAttribute('test'));
-    expect(mixData.attributeOfType<MockStringScalarAttribute>(),
+    expect(mixData.attributeOf<MockStringScalarAttribute>(),
         isInstanceOf<MockStringScalarAttribute>());
-    expect(mixData.attributeOfType<MockDoubleScalarAttribute>(),
+    expect(mixData.attributeOf<MockDoubleScalarAttribute>(),
         const MockDoubleScalarAttribute(2.0));
 
     expect(mixData.decoratorOfType<MockDoubleDecoratorAttribute>(),
-        isInstanceOf<List<MockDoubleDecoratorAttribute>>());
-    expect(mixData.attributeOfType<MockDoubleDecoratorAttribute>(),
+        isInstanceOf<Iterable<MockDoubleDecoratorAttribute>>());
+    expect(mixData.attributeOf<MockDoubleDecoratorAttribute>(),
         const MockDoubleDecoratorAttribute(0.5));
   });
 
@@ -72,20 +72,20 @@ void main() {
 
     expect(mergedMixData, isInstanceOf<MixData>());
     expect(mergedMixData.attributes.length, 4);
-    expect(mergedMixData.attributeOfType<MockIntScalarAttribute>(),
+    expect(mergedMixData.attributeOf<MockIntScalarAttribute>(),
         isInstanceOf<MockIntScalarAttribute>());
-    expect(mergedMixData.attributeOfType<MockStringScalarAttribute>(),
+    expect(mergedMixData.attributeOf<MockStringScalarAttribute>(),
         isInstanceOf<MockStringScalarAttribute>());
-    expect(mergedMixData.attributeOfType<MockDoubleScalarAttribute>(),
+    expect(mergedMixData.attributeOf<MockDoubleScalarAttribute>(),
         isInstanceOf<MockDoubleScalarAttribute>());
     expect(mergedMixData.decoratorOfType<MockDoubleDecoratorAttribute>(),
-        isInstanceOf<List<MockDoubleDecoratorAttribute>>());
+        isInstanceOf<Iterable<MockDoubleDecoratorAttribute>>());
 
-    expect(mergedMixData.attributeOfType<MockIntScalarAttribute>(),
+    expect(mergedMixData.attributeOf<MockIntScalarAttribute>(),
         const MockIntScalarAttribute(1));
-    expect(mergedMixData.attributeOfType<MockStringScalarAttribute>(),
+    expect(mergedMixData.attributeOf<MockStringScalarAttribute>(),
         const MockStringScalarAttribute('test'));
-    expect(mergedMixData.attributeOfType<MockDoubleScalarAttribute>(),
+    expect(mergedMixData.attributeOf<MockDoubleScalarAttribute>(),
         const MockDoubleScalarAttribute(4.0));
     expect(mergedMixData.decoratorOfType<MockDoubleDecoratorAttribute>().first,
         const MockDoubleDecoratorAttribute(0.6));

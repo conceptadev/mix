@@ -10,14 +10,14 @@ import '../../../helpers/testing_utils.dart';
 void main() {
   group('TextStyleToken', () {
     test('Constructor assigns name correctly', () {
-      const textStyleToken = TextStyleToken('testName');
+      const textStyleToken = TextStyleToken.name('testName');
       expect(textStyleToken.name, 'testName');
     });
 
     test('Equality operator works correctly', () {
-      const textStyleToken1 = TextStyleToken('testName');
-      const textStyleToken2 = TextStyleToken('testName');
-      const textStyleToken3 = TextStyleToken('differentName');
+      const textStyleToken1 = TextStyleToken.name('testName');
+      const textStyleToken2 = TextStyleToken.name('testName');
+      const textStyleToken3 = TextStyleToken.name('differentName');
 
       expect(textStyleToken1 == textStyleToken2, isTrue);
       expect(textStyleToken1 == textStyleToken3, isFalse);
@@ -25,19 +25,19 @@ void main() {
     });
 
     test('hashCode is consistent with name', () {
-      const textStyleToken1 = TextStyleToken('testName');
-      const textStyleToken2 = TextStyleToken('testName');
-      const textStyleToken3 = TextStyleToken('differentName');
+      const textStyleToken1 = TextStyleToken.name('testName');
+      const textStyleToken2 = TextStyleToken.name('testName');
+      const textStyleToken3 = TextStyleToken.name('differentName');
 
       expect(textStyleToken1.hashCode, textStyleToken2.hashCode);
       expect(textStyleToken1.hashCode, isNot(textStyleToken3.hashCode));
     });
 
     testWidgets('Test it resolves correctly', (tester) async {
-      const redtextStyleToken = TextStyleToken('red');
-      const greentextStyleToken = TextStyleToken('green');
-      const bluetextStyleToken = TextStyleToken('blue');
-      final theme = MixThemeData(
+      const redtextStyleToken = TextStyleToken.name('red');
+      const greentextStyleToken = TextStyleToken.name('green');
+      const bluetextStyleToken = TextStyleToken.name('blue');
+      final theme = MixThemeData.tokenMap(
         textStyles: {
           redtextStyleToken: (_) => const TextStyle(color: Colors.red),
           greentextStyleToken: (_) => const TextStyle(color: Colors.green),
@@ -51,11 +51,11 @@ void main() {
 
       final mixData = MixData.create(context, StyleMix.empty);
 
-      expect(mixData.resolver.textStyleToken(redtextStyleToken),
+      expect(mixData.tokens.textStyleToken(redtextStyleToken),
           const TextStyle(color: Colors.red));
-      expect(mixData.resolver.textStyleToken(greentextStyleToken),
+      expect(mixData.tokens.textStyleToken(greentextStyleToken),
           const TextStyle(color: Colors.green));
-      expect(mixData.resolver.textStyleToken(bluetextStyleToken),
+      expect(mixData.tokens.textStyleToken(bluetextStyleToken),
           const TextStyle(color: Colors.blue));
     });
   });
@@ -64,17 +64,17 @@ void main() {
   group('TextStyleResolvableToken', () {
     test('Constructor assigns name correctly', () {
       final textStyleToken =
-          TextStyleTokenResolver('testName', (_) => const TextStyle());
+          TextStyleToken.resolvable('testName', (_) => const TextStyle());
       expect(textStyleToken.name, 'testName');
     });
 
     test('Equality operator works correctly', () {
       final textStyleToken1 =
-          TextStyleTokenResolver('testName', (_) => const TextStyle());
+          TextStyleToken.resolvable('testName', (_) => const TextStyle());
       final textStyleToken2 =
-          TextStyleTokenResolver('testName', (_) => const TextStyle());
+          TextStyleToken.resolvable('testName', (_) => const TextStyle());
       final textStyleToken3 =
-          TextStyleTokenResolver('differentName', (_) => const TextStyle());
+          TextStyleToken.resolvable('differentName', (_) => const TextStyle());
 
       expect(textStyleToken1 == textStyleToken2, isTrue);
       expect(textStyleToken1 == textStyleToken3, isFalse);
@@ -83,22 +83,22 @@ void main() {
 
     test('hashCode is consistent with name', () {
       final textStyleToken1 =
-          TextStyleTokenResolver('testName', (_) => const TextStyle());
+          TextStyleToken.resolvable('testName', (_) => const TextStyle());
       final textStyleToken2 =
-          TextStyleTokenResolver('testName', (_) => const TextStyle());
+          TextStyleToken.resolvable('testName', (_) => const TextStyle());
       final textStyleToken3 =
-          TextStyleTokenResolver('differentName', (_) => const TextStyle());
+          TextStyleToken.resolvable('differentName', (_) => const TextStyle());
 
       expect(textStyleToken1.hashCode, textStyleToken2.hashCode);
       expect(textStyleToken1.hashCode, isNot(textStyleToken3.hashCode));
     });
 
     testWidgets('Test it resolves correctly', (tester) async {
-      final redtextStyleToken = TextStyleTokenResolver(
+      final redtextStyleToken = TextStyleToken.resolvable(
           'red', (_) => const TextStyle(color: Colors.red));
-      final greentextStyleToken = TextStyleTokenResolver(
+      final greentextStyleToken = TextStyleToken.resolvable(
           'green', (_) => const TextStyle(color: Colors.green));
-      final bluetextStyleToken = TextStyleTokenResolver(
+      final bluetextStyleToken = TextStyleToken.resolvable(
           'blue', (_) => const TextStyle(color: Colors.blue));
 
       await tester.pumpMaterialApp(Container());
@@ -107,11 +107,11 @@ void main() {
 
       final mixData = MixData.create(context, StyleMix.empty);
 
-      expect(mixData.resolver.textStyleToken(redtextStyleToken),
+      expect(mixData.tokens.textStyleToken(redtextStyleToken),
           const TextStyle(color: Colors.red));
-      expect(mixData.resolver.textStyleToken(greentextStyleToken),
+      expect(mixData.tokens.textStyleToken(greentextStyleToken),
           const TextStyle(color: Colors.green));
-      expect(mixData.resolver.textStyleToken(bluetextStyleToken),
+      expect(mixData.tokens.textStyleToken(bluetextStyleToken),
           const TextStyle(color: Colors.blue));
     });
   });

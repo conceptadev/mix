@@ -12,13 +12,12 @@ class BasicExample extends HookWidget {
     final mix = StyleMix.create([
       height(300),
       width(300),
-      rounded(10),
-      animation(),
+      borderRadius(10),
       elevation(2),
       margin(10),
-      alignmentCenter(),
+      alignment.center(),
       backgroundColor(Colors.purple),
-      textStyle(color: Colors.white),
+      text.style(color: Colors.white),
       onPress(
         backgroundColor(Colors.black),
       ),
@@ -61,7 +60,7 @@ class BasicExample extends HookWidget {
             "This is another StyledText, but yet another a different mix!",
             style: onSurfaceMix.merge(
               StyleMix(
-                textStyle(
+                text.style(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                   fontStyle: FontStyle.italic,
@@ -74,10 +73,10 @@ class BasicExample extends HookWidget {
             style: onSurfaceMix.merge(
               StyleMix(
                 onLight(
-                  textStyle(color: $M3Color.error),
+                  text.style(color: $colors.error),
                 ),
                 onDark(
-                  textStyle(color: $M3Color.primary),
+                  text.style(color: $colors.primary),
                 ),
               ),
             ),
@@ -95,7 +94,7 @@ class BasicExample extends HookWidget {
                 Icons.move_to_inbox,
                 style: onSurfaceMix.merge(
                   StyleMix(
-                    iconSize(50),
+                    icon(size: 50),
                   ),
                 ),
               ),
@@ -103,7 +102,7 @@ class BasicExample extends HookWidget {
                 Icons.one_k,
                 style: onSurfaceMix.merge(
                   StyleMix(
-                    iconSize(60),
+                    icon(size: 60),
                   ),
                 ),
               ),
@@ -111,8 +110,8 @@ class BasicExample extends HookWidget {
                 Icons.waving_hand_rounded,
                 style: onSurfaceMix.merge(
                   StyleMix(
-                    iconSize(70),
-                    iconColor($M3Color.secondary),
+                    icon(size: 70),
+                    icon(color: $colors.secondary),
                   ),
                 ),
               ),
@@ -120,8 +119,8 @@ class BasicExample extends HookWidget {
                 Icons.warning_amber,
                 style: onSurfaceMix.merge(
                   StyleMix(
-                    iconSize(90),
-                    iconColor(Colors.yellow.shade900),
+                    icon(size: 90),
+                    icon(color: Colors.yellow.shade900),
                   ),
                 ),
               ),

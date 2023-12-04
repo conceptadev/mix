@@ -22,45 +22,41 @@ class ButtonSizeVariants {
 }
 
 StyleMix get _baseStyle => StyleMix(
-      rounded(4),
-      animation(
-        curve: Curves.easeIn,
-        duration: 100,
-      ),
+      borderRadius(4),
       onPress(
         scale(0.95),
       ),
-      mainAxisAlignment(MainAxisAlignment.center),
-      textStyle(
+      flex.mainAxisAlignment.center(),
+      text.style(
         // added because of lack of style parameters (yellow lines)
         decoration: TextDecoration.none,
         fontWeight: FontWeight.w600,
-        fontFamily: MaterialTextStyles.bodySmall.fontFamily,
+        fontFamily: $textStyles.bodySmall.fontFamily,
       ),
-      mainAxisSize(MainAxisSize.min), // For flexbox
+      flex.mainAxisSize.min(),
       ButtonSizeVariants.small(
-        paddingHorizontal(10),
-        paddingVertical(10),
-        textStyle(
+        padding.horizontal(10),
+        padding.vertical(10),
+        text.style(
           fontSize: 16,
         ),
-        iconSize(24),
+        icon(size: 24),
       ),
       ButtonSizeVariants.medium(
-        paddingHorizontal(4),
-        paddingVertical(16),
-        textStyle(
+        padding.horizontal(4),
+        padding.vertical(16),
+        text.style(
           fontSize: 16,
         ),
-        iconSize(24),
+        icon(size: 24),
       ),
       ButtonSizeVariants.large(
-        paddingHorizontal(4),
-        paddingVertical(2),
-        textStyle(
+        padding.horizontal(4),
+        padding.vertical(2),
+        text.style(
           fontSize: 16,
         ),
-        iconSize(24),
+        icon(size: 24),
       ),
     );
 
@@ -144,15 +140,15 @@ abstract class Button extends StatelessWidget {
 }
 
 StyleMix get _style => StyleMix(
-      textStyle(
+      text.style(
         color: const Color(0xFFFF004C),
       ),
       backgroundColor(const Color(0x0F07E2FF)),
-      iconColor(_MaterialDesignColors.onBackground),
+      icon(color: $colors.onBackground),
       onDisabled(
-        backgroundColor(_MaterialDesignColors.background.withOpacity(0.3)),
-        textStyle(color: _MaterialDesignColors.onBackground.withOpacity(0.3)),
-        iconColor(_MaterialDesignColors.onBackground.withOpacity(0.3)),
+        backgroundColor($colors.background.withOpacity(0.3)),
+        text.style(color: $colors.onBackground.withOpacity(0.3)),
+        icon(color: $colors.onBackground.withOpacity(0.3)),
       ),
     );
 

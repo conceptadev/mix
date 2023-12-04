@@ -1,29 +1,77 @@
 import 'package:flutter/material.dart';
 
-import '../attributes/attribute.dart';
 import '../attributes/variant_attribute.dart';
-import '../core/equality/compare_mixin.dart';
+import '../core/attribute.dart';
 import '../factory/style_mix.dart';
+import '../helpers/compare_mixin.dart';
 import 'multi_variant.dart';
 
-/// A class representing a variant, which is a combination of attributes.
-/// It can be combined with other variants using logical AND (&) and OR (|) operations.
+/// An immutable class representing a styling variant.
+///
+/// Variants encapsulate a set of styles that can be applied together under certain conditions
+/// in your application, making it easy to switch between different sets of styles.
+///
+/// You can think of variant as a switch that applies a certain set of styles when it's turned on.
+///
+/// The `Variant` class is designed to be immutable and can be used in conjunction
+/// with [StyleMix] and [Attribute] to define specific styling rules.
+///
+/// Example Usage:
+/// ```dart
+///    const outlinedVariant = Variant('outlined');
+///    const filledVariant = Variant('filled');
+
+///    final style = StyleMix(
+///     // shared attributes between all variants
+///      textStyle(fontSize: 16),
+///      padding(10, 20),
+///      outlinedVariant(
+///        border(color: Colors.black, width: 1),
+///         extStyle(color: Colors.black),
+///      ),
+///      filledVariant(
+///        backgroundColor(Colors.black),
+///        textStyle(color: Colors.white),
+///      ),
+///    );
+/// ```
 @immutable
 class Variant with Comparable {
   final String name;
 
-  /// Creates a new [Variant] with a given [name] and an optional [inverse] flag.
+  /// Constructs a `Variant` with the given [name].
+  ///
+  /// The [name] parameter uniquely identifies the variant and is used in style resolution.
   const Variant(this.name);
 
-  /// Combines this variant with another [variant] using a logical AND operation.
+  /// Combines this variant with another [variant] using an 'AND' operation.
+  ///
+  /// This operator returns a [MultiVariant] that represents a combination of both
+  /// variants. It is useful for defining styles that should be applied when
+  /// multiple conditions are met.
+  ///
+  /// Example:
+  /// ```dart
+  /// final combinedVariant = variant1 & variant2;
+  /// ```
   MultiVariant operator &(Variant variant) => MultiVariant.and([this, variant]);
 
-  /// Combines this variant with another [variant] using a logical OR operation.
+  /// Combines this variant with another [variant] using an 'OR' operation.
+  ///
+  /// This operator returns a [MultiVariant] that represents either of the variants.
+  /// It is useful for defining styles that should be applied when any one of
+  /// multiple conditions is met.
+  ///
+  /// Example:
+  /// ```dart
+  /// final eitherVariant = variant1 | variant2;
+  /// ```
   MultiVariant operator |(Variant variant) => MultiVariant.or([this, variant]);
 
-  /// Applies the variant to a set of attributes and creates a [VariantAttribute] instance.
-  /// Up to 12 optional [Attribute] parameters can be provided.
-
+  /// Defines styles to be applied when this variant is active.
+  ///
+  /// You can define up to 20 styling [`Attribute`]s to be applied when this `Variant` is activated.
+  /// Null values are ignored and do not affect the resulting styling rules.
   VariantAttribute call([
     Attribute? p1,
     Attribute? p2,
@@ -50,8 +98,6 @@ class Variant with Comparable {
       p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, //
       p11, p12, p13, p14, p15, p16, p17, p18, p19, p20,
     ].whereType<Attribute>();
-
-    // Create a VariantAttribute using the collected parameters.
 
     return VariantAttribute(this, StyleMix.create(params));
   }

@@ -11,31 +11,37 @@ enum BreakpointOrientation {
 class BreakpointConstraint {
   final double minWidth;
   final double maxWidth;
-  final BreakpointOrientation orientation;
 
   const BreakpointConstraint({
     this.minWidth = 0,
     this.maxWidth = double.infinity,
-    this.orientation = BreakpointOrientation.all,
   });
 
   bool matches(Size size) {
-    final matchesWidth = size.width >= minWidth && size.width <= maxWidth;
-    final matchesOrientation = orientation == BreakpointOrientation.all ||
-        (orientation == BreakpointOrientation.portrait &&
-            size.height > size.width) ||
-        (orientation == BreakpointOrientation.landscape &&
-            size.width > size.height);
-
-    return matchesWidth && matchesOrientation;
+    return size.width >= minWidth && size.width <= maxWidth;
   }
 }
 
 class BreakpointToken extends MixToken<BreakpointConstraint> {
-  static const xsmall = BreakpointToken('--mix-breakpoint-xsmall');
-  static const small = BreakpointToken('--mix-breakpoint-small');
-  static const medium = BreakpointToken('--mix-breakpoint-medium');
-  static const large = BreakpointToken('--mix-breakpoint-large');
+  static const xsmall = BreakpointToken(
+    'mix.breakpoint.xsmall',
+    BreakpointConstraint(maxWidth: 599),
+  );
+  static const small = BreakpointToken(
+    'mix.breakpoint.small',
+    BreakpointConstraint(minWidth: 600, maxWidth: 1023),
+  );
+  static const medium = BreakpointToken(
+    'mix.breakpoint.medium',
+    BreakpointConstraint(minWidth: 1024, maxWidth: 1439),
+  );
+  static const large = BreakpointToken(
+    'mix.breakpoint.large',
+    BreakpointConstraint(minWidth: 1440, maxWidth: double.infinity),
+  );
 
-  const BreakpointToken(super.name);
+  const BreakpointToken(super.name, super.value);
+
+  @override
+  BreakpointConstraint call() => value;
 }
