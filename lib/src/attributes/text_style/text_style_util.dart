@@ -40,7 +40,7 @@ import 'text_style_dto.dart';
 
 class TextStyleUtility<T extends StyleAttribute>
     extends DtoUtility<T, TextStyleDto, TextStyle> {
-  const TextStyleUtility(super.builder) : super(valueToDto: TextStyleDto.from);
+  const TextStyleUtility(super.builder) : super(valueToDto: TextStyleDto.as);
 
   T _only({
     ColorDto? color,
@@ -432,7 +432,7 @@ class TextStyleUtility<T extends StyleAttribute>
   ///
   /// See also:
   /// * [TextStyleToken]
-  T token(TextStyleToken token) => builder(TextStyleDto.token(token));
+  T of(TextStyleToken token) => builder(TextStyleDto.of(token));
 
   /// Callable method for setting multiple values at once.
   ///

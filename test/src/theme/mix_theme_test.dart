@@ -10,7 +10,7 @@ void main() {
     testWidgets('MixTheme.of', (tester) async {
       final theme = MixThemeData(
         colors: StyledTokens({
-          primaryColor: (_) => Colors.blue,
+          primaryColor: Colors.blue,
         }),
       );
 

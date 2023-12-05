@@ -10,7 +10,7 @@ class StyledText extends StyledWidget {
     this.semanticsLabel,
     super.style,
     super.key,
-    super.inherit,
+    super.inherit = true,
     this.locale,
   });
 

@@ -26,7 +26,7 @@ abstract class MixToken<T> {
     return RadiusToken(name, value);
   }
 
-  T call() => value;
+  T call();
 
   @override
   operator ==(Object other) {
@@ -41,34 +41,33 @@ abstract class MixToken<T> {
   int get hashCode => Object.hash(name, value, runtimeType);
 }
 
-mixin ValueRef<T> {
-  String get tokenName;
-  TokenResolver<T> get resolve;
+mixin TokenRef<T extends MixToken<V>, V> {
+  T get token;
 }
 
-typedef TokenResolver<T> = T Function(BuildContext context);
+mixin WithTokenResolver<V> {
+  BuildContextResolver<V> get resolve;
+}
 
-typedef TokenMap<T extends MixToken<V>, V> = Map<T, TokenResolver<V>>;
+typedef BuildContextResolver<T> = T Function(BuildContext context);
+
+typedef TokenMap<T extends MixToken<V>, V> = Map<T, V>;
 
 class StyledTokens<T extends MixToken<V>, V> with Comparable {
-  final Map<T, TokenResolver<V>> _map;
+  final Map<T, V> _map;
 
   const StyledTokens(this._map);
 
   //  empty
   const StyledTokens.empty() : this(const {});
 
-  V call(T token, BuildContext context) {
-    final value = _map[token]?.call(context) ?? token.value;
-
-    return value is ValueRef ? value.resolve(context) : value;
-  }
-
   // Looks for the token the value set within the MixToken
   // TODO: Needs to be optimized, but this is a temporary solution
   T? findByValue(V value) {
     return _map.keys.firstWhereOrNull((token) => token.value == value);
   }
+
+  V getTokenValue(T token) => _map[token] ?? token.value;
 
   @override
   get props => [_map];

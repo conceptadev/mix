@@ -27,3 +27,25 @@ class ColorDto extends Dto<Color> with Mergeable<ColorDto> {
   @override
   get props => [value];
 }
+
+
+  // Color withAlpha(int a) {
+  //   return Color.fromARGB(a, red, green, blue);
+  // }
+
+  // Color withOpacity(double opacity) {
+  //   assert(opacity >= 0.0 && opacity <= 1.0);
+  //   return withAlpha((255.0 * opacity).round());
+  // }
+
+  // Color withRed(int r) {
+  //   return Color.fromARGB(alpha, r, green, blue);
+  // }
+
+  // Color withGreen(int g) {
+  //   return Color.fromARGB(alpha, red, g, blue);
+  // }
+
+  // Color withBlue(int b) {
+  //   return Color.fromARGB(alpha, red, green, b);
+  // }

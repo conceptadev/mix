@@ -10,14 +10,14 @@ import '../../../helpers/testing_utils.dart';
 void main() {
   group('TextStyleToken', () {
     test('Constructor assigns name correctly', () {
-      const textStyleToken = TextStyleToken.name('testName');
+      const textStyleToken = TextStyleToken('testName', TextStyle());
       expect(textStyleToken.name, 'testName');
     });
 
     test('Equality operator works correctly', () {
-      const textStyleToken1 = TextStyleToken.name('testName');
-      const textStyleToken2 = TextStyleToken.name('testName');
-      const textStyleToken3 = TextStyleToken.name('differentName');
+      const textStyleToken1 = TextStyleToken('testName', TextStyle());
+      const textStyleToken2 = TextStyleToken('testName', TextStyle());
+      const textStyleToken3 = TextStyleToken('differentName', TextStyle());
 
       expect(textStyleToken1 == textStyleToken2, isTrue);
       expect(textStyleToken1 == textStyleToken3, isFalse);
@@ -25,23 +25,23 @@ void main() {
     });
 
     test('hashCode is consistent with name', () {
-      const textStyleToken1 = TextStyleToken.name('testName');
-      const textStyleToken2 = TextStyleToken.name('testName');
-      const textStyleToken3 = TextStyleToken.name('differentName');
+      const textStyleToken1 = TextStyleToken('testName', TextStyle());
+      const textStyleToken2 = TextStyleToken('testName', TextStyle());
+      const textStyleToken3 = TextStyleToken('differentName', TextStyle());
 
       expect(textStyleToken1.hashCode, textStyleToken2.hashCode);
       expect(textStyleToken1.hashCode, isNot(textStyleToken3.hashCode));
     });
 
     testWidgets('Test it resolves correctly', (tester) async {
-      const redtextStyleToken = TextStyleToken.name('red');
-      const greentextStyleToken = TextStyleToken.name('green');
-      const bluetextStyleToken = TextStyleToken.name('blue');
+      const redtextStyleToken = TextStyleToken('red', TextStyle());
+      const greentextStyleToken = TextStyleToken('green', TextStyle());
+      const bluetextStyleToken = TextStyleToken('blue', TextStyle());
       final theme = MixThemeData.tokenMap(
         textStyles: {
-          redtextStyleToken: (_) => const TextStyle(color: Colors.red),
-          greentextStyleToken: (_) => const TextStyle(color: Colors.green),
-          bluetextStyleToken: (_) => const TextStyle(color: Colors.blue),
+          redtextStyleToken: const TextStyle(color: Colors.red),
+          greentextStyleToken: const TextStyle(color: Colors.green),
+          bluetextStyleToken: const TextStyle(color: Colors.blue),
         },
       );
 

@@ -207,47 +207,47 @@ extension on BuildContext {
 }
 
 mixin MaterialColorTokensMixin {
-  Color get primary => _colors.primary();
-  Color get secondary => _colors.secondary();
-  Color get tertiary => _colors.tertiary();
-  Color get surface => _colors.surface();
-  Color get background => _colors.background();
-  Color get error => _colors.error();
-  Color get onPrimary => _colors.onPrimary();
-  Color get onSecondary => _colors.onSecondary();
-  Color get onTertiary => _colors.onTertiary();
-  Color get onSurface => _colors.onSurface();
-  Color get onBackground => _colors.onBackground();
-  Color get onError => _colors.onError();
+  ColorToken get primary => _colors.primary;
+  ColorToken get secondary => _colors.secondary;
+  ColorToken get tertiary => _colors.tertiary;
+  ColorToken get surface => _colors.surface;
+  ColorToken get background => _colors.background;
+  ColorToken get error => _colors.error;
+  ColorToken get onPrimary => _colors.onPrimary;
+  ColorToken get onSecondary => _colors.onSecondary;
+  ColorToken get onTertiary => _colors.onTertiary;
+  ColorToken get onSurface => _colors.onSurface;
+  ColorToken get onBackground => _colors.onBackground;
+  ColorToken get onError => _colors.onError;
 }
 
 mixin MaterialTextStyleTokensMixin {
-  TextStyle get displayLarge => _textStyles.displayLarge();
-  TextStyle get displayMedium => _textStyles.displayMedium();
-  TextStyle get displaySmall => _textStyles.displaySmall();
-  TextStyle get headlineLarge => _textStyles.headlineLarge();
-  TextStyle get headlineMedium => _textStyles.headlineMedium();
-  TextStyle get headlineSmall => _textStyles.headlineSmall();
-  TextStyle get titleLarge => _textStyles.titleLarge();
-  TextStyle get titleMedium => _textStyles.titleMedium();
-  TextStyle get titleSmall => _textStyles.titleSmall();
-  TextStyle get bodyLarge => _textStyles.bodyLarge();
-  TextStyle get bodyMedium => _textStyles.bodyMedium();
-  TextStyle get bodySmall => _textStyles.bodySmall();
-  TextStyle get labelLarge => _textStyles.labelLarge();
-  TextStyle get labelMedium => _textStyles.labelMedium();
-  TextStyle get labelSmall => _textStyles.labelSmall();
-  TextStyle get headline1 => _textStyles.headline1();
-  TextStyle get headline2 => _textStyles.headline2();
-  TextStyle get headline3 => _textStyles.headline3();
-  TextStyle get headline4 => _textStyles.headline4();
-  TextStyle get headline5 => _textStyles.headline5();
-  TextStyle get headline6 => _textStyles.headline6();
-  TextStyle get subtitle1 => _textStyles.subtitle1();
-  TextStyle get subtitle2 => _textStyles.subtitle2();
-  TextStyle get bodyText1 => _textStyles.bodyText1();
-  TextStyle get bodyText2 => _textStyles.bodyText2();
-  TextStyle get caption => _textStyles.caption();
-  TextStyle get button => _textStyles.button();
-  TextStyle get overline => _textStyles.overline();
+  TextStyleToken get displayLarge => _textStyles.displayLarge;
+  TextStyleToken get displayMedium => _textStyles.displayMedium;
+  TextStyleToken get displaySmall => _textStyles.displaySmall;
+  TextStyleToken get headlineLarge => _textStyles.headlineLarge;
+  TextStyleToken get headlineMedium => _textStyles.headlineMedium;
+  TextStyleToken get headlineSmall => _textStyles.headlineSmall;
+  TextStyleToken get titleLarge => _textStyles.titleLarge;
+  TextStyleToken get titleMedium => _textStyles.titleMedium;
+  TextStyleToken get titleSmall => _textStyles.titleSmall;
+  TextStyleToken get bodyLarge => _textStyles.bodyLarge;
+  TextStyleToken get bodyMedium => _textStyles.bodyMedium;
+  TextStyleToken get bodySmall => _textStyles.bodySmall;
+  TextStyleToken get labelLarge => _textStyles.labelLarge;
+  TextStyleToken get labelMedium => _textStyles.labelMedium;
+  TextStyleToken get labelSmall => _textStyles.labelSmall;
+  TextStyleToken get headline1 => _textStyles.headline1;
+  TextStyleToken get headline2 => _textStyles.headline2;
+  TextStyleToken get headline3 => _textStyles.headline3;
+  TextStyleToken get headline4 => _textStyles.headline4;
+  TextStyleToken get headline5 => _textStyles.headline5;
+  TextStyleToken get headline6 => _textStyles.headline6;
+  TextStyleToken get subtitle1 => _textStyles.subtitle1;
+  TextStyleToken get subtitle2 => _textStyles.subtitle2;
+  TextStyleToken get bodyText1 => _textStyles.bodyText1;
+  TextStyleToken get bodyText2 => _textStyles.bodyText2;
+  TextStyleToken get caption => _textStyles.caption;
+  TextStyleToken get button => _textStyles.button;
+  TextStyleToken get overline => _textStyles.overline;
 }

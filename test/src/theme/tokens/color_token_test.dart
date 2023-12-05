@@ -10,7 +10,8 @@ void main() {
     test('Constructor assigns name correctly', () {
       const colorToken = ColorToken('testName', Colors.black);
       expect(colorToken.name, 'testName');
-      expect(colorToken.value, Colors.black);
+      expect(colorToken().token, colorToken);
+      expect(colorToken().token.value, Colors.black);
     });
 
     // Equality Operator Test
@@ -42,8 +43,8 @@ void main() {
       const bluecolorToken = ColorToken('blue', Colors.blue);
       final theme = MixThemeData.tokenMap(
         colors: {
-          redcolorToken: (_) => Colors.redAccent,
-          bluecolorToken: (_) => Colors.blueAccent,
+          redcolorToken: Colors.redAccent,
+          bluecolorToken: Colors.blueAccent,
         },
       );
 

@@ -14,32 +14,42 @@ class RadiusToken extends MixToken<Radius> {
 
   const RadiusToken(super.name, super.value);
 
-  const RadiusToken.name(String name) : this(name, Radius.zero);
-
-  factory RadiusToken.resolvable(String name, TokenResolver<Radius> resolver) {
-    return RadiusToken(name, RadiusRef(name, resolver));
+  factory RadiusToken.resolvable(
+    String name,
+    BuildContextResolver<Radius> resolver,
+  ) {
+    return RadiusToken(name, RadiusResolver(resolver));
+  }
+  @override
+  RadiusRef call() {
+    return RadiusRef(this);
   }
 }
 
 @immutable
-class RadiusRef extends Radius with ValueRef<Radius> {
+class RadiusResolver extends Radius with WithTokenResolver<Radius> {
   @override
-  final String tokenName;
+  final BuildContextResolver<Radius> resolve;
 
+  const RadiusResolver(this.resolve) : super.circular(0);
+}
+
+@immutable
+class RadiusRef extends Radius with TokenRef<RadiusToken, Radius> {
   @override
-  final TokenResolver<Radius> resolve;
+  final RadiusToken token;
 
-  const RadiusRef(this.tokenName, this.resolve) : super.circular(0);
+  const RadiusRef(this.token) : super.circular(0);
 
   @override
   operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is RadiusRef && other.tokenName == tokenName;
+    return other is RadiusRef && other.token == token;
   }
 
   @override
-  int get hashCode => tokenName.hashCode;
+  int get hashCode => token.hashCode;
 }
 
 // // Helper class to wrap functions that can return

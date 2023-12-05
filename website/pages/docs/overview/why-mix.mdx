@@ -1,13 +1,56 @@
-import 'package:flutter/material.dart';
-import 'package:mix/mix.dart';
+---
+id: why-mix
+title: "Why Mix?"
+---
 
+## With and without Mix
+
+Mix provides a lot of different benefits on how you can define and organize your design tokens, and no documentation would be complete without a syntax comparison between **Mix vs. Without Mix**.
+
+Let's go ahead and take a look at the code. Don't worry about understanding each line, the docs will go into more detail about each item.
+
+### With Mix
+
+```dart
+class CustomMixWidget extends StatelessWidget {
+  const CustomMixWidget({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final style = StyleMix(
+      height(100),
+      animated(),
+      marginY(10),
+      elevation(10),
+      borderRadius(10),
+      backgroundColor(MaterialTokens.colorScheme.primary),
+      textStyle($button),
+      textStyle(color: $onPrimary),
+      onHover(
+        elevation(2),
+        padding(20),
+        backgroundColor($secondary),
+        textStyle(color: $onSecondary),
+      ),
+    );
+    return Box(
+      style: style,
+      child: const TextMix('Custom Widget'),
+    );
+  }
+}
+```
+
+### Without Mix
+
+```dart
 class CustomWidget extends StatefulWidget {
   const CustomWidget({
     Key? key,
   }) : super(key: key);
 
   @override
-  State<CustomWidget> createState() => _CustomWidgetState();
+  _CustomWidgetState createState() => _CustomWidgetState();
 }
 
 class _CustomWidgetState extends State<CustomWidget> {
@@ -43,7 +86,7 @@ class _CustomWidgetState extends State<CustomWidget> {
           ),
           child: Text(
             'Custom Widget',
-            style: Theme.of(context).textTheme.labelLarge?.copyWith(
+            style: Theme.of(context).textTheme.button?.copyWith(
                   color: _isHover
                       ? colorScheme.onSecondary
                       : colorScheme.onPrimary,
@@ -54,31 +97,4 @@ class _CustomWidgetState extends State<CustomWidget> {
     );
   }
 }
-
-class CustomMixWidget extends StatelessWidget {
-  const CustomMixWidget({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final style = StyleMix(
-      height(100),
-      margin.vertical(10),
-      elevation(10),
-      borderRadius(10),
-      backgroundColor($colors.primary()),
-      text.style.of($textStyles.bodyMedium),
-      text.style(color: $colors.onPrimary()),
-      onHover(
-        elevation(2),
-        padding(20),
-        backgroundColor.of($colors.secondary),
-        text.style.color.of($colors.onSecondary),
-      ),
-    );
-
-    return StyledContainer(
-      style: style,
-      child: const StyledText('Custom Widget'),
-    );
-  }
-}
+```

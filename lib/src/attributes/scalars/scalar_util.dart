@@ -23,6 +23,7 @@ abstract class DtoUtility<Attr extends StyleAttribute, D extends Dto<Value>,
 
   const DtoUtility(super.builder, {required this.valueToDto});
 
+  /// Returns a new [StyleAttribute] with the given [value].
   Attr as(Value value) => _builder(valueToDto(value));
 }
 

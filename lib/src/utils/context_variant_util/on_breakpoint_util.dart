@@ -56,9 +56,9 @@ ContextVariant onBreakpointToken(BreakpointToken token) {
 
       final size = MediaQuery.sizeOf(context);
 
-      final selectedbreakpoint = breakpoints(token, context);
+      final selectedbreakpoint = breakpoints.getTokenValue(token);
 
-      return selectedbreakpoint.matches(size);
+      return selectedbreakpoint?.matches(size) ?? false;
     },
   );
 }

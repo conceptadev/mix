@@ -73,10 +73,10 @@ class BasicExample extends HookWidget {
             style: onSurfaceMix.merge(
               StyleMix(
                 onLight(
-                  text.style(color: $colors.error),
+                  text.style.color.of($colors.error),
                 ),
                 onDark(
-                  text.style(color: $colors.primary),
+                  text.style.color.of($colors.primary),
                 ),
               ),
             ),
@@ -111,7 +111,7 @@ class BasicExample extends HookWidget {
                 style: onSurfaceMix.merge(
                   StyleMix(
                     icon(size: 70),
-                    icon(color: $colors.secondary),
+                    icon.color.of($colors.secondary),
                   ),
                 ),
               ),

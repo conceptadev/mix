@@ -10,7 +10,7 @@ class StyledIcon extends StyledWidget {
     this.semanticLabel,
     super.style,
     super.key,
-    super.inherit,
+    super.inherit = true,
     this.textDirection,
   });
 

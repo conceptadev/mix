@@ -99,38 +99,6 @@ class MixThemeData with Comparable {
     );
   }
 
-  Color colorToken(BuildContext context, ColorToken token) {
-    return colors(token, context);
-  }
-
-  Color colorRef(BuildContext context, ColorRef ref) => ref.resolve(context);
-
-  Radius radiiToken(BuildContext context, RadiusToken token) {
-    return radii(token, context);
-  }
-
-  Radius radiiRef(BuildContext context, RadiusRef ref) => ref.resolve(context);
-
-  TextStyle textStyleToken(BuildContext context, TextStyleToken token) {
-    return textStyles(token, context);
-  }
-
-  TextStyle textStyleRef(BuildContext context, TextStyleRef ref) =>
-      ref.resolve(context);
-
-  double spaceTokenRef(BuildContext context, SpaceRef value) {
-    if (value >= 0) return value;
-    final token = space.findByValue(value);
-
-    return token == null ? 0.0 : spaceToken(context, token);
-  }
-
-  double spaceToken(BuildContext context, SpaceToken token) {
-    final value = space(token, context);
-
-    return value >= 0 ? value : token.value;
-  }
-
   @override
   get props => [space, breakpoints, colors, textStyles, radii];
 }
@@ -141,32 +109,46 @@ class MixTokenResolver {
 
   const MixTokenResolver(this._context, this._theme);
 
+  StyledTokens<ColorToken, Color> get _colors => _theme.colors;
+  StyledTokens<SpaceToken, double> get _space => _theme.space;
+  StyledTokens<TextStyleToken, TextStyle> get _textStyles => _theme.textStyles;
+  StyledTokens<RadiusToken, Radius> get _radii => _theme.radii;
+  StyledTokens<BreakpointToken, BreakpointConstraint> get _breakpoints =>
+      _theme.breakpoints;
+
   Color colorToken(ColorToken token) {
-    return _theme.colors(token, _context);
+    final value = _colors.getTokenValue(token);
+
+    return value is ColorResolver ? value.resolve(_context) : value;
   }
 
-  Color colorRef(ColorRef ref) => ref.resolve(_context);
+  Color colorRef(ColorRef ref) => colorToken(ref.token);
 
   Radius radiiToken(RadiusToken token) {
-    return _theme.radii(token, _context);
+    final value = _radii.getTokenValue(token);
+
+    return value is RadiusResolver ? value.resolve(_context) : value;
   }
 
-  Radius radiiRef(RadiusRef ref) => ref.resolve(_context);
+  Radius radiiRef(RadiusRef ref) => radiiToken(ref.token);
 
   TextStyle textStyleToken(TextStyleToken token) {
-    return _theme.textStyles(token, _context);
+    final value = _textStyles.getTokenValue(token);
+
+    return value is TextStyleResolver ? value.resolve(_context) : value;
   }
 
-  TextStyle textStyleRef(TextStyleRef ref) => ref.resolve(_context);
+  TextStyle textStyleRef(TextStyleRef ref) => textStyleToken(ref.token);
+
+  double spaceToken(SpaceToken token) => _space.getTokenValue(token);
 
   double spaceTokenRef(SpaceRef value) {
     if (value >= 0) return value;
-    final token = _theme.space.findByValue(value);
 
-    return token == null ? 0.0 : spaceToken(_context, token);
+    return _space.findByValue(value)?.value ?? 0.0;
   }
 
-  double spaceToken(BuildContext context, SpaceToken token) {
-    return _theme.space(token, context);
+  BreakpointConstraint breakpointToken(BreakpointToken token) {
+    return _breakpoints.getTokenValue(token);
   }
 }

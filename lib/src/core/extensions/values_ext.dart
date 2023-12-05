@@ -157,7 +157,7 @@ extension ListBoxShadowExt on List<BoxShadow> {
 }
 
 extension TextStyleExt on TextStyle {
-  TextStyleDto toDto() => TextStyleDto.from(this);
+  TextStyleDto toDto() => TextStyleDto.as(this);
 
   TextStyleAttribute toAttribute() => TextStyleAttribute(toDto());
 }

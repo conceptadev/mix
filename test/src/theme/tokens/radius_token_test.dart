@@ -7,14 +7,15 @@ import '../../../helpers/testing_utils.dart';
 void main() {
   group('RadiusToken', () {
     test('Constructor assigns name correctly', () {
-      const radiusRef = RadiusToken.name('testName');
+      const radiusRef = RadiusToken('testName', Radius.zero);
       expect(radiusRef.name, 'testName');
+      expect(radiusRef.value, Radius.zero);
     });
 
     test('Equality operator works correctly', () {
-      const radiusRef1 = RadiusToken.name('testName');
-      const radiusRef2 = RadiusToken.name('testName');
-      const radiusRef3 = RadiusToken.name('differentName');
+      const radiusRef1 = RadiusToken('testName', Radius.zero);
+      const radiusRef2 = RadiusToken('testName', Radius.zero);
+      const radiusRef3 = RadiusToken('differentName', Radius.zero);
 
       expect(radiusRef1 == radiusRef2, isTrue);
       expect(radiusRef1 == radiusRef3, isFalse);
@@ -22,23 +23,23 @@ void main() {
     });
 
     test('hashCode is consistent with name', () {
-      const radiusRef1 = RadiusToken.name('testName');
-      const radiusRef2 = RadiusToken.name('testName');
-      const radiusRef3 = RadiusToken.name('differentName');
+      const radiusRef1 = RadiusToken('testName', Radius.zero);
+      const radiusRef2 = RadiusToken('testName', Radius.zero);
+      const radiusRef3 = RadiusToken('differentName', Radius.zero);
 
       expect(radiusRef1.hashCode, radiusRef2.hashCode);
       expect(radiusRef1.hashCode, isNot(radiusRef3.hashCode));
     });
 
     testWidgets('Test it resolves correctly', (tester) async {
-      const redRadiusRef = RadiusToken.name('red');
-      const greenRadiusRef = RadiusToken.name('green');
-      const blueRadiusRef = RadiusToken.name('blue');
+      const redRadiusRef = RadiusToken('red', Radius.zero);
+      const greenRadiusRef = RadiusToken('green', Radius.zero);
+      const blueRadiusRef = RadiusToken('blue', Radius.zero);
       final theme = MixThemeData.tokenMap(
         radii: {
-          redRadiusRef: (_) => const Radius.circular(1),
-          greenRadiusRef: (_) => const Radius.circular(2),
-          blueRadiusRef: (_) => const Radius.circular(3),
+          redRadiusRef: const Radius.circular(1),
+          greenRadiusRef: const Radius.circular(2),
+          blueRadiusRef: const Radius.circular(3),
         },
       );
 
