@@ -21,7 +21,7 @@ MixData MockMixData(
 
 final EmptyMixData = MixData.create(
   MockBuildContext(),
-  StyleMix.empty,
+  const StyleMix.empty(),
 );
 
 MediaQuery createMediaQuery(Size size) {
@@ -96,7 +96,7 @@ Widget createWithMixTheme(
 extension WidgetTesterExt on WidgetTester {
   Future<void> pumpWithMix(
     Widget widget, {
-    StyleMix style = StyleMix.empty,
+    StyleMix style = const StyleMix.empty(),
     MixThemeData theme = const MixThemeData.empty(),
   }) async {
     await pumpWithMixTheme(
@@ -129,14 +129,21 @@ extension WidgetTesterExt on WidgetTester {
 
   Future<void> pumpWithPressable(
     Widget widget, {
-    PressableState state = PressableState.pressed,
+    GestureData data = const GestureData.none(),
+    GestureState state = GestureState.none,
+    GestureStatus status = GestureStatus.enabled,
     bool focus = false,
+    bool hover = false,
   }) async {
     await pumpWidget(
       MaterialApp(
-        home: PressableNotifier(
-          state: state,
-          focus: focus,
+        home: GestureStateNotifier(
+          data: data.copyWith(
+            state: state,
+            status: status,
+            hover: hover,
+            focus: focus,
+          ),
           child: widget,
         ),
       ),

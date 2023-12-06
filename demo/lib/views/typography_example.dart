@@ -46,7 +46,7 @@ class TypographyExample extends StatelessWidget {
                   height: 1.5,
                   shadows: [
                     Shadow(
-                      color: $colors.secondary,
+                      color: $colors.secondary(),
                       offset: const Offset(2, 2),
                       blurRadius: 2,
                     ),

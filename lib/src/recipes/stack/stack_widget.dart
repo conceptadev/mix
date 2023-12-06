@@ -1,8 +1,8 @@
 import 'package:flutter/widgets.dart';
 
-import '../../helpers/build_context_ext.dart';
 import '../../widgets/styled_widget.dart';
 import '../container/container_attribute.dart';
+import '../container/container_spec.dart';
 import '../container/container_widget.dart';
 import 'stack_attribute.dart';
 import 'stack_spec.dart';
@@ -18,24 +18,16 @@ class StyledStack extends StyledWidget {
   final List<Widget> children;
   @override
   Widget build(BuildContext context) {
-    final contextMix = context.mix;
-    final inheritedAttribute = inherit && contextMix != null
-        ? StackMixAttribute.of(contextMix)
-        : const StackMixAttribute();
-
     return withMix(context, (mix) {
-      final attribute = StackMixAttribute.of(mix);
-      final merged = inheritedAttribute.merge(attribute);
+      final spec = StackSpecAttribute.of(mix).resolve(mix);
 
-      final mixture = merged.resolve(mix);
-
-      return MixedStack(mixture, children: children);
+      return StackSpecWidget(spec, children: children);
     });
   }
 }
 
-class MixedStack extends StatelessWidget {
-  const MixedStack(this.mixture, {super.key, this.children});
+class StackSpecWidget extends StatelessWidget {
+  const StackSpecWidget(this.mixture, {super.key, this.children});
 
   final List<Widget>? children;
   final StackSpec mixture;
@@ -65,12 +57,15 @@ class ZBox extends StyledWidget {
   @override
   Widget build(BuildContext context) {
     return withMix(context, (mix) {
-      final containerMix = ContainerSpecAttribute.of(mix).resolve(mix);
-      final stackMix = StackMixAttribute.of(mix).resolve(mix);
+      final containerSpec =
+          mix.attributeOf<ContainerSpecAttribute>()?.resolve(mix) ??
+              const ContainerSpec.empty();
+      final stackSpec = mix.attributeOf<StackSpecAttribute>()?.resolve(mix) ??
+          const StackSpec.empty();
 
-      return MixedContainer(
-        containerMix,
-        child: MixedStack(stackMix, children: children),
+      return ContainerSpecWidget(
+        containerSpec,
+        child: StackSpecWidget(stackSpec, children: children),
       );
     });
   }

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../../core/attribute.dart';
 import '../scalars/scalar_util.dart';
-import 'constraints_attribute.dart';
 import 'constraints_dto.dart';
 
 /// Utility class for building box constraints-related style attributes.
@@ -29,19 +28,6 @@ class BoxConstraintsUtility<T extends StyleAttribute>
   const BoxConstraintsUtility(super.builder)
       : super(valueToDto: BoxConstraintsDto.from);
 
-  /// Sets the minimum width of the box constraints.
-  ///
-  /// The `width` parameter sets the smallest width that the box can be.
-  ///
-  /// Example:
-  /// ```dart
-  /// final boxConstraints = BoxConstraintsUtility<StyleAttribute>(builder);
-  /// final attribute = boxConstraints.minWidth(100);
-  /// ```
-  ///
-  /// Attribute now holds a [T] with a [BoxConstraintsAttribute] that has a minWidth value of `100`.
-  T minWidth(double width) => call(minWidth: width);
-
   /// Sets the maximum width of the box constraints.
   ///
   /// The `width` parameter sets the largest width that the box can be.
@@ -54,7 +40,24 @@ class BoxConstraintsUtility<T extends StyleAttribute>
   /// ```
   ///
   /// Attribute now holds a [T] with a [BoxConstraintsAttribute] that has a maxWidth value of `100`.
-  T maxWidth(double width) => call(maxWidth: width);
+  DoubleUtility<T> get maxWidth {
+    return DoubleUtility<T>((value) => call(maxWidth: value));
+  }
+
+  /// Sets the minimum width of the box constraints.
+  ///
+  /// The `width` parameter sets the smallest width that the box can be.
+  ///
+  /// Example:
+  /// ```dart
+  /// final boxConstraints = BoxConstraintsUtility<StyleAttribute>(builder);
+  /// final attribute = boxConstraints.minWidth(100);
+  /// ```
+  ///
+  /// Attribute now holds a [T] with a [BoxConstraintsAttribute] that has a minWidth value of `100`.
+  DoubleUtility<T> get minWidth {
+    return DoubleUtility<T>((value) => call(minWidth: value));
+  }
 
   /// Sets the minimum height of the box constraints.
   ///
@@ -68,7 +71,9 @@ class BoxConstraintsUtility<T extends StyleAttribute>
   /// ```
   ///
   /// Attribute now holds a [T] with a [BoxConstraintsAttribute] that has a minHeight value of `100`.
-  T minHeight(double height) => call(minHeight: height);
+  DoubleUtility<T> get minHeight {
+    return DoubleUtility<T>((value) => call(minHeight: value));
+  }
 
   /// Sets the maximum height of the box constraints.
   ///
@@ -82,7 +87,9 @@ class BoxConstraintsUtility<T extends StyleAttribute>
   /// ```
   ///
   /// Attribute now holds a [T] with a [BoxConstraintsAttribute] that has a maxHeight value of `100`.
-  T maxHeight(double height) => call(maxHeight: height);
+  DoubleUtility<T> get maxHeight {
+    return DoubleUtility<T>((value) => call(maxHeight: value));
+  }
 
   T call({
     double? minWidth,

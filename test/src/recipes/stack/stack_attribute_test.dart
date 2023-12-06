@@ -10,7 +10,7 @@ void main() {
         'of returns default attribute when mix does not have StackMixAttribute',
         () {
       final mix = MixData.create(MockBuildContext(), StyleMix());
-      final attribute = StackMixAttribute.of(mix);
+      final attribute = StackSpecAttribute.of(mix);
 
       final resolved = attribute.resolve(mix);
 
@@ -21,7 +21,7 @@ void main() {
     });
 
     test('resolve returns correct StackSpec', () {
-      const attribute = StackMixAttribute(
+      const attribute = StackSpecAttribute(
         alignment: Alignment.center,
         fit: StackFit.expand,
         textDirection: TextDirection.ltr,
@@ -37,13 +37,13 @@ void main() {
     });
 
     test('merge returns correct StackMixAttribute', () {
-      const attribute1 = StackMixAttribute(
+      const attribute1 = StackSpecAttribute(
         alignment: Alignment.center,
         fit: StackFit.expand,
         textDirection: TextDirection.ltr,
         clipBehavior: Clip.antiAlias,
       );
-      const attribute2 = StackMixAttribute(
+      const attribute2 = StackSpecAttribute(
         alignment: Alignment.topLeft,
         fit: StackFit.loose,
         textDirection: TextDirection.rtl,
@@ -60,7 +60,7 @@ void main() {
     });
 
     test('props returns correct list of properties', () {
-      const attribute = StackMixAttribute(
+      const attribute = StackSpecAttribute(
         alignment: Alignment.center,
         fit: StackFit.expand,
         textDirection: TextDirection.ltr,

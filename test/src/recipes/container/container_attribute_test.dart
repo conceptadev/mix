@@ -10,24 +10,24 @@ void main() {
       final containerSpecAttribute = ContainerSpecAttribute(
         alignment: Alignment.center,
         clipBehavior: Clip.antiAlias,
-        color: Colors.blue.toDto(),
         constraints: const BoxConstraintsDto(maxHeight: 100),
         decoration: const BoxDecorationDto(color: ColorDto(Colors.blue)),
         height: 100,
-        margin: const SpacingDto(
+        margin: const SpacingDto.only(
           bottom: 10,
           left: 10,
           right: 10,
           top: 10,
         ),
-        padding: const SpacingDto(bottom: 20, left: 20, right: 20, top: 20),
+        padding:
+            const SpacingDto.only(bottom: 20, left: 20, right: 20, top: 20),
         transform: Matrix4.identity(),
         width: 100,
       );
 
       expect(containerSpecAttribute.alignment, Alignment.center);
       expect(containerSpecAttribute.clipBehavior, Clip.antiAlias);
-      expect(containerSpecAttribute.color?.value, Colors.blue);
+
       expect(containerSpecAttribute.constraints,
           const BoxConstraintsDto(maxHeight: 100));
       expect(containerSpecAttribute.decoration,
@@ -36,7 +36,7 @@ void main() {
       expect(containerSpecAttribute.height, 100);
       expect(
           containerSpecAttribute.margin,
-          const SpacingDto(
+          const SpacingDto.only(
             bottom: 10,
             left: 10,
             right: 10,
@@ -44,7 +44,7 @@ void main() {
           ));
       expect(
         containerSpecAttribute.padding,
-        const SpacingDto(bottom: 20, left: 20, right: 20, top: 20),
+        const SpacingDto.only(bottom: 20, left: 20, right: 20, top: 20),
       );
       expect(containerSpecAttribute.transform, Matrix4.identity());
       expect(containerSpecAttribute.width, 100);
@@ -55,17 +55,17 @@ void main() {
       final containerSpecAttribute = ContainerSpecAttribute(
         alignment: Alignment.center,
         clipBehavior: Clip.antiAlias,
-        color: Colors.blue.toDto(),
         constraints: const BoxConstraintsDto(maxHeight: 100),
         decoration: const BoxDecorationDto(color: ColorDto(Colors.blue)),
         height: 100,
-        margin: const SpacingDto(
+        margin: const SpacingDto.only(
           bottom: 10,
           left: 10,
           right: 10,
           top: 10,
         ),
-        padding: const SpacingDto(bottom: 20, left: 20, right: 20, top: 20),
+        padding:
+            const SpacingDto.only(bottom: 20, left: 20, right: 20, top: 20),
         transform: Matrix4.identity(),
         width: 100,
       );
@@ -74,7 +74,7 @@ void main() {
 
       expect(containerSpec.alignment, Alignment.center);
       expect(containerSpec.clipBehavior, Clip.antiAlias);
-      expect(containerSpec.color, Colors.blue);
+
       expect(containerSpec.constraints,
           const BoxConstraints(maxHeight: 100, maxWidth: double.infinity));
       expect(containerSpec.decoration, const BoxDecoration(color: Colors.blue));
@@ -101,17 +101,17 @@ void main() {
       final containerSpecAttribute = ContainerSpecAttribute(
         alignment: Alignment.center,
         clipBehavior: Clip.antiAlias,
-        color: Colors.blue.toDto(),
         constraints: const BoxConstraintsDto(maxHeight: 100),
         decoration: const BoxDecorationDto(color: ColorDto(Colors.blue)),
         height: 100,
-        margin: const SpacingDto(
+        margin: const SpacingDto.only(
           bottom: 10,
           left: 10,
           right: 10,
           top: 10,
         ),
-        padding: const SpacingDto(bottom: 20, left: 20, right: 20, top: 20),
+        padding:
+            const SpacingDto.only(bottom: 20, left: 20, right: 20, top: 20),
         transform: Matrix4.identity(),
         width: 100,
       );
@@ -120,17 +120,17 @@ void main() {
         ContainerSpecAttribute(
           alignment: Alignment.centerLeft,
           clipBehavior: Clip.antiAliasWithSaveLayer,
-          color: Colors.red.toDto(),
           constraints: const BoxConstraintsDto(maxHeight: 200),
           decoration: const BoxDecorationDto(color: ColorDto(Colors.red)),
           height: 200,
-          margin: const SpacingDto(
+          margin: const SpacingDto.only(
             bottom: 20,
             left: 20,
             right: 20,
             top: 20,
           ),
-          padding: const SpacingDto(bottom: 30, left: 30, right: 30, top: 30),
+          padding:
+              const SpacingDto.only(bottom: 30, left: 30, right: 30, top: 30),
           transform: Matrix4.identity(),
           width: 200,
         ),
@@ -139,7 +139,7 @@ void main() {
       expect(mergedContainerSpecAttribute.alignment, Alignment.centerLeft);
       expect(mergedContainerSpecAttribute.clipBehavior,
           Clip.antiAliasWithSaveLayer);
-      expect(mergedContainerSpecAttribute.color?.value, Colors.red);
+
       expect(mergedContainerSpecAttribute.constraints,
           const BoxConstraintsDto(maxHeight: 200));
       expect(mergedContainerSpecAttribute.decoration,
@@ -148,7 +148,7 @@ void main() {
       expect(mergedContainerSpecAttribute.height, 200);
       expect(
           mergedContainerSpecAttribute.margin,
-          const SpacingDto(
+          const SpacingDto.only(
             bottom: 20,
             left: 20,
             right: 20,
@@ -156,7 +156,7 @@ void main() {
           ));
       expect(
         mergedContainerSpecAttribute.padding,
-        const SpacingDto(bottom: 30, left: 30, right: 30, top: 30),
+        const SpacingDto.only(bottom: 30, left: 30, right: 30, top: 30),
       );
       expect(mergedContainerSpecAttribute.transform, Matrix4.identity());
       expect(mergedContainerSpecAttribute.width, 200);
@@ -167,17 +167,17 @@ void main() {
       final containerSpecAttribute = ContainerSpecAttribute(
         alignment: Alignment.center,
         clipBehavior: Clip.antiAlias,
-        color: Colors.blue.toDto(),
         constraints: const BoxConstraintsDto(maxHeight: 100),
         decoration: const BoxDecorationDto(color: ColorDto(Colors.blue)),
         height: 100,
-        margin: const SpacingDto(
+        margin: const SpacingDto.only(
           bottom: 10,
           left: 10,
           right: 10,
           top: 10,
         ),
-        padding: const SpacingDto(bottom: 20, left: 20, right: 20, top: 20),
+        padding:
+            const SpacingDto.only(bottom: 20, left: 20, right: 20, top: 20),
         transform: Matrix4.identity(),
         width: 100,
       );
@@ -188,17 +188,17 @@ void main() {
           ContainerSpecAttribute(
             alignment: Alignment.center,
             clipBehavior: Clip.antiAlias,
-            color: Colors.blue.toDto(),
             constraints: const BoxConstraintsDto(maxHeight: 100),
             decoration: const BoxDecorationDto(color: ColorDto(Colors.blue)),
             height: 100,
-            margin: const SpacingDto(
+            margin: const SpacingDto.only(
               bottom: 10,
               left: 10,
               right: 10,
               top: 10,
             ),
-            padding: const SpacingDto(bottom: 20, left: 20, right: 20, top: 20),
+            padding:
+                const SpacingDto.only(bottom: 20, left: 20, right: 20, top: 20),
             transform: Matrix4.identity(),
             width: 100,
           ),
@@ -211,17 +211,17 @@ void main() {
       final containerSpecAttribute = ContainerSpecAttribute(
         alignment: Alignment.center,
         clipBehavior: Clip.antiAlias,
-        color: Colors.blue.toDto(),
         constraints: const BoxConstraintsDto(maxHeight: 100),
         decoration: const BoxDecorationDto(color: ColorDto(Colors.blue)),
         height: 100,
-        margin: const SpacingDto(
+        margin: const SpacingDto.only(
           bottom: 10,
           left: 10,
           right: 10,
           top: 10,
         ),
-        padding: const SpacingDto(bottom: 20, left: 20, right: 20, top: 20),
+        padding:
+            const SpacingDto.only(bottom: 20, left: 20, right: 20, top: 20),
         transform: Matrix4.identity(),
         width: 100,
       );
@@ -233,18 +233,17 @@ void main() {
             ContainerSpecAttribute(
               alignment: Alignment.centerLeft,
               clipBehavior: Clip.antiAliasWithSaveLayer,
-              color: Colors.red.toDto(),
               constraints: const BoxConstraintsDto(maxHeight: 200),
               decoration: const BoxDecorationDto(color: ColorDto(Colors.red)),
               height: 200,
-              margin: const SpacingDto(
+              margin: const SpacingDto.only(
                 bottom: 20,
                 left: 20,
                 right: 20,
                 top: 20,
               ),
-              padding:
-                  const SpacingDto(bottom: 30, left: 30, right: 30, top: 30),
+              padding: const SpacingDto.only(
+                  bottom: 30, left: 30, right: 30, top: 30),
               transform: Matrix4.identity(),
               width: 200,
             ),

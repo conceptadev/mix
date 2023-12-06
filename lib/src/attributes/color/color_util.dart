@@ -128,6 +128,8 @@ class MaterialColorUtility<T extends StyleAttribute>
   T shade700() => _buildColor(color[700]!);
   T shade800() => _buildColor(color[800]!);
   T shade900() => _buildColor(color[900]!);
+
+  T call() => _buildColor(color[500]!);
 }
 
 @immutable
@@ -139,4 +141,6 @@ class MaterialAccentColorUtility<T extends StyleAttribute>
   T shade200() => _buildColor(color[200]!);
   T shade400() => _buildColor(color[400]!);
   T shade700() => _buildColor(color[700]!);
+
+  T call() => _buildColor(color[400]!);
 }

@@ -1,20 +1,27 @@
 import 'package:flutter/material.dart';
 
+import '../mix_theme.dart';
 import 'mix_token.dart';
 
 @immutable
 class ColorToken extends MixToken<Color> {
-  const ColorToken(super.name, super.value);
-
-  factory ColorToken.resolvable(
-    String name,
-    BuildContextResolver<Color> resolver,
-  ) {
-    return ColorToken(name, ColorResolver(resolver));
-  }
+  const ColorToken(super.name);
 
   @override
   ColorRef call() => ColorRef(this);
+
+  @override
+  Color resolve(BuildContext context) {
+    final themeValue = MixTheme.of(context).colors[this];
+    assert(
+      themeValue != null,
+      'ColorToken $name is not defined in the theme',
+    );
+
+    return themeValue is ColorResolver
+        ? themeValue.resolve(context)
+        : themeValue ?? Colors.transparent;
+  }
 }
 
 class ColorResolver extends Color with WithTokenResolver<Color> {

@@ -65,7 +65,7 @@ class TextStyleUtility<T extends StyleAttribute>
     double? height,
   }) {
     final textStyle = TextStyleDto(
-      TextStyleDataDto(
+      TextStyleData(
         background: background,
         backgroundColor: backgroundColor,
         color: color,

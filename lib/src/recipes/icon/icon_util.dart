@@ -9,19 +9,19 @@ import 'icon_attribute.dart';
 const icon = IconUtility.selfBuilder;
 
 class IconUtility<T extends StyleAttribute>
-    extends MixUtility<T, IconMixAttribute> {
+    extends MixUtility<T, IconSpecAttribute> {
   static const selfBuilder = IconUtility(MixUtility.selfBuilder);
   const IconUtility(super.builder);
 
   ColorUtility<T> get color {
-    return ColorUtility((color) => builder(IconMixAttribute(color: color)));
+    return ColorUtility((color) => builder(IconSpecAttribute(color: color)));
   }
 
   T size(double size) {
-    return builder(IconMixAttribute(size: size));
+    return builder(IconSpecAttribute(size: size));
   }
 
-  IconMixAttribute call({double? size, Color? color}) {
-    return IconMixAttribute(size: size, color: color?.toDto());
+  IconSpecAttribute call({double? size, Color? color}) {
+    return IconSpecAttribute(size: size, color: color?.toDto());
   }
 }

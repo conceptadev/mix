@@ -3,19 +3,29 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+import '../mix_theme.dart';
 import 'mix_token.dart';
 
 class TextStyleToken extends MixToken<TextStyle> {
-  const TextStyleToken(super.name, super.value);
+  const TextStyleToken(super.name);
 
-  factory TextStyleToken.resolvable(
-    String name,
-    BuildContextResolver<TextStyle> resolver,
-  ) {
-    return TextStyleToken(name, TextStyleResolver(resolver));
-  }
   @override
   TextStyleRef call() => TextStyleRef(this);
+
+  @override
+  TextStyle resolve(BuildContext context) {
+    final themeValue = MixTheme.of(context).textStyles[this];
+    assert(
+      themeValue != null,
+      'TextStyleToken $name is not defined in the theme',
+    );
+
+    final resolvedValue = themeValue is TextStyleResolver
+        ? themeValue.resolve(context)
+        : themeValue;
+
+    return resolvedValue ?? const TextStyle();
+  }
 }
 
 @immutable
@@ -39,6 +49,39 @@ class TextStyleRef extends TextStyle with TokenRef<TextStyleToken, TextStyle> {
 
     return other is TextStyleRef && other.token == token;
   }
+
+  @override
+  TextStyle copyWith({
+    bool? inherit,
+    Color? color,
+    Color? backgroundColor,
+    double? fontSize,
+    FontWeight? fontWeight,
+    FontStyle? fontStyle,
+    double? letterSpacing,
+    double? wordSpacing,
+    TextBaseline? textBaseline,
+    double? height,
+    TextLeadingDistribution? leadingDistribution,
+    Locale? locale,
+    Paint? foreground,
+    Paint? background,
+    List<Shadow>? shadows,
+    List<FontFeature>? fontFeatures,
+    List<FontVariation>? fontVariations,
+    TextDecoration? decoration,
+    Color? decorationColor,
+    TextDecorationStyle? decorationStyle,
+    double? decorationThickness,
+    String? debugLabel,
+    String? fontFamily,
+    List<String>? fontFamilyFallback,
+    String? package,
+    TextOverflow? overflow,
+  }) =>
+      throw _e(token.name, 'copyWith');
+  @override
+  String get fontFamily => throw _e(token.name, 'fontFamily');
 
   @override
   bool get inherit => throw _e(token.name, 'inherit');

@@ -14,7 +14,6 @@ void main() {
         final container = containerUtility(
           alignment: Alignment.center,
           clipBehavior: Clip.antiAlias,
-          color: Colors.blue,
           constraints: const BoxConstraints(
               maxHeight: 100, maxWidth: 200, minWidth: 50, minHeight: 40),
           decoration: RandomGenerator.boxDecoration(),
@@ -27,7 +26,7 @@ void main() {
 
         expect(container.value.alignment, Alignment.center);
         expect(container.value.clipBehavior, Clip.antiAlias);
-        expect(container.value.color, const ColorDto(Colors.blue));
+
         expect(
             container.value.constraints,
             const BoxConstraintsDto(
@@ -36,9 +35,9 @@ void main() {
 
         expect(container.value.height, 10);
         expect(container.value.margin,
-            const SpacingDto(bottom: 10, left: 10, right: 10, top: 10));
+            const SpacingDto.only(bottom: 10, left: 10, right: 10, top: 10));
         expect(container.value.padding,
-            const SpacingDto(bottom: 10, left: 10, right: 10, top: 10));
+            const SpacingDto.only(bottom: 10, left: 10, right: 10, top: 10));
         expect(container.value.transform, Matrix4.identity());
         expect(container.value.width, 10);
       });
@@ -61,7 +60,8 @@ void main() {
       test('color() returns correct instance', () {
         final container = containerUtility.color(Colors.blue);
 
-        expect(container.value.color, const ColorDto(Colors.blue));
+        expect((container.value.decoration as BoxDecoration).color,
+            const ColorDto(Colors.blue));
       });
 
       // constraints()
@@ -71,7 +71,7 @@ void main() {
 
       // decoration()
       test('decoration() returns correct instance', () {
-        expect(containerUtility.decoration, isA<BoxDecorationUtility>());
+        expect(containerUtility.decoration, isA<DecorationUtility>());
       });
 
       // height()

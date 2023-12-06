@@ -7,7 +7,7 @@ import '../../../helpers/testing_utils.dart';
 void main() {
   group('FlexMixAttribute', () {
     test('of returns correct FlexMixAttribute', () {
-      final attribute = FlexMixAttribute.of(EmptyMixData);
+      final attribute = FlexSpecAttribute.of(EmptyMixData);
 
       expect(attribute.direction, null);
       expect(attribute.mainAxisAlignment, null);
@@ -21,7 +21,7 @@ void main() {
     });
 
     test('resolve returns correct FlexSpec', () {
-      const attribute = FlexMixAttribute(
+      const attribute = FlexSpecAttribute(
         direction: Axis.horizontal,
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -47,7 +47,7 @@ void main() {
     });
 
     test('merge returns correct FlexMixAttribute', () {
-      const attribute1 = FlexMixAttribute(
+      const attribute1 = FlexSpecAttribute(
         direction: Axis.horizontal,
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -58,7 +58,7 @@ void main() {
         clipBehavior: Clip.antiAlias,
         gap: 10.0,
       );
-      const attribute2 = FlexMixAttribute(
+      const attribute2 = FlexSpecAttribute(
         direction: Axis.vertical,
         mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.end,
@@ -83,7 +83,7 @@ void main() {
     });
 
     test('props returns correct list of properties', () {
-      const attribute = FlexMixAttribute(
+      const attribute = FlexSpecAttribute(
         direction: Axis.horizontal,
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,

@@ -8,11 +8,11 @@ class VariantsAndOperator extends StatelessWidget {
   Widget build(BuildContext context) {
     final mix = StyleMix(
       padding(20.0),
-      textStyle(color: Colors.white),
+      text.style(color: Colors.white),
       (onHover & onEnabled)(
         // When it's hovering AND pressing
-        textStyle(color: Colors.black),
-        bold(),
+        text.style(color: Colors.black),
+        text.style.bold(),
       ),
     );
 

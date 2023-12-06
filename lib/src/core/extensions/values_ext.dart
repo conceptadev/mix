@@ -5,13 +5,10 @@ import '../../attributes/border/border_dto.dart';
 import '../../attributes/border/border_radius_attribute.dart';
 import '../../attributes/border/border_radius_dto.dart';
 import '../../attributes/color/color_dto.dart';
-import '../../attributes/constraints/constraints_attribute.dart';
 import '../../attributes/constraints/constraints_dto.dart';
-import '../../attributes/decoration/decoration_attribute.dart';
 import '../../attributes/decoration/decoration_dto.dart';
 import '../../attributes/gradient/gradient_attribute.dart';
 import '../../attributes/gradient/gradient_dto.dart';
-import '../../attributes/scalars/scalars_attribute.dart';
 import '../../attributes/shadow/shadow_dto.dart';
 import '../../attributes/spacing/spacing_dto.dart';
 import '../../attributes/strut_style/strut_style_attribute.dart';
@@ -71,22 +68,14 @@ extension ColorExt on Color {
 }
 
 // Extension for Alignment
-extension AlignmentGeometryExt on AlignmentGeometry {
-  AlignmentGeometryAttribute toAttribute() {
-    return AlignmentGeometryAttribute(this);
-  }
-}
+extension AlignmentGeometryExt on AlignmentGeometry {}
 
 extension BoxConstraintsExt on BoxConstraints {
   BoxConstraintsDto toDto() => BoxConstraintsDto.from(this);
-
-  BoxConstraintsAttribute toAttribute() => BoxConstraintsAttribute(toDto());
 }
 
 // Extension for Axis
-extension AxisExt on Axis {
-  AxisAttribute toAttribute() => AxisAttribute(this);
-}
+extension AxisExt on Axis {}
 
 extension DecorationExt on Decoration {
   DecorationDto toDto() {
@@ -95,8 +84,6 @@ extension DecorationExt on Decoration {
 
     throw UnimplementedError('$runtimeType is not implemented.');
   }
-
-  DecorationAttribute toAttribute() => DecorationAttribute(toDto());
 }
 
 extension BoxDecorationExt on BoxDecoration {
@@ -118,18 +105,12 @@ extension BorderRadiusGeometryExt on BorderRadiusGeometry {
 }
 
 extension Matrix4Ext on Matrix4 {
-  TransformAttribute toAttribute() => TransformAttribute(this);
-
   /// Merge [other] into this matrix.
   Matrix4 merge(Matrix4? other) {
     if (other == null || other == this) return this;
 
     return clone()..multiply(other);
   }
-}
-
-extension ClipExt on Clip {
-  ClipBehaviorAttribute toAttribute() => ClipBehaviorAttribute(this);
 }
 
 extension BorderSideExt on BorderSide {

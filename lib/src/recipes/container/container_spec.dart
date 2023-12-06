@@ -12,7 +12,7 @@ class ContainerSpec extends Spec<ContainerSpec> {
   final Decoration? decoration;
   final Matrix4? transform;
   final Clip? clipBehavior;
-  final Color? color;
+  // final Color? color;
   final double? width, height;
 
   const ContainerSpec({
@@ -23,7 +23,6 @@ class ContainerSpec extends Spec<ContainerSpec> {
     required this.decoration,
     required this.transform,
     required this.clipBehavior,
-    required this.color,
     required this.width,
     required this.height,
   });
@@ -35,28 +34,9 @@ class ContainerSpec extends Spec<ContainerSpec> {
         constraints = null,
         decoration = null,
         transform = null,
-        color = null,
         width = null,
         height = null,
         clipBehavior = null;
-
-  @override
-  ContainerSpec merge(ContainerSpec? other) {
-    if (other == null) return this;
-
-    return copyWith(
-      alignment: other.alignment,
-      padding: other.padding,
-      margin: other.margin,
-      constraints: other.constraints,
-      decoration: other.decoration,
-      width: other.width,
-      height: other.height,
-      transform: other.transform,
-      clipBehavior: other.clipBehavior,
-      color: other.color,
-    );
-  }
 
   @override
   ContainerSpec copyWith({
@@ -79,7 +59,6 @@ class ContainerSpec extends Spec<ContainerSpec> {
       decoration: decoration ?? this.decoration,
       transform: transform ?? this.transform,
       clipBehavior: clipBehavior ?? this.clipBehavior,
-      color: color ?? this.color,
       width: width ?? this.width,
       height: height ?? this.height,
     );
@@ -95,7 +74,6 @@ class ContainerSpec extends Spec<ContainerSpec> {
       decoration: Decoration.lerp(decoration, other.decoration, t),
       transform: Matrix4Tween(begin: transform, end: other.transform).lerp(t),
       clipBehavior: t < 0.5 ? clipBehavior : other.clipBehavior,
-      color: Color.lerp(color, other.color, t),
       width: lerpDouble(width, other.width, t),
       height: lerpDouble(height, other.height, t),
     );
@@ -112,6 +90,5 @@ class ContainerSpec extends Spec<ContainerSpec> {
         decoration,
         transform,
         clipBehavior,
-        color,
       ];
 }

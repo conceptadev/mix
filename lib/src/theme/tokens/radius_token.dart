@@ -1,28 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+import '../mix_theme.dart';
 import 'mix_token.dart';
 
-const _small = RadiusToken('mix.radii.small', Radius.circular(4));
-const _medium = RadiusToken('mix.radii.medium', Radius.circular(8));
-const _large = RadiusToken('mix.radii.large', Radius.circular(16));
+const _small = RadiusToken('mix.radii.small');
+const _medium = RadiusToken('mix.radii.medium');
+const _large = RadiusToken('mix.radii.large');
 
 class RadiusToken extends MixToken<Radius> {
   static const small = _small;
   static const medium = _medium;
   static const large = _large;
 
-  const RadiusToken(super.name, super.value);
+  const RadiusToken(super.name);
 
-  factory RadiusToken.resolvable(
-    String name,
-    BuildContextResolver<Radius> resolver,
-  ) {
-    return RadiusToken(name, RadiusResolver(resolver));
-  }
   @override
-  RadiusRef call() {
-    return RadiusRef(this);
+  RadiusRef call() => RadiusRef(this);
+
+  @override
+  Radius resolve(BuildContext context) {
+    final themeValue = MixTheme.of(context).radii[this];
+    assert(
+      themeValue != null,
+      'RadiusToken $name is not defined in the theme and has no default value',
+    );
+
+    final resolvedValue =
+        themeValue is RadiusResolver ? themeValue.resolve(context) : themeValue;
+
+    return resolvedValue ?? const Radius.circular(0);
   }
 }
 

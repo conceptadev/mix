@@ -5,11 +5,11 @@ import '../../attributes/spacing/spacing_util.dart';
 import '../../core/attribute.dart';
 import 'flex_attribute.dart';
 
-/// A utility class for building [FlexMixAttribute]s.
+/// A utility class for building [FlexSpecAttribute]s.
 final flex = FlexSpecUtility.selfBuilder;
 
 class FlexSpecUtility<T extends StyleAttribute>
-    extends MixUtility<T, FlexMixAttribute> {
+    extends MixUtility<T, FlexSpecAttribute> {
   static final selfBuilder = FlexSpecUtility((value) => value);
 
   const FlexSpecUtility(super.builder);
@@ -76,7 +76,7 @@ class FlexSpecUtility<T extends StyleAttribute>
     Clip? clipBehavior,
     double? gap,
   }) {
-    final attriubte = FlexMixAttribute(
+    final attriubte = FlexSpecAttribute(
       direction: direction,
       mainAxisAlignment: mainAxisAlignment,
       crossAxisAlignment: crossAxisAlignment,

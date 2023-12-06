@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../helpers/build_context_ext.dart';
 import '../../widgets/styled_widget.dart';
 import 'text_attribute.dart';
 
@@ -20,31 +19,23 @@ class StyledText extends StyledWidget {
 
   @override
   Widget build(BuildContext context) {
-    final inheritedAttribute = inherit && context.mix != null
-        // ignore: avoid-non-null-assertion
-        ? TextMixAttribute.of(context.mix!)
-        : const TextMixAttribute();
-
     return withMix(context, (mix) {
-      final attribute = TextMixAttribute.of(mix);
-      final merged = inheritedAttribute.merge(attribute);
-
-      final mixture = merged.resolve(mix);
+      final spec = TextMixAttribute.of(mix).resolve(mix);
 
       return Text(
-        mixture.applyTextDirectives(text),
-        style: mixture.style,
-        strutStyle: mixture.strutStyle,
-        textAlign: mixture.textAlign,
-        textDirection: mixture.textDirection ?? TextDirection.ltr,
+        spec.applyTextDirectives(text),
+        style: spec.style,
+        strutStyle: spec.strutStyle,
+        textAlign: spec.textAlign,
+        textDirection: spec.textDirection ?? TextDirection.ltr,
         locale: locale,
-        softWrap: mixture.softWrap,
-        overflow: mixture.overflow,
-        textScaleFactor: mixture.textScaleFactor,
-        maxLines: mixture.maxLines,
+        softWrap: spec.softWrap,
+        overflow: spec.overflow,
+        textScaleFactor: spec.textScaleFactor,
+        maxLines: spec.maxLines,
         semanticsLabel: semanticsLabel,
-        textWidthBasis: mixture.textWidthBasis,
-        textHeightBehavior: mixture.textHeightBehavior,
+        textWidthBasis: spec.textWidthBasis,
+        textHeightBehavior: spec.textHeightBehavior,
       );
     });
   }

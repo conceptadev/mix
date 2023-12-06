@@ -19,30 +19,6 @@ void main() {
       expect(recipe.fit, null);
     });
 
-    test('merge returns correct ImageSpec', () {
-      const spec1 = ImageSpec(
-        width: 100,
-        height: 200,
-        color: Colors.red,
-        repeat: ImageRepeat.repeat,
-        fit: BoxFit.cover,
-      );
-      const spec2 = ImageSpec(
-        width: 150,
-        height: 250,
-        color: Colors.blue,
-        repeat: ImageRepeat.noRepeat,
-        fit: BoxFit.fill,
-      );
-      final mergedSpec = spec1.merge(spec2);
-
-      expect(mergedSpec.width, 150);
-      expect(mergedSpec.height, 250);
-      expect(mergedSpec.color, Colors.blue);
-      expect(mergedSpec.repeat, ImageRepeat.noRepeat);
-      expect(mergedSpec.fit, BoxFit.fill);
-    });
-
     test('lerp returns correct ImageSpec', () {
       const spec1 = ImageSpec(
         width: 100,

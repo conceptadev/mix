@@ -1,9 +1,9 @@
 import 'package:flutter/widgets.dart';
 
-import '../../helpers/build_context_ext.dart';
 import '../../widgets/gap_widget.dart';
 import '../../widgets/styled_widget.dart';
 import '../container/container_attribute.dart';
+import '../container/container_spec.dart';
 import '../container/container_widget.dart';
 import 'flex_attribute.dart';
 import 'flex_spec.dart';
@@ -40,19 +40,11 @@ class StyledFlex extends StyledWidget {
 
   @override
   Widget build(BuildContext context) {
-    final contextMix = context.mix;
-    final inheritedAttribute = inherit && contextMix != null
-        ? FlexMixAttribute.of(contextMix)
-        : const FlexMixAttribute();
-
     return withMix(context, (mix) {
-      final attribute = FlexMixAttribute.of(mix);
-      final merged = inheritedAttribute.merge(attribute);
-
-      final mixture = merged.resolve(mix);
+      final spec = FlexSpecAttribute.of(mix).resolve(mix);
 
       List<Widget> renderSpacedChildren() {
-        final gap = mixture.gap;
+        final gap = spec.gap;
 
         return gap == null
             ? children
@@ -63,7 +55,7 @@ class StyledFlex extends StyledWidget {
       }
 
       return MixedFlex(
-        mixture,
+        spec,
         direction: direction,
         children: renderSpacedChildren(),
       );
@@ -182,16 +174,15 @@ class FlexBox extends StyledWidget {
   @override
   Widget build(BuildContext context) {
     return withMix(context, (mix) {
-      final containerStyle = ContainerSpecAttribute.of(mix).resolve(mix);
-      final flexStyle = FlexMixAttribute.of(mix).resolve(mix);
+      final containerSpec =
+          mix.attributeOf<ContainerSpecAttribute>()?.resolve(mix) ??
+              const ContainerSpec.empty();
+      final flexSpec = mix.attributeOf<FlexSpecAttribute>()?.resolve(mix) ??
+          const FlexSpec.empty();
 
-      return MixedContainer(
-        containerStyle,
-        child: MixedFlex(
-          flexStyle,
-          direction: direction,
-          children: children,
-        ),
+      return ContainerSpecWidget(
+        containerSpec,
+        child: MixedFlex(flexSpec, direction: direction, children: children),
       );
     });
   }

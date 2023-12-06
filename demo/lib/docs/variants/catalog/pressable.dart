@@ -9,19 +9,23 @@ class VariantsCatalogPressable extends StatelessWidget {
     return Row(children: [
       buildBlock(
         'Hover',
-        StyleMix(onHover(
-          border(color: $colors.primary, width: 2),
-          padding(4.0),
-        )),
+        StyleMix(
+          onHover(
+            border(color: $colors.primary(), width: 2),
+            padding(4.0),
+          ),
+        ),
         const Text('Hover this to show the highlight'),
       ),
       const VerticalDivider(),
       buildBlock(
         'Focus',
-        StyleMix(onFocus(
-          border(color: $colors.primary, width: 2),
-          padding(4.0),
-        )),
+        StyleMix(
+          onFocus(
+            border(color: $colors.primary(), width: 2),
+            padding(4.0),
+          ),
+        ),
         const Text('Focus this to show the highlight'),
       ),
       const VerticalDivider(),
@@ -30,7 +34,7 @@ class VariantsCatalogPressable extends StatelessWidget {
         StyleMix(
           onPress(
             border(
-              color: $colors.primary,
+              color: $colors.primary(),
               width: 2,
             ),
             padding(4.0),

@@ -12,7 +12,7 @@ void main() {
       final mix = MixData.create(
         MockBuildContext(),
         StyleMix(
-          IconMixAttribute(color: Colors.red.toDto(), size: 20.0),
+          IconSpecAttribute(color: Colors.red.toDto(), size: 20.0),
         ),
       );
 

@@ -3,7 +3,6 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 import '../mix.dart';
-import 'attributes/text_style/text_style_dto.dart';
 
 const kShortAliasDeprecation =
     'Short aliases will be deprecated, you can create your own. Example: final p = padding;';
@@ -87,8 +86,8 @@ extension WithSpaceTokensExt<T extends StyleAttribute>
 }
 
 @Deprecated('Use mainAxisAlignment instead')
-FlexMixAttribute mainAxis(MainAxisAlignment mainAxisAlignment) {
-  return FlexMixAttribute(mainAxisAlignment: mainAxisAlignment);
+FlexSpecAttribute mainAxis(MainAxisAlignment mainAxisAlignment) {
+  return FlexSpecAttribute(mainAxisAlignment: mainAxisAlignment);
 }
 
 @Deprecated('Use onXSmall instead')
@@ -290,7 +289,7 @@ StyleMixAttribute _apply(Iterable<StyleMix> mixes) {
 }
 
 @Deprecated(kShortAliasDeprecation)
-const p = padding;
+final p = box.padding;
 
 @Deprecated(kShortAliasDeprecation)
 final pt = paddingTop;
@@ -317,10 +316,10 @@ final px = paddingHorizontal;
 final py = paddingVertical;
 
 @Deprecated(kShortAliasDeprecation)
-final pi = padding.as;
+final pi = box.padding.as;
 
 @Deprecated(kShortAliasDeprecation)
-const m = margin;
+final m = box.margin;
 @Deprecated(kShortAliasDeprecation)
 final mt = marginTop;
 @Deprecated(kShortAliasDeprecation)
@@ -346,23 +345,23 @@ final marginX = marginHorizontal;
 @Deprecated(kShortAliasDeprecation)
 final marginY = marginVertical;
 
-@Deprecated('Use borderRadius instead')
-const rounded = borderRadius;
+@Deprecated('Use box.borderRadius instead')
+final rounded = box.borderRadius;
 
-@Deprecated('Use borderRadius instead')
-const r = borderRadius;
+@Deprecated('Use box.borderRadius instead')
+final r = box.borderRadius;
 
-@Deprecated('Use borderRadius.horizontal instead')
+@Deprecated('Use box.borderRadius.horizontal instead')
 dynamic get roundedH => UnimplementedError();
 
-@Deprecated('use borderRadius.vertical instead')
+@Deprecated('use box.borderRadius.vertical instead')
 dynamic get roundedV => UnimplementedError();
 
 @Deprecated(kShortAliasDeprecation)
 dynamic get roundedDH => UnimplementedError();
 
 @Deprecated(kShortAliasDeprecation)
-final roundedTL = borderRadius.topLeft;
+final roundedTL = box.borderRadius.topLeft;
 
 @Deprecated(kShortAliasDeprecation)
 BorderRadiusGeometryAttribute roundedTR() {
@@ -400,69 +399,90 @@ BorderRadiusGeometryAttribute roundedBE() {
 }
 
 @Deprecated(kShortAliasDeprecation)
-const h = height;
+final h = box.height;
+
+@Deprecated('Use box.height instead')
+final height = box.height;
 
 @Deprecated(kShortAliasDeprecation)
-const w = width;
+final w = box.width;
+
+@Deprecated('Use box.width instead')
+final width = box.width;
 
 @Deprecated(kShortAliasDeprecation)
-final maxH = maxHeight;
+final maxH = box.maxWidth;
+
+@Deprecated('Use box.maxHeight instead')
+final maxHeight = box.maxHeight;
 
 @Deprecated(kShortAliasDeprecation)
 final maxW = maxWidth;
 
-@Deprecated(kShortAliasDeprecation)
-final minH = minHeight;
+@Deprecated('Use box.maxWidth instead')
+final maxWidth = box.maxWidth;
 
 @Deprecated(kShortAliasDeprecation)
-final minW = minWidth;
+final minH = box.minHeight;
+
+@Deprecated('Use box.minHeight instead')
+final minHeight = box.minHeight;
 
 @Deprecated(kShortAliasDeprecation)
-final bt = border.top;
+final minW = box.minWidth;
+
+@Deprecated('Use box.minWidth instead')
+final minWidth = box.minWidth;
 
 @Deprecated(kShortAliasDeprecation)
-final bb = border.bottom;
+final bt = box.border.top;
 
 @Deprecated(kShortAliasDeprecation)
-final bl = border.left;
+final bb = box.border.bottom;
 
 @Deprecated(kShortAliasDeprecation)
-final br = border.right;
+final bl = box.border.left;
 
 @Deprecated(kShortAliasDeprecation)
-final bs = border.start;
+final br = box.border.right;
 
 @Deprecated(kShortAliasDeprecation)
-final be = border.end;
+final bs = box.border.start;
 
-@Deprecated('Use alignment instead')
-const align = alignment;
+@Deprecated(kShortAliasDeprecation)
+final be = box.border.end;
+
+@Deprecated('Use box.alignment instead')
+final align = box.alignment;
+
+@Deprecated('Use box.alignment instead')
+final alignment = box.alignment;
 
 @Deprecated('Use stack instead')
-AlignmentGeometryAttribute zAligmnent(Alignment alignment) {
-  return alignment.toAttribute();
+ContainerSpecAttribute zAligmnent(Alignment alignment) {
+  return box.alignment(alignment);
 }
 
 @Deprecated('Use stackFit instead')
-StackMixAttribute zFit(StackFit fit) {
-  return StackMixAttribute(fit: fit);
+StackSpecAttribute zFit(StackFit fit) {
+  return StackSpecAttribute(fit: fit);
 }
 
 @Deprecated('Use stack instead')
-StackMixAttribute zClip(Clip clip) {
-  return StackMixAttribute(clipBehavior: clip);
+StackSpecAttribute zClip(Clip clip) {
+  return StackSpecAttribute(clipBehavior: clip);
 }
 
 // Create a FlexAttributes for the direction axis.
 @Deprecated('Use axis() instead')
-AxisAttribute direction(Axis direction) {
-  return AxisAttribute(direction);
+FlexSpecAttribute directionAxis(Axis axis) {
+  return FlexSpecAttribute(direction: axis);
 }
 
 // Create a FlexAttributes for the cross axis.
 @Deprecated('Use crossAxisAlignment() instead')
-FlexMixAttribute crossAxis(CrossAxisAlignment crossAxisAlignment) {
-  return FlexMixAttribute(crossAxisAlignment: crossAxisAlignment);
+FlexSpecAttribute crossAxis(CrossAxisAlignment crossAxisAlignment) {
+  return FlexSpecAttribute(crossAxisAlignment: crossAxisAlignment);
 }
 
 @Deprecated('Use textDirective(directive)')
@@ -485,104 +505,113 @@ TextMixAttribute overflow(TextOverflow overflow) {
   return TextMixAttribute(overflow: overflow);
 }
 
-@Deprecated('use margin.only instead')
-final marginOnly = margin.only;
+@Deprecated('Use box.margin instead')
+final margin = box.margin;
 
-@Deprecated('use margin.only instead')
-final marginDirectionalOnly = margin.only;
+@Deprecated('use box.margin.only instead')
+final marginOnly = box.margin.only;
 
-@Deprecated('use margin.all instead')
-final marginAll = margin.all;
+@Deprecated('use box.margin.only instead')
+final marginDirectionalOnly = box.margin.only;
 
-@Deprecated('use margin.top instead')
-final marginTop = margin.top;
+@Deprecated('use box.margin.all instead')
+final marginAll = box.margin.all;
 
-@Deprecated('use margin.bottom instead')
-final marginBottom = margin.bottom;
+@Deprecated('use box.margin.top instead')
+final marginTop = box.margin.top;
 
-@Deprecated('use margin.left instead')
-final marginLeft = margin.left;
+@Deprecated('use box.margin.bottom instead')
+final marginBottom = box.margin.bottom;
 
-@Deprecated('use margin.right instead')
-final marginRight = margin.right;
+@Deprecated('use box.margin.left instead')
+final marginLeft = box.margin.left;
 
-@Deprecated('use margin.start instead')
-final marginStart = margin.start;
+@Deprecated('use box.margin.right instead')
+final marginRight = box.margin.right;
 
-@Deprecated('use margin.end instead')
-final marginEnd = margin.end;
+@Deprecated('use box.margin.start instead')
+final marginStart = box.margin.start;
 
-@Deprecated('use margin.horizontal instead')
-final marginHorizontal = margin.horizontal;
+@Deprecated('use box.margin.end instead')
+final marginEnd = box.margin.end;
 
-@Deprecated('use margin.vertical instead')
-final marginVertical = margin.vertical;
+@Deprecated('use box.margin.horizontal instead')
+final marginHorizontal = box.margin.horizontal;
 
-@Deprecated('use marginFrom instead')
-final marginFrom = margin.as;
+@Deprecated('use box.margin.vertical instead')
+final marginVertical = box.margin.vertical;
 
-@Deprecated('use padding.only instead')
-final paddingOnly = padding.only;
+@Deprecated('use box.margin.as instead')
+final marginFrom = box.margin.as;
 
-@Deprecated('use padding.only instead')
-final paddingDirectionalOnly = padding.only;
+@Deprecated('use box.padding instead')
+final padding = box.padding;
 
-@Deprecated('use padding.all instead')
-final paddingAll = padding.all;
+@Deprecated('use box.padding.only instead')
+final paddingOnly = box.padding.only;
 
-@Deprecated('use padding.top instead')
-final paddingTop = padding.top;
+@Deprecated('use box.padding.only instead')
+final paddingDirectionalOnly = box.padding.only;
 
-@Deprecated('use padding.bottom instead')
-final paddingBottom = padding.bottom;
+@Deprecated('use box.padding.all instead')
+final paddingAll = box.padding.all;
 
-@Deprecated('use padding.left instead')
-final paddingLeft = padding.left;
+@Deprecated('use box.padding.top instead')
+final paddingTop = box.padding.top;
 
-@Deprecated('use padding.right instead')
-final paddingRight = padding.right;
+@Deprecated('use box.padding.bottom instead')
+final paddingBottom = box.padding.bottom;
 
-@Deprecated('use padding.start instead')
-final paddingStart = padding.start;
+@Deprecated('use box.padding.left instead')
+final paddingLeft = box.padding.left;
 
-@Deprecated('use padding.end instead')
-final paddingEnd = padding.end;
+@Deprecated('use box.padding.right instead')
+final paddingRight = box.padding.right;
 
-@Deprecated('use padding.horizontal instead')
-final paddingHorizontal = padding.horizontal;
+@Deprecated('use box.padding.start instead')
+final paddingStart = box.padding.start;
 
-@Deprecated('use padding.vertical instead')
-final paddingVertical = padding.vertical;
+@Deprecated('use box.padding.end instead')
+final paddingEnd = box.padding.end;
 
-@Deprecated('use paddingFrom instead')
-final paddingFrom = padding.as;
+@Deprecated('use box.padding.horizontal instead')
+final paddingHorizontal = box.padding.horizontal;
 
-@Deprecated('use border.top instead')
-final borderTop = border.top;
+@Deprecated('use box.padding.vertical instead')
+final paddingVertical = box.padding.vertical;
 
-@Deprecated('use border.bottom instead')
-final borderBottom = border.bottom;
+@Deprecated('use box.margin.as instead')
+final paddingFrom = box.padding.as;
 
-@Deprecated('use border.left instead')
-final borderLeft = border.left;
+@Deprecated('Use box.border')
+final border = box.border;
 
-@Deprecated('use border.right instead')
-final borderRight = border.right;
+@Deprecated('use box.border.top instead')
+final borderTop = box.border.top;
 
-@Deprecated('use border.start instead')
-final borderStart = border.start;
+@Deprecated('use box.border.bottom instead')
+final borderBottom = box.border.bottom;
 
-@Deprecated('use border.end instead')
-final borderEnd = border.end;
+@Deprecated('use box.border.left instead')
+final borderLeft = box.border.left;
 
-@Deprecated('use border.horizontal instead')
-final borderHorizontal = border.horizontal;
+@Deprecated('use box.border.right instead')
+final borderRight = box.border.right;
 
-@Deprecated('use border.vertical instead')
-final borderVertical = border.vertical;
+@Deprecated('use box.border.start instead')
+final borderStart = box.border.start;
 
-@Deprecated('use border.all instead')
-final borderAll = border.all;
+@Deprecated('use box.border.end instead')
+final borderEnd = box.border.end;
+
+@Deprecated('use box.border.horizontal instead')
+final borderHorizontal = box.border.horizontal;
+
+@Deprecated('use box.border.vertical instead')
+final borderVertical = box.border.vertical;
+
+@Deprecated('use box.border.all instead')
+final borderAll = box.border.all;
 
 @Deprecated('Use StyledText now')
 typedef TextMix = StyledText;
@@ -593,26 +622,29 @@ final textStyle = text.style;
 @Deprecated('Use text.style.shadow instead')
 final shadow = text.style.shadow;
 
-@Deprecated('use backgroundColor instead')
-const bgColor = backgroundColor;
+@Deprecated('use box.color instead')
+final bgColor = box.decoration.box.color;
+
+@Deprecated('use box.color instead')
+final backgroundColor = box.decoration.box.color;
 
 // do no tuse main axisaligmnet use flex.mainAxisAlignment instead
 @Deprecated(
   'use flex(mainAxisAlignment:value) instead or flex.mainAxisAlignment',
 )
-FlexMixAttribute mainAxisAlignment(MainAxisAlignment mainAxisAlignment) {
-  return FlexMixAttribute(mainAxisAlignment: mainAxisAlignment);
+FlexSpecAttribute mainAxisAlignment(MainAxisAlignment mainAxisAlignment) {
+  return FlexSpecAttribute(mainAxisAlignment: mainAxisAlignment);
 }
 
 @Deprecated(
   'use flex(crossAxisAlignment:value) instead or flex.crossAxisAlignment',
 )
-FlexMixAttribute crossAlignment(CrossAxisAlignment crossAxisAlignment) {
-  return FlexMixAttribute(crossAxisAlignment: crossAxisAlignment);
+FlexSpecAttribute crossAlignment(CrossAxisAlignment crossAxisAlignment) {
+  return FlexSpecAttribute(crossAxisAlignment: crossAxisAlignment);
 }
 
 @Deprecated('use flex(mainAxisSize:value) instead or flex.mainAxisSize')
-FlexMixAttribute mainAxisSize(MainAxisSize mainAxisSize) {
+FlexSpecAttribute mainAxisSize(MainAxisSize mainAxisSize) {
   return flex(mainAxisSize: mainAxisSize);
 }
 
@@ -622,3 +654,12 @@ TextMixAttribute bold() {
     style: TextStyleDto.only(fontWeight: FontWeight.bold),
   );
 }
+
+@Deprecated('use box.border.radius')
+final borderRadius = box.borderRadius;
+
+@Deprecated('use box.elevation instead')
+final elevation = box.elevation;
+
+@Deprecated('use box.clipBehavior instead')
+final clipBehavior = box.clipBehavior;

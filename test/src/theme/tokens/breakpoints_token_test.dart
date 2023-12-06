@@ -6,34 +6,34 @@ void main() {
   test('MixBreakpointsTokens', () {
     final breakpoints = MixThemeData().breakpoints;
 
-    final large = breakpoints.getTokenValue(BreakpointToken.large);
+    final large = breakpoints[BreakpointToken.large]!;
 
-    final medium = breakpoints.getTokenValue(BreakpointToken.medium);
-    final small = breakpoints.getTokenValue(BreakpointToken.small);
-    final xsmall = breakpoints.getTokenValue(BreakpointToken.xsmall);
+    final medium = breakpoints[BreakpointToken.medium]!;
+    final small = breakpoints[BreakpointToken.small]!;
+    final xsmall = breakpoints[BreakpointToken.xsmall]!;
 
     expect(
       large,
-      const BreakpointConstraint(minWidth: 1440, maxWidth: double.infinity),
+      const Breakpoint(minWidth: 1440, maxWidth: double.infinity),
     );
     expect(
       medium,
-      const BreakpointConstraint(minWidth: 1024, maxWidth: 1439),
+      const Breakpoint(minWidth: 1024, maxWidth: 1439),
     );
     expect(
       small,
-      const BreakpointConstraint(minWidth: 600, maxWidth: 1023),
+      const Breakpoint(minWidth: 600, maxWidth: 1023),
     );
     expect(
       xsmall,
-      const BreakpointConstraint(minWidth: 0, maxWidth: 599),
+      const Breakpoint(minWidth: 0, maxWidth: 599),
     );
   });
 
   test('MixBreakpointsTokens large matches correctly', () {
     final breakpoints = MixThemeData().breakpoints;
 
-    final large = breakpoints.getTokenValue(BreakpointToken.large)!;
+    final large = breakpoints[BreakpointToken.large]!;
 
     expect(
       large.matches(const Size(1440, 1024)),
@@ -49,7 +49,7 @@ void main() {
   test('MixBreakpointsTokens medium matches correctly', () {
     final breakpoints = MixThemeData().breakpoints;
 
-    final medium = breakpoints.getTokenValue(BreakpointToken.medium)!;
+    final medium = breakpoints[BreakpointToken.medium]!;
 
     expect(
       medium.matches(const Size(1024, 1024)),
@@ -65,7 +65,7 @@ void main() {
   test('MixBreakpointsTokens small matches correctly', () {
     final breakpoints = MixThemeData().breakpoints;
 
-    final small = breakpoints.getTokenValue(BreakpointToken.small)!;
+    final small = breakpoints[BreakpointToken.small]!;
 
     expect(
       small.matches(const Size(600, 1024)),
@@ -81,7 +81,7 @@ void main() {
   test('MixBreakpointsTokens xsmall matches correctly', () {
     final breakpoints = MixThemeData().breakpoints;
 
-    final xsmall = breakpoints.getTokenValue(BreakpointToken.xsmall)!;
+    final xsmall = breakpoints[BreakpointToken.xsmall]!;
 
     expect(
       xsmall.matches(const Size(0, 1024)),

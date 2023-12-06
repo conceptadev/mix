@@ -78,8 +78,8 @@ class AlignmentUtility<T extends StyleAttribute>
 /// final utility = DoubleUtility(builder);
 /// final tenValue = utility(10);
 /// ```
-abstract class DoubleUtility<T extends StyleAttribute>
-    extends ScalarUtility<T, double> with CallableUtilityMixin<T, double> {
+class DoubleUtility<T extends StyleAttribute> extends ScalarUtility<T, double>
+    with CallableUtilityMixin<T, double> {
   const DoubleUtility(super.builder);
 }
 

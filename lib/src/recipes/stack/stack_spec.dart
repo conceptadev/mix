@@ -15,6 +15,12 @@ class StackSpec extends Spec<StackSpec> {
     this.clipBehavior,
   });
 
+  const StackSpec.empty()
+      : alignment = null,
+        fit = null,
+        textDirection = null,
+        clipBehavior = null;
+
   @override
   StackSpec lerp(StackSpec other, double t) {
     return StackSpec(
@@ -22,16 +28,6 @@ class StackSpec extends Spec<StackSpec> {
       fit: t < 0.5 ? fit : other.fit,
       textDirection: t < 0.5 ? textDirection : other.textDirection,
       clipBehavior: t < 0.5 ? clipBehavior : other.clipBehavior,
-    );
-  }
-
-  @override
-  StackSpec merge(StackSpec? other) {
-    return copyWith(
-      alignment: other?.alignment,
-      fit: other?.fit,
-      textDirection: other?.textDirection,
-      clipBehavior: other?.clipBehavior,
     );
   }
 

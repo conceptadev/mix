@@ -3,15 +3,12 @@ import '../../core/attribute.dart';
 import '../../factory/mix_provider_data.dart';
 import 'icon_spec.dart';
 
-class IconMixAttribute extends ResolvableAttribute<IconMixAttribute, IconSpec> {
+class IconSpecAttribute
+    extends ResolvableAttribute<IconSpecAttribute, IconSpec> {
   final double? size;
   final ColorDto? color;
 
-  const IconMixAttribute({this.size, this.color});
-
-  static IconMixAttribute of(MixData mix) {
-    return mix.attributeOf<IconMixAttribute>() ?? const IconMixAttribute();
-  }
+  const IconSpecAttribute({this.size, this.color});
 
   @override
   IconSpec resolve(MixData mix) {
@@ -19,10 +16,10 @@ class IconMixAttribute extends ResolvableAttribute<IconMixAttribute, IconSpec> {
   }
 
   @override
-  IconMixAttribute merge(covariant IconMixAttribute? other) {
+  IconSpecAttribute merge(covariant IconSpecAttribute? other) {
     if (other == null) return this;
 
-    return IconMixAttribute(
+    return IconSpecAttribute(
       size: size ?? other.size,
       color: color ?? other.color,
     );
