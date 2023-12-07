@@ -60,7 +60,7 @@ void main() {
       test('color() returns correct instance', () {
         final container = containerUtility.color(Colors.blue);
 
-        expect((container.value.decoration as BoxDecoration).color,
+        expect((container.value.decoration as BoxDecorationDto).color,
             const ColorDto(Colors.blue));
       });
 

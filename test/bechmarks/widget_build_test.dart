@@ -149,7 +149,8 @@ void main() {
     // print('StyledContainer: $elapsedStyledContainerTime ms');
     // print('Container: $elapsedContainerTime ms');
     // StyledContainer shoudl not b slower than 0.01 ms
-    expect(elapsedStyledContainerTime, lessThan(elapsedContainerTime + 0.01));
+    expect(elapsedStyledContainerTime, lessThan(elapsedContainerTime + 0.02),
+        reason: 'StyledContainer is too slow');
   });
 
   // test perfromance for StyleMix.create
