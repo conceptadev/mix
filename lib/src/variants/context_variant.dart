@@ -84,3 +84,8 @@ class ContextVariant extends Variant {
   @override
   get props => [name, when];
 }
+
+@immutable
+class GestureVariant extends ContextVariant {
+  const GestureVariant(super.name, {required super.when});
+}

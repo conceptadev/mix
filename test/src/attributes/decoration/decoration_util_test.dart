@@ -1,16 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
-import 'package:mix/src/attributes/decoration/decoration_dto.dart';
-import 'package:mix/src/attributes/gradient/gradient_dto.dart';
 
 import '../../../helpers/attribute_generator.dart';
 import '../../../helpers/testing_utils.dart';
 
 void main() {
-  const boxDecoration = BoxDecorationUtility(UtilityTestAttribute.new);
+  // DecorationUtility
+  group('DecorationUtility', () {
+    const decorationUtility = DecorationUtility(UtilityTestAttribute.new);
 
+    // box
+    test('box returns correct instance', () {
+      final box = decorationUtility.box;
+      expect(box, isA<BoxDecorationUtility>());
+    });
+
+    // shape
+    test('shape returns correct instance', () {
+      final shape = decorationUtility.shape;
+      expect(shape, isA<ShapeDecorationUtility>());
+    });
+  });
   group('BoxDecorationUtility', () {
+    const boxDecoration = BoxDecorationUtility(UtilityTestAttribute.new);
     test('call', () {
       final refBoxDecoration = RandomGenerator.boxDecoration();
 
@@ -45,7 +58,8 @@ void main() {
       expect(result.value.shape, equals(refBoxDecoration.shape));
     });
     test('color setting', () {
-      final result = boxDecoration(color: Colors.red);
+      final result = boxDecoration.color(Colors.red);
+
       expect(result.value.color, equals(Colors.red.toDto()));
     });
 
@@ -77,15 +91,23 @@ void main() {
     });
 
     test('boxShadow setting', () {
-      final boxShadow = [
-        const BoxShadow(
-          color: Colors.black,
-          blurRadius: 10.0,
-          offset: Offset(5.0, 5.0),
-        )
-      ];
-      final result = boxDecoration.boxShadow(boxShadow);
-      expect(result.value.boxShadow, equals(boxShadow.toDto()));
+      const boxShadow = BoxShadow(
+        color: Colors.black,
+        blurRadius: 10.0,
+        offset: Offset(5.0, 5.0),
+        spreadRadius: 2.0,
+      );
+
+      final result = boxDecoration.boxShadows([boxShadow]);
+
+      final resultSingle = boxDecoration.boxShadow(
+        color: Colors.black,
+        blurRadius: 10.0,
+        offset: const Offset(5.0, 5.0),
+        spreadRadius: 2.0,
+      );
+      expect(result.value.boxShadow, equals([boxShadow].toDto()));
+      expect(resultSingle.value.boxShadow?.first, equals(boxShadow.toDto()));
     });
 
     test('elevation setting', () {
@@ -93,6 +115,79 @@ void main() {
       final boxShadows =
           result.value.boxShadow?.map((e) => e.resolve(EmptyMixData));
       expect(boxShadows, equals(kElevationToShadow[9]!));
+    });
+  });
+
+  // ShapeDecorationUtility
+  group('ShapeDecorationUtility', () {
+    const shapeDecoration = ShapeDecorationUtility(UtilityTestAttribute.new);
+    const boxShadow = BoxShadow(
+      color: Colors.black,
+      blurRadius: 10.0,
+      offset: Offset(5.0, 5.0),
+    );
+
+    const linearGradient = LinearGradient(
+      begin: Alignment.topLeft,
+      end: Alignment.bottomRight,
+      colors: [Colors.red, Colors.blue],
+    );
+
+    // call()
+    test('call() returns correct instance', () {
+      final result = shapeDecoration(
+        color: Colors.blue,
+        gradient: linearGradient,
+        shadows: const [boxShadow],
+      );
+
+      expect(result.value.color, equals(Colors.blue.toDto()));
+      expect(
+          result.value.gradient,
+          equals(GradientDto.from(
+            linearGradient,
+          )));
+      expect(
+          result.value.shadows,
+          equals(
+            const [boxShadow].map((e) => BoxShadowDto.from(e)).toList(),
+          ));
+    });
+
+    // color()
+    test('color() returns correct instance', () {
+      final result = shapeDecoration.color(Colors.blue);
+
+      expect(result.value.color, equals(Colors.blue.toDto()));
+    });
+
+    // gradient()
+    test('gradient() returns correct instance', () {
+      final result = shapeDecoration.gradient.as(linearGradient);
+
+      expect(
+          result.value.gradient,
+          equals(GradientDto.from(
+            linearGradient,
+          )));
+    });
+
+    // shadows()
+    test('shadows() returns correct instance', () {
+      final result = shapeDecoration.shadows([boxShadow]);
+
+      expect(
+          result.value.shadows,
+          equals(
+            const [boxShadow].map((e) => BoxShadowDto.from(e)).toList(),
+          ));
+    });
+
+    // shape()
+    test('shape() returns correct instance', () {
+      final result = shapeDecoration.shape.circle();
+
+      expect(result.value.shape, equals(const CircleBorder()));
     });
   });
 }

@@ -4,13 +4,13 @@ import '../../core/attribute.dart';
 import '../../factory/mix_provider_data.dart';
 import 'stack_spec.dart';
 
-class StackMixAttribute
-    extends ResolvableAttribute<StackMixAttribute, StackSpec> {
+class StackSpecAttribute
+    extends ResolvableAttribute<StackSpecAttribute, StackSpec> {
   final Clip? _clipBehavior;
   final TextDirection? _textDirection;
   final StackFit? _fit;
   final AlignmentGeometry? _alignment;
-  const StackMixAttribute({
+  const StackSpecAttribute({
     AlignmentGeometry? alignment,
     StackFit? fit,
     TextDirection? textDirection,
@@ -20,8 +20,8 @@ class StackMixAttribute
         _fit = fit,
         _alignment = alignment;
 
-  static StackMixAttribute of(MixData mix) {
-    return mix.attributeOf<StackMixAttribute>() ?? const StackMixAttribute();
+  static StackSpecAttribute of(MixData mix) {
+    return mix.attributeOf<StackSpecAttribute>() ?? const StackSpecAttribute();
   }
 
   @override
@@ -35,10 +35,10 @@ class StackMixAttribute
   }
 
   @override
-  StackMixAttribute merge(covariant StackMixAttribute? other) {
+  StackSpecAttribute merge(covariant StackSpecAttribute? other) {
     if (other == null) return this;
 
-    return StackMixAttribute(
+    return StackSpecAttribute(
       alignment: other._alignment ?? _alignment,
       fit: other._fit ?? _fit,
       textDirection: other._textDirection ?? _textDirection,

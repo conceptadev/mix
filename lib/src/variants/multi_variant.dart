@@ -81,6 +81,10 @@ class MultiVariant extends Variant {
     return MultiVariant(variants, type: MultiVariantOperator.or);
   }
 
+  bool get hasGestureVariant {
+    return variants.any((variant) => variant is GestureVariant);
+  }
+
   /// Removes specified variants from this `MultiVariant`.
   ///
   /// This method returns a new variant after removing the specified [variantsToRemove].

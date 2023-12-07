@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
-import 'package:mix/src/attributes/constraints/constraints_dto.dart';
-import 'package:mix/src/attributes/decoration/decoration_dto.dart';
-import 'package:mix/src/attributes/strut_style/strut_style_dto.dart';
-import 'package:mix/src/attributes/text_style/text_style_dto.dart';
 
 import '../../../helpers/testing_utils.dart';
 
@@ -34,16 +30,6 @@ void main() {
       expect(attribute.resolve(EmptyMixData), value);
     });
 
-    test('AlignmentGeometry', () {
-      const alignment = Alignment.topCenter;
-
-      const attribute = AlignmentGeometryAttribute(alignment);
-
-      expect(alignment.toAttribute(), attribute);
-
-      expect(attribute.value, alignment);
-    });
-
     test('ShapeDecoration', () {
       final value = ShapeDecoration(
         shape: Border.all(),
@@ -52,17 +38,9 @@ void main() {
       );
 
       final dto = ShapeDecorationDto.from(value);
-      final attribute = DecorationAttribute(dto);
 
-      expect(value.toAttribute(), isA<DecorationAttribute>());
-      expect(value.toAttribute(), attribute);
       expect(value.toDto(), isA<ShapeDecorationDto>());
       expect(value.toDto(), dto);
-
-      expect(attribute.value, dto);
-
-      // Resolves correctly
-      expect(attribute.resolve(EmptyMixData), value);
     });
 
     test('BoxConstraints toAttribute', () {
@@ -74,25 +52,9 @@ void main() {
       );
 
       final dto = BoxConstraintsDto.from(value);
-      final attribute = BoxConstraintsAttribute(dto);
 
-      expect(value.toAttribute(), isA<BoxConstraintsAttribute>());
-      expect(value.toAttribute(), attribute);
       expect(value.toDto(), isA<BoxConstraintsDto>());
       expect(value.toDto(), dto);
-
-      expect(attribute.value, dto);
-
-      // Resolves correctly
-      expect(attribute.resolve(EmptyMixData), value);
-    });
-
-    test('Axis toAttribute', () {
-      const value = Axis.horizontal;
-
-      const attribute = AxisAttribute(value);
-
-      expect(attribute.value, Axis.horizontal);
     });
 
     test('BoxDecoration toAttribute', () {
@@ -105,17 +67,9 @@ void main() {
       );
 
       final dto = BoxDecorationDto.from(value);
-      final attribute = DecorationAttribute(dto);
 
-      expect(value.toAttribute(), isA<DecorationAttribute>());
-      expect(value.toAttribute(), attribute);
       expect(value.toDto(), isA<BoxDecorationDto>());
       expect(value.toDto(), dto);
-
-      expect(attribute.value, dto);
-
-      // Resolves correctly
-      expect(attribute.resolve(EmptyMixData), value);
     });
 
     test('BorderRadiusGeometry', () {
@@ -133,12 +87,6 @@ void main() {
 
       // Resolves correctly
       expect(attribute.resolve(EmptyMixData), value);
-    });
-
-    test('Matrix4 toAttribute', () {
-      final matrix4 = Matrix4.identity();
-      final attribute = matrix4.toAttribute();
-      expect(attribute.value, Matrix4.identity());
     });
 
     test('BorderSide', () {
@@ -231,7 +179,7 @@ void main() {
         fontWeight: FontWeight.bold,
       );
 
-      final dto = TextStyleDto.from(value);
+      final dto = TextStyleDto.as(value);
       final attribute = TextStyleAttribute(dto);
 
       expect(value.toAttribute(), isA<TextStyleAttribute>());

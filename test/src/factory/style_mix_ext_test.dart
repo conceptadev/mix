@@ -9,7 +9,7 @@ void main() {
   testWidgets('StyleMix.container matches StyledContainer(style:StyleMix)',
       (tester) async {
     final style = StyleMix(
-      box.decoration(
+      box.decoration.box(
         border: Border.all(
           color: Colors.red,
         ),
@@ -28,7 +28,7 @@ void main() {
             ),
             StyledContainer(
               key: keyThree,
-              style: StyleMix.empty,
+              style: const StyleMix.empty(),
               child: const SizedBox(),
             ),
           ],
@@ -48,7 +48,7 @@ void main() {
   testWidgets('StyleMix.box matches StyledContainer(style:StyleMix)',
       (tester) async {
     final style = StyleMix(
-      box.decoration(
+      box.decoration.box(
         border: Border.all(color: Colors.red),
       ),
     );
@@ -65,7 +65,7 @@ void main() {
             ),
             StyledContainer(
               key: keyThree,
-              style: StyleMix.empty,
+              style: const StyleMix.empty(),
               child: const SizedBox(),
             ),
           ],
@@ -84,7 +84,7 @@ void main() {
 
   testWidgets('StyleMix.hbox matches HBox(style:StyleMix)', (tester) async {
     final style =
-        StyleMix(box.decoration(border: Border.all(color: Colors.red)));
+        StyleMix(box.decoration.box(border: Border.all(color: Colors.red)));
 
     await tester.pumpWidget(
       MaterialApp(
@@ -98,7 +98,7 @@ void main() {
             ),
             HBox(
               key: keyThree,
-              style: StyleMix.empty,
+              style: const StyleMix.empty(),
               children: const [SizedBox()],
             ),
           ],
@@ -116,8 +116,11 @@ void main() {
   });
 
   testWidgets('StyleMix.row matches StyledRow(style:StyleMix)', (tester) async {
-    final style =
-        StyleMix(box.decoration(border: Border.all(color: Colors.red)));
+    final style = StyleMix(
+      box.decoration.box(
+        border: Border.all(color: Colors.red),
+      ),
+    );
 
     await tester.pumpWidget(
       MaterialApp(
@@ -131,7 +134,7 @@ void main() {
             ),
             StyledRow(
               key: keyThree,
-              style: StyleMix.empty,
+              style: const StyleMix.empty(),
               children: const [SizedBox()],
             ),
           ],
@@ -150,7 +153,7 @@ void main() {
 
   testWidgets('StyleMix.text matches StyledText(style:StyleMix)',
       (tester) async {
-    final style = StyleMix(textStyle(color: Colors.red));
+    final style = StyleMix(text.style(color: Colors.red));
 
     await tester.pumpWidget(
       MaterialApp(
@@ -165,7 +168,7 @@ void main() {
             StyledText(
               'text',
               key: keyThree,
-              style: StyleMix.empty,
+              style: const StyleMix.empty(),
             ),
           ],
         ),
@@ -183,7 +186,7 @@ void main() {
 
   testWidgets('StyleMix.vbox matches VBox(style:StyleMix)', (tester) async {
     final style =
-        StyleMix(box.decoration(border: Border.all(color: Colors.red)));
+        StyleMix(box.decoration.box(border: Border.all(color: Colors.red)));
 
     await tester.pumpWidget(
       MaterialApp(
@@ -197,7 +200,7 @@ void main() {
             ),
             VBox(
               key: keyThree,
-              style: StyleMix.empty,
+              style: const StyleMix.empty(),
               children: const [SizedBox()],
             ),
           ],
@@ -216,8 +219,13 @@ void main() {
 
   testWidgets('StyleMix.column matches StyledColumn(style:StyleMix)',
       (tester) async {
-    final style =
-        StyleMix(box.decoration(border: Border.all(color: Colors.red)));
+    final style = StyleMix(
+      container.decoration.box(
+        border: Border.all(
+          color: Colors.red,
+        ),
+      ),
+    );
 
     await tester.pumpWidget(
       MaterialApp(
@@ -231,7 +239,7 @@ void main() {
             ),
             StyledColumn(
               key: keyThree,
-              style: StyleMix.empty,
+              style: const StyleMix.empty(),
               children: const [SizedBox()],
             ),
           ],
@@ -265,7 +273,7 @@ void main() {
             StyledIcon(
               Icons.ac_unit,
               key: keyThree,
-              style: StyleMix.empty,
+              style: const StyleMix.empty(),
             ),
           ],
         ),

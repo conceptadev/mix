@@ -10,29 +10,29 @@ class VariantsExample extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final baseStyle = StyleMix(
-      height(300),
-      width(300),
-      borderRadius(10),
-      elevation(2),
-      margin(10),
-      alignment.center(),
+      box.height(300),
+      box.width(300),
+      box.borderRadius(10),
+      box.elevation(2),
+      box.margin(10),
+      box.alignment.center(),
     );
 
     final style = StyleMix(
-      backgroundColor($colors.primary),
-      text.style(color: $colors.onPrimary),
+      box.color($colors.primary()),
+      text.style(color: $colors.onPrimary()),
       onHover(
-        backgroundColor($colors.secondary),
-        text.style(color: $colors.onPrimary),
+        box.color($colors.secondary()),
+        text.style(color: $colors.onPrimary()),
       ),
     ).merge(baseStyle);
 
     final onDarkStyle = StyleMix(
-      backgroundColor($colors.primary),
-      text.style(color: $colors.onPrimary),
+      box.color($colors.primary()),
+      text.style(color: $colors.onPrimary()),
       onDark(
-        backgroundColor(Colors.red),
-        text.style(color: $colors.onPrimary),
+        box.color(Colors.red),
+        text.style(color: $colors.onPrimary()),
       ),
     ).merge(baseStyle);
 

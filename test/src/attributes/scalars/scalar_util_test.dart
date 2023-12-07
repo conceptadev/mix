@@ -170,6 +170,89 @@ void main() {
     });
   });
 
+  // AlignmentUtility
+  group('AlignmentUtility Tests', () {
+    const utility = AlignmentUtility(UtilityTestAttribute.new);
+
+    // only
+    test('only() returns correct instance', () {
+      final alignment = utility.only(x: 10, y: 8);
+      final alignmnetDirectional = utility.only(start: 10, y: 8);
+
+      expect(alignment.value, equals(const Alignment(10, 8)));
+      expect(alignmnetDirectional.value,
+          equals(const AlignmentDirectional(10, 8)));
+
+      expect(() => utility.only(x: 10, start: 8), throwsAssertionError);
+    });
+    test('Properties are initialized correctly', () {
+      expect(utility.topLeft().value, isA<Alignment>());
+      expect(utility.topCenter().value, isA<Alignment>());
+      expect(utility.topRight().value, isA<Alignment>());
+      expect(utility.centerLeft().value, isA<Alignment>());
+      expect(utility.center().value, isA<Alignment>());
+      expect(utility.centerRight().value, isA<Alignment>());
+      expect(utility.bottomLeft().value, isA<Alignment>());
+      expect(utility.bottomCenter().value, isA<Alignment>());
+      expect(utility.bottomRight().value, isA<Alignment>());
+      expect(utility.topLeft().value, Alignment.topLeft);
+      expect(utility.topCenter().value, Alignment.topCenter);
+      expect(utility.topRight().value, Alignment.topRight);
+      expect(utility.centerLeft().value, Alignment.centerLeft);
+      expect(utility.center().value, Alignment.center);
+      expect(utility.centerRight().value, Alignment.centerRight);
+      expect(utility.bottomLeft().value, Alignment.bottomLeft);
+      expect(utility.bottomCenter().value, Alignment.bottomCenter);
+      expect(utility.bottomRight().value, Alignment.bottomRight);
+    });
+  });
+
+// BorderStyleUtility
+  group('BorderStyleUtility Tests', () {
+    const utility = BorderStyleUtility(UtilityTestAttribute.new);
+    test('Properties are initialized correctly', () {
+      expect(utility.none().value, isA<BorderStyle>());
+      expect(utility.solid().value, isA<BorderStyle>());
+      expect(utility.none().value, BorderStyle.none);
+      expect(utility.solid().value, BorderStyle.solid);
+    });
+  });
+
+  // ShapeBorderUtility
+
+  group('ShapeBorderUtility', () {
+    const utility = ShapeBorderUtility(UtilityTestAttribute.new);
+
+    // circle()
+    test('circle() returns correct instance', () {
+      final shapeBorder = utility.circle();
+
+      expect(shapeBorder.value, isA<CircleBorder>());
+    });
+
+    // stadium()
+    test('stadium() returns correct instance', () {
+      final shapeBorder = utility.stadium();
+
+      expect(shapeBorder.value, isA<StadiumBorder>());
+    });
+
+    // rounded()
+    test('rounded() returns correct instance', () {
+      final shapeBorder = utility.rounded(20);
+
+      expect(shapeBorder.value, isA<RoundedRectangleBorder>());
+      expect((shapeBorder.value as RoundedRectangleBorder).borderRadius,
+          BorderRadius.circular(20));
+    });
+
+    //  beveled()
+    test('beveled() returns correct instance', () {
+      final shapeBorder = utility.beveled();
+
+      expect(shapeBorder.value, isA<BeveledRectangleBorder>());
+    });
+  });
   group('BoxFitUtility Tests', () {
     const utility = BoxFitUtility(UtilityTestAttribute.new);
     test('Properties are initialized correctly', () {
@@ -200,6 +283,69 @@ void main() {
     });
   });
 
+  // TextDirectionUtility
+  group('TextDirectionUtility Tests', () {
+    const utility = TextDirectionUtility(UtilityTestAttribute.new);
+    test('Properties are initialized correctly', () {
+      expect(utility.ltr().value, isA<TextDirection>());
+      expect(utility.rtl().value, isA<TextDirection>());
+      expect(utility.ltr().value, TextDirection.ltr);
+      expect(utility.rtl().value, TextDirection.rtl);
+    });
+  });
+
+  // TileModeUtility
+  group('TileModeUtility Tests', () {
+    const utility = TileModeUtility(UtilityTestAttribute.new);
+    test('Properties are initialized correctly', () {
+      expect(utility.clamp().value, isA<TileMode>());
+      expect(utility.mirror().value, isA<TileMode>());
+      expect(utility.repeated().value, isA<TileMode>());
+      expect(utility.clamp().value, TileMode.clamp);
+      expect(utility.mirror().value, TileMode.mirror);
+      expect(utility.repeated().value, TileMode.repeated);
+    });
+  });
+
+  // GradientTransformUtility
+  group('GradientTransformUtility Tests', () {
+    const utility = GradientTransformUtility(UtilityTestAttribute.new);
+    test('rotate', () {
+      expect(utility.rotate(20).value, isA<GradientTransform>());
+      expect(utility.rotate(20).value, const GradientRotation(20));
+    });
+  });
+
+  // Matrix4Utility
+  group('Matrix4Utility Tests', () {
+    const utility = Matrix4Utility(UtilityTestAttribute.new);
+    test('identity', () {
+      expect(utility.identity().value, isA<Matrix4>());
+      expect(utility.identity().value, Matrix4.identity());
+    });
+
+    test('rotationX', () {
+      expect(utility.rotationX(20).value, isA<Matrix4>());
+      expect(utility.rotationX(20).value, Matrix4.rotationX(20));
+    });
+
+    test('rotationY', () {
+      expect(utility.rotationY(20).value, isA<Matrix4>());
+      expect(utility.rotationY(20).value, Matrix4.rotationY(20));
+    });
+
+    test('rotationZ', () {
+      expect(utility.rotationZ(20).value, isA<Matrix4>());
+      expect(utility.rotationZ(20).value, Matrix4.rotationZ(20));
+    });
+
+    test('translation', () {
+      expect(utility.translationValues(20, 20, 20).value, isA<Matrix4>());
+      expect(utility.translationValues(20, 20, 20).value,
+          Matrix4.translationValues(20, 20, 20));
+    });
+  });
+
   group('BlendModeUtility Tests', () {
     test('Properties are initialized correctly', () {
       const utility = BlendModeUtility(UtilityTestAttribute.new);
@@ -216,6 +362,122 @@ void main() {
       expect(utility.dstATop().value, BlendMode.dstATop);
       expect(utility.xor().value, BlendMode.xor);
       expect(utility.plus().value, BlendMode.plus);
+    });
+  });
+
+  // BlendModeUtility
+  group('BlendModeUtility Tests', () {
+    const utility = BlendModeUtility(UtilityTestAttribute.new);
+    test('Properties are initialized correctly', () {
+      expect(utility.clear().value, isA<BlendMode>());
+      expect(utility.src().value, isA<BlendMode>());
+      expect(utility.dst().value, isA<BlendMode>());
+      expect(utility.srcOver().value, isA<BlendMode>());
+      expect(utility.dstOver().value, isA<BlendMode>());
+      expect(utility.srcIn().value, isA<BlendMode>());
+      expect(utility.dstIn().value, isA<BlendMode>());
+      expect(utility.srcOut().value, isA<BlendMode>());
+      expect(utility.dstOut().value, isA<BlendMode>());
+      expect(utility.srcATop().value, isA<BlendMode>());
+      expect(utility.dstATop().value, isA<BlendMode>());
+      expect(utility.xor().value, isA<BlendMode>());
+      expect(utility.plus().value, isA<BlendMode>());
+      expect(utility.clear().value, BlendMode.clear);
+      expect(utility.src().value, BlendMode.src);
+      expect(utility.dst().value, BlendMode.dst);
+      expect(utility.srcOver().value, BlendMode.srcOver);
+      expect(utility.dstOver().value, BlendMode.dstOver);
+      expect(utility.srcIn().value, BlendMode.srcIn);
+      expect(utility.dstIn().value, BlendMode.dstIn);
+      expect(utility.srcOut().value, BlendMode.srcOut);
+      expect(utility.dstOut().value, BlendMode.dstOut);
+      expect(utility.srcATop().value, BlendMode.srcATop);
+      expect(utility.dstATop().value, BlendMode.dstATop);
+      expect(utility.xor().value, BlendMode.xor);
+      expect(utility.plus().value, BlendMode.plus);
+    });
+  });
+
+  // FontWeightUtility
+  group('FontWeightUtility Tests', () {
+    const utility = FontWeightUtility(UtilityTestAttribute.new);
+    test('Properties are initialized correctly', () {
+      expect(utility.bold().value, isA<FontWeight>());
+      expect(utility.normal().value, isA<FontWeight>());
+      expect(utility.bold().value, FontWeight.bold);
+      expect(utility.normal().value, FontWeight.normal);
+      expect(utility.w100().value, isA<FontWeight>());
+      expect(utility.w200().value, isA<FontWeight>());
+      expect(utility.w300().value, isA<FontWeight>());
+      expect(utility.w400().value, isA<FontWeight>());
+      expect(utility.w500().value, isA<FontWeight>());
+      expect(utility.w600().value, isA<FontWeight>());
+      expect(utility.w700().value, isA<FontWeight>());
+      expect(utility.w800().value, isA<FontWeight>());
+      expect(utility.w900().value, isA<FontWeight>());
+      expect(utility.w100().value, FontWeight.w100);
+      expect(utility.w200().value, FontWeight.w200);
+      expect(utility.w300().value, FontWeight.w300);
+      expect(utility.w400().value, FontWeight.w400);
+      expect(utility.w500().value, FontWeight.w500);
+      expect(utility.w600().value, FontWeight.w600);
+      expect(utility.w700().value, FontWeight.w700);
+      expect(utility.w800().value, FontWeight.w800);
+      expect(utility.w900().value, FontWeight.w900);
+    });
+  });
+
+  // TextDecorationUtility
+  group('TextDecorationUtility Tests', () {
+    const utility = TextDecorationUtility(UtilityTestAttribute.new);
+    test('Properties are initialized correctly', () {
+      expect(utility.none().value, isA<TextDecoration>());
+      expect(utility.underline().value, isA<TextDecoration>());
+      expect(utility.overline().value, isA<TextDecoration>());
+      expect(utility.lineThrough().value, isA<TextDecoration>());
+      expect(utility.none().value, TextDecoration.none);
+      expect(utility.underline().value, TextDecoration.underline);
+      expect(utility.overline().value, TextDecoration.overline);
+      expect(utility.lineThrough().value, TextDecoration.lineThrough);
+    });
+  });
+
+  // FontStyleUtility
+  group('FontStyleUtility Tests', () {
+    const utility = FontStyleUtility(UtilityTestAttribute.new);
+    test('Properties are initialized correctly', () {
+      expect(utility.normal().value, isA<FontStyle>());
+      expect(utility.italic().value, isA<FontStyle>());
+      expect(utility.normal().value, FontStyle.normal);
+      expect(utility.italic().value, FontStyle.italic);
+    });
+  });
+
+  // RadiusUtility
+  group('RadiusUtility Tests', () {
+    const utility = RadiusUtility(UtilityTestAttribute.new);
+    test('Properties are initialized correctly', () {
+      expect(utility.circular(10).value, isA<Radius>());
+      expect(utility.circular(10).value, const Radius.circular(10));
+      expect(utility.elliptical(10, 20).value, isA<Radius>());
+      expect(utility.elliptical(10, 20).value, const Radius.elliptical(10, 20));
+    });
+  });
+
+  // TextDecorationStyleUtility
+  group('TextDecorationStyleUtility Tests', () {
+    const utility = TextDecorationStyleUtility(UtilityTestAttribute.new);
+    test('Properties are initialized correctly', () {
+      expect(utility.solid().value, isA<TextDecorationStyle>());
+      expect(utility.double().value, isA<TextDecorationStyle>());
+      expect(utility.dotted().value, isA<TextDecorationStyle>());
+      expect(utility.dashed().value, isA<TextDecorationStyle>());
+      expect(utility.wavy().value, isA<TextDecorationStyle>());
+      expect(utility.solid().value, TextDecorationStyle.solid);
+      expect(utility.double().value, TextDecorationStyle.double);
+      expect(utility.dotted().value, TextDecorationStyle.dotted);
+      expect(utility.dashed().value, TextDecorationStyle.dashed);
+      expect(utility.wavy().value, TextDecorationStyle.wavy);
     });
   });
 }

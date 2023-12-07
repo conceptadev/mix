@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import '../../core/attribute.dart';
 import '../../core/extensions/values_ext.dart';
 import '../scalars/scalar_util.dart';
-import 'border_radius_attribute.dart';
 import 'border_radius_dto.dart';
 
 /// Utility class for creating and manipulating attributes with [BorderRadiusGeometry]

@@ -7,7 +7,7 @@ import 'edge_insets_dto.dart';
 
 @immutable
 class SpacingDto extends EdgeInsetsGeometryDto<SpacingDto> {
-  const SpacingDto({
+  const SpacingDto._({
     super.top,
     super.bottom,
     super.left,
@@ -16,16 +16,32 @@ class SpacingDto extends EdgeInsetsGeometryDto<SpacingDto> {
     super.end,
   });
 
+  const SpacingDto.only({
+    double? top,
+    double? bottom,
+    double? left,
+    double? right,
+    double? start,
+    double? end,
+  }) : this._(
+          top: top,
+          bottom: bottom,
+          left: left,
+          right: right,
+          start: start,
+          end: end,
+        );
+
   static SpacingDto from(EdgeInsetsGeometry edgeInsets) {
     if (edgeInsets is EdgeInsetsDirectional) {
-      return SpacingDto(
+      return SpacingDto._(
         top: edgeInsets.top,
         bottom: edgeInsets.bottom,
         start: edgeInsets.start,
         end: edgeInsets.end,
       );
     } else if (edgeInsets is EdgeInsets) {
-      return SpacingDto(
+      return SpacingDto._(
         top: edgeInsets.top,
         bottom: edgeInsets.bottom,
         left: edgeInsets.left,
@@ -48,7 +64,7 @@ class SpacingDto extends EdgeInsetsGeometryDto<SpacingDto> {
   SpacingDto merge(SpacingDto? other) {
     if (other == null) return this;
 
-    return SpacingDto(
+    return SpacingDto._(
       top: other.top ?? top,
       bottom: other.bottom ?? bottom,
       left: other.left ?? left,

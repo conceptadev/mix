@@ -7,7 +7,7 @@ void main() {
   group('SpaceToken tests', () {
     test('SpaceToken.xsmall() returns correct value', () {
       expect(SpaceToken.xsmall(), SpaceToken.xsmall());
-      expect(const SpaceToken('mix.space.xsmall', 4.0), SpaceToken.xsmall);
+      expect(const SpaceToken('mix.space.xsmall'), SpaceToken.xsmall);
       expect('mix.space.xsmall', SpaceToken.xsmall.name);
       expect('mix.space.xsmall'.hashCode, SpaceToken.xsmall.name.hashCode);
 
@@ -17,7 +17,7 @@ void main() {
 
     test('SpaceToken.small() returns correct value', () {
       expect(SpaceToken.small(), SpaceToken.small());
-      expect(const SpaceToken('mix.space.small', 8.0), SpaceToken.small);
+      expect(const SpaceToken('mix.space.small'), SpaceToken.small);
       expect('mix.space.small', SpaceToken.small.name);
       expect('mix.space.small'.hashCode, SpaceToken.small.name.hashCode);
 
@@ -27,7 +27,7 @@ void main() {
 
     test('SpaceToken.medium() returns correct value', () {
       expect(SpaceToken.medium(), SpaceToken.medium());
-      expect(const SpaceToken('mix.space.medium', 16.0), SpaceToken.medium);
+      expect(const SpaceToken('mix.space.medium'), SpaceToken.medium);
       expect('mix.space.medium', SpaceToken.medium.name);
       expect('mix.space.medium'.hashCode, SpaceToken.medium.name.hashCode);
 
@@ -37,14 +37,14 @@ void main() {
 
     test('SpaceToken.large() returns correct value', () {
       expect(SpaceToken.large(), SpaceToken.large());
-      expect(const SpaceToken('mix.space.large', 24.0), SpaceToken.large);
+      expect(const SpaceToken('mix.space.large'), SpaceToken.large);
       expect('mix.space.large', SpaceToken.large.name);
       expect('mix.space.large'.hashCode, SpaceToken.large.name.hashCode);
     });
 
     test('SpaceToken.xlarge() returns correct value', () {
       expect(SpaceToken.xlarge(), SpaceToken.xlarge());
-      expect(const SpaceToken('mix.space.xlarge', 32.0), SpaceToken.xlarge);
+      expect(const SpaceToken('mix.space.xlarge'), SpaceToken.xlarge);
       expect('mix.space.xlarge', SpaceToken.xlarge.name);
       expect('mix.space.xlarge'.hashCode, SpaceToken.xlarge.name.hashCode);
 
@@ -54,7 +54,7 @@ void main() {
 
     test('SpaceToken.xxlarge() returns correct value', () {
       expect(SpaceToken.xxlarge(), SpaceToken.xxlarge());
-      expect(const SpaceToken('mix.space.xxlarge', 40.0), SpaceToken.xxlarge);
+      expect(const SpaceToken('mix.space.xxlarge'), SpaceToken.xxlarge);
       expect('mix.space.xxlarge', SpaceToken.xxlarge.name);
       expect('mix.space.xxlarge'.hashCode, SpaceToken.xxlarge.name.hashCode);
 

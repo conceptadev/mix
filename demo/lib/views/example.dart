@@ -61,18 +61,18 @@ class CustomMixWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final style = StyleMix(
-      height(100),
-      margin.vertical(10),
-      elevation(10),
-      borderRadius(10),
-      backgroundColor($colors.primary),
-      text.style.as($textStyles.bodyMedium),
-      text.style(color: $colors.onPrimary),
+      box.height(100),
+      box.margin.vertical(10),
+      box.elevation(10),
+      box.borderRadius(10),
+      box.color($colors.primary()),
+      text.style.of($textStyles.bodyMedium),
+      text.style(color: $colors.onPrimary()),
       onHover(
-        elevation(2),
-        padding(20),
-        backgroundColor($colors.secondary),
-        text.style(color: $colors.onSecondary),
+        box.elevation(2),
+        box.padding(20),
+        box.color.of($colors.secondary),
+        text.style.color.of($colors.onSecondary),
       ),
     );
 

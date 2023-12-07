@@ -4,15 +4,15 @@ import 'package:mix/mix.dart';
 import '../styles.dart';
 
 StyleMix get button => StyleMix(
-      text.style.as($textStyles.bodyMedium),
-      padding.top(10),
+      text.style.of($textStyles.bodyMedium),
+      box.padding.top(10),
       text.style.bold(),
       text.style(fontSize: 6.0),
-      backgroundColor($colors.primary),
+      box.color.of($colors.primary),
       onHover(
-        backgroundColor($colors.secondary),
+        box.color.of($colors.secondary),
       ),
-      padding(8, 15),
+      box.padding(8, 15),
     );
 
 class TypographyExample extends StatelessWidget {
@@ -37,8 +37,8 @@ class TypographyExample extends StatelessWidget {
             "This is a StyledText with a custom textStyle!",
             style: headingMix.merge(
               StyleMix(
-                textStyle(
-                  color: $colors.surface,
+                text.style(
+                  color: $colors.surface(),
                   fontWeight: FontWeight.bold,
                   fontStyle: FontStyle.italic,
                   letterSpacing: 2,
@@ -46,14 +46,14 @@ class TypographyExample extends StatelessWidget {
                   height: 1.5,
                   shadows: [
                     Shadow(
-                      color: $colors.secondary,
+                      color: $colors.secondary(),
                       offset: const Offset(2, 2),
                       blurRadius: 2,
                     ),
                   ],
                 ),
                 onDark(
-                  textStyle(color: $colors.surface),
+                  text.style.color.of($colors.surface),
                 ),
               ),
             ),

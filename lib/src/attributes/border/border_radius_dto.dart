@@ -3,6 +3,17 @@ import 'package:flutter/material.dart';
 import '../../core/attribute.dart';
 import '../../factory/mix_provider_data.dart';
 
+/// Represents a [Dto] Data transfer object of [BorderRadiusGeometry]
+///
+/// This is used to allow for resolvable value tokens, and also the correct
+/// merge and combining behavior. It allows to be merged, and resolved to a [BorderRadiusGeometry]
+///
+/// This Dto implements `BorderRadius` and `BorderRadiusDirectional` Flutter classes to allow for
+/// better merging support, and cleaner API for the utilities
+///
+/// See also:
+/// - [BorderRadiusGeometry], which is the Flutter counterpart of this class.
+
 @immutable
 class BorderRadiusGeometryDto extends Dto<BorderRadiusGeometry>
     with Mergeable<BorderRadiusGeometryDto> {

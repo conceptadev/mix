@@ -1,45 +1,209 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mix/mix.dart';
 
-int expensiveFunction() {
-  int result = 0;
-  for (int i = 0; i < 10000000; i++) {
-    result += i;
-  }
+import '../helpers/testing_utils.dart';
 
-  return result;
-}
-
-class ExpensiveWidget extends StatelessWidget {
-  const ExpensiveWidget({Key? key}) : super(key: key);
+class StyledContainerExample extends StatelessWidget {
+  const StyledContainerExample({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    expensiveFunction();
+    final paddingAttr = box.padding(10);
+    final marginAttr = box.margin(15);
+    final alignmentAttr = box.alignment.center();
+    final clipAttr = box.clipBehavior.hardEdge();
 
+    final borderAttribute = box.border.all(
+      color: Colors.red,
+      width: 1,
+      style: BorderStyle.solid,
+    );
+
+    final radiusAttribute = box.borderRadius(10);
+
+    final colorAttribute = box.color(Colors.red);
+
+    return StyledContainer(
+      style: StyleMix(
+        paddingAttr,
+        marginAttr,
+        alignmentAttr,
+        clipAttr,
+        borderAttribute,
+        radiusAttribute,
+        colorAttribute,
+      ),
+      child: const SizedBox(
+        width: 100,
+        height: 100,
+      ),
+    );
+  }
+}
+
+class StyleWidgetExpensiveAttributge extends StatelessWidget {
+  const StyleWidgetExpensiveAttributge({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final paddingAttr = box.padding(10);
+    final marginAttr = box.margin(15);
+    final alignmentAttr = box.alignment.center();
+    final clipAttr = box.clipBehavior.hardEdge();
+
+    final borderAttribute = box.border.all(
+      color: Colors.red,
+      width: 1,
+      style: BorderStyle.solid,
+    );
+
+    final radiusAttribute = box.borderRadius(10);
+
+    final colorAttribute = box.color(Colors.red);
+
+    StyleMix buildStyle() {
+      return StyleMix(
+        paddingAttr,
+        marginAttr,
+        alignmentAttr,
+        clipAttr,
+        borderAttribute,
+        radiusAttribute,
+        colorAttribute,
+      );
+    }
+
+    StyleMix mergedStyle = buildStyle();
+
+    // merge 100 times buildStyles()
+    for (int i = 0; i < 10000; i++) {
+      mergedStyle = mergedStyle.merge(buildStyle());
+    }
+
+    return StyledContainer(
+      style: mergedStyle,
+      child: const SizedBox(
+        width: 100,
+        height: 100,
+      ),
+    );
+  }
+}
+
+class ContainerExample extends StatelessWidget {
+  const ContainerExample({super.key});
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
-      width: 100,
-      height: 100,
-      color: Colors.blue,
+      padding: const EdgeInsets.all(10),
+      margin: const EdgeInsets.all(15),
+      alignment: Alignment.center,
+      clipBehavior: Clip.hardEdge,
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: Colors.red,
+          width: 1,
+          style: BorderStyle.solid,
+        ),
+        borderRadius: BorderRadius.circular(10),
+        color: Colors.red,
+      ),
+      child: const SizedBox(
+        width: 100,
+        height: 100,
+      ),
     );
   }
 }
 
 void main() {
-  testWidgets('Build time test', (WidgetTester tester) async {
-    final widget = Container(width: 100, height: 100, color: Colors.blue);
+  testWidgets('Is fast enough', (WidgetTester tester) async {
+    const iterationCount = 10000;
 
-    const expensiveWidget = ExpensiveWidget();
+    Future<int> buildWidget(Widget widget) async {
+      return await tester.runAsync<int>(() async {
+            final stopwatch = Stopwatch()..start();
+            for (int i = 0; i < iterationCount; i++) {
+              await tester.pumpWidget(widget);
+            }
+            stopwatch.stop();
+            return stopwatch.elapsedMilliseconds;
+          }) ??
+          0;
+    }
 
+    // warm up
+    await buildWidget(const ContainerExample());
+    await buildWidget(const StyledContainerExample());
+
+    // ignore: prefer_const_constructors
+    final styledContainerTime = await buildWidget(StyledContainer());
+    // ignore: prefer_const_constructors
+    final containerTime = await buildWidget(ContainerExample());
+
+    final elapsedStyledContainerTime = styledContainerTime / iterationCount;
+    final elapsedContainerTime = containerTime / iterationCount;
+
+    // print('StyledContainer: $elapsedStyledContainerTime ms');
+    // print('Container: $elapsedContainerTime ms');
+    // StyledContainer shoudl not b slower than 0.01 ms
+    expect(elapsedStyledContainerTime, lessThan(elapsedContainerTime + 0.02),
+        reason: 'StyledContainer is too slow');
+  });
+
+  // test perfromance for StyleMix.create
+  test('StyleMix.create', () {
+    const iterations = 10000;
     final stopwatch = Stopwatch()..start();
-    await tester.pumpWidget(widget);
-    final elapsed = stopwatch.elapsedMilliseconds;
+    for (int i = 0; i < iterations; i++) {
+      StyleMix.create([
+        box.padding(10),
+        box.margin(15),
+        box.alignment.center(),
+        box.clipBehavior.hardEdge(),
+        box.border.all(
+          color: Colors.red,
+          width: 1,
+          style: BorderStyle.solid,
+        ),
+        box.borderRadius(10),
+        box.color(Colors.red),
+      ]);
+    }
+    stopwatch.stop();
 
-    stopwatch.reset();
-    await tester.pumpWidget(expensiveWidget);
-    final elapsedExpensive = stopwatch.elapsedMilliseconds;
+    final elapsedTime = stopwatch.elapsedMilliseconds / iterations;
+    print('StyleMix.create: $elapsedTime ms');
+  });
 
-    debugPrint('Elapsed: $elapsed');
-    debugPrint('Elapsed Expensive: $elapsedExpensive');
+  // test performance for MixData.create
+  test('MixData.create', () {
+    const iterations = 10000;
+    final stopwatch = Stopwatch()..start();
+    for (int i = 0; i < iterations; i++) {
+      MixData.create(
+        MockBuildContext(),
+        StyleMix(
+          box.padding(10),
+          box.margin(15),
+          box.alignment.center(),
+          box.clipBehavior.hardEdge(),
+          box.border.all(
+            color: Colors.red,
+            width: 1,
+            style: BorderStyle.solid,
+          ),
+          box.borderRadius(10),
+          box.color(Colors.red),
+        ),
+      );
+    }
+
+    stopwatch.stop();
+    final timeElapsed = stopwatch.elapsedMilliseconds / iterations;
+
+    print('MixData.create: $timeElapsed ms');
   });
 }

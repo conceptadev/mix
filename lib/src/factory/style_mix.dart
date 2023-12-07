@@ -30,26 +30,25 @@ typedef Mix = StyleMix;
 /// final updatedStyle = style.selectVariant(myVariant);
 /// ```
 class StyleMix with Comparable {
-  /// A constant, empty mix for use with const constructor widgets.
-  ///
-  /// This can be used as a default or initial value where a `StyleMix` is required.
-  static const empty = StyleMix._(
-    styles: StyleAttributeMap.empty(),
-    variants: VariantAttributeMap.empty(),
-  );
-
   /// Visual attributes contained in this mix.
   final StyleAttributeMap styles;
 
   /// The variant attributes contained in this mix.
   final VariantAttributeMap variants;
 
-  static final stack = SpreadFunctionParams(_styleType<StackMixAttribute>());
+  static final stack = SpreadFunctionParams(_styleType<StackSpecAttribute>());
   static final text = SpreadFunctionParams(_styleType<TextMixAttribute>());
   static final image = SpreadFunctionParams(_styleType<ImageMixAttribute>());
   static final container =
       SpreadFunctionParams(_styleType<ContainerSpecAttribute>());
-  static final flex = SpreadFunctionParams(_styleType<FlexMixAttribute>());
+  static final flex = SpreadFunctionParams(_styleType<FlexSpecAttribute>());
+
+  /// A constant, empty mix for use with const constructor widgets.
+  ///
+  /// This can be used as a default or initial value where a `StyleMix` is required.
+  const StyleMix.empty()
+      : styles = const StyleAttributeMap.empty(),
+        variants = const VariantAttributeMap.empty();
 
   const StyleMix._({required this.styles, required this.variants});
 
@@ -142,7 +141,7 @@ class StyleMix with Comparable {
     StyleMix style, [
     StyleMix? fallback,
   ]) {
-    return condition ? style : fallback ?? StyleMix.empty;
+    return condition ? style : fallback ?? const StyleMix.empty();
   }
 
   /// Combines an optional positional list of [mixes] into a single `StyleMix`.
@@ -156,7 +155,7 @@ class StyleMix with Comparable {
   /// ```
   factory StyleMix.combineList(Iterable<StyleMix> mixes) {
     return mixes.isEmpty
-        ? StyleMix.empty
+        ? const StyleMix.empty()
         : mixes.reduce((combinedStyle, mix) => combinedStyle.merge(mix));
   }
 
@@ -376,7 +375,7 @@ class StyleMix with Comparable {
       }
     }
     if (pickedVariants.isEmpty || matchedVariants.isEmpty) {
-      return isRecursive ? this : StyleMix.empty;
+      return isRecursive ? this : const StyleMix.empty();
     }
 
     final pickedStyle =

@@ -32,6 +32,14 @@ abstract class DecorationDto<Value extends Decoration> extends Dto<Value>
   }
 }
 
+/// Represents a [Dto] Data transfer object of [BoxDecoration]
+///
+/// This is used to allow for resolvable value tokens, and also the correct
+/// merge and combining behavior. It allows to be merged, and resolved to a `[BoxDecoration]
+///
+/// See also:
+/// * [BoxDecoration], which is the Flutter counterpart of this class.
+/// * [DecorationDto], which is the base class for this class.
 @immutable
 class BoxDecorationDto extends DecorationDto<BoxDecoration> {
   final ColorDto? color;
@@ -50,6 +58,7 @@ class BoxDecorationDto extends DecorationDto<BoxDecoration> {
     this.shape,
   });
 
+  /// Creates a [BoxDecorationDto] from a given [BoxDecoration].
   static BoxDecorationDto from(BoxDecoration decoration) {
     return BoxDecorationDto(
       color: ColorDto.maybeFrom(decoration.color),
@@ -61,10 +70,14 @@ class BoxDecorationDto extends DecorationDto<BoxDecoration> {
     );
   }
 
+  /// Creates a [BoxDecorationDto] from a given [BoxDecoration].
+  ///
+  /// Returns null if the decoration is null.
   static BoxDecorationDto? maybeFrom(BoxDecoration? decoration) {
     return decoration == null ? null : from(decoration);
   }
 
+  /// Resolves this [BoxDecorationDto] with a given [MixData] to a [BoxDecoration]
   @override
   BoxDecoration resolve(MixData mix) {
     return BoxDecoration(
@@ -77,6 +90,7 @@ class BoxDecorationDto extends DecorationDto<BoxDecoration> {
     );
   }
 
+  /// Merges this [BoxDecorationDto] with `other` [BoxDecorationDto]
   @override
   BoxDecorationDto merge(BoxDecorationDto? other) {
     if (other == null) return this;

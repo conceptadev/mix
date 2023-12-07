@@ -22,7 +22,7 @@ class ButtonSizeVariants {
 }
 
 StyleMix get _baseStyle => StyleMix(
-      borderRadius(4),
+      box.borderRadius(4),
       onPress(
         scale(0.95),
       ),
@@ -31,28 +31,28 @@ StyleMix get _baseStyle => StyleMix(
         // added because of lack of style parameters (yellow lines)
         decoration: TextDecoration.none,
         fontWeight: FontWeight.w600,
-        fontFamily: $textStyles.bodySmall.fontFamily,
       ),
+      text.style.of($textStyles.bodySmall),
       flex.mainAxisSize.min(),
       ButtonSizeVariants.small(
-        padding.horizontal(10),
-        padding.vertical(10),
+        box.padding.horizontal(10),
+        box.padding.vertical(10),
         text.style(
           fontSize: 16,
         ),
         icon(size: 24),
       ),
       ButtonSizeVariants.medium(
-        padding.horizontal(4),
-        padding.vertical(16),
+        box.padding.horizontal(4),
+        box.padding.vertical(16),
         text.style(
           fontSize: 16,
         ),
         icon(size: 24),
       ),
       ButtonSizeVariants.large(
-        padding.horizontal(4),
-        padding.vertical(2),
+        box.padding.horizontal(4),
+        box.padding.vertical(2),
         text.style(
           fontSize: 16,
         ),
@@ -143,12 +143,12 @@ StyleMix get _style => StyleMix(
       text.style(
         color: const Color(0xFFFF004C),
       ),
-      backgroundColor(const Color(0x0F07E2FF)),
-      icon(color: $colors.onBackground),
+      box.color(const Color(0x0F07E2FF)),
+      icon.color.of($colors.onBackground),
       onDisabled(
-        backgroundColor($colors.background.withOpacity(0.3)),
-        text.style(color: $colors.onBackground.withOpacity(0.3)),
-        icon(color: $colors.onBackground.withOpacity(0.3)),
+        box.color.of($colors.background),
+        text.style.color.of($colors.onBackground),
+        icon.color.of($colors.onBackground),
       ),
     );
 

@@ -1,45 +1,62 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+import '../mix_theme.dart';
 import 'mix_token.dart';
 
-const _small = RadiusToken('mix.radii.small', Radius.circular(4));
-const _medium = RadiusToken('mix.radii.medium', Radius.circular(8));
-const _large = RadiusToken('mix.radii.large', Radius.circular(16));
+const _small = RadiusToken('mix.radii.small');
+const _medium = RadiusToken('mix.radii.medium');
+const _large = RadiusToken('mix.radii.large');
 
 class RadiusToken extends MixToken<Radius> {
   static const small = _small;
   static const medium = _medium;
   static const large = _large;
 
-  const RadiusToken(super.name, super.value);
+  const RadiusToken(super.name);
 
-  const RadiusToken.name(String name) : this(name, Radius.zero);
+  @override
+  RadiusRef call() => RadiusRef(this);
 
-  factory RadiusToken.resolvable(String name, TokenResolver<Radius> resolver) {
-    return RadiusToken(name, RadiusRef(name, resolver));
+  @override
+  Radius resolve(BuildContext context) {
+    final themeValue = MixTheme.of(context).radii[this];
+    assert(
+      themeValue != null,
+      'RadiusToken $name is not defined in the theme and has no default value',
+    );
+
+    final resolvedValue =
+        themeValue is RadiusResolver ? themeValue.resolve(context) : themeValue;
+
+    return resolvedValue ?? const Radius.circular(0);
   }
 }
 
 @immutable
-class RadiusRef extends Radius with ValueRef<Radius> {
+class RadiusResolver extends Radius with WithTokenResolver<Radius> {
   @override
-  final String tokenName;
+  final BuildContextResolver<Radius> resolve;
 
+  const RadiusResolver(this.resolve) : super.circular(0);
+}
+
+@immutable
+class RadiusRef extends Radius with TokenRef<RadiusToken, Radius> {
   @override
-  final TokenResolver<Radius> resolve;
+  final RadiusToken token;
 
-  const RadiusRef(this.tokenName, this.resolve) : super.circular(0);
+  const RadiusRef(this.token) : super.circular(0);
 
   @override
   operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is RadiusRef && other.tokenName == tokenName;
+    return other is RadiusRef && other.token == token;
   }
 
   @override
-  int get hashCode => tokenName.hashCode;
+  int get hashCode => token.hashCode;
 }
 
 // // Helper class to wrap functions that can return

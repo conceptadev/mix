@@ -6,6 +6,7 @@ import '../core/attributes_map.dart';
 import '../decorators/decorator.dart';
 import '../helpers/compare_mixin.dart';
 import '../theme/mix_theme.dart';
+import '../variants/context_variant.dart';
 import 'style_mix.dart';
 
 /// This class is used for encapsulating all [MixData] related operations.
@@ -30,7 +31,7 @@ class MixData with Comparable {
   factory MixData.create(BuildContext context, StyleMix style) {
     final styleMix = applyContextToVisualAttributes(context, style);
 
-    final resolver = MixTokenResolver(context, MixTheme.of(context));
+    final resolver = MixTokenResolver(context);
 
     return MixData._(
       resolver: resolver,
@@ -114,12 +115,33 @@ List<StyleAttribute> applyContextToVisualAttributes(
     return mix.styles.values.toList();
   }
 
+  List<WhenVariant> contextVariantTypes = [];
+  List<WhenVariant> gestureVariantTypes = [];
+
   for (ContextVariantAttribute attr in contextVariants) {
-    style = _applyVariants(context, style, attr);
+    if (attr.variant is GestureVariant) {
+      gestureVariantTypes.add(attr);
+    } else {
+      contextVariantTypes.add(attr);
+    }
   }
 
   for (MultiVariantAttribute attr in multiVariants) {
-    style = _applyVariants(context, style, attr);
+    if (attr.variant.hasGestureVariant) {
+      gestureVariantTypes.add(attr);
+    } else {
+      contextVariantTypes.add(attr);
+    }
+  }
+
+  for (WhenVariant variant in contextVariantTypes) {
+    style = _applyVariants(context, style, variant);
+  }
+
+  // Gesture Variants are applied after Context Variants
+  // As they take precedence over Context Variants from a styling perspective
+  for (WhenVariant variant in gestureVariantTypes) {
+    style = _applyVariants(context, style, variant);
   }
 
   return applyContextToVisualAttributes(context, style);

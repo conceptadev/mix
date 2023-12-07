@@ -3,109 +3,157 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+import '../mix_theme.dart';
 import 'mix_token.dart';
 
 class TextStyleToken extends MixToken<TextStyle> {
-  const TextStyleToken(super.name, super.value);
+  const TextStyleToken(super.name);
 
-  const TextStyleToken.name(String name) : this(name, const TextStyle());
+  @override
+  TextStyleRef call() => TextStyleRef(this);
 
-  factory TextStyleToken.resolvable(
-    String name,
-    TokenResolver<TextStyle> resolver,
-  ) {
-    return TextStyleToken(name, TextStyleRef(name, resolver));
+  @override
+  TextStyle resolve(BuildContext context) {
+    final themeValue = MixTheme.of(context).textStyles[this];
+    assert(
+      themeValue != null,
+      'TextStyleToken $name is not defined in the theme',
+    );
+
+    final resolvedValue = themeValue is TextStyleResolver
+        ? themeValue.resolve(context)
+        : themeValue;
+
+    return resolvedValue ?? const TextStyle();
   }
 }
 
 @immutable
-class TextStyleRef extends TextStyle with ValueRef<TextStyle> {
+class TextStyleResolver extends TextStyle with WithTokenResolver<TextStyle> {
   @override
-  final String tokenName;
+  final BuildContextResolver<TextStyle> resolve;
 
+  const TextStyleResolver(this.resolve);
+}
+
+@immutable
+class TextStyleRef extends TextStyle with TokenRef<TextStyleToken, TextStyle> {
   @override
-  final TokenResolver<TextStyle> resolve;
+  final TextStyleToken token;
 
-  const TextStyleRef(this.tokenName, this.resolve);
+  const TextStyleRef(this.token);
 
   @override
   operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is TextStyleRef && other.tokenName == tokenName;
+    return other is TextStyleRef && other.token == token;
   }
 
   @override
-  bool get inherit => throw _e(tokenName, 'inherit');
+  TextStyle copyWith({
+    bool? inherit,
+    Color? color,
+    Color? backgroundColor,
+    double? fontSize,
+    FontWeight? fontWeight,
+    FontStyle? fontStyle,
+    double? letterSpacing,
+    double? wordSpacing,
+    TextBaseline? textBaseline,
+    double? height,
+    TextLeadingDistribution? leadingDistribution,
+    Locale? locale,
+    Paint? foreground,
+    Paint? background,
+    List<Shadow>? shadows,
+    List<FontFeature>? fontFeatures,
+    List<FontVariation>? fontVariations,
+    TextDecoration? decoration,
+    Color? decorationColor,
+    TextDecorationStyle? decorationStyle,
+    double? decorationThickness,
+    String? debugLabel,
+    String? fontFamily,
+    List<String>? fontFamilyFallback,
+    String? package,
+    TextOverflow? overflow,
+  }) =>
+      throw _e(token.name, 'copyWith');
+  @override
+  String get fontFamily => throw _e(token.name, 'fontFamily');
 
   @override
-  Color get color => throw _e(tokenName, 'color');
+  bool get inherit => throw _e(token.name, 'inherit');
 
   @override
-  Color get backgroundColor => throw _e(tokenName, 'backgroundColor');
+  Color get color => throw _e(token.name, 'color');
 
   @override
-  double get fontSize => throw _e(tokenName, 'fontSize');
+  Color get backgroundColor => throw _e(token.name, 'backgroundColor');
 
   @override
-  FontWeight get fontWeight => throw _e(tokenName, 'fontWeight');
+  double get fontSize => throw _e(token.name, 'fontSize');
 
   @override
-  FontStyle get fontStyle => throw _e(tokenName, 'fontStyle');
+  FontWeight get fontWeight => throw _e(token.name, 'fontWeight');
 
   @override
-  double get letterSpacing => throw _e(tokenName, 'letterSpacing');
+  FontStyle get fontStyle => throw _e(token.name, 'fontStyle');
 
   @override
-  double get wordSpacing => throw _e(tokenName, 'wordSpacing');
+  double get letterSpacing => throw _e(token.name, 'letterSpacing');
 
   @override
-  TextBaseline get textBaseline => throw _e(tokenName, 'textBaseline');
+  double get wordSpacing => throw _e(token.name, 'wordSpacing');
 
   @override
-  double get height => throw _e(tokenName, 'height');
+  TextBaseline get textBaseline => throw _e(token.name, 'textBaseline');
+
+  @override
+  double get height => throw _e(token.name, 'height');
 
   @override
   TextLeadingDistribution get leadingDistribution =>
-      throw _e(tokenName, 'leadingDistribution');
+      throw _e(token.name, 'leadingDistribution');
 
   @override
-  Locale get locale => throw _e(tokenName, 'locale');
+  Locale get locale => throw _e(token.name, 'locale');
 
   @override
-  Paint get foreground => throw _e(tokenName, 'foreground');
+  Paint get foreground => throw _e(token.name, 'foreground');
 
   @override
-  Paint get background => throw _e(tokenName, 'background');
+  Paint get background => throw _e(token.name, 'background');
 
   @override
-  List<Shadow> get shadows => throw _e(tokenName, 'shadows');
+  List<Shadow> get shadows => throw _e(token.name, 'shadows');
 
   @override
-  List<FontFeature> get fontFeatures => throw _e(tokenName, 'fontFeatures');
+  List<FontFeature> get fontFeatures => throw _e(token.name, 'fontFeatures');
 
   @override
   List<FontVariation> get fontVariations =>
-      throw _e(tokenName, 'fontVariations');
+      throw _e(token.name, 'fontVariations');
 
   @override
-  TextDecoration get decoration => throw _e(tokenName, 'decoration');
+  TextDecoration get decoration => throw _e(token.name, 'decoration');
 
   @override
-  Color get decorationColor => throw _e(tokenName, 'decorationColor');
+  Color get decorationColor => throw _e(token.name, 'decorationColor');
 
   @override
   TextDecorationStyle get decorationStyle =>
-      throw _e(tokenName, 'decorationStyle');
+      throw _e(token.name, 'decorationStyle');
 
   @override
-  double get decorationThickness => throw _e(tokenName, 'decorationThickness');
+  double get decorationThickness => throw _e(token.name, 'decorationThickness');
 
   @override
-  String get debugLabel => throw _e(tokenName, 'debugLabel');
+  String get debugLabel => throw _e(token.name, 'debugLabel');
 
   @override
-  int get hashCode => tokenName.hashCode;
+  int get hashCode => token.name.hashCode;
 }
 
 TokenFieldAccessError _e(String token, String field) {

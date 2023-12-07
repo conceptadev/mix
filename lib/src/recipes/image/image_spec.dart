@@ -36,17 +36,6 @@ class ImageSpec extends Spec<ImageSpec> {
   }
 
   @override
-  ImageSpec merge(ImageSpec? other) {
-    return copyWith(
-      width: other?.width,
-      height: other?.height,
-      color: other?.color,
-      repeat: other?.repeat,
-      fit: other?.fit,
-    );
-  }
-
-  @override
   ImageSpec lerp(ImageSpec? other, double t) {
     return ImageSpec(
       width: lerpDouble(width, other?.width, t),

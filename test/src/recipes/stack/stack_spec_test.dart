@@ -10,7 +10,7 @@ void main() {
       final mix = MixData.create(
         MockBuildContext(),
         StyleMix(
-          const StackMixAttribute(
+          const StackSpecAttribute(
             fit: StackFit.expand,
             clipBehavior: Clip.antiAlias,
             alignment: Alignment.center,
@@ -19,7 +19,7 @@ void main() {
         ),
       );
 
-      final mixture = StackMixAttribute.of(mix).resolve(mix);
+      final mixture = StackSpecAttribute.of(mix).resolve(mix);
 
       expect(mixture.alignment, Alignment.center);
       expect(mixture.fit, StackFit.expand);

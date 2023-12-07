@@ -7,7 +7,7 @@ import 'stack_attribute.dart';
 const stack = StackSpecUtility.selfBuilder;
 
 class StackSpecUtility<T extends StyleAttribute>
-    extends MixUtility<T, StackMixAttribute> {
+    extends MixUtility<T, StackSpecAttribute> {
   static const selfBuilder = StackSpecUtility(MixUtility.selfBuilder);
 
   const StackSpecUtility(super.builder);
@@ -18,7 +18,7 @@ class StackSpecUtility<T extends StyleAttribute>
     TextDirection? textDirection,
     Clip? clipBehavior,
   }) {
-    final stack = StackMixAttribute(
+    final stack = StackSpecAttribute(
       alignment: alignment,
       fit: fit,
       textDirection: textDirection,

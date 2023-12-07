@@ -7,12 +7,12 @@ class VariantsAndOperator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final mix = StyleMix(
-      padding(20.0),
-      textStyle(color: Colors.white),
+      box.padding(20.0),
+      text.style(color: Colors.white),
       (onHover & onEnabled)(
         // When it's hovering AND pressing
-        textStyle(color: Colors.black),
-        bold(),
+        text.style(color: Colors.black),
+        text.style.bold(),
       ),
     );
 

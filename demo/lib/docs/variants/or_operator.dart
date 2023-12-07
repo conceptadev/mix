@@ -7,12 +7,12 @@ class VariantsOrOperator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final mix = StyleMix(
-      padding(20.0),
+      box.padding(20.0),
+      // Whether it's small OR medium
       (onSmall | onMedium)(
-        // Whether it's small OR medium
-        width(300),
-        height(400),
-        backgroundColor(Colors.white),
+        box.width(300),
+        box.height(400),
+        box.color.white(),
       ),
     );
 

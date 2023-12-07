@@ -19,5 +19,5 @@ StyleMix get flexAlign => StyleMix(
       flex.mainAxisAlignment.start(),
       flex.crossAxisAlignment.start(),
       flex.mainAxisSize.max(),
-      width(double.infinity),
+      box.width(double.infinity),
     );
