@@ -128,7 +128,7 @@ class BoxShadowDto extends ShadowDtoImpl<BoxShadowDto, BoxShadow> {
     if (other == null) return this;
 
     return BoxShadowDto(
-      color: other.color ?? color,
+      color: color?.merge(other.color) ?? other.color,
       offset: other.offset ?? offset,
       blurRadius: other.blurRadius ?? blurRadius,
       spreadRadius: other.spreadRadius ?? spreadRadius,

@@ -204,7 +204,9 @@ class ContainerUtility<T extends StyleAttribute>
   BorderRadiusGeometryUtility<T> get borderRadius =>
       decoration.box.borderRadius;
 
-  BoxShadowListUtility<T> get boxShadow => decoration.box.boxShadow;
+  BoxShadowListUtility<T> get shadows => decoration.box.boxShadows;
+
+  BoxShadowUtility<T> get shadow => decoration.box.boxShadow;
 
   ///  Constraints utilities
   DoubleUtility<T> get maxWidth => constraints.maxWidth;

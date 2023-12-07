@@ -91,15 +91,23 @@ void main() {
     });
 
     test('boxShadow setting', () {
-      final boxShadow = [
-        const BoxShadow(
-          color: Colors.black,
-          blurRadius: 10.0,
-          offset: Offset(5.0, 5.0),
-        )
-      ];
-      final result = boxDecoration.boxShadow(boxShadow);
-      expect(result.value.boxShadow, equals(boxShadow.toDto()));
+      const boxShadow = BoxShadow(
+        color: Colors.black,
+        blurRadius: 10.0,
+        offset: Offset(5.0, 5.0),
+        spreadRadius: 2.0,
+      );
+
+      final result = boxDecoration.boxShadows([boxShadow]);
+
+      final resultSingle = boxDecoration.boxShadow(
+        color: Colors.black,
+        blurRadius: 10.0,
+        offset: const Offset(5.0, 5.0),
+        spreadRadius: 2.0,
+      );
+      expect(result.value.boxShadow, equals([boxShadow].toDto()));
+      expect(resultSingle.value.boxShadow?.first, equals(boxShadow.toDto()));
     });
 
     test('elevation setting', () {

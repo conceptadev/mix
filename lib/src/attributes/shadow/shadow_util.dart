@@ -132,8 +132,8 @@ class BoxShadowListUtility<T extends StyleAttribute>
 /// Allows setting of color, offset, blur radius, and spread radius for a box shadow.
 /// Useful for adding depth and elevation effects to Flutter widgets.
 class BoxShadowUtility<T extends StyleAttribute>
-    extends MixUtility<T, BoxShadowDto> {
-  const BoxShadowUtility(super.builder);
+    extends DtoUtility<T, BoxShadowDto, BoxShadow> {
+  const BoxShadowUtility(super.builder) : super(valueToDto: BoxShadowDto.from);
 
   T _only({
     ColorDto? color,
@@ -179,18 +179,6 @@ class BoxShadowUtility<T extends StyleAttribute>
     return OffsetUtility((offset) => call(offset: offset));
   }
 
-  /// Method to set the spread radius of the box shadow.
-  ///
-  /// Example usage:
-  ///
-  /// ```dart
-  /// final boxShadow = BoxShadowUtility<StyleAttribute>(builder);
-  /// final attribute = boxShadow.spreadRadius(1.0);
-  /// ```
-  ///
-  /// Attribute now holds a [BoxShadowAttribute] with a [BoxShadowDto] that has a spread radius value of `1.0`.
-  T spreadRadius(double spreadRadius) => call(spreadRadius: spreadRadius);
-
   /// Method to set the blur radius of the box shadow.
   ///
   /// Example usage:
@@ -201,7 +189,23 @@ class BoxShadowUtility<T extends StyleAttribute>
   /// ```
   ///
   /// Attribute now holds a [BoxShadowAttribute] with a [BoxShadowDto] that has a blur radius value of `4.0`.
-  T blurRadius(double blurRadius) => call(blurRadius: blurRadius);
+  DoubleUtility<T> get blurRadius {
+    return DoubleUtility((blurRadius) => call(blurRadius: blurRadius));
+  }
+
+  /// Method to set the spread radius of the box shadow.
+  ///
+  /// Example usage:
+  ///
+  /// ```dart
+  /// final boxShadow = BoxShadowUtility<StyleAttribute>(builder);
+  /// final attribute = boxShadow.spreadRadius(1.0);
+  /// ```
+  ///
+  /// Attribute now holds a [BoxShadowAttribute] with a [BoxShadowDto] that has a spread radius value of `1.0`.
+  DoubleUtility<T> get spreadRadius {
+    return DoubleUtility((spreadRadius) => call(spreadRadius: spreadRadius));
+  }
 
   /// Method to create a box shadow with provided parameters.
   T call({
