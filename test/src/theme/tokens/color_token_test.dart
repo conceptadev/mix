@@ -18,8 +18,6 @@ void main() {
       const colorToken1 = ColorToken('testName');
       const colorToken2 = ColorToken('testName');
 
-      const textStyleToken = TextStyleToken('testName');
-
       const colorToken3 = ColorToken('differentName');
 
       expect(colorToken1 == colorToken2, isTrue);

@@ -5,14 +5,14 @@ import '../styles.dart';
 
 StyleMix get button => StyleMix(
       text.style.of($textStyles.bodyMedium),
-      padding.top(10),
+      box.padding.top(10),
       text.style.bold(),
       text.style(fontSize: 6.0),
-      backgroundColor.of($colors.primary),
+      box.color.of($colors.primary),
       onHover(
-        backgroundColor.of($colors.secondary),
+        box.color.of($colors.secondary),
       ),
-      padding(8, 15),
+      box.padding(8, 15),
     );
 
 class TypographyExample extends StatelessWidget {

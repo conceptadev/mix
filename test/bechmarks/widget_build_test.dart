@@ -178,35 +178,6 @@ void main() {
     print('StyleMix.create: $elapsedTime ms');
   });
 
-  // test perfromance for StyleAttributeMap
-  test(
-    'StyleAttributeMap',
-    () {
-      const iterations = 10000;
-      final stopwatch = Stopwatch()..start();
-      for (int i = 0; i < iterations; i++) {
-        StyleAttributeMap([
-          box.padding(10),
-          box.margin(15),
-          box.alignment.center(),
-          box.clipBehavior.hardEdge(),
-          box.border.all(
-            color: Colors.red,
-            width: 1,
-            style: BorderStyle.solid,
-          ),
-          box.borderRadius(10),
-          box.color(Colors.red),
-        ]);
-      }
-
-      stopwatch.stop();
-      final timeElapsed = stopwatch.elapsedMilliseconds / iterations;
-
-      print('StyleAttributeMap: $timeElapsed ms');
-    },
-  );
-
   // test performance for MixData.create
   test('MixData.create', () {
     const iterations = 10000;

@@ -22,7 +22,7 @@ class ButtonSizeVariants {
 }
 
 StyleMix get _baseStyle => StyleMix(
-      borderRadius(4),
+      box.borderRadius(4),
       onPress(
         scale(0.95),
       ),
@@ -35,24 +35,24 @@ StyleMix get _baseStyle => StyleMix(
       text.style.of($textStyles.bodySmall),
       flex.mainAxisSize.min(),
       ButtonSizeVariants.small(
-        padding.horizontal(10),
-        padding.vertical(10),
+        box.padding.horizontal(10),
+        box.padding.vertical(10),
         text.style(
           fontSize: 16,
         ),
         icon(size: 24),
       ),
       ButtonSizeVariants.medium(
-        padding.horizontal(4),
-        padding.vertical(16),
+        box.padding.horizontal(4),
+        box.padding.vertical(16),
         text.style(
           fontSize: 16,
         ),
         icon(size: 24),
       ),
       ButtonSizeVariants.large(
-        padding.horizontal(4),
-        padding.vertical(2),
+        box.padding.horizontal(4),
+        box.padding.vertical(2),
         text.style(
           fontSize: 16,
         ),
@@ -143,10 +143,10 @@ StyleMix get _style => StyleMix(
       text.style(
         color: const Color(0xFFFF004C),
       ),
-      backgroundColor(const Color(0x0F07E2FF)),
+      box.color(const Color(0x0F07E2FF)),
       icon.color.of($colors.onBackground),
       onDisabled(
-        backgroundColor.of($colors.background),
+        box.color.of($colors.background),
         text.style.color.of($colors.onBackground),
         icon.color.of($colors.onBackground),
       ),

@@ -5,11 +5,6 @@ import 'style_mix.dart';
 
 typedef MixBuilder = Widget Function(MixData mix);
 
-typedef InheritedMixBuilder = Widget Function(
-  MixData mix,
-  MixData? inheritedMix,
-);
-
 /// Provides [MixData] to the widget tree.
 class MixProvider extends InheritedWidget {
   /// Stores [MixData] and wraps a [child] widget.

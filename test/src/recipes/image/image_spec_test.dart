@@ -9,7 +9,6 @@ import '../../../helpers/testing_utils.dart';
 void main() {
   group('ImageSpec', () {
     test('resolve returns correct recipe', () {
-      const attribute = ImageMixAttribute();
       final recipe = ImageSpec.resolve(EmptyMixData);
 
       expect(recipe.width, null);

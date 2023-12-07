@@ -4,12 +4,12 @@ import 'package:mix/mix.dart';
 import '../styles.dart';
 
 StyleMix get mix => StyleMix(
-      height(300),
-      width(300),
-      borderRadius(10),
-      elevation(2),
-      backgroundColor.of($colors.surface),
-      alignment.center(),
+      box.height(300),
+      box.width(300),
+      box.borderRadius(10),
+      box.elevation(2),
+      box.color.of($colors.surface),
+      box.alignment.center(),
       text.style.color.of($colors.onSurface),
     );
 
@@ -42,9 +42,9 @@ class LayoutExample extends StatelessWidget {
               StyledContainer(
                 style: mix.merge(
                   StyleMix(
-                    width(200),
-                    height(100),
-                    backgroundColor(Colors.green),
+                    box.width(200),
+                    box.height(100),
+                    box.color(Colors.green),
                   ),
                 ),
                 child: StyledText(
