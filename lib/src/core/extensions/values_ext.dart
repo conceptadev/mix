@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../../attributes/border/border_attribute.dart';
 import '../../attributes/border/border_dto.dart';
-import '../../attributes/border/border_radius_attribute.dart';
 import '../../attributes/border/border_radius_dto.dart';
 import '../../attributes/color/color_dto.dart';
 import '../../attributes/constraints/constraints_dto.dart';
 import '../../attributes/decoration/decoration_dto.dart';
-import '../../attributes/gradient/gradient_attribute.dart';
 import '../../attributes/gradient/gradient_dto.dart';
 import '../../attributes/shadow/shadow_dto.dart';
 import '../../attributes/spacing/spacing_dto.dart';
@@ -23,8 +20,6 @@ extension StrutStyleExt on StrutStyle {
 }
 
 extension GradientExt on Gradient {
-  GradientAttribute toAttribute() => GradientAttribute(toDto());
-
   // toDto
   GradientDto toDto() {
     if (this is LinearGradient) return (this as LinearGradient).toDto();
@@ -49,10 +44,6 @@ extension SweepGradientExt on SweepGradient {
 
 extension BoxBorderExt on BoxBorder {
   BoxBorderDto toDto() => BoxBorderDto.from(this);
-
-  BoxBorderAttribute toAttribute() {
-    return BoxBorderAttribute(toDto());
-  }
 }
 
 extension EdgeInsetsGeometryExt on EdgeInsetsGeometry {
@@ -95,10 +86,6 @@ extension ShapeDecorationExt on ShapeDecoration {
 }
 
 extension BorderRadiusGeometryExt on BorderRadiusGeometry {
-  BorderRadiusGeometryAttribute toAttribute() {
-    return BorderRadiusGeometryAttribute(toDto());
-  }
-
   BorderRadiusGeometryDto toDto() {
     return BorderRadiusGeometryDto.from(this);
   }

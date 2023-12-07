@@ -12,19 +12,19 @@ void main() {
       expect(merged.directives?.length, 2);
     });
     test('resolve returns correct TextDirective with default values', () {
-      const attr = TextMixAttribute(directives: []);
+      const attr = TextSpecAttribute(directives: []);
 
       expect(attr.directives, []);
     });
 
     test('Equality holds when all properties are the same', () {
-      final attr1 = TextMixAttribute(directives: [TextDirective(uppercaseFn)]);
-      final attr2 = TextMixAttribute(directives: [TextDirective(uppercaseFn)]);
+      final attr1 = TextSpecAttribute(directives: [TextDirective(uppercaseFn)]);
+      final attr2 = TextSpecAttribute(directives: [TextDirective(uppercaseFn)]);
       expect(attr1, attr2);
     });
     test('Equality fails when properties are different', () {
-      final attr1 = TextMixAttribute(directives: [TextDirective(uppercaseFn)]);
-      final attr2 = TextMixAttribute(directives: [TextDirective(lowercaseFn)]);
+      final attr1 = TextSpecAttribute(directives: [TextDirective(uppercaseFn)]);
+      final attr2 = TextSpecAttribute(directives: [TextDirective(lowercaseFn)]);
       expect(attr1, isNot(attr2));
     });
 

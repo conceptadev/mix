@@ -12,7 +12,7 @@ class VariantsExample extends HookWidget {
     final baseStyle = StyleMix(
       box.height(300),
       box.width(300),
-      box.borderRadius(10),
+      box.border.radius(10),
       box.elevation(2),
       box.margin(10),
       box.alignment.center(),

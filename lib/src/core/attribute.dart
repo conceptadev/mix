@@ -6,13 +6,13 @@ import '../helpers/compare_mixin.dart';
 @immutable
 abstract class Attribute with Comparable {
   const Attribute();
+
+  // Type used for merging and optimization
+  Object get type;
 }
 
 abstract class StyleAttribute extends Attribute {
   const StyleAttribute();
-
-  // Type used for combining attributes
-  Type get type;
 }
 
 abstract class Dto<Value> with Comparable, Resolvable<Value> {
@@ -110,26 +110,4 @@ mixin MultiChildRenderAttributeMixin<W extends MultiChildRenderObjectWidget>
 abstract class Spec<T extends Spec<T>> extends ThemeExtension<T>
     with Comparable {
   const Spec();
-
-  Duration lerpDuration(Duration a, Duration b, double t) {
-    int lerpTicks = ((1 - t) * a.inMilliseconds + t * b.inMilliseconds).round();
-
-    return Duration(milliseconds: lerpTicks);
-  }
-
-  int lerpInt(int a, int b, double t) {
-    return ((1 - t) * a + t * b).round();
-  }
-
-  N? genericNumLerp<N extends num>(N? a, N? b, double t) {
-    if (a == null && b == null) return null;
-    if (a == null) return b;
-    if (b == null) return a;
-
-    return (a * (1 - t) + b * t) as N;
-  }
-
-  P lerpSnap<P>(P from, P to, double t) {
-    return t < 0.5 ? from : to;
-  }
 }

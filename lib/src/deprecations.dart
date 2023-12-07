@@ -138,7 +138,7 @@ final font = text.style;
 @Deprecated(
   'Use text.style(shadows: shadows) or text.style.shadows(shadows) instead',
 )
-TextMixAttribute textShadow(List<Shadow> shadows) {
+TextSpecAttribute textShadow(List<Shadow> shadows) {
   return text.style(shadows: shadows);
 }
 
@@ -345,58 +345,44 @@ final marginX = marginHorizontal;
 @Deprecated(kShortAliasDeprecation)
 final marginY = marginVertical;
 
-@Deprecated('Use box.borderRadius instead')
-final rounded = box.borderRadius;
+@Deprecated('Use box.border.radius instead')
+final rounded = box.border.radius;
 
-@Deprecated('Use box.borderRadius instead')
-final r = box.borderRadius;
+@Deprecated('Use box.border.radius instead')
+final r = box.border.radius;
 
-@Deprecated('Use box.borderRadius.horizontal instead')
+@Deprecated('Use box.border.radius.horizontal instead')
 dynamic get roundedH => UnimplementedError();
 
-@Deprecated('use box.borderRadius.vertical instead')
+@Deprecated('use box.border.radius.vertical instead')
 dynamic get roundedV => UnimplementedError();
 
 @Deprecated(kShortAliasDeprecation)
 dynamic get roundedDH => UnimplementedError();
 
 @Deprecated(kShortAliasDeprecation)
-final roundedTL = box.borderRadius.topLeft;
+final roundedTL = box.border.radius.topLeft;
 
 @Deprecated(kShortAliasDeprecation)
-BorderRadiusGeometryAttribute roundedTR() {
-  throw UnimplementedError();
-}
+final roundedTR = box.border.radius.topRight;
 
 @Deprecated(kShortAliasDeprecation)
-BorderRadiusGeometryAttribute roundedBL() {
-  throw UnimplementedError();
-}
+final roundedBL = box.border.radius.bottomLeft;
 
 @Deprecated(kShortAliasDeprecation)
-BorderRadiusGeometryAttribute roundedBR() {
-  throw UnimplementedError();
-}
+final roundedBR = box.border.radius.bottomRight;
 
 @Deprecated(kShortAliasDeprecation)
-BorderRadiusGeometryAttribute roundedTS() {
-  throw UnimplementedError();
-}
+final roundedTS = box.border.radius.topStart;
 
 @Deprecated(kShortAliasDeprecation)
-BorderRadiusGeometryAttribute roundedTE() {
-  throw UnimplementedError();
-}
+final roundedTE = box.border.radius.topEnd;
 
 @Deprecated(kShortAliasDeprecation)
-BorderRadiusGeometryAttribute roundedBS() {
-  throw UnimplementedError();
-}
+final roundedBS = box.border.radius.bottomStart;
 
 @Deprecated(kShortAliasDeprecation)
-BorderRadiusGeometryAttribute roundedBE() {
-  throw UnimplementedError();
-}
+final roundedBE = box.border.radius.bottomEnd;
 
 @Deprecated(kShortAliasDeprecation)
 final h = box.height;
@@ -486,13 +472,13 @@ FlexSpecAttribute crossAxis(CrossAxisAlignment crossAxisAlignment) {
 }
 
 @Deprecated('Use textDirective(directive)')
-TextMixAttribute directives(List<TextDirective> directives) {
-  return TextMixAttribute(directives: directives);
+TextSpecAttribute directives(List<TextDirective> directives) {
+  return TextSpecAttribute(directives: directives);
 }
 
 @Deprecated('Use textDirective(directive)')
-TextMixAttribute directive(TextDirective directive) {
-  return TextMixAttribute(directives: [directive]);
+TextSpecAttribute directive(TextDirective directive) {
+  return TextSpecAttribute(directives: [directive]);
 }
 
 @Deprecated('Locale is now passed to StyledText widget')
@@ -501,8 +487,8 @@ TextStyleAttribute locale() {
 }
 
 @Deprecated('Use text(overflow: overflow)')
-TextMixAttribute overflow(TextOverflow overflow) {
-  return TextMixAttribute(overflow: overflow);
+TextSpecAttribute overflow(TextOverflow overflow) {
+  return TextSpecAttribute(overflow: overflow);
 }
 
 @Deprecated('Use box.margin instead')
@@ -649,14 +635,14 @@ FlexSpecAttribute mainAxisSize(MainAxisSize mainAxisSize) {
 }
 
 @Deprecated('use text.style.bold() instead')
-TextMixAttribute bold() {
-  return TextMixAttribute(
+TextSpecAttribute bold() {
+  return TextSpecAttribute(
     style: TextStyleDto.only(fontWeight: FontWeight.bold),
   );
 }
 
 @Deprecated('use box.border.radius')
-final borderRadius = box.borderRadius;
+final borderRadius = box.border.radius;
 
 @Deprecated('use box.elevation instead')
 final elevation = box.elevation;

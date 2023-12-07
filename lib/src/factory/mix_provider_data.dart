@@ -15,7 +15,7 @@ import 'style_mix.dart';
 @immutable
 class MixData with Comparable {
   // Instance variables for widget attributes, widget decorators and token resolver.
-  final StyleAttributeMap _attributes;
+  final AttributeMap _attributes;
 
   final MixTokenResolver _tokenResolver;
 
@@ -24,7 +24,7 @@ class MixData with Comparable {
   /// It takes in [attributes] and [resolver] as required parameters.
   MixData._({
     required MixTokenResolver resolver,
-    required StyleAttributeMap attributes,
+    required AttributeMap attributes,
   })  : _attributes = attributes,
         _tokenResolver = resolver;
 
@@ -33,10 +33,7 @@ class MixData with Comparable {
 
     final resolver = MixTokenResolver(context);
 
-    return MixData._(
-      resolver: resolver,
-      attributes: StyleAttributeMap(styleMix),
-    );
+    return MixData._(resolver: resolver, attributes: AttributeMap(styleMix));
   }
 
   /// Getter for [MixTokenResolver].
@@ -48,12 +45,12 @@ class MixData with Comparable {
   ///
   /// Returns [_attributes].
   @visibleForTesting
-  StyleAttributeMap get attributes => _attributes;
+  AttributeMap get attributes => _attributes;
 
   /// Getter for [_decorators].
   ///
   /// Returns a list of attributes of type [Decorator].
-  Iterable<T> decoratorOfType<T extends Decorator>() =>
+  Iterable<T> decoratorOfType<T extends Decorator<T>>() =>
       _attributes.whereType<T>();
 
   /// Finds and returns an [VisualAttribute] of type [A], or null if not found.

@@ -4,7 +4,6 @@ import '../../core/attribute.dart';
 import '../../core/extensions/values_ext.dart';
 import '../color/color_dto.dart';
 import '../scalars/scalar_util.dart';
-import 'gradient_attribute.dart';
 import 'gradient_dto.dart';
 
 /// A utility class for working with gradients.
@@ -43,8 +42,6 @@ import 'gradient_dto.dart';
 /// ```
 class GradientUtility<T extends StyleAttribute>
     extends MixUtility<T, GradientDto> {
-  static const selfBuilder = GradientUtility(GradientAttribute.new);
-
   const GradientUtility(super.builder);
 
   /// Returns a [RadialGradientUtility] for creating radial gradients.
@@ -102,8 +99,6 @@ class GradientUtility<T extends StyleAttribute>
 @immutable
 class RadialGradientUtility<T extends StyleAttribute>
     extends MixUtility<T, RadialGradientDto> {
-  static const selfBuilder = RadialGradientUtility(GradientAttribute.new);
-
   const RadialGradientUtility(super.builder);
 
   /// Returns an [AlignmentUtility] for setting the center of the radial gradient.
@@ -304,8 +299,6 @@ class RadialGradientUtility<T extends StyleAttribute>
 @immutable
 class LinearGradientUtility<T extends StyleAttribute>
     extends MixUtility<T, LinearGradientDto> {
-  static const selfBuilder = LinearGradientUtility(GradientAttribute.new);
-
   const LinearGradientUtility(super.builder);
 
   /// Returns an [AlignmentUtility] for setting the begin of the linear gradient.
@@ -508,10 +501,9 @@ class LinearGradientUtility<T extends StyleAttribute>
 /// * [GradientAttribute], a class for creating gradient attributes.
 /// * [GradientDto], a class for creating gradient values.
 class SweepGradientUtility<T extends StyleAttribute>
-    extends MixUtility<T, SweepGradientDto> {
-  static const selfBuilder = SweepGradientUtility(GradientAttribute.new);
-
-  const SweepGradientUtility(super.builder);
+    extends DtoUtility<T, SweepGradientDto, SweepGradient> {
+  const SweepGradientUtility(super.builder)
+      : super(valueToDto: SweepGradientDto.from);
 
   /// Returns an [AlignmentUtility] for setting the center of the sweep gradient.
   ///
@@ -625,22 +617,6 @@ class SweepGradientUtility<T extends StyleAttribute>
   /// that has a stops value of [0.0, 1.0].
   T stops(List<double> stops) => call(stops: stops);
 
-  /// Converts the provided [SweepGradient] to the specified type [T].
-  ///
-  /// Example usage:
-  ///
-  /// ```dart
-  /// final gradient = SweepGradientUtility<StyleAttribute>(builder);
-  /// final gradient = SweepGradient(center: Alignment.center, startAngle: 0.0, endAngle: pi);
-  /// final attribute = gradient.as(gradient);
-  /// ```
-  ///
-  /// Attribute now holds a [GradientAttribute] with a [SweepGradientDto]
-  /// that has a center value of Alignment.center, a startAngle of 0.0, and an endAngle of pi.
-  T as(SweepGradient gradient) {
-    return builder(SweepGradientDto.from(gradient));
-  }
-
   /// Creates a [SweepGradientDto] with the provided parameters and calls the [builder] function.
   ///
   /// Example usage:
@@ -672,5 +648,22 @@ class SweepGradientUtility<T extends StyleAttribute>
     );
 
     return builder(gradient);
+  }
+
+  /// Converts the provided [SweepGradient] to the specified type [T].
+  ///
+  /// Example usage:
+  ///
+  /// ```dart
+  /// final gradient = SweepGradientUtility<StyleAttribute>(builder);
+  /// final gradient = SweepGradient(center: Alignment.center, startAngle: 0.0, endAngle: pi);
+  /// final attribute = gradient.as(gradient);
+  /// ```
+  ///
+  /// Attribute now holds a [GradientAttribute] with a [SweepGradientDto]
+  /// that has a center value of Alignment.center, a startAngle of 0.0, and an endAngle of pi.
+  @override
+  T as(SweepGradient gradient) {
+    return builder(SweepGradientDto.from(gradient));
   }
 }

@@ -7,11 +7,11 @@ import '../attributes/variant_attribute.dart';
 import '../core/attribute.dart';
 import '../core/attributes_map.dart';
 import '../helpers/compare_mixin.dart';
-import '../recipes/container/container_attribute.dart';
-import '../recipes/flex/flex_attribute.dart';
-import '../recipes/image/image_attribute.dart';
-import '../recipes/stack/stack_attribute.dart';
-import '../recipes/text/text_attribute.dart';
+import '../specs/container/container_attribute.dart';
+import '../specs/flex/flex_attribute.dart';
+import '../specs/image/image_attribute.dart';
+import '../specs/stack/stack_attribute.dart';
+import '../specs/text/text_attribute.dart';
 import '../utils/helper_util.dart';
 import '../variants/variant.dart';
 
@@ -31,14 +31,14 @@ typedef Mix = StyleMix;
 /// ```
 class StyleMix with Comparable {
   /// Visual attributes contained in this mix.
-  final StyleAttributeMap styles;
+  final AttributeMap<StyleAttribute> styles;
 
   /// The variant attributes contained in this mix.
-  final VariantAttributeMap variants;
+  final AttributeMap<VariantAttribute> variants;
 
   static final stack = SpreadFunctionParams(_styleType<StackSpecAttribute>());
-  static final text = SpreadFunctionParams(_styleType<TextMixAttribute>());
-  static final image = SpreadFunctionParams(_styleType<ImageMixAttribute>());
+  static final text = SpreadFunctionParams(_styleType<TextSpecAttribute>());
+  static final image = SpreadFunctionParams(_styleType<ImageSpecAttribute>());
   static final container =
       SpreadFunctionParams(_styleType<ContainerSpecAttribute>());
   static final flex = SpreadFunctionParams(_styleType<FlexSpecAttribute>());
@@ -47,8 +47,8 @@ class StyleMix with Comparable {
   ///
   /// This can be used as a default or initial value where a `StyleMix` is required.
   const StyleMix.empty()
-      : styles = const StyleAttributeMap.empty(),
-        variants = const VariantAttributeMap.empty();
+      : styles = const AttributeMap.empty(),
+        variants = const AttributeMap.empty();
 
   const StyleMix._({required this.styles, required this.variants});
 
@@ -123,8 +123,8 @@ class StyleMix with Comparable {
     }
 
     return StyleMix._(
-      styles: StyleAttributeMap(styleList),
-      variants: VariantAttributeMap(variantList),
+      styles: AttributeMap(styleList),
+      variants: AttributeMap(variantList),
     );
   }
 
@@ -230,8 +230,8 @@ class StyleMix with Comparable {
   ///
   /// If [styles] or [variants] is null, the corresponding attribute map of this mix is used.
   StyleMix copyWith({
-    StyleAttributeMap? styles,
-    VariantAttributeMap? variants,
+    AttributeMap<StyleAttribute>? styles,
+    AttributeMap<VariantAttribute>? variants,
   }) {
     return StyleMix._(
       styles: styles ?? this.styles,
@@ -319,7 +319,7 @@ class StyleMix with Comparable {
 
     final updatedStyle = StyleMix._(
       styles: styles,
-      variants: VariantAttributeMap(remainingVariants),
+      variants: AttributeMap(remainingVariants),
     );
 
     /// If not a single variant was matched, return the original StyleMix.

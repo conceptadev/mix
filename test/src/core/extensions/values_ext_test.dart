@@ -76,17 +76,9 @@ void main() {
       final value = BorderRadius.circular(10.0);
 
       final dto = BorderRadiusGeometryDto.from(value);
-      final attribute = BorderRadiusGeometryAttribute(dto);
 
-      expect(value.toAttribute(), isA<BorderRadiusGeometryAttribute>());
-      expect(value.toAttribute(), attribute);
       expect(value.toDto(), isA<BorderRadiusGeometryDto>());
       expect(value.toDto(), dto);
-
-      expect(attribute.value, dto);
-
-      // Resolves correctly
-      expect(attribute.resolve(EmptyMixData), value);
     });
 
     test('BorderSide', () {
@@ -114,17 +106,7 @@ void main() {
         bottom: BorderSide(color: Colors.blue),
       );
 
-      final dto = BoxBorderDto.from(value);
-      final attribute = BoxBorderAttribute(dto);
-
-      expect(value.toAttribute(), isA<BoxBorderAttribute>());
-      expect(value.toAttribute(), attribute);
       expect(value.toDto(), isA<BoxBorderDto>());
-
-      expect(attribute.value, dto);
-
-      // Resolves correctly
-      expect(attribute.resolve(EmptyMixData), value);
 
       // BorderDirectional
       const value2 = BorderDirectional(
@@ -132,17 +114,7 @@ void main() {
         bottom: BorderSide(color: Colors.blue),
       );
 
-      final dto2 = BoxBorderDto.from(value2);
-      final attribute2 = BoxBorderAttribute(dto2);
-
-      expect(value2.toAttribute(), isA<BoxBorderAttribute>());
-      expect(value2.toAttribute(), attribute2);
       expect(value2.toDto(), isA<BoxBorderDto>());
-
-      expect(attribute2.value, dto2);
-
-      // Resolves correctly
-      expect(attribute2.resolve(EmptyMixData), value2);
     });
 
     test('Shadow', () {
