@@ -22,7 +22,7 @@ class ButtonSizeVariants {
 }
 
 StyleMix get _baseStyle => StyleMix(
-      box.borderRadius(4),
+      box.border.radius(4),
       onPress(
         scale(0.95),
       ),

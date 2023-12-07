@@ -21,7 +21,7 @@ Widget boxDecorationContainer(BuildContext context) {
     ),
     box.padding.horizontal(15.0),
     box.padding.vertical(8.0),
-    box.borderRadius(5),
+    box.border.radius(5),
     box.width(100),
     box.height(100),
     onDark(

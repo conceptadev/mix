@@ -1,13 +1,22 @@
 import 'package:flutter/material.dart';
 
 import '../factory/mix_provider_data.dart';
+import '../helpers/lerp_helpers.dart';
 import 'decorator.dart';
 
-class ClipPathDecorator extends WrapDecorator<ClipPathDecorator> {
+class ClipPathDecorator extends BoxDecorator<ClipPathDecorator> {
   final Clip? clipBehavior;
   final CustomClipper<Path>? clipper;
 
   const ClipPathDecorator({this.clipBehavior, this.clipper, super.key});
+
+  @override
+  ClipPathDecorator lerp(ClipPathDecorator? other, double t) {
+    return ClipPathDecorator(
+      clipBehavior: lerpSnap(clipBehavior, other?.clipBehavior, t),
+      clipper: lerpSnap(clipper, other?.clipper, t),
+    );
+  }
 
   @override
   ClipPathDecorator merge(covariant ClipPathDecorator? other) {
@@ -31,11 +40,19 @@ class ClipPathDecorator extends WrapDecorator<ClipPathDecorator> {
   }
 }
 
-class ClipOvalDecorator extends WrapDecorator<ClipOvalDecorator> {
+class ClipOvalDecorator extends BoxDecorator<ClipOvalDecorator> {
   final Clip? clipBehavior;
   final CustomClipper<Rect>? clipper;
 
   const ClipOvalDecorator({this.clipper, this.clipBehavior, super.key});
+
+  @override
+  ClipOvalDecorator lerp(ClipOvalDecorator? other, double t) {
+    return ClipOvalDecorator(
+      clipper: lerpSnap(clipper, other?.clipper, t),
+      clipBehavior: lerpSnap(clipBehavior, other?.clipBehavior, t),
+    );
+  }
 
   @override
   ClipOvalDecorator merge(covariant ClipOvalDecorator? other) {
@@ -59,11 +76,19 @@ class ClipOvalDecorator extends WrapDecorator<ClipOvalDecorator> {
   }
 }
 
-class ClipRectDecorator extends WrapDecorator<ClipRectDecorator> {
+class ClipRectDecorator extends BoxDecorator<ClipRectDecorator> {
   final Clip? clipBehavior;
   final CustomClipper<Rect>? clipper;
 
   const ClipRectDecorator({this.clipBehavior, this.clipper, super.key});
+
+  @override
+  ClipRectDecorator lerp(ClipRectDecorator? other, double t) {
+    return ClipRectDecorator(
+      clipBehavior: lerpSnap(clipBehavior, other?.clipBehavior, t),
+      clipper: lerpSnap(clipper, other?.clipper, t),
+    );
+  }
 
   @override
   ClipRectDecorator merge(covariant ClipRectDecorator? other) {
@@ -87,7 +112,7 @@ class ClipRectDecorator extends WrapDecorator<ClipRectDecorator> {
   }
 }
 
-class ClipRRectDecorator extends WrapDecorator<ClipRRectDecorator> {
+class ClipRRectDecorator extends BoxDecorator<ClipRRectDecorator> {
   final Clip? clipBehavior;
   final BorderRadius? borderRadius;
   final CustomClipper<RRect>? clipper;
@@ -98,6 +123,15 @@ class ClipRRectDecorator extends WrapDecorator<ClipRRectDecorator> {
     this.clipper,
     super.key,
   });
+
+  @override
+  ClipRRectDecorator lerp(ClipRRectDecorator? other, double t) {
+    return ClipRRectDecorator(
+      clipBehavior: lerpSnap(clipBehavior, other?.clipBehavior, t),
+      borderRadius: BorderRadius.lerp(borderRadius, other?.borderRadius, t),
+      clipper: lerpSnap(clipper, other?.clipper, t),
+    );
+  }
 
   @override
   ClipRRectDecorator merge(covariant ClipRRectDecorator? other) {
@@ -123,39 +157,7 @@ class ClipRRectDecorator extends WrapDecorator<ClipRRectDecorator> {
   }
 }
 
-class AnimatedClipRRect extends StatelessWidget {
-  const AnimatedClipRRect({
-    required this.duration,
-    this.curve = Curves.linear,
-    required this.borderRadius,
-    required this.child,
-    Key? key,
-  }) : super(key: key);
-
-  static Widget _builder(
-    BuildContext context,
-    BorderRadius radius,
-    Widget? child,
-  ) {
-    return ClipRRect(borderRadius: radius, child: child);
-  }
-
-  final Duration duration;
-  final Curve curve;
-  final BorderRadius borderRadius;
-  final Widget child;
-
-  @override
-  Widget build(BuildContext context) {
-    return TweenAnimationBuilder<BorderRadius>(
-      tween: Tween(begin: BorderRadius.zero, end: borderRadius),
-      duration: duration,
-      curve: curve,
-      builder: _builder,
-      child: child,
-    );
-  }
-}
+//
 
 class TriangleClipper extends CustomClipper<Path> {
   const TriangleClipper();

@@ -9,15 +9,21 @@ class BasicExample extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mix = StyleMix.create([
+    final mix = StyleMix(
       box.height(300),
       box.width(300),
-      box.borderRadius(10),
+      box.border.radius(10),
+      box.padding.all.large(),
+      box.padding.top.small(),
       box.elevation(2),
-      box.margin(10),
+      box.margin.horizontal(10),
       box.alignment.center(),
-      box.color(Colors.purple),
+      container.color(Colors.purple),
+      container.color.purple.shade300(),
       text.style(color: Colors.white),
+      container.border.radius(10),
+      container.decoration.shape.color.white(),
+      text.style.color.white(),
       onPress(
         box.color(Colors.black),
       ),
@@ -27,7 +33,7 @@ class BasicExample extends HookWidget {
       onLongPress(
         box.color(Colors.green),
       ),
-    ]);
+    );
 
     return SingleChildScrollView(
       padding: const EdgeInsets.all(20),

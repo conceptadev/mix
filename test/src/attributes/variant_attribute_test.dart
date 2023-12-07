@@ -43,7 +43,7 @@ void main() {
     test('mergeKey returns correct instance', () {
       final variantAttribute = VariantAttribute(variant, style);
 
-      expect(variantAttribute.mergeKey, const ObjectKey(variant));
+      expect(variantAttribute.type, const ObjectKey(variant));
     });
 
     // merge()
@@ -77,7 +77,7 @@ void main() {
     test('mergeKey returns correct instance', () {
       final variantAttribute = ContextVariantAttribute(variant, style);
 
-      expect(variantAttribute.mergeKey, ObjectKey(variant));
+      expect(variantAttribute.type, ObjectKey(variant));
     });
 
     // merge()

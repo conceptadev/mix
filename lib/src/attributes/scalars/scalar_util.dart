@@ -10,10 +10,12 @@ abstract class MixUtility<Attr extends StyleAttribute, Value> {
   final UtilityBuilder<Attr, Value> _builder;
   const MixUtility(this._builder);
 
-  static V selfBuilder<V>(V value) => value;
-
   @protected
   UtilityBuilder<Attr, Value> get builder => _builder;
+}
+
+abstract class SpecUtility<SpecAttr extends ResolvableAttribute> {
+  const SpecUtility();
 }
 
 abstract class DtoUtility<Attr extends StyleAttribute, D extends Dto<Value>,
@@ -643,6 +645,7 @@ class FontStyleUtility<T extends StyleAttribute>
 /// final zero = radius.zero();
 /// final circular = radius.circular(10);
 /// final elliptical = radius.elliptical(10, 10);
+/// final circular = radius(10);
 /// ```
 ///
 /// See [Radius] for more information.
@@ -654,6 +657,8 @@ class RadiusUtility<T extends StyleAttribute> extends MixUtility<T, Radius> {
   T elliptical(double x, double y) => _builder(Radius.elliptical(x, y));
 
   T circular(double radius) => _builder(Radius.circular(radius));
+
+  T call(double radius) => _builder(Radius.circular(radius));
 }
 
 /// Utility for setting `TextDecorationStyle` values.

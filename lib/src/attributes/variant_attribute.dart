@@ -14,8 +14,6 @@ class VariantAttribute<T extends Variant> extends Attribute
 
   const VariantAttribute(this.variant, StyleMix style) : _style = style;
 
-  Key get mergeKey => ObjectKey(variant);
-
   StyleMix get value => _style;
 
   @override
@@ -24,6 +22,9 @@ class VariantAttribute<T extends Variant> extends Attribute
 
     return VariantAttribute(variant, _style.merge(other._style));
   }
+
+  @override
+  Object get type => ObjectKey(variant);
 
   @override
   get props => [variant, value];

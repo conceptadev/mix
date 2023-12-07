@@ -15,10 +15,11 @@ abstract class NestedStyleMixAttribute<
 
   @override
   Self merge(Self? other) {
-    if (other == null) return this as Self;
-
-    return _mergeWith(other.value);
+    return other == null ? this as Self : _mergeWith(other.value);
   }
+
+  @override
+  Object get type => Self;
 
   @override
   get props => [value];

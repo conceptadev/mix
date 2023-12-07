@@ -1,5 +1,7 @@
 // ignore_for_file: non_constant_identifier_names
 
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:meta/meta.dart';
@@ -211,9 +213,17 @@ class MockIntScalarAttribute
   const MockIntScalarAttribute(super.value);
 }
 
-class MockDoubleDecoratorAttribute extends Decorator {
+class MockDoubleDecoratorAttribute
+    extends Decorator<MockDoubleDecoratorAttribute> {
   final double value;
   const MockDoubleDecoratorAttribute(this.value, {super.key});
+
+  @override
+  MockDoubleDecoratorAttribute lerp(
+      MockDoubleDecoratorAttribute? other, double t) {
+    return MockDoubleDecoratorAttribute(
+        lerpDouble(value, other?.value, t) ?? value);
+  }
 
   @override
   get props => [value];
@@ -234,6 +244,9 @@ class MockStringScalarAttribute
 
 class MockInvalidAttribute extends Attribute {
   const MockInvalidAttribute();
+
+  @override
+  Type get type => MockInvalidAttribute;
 
   @override
   get props => [];
@@ -275,4 +288,13 @@ void testScalarAttribute<T extends ScalarAttribute<T, V>, V>(
 class UtilityTestAttribute<T>
     extends ScalarAttribute<UtilityTestAttribute<T>, T> {
   const UtilityTestAttribute(super.value);
+}
+
+class UtilityTestDtoAttribute<T extends Dto<V>, V>
+    extends ScalarAttribute<UtilityTestDtoAttribute<T, V>, T> {
+  const UtilityTestDtoAttribute(super.value);
+
+  V resolve(MixData mix) {
+    return value.resolve(mix);
+  }
 }

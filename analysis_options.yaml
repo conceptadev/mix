@@ -21,6 +21,7 @@ dart_code_metrics:
   rules-exclude:
     - "test/**"
   rules:
+    no-object-declaration: false
     prefer-match-file-name: false
     prefer-single-widget-per-file: false
     parameters-ordering: false

@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
@@ -20,7 +22,7 @@ class StyledContainerExample extends StatelessWidget {
       style: BorderStyle.solid,
     );
 
-    final radiusAttribute = box.borderRadius(10);
+    final radiusAttribute = box.border.radius(10);
 
     final colorAttribute = box.color(Colors.red);
 
@@ -34,55 +36,6 @@ class StyledContainerExample extends StatelessWidget {
         radiusAttribute,
         colorAttribute,
       ),
-      child: const SizedBox(
-        width: 100,
-        height: 100,
-      ),
-    );
-  }
-}
-
-class StyleWidgetExpensiveAttributge extends StatelessWidget {
-  const StyleWidgetExpensiveAttributge({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final paddingAttr = box.padding(10);
-    final marginAttr = box.margin(15);
-    final alignmentAttr = box.alignment.center();
-    final clipAttr = box.clipBehavior.hardEdge();
-
-    final borderAttribute = box.border.all(
-      color: Colors.red,
-      width: 1,
-      style: BorderStyle.solid,
-    );
-
-    final radiusAttribute = box.borderRadius(10);
-
-    final colorAttribute = box.color(Colors.red);
-
-    StyleMix buildStyle() {
-      return StyleMix(
-        paddingAttr,
-        marginAttr,
-        alignmentAttr,
-        clipAttr,
-        borderAttribute,
-        radiusAttribute,
-        colorAttribute,
-      );
-    }
-
-    StyleMix mergedStyle = buildStyle();
-
-    // merge 100 times buildStyles()
-    for (int i = 0; i < 10000; i++) {
-      mergedStyle = mergedStyle.merge(buildStyle());
-    }
-
-    return StyledContainer(
-      style: mergedStyle,
       child: const SizedBox(
         width: 100,
         height: 100,
@@ -135,12 +88,11 @@ void main() {
     }
 
     // warm up
-    await buildWidget(const ContainerExample());
-    await buildWidget(const StyledContainerExample());
+    await buildWidget(ContainerExample());
+    await buildWidget(StyledContainerExample());
 
-    // ignore: prefer_const_constructors
     final styledContainerTime = await buildWidget(StyledContainer());
-    // ignore: prefer_const_constructors
+
     final containerTime = await buildWidget(ContainerExample());
 
     final elapsedStyledContainerTime = styledContainerTime / iterationCount;
@@ -168,7 +120,7 @@ void main() {
           width: 1,
           style: BorderStyle.solid,
         ),
-        box.borderRadius(10),
+        box.border.radius(10),
         box.color(Colors.red),
       ]);
     }
@@ -195,7 +147,7 @@ void main() {
             width: 1,
             style: BorderStyle.solid,
           ),
-          box.borderRadius(10),
+          box.border.radius(10),
           box.color(Colors.red),
         ),
       );
@@ -206,4 +158,53 @@ void main() {
 
     print('MixData.create: $timeElapsed ms');
   });
+}
+
+class StyleWidgetExpensiveAttributge extends StatelessWidget {
+  const StyleWidgetExpensiveAttributge({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final paddingAttr = box.padding(10);
+    final marginAttr = box.margin(15);
+    final alignmentAttr = box.alignment.center();
+    final clipAttr = box.clipBehavior.hardEdge();
+
+    // final borderAttribute = box.border.all(
+    //   color: Colors.red,
+    //   width: 1,
+    //   style: BorderStyle.solid,
+    // );
+
+    // final radiusAttribute = box.border.radius(10);
+
+    final colorAttribute = box.color(Colors.red);
+
+    StyleMix buildStyle() {
+      return StyleMix(
+        paddingAttr,
+        marginAttr,
+        alignmentAttr,
+        clipAttr,
+        // borderAttribute,
+        // radiusAttribute,
+        colorAttribute,
+      );
+    }
+
+    StyleMix mergedStyle = buildStyle();
+
+    // merge 100 times buildStyles()
+    for (int i = 0; i < 10000; i++) {
+      mergedStyle = mergedStyle.merge(buildStyle());
+    }
+
+    return StyledContainer(
+      style: mergedStyle,
+      child: const SizedBox(
+        width: 100,
+        height: 100,
+      ),
+    );
+  }
 }
