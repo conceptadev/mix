@@ -5,32 +5,25 @@ import '../../core/extensions/iterable_ext.dart';
 import '../../factory/mix_provider_data.dart';
 import '../color/color_dto.dart';
 
-/// Abstract class representing a [Dto] Data transfer object for a gradient.
-/// It provides common properties and methods for different types of gradients.
+/// Represents a base [Dto] Data transfer object of [Gradient]
 ///
-/// This is used to allow for resolvable value tokens, and also the correct merge and combining behavior.
-/// It extends the [Dto] class and implements the [resolve] and [merge] methods.
-/// It also overrides the [props] getter to provide a list of properties used for equality comparison.
+/// This is used to allow for resolvable value tokens, and also the correct
+/// merge and combining behavior. It allows to be merged, and resolved to a `[Gradient]
 ///
 /// See also:
-/// * [GradientDto], which is the base class for this class.
-/// * [LinearGradientDto], which is a type of gradient DTO.
-/// * [RadialGradientDto], which is a type of gradient DTO.
-/// * [SweepGradientDto], which is a type of gradient DTO.
 /// * [Gradient], which is the Flutter counterpart of this class.
+/// * [LinearGradientDto], which extends this class.
+/// * [RadialGradientDto], which extends this class.
+/// * [SweepGradientDto], which extends this class.
 @immutable
 abstract class GradientDto<T extends Gradient> extends Dto<T>
     with Mergeable<GradientDto<T>> {
-  /// The list of stops for the gradient.
   final List<double>? stops;
 
-  /// The list of color DTOs for the gradient.
   final List<ColorDto>? colors;
 
-  /// The transform applied to the gradient.
   final GradientTransform? transform;
 
-  /// Constructs a [GradientDto] with the given [stops], [colors], and [transform].
   const GradientDto({this.stops, this.colors, this.transform});
 
   /// Creates a [GradientDto] from a given [gradient].
@@ -51,61 +44,28 @@ abstract class GradientDto<T extends Gradient> extends Dto<T>
 
   /// Creates a [GradientDto] from a given [gradient].
   ///
-  /// Utility method for internal implementation
   /// Returns null if the gradient is null.
   static GradientDto? maybeFrom(Gradient? gradient) {
     return gradient == null ? null : from(gradient);
   }
 
-  /// Resolves the gradient DTO into a concrete gradient based on the given [mix] data.
+  /// Resolves [GradientDto] given a [MixData] into a [Gradient
   @override
   T resolve(MixData mix);
 
-  /// Merges this gradient DTO with another [other] gradient DTO.
+  /// Merges [GradientDto] with another `other` [GradientDto]
   @override
   GradientDto<T> merge(covariant GradientDto<T>? other);
 
-  /// The list of properties used for equality comparison.
   @override
   get props => [stops, colors, transform];
 }
 
-/// A data transfer object [Dto] representing a linear gradient.
+/// Represents a [Dto] Data transfer object of [LinearGradient]
 ///
-/// This DTO extends the [GradientDto] class and provides additional properties
-/// specific to linear gradients, such as the [begin] and [end] alignment points,
-/// [tileMode], and [transform].
+/// This is used to allow for resolvable value tokens, and also the correct
+/// merge and combining behavior. It allows to be merged, and resolved to a `[LinearGradient]
 ///
-/// Linear gradients can be created using the [LinearGradientDto.from] method,
-/// which takes a [LinearGradient] object and returns a corresponding
-/// [LinearGradientDto] instance.
-///
-/// Linear gradients can also be resolved using the [resolve] method, which
-/// takes a [MixData] object and returns a resolved [LinearGradient] instance.
-///
-/// Linear gradients can be merged using the [merge] method, which takes
-/// another [LinearGradientDto] object and returns a new [LinearGradientDto]
-/// instance with merged properties. If the provided [LinearGradientDto] is null,
-/// the merge operation returns the original [LinearGradientDto] instance.
-///
-/// Example usage:
-/// ```dart
-/// final gradient1 = LinearGradientDto(
-///   begin: Alignment.topLeft,
-///   end: Alignment.bottomRight,
-///   colors: [Colors.red, Colors.blue],
-///   stops: [0.0, 1.0],
-/// );
-///
-/// final gradient2 = LinearGradientDto(
-///   begin: Alignment.centerLeft,
-///   end: Alignment.centerRight,
-///   colors: [Colors.green, Colors.yellow],
-///   stops: [0.0, 1.0],
-/// );
-///
-/// final mergedGradient = gradient1.merge(gradient2);
-/// ```
 /// See also:
 /// * [LinearGradient], which is the Flutter counterpart of this class.
 /// * [GradientDto], which is the base class for this class.
@@ -127,6 +87,7 @@ class LinearGradientDto extends GradientDto<LinearGradient> {
     super.stops,
   });
 
+  /// Creates a [LinearGradientDto] from a given [gradient].
   static LinearGradientDto from(LinearGradient gradient) {
     return LinearGradientDto(
       begin: gradient.begin,
@@ -138,10 +99,14 @@ class LinearGradientDto extends GradientDto<LinearGradient> {
     );
   }
 
+  /// Creates a [LinearGradientDto] from a given [gradient].
+  ///
+  /// Returns null if the gradient is null.
   static LinearGradientDto? maybeFrom(LinearGradient? gradient) {
     return gradient == null ? null : from(gradient);
   }
 
+  /// Resolves [LinearGradientDto] given a [MixData] into a [LinearGradient]
   @override
   LinearGradient resolve(MixData mix) {
     return LinearGradient(
@@ -154,6 +119,7 @@ class LinearGradientDto extends GradientDto<LinearGradient> {
     );
   }
 
+  /// Merges [LinearGradientDto] with another `other` [LinearGradientDto
   @override
   LinearGradientDto merge(LinearGradientDto? other) {
     if (other == null) return this;
@@ -172,23 +138,10 @@ class LinearGradientDto extends GradientDto<LinearGradient> {
   List<Object?> get props => [begin, end, colors, stops, tileMode, transform];
 }
 
-/// A data transfer object [Dto] representing a radial gradient.
+/// Represents a [Dto] Data transfer object of [RadialGradient]
 ///
-/// This DTO extends the [GradientDto] class and provides additional properties
-/// specific to radial gradients, such as the [center], [radius], [focalRadius],
-/// [focal], and [tileMode].
-///
-/// Radial gradients can be created using the [RadialGradientDto.from] method,
-/// which takes a [RadialGradient] object and returns a corresponding
-/// [RadialGradientDto] instance.
-///
-/// Radial gradients can also be resolved using the [resolve] method, which
-/// takes a [MixData] object and returns a resolved [RadialGradient] instance.
-///
-/// Radial gradients can be merged using the [merge] method, which takes
-/// another [RadialGradientDto] object and returns a new [RadialGradientDto]
-/// instance with merged properties. If the provided [RadialGradientDto] is null,
-/// the merge operation returns the original [RadialGradientDto] instance.
+/// This is used to allow for resolvable value tokens, and also the correct
+/// merge and combining behavior. It allows to be merged, and resolved to a `[RadialGradient]
 ///
 /// Example usage:
 ///
@@ -238,6 +191,7 @@ class RadialGradientDto extends GradientDto<RadialGradient> {
     super.stops,
   });
 
+  /// Creates a [RadialGradientDto] from a given [RadialGradient].
   static RadialGradientDto from(RadialGradient gradient) {
     return RadialGradientDto(
       center: gradient.center,
@@ -251,10 +205,14 @@ class RadialGradientDto extends GradientDto<RadialGradient> {
     );
   }
 
+  /// Creates a [RadialGradientDto] from a given [RadialGradient].
+  ///
+  /// Returns null if the gradient is null.
   static RadialGradientDto? maybeFrom(RadialGradient? gradient) {
     return gradient == null ? null : from(gradient);
   }
 
+  /// Resolves [RadialGradientDto] given a [MixData] into a [RadialGradient
   @override
   RadialGradient resolve(MixData mix) {
     return RadialGradient(
@@ -269,19 +227,20 @@ class RadialGradientDto extends GradientDto<RadialGradient> {
     );
   }
 
+  /// Merges [RadialGradientDto] with another `other` [RadialGradientDto]
   @override
   RadialGradientDto merge(RadialGradientDto? other) {
     if (other == null) return this;
 
     return RadialGradientDto(
-      center: center,
-      radius: radius ?? other.radius,
+      center: other.center ?? center,
+      radius: other.radius ?? radius,
       tileMode: other.tileMode ?? tileMode,
-      focal: focal,
+      focal: other.focal ?? focal,
       focalRadius: other.focalRadius ?? focalRadius,
       transform: other.transform ?? transform,
-      colors: colors?.merge(other.colors),
-      stops: stops?.merge(other.stops),
+      colors: colors?.merge(other.colors) ?? other.colors,
+      stops: stops?.merge(other.stops) ?? other.stops,
     );
   }
 
@@ -290,45 +249,10 @@ class RadialGradientDto extends GradientDto<RadialGradient> {
       [center, radius, colors, stops, tileMode, focal, transform, focalRadius];
 }
 
-/// A data transfer object [Dto] representing a sweep gradient.
+/// Represents a [Dto] Data transfer object of [SweepGradient]
 ///
-/// This DTO extends the [GradientDto] class and provides additional properties
-/// specific to sweep gradients, such as the [center], [startAngle], [endAngle],
-/// and [tileMode].
-///
-/// Sweep gradients can be created using the [SweepGradientDto.from] method,
-/// which takes a [SweepGradient] object and returns a corresponding
-/// [SweepGradientDto] instance.
-///
-/// Sweep gradients can also be resolved using the [resolve] method, which
-/// takes a [MixData] object and returns a resolved [SweepGradient] instance.
-///
-/// Sweep gradients can be merged using the [merge] method, which takes
-/// another [SweepGradientDto] object and returns a new [SweepGradientDto]
-/// instance with merged properties. If the provided [SweepGradientDto] is null,
-/// the merge operation returns the original [SweepGradientDto] instance.
-///
-/// Example usage:
-///
-/// ```dart
-/// final gradient1 = SweepGradientDto(
-///  center: Alignment.center,
-/// startAngle: 0.0,
-/// endAngle: 0.5,
-/// colors: [Colors.red, Colors.blue],
-/// stops: [0.0, 1.0],
-/// );
-///
-/// final gradient2 = SweepGradientDto(
-/// center: Alignment.center,
-/// startAngle: 0.0,
-/// endAngle: 0.5,
-/// colors: [Colors.green, Colors.yellow],
-/// stops: [0.0, 1.0],
-/// );
-///
-/// final mergedGradient = gradient1.merge(gradient2);
-/// ```
+/// This is used to allow for resolvable value tokens, and also the correct
+/// merge and combining behavior. It allows to be merged, and resolved to a `[SweepGradient]
 ///
 /// See also:
 /// * [SweepGradient], which is the Flutter counterpart of this class.
@@ -354,6 +278,7 @@ class SweepGradientDto extends GradientDto<SweepGradient> {
     super.stops,
   });
 
+  /// Creates a [SweepGradientDto] from a given [SweepGradient].
   static SweepGradientDto from(SweepGradient gradient) {
     return SweepGradientDto(
       center: gradient.center,
@@ -366,10 +291,14 @@ class SweepGradientDto extends GradientDto<SweepGradient> {
     );
   }
 
+  /// Creates a [SweepGradientDto] from a given [SweepGradient].
+  ///
+  /// Returns null if the gradient is null.
   static SweepGradientDto? maybeFrom(SweepGradient? gradient) {
     return gradient == null ? null : from(gradient);
   }
 
+  /// Resolves [SweepGradientDto] given a [MixData] into a [SweepGradient]
   @override
   SweepGradient resolve(MixData mix) {
     return SweepGradient(
@@ -383,18 +312,19 @@ class SweepGradientDto extends GradientDto<SweepGradient> {
     );
   }
 
+  /// Merges [SweepGradientDto] with another `other` [SweepGradientDto]
   @override
   SweepGradientDto merge(SweepGradientDto? other) {
     if (other == null) return this;
 
     return SweepGradientDto(
       center: other.center ?? center,
-      startAngle: startAngle ?? other.startAngle,
-      endAngle: endAngle ?? other.endAngle,
+      startAngle: other.startAngle ?? startAngle,
+      endAngle: other.endAngle ?? endAngle,
       tileMode: other.tileMode ?? tileMode,
       transform: other.transform ?? transform,
-      colors: colors?.merge(other.colors),
-      stops: stops?.merge(other.stops),
+      colors: colors?.merge(other.colors) ?? other.colors,
+      stops: stops?.merge(other.stops) ?? other.stops,
     );
   }
 

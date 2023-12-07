@@ -37,11 +37,11 @@ class ImageMixAttribute
     if (other == null) return this;
 
     return ImageMixAttribute(
-      width: width ?? other.width,
-      height: height ?? other.height,
-      color: color ?? other.color,
-      repeat: repeat ?? other.repeat,
-      fit: fit ?? other.fit,
+      width: other.width ?? width,
+      height: other.height ?? height,
+      color: other.color ?? color,
+      repeat: other.repeat ?? repeat,
+      fit: other.fit ?? fit,
     );
   }
 

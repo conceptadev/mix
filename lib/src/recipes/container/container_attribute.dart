@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../attributes/color/color_dto.dart';
-import '../../attributes/constraints/constraints_attribute.dart';
 import '../../attributes/constraints/constraints_dto.dart';
-import '../../attributes/decoration/decoration_attribute.dart';
 import '../../attributes/decoration/decoration_dto.dart';
-import '../../attributes/scalars/scalars_attribute.dart';
-import '../../attributes/spacing/spacing_attribute.dart';
 import '../../attributes/spacing/spacing_dto.dart';
 import '../../core/attribute.dart';
 import '../../factory/mix_provider_data.dart';
@@ -21,7 +16,7 @@ class ContainerSpecAttribute
   final DecorationDto? decoration;
   final Matrix4? transform;
   final Clip? clipBehavior;
-  final ColorDto? color;
+
   final double? width;
   final double? height;
 
@@ -33,27 +28,9 @@ class ContainerSpecAttribute
     this.decoration,
     this.transform,
     this.clipBehavior,
-    this.color,
     this.width,
     this.height,
   });
-
-  static ContainerSpecAttribute of(MixData mix) {
-    final attribute = mix.attributeOf<ContainerSpecAttribute>();
-
-    return ContainerSpecAttribute(
-      alignment: mix.attributeOf<AlignmentGeometryAttribute>()?.value,
-      padding: mix.attributeOf<PaddingAttribute>()?.value,
-      margin: mix.attributeOf<MarginAttribute>()?.value,
-      constraints: mix.attributeOf<BoxConstraintsAttribute>()?.value,
-      decoration: mix.attributeOf<DecorationAttribute>()?.value,
-      transform: mix.attributeOf<TransformAttribute>()?.value,
-      clipBehavior: mix.attributeOf<ClipBehaviorAttribute>()?.value,
-      color: mix.attributeOf<BackgroundColorAttribute>()?.value,
-      width: mix.attributeOf<WidthAttribute>()?.value,
-      height: mix.attributeOf<HeightAttribute>()?.value,
-    ).merge(attribute);
-  }
 
   @override
   ContainerSpec resolve(MixData mix) {
@@ -65,7 +42,6 @@ class ContainerSpecAttribute
       decoration: decoration?.resolve(mix),
       transform: transform,
       clipBehavior: clipBehavior,
-      color: color?.resolve(mix),
       width: width,
       height: height,
     );
@@ -83,7 +59,6 @@ class ContainerSpecAttribute
       decoration: decoration?.merge(other.decoration) ?? other.decoration,
       transform: other.transform ?? transform,
       clipBehavior: other.clipBehavior ?? clipBehavior,
-      color: color?.merge(other.color) ?? other.color,
       width: other.width ?? width,
       height: other.height ?? height,
     );
@@ -98,7 +73,6 @@ class ContainerSpecAttribute
         decoration,
         transform,
         clipBehavior,
-        color,
         width,
         height,
       ];

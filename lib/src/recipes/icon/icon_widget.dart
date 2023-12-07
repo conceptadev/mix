@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../helpers/build_context_ext.dart';
 import '../../widgets/styled_widget.dart';
 import 'icon_attribute.dart';
+import 'icon_spec.dart';
 
 class StyledIcon extends StyledWidget {
   const StyledIcon(
@@ -10,7 +10,7 @@ class StyledIcon extends StyledWidget {
     this.semanticLabel,
     super.style,
     super.key,
-    super.inherit,
+    super.inherit = true,
     this.textDirection,
   });
 
@@ -20,21 +20,14 @@ class StyledIcon extends StyledWidget {
 
   @override
   Widget build(BuildContext context) {
-    final contextMix = context.mix;
-    final inheritedAttribute = inherit && contextMix != null
-        ? IconMixAttribute.of(contextMix)
-        : const IconMixAttribute();
-
     return withMix(context, (mix) {
-      final attribute = IconMixAttribute.of(mix);
-      final merged = inheritedAttribute.merge(attribute);
-
-      final mixture = merged.resolve(mix);
+      final spec = mix.attributeOf<IconSpecAttribute>()?.resolve(mix) ??
+          const IconSpec.empty();
 
       return Icon(
         icon,
-        size: mixture.size,
-        color: mixture.color,
+        size: spec.size,
+        color: spec.color,
         semanticLabel: semanticLabel,
         textDirection: textDirection,
       );
@@ -60,22 +53,15 @@ class AnimatedStyledIcon extends StyledWidget {
 
   @override
   Widget build(BuildContext context) {
-    final inheritedAttribute = inherit && context.mix != null
-        // ignore: avoid-non-null-assertion
-        ? IconMixAttribute.of(context.mix!)
-        : const IconMixAttribute();
-
     return withMix(context, (mix) {
-      final attribute = IconMixAttribute.of(mix);
-      final merged = inheritedAttribute.merge(attribute);
-
-      final mixture = merged.resolve(mix);
+      final spec = mix.attributeOf<IconSpecAttribute>()?.resolve(mix) ??
+          const IconSpec.empty();
 
       return AnimatedIcon(
         icon: icon,
         progress: progress,
-        color: mixture.color,
-        size: mixture.size,
+        color: spec.color,
+        size: spec.size,
         semanticLabel: semanticLabel,
         textDirection: textDirection,
       );

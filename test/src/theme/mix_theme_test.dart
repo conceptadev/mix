@@ -5,13 +5,13 @@ import 'package:mix/mix.dart';
 import '../../helpers/testing_utils.dart';
 
 void main() {
-  const primaryColor = ColorToken('primary', Colors.red);
+  const primaryColor = ColorToken('primary');
   group('MixTheme', () {
     testWidgets('MixTheme.of', (tester) async {
       final theme = MixThemeData(
-        colors: StyledTokens({
-          primaryColor: (_) => Colors.blue,
-        }),
+        colors: {
+          primaryColor: Colors.blue,
+        },
       );
 
       await tester.pumpWithMixTheme(Container(), theme: theme);
@@ -29,7 +29,7 @@ void main() {
       final context = tester.element(find.byType(Container));
 
       expect(MixTheme.maybeOf(context), null);
-      expect(MixTheme.of(context), MixThemeData());
+      expect(() => MixTheme.of(context), throwsAssertionError);
     });
   });
 }

@@ -4,7 +4,8 @@ import '../../core/attribute.dart';
 import '../../factory/mix_provider_data.dart';
 import 'flex_spec.dart';
 
-class FlexMixAttribute extends ResolvableAttribute<FlexMixAttribute, FlexSpec> {
+class FlexSpecAttribute
+    extends ResolvableAttribute<FlexSpecAttribute, FlexSpec> {
   final Axis? direction;
   final MainAxisAlignment? mainAxisAlignment;
   final CrossAxisAlignment? crossAxisAlignment;
@@ -15,7 +16,7 @@ class FlexMixAttribute extends ResolvableAttribute<FlexMixAttribute, FlexSpec> {
   final Clip? clipBehavior;
   final double? gap;
 
-  const FlexMixAttribute({
+  const FlexSpecAttribute({
     this.direction,
     this.mainAxisAlignment,
     this.crossAxisAlignment,
@@ -27,8 +28,8 @@ class FlexMixAttribute extends ResolvableAttribute<FlexMixAttribute, FlexSpec> {
     this.gap,
   });
 
-  static FlexMixAttribute of(MixData mix) {
-    return mix.attributeOf<FlexMixAttribute>() ?? const FlexMixAttribute();
+  static FlexSpecAttribute of(MixData mix) {
+    return mix.attributeOf<FlexSpecAttribute>() ?? const FlexSpecAttribute();
   }
 
   @override
@@ -47,10 +48,10 @@ class FlexMixAttribute extends ResolvableAttribute<FlexMixAttribute, FlexSpec> {
   }
 
   @override
-  FlexMixAttribute merge(covariant FlexMixAttribute? other) {
+  FlexSpecAttribute merge(covariant FlexSpecAttribute? other) {
     if (other == null) return this;
 
-    return FlexMixAttribute(
+    return FlexSpecAttribute(
       direction: other.direction ?? direction,
       mainAxisAlignment: other.mainAxisAlignment ?? mainAxisAlignment,
       crossAxisAlignment: other.crossAxisAlignment ?? crossAxisAlignment,

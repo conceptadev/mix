@@ -2,7 +2,6 @@ import 'package:desktop_window/desktop_window.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:mix/mix.dart';
 
 import 'app_shell.dart';
 import 'docs/docs.dart';
@@ -66,11 +65,8 @@ class MyApp extends StatelessWidget {
             });
           },
           builder: (context, child) {
-            return MixTheme(
-              data: MixThemeData(),
-              child: Material(
-                child: child ?? const SizedBox.shrink(),
-              ),
+            return Material(
+              child: child ?? const SizedBox.shrink(),
             );
           },
         );

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../helpers/string_ext.dart';
 import '../../theme/mix_theme.dart';
-import '../../theme/tokens/breakpoints.dart';
+import '../../theme/tokens/breakpoints_token.dart';
 import '../../variants/context_variant.dart';
 
 /// Global breakpoint context variants based on predefined screen sizes.
@@ -26,10 +26,7 @@ final onLarge = onBreakpointToken(BreakpointToken.large);
 /// the orientation constraint. This function returns a [ContextVariant] which will apply
 /// when the screen size matches these constraints.
 ContextVariant onBreakpoint({minWidth = 0, maxWidth = double.infinity}) {
-  final constraints = BreakpointConstraint(
-    minWidth: minWidth,
-    maxWidth: maxWidth,
-  );
+  final constraints = Breakpoint(minWidth: minWidth, maxWidth: maxWidth);
   final constraintName =
       'minWidth-${constraints.minWidth}-maxWidth-${constraints.maxWidth}';
 
@@ -52,11 +49,9 @@ ContextVariant onBreakpointToken(BreakpointToken token) {
   return ContextVariant(
     'on-${token.name.paramCase}',
     when: (BuildContext context) {
-      final breakpoints = MixTheme.of(context).breakpoints;
-
       final size = MediaQuery.sizeOf(context);
 
-      final selectedbreakpoint = breakpoints(token, context);
+      final selectedbreakpoint = token.resolve(context);
 
       return selectedbreakpoint.matches(size);
     },

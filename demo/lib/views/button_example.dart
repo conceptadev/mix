@@ -31,8 +31,8 @@ StyleMix get _baseStyle => StyleMix(
         // added because of lack of style parameters (yellow lines)
         decoration: TextDecoration.none,
         fontWeight: FontWeight.w600,
-        fontFamily: $textStyles.bodySmall.fontFamily,
       ),
+      text.style.of($textStyles.bodySmall),
       flex.mainAxisSize.min(),
       ButtonSizeVariants.small(
         padding.horizontal(10),
@@ -144,11 +144,11 @@ StyleMix get _style => StyleMix(
         color: const Color(0xFFFF004C),
       ),
       backgroundColor(const Color(0x0F07E2FF)),
-      icon(color: $colors.onBackground),
+      icon.color.of($colors.onBackground),
       onDisabled(
-        backgroundColor($colors.background.withOpacity(0.3)),
-        text.style(color: $colors.onBackground.withOpacity(0.3)),
-        icon(color: $colors.onBackground.withOpacity(0.3)),
+        backgroundColor.of($colors.background),
+        text.style.color.of($colors.onBackground),
+        icon.color.of($colors.onBackground),
       ),
     );
 

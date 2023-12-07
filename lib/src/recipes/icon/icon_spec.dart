@@ -15,9 +15,9 @@ class IconSpec extends Spec<IconSpec> {
         size = null;
 
   static IconSpec resolve(MixData mix) {
-    final recipe = mix.attributeOf<IconMixAttribute>()?.resolve(mix);
+    final recipe = mix.attributeOf<IconSpecAttribute>()?.resolve(mix);
 
-    return recipe ?? const IconMixAttribute().resolve(mix);
+    return recipe ?? const IconSpecAttribute().resolve(mix);
   }
 
   @override
@@ -26,11 +26,6 @@ class IconSpec extends Spec<IconSpec> {
       color: Color.lerp(color, other.color, t),
       size: lerpDouble(size, other.size, t),
     );
-  }
-
-  @override
-  IconSpec merge(IconSpec? other) {
-    return copyWith(color: other?.color, size: other?.size);
   }
 
   @override

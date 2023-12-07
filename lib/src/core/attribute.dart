@@ -108,7 +108,7 @@ mixin MultiChildRenderAttributeMixin<W extends MultiChildRenderObjectWidget>
 
 @immutable
 abstract class Spec<T extends Spec<T>> extends ThemeExtension<T>
-    with Comparable, Mergeable<T> {
+    with Comparable {
   const Spec();
 
   Duration lerpDuration(Duration a, Duration b, double t) {

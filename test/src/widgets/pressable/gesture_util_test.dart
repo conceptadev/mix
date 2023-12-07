@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
 
-import '../../helpers/testing_utils.dart';
+import '../../../helpers/testing_utils.dart';
 
 void main() {
   group('Pressable Util', () {
@@ -13,7 +13,7 @@ void main() {
     testWidgets('press state', (tester) async {
       await tester.pumpWithPressable(
         Container(),
-        state: PressableState.pressed,
+        state: GestureState.pressed,
         focus: true,
       );
 
@@ -30,7 +30,7 @@ void main() {
     testWidgets('long press state', (tester) async {
       await tester.pumpWithPressable(
         Container(),
-        state: PressableState.longPressed,
+        state: GestureState.longPressed,
         focus: true,
       );
 
@@ -50,7 +50,7 @@ void main() {
     testWidgets('hover state', (tester) async {
       await tester.pumpWithPressable(
         Container(),
-        state: PressableState.hover,
+        hover: true,
         focus: true,
       );
 
@@ -67,7 +67,7 @@ void main() {
     testWidgets('disabled state', (tester) async {
       await tester.pumpWithPressable(
         Container(),
-        state: PressableState.disabled,
+        status: GestureStatus.disabled,
         focus: true,
       );
 
@@ -88,7 +88,7 @@ void main() {
     testWidgets('enabled state', (tester) async {
       await tester.pumpWithPressable(
         Container(),
-        state: PressableState.pressed,
+        state: GestureState.pressed,
         focus: true,
       );
 
@@ -101,7 +101,7 @@ void main() {
         onEnabledAttr.value,
         StyleMix(attribute1, attribute2, attribute3),
       );
-      expect(onEnabledAttr.variant.name, 'not(on-disabled)');
+      expect(onEnabledAttr.variant.name, 'on-enabled');
       expect(onEnabledAttr.variant.when(context), true);
     });
 
@@ -109,7 +109,7 @@ void main() {
     testWidgets('focus state', (tester) async {
       await tester.pumpWithPressable(
         Container(),
-        state: PressableState.pressed,
+        state: GestureState.pressed,
         focus: true,
       );
 

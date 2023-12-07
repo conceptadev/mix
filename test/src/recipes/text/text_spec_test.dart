@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
-import 'package:mix/src/attributes/strut_style/strut_style_dto.dart';
-import 'package:mix/src/attributes/text_style/text_style_dto.dart';
 
 import '../../../helpers/testing_utils.dart';
 

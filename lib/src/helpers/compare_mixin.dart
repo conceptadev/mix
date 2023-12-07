@@ -1,5 +1,7 @@
 // ignore_for_file: avoid-mutating-parameters
 
+import 'package:flutter/material.dart';
+
 import '../core/extensions/iterable_ext.dart';
 import 'deep_collection_equality.dart';
 
@@ -140,6 +142,7 @@ mixin Comparable {
   int get hashCode => runtimeType.hashCode ^ _mapPropsToHashCode(props);
 
   // Returns a list of properties that differ between this object and another.
+  @visibleForTesting
   List<String> getDiff(Object other) {
     final diff = <String>[];
 

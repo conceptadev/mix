@@ -63,7 +63,7 @@ void main() {
 
     expect(find.byType(Container), findsOneWidget);
 
-    expect(container.color, Colors.red);
+    expect((container.decoration as BoxDecoration).color, Colors.red);
 
     expect(stackWidget.alignment, Alignment.topCenter);
     expect(stackWidget.fit, StackFit.expand);

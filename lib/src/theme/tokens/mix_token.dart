@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+import '../../core/attribute.dart';
 import '../../core/extensions/iterable_ext.dart';
 import '../../helpers/compare_mixin.dart';
 import 'color_token.dart';
@@ -10,23 +11,17 @@ import 'text_style_token.dart';
 @immutable
 abstract class MixToken<T> {
   final String name;
-  final T value;
+  const MixToken(this.name);
 
-  const MixToken(this.name, this.value);
+  static ColorToken color(String name) => ColorToken(name);
 
-  static ColorToken color(String name, Color value) {
-    return ColorToken(name, value);
-  }
+  static TextStyleToken textStyle(String name) => TextStyleToken(name);
 
-  static TextStyleToken textStyle(String name, TextStyle value) {
-    return TextStyleToken(name, value);
-  }
+  static RadiusToken radius(String name) => RadiusToken(name);
 
-  static RadiusToken radius(String name, Radius value) {
-    return RadiusToken(name, value);
-  }
+  T call();
 
-  T call() => value;
+  T resolve(BuildContext context);
 
   @override
   operator ==(Object other) {
@@ -34,40 +29,52 @@ abstract class MixToken<T> {
 
     if (runtimeType != other.runtimeType) return false;
 
-    return other is MixToken && other.name == name && other.value == value;
+    return other is MixToken && other.name == name;
   }
 
   @override
-  int get hashCode => Object.hash(name, value, runtimeType);
+  int get hashCode => Object.hash(name, runtimeType);
 }
 
-mixin ValueRef<T> {
-  String get tokenName;
-  TokenResolver<T> get resolve;
+mixin TokenRef<T extends MixToken<V>, V> {
+  T get token;
 }
 
-typedef TokenResolver<T> = T Function(BuildContext context);
+mixin DtoRef<T extends Dto<V>, V> {
+  T get data;
+}
 
-typedef TokenMap<T extends MixToken<V>, V> = Map<T, TokenResolver<V>>;
+mixin WithTokenResolver<V> {
+  BuildContextResolver<V> get resolve;
+}
+
+typedef BuildContextResolver<T> = T Function(BuildContext context);
 
 class StyledTokens<T extends MixToken<V>, V> with Comparable {
-  final Map<T, TokenResolver<V>> _map;
+  final Map<T, V> _map;
 
   const StyledTokens(this._map);
 
   //  empty
   const StyledTokens.empty() : this(const {});
 
-  V call(T token, BuildContext context) {
-    final value = _map[token]?.call(context) ?? token.value;
-
-    return value is ValueRef ? value.resolve(context) : value;
-  }
+  V? operator [](T token) => _map[token];
 
   // Looks for the token the value set within the MixToken
   // TODO: Needs to be optimized, but this is a temporary solution
-  T? findByValue(V value) {
-    return _map.keys.firstWhereOrNull((token) => token.value == value);
+  T? findByRef(V value) {
+    return _map.keys.firstWhereOrNull((token) => token() == value);
+  }
+
+  StyledTokens<T, V> merge(StyledTokens<T, V> other) {
+    //  TODO: This is a temporary solution, but it works for now
+    // ovrite the keys on this _map with the keys from the other _map
+
+    final newMap = Map<T, V>.from(_map);
+
+    newMap.addAll(other._map);
+
+    return StyledTokens(newMap);
   }
 
   @override

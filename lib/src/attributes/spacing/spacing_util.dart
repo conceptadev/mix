@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../../core/attribute.dart';
 import '../../theme/tokens/space_token.dart';
 import '../scalars/scalar_util.dart';
-import 'spacing_attribute.dart';
 import 'spacing_dto.dart';
 
 /// A utility class for defining spacing attributes like padding and margin in Flutter widgets.
@@ -252,7 +251,7 @@ class SpacingUtility<T extends StyleAttribute>
     double? end,
   }) {
     return builder(
-      SpacingDto(
+      SpacingDto.only(
         top: top,
         bottom: bottom,
         left: left,
@@ -524,7 +523,7 @@ class SpacingDirectionalUtility<T extends StyleAttribute>
   /// * [SpacingDto], the data transfer object for [SpacingAttribute]
   T only({double? top, double? bottom, double? start, double? end}) {
     return builder(
-      SpacingDto(top: top, bottom: bottom, start: start, end: end),
+      SpacingDto.only(top: top, bottom: bottom, start: start, end: end),
     );
   }
 }

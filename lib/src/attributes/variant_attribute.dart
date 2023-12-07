@@ -87,3 +87,15 @@ class MultiVariantAttribute extends VariantAttribute<MultiVariant>
     return MultiVariantAttribute(variant, _style.merge(other._style));
   }
 }
+
+@immutable
+class GestureContextVariantAttribute extends ContextVariantAttribute {
+  const GestureContextVariantAttribute(super.variant, super.style);
+
+  @override
+  GestureContextVariantAttribute merge(GestureContextVariantAttribute other) {
+    if (other.variant != variant) throw throwArgumentError(other);
+
+    return GestureContextVariantAttribute(variant, _style.merge(other._style));
+  }
+}

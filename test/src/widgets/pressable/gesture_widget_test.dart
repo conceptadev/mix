@@ -22,6 +22,7 @@ void main() {
         ),
         Pressable(
           onPressed: null,
+          disabled: true,
           child: Container(
             key: secondKey,
           ),
@@ -34,12 +35,12 @@ void main() {
     final firstContext = tester.element(find.byKey(firstKey));
     final secondContext = tester.element(find.byKey(secondKey));
 
-    final firstNotifier = PressableNotifier.of(firstContext);
-    final secondNotifier = PressableNotifier.of(secondContext);
+    final firstNotifier = GestureStateNotifier.of(firstContext);
+    final secondNotifier = GestureStateNotifier.of(secondContext);
 
     expect(onEnabledAttr.when(firstContext), true);
-    expect(firstNotifier!.state, PressableState.inactive);
+    expect(firstNotifier!.status, GestureStatus.enabled);
     expect(onEnabledAttr.when(secondContext), false);
-    expect(secondNotifier!.state, PressableState.disabled);
+    expect(secondNotifier!.status, GestureStatus.disabled);
   });
 }

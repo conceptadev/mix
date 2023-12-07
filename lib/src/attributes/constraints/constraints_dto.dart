@@ -4,10 +4,18 @@ import '../../core/attribute.dart';
 import '../../factory/mix_provider_data.dart';
 
 abstract class ConstraintsDto<Self extends ConstraintsDto<Self, Value>,
-    Value extends Constraints> extends Dto<Value> {
+    Value extends Constraints> extends Dto<Value> with Mergeable<Self> {
   const ConstraintsDto();
 }
 
+/// Represents a [Dto] Data transfer object of [BoxConstraints]
+///
+/// This is used to allow for resolvable value tokens, and also the correct
+/// merge and combining behavior. It allows to be merged, and resolved to a `[BoxConstraints]
+///
+/// See also:
+/// - [BoxConstraints], which is the Flutter counterpart of this class.
+/// - [ConstraintsDto], which is the base class for this class.
 class BoxConstraintsDto
     extends ConstraintsDto<BoxConstraintsDto, BoxConstraints> {
   final double? minWidth;
@@ -22,6 +30,7 @@ class BoxConstraintsDto
     this.maxHeight,
   });
 
+  /// Creates a [BoxConstraintsDto] from a given [BoxConstraints].
   static BoxConstraintsDto from(BoxConstraints constraints) {
     return BoxConstraintsDto(
       minWidth: constraints.minWidth,
@@ -31,29 +40,25 @@ class BoxConstraintsDto
     );
   }
 
+  /// Creates a [BoxConstraintsDto] from a given [BoxConstraints].
+  ///
+  /// Returns null if the constraints are null.
   static BoxConstraintsDto? maybeFrom(BoxConstraints? constraints) {
     return constraints == null ? null : from(constraints);
   }
 
+  /// Resolves this [BoxConstraintsDto] with a given [MixData] to a [BoxConstraints]
   @override
   BoxConstraints resolve(MixData mix) {
-    BoxConstraints? constraints;
-
-    if (minWidth != null ||
-        maxWidth != null ||
-        minHeight != null ||
-        maxHeight != null) {
-      constraints = BoxConstraints(
-        minWidth: minWidth ?? 0,
-        maxWidth: maxWidth ?? double.infinity,
-        minHeight: minHeight ?? 0,
-        maxHeight: maxHeight ?? double.infinity,
-      );
-    }
-
-    return constraints ?? const BoxConstraints();
+    return BoxConstraints(
+      minWidth: minWidth ?? 0,
+      maxWidth: maxWidth ?? double.infinity,
+      minHeight: minHeight ?? 0,
+      maxHeight: maxHeight ?? double.infinity,
+    );
   }
 
+  /// Merges this [BoxConstraintsDto] with `other` [BoxConstraintsDto]
   @override
   BoxConstraintsDto merge(BoxConstraintsDto? other) {
     if (other == null) return this;

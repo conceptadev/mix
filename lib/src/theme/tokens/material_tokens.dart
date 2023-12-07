@@ -2,203 +2,140 @@
 
 import 'package:flutter/material.dart';
 
+import '../mix_theme.dart';
 import 'color_token.dart';
 import 'text_style_token.dart';
 
+const _cm = _MaterialColorTokens();
+const _ts = _MaterialTextStyles();
+
+@immutable
+class MaterialTokens {
+  final colors = _cm;
+  final textStyles = _ts;
+  const MaterialTokens();
+}
+
+final materialMixTheme = MixThemeData(
+  colors: {
+    _cm.primary: ColorResolver((c) => c.color.primary),
+    _cm.secondary: ColorResolver((c) => c.color.secondary),
+    _cm.tertiary: ColorResolver((c) => c.color.tertiary),
+    _cm.surface: ColorResolver((c) => c.color.surface),
+    _cm.background: ColorResolver((c) => c.color.background),
+    _cm.error: ColorResolver((c) => c.color.error),
+    _cm.onPrimary: ColorResolver((c) => c.color.onPrimary),
+    _cm.onSecondary: ColorResolver((c) => c.color.onSecondary),
+    _cm.onTertiary: ColorResolver((c) => c.color.onTertiary),
+    _cm.onSurface: ColorResolver((c) => c.color.onSurface),
+    _cm.onBackground: ColorResolver((context) => context.color.onBackground),
+    _cm.onError: ColorResolver((context) => context.color.onError),
+  },
+  textStyles: {
+    _ts.displayLarge: TextStyleResolver((c) => c.text.displayLarge!),
+    _ts.displayMedium: TextStyleResolver((c) => c.text.displayMedium!),
+    _ts.displaySmall: TextStyleResolver((c) => c.text.displaySmall!),
+    _ts.headlineLarge: TextStyleResolver((c) => c.text.headlineLarge!),
+    _ts.headlineMedium: TextStyleResolver((c) => c.text.headlineMedium!),
+    _ts.headlineSmall: TextStyleResolver((c) => c.text.headlineSmall!),
+    _ts.titleLarge: TextStyleResolver((c) => c.text.titleLarge!),
+    _ts.titleMedium: TextStyleResolver((c) => c.text.titleMedium!),
+    _ts.titleSmall: TextStyleResolver((c) => c.text.titleSmall!),
+    _ts.bodyLarge: TextStyleResolver((c) => c.text.bodyLarge!),
+    _ts.bodyMedium: TextStyleResolver((c) => c.text.bodyMedium!),
+    _ts.bodySmall: TextStyleResolver((c) => c.text.bodySmall!),
+    _ts.labelLarge: TextStyleResolver((c) => c.text.labelLarge!),
+    _ts.labelMedium: TextStyleResolver((c) => c.text.labelMedium!),
+    _ts.labelSmall: TextStyleResolver((c) => c.text.labelSmall!),
+    _ts.headline1: TextStyleResolver((c) => c.text.headline1!),
+    _ts.headline2: TextStyleResolver((c) => c.text.headline2!),
+    _ts.headline3: TextStyleResolver((c) => c.text.headline3!),
+    _ts.headline4: TextStyleResolver((c) => c.text.headline4!),
+    _ts.headline5: TextStyleResolver((c) => c.text.headline5!),
+    _ts.headline6: TextStyleResolver((c) => c.text.headline6!),
+    _ts.subtitle1: TextStyleResolver((c) => c.text.subtitle1!),
+    _ts.subtitle2: TextStyleResolver((c) => c.text.subtitle2!),
+    _ts.bodyText1: TextStyleResolver((c) => c.text.bodyText1!),
+    _ts.bodyText2: TextStyleResolver((c) => c.text.bodyText2!),
+    _ts.caption: TextStyleResolver((c) => c.text.caption!),
+    _ts.button: TextStyleResolver((c) => c.text.button!),
+    _ts.overline: TextStyleResolver((c) => c.text.overline!),
+  },
+);
+
 @immutable
 class _MaterialColorTokens {
-  final primary = ColorToken.resolvable(
-    'md.color.primary',
-    (context) => context.color.primary,
-  );
+  final primary = const ColorToken('md.color.primary');
 
-  final secondary = ColorToken.resolvable(
-    'md.color.secondary',
-    (context) => context.color.secondary,
-  );
+  final secondary = const ColorToken('md.color.secondary');
 
-  final tertiary = ColorToken.resolvable(
-    'md.color.tertiary',
-    (context) => context.color.tertiary,
-  );
+  final tertiary = const ColorToken('md.color.tertiary');
 
-  final surface = ColorToken.resolvable(
-    'md.color.surface',
-    (context) => context.color.surface,
-  );
+  final surface = const ColorToken('md.color.surface');
 
-  final background = ColorToken.resolvable(
-    'md.color.background',
-    (context) => context.color.background,
-  );
+  final background = const ColorToken('md.color.background');
 
-  final error = ColorToken.resolvable(
-    'md.color.error',
-    (context) => context.color.error,
-  );
+  final error = const ColorToken('md.color.error');
 
-  final onPrimary = ColorToken.resolvable(
-    'md.color.on.primary',
-    (context) => context.color.onPrimary,
-  );
+  final onPrimary = const ColorToken('md.color.on.primary');
 
-  final onSecondary = ColorToken.resolvable(
-    'md.color.on.secondary',
-    (context) => context.color.onSecondary,
-  );
+  final onSecondary = const ColorToken('md.color.on.secondary');
 
-  final onTertiary = ColorToken.resolvable(
-    'md.color.on.tertiary',
-    (context) => context.color.onTertiary,
-  );
+  final onTertiary = const ColorToken('md.color.on.tertiary');
 
-  final onSurface = ColorToken.resolvable(
-    'md.color.on.surface',
-    (context) => context.color.onSurface,
-  );
+  final onSurface = const ColorToken('md.color.on.surface');
 
-  final onBackground = ColorToken.resolvable(
-    'md.color.on.background',
-    (context) => context.color.onBackground,
-  );
+  final onBackground = const ColorToken('md.color.on.background');
 
-  final onError = ColorToken.resolvable(
-    'md.color.on.error',
-    (context) => context.color.onError,
-  );
+  final onError = const ColorToken('md.color.on.error');
 
-  _MaterialColorTokens();
+  const _MaterialColorTokens();
 }
 
 @immutable
 // Material 3 TextTheme Tokens.
 class _MaterialTextStyles {
   //  Material 3 text styles
-  final displayLarge = TextStyleToken.resolvable(
-    'md3.text.theme.display.large',
-    (context) => context.text.displayLarge!,
-  );
-  final displayMedium = TextStyleToken.resolvable(
+  final displayLarge = const TextStyleToken('md3.text.theme.display.large');
+  final displayMedium = const TextStyleToken(
     'md3.text.theme.display.medium',
-    (context) => context.text.displayMedium!,
   );
-  final displaySmall = TextStyleToken.resolvable(
-    'md3.text.theme.display.small',
-    (context) => context.text.displaySmall!,
-  );
-  final headlineLarge = TextStyleToken.resolvable(
+  final displaySmall = const TextStyleToken('md3.text.theme.display.small');
+  final headlineLarge = const TextStyleToken(
     'md3.text.theme.headline.large',
-    (context) => context.text.headlineLarge!,
   );
-  final headlineMedium = TextStyleToken.resolvable(
+  final headlineMedium = const TextStyleToken(
     'md3.text.theme.headline.medium',
-    (context) => context.text.headlineMedium!,
   );
-  final headlineSmall = TextStyleToken.resolvable(
+  final headlineSmall = const TextStyleToken(
     'md3.text.theme.headline.small',
-    (context) => context.text.headlineSmall!,
   );
-  final titleLarge = TextStyleToken.resolvable(
-    'md3.text.theme.title.large',
-    (context) => context.text.titleLarge!,
-  );
-  final titleMedium = TextStyleToken.resolvable(
-    'md3.text.theme.title.medium',
-    (context) => context.text.titleMedium!,
-  );
-  final titleSmall = TextStyleToken.resolvable(
-    'md3.text.theme.title.small',
-    (context) => context.text.titleSmall!,
-  );
-  final bodyLarge = TextStyleToken.resolvable(
-    'md3.text.theme.body.large',
-    (context) => context.text.bodyLarge!,
-  );
-  final bodyMedium = TextStyleToken.resolvable(
-    'md3.text.theme.body.medium',
-    (context) => context.text.bodyMedium!,
-  );
-  final bodySmall = TextStyleToken.resolvable(
-    'md3.text.theme.body.small',
-    (context) => context.text.bodySmall!,
-  );
-  final labelLarge = TextStyleToken.resolvable(
-    'md3.text.theme.label.large',
-    (context) => context.text.labelLarge!,
-  );
-  final labelMedium = TextStyleToken.resolvable(
-    'md3.text.theme.label.medium',
-    (context) => context.text.labelMedium!,
-  );
-  final labelSmall = TextStyleToken.resolvable(
-    'md3.text.theme.label.small',
-    (context) => context.text.labelSmall!,
-  );
+
+  final titleLarge = const TextStyleToken('md3.text.theme.title.large');
+  final titleMedium = const TextStyleToken('md3.text.theme.title.medium');
+  final titleSmall = const TextStyleToken('md3.text.theme.title.small');
+  final bodyLarge = const TextStyleToken('md3.text.theme.body.large');
+  final bodyMedium = const TextStyleToken('md3.text.theme.body.medium');
+  final bodySmall = const TextStyleToken('md3.text.theme.body.small');
+  final labelLarge = const TextStyleToken('md3.text.theme.label.large');
+  final labelMedium = const TextStyleToken('md3.text.theme.label.medium');
+  final labelSmall = const TextStyleToken('md3.text.theme.label.small');
   // Material 2 text styles
-  final headline1 = TextStyleToken.resolvable(
-    'md2.text.theme.headline1',
-    (context) => context.text.headline1!,
-  );
-  final headline2 = TextStyleToken.resolvable(
-    'md2.text.theme.headline2',
-    (context) => context.text.headline2!,
-  );
-  final headline3 = TextStyleToken.resolvable(
-    'md2.text.theme.headline3',
-    (context) => context.text.headline3!,
-  );
-  final headline4 = TextStyleToken.resolvable(
-    'md2.text.theme.headline4',
-    (context) => context.text.headline4!,
-  );
-  final headline5 = TextStyleToken.resolvable(
-    'md2.text.theme.headline5',
-    (context) => context.text.headline5!,
-  );
-  final headline6 = TextStyleToken.resolvable(
-    'md2.text.theme.headline6',
-    (context) => context.text.headline6!,
-  );
-  final subtitle1 = TextStyleToken.resolvable(
-    'md2.text.theme.subtitle1',
-    (context) => context.text.subtitle1!,
-  );
-  final subtitle2 = TextStyleToken.resolvable(
-    'md2.text.theme.subtitle2',
-    (context) => context.text.subtitle2!,
-  );
-  final bodyText1 = TextStyleToken.resolvable(
-    'md2.text.theme.bodyText1',
-    (context) => context.text.bodyText1!,
-  );
-  final bodyText2 = TextStyleToken.resolvable(
-    'md2.text.theme.bodyText2',
-    (context) => context.text.bodyText2!,
-  );
-  final caption = TextStyleToken.resolvable(
-    'md2.text.theme.caption',
-    (context) => context.text.caption!,
-  );
-  final button = TextStyleToken.resolvable(
-    'md2.text.theme.button',
-    (context) => context.text.button!,
-  );
-  final overline = TextStyleToken.resolvable(
-    'md2.text.theme.overline',
-    (context) => context.text.overline!,
-  );
+  final headline1 = const TextStyleToken('md2.text.theme.headline1');
+  final headline2 = const TextStyleToken('md2.text.theme.headline2');
+  final headline3 = const TextStyleToken('md2.text.theme.headline3');
+  final headline4 = const TextStyleToken('md2.text.theme.headline4');
+  final headline5 = const TextStyleToken('md2.text.theme.headline5');
+  final headline6 = const TextStyleToken('md2.text.theme.headline6');
+  final subtitle1 = const TextStyleToken('md2.text.theme.subtitle1');
+  final subtitle2 = const TextStyleToken('md2.text.theme.subtitle2');
+  final bodyText1 = const TextStyleToken('md2.text.theme.bodyText1');
+  final bodyText2 = const TextStyleToken('md2.text.theme.bodyText2');
+  final caption = const TextStyleToken('md2.text.theme.caption');
+  final button = const TextStyleToken('md2.text.theme.button');
+  final overline = const TextStyleToken('md2.text.theme.overline');
 
-  _MaterialTextStyles();
-}
-
-final _colors = _MaterialColorTokens();
-final _textStyles = _MaterialTextStyles();
-
-@immutable
-class MaterialTokens {
-  final colors = _colors;
-  final textStyles = _textStyles;
-  MaterialTokens();
+  const _MaterialTextStyles();
 }
 
 extension on BuildContext {
@@ -207,47 +144,47 @@ extension on BuildContext {
 }
 
 mixin MaterialColorTokensMixin {
-  Color get primary => _colors.primary();
-  Color get secondary => _colors.secondary();
-  Color get tertiary => _colors.tertiary();
-  Color get surface => _colors.surface();
-  Color get background => _colors.background();
-  Color get error => _colors.error();
-  Color get onPrimary => _colors.onPrimary();
-  Color get onSecondary => _colors.onSecondary();
-  Color get onTertiary => _colors.onTertiary();
-  Color get onSurface => _colors.onSurface();
-  Color get onBackground => _colors.onBackground();
-  Color get onError => _colors.onError();
+  ColorToken get primary => _cm.primary;
+  ColorToken get secondary => _cm.secondary;
+  ColorToken get tertiary => _cm.tertiary;
+  ColorToken get surface => _cm.surface;
+  ColorToken get background => _cm.background;
+  ColorToken get error => _cm.error;
+  ColorToken get onPrimary => _cm.onPrimary;
+  ColorToken get onSecondary => _cm.onSecondary;
+  ColorToken get onTertiary => _cm.onTertiary;
+  ColorToken get onSurface => _cm.onSurface;
+  ColorToken get onBackground => _cm.onBackground;
+  ColorToken get onError => _cm.onError;
 }
 
 mixin MaterialTextStyleTokensMixin {
-  TextStyle get displayLarge => _textStyles.displayLarge();
-  TextStyle get displayMedium => _textStyles.displayMedium();
-  TextStyle get displaySmall => _textStyles.displaySmall();
-  TextStyle get headlineLarge => _textStyles.headlineLarge();
-  TextStyle get headlineMedium => _textStyles.headlineMedium();
-  TextStyle get headlineSmall => _textStyles.headlineSmall();
-  TextStyle get titleLarge => _textStyles.titleLarge();
-  TextStyle get titleMedium => _textStyles.titleMedium();
-  TextStyle get titleSmall => _textStyles.titleSmall();
-  TextStyle get bodyLarge => _textStyles.bodyLarge();
-  TextStyle get bodyMedium => _textStyles.bodyMedium();
-  TextStyle get bodySmall => _textStyles.bodySmall();
-  TextStyle get labelLarge => _textStyles.labelLarge();
-  TextStyle get labelMedium => _textStyles.labelMedium();
-  TextStyle get labelSmall => _textStyles.labelSmall();
-  TextStyle get headline1 => _textStyles.headline1();
-  TextStyle get headline2 => _textStyles.headline2();
-  TextStyle get headline3 => _textStyles.headline3();
-  TextStyle get headline4 => _textStyles.headline4();
-  TextStyle get headline5 => _textStyles.headline5();
-  TextStyle get headline6 => _textStyles.headline6();
-  TextStyle get subtitle1 => _textStyles.subtitle1();
-  TextStyle get subtitle2 => _textStyles.subtitle2();
-  TextStyle get bodyText1 => _textStyles.bodyText1();
-  TextStyle get bodyText2 => _textStyles.bodyText2();
-  TextStyle get caption => _textStyles.caption();
-  TextStyle get button => _textStyles.button();
-  TextStyle get overline => _textStyles.overline();
+  TextStyleToken get displayLarge => _ts.displayLarge;
+  TextStyleToken get displayMedium => _ts.displayMedium;
+  TextStyleToken get displaySmall => _ts.displaySmall;
+  TextStyleToken get headlineLarge => _ts.headlineLarge;
+  TextStyleToken get headlineMedium => _ts.headlineMedium;
+  TextStyleToken get headlineSmall => _ts.headlineSmall;
+  TextStyleToken get titleLarge => _ts.titleLarge;
+  TextStyleToken get titleMedium => _ts.titleMedium;
+  TextStyleToken get titleSmall => _ts.titleSmall;
+  TextStyleToken get bodyLarge => _ts.bodyLarge;
+  TextStyleToken get bodyMedium => _ts.bodyMedium;
+  TextStyleToken get bodySmall => _ts.bodySmall;
+  TextStyleToken get labelLarge => _ts.labelLarge;
+  TextStyleToken get labelMedium => _ts.labelMedium;
+  TextStyleToken get labelSmall => _ts.labelSmall;
+  TextStyleToken get headline1 => _ts.headline1;
+  TextStyleToken get headline2 => _ts.headline2;
+  TextStyleToken get headline3 => _ts.headline3;
+  TextStyleToken get headline4 => _ts.headline4;
+  TextStyleToken get headline5 => _ts.headline5;
+  TextStyleToken get headline6 => _ts.headline6;
+  TextStyleToken get subtitle1 => _ts.subtitle1;
+  TextStyleToken get subtitle2 => _ts.subtitle2;
+  TextStyleToken get bodyText1 => _ts.bodyText1;
+  TextStyleToken get bodyText2 => _ts.bodyText2;
+  TextStyleToken get caption => _ts.caption;
+  TextStyleToken get button => _ts.button;
+  TextStyleToken get overline => _ts.overline;
 }

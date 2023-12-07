@@ -10,22 +10,22 @@ class BasicExample extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final mix = StyleMix.create([
-      height(300),
-      width(300),
-      borderRadius(10),
-      elevation(2),
-      margin(10),
-      alignment.center(),
-      backgroundColor(Colors.purple),
+      box.height(300),
+      box.width(300),
+      box.borderRadius(10),
+      box.elevation(2),
+      box.margin(10),
+      box.alignment.center(),
+      box.color(Colors.purple),
       text.style(color: Colors.white),
       onPress(
-        backgroundColor(Colors.black),
+        box.color(Colors.black),
       ),
       onHover(
         opacity(0.5),
       ),
       onLongPress(
-        backgroundColor(Colors.green),
+        box.color(Colors.green),
       ),
     ]);
 
@@ -73,10 +73,10 @@ class BasicExample extends HookWidget {
             style: onSurfaceMix.merge(
               StyleMix(
                 onLight(
-                  text.style(color: $colors.error),
+                  text.style.color.of($colors.error),
                 ),
                 onDark(
-                  text.style(color: $colors.primary),
+                  text.style.color.of($colors.primary),
                 ),
               ),
             ),
@@ -111,7 +111,7 @@ class BasicExample extends HookWidget {
                 style: onSurfaceMix.merge(
                   StyleMix(
                     icon(size: 70),
-                    icon(color: $colors.secondary),
+                    icon.color.of($colors.secondary),
                   ),
                 ),
               ),

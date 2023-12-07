@@ -88,9 +88,15 @@ class BoxDecorationUtility<T extends StyleAttribute>
     });
   }
 
-  BoxShadowListUtility<T> get boxShadow {
-    return BoxShadowListUtility((List<BoxShadowDto> boxShadow) {
-      return _only(boxShadow: boxShadow);
+  BoxShadowListUtility<T> get boxShadows {
+    return BoxShadowListUtility((List<BoxShadowDto> boxShadows) {
+      return _only(boxShadow: boxShadows);
+    });
+  }
+
+  BoxShadowUtility<T> get boxShadow {
+    return BoxShadowUtility((BoxShadowDto boxShadow) {
+      return _only(boxShadow: [boxShadow]);
     });
   }
 

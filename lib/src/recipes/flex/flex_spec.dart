@@ -41,9 +41,9 @@ class FlexSpec extends Spec<FlexSpec> {
         gap = null;
 
   static FlexSpec resolve(MixData mix) {
-    final recipe = mix.attributeOf<FlexMixAttribute>()?.resolve(mix);
+    final recipe = mix.attributeOf<FlexSpecAttribute>()?.resolve(mix);
 
-    return recipe ?? const FlexMixAttribute().resolve(mix);
+    return recipe ?? const FlexSpecAttribute().resolve(mix);
   }
 
   @override
@@ -61,21 +61,6 @@ class FlexSpec extends Spec<FlexSpec> {
       textBaseline: lerpSnap(textBaseline, other.textBaseline, t),
       clipBehavior: lerpSnap(clipBehavior, other.clipBehavior, t),
       gap: lerpDouble(gap, other.gap, t),
-    );
-  }
-
-  @override
-  FlexSpec merge(FlexSpec? other) {
-    return copyWith(
-      direction: other?.direction,
-      mainAxisAlignment: other?.mainAxisAlignment,
-      crossAxisAlignment: other?.crossAxisAlignment,
-      mainAxisSize: other?.mainAxisSize,
-      verticalDirection: other?.verticalDirection,
-      textDirection: other?.textDirection,
-      textBaseline: other?.textBaseline,
-      clipBehavior: other?.clipBehavior,
-      gap: other?.gap,
     );
   }
 

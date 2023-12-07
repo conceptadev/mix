@@ -61,25 +61,6 @@ class TextSpec extends Spec<TextSpec> {
   }
 
   @override
-  TextSpec merge(TextSpec? other) {
-    if (other == null) return this;
-
-    return copyWith(
-      softWrap: other.softWrap,
-      overflow: other.overflow,
-      strutStyle: other.strutStyle,
-      textAlign: other.textAlign,
-      textScaleFactor: other.textScaleFactor,
-      maxLines: other.maxLines,
-      style: other.style,
-      textWidthBasis: other.textWidthBasis,
-      textHeightBehavior: other.textHeightBehavior,
-      directives: other.directives,
-      textDirection: other.textDirection,
-    );
-  }
-
-  @override
   TextSpec lerp(TextSpec other, double t) {
     // Define a helper method for snapping
 

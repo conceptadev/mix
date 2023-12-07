@@ -6,12 +6,12 @@ import '../../../helpers/testing_utils.dart';
 
 void main() {
   testWidgets('StyledContainer', (WidgetTester tester) async {
-    final paddingAttr = padding(10);
-    final marginAttr = margin(15);
-    final alignmentAttr = alignment.center();
-    final clipAttr = clipBehavior.hardEdge();
+    final paddingAttr = box.padding(10);
+    final marginAttr = box.margin(15);
+    final alignmentAttr = box.alignment.center();
+    final clipAttr = box.clipBehavior.hardEdge();
 
-    final boxDecorationAttr = box.decoration(
+    final boxDecorationAttr = box.decoration.box(
       border: Border.all(color: Colors.red, width: 1, style: BorderStyle.solid),
       borderRadius: BorderRadius.circular(10),
       color: Colors.red,
