@@ -8,26 +8,26 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 )
 Widget boxDecorationContainer(BuildContext context) {
   final boxStyle = StyleMix(
-    backgroundColor.red(),
+    box.color.red(),
     onPress(
-      backgroundColor.blue(),
+      box.color.blue(),
     ),
     opacity(0.5),
     (onHover & onDark)(
-      backgroundColor.orange(),
+      box.color.orange(),
     ),
     onHover(
-      backgroundColor.grey(),
+      box.color.grey(),
     ),
-    padding.horizontal(15.0),
-    padding.vertical(8.0),
-    borderRadius(5),
-    width(100),
-    height(100),
+    box.padding.horizontal(15.0),
+    box.padding.vertical(8.0),
+    box.borderRadius(5),
+    box.width(100),
+    box.height(100),
     onDark(
-      backgroundColor.purple(),
+      box.color.purple(),
     ),
-    alignment.center(),
+    box.alignment.center(),
     text.style.bold(),
   );
 
