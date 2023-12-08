@@ -5,15 +5,15 @@ import 'dart:collection';
 import '../helpers/compare_mixin.dart';
 import 'attribute.dart';
 
-class MixableMap<T extends Attribute> with Comparable {
+class AttributeMap<T extends Attribute> with Comparable {
   final LinkedHashMap<Object, T>? _map;
 
-  const MixableMap._(this._map);
+  const AttributeMap._(this._map);
 
-  const MixableMap.empty() : _map = null;
+  const AttributeMap.empty() : _map = null;
 
-  factory MixableMap(Iterable<T> attributes) {
-    return MixableMap._(_mergeMap<T>(attributes));
+  factory AttributeMap(Iterable<T> attributes) {
+    return AttributeMap._(_mergeMap<T>(attributes));
   }
 
   static LinkedHashMap<Object, Attr> _mergeMap<Attr extends Attribute>(
@@ -50,17 +50,19 @@ class MixableMap<T extends Attribute> with Comparable {
 
   List<T> get values => _map?.values.toList() ?? [];
 
-  bool contains(T attribute) => _map?.containsKey(attribute.type) ?? false;
+  bool containsType(T attribute) => _map?.containsKey(attribute.type) ?? false;
+
+  bool containsValue(T attribute) => _map?.containsValue(attribute) ?? false;
 
   Attr? attributeOfType<Attr extends T>() => _map?[Attr] as Attr?;
 
   Iterable<Attr> whereType<Attr extends T>() =>
       _map?.values.whereType<Attr>() ?? [];
 
-  MixableMap<T> merge(MixableMap<T>? other) {
-    return other == null ? this : MixableMap([...values, ...other.values]);
+  AttributeMap<T> merge(AttributeMap<T>? other) {
+    return other == null ? this : AttributeMap([...values, ...other.values]);
   }
 
   @override
-  List<Object> get props => [_map ?? {}];
+  get props => [_map];
 }

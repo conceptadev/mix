@@ -62,14 +62,14 @@ extension StringExt on String {
   }
 
   /// Checks if the string is in all uppercase.
-  bool isUpperCase() => toUpperCase() == this;
+  bool get isUpperCase => toUpperCase() == this;
 
   /// Checks if the string is in all lowercase.
-  bool isLowerCase() => toLowerCase() == this;
+  bool get isLowerCase => toLowerCase() == this;
 
   /// Converts the string to camel case.
-  String camelCase() {
-    final wordList = words.map((word) => word.capitalize()).toList();
+  String get camelCase {
+    final wordList = words.map((word) => word.capitalize).toList();
     if (wordList.isNotEmpty) {
       wordList[0] = wordList.first.toLowerCase();
     }
@@ -78,10 +78,10 @@ extension StringExt on String {
   }
 
   /// Converts the string to pascal case.
-  String pascalCase() => words.map((word) => word.capitalize).join();
+  String get pascalCase => words.map((word) => word.capitalize).join();
 
   /// Capitalizes the first letter of the string.
-  String capitalize() {
+  String get capitalize {
     if (isEmpty) return this;
     final firstRune = runes.first;
     final restRunes = runes.skip(1);
@@ -91,24 +91,24 @@ extension StringExt on String {
   }
 
   /// Converts the string to constant case.
-  String constantCase() => words.uppercase.join(_snakeCaseSeparator);
+  String get constantCase => words.uppercase.join(_snakeCaseSeparator);
 
   /// Converts the string to snake case.
-  String snakeCase() => words.lowercase.join(_snakeCaseSeparator);
+  String get snakeCase => words.lowercase.join(_snakeCaseSeparator);
 
   /// Converts the string to param case.
-  String paramCase() => words.lowercase.join(_paramCaseSeparator);
+  String get paramCase => words.lowercase.join(_paramCaseSeparator);
 
   /// Converts the string to title case.
-  String titleCase() =>
+  String get titleCase =>
       words.map((word) => word.capitalize).join(_spaceSeparator);
 
   /// Converts the string to sentence case.
-  String sentenceCase() {
+  String get sentenceCase {
     final wordList = [...words];
     if (wordList.isEmpty) return this;
 
-    wordList[0] = wordList.first.capitalize();
+    wordList[0] = wordList.first.capitalize;
 
     return wordList.join(_spaceSeparator);
   }

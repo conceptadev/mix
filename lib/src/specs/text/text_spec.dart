@@ -3,8 +3,9 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 import '../../core/attribute.dart';
-import '../../core/directive.dart';
+import '../../factory/mix_provider_data.dart';
 import '../../helpers/lerp_helpers.dart';
+import 'text_attribute.dart';
 
 class TextSpec extends Spec<TextSpec> {
   final TextOverflow? overflow;
@@ -18,7 +19,6 @@ class TextSpec extends Spec<TextSpec> {
   final TextDirection? textDirection;
   final bool? softWrap;
 
-  final List<TextModifyDirective> directives;
   const TextSpec({
     required this.overflow,
     this.strutStyle,
@@ -30,7 +30,6 @@ class TextSpec extends Spec<TextSpec> {
     this.textHeightBehavior,
     this.textDirection,
     this.softWrap,
-    this.directives = const [],
   });
 
   // empty
@@ -44,14 +43,11 @@ class TextSpec extends Spec<TextSpec> {
         textWidthBasis = null,
         textHeightBehavior = null,
         textDirection = null,
-        softWrap = null,
-        directives = const [];
+        softWrap = null;
 
-  String applyTextDirectives(String? text) {
-    if (text == null) return '';
-
-    return directives.fold(text, (text, directive) => directive(text));
-  }
+  static TextSpec of(MixData mix) =>
+      mix.attributeOf<TextSpecAttribute>()?.resolve(mix) ??
+      const TextSpec.empty();
 
   @override
   TextSpec lerp(TextSpec other, double t) {
@@ -69,7 +65,6 @@ class TextSpec extends Spec<TextSpec> {
           lerpSnap(textHeightBehavior, other.textHeightBehavior, t),
       textDirection: lerpSnap(textDirection, other.textDirection, t),
       softWrap: lerpSnap(softWrap, other.softWrap, t),
-      directives: lerpSnap(directives, other.directives, t),
     );
   }
 
@@ -84,7 +79,6 @@ class TextSpec extends Spec<TextSpec> {
     TextStyle? style,
     TextWidthBasis? textWidthBasis,
     TextHeightBehavior? textHeightBehavior,
-    List<TextModifyDirective>? directives,
     TextDirection? textDirection,
   }) {
     return TextSpec(
@@ -98,7 +92,6 @@ class TextSpec extends Spec<TextSpec> {
       textHeightBehavior: textHeightBehavior ?? this.textHeightBehavior,
       textDirection: textDirection ?? this.textDirection,
       softWrap: softWrap ?? this.softWrap,
-      directives: directives ?? this.directives,
     );
   }
 
@@ -113,7 +106,6 @@ class TextSpec extends Spec<TextSpec> {
         textWidthBasis,
         textHeightBehavior,
         style,
-        directives,
         textDirection,
       ];
 }

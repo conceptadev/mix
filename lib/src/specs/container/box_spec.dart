@@ -3,8 +3,6 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 import '../../core/attribute.dart';
-import '../../core/attributes_map.dart';
-import '../../core/decorator.dart';
 
 class BoxSpec extends Spec<BoxSpec> {
   final AlignmentGeometry? alignment;
@@ -51,7 +49,6 @@ class BoxSpec extends Spec<BoxSpec> {
     Matrix4? transform,
     Clip? clipBehavior,
     Color? color,
-    MixableMap<WidgetDecorator>? directives,
   }) {
     return BoxSpec(
       alignment: alignment ?? this.alignment,

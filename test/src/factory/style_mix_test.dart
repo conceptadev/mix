@@ -312,11 +312,11 @@ void main() {
       );
       final pickedMix = style.pickVariants([outlinedVariant, smallVariant]);
 
-      expect(pickedMix.styles.contains(stringAttr1), isTrue);
-      expect(pickedMix.styles.contains(stringAttr2), isTrue);
-      expect(pickedMix.styles.contains(stringAttr3), isTrue);
-      expect(pickedMix.styles.contains(attr1), isFalse);
-      expect(pickedMix.styles.contains(attr2), isFalse);
+      expect(pickedMix.styles.containsType(stringAttr1), isTrue);
+      expect(pickedMix.styles.containsType(stringAttr2), isTrue);
+      expect(pickedMix.styles.containsType(stringAttr3), isTrue);
+      expect(pickedMix.styles.containsType(attr1), isFalse);
+      expect(pickedMix.styles.containsType(attr2), isFalse);
       expect(pickedMix.variants.isEmpty, isTrue);
     });
 

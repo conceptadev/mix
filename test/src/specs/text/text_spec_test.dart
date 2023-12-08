@@ -6,8 +6,6 @@ import '../../../helpers/testing_utils.dart';
 
 void main() {
   group('TextSpec', () {
-    const uppercaseDirective = TextModifyDirective(TextModifiers.uppercase);
-    const lowercaseDirective = TextModifyDirective(TextModifiers.lowercase);
     test('resolve', () {
       final mix = MixData.create(
         MockBuildContext(),
@@ -26,7 +24,6 @@ void main() {
               applyHeightToLastDescent: true,
             ),
             softWrap: true,
-            directives: const [uppercaseDirective],
           ),
         ),
       );
@@ -47,9 +44,6 @@ void main() {
               applyHeightToFirstAscent: true, applyHeightToLastDescent: true));
       expect(spec.textDirection, TextDirection.ltr);
       expect(spec.softWrap, true);
-      expect(spec.directives, [uppercaseDirective]);
-
-      expect(spec.applyTextDirectives('hello'), 'HELLO');
     });
 
     test('copyWith', () {
@@ -65,7 +59,6 @@ void main() {
             applyHeightToFirstAscent: true, applyHeightToLastDescent: true),
         textDirection: TextDirection.ltr,
         softWrap: true,
-        directives: [uppercaseDirective],
       );
 
       final copiedSpec = spec.copyWith(
@@ -80,7 +73,6 @@ void main() {
             applyHeightToFirstAscent: false, applyHeightToLastDescent: false),
         textDirection: TextDirection.rtl,
         softWrap: false,
-        directives: [lowercaseDirective],
       );
 
       expect(copiedSpec.overflow, TextOverflow.fade);
@@ -98,7 +90,6 @@ void main() {
 
       expect(copiedSpec.textDirection, TextDirection.rtl);
       expect(copiedSpec.softWrap, false);
-      expect(copiedSpec.directives, [lowercaseDirective]);
     });
 
     test('lerp', () {
@@ -116,7 +107,6 @@ void main() {
         ),
         textDirection: TextDirection.ltr,
         softWrap: true,
-        directives: [uppercaseDirective],
       );
 
       const spec2 = TextSpec(
@@ -133,7 +123,6 @@ void main() {
         ),
         textDirection: TextDirection.rtl,
         softWrap: false,
-        directives: [lowercaseDirective],
       );
 
       const t = 0.5;
@@ -159,7 +148,6 @@ void main() {
           ));
       expect(lerpedSpec.textDirection, TextDirection.rtl);
       expect(lerpedSpec.softWrap, false);
-      expect(lerpedSpec.directives, [lowercaseDirective]);
 
       expect(lerpedSpec, isNot(spec1));
     });

@@ -31,10 +31,10 @@ typedef Mix = StyleMix;
 /// ```
 class StyleMix with Comparable {
   /// Visual attributes contained in this mix.
-  final MixableMap<StyleAttribute> styles;
+  final AttributeMap<StyleAttribute> styles;
 
   /// The variant attributes contained in this mix.
-  final MixableMap<VariantAttribute> variants;
+  final AttributeMap<VariantAttribute> variants;
 
   static final stack = SpreadFunctionParams(_styleType<StackSpecAttribute>());
   static final text = SpreadFunctionParams(_styleType<TextSpecAttribute>());
@@ -46,8 +46,8 @@ class StyleMix with Comparable {
   ///
   /// This can be used as a default or initial value where a `StyleMix` is required.
   const StyleMix.empty()
-      : styles = const MixableMap.empty(),
-        variants = const MixableMap.empty();
+      : styles = const AttributeMap.empty(),
+        variants = const AttributeMap.empty();
 
   const StyleMix._({required this.styles, required this.variants});
 
@@ -122,8 +122,8 @@ class StyleMix with Comparable {
     }
 
     return StyleMix._(
-      styles: MixableMap(styleList),
-      variants: MixableMap(variantList),
+      styles: AttributeMap(styleList),
+      variants: AttributeMap(variantList),
     );
   }
 
@@ -229,8 +229,8 @@ class StyleMix with Comparable {
   ///
   /// If [styles] or [variants] is null, the corresponding attribute map of this mix is used.
   StyleMix copyWith({
-    MixableMap<StyleAttribute>? styles,
-    MixableMap<VariantAttribute>? variants,
+    AttributeMap<StyleAttribute>? styles,
+    AttributeMap<VariantAttribute>? variants,
   }) {
     return StyleMix._(
       styles: styles ?? this.styles,
@@ -318,7 +318,7 @@ class StyleMix with Comparable {
 
     final updatedStyle = StyleMix._(
       styles: styles,
-      variants: MixableMap(remainingVariants),
+      variants: AttributeMap(remainingVariants),
     );
 
     /// If not a single variant was matched, return the original StyleMix.

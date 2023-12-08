@@ -11,8 +11,9 @@ class StyleMixAttribute extends Attribute with Mergeable<StyleMixAttribute> {
   const StyleMixAttribute(this.value);
 
   @override
-  StyleMixAttribute merge(StyleMixAttribute? other) =>
-      StyleMixAttribute(value.merge(other?.value));
+  StyleMixAttribute merge(StyleMixAttribute? other) {
+    return other == null ? this : StyleMixAttribute(value.merge(other.value));
+  }
 
   @override
   Object get type => StyleMixAttribute;
