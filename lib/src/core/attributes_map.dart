@@ -5,15 +5,15 @@ import 'dart:collection';
 import '../helpers/compare_mixin.dart';
 import 'attribute.dart';
 
-class AttributeMap<T extends Attribute> with Comparable {
+class MixableMap<T extends Attribute> with Comparable {
   final LinkedHashMap<Object, T>? _map;
 
-  const AttributeMap._(this._map);
+  const MixableMap._(this._map);
 
-  const AttributeMap.empty() : _map = null;
+  const MixableMap.empty() : _map = null;
 
-  factory AttributeMap(Iterable<T> attributes) {
-    return AttributeMap._(_mergeMap<T>(attributes));
+  factory MixableMap(Iterable<T> attributes) {
+    return MixableMap._(_mergeMap<T>(attributes));
   }
 
   static LinkedHashMap<Object, Attr> _mergeMap<Attr extends Attribute>(
@@ -57,8 +57,8 @@ class AttributeMap<T extends Attribute> with Comparable {
   Iterable<Attr> whereType<Attr extends T>() =>
       _map?.values.whereType<Attr>() ?? [];
 
-  AttributeMap<T> merge(AttributeMap<T> other) {
-    return AttributeMap([...values, ...other.values]);
+  MixableMap<T> merge(MixableMap<T>? other) {
+    return other == null ? this : MixableMap([...values, ...other.values]);
   }
 
   @override

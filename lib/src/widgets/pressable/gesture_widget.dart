@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../factory/style_mix.dart';
-import '../../specs/container/container_widget.dart';
+import '../../specs/container/box_widget.dart';
 import 'gesture_state.notifier.dart';
 
 class GestureBox extends StatelessWidget {

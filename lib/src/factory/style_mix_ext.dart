@@ -2,20 +2,20 @@
 import 'package:flutter/material.dart';
 
 import '../core/attribute.dart';
-import '../specs/container/container_widget.dart';
+import '../specs/container/box_widget.dart';
 import '../specs/flex/flex_widget.dart';
 import '../specs/icon/icon_widget.dart';
 import '../specs/text/text_widget.dart';
 import 'style_mix.dart';
 
 extension StyleMixExt<T extends Attribute> on StyleMix {
-  StyledContainer container({
+  Box container({
     required Widget child,
     bool inherit = false,
     Key? key,
     StyleMix? style,
   }) {
-    return StyledContainer(
+    return Box(
       style: merge(style),
       key: key,
       inherit: inherit,
@@ -23,7 +23,7 @@ extension StyleMixExt<T extends Attribute> on StyleMix {
     );
   }
 
-  StyledContainer box({
+  Box box({
     required Widget child,
     bool inherit = false,
     Key? key,

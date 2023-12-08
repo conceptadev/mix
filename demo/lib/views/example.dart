@@ -76,7 +76,7 @@ class CustomMixWidget extends StatelessWidget {
       ),
     );
 
-    return StyledContainer(
+    return Box(
       style: style,
       child: const StyledText('Custom Widget'),
     );

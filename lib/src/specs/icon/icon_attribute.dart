@@ -3,8 +3,7 @@ import '../../core/attribute.dart';
 import '../../factory/mix_provider_data.dart';
 import 'icon_spec.dart';
 
-class IconSpecAttribute
-    extends ResolvableAttribute<IconSpecAttribute, IconSpec> {
+class IconSpecAttribute extends SpecAttribute<IconSpecAttribute, IconSpec> {
   final double? size;
   final ColorDto? color;
 

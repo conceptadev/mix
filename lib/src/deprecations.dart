@@ -445,51 +445,33 @@ final align = box.alignment;
 final alignment = box.alignment;
 
 @Deprecated('Use stack instead')
-ContainerSpecAttribute zAligmnent(Alignment alignment) {
-  return box.alignment(alignment);
-}
+final zAlignment = stack.alignment;
 
 @Deprecated('Use stackFit instead')
-StackSpecAttribute zFit(StackFit fit) {
-  return StackSpecAttribute(fit: fit);
-}
+final zFit = stack.fit;
 
-@Deprecated('Use stack instead')
-StackSpecAttribute zClip(Clip clip) {
-  return StackSpecAttribute(clipBehavior: clip);
-}
+@Deprecated('Use stac.clipBehavior instead')
+final zClip = stack.clipBehavior;
 
 // Create a FlexAttributes for the direction axis.
-@Deprecated('Use axis() instead')
-FlexSpecAttribute directionAxis(Axis axis) {
-  return FlexSpecAttribute(direction: axis);
-}
+@Deprecated('Use flex.direction instead')
+final directionAxis = flex.direction;
 
 // Create a FlexAttributes for the cross axis.
-@Deprecated('Use crossAxisAlignment() instead')
-FlexSpecAttribute crossAxis(CrossAxisAlignment crossAxisAlignment) {
-  return FlexSpecAttribute(crossAxisAlignment: crossAxisAlignment);
-}
+@Deprecated('Use flex.crossAxisAlignment instead')
+final crossAxis = flex.crossAxisAlignment;
 
-@Deprecated('Use textDirective(directive)')
-TextSpecAttribute directives(List<TextDirective> directives) {
-  return TextSpecAttribute(directives: directives);
-}
+@Deprecated('Use text.directive')
+final directives = text.directive;
 
-@Deprecated('Use textDirective(directive)')
-TextSpecAttribute directive(TextDirective directive) {
-  return TextSpecAttribute(directives: [directive]);
-}
+@Deprecated('Use text.directive')
+final directive = text.directive;
 
 @Deprecated('Locale is now passed to StyledText widget')
-TextStyleAttribute locale() {
-  throw UnimplementedError();
-}
+final locale = text.style.locale;
 
 @Deprecated('Use text(overflow: overflow)')
-TextSpecAttribute overflow(TextOverflow overflow) {
-  return TextSpecAttribute(overflow: overflow);
-}
+final overflow = text.overflow;
 
 @Deprecated('Use box.margin instead')
 final margin = box.margin;
@@ -609,37 +591,27 @@ final textStyle = text.style;
 final shadow = text.style.shadow;
 
 @Deprecated('use box.color instead')
-final bgColor = box.decoration.box.color;
+final bgColor = box.decoration.color;
 
 @Deprecated('use box.color instead')
-final backgroundColor = box.decoration.box.color;
+final backgroundColor = box.decoration.color;
 
 // do no tuse main axisaligmnet use flex.mainAxisAlignment instead
 @Deprecated(
   'use flex(mainAxisAlignment:value) instead or flex.mainAxisAlignment',
 )
-FlexSpecAttribute mainAxisAlignment(MainAxisAlignment mainAxisAlignment) {
-  return FlexSpecAttribute(mainAxisAlignment: mainAxisAlignment);
-}
+final mainAxisAlignment = flex.mainAxisAlignment;
 
 @Deprecated(
   'use flex(crossAxisAlignment:value) instead or flex.crossAxisAlignment',
 )
-FlexSpecAttribute crossAlignment(CrossAxisAlignment crossAxisAlignment) {
-  return FlexSpecAttribute(crossAxisAlignment: crossAxisAlignment);
-}
+final crossAxisAlignment = flex.crossAxisAlignment;
 
 @Deprecated('use flex(mainAxisSize:value) instead or flex.mainAxisSize')
-FlexSpecAttribute mainAxisSize(MainAxisSize mainAxisSize) {
-  return flex(mainAxisSize: mainAxisSize);
-}
+final mainAxisSize = flex.mainAxisSize;
 
 @Deprecated('use text.style.bold() instead')
-TextSpecAttribute bold() {
-  return TextSpecAttribute(
-    style: TextStyleDto.only(fontWeight: FontWeight.bold),
-  );
-}
+final bold = text.style.bold;
 
 @Deprecated('use box.border.radius')
 final borderRadius = box.border.radius;

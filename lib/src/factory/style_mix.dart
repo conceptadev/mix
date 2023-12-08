@@ -7,7 +7,7 @@ import '../attributes/variant_attribute.dart';
 import '../core/attribute.dart';
 import '../core/attributes_map.dart';
 import '../helpers/compare_mixin.dart';
-import '../specs/container/container_attribute.dart';
+import '../specs/container/box_attribute.dart';
 import '../specs/flex/flex_attribute.dart';
 import '../specs/image/image_attribute.dart';
 import '../specs/stack/stack_attribute.dart';
@@ -31,24 +31,23 @@ typedef Mix = StyleMix;
 /// ```
 class StyleMix with Comparable {
   /// Visual attributes contained in this mix.
-  final AttributeMap<StyleAttribute> styles;
+  final MixableMap<StyleAttribute> styles;
 
   /// The variant attributes contained in this mix.
-  final AttributeMap<VariantAttribute> variants;
+  final MixableMap<VariantAttribute> variants;
 
   static final stack = SpreadFunctionParams(_styleType<StackSpecAttribute>());
   static final text = SpreadFunctionParams(_styleType<TextSpecAttribute>());
   static final image = SpreadFunctionParams(_styleType<ImageSpecAttribute>());
-  static final container =
-      SpreadFunctionParams(_styleType<ContainerSpecAttribute>());
+  static final container = SpreadFunctionParams(_styleType<BoxSpecAttribute>());
   static final flex = SpreadFunctionParams(_styleType<FlexSpecAttribute>());
 
   /// A constant, empty mix for use with const constructor widgets.
   ///
   /// This can be used as a default or initial value where a `StyleMix` is required.
   const StyleMix.empty()
-      : styles = const AttributeMap.empty(),
-        variants = const AttributeMap.empty();
+      : styles = const MixableMap.empty(),
+        variants = const MixableMap.empty();
 
   const StyleMix._({required this.styles, required this.variants});
 
@@ -123,8 +122,8 @@ class StyleMix with Comparable {
     }
 
     return StyleMix._(
-      styles: AttributeMap(styleList),
-      variants: AttributeMap(variantList),
+      styles: MixableMap(styleList),
+      variants: MixableMap(variantList),
     );
   }
 
@@ -230,8 +229,8 @@ class StyleMix with Comparable {
   ///
   /// If [styles] or [variants] is null, the corresponding attribute map of this mix is used.
   StyleMix copyWith({
-    AttributeMap<StyleAttribute>? styles,
-    AttributeMap<VariantAttribute>? variants,
+    MixableMap<StyleAttribute>? styles,
+    MixableMap<VariantAttribute>? variants,
   }) {
     return StyleMix._(
       styles: styles ?? this.styles,
@@ -319,7 +318,7 @@ class StyleMix with Comparable {
 
     final updatedStyle = StyleMix._(
       styles: styles,
-      variants: AttributeMap(remainingVariants),
+      variants: MixableMap(remainingVariants),
     );
 
     /// If not a single variant was matched, return the original StyleMix.
@@ -437,7 +436,7 @@ class SwitchCondition<T> {
 }
 
 StyleMix Function(Iterable<T> attributes)
-    _styleType<T extends ResolvableAttribute<T, dynamic>>() {
+    _styleType<T extends SpecAttribute<T, dynamic>>() {
   return (Iterable<T> attributes) {
     final merged = attributes.reduce((value, element) => value.merge(element));
 

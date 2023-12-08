@@ -24,7 +24,7 @@ class ButtonSizeVariants {
 StyleMix get _baseStyle => StyleMix(
       box.border.radius(4),
       onPress(
-        scale(0.95),
+        box.scale(0.95),
       ),
       flex.mainAxisAlignment.center(),
       text.style(

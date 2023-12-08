@@ -26,7 +26,7 @@ class StyledContainerExample extends StatelessWidget {
 
     final colorAttribute = box.color(Colors.red);
 
-    return StyledContainer(
+    return Box(
       style: StyleMix(
         paddingAttr,
         marginAttr,
@@ -91,7 +91,7 @@ void main() {
     await buildWidget(ContainerExample());
     await buildWidget(StyledContainerExample());
 
-    final styledContainerTime = await buildWidget(StyledContainer());
+    final styledContainerTime = await buildWidget(Box());
 
     final containerTime = await buildWidget(ContainerExample());
 
@@ -199,7 +199,7 @@ class StyleWidgetExpensiveAttributge extends StatelessWidget {
       mergedStyle = mergedStyle.merge(buildStyle());
     }
 
-    return StyledContainer(
+    return Box(
       style: mergedStyle,
       child: const SizedBox(
         width: 100,

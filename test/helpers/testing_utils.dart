@@ -1,7 +1,5 @@
 // ignore_for_file: non_constant_identifier_names
 
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:meta/meta.dart';
@@ -211,25 +209,6 @@ class MockDoubleScalarAttribute
 class MockIntScalarAttribute
     extends ScalarAttribute<MockIntScalarAttribute, int> {
   const MockIntScalarAttribute(super.value);
-}
-
-class MockDoubleDecoratorAttribute
-    extends Decorator<MockDoubleDecoratorAttribute> {
-  final double value;
-  const MockDoubleDecoratorAttribute(this.value, {super.key});
-
-  @override
-  MockDoubleDecoratorAttribute lerp(
-      MockDoubleDecoratorAttribute? other, double t) {
-    return MockDoubleDecoratorAttribute(
-        lerpDouble(value, other?.value, t) ?? value);
-  }
-
-  @override
-  get props => [value];
-
-  @override
-  Type get type => MockDoubleDecoratorAttribute;
 }
 
 class MockBooleanScalarAttribute

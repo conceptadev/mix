@@ -5,9 +5,9 @@ import 'package:mix/mix.dart';
 import '../../../helpers/testing_utils.dart';
 
 void main() {
-  group('ContainerSpecAttribute', () {
+  group('BoxSpecAttribute', () {
     test('Constructor assigns correct properties', () {
-      final containerSpecAttribute = ContainerSpecAttribute(
+      final containerSpecAttribute = BoxSpecAttribute(
         alignment: Alignment.center,
         clipBehavior: Clip.antiAlias,
         constraints: const BoxConstraintsDto(maxHeight: 100),
@@ -52,7 +52,7 @@ void main() {
 
     // resolve()
     test('resolve() returns correct instance', () {
-      final containerSpecAttribute = ContainerSpecAttribute(
+      final containerSpecAttribute = BoxSpecAttribute(
         alignment: Alignment.center,
         clipBehavior: Clip.antiAlias,
         constraints: const BoxConstraintsDto(maxHeight: 100),
@@ -98,7 +98,7 @@ void main() {
 
     // merge()
     test('merge() returns correct instance', () {
-      final containerSpecAttribute = ContainerSpecAttribute(
+      final containerSpecAttribute = BoxSpecAttribute(
         alignment: Alignment.center,
         clipBehavior: Clip.antiAlias,
         constraints: const BoxConstraintsDto(maxHeight: 100),
@@ -116,8 +116,8 @@ void main() {
         width: 100,
       );
 
-      final mergedContainerSpecAttribute = containerSpecAttribute.merge(
-        ContainerSpecAttribute(
+      final mergedBoxSpecAttribute = containerSpecAttribute.merge(
+        BoxSpecAttribute(
           alignment: Alignment.centerLeft,
           clipBehavior: Clip.antiAliasWithSaveLayer,
           constraints: const BoxConstraintsDto(maxHeight: 200),
@@ -136,18 +136,17 @@ void main() {
         ),
       );
 
-      expect(mergedContainerSpecAttribute.alignment, Alignment.centerLeft);
-      expect(mergedContainerSpecAttribute.clipBehavior,
-          Clip.antiAliasWithSaveLayer);
+      expect(mergedBoxSpecAttribute.alignment, Alignment.centerLeft);
+      expect(mergedBoxSpecAttribute.clipBehavior, Clip.antiAliasWithSaveLayer);
 
-      expect(mergedContainerSpecAttribute.constraints,
+      expect(mergedBoxSpecAttribute.constraints,
           const BoxConstraintsDto(maxHeight: 200));
-      expect(mergedContainerSpecAttribute.decoration,
+      expect(mergedBoxSpecAttribute.decoration,
           const BoxDecorationDto(color: ColorDto(Colors.red)));
 
-      expect(mergedContainerSpecAttribute.height, 200);
+      expect(mergedBoxSpecAttribute.height, 200);
       expect(
-          mergedContainerSpecAttribute.margin,
+          mergedBoxSpecAttribute.margin,
           const SpacingDto.only(
             bottom: 20,
             left: 20,
@@ -155,16 +154,16 @@ void main() {
             top: 20,
           ));
       expect(
-        mergedContainerSpecAttribute.padding,
+        mergedBoxSpecAttribute.padding,
         const SpacingDto.only(bottom: 30, left: 30, right: 30, top: 30),
       );
-      expect(mergedContainerSpecAttribute.transform, Matrix4.identity());
-      expect(mergedContainerSpecAttribute.width, 200);
+      expect(mergedBoxSpecAttribute.transform, Matrix4.identity());
+      expect(mergedBoxSpecAttribute.width, 200);
     });
 
     // equality
     test('equality', () {
-      final containerSpecAttribute = ContainerSpecAttribute(
+      final containerSpecAttribute = BoxSpecAttribute(
         alignment: Alignment.center,
         clipBehavior: Clip.antiAlias,
         constraints: const BoxConstraintsDto(maxHeight: 100),
@@ -185,7 +184,7 @@ void main() {
       expect(
         containerSpecAttribute,
         equals(
-          ContainerSpecAttribute(
+          BoxSpecAttribute(
             alignment: Alignment.center,
             clipBehavior: Clip.antiAlias,
             constraints: const BoxConstraintsDto(maxHeight: 100),
@@ -208,7 +207,7 @@ void main() {
 
     // not equals
     test('not equals', () {
-      final containerSpecAttribute = ContainerSpecAttribute(
+      final containerSpecAttribute = BoxSpecAttribute(
         alignment: Alignment.center,
         clipBehavior: Clip.antiAlias,
         constraints: const BoxConstraintsDto(maxHeight: 100),
@@ -230,7 +229,7 @@ void main() {
         containerSpecAttribute,
         isNot(
           equals(
-            ContainerSpecAttribute(
+            BoxSpecAttribute(
               alignment: Alignment.centerLeft,
               clipBehavior: Clip.antiAliasWithSaveLayer,
               constraints: const BoxConstraintsDto(maxHeight: 200),

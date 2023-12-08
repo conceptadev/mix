@@ -50,7 +50,7 @@ void main() {
     test('merge() returns correct instance', () {
       final variantAttribute = VariantAttribute(variant, style);
 
-      final otherStyle = StyleMix(const MockDoubleDecoratorAttribute(10));
+      final otherStyle = StyleMix(const MockIntScalarAttribute(10));
       final otherAttribute = VariantAttribute(variant, otherStyle);
 
       final result = variantAttribute.merge(otherAttribute);
@@ -84,7 +84,7 @@ void main() {
     test('merge() returns correct instance', () {
       final variantAttribute = ContextVariantAttribute(variant, style);
 
-      final otherStyle = StyleMix(const MockDoubleDecoratorAttribute(10));
+      final otherStyle = StyleMix(const MockIntScalarAttribute(10));
       final otherAttribute = ContextVariantAttribute(variant, otherStyle);
 
       final result = variantAttribute.merge(otherAttribute);

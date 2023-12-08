@@ -11,14 +11,14 @@ void main() {
     final alignmentAttr = box.alignment.center();
     final clipAttr = box.clipBehavior.hardEdge();
 
-    final boxDecorationAttr = box.decoration.box(
+    final boxDecorationAttr = box.decoration(
       border: Border.all(color: Colors.red, width: 1, style: BorderStyle.solid),
       borderRadius: BorderRadius.circular(10),
       color: Colors.red,
     );
 
     await tester.pumpStyledWidget(
-      StyledContainer(
+      Box(
         style: StyleMix(
           paddingAttr,
           marginAttr,

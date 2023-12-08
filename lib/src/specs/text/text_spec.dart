@@ -47,16 +47,6 @@ class TextSpec extends Spec<TextSpec> {
         softWrap = null,
         directives = const [];
 
-  //  static ContainerSpec? maybeOf(BuildContext context) {
-  //   final mix = MixProvider.maybeOf(context);
-
-  //   return mix?.resolvableOf(const ContainerSpecAttribute());
-  // }
-
-  // static ContainerSpec of(BuildContext context) {
-  //   return maybeOf(context) ?? const ContainerSpec.empty();
-  // }
-
   String applyTextDirectives(String? text) {
     if (text == null) return '';
 

@@ -21,7 +21,7 @@ class VariantsAndOperator extends StatelessWidget {
         onPressed: () {
           return;
         },
-        child: StyledContainer(
+        child: Box(
           style: mix,
           child: const StyledText('HOVER THIS TO CHANGE THE TEXT COLOR'),
         ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../core/styled_widget.dart';
 import 'text_attribute.dart';
+import 'text_spec.dart';
 
 class StyledText extends StyledWidget {
   const StyledText(
@@ -20,7 +21,8 @@ class StyledText extends StyledWidget {
   @override
   Widget build(BuildContext context) {
     return withMix(context, (mix) {
-      final spec = TextSpecAttribute.of(mix).resolve(mix);
+      final spec = mix.attributeOf<TextSpecAttribute>()?.resolve(mix) ??
+          const TextSpec.empty();
 
       return Text(
         spec.applyTextDirectives(text),

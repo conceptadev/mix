@@ -18,17 +18,17 @@ class BasicExample extends HookWidget {
       box.elevation(2),
       box.margin.horizontal(10),
       box.alignment.center(),
-      container.color(Colors.purple),
-      container.color.purple.shade300(),
+      box.color(Colors.purple),
+      box.color.purple.shade300(),
       text.style(color: Colors.white),
-      container.border.radius(10),
-      container.decoration.shape.color.white(),
+      box.border.radius(10),
+      box.shapeDecoration.color.white(),
       text.style.color.white(),
       onPress(
         box.color(Colors.black),
       ),
       onHover(
-        opacity(0.5),
+        box.opacity(0.5),
       ),
       onLongPress(
         box.color(Colors.green),
@@ -46,7 +46,7 @@ class BasicExample extends HookWidget {
             "Container",
             style: headingMix,
           ),
-          StyledContainer(
+          Box(
             style: mix,
             child: StyledText(
               "Hello World, this is a StyledContainer!",
@@ -141,7 +141,7 @@ class BasicExample extends HookWidget {
             onPressed: () {
               return;
             },
-            child: StyledContainer(
+            child: Box(
               style: mix,
               child: StyledText(
                 "Press or long press me!",

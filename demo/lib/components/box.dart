@@ -12,7 +12,7 @@ Widget boxDecorationContainer(BuildContext context) {
     onPress(
       box.color.blue(),
     ),
-    opacity(0.5),
+    box.opacity(0.5),
     (onHover & onDark)(
       box.color.orange(),
     ),

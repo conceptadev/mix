@@ -17,7 +17,7 @@ class VariantAttribute<T extends Variant> extends Attribute
   StyleMix get value => _style;
 
   @override
-  VariantAttribute<T> merge(covariant VariantAttribute<T> other) {
+  VariantAttribute<T> merge(VariantAttribute<T> other) {
     if (other.variant != variant) throw throwArgumentError(other);
 
     return VariantAttribute(variant, _style.merge(other._style));

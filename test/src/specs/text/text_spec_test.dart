@@ -12,44 +12,44 @@ void main() {
       final mix = MixData.create(
         MockBuildContext(),
         StyleMix(
-          const StrutStyleAttribute(StrutStyleDto(fontSize: 20.0)),
-          TextStyleAttribute(
-              TextStyleDto.only(color: const ColorDto(Colors.red))),
-          const TextSpecAttribute(
+          TextSpecAttribute(
             overflow: TextOverflow.ellipsis,
             textDirection: TextDirection.ltr,
             textAlign: TextAlign.center,
+            style: TextStyleDto.only(color: const ColorDto(Colors.red)),
+            strutStyle: const StrutStyleDto(fontSize: 20.0),
             textScaleFactor: 1.0,
             maxLines: 2,
             textWidthBasis: TextWidthBasis.longestLine,
-            textHeightBehavior: TextHeightBehavior(
+            textHeightBehavior: const TextHeightBehavior(
               applyHeightToFirstAscent: true,
               applyHeightToLastDescent: true,
             ),
             softWrap: true,
-            directives: [uppercaseDirective],
+            directives: const [uppercaseDirective],
           ),
         ),
       );
 
-      final mixture = TextSpecAttribute.of(mix).resolve(mix);
+      final spec = mix.attributeOf<TextSpecAttribute>()?.resolve(mix) ??
+          const TextSpec.empty();
 
-      expect(mixture.overflow, TextOverflow.ellipsis);
-      expect(mixture.strutStyle, const StrutStyle(fontSize: 20.0));
-      expect(mixture.textAlign, TextAlign.center);
-      expect(mixture.textScaleFactor, 1.0);
-      expect(mixture.maxLines, 2);
-      expect(mixture.style, const TextStyle(color: Colors.red));
-      expect(mixture.textWidthBasis, TextWidthBasis.longestLine);
+      expect(spec.overflow, TextOverflow.ellipsis);
+      expect(spec.strutStyle, const StrutStyle(fontSize: 20.0));
+      expect(spec.textAlign, TextAlign.center);
+      expect(spec.textScaleFactor, 1.0);
+      expect(spec.maxLines, 2);
+      expect(spec.style, const TextStyle(color: Colors.red));
+      expect(spec.textWidthBasis, TextWidthBasis.longestLine);
       expect(
-          mixture.textHeightBehavior,
+          spec.textHeightBehavior,
           const TextHeightBehavior(
               applyHeightToFirstAscent: true, applyHeightToLastDescent: true));
-      expect(mixture.textDirection, TextDirection.ltr);
-      expect(mixture.softWrap, true);
-      expect(mixture.directives, [uppercaseDirective]);
+      expect(spec.textDirection, TextDirection.ltr);
+      expect(spec.softWrap, true);
+      expect(spec.directives, [uppercaseDirective]);
 
-      expect(mixture.applyTextDirectives('hello'), 'HELLO');
+      expect(spec.applyTextDirectives('hello'), 'HELLO');
     });
 
     test('copyWith', () {

@@ -50,7 +50,7 @@ class VariantsExample extends HookWidget {
             onPressed: () {
               return;
             },
-            child: StyledContainer(
+            child: Box(
               style: style,
               child: StyledText(
                 'onHover variant',
@@ -63,7 +63,7 @@ class VariantsExample extends HookWidget {
             "onDark variants",
             style: headingMix,
           ),
-          StyledContainer(
+          Box(
             style: onDarkStyle,
             child: StyledText(
               'onDark variant',

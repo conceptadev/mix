@@ -1,9 +1,9 @@
 import 'package:flutter/widgets.dart';
 
 import '../../core/styled_widget.dart';
-import '../container/container_attribute.dart';
-import '../container/container_spec.dart';
-import '../container/container_widget.dart';
+import '../container/box_attribute.dart';
+import '../container/box_spec.dart';
+import '../container/box_widget.dart';
 import 'stack_attribute.dart';
 import 'stack_spec.dart';
 
@@ -57,13 +57,12 @@ class ZBox extends StyledWidget {
   @override
   Widget build(BuildContext context) {
     return withMix(context, (mix) {
-      final containerSpec =
-          mix.attributeOf<ContainerSpecAttribute>()?.resolve(mix) ??
-              const ContainerSpec.empty();
+      final containerSpec = mix.attributeOf<BoxSpecAttribute>()?.resolve(mix) ??
+          const BoxSpec.empty();
       final stackSpec = mix.attributeOf<StackSpecAttribute>()?.resolve(mix) ??
           const StackSpec.empty();
 
-      return ContainerSpecWidget(
+      return BoxSpecWidget(
         containerSpec,
         child: StackSpecWidget(stackSpec, children: children),
       );

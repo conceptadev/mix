@@ -8,15 +8,11 @@ import '../../attributes/decoration/decoration_dto.dart';
 import '../../attributes/gradient/gradient_dto.dart';
 import '../../attributes/shadow/shadow_dto.dart';
 import '../../attributes/spacing/spacing_dto.dart';
-import '../../attributes/strut_style/strut_style_attribute.dart';
 import '../../attributes/strut_style/strut_style_dto.dart';
-import '../../attributes/text_style/text_style_attribute.dart';
 import '../../attributes/text_style/text_style_dto.dart';
 
 extension StrutStyleExt on StrutStyle {
   StrutStyleDto toDto() => StrutStyleDto.from(this);
-
-  StrutStyleAttribute toAttribute() => StrutStyleAttribute(toDto());
 }
 
 extension GradientExt on Gradient {
@@ -126,6 +122,4 @@ extension ListBoxShadowExt on List<BoxShadow> {
 
 extension TextStyleExt on TextStyle {
   TextStyleDto toDto() => TextStyleDto.as(this);
-
-  TextStyleAttribute toAttribute() => TextStyleAttribute(toDto());
 }

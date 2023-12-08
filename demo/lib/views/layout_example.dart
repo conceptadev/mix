@@ -32,14 +32,14 @@ class LayoutExample extends StatelessWidget {
           StyledStack(
             style: mix,
             children: [
-              StyledContainer(
+              Box(
                 style: mix,
                 child: StyledText(
                   "This is a StyledContainer inside a StyledStack!",
                   style: mix,
                 ),
               ),
-              StyledContainer(
+              Box(
                 style: mix.merge(
                   StyleMix(
                     box.width(200),

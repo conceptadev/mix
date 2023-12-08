@@ -2,9 +2,9 @@ import 'package:flutter/widgets.dart';
 
 import '../../core/styled_widget.dart';
 import '../../widgets/gap_widget.dart';
-import '../container/container_attribute.dart';
-import '../container/container_spec.dart';
-import '../container/container_widget.dart';
+import '../container/box_attribute.dart';
+import '../container/box_spec.dart';
+import '../container/box_widget.dart';
 import 'flex_attribute.dart';
 import 'flex_spec.dart';
 
@@ -174,13 +174,12 @@ class FlexBox extends StyledWidget {
   @override
   Widget build(BuildContext context) {
     return withMix(context, (mix) {
-      final containerSpec =
-          mix.attributeOf<ContainerSpecAttribute>()?.resolve(mix) ??
-              const ContainerSpec.empty();
+      final containerSpec = mix.attributeOf<BoxSpecAttribute>()?.resolve(mix) ??
+          const BoxSpec.empty();
       final flexSpec = mix.attributeOf<FlexSpecAttribute>()?.resolve(mix) ??
           const FlexSpec.empty();
 
-      return ContainerSpecWidget(
+      return BoxSpecWidget(
         containerSpec,
         child: MixedFlex(flexSpec, direction: direction, children: children),
       );

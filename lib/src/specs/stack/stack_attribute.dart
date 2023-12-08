@@ -4,8 +4,7 @@ import '../../core/attribute.dart';
 import '../../factory/mix_provider_data.dart';
 import 'stack_spec.dart';
 
-class StackSpecAttribute
-    extends ResolvableAttribute<StackSpecAttribute, StackSpec> {
+class StackSpecAttribute extends SpecAttribute<StackSpecAttribute, StackSpec> {
   final Clip? _clipBehavior;
   final TextDirection? _textDirection;
   final StackFit? _fit;

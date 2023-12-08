@@ -62,7 +62,7 @@ class VariantsCatalogPressable extends StatelessWidget {
                 onPressed: () {
                   return;
                 },
-                child: StyledContainer(
+                child: Box(
                   style: mix,
                   child: child,
                 ),

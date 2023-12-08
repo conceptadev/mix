@@ -20,7 +20,7 @@ class VariantsDefaultExample extends StatelessWidget {
         onPressed: () {
           return;
         },
-        child: StyledContainer(
+        child: Box(
           style: style,
           child: const StyledText('Button'),
         ),

@@ -834,9 +834,9 @@ class ContainerAttributes extends SpecAttribute
 - BackgroundColorAttribute? color
 - ClipAttribute? clipBehavior
 - ContainerAttributes merge(ContainerAttributes? other)
-- ContainerSpec resolve(MixData mix)
+- BoxSpec resolve(MixData mix)
 - get List<Object?> props
-class ContainerSpec extends Spec
+class BoxSpec extends Spec
 - AlignmentGeometry? alignment
 - EdgeInsetsGeometry? padding
 - EdgeInsetsGeometry? margin
@@ -847,8 +847,8 @@ class ContainerSpec extends Spec
 - Matrix4? transform
 - Color? color
 - Clip? clipBehavior
-- ContainerSpec copyWith()
-- ContainerSpec lerp(ContainerSpec other, double t)
+- BoxSpec copyWith()
+- BoxSpec lerp(BoxSpec other, double t)
 - get null props
 
 Beginning of file: lib/src/attributes/nested_attribute.dart

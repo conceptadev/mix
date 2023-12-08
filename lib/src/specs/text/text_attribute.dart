@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
 
-import '../../attributes/strut_style/strut_style_attribute.dart';
 import '../../attributes/strut_style/strut_style_dto.dart';
-import '../../attributes/text_style/text_style_attribute.dart';
 import '../../attributes/text_style/text_style_dto.dart';
 import '../../core/attribute.dart';
 import '../../core/directive.dart';
 import '../../factory/mix_provider_data.dart';
 import 'text_spec.dart';
 
-class TextSpecAttribute
-    extends ResolvableAttribute<TextSpecAttribute, TextSpec> {
+class TextSpecAttribute extends SpecAttribute<TextSpecAttribute, TextSpec> {
   final TextOverflow? overflow;
   final StrutStyleDto? strutStyle;
   final TextAlign? textAlign;
@@ -37,15 +34,6 @@ class TextSpecAttribute
     this.directives,
   });
 
-  static TextSpecAttribute of(MixData mix) {
-    final attribute = mix.attributeOf<TextSpecAttribute>();
-
-    return TextSpecAttribute(
-      strutStyle: mix.attributeOf<StrutStyleAttribute>()?.value,
-      style: mix.attributeOf<TextStyleAttribute>()?.value,
-    ).merge(attribute);
-  }
-
   @override
   TextSpec resolve(MixData mix) {
     return TextSpec(
@@ -64,7 +52,7 @@ class TextSpecAttribute
   }
 
   @override
-  TextSpecAttribute merge(covariant TextSpecAttribute? other) {
+  TextSpecAttribute merge(TextSpecAttribute? other) {
     if (other == null) return this;
 
     return TextSpecAttribute(
