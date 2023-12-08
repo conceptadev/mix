@@ -6,8 +6,8 @@ import '../../../helpers/testing_utils.dart';
 
 void main() {
   group('TextSpec', () {
-    const uppercaseDirective = TextDirective(TextModifiers.uppercase);
-    const lowercaseDirective = TextDirective(TextModifiers.lowercase);
+    const uppercaseDirective = TextModifyDirective(TextModifiers.uppercase);
+    const lowercaseDirective = TextModifyDirective(TextModifiers.lowercase);
     test('resolve', () {
       final mix = MixData.create(
         MockBuildContext(),

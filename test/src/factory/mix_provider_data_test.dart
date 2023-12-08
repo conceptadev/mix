@@ -16,6 +16,7 @@ void main() {
           const MockIntScalarAttribute(1),
           const MockStringScalarAttribute('test'),
           const MockDoubleScalarAttribute(3.0),
+          const MockBooleanScalarAttribute(false),
           autoApplyVariant(
             const MockDoubleScalarAttribute(2.0),
           ),
@@ -37,6 +38,9 @@ void main() {
         isInstanceOf<MockStringScalarAttribute>());
     expect(mixData.attributeOf<MockDoubleScalarAttribute>(),
         const MockDoubleScalarAttribute(2.0));
+
+    expect(mixData.attributeOf<MockBooleanScalarAttribute>(),
+        const MockBooleanScalarAttribute(false));
   });
 
   test('MixData merge', () {
@@ -46,6 +50,7 @@ void main() {
           const MockIntScalarAttribute(1),
           const MockStringScalarAttribute('test'),
           const MockDoubleScalarAttribute(3.0),
+          const MockBooleanScalarAttribute(true),
           autoApplyVariant(
             const MockDoubleScalarAttribute(2.0),
           ),
@@ -70,6 +75,9 @@ void main() {
         isInstanceOf<MockStringScalarAttribute>());
     expect(mergedMixData.attributeOf<MockDoubleScalarAttribute>(),
         isInstanceOf<MockDoubleScalarAttribute>());
+
+    expect(mergedMixData.attributeOf<MockBooleanScalarAttribute>(),
+        const MockBooleanScalarAttribute(true));
 
     expect(mergedMixData.attributeOf<MockIntScalarAttribute>(),
         const MockIntScalarAttribute(1));

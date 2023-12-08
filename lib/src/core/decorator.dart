@@ -4,13 +4,13 @@ import '../factory/mix_provider_data.dart';
 import 'attribute.dart';
 
 abstract class Decorator extends Attribute {
-  final Key? key;
-  const Decorator({required this.key});
+  const Decorator();
 }
 
 abstract class WidgetDecorator<Self extends WidgetDecorator<Self>>
     extends Decorator {
-  const WidgetDecorator({super.key});
+  final Key? key;
+  const WidgetDecorator({this.key});
 
   /// Linearly interpolate with another [Decorator] object.
   WidgetDecorator lerp(covariant WidgetDecorator? other, double t);

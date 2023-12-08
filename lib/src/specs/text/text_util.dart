@@ -5,8 +5,11 @@ import '../../attributes/strut_style/strut_style_dto.dart';
 import '../../attributes/strut_style/strut_style_util.dart';
 import '../../attributes/text_style/text_style_dto.dart';
 import '../../attributes/text_style/text_style_util.dart';
+import '../../core/attribute.dart';
+import '../../core/attributes_map.dart';
 import '../../core/directive.dart';
 import '../../core/extensions/values_ext.dart';
+import '../../helpers/string_ext.dart';
 import 'text_attribute.dart';
 
 const text = TextUtility();
@@ -25,7 +28,7 @@ class TextUtility extends SpecUtility<TextSpecAttribute> {
     TextHeightBehavior? textHeightBehavior,
     TextDirection? textDirection,
     bool? softWrap,
-    List<TextDirective>? directives,
+    MixableMap<TextDirective>? directives,
   }) {
     return TextSpecAttribute(
       overflow: overflow,
@@ -90,7 +93,7 @@ class TextUtility extends SpecUtility<TextSpecAttribute> {
     );
   }
 
-  TextSpecAttribute directive(TextDirective directive) {
+  TextSpecAttribute directive(ModifyTextDataDirective directive) {
     return _only(directives: [directive]);
   }
 
@@ -118,7 +121,27 @@ class TextUtility extends SpecUtility<TextSpecAttribute> {
       textHeightBehavior: textHeightBehavior,
       textDirection: textDirection,
       softWrap: softWrap,
-      directives: directives,
+      directives: directives == null ? null : MixableMap(directives),
     );
   }
 }
+
+mixin TextDirectiveUtilityMixin<T extends StyleAttribute>
+    on SpecUtility<TextSpecAttribute> {
+  TextSpecAttribute capitalize() => _addModifier(_capitalize);
+  TextSpecAttribute uppercase() => _addModifier(_uppercase);
+  TextSpecAttribute lowercase() => _addModifier(_lowercase);
+  TextSpecAttribute titleCase() => _addModifier(_titleCase);
+  TextSpecAttribute sentenceCase() => _addModifier(_sentenceCase);
+
+  TextSpecAttribute _addModifier(Modifier<String> modifier) =>
+      TextSpecAttribute(directives: [
+        ModifyTextDataDirective([modifier]),
+      ]);
+}
+
+String _capitalize(String value) => value.capitalize();
+String _uppercase(String value) => value.toUpperCase();
+String _lowercase(String value) => value.toLowerCase();
+String _titleCase(String value) => value.titleCase();
+String _sentenceCase(String value) => value.sentenceCase();

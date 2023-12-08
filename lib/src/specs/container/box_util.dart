@@ -12,15 +12,14 @@ import '../../attributes/shadow/shadow_util.dart';
 import '../../attributes/spacing/spacing_dto.dart';
 import '../../attributes/spacing/spacing_util.dart';
 import '../../core/extensions/values_ext.dart';
-import 'container_attribute.dart';
+import 'box_attribute.dart';
 
-const container = ContainerUtility();
-const box = ContainerUtility();
+const box = BoxSpecUtility();
 
-class ContainerUtility extends SpecUtility<ContainerSpecAttribute> {
-  const ContainerUtility();
+class BoxSpecUtility extends SpecUtility<BoxSpecAttribute> {
+  const BoxSpecUtility();
 
-  ContainerSpecAttribute _only({
+  BoxSpecAttribute _only({
     AlignmentGeometry? alignment,
     SpacingDto? padding,
     SpacingDto? margin,
@@ -31,7 +30,7 @@ class ContainerUtility extends SpecUtility<ContainerSpecAttribute> {
     Matrix4? transform,
     Clip? clipBehavior,
   }) {
-    return ContainerSpecAttribute(
+    return BoxSpecAttribute(
       alignment: alignment,
       padding: padding,
       margin: margin,
@@ -44,11 +43,13 @@ class ContainerUtility extends SpecUtility<ContainerSpecAttribute> {
     );
   }
 
-  DecorationUtility<ContainerSpecAttribute> get decoration {
-    return DecorationUtility((decoration) => _only(decoration: decoration));
+  BoxDecorationUtility<BoxSpecAttribute> get decoration {
+    return BoxDecorationUtility(
+      (decoration) => _only(decoration: decoration),
+    );
   }
 
-  AlignmentUtility<ContainerSpecAttribute> get alignment {
+  AlignmentUtility<BoxSpecAttribute> get alignment {
     return AlignmentUtility((alignment) => call(alignment: alignment));
   }
 
@@ -109,7 +110,7 @@ class ContainerUtility extends SpecUtility<ContainerSpecAttribute> {
   ///
   /// `padding` effectively leverages `SpacingUtility<T>` to create a versatile and readable way of applying padding,
   /// making it easier to manage spacing in Flutter's layout system.
-  SpacingUtility<ContainerSpecAttribute> get padding {
+  SpacingUtility<BoxSpecAttribute> get padding {
     return SpacingUtility((padding) => _only(padding: padding));
   }
 
@@ -170,59 +171,74 @@ class ContainerUtility extends SpecUtility<ContainerSpecAttribute> {
   ///
   /// `margin` effectively leverages `SpacingUtility<T>` to create a versatile and readable way of applying margin,
   /// making it easier to manage spacing in Flutter's layout system.
-  SpacingUtility<ContainerSpecAttribute> get margin {
+  SpacingUtility<BoxSpecAttribute> get margin {
     return SpacingUtility((margin) => _only(margin: margin));
   }
 
   // We use BoxDecoration for better Decoration support to avoid weird issues
-  ColorUtility<ContainerSpecAttribute> get color => decoration.box.color;
+  ColorUtility<BoxSpecAttribute> get color => decoration.color;
 
-  ElevationUtility<ContainerSpecAttribute> get elevation =>
-      decoration.box.elevation;
+  ElevationUtility<BoxSpecAttribute> get elevation => decoration.elevation;
 
-  BoxConstraintsUtility<ContainerSpecAttribute> get constraints {
+  ShapeDecorationUtility<BoxSpecAttribute> get shapeDecoration =>
+      ShapeDecorationUtility((decoration) => _only(decoration: decoration));
+
+  BoxConstraintsUtility<BoxSpecAttribute> get constraints {
     return BoxConstraintsUtility(
       (constraints) => _only(constraints: constraints),
     );
   }
 
-  Matrix4Utility<ContainerSpecAttribute> get transform {
+  Matrix4Utility<BoxSpecAttribute> get transform {
     return Matrix4Utility((transform) => call(transform: transform));
   }
 
-  ClipUtility<ContainerSpecAttribute> get clipBehavior {
+  ClipUtility<BoxSpecAttribute> get clipBehavior {
     return ClipUtility((clipBehavior) => call(clipBehavior: clipBehavior));
   }
 
+  // OpacityUtility<BoxSpecAttribute> get opacity => OpacityUtility(directive);
+
+  // RotateUtility<BoxSpecAttribute> get rotate => RotateUtility(directive);
+
+  // ScaleUtility<BoxSpecAttribute> get scale => ScaleUtility(directive);
+
+  // VisibilityUtility<BoxSpecAttribute> get visibility =>
+  //     VisibilityUtility(directive);
+
+  // FlexibleDirectiveUtility<BoxSpecAttribute> get flexible =>
+  //     FlexibleDirectiveUtility(directive);
+
+  // AspectRatioUtility<BoxSpecAttribute> get aspectRatio =>
+  //     AspectRatioUtility(directive);
+
   ///  Decoration Utilities
-  ContainerBorderUtility<ContainerSpecAttribute> get border {
-    return ContainerBorderUtility(
+  BoxSpecBorderUtility<BoxSpecAttribute> get border {
+    return BoxSpecBorderUtility(
       (border) => _only(decoration: BoxDecorationDto(border: border)),
     );
   }
 
-  BoxShadowListUtility<ContainerSpecAttribute> get shadows =>
-      decoration.box.boxShadows;
+  BoxShadowListUtility<BoxSpecAttribute> get shadows => decoration.boxShadows;
 
-  BoxShadowUtility<ContainerSpecAttribute> get shadow =>
-      decoration.box.boxShadow;
+  BoxShadowUtility<BoxSpecAttribute> get shadow => decoration.boxShadow;
 
   ///  Constraints utilities
-  DoubleUtility<ContainerSpecAttribute> get maxWidth => constraints.maxWidth;
+  DoubleUtility<BoxSpecAttribute> get maxWidth => constraints.maxWidth;
 
-  DoubleUtility<ContainerSpecAttribute> get minWidth => constraints.minWidth;
+  DoubleUtility<BoxSpecAttribute> get minWidth => constraints.minWidth;
 
-  DoubleUtility<ContainerSpecAttribute> get maxHeight => constraints.maxHeight;
+  DoubleUtility<BoxSpecAttribute> get maxHeight => constraints.maxHeight;
 
-  DoubleUtility<ContainerSpecAttribute> get minHeight => constraints.minHeight;
+  DoubleUtility<BoxSpecAttribute> get minHeight => constraints.minHeight;
 
-  DoubleUtility<ContainerSpecAttribute> get width =>
+  DoubleUtility<BoxSpecAttribute> get width =>
       DoubleUtility((width) => _only(width: width));
 
-  DoubleUtility<ContainerSpecAttribute> get height =>
+  DoubleUtility<BoxSpecAttribute> get height =>
       DoubleUtility((height) => _only(height: height));
 
-  ContainerSpecAttribute call({
+  BoxSpecAttribute call({
     AlignmentGeometry? alignment,
     EdgeInsets? padding,
     EdgeInsets? margin,
@@ -247,17 +263,17 @@ class ContainerUtility extends SpecUtility<ContainerSpecAttribute> {
   }
 }
 
-class ContainerBorderUtility<T extends ContainerSpecAttribute>
-    extends BoxBorderUtility<ContainerSpecAttribute> {
-  const ContainerBorderUtility(super.builder);
+class BoxSpecBorderUtility<T extends BoxSpecAttribute>
+    extends BoxBorderUtility<BoxSpecAttribute> {
+  const BoxSpecBorderUtility(super.builder);
 
-  BoxDecorationUtility<ContainerSpecAttribute> get _decoration {
+  BoxDecorationUtility<BoxSpecAttribute> get _decoration {
     return BoxDecorationUtility(
-      (decoration) => ContainerSpecAttribute(decoration: decoration),
+      (decoration) => BoxSpecAttribute(decoration: decoration),
     );
   }
 
-  BorderRadiusGeometryUtility<ContainerSpecAttribute> get radius {
+  BorderRadiusGeometryUtility<BoxSpecAttribute> get radius {
     return _decoration.borderRadius;
   }
 }

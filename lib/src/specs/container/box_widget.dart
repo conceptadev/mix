@@ -1,30 +1,30 @@
 import 'package:flutter/material.dart';
 
 import '../../core/styled_widget.dart';
-import 'container_attribute.dart';
-import 'container_spec.dart';
+import 'box_attribute.dart';
+import 'box_spec.dart';
 
-typedef Box = StyledContainer;
-typedef AnimatedBox = AnimatedStyleContainer;
+typedef StyledContainer = Box;
+typedef StyledAnimatedContainer = AnimatedBox;
 
-class StyledContainer extends StyledWidget {
-  const StyledContainer({super.style, super.key, super.inherit, this.child});
+class Box extends StyledWidget {
+  const Box({super.style, super.key, super.inherit, this.child});
 
   final Widget? child;
 
   @override
   Widget build(BuildContext context) {
     return withMix(context, (mix) {
-      final spec = mix.attributeOf<ContainerSpecAttribute>()?.resolve(mix) ??
-          const ContainerSpec.empty();
+      final spec = mix.attributeOf<BoxSpecAttribute>()?.resolve(mix) ??
+          const BoxSpec.empty();
 
-      return ContainerSpecWidget(spec, child: child);
+      return BoxSpecWidget(spec, child: child);
     });
   }
 }
 
-class AnimatedStyleContainer extends StyledWidget {
-  const AnimatedStyleContainer({
+class AnimatedBox extends StyledWidget {
+  const AnimatedBox({
     super.style,
     super.key,
     super.inherit,
@@ -40,10 +40,10 @@ class AnimatedStyleContainer extends StyledWidget {
   @override
   Widget build(BuildContext context) {
     return withMix(context, (mix) {
-      final spec = mix.attributeOf<ContainerSpecAttribute>()?.resolve(mix) ??
-          const ContainerSpec.empty();
+      final spec = mix.attributeOf<BoxSpecAttribute>()?.resolve(mix) ??
+          const BoxSpec.empty();
 
-      return AnimatedContainerSpecWidget(
+      return AnimatedBoxSpecWidget(
         spec,
         curve: curve,
         duration: duration,
@@ -53,11 +53,11 @@ class AnimatedStyleContainer extends StyledWidget {
   }
 }
 
-class ContainerSpecWidget extends StatelessWidget {
-  const ContainerSpecWidget(this.spec, {super.key, this.child});
+class BoxSpecWidget extends StatelessWidget {
+  const BoxSpecWidget(this.spec, {super.key, this.child});
 
   final Widget? child;
-  final ContainerSpec spec;
+  final BoxSpec spec;
 
   @override
   Widget build(BuildContext context) {
@@ -76,8 +76,8 @@ class ContainerSpecWidget extends StatelessWidget {
   }
 }
 
-class AnimatedContainerSpecWidget extends StatelessWidget {
-  const AnimatedContainerSpecWidget(
+class AnimatedBoxSpecWidget extends StatelessWidget {
+  const AnimatedBoxSpecWidget(
     this.spec, {
     super.key,
     this.child,
@@ -88,7 +88,7 @@ class AnimatedContainerSpecWidget extends StatelessWidget {
   final Widget? child;
   final Curve? curve;
   final Duration? duration;
-  final ContainerSpec spec;
+  final BoxSpec spec;
 
   @override
   Widget build(BuildContext context) {

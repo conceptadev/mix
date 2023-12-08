@@ -3,8 +3,10 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 import '../../core/attribute.dart';
+import '../../core/attributes_map.dart';
+import '../../core/decorator.dart';
 
-class ContainerSpec extends Spec<ContainerSpec> {
+class BoxSpec extends Spec<BoxSpec> {
   final AlignmentGeometry? alignment;
   final EdgeInsetsGeometry? padding;
   final EdgeInsetsGeometry? margin;
@@ -14,7 +16,7 @@ class ContainerSpec extends Spec<ContainerSpec> {
   final Clip? clipBehavior;
   final double? width, height;
 
-  const ContainerSpec({
+  const BoxSpec({
     required this.alignment,
     required this.padding,
     required this.margin,
@@ -26,7 +28,7 @@ class ContainerSpec extends Spec<ContainerSpec> {
     required this.height,
   });
 
-  const ContainerSpec.empty()
+  const BoxSpec.empty()
       : alignment = null,
         padding = null,
         margin = null,
@@ -38,7 +40,7 @@ class ContainerSpec extends Spec<ContainerSpec> {
         clipBehavior = null;
 
   @override
-  ContainerSpec copyWith({
+  BoxSpec copyWith({
     AlignmentGeometry? alignment,
     EdgeInsetsGeometry? padding,
     EdgeInsetsGeometry? margin,
@@ -49,8 +51,9 @@ class ContainerSpec extends Spec<ContainerSpec> {
     Matrix4? transform,
     Clip? clipBehavior,
     Color? color,
+    MixableMap<WidgetDecorator>? directives,
   }) {
-    return ContainerSpec(
+    return BoxSpec(
       alignment: alignment ?? this.alignment,
       padding: padding ?? this.padding,
       margin: margin ?? this.margin,
@@ -64,8 +67,8 @@ class ContainerSpec extends Spec<ContainerSpec> {
   }
 
   @override
-  ContainerSpec lerp(ContainerSpec other, double t) {
-    return ContainerSpec(
+  BoxSpec lerp(BoxSpec other, double t) {
+    return BoxSpec(
       alignment: AlignmentGeometry.lerp(alignment, other.alignment, t),
       padding: EdgeInsetsGeometry.lerp(padding, other.padding, t),
       margin: EdgeInsetsGeometry.lerp(margin, other.margin, t),

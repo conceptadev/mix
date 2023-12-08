@@ -18,7 +18,7 @@ class TextSpec extends Spec<TextSpec> {
   final TextDirection? textDirection;
   final bool? softWrap;
 
-  final List<TextDirective> directives;
+  final List<TextModifyDirective> directives;
   const TextSpec({
     required this.overflow,
     this.strutStyle,
@@ -84,7 +84,7 @@ class TextSpec extends Spec<TextSpec> {
     TextStyle? style,
     TextWidthBasis? textWidthBasis,
     TextHeightBehavior? textHeightBehavior,
-    List<TextDirective>? directives,
+    List<TextModifyDirective>? directives,
     TextDirection? textDirection,
   }) {
     return TextSpec(

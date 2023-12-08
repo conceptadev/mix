@@ -18,13 +18,17 @@ void main() {
     });
 
     test('Equality holds when all properties are the same', () {
-      final attr1 = TextSpecAttribute(directives: [TextDirective(uppercaseFn)]);
-      final attr2 = TextSpecAttribute(directives: [TextDirective(uppercaseFn)]);
+      final attr1 =
+          TextSpecAttribute(directives: [TextModifyDirective(uppercaseFn)]);
+      final attr2 =
+          TextSpecAttribute(directives: [TextModifyDirective(uppercaseFn)]);
       expect(attr1, attr2);
     });
     test('Equality fails when properties are different', () {
-      final attr1 = TextSpecAttribute(directives: [TextDirective(uppercaseFn)]);
-      final attr2 = TextSpecAttribute(directives: [TextDirective(lowercaseFn)]);
+      final attr1 =
+          TextSpecAttribute(directives: [TextModifyDirective(uppercaseFn)]);
+      final attr2 =
+          TextSpecAttribute(directives: [TextModifyDirective(lowercaseFn)]);
       expect(attr1, isNot(attr2));
     });
 

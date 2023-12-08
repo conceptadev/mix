@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../attributes/variant_attribute.dart';
 import '../core/attribute.dart';
 import '../core/attributes_map.dart';
-import '../decorators/decorator.dart';
 import '../helpers/compare_mixin.dart';
 import '../theme/mix_theme.dart';
 import '../variants/context_variant.dart';
@@ -15,7 +14,7 @@ import 'style_mix.dart';
 @immutable
 class MixData with Comparable {
   // Instance variables for widget attributes, widget decorators and token resolver.
-  final AttributeMap _attributes;
+  final MixableMap _attributes;
 
   final MixTokenResolver _tokenResolver;
 
@@ -24,7 +23,7 @@ class MixData with Comparable {
   /// It takes in [attributes] and [resolver] as required parameters.
   MixData._({
     required MixTokenResolver resolver,
-    required AttributeMap attributes,
+    required MixableMap attributes,
   })  : _attributes = attributes,
         _tokenResolver = resolver;
 
@@ -33,7 +32,7 @@ class MixData with Comparable {
 
     final resolver = MixTokenResolver(context);
 
-    return MixData._(resolver: resolver, attributes: AttributeMap(styleMix));
+    return MixData._(resolver: resolver, attributes: MixableMap(styleMix));
   }
 
   /// Getter for [MixTokenResolver].
@@ -45,13 +44,7 @@ class MixData with Comparable {
   ///
   /// Returns [_attributes].
   @visibleForTesting
-  AttributeMap get attributes => _attributes;
-
-  /// Getter for [_decorators].
-  ///
-  /// Returns a list of attributes of type [Decorator].
-  Iterable<T> decoratorOfType<T extends Decorator<T>>() =>
-      _attributes.whereType<T>();
+  MixableMap get attributes => _attributes;
 
   /// Finds and returns an [VisualAttribute] of type [A], or null if not found.
   A? attributeOf<A extends StyleAttribute>() {
@@ -68,9 +61,7 @@ class MixData with Comparable {
     return _attributes.whereType<A>();
   }
 
-  Value resolvableOf<Value, A extends ResolvableAttribute<A, Value>>(
-    A attribute,
-  ) {
+  Value resolvableOf<Value, A extends SpecAttribute<A, Value>>(A attribute) {
     final attributes = _attributes.whereType<A>();
     if (attributes.isEmpty) return attribute.resolve(this);
 
