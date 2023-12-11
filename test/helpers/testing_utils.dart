@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:meta/meta.dart';
 import 'package:mix/mix.dart';
+import 'package:mix/src/helpers/lerp_helpers.dart';
 import 'package:mockito/mockito.dart';
 
 export 'package:mix/src/core/extensions/values_ext.dart';
@@ -276,4 +277,25 @@ class UtilityTestDtoAttribute<T extends Dto<V>, V>
   V resolve(MixData mix) {
     return value.resolve(mix);
   }
+}
+
+class CustomWidgetDecorator extends BoxWidgetDecorator<CustomWidgetDecorator> {
+  const CustomWidgetDecorator({super.key});
+  @override
+  Widget build(mix, child) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: child,
+    );
+  }
+
+  @override
+  CustomWidgetDecorator lerp(CustomWidgetDecorator? other, double t) {
+    if (other == null) return this;
+
+    return lerpSnap(this, other, t);
+  }
+
+  @override
+  get props => [];
 }

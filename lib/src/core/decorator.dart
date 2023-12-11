@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../factory/mix_provider_data.dart';
 import 'attribute.dart';
 
-abstract class Decorator extends Attribute {
+abstract class Decorator extends StyleAttribute {
   const Decorator();
 }
 
@@ -17,5 +17,16 @@ abstract class WidgetDecorator<Self extends WidgetDecorator<Self>>
 
   @override
   Object get type => Self;
-  Widget build(Widget child, MixData mix);
+
+  Widget build(MixData mix, Widget child);
+}
+
+abstract class BoxWidgetDecorator<Self extends BoxWidgetDecorator<Self>>
+    extends WidgetDecorator<Self> {
+  const BoxWidgetDecorator({super.key});
+}
+
+abstract class FlexWidgetDecorator<Self extends FlexWidgetDecorator<Self>>
+    extends WidgetDecorator<Self> {
+  const FlexWidgetDecorator({super.key});
 }

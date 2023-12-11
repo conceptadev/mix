@@ -12,7 +12,8 @@ class BoxSpec extends Spec<BoxSpec> {
   final Decoration? decoration;
   final Matrix4? transform;
   final Clip? clipBehavior;
-  final double? width, height;
+  final double? width;
+  final double? height;
 
   const BoxSpec({
     required this.alignment,

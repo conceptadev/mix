@@ -7,16 +7,15 @@ import 'package:flutter/material.dart';
 import '../attributes/scalars/scalar_util.dart';
 import '../core/attribute.dart';
 import '../core/decorator.dart';
-import '../factory/mix_provider_data.dart';
 import '../helpers/lerp_helpers.dart';
 
-class AspectRatioDirective extends WidgetDecorator<AspectRatioDirective> {
+class AspectRatioDecorator extends BoxWidgetDecorator<AspectRatioDecorator> {
   final double aspectRatio;
-  const AspectRatioDirective(this.aspectRatio, {super.key});
+  const AspectRatioDecorator(this.aspectRatio, {super.key});
 
   @override
-  AspectRatioDirective lerp(AspectRatioDirective? other, double t) {
-    return AspectRatioDirective(
+  AspectRatioDecorator lerp(AspectRatioDecorator? other, double t) {
+    return AspectRatioDecorator(
       lerpDouble(aspectRatio, other?.aspectRatio, t) ?? aspectRatio,
     );
   }
@@ -25,44 +24,44 @@ class AspectRatioDirective extends WidgetDecorator<AspectRatioDirective> {
   get props => [aspectRatio];
 
   @override
-  Widget build(child, mix) =>
+  Widget build(mix, child) =>
       AspectRatio(key: key, aspectRatio: aspectRatio, child: child);
 }
 
-class VisibilityDirective extends WidgetDecorator<VisibilityDirective> {
+class VisibilityDecorator extends BoxWidgetDecorator<VisibilityDecorator> {
   final bool visible;
-  const VisibilityDirective(this.visible, {super.key});
+  const VisibilityDecorator(this.visible, {super.key});
 
   @override
-  VisibilityDirective lerp(VisibilityDirective? other, double t) {
-    return VisibilityDirective(other?.visible ?? visible);
+  VisibilityDecorator lerp(VisibilityDecorator? other, double t) {
+    return VisibilityDecorator(lerpSnap(visible, other?.visible, t) ?? visible);
   }
 
   @override
   get props => [visible];
 
   @override
-  Widget build(child, mix) =>
+  Widget build(mix, child) =>
       Visibility(key: key, visible: visible, child: child);
 }
 
-class FlexibleDirective extends WidgetDecorator<FlexibleDirective>
-    with Mergeable<FlexibleDirective> {
+class FlexibleDecorator extends FlexWidgetDecorator<FlexibleDecorator>
+    with Mergeable<FlexibleDecorator> {
   final int? flex;
   final FlexFit? fit;
-  const FlexibleDirective({this.flex, this.fit, super.key});
+  const FlexibleDecorator({this.flex, this.fit, super.key});
 
   @override
-  FlexibleDirective lerp(FlexibleDirective? other, double t) {
-    return FlexibleDirective(
+  FlexibleDecorator lerp(FlexibleDecorator? other, double t) {
+    return FlexibleDecorator(
       flex: lerpInt(flex, other?.flex, t),
       fit: lerpSnap(fit, other?.fit, t),
     );
   }
 
   @override
-  FlexibleDirective merge(FlexibleDirective? other) {
-    return FlexibleDirective(
+  FlexibleDecorator merge(FlexibleDecorator? other) {
+    return FlexibleDecorator(
       flex: other?.flex ?? flex,
       fit: other?.fit ?? fit,
     );
@@ -72,7 +71,7 @@ class FlexibleDirective extends WidgetDecorator<FlexibleDirective>
   get props => [flex, fit];
 
   @override
-  Widget build(child, mix) {
+  Widget build(mix, Widget child) {
     return Flexible(
       key: key,
       flex: flex ?? 1,
@@ -82,14 +81,14 @@ class FlexibleDirective extends WidgetDecorator<FlexibleDirective>
   }
 }
 
-class OpacityDirective extends WidgetDecorator<OpacityDirective> {
+class OpacityDecorator extends BoxWidgetDecorator<OpacityDecorator> {
   /// The [opacity] argument must not be null and must be between 0.0 and 1.0 (inclusive).
   final double opacity;
-  const OpacityDirective(this.opacity, {super.key});
+  const OpacityDecorator(this.opacity, {super.key});
 
   @override
-  OpacityDirective lerp(OpacityDirective? other, double t) {
-    return OpacityDirective(
+  OpacityDecorator lerp(OpacityDecorator? other, double t) {
+    return OpacityDecorator(
       lerpDouble(opacity, other?.opacity, t) ?? opacity,
     );
   }
@@ -98,53 +97,53 @@ class OpacityDirective extends WidgetDecorator<OpacityDirective> {
   get props => [opacity];
 
   @override
-  Widget build(child, mix) => Opacity(key: key, opacity: opacity, child: child);
+  Widget build(mix, child) => Opacity(key: key, opacity: opacity, child: child);
 }
 
-class RotateDirective extends WidgetDecorator<RotateDirective> {
+class RotateDecorator extends BoxWidgetDecorator<RotateDecorator> {
   final int quarterTurns;
-  const RotateDirective(this.quarterTurns, {super.key});
+  const RotateDecorator(this.quarterTurns, {super.key});
 
   @override
-  RotateDirective lerp(RotateDirective? other, double t) {
-    return RotateDirective(lerpInt(quarterTurns, other?.quarterTurns, t));
+  RotateDecorator lerp(RotateDecorator? other, double t) {
+    return RotateDecorator(lerpInt(quarterTurns, other?.quarterTurns, t));
   }
 
   @override
   get props => [quarterTurns];
 
   @override
-  Widget build(child, mix) =>
+  Widget build(mix, child) =>
       RotatedBox(key: key, quarterTurns: quarterTurns, child: child);
 }
 
-class ScaleDirective extends WidgetDecorator<ScaleDirective> {
+class ScaleDecorator extends BoxWidgetDecorator<ScaleDecorator> {
   final double scale;
-  const ScaleDirective(this.scale, {super.key});
+  const ScaleDecorator(this.scale, {super.key});
 
   @override
-  ScaleDirective lerp(ScaleDirective? other, double t) {
-    return ScaleDirective(lerpDouble(scale, other?.scale, t) ?? scale);
+  ScaleDecorator lerp(ScaleDecorator? other, double t) {
+    return ScaleDecorator(lerpDouble(scale, other?.scale, t) ?? scale);
   }
 
   @override
   get props => [scale];
 
   @override
-  Widget build(child, mix) =>
+  Widget build(mix, child) =>
       Transform.scale(key: key, scale: scale, child: child);
 }
 
 enum ClipType { path, oval, rect, rRect, triangle }
 
-class ClipDirective<T> extends WidgetDecorator<ClipDirective>
-    with Mergeable<ClipDirective> {
+class ClipDecorator<T> extends BoxWidgetDecorator<ClipDecorator>
+    with Mergeable<ClipDecorator> {
   final ClipType clipType;
   final Clip? clipBehavior;
   final CustomClipper<T>? clipper;
   //  Used only for ClipRRect
   final BorderRadiusGeometry? borderRadius;
-  const ClipDirective({
+  const ClipDecorator({
     required this.clipType,
     this.clipBehavior,
     this.clipper,
@@ -153,12 +152,12 @@ class ClipDirective<T> extends WidgetDecorator<ClipDirective>
   });
 
   @override
-  ClipDirective lerp(ClipDirective? other, double t) {
+  ClipDecorator lerp(ClipDecorator? other, double t) {
     if (other == null) return this;
     if (clipType != other.clipType) return other;
 
-    return ClipDirective(
-      clipType: clipType,
+    return ClipDecorator(
+      clipType: lerpSnap(clipType, other.clipType, t),
       clipBehavior: lerpSnap(clipBehavior, other.clipBehavior, t),
       clipper: lerpSnap(clipper, other.clipper, t),
       borderRadius:
@@ -167,11 +166,11 @@ class ClipDirective<T> extends WidgetDecorator<ClipDirective>
   }
 
   @override
-  ClipDirective merge(ClipDirective? other) {
+  ClipDecorator merge(ClipDecorator? other) {
     if (other == null) return this;
     if (clipType != other.clipType) return other;
 
-    return ClipDirective(
+    return ClipDecorator(
       clipType: clipType,
       clipBehavior: other.clipBehavior ?? clipBehavior,
       clipper: other.clipper ?? clipper,
@@ -183,7 +182,7 @@ class ClipDirective<T> extends WidgetDecorator<ClipDirective>
   get props => [clipType, clipBehavior, clipper, borderRadius];
 
   @override
-  Widget build(Widget child, MixData mix) {
+  Widget build(mix, child) {
     switch (clipType) {
       case ClipType.path:
         return ClipPath(
@@ -250,7 +249,7 @@ class TriangleClipper extends CustomClipper<Path> {
 }
 
 class ClipTypeUtility<T extends StyleAttribute>
-    extends MixUtility<T, ClipDirective> {
+    extends MixUtility<T, ClipDecorator> {
   final ClipType clipType;
 
   const ClipTypeUtility(this.clipType, super.builder);
@@ -269,7 +268,7 @@ class ClipTypeUtility<T extends StyleAttribute>
     );
 
     return builder(
-      ClipDirective(
+      ClipDecorator(
         clipType: clipType,
         clipBehavior: clipBehavior,
         clipper: clipper,
@@ -280,9 +279,9 @@ class ClipTypeUtility<T extends StyleAttribute>
   }
 }
 
-class ClipDirectiveUtility<T extends StyleAttribute>
-    extends MixUtility<T, ClipDirective> {
-  const ClipDirectiveUtility(super.builder);
+class ClipDecoratorUtility<T extends StyleAttribute>
+    extends MixUtility<T, ClipDecorator> {
+  const ClipDecoratorUtility(super.builder);
 
   ClipTypeUtility<T> get path {
     return ClipTypeUtility(ClipType.path, builder);

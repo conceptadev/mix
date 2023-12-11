@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../attributes/variant_attribute.dart';
 import '../core/attribute.dart';
 import '../core/attributes_map.dart';
+import '../core/decorator.dart';
 import '../helpers/compare_mixin.dart';
 import '../theme/mix_theme.dart';
 import '../variants/context_variant.dart';
@@ -51,10 +52,12 @@ class MixData with Comparable {
     final attributes = _attributes.whereType<A>();
     if (attributes.isEmpty) return null;
 
-    final attributeItem = _mergeAttributes(attributes) ?? attributes.last;
-    //
+    return _mergeAttributes(attributes) ?? attributes.last;
+  }
 
-    return attributeItem;
+  /// Finds all Decorators of type [A].
+  Iterable<A> decoratorsOf<A extends Decorator>() {
+    return _attributes.whereType<A>();
   }
 
   Iterable<A> whereType<A extends StyleAttribute>() {
@@ -69,11 +72,6 @@ class MixData with Comparable {
         .reduce((value, element) => value.merge(element))
         .resolve(this);
   }
-
-  // /// Resolves and returns the value of the [VisualAttribute] of type [A].
-  // R get<A extends Resolver<R>, R>() {
-  //   return attributeOfType<A>()?.resolve(this);
-  // }
 
   // /// Merges this [MixData] with another, prioritizing this instance's properties.
   MixData merge(MixData other) {

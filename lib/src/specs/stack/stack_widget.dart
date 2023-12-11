@@ -1,8 +1,7 @@
 import 'package:flutter/widgets.dart';
 
 import '../../core/styled_widget.dart';
-import '../container/box_attribute.dart';
-import '../container/box_spec.dart';
+import '../../factory/mix_provider_data.dart';
 import '../container/box_widget.dart';
 import 'stack_attribute.dart';
 import 'stack_spec.dart';
@@ -19,26 +18,27 @@ class StyledStack extends StyledWidget {
   @override
   Widget build(BuildContext context) {
     return withMix(context, (mix) {
-      final spec = StackSpecAttribute.of(mix).resolve(mix);
-
-      return StackSpecWidget(spec, children: children);
+      return MixedStack(mix, children: children);
     });
   }
 }
 
-class StackSpecWidget extends StatelessWidget {
-  const StackSpecWidget(this.mixture, {super.key, this.children});
+class MixedStack extends StatelessWidget {
+  const MixedStack(this.mix, {super.key, this.children});
 
   final List<Widget>? children;
-  final StackSpec mixture;
+  final MixData mix;
 
   @override
   Widget build(BuildContext context) {
+    final spec = mix.attributeOf<StackSpecAttribute>()?.resolve(mix) ??
+        const StackSpec.empty();
+
     return Stack(
-      alignment: mixture.alignment ?? _defaultStack.alignment,
-      textDirection: mixture.textDirection,
-      fit: mixture.fit ?? _defaultStack.fit,
-      clipBehavior: mixture.clipBehavior ?? _defaultStack.clipBehavior,
+      alignment: spec.alignment ?? _defaultStack.alignment,
+      textDirection: spec.textDirection,
+      fit: spec.fit ?? _defaultStack.fit,
+      clipBehavior: spec.clipBehavior ?? _defaultStack.clipBehavior,
       children: children ?? const <Widget>[],
     );
   }
@@ -57,15 +57,7 @@ class ZBox extends StyledWidget {
   @override
   Widget build(BuildContext context) {
     return withMix(context, (mix) {
-      final containerSpec = mix.attributeOf<BoxSpecAttribute>()?.resolve(mix) ??
-          const BoxSpec.empty();
-      final stackSpec = mix.attributeOf<StackSpecAttribute>()?.resolve(mix) ??
-          const StackSpec.empty();
-
-      return BoxSpecWidget(
-        containerSpec,
-        child: StackSpecWidget(stackSpec, children: children),
-      );
+      return MixedBox(mix, child: MixedStack(mix, children: children));
     });
   }
 }

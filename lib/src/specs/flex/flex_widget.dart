@@ -1,12 +1,10 @@
 import 'package:flutter/widgets.dart';
 
 import '../../core/styled_widget.dart';
+import '../../factory/mix_provider_data.dart';
 import '../../widgets/gap_widget.dart';
-import '../container/box_attribute.dart';
-import '../container/box_spec.dart';
 import '../container/box_widget.dart';
 import 'flex_attribute.dart';
-import 'flex_spec.dart';
 
 /// A flexible layout widget enhanced with `StyleMix` for simplified styling.
 ///
@@ -41,31 +39,14 @@ class StyledFlex extends StyledWidget {
   @override
   Widget build(BuildContext context) {
     return withMix(context, (mix) {
-      final spec = FlexSpecAttribute.of(mix).resolve(mix);
-
-      List<Widget> renderSpacedChildren() {
-        final gap = spec.gap;
-
-        return gap == null
-            ? children
-            : List<Widget>.generate(
-                children.length * 2 - 1,
-                (index) => index % 2 == 0 ? children[index ~/ 2] : Gap(gap),
-              );
-      }
-
-      return MixedFlex(
-        spec,
-        direction: direction,
-        children: renderSpacedChildren(),
-      );
+      return MixedFlex(mix, direction: direction, children: children);
     });
   }
 }
 
 class MixedFlex extends StatelessWidget {
   const MixedFlex(
-    this.mixture, {
+    this.mix, {
     super.key,
     required this.children,
     required this.direction,
@@ -73,20 +54,30 @@ class MixedFlex extends StatelessWidget {
 
   final List<Widget> children;
   final Axis direction;
-  final FlexSpec mixture;
+  final MixData mix;
 
   @override
   Widget build(BuildContext context) {
+    final spec = FlexSpecAttribute.of(mix).resolve(mix);
+    final gap = spec.gap;
+
+    final spacedChildren = gap == null
+        ? children
+        : List<Widget>.generate(
+            children.length * 2 - 1,
+            (index) => index % 2 == 0 ? children[index ~/ 2] : Gap(gap),
+          );
+
     return Flex(
       direction: direction,
       mainAxisAlignment:
-          mixture.mainAxisAlignment ?? _defaultFlex.mainAxisAlignment,
-      mainAxisSize: mixture.mainAxisSize ?? _defaultFlex.mainAxisSize,
+          spec.mainAxisAlignment ?? _defaultFlex.mainAxisAlignment,
+      mainAxisSize: spec.mainAxisSize ?? _defaultFlex.mainAxisSize,
       crossAxisAlignment:
-          mixture.crossAxisAlignment ?? _defaultFlex.crossAxisAlignment,
+          spec.crossAxisAlignment ?? _defaultFlex.crossAxisAlignment,
       verticalDirection:
-          mixture.verticalDirection ?? _defaultFlex.verticalDirection,
-      children: children,
+          spec.verticalDirection ?? _defaultFlex.verticalDirection,
+      children: spacedChildren,
     );
   }
 }
@@ -174,14 +165,9 @@ class FlexBox extends StyledWidget {
   @override
   Widget build(BuildContext context) {
     return withMix(context, (mix) {
-      final containerSpec = mix.attributeOf<BoxSpecAttribute>()?.resolve(mix) ??
-          const BoxSpec.empty();
-      final flexSpec = mix.attributeOf<FlexSpecAttribute>()?.resolve(mix) ??
-          const FlexSpec.empty();
-
-      return BoxSpecWidget(
-        containerSpec,
-        child: MixedFlex(flexSpec, direction: direction, children: children),
+      return MixedBox(
+        mix,
+        child: MixedFlex(mix, direction: direction, children: children),
       );
     });
   }

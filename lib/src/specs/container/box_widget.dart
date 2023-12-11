@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../core/styled_widget.dart';
+import '../../decorators/widget_decorator_widget.dart';
+import '../../factory/mix_provider_data.dart';
 import 'box_attribute.dart';
 import 'box_spec.dart';
 
@@ -15,10 +17,7 @@ class Box extends StyledWidget {
   @override
   Widget build(BuildContext context) {
     return withMix(context, (mix) {
-      final spec = mix.attributeOf<BoxSpecAttribute>()?.resolve(mix) ??
-          const BoxSpec.empty();
-
-      return BoxSpecWidget(spec, child: child);
+      return MixedBox(mix, child: child);
     });
   }
 }
@@ -53,26 +52,35 @@ class AnimatedBox extends StyledWidget {
   }
 }
 
-class BoxSpecWidget extends StatelessWidget {
-  const BoxSpecWidget(this.spec, {super.key, this.child});
+class MixedBox extends StatelessWidget {
+  const MixedBox(
+    this.mix, {
+    super.key,
+    this.child,
+    this.decoratorOrder = const [],
+  });
 
   final Widget? child;
-  final BoxSpec spec;
+  final MixData mix;
+  final List<Type> decoratorOrder;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      alignment: spec.alignment,
-      padding: spec.padding,
-      decoration: spec.decoration,
-      width: spec.width,
-      height: spec.height,
-      constraints: spec.constraints,
-      margin: spec.margin,
-      transform: spec.transform,
-      clipBehavior: spec.clipBehavior ?? Clip.none,
+    final spec = mix.attributeOf<BoxSpecAttribute>()?.resolve(mix);
+    final current = Container(
+      alignment: spec?.alignment,
+      padding: spec?.padding,
+      decoration: spec?.decoration,
+      width: spec?.width,
+      height: spec?.height,
+      constraints: spec?.constraints,
+      margin: spec?.margin,
+      transform: spec?.transform,
+      clipBehavior: spec?.clipBehavior ?? Clip.none,
       child: child,
     );
+
+    return RenderWidgetDecorators(mix: mix, child: current);
   }
 }
 

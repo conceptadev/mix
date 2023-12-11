@@ -8,28 +8,28 @@ import '../../helpers/testing_utils.dart';
 void main() {
   group('Decorators: ', () {
     const aspectRatio = AspectRatioUtility(UtilityTestAttribute.new);
-    const flexible = FlexibleDirectiveUtility(UtilityTestAttribute.new);
+    const flexible = FlexibleDecoratorUtility(UtilityTestAttribute.new);
 
     const opacity = OpacityUtility(UtilityTestAttribute.new);
     const rotate = RotateUtility(UtilityTestAttribute.new);
     const scale = ScaleUtility(UtilityTestAttribute.new);
-    const clip = ClipDirectiveUtility(UtilityTestAttribute.new);
+    const clip = ClipDecoratorUtility(UtilityTestAttribute.new);
     test('aspectRatio creates AspectRatioDecorator correctly', () {
       final aspectRatioDecorator = aspectRatio(2.0);
 
       expect(aspectRatioDecorator.value.aspectRatio, 2.0);
     });
 
-    test('expanded creates FlexibleDirectiveUtility correctly', () {
-      const flexible = FlexibleDirectiveUtility(UtilityTestAttribute.new);
+    test('expanded creates FlexibleDecoratorUtility correctly', () {
+      const flexible = FlexibleDecoratorUtility(UtilityTestAttribute.new);
       final flexibleDecorator = flexible.expanded();
 
       expect(flexibleDecorator.value.fit, FlexFit.tight);
     });
 
-    test('default flexible creates FlexibleDirectiveUtility correctly', () {
+    test('default flexible creates FlexibleDecoratorUtility correctly', () {
       final flexibleDecorator = flexible();
-      final widget = flexibleDecorator.value.build(const Empty(), EmptyMixData)
+      final widget = flexibleDecorator.value.build(EmptyMixData, const Empty())
           as Flexible;
 
       expect(flexibleDecorator.value.fit, null);
@@ -51,19 +51,19 @@ void main() {
     });
 
     test('rotate90 creates RotateDecorator correctly', () {
-      final rotateDecorator = rotate.d90;
+      final rotateDecorator = rotate.d90();
 
       expect(rotateDecorator.value.quarterTurns, 1);
     });
 
     test('rotate180 creates RotateDecorator correctly', () {
-      final rotateDecorator = rotate.d180;
+      final rotateDecorator = rotate.d180();
 
       expect(rotateDecorator.value.quarterTurns, 2);
     });
 
     test('rotate270 creates RotateDecorator correctly', () {
-      final rotateDecorator = rotate.d270;
+      final rotateDecorator = rotate.d270();
 
       expect(rotateDecorator.value.quarterTurns, 3);
     });
@@ -85,14 +85,14 @@ void main() {
     test('clipOval creates ClipOvalDecorator correctly', () {
       final clipOvalDecorator = clip.oval();
 
-      expect(clipOvalDecorator.value.build(const Empty(), EmptyMixData),
+      expect(clipOvalDecorator.value.build(EmptyMixData, const Empty()),
           isA<ClipOval>());
     });
 
     test('clipPath creates ClipPathDecorator correctly', () {
       final clipPathDecorator = clip.path();
 
-      expect(clipPathDecorator.value.build(const Empty(), EmptyMixData),
+      expect(clipPathDecorator.value.build(EmptyMixData, const Empty()),
           isA<ClipPath>());
     });
 
@@ -100,7 +100,7 @@ void main() {
       final clipTriangleDecorator = clip.triangle();
 
       final widget = clipTriangleDecorator.value
-          .build(const Empty(), EmptyMixData) as ClipPath;
+          .build(EmptyMixData, const Empty()) as ClipPath;
 
       expect(widget.clipper, isA<TriangleClipper>());
     });

@@ -197,21 +197,6 @@ class BoxSpecUtility extends SpecUtility<BoxSpecAttribute> {
     return ClipUtility((clipBehavior) => call(clipBehavior: clipBehavior));
   }
 
-  // OpacityUtility<BoxSpecAttribute> get opacity => OpacityUtility(directive);
-
-  // RotateUtility<BoxSpecAttribute> get rotate => RotateUtility(directive);
-
-  // ScaleUtility<BoxSpecAttribute> get scale => ScaleUtility(directive);
-
-  // VisibilityUtility<BoxSpecAttribute> get visibility =>
-  //     VisibilityUtility(directive);
-
-  // FlexibleDirectiveUtility<BoxSpecAttribute> get flexible =>
-  //     FlexibleDirectiveUtility(directive);
-
-  // AspectRatioUtility<BoxSpecAttribute> get aspectRatio =>
-  //     AspectRatioUtility(directive);
-
   ///  Decoration Utilities
   BoxSpecBorderUtility<BoxSpecAttribute> get border {
     return BoxSpecBorderUtility(
