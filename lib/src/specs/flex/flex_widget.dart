@@ -39,14 +39,14 @@ class StyledFlex extends StyledWidget {
   @override
   Widget build(BuildContext context) {
     return withMix(context, (mix) {
-      return MixedFlex(mix, direction: direction, children: children);
+      return MixedFlex(mix: mix, direction: direction, children: children);
     });
   }
 }
 
 class MixedFlex extends StatelessWidget {
-  const MixedFlex(
-    this.mix, {
+  const MixedFlex({
+    required this.mix,
     super.key,
     required this.children,
     required this.direction,
@@ -166,8 +166,8 @@ class FlexBox extends StyledWidget {
   Widget build(BuildContext context) {
     return withMix(context, (mix) {
       return MixedBox(
-        mix,
-        child: MixedFlex(mix, direction: direction, children: children),
+        mix: mix,
+        child: MixedFlex(mix: mix, direction: direction, children: children),
       );
     });
   }

@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 import '../../core/attribute.dart';
+import '../../helpers/lerp_helpers.dart';
 
 class BoxSpec extends Spec<BoxSpec> {
   final AlignmentGeometry? alignment;
@@ -73,7 +74,7 @@ class BoxSpec extends Spec<BoxSpec> {
       constraints: BoxConstraints.lerp(constraints, other.constraints, t),
       decoration: Decoration.lerp(decoration, other.decoration, t),
       transform: Matrix4Tween(begin: transform, end: other.transform).lerp(t),
-      clipBehavior: t < 0.5 ? clipBehavior : other.clipBehavior,
+      clipBehavior: lerpSnap(clipBehavior, other.clipBehavior, t),
       width: lerpDouble(width, other.width, t),
       height: lerpDouble(height, other.height, t),
     );
@@ -91,4 +92,17 @@ class BoxSpec extends Spec<BoxSpec> {
         transform,
         clipBehavior,
       ];
+}
+
+class BoxSpecTween extends Tween<BoxSpec?> {
+  BoxSpecTween({super.begin, super.end});
+
+  @override
+  BoxSpec? lerp(double t) {
+    if (begin == null) return end;
+    if (end == null) return begin;
+
+    // ignore: avoid-non-null-assertion
+    return begin!.lerp(end!, t);
+  }
 }

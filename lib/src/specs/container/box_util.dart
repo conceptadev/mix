@@ -15,6 +15,20 @@ import '../../core/extensions/values_ext.dart';
 import 'box_attribute.dart';
 
 const box = BoxSpecUtility();
+final border = box.border;
+final backgroundColor = box.color;
+final borderRadius = box.border.radius;
+final width = box.width;
+final height = box.height;
+final maxWidth = box.maxWidth;
+final maxHeight = box.maxHeight;
+final minWidth = box.minWidth;
+final minHeight = box.minHeight;
+final padding = box.padding;
+final margin = box.margin;
+final alignment = box.alignment;
+final clipBehavior = box.clipBehavior;
+final elevation = box.elevation;
 
 class BoxSpecUtility extends SpecUtility<BoxSpecAttribute> {
   const BoxSpecUtility();

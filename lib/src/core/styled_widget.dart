@@ -39,7 +39,7 @@ abstract class AnimatedStyledWidget extends StyledWidget {
     super.key,
     super.inherit,
     super.style,
-    required this.curve,
+    this.curve = Curves.linear,
     required this.duration,
   });
 

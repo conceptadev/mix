@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 
 import '../mix.dart';
@@ -143,143 +141,58 @@ TextSpecAttribute textShadow(List<Shadow> shadows) {
 }
 
 @Deprecated('Use text.style(shadow: shadow) instead')
-const fontWeight = LegacyTextStyleUtility.fontWeight;
+final fontWeight = text.style.fontWeight;
 
 @Deprecated('Use text.style(letterSpacing: letterSpacing) instead')
-const letterSpacing = LegacyTextStyleUtility.letterSpacing;
+final letterSpacing = text.style.letterSpacing;
 
 @Deprecated('Use text.style(debugLabel: debugLabel) instead')
-const debugLabel = LegacyTextStyleUtility.debugLabel;
+final debugLabel = text.style.debugLabel;
 
 @Deprecated('Use text.style(height: height) instead')
-const textHeight = LegacyTextStyleUtility.textHeight;
+final textHeight = text.style.height;
 
 @Deprecated('Use text.style(wordSpacing: wordSpacing) instead')
-const wordSpacing = LegacyTextStyleUtility.wordSpacing;
+final wordSpacing = text.style.wordSpacing;
 
 @Deprecated('Use text.style(fontStyle: fontStyle) instead')
-const fontStyle = LegacyTextStyleUtility.fontStyle;
+final fontStyle = text.style.fontStyle;
 
 @Deprecated('Use text.style(fontSize: fontSize) instead')
-const fontSize = LegacyTextStyleUtility.fontSize;
-
-@Deprecated('Use text.style(inherit: inherit) instead')
-const inherit = LegacyTextStyleUtility.inherit;
+final fontSize = text.style.fontSize;
 
 @Deprecated('Use text.style(color: color) instead')
-const textColor = LegacyTextStyleUtility.textColor;
+final textColor = text.style.color;
 
 @Deprecated('Use text.style(backgroundColor: backgroundColor) instead')
-const textBgColor = LegacyTextStyleUtility.textBgColor;
+final textBgColor = text.style.backgroundColor;
 
 @Deprecated('Use text.style(foreground: foreground) instead')
-const textForeground = LegacyTextStyleUtility.textForeground;
+final textForeground = text.style.foreground;
 
 @Deprecated('Use text.style(background: background) instead')
-const textBackground = LegacyTextStyleUtility.textBackground;
+final textBackground = text.style.background;
 
 @Deprecated('Use text.style(shadows: shadows) instead')
-const textShadows = LegacyTextStyleUtility.textShadow;
+final textShadows = text.style.shadows;
 
 @Deprecated('Use text.style(fontFeatures: fontFeatures) instead')
-const fontFeatures = LegacyTextStyleUtility.fontFeatures;
+final fontFeatures = text.style.fontFeatures;
 
 @Deprecated('Use text.style(decoration: decoration) instead')
-const textDecoration = LegacyTextStyleUtility.textDecoration;
+final textDecoration = text.style.decoration;
 
 @Deprecated('Use text.style(decorationColor: decorationColor) instead')
-const textDecorationColor = LegacyTextStyleUtility.textDecorationColor;
+final textDecorationColor = text.style.decorationColor;
 
 @Deprecated('Use text.style(decorationStyle: decorationStyle) instead')
-const textDecorationStyle = LegacyTextStyleUtility.textDecorationStyle;
+final textDecorationStyle = text.style.decorationStyle;
 
 @Deprecated('Use text.style(decorationThickness: decorationThickness) instead')
-const textDecorationThickness = LegacyTextStyleUtility.textDecorationThickness;
+final textDecorationThickness = text.style.decorationThickness;
 
 @Deprecated('Use text.style(fontFamilyFallback: fontFamilyFallback) instead')
-const fontFamilyFallback = LegacyTextStyleUtility.fontFamilyFallback;
-
-class LegacyTextStyleUtility {
-  static TextStyle textShadow(List<Shadow> shadows) {
-    return TextStyle(shadows: shadows);
-  }
-
-  static TextStyle fontWeight(FontWeight weight) {
-    return TextStyle(fontWeight: weight);
-  }
-
-  static TextStyle textBaseline(TextBaseline baseline) {
-    return TextStyle(textBaseline: baseline);
-  }
-
-  static TextStyle letterSpacing(double spacing) {
-    return TextStyle(letterSpacing: spacing);
-  }
-
-  static TextStyle debugLabel(String label) {
-    return TextStyle(debugLabel: label);
-  }
-
-  static TextStyle textHeight(double height) {
-    return TextStyle(height: height);
-  }
-
-  static TextStyle wordSpacing(double spacing) {
-    return TextStyle(wordSpacing: spacing);
-  }
-
-  static TextStyle fontStyle(FontStyle style) {
-    return TextStyle(fontStyle: style);
-  }
-
-  static TextStyle fontSize(double size) {
-    return TextStyle(fontSize: size);
-  }
-
-  static TextStyle inherit(bool value) {
-    return TextStyle(inherit: value);
-  }
-
-  static TextStyle textColor(Color color) {
-    return TextStyle(color: color);
-  }
-
-  static TextStyle textBgColor(Color backgroundColor) {
-    return TextStyle(backgroundColor: backgroundColor);
-  }
-
-  static TextStyle textForeground(Paint foreground) {
-    return TextStyle(foreground: foreground);
-  }
-
-  static TextStyle textBackground(Paint background) {
-    return TextStyle(background: background);
-  }
-
-  static TextStyle fontFeatures(List<FontFeature> features) {
-    return TextStyle(fontFeatures: features);
-  }
-
-  static TextStyle textDecoration(TextDecoration decoration) {
-    return TextStyle(decoration: decoration);
-  }
-
-  static TextStyle textDecorationColor(Color decorationColor) {
-    return TextStyle(decorationColor: decorationColor);
-  }
-
-  static TextStyle textDecorationStyle(TextDecorationStyle decorationStyle) {
-    return TextStyle(decorationStyle: decorationStyle);
-  }
-
-  static TextStyle textDecorationThickness(double decorationThickness) {
-    return TextStyle(decorationThickness: decorationThickness);
-  }
-
-  static TextStyle fontFamilyFallback(List<String> fontFamilyFallback) {
-    return TextStyle(fontFamilyFallback: fontFamilyFallback);
-  }
-}
+final fontFamilyFallback = text.style.fontFamilyFallback;
 
 @Deprecated('Use style.merge(otherStyle), instead')
 const apply = SpreadFunctionParams(_apply);
@@ -387,38 +300,20 @@ final roundedBE = box.border.radius.bottomEnd;
 @Deprecated(kShortAliasDeprecation)
 final h = box.height;
 
-@Deprecated('Use box.height instead')
-final height = box.height;
-
 @Deprecated(kShortAliasDeprecation)
 final w = box.width;
-
-@Deprecated('Use box.width instead')
-final width = box.width;
 
 @Deprecated(kShortAliasDeprecation)
 final maxH = box.maxWidth;
 
-@Deprecated('Use box.maxHeight instead')
-final maxHeight = box.maxHeight;
-
 @Deprecated(kShortAliasDeprecation)
 final maxW = maxWidth;
-
-@Deprecated('Use box.maxWidth instead')
-final maxWidth = box.maxWidth;
 
 @Deprecated(kShortAliasDeprecation)
 final minH = box.minHeight;
 
-@Deprecated('Use box.minHeight instead')
-final minHeight = box.minHeight;
-
 @Deprecated(kShortAliasDeprecation)
 final minW = box.minWidth;
-
-@Deprecated('Use box.minWidth instead')
-final minWidth = box.minWidth;
 
 @Deprecated(kShortAliasDeprecation)
 final bt = box.border.top;
@@ -440,9 +335,6 @@ final be = box.border.end;
 
 @Deprecated('Use box.alignment instead')
 final align = box.alignment;
-
-@Deprecated('Use box.alignment instead')
-final alignment = box.alignment;
 
 @Deprecated('Use stack instead')
 final zAlignment = stack.alignment;
@@ -473,113 +365,104 @@ final locale = text.style.locale;
 @Deprecated('Use text(overflow: overflow)')
 final overflow = text.overflow;
 
-@Deprecated('Use box.margin instead')
-final margin = box.margin;
-
 @Deprecated('use box.margin.only instead')
-final marginOnly = box.margin.only;
+final marginOnly = margin.only;
 
-@Deprecated('use box.margin.only instead')
-final marginDirectionalOnly = box.margin.only;
+@Deprecated('use margin.only instead')
+final marginDirectionalOnly = margin.only;
 
-@Deprecated('use box.margin.all instead')
-final marginAll = box.margin.all;
+@Deprecated('use margin.all instead')
+final marginAll = margin.all;
 
-@Deprecated('use box.margin.top instead')
-final marginTop = box.margin.top;
+@Deprecated('use margin.top instead')
+final marginTop = margin.top;
 
-@Deprecated('use box.margin.bottom instead')
-final marginBottom = box.margin.bottom;
+@Deprecated('use margin.bottom instead')
+final marginBottom = margin.bottom;
 
-@Deprecated('use box.margin.left instead')
-final marginLeft = box.margin.left;
+@Deprecated('use margin.left instead')
+final marginLeft = margin.left;
 
-@Deprecated('use box.margin.right instead')
-final marginRight = box.margin.right;
+@Deprecated('use margin.right instead')
+final marginRight = margin.right;
 
-@Deprecated('use box.margin.start instead')
-final marginStart = box.margin.start;
+@Deprecated('use margin.start instead')
+final marginStart = margin.start;
 
-@Deprecated('use box.margin.end instead')
-final marginEnd = box.margin.end;
+@Deprecated('use margin.end instead')
+final marginEnd = margin.end;
 
-@Deprecated('use box.margin.horizontal instead')
-final marginHorizontal = box.margin.horizontal;
+@Deprecated('use margin.horizontal instead')
+final marginHorizontal = margin.horizontal;
 
-@Deprecated('use box.margin.vertical instead')
-final marginVertical = box.margin.vertical;
+@Deprecated('use margin.vertical instead')
+final marginVertical = margin.vertical;
 
-@Deprecated('use box.margin.as instead')
-final marginFrom = box.margin.as;
+@Deprecated('use margin.as instead')
+final marginFrom = margin.as;
 
-@Deprecated('use box.padding instead')
-final padding = box.padding;
+@Deprecated('use padding.only instead')
+final paddingOnly = padding.only;
 
-@Deprecated('use box.padding.only instead')
-final paddingOnly = box.padding.only;
+@Deprecated('use padding.only instead')
+final paddingDirectionalOnly = padding.only;
 
-@Deprecated('use box.padding.only instead')
-final paddingDirectionalOnly = box.padding.only;
+@Deprecated('use padding.all instead')
+final paddingAll = padding.all;
 
-@Deprecated('use box.padding.all instead')
-final paddingAll = box.padding.all;
+@Deprecated('use padding.top instead')
+final paddingTop = padding.top;
 
-@Deprecated('use box.padding.top instead')
-final paddingTop = box.padding.top;
+@Deprecated('use padding.bottom instead')
+final paddingBottom = padding.bottom;
 
-@Deprecated('use box.padding.bottom instead')
-final paddingBottom = box.padding.bottom;
+@Deprecated('use padding.left instead')
+final paddingLeft = padding.left;
 
-@Deprecated('use box.padding.left instead')
-final paddingLeft = box.padding.left;
+@Deprecated('use padding.right instead')
+final paddingRight = padding.right;
 
-@Deprecated('use box.padding.right instead')
-final paddingRight = box.padding.right;
+@Deprecated('use padding.start instead')
+final paddingStart = padding.start;
 
-@Deprecated('use box.padding.start instead')
-final paddingStart = box.padding.start;
+@Deprecated('use padding.end instead')
+final paddingEnd = padding.end;
 
-@Deprecated('use box.padding.end instead')
-final paddingEnd = box.padding.end;
+@Deprecated('use padding.horizontal instead')
+final paddingHorizontal = padding.horizontal;
 
-@Deprecated('use box.padding.horizontal instead')
-final paddingHorizontal = box.padding.horizontal;
+@Deprecated('use padding.vertical instead')
+final paddingVertical = padding.vertical;
 
-@Deprecated('use box.padding.vertical instead')
-final paddingVertical = box.padding.vertical;
+@Deprecated('use padding.as instead')
+final paddingFrom = padding.as;
 
-@Deprecated('use box.margin.as instead')
-final paddingFrom = box.padding.as;
+@Deprecated('use border.top instead')
+final borderTop = border.top;
 
-@Deprecated('Use box.border')
-final border = box.border;
+@Deprecated('use border.bottom instead')
+final borderBottom = border.bottom;
 
-@Deprecated('use box.border.top instead')
-final borderTop = box.border.top;
+@Deprecated('use border.left instead')
+final borderLeft = border.left;
 
-@Deprecated('use box.border.bottom instead')
-final borderBottom = box.border.bottom;
+@Deprecated('use border.right instead')
+final borderRight = border.right;
 
-@Deprecated('use box.border.left instead')
-final borderLeft = box.border.left;
+@Deprecated('use border.start instead')
+final borderStart = border.start;
 
-@Deprecated('use box.border.right instead')
-final borderRight = box.border.right;
+@Deprecated('use border.end instead')
+final borderEnd = border.end;
 
-@Deprecated('use box.border.start instead')
-final borderStart = box.border.start;
+@Deprecated('use border.horizontal instead')
+final borderHorizontal = border.horizontal;
 
-@Deprecated('use box.border.end instead')
-final borderEnd = box.border.end;
+@Deprecated('use border.vertical instead')
+final borderVertical = border.vertical;
 
-@Deprecated('use box.border.horizontal instead')
-final borderHorizontal = box.border.horizontal;
-
-@Deprecated('use box.border.vertical instead')
-final borderVertical = box.border.vertical;
-
-@Deprecated('use box.border.all instead')
-final borderAll = box.border.all;
+@Deprecated('use border.all instead')
+final borderAll = border.all;
 
 @Deprecated('Use StyledText now')
 typedef TextMix = StyledText;
@@ -592,9 +475,6 @@ final shadow = text.style.shadow;
 
 @Deprecated('use box.color instead')
 final bgColor = box.decoration.color;
-
-@Deprecated('use box.color instead')
-final backgroundColor = box.decoration.color;
 
 // do no tuse main axisaligmnet use flex.mainAxisAlignment instead
 @Deprecated(
@@ -613,11 +493,41 @@ final mainAxisSize = flex.mainAxisSize;
 @Deprecated('use text.style.bold() instead')
 final bold = text.style.bold;
 
-@Deprecated('use box.border.radius')
-final borderRadius = box.border.radius;
+// @Deprecated('Use box.maxHeight instead')
+// final maxHeight = box.maxHeight;
 
-@Deprecated('use box.elevation instead')
-final elevation = box.elevation;
+// @Deprecated('use box.padding instead')
+// final padding = box.padding;
 
-@Deprecated('use box.clipBehavior instead')
-final clipBehavior = box.clipBehavior;
+// @Deprecated('Use box.margin instead')
+// final margin = box.margin;
+
+// @Deprecated('Use box.border')
+// final border = box.border;
+
+// @Deprecated('use box.border.radius')
+// final borderRadius = box.border.radius;
+
+// @Deprecated('use box.elevation instead')
+// final elevation = box.elevation;
+
+// @Deprecated('use box.clipBehavior instead')
+// final clipBehavior = box.clipBehavior;
+
+// @Deprecated('Use box.height instead')
+// final height = box.height;
+
+// @Deprecated('Use box.width instead')
+// final width = box.width;
+
+// @Deprecated('Use box.maxWidth instead')
+// final maxWidth = box.maxWidth;
+// @Deprecated('Use box.minHeight instead')
+// final minHeight = box.minHeight;
+// @Deprecated('Use box.minWidth instead')
+// final minWidth = box.minWidth;
+// @Deprecated('Use box.alignment instead')
+// final alignment = box.alignment;
+
+// @Deprecated('use box.color instead')
+// final backgroundColor = box.decoration.color;
