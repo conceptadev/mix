@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../core/attribute.dart';
+import '../../factory/mix_provider_data.dart';
+import 'stack_attribute.dart';
 
 class StackSpec extends Spec<StackSpec> {
   final AlignmentGeometry? alignment;
@@ -20,6 +22,11 @@ class StackSpec extends Spec<StackSpec> {
         fit = null,
         textDirection = null,
         clipBehavior = null;
+
+  static StackSpec of(MixData mix) {
+    return mix.attributeOf<StackSpecAttribute>()?.resolve(mix) ??
+        const StackSpec.empty();
+  }
 
   @override
   StackSpec lerp(StackSpec other, double t) {

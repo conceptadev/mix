@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../core/styled_widget.dart';
+import '../../factory/mix_provider.dart';
+import '../../factory/mix_provider_data.dart';
 import 'icon_attribute.dart';
 import 'icon_spec.dart';
 
@@ -21,17 +23,68 @@ class StyledIcon extends StyledWidget {
   @override
   Widget build(BuildContext context) {
     return withMix(context, (mix) {
-      final spec = mix.attributeOf<IconSpecAttribute>()?.resolve(mix) ??
-          const IconSpec.empty();
-
-      return Icon(
+      return MixedIcon(
         icon,
-        size: spec.size,
-        color: spec.color,
         semanticLabel: semanticLabel,
         textDirection: textDirection,
       );
     });
+  }
+}
+
+class MixedIcon extends StatelessWidget {
+  const MixedIcon(
+    this.icon, {
+    this.mix,
+    this.semanticLabel,
+    super.key,
+    this.textDirection,
+  });
+
+  final IconData? icon;
+  final MixData? mix;
+  final String? semanticLabel;
+  final TextDirection? textDirection;
+
+  @override
+  Widget build(BuildContext context) {
+    final mix = this.mix ?? MixProvider.of(context);
+    final spec = IconSpec.of(mix);
+
+    return IconSpecWidget(
+      spec: spec,
+      semanticLabel: semanticLabel,
+      textDirection: textDirection,
+      icon: icon,
+    );
+  }
+}
+
+class IconSpecWidget extends StatelessWidget {
+  const IconSpecWidget({
+    super.key,
+    required this.spec,
+    this.semanticLabel,
+    this.textDirection,
+    this.icon,
+  });
+
+  final IconSpec spec;
+
+  final IconData? icon;
+
+  final String? semanticLabel;
+  final TextDirection? textDirection;
+
+  @override
+  Widget build(BuildContext context) {
+    return Icon(
+      icon,
+      size: spec.size,
+      color: spec.color,
+      semanticLabel: semanticLabel,
+      textDirection: textDirection,
+    );
   }
 }
 

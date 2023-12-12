@@ -4,7 +4,7 @@ import '../../core/styled_widget.dart';
 import '../../factory/mix_provider_data.dart';
 import '../../widgets/gap_widget.dart';
 import '../container/box_widget.dart';
-import 'flex_attribute.dart';
+import 'flex_spec.dart';
 
 /// A flexible layout widget enhanced with `StyleMix` for simplified styling.
 ///
@@ -58,7 +58,7 @@ class MixedFlex extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final spec = FlexSpecAttribute.of(mix).resolve(mix);
+    final spec = FlexSpec.of(mix);
     final gap = spec.gap;
 
     final spacedChildren = gap == null

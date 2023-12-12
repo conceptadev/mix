@@ -3,7 +3,9 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 import '../../core/attribute.dart';
+import '../../factory/mix_provider_data.dart';
 import '../../helpers/lerp_helpers.dart';
+import 'box_attribute.dart';
 
 class BoxSpec extends Spec<BoxSpec> {
   final AlignmentGeometry? alignment;
@@ -38,6 +40,11 @@ class BoxSpec extends Spec<BoxSpec> {
         width = null,
         height = null,
         clipBehavior = null;
+
+  static BoxSpec of(MixData mix) {
+    return mix.attributeOf<BoxSpecAttribute>()?.resolve(mix) ??
+        const BoxSpec.empty();
+  }
 
   @override
   BoxSpec copyWith({

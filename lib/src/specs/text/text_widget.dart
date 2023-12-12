@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../core/directive.dart';
 import '../../core/styled_widget.dart';
+import '../../factory/mix_provider.dart';
+import '../../factory/mix_provider_data.dart';
 import 'text_spec.dart';
 
 class StyledText extends StyledWidget {
@@ -21,25 +23,49 @@ class StyledText extends StyledWidget {
   @override
   Widget build(BuildContext context) {
     return withMix(context, (mix) {
-      final textSpec = TextSpec.of(mix);
-
-      final modifyText = mix.attributeOf<TextDataDirective>();
-
-      return Text(
-        modifyText?.apply(text) ?? text,
-        style: textSpec.style,
-        strutStyle: textSpec.strutStyle,
-        textAlign: textSpec.textAlign,
-        textDirection: textSpec.textDirection ?? TextDirection.ltr,
-        locale: locale,
-        softWrap: textSpec.softWrap,
-        overflow: textSpec.overflow,
-        textScaleFactor: textSpec.textScaleFactor,
-        maxLines: textSpec.maxLines,
+      return MixedText(
+        text: text,
         semanticsLabel: semanticsLabel,
-        textWidthBasis: textSpec.textWidthBasis,
-        textHeightBehavior: textSpec.textHeightBehavior,
+        locale: locale,
       );
     });
+  }
+}
+
+class MixedText extends StatelessWidget {
+  const MixedText({
+    required this.text,
+    this.mix,
+    this.semanticsLabel,
+    this.locale,
+    super.key,
+  });
+
+  final String text;
+  final String? semanticsLabel;
+  final Locale? locale;
+  final MixData? mix;
+
+  @override
+  Widget build(BuildContext context) {
+    final mix = this.mix ?? MixProvider.of(context);
+    final spec = TextSpec.of(mix);
+    final modifyText = mix.attributeOf<TextDataDirective>();
+
+    return Text(
+      modifyText?.apply(text) ?? text,
+      style: spec.style,
+      strutStyle: spec.strutStyle,
+      textAlign: spec.textAlign,
+      textDirection: spec.textDirection,
+      locale: locale,
+      softWrap: spec.softWrap,
+      overflow: spec.overflow,
+      textScaleFactor: spec.textScaleFactor,
+      maxLines: spec.maxLines,
+      semanticsLabel: semanticsLabel,
+      textWidthBasis: spec.textWidthBasis,
+      textHeightBehavior: spec.textHeightBehavior,
+    );
   }
 }
