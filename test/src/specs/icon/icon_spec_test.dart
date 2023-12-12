@@ -16,7 +16,7 @@ void main() {
         ),
       );
 
-      final spec = IconSpec.resolve(mix);
+      final spec = IconSpec.of(mix);
 
       expect(spec.color, Colors.red);
       expect(spec.size, 20.0);
