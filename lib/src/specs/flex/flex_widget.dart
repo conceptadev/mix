@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 
 import '../../core/styled_widget.dart';
+import '../../factory/mix_provider.dart';
 import '../../factory/mix_provider_data.dart';
 import '../../widgets/gap_widget.dart';
 import '../container/box_widget.dart';
@@ -46,7 +47,7 @@ class StyledFlex extends StyledWidget {
 
 class MixedFlex extends StatelessWidget {
   const MixedFlex({
-    required this.mix,
+    this.mix,
     super.key,
     required this.children,
     required this.direction,
@@ -54,10 +55,11 @@ class MixedFlex extends StatelessWidget {
 
   final List<Widget> children;
   final Axis direction;
-  final MixData mix;
+  final MixData? mix;
 
   @override
   Widget build(BuildContext context) {
+    final mix = this.mix ?? MixProvider.of(context);
     final spec = FlexSpec.of(mix);
     final gap = spec.gap;
 
@@ -166,8 +168,7 @@ class FlexBox extends StyledWidget {
   Widget build(BuildContext context) {
     return withMix(context, (mix) {
       return MixedBox(
-        mix: mix,
-        child: MixedFlex(mix: mix, direction: direction, children: children),
+        child: MixedFlex(direction: direction, children: children),
       );
     });
   }

@@ -8,26 +8,26 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 )
 Widget boxDecorationContainer(BuildContext context) {
   final boxStyle = StyleMix(
-    box.color.red(),
+    backgroundColor.red(),
     onPress(
-      box.color.blue(),
+      backgroundColor.blue(),
     ),
-    box.opacity(0.5),
+    opacity(0.5),
     (onHover & onDark)(
-      box.color.orange(),
+      backgroundColor.orange(),
     ),
     onHover(
-      box.color.grey(),
+      backgroundColor.grey(),
     ),
-    box.padding.horizontal(15.0),
-    box.padding.vertical(8.0),
-    box.border.radius(5),
-    box.width(100),
-    box.height(100),
+    padding.horizontal(15.0),
+    padding.vertical(8.0),
+    border.radius(5),
+    width(100),
+    height(100),
     onDark(
-      box.color.purple(),
+      backgroundColor.purple(),
     ),
-    box.alignment.center(),
+    alignment.center(),
     text.style.bold(),
   );
 
@@ -42,6 +42,7 @@ Widget boxDecorationContainer(BuildContext context) {
         Pressable(
           child: AnimatedBox(
             style: boxStyle,
+            duration: const Duration(milliseconds: 150),
             child: const StyledText('Press me Animated'),
           ),
         )

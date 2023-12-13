@@ -2,7 +2,7 @@
 
 import 'package:flutter/foundation.dart';
 
-import '../attributes/style_mix_attribute.dart';
+import '../attributes/style_mix/style_mix_attribute.dart';
 import '../attributes/variant_attribute.dart';
 import '../core/attribute.dart';
 import '../core/attributes_map.dart';
@@ -127,6 +127,21 @@ class StyleMix with Comparable {
     );
   }
 
+  /// Combines a positional list of [mixes] into a single `StyleMix`.
+  ///
+  /// This factory constructor iterates through the list of [mixes] params, merging
+  /// each mix with the previous mix and returning the final combined `StyleMix`.
+  ///
+  /// Example:
+  /// ```dart
+  /// final combinedStyle = StyleMix.combine([style1, style2, style3]);
+  /// ```
+  static StyleMix combine(Iterable<StyleMix> mixes) {
+    return mixes.isEmpty
+        ? const StyleMix.empty()
+        : mixes.reduce((combinedStyle, mix) => combinedStyle.merge(mix));
+  }
+
   /// Selects a mix based on a [condition].
   ///
   /// Returns [fallback] if the [condition] is true, otherwise returns [style].
@@ -135,7 +150,7 @@ class StyleMix with Comparable {
   /// ```dart
   /// final style = StyleMix.chooser(condition, style, fallbackStyle);
   /// ```
-  factory StyleMix.chooser(
+  static StyleMix chooser(
     bool condition,
     StyleMix style, [
     StyleMix? fallback,
@@ -143,42 +158,9 @@ class StyleMix with Comparable {
     return condition ? style : fallback ?? const StyleMix.empty();
   }
 
-  /// Combines an optional positional list of [mixes] into a single `StyleMix`.
-  ///
-  /// This factory constructor iterates through the list of [mixes] params, merging
-  /// each mix with the previous mix and returning the final combined `StyleMix`.
-  ///
-  /// Example:
-  /// ```dart
-  /// final combinedStyle = StyleMix.combineList([style1, style2, style3]);
-  /// ```
-  factory StyleMix.combineList(Iterable<StyleMix> mixes) {
-    return mixes.isEmpty
-        ? const StyleMix.empty()
-        : mixes.reduce((combinedStyle, mix) => combinedStyle.merge(mix));
+  StyleMix _addAttributes(List<Attribute> attributes) {
+    return merge(StyleMix.create(attributes));
   }
-
-  /// Combines an optional positional list of [StyleMix] instances into a single `StyleMix`.
-  ///
-  /// This factory constructor iterates through the non-null parameters, merging
-  /// each `StyleMix` instance with the previous one and returning the final combined `StyleMix`.
-  /// If a null value is provided for any of the parameters, it is ignored.
-  ///
-  /// Example:
-  /// ```dart
-  /// final style1 = StyleMix(...);
-  /// final style2 = StyleMix(...);
-  /// final style3 = StyleMix(...);
-  ///
-  /// final combinedStyle = StyleMix.combine(style1, style2, style3);
-  /// ```
-  ///
-  /// In this example:
-  /// - Three `StyleMix` instances `style1`, `style2`, and `style3` are created.
-  /// - The `combine` factory constructor is called with `style1`, `style2`, and `style3` as arguments.
-  /// - The `combine` method returns a new `StyleMix` instance `combinedStyle` with the visual and variant attributes of `style1`, `style2`, and `style3` combined.
-  static SpreadFunctionParams<StyleMix, StyleMix> get combine =>
-      const SpreadFunctionParams(StyleMix.combineList);
 
   /// Returns a list of all attributes contained in this mix.
   ///
@@ -224,6 +206,17 @@ class StyleMix with Comparable {
   SpreadFunctionParams<Variant, StyleMix> get selectVariant {
     return SpreadFunctionParams(selectVariantList);
   }
+
+  /// Allows to create a new `StyleMix` by using this mix as a base and adding additional attributes.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// final style = StyleMix(attr1, attr2);
+  /// final updatedStyle = style.mix(attr3, attr4);
+  /// ```
+  SpreadFunctionParams<Attribute, StyleMix> get mix =>
+      SpreadFunctionParams(_addAttributes);
 
   /// Returns a new `StyleMix` with the provided [styles] and [variants] merged with this mix's values.
   ///
@@ -328,7 +321,7 @@ class StyleMix with Comparable {
 
     /// Create a StyleMix from the matched variants.
     final styleToApply =
-        StyleMix.combineList(matchedVariants.map((e) => e.value).toList());
+        StyleMix.combine(matchedVariants.map((e) => e.value).toList());
 
     /// Merge the new StyleMix created with the existing StyleMix, excluding the matched variants.
     final mergedStyle = updatedStyle.merge(styleToApply);
@@ -377,8 +370,7 @@ class StyleMix with Comparable {
       return isRecursive ? this : const StyleMix.empty();
     }
 
-    final pickedStyle =
-        StyleMix.combineList(matchedVariants.map((e) => e.value));
+    final pickedStyle = StyleMix.combine(matchedVariants.map((e) => e.value));
 
     return pickedStyle.pickVariants(pickedVariants, isRecursive: true);
   }

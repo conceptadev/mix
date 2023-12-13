@@ -2,7 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/src/attributes/style_mix/style_mix_attribute.dart';
 import 'package:mix/src/factory/style_mix.dart';
 
-import '../../helpers/testing_utils.dart';
+import '../../../helpers/testing_utils.dart';
 
 void main() {
   group('StyleMixAttribute', () {
@@ -81,6 +81,7 @@ void main() {
       final styleAttribute2 = StyleMixAttribute(styleMix2);
       final styleAttribute3 = StyleMixAttribute(styleMix3);
 
+      // Act
       // Simulate the nested merge as it would occur during construction or setup.
       // This assumes StyleMix.merge() not only merges attributes but also merges other StyleMixes.
       final mergedAttribute1 = styleAttribute1.merge(styleAttribute2);

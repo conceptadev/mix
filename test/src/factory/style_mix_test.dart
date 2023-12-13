@@ -92,39 +92,6 @@ void main() {
   });
 
   group('StyleMix.combine', () {
-    test(
-        'should return a StyleMix with all non-null StyleMix instances combined',
-        () {
-      final style1 = StyleMix(attribute1); // Add attributes as needed
-      final style2 = StyleMix(attribute2);
-      final style3 = StyleMix(null, attribute3,
-          variantAttr1(attribute4)); // Partially null attributes
-
-      final combinedStyle =
-          StyleMix.combine(style1, style2, style3, null, null, null);
-
-      // Expect that combinedStyle contains all attributes of style1, style2, and style3
-      expect(combinedStyle.styles.length, 3);
-      expect(combinedStyle.variants.length, 1);
-      expect(combinedStyle.length, 4);
-
-      expect(combinedStyle.values.contains(attribute1), true);
-      expect(combinedStyle.values.contains(attribute2), true);
-      expect(combinedStyle.values.contains(attribute3), true);
-      expect(combinedStyle.values.contains(variantAttr1(attribute4)), true);
-    });
-
-    test('should return an empty StyleMix when all instances are null', () {
-      final combinedStyle =
-          StyleMix.combine(null, null, null, null, null, null);
-
-      // Expect that combinedStyle is an empty StyleMix instance
-      expect(combinedStyle.styles.isEmpty, true);
-      expect(combinedStyle.variants.isEmpty, true);
-    });
-  });
-
-  group('StyleMix.combineList', () {
     test('should return a StyleMix with all instances combined', () {
       final styleList = [
         StyleMix(attribute1),
@@ -133,7 +100,7 @@ void main() {
         StyleMix(variantAttr1(attribute4)),
       ];
 
-      final combinedStyle = StyleMix.combineList(styleList);
+      final combinedStyle = StyleMix.combine(styleList);
 
       // Expect that combinedStyle contains all attributes of style1, style2, and style3
       expect(combinedStyle.styles.length, 3);
@@ -147,7 +114,7 @@ void main() {
     });
 
     test('should return an empty StyleMix when the list is empty', () {
-      final combinedStyle = StyleMix.combineList([]);
+      final combinedStyle = StyleMix.combine([]);
 
       // Expect that combinedStyle is an empty StyleMix instance
       expect(combinedStyle.isEmpty, true);

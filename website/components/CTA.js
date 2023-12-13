@@ -1,4 +1,4 @@
-import { DuplicateIcon } from "@heroicons/react/outline";
+import { DocumentDuplicateIcon } from "@heroicons/react/24/outline";
 import copy from "copy-to-clipboard";
 import Link from "next/link";
 import toast, { Toaster } from "react-hot-toast";
@@ -23,7 +23,7 @@ const CallToAction = () => {
           className="flex items-center justify-center w-full px-8 py-3 font-mono text-sm font-medium text-gray-600 bg-black border border-transparent border-gray-200 rounded-md bg-opacity-5 dark:bg-white dark:text-gray-300 dark:border-gray-700 dark:bg-opacity-5 betterhover:hover:bg-gray-50 betterhover:dark:hover:bg-gray-900 md:py-3 md:text-base md:leading-6 md:px-10"
         >
           flutter pub add mix
-          <DuplicateIcon className="w-6 h-6 ml-2 -mr-3 text-gray-400" />
+          <DocumentDuplicateIcon className="w-6 h-6 ml-2 -mr-3 text-gray-400" />
         </button>
       </div>
       <Toaster position="bottom-right" />

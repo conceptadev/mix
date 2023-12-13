@@ -28,7 +28,7 @@ class BasicExample extends HookWidget {
         box.color(Colors.black),
       ),
       onHover(
-        box.opacity(0.5),
+        opacity(0.5),
       ),
       onLongPress(
         box.color(Colors.green),

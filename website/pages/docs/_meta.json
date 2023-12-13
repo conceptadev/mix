@@ -1,4 +1,8 @@
 {
+  "-- Overview": {
+    "type": "separator",
+    "title": "Overview"
+  },
   "introduction": {
     "title": "Introduction"
   },

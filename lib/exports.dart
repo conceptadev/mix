@@ -19,7 +19,7 @@ export 'src/attributes/spacing/spacing_dto.dart';
 export 'src/attributes/spacing/spacing_util.dart';
 export 'src/attributes/strut_style/strut_style_dto.dart';
 export 'src/attributes/strut_style/strut_style_util.dart';
-export 'src/attributes/style_mix_attribute.dart';
+export 'src/attributes/style_mix/style_mix_attribute.dart';
 export 'src/attributes/text_directives_util.dart';
 export 'src/attributes/text_style/text_style_dto.dart';
 export 'src/attributes/text_style/text_style_util.dart';

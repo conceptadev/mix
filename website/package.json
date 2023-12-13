@@ -1,5 +1,5 @@
 {
-  "name": "nextra",
+  "name": "mix-docs",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -8,28 +8,26 @@
     "start": "next start",
     "build": "next build"
   },
-  "author": "Shu Ding",
-  "license": "MIT",
   "dependencies": {
-    "@docsearch/react": "^3.3.0",
-    "@heroicons/react": "^1.0.6",
+    "@docsearch/react": "^3.5.2",
+    "@heroicons/react": "^2.0.18",
     "copy-to-clipboard": "^3.3.3",
-    "next": "^13.0.6",
-    "nextra": "2.0.1",
-    "nextra-theme-docs": "2.0.1",
+    "next": "^13.5.6",
+    "nextra": "2.13.2",
+    "nextra-theme-docs": "2.13.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-hot-toast": "^2.4.0"
+    "react-hot-toast": "^2.4.1"
   },
   "devDependencies": {
-    "@types/mdx": "^2.0.3",
-    "@types/node": "^18.11.11",
-    "@types/react": "^18.0.26",
-    "autoprefixer": "^10.4.13",
-    "postcss": "^8.4.19",
-    "postcss-import": "^15.0.1",
-    "prettier": "^2.8.0",
-    "tailwindcss": "^3.2.4",
-    "typescript": "^4.9.3"
+    "@types/mdx": "^2.0.10",
+    "@types/node": "^20.10.4",
+    "@types/react": "^18.2.45",
+    "autoprefixer": "^10.4.16",
+    "postcss": "^8.4.32",
+    "postcss-import": "^15.1.0",
+    "prettier": "^2.8.8",
+    "tailwindcss": "^3.3.6",
+    "typescript": "^4.9.5"
   }
 }

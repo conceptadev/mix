@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../core/attribute.dart';
-import '../factory/style_mix.dart';
+import '../../core/attribute.dart';
+import '../../factory/style_mix.dart';
 
 /// Allows to pass down Mixes as attributes for use with helpers.
 @immutable

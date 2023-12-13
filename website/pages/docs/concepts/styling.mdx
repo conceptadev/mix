@@ -1,0 +1,127 @@
+---
+id: styling
+title: "Styling"
+---
+
+import { Callout } from "nextra-theme-docs";
+
+# Styling
+
+Adopting the functional style syntax in Mix is a key technique for defining styles in Flutter. This method not only fosters a more intuitive and expressive way to build UIs, but it also enhances the clarity and maintainability of the code.
+
+Mix's functional approach allows for direct and readable style declarations, ensuring a smoother and more consistent styling process. Moreover, this approach excels in facilitating style overrides, providing a streamlined and flexible way to customize and adapt styles across different widgets.
+
+By leveraging Mix's functional syntax, developers can craft more elegant and efficient Flutter interfaces, ensuring a cohesive and dynamic user experience.
+
+## StyleMix
+
+The `StyleMix` class in Mix is a foundational utility for managing and applying styles. It encapsulates a set of styling attributes and variants, offering a powerful and flexible way to define and manipulate styles for widgets. This concept page will guide you through the key features and usage of StyleMix.
+
+**Overview**
+
+- Purpose: StyleMix is designed to manage collections of styling attributes and variants, making it easier to apply consistent and reusable styles across your Flutter app.
+- Composition: It combines multiple styling attributes, such as colors, fonts, sizes, and more, into a single entity that can be applied to widgets.
+- Variants: Besides standard styling attributes, StyleMix also supports variants, allowing for more dynamic and context-sensitive styling.
+
+<Callout emoji="⚠️">
+  The order of the attributes is important, and keep in mind when composing and
+  overriding them. Styling attributes are merged from left to right, so the
+  attributes on the right will override the attributes on the left.
+</Callout>
+
+### Creating a Style
+
+You can create a Mix by calling it's class and passing positional attributes like so
+
+```dart
+final style = StyleMix(
+  height(100),
+  width(100),
+  backgroundColor.purple(),
+  border.radius(10),
+);
+```
+
+### Composing Styles
+
+Composing styles is a powerful way to create sophisticated UI designs. It involves combining and merging StyleMix instances to achieve layered and comprehensive styling. Let's dive into some examples to illustrate how this works, especially focusing on how styles override each other.
+
+#### Mixing Styles
+
+First, let's create a base StyleMix:
+
+```dart
+final baseStyle = StyleMix(
+  height(100),
+  width(100),
+  backgroundColor.purple(),
+  border.radius(10),
+);
+```
+
+Now let's create a new style by mixing the base style with additional attributes:
+
+```dart
+final newStyle = baseStyle.mix(
+  border.width(2),
+  border.color.black()
+);
+```
+
+#### Overriding Styles
+
+This approach allows you to override specific attributes of the base style, while inheriting the rest of the attributes.
+
+Now, let's create a new StyleMix by overriding the `backgroundColor` attribute of the base style:
+
+```dart
+final newStyle = baseStyle.mix(
+  backgroundColor.blue(),
+);
+```
+
+In this example, the `newStyle` will inherit all attributes from the `baseStyle`, except for the `backgroundColor` attribute, which will be overridden by the new value.
+
+#### Utility `apply`
+
+You can also apply the Style as an attribute by using the `apply` utility. This approach allows you more control over the order of the attributes.
+
+This is the same as the previous example, but using `apply` instead of `merge`:
+
+```dart
+final newStyle = StyleMix(
+  apply(baseStyle),
+  backgroundColor.blue(),
+);
+```
+
+However if you add `apply` after the `backgroundColor` attribute, the `backgroundColor` will be overridden by the `baseStyle`:
+
+```dart
+final newStyle = StyleMix(
+  backgroundColor.blue(),
+  apply(baseStyle),
+);
+```
+
+**Benefits of combining styles**
+
+- Modularity: Allows breaking down complex styles into manageable chunks, which can be combined or merged as needed.
+- Reusability: Encourages the reuse of common style elements, reducing redundancy and maintaining consistency across the UI.
+- Flexibility: Provides the flexibility to dynamically adjust styles based on different conditions or user interactions.
+- Maintainability: Simplifies the maintenance of styles, as changes can be made to individual mixes rather than entire stylesheets.
+
+### StyleMix.chooser()
+
+Uses a _Mix_ based on a condition
+
+```dart
+final errorMix = StyleMix(backgroundColor(Colors.red));
+final successMix = StyleMix(backgroundColor(Colors.green));
+
+final mix = StyleMix.chooser(
+  condition: hasError,
+  ifTrue: errorMix,
+  ifFalse: succesMix,
+);
+```

@@ -31,7 +31,7 @@ extension DeprecatedMixExtension<T extends Attribute> on StyleMix {
 
   @Deprecated('Use merge() or mergeMany() instead')
   SpreadFunctionParams<StyleMix, StyleMix> get apply =>
-      const SpreadFunctionParams(StyleMix.combineList);
+      const SpreadFunctionParams(StyleMix.combine);
 
   @Deprecated('Use selectVariant now')
   StyleMix withVariant(Variant variant) {
@@ -40,7 +40,7 @@ extension DeprecatedMixExtension<T extends Attribute> on StyleMix {
 
   @Deprecated('Use combine now')
   StyleMix combineAll(List<StyleMix> mixes) {
-    return StyleMix.combineList(mixes);
+    return StyleMix.combine(mixes);
   }
 
   @Deprecated('Use selectVariant now')
@@ -193,13 +193,6 @@ final textDecorationThickness = text.style.decorationThickness;
 
 @Deprecated('Use text.style(fontFamilyFallback: fontFamilyFallback) instead')
 final fontFamilyFallback = text.style.fontFamilyFallback;
-
-@Deprecated('Use style.merge(otherStyle), instead')
-const apply = SpreadFunctionParams(_apply);
-
-StyleMixAttribute _apply(Iterable<StyleMix> mixes) {
-  return StyleMixAttribute(StyleMix.combineList(mixes));
-}
 
 @Deprecated(kShortAliasDeprecation)
 final p = box.padding;
