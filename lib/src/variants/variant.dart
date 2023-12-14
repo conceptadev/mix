@@ -21,9 +21,9 @@ import 'multi_variant.dart';
 ///    const outlinedVariant = Variant('outlined');
 ///    const filledVariant = Variant('filled');
 
-///    final style = StyleMix(
+///    final style = Style(
 ///     // shared attributes between all variants
-///      textStyle(fontSize: 16),
+///      text.style(fontSize: 16),
 ///      padding(10, 20),
 ///      outlinedVariant(
 ///        border(color: Colors.black, width: 1),
@@ -31,7 +31,7 @@ import 'multi_variant.dart';
 ///      ),
 ///      filledVariant(
 ///        backgroundColor(Colors.black),
-///        textStyle(color: Colors.white),
+///        text.style(color: Colors.white),
 ///      ),
 ///    );
 /// ```

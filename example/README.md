@@ -8,24 +8,23 @@ Let's go ahead and take a look at the code. Don't worry about understanding each
 
 ```dart
 class CustomMixWidget extends StatelessWidget {
-  const CustomMixWidget({Key? key}) : super(key: key);
+  const CustomMixWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final style = Mix(
+    final style = Style(
       height(100),
-      animated(),
-      marginY(10),
+      marginVertical(10),
       elevation(10),
-      rounded(10),
-      bgColor(MaterialTokens.colorScheme.primary),
-      textStyle($button),
-      textColor($onPrimary),
-      hover(
+      border.radius(10),
+      backgroundColor($md.colors.primary()),
+      text.style($button()),
+      text.style.color($md.colors.onPrimary()),
+      onHover(
         elevation(2),
         padding(20),
-        bgColor($secondary),
-        textColor($onSecondary),
+        backgroundColor($md.colors.secondary()),
+        text.style.color($md.colors.onSecondary()),
       ),
     );
     return Box(
@@ -41,8 +40,8 @@ class CustomMixWidget extends StatelessWidget {
 ```dart
 class CustomWidget extends StatefulWidget {
   const CustomWidget({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   _CustomWidgetState createState() => _CustomWidgetState();

@@ -39,7 +39,7 @@ class Style with Comparable {
   static final stack = SpreadFunctionParams(_styleType<StackSpecAttribute>());
   static final text = SpreadFunctionParams(_styleType<TextSpecAttribute>());
   static final image = SpreadFunctionParams(_styleType<ImageSpecAttribute>());
-  static final container = SpreadFunctionParams(_styleType<BoxSpecAttribute>());
+  static final box = SpreadFunctionParams(_styleType<BoxSpecAttribute>());
   static final flex = SpreadFunctionParams(_styleType<FlexSpecAttribute>());
 
   /// A constant, empty mix for use with const constructor widgets.

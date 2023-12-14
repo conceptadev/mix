@@ -105,8 +105,8 @@ void main() {
         reason: 'StyledContainer is too slow');
   });
 
-  // test perfromance for StyleMix.create
-  test('StyleMix.create', () {
+  // test perfromance for Style.create
+  test('Style.create', () {
     const iterations = 10000;
     final stopwatch = Stopwatch()..start();
     for (int i = 0; i < iterations; i++) {
@@ -127,7 +127,7 @@ void main() {
     stopwatch.stop();
 
     final elapsedTime = stopwatch.elapsedMilliseconds / iterations;
-    print('StyleMix.create: $elapsedTime ms');
+    print('Style.create: $elapsedTime ms');
   });
 
   // test performance for MixData.create

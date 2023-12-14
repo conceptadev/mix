@@ -6,7 +6,7 @@ void main() {
   final keyOne = UniqueKey();
   final keyTwo = UniqueKey();
   final keyThree = UniqueKey();
-  testWidgets('StyleMix.container matches StyledContainer(style:StyleMix)',
+  testWidgets('Style.container matches StyledContainer(style:Style)',
       (tester) async {
     final style = Style(
       box.decoration(
@@ -45,8 +45,7 @@ void main() {
     expect(containerThree.style, isNot(style));
   });
 
-  testWidgets('StyleMix.box matches StyledContainer(style:StyleMix)',
-      (tester) async {
+  testWidgets('Style.box matches StyledContainer(style:Style)', (tester) async {
     final style = Style(
       box.decoration(
         border: Border.all(color: Colors.red),
@@ -82,7 +81,7 @@ void main() {
     expect(containerThree.style, isNot(style), reason: 'containerThree.style');
   });
 
-  testWidgets('StyleMix.hbox matches HBox(style:StyleMix)', (tester) async {
+  testWidgets('Style.hbox matches HBox(style:Style)', (tester) async {
     final style = Style(box.decoration(border: Border.all(color: Colors.red)));
 
     await tester.pumpWidget(
@@ -114,7 +113,7 @@ void main() {
     expect(containerThree.style, isNot(style));
   });
 
-  testWidgets('StyleMix.row matches StyledRow(style:StyleMix)', (tester) async {
+  testWidgets('Style.row matches StyledRow(style:Style)', (tester) async {
     final style = Style(
       box.decoration(
         border: Border.all(color: Colors.red),
@@ -150,8 +149,7 @@ void main() {
     expect(containerThree.style, isNot(style));
   });
 
-  testWidgets('StyleMix.text matches StyledText(style:StyleMix)',
-      (tester) async {
+  testWidgets('Style.text matches StyledText(style:Style)', (tester) async {
     final style = Style(text.style(color: Colors.red));
 
     await tester.pumpWidget(
@@ -183,7 +181,7 @@ void main() {
     expect(containerThree.style, isNot(style));
   });
 
-  testWidgets('StyleMix.vbox matches VBox(style:StyleMix)', (tester) async {
+  testWidgets('Style.vbox matches VBox(style:Style)', (tester) async {
     final style = Style(box.decoration(border: Border.all(color: Colors.red)));
 
     await tester.pumpWidget(
@@ -215,8 +213,7 @@ void main() {
     expect(containerThree.style, isNot(style));
   });
 
-  testWidgets('StyleMix.column matches StyledColumn(style:StyleMix)',
-      (tester) async {
+  testWidgets('Style.column matches StyledColumn(style:Style)', (tester) async {
     final style = Style(
       box.decoration(
         border: Border.all(
@@ -254,8 +251,7 @@ void main() {
     expect(containerThree.style, isNot(style));
   });
 
-  testWidgets('StyleMix.icon matches StyledIcon(style:StyleMix)',
-      (tester) async {
+  testWidgets('Style.icon matches StyledIcon(style:Style)', (tester) async {
     final style = Style(icon(color: Colors.black));
 
     await tester.pumpWidget(

@@ -16,8 +16,8 @@ Design Tokens are made of references (`MixToken`), which can be read by `Mix` at
 For example, if you want to create a button with the primary color, you can use `backgroundColor(MaterialTokens.colorScheme.primary)`:
 
 ```dart
-Mix get style => StyleMix(
-  textStyle($body2), // Text theme from Material Theme
+Mix get style => Style(
+  text.style($body2), // Text theme from Material Theme
   backgroundColor(MaterialTokens.colorScheme.primary), // use the primary color from Material Theme
   (hover)(
     backgroundColor($secondary), // when hovering, use the secondary color
@@ -96,7 +96,7 @@ MixTheme(
 Finally, use it a `Mix`:
 
 ```dart
-final myMix = StyleMix(
+final myMix = Style(
   backgroundColor($myColor),
 );
 ```

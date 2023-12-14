@@ -7,21 +7,21 @@ import '../../widgets/gap_widget.dart';
 import '../container/box_widget.dart';
 import 'flex_spec.dart';
 
-/// A flexible layout widget enhanced with `StyleMix` for simplified styling.
+/// A flexible layout widget enhanced with `Style` for simplified styling.
 ///
 /// `StyledFlex` extends the capabilities of the Flutter `Flex` widget by integrating
-/// `StyleMix`, allowing for more streamlined styling. This widget is ideal for creating
+/// `Style`, allowing for more streamlined styling. This widget is ideal for creating
 /// flexible layouts (either rows or columns) with enhanced styling capabilities.
 ///
 /// The `direction` parameter determines the layout orientation, while the `children`
-/// parameter takes a list of widgets. The `StyleMix` integration allows for applying
+/// parameter takes a list of widgets. The `Style` integration allows for applying
 /// consistent styles across all child widgets easily.
 ///
 /// Example Usage:
 /// ```dart
 /// StyledFlex(
 ///   direction: Axis.horizontal,
-///   style: yourStyleMix,
+///   style: yourStyle,
 ///   children: [Widget1(), Widget2(), Widget3()],
 /// );
 /// ```
@@ -84,10 +84,10 @@ class MixedFlex extends StatelessWidget {
   }
 }
 
-/// A horizontal layout widget leveraging `StyleMix` for advanced styling.
+/// A horizontal layout widget leveraging `Style` for advanced styling.
 ///
 /// `StyledRow` is a specialized form of `StyledFlex` that defaults to a horizontal
-/// direction (i.e., `Axis.horizontal`). It benefits from `StyleMix` integration,
+/// direction (i.e., `Axis.horizontal`). It benefits from `Style` integration,
 /// enabling more efficient and consistent styling across its children.
 ///
 /// Inherits all the styling and layout properties of `StyledFlex`, with a simplified
@@ -96,7 +96,7 @@ class MixedFlex extends StatelessWidget {
 /// Example Usage:
 /// ```dart
 /// StyledRow(
-///   style: yourStyleMix,
+///   style: yourStyle,
 ///   children: [Widget1(), Widget2()],
 /// );
 /// ```
@@ -109,9 +109,9 @@ class StyledRow extends StyledFlex {
   }) : super(direction: Axis.horizontal);
 }
 
-/// A vertical layout widget enhanced with `StyleMix` for easy styling.
+/// A vertical layout widget enhanced with `Style` for easy styling.
 ///
-/// `StyledColumn` is a vertical variant of `StyledFlex`, employing `StyleMix` for
+/// `StyledColumn` is a vertical variant of `StyledFlex`, employing `Style` for
 /// an improved styling experience. It's designed for vertical arrangements of widgets,
 /// providing a consistent and easy-to-manage styling approach.
 ///
@@ -121,7 +121,7 @@ class StyledRow extends StyledFlex {
 /// Example Usage:
 /// ```dart
 /// StyledColumn(
-///   style: yourStyleMix,
+///   style: yourStyle,
 ///   children: [Widget1(), Widget2()],
 /// );
 /// ```
@@ -134,21 +134,21 @@ class StyledColumn extends StyledFlex {
   }) : super(direction: Axis.vertical);
 }
 
-/// A flex container widget with integrated `StyleMix` for enhanced styling.
+/// A flex container widget with integrated `Style` for enhanced styling.
 ///
 /// `FlexBox` combines the features of `StyledContainer` and `StyledFlex`, offering
 /// a powerful tool for creating flexible layouts with advanced styling capabilities
-/// through `StyleMix`. It's perfect for designing complex layouts that require both
+/// through `Style`. It's perfect for designing complex layouts that require both
 /// container and flex properties with uniform styling.
 ///
-/// The `direction` parameter sets the layout's orientation, while the `StyleMix`
+/// The `direction` parameter sets the layout's orientation, while the `Style`
 /// integration simplifies the process of applying consistent styles to all elements.
 ///
 /// Example Usage:
 /// ```dart
 /// FlexBox(
 ///   direction: Axis.horizontal,
-///   style: yourStyleMix,
+///   style: yourStyle,
 ///   children: [Widget1(), Widget2()],
 /// );
 /// ```
@@ -174,10 +174,10 @@ class FlexBox extends StyledWidget {
   }
 }
 
-/// A horizontal flex container with `StyleMix` for easy and consistent styling.
+/// A horizontal flex container with `Style` for easy and consistent styling.
 ///
 /// `HBox` is a specialized `FlexBox` designed for horizontal layouts, simplifying
-/// the process of applying horizontal alignment with advanced styling via `StyleMix`.
+/// the process of applying horizontal alignment with advanced styling via `Style`.
 /// It's an efficient way to achieve consistent styling in horizontal arrangements.
 ///
 /// Inherits all functionalities of `FlexBox`, optimized for horizontal layouts.
@@ -185,7 +185,7 @@ class FlexBox extends StyledWidget {
 /// Example Usage:
 /// ```dart
 /// HBox(
-///   style: yourStyleMix,
+///   style: yourStyle,
 ///   children: [Widget1(), Widget2()],
 /// );
 /// ```
@@ -198,9 +198,9 @@ class HBox extends FlexBox {
   }) : super(direction: Axis.horizontal);
 }
 
-/// A vertical flex container that uses `StyleMix` for streamlined styling.
+/// A vertical flex container that uses `Style` for streamlined styling.
 ///
-/// `VBox` is a vertical counterpart to `HBox`, utilizing `StyleMix` for efficient
+/// `VBox` is a vertical counterpart to `HBox`, utilizing `Style` for efficient
 /// and consistent styling in vertical layouts. It offers an easy way to manage
 /// vertical alignment and styling in a cohesive manner.
 ///
@@ -210,7 +210,7 @@ class HBox extends FlexBox {
 /// Example Usage:
 /// ```dart
 /// VBox(
-///   style: yourStyleMix,
+///   style: yourStyle,
 ///   children: [Widget1(), Widget2()],
 /// );
 /// ```

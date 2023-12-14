@@ -17,20 +17,20 @@ class CustomMixWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final style = StyleMix(
+    final style = Style(
       height(100),
       animated(),
       marginY(10),
       elevation(10),
       borderRadius(10),
       backgroundColor(MaterialTokens.colorScheme.primary),
-      textStyle($button),
-      textStyle(color: $onPrimary),
+      text.style($button),
+      text.style(color: $onPrimary),
       onHover(
         elevation(2),
         padding(20),
         backgroundColor($secondary),
-        textStyle(color: $onSecondary),
+        text.style(color: $onSecondary),
       ),
     );
     return Box(

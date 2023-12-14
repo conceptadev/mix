@@ -1,10 +1,10 @@
 import '../../factory/style_mix.dart';
 import 'nested_style_attribute.dart';
 
-const apply = StyleMixUtility();
+const apply = NestedStyleUtility();
 
-class StyleMixUtility {
-  const StyleMixUtility();
+class NestedStyleUtility {
+  const NestedStyleUtility();
 
   NestedStyleAttribute _applyStyle(List<Style> mixes) {
     return NestedStyleAttribute(Style.combine(mixes));

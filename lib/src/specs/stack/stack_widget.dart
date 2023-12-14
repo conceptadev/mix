@@ -8,7 +8,7 @@ import 'stack_spec.dart';
 /// [StyledStack] - A styled widget that creates a stack layout with a mix of styles.
 ///
 /// This widget extends [StyledWidget] and is designed to arrange its [children] in a stack,
-/// applying the styles defined in a `StyleMix`. It is useful when you need to layer widgets
+/// applying the styles defined in a `Style`. It is useful when you need to layer widgets
 /// on top of each other and control their styling in a unified manner.
 ///
 /// Parameters:
@@ -16,7 +16,7 @@ import 'stack_spec.dart';
 ///   - [inherit]: Determines whether the [StyledStack] should inherit styles from its ancestors.
 ///     Inherits from [StyledWidget].
 ///   - [key]: The key for the widget. Inherits from [StyledWidget].
-///   - [style]: The [StyleMix] to be applied. Inherits from [StyledWidget].
+///   - [style]: The [Style] to be applied. Inherits from [StyledWidget].
 class StyledStack extends StyledWidget {
   const StyledStack({
     this.children = const <Widget>[],
@@ -40,7 +40,7 @@ class StyledStack extends StyledWidget {
 ///
 /// This widget is used to render a stack layout with the styling attributes defined in the `MixData`.
 /// It is particularly useful for creating layered UIs where each layer's position and styling
-/// can be controlled through a `StyleMix`.
+/// can be controlled through a `Style`.
 ///
 /// Parameters:
 ///   - [mix]: The `MixData` representing the current styling context.
@@ -70,7 +70,7 @@ class MixedStack extends StatelessWidget {
 
 /// [ZBox] - A styled widget that combines the functionalities of [Box] and [StyledStack].
 ///
-/// This widget is designed to apply a `StyleMix` to a stack layout, making it a combination
+/// This widget is designed to apply a `Style` to a stack layout, making it a combination
 /// of a box and a stack. It is ideal for scenarios where you need to create a stacked layout
 /// with specific styling and alignment, encapsulated within a box-like structure.
 ///
@@ -79,7 +79,7 @@ class MixedStack extends StatelessWidget {
 ///   - [inherit]: Determines whether the [ZBox] should inherit styles from its ancestors.
 ///     Inherits from [StyledWidget].
 ///   - [key]: The key for the widget. Inherits from [StyledWidget].
-///   - [style]: The [StyleMix] to be applied. Inherits from [StyledWidget].
+///   - [style]: The [Style] to be applied. Inherits from [StyledWidget].
 class ZBox extends StyledWidget {
   const ZBox({
     this.children = const <Widget>[],

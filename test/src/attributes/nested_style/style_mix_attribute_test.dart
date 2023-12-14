@@ -83,16 +83,16 @@ void main() {
 
       // Act
       // Simulate the nested merge as it would occur during construction or setup.
-      // This assumes StyleMix.merge() not only merges attributes but also merges other StyleMixes.
+      // This assumes Style.merge() not only merges attributes but also merges other Stylees.
       final mergedAttribute1 = styleAttribute1.merge(styleAttribute2);
       final mergedAttribute2 = mergedAttribute1.merge(styleAttribute3);
 
-      final finalStyleMix = mergedAttribute1.merge(mergedAttribute2).value;
+      final finalStyle = mergedAttribute1.merge(mergedAttribute2).value;
 
-      expect(finalStyleMix.values, containsAll([attr1, attr2, attr3]));
+      expect(finalStyle.values, containsAll([attr1, attr2, attr3]));
 
       // Does not contain any attributes of type NestedStyleAttribute
-      expect(finalStyleMix.values.whereType<NestedStyleAttribute>(), isEmpty);
+      expect(finalStyle.values.whereType<NestedStyleAttribute>(), isEmpty);
     });
 
     test('should handle nested NestedStyleAttributes properly', () {

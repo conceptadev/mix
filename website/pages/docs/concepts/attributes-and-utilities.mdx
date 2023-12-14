@@ -2,7 +2,7 @@
 title: "Attributes and Utilities"
 ---
 
-import Code from "../../../components/Code.js";
+import { Callout } from "nextra-theme-docs";
 import { Callout } from "nextra-theme-docs";
 
 # Attributes
@@ -20,7 +20,7 @@ To facilitate interacting with `Attributes`, we use `Utility` functions. These f
 Consider the following example:
 
 ```dart
-StyleMix(height(100));
+Style(height(100));
 ```
 
 This defines a _Mix_ with the box height attribute of _100_.
@@ -29,13 +29,13 @@ The function `height()` is a `Utility` that allows us to compose an `Attribute`.
 With that in mind you can think that
 
 ```dart
-StyleMix(height(100))
+Style(height(100))
 ```
 
 is equivalent to
 
 ```dart
-StyleMix(BoxAttribute(height: 100))
+Style(BoxAttribute(height: 100))
 ```
 
 As you can see, `Utilities` are not required for composing _Mixes_. However, they make a cleaner API possible, and an overall better development experience.
@@ -45,7 +45,7 @@ As you can see, `Utilities` are not required for composing _Mixes_. However, the
 Directives are _Attributes_ that define a transformation that needs to happen within the widget during build time. A great example of this would be the `TextDirective` which allow to define the text case, for your `TextMix` widget.
 
 ```dart highlight="2"
-final style = StyleMix(
+final style = Style(
   upperCase(),
 );
 

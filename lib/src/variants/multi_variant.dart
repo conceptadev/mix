@@ -27,13 +27,13 @@ enum MultiVariantOperator { and, or }
 /// final combinedAndVariant = MultiVariant.and([variantA, variantB]);
 /// final combinedOrVariant = MultiVariant.or([variantA, variantB]);
 ///
-/// final style = StyleMix(
-///   textStyle(fontSize: 16),
+/// final style = Style(
+///   text.style(fontSize: 16),
 ///   combinedAndVariant(
-///     textStyle(color: Colors.blue),
+///     text.style(color: Colors.blue),
 ///   ),
 ///   combinedOrVariant(
-///     textStyle(color: Colors.green),
+///     text.style(color: Colors.green),
 ///   ),
 /// );
 /// ```

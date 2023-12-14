@@ -18,7 +18,7 @@ The fundamental widget primitive defined in _Mix_ is a `Box`. A `Box` can contai
 That means that this:
 
 ```dart
-Box(style: StyleMix(height(100)));
+Box(style: Style(height(100)));
 ```
 
 will become the following:
@@ -30,7 +30,7 @@ Container(height: 100);
 You can think of `Utilities` as shortcuts to defining visual properties. Thus:
 
 ```dart
-Box(style: StyleMix(borderRadius(100)));
+Box(style: Style(borderRadius(100)));
 ```
 
 will become the following:
@@ -53,7 +53,7 @@ Built-in mixable widgets that you can use right-away in your app.
 
 ```dart
 Box(
-  style: StyleMix(
+  style: Style(
     height(100),
     width(300),
     borderRadius(15),
@@ -70,7 +70,7 @@ A flex box is a widget that takes a list of children and displays them according
 
 ```dart
 FlexBox(
-  style: StyleMix(gap(6.0)),
+  style: Style(gap(6.0)),
   axis: Axis.horizontal,
   children: [
     IconMix(icon: Icons.search),
@@ -85,7 +85,7 @@ FlexBox(
 
 ```dart
 Hbox(
-  style: StyleMix(gap(6)),
+  style: Style(gap(6)),
   children: [
     Image.fromAsset('assets/image.png'),
     VBox(
@@ -104,7 +104,7 @@ It's capable of displaying icons and inherit data from parent mixes
 
 ```dart
 IconMix(
-  style: StyleMix(
+  style: Style(
     iconSize(30),
     iconColor(Colors.grey),
   ),
@@ -127,7 +127,7 @@ Here's how you can create a text button with it:
 Pressable(
   onPressed: () => debugPrint('my awesome button was pressed'),
   child: Box(
-    style: StyleMix(
+    style: Style(
       // when nothing's happening, bg color is the default grey
       backgroundColor(Colors.grey),
       (hover)(
@@ -144,11 +144,11 @@ Pressable(
     ),
     child: TextMix(
       'PRESS ME',
-      style: StyleMix(
+      style: Style(
         (disabled)(
-          textStyle(color: Colors.grey.shade900),
+          text.style(color: Colors.grey.shade900),
         ),
-        textStyle(color: Colors.black, fontSize: 18.0),
+        text.style(color: Colors.black, fontSize: 18.0),
         bold(),
       ),
     ),
@@ -163,8 +163,8 @@ It's capable of rendering text and inherit data from parent mixes
 ```dart
 TextMix(
   'Mix is AWESOME!'
-  style: StyleMix(
-    textStyle(
+  style: Style(
+    text.style(
       color: Colors.black,
       fontSize: 16.0,
       shadow: Shadow(

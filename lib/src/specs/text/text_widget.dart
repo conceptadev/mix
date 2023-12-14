@@ -9,7 +9,7 @@ import 'text_spec.dart';
 /// [StyledText] - A styled widget for displaying text with a mix of styles.
 ///
 /// This widget extends [StyledWidget] and provides a way to display text with
-/// styles defined in a `StyleMix`. It is ideal for creating text elements in your
+/// styles defined in a `Style`. It is ideal for creating text elements in your
 /// UI where the text styling needs to be dynamic and controlled through a styling system.
 ///
 /// The [StyledText] is particularly useful when you need text elements that adapt
@@ -19,7 +19,7 @@ import 'text_spec.dart';
 /// Parameters:
 ///   - [text]: The text string to display.
 ///   - [semanticsLabel]: An optional semantics label for the text, used by screen readers.
-///   - [style]: The [StyleMix] to be applied to the text. Inherits from [StyledWidget].
+///   - [style]: The [Style] to be applied to the text. Inherits from [StyledWidget].
 ///   - [key]: The key for the widget. Inherits from [StyledWidget].
 ///   - [inherit]: Determines whether the [StyledText] should inherit styles from its ancestors.
 ///     Default is `true`. Inherits from [StyledWidget].
@@ -29,12 +29,12 @@ import 'text_spec.dart';
 /// ```dart
 /// StyledText(
 ///   'content',
-///   style: myStyleMix,
+///   style: myStyle,
 /// )
 /// ```
 ///
 /// This example shows a `StyledText` widget displaying the string 'content'
-/// with the styles defined in `myStyleMix`.
+/// with the styles defined in `myStyle`.
 class StyledText extends StyledWidget {
   const StyledText(
     this.text, {

@@ -10,7 +10,7 @@ void main() {
   const attribute4 = MockStringScalarAttribute('string1');
   const variantAttr1 = Variant('mock1');
   const variantAttr2 = Variant('mock2');
-  group('StyleMix()', () {
+  group('Style()', () {
     test('Initialization with All Null Attributes', () {
       final mix = Style(null, null, null, null);
       expect(mix.styles.isEmpty, true);
@@ -56,7 +56,7 @@ void main() {
     });
   });
 
-  group('StyleMix.create([]) ', () {
+  group('Style.create([]) ', () {
     test('Initialization with Empty Array', () {
       final mix = Style.create([]);
       expect(mix.styles.isEmpty, true);
@@ -91,8 +91,8 @@ void main() {
     });
   });
 
-  group('StyleMix.combine', () {
-    test('should return a StyleMix with all instances combined', () {
+  group('Style.combine', () {
+    test('should return a Style with all instances combined', () {
       final styleList = [
         Style(attribute1),
         Style(attribute2),
@@ -113,10 +113,10 @@ void main() {
       expect(combinedStyle.values.contains(variantAttr1(attribute4)), true);
     });
 
-    test('should return an empty StyleMix when the list is empty', () {
+    test('should return an empty Style when the list is empty', () {
       final combinedStyle = Style.combine([]);
 
-      // Expect that combinedStyle is an empty StyleMix instance
+      // Expect that combinedStyle is an empty Style instance
       expect(combinedStyle.isEmpty, true);
       expect(combinedStyle.isNotEmpty, false);
       expect(combinedStyle.styles.isEmpty, true);
@@ -126,7 +126,7 @@ void main() {
     });
   });
 
-  group('StyleMix.chooser() ', () {
+  group('Style.chooser() ', () {
     test('Condition is True', () {
       const trueAttribute = MockIntScalarAttribute(1);
       const falseAttribute = MockDoubleScalarAttribute(2.0);
@@ -167,7 +167,7 @@ void main() {
     });
   });
 
-  group('StyleMix.selectVariant', () {
+  group('Style.selectVariant', () {
     const attr1 = MockDoubleScalarAttribute(1.0);
     const attr2 = MockIntScalarAttribute(2);
     const attr3 = MockBooleanScalarAttribute(true);
@@ -211,7 +211,7 @@ void main() {
     });
   });
 
-  group('StyleMix.selectVariantList', () {
+  group('Style.selectVariantList', () {
     const attr1 = MockDoubleScalarAttribute(1.0);
     const attr2 = MockIntScalarAttribute(2);
     const attr3 = MockBooleanScalarAttribute(true);
@@ -254,7 +254,7 @@ void main() {
     });
   });
 
-  group('StyleMix.pickVariants', () {
+  group('Style.pickVariants', () {
     const attr1 = MockDoubleScalarAttribute(1.0);
     const attr2 = MockIntScalarAttribute(2);
 
@@ -287,7 +287,7 @@ void main() {
       expect(pickedMix.variants.isEmpty, isTrue);
     });
 
-    test('Returns empty StyleMix when no Variants are picked', () {
+    test('Returns empty Style when no Variants are picked', () {
       final style = Style(attr1, attr2);
       final pickedMix = style.pickVariants([]);
 
@@ -295,7 +295,7 @@ void main() {
       expect(pickedMix.variants.isEmpty, isTrue);
     });
 
-    test('Returns empty StyleMix when picked Variants are not present', () {
+    test('Returns empty Style when picked Variants are not present', () {
       final style = Style(attr1, attr2); // no variants added here
       final pickedMix = style.pickVariants([outlinedVariant, smallVariant]);
 
@@ -304,7 +304,7 @@ void main() {
     });
   });
 
-  group('StyleMix hashcode', () {
+  group('Style hashcode', () {
     test('should return different hashcode for same attributes', () {
       final style1 = Style(attribute1, attribute2);
       final style2 = Style(attribute1, attribute2);
@@ -320,7 +320,7 @@ void main() {
     });
   });
 
-  group('StyleMix equality', () {
+  group('Style equality', () {
     test('should return true for same attributes', () {
       final style1 = Style(attribute1, attribute2);
       final style2 = Style(attribute1, attribute2);
@@ -336,7 +336,7 @@ void main() {
     });
   });
 
-  group('StyleMix variantChooser', () {
+  group('Style variantChooser', () {
     const variant1 = Variant('Variant1');
     const variant2 = Variant('Variant2');
     final style = Style(

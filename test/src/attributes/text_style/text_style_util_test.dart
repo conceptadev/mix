@@ -9,10 +9,11 @@ import '../../../helpers/testing_utils.dart';
 
 void main() {
   group('TextStyleUtility', () {
+    const textStyle = TextStyleUtility(UtilityTestAttribute.new);
     test('call() creates TextStyleAttribute correctly', () {
       final yellowPaint = Paint()..color = Colors.yellow;
       final purplePaint = Paint()..color = Colors.purple;
-      final attr = text.style(
+      final attr = textStyle(
         fontFamily: 'Roboto',
         fontWeight: FontWeight.bold,
         fontStyle: FontStyle.italic,
@@ -38,117 +39,116 @@ void main() {
         height: 2.0,
       );
 
-      final attrWithPaint = text.style(
+      final attrWithPaint = textStyle(
         background: purplePaint,
         foreground: yellowPaint,
       );
 
-      final resolvedValue = attr.resolve(EmptyMixData);
-      final resolvedWithPaint = attrWithPaint.resolve(EmptyMixData);
+      final resolvedValue = attr.value.resolve(EmptyMixData);
+      final resolvedWithPaint = attrWithPaint.value.resolve(EmptyMixData);
 
-      expect(resolvedValue.style?.fontWeight, FontWeight.bold);
-      expect(resolvedValue.style?.fontStyle, FontStyle.italic);
-      expect(resolvedValue.style?.fontSize, 16.0);
-      expect(resolvedValue.style?.letterSpacing, 1.0);
-      expect(resolvedValue.style?.wordSpacing, 2.0);
-      expect(resolvedValue.style?.textBaseline, TextBaseline.ideographic);
-      expect(resolvedValue.style?.shadows?.length, 1);
-      expect(resolvedValue.style?.shadows?.first.blurRadius, 1.0);
+      expect(resolvedValue.fontWeight, FontWeight.bold);
+      expect(resolvedValue.fontStyle, FontStyle.italic);
+      expect(resolvedValue.fontSize, 16.0);
+      expect(resolvedValue.letterSpacing, 1.0);
+      expect(resolvedValue.wordSpacing, 2.0);
+      expect(resolvedValue.textBaseline, TextBaseline.ideographic);
+      expect(resolvedValue.shadows?.length, 1);
+      expect(resolvedValue.shadows?.first.blurRadius, 1.0);
       expect(
-        resolvedValue.style?.shadows?.first.color,
+        resolvedValue.shadows?.first.color,
         Colors.black,
       );
+      expect(resolvedValue.shadows?.first.offset, const Offset(1.0, 1.0));
+      expect(resolvedValue.color, Colors.red);
+      expect(resolvedValue.backgroundColor, Colors.blue);
+      expect(resolvedValue.fontFeatures?.length, 1);
       expect(
-          resolvedValue.style?.shadows?.first.offset, const Offset(1.0, 1.0));
-      expect(resolvedValue.style?.color, Colors.red);
-      expect(resolvedValue.style?.backgroundColor, Colors.blue);
-      expect(resolvedValue.style?.fontFeatures?.length, 1);
-      expect(
-        resolvedValue.style?.fontFeatures?.first,
+        resolvedValue.fontFeatures?.first,
         const FontFeature.alternative(4),
       );
       expect(
-        resolvedValue.style?.decoration,
+        resolvedValue.decoration,
         TextDecoration.underline,
       );
       expect(
-        resolvedValue.style?.decorationColor,
+        resolvedValue.decorationColor,
         Colors.green,
       );
-      expect(resolvedValue.style?.decorationStyle, TextDecorationStyle.dashed);
-      // expect(textStyleAttribute.resolve(EmptyMixData).foreground, yellowPaint);
-      // expect(textStyleAttribute.resolve(EmptyMixData).background, purplePaint);
-      expect(resolvedValue.style?.debugLabel, 'debugLabel');
+      expect(resolvedValue.decorationStyle, TextDecorationStyle.dashed);
+      // expect(textStyleAttribute.value.foreground, yellowPaint);
+      // expect(textStyleAttribute.value.background, purplePaint);
+      expect(resolvedValue.debugLabel, 'debugLabel');
       expect(
-        resolvedValue.style?.locale,
+        resolvedValue.locale,
         const Locale('en', 'US'),
       );
-      expect(resolvedValue.style?.height, 2.0);
-      expect(resolvedWithPaint.style?.foreground, yellowPaint);
-      expect(resolvedWithPaint.style?.background, purplePaint);
+      expect(resolvedValue.height, 2.0);
+      expect(resolvedWithPaint.foreground, yellowPaint);
+      expect(resolvedWithPaint.background, purplePaint);
     });
 
     test('color() creates TextStyleAttribute correctly', () {
-      final textStyleAttribute = text.style(color: Colors.red);
-      final resolvedValue = textStyleAttribute.resolve(EmptyMixData);
+      final textStyleAttribute = textStyle(color: Colors.red);
+      final resolvedValue = textStyleAttribute.value.resolve(EmptyMixData);
 
-      expect(resolvedValue.style?.color, Colors.red);
+      expect(resolvedValue.color, Colors.red);
     });
 
     test('backgroundColor() creates TextStyleAttribute correctly', () {
-      final textStyleAttribute = text.style(backgroundColor: Colors.blue);
-      final resolvedValue = textStyleAttribute.resolve(EmptyMixData);
+      final textStyleAttribute = textStyle(backgroundColor: Colors.blue);
+      final resolvedValue = textStyleAttribute.value.resolve(EmptyMixData);
 
-      expect(resolvedValue.style?.backgroundColor, Colors.blue);
+      expect(resolvedValue.backgroundColor, Colors.blue);
     });
 
     test('fontFamily() creates TextStyleAttribute correctly', () {
-      final textStyleAttribute = text.style(fontFamily: 'Roboto');
-      final resolvedValue = textStyleAttribute.resolve(EmptyMixData);
+      final textStyleAttribute = textStyle(fontFamily: 'Roboto');
+      final resolvedValue = textStyleAttribute.value.resolve(EmptyMixData);
 
-      expect(resolvedValue.style?.fontFamily, 'Roboto');
+      expect(resolvedValue.fontFamily, 'Roboto');
     });
 
     test('fontSize() creates TextStyleAttribute correctly', () {
-      final textStyleAttribute = text.style(fontSize: 16.0);
-      final resolvedValue = textStyleAttribute.resolve(EmptyMixData);
+      final textStyleAttribute = textStyle(fontSize: 16.0);
+      final resolvedValue = textStyleAttribute.value.resolve(EmptyMixData);
 
-      expect(resolvedValue.style?.fontSize, 16.0);
+      expect(resolvedValue.fontSize, 16.0);
     });
 
     test('fontWeight() creates TextStyleAttribute correctly', () {
-      final textStyleAttribute = text.style.fontWeight.bold();
-      final resolvedValue = textStyleAttribute.resolve(EmptyMixData);
+      final textStyleAttribute = textStyle.fontWeight.bold();
+      final resolvedValue = textStyleAttribute.value.resolve(EmptyMixData);
 
-      expect(resolvedValue.style?.fontWeight, FontWeight.bold);
+      expect(resolvedValue.fontWeight, FontWeight.bold);
     });
 
     test('fontStyle() creates TextStyleAttribute correctly', () {
-      final textStyleAttribute = text.style.fontStyle.italic();
-      final resolvedValue = textStyleAttribute.resolve(EmptyMixData);
+      final textStyleAttribute = textStyle.fontStyle.italic();
+      final resolvedValue = textStyleAttribute.value.resolve(EmptyMixData);
 
-      expect(resolvedValue.style?.fontStyle, FontStyle.italic);
+      expect(resolvedValue.fontStyle, FontStyle.italic);
     });
 
     test('letterSpacing() creates TextStyleAttribute correctly', () {
-      final textStyleAttribute = text.style(letterSpacing: 1.0);
-      final resolvedValue = textStyleAttribute.resolve(EmptyMixData);
+      final textStyleAttribute = textStyle(letterSpacing: 1.0);
+      final resolvedValue = textStyleAttribute.value.resolve(EmptyMixData);
 
-      expect(resolvedValue.style?.letterSpacing, 1.0);
+      expect(resolvedValue.letterSpacing, 1.0);
     });
 
     test('wordSpacing() creates TextStyleAttribute correctly', () {
-      final textStyleAttribute = text.style(wordSpacing: 2.0);
-      final resolvedValue = textStyleAttribute.resolve(EmptyMixData);
+      final textStyleAttribute = textStyle(wordSpacing: 2.0);
+      final resolvedValue = textStyleAttribute.value.resolve(EmptyMixData);
 
-      expect(resolvedValue.style?.wordSpacing, 2.0);
+      expect(resolvedValue.wordSpacing, 2.0);
     });
 
     test('textBaseline() creates TextStyleAttribute correctly', () {
-      final textStyleAttribute = text.style.textBaseline.ideographic();
-      final resolvedValue = textStyleAttribute.resolve(EmptyMixData);
+      final textStyleAttribute = textStyle.textBaseline.ideographic();
+      final resolvedValue = textStyleAttribute.value.resolve(EmptyMixData);
 
-      expect(resolvedValue.style?.textBaseline, TextBaseline.ideographic);
+      expect(resolvedValue.textBaseline, TextBaseline.ideographic);
     });
 
     test('shadows() creates TextStyleAttribute correctly', () {
@@ -157,74 +157,74 @@ void main() {
         color: Colors.black,
         offset: Offset(1.0, 1.0),
       );
-      final attribute = text.style.shadow(
+      final attribute = textStyle.shadow(
         blurRadius: 1.0,
         color: Colors.black,
         offset: const Offset(1.0, 1.0),
       );
 
-      final resolved = attribute.resolve(EmptyMixData);
+      final resolved = attribute.value.resolve(EmptyMixData);
 
-      expect(resolved.style?.shadows?.length, 1);
-      expect(resolved.style?.shadows?.first.blurRadius, 1.0);
-      expect(resolved.style?.shadows?.first.color, Colors.black);
-      expect(resolved.style?.shadows?.first.offset, const Offset(1.0, 1.0));
-      expect(resolved.style?.shadows?.first, shadow);
+      expect(resolved.shadows?.length, 1);
+      expect(resolved.shadows?.first.blurRadius, 1.0);
+      expect(resolved.shadows?.first.color, Colors.black);
+      expect(resolved.shadows?.first.offset, const Offset(1.0, 1.0));
+      expect(resolved.shadows?.first, shadow);
     });
 
     test('fontFeatures() creates TextStyleAttribute correctly', () {
-      final textStyleAttribute = text.style.fontFeatures([
+      final textStyleAttribute = textStyle.fontFeatures([
         const FontFeature.alternative(4),
       ]);
 
-      final resolvedValue = textStyleAttribute.resolve(EmptyMixData);
+      final resolvedValue = textStyleAttribute.value.resolve(EmptyMixData);
 
-      expect(resolvedValue.style?.fontFeatures?.length, 1);
+      expect(resolvedValue.fontFeatures?.length, 1);
       expect(
-        resolvedValue.style?.fontFeatures?.first,
+        resolvedValue.fontFeatures?.first,
         const FontFeature.alternative(4),
       );
     });
 
     test('decoration() creates TextStyleAttribute correctly', () {
-      final textStyleAttribute = text.style.decoration.underline();
+      final textStyleAttribute = textStyle.decoration.underline();
 
-      final resolvedValue = textStyleAttribute.resolve(EmptyMixData);
+      final resolvedValue = textStyleAttribute.value.resolve(EmptyMixData);
 
-      expect(resolvedValue.style?.decoration, TextDecoration.underline);
+      expect(resolvedValue.decoration, TextDecoration.underline);
     });
 
     test('decorationColor() creates TextStyleAttribute correctly', () {
-      final textStyleAttribute = text.style(decorationColor: Colors.green);
-      final resolvedValue = textStyleAttribute.resolve(EmptyMixData);
+      final textStyleAttribute = textStyle(decorationColor: Colors.green);
+      final resolvedValue = textStyleAttribute.value.resolve(EmptyMixData);
 
-      expect(resolvedValue.style?.decorationColor, Colors.green);
+      expect(resolvedValue.decorationColor, Colors.green);
     });
 
     test('decorationStyle() creates TextStyleAttribute correctly', () {
-      final textStyleAttribute = text.style.decorationStyle.dashed();
+      final textStyleAttribute = textStyle.decorationStyle.dashed();
 
-      final resolvedValue = textStyleAttribute.resolve(EmptyMixData);
+      final resolvedValue = textStyleAttribute.value.resolve(EmptyMixData);
 
-      expect(resolvedValue.style?.decorationStyle, TextDecorationStyle.dashed);
+      expect(resolvedValue.decorationStyle, TextDecorationStyle.dashed);
     });
 
     test('foreground() creates TextStyleAttribute correctly', () {
       final yellowPaint = Paint()..color = Colors.yellow;
-      final textStyleAttribute = text.style.foreground(yellowPaint);
+      final textStyleAttribute = textStyle.foreground(yellowPaint);
 
-      final resolvedValue = textStyleAttribute.resolve(EmptyMixData);
+      final resolvedValue = textStyleAttribute.value.resolve(EmptyMixData);
 
-      expect(resolvedValue.style?.foreground, yellowPaint);
+      expect(resolvedValue.foreground, yellowPaint);
     });
 
     test('background() creates TextStyleAttribute correctly', () {
       final purplePaint = Paint()..color = Colors.purple;
-      final textStyleAttribute = text.style.background(purplePaint);
+      final textStyleAttribute = textStyle.background(purplePaint);
 
-      final resolvedValue = textStyleAttribute.resolve(EmptyMixData);
+      final resolvedValue = textStyleAttribute.value.resolve(EmptyMixData);
 
-      expect(resolvedValue.style?.background, purplePaint);
+      expect(resolvedValue.background, purplePaint);
     });
   });
 }

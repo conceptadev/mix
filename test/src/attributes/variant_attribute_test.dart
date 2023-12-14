@@ -2,13 +2,13 @@
 // class VariantAttribute<T extends Variant> extends Attribute
 //     with Mergeable<VariantAttribute<T>> {
 //   final T variant;
-//   final StyleMix _style;
+//   final Style _style;
 
-//   const VariantAttribute(this.variant, StyleMix style) : _style = style;
+//   const VariantAttribute(this.variant, Style style) : _style = style;
 
 //   Key get mergeKey => ObjectKey(variant);
 
-//   StyleMix get value => _style;
+//   Style get value => _style;
 
 //   @override
 //   VariantAttribute<T> merge(covariant VariantAttribute<T> other) {
