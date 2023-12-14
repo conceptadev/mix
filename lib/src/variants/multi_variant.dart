@@ -187,7 +187,7 @@ class MultiVariant extends Variant {
       p11, p12, p13, p14, p15, p16, p17, p18, p19, p20,
     ].whereType<Attribute>();
 
-    return MultiVariantAttribute(this, StyleMix.create(params));
+    return MultiVariantAttribute(this, Style.create(params));
   }
 
   @override

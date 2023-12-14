@@ -12,7 +12,7 @@ export 'package:mix/src/core/extensions/values_ext.dart';
 class MockBuildContext extends Mock implements BuildContext {}
 
 MixData MockMixData(
-  StyleMix style,
+  Style style,
 ) {
   return MixData.create(
     MockBuildContext(),
@@ -22,7 +22,7 @@ MixData MockMixData(
 
 final EmptyMixData = MixData.create(
   MockBuildContext(),
-  const StyleMix.empty(),
+  const Style.empty(),
 );
 
 MediaQuery createMediaQuery(Size size) {
@@ -97,7 +97,7 @@ Widget createWithMixTheme(
 extension WidgetTesterExt on WidgetTester {
   Future<void> pumpWithMix(
     Widget widget, {
-    StyleMix style = const StyleMix.empty(),
+    Style style = const Style.empty(),
     MixThemeData theme = const MixThemeData.empty(),
   }) async {
     await pumpWithMixTheme(

@@ -9,7 +9,7 @@ void main() {
     test('resolve', () {
       final mix = MixData.create(
         MockBuildContext(),
-        StyleMix(
+        Style(
           const StackSpecAttribute(
             fit: StackFit.expand,
             clipBehavior: Clip.antiAlias,

@@ -18,7 +18,7 @@ class GestureBox extends StatelessWidget {
     this.style,
   });
 
-  final StyleMix? style;
+  final Style? style;
   final Widget child;
   final VoidCallback? onPressed;
   final VoidCallback? onLongPress;

@@ -12,7 +12,7 @@ void main() {
   test('MixData create', () {
     final mixData = MixData.create(
         MockBuildContext(),
-        StyleMix(
+        Style(
           const MockIntScalarAttribute(1),
           const MockStringScalarAttribute('test'),
           const MockDoubleScalarAttribute(3.0),
@@ -46,7 +46,7 @@ void main() {
   test('MixData merge', () {
     final mixData = MixData.create(
         MockBuildContext(),
-        StyleMix(
+        Style(
           const MockIntScalarAttribute(1),
           const MockStringScalarAttribute('test'),
           const MockDoubleScalarAttribute(3.0),
@@ -58,7 +58,7 @@ void main() {
 
     final mixData2 = MixData.create(
         MockBuildContext(),
-        StyleMix(
+        Style(
           const MockDoubleScalarAttribute(5.0),
           autoApplyVariant(
             const MockDoubleScalarAttribute(4.0),

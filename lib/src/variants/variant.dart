@@ -14,7 +14,7 @@ import 'multi_variant.dart';
 /// You can think of variant as a switch that applies a certain set of styles when it's turned on.
 ///
 /// The `Variant` class is designed to be immutable and can be used in conjunction
-/// with [StyleMix] and [Attribute] to define specific styling rules.
+/// with [Style] and [Attribute] to define specific styling rules.
 ///
 /// Example Usage:
 /// ```dart
@@ -99,7 +99,7 @@ class Variant with Comparable {
       p11, p12, p13, p14, p15, p16, p17, p18, p19, p20,
     ].whereType<Attribute>();
 
-    return VariantAttribute(this, StyleMix.create(params));
+    return VariantAttribute(this, Style.create(params));
   }
 
   @override

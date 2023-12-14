@@ -78,7 +78,7 @@ class ContextVariant extends Variant {
     ].whereType<Attribute>();
 
     // Create a ContextVariantAttribute using the collected parameters.
-    return ContextVariantAttribute(this, StyleMix.create(params));
+    return ContextVariantAttribute(this, Style.create(params));
   }
 
   @override

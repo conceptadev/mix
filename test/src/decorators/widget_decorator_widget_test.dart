@@ -5,7 +5,7 @@ import 'package:mix/mix.dart';
 import '../../helpers/testing_utils.dart';
 
 void main() {
-  final style = StyleMix(
+  final style = Style(
     scale(2.0),
     opacity(0.5),
     visibility.on(),

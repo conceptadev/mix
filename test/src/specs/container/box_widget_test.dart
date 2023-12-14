@@ -19,7 +19,7 @@ void main() {
 
     await tester.pumpStyledWidget(
       Box(
-        style: StyleMix(
+        style: Style(
           paddingAttr,
           marginAttr,
           alignmentAttr,

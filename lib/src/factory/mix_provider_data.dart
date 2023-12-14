@@ -28,7 +28,7 @@ class MixData with Comparable {
   })  : _attributes = attributes,
         _tokenResolver = resolver;
 
-  factory MixData.create(BuildContext context, StyleMix style) {
+  factory MixData.create(BuildContext context, Style style) {
     final styleMix = applyContextToVisualAttributes(context, style);
 
     final resolver = MixTokenResolver(context);
@@ -89,9 +89,9 @@ class MixData with Comparable {
 @visibleForTesting
 List<StyleAttribute> applyContextToVisualAttributes(
   BuildContext context,
-  StyleMix mix,
+  Style mix,
 ) {
-  StyleMix style = StyleMix.create(mix.styles.values);
+  Style style = Style.create(mix.styles.values);
 
   final contextVariants = mix.variants.whereType<ContextVariantAttribute>();
   final multiVariants = mix.variants.whereType<MultiVariantAttribute>();
@@ -133,9 +133,9 @@ List<StyleAttribute> applyContextToVisualAttributes(
   return applyContextToVisualAttributes(context, style);
 }
 
-StyleMix _applyVariants<T extends WhenVariant>(
+Style _applyVariants<T extends WhenVariant>(
   BuildContext context,
-  StyleMix style,
+  Style style,
   T variant,
 ) {
   return variant.when(context) ? style.merge(variant.value) : style;

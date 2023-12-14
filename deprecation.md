@@ -24,11 +24,11 @@ Inheritance of Mix was turned on by default for Text and Icon widgets. However b
 ```dart
 
 final boxStyleMix = StyleMix(backgroundColor(Colors.red));
-final textStyleMix = StyleMix(textStyle(color: Colors.white));
+final textStyleMix = StyleMix(text.style(color: Colors.white));
 
 return Box(
     style: boxStyleMix,
-    child: TextMix('Content', style: textStyleMix,),
+    child: StyledText('Content', style: textStyleMix,),
 );
 
 ```

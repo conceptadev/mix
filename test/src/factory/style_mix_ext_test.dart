@@ -8,7 +8,7 @@ void main() {
   final keyThree = UniqueKey();
   testWidgets('StyleMix.container matches StyledContainer(style:StyleMix)',
       (tester) async {
-    final style = StyleMix(
+    final style = Style(
       box.decoration(
         border: Border.all(
           color: Colors.red,
@@ -28,7 +28,7 @@ void main() {
             ),
             Box(
               key: keyThree,
-              style: const StyleMix.empty(),
+              style: const Style.empty(),
               child: const SizedBox(),
             ),
           ],
@@ -47,7 +47,7 @@ void main() {
 
   testWidgets('StyleMix.box matches StyledContainer(style:StyleMix)',
       (tester) async {
-    final style = StyleMix(
+    final style = Style(
       box.decoration(
         border: Border.all(color: Colors.red),
       ),
@@ -65,7 +65,7 @@ void main() {
             ),
             Box(
               key: keyThree,
-              style: const StyleMix.empty(),
+              style: const Style.empty(),
               child: const SizedBox(),
             ),
           ],
@@ -83,8 +83,7 @@ void main() {
   });
 
   testWidgets('StyleMix.hbox matches HBox(style:StyleMix)', (tester) async {
-    final style =
-        StyleMix(box.decoration(border: Border.all(color: Colors.red)));
+    final style = Style(box.decoration(border: Border.all(color: Colors.red)));
 
     await tester.pumpWidget(
       MaterialApp(
@@ -98,7 +97,7 @@ void main() {
             ),
             HBox(
               key: keyThree,
-              style: const StyleMix.empty(),
+              style: const Style.empty(),
               children: const [SizedBox()],
             ),
           ],
@@ -116,7 +115,7 @@ void main() {
   });
 
   testWidgets('StyleMix.row matches StyledRow(style:StyleMix)', (tester) async {
-    final style = StyleMix(
+    final style = Style(
       box.decoration(
         border: Border.all(color: Colors.red),
       ),
@@ -134,7 +133,7 @@ void main() {
             ),
             StyledRow(
               key: keyThree,
-              style: const StyleMix.empty(),
+              style: const Style.empty(),
               children: const [SizedBox()],
             ),
           ],
@@ -153,7 +152,7 @@ void main() {
 
   testWidgets('StyleMix.text matches StyledText(style:StyleMix)',
       (tester) async {
-    final style = StyleMix(text.style(color: Colors.red));
+    final style = Style(text.style(color: Colors.red));
 
     await tester.pumpWidget(
       MaterialApp(
@@ -168,7 +167,7 @@ void main() {
             StyledText(
               'text',
               key: keyThree,
-              style: const StyleMix.empty(),
+              style: const Style.empty(),
             ),
           ],
         ),
@@ -185,8 +184,7 @@ void main() {
   });
 
   testWidgets('StyleMix.vbox matches VBox(style:StyleMix)', (tester) async {
-    final style =
-        StyleMix(box.decoration(border: Border.all(color: Colors.red)));
+    final style = Style(box.decoration(border: Border.all(color: Colors.red)));
 
     await tester.pumpWidget(
       MaterialApp(
@@ -200,7 +198,7 @@ void main() {
             ),
             VBox(
               key: keyThree,
-              style: const StyleMix.empty(),
+              style: const Style.empty(),
               children: const [SizedBox()],
             ),
           ],
@@ -219,7 +217,7 @@ void main() {
 
   testWidgets('StyleMix.column matches StyledColumn(style:StyleMix)',
       (tester) async {
-    final style = StyleMix(
+    final style = Style(
       box.decoration(
         border: Border.all(
           color: Colors.red,
@@ -239,7 +237,7 @@ void main() {
             ),
             StyledColumn(
               key: keyThree,
-              style: const StyleMix.empty(),
+              style: const Style.empty(),
               children: const [SizedBox()],
             ),
           ],
@@ -258,7 +256,7 @@ void main() {
 
   testWidgets('StyleMix.icon matches StyledIcon(style:StyleMix)',
       (tester) async {
-    final style = StyleMix(icon(color: Colors.black));
+    final style = Style(icon(color: Colors.black));
 
     await tester.pumpWidget(
       MaterialApp(
@@ -273,7 +271,7 @@ void main() {
             StyledIcon(
               Icons.ac_unit,
               key: keyThree,
-              style: const StyleMix.empty(),
+              style: const Style.empty(),
             ),
           ],
         ),

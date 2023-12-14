@@ -52,7 +52,7 @@ void main() {
 
       final context = tester.element(find.byType(Container));
 
-      final mixData = MixData.create(context, const StyleMix.empty());
+      final mixData = MixData.create(context, const Style.empty());
 
       expect(mixData.tokens.colorToken(redcolorToken), Colors.redAccent);
       expect(mixData.tokens.colorToken(greencolorToken), Colors.green);

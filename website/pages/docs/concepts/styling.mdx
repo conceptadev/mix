@@ -7,11 +7,11 @@ import { Callout } from "nextra-theme-docs";
 
 # Styling
 
-Adopting the functional style syntax in Mix is a key technique for defining styles in Flutter. This method not only fosters a more intuitive and expressive way to build UIs, but it also enhances the clarity and maintainability of the code.
+Adopting the functional style syntax is a key technique for defining styles in Mix. This method not only fosters a more intuitive and expressive way to build UIs, but it also enhances the clarity and maintainability of the code.
 
 Mix's functional approach allows for direct and readable style declarations, ensuring a smoother and more consistent styling process. Moreover, this approach excels in facilitating style overrides, providing a streamlined and flexible way to customize and adapt styles across different widgets.
 
-By leveraging Mix's functional syntax, developers can craft more elegant and efficient Flutter interfaces, ensuring a cohesive and dynamic user experience.
+By leveraging Mix's functional syntax, developers can craft more elegant widget efficiently, ensuring a cohesive and dynamic user experience.
 
 ## StyleMix
 
@@ -25,8 +25,9 @@ The `StyleMix` class in Mix is a foundational utility for managing and applying 
 
 <Callout emoji="⚠️">
   The order of the attributes is important, and keep in mind when composing and
-  overriding them. Styling attributes are merged from left to right, so the
-  attributes on the right will override the attributes on the left.
+  overriding them. Styling attributes are merged from left (top) to right
+  (bottom) so the attributes on the right will override the attributes on the
+  left.
 </Callout>
 
 ### Creating a Style
@@ -104,7 +105,7 @@ final newStyle = StyleMix(
 );
 ```
 
-**Benefits of combining styles**
+**Benefits of composing styles**
 
 - Modularity: Allows breaking down complex styles into manageable chunks, which can be combined or merged as needed.
 - Reusability: Encourages the reuse of common style elements, reducing redundancy and maintaining consistency across the UI.
@@ -116,12 +117,12 @@ final newStyle = StyleMix(
 Uses a _Mix_ based on a condition
 
 ```dart
-final errorMix = StyleMix(backgroundColor(Colors.red));
-final successMix = StyleMix(backgroundColor(Colors.green));
+final errorStyle = StyleMix(backgroundColor.red());
+final successStyle = StyleMix(backgroundColor.green());
 
 final mix = StyleMix.chooser(
   condition: hasError,
-  ifTrue: errorMix,
-  ifFalse: succesMix,
+  ifTrue: errorStyle,
+  ifFalse: successStyle,
 );
 ```

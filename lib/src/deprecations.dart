@@ -5,60 +5,60 @@ import '../mix.dart';
 const kShortAliasDeprecation =
     'Short aliases will be deprecated, you can create your own. Example: final p = padding;';
 
-extension DeprecatedMixExtension<T extends Attribute> on StyleMix {
+extension DeprecatedMixExtension<T extends Attribute> on Style {
   /// Adds an Attribute to a Mix.
   @Deprecated('Simplifying the mix API to avoid confusion. Use apply instead')
-  SpreadFunctionParams<T, StyleMix> get mix {
+  SpreadFunctionParams<T, Style> get mix {
     return SpreadFunctionParams(addAttributes);
   }
 
   @Deprecated('Use selectVariants now')
-  StyleMix withVariants(List<Variant> variants) {
+  Style withVariants(List<Variant> variants) {
     return withManyVariants(variants);
   }
 
   @Deprecated(
     'Use merge() or mergeMany() now. You might have to turn into a Mix first. firstMixFactory.merge(secondMix)',
   )
-  StyleMix addAttributes(Iterable<Attribute> attributes) {
-    return merge(StyleMix.create(attributes));
+  Style addAttributes(Iterable<Attribute> attributes) {
+    return merge(Style.create(attributes));
   }
 
   @Deprecated('Use selectVariants now')
-  StyleMix withManyVariants(Iterable<Variant> variants) {
+  Style withManyVariants(Iterable<Variant> variants) {
     return selectVariantList(variants);
   }
 
   @Deprecated('Use merge() or mergeMany() instead')
-  SpreadFunctionParams<StyleMix, StyleMix> get apply =>
-      const SpreadFunctionParams(StyleMix.combine);
+  SpreadFunctionParams<Style, Style> get apply =>
+      const SpreadFunctionParams(Style.combine);
 
   @Deprecated('Use selectVariant now')
-  StyleMix withVariant(Variant variant) {
+  Style withVariant(Variant variant) {
     return selectVariant(variant);
   }
 
   @Deprecated('Use combine now')
-  StyleMix combineAll(List<StyleMix> mixes) {
-    return StyleMix.combine(mixes);
+  Style combineAll(List<Style> mixes) {
+    return Style.combine(mixes);
   }
 
   @Deprecated('Use selectVariant now')
-  StyleMix withMaybeVariant(Variant? variant) {
+  Style withMaybeVariant(Variant? variant) {
     if (variant == null) return this;
 
     return withVariant(variant);
   }
 
   @Deprecated('Use mergeNullable instead')
-  StyleMix maybeApply(StyleMix? mix) {
+  Style maybeApply(Style? mix) {
     if (mix == null) return this;
 
     return apply(mix);
   }
 
   @Deprecated('Use applyNullable instead')
-  StyleMix applyMaybe(StyleMix? mix) {
+  Style applyMaybe(Style? mix) {
     return maybeApply(mix);
   }
 }

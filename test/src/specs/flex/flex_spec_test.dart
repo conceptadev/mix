@@ -11,7 +11,7 @@ void main() {
     test('resolve', () {
       final mix = MixData.create(
         MockBuildContext(),
-        StyleMix(
+        Style(
           const FlexSpecAttribute(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,

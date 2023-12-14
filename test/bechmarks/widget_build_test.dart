@@ -27,7 +27,7 @@ class StyledContainerExample extends StatelessWidget {
     final colorAttribute = box.color(Colors.red);
 
     return Box(
-      style: StyleMix(
+      style: Style(
         paddingAttr,
         marginAttr,
         alignmentAttr,
@@ -110,7 +110,7 @@ void main() {
     const iterations = 10000;
     final stopwatch = Stopwatch()..start();
     for (int i = 0; i < iterations; i++) {
-      StyleMix.create([
+      Style.create([
         box.padding(10),
         box.margin(15),
         box.alignment.center(),
@@ -137,7 +137,7 @@ void main() {
     for (int i = 0; i < iterations; i++) {
       MixData.create(
         MockBuildContext(),
-        StyleMix(
+        Style(
           box.padding(10),
           box.margin(15),
           box.alignment.center(),
@@ -180,8 +180,8 @@ class StyleWidgetExpensiveAttributge extends StatelessWidget {
 
     final colorAttribute = box.color(Colors.red);
 
-    StyleMix buildStyle() {
-      return StyleMix(
+    Style buildStyle() {
+      return Style(
         paddingAttr,
         marginAttr,
         alignmentAttr,
@@ -192,7 +192,7 @@ class StyleWidgetExpensiveAttributge extends StatelessWidget {
       );
     }
 
-    StyleMix mergedStyle = buildStyle();
+    Style mergedStyle = buildStyle();
 
     // merge 100 times buildStyles()
     for (int i = 0; i < 10000; i++) {

@@ -31,7 +31,7 @@ void main() {
   // VariantAttribute
   group('VariantAttribute', () {
     const variant = Variant('custom_variant');
-    final style = StyleMix(const MockIntScalarAttribute(8));
+    final style = Style(const MockIntScalarAttribute(8));
     test('Constructor assigns correct properties', () {
       final variantAttribute = VariantAttribute(variant, style);
 
@@ -50,7 +50,7 @@ void main() {
     test('merge() returns correct instance', () {
       final variantAttribute = VariantAttribute(variant, style);
 
-      final otherStyle = StyleMix(const MockIntScalarAttribute(10));
+      final otherStyle = Style(const MockIntScalarAttribute(10));
       final otherAttribute = VariantAttribute(variant, otherStyle);
 
       final result = variantAttribute.merge(otherAttribute);
@@ -65,7 +65,7 @@ void main() {
   group('ContextVariantAttribute', () {
     final variant = ContextVariant('custom_variant', when: (_) => true);
 
-    final style = StyleMix(const MockIntScalarAttribute(8));
+    final style = Style(const MockIntScalarAttribute(8));
     test('Constructor assigns correct properties', () {
       final variantAttribute = ContextVariantAttribute(variant, style);
 
@@ -84,7 +84,7 @@ void main() {
     test('merge() returns correct instance', () {
       final variantAttribute = ContextVariantAttribute(variant, style);
 
-      final otherStyle = StyleMix(const MockIntScalarAttribute(10));
+      final otherStyle = Style(const MockIntScalarAttribute(10));
       final otherAttribute = ContextVariantAttribute(variant, otherStyle);
 
       final result = variantAttribute.merge(otherAttribute);

@@ -22,7 +22,7 @@ void main() {
       final onPressAttr = onPress(attribute1, attribute2, attribute3);
 
       expect(onPressAttr.when(context), true);
-      expect(onPressAttr.value, StyleMix(attribute1, attribute2, attribute3));
+      expect(onPressAttr.value, Style(attribute1, attribute2, attribute3));
       expect(onPressAttr.variant.name, 'on-pressed');
       expect(onPressAttr.variant.when(context), true);
     });
@@ -41,7 +41,7 @@ void main() {
       expect(onLongPressAttr.when(context), true);
       expect(
         onLongPressAttr.value,
-        StyleMix(attribute1, attribute2, attribute3),
+        Style(attribute1, attribute2, attribute3),
       );
       expect(onLongPressAttr.variant.name, 'on-long-pressed');
       expect(onLongPressAttr.variant.when(context), true);
@@ -59,7 +59,7 @@ void main() {
       final onHoverAttr = onHover(attribute1, attribute2, attribute3);
 
       expect(onHoverAttr.when(context), true);
-      expect(onHoverAttr.value, StyleMix(attribute1, attribute2, attribute3));
+      expect(onHoverAttr.value, Style(attribute1, attribute2, attribute3));
       expect(onHoverAttr.variant.name, 'on-hover');
       expect(onHoverAttr.variant.when(context), true);
     });
@@ -78,7 +78,7 @@ void main() {
       expect(onDisabledAttr.when(context), true);
       expect(
         onDisabledAttr.value,
-        StyleMix(attribute1, attribute2, attribute3),
+        Style(attribute1, attribute2, attribute3),
       );
       expect(onDisabledAttr.variant.name, 'on-disabled');
       expect(onDisabledAttr.variant.when(context), true);
@@ -99,7 +99,7 @@ void main() {
       expect(onEnabledAttr.when(context), true);
       expect(
         onEnabledAttr.value,
-        StyleMix(attribute1, attribute2, attribute3),
+        Style(attribute1, attribute2, attribute3),
       );
       expect(onEnabledAttr.variant.name, 'on-enabled');
       expect(onEnabledAttr.variant.when(context), true);
@@ -118,7 +118,7 @@ void main() {
       final onFocusAttr = onFocus(attribute1, attribute2, attribute3);
 
       expect(onFocusAttr.when(context), true);
-      expect(onFocusAttr.value, StyleMix(attribute1, attribute2, attribute3));
+      expect(onFocusAttr.value, Style(attribute1, attribute2, attribute3));
       expect(onFocusAttr.variant.name, 'on-focus');
       expect(onFocusAttr.variant.when(context), true);
     });

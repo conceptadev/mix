@@ -11,7 +11,7 @@ void main() {
     test('resolve', () {
       final mix = MixData.create(
         MockBuildContext(),
-        StyleMix(
+        Style(
           // const AlignmentGeometryAttribute(Alignment.center),
           // const PaddingAttribute(SpacingDto.only(top: 8, bottom: 16)),
           // const MarginAttribute(SpacingDto.only(top: 10.0, bottom: 12.0)),

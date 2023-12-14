@@ -32,7 +32,7 @@ void main() {
         clipBehavior: Clip.antiAlias,
         gap: 10.0,
       );
-      final mixData = MixData.create(MockBuildContext(), StyleMix(attribute));
+      final mixData = MixData.create(MockBuildContext(), Style(attribute));
       final resolvedSpec = attribute.resolve(mixData);
 
       expect(resolvedSpec.crossAxisAlignment, CrossAxisAlignment.start);

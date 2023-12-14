@@ -9,7 +9,7 @@ class VariantsExample extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final baseStyle = StyleMix(
+    final baseStyle = Style(
       box.height(300),
       box.width(300),
       box.border.radius(10),
@@ -18,7 +18,7 @@ class VariantsExample extends HookWidget {
       box.alignment.center(),
     );
 
-    final style = StyleMix(
+    final style = Style(
       box.color($colors.primary()),
       text.style(color: $colors.onPrimary()),
       onHover(
@@ -27,7 +27,7 @@ class VariantsExample extends HookWidget {
       ),
     ).merge(baseStyle);
 
-    final onDarkStyle = StyleMix(
+    final onDarkStyle = Style(
       box.color($colors.primary()),
       text.style(color: $colors.onPrimary()),
       onDark(

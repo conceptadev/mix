@@ -3,7 +3,7 @@ import 'package:mix/mix.dart';
 
 import '../styles.dart';
 
-StyleMix get button => StyleMix(
+Style get button => Style(
       text.style.of($textStyles.bodyMedium),
       box.padding.top(10),
       text.style.bold(),
@@ -36,7 +36,7 @@ class TypographyExample extends StatelessWidget {
           StyledText(
             "This is a StyledText with a custom textStyle!",
             style: headingMix.merge(
-              StyleMix(
+              Style(
                 text.style(
                   color: $colors.surface(),
                   fontWeight: FontWeight.bold,

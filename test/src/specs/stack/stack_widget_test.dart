@@ -6,7 +6,7 @@ import '../../../helpers/testing_utils.dart';
 
 void main() {
   testWidgets('Stack', (tester) async {
-    final style = StyleMix(
+    final style = Style(
       stack.fit.expand(),
       stack.alignment.topCenter(),
       stack.clipBehavior.antiAlias(),
@@ -41,7 +41,7 @@ void main() {
   });
 
   testWidgets('ZBox', (tester) async {
-    final style = StyleMix(
+    final style = Style(
       stack.fit.expand(),
       stack.alignment.topCenter(),
       stack.textDirection.ltr(),

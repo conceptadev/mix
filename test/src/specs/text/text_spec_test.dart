@@ -9,7 +9,7 @@ void main() {
     test('resolve', () {
       final mix = MixData.create(
         MockBuildContext(),
-        StyleMix(
+        Style(
           TextSpecAttribute(
             overflow: TextOverflow.ellipsis,
             textDirection: TextDirection.ltr,

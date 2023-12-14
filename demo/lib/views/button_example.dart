@@ -21,7 +21,7 @@ class ButtonSizeVariants {
   static final large = ButtonSizeVariant(SizeVariantEnum.large);
 }
 
-StyleMix get _baseStyle => StyleMix(
+Style get _baseStyle => Style(
       box.border.radius(4),
       onPress(
         scale(0.95),
@@ -75,7 +75,7 @@ abstract class Button extends StatelessWidget {
 
   final String text;
   final ButtonSizeVariant? size;
-  final StyleMix? style;
+  final Style? style;
   final VoidCallback? onPressed;
   final VoidCallback? onLongPressed;
   final Widget? leading;
@@ -102,7 +102,7 @@ abstract class Button extends StatelessWidget {
     return StyledText(
       text,
       inherit: true,
-      style: StyleMix(),
+      style: Style(),
     );
   }
 
@@ -139,7 +139,7 @@ abstract class Button extends StatelessWidget {
   }
 }
 
-StyleMix get _style => StyleMix(
+Style get _style => Style(
       text.style(
         color: const Color(0xFFFF004C),
       ),

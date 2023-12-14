@@ -11,7 +11,7 @@ void main() {
     test('resolve', () {
       final mix = MixData.create(
         MockBuildContext(),
-        StyleMix(
+        Style(
           IconSpecAttribute(color: Colors.red.toDto(), size: 20.0),
         ),
       );
