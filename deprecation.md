@@ -3,7 +3,7 @@
 
 ## Composability
 
-To compose mixes we used `Mix()`, however this is confusing when dealing with resolved Mixes from context, `Mix` also is not the resolved mix and was not clear when dealing with mix Builder, and resolved mix data, therefore we have renamed the internal to `MixFactory` which is a better definition of what is doing. However we have created an alias for `StyleMix`, and have deprecated `Mix`. The recommendation, will be to use `StyleMix` and this will the preferred way on the documentations, and internal references.
+To compose mixes we used `Mix()`, however this is confusing when dealing with resolved Mixes from context, `Mix` also is not the resolved mix and was not clear when dealing with mix Builder, and resolved mix data, therefore we have renamed the internal to `MixFactory` which is a better definition of what is doing. However we have created an alias for `Style`, and have deprecated `Mix`. The recommendation, will be to use `Style` and this will the preferred way on the documentations, and internal references.
 
 Keep in mind that you can create type aliases, in order to  best fit your teams workflows and definitions.
 
@@ -23,12 +23,12 @@ Inheritance of Mix was turned on by default for Text and Icon widgets. However b
 
 ```dart
 
-final boxStyleMix = StyleMix(backgroundColor(Colors.red));
-final textStyleMix = StyleMix(textStyle(color: Colors.white));
+final boxStyle = Style(backgroundColor(Colors.red));
+final textStyle = Style(text.style(color: Colors.white));
 
 return Box(
-    style: boxStyleMix,
-    child: TextMix('Content', style: textStyleMix,),
+    style: boxStyle,
+    child: StyledText('Content', style: textStyle,),
 );
 
 ```

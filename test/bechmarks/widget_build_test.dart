@@ -26,8 +26,8 @@ class StyledContainerExample extends StatelessWidget {
 
     final colorAttribute = box.color(Colors.red);
 
-    return StyledContainer(
-      style: StyleMix(
+    return Box(
+      style: Style(
         paddingAttr,
         marginAttr,
         alignmentAttr,
@@ -91,7 +91,7 @@ void main() {
     await buildWidget(ContainerExample());
     await buildWidget(StyledContainerExample());
 
-    final styledContainerTime = await buildWidget(StyledContainer());
+    final styledContainerTime = await buildWidget(Box());
 
     final containerTime = await buildWidget(ContainerExample());
 
@@ -105,12 +105,12 @@ void main() {
         reason: 'StyledContainer is too slow');
   });
 
-  // test perfromance for StyleMix.create
-  test('StyleMix.create', () {
+  // test perfromance for Style.create
+  test('Style.create', () {
     const iterations = 10000;
     final stopwatch = Stopwatch()..start();
     for (int i = 0; i < iterations; i++) {
-      StyleMix.create([
+      Style.create([
         box.padding(10),
         box.margin(15),
         box.alignment.center(),
@@ -127,7 +127,7 @@ void main() {
     stopwatch.stop();
 
     final elapsedTime = stopwatch.elapsedMilliseconds / iterations;
-    print('StyleMix.create: $elapsedTime ms');
+    print('Style.create: $elapsedTime ms');
   });
 
   // test performance for MixData.create
@@ -137,7 +137,7 @@ void main() {
     for (int i = 0; i < iterations; i++) {
       MixData.create(
         MockBuildContext(),
-        StyleMix(
+        Style(
           box.padding(10),
           box.margin(15),
           box.alignment.center(),
@@ -180,8 +180,8 @@ class StyleWidgetExpensiveAttributge extends StatelessWidget {
 
     final colorAttribute = box.color(Colors.red);
 
-    StyleMix buildStyle() {
-      return StyleMix(
+    Style buildStyle() {
+      return Style(
         paddingAttr,
         marginAttr,
         alignmentAttr,
@@ -192,14 +192,14 @@ class StyleWidgetExpensiveAttributge extends StatelessWidget {
       );
     }
 
-    StyleMix mergedStyle = buildStyle();
+    Style mergedStyle = buildStyle();
 
     // merge 100 times buildStyles()
     for (int i = 0; i < 10000; i++) {
       mergedStyle = mergedStyle.merge(buildStyle());
     }
 
-    return StyledContainer(
+    return Box(
       style: mergedStyle,
       child: const SizedBox(
         width: 100,

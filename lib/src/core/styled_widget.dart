@@ -7,16 +7,16 @@ import '../factory/style_mix.dart';
 abstract class StyledWidget extends StatelessWidget {
   /// Constructor.
   const StyledWidget({
-    required StyleMix? style,
+    required Style? style,
     super.key,
 
     /// Inherit beavhior is off by default and allows to inherit the style from the parent Context.
     /// Only WidgetAttributes are inherited. Decorators will not be inherited as
     /// decorators should have already been applied to the parent Widget.
     this.inherit = false,
-  }) : style = style ?? const StyleMix.empty();
+  }) : style = style ?? const Style.empty();
 
-  final StyleMix style;
+  final Style style;
 
   final bool inherit;
 
@@ -39,7 +39,7 @@ abstract class AnimatedStyledWidget extends StyledWidget {
     super.key,
     super.inherit,
     super.style,
-    required this.curve,
+    this.curve = Curves.linear,
     required this.duration,
   });
 

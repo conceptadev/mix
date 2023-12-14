@@ -3,7 +3,7 @@ import 'package:mix/mix.dart';
 
 import '../styles.dart';
 
-StyleMix get mix => StyleMix(
+Style get mix => Style(
       box.height(300),
       box.width(300),
       box.border.radius(10),
@@ -32,16 +32,16 @@ class LayoutExample extends StatelessWidget {
           StyledStack(
             style: mix,
             children: [
-              StyledContainer(
+              Box(
                 style: mix,
                 child: StyledText(
                   "This is a StyledContainer inside a StyledStack!",
                   style: mix,
                 ),
               ),
-              StyledContainer(
+              Box(
                 style: mix.merge(
-                  StyleMix(
+                  Style(
                     box.width(200),
                     box.height(100),
                     box.color(Colors.green),

@@ -19,15 +19,9 @@ void main() {
       );
 
       final dto = StrutStyleDto.from(value);
-      final attribute = StrutStyleAttribute(dto);
-
-      expect(value.toAttribute(), isA<StrutStyleAttribute>());
-      expect(value.toAttribute(), attribute);
-
-      expect(attribute.value, dto);
 
       // Resolves correctly
-      expect(attribute.resolve(EmptyMixData), value);
+      expect(dto.resolve(EmptyMixData), value);
     });
 
     test('ShapeDecoration', () {
@@ -152,17 +146,9 @@ void main() {
       );
 
       final dto = TextStyleDto.as(value);
-      final attribute = TextStyleAttribute(dto);
 
-      expect(value.toAttribute(), isA<TextStyleAttribute>());
-      expect(value.toAttribute(), attribute);
       expect(value.toDto(), isA<TextStyleDto>());
       expect(value.toDto(), dto);
-
-      expect(attribute.value, dto);
-
-      // Resolves correctly
-      expect(attribute.resolve(EmptyMixData), value);
     });
   });
 }

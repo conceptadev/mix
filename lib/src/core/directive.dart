@@ -1,56 +1,37 @@
 import 'package:flutter/material.dart';
 
-import '../helpers/compare_mixin.dart';
+import 'attribute.dart';
 
 typedef Modifier<T> = T Function(T value);
 
-/// The `Directive` abstract class provides a mechanism to modify a value of type `T`.
-/// It is typically used in the context of an `Attribute`.
-abstract class Directive<T> with Comparable {
-  final Modifier<T> _modifier;
-  const Directive(this._modifier);
+/// The `Directive` abstract class provides the ability to modify or apply
+/// different behaviors to widgets and attributes.
+abstract class Directive extends StyleAttribute {
+  const Directive();
+}
 
-  // An abstract method modify that takes a covariant parameter of type T
-  // This method is used to modify the value of type T
-  // The implementation of this method will be provided by the subclasses of Directive
-  T call(T value) => _modifier(value);
+class TextDataDirective extends Directive with Mergeable<TextDataDirective> {
+  final List<Modifier<String>> _modifiers;
+  const TextDataDirective(this._modifiers);
+
+  @visibleForTesting
+  int get length => _modifiers.length;
+
+  String apply(String value) {
+    return _modifiers.fold(
+      value,
+      (previousValue, modifier) => modifier(previousValue),
+    );
+  }
 
   @override
-  get props => [_modifier];
+  TextDataDirective merge(TextDataDirective other) {
+    return TextDataDirective([..._modifiers, ...other._modifiers]);
+  }
+
+  @override
+  Object get type => TextDataDirective;
+
+  @override
+  get props => [_modifiers];
 }
-
-// abstract class DirectiveAttribute<T extends Directive> with Comparable {
-//   final List<T> _directives;
-//   const DirectiveAttribute(this._directives);
-
-//   List<T> get value => _directives;
-
-//   @override
-//   get props => [_directives];
-// }
-
-class TextDirective extends Directive<String> {
-  const TextDirective(super.modifier);
-}
-
-class ColorDirective extends Directive<Color> {
-  const ColorDirective(super.modifier);
-}
-
-// class TextDirectiveAttribute extends DirectiveAttribute<TextDirective> {
-//   const TextDirectiveAttribute.raw(super.directives);
-
-//   factory TextDirectiveAttribute(TextDirective directive) {
-//     return TextDirectiveAttribute.raw([directive]);
-//   }
-
-//   String modify(String text) =>
-//       value.fold(text, (value, directive) => directive(value));
-
-//   @override
-//   TextDirectiveAttribute merge(covariant TextDirectiveAttribute? other) {
-//     return other == null
-//         ? this
-//         : TextDirectiveAttribute.raw([..._directives, ...other._directives]);
-//   }
-// }

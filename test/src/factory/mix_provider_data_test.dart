@@ -8,16 +8,16 @@ import 'package:mix/src/variants/context_variant.dart';
 import '../../helpers/testing_utils.dart';
 
 void main() {
-  final mockVariant = ContextVariant('mock', when: (context) => true);
+  final autoApplyVariant = ContextVariant('mock', when: (context) => true);
   test('MixData create', () {
     final mixData = MixData.create(
         MockBuildContext(),
-        StyleMix(
+        Style(
           const MockIntScalarAttribute(1),
           const MockStringScalarAttribute('test'),
           const MockDoubleScalarAttribute(3.0),
-          const MockDoubleDecoratorAttribute(0.5),
-          mockVariant(
+          const MockBooleanScalarAttribute(false),
+          autoApplyVariant(
             const MockDoubleScalarAttribute(2.0),
           ),
         ));
@@ -39,31 +39,28 @@ void main() {
     expect(mixData.attributeOf<MockDoubleScalarAttribute>(),
         const MockDoubleScalarAttribute(2.0));
 
-    expect(mixData.decoratorOfType<MockDoubleDecoratorAttribute>(),
-        isInstanceOf<Iterable<MockDoubleDecoratorAttribute>>());
-    expect(mixData.attributeOf<MockDoubleDecoratorAttribute>(),
-        const MockDoubleDecoratorAttribute(0.5));
+    expect(mixData.attributeOf<MockBooleanScalarAttribute>(),
+        const MockBooleanScalarAttribute(false));
   });
 
   test('MixData merge', () {
     final mixData = MixData.create(
         MockBuildContext(),
-        StyleMix(
+        Style(
           const MockIntScalarAttribute(1),
           const MockStringScalarAttribute('test'),
           const MockDoubleScalarAttribute(3.0),
-          const MockDoubleDecoratorAttribute(0.5),
-          mockVariant(
+          const MockBooleanScalarAttribute(true),
+          autoApplyVariant(
             const MockDoubleScalarAttribute(2.0),
           ),
         ));
 
     final mixData2 = MixData.create(
         MockBuildContext(),
-        StyleMix(
+        Style(
           const MockDoubleScalarAttribute(5.0),
-          const MockDoubleDecoratorAttribute(0.6),
-          mockVariant(
+          autoApplyVariant(
             const MockDoubleScalarAttribute(4.0),
           ),
         ));
@@ -78,8 +75,9 @@ void main() {
         isInstanceOf<MockStringScalarAttribute>());
     expect(mergedMixData.attributeOf<MockDoubleScalarAttribute>(),
         isInstanceOf<MockDoubleScalarAttribute>());
-    expect(mergedMixData.decoratorOfType<MockDoubleDecoratorAttribute>(),
-        isInstanceOf<Iterable<MockDoubleDecoratorAttribute>>());
+
+    expect(mergedMixData.attributeOf<MockBooleanScalarAttribute>(),
+        const MockBooleanScalarAttribute(true));
 
     expect(mergedMixData.attributeOf<MockIntScalarAttribute>(),
         const MockIntScalarAttribute(1));
@@ -87,7 +85,5 @@ void main() {
         const MockStringScalarAttribute('test'));
     expect(mergedMixData.attributeOf<MockDoubleScalarAttribute>(),
         const MockDoubleScalarAttribute(4.0));
-    expect(mergedMixData.decoratorOfType<MockDoubleDecoratorAttribute>().first,
-        const MockDoubleDecoratorAttribute(0.6));
   });
 }

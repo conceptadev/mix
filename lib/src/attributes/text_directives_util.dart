@@ -1,30 +1,24 @@
-import '../core/attribute.dart';
 import '../core/directive.dart';
 import '../helpers/string_ext.dart';
-import '../specs/text/text_attribute.dart';
-import 'scalars/scalar_util.dart';
 
-final capitalize = _textDirective(TextModifiers.capitalize);
-final uppercase = _textDirective(TextModifiers.uppercase);
-final lowercase = _textDirective(TextModifiers.lowercase);
-final titleCase = _textDirective(TextModifiers.titleCase);
-final sentenceCase = _textDirective(TextModifiers.sentenceCase);
+class TextDataDirectiveUtility {
+  const TextDataDirectiveUtility();
+  TextDataDirective _wrap(Modifier<String> modifier) =>
+      TextDataDirective([modifier]);
 
-TextSpecAttribute Function() _textDirective(Modifier<String> modifier) =>
-    () => TextSpecAttribute(directives: [TextDirective(modifier)]);
+  TextDataDirective capitalize() => _wrap(_capitalize);
+  TextDataDirective uppercase() => _wrap(_uppercase);
+  TextDataDirective lowercase() => _wrap(_lowercase);
+  TextDataDirective titleCase() => _wrap(_titleCase);
+  TextDataDirective sentenceCase() => _wrap(_sentenceCase);
 
-class TextDirectiveUtility<T extends StyleAttribute>
-    extends ScalarUtility<T, TextDirective> {
-  const TextDirectiveUtility(super.builder);
+  TextDataDirective call(Modifier<String> modifier) {
+    return TextDataDirective([modifier]);
+  }
 }
 
-//  This is mostly used for testing, and easy reference of the modifier itself.
-class TextModifiers {
-  const TextModifiers._();
-
-  static String capitalize(String value) => value.capitalize;
-  static String uppercase(String value) => value.toUpperCase();
-  static String lowercase(String value) => value.toLowerCase();
-  static String titleCase(String value) => value.titleCase;
-  static String sentenceCase(String value) => value.sentenceCase;
-}
+String _capitalize(String value) => value.capitalize;
+String _uppercase(String value) => value.toUpperCase();
+String _lowercase(String value) => value.toLowerCase();
+String _titleCase(String value) => value.titleCase;
+String _sentenceCase(String value) => value.sentenceCase;

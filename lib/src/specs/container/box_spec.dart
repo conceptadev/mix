@@ -3,8 +3,11 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 import '../../core/attribute.dart';
+import '../../factory/mix_provider_data.dart';
+import '../../helpers/lerp_helpers.dart';
+import 'box_attribute.dart';
 
-class ContainerSpec extends Spec<ContainerSpec> {
+class BoxSpec extends Spec<BoxSpec> {
   final AlignmentGeometry? alignment;
   final EdgeInsetsGeometry? padding;
   final EdgeInsetsGeometry? margin;
@@ -12,9 +15,10 @@ class ContainerSpec extends Spec<ContainerSpec> {
   final Decoration? decoration;
   final Matrix4? transform;
   final Clip? clipBehavior;
-  final double? width, height;
+  final double? width;
+  final double? height;
 
-  const ContainerSpec({
+  const BoxSpec({
     required this.alignment,
     required this.padding,
     required this.margin,
@@ -26,7 +30,7 @@ class ContainerSpec extends Spec<ContainerSpec> {
     required this.height,
   });
 
-  const ContainerSpec.empty()
+  const BoxSpec.empty()
       : alignment = null,
         padding = null,
         margin = null,
@@ -37,8 +41,13 @@ class ContainerSpec extends Spec<ContainerSpec> {
         height = null,
         clipBehavior = null;
 
+  static BoxSpec of(MixData mix) {
+    return mix.attributeOf<BoxSpecAttribute>()?.resolve(mix) ??
+        const BoxSpec.empty();
+  }
+
   @override
-  ContainerSpec copyWith({
+  BoxSpec copyWith({
     AlignmentGeometry? alignment,
     EdgeInsetsGeometry? padding,
     EdgeInsetsGeometry? margin,
@@ -50,7 +59,7 @@ class ContainerSpec extends Spec<ContainerSpec> {
     Clip? clipBehavior,
     Color? color,
   }) {
-    return ContainerSpec(
+    return BoxSpec(
       alignment: alignment ?? this.alignment,
       padding: padding ?? this.padding,
       margin: margin ?? this.margin,
@@ -64,15 +73,15 @@ class ContainerSpec extends Spec<ContainerSpec> {
   }
 
   @override
-  ContainerSpec lerp(ContainerSpec other, double t) {
-    return ContainerSpec(
+  BoxSpec lerp(BoxSpec other, double t) {
+    return BoxSpec(
       alignment: AlignmentGeometry.lerp(alignment, other.alignment, t),
       padding: EdgeInsetsGeometry.lerp(padding, other.padding, t),
       margin: EdgeInsetsGeometry.lerp(margin, other.margin, t),
       constraints: BoxConstraints.lerp(constraints, other.constraints, t),
       decoration: Decoration.lerp(decoration, other.decoration, t),
       transform: Matrix4Tween(begin: transform, end: other.transform).lerp(t),
-      clipBehavior: t < 0.5 ? clipBehavior : other.clipBehavior,
+      clipBehavior: lerpSnap(clipBehavior, other.clipBehavior, t),
       width: lerpDouble(width, other.width, t),
       height: lerpDouble(height, other.height, t),
     );
@@ -90,4 +99,17 @@ class ContainerSpec extends Spec<ContainerSpec> {
         transform,
         clipBehavior,
       ];
+}
+
+class BoxSpecTween extends Tween<BoxSpec?> {
+  BoxSpecTween({super.begin, super.end});
+
+  @override
+  BoxSpec? lerp(double t) {
+    if (begin == null) return end;
+    if (end == null) return begin;
+
+    // ignore: avoid-non-null-assertion
+    return begin!.lerp(end!, t);
+  }
 }

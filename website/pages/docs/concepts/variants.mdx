@@ -18,12 +18,12 @@ Variants in Mix are a foundational concept for creating dynamic and modular styl
 Variants allow for the efficient organization of style attributes, facilitating the easy application and switching between different style sets. This approach provides a streamlined method for handling diverse styling requirements across different components, contributing to a more maintainable and consistent design system within your applications. By using Variants, developers can craft adaptable and cohesive UI components, enhancing both the functionality and aesthetic of their Flutter projects.
 
 ```dart highlight="10-13"
-final style = StyleMix(
+final style = Style(
   backgroundColor(MaterialTokens.colorScheme.primary),
-  textStyle(color: $onPrimary),
+  text.style(color: $onPrimary),
   onHover(
     backgroundColor(MaterialTokens.colorScheme.primary),
-    textStyle(color: $onPrimary),
+    text.style(color: $onPrimary),
   ),
 );
 
@@ -41,12 +41,12 @@ Widgets.
 To use a variant, call it on a _Mix_
 
 ```dart
-final style = StyleMix(
+final style = Style(
   onDark(
-    textStyle(color: Colors.white),
+    text.style(color: Colors.white),
   ),
   onLight(
-    textStyle(color: Colors.black),
+    text.style(color: Colors.black),
   ),
 );
 ```
@@ -58,7 +58,7 @@ The operators `|` and `&` can be used to add conditions to your mix:
 - `|`: whether one of the variants apply
 
 ```dart highlight="3-7"
-final style = StyleMix(
+final style = Style(
   padding(20),
   (onSmall | onMedium)( // Whether it's small OR medium
     width(300),
@@ -71,10 +71,10 @@ final style = StyleMix(
 - `&`: when all of the variants apply
 
 ```dart highlight="3-6"
-final mix = StyleMix(
+final mix = Style(
   padding(20.0),
   (onHover & onPress)( // When it's hovering AND pressing
-    textStyle(color: Colors.black),
+    text.style(color: Colors.black),
     bold(),
   ),
 );
@@ -84,7 +84,7 @@ The `onNot` operator can also be called to execute the variant content only when
 variant is not called. For example:
 
 ```dart highlight="2-4"
-final mix = StyleMix(
+final mix = Style(
   onNot(disabled)(
     scale(1.2),
   ),
@@ -150,7 +150,7 @@ For widgets such as Dialogs, Cards and Modals, it's good to have titles and cont
 - `paragraph()`: Applies attributes when the `TextMix` is marked as paragraph
 
 ```dart highlight="2-7"
-final mix = StyleMix(
+final mix = Style(
   title(
     titleCase(), // Makes the title uppercase
     font(
@@ -178,13 +178,13 @@ way.
 ```dart highlight="6-10"
 const outlined = Variant('outlined');
 
-final mix = StyleMix(
+final mix = Style(
   backgroundColor(Colors.black),
-  textStyle(color: Colors.white),
+  text.style(color: Colors.white),
   outlined(
     backgroundColor(Colors.transparent),
     borderColor(Colors.black),
-    textStyle(color: Colors.black),
+    text.style(color: Colors.black),
   ),
 );
 ```

@@ -24,10 +24,10 @@ typedef WhenContextFunction = bool Function(BuildContext context);
 ///   when: (BuildContext context) => Theme.of(context).brightness == Brightness.dark,
 /// )
 ///
-/// final style = StyleMix(
-///   textStyle(fontSize: 16),
+/// final style = Style(
+///   text.style(fontSize: 16),
 ///   onDark(
-///     textStyle(color: Colors.white),
+///     text.style(color: Colors.white),
 ///   ),
 /// );
 /// ```
@@ -78,7 +78,7 @@ class ContextVariant extends Variant {
     ].whereType<Attribute>();
 
     // Create a ContextVariantAttribute using the collected parameters.
-    return ContextVariantAttribute(this, StyleMix.create(params));
+    return ContextVariantAttribute(this, Style.create(params));
   }
 
   @override

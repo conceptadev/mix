@@ -6,11 +6,11 @@ import '../../../helpers/attribute_generator.dart';
 
 void main() {
   group(
-    'ContainerUtility',
+    'BoxUtility',
     () {
-      const containerUtility = ContainerUtility();
+      const boxUtility = BoxSpecUtility();
       test('call() returns correct instance', () {
-        final container = containerUtility(
+        final container = boxUtility(
           alignment: Alignment.center,
           clipBehavior: Clip.antiAlias,
           constraints: const BoxConstraints(
@@ -41,65 +41,55 @@ void main() {
         expect(container.width, 10);
       });
 
-      // alignment()
       test('alignment() returns correct instance', () {
-        final container = containerUtility.alignment(Alignment.center);
+        final container = boxUtility.alignment(Alignment.center);
 
         expect(container.alignment, Alignment.center);
       });
 
-      // clipBehavior()
       test('clipBehavior() returns correct instance', () {
-        final container = containerUtility.clipBehavior(Clip.antiAlias);
+        final container = boxUtility.clipBehavior(Clip.antiAlias);
 
         expect(container.clipBehavior, Clip.antiAlias);
       });
 
-      // color()
       test('color() returns correct instance', () {
-        final container = containerUtility.color(Colors.blue);
+        final container = boxUtility.color(Colors.blue);
 
         expect((container.decoration as BoxDecorationDto).color,
             const ColorDto(Colors.blue));
       });
 
-      // constraints()
       test('constraints() returns correct instance', () {
-        expect(container.constraints, isA<BoxConstraintsUtility>());
+        expect(box.constraints, isA<BoxConstraintsUtility>());
       });
 
-      // decoration()
-      test('decoration() returns correct instance', () {
-        expect(containerUtility.decoration, isA<DecorationUtility>());
+      test('shape() returns correct instance', () {
+        expect(boxUtility.shapeDecoration, isA<ShapeDecorationUtility>());
       });
 
-      // height()
       test('height() returns correct instance', () {
-        final container = containerUtility.height(10);
+        final container = boxUtility.height(10);
 
         expect(container.height, 10);
       });
 
-      // margin()
       test('margin() returns correct instance', () {
-        expect(containerUtility.margin, isA<SpacingUtility>());
+        expect(boxUtility.margin, isA<SpacingUtility>());
       });
 
-      // padding()
       test('padding() returns correct instance', () {
-        expect(containerUtility.padding, isA<SpacingUtility>());
+        expect(boxUtility.padding, isA<SpacingUtility>());
       });
 
-      // transform()
       test('transform() returns correct instance', () {
-        final container = containerUtility.transform(Matrix4.identity());
+        final container = boxUtility.transform(Matrix4.identity());
 
         expect(container.transform, Matrix4.identity());
       });
 
-      // width()
       test('width() returns correct instance', () {
-        final container = containerUtility.width(10);
+        final container = boxUtility.width(10);
 
         expect(container.width, 10);
       });

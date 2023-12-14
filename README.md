@@ -52,7 +52,7 @@ Provide simple API to compose design and layout attributes for widgets. That can
 ```dart
 import 'package:mix/mix.dart';
 
-final style = StyleMix(
+final style = Style(
   height(150),
   width(150),
 );

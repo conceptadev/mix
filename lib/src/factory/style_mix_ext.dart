@@ -2,20 +2,20 @@
 import 'package:flutter/material.dart';
 
 import '../core/attribute.dart';
-import '../specs/container/container_widget.dart';
+import '../specs/container/box_widget.dart';
 import '../specs/flex/flex_widget.dart';
 import '../specs/icon/icon_widget.dart';
 import '../specs/text/text_widget.dart';
 import 'style_mix.dart';
 
-extension StyleMixExt<T extends Attribute> on StyleMix {
-  StyledContainer container({
+extension StyleExt<T extends Attribute> on Style {
+  Box container({
     required Widget child,
     bool inherit = false,
     Key? key,
-    StyleMix? style,
+    Style? style,
   }) {
-    return StyledContainer(
+    return Box(
       style: merge(style),
       key: key,
       inherit: inherit,
@@ -23,12 +23,12 @@ extension StyleMixExt<T extends Attribute> on StyleMix {
     );
   }
 
-  StyledContainer box({
+  Box box({
     required Widget child,
     bool inherit = false,
     Key? key,
-    StyleMix? style,
-    @Deprecated('Use the style parameter instead') StyleMix? mix,
+    Style? style,
+    @Deprecated('Use the style parameter instead') Style? mix,
   }) {
     return container(
       inherit: inherit,
@@ -42,8 +42,8 @@ extension StyleMixExt<T extends Attribute> on StyleMix {
     required List<Widget> children,
     bool inherit = false,
     Key? key,
-    @Deprecated('Use the style parameter instead') StyleMix? mix,
-    StyleMix? style,
+    @Deprecated('Use the style parameter instead') Style? mix,
+    Style? style,
   }) {
     return HBox(
       style: merge(style ?? mix),
@@ -57,8 +57,8 @@ extension StyleMixExt<T extends Attribute> on StyleMix {
     required List<Widget> children,
     bool inherit = false,
     Key? key,
-    @Deprecated('Use the style parameter instead') StyleMix? mix,
-    StyleMix? style,
+    @Deprecated('Use the style parameter instead') Style? mix,
+    Style? style,
   }) {
     return StyledRow(
       style: merge(style ?? mix),
@@ -72,9 +72,9 @@ extension StyleMixExt<T extends Attribute> on StyleMix {
     String text, {
     bool inherit = false,
     Key? key,
-    @Deprecated('Use the style parameter instead') StyleMix? mix,
+    @Deprecated('Use the style parameter instead') Style? mix,
     String? semanticsLabel,
-    StyleMix? style,
+    Style? style,
   }) {
     return StyledText(
       text,
@@ -89,8 +89,8 @@ extension StyleMixExt<T extends Attribute> on StyleMix {
     required List<Widget> children,
     bool inherit = false,
     Key? key,
-    @Deprecated('Use the style parameter instead') StyleMix? mix,
-    StyleMix? style,
+    @Deprecated('Use the style parameter instead') Style? mix,
+    Style? style,
   }) {
     return VBox(
       style: merge(style ?? mix),
@@ -104,8 +104,8 @@ extension StyleMixExt<T extends Attribute> on StyleMix {
     required List<Widget> children,
     bool inherit = false,
     Key? key,
-    @Deprecated('Use the style parameter instead') StyleMix? mix,
-    StyleMix? style,
+    @Deprecated('Use the style parameter instead') Style? mix,
+    Style? style,
   }) {
     return StyledColumn(
       style: merge(style ?? mix),
@@ -119,8 +119,8 @@ extension StyleMixExt<T extends Attribute> on StyleMix {
     IconData icon, {
     bool inherit = false,
     Key? key,
-    @Deprecated('Use the style parameter instead') StyleMix? mix,
-    StyleMix? style,
+    @Deprecated('Use the style parameter instead') Style? mix,
+    Style? style,
   }) {
     return StyledIcon(
       icon,

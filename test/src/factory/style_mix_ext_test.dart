@@ -6,10 +6,10 @@ void main() {
   final keyOne = UniqueKey();
   final keyTwo = UniqueKey();
   final keyThree = UniqueKey();
-  testWidgets('StyleMix.container matches StyledContainer(style:StyleMix)',
+  testWidgets('Style.container matches StyledContainer(style:Style)',
       (tester) async {
-    final style = StyleMix(
-      box.decoration.box(
+    final style = Style(
+      box.decoration(
         border: Border.all(
           color: Colors.red,
         ),
@@ -21,14 +21,14 @@ void main() {
         home: Column(
           children: [
             style.container(child: const SizedBox(), key: keyOne),
-            StyledContainer(
+            Box(
               key: keyTwo,
               style: style,
               child: const SizedBox(),
             ),
-            StyledContainer(
+            Box(
               key: keyThree,
-              style: const StyleMix.empty(),
+              style: const Style.empty(),
               child: const SizedBox(),
             ),
           ],
@@ -36,19 +36,18 @@ void main() {
       ),
     );
 
-    final containerOne = tester.widget<StyledContainer>(find.byKey(keyOne));
-    final containerTwo = tester.widget<StyledContainer>(find.byKey(keyTwo));
-    final containerThree = tester.widget<StyledContainer>(find.byKey(keyThree));
+    final containerOne = tester.widget<Box>(find.byKey(keyOne));
+    final containerTwo = tester.widget<Box>(find.byKey(keyTwo));
+    final containerThree = tester.widget<Box>(find.byKey(keyThree));
 
     expect(containerOne.style, style);
     expect(containerTwo.style, style);
     expect(containerThree.style, isNot(style));
   });
 
-  testWidgets('StyleMix.box matches StyledContainer(style:StyleMix)',
-      (tester) async {
-    final style = StyleMix(
-      box.decoration.box(
+  testWidgets('Style.box matches StyledContainer(style:Style)', (tester) async {
+    final style = Style(
+      box.decoration(
         border: Border.all(color: Colors.red),
       ),
     );
@@ -58,14 +57,14 @@ void main() {
         home: Column(
           children: [
             style.box(child: const SizedBox(), key: keyOne),
-            StyledContainer(
+            Box(
               key: keyTwo,
               style: style,
               child: const SizedBox(),
             ),
-            StyledContainer(
+            Box(
               key: keyThree,
-              style: const StyleMix.empty(),
+              style: const Style.empty(),
               child: const SizedBox(),
             ),
           ],
@@ -73,18 +72,17 @@ void main() {
       ),
     );
 
-    final containerOne = tester.widget<StyledContainer>(find.byKey(keyOne));
-    final containerTwo = tester.widget<StyledContainer>(find.byKey(keyTwo));
-    final containerThree = tester.widget<StyledContainer>(find.byKey(keyThree));
+    final containerOne = tester.widget<Box>(find.byKey(keyOne));
+    final containerTwo = tester.widget<Box>(find.byKey(keyTwo));
+    final containerThree = tester.widget<Box>(find.byKey(keyThree));
 
     expect(containerOne.style, style, reason: 'containerOne.style');
     expect(containerTwo.style, style, reason: 'containerTwo.style');
     expect(containerThree.style, isNot(style), reason: 'containerThree.style');
   });
 
-  testWidgets('StyleMix.hbox matches HBox(style:StyleMix)', (tester) async {
-    final style =
-        StyleMix(box.decoration.box(border: Border.all(color: Colors.red)));
+  testWidgets('Style.hbox matches HBox(style:Style)', (tester) async {
+    final style = Style(box.decoration(border: Border.all(color: Colors.red)));
 
     await tester.pumpWidget(
       MaterialApp(
@@ -98,7 +96,7 @@ void main() {
             ),
             HBox(
               key: keyThree,
-              style: const StyleMix.empty(),
+              style: const Style.empty(),
               children: const [SizedBox()],
             ),
           ],
@@ -115,9 +113,9 @@ void main() {
     expect(containerThree.style, isNot(style));
   });
 
-  testWidgets('StyleMix.row matches StyledRow(style:StyleMix)', (tester) async {
-    final style = StyleMix(
-      box.decoration.box(
+  testWidgets('Style.row matches StyledRow(style:Style)', (tester) async {
+    final style = Style(
+      box.decoration(
         border: Border.all(color: Colors.red),
       ),
     );
@@ -134,7 +132,7 @@ void main() {
             ),
             StyledRow(
               key: keyThree,
-              style: const StyleMix.empty(),
+              style: const Style.empty(),
               children: const [SizedBox()],
             ),
           ],
@@ -151,9 +149,8 @@ void main() {
     expect(containerThree.style, isNot(style));
   });
 
-  testWidgets('StyleMix.text matches StyledText(style:StyleMix)',
-      (tester) async {
-    final style = StyleMix(text.style(color: Colors.red));
+  testWidgets('Style.text matches StyledText(style:Style)', (tester) async {
+    final style = Style(text.style(color: Colors.red));
 
     await tester.pumpWidget(
       MaterialApp(
@@ -168,7 +165,7 @@ void main() {
             StyledText(
               'text',
               key: keyThree,
-              style: const StyleMix.empty(),
+              style: const Style.empty(),
             ),
           ],
         ),
@@ -184,9 +181,8 @@ void main() {
     expect(containerThree.style, isNot(style));
   });
 
-  testWidgets('StyleMix.vbox matches VBox(style:StyleMix)', (tester) async {
-    final style =
-        StyleMix(box.decoration.box(border: Border.all(color: Colors.red)));
+  testWidgets('Style.vbox matches VBox(style:Style)', (tester) async {
+    final style = Style(box.decoration(border: Border.all(color: Colors.red)));
 
     await tester.pumpWidget(
       MaterialApp(
@@ -200,7 +196,7 @@ void main() {
             ),
             VBox(
               key: keyThree,
-              style: const StyleMix.empty(),
+              style: const Style.empty(),
               children: const [SizedBox()],
             ),
           ],
@@ -217,10 +213,9 @@ void main() {
     expect(containerThree.style, isNot(style));
   });
 
-  testWidgets('StyleMix.column matches StyledColumn(style:StyleMix)',
-      (tester) async {
-    final style = StyleMix(
-      container.decoration.box(
+  testWidgets('Style.column matches StyledColumn(style:Style)', (tester) async {
+    final style = Style(
+      box.decoration(
         border: Border.all(
           color: Colors.red,
         ),
@@ -239,7 +234,7 @@ void main() {
             ),
             StyledColumn(
               key: keyThree,
-              style: const StyleMix.empty(),
+              style: const Style.empty(),
               children: const [SizedBox()],
             ),
           ],
@@ -256,9 +251,8 @@ void main() {
     expect(containerThree.style, isNot(style));
   });
 
-  testWidgets('StyleMix.icon matches StyledIcon(style:StyleMix)',
-      (tester) async {
-    final style = StyleMix(icon(color: Colors.black));
+  testWidgets('Style.icon matches StyledIcon(style:Style)', (tester) async {
+    final style = Style(icon(color: Colors.black));
 
     await tester.pumpWidget(
       MaterialApp(
@@ -273,7 +267,7 @@ void main() {
             StyledIcon(
               Icons.ac_unit,
               key: keyThree,
-              style: const StyleMix.empty(),
+              style: const Style.empty(),
             ),
           ],
         ),

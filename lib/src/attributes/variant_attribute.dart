@@ -10,14 +10,14 @@ import '../variants/variant.dart';
 class VariantAttribute<T extends Variant> extends Attribute
     with Mergeable<VariantAttribute<T>> {
   final T variant;
-  final StyleMix _style;
+  final Style _style;
 
-  const VariantAttribute(this.variant, StyleMix style) : _style = style;
+  const VariantAttribute(this.variant, Style style) : _style = style;
 
-  StyleMix get value => _style;
+  Style get value => _style;
 
   @override
-  VariantAttribute<T> merge(covariant VariantAttribute<T> other) {
+  VariantAttribute<T> merge(VariantAttribute<T> other) {
     if (other.variant != variant) throw throwArgumentError(other);
 
     return VariantAttribute(variant, _style.merge(other._style));

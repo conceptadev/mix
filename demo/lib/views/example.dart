@@ -60,7 +60,7 @@ class CustomMixWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final style = StyleMix(
+    final style = Style(
       box.height(100),
       box.margin.vertical(10),
       box.elevation(10),
@@ -76,7 +76,7 @@ class CustomMixWidget extends StatelessWidget {
       ),
     );
 
-    return StyledContainer(
+    return Box(
       style: style,
       child: const StyledText('Custom Widget'),
     );

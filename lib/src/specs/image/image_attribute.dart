@@ -5,8 +5,7 @@ import '../../core/attribute.dart';
 import '../../factory/mix_provider_data.dart';
 import 'image_spec.dart';
 
-class ImageSpecAttribute
-    extends ResolvableAttribute<ImageSpecAttribute, ImageSpec> {
+class ImageSpecAttribute extends SpecAttribute<ImageSpecAttribute, ImageSpec> {
   final double? width;
   final double? height;
   final ColorDto? color;

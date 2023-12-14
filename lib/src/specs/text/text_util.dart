@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../attributes/scalars/scalar_util.dart';
 import '../../attributes/strut_style/strut_style_dto.dart';
 import '../../attributes/strut_style/strut_style_util.dart';
+import '../../attributes/text_directives_util.dart';
 import '../../attributes/text_style/text_style_dto.dart';
 import '../../attributes/text_style/text_style_util.dart';
 import '../../core/directive.dart';
@@ -25,7 +26,6 @@ class TextUtility extends SpecUtility<TextSpecAttribute> {
     TextHeightBehavior? textHeightBehavior,
     TextDirection? textDirection,
     bool? softWrap,
-    List<TextDirective>? directives,
   }) {
     return TextSpecAttribute(
       overflow: overflow,
@@ -38,10 +38,10 @@ class TextUtility extends SpecUtility<TextSpecAttribute> {
       textHeightBehavior: textHeightBehavior,
       textDirection: textDirection,
       softWrap: softWrap,
-      directives: directives,
     );
   }
 
+  TextDataDirectiveUtility get directive => const TextDataDirectiveUtility();
   TextOverflowUtility<TextSpecAttribute> get overflow {
     return TextOverflowUtility((overflow) => _only(overflow: overflow));
   }
@@ -90,9 +90,11 @@ class TextUtility extends SpecUtility<TextSpecAttribute> {
     );
   }
 
-  TextSpecAttribute directive(TextDirective directive) {
-    return _only(directives: [directive]);
-  }
+  TextDataDirective capitalize() => directive.capitalize();
+  TextDataDirective uppercase() => directive.uppercase();
+  TextDataDirective lowercase() => directive.lowercase();
+  TextDataDirective titleCase() => directive.titleCase();
+  TextDataDirective sentenceCase() => directive.sentenceCase();
 
   TextSpecAttribute call({
     TextOverflow? overflow,
@@ -105,7 +107,6 @@ class TextUtility extends SpecUtility<TextSpecAttribute> {
     TextHeightBehavior? textHeightBehavior,
     TextDirection? textDirection,
     bool? softWrap,
-    List<TextDirective>? directives,
   }) {
     return _only(
       overflow: overflow,
@@ -118,7 +119,6 @@ class TextUtility extends SpecUtility<TextSpecAttribute> {
       textHeightBehavior: textHeightBehavior,
       textDirection: textDirection,
       softWrap: softWrap,
-      directives: directives,
     );
   }
 }

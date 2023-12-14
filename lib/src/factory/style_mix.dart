@@ -2,12 +2,12 @@
 
 import 'package:flutter/foundation.dart';
 
-import '../attributes/style_mix_attribute.dart';
+import '../attributes/nested_style/nested_style_attribute.dart';
 import '../attributes/variant_attribute.dart';
 import '../core/attribute.dart';
 import '../core/attributes_map.dart';
 import '../helpers/compare_mixin.dart';
-import '../specs/container/container_attribute.dart';
+import '../specs/container/box_attribute.dart';
 import '../specs/flex/flex_attribute.dart';
 import '../specs/image/image_attribute.dart';
 import '../specs/stack/stack_attribute.dart';
@@ -15,21 +15,21 @@ import '../specs/text/text_attribute.dart';
 import '../utils/helper_util.dart';
 import '../variants/variant.dart';
 
-typedef Mix = StyleMix;
+typedef Mix = Style;
 
 /// A utility class for managing a collection of styling attributes and variants.
 ///
-/// The `StyleMix` class is used to encapsulate a set of styling attributes and
+/// The `Style` class is used to encapsulate a set of styling attributes and
 /// variants which can be applied to a widget. This class provides several
 /// factory constructors and utility methods to help create, manipulate, and
 /// merge collections of styling attributes and variants.
 ///
 /// Example:
 /// ```dart
-/// final style = StyleMix(attribute1, attribute2, attribute3);
+/// final style = Style(attribute1, attribute2, attribute3);
 /// final updatedStyle = style.selectVariant(myVariant);
 /// ```
-class StyleMix with Comparable {
+class Style with Comparable {
   /// Visual attributes contained in this mix.
   final AttributeMap<StyleAttribute> styles;
 
@@ -39,24 +39,23 @@ class StyleMix with Comparable {
   static final stack = SpreadFunctionParams(_styleType<StackSpecAttribute>());
   static final text = SpreadFunctionParams(_styleType<TextSpecAttribute>());
   static final image = SpreadFunctionParams(_styleType<ImageSpecAttribute>());
-  static final container =
-      SpreadFunctionParams(_styleType<ContainerSpecAttribute>());
+  static final box = SpreadFunctionParams(_styleType<BoxSpecAttribute>());
   static final flex = SpreadFunctionParams(_styleType<FlexSpecAttribute>());
 
   /// A constant, empty mix for use with const constructor widgets.
   ///
-  /// This can be used as a default or initial value where a `StyleMix` is required.
-  const StyleMix.empty()
+  /// This can be used as a default or initial value where a `Style` is required.
+  const Style.empty()
       : styles = const AttributeMap.empty(),
         variants = const AttributeMap.empty();
 
-  const StyleMix._({required this.styles, required this.variants});
+  const Style._({required this.styles, required this.variants});
 
-  /// Creates a new `StyleMix` instance with a specified list of [Attribute]s.
+  /// Creates a new `Style` instance with a specified list of [Attribute]s.
   ///
-  /// This factory constructor initializes a `StyleMix` with a list of
+  /// This factory constructor initializes a `Style` with a list of
   /// attributes provided as individual parameters. Only non-null attributes
-  /// are included in the resulting `StyleMix`.
+  /// are included in the resulting `Style`.
   ///
   /// There is no specific reason for only 20 parameters. This is just a
   /// reasonable number of parameters to support. If you need more than 20,
@@ -64,9 +63,9 @@ class StyleMix with Comparable {
   ///
   /// Example:
   /// ```dart
-  /// final style = StyleMix(attribute1, attribute2, attribute3);
+  /// final style = Style(attribute1, attribute2, attribute3);
   /// ```
-  factory StyleMix([
+  factory Style([
     Attribute? p1,
     Attribute? p2,
     Attribute? p3,
@@ -93,19 +92,19 @@ class StyleMix with Comparable {
       p11, p12, p13, p14, p15, p16, p17, p18, p19, p20,
     ].whereType<Attribute>();
 
-    return StyleMix.create(params);
+    return Style.create(params);
   }
 
-  /// Constructs a `StyleMix` from an iterable of [Attribute] instances.
+  /// Constructs a `Style` from an iterable of [Attribute] instances.
   ///
   /// This factory constructor segregates the attributes into visual and variant
-  /// attributes, initializing a new `StyleMix` with these segregated collections.
+  /// attributes, initializing a new `Style` with these segregated collections.
   ///
   /// Example:
   /// ```dart
-  /// final style = StyleMix.create([attribute1, attribute2]);
+  /// final style = Style.create([attribute1, attribute2]);
   /// ```
-  factory StyleMix.create(Iterable<Attribute> attributes) {
+  factory Style.create(Iterable<Attribute> attributes) {
     final variantList = <VariantAttribute>[];
     final styleList = <StyleAttribute>[];
 
@@ -114,7 +113,7 @@ class StyleMix with Comparable {
         styleList.add(attribute);
       } else if (attribute is VariantAttribute) {
         variantList.add(attribute);
-      } else if (attribute is StyleMixAttribute) {
+      } else if (attribute is NestedStyleAttribute) {
         variantList.addAll(attribute.value.variants.values);
         styleList.addAll(attribute.value.styles.values);
       } else {
@@ -122,10 +121,25 @@ class StyleMix with Comparable {
       }
     }
 
-    return StyleMix._(
+    return Style._(
       styles: AttributeMap(styleList),
       variants: AttributeMap(variantList),
     );
+  }
+
+  /// Combines a positional list of [mixes] into a single `Style`.
+  ///
+  /// This factory constructor iterates through the list of [mixes] params, merging
+  /// each mix with the previous mix and returning the final combined `Style`.
+  ///
+  /// Example:
+  /// ```dart
+  /// final combinedStyle = Style.combine([style1, style2, style3]);
+  /// ```
+  static Style combine(Iterable<Style> mixes) {
+    return mixes.isEmpty
+        ? const Style.empty()
+        : mixes.reduce((combinedStyle, mix) => combinedStyle.merge(mix));
   }
 
   /// Selects a mix based on a [condition].
@@ -134,62 +148,25 @@ class StyleMix with Comparable {
   ///
   /// Example:
   /// ```dart
-  /// final style = StyleMix.chooser(condition, style, fallbackStyle);
+  /// final style = Style.chooser(condition, style, fallbackStyle);
   /// ```
-  factory StyleMix.chooser(
-    bool condition,
-    StyleMix style, [
-    StyleMix? fallback,
-  ]) {
-    return condition ? style : fallback ?? const StyleMix.empty();
+  static Style chooser(bool condition, Style style, [Style? fallback]) {
+    return condition ? style : fallback ?? const Style.empty();
   }
 
-  /// Combines an optional positional list of [mixes] into a single `StyleMix`.
-  ///
-  /// This factory constructor iterates through the list of [mixes] params, merging
-  /// each mix with the previous mix and returning the final combined `StyleMix`.
-  ///
-  /// Example:
-  /// ```dart
-  /// final combinedStyle = StyleMix.combineList([style1, style2, style3]);
-  /// ```
-  factory StyleMix.combineList(Iterable<StyleMix> mixes) {
-    return mixes.isEmpty
-        ? const StyleMix.empty()
-        : mixes.reduce((combinedStyle, mix) => combinedStyle.merge(mix));
+  Style _addAttributes(List<Attribute> attributes) {
+    return merge(Style.create(attributes));
   }
-
-  /// Combines an optional positional list of [StyleMix] instances into a single `StyleMix`.
-  ///
-  /// This factory constructor iterates through the non-null parameters, merging
-  /// each `StyleMix` instance with the previous one and returning the final combined `StyleMix`.
-  /// If a null value is provided for any of the parameters, it is ignored.
-  ///
-  /// Example:
-  /// ```dart
-  /// final style1 = StyleMix(...);
-  /// final style2 = StyleMix(...);
-  /// final style3 = StyleMix(...);
-  ///
-  /// final combinedStyle = StyleMix.combine(style1, style2, style3);
-  /// ```
-  ///
-  /// In this example:
-  /// - Three `StyleMix` instances `style1`, `style2`, and `style3` are created.
-  /// - The `combine` factory constructor is called with `style1`, `style2`, and `style3` as arguments.
-  /// - The `combine` method returns a new `StyleMix` instance `combinedStyle` with the visual and variant attributes of `style1`, `style2`, and `style3` combined.
-  static SpreadFunctionParams<StyleMix, StyleMix> get combine =>
-      const SpreadFunctionParams(StyleMix.combineList);
 
   /// Returns a list of all attributes contained in this mix.
   ///
   /// This includes both visual and variant attributes.
   Iterable<Attribute> get values => [...styles.values, ...variants.values];
 
-  /// Returns true if this StyleMix does not contain any attributes or variants.
+  /// Returns true if this Style does not contain any attributes or variants.
   bool get isEmpty => styles.isEmpty && variants.isEmpty;
 
-  /// Returns false if this StyleMix contains any attributes or variants.
+  /// Returns false if this Style contains any attributes or variants.
   bool get isNotEmpty => !isEmpty;
 
   /// Returns the length of the list of attributes contained in this mix.
@@ -197,15 +174,15 @@ class StyleMix with Comparable {
   /// This includes both visual and variant attributes.
   int get length => values.length;
 
-  /// Selects a single or positional params list of [Variant] and returns a new `StyleMix` with the selected variants.
+  /// Selects a single or positional params list of [Variant] and returns a new `Style` with the selected variants.
   ///
-  /// If the [variant] is not initially part of the `StyleMix`, this method returns this mix without any changes.
-  /// Otherwise, the method merges the attributes of the selected [variant] into a new `StyleMix` instance.
+  /// If the [variant] is not initially part of the `Style`, this method returns this mix without any changes.
+  /// Otherwise, the method merges the attributes of the selected [variant] into a new `Style` instance.
   ///
   /// Example:
   /// ```dart
   /// final outlined = Variant('outlined-button');
-  /// final style = StyleMix(
+  /// final style = Style(
   ///   attr1,
   ///   attr2,
   ///   outlined(attr4, attr5),
@@ -215,37 +192,48 @@ class StyleMix with Comparable {
   ///
   /// In this example:
   /// - An `outlined` instance `outlined` is created to represent an outlined button styling.
-  /// - An initial `StyleMix` instance `style` is created with `attr1` and `attr2`, along with the `outlined`.
-  /// - The `selectVariant` method is called on the `StyleMix` instance with `outlined` as the argument.
-  /// - The `selectVariant` method returns a new `StyleMix` instance `updatedStyle` with the attributes of the selected variant merged.
-  /// - The resulting `updatedStyle` is equivalent to `StyleMix(attr1, attr2, attr4, attr5)`.
+  /// - An initial `Style` instance `style` is created with `attr1` and `attr2`, along with the `outlined`.
+  /// - The `selectVariant` method is called on the `Style` instance with `outlined` as the argument.
+  /// - The `selectVariant` method returns a new `Style` instance `updatedStyle` with the attributes of the selected variant merged.
+  /// - The resulting `updatedStyle` is equivalent to `Style(attr1, attr2, attr4, attr5)`.
   ///
   /// Note:
-  /// The attributes from the selected variant (`attr4` and `attr5`) are not applied to the `StyleMix` instance until the `selectVariant` method is called.
-  SpreadFunctionParams<Variant, StyleMix> get selectVariant {
+  /// The attributes from the selected variant (`attr4` and `attr5`) are not applied to the `Style` instance until the `selectVariant` method is called.
+  SpreadFunctionParams<Variant, Style> get selectVariant {
     return SpreadFunctionParams(selectVariantList);
   }
 
-  /// Returns a new `StyleMix` with the provided [styles] and [variants] merged with this mix's values.
+  /// Allows to create a new `Style` by using this mix as a base and adding additional attributes.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// final style = Style(attr1, attr2);
+  /// final updatedStyle = style.mix(attr3, attr4);
+  /// ```
+  SpreadFunctionParams<Attribute, Style> get mix =>
+      SpreadFunctionParams(_addAttributes);
+
+  /// Returns a new `Style` with the provided [styles] and [variants] merged with this mix's values.
   ///
   /// If [styles] or [variants] is null, the corresponding attribute map of this mix is used.
-  StyleMix copyWith({
+  Style copyWith({
     AttributeMap<StyleAttribute>? styles,
     AttributeMap<VariantAttribute>? variants,
   }) {
-    return StyleMix._(
+    return Style._(
       styles: styles ?? this.styles,
       variants: variants ?? this.variants,
     );
   }
 
-  /// Merges this mix with the provided [StyleMix] instances and returns the resulting `StyleMix`.
+  /// Merges this mix with the provided [Style] instances and returns the resulting `Style`.
   ///
-  /// This method combines the visual and variant attributes of this mix and the provided [StyleMix] instances.
+  /// This method combines the visual and variant attributes of this mix and the provided [Style] instances.
   /// If a null value is provided for any of the parameters, it is ignored.
   ///
   /// This method combines the visual and variant attributes of this mix and the provided [mix].
-  StyleMix merge(StyleMix? mix) {
+  Style merge(Style? mix) {
     if (mix == null) return this;
 
     final mergedStyles = styles.merge(mix.styles);
@@ -254,15 +242,15 @@ class StyleMix with Comparable {
     return copyWith(styles: mergedStyles, variants: mergedVariants);
   }
 
-  /// Selects multiple [Variant] instances and returns a new `StyleMix` with the selected variants.
+  /// Selects multiple [Variant] instances and returns a new `Style` with the selected variants.
   ///
   /// If the [selectVariantList] list is empty, returns this mix without any changes.
-  /// Otherwise, the method merges the attributes of the selected variants into a new `StyleMix` instance.
+  /// Otherwise, the method merges the attributes of the selected variants into a new `Style` instance.
   ///
   /// Example:
   /// final outlinedVariant = Variant('outlined');
   /// final smallVariant = Variant('small');
-  /// final style = StyleMix(
+  /// final style = Style(
   ///   attr1,
   ///   attr2,
   ///   outlinedVariant(attr3, attr4),
@@ -273,15 +261,15 @@ class StyleMix with Comparable {
   ///
   /// In this example:
   /// - Two `Variant` instances `outlinedVariant` and `smallVariant` are created.
-  /// - An initial `StyleMix` instance `style` is created with `attr1` and `attr2`, along with the two variants.
-  /// - The `selectVariants` method is called on the `StyleMix` instance with a list of `outlinedVariant` and `smallVariant` as the argument.
-  /// - The `selectVariants` method returns a new `StyleMix` instance `outlinedSmallMix` with the attributes of the selected variants merged.
-  /// - The resulting `outlinedSmallMix` is equivalent to `StyleMix(attr1, attr2, attr3, attr4, attr5)`.
+  /// - An initial `Style` instance `style` is created with `attr1` and `attr2`, along with the two variants.
+  /// - The `selectVariants` method is called on the `Style` instance with a list of `outlinedVariant` and `smallVariant` as the argument.
+  /// - The `selectVariants` method returns a new `Style` instance `outlinedSmallMix` with the attributes of the selected variants merged.
+  /// - The resulting `outlinedSmallMix` is equivalent to `Style(attr1, attr2, attr3, attr4, attr5)`.
   ///
   /// Note:
-  /// The attributes from the selected variants (`attr3`, `attr4`, and `attr5`) are not applied to the `StyleMix` instance until the `selectVariants` method is called.
-  StyleMix selectVariantList(Iterable<Variant> selectedVariants) {
-    /// Return the original StyleMix if no variants were selected
+  /// The attributes from the selected variants (`attr3`, `attr4`, and `attr5`) are not applied to the `Style` instance until the `selectVariants` method is called.
+  Style selectVariantList(Iterable<Variant> selectedVariants) {
+    /// Return the original Style if no variants were selected
     if (selectedVariants.isEmpty) {
       return this;
     }
@@ -317,57 +305,57 @@ class StyleMix with Comparable {
       }
     }
 
-    final updatedStyle = StyleMix._(
+    final updatedStyle = Style._(
       styles: styles,
       variants: AttributeMap(remainingVariants),
     );
 
-    /// If not a single variant was matched, return the original StyleMix.
+    /// If not a single variant was matched, return the original Style.
     if (matchedVariants.isEmpty) {
       return updatedStyle;
     }
 
-    /// Create a StyleMix from the matched variants.
+    /// Create a Style from the matched variants.
     final styleToApply =
-        StyleMix.combineList(matchedVariants.map((e) => e.value).toList());
+        Style.combine(matchedVariants.map((e) => e.value).toList());
 
-    /// Merge the new StyleMix created with the existing StyleMix, excluding the matched variants.
+    /// Merge the new Style created with the existing Style, excluding the matched variants.
     final mergedStyle = updatedStyle.merge(styleToApply);
 
-    /// Apply all variants and return the final StyleMix.
+    /// Apply all variants and return the final Style.
     return mergedStyle.selectVariantList(selectedVariants);
   }
 
-  /// Picks and applies only the attributes within the specified [Variant] instances, and returns a new `StyleMix`.
+  /// Picks and applies only the attributes within the specified [Variant] instances, and returns a new `Style`.
   ///
-  /// Unlike `selectVariants`, `pickVariants` ignores all other attributes initially present in the `StyleMix`.
+  /// Unlike `selectVariants`, `pickVariants` ignores all other attributes initially present in the `Style`.
   ///
-  /// If the list of [pickVariants] is empty, returns a new empty `StyleMix`.
+  /// If the list of [pickVariants] is empty, returns a new empty `Style`.
   ///
   /// Example:
   /// ```dart
   /// final outlinedVariant = Variant('outlined');
   /// final smallVariant = Variant('small');
-  /// final style = StyleMix(attr1, attr2, outlinedVariant(buttonAttr1, buttonAttr2), smallVariant(buttonAttr3));
+  /// final style = Style(attr1, attr2, outlinedVariant(buttonAttr1, buttonAttr2), smallVariant(buttonAttr3));
   /// final pickedMix = style.pickVariants([outlinedVariant, smallVariant]);
   /// ```
   ///
   /// In this example:
   /// - Two `Variant` instances `outlinedVariant` and `smallVariant` are created.
-  /// - An initial `StyleMix` instance `style` is created with `attr1` and `attr2`, along with the two variants.
-  /// - The `pickVariants` method is called on the `StyleMix` instance with a list of `outlinedVariant` and `smallVariant` as the argument.
-  /// - The `pickVariants` method returns a new `StyleMix` instance `pickedMix` with only the attributes of the selected variants, ignoring `attr1` and `attr2`.
-  /// - The resulting `pickedMix` is equivalent to `StyleMix(buttonAttr1, buttonAttr2, buttonAttr3)`.
+  /// - An initial `Style` instance `style` is created with `attr1` and `attr2`, along with the two variants.
+  /// - The `pickVariants` method is called on the `Style` instance with a list of `outlinedVariant` and `smallVariant` as the argument.
+  /// - The `pickVariants` method returns a new `Style` instance `pickedMix` with only the attributes of the selected variants, ignoring `attr1` and `attr2`.
+  /// - The resulting `pickedMix` is equivalent to `Style(buttonAttr1, buttonAttr2, buttonAttr3)`.
   ///
   /// Note:
-  /// The attributes `attr1` and `attr2` from the initial `StyleMix` are ignored, and only the attributes within the specified variants are picked and applied to the new `StyleMix`.
-  StyleMix pickVariants(
+  /// The attributes `attr1` and `attr2` from the initial `Style` are ignored, and only the attributes within the specified variants are picked and applied to the new `Style`.
+  Style pickVariants(
     List<Variant> pickedVariants, {
     bool isRecursive = false,
   }) {
     final matchedVariants = <VariantAttribute>[];
 
-    // Return an empty StyleMix if the list of picked variants is empty
+    // Return an empty Style if the list of picked variants is empty
 
     for (final variantAttr in variants.values) {
       if (pickedVariants.contains(variantAttr.variant)) {
@@ -375,16 +363,15 @@ class StyleMix with Comparable {
       }
     }
     if (pickedVariants.isEmpty || matchedVariants.isEmpty) {
-      return isRecursive ? this : const StyleMix.empty();
+      return isRecursive ? this : const Style.empty();
     }
 
-    final pickedStyle =
-        StyleMix.combineList(matchedVariants.map((e) => e.value));
+    final pickedStyle = Style.combine(matchedVariants.map((e) => e.value));
 
     return pickedStyle.pickVariants(pickedVariants, isRecursive: true);
   }
 
-  /// Selects variants based on a [cases] map and returns a new `StyleMix` with the selected variants.
+  /// Selects variants based on a [cases] map and returns a new `Style` with the selected variants.
   ///
   /// The [cases] list contains [SwitchCondition] instances, each of which contains a boolean [condition] and a [Variant].
   /// If a condition is true, the corresponding [Variant] is selected.
@@ -394,7 +381,7 @@ class StyleMix with Comparable {
   /// final highContrastVariant = Variant('highContrast');
   /// final largeFontVariant = Variant('largeFont');
   ///
-  /// final style = StyleMix();
+  /// final style = Style();
   /// final updatedStyle = style.variantSwitcher([
   ///   const ConditionChooser(useHighContrast, highContrastVariant),
   ///   const ConditionChooser(useLargeFont, largeFontVariant)
@@ -403,11 +390,11 @@ class StyleMix with Comparable {
   ///
   /// In this example:
   /// - Two `Variant` instances are created to represent high contrast and large font styling preferences.
-  /// - An initial `StyleMix` instance is created.
-  /// - The `variantSwitcher` method is called on the `StyleMix` instance with a map of conditions and variants.
+  /// - An initial `Style` instance is created.
+  /// - The `variantSwitcher` method is called on the `Style` instance with a map of conditions and variants.
   /// - The conditions `useHighContratst` and `useLargeFont` are hypothetical boolean values representing user preferences.
-  /// - If a condition is true, the corresponding `Variant` is selected and applied to the `StyleMix` instance, creating an `updatedStyle` instance with the selected variants.
-  StyleMix variantSwitcher(List<SwitchCondition<Variant>> cases) {
+  /// - If a condition is true, the corresponding `Variant` is selected and applied to the `Style` instance, creating an `updatedStyle` instance with the selected variants.
+  Style variantSwitcher(List<SwitchCondition<Variant>> cases) {
     List<Variant> variantsToApply = [];
 
     for (SwitchCondition<Variant> conditionCase in cases) {
@@ -436,11 +423,11 @@ class SwitchCondition<T> {
   const SwitchCondition(this.condition, this.value);
 }
 
-StyleMix Function(Iterable<T> attributes)
-    _styleType<T extends ResolvableAttribute<T, dynamic>>() {
+Style Function(Iterable<T> attributes)
+    _styleType<T extends SpecAttribute<T, dynamic>>() {
   return (Iterable<T> attributes) {
     final merged = attributes.reduce((value, element) => value.merge(element));
 
-    return StyleMix(merged);
+    return Style(merged);
   };
 }

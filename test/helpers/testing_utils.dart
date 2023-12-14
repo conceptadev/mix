@@ -1,11 +1,10 @@
 // ignore_for_file: non_constant_identifier_names
 
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:meta/meta.dart';
 import 'package:mix/mix.dart';
+import 'package:mix/src/helpers/lerp_helpers.dart';
 import 'package:mockito/mockito.dart';
 
 export 'package:mix/src/core/extensions/values_ext.dart';
@@ -13,7 +12,7 @@ export 'package:mix/src/core/extensions/values_ext.dart';
 class MockBuildContext extends Mock implements BuildContext {}
 
 MixData MockMixData(
-  StyleMix style,
+  Style style,
 ) {
   return MixData.create(
     MockBuildContext(),
@@ -23,7 +22,7 @@ MixData MockMixData(
 
 final EmptyMixData = MixData.create(
   MockBuildContext(),
-  const StyleMix.empty(),
+  const Style.empty(),
 );
 
 MediaQuery createMediaQuery(Size size) {
@@ -98,7 +97,7 @@ Widget createWithMixTheme(
 extension WidgetTesterExt on WidgetTester {
   Future<void> pumpWithMix(
     Widget widget, {
-    StyleMix style = const StyleMix.empty(),
+    Style style = const Style.empty(),
     MixThemeData theme = const MixThemeData.empty(),
   }) async {
     await pumpWithMixTheme(
@@ -213,25 +212,6 @@ class MockIntScalarAttribute
   const MockIntScalarAttribute(super.value);
 }
 
-class MockDoubleDecoratorAttribute
-    extends Decorator<MockDoubleDecoratorAttribute> {
-  final double value;
-  const MockDoubleDecoratorAttribute(this.value, {super.key});
-
-  @override
-  MockDoubleDecoratorAttribute lerp(
-      MockDoubleDecoratorAttribute? other, double t) {
-    return MockDoubleDecoratorAttribute(
-        lerpDouble(value, other?.value, t) ?? value);
-  }
-
-  @override
-  get props => [value];
-
-  @override
-  Type get type => MockDoubleDecoratorAttribute;
-}
-
 class MockBooleanScalarAttribute
     extends ScalarAttribute<MockBooleanScalarAttribute, bool> {
   const MockBooleanScalarAttribute(super.value);
@@ -297,4 +277,25 @@ class UtilityTestDtoAttribute<T extends Dto<V>, V>
   V resolve(MixData mix) {
     return value.resolve(mix);
   }
+}
+
+class CustomWidgetDecorator extends BoxWidgetDecorator<CustomWidgetDecorator> {
+  const CustomWidgetDecorator({super.key});
+  @override
+  Widget build(mix, child) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: child,
+    );
+  }
+
+  @override
+  CustomWidgetDecorator lerp(CustomWidgetDecorator? other, double t) {
+    if (other == null) return this;
+
+    return lerpSnap(this, other, t);
+  }
+
+  @override
+  get props => [];
 }

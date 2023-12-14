@@ -11,7 +11,7 @@ void main() {
     test('resolve', () {
       final mix = MixData.create(
         MockBuildContext(),
-        StyleMix(
+        Style(
           const FlexSpecAttribute(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -26,7 +26,7 @@ void main() {
         ),
       );
 
-      final spec = FlexSpec.resolve(mix);
+      final spec = FlexSpec.of(mix);
 
       expect(spec.crossAxisAlignment, CrossAxisAlignment.center);
       expect(spec.mainAxisAlignment, MainAxisAlignment.center);
@@ -125,6 +125,48 @@ void main() {
       expect(lerpedSpec.gap, lerpDouble(spec1.gap, spec2.gap, t));
 
       expect(lerpedSpec, isNot(spec1));
+    });
+
+    // equality
+    test('equality', () {
+      const spec1 = FlexSpec(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        verticalDirection: VerticalDirection.down,
+        direction: Axis.horizontal,
+        textDirection: TextDirection.ltr,
+        textBaseline: TextBaseline.alphabetic,
+        clipBehavior: Clip.none,
+        gap: 10,
+      );
+
+      const spec2 = FlexSpec(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        verticalDirection: VerticalDirection.down,
+        direction: Axis.horizontal,
+        textDirection: TextDirection.ltr,
+        textBaseline: TextBaseline.alphabetic,
+        clipBehavior: Clip.none,
+        gap: 10,
+      );
+
+      const spec3 = FlexSpec(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        mainAxisAlignment: MainAxisAlignment.end,
+        mainAxisSize: MainAxisSize.max,
+        verticalDirection: VerticalDirection.up,
+        direction: Axis.vertical,
+        textDirection: TextDirection.rtl,
+        textBaseline: TextBaseline.ideographic,
+        clipBehavior: Clip.antiAlias,
+        gap: 20,
+      );
+
+      expect(spec1, spec2);
+      expect(spec1, isNot(spec3));
     });
   });
 }

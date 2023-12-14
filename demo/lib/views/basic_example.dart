@@ -9,7 +9,7 @@ class BasicExample extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mix = StyleMix(
+    final mix = Style(
       box.height(300),
       box.width(300),
       box.border.radius(10),
@@ -18,11 +18,11 @@ class BasicExample extends HookWidget {
       box.elevation(2),
       box.margin.horizontal(10),
       box.alignment.center(),
-      container.color(Colors.purple),
-      container.color.purple.shade300(),
+      box.color(Colors.purple),
+      box.color.purple.shade300(),
       text.style(color: Colors.white),
-      container.border.radius(10),
-      container.decoration.shape.color.white(),
+      box.border.radius(10),
+      box.shapeDecoration.color.white(),
       text.style.color.white(),
       onPress(
         box.color(Colors.black),
@@ -46,7 +46,7 @@ class BasicExample extends HookWidget {
             "Container",
             style: headingMix,
           ),
-          StyledContainer(
+          Box(
             style: mix,
             child: StyledText(
               "Hello World, this is a StyledContainer!",
@@ -65,7 +65,7 @@ class BasicExample extends HookWidget {
           StyledText(
             "This is another StyledText, but yet another a different mix!",
             style: onSurfaceMix.merge(
-              StyleMix(
+              Style(
                 text.style(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -77,7 +77,7 @@ class BasicExample extends HookWidget {
           StyledText(
             "This is a StyledText that changes to a different when in dark mode!",
             style: onSurfaceMix.merge(
-              StyleMix(
+              Style(
                 onLight(
                   text.style.color.of($colors.error),
                 ),
@@ -99,7 +99,7 @@ class BasicExample extends HookWidget {
               StyledIcon(
                 Icons.move_to_inbox,
                 style: onSurfaceMix.merge(
-                  StyleMix(
+                  Style(
                     icon(size: 50),
                   ),
                 ),
@@ -107,7 +107,7 @@ class BasicExample extends HookWidget {
               StyledIcon(
                 Icons.one_k,
                 style: onSurfaceMix.merge(
-                  StyleMix(
+                  Style(
                     icon(size: 60),
                   ),
                 ),
@@ -115,7 +115,7 @@ class BasicExample extends HookWidget {
               StyledIcon(
                 Icons.waving_hand_rounded,
                 style: onSurfaceMix.merge(
-                  StyleMix(
+                  Style(
                     icon(size: 70),
                     icon.color.of($colors.secondary),
                   ),
@@ -124,7 +124,7 @@ class BasicExample extends HookWidget {
               StyledIcon(
                 Icons.warning_amber,
                 style: onSurfaceMix.merge(
-                  StyleMix(
+                  Style(
                     icon(size: 90),
                     icon(color: Colors.yellow.shade900),
                   ),
@@ -141,7 +141,7 @@ class BasicExample extends HookWidget {
             onPressed: () {
               return;
             },
-            child: StyledContainer(
+            child: Box(
               style: mix,
               child: StyledText(
                 "Press or long press me!",

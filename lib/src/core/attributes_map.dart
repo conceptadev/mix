@@ -50,17 +50,21 @@ class AttributeMap<T extends Attribute> with Comparable {
 
   List<T> get values => _map?.values.toList() ?? [];
 
-  bool contains(T attribute) => _map?.containsKey(attribute.type) ?? false;
+  bool containsType(T attribute) => _map?.containsKey(attribute.type) ?? false;
+
+  bool containsValue(T attribute) => _map?.containsValue(attribute) ?? false;
 
   Attr? attributeOfType<Attr extends T>() => _map?[Attr] as Attr?;
 
   Iterable<Attr> whereType<Attr extends T>() =>
       _map?.values.whereType<Attr>() ?? [];
 
-  AttributeMap<T> merge(AttributeMap<T> other) {
-    return AttributeMap([...values, ...other.values]);
+  AttributeMap<T> merge(AttributeMap<T>? other) {
+    return other == null ? this : AttributeMap([...values, ...other.values]);
   }
 
+  Map<Object, T> toMap() => _map?.cast() ?? {};
+
   @override
-  List<Object> get props => [_map ?? {}];
+  get props => [_map];
 }

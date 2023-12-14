@@ -27,13 +27,13 @@ enum MultiVariantOperator { and, or }
 /// final combinedAndVariant = MultiVariant.and([variantA, variantB]);
 /// final combinedOrVariant = MultiVariant.or([variantA, variantB]);
 ///
-/// final style = StyleMix(
-///   textStyle(fontSize: 16),
+/// final style = Style(
+///   text.style(fontSize: 16),
 ///   combinedAndVariant(
-///     textStyle(color: Colors.blue),
+///     text.style(color: Colors.blue),
 ///   ),
 ///   combinedOrVariant(
-///     textStyle(color: Colors.green),
+///     text.style(color: Colors.green),
 ///   ),
 /// );
 /// ```
@@ -187,7 +187,7 @@ class MultiVariant extends Variant {
       p11, p12, p13, p14, p15, p16, p17, p18, p19, p20,
     ].whereType<Attribute>();
 
-    return MultiVariantAttribute(this, StyleMix.create(params));
+    return MultiVariantAttribute(this, Style.create(params));
   }
 
   @override

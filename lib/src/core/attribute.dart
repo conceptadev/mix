@@ -7,14 +7,11 @@ import '../helpers/compare_mixin.dart';
 abstract class Attribute with Comparable {
   const Attribute();
 
-  // Type used for merging and optimization
+  // Used as a merge type
   Object get type;
 }
 
-abstract class StyleAttribute extends Attribute {
-  const StyleAttribute();
-}
-
+@immutable
 abstract class Dto<Value> with Comparable, Resolvable<Value> {
   const Dto();
 }
@@ -66,34 +63,24 @@ mixin Mergeable<T> {
   T merge(covariant T? other);
 }
 
+@immutable
+abstract class StyleAttribute extends Attribute {
+  const StyleAttribute();
+}
+
 /// An abstract class representing a resolvable attribute.
 ///
 /// This class extends the [StyleAttribute] class and provides a generic type [Self] and [Value].
 /// The [Self] type represents the concrete implementation of the attribute, while the [Value] type represents the resolvable value.
-abstract class ResolvableAttribute<Self, Value> extends StyleAttribute
+abstract class SpecAttribute<Self, Value> extends StyleAttribute
     with Resolvable<Value>, Mergeable<Self> {
-  const ResolvableAttribute();
+  const SpecAttribute();
 
   @override
   Self merge(Self? other);
 
   @override
   Type get type => Self;
-}
-
-abstract class DtoAttribute<Self, D extends Dto<Value>, Value>
-    extends StyleAttribute with Resolvable<Value>, Mergeable<Self> {
-  final D value;
-  const DtoAttribute(this.value);
-
-  @override
-  Value resolve(MixData mix) => value.resolve(mix);
-
-  @override
-  Type get type => Self;
-
-  @override
-  get props => [value];
 }
 
 mixin SingleChildRenderAttributeMixin<W extends RenderObjectWidget>

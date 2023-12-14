@@ -9,7 +9,7 @@ class VariantsCatalogPressable extends StatelessWidget {
     return Row(children: [
       buildBlock(
         'Hover',
-        StyleMix(
+        Style(
           onHover(
             box.border(color: $colors.primary(), width: 2),
             box.padding(4.0),
@@ -20,7 +20,7 @@ class VariantsCatalogPressable extends StatelessWidget {
       const VerticalDivider(),
       buildBlock(
         'Focus',
-        StyleMix(
+        Style(
           onFocus(
             box.border(color: $colors.primary(), width: 2),
             box.padding(4.0),
@@ -31,7 +31,7 @@ class VariantsCatalogPressable extends StatelessWidget {
       const VerticalDivider(),
       buildBlock(
         'Press',
-        StyleMix(
+        Style(
           onPress(
             box.border(
               color: $colors.primary(),
@@ -45,7 +45,7 @@ class VariantsCatalogPressable extends StatelessWidget {
     ]);
   }
 
-  Widget buildBlock(String title, StyleMix mix, Widget child) {
+  Widget buildBlock(String title, Style mix, Widget child) {
     return Builder(builder: (context) {
       return Expanded(
         child: Padding(
@@ -62,7 +62,7 @@ class VariantsCatalogPressable extends StatelessWidget {
                 onPressed: () {
                   return;
                 },
-                child: StyledContainer(
+                child: Box(
                   style: mix,
                   child: child,
                 ),

@@ -41,10 +41,9 @@ class FlexSpec extends Spec<FlexSpec> {
         clipBehavior = null,
         gap = null;
 
-  static FlexSpec resolve(MixData mix) {
-    final recipe = mix.attributeOf<FlexSpecAttribute>()?.resolve(mix);
-
-    return recipe ?? const FlexSpecAttribute().resolve(mix);
+  static FlexSpec of(MixData mix) {
+    return mix.attributeOf<FlexSpecAttribute>()?.resolve(mix) ??
+        const FlexSpec.empty();
   }
 
   @override

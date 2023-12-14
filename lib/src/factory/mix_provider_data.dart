@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../attributes/variant_attribute.dart';
 import '../core/attribute.dart';
 import '../core/attributes_map.dart';
-import '../decorators/decorator.dart';
+import '../core/decorator.dart';
 import '../helpers/compare_mixin.dart';
 import '../theme/mix_theme.dart';
 import '../variants/context_variant.dart';
@@ -28,7 +28,7 @@ class MixData with Comparable {
   })  : _attributes = attributes,
         _tokenResolver = resolver;
 
-  factory MixData.create(BuildContext context, StyleMix style) {
+  factory MixData.create(BuildContext context, Style style) {
     final styleMix = applyContextToVisualAttributes(context, style);
 
     final resolver = MixTokenResolver(context);
@@ -47,30 +47,24 @@ class MixData with Comparable {
   @visibleForTesting
   AttributeMap get attributes => _attributes;
 
-  /// Getter for [_decorators].
-  ///
-  /// Returns a list of attributes of type [Decorator].
-  Iterable<T> decoratorOfType<T extends Decorator<T>>() =>
-      _attributes.whereType<T>();
-
   /// Finds and returns an [VisualAttribute] of type [A], or null if not found.
   A? attributeOf<A extends StyleAttribute>() {
     final attributes = _attributes.whereType<A>();
     if (attributes.isEmpty) return null;
 
-    final attributeItem = _mergeAttributes(attributes) ?? attributes.last;
-    //
+    return _mergeAttributes(attributes) ?? attributes.last;
+  }
 
-    return attributeItem;
+  /// Finds all Decorators of type [A].
+  Iterable<A> decoratorsOf<A extends Decorator>() {
+    return _attributes.whereType<A>();
   }
 
   Iterable<A> whereType<A extends StyleAttribute>() {
     return _attributes.whereType<A>();
   }
 
-  Value resolvableOf<Value, A extends ResolvableAttribute<A, Value>>(
-    A attribute,
-  ) {
+  Value resolvableOf<Value, A extends SpecAttribute<A, Value>>(A attribute) {
     final attributes = _attributes.whereType<A>();
     if (attributes.isEmpty) return attribute.resolve(this);
 
@@ -78,11 +72,6 @@ class MixData with Comparable {
         .reduce((value, element) => value.merge(element))
         .resolve(this);
   }
-
-  // /// Resolves and returns the value of the [VisualAttribute] of type [A].
-  // R get<A extends Resolver<R>, R>() {
-  //   return attributeOfType<A>()?.resolve(this);
-  // }
 
   // /// Merges this [MixData] with another, prioritizing this instance's properties.
   MixData merge(MixData other) {
@@ -100,9 +89,9 @@ class MixData with Comparable {
 @visibleForTesting
 List<StyleAttribute> applyContextToVisualAttributes(
   BuildContext context,
-  StyleMix mix,
+  Style mix,
 ) {
-  StyleMix style = StyleMix.create(mix.styles.values);
+  Style style = Style.create(mix.styles.values);
 
   final contextVariants = mix.variants.whereType<ContextVariantAttribute>();
   final multiVariants = mix.variants.whereType<MultiVariantAttribute>();
@@ -144,9 +133,9 @@ List<StyleAttribute> applyContextToVisualAttributes(
   return applyContextToVisualAttributes(context, style);
 }
 
-StyleMix _applyVariants<T extends WhenVariant>(
+Style _applyVariants<T extends WhenVariant>(
   BuildContext context,
-  StyleMix style,
+  Style style,
   T variant,
 ) {
   return variant.when(context) ? style.merge(variant.value) : style;

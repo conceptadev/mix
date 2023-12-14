@@ -10,40 +10,40 @@ void main() {
   const attribute4 = MockStringScalarAttribute('string1');
   const variantAttr1 = Variant('mock1');
   const variantAttr2 = Variant('mock2');
-  group('StyleMix()', () {
+  group('Style()', () {
     test('Initialization with All Null Attributes', () {
-      final mix = StyleMix(null, null, null, null);
+      final mix = Style(null, null, null, null);
       expect(mix.styles.isEmpty, true);
       expect(mix.variants.isEmpty, true);
     });
 
     test('Initialization with Mixed Null and Non-Null Attributes', () {
-      final mix = StyleMix(null, attribute1, null);
+      final mix = Style(null, attribute1, null);
       expect(mix.styles.length, 1);
       expect(mix.variants.isEmpty, true);
       expect(mix.styles.values[0], attribute1);
     });
 
     test('Initialization with All Non-Null ScalarAttributes', () {
-      final mix = StyleMix(attribute1, attribute2);
+      final mix = Style(attribute1, attribute2);
       expect(mix.styles.length, 2);
       expect(mix.variants.isEmpty, true);
     });
 
     test('Initialization with All Non-Null VariantAttributes', () {
-      final mix = StyleMix(variantAttr1(), variantAttr2());
+      final mix = Style(variantAttr1(), variantAttr2());
       expect(mix.variants.length, 2);
       expect(mix.styles.isEmpty, true);
     });
 
     test('Initialization with Mixed Scalar and Variant Attributes', () {
-      final mix = StyleMix(attribute1, variantAttr1());
+      final mix = Style(attribute1, variantAttr1());
       expect(mix.styles.length, 1);
       expect(mix.variants.length, 1);
     });
 
     test('Initialization with many typse of attributes', () {
-      final mix = StyleMix(
+      final mix = Style(
         attribute1,
         attribute2,
         variantAttr1(),
@@ -56,9 +56,9 @@ void main() {
     });
   });
 
-  group('StyleMix.create([]) ', () {
+  group('Style.create([]) ', () {
     test('Initialization with Empty Array', () {
-      final mix = StyleMix.create([]);
+      final mix = Style.create([]);
       expect(mix.styles.isEmpty, true);
       expect(mix.variants.isEmpty, true);
     });
@@ -71,7 +71,7 @@ void main() {
         attribute4,
         variantAttr1(),
       ];
-      final mix = StyleMix.create(attributes);
+      final mix = Style.create(attributes);
       expect(mix.styles.isEmpty, false);
       expect(mix.variants.isEmpty, false);
       expect(mix.styles.length, 4);
@@ -87,53 +87,20 @@ void main() {
         attribute4,
         const MockInvalidAttribute(),
       ];
-      expect(() => StyleMix.create(attributes), throwsUnsupportedError);
+      expect(() => Style.create(attributes), throwsUnsupportedError);
     });
   });
 
-  group('StyleMix.combine', () {
-    test(
-        'should return a StyleMix with all non-null StyleMix instances combined',
-        () {
-      final style1 = StyleMix(attribute1); // Add attributes as needed
-      final style2 = StyleMix(attribute2);
-      final style3 = StyleMix(null, attribute3,
-          variantAttr1(attribute4)); // Partially null attributes
-
-      final combinedStyle =
-          StyleMix.combine(style1, style2, style3, null, null, null);
-
-      // Expect that combinedStyle contains all attributes of style1, style2, and style3
-      expect(combinedStyle.styles.length, 3);
-      expect(combinedStyle.variants.length, 1);
-      expect(combinedStyle.length, 4);
-
-      expect(combinedStyle.values.contains(attribute1), true);
-      expect(combinedStyle.values.contains(attribute2), true);
-      expect(combinedStyle.values.contains(attribute3), true);
-      expect(combinedStyle.values.contains(variantAttr1(attribute4)), true);
-    });
-
-    test('should return an empty StyleMix when all instances are null', () {
-      final combinedStyle =
-          StyleMix.combine(null, null, null, null, null, null);
-
-      // Expect that combinedStyle is an empty StyleMix instance
-      expect(combinedStyle.styles.isEmpty, true);
-      expect(combinedStyle.variants.isEmpty, true);
-    });
-  });
-
-  group('StyleMix.combineList', () {
-    test('should return a StyleMix with all instances combined', () {
+  group('Style.combine', () {
+    test('should return a Style with all instances combined', () {
       final styleList = [
-        StyleMix(attribute1),
-        StyleMix(attribute2),
-        StyleMix(attribute3),
-        StyleMix(variantAttr1(attribute4)),
+        Style(attribute1),
+        Style(attribute2),
+        Style(attribute3),
+        Style(variantAttr1(attribute4)),
       ];
 
-      final combinedStyle = StyleMix.combineList(styleList);
+      final combinedStyle = Style.combine(styleList);
 
       // Expect that combinedStyle contains all attributes of style1, style2, and style3
       expect(combinedStyle.styles.length, 3);
@@ -146,10 +113,10 @@ void main() {
       expect(combinedStyle.values.contains(variantAttr1(attribute4)), true);
     });
 
-    test('should return an empty StyleMix when the list is empty', () {
-      final combinedStyle = StyleMix.combineList([]);
+    test('should return an empty Style when the list is empty', () {
+      final combinedStyle = Style.combine([]);
 
-      // Expect that combinedStyle is an empty StyleMix instance
+      // Expect that combinedStyle is an empty Style instance
       expect(combinedStyle.isEmpty, true);
       expect(combinedStyle.isNotEmpty, false);
       expect(combinedStyle.styles.isEmpty, true);
@@ -159,15 +126,15 @@ void main() {
     });
   });
 
-  group('StyleMix.chooser() ', () {
+  group('Style.chooser() ', () {
     test('Condition is True', () {
       const trueAttribute = MockIntScalarAttribute(1);
       const falseAttribute = MockDoubleScalarAttribute(2.0);
 
-      final trueStyle = StyleMix(trueAttribute);
-      final falseStyle = StyleMix(falseAttribute);
+      final trueStyle = Style(trueAttribute);
+      final falseStyle = Style(falseAttribute);
 
-      final mix = StyleMix.chooser(true, trueStyle, falseStyle);
+      final mix = Style.chooser(true, trueStyle, falseStyle);
 
       expect(mix.styles.length, 1);
       expect(mix.styles.values[0], trueAttribute);
@@ -177,10 +144,10 @@ void main() {
       const trueAttribute = MockIntScalarAttribute(1);
       const falseAttribute = MockDoubleScalarAttribute(2.0);
 
-      final trueStyle = StyleMix(trueAttribute);
-      final falseStyle = StyleMix(falseAttribute);
+      final trueStyle = Style(trueAttribute);
+      final falseStyle = Style(falseAttribute);
 
-      final mix = StyleMix.chooser(false, trueStyle, falseStyle);
+      final mix = Style.chooser(false, trueStyle, falseStyle);
 
       expect(mix.styles.length, 1);
       expect(mix.styles.values[0], falseAttribute);
@@ -189,10 +156,10 @@ void main() {
     test('Both ifTrue and ifFalse Are Same', () {
       const sameAttribute = MockBooleanScalarAttribute(true);
 
-      final sameStyle = StyleMix(sameAttribute);
-      final otherStyle = StyleMix(const MockBooleanScalarAttribute(false));
+      final sameStyle = Style(sameAttribute);
+      final otherStyle = Style(const MockBooleanScalarAttribute(false));
 
-      final style = StyleMix.chooser(true, sameStyle, otherStyle);
+      final style = Style.chooser(true, sameStyle, otherStyle);
 
       expect(style.styles.length, 1);
       expect(style.styles.values[0], sameAttribute);
@@ -200,7 +167,7 @@ void main() {
     });
   });
 
-  group('StyleMix.selectVariant', () {
+  group('Style.selectVariant', () {
     const attr1 = MockDoubleScalarAttribute(1.0);
     const attr2 = MockIntScalarAttribute(2);
     const attr3 = MockBooleanScalarAttribute(true);
@@ -208,7 +175,7 @@ void main() {
     const variantAttr1 = Variant('variant1');
 
     test('with a Matched Variant', () {
-      final style = StyleMix(attr1, attr2, variantAttr1(attr3));
+      final style = Style(attr1, attr2, variantAttr1(attr3));
       final updatedStyle = style.selectVariant(variantAttr1);
 
       expect(updatedStyle.styles.length, 3);
@@ -219,7 +186,7 @@ void main() {
 
     test('with matching multi variant', () {
       final multiVariant = MultiVariant.and(const [variantAttr1, variantAttr2]);
-      final style = StyleMix(attr1, attr2, multiVariant(attr3));
+      final style = Style(attr1, attr2, multiVariant(attr3));
       final firstStyle = style.selectVariant(variantAttr1);
       final secondStyle = firstStyle.selectVariant(variantAttr2);
       final thirdStyle = style.selectVariant(variantAttr1, variantAttr2);
@@ -237,14 +204,14 @@ void main() {
     });
 
     test('with an Unmatched Variant', () {
-      final style = StyleMix(attr1, attr2);
+      final style = Style(attr1, attr2);
       final updatedStyle = style.selectVariant(variantAttr1);
 
       expect(updatedStyle, style);
     });
   });
 
-  group('StyleMix.selectVariantList', () {
+  group('Style.selectVariantList', () {
     const attr1 = MockDoubleScalarAttribute(1.0);
     const attr2 = MockIntScalarAttribute(2);
     const attr3 = MockBooleanScalarAttribute(true);
@@ -253,7 +220,7 @@ void main() {
     const variantAttr2 = Variant('variant2');
 
     test('with Matched Variants', () {
-      final style = StyleMix(attr1, variantAttr1(attr2), variantAttr2(attr3));
+      final style = Style(attr1, variantAttr1(attr2), variantAttr2(attr3));
       final updatedStyle =
           style.selectVariantList([variantAttr1, variantAttr2]);
 
@@ -265,7 +232,7 @@ void main() {
 
     test('with matching multi variant', () {
       final multiVariant = MultiVariant.and(const [variantAttr1, variantAttr2]);
-      final style = StyleMix(attr1, attr2, multiVariant(attr3));
+      final style = Style(attr1, attr2, multiVariant(attr3));
       final thirdStyle = style.selectVariantList([variantAttr1, variantAttr2]);
 
       expect(thirdStyle.styles.length, 3);
@@ -273,21 +240,21 @@ void main() {
     });
 
     test('with Unmatched Variants', () {
-      final mix = StyleMix(attr1);
+      final mix = Style(attr1);
       final updatedMix = mix.selectVariantList([variantAttr1, variantAttr2]);
 
       expect(updatedMix, mix);
     });
 
     test('with Empty List', () {
-      final mix = StyleMix(attr1, attr2);
+      final mix = Style(attr1, attr2);
       final updatedMix = mix.selectVariantList([]);
 
       expect(updatedMix, mix);
     });
   });
 
-  group('StyleMix.pickVariants', () {
+  group('Style.pickVariants', () {
     const attr1 = MockDoubleScalarAttribute(1.0);
     const attr2 = MockIntScalarAttribute(2);
 
@@ -299,7 +266,7 @@ void main() {
     const smallVariant = Variant('small');
 
     test('Picks specified Variants and ignores others', () {
-      final style = StyleMix(
+      final style = Style(
         attr1,
         attr2,
         outlinedVariant(
@@ -312,24 +279,24 @@ void main() {
       );
       final pickedMix = style.pickVariants([outlinedVariant, smallVariant]);
 
-      expect(pickedMix.styles.contains(stringAttr1), isTrue);
-      expect(pickedMix.styles.contains(stringAttr2), isTrue);
-      expect(pickedMix.styles.contains(stringAttr3), isTrue);
-      expect(pickedMix.styles.contains(attr1), isFalse);
-      expect(pickedMix.styles.contains(attr2), isFalse);
+      expect(pickedMix.styles.containsType(stringAttr1), isTrue);
+      expect(pickedMix.styles.containsType(stringAttr2), isTrue);
+      expect(pickedMix.styles.containsType(stringAttr3), isTrue);
+      expect(pickedMix.styles.containsType(attr1), isFalse);
+      expect(pickedMix.styles.containsType(attr2), isFalse);
       expect(pickedMix.variants.isEmpty, isTrue);
     });
 
-    test('Returns empty StyleMix when no Variants are picked', () {
-      final style = StyleMix(attr1, attr2);
+    test('Returns empty Style when no Variants are picked', () {
+      final style = Style(attr1, attr2);
       final pickedMix = style.pickVariants([]);
 
       expect(pickedMix.styles.isEmpty, isTrue);
       expect(pickedMix.variants.isEmpty, isTrue);
     });
 
-    test('Returns empty StyleMix when picked Variants are not present', () {
-      final style = StyleMix(attr1, attr2); // no variants added here
+    test('Returns empty Style when picked Variants are not present', () {
+      final style = Style(attr1, attr2); // no variants added here
       final pickedMix = style.pickVariants([outlinedVariant, smallVariant]);
 
       expect(pickedMix.styles.isEmpty, isTrue);
@@ -337,42 +304,42 @@ void main() {
     });
   });
 
-  group('StyleMix hashcode', () {
+  group('Style hashcode', () {
     test('should return different hashcode for same attributes', () {
-      final style1 = StyleMix(attribute1, attribute2);
-      final style2 = StyleMix(attribute1, attribute2);
+      final style1 = Style(attribute1, attribute2);
+      final style2 = Style(attribute1, attribute2);
 
       expect(style1.hashCode, equals(style2.hashCode));
     });
 
     test('should return different hashcode for different attributes', () {
-      final style1 = StyleMix(attribute1, attribute2);
-      final style2 = StyleMix(attribute1, attribute3);
+      final style1 = Style(attribute1, attribute2);
+      final style2 = Style(attribute1, attribute3);
 
       expect(style1.hashCode, isNot(style2.hashCode));
     });
   });
 
-  group('StyleMix equality', () {
+  group('Style equality', () {
     test('should return true for same attributes', () {
-      final style1 = StyleMix(attribute1, attribute2);
-      final style2 = StyleMix(attribute1, attribute2);
+      final style1 = Style(attribute1, attribute2);
+      final style2 = Style(attribute1, attribute2);
 
       expect(style1, style2);
     });
 
     test('should return false for different attributes', () {
-      final style1 = StyleMix(attribute1, attribute2);
-      final style2 = StyleMix(attribute1, attribute3);
+      final style1 = Style(attribute1, attribute2);
+      final style2 = Style(attribute1, attribute3);
 
       expect(style1, isNot(style2));
     });
   });
 
-  group('StyleMix variantChooser', () {
+  group('Style variantChooser', () {
     const variant1 = Variant('Variant1');
     const variant2 = Variant('Variant2');
-    final style = StyleMix(
+    final style = Style(
       attribute1,
       attribute2,
       variant1(attribute3),

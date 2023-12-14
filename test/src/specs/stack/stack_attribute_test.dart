@@ -9,7 +9,7 @@ void main() {
     test(
         'of returns default attribute when mix does not have StackMixAttribute',
         () {
-      final mix = MixData.create(MockBuildContext(), StyleMix());
+      final mix = MixData.create(MockBuildContext(), Style());
       final attribute = StackSpecAttribute.of(mix);
 
       final resolved = attribute.resolve(mix);
@@ -27,7 +27,7 @@ void main() {
         textDirection: TextDirection.ltr,
         clipBehavior: Clip.antiAlias,
       );
-      final mix = MixData.create(MockBuildContext(), StyleMix(attribute));
+      final mix = MixData.create(MockBuildContext(), Style(attribute));
       final spec = attribute.resolve(mix);
 
       expect(spec.alignment, Alignment.center);

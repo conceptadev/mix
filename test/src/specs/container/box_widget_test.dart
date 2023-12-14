@@ -5,21 +5,21 @@ import 'package:mix/mix.dart';
 import '../../../helpers/testing_utils.dart';
 
 void main() {
-  testWidgets('StyledContainer', (WidgetTester tester) async {
+  testWidgets('Box', (WidgetTester tester) async {
     final paddingAttr = box.padding(10);
     final marginAttr = box.margin(15);
     final alignmentAttr = box.alignment.center();
     final clipAttr = box.clipBehavior.hardEdge();
 
-    final boxDecorationAttr = box.decoration.box(
+    final boxDecorationAttr = box.decoration(
       border: Border.all(color: Colors.red, width: 1, style: BorderStyle.solid),
       borderRadius: BorderRadius.circular(10),
       color: Colors.red,
     );
 
     await tester.pumpStyledWidget(
-      StyledContainer(
-        style: StyleMix(
+      Box(
+        style: Style(
           paddingAttr,
           marginAttr,
           alignmentAttr,
@@ -37,12 +37,13 @@ void main() {
     expect(containerWidget.alignment, Alignment.center);
     expect(containerWidget.clipBehavior, Clip.hardEdge);
     expect(
-        containerWidget.decoration,
-        BoxDecoration(
-          border:
-              Border.all(color: Colors.red, width: 1, style: BorderStyle.solid),
-          borderRadius: BorderRadius.circular(10),
-          color: Colors.red,
-        ));
+      containerWidget.decoration,
+      BoxDecoration(
+        border:
+            Border.all(color: Colors.red, width: 1, style: BorderStyle.solid),
+        borderRadius: BorderRadius.circular(10),
+        color: Colors.red,
+      ),
+    );
   });
 }

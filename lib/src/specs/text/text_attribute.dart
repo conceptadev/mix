@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
 
-import '../../attributes/strut_style/strut_style_attribute.dart';
 import '../../attributes/strut_style/strut_style_dto.dart';
-import '../../attributes/text_style/text_style_attribute.dart';
 import '../../attributes/text_style/text_style_dto.dart';
 import '../../core/attribute.dart';
-import '../../core/directive.dart';
 import '../../factory/mix_provider_data.dart';
 import 'text_spec.dart';
 
-class TextSpecAttribute
-    extends ResolvableAttribute<TextSpecAttribute, TextSpec> {
+class TextSpecAttribute extends SpecAttribute<TextSpecAttribute, TextSpec> {
   final TextOverflow? overflow;
   final StrutStyleDto? strutStyle;
   final TextAlign? textAlign;
@@ -21,7 +17,6 @@ class TextSpecAttribute
   final TextHeightBehavior? textHeightBehavior;
   final TextDirection? textDirection;
   final bool? softWrap;
-  final List<TextDirective>? directives;
 
   const TextSpecAttribute({
     this.overflow,
@@ -34,17 +29,7 @@ class TextSpecAttribute
     this.textHeightBehavior,
     this.textDirection,
     this.softWrap,
-    this.directives,
   });
-
-  static TextSpecAttribute of(MixData mix) {
-    final attribute = mix.attributeOf<TextSpecAttribute>();
-
-    return TextSpecAttribute(
-      strutStyle: mix.attributeOf<StrutStyleAttribute>()?.value,
-      style: mix.attributeOf<TextStyleAttribute>()?.value,
-    ).merge(attribute);
-  }
 
   @override
   TextSpec resolve(MixData mix) {
@@ -59,12 +44,11 @@ class TextSpecAttribute
       textHeightBehavior: textHeightBehavior,
       textDirection: textDirection,
       softWrap: softWrap,
-      directives: directives ?? [],
     );
   }
 
   @override
-  TextSpecAttribute merge(covariant TextSpecAttribute? other) {
+  TextSpecAttribute merge(TextSpecAttribute? other) {
     if (other == null) return this;
 
     return TextSpecAttribute(
@@ -78,7 +62,6 @@ class TextSpecAttribute
       textHeightBehavior: other.textHeightBehavior ?? textHeightBehavior,
       textDirection: other.textDirection ?? textDirection,
       softWrap: other.softWrap ?? softWrap,
-      directives: [...(directives ?? []), ...(other.directives ?? [])],
     );
   }
 
@@ -94,6 +77,5 @@ class TextSpecAttribute
         textHeightBehavior,
         textDirection,
         softWrap,
-        directives,
       ];
 }

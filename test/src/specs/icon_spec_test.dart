@@ -11,12 +11,12 @@ void main() {
     test('resolve', () {
       final mix = MixData.create(
         MockBuildContext(),
-        StyleMix(
+        Style(
           IconSpecAttribute(color: Colors.red.toDto(), size: 20.0),
         ),
       );
 
-      final spec = IconSpec.resolve(mix);
+      final spec = IconSpec.of(mix);
 
       expect(spec.color, Colors.red);
       expect(spec.size, 20.0);

@@ -5,10 +5,9 @@ import '../../attributes/decoration/decoration_dto.dart';
 import '../../attributes/spacing/spacing_dto.dart';
 import '../../core/attribute.dart';
 import '../../factory/mix_provider_data.dart';
-import 'container_spec.dart';
+import 'box_spec.dart';
 
-class ContainerSpecAttribute
-    extends ResolvableAttribute<ContainerSpecAttribute, ContainerSpec> {
+class BoxSpecAttribute extends SpecAttribute<BoxSpecAttribute, BoxSpec> {
   final AlignmentGeometry? alignment;
   final SpacingDto? padding;
   final SpacingDto? margin;
@@ -19,7 +18,7 @@ class ContainerSpecAttribute
   final double? width;
   final double? height;
 
-  const ContainerSpecAttribute({
+  const BoxSpecAttribute({
     this.alignment,
     this.padding,
     this.margin,
@@ -32,8 +31,8 @@ class ContainerSpecAttribute
   });
 
   @override
-  ContainerSpec resolve(MixData mix) {
-    return ContainerSpec(
+  BoxSpec resolve(MixData mix) {
+    return BoxSpec(
       alignment: alignment,
       padding: padding?.resolve(mix),
       margin: margin?.resolve(mix),
@@ -47,10 +46,10 @@ class ContainerSpecAttribute
   }
 
   @override
-  ContainerSpecAttribute merge(ContainerSpecAttribute? other) {
+  BoxSpecAttribute merge(BoxSpecAttribute? other) {
     if (other == null) return this;
 
-    return ContainerSpecAttribute(
+    return BoxSpecAttribute(
       alignment: other.alignment ?? alignment,
       padding: padding?.merge(other.padding) ?? other.padding,
       margin: margin?.merge(other.margin) ?? other.margin,
