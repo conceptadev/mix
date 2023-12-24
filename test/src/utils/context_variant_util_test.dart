@@ -8,13 +8,13 @@ void main() {
   group('ContextVariant', () {
     test('Equality holds when all properties are the same', () {
       bool contextFunction(BuildContext context) => true;
-      final variant1 = ContextVariant('variant1', when: contextFunction);
-      final variant2 = ContextVariant('variant1', when: contextFunction);
+      final variant1 = ContextVariant('variant1', contextFunction);
+      final variant2 = ContextVariant('variant1', contextFunction);
       expect(variant1, variant2);
     });
     test('Equality fails when properties are different', () {
-      final variant1 = ContextVariant('variant1', when: (context) => true);
-      final variant2 = ContextVariant('variant2', when: (context) => true);
+      final variant1 = ContextVariant('variant1', (context) => true);
+      final variant2 = ContextVariant('variant2', (context) => true);
       expect(variant1, isNot(variant2));
     });
   });

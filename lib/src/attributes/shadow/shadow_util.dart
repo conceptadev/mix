@@ -236,11 +236,10 @@ class ElevationUtility<T extends StyleAttribute>
   /// Example usage:
   ///
   /// ```dart
-  /// final elevation = ElevationUtility<StyleAttribute>(builder);
   /// final attribute = elevation.two();
   /// ```
   ///
-  /// Attribute now holds a list of [BoxShadowAttribute] corresponding to a material elevation of `2`.
+  /// Attribute now holds a list of [BoxShadowDto] corresponding to a material elevation of `2`.
   T call(int value) {
     assert(kElevationToShadow.containsKey(value), 'Invalid elevation value');
 

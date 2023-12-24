@@ -61,7 +61,6 @@ class BoxBorderUtility<T extends StyleAttribute>
   /// Example usage:
   ///
   /// ```dart
-  /// final border = BorderUtility<StyleAttribute>(builder);
   /// final attribute = border.all(
   ///   color: Colors.red,
   ///   width: 2.0,
@@ -86,7 +85,6 @@ class BoxBorderUtility<T extends StyleAttribute>
   /// Example usage:
   ///
   /// ```dart
-  /// final border = BorderUtility<StyleAttribute>(builder);
   /// final attribute = border.bottom(
   ///   color: Colors.blue,
   ///   width: 3.0,
@@ -112,7 +110,6 @@ class BoxBorderUtility<T extends StyleAttribute>
   /// Example usage:
   ///
   /// ```dart
-  /// final border = BorderUtility<StyleAttribute>(builder);
   /// final attribute = border.top(
   ///   color: Colors.blue,
   ///   width: 3.0,
@@ -138,7 +135,6 @@ class BoxBorderUtility<T extends StyleAttribute>
   /// Example usage:
   ///
   /// ```dart
-  /// final border = BorderUtility<StyleAttribute>(builder);
   /// final attribute = border.left(
   ///   color: Colors.blue,
   ///   width: 3.0,
@@ -164,7 +160,6 @@ class BoxBorderUtility<T extends StyleAttribute>
   /// Example usage:
   ///
   /// ```dart
-  /// final border = BorderUtility<StyleAttribute>(builder);
   /// final attribute = border.right(
   ///   color: Colors.blue,
   ///   width: 3.0,
@@ -234,7 +229,6 @@ class BoxBorderUtility<T extends StyleAttribute>
   /// Example usage:
   ///
   /// ```dart
-  /// final border = BorderUtility<StyleAttribute>(builder);
   /// final attribute = border.vertical(
   ///   color: Colors.indigo,
   ///   width: 1.5,
@@ -259,7 +253,6 @@ class BoxBorderUtility<T extends StyleAttribute>
   /// Example usage:
   ///
   /// ```dart
-  /// final border = BorderUtility<StyleAttribute>(builder);
   /// final attribute = border.horizontal(
   ///   color: Colors.teal,
   ///   width: 1.0,

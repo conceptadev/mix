@@ -9,8 +9,7 @@ import 'color_dto.dart';
 
 @immutable
 class ColorUtility<T extends StyleAttribute>
-    extends DtoUtility<T, ColorDto, Color>
-    with CallableDtoUtilityMixin<T, ColorDto, Color> {
+    extends DtoUtility<T, ColorDto, Color> {
   const ColorUtility(super.builder) : super(valueToDto: ColorDto.new);
 
   T _buildColor(Color color) => builder(valueToDto(color));
@@ -87,7 +86,7 @@ class ColorUtility<T extends StyleAttribute>
 
   T of(ColorToken ref) => _buildColor(ref());
 
-  T transparent() => _buildColor(const Color(0x00000000));
+  T transparent() => _buildColor(Colors.transparent);
   T black() => _buildColor(const Color(0xFF000000));
   T black87() => _buildColor(const Color(0xDD000000));
   T black54() => _buildColor(const Color(0x8A000000));
@@ -104,6 +103,8 @@ class ColorUtility<T extends StyleAttribute>
   T white24() => _buildColor(const Color(0x3DFFFFFF));
   T white12() => _buildColor(const Color(0x1FFFFFFF));
   T white10() => _buildColor(const Color(0x1AFFFFFF));
+
+  T call(Color color) => _buildColor(color);
 }
 
 abstract class ColorSwatchUtility<T extends StyleAttribute>

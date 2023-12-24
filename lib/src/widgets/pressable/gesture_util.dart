@@ -1,5 +1,7 @@
+import 'package:flutter/material.dart';
+
 import '../../helpers/string_ext.dart';
-import '../../variants/context_variant.dart';
+import '../../variants/variant.dart';
 import 'gesture_state.notifier.dart';
 
 final onPress = _onState(GestureState.pressed);
@@ -10,24 +12,29 @@ final onEnabled = _onStatus(GestureStatus.enabled);
 
 final onFocus = ContextVariant(
   'on-focus',
-  when: (context) => GestureStateNotifier.of(context)?.focus == true,
+  (context) => GestureStateNotifier.of(context)?.focus == true,
 );
 
 final onHover = ContextVariant(
   'on-hover',
-  when: (context) => GestureStateNotifier.of(context)?.hover == true,
+  (context) => GestureStateNotifier.of(context)?.hover == true,
 );
+
+@immutable
+class GestureVariant extends ContextVariant {
+  const GestureVariant(super.name, super.when);
+}
 
 GestureVariant _onState(GestureState state) {
   return GestureVariant(
     'on-${state.name.paramCase}',
-    when: (context) => GestureStateNotifier.of(context)?.state == state,
+    (context) => GestureStateNotifier.of(context)?.state == state,
   );
 }
 
 GestureVariant _onStatus(GestureStatus status) {
   return GestureVariant(
     'on-${status.name.paramCase}',
-    when: (context) => GestureStateNotifier.of(context)?.status == status,
+    (context) => GestureStateNotifier.of(context)?.status == status,
   );
 }

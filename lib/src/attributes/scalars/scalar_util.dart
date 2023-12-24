@@ -29,16 +29,6 @@ abstract class DtoUtility<Attr extends StyleAttribute, D extends Dto<Value>,
   Attr as(Value value) => _builder(valueToDto(value));
 }
 
-mixin CallableUtilityMixin<Attr extends StyleAttribute, Value>
-    on MixUtility<Attr, Value> {
-  Attr call(Value value) => _builder(value);
-}
-
-mixin CallableDtoUtilityMixin<Attr extends StyleAttribute, D extends Dto<Value>,
-    Value> on DtoUtility<Attr, D, Value> {
-  Attr call(Value value) => _builder(valueToDto(value));
-}
-
 abstract class ScalarUtility<Return extends StyleAttribute, Param>
     extends MixUtility<Return, Param> {
   const ScalarUtility(super.builder);
@@ -48,23 +38,56 @@ abstract class ScalarUtility<Return extends StyleAttribute, Param>
   Return call(Param value) => _builder(value);
 }
 
+/// AlignmentUtility - A utility class for defining alignment attributes for widgets.
+///
+/// This class extends `ScalarUtility<T, AlignmentGeometry>`, allowing it to handle alignment attributes
+/// using generic types. It provides methods to set various predefined alignments as well as custom alignments.
 class AlignmentUtility<T extends StyleAttribute>
     extends ScalarUtility<T, AlignmentGeometry> {
+  // Constructor accepting a builder function to create instances of T.
   const AlignmentUtility(super.builder);
 
+  /// Sets the alignment to top left.
   T topLeft() => builder(Alignment.topLeft);
+
+  /// Sets the alignment to top center.
   T topCenter() => builder(Alignment.topCenter);
+
+  /// Sets the alignment to top right.
   T topRight() => builder(Alignment.topRight);
+
+  /// Sets the alignment to center left.
   T centerLeft() => builder(Alignment.centerLeft);
+
+  /// Sets the alignment to center.
   T center() => builder(Alignment.center);
+
+  /// Sets the alignment to center right.
   T centerRight() => builder(Alignment.centerRight);
+
+  /// Sets the alignment to bottom left.
   T bottomLeft() => builder(Alignment.bottomLeft);
+
+  /// Sets the alignment to bottom center.
   T bottomCenter() => builder(Alignment.bottomCenter);
+
+  /// Sets the alignment to bottom right.
   T bottomRight() => builder(Alignment.bottomRight);
+
+  /// Sets a custom alignment based on the provided x, y, or start values.
+  ///
+  /// The `x` and `start` parameters are mutually exclusive to avoid conflicts.
+  /// The `x` parameter sets a specific horizontal alignment, while `start` aligns based on text direction (LTR/RTL).
+  /// The `y` parameter sets the vertical alignment.
+  ///
+  /// - `x`: Horizontal alignment value, ignored if `start` is provided.
+  /// - `y`: Vertical alignment value.
+  /// - `start`: Horizontal alignment based on text direction, overrides `x` if provided.
   T only({double? x, double? y, double? start}) {
     assert(x == null || start == null,
         'Cannot provide both an x and a start parameter.');
 
+    // If `start` is provided, it creates an AlignmentDirectional, otherwise a regular Alignment.
     return start == null
         ? builder(Alignment(x ?? 0, y ?? 0))
         : builder(AlignmentDirectional(start, y ?? 0));
@@ -80,9 +103,11 @@ class AlignmentUtility<T extends StyleAttribute>
 /// final utility = DoubleUtility(builder);
 /// final tenValue = utility(10);
 /// ```
-class DoubleUtility<T extends StyleAttribute> extends ScalarUtility<T, double>
-    with CallableUtilityMixin<T, double> {
+class DoubleUtility<T extends StyleAttribute> extends ScalarUtility<T, double> {
   const DoubleUtility(super.builder);
+
+  @override
+  T call(double value) => builder(value);
 }
 
 /// Utility for Size values. Includes predefined values such as zero and infinity.
@@ -110,11 +135,13 @@ abstract class SizingUtility<T extends StyleAttribute>
 /// final tenValue = utility(10);
 /// // zeroValue is 0
 /// ```
-class IntUtility<T extends StyleAttribute> extends ScalarUtility<T, int>
-    with CallableUtilityMixin<T, int> {
+class IntUtility<T extends StyleAttribute> extends ScalarUtility<T, int> {
   const IntUtility(super.builder);
 
   T zero() => builder(0);
+
+  @override
+  T call(int value) => builder(value);
 }
 
 /// Utility for creating `bool` values.
@@ -128,12 +155,14 @@ class IntUtility<T extends StyleAttribute> extends ScalarUtility<T, int>
 /// final disabled = boolUtility.off();
 /// final boolValue = boolUtility(true);
 /// ```
-class BoolUtility<T extends StyleAttribute> extends ScalarUtility<T, bool>
-    with CallableUtilityMixin<T, bool> {
+class BoolUtility<T extends StyleAttribute> extends ScalarUtility<T, bool> {
   const BoolUtility(super.builder);
 
   T on() => builder(true);
   T off() => builder(false);
+
+  @override
+  T call(bool value) => builder(value);
 }
 
 /// Utility for setting `VerticalDirection` values.
@@ -318,7 +347,6 @@ class TileModeUtility<T extends StyleAttribute>
 /// final rotate90 = gradientTransform.rotate(90);
 /// ```
 /// See [GradientTransform] for more information.
-
 class GradientTransformUtility<T extends StyleAttribute>
     extends ScalarUtility<T, GradientTransform> {
   const GradientTransformUtility(super.builder);
@@ -456,7 +484,6 @@ class ImageRepeatUtility<T extends StyleAttribute>
 /// final offset = OffsetUtility(builder);
 /// final offsetValue = offset(10, 10);
 /// ```
-
 class OffsetUtility<T extends StyleAttribute> extends MixUtility<T, Offset> {
   const OffsetUtility(super.builder);
 

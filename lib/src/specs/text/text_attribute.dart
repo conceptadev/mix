@@ -49,20 +49,20 @@ class TextSpecAttribute extends SpecAttribute<TextSpecAttribute, TextSpec> {
 
   @override
   TextSpecAttribute merge(TextSpecAttribute? other) {
-    if (other == null) return this;
-
-    return TextSpecAttribute(
-      overflow: other.overflow ?? overflow,
-      strutStyle: strutStyle?.merge(other.strutStyle) ?? other.strutStyle,
-      textAlign: other.textAlign ?? textAlign,
-      textScaleFactor: other.textScaleFactor ?? textScaleFactor,
-      maxLines: other.maxLines ?? maxLines,
-      style: style?.merge(other.style) ?? other.style,
-      textWidthBasis: other.textWidthBasis ?? textWidthBasis,
-      textHeightBehavior: other.textHeightBehavior ?? textHeightBehavior,
-      textDirection: other.textDirection ?? textDirection,
-      softWrap: other.softWrap ?? softWrap,
-    );
+    return other == null
+        ? this
+        : TextSpecAttribute(
+            overflow: other.overflow ?? overflow,
+            strutStyle: strutStyle?.merge(other.strutStyle) ?? other.strutStyle,
+            textAlign: other.textAlign ?? textAlign,
+            textScaleFactor: other.textScaleFactor ?? textScaleFactor,
+            maxLines: other.maxLines ?? maxLines,
+            style: style?.merge(other.style) ?? other.style,
+            textWidthBasis: other.textWidthBasis ?? textWidthBasis,
+            textHeightBehavior: other.textHeightBehavior ?? textHeightBehavior,
+            textDirection: other.textDirection ?? textDirection,
+            softWrap: other.softWrap ?? softWrap,
+          );
   }
 
   @override

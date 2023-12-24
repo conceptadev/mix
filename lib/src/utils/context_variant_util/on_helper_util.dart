@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
-
-import '../../variants/context_variant.dart';
+import '../../variants/variant.dart';
 
 /// Creates a [ContextVariant] that negates the condition of another [ContextVariant].
 ///
@@ -12,6 +10,6 @@ import '../../variants/context_variant.dart';
 ContextVariant onNot(ContextVariant variant) {
   return ContextVariant(
     'not(${variant.name})',
-    when: (BuildContext context) => !variant.when(context),
+    (context) => !variant.when(context),
   );
 }

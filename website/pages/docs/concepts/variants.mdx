@@ -3,55 +3,139 @@ id: variants
 title: "Variants"
 ---
 
-import Code from "../../../components/Code.js";
+import { Callout } from "nextra-theme-docs";
 
-# Variants
+# Style Variants
+
+Variants are powerful tools in Mix, designed to streamline the styling process in Flutter applications. They allow for the grouping and conditional application of styling attributes, enhancing efficiency and adaptability in UI design.
 
 ## Overview
 
-Variants in Mix are a foundational concept for creating dynamic and modular style definitions. They enable developers to encapsulate and manage groups of styling attributes, which can be applied to various aspects of a Flutter application's UI.
+The `Variant` API is designed to be simple and intuitive. There are two types of variants.
 
-- Variants could be also use-cases for Design Systems
+- **Named variants** are applied manually, and can be used to create custom variants.
+- **Context variants** are applied automatically, and can be used to create responsive variants.
 
-## The Role of Variants
+Variants usage can be broken down in two main parts. The definition of a `Variant`, and the application of the variant within a `Style`.
 
-Variants allow for the efficient organization of style attributes, facilitating the easy application and switching between different style sets. This approach provides a streamlined method for handling diverse styling requirements across different components, contributing to a more maintainable and consistent design system within your applications. By using Variants, developers can craft adaptable and cohesive UI components, enhancing both the functionality and aesthetic of their Flutter projects.
+## Named Variants
 
-```dart highlight="10-13"
-final style = Style(
-  backgroundColor(MaterialTokens.colorScheme.primary),
-  text.style(color: $onPrimary),
-  onHover(
-    backgroundColor(MaterialTokens.colorScheme.primary),
-    text.style(color: $onPrimary),
-  ),
-);
+Named variants are important when you want to have a very clear control of when a variant can be used, and want to control the over the variant usage and type.
 
-Pressable(
-  style: style,
-  child: const TextMix('Button'),
-);
-```
+### Defining a Variant
 
-Variants can be extremely powerful, and allow you to create consistent variations of your
-Widgets.
-
-## Usage
-
-To use a variant, call it on a _Mix_
+To define a variant, you can use the `Variant` constructor.
 
 ```dart
+const outlined = Variant('outlined');
+```
+
+### Using a Variant in a Style
+
+To use a variant in a style, you can call it as a function on a `Style` passing the attributes.
+
+```dart {1, 8-12}
+const outlined = Variant('outlined');
+
 final style = Style(
-  onDark(
-    text.style(color: Colors.white),
-  ),
-  onLight(
-    text.style(color: Colors.black),
+  padding(20),
+  border.radius(10),
+  backgroundColor.black(),
+  text.style.color.white(),
+  outlined(
+    backgroundColor.transparent(),
+    border.color.black(),
+    text.style.color.black(),
   ),
 );
 ```
 
-### Conditional operators
+### Applying a Variant
+
+To apply a variant, you can use the `variant` method on a `Style`.
+
+```dart {1, 8-12, 15}
+const outlined = Variant('outlined');
+
+final style = Style(
+  padding(20),
+  border.radius(10),
+  backgroundColor.black(),
+  text.style.color.white(),
+  outlined(
+    backgroundColor.transparent(),
+    border.color.black(),
+    text.style.color.black(),
+  ),
+);
+
+final outlinedStyle = style.variant(outlined);
+```
+
+`outlinedStyle` will now have the attributes defined in the `outlined` variant, and will be equivalent to the following:
+
+```dart highlight="2-4"
+final outlinedStyle = Style(
+  padding(20),
+  border.radius(10),
+  backgroundColor.transparent(),
+  border.color.black(),
+  text.style.color.black(),
+);
+```
+
+## Context Variants
+
+Context variants are variants that are applied automatically based on the BuildContext. They are useful when you want to create responsive variants that are applied automatically based on the context.
+
+### Defining a Context Variant
+
+To define a context variant, you can use the `ContextVariant` constructor and pass a `when` function.
+
+```dart
+final onDark = ContextVariant(
+  'on-dark',
+  (context) => Theme.of(context).brightness == Brightness.dark;
+);
+```
+
+<Callout type="info">
+  Defining the name of a context variant with `on` is a convention, but not a
+  requirement. That helps identify that this is a `ContextVariant`.
+</Callout>
+
+### Using a Context Variant in a Style
+
+To use a context variant in a style, you can call it as a function on a `Style` passing the attributes.
+
+```dart {7-10}
+
+final style = Style(
+  padding(20),
+  border.radius(10),
+  backgroundColor.black(),
+  text.style.color.white(),
+  onDark(
+    backgroundColor.white(),
+    text.style.color.black(),
+  ),
+);
+```
+
+### Applying a Context Variant
+
+`ContextVariants` are applied automatically based on the `BuildContext`. Once it is called on a style it will be equivalent to have defined the following:
+
+```dart highlight="2-4"
+final onDarkStyle = Style(
+  padding(20),
+  border.radius(10),
+  backgroundColor.white(),
+  text.style.color.black(),
+);
+```
+
+## Conditional operators
 
 The operators `|` and `&` can be used to add conditions to your mix:
 
@@ -84,7 +168,7 @@ The `onNot` operator can also be called to execute the variant content only when
 variant is not called. For example:
 
 ```dart highlight="2-4"
-final mix = Style(
+final style = Style(
   onNot(disabled)(
     scale(1.2),
   ),
@@ -101,129 +185,30 @@ Widgets.
 These are `Variants` that will change based on different _gestures_ and state of the
 `Pressable` Widget.
 
-- `hover()`: Applies attributes on hover.
-- `focus()`: Applies attributes on focus.
-- `press()`: Applies attributes when pressing.
-- `disabled()`: Applies attributes when disabled.
+- `onHover()`: Applies attributes on hover.
+- `onFocus()`: Applies attributes on focus.
+- `onPress()`: Applies attributes when pressing.
+- `onDisabled()`: Applies attributes when disabled.
 
 ### Breakpoints
 
-- `small()`: Applies attributes when the screen is at least `small` breakpoint.
-- `medium()`: Applies attributes when the screen is at least `medium` breakpoint.
-- `large()`: Applies attributes when the screen is at least `large` breakpoint.
+- `onSmall()`: Applies attributes when the screen is at least `small` breakpoint.
+- `onMedium()`: Applies attributes when the screen is at least `medium` breakpoint.
+- `onLarge()`: Applies attributes when the screen is at least `large` breakpoint.
 
 Breakpoints for these sizes can be configured in the `MixTheme`:
 
-```dart
-MixTheme(
-  data: MixThemeData(
-    breakpoints: MixThemeBreakpoints(
-      small: 600, // cellphone
-      medium: 1240, // tablet
-      large: 1440, // desktop
-    ),
-  ),
-  child: ...,
-),
-```
-
 ### Orientation
 
-- `portrait()`: Applies attributes when the screen is in portrait orientation.
-- `landscape()`: Applies attributes when the screen is in landscape orientation.
+- `onPortrait()`: Applies attributes when the screen is in portrait orientation.
+- `onLandscape()`: Applies attributes when the screen is in landscape orientation.
 
 ### Dark Mode
 
-- `dark()`: Applies attributes when the theme is in dark mode.
-- `light()`: Applies attributes when the theme is in light mode.
+- `onDark()`: Applies attributes when the theme is in dark mode.
+- `onLight()`: Applies attributes when the theme is in light mode.
 
 ### State Holding
 
-- `active()`: Applies attributes when the widget state is marked as active
-- `inactive()`: Applies attributes when the widget state is marked as inactive
-
-### Text Styling
-
-For widgets such as Dialogs, Cards and Modals, it's good to have titles and content.
-
-- `title()`: Applies attributes when the `TextMix` is marked as title
-- `paragraph()`: Applies attributes when the `TextMix` is marked as paragraph
-
-```dart highlight="2-7"
-final mix = Style(
-  title(
-    titleCase(), // Makes the title uppercase
-    font(
-      weight: FontWeight.bold, // Makes the title bold
-    ),
-  ),
-);
-```
-
-All other texts that are not marked as `title` will not be touched.
-
-## Custom Variants
-
-Mix gives you complete control of how to define your own `Variants` and when they are
-applied.
-
-There are two types of `Variants` that you are able to define: callable and context
-variants.
-
-### Callable Variants
-
-Can be called manually when they need to be applied. You can define a variant the following
-way.
-
-```dart highlight="6-10"
-const outlined = Variant('outlined');
-
-final mix = Style(
-  backgroundColor(Colors.black),
-  text.style(color: Colors.white),
-  outlined(
-    backgroundColor(Colors.transparent),
-    borderColor(Colors.black),
-    text.style(color: Colors.black),
-  ),
-);
-```
-
-You are then able to choose when to apply the variant based on your own logic.
-
-```dart highlight="2"
-Pressable(
-  style: mix.withVariant(outlined),
-  onPressed: () {},
-  child: const TextMix('Outlined Button'),
-);
-```
-
-You are also able to pass the variant through the `variant` parameter on the
-`MixableWidget` constructor
-
-```dart highlight="3"
-Pressable(
-  style: mix,
-  variant: outlined,
-  onPressed: () {},
-  child: const TextMix('Outlined Button'),
-);
-
-```
-
-### Context Variants
-
-These are `Variants` that have a method that defines when they should be applied based on
-the `BuildContext`. These will be applied automatically.
-
-Here is an example implementation of the `dark()` to understand how it works.
-
-```dart highlight="3-5"
-final dark = Variant(
-  'dark',
-  shouldApply: (BuildContext context) {
-    return Theme.of(context).brightness == Brightness.dark;
-  },
-);
-```
+- `onActive()`: Applies attributes when the widget state is marked as active
+- `onInactive()`: Applies attributes when the widget state is marked as inactive

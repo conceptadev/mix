@@ -8,40 +8,29 @@ const kShortAliasDeprecation =
 extension DeprecatedMixExtension<T extends Attribute> on Style {
   /// Adds an Attribute to a Mix.
   @Deprecated('Simplifying the mix API to avoid confusion. Use apply instead')
-  SpreadFunctionParams<T, Style> get mix {
-    return SpreadFunctionParams(addAttributes);
-  }
+  SpreadFunctionParams<T, Style> get mix => SpreadFunctionParams(addAttributes);
 
   @Deprecated('Use selectVariants now')
-  Style withVariants(List<Variant> variants) {
-    return withManyVariants(variants);
-  }
+  Style withVariants(List<Variant> variants) => withManyVariants(variants);
 
   @Deprecated(
     'Use merge() or mergeMany() now. You might have to turn into a Mix first. firstMixFactory.merge(secondMix)',
   )
-  Style addAttributes(Iterable<Attribute> attributes) {
-    return merge(Style.create(attributes));
-  }
+  Style addAttributes(Iterable<Attribute> attributes) =>
+      merge(Style.create(attributes));
 
   @Deprecated('Use selectVariants now')
-  Style withManyVariants(Iterable<Variant> variants) {
-    return selectVariantList(variants);
-  }
+  Style withManyVariants(Iterable<Variant> variants) => variantList(variants);
 
   @Deprecated('Use merge() or mergeMany() instead')
   SpreadFunctionParams<Style, Style> get apply =>
       const SpreadFunctionParams(Style.combine);
 
   @Deprecated('Use selectVariant now')
-  Style withVariant(Variant variant) {
-    return selectVariant(variant);
-  }
+  Style withVariant(Variant value) => variant(value);
 
   @Deprecated('Use combine now')
-  Style combineAll(List<Style> mixes) {
-    return Style.combine(mixes);
-  }
+  Style combineAll(List<Style> mixes) => Style.combine(mixes);
 
   @Deprecated('Use selectVariant now')
   Style withMaybeVariant(Variant? variant) {
@@ -58,9 +47,7 @@ extension DeprecatedMixExtension<T extends Attribute> on Style {
   }
 
   @Deprecated('Use applyNullable instead')
-  Style applyMaybe(Style? mix) {
-    return maybeApply(mix);
-  }
+  Style applyMaybe(Style? mix) => maybeApply(mix);
 }
 
 /// This refers to the deprecated class MixData and it's here for the purpose of maintaining compatibility.

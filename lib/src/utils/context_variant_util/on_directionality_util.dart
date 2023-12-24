@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../helpers/string_ext.dart';
-import '../../variants/context_variant.dart';
+import '../../variants/variant.dart';
 
 /// Variant for Right-To-Left (RTL) text direction.
 final onRTL = onDirectionality(TextDirection.rtl);
@@ -19,6 +19,6 @@ final onLTR = onDirectionality(TextDirection.ltr);
 ContextVariant onDirectionality(TextDirection direction) {
   return ContextVariant(
     'on-${direction.name.paramCase}',
-    when: (BuildContext context) => Directionality.of(context) == direction,
+    (context) => Directionality.of(context) == direction,
   );
 }

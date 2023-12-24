@@ -6,7 +6,7 @@ import '../core/attributes_map.dart';
 import '../core/decorator.dart';
 import '../helpers/compare_mixin.dart';
 import '../theme/mix_theme.dart';
-import '../variants/context_variant.dart';
+import '../widgets/pressable/gesture_util.dart';
 import 'style_mix.dart';
 
 /// This class is used for encapsulating all [MixData] related operations.
@@ -113,7 +113,7 @@ List<StyleAttribute> applyContextToVisualAttributes(
   }
 
   for (MultiVariantAttribute attr in multiVariants) {
-    if (attr.variant.hasGestureVariant) {
+    if (attr.variant.variants.any((variant) => variant is GestureVariant)) {
       gestureVariantTypes.add(attr);
     } else {
       contextVariantTypes.add(attr);

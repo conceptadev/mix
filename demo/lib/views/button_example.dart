@@ -120,9 +120,8 @@ abstract class Button extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mergedStyle = _baseStyle
-        .selectVariant(size ?? ButtonSizeVariants.medium)
-        .merge(style);
+    final mergedStyle =
+        _baseStyle.variant(size ?? ButtonSizeVariants.medium).merge(style);
 
     return Pressable(
       onPressed: onPressed,

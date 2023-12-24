@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../helpers/string_ext.dart';
 import '../../theme/mix_theme.dart';
 import '../../theme/tokens/breakpoints_token.dart';
-import '../../variants/context_variant.dart';
+import '../../variants/variant.dart';
 
 /// Global breakpoint context variants based on predefined screen sizes.
 /// These can be used to apply styles or layouts conditionally depending on the screen size.
@@ -30,14 +30,11 @@ ContextVariant onBreakpoint({minWidth = 0, maxWidth = double.infinity}) {
   final constraintName =
       'minWidth-${constraints.minWidth}-maxWidth-${constraints.maxWidth}';
 
-  return ContextVariant(
-    'on-$constraintName',
-    when: (BuildContext context) {
-      final size = MediaQuery.sizeOf(context);
+  return ContextVariant('on-$constraintName', (context) {
+    final size = MediaQuery.sizeOf(context);
 
-      return constraints.matches(size);
-    },
-  );
+    return constraints.matches(size);
+  });
 }
 
 /// Creates a [ContextVariant] based on a specific [token].
@@ -46,14 +43,11 @@ ContextVariant onBreakpoint({minWidth = 0, maxWidth = double.infinity}) {
 /// and returns a [ContextVariant] that applies when the current screen size matches
 /// the specified breakpoint.
 ContextVariant onBreakpointToken(BreakpointToken token) {
-  return ContextVariant(
-    'on-${token.name.paramCase}',
-    when: (BuildContext context) {
-      final size = MediaQuery.sizeOf(context);
+  return ContextVariant('on-${token.name.paramCase}', (context) {
+    final size = MediaQuery.sizeOf(context);
 
-      final selectedbreakpoint = token.resolve(context);
+    final selectedbreakpoint = token.resolve(context);
 
-      return selectedbreakpoint.matches(size);
-    },
-  );
+    return selectedbreakpoint.matches(size);
+  });
 }

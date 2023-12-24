@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../core/attribute.dart';
 import '../factory/style_mix.dart';
-import '../variants/context_variant.dart';
-import '../variants/multi_variant.dart';
 import '../variants/variant.dart';
 
 @immutable
@@ -86,17 +84,5 @@ class MultiVariantAttribute extends VariantAttribute<MultiVariant>
     if (other.variant != variant) throw throwArgumentError(other);
 
     return MultiVariantAttribute(variant, _style.merge(other._style));
-  }
-}
-
-@immutable
-class GestureContextVariantAttribute extends ContextVariantAttribute {
-  const GestureContextVariantAttribute(super.variant, super.style);
-
-  @override
-  GestureContextVariantAttribute merge(GestureContextVariantAttribute other) {
-    if (other.variant != variant) throw throwArgumentError(other);
-
-    return GestureContextVariantAttribute(variant, _style.merge(other._style));
   }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../helpers/string_ext.dart';
-import '../../variants/context_variant.dart';
+import '../../variants/variant.dart';
 
 /// Global brightness context variants.
 /// These variants are used to apply styles or behaviors conditionally based on the theme's brightness setting.
@@ -18,10 +18,7 @@ final onLight = onBrightness(Brightness.light);
 /// brightness matches the specified [brightness]. It is useful for defining
 /// brightness-specific styles or behaviors in the application.
 ContextVariant onBrightness(Brightness brightness) {
-  return ContextVariant(
-    'on-${brightness.name.paramCase}',
-    when: (BuildContext context) {
-      return Theme.of(context).brightness == brightness;
-    },
-  );
+  return ContextVariant('on-${brightness.name.paramCase}', (context) {
+    return Theme.of(context).brightness == brightness;
+  });
 }

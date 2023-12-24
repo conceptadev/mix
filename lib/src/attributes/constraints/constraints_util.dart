@@ -6,7 +6,7 @@ import 'constraints_dto.dart';
 
 /// Utility class for building box constraints-related style attributes.
 ///
-/// Accepts a builder function that returns [T] and takes a [BoxConstraintsAttribute] as a parameter.
+/// Accepts a builder function that returns [T] and takes a [BoxConstraintsDto] as a parameter.
 ///
 /// This utility allows for detailed configuration of box constraints,
 /// supporting attributes like `minWidth`, `maxWidth`, `minHeight`, and `maxHeight`.
@@ -19,7 +19,7 @@ class BoxConstraintsUtility<T extends StyleAttribute>
     extends DtoUtility<T, BoxConstraintsDto, BoxConstraints> {
   /// Creates a [BoxConstraintsUtility] with a builder function.
   ///
-  /// The builder function takes a [BoxConstraintsAttribute] as a parameter and returns [T].
+  /// The builder function takes a [BoxConstraintsDto] as a parameter and returns [T].
   ///
   /// Example:
   /// ```dart
@@ -39,7 +39,7 @@ class BoxConstraintsUtility<T extends StyleAttribute>
   /// final attribute = boxConstraints.maxWidth(100);
   /// ```
   ///
-  /// Attribute now holds a [T] with a [BoxConstraintsAttribute] that has a maxWidth value of `100`.
+  /// Attribute now holds a [T] with a [BoxConstraintsDto] that has a maxWidth value of `100`.
   DoubleUtility<T> get maxWidth {
     return DoubleUtility<T>((value) => call(maxWidth: value));
   }
@@ -54,7 +54,7 @@ class BoxConstraintsUtility<T extends StyleAttribute>
   /// final attribute = boxConstraints.minWidth(100);
   /// ```
   ///
-  /// Attribute now holds a [T] with a [BoxConstraintsAttribute] that has a minWidth value of `100`.
+  /// Attribute now holds a [T] with a [BoxConstraintsDto] that has a minWidth value of `100`.
   DoubleUtility<T> get minWidth {
     return DoubleUtility<T>((value) => call(minWidth: value));
   }
@@ -70,7 +70,7 @@ class BoxConstraintsUtility<T extends StyleAttribute>
   /// final attribute = boxConstraints.minHeight(100);
   /// ```
   ///
-  /// Attribute now holds a [T] with a [BoxConstraintsAttribute] that has a minHeight value of `100`.
+  /// Attribute now holds a [T] with a [BoxConstraintsDto] that has a minHeight value of `100`.
   DoubleUtility<T> get minHeight {
     return DoubleUtility<T>((value) => call(minHeight: value));
   }
@@ -86,7 +86,7 @@ class BoxConstraintsUtility<T extends StyleAttribute>
   /// final attribute = boxConstraints.maxHeight(100);
   /// ```
   ///
-  /// Attribute now holds a [T] with a [BoxConstraintsAttribute] that has a maxHeight value of `100`.
+  /// Attribute now holds a [T] with a [BoxConstraintsDto] that has a maxHeight value of `100`.
   DoubleUtility<T> get maxHeight {
     return DoubleUtility<T>((value) => call(maxHeight: value));
   }

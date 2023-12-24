@@ -15,7 +15,7 @@ void main() {
           // const AlignmentGeometryAttribute(Alignment.center),
           // const PaddingAttribute(SpacingDto.only(top: 8, bottom: 16)),
           // const MarginAttribute(SpacingDto.only(top: 10.0, bottom: 12.0)),
-          // const BoxConstraintsAttribute(
+          // const BoxConstraintsDto(
           //   BoxConstraintsDto(maxWidth: 300.0, minHeight: 200.0),
           // ),
           // const DecorationAttribute(

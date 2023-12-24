@@ -1,6 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mix/mix.dart';
-import 'package:mix/src/variants/multi_variant.dart';
+import 'package:mix/src/variants/variant.dart';
 
 import '../../helpers/testing_utils.dart';
 
@@ -34,8 +33,8 @@ void main() {
     });
 
     test('when should correctly match context variants', () {
-      final variant1 = ContextVariant('variant1', when: (context) => true);
-      final variant2 = ContextVariant('variant2', when: (context) => false);
+      final variant1 = ContextVariant('variant1', (context) => true);
+      final variant2 = ContextVariant('variant2', (context) => false);
       final multiAndVariant = MultiVariant.and([variant1, variant2]);
       final multiOrVariant = MultiVariant.or([variant1, variant2]);
 

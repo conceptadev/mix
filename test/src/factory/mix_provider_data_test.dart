@@ -3,12 +3,12 @@ import 'package:mix/src/core/attributes_map.dart';
 import 'package:mix/src/factory/mix_provider_data.dart';
 import 'package:mix/src/factory/style_mix.dart';
 import 'package:mix/src/theme/mix_theme.dart';
-import 'package:mix/src/variants/context_variant.dart';
+import 'package:mix/src/variants/variant.dart';
 
 import '../../helpers/testing_utils.dart';
 
 void main() {
-  final autoApplyVariant = ContextVariant('mock', when: (context) => true);
+  final autoApplyVariant = ContextVariant('mock', (context) => true);
   test('MixData create', () {
     final mixData = MixData.create(
         MockBuildContext(),
