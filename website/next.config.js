@@ -9,10 +9,7 @@ const withNextra = require("nextra")({
 // eslint-disable-next-line no-undef
 module.exports = withNextra({
   reactStrictMode: true,
-  experiments: {
-    swcLoader: true,
-    swcMinify: true,
-  },
+
   async redirects() {
     return [
       {

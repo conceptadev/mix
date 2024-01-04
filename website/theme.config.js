@@ -1,12 +1,16 @@
 import Image from "next/image";
 import CustomSearch from "./components/Search";
+import { useRouter } from "next/router";
+
 const themeConfig = {
-  github: "https://github.com/fluttertools/mix",
-  projectLink: "https://github.com/fluttertools/mix",
-  docsRepositoryBase: "https://github.com/fluttertools/mix/blob/main",
-  search: true,
-  customSearch: <CustomSearch />,
-  titleSuffix: " – Mix",
+  useNextSeoProps() {
+    const { asPath } = useRouter();
+    if (asPath !== "/") {
+      return {
+        titleTemplate: "%s – Mix",
+      };
+    }
+  },
   logo: (
     <>
       <Image
@@ -22,6 +26,13 @@ const themeConfig = {
       </span>
     </>
   ),
+
+  project: {
+    link: "https://github.com/conceptadev/mix",
+  },
+  docsRepositoryBase: "https://github.com/conceptadev/mix/blob/main",
+  search: true,
+  customSearch: <CustomSearch />,
   head: (
     <>
       <meta name="msapplication-TileColor" content="#ffffff" />
@@ -74,29 +85,41 @@ const themeConfig = {
       <meta name="msapplication-TileImage" content="/ms-icon-150x150.png" />
     </>
   ),
+  navigation: {
+    prev: true,
+    next: true,
+  },
+  toc: {
+    float: true,
+  },
 
-  prevLinks: true,
-  nextLinks: true,
-  floatTOC: true,
   footer: true,
   nextThemes: {
     defaultTheme: "dark",
   },
-  defaultMenuCollapsed: true,
-  footerEditLink: "Edit this page on GitHub",
+  sidebar: {
+    defaultMenuCollapseLevel: Infinity,
+    autoCollapse: false,
+    toggleButton: false,
+  },
+  editLink: {
+    text: "Edit this page on GitHub",
+  },
+  footer: {
+    text: (
+      <>
+        <a
+          href="https://vercel.com/?utm_source=fluttermix&utm_campaign=oss"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <Image src="/assets/powered-by-vercel.svg" height={43} width={211} />{" "}
+        </a>
+      </>
+    ),
+  },
+
   darkMode: true,
-  footerText: (
-    <>
-      <a
-        href="https://vercel.com/?utm_source=fluttermix&utm_campaign=oss"
-        target="_blank"
-        rel="noreferrer"
-      >
-        <Image src="/assets/powered-by-vercel.svg" height={43} width={211} />{" "}
-      </a>
-    </>
-  ),
-  unstable_faviconGlyph: "👋",
 };
 
 export default themeConfig;

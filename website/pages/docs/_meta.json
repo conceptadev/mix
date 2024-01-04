@@ -4,9 +4,17 @@
     "title": "Overview"
   },
   "introduction": {
-    "title": "Introduction"
+    "title": "Introduction",
+    "display": "children"
   },
-  "concepts": "Concepts",
+  "-- Concepts": {
+    "type": "separator",
+    "title": "Concepts"
+  },
+  "concepts": {
+    "title": "Concepts",
+    "display": "children"
+  },
   "theme": "Theme",
   "faq": "FAQ"
 }
