@@ -8,23 +8,7 @@ import 'spacing_dto.dart';
 /// A utility class for defining spacing attributes like padding and margin in Flutter widgets.
 ///
 /// This class provides a convenient and intuitive way to specify various types of spacing in UI components.
-/// It works with `SpacingAttribute` to create custom spacing attributes that can be applied to widgets.
-///
-/// Example:
-/// ```dart
-///   // Instantiate SpacingUtility with a custom SpacingAttributeBuilder.
-///   final spacing = SpacingUtility(SpacingAttribute.new);
-///
-///   // Apply uniform spacing of 10 units on all sides.
-///   final uniform = spacing.all(10);
-///
-///   // Apply different spacing values for each side.
-///   final custom = spacing.only(top: 10, bottom: 20, left: 30, right: 40);
-///
-///   // Apply 15 units of vertical and 20 units of horizontal spacing.
-///   final vertical = spacing.vertical(15);
-///   final horizontal = spacing.horizontal(20);
-/// ```
+/// It works with `SpacingDto` to create custom spacing attributes that can be applied to widgets.
 @immutable
 class SpacingUtility<T extends StyleAttribute>
     extends DtoUtility<T, SpacingDto, EdgeInsetsGeometry> {
@@ -241,7 +225,7 @@ class SpacingUtility<T extends StyleAttribute>
   /// );
   /// ```
   /// See also:
-  /// * [SpacingDto], the data transfer object for [SpacingAttribute]
+  /// * [SpacingDto], the data transfer object for [SpacingDto]
   T only({
     double? top,
     double? bottom,
@@ -278,7 +262,7 @@ class SpacingUtility<T extends StyleAttribute>
   /// final mixedSpacing = spacing(10, 20, 30, 40);
   /// ```
   /// See also:
-  /// * [SpacingDto], the data transfer object for [SpacingAttribute]
+  /// * [SpacingDto], the data transfer object for [SpacingDto]
   T call(double p1, [double? p2, double? p3, double? p4]) {
     double top = p1;
     double bottom = p1;
@@ -307,7 +291,7 @@ class SpacingUtility<T extends StyleAttribute>
 ///
 /// Example:
 /// ```dart
-///   final spacing = SpacingDirectionalUtility(SpacingAttribute.new);
+///   final spacing = SpacingDirectionalUtility(SpacingDto.new);
 ///
 ///   // Apply uniform spacing of 10 units on all directional sides.
 ///   final uniform = spacing.all(10);
@@ -484,7 +468,7 @@ class SpacingDirectionalUtility<T extends StyleAttribute>
   /// final mixedSpacing = spacing(10, 20, 30, 40,);
   /// ```
   /// See also:
-  /// * [SpacingDto], the data transfer object for [SpacingAttribute]
+  /// * [SpacingDto], the data transfer object for [SpacingDto]
   T call(double p1, [double? p2, double? p3, double? p4]) {
     double top = p1;
     double bottom = p1;
@@ -520,7 +504,7 @@ class SpacingDirectionalUtility<T extends StyleAttribute>
   /// );
   /// ```
   /// See also:
-  /// * [SpacingDto], the data transfer object for [SpacingAttribute]
+  /// * [SpacingDto], the data transfer object for [SpacingDto]
   T only({double? top, double? bottom, double? start, double? end}) {
     return builder(
       SpacingDto.only(top: top, bottom: bottom, start: start, end: end),
@@ -547,7 +531,7 @@ class SpacingDirectionalUtility<T extends StyleAttribute>
 /// * [SpaceToken], the design tokens for spacing sizes
 /// * [SpacingUtility], the utility class for creating spacing attributes
 /// * [SpacingDirectionalUtility], the utility class for creating directional spacing attributes
-/// * [SpacingDto], the data transfer object for [SpacingAttribute]
+/// * [SpacingDto], the data transfer object for [SpacingDto]
 @immutable
 class SpacingSideUtility<T extends StyleAttribute>
     extends MixUtility<T, double> {

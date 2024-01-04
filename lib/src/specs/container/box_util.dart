@@ -11,7 +11,6 @@ import '../../attributes/scalars/scalar_util.dart';
 import '../../attributes/shadow/shadow_util.dart';
 import '../../attributes/spacing/spacing_dto.dart';
 import '../../attributes/spacing/spacing_util.dart';
-import '../../core/extensions/values_ext.dart';
 import 'box_attribute.dart';
 
 const box = BoxSpecUtility();
@@ -61,8 +60,11 @@ const box = BoxSpecUtility();
 /// final vertical = border.vertical(...); // Applies border on the top and bottom.
 /// ```
 ///
-/// You can do the same for `vertical` borders.
-///
+/// See also:
+/// - [BoxSpecBorderUtility]
+/// - [BoxBorderUtility]
+/// - [BorderRadiusGeometryUtility]
+/// - [BoxSpecAttribute]
 final border = box.border;
 
 /// `backgroundColor` - A Utility for defining [BoxDecoration] color value for a [Box] widget
@@ -81,7 +83,6 @@ final backgroundColor = box.color;
 /// See also:
 /// - [DoubleUtility]
 /// - [BoxSpecAttribute]
-/// - [Box]
 final width = box.width;
 
 /// 'height' - A Utility for defining the height value of a [Box] widget
@@ -97,7 +98,6 @@ final width = box.width;
 /// See also:
 /// - [DoubleUtility]
 /// - [BoxSpecAttribute]
-/// - [Box]
 final height = box.height;
 
 /// 'minHeight' - A Utility for Defining minHeight Values for a [BoxConstraints] of a Box widget
@@ -114,7 +114,6 @@ final height = box.height;
 /// - [DoubleUtility]
 /// - [BoxSpecAttribute]
 /// - [BoxConstraintsDto]
-/// - [BoxConstraints]
 /// - [BoxConstraintsUtility]
 final minHeight = box.minHeight;
 
@@ -132,25 +131,23 @@ final minHeight = box.minHeight;
 /// - [DoubleUtility]
 /// - [BoxSpecAttribute]
 /// - [BoxConstraintsDto]
-/// - [BoxConstraints]
 /// - [BoxConstraintsUtility]
 final maxHeight = box.maxHeight;
 
-/// 'minWidth' - A Utility for defining minWidth Values for a [BoxConstraints] of a Box widget
+/// `minWidth` - Utility for defining minimum width for Box widgets
 ///
-/// An instance of `DoubleUtility<BoxSpecAttribute>`, utilized in Flutter to define minWidth
+/// This utility, an instance of `DoubleUtility<BoxSpecAttribute>`, is used to specify the minimum width constraint
+/// for a Box widget in Flutter. It ensures a Box widget does not shrink below the defined minimum width.
 ///
-/// Examples:
-///
+/// Example:
 /// ```dart
-/// final minWidth = minWidth(100); // Sets minWidth to 100.
+/// final minWidthValue = minWidth(100); // Sets the minimum width to 100.
 /// ```
 ///
 /// See also:
 /// - [DoubleUtility]
 /// - [BoxSpecAttribute]
 /// - [BoxConstraintsDto]
-/// - [BoxConstraints]
 /// - [BoxConstraintsUtility]
 final minWidth = box.minWidth;
 
@@ -165,69 +162,23 @@ final minWidth = box.minWidth;
 /// ```
 final maxWidth = box.maxWidth;
 
-/// `padding` - A Utility for Defining Padding Values for Box widgets
+/// `padding` - Utility for defining padding values for Box widgets
 ///
-/// An instance of `SpacingUtility<BoxSpecAttribute>`, utilized in Flutter to define padding
-/// values for box widgets. It provides a structured approach to applying padding, enhancing
-/// the layout composition with clarity and precision.
+/// An instance of `SpacingUtility<BoxSpecAttribute>`, this utility offers flexible ways to apply padding.
+/// It supports uniform, horizontal, vertical, side-specific, directional, and individual side padding.
 ///
-/// Examples:
-///
-/// Uniform padding:
-///
-/// ```dart
-/// final uniform = padding.all(10); // Applies 10 units of padding on all sides.
-/// ```
-///
-/// Horizontal padding:
-///
-/// ```dart
-/// final horizontal = padding.horizontal(15); // Applies 15 units of padding on the left and right.
-/// ```
-///
-/// Vertical padding:
-///
-/// ```dart
-/// final vertical = padding.vertical(20); // Applies 20 units of padding on the top and bottom.
-/// ```
-///
-/// Individual side padding:
-///
-/// ```dart
-/// final custom = padding.only(top: 10, bottom: 20, left: 30, right: 40);
-/// // Applies 10 units on top, 20 units on bottom, 30 units on left, and 40 units on right.
-/// ```
-///
-/// Padding to a specific side:
-///
-/// ```dart
-/// final top = padding.top(5); // Applies 5 units of padding at the top.
-/// final bottom = padding.bottom(5); // Applies 5 units of padding at the bottom.
-/// final left = padding.left(8); // Applies 8 units of padding on the left side.
-/// final right = padding.right(8); // Applies 8 units of padding on the right side.
-/// ```
-///
-/// Directional padding in RTL (Right-to-Left) layouts:
-///
-/// ```dart
-/// final start = padding.start(10); // Applies 10 units of padding at the start side (considering text direction).
-/// final end = padding.end(10); // Applies 10 units of padding at the end side (considering text direction).
-/// ```
-///
-/// Flexible Padding with Callable Method
-/// 1 parameter: Uniform padding.
-/// 2 parameters: Vertical and horizontal padding.
-/// 3 parameters: Top, horizontal, and bottom padding.
-/// 4 parameters: Top, right, bottom, left padding.
-///
-/// Examples:
-/// - `padding(10)`: 10 units uniformly.
-/// - `padding(10, 20)`: 10 units top and bottom, 20 units left and right.
-/// - `padding(10, 20, 30)`: 10 units top, 20 units left and right, 30 units bottom.
+/// Example shorthand usage:
+/// - `padding(10)`: Uniform padding of 10 units on all sides.
+/// - `padding(10, 20)`: 10 units vertical (top and bottom), 20 units horizontal (left and right).
+/// - `padding(10, 20, 30)`: 10 units top, 20 units horizontal, 30 units bottom.
 /// - `padding(10, 20, 30, 40)`: 10 units top, 20 units right, 30 units bottom, 40 units left.
 ///
-/// `padding` effectively leverages `SpacingUtility<T>` to create a versatile and readable way of applying padding,
-/// making it easier to manage spacing in Flutter's layout system.
+/// Example method usage:
+/// - Uniform: `padding.all(10)` for 10 units on all sides.
+/// - Side-specific: `padding.only(top: 10, bottom: 20, left: 30, right: 40)`.
+/// - Individual sides: `padding.top(5)`, `padding.bottom(10)`, `padding.left(15)`, `padding.right(20)`.
+/// - Horizontal/Vertical: `padding.horizontal(15)`, `padding.vertical(20)`.
+/// - Directional (RTL): `padding.start(10)`, `padding.end(10)`.
 ///
 /// See also:
 /// - [SpacingUtility]
@@ -235,113 +186,48 @@ final maxWidth = box.maxWidth;
 /// - [BoxSpecAttribute]
 final padding = box.padding;
 
-/// `margin` - A Utility for Defining Padding Values for Box widgets
+/// `margin` - Utility for defining margin values for Box widgets
 ///
-/// An instance of `SpacingUtility<BoxSpecAttribute>`, utilized in Flutter to define margin
-/// values for box widgets. It provides a structured approach to applying margin, enhancing
-/// the layout composition with clarity and precision.
+/// An instance of `SpacingUtility<BoxSpecAttribute>`, this utility provides versatile ways to apply margin.
+/// It supports uniform, horizontal, vertical, side-specific, directional, and individual side margins.
 ///
-/// Examples:
-///
-/// Uniform margin:
-///
-/// ```dart
-/// final uniform = margin.all(10); // Applies 10 units of margin on all sides.
-/// ```
-///
-/// Horizontal margin:
-///
-/// ```dart
-/// final horizontal = margin.horizontal(15); // Applies 15 units of margin on the left and right.
-/// ```
-///
-/// Vertical margin:
-///
-/// ```dart
-/// final vertical = margin.vertical(20); // Applies 20 units of margin on the top and bottom.
-/// ```
-///
-/// Individual side margin:
-///
-/// ```dart
-/// final custom = margin.only(top: 10, bottom: 20, left: 30, right: 40);
-/// // Applies 10 units on top, 20 units on bottom, 30 units on left, and 40 units on right.
-/// ```
-///
-/// Padding to a specific side:
-///
-/// ```dart
-/// final top = margin.top(5); // Applies 5 units of margin at the top.
-/// final bottom = margin.bottom(5); // Applies 5 units of margin at the bottom.
-/// final left = margin.left(8); // Applies 8 units of margin on the left side.
-/// final right = margin.right(8); // Applies 8 units of margin on the right side.
-/// ```
-///
-/// Directional margin in RTL (Right-to-Left) layouts:
-///
-/// ```dart
-/// final start = margin.start(10); // Applies 10 units of margin at the start side (considering text direction).
-/// final end = margin.end(10); // Applies 10 units of margin at the end side (considering text direction).
-/// ```
-///
-/// Flexible Padding with Callable Method
-/// 1 parameter: Uniform margin.
-/// 2 parameters: Vertical and horizontal margin.
-/// 3 parameters: Top, horizontal, and bottom margin.
-/// 4 parameters: Top, right, bottom, left margin.
-///
-/// Examples:
-/// - `margin(10)`: 10 units uniformly.
-/// - `margin(10, 20)`: 10 units top and bottom, 20 units left and right.
-/// - `margin(10, 20, 30)`: 10 units top, 20 units left and right, 30 units bottom.
+/// Example shorthand usage:
+/// - `margin(10)`: Uniform margin of 10 units on all sides.
+/// - `margin(10, 20)`: 10 units vertical (top and bottom), 20 units horizontal (left and right).
+/// - `margin(10, 20, 30)`: 10 units top, 20 units horizontal, 30 units bottom.
 /// - `margin(10, 20, 30, 40)`: 10 units top, 20 units right, 30 units bottom, 40 units left.
 ///
-/// `margin` effectively leverages `SpacingUtility<T>` to create a versatile and readable way of applying padding,
-/// making it easier to manage spacing in Flutter's layout system.
+/// Example method usage:
+/// - Uniform: `margin.all(10)` for 10 units on all sides.
+/// - Side-specific: `margin.only(top: 10, bottom: 20, left: 30, right: 40)`.
+/// - Individual sides: `margin.top(5)`, `margin.bottom(10)`, `margin.left(15)`, `margin.right(20)`.
+/// - Horizontal/Vertical: `margin.horizontal(15)`, `margin.vertical(20)`.
+/// - Directional (RTL): `margin.start(10)`, `margin.end(10)`.
 ///
 /// See also:
-/// - [SpacingUtility]
 /// - [SpacingDto]
+/// - [SpacingUtility]
 /// - [BoxSpecAttribute]
 final margin = box.margin;
 
-/// `alignment` - A Utility for Defining Alignment Values for Box widgets
+/// `alignment` - Utility for defining alignment values for Box widgets
 ///
-/// An instance of `AlignmentUtility<BoxSpecAttribute>`, utilized in Flutter to define alignment
-/// values for box widgets. It provides a structured approach to applying alignment, enhancing
-/// the layout composition with clarity and precision.
+/// An instance of `AlignmentUtility<BoxSpecAttribute>`, this utility provides structured methods
+/// to apply alignment to box widgets, enhancing layout composition with precision.
 ///
-/// Examples:
+/// Shorthand Usage Examples:
+/// - `alignment.center()`: Aligns to the center.
+/// - `alignment.topLeft()`, `alignment.bottomRight()`: Aligns to top left or bottom right.
+/// - `alignment.topCenter()`, `alignment.bottomCenter()`: Aligns to top or bottom center.
+/// - `alignment.centerLeft()`, `alignment.centerRight()`: Aligns to center left or right.
 ///
-/// ```dart
-/// final center = alignment.center(); // Aligns the box to the center of the parent.
-/// final topLeft = alignment.topLeft(); // Aligns the box to the top left of the parent.
-/// final bottomRight = alignment.bottomRight(); // Aligns the box to the bottom right of the parent.
-/// ```
+/// Custom Alignment:
+/// - `alignment.only(x: 0.5, y: 0.5)`: Custom horizontal and vertical alignment.
+/// - `alignment.only(start: 0.5, y: 0.5)`: Custom alignment considering text direction.
 ///
-/// Sets a custom alignment based on the provided x, y, or start values.
+/// The `x` parameter sets horizontal alignment, `y` sets vertical. `start` aligns based on text direction,
+/// overriding `x`.
 ///
-/// The `x` and `start` parameters are mutually exclusive to avoid conflicts.
-/// The `x` parameter sets a specific horizontal alignment, while `start` aligns based on text direction (LTR/RTL).
-/// The `y` parameter sets the vertical alignment.
-///
-/// - `x`: Horizontal alignment value, ignored if `start` is provided.
-/// - `y`: Vertical alignment value.
-/// - `start`: Horizontal alignment based on text direction, overrides `x` if provided.
-///
-/// ```dart
-/// final custom = alignment.only(x: 0.5, y: 0.5); // Aligns the box to the center of the parent.
-/// final custom = alignment.only(start: 0.5, y: 0.5); // Aligns the box to the center of the parent considering text direction.
-/// ```
-///
-/// Helper methods that are similar to methods on [Alignment] and [AlignmentDirectional].
-///
-/// ```dart
-/// final topCenter = alignment.topCenter(); // Aligns the box to the top center of the parent.
-/// final bottomCenter = alignment.bottomCenter(); // Aligns the box to the bottom center of the parent.
-/// final centerLeft = alignment.centerLeft(); // Aligns the box to the center left of the parent.
-/// final centerRight = alignment.centerRight(); // Aligns the box to the center right of the parent.
-/// ```
 /// See also:
 /// - [Alignment]
 /// - [AlignmentDirectional]
@@ -349,20 +235,16 @@ final margin = box.margin;
 /// - [BoxSpecAttribute]
 final alignment = box.alignment;
 
-/// `clipBehavior` - A Utility for Defining Clip Behavior Values for Box widgets
+/// `clipBehavior` - Utility for defining clip behavior values for Box widgets
 ///
-/// An instance of `ClipUtility<BoxSpecAttribute>`, utilized in Flutter to define clip behavior
-/// values for box widgets. It provides a structured approach to applying clip behavior, enhancing
-/// the layout composition with clarity and precision.
+/// An instance of `ClipUtility<BoxSpecAttribute>`, this utility allows for specifying clip behaviors
+/// for box widgets, contributing to clear and precise layout compositions.
 ///
-/// Examples:
-///
-/// ```dart
-/// final antiAlias = clipBehavior.antiAlias(); // Clips the box with anti-aliasing.
-/// final antiAliasWithSaveLayer = clipBehavior.antiAliasWithSaveLayer(); // Clips the box with anti-aliasing and save layer.
-/// final hardEdge = clipBehavior.hardEdge(); // Clips the box with hard edges.
-/// final none = clipBehavior.none(); // Does not clip the box.
-/// ```
+/// Shorthand Usage Examples:
+/// - `clipBehavior.antiAlias()`: Applies anti-aliasing.
+/// - `clipBehavior.antiAliasWithSaveLayer()`: Anti-aliasing with a save layer.
+/// - `clipBehavior.hardEdge()`: Applies hard edge clipping.
+/// - `clipBehavior.none()`: No clipping.
 ///
 /// See also:
 /// - [Clip]
@@ -402,7 +284,73 @@ final elevation = box.elevation;
 class BoxSpecUtility extends SpecUtility<BoxSpecAttribute> {
   const BoxSpecUtility();
 
-  BoxSpecAttribute _only({
+  BoxDecorationUtility<BoxSpecAttribute> get decoration {
+    return BoxDecorationUtility(
+      (decoration) => only(decoration: decoration),
+    );
+  }
+
+  AlignmentUtility<BoxSpecAttribute> get alignment {
+    return AlignmentUtility((alignment) => only(alignment: alignment));
+  }
+
+  SpacingUtility<BoxSpecAttribute> get padding {
+    return SpacingUtility((padding) => only(padding: padding));
+  }
+
+  SpacingUtility<BoxSpecAttribute> get margin {
+    return SpacingUtility((margin) => only(margin: margin));
+  }
+
+  // We use BoxDecoration for better Decoration support to avoid weird issues
+  ColorUtility<BoxSpecAttribute> get color => decoration.color;
+
+  ElevationUtility<BoxSpecAttribute> get elevation => decoration.elevation;
+
+  ShapeDecorationUtility<BoxSpecAttribute> get shapeDecoration =>
+      ShapeDecorationUtility((decoration) => only(decoration: decoration));
+
+  BoxConstraintsUtility<BoxSpecAttribute> get constraints {
+    return BoxConstraintsUtility(
+      (constraints) => only(constraints: constraints),
+    );
+  }
+
+  Matrix4Utility<BoxSpecAttribute> get transform {
+    return Matrix4Utility((transform) => only(transform: transform));
+  }
+
+  ClipUtility<BoxSpecAttribute> get clipBehavior {
+    return ClipUtility((clipBehavior) => only(clipBehavior: clipBehavior));
+  }
+
+  ///  Decoration Utilities
+  BoxSpecBorderUtility<BoxSpecAttribute> get border {
+    return BoxSpecBorderUtility(
+      (border) => only(decoration: BoxDecorationDto(border: border)),
+    );
+  }
+
+  BoxShadowListUtility<BoxSpecAttribute> get shadows => decoration.boxShadows;
+
+  BoxShadowUtility<BoxSpecAttribute> get shadow => decoration.boxShadow;
+
+  ///  Constraints utilities
+  DoubleUtility<BoxSpecAttribute> get maxWidth => constraints.maxWidth;
+
+  DoubleUtility<BoxSpecAttribute> get minWidth => constraints.minWidth;
+
+  DoubleUtility<BoxSpecAttribute> get maxHeight => constraints.maxHeight;
+
+  DoubleUtility<BoxSpecAttribute> get minHeight => constraints.minHeight;
+
+  DoubleUtility<BoxSpecAttribute> get width =>
+      DoubleUtility((width) => only(width: width));
+
+  DoubleUtility<BoxSpecAttribute> get height =>
+      DoubleUtility((height) => only(height: height));
+
+  BoxSpecAttribute only({
     AlignmentGeometry? alignment,
     SpacingDto? padding,
     SpacingDto? margin,
@@ -423,96 +371,6 @@ class BoxSpecUtility extends SpecUtility<BoxSpecAttribute> {
       clipBehavior: clipBehavior,
       width: width,
       height: height,
-    );
-  }
-
-  BoxDecorationUtility<BoxSpecAttribute> get decoration {
-    return BoxDecorationUtility(
-      (decoration) => _only(decoration: decoration),
-    );
-  }
-
-  AlignmentUtility<BoxSpecAttribute> get alignment {
-    return AlignmentUtility((alignment) => call(alignment: alignment));
-  }
-
-  SpacingUtility<BoxSpecAttribute> get padding {
-    return SpacingUtility((padding) => _only(padding: padding));
-  }
-
-  SpacingUtility<BoxSpecAttribute> get margin {
-    return SpacingUtility((margin) => _only(margin: margin));
-  }
-
-  // We use BoxDecoration for better Decoration support to avoid weird issues
-  ColorUtility<BoxSpecAttribute> get color => decoration.color;
-
-  ElevationUtility<BoxSpecAttribute> get elevation => decoration.elevation;
-
-  ShapeDecorationUtility<BoxSpecAttribute> get shapeDecoration =>
-      ShapeDecorationUtility((decoration) => _only(decoration: decoration));
-
-  BoxConstraintsUtility<BoxSpecAttribute> get constraints {
-    return BoxConstraintsUtility(
-      (constraints) => _only(constraints: constraints),
-    );
-  }
-
-  Matrix4Utility<BoxSpecAttribute> get transform {
-    return Matrix4Utility((transform) => call(transform: transform));
-  }
-
-  ClipUtility<BoxSpecAttribute> get clipBehavior {
-    return ClipUtility((clipBehavior) => call(clipBehavior: clipBehavior));
-  }
-
-  ///  Decoration Utilities
-  BoxSpecBorderUtility<BoxSpecAttribute> get border {
-    return BoxSpecBorderUtility(
-      (border) => _only(decoration: BoxDecorationDto(border: border)),
-    );
-  }
-
-  BoxShadowListUtility<BoxSpecAttribute> get shadows => decoration.boxShadows;
-
-  BoxShadowUtility<BoxSpecAttribute> get shadow => decoration.boxShadow;
-
-  ///  Constraints utilities
-  DoubleUtility<BoxSpecAttribute> get maxWidth => constraints.maxWidth;
-
-  DoubleUtility<BoxSpecAttribute> get minWidth => constraints.minWidth;
-
-  DoubleUtility<BoxSpecAttribute> get maxHeight => constraints.maxHeight;
-
-  DoubleUtility<BoxSpecAttribute> get minHeight => constraints.minHeight;
-
-  DoubleUtility<BoxSpecAttribute> get width =>
-      DoubleUtility((width) => _only(width: width));
-
-  DoubleUtility<BoxSpecAttribute> get height =>
-      DoubleUtility((height) => _only(height: height));
-
-  BoxSpecAttribute call({
-    AlignmentGeometry? alignment,
-    EdgeInsets? padding,
-    EdgeInsets? margin,
-    BoxConstraints? constraints,
-    double? width,
-    double? height,
-    BoxDecoration? decoration,
-    Matrix4? transform,
-    Clip? clipBehavior,
-  }) {
-    return _only(
-      alignment: alignment,
-      padding: SpacingDto.maybeFrom(padding),
-      margin: SpacingDto.maybeFrom(margin),
-      decoration: decoration?.toDto(),
-      constraints: constraints?.toDto(),
-      width: width,
-      height: height,
-      transform: transform,
-      clipBehavior: clipBehavior,
     );
   }
 }

@@ -252,7 +252,7 @@ void main() {
   });
 
   testWidgets('Style.icon matches StyledIcon(style:Style)', (tester) async {
-    final style = Style(icon(color: Colors.black));
+    final style = Style(icon.color.red());
 
     await tester.pumpWidget(
       MaterialApp(

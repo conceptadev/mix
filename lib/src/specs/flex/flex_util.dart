@@ -15,57 +15,54 @@ class FlexSpecUtility<T extends StyleAttribute>
   const FlexSpecUtility(super.builder);
 
   AxisUtility<T> get direction {
-    return AxisUtility((direction) => call(direction: direction));
+    return AxisUtility((direction) => only(direction: direction));
   }
 
   MainAxisAlignmentUtility<T> get mainAxisAlignment {
     return MainAxisAlignmentUtility(
-      (mainAxisAlignment) => call(mainAxisAlignment: mainAxisAlignment),
+      (mainAxisAlignment) => only(mainAxisAlignment: mainAxisAlignment),
     );
   }
 
   CrossAxisAlignmentUtility<T> get crossAxisAlignment {
     return CrossAxisAlignmentUtility(
-      (crossAxisAlignment) => call(crossAxisAlignment: crossAxisAlignment),
+      (crossAxisAlignment) => only(crossAxisAlignment: crossAxisAlignment),
     );
   }
 
   MainAxisSizeUtility<T> get mainAxisSize {
     return MainAxisSizeUtility(
-      (mainAxisSize) => call(mainAxisSize: mainAxisSize),
+      (mainAxisSize) => only(mainAxisSize: mainAxisSize),
     );
   }
 
   VerticalDirectionUtility<T> get verticalDirection {
     return VerticalDirectionUtility(
-      (verticalDirection) => call(verticalDirection: verticalDirection),
+      (verticalDirection) => only(verticalDirection: verticalDirection),
     );
   }
 
   TextDirectionUtility<T> get textDirection {
     return TextDirectionUtility(
-      (textDirection) => call(textDirection: textDirection),
+      (textDirection) => only(textDirection: textDirection),
     );
   }
 
   TextBaselineUtility<T> get textBaseline {
     return TextBaselineUtility(
-      (textBaseline) => call(textBaseline: textBaseline),
+      (textBaseline) => only(textBaseline: textBaseline),
     );
   }
 
   ClipUtility<T> get clipBehavior {
-    return ClipUtility((clipBehavior) => call(clipBehavior: clipBehavior));
+    return ClipUtility((clipBehavior) => only(clipBehavior: clipBehavior));
   }
 
   SpacingSideUtility<T> get gap {
-    return SpacingSideUtility((gap) => call(gap: gap));
+    return SpacingSideUtility((gap) => only(gap: gap));
   }
 
-  T row() => direction.horizontal();
-  T column() => direction.vertical();
-
-  T call({
+  T only({
     Axis? direction,
     MainAxisAlignment? mainAxisAlignment,
     CrossAxisAlignment? crossAxisAlignment,
@@ -90,4 +87,7 @@ class FlexSpecUtility<T extends StyleAttribute>
 
     return builder(attriubte);
   }
+
+  T row() => direction.horizontal();
+  T column() => direction.vertical();
 }

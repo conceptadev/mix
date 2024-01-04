@@ -39,18 +39,4 @@ class StackSpecUtility extends SpecUtility<StackSpecAttribute> {
   ClipUtility<StackSpecAttribute> get clipBehavior {
     return ClipUtility((clipBehavior) => _only(clipBehavior: clipBehavior));
   }
-
-  StackSpecAttribute call({
-    AlignmentGeometry? alignment,
-    StackFit? fit,
-    TextDirection? textDirection,
-    Clip? clipBehavior,
-  }) {
-    return _only(
-      alignment: alignment,
-      fit: fit,
-      textDirection: textDirection,
-      clipBehavior: clipBehavior,
-    );
-  }
 }

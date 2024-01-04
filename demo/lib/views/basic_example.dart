@@ -100,7 +100,7 @@ class BasicExample extends HookWidget {
                 Icons.move_to_inbox,
                 style: onSurfaceMix.merge(
                   Style(
-                    icon(size: 50),
+                    icon.size(50),
                   ),
                 ),
               ),
@@ -108,7 +108,7 @@ class BasicExample extends HookWidget {
                 Icons.one_k,
                 style: onSurfaceMix.merge(
                   Style(
-                    icon(size: 60),
+                    icon.size(60),
                   ),
                 ),
               ),
@@ -116,7 +116,7 @@ class BasicExample extends HookWidget {
                 Icons.waving_hand_rounded,
                 style: onSurfaceMix.merge(
                   Style(
-                    icon(size: 70),
+                    icon.size(70),
                     icon.color.of($colors.secondary),
                   ),
                 ),
@@ -125,8 +125,8 @@ class BasicExample extends HookWidget {
                 Icons.warning_amber,
                 style: onSurfaceMix.merge(
                   Style(
-                    icon(size: 90),
-                    icon(color: Colors.yellow.shade900),
+                    icon.size(90),
+                    icon.color.yellow.shade900(),
                   ),
                 ),
               ),

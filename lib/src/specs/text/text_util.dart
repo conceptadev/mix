@@ -7,7 +7,6 @@ import '../../attributes/text_directives_util.dart';
 import '../../attributes/text_style/text_style_dto.dart';
 import '../../attributes/text_style/text_style_util.dart';
 import '../../core/directive.dart';
-import '../../core/extensions/values_ext.dart';
 import 'text_attribute.dart';
 
 const text = TextUtility();
@@ -95,30 +94,4 @@ class TextUtility extends SpecUtility<TextSpecAttribute> {
   TextDataDirective lowercase() => directive.lowercase();
   TextDataDirective titleCase() => directive.titleCase();
   TextDataDirective sentenceCase() => directive.sentenceCase();
-
-  TextSpecAttribute call({
-    TextOverflow? overflow,
-    StrutStyle? strutStyle,
-    TextAlign? textAlign,
-    double? textScaleFactor,
-    int? maxLines,
-    TextStyle? style,
-    TextWidthBasis? textWidthBasis,
-    TextHeightBehavior? textHeightBehavior,
-    TextDirection? textDirection,
-    bool? softWrap,
-  }) {
-    return _only(
-      overflow: overflow,
-      strutStyle: strutStyle?.toDto(),
-      textAlign: textAlign,
-      textScaleFactor: textScaleFactor,
-      maxLines: maxLines,
-      style: style?.toDto(),
-      textWidthBasis: textWidthBasis,
-      textHeightBehavior: textHeightBehavior,
-      textDirection: textDirection,
-      softWrap: softWrap,
-    );
-  }
 }

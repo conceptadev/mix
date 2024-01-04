@@ -40,7 +40,7 @@ Style get _baseStyle => Style(
         text.style(
           fontSize: 16,
         ),
-        icon(size: 24),
+        icon.size(24),
       ),
       ButtonSizeVariants.medium(
         box.padding.horizontal(4),
@@ -48,7 +48,7 @@ Style get _baseStyle => Style(
         text.style(
           fontSize: 16,
         ),
-        icon(size: 24),
+        icon.size(24),
       ),
       ButtonSizeVariants.large(
         box.padding.horizontal(4),
@@ -56,7 +56,7 @@ Style get _baseStyle => Style(
         text.style(
           fontSize: 16,
         ),
-        icon(size: 24),
+        icon.size(24),
       ),
     );
 

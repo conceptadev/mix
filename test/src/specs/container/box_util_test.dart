@@ -2,23 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
 
-import '../../../helpers/attribute_generator.dart';
-
 void main() {
   group(
     'BoxUtility',
     () {
       const boxUtility = BoxSpecUtility();
       test('call() returns correct instance', () {
-        final container = boxUtility(
+        const constraints = BoxConstraintsDto(
+          maxHeight: 100,
+          maxWidth: 200,
+          minWidth: 50,
+          minHeight: 40,
+        );
+
+        const spacing = SpacingDto.all(10);
+
+        final container = boxUtility.only(
           alignment: Alignment.center,
           clipBehavior: Clip.antiAlias,
-          constraints: const BoxConstraints(
-              maxHeight: 100, maxWidth: 200, minWidth: 50, minHeight: 40),
-          decoration: RandomGenerator.boxDecoration(),
+          constraints: constraints,
           height: 10,
-          margin: const EdgeInsets.all(10),
-          padding: const EdgeInsets.all(10),
+          margin: spacing,
+          padding: spacing,
           transform: Matrix4.identity(),
           width: 10,
         );
@@ -27,16 +32,19 @@ void main() {
         expect(container.clipBehavior, Clip.antiAlias);
 
         expect(
-            container.constraints,
-            const BoxConstraintsDto(
-                maxHeight: 100, maxWidth: 200, minWidth: 50, minHeight: 40));
-        expect(container.decoration, isA<BoxDecorationDto>());
+          container.constraints,
+          constraints,
+        );
 
         expect(container.height, 10);
-        expect(container.margin,
-            const SpacingDto.only(bottom: 10, left: 10, right: 10, top: 10));
-        expect(container.padding,
-            const SpacingDto.only(bottom: 10, left: 10, right: 10, top: 10));
+        expect(
+          container.margin,
+          spacing,
+        );
+        expect(
+          container.padding,
+          spacing,
+        );
         expect(container.transform, Matrix4.identity());
         expect(container.width, 10);
       });

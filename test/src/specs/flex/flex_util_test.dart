@@ -8,7 +8,7 @@ void main() {
   group('FlexUtility', () {
     const flexUtility = FlexSpecUtility(UtilityTestAttribute.new);
     test('call() returns correct instance', () {
-      final flex = flexUtility(
+      final flex = flexUtility.only(
         direction: Axis.horizontal,
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
