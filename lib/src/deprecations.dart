@@ -444,8 +444,30 @@ final borderVertical = border.vertical;
 @Deprecated('use border.all instead')
 final borderAll = border.all;
 
-@Deprecated('Use StyledText now')
-typedef TextMix = StyledText;
+@Deprecated('Use StyledText instead')
+class TextMix extends StyledText {
+  const TextMix(
+    super.text, {
+    super.semanticsLabel,
+    Mix? mix,
+    super.key,
+    super.inherit = true,
+    super.locale,
+  }) : super(style: mix);
+}
+
+@Deprecated('Use StyledIcon instead')
+class IconMix extends StyledIcon {
+  const IconMix(
+    super.icon, {
+    super.semanticLabel,
+    required Mix mix,
+    super.key,
+    super.inherit = true,
+    super.textDirection,
+  });
+}
+
 
 @Deprecated('Use text.style instead')
 final textStyle = text.style;
@@ -472,6 +494,15 @@ final mainAxisSize = flex.mainAxisSize;
 
 @Deprecated('use text.style.bold() instead')
 final bold = text.style.bold;
+
+@Deprecated('use flex.gap(value) instead')
+final gap = flex.gap;
+
+@Deprecated('use icon.size instead')
+final iconSize = icon.size;
+
+@Deprecated('use icon.color instead')
+final iconColor = icon.color;
 
 // @Deprecated('Use box.maxHeight instead')
 // final maxHeight = box.maxHeight;
