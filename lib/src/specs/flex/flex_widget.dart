@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import '../../core/styled_widget.dart';
 import '../../factory/mix_provider.dart';
 import '../../factory/mix_provider_data.dart';
+import '../../factory/style_mix.dart';
 import '../../widgets/gap_widget.dart';
 import '../container/box_widget.dart';
 import 'flex_spec.dart';
@@ -184,18 +185,29 @@ class FlexBox extends StyledWidget {
 ///
 /// Example Usage:
 /// ```dart
-/// HBox(
-///   style: yourStyle,
+/// HBox.withStyle(
+///   yourStyle,
 ///   children: [Widget1(), Widget2()],
 /// );
 /// ```
 class HBox extends FlexBox {
-  const HBox({
-    super.style,
+  const HBox.withStyle(
+    Style style, {
     super.key,
     super.inherit,
     super.children = const <Widget>[],
-  }) : super(direction: Axis.horizontal);
+  }) : super(style: style, direction: Axis.horizontal);
+
+  @Deprecated('Use the HBox.withStyle instead')
+  const HBox({
+    required Mix mix,
+    super.key,
+    super.inherit,
+    super.children = const <Widget>[],
+  }) : super(
+          style: mix,
+          direction: Axis.horizontal,
+        );
 }
 
 /// A vertical flex container that uses `Style` for streamlined styling.
@@ -209,18 +221,29 @@ class HBox extends FlexBox {
 ///
 /// Example Usage:
 /// ```dart
-/// VBox(
-///   style: yourStyle,
+/// VBox.withStyle(
+///   yourStyle,
 ///   children: [Widget1(), Widget2()],
 /// );
 /// ```
 class VBox extends FlexBox {
-  const VBox({
-    super.style,
+  const VBox.withStyle(
+    Style style, {
     super.key,
     super.inherit,
     super.children = const <Widget>[],
-  }) : super(direction: Axis.vertical);
+  }) : super(style: style, direction: Axis.vertical);
+
+  @Deprecated('Use the VBox.withStyle instead')
+  const VBox({
+    required Mix mix,
+    super.key,
+    super.inherit,
+    super.children = const <Widget>[],
+  }) : super(
+          style: mix,
+          direction: Axis.vertical,
+        );
 }
 
 const _defaultFlex = Flex(direction: Axis.horizontal, children: <Widget>[]);

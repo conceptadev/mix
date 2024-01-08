@@ -89,14 +89,14 @@ void main() {
         home: Column(
           children: [
             style.hbox(children: [const SizedBox()], key: keyOne),
-            HBox(
+            HBox.withStyle(
+              style,
               key: keyTwo,
-              style: style,
               children: const [SizedBox()],
             ),
-            HBox(
+            HBox.withStyle(
+              const Style.empty(),
               key: keyThree,
-              style: const Style.empty(),
               children: const [SizedBox()],
             ),
           ],
@@ -189,14 +189,14 @@ void main() {
         home: Column(
           children: [
             style.vbox(children: [const SizedBox()], key: keyOne),
-            VBox(
+            VBox.withStyle(
+              style,
               key: keyTwo,
-              style: style,
               children: const [SizedBox()],
             ),
-            VBox(
+            VBox.withStyle(
+              const Style.empty(),
               key: keyThree,
-              style: const Style.empty(),
               children: const [SizedBox()],
             ),
           ],
