@@ -142,18 +142,6 @@ class Style with Comparable {
         : mixes.reduce((combinedStyle, mix) => combinedStyle.merge(mix));
   }
 
-  /// Selects a mix based on a [condition].
-  ///
-  /// Returns [fallback] if the [condition] is true, otherwise returns [style].
-  ///
-  /// Example:
-  /// ```dart
-  /// final style = Style.chooser(condition, style, fallbackStyle);
-  /// ```
-  static Style chooser(bool condition, Style style, [Style? fallback]) {
-    return condition ? style : fallback ?? const Style.empty();
-  }
-
   Style _addAttributes(List<Attribute> attributes) {
     return merge(Style.create(attributes));
   }
@@ -202,9 +190,8 @@ class Style with Comparable {
   ///
   /// Note:
   /// The attributes from the selected variant (`attr4` and `attr5`) are not applied to the `Style` instance until the `variant` method is called.
-  SpreadFunctionParams<Variant, Style> get variant {
-    return SpreadFunctionParams(variantList);
-  }
+  SpreadFunctionParams<Variant, Style> get variant =>
+      SpreadFunctionParams(variantList);
 
   /// Allows to create a new `Style` by using this mix as a base and adding additional attributes.
   ///

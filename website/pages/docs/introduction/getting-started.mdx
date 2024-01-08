@@ -1,7 +1,26 @@
 ---
-id: getting-started
-title: "Getting started"
+id: introduction
+title: "Introduction"
 ---
+
+## The what and why of Mix
+
+Motivation
+Flutter favors composition over inheritance when building widgets. This choice keeps Flutter API extremely easy to interact with and powerful.
+However, in our experience, both inheritance and composition are essential when defining presentation attributes. Themes are an excellent example of inheritance but are not extended across all visual properties.
+Maintaining a design system is much harder than building it.
+When building a design system, it can be challenging to develop and maintain a consistent UI that shares the same design language for widget variations or across different widgets within the design system.
+Goals
+Provide simple API to compose design and layout attributes for widgets. That can easily be extended, overridden, and combined; we call this a Mix.
+Visual attributes should be defined outside of a BuildContext by a composable API shared across the design system.
+Style consistently with a global context
+Allow to respond to changing requirements quickly
+Create adaptive designs and layouts with ease
+Principles
+Abstract Flutter API, and not modify its behavior.
+Development efficiency is gained by the ease of use, consistency, and reusability, not coding speed.
+Composability should be a priority. Mixes, Attributes, Widgets, etc.
+Designer friendly (use simple standard semantics when possible).
 
 ## Comparison
 
@@ -22,15 +41,15 @@ class CustomMixWidget extends StatelessWidget {
       margin.top(10),
       margin.bottom(5),
       elevation(10),
-      borderRadius(10),
-      backgroundColor(MaterialTokens.colorScheme.primary),
-      text.style($button),
+      border.radius(10),
+      backgroundColor($md.colors.primary()),
+      text.style.of($button),
       text.style(color: $onPrimary),
       onHover(
         elevation(2),
         padding(20),
-        backgroundColor($secondary),
-        text.style(color: $onSecondary),
+        backgroundColor($md.colors.secondary()),
+        text.style.color($md.colors.onSecondary()),
       ),
     );
     return Box(

@@ -6,62 +6,62 @@ import '../../../helpers/testing_utils.dart';
 
 void main() {
   group('PressableNotifier', () {
-    const gestureData = GestureData(
-      state: GestureState.pressed,
-      status: GestureStatus.enabled,
+    const gestureData = WidgetStateData(
+      state: WidgetState.pressed,
+      status: WidgetStatus.enabled,
       focus: true,
       hover: false,
     );
     test('constructor', () {
-      final notifier = GestureStateNotifier(
+      final notifier = WidgetStateNotifier(
         data: gestureData,
         child: Container(),
       );
 
-      expect(notifier.data.state, GestureState.pressed);
+      expect(notifier.data.state, WidgetState.pressed);
       expect(notifier.data.focus, true);
       expect(notifier.child, isA<Container>());
     });
 
     test('of', () {
-      final notifier = GestureStateNotifier(
+      final notifier = WidgetStateNotifier(
         data: gestureData,
         child: Container(),
       );
 
-      final otherNotifier = GestureStateNotifier(
-        data: const GestureData(
+      final otherNotifier = WidgetStateNotifier(
+        data: const WidgetStateData(
           focus: false,
-          state: GestureState.none,
-          status: GestureStatus.disabled,
+          state: WidgetState.none,
+          status: WidgetStatus.disabled,
           hover: false,
         ),
         child: Container(),
       );
 
-      final sameNotifier = GestureStateNotifier(
+      final sameNotifier = WidgetStateNotifier(
         data: gestureData,
         child: Container(),
       );
 
       expect(notifier.updateShouldNotify(otherNotifier), true);
       expect(notifier.updateShouldNotify(sameNotifier), false);
-      expect(GestureStateNotifier.of(MockBuildContext()), null);
+      expect(WidgetStateNotifier.of(MockBuildContext()), null);
     });
 
     testWidgets('can get it from context', (tester) async {
       await tester.pumpWithPressable(
         Container(),
-        state: GestureState.pressed,
+        state: WidgetState.pressed,
         focus: true,
       );
 
       final context = tester.element(find.byType(Container));
 
-      final notifier = GestureStateNotifier.of(context);
+      final notifier = WidgetStateNotifier.of(context);
 
-      expect(notifier, isA<GestureData>());
-      expect(notifier!.state, GestureState.pressed);
+      expect(notifier, isA<WidgetStateData>());
+      expect(notifier!.state, WidgetState.pressed);
       expect(notifier.focus, true);
     });
   });

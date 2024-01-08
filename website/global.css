@@ -1,6 +1,0 @@
-@import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
-
-@import "nextra-theme-docs/style.css";
-@import "./styles.css";

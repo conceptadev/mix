@@ -82,5 +82,5 @@ export 'src/variants/variant.dart';
 export 'src/widgets/gap_widget.dart';
 export 'src/widgets/pressable/gesture_state.dart';
 export 'src/widgets/pressable/gesture_state.notifier.dart';
-export 'src/widgets/pressable/gesture_util.dart';
 export 'src/widgets/pressable/gesture_widget.dart';
+export 'src/widgets/pressable/widget_state_util.dart';

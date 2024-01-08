@@ -92,14 +92,14 @@ class PressableWidgetState extends State<Pressable> {
     return FocusNode(debugLabel: '${widget.runtimeType}');
   }
 
-  GestureState get _currentGesture {
+  WidgetState get _currentGesture {
     // Long pressed has priority over pressed
     // Due to delay of removing the _press state
-    if (_longpressed) return GestureState.longPressed;
+    if (_longpressed) return WidgetState.longPressed;
 
-    if (_pressed) return GestureState.pressed;
+    if (_pressed) return WidgetState.pressed;
 
-    return GestureState.none;
+    return WidgetState.none;
   }
 
   @override
@@ -138,9 +138,9 @@ class PressableWidgetState extends State<Pressable> {
   Widget build(BuildContext context) {
     final currentGesture = _currentGesture;
     final currentStatus =
-        widget.disabled ? GestureStatus.disabled : GestureStatus.enabled;
+        widget.disabled ? WidgetStatus.disabled : WidgetStatus.enabled;
 
-    final onEnabled = currentStatus == GestureStatus.enabled;
+    final onEnabled = currentStatus == WidgetStatus.enabled;
 
     return MergeSemantics(
       child: Semantics(
@@ -165,8 +165,8 @@ class PressableWidgetState extends State<Pressable> {
             onShowFocusHighlight: (v) => updateState(() => _focus = v),
             onShowHoverHighlight: (v) => updateState(() => _hover = v),
             onFocusChange: widget.onFocusChange,
-            child: GestureStateNotifier(
-              data: GestureData(
+            child: WidgetStateNotifier(
+              data: WidgetStateData(
                 focus: _focus,
                 status: currentStatus,
                 state: currentGesture,

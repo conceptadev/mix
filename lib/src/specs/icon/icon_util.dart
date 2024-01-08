@@ -5,6 +5,14 @@ import 'icon_attribute.dart';
 
 const icon = IconUtility();
 
+/// Utility class for building [IconSpecAttribute]s
+///
+/// Example:
+///
+/// ```dart
+/// final icon = IconUtility();
+///
+/// final iconSpec = icon.size(24);
 class IconUtility extends SpecUtility<IconSpecAttribute> {
   const IconUtility();
 
@@ -16,7 +24,7 @@ class IconUtility extends SpecUtility<IconSpecAttribute> {
     return ColorUtility((color) => IconSpecAttribute(color: color));
   }
 
-  IconSpecAttribute size(double size) {
-    return _only(size: size);
+  DoubleUtility<IconSpecAttribute> get size {
+    return DoubleUtility((size) => _only(size: size));
   }
 }

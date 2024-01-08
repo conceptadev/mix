@@ -5,22 +5,19 @@ title: "Variants"
 
 import { Callout } from "nextra-theme-docs";
 
-# Style Variants
+# Variants
 
-Variants are powerful tools in Mix, designed to streamline the styling process in Flutter applications. They allow for the grouping and conditional application of styling attributes, enhancing efficiency and adaptability in UI design.
+Variants in Mix are tools that simplify variations of a widget styling. They can group style for specific use cases, or to create responsive variants that are applied automatically based on the context.
 
 ## Overview
 
-The `Variant` API is designed to be simple and intuitive. There are two types of variants.
+Variants play a crucial role in building custom widgets. Often, we encounter styles that appear quite similar, with only a handful of minor yet influential differences.
 
-- **Named variants** are applied manually, and can be used to create custom variants.
-- **Context variants** are applied automatically, and can be used to create responsive variants.
+Take a button, for instance. It could embody a primary or secondary variant, or maybe even change its style based on the screen's brightness. These subtle transformations, while seemingly small, can significantly shape UI, illustrating the power of Variants.
 
-Variants usage can be broken down in two main parts. The definition of a `Variant`, and the application of the variant within a `Style`.
+## Simple Variants
 
-## Named Variants
-
-Named variants are important when you want to have a very clear control of when a variant can be used, and want to control the over the variant usage and type.
+Simple variants define custom styling variations intended for specific use cases. You can manually apply them to Style instances to exercise fine-grained control.
 
 ### Defining a Variant
 
@@ -86,7 +83,7 @@ final outlinedStyle = Style(
 
 ## Context Variants
 
-Context variants are variants that are applied automatically based on the BuildContext. They are useful when you want to create responsive variants that are applied automatically based on the context.
+Context variants are automatically applied based on the `BuildContext`. They are useful for creating responsive variants.
 
 ### Defining a Context Variant
 
@@ -108,8 +105,7 @@ final onDark = ContextVariant(
 
 To use a context variant in a style, you can call it as a function on a `Style` passing the attributes.
 
-```dart {7-10}
-
+```dart {6-9}
 final style = Style(
   padding(20),
   border.radius(10),
@@ -122,12 +118,10 @@ final style = Style(
 );
 ```
 
-### Applying a Context Variant
-
-`ContextVariants` are applied automatically based on the `BuildContext`. Once it is called on a style it will be equivalent to have defined the following:
+When the `onDark` variant is applied, it will override the `backgroundColor` and `text.style.color` attributes. When this happens the style will be equivalent to the following:
 
 ```dart highlight="2-4"
-final onDarkStyle = Style(
+final style = Style(
   padding(20),
   border.radius(10),
   backgroundColor.white(),
@@ -139,7 +133,9 @@ final onDarkStyle = Style(
 
 The operators `|` and `&` can be used to add conditions to your mix:
 
-- `|`: whether one of the variants apply
+### OR Operator
+
+The `|` operator is used in case you want to apply the variant when any of the variants apply.
 
 ```dart highlight="3-7"
 final style = Style(
@@ -147,68 +143,77 @@ final style = Style(
   (onSmall | onMedium)( // Whether it's small OR medium
     width(300),
     height(400),
-    backgroundColor(Colors.white),
+    backgroundColor.white(),
   ),
 );
 ```
 
-- `&`: when all of the variants apply
+### AND Operator
+
+The `&` operator is used in case you want to apply the variant when all of the variants apply.
 
 ```dart highlight="3-6"
 final mix = Style(
-  padding(20.0),
-  (onHover & onPress)( // When it's hovering AND pressing
-    text.style(color: Colors.black),
-    bold(),
+  padding(20),
+  // When it's hovering AND pressing
+  (onHover & onPress)(
+    text.style.color.black(),
+    text.style.bold(),
   ),
 );
 ```
 
-The `onNot` operator can also be called to execute the variant content only when the given
-variant is not called. For example:
+### Not Condition
 
-```dart highlight="2-4"
+While not a traditional negation operator, `onNot` allows you to compose a variant that is applied when the `ContextVariant` apply condition returns false.
+
+```dart {1, 4-6}
+final onDisabled = onNot(onEnabled);
+
 final style = Style(
-  onNot(disabled)(
+  onDisabled(
     scale(1.2),
   ),
 );
 ```
 
-## Variants catalog
+## Built-in Context Variants
 
-Mix already has some `Reactive Variants` defined which can be used to create responsive
-Widgets.
-
-### Pressable
-
-These are `Variants` that will change based on different _gestures_ and state of the
-`Pressable` Widget.
-
-- `onHover()`: Applies attributes on hover.
-- `onFocus()`: Applies attributes on focus.
-- `onPress()`: Applies attributes when pressing.
-- `onDisabled()`: Applies attributes when disabled.
-
-### Breakpoints
-
-- `onSmall()`: Applies attributes when the screen is at least `small` breakpoint.
-- `onMedium()`: Applies attributes when the screen is at least `medium` breakpoint.
-- `onLarge()`: Applies attributes when the screen is at least `large` breakpoint.
-
-Breakpoints for these sizes can be configured in the `MixTheme`:
+Mix provides a set of pre-defined context variants for adaptive styling:
 
 ### Orientation
 
-- `onPortrait()`: Applies attributes when the screen is in portrait orientation.
-- `onLandscape()`: Applies attributes when the screen is in landscape orientation.
+- **`onPortrait()`:** Applies styles when the device is in portrait orientation.
+- **`onLandscape()`:** Applies styles when the device is in landscape orientation.
 
-### Dark Mode
+### Breakpoints
 
-- `onDark()`: Applies attributes when the theme is in dark mode.
-- `onLight()`: Applies attributes when the theme is in light mode.
+- **`onSmall()`:** Applies styles when the screen is at least the "small" breakpoint.
+- **`onXSmall()`:** Applies styles when the screen is at least the "extra small" breakpoint.
+- **`onMedium()`:** Applies styles when the screen is at least the "medium" breakpoint.
+- **`onLarge()`:** Applies styles when the screen is at least the "large" breakpoint.
 
-### State Holding
+### Custom Breakpoints
 
-- `onActive()`: Applies attributes when the widget state is marked as active
-- `onInactive()`: Applies attributes when the widget state is marked as inactive
+- **`onBreakpoint({minWidth, maxWidth})`:** Create custom context variants for specific screen size ranges.
+
+### Directionality
+
+- **`onRTL()`:** Applies styles when the text direction is right-to-left (RTL).
+- **`onLTR()`:** Applies styles when the text direction is left-to-right (LTR).
+
+### Brightness
+
+- **`onDark()`:** Applies styles when the theme is in dark mode.
+- **`onLight()`:** Applies styles when the theme is in light mode.
+
+### Widget State
+
+For the following variants, the widget must be wrapped in a `Pressable` widget or use the `GestureBox` widget.
+
+- **`onHover()`:** Applies styles when the widget is hovered.
+- **`onPress()`:** Applies styles when the widget is pressed.
+- **`onLongPress()`:** Applies styles when the widget is long pressed.
+- **`onFocus()`:** Applies styles when the widget is focused.
+- **`onDisabled()`:** Applies styles when the widget is disabled.
+- **`onEnabled()`:** Applies styles when the widget is enabled.

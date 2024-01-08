@@ -35,12 +35,12 @@ void main() {
     final firstContext = tester.element(find.byKey(firstKey));
     final secondContext = tester.element(find.byKey(secondKey));
 
-    final firstNotifier = GestureStateNotifier.of(firstContext);
-    final secondNotifier = GestureStateNotifier.of(secondContext);
+    final firstNotifier = WidgetStateNotifier.of(firstContext);
+    final secondNotifier = WidgetStateNotifier.of(secondContext);
 
     expect(onEnabledAttr.when(firstContext), true);
-    expect(firstNotifier!.status, GestureStatus.enabled);
+    expect(firstNotifier!.status, WidgetStatus.enabled);
     expect(onEnabledAttr.when(secondContext), false);
-    expect(secondNotifier!.status, GestureStatus.disabled);
+    expect(secondNotifier!.status, WidgetStatus.disabled);
   });
 }

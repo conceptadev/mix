@@ -1,7 +1,7 @@
 {
   "styling": "Styling",
-  "variants": "Variants",
   "utilities": "Utilities Fundamentals",
-  "mixable-widgets": "Mixable widgets",
-  "decorators": "Decorators"
+  "variants": "Variants",
+  "decorators": "Decorators",
+  "styled-widgets": "Styled Widgets"
 }

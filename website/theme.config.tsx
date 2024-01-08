@@ -1,6 +1,6 @@
 import Image from "next/image";
-import CustomSearch from "./components/Search";
 import { useRouter } from "next/router";
+import CustomSearch from "./components/Search";
 
 const themeConfig = {
   useNextSeoProps() {
@@ -14,25 +14,21 @@ const themeConfig = {
   logo: (
     <>
       <Image
-        className="md:inline object-contain hidden"
-        height={16}
-        width={16}
+        height={32}
+        width={32}
         alt="Mix Icon"
-        src={"/assets/mix-icon-gradient.svg"}
+        src={"/assets/mix-icon.svg"}
       />
-      <span className="mr-2 font-extrabold mx-2 hidden md:inline">Mix</span>
-      <span className="text-gray-600 font-normal text-sm hidden md:inline">
-        Effortlessly build Flutter design systems.
-      </span>
+      <span className="mr-2 font-extrabold mx-2 md:inline">Mix</span>
     </>
   ),
-
   project: {
     link: "https://github.com/conceptadev/mix",
   },
   docsRepositoryBase: "https://github.com/conceptadev/mix/blob/main",
-  search: true,
-  customSearch: <CustomSearch />,
+  search: {
+    component: <CustomSearch />,
+  },
   head: (
     <>
       <meta name="msapplication-TileColor" content="#ffffff" />
@@ -91,16 +87,25 @@ const themeConfig = {
   },
   toc: {
     float: true,
+    backToTop: true,
   },
-
-  footer: true,
+  darkMode: true,
   nextThemes: {
     defaultTheme: "dark",
+    forcedTheme: "dark",
   },
   sidebar: {
-    defaultMenuCollapseLevel: Infinity,
+    defaultMenuCollapseLevel: 5,
     autoCollapse: false,
     toggleButton: false,
+  },
+  primaryHue: {
+    light: 200,
+    dark: 251,
+  },
+  primarySaturation: {
+    light: 50,
+    dark: 50,
   },
   editLink: {
     text: "Edit this page on GitHub",
@@ -113,13 +118,16 @@ const themeConfig = {
           target="_blank"
           rel="noreferrer"
         >
-          <Image src="/assets/powered-by-vercel.svg" height={43} width={211} />{" "}
+          <Image
+            alt="mix logo"
+            src="/assets/powered-by-vercel.svg"
+            height={43}
+            width={211}
+          />{" "}
         </a>
       </>
     ),
   },
-
-  darkMode: true,
 };
 
 export default themeConfig;

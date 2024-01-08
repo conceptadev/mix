@@ -7,47 +7,44 @@ import { Callout } from "nextra-theme-docs";
 
 # Styling with Mix
 
-Mix introduces a functional and intuitive approach to styling in Flutter, empowering developers to create UIs that are both visually appealing and maintainable. By embracing the functional style syntax, Mix allows you to define styles in a more declarative and expressive manner, fostering clarity and consistency in your code.
+Mix introduces an efficient, user-friendly approach to managing the visual semantics of widgets. By leveraging the functional style syntax, Mix not only enhances the aesthetic appeal of your interfaces but also promotes code maintainability. This methodology is crafted for clarity and consistency, pivotal in streamlining your project’s styling process.
 
-This functional approach enables direct and readable style declarations, resulting in a smoother and more streamlined styling process. Moreover, Mix excels in facilitating style overrides, providing a versatile and flexible way to customize and adapt styles across different widgets.
+Emphasizing readable and concise style declarations, Mix significantly simplifies the development workflow. It stands out for its adeptness in handling style overrides, offering remarkable flexibility to customize and adapt styles across diverse widgets with ease.
 
-By leveraging Mix's functional syntax, you can craft elegant widgets efficiently, ensuring a cohesive and dynamic user experience.
+## Comprehensive Overview
 
-## Overview
+At the core of Mix's styling capabilities is the `Style` class, a robust toolkit for style management and application. It encapsulates a suite of styling attributes and variants, providing a versatile and efficient approach to widget styling. This section delves into the essential features and practical applications of the `Style` class.
 
-The Style class in Mix serves as a foundational utility for managing and applying styles. It encapsulates a collection of styling attributes and variants, offering a powerful and flexible way to define and manipulate styles for widgets. This concept page will guide you through the key features and usage of Style.
-
-- **Purpose**: Style is designed to manage, and reuse collections of styling attributes and variants, making it easier to apply consistent and reusable styles across your Flutter app.
-- **Composition**: It combines multiple styling attributes, such as colors, fonts, sizes, and more, into a single entity that can be applied to widgets.
-- **Variants**: Besides standard styling attributes, Style also supports variants, allowing for more dynamic and context-sensitive styling.
+- **Functionality**: The `Style` class is engineered for efficient handling and reuse of styling attributes and variants. Its design simplifies the application of uniform and reusable styles throughout your Flutter application.
+- **Mechanism**: It integrates various styling aspects, including colors, fonts, dimensions, and more, into a unified construct, streamlining the application of styles to widgets.
+- **Advanced Capabilities**: Beyond conventional styling attributes, `Style` also supports dynamic variants, enabling context-responsive and adaptable styling solutions.
 
 <Callout emoji="⚠️">
-  The order of the attributes is important, and keep in mind when composing and
-  overriding them. Styling attributes are merged from left (top) to right
-  (bottom) so the attributes on the right will override the attributes on the
-  left.
+  Important Note: Remember that the sequence of attributes is crucial in their
+  composition and overriding. Styling attributes merge sequentially, with
+  subsequent attributes taking precedence.
 </Callout>
 
-### Creating a Style
+### **Crafting Your Unique Style**
 
-You can create a Mix by calling it's class and passing positional attributes like so
+Creating a Mix style is a seamless process. Start by constructing a `Style` object and incorporate your desired attributes:
 
 ```dart
 final style = Style(
   height(100),
   width(100),
   backgroundColor.purple(),
-  border.radius(10),
+  borderRadius(10),
 );
 ```
 
-### **Style Composition**
+### **Composing Styles**
 
-Composing styles is a powerful technique in Mix that allows you to combine and merge Style instances to achieve layered and comprehensive styling. This approach promotes modularity, reusability, flexibility, and maintainability in your code.
+Create styles by combining and merging multiple Style instances. This technique, called style composition, allows you to build complex styles while ensuring modularity, reusability, flexibility, and maintainability in your codebase. The secret lies in calling the Mix class and passing attributes as arguments.
 
-#### **Mixing Styles**
+#### **Mixing Attributes**
 
-To mix styles, simply use the `mix()` method on a Style instance. For example:
+Simply use the `mix()` method on a Style instance. For example:
 
 ```dart
 final baseStyle = Style(
@@ -63,11 +60,11 @@ final newStyle = baseStyle.mix(
 );
 ```
 
-In this example, the `newStyle` inherits all attributes from the `baseStyle`, except for the `border.width` and `border.color` attributes, which are overridden by the new values.
+In this example, the `newStyle` inherits all attributes from the `baseStyle`, and add `border.width` and `border.color` attributes to it.
 
-#### **Overriding Styles**
+#### **Overriding Attributes**
 
-You can also override specific attributes of a style by passing new values to the `mix()` method. For instance:
+**Taking Control** You can also override specific attributes of a style by passing new values to the `mix()` method. For instance:
 
 ```dart
 final newStyle = baseStyle.mix(
@@ -77,11 +74,37 @@ final newStyle = baseStyle.mix(
 
 In this example, the `newStyle` will inherit all attributes from the `baseStyle`, except for the `backgroundColor` attribute, which will be overridden by the new value.
 
-#### **Using the `apply()` Utility**
+#### **Combining Styles**
 
-Alternatively, you can apply a style as an attribute using the `apply()` utility. This approach gives you more control over the order of the attributes.
+You can also combine multiple styles into a single one.
 
-For example, the following code achieves the same result as the previous example, but using `apply`:
+```dart
+final newStyle = Style.combine([
+  baseStyle,
+  otherStyle,
+]);
+```
+
+#### Merging Styles
+
+Use the `merge()` method on a Style instance. For example:
+
+```dart
+final otherStyle = Style(
+  border.width(2),
+  border.color.black(),
+);
+
+final newStyle = baseStyle.merge(otherStyle);
+```
+
+In this example, the `newStyle` will inherit all attributes from both the `baseStyle` and the `otherStyle`, with the `otherStyle` taking priority over the `baseStyle` in case of conflicts.
+
+#### Applying Styles
+
+To apply styles individually, use `apply()`. This gives you control over their order.
+
+In this example, the `backgroundColor` attribute of the `baseStyle` is overridden by the `backgroundColor` attribute of the `newStyle`:
 
 ```dart
 final newStyle = Style(
@@ -99,28 +122,9 @@ final newStyle = Style(
 );
 ```
 
-**Benefits of Composing Styles**
+### **Benefits of Composition**
 
 - **Modularity**: Break down complex styles into manageable chunks, which can be combined or merged as needed.
 - **Reusability**: Encourage the reuse of common style elements, reducing redundancy and maintaining consistency across the UI.
 - **Flexibility**: Dynamically adjust styles based on different conditions or user interactions.
 - **Maintainability**: Simplify the maintenance of styles, as changes can be made to individual mixes rather than entire stylesheets.
-
-### **Style.chooser()**
-
-The `Style.chooser()` method allows you to use a Mix based on a condition. For example:
-
-```dart
-final errorStyle = Style(backgroundColor.red());
-final successStyle = Style(backgroundColor.green());
-
-final mix = Style.chooser(
-  condition: hasError,
-  ifTrue: errorStyle,
-  ifFalse: successStyle,
-);
-```
-
-In this example, the `mix` will be set to the `errorStyle` if the `hasError` condition is true, and to the `successStyle` if the condition is false.
-
-This approach can be useful for creating dynamic styles that adapt to different conditions or user interactions.

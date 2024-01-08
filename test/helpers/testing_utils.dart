@@ -130,15 +130,15 @@ extension WidgetTesterExt on WidgetTester {
 
   Future<void> pumpWithPressable(
     Widget widget, {
-    GestureData data = const GestureData.none(),
-    GestureState state = GestureState.none,
-    GestureStatus status = GestureStatus.enabled,
+    WidgetStateData data = const WidgetStateData.none(),
+    WidgetState state = WidgetState.none,
+    WidgetStatus status = WidgetStatus.enabled,
     bool focus = false,
     bool hover = false,
   }) async {
     await pumpWidget(
       MaterialApp(
-        home: GestureStateNotifier(
+        home: WidgetStateNotifier(
           data: data.copyWith(
             state: state,
             status: status,
@@ -279,7 +279,7 @@ class UtilityTestDtoAttribute<T extends Dto<V>, V>
   }
 }
 
-class CustomWidgetDecorator extends BoxWidgetDecorator<CustomWidgetDecorator> {
+class CustomWidgetDecorator extends WidgetDecorator<CustomWidgetDecorator> {
   const CustomWidgetDecorator({super.key});
   @override
   Widget build(mix, child) {

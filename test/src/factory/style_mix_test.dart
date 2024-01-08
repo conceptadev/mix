@@ -126,47 +126,6 @@ void main() {
     });
   });
 
-  group('Style.chooser() ', () {
-    test('Condition is True', () {
-      const trueAttribute = MockIntScalarAttribute(1);
-      const falseAttribute = MockDoubleScalarAttribute(2.0);
-
-      final trueStyle = Style(trueAttribute);
-      final falseStyle = Style(falseAttribute);
-
-      final mix = Style.chooser(true, trueStyle, falseStyle);
-
-      expect(mix.styles.length, 1);
-      expect(mix.styles.values[0], trueAttribute);
-    });
-
-    test('Condition is False', () {
-      const trueAttribute = MockIntScalarAttribute(1);
-      const falseAttribute = MockDoubleScalarAttribute(2.0);
-
-      final trueStyle = Style(trueAttribute);
-      final falseStyle = Style(falseAttribute);
-
-      final mix = Style.chooser(false, trueStyle, falseStyle);
-
-      expect(mix.styles.length, 1);
-      expect(mix.styles.values[0], falseAttribute);
-    });
-
-    test('Both ifTrue and ifFalse Are Same', () {
-      const sameAttribute = MockBooleanScalarAttribute(true);
-
-      final sameStyle = Style(sameAttribute);
-      final otherStyle = Style(const MockBooleanScalarAttribute(false));
-
-      final style = Style.chooser(true, sameStyle, otherStyle);
-
-      expect(style.styles.length, 1);
-      expect(style.styles.values[0], sameAttribute);
-      expect(sameStyle, style);
-    });
-  });
-
   group('Style.selectVariant', () {
     const attr1 = MockDoubleScalarAttribute(1.0);
     const attr2 = MockIntScalarAttribute(2);
