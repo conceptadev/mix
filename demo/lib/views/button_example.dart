@@ -126,8 +126,8 @@ abstract class Button extends StatelessWidget {
     return Pressable(
       onPressed: onPressed,
       onLongPress: onLongPressed,
-      child: HBox.withStyle(
-        mergedStyle,
+      child: HBox(
+        style: mergedStyle,
         children: [
           _leftContent,
           _centerContent,

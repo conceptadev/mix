@@ -45,8 +45,8 @@ extension StyleExt<T extends Attribute> on Style {
     @Deprecated('Use the style parameter instead') Style? mix,
     Style? style,
   }) {
-    return HBox.withStyle(
-      merge(style ?? mix),
+    return HBox(
+      style: merge(style ?? mix),
       key: key,
       inherit: inherit,
       children: children,
@@ -92,8 +92,8 @@ extension StyleExt<T extends Attribute> on Style {
     @Deprecated('Use the style parameter instead') Style? mix,
     Style? style,
   }) {
-    return VBox.withStyle(
-      merge(style ?? mix),
+    return VBox(
+      style: merge(style ?? mix),
       key: key,
       inherit: inherit,
       children: children,
