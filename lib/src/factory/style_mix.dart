@@ -337,6 +337,7 @@ class Style with Comparable {
   ///
   /// Note:
   /// The attributes `attr1` and `attr2` from the initial `Style` are ignored, and only the attributes within the specified variants are picked and applied to the new `Style`.
+  @visibleForTesting
   Style pickVariants(
     List<Variant> pickedVariants, {
     bool isRecursive = false,
