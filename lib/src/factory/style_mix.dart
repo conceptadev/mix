@@ -15,8 +15,6 @@ import '../specs/text/text_attribute.dart';
 import '../utils/helper_util.dart';
 import '../variants/variant.dart';
 
-typedef Mix = Style;
-
 /// A utility class for managing a collection of styling attributes and variants.
 ///
 /// The `Style` class is used to encapsulate a set of styling attributes and
@@ -223,11 +221,11 @@ class Style with Comparable {
   /// If a null value is provided for any of the parameters, it is ignored.
   ///
   /// This method combines the visual and variant attributes of this mix and the provided [mix].
-  Style merge(Style? mix) {
-    if (mix == null) return this;
+  Style merge(Style? style) {
+    if (style == null) return this;
 
-    final mergedStyles = styles.merge(mix.styles);
-    final mergedVariants = variants.merge(mix.variants);
+    final mergedStyles = styles.merge(style.styles);
+    final mergedVariants = variants.merge(style.variants);
 
     return copyWith(styles: mergedStyles, variants: mergedVariants);
   }

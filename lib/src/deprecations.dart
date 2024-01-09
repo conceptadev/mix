@@ -5,34 +5,37 @@ import '../mix.dart';
 const kShortAliasDeprecation =
     'Short aliases will be deprecated, you can create your own. Example: final p = padding;';
 
+@Deprecated('Use Style instead')
+typedef Mix = Style;
+
 extension DeprecatedMixExtension<T extends Attribute> on Style {
   /// Adds an Attribute to a Mix.
   @Deprecated('Simplifying the mix API to avoid confusion. Use apply instead')
   SpreadFunctionParams<T, Style> get mix => SpreadFunctionParams(addAttributes);
 
-  @Deprecated('Use selectVariants now')
+  @Deprecated('Use variantList(value:) instead')
   Style withVariants(List<Variant> variants) => withManyVariants(variants);
 
+  @Deprecated('Use variantList(value:) instead')
+  Style withManyVariants(Iterable<Variant> variants) => variantList(variants);
+
   @Deprecated(
-    'Use merge() or mergeMany() now. You might have to turn into a Mix first. firstMixFactory.merge(secondMix)',
+    'Use merge() or mergeMany() instead. You might have to turn into a Mix first. firstMixFactory.merge(secondMix)',
   )
   Style addAttributes(Iterable<Attribute> attributes) =>
       merge(Style.create(attributes));
-
-  @Deprecated('Use selectVariants now')
-  Style withManyVariants(Iterable<Variant> variants) => variantList(variants);
 
   @Deprecated('Use merge() or mergeMany() instead')
   SpreadFunctionParams<Style, Style> get apply =>
       const SpreadFunctionParams(Style.combine);
 
-  @Deprecated('Use selectVariant now')
+  @Deprecated('Use variant(value:) instead')
   Style withVariant(Variant value) => variant(value);
 
-  @Deprecated('Use combine now')
+  @Deprecated('Use combine instead')
   Style combineAll(List<Style> mixes) => Style.combine(mixes);
 
-  @Deprecated('Use selectVariant now')
+  @Deprecated('Use variant(value:) instead')
   Style withMaybeVariant(Variant? variant) {
     if (variant == null) return this;
 
@@ -467,7 +470,6 @@ class IconMix extends StyledIcon {
     super.textDirection,
   });
 }
-
 
 @Deprecated('Use text.style instead')
 final textStyle = text.style;
