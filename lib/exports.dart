@@ -78,7 +78,6 @@ export 'src/utils/context_variant_util/on_helper_util.dart';
 export 'src/utils/context_variant_util/on_orientation_util.dart';
 export 'src/utils/helper_util.dart';
 export 'src/variants/variant.dart';
-export 'src/widgets/gap_widget.dart';
 export 'src/widgets/pressable/gesture_state.dart';
 export 'src/widgets/pressable/gesture_state.notifier.dart';
 export 'src/widgets/pressable/gesture_widget.dart';
