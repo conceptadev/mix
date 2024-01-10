@@ -1,8 +1,10 @@
 import 'package:flutter/widgets.dart';
 
 import '../../core/styled_widget.dart';
+import '../../deprecations.dart';
 import '../../factory/mix_provider.dart';
 import '../../factory/mix_provider_data.dart';
+import '../../factory/style_mix.dart';
 import '../../widgets/gap_widget.dart';
 import '../container/box_widget.dart';
 import 'flex_spec.dart';
@@ -191,11 +193,15 @@ class FlexBox extends StyledWidget {
 /// ```
 class HBox extends FlexBox {
   const HBox({
-    super.style,
+    Style? style,
+    @Deprecated('Use the the style parameter instead') Mix? mix,
     super.key,
     super.inherit,
     super.children = const <Widget>[],
-  }) : super(direction: Axis.horizontal);
+  }) : super(
+          style: style ?? mix,
+          direction: Axis.horizontal,
+        );
 }
 
 /// A vertical flex container that uses `Style` for streamlined styling.
@@ -216,11 +222,15 @@ class HBox extends FlexBox {
 /// ```
 class VBox extends FlexBox {
   const VBox({
-    super.style,
+    Style? style,
+    @Deprecated('Use the the style parameter instead') Mix? mix,
     super.key,
     super.inherit,
     super.children = const <Widget>[],
-  }) : super(direction: Axis.vertical);
+  }) : super(
+          style: style ?? mix,
+          direction: Axis.vertical,
+        );
 }
 
 const _defaultFlex = Flex(direction: Axis.horizontal, children: <Widget>[]);

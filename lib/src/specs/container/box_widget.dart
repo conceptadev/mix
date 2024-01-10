@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../core/styled_widget.dart';
-import '../../decorators/widget_decorator_widget.dart';
-import '../../factory/mix_provider.dart';
-import '../../factory/mix_provider_data.dart';
-import 'box_attribute.dart';
-import 'box_spec.dart';
+import '../../../mix.dart';
 
 typedef StyledContainer = Box;
 typedef StyledAnimatedContainer = AnimatedBox;
@@ -43,7 +38,13 @@ typedef StyledAnimatedContainer = AnimatedBox;
 /// This example creates a `Box` widget with a custom `Style`, offering enhanced styling
 /// and decoration capabilities compared to a standard [Container].
 class Box extends StyledWidget {
-  const Box({super.style, super.key, super.inherit, this.child});
+  const Box({
+    @Deprecated('Use the the style parameter instead') Mix? mix,
+    super.style,
+    super.key,
+    super.inherit,
+    this.child,
+  });
 
   final Widget? child;
 

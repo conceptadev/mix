@@ -90,13 +90,13 @@ void main() {
           children: [
             style.hbox(children: [const SizedBox()], key: keyOne),
             HBox(
-              key: keyTwo,
               style: style,
+              key: keyTwo,
               children: const [SizedBox()],
             ),
             HBox(
-              key: keyThree,
               style: const Style.empty(),
+              key: keyThree,
               children: const [SizedBox()],
             ),
           ],
@@ -190,13 +190,13 @@ void main() {
           children: [
             style.vbox(children: [const SizedBox()], key: keyOne),
             VBox(
-              key: keyTwo,
               style: style,
+              key: keyTwo,
               children: const [SizedBox()],
             ),
             VBox(
-              key: keyThree,
               style: const Style.empty(),
+              key: keyThree,
               children: const [SizedBox()],
             ),
           ],
