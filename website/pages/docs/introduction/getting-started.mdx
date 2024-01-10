@@ -1,119 +1,76 @@
 ---
-id: introduction
-title: "Introduction"
+title: "Getting Started"
 ---
 
-## The what and why of Mix
+import { Steps } from "nextra/components";
 
-Motivation
-Flutter favors composition over inheritance when building widgets. This choice keeps Flutter API extremely easy to interact with and powerful.
-However, in our experience, both inheritance and composition are essential when defining presentation attributes. Themes are an excellent example of inheritance but are not extended across all visual properties.
-Maintaining a design system is much harder than building it.
-When building a design system, it can be challenging to develop and maintain a consistent UI that shares the same design language for widget variations or across different widgets within the design system.
-Goals
-Provide simple API to compose design and layout attributes for widgets. That can easily be extended, overridden, and combined; we call this a Mix.
-Visual attributes should be defined outside of a BuildContext by a composable API shared across the design system.
-Style consistently with a global context
-Allow to respond to changing requirements quickly
-Create adaptive designs and layouts with ease
-Principles
-Abstract Flutter API, and not modify its behavior.
-Development efficiency is gained by the ease of use, consistency, and reusability, not coding speed.
-Composability should be a priority. Mixes, Attributes, Widgets, etc.
-Designer friendly (use simple standard semantics when possible).
+# Getting Started
 
-## Comparison
+<Steps>
 
-Mix provides a lot of different benefits on how you can define and organize your design tokens, and no documentation would be complete without a syntax comparison between **Mix vs. Without Mix**.
+### Installation
 
-Let's go ahead and take a look at the code. Don't worry about understanding each line, the docs will go into more detail about each item.
+Run the following command in the root of your project:
 
-### With Mix
-
-```dart
-class CustomMixWidget extends StatelessWidget {
-  const CustomMixWidget({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final style = Style(
-      height(100),
-      margin.top(10),
-      margin.bottom(5),
-      elevation(10),
-      border.radius(10),
-      backgroundColor($md.colors.primary()),
-      text.style.of($button),
-      text.style(color: $onPrimary),
-      onHover(
-        elevation(2),
-        padding(20),
-        backgroundColor($md.colors.secondary()),
-        text.style.color($md.colors.onSecondary()),
-      ),
-    );
-    return Box(
-      style: style,
-      child: const StyledText('Custom Widget'),
-    );
-  }
-}
+```
+flutter pub add mix
 ```
 
-### Without Mix
+Import it everywhere you use it:
 
 ```dart
-class CustomWidget extends StatefulWidget {
-  const CustomWidget({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  _CustomWidgetState createState() => _CustomWidgetState();
-}
-
-class _CustomWidgetState extends State<CustomWidget> {
-  bool _isHover = false;
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-
-    return MouseRegion(
-      onEnter: (event) {
-        setState(() => _isHover = true);
-      },
-      onExit: (event) {
-        setState(() => _isHover = false);
-      },
-      child: Material(
-        elevation: _isHover ? 2 : 10,
-        child: AnimatedContainer(
-          curve: Curves.linear,
-          duration: const Duration(milliseconds: 100),
-          height: 100,
-          padding:
-              _isHover ? const EdgeInsets.all(20) : const EdgeInsets.all(0),
-          margin: const EdgeInsets.only(top: 10, bottom: 5),
-          decoration: BoxDecoration(
-            color: _isHover ? colorScheme.secondary : colorScheme.primary,
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Text(
-            'Custom Widget',
-            style: Theme.of(context).textTheme.button?.copyWith(
-                  color: _isHover
-                      ? colorScheme.onSecondary
-                      : colorScheme.onPrimary,
-                ),
-          ),
-        ),
-      ),
-    );
-  }
-}
+import 'package:mix/mix.dart';
 ```
+
+### Styling Your First Widget
+
+#### Flutter's Traditional Approach
+
+In Flutter, you might style a Container with elevation and color like this:
+
+```dart
+Container(
+  height: 100,
+  width: 100,
+  margin: EdgeInsets.symmetric(
+    vertical: 10,
+    horizontal: 20,
+  ),
+  decoration: BoxDecoration(
+    color: Colors.blue,
+    borderRadius: BorderRadius.circular(10),
+    border: Border.all(
+      color: Colors.black,
+      width: 1,
+      style: BorderStyle.solid,
+    ),
+  ),
+  child: Text('Hello World'),
+);
+```
+
+### Mix's Approach
+
+Now, let's style the same Container with Mix:
+
+```dart
+final style = Style(
+  height(100),
+  width(100),
+  margin(10, 20),
+  backgroundColor.blue(),
+  border.radius(10),
+  border(
+    color: Colors.black,
+    width: 1,
+    style: BorderStyle.solid,
+  ),
+);
+
+Box(
+  style: style,
+  child: Text('Hello Mix'),
+);
+```
+
+</Steps>

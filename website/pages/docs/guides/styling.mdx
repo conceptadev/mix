@@ -7,23 +7,15 @@ import { Callout } from "nextra-theme-docs";
 
 # Styling with Mix
 
-Mix introduces an efficient, user-friendly approach to managing the visual semantics of widgets. By leveraging the functional style syntax, Mix not only enhances the aesthetic appeal of your interfaces but also promotes code maintainability. This methodology is crafted for clarity and consistency, pivotal in streamlining your project’s styling process.
+Mix enhances Flutter development with a functional styling approach, focusing on separating visual semantics from business logic for improved readability and maintainability. Its emphasis on concise style declarations simplifies the workflow, allowing the creation of complex styles from simple building blocks.
 
-Emphasizing readable and concise style declarations, Mix significantly simplifies the development workflow. It stands out for its adeptness in handling style overrides, offering remarkable flexibility to customize and adapt styles across diverse widgets with ease.
+This method fosters modularity, reusability, and flexibility in styling, streamlining the process of defining and applying styles to widgets.
 
-## Comprehensive Overview
-
-At the core of Mix's styling capabilities is the `Style` class, a robust toolkit for style management and application. It encapsulates a suite of styling attributes and variants, providing a versatile and efficient approach to widget styling. This section delves into the essential features and practical applications of the `Style` class.
+## Key Concepts
 
 - **Functionality**: The `Style` class is engineered for efficient handling and reuse of styling attributes and variants. Its design simplifies the application of uniform and reusable styles throughout your Flutter application.
 - **Mechanism**: It integrates various styling aspects, including colors, fonts, dimensions, and more, into a unified construct, streamlining the application of styles to widgets.
 - **Advanced Capabilities**: Beyond conventional styling attributes, `Style` also supports dynamic variants, enabling context-responsive and adaptable styling solutions.
-
-<Callout emoji="⚠️">
-  Important Note: Remember that the sequence of attributes is crucial in their
-  composition and overriding. Styling attributes merge sequentially, with
-  subsequent attributes taking precedence.
-</Callout>
 
 ### **Crafting Your Unique Style**
 
@@ -37,6 +29,12 @@ final style = Style(
   borderRadius(10),
 );
 ```
+
+<Callout emoji="⚠️">
+  Important Note: Remember that the sequence of attributes is crucial in their
+  composition and overriding. Styling attributes merge sequentially, with
+  subsequent attributes taking precedence.
+</Callout>
 
 ### **Composing Styles**
 

@@ -9,10 +9,10 @@
   },
   "-- Concepts": {
     "type": "separator",
-    "title": "Concepts"
+    "title": "Guides"
   },
-  "concepts": {
-    "title": "Concepts",
+  "guides": {
+    "title": "Guides",
     "display": "children"
   },
   "theme": "Theme",

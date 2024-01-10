@@ -16,6 +16,8 @@ class GestureBox extends StatelessWidget {
     this.behavior,
     required this.child,
     this.style,
+    this.animationDuration = const Duration(milliseconds: 100),
+    this.animationCurve = Curves.linear,
   });
 
   final Style? style;
@@ -26,6 +28,8 @@ class GestureBox extends StatelessWidget {
   final bool autofocus;
   final Duration unpressDelay;
   final Function(bool focus)? onFocusChange;
+  final Duration animationDuration;
+  final Curve animationCurve;
 
   final HitTestBehavior? behavior;
 
@@ -39,7 +43,12 @@ class GestureBox extends StatelessWidget {
       onLongPress: onLongPress,
       unpressDelay: unpressDelay,
       onPressed: onPressed,
-      child: Box(style: style, child: child),
+      child: AnimatedBox(
+        style: style,
+        curve: animationCurve,
+        duration: animationDuration,
+        child: child,
+      ),
     );
   }
 }

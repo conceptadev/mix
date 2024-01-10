@@ -10,85 +10,42 @@ import 'box_spec.dart';
 typedef StyledContainer = Box;
 typedef StyledAnimatedContainer = AnimatedBox;
 
-/// [Box] - A styled widget that applies a [Style] to its [child], similar to a [Container].
+/// A widget that applies styling from `StyledWidget` to a `MixedBox`.
 ///
-/// `Box` behaves similarly to Flutter's [Container] widget but offers enhanced styling capabilities
-/// through its use of a `Style`. This widget extends [StyledWidget] and acts as a flexible
-/// wrapper for applying a mix of styles and decorations to its [child]. Unlike `Container`,
-/// `Box` is specifically designed to work with the styling system that utilizes `Style`,
-/// allowing for more complex and varied style compositions.
-///
-/// One of the key features of `Box` is its ability to apply decorators, which are made possible
-/// by its use of the [MixedBox] widget internally. This enables `Box` to go beyond the basic styling
-/// functionalities of a `Container` by supporting advanced styling and decoration features
-/// defined in the `Style`.
-///
-/// Parameters:
-///   - [style]: The [Style] to be applied. Inherits from [StyledWidget] and enhances the
-///     styling capabilities beyond what is offered by a standard [Container].
-///   - [key]: The key for the widget. Inherits from [StyledWidget].
-///   - [inherit]: Determines whether the [Box] should inherit styles from its
-///     ancestors. Default is `false`. This attribute is part of the [StyledWidget] base class.
-///   - [child]: The widget below this widget in the tree. The [child] is styled based on the
-///     attributes defined in the provided [Style].
-///
-/// Example usage:
-/// ```dart
-/// Box(
-///   style: Style( /* ...style attributes... */ ),
-///   child: Text('Styled Box Widget')
-/// )
-/// ```
-///
-/// This example creates a `Box` widget with a custom `Style`, offering enhanced styling
-/// and decoration capabilities compared to a standard [Container].
+/// `Box` extends `StyledWidget` and uses its styling capabilities to style a `MixedBox`.
+/// This widget serves as a convenient way to apply consistent styles to its child widget
+/// using the `MixData` obtained from `StyledWidget`.
 class Box extends StyledWidget {
+  /// Creates a `Box` widget.
+  ///
+  /// The [style], [key], and [inherit] parameters are passed to `StyledWidget`.
+  /// The [child] is the widget to which the styling will be applied.
   const Box({super.style, super.key, super.inherit, this.child});
 
+  /// The child widget that will receive the styles.
   final Widget? child;
 
   @override
   Widget build(BuildContext context) {
+    // Apply styling from StyledWidget to a MixedBox.
+    // This method uses `withMix` to get the `MixData` and then applies it to `MixedBox`,
+    // effectively styling the [child].
     return withMix(context, (mix) {
       return MixedBox(child: child);
     });
   }
 }
 
-/// [MixedBox] - A widget that applies a given [Style] to its [child].
+/// A widget that applies styling defined in `MixData` to a child widget.
 ///
-/// This widget is primarily used by [Box] and [AnimatedBox] to render their children
-/// with the styles specified in the `Style`. It acts as an intermediary widget
-/// that resolves and applies the styling attributes from the provided `Style`
-/// to the [child]. It also integrates with the decorator system, enabling the application
-/// of various styling effects in a flexible manner.
-///
-/// The [MixedBox] handles the extraction of [BoxSpecAttribute] from the `Style`
-/// and uses it to create a [BoxSpecWidget]. The decorators, if any, are applied
-/// in the specified order, allowing for layered styling effects.
-///
-/// Parameters:
-///   - [mix]: The `MixData` representing the current styling context. It contains
-///     the resolved attributes from the `Style` that are to be applied to the [child].
-///   - [key]: The key for the widget.
-///   - [child]: The widget below this widget in the tree. It is the recipient of the
-///     styles and decorations applied by this widget.
-///   - [decoratorOrder]: Specifies the order in which decorators are applied to the widget.
-///     This allows for fine-grained control over how multiple decorators interact
-///     with each other.
-///
-/// Example usage:
-/// ```dart
-/// MixedBox(
-///   mix: mixData,
-///   child: Text('Styled with Mix'),
-///   decoratorOrder: [ /* Decorator types in desired order */ ]
-/// )
-/// ```
-///
-/// This example shows how `MixedBox` is used to apply a `Style` to a text widget,
-/// potentially with a series of decorators applied in a specific order.
+/// `MixedBox` transforms styling rules from `MixData` into concrete properties on
+/// a `Container`. It's used to dynamically style a child widget based on these rules.
 class MixedBox extends StatelessWidget {
+  /// Creates a `MixedBox` widget.
+  ///
+  /// The [mix] parameter holds styling rules. If null, styling is obtained from
+  /// the closest `MixProvider`. The [child] is the widget to be styled. The optional
+  /// [decoratorOrder] determines the order of style decorators on the child.
   const MixedBox({
     this.mix,
     super.key,
@@ -102,17 +59,16 @@ class MixedBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Get MixData from this widget or the nearest MixProvider.
     final mix = this.mix ?? MixProvider.of(context);
-    // Resolve the BoxSpecAttribute from the mix. If not found, use an empty BoxSpec.
+
+    // Retrieve styling properties from MixData. Use default properties if MixData is not provided.
     final spec = BoxSpec.of(mix);
 
-    // The RenderWidgetDecorators widget is responsible for applying the decorators
-    // to the child widget in the specified order.
+    // Apply styles and decorators to the Container, which wraps the child widget.
     return RenderWidgetDecorators(
       mix: mix,
-      // The Container widget is used here as a foundation for applying the styling.
-      // Each property of the BoxSpec is mapped to the corresponding property of the Container,
-      // allowing for a flexible and dynamic approach to styling.
+      orderOfDecorators: decoratorOrder,
       child: Container(
         alignment: spec.alignment,
         padding: spec.padding,

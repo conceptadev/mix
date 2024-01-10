@@ -101,7 +101,7 @@ const themeConfig = {
   },
   primaryHue: {
     light: 200,
-    dark: 251,
+    dark: 285,
   },
   primarySaturation: {
     light: 50,
