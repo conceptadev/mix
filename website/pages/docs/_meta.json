@@ -7,12 +7,18 @@
     "title": "Introduction",
     "display": "children"
   },
-  "-- Concepts": {
+  "-- Guides": {
     "type": "separator",
     "title": "Guides"
   },
   "guides": {
-    "title": "Guides",
+    "display": "children"
+  },
+  "-- Widgets": {
+    "type": "separator",
+    "title": "Widgets"
+  },
+  "widgets": {
     "display": "children"
   },
   "theme": "Theme",
