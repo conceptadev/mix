@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../core/styled_widget.dart';
-import '../../decorators/widget_decorator_widget.dart';
-import '../../factory/mix_provider.dart';
-import '../../factory/mix_provider_data.dart';
-import 'box_attribute.dart';
-import 'box_spec.dart';
+import '../../../mix.dart';
 
 typedef StyledContainer = Box;
 typedef StyledAnimatedContainer = AnimatedBox;
@@ -16,11 +11,13 @@ typedef StyledAnimatedContainer = AnimatedBox;
 /// This widget serves as a convenient way to apply consistent styles to its child widget
 /// using the `MixData` obtained from `StyledWidget`.
 class Box extends StyledWidget {
-  /// Creates a `Box` widget.
-  ///
-  /// The [style], [key], and [inherit] parameters are passed to `StyledWidget`.
-  /// The [child] is the widget to which the styling will be applied.
-  const Box({super.style, super.key, super.inherit, this.child});
+  const Box({
+    @Deprecated('Use the the style parameter instead') Mix? mix,
+    super.style,
+    super.key,
+    super.inherit,
+    this.child,
+  });
 
   /// The child widget that will receive the styles.
   final Widget? child;

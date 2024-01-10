@@ -37,7 +37,6 @@ export 'src/decorators/widget_decorators_util.dart';
 export 'src/deprecations.dart';
 export 'src/factory/mix_provider.dart';
 export 'src/factory/mix_provider_data.dart';
-export 'src/factory/style_group.dart';
 export 'src/factory/style_mix.dart';
 export 'src/factory/style_mix_ext.dart';
 export 'src/specs/container/box_attribute.dart';
