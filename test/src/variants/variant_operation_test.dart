@@ -23,29 +23,10 @@ void main() {
     });
 
     group('Operator `or`', () {
-      const foo = Variant('foo');
-      const bar = Variant('bar');
-      const fooBar = Variant('foobar');
-
-      Widget buildWidgetForTest(Style style, Variant variant) {
-        return Builder(
-          builder: (context) {
-            final mixData = MixData.create(context, style.variant(variant));
-            final icon = IconSpec.of(mixData);
-
-            expect(icon.color, Colors.black);
-
-            return const SizedBox(
-              height: 10,
-            );
-          },
-        );
-      }
-
       testWidgets('should set the same icon color for 2 different variants',
           (WidgetTester tester) async {
         final style = Style(
-          (foo | bar)(
+          (_foo | _bar)(
             icon.color.black(),
           ),
         );
@@ -53,8 +34,12 @@ void main() {
         await tester.pumpMaterialApp(
           Row(
             children: [
-              buildWidgetForTest(style, foo),
-              buildWidgetForTest(style, bar),
+              _buildDefaultTestCase(style, [_foo]),
+              _buildDefaultTestCase(style, [_bar]),
+              _buildDefaultTestCase(style, [_foo, _bar]),
+              _buildDefaultTestCase(style, [_foo, _fooBar]),
+              _buildDefaultTestCase(style, [_bar, _fooBar]),
+              _buildTestCaseToVerifyIfNull(style, [_fooBar]),
             ],
           ),
         );
@@ -63,7 +48,7 @@ void main() {
       testWidgets('should set the same icon color for 3 different variants',
           (WidgetTester tester) async {
         final style = Style(
-          (foo | bar | fooBar)(
+          (_foo | _bar | _fooBar)(
             icon.color.black(),
           ),
         );
@@ -71,9 +56,13 @@ void main() {
         await tester.pumpMaterialApp(
           Row(
             children: [
-              buildWidgetForTest(style, foo),
-              buildWidgetForTest(style, bar),
-              buildWidgetForTest(style, fooBar),
+              _buildDefaultTestCase(style, [_foo]),
+              _buildDefaultTestCase(style, [_bar]),
+              _buildDefaultTestCase(style, [_fooBar]),
+              _buildDefaultTestCase(style, [_foo, _bar]),
+              _buildDefaultTestCase(style, [_foo, _fooBar]),
+              _buildDefaultTestCase(style, [_bar, _fooBar]),
+              _buildDefaultTestCase(style, [_bar, _foo, _fooBar]),
             ],
           ),
         );
@@ -81,35 +70,25 @@ void main() {
     });
 
     group('Operator `and`', () {
-      const foo = Variant('foo');
-      const bar = Variant('bar');
-      const fooBar = Variant('foobar');
-
-      Widget buildWidgetForTest(Style style, List<Variant> variants) {
-        return Builder(
-          builder: (context) {
-            final mixData =
-                MixData.create(context, style.variantList(variants));
-            final icon = IconSpec.of(mixData);
-
-            expect(icon.color, Colors.black);
-
-            return const Placeholder();
-          },
-        );
-      }
-
       testWidgets(
           'should set the icon color when 2 different variants are needed',
           (WidgetTester tester) async {
         final style = Style(
-          (foo & bar)(
+          (_foo & _bar)(
             icon.color.black(),
           ),
         );
 
         await tester.pumpMaterialApp(
-          buildWidgetForTest(style, [foo, bar]),
+          Row(
+            children: [
+              _buildDefaultTestCase(style, [_foo, _bar]),
+              _buildDefaultTestCase(style, [_foo, _bar, _fooBar]),
+              _buildTestCaseToVerifyIfNull(style, [_fooBar]),
+              _buildTestCaseToVerifyIfNull(style, [_foo, _fooBar]),
+              // _buildTestCaseToVerifyIfNull(style, [_bar, _fooBar]),
+            ],
+          ),
         );
       });
 
@@ -117,15 +96,102 @@ void main() {
           'should set the icon color when 3 different variants are needed',
           (WidgetTester tester) async {
         final style = Style(
-          (foo & bar & fooBar)(
+          (_foo & _bar & _fooBar)(
             icon.color.black(),
           ),
         );
 
         await tester.pumpMaterialApp(
-          buildWidgetForTest(style, [foo, bar, fooBar]),
+          Row(
+            children: [
+              _buildDefaultTestCase(style, [_foo, _bar, _fooBar]),
+              _buildTestCaseToVerifyIfNull(style, [_foo, _bar]),
+              // _buildTestCaseToVerifyIfNull(style, [_foo, _fooBar]),
+              // _buildTestCaseToVerifyIfNull(style, [_bar, _fooBar]),
+              _buildTestCaseToVerifyIfNull(style, [_bar]),
+              _buildTestCaseToVerifyIfNull(style, [_foo]),
+              // _buildTestCaseToVerifyIfNull(style, [_fooBar]),
+            ],
+          ),
         );
       });
     });
   });
+
+  group('Operators `and` and `or` in the same expression', () {
+    testWidgets(
+        'should follow the order of operations and set the icon color when all conditions are met, case with | first',
+        (WidgetTester tester) async {
+      final style = Style(
+        (_foo | _bar & _fooBar)(
+          icon.color.black(),
+        ),
+      );
+
+      await tester.pumpMaterialApp(
+        Row(
+          children: [
+            _buildDefaultTestCase(style, [_foo, _fooBar]),
+            _buildDefaultTestCase(style, [_bar, _fooBar]),
+            _buildDefaultTestCase(style, [_foo, _bar, _fooBar]),
+            // _buildTestCaseToVerifyIfNull(style, [_foo]),
+            // _buildTestCaseToVerifyIfNull(style, [_bar]),
+            // _buildTestCaseToVerifyIfNull(style, [_fooBar]),
+          ],
+        ),
+      );
+    });
+
+    testWidgets(
+        'should follow the order of operations and set the icon color when all conditions are met, case with & first',
+        (WidgetTester tester) async {
+      final style = Style(
+        (_foo & _bar | _fooBar)(
+          icon.color.black(),
+        ),
+      );
+
+      await tester.pumpMaterialApp(
+        Row(
+          children: [
+            _buildDefaultTestCase(style, [_foo, _bar, _fooBar]),
+            _buildDefaultTestCase(style, [_foo, _bar]),
+            _buildDefaultTestCase(style, [_foo, _fooBar]),
+            _buildDefaultTestCase(style, [_bar, _fooBar]),
+            _buildDefaultTestCase(style, [_fooBar]),
+            // _buildTestCaseToVerifyIfNull(style, [_foo]),
+            // _buildTestCaseToVerifyIfNull(style, [_bar]),
+          ],
+        ),
+      );
+    });
+  });
 }
+
+Widget _buildDefaultTestCase(Style style, List<Variant> variants) {
+  return Builder(
+    builder: (context) {
+      final mixData = MixData.create(context, style.variantList(variants));
+      final icon = IconSpec.of(mixData);
+
+      expect(icon.color, Colors.black);
+      return const SizedBox();
+    },
+  );
+}
+
+Widget _buildTestCaseToVerifyIfNull(Style style, List<Variant> variants) {
+  return Builder(
+    builder: (context) {
+      final mixData = MixData.create(context, style.variantList(variants));
+      final icon = IconSpec.of(mixData);
+
+      expect(icon.color, null);
+      return const SizedBox();
+    },
+  );
+}
+
+const _foo = Variant('foo');
+const _bar = Variant('bar');
+const _fooBar = Variant('fooBar');
