@@ -249,7 +249,7 @@ class MultiVariant extends Variant {
   /// It initializes a `MultiVariant` with the given [variants] and sets the type to `MultiVariantType.and`.
   factory MultiVariant.and(Iterable<Variant> variants) {
     return MultiVariant(
-      _expandVariants(variants),
+      variants,
       type: MultiVariantOperator.and,
     );
   }
@@ -259,7 +259,7 @@ class MultiVariant extends Variant {
   /// It initializes a `MultiVariant` with the given [variants] and sets the type to `MultiVariantType.or`.
   factory MultiVariant.or(Iterable<Variant> variants) {
     return MultiVariant(
-      _expandVariants(variants),
+      variants,
       type: MultiVariantOperator.or,
     );
   }
@@ -312,12 +312,24 @@ class MultiVariant extends Variant {
   /// Here, `isMatched` will be true for `MultiVariantType.and` if both `variantA` and `variantB` are included in the provided list.
   /// For `MultiVariantType.or`, `isMatched` would be true if either `variantA` or `variantB` is in the list.
   bool matches(Iterable<Variant> matchVariants) {
-    final matchSet = matchVariants.toSet();
-    final variantSet = variants.toSet();
+    final list = variants.map((variant) {
+      if (variant is MultiVariant) {
+        return variant.matches(matchVariants);
+      } else {
+        final List<bool> x =
+            variants.map((e) => matchVariants.contains(variant)).toList();
+        return operatorType == MultiVariantOperator.and
+            ? x.every((e) => e == true)
+            : x.contains(true);
+      }
+    }).toList();
 
-    return operatorType == MultiVariantOperator.and
-        ? variantSet.difference(matchSet).isEmpty
-        : variantSet.intersection(matchSet).isNotEmpty;
+    final result = operatorType == MultiVariantOperator.and
+        ? list.every((e) => e == true)
+        : list.contains(true);
+    print(
+        '${variants.first}(${list.first}) $operatorType ${variants.last}(${list.last}) => $result');
+    return result;
   }
 
   /// Evaluates if the `MultiVariant` should be applied based on the build context.
