@@ -248,14 +248,30 @@ class MultiVariant extends Variant {
   ///
   /// It initializes a `MultiVariant` with the given [variants] and sets the type to `MultiVariantType.and`.
   factory MultiVariant.and(Iterable<Variant> variants) {
-    return MultiVariant(variants, type: MultiVariantOperator.and);
+    return MultiVariant(
+      _expandVariants(variants),
+      type: MultiVariantOperator.and,
+    );
   }
 
   /// Factory constructor to create a `MultiVariant` where any one of the provided variants needs to be active (`MultiVariantType.or`).
   ///
   /// It initializes a `MultiVariant` with the given [variants] and sets the type to `MultiVariantType.or`.
   factory MultiVariant.or(Iterable<Variant> variants) {
-    return MultiVariant(variants, type: MultiVariantOperator.or);
+    return MultiVariant(
+      _expandVariants(variants),
+      type: MultiVariantOperator.or,
+    );
+  }
+
+  static List<Variant> _expandVariants(Iterable<Variant> variants) {
+    return variants.expand((element) {
+      if (element is MultiVariant) {
+        return element.variants;
+      } else {
+        return [element];
+      }
+    }).toList();
   }
 
   /// Removes specified variants from this `MultiVariant`.
