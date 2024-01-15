@@ -264,16 +264,6 @@ class MultiVariant extends Variant {
     );
   }
 
-  static List<Variant> _expandVariants(Iterable<Variant> variants) {
-    return variants.expand((element) {
-      if (element is MultiVariant) {
-        return element.variants;
-      } else {
-        return [element];
-      }
-    }).toList();
-  }
-
   /// Removes specified variants from this `MultiVariant`.
   ///
   /// This method returns a new variant after removing the specified [variantsToRemove].
