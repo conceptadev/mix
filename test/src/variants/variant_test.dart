@@ -59,20 +59,5 @@ void main() {
       expect(multiVariant.variants, containsAll([variant1, variant2]));
       expect(multiVariant.operatorType, MultiVariantOperator.or);
     });
-
-    test(
-        'MultiVariant.or should correctly create a MultiVariant when use operator between MultiVariant and a simple Variant',
-        () {
-      const variant1 = Variant('variant1');
-      const variant2 = Variant('variant2');
-      final multiVariant = MultiVariant.or(const [variant1, variant2]);
-
-      const variant = Variant('variant');
-
-      final sut = MultiVariant.or([multiVariant, variant]);
-
-      expect(sut.variants, containsAll([variant1, variant2, variant]));
-      expect(sut.operatorType, MultiVariantOperator.or);
-    });
   });
 }

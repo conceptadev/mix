@@ -21,100 +21,100 @@ void main() {
       expect(result.variants, contains(variant));
       expect(result.variants, contains(otherVariant));
     });
+  });
 
-    group('Operator `or`', () {
-      testWidgets('should set the same icon color for 2 different variants',
-          (WidgetTester tester) async {
-        final style = Style(
-          (_foo | _bar)(
-            icon.color.black(),
-          ),
-        );
+  group('Operator `or`', () {
+    testWidgets('should set the same icon color for 2 different variants',
+        (WidgetTester tester) async {
+      final style = Style(
+        (_foo | _bar)(
+          icon.color.black(),
+        ),
+      );
 
-        await tester.pumpMaterialApp(
-          Row(
-            children: [
-              _buildDefaultTestCase(style, [_foo]),
-              _buildDefaultTestCase(style, [_bar]),
-              _buildDefaultTestCase(style, [_foo, _bar]),
-              _buildDefaultTestCase(style, [_foo, _fooBar]),
-              _buildDefaultTestCase(style, [_bar, _fooBar]),
-              _buildTestCaseToVerifyIfNull(style, [_fooBar]),
-            ],
-          ),
-        );
-      });
-
-      testWidgets('should set the same icon color for 3 different variants',
-          (WidgetTester tester) async {
-        final style = Style(
-          (_foo | _bar | _fooBar)(
-            icon.color.black(),
-          ),
-        );
-
-        await tester.pumpMaterialApp(
-          Row(
-            children: [
-              _buildDefaultTestCase(style, [_foo]),
-              _buildDefaultTestCase(style, [_bar]),
-              _buildDefaultTestCase(style, [_fooBar]),
-              _buildDefaultTestCase(style, [_foo, _bar]),
-              _buildDefaultTestCase(style, [_foo, _fooBar]),
-              _buildDefaultTestCase(style, [_bar, _fooBar]),
-              _buildDefaultTestCase(style, [_bar, _foo, _fooBar]),
-            ],
-          ),
-        );
-      });
+      await tester.pumpMaterialApp(
+        Row(
+          children: [
+            _buildDefaultTestCase(style, [_foo]),
+            _buildDefaultTestCase(style, [_bar]),
+            _buildDefaultTestCase(style, [_foo, _bar]),
+            _buildDefaultTestCase(style, [_foo, _fooBar]),
+            _buildDefaultTestCase(style, [_bar, _fooBar]),
+            _buildTestCaseToVerifyIfNull(style, [_fooBar]),
+          ],
+        ),
+      );
     });
 
-    group('Operator `and`', () {
-      testWidgets(
-          'should set the icon color when 2 different variants are needed',
-          (WidgetTester tester) async {
-        final style = Style(
-          (_foo & _bar)(
-            icon.color.black(),
-          ),
-        );
+    testWidgets('should set the same icon color for 3 different variants',
+        (WidgetTester tester) async {
+      final style = Style(
+        (_foo | _bar | _fooBar)(
+          icon.color.black(),
+        ),
+      );
 
-        await tester.pumpMaterialApp(
-          Row(
-            children: [
-              _buildDefaultTestCase(style, [_foo, _bar]),
-              _buildDefaultTestCase(style, [_foo, _bar, _fooBar]),
-              _buildTestCaseToVerifyIfNull(style, [_fooBar]),
-              _buildTestCaseToVerifyIfNull(style, [_foo, _fooBar]),
-              // _buildTestCaseToVerifyIfNull(style, [_bar, _fooBar]),
-            ],
-          ),
-        );
-      });
+      await tester.pumpMaterialApp(
+        Row(
+          children: [
+            _buildDefaultTestCase(style, [_foo]),
+            _buildDefaultTestCase(style, [_bar]),
+            _buildDefaultTestCase(style, [_fooBar]),
+            _buildDefaultTestCase(style, [_foo, _bar]),
+            _buildDefaultTestCase(style, [_foo, _fooBar]),
+            _buildDefaultTestCase(style, [_bar, _fooBar]),
+            _buildDefaultTestCase(style, [_bar, _foo, _fooBar]),
+          ],
+        ),
+      );
+    });
+  });
 
-      testWidgets(
-          'should set the icon color when 3 different variants are needed',
-          (WidgetTester tester) async {
-        final style = Style(
-          (_foo & _bar & _fooBar)(
-            icon.color.black(),
-          ),
-        );
+  group('Operator `and`', () {
+    testWidgets(
+        'should set the icon color when 2 different variants are needed',
+        (WidgetTester tester) async {
+      final style = Style(
+        (_foo & _bar)(
+          icon.color.black(),
+        ),
+      );
 
-        await tester.pumpMaterialApp(
-          Row(
-            children: [
-              _buildDefaultTestCase(style, [_foo, _bar, _fooBar]),
-              _buildTestCaseToVerifyIfNull(style, [_foo, _bar]),
-              // _buildTestCaseToVerifyIfNull(style, [_foo, _fooBar]),
-              // _buildTestCaseToVerifyIfNull(style, [_bar, _fooBar]),
-              _buildTestCaseToVerifyIfNull(style, [_bar]),
-              _buildTestCaseToVerifyIfNull(style, [_foo]),
-              // _buildTestCaseToVerifyIfNull(style, [_fooBar]),
-            ],
-          ),
-        );
-      });
+      await tester.pumpMaterialApp(
+        Row(
+          children: [
+            _buildDefaultTestCase(style, [_foo, _bar]),
+            _buildTestCaseToVerifyIfNull(style, [_fooBar]),
+            _buildTestCaseToVerifyIfNull(style, [_foo, _fooBar]),
+            _buildTestCaseToVerifyIfNull(style, [_bar, _fooBar]),
+            _buildDefaultTestCase(style, [_foo, _bar, _fooBar]),
+          ],
+        ),
+      );
+    });
+
+    testWidgets(
+        'should set the icon color when 3 different variants are needed',
+        (WidgetTester tester) async {
+      final style = Style(
+        (_foo & _bar & _fooBar)(
+          icon.color.black(),
+        ),
+      );
+
+      await tester.pumpMaterialApp(
+        Row(
+          children: [
+            _buildDefaultTestCase(style, [_foo, _bar, _fooBar]),
+            _buildTestCaseToVerifyIfNull(style, [_bar]),
+            _buildTestCaseToVerifyIfNull(style, [_foo]),
+            _buildTestCaseToVerifyIfNull(style, [_fooBar]),
+            _buildTestCaseToVerifyIfNull(style, [_bar, _foo]),
+            _buildTestCaseToVerifyIfNull(style, [_foo, _fooBar]),
+            _buildTestCaseToVerifyIfNull(style, [_bar, _fooBar]),
+          ],
+        ),
+      );
     });
   });
 
@@ -123,7 +123,7 @@ void main() {
         'should follow the order of operations and set the icon color when all conditions are met, case with | first',
         (WidgetTester tester) async {
       final style = Style(
-        (_foo | _bar & _fooBar)(
+        ((_foo | _bar) & _fooBar)(
           icon.color.black(),
         ),
       );
@@ -134,9 +134,9 @@ void main() {
             _buildDefaultTestCase(style, [_foo, _fooBar]),
             _buildDefaultTestCase(style, [_bar, _fooBar]),
             _buildDefaultTestCase(style, [_foo, _bar, _fooBar]),
-            // _buildTestCaseToVerifyIfNull(style, [_foo]),
-            // _buildTestCaseToVerifyIfNull(style, [_bar]),
-            // _buildTestCaseToVerifyIfNull(style, [_fooBar]),
+            _buildTestCaseToVerifyIfNull(style, [_foo]),
+            _buildTestCaseToVerifyIfNull(style, [_bar]),
+            _buildTestCaseToVerifyIfNull(style, [_fooBar]),
           ],
         ),
       );
@@ -159,8 +159,8 @@ void main() {
             _buildDefaultTestCase(style, [_foo, _fooBar]),
             _buildDefaultTestCase(style, [_bar, _fooBar]),
             _buildDefaultTestCase(style, [_fooBar]),
-            // _buildTestCaseToVerifyIfNull(style, [_foo]),
-            // _buildTestCaseToVerifyIfNull(style, [_bar]),
+            _buildTestCaseToVerifyIfNull(style, [_foo]),
+            _buildTestCaseToVerifyIfNull(style, [_bar]),
           ],
         ),
       );
