@@ -28,11 +28,12 @@ class MixData with Comparable {
         _tokenResolver = resolver;
 
   factory MixData.create(BuildContext context, Style style) {
-    final styleMix = applyContextToVisualAttributes(context, style);
+    final attributeList = applyContextToVisualAttributes(context, style);
 
     final resolver = MixTokenResolver(context);
 
-    return MixData._(resolver: resolver, attributes: AttributeMap(styleMix));
+    return MixData._(
+        resolver: resolver, attributes: AttributeMap(attributeList));
   }
 
   /// Getter for [MixTokenResolver].

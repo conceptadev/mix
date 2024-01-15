@@ -276,13 +276,9 @@ class Style with Comparable {
     for (final attr in variants.values) {
       if (attr is MultiVariantAttribute) {
         if (attr.matches(selectedVariants)) {
-          // if all variants match, add it to the matchedVariants
           matchedVariants.add(attr);
         } else {
-          // Remove any matching variants and add it as a new MultiVariantAttribute
-          // This allows to multiple matching variants to be removed
-          // For multi pass matching
-          remainingVariants.add(attr.remove(selectedVariants));
+          remainingVariants.add(attr);
         }
       } else {
         if (selectedVariantSet.contains(attr.variant)) {
