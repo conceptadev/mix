@@ -103,6 +103,10 @@ class Variant with Comparable {
 
   @override
   get props => [name];
+
+  bool matches(Iterable<Variant> matchVariants) {
+    return matchVariants.contains(this);
+  }
 }
 
 /// A typedef for a function that determines if a specific context condition is met.
@@ -301,18 +305,9 @@ class MultiVariant extends Variant {
   /// ```
   /// Here, `isMatched` will be true for `MultiVariantType.and` if both `variantA` and `variantB` are included in the provided list.
   /// For `MultiVariantType.or`, `isMatched` would be true if either `variantA` or `variantB` is in the list.
+  @override
   bool matches(Iterable<Variant> matchVariants) {
-    final list = variants.map((variant) {
-      if (variant is MultiVariant) {
-        return variant.matches(matchVariants);
-      } else {
-        final List<bool> x =
-            variants.map((e) => matchVariants.contains(variant)).toList();
-        return operatorType == MultiVariantOperator.and
-            ? x.every((e) => e == true)
-            : x.contains(true);
-      }
-    }).toList();
+    final list = variants.map((e) => e.matches(matchVariants)).toList();
 
     final result = operatorType == MultiVariantOperator.and
         ? list.every((e) => e == true)

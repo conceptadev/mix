@@ -281,14 +281,9 @@ class Style with Comparable {
     final matchedVariants = <VariantAttribute>[];
     final remainingVariants = <VariantAttribute>[];
 
-    /// Convert the selected variants list into a set for efficient lookup.
-    /// A set does not contain duplicate elements and lookup time is O(1), making it faster than list lookup.
-    final selectedVariantSet = selectedVariants.toSet();
-
     /// Loop over all VariantAttributes in variants only once instead of a nested loop,
     /// checking if each one matches with the selected variants.
     /// If it does, add it to the matchedVariants, else add it to remainingVariants.
-
     for (final attr in variants.values) {
       if (attr.matches(selectedVariants)) {
         matchedVariants.add(attr);
