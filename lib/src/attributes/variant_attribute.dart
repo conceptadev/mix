@@ -21,6 +21,9 @@ class VariantAttribute<T extends Variant> extends Attribute
     return VariantAttribute(variant, _style.merge(other._style));
   }
 
+  bool matches(Iterable<Variant> otherVariants) =>
+      otherVariants.contains(variant);
+
   @override
   Object get type => ObjectKey(variant);
 
@@ -73,6 +76,7 @@ class MultiVariantAttribute extends VariantAttribute<MultiVariant>
     return VariantAttribute(variant, _style);
   }
 
+  @override
   bool matches(Iterable<Variant> otherVariants) =>
       variant.matches(otherVariants);
 

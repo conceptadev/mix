@@ -288,19 +288,12 @@ class Style with Comparable {
     /// Loop over all VariantAttributes in variants only once instead of a nested loop,
     /// checking if each one matches with the selected variants.
     /// If it does, add it to the matchedVariants, else add it to remainingVariants.
+
     for (final attr in variants.values) {
-      if (attr is MultiVariantAttribute) {
-        if (attr.matches(selectedVariants)) {
-          matchedVariants.add(attr);
-        } else {
-          remainingVariants.add(attr);
-        }
+      if (attr.matches(selectedVariants)) {
+        matchedVariants.add(attr);
       } else {
-        if (selectedVariantSet.contains(attr.variant)) {
-          matchedVariants.add(attr);
-        } else {
-          remainingVariants.add(attr);
-        }
+        remainingVariants.add(attr);
       }
     }
 
