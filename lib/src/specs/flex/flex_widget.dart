@@ -5,7 +5,6 @@ import '../../deprecations.dart';
 import '../../factory/mix_provider.dart';
 import '../../factory/mix_provider_data.dart';
 import '../../factory/style_mix.dart';
-import '../../widgets/gap_widget.dart';
 import '../container/box_widget.dart';
 import 'flex_spec.dart';
 
@@ -65,13 +64,6 @@ class MixedFlex extends StatelessWidget {
     final spec = FlexSpec.of(mix);
     final gap = spec.gap;
 
-    final spacedChildren = gap == null
-        ? children
-        : List<Widget>.generate(
-            children.length * 2 - 1,
-            (index) => index % 2 == 0 ? children[index ~/ 2] : Gap(gap),
-          );
-
     return Flex(
       direction: direction,
       mainAxisAlignment:
@@ -81,7 +73,24 @@ class MixedFlex extends StatelessWidget {
           spec.crossAxisAlignment ?? _defaultFlex.crossAxisAlignment,
       verticalDirection:
           spec.verticalDirection ?? _defaultFlex.verticalDirection,
-      children: spacedChildren,
+      children: buildChildren(gap),
+    );
+  }
+
+  @visibleForTesting
+  List<Widget> buildChildren(double? gap) {
+    if (gap == null) return children;
+
+    return List<Widget>.generate(
+      children.length,
+      (index) => index == children.length - 1
+          ? children[index]
+          : Padding(
+              padding: direction == Axis.horizontal
+                  ? EdgeInsets.only(right: gap)
+                  : EdgeInsets.only(bottom: gap),
+              child: children[index],
+            ),
     );
   }
 }
