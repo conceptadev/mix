@@ -327,8 +327,6 @@ class MultiVariant extends Variant {
     final result = operatorType == MultiVariantOperator.and
         ? list.every((e) => e == true)
         : list.contains(true);
-    print(
-        '${variants.first}(${list.first}) $operatorType ${variants.last}(${list.last}) => $result');
     return result;
   }
 
