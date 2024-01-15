@@ -1,17 +1,18 @@
+/** @type {import('tailwindcss').Config} */
 module.exports = {
-  mode: "jit",
   content: [
-    "./pages/**/*.{js,ts,jsx,tsx,md,mdx}",
+    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx}",
-    "./theme.config.js",
-    "./styles.css",
+    "./theme.config.tsx",
   ],
-  darkMode: "class",
   theme: {
-    extend: {},
-  },
-  variants: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        sans: ["var(--font-inter)"],
+        mono: ["var(--font-jetbrains-mono)"],
+      },
+    },
   },
   plugins: [],
+  darkMode: "class",
 };

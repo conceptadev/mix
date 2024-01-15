@@ -1,0 +1,110 @@
+---
+title: "A Comparative Look"
+---
+
+## A Comparative Look of Mix
+
+Mix rethinks the way we handle styling in Flutter by simplifying and streamlining the process. This comparison aims to showcase how Mix enhances code readability, maintainability, and reduces boilerplate, especially when dealing with complex widget styles and interactions.
+
+### Code Comparison: With Mix vs. Without Mix
+
+We'll compare a common scenario: styling a custom widget, to illustrate the advantages of using Mix. In this example, we'll be styling a custom widget with the following requirements:
+
+- **Leveraging ThemeData for Styling**: Illustrating how Mix uses values from ThemeData, ensuring consistency and ease in styling widgets with the existing Material theme.
+- **Flexible Overriding of Styles**: Demonstrating the ability to override specific TextStyle and BoxDecoration properties, showcasing Mix's flexibility and adaptability in customization.
+- **Simplified Interaction-Based Styling**: Highlighting Mix’s capability to handle hover states effortlessly, allowing for dynamic styling changes in response to user interactions.
+- **Inherited Text Styles**: Showcasing how text styles can be inherited within the same style context in Mix, eliminating the need for repetitive style declarations.
+
+#### With Mix
+
+```dart
+class CustomMixWidget extends StatelessWidget {
+  const CustomMixWidget({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final style = Style(
+      height(100),
+      margin.vertical(10),
+      elevation(10),
+      border.radius(10),
+      backgroundColor($md.colors.primary()),
+      text.style.as($button()),
+      text.style.color($md.colors.onPrimary()),
+      onHover(
+        elevation(2),
+        padding(20),
+        backgroundColor($md.colors.secondary()),
+        text.style(color: $md.colors.onSecondary()),
+      ),
+    );
+    return GestureBox(
+      style: style,
+      child: const StyledText('Custom Widget'),
+    );
+  }
+}
+```
+
+In this Mix example, notice the streamlined declaration of styles and the simplified handling of hover states. The code is more concise and easier to read.
+
+### Without Mix
+
+```dart
+class CustomWidget extends StatefulWidget {
+  const CustomWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  _CustomWidgetState createState() => _CustomWidgetState();
+}
+
+class _CustomWidgetState extends State<CustomWidget> {
+  bool _isHover = false;
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return MouseRegion(
+      onEnter: (event) {
+        setState(() => _isHover = true);
+      },
+      onExit: (event) {
+        setState(() => _isHover = false);
+      },
+      child: Material(
+        elevation: _isHover ? 2 : 10,
+        child: AnimatedContainer(
+          curve: Curves.linear,
+          duration: const Duration(milliseconds: 100),
+          height: 100,
+          padding:
+              _isHover ? const EdgeInsets.all(20) : const EdgeInsets.all(0),
+          margin: const EdgeInsets.symmetric(vertical: 10),
+          decoration: BoxDecoration(
+            color: _isHover ? colorScheme.secondary : colorScheme.primary,
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Text(
+            'Custom Widget',
+            style: Theme.of(context).textTheme.button?.copyWith(
+                  color: _isHover
+                      ? colorScheme.onSecondary
+                      : colorScheme.onPrimary,
+                ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+```
+
+Without Mix, the code is more verbose, especially in managing the hover state and styling. The separation between logic and presentation is less clear.

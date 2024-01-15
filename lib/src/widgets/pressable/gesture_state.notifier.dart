@@ -3,32 +3,32 @@ import 'package:flutter/widgets.dart';
 import '../../helpers/compare_mixin.dart';
 
 @immutable
-class GestureData with Comparable {
+class WidgetStateData with Comparable {
   final bool focus;
   final bool hover;
-  final GestureStatus status;
-  final GestureState state;
+  final WidgetStatus status;
+  final WidgetState state;
 
-  const GestureData({
+  const WidgetStateData({
     required this.focus,
     required this.status,
     required this.state,
     required this.hover,
   });
 
-  const GestureData.none()
+  const WidgetStateData.none()
       : focus = false,
         hover = false,
-        status = GestureStatus.disabled,
-        state = GestureState.none;
+        status = WidgetStatus.disabled,
+        state = WidgetState.none;
 
-  GestureData copyWith({
+  WidgetStateData copyWith({
     bool? focus,
     bool? hover,
-    GestureStatus? status,
-    GestureState? state,
+    WidgetStatus? status,
+    WidgetState? state,
   }) {
-    return GestureData(
+    return WidgetStateData(
       focus: focus ?? this.focus,
       status: status ?? this.status,
       state: state ?? this.state,
@@ -40,34 +40,34 @@ class GestureData with Comparable {
   get props => [focus, status, state, hover];
 }
 
-enum GestureStatus {
+enum WidgetStatus {
   enabled,
   disabled,
 }
 
-enum GestureState {
+enum WidgetState {
   none,
   pressed,
   longPressed,
 }
 
-class GestureStateNotifier extends InheritedWidget {
-  const GestureStateNotifier({
+class WidgetStateNotifier extends InheritedWidget {
+  const WidgetStateNotifier({
     super.key,
     required super.child,
     required this.data,
   });
 
-  static GestureData? of(BuildContext context) {
+  static WidgetStateData? of(BuildContext context) {
     return context
-        .dependOnInheritedWidgetOfExactType<GestureStateNotifier>()
+        .dependOnInheritedWidgetOfExactType<WidgetStateNotifier>()
         ?.data;
   }
 
-  final GestureData data;
+  final WidgetStateData data;
 
   @override
-  bool updateShouldNotify(GestureStateNotifier oldWidget) {
+  bool updateShouldNotify(WidgetStateNotifier oldWidget) {
     return oldWidget.data != data;
   }
 }

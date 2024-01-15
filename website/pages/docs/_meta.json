@@ -4,9 +4,23 @@
     "title": "Overview"
   },
   "introduction": {
-    "title": "Introduction"
+    "title": "Introduction",
+    "display": "children"
   },
-  "concepts": "Concepts",
+  "-- Guides": {
+    "type": "separator",
+    "title": "Guides"
+  },
+  "guides": {
+    "display": "children"
+  },
+  "-- Widgets": {
+    "type": "separator",
+    "title": "Widgets"
+  },
+  "widgets": {
+    "display": "children"
+  },
   "theme": "Theme",
   "faq": "FAQ"
 }

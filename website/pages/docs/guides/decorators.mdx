@@ -1,0 +1,237 @@
+# Decorators
+
+Decorators in Mix extend functionality by defining the widget composition tree structure, providing support for core widgets, external widgets, and third-party widgets without compromising the simplicity of core Mix.
+
+## Understanding the Mechanics
+
+Take the `scale` attribute, for instance. The Container widget doesn't inherently possess the ability to scale. But, by employing a Transform widget as a decorator, we can introduce this effect.
+
+```dart
+Transform.scale(
+  scale: 0.5,
+  child: Container(
+    child: const Text("Half sized box"),
+  ),
+)
+```
+
+### Creating a decorator
+
+We can achieve the same effect by creating a custom `**WidgetDecorator**`.
+
+Creating a decorator is like creating a `**StatelessWidget**`. Extend `**WidgetDecorator**`. Define the properties you want to modify and the widget you want to decorate.
+
+```dart {2, 15-19}
+class ScaleDecorator extends WidgetDecorator<ScaleDecorator> {
+  final double scale;
+  const ScaleDecorator(this.scale, {super.key});
+
+  @override
+  ScaleDecorator lerp(ScaleDecorator? other, double t) {
+    return ScaleDecorator(lerpDouble(scale, other?.scale, t) ?? scale);
+  }
+
+  @override
+  get props => [scale];
+
+  @override
+  Widget build(mix, child) {
+    return Transform.scale(
+      key: key,
+      scale: scale,
+      child: child,
+    );
+  }
+}
+```
+
+### Crafting a decorator utility
+
+To simplify decorator usage, you can design a utility function that automatically creates the decorator for you.
+
+```dart
+ScaleDecorator scale(double scale, {Key? key}) => ScaleDecorator(scale, key: key);
+```
+
+### Using a decorator
+
+```dart {2}
+final style = Style(
+  scale(0.5),
+);
+
+Box(
+  style: style,
+  child: const Text('Half sized box'),
+);
+```
+
+## Built-in decorators
+
+Mix comes with a set of built-in decorators that can be used out of the box.
+
+### Scale Decorator
+
+Decorates a `Box` with a `Transform.scale` widget
+
+```dart
+final style = Style(
+  scale(0.5),
+);
+
+// Equivalent to
+Transform.scale(
+  scale: 0.5,
+  child: Box(
+    child: const Text('Half sized box'),
+  ),
+);
+```
+
+### Opacity
+
+Decorates a `Box` with an `Opacity` widget
+
+```dart
+final style = Style(
+  opacity(0.5),
+);
+
+// Equivalent to
+Opacity(
+  opacity: 0.5,
+  child: Box(
+    child: const Text('Half transparent box'),
+  ),
+);
+```
+
+### Rotate
+
+Decorates a `Box` with a `Transform.rotate` widget. The parameter is quarter turns.
+
+```dart
+final style = Style(
+  rotate(1),
+);
+
+// Equivalent to
+RotatedBox(
+  quarterTurns: 1,
+  child: Box(
+    child: const Text('Rotated box'),
+  ),
+);
+```
+
+**Helper methods**
+
+- `rotate(1)`: 90 degrees
+- `rotate.d90()`: 90 degrees
+- `rotate(2)`: 180 degrees
+- `rotate.d180()`: 180 degrees
+- `rotate(3)`: 270 degrees
+- `rotate.d270()`: 270 degrees
+
+### Aspect Ratio
+
+Decorates a `Box` with an `AspectRatio` widget
+
+```dart
+final style = Style(
+  aspectRatio(6/9),
+);
+
+// Equivalent to
+AspectRatio(
+  aspectRatio: 6/9,
+  child: Box(
+    child: const Text('Aspect ratio box'),
+  ),
+);
+```
+
+### Clip
+
+Decorates a `Box` with different types of `Clip` widgets
+
+```dart
+final style = Style(
+  clip.oval(),
+);
+
+Box(
+  style: style,
+  child: const Text('Oval box'),
+);
+
+// Equivalent to
+ClipOval(
+  child: Box(
+    child: const Text('Oval box'),
+  ),
+);
+```
+
+**Helper methods**
+
+- `clip.oval()`: Wraps with a **ClipOval** widget
+- `clip.rrect()`: Wraps with a **ClipRRect** widget
+- `clip.rect()`: Wraps with a **ClipRect** widget
+- `clip.path()`: Wraps with a **ClipPath** widget
+- `clip.triangle()`: Wraps with a **ClipPath** widget that clips to a triangle
+
+### Visibility
+
+Decorates a `Box` with a `Visibility` widget
+
+```dart
+final style = Style(
+  visibility(false),
+);
+
+// Equivalent to
+Visibility(
+  visible: false,
+  child: Box(
+    child: const Text('Invisible box'),
+  ),
+);
+```
+
+**Helper methods**
+
+- `visibility.on()`: Wraps the **Box** with an **Visibility** widget that is visible
+- `visibility.off()`: Wraps the **`**Box**`** with an **`**Visibility**`** widget that is invisible
+
+### Flexible
+
+Decorates a `Flex` Styled widget like `FlexBox`, `HBox`, `VBox`, with a `Flexible` widget
+
+```dart
+final style = Style(
+  flexible(flex:1, fit: FlexFit.tight),
+);
+```
+
+- `flexible(flex:1, fit: FlexFit.tight)`: Wraps the `Flex` Styled widget with a `Flexible` widget
+
+**Helper methods**
+
+- `flexible.expanded()`: Equivalent to **Expanded** widget, or `flexible(fit: FlexFit.tight)`
+- `flexible.loose()`: Equivalent to **Flexible** widget, or `flexible(fit: FlexFit.loose)`
+- `flexible.tight()`: Equivalent to `flexible(fit: FlexFit.tight)`
+
+This is equivalent to wrapping the `Flex` Styled widget with a `Flexible` widget.
+
+```dart
+Flexible(
+  flex: 1,
+  fit: FlexFit.tight,
+  child: FlexBox(
+    children: [
+       const Text('Flexible box'),
+    ],
+  ),
+);
+```

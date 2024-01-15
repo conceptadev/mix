@@ -2,17 +2,14 @@
 
 const withNextra = require("nextra")({
   theme: "nextra-theme-docs",
-  themeConfig: "./theme.config.js",
+  themeConfig: "./theme.config.tsx",
   mdxOptions: { remarkPlugins: [] },
 });
 
 // eslint-disable-next-line no-undef
 module.exports = withNextra({
   reactStrictMode: true,
-  experiments: {
-    swcLoader: true,
-    swcMinify: true,
-  },
+
   async redirects() {
     return [
       {

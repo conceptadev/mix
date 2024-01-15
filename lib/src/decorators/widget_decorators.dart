@@ -9,7 +9,7 @@ import '../core/attribute.dart';
 import '../core/decorator.dart';
 import '../helpers/lerp_helpers.dart';
 
-class AspectRatioDecorator extends BoxWidgetDecorator<AspectRatioDecorator> {
+class AspectRatioDecorator extends WidgetDecorator<AspectRatioDecorator> {
   final double aspectRatio;
   const AspectRatioDecorator(this.aspectRatio, {super.key});
 
@@ -28,7 +28,7 @@ class AspectRatioDecorator extends BoxWidgetDecorator<AspectRatioDecorator> {
       AspectRatio(key: key, aspectRatio: aspectRatio, child: child);
 }
 
-class VisibilityDecorator extends BoxWidgetDecorator<VisibilityDecorator> {
+class VisibilityDecorator extends WidgetDecorator<VisibilityDecorator> {
   final bool visible;
   const VisibilityDecorator(this.visible, {super.key});
 
@@ -81,7 +81,7 @@ class FlexibleDecorator extends FlexWidgetDecorator<FlexibleDecorator>
   }
 }
 
-class OpacityDecorator extends BoxWidgetDecorator<OpacityDecorator> {
+class OpacityDecorator extends WidgetDecorator<OpacityDecorator> {
   /// The [opacity] argument must not be null and must be between 0.0 and 1.0 (inclusive).
   final double opacity;
   const OpacityDecorator(this.opacity, {super.key});
@@ -100,7 +100,7 @@ class OpacityDecorator extends BoxWidgetDecorator<OpacityDecorator> {
   Widget build(mix, child) => Opacity(key: key, opacity: opacity, child: child);
 }
 
-class RotateDecorator extends BoxWidgetDecorator<RotateDecorator> {
+class RotateDecorator extends WidgetDecorator<RotateDecorator> {
   final int quarterTurns;
   const RotateDecorator(this.quarterTurns, {super.key});
 
@@ -113,11 +113,12 @@ class RotateDecorator extends BoxWidgetDecorator<RotateDecorator> {
   get props => [quarterTurns];
 
   @override
-  Widget build(mix, child) =>
-      RotatedBox(key: key, quarterTurns: quarterTurns, child: child);
+  Widget build(mix, child) {
+    return RotatedBox(key: key, quarterTurns: quarterTurns, child: child);
+  }
 }
 
-class ScaleDecorator extends BoxWidgetDecorator<ScaleDecorator> {
+class ScaleDecorator extends WidgetDecorator<ScaleDecorator> {
   final double scale;
   const ScaleDecorator(this.scale, {super.key});
 
@@ -130,13 +131,14 @@ class ScaleDecorator extends BoxWidgetDecorator<ScaleDecorator> {
   get props => [scale];
 
   @override
-  Widget build(mix, child) =>
-      Transform.scale(key: key, scale: scale, child: child);
+  Widget build(mix, child) {
+    return Transform.scale(key: key, scale: scale, child: child);
+  }
 }
 
 enum ClipType { path, oval, rect, rRect, triangle }
 
-class ClipDecorator<T> extends BoxWidgetDecorator<ClipDecorator>
+class ClipDecorator<T> extends WidgetDecorator<ClipDecorator>
     with Mergeable<ClipDecorator> {
   final ClipType clipType;
   final Clip? clipBehavior;
@@ -279,6 +281,7 @@ class ClipTypeUtility<T extends StyleAttribute>
   }
 }
 
+/// A utility class for creating [ClipDecorator]s.
 class ClipDecoratorUtility<T extends StyleAttribute>
     extends MixUtility<T, ClipDecorator> {
   const ClipDecoratorUtility(super.builder);

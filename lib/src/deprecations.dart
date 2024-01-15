@@ -5,34 +5,37 @@ import '../mix.dart';
 const kShortAliasDeprecation =
     'Short aliases will be deprecated, you can create your own. Example: final p = padding;';
 
+@Deprecated('Use Style instead')
+typedef Mix = Style;
+
 extension DeprecatedMixExtension<T extends Attribute> on Style {
   /// Adds an Attribute to a Mix.
   @Deprecated('Simplifying the mix API to avoid confusion. Use apply instead')
   SpreadFunctionParams<T, Style> get mix => SpreadFunctionParams(addAttributes);
 
-  @Deprecated('Use selectVariants now')
+  @Deprecated('Use variantList(value:) instead')
   Style withVariants(List<Variant> variants) => withManyVariants(variants);
 
+  @Deprecated('Use variantList(value:) instead')
+  Style withManyVariants(Iterable<Variant> variants) => variantList(variants);
+
   @Deprecated(
-    'Use merge() or mergeMany() now. You might have to turn into a Mix first. firstMixFactory.merge(secondMix)',
+    'Use merge() or mergeMany() instead. You might have to turn into a Mix first. firstMixFactory.merge(secondMix)',
   )
   Style addAttributes(Iterable<Attribute> attributes) =>
       merge(Style.create(attributes));
-
-  @Deprecated('Use selectVariants now')
-  Style withManyVariants(Iterable<Variant> variants) => variantList(variants);
 
   @Deprecated('Use merge() or mergeMany() instead')
   SpreadFunctionParams<Style, Style> get apply =>
       const SpreadFunctionParams(Style.combine);
 
-  @Deprecated('Use selectVariant now')
+  @Deprecated('Use variant(value:) instead')
   Style withVariant(Variant value) => variant(value);
 
-  @Deprecated('Use combine now')
+  @Deprecated('Use combine instead')
   Style combineAll(List<Style> mixes) => Style.combine(mixes);
 
-  @Deprecated('Use selectVariant now')
+  @Deprecated('Use variant(value:) instead')
   Style withMaybeVariant(Variant? variant) {
     if (variant == null) return this;
 
@@ -444,8 +447,29 @@ final borderVertical = border.vertical;
 @Deprecated('use border.all instead')
 final borderAll = border.all;
 
-@Deprecated('Use StyledText now')
-typedef TextMix = StyledText;
+@Deprecated('Use StyledText instead')
+class TextMix extends StyledText {
+  const TextMix(
+    super.text, {
+    super.semanticsLabel,
+    Mix? mix,
+    super.key,
+    super.inherit = true,
+    super.locale,
+  }) : super(style: mix);
+}
+
+@Deprecated('Use StyledIcon instead')
+class IconMix extends StyledIcon {
+  const IconMix(
+    super.icon, {
+    super.semanticLabel,
+    required Mix mix,
+    super.key,
+    super.inherit = true,
+    super.textDirection,
+  });
+}
 
 @Deprecated('Use text.style instead')
 final textStyle = text.style;
@@ -472,6 +496,15 @@ final mainAxisSize = flex.mainAxisSize;
 
 @Deprecated('use text.style.bold() instead')
 final bold = text.style.bold;
+
+@Deprecated('use flex.gap(value) instead')
+final gap = flex.gap;
+
+@Deprecated('use icon.size instead')
+final iconSize = icon.size;
+
+@Deprecated('use icon.color instead')
+final iconColor = icon.color;
 
 // @Deprecated('Use box.maxHeight instead')
 // final maxHeight = box.maxHeight;

@@ -1,0 +1,220 @@
+---
+id: variants
+title: "Variants"
+---
+
+import { Callout } from "nextra-theme-docs";
+
+# Variants
+
+Variants are a fundamental feature in Mix, streamlining the styling of widgets by defining styling variations that can be applied both conditionally and responsively for dynamic UI adaptation
+
+## Key Concepts
+
+Variants are key to customizing widgets in Mix. They address the need for styles that are broadly similar yet have minor, impactful differences.
+
+For example, a button might have primary or secondary styles, or its appearance could vary with screen brightness. These nuanced changes, although subtle, are critical in defining the UI's look and feel, showcasing the versatility and utility of Variants in Mix.
+
+## Simple Variants
+
+Simple variants define custom styling variations intended for specific use cases. You can manually apply them to Style instances to exercise fine-grained control.
+
+### Defining a Variant
+
+To define a variant, you can use the `Variant` constructor.
+
+```dart
+const outlined = Variant('outlined');
+```
+
+### Using a Variant in a Style
+
+To use a variant in a style, you can call it as a function on a `Style` passing the attributes.
+
+```dart {1, 8-12}
+const outlined = Variant('outlined');
+
+final style = Style(
+  padding(20),
+  border.radius(10),
+  backgroundColor.black(),
+  text.style.color.white(),
+  outlined(
+    backgroundColor.transparent(),
+    border.color.black(),
+    text.style.color.black(),
+  ),
+);
+```
+
+### Applying a Variant
+
+To apply a variant, you can use the `variant` method on a `Style`.
+
+```dart {1, 8-12, 15}
+const outlined = Variant('outlined');
+
+final style = Style(
+  padding(20),
+  border.radius(10),
+  backgroundColor.black(),
+
+  text.style.color.white(),
+  outlined(
+    backgroundColor.transparent(),
+    border.color.black(),
+    text.style.color.black(),
+  ),
+);
+
+final outlinedStyle = style.variant(outlined);
+```
+
+`outlinedStyle` will now have the attributes defined in the `outlined` variant, and will be equivalent to the following:
+
+```dart highlight="2-4"
+final outlinedStyle = Style(
+  padding(20),
+  border.radius(10),
+  backgroundColor.transparent(),
+  border.color.black(),
+  text.style.color.black(),
+);
+```
+
+## Context Variants
+
+Context variants are automatically applied based on the `BuildContext`. They are useful for creating responsive variants.
+
+### Defining a Context Variant
+
+To define a context variant, you can use the `ContextVariant` constructor and pass a `when` function.
+
+```dart
+final onDark = ContextVariant(
+  'on-dark',
+  (context) => Theme.of(context).brightness == Brightness.dark;
+);
+```
+
+<Callout type="info">
+  Defining the name of a context variant with `on` is a convention, but not a
+  requirement. That helps identify that this is a `ContextVariant`.
+</Callout>
+
+### Using a Context Variant in a Style
+
+To use a context variant in a style, you can call it as a function on a `Style` passing the attributes.
+
+```dart {6-9}
+final style = Style(
+  padding(20),
+  border.radius(10),
+  backgroundColor.black(),
+  text.style.color.white(),
+  onDark(
+    backgroundColor.white(),
+    text.style.color.black(),
+  ),
+);
+```
+
+When the `onDark` variant is applied, it will override the `backgroundColor` and `text.style.color` attributes. When this happens the style will be equivalent to the following:
+
+```dart highlight="2-4"
+final style = Style(
+  padding(20),
+  border.radius(10),
+  backgroundColor.white(),
+  text.style.color.black(),
+);
+```
+
+## Conditional operators
+
+The operators `|` and `&` can be used to add conditions to your mix:
+
+### OR Operator
+
+The `|` operator is used in case you want to apply the variant when any of the variants apply.
+
+```dart highlight="3-7"
+final style = Style(
+  padding(20),
+  (onSmall | onMedium)( // Whether it's small OR medium
+    width(300),
+    height(400),
+    backgroundColor.white(),
+  ),
+);
+```
+
+### AND Operator
+
+The `&` operator is used in case you want to apply the variant when all of the variants apply.
+
+```dart highlight="3-6"
+final mix = Style(
+  padding(20),
+  // When it's hovering AND pressing
+  (onHover & onPress)(
+    text.style.color.black(),
+    text.style.bold(),
+  ),
+);
+```
+
+### Not Condition
+
+While not a traditional negation operator, `onNot` allows you to compose a variant that is applied when the `ContextVariant` apply condition returns false.
+
+```dart {1, 4-6}
+final onDisabled = onNot(onEnabled);
+
+final style = Style(
+  onDisabled(
+    scale(1.2),
+  ),
+);
+```
+
+## Built-in Context Variants
+
+Mix provides a set of pre-defined context variants for adaptive styling:
+
+### Orientation
+
+- **`onPortrait()`:** Applies styles when the device is in portrait orientation.
+- **`onLandscape()`:** Applies styles when the device is in landscape orientation.
+
+### Breakpoints
+
+- **`onSmall()`:** Applies styles when the screen is at least the "small" breakpoint.
+- **`onXSmall()`:** Applies styles when the screen is at least the "extra small" breakpoint.
+- **`onMedium()`:** Applies styles when the screen is at least the "medium" breakpoint.
+- **`onLarge()`:** Applies styles when the screen is at least the "large" breakpoint.
+
+### Custom Breakpoints
+
+- **`onBreakpoint({minWidth, maxWidth})`:** Create custom context variants for specific screen size ranges.
+
+### Directionality
+
+- **`onRTL()`:** Applies styles when the text direction is right-to-left (RTL).
+- **`onLTR()`:** Applies styles when the text direction is left-to-right (LTR).
+
+### Brightness
+
+- **`onDark()`:** Applies styles when the theme is in dark mode.
+- **`onLight()`:** Applies styles when the theme is in light mode.
+
+### Widget State
+
+For the following variants, the widget must be wrapped in a `Pressable` widget or use the `GestureBox` widget.
+
+- **`onHover()`:** Applies styles when the widget is hovered.
+- **`onPress()`:** Applies styles when the widget is pressed.
+- **`onLongPress()`:** Applies styles when the widget is long pressed.
+- **`onFocus()`:** Applies styles when the widget is focused.
+- **`onDisabled()`:** Applies styles when the widget is disabled.
+- **`onEnabled()`:** Applies styles when the widget is enabled.

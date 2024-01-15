@@ -45,12 +45,12 @@ class RenderWidgetDecorators extends StatelessWidget {
   Widget build(BuildContext context) {
     Widget current = child;
 
-    final decorators = mix.decoratorsOf<BoxWidgetDecorator>();
+    final decorators = mix.whereType<WidgetDecorator>();
 
     if (decorators.isEmpty) return current;
 
-    Map<Object, BoxWidgetDecorator> decoratorMap =
-        AttributeMap<BoxWidgetDecorator>(decorators).toMap();
+    Map<Object, WidgetDecorator> decoratorMap =
+        AttributeMap<WidgetDecorator>(decorators).toMap();
 
     final listOfDecorators = {
       ...orderOfDecorators,

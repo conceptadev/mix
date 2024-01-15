@@ -1,4 +1,6 @@
 {
-  "installation": "Installation",
-  "getting-started": "Getting started"
+  "index": "Introduction",
+  "getting-started": "Getting started",
+  "comparison": "Comparative Overview",
+  "utility-first": "Utility-First Approach"
 }

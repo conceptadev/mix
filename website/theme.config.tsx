@@ -1,27 +1,34 @@
 import Image from "next/image";
+import { useRouter } from "next/router";
 import CustomSearch from "./components/Search";
+
 const themeConfig = {
-  github: "https://github.com/fluttertools/mix",
-  projectLink: "https://github.com/fluttertools/mix",
-  docsRepositoryBase: "https://github.com/fluttertools/mix/blob/main",
-  search: true,
-  customSearch: <CustomSearch />,
-  titleSuffix: " – Mix",
+  useNextSeoProps() {
+    const { asPath } = useRouter();
+    if (asPath !== "/") {
+      return {
+        titleTemplate: "%s – Mix",
+      };
+    }
+  },
   logo: (
     <>
       <Image
-        className="md:inline object-contain hidden"
-        height={16}
-        width={16}
+        height={32}
+        width={32}
         alt="Mix Icon"
-        src={"/assets/mix-icon-gradient.svg"}
+        src={"/assets/mix-icon.svg"}
       />
-      <span className="mr-2 font-extrabold mx-2 hidden md:inline">Mix</span>
-      <span className="text-gray-600 font-normal text-sm hidden md:inline">
-        Effortlessly build Flutter design systems.
-      </span>
+      <span className="mr-2 font-extrabold mx-2 md:inline">Mix</span>
     </>
   ),
+  project: {
+    link: "https://github.com/conceptadev/mix",
+  },
+  docsRepositoryBase: "https://github.com/conceptadev/mix/blob/main",
+  search: {
+    component: <CustomSearch />,
+  },
   head: (
     <>
       <meta name="msapplication-TileColor" content="#ffffff" />
@@ -74,29 +81,53 @@ const themeConfig = {
       <meta name="msapplication-TileImage" content="/ms-icon-150x150.png" />
     </>
   ),
-
-  prevLinks: true,
-  nextLinks: true,
-  floatTOC: true,
-  footer: true,
+  navigation: {
+    prev: true,
+    next: true,
+  },
+  toc: {
+    float: true,
+    backToTop: true,
+  },
+  darkMode: true,
   nextThemes: {
     defaultTheme: "dark",
+    forcedTheme: "dark",
   },
-  defaultMenuCollapsed: true,
-  footerEditLink: "Edit this page on GitHub",
-  darkMode: true,
-  footerText: (
-    <>
-      <a
-        href="https://vercel.com/?utm_source=fluttermix&utm_campaign=oss"
-        target="_blank"
-        rel="noreferrer"
-      >
-        <Image src="/assets/powered-by-vercel.svg" height={43} width={211} />{" "}
-      </a>
-    </>
-  ),
-  unstable_faviconGlyph: "👋",
+  sidebar: {
+    defaultMenuCollapseLevel: 5,
+    autoCollapse: false,
+    toggleButton: false,
+  },
+  primaryHue: {
+    light: 200,
+    dark: 285,
+  },
+  primarySaturation: {
+    light: 50,
+    dark: 50,
+  },
+  editLink: {
+    text: "Edit this page on GitHub",
+  },
+  footer: {
+    text: (
+      <>
+        <a
+          href="https://vercel.com/?utm_source=fluttermix&utm_campaign=oss"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <Image
+            alt="mix logo"
+            src="/assets/powered-by-vercel.svg"
+            height={43}
+            width={211}
+          />{" "}
+        </a>
+      </>
+    ),
+  },
 };
 
 export default themeConfig;

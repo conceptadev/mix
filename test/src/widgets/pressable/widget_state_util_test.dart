@@ -13,7 +13,7 @@ void main() {
     testWidgets('press state', (tester) async {
       await tester.pumpWithPressable(
         Container(),
-        state: GestureState.pressed,
+        state: WidgetState.pressed,
         focus: true,
       );
 
@@ -30,7 +30,7 @@ void main() {
     testWidgets('long press state', (tester) async {
       await tester.pumpWithPressable(
         Container(),
-        state: GestureState.longPressed,
+        state: WidgetState.longPressed,
         focus: true,
       );
 
@@ -67,7 +67,7 @@ void main() {
     testWidgets('disabled state', (tester) async {
       await tester.pumpWithPressable(
         Container(),
-        status: GestureStatus.disabled,
+        status: WidgetStatus.disabled,
         focus: true,
       );
 
@@ -88,7 +88,7 @@ void main() {
     testWidgets('enabled state', (tester) async {
       await tester.pumpWithPressable(
         Container(),
-        state: GestureState.pressed,
+        state: WidgetState.pressed,
         focus: true,
       );
 
@@ -109,7 +109,7 @@ void main() {
     testWidgets('focus state', (tester) async {
       await tester.pumpWithPressable(
         Container(),
-        state: GestureState.pressed,
+        state: WidgetState.pressed,
         focus: true,
       );
 

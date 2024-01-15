@@ -3,10 +3,9 @@ import 'package:flutter/material.dart';
 import '../attributes/variant_attribute.dart';
 import '../core/attribute.dart';
 import '../core/attributes_map.dart';
-import '../core/decorator.dart';
 import '../helpers/compare_mixin.dart';
 import '../theme/mix_theme.dart';
-import '../widgets/pressable/gesture_util.dart';
+import '../widgets/pressable/widget_state_util.dart';
 import 'style_mix.dart';
 
 /// This class is used for encapsulating all [MixData] related operations.
@@ -55,11 +54,6 @@ class MixData with Comparable {
     return _mergeAttributes(attributes) ?? attributes.last;
   }
 
-  /// Finds all Decorators of type [A].
-  Iterable<A> decoratorsOf<A extends Decorator>() {
-    return _attributes.whereType<A>();
-  }
-
   Iterable<A> whereType<A extends StyleAttribute>() {
     return _attributes.whereType<A>();
   }
@@ -105,7 +99,7 @@ List<StyleAttribute> applyContextToVisualAttributes(
   List<WhenVariant> gestureVariantTypes = [];
 
   for (ContextVariantAttribute attr in contextVariants) {
-    if (attr.variant is GestureVariant) {
+    if (attr.variant is WidgetStateVariant) {
       gestureVariantTypes.add(attr);
     } else {
       contextVariantTypes.add(attr);
@@ -113,7 +107,7 @@ List<StyleAttribute> applyContextToVisualAttributes(
   }
 
   for (MultiVariantAttribute attr in multiVariants) {
-    if (attr.variant.variants.any((variant) => variant is GestureVariant)) {
+    if (attr.variant.variants.any((variant) => variant is WidgetStateVariant)) {
       gestureVariantTypes.add(attr);
     } else {
       contextVariantTypes.add(attr);

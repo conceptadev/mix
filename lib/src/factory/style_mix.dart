@@ -15,8 +15,6 @@ import '../specs/text/text_attribute.dart';
 import '../utils/helper_util.dart';
 import '../variants/variant.dart';
 
-typedef Mix = Style;
-
 /// A utility class for managing a collection of styling attributes and variants.
 ///
 /// The `Style` class is used to encapsulate a set of styling attributes and
@@ -142,18 +140,6 @@ class Style with Comparable {
         : mixes.reduce((combinedStyle, mix) => combinedStyle.merge(mix));
   }
 
-  /// Selects a mix based on a [condition].
-  ///
-  /// Returns [fallback] if the [condition] is true, otherwise returns [style].
-  ///
-  /// Example:
-  /// ```dart
-  /// final style = Style.chooser(condition, style, fallbackStyle);
-  /// ```
-  static Style chooser(bool condition, Style style, [Style? fallback]) {
-    return condition ? style : fallback ?? const Style.empty();
-  }
-
   Style _addAttributes(List<Attribute> attributes) {
     return merge(Style.create(attributes));
   }
@@ -202,9 +188,8 @@ class Style with Comparable {
   ///
   /// Note:
   /// The attributes from the selected variant (`attr4` and `attr5`) are not applied to the `Style` instance until the `variant` method is called.
-  SpreadFunctionParams<Variant, Style> get variant {
-    return SpreadFunctionParams(variantList);
-  }
+  SpreadFunctionParams<Variant, Style> get variant =>
+      SpreadFunctionParams(variantList);
 
   /// Allows to create a new `Style` by using this mix as a base and adding additional attributes.
   ///
@@ -236,11 +221,11 @@ class Style with Comparable {
   /// If a null value is provided for any of the parameters, it is ignored.
   ///
   /// This method combines the visual and variant attributes of this mix and the provided [mix].
-  Style merge(Style? mix) {
-    if (mix == null) return this;
+  Style merge(Style? style) {
+    if (style == null) return this;
 
-    final mergedStyles = styles.merge(mix.styles);
-    final mergedVariants = variants.merge(mix.variants);
+    final mergedStyles = styles.merge(style.styles);
+    final mergedVariants = variants.merge(style.variants);
 
     return copyWith(styles: mergedStyles, variants: mergedVariants);
   }
@@ -352,6 +337,7 @@ class Style with Comparable {
   ///
   /// Note:
   /// The attributes `attr1` and `attr2` from the initial `Style` are ignored, and only the attributes within the specified variants are picked and applied to the new `Style`.
+  @visibleForTesting
   Style pickVariants(
     List<Variant> pickedVariants, {
     bool isRecursive = false,

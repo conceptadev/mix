@@ -5,35 +5,43 @@ title: "Mixable widgets"
 
 import Code from "../../../components/Code.js";
 
-## Mixable Widgets
+## Styled Widgets
 
-`package:mix/mix.dart` defines a set of widget primitives that can use _Mix_ `Attributes` and allow them to be rendered with those `Attributes`.
+These are widget primitives that can use _Mix_ `Attributes` and be rendered with those `Attributes`.
 
-At first glance it might seem these widgets are doing a lot &mdash; in reality, they are simply wrapping basic _Flutter_ widgets and allowing their visual properties to be defined through a _Mix._
+Initially, these widgets may seem complex. However, they primarily wrap basic _Flutter_ widgets and allow their visual properties to be defined through a _Mix._
 
-The fundamental widget primitive defined in _Mix_ is a `Box`. A `Box` can contain other widgets and a set of `BoxAttributes` to define it's visual properties.
+The foundational widget primitive in _Mix_ is a `Box`. It can contain other widgets and a set of `BoxAttributes` to specify its visual properties.
 
-> An easy misconception would be to think that `Box` is **like** a `Container`, but that would be incorrect: `Box` **is** a `Container`.
+> It's important to note that a `Box` is not like a `Container`, but rather, it is a `Container`. This means that the code:
 
 That means that this:
 
 ```dart
-Box(style: Style(height(100)));
+Box(
+  style: Style(
+    height(100),
+  ),
+);
 ```
 
-will become the following:
+will translate to:
 
 ```dart
 Container(height: 100);
 ```
 
-You can think of `Utilities` as shortcuts to defining visual properties. Thus:
+Consider `Utilities` as shortcuts for defining visual properties. For instance:
 
 ```dart
-Box(style: Style(borderRadius(100)));
+Box(
+  style: Style(
+    border.radius(100),
+  ),
+);
 ```
 
-will become the following:
+will be rendered as:
 
 ```dart
 Container(
@@ -43,22 +51,22 @@ Container(
 )
 ```
 
-## Mixable catalog
+## Catalog of Styled Widgets
 
-Built-in mixable widgets that you can use right-away in your app.
+Build-in styled widgets are:
 
 ### Box
 
-`Box` is, basically, a `Container`. A mixable that will usually be the base widget to create most of your layouts.
+`Box` is, basically, a `Container`. A widget that will usually be the base widget to create most of your layouts.
 
 ```dart
 Box(
   style: Style(
     height(100),
     width(300),
-    borderRadius(15),
-    backgroundColor(Colors.amber),
-    alignment(Alignment.center),
+    border.radius(15),
+    backgroundColor.amber(),
+    alignment.center(),
     elevation(4)
   ),
 ),
@@ -85,7 +93,7 @@ FlexBox(
 
 ```dart
 Hbox(
-  style: Style(gap(6)),
+  style: Style(gap(6),),
   children: [
     Image.fromAsset('assets/image.png'),
     VBox(
@@ -98,12 +106,12 @@ Hbox(
 ),
 ```
 
-### IconMix
+### StyledIcon
 
 It's capable of displaying icons and inherit data from parent mixes
 
 ```dart
-IconMix(
+StyledIcon(
   style: Style(
     iconSize(30),
     iconColor(Colors.grey),
@@ -114,7 +122,7 @@ IconMix(
 
 ### Pressable
 
-A `Pressable` is a mixable widget that can provide the following information for its descendants:
+A `Pressable` is a styled widget that can provide the following information for its descendants:
 
 - hovering
 - pressing
@@ -156,12 +164,12 @@ Pressable(
 ),
 ```
 
-### TextMix
+### StyledText
 
 It's capable of rendering text and inherit data from parent mixes
 
 ```dart
-TextMix(
+StyledText(
   'Mix is AWESOME!'
   style: Style(
     text.style(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../core/styled_widget.dart';
 import '../../decorators/widget_decorator_widget.dart';
+import '../../deprecations.dart';
 import '../../factory/mix_provider.dart';
 import '../../factory/mix_provider_data.dart';
 import 'box_attribute.dart';
@@ -10,85 +11,90 @@ import 'box_spec.dart';
 typedef StyledContainer = Box;
 typedef StyledAnimatedContainer = AnimatedBox;
 
-/// [Box] - A styled widget that applies a [Style] to its [child], similar to a [Container].
+/// A [Container] equivalent widget for applying styles using Mix.
 ///
-/// `Box` behaves similarly to Flutter's [Container] widget but offers enhanced styling capabilities
-/// through its use of a `Style`. This widget extends [StyledWidget] and acts as a flexible
-/// wrapper for applying a mix of styles and decorations to its [child]. Unlike `Container`,
-/// `Box` is specifically designed to work with the styling system that utilizes `Style`,
-/// allowing for more complex and varied style compositions.
+/// `Box` is a concrete implementation of [StyledWidget] that applies custom styles
+/// to a single child widget using the styling capabilities inherited from
+/// [StyledWidget]. It wraps the child in a `MixedBox`, which is responsible for
+/// rendering the styled output.
 ///
-/// One of the key features of `Box` is its ability to apply decorators, which are made possible
-/// by its use of the [MixedBox] widget internally. This enables `Box` to go beyond the basic styling
-/// functionalities of a `Container` by supporting advanced styling and decoration features
-/// defined in the `Style`.
+/// The primary purpose of `Box` is to provide a flexible and reusable way to style
+/// widgets without the need to repeatedly define common style properties. It leverages
+/// the [Style] object to define the appearance and allows inheriting styles from
+/// ancestor [StyledWidget]s in the widget tree.
 ///
-/// Parameters:
-///   - [style]: The [Style] to be applied. Inherits from [StyledWidget] and enhances the
-///     styling capabilities beyond what is offered by a standard [Container].
-///   - [key]: The key for the widget. Inherits from [StyledWidget].
-///   - [inherit]: Determines whether the [Box] should inherit styles from its
-///     ancestors. Default is `false`. This attribute is part of the [StyledWidget] base class.
-///   - [child]: The widget below this widget in the tree. The [child] is styled based on the
-///     attributes defined in the provided [Style].
+/// ## Inheriting Styles
 ///
-/// Example usage:
-/// ```dart
-/// Box(
-///   style: Style( /* ...style attributes... */ ),
-///   child: Text('Styled Box Widget')
-/// )
-/// ```
+/// If the [inherit] property is set to `true`, `Box` will merge its defined style with
+/// the style from the nearest [MixProvider] ancestor in the widget tree. This is
+/// useful for cascading styles down the widget tree.
 ///
-/// This example creates a `Box` widget with a custom `Style`, offering enhanced styling
-/// and decoration capabilities compared to a standard [Container].
+/// ## Performance Considerations
+///
+/// While `Box` provides a convenient way to style widgets, be mindful of the
+/// performance implications of using complex styles and deep inheritance trees.
+/// Overuse of style inheritance can lead to increased widget rebuilds and might
+/// affect the performance of your application.
+///
+/// See also:
+/// * [Style], which defines the visual properties to be applied.
+/// * [MixedBox], which is used internally by `Box` to render the styled widget.
+/// * [Container], which is the Flutter equivalent widget.
 class Box extends StyledWidget {
-  const Box({super.style, super.key, super.inherit, this.child});
+  const Box({
+    @Deprecated('Use the the style parameter instead') Mix? mix,
+    super.style,
+    super.key,
+    super.inherit,
+    this.child,
+  });
 
+  /// The child widget that will receive the styles.
   final Widget? child;
 
   @override
   Widget build(BuildContext context) {
+    // Apply styling from StyledWidget to a MixedBox.
+    // This method uses `withMix` to get the `MixData` and then applies it to `MixedBox`,
+    // effectively styling the [child].
     return withMix(context, (mix) {
       return MixedBox(child: child);
     });
   }
 }
 
-/// [MixedBox] - A widget that applies a given [Style] to its [child].
+/// A widget that is responsible for rendering a [Container] with styling defined in `MixData`.
 ///
-/// This widget is primarily used by [Box] and [AnimatedBox] to render their children
-/// with the styles specified in the `Style`. It acts as an intermediary widget
-/// that resolves and applies the styling attributes from the provided `Style`
-/// to the [child]. It also integrates with the decorator system, enabling the application
-/// of various styling effects in a flexible manner.
+/// `MixedBox` is a critical component in the Mix, acting as the interpreter
+/// between abstract styling rules in `MixData` and concrete visual properties on a `Container`.
+/// It allows dynamic and flexible styling of child widgets based on the rules defined in the
+/// provided `MixData`. This widget is particularly useful in scenarios where the styling needs
+/// to adapt based on different conditions or contexts.
 ///
-/// The [MixedBox] handles the extraction of [BoxSpecAttribute] from the `Style`
-/// and uses it to create a [BoxSpecWidget]. The decorators, if any, are applied
-/// in the specified order, allowing for layered styling effects.
+/// The [mix] parameter is the cornerstone of `MixedBox`. It encapsulates the styling rules
+/// that dictate how the child widget should be visually represented. If [mix] is null,
+/// `MixedBox` attempts to retrieve styling information from the nearest `MixProvider` in
+/// the widget tree, enabling style inheritance and theming capabilities.
 ///
-/// Parameters:
-///   - [mix]: The `MixData` representing the current styling context. It contains
-///     the resolved attributes from the `Style` that are to be applied to the [child].
-///   - [key]: The key for the widget.
-///   - [child]: The widget below this widget in the tree. It is the recipient of the
-///     styles and decorations applied by this widget.
-///   - [decoratorOrder]: Specifies the order in which decorators are applied to the widget.
-///     This allows for fine-grained control over how multiple decorators interact
-///     with each other.
+/// The [child] parameter is the widget that will be styled by `MixedBox`. This child widget
+/// can be any Flutter widget, making `MixedBox` a way to add composable visual and layout widgets
+/// to the widget tree.
 ///
-/// Example usage:
-/// ```dart
-/// MixedBox(
-///   mix: mixData,
-///   child: Text('Styled with Mix'),
-///   decoratorOrder: [ /* Decorator types in desired order */ ]
-/// )
-/// ```
+/// The [decoratorOrder] parameter provides a way to control the order in which [Decorators] are applied.
+/// This can be crucial when certain styling effects need to be prioritized over others.
+/// It defaults to an empty list, which implies a standard
+/// order of decoration.
 ///
-/// This example shows how `MixedBox` is used to apply a `Style` to a text widget,
-/// potentially with a series of decorators applied in a specific order.
+/// See also:
+/// * [MixData], which holds the styling rules used by `MixedBox`.
+/// * [Container], the underlying widget that is used to apply the actual styling.
+/// * [MixProvider], which can provide inherited `MixData`.
 class MixedBox extends StatelessWidget {
+  /// Creates a `MixedBox` widget.
+  ///
+  /// The [mix] parameter holds styling rules. If null, styling is obtained from
+  /// the closest `MixProvider`. The [child] is the widget to be styled. The optional
+  /// [decoratorOrder] determines the order of style decorators on the child.
   const MixedBox({
     this.mix,
     super.key,
@@ -102,17 +108,16 @@ class MixedBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Get MixData from this widget or the nearest MixProvider.
     final mix = this.mix ?? MixProvider.of(context);
-    // Resolve the BoxSpecAttribute from the mix. If not found, use an empty BoxSpec.
+
+    // Retrieve styling properties from MixData. Use default properties if MixData is not provided.
     final spec = BoxSpec.of(mix);
 
-    // The RenderWidgetDecorators widget is responsible for applying the decorators
-    // to the child widget in the specified order.
+    // Apply styles and decorators to the Container, which wraps the child widget.
     return RenderWidgetDecorators(
       mix: mix,
-      // The Container widget is used here as a foundation for applying the styling.
-      // Each property of the BoxSpec is mapped to the corresponding property of the Container,
-      // allowing for a flexible and dynamic approach to styling.
+      orderOfDecorators: decoratorOrder,
       child: Container(
         alignment: spec.alignment,
         padding: spec.padding,
@@ -129,42 +134,20 @@ class MixedBox extends StatelessWidget {
   }
 }
 
-/// [AnimatedBox] - An animated widget that applies a styled [Style] to its [child].
+/// Animated version of [Box] that gradually changes its values over a period of time.
 ///
-/// This widget extends [AnimatedStyledWidget], enabling it to animate the transition
-/// of styles defined in a `Style`. It is particularly useful for creating visually
-/// appealing dynamic effects in response to state changes or user interactions. The
-/// `AnimatedBox` leverages the [AnimatedMixedBox] to apply the animated transition
-/// to the styling properties defined in the `BoxSpec`.
+/// The [AnimatedBox] will automatically animate between the old and
+/// new style values of properties when they change using the provided curve and
+/// duration. Attributes that are null are not animated. Its child and
+/// descendants are not animated.
 ///
-/// The `AnimatedBox` is adept at handling complex styling scenarios where the visual
-/// properties of a widget need to smoothly transition over a period of time, making
-/// it ideal for modern, interactive UIs.
+/// This class is useful for generating simple implicit transitions between
+/// different in a [Box] with by applying the [AnimatedMixedBox] to the child.
 ///
-/// Parameters:
-///   - [style]: The [Style] to be applied and animated. Inherits from [AnimatedStyledWidget].
-///   - [key]: The key for the widget. Inherits from [AnimatedStyledWidget].
-///   - [inherit]: Determines whether the [AnimatedBox] should inherit styles from its ancestors.
-///     Inherits from [AnimatedStyledWidget] and defaults to `false`.
-///   - [child]: The widget below this widget in the tree, which will be the recipient
-///     of the animated styles.
-///   - [curve]: The animation curve, inherited from [AnimatedStyledWidget], to use for transitions.
-///   - [duration]: The duration over which to animate the specified style mix, required and
-///     inherited from [AnimatedStyledWidget].
-///
-/// Example usage:
-/// ```dart
-/// AnimatedBox(
-///   style: myStyle,
-///   duration: Duration(seconds: 1),
-///   curve: Curves.easeInOut,
-///   child: Text('Animated Styled Box'),
-/// )
-/// ```
-///
-/// This example creates an `AnimatedBox` with a custom `Style` named `myStyle`.
-/// The widget animates these styles over a duration of 1 second with an `easeInOut` curve,
-/// providing a fluid and dynamic experience for the 'Animated Styled Box' text widget.
+/// See also:
+/// * [MixData], which holds the styling and animation rules used by `AnimatedBox`.
+/// * [AnimatedMixedBox], which is responsible for applying the animated transitions to
+///   the styling properties.
 class AnimatedBox extends AnimatedStyledWidget {
   const AnimatedBox({
     super.style,
@@ -194,6 +177,21 @@ class AnimatedBox extends AnimatedStyledWidget {
   }
 }
 
+/// Animated version of [MixedBox] that gradually changes its values over a period of time.
+///
+/// The [AnimatedMixedBox] will automatically animate between the old and
+/// new `MixData` values of properties when they change using the provided curve and
+/// duration. Attributes that are null are not animated. Its child and
+/// descendants are not animated.
+///
+/// This class is useful for generating simple implicit transitions between
+/// different in a [MixedBox] with its internal [AnimatedContainer].
+///
+/// See also:
+/// * [MixData], which holds the styling and animation rules used by `AnimatedMixedBox`.
+/// * [AnimatedBox], which is responsible for applying the animated transitions to
+///  the styling properties.
+/// * [AnimatedContainer], the Flutter equivalent widget.
 class AnimatedMixedBox extends StatelessWidget {
   const AnimatedMixedBox({
     this.mix,
