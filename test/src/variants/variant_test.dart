@@ -1,9 +1,32 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mix/src/variants/variant.dart';
+import 'package:mix/mix.dart';
 
 import '../../helpers/testing_utils.dart';
 
 void main() {
+  group('Variant', () {
+    testWidgets('should set attributes when variant matches, otherwise null',
+        (WidgetTester tester) async {
+      final style = Style(
+        icon.color.black(),
+        _foo(
+          box.height(10),
+          box.width(10),
+        ),
+      );
+
+      await tester.pumpMaterialApp(
+        Row(
+          children: [
+            _buildDefaultTestCase(style, [_foo]),
+            _buildTestCaseToVerifyIfNull(style, [_bar]),
+          ],
+        ),
+      );
+    });
+  });
+
   group('MultiVariant', () {
     test('remove should remove the correct variants', () {
       const variant1 = Variant('variant1');
@@ -61,3 +84,40 @@ void main() {
     });
   });
 }
+
+Widget _buildDefaultTestCase(Style style, List<Variant> variants) {
+  return Builder(
+    builder: (context) {
+      final mixData = MixData.create(context, style.variantList(variants));
+
+      final box = BoxSpec.of(mixData);
+      final icon = IconSpec.of(mixData);
+
+      expect(box.height, 10);
+      expect(box.width, 10);
+      expect(icon.color, Colors.black);
+
+      return const SizedBox();
+    },
+  );
+}
+
+Widget _buildTestCaseToVerifyIfNull(Style style, List<Variant> variants) {
+  return Builder(
+    builder: (context) {
+      final mixData = MixData.create(context, style.variantList(variants));
+
+      final box = BoxSpec.of(mixData);
+      final icon = IconSpec.of(mixData);
+
+      expect(box.height, null);
+      expect(box.width, null);
+      expect(icon.color, Colors.black);
+
+      return const SizedBox();
+    },
+  );
+}
+
+const _foo = Variant('foo');
+const _bar = Variant('bar');

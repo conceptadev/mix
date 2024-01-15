@@ -126,7 +126,7 @@ void main() {
     });
   });
 
-  group('Style.selectVariant', () {
+  group('Style.variant', () {
     const attr1 = MockDoubleScalarAttribute(1.0);
     const attr2 = MockIntScalarAttribute(2);
     const attr3 = MockBooleanScalarAttribute(true);
@@ -143,15 +143,37 @@ void main() {
       expect(style.variants.length, 1);
     });
 
-    test('with matching multi variant', () {
+    test('with matching multi variant `and` ', () {
       final multiVariant = MultiVariant.and(const [variantAttr1, variantAttr2]);
       final style = Style(attr1, attr2, multiVariant(attr3));
+
+      final a = style.variant(variantAttr1);
+      final b = a.variant(variantAttr2);
+      final c = style.variant(variantAttr1, variantAttr2);
+
+      expect(a.styles.length, 2);
+      expect(a.variants.length, 1);
+
+      expect(b.styles.length, 2);
+      expect(b.variants.length, 1);
+
+      expect(c.styles.length, 3);
+      expect(c.variants.length, 0);
+
+      expect(b, a);
+      expect(c == b, false);
+    });
+
+    test('with matching multivariant `or` ', () {
+      final multiVariant = MultiVariant.or(const [variantAttr1, variantAttr2]);
+      final style = Style(attr1, attr2, multiVariant(attr3));
+
       final firstStyle = style.variant(variantAttr1);
-      final secondStyle = firstStyle.variant(variantAttr2);
+      final secondStyle = style.variant(variantAttr2);
       final thirdStyle = style.variant(variantAttr1, variantAttr2);
 
-      expect(firstStyle.styles.length, 2);
-      expect(firstStyle.variants.length, 1);
+      expect(firstStyle.styles.length, 3);
+      expect(firstStyle.variants.length, 0);
 
       expect(secondStyle.styles.length, 3);
       expect(secondStyle.variants.length, 0);
@@ -159,7 +181,49 @@ void main() {
       expect(thirdStyle.styles.length, 3);
       expect(thirdStyle.variants.length, 0);
 
+      expect(secondStyle, firstStyle);
       expect(secondStyle, thirdStyle);
+    });
+
+    test('with matching complex multivariant `or` ', () {
+      const variantAttr3 = Variant('variantAttr3');
+
+      final multiVariant = MultiVariant.and([
+        variantAttr3,
+        MultiVariant.or(const [variantAttr1, variantAttr2])
+      ]);
+
+      final style = Style(attr1, attr2, multiVariant(attr3));
+
+      final a = style.variant(variantAttr1);
+
+      expect(a.styles.length, 2);
+      expect(a.variants.length, 1);
+
+      final b = style.variant(variantAttr2);
+
+      expect(b.styles.length, 2);
+      expect(b.variants.length, 1);
+
+      final c = style.variant(variantAttr3);
+
+      expect(c.styles.length, 2);
+      expect(c.variants.length, 1);
+
+      final d = style.variant(variantAttr1, variantAttr2);
+
+      expect(d.styles.length, 2);
+      expect(d.variants.length, 1);
+
+      final e = style.variant(variantAttr1, variantAttr3);
+
+      expect(e.styles.length, 3);
+      expect(e.variants.length, 0);
+
+      final f = style.variant(variantAttr2, variantAttr3);
+
+      expect(f.styles.length, 3);
+      expect(f.variants.length, 0);
     });
 
     test('with an Unmatched Variant', () {
@@ -170,7 +234,7 @@ void main() {
     });
   });
 
-  group('Style.selectVariantList', () {
+  group('Style.variantList', () {
     const attr1 = MockDoubleScalarAttribute(1.0);
     const attr2 = MockIntScalarAttribute(2);
     const attr3 = MockBooleanScalarAttribute(true);
@@ -209,6 +273,56 @@ void main() {
       final updatedMix = mix.variantList([]);
 
       expect(updatedMix, mix);
+    });
+
+    test(
+        'should return the same value if the parameter don`t satisfy the logic expression with 3 variants combined with `and` operator',
+        () {
+      const variantAttr3 = Variant('variantAttr3');
+
+      final style = Style(
+        box.color.red(),
+        (variantAttr1 & variantAttr2 & variantAttr3)(
+          icon.color.black(),
+        ),
+      );
+
+      final a = style.variantList([variantAttr3]);
+      final b = style.variantList([variantAttr2]);
+      final c = style.variantList([variantAttr1]);
+      final d = style.variantList([variantAttr2, variantAttr3]);
+      final e = style.variantList([variantAttr1, variantAttr3]);
+      final f = style.variantList([variantAttr2, variantAttr1]);
+
+      expect(a, style);
+      expect(a, b);
+      expect(a, c);
+      expect(a, d);
+      expect(a, e);
+      expect(a, f);
+    });
+
+    test(
+        'should return the same value if the parameter don`t satisfy the logic expression with 3 variants combined with `or` operator',
+        () {
+      const variantAttr3 = Variant('variantAttr3');
+
+      const extraVariant1 = Variant('extraVariant1');
+      const extraVariant2 = Variant('extraVariant2');
+
+      final style = Style(
+        box.color.red(),
+        (variantAttr1 | variantAttr2 | variantAttr3)(
+          icon.color.black(),
+        ),
+      );
+
+      final a = style.variantList([extraVariant1]);
+      final b = style.variantList([extraVariant2]);
+      final c = style.variantList([extraVariant1, extraVariant2]);
+
+      expect(a, b);
+      expect(a, c);
     });
   });
 

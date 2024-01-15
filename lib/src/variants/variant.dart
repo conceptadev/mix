@@ -103,6 +103,10 @@ class Variant with Comparable {
 
   @override
   get props => [name];
+
+  bool matches(Iterable<Variant> matchVariants) {
+    return matchVariants.contains(this);
+  }
 }
 
 /// A typedef for a function that determines if a specific context condition is met.
@@ -248,14 +252,20 @@ class MultiVariant extends Variant {
   ///
   /// It initializes a `MultiVariant` with the given [variants] and sets the type to `MultiVariantType.and`.
   factory MultiVariant.and(Iterable<Variant> variants) {
-    return MultiVariant(variants, type: MultiVariantOperator.and);
+    return MultiVariant(
+      variants,
+      type: MultiVariantOperator.and,
+    );
   }
 
   /// Factory constructor to create a `MultiVariant` where any one of the provided variants needs to be active (`MultiVariantType.or`).
   ///
   /// It initializes a `MultiVariant` with the given [variants] and sets the type to `MultiVariantType.or`.
   factory MultiVariant.or(Iterable<Variant> variants) {
-    return MultiVariant(variants, type: MultiVariantOperator.or);
+    return MultiVariant(
+      variants,
+      type: MultiVariantOperator.or,
+    );
   }
 
   /// Removes specified variants from this `MultiVariant`.
@@ -295,13 +305,14 @@ class MultiVariant extends Variant {
   /// ```
   /// Here, `isMatched` will be true for `MultiVariantType.and` if both `variantA` and `variantB` are included in the provided list.
   /// For `MultiVariantType.or`, `isMatched` would be true if either `variantA` or `variantB` is in the list.
+  @override
   bool matches(Iterable<Variant> matchVariants) {
-    final matchSet = matchVariants.toSet();
-    final variantSet = variants.toSet();
+    final list = variants.map((e) => e.matches(matchVariants)).toList();
 
-    return operatorType == MultiVariantOperator.and
-        ? variantSet.difference(matchSet).isEmpty
-        : variantSet.intersection(matchSet).isNotEmpty;
+    final result = operatorType == MultiVariantOperator.and
+        ? list.every((e) => e == true)
+        : list.contains(true);
+    return result;
   }
 
   /// Evaluates if the `MultiVariant` should be applied based on the build context.
