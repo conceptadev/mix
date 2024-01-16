@@ -1,0 +1,167 @@
+---
+id: best-practices
+title: "Best Practices"
+---
+
+import { Callout } from "nextra-theme-docs";
+
+# Best Practices
+As you start to build your application with Mix, you'll want to follow some best practices to ensure your code is aligned with the framework's conventions.
+
+To get started, I'll create a button based on the [Shadcn Button](https://ui.shadcn.com/docs/components/button) component. I'll call it `ShadcnButton`. 
+
+## File Structure
+First, I'll create a folder called `button`. Inside it, I'll create three files:
+
+### `button.dart`,
+In this file, I'll create a class called `ShadcnButton` and all structure of the component.
+
+###`button.variants.dart`.
+And the last one, I'll create a class called `ShadcnButtonVariants` and all `Variants` classes.
+
+### `button.style.dart`
+Here, I'll create a class called `ShadcnButtonStyle` and all `Styles` classes related to button.
+
+## Widget Structure
+The main tip here is to use the StyledWidget to create your component. Those widgets are responsible for creating the component's structure and styling it. Although your Button structure will be looks like the following code:
+
+```dart
+class ShadcnButton extends StatelessWidget {
+  const ShadcnButton({
+    super.key,
+    required this.title,
+  });
+
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+
+    return Pressable(
+      child: Box(
+        child: StyledText(
+          title,
+        ),
+      ),
+    );
+  }
+}
+```
+
+In this code sample I only used two StyledWidgets, `Box` and `StyledText`. However, you can see the full list of StyledWidgets [here](/styled-widgets).
+
+## Defining Variants
+To create variants is quite simple. You just need to create a class that extends `Variant` and define the variants you want to use, so I'll create a class called `ShadcnButtonVariants` and define the cases `primary`, `destructive` and `link`. Shadcn has more than that, but for this example, I'll use only those three.
+
+```dart
+class ButtonType extends Variant {
+  const ButtonType._(super.name);
+
+  static const primary = ButtonType._('primaryButtonVariant');
+  static const destructive = ButtonType._('destructiveButtonVariant');
+  static const link = ButtonType._('linkButtonVariant');
+}
+```
+
+Now that the variants are defined, I'll modify the `ShadcnButton` class to receive the variant as a parameter and use it to define the style of the component.
+
+```dart
+class ShadcnButton extends StatelessWidget {
+  const ShadcnButton({
+    super.key,
+    required this.title,
+    this.type = ButtonType.primary,
+  });
+
+  final String title;
+  final ButtonType type;
+
+  @override
+  Widget build(BuildContext context) {
+
+    return Pressable(
+      child: Box(
+        child: StyledText(
+          title,
+        ),
+      ),
+    );
+  }
+}
+
+```
+
+## Styling the component
+
+finally, I'll create a class called `ShadcnButtonStyle` and define the styles for each variant defined in the `ShadcnButtonVariants` class.
+
+```dart
+class ShadcnButtonStyle {
+  ShadcnButtonStyle(this.type);
+
+  final ButtonType type;
+
+  late final container = Style(
+    padding.horizontal(16),
+    padding.vertical(8),
+    border.radius.all(8),
+    ButtonType.primary(
+      backgroundColor.black(),
+    ),
+    ButtonType.destructive(
+      backgroundColor.redAccent(),
+    ),
+    ButtonType.link(
+      backgroundColor.transparent(),
+    ),
+  ).applyVariant(type);
+
+  late final title = Style(
+    text.style.color.white(),
+    text.style.fontSize(14),
+    text.style.bold(),
+    ButtonType.primary(
+      text.style.color.white(),
+    ),
+    ButtonType.destructive(
+      text.style.color.white(),
+    ),
+    ButtonType.link(
+      text.style.color.black(),
+      text.style.decoration.underline(),
+    ),
+  ).applyVariant(type);
+}
+```
+
+Now I'll modify the `ShadcnButton` class to support the styles defined in the `ShadcnButtonStyle` class.
+
+```dart
+class ShadcnButton extends StatelessWidget {
+  const ShadcnButton({
+    super.key,
+    required this.title,
+    this.type = ButtonType.primary,
+  });
+
+  final String title;
+  final ButtonType type;
+
+  @override
+  Widget build(BuildContext context) {
+    final style = ShadcnButtonStyle(type);
+
+    return Pressable(
+      child: Box(
+        style: style.container,
+        child: StyledText(
+          title,
+          style: style.title,
+        ),
+      ),
+    );
+  }
+}
+```
+
+Now you are prepared to use your component in your application and it will be aligned with the framework's conventions. Congratulations! 🎉
