@@ -49,7 +49,7 @@ final style = Style(
 
 ### Applying a Variant
 
-To apply a variant, you can use the `variant` method on a `Style`.
+To apply a variant, you can use the `applyVariant` method on a `Style`.
 
 ```dart {1, 8-12, 15}
 const outlined = Variant('outlined');
@@ -67,7 +67,7 @@ final style = Style(
   ),
 );
 
-final outlinedStyle = style.variant(outlined);
+final outlinedStyle = style.applyVariant(outlined);
 ```
 
 `outlinedStyle` will now have the attributes defined in the `outlined` variant, and will be equivalent to the following:
@@ -132,7 +132,7 @@ final style = Style(
 
 ## Conditional operators
 
-The operators `|` and `&` can be used to add conditions to your mix:
+The operators `|` and `&` can be used to add conditions to your style:
 
 ### OR Operator
 
@@ -149,18 +149,78 @@ final style = Style(
 );
 ```
 
+When the `onSmall` variant or `onMedium` variant is applied, the resulted `Style` will be equivalent to the following:
+
+```dart highlight="2-4"
+Style(
+  padding(20),
+  width(300),
+  height(400),
+  backgroundColor.white(),
+);
+```
+
 ### AND Operator
 
 The `&` operator is used in case you want to apply the variant when all of the variants apply.
 
 ```dart highlight="3-6"
-final mix = Style(
+final style = Style(
   padding(20),
   // When it's hovering AND pressing
   (onHover & onPress)(
     text.style.color.black(),
     text.style.bold(),
   ),
+);
+```
+
+In this scenery only when the onHover variant and onPress are applied, the resulted `Style` will be equivalent to the following:
+
+```dart highlight="2-4"
+Style(
+  padding(20),
+  text.style.color.black(),
+  text.style.bold(),
+);
+```
+
+### Combining operators
+
+You can combine operators `|` and `&` to create more complex conditions:
+
+```dart
+final style = Style(
+  box.height(100),
+  box.width(100),
+  (onHover | onPress & onDark)(
+    box.color.red(),
+  ),
+);
+```
+
+<Callout type="info">
+  The operator that has preference is the first readed operator, so in this case the `onHover` variant will be applied first, then the `onPress` and finally the `onDark` variant.
+</Callout>
+
+To understand how this works, let's see the following example:
+
+1. When the `onHover` variant is applied, the resulted `Style` will be equivalent to:
+
+```dart 
+Style(
+  box.height(100),
+  box.width(100),
+);
+```
+
+2. However, applying the `onHover` variant and the `onDark` variant, the resulting `Style` is different because it satisfies the logic condition in the variant.
+
+```dart 
+Style(
+  box.height(100),
+  box.width(100),
+  box.color.red(),
 );
 ```
 

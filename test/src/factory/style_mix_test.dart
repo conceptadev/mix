@@ -135,7 +135,7 @@ void main() {
 
     test('with a Matched Variant', () {
       final style = Style(attr1, attr2, variantAttr1(attr3));
-      final updatedStyle = style.variant(variantAttr1);
+      final updatedStyle = style.applyVariant(variantAttr1);
 
       expect(updatedStyle.styles.length, 3);
       expect(style.styles.length, 2);
@@ -147,9 +147,9 @@ void main() {
       final multiVariant = MultiVariant.and(const [variantAttr1, variantAttr2]);
       final style = Style(attr1, attr2, multiVariant(attr3));
 
-      final a = style.variant(variantAttr1);
-      final b = a.variant(variantAttr2);
-      final c = style.variant(variantAttr1, variantAttr2);
+      final a = style.applyVariant(variantAttr1);
+      final b = a.applyVariant(variantAttr2);
+      final c = style.applyVariant(variantAttr1, variantAttr2);
 
       expect(a.styles.length, 2);
       expect(a.variants.length, 1);
@@ -168,9 +168,9 @@ void main() {
       final multiVariant = MultiVariant.or(const [variantAttr1, variantAttr2]);
       final style = Style(attr1, attr2, multiVariant(attr3));
 
-      final firstStyle = style.variant(variantAttr1);
-      final secondStyle = style.variant(variantAttr2);
-      final thirdStyle = style.variant(variantAttr1, variantAttr2);
+      final firstStyle = style.applyVariant(variantAttr1);
+      final secondStyle = style.applyVariant(variantAttr2);
+      final thirdStyle = style.applyVariant(variantAttr1, variantAttr2);
 
       expect(firstStyle.styles.length, 3);
       expect(firstStyle.variants.length, 0);
@@ -195,32 +195,32 @@ void main() {
 
       final style = Style(attr1, attr2, multiVariant(attr3));
 
-      final a = style.variant(variantAttr1);
+      final a = style.applyVariant(variantAttr1);
 
       expect(a.styles.length, 2);
       expect(a.variants.length, 1);
 
-      final b = style.variant(variantAttr2);
+      final b = style.applyVariant(variantAttr2);
 
       expect(b.styles.length, 2);
       expect(b.variants.length, 1);
 
-      final c = style.variant(variantAttr3);
+      final c = style.applyVariant(variantAttr3);
 
       expect(c.styles.length, 2);
       expect(c.variants.length, 1);
 
-      final d = style.variant(variantAttr1, variantAttr2);
+      final d = style.applyVariant(variantAttr1, variantAttr2);
 
       expect(d.styles.length, 2);
       expect(d.variants.length, 1);
 
-      final e = style.variant(variantAttr1, variantAttr3);
+      final e = style.applyVariant(variantAttr1, variantAttr3);
 
       expect(e.styles.length, 3);
       expect(e.variants.length, 0);
 
-      final f = style.variant(variantAttr2, variantAttr3);
+      final f = style.applyVariant(variantAttr2, variantAttr3);
 
       expect(f.styles.length, 3);
       expect(f.variants.length, 0);
@@ -228,7 +228,7 @@ void main() {
 
     test('with an Unmatched Variant', () {
       final style = Style(attr1, attr2);
-      final updatedStyle = style.variant(variantAttr1);
+      final updatedStyle = style.applyVariant(variantAttr1);
 
       expect(updatedStyle, style);
     });
@@ -244,7 +244,7 @@ void main() {
 
     test('with Matched Variants', () {
       final style = Style(attr1, variantAttr1(attr2), variantAttr2(attr3));
-      final updatedStyle = style.variantList([variantAttr1, variantAttr2]);
+      final updatedStyle = style.applyVariants([variantAttr1, variantAttr2]);
 
       expect(style.styles.length, 1);
       expect(style.variants.length, 2);
@@ -255,7 +255,7 @@ void main() {
     test('with matching multi variant', () {
       final multiVariant = MultiVariant.and(const [variantAttr1, variantAttr2]);
       final style = Style(attr1, attr2, multiVariant(attr3));
-      final thirdStyle = style.variantList([variantAttr1, variantAttr2]);
+      final thirdStyle = style.applyVariants([variantAttr1, variantAttr2]);
 
       expect(thirdStyle.styles.length, 3);
       expect(thirdStyle.variants.length, 0);
@@ -263,14 +263,14 @@ void main() {
 
     test('with Unmatched Variants', () {
       final mix = Style(attr1);
-      final updatedMix = mix.variantList([variantAttr1, variantAttr2]);
+      final updatedMix = mix.applyVariants([variantAttr1, variantAttr2]);
 
       expect(updatedMix, mix);
     });
 
     test('with Empty List', () {
       final mix = Style(attr1, attr2);
-      final updatedMix = mix.variantList([]);
+      final updatedMix = mix.applyVariants([]);
 
       expect(updatedMix, mix);
     });
@@ -287,12 +287,12 @@ void main() {
         ),
       );
 
-      final a = style.variantList([variantAttr3]);
-      final b = style.variantList([variantAttr2]);
-      final c = style.variantList([variantAttr1]);
-      final d = style.variantList([variantAttr2, variantAttr3]);
-      final e = style.variantList([variantAttr1, variantAttr3]);
-      final f = style.variantList([variantAttr2, variantAttr1]);
+      final a = style.applyVariants([variantAttr3]);
+      final b = style.applyVariants([variantAttr2]);
+      final c = style.applyVariants([variantAttr1]);
+      final d = style.applyVariants([variantAttr2, variantAttr3]);
+      final e = style.applyVariants([variantAttr1, variantAttr3]);
+      final f = style.applyVariants([variantAttr2, variantAttr1]);
 
       expect(a, style);
       expect(a, b);
@@ -317,9 +317,9 @@ void main() {
         ),
       );
 
-      final a = style.variantList([extraVariant1]);
-      final b = style.variantList([extraVariant2]);
-      final c = style.variantList([extraVariant1, extraVariant2]);
+      final a = style.applyVariants([extraVariant1]);
+      final b = style.applyVariants([extraVariant2]);
+      final c = style.applyVariants([extraVariant1, extraVariant2]);
 
       expect(a, b);
       expect(a, c);
