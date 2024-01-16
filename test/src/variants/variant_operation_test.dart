@@ -171,7 +171,7 @@ void main() {
 Widget _buildDefaultTestCase(Style style, List<Variant> variants) {
   return Builder(
     builder: (context) {
-      final mixData = MixData.create(context, style.variantList(variants));
+      final mixData = MixData.create(context, style.applyVariants(variants));
       final icon = IconSpec.of(mixData);
 
       expect(icon.color, Colors.black);
@@ -183,7 +183,7 @@ Widget _buildDefaultTestCase(Style style, List<Variant> variants) {
 Widget _buildTestCaseToVerifyIfNull(Style style, List<Variant> variants) {
   return Builder(
     builder: (context) {
-      final mixData = MixData.create(context, style.variantList(variants));
+      final mixData = MixData.create(context, style.applyVariants(variants));
       final icon = IconSpec.of(mixData);
 
       expect(icon.color, null);

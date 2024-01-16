@@ -103,16 +103,16 @@ class Style with Comparable {
   /// final style = Style.create([attribute1, attribute2]);
   /// ```
   factory Style.create(Iterable<Attribute> attributes) {
-    final variantList = <VariantAttribute>[];
+    final applyVariants = <VariantAttribute>[];
     final styleList = <StyleAttribute>[];
 
     for (final attribute in attributes) {
       if (attribute is StyleAttribute) {
         styleList.add(attribute);
       } else if (attribute is VariantAttribute) {
-        variantList.add(attribute);
+        applyVariants.add(attribute);
       } else if (attribute is NestedStyleAttribute) {
-        variantList.addAll(attribute.value.variants.values);
+        applyVariants.addAll(attribute.value.variants.values);
         styleList.addAll(attribute.value.styles.values);
       } else {
         throw UnsupportedError('Unsupported attribute type: $attribute');
@@ -121,7 +121,7 @@ class Style with Comparable {
 
     return Style._(
       styles: AttributeMap(styleList),
-      variants: AttributeMap(variantList),
+      variants: AttributeMap(applyVariants),
     );
   }
 
@@ -162,8 +162,8 @@ class Style with Comparable {
 
   /// Selects a single or positional params list of [Variant] and returns a new `Style` with the selected variants.
   ///
-  /// If the [variant] is not initially part of the `Style`, this method returns this mix without any changes.
-  /// Otherwise, the method merges the attributes of the selected [variant] into a new `Style` instance.
+  /// If the [applyVariant] is not initially part of the `Style`, this method returns this mix without any changes.
+  /// Otherwise, the method merges the attributes of the selected [applyVariant] into a new `Style` instance.
   ///
   /// Example:
   /// ```dart
@@ -176,7 +176,7 @@ class Style with Comparable {
   ///     attr5,
   ///   ),
   /// );
-  /// final updatedStyle = style.variant(outlined);
+  /// final updatedStyle = style.applyVariant(outlined);
   /// ```
   ///
   /// In this example:
@@ -187,9 +187,9 @@ class Style with Comparable {
   /// - The resulting `updatedStyle` is equivalent to `Style(attr1, attr2, attr4, attr5)`.
   ///
   /// Note:
-  /// The attributes from the selected variant (`attr4` and `attr5`) are not applied to the `Style` instance until the `variant` method is called.
-  SpreadFunctionParams<Variant, Style> get variant =>
-      SpreadFunctionParams(variantList);
+  /// The attributes from the selected variant (`attr4` and `attr5`) are not applied to the `Style` instance until the `applyVariant` method is called.
+  SpreadFunctionParams<Variant, Style> get applyVariant =>
+      SpreadFunctionParams(applyVariants);
 
   /// Allows to create a new `Style` by using this mix as a base and adding additional attributes.
   ///
@@ -232,7 +232,7 @@ class Style with Comparable {
 
   /// Selects multiple [Variant] instances and returns a new `Style` with the selected variants.
   ///
-  /// If the [variantList] list is empty, returns this mix without any changes.
+  /// If the [applyVariants] list is empty, returns this mix without any changes.
   /// Otherwise, the method merges the attributes of the selected variants into a new `Style` instance.
   ///
   /// Example:
@@ -244,19 +244,19 @@ class Style with Comparable {
   ///   outlinedVariant(attr3, attr4),
   ///   smallVariant(attr5),
   /// );
-  /// final outlinedSmallMix = style.variantList([outlinedVariant, smallVariant]);
+  /// final outlinedSmallMix = style.applyVariants([outlinedVariant, smallVariant]);
   /// ```
   ///
   /// In this example:
   /// - Two `Variant` instances `outlinedVariant` and `smallVariant` are created.
   /// - An initial `Style` instance `style` is created with `attr1` and `attr2`, along with the two variants.
-  /// - The `variantList` method is called on the `Style` instance with a list of `outlinedVariant` and `smallVariant` as the argument.
-  /// - The `variantList` method returns a new `Style` instance `outlinedSmallMix` with the attributes of the selected variants merged.
+  /// - The `applyVariants` method is called on the `Style` instance with a list of `outlinedVariant` and `smallVariant` as the argument.
+  /// - The `applyVariants` method returns a new `Style` instance `outlinedSmallMix` with the attributes of the selected variants merged.
   /// - The resulting `outlinedSmallMix` is equivalent to `Style(attr1, attr2, attr3, attr4, attr5)`.
   ///
   /// Note:
-  /// The attributes from the selected variants (`attr3`, `attr4`, and `attr5`) are not applied to the `Style` instance until the `variantList` method is called.
-  Style variantList(Iterable<Variant> selectedVariants) {
+  /// The attributes from the selected variants (`attr3`, `attr4`, and `attr5`) are not applied to the `Style` instance until the `applyVariants` method is called.
+  Style applyVariants(Iterable<Variant> selectedVariants) {
     /// Return the original Style if no variants were selected
     if (selectedVariants.isEmpty) {
       return this;
@@ -295,12 +295,12 @@ class Style with Comparable {
     final mergedStyle = updatedStyle.merge(styleToApply);
 
     /// Apply all variants and return the final Style.
-    return mergedStyle.variantList(selectedVariants);
+    return mergedStyle.applyVariants(selectedVariants);
   }
 
   /// Picks and applies only the attributes within the specified [Variant] instances, and returns a new `Style`.
   ///
-  /// Unlike `variantList`, `pickVariants` ignores all other attributes initially present in the `Style`.
+  /// Unlike `applyVariants`, `pickVariants` ignores all other attributes initially present in the `Style`.
   ///
   /// If the list of [pickVariants] is empty, returns a new empty `Style`.
   ///
@@ -376,7 +376,7 @@ class Style with Comparable {
       }
     }
 
-    return variantList(variantsToApply);
+    return applyVariants(variantsToApply);
   }
 
   @override

@@ -17,7 +17,7 @@ extension DeprecatedMixExtension<T extends Attribute> on Style {
   Style withVariants(List<Variant> variants) => withManyVariants(variants);
 
   @Deprecated('Use variantList(value:) instead')
-  Style withManyVariants(Iterable<Variant> variants) => variantList(variants);
+  Style withManyVariants(Iterable<Variant> variants) => applyVariants(variants);
 
   @Deprecated(
     'Use merge() or mergeMany() instead. You might have to turn into a Mix first. firstMixFactory.merge(secondMix)',
@@ -30,7 +30,7 @@ extension DeprecatedMixExtension<T extends Attribute> on Style {
       const SpreadFunctionParams(Style.combine);
 
   @Deprecated('Use variant(value:) instead')
-  Style withVariant(Variant value) => variant(value);
+  Style withVariant(Variant value) => applyVariant(value);
 
   @Deprecated('Use combine instead')
   Style combineAll(List<Style> mixes) => Style.combine(mixes);
