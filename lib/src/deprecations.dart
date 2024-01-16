@@ -13,10 +13,10 @@ extension DeprecatedMixExtension<T extends Attribute> on Style {
   @Deprecated('Simplifying the mix API to avoid confusion. Use apply instead')
   SpreadFunctionParams<T, Style> get mix => SpreadFunctionParams(addAttributes);
 
-  @Deprecated('Use variantList(value:) instead')
+  @Deprecated('Use applyVariant(value:) instead')
   Style withVariants(List<Variant> variants) => withManyVariants(variants);
 
-  @Deprecated('Use variantList(value:) instead')
+  @Deprecated('Use applyVariants(value:) instead')
   Style withManyVariants(Iterable<Variant> variants) => applyVariants(variants);
 
   @Deprecated(
@@ -29,7 +29,7 @@ extension DeprecatedMixExtension<T extends Attribute> on Style {
   SpreadFunctionParams<Style, Style> get apply =>
       const SpreadFunctionParams(Style.combine);
 
-  @Deprecated('Use variant(value:) instead')
+  @Deprecated('Use applyVariant(value:) instead')
   Style withVariant(Variant value) => applyVariant(value);
 
   @Deprecated('Use combine instead')
