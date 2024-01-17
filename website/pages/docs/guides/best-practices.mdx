@@ -38,7 +38,6 @@ class CustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final style = CustomButtonStyle(type, size);
     return PressableBox(
       onPressed: onPressed,
       child: StyledText(
@@ -57,18 +56,18 @@ To create variants is quite simple. You just need to create a class that extends
 
 ```dart
 class CustomButtonType extends Variant {
-  const ButtonType._(super.name);
+  const CustomButtonType._(super.name);
 
-  static const primary = ButtonType._('custom.button.primary');
-  static const destructive = ButtonType._('custom.button.desctructive');
-  static const link = ButtonType._('custom.button.link');
+  static const primary = CustomButtonType._('custom.button.primary');
+  static const destructive = CustomButtonType._('custom.button.desctructive');
+  static const link = CustomButtonType._('custom.button.link');
 }
 
 class CustomButtonSize extends Variant {
-  const ButtonSize._(super.name);
+  const CustomButtonSize._(super.name);
 
-  static const medium = ButtonSize._('custom.button.medium');
-  static const large = ButtonSize._('custom.button.large');
+  static const medium = CustomButtonSize._('custom.button.medium');
+  static const large = CustomButtonSize._('custom.button.large');
 }
 ```
 
@@ -154,7 +153,6 @@ class CustomButtonStyle {
         ),
       ).applyVariants([type, size]);
 }
-
 ```
 
 Now I'll modify the `CustomButton` class to support the styles defined in the `CustomButtonStyle` class.
