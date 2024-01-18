@@ -256,6 +256,34 @@ void main() {
             matching: find.byType(Transform),
           ),
           findsNothing);
+
+      expect(
+          find.descendant(
+            of: find.byKey(key),
+            matching: find.byType(Opacity),
+          ),
+          findsNothing);
+
+      expect(
+          find.descendant(
+            of: find.byKey(key),
+            matching: find.byType(RotatedBox),
+          ),
+          findsNothing);
+
+      expect(
+          find.descendant(
+            of: find.byKey(key),
+            matching: find.byType(Visibility),
+          ),
+          findsNothing);
+
+      expect(
+          find.descendant(
+            of: find.byKey(key),
+            matching: find.byType(AspectRatio),
+          ),
+          findsNothing);
     });
   });
 }
