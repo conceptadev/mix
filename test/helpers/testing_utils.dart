@@ -299,3 +299,17 @@ class CustomWidgetDecorator extends WidgetDecorator<CustomWidgetDecorator> {
   @override
   get props => [];
 }
+
+class WidgetWithTestableBuild extends StyledWidget {
+  const WidgetWithTestableBuild(this.onBuild, {super.key});
+
+  final void Function(BuildContext context) onBuild;
+
+  @override
+  Widget build(BuildContext context) {
+    return withMix(context, (_) {
+      onBuild(context);
+      return const SizedBox();
+    });
+  }
+}

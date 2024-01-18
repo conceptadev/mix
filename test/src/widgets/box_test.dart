@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
 
+import '../../helpers/testing_utils.dart';
+
 void main() {
   group('Box', () {
     testWidgets('by default should not pass its style through the widget tree',
@@ -12,7 +14,7 @@ void main() {
             icon.color.black(),
           ),
           child: Box(
-            child: _TestableStyledWidget((context) {
+            child: WidgetWithTestableBuild((context) {
               final inheritedStyle = MixProvider.maybeOf(context);
 
               expect(inheritedStyle?.attributes.length, 0);
@@ -32,7 +34,7 @@ void main() {
           ),
           child: Box(
             inherit: true,
-            child: _TestableStyledWidget((context) {
+            child: WidgetWithTestableBuild((context) {
               final inheritedStyle = MixProvider.maybeOf(context)!;
               final iconSpec = IconSpec.of(inheritedStyle);
 
@@ -58,7 +60,7 @@ void main() {
               box.height(100),
               box.width(100),
             ),
-            child: _TestableStyledWidget((context) {
+            child: WidgetWithTestableBuild((context) {
               final inheritedStyle = MixProvider.maybeOf(context)!;
               final iconSpec = IconSpec.of(inheritedStyle);
               final boxSpec = BoxSpec.of(inheritedStyle);
@@ -87,7 +89,7 @@ void main() {
               box.height(100),
               box.width(100),
             ),
-            child: _TestableStyledWidget((context) {
+            child: WidgetWithTestableBuild((context) {
               final inheritedStyle = MixProvider.maybeOf(context)!;
               final iconSpec = IconSpec.of(inheritedStyle);
               final boxSpec = BoxSpec.of(inheritedStyle);
@@ -116,7 +118,7 @@ void main() {
               style: Style(
                 box.width(100),
               ),
-              child: _TestableStyledWidget((context) {
+              child: WidgetWithTestableBuild((context) {
                 final inheritedStyle = MixProvider.maybeOf(context)!;
                 final boxSpec = BoxSpec.of(inheritedStyle);
 
@@ -141,7 +143,7 @@ void main() {
             style: Style(
               box.height(100),
               box.width(50),
-              scale(1),
+              // scale(1),
               opacity(0.5),
               rotate(1),
               visibility(true),
@@ -193,18 +195,4 @@ void main() {
       },
     );
   });
-}
-
-class _TestableStyledWidget extends StyledWidget {
-  const _TestableStyledWidget(this.onBuild);
-
-  final void Function(BuildContext context) onBuild;
-
-  @override
-  Widget build(BuildContext context) {
-    return withMix(context, (_) {
-      onBuild(context);
-      return const SizedBox();
-    });
-  }
 }

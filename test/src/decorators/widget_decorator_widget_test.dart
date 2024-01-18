@@ -223,4 +223,36 @@ void main() {
       );
     });
   });
+
+  group('Decorators attributes', () {
+    testWidgets(
+        'should be applied to the first one the children wont inherit even though the second one is set to inherit',
+        (tester) async {
+      const key = Key('box');
+
+      await tester.pumpWidget(
+        Box(
+          key: key,
+          style: Style(
+            scale(1),
+          ),
+          child: Box(
+            inherit: true,
+            child: WidgetWithTestableBuild((context) {
+              final inheritedMix = MixProvider.maybeOf(context)!;
+
+              expect(inheritedMix.attributes.length, 1);
+            }),
+          ),
+        ),
+      );
+
+      expect(
+          find.descendant(
+            of: find.byKey(key),
+            matching: find.byType(Transform),
+          ),
+          findsWidgets);
+    });
+  });
 }
