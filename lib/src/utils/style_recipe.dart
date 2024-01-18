@@ -1,4 +1,4 @@
-import '../../mix.dart';
+import '../variants/variant.dart';
 
 abstract class StyleRecipe<T extends StyleRecipe<T>> {
   const StyleRecipe();
