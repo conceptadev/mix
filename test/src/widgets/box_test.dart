@@ -143,7 +143,7 @@ void main() {
             style: Style(
               box.height(100),
               box.width(50),
-              // scale(1),
+              scale(1),
               opacity(0.5),
               rotate(1),
               visibility(true),

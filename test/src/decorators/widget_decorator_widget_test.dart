@@ -14,12 +14,11 @@ void main() {
     const CustomWidgetDecorator(),
   );
 
-  final mixData = MixData.create(MockBuildContext(), style);
   group('RenderWidgetDecorators', () {
     testWidgets('Renders decorators in the correct order', (tester) async {
       await tester.pumpMaterialApp(
         RenderWidgetDecorators(
-          mix: mixData,
+          mix: MixData.create(MockBuildContext(), style),
           child: const Text('child'),
         ),
       );
@@ -82,7 +81,7 @@ void main() {
     testWidgets('Renders decorators in the correct order', (tester) async {
       await tester.pumpMaterialApp(
         RenderWidgetDecorators(
-          mix: mixData,
+          mix: MixData.create(MockBuildContext(), style),
           orderOfDecorators: const [
             ClipDecorator,
             AspectRatioDecorator,
@@ -152,7 +151,7 @@ void main() {
     testWidgets('Renders decorators in the correct order', (tester) async {
       await tester.pumpMaterialApp(
         RenderWidgetDecorators(
-          mix: mixData,
+          mix: MixData.create(MockBuildContext(), style),
           orderOfDecorators: const [
             ClipDecorator,
             AspectRatioDecorator,
@@ -232,16 +231,20 @@ void main() {
 
       await tester.pumpWidget(
         Box(
-          key: key,
           style: Style(
-            scale(1),
+            scale(2.0),
+            opacity(0.5),
+            visibility.on(),
+            clip.oval(),
+            aspectRatio(2.0),
           ),
           child: Box(
+            key: key,
             inherit: true,
             child: WidgetWithTestableBuild((context) {
               final inheritedMix = MixProvider.maybeOf(context)!;
 
-              expect(inheritedMix.attributes.length, 1);
+              expect(inheritedMix.attributes.length, 0);
             }),
           ),
         ),
@@ -252,7 +255,7 @@ void main() {
             of: find.byKey(key),
             matching: find.byType(Transform),
           ),
-          findsWidgets);
+          findsNothing);
     });
   });
 }
