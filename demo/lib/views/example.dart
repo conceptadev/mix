@@ -64,7 +64,7 @@ class CustomMixWidget extends StatelessWidget {
       box.height(100),
       box.margin.vertical(10),
       box.elevation(10),
-      box.border.radius(10),
+      box.borderRadius(10),
       box.color($colors.primary()),
       text.style.of($textStyles.bodyMedium),
       text.style(color: $colors.onPrimary()),
