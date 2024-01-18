@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 import '../../core/styled_widget.dart';
+import '../../decorators/widget_decorator_widget.dart';
 import '../../factory/mix_provider.dart';
 import '../../factory/mix_provider_data.dart';
-import '../container/box_widget.dart';
 import 'icon_attribute.dart';
 import 'icon_spec.dart';
 
@@ -24,14 +24,10 @@ class StyledIcon extends StyledWidget {
   @override
   Widget build(BuildContext context) {
     return withMix(context, (mix) {
-      return Box(
-        style: style,
-        inherit: inherit,
-        child: MixedIcon(
-          icon,
-          semanticLabel: semanticLabel,
-          textDirection: textDirection,
-        ),
+      return MixedIcon(
+        icon,
+        semanticLabel: semanticLabel,
+        textDirection: textDirection,
       );
     });
   }
@@ -44,23 +40,28 @@ class MixedIcon extends StatelessWidget {
     this.semanticLabel,
     super.key,
     this.textDirection,
+    this.decoratorOrder = const [],
   });
 
   final IconData? icon;
   final MixData? mix;
   final String? semanticLabel;
   final TextDirection? textDirection;
+  final List<Type> decoratorOrder;
 
   @override
   Widget build(BuildContext context) {
     final mix = this.mix ?? MixProvider.of(context);
     final spec = IconSpec.of(mix);
 
-    return IconSpecWidget(
-      spec: spec,
-      semanticLabel: semanticLabel,
-      textDirection: textDirection,
-      icon: icon,
+    return RenderWidgetDecorators(
+      mix: mix,
+      child: IconSpecWidget(
+        spec: spec,
+        semanticLabel: semanticLabel,
+        textDirection: textDirection,
+        icon: icon,
+      ),
     );
   }
 }
