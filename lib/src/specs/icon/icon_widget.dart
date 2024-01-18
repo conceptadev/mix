@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../core/styled_widget.dart';
 import '../../factory/mix_provider.dart';
 import '../../factory/mix_provider_data.dart';
+import '../container/box_widget.dart';
 import 'icon_attribute.dart';
 import 'icon_spec.dart';
 
@@ -23,10 +24,14 @@ class StyledIcon extends StyledWidget {
   @override
   Widget build(BuildContext context) {
     return withMix(context, (mix) {
-      return MixedIcon(
-        icon,
-        semanticLabel: semanticLabel,
-        textDirection: textDirection,
+      return Box(
+        style: style,
+        inherit: inherit,
+        child: MixedIcon(
+          icon,
+          semanticLabel: semanticLabel,
+          textDirection: textDirection,
+        ),
       );
     });
   }
