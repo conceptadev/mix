@@ -76,10 +76,6 @@ class MixData with Comparable {
   Iterable<Attribute> where(bool Function(Attribute attr) clousure) =>
       attributes.values.where(clousure);
 
-  Object? removeType(Object attribute) {
-    return _attributes.remove(attribute);
-  }
-
   Value resolvableOf<Value, A extends SpecAttribute<A, Value>>(A attribute) {
     final attributes = _attributes.whereType<A>();
     if (attributes.isEmpty) return attribute.resolve(this);

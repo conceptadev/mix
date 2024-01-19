@@ -14,11 +14,13 @@ void main() {
     const CustomWidgetDecorator(),
   );
 
+  final mixData = MixData.create(MockBuildContext(), style);
+
   group('RenderWidgetDecorators', () {
     testWidgets('Renders decorators in the correct order', (tester) async {
       await tester.pumpMaterialApp(
         RenderWidgetDecorators(
-          mix: MixData.create(MockBuildContext(), style),
+          mix: mixData,
           child: const Text('child'),
         ),
       );
@@ -81,7 +83,7 @@ void main() {
     testWidgets('Renders decorators in the correct order', (tester) async {
       await tester.pumpMaterialApp(
         RenderWidgetDecorators(
-          mix: MixData.create(MockBuildContext(), style),
+          mix: mixData,
           orderOfDecorators: const [
             ClipDecorator,
             AspectRatioDecorator,
