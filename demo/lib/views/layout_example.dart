@@ -6,7 +6,7 @@ import '../styles.dart';
 Style get mix => Style(
       box.height(300),
       box.width(300),
-      box.border.radius(10),
+      box.borderRadius(10),
       box.elevation(2),
       box.color.of($colors.surface),
       box.alignment.center(),

@@ -22,7 +22,7 @@ class StyledContainerExample extends StatelessWidget {
       style: BorderStyle.solid,
     );
 
-    final radiusAttribute = box.border.radius(10);
+    final radiusAttribute = box.borderRadius(10);
 
     final colorAttribute = box.color(Colors.red);
 
@@ -120,7 +120,7 @@ void main() {
           width: 1,
           style: BorderStyle.solid,
         ),
-        box.border.radius(10),
+        box.borderRadius(10),
         box.color(Colors.red),
       ]);
     }
@@ -147,7 +147,7 @@ void main() {
             width: 1,
             style: BorderStyle.solid,
           ),
-          box.border.radius(10),
+          box.borderRadius(10),
           box.color(Colors.red),
         ),
       );
@@ -176,7 +176,7 @@ class StyleWidgetExpensiveAttributge extends StatelessWidget {
     //   style: BorderStyle.solid,
     // );
 
-    // final radiusAttribute = box.border.radius(10);
+    // final radiusAttribute = box.borderRadius(10);
 
     final colorAttribute = box.color(Colors.red);
 

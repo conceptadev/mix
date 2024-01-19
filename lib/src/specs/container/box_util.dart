@@ -66,6 +66,7 @@ const box = BoxSpecUtility();
 /// - [BorderRadiusGeometryUtility]
 /// - [BoxSpecAttribute]
 final border = box.border;
+final borderRadius = box.borderRadius;
 
 /// `backgroundColor` - A Utility for defining [BoxDecoration] color value for a [Box] widget
 final backgroundColor = box.color;
@@ -324,12 +325,10 @@ class BoxSpecUtility extends SpecUtility<BoxSpecAttribute> {
     return ClipUtility((clipBehavior) => only(clipBehavior: clipBehavior));
   }
 
-  ///  Decoration Utilities
-  BoxSpecBorderUtility<BoxSpecAttribute> get border {
-    return BoxSpecBorderUtility(
-      (border) => only(decoration: BoxDecorationDto(border: border)),
-    );
-  }
+  BorderRadiusGeometryUtility<BoxSpecAttribute> get borderRadius =>
+      decoration.borderRadius;
+
+  BoxBorderUtility<BoxSpecAttribute> get border => decoration.border;
 
   BoxShadowListUtility<BoxSpecAttribute> get shadows => decoration.boxShadows;
 
@@ -372,20 +371,5 @@ class BoxSpecUtility extends SpecUtility<BoxSpecAttribute> {
       width: width,
       height: height,
     );
-  }
-}
-
-class BoxSpecBorderUtility<T extends BoxSpecAttribute>
-    extends BoxBorderUtility<BoxSpecAttribute> {
-  const BoxSpecBorderUtility(super.builder);
-
-  BoxDecorationUtility<BoxSpecAttribute> get _decoration {
-    return BoxDecorationUtility(
-      (decoration) => BoxSpecAttribute(decoration: decoration),
-    );
-  }
-
-  BorderRadiusGeometryUtility<BoxSpecAttribute> get radius {
-    return _decoration.borderRadius;
   }
 }

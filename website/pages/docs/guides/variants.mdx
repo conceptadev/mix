@@ -36,7 +36,7 @@ const outlined = Variant('outlined');
 
 final style = Style(
   padding(20),
-  border.radius(10),
+  borderRadius(10),
   backgroundColor.black(),
   text.style.color.white(),
   outlined(
@@ -56,7 +56,7 @@ const outlined = Variant('outlined');
 
 final style = Style(
   padding(20),
-  border.radius(10),
+  borderRadius(10),
   backgroundColor.black(),
 
   text.style.color.white(),
@@ -75,7 +75,7 @@ final outlinedStyle = style.applyVariant(outlined);
 ```dart highlight="2-4"
 final outlinedStyle = Style(
   padding(20),
-  border.radius(10),
+  borderRadius(10),
   backgroundColor.transparent(),
   border.color.black(),
   text.style.color.black(),
@@ -109,7 +109,7 @@ To use a context variant in a style, you can call it as a function on a `Style` 
 ```dart {6-9}
 final style = Style(
   padding(20),
-  border.radius(10),
+  borderRadius(10),
   backgroundColor.black(),
   text.style.color.white(),
   onDark(
@@ -124,7 +124,7 @@ When the `onDark` variant is applied, it will override the `backgroundColor` and
 ```dart highlight="2-4"
 final style = Style(
   padding(20),
-  border.radius(10),
+  borderRadius(10),
   backgroundColor.white(),
   text.style.color.black(),
 );

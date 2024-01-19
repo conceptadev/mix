@@ -12,7 +12,7 @@ class BasicExample extends HookWidget {
     final mix = Style(
       box.height(300),
       box.width(300),
-      box.border.radius(10),
+      box.borderRadius(10),
       box.padding.all.large(),
       box.padding.top.small(),
       box.elevation(2),
@@ -21,7 +21,7 @@ class BasicExample extends HookWidget {
       box.color(Colors.purple),
       box.color.purple.shade300(),
       text.style(color: Colors.white),
-      box.border.radius(10),
+      box.borderRadius(10),
       box.shapeDecoration.color.white(),
       text.style.color.white(),
       onPress(

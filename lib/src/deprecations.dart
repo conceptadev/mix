@@ -241,44 +241,44 @@ final marginX = marginHorizontal;
 @Deprecated(kShortAliasDeprecation)
 final marginY = marginVertical;
 
-@Deprecated('Use box.border.radius instead')
-final rounded = box.border.radius;
+@Deprecated('Use box.borderRadius instead')
+final rounded = box.borderRadius;
 
-@Deprecated('Use box.border.radius instead')
-final r = box.border.radius;
+@Deprecated('Use box.borderRadius instead')
+final r = box.borderRadius;
 
-@Deprecated('Use box.border.radius.horizontal instead')
+@Deprecated('Use box.borderRadius.horizontal instead')
 dynamic get roundedH => UnimplementedError();
 
-@Deprecated('use box.border.radius.vertical instead')
+@Deprecated('use box.borderRadius.vertical instead')
 dynamic get roundedV => UnimplementedError();
 
 @Deprecated(kShortAliasDeprecation)
 dynamic get roundedDH => UnimplementedError();
 
 @Deprecated(kShortAliasDeprecation)
-final roundedTL = box.border.radius.topLeft;
+final roundedTL = box.borderRadius.topLeft;
 
 @Deprecated(kShortAliasDeprecation)
-final roundedTR = box.border.radius.topRight;
+final roundedTR = box.borderRadius.topRight;
 
 @Deprecated(kShortAliasDeprecation)
-final roundedBL = box.border.radius.bottomLeft;
+final roundedBL = box.borderRadius.bottomLeft;
 
 @Deprecated(kShortAliasDeprecation)
-final roundedBR = box.border.radius.bottomRight;
+final roundedBR = box.borderRadius.bottomRight;
 
 @Deprecated(kShortAliasDeprecation)
-final roundedTS = box.border.radius.topStart;
+final roundedTS = box.borderRadius.topStart;
 
 @Deprecated(kShortAliasDeprecation)
-final roundedTE = box.border.radius.topEnd;
+final roundedTE = box.borderRadius.topEnd;
 
 @Deprecated(kShortAliasDeprecation)
-final roundedBS = box.border.radius.bottomStart;
+final roundedBS = box.borderRadius.bottomStart;
 
 @Deprecated(kShortAliasDeprecation)
-final roundedBE = box.border.radius.bottomEnd;
+final roundedBE = box.borderRadius.bottomEnd;
 
 @Deprecated(kShortAliasDeprecation)
 final h = box.height;
@@ -518,8 +518,8 @@ final iconColor = icon.color;
 // @Deprecated('Use box.border')
 // final border = box.border;
 
-// @Deprecated('use box.border.radius')
-// final borderRadius = box.border.radius;
+// @Deprecated('use box.borderRadius')
+// final borderRadius = box.borderRadius;
 
 // @Deprecated('use box.elevation instead')
 // final elevation = box.elevation;
