@@ -33,7 +33,21 @@ class MixData with Comparable {
     final resolver = MixTokenResolver(context);
 
     return MixData._(
-        resolver: resolver, attributes: AttributeMap(attributeList));
+      resolver: resolver,
+      attributes: AttributeMap(attributeList),
+    );
+  }
+
+  factory MixData.where(
+    MixData data,
+    bool Function(Attribute attr) clousure,
+  ) {
+    final attributeListFiltered = data.where(clousure);
+
+    return MixData._(
+      resolver: data._tokenResolver,
+      attributes: AttributeMap(attributeListFiltered),
+    );
   }
 
   /// Getter for [MixTokenResolver].
@@ -58,6 +72,9 @@ class MixData with Comparable {
   Iterable<A> whereType<A extends StyleAttribute>() {
     return _attributes.whereType<A>();
   }
+
+  Iterable<Attribute> where(bool Function(Attribute attr) clousure) =>
+      attributes.values.where(clousure);
 
   Object? removeType(Object attribute) {
     return _attributes.remove(attribute);

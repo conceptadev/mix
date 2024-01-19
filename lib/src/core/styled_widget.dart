@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import '../factory/mix_provider.dart';
 import '../factory/mix_provider_data.dart';
 import '../factory/style_mix.dart';
+import 'attribute.dart';
+import 'decorator.dart';
 
 /// An abstract widget for applying custom styles.
 ///
@@ -37,7 +39,11 @@ abstract class StyledWidget extends StatelessWidget {
   /// This method is typically used in the `build` method of widgets extending
   /// [StyledWidget] to provide the actual styled widget.
   Widget withMix(BuildContext context, MixBuilder builder) {
-    final inheritedMix = inherit ? MixProvider.maybeOf(context) : null;
+    MixData? inheritedMix = inherit ? MixProvider.maybeOf(context) : null;
+
+    if (inheritedMix != null) {
+      inheritedMix = MixData.where(inheritedMix, _handleDecoratorsOnInhirit);
+    }
 
     final mixData = MixData.create(context, style);
 
@@ -45,6 +51,8 @@ abstract class StyledWidget extends StatelessWidget {
 
     return MixProvider(data: mergedMixData, child: builder(mergedMixData));
   }
+
+  bool _handleDecoratorsOnInhirit(Attribute attr) => attr is! WidgetDecorator;
 
   @override
   Widget build(BuildContext context);

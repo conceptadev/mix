@@ -62,9 +62,6 @@ class RenderWidgetDecorators extends StatelessWidget {
       final decorator = decoratorMap.remove(decoratorType);
       if (decorator == null) continue;
       current = decorator.build(mix, current);
-
-      // Remove the decorator from the MixData, because it can be applied only once.
-      mix.removeType(decoratorType);
     }
 
     return current;
