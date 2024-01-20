@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 import '../../core/styled_widget.dart';
-import '../../decorators/widget_decorator_widget.dart';
 import '../../deprecations.dart';
 import '../../factory/mix_provider.dart';
 import '../../factory/mix_provider_data.dart';
+import '../../utils/helper_util.dart';
 import 'box_attribute.dart';
 import 'box_spec.dart';
 
@@ -115,7 +115,7 @@ class MixedBox extends StatelessWidget {
     final spec = BoxSpec.of(mix);
 
     // Apply styles and decorators to the Container, which wraps the child widget.
-    return RenderWidgetDecorators(
+    return shouldApplyDecorators(
       mix: mix,
       orderOfDecorators: decoratorOrder,
       child: Container(

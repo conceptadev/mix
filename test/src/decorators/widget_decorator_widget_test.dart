@@ -153,7 +153,7 @@ void main() {
     testWidgets('Renders decorators in the correct order', (tester) async {
       await tester.pumpMaterialApp(
         RenderWidgetDecorators(
-          mix: MixData.create(MockBuildContext(), style),
+          mix: mixData,
           orderOfDecorators: const [
             ClipDecorator,
             AspectRatioDecorator,
@@ -286,6 +286,31 @@ void main() {
             matching: find.byType(AspectRatio),
           ),
           findsNothing);
+    });
+
+    testWidgets(
+        'If there are no decorator attributes in Style, RenderWidgetDecorators shouldnt exist in the widget tree',
+        (tester) async {
+      const key = Key('box');
+
+      await tester.pumpWidget(
+        Box(
+          key: key,
+          style: Style(
+            backgroundColor.red(),
+            height(100),
+            width(100),
+          ),
+        ),
+      );
+
+      expect(
+        find.descendant(
+          of: find.byKey(key),
+          matching: find.byType(RenderWidgetDecorators),
+        ),
+        findsNothing,
+      );
     });
   });
 }

@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../core/styled_widget.dart';
-import '../../decorators/widget_decorator_widget.dart';
-import '../../factory/mix_provider.dart';
-import '../../factory/mix_provider_data.dart';
-import 'icon_attribute.dart';
-import 'icon_spec.dart';
+import '../../../mix.dart';
 
 class StyledIcon extends StyledWidget {
   const StyledIcon(
@@ -54,8 +49,9 @@ class MixedIcon extends StatelessWidget {
     final mix = this.mix ?? MixProvider.of(context);
     final spec = IconSpec.of(mix);
 
-    return RenderWidgetDecorators(
+    return shouldApplyDecorators(
       mix: mix,
+      orderOfDecorators: decoratorOrder,
       child: IconSpecWidget(
         spec: spec,
         semanticLabel: semanticLabel,

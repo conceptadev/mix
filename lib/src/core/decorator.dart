@@ -13,6 +13,9 @@ abstract class Decorator<Self extends Decorator<Self>> extends StyleAttribute {
   @override
   Object get type => Self;
 
+  @override
+  bool get isInheritable => false;
+
   Widget build(MixData mix, Widget child);
 }
 
