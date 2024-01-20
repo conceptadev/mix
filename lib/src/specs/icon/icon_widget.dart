@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 
-import '../../../mix.dart';
+import '../../core/styled_widget.dart';
+import '../../factory/mix_provider.dart';
+import '../../factory/mix_provider_data.dart';
+import '../../utils/helper_util.dart';
+import 'icon_attribute.dart';
+import 'icon_spec.dart';
 
 class StyledIcon extends StyledWidget {
   const StyledIcon(

@@ -227,7 +227,7 @@ void main() {
 
   group('Decorators attributes', () {
     testWidgets(
-        'should be applied to the first one the children wont inherit even though the second one is set to inherit',
+        'should be applied to the first one. The children wont inherit even though the second one is set to inherit',
         (tester) async {
       const key = Key('box');
 
@@ -243,10 +243,11 @@ void main() {
           child: Box(
             key: key,
             inherit: true,
-            child: WidgetWithTestableBuild((context) {
+            child: Builder(builder: (context) {
               final inheritedMix = MixProvider.maybeOf(context)!;
 
               expect(inheritedMix.attributes.length, 0);
+              return const SizedBox();
             }),
           ),
         ),

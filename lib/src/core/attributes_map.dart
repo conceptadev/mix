@@ -59,8 +59,6 @@ class AttributeMap<T extends Attribute> with Comparable {
   Iterable<Attr> whereType<Attr extends T>() =>
       _map?.values.whereType<Attr>() ?? [];
 
-  Iterable<T> where(bool Function(T) test) => _map?.values.where(test) ?? [];
-
   AttributeMap<T> merge(AttributeMap<T>? other) {
     return other == null ? this : AttributeMap([...values, ...other.values]);
   }

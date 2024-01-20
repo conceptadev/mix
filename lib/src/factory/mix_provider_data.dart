@@ -39,18 +39,6 @@ class MixData with Comparable {
     );
   }
 
-  factory MixData.where(
-    MixData data,
-    bool Function(Attribute attr) clousure,
-  ) {
-    final attributeListFiltered = data.where(clousure);
-
-    return MixData._(
-      resolver: data._tokenResolver,
-      attributes: AttributeMap(attributeListFiltered),
-    );
-  }
-
   factory MixData.inherited(BuildContext context) {
     final inheritedMix = MixProvider.maybeOf(context);
 
@@ -59,7 +47,7 @@ class MixData with Comparable {
     }
 
     // Remove non-inheritable attributes
-    final inheritableAttributes = inheritedMix.where(
+    final inheritableAttributes = inheritedMix.attributes.values.where(
       (attr) => attr.isInheritable,
     );
 
@@ -95,9 +83,6 @@ class MixData with Comparable {
   bool contains<T>() {
     return _attributes.values.any((attr) => attr is T);
   }
-
-  Iterable<Attribute> where(bool Function(Attribute attr) clousure) =>
-      attributes.values.where(clousure);
 
   Value resolvableOf<Value, A extends SpecAttribute<A, Value>>(A attribute) {
     final attributes = _attributes.whereType<A>();
