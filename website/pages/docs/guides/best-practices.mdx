@@ -1,0 +1,191 @@
+---
+id: best-practices
+title: "Best Practices"
+---
+
+import { Callout } from "nextra-theme-docs";
+
+# Best Practices
+As you start to build your application with Mix, you'll want to follow some best practices to ensure your code is aligned with the framework's conventions.
+
+To get started, I'll create a button based on the [Shadcn Button](https://ui.shadcn.com/docs/components/button) component. I'll call it `CustomButton`. 
+
+## File Structure
+First, I'll create a folder called `button`. Inside it, I'll create three files:
+
+### `button.dart`,
+In this file, I'll create a class called `CustomButton` and all structure of the component.
+
+###`button.variant.dart`.
+And the last one, I'll create a class called `CustomButtonVariant` and all `Variant` instances.
+
+### `button.style.dart`
+Here, I'll create a class called `CustomButtonStyle` and all `Style` instances related to button.
+
+## Widget Structure
+The main tip here is to use the StyledWidgets to create your component. Those widgets are responsible for creating the component's structure and styling it. Although your Button structure will be looks like the following code:
+
+```dart
+class CustomButton extends StatelessWidget {
+  const CustomButton({
+    super.key,
+    required this.title,
+    required this.onPressed,
+  });
+
+  final String title;
+  final void Function() onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return PressableBox(
+      onPressed: onPressed,
+      child: StyledText(
+        title,
+      ),
+    );
+  }
+}
+
+```
+
+In this code sample I only used two StyledWidgets, `PressableBox` and `StyledText`. However, you can see the full list of StyledWidgets [here](/styled-widgets).
+
+## Defining Variants
+To create variants is quite simple. You just need to create a class that extends `Variant` and define the variants you want to use, so I'll create two classes, the first one is `ButtonType` to define the cases `primary`, `destructive` and `link`, the other one is ButtonSize with cases `medium` and `large`. Shadcn has more than that, but for this example, I'll use only those three.
+
+```dart
+class CustomButtonType extends Variant {
+  const CustomButtonType._(super.name);
+
+  static const primary = CustomButtonType._('custom.button.primary');
+  static const destructive = CustomButtonType._('custom.button.desctructive');
+  static const link = CustomButtonType._('custom.button.link');
+}
+
+class CustomButtonSize extends Variant {
+  const CustomButtonSize._(super.name);
+
+  static const medium = CustomButtonSize._('custom.button.medium');
+  static const large = CustomButtonSize._('custom.button.large');
+}
+```
+
+Now that the variants are defined, I'll modify the `CustomButton` class to receive the variants as parameters and use it to define the style of the component.
+
+```dart
+class CustomButton extends StatelessWidget {
+  const CustomButton({
+    super.key,
+    required this.title,
+    required this.onPressed,
+    this.type = CustomButtonType.primary,
+    this.size = CustomButtonSize.large,
+  });
+
+  final String title;
+  final void Function() onPressed;
+  final CustomButtonType type;
+  final CustomButtonSize size;
+
+  @override
+  Widget build(BuildContext context) {
+    return PressableBox(
+      child: StyledText(
+        title,
+      ),
+    );
+  }
+}
+
+```
+
+## Styling the component
+
+finally, I'll create a class called `CustomButtonStyle` and define the styles for each variant defined in `CustomButtonType` and `CustomButtonSize` class.
+
+```dart
+class CustomButtonStyle {
+  CustomButtonStyle(this.type, this.size);
+
+  final CustomButtonType type;
+  final CustomButtonSize size;
+
+  Style container() => Style(
+        border.radius.all(8),
+        CustomButtonSize.medium(
+          padding.horizontal(16),
+          padding.vertical(8),
+        ),
+        CustomButtonSize.large(
+          padding.horizontal(24),
+          padding.vertical(16),
+        ),
+        CustomButtonType.primary(
+          backgroundColor.black(),
+        ),
+        CustomButtonType.destructive(
+          backgroundColor.redAccent(),
+        ),
+        CustomButtonType.link(
+          backgroundColor.transparent(),
+        ),
+      ).applyVariants([type, size]);
+
+  Style label() => Style(
+        text.style.color.white(),
+        text.style.bold(),
+        CustomButtonSize.medium(
+          text.style.fontSize(14),
+        ),
+        CustomButtonSize.large(
+          text.style.fontSize(18),
+        ),
+        CustomButtonType.primary(
+          text.style.color.white(),
+        ),
+        CustomButtonType.destructive(
+          text.style.color.white(),
+        ),
+        CustomButtonType.link(
+          text.style.color.black(),
+          text.style.decoration.underline(),
+        ),
+      ).applyVariants([type, size]);
+}
+```
+
+Now I'll modify the `CustomButton` class to support the styles defined in the `CustomButtonStyle` class.
+
+```dart
+class CustomButton extends StatelessWidget {
+  const CustomButton({
+    super.key,
+    required this.title,
+    this.type = CustomButtonType.primary,
+    this.size = CustomButtonSize.large,
+    required this.onPressed,
+  });
+
+  final String title;
+  final CustomButtonType type;
+  final CustomButtonSize size;
+  final void Function() onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    final style = CustomButtonStyle(type, size);
+    return PressableBox(
+      onPressed: onPressed,
+      style: style.container(),
+      child: StyledText(
+        title,
+        style: style.label(),
+      ),
+    );
+  }
+}
+
+```
+
+Now you are prepared to use your component in your application and it will be aligned with the framework's conventions. Congratulations! 🎉

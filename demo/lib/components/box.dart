@@ -34,7 +34,7 @@ Widget boxDecorationContainer(BuildContext context) {
   return Center(
     child: Column(
       children: [
-        GestureBox(
+        PressableBox(
           style: boxStyle,
           onPressed: () {},
           child: const StyledText('Press me'),

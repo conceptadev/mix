@@ -4,19 +4,19 @@ import '../../factory/style_mix.dart';
 import '../../specs/container/box_widget.dart';
 import 'gesture_state.notifier.dart';
 
-class GestureBox extends StatelessWidget {
-  const GestureBox({
+class PressableBox extends StatelessWidget {
+  const PressableBox({
     super.key,
     this.onPressed,
     this.onLongPress,
     this.focusNode,
     this.autofocus = false,
-    this.unpressDelay = const Duration(milliseconds: 250),
+    this.unpressDelay = const Duration(milliseconds: 0),
     this.onFocusChange,
     this.behavior,
     required this.child,
     this.style,
-    this.animationDuration = const Duration(milliseconds: 100),
+    this.animationDuration = const Duration(milliseconds: 0),
     this.animationCurve = Curves.linear,
   });
 
@@ -61,7 +61,7 @@ class Pressable extends StatefulWidget {
     required this.child,
     this.onFocusChange,
     this.onLongPress,
-    this.unpressDelay = const Duration(milliseconds: 100),
+    this.unpressDelay = const Duration(milliseconds: 0),
     this.onPressed,
     this.disabled = false,
     super.key,
