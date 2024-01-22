@@ -1,9 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mix/src/core/attributes_map.dart';
-import 'package:mix/src/factory/mix_provider_data.dart';
-import 'package:mix/src/factory/style_mix.dart';
-import 'package:mix/src/theme/mix_theme.dart';
-import 'package:mix/src/variants/variant.dart';
+import 'package:mix/mix.dart';
 
 import '../../helpers/testing_utils.dart';
 
@@ -86,4 +83,35 @@ void main() {
     expect(mergedMixData.attributeOf<MockDoubleScalarAttribute>(),
         const MockDoubleScalarAttribute(4.0));
   });
+
+  testWidgets('MixData.inherited shouldnt have attributes non inheritable',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(
+      MixProvider(
+        data: MixData.create(
+          MockBuildContext(),
+          Style(
+            const _NonInheritableAttribute(),
+            icon.color.black(),
+          ),
+        ),
+        child: Builder(builder: (context) {
+          final inheritedMix = MixData.inherited(context);
+          final iconSpec = IconSpec.of(inheritedMix!);
+
+          expect(inheritedMix.attributes.length, 1);
+          expect(iconSpec.color, Colors.black);
+          return const SizedBox();
+        }),
+      ),
+    );
+  });
+}
+
+class _NonInheritableAttribute
+    extends ScalarAttribute<MockIntScalarAttribute, int?> {
+  const _NonInheritableAttribute() : super(null);
+
+  @override
+  bool get isInheritable => false;
 }

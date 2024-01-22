@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../core/styled_widget.dart';
 import '../../factory/mix_provider.dart';
 import '../../factory/mix_provider_data.dart';
+import '../../utils/helper_util.dart';
 import 'icon_attribute.dart';
 import 'icon_spec.dart';
 
@@ -39,23 +40,31 @@ class MixedIcon extends StatelessWidget {
     this.semanticLabel,
     super.key,
     this.textDirection,
+    this.decoratorOrder = const [],
   });
 
   final IconData? icon;
   final MixData? mix;
   final String? semanticLabel;
   final TextDirection? textDirection;
+  final List<Type> decoratorOrder;
 
   @override
   Widget build(BuildContext context) {
     final mix = this.mix ?? MixProvider.of(context);
     final spec = IconSpec.of(mix);
 
-    return IconSpecWidget(
+    final iconWidget = IconSpecWidget(
       spec: spec,
       semanticLabel: semanticLabel,
       textDirection: textDirection,
       icon: icon,
+    );
+
+    return shouldApplyDecorators(
+      mix: mix,
+      orderOfDecorators: decoratorOrder,
+      child: iconWidget,
     );
   }
 }

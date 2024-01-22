@@ -6,6 +6,7 @@ import '../core/attributes_map.dart';
 import '../helpers/compare_mixin.dart';
 import '../theme/mix_theme.dart';
 import '../widgets/pressable/widget_state_util.dart';
+import 'mix_provider.dart';
 import 'style_mix.dart';
 
 /// This class is used for encapsulating all [MixData] related operations.
@@ -33,7 +34,25 @@ class MixData with Comparable {
     final resolver = MixTokenResolver(context);
 
     return MixData._(
-        resolver: resolver, attributes: AttributeMap(attributeList));
+      resolver: resolver,
+      attributes: AttributeMap(attributeList),
+    );
+  }
+
+  static MixData? inherited(BuildContext context) {
+    final inheritedMix = MixProvider.maybeOf(context);
+
+    if (inheritedMix == null) return null;
+
+    // Remove non-inheritable attributes
+    final inheritableAttributes = inheritedMix.attributes.values.where(
+      (attr) => attr.isInheritable,
+    );
+
+    return MixData._(
+      resolver: MixTokenResolver(context),
+      attributes: AttributeMap(inheritableAttributes),
+    );
   }
 
   /// Getter for [MixTokenResolver].
@@ -57,6 +76,10 @@ class MixData with Comparable {
 
   Iterable<A> whereType<A extends StyleAttribute>() {
     return _attributes.whereType<A>();
+  }
+
+  bool contains<T>() {
+    return _attributes.values.any((attr) => attr is T);
   }
 
   Value resolvableOf<Value, A extends SpecAttribute<A, Value>>(A attribute) {

@@ -4,6 +4,7 @@ import '../../core/directive.dart';
 import '../../core/styled_widget.dart';
 import '../../factory/mix_provider.dart';
 import '../../factory/mix_provider_data.dart';
+import '../../utils/helper_util.dart';
 import 'text_spec.dart';
 
 /// [StyledText] - A styled widget for displaying text with a mix of styles.
@@ -80,6 +81,7 @@ class MixedText extends StatelessWidget {
     this.mix,
     this.semanticsLabel,
     this.locale,
+    this.decoratorOrder = const [],
     super.key,
   });
 
@@ -87,6 +89,7 @@ class MixedText extends StatelessWidget {
   final String? semanticsLabel;
   final Locale? locale;
   final MixData? mix;
+  final List<Type> decoratorOrder;
 
   @override
   Widget build(BuildContext context) {
@@ -98,7 +101,7 @@ class MixedText extends StatelessWidget {
     final modifyText = mix.attributeOf<TextDataDirective>();
 
     // The Text widget is used here, applying the resolved styles and properties from TextSpec.
-    return Text(
+    final textWidget = Text(
       modifyText?.apply(text) ?? text,
       style: spec.style,
       strutStyle: spec.strutStyle,
@@ -112,6 +115,12 @@ class MixedText extends StatelessWidget {
       semanticsLabel: semanticsLabel,
       textWidthBasis: spec.textWidthBasis,
       textHeightBehavior: spec.textHeightBehavior,
+    );
+
+    return shouldApplyDecorators(
+      mix: mix,
+      orderOfDecorators: decoratorOrder,
+      child: textWidget,
     );
   }
 }

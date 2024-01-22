@@ -15,6 +15,7 @@ void main() {
   );
 
   final mixData = MixData.create(MockBuildContext(), style);
+
   group('RenderWidgetDecorators', () {
     testWidgets('Renders decorators in the correct order', (tester) async {
       await tester.pumpMaterialApp(
@@ -220,6 +221,96 @@ void main() {
           matching: find.text('child'),
         ),
         findsOneWidget,
+      );
+    });
+  });
+
+  group('Decorators attributes', () {
+    testWidgets(
+        'should be applied to the first one. The children wont inherit even though the second one is set to inherit',
+        (tester) async {
+      const key = Key('box');
+
+      await tester.pumpWidget(
+        Box(
+          style: Style(
+            scale(2.0),
+            opacity(0.5),
+            visibility.on(),
+            clip.oval(),
+            aspectRatio(2.0),
+          ),
+          child: Box(
+            key: key,
+            inherit: true,
+            child: Builder(builder: (context) {
+              final inheritedMix = MixProvider.maybeOf(context)!;
+
+              expect(inheritedMix.attributes.length, 0);
+              return const SizedBox();
+            }),
+          ),
+        ),
+      );
+
+      expect(
+          find.descendant(
+            of: find.byKey(key),
+            matching: find.byType(Transform),
+          ),
+          findsNothing);
+
+      expect(
+          find.descendant(
+            of: find.byKey(key),
+            matching: find.byType(Opacity),
+          ),
+          findsNothing);
+
+      expect(
+          find.descendant(
+            of: find.byKey(key),
+            matching: find.byType(RotatedBox),
+          ),
+          findsNothing);
+
+      expect(
+          find.descendant(
+            of: find.byKey(key),
+            matching: find.byType(Visibility),
+          ),
+          findsNothing);
+
+      expect(
+          find.descendant(
+            of: find.byKey(key),
+            matching: find.byType(AspectRatio),
+          ),
+          findsNothing);
+    });
+
+    testWidgets(
+        'If there are no decorator attributes in Style, RenderWidgetDecorators shouldnt exist in the widget tree',
+        (tester) async {
+      const key = Key('box');
+
+      await tester.pumpWidget(
+        Box(
+          key: key,
+          style: Style(
+            backgroundColor.red(),
+            height(100),
+            width(100),
+          ),
+        ),
+      );
+
+      expect(
+        find.descendant(
+          of: find.byKey(key),
+          matching: find.byType(RenderWidgetDecorators),
+        ),
+        findsNothing,
       );
     });
   });
