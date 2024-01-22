@@ -5,6 +5,7 @@ import '../../deprecations.dart';
 import '../../factory/mix_provider.dart';
 import '../../factory/mix_provider_data.dart';
 import '../../factory/style_mix.dart';
+import '../../utils/helper_util.dart';
 import '../container/box_widget.dart';
 import 'flex_spec.dart';
 
@@ -48,14 +49,16 @@ class StyledFlex extends StyledWidget {
 
 class MixedFlex extends StatelessWidget {
   const MixedFlex({
-    this.mix,
     super.key,
+    this.mix,
+    this.decoratorOrder = const [],
     required this.children,
     required this.direction,
   });
 
   final List<Widget> children;
   final Axis direction;
+  final List<Type> decoratorOrder;
   final MixData? mix;
 
   @override
@@ -64,7 +67,7 @@ class MixedFlex extends StatelessWidget {
     final spec = FlexSpec.of(mix);
     final gap = spec.gap;
 
-    return Flex(
+    var flexWidget = Flex(
       direction: direction,
       mainAxisAlignment:
           spec.mainAxisAlignment ?? _defaultFlex.mainAxisAlignment,
@@ -74,6 +77,12 @@ class MixedFlex extends StatelessWidget {
       verticalDirection:
           spec.verticalDirection ?? _defaultFlex.verticalDirection,
       children: buildChildren(gap),
+    );
+
+    return shouldApplyDecorators(
+      mix: mix,
+      orderOfDecorators: decoratorOrder,
+      child: flexWidget,
     );
   }
 

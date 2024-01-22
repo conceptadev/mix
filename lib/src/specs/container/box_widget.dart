@@ -115,21 +115,23 @@ class MixedBox extends StatelessWidget {
     final spec = BoxSpec.of(mix);
 
     // Apply styles and decorators to the Container, which wraps the child widget.
+    final container = Container(
+      alignment: spec.alignment,
+      padding: spec.padding,
+      decoration: spec.decoration,
+      width: spec.width,
+      height: spec.height,
+      constraints: spec.constraints,
+      margin: spec.margin,
+      transform: spec.transform,
+      clipBehavior: spec.clipBehavior ?? Clip.none,
+      child: child,
+    );
+
     return shouldApplyDecorators(
       mix: mix,
       orderOfDecorators: decoratorOrder,
-      child: Container(
-        alignment: spec.alignment,
-        padding: spec.padding,
-        decoration: spec.decoration,
-        width: spec.width,
-        height: spec.height,
-        constraints: spec.constraints,
-        margin: spec.margin,
-        transform: spec.transform,
-        clipBehavior: spec.clipBehavior ?? Clip.none,
-        child: child,
-      ),
+      child: container,
     );
   }
 }

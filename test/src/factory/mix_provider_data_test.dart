@@ -97,7 +97,7 @@ void main() {
         ),
         child: Builder(builder: (context) {
           final inheritedMix = MixData.inherited(context);
-          final iconSpec = IconSpec.of(inheritedMix);
+          final iconSpec = IconSpec.of(inheritedMix!);
 
           expect(inheritedMix.attributes.length, 1);
           expect(iconSpec.color, Colors.black);

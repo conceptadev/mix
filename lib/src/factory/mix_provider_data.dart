@@ -39,12 +39,10 @@ class MixData with Comparable {
     );
   }
 
-  factory MixData.inherited(BuildContext context) {
+  static MixData? inherited(BuildContext context) {
     final inheritedMix = MixProvider.maybeOf(context);
 
-    if (inheritedMix == null) {
-      return MixData.create(context, const Style.empty());
-    }
+    if (inheritedMix == null) return null;
 
     // Remove non-inheritable attributes
     final inheritableAttributes = inheritedMix.attributes.values.where(

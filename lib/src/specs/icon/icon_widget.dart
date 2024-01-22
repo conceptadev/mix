@@ -54,15 +54,17 @@ class MixedIcon extends StatelessWidget {
     final mix = this.mix ?? MixProvider.of(context);
     final spec = IconSpec.of(mix);
 
+    final iconWidget = IconSpecWidget(
+      spec: spec,
+      semanticLabel: semanticLabel,
+      textDirection: textDirection,
+      icon: icon,
+    );
+
     return shouldApplyDecorators(
       mix: mix,
       orderOfDecorators: decoratorOrder,
-      child: IconSpecWidget(
-        spec: spec,
-        semanticLabel: semanticLabel,
-        textDirection: textDirection,
-        icon: icon,
-      ),
+      child: iconWidget,
     );
   }
 }
