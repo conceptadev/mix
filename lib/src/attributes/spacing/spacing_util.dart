@@ -439,4 +439,6 @@ class SpacingSideUtility<T extends StyleAttribute>
 
   /// Applies a custom spacing value
   T call(double value) => builder(value);
+
+  T of(SpaceToken ref) => builder(ref());
 }

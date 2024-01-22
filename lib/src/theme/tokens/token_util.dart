@@ -1,32 +1,45 @@
 import 'package:flutter/material.dart';
 
-import '../material/material_tokens.dart';
+import 'breakpoints_token.dart';
+import 'material_tokens.dart';
 import 'radius_token.dart';
 import 'space_token.dart';
 
-const $md = MaterialTokens();
 const $radii = RadiiTokenUtil();
 const $space = SpaceTokenUtil();
 const $colors = ColorTokenUtil();
+const $breakpoints = BreakpointTokenUtil();
 const $textStyles = TextStyleTokenUtil();
 
 @immutable
 class RadiiTokenUtil {
   const RadiiTokenUtil();
-  RadiusRef small() => RadiusToken.small();
-  RadiusRef medium() => RadiusToken.medium();
-  RadiusRef large() => RadiusToken.large();
+
+  final small = RadiusToken.small;
+  final medium = RadiusToken.medium;
+  final large = RadiusToken.large;
 }
 
 @immutable
 class SpaceTokenUtil {
   const SpaceTokenUtil();
-  SpaceRef xsmall() => SpaceToken.xsmall();
-  SpaceRef small() => SpaceToken.small();
-  SpaceRef medium() => SpaceToken.medium();
-  SpaceRef large() => SpaceToken.large();
-  SpaceRef xlarge() => SpaceToken.xlarge();
-  SpaceRef xxlarge() => SpaceToken.xxlarge();
+
+  final xsmall = SpaceToken.xsmall;
+  final small = SpaceToken.small;
+  final medium = SpaceToken.medium;
+  final large = SpaceToken.large;
+  final xlarge = SpaceToken.xlarge;
+  final xxlarge = SpaceToken.xxlarge;
+}
+
+@immutable
+class BreakpointTokenUtil {
+  const BreakpointTokenUtil();
+
+  final xsmall = BreakpointToken.xsmall;
+  final small = BreakpointToken.small;
+  final medium = BreakpointToken.medium;
+  final large = BreakpointToken.large;
 }
 
 @immutable
