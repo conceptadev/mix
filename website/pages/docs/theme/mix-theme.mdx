@@ -5,11 +5,11 @@ title: 'Mix theme'
 
 # Mix Theme
 
-`MixTheme` is the base class for theming your application using _Mix_ using Design Tokens. It makes use of a `MixThemeData` class, where you'll be able to style your app globally, as well as dynamically change values and colors
+`MixTheme` is the base class for theming your application using Design Tokens in _Mix_. It makes use of a `MixThemeData` class, where you'll be able to style your app globally, as well as dynamically change values and colors
 
 ## Initialization
 
-In order to style your app, wrap it in a `MixTheme`, usually on the `builder` parameter of `WidgetsApp` and its variant:
+In order to style your app, wrap it in a `MixTheme`:
 
 ```dart
 class MyApp extends StatelessWidget {
@@ -17,17 +17,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'My app with Mix',
-      home: const Home(),
-      builder: (context, child) {
-        return MixTheme(
-          data: const MixThemeData(
-            // the app style will be defined here
+    return MixTheme(
+      data: MixThemeData(
+          // the app style will be defined here
           ),
-          child: child ?? const SizedBox.shrink(),
-        );
-      }
+      child: const MaterialApp(
+        title: 'Remix',
+        home: AppShell(title: 'Remix Home Page'),
+      ),
     );
   }
 }
@@ -47,8 +44,127 @@ Context Tokens are design tokens that are defined at build time. With this, it's
 - dynamically changing the accent color of the app
 - define multiple themes for different parts of the app
 
-Context tokens are made of references (`MixRef`), which can be read by `Mix` at build time. There are a lot of built-in context tokens already available for usage, from colors to text:
+Context tokens are made of references (`MixToken`), which can be read by `Style` at build time. There are a lot of built-in context tokens already available for usage, from colors to text:
 
-For example, if you want to create a rounded button with the primary color, you can use `backgroundColor(MaterialTokens.colorScheme.primary)`
+For example, if you want to create a button with the primary color, you can use `backgroundColor($colors.primary)` and to configure the color that will be used, you can use define it in `MixThemeData` class.
 
-[Learn more](context-references)
+```dart
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MixTheme(
+      data: MixThemeData(
+        colors: {
+          $colors.primary: Colors.red,
+        },
+      ),
+      child: const MaterialApp(
+        title: 'Remix',
+        home: AppShell(title: 'Remix Home Page'),
+      ),
+    );
+  }
+}
+```
+
+Now every time you use $colors.primary in your app, it will be replaced by the color you defined in `MixThemeData` in this case, red.
+
+### Creating your own design tokens
+
+You can create your own context tokens is just as easy as creating a constant. The only difference is that you need to use a extentions of `MixToken` that represents the type of the token you want to create. 
+
+For example, if you want to create a `MixToken` that represents a color, you can use `ColorToken`:
+
+```dart
+const ColorToken customColorToken = ColorToken('custom.color');
+```
+
+To give a variable `customColorToken` a value, you need to add it to `MixThemeData` as a key and the color which he represents as a value:
+
+```dart
+MixThemeData(
+  colors: {
+    customColorToken: Colors.red,
+  },
+)
+```
+
+to use it in a widget, you can use it inside `Style` as a color:
+
+```dart
+Box(
+  style: Style(
+    box.height(100),
+    box.width(100),
+    box.color(customColorToken()),
+  ),
+)
+```
+
+### Material Design Tokens in Mix
+To make it easier to use Material Design Tokens in Mix, we created all the tokens check the list below:
+
+#### BreakpointToken
+- xsmall
+- small
+- medium
+- large
+
+#### ColorToken
+- primary
+- secondary
+- tertiary
+- surface
+- background
+- error
+- onPrimary
+- onSecondary
+- onTertiary
+- onSurface
+- onBackground
+- onError
+
+#### TextStyleToken
+- displayLarge
+- displayMedium
+- displaySmall
+- headlineLarge
+- headlineMedium
+- headlineSmall
+- titleLarge
+- titleMedium
+- titleSmall
+- bodyLarge
+- bodyMedium
+- bodySmall
+- labelLarge
+- labelMedium
+- labelSmall
+- headline1
+- headline2
+- headline3
+- headline4
+- headline5
+- headline6
+- subtitle1
+- subtitle2
+- bodyText1
+- bodyText2
+- caption
+- button
+- overline
+
+#### SpaceToken
+- xsmall
+- small
+- medium
+- large
+- xlarge
+- xxlarge
+
+#### RadiusToken
+- small
+- medium
+- large
