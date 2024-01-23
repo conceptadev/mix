@@ -9,6 +9,9 @@ abstract class Attribute with Comparable {
 
   // Used as a merge type
   Object get type;
+
+  // Used to determine if the attribute is inheritable
+  bool get isInheritable => true;
 }
 
 @immutable

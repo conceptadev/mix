@@ -37,7 +37,7 @@ abstract class StyledWidget extends StatelessWidget {
   /// This method is typically used in the `build` method of widgets extending
   /// [StyledWidget] to provide the actual styled widget.
   Widget withMix(BuildContext context, MixBuilder builder) {
-    final inheritedMix = inherit ? MixProvider.maybeOf(context) : null;
+    final inheritedMix = inherit ? MixData.inherited(context) : null;
 
     final mixData = MixData.create(context, style);
 
