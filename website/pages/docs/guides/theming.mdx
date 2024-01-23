@@ -3,31 +3,74 @@ id: theming
 title: "Theming"
 ---
 
-# Mix Theme
+# Theming
 
-`MixTheme` is the base class for theming your application using Design Tokens in _Mix_. It makes use of a `MixThemeData` class, where you'll be able to style your app globally, as well as dynamically change values and colors
+## Setting Up MixTheme
 
-## Initialization
+Before you begin styling your application with various design tokens, the first step is to configure the `MixTheme`. `MixTheme` serves as an ancestor widget that passes down the defined tokens to all its child widgets, ensuring they can access and utilize the same styling information. Setting up MixTheme correctly is key to leveraging the full power of the Mix package for your application's theming needs.
 
-In order to style your app, wrap it in a `MixTheme`:
+Here's how you can initialize and implement `MixTheme`:
+
+### Wrapping the Root Widget
+
+To apply your theme globally, you'll want to wrap your application's root widget with the `MixTheme` widget. By doing so, the theme data becomes available to all widgets in the app's widget tree, allowing them to use the established design tokens.
+
+Here's a basic example of wrapping a `MaterialApp` with `MixTheme`:
 
 ```dart
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+void main() {
+  runApp(MyApp());
+}
 
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MixTheme(
-      data: MixThemeData(
-          // the app style will be defined here
-          ),
-      child: const MaterialApp(
-        title: 'Remix',
-        home: AppShell(title: 'Remix Home Page'),
+      data: myMixThemeData, // Your predefined MixThemeData
+      child: MaterialApp(
+        title: 'Flutter Mix Themed App',
+        home: MyHomePage(),
       ),
     );
   }
 }
+```
+
+### Creating MixThemeData
+
+Creating a `MixThemeData` instance is the next crucial step. This object defines your application's design tokens, such as colors, typography, spacing, and more.
+
+```dart
+final theme = MixThemeData(
+  colors: {
+    ColorToken('primary'): Colors.blue,
+    ColorToken('secondary'): Colors.green,
+  },
+  textStyles: {
+    TextStyleToken('heading1'): const TextStyle(fontSize: 32, fontWeight: FontWeight.bold,),
+    TextStyleToken('bodyText'): const TextStyle(fontSize: 14,),
+  },
+  space: {
+    SpaceToken.xsmall: 4.0,
+    SpaceToken.small: 8.0,
+    SpaceToken.medium: 16.0,
+    SpaceToken.large: 24.0,
+    SpaceToken.xlarge: 32.0,
+    SpaceToken.xxlarge: 40.0,
+  },
+  radii: {
+    RadiusToken.small: const Radius.circular(4),
+    RadiusToken.medium: const Radius.circular(8),
+    RadiusToken.large: const Radius.circular(16),
+  },
+  breakpoints: {
+    BreakpointToken.xsmall: const Breakpoint(maxWidth: 599),
+    BreakpointToken.small: const Breakpoint(minWidth: 600, maxWidth: 1023,),
+    BreakpointToken.medium: const Breakpoint(minWidth: 1024, maxWidth: 1439,),
+    BreakpointToken.large:
+      const Breakpoint(minWidth: 1440, maxWidth: double.infinity,),
+  },
+);
 ```
 
 ## Design Tokens

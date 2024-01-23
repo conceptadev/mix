@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'material_tokens.dart';
-import 'radius_token.dart';
-import 'space_token.dart';
+import '../../../mix.dart';
 
 final $radii = RadiiTokenUtil();
 const $space = SpaceTokenUtil();
@@ -29,10 +27,20 @@ class SpaceTokenUtil {
   double xxlarge() => SpaceToken.xxlarge();
 }
 
-class ColorTokenUtil with MaterialColorTokensMixin {
+@immutable
+class ColorTokenUtil {
   const ColorTokenUtil();
+
+  factory ColorTokenUtil.withMaterial() {
+    return const ColorTokenUtilWithMaterialTokens();
+  }
 }
 
-class TextStyleTokenUtil with MaterialTextStyleTokensMixin {
+@immutable
+class TextStyleTokenUtil {
   const TextStyleTokenUtil();
+
+  factory TextStyleTokenUtil.withMaterial() {
+    return const TextStyleTokenUtilWithMaterialTokens();
+  }
 }

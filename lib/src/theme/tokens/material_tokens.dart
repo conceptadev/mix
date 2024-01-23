@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../mix_theme.dart';
 import 'color_token.dart';
 import 'text_style_token.dart';
+import 'token_util.dart';
 
 const _cm = _MaterialColorTokens();
 const _ts = _MaterialTextStyles();
@@ -156,6 +157,16 @@ mixin MaterialColorTokensMixin {
   ColorToken get onSurface => _cm.onSurface;
   ColorToken get onBackground => _cm.onBackground;
   ColorToken get onError => _cm.onError;
+}
+
+class ColorTokenUtilWithMaterialTokens extends ColorTokenUtil
+    with MaterialColorTokensMixin {
+  const ColorTokenUtilWithMaterialTokens();
+}
+
+class TextStyleTokenUtilWithMaterialTokens extends TextStyleTokenUtil
+    with MaterialTextStyleTokensMixin {
+  const TextStyleTokenUtilWithMaterialTokens();
 }
 
 mixin MaterialTextStyleTokensMixin {
