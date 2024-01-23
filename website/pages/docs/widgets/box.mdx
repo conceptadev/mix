@@ -1,1 +1,174 @@
-## Box
+import { Tabs, Callout } from "nextra/components";
+
+# Box - The Styled Container
+
+## Overview
+
+Box is an simple but powerful widget primitive, designed to bring ease and enhancement to the task of styling. It is analogous to the `Container` widget but enhanced with the capabilities of the Mix styling system.
+
+### Usage
+
+To style a widget with `Box`, pass your child widget to the `Box` and provide a `Style` object.
+
+```dart
+Box(
+  style: Style(
+    backgroundColor.blue(),
+    borderRadius.all(8),
+    padding.vertical(20),
+    elevation(2),
+  ),
+  child: Text('Styled Box'),
+);
+```
+
+Here, `Box` will render a text widget with a blue background, rounded corners, vertical padding, and an elevation shadow.
+
+### Inheritance
+
+`Box` can also inherit styles from its ancestors. By setting the `inherit` property to `true`, any Mix styles applied up the widget tree through `MixProvider` can be extended or overridden.
+
+```dart
+MixProvider(
+  mix: Style(backgroundColor.blue()),
+  child: Box(
+    style: Style(borderRadius.all(8)),
+    inherit: true,
+    child: Text('Inherited Box'),
+  ),
+);
+```
+
+### Composition and Decoration
+
+Mix excels in the composability of styles. Utilizing decorators such as `scale`, `opacity`, and `rotate`, you can add rich visual effects to your widgets, often with just a single line of code.
+
+```dart
+Box(
+  style: Style(
+    scale(1.2),
+    opacity(0.75),
+    rotate(45),
+  ),
+  child: Icon(Icons.star),
+);
+```
+
+## Utilities
+
+The `Box` widget in Mix harnesses a suite of utilities designed to provide an intuitive and expressive API for styling your Flutter widgets. These utilities encapsulate common styling properties like constraints, colors, spacing, and more, allowing you to craft complex styles with minimal effort.
+
+Each utility is a function that contributes a specific style attribute to the `Box`. They essentially serve as the building blocks for your styling needs, streamlining the customization process and ensuring a consistent design language throughout your application.
+
+### General
+
+You can find all the Box utilities under the `box` utility. With this you can easily find all the utilities in one place, and this can be helpful when wanting to have better control over the types. However you can find some aliases for them to simplify the usage.
+
+### Constraints
+
+- **`width`**: Sets the width of the box.
+- **`height`**: Sets the height of the box.
+- **`maxWidth`**: Sets the maximum width the box can have.
+- **`minWidth`**: Sets the minimum width the box must have.
+- **`maxHeight`**: Sets the maximum height the box can have.
+- **`minHeight`**: Sets the minimum height the box must have.
+
+### Spacing
+
+#### **`padding`**
+
+Padding determines the space between the content inside the Box and its border. Mix's padding utility allows you to specify this spacing succinctly with a variety of API options
+
+##### **Shorthand**
+
+Shorthand notation offers a quick and concise way to specify spacing. When using shorthand, you provide one or more numerical values, automatically mapped to corresponding sides based on their order and number.
+
+```dart
+// Uniform padding of 10 units on all sides.
+padding(10)
+// 10 units vertical (top and bottom), 20 units horizontal (left and right).
+padding(10, 20)
+// 10 units top, 20 units horizontal, 30 units bottom.
+padding(10, 20, 30)
+// 10 units top, 20 units right, 30 units bottom, 40 units left.
+padding(10, 20, 30, 40)
+```
+
+<Callout type="info">
+  Remember that you can always pass `design tokens` as values using the `$space`
+  syntax. Read more about design tokens [here](/docs/design-tokens).
+</Callout>
+
+The shorthand methods simplify the code, making it more readable and easier to write, while maintaining the versatile and powerful features that Mix provides.
+
+##### **Uniform Sides**
+
+Apply equal padding to all sides of the box.
+
+```dart
+padding.all(8);
+```
+
+##### **Individual Sides**
+
+There are two approaches to applying padding to individual sides. You can either use the method with the side name in it, or you can use the `only` method with the side name as a parameter.
+
+**Using side name method**
+
+```dart
+padding.top(8);
+padding.bottom(8);
+padding.left(8);
+padding.right(8);
+padding.start(8);
+padding.end(8);
+```
+
+This approach is important because it also allows you easy access to `design tokens` for padding. For example, if you want to use the `small` design token for padding, you can do so like this:
+
+```dart
+padding.top.small();
+```
+
+**Using `only` method**
+
+Apply padding to specific sides of the box. You can specify which sides to apply padding to by passing the corresponding parameters. You can also specify directional values like `start` and `end` for left and right padding.
+
+```dart
+padding.only(
+    top: 16,
+    bottom: 16,
+    left: 8, // or start: 8,
+    right: 8, // or end: 8,
+);
+```
+
+##### **Horizontal and Vertical**
+
+Apply padding to the horizontal or vertical axis of the box. This also allows you to use `design tokens`.
+
+```dart
+padding.horizontal(8);
+// padding.horizontal.small();
+padding.vertical(8);
+// padding.vertical.small();
+```
+
+### Decoration
+
+- **`border`**: Sets the border of the box.
+- **`borderRadius`**: Sets the border radius of the box.
+- **`backgroundColor`**: Sets the background color of the box.
+- **`elevation`**: Sets the elevation of the box.
+
+### Alignment
+
+- **`alignment`**: Sets the alignment of the box.
+
+### ClipBehavior
+
+- **`clipBehavior`**: Sets the clip behavior of the box.
+
+```
+
+```

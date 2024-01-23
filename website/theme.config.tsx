@@ -101,11 +101,11 @@ const themeConfig = {
   },
   primaryHue: {
     light: 200,
-    dark: 285,
+    dark: 300,
   },
   primarySaturation: {
     light: 50,
-    dark: 50,
+    dark: 40,
   },
   editLink: {
     text: "Edit this page on GitHub",

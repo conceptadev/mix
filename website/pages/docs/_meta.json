@@ -12,6 +12,7 @@
     "title": "Guides"
   },
   "guides": {
+    "title": "Guides",
     "display": "children"
   },
   "-- Widgets": {
@@ -19,6 +20,7 @@
     "title": "Widgets"
   },
   "widgets": {
+    "title": "Widgets",
     "display": "children"
   },
   "theme": "Theme",
