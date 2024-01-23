@@ -12,6 +12,7 @@
     "@docsearch/react": "^3.5.2",
     "@headlessui/react": "^1.7.18",
     "@heroicons/react": "^2.0.18",
+    "@vercel/analytics": "^1.1.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "copy-to-clipboard": "^3.3.3",

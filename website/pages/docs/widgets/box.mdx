@@ -2,8 +2,6 @@ import { Tabs, Callout } from "nextra/components";
 
 # Box - The Styled Container
 
-## Overview
-
 Box is a versatile and robust widget, crafted to streamline and enrich the styling process in Flutter. This widget is akin to Flutter's native Container, but it incorporates the advanced capabilities of the Mix styling system, offering a more nuanced and flexible approach to design.
 
 ### Usage
@@ -23,21 +21,6 @@ Box(
 ```
 
 In this example, Box adeptly applies a series of styles – a blue background, uniformly rounded corners, consistent vertical padding, and subtle elevation – to the enclosed Text widget.
-
-### Inheritance
-
-An important feature of Box is its ability to inherit and build upon styles defined higher in the widget tree. By enabling the inherit property, Box can seamlessly integrate and further refine styles provided by ancestor widgets using `MixProvider`.
-
-```dart
-MixProvider(
-  mix: Style(backgroundColor.blue()),
-  child: Box(
-    style: Style(borderRadius.all(8)),
-    inherit: true,
-    child: Text('Inherited Box'),
-  ),
-);
-```
 
 ### Composition and Decoration
 

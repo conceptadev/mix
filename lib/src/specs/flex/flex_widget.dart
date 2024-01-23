@@ -67,7 +67,7 @@ class MixedFlex extends StatelessWidget {
     final spec = FlexSpec.of(mix);
     final gap = spec.gap;
 
-    var flexWidget = Flex(
+    final current = Flex(
       direction: direction,
       mainAxisAlignment:
           spec.mainAxisAlignment ?? _defaultFlex.mainAxisAlignment,
@@ -82,7 +82,7 @@ class MixedFlex extends StatelessWidget {
     return shouldApplyDecorators(
       mix: mix,
       orderOfDecorators: decoratorOrder,
-      child: flexWidget,
+      child: current,
     );
   }
 
@@ -102,56 +102,6 @@ class MixedFlex extends StatelessWidget {
             ),
     );
   }
-}
-
-/// A horizontal layout widget leveraging `Style` for advanced styling.
-///
-/// `StyledRow` is a specialized form of `StyledFlex` that defaults to a horizontal
-/// direction (i.e., `Axis.horizontal`). It benefits from `Style` integration,
-/// enabling more efficient and consistent styling across its children.
-///
-/// Inherits all the styling and layout properties of `StyledFlex`, with a simplified
-/// interface for horizontal layouts.
-///
-/// Example Usage:
-/// ```dart
-/// StyledRow(
-///   style: yourStyle,
-///   children: [Widget1(), Widget2()],
-/// );
-/// ```
-class StyledRow extends StyledFlex {
-  const StyledRow({
-    super.style,
-    super.key,
-    super.inherit,
-    required super.children,
-  }) : super(direction: Axis.horizontal);
-}
-
-/// A vertical layout widget enhanced with `Style` for easy styling.
-///
-/// `StyledColumn` is a vertical variant of `StyledFlex`, employing `Style` for
-/// an improved styling experience. It's designed for vertical arrangements of widgets,
-/// providing a consistent and easy-to-manage styling approach.
-///
-/// Inherits the comprehensive styling capabilities of `StyledFlex`, tailored for
-/// vertical layouts.
-///
-/// Example Usage:
-/// ```dart
-/// StyledColumn(
-///   style: yourStyle,
-///   children: [Widget1(), Widget2()],
-/// );
-/// ```
-class StyledColumn extends StyledFlex {
-  const StyledColumn({
-    super.style,
-    super.key,
-    super.inherit,
-    super.children,
-  }) : super(direction: Axis.vertical);
 }
 
 /// A flex container widget with integrated `Style` for enhanced styling.
@@ -216,10 +166,7 @@ class HBox extends FlexBox {
     super.key,
     super.inherit,
     super.children = const <Widget>[],
-  }) : super(
-          style: style ?? mix,
-          direction: Axis.horizontal,
-        );
+  }) : super(style: style ?? mix, direction: Axis.horizontal);
 }
 
 /// A vertical flex container that uses `Style` for streamlined styling.
@@ -245,10 +192,7 @@ class VBox extends FlexBox {
     super.key,
     super.inherit,
     super.children = const <Widget>[],
-  }) : super(
-          style: style ?? mix,
-          direction: Axis.vertical,
-        );
+  }) : super(style: style ?? mix, direction: Axis.vertical);
 }
 
 const _defaultFlex = Flex(direction: Axis.horizontal, children: <Widget>[]);

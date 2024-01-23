@@ -25,6 +25,15 @@ const themeConfig = {
   project: {
     link: "https://github.com/conceptadev/mix",
   },
+  banner: {
+    key: "1.0-beta-doc-wip-notice",
+    dismissible: false,
+    text: (
+      <a href="https://fluttermix.com" target="_blank">
+        Mix 1.0 is in Beta. Documentation is currently a work-in-progress →
+      </a>
+    ),
+  },
   docsRepositoryBase: "https://github.com/conceptadev/mix/blob/main",
   search: {
     component: <CustomSearch />,

@@ -161,70 +161,21 @@ class TextStyleUtility<T extends StyleAttribute>
   }
 
   /// Returns a [ColorUtility] for manipulating the background color of the text style.
-  ///
-  /// Example:
-  ///
-  /// ```dart
-  /// final textStyle = TextStyleUtility(builder);
-  /// final customBackgroundColor = textStyle.backgroundColor(Colors.red);
-  /// ```
-  ///
-  /// See also:
-  /// - [ColorUtility]
   ColorUtility<T> get backgroundColor {
     return ColorUtility((color) => _only(backgroundColor: color));
   }
 
   /// Returns a [ColorUtility] for manipulating the decoration color of the text style.
-  ///
-  /// Example:
-  ///
-  /// ```dart
-  /// final textStyle = TextStyleUtility(builder);
-  /// final decorationColor = textStyle.decorationColor(Colors.red);
-  /// ```
-  ///
-  /// See also:
-  /// - [ColorUtility]
   ColorUtility<T> get decorationColor {
     return ColorUtility((color) => _only(decorationColor: color));
   }
 
   /// Returns a [ShadowUtility] for manipulating the shadow of the text style.
-  ///
-  /// This utility allows you to modify the color, offset, and blur radius
-  /// of the shadow. It uses the [ShadowUtility] class which provides
-  /// an interface to build upon the [ShadowDto] object.
-  ///
-  /// Example:
-  ///
-  /// ```dart
-  /// final textStyle = TextStyleUtility(builder);
-  /// final shadowed = textStyle.shadow(color: Colors.red, offset: Offset(1, 1), blurRadius: 1);
-  /// final offset = textStyle.shadow.offset(1, 1);
-  ///
-  /// ```
-  ///
-  /// See also:
-  /// - [ColorUtility]
-  /// - [OffsetUtility]
-  /// - [DoubleUtility]
   ShadowUtility<T> get shadow {
     return ShadowUtility((shadow) => _only(shadows: [shadow]));
   }
 
   /// Returns a [TextDecorationStyleUtility] for manipulating the decoration style of the text style.
-  ///
-  /// Example:
-  ///
-  /// ```dart
-  /// final textStyle = TextStyleUtility(builder);
-  /// final dashed = textStyle.decorationStyle.dashed();
-  /// ```
-  ///
-  /// See also:
-  /// - [TextDecorationStyleUtility]
-  /// - [TextDecorationStyle]
   TextDecorationStyleUtility<T> get decorationStyle {
     return TextDecorationStyleUtility(
       (style) => _only(decorationStyle: style),
@@ -232,206 +183,64 @@ class TextStyleUtility<T extends StyleAttribute>
   }
 
   /// Returns a [TextBaselineUtility] for manipulating the text baseline of the text style.
-  ///
-  /// Example:
-  ///
-  /// ```dart
-  /// final textStyle = TextStyleUtility(builder);
-  /// final alphabetic = textStyle.textBaseline.alphabetic();
-  /// ```
-  ///
-  /// See also:
-  /// - [TextBaselineUtility]
-  /// - [TextBaseline]
   TextBaselineUtility<T> get textBaseline {
     return TextBaselineUtility((baseline) => _only(textBaseline: baseline));
   }
 
   /// Returns a [FontFamilyUtility] for manipulating the font family of the text style.
-  ///
-  /// Example:
-  ///
-  /// ```dart
-  /// final textStyle = TextStyleUtility(builder);
-  /// final customFontFamily = textStyle.fontFamily('Roboto');
-  /// ```
-  ///
-  /// See also:
-  /// - [FontFamilyUtility]
   FontFamilyUtility<T> get fontFamily {
     return FontFamilyUtility((fontFamily) => call(fontFamily: fontFamily));
   }
 
-  /// Method for setting the height of the text style.
-  ///
-  /// Example:
-  ///
-  /// ```dart
-  /// final textStyle = TextStyleUtility(builder);
-  /// final customHeight = textStyle.height(1.5);
-  /// ```
+  /// Sets the height of the text style.
   T height(double height) => _only(height: height);
 
-  /// Method for setting the word spacing of the text style.
-  ///
-  /// Example:
-  ///
-  /// ```dart
-  /// final textStyle = TextStyleUtility(builder);
-  /// final customWordSpacing = textStyle.wordSpacing(1.5);
-  /// ```
+  /// Sets the text scale factor of the text style.
   T wordSpacing(double wordSpacing) {
     return _only(wordSpacing: wordSpacing);
   }
 
-  /// Method for setting the letter spacing of the text style.
-  ///
-  /// Example:
-  ///
-  /// ```dart
-  /// final textStyle = TextStyleUtility(builder);
-  /// final customLetterSpacing = textStyle.letterSpacing(1.5);
-  /// ```
-  ///
-  /// See also:
-  /// - [DoubleUtility]
+  /// Sets the text scale factor of the text style.
   T letterSpacing(double letterSpacing) {
     return _only(letterSpacing: letterSpacing);
   }
 
-  /// Method for setting the shadows of the text style.
-  ///
-  /// Example:
-  ///
-  /// ```dart
-  // final textStyle = TextStyleUtility(builder);
-  // final customShadows = textStyle.shadows([
-  //   Shadow(color: Colors.red, offset: Offset(1, 1), blurRadius: 1),
-  // ]);
-  /// ```
+  /// Sets the shadows of the text style.
   T shadows(List<Shadow> shadows) {
     return _only(shadows: shadows.map((e) => e.toDto()).toList());
   }
 
-  /// Method alias for [FontStyle.italic].
-  ///
-  /// Example:
-  ///
-  /// ```dart
-  /// final textStyle = TextStyleUtility(builder);
-  /// final italic = textStyle.italic();
-  /// ```
-  ///
-  /// See also:
-  /// * [FontStyle.italic]
+  /// Alias shortcut for [FontStyle.italic].
   T italic() => fontStyle.italic();
 
-  /// Method alias for [FontStyle.normal].
-  ///
-  /// Example:
-  ///
-  /// ```dart
-  /// final textStyle = TextStyleUtility(builder);
-  /// final normal = textStyle.normal();
-  /// ```
-  ///
-  /// See also:
-  /// * [FontStyle.normal]
+  /// Alias shortcut for [FontStyle.normal].
   T bold() => fontWeight.bold();
 
-  /// Method for settings the foreground of the text style.
-  ///
-  /// Example:
-  ///
-  /// ```dart
-  /// final textStyle = TextStyleUtility(builder);
-  /// final foreground = textStyle.foreground(Paint()..color = Colors.red);
-  /// ```
-  ///
-  /// See also:
-  /// * [Paint]
+  /// Sets the foreground of the text style.
   T foreground(Paint foreground) => call(foreground: foreground);
 
-  /// Method for settings the background of the text style.
-  ///
-  /// Example:
-  ///
-  /// ```dart
-  /// final textStyle = TextStyleUtility(builder);
-  /// final background = textStyle.background(Paint()..color = Colors.red);
-  /// ```
+  /// Sets the background of the text style.
   T background(Paint background) => call(background: background);
 
-  /// Method for settings font features of the text style.
-  ///
-  /// Example:
-  ///
-  /// ```dart
-  /// final textStyle = TextStyleUtility(builder);
-  /// final fontFeatures = textStyle.fontFeatures([FontFeature.enable('smcp')]);
-  /// ```
-  ///
-  /// See also:
-  /// * [FontFeature]
+  /// Sets the fontFeatures of the text style.
   T fontFeatures(List<FontFeature> fontFeatures) =>
       call(fontFeatures: fontFeatures);
 
-  /// Method for setting the locale of the text style.
-  ///
-  /// Example:
-  ///
-  /// ```dart
-  /// final textStyle = TextStyleUtility(builder);
-  /// final locale = textStyle.locale(Locale('en'));
-  /// ```
-  ///
-  /// See also:
-  /// * [Locale]
+  /// Sets the locale of the text style.
   T locale(Locale locale) => call(locale: locale);
 
-  /// Method for setting the debug label of the text style.
-  ///
-  /// Example:
-  ///
-  /// ```dart
-  /// final textStyle = TextStyleUtility(builder);
-  /// final debugLabel = textStyle.debugLabel('debug label');
-  /// ```
+  /// Sets the debug label of the text style.
   T debugLabel(String label) => call(debugLabel: label);
 
-  /// Method for setting the decoration thickness of the text style.
-  ///
-  /// Example:
-  ///
-  /// ```dart
-  /// final textStyle = TextStyleUtility(builder);
-  /// final decorationThickness = textStyle.decorationThickness(1.0);
-  /// ```
+  /// Sets the decorationThickness of the text style.
   T decorationThickness(double thickness) =>
       call(decorationThickness: thickness);
 
-  /// Method for setting the font family fallback of the text style.
-  ///
-  /// Example:
-  ///
-  /// ```dart
-  /// final textStyle = TextStyleUtility(builder);
-  /// final fontFamilyFallback = textStyle.fontFamilyFallback(['Roboto']);
-  /// ```
+  /// Sets the fontFamilyFallback of the text style.
   T fontFamilyFallback(List<String> fallback) =>
       call(fontFamilyFallback: fallback);
 
-  /// Method for setting the `TextStyleToken` of the text style.
-  ///
-  /// Example:
-  ///
-  /// ```dart
-  /// final textStyle = TextStyleUtility(builder);
-  /// final token = textStyle.token(token);
-  /// ```
-  ///
-  /// See also:
-  /// * [TextStyleToken]
+  /// Allows to pass a [TextStyleToken] to the utility directly.
   T of(TextStyleToken token) => builder(TextStyleDto.of(token));
 
   /// Callable method for setting multiple values at once.

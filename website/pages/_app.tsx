@@ -1,3 +1,4 @@
+import { Analytics } from "@vercel/analytics/react";
 import { Fira_Code, Inter } from "next/font/google";
 import "../style.css";
 
@@ -31,6 +32,7 @@ export default function MyApp({ Component, pageProps }) {
         }
       `}</style>
       <Component {...pageProps} />
+      <Analytics />
     </main>
   );
 }
