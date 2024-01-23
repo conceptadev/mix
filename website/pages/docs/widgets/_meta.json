@@ -2,10 +2,22 @@
   "box": {
     "title": "Box"
   },
-  "flex": {
-    "title": "Flex"
+  "pressable-box": {
+    "title": "PressableBox"
   },
   "text": {
     "title": "Text"
+  },
+  "icon": {
+    "title": "Icon"
+  },
+  "image": {
+    "title": "Image"
+  },
+  "flex": {
+    "title": "Flex"
+  },
+  "stack": {
+    "title": "Stack"
   }
 }

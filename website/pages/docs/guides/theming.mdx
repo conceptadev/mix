@@ -1,6 +1,6 @@
 ---
-id: mix-theme
-title: 'Mix theme'
+id: theming
+title: "Theming"
 ---
 
 # Mix Theme
@@ -29,7 +29,6 @@ class MyApp extends StatelessWidget {
   }
 }
 ```
-
 
 ## Design Tokens
 
@@ -73,7 +72,7 @@ Now every time you use $colors.primary in your app, it will be replaced by the c
 
 ### Creating your own design tokens
 
-You can create your own context tokens is just as easy as creating a constant. The only difference is that you need to use a extentions of `MixToken` that represents the type of the token you want to create. 
+You can create your own context tokens is just as easy as creating a constant. The only difference is that you need to use a extentions of `MixToken` that represents the type of the token you want to create.
 
 For example, if you want to create a `MixToken` that represents a color, you can use `ColorToken`:
 
@@ -104,15 +103,18 @@ Box(
 ```
 
 ### Material Design Tokens in Mix
+
 To make it easier to use Material Design Tokens in Mix, we created all the tokens check the list below:
 
 #### BreakpointToken
+
 - xsmall
 - small
 - medium
 - large
 
 #### ColorToken
+
 - primary
 - secondary
 - tertiary
@@ -127,6 +129,7 @@ To make it easier to use Material Design Tokens in Mix, we created all the token
 - onError
 
 #### TextStyleToken
+
 - displayLarge
 - displayMedium
 - displaySmall
@@ -157,6 +160,7 @@ To make it easier to use Material Design Tokens in Mix, we created all the token
 - overline
 
 #### SpaceToken
+
 - xsmall
 - small
 - medium
@@ -165,6 +169,7 @@ To make it easier to use Material Design Tokens in Mix, we created all the token
 - xxlarge
 
 #### RadiusToken
+
 - small
 - medium
 - large

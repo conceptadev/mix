@@ -1,5 +1,9 @@
 {
   "styling": "Styling",
+  "utility-first": "Utility-First",
   "variants": "Variants",
-  "decorators": "Decorators"
+  "decorators": "Decorators",
+  "theming": "Theming",
+  "design-tokens": "Design Tokens",
+  "directives": "Directives"
 }
