@@ -5,6 +5,7 @@ import 'dart:collection';
 import '../helpers/compare_mixin.dart';
 import 'attribute.dart';
 
+// @nodoc
 class AttributeMap<T extends Attribute> with Comparable {
   final LinkedHashMap<Object, T>? _map;
 

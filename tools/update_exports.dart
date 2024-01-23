@@ -6,7 +6,7 @@ import 'package:path/path.dart' as p;
 
 void main() {
   final libDirectory = Directory('lib');
-  final exportFilePath = p.join('lib', 'exports.dart');
+  final exportFilePath = p.join('lib', 'mix.dart');
 
   if (!libDirectory.existsSync()) {
     print('The lib directory was not found.');
@@ -19,7 +19,12 @@ void main() {
     exportFile.deleteSync();
   }
 
-  final newExports = <String>{};
+  final outputString = <String>{};
+
+  outputString.add('library mix;');
+  outputString.add('');
+  outputString.add('export \'src/deprecations.dart\';');
+  outputString.add('');
 
   // Traverse the /lib/ directory
   for (final entity in libDirectory.listSync(recursive: true)) {
@@ -38,10 +43,10 @@ void main() {
       continue;
     }
 
-    newExports.add('export \'$relativePath\';');
+    outputString.add('export \'$relativePath\';');
   }
 
-  exportFile.writeAsStringSync(newExports.join('\n'));
+  exportFile.writeAsStringSync(outputString.join('\n'));
 
-  print('Exports file updated with ${newExports.length} exports.');
+  print('Exports file updated with ${outputString.length} exports.');
 }

@@ -2,6 +2,7 @@ import 'dart:math';
 
 import '../attribute.dart';
 
+// @nodoc
 extension IterableExt<T> on Iterable<T> {
   T? get firstMaybeNull => isEmpty ? null : first;
 

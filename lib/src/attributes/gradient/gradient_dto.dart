@@ -5,7 +5,7 @@ import '../../core/extensions/iterable_ext.dart';
 import '../../factory/mix_provider_data.dart';
 import '../color/color_dto.dart';
 
-/// Represents a base [Dto] Data transfer object of [Gradient]
+/// Represents a base Data transfer object of [Gradient]
 ///
 /// This is used to allow for resolvable value tokens, and also the correct
 /// merge and combining behavior. It allows to be merged, and resolved to a `[Gradient]
@@ -15,6 +15,8 @@ import '../color/color_dto.dart';
 /// * [LinearGradientDto], which extends this class.
 /// * [RadialGradientDto], which extends this class.
 /// * [SweepGradientDto], which extends this class.
+///
+/// {@category DTO}
 @immutable
 abstract class GradientDto<T extends Gradient> extends Dto<T>
     with Mergeable<GradientDto<T>> {
@@ -61,7 +63,7 @@ abstract class GradientDto<T extends Gradient> extends Dto<T>
   get props => [stops, colors, transform];
 }
 
-/// Represents a [Dto] Data transfer object of [LinearGradient]
+/// Represents a Data transfer object of [LinearGradient]
 ///
 /// This is used to allow for resolvable value tokens, and also the correct
 /// merge and combining behavior. It allows to be merged, and resolved to a `[LinearGradient]
@@ -71,6 +73,8 @@ abstract class GradientDto<T extends Gradient> extends Dto<T>
 /// * [GradientDto], which is the base class for this class.
 /// * [RadialGradientDto], which is another type of gradient DTO.
 /// * [SweepGradientDto], which is another type of gradient DTO.
+///
+/// {@category DTO}
 @immutable
 class LinearGradientDto extends GradientDto<LinearGradient> {
   final AlignmentGeometry? begin;
@@ -138,7 +142,7 @@ class LinearGradientDto extends GradientDto<LinearGradient> {
   List<Object?> get props => [begin, end, colors, stops, tileMode, transform];
 }
 
-/// Represents a [Dto] Data transfer object of [RadialGradient]
+/// Represents a Data transfer object of [RadialGradient]
 ///
 /// This is used to allow for resolvable value tokens, and also the correct
 /// merge and combining behavior. It allows to be merged, and resolved to a `[RadialGradient]
@@ -169,6 +173,7 @@ class LinearGradientDto extends GradientDto<LinearGradient> {
 /// * [LinearGradientDto], which is another type of gradient DTO.
 /// * [SweepGradientDto], which is another type of gradient DTO.
 ///
+/// {@category DTO}
 @immutable
 class RadialGradientDto extends GradientDto<RadialGradient> {
   final AlignmentGeometry? center;
@@ -249,7 +254,7 @@ class RadialGradientDto extends GradientDto<RadialGradient> {
       [center, radius, colors, stops, tileMode, focal, transform, focalRadius];
 }
 
-/// Represents a [Dto] Data transfer object of [SweepGradient]
+/// Represents a Data transfer object of [SweepGradient]
 ///
 /// This is used to allow for resolvable value tokens, and also the correct
 /// merge and combining behavior. It allows to be merged, and resolved to a `[SweepGradient]
@@ -259,7 +264,8 @@ class RadialGradientDto extends GradientDto<RadialGradient> {
 /// * [GradientDto], which is the base class for this class.
 /// * [LinearGradientDto], which is another type of gradient DTO.
 /// * [RadialGradientDto], which is another type of gradient DTO.
-
+///
+/// {@category DTO}
 @immutable
 class SweepGradientDto extends GradientDto<SweepGradient> {
   final AlignmentGeometry? center;

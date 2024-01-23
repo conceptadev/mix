@@ -22,10 +22,10 @@ const HomeContent = () => {
           </p>
 
           <div className="not-prose mb-16 mt-6 flex gap-3">
-            <Button href="/quickstart" arrow="right">
+            <Button href="/docs/introduction/getting-started" arrow="right">
               <>Getting Started</>
             </Button>
-            <Button href="/sdks" variant="outline">
+            <Button href="/docs" variant="outline">
               <>Documentation</>
             </Button>
           </div>
