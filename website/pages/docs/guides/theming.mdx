@@ -3,7 +3,11 @@ id: theming
 title: "Theming"
 ---
 
+import { Callout } from "nextra-theme-docs";
+
 # Theming
+
+<Callout type="warning">This section is a work-in-progress</Callout>
 
 ## Setting Up MixTheme
 
@@ -13,23 +17,16 @@ Here's how you can initialize and implement `MixTheme`:
 
 ### Wrapping the Root Widget
 
-To apply your theme globally, you'll want to wrap your application's root widget with the `MixTheme` widget. By doing so, the theme data becomes available to all widgets in the app's widget tree, allowing them to use the established design tokens.
-
-Here's a basic example of wrapping a `MaterialApp` with `MixTheme`:
+To apply your theme globally, you'll want to wrap your application's root widget with the `MixTheme` widget.
 
 ```dart
-void main() {
-  runApp(MyApp());
-}
-
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MixTheme(
-      data: myMixThemeData, // Your predefined MixThemeData
-      child: MaterialApp(
-        title: 'Flutter Mix Themed App',
-        home: MyHomePage(),
+    return MaterialApp(
+      title: 'Mix App',
+      home: MixTheme(
+        child: MyHomePage(),
       ),
     );
   }
@@ -86,33 +83,6 @@ Context Tokens are design tokens that are defined at build time. With this, it's
 - dynamically changing the accent color of the app
 - define multiple themes for different parts of the app
 
-Context tokens are made of references (`MixToken`), which can be read by `Style` at build time. There are a lot of built-in context tokens already available for usage, from colors to text:
-
-For example, if you want to create a button with the primary color, you can use `backgroundColor($colors.primary)` and to configure the color that will be used, you can use define it in `MixThemeData` class.
-
-```dart
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return MixTheme(
-      data: MixThemeData(
-        colors: {
-          $colors.primary: Colors.red,
-        },
-      ),
-      child: const MaterialApp(
-        title: 'Remix',
-        home: AppShell(title: 'Remix Home Page'),
-      ),
-    );
-  }
-}
-```
-
-Now every time you use $colors.primary in your app, it will be replaced by the color you defined in `MixThemeData` in this case, red.
-
 ### Creating your own design tokens
 
 You can create your own context tokens is just as easy as creating a constant. The only difference is that you need to use a extentions of `MixToken` that represents the type of the token you want to create.
@@ -147,72 +117,35 @@ Box(
 
 ### Material Design Tokens in Mix
 
-To make it easier to use Material Design Tokens in Mix, we created all the tokens check the list below:
+You can use the Material Design Tokens in Mix by implementing the following `MixThemeData`:
 
-#### BreakpointToken
+#### Configure Material tokens
 
-- xsmall
-- small
-- medium
-- large
+```dart
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Mix App',
+      home: MixTheme(
+        data: MixThemeData.withMaterial(),
+        child: MyHomePage(),
+      ),
+    );
+  }
+}
+```
 
-#### ColorToken
+#### Using Material tokens
 
-- primary
-- secondary
-- tertiary
-- surface
-- background
-- error
-- onPrimary
-- onSecondary
-- onTertiary
-- onSurface
-- onBackground
-- onError
+Mix provides an easy utility that you can use called `$md`, this is a namespace for all the Material Design tokens.
 
-#### TextStyleToken
-
-- displayLarge
-- displayMedium
-- displaySmall
-- headlineLarge
-- headlineMedium
-- headlineSmall
-- titleLarge
-- titleMedium
-- titleSmall
-- bodyLarge
-- bodyMedium
-- bodySmall
-- labelLarge
-- labelMedium
-- labelSmall
-- headline1
-- headline2
-- headline3
-- headline4
-- headline5
-- headline6
-- subtitle1
-- subtitle2
-- bodyText1
-- bodyText2
-- caption
-- button
-- overline
-
-#### SpaceToken
-
-- xsmall
-- small
-- medium
-- large
-- xlarge
-- xxlarge
-
-#### RadiusToken
-
-- small
-- medium
-- large
+```dart
+Box(
+  style: Style(
+    text.style.of($md.textTheme.headline1),
+    backgroundColor.of($md.colorScheme.primary),
+  ),
+  child: Text('Hello World'),
+)
+```

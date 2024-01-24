@@ -36,7 +36,7 @@ class WidgetbookApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MixTheme(
-      data: MixThemeData.withMaterialTokens(),
+      data: MixThemeData.withMaterial(),
       child: Widgetbook.material(
         directories: directories,
         addons: [materialTheme],

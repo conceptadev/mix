@@ -11,7 +11,7 @@ class VariantsCatalogPressable extends StatelessWidget {
         'Hover',
         Style(
           onHover(
-            box.border(color: $colors.primary(), width: 2),
+            box.border(color: $md.colorScheme.primary(), width: 2),
             box.padding(4.0),
           ),
         ),
@@ -22,7 +22,7 @@ class VariantsCatalogPressable extends StatelessWidget {
         'Focus',
         Style(
           onFocus(
-            box.border(color: $colors.primary(), width: 2),
+            box.border(color: $md.colorScheme.primary(), width: 2),
             box.padding(4.0),
           ),
         ),
@@ -34,7 +34,7 @@ class VariantsCatalogPressable extends StatelessWidget {
         Style(
           onPress(
             box.border(
-              color: $colors.primary(),
+              color: $md.colorScheme.primary(),
               width: 2,
             ),
             box.padding(4.0),

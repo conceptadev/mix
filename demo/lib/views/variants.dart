@@ -19,20 +19,20 @@ class VariantsExample extends HookWidget {
     );
 
     final style = Style(
-      box.color($colors.primary()),
-      text.style(color: $colors.onPrimary()),
+      box.color($md.colorScheme.primary()),
+      text.style(color: $md.colorScheme.onPrimary()),
       onHover(
-        box.color($colors.secondary()),
-        text.style(color: $colors.onPrimary()),
+        box.color($md.colorScheme.secondary()),
+        text.style(color: $md.colorScheme.onPrimary()),
       ),
     ).merge(baseStyle);
 
     final onDarkStyle = Style(
-      box.color($colors.primary()),
-      text.style(color: $colors.onPrimary()),
+      box.color($md.colorScheme.primary()),
+      text.style(color: $md.colorScheme.onPrimary()),
       onDark(
         box.color(Colors.red),
-        text.style(color: $colors.onPrimary()),
+        text.style(color: $md.colorScheme.onPrimary()),
       ),
     ).merge(baseStyle);
 

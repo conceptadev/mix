@@ -25,7 +25,7 @@ const HomeContent = () => {
             <Button href="/docs/introduction/getting-started" arrow="right">
               <>Getting Started</>
             </Button>
-            <Button href="/docs" variant="outline">
+            <Button href="/docs/introduction" variant="outline">
               <>Documentation</>
             </Button>
           </div>

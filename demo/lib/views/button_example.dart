@@ -32,7 +32,7 @@ Style get _baseStyle => Style(
         decoration: TextDecoration.none,
         fontWeight: FontWeight.w600,
       ),
-      text.style.of($textStyles.bodySmall),
+      text.style.of($md.textTheme.bodySmall),
       flex.mainAxisSize.min(),
       ButtonSizeVariants.small(
         box.padding.horizontal(10),
@@ -143,11 +143,11 @@ Style get _style => Style(
         color: const Color(0xFFFF004C),
       ),
       box.color(const Color(0x0F07E2FF)),
-      icon.color.of($colors.onBackground),
+      icon.color.of($md.colorScheme.onBackground),
       onDisabled(
-        box.color.of($colors.background),
-        text.style.color.of($colors.onBackground),
-        icon.color.of($colors.onBackground),
+        box.color.of($md.colorScheme.background),
+        text.style.color.of($md.colorScheme.onBackground),
+        icon.color.of($md.colorScheme.onBackground),
       ),
     );
 
