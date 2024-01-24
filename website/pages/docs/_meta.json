@@ -3,8 +3,8 @@
     "type": "separator",
     "title": "Overview"
   },
-  "introduction": {
-    "title": "Introduction",
+  "overview": {
+    "title": "Overview",
     "display": "children"
   },
   "-- Guides": {
