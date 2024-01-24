@@ -57,16 +57,17 @@ void main() {
   });
 
   group('RadiiTokenUtil', () {
+    const radii = RadiiTokenUtil();
     test('small returns correct value', () {
-      expect(RadiiTokenUtil().small, RadiusToken.small());
+      expect(radii.small(), RadiusToken.small());
     });
 
     test('medium returns correct value', () {
-      expect(RadiiTokenUtil().medium, RadiusToken.medium());
+      expect(radii.medium(), RadiusToken.medium());
     });
 
     test('large returns correct value', () {
-      expect(RadiiTokenUtil().large, RadiusToken.large());
+      expect(radii.large(), RadiusToken.large());
     });
   });
 

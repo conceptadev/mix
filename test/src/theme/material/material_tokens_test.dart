@@ -54,7 +54,7 @@ void main() {
 
       final theme = Theme.of(context);
 
-      final textStyles = const MaterialTokens().textStyles;
+      final textStyles = const MaterialTokens().text;
       expect(refResolver(textStyles.displayLarge(), context),
           theme.textTheme.displayLarge);
       expect(refResolver(textStyles.displayMedium(), context),
@@ -96,7 +96,7 @@ void main() {
 
       final theme = Theme.of(context);
 
-      final textStyles = const MaterialTokens().textStyles;
+      final textStyles = const MaterialTokens().text;
       expect(refResolver(textStyles.headline1(), context),
           theme.textTheme.headline1);
       expect(refResolver(textStyles.headline2(), context),

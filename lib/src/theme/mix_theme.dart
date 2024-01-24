@@ -3,9 +3,9 @@
 import 'package:flutter/material.dart';
 
 import '../helpers/compare_mixin.dart';
+import 'material/material_theme.dart';
 import 'tokens/breakpoints_token.dart';
 import 'tokens/color_token.dart';
-import 'tokens/material_tokens.dart';
 import 'tokens/mix_token.dart';
 import 'tokens/radius_token.dart';
 import 'tokens/space_token.dart';
@@ -147,29 +147,3 @@ final _breakpointTokenMap = StyledTokens({
   BreakpointToken.large:
       const Breakpoint(minWidth: 1440, maxWidth: double.infinity),
 });
-
-class MixTokenResolver {
-  final BuildContext _context;
-
-  const MixTokenResolver(this._context);
-
-  Color colorToken(ColorToken token) => token.resolve(_context);
-
-  Color colorRef(ColorRef ref) => colorToken(ref.token);
-
-  Radius radiiToken(RadiusToken token) => token.resolve(_context);
-
-  Radius radiiRef(RadiusRef ref) => radiiToken(ref.token);
-
-  TextStyle textStyleToken(TextStyleToken token) => token.resolve(_context);
-
-  TextStyle textStyleRef(TextStyleRef ref) => textStyleToken(ref.token);
-
-  double spaceToken(SpaceToken token) => token.resolve(_context);
-
-  double spaceTokenRef(SpaceRef spaceRef) {
-    return spaceRef < 0 ? spaceRef.resolve(_context) : spaceRef;
-  }
-
-  Breakpoint breakpointToken(BreakpointToken token) => token.resolve(_context);
-}
