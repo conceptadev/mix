@@ -17,14 +17,14 @@ class CustomMixWidget extends StatelessWidget {
       marginVertical(10),
       elevation(10),
       borderRadius(10),
-      backgroundColor($md.colors.primary()),
+      backgroundColor($md.colorScheme.primary()),
       text.style($button()),
-      text.style.color($md.colors.onPrimary()),
+      text.style.color($md.colorScheme.onPrimary()),
       onHover(
         elevation(2),
         padding(20),
-        backgroundColor($md.colors.secondary()),
-        text.style.color($md.colors.onSecondary()),
+        backgroundColor($md.colorScheme.secondary()),
+        text.style.color($md.colorScheme.onSecondary()),
       ),
     );
     return Box(

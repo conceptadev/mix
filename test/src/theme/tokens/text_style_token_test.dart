@@ -60,12 +60,14 @@ void main() {
   testWidgets('Combined Test', (tester) async {
     final themeData = MixThemeData(
       textStyles: {
-        $md.text.bodyText1: const TextStyle(color: Colors.red, fontSize: 10),
-        $md.text.bodyText2: const TextStyle(color: Colors.blue, fontSize: 20),
+        $md.textTheme.bodyText1:
+            const TextStyle(color: Colors.red, fontSize: 10),
+        $md.textTheme.bodyText2:
+            const TextStyle(color: Colors.blue, fontSize: 20),
       },
       colors: {
-        $md.colors.error: Colors.blue,
-        $md.colors.background: Colors.red,
+        $md.colorScheme.error: Colors.blue,
+        $md.colorScheme.background: Colors.red,
       },
       radii: {
         $radii.medium: const Radius.elliptical(10, 50),
@@ -82,10 +84,10 @@ void main() {
       Box(
         key: key,
         style: Style(
-          text.style.of($md.text.bodyText1),
-          text.style.of($md.text.bodyText2),
-          box.color.of($md.colors.background),
-          box.color.of($md.colors.error),
+          text.style.of($md.textTheme.bodyText1),
+          text.style.of($md.textTheme.bodyText2),
+          box.color.of($md.colorScheme.background),
+          box.color.of($md.colorScheme.error),
           box.borderRadius.all.of($radii.medium),
           box.borderRadius.all.of($radii.large),
           box.padding.horizontal.of($space.medium),
@@ -114,17 +116,17 @@ void main() {
 
     expect(
       textWidget.style!.color,
-      themeData.textStyles[$md.text.bodyText2]!.color,
+      themeData.textStyles[$md.textTheme.bodyText2]!.color,
     );
 
     expect(
       textWidget.style!.fontSize,
-      themeData.textStyles[$md.text.bodyText2]!.fontSize,
+      themeData.textStyles[$md.textTheme.bodyText2]!.fontSize,
     );
 
     expect(
       (containerWidget.decoration as BoxDecoration).color,
-      themeData.colors[$md.colors.error],
+      themeData.colors[$md.colorScheme.error],
     );
 
     expect(

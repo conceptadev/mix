@@ -9,7 +9,7 @@ void main() {
   final theme = MixThemeData(
     colors: {
       primaryColor: Colors.blue,
-      $md.colors.error: Colors.redAccent,
+      $md.colorScheme.error: Colors.redAccent,
     },
     breakpoints: {
       $breakpoints.small: const Breakpoint(
@@ -25,7 +25,7 @@ void main() {
       $space.small: 30,
     },
     textStyles: {
-      $md.text.bodyLarge: const TextStyle(
+      $md.textTheme.bodyLarge: const TextStyle(
         fontSize: 200,
         fontWeight: FontWeight.w300,
       ),
@@ -54,7 +54,7 @@ void main() {
             box.color.of(primaryColor),
             box.borderRadius.all.of($radii.small),
             box.padding.horizontal.of($space.small),
-            text.style.of($md.text.bodyLarge),
+            text.style.of($md.textTheme.bodyLarge),
           ),
           child: const StyledText('Hello'),
         ),
@@ -90,7 +90,7 @@ void main() {
 
       expect(
         textWidget.style,
-        theme.textStyles[$md.text.bodyLarge],
+        theme.textStyles[$md.textTheme.bodyLarge],
       );
     });
 
