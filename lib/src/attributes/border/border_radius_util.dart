@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../../core/attribute.dart';
 import '../../core/extensions/values_ext.dart';
+import '../../theme/tokens/radius_token.dart';
 import '../scalars/scalar_util.dart';
 import 'border_radius_dto.dart';
 
@@ -276,6 +277,13 @@ class BorderRadiusGeometryUtility<T extends StyleAttribute>
       ),
     );
   }
+
+  T of(RadiusToken ref) => only(
+        topLeft: ref(),
+        topRight: ref(),
+        bottomLeft: ref(),
+        bottomRight: ref(),
+      );
 
   /// Sets the border radius for each corner of a [BorderRadiusGeometry].
   ///

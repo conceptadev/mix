@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../core/attribute.dart';
+import '../../theme/tokens/radius_token.dart';
 
 typedef UtilityBuilder<ReturnType, ParamType> = ReturnType Function(
   ParamType value,
@@ -686,6 +687,8 @@ class RadiusUtility<T extends StyleAttribute> extends MixUtility<T, Radius> {
   T circular(double radius) => _builder(Radius.circular(radius));
 
   T call(double radius) => _builder(Radius.circular(radius));
+
+  T of(RadiusToken ref) => _builder(ref());
 }
 
 /// Utility for setting `TextDecorationStyle` values.
