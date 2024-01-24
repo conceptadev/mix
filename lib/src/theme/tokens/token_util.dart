@@ -1,30 +1,32 @@
 import 'package:flutter/material.dart';
 
-import '../../../mix.dart';
+import '../material/material_tokens.dart';
+import 'radius_token.dart';
+import 'space_token.dart';
 
-final $radii = RadiiTokenUtil();
+const $md = MaterialTokens();
+const $radii = RadiiTokenUtil();
 const $space = SpaceTokenUtil();
 const $colors = ColorTokenUtil();
 const $textStyles = TextStyleTokenUtil();
 
 @immutable
 class RadiiTokenUtil {
-  final small = RadiusToken.small();
-  final medium = RadiusToken.medium();
-  final large = RadiusToken.large();
-
-  RadiiTokenUtil();
+  const RadiiTokenUtil();
+  RadiusRef small() => RadiusToken.small();
+  RadiusRef medium() => RadiusToken.medium();
+  RadiusRef large() => RadiusToken.large();
 }
 
 @immutable
 class SpaceTokenUtil {
   const SpaceTokenUtil();
-  double xsmall() => SpaceToken.xsmall();
-  double small() => SpaceToken.small();
-  double medium() => SpaceToken.medium();
-  double large() => SpaceToken.large();
-  double xlarge() => SpaceToken.xlarge();
-  double xxlarge() => SpaceToken.xxlarge();
+  SpaceRef xsmall() => SpaceToken.xsmall();
+  SpaceRef small() => SpaceToken.small();
+  SpaceRef medium() => SpaceToken.medium();
+  SpaceRef large() => SpaceToken.large();
+  SpaceRef xlarge() => SpaceToken.xlarge();
+  SpaceRef xxlarge() => SpaceToken.xxlarge();
 }
 
 @immutable

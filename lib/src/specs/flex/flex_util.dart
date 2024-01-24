@@ -2,67 +2,99 @@ import 'package:flutter/material.dart';
 
 import '../../attributes/scalars/scalar_util.dart';
 import '../../attributes/spacing/spacing_util.dart';
-import '../../core/attribute.dart';
 import 'flex_attribute.dart';
 
 /// A utility class for building [FlexSpecAttribute]s.
-final flex = FlexSpecUtility.selfBuilder;
+const flex = FlexSpecUtility();
 
-class FlexSpecUtility<T extends StyleAttribute>
-    extends MixUtility<T, FlexSpecAttribute> {
-  static final selfBuilder = FlexSpecUtility((value) => value);
+/// FlexSpecUtility
+///
+/// A utility class to create `FlexSpecAttribute` by creating a nested API.
+/// This allows a composable way to create `FlexSpecAttribute` without
+/// having to manually create a `FlexSpecAttribute` and provide all the
+/// properties.
+/// See also:
+/// * [FlexSpecAttribute]
+class FlexSpecUtility extends SpecUtility<FlexSpecAttribute> {
+  const FlexSpecUtility();
 
-  const FlexSpecUtility(super.builder);
-
-  AxisUtility<T> get direction {
+  /// Sets the flex direction (axis) of the layout.
+  ///
+  /// Returns an `AxisUtility` to set the axis to horizontal or vertical.
+  AxisUtility<FlexSpecAttribute> get direction {
     return AxisUtility((direction) => only(direction: direction));
   }
 
-  MainAxisAlignmentUtility<T> get mainAxisAlignment {
+  /// Sets the main axis alignment.
+  ///
+  /// Returns a `MainAxisAlignmentUtility` to set the alignment.
+  MainAxisAlignmentUtility<FlexSpecAttribute> get mainAxisAlignment {
     return MainAxisAlignmentUtility(
       (mainAxisAlignment) => only(mainAxisAlignment: mainAxisAlignment),
     );
   }
 
-  CrossAxisAlignmentUtility<T> get crossAxisAlignment {
+  /// Sets the cross axis alignment.
+  ///
+  /// Returns a `CrossAxisAlignmentUtility` to set the alignment.
+  CrossAxisAlignmentUtility<FlexSpecAttribute> get crossAxisAlignment {
     return CrossAxisAlignmentUtility(
       (crossAxisAlignment) => only(crossAxisAlignment: crossAxisAlignment),
     );
   }
 
-  MainAxisSizeUtility<T> get mainAxisSize {
+  /// Sets the main axis size.
+  ///
+  /// Returns a `MainAxisSizeUtility` to set the size.
+  MainAxisSizeUtility<FlexSpecAttribute> get mainAxisSize {
     return MainAxisSizeUtility(
       (mainAxisSize) => only(mainAxisSize: mainAxisSize),
     );
   }
 
-  VerticalDirectionUtility<T> get verticalDirection {
+  /// Sets the vertical direction.
+  ///
+  /// Returns a `VerticalDirectionUtility` to set the direction.
+  VerticalDirectionUtility<FlexSpecAttribute> get verticalDirection {
     return VerticalDirectionUtility(
       (verticalDirection) => only(verticalDirection: verticalDirection),
     );
   }
 
-  TextDirectionUtility<T> get textDirection {
+  /// Sets the text direction.
+  ///
+  /// Returns a `TextDirectionUtility` to set the direction.
+  TextDirectionUtility<FlexSpecAttribute> get textDirection {
     return TextDirectionUtility(
       (textDirection) => only(textDirection: textDirection),
     );
   }
 
-  TextBaselineUtility<T> get textBaseline {
+  /// Sets the text baseline alignment.
+  ///
+  /// Returns a `TextBaselineUtility` to set the alignment.
+  TextBaselineUtility<FlexSpecAttribute> get textBaseline {
     return TextBaselineUtility(
       (textBaseline) => only(textBaseline: textBaseline),
     );
   }
 
-  ClipUtility<T> get clipBehavior {
+  /// Sets the clip behavior.
+  ///
+  /// Returns a `ClipUtility` to set the behavior.
+  ClipUtility<FlexSpecAttribute> get clipBehavior {
     return ClipUtility((clipBehavior) => only(clipBehavior: clipBehavior));
   }
 
-  SpacingSideUtility<T> get gap {
+  /// Sets the gap (spacing) between children.
+  ///
+  /// Returns a `SpacingSideUtility` to set the gap.
+  SpacingSideUtility<FlexSpecAttribute> get gap {
     return SpacingSideUtility((gap) => only(gap: gap));
   }
 
-  T only({
+  /// Creates a `FlexSpecAttribute` with the specified properties.
+  FlexSpecAttribute only({
     Axis? direction,
     MainAxisAlignment? mainAxisAlignment,
     CrossAxisAlignment? crossAxisAlignment,
@@ -73,7 +105,7 @@ class FlexSpecUtility<T extends StyleAttribute>
     Clip? clipBehavior,
     double? gap,
   }) {
-    final attriubte = FlexSpecAttribute(
+    return FlexSpecAttribute(
       direction: direction,
       mainAxisAlignment: mainAxisAlignment,
       crossAxisAlignment: crossAxisAlignment,
@@ -84,10 +116,11 @@ class FlexSpecUtility<T extends StyleAttribute>
       clipBehavior: clipBehavior,
       gap: gap,
     );
-
-    return builder(attriubte);
   }
 
-  T row() => direction.horizontal();
-  T column() => direction.vertical();
+  /// Shorthand for setting the direction to horizontal.
+  FlexSpecAttribute row() => direction.horizontal();
+
+  /// Shorthand for setting the direction to vertical.
+  FlexSpecAttribute column() => direction.vertical();
 }
