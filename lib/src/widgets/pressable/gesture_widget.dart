@@ -61,7 +61,7 @@ class Pressable extends StatefulWidget {
     required this.child,
     this.onFocusChange,
     this.onLongPress,
-    this.unpressDelay = const Duration(milliseconds: 0),
+    this.unpressDelay = const Duration(),
     this.onPressed,
     this.disabled = false,
     super.key,
