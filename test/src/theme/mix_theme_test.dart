@@ -52,7 +52,7 @@ void main() {
           key: key,
           style: Style(
             box.color.of(primaryColor),
-            box.borderRadius.of($radii.small),
+            box.borderRadius.all.of($radii.small),
             box.padding.horizontal.of($space.small),
             text.style.of($md.text.bodyLarge),
           ),

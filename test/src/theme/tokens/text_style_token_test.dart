@@ -86,8 +86,8 @@ void main() {
           text.style.of($md.text.bodyText2),
           box.color.of($md.colors.background),
           box.color.of($md.colors.error),
-          box.borderRadius.of($radii.medium),
-          box.borderRadius.of($radii.large),
+          box.borderRadius.all.of($radii.medium),
+          box.borderRadius.all.of($radii.large),
           box.padding.horizontal.of($space.medium),
           box.padding.horizontal.of($space.large),
         ),
@@ -129,7 +129,7 @@ void main() {
 
     expect(
       (containerWidget.decoration as BoxDecoration).borderRadius,
-      BorderRadius.all(themeData.radii[$radii.medium]!),
+      BorderRadius.all(themeData.radii[$radii.large]!),
     );
 
     expect(

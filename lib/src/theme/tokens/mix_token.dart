@@ -67,9 +67,6 @@ class StyledTokens<T extends MixToken<V>, V> with Comparable {
   }
 
   StyledTokens<T, V> merge(StyledTokens<T, V> other) {
-    //  TODO: This is a temporary solution, but it works for now
-    // ovrite the keys on this _map with the keys from the other _map
-
     final newMap = Map<T, V>.from(_map);
 
     newMap.addAll(other._map);

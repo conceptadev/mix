@@ -38,19 +38,7 @@ class BorderRadiusGeometryDto extends Dto<BorderRadiusGeometry>
     this.topEnd,
     this.bottomStart,
     this.bottomEnd,
-  }) : token = null;
-
-  final RadiusToken? token;
-
-  const BorderRadiusGeometryDto.token(RadiusToken this.token)
-      : topLeft = null,
-        topRight = null,
-        bottomLeft = null,
-        bottomRight = null,
-        topStart = null,
-        topEnd = null,
-        bottomStart = null,
-        bottomEnd = null;
+  });
 
   static BorderRadiusGeometryDto from(BorderRadiusGeometry radius) {
     if (radius is BorderRadius) {
@@ -107,13 +95,9 @@ class BorderRadiusGeometryDto extends Dto<BorderRadiusGeometry>
   @override
   BorderRadiusGeometry resolve(MixData mix) {
     Radius getRadiusValue(Radius? radius) {
-      const defaultRadius = Radius.zero;
+      if (radius == null) return Radius.zero;
 
-      if (token != null) {
-        return mix.tokens.radiiToken(token!);
-      }
-
-      return radius ?? defaultRadius;
+      return radius is RadiusRef ? mix.tokens.radiiRef(radius) : radius;
     }
 
     return isDirectional
