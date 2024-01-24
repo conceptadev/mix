@@ -1,9 +1,17 @@
+## 1.0.0-beta.1
+
+- Revamped Mix API for improved functionality and developer experience.
+- Enhanced performance and system responsiveness.
+- Broadened test coverage for greater reliability.
+- Extensive bug fixes for increased stability.
+
+Visit our documentation site for more information [https://fluttermix.com](https://fluttermix.com)
+
 ## 0.0.7
 
 - Performance improvements
 - Bug fixes [#59](https://github.com/leoafarias/mix/issues/59) by @bdlukaa
 - InheritedAttribute - Custiom Mix attributes [#94](https://github.com/leoafarias/mix/pull/94) by @pbissonho
-
 
 ## 0.0.6
 
