@@ -23,7 +23,7 @@ void main() {
       $space.small: 30,
     },
     textStyles: {
-      $textStyles.bodyLarge: const TextStyle(
+      $md.text.bodyLarge: const TextStyle(
         fontSize: 200,
         fontWeight: FontWeight.w300,
       ),
@@ -52,7 +52,7 @@ void main() {
             box.color.of(primaryColor),
             box.borderRadius.of($radii.small),
             box.padding.horizontal.of($space.small),
-            text.style.of($textStyles.bodyLarge),
+            text.style.of($md.text.bodyLarge),
           ),
           child: const StyledText('Hello'),
         ),
@@ -88,7 +88,7 @@ void main() {
 
       expect(
         textWidget.style,
-        theme.textStyles[$textStyles.bodyLarge],
+        theme.textStyles[$md.text.bodyLarge],
       );
     });
 
