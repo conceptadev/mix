@@ -38,7 +38,19 @@ class BorderRadiusGeometryDto extends Dto<BorderRadiusGeometry>
     this.topEnd,
     this.bottomStart,
     this.bottomEnd,
-  });
+  }) : token = null;
+
+  final RadiusToken? token;
+
+  const BorderRadiusGeometryDto.token(RadiusToken this.token)
+      : topLeft = null,
+        topRight = null,
+        bottomLeft = null,
+        bottomRight = null,
+        topStart = null,
+        topEnd = null,
+        bottomStart = null,
+        bottomEnd = null;
 
   static BorderRadiusGeometryDto from(BorderRadiusGeometry radius) {
     if (radius is BorderRadius) {
@@ -94,36 +106,28 @@ class BorderRadiusGeometryDto extends Dto<BorderRadiusGeometry>
 
   @override
   BorderRadiusGeometry resolve(MixData mix) {
-    const defaultRadius = Radius.zero;
+    Radius getRadiusValue(Radius? radius) {
+      const defaultRadius = Radius.zero;
+
+      if (token != null) {
+        return mix.tokens.radiiToken(token!);
+      }
+
+      return radius ?? defaultRadius;
+    }
 
     return isDirectional
         ? BorderRadiusDirectional.only(
-            topStart: mix.tokens.radiiRef(
-              (topStart ?? defaultRadius) as RadiusRef,
-            ),
-            topEnd: mix.tokens.radiiRef(
-              (topEnd ?? defaultRadius) as RadiusRef,
-            ),
-            bottomStart: mix.tokens.radiiRef(
-              (bottomStart ?? defaultRadius) as RadiusRef,
-            ),
-            bottomEnd: mix.tokens.radiiRef(
-              (bottomEnd ?? defaultRadius) as RadiusRef,
-            ),
+            topStart: getRadiusValue(topStart),
+            topEnd: getRadiusValue(topEnd),
+            bottomStart: getRadiusValue(bottomStart),
+            bottomEnd: getRadiusValue(bottomEnd),
           )
         : BorderRadius.only(
-            topLeft: mix.tokens.radiiRef(
-              (topLeft ?? defaultRadius) as RadiusRef,
-            ),
-            topRight: mix.tokens.radiiRef(
-              (topRight ?? defaultRadius) as RadiusRef,
-            ),
-            bottomLeft: mix.tokens.radiiRef(
-              (bottomLeft ?? defaultRadius) as RadiusRef,
-            ),
-            bottomRight: mix.tokens.radiiRef(
-              (bottomRight ?? defaultRadius) as RadiusRef,
-            ),
+            topLeft: getRadiusValue(topLeft),
+            topRight: getRadiusValue(topRight),
+            bottomLeft: getRadiusValue(bottomLeft),
+            bottomRight: getRadiusValue(bottomRight),
           );
   }
 

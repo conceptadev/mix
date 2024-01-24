@@ -9,6 +9,7 @@ void main() {
   final theme = MixThemeData(
     colors: {
       primaryColor: Colors.blue,
+      $md.colors.error: Colors.redAccent,
     },
     breakpoints: {
       $breakpoints.small: const Breakpoint(
@@ -17,7 +18,8 @@ void main() {
       ),
     },
     radii: {
-      $radii.small: const Radius.circular(10),
+      $radii.small: const Radius.circular(200),
+      $radii.large: const Radius.circular(2000),
     },
     space: {
       $space.small: 30,

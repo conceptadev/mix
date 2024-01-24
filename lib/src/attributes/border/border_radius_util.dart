@@ -278,12 +278,7 @@ class BorderRadiusGeometryUtility<T extends StyleAttribute>
     );
   }
 
-  T of(RadiusToken ref) => only(
-        topLeft: ref(),
-        topRight: ref(),
-        bottomLeft: ref(),
-        bottomRight: ref(),
-      );
+  T of(RadiusToken ref) => builder(BorderRadiusGeometryDto.token(ref));
 
   /// Sets the border radius for each corner of a [BorderRadiusGeometry].
   ///
