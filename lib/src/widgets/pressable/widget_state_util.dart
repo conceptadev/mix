@@ -18,7 +18,7 @@ final onDisabled = _onStatus(WidgetStatus.disabled);
 /// Applies styles when the widget is enabled.
 final onEnabled = _onStatus(WidgetStatus.enabled);
 
-/// Applies styles when the widget has focus.
+/// Applies styles when the widget has focus.dar
 final onFocus = ContextVariant(
   'on-focus',
   (context) => WidgetStateNotifier.of(context)?.focus == true,

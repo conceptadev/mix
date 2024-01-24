@@ -60,10 +60,11 @@ extension StyleExt<T extends Attribute> on Style {
     @Deprecated('Use the style parameter instead') Style? mix,
     Style? style,
   }) {
-    return HBox(
+    return FlexBox(
       style: merge(style ?? mix),
       key: key,
       inherit: inherit,
+      direction: Axis.horizontal,
       children: children,
     );
   }
@@ -100,17 +101,18 @@ extension StyleExt<T extends Attribute> on Style {
     );
   }
 
-  VBox column({
+  FlexBox column({
     required List<Widget> children,
     bool inherit = false,
     Key? key,
     @Deprecated('Use the style parameter instead') Style? mix,
     Style? style,
   }) {
-    return VBox(
+    return FlexBox(
       style: merge(style ?? mix),
       key: key,
       inherit: inherit,
+      direction: Axis.vertical,
       children: children,
     );
   }

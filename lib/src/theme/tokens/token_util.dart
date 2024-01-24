@@ -32,17 +32,9 @@ class SpaceTokenUtil {
 @immutable
 class ColorTokenUtil {
   const ColorTokenUtil();
-
-  factory ColorTokenUtil.withMaterial() {
-    return const ColorTokenUtilWithMaterialTokens();
-  }
 }
 
 @immutable
 class TextStyleTokenUtil {
   const TextStyleTokenUtil();
-
-  factory TextStyleTokenUtil.withMaterial() {
-    return const TextStyleTokenUtilWithMaterialTokens();
-  }
 }
