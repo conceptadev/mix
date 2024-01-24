@@ -7,11 +7,11 @@ class VariantsDefaultExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final style = Style(
-      box.color($colors.secondary()),
-      text.style.color.of($colors.onSecondary),
+      box.color($md.colorScheme.secondary()),
+      text.style.color.of($md.colorScheme.onSecondary),
       onHover(
-        box.color.of($colors.primary),
-        text.style(color: $colors.onPrimary()),
+        box.color.of($md.colorScheme.primary),
+        text.style(color: $md.colorScheme.onPrimary()),
       ),
     );
 

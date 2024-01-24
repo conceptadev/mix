@@ -7,10 +7,10 @@ import 'gesture_state.notifier.dart';
 /// Global context variants for handling common widget states and gestures.
 
 /// Applies styles when the widget is pressed.
-final onPress = _onState(WidgetState.pressed);
+final onPressed = _onState(WidgetState.pressed);
 
 /// Applies styles when the widget is long pressed.
-final onLongPress = _onState(WidgetState.longPressed);
+final onLongPressed = _onState(WidgetState.longPressed);
 
 /// Applies styles when the widget is disabled.
 final onDisabled = _onStatus(WidgetStatus.disabled);
@@ -18,20 +18,20 @@ final onDisabled = _onStatus(WidgetStatus.disabled);
 /// Applies styles when the widget is enabled.
 final onEnabled = _onStatus(WidgetStatus.enabled);
 
-/// Applies styles when the widget has focus.
-final onFocus = ContextVariant(
-  'on-focus',
-  (context) => WidgetStateNotifier.of(context)?.focus == true,
+/// Applies styles when the widget has focus.dar
+final onFocused = ContextVariant(
+  'on-focused',
 
   /// Applies the variant only when the GestureStateNotifier's focus property is true.
+  (context) => WidgetStateNotifier.of(context)?.focus == true,
 );
 
 /// Applies styles when the widget is being hovered over.
 final onHover = ContextVariant(
   'on-hover',
-  (context) => WidgetStateNotifier.of(context)?.hover == true,
 
   /// Applies the variant only when the GestureStateNotifier's hover property is true.
+  (context) => WidgetStateNotifier.of(context)?.hover == true,
 );
 
 /// Helper class for creating widget state-based context variants.

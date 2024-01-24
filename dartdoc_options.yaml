@@ -1,8 +1,4 @@
 dartdoc:
   showStats: true
-  categories:
-      "Widgets":
-        name: Widgets
-      "Second Category":
-        name: Great
-      categoryOrder: ["Widgets", "Second Category"]
+  nodoc: ['lib/src/deprecations.dart']
+  

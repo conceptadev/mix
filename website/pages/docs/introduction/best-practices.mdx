@@ -4,26 +4,42 @@ title: "Best Practices"
 ---
 
 import { Callout } from "nextra-theme-docs";
+import { FileTree } from "nextra/components";
 
 # Best Practices
-As you start to build your application with Mix, you'll want to follow some best practices to ensure your code is aligned with the framework's conventions.
 
-To get started, I'll create a button based on the [Shadcn Button](https://ui.shadcn.com/docs/components/button) component. I'll call it `CustomButton`. 
+As you start to build your app with Mix, you'll want to follow some best practices to ensure your code is aligned with the framework's conventions.
+
+<Callout type="info">
+  Guidelines in this guide are crafted for scalability and maintainability in
+  Mix, and will evolve with community insights.
+</Callout>
+
+To get started, We'll create a button based on the Shadcn's [Button](https://ui.shadcn.com/docs/components/button) component. We'll call it a `CustomButton`.
 
 ## File Structure
-First, I'll create a folder called `button`. Inside it, I'll create three files:
 
-### `button.dart`,
-In this file, I'll create a class called `CustomButton` and all structure of the component.
+A well-organized file structure is crucial for maintaining a clean and scalable codebase, especially when working with design systems in Flutter. By dividing the button component into separate files as shown below, we not only enhance readability but also promote modularity and maintainability:
 
-###`button.variant.dart`.
-And the last one, I'll create a class called `CustomButtonVariant` and all `Variant` instances.
+<FileTree>
+  <FileTree.Folder name="widgets" defaultOpen>
+    <FileTree.Folder name="button" defaultOpen>
+      <FileTree.File name="button.dart" />
+      <FileTree.File name="button.variant.dart" />
+      <FileTree.File name="button.style.dart" />
+    </FileTree.Folder>
+  </FileTree.Folder>
+</FileTree>
 
-### `button.style.dart`
-Here, I'll create a class called `CustomButtonStyle` and all `Style` instances related to button.
+- `button.dart` - This file will contain the CustomButton class and define the component's structure.
+
+- `button.variant.dart` - Here, we'll define the CustomButtonVariant class and all its Variant instances.
+
+- `button.style.dart` - In this file, the CustomButtonStyle class will be created, housing all Style instances related to the button.
 
 ## Widget Structure
-The main tip here is to use the StyledWidgets to create your component. Those widgets are responsible for creating the component's structure and styling it. Although your Button structure will be looks like the following code:
+
+It's recommended to use `StyledWidgets` for component creation. These widgets are key in structuring and styling your component. For example, the structure of your Button might look like this:
 
 ```dart
 class CustomButton extends StatelessWidget {
@@ -46,13 +62,13 @@ class CustomButton extends StatelessWidget {
     );
   }
 }
-
 ```
 
-In this code sample I only used two StyledWidgets, `PressableBox` and `StyledText`. However, you can see the full list of StyledWidgets [here](/styled-widgets).
+This example utilizes two StyledWidgets: `PressableBox` and `StyledText`. Explore the full list of StyledWidgets [here](/styled-widgets).
 
 ## Defining Variants
-To create variants is quite simple. You just need to create a class that extends `Variant` and define the variants you want to use, so I'll create two classes, the first one is `ButtonType` to define the cases `primary`, `destructive` and `link`, the other one is ButtonSize with cases `medium` and `large`. Shadcn has more than that, but for this example, I'll use only those three.
+
+Variants are a powerful feature in design systems, allowing for flexible and reusable component configurations. In our `CustomButton` example, we create two types of variants: `CustomButtonType` and `CustomButtonSize`.
 
 ```dart
 class CustomButtonType extends Variant {
@@ -71,7 +87,13 @@ class CustomButtonSize extends Variant {
 }
 ```
 
-Now that the variants are defined, I'll modify the `CustomButton` class to receive the variants as parameters and use it to define the style of the component.
+By defining variants, we create a set of predefined styles that can be easily applied to the `CustomButton`. This approach offers several advantages:
+
+- **Consistency**: Variants allows you to maintain a simple API to style your component. You can easily apply a set of predefined styles to your component, ensuring consistency across your application.
+- **Flexibility**: They allow for customization without altering the core component logic. You can introduce new styles or modify existing ones without impacting the button's basic functionality.
+- **Ease of Use**: With variants, the component's API becomes more intuitive and easier to use, as developers can pick from a set of predefined options.
+
+Now, let's incorporate these variants into the `CustomButton` class to influence the component's style:
 
 ```dart
 class CustomButton extends StatelessWidget {
@@ -91,18 +113,18 @@ class CustomButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PressableBox(
+      onPressed: onPressed,
       child: StyledText(
         title,
       ),
     );
   }
 }
-
 ```
 
 ## Styling the component
 
-finally, I'll create a class called `CustomButtonStyle` and define the styles for each variant defined in `CustomButtonType` and `CustomButtonSize` class.
+In the `CustomButtonStyle` class, we carefully define the styles for each variant associated with the `CustomButton`. This approach is central to ensuring that the button not only functions well but also aligns with the aesthetic and usability standards of our design system.
 
 ```dart
 class CustomButtonStyle {
@@ -112,7 +134,7 @@ class CustomButtonStyle {
   final CustomButtonSize size;
 
   Style container() => Style(
-        border.radius.all(8),
+        borderRadius(8),
         CustomButtonSize.medium(
           padding.horizontal(16),
           padding.vertical(8),
@@ -155,22 +177,22 @@ class CustomButtonStyle {
 }
 ```
 
-Now I'll modify the `CustomButton` class to support the styles defined in the `CustomButtonStyle` class.
+With these styles in place, update the `CustomButton` class to apply them:
 
 ```dart
 class CustomButton extends StatelessWidget {
   const CustomButton({
     super.key,
     required this.title,
+    required this.onPressed,
     this.type = CustomButtonType.primary,
     this.size = CustomButtonSize.large,
-    required this.onPressed,
   });
 
   final String title;
+  final void Function() onPressed;
   final CustomButtonType type;
   final CustomButtonSize size;
-  final void Function() onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -185,7 +207,6 @@ class CustomButton extends StatelessWidget {
     );
   }
 }
-
 ```
 
-Now you are prepared to use your component in your application and it will be aligned with the framework's conventions. Congratulations! 🎉
+Congratulations! You are now ready to use your `CustomButton` component, fully aligned with the Mix framework's conventions. 🎉

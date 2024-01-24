@@ -200,14 +200,16 @@ final style = Style(
 ```
 
 <Callout type="info">
-  The operator that has preference is the first readed operator, so in this case the `onHover` variant will be applied first, then the `onPress` and finally the `onDark` variant.
+  The operator that has preference is the first readed operator, so in this case
+  the `onHover` variant will be applied first, then the `onPress` and finally
+  the `onDark` variant.
 </Callout>
 
 To understand how this works, let's see the following example:
 
 1. When the `onHover` variant is applied, the resulted `Style` will be equivalent to:
 
-```dart 
+```dart
 Style(
   box.height(100),
   box.width(100),
@@ -216,7 +218,7 @@ Style(
 
 2. However, applying the `onHover` variant and the `onDark` variant, the resulting `Style` is different because it satisfies the logic condition in the variant.
 
-```dart 
+```dart
 Style(
   box.height(100),
   box.width(100),
@@ -273,8 +275,8 @@ Mix provides a set of pre-defined context variants for adaptive styling:
 For the following variants, the widget must be wrapped in a `Pressable` widget or use the `GestureBox` widget.
 
 - **`onHover()`:** Applies styles when the widget is hovered.
-- **`onPress()`:** Applies styles when the widget is pressed.
-- **`onLongPress()`:** Applies styles when the widget is long pressed.
-- **`onFocus()`:** Applies styles when the widget is focused.
+- **`onPressed()`:** Applies styles when the widget is pressed.
+- **`onLongPressed()`:** Applies styles when the widget is long pressed.
+- **`onFocused()`:** Applies styles when the widget is focused.
 - **`onDisabled()`:** Applies styles when the widget is disabled.
 - **`onEnabled()`:** Applies styles when the widget is enabled.

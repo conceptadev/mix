@@ -5,10 +5,22 @@ import '../../theme/tokens/space_token.dart';
 import '../scalars/scalar_util.dart';
 import 'spacing_dto.dart';
 
-/// A utility class for defining spacing attributes like padding and margin in Flutter widgets.
+/// A utility class for creating flexible and consistent spacing attributes in Flutter widgets.
 ///
-/// This class provides a convenient and intuitive way to specify various types of spacing in UI components.
-/// It works with `SpacingDto` to create custom spacing attributes that can be applied to widgets.
+/// This utility offers a variety of methods to apply uniform or custom spacing around widgets.
+///
+/// It's designed to work seamlessly with the `MixTheme`, ensuring that
+/// spacing across the application follows the predefined design tokens or custom values.
+///
+/// Utilizing `SpacingUtility` simplifies the process of applying consistent and theme-aligned
+/// spacings, enhancing the visual harmony and usability of the application's UI.
+///
+/// Usage examples and scenarios for each method are provided in their respective documentation.
+///
+/// See also:
+/// * [SpacingDto]: The data transfer object used by `SpacingUtility`.
+/// * [SpacingSideUtility]: A utility for applying spacing to individual sides of a widget.
+/// * [SpacingDirectionalUtility]: A utility for creating directional spacing attributes.
 @immutable
 class SpacingUtility<T extends StyleAttribute>
     extends DtoUtility<T, SpacingDto, EdgeInsetsGeometry> {
@@ -18,46 +30,14 @@ class SpacingUtility<T extends StyleAttribute>
   SpacingDirectionalUtility<T> get directional =>
       SpacingDirectionalUtility(builder);
 
-  /// Applies uniform horizontal spacing to a widget.
-  ///
-  /// This method returns a `SpacingSideUtility<T>` that provides equal horizontal spacing on both the left and right sides of a widget.
-  /// It is ideal for consistent horizontal padding or margin, aiding in maintaining a harmonious alignment in the horizontal axis of the layout.
-  ///
-  /// Parameters:
-  /// `value` (double): The spacing value to apply equally to the left and right sides.
-  ///
-  /// Example:
-  ///
-  /// ```dart
-  /// // Applying 15 units of uniform horizontal spacing to the left and right sides of a widget
-  /// final horizontalSpacing = spacing.horizontal(15);
-  /// ```
-  ///
-  /// See also:
-  /// * [SpacingSideUtility], the utility class for applying spacing to individual sides of a widget
+  /// Applies uniform horizontal (left and right) spacing to a widget.
   SpacingSideUtility<T> get horizontal {
     return SpacingSideUtility(
       (double value) => only(left: value, right: value),
     );
   }
 
-  /// Applies uniform vertical spacing to a widget.
-  ///
-  /// This method creates a `SpacingSideUtility<T>` instance that applies equal spacing to both the top and bottom sides of a widget.
-  /// It's especially useful for achieving symmetrical vertical padding or margin, enhancing the visual balance of the layout.
-  ///
-  /// Parameters:
-  /// `value` (double): The amount of vertical spacing to apply uniformly to the top and bottom.
-  ///
-  /// Example:
-  ///
-  /// ```dart
-  /// // Creating a vertical spacing utility with 20 units of spacing for the top and bottom sides
-  /// final verticalSpacing = spacing.vertical(20);
-  /// ```
-  ///
-  /// See also:
-  /// * [SpacingSideUtility], the utility class for applying spacing to individual sides of a widget
+  /// Applies uniform vertical (top and bottom) spacing to a widget
   SpacingSideUtility<T> get vertical {
     return SpacingSideUtility(
       (double value) => only(top: value, bottom: value),
@@ -65,22 +45,6 @@ class SpacingUtility<T extends StyleAttribute>
   }
 
   /// Creates a spacing utility that applies uniform spacing to all sides of a widget.
-  ///
-  /// This method returns a `SpacingSideUtility<T>` for setting equal spacing on the top, bottom, left, and right sides.
-  /// It is ideal for creating consistent padding or margin around a widget.
-  ///
-  /// Parameters:
-  /// `value` (double): The uniform spacing value to apply on all sides.
-  ///
-  /// Example:
-  ///
-  /// ```dart
-  /// // Applying 10 units of uniform spacing to all sides of a widget
-  /// final uniformSpacing = spacing.all(10);
-  /// ```
-  ///
-  /// See also:
-  /// * [SpacingSideUtility], the utility class for applying spacing to individual sides of a widget
   SpacingSideUtility<T> get all {
     return SpacingSideUtility(
       (double value) =>
@@ -89,121 +53,31 @@ class SpacingUtility<T extends StyleAttribute>
   }
 
   /// Applies uniform spacing to the top side of a widget.
-  ///
-  /// This method returns a `SpacingSideUtility<T>` for setting a specified amount of spacing
-  /// (either padding or margin) at the top edge of a widget. It is helpful for adjusting vertical
-  /// alignment and spacing within layouts.
-  ///
-  /// Parameters:
-  /// `value` (double): The spacing value to be applied to the top side.
-  ///
-  /// Example:
-  ///
-  /// ```dart
-  /// // Adding 5 units of spacing to the top side of a widget
-  /// final topSpacing = spacing.top(5);
-  /// ```
-  ///
-  /// See also:
-  /// * [SpacingSideUtility], the utility class for applying spacing to individual sides of a widget
   SpacingSideUtility<T> get top {
     return SpacingSideUtility((value) => only(top: value));
   }
 
   /// Applies uniform spacing to the bottom side of a widget.
-  ///
-  /// This method returns a `SpacingSideUtility<T>` for adding a specific amount of spacing
-  /// (padding or margin) to the bottom edge. It is useful for managing vertical space and alignment
-  /// in widget layouts.
-  ///
-  /// Parameters:
-  /// `value` (double): The spacing value to apply to the bottom side.
-  ///
-  /// Example:
-  ///
-  /// ```dart
-  /// // Setting 5 units of spacing at the bottom side of a widget
-  /// final bottomSpacing = spacing.bottom(5);
-  /// ```
-  ///
-  /// See also:
-  /// * [SpacingSideUtility], the utility class for applying spacing to individual sides of a widget
   SpacingSideUtility<T> get bottom {
     return SpacingSideUtility((value) => only(bottom: value));
   }
 
   /// Applies spacing to the left side.
-  ///
-  /// Ideal for adding padding or margin to the left edge.
-  ///
-  /// Example:
-  ///
-  /// ```dart
-  /// final myLeftSpacing = spacing.left(8);
-  /// ```
-  ///
-  /// See also:
-  /// * [SpacingSideUtility], the utility class for applying spacing to individual sides of a widget
   SpacingSideUtility<T> get left {
     return SpacingSideUtility((value) => only(left: value));
   }
 
   /// Applies spacing to the right side.
-  ///
-  /// Use this method for padding or margin on the right edge.
-  ///
-  /// Example:
-  ///
-  /// ```dart
-  /// final myRightSpacing = spacing.right(8);
-  /// ```
-  ///
-  /// See also:
-  /// * [SpacingSideUtility], the utility class for applying spacing to individual sides of a widget
   SpacingSideUtility<T> get right {
     return SpacingSideUtility((value) => only(right: value));
   }
 
   /// Applies spacing to the start side of the widget, considering the text direction.
-  ///
-  /// This method returns a `SpacingSideUtility<T>` for adding padding or margin to the start side,
-  /// which is dynamically determined based on the text direction (LTR or RTL).
-  /// It is particularly useful in multilingual applications supporting RTL layouts.
-  ///
-  /// Parameters:
-  /// `value` (double): The spacing value to apply to the start side.
-  ///
-  /// Example:
-  ///
-  /// ```dart
-  /// // Adding 10 units of spacing to the start side of a widget
-  /// final startSpacing = spacing.start(10);
-  /// ```
-  ///
-  /// See also:
-  /// * [SpacingSideUtility], the utility class for applying spacing to individual sides of a widget
   SpacingSideUtility<T> get start {
     return SpacingSideUtility((value) => only(start: value));
   }
 
   /// Applies spacing to the end side of the widget, taking into account the text direction.
-  ///
-  /// This method returns a `SpacingSideUtility<T>` for applying padding or margin to the end side.
-  /// The 'end' side is contextually determined based on the current text direction (LTR or RTL), making
-  /// it suitable for RTL layouts and localization needs.
-  ///
-  /// Parameters:
-  /// `value` (double): The spacing value to be applied to the end side.
-  ///
-  /// Example:
-  ///
-  /// ```dart
-  /// // Applying 10 units of spacing to the end side of a widget
-  /// final endSpacing = spacing.end(10);
-  /// ```
-  ///
-  /// See also:
-  /// * [SpacingSideUtility], the utility class for applying spacing to individual sides of a widget
   SpacingSideUtility<T> get end {
     return SpacingSideUtility((double value) => only(end: value));
   }
@@ -512,19 +386,25 @@ class SpacingDirectionalUtility<T extends StyleAttribute>
   }
 }
 
-/// A utility class for creating spacing attributes using design tokens from `MixTheme`.
+/// {@template spacing_side_utility}
+/// A utility class for creating spacing values directly or [SpaceToken] values from from [MixTheme].
 ///
 /// `SpacingSideUtility` enables the application of standard spacing sizes (like xsmall, small, etc.) or custom values in widget layouts.
+///
 /// The sizes used are design tokens defined in `MixTheme`. These tokens are referenced values that get converted to actual spacing during
 /// the widget build process, ensuring consistent and theme-aligned spacing throughout the application.
 ///
 /// Example:
 /// ```dart
+/// // Applying a custom spacing value
+/// final customSpacing = spacingSide(15);
+///
 /// // Using predefined spacing sizes from MixTheme design tokens
 /// final smallSpacing = spacingSide.small();
-///
-/// // Applying a custom spacing value, to be converted in line with MixTheme during build
-/// final customSpacing = spacingSide(15);
+/// final mediumSpacing = spacingSide.medium();
+/// final largeSpacing = spacingSide.large();
+/// final xlargeSpacing = spacingSide.xlarge();
+/// final xxlargeSpacing = spacingSide.xxlarge();
 /// ```
 ///
 /// See also:
@@ -532,110 +412,31 @@ class SpacingDirectionalUtility<T extends StyleAttribute>
 /// * [SpacingUtility], the utility class for creating spacing attributes
 /// * [SpacingDirectionalUtility], the utility class for creating directional spacing attributes
 /// * [SpacingDto], the data transfer object for [SpacingDto]
+/// {@endtemplate}
 @immutable
 class SpacingSideUtility<T extends StyleAttribute>
     extends MixUtility<T, double> {
   /// Creates a `SpacingSideUtility` with a builder function.
-  ///
-  /// The builder function takes a `double` as a parameter and returns `T`.
-  /// Now when using the utility it can inject custom methods into the builder function.
-  ///
-  /// Methods:
-  /// - `xsmall()`: Applies the 'extra-small' spacing size from design tokens.
-  /// - `small()`: Applies the 'small' spacing size from design tokens.
-  /// - `medium()`: Applies the 'medium' spacing size from design tokens.
-  /// - `large()`: Applies the 'large' spacing size from design tokens.
-  /// - `xlarge()`: Applies the 'extra-large' spacing size from design tokens.
-  /// - `xxlarge()`: Applies the 'extra-extra-large' spacing size from design tokens.
-  /// - `call(double value)`: Applies a custom spacing value. The `value` parameter is the spacing value to apply.
-  ///
-  /// Each method returns a `T` type, representing the spacing attribute created, which aligns with the overall theme and design system of the application.
   const SpacingSideUtility(super.builder);
 
-  /// Applies the 'extra-small' spacing size from design tokens.
-  ///
-  /// Example:
-  ///
-  /// ```dart
-  /// final smallSpacing = spacingSide.small();
-  /// ```
-  ///
-  /// See also:
-  /// * [SpaceToken], the design tokens for spacing sizes
+  /// Applies the xsmall spacing size from design tokens.
   T xsmall() => builder(SpaceToken.xsmall());
 
-  /// Applies the 'small' spacing size from design tokens.
-  ///
-  /// Example:
-  ///
-  /// ```dart
-  /// final smallSpacing = spacingSide.small();
-  /// ```
-  ///
-  /// See also:
-  /// * [SpaceToken], the design tokens for spacing sizes
+  /// Applies the small spacing size from design tokens.
   T small() => builder(SpaceToken.small());
 
-  /// Applies the 'medium' spacing size from design tokens.
-  ///
-  /// Example:
-  ///
-  /// ```dart
-  /// final mediumSpacing = spacingSide.medium();
-  /// ```
-  ///
-  /// See also:
-  /// * [SpaceToken], the design tokens for spacing sizes
+  /// Applies the medium spacing size from design tokens.
   T medium() => builder(SpaceToken.medium());
 
-  /// Applies the 'large' spacing size from design tokens.
-  ///
-  /// Example:
-  ///
-  /// ```dart
-  /// final largeSpacing = spacingSide.large();
-  /// ```
-  ///
-  /// See also:
-  /// * [SpaceToken], the design tokens for spacing sizes
+  /// Applies the large spacing size from design tokens.
   T large() => builder(SpaceToken.large());
 
-  /// Applies the 'extra-large' spacing size from design tokens.
-  ///
-  /// Example:
-  ///
-  /// ```dart
-  /// final xlargeSpacing = spacingSide.xlarge();
-  /// ```
-  ///
-  /// See also:
-  /// * [SpaceToken], the design tokens for spacing sizes
+  /// Applies the xlarge spacing size from design tokens.
   T xlarge() => builder(SpaceToken.xlarge());
 
-  /// Applies the 'extra-extra-large' spacing size from design tokens.
-  ///
-  /// Example:
-  ///
-  /// ```dart
-  /// final xxlargeSpacing = spacingSide.xxlarge();
-  /// ```
-  ///
-  /// See also:
-  /// * [SpaceToken], the design tokens for spacing sizes
+  /// Applies the xxlarge spacing size from design tokens.
   T xxlarge() => builder(SpaceToken.xxlarge());
 
   /// Applies a custom spacing value
-  ///
-  /// Parameters:
-  /// `value` (double): The spacing value to apply.
-  ///
-  /// Example:
-  ///
-  /// ```dart
-  /// final customSpacing = spacingSide(15);
-  /// ```
-  ///
-  /// See also:
-  /// * [SpaceToken], the design tokens for spacing sizes
   T call(double value) => builder(value);
 }

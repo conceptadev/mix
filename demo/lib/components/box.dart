@@ -9,7 +9,7 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 Widget boxDecorationContainer(BuildContext context) {
   final boxStyle = Style(
     backgroundColor.red(),
-    onPress(
+    onPressed(
       backgroundColor.blue(),
     ),
     opacity(0.5),

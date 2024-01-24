@@ -29,10 +29,12 @@ class SpaceTokenUtil {
   SpaceRef xxlarge() => SpaceToken.xxlarge();
 }
 
+@immutable
 class ColorTokenUtil {
   const ColorTokenUtil();
 }
 
+@immutable
 class TextStyleTokenUtil {
   const TextStyleTokenUtil();
 }

@@ -54,45 +54,18 @@ class MixedIcon extends StatelessWidget {
     final mix = this.mix ?? MixProvider.of(context);
     final spec = IconSpec.of(mix);
 
-    final iconWidget = IconSpecWidget(
-      spec: spec,
-      semanticLabel: semanticLabel,
-      textDirection: textDirection,
-      icon: icon,
-    );
-
-    return shouldApplyDecorators(
-      mix: mix,
-      orderOfDecorators: decoratorOrder,
-      child: iconWidget,
-    );
-  }
-}
-
-class IconSpecWidget extends StatelessWidget {
-  const IconSpecWidget({
-    super.key,
-    required this.spec,
-    this.semanticLabel,
-    this.textDirection,
-    this.icon,
-  });
-
-  final IconSpec spec;
-
-  final IconData? icon;
-
-  final String? semanticLabel;
-  final TextDirection? textDirection;
-
-  @override
-  Widget build(BuildContext context) {
-    return Icon(
+    final current = Icon(
       icon,
       size: spec.size,
       color: spec.color,
       semanticLabel: semanticLabel,
       textDirection: textDirection,
+    );
+
+    return shouldApplyDecorators(
+      mix: mix,
+      orderOfDecorators: decoratorOrder,
+      child: current,
     );
   }
 }

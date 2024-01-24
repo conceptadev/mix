@@ -101,12 +101,12 @@ class Variant with Comparable {
     return VariantAttribute(this, Style.create(params));
   }
 
-  @override
-  get props => [name];
-
   bool matches(Iterable<Variant> matchVariants) {
     return matchVariants.contains(this);
   }
+
+  @override
+  get props => [name];
 }
 
 /// A typedef for a function that determines if a specific context condition is met.
@@ -252,20 +252,14 @@ class MultiVariant extends Variant {
   ///
   /// It initializes a `MultiVariant` with the given [variants] and sets the type to `MultiVariantType.and`.
   factory MultiVariant.and(Iterable<Variant> variants) {
-    return MultiVariant(
-      variants,
-      type: MultiVariantOperator.and,
-    );
+    return MultiVariant(variants, type: MultiVariantOperator.and);
   }
 
   /// Factory constructor to create a `MultiVariant` where any one of the provided variants needs to be active (`MultiVariantType.or`).
   ///
   /// It initializes a `MultiVariant` with the given [variants] and sets the type to `MultiVariantType.or`.
   factory MultiVariant.or(Iterable<Variant> variants) {
-    return MultiVariant(
-      variants,
-      type: MultiVariantOperator.or,
-    );
+    return MultiVariant(variants, type: MultiVariantOperator.or);
   }
 
   /// Removes specified variants from this `MultiVariant`.
@@ -287,32 +281,6 @@ class MultiVariant extends Variant {
     return updatedVariants.length == 1
         ? updatedVariants.first
         : MultiVariant(updatedVariants, type: operatorType);
-  }
-
-  /// Determines if the current `MultiVariant` matches a set of provided variants.
-  ///
-  /// This method evaluates whether the variants within this `MultiVariant` align with the given [matchVariants] based on its `type`:
-  /// - `MultiVariantType.and`: Returns true if every variant in this `MultiVariant` is present in [matchVariants].
-  /// - `MultiVariantType.or`: Returns true if at least one of the variants in this `MultiVariant` is present in [matchVariants].
-  ///
-  /// This method is particularly useful for checking if a composite style, represented by this `MultiVariant`,
-  /// should be applied based on a specific set of active variants.
-  ///
-  /// Example:
-  /// ```dart
-  /// final combinedVariant = MultiVariant.and([variantA, variantB]);
-  /// bool isMatched = combinedVariant.matches([variantA, variantB, variantC]);
-  /// ```
-  /// Here, `isMatched` will be true for `MultiVariantType.and` if both `variantA` and `variantB` are included in the provided list.
-  /// For `MultiVariantType.or`, `isMatched` would be true if either `variantA` or `variantB` is in the list.
-  @override
-  bool matches(Iterable<Variant> matchVariants) {
-    final list = variants.map((e) => e.matches(matchVariants)).toList();
-
-    final result = operatorType == MultiVariantOperator.and
-        ? list.every((e) => e == true)
-        : list.contains(true);
-    return result;
   }
 
   /// Evaluates if the `MultiVariant` should be applied based on the build context.
@@ -337,6 +305,31 @@ class MultiVariant extends Variant {
         ? contextVariants.any((variant) => variant.when(context))
         : contextVariants.length == variants.length &&
             contextVariants.every((variant) => variant.when(context));
+  }
+
+  /// Determines if the current `MultiVariant` matches a set of provided variants.
+  ///
+  /// This method evaluates whether the variants within this `MultiVariant` align with the given [matchVariants] based on its `type`:
+  /// - `MultiVariantType.and`: Returns true if every variant in this `MultiVariant` is present in [matchVariants].
+  /// - `MultiVariantType.or`: Returns true if at least one of the variants in this `MultiVariant` is present in [matchVariants].
+  ///
+  /// This method is particularly useful for checking if a composite style, represented by this `MultiVariant`,
+  /// should be applied based on a specific set of active variants.
+  ///
+  /// Example:
+  /// ```dart
+  /// final combinedVariant = MultiVariant.and([variantA, variantB]);
+  /// bool isMatched = combinedVariant.matches([variantA, variantB, variantC]);
+  /// ```
+  /// Here, `isMatched` will be true for `MultiVariantType.and` if both `variantA` and `variantB` are included in the provided list.
+  /// For `MultiVariantType.or`, `isMatched` would be true if either `variantA` or `variantB` is in the list.
+  @override
+  bool matches(Iterable<Variant> matchVariants) {
+    final list = variants.map((e) => e.matches(matchVariants)).toList();
+
+    return operatorType == MultiVariantOperator.and
+        ? list.every((e) => e)
+        : list.contains(true);
   }
 
   /// A method for creating a new `MultiVariantAttribute` instance.

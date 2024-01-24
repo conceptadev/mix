@@ -8,7 +8,7 @@ abstract class ConstraintsDto<Self extends ConstraintsDto<Self, Value>,
   const ConstraintsDto();
 }
 
-/// Represents a [Dto] Data transfer object of [BoxConstraints]
+/// Represents a Data transfer object of [BoxConstraints]
 ///
 /// This is used to allow for resolvable value tokens, and also the correct
 /// merge and combining behavior. It allows to be merged, and resolved to a `[BoxConstraints]
@@ -16,6 +16,8 @@ abstract class ConstraintsDto<Self extends ConstraintsDto<Self, Value>,
 /// See also:
 /// - [BoxConstraints], which is the Flutter counterpart of this class.
 /// - [ConstraintsDto], which is the base class for this class.
+///
+/// {@category DTO}
 class BoxConstraintsDto
     extends ConstraintsDto<BoxConstraintsDto, BoxConstraints> {
   final double? minWidth;

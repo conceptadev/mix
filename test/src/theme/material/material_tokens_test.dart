@@ -18,10 +18,10 @@ void main() {
       final theme = ThemeData.light();
       await tester.pumpWithMixTheme(
         Container(),
-        theme: MixThemeData.withMaterialTokens().copyWith(),
+        theme: MixThemeData.withMaterial().copyWith(),
       );
       final context = tester.element(find.byType(Container));
-      final colors = const MaterialTokens().colors;
+      final colors = const MaterialTokens().colorScheme;
 
       expect(refResolver(colors.primary(), context), theme.colorScheme.primary);
       expect(refResolver(colors.secondary(), context),
@@ -48,13 +48,13 @@ void main() {
     testWidgets('Material 3 textStyles', (tester) async {
       await tester.pumpWithMixTheme(
         Container(),
-        theme: MixThemeData.withMaterialTokens(),
+        theme: MixThemeData.withMaterial(),
       );
       final context = tester.element(find.byType(Container));
 
       final theme = Theme.of(context);
 
-      final textStyles = const MaterialTokens().text;
+      final textStyles = const MaterialTokens().textTheme;
       expect(refResolver(textStyles.displayLarge(), context),
           theme.textTheme.displayLarge);
       expect(refResolver(textStyles.displayMedium(), context),
@@ -90,13 +90,13 @@ void main() {
     testWidgets('Material 2 text styles', (tester) async {
       await tester.pumpWithMixTheme(
         Container(),
-        theme: MixThemeData.withMaterialTokens(),
+        theme: MixThemeData.withMaterial(),
       );
       final context = tester.element(find.byType(Container));
 
       final theme = Theme.of(context);
 
-      final textStyles = const MaterialTokens().text;
+      final textStyles = const MaterialTokens().textTheme;
       expect(refResolver(textStyles.headline1(), context),
           theme.textTheme.headline1);
       expect(refResolver(textStyles.headline2(), context),

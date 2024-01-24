@@ -73,10 +73,8 @@ extension WithSpaceTokensExt<T extends StyleAttribute>
   T get xxl => xxlarge();
 }
 
-@Deprecated('Use mainAxisAlignment instead')
-FlexSpecAttribute mainAxis(MainAxisAlignment mainAxisAlignment) {
-  return FlexSpecAttribute(mainAxisAlignment: mainAxisAlignment);
-}
+@Deprecated('Use flex.mainAxisAlignment instead')
+final mainAxis = flex.mainAxisAlignment;
 
 @Deprecated('Use onXSmall instead')
 final xsmall = onXSmall;
@@ -99,8 +97,11 @@ final large = onLarge;
 @Deprecated('Use onHover instead')
 final hover = onHover;
 
-@Deprecated('Use onFocus instead')
-final focus = onFocus;
+@Deprecated('Use onFocused instead')
+final focus = onFocused;
+
+@Deprecated('Use onFocused instead')
+final onFocus = onFocused;
 
 @Deprecated('Use onPortrait instead')
 final portrait = onPortrait;
@@ -114,13 +115,16 @@ final disabled = onDisabled;
 @Deprecated('Use onEnabled instead')
 final enabled = onEnabled;
 
-@Deprecated('Use onPress instead')
-final press = onPress;
+@Deprecated('Use onPressed instead')
+final press = onPressed;
+
+@Deprecated('Use onPressed instead')
+final onPress = onPressed;
 
 @Deprecated('Use onNot instead')
 const not = onNot;
 
-@Deprecated('Use textStyle instead')
+@Deprecated('Use text.style instead')
 final font = text.style;
 
 @Deprecated(
@@ -468,7 +472,7 @@ class IconMix extends StyledIcon {
     super.key,
     super.inherit = true,
     super.textDirection,
-  });
+  }) : super(style: mix);
 }
 
 @Deprecated('Use text.style instead')
@@ -477,21 +481,17 @@ final textStyle = text.style;
 @Deprecated('Use text.style.shadow instead')
 final shadow = text.style.shadow;
 
-@Deprecated('use box.color instead')
+@Deprecated('use backgroundColor instead')
 final bgColor = box.decoration.color;
 
 // do no tuse main axisaligmnet use flex.mainAxisAlignment instead
-@Deprecated(
-  'use flex(mainAxisAlignment:value) instead or flex.mainAxisAlignment',
-)
+@Deprecated('use  flex.mainAxisAlignment')
 final mainAxisAlignment = flex.mainAxisAlignment;
 
-@Deprecated(
-  'use flex(crossAxisAlignment:value) instead or flex.crossAxisAlignment',
-)
+@Deprecated('use  flex.crossAxisAlignment')
 final crossAxisAlignment = flex.crossAxisAlignment;
 
-@Deprecated('use flex(mainAxisSize:value) instead or flex.mainAxisSize')
+@Deprecated('use flex.mainAxisSize')
 final mainAxisSize = flex.mainAxisSize;
 
 @Deprecated('use text.style.bold() instead')
@@ -505,42 +505,3 @@ final iconSize = icon.size;
 
 @Deprecated('use icon.color instead')
 final iconColor = icon.color;
-
-// @Deprecated('Use box.maxHeight instead')
-// final maxHeight = box.maxHeight;
-
-// @Deprecated('use box.padding instead')
-// final padding = box.padding;
-
-// @Deprecated('Use box.margin instead')
-// final margin = box.margin;
-
-// @Deprecated('Use box.border')
-// final border = box.border;
-
-// @Deprecated('use box.borderRadius')
-// final borderRadius = box.borderRadius;
-
-// @Deprecated('use box.elevation instead')
-// final elevation = box.elevation;
-
-// @Deprecated('use box.clipBehavior instead')
-// final clipBehavior = box.clipBehavior;
-
-// @Deprecated('Use box.height instead')
-// final height = box.height;
-
-// @Deprecated('Use box.width instead')
-// final width = box.width;
-
-// @Deprecated('Use box.maxWidth instead')
-// final maxWidth = box.maxWidth;
-// @Deprecated('Use box.minHeight instead')
-// final minHeight = box.minHeight;
-// @Deprecated('Use box.minWidth instead')
-// final minWidth = box.minWidth;
-// @Deprecated('Use box.alignment instead')
-// final alignment = box.alignment;
-
-// @Deprecated('use box.color instead')
-// final backgroundColor = box.decoration.color;

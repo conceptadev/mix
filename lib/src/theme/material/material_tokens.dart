@@ -5,8 +5,8 @@ import '../tokens/text_style_token.dart';
 
 @immutable
 class MaterialTokens {
-  final colors = const _MaterialColorTokens();
-  final text = const _MaterialTextStyles();
+  final colorScheme = const _MaterialColorTokens();
+  final textTheme = const _MaterialTextStyles();
 
   const MaterialTokens();
 }

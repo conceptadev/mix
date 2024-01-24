@@ -11,6 +11,16 @@ import '../color/color_dto.dart';
 import '../gradient/gradient_dto.dart';
 import '../shadow/shadow_dto.dart';
 
+/// A Data transfer object that represents a [Decoration] value.
+///
+/// This DTO is used to resolve a [Decoration] value from a [MixData] instance.
+///
+/// See also:
+/// * [Decoration], which is the Flutter equivalent class.
+/// * [BoxDecoration], which is the Flutter equivalent class.
+/// * [ShapeDecoration], which is the Flutter equivalent class.
+///
+/// {@category DTO}
 @immutable
 abstract class DecorationDto<Value extends Decoration> extends Dto<Value>
     with Mergeable<DecorationDto<Value>> {
@@ -32,7 +42,7 @@ abstract class DecorationDto<Value extends Decoration> extends Dto<Value>
   }
 }
 
-/// Represents a [Dto] Data transfer object of [BoxDecoration]
+/// Represents a Data transfer object of [BoxDecoration]
 ///
 /// This is used to allow for resolvable value tokens, and also the correct
 /// merge and combining behavior. It allows to be merged, and resolved to a `[BoxDecoration]
@@ -40,6 +50,7 @@ abstract class DecorationDto<Value extends Decoration> extends Dto<Value>
 /// See also:
 /// * [BoxDecoration], which is the Flutter counterpart of this class.
 /// * [DecorationDto], which is the base class for this class.
+/// {@category DTO}
 @immutable
 class BoxDecorationDto extends DecorationDto<BoxDecoration> {
   final ColorDto? color;

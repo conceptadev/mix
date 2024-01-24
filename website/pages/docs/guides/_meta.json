@@ -2,5 +2,7 @@
   "styling": "Styling",
   "variants": "Variants",
   "decorators": "Decorators",
-  "styled-widgets": "Styled Widgets"
+  "theming": "Theming",
+  "design-tokens": "Design Tokens",
+  "directives": "Directives"
 }

@@ -24,13 +24,13 @@ class BasicExample extends HookWidget {
       box.borderRadius(10),
       box.shapeDecoration.color.white(),
       text.style.color.white(),
-      onPress(
+      onPressed(
         box.color(Colors.black),
       ),
       onHover(
         opacity(0.5),
       ),
-      onLongPress(
+      onLongPressed(
         box.color(Colors.green),
       ),
     );
@@ -79,10 +79,10 @@ class BasicExample extends HookWidget {
             style: onSurfaceMix.merge(
               Style(
                 onLight(
-                  text.style.color.of($colors.error),
+                  text.style.color.of($md.colorScheme.error),
                 ),
                 onDark(
-                  text.style.color.of($colors.primary),
+                  text.style.color.of($md.colorScheme.primary),
                 ),
               ),
             ),
@@ -117,7 +117,7 @@ class BasicExample extends HookWidget {
                 style: onSurfaceMix.merge(
                   Style(
                     icon.size(70),
-                    icon.color.of($colors.secondary),
+                    icon.color.of($md.colorScheme.secondary),
                   ),
                 ),
               ),

@@ -14,15 +14,15 @@ class VariantAttribute<T extends Variant> extends Attribute
 
   Style get value => _style;
 
+  bool matches(Iterable<Variant> otherVariants) =>
+      otherVariants.contains(variant);
+
   @override
   VariantAttribute<T> merge(VariantAttribute<T> other) {
     if (other.variant != variant) throw throwArgumentError(other);
 
     return VariantAttribute(variant, _style.merge(other._style));
   }
-
-  bool matches(Iterable<Variant> otherVariants) =>
-      otherVariants.contains(variant);
 
   @override
   Object get type => ObjectKey(variant);

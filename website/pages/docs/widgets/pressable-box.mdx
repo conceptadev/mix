@@ -1,0 +1,44 @@
+---
+title: PressableBox
+---
+
+# PressableBox
+
+A widget that builds on Flutter's interactivity foundation to provide a pressable area with customizable style and behavior.
+
+It is designed as a flexible and style-friendly alternative to the traditional `InkWell` or `GestureDetector` widgets.
+
+With `PressableBox`, you can apply visual changes when user interactions like pressing or focusing occur, and integrate these seamlessly into your styled components.
+
+## Usage
+
+To use `PressableBox`, simply wrap your widget with it and specify the interaction callbacks you're interested in, along with any styles you wish to apply:
+
+```dart
+PressableBox(
+style: Style(
+  backgroundColor.blue(),
+    onPressed(
+      backgroundColor.red(),
+    ),
+    onHover(
+      backgroundColor.green(),
+    ),
+  ),
+onPress: () => print('Pressed!'),
+child: StyledText('Press Me'),
+);
+```
+
+In the example above, the `PressableBox` will apply a blue background color to the child `StyledText` by default, and a red background color when the user presses on it (and a green background color when the user hovers over it, if the platform supports it). The `onPress` callback will also be invoked when the user presses on the `PressableBox`.
+
+## Interaction States
+
+`PressableBox` integrates with various context variant utilities that apply styles based on different widget states and gestures. Here are a few of the interaction states and their corresponding styling hooks:
+
+- `onPress`: Styles applied when the widget is being pressed.
+- `onLongPress`: Styles applied when the widget is being long-pressed.
+- `onDisabled`: Styles applied when the widget is disabled and therefore non-interactive.
+- `onEnabled`: Styles applied when the widget is enabled and interactive.
+- `onFocus`: Styles applied when the widget gains focus.
+- `onHover`: Styles applied when a pointer has hovered over a widget.

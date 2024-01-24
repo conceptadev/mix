@@ -4,13 +4,13 @@ import 'package:mix/mix.dart';
 import '../styles.dart';
 
 Style get button => Style(
-      text.style.of($textStyles.bodyMedium),
+      text.style.of($md.textTheme.bodyMedium),
       box.padding.top(10),
       text.style.bold(),
       text.style(fontSize: 6.0),
-      box.color.of($colors.primary),
+      box.color.of($md.colorScheme.primary),
       onHover(
-        box.color.of($colors.secondary),
+        box.color.of($md.colorScheme.secondary),
       ),
       box.padding(8, 15),
     );
@@ -38,7 +38,7 @@ class TypographyExample extends StatelessWidget {
             style: headingMix.merge(
               Style(
                 text.style(
-                  color: $colors.surface(),
+                  color: $md.colorScheme.surface(),
                   fontWeight: FontWeight.bold,
                   fontStyle: FontStyle.italic,
                   letterSpacing: 2,
@@ -46,14 +46,14 @@ class TypographyExample extends StatelessWidget {
                   height: 1.5,
                   shadows: [
                     Shadow(
-                      color: $colors.secondary(),
+                      color: $md.colorScheme.secondary(),
                       offset: const Offset(2, 2),
                       blurRadius: 2,
                     ),
                   ],
                 ),
                 onDark(
-                  text.style.color.of($colors.surface),
+                  text.style.color.of($md.colorScheme.surface),
                 ),
               ),
             ),

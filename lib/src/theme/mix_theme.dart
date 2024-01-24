@@ -75,7 +75,7 @@ class MixThemeData with Comparable {
     );
   }
 
-  factory MixThemeData.withMaterialTokens({
+  factory MixThemeData.withMaterial({
     Map<BreakpointToken, Breakpoint>? breakpoints,
     Map<ColorToken, Color>? colors,
     Map<SpaceToken, double>? space,

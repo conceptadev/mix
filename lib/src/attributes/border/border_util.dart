@@ -14,13 +14,9 @@ import 'border_dto.dart';
 /// Example usage:
 ///
 /// ```dart
-/// final boxBorder = BoxBorderUtility<StyleAttribute>(builder);
-/// final attribute = boxBorder.all(
-///   color: Colors.red,
-///   width: 2.0,
-/// );
+/// final border = BoxBorderUtility<StyleAttribute>(builder);
 ///
-/// final borderAttribute = boxBorder(
+/// final attribute = border(
 ///   color: Colors.red,
 ///   width: 2.0,
 ///   style: BorderStyle.solid,
@@ -335,7 +331,7 @@ class BoxBorderUtility<T extends StyleAttribute>
 /// ```dart
 /// final borderSide = BorderSideUtility<StyleAttribute>(builder);
 ///
-/// final attribute = borderSide.call(
+/// final attribute = borderSide(
 ///   color: Colors.red,
 ///   width: 2.0,
 ///   style: BorderStyle.solid,

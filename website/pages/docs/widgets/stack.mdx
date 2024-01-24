@@ -1,0 +1,74 @@
+---
+title: ZBox
+---
+
+# ZBox (Stack)
+
+`ZBox` is a composite styled widget that merges the layout capabilities of a `Box` with the stacking functionality of `StyledStack`. It is designed for use cases where you require a styled stacking layout, encapsulated within a box-shaped container with alignment and other style properties.
+
+## Usage
+
+Create an instance of `ZBox` and provide it with a style and a list of widgets for your stacked layout:
+
+```dart
+ZBox(
+  style: Style(
+    stack.alignment.bottomLeft(),
+    stack.fit.loose(),
+    width(300),
+    height(300),
+    backgroundColor.blue(),
+  ),
+  children: [...],
+);
+```
+
+## Utilities
+
+### **alignment**
+
+Align layers within the stacked layout:
+
+```dart
+// Align at the bottom center of the stack
+stack.alignment.bottomCenter();
+
+// Align at the top right of the stack
+stack.alignment.topRight();
+```
+
+### **fit**
+
+Determine how layers are sized within the stack:
+
+```dart
+// StackFit.loose
+stack.fit.loose();
+
+// StackFit.expand
+stack.fit.expand();
+```
+
+### **textDirection**
+
+Indicate the text direction in the stack for correct placement of elements:
+
+```dart
+// Left-to-right text direction
+stack.textDirection.ltr();
+
+// Right-to-left text direction
+stack.textDirection.rtl();
+```
+
+### **clipBehavior**
+
+Control how children outside the stack’s bounds are clipped:
+
+```dart
+// Clip.hardEdge
+stack.clipBehavior.hardEdge();
+
+// Clip.none
+stack.clipBehavior.none();
+```

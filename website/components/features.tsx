@@ -1,99 +1,138 @@
-import {
-  ArrowsExpandIcon,
-  BeakerIcon,
-  ChartBarIcon,
-  ChartPieIcon,
-  ChipIcon,
-  CloudUploadIcon,
-  FingerPrintIcon,
-  LightningBoltIcon,
-  RefreshIcon,
-} from "@heroicons/react/outline";
+"use client";
 
-const features = [
+import {
+  motion,
+  useMotionTemplate,
+  useMotionValue,
+  type MotionValue,
+} from "framer-motion";
+import Link from "next/link";
+
+import {
+  HandMetalIcon,
+  PaintBucketIcon,
+  VenetianMaskIcon,
+  WrenchIcon,
+} from "lucide-react";
+
+interface Feature {
+  href: string;
+  name: string;
+  description: string;
+  icon: React.ComponentType<{ className?: string }>;
+}
+
+const features: Array<Feature> = [
   {
-    name: "Incremental builds",
-    description: `Building once is painful enough, Turborepo will remember what you've built and skip the stuff that's already been computed.`,
-    icon: RefreshIcon,
+    href: "/",
+    name: "Intuitive Style Semantics",
+    description:
+      "Transform simple elements into elegant, complex designs, enabling flexible and scalable UIs.",
+    icon: HandMetalIcon,
   },
   {
-    name: "Content-aware hashing",
-    description: `Turborepo looks at the contents of your files, not timestamps to figure out what needs to be built.`,
-    icon: FingerPrintIcon,
+    href: "/",
+    name: "First-class Variant Support",
+    description:
+      "Seamlessly create condition and responsive styling variants, allow you to design composable widgets.",
+    icon: VenetianMaskIcon,
   },
   {
-    name: "Cloud caching",
-    description: `Share a cloud build cache with your teammates and CI/CD for even faster builds.`,
-    icon: CloudUploadIcon,
+    href: "/",
+    name: "Design Tokens & Theming",
+    description:
+      "Define consistent style properties across widgets inspired by modern design principles for a unified UI.",
+    icon: PaintBucketIcon,
   },
   {
-    name: "Parallel execution",
-    description: `Execute builds using every core at maximum parallelism without wasting idle CPUs.`,
-    icon: LightningBoltIcon,
-  },
-  {
-    name: "Task pipelines",
-    description: `Define the relationships between your tasks and then let Turborepo optimize what to build and when.`,
-    icon: ArrowsExpandIcon,
-  },
-  {
-    name: "Zero runtime overhead",
-    description: `Turborepo doesn't interfere with your runtime code or touch your sourcemaps. It does what it does and then gets out of your way.`,
-    icon: ChipIcon,
-  },
-  // {
-  //   name: 'Package manager agnostic',
-  //   description: `Turborepo works with Yarn v1, Yarn v2, NPM, and PNPM workspaces.`,
-  //   icon: LightningBoltIcon,
-  // },
-  // {
-  //   name: 'Focused installs',
-  //   description: `Only install the dependencies you actually need. Works perfectly with Docker layer caching.`,
-  //   icon: DownloadIcon,
-  // },
-  {
-    name: "Pruned subsets",
-    description: `Speed up PaaS deploys by generating a subset of your monorepo with only what's needed to build a specific target.`,
-    icon: ChartPieIcon,
-  },
-  {
-    name: "JSON configuration",
-    description: `Reduce complexity through convention. Fan out configuration with just a few lines of JSON.`,
-    icon: BeakerIcon,
-  },
-  {
-    name: `Profile in your browser`,
-    description: `Generate build profiles and import them in Chrome or Edge to understand which tasks are taking the longest.`,
-    icon: ChartBarIcon,
+    href: "/",
+    name: "Utility-First",
+    description:
+      "Craft your styling with simple, reusable functions for easy customization and API extension.",
+    icon: WrenchIcon,
   },
 ];
 
-function Features() {
+function FeatureIcon({ icon: Icon }: { icon: Feature["icon"] }) {
   return (
-    <>
-      <div className="grid grid-cols-2 gap-6 my-12 sm:grid-cols-3 ">
-        {features.map(({ icon: Icon, ...feature }, _) => (
-          <div
-            className="flex items-center space-x-4"
-            key={feature.name.split(" ").join("-")}
-          >
-            <div>
-              <Icon
-                className="block w-8 h-8"
-                style={{ height: 24, width: 24 }}
-                aria-hidden="true"
-              />
-            </div>
-            <div>
-              <div className="my-0 font-medium dark:text-white">
-                {feature.name}
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-    </>
+    <div className="flex h-7 w-7 items-center justify-center rounded-full bg-zinc-900/5 ring-1 ring-zinc-900/25 backdrop-blur-[2px] transition duration-300 group-hover:bg-white/50 group-hover:ring-zinc-900/25 dark:bg-white/7.5 dark:ring-white/15 dark:group-hover:bg-purple-300/10 dark:group-hover:ring-purple-400">
+      <Icon className="h-5 w-5 fill-zinc-700/10 stroke-zinc-700 transition-colors duration-300 group-hover:stroke-zinc-900 dark:fill-white/10 dark:stroke-zinc-400 dark:group-hover:fill-purple-300/10 dark:group-hover:stroke-purple-400" />
+    </div>
   );
 }
 
-export default Features;
+function FeaturePattern({
+  mouseX,
+  mouseY,
+  ...gridProps
+}: {
+  mouseX: MotionValue<number>;
+  mouseY: MotionValue<number>;
+}) {
+  let maskImage = useMotionTemplate`radial-gradient(180px at ${mouseX}px ${mouseY}px, white, transparent)`;
+  let style = { maskImage, WebkitMaskImage: maskImage };
+
+  return (
+    <div className="pointer-events-none">
+      <div className="absolute inset-0 rounded-2xl transition duration-300 [mask-image:linear-gradient(white,transparent)] group-hover:opacity-50"></div>
+      <motion.div
+        className="absolute inset-0 rounded-2xl bg-gradient-to-r from-[#D7EDEA] to-[#F4FBDF] opacity-0 transition duration-300 group-hover:opacity-100 dark:from-[#23202e] dark:to-[#282331]"
+        style={style}
+      />
+      <motion.div
+        className="absolute inset-0 rounded-2xl opacity-0 mix-blend-overlay transition duration-300 group-hover:opacity-100"
+        style={style}
+      ></motion.div>
+    </div>
+  );
+}
+
+function Feature({ feature }: { feature: Feature }) {
+  let mouseX = useMotionValue(0);
+  let mouseY = useMotionValue(0);
+
+  function onMouseMove({
+    currentTarget,
+    clientX,
+    clientY,
+  }: React.MouseEvent<HTMLDivElement>) {
+    let { left, top } = currentTarget.getBoundingClientRect();
+    mouseX.set(clientX - left);
+    mouseY.set(clientY - top);
+  }
+
+  return (
+    <div
+      key={feature.href}
+      onMouseMove={onMouseMove}
+      className="group relative flex rounded-2xl bg-zinc-50 transition-shadow hover:shadow-md hover:shadow-zinc-900/5 dark:bg-white/2.5 dark:hover:shadow-black/5"
+    >
+      <FeaturePattern mouseX={mouseX} mouseY={mouseY} />
+      <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-zinc-900/7.5 group-hover:ring-zinc-900/10 dark:ring-white/10 dark:group-hover:ring-white/20" />
+      <div className="relative rounded-2xl px-4 pb-4 pt-16">
+        <FeatureIcon icon={feature.icon} />
+        <h3 className="mt-4 text-sm font-semibold leading-7 text-zinc-900 dark:text-white">
+          <Link href={feature.href}>
+            <span className="absolute inset-0 rounded-2xl" />
+            {feature.name}
+          </Link>
+        </h3>
+        <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
+          {feature.description}
+        </p>
+      </div>
+    </div>
+  );
+}
+
+export function Features() {
+  return (
+    <div className="my-16 xl:max-w-none">
+      <div className="not-prose mt-4 grid grid-cols-1 gap-8 border-t border-zinc-900/5 pt-10 sm:grid-cols-2 xl:grid-cols-4 dark:border-white/5">
+        {features.map((feature) => (
+          <Feature key={feature.href} feature={feature} />
+        ))}
+      </div>
+    </div>
+  );
+}

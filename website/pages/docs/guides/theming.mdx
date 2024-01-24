@@ -1,0 +1,151 @@
+---
+id: theming
+title: "Theming"
+---
+
+import { Callout } from "nextra-theme-docs";
+
+# Theming
+
+<Callout type="warning">This section is a work-in-progress</Callout>
+
+## Setting Up MixTheme
+
+Before you begin styling your application with various design tokens, the first step is to configure the `MixTheme`. `MixTheme` serves as an ancestor widget that passes down the defined tokens to all its child widgets, ensuring they can access and utilize the same styling information. Setting up MixTheme correctly is key to leveraging the full power of the Mix package for your application's theming needs.
+
+Here's how you can initialize and implement `MixTheme`:
+
+### Wrapping the Root Widget
+
+To apply your theme globally, you'll want to wrap your application's root widget with the `MixTheme` widget.
+
+```dart
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Mix App',
+      home: MixTheme(
+        child: MyHomePage(),
+      ),
+    );
+  }
+}
+```
+
+### Creating MixThemeData
+
+Creating a `MixThemeData` instance is the next crucial step. This object defines your application's design tokens, such as colors, typography, spacing, and more.
+
+```dart
+final theme = MixThemeData(
+  colors: {
+    ColorToken('primary'): Colors.blue,
+    ColorToken('secondary'): Colors.green,
+  },
+  textStyles: {
+    TextStyleToken('heading1'): const TextStyle(fontSize: 32, fontWeight: FontWeight.bold,),
+    TextStyleToken('bodyText'): const TextStyle(fontSize: 14,),
+  },
+  space: {
+    SpaceToken.xsmall: 4.0,
+    SpaceToken.small: 8.0,
+    SpaceToken.medium: 16.0,
+    SpaceToken.large: 24.0,
+    SpaceToken.xlarge: 32.0,
+    SpaceToken.xxlarge: 40.0,
+  },
+  radii: {
+    RadiusToken.small: const Radius.circular(4),
+    RadiusToken.medium: const Radius.circular(8),
+    RadiusToken.large: const Radius.circular(16),
+  },
+  breakpoints: {
+    BreakpointToken.xsmall: const Breakpoint(maxWidth: 599),
+    BreakpointToken.small: const Breakpoint(minWidth: 600, maxWidth: 1023,),
+    BreakpointToken.medium: const Breakpoint(minWidth: 1024, maxWidth: 1439,),
+    BreakpointToken.large:
+      const Breakpoint(minWidth: 1440, maxWidth: double.infinity,),
+  },
+);
+```
+
+## Design Tokens
+
+Tokens allow to define visual properties like colors, text styles, and spacing that can be consistently applied across all your widgets.
+
+The most important difference between defining a design token in Mix vs. a constant is that Mix allows you to define `context` reference values that will be used on build time.
+
+### Context Tokens
+
+Context Tokens are design tokens that are defined at build time. With this, it's possible to do things like:
+
+- dynamically changing the accent color of the app
+- define multiple themes for different parts of the app
+
+### Creating your own design tokens
+
+You can create your own context tokens is just as easy as creating a constant. The only difference is that you need to use a extentions of `MixToken` that represents the type of the token you want to create.
+
+For example, if you want to create a `MixToken` that represents a color, you can use `ColorToken`:
+
+```dart
+const ColorToken customColorToken = ColorToken('custom.color');
+```
+
+To give a variable `customColorToken` a value, you need to add it to `MixThemeData` as a key and the color which he represents as a value:
+
+```dart
+MixThemeData(
+  colors: {
+    customColorToken: Colors.red,
+  },
+)
+```
+
+to use it in a widget, you can use it inside `Style` as a color:
+
+```dart
+Box(
+  style: Style(
+    box.height(100),
+    box.width(100),
+    box.color.of(customColorToken),
+  ),
+)
+```
+
+### Material Design Tokens in Mix
+
+You can use the Material Design Tokens in Mix by implementing the following `MixThemeData`:
+
+#### Configure Material tokens
+
+```dart
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Mix App',
+      home: MixTheme(
+        data: MixThemeData.withMaterial(),
+        child: MyHomePage(),
+      ),
+    );
+  }
+}
+```
+
+#### Using Material tokens
+
+Mix provides an easy utility that you can use called `$md`, this is a namespace for all the Material Design tokens.
+
+```dart
+Box(
+  style: Style(
+    text.style.of($md.textTheme.headline1),
+    backgroundColor.of($md.colorScheme.primary),
+  ),
+  child: Text('Hello World'),
+)
+```

@@ -67,7 +67,7 @@ class MixedFlex extends StatelessWidget {
     final spec = FlexSpec.of(mix);
     final gap = spec.gap;
 
-    var flexWidget = Flex(
+    final current = Flex(
       direction: direction,
       mainAxisAlignment:
           spec.mainAxisAlignment ?? _defaultFlex.mainAxisAlignment,
@@ -82,7 +82,7 @@ class MixedFlex extends StatelessWidget {
     return shouldApplyDecorators(
       mix: mix,
       orderOfDecorators: decoratorOrder,
-      child: flexWidget,
+      child: current,
     );
   }
 
@@ -216,10 +216,7 @@ class HBox extends FlexBox {
     super.key,
     super.inherit,
     super.children = const <Widget>[],
-  }) : super(
-          style: style ?? mix,
-          direction: Axis.horizontal,
-        );
+  }) : super(style: style ?? mix, direction: Axis.horizontal);
 }
 
 /// A vertical flex container that uses `Style` for streamlined styling.
@@ -245,10 +242,7 @@ class VBox extends FlexBox {
     super.key,
     super.inherit,
     super.children = const <Widget>[],
-  }) : super(
-          style: style ?? mix,
-          direction: Axis.vertical,
-        );
+  }) : super(style: style ?? mix, direction: Axis.vertical);
 }
 
 const _defaultFlex = Flex(direction: Axis.horizontal, children: <Widget>[]);
