@@ -4,7 +4,7 @@ import '../attributes/variant_attribute.dart';
 import '../core/attribute.dart';
 import '../core/attributes_map.dart';
 import '../helpers/compare_mixin.dart';
-import '../theme/mix_theme.dart';
+import '../theme/token_resolver.dart';
 import '../widgets/pressable/widget_state_util.dart';
 import 'mix_provider.dart';
 import 'style_mix.dart';
