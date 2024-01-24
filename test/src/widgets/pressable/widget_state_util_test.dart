@@ -119,7 +119,7 @@ void main() {
 
       expect(onFocusAttr.when(context), true);
       expect(onFocusAttr.value, Style(attribute1, attribute2, attribute3));
-      expect(onFocusAttr.variant.name, 'on-focus');
+      expect(onFocusAttr.variant.name, 'on-focused');
       expect(onFocusAttr.variant.when(context), true);
     });
   });
