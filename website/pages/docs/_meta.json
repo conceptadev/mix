@@ -22,7 +22,5 @@
   "widgets": {
     "title": "Widgets",
     "display": "children"
-  },
-  "theme": "Theme",
-  "faq": "FAQ"
+  }
 }

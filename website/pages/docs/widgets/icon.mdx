@@ -1,3 +1,70 @@
-# Icon
+# StyledIcon (Icon)
 
-Coming soon.
+A wrapped `Icon` widget that can be easily themed and styled using Mix style attributes. This simplifies the process of applying consistent and reusable styling across `Icon` widgets.
+
+## Usage
+
+To use `StyledIcon`, simply pass the icon data and apply the style using the `Style` class.
+
+```dart
+StyledIcon(
+  Icons.star,
+  style: Style(
+    icon.size(30),
+    icon.color.blue(),
+  ),
+);
+```
+
+## Inheritance
+
+The **StyledIcon** widget has the `inherit` flag set to `true` by default. This means that the style attributes will be inherited from its closest `Mix` ancestor in the widget tree.
+
+```dart
+Box(
+  Style(
+    icon.size(30),
+    icon.color.blue(),
+  ),
+  child: StyledIcon(Icons.star),
+);
+```
+
+In the above example, the `StyledIcon` widget will inherit the icon size and color style from the `Box` widget.
+
+## AnimatedStyledIcon
+
+An `AnimatedStyledIcon` allows you to use `AnimatedIconData` with a controllable animation progress and applies styles in the same way as `StyledIcon`.
+
+```dart
+AnimatedStyledIcon(
+  AnimatedIcons.menu_close,
+  progress: animationController, // Animation<double>
+  style: Style(
+    icon.size(60),
+    icon.color.green(),
+  ),
+);
+```
+
+## Utilities
+
+The `icon` constant alias is an instance of `IconUtility`, which facilitates the construction of `IconSpec` attributes. These attributes are used to style and manage properties of icon widgets.
+
+#### **color**
+
+Change the color of the icon:
+
+```dart
+// Apply a color to the icon
+icon.color.red();
+```
+
+#### **size**
+
+Set the size of the icon:
+
+```dart
+// Set the icon size to 24
+icon.size(24);
+```
