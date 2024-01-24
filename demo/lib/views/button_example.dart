@@ -23,7 +23,7 @@ class ButtonSizeVariants {
 
 Style get _baseStyle => Style(
       box.borderRadius(4),
-      onPress(
+      onPressed(
         scale(0.95),
       ),
       flex.mainAxisAlignment.center(),

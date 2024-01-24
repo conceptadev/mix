@@ -19,7 +19,7 @@ void main() {
 
       final context = tester.element(find.byType(Container));
 
-      final onPressAttr = onPress(attribute1, attribute2, attribute3);
+      final onPressAttr = onPressed(attribute1, attribute2, attribute3);
 
       expect(onPressAttr.when(context), true);
       expect(onPressAttr.value, Style(attribute1, attribute2, attribute3));
@@ -36,7 +36,7 @@ void main() {
 
       final context = tester.element(find.byType(Container));
 
-      final onLongPressAttr = onLongPress(attribute1, attribute2, attribute3);
+      final onLongPressAttr = onLongPressed(attribute1, attribute2, attribute3);
 
       expect(onLongPressAttr.when(context), true);
       expect(
@@ -115,7 +115,7 @@ void main() {
 
       final context = tester.element(find.byType(Container));
 
-      final onFocusAttr = onFocus(attribute1, attribute2, attribute3);
+      final onFocusAttr = onFocused(attribute1, attribute2, attribute3);
 
       expect(onFocusAttr.when(context), true);
       expect(onFocusAttr.value, Style(attribute1, attribute2, attribute3));

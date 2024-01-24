@@ -21,7 +21,7 @@ class VariantsCatalogPressable extends StatelessWidget {
       buildBlock(
         'Focus',
         Style(
-          onFocus(
+          onFocused(
             box.border(color: $md.colorScheme.primary(), width: 2),
             box.padding(4.0),
           ),
@@ -32,7 +32,7 @@ class VariantsCatalogPressable extends StatelessWidget {
       buildBlock(
         'Press',
         Style(
-          onPress(
+          onPressed(
             box.border(
               color: $md.colorScheme.primary(),
               width: 2,

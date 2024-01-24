@@ -24,13 +24,13 @@ class BasicExample extends HookWidget {
       box.borderRadius(10),
       box.shapeDecoration.color.white(),
       text.style.color.white(),
-      onPress(
+      onPressed(
         box.color(Colors.black),
       ),
       onHover(
         opacity(0.5),
       ),
-      onLongPress(
+      onLongPressed(
         box.color(Colors.green),
       ),
     );
