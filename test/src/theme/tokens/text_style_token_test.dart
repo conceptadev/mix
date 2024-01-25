@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mix/src/factory/mix_provider_data.dart';
-import 'package:mix/src/factory/style_mix.dart';
-import 'package:mix/src/theme/mix_theme.dart';
-import 'package:mix/src/theme/tokens/text_style_token.dart';
+import 'package:mix/mix.dart';
 
 import '../../../helpers/testing_utils.dart';
 
@@ -58,5 +55,88 @@ void main() {
       expect(mixData.tokens.textStyleToken(bluetextStyleToken),
           const TextStyle(color: Colors.blue));
     });
+  });
+
+  testWidgets('Combined Test', (tester) async {
+    final themeData = MixThemeData(
+      textStyles: {
+        $md.textTheme.bodyText1:
+            const TextStyle(color: Colors.red, fontSize: 10),
+        $md.textTheme.bodyText2:
+            const TextStyle(color: Colors.blue, fontSize: 20),
+      },
+      colors: {
+        $md.colorScheme.error: Colors.blue,
+        $md.colorScheme.background: Colors.red,
+      },
+      radii: {
+        $radii.medium: const Radius.elliptical(10, 50),
+      },
+      space: {
+        $space.large: 100,
+        $space.medium: 50,
+      },
+    );
+
+    const key = Key('box');
+
+    await tester.pumpWithMixTheme(
+      Box(
+        key: key,
+        style: Style(
+          text.style.of($md.textTheme.bodyText1),
+          text.style.of($md.textTheme.bodyText2),
+          box.color.of($md.colorScheme.background),
+          box.color.of($md.colorScheme.error),
+          box.borderRadius.all.of($radii.medium),
+          box.borderRadius.all.of($radii.large),
+          box.padding.horizontal.of($space.medium),
+          box.padding.horizontal.of($space.large),
+        ),
+        child: const StyledText(
+          'Hello',
+        ),
+      ),
+      theme: themeData,
+    );
+
+    final textWidget = tester.widget<Text>(
+      find.descendant(
+        of: find.byKey(key),
+        matching: find.byType(Text),
+      ),
+    );
+
+    final containerWidget = tester.widget<Container>(
+      find.descendant(
+        of: find.byKey(key),
+        matching: find.byType(Container),
+      ),
+    );
+
+    expect(
+      textWidget.style!.color,
+      themeData.textStyles[$md.textTheme.bodyText2]!.color,
+    );
+
+    expect(
+      textWidget.style!.fontSize,
+      themeData.textStyles[$md.textTheme.bodyText2]!.fontSize,
+    );
+
+    expect(
+      (containerWidget.decoration as BoxDecoration).color,
+      themeData.colors[$md.colorScheme.error],
+    );
+
+    expect(
+      (containerWidget.decoration as BoxDecoration).borderRadius,
+      BorderRadius.all(themeData.radii[$radii.large]!),
+    );
+
+    expect(
+      containerWidget.padding!.horizontal / 2,
+      themeData.space[$space.large],
+    );
   });
 }

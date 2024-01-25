@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../core/attribute.dart';
 import '../../factory/mix_provider_data.dart';
+import '../../theme/tokens/radius_token.dart';
 
 /// Represents a [Dto] Data transfer object of [BorderRadiusGeometry]
 ///
@@ -93,20 +94,24 @@ class BorderRadiusGeometryDto extends Dto<BorderRadiusGeometry>
 
   @override
   BorderRadiusGeometry resolve(MixData mix) {
-    const defaultRadius = Radius.zero;
+    Radius getRadiusValue(Radius? radius) {
+      if (radius == null) return Radius.zero;
+
+      return radius is RadiusRef ? mix.tokens.radiiRef(radius) : radius;
+    }
 
     return isDirectional
         ? BorderRadiusDirectional.only(
-            topStart: topStart ?? defaultRadius,
-            topEnd: topEnd ?? defaultRadius,
-            bottomStart: bottomStart ?? defaultRadius,
-            bottomEnd: bottomEnd ?? defaultRadius,
+            topStart: getRadiusValue(topStart),
+            topEnd: getRadiusValue(topEnd),
+            bottomStart: getRadiusValue(bottomStart),
+            bottomEnd: getRadiusValue(bottomEnd),
           )
         : BorderRadius.only(
-            topLeft: topLeft ?? defaultRadius,
-            topRight: topRight ?? defaultRadius,
-            bottomLeft: bottomLeft ?? defaultRadius,
-            bottomRight: bottomRight ?? defaultRadius,
+            topLeft: getRadiusValue(topLeft),
+            topRight: getRadiusValue(topRight),
+            bottomLeft: getRadiusValue(bottomLeft),
+            bottomRight: getRadiusValue(bottomRight),
           );
   }
 
