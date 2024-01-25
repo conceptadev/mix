@@ -245,4 +245,5 @@ class VBox extends FlexBox {
   }) : super(style: style ?? mix, direction: Axis.vertical);
 }
 
-const _defaultFlex = Flex(direction: Axis.horizontal, children: <Widget>[]);
+final _defaultFlex =
+    Flex(direction: Axis.horizontal, children: const <Widget>[]);

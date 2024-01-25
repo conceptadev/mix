@@ -85,3 +85,6 @@ node_modules
 # FVM Version Cache
 .fvm/
 **/**.context.md
+
+# FVM Version Cache
+.fvm/versions

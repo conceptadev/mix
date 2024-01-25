@@ -66,7 +66,7 @@ void main() {
     final mix = context.mix;
     expect(mix, isNull);
     expect(context.directionality, Directionality.of(context));
-    expect(context.orientation, MediaQuery.orientationOf(context));
+    expect(context.orientation, MediaQuery.of(context).orientation);
     // expect(context.screenSize, const Size(400.0, 600.0));
     expect(context.brightness, Theme.of(context).brightness);
     expect(context.theme, Theme.of(context));
@@ -75,10 +75,10 @@ void main() {
     expect(context.mixTheme, const MixThemeData.empty());
     expect(context.isDarkMode, Theme.of(context).brightness == Brightness.dark);
     expect(context.isLandscape,
-        MediaQuery.orientationOf(context) == Orientation.landscape);
+        MediaQuery.of(context).orientation == Orientation.landscape);
     expect(context.isPortrait,
-        MediaQuery.orientationOf(context) == Orientation.portrait);
+        MediaQuery.of(context).orientation == Orientation.portrait);
 
-    addTearDown(tester.view.resetPhysicalSize);
+    // addTearDown(tester.view.resetPhysicalSize);
   });
 }
