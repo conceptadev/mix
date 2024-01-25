@@ -11,12 +11,12 @@ class PressableBox extends StatelessWidget {
     this.onLongPress,
     this.focusNode,
     this.autofocus = false,
-    this.unpressDelay = const Duration(milliseconds: 0),
+    this.unpressDelay = const Duration(milliseconds: 150),
     this.onFocusChange,
     this.behavior,
     required this.child,
     this.style,
-    this.animationDuration = const Duration(milliseconds: 0),
+    this.animationDuration = const Duration(milliseconds: 125),
     this.animationCurve = Curves.linear,
   });
 
