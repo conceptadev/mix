@@ -46,11 +46,11 @@ const themeConfig = {
       <meta httpEquiv="Content-Language" content="en" />
       <meta
         name="description"
-        content="style: An expressive way to effortlessly build design systems in Flutter."
+        content="Mix: Build your Flutter UI effortlessly with a simple declarative syntax."
       />
       <meta
         name="og:description"
-        content="style: An expressive way to effortlessly build design systems in Flutter."
+        content="Mix: Build your Flutter UI effortlessly with a simple declarative syntax."
       />
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:image" content="https://fluttermix.com/og.png" />
@@ -58,7 +58,7 @@ const themeConfig = {
       <meta name="twitter:url" content="https://fluttermix.com" />
       <meta
         name="og:title"
-        content="style: An expressive way to effortlessly build design systems in Flutter."
+        content="Mix: Build your Flutter UI effortlessly with a simple declarative syntax."
       />
       <meta name="og:image" content="https://fluttermix.com/og.png" />
       <meta name="apple-mobile-web-app-title" content="Mix" />

@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "next",
     "start": "next start",
-    "build": "next build"
+    "build": "next build",
+    "postbuild": "next-sitemap"
   },
   "dependencies": {
     "@docsearch/react": "^3.5.2",
@@ -19,6 +20,7 @@
     "framer-motion": "^10.18.0",
     "lucide-react": "^0.302.0",
     "next": "^14.0.4",
+    "next-sitemap": "^4.2.3",
     "nextra": "2.13.2",
     "nextra-theme-docs": "2.13.2",
     "react": "^18.2.0",
@@ -33,6 +35,7 @@
     "@types/node": "^20.10.4",
     "@types/react": "^18.2.45",
     "autoprefixer": "^10.4.16",
+    "eslint": "^8.56.0",
     "postcss": "^8.4.32",
     "postcss-import": "^15.1.0",
     "prettier": "^2.8.8",
