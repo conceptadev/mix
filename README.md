@@ -10,17 +10,21 @@
 ![Pub Likes](https://img.shields.io/pub/likes/mix?label=Pub%20Likes&style=for-the-badge)
 ![Pub Points](https://img.shields.io/pub/points/mix?label=Pub%20Points&style=for-the-badge) [![Github All Contributors](https://img.shields.io/github/all-contributors/leoafarias/mix?style=for-the-badge)](https://github.com/leoafarias/mix/graphs/contributors) [![MIT Licence](https://img.shields.io/github/license/leoafarias/mix?style=for-the-badge&longCache=true)](https://opensource.org/licenses/mit-license.php) [![Awesome Flutter](https://img.shields.io/badge/awesome-flutter-purple?longCache=true&style=for-the-badge)](https://github.com/Solido/awesome-flutter)
 
-Build Flutter design systems expressively and effortlessly. **Mix** offers primitive building blocks to help developers and designers create beautiful UI with confidence.
+Mix offers a novel approach to styling in Flutter, targeting the specific challenges developers encounter with traditional methods. It emphasizes the separation of presentation from logic, akin to the division of HTML and CSS in web development, ensuring maintainable and readable code.
 
-## Motivation
+- **Comprehensive Styling**: By extending beyond Flutter's theme system, Mix for composability across broader range of visual properties. This comprehensive approach guarantees consistent styling across all widgets, including custom ones.
 
-Flutter favors [composition](https://docs.flutter.dev/resources/architectural-overview#composition) over inheritance when building widgets. This choice keeps Flutter API extremely easy to interact with and powerful.
+- **Streamlined Code Structure**: Mix reduces the need for inline styling and resolves the complexity associated with subclassing and widget composition. Its advanced features facilitate a clean, organized, and efficient codebase.
 
-However, in our experience, both inheritance and composition are essential when defining presentation attributes. [Themes](https://docs.flutter.dev/cookbook/design/themes) are an excellent example of inheritance but are not extended across all visual properties.
+## Why Mix?
 
-When building a design system, it can be challenging to develop and maintain a consistent UI that shares the same design language for widget variations or across different widgets within the design system.
+- **Separation of Concerns**: Mix distinctly separates styling from widget logic. This not only enhances code clarity but also makes the UI design process more intuitive and efficient.
 
-> Maintaining a design system is much harder than building it.
+- **Flexible and Modular Styling**: Through its compositional approach, Mix allows for the creation of complex styles from simple, reusable elements. This promotes modularity and flexibility, making UI development faster and more scalable.
+
+- **Enhanced Custom Widget Support**: Addressing the limitations of ThemeData, Mix ensures that custom widgets receive the same level of styling support as standard Flutter widgets, maintaining a unified aesthetic throughout the application.
+
+**Mix offers primitive building blocks to help developers create beautiful and consistent UI.**
 
 ## Goals
 
@@ -35,28 +39,30 @@ Provide simple API to compose design and layout attributes for widgets. That can
 
 - **Abstract Flutter API, and not modify its behavior.**
 - Development efficiency is gained by the ease of use, consistency, and reusability, not coding speed.
-- Composability should be a priority. Mixes, Attributes, Widgets, etc.
+- Composability should be a priority. Styles, Attributes, Variants, etc.
 - Designer friendly (use simple standard semantics when possible).
 
-## Usage
+## Key Features
 
-### Simple Mix
+### Powerful Style Semantics
 
-```dart
-import 'package:mix/mix.dart';
+Mix's compositional approach allows for the creation of complex styles from simple, reusable elements. This promotes modularity and flexibility, making UI development faster and more scalable.
 
-final style = Style(
-  height(150),
-  width(150),
-);
+### First-Class Variant Support
 
-// Use in a Box widget
-Box
-  style:style,
-  child:Child(),
-);
+As a first-class feature, Variants in Mix enable the design of flexible and composable widget styling. They can be applied both conditionally and responsively for dynamic UI adaptation.
 
-```
+### Design Tokens & Theming
+
+Inspired by constraint-based design principles projects like [Theme UI](https://theme-ui.com/), and [Styled System](https://github.com/styled-system/styled-system), Mix's theming system allows for definition of style properties that can be used across any widget. This ensures consistent styling across the entire application.
+
+### Utility-First
+
+Mix style attributes consist of simple and reusable functions, allowing for complete control over the styling API while also facilitating easy customization and extension of its API
+
+### Developer experience
+
+Mix is designed to optimize developer experience, offering an intuitive, efficient, and flexible framework for Flutter UI design, significantly enhancing productivity and creativity.
 
 [Read our docs for more information](https://www.fluttermix.com)
 
