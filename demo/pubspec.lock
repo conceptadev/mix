@@ -510,7 +510,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "1.0.0-beta.1"
+    version: "1.0.0-beta.3"
   nested:
     dependency: transitive
     description:

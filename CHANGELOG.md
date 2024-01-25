@@ -1,4 +1,4 @@
-## 1.0.0-beta.1
+## 1.0.0-beta.3
 
 - Revamped Mix API for improved functionality and developer experience.
 - Enhanced performance and system responsiveness.
