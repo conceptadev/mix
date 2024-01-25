@@ -104,4 +104,4 @@ class ZBox extends StyledWidget {
 
 // Default Stack used as a fallback
 // for styling properties in MixedStack.
-const _defaultStack = Stack();
+final _defaultStack = Stack();

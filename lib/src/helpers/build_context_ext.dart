@@ -13,10 +13,12 @@ extension BuildContextExt on BuildContext {
   TextDirection get directionality => Directionality.of(this);
 
   /// Orientation of the device.
-  Orientation get orientation => MediaQuery.orientationOf(this);
+
+  Orientation get orientation => MediaQuery.of(this).orientation;
 
   /// Screen size.
-  Size get screenSize => MediaQuery.sizeOf(this);
+
+  Size get screenSize => MediaQuery.of(this).size;
 
   // Theme Context Extensions.
   Brightness get brightness => Theme.of(this).brightness;

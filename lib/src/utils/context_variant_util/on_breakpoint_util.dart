@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-
+import '../../helpers/build_context_ext.dart';
 import '../../helpers/string_ext.dart';
 import '../../theme/mix_theme.dart';
 import '../../theme/tokens/breakpoints_token.dart';
@@ -31,7 +30,7 @@ ContextVariant onBreakpoint({minWidth = 0, maxWidth = double.infinity}) {
       'minWidth-${constraints.minWidth}-maxWidth-${constraints.maxWidth}';
 
   return ContextVariant('on-$constraintName', (context) {
-    final size = MediaQuery.sizeOf(context);
+    final size = context.screenSize;
 
     return constraints.matches(size);
   });
@@ -44,7 +43,7 @@ ContextVariant onBreakpoint({minWidth = 0, maxWidth = double.infinity}) {
 /// the specified breakpoint.
 ContextVariant onBreakpointToken(BreakpointToken token) {
   return ContextVariant('on-${token.name.paramCase}', (context) {
-    final size = MediaQuery.sizeOf(context);
+    final size = context.screenSize;
 
     final selectedbreakpoint = token.resolve(context);
 

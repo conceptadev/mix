@@ -23,6 +23,6 @@ final onLandscape = onOrientation(Orientation.landscape);
 ContextVariant onOrientation(Orientation orientation) {
   return ContextVariant(
     'on-${orientation.name.paramCase}',
-    (context) => MediaQuery.orientationOf(context) == orientation,
+    (context) => MediaQuery.of(context).orientation == orientation,
   );
 }

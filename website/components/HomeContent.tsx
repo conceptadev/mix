@@ -18,7 +18,7 @@ const HomeContent = () => {
           <p className="subtitle">
             Build your Flutter UI effortlessly
             <br className="sm:block hidden" />
-            with a simple declarative syntax.
+            with a simple declarative styling.
           </p>
 
           <div className="not-prose mb-16 mt-6 flex gap-3">
