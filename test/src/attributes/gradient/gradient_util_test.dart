@@ -127,7 +127,7 @@ void main() {
     // focal
     test('.focal', () {
       const focal = Alignment.center;
-      final attribute = radialUtility.focal.builder(focal);
+      final attribute = radialUtility.focal(focal);
       final attributeFn = radialUtility.focal.center();
 
       final resolvedGradient =
