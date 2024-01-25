@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
+import '../material/material_tokens.dart';
 import 'breakpoints_token.dart';
-import 'material_tokens.dart';
 import 'radius_token.dart';
 import 'space_token.dart';
 
+const $md = MaterialTokens();
 const $radii = RadiiTokenUtil();
 const $space = SpaceTokenUtil();
 const $colors = ColorTokenUtil();
