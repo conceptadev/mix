@@ -16,7 +16,7 @@ StyledText(
 
 ## Inheritance
 
-The **StyledText** widget has the **inherit** flag true by default. That means that the style attributes will be inherited from the parent widget.
+The **StyledText** widget has the **inherit** flag true by default. That means that the style attributes will be inherited from the parent widget. However, remember that decorators attributes cannot be inherited.
 
 ```dart
 Box(
@@ -76,6 +76,61 @@ Limit the number of lines for the text block:
 ```dart
 // Restrict text to two lines
 text.maxLines(2);
+```
+
+
+#### **textWidthBasis**
+
+Determine how text width is measured:
+
+```dart
+// Measure text width based on the longest line
+text.textWidthBasis.longestLine();
+
+// Measure text width based on the parent container
+text.textWidthBasis.parent();
+```
+
+#### **textHeightBehavior**
+
+Define how text height adjustments are made:
+
+```dart
+// Set a specified text height behavior
+text.textHeightBehavior(...); // TextHeightBehavior instance
+```
+
+#### **textDirection**
+
+Set the reading directionality of the text:
+
+```dart
+// Left-to-right text direction
+text.textDirection.ltr();
+
+// Right-to-left text direction
+text.textDirection.rtl();
+```
+
+#### **softWrap**
+
+Choose whether the text should soft-wrap:
+
+```dart
+// Enable soft wrapping
+text.softWrap(true);
+
+// Disable soft wrapping
+text.softWrap(false);
+```
+
+#### **textScaleFactor**
+
+Adjust the text scale factor for sizing:
+
+```dart
+// Increase text size by a factor of 1.5
+text.textScaleFactor(1.5);
 ```
 
 #### **`style`**
@@ -209,60 +264,6 @@ Set the locale for the text, affecting how it's displayed:
 
 ```dart
 text.style.locale(Locale('en')); // English locale
-```
-
-#### **textWidthBasis**
-
-Determine how text width is measured:
-
-```dart
-// Measure text width based on the longest line
-text.textWidthBasis.longestLine();
-
-// Measure text width based on the parent container
-text.textWidthBasis.parent();
-```
-
-#### **textHeightBehavior**
-
-Define how text height adjustments are made:
-
-```dart
-// Set a specified text height behavior
-text.textHeightBehavior(...); // TextHeightBehavior instance
-```
-
-#### **textDirection**
-
-Set the reading directionality of the text:
-
-```dart
-// Left-to-right text direction
-text.textDirection.ltr();
-
-// Right-to-left text direction
-text.textDirection.rtl();
-```
-
-#### **softWrap**
-
-Choose whether the text should soft-wrap:
-
-```dart
-// Enable soft wrapping
-text.softWrap(true);
-
-// Disable soft wrapping
-text.softWrap(false);
-```
-
-#### **textScaleFactor**
-
-Adjust the text scale factor for sizing:
-
-```dart
-// Increase text size by a factor of 1.5
-text.textScaleFactor(1.5);
 ```
 
 ### **Directives**

@@ -24,6 +24,13 @@ To enhance readability, short aliases and shorthand property/method names are re
 
 Decorators' order was previously determined by their addition sequence. Now, we enforce specific ordering but also allow customizable orders. This might cause behavior changes in rare cases. For details, refer to the [decorators guide](https://fluttermix.com/docs/guides/decorators).
 
+### StyledWidgets updates
+
+#### The new PressableBox
+
+To provide a more consistent way to use the gesture APIs, we developed a new widget that merges the functionalities of Box and `Pressable`. Thus, the new `PressableBox` can receive a style like a Box and also accept interactions and its variants, similar to a `Pressable`. For more information, see the [PressableBox guide](https://www.fluttermix.com/docs/widgets/pressable-box).
+Keep in mind that the ideia is to reserve the old `Pressable` to more advanced cases.
+
 ### Behavior changes
 
 #### Decorators
