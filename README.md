@@ -10,6 +10,10 @@
 ![Pub Likes](https://img.shields.io/pub/likes/mix?label=Pub%20Likes&style=for-the-badge)
 ![Pub Points](https://img.shields.io/pub/points/mix?label=Pub%20Points&style=for-the-badge) [![Github All Contributors](https://img.shields.io/github/all-contributors/leoafarias/mix?style=for-the-badge)](https://github.com/leoafarias/mix/graphs/contributors) [![MIT Licence](https://img.shields.io/github/license/leoafarias/mix?style=for-the-badge&longCache=true)](https://opensource.org/licenses/mit-license.php) [![Awesome Flutter](https://img.shields.io/badge/awesome-flutter-purple?longCache=true&style=for-the-badge)](https://github.com/Solido/awesome-flutter)
 
+![og](https://github.com/conceptadev/mix/assets/435833/4a88bae6-706a-424d-ab24-079eda6db92f)
+
+## Read about our 1.0 Beta release [here](https://github.com/conceptadev/mix/releases/tag/v1.0.0-beta.1)
+
 Mix offers a novel approach to styling in Flutter, targeting the specific challenges developers encounter with traditional methods. It emphasizes the separation of presentation from logic, akin to the division of HTML and CSS in web development, ensuring maintainable and readable code.
 
 - **Comprehensive Styling**: By extending beyond Flutter's theme system, Mix for composability across broader range of visual properties. This comprehensive approach guarantees consistent styling across all widgets, including custom ones.
