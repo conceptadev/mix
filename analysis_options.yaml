@@ -15,14 +15,14 @@ analyzer:
 
 dart_code_metrics:
   extends:
-    - package:dart_code_metrics_presets/all.yaml
+    - package:dart_code_metrics_presets/recommended.yaml
   metrics-exclude:
     - test/**
   rules-exclude:
     - "test/**"
   rules:
-    no-object-declaration: false
     prefer-match-file-name: false
+    no-object-declaration: false
     prefer-single-widget-per-file: false
     parameters-ordering: false
     prefer-dedicated-media-query-methods: false
@@ -35,7 +35,6 @@ dart_code_metrics:
     prefer-widget-private-members: false
     prefer-static-class: false
     avoid-late-keyword: false
-    avoid-barrel-files: false
     avoid-declaring-call-method: false
     avoid-long-parameter-list: false
     avoid-recursive-calls: false
@@ -45,9 +44,8 @@ dart_code_metrics:
     prefer-correct-identifier-length: false
     avoid-unsafe-collection-methods: false
     avoid-similar-names: false
-    format-comment: false
     no-equal-arguments: false
-    prefer_initializing_formals: false
+    prefer-prefixed-global-constants: false
     avoid-returning-widgets: false
     avoid-nested-conditional-expressions:
         acceptable-level: 3

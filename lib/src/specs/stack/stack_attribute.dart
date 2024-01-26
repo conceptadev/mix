@@ -20,7 +20,7 @@ class StackSpecAttribute extends SpecAttribute<StackSpecAttribute, StackSpec> {
         _alignment = alignment;
 
   static StackSpecAttribute of(MixData mix) {
-    return mix.attributeOf<StackSpecAttribute>() ?? const StackSpecAttribute();
+    return mix.attributeOf() ?? const StackSpecAttribute();
   }
 
   @override

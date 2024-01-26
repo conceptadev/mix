@@ -28,7 +28,7 @@ class FlexSpecAttribute extends SpecAttribute<FlexSpecAttribute, FlexSpec> {
   });
 
   static FlexSpecAttribute of(MixData mix) {
-    return mix.attributeOf<FlexSpecAttribute>() ?? const FlexSpecAttribute();
+    return mix.attributeOf() ?? const FlexSpecAttribute();
   }
 
   @override

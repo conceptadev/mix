@@ -66,7 +66,7 @@ class MixedStack extends StatelessWidget {
       textDirection: spec.textDirection,
       fit: spec.fit ?? _defaultStack.fit,
       clipBehavior: spec.clipBehavior ?? _defaultStack.clipBehavior,
-      children: children ?? const <Widget>[],
+      children: children ?? const [],
     );
   }
 }

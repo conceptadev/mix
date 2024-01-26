@@ -1,8 +1,9 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/widgets.dart';
 
 import '../../core/styled_widget.dart';
 import '../../deprecations.dart';
-import '../../factory/mix_provider.dart';
 import '../../factory/mix_provider_data.dart';
 import '../../factory/style_mix.dart';
 import '../../utils/helper_util.dart';
@@ -50,7 +51,7 @@ class StyledFlex extends StyledWidget {
 class MixedFlex extends StatelessWidget {
   const MixedFlex({
     super.key,
-    this.mix,
+    required this.mix,
     this.decoratorOrder = const [],
     required this.children,
     required this.direction,
@@ -59,11 +60,10 @@ class MixedFlex extends StatelessWidget {
   final List<Widget> children;
   final Axis direction;
   final List<Type> decoratorOrder;
-  final MixData? mix;
+  final MixData mix;
 
   @override
   Widget build(BuildContext context) {
-    final mix = this.mix ?? MixProvider.of(context);
     final spec = FlexSpec.of(mix);
     final gap = spec.gap;
 
@@ -90,7 +90,7 @@ class MixedFlex extends StatelessWidget {
   List<Widget> buildChildren(double? gap) {
     if (gap == null) return children;
 
-    return List<Widget>.generate(
+    return List.generate(
       children.length,
       (index) => index == children.length - 1
           ? children[index]
@@ -188,7 +188,8 @@ class FlexBox extends StyledWidget {
   Widget build(BuildContext context) {
     return withMix(context, (mix) {
       return MixedBox(
-        child: MixedFlex(direction: direction, children: children),
+        mix: mix,
+        child: MixedFlex(mix: mix, direction: direction, children: children),
       );
     });
   }
@@ -245,5 +246,4 @@ class VBox extends FlexBox {
   }) : super(style: style ?? mix, direction: Axis.vertical);
 }
 
-final _defaultFlex =
-    Flex(direction: Axis.horizontal, children: const <Widget>[]);
+final _defaultFlex = Flex(direction: Axis.horizontal, children: const []);

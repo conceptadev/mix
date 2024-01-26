@@ -34,7 +34,7 @@ extension ListExt<T> on List<T> {
     final otherLength = other.length;
     final maxLength = max(listLength, otherLength);
 
-    return List<T>.generate(maxLength, (int index) {
+    return List.generate(maxLength, (int index) {
       if (index < listLength && index < otherLength) {
         final currentValue = this[index];
         final otherValue = other[index];
