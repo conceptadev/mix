@@ -1,4 +1,4 @@
-# Unreleased
+# 1.0.0-beta.4
 
 - Improvements on border, and borderRadius utitlies.
 - Fixes issue [#179](https://github.com/conceptadev/mix/issues/179)
