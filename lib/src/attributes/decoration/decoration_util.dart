@@ -62,13 +62,25 @@ class BoxDecorationUtility<T extends StyleAttribute>
     return ColorUtility((ColorDto color) => _only(color: color));
   }
 
-  BoxBorderUtility<T> get border {
-    return BoxBorderUtility((border) => _only(border: border));
+  BorderUtility<T> get border {
+    return BorderUtility((border) => _only(border: border));
+  }
+
+  BorderDirectionalUtility<T> get borderDirectional {
+    return BorderDirectionalUtility((borderDirectional) {
+      return _only(border: borderDirectional);
+    });
   }
 
   BorderRadiusGeometryUtility<T> get borderRadius {
     return BorderRadiusGeometryUtility(
       (borderRadius) => _only(borderRadius: borderRadius),
+    );
+  }
+
+  BorderRadiusDirectionalUtility<T> get borderRadiusDirectional {
+    return BorderRadiusDirectionalUtility(
+      (borderRadiusDirectional) => _only(borderRadius: borderRadiusDirectional),
     );
   }
 

@@ -1,4 +1,3 @@
-// ignore_for_file: deprecated_member_use, avoid-non-null-assertion
 import 'package:flutter/material.dart';
 
 import '../mix_theme.dart';

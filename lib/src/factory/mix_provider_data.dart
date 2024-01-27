@@ -75,7 +75,7 @@ class MixData with Comparable {
   }
 
   Iterable<A> whereType<A extends StyleAttribute>() {
-    return _attributes.whereType<A>();
+    return _attributes.whereType();
   }
 
   bool contains<T>() {

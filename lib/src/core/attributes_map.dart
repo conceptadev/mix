@@ -14,7 +14,7 @@ class AttributeMap<T extends Attribute> with Comparable {
   const AttributeMap.empty() : _map = null;
 
   factory AttributeMap(Iterable<T> attributes) {
-    return AttributeMap._(_mergeMap<T>(attributes));
+    return AttributeMap._(_mergeMap(attributes));
   }
 
   static LinkedHashMap<Object, Attr> _mergeMap<Attr extends Attribute>(
@@ -57,8 +57,7 @@ class AttributeMap<T extends Attribute> with Comparable {
 
   Attr? attributeOfType<Attr extends T>() => _map?[Attr] as Attr?;
 
-  Iterable<Attr> whereType<Attr extends T>() =>
-      _map?.values.whereType<Attr>() ?? [];
+  Iterable<Attr> whereType<Attr extends T>() => _map?.values.whereType() ?? [];
 
   AttributeMap<T> merge(AttributeMap<T>? other) {
     return other == null ? this : AttributeMap([...values, ...other.values]);

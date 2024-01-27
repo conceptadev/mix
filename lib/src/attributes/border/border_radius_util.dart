@@ -15,7 +15,7 @@ import 'border_radius_dto.dart';
 ///
 /// Example usage:
 ///
-/// ```dar
+/// ```dart
 /// final attribute = borderRadius(10.0);
 /// ```
 ///
@@ -30,87 +30,43 @@ class BorderRadiusGeometryUtility<T extends StyleAttribute>
   const BorderRadiusGeometryUtility(super.builder)
       : super(valueToDto: BorderRadiusGeometryDto.from);
 
-  /// Returns a [BorderRadiusDirectionalUtility] to manipulate [BorderRadiusDirectional].
-  ///
-  /// Example usage:
-  ///
-  /// ```dart
-  /// final attribute = borderRadius.directional(10.0);
-  /// ```
-  ///
-  /// See also:
-  /// * [BorderRadiusDirectionalUtility], the utility class for manipulating [BorderRadiusDirectional]
-  /// * [BorderRadiusDirectionalAttribute], the attribute class for [BorderRadiusDirectional]
-  BorderRadiusDirectionalUtility<T> get directional {
+  BorderRadiusDirectionalUtility<T> get _directional {
     return BorderRadiusDirectionalUtility(builder);
   }
 
-  /// Returns a [RadiusUtility] to manipulate [Radius].
-  ///
-  /// Example usage:
-  ///
-  /// ```dart
-  /// final attribute = borderRadius.circular(10.0);
-  /// ```
-  ///
-  /// See also:
-  /// * [RadiusUtility], the utility class for manipulating [Radius]
+  /// Returns a [RadiusUtility] to manipulate [Radius] for bottomLeft corner.
   RadiusUtility<T> get bottomLeft {
     return RadiusUtility((radius) => only(bottomLeft: radius));
   }
 
-  /// Returns a [RadiusUtility] to manipulate [Radius].
-  ///
-  /// Example usage:
-  ///
-  /// ```dart
-  /// final attribute = borderRadius.circular(10.0);
-  /// ```
-  ///
-  /// See also:
-  /// * [RadiusUtility], the utility class for manipulating [Radius]
+  /// Returns a [RadiusUtility] to manipulate [Radius] for topStart corner.
+  RadiusUtility<T> get topStart => _directional.topStart;
+
+  /// Returns a [RadiusUtility] to manipulate [Radius] for topEnd corner.
+  RadiusUtility<T> get topEnd => _directional.topEnd;
+
+  /// Returns a [RadiusUtility] to manipulate [Radius] for bottomStart corner.
+  RadiusUtility<T> get bottomStart => _directional.bottomStart;
+
+  /// Returns a [RadiusUtility] to manipulate [Radius] for bottomEnd corner.
+  RadiusUtility<T> get bottomEnd => _directional.bottomEnd;
+
+  /// Returns a [RadiusUtility] to manipulate [Radius] for bottomRight corner.
   RadiusUtility<T> get bottomRight {
     return RadiusUtility((radius) => only(bottomRight: radius));
   }
 
-  /// Returns a [RadiusUtility] to manipulate [Radius].
-  ///
-  /// Example usage:
-  ///
-  /// ```dart
-  /// final attribute = borderRadius.circular(10.0);
-  /// ```
-  ///
-  /// See also:
-  /// * [RadiusUtility], the utility class for manipulating [Radius]
+  /// Returns a [RadiusUtility] to manipulate [Radius] for topLeft corner.
   RadiusUtility<T> get topLeft {
     return RadiusUtility((radius) => only(topLeft: radius));
   }
 
-  /// Returns a [RadiusUtility] to manipulate [Radius].
-  ///
-  /// Example usage:
-  ///
-  /// ```dart
-  /// final attribute = borderRadius.circular(10.0);
-  /// ```
-  ///
-  /// See also:
-  /// * [RadiusUtility], the utility class for manipulating [Radius]
+  /// Returns a [RadiusUtility] to manipulate [Radius] for topRight corner.
   RadiusUtility<T> get topRight {
     return RadiusUtility((radius) => only(topRight: radius));
   }
 
-  /// Applies radius to all corners.
-  ///
-  /// Example usage:
-  ///
-  /// ```dart
-  /// final attribute = borderRadius.all(10.0);
-  /// ```
-  ///
-  /// See also:
-  /// * [RadiusUtility], the utility class for manipulating [Radius]
+  /// Returns a [RadiusUtility] to manipulate [Radius] for all corners.
   RadiusUtility<T> get all {
     return RadiusUtility((radius) => only(
           topLeft: radius,
@@ -120,136 +76,47 @@ class BorderRadiusGeometryUtility<T extends StyleAttribute>
         ));
   }
 
-  /// Applies radius to topRight and topLeft corners.
-  ///
-  /// Example usage:
-  ///
-  /// ```dart
-  /// final attribute = borderRadius.top(10.0);
-  /// ```
-  ///
-  /// See also:
-  /// * [RadiusUtility], the utility class for manipulating [Radius]
+  /// Returns a [RadiusUtility] to manipulate [Radius] for topLeft and topRight corner.
   RadiusUtility<T> get top {
     return RadiusUtility(
       (radius) => only(topLeft: radius, topRight: radius),
     );
   }
 
-  /// Applies radius to bottomRight and bottomLeft corners.
-  ///
-  /// Example usage:
-  ///
-  /// ```dart
-  /// final attribute = borderRadius.bottom(10.0);
-  /// ```
-  ///
-  /// See also:
-  /// * [RadiusUtility], the utility class for manipulating [Radius]
+  /// Returns a [RadiusUtility] to manipulate [Radius] for bottomLeft and bottomRight corner.
   RadiusUtility<T> get bottom {
     return RadiusUtility(
       (radius) => only(bottomLeft: radius, bottomRight: radius),
     );
   }
 
-  /// Applies radius to topLeft and bottomLeft corners.
-  ///
-  /// Example usage:
-  ///
-  /// ```dart
-  /// final attribute = borderRadius.left(10.0);
-  /// ```
-  ///
-  /// See also:
-  /// * [RadiusUtility], the utility class for manipulating [Radius]
+  /// Returns a [RadiusUtility] to manipulate [Radius] for topLeft and bottomLeft corner.
   RadiusUtility<T> get left {
     return RadiusUtility(
       (radius) => only(topLeft: radius, bottomLeft: radius),
     );
   }
 
-  /// Applies radius to topRight and bottomRight corners.
-  ///
-  /// Example usage:
-  ///
-  /// ```dart
-  /// final attribute = borderRadius.right(10.0);
-  /// ```
-  ///
-  /// See also:
-  /// * [RadiusUtility], the utility class for manipulating [Radius]
+  /// Returns a [RadiusUtility] to manipulate [Radius] for topRight and bottomRight corner.
   RadiusUtility<T> get right {
     return RadiusUtility(
       (radius) => only(topRight: radius, bottomRight: radius),
     );
   }
 
-  /// Applies radius topStart corner
-  ///
-  /// Example usage:
-  ///
-  /// ```dart
-  /// final attribute = borderRadius.topStart(10.0);
-  /// ```
-  ///
-  /// See also:
-  /// * [RadiusUtility], the utility class for manipulating [Radius]
-  RadiusUtility<T> get topStart {
-    return RadiusUtility((radius) => only(topStart: radius));
+  /// Sets a circular [Radius] for all corners.
+  T circular(double radius) {
+    return all.circular(radius);
   }
 
-  /// Applies radius topEnd corner
-  ///
-  /// Example usage:
-  ///
-  /// ```dart
-  /// final attribute = borderRadius.topEnd(10.0);
-  /// ```
-  ///
-  /// See also:
-  /// * [RadiusUtility], the utility class for manipulating [Radius]
-  RadiusUtility<T> get topEnd {
-    return RadiusUtility((radius) => only(topEnd: radius));
+  /// Sets an elliptical [Radius] for all corners.
+  T elliptical(double x, double y) {
+    return all.elliptical(x, y);
   }
 
-  /// Applies radius bottomStart corner
-  ///
-  /// Example usage:
-  ///
-  /// ```dart
-  /// final attribute = borderRadius.bottomStart(10.0);
-  /// ```
-  ///
-  /// See also:
-  /// * [RadiusUtility], the utility class for manipulating [Radius]
-  RadiusUtility<T> get bottomStart {
-    return RadiusUtility((radius) => only(bottomStart: radius));
-  }
-
-  /// Applies radius bottomEnd corner
-  ///
-  /// Example usage:
-  ///
-  /// ```dart
-  /// final attribute = borderRadius.bottomEnd(10.0);
-  /// ```
-  ///
-  /// See also:
-  /// * [RadiusUtility], the utility class for manipulating [Radius]
-  RadiusUtility<T> get bottomEnd {
-    return RadiusUtility((radius) => only(bottomEnd: radius));
-  }
-
-  /// Applies a Radius.zero to all corners
-  ///
-  /// Will apply to radius 0 to topLeft, topRight, bottomLeft and bottomRight
+  /// Sets a zero [Radius] for all corners.
   T zero() {
-    return only(
-      topLeft: Radius.zero,
-      topRight: Radius.zero,
-      bottomLeft: Radius.zero,
-      bottomRight: Radius.zero,
-    );
+    return all.zero();
   }
 
   // Only specific corners
@@ -258,10 +125,6 @@ class BorderRadiusGeometryUtility<T extends StyleAttribute>
     Radius? topRight,
     Radius? bottomLeft,
     Radius? bottomRight,
-    Radius? topStart,
-    Radius? topEnd,
-    Radius? bottomStart,
-    Radius? bottomEnd,
   }) {
     return builder(
       BorderRadiusGeometryDto(
@@ -269,35 +132,9 @@ class BorderRadiusGeometryUtility<T extends StyleAttribute>
         topRight: topRight,
         bottomLeft: bottomLeft,
         bottomRight: bottomRight,
-        topStart: topStart,
-        topEnd: topEnd,
-        bottomStart: bottomStart,
-        bottomEnd: bottomEnd,
       ),
     );
   }
-
-  /// Sets the border radius for each corner of a [BorderRadiusGeometry].
-  ///
-  /// This method allows setting distinct radii for each corner. Each parameter
-  /// represents a corner's radius, starting from top-left and moving clockwise.
-  ///
-  /// Parameters:
-  /// - [topLeft]: Radius for the top-left corner.
-  /// - [topRight]: Radius for the top-right corner. Defaults to [topLeft] if not provided.
-  /// - [bottomLeft]: Radius for the bottom-left corner. Defaults to [topLeft] if not provided.
-  /// - [bottomRight]: Radius for the bottom-right corner. Defaults to [topLeft] if not provided.
-  ///
-  /// Example usage:
-  /// ```dart
-  /// final borderRadiusUtility = BorderRadiusGeometryUtility<StyleAttribute>(builder);
-  /// final attribute = borderRadiusUtility(
-  ///   topLeft: 10.0,
-  ///   topRight: 12.0,
-  ///   bottomLeft: 8.0,
-  ///   bottomRight: 10.0,
-  /// );
-  /// ```
 
   T call(double p1, [double? p2, double? p3, double? p4]) {
     double topLeft = p1;
@@ -338,16 +175,7 @@ class BorderRadiusDirectionalUtility<T extends StyleAttribute>
   const BorderRadiusDirectionalUtility(super.builder)
       : super(valueToDto: BorderRadiusGeometryDto.from);
 
-  /// Applies radius to all corners.
-  ///
-  /// Example usage:
-  ///
-  /// ```dart
-  /// final attribute = borderRadius.all(10.0);
-  /// ```
-  ///
-  /// See also:
-  /// * [RadiusUtility], the utility class for manipulating [Radius]
+  /// Returns a [RadiusUtility] to manipulate [Radius] for all corners.
   RadiusUtility<T> get all {
     return RadiusUtility((radius) => only(
           topStart: radius,
@@ -357,30 +185,63 @@ class BorderRadiusDirectionalUtility<T extends StyleAttribute>
         ));
   }
 
-  /// Applies radius to topStart and topEnd corners.
-  ///
-  /// Example usage:
-  ///
-  /// ```dart
-  /// final attribute = borderRadius.top(10.0);
-  /// ```
-  ///
-  /// See also:
-  /// * [RadiusUtility], the utility class for manipulating [Radius]
-  T get top {
-    return only(topStart: Radius.zero, topEnd: Radius.zero);
+  /// Returns a [RadiusUtility] to manipulate [Radius] for topStart and topEnd corner.
+  RadiusUtility<T> get top {
+    return RadiusUtility((radius) => only(topStart: radius, topEnd: radius));
   }
 
-  /// Applies radius to bottomStart and bottomEnd corners.
-  ///
-  /// Example usage:
-  ///
-  /// ```dart
-  /// final attribute = borderRadius.bottom(10.0);
-  /// ```
-  ///
-  /// See also:
-  /// * [RadiusUtility], the utility class for manipulating [Radius]
+  /// Returns a [RadiusUtility] to manipulate [Radius] for bottomStart and bottomEnd corner.
+  RadiusUtility<T> get bottom {
+    return RadiusUtility(
+      (radius) => only(bottomStart: radius, bottomEnd: radius),
+    );
+  }
+
+  /// Returns a [RadiusUtility] to manipulate [Radius] for topStart and bottomStart corner.
+  RadiusUtility<T> get start {
+    return RadiusUtility(
+      (radius) => only(topStart: radius, bottomStart: radius),
+    );
+  }
+
+  /// Returns a [RadiusUtility] to manipulate [Radius] for topEnd and bottomEnd corner.
+  RadiusUtility<T> get end {
+    return RadiusUtility(
+      (radius) => only(topEnd: radius, bottomEnd: radius),
+    );
+  }
+
+  /// Returns a [RadiusUtility] to manipulate [Radius] for topStart corner.
+  RadiusUtility<T> get topStart {
+    return RadiusUtility((radius) => only(topStart: radius));
+  }
+
+  /// Returns a [RadiusUtility] to manipulate [Radius] for topEnd corner.
+  RadiusUtility<T> get topEnd {
+    return RadiusUtility((radius) => only(topEnd: radius));
+  }
+
+  /// Returns a [RadiusUtility] to manipulate [Radius] for bottomStart corner.
+  RadiusUtility<T> get bottomStart {
+    return RadiusUtility((radius) => only(bottomStart: radius));
+  }
+
+  /// Returns a [RadiusUtility] to manipulate [Radius] for bottomEnd corner.
+  RadiusUtility<T> get bottomEnd {
+    return RadiusUtility((radius) => only(bottomEnd: radius));
+  }
+
+  T circular(double radius) {
+    return all.circular(radius);
+  }
+
+  T elliptical(double x, double y) {
+    return all.elliptical(x, y);
+  }
+
+  T zero() {
+    return all.zero();
+  }
 
   T call(double p1, [double? p2, double? p3, double? p4]) {
     double topStart = p1;
@@ -417,7 +278,14 @@ class BorderRadiusDirectionalUtility<T extends StyleAttribute>
     );
   }
 
-  // Only specific corners
+  /// Creates a [BorderRadiusGeometryDto] with the specified radius values for each corner.
+  ///
+  /// The [topStart] parameter represents the radius of the top-left corner.
+  /// The [topEnd] parameter represents the radius of the top-right corner.
+  /// The [bottomStart] parameter represents the radius of the bottom-left corner.
+  /// The [bottomEnd] parameter represents the radius of the bottom-right corner.
+  ///
+  /// Returns the created [T] object.
   T only({
     Radius? topStart,
     Radius? topEnd,
@@ -433,6 +301,4 @@ class BorderRadiusDirectionalUtility<T extends StyleAttribute>
       ),
     );
   }
-
-  T zero() => all.zero();
 }

@@ -1,5 +1,3 @@
-// ignore_for_file: avoid-mutating-parameters
-
 import 'package:flutter/material.dart';
 
 import '../core/extensions/iterable_ext.dart';

@@ -22,5 +22,13 @@
   "widgets": {
     "title": "Widgets",
     "display": "children"
+  },
+  "-- Utilities": {
+    "type": "separator",
+    "title": "Utilities"
+  },
+  "utilities": {
+    "title": "Utilities",
+    "display": "children"
   }
 }

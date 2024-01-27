@@ -66,7 +66,11 @@ const box = BoxSpecUtility();
 /// - [BorderRadiusGeometryUtility]
 /// - [BoxSpecAttribute]
 final border = box.border;
+final borderDirectional = box.borderDirectional;
+
 final borderRadius = box.borderRadius;
+
+final borderRadiusDirectional = box.borderRadiusDirectional;
 
 /// `backgroundColor` - A Utility for defining [BoxDecoration] color value for a [Box] widget
 final backgroundColor = box.color;
@@ -328,7 +332,13 @@ class BoxSpecUtility extends SpecUtility<BoxSpecAttribute> {
   BorderRadiusGeometryUtility<BoxSpecAttribute> get borderRadius =>
       decoration.borderRadius;
 
-  BoxBorderUtility<BoxSpecAttribute> get border => decoration.border;
+  BorderRadiusDirectionalUtility<BoxSpecAttribute>
+      get borderRadiusDirectional => decoration.borderRadiusDirectional;
+
+  BorderUtility<BoxSpecAttribute> get border => decoration.border;
+
+  BorderDirectionalUtility<BoxSpecAttribute> get borderDirectional =>
+      decoration.borderDirectional;
 
   BoxShadowListUtility<BoxSpecAttribute> get shadows => decoration.boxShadows;
 

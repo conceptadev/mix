@@ -122,11 +122,11 @@ final bl = border.left;
 @Deprecated('Use border.right instead')
 final br = border.right;
 
-@Deprecated('Use border.start instead')
-final bs = border.start;
+@Deprecated('Use borderDirectional.start instead')
+final bs = borderDirectional.start;
 
-@Deprecated('Use border.end instead')
-final be = border.end;
+@Deprecated('Use borderDirectional.end instead')
+final be = borderDirectional.end;
 
 @Deprecated('Use alignment instead')
 final align = alignment;
@@ -292,10 +292,10 @@ final borderBottom = border.bottom;
 final borderLeft = border.left;
 @Deprecated('Use border.right instead')
 final borderRight = border.right;
-@Deprecated('Use border.start instead')
-final borderStart = border.start;
-@Deprecated('Use border.end instead')
-final borderEnd = border.end;
+@Deprecated('Use borderDirectional.start instead')
+final borderStart = borderDirectional.start;
+@Deprecated('Use borderDirectional.end instead')
+final borderEnd = borderDirectional.end;
 @Deprecated('Use border.horizontal instead')
 final borderHorizontal = border.horizontal;
 @Deprecated('Use border.vertical instead')
@@ -376,16 +376,16 @@ final roundedBL = borderRadius.bottomLeft;
 final roundedBR = borderRadius.bottomRight;
 
 @Deprecated(kShortAliasDeprecation)
-final roundedTS = borderRadius.topStart;
+final roundedTS = borderRadiusDirectional.topStart;
 
 @Deprecated(kShortAliasDeprecation)
-final roundedTE = borderRadius.topEnd;
+final roundedTE = borderRadiusDirectional.topEnd;
 
 @Deprecated(kShortAliasDeprecation)
-final roundedBS = borderRadius.bottomStart;
+final roundedBS = borderRadiusDirectional.bottomStart;
 
 @Deprecated(kShortAliasDeprecation)
-final roundedBE = borderRadius.bottomEnd;
+final roundedBE = borderRadiusDirectional.bottomEnd;
 
 @Deprecated('Use stack.alignment instead')
 final zAlignment = stack.alignment;

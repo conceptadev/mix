@@ -14,7 +14,6 @@ import '../../theme/tokens/radius_token.dart';
 ///
 /// See also:
 /// - [BorderRadiusGeometry], which is the Flutter counterpart of this class.
-
 @immutable
 class BorderRadiusGeometryDto extends Dto<BorderRadiusGeometry>
     with Mergeable<BorderRadiusGeometryDto> {

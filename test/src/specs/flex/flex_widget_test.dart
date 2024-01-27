@@ -52,9 +52,10 @@ void main() {
 
   test('Verify if widgets are wrapped with Padding when there are 3 children',
       () {
-    var sut = const MixedFlex(
+    var sut = MixedFlex(
+      mix: EmptyMixData,
       direction: Axis.horizontal,
-      children: [
+      children: const [
         SizedBox(),
         SizedBox(),
         SizedBox(),
@@ -69,9 +70,10 @@ void main() {
   });
 
   test('Verify if widgets are wrapped with Padding when there is 1 child', () {
-    var sut = const MixedFlex(
+    var sut = MixedFlex(
+      mix: EmptyMixData,
       direction: Axis.horizontal,
-      children: [
+      children: const [
         SizedBox(),
       ],
     ).buildChildren(10);
@@ -86,9 +88,10 @@ void main() {
   test(
       'Verify if when MixedFlex has direction horizontal the padding is only in the right',
       () {
-    var sut = const MixedFlex(
+    var sut = MixedFlex(
+      mix: EmptyMixData,
       direction: Axis.horizontal,
-      children: [
+      children: const [
         SizedBox(),
         SizedBox(),
       ],
@@ -110,9 +113,10 @@ void main() {
   test(
       'Verify if when MixedFlex has direction horizontal the padding is only in the right',
       () {
-    var sut = const MixedFlex(
+    var sut = MixedFlex(
+      mix: EmptyMixData,
       direction: Axis.vertical,
-      children: [
+      children: const [
         SizedBox(),
         SizedBox(),
       ],
