@@ -23,8 +23,3 @@ abstract class WidgetDecorator<Self extends WidgetDecorator<Self>>
     extends Decorator<Self> {
   const WidgetDecorator({super.key});
 }
-
-abstract class FlexWidgetDecorator<Self extends FlexWidgetDecorator<Self>>
-    extends Decorator<Self> {
-  const FlexWidgetDecorator({super.key});
-}

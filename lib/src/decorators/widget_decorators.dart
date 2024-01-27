@@ -45,7 +45,7 @@ class VisibilityDecorator extends WidgetDecorator<VisibilityDecorator> {
       Visibility(key: key, visible: visible, child: child);
 }
 
-class FlexibleDecorator extends FlexWidgetDecorator<FlexibleDecorator>
+class FlexibleDecorator extends WidgetDecorator<FlexibleDecorator>
     with Mergeable<FlexibleDecorator> {
   final int? flex;
   final FlexFit? fit;
