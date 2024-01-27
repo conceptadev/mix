@@ -247,15 +247,37 @@ class ElevationUtility<T extends StyleAttribute>
   }
 
   // Convenience methods for common elevation values.
+
+  @Deprecated('Use pass int value to call() instead')
   T none() => call(0);
+
+  @Deprecated('Use pass int value to call() instead')
   T one() => call(1);
+
+  @Deprecated('Use pass int value to call() instead')
   T two() => call(2);
+
+  @Deprecated('Use pass int value to call() instead')
   T three() => call(3);
+
+  @Deprecated('Use pass int value to call() instead')
   T four() => call(4);
+
+  @Deprecated('Use pass int value to call() instead')
   T six() => call(6);
+
+  @Deprecated('Use pass int value to call() instead')
   T eight() => call(8);
+
+  @Deprecated('Use pass int value to call() instead')
   T nine() => call(9);
+
+  @Deprecated('Use pass int value to call() instead')
   T twelve() => call(12);
+
+  @Deprecated('Use pass int value to call() instead')
   T sixteen() => call(16);
+
+  @Deprecated('Use pass int value to call() instead')
   T twentyFour() => call(24);
 }
