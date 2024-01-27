@@ -81,7 +81,6 @@ class BorderUtility<T extends StyleAttribute>
     extends DtoUtility<T, BoxBorderDto, BoxBorder> {
   /// Constructor for creating an instance of the class.
   const BorderUtility(super.builder) : super(valueToDto: BoxBorderDto.from);
-
   BoxBorderDto _symmetric({
     BorderSideDto? vertical,
     BorderSideDto? horizontal,
@@ -108,6 +107,15 @@ class BorderUtility<T extends StyleAttribute>
       BoxBorderDto(top: top, bottom: bottom, left: left, right: right),
     );
   }
+
+  BorderDirectionalUtility<T> get _directional =>
+      BorderDirectionalUtility((border) => builder(border));
+
+  /// Method to set the border on the start side
+  BorderSideUtility<T> get start => _directional.start;
+
+  /// Method to set the border on the end side
+  BorderSideUtility<T> get end => _directional.end;
 
   /// Method to set the border on all sides.
   BorderSideUtility<T> get all {

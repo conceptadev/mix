@@ -72,6 +72,28 @@ border.right.style.solid();
 border.right.strokeAlign(0.5);
 ```
 
+#### border.start
+
+Styles the start side of `BorderDirectional`.
+
+```dart
+border.start.color.red();
+border.start.width(2);
+border.start.style.solid();
+border.start.strokeAlign(0.5);
+```
+
+#### border.end
+
+Styles the end side of `BorderDirectional`.
+
+```dart
+border.end.color.red();
+border.end.width(2);
+border.end.style.solid();
+border.end.strokeAlign(0.5);
+```
+
 #### border.horizontal
 
 Styles the horizontal (top and bottom) sides of `Border`.
@@ -268,6 +290,50 @@ borderRadius.bottomRight(10);
 borderRadius.bottomRight.circular(10);
 borderRadius.bottomRight.elliptical(10, 20);
 borderRadius.bottomRight.zero();
+```
+
+#### borderRadius.topStart
+
+Styles the topStart `BorderRadiusDirectional` of a `BoxDecoration.borderRadius`.
+
+```dart
+borderRadius.topStart(10);
+borderRadius.topStart.circular(10);
+borderRadius.topStart.elliptical(10, 20);
+borderRadius.topStart.zero();
+```
+
+#### borderRadius.topEnd
+
+Styles the topEnd `BorderRadiusDirectional` of a `BoxDecoration.borderRadius`.
+
+```dart
+borderRadius.topEnd(10);
+borderRadius.topEnd.circular(10);
+borderRadius.topEnd.elliptical(10, 20);
+borderRadius.topEnd.zero();
+```
+
+#### borderRadius.bottomStart
+
+Styles the bottomStart `BorderRadiusDirectional` of a `BoxDecoration.borderRadius`.
+
+```dart
+borderRadius.bottomStart(10);
+borderRadius.bottomStart.circular(10);
+borderRadius.bottomStart.elliptical(10, 20);
+borderRadius.bottomStart.zero();
+```
+
+#### borderRadius.bottomEnd
+
+Styles the bottomEnd `BorderRadiusDirectional` of a `BoxDecoration.borderRadius`.
+
+```dart
+borderRadius.bottomEnd(10);
+borderRadius.bottomEnd.circular(10);
+borderRadius.bottomEnd.elliptical(10, 20);
+borderRadius.bottomEnd.zero();
 ```
 
 #### borderRadius.top

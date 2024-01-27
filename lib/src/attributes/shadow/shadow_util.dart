@@ -238,4 +238,17 @@ class ElevationUtility<T extends StyleAttribute>
 
     return builder(kElevationToShadow[value]!.toDto());
   }
+
+  // Convenience methods for common elevation values.
+  T none() => call(0);
+  T one() => call(1);
+  T two() => call(2);
+  T three() => call(3);
+  T four() => call(4);
+  T six() => call(6);
+  T eight() => call(8);
+  T nine() => call(9);
+  T twelve() => call(12);
+  T sixteen() => call(16);
+  T twentyFour() => call(24);
 }

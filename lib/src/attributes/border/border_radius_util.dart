@@ -30,10 +30,26 @@ class BorderRadiusGeometryUtility<T extends StyleAttribute>
   const BorderRadiusGeometryUtility(super.builder)
       : super(valueToDto: BorderRadiusGeometryDto.from);
 
+  BorderRadiusDirectionalUtility<T> get _directional {
+    return BorderRadiusDirectionalUtility(builder);
+  }
+
   /// Returns a [RadiusUtility] to manipulate [Radius] for bottomLeft corner.
   RadiusUtility<T> get bottomLeft {
     return RadiusUtility((radius) => only(bottomLeft: radius));
   }
+
+  /// Returns a [RadiusUtility] to manipulate [Radius] for topStart corner.
+  RadiusUtility<T> get topStart => _directional.topStart;
+
+  /// Returns a [RadiusUtility] to manipulate [Radius] for topEnd corner.
+  RadiusUtility<T> get topEnd => _directional.topEnd;
+
+  /// Returns a [RadiusUtility] to manipulate [Radius] for bottomStart corner.
+  RadiusUtility<T> get bottomStart => _directional.bottomStart;
+
+  /// Returns a [RadiusUtility] to manipulate [Radius] for bottomEnd corner.
+  RadiusUtility<T> get bottomEnd => _directional.bottomEnd;
 
   /// Returns a [RadiusUtility] to manipulate [Radius] for bottomRight corner.
   RadiusUtility<T> get bottomRight {
