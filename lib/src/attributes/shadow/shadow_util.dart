@@ -232,30 +232,10 @@ class ElevationUtility<T extends StyleAttribute>
   const ElevationUtility(super.builder);
 
   /// Method to set elevation based on material design standards.
-  ///
-  /// Example usage:
-  ///
-  /// ```dart
-  /// final attribute = elevation.two();
-  /// ```
-  ///
-  /// Attribute now holds a list of [BoxShadowDto] corresponding to a material elevation of `2`.
+  /// You can pass 0, 1, 2, 3, 4, 6, 8, 9, 12, 16, 24 to this method.
   T call(int value) {
     assert(kElevationToShadow.containsKey(value), 'Invalid elevation value');
 
     return builder(kElevationToShadow[value]!.toDto());
   }
-
-  // Convenience methods for common elevation values.
-  T none() => call(0);
-  T one() => call(1);
-  T two() => call(2);
-  T three() => call(3);
-  T four() => call(4);
-  T six() => call(6);
-  T eight() => call(8);
-  T nine() => call(9);
-  T twelve() => call(12);
-  T sixteen() => call(16);
-  T twentyFour() => call(24);
 }
