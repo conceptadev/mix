@@ -1,3 +1,8 @@
+# Unreleased
+
+- Improvements on border, and borderRadius utitlies.
+- Fixes issue [#179](https://github.com/conceptadev/mix/issues/179)
+
 ## 1.0.0-beta.3
 
 - Revamped Mix API for improved functionality and developer experience.
