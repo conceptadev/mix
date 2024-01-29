@@ -63,7 +63,7 @@ class Pressable extends StatefulWidget {
     this.onLongPress,
     this.unpressDelay = const Duration(),
     this.onPressed,
-    this.disabled = false,
+    this.isDisabled = false,
     super.key,
   });
 
@@ -72,7 +72,7 @@ class Pressable extends StatefulWidget {
   final VoidCallback? onLongPress;
   final FocusNode? focusNode;
   final bool autofocus;
-  final bool disabled;
+  final bool isDisabled;
   final Duration unpressDelay;
   final Function(bool focus)? onFocusChange;
 
@@ -147,7 +147,7 @@ class PressableWidgetState extends State<Pressable> {
   Widget build(BuildContext context) {
     final currentGesture = _currentGesture;
     final currentStatus =
-        widget.disabled ? WidgetStatus.disabled : WidgetStatus.enabled;
+        widget.isDisabled ? WidgetStatus.disabled : WidgetStatus.enabled;
 
     final onEnabled = currentStatus == WidgetStatus.enabled;
 
@@ -157,35 +157,48 @@ class PressableWidgetState extends State<Pressable> {
         button: true,
         focusable: onEnabled && _node.canRequestFocus,
         focused: _node.hasFocus,
-        child: GestureDetector(
-          onTapDown: (_) => updateState(() => _pressed = true),
-          onTapUp: (_) => handleUnpress(),
-          onTap: widget.onPressed,
-          onTapCancel: () => handleUnpress(),
-          onLongPressCancel: () => updateState(() => _longpressed = false),
-          onLongPress: widget.onLongPress,
-          onLongPressStart: (_) => updateState(() => _longpressed = true),
-          onLongPressEnd: (_) => updateState(() => _longpressed = false),
-          behavior: widget.behavior,
-          child: FocusableActionDetector(
-            enabled: onEnabled,
-            focusNode: _node,
-            autofocus: widget.autofocus,
-            onShowFocusHighlight: (v) => updateState(() => _focus = v),
-            onShowHoverHighlight: (v) => updateState(() => _hover = v),
-            onFocusChange: widget.onFocusChange,
-            child: WidgetStateNotifier(
-              data: WidgetStateData(
-                focus: _focus,
-                status: currentStatus,
-                state: currentGesture,
-                hover: _hover,
+        child: _buildGestureDetector(
+            isDisabled: widget.isDisabled,
+            child: FocusableActionDetector(
+              enabled: onEnabled,
+              focusNode: _node,
+              autofocus: widget.autofocus,
+              onShowFocusHighlight: (v) => updateState(() => _focus = v),
+              onShowHoverHighlight: (v) => updateState(() => _hover = v),
+              onFocusChange: widget.onFocusChange,
+              child: WidgetStateNotifier(
+                data: WidgetStateData(
+                  focus: _focus,
+                  status: currentStatus,
+                  state: currentGesture,
+                  hover: _hover,
+                ),
+                child: widget.child,
               ),
-              child: widget.child,
-            ),
-          ),
-        ),
+            )),
       ),
     );
+  }
+
+  GestureDetector _buildGestureDetector({
+    required bool isDisabled,
+    required Widget child,
+  }) {
+    return isDisabled
+        ? GestureDetector(
+            child: child,
+          )
+        : GestureDetector(
+            onTapDown: (_) => updateState(() => _pressed = true),
+            onTapUp: (_) => handleUnpress(),
+            onTap: widget.onPressed,
+            onTapCancel: () => handleUnpress(),
+            onLongPressCancel: () => updateState(() => _longpressed = false),
+            onLongPress: widget.onLongPress,
+            onLongPressStart: (_) => updateState(() => _longpressed = true),
+            onLongPressEnd: (_) => updateState(() => _longpressed = false),
+            behavior: widget.behavior,
+            child: child,
+          );
   }
 }
