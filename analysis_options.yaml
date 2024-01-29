@@ -25,6 +25,7 @@ dart_code_metrics:
     no-object-declaration: false
     prefer-single-widget-per-file: false
     parameters-ordering: false
+    match-getter-setter-field-names: false
     prefer-dedicated-media-query-methods: false
     arguments-ordering:
       child-last: true

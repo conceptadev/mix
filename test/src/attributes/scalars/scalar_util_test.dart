@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
+import 'package:mix/src/attributes/border/shape_border_dto.dart';
+import 'package:mix/src/attributes/border/shape_border_util.dart';
 
 import '../../../helpers/testing_utils.dart';
 
@@ -227,30 +229,30 @@ void main() {
     test('circle() returns correct instance', () {
       final shapeBorder = utility.circle();
 
-      expect(shapeBorder.value, isA<CircleBorder>());
+      expect(shapeBorder.value, isA<CircleBorderDto>());
     });
 
     // stadium()
     test('stadium() returns correct instance', () {
       final shapeBorder = utility.stadium();
 
-      expect(shapeBorder.value, isA<StadiumBorder>());
+      expect(shapeBorder.value, isA<StadiumBorderDto>());
     });
 
     // rounded()
     test('rounded() returns correct instance', () {
-      final shapeBorder = utility.rounded(20);
+      final shapeBorder = utility.roundedRectangle.borderRadius(20);
 
-      expect(shapeBorder.value, isA<RoundedRectangleBorder>());
-      expect((shapeBorder.value as RoundedRectangleBorder).borderRadius,
-          BorderRadius.circular(20));
+      expect(shapeBorder.value, isA<RoundedRectangleBorderDto>());
+      expect((shapeBorder.value as RoundedRectangleBorderDto).borderRadius,
+          BorderRadius.circular(20).toDto());
     });
 
     //  beveled()
     test('beveled() returns correct instance', () {
-      final shapeBorder = utility.beveled();
+      final shapeBorder = utility.beveledRectangle();
 
-      expect(shapeBorder.value, isA<BeveledRectangleBorder>());
+      expect(shapeBorder.value, isA<BeveledRectangleBorderDto>());
     });
   });
   group('BoxFitUtility Tests', () {

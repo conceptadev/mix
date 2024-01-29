@@ -6,6 +6,8 @@ import '../border/border_dto.dart';
 import '../border/border_radius_dto.dart';
 import '../border/border_radius_util.dart';
 import '../border/border_util.dart';
+import '../border/shape_border_dto.dart';
+import '../border/shape_border_util.dart';
 import '../color/color_dto.dart';
 import '../color/color_util.dart';
 import '../gradient/gradient_dto.dart';
@@ -140,7 +142,7 @@ class ShapeDecorationUtility<T extends StyleAttribute>
     ColorDto? color,
     GradientDto? gradient,
     List<BoxShadowDto>? shadows,
-    ShapeBorder? shape,
+    ShapeBorderDto? shape,
   }) {
     return builder(
       ShapeDecorationDto(
@@ -167,7 +169,7 @@ class ShapeDecorationUtility<T extends StyleAttribute>
   }
 
   ShapeBorderUtility<T> get shape {
-    return ShapeBorderUtility((ShapeBorder shape) => _only(shape: shape));
+    return ShapeBorderUtility((shape) => _only(shape: shape));
   }
 
   T call({
@@ -177,10 +179,10 @@ class ShapeDecorationUtility<T extends StyleAttribute>
     ShapeBorder? shape,
   }) {
     return _only(
-      color: color?.toDto(),
-      gradient: gradient?.toDto(),
-      shadows: shadows?.map((e) => e.toDto()).toList(),
-      shape: shape,
+      color: ColorDto.maybeFrom(color),
+      gradient: GradientDto.maybeFrom(gradient),
+      shadows: shadows?.map(BoxShadowDto.from).toList(),
+      shape: ShapeBorderDto.maybeFrom(shape),
     );
   }
 }

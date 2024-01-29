@@ -7,6 +7,7 @@ import '../../core/extensions/iterable_ext.dart';
 import '../../factory/mix_provider_data.dart';
 import '../border/border_dto.dart';
 import '../border/border_radius_dto.dart';
+import '../border/shape_border_dto.dart';
 import '../color/color_dto.dart';
 import '../gradient/gradient_dto.dart';
 import '../shadow/shadow_dto.dart';
@@ -14,6 +15,9 @@ import '../shadow/shadow_dto.dart';
 /// A Data transfer object that represents a [Decoration] value.
 ///
 /// This DTO is used to resolve a [Decoration] value from a [MixData] instance.
+///
+/// This class needs to have the different properties that are not found in the [Decorators] class.
+/// In order to support merging of [Decoration] values, and reusable of common properties.
 ///
 /// See also:
 /// * [Decoration], which is the Flutter equivalent class.
@@ -23,22 +27,60 @@ import '../shadow/shadow_dto.dart';
 /// {@category DTO}
 @immutable
 abstract class DecorationDto<Value extends Decoration> extends Dto<Value>
-    with Mergeable<DecorationDto<Value>> {
-  const DecorationDto();
+    with Mergeable<DecorationDto> {
+  final ColorDto? color;
+  final GradientDto? gradient;
+  final List<BoxShadowDto>? boxShadow;
 
-  static DecorationDto<Value> from<Value extends Decoration>(
-    Decoration decoration,
-  ) {
+  const DecorationDto({
+    required this.color,
+    required this.gradient,
+    required this.boxShadow,
+  });
+
+  static DecorationDto<T> from<T extends Decoration>(T decoration) {
     if (decoration is BoxDecoration) {
-      return BoxDecorationDto.from(decoration) as DecorationDto<Value>;
+      return BoxDecorationDto.from(decoration) as DecorationDto<T>;
+    } else if (decoration is ShapeDecoration) {
+      return ShapeDecorationDto.from(decoration) as DecorationDto<T>;
     }
-    if (decoration is ShapeDecoration) {
-      return ShapeDecorationDto.from(decoration) as DecorationDto<Value>;
+    throw ArgumentError.value(
+      decoration,
+      'decoration',
+      'Unsupported decoration type',
+    );
+  }
+
+  DecorationDto<Value> _mergeDecoration(covariant DecorationDto<Value>? other);
+
+  /// Returns true if this decoration is mergeable with other.
+  bool isMergeable();
+
+  @override
+  DecorationDto merge(covariant DecorationDto? other) {
+    if (other == null) return this;
+
+    if (runtimeType == other.runtimeType) {
+      return _mergeDecoration(other as DecorationDto<Value>);
     }
 
-    throw UnimplementedError(
-      'DecorationDto.from: $decoration is not supported',
-    );
+    assert(isMergeable(), 'This decoration is not mergeable with other');
+
+    if (other is BoxDecorationDto) {
+      return BoxDecorationDto(
+        color: color,
+        gradient: gradient,
+        boxShadow: boxShadow,
+      )._mergeDecoration(other);
+    } else if (other is ShapeDecorationDto) {
+      return ShapeDecorationDto(
+        color: color,
+        gradient: gradient,
+        shadows: boxShadow,
+      )._mergeDecoration(other);
+    }
+
+    throw ArgumentError.value(other, 'other', 'Unsupported decoration type');
   }
 }
 
@@ -53,19 +95,16 @@ abstract class DecorationDto<Value extends Decoration> extends Dto<Value>
 /// {@category DTO}
 @immutable
 class BoxDecorationDto extends DecorationDto<BoxDecoration> {
-  final ColorDto? color;
   final BoxBorderDto? border;
   final BorderRadiusGeometryDto? borderRadius;
-  final GradientDto? gradient;
-  final List<BoxShadowDto>? boxShadow;
   final BoxShape? shape;
 
   const BoxDecorationDto({
-    this.color,
+    super.color,
     this.border,
     this.borderRadius,
-    this.gradient,
-    this.boxShadow,
+    super.gradient,
+    super.boxShadow,
     this.shape,
   });
 
@@ -88,6 +127,28 @@ class BoxDecorationDto extends DecorationDto<BoxDecoration> {
     return decoration == null ? null : from(decoration);
   }
 
+  /// Merges this [BoxDecorationDto] with `other` [BoxDecorationDto]
+  @override
+  BoxDecorationDto _mergeDecoration(BoxDecorationDto? other) {
+    if (other == null) return this;
+
+    return BoxDecorationDto(
+      color: color?.merge(other.color) ?? other.color,
+      border: border?.merge(other.border) ?? other.border,
+      borderRadius:
+          borderRadius?.merge(other.borderRadius) ?? other.borderRadius,
+      gradient: gradient?.merge(other.gradient) ?? other.gradient,
+      boxShadow: boxShadow?.merge(other.boxShadow) ?? other.boxShadow,
+      shape: other.shape ?? shape,
+    );
+  }
+
+  @override
+  bool isMergeable() {
+    // is only mergeable if no other properties are set besides: color, boxShadow, and gradient
+    return border == null && borderRadius == null && shape == null;
+  }
+
   /// Resolves this [BoxDecorationDto] with a given [MixData] to a [BoxDecoration]
   @override
   BoxDecoration resolve(MixData mix) {
@@ -101,21 +162,6 @@ class BoxDecorationDto extends DecorationDto<BoxDecoration> {
     );
   }
 
-  /// Merges this [BoxDecorationDto] with `other` [BoxDecorationDto]
-  @override
-  BoxDecorationDto merge(BoxDecorationDto? other) {
-    if (other == null) return this;
-
-    return BoxDecorationDto(
-      color: color?.merge(other.color) ?? other.color,
-      border: border?.merge(other.border) ?? other.border,
-      borderRadius:
-          borderRadius?.merge(other.borderRadius) ?? other.borderRadius,
-      gradient: gradient?.merge(other.gradient) ?? other.gradient,
-      boxShadow: boxShadow?.merge(other.boxShadow) ?? other.boxShadow,
-    );
-  }
-
   @override
   List<Object?> get props =>
       [color, border, borderRadius, gradient, boxShadow, shape];
@@ -123,22 +169,19 @@ class BoxDecorationDto extends DecorationDto<BoxDecoration> {
 
 @immutable
 class ShapeDecorationDto extends DecorationDto<ShapeDecoration> {
-  final ColorDto? color;
-  final ShapeBorder? shape;
-  final GradientDto? gradient;
-  final List<BoxShadowDto>? shadows;
+  final ShapeBorderDto? shape;
 
   const ShapeDecorationDto({
-    this.color,
+    super.color,
     this.shape,
-    this.gradient,
-    this.shadows,
-  });
+    super.gradient,
+    List<BoxShadowDto>? shadows,
+  }) : super(boxShadow: shadows);
 
   static ShapeDecorationDto from(ShapeDecoration decoration) {
     return ShapeDecorationDto(
       color: ColorDto.maybeFrom(decoration.color),
-      shape: decoration.shape,
+      shape: ShapeBorderDto.maybeFrom(decoration.shape),
       gradient: GradientDto.maybeFrom(decoration.gradient),
       shadows: decoration.shadows?.map(BoxShadowDto.from).toList(),
     );
@@ -149,24 +192,32 @@ class ShapeDecorationDto extends DecorationDto<ShapeDecoration> {
   }
 
   @override
+  ShapeDecorationDto _mergeDecoration(ShapeDecorationDto? other) {
+    if (other == null) return this;
+
+    return ShapeDecorationDto(
+      color: color?.merge(other.color) ?? other.color,
+      shape: shape?.merge(other.shape) ?? other.shape,
+      gradient: gradient?.merge(other.gradient) ?? other.gradient,
+      shadows: boxShadow?.merge(other.boxShadow) ?? other.boxShadow,
+    );
+  }
+
+  List<BoxShadowDto>? get shadows => boxShadow;
+
+  @override
+  bool isMergeable() {
+    // is only mergeable if no other properties are set besides: color, boxShadow, and gradient
+    return shape == null;
+  }
+
+  @override
   ShapeDecoration resolve(MixData mix) {
     return ShapeDecoration(
       color: color?.resolve(mix),
       gradient: gradient?.resolve(mix),
       shadows: shadows?.map((e) => e.resolve(mix)).toList(),
-      shape: shape ?? const RoundedRectangleBorder(),
-    );
-  }
-
-  @override
-  ShapeDecorationDto merge(ShapeDecorationDto? other) {
-    if (other == null) return this;
-
-    return ShapeDecorationDto(
-      color: other.color ?? color,
-      shape: other.shape ?? shape,
-      gradient: other.gradient ?? gradient,
-      shadows: other.shadows ?? shadows,
+      shape: shape?.resolve(mix) ?? const RoundedRectangleBorder(),
     );
   }
 

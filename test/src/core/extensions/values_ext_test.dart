@@ -25,10 +25,10 @@ void main() {
     });
 
     test('ShapeDecoration', () {
-      final value = ShapeDecoration(
-        shape: Border.all(),
-        gradient: const RadialGradient(colors: [Colors.red, Colors.blue]),
-        shadows: const [BoxShadow(blurRadius: 5.0)],
+      const value = ShapeDecoration(
+        shape: CircleBorder(),
+        gradient: RadialGradient(colors: [Colors.red, Colors.blue]),
+        shadows: [BoxShadow(blurRadius: 5.0)],
       );
 
       final dto = ShapeDecorationDto.from(value);
