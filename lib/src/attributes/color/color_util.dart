@@ -164,6 +164,7 @@ class MaterialAccentColorUtility<T extends StyleAttribute>
 
 typedef ColorModifier = Color Function(Color);
 
+@immutable
 class OpacityColorDirective extends ColorDirective {
   final double opacity;
   const OpacityColorDirective(this.opacity);
@@ -175,6 +176,7 @@ class OpacityColorDirective extends ColorDirective {
   get props => [opacity];
 }
 
+@immutable
 class AlphaColorDirective extends ColorDirective {
   final int alpha;
   const AlphaColorDirective(this.alpha);
@@ -186,7 +188,7 @@ class AlphaColorDirective extends ColorDirective {
   get props => [alpha];
 }
 
-// Dark by percentage
+@immutable
 class DarkenColorDirective extends ColorDirective {
   final int percentage;
   const DarkenColorDirective(this.percentage);
@@ -198,7 +200,7 @@ class DarkenColorDirective extends ColorDirective {
   get props => [percentage];
 }
 
-// Light by percentage
+@immutable
 class LightenColorDirective extends ColorDirective {
   final int percentage;
   const LightenColorDirective(this.percentage);
@@ -210,7 +212,7 @@ class LightenColorDirective extends ColorDirective {
   get props => [percentage];
 }
 
-// Saturate by percentage
+@immutable
 class SaturateColorDirective extends ColorDirective {
   final int percentage;
   const SaturateColorDirective(this.percentage);
@@ -222,7 +224,7 @@ class SaturateColorDirective extends ColorDirective {
   get props => [percentage];
 }
 
-// Desaturate by percentage
+@immutable
 class DesaturateColorDirective extends ColorDirective {
   final int percentage;
   const DesaturateColorDirective(this.percentage);
@@ -234,7 +236,7 @@ class DesaturateColorDirective extends ColorDirective {
   get props => [percentage];
 }
 
-// Tint by percentage
+@immutable
 class TintColorDirective extends ColorDirective {
   final int percentage;
   const TintColorDirective(this.percentage);
@@ -246,7 +248,7 @@ class TintColorDirective extends ColorDirective {
   get props => [percentage];
 }
 
-// Shade by percentage
+@immutable
 class ShadeColorDirective extends ColorDirective {
   final int percentage;
   const ShadeColorDirective(this.percentage);
@@ -258,7 +260,7 @@ class ShadeColorDirective extends ColorDirective {
   get props => [percentage];
 }
 
-// Brighten by percentage
+@immutable
 class BrightenColorDirective extends ColorDirective {
   final int percentage;
   const BrightenColorDirective(this.percentage);

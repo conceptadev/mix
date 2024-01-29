@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../helpers/compare_mixin.dart';
 import 'attribute.dart';
 
 typedef Modifier<T> = T Function(T value);
@@ -11,10 +12,8 @@ abstract class Directive extends StyleAttribute {
 }
 
 @immutable
-abstract class ColorDirective {
+abstract class ColorDirective with Comparable {
   const ColorDirective();
-
-  get props => [];
 
   Color modify(Color color);
 }

@@ -19,12 +19,12 @@ class ColorDto extends Dto<Color> with Mergeable<ColorDto> {
   final Color? value;
   final List<ColorDirective> directives;
 
-  const ColorDto._({this.value, this.directives = const []});
+  const ColorDto.raw({this.value, this.directives = const []});
 
-  const ColorDto(Color value) : this._(value: value);
+  const ColorDto(Color value) : this.raw(value: value);
 
   ColorDto.directive(ColorDirective directive)
-      : this._(directives: [directive]);
+      : this.raw(directives: [directive]);
 
   static ColorDto? maybeFrom(Color? value) =>
       value == null ? null : ColorDto(value);
@@ -36,6 +36,7 @@ class ColorDto extends Dto<Color> with Mergeable<ColorDto> {
     if (color is ColorRef) {
       color = mix.tokens.colorRef(color);
     }
+
     for (final directive in directives) {
       color = directive.modify(color);
     }
@@ -47,7 +48,7 @@ class ColorDto extends Dto<Color> with Mergeable<ColorDto> {
   ColorDto merge(covariant ColorDto? other) {
     return other == null
         ? this
-        : ColorDto._(
+        : ColorDto.raw(
             value: other.value ?? value,
             directives: [...directives, ...other.directives],
           );

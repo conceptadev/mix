@@ -79,10 +79,22 @@ void main() {
       expect(merged, same(colorDto));
     });
 
-    // Testing props getter
-    test('ColorDto.props should return the correct properties', () {
-      const colorDto = ColorDto(Colors.red);
-      expect(colorDto.props, [Colors.red]);
+    // Test equality
+    test('ColorDto.equals should return true for equal instances', () {
+      const colorDto1 = ColorDto.raw(
+        value: Colors.red,
+        directives: [OpacityColorDirective(0.5)],
+      );
+      const colorDto2 = ColorDto.raw(
+        value: Colors.red,
+        directives: [OpacityColorDirective(0.5)],
+      );
+
+      const colorDto3 = ColorDto.raw(
+          value: Colors.red, directives: [DarkenColorDirective(10)]);
+
+      expect(colorDto1, colorDto2);
+      expect(colorDto1, isNot(colorDto3));
     });
   });
 }
