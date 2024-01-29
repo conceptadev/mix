@@ -18,10 +18,12 @@ class PressableBox extends StatelessWidget {
     this.style,
     this.animationDuration = const Duration(milliseconds: 125),
     this.animationCurve = Curves.linear,
+    this.isDisabled = false,
   });
 
   final Style? style;
   final Widget child;
+  final bool isDisabled;
   final VoidCallback? onPressed;
   final VoidCallback? onLongPress;
   final FocusNode? focusNode;
@@ -43,6 +45,7 @@ class PressableBox extends StatelessWidget {
       onLongPress: onLongPress,
       unpressDelay: unpressDelay,
       onPressed: onPressed,
+      isDisabled: isDisabled,
       child: AnimatedBox(
         style: style,
         curve: animationCurve,

@@ -91,4 +91,56 @@ void main() {
       expect(counter, 0);
     });
   });
+
+  group('PressableBox', () {
+    testWidgets('must be clickable when isDisabled is setted to false',
+        (tester) async {
+      int counter = 0;
+
+      await tester.pumpWidget(
+        PressableBox(
+          unpressDelay: Duration.zero,
+          animationDuration: Duration.zero,
+          onPressed: () {
+            counter++;
+          },
+          isDisabled: false,
+          child: Container(),
+        ),
+      );
+
+      final pressableFinder = find.byType(PressableBox);
+      expect(pressableFinder, findsOneWidget);
+
+      await tester.tap(pressableFinder);
+      await tester.pumpAndSettle();
+
+      expect(counter, 1);
+    });
+
+    testWidgets('must be unclickable when isDisabled is setted to true',
+        (tester) async {
+      int counter = 0;
+
+      await tester.pumpWidget(
+        PressableBox(
+          onPressed: () {
+            counter++;
+          },
+          unpressDelay: Duration.zero,
+          animationDuration: Duration.zero,
+          isDisabled: true,
+          child: Container(),
+        ),
+      );
+
+      final pressableFinder = find.byType(PressableBox);
+      expect(pressableFinder, findsOneWidget);
+
+      await tester.tap(pressableFinder);
+      await tester.pumpAndSettle();
+
+      expect(counter, 0);
+    });
+  });
 }
