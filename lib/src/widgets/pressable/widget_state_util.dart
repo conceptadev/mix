@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../helpers/string_ext.dart';
 import '../../variants/variant.dart';
-import 'gesture_state.notifier.dart';
+import 'pressable_state.notifier.dart';
 
 /// Global context variants for handling common widget states and gestures.
 

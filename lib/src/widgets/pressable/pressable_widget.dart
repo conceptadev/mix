@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../factory/style_mix.dart';
 import '../../specs/container/box_widget.dart';
-import 'gesture_state.notifier.dart';
+import 'pressable_state.notifier.dart';
 
 class PressableBox extends StatelessWidget {
   const PressableBox({
