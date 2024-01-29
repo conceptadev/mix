@@ -96,7 +96,7 @@ class ShadowUtility<T extends StyleAttribute> extends MixUtility<T, ShadowDto> {
   /// Method to create a shadow with provided parameters.
   T call({Color? color, Offset? offset, double? blurRadius}) {
     return _only(
-      color: color?.toDto(),
+      color: ColorDto.maybeFrom(color),
       offset: offset,
       blurRadius: blurRadius,
     );
@@ -215,7 +215,7 @@ class BoxShadowUtility<T extends StyleAttribute>
     double? spreadRadius,
   }) {
     return _only(
-      color: color?.toDto(),
+      color: ColorDto.maybeFrom(color),
       offset: offset,
       blurRadius: blurRadius,
       spreadRadius: spreadRadius,

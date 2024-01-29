@@ -10,6 +10,15 @@ abstract class Directive extends StyleAttribute {
   const Directive();
 }
 
+@immutable
+abstract class ColorDirective {
+  const ColorDirective();
+
+  get props => [];
+
+  Color modify(Color color);
+}
+
 class TextDataDirective extends Directive with Mergeable<TextDataDirective> {
   final List<Modifier<String>> _modifiers;
   const TextDataDirective(this._modifiers);

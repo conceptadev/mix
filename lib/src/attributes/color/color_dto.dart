@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../core/attribute.dart';
+import '../../core/directive.dart';
 import '../../factory/mix_provider_data.dart';
 import '../../theme/tokens/color_token.dart';
 
@@ -15,24 +16,43 @@ import '../../theme/tokens/color_token.dart';
 /// {@category DTO}
 @immutable
 class ColorDto extends Dto<Color> with Mergeable<ColorDto> {
-  final Color value;
-  const ColorDto(this.value);
+  final Color? value;
+  final List<ColorDirective> directives;
+
+  const ColorDto._({this.value, this.directives = const []});
+
+  const ColorDto(Color value) : this._(value: value);
+
+  ColorDto.directive(ColorDirective directive)
+      : this._(directives: [directive]);
 
   static ColorDto? maybeFrom(Color? value) =>
       value == null ? null : ColorDto(value);
 
   @override
   Color resolve(MixData mix) {
-    final colorRef = value;
+    Color color = value ?? Colors.transparent;
 
-    return colorRef is ColorRef ? mix.tokens.colorRef(colorRef) : colorRef;
+    if (color is ColorRef) {
+      color = mix.tokens.colorRef(color);
+    }
+    for (final directive in directives) {
+      color = directive.modify(color);
+    }
+
+    return color;
   }
 
   @override
   ColorDto merge(covariant ColorDto? other) {
-    return other == null ? this : ColorDto(other.value);
+    return other == null
+        ? this
+        : ColorDto._(
+            value: other.value ?? value,
+            directives: [...directives, ...other.directives],
+          );
   }
 
   @override
-  get props => [value];
+  List<Object?> get props => [value, directives];
 }

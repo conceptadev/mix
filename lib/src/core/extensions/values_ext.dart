@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../../attributes/border/border_dto.dart';
 import '../../attributes/border/border_radius_dto.dart';
-import '../../attributes/color/color_dto.dart';
 import '../../attributes/constraints/constraints_dto.dart';
 import '../../attributes/decoration/decoration_dto.dart';
 import '../../attributes/gradient/gradient_dto.dart';
@@ -56,11 +55,6 @@ extension EdgeInsetsGeometryExt on EdgeInsetsGeometry {
 // @nodoc
 extension DoubleExt on double {
   Radius toRadius() => Radius.circular(this);
-}
-
-// @nodoc
-extension ColorExt on Color {
-  ColorDto toDto() => ColorDto(this);
 }
 
 // @nodoc

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../core/attribute.dart';
-import '../../core/extensions/values_ext.dart';
 import '../color/color_dto.dart';
 import '../color/color_util.dart';
 import '../scalars/scalar_util.dart';
@@ -67,7 +66,7 @@ class BorderSideUtility<T extends StyleAttribute>
     double? strokeAlign,
   }) {
     final side = BorderSideDto(
-      color: color?.toDto(),
+      color: ColorDto.maybeFrom(color),
       strokeAlign: strokeAlign,
       style: style,
       width: width,
