@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
+import 'package:mix/src/attributes/border/shape_border_dto.dart';
 
 import '../../../helpers/attribute_generator.dart';
 import '../../../helpers/testing_utils.dart';
@@ -187,7 +188,7 @@ void main() {
     test('shape() returns correct instance', () {
       final result = shapeDecoration.shape.circle();
 
-      expect(result.value.shape, equals(const CircleBorder()));
+      expect(result.value.shape, equals(const CircleBorderDto()));
     });
   });
 }

@@ -238,32 +238,6 @@ class TextHeightBehaviorUtility<T extends StyleAttribute>
   const TextHeightBehaviorUtility(super.builder);
 }
 
-/// Utility for setting `ShapeBorder` values.
-///
-/// Useful for defining the shape of widgets.
-/// Includes subclasses of `ShapeBorder` such as `RoundedRectangleBorder`.
-///
-/// Example:
-///
-/// ```dart
-/// final shapeBorder = ShapeBorderUtility(builder);
-/// final roundedRectangle = shapeBorder.roundedRectangle(10);
-/// ```
-///
-/// See [ShapeBorder] for more information.
-class ShapeBorderUtility<T extends StyleAttribute>
-    extends ScalarUtility<T, ShapeBorder> {
-  const ShapeBorderUtility(super.builder);
-
-  T rounded(double radius) => builder(
-        RoundedRectangleBorder(borderRadius: BorderRadius.circular(radius)),
-      );
-
-  T circle() => builder(const CircleBorder());
-  T stadium() => builder(const StadiumBorder());
-  T beveled() => builder(const BeveledRectangleBorder());
-}
-
 /// Utility for setting `Axis` values.
 ///
 /// Useful for defining the direction of flex layouts.

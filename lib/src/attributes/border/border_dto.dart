@@ -146,6 +146,10 @@ class BorderSideDto extends Dto<BorderSide> with Mergeable<BorderSideDto> {
     );
   }
 
+  static BorderSideDto? maybeFrom(BorderSide? side) {
+    return side == null ? null : from(side);
+  }
+
   BorderSideDto copyWith({
     ColorDto? color,
     double? width,
