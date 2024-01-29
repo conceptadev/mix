@@ -75,4 +75,28 @@ void main() {
       expect(colorDto, equals(const ColorDto(color)));
     });
   });
+
+  // contrast
+  // group('contrast() Tests', () {
+  //   test('should return the correct color', () {
+  //     const color = Color.fromARGB(255, 255, 255, 255);
+  //     final contrastColor = color.contrast();
+
+  //     expect(contrastColor, equals(const Color.fromARGB(255, 0, 0, 0)));
+  //   });
+
+  //   test('should return the correct color', () {
+  //     const color = Colors.black;
+  //     final contrastColor = color.contrast();
+
+  //     expect(contrastColor, Colors.white);
+  //   });
+
+  //   test('should return the correct color', () {
+  //     const color = Colors.red;
+  //     final contrastColor = color.contrast();
+
+  //     expect(contrastColor, Colors.black);
+  //   });
+  // });
 }

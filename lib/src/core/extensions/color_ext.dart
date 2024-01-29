@@ -32,6 +32,14 @@ extension ColorExt on Color {
     );
   }
 
+  Color contrast([int amount = 100]) {
+    final p = RangeError.checkValueInInterval(amount, 0, 100, 'amount') / 100;
+
+    final luminance = computeLuminance();
+
+    return luminance > 0.5 ? darken((p).round()) : brighten((p).round());
+  }
+
   Color darken([int amount = 10]) {
     final p = RangeError.checkValueInInterval(amount, 0, 100, 'amount') / 100;
     final hsl = HSLColor.fromColor(this);
