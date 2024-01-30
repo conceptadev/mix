@@ -22,3 +22,6 @@ dev_dependencies:
   mockito: ^5.4.2
   meta: ^1.9.1
 
+flutter:
+  assets:
+    - test_resources/

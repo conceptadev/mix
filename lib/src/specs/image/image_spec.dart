@@ -13,6 +13,10 @@ class ImageSpec extends Spec<ImageSpec> {
   final Color? color;
   final ImageRepeat? repeat;
   final BoxFit? fit;
+  final AlignmentGeometry? alignment;
+  final Rect? centerSlice;
+  final FilterQuality? filterQuality;
+  final BlendMode? colorBlendMode;
 
   const ImageSpec({
     required this.width,
@@ -20,6 +24,10 @@ class ImageSpec extends Spec<ImageSpec> {
     required this.color,
     required this.repeat,
     required this.fit,
+    required this.alignment,
+    required this.centerSlice,
+    required this.filterQuality,
+    required this.colorBlendMode,
   });
 
   const ImageSpec.empty()
@@ -27,12 +35,15 @@ class ImageSpec extends Spec<ImageSpec> {
         height = null,
         color = null,
         repeat = null,
+        alignment = null,
+        centerSlice = null,
+        filterQuality = FilterQuality.none,
+        colorBlendMode = BlendMode.clear,
         fit = null;
 
-  static ImageSpec resolve(MixData mix) {
-    final recipe = mix.attributeOf<ImageSpecAttribute>()?.resolve(mix);
-
-    return recipe ?? const ImageSpecAttribute().resolve(mix);
+  static ImageSpec of(MixData mix) {
+    return mix.attributeOf<ImageSpecAttribute>()?.resolve(mix) ??
+        const ImageSpec.empty();
   }
 
   @override
@@ -43,6 +54,10 @@ class ImageSpec extends Spec<ImageSpec> {
       color: Color.lerp(color, other?.color, t),
       repeat: t < 0.5 ? repeat : other?.repeat,
       fit: t < 0.5 ? fit : other?.fit,
+      centerSlice: Rect.lerp(centerSlice, other?.centerSlice, t),
+      filterQuality: t < 0.5 ? filterQuality : other?.filterQuality,
+      colorBlendMode: t < 0.5 ? colorBlendMode : other?.colorBlendMode,
+      alignment: AlignmentGeometry.lerp(alignment, other?.alignment, t),
     );
   }
 
@@ -54,6 +69,10 @@ class ImageSpec extends Spec<ImageSpec> {
     Color? color,
     ImageRepeat? repeat,
     BoxFit? fit,
+    AlignmentGeometry? alignment,
+    Rect? centerSlice,
+    FilterQuality? filterQuality,
+    BlendMode? colorBlendMode,
   }) {
     return ImageSpec(
       width: width ?? this.width,
@@ -61,9 +80,23 @@ class ImageSpec extends Spec<ImageSpec> {
       color: color ?? this.color,
       repeat: repeat ?? this.repeat,
       fit: fit ?? this.fit,
+      centerSlice: centerSlice ?? this.centerSlice,
+      alignment: alignment ?? this.alignment,
+      filterQuality: filterQuality ?? this.filterQuality,
+      colorBlendMode: colorBlendMode ?? this.colorBlendMode,
     );
   }
 
   @override
-  get props => [width, height, color, repeat, fit];
+  get props => [
+        width,
+        height,
+        color,
+        repeat,
+        fit,
+        centerSlice,
+        alignment,
+        filterQuality,
+        colorBlendMode,
+      ];
 }
