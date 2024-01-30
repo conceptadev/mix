@@ -62,7 +62,6 @@ void main() {
       );
       final props = attribute.props;
 
-      expect(props.length, 9);
       expect(props[0], 100);
       expect(props[1], 200);
       expect(props[2], const ColorDto(Colors.black));

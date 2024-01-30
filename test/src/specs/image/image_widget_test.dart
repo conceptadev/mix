@@ -15,7 +15,7 @@ void main() {
                 image.width(152),
                 image.height(152),
                 image.color.black(),
-                image.repeat.repeat(),
+                image.imageRepeat.repeat(),
                 image.fit.fill(),
                 image.centerSlice.fromLTRB(1, 2, 3, 4),
                 image.alignment.bottomLeft(),
