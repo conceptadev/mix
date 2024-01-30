@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../helpers/compare_mixin.dart';
 import 'attribute.dart';
 
 typedef Modifier<T> = T Function(T value);
@@ -9,13 +8,6 @@ typedef Modifier<T> = T Function(T value);
 /// different behaviors to widgets and attributes.
 abstract class Directive extends StyleAttribute {
   const Directive();
-}
-
-@immutable
-abstract class ColorDirective with Comparable {
-  const ColorDirective();
-
-  Color modify(Color color);
 }
 
 class TextDataDirective extends Directive with Mergeable<TextDataDirective> {
