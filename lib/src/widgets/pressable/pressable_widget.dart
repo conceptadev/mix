@@ -18,12 +18,12 @@ class PressableBox extends StatelessWidget {
     this.style,
     this.animationDuration = const Duration(milliseconds: 125),
     this.animationCurve = Curves.linear,
-    this.isDisabled = false,
+    this.disabled = false,
   });
 
   final Style? style;
   final Widget child;
-  final bool isDisabled;
+  final bool disabled;
   final VoidCallback? onPressed;
   final VoidCallback? onLongPress;
   final FocusNode? focusNode;
@@ -45,7 +45,7 @@ class PressableBox extends StatelessWidget {
       onLongPress: onLongPress,
       unpressDelay: unpressDelay,
       onPressed: onPressed,
-      isDisabled: isDisabled,
+      disabled: disabled,
       child: AnimatedBox(
         style: style,
         curve: animationCurve,
@@ -66,7 +66,7 @@ class Pressable extends StatefulWidget {
     this.onLongPress,
     this.unpressDelay = const Duration(),
     this.onPressed,
-    this.isDisabled = false,
+    this.disabled = false,
     super.key,
   });
 
@@ -75,7 +75,7 @@ class Pressable extends StatefulWidget {
   final VoidCallback? onLongPress;
   final FocusNode? focusNode;
   final bool autofocus;
-  final bool isDisabled;
+  final bool disabled;
   final Duration unpressDelay;
   final Function(bool focus)? onFocusChange;
 
@@ -150,7 +150,7 @@ class PressableWidgetState extends State<Pressable> {
   Widget build(BuildContext context) {
     final currentGesture = _currentGesture;
     final currentStatus =
-        widget.isDisabled ? WidgetStatus.disabled : WidgetStatus.enabled;
+        widget.disabled ? WidgetStatus.disabled : WidgetStatus.enabled;
 
     final onEnabled = currentStatus == WidgetStatus.enabled;
 
@@ -161,7 +161,7 @@ class PressableWidgetState extends State<Pressable> {
         focusable: onEnabled && _node.canRequestFocus,
         focused: _node.hasFocus,
         child: _buildGestureDetector(
-            isDisabled: widget.isDisabled,
+            isDisabled: widget.disabled,
             child: FocusableActionDetector(
               enabled: onEnabled,
               focusNode: _node,

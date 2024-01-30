@@ -23,7 +23,7 @@ void main() {
           ),
           Pressable(
             onPressed: null,
-            isDisabled: true,
+            disabled: true,
             child: Container(
               key: secondKey,
             ),
@@ -54,7 +54,7 @@ void main() {
           onPressed: () {
             counter++;
           },
-          isDisabled: false,
+          disabled: false,
           child: Container(),
         ),
       );
@@ -77,7 +77,7 @@ void main() {
           onPressed: () {
             counter++;
           },
-          isDisabled: true,
+          disabled: true,
           child: Container(),
         ),
       );
@@ -104,7 +104,7 @@ void main() {
           onPressed: () {
             counter++;
           },
-          isDisabled: false,
+          disabled: false,
           child: Container(),
         ),
       );
@@ -129,7 +129,7 @@ void main() {
           },
           unpressDelay: Duration.zero,
           animationDuration: Duration.zero,
-          isDisabled: true,
+          disabled: true,
           child: Container(),
         ),
       );
