@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../factory/style_mix.dart';
 import '../../specs/container/box_widget.dart';
-import 'gesture_state.notifier.dart';
+import 'pressable_state.notifier.dart';
 
 class PressableBox extends StatelessWidget {
   const PressableBox({
@@ -18,10 +18,12 @@ class PressableBox extends StatelessWidget {
     this.style,
     this.animationDuration = const Duration(milliseconds: 125),
     this.animationCurve = Curves.linear,
+    this.disabled = false,
   });
 
   final Style? style;
   final Widget child;
+  final bool disabled;
   final VoidCallback? onPressed;
   final VoidCallback? onLongPress;
   final FocusNode? focusNode;
@@ -43,6 +45,7 @@ class PressableBox extends StatelessWidget {
       onLongPress: onLongPress,
       unpressDelay: unpressDelay,
       onPressed: onPressed,
+      disabled: disabled,
       child: AnimatedBox(
         style: style,
         curve: animationCurve,
@@ -157,35 +160,48 @@ class PressableWidgetState extends State<Pressable> {
         button: true,
         focusable: onEnabled && _node.canRequestFocus,
         focused: _node.hasFocus,
-        child: GestureDetector(
-          onTapDown: (_) => updateState(() => _pressed = true),
-          onTapUp: (_) => handleUnpress(),
-          onTap: widget.onPressed,
-          onTapCancel: () => handleUnpress(),
-          onLongPressCancel: () => updateState(() => _longpressed = false),
-          onLongPress: widget.onLongPress,
-          onLongPressStart: (_) => updateState(() => _longpressed = true),
-          onLongPressEnd: (_) => updateState(() => _longpressed = false),
-          behavior: widget.behavior,
-          child: FocusableActionDetector(
-            enabled: onEnabled,
-            focusNode: _node,
-            autofocus: widget.autofocus,
-            onShowFocusHighlight: (v) => updateState(() => _focus = v),
-            onShowHoverHighlight: (v) => updateState(() => _hover = v),
-            onFocusChange: widget.onFocusChange,
-            child: WidgetStateNotifier(
-              data: WidgetStateData(
-                focus: _focus,
-                status: currentStatus,
-                state: currentGesture,
-                hover: _hover,
+        child: _buildGestureDetector(
+            isDisabled: widget.disabled,
+            child: FocusableActionDetector(
+              enabled: onEnabled,
+              focusNode: _node,
+              autofocus: widget.autofocus,
+              onShowFocusHighlight: (v) => updateState(() => _focus = v),
+              onShowHoverHighlight: (v) => updateState(() => _hover = v),
+              onFocusChange: widget.onFocusChange,
+              child: WidgetStateNotifier(
+                data: WidgetStateData(
+                  focus: _focus,
+                  status: currentStatus,
+                  state: currentGesture,
+                  hover: _hover,
+                ),
+                child: widget.child,
               ),
-              child: widget.child,
-            ),
-          ),
-        ),
+            )),
       ),
     );
+  }
+
+  GestureDetector _buildGestureDetector({
+    required bool isDisabled,
+    required Widget child,
+  }) {
+    return isDisabled
+        ? GestureDetector(
+            child: child,
+          )
+        : GestureDetector(
+            onTapDown: (_) => updateState(() => _pressed = true),
+            onTapUp: (_) => handleUnpress(),
+            onTap: widget.onPressed,
+            onTapCancel: () => handleUnpress(),
+            onLongPressCancel: () => updateState(() => _longpressed = false),
+            onLongPress: widget.onLongPress,
+            onLongPressStart: (_) => updateState(() => _longpressed = true),
+            onLongPressEnd: (_) => updateState(() => _longpressed = false),
+            behavior: widget.behavior,
+            child: child,
+          );
   }
 }
