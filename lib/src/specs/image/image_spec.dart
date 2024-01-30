@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 
 import '../../core/attribute.dart';
 import '../../factory/mix_provider_data.dart';
+import '../../helpers/lerp_helpers.dart';
 import 'image_attribute.dart';
 
 @immutable
@@ -52,11 +53,11 @@ class ImageSpec extends Spec<ImageSpec> {
       width: lerpDouble(width, other?.width, t),
       height: lerpDouble(height, other?.height, t),
       color: Color.lerp(color, other?.color, t),
-      repeat: t < 0.5 ? repeat : other?.repeat,
-      fit: t < 0.5 ? fit : other?.fit,
-      centerSlice: Rect.lerp(centerSlice, other?.centerSlice, t),
-      filterQuality: t < 0.5 ? filterQuality : other?.filterQuality,
-      colorBlendMode: t < 0.5 ? colorBlendMode : other?.colorBlendMode,
+      centerSlice: lerpSnap(centerSlice, other?.centerSlice, t),
+      repeat: lerpSnap(repeat, other?.repeat, t),
+      fit: lerpSnap(fit, other?.fit, t),
+      filterQuality: lerpSnap(filterQuality, other?.filterQuality, t),
+      colorBlendMode: lerpSnap(colorBlendMode, other?.colorBlendMode, t),
       alignment: AlignmentGeometry.lerp(alignment, other?.alignment, t),
     );
   }
