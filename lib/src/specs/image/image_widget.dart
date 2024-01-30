@@ -17,6 +17,7 @@ class StyledImage extends StyledWidget {
   const StyledImage({
     super.key,
     super.style,
+    super.inherit = true,
     this.frameBuilder,
     this.loadingBuilder,
     this.errorBuilder,

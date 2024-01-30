@@ -4,9 +4,9 @@ import 'package:mix/mix.dart';
 
 void main() {
   group('StyledImage', () {
-    testWidgets('receive all the attributes', (WidgetTester tester) async {
-      TestWidgetsFlutterBinding.ensureInitialized();
+    TestWidgetsFlutterBinding.ensureInitialized();
 
+    testWidgets('receive all the attributes', (WidgetTester tester) async {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -42,8 +42,6 @@ void main() {
     });
 
     testWidgets('can receive a decorator', (WidgetTester tester) async {
-      TestWidgetsFlutterBinding.ensureInitialized();
-
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -63,6 +61,28 @@ void main() {
           tester.element(find.byType(Opacity)).widget as Opacity;
 
       expect(opacityWidget.opacity, 0.5);
+    });
+
+    testWidgets('can inherit style from the parent StyledWidget',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(
+        Box(
+          style: Style(
+            image.width(152),
+            image.height(152),
+            image.color.black(),
+          ),
+          child: const StyledImage(
+            image: AssetImage('test_resources/logo.png'),
+          ),
+        ),
+      );
+
+      final imageWidget = tester.element(find.byType(Image)).widget as Image;
+
+      expect(imageWidget.width, 152);
+      expect(imageWidget.height, 152);
+      expect(imageWidget.color, Colors.black);
     });
   });
 }
