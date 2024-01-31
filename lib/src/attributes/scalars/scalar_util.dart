@@ -443,10 +443,12 @@ class FontFamilyUtility<T extends StyleAttribute>
 /// ```
 /// See [ImageRepeat] for more information.
 class ImageRepeatUtility<T extends StyleAttribute>
-    extends ScalarUtility<T, ImageRepeat> {
+    extends MixUtility<T, ImageRepeat> {
   const ImageRepeatUtility(super.builder);
+
+  T call() => builder(ImageRepeat.repeat);
+
   T noRepeat() => builder(ImageRepeat.noRepeat);
-  T repeat() => builder(ImageRepeat.repeat);
   T repeatX() => builder(ImageRepeat.repeatX);
   T repeatY() => builder(ImageRepeat.repeatY);
 }

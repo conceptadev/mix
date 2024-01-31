@@ -38,7 +38,7 @@ class ImageUtility extends SpecUtility<ImageSpecAttribute> {
     return ColorUtility((color) => _only(color: color));
   }
 
-  ImageRepeatUtility<ImageSpecAttribute> get imageRepeat {
+  ImageRepeatUtility<ImageSpecAttribute> get repeat {
     return ImageRepeatUtility((repeat) => _only(repeat: repeat));
   }
 
