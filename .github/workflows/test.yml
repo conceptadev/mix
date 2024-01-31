@@ -46,6 +46,7 @@ jobs:
         id: undefined_symbols
         run: |
           cd remix
+          flutter analyze
           if flutter analyze | grep -q 'undefined'; then
             echo "A file contains undefined symbols. Please add a deprecated annotation before you remove it."
             exit 1
