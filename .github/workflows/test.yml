@@ -9,6 +9,8 @@ on:
 jobs:
   setup_and_initial_checks:
     runs-on: ubuntu-latest
+    outputs:
+      flutter-version: ${{ steps.flutter_version.outputs.version }}
     steps:
       - name: Checkout mix repo
         uses: actions/checkout@v2
@@ -26,12 +28,27 @@ jobs:
         with:
           channel: "stable"
 
-      - run: flutter --version
+      - name: Get Flutter version
+        id: flutter_version
+        run: echo "::set-output name=version::$(flutter --version)"
+
+      - name: Archive workspace
+        uses: actions/upload-artifact@v3
+        with:
+          name: workspace
+          path: |
+            main
+            remix
 
   test_mix_repo:
     runs-on: ubuntu-latest
     needs: setup_and_initial_checks
     steps:
+      - name: Download workspace
+        uses: actions/download-artifact@v3
+        with:
+          name: workspace
+
       - run: cd main && flutter pub get
       - run: cd main && flutter test
 
@@ -39,6 +56,11 @@ jobs:
     runs-on: ubuntu-latest
     needs: setup_and_initial_checks
     steps:
+      - name: Download workspace
+        uses: actions/download-artifact@v3
+        with:
+          name: workspace
+
       - name: Add most recent mix version to remix_ui
         run: |
           cd remix
@@ -52,13 +74,9 @@ jobs:
             echo "A file contains undefined symbols. Please add a deprecated annotation before you remove it."
             exit 1
           fi
-
-  post_test_actions:
-    runs-on: ubuntu-latest
-    needs: [test_mix_repo, update_and_test_remix_ui]
-    if: ${{ failure() }}
-    steps:
+          
       - name: Add Label to Issue
+        if: ${{ failure() && steps.undefined_symbols.conclusion == 'failure' }}
         uses: actions/github-script@v7
         with:
           script: |
