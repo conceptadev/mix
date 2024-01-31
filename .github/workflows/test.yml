@@ -66,7 +66,7 @@ jobs:
             issue_number: context.issue.number,
             owner: context.repo.owner,
             repo: context.repo.repo,
-            body: 'Hello 😊, we've noticed a breaking change in our API. Please add the deprecated annotation before you remove it.'
+            body: 'Hello 😊, we have noticed a breaking change in our API. Please add the deprecated annotation before you remove it.'
           })
 
         
