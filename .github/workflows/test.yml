@@ -46,8 +46,6 @@ jobs:
         id: undefined_symbols
         run: |
           cd remix
-          flutter analyze lib
-          echo "Separa"
           if flutter analyze lib | grep -q 'undefined'; then
             echo "A file contains undefined symbols. Please add a deprecated annotation before you remove it."
             exit 1
@@ -63,6 +61,12 @@ jobs:
             owner: context.repo.owner,
             repo: context.repo.repo,
             labels: ['New Deprecation']
+          })
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: 'Hello 😊, we've noticed a breaking change in our API. Please add the deprecated annotation before you remove it.'
           })
 
         
