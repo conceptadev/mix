@@ -84,6 +84,6 @@ export 'src/utils/context_variant_util/on_orientation_util.dart';
 export 'src/utils/helper_util.dart';
 export 'src/utils/style_recipe.dart';
 export 'src/variants/variant.dart';
-export 'src/widgets/pressable/gesture_state.notifier.dart';
-export 'src/widgets/pressable/gesture_widget.dart';
+export 'src/widgets/pressable/pressable_state.notifier.dart';
+export 'src/widgets/pressable/pressable_widget.dart';
 export 'src/widgets/pressable/widget_state_util.dart';

@@ -98,6 +98,7 @@ class BoxDecorationDto extends DecorationDto<BoxDecoration> {
   final BoxBorderDto? border;
   final BorderRadiusGeometryDto? borderRadius;
   final BoxShape? shape;
+  final BlendMode? backgroundBlendMode;
 
   const BoxDecorationDto({
     super.color,
@@ -106,6 +107,7 @@ class BoxDecorationDto extends DecorationDto<BoxDecoration> {
     super.gradient,
     super.boxShadow,
     this.shape,
+    this.backgroundBlendMode,
   });
 
   /// Creates a [BoxDecorationDto] from a given [BoxDecoration].
@@ -117,6 +119,7 @@ class BoxDecorationDto extends DecorationDto<BoxDecoration> {
       gradient: GradientDto.maybeFrom(decoration.gradient),
       boxShadow: decoration.boxShadow?.map(BoxShadowDto.from).toList(),
       shape: decoration.shape,
+      backgroundBlendMode: decoration.backgroundBlendMode,
     );
   }
 
@@ -140,13 +143,17 @@ class BoxDecorationDto extends DecorationDto<BoxDecoration> {
       gradient: gradient?.merge(other.gradient) ?? other.gradient,
       boxShadow: boxShadow?.merge(other.boxShadow) ?? other.boxShadow,
       shape: other.shape ?? shape,
+      backgroundBlendMode: other.backgroundBlendMode ?? backgroundBlendMode,
     );
   }
 
   @override
   bool isMergeable() {
     // is only mergeable if no other properties are set besides: color, boxShadow, and gradient
-    return border == null && borderRadius == null && shape == null;
+    return border == null &&
+        borderRadius == null &&
+        shape == null &&
+        backgroundBlendMode == null;
   }
 
   /// Resolves this [BoxDecorationDto] with a given [MixData] to a [BoxDecoration]
@@ -158,13 +165,21 @@ class BoxDecorationDto extends DecorationDto<BoxDecoration> {
       borderRadius: borderRadius?.resolve(mix),
       boxShadow: boxShadow?.map((e) => e.resolve(mix)).toList(),
       gradient: gradient?.resolve(mix),
+      backgroundBlendMode: backgroundBlendMode,
       shape: shape ?? BoxShape.rectangle,
     );
   }
 
   @override
-  List<Object?> get props =>
-      [color, border, borderRadius, gradient, boxShadow, shape];
+  List<Object?> get props => [
+        color,
+        border,
+        borderRadius,
+        gradient,
+        boxShadow,
+        shape,
+        backgroundBlendMode,
+      ];
 }
 
 @immutable

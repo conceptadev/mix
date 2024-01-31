@@ -47,6 +47,7 @@ class BoxDecorationUtility<T extends StyleAttribute>
     GradientDto? gradient,
     List<BoxShadowDto>? boxShadow,
     BoxShape? shape,
+    BlendMode? backgroundBlendMode,
   }) {
     return builder(
       BoxDecorationDto(
@@ -56,6 +57,7 @@ class BoxDecorationUtility<T extends StyleAttribute>
         gradient: gradient,
         boxShadow: boxShadow,
         shape: shape,
+        backgroundBlendMode: backgroundBlendMode,
       ),
     );
   }
@@ -66,6 +68,11 @@ class BoxDecorationUtility<T extends StyleAttribute>
 
   BorderUtility<T> get border {
     return BorderUtility((border) => _only(border: border));
+  }
+
+  BlendModeUtility<T> get backgroundBlendMode {
+    return BlendModeUtility(
+        (blendMode) => _only(backgroundBlendMode: blendMode));
   }
 
   BorderDirectionalUtility<T> get borderDirectional {
@@ -121,6 +128,7 @@ class BoxDecorationUtility<T extends StyleAttribute>
     Gradient? gradient,
     List<BoxShadow>? boxShadow,
     BoxShape? shape,
+    BlendMode? backgroundBlendMode,
   }) {
     return _only(
       color: ColorDto.maybeFrom(color),
@@ -129,6 +137,7 @@ class BoxDecorationUtility<T extends StyleAttribute>
       gradient: gradient?.toDto(),
       boxShadow: boxShadow?.toDto(),
       shape: shape,
+      backgroundBlendMode: backgroundBlendMode,
     );
   }
 }
