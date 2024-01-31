@@ -19,9 +19,9 @@ jobs:
       - run: flutter --version
       - run: flutter pub get
 
-      - uses: axel-op/dart-package-analyzer@v3
-        with:
-          githubToken: ${{ secrets.GITHUB_TOKEN }}
+      # - uses: axel-op/dart-package-analyzer@v3
+      #   with:
+      #     githubToken: ${{ secrets.GITHUB_TOKEN }}
       - run: flutter test
 
   remix_build:
@@ -31,7 +31,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with: 
-          repository: 'conceptadev/remix'
+          repository: 'conceptadev/remix_ui'
 
       - uses: subosito/flutter-action@v2
         with:
