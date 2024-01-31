@@ -33,11 +33,11 @@ jobs:
         with: 
           repository: 'conceptadev/remix_ui'
 
-      - uses: subosito/flutter-action@v2
-        with:
-          channel: "stable"
+      # - uses: subosito/flutter-action@v2
+      #   with:
+      #     channel: "stable"
       - run: flutter --version
-      - run: flutter pub get
+      # - run: flutter pub get
 
       - name: Verify if there are any undefined symbols
         uses: actions/github-script@v7
