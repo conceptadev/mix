@@ -154,54 +154,48 @@ class PressableWidgetState extends State<Pressable> {
 
     final onEnabled = currentStatus == WidgetStatus.enabled;
 
+    final focusableDetector = FocusableActionDetector(
+      enabled: onEnabled,
+      focusNode: _node,
+      autofocus: widget.autofocus,
+      onShowFocusHighlight: (v) => updateState(() => _focus = v),
+      onShowHoverHighlight: (v) => updateState(() => _hover = v),
+      onFocusChange: widget.onFocusChange,
+      child: WidgetStateNotifier(
+        data: WidgetStateData(
+          focus: _focus,
+          status: currentStatus,
+          state: currentGesture,
+          hover: _hover,
+        ),
+        child: widget.child,
+      ),
+    );
+
     return MergeSemantics(
       child: Semantics(
         enabled: onEnabled,
         button: true,
         focusable: onEnabled && _node.canRequestFocus,
         focused: _node.hasFocus,
-        child: _buildGestureDetector(
-            isDisabled: widget.disabled,
-            child: FocusableActionDetector(
-              enabled: onEnabled,
-              focusNode: _node,
-              autofocus: widget.autofocus,
-              onShowFocusHighlight: (v) => updateState(() => _focus = v),
-              onShowHoverHighlight: (v) => updateState(() => _hover = v),
-              onFocusChange: widget.onFocusChange,
-              child: WidgetStateNotifier(
-                data: WidgetStateData(
-                  focus: _focus,
-                  status: currentStatus,
-                  state: currentGesture,
-                  hover: _hover,
-                ),
-                child: widget.child,
+        child: widget.disabled
+            ? GestureDetector(
+                child: focusableDetector,
+              )
+            : GestureDetector(
+                onTapDown: (_) => updateState(() => _pressed = true),
+                onTapUp: (_) => handleUnpress(),
+                onTap: widget.onPressed,
+                onTapCancel: () => handleUnpress(),
+                onLongPressCancel: () =>
+                    updateState(() => _longpressed = false),
+                onLongPress: widget.onLongPress,
+                onLongPressStart: (_) => updateState(() => _longpressed = true),
+                onLongPressEnd: (_) => updateState(() => _longpressed = false),
+                behavior: widget.behavior,
+                child: focusableDetector,
               ),
-            )),
       ),
     );
-  }
-
-  GestureDetector _buildGestureDetector({
-    required bool isDisabled,
-    required Widget child,
-  }) {
-    return isDisabled
-        ? GestureDetector(
-            child: child,
-          )
-        : GestureDetector(
-            onTapDown: (_) => updateState(() => _pressed = true),
-            onTapUp: (_) => handleUnpress(),
-            onTap: widget.onPressed,
-            onTapCancel: () => handleUnpress(),
-            onLongPressCancel: () => updateState(() => _longpressed = false),
-            onLongPress: widget.onLongPress,
-            onLongPressStart: (_) => updateState(() => _longpressed = true),
-            onLongPressEnd: (_) => updateState(() => _longpressed = false),
-            behavior: widget.behavior,
-            child: child,
-          );
   }
 }
