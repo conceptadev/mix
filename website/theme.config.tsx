@@ -63,16 +63,28 @@ const themeConfig = {
       return `${origin}/assets/og/${ogImage}`;
     };
 
+    const title = () => {
+      if (frontMatter.title) {
+        return frontMatter.title + " – " + packageName;
+      }
+      return packageName;
+    };
+
     return (
       <>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>{title()}</title>
+        <meta
+          name="description"
+          content={frontMatter.description || description}
+        />
 
         {/* Open Graph */}
         <meta property="og:site_name" content={packageName} />
         <meta property="og:type" content="website" />
         <meta property="og:image" content={ogImage()} />
         <meta property="og:url" content={origin} />
-        <meta property="og:title" content={frontMatter.title || packageName} />
+        <meta property="og:title" content={title()} />
         <meta
           property="og:description"
           content={frontMatter.description || description}
