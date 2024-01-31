@@ -52,18 +52,25 @@ void main() {
       const attribute = ImageSpecAttribute(
         width: 100,
         height: 200,
-        color: ColorDto(Colors.red),
+        color: ColorDto(Colors.black),
         repeat: ImageRepeat.repeat,
         fit: BoxFit.cover,
+        alignment: Alignment.bottomCenter,
+        centerSlice: Rect.zero,
+        filterQuality: FilterQuality.low,
+        colorBlendMode: BlendMode.srcOver,
       );
       final props = attribute.props;
 
-      expect(props.length, 5);
       expect(props[0], 100);
       expect(props[1], 200);
-      expect(props[2], const ColorDto(Colors.red));
+      expect(props[2], const ColorDto(Colors.black));
       expect(props[3], ImageRepeat.repeat);
       expect(props[4], BoxFit.cover);
+      expect(props[5], Rect.zero);
+      expect(props[6], Alignment.bottomCenter);
+      expect(props[7], FilterQuality.low);
+      expect(props[8], BlendMode.srcOver);
     });
   });
 }

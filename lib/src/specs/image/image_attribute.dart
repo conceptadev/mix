@@ -11,13 +11,21 @@ class ImageSpecAttribute extends SpecAttribute<ImageSpecAttribute, ImageSpec> {
   final ColorDto? color;
   final ImageRepeat? repeat;
   final BoxFit? fit;
+  final AlignmentGeometry? alignment;
+  final Rect? centerSlice;
+  final FilterQuality? filterQuality;
+  final BlendMode? colorBlendMode;
 
   const ImageSpecAttribute({
+    this.centerSlice,
     this.width,
     this.height,
     this.color,
     this.repeat,
     this.fit,
+    this.alignment,
+    this.colorBlendMode,
+    this.filterQuality,
   });
 
   @override
@@ -28,6 +36,10 @@ class ImageSpecAttribute extends SpecAttribute<ImageSpecAttribute, ImageSpec> {
       color: color?.resolve(mix),
       repeat: repeat,
       fit: fit,
+      alignment: alignment,
+      centerSlice: centerSlice,
+      filterQuality: filterQuality,
+      colorBlendMode: colorBlendMode,
     );
   }
 
@@ -41,9 +53,23 @@ class ImageSpecAttribute extends SpecAttribute<ImageSpecAttribute, ImageSpec> {
       color: other.color ?? color,
       repeat: other.repeat ?? repeat,
       fit: other.fit ?? fit,
+      alignment: other.alignment ?? alignment,
+      centerSlice: other.centerSlice ?? centerSlice,
+      filterQuality: other.filterQuality ?? filterQuality,
+      colorBlendMode: other.colorBlendMode ?? colorBlendMode,
     );
   }
 
   @override
-  get props => [width, height, color, repeat, fit];
+  get props => [
+        width,
+        height,
+        color,
+        repeat,
+        fit,
+        centerSlice,
+        alignment,
+        filterQuality,
+        colorBlendMode,
+      ];
 }

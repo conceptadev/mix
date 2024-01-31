@@ -443,10 +443,12 @@ class FontFamilyUtility<T extends StyleAttribute>
 /// ```
 /// See [ImageRepeat] for more information.
 class ImageRepeatUtility<T extends StyleAttribute>
-    extends ScalarUtility<T, ImageRepeat> {
+    extends MixUtility<T, ImageRepeat> {
   const ImageRepeatUtility(super.builder);
+
+  T call() => builder(ImageRepeat.repeat);
+
   T noRepeat() => builder(ImageRepeat.noRepeat);
-  T repeat() => builder(ImageRepeat.repeat);
   T repeatX() => builder(ImageRepeat.repeatX);
   T repeatY() => builder(ImageRepeat.repeatY);
 }
@@ -781,4 +783,39 @@ class TextAlignUtility<T extends StyleAttribute>
   T justify() => _builder(TextAlign.justify);
   T start() => _builder(TextAlign.start);
   T end() => _builder(TextAlign.end);
+}
+
+class RectUtility<T extends StyleAttribute> extends ScalarUtility<T, Rect> {
+  const RectUtility(super.builder);
+  T largest() => _builder(Rect.largest);
+  T zero() => _builder(Rect.zero);
+
+  T fromCenter({
+    required Offset center,
+    required double width,
+    required double height,
+  }) =>
+      _builder(Rect.fromCenter(center: center, width: width, height: height));
+
+  T fromLTRB(double left, double top, double right, double bottom) =>
+      _builder(Rect.fromLTRB(left, top, right, bottom));
+
+  T fromLTWH(double left, double top, double width, double height) =>
+      _builder(Rect.fromLTWH(left, top, width, height));
+
+  T fromCircle({required Offset center, required double radius}) =>
+      _builder(Rect.fromCircle(center: center, radius: radius));
+
+  T fromPoints({required Offset a, required Offset b}) =>
+      _builder(Rect.fromPoints(a, b));
+}
+
+class FilterQualityUtility<T extends StyleAttribute>
+    extends ScalarUtility<T, FilterQuality> {
+  const FilterQualityUtility(super.builder);
+
+  T none() => _builder(FilterQuality.none);
+  T low() => _builder(FilterQuality.low);
+  T medium() => _builder(FilterQuality.medium);
+  T high() => _builder(FilterQuality.high);
 }

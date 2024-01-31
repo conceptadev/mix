@@ -16,6 +16,10 @@ class ImageUtility extends SpecUtility<ImageSpecAttribute> {
     ColorDto? color,
     ImageRepeat? repeat,
     BoxFit? fit,
+    AlignmentGeometry? alignment,
+    Rect? centerSlice,
+    BlendMode? blendMode,
+    FilterQuality? filterQuality,
   }) {
     return ImageSpecAttribute(
       width: width,
@@ -23,6 +27,10 @@ class ImageUtility extends SpecUtility<ImageSpecAttribute> {
       color: color,
       repeat: repeat,
       fit: fit,
+      alignment: alignment,
+      centerSlice: centerSlice,
+      colorBlendMode: blendMode,
+      filterQuality: filterQuality,
     );
   }
 
@@ -44,5 +52,22 @@ class ImageUtility extends SpecUtility<ImageSpecAttribute> {
 
   DoubleUtility<ImageSpecAttribute> get height {
     return DoubleUtility((height) => _only(height: height));
+  }
+
+  AlignmentUtility<ImageSpecAttribute> get alignment {
+    return AlignmentUtility((alignment) => _only(alignment: alignment));
+  }
+
+  RectUtility<ImageSpecAttribute> get centerSlice {
+    return RectUtility((rect) => _only(centerSlice: rect));
+  }
+
+  FilterQualityUtility<ImageSpecAttribute> get filterQuality {
+    return FilterQualityUtility(
+        (filterQuality) => _only(filterQuality: filterQuality));
+  }
+
+  BlendModeUtility<ImageSpecAttribute> get blendMode {
+    return BlendModeUtility((blendMode) => _only(blendMode: blendMode));
   }
 }

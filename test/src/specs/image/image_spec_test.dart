@@ -9,7 +9,7 @@ import '../../../helpers/testing_utils.dart';
 void main() {
   group('ImageSpec', () {
     test('resolve returns correct recipe', () {
-      final recipe = ImageSpec.resolve(EmptyMixData);
+      final recipe = ImageSpec.of(EmptyMixData);
 
       expect(recipe.width, null);
       expect(recipe.height, null);
@@ -25,6 +25,10 @@ void main() {
         color: Colors.red,
         repeat: ImageRepeat.repeat,
         fit: BoxFit.cover,
+        alignment: Alignment.bottomCenter,
+        centerSlice: Rect.zero,
+        filterQuality: FilterQuality.low,
+        colorBlendMode: BlendMode.srcOver,
       );
       const spec2 = ImageSpec(
         width: 150,
@@ -32,6 +36,10 @@ void main() {
         color: Colors.blue,
         repeat: ImageRepeat.noRepeat,
         fit: BoxFit.fill,
+        alignment: Alignment.bottomCenter,
+        centerSlice: Rect.fromLTRB(0, 0, 0, 0),
+        filterQuality: FilterQuality.high,
+        colorBlendMode: BlendMode.colorBurn,
       );
       final lerpSpec = spec1.lerp(spec2, 0.5);
 
@@ -40,6 +48,10 @@ void main() {
       expect(lerpSpec.color, Color.lerp(Colors.red, Colors.blue, 0.5));
       expect(lerpSpec.repeat, ImageRepeat.noRepeat);
       expect(lerpSpec.fit, BoxFit.fill);
+      expect(lerpSpec.alignment, Alignment.bottomCenter);
+      expect(lerpSpec.centerSlice, const Rect.fromLTRB(0, 0, 0, 0));
+      expect(lerpSpec.filterQuality, FilterQuality.high);
+      expect(lerpSpec.colorBlendMode, BlendMode.colorBurn);
     });
 
     test('copyWith returns correct ImageSpec', () {
@@ -49,6 +61,10 @@ void main() {
         color: Colors.red,
         repeat: ImageRepeat.repeat,
         fit: BoxFit.cover,
+        alignment: Alignment.bottomCenter,
+        centerSlice: Rect.fromLTRB(0, 0, 0, 0),
+        filterQuality: FilterQuality.low,
+        colorBlendMode: BlendMode.srcOver,
       );
       final copiedSpec = spec.copyWith(
         width: 150,
@@ -56,6 +72,10 @@ void main() {
         color: Colors.blue,
         repeat: ImageRepeat.noRepeat,
         fit: BoxFit.fill,
+        alignment: Alignment.topCenter,
+        centerSlice: Rect.zero,
+        filterQuality: FilterQuality.none,
+        colorBlendMode: BlendMode.clear,
       );
 
       expect(copiedSpec.width, 150);
@@ -63,6 +83,10 @@ void main() {
       expect(copiedSpec.color, Colors.blue);
       expect(copiedSpec.repeat, ImageRepeat.noRepeat);
       expect(copiedSpec.fit, BoxFit.fill);
+      expect(copiedSpec.alignment, Alignment.topCenter);
+      expect(copiedSpec.centerSlice, Rect.zero);
+      expect(copiedSpec.filterQuality, FilterQuality.none);
+      expect(copiedSpec.colorBlendMode, BlendMode.clear);
     });
 
     test('props returns correct list of properties', () {
@@ -72,15 +96,24 @@ void main() {
         color: Colors.red,
         repeat: ImageRepeat.repeat,
         fit: BoxFit.cover,
+        alignment: Alignment.bottomCenter,
+        centerSlice: Rect.zero,
+        filterQuality: FilterQuality.low,
+        colorBlendMode: BlendMode.srcOver,
       );
+
       final props = spec.props;
 
-      expect(props.length, 5);
+      expect(props.length, 9);
       expect(props[0], 100);
       expect(props[1], 200);
       expect(props[2], Colors.red);
       expect(props[3], ImageRepeat.repeat);
       expect(props[4], BoxFit.cover);
+      expect(props[5], Rect.zero);
+      expect(props[6], Alignment.bottomCenter);
+      expect(props[7], FilterQuality.low);
+      expect(props[8], BlendMode.srcOver);
     });
   });
 }

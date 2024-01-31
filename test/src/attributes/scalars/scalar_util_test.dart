@@ -162,11 +162,11 @@ void main() {
     const utility = ImageRepeatUtility(UtilityTestAttribute.new);
     test('Properties are initialized correctly', () {
       expect(utility.noRepeat().value, isA<ImageRepeat>());
-      expect(utility.repeat().value, isA<ImageRepeat>());
+      expect(utility().value, isA<ImageRepeat>());
       expect(utility.repeatX().value, isA<ImageRepeat>());
       expect(utility.repeatY().value, isA<ImageRepeat>());
       expect(utility.noRepeat().value, ImageRepeat.noRepeat);
-      expect(utility.repeat().value, ImageRepeat.repeat);
+      expect(utility().value, ImageRepeat.repeat);
       expect(utility.repeatX().value, ImageRepeat.repeatX);
       expect(utility.repeatY().value, ImageRepeat.repeatY);
     });

@@ -57,6 +57,7 @@ export 'src/specs/icon/icon_widget.dart';
 export 'src/specs/image/image_attribute.dart';
 export 'src/specs/image/image_spec.dart';
 export 'src/specs/image/image_util.dart';
+export 'src/specs/image/image_widget.dart';
 export 'src/specs/stack/stack_attribute.dart';
 export 'src/specs/stack/stack_spec.dart';
 export 'src/specs/stack/stack_util.dart';
