@@ -33,14 +33,13 @@ jobs:
       # - uses: axel-op/dart-package-analyzer@v3
       #   with:
       #     githubToken: ${{ secrets.GITHUB_TOKEN }}
-      - run: flutter test
-
-      - run: cd .. && cd remix
+      - run: cd main && flutter test
 
       - name: Verify if there are any undefined symbols
         uses: actions/github-script@v7
         with:
           script: |
+            cd remix
             flutter analyze | grep 'undefined'
             if [ $? -eq 0 ]; then
               core.setFailed('A file contains undefined symbols. Please add a deprecated annotation before you remove it.')
