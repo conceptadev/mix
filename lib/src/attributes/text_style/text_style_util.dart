@@ -285,8 +285,8 @@ class TextStyleUtility<T extends StyleAttribute>
     double? height,
   }) {
     final textStyle = TextStyleDto.only(
-      color: color?.toDto(),
-      backgroundColor: backgroundColor?.toDto(),
+      color: ColorDto.maybeFrom(color),
+      backgroundColor: ColorDto.maybeFrom(backgroundColor),
       fontSize: fontSize,
       fontWeight: fontWeight,
       fontStyle: fontStyle,
@@ -297,7 +297,7 @@ class TextStyleUtility<T extends StyleAttribute>
       shadows: shadows?.map((e) => e.toDto()).toList(),
       fontFeatures: fontFeatures,
       decoration: decoration,
-      decorationColor: decorationColor?.toDto(),
+      decorationColor: ColorDto.maybeFrom(decorationColor),
       decorationStyle: decorationStyle,
       locale: locale,
       height: height,

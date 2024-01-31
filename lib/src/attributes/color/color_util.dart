@@ -3,8 +3,10 @@
 import 'package:flutter/material.dart';
 
 import '../../core/attribute.dart';
+import '../../core/extensions/color_ext.dart';
 import '../../theme/tokens/color_token.dart';
 import '../scalars/scalar_util.dart';
+import 'color_directives.dart';
 import 'color_dto.dart';
 
 @immutable
@@ -13,6 +15,22 @@ class ColorUtility<T extends StyleAttribute>
   const ColorUtility(super.builder) : super(valueToDto: ColorDto.new);
 
   T _buildColor(Color color) => builder(valueToDto(color));
+
+  T _directive(ColorDirective directive) =>
+      builder(ColorDto.directive(directive));
+
+  T withOpacity(double opacity) => _directive(OpacityColorDirective(opacity));
+  T withAlpha(int alpha) => _directive(AlphaColorDirective(alpha));
+  T darken(int percentage) => _directive(DarkenColorDirective(percentage));
+  T lighten(int percentage) => _directive(LightenColorDirective(percentage));
+  T saturate(int percentage) => _directive(SaturateColorDirective(percentage));
+  T desaturate(int percentage) =>
+      _directive(DesaturateColorDirective(percentage));
+  T tint(int percentage) => _directive(TintColorDirective(percentage));
+  T shade(int percentage) => _directive(ShadeColorDirective(percentage));
+  T brighten(int percentage) => _directive(BrightenColorDirective(percentage));
+
+  T of(ColorToken ref) => _buildColor(ref());
 
   MaterialColorUtility<T> get red => MaterialColorUtility(builder, Colors.red);
   MaterialColorUtility<T> get pink =>
@@ -83,9 +101,6 @@ class ColorUtility<T extends StyleAttribute>
       MaterialAccentColorUtility(builder, Colors.orangeAccent);
   MaterialAccentColorUtility<T> get deepOrangeAccent =>
       MaterialAccentColorUtility(builder, Colors.deepOrangeAccent);
-
-  T of(ColorToken ref) => _buildColor(ref());
-
   T transparent() => _buildColor(Colors.transparent);
   T black() => _buildColor(const Color(0xFF000000));
   T black87() => _buildColor(const Color(0xDD000000));
@@ -144,4 +159,114 @@ class MaterialAccentColorUtility<T extends StyleAttribute>
   T shade700() => _buildColor(color[700]!);
 
   T call() => _buildColor(color[400]!);
+}
+
+typedef ColorModifier = Color Function(Color);
+
+@immutable
+class OpacityColorDirective extends ColorDirective {
+  final double opacity;
+  const OpacityColorDirective(this.opacity);
+
+  @override
+  Color modify(Color color) => color.withOpacity(opacity);
+
+  @override
+  get props => [opacity];
+}
+
+@immutable
+class AlphaColorDirective extends ColorDirective {
+  final int alpha;
+  const AlphaColorDirective(this.alpha);
+
+  @override
+  Color modify(Color color) => color.withAlpha(alpha);
+
+  @override
+  get props => [alpha];
+}
+
+@immutable
+class DarkenColorDirective extends ColorDirective {
+  final int percentage;
+  const DarkenColorDirective(this.percentage);
+
+  @override
+  Color modify(Color color) => color.darken(percentage);
+
+  @override
+  get props => [percentage];
+}
+
+@immutable
+class LightenColorDirective extends ColorDirective {
+  final int percentage;
+  const LightenColorDirective(this.percentage);
+
+  @override
+  Color modify(Color color) => color.lighten(percentage);
+
+  @override
+  get props => [percentage];
+}
+
+@immutable
+class SaturateColorDirective extends ColorDirective {
+  final int percentage;
+  const SaturateColorDirective(this.percentage);
+
+  @override
+  Color modify(Color color) => color.saturate(percentage);
+
+  @override
+  get props => [percentage];
+}
+
+@immutable
+class DesaturateColorDirective extends ColorDirective {
+  final int percentage;
+  const DesaturateColorDirective(this.percentage);
+
+  @override
+  Color modify(Color color) => color.desaturate(percentage);
+
+  @override
+  get props => [percentage];
+}
+
+@immutable
+class TintColorDirective extends ColorDirective {
+  final int percentage;
+  const TintColorDirective(this.percentage);
+
+  @override
+  Color modify(Color color) => color.tint(percentage);
+
+  @override
+  get props => [percentage];
+}
+
+@immutable
+class ShadeColorDirective extends ColorDirective {
+  final int percentage;
+  const ShadeColorDirective(this.percentage);
+
+  @override
+  Color modify(Color color) => color.shade(percentage);
+
+  @override
+  get props => [percentage];
+}
+
+@immutable
+class BrightenColorDirective extends ColorDirective {
+  final int percentage;
+  const BrightenColorDirective(this.percentage);
+
+  @override
+  Color modify(Color color) => color.brighten(percentage);
+
+  @override
+  get props => [percentage];
 }

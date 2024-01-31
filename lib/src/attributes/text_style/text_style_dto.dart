@@ -91,11 +91,11 @@ class TextStyleData extends Dto<TextStyle> with Mergeable<TextStyleData> {
         ? TextStyleData.tokenRef(style)
         : TextStyleData(
             background: style.background,
-            backgroundColor: style.backgroundColor?.toDto(),
-            color: style.color?.toDto(),
+            backgroundColor: ColorDto.maybeFrom(style.backgroundColor),
+            color: ColorDto.maybeFrom(style.color),
             debugLabel: style.debugLabel,
             decoration: style.decoration,
-            decorationColor: style.decorationColor?.toDto(),
+            decorationColor: ColorDto.maybeFrom(style.decorationColor),
             decorationStyle: style.decorationStyle,
             decorationThickness: style.decorationThickness,
             fontFamily: style.fontFamily,

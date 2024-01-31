@@ -131,7 +131,7 @@ class BoxDecorationUtility<T extends StyleAttribute>
     BlendMode? backgroundBlendMode,
   }) {
     return _only(
-      color: color?.toDto(),
+      color: ColorDto.maybeFrom(color),
       border: border?.toDto(),
       borderRadius: borderRadius?.toDto(),
       gradient: gradient?.toDto(),

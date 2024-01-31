@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../core/attribute.dart';
-import '../../core/extensions/values_ext.dart';
 import '../color/color_dto.dart';
 import '../scalars/scalar_util.dart';
 import 'gradient_dto.dart';
@@ -269,7 +268,7 @@ class RadialGradientUtility<T extends StyleAttribute>
       focal: focal,
       focalRadius: focalRadius,
       transform: transform,
-      colors: colors?.map((e) => e.toDto()).toList(),
+      colors: colors?.map(ColorDto.new).toList(),
       stops: stops,
     );
 
