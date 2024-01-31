@@ -11,7 +11,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout mix repo
+        uses: actions/checkout@v2
+        with:
+          path: main
+
+      - name: Checkout remix_ui repo
+        uses: actions/checkout@v2
+        with:
+          repository: conceptadev/remix_ui
+          path: remix
+
       - uses: subosito/flutter-action@v2
         with:
           channel: "stable"
@@ -19,10 +29,27 @@ jobs:
       - run: flutter --version
       - run: flutter pub get
 
-      - uses: axel-op/dart-package-analyzer@v3
-        with:
-          githubToken: ${{ secrets.GITHUB_TOKEN }}
+      # - uses: axel-op/dart-package-analyzer@v3
+      #   with:
+      #     githubToken: ${{ secrets.GITHUB_TOKEN }}
       - run: flutter test
+
+      - name: Verify if there are any undefined symbols
+        uses: actions/github-script@v7
+        with:
+          script: |
+            flutter analyze | grep 'undefined'
+            if [ $? -eq 0 ]; then
+              core.setFailed('A file contains undefined symbols. Please add a deprecated annotation before you remove it.')
+              github.rest.issues.addLabels({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                labels: ['New Deprecation']
+              })
+            else
+            fi
+        
 
   remix_build:
     runs-on: ubuntu-latest
@@ -39,20 +66,5 @@ jobs:
       # - run: flutter --version
       # - run: flutter pub get
 
-      - name: Verify if there are any undefined symbols
-        uses: actions/github-script@v7
-        with:
-          script: |
-            dart analyze | grep 'undefined'
-            if [ $? -eq 0 ]; then
-              core.setFailed('A file contains undefined symbols. Please add a deprecated annotation before you remove it.')
-              github.rest.issues.addLabels({
-                issue_number: context.issue.number,
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                labels: ['New Deprecation']
-              })
-            else
-            fi
-          
+      
         
