@@ -82,13 +82,10 @@ class MixData with Comparable {
     return _attributes.values.any((attr) => attr is T);
   }
 
-  Value resolvableOf<Value, A extends SpecAttribute<A, Value>>(A attribute) {
-    final attributes = _attributes.whereType<A>();
-    if (attributes.isEmpty) return attribute.resolve(this);
+  Value? resolvableOf<Value, A extends SpecAttribute<A, Value>>() {
+    final attribute = _attributes.attributeOfType<A>();
 
-    return [attribute, ...attributes]
-        .reduce((value, element) => value.merge(element))
-        .resolve(this);
+    return attribute?.resolve(this);
   }
 
   // /// Merges this [MixData] with another, prioritizing this instance's properties.

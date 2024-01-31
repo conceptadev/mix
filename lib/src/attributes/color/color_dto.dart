@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 import '../../core/attribute.dart';
-import '../../core/directive.dart';
 import '../../factory/mix_provider_data.dart';
 import '../../theme/tokens/color_token.dart';
+import 'color_directives.dart';
 
 /// A Data transfer object that represents a [Color] value.
 ///
@@ -45,7 +45,7 @@ class ColorDto extends Dto<Color> with Mergeable<ColorDto> {
   }
 
   @override
-  ColorDto merge(covariant ColorDto? other) {
+  ColorDto merge(ColorDto? other) {
     return other == null
         ? this
         : ColorDto.raw(

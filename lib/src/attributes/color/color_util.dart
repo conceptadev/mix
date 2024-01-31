@@ -3,10 +3,10 @@
 import 'package:flutter/material.dart';
 
 import '../../core/attribute.dart';
-import '../../core/directive.dart';
 import '../../core/extensions/color_ext.dart';
 import '../../theme/tokens/color_token.dart';
 import '../scalars/scalar_util.dart';
+import 'color_directives.dart';
 import 'color_dto.dart';
 
 @immutable
@@ -18,6 +18,19 @@ class ColorUtility<T extends StyleAttribute>
 
   T _directive(ColorDirective directive) =>
       builder(ColorDto.directive(directive));
+
+  T withOpacity(double opacity) => _directive(OpacityColorDirective(opacity));
+  T withAlpha(int alpha) => _directive(AlphaColorDirective(alpha));
+  T darken(int percentage) => _directive(DarkenColorDirective(percentage));
+  T lighten(int percentage) => _directive(LightenColorDirective(percentage));
+  T saturate(int percentage) => _directive(SaturateColorDirective(percentage));
+  T desaturate(int percentage) =>
+      _directive(DesaturateColorDirective(percentage));
+  T tint(int percentage) => _directive(TintColorDirective(percentage));
+  T shade(int percentage) => _directive(ShadeColorDirective(percentage));
+  T brighten(int percentage) => _directive(BrightenColorDirective(percentage));
+
+  T of(ColorToken ref) => _buildColor(ref());
 
   MaterialColorUtility<T> get red => MaterialColorUtility(builder, Colors.red);
   MaterialColorUtility<T> get pink =>
@@ -88,20 +101,6 @@ class ColorUtility<T extends StyleAttribute>
       MaterialAccentColorUtility(builder, Colors.orangeAccent);
   MaterialAccentColorUtility<T> get deepOrangeAccent =>
       MaterialAccentColorUtility(builder, Colors.deepOrangeAccent);
-
-  T withOpacity(double opacity) => _directive(OpacityColorDirective(opacity));
-  T withAlpha(int alpha) => _directive(AlphaColorDirective(alpha));
-  T darken(int percentage) => _directive(DarkenColorDirective(percentage));
-  T lighten(int percentage) => _directive(LightenColorDirective(percentage));
-  T saturate(int percentage) => _directive(SaturateColorDirective(percentage));
-  T desaturate(int percentage) =>
-      _directive(DesaturateColorDirective(percentage));
-  T tint(int percentage) => _directive(TintColorDirective(percentage));
-  T shade(int percentage) => _directive(ShadeColorDirective(percentage));
-  T brighten(int percentage) => _directive(BrightenColorDirective(percentage));
-
-  T of(ColorToken ref) => _buildColor(ref());
-
   T transparent() => _buildColor(Colors.transparent);
   T black() => _buildColor(const Color(0xFF000000));
   T black87() => _buildColor(const Color(0xDD000000));
