@@ -5,7 +5,7 @@ abstract class StyleRecipe<T extends StyleRecipe<T>> {
 
   StyleRecipe<T> merge(covariant StyleRecipe<T>? other);
 
-  StyleRecipe<T> selectVariants(List<Variant> variants);
+  StyleRecipe<T> applyVariants(List<Variant> variants);
 
   StyleRecipe<T> copyWith();
 }
