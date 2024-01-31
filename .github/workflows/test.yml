@@ -20,7 +20,6 @@ jobs:
         with:
           repository: conceptadev/remix_ui
           path: remix
-          ref: test-branch
 
       - name: Archive workspace
         uses: actions/upload-artifact@v3
