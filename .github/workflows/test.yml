@@ -28,16 +28,14 @@ jobs:
 
       - run: flutter --version
 
-      - run: cd main
-      - run: flutter pub get
+      - run: cd main && flutter pub get
 
       # - uses: axel-op/dart-package-analyzer@v3
       #   with:
       #     githubToken: ${{ secrets.GITHUB_TOKEN }}
       - run: flutter test
 
-      - run: cd ..
-      - run: cd remix
+      - run: cd .. && cd remix
 
       - name: Verify if there are any undefined symbols
         uses: actions/github-script@v7
