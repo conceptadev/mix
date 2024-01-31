@@ -49,7 +49,8 @@ jobs:
 
   update_and_test_remix_ui:
     runs-on: ubuntu-latest
-    needs: setup_and_initial_checks
+
+    needs: test_mix_repo
     steps:
       - name: Download workspace
         uses: actions/download-artifact@v3
@@ -74,3 +75,58 @@ jobs:
             echo "A file contains undefined symbols. Please add a deprecated annotation before you remove it."
             exit 1
           fi
+      - name: Add Label to Issue
+        uses: actions/github-script@v7
+        if: ${{ failure() && steps.undefined_symbols.conclusion == 'failure' }}
+        with:
+          script: |
+            github.rest.issues.addLabels({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: ['New Deprecation']
+            })
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: 'Hello 😊, we have noticed a breaking change in our API. Please add the deprecated annotation before you remove it.'
+            })
+
+
+  test_remix_ui:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    needs: update_and_test_remix_ui
+    if: ${{ needs.update_and_test_remix_ui.result == 'success' }}
+    steps:
+      - name: Download workspace
+        uses: actions/download-artifact@v3
+        with:
+          name: workspace
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+
+      - run: cd remix && flutter test
+        id: remix_test
+
+      - name: Add Label to Issue and Comment
+        uses: actions/github-script@v7
+        if: ${{ failure() && steps.remix_test.conclusion == 'failure' }}
+        with:
+          script: |
+            github.rest.issues.addLabels({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: ['Behavior Change']
+            })
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: 'We have noticed a change in Mix's behavior. Are you sure about this?'
+            })
