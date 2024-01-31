@@ -1,6 +1,11 @@
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { useConfig } from "nextra-theme-docs";
 import CustomSearch from "./components/Search";
+
+const packageName = "Mix";
+const siteUrl = "https://fluttermix.com";
+const description = "An expressive way to build design systems in Flutter.";
 
 const themeConfig = {
   useNextSeoProps() {
@@ -29,7 +34,7 @@ const themeConfig = {
     key: "1.0-beta-doc-wip-notice",
     dismissible: false,
     text: (
-      <a href="https://fluttermix.com" target="_blank">
+      <a href={`${siteUrl}`} target="_blank">
         Mix 1.0 is in Beta. Documentation is currently a work-in-progress →
       </a>
     ),
@@ -38,58 +43,91 @@ const themeConfig = {
   search: {
     component: <CustomSearch />,
   },
-  head: (
-    <>
-      <meta name="msapplication-TileColor" content="#ffffff" />
-      <meta name="theme-color" content="#ffffff" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <meta httpEquiv="Content-Language" content="en" />
-      <meta
-        name="description"
-        content="Mix: Build your Flutter UI effortlessly with a simple declarative syntax."
-      />
-      <meta
-        name="og:description"
-        content="Mix: Build your Flutter UI effortlessly with a simple declarative syntax."
-      />
-      <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:image" content="https://fluttermix.com/og.png" />
-      <meta name="twitter:site:domain" content="fluttermix.com" />
-      <meta name="twitter:url" content="https://fluttermix.com" />
-      <meta
-        name="og:title"
-        content="Mix: Build your Flutter UI effortlessly with a simple declarative syntax."
-      />
-      <meta name="og:image" content="https://fluttermix.com/og.png" />
-      <meta name="apple-mobile-web-app-title" content="Mix" />
+  head: () => {
+    const { asPath, defaultLocale, locale } = useRouter();
+    const origin =
+      typeof window !== "undefined" && window.location.origin
+        ? window.location.origin
+        : "";
 
-      <link
-        rel="apple-touch-icon"
-        sizes="180x180"
-        href="/apple-icon-180x180.png"
-      />
-      <link
-        rel="icon"
-        type="image/png"
-        sizes="192x192"
-        href="/android-icon-192x192.png"
-      />
-      <link
-        rel="icon"
-        type="image/png"
-        sizes="32x32"
-        href="/favicon-32x32.png"
-      />
-      <link
-        rel="icon"
-        type="image/png"
-        sizes="16x16"
-        href="/favicon-16x16.png"
-      />
-      <link rel="manifest" href="/site.webmanifest" />
-      <meta name="msapplication-TileImage" content="/ms-icon-150x150.png" />
-    </>
-  ),
+    const { frontMatter } = useConfig();
+    const url =
+      origin + (defaultLocale === locale ? asPath : `/${locale}${asPath}`);
+
+    const ogImage = () => {
+      let ogImage = "main.png";
+      if (frontMatter.og_image) {
+        ogImage = frontMatter.og_image;
+      }
+
+      return `${origin}/assets/og/${ogImage}`;
+    };
+
+    const title = () => {
+      if (frontMatter.title) {
+        return frontMatter.title + " – " + packageName;
+      }
+      return packageName;
+    };
+
+    return (
+      <>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>{title()}</title>
+        <meta
+          name="description"
+          content={frontMatter.description || description}
+        />
+
+        {/* Open Graph */}
+        <meta property="og:site_name" content={packageName} />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content={ogImage()} />
+        <meta property="og:url" content={origin} />
+        <meta property="og:title" content={title()} />
+        <meta
+          property="og:description"
+          content={frontMatter.description || description}
+        />
+
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:image" content={ogImage()} />
+        <meta name="twitter:site:domain" content={`${origin}`} />
+        <meta name="twitter:url" content={`${url}`} />
+
+        {/* Icons */}
+        <meta name="apple-mobile-web-app-title" content={packageName} />
+
+        <link
+          rel="apple-touch-icon"
+          sizes="180x180"
+          href="/apple-icon-180x180.png"
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="192x192"
+          href="/android-icon-192x192.png"
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="32x32"
+          href="/favicon-32x32.png"
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="16x16"
+          href="/favicon-16x16.png"
+        />
+        <link rel="manifest" href="/site.webmanifest" />
+        <meta name="msapplication-TileImage" content="/ms-icon-150x150.png" />
+      </>
+    );
+  },
+
   navigation: {
     prev: true,
     next: true,
