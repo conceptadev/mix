@@ -21,6 +21,7 @@ jobs:
         with:
           repository: conceptadev/remix_ui
           path: remix
+          ref: test-branch
 
       - uses: subosito/flutter-action@v2
         with:
