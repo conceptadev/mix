@@ -134,5 +134,5 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: 'We have noticed a change in Mix's behavior. Are you sure about this?'
+              body: "We have noticed a change in Mix's behavior. Are you sure about this"
             })
