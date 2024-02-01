@@ -15,10 +15,6 @@ jobs:
         with:
           path: main
 
-      - run: echo ${{ github.ref_name  }}
-      - run: echo ${{ github.head_ref  }}
-      - run: echo ${{ github.ref  }}
-
       - name: Checkout remix_ui repo
         uses: actions/checkout@v2
         with:
@@ -118,7 +114,7 @@ jobs:
         run: |
           cd remix
           dart pub remove mix
-          dart pub add 'mix:{"git":{"url":"https://github.com/conceptadev/mix","ref":github.ref_name}}'
+          dart pub add 'mix:{"git":{"url":"https://github.com/conceptadev/mix","ref":${{ github.head_ref  }}}}'
 
       - run: cd remix && flutter test
         id: remix_test
