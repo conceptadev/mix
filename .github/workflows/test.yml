@@ -16,6 +16,8 @@ jobs:
           path: main
 
       - run: echo ${{ github.ref_name  }}
+      - run: echo ${{ github.head_ref  }}
+      - run: echo ${{ github.ref  }}
 
       - name: Checkout remix_ui repo
         uses: actions/checkout@v2
@@ -67,7 +69,7 @@ jobs:
         run: |
           cd remix
           dart pub remove mix
-          dart pub add 'mix:{"git":{"url":"https://github.com/conceptadev/mix","ref": ${{ github.ref_name  }}}}'
+          dart pub add 'mix:{"git":{"url":"https://github.com/conceptadev/mix","ref": ${{ github.head_ref  }}}}'
       - name: Verify if there are any undefined symbols
         id: undefined_symbols
         run: |
