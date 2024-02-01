@@ -9,6 +9,7 @@ on:
 jobs:
   test_mix_repo:
     runs-on: ubuntu-latest
+    name: Test Mix Repo
     steps:
       - name: Checkout mix repo
         uses: actions/checkout@v2
@@ -35,8 +36,9 @@ jobs:
         
       - run: cd main && flutter test
 
-  update_and_analyze_remix_ui:
+  analyze_breaking_changes:
     runs-on: ubuntu-latest
+    name: Analyze Breaking Changes
 
     needs: test_mix_repo
     steps:
@@ -88,11 +90,12 @@ jobs:
             })
 
 
-  test_remix_ui:
+  analyze_behavior_changes:
     runs-on: ubuntu-latest
+    name: Analyze Behavior Changes
     continue-on-error: true
-    needs: update_and_analyze_remix_ui
-    if: ${{ needs.update_and_analyze_remix_ui.result == 'success' }}
+    needs: analyze_breaking_changes
+    if: ${{ needs.analyze_breaking_changes.result == 'success' }}
     steps:
       - name: Checkout mix repo
         uses: actions/checkout@v2
