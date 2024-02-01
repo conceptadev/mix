@@ -48,6 +48,7 @@ jobs:
       - uses: axel-op/dart-package-analyzer@v3
         with:
           githubToken: ${{ secrets.GITHUB_TOKEN }}
+          relativePath: main
         
       - run: cd main && flutter test
 
