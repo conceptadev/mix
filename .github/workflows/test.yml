@@ -44,6 +44,11 @@ jobs:
           channel: "stable"
 
       - run: cd main && flutter pub get
+
+      - uses: axel-op/dart-package-analyzer@v3
+        with:
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+        
       - run: cd main && flutter test
 
   update_and_analyze_remix_ui:
