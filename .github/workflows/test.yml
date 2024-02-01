@@ -109,7 +109,14 @@ jobs:
         with:
           channel: "stable"
 
-      - run: cd remix && flutter test
+    
+      - name: Add most recent mix version to remix_ui
+        run: |
+          cd remix
+          dart pub remove mix
+          dart pub add 'mix:{"git":{"url":"https://github.com/conceptadev/mix","ref":"main"}}'
+
+      - run: flutter test
         id: remix_test
 
       - name: Add Label to Issue and Comment
