@@ -116,7 +116,7 @@ jobs:
           dart pub remove mix
           dart pub add 'mix:{"git":{"url":"https://github.com/conceptadev/mix","ref":"main"}}'
 
-      - run: flutter test
+      - run: cd remix && flutter test
         id: remix_test
 
       - name: Add Label to Issue and Comment
