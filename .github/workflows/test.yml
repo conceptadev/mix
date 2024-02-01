@@ -7,7 +7,7 @@ on:
     branches: [main]
 
 jobs:
-  setup_and_initial_checks:
+  test_mix_repo:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout mix repo
@@ -20,23 +20,6 @@ jobs:
         with:
           repository: conceptadev/remix_ui
           path: remix
-
-      - name: Archive workspace
-        uses: actions/upload-artifact@v3
-        with:
-          name: workspace
-          path: |
-            main
-            remix
-
-  test_mix_repo:
-    runs-on: ubuntu-latest
-    needs: setup_and_initial_checks
-    steps:
-      - name: Download workspace
-        uses: actions/download-artifact@v3
-        with:
-          name: workspace
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
@@ -57,10 +40,16 @@ jobs:
 
     needs: test_mix_repo
     steps:
-      - name: Download workspace
-        uses: actions/download-artifact@v3
+      - name: Checkout mix repo
+        uses: actions/checkout@v2
         with:
-          name: workspace
+          path: main
+
+      - name: Checkout remix_ui repo
+        uses: actions/checkout@v2
+        with:
+          repository: conceptadev/remix_ui
+          path: remix
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
@@ -105,10 +94,16 @@ jobs:
     needs: update_and_analyze_remix_ui
     if: ${{ needs.update_and_analyze_remix_ui.result == 'success' }}
     steps:
-      - name: Download workspace
-        uses: actions/download-artifact@v3
+      - name: Checkout mix repo
+        uses: actions/checkout@v2
         with:
-          name: workspace
+          path: main
+
+      - name: Checkout remix_ui repo
+        uses: actions/checkout@v2
+        with:
+          repository: conceptadev/remix_ui
+          path: remix
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
