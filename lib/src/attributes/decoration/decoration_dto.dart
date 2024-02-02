@@ -11,6 +11,7 @@ import '../border/shape_border_dto.dart';
 import '../color/color_dto.dart';
 import '../gradient/gradient_dto.dart';
 import '../shadow/shadow_dto.dart';
+import 'image/decoration_image_dto.dart';
 
 /// A Data transfer object that represents a [Decoration] value.
 ///
@@ -99,6 +100,7 @@ class BoxDecorationDto extends DecorationDto<BoxDecoration> {
   final BorderRadiusGeometryDto? borderRadius;
   final BoxShape? shape;
   final BlendMode? backgroundBlendMode;
+  final DecorationImageDto? image;
 
   const BoxDecorationDto({
     super.color,
@@ -108,6 +110,7 @@ class BoxDecorationDto extends DecorationDto<BoxDecoration> {
     super.boxShadow,
     this.shape,
     this.backgroundBlendMode,
+    this.image,
   });
 
   /// Creates a [BoxDecorationDto] from a given [BoxDecoration].
@@ -119,6 +122,7 @@ class BoxDecorationDto extends DecorationDto<BoxDecoration> {
       gradient: GradientDto.maybeFrom(decoration.gradient),
       boxShadow: decoration.boxShadow?.map(BoxShadowDto.from).toList(),
       shape: decoration.shape,
+      image: DecorationImageDto.maybeFrom(decoration.image),
       backgroundBlendMode: decoration.backgroundBlendMode,
     );
   }
@@ -144,6 +148,7 @@ class BoxDecorationDto extends DecorationDto<BoxDecoration> {
       boxShadow: boxShadow?.merge(other.boxShadow) ?? other.boxShadow,
       shape: other.shape ?? shape,
       backgroundBlendMode: other.backgroundBlendMode ?? backgroundBlendMode,
+      image: other.image ?? image,
     );
   }
 
@@ -167,6 +172,7 @@ class BoxDecorationDto extends DecorationDto<BoxDecoration> {
       gradient: gradient?.resolve(mix),
       backgroundBlendMode: backgroundBlendMode,
       shape: shape ?? BoxShape.rectangle,
+      image: image?.resolve(mix),
     );
   }
 
