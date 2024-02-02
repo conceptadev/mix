@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 
-import '../../../../mix.dart';
+import '../../../core/attribute.dart';
+import '../../../factory/mix_provider_data.dart';
 
 class DecorationImageDto extends Dto<DecorationImage>
     with Mergeable<DecorationImageDto> {
