@@ -20,6 +20,7 @@ void main() {
     test('merge returns merged object correctly', () {
       final decoration1 = BoxDecorationDto(color: Colors.red.toDto());
       final decoration2 = BoxDecorationDto(gradient: linearGradientDto);
+
       final merged = decoration1.merge(decoration2);
       expect(merged.color, decoration1.color);
       expect(merged.gradient, decoration2.gradient);
