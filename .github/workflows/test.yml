@@ -1,4 +1,4 @@
-name: Test
+name: Test Workflow
 
 on:
   push:
@@ -7,19 +7,136 @@ on:
     branches: [main]
 
 jobs:
-  test:
+  test_mix_repo:
     runs-on: ubuntu-latest
-
+    name: Test Mix Repo
     steps:
-      - uses: actions/checkout@v2
-      - uses: subosito/flutter-action@v2
+      - name: Checkout mix repo
+        uses: actions/checkout@v2
+        with:
+          path: main
+
+      - name: Checkout remix_ui repo
+        uses: actions/checkout@v2
+        with:
+          repository: conceptadev/remix_ui
+          path: remix
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
         with:
           channel: "stable"
 
-      - run: flutter --version
-      - run: flutter pub get
+      - run: cd main && flutter pub get
 
       - uses: axel-op/dart-package-analyzer@v3
         with:
           githubToken: ${{ secrets.GITHUB_TOKEN }}
-      - run: flutter test
+          relativePath: main
+        
+      - run: cd main && flutter test
+
+  analyze_breaking_changes:
+    runs-on: ubuntu-latest
+    name: Analyze Breaking Changes
+
+    needs: test_mix_repo
+    steps:
+      - name: Checkout mix repo
+        uses: actions/checkout@v2
+        with:
+          path: main
+
+      - name: Checkout remix_ui repo
+        uses: actions/checkout@v2
+        with:
+          repository: conceptadev/remix_ui
+          path: remix
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+
+      - name: Add most recent mix version to remix_ui
+        run: |
+          cd remix
+          dart pub remove mix
+          dart pub add 'mix:{"git":{"url":"https://github.com/conceptadev/mix","ref": ${{ github.head_ref  }}}}'
+      - name: Verify if there are any undefined symbols
+        id: undefined_symbols
+        run: |
+          cd remix
+          if flutter analyze lib | grep -q 'undefined'; then
+            echo "A file contains undefined symbols. Please add a deprecated annotation before you remove it."
+            exit 1
+          fi
+      - name: Add Label to Issue
+        uses: actions/github-script@v7
+        if: ${{ failure() && steps.undefined_symbols.conclusion == 'failure' }}
+        with:
+          script: |
+            github.rest.issues.addLabels({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: ['New Deprecation']
+            })
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: 'Hello 😊, we have noticed a breaking change in our API. Please add the deprecated annotation before you remove it.'
+            })
+
+
+  analyze_behavior_changes:
+    runs-on: ubuntu-latest
+    name: Analyze Behavior Changes
+    continue-on-error: true
+    needs: analyze_breaking_changes
+    if: ${{ needs.analyze_breaking_changes.result == 'success' }}
+    steps:
+      - name: Checkout mix repo
+        uses: actions/checkout@v2
+        with:
+          path: main
+
+      - name: Checkout remix_ui repo
+        uses: actions/checkout@v2
+        with:
+          repository: conceptadev/remix_ui
+          path: remix
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+
+    
+      - name: Add most recent mix version to remix_ui
+        run: |
+          cd remix
+          dart pub remove mix
+          dart pub add 'mix:{"git":{"url":"https://github.com/conceptadev/mix","ref":${{ github.head_ref  }}}}'
+
+      - run: cd remix && flutter test
+        id: remix_test
+
+      - name: Add Label to Issue and Comment
+        uses: actions/github-script@v7
+        if: ${{ failure() && steps.remix_test.conclusion == 'failure' }}
+        with:
+          script: |
+            github.rest.issues.addLabels({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: ['Behavior Change']
+            })
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: "We have noticed a change in Mix's behavior. Are you sure about this"
+            })
