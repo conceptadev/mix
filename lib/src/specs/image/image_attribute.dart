@@ -48,15 +48,15 @@ class ImageSpecAttribute extends SpecAttribute<ImageSpecAttribute, ImageSpec> {
     if (other == null) return this;
 
     return ImageSpecAttribute(
+      centerSlice: other.centerSlice ?? centerSlice,
       width: other.width ?? width,
       height: other.height ?? height,
-      color: other.color ?? color,
+      color: color?.merge(other.color) ?? other.color,
       repeat: other.repeat ?? repeat,
       fit: other.fit ?? fit,
       alignment: other.alignment ?? alignment,
-      centerSlice: other.centerSlice ?? centerSlice,
-      filterQuality: other.filterQuality ?? filterQuality,
       colorBlendMode: other.colorBlendMode ?? colorBlendMode,
+      filterQuality: other.filterQuality ?? filterQuality,
     );
   }
 

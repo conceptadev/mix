@@ -138,6 +138,7 @@ class ScaleDecorator extends WidgetDecorator<ScaleDecorator> {
 
 enum ClipType { path, oval, rect, rRect, triangle }
 
+// TODO: Implement BorderRadiusGeometryDto
 class ClipDecorator<T> extends WidgetDecorator<ClipDecorator>
     with Mergeable<ClipDecorator> {
   final ClipType clipType;

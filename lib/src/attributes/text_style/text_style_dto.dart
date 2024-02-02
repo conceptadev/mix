@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 
 import '../../core/attribute.dart';
 import '../../core/extensions/iterable_ext.dart';
-import '../../core/extensions/values_ext.dart';
 import '../../factory/mix_provider_data.dart';
 import '../../theme/tokens/text_style_token.dart';
 import '../color/color_dto.dart';
@@ -108,7 +107,7 @@ class TextStyleData extends Dto<TextStyle> with Mergeable<TextStyleData> {
             height: style.height,
             letterSpacing: style.letterSpacing,
             locale: style.locale,
-            shadows: style.shadows?.map((e) => e.toDto()).toList(),
+            shadows: style.shadows?.map(ShadowDto.from).toList(),
             textBaseline: style.textBaseline,
             wordSpacing: style.wordSpacing,
           );
