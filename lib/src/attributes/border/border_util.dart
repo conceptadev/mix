@@ -37,12 +37,14 @@ class BorderSideUtility<T extends StyleAttribute>
     BorderStyle? style,
     double? strokeAlign,
   }) {
-    return builder(BorderSideDto(
-      color: color,
-      strokeAlign: strokeAlign,
-      style: style,
-      width: width,
-    ));
+    return builder(
+      BorderSideDto(
+        color: color,
+        strokeAlign: strokeAlign,
+        style: style,
+        width: width,
+      ),
+    );
   }
 
   /// Returns a [ColorUtility] to manipulate [Color] of the [BorderSideDto]
@@ -52,11 +54,15 @@ class BorderSideUtility<T extends StyleAttribute>
   BorderStyleUtility<T> get style =>
       BorderStyleUtility((style) => _only(style: style));
 
+  T as(BorderSide side) => builder(BorderSideDto.from(side));
+
   /// Sets the width of the [BorderSideDto]
   T width(double width) => call(width: width);
 
   /// Sets the stroke align of the [BorderSideDto]
   T strokeAlign(double strokeAlign) => call(strokeAlign: strokeAlign);
+
+  T none() => as(BorderSide.none);
 
   /// Creates a [BorderSideDto] with the provided parameters and calls the [builder] function.
   T call({
@@ -80,6 +86,7 @@ class BorderUtility<T extends StyleAttribute>
     extends DtoUtility<T, BoxBorderDto, BoxBorder> {
   /// Constructor for creating an instance of the class.
   const BorderUtility(super.builder) : super(valueToDto: BoxBorderDto.from);
+
   BoxBorderDto _symmetric({
     BorderSideDto? vertical,
     BorderSideDto? horizontal,
@@ -94,17 +101,6 @@ class BorderUtility<T extends StyleAttribute>
 
   BoxBorderDto _fromBorderSide(BorderSideDto side) {
     return BoxBorderDto(top: side, bottom: side, left: side, right: side);
-  }
-
-  T _only({
-    BorderSideDto? top,
-    BorderSideDto? bottom,
-    BorderSideDto? left,
-    BorderSideDto? right,
-  }) {
-    return builder(
-      BoxBorderDto(top: top, bottom: bottom, left: left, right: right),
-    );
   }
 
   BorderDirectionalUtility<T> get _directional =>
@@ -123,22 +119,22 @@ class BorderUtility<T extends StyleAttribute>
 
   /// Method to set the border on the bottom side.
   BorderSideUtility<T> get bottom {
-    return BorderSideUtility((side) => _only(bottom: side));
+    return BorderSideUtility((side) => only(bottom: side));
   }
 
   /// Method to set the border on the top side.
   BorderSideUtility<T> get top {
-    return BorderSideUtility((side) => _only(top: side));
+    return BorderSideUtility((side) => only(top: side));
   }
 
   /// Method to set the border on the left side.
   BorderSideUtility<T> get left {
-    return BorderSideUtility((side) => _only(left: side));
+    return BorderSideUtility((side) => only(left: side));
   }
 
   /// Method to set the border on the right side.
   BorderSideUtility<T> get right {
-    return BorderSideUtility((side) => _only(right: side));
+    return BorderSideUtility((side) => only(right: side));
   }
 
   /// Method to set the borders on the vertical sides.
@@ -150,6 +146,29 @@ class BorderUtility<T extends StyleAttribute>
   BorderSideUtility<T> get horizontal {
     return BorderSideUtility(
       (side) => builder(_symmetric(horizontal: side)),
+    );
+  }
+
+  /// Returns a [ColorUtility] to manipulate [Color] of the [BorderSideDto]
+  ColorUtility<T> get color => all.color;
+
+  BorderStyleUtility<T> get style => all.style;
+
+  T width(double width) => all.width(width);
+
+  T strokeAlign(double strokeAlign) => all.strokeAlign(strokeAlign);
+
+  T none() => all.none();
+
+  /// Method to set the border individually on each side.
+  T only({
+    BorderSideDto? top,
+    BorderSideDto? bottom,
+    BorderSideDto? left,
+    BorderSideDto? right,
+  }) {
+    return builder(
+      BoxBorderDto(top: top, bottom: bottom, left: left, right: right),
     );
   }
 

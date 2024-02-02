@@ -133,8 +133,8 @@ class LinearGradientDto extends GradientDto<LinearGradient> {
       end: other.end ?? end,
       tileMode: other.tileMode ?? tileMode,
       transform: other.transform ?? transform,
-      colors: colors?.merge(other.colors),
-      stops: stops?.merge(other.stops),
+      colors: colors?.merge(other.colors) ?? other.colors,
+      stops: stops?.merge(other.stops) ?? other.stops,
     );
   }
 

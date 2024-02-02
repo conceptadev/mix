@@ -67,7 +67,7 @@ class ShadowDto extends ShadowDtoImpl<ShadowDto, Shadow> {
 
     return ShadowDto(
       blurRadius: other.blurRadius ?? blurRadius,
-      color: other.color ?? color,
+      color: color?.merge(other.color) ?? other.color,
       offset: other.offset ?? offset,
     );
   }

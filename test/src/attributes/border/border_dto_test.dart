@@ -82,6 +82,37 @@ void main() {
       expect(resolvedBorder.start, const BorderSide(width: 15.0));
       expect(resolvedBorder.end, const BorderSide(width: 20.0));
     });
+
+    //  merge
+    test('merge() Border', () {
+      const borderDto1 = BoxBorderDto(
+        top: BorderSideDto(width: 1.0, color: ColorDto(Colors.red)),
+        bottom: BorderSideDto(width: 1.0, color: ColorDto(Colors.red)),
+        left: BorderSideDto(width: 1.0, color: ColorDto(Colors.red)),
+        right: BorderSideDto(width: 1.0, color: ColorDto(Colors.red)),
+      );
+
+      const borderDto2 = BoxBorderDto(
+        top: BorderSideDto(width: 2.0),
+        bottom: BorderSideDto(width: 2.0),
+        left: BorderSideDto(width: 2.0),
+        right: BorderSideDto(width: 2.0),
+      );
+
+      final merged = borderDto1.merge(borderDto2);
+
+      expect(merged.top?.width, 2.0);
+      expect(merged.top?.color, const ColorDto(Colors.red));
+
+      expect(merged.bottom?.width, 2.0);
+      expect(merged.bottom?.color, const ColorDto(Colors.red));
+
+      expect(merged.left?.width, 2.0);
+      expect(merged.left?.color, const ColorDto(Colors.red));
+
+      expect(merged.right?.width, 2.0);
+      expect(merged.right?.color, const ColorDto(Colors.red));
+    });
   });
 
   // BorderSideDto tests

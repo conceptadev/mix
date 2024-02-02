@@ -81,19 +81,19 @@ class BoxBorderDto extends Dto<BoxBorder> with Mergeable<BoxBorderDto> {
     assert(type != null, 'Cannot merge Border with BoxBorderDirectional');
     if (type == Border) {
       return BoxBorderDto(
-        top: other.top ?? top,
-        bottom: other.bottom ?? bottom,
-        left: other.left ?? left,
-        right: other.right ?? right,
+        top: top?.merge(other.top) ?? other.top,
+        bottom: bottom?.merge(other.bottom) ?? other.bottom,
+        left: left?.merge(other.left) ?? other.left,
+        right: right?.merge(other.right) ?? other.right,
       );
     }
 
     if (type == BorderDirectional) {
       return BoxBorderDto(
-        top: other.top ?? top,
-        bottom: other.bottom ?? bottom,
-        start: other.start ?? start,
-        end: other.end ?? end,
+        top: top?.merge(other.top) ?? other.top,
+        bottom: bottom?.merge(other.bottom) ?? other.bottom,
+        start: start?.merge(other.start) ?? other.start,
+        end: end?.merge(other.end) ?? other.end,
       );
     }
 
