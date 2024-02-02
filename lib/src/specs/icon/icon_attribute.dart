@@ -19,7 +19,7 @@ class IconSpecAttribute extends SpecAttribute<IconSpecAttribute, IconSpec> {
     if (other == null) return this;
 
     return IconSpecAttribute(
-      size: size ?? other.size,
+      size: other.size ?? size,
       color: color?.merge(other.color) ?? other.color,
     );
   }

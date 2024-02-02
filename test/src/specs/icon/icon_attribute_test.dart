@@ -26,8 +26,8 @@ void main() {
               IconSpecAttribute(size: 32, color: ColorDto(Colors.green));
           final mergedAttribute = attribute1.merge(attribute2);
           expect(mergedAttribute, isA<IconSpecAttribute>());
-          expect(mergedAttribute.size, equals(24));
-          expect(mergedAttribute.color, equals(const ColorDto(Colors.red)));
+          expect(mergedAttribute.size, equals(32));
+          expect(mergedAttribute.color, equals(const ColorDto(Colors.green)));
         },
       );
 
