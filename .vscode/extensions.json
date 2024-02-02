@@ -1,0 +1,8 @@
+{
+    "recommendations": [
+        "andreasblech.better-tests",
+        "dart-code.dart-code",
+        "dcmdev.dcm-vscode-extension",
+        "flutterando.flutter-coverage"
+    ]
+}
