@@ -148,7 +148,7 @@ class BoxDecorationDto extends DecorationDto<BoxDecoration> {
       boxShadow: boxShadow?.merge(other.boxShadow) ?? other.boxShadow,
       shape: other.shape ?? shape,
       backgroundBlendMode: other.backgroundBlendMode ?? backgroundBlendMode,
-      image: other.image ?? image,
+      image: image?.merge(other.image),
     );
   }
 

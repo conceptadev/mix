@@ -4,7 +4,7 @@ import '../../../../mix.dart';
 
 class DecorationImageDto extends Dto<DecorationImage>
     with Mergeable<DecorationImageDto> {
-  final ImageProvider image;
+  final ImageProvider? image;
   final BoxFit? fit;
 
   const DecorationImageDto({
@@ -37,7 +37,7 @@ class DecorationImageDto extends Dto<DecorationImage>
   @override
   DecorationImage resolve(MixData mix) {
     return DecorationImage(
-      image: image,
+      image: image ?? const AssetImage(''),
       fit: fit,
     );
   }

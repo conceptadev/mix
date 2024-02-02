@@ -27,7 +27,7 @@ class DecorationImageUtility<T extends StyleAttribute>
   }) {
     return builder(
       DecorationImageDto(
-        image: image ?? const AssetImage(''),
+        image: image,
         fit: fit,
       ),
     );
