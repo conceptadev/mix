@@ -129,7 +129,7 @@ void main() {
 
     final elapsedTime = stopwatch.elapsedMilliseconds / iterations;
     log('Style.create: $elapsedTime ms');
-    expect(style.length, 0);
+    expect(style.isNotEmpty, true);
   });
 
   // test performance for MixData.create
@@ -160,7 +160,7 @@ void main() {
     final timeElapsed = stopwatch.elapsedMilliseconds / iterations;
 
     log('MixData.create: $timeElapsed ms');
-    expect(mixData.attributes.length, 0);
+    expect(mixData.attributes.isNotEmpty, true);
   });
 }
 
