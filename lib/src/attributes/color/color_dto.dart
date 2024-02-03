@@ -23,11 +23,9 @@ class ColorDto extends Dto<Color> with Mergeable<ColorDto> {
 
   const ColorDto(Color value) : this.raw(value: value);
 
-  ColorDto.directive(ColorDirective directive)
-      : this.raw(directives: [directive]);
+  ColorDto.directive(ColorDirective directive) : this.raw(directives: [directive]);
 
-  static ColorDto? maybeFrom(Color? value) =>
-      value == null ? null : ColorDto(value);
+  static ColorDto? maybeFrom(Color? value) => value == null ? null : ColorDto(value);
 
   @override
   Color resolve(MixData mix) {

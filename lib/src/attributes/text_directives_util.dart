@@ -3,8 +3,7 @@ import '../helpers/string_ext.dart';
 
 class TextDataDirectiveUtility {
   const TextDataDirectiveUtility();
-  TextDataDirective _wrap(Modifier<String> modifier) =>
-      TextDataDirective([modifier]);
+  TextDataDirective _wrap(Modifier<String> modifier) => TextDataDirective([modifier]);
 
   TextDataDirective capitalize() => _wrap(_capitalize);
   TextDataDirective uppercase() => _wrap(_uppercase);

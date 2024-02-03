@@ -6,60 +6,48 @@ import '../../../helpers/testing_utils.dart';
 
 void main() {
   testWidgets(
-      'Verify if widgets are wrapped with Padding when there are 2 children',
-      (tester) async {
-    await tester.pumpWidget(
-      VBox(
-        style: Style(
-          flex.gap(10),
+    'Verify if widgets are wrapped with Padding when there are 2 children',
+    (tester) async {
+      await tester.pumpWidget(
+        VBox(
+          style: Style(flex.gap(10)),
+          children: const [SizedBox(), SizedBox()],
         ),
-        children: const [
-          SizedBox(),
-          SizedBox(),
-        ],
-      ),
-    );
+      );
 
-    final mixedFlex = find.byType(MixedFlex);
+      final mixedFlex = find.byType(MixedFlex);
 
-    expect(
-      find.descendant(of: mixedFlex, matching: find.byType(Padding)),
-      findsNWidgets(1),
-    );
-  });
+      expect(
+        find.descendant(of: mixedFlex, matching: find.byType(Padding)),
+        findsNWidgets(1),
+      );
+    },
+  );
 
   testWidgets(
-      'Verify if widgets are wrapped with Padding when there are 1 children',
-      (tester) async {
-    await tester.pumpWidget(
-      VBox(
-        style: Style(
-          flex.gap(10),
+    'Verify if widgets are wrapped with Padding when there are 1 children',
+    (tester) async {
+      await tester.pumpWidget(
+        VBox(
+          style: Style(flex.gap(10)),
+          children: const [SizedBox()],
         ),
-        children: const [
-          SizedBox(),
-        ],
-      ),
-    );
+      );
 
-    final mixedFlex = find.byType(MixedFlex);
+      final mixedFlex = find.byType(MixedFlex);
 
-    expect(
-      find.descendant(of: mixedFlex, matching: find.byType(Padding)),
-      findsNWidgets(0),
-    );
-  });
+      expect(
+        find.descendant(of: mixedFlex, matching: find.byType(Padding)),
+        findsNWidgets(0),
+      );
+    },
+  );
 
-  test('Verify if widgets are wrapped with Padding when there are 3 children',
-      () {
+  test('Verify if widgets are wrapped with Padding when there are 3 children', () {
     var sut = MixedFlex(
       mix: EmptyMixData,
       direction: Axis.horizontal,
-      children: const [
-        SizedBox(),
-        SizedBox(),
-        SizedBox(),
-      ],
+      children: const [SizedBox(), SizedBox(), SizedBox()],
     ).buildChildren(10);
 
     expect(sut.length, 3);
@@ -73,9 +61,7 @@ void main() {
     var sut = MixedFlex(
       mix: EmptyMixData,
       direction: Axis.horizontal,
-      children: const [
-        SizedBox(),
-      ],
+      children: const [SizedBox()],
     ).buildChildren(10);
 
     expect(sut.length, 1);
@@ -85,16 +71,11 @@ void main() {
     }
   });
 
-  test(
-      'Verify if when MixedFlex has direction horizontal the padding is only in the right',
-      () {
+  test('Verify if when MixedFlex has direction horizontal the padding is only in the right', () {
     var sut = MixedFlex(
       mix: EmptyMixData,
       direction: Axis.horizontal,
-      children: const [
-        SizedBox(),
-        SizedBox(),
-      ],
+      children: const [SizedBox(), SizedBox()],
     ).buildChildren(10);
 
     for (var i = 0; i < sut.length; i++) {
@@ -110,16 +91,11 @@ void main() {
     }
   });
 
-  test(
-      'Verify if when MixedFlex has direction horizontal the padding is only in the right',
-      () {
+  test('Verify if when MixedFlex has direction horizontal the padding is only in the right', () {
     var sut = MixedFlex(
       mix: EmptyMixData,
       direction: Axis.vertical,
-      children: const [
-        SizedBox(),
-        SizedBox(),
-      ],
+      children: const [SizedBox(), SizedBox()],
     ).buildChildren(10);
 
     for (var i = 0; i < sut.length; i++) {
@@ -145,13 +121,8 @@ void main() {
               Row(
                 children: [
                   HBox(
-                    style: Style(
-                      flex.gap(10),
-                    ),
-                    children: const [
-                      StyledText('test'),
-                      StyledText('case'),
-                    ],
+                    style: Style(flex.gap(10)),
+                    children: const [StyledText('test'), StyledText('case')],
                   ),
                 ],
               ),
@@ -172,13 +143,8 @@ void main() {
               Column(
                 children: [
                   VBox(
-                    style: Style(
-                      flex.gap(10),
-                    ),
-                    children: const [
-                      StyledText('test'),
-                      StyledText('case'),
-                    ],
+                    style: Style(flex.gap(10)),
+                    children: const [StyledText('test'), StyledText('case')],
                   ),
                 ],
               ),

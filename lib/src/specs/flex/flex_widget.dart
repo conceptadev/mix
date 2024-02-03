@@ -69,13 +69,10 @@ class MixedFlex extends StatelessWidget {
 
     final current = Flex(
       direction: direction,
-      mainAxisAlignment:
-          spec.mainAxisAlignment ?? _defaultFlex.mainAxisAlignment,
+      mainAxisAlignment: spec.mainAxisAlignment ?? _defaultFlex.mainAxisAlignment,
       mainAxisSize: spec.mainAxisSize ?? _defaultFlex.mainAxisSize,
-      crossAxisAlignment:
-          spec.crossAxisAlignment ?? _defaultFlex.crossAxisAlignment,
-      verticalDirection:
-          spec.verticalDirection ?? _defaultFlex.verticalDirection,
+      crossAxisAlignment: spec.crossAxisAlignment ?? _defaultFlex.crossAxisAlignment,
+      verticalDirection: spec.verticalDirection ?? _defaultFlex.verticalDirection,
       children: buildChildren(gap),
     );
 

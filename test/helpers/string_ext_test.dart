@@ -21,10 +21,7 @@ void main() {
       '12345': ['12345'], // Numbers
       'hello123World': ['hello123', 'World'], // Mix of numbers and letters
       '!@#\$%^&*()': ['!@#\$%^&*()'], // Special characters only
-      'Hello!World': [
-        'Hello!',
-        'World'
-      ], // Words separated by a non-standard separator
+      'Hello!World': ['Hello!', 'World'], // Words separated by a non-standard separator
     };
 
     cases.forEach((input, expectedOutput) {
@@ -51,8 +48,7 @@ void main() {
       '12345': '12345', // Numbers
       'hello123World': 'hello123-world', // Mix of numbers and letters
       '!@#\$%^&*()': '!@#\$%^&*()', // Special characters only
-      'Hello!World':
-          'hello!-world', // Words separated by a non-standard separator
+      'Hello!World': 'hello!-world', // Words separated by a non-standard separator
     };
 
     paramCases.forEach((input, expectedOutput) {
@@ -79,8 +75,7 @@ void main() {
       '12345': '12345', // Numbers
       'hello123World': 'Hello123World', // Mix of numbers and letters
       '!@#\$%^&*()': '!@#\$%^&*()', // Special characters only
-      'Hello!World':
-          'Hello!World', // Words separated by a non-standard separator
+      'Hello!World': 'Hello!World', // Words separated by a non-standard separator
     };
 
     pascalCases.forEach((input, expectedOutput) {
@@ -107,8 +102,7 @@ void main() {
       '12345': '12345', // Numbers
       'hello123World': 'hello123World', // Mix of numbers and letters
       '!@#\$%^&*()': '!@#\$%^&*()', // Special characters only
-      'Hello!World':
-          'hello!World', // Words separated by a non-standard separator
+      'Hello!World': 'hello!World', // Words separated by a non-standard separator
     };
 
     camelCases.forEach((input, expectedOutput) {

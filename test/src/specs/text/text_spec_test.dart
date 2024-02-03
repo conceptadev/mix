@@ -12,24 +12,23 @@ void main() {
         Style(
           TextSpecAttribute(
             overflow: TextOverflow.ellipsis,
-            textDirection: TextDirection.ltr,
-            textAlign: TextAlign.center,
-            style: TextStyleDto.only(color: const ColorDto(Colors.red)),
             strutStyle: const StrutStyleDto(fontSize: 20.0),
+            textAlign: TextAlign.center,
             textScaleFactor: 1.0,
             maxLines: 2,
+            style: TextStyleDto.only(color: const ColorDto(Colors.red)),
             textWidthBasis: TextWidthBasis.longestLine,
             textHeightBehavior: const TextHeightBehavior(
               applyHeightToFirstAscent: true,
               applyHeightToLastDescent: true,
             ),
+            textDirection: TextDirection.ltr,
             softWrap: true,
           ),
         ),
       );
 
-      final spec = mix.attributeOf<TextSpecAttribute>()?.resolve(mix) ??
-          const TextSpec.empty();
+      final spec = mix.attributeOf<TextSpecAttribute>()?.resolve(mix) ?? const TextSpec.empty();
 
       expect(spec.overflow, TextOverflow.ellipsis);
       expect(spec.strutStyle, const StrutStyle(fontSize: 20.0));
@@ -39,9 +38,9 @@ void main() {
       expect(spec.style, const TextStyle(color: Colors.red));
       expect(spec.textWidthBasis, TextWidthBasis.longestLine);
       expect(
-          spec.textHeightBehavior,
-          const TextHeightBehavior(
-              applyHeightToFirstAscent: true, applyHeightToLastDescent: true));
+        spec.textHeightBehavior,
+        const TextHeightBehavior(applyHeightToFirstAscent: true, applyHeightToLastDescent: true),
+      );
       expect(spec.textDirection, TextDirection.ltr);
       expect(spec.softWrap, true);
     });
@@ -55,13 +54,14 @@ void main() {
         maxLines: 2,
         style: TextStyle(color: Colors.red),
         textWidthBasis: TextWidthBasis.longestLine,
-        textHeightBehavior: TextHeightBehavior(
-            applyHeightToFirstAscent: true, applyHeightToLastDescent: true),
+        textHeightBehavior:
+            TextHeightBehavior(applyHeightToFirstAscent: true, applyHeightToLastDescent: true),
         textDirection: TextDirection.ltr,
         softWrap: true,
       );
 
       final copiedSpec = spec.copyWith(
+        softWrap: false,
         overflow: TextOverflow.fade,
         strutStyle: const StrutStyle(fontSize: 30.0),
         textAlign: TextAlign.start,
@@ -70,9 +70,10 @@ void main() {
         style: const TextStyle(color: Colors.blue),
         textWidthBasis: TextWidthBasis.parent,
         textHeightBehavior: const TextHeightBehavior(
-            applyHeightToFirstAscent: false, applyHeightToLastDescent: false),
+          applyHeightToFirstAscent: false,
+          applyHeightToLastDescent: false,
+        ),
         textDirection: TextDirection.rtl,
-        softWrap: false,
       );
 
       expect(copiedSpec.overflow, TextOverflow.fade);
@@ -83,10 +84,12 @@ void main() {
       expect(copiedSpec.style, const TextStyle(color: Colors.blue));
       expect(copiedSpec.textWidthBasis, TextWidthBasis.parent);
       expect(
-          copiedSpec.textHeightBehavior,
-          const TextHeightBehavior(
-              applyHeightToFirstAscent: false,
-              applyHeightToLastDescent: false));
+        copiedSpec.textHeightBehavior,
+        const TextHeightBehavior(
+          applyHeightToFirstAscent: false,
+          applyHeightToLastDescent: false,
+        ),
+      );
 
       expect(copiedSpec.textDirection, TextDirection.rtl);
       expect(copiedSpec.softWrap, false);
@@ -135,17 +138,22 @@ void main() {
       expect(lerpedSpec.textScaleFactor, 1.5);
       expect(lerpedSpec.maxLines, 3);
       expect(
-          lerpedSpec.style,
-          TextStyle.lerp(const TextStyle(color: Colors.red),
-              const TextStyle(color: Colors.blue), t));
+        lerpedSpec.style,
+        TextStyle.lerp(
+          const TextStyle(color: Colors.red),
+          const TextStyle(color: Colors.blue),
+          t,
+        ),
+      );
       expect(lerpedSpec.textWidthBasis, TextWidthBasis.parent);
 
       expect(
-          lerpedSpec.textHeightBehavior,
-          const TextHeightBehavior(
-            applyHeightToFirstAscent: false,
-            applyHeightToLastDescent: false,
-          ));
+        lerpedSpec.textHeightBehavior,
+        const TextHeightBehavior(
+          applyHeightToFirstAscent: false,
+          applyHeightToLastDescent: false,
+        ),
+      );
       expect(lerpedSpec.textDirection, TextDirection.rtl);
       expect(lerpedSpec.softWrap, false);
 

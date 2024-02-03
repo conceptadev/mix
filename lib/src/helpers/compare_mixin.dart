@@ -7,8 +7,7 @@ import 'deep_collection_equality.dart';
 
 /// Returns a `hashCode` for [props].
 /// This function uses the Jenkins hash function to generate a hash code for the given properties.
-int _mapPropsToHashCode(Iterable? props) =>
-    _finish([...?props].fold(0, _combine));
+int _mapPropsToHashCode(Iterable? props) => _finish([...?props].fold(0, _combine));
 
 // Instance of DeepCollectionEquality used for deep comparison of collections.
 const _equality = DeepCollectionEquality();
@@ -62,9 +61,7 @@ bool _isEquatable(dynamic object) {
 int _combine(int hash, dynamic object) {
   // If the object is a Map, sort the keys and combine their hash codes.
   if (object is Map) {
-    object.keys
-        .sorted((dynamic a, dynamic b) => a.hashCode - b.hashCode)
-        .forEach((key) {
+    object.keys.sorted((dynamic a, dynamic b) => a.hashCode - b.hashCode).forEach((key) {
       hash = hash ^ _combine(hash, [key, object[key]]);
     });
 
@@ -132,9 +129,7 @@ mixin Comparable {
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        other is Comparable &&
-            runtimeType == other.runtimeType &&
-            _equals(props, other.props);
+        other is Comparable && runtimeType == other.runtimeType && _equals(props, other.props);
   }
 
   // Overrides the hash code getter to compute the hash code based on the properties.

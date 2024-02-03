@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 
-import '../../../mix.dart';
+import '../../core/attribute.dart';
+import '../scalars/scalar_util.dart';
+import 'border_dto.dart';
+import 'border_radius_dto.dart';
+import 'border_radius_util.dart';
+import 'border_util.dart';
 import 'shape_border_dto.dart';
 
 /// Utility for setting `ShapeBorder` values.
@@ -18,24 +23,21 @@ import 'shape_border_dto.dart';
 /// See [ShapeBorder] for more information.
 class ShapeBorderUtility<T extends StyleAttribute>
     extends DtoUtility<T, ShapeBorderDto, ShapeBorder> {
-  const ShapeBorderUtility(super.builder)
-      : super(valueToDto: ShapeBorderDto.from);
+  const ShapeBorderUtility(super.builder) : super(valueToDto: ShapeBorderDto.from);
 
   RoundedRectanbleBorderUtility<T> get roundedRectangle =>
       RoundedRectanbleBorderUtility((roundedRectangle) {
         return builder(roundedRectangle);
       });
 
-  CircleBorderUtility<T> get circle =>
-      CircleBorderUtility((circle) => builder(circle));
+  CircleBorderUtility<T> get circle => CircleBorderUtility((circle) => builder(circle));
 
   BeveledRectangleBorderUtility<T> get beveledRectangle =>
       BeveledRectangleBorderUtility((beveledRectangle) {
         return builder(beveledRectangle);
       });
 
-  StadiumBorderUtility<T> get stadium =>
-      StadiumBorderUtility((stadium) => builder(stadium));
+  StadiumBorderUtility<T> get stadium => StadiumBorderUtility((stadium) => builder(stadium));
 
   ContinuousRectangleBorderUtility<T> get continuousRectangle =>
       ContinuousRectangleBorderUtility((continuousRectangle) {
@@ -54,11 +56,9 @@ class RoundedRectanbleBorderUtility<T extends StyleAttribute>
     );
   }
 
-  BorderSideUtility<T> get side =>
-      BorderSideUtility((side) => _only(side: side));
+  BorderSideUtility<T> get side => BorderSideUtility((side) => _only(side: side));
 
-  BorderRadiusGeometryUtility<T> get borderRadius =>
-      BorderRadiusGeometryUtility(
+  BorderRadiusGeometryUtility<T> get borderRadius => BorderRadiusGeometryUtility(
         (borderRadius) => _only(borderRadius: borderRadius),
       );
 
@@ -72,8 +72,7 @@ class RoundedRectanbleBorderUtility<T extends StyleAttribute>
 
 class CircleBorderUtility<T extends StyleAttribute>
     extends DtoUtility<T, CircleBorderDto, CircleBorder> {
-  const CircleBorderUtility(super.builder)
-      : super(valueToDto: CircleBorderDto.from);
+  const CircleBorderUtility(super.builder) : super(valueToDto: CircleBorderDto.from);
 
   T _only({BorderSideDto? side, double? eccentricity}) {
     return builder(CircleBorderDto(side: side, eccentricity: eccentricity));
@@ -82,8 +81,7 @@ class CircleBorderUtility<T extends StyleAttribute>
   DoubleUtility<T> get eccentricity =>
       DoubleUtility((eccentricity) => _only(eccentricity: eccentricity));
 
-  BorderSideUtility<T> get side =>
-      BorderSideUtility((side) => _only(side: side));
+  BorderSideUtility<T> get side => BorderSideUtility((side) => _only(side: side));
 
   T call({BorderSide? side, double? eccentricity}) {
     return _only(
@@ -104,11 +102,9 @@ class BeveledRectangleBorderUtility<T extends StyleAttribute>
     );
   }
 
-  BorderSideUtility<T> get side =>
-      BorderSideUtility((side) => _only(side: side));
+  BorderSideUtility<T> get side => BorderSideUtility((side) => _only(side: side));
 
-  BorderRadiusGeometryUtility<T> get borderRadius =>
-      BorderRadiusGeometryUtility(
+  BorderRadiusGeometryUtility<T> get borderRadius => BorderRadiusGeometryUtility(
         (borderRadius) => _only(borderRadius: borderRadius),
       );
 
@@ -122,15 +118,13 @@ class BeveledRectangleBorderUtility<T extends StyleAttribute>
 
 class StadiumBorderUtility<T extends StyleAttribute>
     extends DtoUtility<T, StadiumBorderDto, StadiumBorder> {
-  const StadiumBorderUtility(super.builder)
-      : super(valueToDto: StadiumBorderDto.from);
+  const StadiumBorderUtility(super.builder) : super(valueToDto: StadiumBorderDto.from);
 
   T _only({BorderSideDto? side}) {
     return builder(StadiumBorderDto(side: side));
   }
 
-  BorderSideUtility<T> get side =>
-      BorderSideUtility((side) => _only(side: side));
+  BorderSideUtility<T> get side => BorderSideUtility((side) => _only(side: side));
 
   T call({BorderSide? side}) {
     return _only(side: BorderSideDto.maybeFrom(side));
@@ -138,8 +132,7 @@ class StadiumBorderUtility<T extends StyleAttribute>
 }
 
 class ContinuousRectangleBorderUtility<T extends StyleAttribute>
-    extends DtoUtility<T, ContinuousRectangleBorderDto,
-        ContinuousRectangleBorder> {
+    extends DtoUtility<T, ContinuousRectangleBorderDto, ContinuousRectangleBorder> {
   const ContinuousRectangleBorderUtility(super.builder)
       : super(valueToDto: ContinuousRectangleBorderDto.from);
 
@@ -149,11 +142,9 @@ class ContinuousRectangleBorderUtility<T extends StyleAttribute>
     );
   }
 
-  BorderSideUtility<T> get side =>
-      BorderSideUtility((side) => _only(side: side));
+  BorderSideUtility<T> get side => BorderSideUtility((side) => _only(side: side));
 
-  BorderRadiusGeometryUtility<T> get borderRadius =>
-      BorderRadiusGeometryUtility(
+  BorderRadiusGeometryUtility<T> get borderRadius => BorderRadiusGeometryUtility(
         (borderRadius) => _only(borderRadius: borderRadius),
       );
 

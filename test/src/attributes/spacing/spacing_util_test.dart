@@ -29,7 +29,7 @@ void main() {
     test('spacingUtils.directional()', () {
       expect(
         spacingUtils.directional(10).value,
-        const SpacingDto.only(start: 10, end: 10, top: 10, bottom: 10),
+        const SpacingDto.only(top: 10, bottom: 10, start: 10, end: 10),
         reason: '1',
       );
       expect(
@@ -44,139 +44,91 @@ void main() {
       );
       expect(
         spacingUtils.directional(10, 20, 30, 40).value,
-        const SpacingDto.only(top: 10, end: 20, bottom: 30, start: 40),
+        const SpacingDto.only(top: 10, bottom: 30, start: 40, end: 20),
         reason: '4',
       );
     });
 
     test('spacingUtils.from', () {
       expect(
-        spacingUtils
-            .as(
-              const EdgeInsets.all(10),
-            )
-            .value,
+        spacingUtils.as(const EdgeInsets.all(10)).value,
         const SpacingDto.only(top: 10, bottom: 10, left: 10, right: 10),
         reason: '1',
       );
 
       expect(
-        spacingUtils
-            .as(
-              const EdgeInsets.only(top: 10),
-            )
-            .value,
+        spacingUtils.as(const EdgeInsets.only(top: 10)).value,
         const SpacingDto.only(top: 10, bottom: 0, left: 0, right: 0),
         reason: '2',
       );
 
       expect(
-        spacingUtils
-            .as(
-              const EdgeInsets.only(left: 10),
-            )
-            .value,
-        const SpacingDto.only(left: 10, bottom: 0, top: 0, right: 0),
+        spacingUtils.as(const EdgeInsets.only(left: 10)).value,
+        const SpacingDto.only(top: 0, bottom: 0, left: 10, right: 0),
         reason: '3',
       );
 
       expect(
-        spacingUtils
-            .as(
-              const EdgeInsets.only(right: 10),
-            )
-            .value,
-        const SpacingDto.only(right: 10, bottom: 0, top: 0, left: 0),
+        spacingUtils.as(const EdgeInsets.only(right: 10)).value,
+        const SpacingDto.only(top: 0, bottom: 0, left: 0, right: 10),
         reason: '4',
       );
 
       expect(
-        spacingUtils
-            .as(
-              const EdgeInsets.only(bottom: 10),
-            )
-            .value,
-        const SpacingDto.only(bottom: 10, top: 0, left: 0, right: 0),
+        spacingUtils.as(const EdgeInsets.only(bottom: 10)).value,
+        const SpacingDto.only(top: 0, bottom: 10, left: 0, right: 0),
         reason: '5',
       );
 
       expect(
-        spacingUtils
-            .as(
-              const EdgeInsets.symmetric(horizontal: 10),
-            )
-            .value,
-        const SpacingDto.only(left: 10, right: 10, top: 0, bottom: 0),
+        spacingUtils.as(const EdgeInsets.symmetric(horizontal: 10)).value,
+        const SpacingDto.only(top: 0, bottom: 0, left: 10, right: 10),
         reason: '6',
       );
 
       expect(
-        spacingUtils
-            .as(
-              const EdgeInsets.symmetric(vertical: 10),
-            )
-            .value,
+        spacingUtils.as(const EdgeInsets.symmetric(vertical: 10)).value,
         const SpacingDto.only(top: 10, bottom: 10, left: 0, right: 0),
         reason: '7',
       );
 
       expect(
-        spacingUtils.directional
-            .as(
-              const EdgeInsetsDirectional.only(start: 10),
-            )
-            .value,
-        const SpacingDto.only(start: 10, end: 0, top: 0, bottom: 0),
+        spacingUtils.directional.as(const EdgeInsetsDirectional.only(start: 10)).value,
+        const SpacingDto.only(top: 0, bottom: 0, start: 10, end: 0),
         reason: '8',
       );
 
       expect(
-        spacingUtils.directional
-            .as(
-              const EdgeInsetsDirectional.only(end: 10),
-            )
-            .value,
-        const SpacingDto.only(end: 10, start: 0, top: 0, bottom: 0),
+        spacingUtils.directional.as(const EdgeInsetsDirectional.only(end: 10)).value,
+        const SpacingDto.only(top: 0, bottom: 0, start: 0, end: 10),
         reason: '9',
       );
 
       expect(
-        spacingUtils.directional
-            .as(
-              const EdgeInsetsDirectional.only(top: 10),
-            )
-            .value,
+        spacingUtils.directional.as(const EdgeInsetsDirectional.only(top: 10)).value,
         const SpacingDto.only(top: 10, bottom: 0, start: 0, end: 0),
         reason: '10',
       );
 
       expect(
-        spacingUtils.directional
-            .as(
-              const EdgeInsetsDirectional.only(bottom: 10),
-            )
-            .value,
-        const SpacingDto.only(bottom: 10, top: 0, start: 0, end: 0),
+        spacingUtils.directional.as(const EdgeInsetsDirectional.only(bottom: 10)).value,
+        const SpacingDto.only(top: 0, bottom: 10, start: 0, end: 0),
         reason: '11',
       );
 
       expect(
-        spacingUtils.directional
-            .as(
-              const EdgeInsetsDirectional.only(start: 10, end: 20),
-            )
-            .value,
-        const SpacingDto.only(start: 10, end: 20, top: 0, bottom: 0),
+        spacingUtils.directional.as(const EdgeInsetsDirectional.only(start: 10, end: 20)).value,
+        const SpacingDto.only(top: 0, bottom: 0, start: 10, end: 20),
         reason: '12',
       );
 
       expect(
         spacingUtils.directional
             .as(
-              const EdgeInsetsDirectional.only(start: 10, end: 20, top: 30),
+              const EdgeInsetsDirectional.only(start: 10, top: 30, end: 20),
             )
             .value,
-        const SpacingDto.only(start: 10, end: 20, top: 30, bottom: 0),
+        const SpacingDto.only(top: 30, bottom: 0, start: 10, end: 20),
         reason: '13',
       );
 
@@ -185,13 +137,13 @@ void main() {
             .as(
               const EdgeInsetsDirectional.only(
                 start: 10,
-                end: 20,
                 top: 30,
+                end: 20,
                 bottom: 40,
               ),
             )
             .value,
-        const SpacingDto.only(start: 10, end: 20, top: 30, bottom: 40),
+        const SpacingDto.only(top: 30, bottom: 40, start: 10, end: 20),
         reason: '14',
       );
     });
@@ -219,10 +171,7 @@ void main() {
     });
 
     test('spacingUtils.top', () {
-      expect(
-        spacingUtils.top(10).value,
-        const SpacingDto.only(top: 10),
-      );
+      expect(spacingUtils.top(10).value, const SpacingDto.only(top: 10));
     });
 
     test('spacingUtils.bottom', () {
@@ -233,17 +182,11 @@ void main() {
     });
 
     test('spacingUtils.left', () {
-      expect(
-        spacingUtils.left(10).value,
-        const SpacingDto.only(left: 10),
-      );
+      expect(spacingUtils.left(10).value, const SpacingDto.only(left: 10));
     });
 
     test('spacingUtils.right', () {
-      expect(
-        spacingUtils.right(10).value,
-        const SpacingDto.only(right: 10),
-      );
+      expect(spacingUtils.right(10).value, const SpacingDto.only(right: 10));
     });
 
     test('spacingUtils.directional.start', () {
@@ -298,15 +241,13 @@ void main() {
       );
 
       expect(
-        spacingUtils.directional.only(start: 10, end: 20, top: 30).value,
-        const SpacingDto.only(start: 10, end: 20, top: 30),
+        spacingUtils.directional.only(top: 30, start: 10, end: 20).value,
+        const SpacingDto.only(top: 30, start: 10, end: 20),
       );
 
       expect(
-        spacingUtils.directional
-            .only(start: 10, end: 20, top: 30, bottom: 40)
-            .value,
-        const SpacingDto.only(start: 10, end: 20, top: 30, bottom: 40),
+        spacingUtils.directional.only(top: 30, bottom: 40, start: 10, end: 20).value,
+        const SpacingDto.only(top: 30, bottom: 40, start: 10, end: 20),
       );
     });
   });

@@ -16,25 +16,18 @@ void main() {
 
     test('checks Map equality with simple types', () {
       expect(deepEquality.equals({'key': 'value'}, {'key': 'value'}), isTrue);
-      expect(
-          deepEquality.equals({'key1': 'value'}, {'key2': 'value'}), isFalse);
-      expect(
-          deepEquality.equals({'key': 'value1'}, {'key': 'value2'}), isFalse);
+      expect(deepEquality.equals({'key1': 'value'}, {'key2': 'value'}), isFalse);
+      expect(deepEquality.equals({'key': 'value1'}, {'key': 'value2'}), isFalse);
       expect(deepEquality.equals({}, {}), isTrue);
-      expect(
-          deepEquality
-              .equals({'key': 'value'}, {'key': 'value', 'extra': 'value'}),
-          isFalse);
+      expect(deepEquality.equals({'key': 'value'}, {'key': 'value', 'extra': 'value'}), isFalse);
     });
 
     test('checks Set equality with simple types', () {
       expect(deepEquality.equals({1, 2, 3}, {1, 2, 3}), isTrue);
       expect(deepEquality.equals({1, 2}, {1, 2, 3}), isFalse);
-      expect(deepEquality.equals({3, 2, 1}, {1, 2, 3}),
-          isTrue); // Order should not matter in sets
+      expect(deepEquality.equals({3, 2, 1}, {1, 2, 3}), isTrue); // Order should not matter in sets
       // ignore: equal_elements_in_set
-      expect(deepEquality.equals({1}, {1, 1, 1}),
-          isTrue); // Duplicate elements in a set
+      expect(deepEquality.equals({1}, {1, 1, 1}), isTrue); // Duplicate elements in a set
     });
 
     test('checks Iterable equality with simple types', () {
@@ -46,50 +39,70 @@ void main() {
 
     test('checks nested collection equality', () {
       expect(
-          deepEquality.equals([
+        deepEquality.equals(
+          [
             {'key': 'value'},
-            {'key2': 'value2'}
-          ], [
+            {'key2': 'value2'},
+          ],
+          [
             {'key': 'value'},
-            {'key2': 'value2'}
-          ]),
-          isTrue);
+            {'key2': 'value2'},
+          ],
+        ),
+        isTrue,
+      );
       expect(
-          deepEquality.equals({
-            'outer': {'inner': 'value'}
-          }, {
-            'outer': {'inner': 'value'}
-          }),
-          isTrue);
+        deepEquality.equals(
+          {
+            'outer': {'inner': 'value'},
+          },
+          {
+            'outer': {'inner': 'value'},
+          },
+        ),
+        isTrue,
+      );
       expect(
-          deepEquality.equals({
-            'set': {1, 2, 3}
-          }, {
-            'set': {3, 2, 1}
-          }),
-          isTrue);
+        deepEquality.equals(
+          {
+            'set': {1, 2, 3},
+          },
+          {
+            'set': {3, 2, 1},
+          },
+        ),
+        isTrue,
+      );
       expect(
-          deepEquality.equals([
+        deepEquality.equals(
+          [
             1,
             [
               2,
-              [3, 4]
-            ]
-          ], [
+              [3, 4],
+            ],
+          ],
+          [
             1,
             [
               2,
-              [3, 4]
-            ]
-          ]),
-          isTrue);
+              [3, 4],
+            ],
+          ],
+        ),
+        isTrue,
+      );
       expect(
-          deepEquality.equals({
-            'set': {1, 2, 3}
-          }, {
-            'set': {1, 2}
-          }),
-          isFalse);
+        deepEquality.equals(
+          {
+            'set': {1, 2, 3},
+          },
+          {
+            'set': {1, 2},
+          },
+        ),
+        isFalse,
+      );
     });
 
     test('checks custom object equality', () {
@@ -124,16 +137,14 @@ void main() {
       expect(deepEquality.hash(map1), deepEquality.hash(map2));
     });
 
-    test(
-        'nested collections with identical contents produce the same hash code',
-        () {
+    test('nested collections with identical contents produce the same hash code', () {
       var nestedList1 = [
         [1, 2],
-        {'a': 1}
+        {'a': 1},
       ];
       var nestedList2 = [
         [1, 2],
-        {'a': 1}
+        {'a': 1},
       ];
       expect(deepEquality.hash(nestedList1), deepEquality.hash(nestedList2));
     });
@@ -144,8 +155,7 @@ void main() {
       expect(deepEquality.hash(iterable1), deepEquality.hash(iterable2));
     });
 
-    test('custom objects with the same properties produce the same hash code',
-        () {
+    test('custom objects with the same properties produce the same hash code', () {
       var object1 = CustomObject(id: 1, value: 'test');
       var object2 = CustomObject(id: 1, value: 'test');
       expect(deepEquality.hash(object1), deepEquality.hash(object2));
@@ -158,15 +168,12 @@ void main() {
       expect(deepEquality.hash(list), isNot(deepEquality.hash(set)));
     });
 
-    test(
-        'collections with null values handled properly in hash code computation',
-        () {
+    test('collections with null values handled properly in hash code computation', () {
       var listWithNull = [null, 2, 3];
       var listWithoutNull = [1, 2, 3];
       // Should not throw an exception and should not be equal
       expect(() => deepEquality.hash(listWithNull), returnsNormally);
-      expect(deepEquality.hash(listWithNull),
-          isNot(deepEquality.hash(listWithoutNull)));
+      expect(deepEquality.hash(listWithNull), isNot(deepEquality.hash(listWithoutNull)));
     });
 
     test('hash code computation is efficient for large collections', () {
@@ -174,8 +181,7 @@ void main() {
       var timeStart = DateTime.now();
       deepEquality.hash(largeList);
       var timeEnd = DateTime.now();
-      expect(
-          timeEnd.difference(timeStart), lessThan(const Duration(seconds: 1)));
+      expect(timeEnd.difference(timeStart), lessThan(const Duration(seconds: 1)));
     });
 
     test('checks nested custom object equality', () {
@@ -188,9 +194,7 @@ void main() {
           AnotherCustomObject(
             id: 4,
             name: 'Child2',
-            children: [
-              AnotherCustomObject(id: 5, name: 'Child3', children: [])
-            ],
+            children: [AnotherCustomObject(id: 5, name: 'Child3', children: [])],
           ),
         ],
       );
@@ -204,9 +208,7 @@ void main() {
           AnotherCustomObject(
             id: 4,
             name: 'Child2',
-            children: [
-              AnotherCustomObject(id: 5, name: 'Child3', children: [])
-            ],
+            children: [AnotherCustomObject(id: 5, name: 'Child3', children: [])],
           ),
         ],
       );
@@ -220,9 +222,7 @@ void main() {
           AnotherCustomObject(
             id: 4,
             name: 'ChildX',
-            children: [
-              AnotherCustomObject(id: 5, name: 'Child3', children: [])
-            ],
+            children: [AnotherCustomObject(id: 5, name: 'Child3', children: [])],
           ),
         ],
       );
@@ -238,7 +238,7 @@ class CustomObject {
   final int id;
   final String value;
 
-  CustomObject({required this.id, required this.value});
+  const CustomObject({required this.id, required this.value});
 
   @override
   bool operator ==(Object other) {
@@ -256,8 +256,7 @@ class AnotherCustomObject {
   final String name;
   final List<AnotherCustomObject> children;
 
-  AnotherCustomObject(
-      {required this.id, required this.name, this.children = const []});
+  const AnotherCustomObject({required this.id, required this.name, this.children = const []});
 
   @override
   bool operator ==(Object other) =>
@@ -272,6 +271,5 @@ class AnotherCustomObject {
   int get hashCode =>
       id.hashCode ^
       name.hashCode ^
-      children.fold(
-          0, (previousValue, element) => previousValue ^ element.hashCode);
+      children.fold(0, (previousValue, element) => previousValue ^ element.hashCode);
 }

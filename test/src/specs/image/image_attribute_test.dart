@@ -50,15 +50,15 @@ void main() {
 
     test('props returns correct list of properties', () {
       const attribute = ImageSpecAttribute(
+        centerSlice: Rect.zero,
         width: 100,
         height: 200,
         color: ColorDto(Colors.black),
         repeat: ImageRepeat.repeat,
         fit: BoxFit.cover,
         alignment: Alignment.bottomCenter,
-        centerSlice: Rect.zero,
-        filterQuality: FilterQuality.low,
         colorBlendMode: BlendMode.srcOver,
+        filterQuality: FilterQuality.low,
       );
       final props = attribute.props;
 

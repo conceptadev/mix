@@ -20,8 +20,8 @@ class StyledContainerExample extends StatelessWidget {
 
     final borderAttribute = box.border.all(
       color: Colors.red,
-      width: 1,
       style: BorderStyle.solid,
+      width: 1,
     );
 
     final radiusAttribute = box.borderRadius(10);
@@ -38,10 +38,7 @@ class StyledContainerExample extends StatelessWidget {
         radiusAttribute,
         colorAttribute,
       ),
-      child: const SizedBox(
-        width: 100,
-        height: 100,
-      ),
+      child: const SizedBox(width: 100, height: 100),
     );
   }
 }
@@ -52,23 +49,20 @@ class ContainerExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(10),
-      margin: const EdgeInsets.all(15),
       alignment: Alignment.center,
-      clipBehavior: Clip.hardEdge,
+      padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
+        color: Colors.red,
         border: Border.all(
           color: Colors.red,
           width: 1,
           style: BorderStyle.solid,
         ),
         borderRadius: BorderRadius.circular(10),
-        color: Colors.red,
       ),
-      child: const SizedBox(
-        width: 100,
-        height: 100,
-      ),
+      margin: const EdgeInsets.all(15),
+      clipBehavior: Clip.hardEdge,
+      child: const SizedBox(width: 100, height: 100),
     );
   }
 }
@@ -84,6 +78,7 @@ void main() {
               await tester.pumpWidget(widget);
             }
             stopwatch.stop();
+
             return stopwatch.elapsedMilliseconds;
           }) ??
           0;
@@ -103,8 +98,11 @@ void main() {
     // print('StyledContainer: $elapsedStyledContainerTime ms');
     // print('Container: $elapsedContainerTime ms');
     // StyledContainer shoudl not b slower than 0.01 ms
-    expect(elapsedStyledContainerTime, lessThan(elapsedContainerTime + 0.02),
-        reason: 'StyledContainer is too slow');
+    expect(
+      elapsedStyledContainerTime,
+      lessThan(elapsedContainerTime + 0.02),
+      reason: 'StyledContainer is too slow',
+    );
   });
 
   // test perfromance for Style.create
@@ -119,8 +117,8 @@ void main() {
         box.clipBehavior.hardEdge(),
         box.border.all(
           color: Colors.red,
-          width: 1,
           style: BorderStyle.solid,
+          width: 1,
         ),
         box.borderRadius(10),
         box.color(Colors.red),
@@ -146,8 +144,8 @@ void main() {
           box.clipBehavior.hardEdge(),
           box.border.all(
             color: Colors.red,
-            width: 1,
             style: BorderStyle.solid,
+            width: 1,
           ),
           box.borderRadius(10),
           box.color(Colors.red),
@@ -203,10 +201,7 @@ class StyleWidgetExpensiveAttributge extends StatelessWidget {
 
     return Box(
       style: mergedStyle,
-      child: const SizedBox(
-        width: 100,
-        height: 100,
-      ),
+      child: const SizedBox(width: 100, height: 100),
     );
   }
 }

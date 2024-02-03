@@ -64,6 +64,7 @@ void main() {
       expect(resolved.maxWidth, double.infinity);
       expect(resolved.minHeight, 100);
       expect(resolved.maxHeight, double.infinity);
+
       return const Placeholder();
     });
     test('Equality holds when all properties are the same', () {

@@ -57,14 +57,12 @@ void main() {
         ),
       );
 
-      final opacityWidget =
-          tester.element(find.byType(Opacity)).widget as Opacity;
+      final opacityWidget = tester.element(find.byType(Opacity)).widget as Opacity;
 
       expect(opacityWidget.opacity, 0.5);
     });
 
-    testWidgets('can inherit style from the parent StyledWidget',
-        (WidgetTester tester) async {
+    testWidgets('can inherit style from the parent StyledWidget', (WidgetTester tester) async {
       await tester.pumpWidget(
         Box(
           style: Style(

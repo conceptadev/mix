@@ -56,9 +56,9 @@ void main() {
       const gradientDto = LinearGradientDto(
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
+        tileMode: TileMode.clamp,
         colors: [ColorDto(Colors.red), ColorDto(Colors.blue)],
         stops: [0.0, 1.0],
-        tileMode: TileMode.clamp,
       );
 
       expect(gradientDto.begin, Alignment.topLeft);
@@ -68,8 +68,7 @@ void main() {
       expect(gradientDto.tileMode, TileMode.clamp);
     });
 
-    test('from method correctly converts LinearGradient to LinearGradientDto',
-        () {
+    test('from method correctly converts LinearGradient to LinearGradientDto', () {
       const linearGradient = LinearGradient(
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
@@ -162,9 +161,9 @@ void main() {
       const gradientDto = RadialGradientDto(
         center: Alignment.center,
         radius: 0.5,
+        tileMode: TileMode.clamp,
         colors: [ColorDto(Colors.red), ColorDto(Colors.blue)],
         stops: [0.0, 1.0],
-        tileMode: TileMode.clamp,
       );
 
       expect(gradientDto.center, Alignment.center);
@@ -174,8 +173,7 @@ void main() {
       expect(gradientDto.tileMode, TileMode.clamp);
     });
 
-    test('from method correctly converts RadialGradient to RadialGradientDto',
-        () {
+    test('from method correctly converts RadialGradient to RadialGradientDto', () {
       const radialGradient = RadialGradient(
         center: Alignment.center,
         radius: 0.5,
@@ -269,9 +267,9 @@ void main() {
         center: Alignment.center,
         startAngle: 0.0,
         endAngle: 1.0,
+        tileMode: TileMode.clamp,
         colors: [ColorDto(Colors.red), ColorDto(Colors.blue)],
         stops: [0.0, 1.0],
-        tileMode: TileMode.clamp,
       );
       expect(gradientDto.center, Alignment.center);
       expect(gradientDto.startAngle, 0.0);
@@ -281,8 +279,7 @@ void main() {
       expect(gradientDto.tileMode, TileMode.clamp);
     });
 
-    test('from method correctly converts SweepGradient to SweepGradientDto',
-        () {
+    test('from method correctly converts SweepGradient to SweepGradientDto', () {
       const sweepGradient = SweepGradient(
         center: Alignment.center,
         startAngle: 0.0,

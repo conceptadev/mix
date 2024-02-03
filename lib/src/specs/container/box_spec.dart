@@ -45,8 +45,7 @@ class BoxSpec extends Spec<BoxSpec> {
         clipBehavior = null;
 
   static BoxSpec of(MixData mix) {
-    return mix.attributeOf<BoxSpecAttribute>()?.resolve(mix) ??
-        const BoxSpec.empty();
+    return mix.attributeOf<BoxSpecAttribute>()?.resolve(mix) ?? const BoxSpec.empty();
   }
 
   @override

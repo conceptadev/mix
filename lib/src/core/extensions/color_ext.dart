@@ -7,6 +7,7 @@ import '../../attributes/color/color_dto.dart';
 extension ColorExt on Color {
   Color mix(Color toColor, [int amount = 50]) {
     final p = RangeError.checkValueInInterval(amount, 0, 100, 'amount') / 100;
+
     return Color.fromARGB(
       ((toColor.alpha - alpha) * p + alpha).round(),
       ((toColor.red - red) * p + red).round(),
@@ -19,11 +20,13 @@ extension ColorExt on Color {
     final p = RangeError.checkValueInInterval(amount, 0, 100, 'amount') / 100;
     final hsl = HSLColor.fromColor(this);
     final lightness = _clamp(hsl.lightness + p);
+
     return hsl.withLightness(lightness).toColor();
   }
 
   Color brighten([int amount = 10]) {
     final p = RangeError.checkValueInInterval(amount, 0, 100, 'amount') / 100;
+
     return Color.fromARGB(
       alpha,
       math.max(0, math.min(255, red - (255 * -p).round())),
@@ -44,6 +47,7 @@ extension ColorExt on Color {
     final p = RangeError.checkValueInInterval(amount, 0, 100, 'amount') / 100;
     final hsl = HSLColor.fromColor(this);
     final lightness = _clamp(hsl.lightness - p);
+
     return hsl.withLightness(lightness).toColor();
   }
 
@@ -61,6 +65,7 @@ extension ColorExt on Color {
     final p = RangeError.checkValueInInterval(amount, 0, 100, 'amount') / 100;
     final hsl = HSLColor.fromColor(this);
     final saturation = _clamp(hsl.saturation - p);
+
     return hsl.withSaturation(saturation).toColor();
   }
 
@@ -68,6 +73,7 @@ extension ColorExt on Color {
     final p = RangeError.checkValueInInterval(amount, 0, 100, 'amount') / 100;
     final hsl = HSLColor.fromColor(this);
     final saturation = _clamp(hsl.saturation + p);
+
     return hsl.withSaturation(saturation).toColor();
   }
 
@@ -76,6 +82,7 @@ extension ColorExt on Color {
   Color complement() {
     final hsl = HSLColor.fromColor(this);
     final hue = (hsl.hue + 180) % 360;
+
     return hsl.withHue(hue).toColor();
   }
 

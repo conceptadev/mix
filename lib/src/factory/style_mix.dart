@@ -188,8 +188,7 @@ class Style with Comparable {
   ///
   /// Note:
   /// The attributes from the selected variant (`attr4` and `attr5`) are not applied to the `Style` instance until the `applyVariant` method is called.
-  SpreadFunctionParams<Variant, Style> get applyVariant =>
-      SpreadFunctionParams(applyVariants);
+  SpreadFunctionParams<Variant, Style> get applyVariant => SpreadFunctionParams(applyVariants);
 
   /// Allows to create a new `Style` by using this mix as a base and adding additional attributes.
   ///
@@ -199,8 +198,7 @@ class Style with Comparable {
   /// final style = Style(attr1, attr2);
   /// final updatedStyle = style.mix(attr3, attr4);
   /// ```
-  SpreadFunctionParams<Attribute, Style> get mix =>
-      SpreadFunctionParams(_addAttributes);
+  SpreadFunctionParams<Attribute, Style> get mix => SpreadFunctionParams(_addAttributes);
 
   /// Returns a new `Style` with the provided [styles] and [variants] merged with this mix's values.
   ///
@@ -288,8 +286,7 @@ class Style with Comparable {
     }
 
     /// Create a Style from the matched variants.
-    final styleToApply =
-        Style.combine(matchedVariants.map((e) => e.value).toList());
+    final styleToApply = Style.combine(matchedVariants.map((e) => e.value).toList());
 
     /// Merge the new Style created with the existing Style, excluding the matched variants.
     final mergedStyle = updatedStyle.merge(styleToApply);

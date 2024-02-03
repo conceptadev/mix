@@ -15,8 +15,7 @@ class IconSpec extends Spec<IconSpec> {
         size = null;
 
   static IconSpec of(MixData mix) {
-    return mix.attributeOf<IconSpecAttribute>()?.resolve(mix) ??
-        const IconSpec.empty();
+    return mix.attributeOf<IconSpecAttribute>()?.resolve(mix) ?? const IconSpec.empty();
   }
 
   @override

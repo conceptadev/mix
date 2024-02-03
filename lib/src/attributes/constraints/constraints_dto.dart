@@ -3,8 +3,8 @@ import 'package:flutter/rendering.dart';
 import '../../core/attribute.dart';
 import '../../factory/mix_provider_data.dart';
 
-abstract class ConstraintsDto<Self extends ConstraintsDto<Self, Value>,
-    Value extends Constraints> extends Dto<Value> with Mergeable<Self> {
+abstract class ConstraintsDto<Self extends ConstraintsDto<Self, Value>, Value extends Constraints>
+    extends Dto<Value> with Mergeable<Self> {
   const ConstraintsDto();
 }
 
@@ -18,8 +18,7 @@ abstract class ConstraintsDto<Self extends ConstraintsDto<Self, Value>,
 /// - [ConstraintsDto], which is the base class for this class.
 ///
 /// {@category DTO}
-class BoxConstraintsDto
-    extends ConstraintsDto<BoxConstraintsDto, BoxConstraints> {
+class BoxConstraintsDto extends ConstraintsDto<BoxConstraintsDto, BoxConstraints> {
   final double? minWidth;
   final double? maxWidth;
   final double? minHeight;

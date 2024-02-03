@@ -18,8 +18,7 @@ import '../color/color_dto.dart';
 ///
 /// {@category DTO}
 @immutable
-abstract class GradientDto<T extends Gradient> extends Dto<T>
-    with Mergeable<GradientDto<T>> {
+abstract class GradientDto<T extends Gradient> extends Dto<T> with Mergeable<GradientDto<T>> {
   final List<double>? stops;
 
   final List<ColorDto>? colors;
@@ -335,6 +334,5 @@ class SweepGradientDto extends GradientDto<SweepGradient> {
   }
 
   @override
-  List<Object?> get props =>
-      [center, startAngle, endAngle, colors, stops, tileMode, transform];
+  List<Object?> get props => [center, startAngle, endAngle, colors, stops, tileMode, transform];
 }

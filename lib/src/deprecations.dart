@@ -1,6 +1,23 @@
 // ignore_for_file: avoid-dynamic
 
-import '../mix.dart';
+import '../src/attributes/spacing/spacing_util.dart';
+import '../src/factory/mix_provider_data.dart';
+import '../src/specs/container/box_util.dart';
+import '../src/specs/flex/flex_util.dart';
+import '../src/specs/icon/icon_util.dart';
+import '../src/specs/icon/icon_widget.dart';
+import '../src/specs/stack/stack_util.dart';
+import '../src/specs/text/text_util.dart';
+import '../src/specs/text/text_widget.dart';
+import '../src/utils/context_variant_util/on_breakpoint_util.dart';
+import '../src/utils/context_variant_util/on_brightness_util.dart';
+import '../src/utils/context_variant_util/on_helper_util.dart';
+import '../src/utils/context_variant_util/on_orientation_util.dart';
+import '../src/utils/helper_util.dart';
+import '../src/variants/variant.dart';
+import '../src/widgets/pressable/widget_state_util.dart';
+import 'core/attribute.dart';
+import 'factory/style_mix.dart';
 
 const kShortAliasDeprecation =
     'Short aliases will be deprecated, you can create your own. Example: final p = padding;';
@@ -18,12 +35,10 @@ extension DeprecatedMixExtension<T extends Attribute> on Style {
   @Deprecated(
     'Use merge() instead. You might have to turn into a Mix first. firstMixFactory.merge(secondMix)',
   )
-  Style addAttributes(Iterable<Attribute> attributes) =>
-      merge(Style.create(attributes));
+  Style addAttributes(Iterable<Attribute> attributes) => merge(Style.create(attributes));
 
   @Deprecated('Use merge()  instead')
-  SpreadFunctionParams<Style, Style> get apply =>
-      const SpreadFunctionParams(Style.combine);
+  SpreadFunctionParams<Style, Style> get apply => const SpreadFunctionParams(Style.combine);
 
   @Deprecated('Use applyVariant(value) instead')
   Style withVariant(Variant value) => applyVariant(value);
@@ -53,8 +68,7 @@ extension DeprecatedMixExtension<T extends Attribute> on Style {
 @Deprecated('Use MixData instead.')
 typedef MixContext = MixData;
 
-extension WithSpaceTokensExt<T extends StyleAttribute>
-    on SpacingSideUtility<T> {
+extension WithSpaceTokensExt<T extends StyleAttribute> on SpacingSideUtility<T> {
   @Deprecated('Use xsmall instead')
   T get xs => this.xsmall();
   @Deprecated('Use small instead')

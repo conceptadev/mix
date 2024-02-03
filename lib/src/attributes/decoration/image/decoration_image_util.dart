@@ -4,8 +4,7 @@ import '../../../core/attribute.dart';
 import '../../scalars/scalar_util.dart';
 import 'decoration_image_dto.dart';
 
-class DecorationImageUtility<T extends StyleAttribute>
-    extends MixUtility<T, DecorationImageDto> {
+class DecorationImageUtility<T extends StyleAttribute> extends MixUtility<T, DecorationImageDto> {
   const DecorationImageUtility(super.builder);
 
   T _only({

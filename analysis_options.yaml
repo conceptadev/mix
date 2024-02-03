@@ -5,6 +5,7 @@ include: package:flutter_lints/flutter.yaml
 # Uncomment to specify additional rules.
 linter:
   rules:
+    # TODO: Turn this to true when all public apis are documented 
     public_member_api_docs: false
     prefer_relative_imports: true
 
@@ -12,27 +13,33 @@ analyzer:
   exclude: 
     - "**/*.g.dart"
     - "**/*.freezed.dart"
+    - "tool/**"
+
 
 dart_code_metrics:
+  formatter:
+    line-length: 100
+    cascading-widget-extensions: true
   extends:
     - package:dart_code_metrics_presets/recommended.yaml
-  metrics-exclude:
-    - test/**
-  rules-exclude:
-    - "test/**"
+    - package:dart_code_metrics_presets/metrics_recommended.yaml
+  # metrics-exclude:
+  #   - test/**
+  # rules-exclude:
+  #   - "test/**"
   rules:
+    newline-before-return: true
+    avoid-importing-entrypoint-exports: true
     prefer-match-file-name: false
+    prefer-correct-callback-field-name: false
     # Remove later when cleaning up
     prefer-single-widget-per-file: false
     # End of remove later
     match-getter-setter-field-names: false
     prefer-dedicated-media-query-methods: false
     avoid-shadowing: false
-    
     enum-constants-ordering: false
-    
     avoid-unsafe-collection-methods: false
-    
     prefer-prefixed-global-constants: false
     avoid-returning-widgets: false
     arguments-ordering:

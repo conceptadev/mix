@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../../../mix.dart';
+import '../../core/attribute.dart';
+import '../../factory/mix_provider_data.dart';
+import 'border_dto.dart';
+import 'border_radius_dto.dart';
 
 @immutable
 abstract class ShapeBorderDto<Value extends ShapeBorder> extends Dto<Value>
@@ -51,8 +54,7 @@ abstract class ShapeBorderDto<Value extends ShapeBorder> extends Dto<Value>
 }
 
 @immutable
-abstract class OutlinedBorderDto<Value extends OutlinedBorder>
-    extends ShapeBorderDto<Value> {
+abstract class OutlinedBorderDto<Value extends OutlinedBorder> extends ShapeBorderDto<Value> {
   final BorderSideDto? side;
 
   const OutlinedBorderDto({this.side});
@@ -82,8 +84,7 @@ abstract class OutlinedBorderDto<Value extends OutlinedBorder>
 }
 
 @immutable
-class RoundedRectangleBorderDto
-    extends OutlinedBorderDto<RoundedRectangleBorder> {
+class RoundedRectangleBorderDto extends OutlinedBorderDto<RoundedRectangleBorder> {
   final BorderRadiusGeometryDto? borderRadius;
 
   const RoundedRectangleBorderDto({this.borderRadius, super.side});
@@ -100,8 +101,7 @@ class RoundedRectangleBorderDto
     if (other == null) return this;
 
     return RoundedRectangleBorderDto(
-      borderRadius:
-          borderRadius?.merge(other.borderRadius) ?? other.borderRadius,
+      borderRadius: borderRadius?.merge(other.borderRadius) ?? other.borderRadius,
       side: side?.merge(other.side) ?? other.side,
     );
   }
@@ -154,8 +154,7 @@ class CircleBorderDto extends OutlinedBorderDto<CircleBorder> {
 }
 
 @immutable
-class BeveledRectangleBorderDto
-    extends OutlinedBorderDto<BeveledRectangleBorder> {
+class BeveledRectangleBorderDto extends OutlinedBorderDto<BeveledRectangleBorder> {
   final BorderRadiusGeometryDto? borderRadius;
 
   const BeveledRectangleBorderDto({this.borderRadius, super.side});
@@ -172,8 +171,7 @@ class BeveledRectangleBorderDto
     if (other == null) return this;
 
     return BeveledRectangleBorderDto(
-      borderRadius:
-          borderRadius?.merge(other.borderRadius) ?? other.borderRadius,
+      borderRadius: borderRadius?.merge(other.borderRadius) ?? other.borderRadius,
       side: side?.merge(other.side) ?? other.side,
     );
   }
@@ -190,8 +188,7 @@ class BeveledRectangleBorderDto
   get props => [borderRadius, side];
 }
 
-class ContinuousRectangleBorderDto
-    extends OutlinedBorderDto<ContinuousRectangleBorder> {
+class ContinuousRectangleBorderDto extends OutlinedBorderDto<ContinuousRectangleBorder> {
   final BorderRadiusGeometryDto? borderRadius;
 
   const ContinuousRectangleBorderDto({this.borderRadius, super.side});
@@ -208,8 +205,7 @@ class ContinuousRectangleBorderDto
     if (other == null) return this;
 
     return ContinuousRectangleBorderDto(
-      borderRadius:
-          borderRadius?.merge(other.borderRadius) ?? other.borderRadius,
+      borderRadius: borderRadius?.merge(other.borderRadius) ?? other.borderRadius,
       side: side?.merge(other.side) ?? other.side,
     );
   }

@@ -32,25 +32,16 @@ void main() {
       final instance2 = DeepNestedClass(deepNestedMap, deepNestedList);
       final instance3 = DeepNestedClass(
         {
-          'key1': {
-            'innerKey1': 1,
-            'innerKey2': 999,
-          },
+          'key1': {'innerKey1': 1, 'innerKey2': 999},
         },
         [
           [
             ['value1', 'value2'],
-            [
-              'value3',
-              'value4',
-            ],
+            ['value3', 'value4'],
           ],
           [
             ['value5', 'value6'],
-            [
-              'value7',
-              'value8',
-            ],
+            ['value7', 'value8'],
           ],
         ],
       );
@@ -65,25 +56,16 @@ void main() {
       final instance2 = DeepNestedClass(deepNestedMap, deepNestedList);
       final instance3 = DeepNestedClass(
         {
-          'key1': {
-            'innerKey1': 1,
-            'innerKey2': 999,
-          },
+          'key1': {'innerKey1': 1, 'innerKey2': 999},
         },
         [
           [
             ['value1', 'value2'],
-            [
-              'value3',
-              'value4',
-            ],
+            ['value3', 'value4'],
           ],
           [
             ['value5', 'value6'],
-            [
-              'value7',
-              'value8',
-            ],
+            ['value7', 'value8'],
           ],
         ],
       );
@@ -126,14 +108,8 @@ class DeepNestedClass with Comparable {
 }
 
 Map<String, Map<String, int>> deepNestedMap = {
-  'key1': {
-    'innerKey1': 1,
-    'innerKey2': 2,
-  },
-  'key2': {
-    'innerKey3': 3,
-    'innerKey4': 4,
-  },
+  'key1': {'innerKey1': 1, 'innerKey2': 2},
+  'key2': {'innerKey3': 3, 'innerKey4': 4},
 };
 
 List<List<List<String>>> deepNestedList = [

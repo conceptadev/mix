@@ -27,8 +27,7 @@ import 'border_dto.dart';
 ///
 /// See also:
 /// * [BorderSideDto], which is a data transfer object for [BorderSide].
-class BorderSideUtility<T extends StyleAttribute>
-    extends MixUtility<T, BorderSideDto> {
+class BorderSideUtility<T extends StyleAttribute> extends MixUtility<T, BorderSideDto> {
   const BorderSideUtility(super.builder);
 
   T _only({
@@ -51,8 +50,7 @@ class BorderSideUtility<T extends StyleAttribute>
   ColorUtility<T> get color => ColorUtility((color) => _only(color: color));
 
   /// Returns a [BorderStyleUtility] to manipulate [BorderStyle] of the [BorderSideDto]
-  BorderStyleUtility<T> get style =>
-      BorderStyleUtility((style) => _only(style: style));
+  BorderStyleUtility<T> get style => BorderStyleUtility((style) => _only(style: style));
 
   T as(BorderSide side) => builder(BorderSideDto.from(side));
 
@@ -82,8 +80,7 @@ class BorderSideUtility<T extends StyleAttribute>
   }
 }
 
-class BorderUtility<T extends StyleAttribute>
-    extends DtoUtility<T, BoxBorderDto, BoxBorder> {
+class BorderUtility<T extends StyleAttribute> extends DtoUtility<T, BoxBorderDto, BoxBorder> {
   /// Constructor for creating an instance of the class.
   const BorderUtility(super.builder) : super(valueToDto: BoxBorderDto.from);
 
@@ -191,8 +188,7 @@ class BorderUtility<T extends StyleAttribute>
 class BorderDirectionalUtility<T extends StyleAttribute>
     extends DtoUtility<T, BoxBorderDto, BoxBorder> {
   /// Constructor for creating an instance of the class.
-  const BorderDirectionalUtility(super.builder)
-      : super(valueToDto: BoxBorderDto.from);
+  const BorderDirectionalUtility(super.builder) : super(valueToDto: BoxBorderDto.from);
 
   BoxBorderDto _symmetric({
     BorderSideDto? vertical,
@@ -237,8 +233,7 @@ class BorderDirectionalUtility<T extends StyleAttribute>
   }
 
   /// Method to set the border on the start side in a directional context.
-  BorderSideUtility<T> get start =>
-      BorderSideUtility((side) => _only(start: side));
+  BorderSideUtility<T> get start => BorderSideUtility((side) => _only(start: side));
 
   /// Method to set the border on the end side in a directional context.
   BorderSideUtility<T> get end => BorderSideUtility((side) => _only(end: side));

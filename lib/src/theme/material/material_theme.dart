@@ -24,21 +24,16 @@ final materialMixTheme = MixThemeData(
     _md.colorScheme.onSecondary: ColorResolver((c) => c.color.onSecondary),
     _md.colorScheme.onTertiary: ColorResolver((c) => c.color.onTertiary),
     _md.colorScheme.onSurface: ColorResolver((c) => c.color.onSurface),
-    _md.colorScheme.onBackground:
-        ColorResolver((context) => context.color.onBackground),
+    _md.colorScheme.onBackground: ColorResolver((context) => context.color.onBackground),
     _md.colorScheme.onError: ColorResolver((context) => context.color.onError),
   },
   textStyles: {
     _md.textTheme.displayLarge: TextStyleResolver((c) => c.text.displayLarge!),
-    _md.textTheme.displayMedium:
-        TextStyleResolver((c) => c.text.displayMedium!),
+    _md.textTheme.displayMedium: TextStyleResolver((c) => c.text.displayMedium!),
     _md.textTheme.displaySmall: TextStyleResolver((c) => c.text.displaySmall!),
-    _md.textTheme.headlineLarge:
-        TextStyleResolver((c) => c.text.headlineLarge!),
-    _md.textTheme.headlineMedium:
-        TextStyleResolver((c) => c.text.headlineMedium!),
-    _md.textTheme.headlineSmall:
-        TextStyleResolver((c) => c.text.headlineSmall!),
+    _md.textTheme.headlineLarge: TextStyleResolver((c) => c.text.headlineLarge!),
+    _md.textTheme.headlineMedium: TextStyleResolver((c) => c.text.headlineMedium!),
+    _md.textTheme.headlineSmall: TextStyleResolver((c) => c.text.headlineSmall!),
     _md.textTheme.titleLarge: TextStyleResolver((c) => c.text.titleLarge!),
     _md.textTheme.titleMedium: TextStyleResolver((c) => c.text.titleMedium!),
     _md.textTheme.titleSmall: TextStyleResolver((c) => c.text.titleSmall!),

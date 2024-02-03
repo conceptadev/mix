@@ -17,16 +17,12 @@ void main() {
         children: [
           Pressable(
             onPressed: () {},
-            child: Container(
-              key: firstKey,
-            ),
+            child: Container(key: firstKey),
           ),
           Pressable(
             onPressed: null,
             disabled: true,
-            child: Container(
-              key: secondKey,
-            ),
+            child: Container(key: secondKey),
           ),
         ],
       ));
@@ -45,8 +41,7 @@ void main() {
       expect(secondNotifier!.status, WidgetStatus.disabled);
     });
 
-    testWidgets('must be clickable when isDisabled is setted to false',
-        (tester) async {
+    testWidgets('must be clickable when isDisabled is setted to false', (tester) async {
       int counter = 0;
 
       await tester.pumpWidget(
@@ -68,8 +63,7 @@ void main() {
       expect(counter, 1);
     });
 
-    testWidgets('must be unclickable when isDisabled is setted to true',
-        (tester) async {
+    testWidgets('must be unclickable when isDisabled is setted to true', (tester) async {
       int counter = 0;
 
       await tester.pumpWidget(
@@ -93,17 +87,16 @@ void main() {
   });
 
   group('PressableBox', () {
-    testWidgets('must be clickable when isDisabled is setted to false',
-        (tester) async {
+    testWidgets('must be clickable when isDisabled is setted to false', (tester) async {
       int counter = 0;
 
       await tester.pumpWidget(
         PressableBox(
-          unpressDelay: Duration.zero,
-          animationDuration: Duration.zero,
           onPressed: () {
             counter++;
           },
+          unpressDelay: Duration.zero,
+          animationDuration: Duration.zero,
           disabled: false,
           child: Container(),
         ),
@@ -118,8 +111,7 @@ void main() {
       expect(counter, 1);
     });
 
-    testWidgets('must be unclickable when isDisabled is setted to true',
-        (tester) async {
+    testWidgets('must be unclickable when isDisabled is setted to true', (tester) async {
       int counter = 0;
 
       await tester.pumpWidget(

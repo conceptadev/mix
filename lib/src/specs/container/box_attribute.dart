@@ -59,8 +59,7 @@ class BoxSpecAttribute extends SpecAttribute<BoxSpecAttribute, BoxSpec> {
       constraints: constraints?.merge(other.constraints) ?? other.constraints,
       decoration: decoration?.merge(other.decoration) ?? other.decoration,
       foregroundDecoration:
-          foregroundDecoration?.merge(other.foregroundDecoration) ??
-              other.foregroundDecoration,
+          foregroundDecoration?.merge(other.foregroundDecoration) ?? other.foregroundDecoration,
       transform: other.transform ?? transform,
       clipBehavior: other.clipBehavior ?? clipBehavior,
       width: other.width ?? width,

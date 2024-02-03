@@ -100,8 +100,7 @@ extension StringExt on String {
   String get paramCase => words.lowercase.join(_paramCaseSeparator);
 
   /// Converts the string to title case.
-  String get titleCase =>
-      words.map((word) => word.capitalize).join(_spaceSeparator);
+  String get titleCase => words.map((word) => word.capitalize).join(_spaceSeparator);
 
   /// Converts the string to sentence case.
   String get sentenceCase {

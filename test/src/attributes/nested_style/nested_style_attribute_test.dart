@@ -34,8 +34,7 @@ void main() {
         expect(mergedAttribute, same(attribute));
       });
 
-      test('should return a new object with merged values if other is not null',
-          () {
+      test('should return a new object with merged values if other is not null', () {
         // Arrange
         final styleMix1 = Style(
           const MockDoubleScalarAttribute(1.0),

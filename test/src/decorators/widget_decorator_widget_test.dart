@@ -19,16 +19,10 @@ void main() {
   group('RenderWidgetDecorators', () {
     testWidgets('Renders decorators in the correct order', (tester) async {
       await tester.pumpMaterialApp(
-        RenderWidgetDecorators(
-          mix: mixData,
-          child: const Text('child'),
-        ),
+        RenderWidgetDecorators(mix: mixData, child: const Text('child')),
       );
 
-      expect(
-        find.byType(RenderWidgetDecorators),
-        findsOneWidget,
-      );
+      expect(find.byType(RenderWidgetDecorators), findsOneWidget);
 
       expect(
         find.descendant(
@@ -95,10 +89,7 @@ void main() {
         ),
       );
 
-      expect(
-        find.byType(RenderWidgetDecorators),
-        findsOneWidget,
-      );
+      expect(find.byType(RenderWidgetDecorators), findsOneWidget);
 
       expect(
         find.descendant(
@@ -154,18 +145,12 @@ void main() {
       await tester.pumpMaterialApp(
         RenderWidgetDecorators(
           mix: mixData,
-          orderOfDecorators: const [
-            ClipDecorator,
-            AspectRatioDecorator,
-          ],
+          orderOfDecorators: const [ClipDecorator, AspectRatioDecorator],
           child: const Text('child'),
         ),
       );
 
-      expect(
-        find.byType(RenderWidgetDecorators),
-        findsOneWidget,
-      );
+      expect(find.byType(RenderWidgetDecorators), findsOneWidget);
 
       expect(
         find.descendant(
@@ -227,91 +212,95 @@ void main() {
 
   group('Decorators attributes', () {
     testWidgets(
-        'should be applied to the first one. The children wont inherit even though the second one is set to inherit',
-        (tester) async {
-      const key = Key('box');
+      'should be applied to the first one. The children wont inherit even though the second one is set to inherit',
+      (tester) async {
+        const key = Key('box');
 
-      await tester.pumpWidget(
-        Box(
-          style: Style(
-            scale(2.0),
-            opacity(0.5),
-            visibility.on(),
-            clip.oval(),
-            aspectRatio(2.0),
+        await tester.pumpWidget(
+          Box(
+            style: Style(
+              scale(2.0),
+              opacity(0.5),
+              visibility.on(),
+              clip.oval(),
+              aspectRatio(2.0),
+            ),
+            child: Box(
+              key: key,
+              inherit: true,
+              child: Builder(builder: (context) {
+                final inheritedMix = MixProvider.maybeOf(context)!;
+
+                expect(inheritedMix.attributes.length, 0);
+
+                return const SizedBox();
+              }),
+            ),
           ),
-          child: Box(
-            key: key,
-            inherit: true,
-            child: Builder(builder: (context) {
-              final inheritedMix = MixProvider.maybeOf(context)!;
+        );
 
-              expect(inheritedMix.attributes.length, 0);
-              return const SizedBox();
-            }),
-          ),
-        ),
-      );
-
-      expect(
+        expect(
           find.descendant(
             of: find.byKey(key),
             matching: find.byType(Transform),
           ),
-          findsNothing);
+          findsNothing,
+        );
 
-      expect(
+        expect(
           find.descendant(
             of: find.byKey(key),
             matching: find.byType(Opacity),
           ),
-          findsNothing);
+          findsNothing,
+        );
 
-      expect(
+        expect(
           find.descendant(
             of: find.byKey(key),
             matching: find.byType(RotatedBox),
           ),
-          findsNothing);
+          findsNothing,
+        );
 
-      expect(
+        expect(
           find.descendant(
             of: find.byKey(key),
             matching: find.byType(Visibility),
           ),
-          findsNothing);
+          findsNothing,
+        );
 
-      expect(
+        expect(
           find.descendant(
             of: find.byKey(key),
             matching: find.byType(AspectRatio),
           ),
-          findsNothing);
-    });
+          findsNothing,
+        );
+      },
+    );
 
     testWidgets(
-        'If there are no decorator attributes in Style, RenderWidgetDecorators shouldnt exist in the widget tree',
-        (tester) async {
-      const key = Key('box');
+      'If there are no decorator attributes in Style, RenderWidgetDecorators shouldnt exist in the widget tree',
+      (tester) async {
+        const key = Key('box');
 
-      await tester.pumpWidget(
-        Box(
-          key: key,
-          style: Style(
-            backgroundColor.red(),
-            height(100),
-            width(100),
+        await tester.pumpWidget(
+          Box(
+            style: Style(backgroundColor.red(), height(100), width(100)),
+            key: key,
           ),
-        ),
-      );
+        );
 
-      expect(
-        find.descendant(
-          of: find.byKey(key),
-          matching: find.byType(RenderWidgetDecorators),
-        ),
-        findsNothing,
-      );
-    });
+        expect(
+          find.descendant(
+            of: find.byKey(key),
+            matching: find.byType(RenderWidgetDecorators),
+          ),
+          findsNothing,
+        );
+      },
+    );
   });
 }

@@ -6,20 +6,14 @@ import '../../helpers/testing_utils.dart';
 
 void main() {
   group('StyledIcon', () {
-    testWidgets('should receive a style from its ancestor widget',
-        (tester) async {
+    testWidgets('should receive a style from its ancestor widget', (tester) async {
       const color = Color(0xffff1744);
       const size = 20.0;
 
       await tester.pumpMaterialApp(
         Box(
-          style: Style(
-            icon.color(color),
-            icon.size(size),
-          ),
-          child: const StyledIcon(
-            Icons.access_time_filled_outlined,
-          ),
+          style: Style(icon.color(color), icon.size(size)),
+          child: const StyledIcon(Icons.access_time_filled_outlined),
         ),
       );
 
@@ -36,7 +30,6 @@ void main() {
         await tester.pumpMaterialApp(
           StyledIcon(
             Icons.access_time_filled_outlined,
-            key: key,
             style: Style(
               box.height(100),
               box.width(50),
@@ -46,49 +39,54 @@ void main() {
               visibility(true),
               aspectRatio(1),
             ),
+            key: key,
           ),
         );
 
         expect(
-            find.descendant(
-                of: find.byKey(key),
-                matching: find.byType(RenderWidgetDecorators)),
-            findsOneWidget);
+          find.descendant(of: find.byKey(key), matching: find.byType(RenderWidgetDecorators)),
+          findsOneWidget,
+        );
 
         expect(
-            find.descendant(
-              of: find.byKey(key),
-              matching: find.byType(Transform),
-            ),
-            findsOneWidget);
+          find.descendant(
+            of: find.byKey(key),
+            matching: find.byType(Transform),
+          ),
+          findsOneWidget,
+        );
 
         expect(
-            find.descendant(
-              of: find.byKey(key),
-              matching: find.byType(Opacity),
-            ),
-            findsOneWidget);
+          find.descendant(
+            of: find.byKey(key),
+            matching: find.byType(Opacity),
+          ),
+          findsOneWidget,
+        );
 
         expect(
-            find.descendant(
-              of: find.byKey(key),
-              matching: find.byType(RotatedBox),
-            ),
-            findsOneWidget);
+          find.descendant(
+            of: find.byKey(key),
+            matching: find.byType(RotatedBox),
+          ),
+          findsOneWidget,
+        );
 
         expect(
-            find.descendant(
-              of: find.byKey(key),
-              matching: find.byType(Visibility),
-            ),
-            findsOneWidget);
+          find.descendant(
+            of: find.byKey(key),
+            matching: find.byType(Visibility),
+          ),
+          findsOneWidget,
+        );
 
         expect(
-            find.descendant(
-              of: find.byKey(key),
-              matching: find.byType(AspectRatio),
-            ),
-            findsOneWidget);
+          find.descendant(
+            of: find.byKey(key),
+            matching: find.byType(AspectRatio),
+          ),
+          findsOneWidget,
+        );
       },
     );
   });

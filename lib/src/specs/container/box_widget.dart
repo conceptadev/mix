@@ -213,7 +213,9 @@ class AnimatedMixedBox extends StatelessWidget {
   Widget build(BuildContext context) {
     final mix = this.mix ?? MixProvider.of(context);
 
-    final spec = mix.attributeOf<BoxSpecAttribute>()?.resolve(mix) ??
+    final spec = mix
+          .attributeOf<BoxSpecAttribute>()
+          ?.resolve(mix) ??
         const BoxSpec.empty();
 
     // AnimatedContainer is utilized here to animate the transition of BoxSpec properties.

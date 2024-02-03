@@ -46,8 +46,7 @@ class TextSpec extends Spec<TextSpec> {
         softWrap = null;
 
   static TextSpec of(MixData mix) =>
-      mix.attributeOf<TextSpecAttribute>()?.resolve(mix) ??
-      const TextSpec.empty();
+      mix.attributeOf<TextSpecAttribute>()?.resolve(mix) ?? const TextSpec.empty();
 
   @override
   TextSpec lerp(TextSpec other, double t) {
@@ -61,8 +60,7 @@ class TextSpec extends Spec<TextSpec> {
       maxLines: lerpSnap(maxLines, other.maxLines, t),
       style: TextStyle.lerp(style, other.style, t),
       textWidthBasis: lerpSnap(textWidthBasis, other.textWidthBasis, t),
-      textHeightBehavior:
-          lerpSnap(textHeightBehavior, other.textHeightBehavior, t),
+      textHeightBehavior: lerpSnap(textHeightBehavior, other.textHeightBehavior, t),
       textDirection: lerpSnap(textDirection, other.textDirection, t),
       softWrap: lerpSnap(softWrap, other.softWrap, t),
     );

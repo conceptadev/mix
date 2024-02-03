@@ -12,21 +12,17 @@ final visibility = VisibilityUtility((d) => d);
 final aspectRatio = AspectRatioUtility((d) => d);
 final flexible = FlexibleDecoratorUtility((d) => d);
 
-class ScaleUtility<T extends StyleAttribute>
-    extends MixUtility<T, ScaleDecorator> {
+class ScaleUtility<T extends StyleAttribute> extends MixUtility<T, ScaleDecorator> {
   const ScaleUtility(super.builder);
   T call(double value, {Key? key}) => builder(ScaleDecorator(value, key: key));
 }
 
-class OpacityUtility<T extends StyleAttribute>
-    extends MixUtility<T, OpacityDecorator> {
+class OpacityUtility<T extends StyleAttribute> extends MixUtility<T, OpacityDecorator> {
   const OpacityUtility(super.builder);
-  T call(double value, {Key? key}) =>
-      builder(OpacityDecorator(value, key: key));
+  T call(double value, {Key? key}) => builder(OpacityDecorator(value, key: key));
 }
 
-class RotateUtility<T extends StyleAttribute>
-    extends MixUtility<T, RotateDecorator> {
+class RotateUtility<T extends StyleAttribute> extends MixUtility<T, RotateDecorator> {
   const RotateUtility(super.builder);
   T d90() => builder(const RotateDecorator(1));
   T d180() => builder(const RotateDecorator(2));
@@ -35,19 +31,16 @@ class RotateUtility<T extends StyleAttribute>
   T call(int value, {Key? key}) => builder(RotateDecorator(value, key: key));
 }
 
-class VisibilityUtility<T extends StyleAttribute>
-    extends MixUtility<T, VisibilityDecorator> {
+class VisibilityUtility<T extends StyleAttribute> extends MixUtility<T, VisibilityDecorator> {
   const VisibilityUtility(super.builder);
   T on() => builder(const VisibilityDecorator(true));
   T off() => builder(const VisibilityDecorator(false));
 
   // ignore: prefer-named-boolean-parameters
-  T call(bool value, {Key? key}) =>
-      builder(VisibilityDecorator(value, key: key));
+  T call(bool value, {Key? key}) => builder(VisibilityDecorator(value, key: key));
 }
 
-class FlexibleDecoratorUtility<T extends StyleAttribute>
-    extends MixUtility<T, FlexibleDecorator> {
+class FlexibleDecoratorUtility<T extends StyleAttribute> extends MixUtility<T, FlexibleDecorator> {
   const FlexibleDecoratorUtility(super.builder);
   FlexFitUtility<T> get fit => FlexFitUtility((fit) => call(fit: fit));
   IntUtility<T> get flex => IntUtility((flex) => call(flex: flex));
@@ -60,9 +53,7 @@ class FlexibleDecoratorUtility<T extends StyleAttribute>
   }
 }
 
-class AspectRatioUtility<T extends StyleAttribute>
-    extends MixUtility<T, AspectRatioDecorator> {
+class AspectRatioUtility<T extends StyleAttribute> extends MixUtility<T, AspectRatioDecorator> {
   const AspectRatioUtility(super.builder);
-  T call(double value, {Key? key}) =>
-      builder(AspectRatioDecorator(value, key: key));
+  T call(double value, {Key? key}) => builder(AspectRatioDecorator(value, key: key));
 }

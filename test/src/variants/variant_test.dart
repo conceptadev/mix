@@ -6,25 +6,24 @@ import '../../helpers/testing_utils.dart';
 
 void main() {
   group('Variant', () {
-    testWidgets('should set attributes when variant matches, otherwise null',
-        (WidgetTester tester) async {
-      final style = Style(
-        icon.color.black(),
-        _foo(
-          box.height(10),
-          box.width(10),
-        ),
-      );
+    testWidgets(
+      'should set attributes when variant matches, otherwise null',
+      (WidgetTester tester) async {
+        final style = Style(
+          icon.color.black(),
+          _foo(box.height(10), box.width(10)),
+        );
 
-      await tester.pumpMaterialApp(
-        Row(
-          children: [
-            _buildDefaultTestCase(style, [_foo]),
-            _buildTestCaseToVerifyIfNull(style, [_bar]),
-          ],
-        ),
-      );
-    });
+        await tester.pumpMaterialApp(
+          Row(
+            children: [
+              _buildDefaultTestCase(style, [_foo]),
+              _buildTestCaseToVerifyIfNull(style, [_bar]),
+            ],
+          ),
+        );
+      },
+    );
   });
 
   group('MultiVariant', () {
@@ -32,8 +31,7 @@ void main() {
       const variant1 = Variant('variant1');
       const variant2 = Variant('variant2');
       const variant3 = Variant('variant3');
-      final multiVariant =
-          MultiVariant.and(const [variant1, variant2, variant3]);
+      final multiVariant = MultiVariant.and(const [variant1, variant2, variant3]);
 
       final result = multiVariant.remove([variant1, variant2]);
 

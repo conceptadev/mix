@@ -26,8 +26,7 @@ final onLarge = onBreakpointToken(BreakpointToken.large);
 /// when the screen size matches these constraints.
 ContextVariant onBreakpoint({minWidth = 0, maxWidth = double.infinity}) {
   final constraints = Breakpoint(minWidth: minWidth, maxWidth: maxWidth);
-  final constraintName =
-      'minWidth-${constraints.minWidth}-maxWidth-${constraints.maxWidth}';
+  final constraintName = 'minWidth-${constraints.minWidth}-maxWidth-${constraints.maxWidth}';
 
   return ContextVariant('on-$constraintName', (context) {
     final size = context.screenSize;

@@ -22,9 +22,9 @@ void main() {
 
     test('from() creates correct instance', () {
       const shadow = Shadow(
-        blurRadius: 10.0,
         color: Colors.blue,
         offset: Offset(10, 10),
+        blurRadius: 10.0,
       );
 
       final shadowDto = ShadowDto.from(shadow);
@@ -36,9 +36,9 @@ void main() {
 
     test('maybeFrom() creates correct instance', () {
       const shadow = Shadow(
-        blurRadius: 10.0,
         color: Colors.blue,
         offset: Offset(10, 10),
+        blurRadius: 10.0,
       );
 
       final shadowDto = ShadowDto.maybeFrom(shadow);
@@ -86,9 +86,9 @@ void main() {
   group('BoxShadowDto', () {
     test('Constructor assigns correct properties', () {
       const boxShadowDto = BoxShadowDto(
-        blurRadius: 10.0,
         color: ColorDto(Colors.blue),
         offset: Offset(10, 10),
+        blurRadius: 10.0,
         spreadRadius: 5.0,
       );
 
@@ -100,9 +100,9 @@ void main() {
 
     test('from() creates correct instance', () {
       const boxShadow = BoxShadow(
-        blurRadius: 10.0,
         color: Colors.blue,
         offset: Offset(10, 10),
+        blurRadius: 10.0,
         spreadRadius: 5.0,
       );
 
@@ -116,9 +116,9 @@ void main() {
 
     test('maybeFrom() creates correct instance', () {
       const boxShadow = BoxShadow(
-        blurRadius: 10.0,
         color: Colors.blue,
         offset: Offset(10, 10),
+        blurRadius: 10.0,
         spreadRadius: 5.0,
       );
 
@@ -132,9 +132,9 @@ void main() {
 
     test('resolve() returns correct instance', () {
       const boxShadowDto = BoxShadowDto(
-        blurRadius: 10.0,
         color: ColorDto(Colors.blue),
         offset: Offset(10, 10),
+        blurRadius: 10.0,
         spreadRadius: 5.0,
       );
 
@@ -148,17 +148,17 @@ void main() {
 
     test('merge() returns correct instance', () {
       const boxShadowDto = BoxShadowDto(
-        blurRadius: 10.0,
         color: ColorDto(Colors.blue),
         offset: Offset(10, 10),
+        blurRadius: 10.0,
         spreadRadius: 5.0,
       );
 
       final mergedBoxShadowDto = boxShadowDto.merge(
         const BoxShadowDto(
-          blurRadius: 20.0,
           color: ColorDto(Colors.red),
           offset: Offset(20, 20),
+          blurRadius: 20.0,
           spreadRadius: 10.0,
         ),
       );

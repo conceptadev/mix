@@ -19,10 +19,8 @@ import 'decoration_dto.dart';
 import 'image/decoration_image_dto.dart';
 import 'image/decoration_image_util.dart';
 
-class DecorationUtility<T extends StyleAttribute>
-    extends DtoUtility<T, DecorationDto, Decoration> {
-  const DecorationUtility(super.builder)
-      : super(valueToDto: DecorationDto.from);
+class DecorationUtility<T extends StyleAttribute> extends DtoUtility<T, DecorationDto, Decoration> {
+  const DecorationUtility(super.builder) : super(valueToDto: DecorationDto.from);
 
   BoxDecorationUtility<T> get box {
     return BoxDecorationUtility((BoxDecorationDto boxDecoration) {
@@ -39,8 +37,7 @@ class DecorationUtility<T extends StyleAttribute>
 
 class BoxDecorationUtility<T extends StyleAttribute>
     extends DtoUtility<T, BoxDecorationDto, BoxDecoration> {
-  const BoxDecorationUtility(super.builder)
-      : super(valueToDto: BoxDecorationDto.from);
+  const BoxDecorationUtility(super.builder) : super(valueToDto: BoxDecorationDto.from);
 
   T _only({
     ColorDto? color,
@@ -153,8 +150,7 @@ class BoxDecorationUtility<T extends StyleAttribute>
 
 class ShapeDecorationUtility<T extends StyleAttribute>
     extends DtoUtility<T, ShapeDecorationDto, ShapeDecoration> {
-  const ShapeDecorationUtility(super.builder)
-      : super(valueToDto: ShapeDecorationDto.from);
+  const ShapeDecorationUtility(super.builder) : super(valueToDto: ShapeDecorationDto.from);
 
   T _only({
     ColorDto? color,

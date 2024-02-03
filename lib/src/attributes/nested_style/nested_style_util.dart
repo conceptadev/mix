@@ -22,9 +22,7 @@ class NestedStyleUtility {
     Style? style5,
     Style? style6,
   ]) {
-    final styles = [style, style2, style3, style4, style5, style6]
-        .whereType<Style>()
-        .toList();
+    final styles = [style, style2, style3, style4, style5, style6].whereType<Style>().toList();
 
     return _applyStyle(styles);
   }

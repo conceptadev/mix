@@ -149,8 +149,7 @@ class PressableWidgetState extends State<Pressable> {
   @override
   Widget build(BuildContext context) {
     final currentGesture = _currentGesture;
-    final currentStatus =
-        widget.disabled ? WidgetStatus.disabled : WidgetStatus.enabled;
+    final currentStatus = widget.disabled ? WidgetStatus.disabled : WidgetStatus.enabled;
 
     final onEnabled = currentStatus == WidgetStatus.enabled;
 
@@ -185,8 +184,7 @@ class PressableWidgetState extends State<Pressable> {
                 onTapUp: (_) => handleUnpress(),
                 onTap: widget.onPressed,
                 onTapCancel: () => handleUnpress(),
-                onLongPressCancel: () =>
-                    updateState(() => _longpressed = false),
+                onLongPressCancel: () => updateState(() => _longpressed = false),
                 onLongPress: widget.onLongPress,
                 onLongPressStart: (_) => updateState(() => _longpressed = true),
                 onLongPressEnd: (_) => updateState(() => _longpressed = false),

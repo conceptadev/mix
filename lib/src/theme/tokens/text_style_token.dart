@@ -20,9 +20,8 @@ class TextStyleToken extends MixToken<TextStyle> {
       'TextStyleToken $name is not defined in the theme',
     );
 
-    final resolvedValue = themeValue is TextStyleResolver
-        ? themeValue.resolve(context)
-        : themeValue;
+    final resolvedValue =
+        themeValue is TextStyleResolver ? themeValue.resolve(context) : themeValue;
 
     return resolvedValue ?? const TextStyle();
   }
@@ -114,8 +113,7 @@ class TextStyleRef extends TextStyle with TokenRef<TextStyleToken, TextStyle> {
   double get height => throw _e(token.name, 'height');
 
   @override
-  TextLeadingDistribution get leadingDistribution =>
-      throw _e(token.name, 'leadingDistribution');
+  TextLeadingDistribution get leadingDistribution => throw _e(token.name, 'leadingDistribution');
 
   @override
   Locale get locale => throw _e(token.name, 'locale');
@@ -133,8 +131,7 @@ class TextStyleRef extends TextStyle with TokenRef<TextStyleToken, TextStyle> {
   List<FontFeature> get fontFeatures => throw _e(token.name, 'fontFeatures');
 
   @override
-  List<FontVariation> get fontVariations =>
-      throw _e(token.name, 'fontVariations');
+  List<FontVariation> get fontVariations => throw _e(token.name, 'fontVariations');
 
   @override
   TextDecoration get decoration => throw _e(token.name, 'decoration');
@@ -143,8 +140,7 @@ class TextStyleRef extends TextStyle with TokenRef<TextStyleToken, TextStyle> {
   Color get decorationColor => throw _e(token.name, 'decorationColor');
 
   @override
-  TextDecorationStyle get decorationStyle =>
-      throw _e(token.name, 'decorationStyle');
+  TextDecorationStyle get decorationStyle => throw _e(token.name, 'decorationStyle');
 
   @override
   double get decorationThickness => throw _e(token.name, 'decorationThickness');

@@ -24,8 +24,7 @@ class StackSpec extends Spec<StackSpec> {
         clipBehavior = null;
 
   static StackSpec of(MixData mix) {
-    return mix.attributeOf<StackSpecAttribute>()?.resolve(mix) ??
-        const StackSpec.empty();
+    return mix.attributeOf<StackSpecAttribute>()?.resolve(mix) ?? const StackSpec.empty();
   }
 
   @override

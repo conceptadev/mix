@@ -17,14 +17,14 @@ void main() {
         style: style,
         children: [
           Container(
-            height: 100,
-            width: 100,
             color: const Color(0xFF000000),
+            width: 100,
+            height: 100,
           ),
           Container(
-            height: 50,
-            width: 50,
             color: const Color(0xFF0000FF),
+            width: 50,
+            height: 50,
           ),
         ],
       ),
@@ -50,10 +50,7 @@ void main() {
     );
 
     await tester.pumpMaterialApp(
-      ZBox(
-        style: style,
-        children: const [],
-      ),
+      ZBox(style: style, children: const []),
     );
 
     final stackWidget = tester.widget<Stack>(find.byType(Stack));

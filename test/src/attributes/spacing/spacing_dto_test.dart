@@ -16,12 +16,7 @@ void main() {
 
       expect(
         spacingDto.resolve(EmptyMixData),
-        const EdgeInsets.only(
-          left: 30,
-          top: 10,
-          right: 40,
-          bottom: 20,
-        ),
+        const EdgeInsets.only(left: 30, top: 10, right: 40, bottom: 20),
       );
     });
 
@@ -41,12 +36,7 @@ void main() {
       final mergedSpacingDto = spacingDto1.merge(spacingDto2);
       expect(
         mergedSpacingDto,
-        const SpacingDto.only(
-          top: 5,
-          bottom: 15,
-          left: 25,
-          right: 35,
-        ),
+        const SpacingDto.only(top: 5, bottom: 15, left: 25, right: 35),
       );
     });
   });

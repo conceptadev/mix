@@ -241,8 +241,7 @@ class MultiVariant extends Variant {
     Iterable<Variant> variants, {
     required MultiVariantOperator type,
   }) {
-    final sortedVariants = variants.toList()
-      ..sort(((a, b) => a.name.compareTo(b.name)));
+    final sortedVariants = variants.toList()..sort(((a, b) => a.name.compareTo(b.name)));
     final combinedName = sortedVariants.map((e) => e.name).join('-');
 
     return MultiVariant._(combinedName, sortedVariants, operatorType: type);
@@ -327,9 +326,7 @@ class MultiVariant extends Variant {
   bool matches(Iterable<Variant> matchVariants) {
     final list = variants.map((e) => e.matches(matchVariants)).toList();
 
-    return operatorType == MultiVariantOperator.and
-        ? list.every((e) => e)
-        : list.contains(true);
+    return operatorType == MultiVariantOperator.and ? list.every((e) => e) : list.contains(true);
   }
 
   /// A method for creating a new `MultiVariantAttribute` instance.

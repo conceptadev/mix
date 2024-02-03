@@ -56,8 +56,7 @@ class DeepCollectionEquality {
 
   int hash(Object? obj) {
     if (obj is Map) {
-      return Object.hashAllUnordered(obj.keys) ^
-          Object.hashAllUnordered(obj.values);
+      return Object.hashAllUnordered(obj.keys) ^ Object.hashAllUnordered(obj.values);
     } else if (obj is Set) {
       return Object.hashAllUnordered(obj);
     } else if (obj is Iterable) {

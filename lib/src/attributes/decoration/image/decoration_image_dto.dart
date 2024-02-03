@@ -4,8 +4,7 @@ import '../../../core/attribute.dart';
 import '../../../factory/mix_provider_data.dart';
 
 @immutable
-class DecorationImageDto extends Dto<DecorationImage>
-    with Mergeable<DecorationImageDto> {
+class DecorationImageDto extends Dto<DecorationImage> with Mergeable<DecorationImageDto> {
   final ImageProvider? image;
   final BoxFit? fit;
   final AlignmentGeometry? alignment;

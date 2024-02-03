@@ -38,8 +38,7 @@ import 'text_style_dto.dart';
 /// - [TextStyleDto]
 /// - [TextStyle]
 
-class TextStyleUtility<T extends StyleAttribute>
-    extends DtoUtility<T, TextStyleDto, TextStyle> {
+class TextStyleUtility<T extends StyleAttribute> extends DtoUtility<T, TextStyleDto, TextStyle> {
   const TextStyleUtility(super.builder) : super(valueToDto: TextStyleDto.as);
 
   T _only({
@@ -223,8 +222,7 @@ class TextStyleUtility<T extends StyleAttribute>
   T background(Paint background) => call(background: background);
 
   /// Sets the fontFeatures of the text style.
-  T fontFeatures(List<FontFeature> fontFeatures) =>
-      call(fontFeatures: fontFeatures);
+  T fontFeatures(List<FontFeature> fontFeatures) => call(fontFeatures: fontFeatures);
 
   /// Sets the locale of the text style.
   T locale(Locale locale) => call(locale: locale);
@@ -233,12 +231,10 @@ class TextStyleUtility<T extends StyleAttribute>
   T debugLabel(String label) => call(debugLabel: label);
 
   /// Sets the decorationThickness of the text style.
-  T decorationThickness(double thickness) =>
-      call(decorationThickness: thickness);
+  T decorationThickness(double thickness) => call(decorationThickness: thickness);
 
   /// Sets the fontFamilyFallback of the text style.
-  T fontFamilyFallback(List<String> fallback) =>
-      call(fontFamilyFallback: fallback);
+  T fontFamilyFallback(List<String> fallback) => call(fontFamilyFallback: fallback);
 
   /// Allows to pass a [TextStyleToken] to the utility directly.
   T of(TextStyleToken token) => builder(TextStyleDto.of(token));

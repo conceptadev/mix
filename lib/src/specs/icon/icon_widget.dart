@@ -89,7 +89,9 @@ class AnimatedStyledIcon extends StyledWidget {
   @override
   Widget build(BuildContext context) {
     return withMix(context, (mix) {
-      final spec = mix.attributeOf<IconSpecAttribute>()?.resolve(mix) ??
+      final spec = mix
+            .attributeOf<IconSpecAttribute>()
+            ?.resolve(mix) ??
           const IconSpec.empty();
 
       return AnimatedIcon(

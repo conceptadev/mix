@@ -6,9 +6,7 @@ import '../../../helpers/testing_utils.dart';
 
 void main() {
   group('StackMixAttribute', () {
-    test(
-        'of returns default attribute when mix does not have StackMixAttribute',
-        () {
+    test('of returns default attribute when mix does not have StackMixAttribute', () {
       final mix = MixData.create(MockBuildContext(), Style());
       final attribute = StackSpecAttribute.of(mix);
 

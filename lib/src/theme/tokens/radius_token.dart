@@ -26,8 +26,7 @@ class RadiusToken extends MixToken<Radius> {
       'RadiusToken $name is not defined in the theme and has no default value',
     );
 
-    final resolvedValue =
-        themeValue is RadiusResolver ? themeValue.resolve(context) : themeValue;
+    final resolvedValue = themeValue is RadiusResolver ? themeValue.resolve(context) : themeValue;
 
     return resolvedValue ?? const Radius.circular(0);
   }

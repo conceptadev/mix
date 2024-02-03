@@ -13,11 +13,11 @@ void main() {
       final strutStyle = strutStyleUtility(
         fontFamily: 'Roboto',
         fontSize: 24.0,
+        fontStyle: FontStyle.italic,
+        fontWeight: FontWeight.bold,
+        forceStrutHeight: true,
         height: 2.0,
         leading: 1.0,
-        fontWeight: FontWeight.bold,
-        fontStyle: FontStyle.italic,
-        forceStrutHeight: true,
       );
 
       expect(strutStyleUtility.call, isA<Function>());

@@ -8,9 +8,7 @@ import '../../../helpers/attribute_generator.dart';
 import '../../../helpers/testing_utils.dart';
 
 void main() {
-  const linearGradient = LinearGradient(
-    colors: Colors.accents,
-  );
+  const linearGradient = LinearGradient(colors: Colors.accents);
 
   final linearGradientDto = LinearGradientDto(
     colors: Colors.accents.map(ColorDto.new).toList(),
@@ -29,14 +27,15 @@ void main() {
       const attr = BoxDecorationDto();
       final decoration = attr.resolve(EmptyMixData);
       expect(decoration, const BoxDecoration());
+
       return const Placeholder();
     });
     test('resolve returns correct BoxDecoration with specific values', () {
-      final attr = BoxDecorationDto(
-          color: Colors.red.toDto(), gradient: linearGradientDto);
+      final attr = BoxDecorationDto(color: Colors.red.toDto(), gradient: linearGradientDto);
       final decoration = attr.resolve(EmptyMixData);
       expect(decoration.color, Colors.red);
       expect(decoration.gradient, linearGradient);
+
       return const Placeholder();
     });
     test('Equality holds when all properties are the same', () {
@@ -70,8 +69,8 @@ void main() {
       final boxShadow = RandomGenerator.boxShadow();
 
       final decoration1 = ShapeDecorationDto(
-        gradient: linearGradientDto,
         shape: const CircleBorderDto(),
+        gradient: linearGradientDto,
         shadows: [boxShadow.toDto()],
       );
 
@@ -100,10 +99,10 @@ void main() {
   });
 
   group('DecorationDto Merge Tests', () {
-    const linearGradientDto = LinearGradientDto(
-        colors: [ColorDto(Colors.red), ColorDto(Colors.blue)]);
-    const otherLinearGradientDto = LinearGradientDto(
-        colors: [ColorDto(Colors.yellow), ColorDto(Colors.green)]);
+    const linearGradientDto =
+        LinearGradientDto(colors: [ColorDto(Colors.red), ColorDto(Colors.blue)]);
+    const otherLinearGradientDto =
+        LinearGradientDto(colors: [ColorDto(Colors.yellow), ColorDto(Colors.green)]);
 
     const boxShadowDto = BoxShadowDto(
       color: ColorDto(Colors.black),
@@ -112,10 +111,11 @@ void main() {
       spreadRadius: 5.0,
     );
     const otherBoxShadowDto = BoxShadowDto(
-        color: ColorDto(Colors.black),
-        offset: Offset(2, 2),
-        blurRadius: 10.0,
-        spreadRadius: 10.0);
+      color: ColorDto(Colors.black),
+      offset: Offset(2, 2),
+      blurRadius: 10.0,
+      spreadRadius: 10.0,
+    );
     test('BoxDecorationDto merges with another BoxDecorationDto', () {
       const boxDeco1 = BoxDecorationDto(
         color: ColorDto(Colors.red),
@@ -140,15 +140,15 @@ void main() {
     test('ShapeDecorationDto merges with another ShapeDecorationDto', () {
       const shapeDeco1 = ShapeDecorationDto(
         color: ColorDto(Colors.red),
+        shape: RoundedRectangleBorderDto(),
         gradient: linearGradientDto,
         shadows: [boxShadowDto],
-        shape: RoundedRectangleBorderDto(),
       );
       const shapeDeco2 = ShapeDecorationDto(
         color: ColorDto(Colors.blue),
+        shape: BeveledRectangleBorderDto(),
         gradient: otherLinearGradientDto,
         shadows: [otherBoxShadowDto],
-        shape: BeveledRectangleBorderDto(),
       );
 
       final merged = shapeDeco1.merge(shapeDeco2) as ShapeDecorationDto;
@@ -207,10 +207,10 @@ void main() {
     test('ShapeDecorationDto cannot merge with BoxDecoration', () {
       const shapeDeco = ShapeDecorationDto(
         color: ColorDto(Colors.red),
-        gradient: linearGradientDto,
-        shadows: [boxShadowDto],
         // Cannot merge because it has shape
         shape: RoundedRectangleBorderDto(),
+        gradient: linearGradientDto,
+        shadows: [boxShadowDto],
       );
 
       const boxDeco = BoxDecorationDto(

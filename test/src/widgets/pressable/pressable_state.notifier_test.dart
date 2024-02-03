@@ -7,9 +7,9 @@ import '../../../helpers/testing_utils.dart';
 void main() {
   group('PressableNotifier', () {
     const gestureData = WidgetStateData(
-      state: WidgetState.pressed,
-      status: WidgetStatus.enabled,
       focus: true,
+      status: WidgetStatus.enabled,
+      state: WidgetState.pressed,
       hover: false,
     );
     test('constructor', () {
@@ -32,8 +32,8 @@ void main() {
       final otherNotifier = WidgetStateNotifier(
         data: const WidgetStateData(
           focus: false,
-          state: WidgetState.none,
           status: WidgetStatus.disabled,
+          state: WidgetState.none,
           hover: false,
         ),
         child: Container(),

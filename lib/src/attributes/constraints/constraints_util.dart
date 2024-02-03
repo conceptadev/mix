@@ -25,8 +25,7 @@ class BoxConstraintsUtility<T extends StyleAttribute>
   /// ```dart
   /// final boxConstraints = BoxConstraintsUtility<StyleAttribute>(builder);
   /// ```
-  const BoxConstraintsUtility(super.builder)
-      : super(valueToDto: BoxConstraintsDto.from);
+  const BoxConstraintsUtility(super.builder) : super(valueToDto: BoxConstraintsDto.from);
 
   /// Sets the maximum width of the box constraints.
   ///

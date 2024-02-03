@@ -86,18 +86,15 @@ abstract class SpecAttribute<Self, Value> extends StyleAttribute
   Type get type => Self;
 }
 
-mixin SingleChildRenderAttributeMixin<W extends RenderObjectWidget>
-    on StyleAttribute {
+mixin SingleChildRenderAttributeMixin<W extends RenderObjectWidget> on StyleAttribute {
   W build(MixData mix, Widget child);
 }
 
-mixin MultiChildRenderAttributeMixin<W extends MultiChildRenderObjectWidget>
-    on StyleAttribute {
+mixin MultiChildRenderAttributeMixin<W extends MultiChildRenderObjectWidget> on StyleAttribute {
   W render(MixData mix, List<Widget> children);
 }
 
 @immutable
-abstract class Spec<T extends Spec<T>> extends ThemeExtension<T>
-    with Comparable {
+abstract class Spec<T extends Spec<T>> extends ThemeExtension<T> with Comparable {
   const Spec();
 }

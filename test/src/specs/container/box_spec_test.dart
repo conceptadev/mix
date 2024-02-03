@@ -26,8 +26,7 @@ void main() {
             alignment: Alignment.center,
             padding: const SpacingDto.only(top: 8, bottom: 16),
             margin: const SpacingDto.only(top: 10.0, bottom: 12.0),
-            constraints:
-                const BoxConstraintsDto(maxWidth: 300.0, minHeight: 200.0),
+            constraints: const BoxConstraintsDto(maxWidth: 300.0, minHeight: 200.0),
             decoration: const BoxDecorationDto(color: ColorDto(Colors.blue)),
             transform: Matrix4.translationValues(10.0, 10.0, 0.0),
             clipBehavior: Clip.antiAlias,
@@ -40,10 +39,9 @@ void main() {
       final spec = mix.attributeOf<BoxSpecAttribute>()!.resolve(mix);
 
       expect(spec.alignment, Alignment.center);
-      expect(spec.padding, const EdgeInsets.only(bottom: 16.0, top: 8.0));
+      expect(spec.padding, const EdgeInsets.only(top: 8.0, bottom: 16.0));
       expect(spec.margin, const EdgeInsets.only(top: 10.0, bottom: 12.0));
-      expect(spec.constraints,
-          const BoxConstraints(maxWidth: 300.0, minHeight: 200.0));
+      expect(spec.constraints, const BoxConstraints(maxWidth: 300.0, minHeight: 200.0));
       expect(spec.decoration, const BoxDecoration(color: Colors.blue));
 
       expect(spec.transform, Matrix4.translationValues(10.0, 10.0, 0.0));
@@ -53,8 +51,6 @@ void main() {
     test('copyWith', () {
       final spec = BoxSpec(
         alignment: Alignment.center,
-        width: 300,
-        height: 200,
         padding: const EdgeInsets.all(16.0),
         margin: const EdgeInsets.only(top: 8.0, bottom: 8.0),
         constraints: const BoxConstraints(maxWidth: 300.0, minHeight: 200.0),
@@ -62,6 +58,8 @@ void main() {
         foregroundDecoration: const BoxDecoration(color: Colors.purple),
         transform: Matrix4.translationValues(10.0, 10.0, 0.0),
         clipBehavior: Clip.antiAlias,
+        width: 300,
+        height: 200,
       );
 
       final copiedSpec = spec.copyWith(width: 250.0, height: 150.0);
@@ -69,11 +67,9 @@ void main() {
       expect(copiedSpec.alignment, Alignment.center);
       expect(copiedSpec.padding, const EdgeInsets.all(16.0));
       expect(copiedSpec.margin, const EdgeInsets.only(top: 8.0, bottom: 8.0));
-      expect(copiedSpec.constraints,
-          const BoxConstraints(maxWidth: 300.0, minHeight: 200.0));
+      expect(copiedSpec.constraints, const BoxConstraints(maxWidth: 300.0, minHeight: 200.0));
       expect(copiedSpec.decoration, const BoxDecoration(color: Colors.blue));
-      expect(copiedSpec.foregroundDecoration,
-          const BoxDecoration(color: Colors.purple));
+      expect(copiedSpec.foregroundDecoration, const BoxDecoration(color: Colors.purple));
 
       expect(copiedSpec.transform, Matrix4.translationValues(10.0, 10.0, 0.0));
       expect(copiedSpec.clipBehavior, Clip.antiAlias);
@@ -84,8 +80,6 @@ void main() {
     test('lerp', () {
       final spec1 = BoxSpec(
         alignment: Alignment.topLeft,
-        width: 300,
-        height: 200,
         padding: const EdgeInsets.all(8.0),
         margin: const EdgeInsets.only(top: 4.0),
         constraints: const BoxConstraints(maxWidth: 200.0),
@@ -93,12 +87,12 @@ void main() {
         foregroundDecoration: const BoxDecoration(color: Colors.blue),
         transform: Matrix4.identity(),
         clipBehavior: Clip.none,
+        width: 300,
+        height: 200,
       );
 
       final spec2 = BoxSpec(
         alignment: Alignment.bottomRight,
-        width: 400,
-        height: 300,
         padding: const EdgeInsets.all(16.0),
         margin: const EdgeInsets.only(top: 8.0),
         constraints: const BoxConstraints(maxWidth: 400.0),
@@ -106,46 +100,53 @@ void main() {
         foregroundDecoration: const BoxDecoration(color: Colors.red),
         transform: Matrix4.rotationZ(0.5),
         clipBehavior: Clip.antiAlias,
+        width: 400,
+        height: 300,
       );
 
       const t = 0.5;
       final lerpedSpec = spec1.lerp(spec2, t);
 
-      expect(lerpedSpec.alignment,
-          Alignment.lerp(Alignment.topLeft, Alignment.bottomRight, t));
+      expect(lerpedSpec.alignment, Alignment.lerp(Alignment.topLeft, Alignment.bottomRight, t));
       expect(
-          lerpedSpec.padding,
-          EdgeInsets.lerp(
-              const EdgeInsets.all(8.0), const EdgeInsets.all(16.0), t));
+        lerpedSpec.padding,
+        EdgeInsets.lerp(const EdgeInsets.all(8.0), const EdgeInsets.all(16.0), t),
+      );
       expect(
-          lerpedSpec.margin,
-          EdgeInsets.lerp(const EdgeInsets.only(top: 4.0),
-              const EdgeInsets.only(top: 8.0), t));
+        lerpedSpec.margin,
+        EdgeInsets.lerp(const EdgeInsets.only(top: 4.0), const EdgeInsets.only(top: 8.0), t),
+      );
       expect(
-          lerpedSpec.constraints,
-          BoxConstraints.lerp(const BoxConstraints(maxWidth: 200.0),
-              const BoxConstraints(maxWidth: 400.0), t));
+        lerpedSpec.constraints,
+        BoxConstraints.lerp(
+          const BoxConstraints(maxWidth: 200.0),
+          const BoxConstraints(maxWidth: 400.0),
+          t,
+        ),
+      );
       expect(
-          lerpedSpec.decoration,
-          DecorationTween(
-                  begin: const BoxDecoration(color: Colors.red),
-                  end: const BoxDecoration(color: Colors.blue))
-              .lerp(t));
+        lerpedSpec.decoration,
+        DecorationTween(
+          begin: const BoxDecoration(color: Colors.red),
+          end: const BoxDecoration(color: Colors.blue),
+        ).lerp(t),
+      );
 
       expect(
-          lerpedSpec.foregroundDecoration,
-          DecorationTween(
-                  begin: const BoxDecoration(color: Colors.blue),
-                  end: const BoxDecoration(color: Colors.red))
-              .lerp(t));
+        lerpedSpec.foregroundDecoration,
+        DecorationTween(
+          begin: const BoxDecoration(color: Colors.blue),
+          end: const BoxDecoration(color: Colors.red),
+        ).lerp(t),
+      );
 
       expect(lerpedSpec.width, lerpDouble(300, 400, t));
       expect(lerpedSpec.height, lerpDouble(200, 300, t));
 
       expect(
-          lerpedSpec.transform,
-          Matrix4Tween(begin: Matrix4.identity(), end: Matrix4.rotationZ(0.5))
-              .lerp(t));
+        lerpedSpec.transform,
+        Matrix4Tween(begin: Matrix4.identity(), end: Matrix4.rotationZ(0.5)).lerp(t),
+      );
       expect(lerpedSpec.clipBehavior, t < 0.5 ? Clip.none : Clip.antiAlias);
     });
 
@@ -153,8 +154,6 @@ void main() {
     test('equality', () {
       final spec1 = BoxSpec(
         alignment: Alignment.topLeft,
-        width: 300,
-        height: 200,
         padding: const EdgeInsets.all(8.0),
         margin: const EdgeInsets.only(top: 4.0),
         constraints: const BoxConstraints(maxWidth: 200.0),
@@ -162,12 +161,12 @@ void main() {
         foregroundDecoration: const BoxDecoration(color: Colors.blue),
         transform: Matrix4.identity(),
         clipBehavior: Clip.none,
+        width: 300,
+        height: 200,
       );
 
       final spec2 = BoxSpec(
         alignment: Alignment.topLeft,
-        width: 300,
-        height: 200,
         padding: const EdgeInsets.all(8.0),
         margin: const EdgeInsets.only(top: 4.0),
         constraints: const BoxConstraints(maxWidth: 200.0),
@@ -175,6 +174,8 @@ void main() {
         foregroundDecoration: const BoxDecoration(color: Colors.blue),
         transform: Matrix4.identity(),
         clipBehavior: Clip.none,
+        width: 300,
+        height: 200,
       );
 
       expect(spec1, spec2);
@@ -184,72 +185,73 @@ void main() {
     test('merge() returns correct instance', () {
       final containerSpecAttribute = BoxSpecAttribute(
         alignment: Alignment.center,
-        clipBehavior: Clip.antiAlias,
-        constraints: const BoxConstraintsDto(maxHeight: 100),
-        decoration: const BoxDecorationDto(color: ColorDto(Colors.blue)),
-        foregroundDecoration:
-            const BoxDecorationDto(color: ColorDto(Colors.blue)),
-        height: 100,
+        padding: const SpacingDto.only(top: 20, bottom: 20, left: 20, right: 20),
         margin: const SpacingDto.only(
+          top: 10,
           bottom: 10,
           left: 10,
           right: 10,
-          top: 10,
         ),
-        padding:
-            const SpacingDto.only(bottom: 20, left: 20, right: 20, top: 20),
+        constraints: const BoxConstraintsDto(maxHeight: 100),
+        decoration: const BoxDecorationDto(color: ColorDto(Colors.blue)),
+        foregroundDecoration: const BoxDecorationDto(color: ColorDto(Colors.blue)),
         transform: Matrix4.identity(),
+        clipBehavior: Clip.antiAlias,
         width: 100,
+        height: 100,
       );
 
       final mergedBoxSpecAttribute = containerSpecAttribute.merge(
         BoxSpecAttribute(
           alignment: Alignment.centerLeft,
-          clipBehavior: Clip.antiAliasWithSaveLayer,
-          constraints: const BoxConstraintsDto(maxHeight: 200),
-          decoration: const BoxDecorationDto(color: ColorDto(Colors.red)),
-          foregroundDecoration:
-              const BoxDecorationDto(color: ColorDto(Colors.amber)),
-          height: 200,
+          padding: const SpacingDto.only(top: 30, bottom: 30, left: 30, right: 30),
           margin: const SpacingDto.only(
+            top: 20,
             bottom: 20,
             left: 20,
             right: 20,
-            top: 20,
           ),
-          padding:
-              const SpacingDto.only(bottom: 30, left: 30, right: 30, top: 30),
+          constraints: const BoxConstraintsDto(maxHeight: 200),
+          decoration: const BoxDecorationDto(color: ColorDto(Colors.red)),
+          foregroundDecoration: const BoxDecorationDto(color: ColorDto(Colors.amber)),
           transform: Matrix4.identity(),
+          clipBehavior: Clip.antiAliasWithSaveLayer,
           width: 200,
+          height: 200,
         ),
       );
 
       expect(mergedBoxSpecAttribute.alignment, Alignment.centerLeft);
       expect(mergedBoxSpecAttribute.clipBehavior, Clip.antiAliasWithSaveLayer);
 
-      expect(mergedBoxSpecAttribute.constraints,
-          const BoxConstraintsDto(maxHeight: 200));
-      expect(mergedBoxSpecAttribute.decoration,
-          const BoxDecorationDto(color: ColorDto(Colors.red)));
-      expect(mergedBoxSpecAttribute.foregroundDecoration,
-          const BoxDecorationDto(color: ColorDto(Colors.amber)));
+      expect(mergedBoxSpecAttribute.constraints, const BoxConstraintsDto(maxHeight: 200));
+      expect(
+        mergedBoxSpecAttribute.decoration,
+        const BoxDecorationDto(color: ColorDto(Colors.red)),
+      );
+      expect(
+        mergedBoxSpecAttribute.foregroundDecoration,
+        const BoxDecorationDto(color: ColorDto(Colors.amber)),
+      );
       expect(mergedBoxSpecAttribute.height, 200);
       expect(
-          mergedBoxSpecAttribute.margin,
-          const SpacingDto.only(
-            bottom: 20,
-            left: 20,
-            right: 20,
-            top: 20,
-          ));
+        mergedBoxSpecAttribute.margin,
+        const SpacingDto.only(
+          top: 20,
+          bottom: 20,
+          left: 20,
+          right: 20,
+        ),
+      );
       expect(
-          mergedBoxSpecAttribute.padding,
-          const SpacingDto.only(
-            bottom: 30,
-            left: 30,
-            right: 30,
-            top: 30,
-          ));
+        mergedBoxSpecAttribute.padding,
+        const SpacingDto.only(
+          top: 30,
+          bottom: 30,
+          left: 30,
+          right: 30,
+        ),
+      );
       expect(mergedBoxSpecAttribute.transform, Matrix4.identity());
       expect(mergedBoxSpecAttribute.width, 200);
     });

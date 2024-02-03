@@ -5,8 +5,7 @@ import '../factory/style_mix.dart';
 import '../variants/variant.dart';
 
 @immutable
-class VariantAttribute<T extends Variant> extends Attribute
-    with Mergeable<VariantAttribute<T>> {
+class VariantAttribute<T extends Variant> extends Attribute with Mergeable<VariantAttribute<T>> {
   final T variant;
   final Style _style;
 
@@ -14,8 +13,7 @@ class VariantAttribute<T extends Variant> extends Attribute
 
   Style get value => _style;
 
-  bool matches(Iterable<Variant> otherVariants) =>
-      otherVariants.contains(variant);
+  bool matches(Iterable<Variant> otherVariants) => otherVariants.contains(variant);
 
   @override
   VariantAttribute<T> merge(VariantAttribute<T> other) {
@@ -60,8 +58,7 @@ ArgumentError throwArgumentError<T extends VariantAttribute>(T other) {
 }
 
 @immutable
-class MultiVariantAttribute extends VariantAttribute<MultiVariant>
-    with WhenVariant<MultiVariant> {
+class MultiVariantAttribute extends VariantAttribute<MultiVariant> with WhenVariant<MultiVariant> {
   const MultiVariantAttribute(super.variant, super.style);
 
   // Remove all variants in given a list
@@ -77,8 +74,7 @@ class MultiVariantAttribute extends VariantAttribute<MultiVariant>
   }
 
   @override
-  bool matches(Iterable<Variant> otherVariants) =>
-      variant.matches(otherVariants);
+  bool matches(Iterable<Variant> otherVariants) => variant.matches(otherVariants);
 
   @override
   bool when(BuildContext context) => variant.when(context);

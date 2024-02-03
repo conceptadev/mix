@@ -39,8 +39,7 @@ import 'gradient_dto.dart';
 ///
 /// final gradientAttribute = gradient.as(linearGradient);
 /// ```
-class GradientUtility<T extends StyleAttribute>
-    extends MixUtility<T, GradientDto> {
+class GradientUtility<T extends StyleAttribute> extends MixUtility<T, GradientDto> {
   const GradientUtility(super.builder);
 
   /// Returns a [RadialGradientUtility] for creating radial gradients.
@@ -96,8 +95,7 @@ class GradientUtility<T extends StyleAttribute>
 /// * [GradientAttribute], a class for creating gradient attributes.
 /// * [GradientDto], a class for creating gradient values.
 @immutable
-class RadialGradientUtility<T extends StyleAttribute>
-    extends MixUtility<T, RadialGradientDto> {
+class RadialGradientUtility<T extends StyleAttribute> extends MixUtility<T, RadialGradientDto> {
   const RadialGradientUtility(super.builder);
 
   /// Returns an [AlignmentUtility] for setting the center of the radial gradient.
@@ -296,8 +294,7 @@ class RadialGradientUtility<T extends StyleAttribute>
 /// * [GradientAttribute], a class for creating gradient attributes.
 /// * [GradientDto], a class for creating gradient values.
 @immutable
-class LinearGradientUtility<T extends StyleAttribute>
-    extends MixUtility<T, LinearGradientDto> {
+class LinearGradientUtility<T extends StyleAttribute> extends MixUtility<T, LinearGradientDto> {
   const LinearGradientUtility(super.builder);
 
   /// Returns an [AlignmentUtility] for setting the begin of the linear gradient.
@@ -501,8 +498,7 @@ class LinearGradientUtility<T extends StyleAttribute>
 /// * [GradientDto], a class for creating gradient values.
 class SweepGradientUtility<T extends StyleAttribute>
     extends DtoUtility<T, SweepGradientDto, SweepGradient> {
-  const SweepGradientUtility(super.builder)
-      : super(valueToDto: SweepGradientDto.from);
+  const SweepGradientUtility(super.builder) : super(valueToDto: SweepGradientDto.from);
 
   /// Returns an [AlignmentUtility] for setting the center of the sweep gradient.
   ///

@@ -59,9 +59,7 @@ class WidgetStateNotifier extends InheritedWidget {
   });
 
   static WidgetStateData? of(BuildContext context) {
-    return context
-        .dependOnInheritedWidgetOfExactType<WidgetStateNotifier>()
-        ?.data;
+    return context.dependOnInheritedWidgetOfExactType<WidgetStateNotifier>()?.data;
   }
 
   final WidgetStateData data;

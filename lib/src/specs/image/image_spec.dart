@@ -43,8 +43,7 @@ class ImageSpec extends Spec<ImageSpec> {
         fit = null;
 
   static ImageSpec of(MixData mix) {
-    return mix.attributeOf<ImageSpecAttribute>()?.resolve(mix) ??
-        const ImageSpec.empty();
+    return mix.attributeOf<ImageSpecAttribute>()?.resolve(mix) ?? const ImageSpec.empty();
   }
 
   @override

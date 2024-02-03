@@ -45,10 +45,10 @@ class RandomGenerator {
       fontFamily: fontFamily ?? 'Roboto',
       fontFamilyFallback: fontFamilyFallback ?? ['Roboto'],
       fontSize: fontSize ?? random.nextDouble() * 20,
-      fontWeight: fontWeight ?? FontWeight.values.random(),
-      fontStyle: fontStyle ?? FontStyle.values.random(),
       height: height ?? random.nextDouble() * 20,
       leading: leading ?? random.nextDouble() * 20,
+      fontWeight: fontWeight ?? FontWeight.values.random(),
+      fontStyle: fontStyle ?? FontStyle.values.random(),
       forceStrutHeight: forceStrutHeight ?? random.nextBool(),
     );
   }
@@ -62,10 +62,10 @@ class RandomGenerator {
     final random = Random();
 
     return EdgeInsets.only(
-      top: top ?? random.nextDouble() * 20,
-      bottom: bottom ?? random.nextDouble() * 20,
       left: left ?? random.nextDouble() * 20,
+      top: top ?? random.nextDouble() * 20,
       right: right ?? random.nextDouble() * 20,
+      bottom: bottom ?? random.nextDouble() * 20,
     );
   }
 
@@ -78,18 +78,14 @@ class RandomGenerator {
     final random = Random();
 
     return EdgeInsetsDirectional.only(
-      top: top ?? random.nextDouble() * 20,
-      bottom: bottom ?? random.nextDouble() * 20,
       start: start ?? random.nextDouble() * 20,
+      top: top ?? random.nextDouble() * 20,
       end: end ?? random.nextDouble() * 20,
+      bottom: bottom ?? random.nextDouble() * 20,
     );
   }
 
-  static Matrix4 matrix4({
-    double? x,
-    double? y,
-    double? z,
-  }) {
+  static Matrix4 matrix4({double? x, double? y, double? z}) {
     final random = Random();
 
     return Matrix4.translationValues(
@@ -97,34 +93,6 @@ class RandomGenerator {
       y ?? random.nextDouble() * 20,
       z ?? random.nextDouble() * 20,
     );
-  }
-
-  TextOverflow textOverflow([TextOverflow? overflow]) {
-    return overflow ?? TextOverflow.values.random();
-  }
-
-  Axis axis([Axis? axis]) {
-    return axis ?? Random().randomElement(Axis.values);
-  }
-
-  MainAxisAlignment mainAxisAlignment([MainAxisAlignment? alignment]) {
-    return alignment ?? MainAxisAlignment.values.random();
-  }
-
-  MainAxisSize mainAxisSize([MainAxisSize? size]) {
-    return size ?? MainAxisSize.values.random();
-  }
-
-  CrossAxisAlignment crossAxisAlignment([CrossAxisAlignment? alignment]) {
-    return alignment ?? CrossAxisAlignment.values.random();
-  }
-
-  TextBaseline textBaseline([TextBaseline? baseline]) {
-    return baseline ?? TextBaseline.values.random();
-  }
-
-  VerticalDirection verticalDirection([VerticalDirection? direction]) {
-    return direction ?? VerticalDirection.values.random();
   }
 
   static BorderRadius borderRadius({
@@ -166,10 +134,10 @@ class RandomGenerator {
     BorderSide? bottom,
   }) {
     return Border(
-      left: left ?? RandomGenerator.borderSide(),
-      right: right ?? RandomGenerator.borderSide(),
       top: top ?? RandomGenerator.borderSide(),
+      right: right ?? RandomGenerator.borderSide(),
       bottom: bottom ?? RandomGenerator.borderSide(),
+      left: left ?? RandomGenerator.borderSide(),
     );
   }
 
@@ -193,9 +161,9 @@ class RandomGenerator {
   }) {
     return BorderDirectional(
       top: top ?? RandomGenerator.borderSide(),
-      bottom: bottom ?? RandomGenerator.borderSide(),
       start: start ?? RandomGenerator.borderSide(),
       end: end ?? RandomGenerator.borderSide(),
+      bottom: bottom ?? RandomGenerator.borderSide(),
     );
   }
 
@@ -209,11 +177,7 @@ class RandomGenerator {
         );
   }
 
-  static Shadow shadow({
-    Color? color,
-    Offset? offset,
-    double? blurRadius,
-  }) {
+  static Shadow shadow({Color? color, Offset? offset, double? blurRadius}) {
     return Shadow(
       color: color ?? RandomGenerator.color(),
       offset: offset ?? const Offset(0, 0),
@@ -236,8 +200,7 @@ class RandomGenerator {
         ]);
   }
 
-  static AlignmentDirectional alignmentDirectional(
-      [AlignmentDirectional? alignment]) {
+  static AlignmentDirectional alignmentDirectional([AlignmentDirectional? alignment]) {
     return alignment ??
         Random().randomElement([
           AlignmentDirectional.center,
@@ -261,20 +224,18 @@ class RandomGenerator {
     Gradient? gradient,
   }) {
     final boxShadowList = boxShadow ?? [RandomGenerator.boxShadow()];
+
     return BoxDecoration(
       color: color ?? RandomGenerator.color(),
       border: border ?? RandomGenerator.border(),
       borderRadius: borderRadius ?? RandomGenerator.borderRadius(),
       boxShadow: boxShadowList,
-      shape: shape ?? BoxShape.values.random(),
       gradient: gradient ?? RandomGenerator.linearGradient(),
+      shape: shape ?? BoxShape.values.random(),
     );
   }
 
-  static Offset offset({
-    double? dx,
-    double? dy,
-  }) {
+  static Offset offset({double? dx, double? dy}) {
     return Offset(
       dx ?? Random().nextDouble() * 20,
       dy ?? Random().nextDouble() * 20,
@@ -311,21 +272,47 @@ class RandomGenerator {
     );
   }
 
+  TextOverflow textOverflow([TextOverflow? overflow]) {
+    return overflow ?? TextOverflow.values.random();
+  }
+
+  Axis axis([Axis? axis]) {
+    return axis ?? Random().randomElement(Axis.values);
+  }
+
+  MainAxisAlignment mainAxisAlignment([MainAxisAlignment? alignment]) {
+    return alignment ?? MainAxisAlignment.values.random();
+  }
+
+  MainAxisSize mainAxisSize([MainAxisSize? size]) {
+    return size ?? MainAxisSize.values.random();
+  }
+
+  CrossAxisAlignment crossAxisAlignment([CrossAxisAlignment? alignment]) {
+    return alignment ?? CrossAxisAlignment.values.random();
+  }
+
+  TextBaseline textBaseline([TextBaseline? baseline]) {
+    return baseline ?? TextBaseline.values.random();
+  }
+
+  VerticalDirection verticalDirection([VerticalDirection? direction]) {
+    return direction ?? VerticalDirection.values.random();
+  }
+
   TextStyle textStyle() {
     final shadows = [
       RandomGenerator.shadow(),
       RandomGenerator.shadow(),
       RandomGenerator.shadow(),
     ];
+
     return TextStyle(
       color: RandomGenerator.color(),
       backgroundColor: RandomGenerator.color(),
-      decorationColor: RandomGenerator.color(),
-      decorationStyle: TextDecorationStyle.values.random(),
-      fontFamily: 'Roboto',
       fontSize: Random().nextDoubleInRange(12, 32),
-      fontStyle: FontStyle.values.random(),
       fontWeight: FontWeight.values.random(),
+      fontStyle: FontStyle.values.random(),
       letterSpacing: Random().nextDoubleInRange(0, 2),
       wordSpacing: Random().nextDoubleInRange(0, 2),
       height: Random().nextDoubleInRange(0, 2),
@@ -337,6 +324,9 @@ class RandomGenerator {
         TextDecoration.lineThrough,
         TextDecoration.overline,
       ].random(),
+      decorationColor: RandomGenerator.color(),
+      decorationStyle: TextDecorationStyle.values.random(),
+      fontFamily: 'Roboto',
     );
   }
 }
