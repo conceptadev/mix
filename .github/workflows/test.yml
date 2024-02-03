@@ -31,11 +31,14 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Run DCM
-        uses: CQLabs/dcm-action@v1
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          folders: lib
-          pull_request_comment_on_fail: true
+        run: dcm analyze lib --fatal-style --fatal-performance --fatal-warnings
+
+      # - name: Run DCM
+      #   uses: CQLabs/dcm-action@v1
+      #   with:
+      #     github_token: ${{ secrets.GITHUB_TOKEN }}
+      #     folders: lib
+      #     pull_request_comment_on_fail: true
           
         
       - run: flutter test
