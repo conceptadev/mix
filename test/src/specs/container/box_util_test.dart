@@ -101,6 +101,42 @@ void main() {
 
         expect(container.width, 10);
       });
+
+      test('decoration() returns correct instance', () {
+        final container = boxUtility.decoration(
+          color: Colors.amber,
+          borderRadius: BorderRadius.circular(10),
+        );
+
+        expect(container.decoration!.color, const ColorDto(Colors.amber));
+
+        final decorationDTO = container.decoration as BoxDecorationDto;
+        expect(
+          decorationDTO.borderRadius,
+          BorderRadiusGeometryDto.from(BorderRadius.circular(10)),
+        );
+      });
+
+      test('foregroundDecoration() returns correct instance', () {
+        final container = boxUtility.foregroundDecoration(
+          color: Colors.amber,
+          borderRadius: BorderRadius.circular(10),
+        );
+
+        expect(
+          container.foregroundDecoration!.color,
+          const ColorDto(Colors.amber),
+          reason: 'The color is not correct',
+        );
+
+        final foregroundDecorationDTO =
+            container.foregroundDecoration as BoxDecorationDto;
+        expect(
+          foregroundDecorationDTO.borderRadius,
+          BorderRadiusGeometryDto.from(BorderRadius.circular(10)),
+          reason: 'The BorderRadius is not correct',
+        );
+      });
     },
   );
 }
