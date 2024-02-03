@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import '../../../core/attribute.dart';
 import '../../../factory/mix_provider_data.dart';
 
+@immutable
 class DecorationImageDto extends Dto<DecorationImage>
     with Mergeable<DecorationImageDto> {
   final ImageProvider? image;
@@ -25,8 +26,7 @@ class DecorationImageDto extends Dto<DecorationImage>
     this.isAntiAlias,
   });
 
-  static DecorationImageDto? maybeFrom(DecorationImage? image) {
-    if (image == null) return null;
+  static DecorationImageDto from(DecorationImage image) {
     return DecorationImageDto(
       image: image.image,
       fit: image.fit,
@@ -37,6 +37,10 @@ class DecorationImageDto extends Dto<DecorationImage>
       invertColors: image.invertColors,
       isAntiAlias: image.isAntiAlias,
     );
+  }
+
+  static DecorationImageDto? maybeFrom(DecorationImage? image) {
+    return image != null ? from(image) : null;
   }
 
   @override
@@ -54,6 +58,27 @@ class DecorationImageDto extends Dto<DecorationImage>
   }
 
   @override
+  DecorationImage resolve(MixData mix) {
+    const defaultDecoration = DecorationImage(image: AssetImage(''));
+
+    assert(
+      image != null,
+      'ImageProvider is required for DecorationImage',
+    );
+
+    return DecorationImage(
+      image: image!,
+      fit: fit,
+      alignment: alignment ?? defaultDecoration.alignment,
+      centerSlice: centerSlice,
+      repeat: repeat ?? defaultDecoration.repeat,
+      filterQuality: filterQuality ?? defaultDecoration.filterQuality,
+      invertColors: invertColors ?? defaultDecoration.invertColors,
+      isAntiAlias: isAntiAlias ?? defaultDecoration.isAntiAlias,
+    );
+  }
+
+  @override
   List<Object?> get props => [
         image,
         fit,
@@ -64,18 +89,4 @@ class DecorationImageDto extends Dto<DecorationImage>
         invertColors,
         isAntiAlias,
       ];
-
-  @override
-  DecorationImage resolve(MixData mix) {
-    return DecorationImage(
-      image: image ?? const AssetImage(''),
-      fit: fit,
-      alignment: alignment ?? Alignment.center,
-      centerSlice: centerSlice,
-      repeat: repeat ?? ImageRepeat.noRepeat,
-      filterQuality: filterQuality ?? FilterQuality.low,
-      invertColors: invertColors ?? false,
-      isAntiAlias: isAntiAlias ?? false,
-    );
-  }
 }

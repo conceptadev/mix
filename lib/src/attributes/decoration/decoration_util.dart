@@ -76,7 +76,8 @@ class BoxDecorationUtility<T extends StyleAttribute>
 
   BlendModeUtility<T> get backgroundBlendMode {
     return BlendModeUtility(
-        (blendMode) => _only(backgroundBlendMode: blendMode));
+      (blendMode) => _only(backgroundBlendMode: blendMode),
+    );
   }
 
   BorderDirectionalUtility<T> get borderDirectional {

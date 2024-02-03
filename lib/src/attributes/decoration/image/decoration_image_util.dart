@@ -6,45 +6,7 @@ import 'decoration_image_dto.dart';
 
 class DecorationImageUtility<T extends StyleAttribute>
     extends MixUtility<T, DecorationImageDto> {
-  DecorationImageUtility(super.builder);
-
-  T call(
-    ImageProvider image,
-  ) =>
-      builder(
-        DecorationImageDto(
-          image: image,
-        ),
-      );
-
-  BoxFitUtility<T> get fit {
-    return BoxFitUtility((fit) => _only(fit: fit));
-  }
-
-  AlignmentUtility<T> get alignment {
-    return AlignmentUtility((alignment) => _only(alignment: alignment));
-  }
-
-  RectUtility<T> get centerSlice {
-    return RectUtility((centerSlice) => _only(centerSlice: centerSlice));
-  }
-
-  ImageRepeatUtility<T> get repeat {
-    return ImageRepeatUtility((repeat) => _only(repeat: repeat));
-  }
-
-  FilterQualityUtility<T> get filterQuality {
-    return FilterQualityUtility(
-        (filterQuality) => _only(filterQuality: filterQuality));
-  }
-
-  BoolUtility<T> get invertColors {
-    return BoolUtility((invertColors) => _only(invertColors: invertColors));
-  }
-
-  BoolUtility<T> get isAntiAlias {
-    return BoolUtility((isAntiAlias) => _only(isAntiAlias: isAntiAlias));
-  }
+  const DecorationImageUtility(super.builder);
 
   T _only({
     ImageProvider? image,
@@ -69,4 +31,36 @@ class DecorationImageUtility<T extends StyleAttribute>
       ),
     );
   }
+
+  BoxFitUtility<T> get fit {
+    return BoxFitUtility((fit) => _only(fit: fit));
+  }
+
+  AlignmentUtility<T> get alignment {
+    return AlignmentUtility((alignment) => _only(alignment: alignment));
+  }
+
+  RectUtility<T> get centerSlice {
+    return RectUtility((centerSlice) => _only(centerSlice: centerSlice));
+  }
+
+  ImageRepeatUtility<T> get repeat {
+    return ImageRepeatUtility((repeat) => _only(repeat: repeat));
+  }
+
+  FilterQualityUtility<T> get filterQuality {
+    return FilterQualityUtility(
+      (filterQuality) => _only(filterQuality: filterQuality),
+    );
+  }
+
+  BoolUtility<T> get invertColors {
+    return BoolUtility((invertColors) => _only(invertColors: invertColors));
+  }
+
+  BoolUtility<T> get isAntiAlias {
+    return BoolUtility((isAntiAlias) => _only(isAntiAlias: isAntiAlias));
+  }
+
+  T call(ImageProvider image) => builder(DecorationImageDto(image: image));
 }
