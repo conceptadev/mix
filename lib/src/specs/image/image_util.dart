@@ -22,13 +22,13 @@ class ImageUtility extends SpecUtility<ImageSpecAttribute> {
     FilterQuality? filterQuality,
   }) {
     return ImageSpecAttribute(
+      centerSlice: centerSlice,
       width: width,
       height: height,
       color: color,
       repeat: repeat,
       fit: fit,
       alignment: alignment,
-      centerSlice: centerSlice,
       colorBlendMode: blendMode,
       filterQuality: filterQuality,
     );
@@ -64,7 +64,8 @@ class ImageUtility extends SpecUtility<ImageSpecAttribute> {
 
   FilterQualityUtility<ImageSpecAttribute> get filterQuality {
     return FilterQualityUtility(
-        (filterQuality) => _only(filterQuality: filterQuality));
+      (filterQuality) => _only(filterQuality: filterQuality),
+    );
   }
 
   BlendModeUtility<ImageSpecAttribute> get blendMode {

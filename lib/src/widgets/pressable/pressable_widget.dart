@@ -179,9 +179,7 @@ class PressableWidgetState extends State<Pressable> {
         focusable: onEnabled && _node.canRequestFocus,
         focused: _node.hasFocus,
         child: widget.disabled
-            ? GestureDetector(
-                child: focusableDetector,
-              )
+            ? GestureDetector(child: focusableDetector)
             : GestureDetector(
                 onTapDown: (_) => updateState(() => _pressed = true),
                 onTapUp: (_) => handleUnpress(),

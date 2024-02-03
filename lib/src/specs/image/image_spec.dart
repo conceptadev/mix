@@ -53,12 +53,12 @@ class ImageSpec extends Spec<ImageSpec> {
       width: lerpDouble(width, other?.width, t),
       height: lerpDouble(height, other?.height, t),
       color: Color.lerp(color, other?.color, t),
-      centerSlice: lerpSnap(centerSlice, other?.centerSlice, t),
       repeat: lerpSnap(repeat, other?.repeat, t),
       fit: lerpSnap(fit, other?.fit, t),
+      alignment: AlignmentGeometry.lerp(alignment, other?.alignment, t),
+      centerSlice: lerpSnap(centerSlice, other?.centerSlice, t),
       filterQuality: lerpSnap(filterQuality, other?.filterQuality, t),
       colorBlendMode: lerpSnap(colorBlendMode, other?.colorBlendMode, t),
-      alignment: AlignmentGeometry.lerp(alignment, other?.alignment, t),
     );
   }
 
@@ -81,8 +81,8 @@ class ImageSpec extends Spec<ImageSpec> {
       color: color ?? this.color,
       repeat: repeat ?? this.repeat,
       fit: fit ?? this.fit,
-      centerSlice: centerSlice ?? this.centerSlice,
       alignment: alignment ?? this.alignment,
+      centerSlice: centerSlice ?? this.centerSlice,
       filterQuality: filterQuality ?? this.filterQuality,
       colorBlendMode: colorBlendMode ?? this.colorBlendMode,
     );
