@@ -93,8 +93,8 @@ const themeConfig = {
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:image" content={ogImage()} />
-        <meta name="twitter:site:domain" content={`${origin}`} />
-        <meta name="twitter:url" content={`${url}`} />
+        <meta name="twitter:site:domain" content={origin} />
+        <meta name="twitter:url" content={url} />
 
         {/* Icons */}
         <meta name="apple-mobile-web-app-title" content={packageName} />
