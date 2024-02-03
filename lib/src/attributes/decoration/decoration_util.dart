@@ -16,6 +16,8 @@ import '../scalars/scalar_util.dart';
 import '../shadow/shadow_dto.dart';
 import '../shadow/shadow_util.dart';
 import 'decoration_dto.dart';
+import 'image/decoration_image_dto.dart';
+import 'image/decoration_image_util.dart';
 
 class DecorationUtility<T extends StyleAttribute>
     extends DtoUtility<T, DecorationDto, Decoration> {
@@ -48,6 +50,7 @@ class BoxDecorationUtility<T extends StyleAttribute>
     List<BoxShadowDto>? boxShadow,
     BoxShape? shape,
     BlendMode? backgroundBlendMode,
+    DecorationImageDto? image,
   }) {
     return builder(
       BoxDecorationDto(
@@ -58,6 +61,7 @@ class BoxDecorationUtility<T extends StyleAttribute>
         boxShadow: boxShadow,
         shape: shape,
         backgroundBlendMode: backgroundBlendMode,
+        image: image,
       ),
     );
   }
@@ -72,7 +76,8 @@ class BoxDecorationUtility<T extends StyleAttribute>
 
   BlendModeUtility<T> get backgroundBlendMode {
     return BlendModeUtility(
-        (blendMode) => _only(backgroundBlendMode: blendMode));
+      (blendMode) => _only(backgroundBlendMode: blendMode),
+    );
   }
 
   BorderDirectionalUtility<T> get borderDirectional {
@@ -119,6 +124,10 @@ class BoxDecorationUtility<T extends StyleAttribute>
     return BoxShadowUtility((BoxShadowDto boxShadow) {
       return _only(boxShadow: [boxShadow]);
     });
+  }
+
+  DecorationImageUtility<T> get image {
+    return DecorationImageUtility((image) => _only(image: image));
   }
 
   T call({
