@@ -13,6 +13,7 @@ class BoxSpec extends Spec<BoxSpec> {
   final EdgeInsetsGeometry? margin;
   final BoxConstraints? constraints;
   final Decoration? decoration;
+  final Decoration? foregroundDecoration;
   final Matrix4? transform;
   final Clip? clipBehavior;
   final double? width;
@@ -24,6 +25,7 @@ class BoxSpec extends Spec<BoxSpec> {
     required this.margin,
     required this.constraints,
     required this.decoration,
+    required this.foregroundDecoration,
     required this.transform,
     required this.clipBehavior,
     required this.width,
@@ -36,6 +38,7 @@ class BoxSpec extends Spec<BoxSpec> {
         margin = null,
         constraints = null,
         decoration = null,
+        foregroundDecoration = null,
         transform = null,
         width = null,
         height = null,
@@ -53,6 +56,7 @@ class BoxSpec extends Spec<BoxSpec> {
     EdgeInsetsGeometry? margin,
     BoxConstraints? constraints,
     Decoration? decoration,
+    Decoration? foregroundDecoration,
     double? width,
     double? height,
     Matrix4? transform,
@@ -65,6 +69,7 @@ class BoxSpec extends Spec<BoxSpec> {
       margin: margin ?? this.margin,
       constraints: constraints ?? this.constraints,
       decoration: decoration ?? this.decoration,
+      foregroundDecoration: foregroundDecoration ?? this.foregroundDecoration,
       transform: transform ?? this.transform,
       clipBehavior: clipBehavior ?? this.clipBehavior,
       width: width ?? this.width,
@@ -80,6 +85,11 @@ class BoxSpec extends Spec<BoxSpec> {
       margin: EdgeInsetsGeometry.lerp(margin, other.margin, t),
       constraints: BoxConstraints.lerp(constraints, other.constraints, t),
       decoration: Decoration.lerp(decoration, other.decoration, t),
+      foregroundDecoration: Decoration.lerp(
+        foregroundDecoration,
+        other.foregroundDecoration,
+        t,
+      ),
       transform: Matrix4Tween(begin: transform, end: other.transform).lerp(t),
       clipBehavior: lerpSnap(clipBehavior, other.clipBehavior, t),
       width: lerpDouble(width, other.width, t),
@@ -96,6 +106,7 @@ class BoxSpec extends Spec<BoxSpec> {
         margin,
         constraints,
         decoration,
+        foregroundDecoration,
         transform,
         clipBehavior,
       ];
