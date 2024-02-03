@@ -1,6 +1,11 @@
 
 include: package:flutter_lints/flutter.yaml
 
+analyzer:
+  exclude: 
+    - "**/*.g.dart"
+    - "**/*.freezed.dart"
+    - "tool/**"
 # For lint rules and documentation, see http://dart-lang.github.io/linter/lints.
 # Uncomment to specify additional rules.
 linter:
@@ -9,27 +14,18 @@ linter:
     public_member_api_docs: false
     prefer_relative_imports: true
 
-analyzer:
-  exclude: 
-    - "**/*.g.dart"
-    - "**/*.freezed.dart"
-    - "tool/**"
-
-
 dart_code_metrics:
-  formatter:
-    line-length: 100
-    cascading-widget-extensions: true
   extends:
     - package:dart_code_metrics_presets/recommended.yaml
     - package:dart_code_metrics_presets/metrics_recommended.yaml
-  # metrics-exclude:
-  #   - test/**
-  # rules-exclude:
-  #   - "test/**"
+  metrics-excludes:
+    - test/**
+  rules-exclude:
+    - test/**
   rules:
     newline-before-return: true
-    avoid-importing-entrypoint-exports: true
+    avoid-importing-entrypoint-exports:
+        only-in-src: true
     prefer-match-file-name: false
     prefer-correct-callback-field-name: false
     # Remove later when cleaning up

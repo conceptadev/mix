@@ -68,20 +68,23 @@ void main() {
       expect(gradientDto.tileMode, TileMode.clamp);
     });
 
-    test('from method correctly converts LinearGradient to LinearGradientDto', () {
-      const linearGradient = LinearGradient(
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-        colors: [Colors.red, Colors.blue],
-        stops: [0.0, 1.0],
-      );
-      final gradientDto = LinearGradientDto.from(linearGradient);
+    test(
+      'from method correctly converts LinearGradient to LinearGradientDto',
+      () {
+        const linearGradient = LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [Colors.red, Colors.blue],
+          stops: [0.0, 1.0],
+        );
+        final gradientDto = LinearGradientDto.from(linearGradient);
 
-      expect(gradientDto.begin, linearGradient.begin);
-      expect(gradientDto.end, linearGradient.end);
-      expect(gradientDto.colors?.length, linearGradient.colors.length);
-      expect(gradientDto.stops, linearGradient.stops);
-    });
+        expect(gradientDto.begin, linearGradient.begin);
+        expect(gradientDto.end, linearGradient.end);
+        expect(gradientDto.colors?.length, linearGradient.colors.length);
+        expect(gradientDto.stops, linearGradient.stops);
+      },
+    );
 
     test('resolve method returns correct LinearGradient', () {
       const gradientDto = LinearGradientDto(
@@ -173,20 +176,23 @@ void main() {
       expect(gradientDto.tileMode, TileMode.clamp);
     });
 
-    test('from method correctly converts RadialGradient to RadialGradientDto', () {
-      const radialGradient = RadialGradient(
-        center: Alignment.center,
-        radius: 0.5,
-        colors: [Colors.red, Colors.blue],
-        stops: [0.0, 1.0],
-      );
-      final gradientDto = RadialGradientDto.from(radialGradient);
+    test(
+      'from method correctly converts RadialGradient to RadialGradientDto',
+      () {
+        const radialGradient = RadialGradient(
+          center: Alignment.center,
+          radius: 0.5,
+          colors: [Colors.red, Colors.blue],
+          stops: [0.0, 1.0],
+        );
+        final gradientDto = RadialGradientDto.from(radialGradient);
 
-      expect(gradientDto.center, radialGradient.center);
-      expect(gradientDto.radius, radialGradient.radius);
-      expect(gradientDto.colors?.length, radialGradient.colors.length);
-      expect(gradientDto.stops, radialGradient.stops);
-    });
+        expect(gradientDto.center, radialGradient.center);
+        expect(gradientDto.radius, radialGradient.radius);
+        expect(gradientDto.colors?.length, radialGradient.colors.length);
+        expect(gradientDto.stops, radialGradient.stops);
+      },
+    );
 
     test('resolve method returns correct RadialGradient', () {
       const gradientDto = RadialGradientDto(
@@ -279,22 +285,25 @@ void main() {
       expect(gradientDto.tileMode, TileMode.clamp);
     });
 
-    test('from method correctly converts SweepGradient to SweepGradientDto', () {
-      const sweepGradient = SweepGradient(
-        center: Alignment.center,
-        startAngle: 0.0,
-        endAngle: 1.0,
-        colors: [Colors.red, Colors.blue],
-        stops: [0.0, 1.0],
-      );
-      final gradientDto = SweepGradientDto.from(sweepGradient);
+    test(
+      'from method correctly converts SweepGradient to SweepGradientDto',
+      () {
+        const sweepGradient = SweepGradient(
+          center: Alignment.center,
+          startAngle: 0.0,
+          endAngle: 1.0,
+          colors: [Colors.red, Colors.blue],
+          stops: [0.0, 1.0],
+        );
+        final gradientDto = SweepGradientDto.from(sweepGradient);
 
-      expect(gradientDto.center, sweepGradient.center);
-      expect(gradientDto.startAngle, sweepGradient.startAngle);
-      expect(gradientDto.endAngle, sweepGradient.endAngle);
-      expect(gradientDto.colors?.length, sweepGradient.colors.length);
-      expect(gradientDto.stops, sweepGradient.stops);
-    });
+        expect(gradientDto.center, sweepGradient.center);
+        expect(gradientDto.startAngle, sweepGradient.startAngle);
+        expect(gradientDto.endAngle, sweepGradient.endAngle);
+        expect(gradientDto.colors?.length, sweepGradient.colors.length);
+        expect(gradientDto.stops, sweepGradient.stops);
+      },
+    );
 
     test('resolve method returns correct SweepGradient', () {
       const gradientDto = SweepGradientDto(

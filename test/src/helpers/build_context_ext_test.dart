@@ -74,8 +74,14 @@ void main() {
     expect(context.textTheme, Theme.of(context).textTheme);
     expect(context.mixTheme, const MixThemeData.empty());
     expect(context.isDarkMode, Theme.of(context).brightness == Brightness.dark);
-    expect(context.isLandscape, MediaQuery.of(context).orientation == Orientation.landscape);
-    expect(context.isPortrait, MediaQuery.of(context).orientation == Orientation.portrait);
+    expect(
+      context.isLandscape,
+      MediaQuery.of(context).orientation == Orientation.landscape,
+    );
+    expect(
+      context.isPortrait,
+      MediaQuery.of(context).orientation == Orientation.portrait,
+    );
 
     // addTearDown(tester.view.resetPhysicalSize);
   });

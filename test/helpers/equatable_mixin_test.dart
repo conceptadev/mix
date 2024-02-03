@@ -27,7 +27,7 @@ void main() {
       expect(instance.toString(), 'TestClass(1, A)');
     });
 
-    test('Should have correct equality', () {
+    test('Deep nested class Should have correct equality', () {
       final instance1 = DeepNestedClass(deepNestedMap, deepNestedList);
       final instance2 = DeepNestedClass(deepNestedMap, deepNestedList);
       final instance3 = DeepNestedClass(
@@ -51,7 +51,7 @@ void main() {
       expect(instance2, isNot(instance3));
     });
 
-    test('Should have correct hashCode', () {
+    test('Deep nested class Should have correct hashCode', () {
       final instance1 = DeepNestedClass(deepNestedMap, deepNestedList);
       final instance2 = DeepNestedClass(deepNestedMap, deepNestedList);
       final instance3 = DeepNestedClass(
@@ -74,7 +74,7 @@ void main() {
       expect(instance1.hashCode, isNot(instance3.hashCode));
     });
 
-    test('Should have correct toString', () {
+    test('Deep nested class Should have correct toString', () {
       final instance = DeepNestedClass(deepNestedMap, deepNestedList);
       expect(
         instance.toString(),

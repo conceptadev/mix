@@ -49,7 +49,8 @@ class RenderWidgetDecorators extends StatelessWidget {
 
     if (decorators.isEmpty) return current;
 
-    Map<Object, WidgetDecorator> decoratorMap = AttributeMap<WidgetDecorator>(decorators).toMap();
+    Map<Object, WidgetDecorator> decoratorMap =
+        AttributeMap<WidgetDecorator>(decorators).toMap();
 
     final listOfDecorators = {
       ...orderOfDecorators,

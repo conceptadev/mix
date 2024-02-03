@@ -236,7 +236,8 @@ void main() {
   // BorderDirectionalUtility
 
   group('BorderDirectionalUtility', () {
-    const borderDirectional = BorderDirectionalUtility(UtilityTestAttribute.new);
+    const borderDirectional =
+        BorderDirectionalUtility(UtilityTestAttribute.new);
 
     test('borderDirectional.top()', () {
       final result = borderDirectional.top(

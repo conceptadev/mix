@@ -54,7 +54,8 @@ abstract class ShapeBorderDto<Value extends ShapeBorder> extends Dto<Value>
 }
 
 @immutable
-abstract class OutlinedBorderDto<Value extends OutlinedBorder> extends ShapeBorderDto<Value> {
+abstract class OutlinedBorderDto<Value extends OutlinedBorder>
+    extends ShapeBorderDto<Value> {
   final BorderSideDto? side;
 
   const OutlinedBorderDto({this.side});
@@ -84,7 +85,8 @@ abstract class OutlinedBorderDto<Value extends OutlinedBorder> extends ShapeBord
 }
 
 @immutable
-class RoundedRectangleBorderDto extends OutlinedBorderDto<RoundedRectangleBorder> {
+class RoundedRectangleBorderDto
+    extends OutlinedBorderDto<RoundedRectangleBorder> {
   final BorderRadiusGeometryDto? borderRadius;
 
   const RoundedRectangleBorderDto({this.borderRadius, super.side});
@@ -101,7 +103,8 @@ class RoundedRectangleBorderDto extends OutlinedBorderDto<RoundedRectangleBorder
     if (other == null) return this;
 
     return RoundedRectangleBorderDto(
-      borderRadius: borderRadius?.merge(other.borderRadius) ?? other.borderRadius,
+      borderRadius:
+          borderRadius?.merge(other.borderRadius) ?? other.borderRadius,
       side: side?.merge(other.side) ?? other.side,
     );
   }
@@ -154,7 +157,8 @@ class CircleBorderDto extends OutlinedBorderDto<CircleBorder> {
 }
 
 @immutable
-class BeveledRectangleBorderDto extends OutlinedBorderDto<BeveledRectangleBorder> {
+class BeveledRectangleBorderDto
+    extends OutlinedBorderDto<BeveledRectangleBorder> {
   final BorderRadiusGeometryDto? borderRadius;
 
   const BeveledRectangleBorderDto({this.borderRadius, super.side});
@@ -171,7 +175,8 @@ class BeveledRectangleBorderDto extends OutlinedBorderDto<BeveledRectangleBorder
     if (other == null) return this;
 
     return BeveledRectangleBorderDto(
-      borderRadius: borderRadius?.merge(other.borderRadius) ?? other.borderRadius,
+      borderRadius:
+          borderRadius?.merge(other.borderRadius) ?? other.borderRadius,
       side: side?.merge(other.side) ?? other.side,
     );
   }
@@ -188,7 +193,8 @@ class BeveledRectangleBorderDto extends OutlinedBorderDto<BeveledRectangleBorder
   get props => [borderRadius, side];
 }
 
-class ContinuousRectangleBorderDto extends OutlinedBorderDto<ContinuousRectangleBorder> {
+class ContinuousRectangleBorderDto
+    extends OutlinedBorderDto<ContinuousRectangleBorder> {
   final BorderRadiusGeometryDto? borderRadius;
 
   const ContinuousRectangleBorderDto({this.borderRadius, super.side});
@@ -205,7 +211,8 @@ class ContinuousRectangleBorderDto extends OutlinedBorderDto<ContinuousRectangle
     if (other == null) return this;
 
     return ContinuousRectangleBorderDto(
-      borderRadius: borderRadius?.merge(other.borderRadius) ?? other.borderRadius,
+      borderRadius:
+          borderRadius?.merge(other.borderRadius) ?? other.borderRadius,
       side: side?.merge(other.side) ?? other.side,
     );
   }

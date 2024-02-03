@@ -108,9 +108,7 @@ extension WidgetTesterExt on WidgetTester {
     MixThemeData theme = const MixThemeData.empty(),
   }) async {
     await pumpWidget(
-      MaterialApp(
-        home: MixTheme(data: theme, child: widget),
-      ),
+      MaterialApp(home: MixTheme(data: theme, child: widget)),
     );
   }
 
@@ -146,21 +144,17 @@ extension WidgetTesterExt on WidgetTester {
     MixThemeData theme = const MixThemeData.empty(),
   }) async {
     await pumpWidget(
-      MaterialApp(
-        home: MixTheme(data: theme, child: widget),
-      ),
+      MaterialApp(home: MixTheme(data: theme, child: widget)),
     );
   }
 }
 
 // ignore: constant_identifier_names
-const FillWidget = SizedBox(
-  width: 25,
-  height: 25,
-);
+const FillWidget = SizedBox(width: 25, height: 25);
 
 class WrapMixThemeWidget extends StatelessWidget {
-  const WrapMixThemeWidget({required this.child, this.theme, Key? key}) : super(key: key);
+  const WrapMixThemeWidget({required this.child, this.theme, Key? key})
+      : super(key: key);
 
   final Widget child;
   final MixThemeData? theme;
@@ -174,19 +168,23 @@ class WrapMixThemeWidget extends StatelessWidget {
   }
 }
 
-class MockDoubleScalarAttribute extends ScalarAttribute<MockDoubleScalarAttribute, double> {
+class MockDoubleScalarAttribute
+    extends ScalarAttribute<MockDoubleScalarAttribute, double> {
   const MockDoubleScalarAttribute(super.value);
 }
 
-class MockIntScalarAttribute extends ScalarAttribute<MockIntScalarAttribute, int> {
+class MockIntScalarAttribute
+    extends ScalarAttribute<MockIntScalarAttribute, int> {
   const MockIntScalarAttribute(super.value);
 }
 
-class MockBooleanScalarAttribute extends ScalarAttribute<MockBooleanScalarAttribute, bool> {
+class MockBooleanScalarAttribute
+    extends ScalarAttribute<MockBooleanScalarAttribute, bool> {
   const MockBooleanScalarAttribute(super.value);
 }
 
-class MockStringScalarAttribute extends ScalarAttribute<MockStringScalarAttribute, String> {
+class MockStringScalarAttribute
+    extends ScalarAttribute<MockStringScalarAttribute, String> {
   const MockStringScalarAttribute(super.value);
 }
 
@@ -233,7 +231,8 @@ void testScalarAttribute<T extends ScalarAttribute<T, V>, V>(
   });
 }
 
-class UtilityTestAttribute<T> extends ScalarAttribute<UtilityTestAttribute<T>, T> {
+class UtilityTestAttribute<T>
+    extends ScalarAttribute<UtilityTestAttribute<T>, T> {
   const UtilityTestAttribute(super.value);
 }
 

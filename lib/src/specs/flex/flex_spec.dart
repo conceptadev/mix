@@ -42,16 +42,20 @@ class FlexSpec extends Spec<FlexSpec> {
         gap = null;
 
   static FlexSpec of(MixData mix) {
-    return mix.attributeOf<FlexSpecAttribute>()?.resolve(mix) ?? const FlexSpec.empty();
+    return mix.attributeOf<FlexSpecAttribute>()?.resolve(mix) ??
+        const FlexSpec.empty();
   }
 
   @override
   FlexSpec lerp(FlexSpec other, double t) {
     return FlexSpec(
-      crossAxisAlignment: lerpSnap(crossAxisAlignment, other.crossAxisAlignment, t),
-      mainAxisAlignment: lerpSnap(mainAxisAlignment, other.mainAxisAlignment, t),
+      crossAxisAlignment:
+          lerpSnap(crossAxisAlignment, other.crossAxisAlignment, t),
+      mainAxisAlignment:
+          lerpSnap(mainAxisAlignment, other.mainAxisAlignment, t),
       mainAxisSize: lerpSnap(mainAxisSize, other.mainAxisSize, t),
-      verticalDirection: lerpSnap(verticalDirection, other.verticalDirection, t),
+      verticalDirection:
+          lerpSnap(verticalDirection, other.verticalDirection, t),
       direction: lerpSnap(direction, other.direction, t),
       textDirection: lerpSnap(textDirection, other.textDirection, t),
       textBaseline: lerpSnap(textBaseline, other.textBaseline, t),

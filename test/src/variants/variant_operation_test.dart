@@ -27,9 +27,7 @@ void main() {
     testWidgets(
       'should set the same icon color for 2 different variants',
       (WidgetTester tester) async {
-        final style = Style(
-          (_foo | _bar)(icon.color.black()),
-        );
+        final style = Style((_foo | _bar)(icon.color.black()));
 
         await tester.pumpMaterialApp(
           Row(
@@ -49,9 +47,7 @@ void main() {
     testWidgets(
       'should set the same icon color for 3 different variants',
       (WidgetTester tester) async {
-        final style = Style(
-          (_foo | _bar | _fooBar)(icon.color.black()),
-        );
+        final style = Style((_foo | _bar | _fooBar)(icon.color.black()));
 
         await tester.pumpMaterialApp(
           Row(
@@ -74,9 +70,7 @@ void main() {
     testWidgets(
       'should set the icon color when 2 different variants are needed',
       (WidgetTester tester) async {
-        final style = Style(
-          (_foo & _bar)(icon.color.black()),
-        );
+        final style = Style((_foo & _bar)(icon.color.black()));
 
         await tester.pumpMaterialApp(
           Row(
@@ -95,9 +89,7 @@ void main() {
     testWidgets(
       'should set the icon color when 3 different variants are needed',
       (WidgetTester tester) async {
-        final style = Style(
-          (_foo & _bar & _fooBar)(icon.color.black()),
-        );
+        final style = Style((_foo & _bar & _fooBar)(icon.color.black()));
 
         await tester.pumpMaterialApp(
           Row(
@@ -120,9 +112,7 @@ void main() {
     testWidgets(
       'should follow the order of operations and set the icon color when all conditions are met, case with | first',
       (WidgetTester tester) async {
-        final style = Style(
-          ((_foo | _bar) & _fooBar)(icon.color.black()),
-        );
+        final style = Style(((_foo | _bar) & _fooBar)(icon.color.black()));
 
         await tester.pumpMaterialApp(
           Row(
@@ -142,9 +132,7 @@ void main() {
     testWidgets(
       'should follow the order of operations and set the icon color when all conditions are met, case with & first',
       (WidgetTester tester) async {
-        final style = Style(
-          (_foo & _bar | _fooBar)(icon.color.black()),
-        );
+        final style = Style((_foo & _bar | _fooBar)(icon.color.black()));
 
         await tester.pumpMaterialApp(
           Row(

@@ -11,37 +11,41 @@ void main() {
 
     // Testing ColorDto.resolve with standard Colors
     for (var color in colorList) {
-      test('ColorDto.resolve should return the same color as provided for $color', () {
-        final colorDto = ColorDto(color);
-        final resolvedValue = colorDto.resolve(EmptyMixData);
-        expect(resolvedValue, color);
-      });
+      test(
+        'ColorDto.resolve should return the same color as provided for $color',
+        () {
+          final colorDto = ColorDto(color);
+          final resolvedValue = colorDto.resolve(EmptyMixData);
+          expect(resolvedValue, color);
+        },
+      );
     }
 
     // Testing ColorDto.resolve with ColorRef
-    testWidgets('ColorDto.resolve should resolve ColorRef correctly', (tester) async {
-      const testColorToken = ColorToken('test');
+    testWidgets(
+      'ColorDto.resolve should resolve ColorRef correctly',
+      (tester) async {
+        const testColorToken = ColorToken('test');
 
-      await tester.pumpWithMixTheme(
-        Container(),
-        theme: MixThemeData(
-          colors: {testColorToken: Colors.red},
-        ),
-      );
+        await tester.pumpWithMixTheme(
+          Container(),
+          theme: MixThemeData(colors: {testColorToken: Colors.red}),
+        );
 
-      final buildContext = tester.element(find.byType(Container));
+        final buildContext = tester.element(find.byType(Container));
 
-      final mockMixData = MixData.create(buildContext, Style());
+        final mockMixData = MixData.create(buildContext, Style());
 
-      final colorRef = testColorToken();
-      final colorDto = ColorDto(colorRef);
-      final resolvedValue = colorDto.resolve(mockMixData);
+        final colorRef = testColorToken();
+        final colorDto = ColorDto(colorRef);
+        final resolvedValue = colorDto.resolve(mockMixData);
 
-      expect(colorRef, isA<ColorRef>());
-      expect(colorRef.token, testColorToken);
-      expect(resolvedValue, isA<Color>());
-      expect(resolvedValue, Colors.red);
-    });
+        expect(colorRef, isA<ColorRef>());
+        expect(colorRef.token, testColorToken);
+        expect(resolvedValue, isA<Color>());
+        expect(resolvedValue, Colors.red);
+      },
+    );
 
     // Testing maybeFrom method
     test('ColorDto.maybeFrom should handle null correctly', () {
@@ -81,7 +85,10 @@ void main() {
         directives: [OpacityColorDirective(0.5)],
       );
 
-      const colorDto3 = ColorDto.raw(value: Colors.red, directives: [DarkenColorDirective(10)]);
+      const colorDto3 = ColorDto.raw(
+        value: Colors.red,
+        directives: [DarkenColorDirective(10)],
+      );
 
       expect(colorDto1, colorDto2);
       expect(colorDto1, isNot(colorDto3));

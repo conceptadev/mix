@@ -109,8 +109,9 @@ void main() {
   test('Style.create', () {
     const iterations = 10000;
     final stopwatch = Stopwatch()..start();
+    Style style = Style();
     for (int i = 0; i < iterations; i++) {
-      Style.create([
+      style = Style.create([
         box.padding(10),
         box.margin(15),
         box.alignment.center(),
@@ -128,14 +129,16 @@ void main() {
 
     final elapsedTime = stopwatch.elapsedMilliseconds / iterations;
     log('Style.create: $elapsedTime ms');
+    expect(style.length, 0);
   });
 
   // test performance for MixData.create
   test('MixData.create', () {
     const iterations = 10000;
     final stopwatch = Stopwatch()..start();
+    MixData mixData = EmptyMixData;
     for (int i = 0; i < iterations; i++) {
-      MixData.create(
+      mixData = MixData.create(
         MockBuildContext(),
         Style(
           box.padding(10),
@@ -157,6 +160,7 @@ void main() {
     final timeElapsed = stopwatch.elapsedMilliseconds / iterations;
 
     log('MixData.create: $timeElapsed ms');
+    expect(mixData.attributes.length, 0);
   });
 }
 

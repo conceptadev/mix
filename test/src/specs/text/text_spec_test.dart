@@ -28,7 +28,8 @@ void main() {
         ),
       );
 
-      final spec = mix.attributeOf<TextSpecAttribute>()?.resolve(mix) ?? const TextSpec.empty();
+      final spec = mix.attributeOf<TextSpecAttribute>()?.resolve(mix) ??
+          const TextSpec.empty();
 
       expect(spec.overflow, TextOverflow.ellipsis);
       expect(spec.strutStyle, const StrutStyle(fontSize: 20.0));
@@ -39,7 +40,10 @@ void main() {
       expect(spec.textWidthBasis, TextWidthBasis.longestLine);
       expect(
         spec.textHeightBehavior,
-        const TextHeightBehavior(applyHeightToFirstAscent: true, applyHeightToLastDescent: true),
+        const TextHeightBehavior(
+          applyHeightToFirstAscent: true,
+          applyHeightToLastDescent: true,
+        ),
       );
       expect(spec.textDirection, TextDirection.ltr);
       expect(spec.softWrap, true);
@@ -54,8 +58,10 @@ void main() {
         maxLines: 2,
         style: TextStyle(color: Colors.red),
         textWidthBasis: TextWidthBasis.longestLine,
-        textHeightBehavior:
-            TextHeightBehavior(applyHeightToFirstAscent: true, applyHeightToLastDescent: true),
+        textHeightBehavior: TextHeightBehavior(
+          applyHeightToFirstAscent: true,
+          applyHeightToLastDescent: true,
+        ),
         textDirection: TextDirection.ltr,
         softWrap: true,
       );

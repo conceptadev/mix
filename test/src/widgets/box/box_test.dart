@@ -6,20 +6,23 @@ import '../../../helpers/testing_utils.dart';
 
 void main() {
   group('Box', () {
-    testWidgets('by default should not pass its style through the widget tree', (tester) async {
-      await tester.pumpWidget(
-        Box(
-          style: Style(icon.color.black()),
-          child: Box(
-            child: WidgetWithTestableBuild((context) {
-              final inheritedStyle = MixProvider.maybeOf(context);
+    testWidgets(
+      'by default should not pass its style through the widget tree',
+      (tester) async {
+        await tester.pumpWidget(
+          Box(
+            style: Style(icon.color.black()),
+            child: Box(
+              child: WidgetWithTestableBuild((context) {
+                final inheritedStyle = MixProvider.maybeOf(context);
 
-              expect(inheritedStyle?.attributes.length, 0);
-            }),
+                expect(inheritedStyle?.attributes.length, 0);
+              }),
+            ),
           ),
-        ),
-      );
-    });
+        );
+      },
+    );
 
     testWidgets(
       'when the property `inherit` is true should pass its style through the widget tree',
@@ -144,7 +147,10 @@ void main() {
         );
 
         expect(
-          find.descendant(of: find.byKey(key), matching: find.byType(RenderWidgetDecorators)),
+          find.descendant(
+            of: find.byKey(key),
+            matching: find.byType(RenderWidgetDecorators),
+          ),
           findsOneWidget,
         );
 

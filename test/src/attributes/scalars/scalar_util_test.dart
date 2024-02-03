@@ -29,7 +29,10 @@ void main() {
       expect(utility.none().value, Clip.none);
       expect(utility.hardEdge().value, Clip.hardEdge);
       expect(utility.antiAlias().value, Clip.antiAlias);
-      expect(utility.antiAliasWithSaveLayer().value, Clip.antiAliasWithSaveLayer);
+      expect(
+        utility.antiAliasWithSaveLayer().value,
+        Clip.antiAliasWithSaveLayer,
+      );
     });
   });
 
@@ -181,7 +184,10 @@ void main() {
       final alignmnetDirectional = utility.only(y: 8, start: 10);
 
       expect(alignment.value, equals(const Alignment(10, 8)));
-      expect(alignmnetDirectional.value, equals(const AlignmentDirectional(10, 8)));
+      expect(
+        alignmnetDirectional.value,
+        equals(const AlignmentDirectional(10, 8)),
+      );
 
       expect(() => utility.only(x: 10, start: 8), throwsAssertionError);
     });
@@ -343,7 +349,10 @@ void main() {
 
     test('translation', () {
       expect(utility.translationValues(20, 20, 20).value, isA<Matrix4>());
-      expect(utility.translationValues(20, 20, 20).value, Matrix4.translationValues(20, 20, 20));
+      expect(
+        utility.translationValues(20, 20, 20).value,
+        Matrix4.translationValues(20, 20, 20),
+      );
     });
   });
 

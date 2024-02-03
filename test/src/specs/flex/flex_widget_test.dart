@@ -28,10 +28,7 @@ void main() {
     'Verify if widgets are wrapped with Padding when there are 1 children',
     (tester) async {
       await tester.pumpWidget(
-        VBox(
-          style: Style(flex.gap(10)),
-          children: const [SizedBox()],
-        ),
+        VBox(style: Style(flex.gap(10)), children: const [SizedBox()]),
       );
 
       final mixedFlex = find.byType(MixedFlex);
@@ -43,19 +40,22 @@ void main() {
     },
   );
 
-  test('Verify if widgets are wrapped with Padding when there are 3 children', () {
-    var sut = MixedFlex(
-      mix: EmptyMixData,
-      direction: Axis.horizontal,
-      children: const [SizedBox(), SizedBox(), SizedBox()],
-    ).buildChildren(10);
+  test(
+    'Verify if widgets are wrapped with Padding when there are 3 children',
+    () {
+      var sut = MixedFlex(
+        mix: EmptyMixData,
+        direction: Axis.horizontal,
+        children: const [SizedBox(), SizedBox(), SizedBox()],
+      ).buildChildren(10);
 
-    expect(sut.length, 3);
+      expect(sut.length, 3);
 
-    for (var i = 0; i < sut.length; i++) {
-      expect(sut[i], i == sut.length - 1 ? isA<SizedBox>() : isA<Padding>());
-    }
-  });
+      for (var i = 0; i < sut.length; i++) {
+        expect(sut[i], i == sut.length - 1 ? isA<SizedBox>() : isA<Padding>());
+      }
+    },
+  );
 
   test('Verify if widgets are wrapped with Padding when there is 1 child', () {
     var sut = MixedFlex(
@@ -71,45 +71,51 @@ void main() {
     }
   });
 
-  test('Verify if when MixedFlex has direction horizontal the padding is only in the right', () {
-    var sut = MixedFlex(
-      mix: EmptyMixData,
-      direction: Axis.horizontal,
-      children: const [SizedBox(), SizedBox()],
-    ).buildChildren(10);
+  test(
+    'Verify if when MixedFlex has direction horizontal the padding is only in the right',
+    () {
+      var sut = MixedFlex(
+        mix: EmptyMixData,
+        direction: Axis.horizontal,
+        children: const [SizedBox(), SizedBox()],
+      ).buildChildren(10);
 
-    for (var i = 0; i < sut.length; i++) {
-      if (i == sut.length - 1) continue;
+      for (var i = 0; i < sut.length; i++) {
+        if (i == sut.length - 1) continue;
 
-      final paddingWidget = sut[i] as Padding;
-      final edgeInsets = paddingWidget.padding.resolve(TextDirection.ltr);
+        final paddingWidget = sut[i] as Padding;
+        final edgeInsets = paddingWidget.padding.resolve(TextDirection.ltr);
 
-      expect(edgeInsets.right, 10);
-      expect(edgeInsets.left, 0);
-      expect(edgeInsets.top, 0);
-      expect(edgeInsets.bottom, 0);
-    }
-  });
+        expect(edgeInsets.right, 10);
+        expect(edgeInsets.left, 0);
+        expect(edgeInsets.top, 0);
+        expect(edgeInsets.bottom, 0);
+      }
+    },
+  );
 
-  test('Verify if when MixedFlex has direction horizontal the padding is only in the right', () {
-    var sut = MixedFlex(
-      mix: EmptyMixData,
-      direction: Axis.vertical,
-      children: const [SizedBox(), SizedBox()],
-    ).buildChildren(10);
+  test(
+    'Verify if when MixedFlex has direction vertical the padding is only in the right',
+    () {
+      var sut = MixedFlex(
+        mix: EmptyMixData,
+        direction: Axis.vertical,
+        children: const [SizedBox(), SizedBox()],
+      ).buildChildren(10);
 
-    for (var i = 0; i < sut.length; i++) {
-      if (i == sut.length - 1) continue;
+      for (var i = 0; i < sut.length; i++) {
+        if (i == sut.length - 1) continue;
 
-      final paddingWidget = sut[i] as Padding;
-      final edgeInsets = paddingWidget.padding.resolve(TextDirection.ltr);
+        final paddingWidget = sut[i] as Padding;
+        final edgeInsets = paddingWidget.padding.resolve(TextDirection.ltr);
 
-      expect(edgeInsets.right, 0);
-      expect(edgeInsets.left, 0);
-      expect(edgeInsets.top, 0);
-      expect(edgeInsets.bottom, 10);
-    }
-  });
+        expect(edgeInsets.right, 0);
+        expect(edgeInsets.left, 0);
+        expect(edgeInsets.top, 0);
+        expect(edgeInsets.bottom, 10);
+      }
+    },
+  );
 
   testWidgets(
     'HBox with gap() rendered correctly in complex widget tree',

@@ -10,7 +10,10 @@ void main() {
     test('mix() should return the correct color', () {
       final mixedColor = color1.mix(color2, 50);
 
-      expect(mixedColor, const Color.fromARGB(255, 139, 109, 149)); // Colors.purple
+      expect(
+        mixedColor,
+        const Color.fromARGB(255, 139, 109, 149),
+      ); // Colors.purple
     });
 
     test('lighten() should return the correct color', () {

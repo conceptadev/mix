@@ -74,7 +74,8 @@ void main() {
         end: BorderSideDto(width: 20.0),
       );
 
-      final resolvedBorder = borderDto.resolve(EmptyMixData) as BorderDirectional;
+      final resolvedBorder =
+          borderDto.resolve(EmptyMixData) as BorderDirectional;
 
       expect(resolvedBorder.top, const BorderSide(width: 5.0));
       expect(resolvedBorder.bottom, const BorderSide(width: 10.0));
@@ -170,18 +171,21 @@ void main() {
     });
 
     // resolve
-    test('resolve should correctly create a BorderSide from a BorderSideDto', () {
-      const borderSideDto = BorderSideDto(
-        color: ColorDto(Colors.red),
-        style: BorderStyle.solid,
-        width: 1.0,
-      );
+    test(
+      'resolve should correctly create a BorderSide from a BorderSideDto',
+      () {
+        const borderSideDto = BorderSideDto(
+          color: ColorDto(Colors.red),
+          style: BorderStyle.solid,
+          width: 1.0,
+        );
 
-      final resolved = borderSideDto.resolve(EmptyMixData);
+        final resolved = borderSideDto.resolve(EmptyMixData);
 
-      expect(resolved.width, borderSideDto.width);
-      expect(resolved.color, borderSideDto.color?.resolve(EmptyMixData));
-      expect(resolved.style, borderSideDto.style);
-    });
+        expect(resolved.width, borderSideDto.width);
+        expect(resolved.color, borderSideDto.color?.resolve(EmptyMixData));
+        expect(resolved.style, borderSideDto.style);
+      },
+    );
   });
 }

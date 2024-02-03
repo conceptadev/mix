@@ -26,7 +26,10 @@ void main() {
     expect(mixData.attributes, isInstanceOf<AttributeMap>());
     expect(mixData.tokens, isInstanceOf<MixTokenResolver>());
     expect(mixData.attributes.length, 4);
-    expect(mixData.attributeOf<MockIntScalarAttribute>(), isInstanceOf<MockIntScalarAttribute>());
+    expect(
+      mixData.attributeOf<MockIntScalarAttribute>(),
+      isInstanceOf<MockIntScalarAttribute>(),
+    );
     expect(
       mixData.attributeOf<MockStringScalarAttribute>(),
       const MockStringScalarAttribute('test'),
@@ -35,7 +38,10 @@ void main() {
       mixData.attributeOf<MockStringScalarAttribute>(),
       isInstanceOf<MockStringScalarAttribute>(),
     );
-    expect(mixData.attributeOf<MockDoubleScalarAttribute>(), const MockDoubleScalarAttribute(2.0));
+    expect(
+      mixData.attributeOf<MockDoubleScalarAttribute>(),
+      const MockDoubleScalarAttribute(2.0),
+    );
 
     expect(
       mixData.attributeOf<MockBooleanScalarAttribute>(),
@@ -85,7 +91,10 @@ void main() {
       const MockBooleanScalarAttribute(true),
     );
 
-    expect(mergedMixData.attributeOf<MockIntScalarAttribute>(), const MockIntScalarAttribute(1));
+    expect(
+      mergedMixData.attributeOf<MockIntScalarAttribute>(),
+      const MockIntScalarAttribute(1),
+    );
     expect(
       mergedMixData.attributeOf<MockStringScalarAttribute>(),
       const MockStringScalarAttribute('test'),
@@ -120,7 +129,8 @@ void main() {
   );
 }
 
-class _NonInheritableAttribute extends ScalarAttribute<MockIntScalarAttribute, int?> {
+class _NonInheritableAttribute
+    extends ScalarAttribute<MockIntScalarAttribute, int?> {
   const _NonInheritableAttribute() : super(null);
 
   @override

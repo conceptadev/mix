@@ -13,7 +13,8 @@ class MixTheme extends InheritedWidget {
   const MixTheme({required super.child, required this.data, super.key});
 
   static MixThemeData of(BuildContext context) {
-    final themeData = context.dependOnInheritedWidgetOfExactType<MixTheme>()?.data;
+    final themeData =
+        context.dependOnInheritedWidgetOfExactType<MixTheme>()?.data;
 
     assert(themeData != null, 'No MixTheme found in context');
 
@@ -65,7 +66,8 @@ class MixThemeData with Comparable {
     return MixThemeData.raw(
       textStyles: StyledTokens(textStyles ?? const {}),
       colors: StyledTokens(colors ?? const {}),
-      breakpoints: _breakpointTokenMap.merge(StyledTokens(breakpoints ?? const {})),
+      breakpoints:
+          _breakpointTokenMap.merge(StyledTokens(breakpoints ?? const {})),
       radii: _radiusTokenMap.merge(StyledTokens(radii ?? const {})),
       space: _spaceTokenMap.merge(StyledTokens(space ?? const {})),
     );
@@ -97,9 +99,11 @@ class MixThemeData with Comparable {
     Map<RadiusToken, Radius>? radii,
   }) {
     return MixThemeData.raw(
-      textStyles: textStyles == null ? this.textStyles : StyledTokens(textStyles),
+      textStyles:
+          textStyles == null ? this.textStyles : StyledTokens(textStyles),
       colors: colors == null ? this.colors : StyledTokens(colors),
-      breakpoints: breakpoints == null ? this.breakpoints : StyledTokens(breakpoints),
+      breakpoints:
+          breakpoints == null ? this.breakpoints : StyledTokens(breakpoints),
       radii: radii == null ? this.radii : StyledTokens(radii),
       space: space == null ? this.space : StyledTokens(space),
     );
@@ -138,5 +142,6 @@ final _breakpointTokenMap = StyledTokens({
   BreakpointToken.xsmall: const Breakpoint(maxWidth: 599),
   BreakpointToken.small: const Breakpoint(minWidth: 600, maxWidth: 1023),
   BreakpointToken.medium: const Breakpoint(minWidth: 1024, maxWidth: 1439),
-  BreakpointToken.large: const Breakpoint(minWidth: 1440, maxWidth: double.infinity),
+  BreakpointToken.large:
+      const Breakpoint(minWidth: 1440, maxWidth: double.infinity),
 });

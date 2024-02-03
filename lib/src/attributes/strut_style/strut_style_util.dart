@@ -5,8 +5,10 @@ import '../scalars/scalar_util.dart';
 import 'strut_style_dto.dart';
 
 @immutable
-class StrutStyleUtility<T extends StyleAttribute> extends DtoUtility<T, StrutStyleDto, StrutStyle> {
-  const StrutStyleUtility(super.builder) : super(valueToDto: StrutStyleDto.from);
+class StrutStyleUtility<T extends StyleAttribute>
+    extends DtoUtility<T, StrutStyleDto, StrutStyle> {
+  const StrutStyleUtility(super.builder)
+      : super(valueToDto: StrutStyleDto.from);
 
   FontFamilyUtility<T> get fontFamily {
     return FontFamilyUtility((fontFamily) => call(fontFamily: fontFamily));

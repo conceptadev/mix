@@ -27,7 +27,8 @@ class SpacingUtility<T extends StyleAttribute>
   /// Comment goes here
   const SpacingUtility(super.builder) : super(valueToDto: SpacingDto.from);
 
-  SpacingDirectionalUtility<T> get directional => SpacingDirectionalUtility(builder);
+  SpacingDirectionalUtility<T> get directional =>
+      SpacingDirectionalUtility(builder);
 
   /// Applies uniform horizontal (left and right) spacing to a widget.
   SpacingSideUtility<T> get horizontal {
@@ -46,7 +47,8 @@ class SpacingUtility<T extends StyleAttribute>
   /// Creates a spacing utility that applies uniform spacing to all sides of a widget.
   SpacingSideUtility<T> get all {
     return SpacingSideUtility(
-      (double value) => only(top: value, bottom: value, left: value, right: value),
+      (double value) =>
+          only(top: value, bottom: value, left: value, right: value),
     );
   }
 
@@ -187,7 +189,8 @@ class SpacingUtility<T extends StyleAttribute>
 @immutable
 class SpacingDirectionalUtility<T extends StyleAttribute>
     extends DtoUtility<T, SpacingDto, EdgeInsetsGeometry> {
-  const SpacingDirectionalUtility(super.builder) : super(valueToDto: SpacingDto.from);
+  const SpacingDirectionalUtility(super.builder)
+      : super(valueToDto: SpacingDto.from);
 
   /// Creates a spacing utility that applies uniform spacing to all sides of a widget.
   ///
@@ -411,7 +414,8 @@ class SpacingDirectionalUtility<T extends StyleAttribute>
 /// * [SpacingDto], the data transfer object for [SpacingDto]
 /// {@endtemplate}
 @immutable
-class SpacingSideUtility<T extends StyleAttribute> extends MixUtility<T, double> {
+class SpacingSideUtility<T extends StyleAttribute>
+    extends MixUtility<T, double> {
   /// Creates a `SpacingSideUtility` with a builder function.
   const SpacingSideUtility(super.builder);
 

@@ -19,6 +19,7 @@ abstract class Decorator<Self extends Decorator<Self>> extends StyleAttribute {
   Widget build(MixData mix, Widget child);
 }
 
-abstract class WidgetDecorator<Self extends WidgetDecorator<Self>> extends Decorator<Self> {
+abstract class WidgetDecorator<Self extends WidgetDecorator<Self>>
+    extends Decorator<Self> {
   const WidgetDecorator({super.key});
 }

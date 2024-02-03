@@ -297,7 +297,8 @@ class BoxSpecUtility extends SpecUtility<BoxSpecAttribute> {
 
   BoxDecorationUtility<BoxSpecAttribute> get foregroundDecoration {
     return BoxDecorationUtility(
-      (foregroundDecoration) => only(foregroundDecoration: foregroundDecoration),
+      (foregroundDecoration) =>
+          only(foregroundDecoration: foregroundDecoration),
     );
   }
 
@@ -335,14 +336,16 @@ class BoxSpecUtility extends SpecUtility<BoxSpecAttribute> {
     return ClipUtility((clipBehavior) => only(clipBehavior: clipBehavior));
   }
 
-  BorderRadiusGeometryUtility<BoxSpecAttribute> get borderRadius => decoration.borderRadius;
+  BorderRadiusGeometryUtility<BoxSpecAttribute> get borderRadius =>
+      decoration.borderRadius;
 
-  BorderRadiusDirectionalUtility<BoxSpecAttribute> get borderRadiusDirectional =>
-      decoration.borderRadiusDirectional;
+  BorderRadiusDirectionalUtility<BoxSpecAttribute>
+      get borderRadiusDirectional => decoration.borderRadiusDirectional;
 
   BorderUtility<BoxSpecAttribute> get border => decoration.border;
 
-  BorderDirectionalUtility<BoxSpecAttribute> get borderDirectional => decoration.borderDirectional;
+  BorderDirectionalUtility<BoxSpecAttribute> get borderDirectional =>
+      decoration.borderDirectional;
 
   BoxShadowListUtility<BoxSpecAttribute> get shadows => decoration.boxShadows;
 
@@ -357,9 +360,11 @@ class BoxSpecUtility extends SpecUtility<BoxSpecAttribute> {
 
   DoubleUtility<BoxSpecAttribute> get minHeight => constraints.minHeight;
 
-  DoubleUtility<BoxSpecAttribute> get width => DoubleUtility((width) => only(width: width));
+  DoubleUtility<BoxSpecAttribute> get width =>
+      DoubleUtility((width) => only(width: width));
 
-  DoubleUtility<BoxSpecAttribute> get height => DoubleUtility((height) => only(height: height));
+  DoubleUtility<BoxSpecAttribute> get height =>
+      DoubleUtility((height) => only(height: height));
 
   BoxSpecAttribute only({
     AlignmentGeometry? alignment,

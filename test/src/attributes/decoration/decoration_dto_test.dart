@@ -31,7 +31,10 @@ void main() {
       return const Placeholder();
     });
     test('resolve returns correct BoxDecoration with specific values', () {
-      final attr = BoxDecorationDto(color: Colors.red.toDto(), gradient: linearGradientDto);
+      final attr = BoxDecorationDto(
+        color: Colors.red.toDto(),
+        gradient: linearGradientDto,
+      );
       final decoration = attr.resolve(EmptyMixData);
       expect(decoration.color, Colors.red);
       expect(decoration.gradient, linearGradient);
@@ -99,10 +102,12 @@ void main() {
   });
 
   group('DecorationDto Merge Tests', () {
-    const linearGradientDto =
-        LinearGradientDto(colors: [ColorDto(Colors.red), ColorDto(Colors.blue)]);
-    const otherLinearGradientDto =
-        LinearGradientDto(colors: [ColorDto(Colors.yellow), ColorDto(Colors.green)]);
+    const linearGradientDto = LinearGradientDto(
+      colors: [ColorDto(Colors.red), ColorDto(Colors.blue)],
+    );
+    const otherLinearGradientDto = LinearGradientDto(
+      colors: [ColorDto(Colors.yellow), ColorDto(Colors.green)],
+    );
 
     const boxShadowDto = BoxShadowDto(
       color: ColorDto(Colors.black),

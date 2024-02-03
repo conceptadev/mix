@@ -20,7 +20,7 @@ void main() {
         leading: 1.0,
       );
 
-      expect(strutStyleUtility.call, isA<Function>());
+      expect(strutStyleUtility(), isA<UtilityTestAttribute>());
       expect(strutStyle.value, isA<StrutStyleDto>());
       expect(strutStyle.value.fontFamily, 'Roboto');
       expect(strutStyle.value.fontSize, 24.0);

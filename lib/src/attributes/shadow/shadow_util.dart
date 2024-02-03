@@ -106,7 +106,8 @@ class ShadowUtility<T extends StyleAttribute> extends MixUtility<T, ShadowDto> {
 /// Utility class for creating and manipulating a list of [BoxShadow] attributes.
 ///
 /// Allows for the creation of a list of box shadows, useful for applying multiple shadows to a single element.
-class BoxShadowListUtility<T extends StyleAttribute> extends MixUtility<T, List<BoxShadowDto>> {
+class BoxShadowListUtility<T extends StyleAttribute>
+    extends MixUtility<T, List<BoxShadowDto>> {
   const BoxShadowListUtility(super.builder);
 
   /// Method to create a list of box shadows from a list of [BoxShadow].
@@ -130,7 +131,8 @@ class BoxShadowListUtility<T extends StyleAttribute> extends MixUtility<T, List<
 ///
 /// Allows setting of color, offset, blur radius, and spread radius for a box shadow.
 /// Useful for adding depth and elevation effects to Flutter widgets.
-class BoxShadowUtility<T extends StyleAttribute> extends DtoUtility<T, BoxShadowDto, BoxShadow> {
+class BoxShadowUtility<T extends StyleAttribute>
+    extends DtoUtility<T, BoxShadowDto, BoxShadow> {
   const BoxShadowUtility(super.builder) : super(valueToDto: BoxShadowDto.from);
 
   T _only({
@@ -225,7 +227,8 @@ class BoxShadowUtility<T extends StyleAttribute> extends DtoUtility<T, BoxShadow
 ///
 /// Provides convenience methods for standard material design elevations. This class
 /// simplifies the process of applying consistent elevation effects across the application.
-class ElevationUtility<T extends StyleAttribute> extends MixUtility<T, List<BoxShadowDto>> {
+class ElevationUtility<T extends StyleAttribute>
+    extends MixUtility<T, List<BoxShadowDto>> {
   const ElevationUtility(super.builder);
 
   /// Method to set elevation based on material design standards.

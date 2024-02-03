@@ -5,8 +5,8 @@ import '../../factory/mix_provider_data.dart';
 import '../color/color_dto.dart';
 
 @immutable
-abstract class ShadowDtoImpl<Self extends ShadowDtoImpl<Self, Value>, Value extends Shadow>
-    extends Dto<Value> with Mergeable<Self> {
+abstract class ShadowDtoImpl<Self extends ShadowDtoImpl<Self, Value>,
+    Value extends Shadow> extends Dto<Value> with Mergeable<Self> {
   final ColorDto? color;
   final Offset? offset;
   final double? blurRadius;

@@ -16,16 +16,8 @@ void main() {
       StyledStack(
         style: style,
         children: [
-          Container(
-            color: const Color(0xFF000000),
-            width: 100,
-            height: 100,
-          ),
-          Container(
-            color: const Color(0xFF0000FF),
-            width: 50,
-            height: 50,
-          ),
+          Container(color: const Color(0xFF000000), width: 100, height: 100),
+          Container(color: const Color(0xFF0000FF), width: 50, height: 50),
         ],
       ),
     );
@@ -49,9 +41,7 @@ void main() {
       backgroundColor(Colors.red),
     );
 
-    await tester.pumpMaterialApp(
-      ZBox(style: style, children: const []),
-    );
+    await tester.pumpMaterialApp(ZBox(style: style, children: const []));
 
     final stackWidget = tester.widget<Stack>(find.byType(Stack));
     final container = tester.widget<Container>(find.byType(Container));

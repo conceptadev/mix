@@ -53,7 +53,10 @@ void main() {
     test('color() returns correct instance', () {
       final container = boxUtility.color(Colors.blue);
 
-      expect((container.decoration as BoxDecorationDto).color, const ColorDto(Colors.blue));
+      expect(
+        (container.decoration as BoxDecorationDto).color,
+        const ColorDto(Colors.blue),
+      );
     });
 
     test('constraints() returns correct instance', () {
@@ -117,7 +120,8 @@ void main() {
         reason: 'The color is not correct',
       );
 
-      final foregroundDecorationDTO = container.foregroundDecoration as BoxDecorationDto;
+      final foregroundDecorationDTO =
+          container.foregroundDecoration as BoxDecorationDto;
       expect(
         foregroundDecorationDTO.borderRadius,
         BorderRadiusGeometryDto.from(BorderRadius.circular(10)),

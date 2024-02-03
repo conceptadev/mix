@@ -55,7 +55,8 @@ void main() {
       const attr1 = MockIntScalarAttribute(2);
       const attr2 = MockBooleanScalarAttribute(true);
       final mixableMap = AttributeMap([attr1, attr2]);
-      final retrievedAttribute = mixableMap.attributeOfType<MockBooleanScalarAttribute>();
+      final retrievedAttribute =
+          mixableMap.attributeOfType<MockBooleanScalarAttribute>();
 
       expect(retrievedAttribute, isNotNull);
       expect(retrievedAttribute, attr2);

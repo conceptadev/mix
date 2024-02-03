@@ -15,11 +15,11 @@ class RandomGenerator {
   }) {
     final random = Random();
 
-    minWidth ??= random.nextDouble() * 200;
-    minHeight ??= random.nextDouble() * 200;
+    minWidth ??= (random.nextDouble() * 200);
+    minHeight ??= (random.nextDouble() * 200);
 
-    maxHeight ??= minWidth + random.nextDouble() * 200;
-    maxWidth ??= minHeight + random.nextDouble() * 200;
+    maxHeight ??= minWidth + (random.nextDouble() * 200);
+    maxWidth ??= minHeight + (random.nextDouble() * 200);
 
     return BoxConstraints(
       minWidth: minWidth,
@@ -44,9 +44,9 @@ class RandomGenerator {
     return StrutStyle(
       fontFamily: fontFamily ?? 'Roboto',
       fontFamilyFallback: fontFamilyFallback ?? ['Roboto'],
-      fontSize: fontSize ?? random.nextDouble() * 20,
-      height: height ?? random.nextDouble() * 20,
-      leading: leading ?? random.nextDouble() * 20,
+      fontSize: fontSize ?? (random.nextDouble() * 20),
+      height: height ?? (random.nextDouble() * 20),
+      leading: leading ?? (random.nextDouble() * 20),
       fontWeight: fontWeight ?? FontWeight.values.random(),
       fontStyle: fontStyle ?? FontStyle.values.random(),
       forceStrutHeight: forceStrutHeight ?? random.nextBool(),
@@ -62,10 +62,10 @@ class RandomGenerator {
     final random = Random();
 
     return EdgeInsets.only(
-      left: left ?? random.nextDouble() * 20,
-      top: top ?? random.nextDouble() * 20,
-      right: right ?? random.nextDouble() * 20,
-      bottom: bottom ?? random.nextDouble() * 20,
+      left: left ?? (random.nextDouble() * 20),
+      top: top ?? (random.nextDouble() * 20),
+      right: right ?? (random.nextDouble() * 20),
+      bottom: bottom ?? (random.nextDouble() * 20),
     );
   }
 
@@ -78,10 +78,10 @@ class RandomGenerator {
     final random = Random();
 
     return EdgeInsetsDirectional.only(
-      start: start ?? random.nextDouble() * 20,
-      top: top ?? random.nextDouble() * 20,
-      end: end ?? random.nextDouble() * 20,
-      bottom: bottom ?? random.nextDouble() * 20,
+      start: start ?? (random.nextDouble() * 20),
+      top: top ?? (random.nextDouble() * 20),
+      end: end ?? (random.nextDouble() * 20),
+      bottom: bottom ?? (random.nextDouble() * 20),
     );
   }
 
@@ -89,9 +89,9 @@ class RandomGenerator {
     final random = Random();
 
     return Matrix4.translationValues(
-      x ?? random.nextDouble() * 20,
-      y ?? random.nextDouble() * 20,
-      z ?? random.nextDouble() * 20,
+      x ?? (random.nextDouble() * 20),
+      y ?? (random.nextDouble() * 20),
+      z ?? (random.nextDouble() * 20),
     );
   }
 
@@ -124,7 +124,7 @@ class RandomGenerator {
   }
 
   static Radius radius([double? radius]) {
-    return Radius.circular(radius ?? Random().nextDouble() * 20);
+    return Radius.circular(radius ?? (Random().nextDouble() * 20));
   }
 
   static Border border({
@@ -148,7 +148,7 @@ class RandomGenerator {
   }) {
     return BorderSide(
       color: color ?? RandomGenerator.color(),
-      width: width ?? Random().nextDouble() * 4,
+      width: width ?? (Random().nextDouble() * 4),
       style: style ?? BorderStyle.values.random(),
     );
   }
@@ -181,7 +181,7 @@ class RandomGenerator {
     return Shadow(
       color: color ?? RandomGenerator.color(),
       offset: offset ?? const Offset(0, 0),
-      blurRadius: blurRadius ?? Random().nextDouble() * 4,
+      blurRadius: blurRadius ?? (Random().nextDouble() * 4),
     );
   }
 
@@ -200,7 +200,9 @@ class RandomGenerator {
         ]);
   }
 
-  static AlignmentDirectional alignmentDirectional([AlignmentDirectional? alignment]) {
+  static AlignmentDirectional alignmentDirectional([
+    AlignmentDirectional? alignment,
+  ]) {
     return alignment ??
         Random().randomElement([
           AlignmentDirectional.center,
@@ -237,8 +239,8 @@ class RandomGenerator {
 
   static Offset offset({double? dx, double? dy}) {
     return Offset(
-      dx ?? Random().nextDouble() * 20,
-      dy ?? Random().nextDouble() * 20,
+      dx ?? (Random().nextDouble() * 20),
+      dy ?? (Random().nextDouble() * 20),
     );
   }
 

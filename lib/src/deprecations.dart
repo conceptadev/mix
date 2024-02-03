@@ -35,10 +35,12 @@ extension DeprecatedMixExtension<T extends Attribute> on Style {
   @Deprecated(
     'Use merge() instead. You might have to turn into a Mix first. firstMixFactory.merge(secondMix)',
   )
-  Style addAttributes(Iterable<Attribute> attributes) => merge(Style.create(attributes));
+  Style addAttributes(Iterable<Attribute> attributes) =>
+      merge(Style.create(attributes));
 
   @Deprecated('Use merge()  instead')
-  SpreadFunctionParams<Style, Style> get apply => const SpreadFunctionParams(Style.combine);
+  SpreadFunctionParams<Style, Style> get apply =>
+      const SpreadFunctionParams(Style.combine);
 
   @Deprecated('Use applyVariant(value) instead')
   Style withVariant(Variant value) => applyVariant(value);
@@ -68,7 +70,8 @@ extension DeprecatedMixExtension<T extends Attribute> on Style {
 @Deprecated('Use MixData instead.')
 typedef MixContext = MixData;
 
-extension WithSpaceTokensExt<T extends StyleAttribute> on SpacingSideUtility<T> {
+extension WithSpaceTokensExt<T extends StyleAttribute>
+    on SpacingSideUtility<T> {
   @Deprecated('Use xsmall instead')
   T get xs => this.xsmall();
   @Deprecated('Use small instead')

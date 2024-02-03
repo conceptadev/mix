@@ -29,7 +29,8 @@ void main() {
 
     test('default flexible creates FlexibleDecoratorUtility correctly', () {
       final flexibleDecorator = flexible();
-      final widget = flexibleDecorator.value.build(EmptyMixData, const Empty()) as Flexible;
+      final widget = flexibleDecorator.value.build(EmptyMixData, const Empty())
+          as Flexible;
 
       expect(flexibleDecorator.value.fit, null);
       expect(widget, isA<Flexible>());
@@ -74,27 +75,38 @@ void main() {
     });
 
     test('clipRRect creates ClipRRectDecorator correctly', () {
-      final clipRRectDecorator = clip.rrect(borderRadius: BorderRadius.circular(10.0));
+      final clipRRectDecorator =
+          clip.rrect(borderRadius: BorderRadius.circular(10.0));
 
-      expect(clipRRectDecorator.value.borderRadius, BorderRadius.circular(10.0));
+      expect(
+        clipRRectDecorator.value.borderRadius,
+        BorderRadius.circular(10.0),
+      );
     });
 
     test('clipOval creates ClipOvalDecorator correctly', () {
       final clipOvalDecorator = clip.oval();
 
-      expect(clipOvalDecorator.value.build(EmptyMixData, const Empty()), isA<ClipOval>());
+      expect(
+        clipOvalDecorator.value.build(EmptyMixData, const Empty()),
+        isA<ClipOval>(),
+      );
     });
 
     test('clipPath creates ClipPathDecorator correctly', () {
       final clipPathDecorator = clip.path();
 
-      expect(clipPathDecorator.value.build(EmptyMixData, const Empty()), isA<ClipPath>());
+      expect(
+        clipPathDecorator.value.build(EmptyMixData, const Empty()),
+        isA<ClipPath>(),
+      );
     });
 
     test('clipTriangle creates ClipPathDecorator correctly', () {
       final clipTriangleDecorator = clip.triangle();
 
-      final widget = clipTriangleDecorator.value.build(EmptyMixData, const Empty()) as ClipPath;
+      final widget = clipTriangleDecorator.value
+          .build(EmptyMixData, const Empty()) as ClipPath;
 
       expect(widget.clipper, isA<TriangleClipper>());
     });

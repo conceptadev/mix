@@ -142,7 +142,8 @@ class BoxDecorationDto extends DecorationDto<BoxDecoration> {
     return BoxDecorationDto(
       color: color?.merge(other.color) ?? other.color,
       border: border?.merge(other.border) ?? other.border,
-      borderRadius: borderRadius?.merge(other.borderRadius) ?? other.borderRadius,
+      borderRadius:
+          borderRadius?.merge(other.borderRadius) ?? other.borderRadius,
       gradient: gradient?.merge(other.gradient) ?? other.gradient,
       boxShadow: boxShadow?.merge(other.boxShadow) ?? other.boxShadow,
       shape: other.shape ?? shape,
@@ -154,7 +155,10 @@ class BoxDecorationDto extends DecorationDto<BoxDecoration> {
   @override
   bool isMergeable() {
     // is only mergeable if no other properties are set besides: color, boxShadow, and gradient
-    return border == null && borderRadius == null && shape == null && backgroundBlendMode == null;
+    return border == null &&
+        borderRadius == null &&
+        shape == null &&
+        backgroundBlendMode == null;
   }
 
   /// Resolves this [BoxDecorationDto] with a given [MixData] to a [BoxDecoration]

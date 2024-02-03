@@ -6,21 +6,24 @@ import '../../helpers/testing_utils.dart';
 
 void main() {
   group('StyledIcon', () {
-    testWidgets('should receive a style from its ancestor widget', (tester) async {
-      const color = Color(0xffff1744);
-      const size = 20.0;
+    testWidgets(
+      'should receive a style from its ancestor widget',
+      (tester) async {
+        const color = Color(0xffff1744);
+        const size = 20.0;
 
-      await tester.pumpMaterialApp(
-        Box(
-          style: Style(icon.color(color), icon.size(size)),
-          child: const StyledIcon(Icons.access_time_filled_outlined),
-        ),
-      );
+        await tester.pumpMaterialApp(
+          Box(
+            style: Style(icon.color(color), icon.size(size)),
+            child: const StyledIcon(Icons.access_time_filled_outlined),
+          ),
+        );
 
-      final iconWidget = tester.widget<Icon>(find.byType(Icon));
-      expect(iconWidget.color, color);
-      expect(iconWidget.size, size);
-    });
+        final iconWidget = tester.widget<Icon>(find.byType(Icon));
+        expect(iconWidget.color, color);
+        expect(iconWidget.size, size);
+      },
+    );
 
     testWidgets(
       'should apply decorators when they are defined in the style',
@@ -44,7 +47,10 @@ void main() {
         );
 
         expect(
-          find.descendant(of: find.byKey(key), matching: find.byType(RenderWidgetDecorators)),
+          find.descendant(
+            of: find.byKey(key),
+            matching: find.byType(RenderWidgetDecorators),
+          ),
           findsOneWidget,
         );
 

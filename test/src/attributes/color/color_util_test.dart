@@ -132,7 +132,10 @@ void main() {
       final attribute = colorUtility.desaturate(10);
 
       expect(attribute.value?.directives.length, 1);
-      expect(attribute.value?.directives.first, isA<DesaturateColorDirective>());
+      expect(
+        attribute.value?.directives.first,
+        isA<DesaturateColorDirective>(),
+      );
     });
 
     // desaturate resolves

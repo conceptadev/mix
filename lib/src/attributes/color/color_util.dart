@@ -8,32 +8,52 @@ import 'color_directives.dart';
 import 'color_dto.dart';
 
 @immutable
-class ColorUtility<T extends StyleAttribute> extends DtoUtility<T, ColorDto, Color> {
+class ColorUtility<T extends StyleAttribute>
+    extends DtoUtility<T, ColorDto, Color> {
   const ColorUtility(super.builder) : super(valueToDto: ColorDto.new);
 
   T _buildColor(Color color) => builder(valueToDto(color));
 
-  T _directive(ColorDirective directive) => builder(ColorDto.directive(directive));
+  T _directive(ColorDirective directive) =>
+      builder(ColorDto.directive(directive));
 
   MaterialColorUtility<T> get red => MaterialColorUtility(builder, Colors.red);
-  MaterialColorUtility<T> get pink => MaterialColorUtility(builder, Colors.pink);
-  MaterialColorUtility<T> get purple => MaterialColorUtility(builder, Colors.purple);
-  MaterialColorUtility<T> get deepPurple => MaterialColorUtility(builder, Colors.deepPurple);
-  MaterialColorUtility<T> get indigo => MaterialColorUtility(builder, Colors.indigo);
-  MaterialColorUtility<T> get blue => MaterialColorUtility(builder, Colors.blue);
-  MaterialColorUtility<T> get lightBlue => MaterialColorUtility(builder, Colors.lightBlue);
-  MaterialColorUtility<T> get cyan => MaterialColorUtility(builder, Colors.cyan);
-  MaterialColorUtility<T> get teal => MaterialColorUtility(builder, Colors.teal);
-  MaterialColorUtility<T> get green => MaterialColorUtility(builder, Colors.green);
-  MaterialColorUtility<T> get lightGreen => MaterialColorUtility(builder, Colors.lightGreen);
-  MaterialColorUtility<T> get lime => MaterialColorUtility(builder, Colors.lime);
-  MaterialColorUtility<T> get yellow => MaterialColorUtility(builder, Colors.yellow);
-  MaterialColorUtility<T> get amber => MaterialColorUtility(builder, Colors.amber);
-  MaterialColorUtility<T> get orange => MaterialColorUtility(builder, Colors.orange);
-  MaterialColorUtility<T> get deepOrange => MaterialColorUtility(builder, Colors.deepOrange);
-  MaterialColorUtility<T> get brown => MaterialColorUtility(builder, Colors.brown);
-  MaterialColorUtility<T> get grey => MaterialColorUtility(builder, Colors.grey);
-  MaterialColorUtility<T> get blueGrey => MaterialColorUtility(builder, Colors.blueGrey);
+  MaterialColorUtility<T> get pink =>
+      MaterialColorUtility(builder, Colors.pink);
+  MaterialColorUtility<T> get purple =>
+      MaterialColorUtility(builder, Colors.purple);
+  MaterialColorUtility<T> get deepPurple =>
+      MaterialColorUtility(builder, Colors.deepPurple);
+  MaterialColorUtility<T> get indigo =>
+      MaterialColorUtility(builder, Colors.indigo);
+  MaterialColorUtility<T> get blue =>
+      MaterialColorUtility(builder, Colors.blue);
+  MaterialColorUtility<T> get lightBlue =>
+      MaterialColorUtility(builder, Colors.lightBlue);
+  MaterialColorUtility<T> get cyan =>
+      MaterialColorUtility(builder, Colors.cyan);
+  MaterialColorUtility<T> get teal =>
+      MaterialColorUtility(builder, Colors.teal);
+  MaterialColorUtility<T> get green =>
+      MaterialColorUtility(builder, Colors.green);
+  MaterialColorUtility<T> get lightGreen =>
+      MaterialColorUtility(builder, Colors.lightGreen);
+  MaterialColorUtility<T> get lime =>
+      MaterialColorUtility(builder, Colors.lime);
+  MaterialColorUtility<T> get yellow =>
+      MaterialColorUtility(builder, Colors.yellow);
+  MaterialColorUtility<T> get amber =>
+      MaterialColorUtility(builder, Colors.amber);
+  MaterialColorUtility<T> get orange =>
+      MaterialColorUtility(builder, Colors.orange);
+  MaterialColorUtility<T> get deepOrange =>
+      MaterialColorUtility(builder, Colors.deepOrange);
+  MaterialColorUtility<T> get brown =>
+      MaterialColorUtility(builder, Colors.brown);
+  MaterialColorUtility<T> get grey =>
+      MaterialColorUtility(builder, Colors.grey);
+  MaterialColorUtility<T> get blueGrey =>
+      MaterialColorUtility(builder, Colors.blueGrey);
   MaterialAccentColorUtility<T> get redAccent =>
       MaterialAccentColorUtility(builder, Colors.redAccent);
   MaterialAccentColorUtility<T> get pinkAccent =>
@@ -71,7 +91,8 @@ class ColorUtility<T extends StyleAttribute> extends DtoUtility<T, ColorDto, Col
   T darken(int percentage) => _directive(DarkenColorDirective(percentage));
   T lighten(int percentage) => _directive(LightenColorDirective(percentage));
   T saturate(int percentage) => _directive(SaturateColorDirective(percentage));
-  T desaturate(int percentage) => _directive(DesaturateColorDirective(percentage));
+  T desaturate(int percentage) =>
+      _directive(DesaturateColorDirective(percentage));
   T tint(int percentage) => _directive(TintColorDirective(percentage));
   T shade(int percentage) => _directive(ShadeColorDirective(percentage));
   T brighten(int percentage) => _directive(BrightenColorDirective(percentage));
@@ -99,14 +120,16 @@ class ColorUtility<T extends StyleAttribute> extends DtoUtility<T, ColorDto, Col
   T call(Color color) => _buildColor(color);
 }
 
-abstract class ColorSwatchUtility<T extends StyleAttribute> extends MixUtility<T, ColorDto> {
+abstract class ColorSwatchUtility<T extends StyleAttribute>
+    extends MixUtility<T, ColorDto> {
   final ColorSwatch<int> color;
   const ColorSwatchUtility(super.builder, this.color);
   T _buildColor(Color color) => builder(ColorDto(color));
 }
 
 @immutable
-class MaterialColorUtility<T extends StyleAttribute> extends ColorSwatchUtility<T> {
+class MaterialColorUtility<T extends StyleAttribute>
+    extends ColorSwatchUtility<T> {
   const MaterialColorUtility(super.builder, super.color);
 
   T shade50() => _buildColor(color[50]!);
@@ -124,7 +147,8 @@ class MaterialColorUtility<T extends StyleAttribute> extends ColorSwatchUtility<
 }
 
 @immutable
-class MaterialAccentColorUtility<T extends StyleAttribute> extends ColorSwatchUtility<T> {
+class MaterialAccentColorUtility<T extends StyleAttribute>
+    extends ColorSwatchUtility<T> {
   const MaterialAccentColorUtility(super.builder, super.color);
 
   T shade100() => _buildColor(color[100]!);

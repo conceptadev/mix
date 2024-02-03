@@ -31,7 +31,8 @@ void main() {
       const variant1 = Variant('variant1');
       const variant2 = Variant('variant2');
       const variant3 = Variant('variant3');
-      final multiVariant = MultiVariant.and(const [variant1, variant2, variant3]);
+      final multiVariant =
+          MultiVariant.and(const [variant1, variant2, variant3]);
 
       final result = multiVariant.remove([variant1, variant2]);
 

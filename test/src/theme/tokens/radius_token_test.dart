@@ -49,8 +49,14 @@ void main() {
       final mixData = MixData.create(context, const Style.empty());
 
       expect(mixData.tokens.radiiToken(redRadiusRef), const Radius.circular(1));
-      expect(mixData.tokens.radiiToken(greenRadiusRef), const Radius.circular(2));
-      expect(mixData.tokens.radiiToken(blueRadiusRef), const Radius.circular(3));
+      expect(
+        mixData.tokens.radiiToken(greenRadiusRef),
+        const Radius.circular(2),
+      );
+      expect(
+        mixData.tokens.radiiToken(blueRadiusRef),
+        const Radius.circular(3),
+      );
     });
   });
 

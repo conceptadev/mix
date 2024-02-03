@@ -9,7 +9,8 @@ void main() {
     test('Constructor assigns correct properties', () {
       final containerSpecAttribute = BoxSpecAttribute(
         alignment: Alignment.center,
-        padding: const SpacingDto.only(top: 20, bottom: 20, left: 20, right: 20),
+        padding:
+            const SpacingDto.only(top: 20, bottom: 20, left: 20, right: 20),
         margin: const SpacingDto.only(
           top: 10,
           bottom: 10,
@@ -27,7 +28,10 @@ void main() {
       expect(containerSpecAttribute.alignment, Alignment.center);
       expect(containerSpecAttribute.clipBehavior, Clip.antiAlias);
 
-      expect(containerSpecAttribute.constraints, const BoxConstraintsDto(maxHeight: 100));
+      expect(
+        containerSpecAttribute.constraints,
+        const BoxConstraintsDto(maxHeight: 100),
+      );
       expect(
         containerSpecAttribute.decoration,
         const BoxDecorationDto(color: ColorDto(Colors.blue)),
@@ -36,12 +40,7 @@ void main() {
       expect(containerSpecAttribute.height, 100);
       expect(
         containerSpecAttribute.margin,
-        const SpacingDto.only(
-          top: 10,
-          bottom: 10,
-          left: 10,
-          right: 10,
-        ),
+        const SpacingDto.only(top: 10, bottom: 10, left: 10, right: 10),
       );
       expect(
         containerSpecAttribute.padding,
@@ -55,7 +54,8 @@ void main() {
     test('resolve() returns correct instance', () {
       final containerSpecAttribute = BoxSpecAttribute(
         alignment: Alignment.center,
-        padding: const SpacingDto.only(top: 20, bottom: 20, left: 20, right: 20),
+        padding:
+            const SpacingDto.only(top: 20, bottom: 20, left: 20, right: 20),
         margin: const SpacingDto.only(
           top: 10,
           bottom: 10,
@@ -84,12 +84,7 @@ void main() {
       expect(containerSpec.height, 100);
       expect(
         containerSpec.margin,
-        const EdgeInsets.only(
-          left: 10,
-          top: 10,
-          right: 10,
-          bottom: 10,
-        ),
+        const EdgeInsets.only(left: 10, top: 10, right: 10, bottom: 10),
       );
       expect(
         containerSpec.padding,
@@ -103,7 +98,8 @@ void main() {
     test('merge() returns correct instance', () {
       final containerSpecAttribute = BoxSpecAttribute(
         alignment: Alignment.center,
-        padding: const SpacingDto.only(top: 20, bottom: 20, left: 20, right: 20),
+        padding:
+            const SpacingDto.only(top: 20, bottom: 20, left: 20, right: 20),
         margin: const SpacingDto.only(
           top: 10,
           bottom: 10,
@@ -121,7 +117,8 @@ void main() {
       final mergedBoxSpecAttribute = containerSpecAttribute.merge(
         BoxSpecAttribute(
           alignment: Alignment.centerLeft,
-          padding: const SpacingDto.only(top: 30, bottom: 30, left: 30, right: 30),
+          padding:
+              const SpacingDto.only(top: 30, bottom: 30, left: 30, right: 30),
           margin: const SpacingDto.only(
             top: 20,
             bottom: 20,
@@ -140,7 +137,10 @@ void main() {
       expect(mergedBoxSpecAttribute.alignment, Alignment.centerLeft);
       expect(mergedBoxSpecAttribute.clipBehavior, Clip.antiAliasWithSaveLayer);
 
-      expect(mergedBoxSpecAttribute.constraints, const BoxConstraintsDto(maxHeight: 200));
+      expect(
+        mergedBoxSpecAttribute.constraints,
+        const BoxConstraintsDto(maxHeight: 200),
+      );
       expect(
         mergedBoxSpecAttribute.decoration,
         const BoxDecorationDto(color: ColorDto(Colors.red)),
@@ -149,12 +149,7 @@ void main() {
       expect(mergedBoxSpecAttribute.height, 200);
       expect(
         mergedBoxSpecAttribute.margin,
-        const SpacingDto.only(
-          top: 20,
-          bottom: 20,
-          left: 20,
-          right: 20,
-        ),
+        const SpacingDto.only(top: 20, bottom: 20, left: 20, right: 20),
       );
       expect(
         mergedBoxSpecAttribute.padding,
@@ -168,7 +163,8 @@ void main() {
     test('equality', () {
       final containerSpecAttribute = BoxSpecAttribute(
         alignment: Alignment.center,
-        padding: const SpacingDto.only(top: 20, bottom: 20, left: 20, right: 20),
+        padding:
+            const SpacingDto.only(top: 20, bottom: 20, left: 20, right: 20),
         margin: const SpacingDto.only(
           top: 10,
           bottom: 10,
@@ -188,7 +184,8 @@ void main() {
         equals(
           BoxSpecAttribute(
             alignment: Alignment.center,
-            padding: const SpacingDto.only(top: 20, bottom: 20, left: 20, right: 20),
+            padding:
+                const SpacingDto.only(top: 20, bottom: 20, left: 20, right: 20),
             margin: const SpacingDto.only(
               top: 10,
               bottom: 10,
@@ -210,7 +207,8 @@ void main() {
     test('not equals', () {
       final containerSpecAttribute = BoxSpecAttribute(
         alignment: Alignment.center,
-        padding: const SpacingDto.only(top: 20, bottom: 20, left: 20, right: 20),
+        padding:
+            const SpacingDto.only(top: 20, bottom: 20, left: 20, right: 20),
         margin: const SpacingDto.only(
           top: 10,
           bottom: 10,
@@ -231,7 +229,12 @@ void main() {
           equals(
             BoxSpecAttribute(
               alignment: Alignment.centerLeft,
-              padding: const SpacingDto.only(top: 30, bottom: 30, left: 30, right: 30),
+              padding: const SpacingDto.only(
+                top: 30,
+                bottom: 30,
+                left: 30,
+                right: 30,
+              ),
               margin: const SpacingDto.only(
                 top: 20,
                 bottom: 20,

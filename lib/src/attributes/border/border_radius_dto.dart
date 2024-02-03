@@ -70,7 +70,10 @@ class BorderRadiusGeometryDto extends Dto<BorderRadiusGeometry>
   }
 
   bool get isDirectional =>
-      topStart != null || topEnd != null || bottomStart != null || bottomEnd != null;
+      topStart != null ||
+      topEnd != null ||
+      bottomStart != null ||
+      bottomEnd != null;
 
   @override
   BorderRadiusGeometryDto merge(BorderRadiusGeometryDto? other) {

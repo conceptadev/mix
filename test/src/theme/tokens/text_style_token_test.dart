@@ -48,7 +48,10 @@ void main() {
 
       final mixData = MixData.create(context, const Style.empty());
 
-      expect(mixData.tokens.textStyleToken(redtextStyleToken), const TextStyle(color: Colors.red));
+      expect(
+        mixData.tokens.textStyleToken(redtextStyleToken),
+        const TextStyle(color: Colors.red),
+      );
       expect(
         mixData.tokens.textStyleToken(greentextStyleToken),
         const TextStyle(color: Colors.green),
@@ -68,8 +71,10 @@ void main() {
       },
       space: {$space.large: 100, $space.medium: 50},
       textStyles: {
-        $md.textTheme.bodyText1: const TextStyle(color: Colors.red, fontSize: 10),
-        $md.textTheme.bodyText2: const TextStyle(color: Colors.blue, fontSize: 20),
+        $md.textTheme.bodyText1:
+            const TextStyle(color: Colors.red, fontSize: 10),
+        $md.textTheme.bodyText2:
+            const TextStyle(color: Colors.blue, fontSize: 20),
       },
       radii: {$radii.medium: const Radius.elliptical(10, 50)},
     );

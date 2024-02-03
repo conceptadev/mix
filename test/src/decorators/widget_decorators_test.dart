@@ -38,9 +38,11 @@ void main() {
         const aspectRatio = 2.0;
         const decorator = AspectRatioDecorator(aspectRatio);
 
-        await tester.pumpMaterialApp(decorator.build(EmptyMixData, Container()));
+        await tester
+            .pumpMaterialApp(decorator.build(EmptyMixData, Container()));
 
-        final AspectRatio aspectRatioWidget = tester.widget(find.byType(AspectRatio));
+        final AspectRatio aspectRatioWidget =
+            tester.widget(find.byType(AspectRatio));
 
         expect(find.byType(AspectRatio), findsOneWidget);
         expect(aspectRatioWidget.aspectRatio, aspectRatio);
@@ -86,9 +88,11 @@ void main() {
         const visible = true;
         const decorator = VisibilityDecorator(visible);
 
-        await tester.pumpMaterialApp(decorator.build(EmptyMixData, Container()));
+        await tester
+            .pumpMaterialApp(decorator.build(EmptyMixData, Container()));
 
-        final Visibility visibilityWidget = tester.widget(find.byType(Visibility));
+        final Visibility visibilityWidget =
+            tester.widget(find.byType(Visibility));
 
         expect(find.byType(Visibility), findsOneWidget);
         expect(visibilityWidget.visible, visible);
@@ -130,7 +134,8 @@ void main() {
         const opacity = 0.5;
         const decorator = OpacityDecorator(opacity);
 
-        await tester.pumpMaterialApp(decorator.build(EmptyMixData, Container()));
+        await tester
+            .pumpMaterialApp(decorator.build(EmptyMixData, Container()));
 
         final Opacity opacityWidget = tester.widget(find.byType(Opacity));
 
@@ -188,9 +193,7 @@ void main() {
         const decorator = FlexibleDecorator(flex: flex, fit: fit);
 
         await tester.pumpMaterialApp(
-          Row(
-            children: [decorator.build(EmptyMixData, Container())],
-          ),
+          Row(children: [decorator.build(EmptyMixData, Container())]),
         );
 
         final Flexible flexibleWidget = tester.widget(find.byType(Flexible));
@@ -236,9 +239,11 @@ void main() {
         const quarterTurns = 1;
         const decorator = RotateDecorator(quarterTurns);
 
-        await tester.pumpMaterialApp(decorator.build(EmptyMixData, Container()));
+        await tester
+            .pumpMaterialApp(decorator.build(EmptyMixData, Container()));
 
-        final RotatedBox rotatedBoxWidget = tester.widget(find.byType(RotatedBox));
+        final RotatedBox rotatedBoxWidget =
+            tester.widget(find.byType(RotatedBox));
 
         expect(find.byType(RotatedBox), findsOneWidget);
         expect(rotatedBoxWidget.quarterTurns, quarterTurns);
@@ -280,12 +285,16 @@ void main() {
         const scale = 1.5;
         const decorator = ScaleDecorator(scale);
 
-        await tester.pumpMaterialApp(decorator.build(EmptyMixData, Container()));
+        await tester
+            .pumpMaterialApp(decorator.build(EmptyMixData, Container()));
 
         final Transform transformWidget = tester.widget(find.byType(Transform));
 
         expect(find.byType(Transform), findsOneWidget);
-        expect(transformWidget.transform, Matrix4.diagonal3Values(scale, scale, 1.0));
+        expect(
+          transformWidget.transform,
+          Matrix4.diagonal3Values(scale, scale, 1.0),
+        );
         expect(transformWidget.child, isA<Container>());
       },
     );
@@ -295,8 +304,8 @@ void main() {
     test('Constructor assigns properties correctly', () {
       const clipType = ClipType.rect;
       const clipBehavior = Clip.antiAlias;
-      final clipper = RectClipper();
-      final decorator = ClipDecorator(
+      const clipper = RectClipper();
+      const decorator = ClipDecorator(
         clipType: clipType,
         clipBehavior: clipBehavior,
         clipper: clipper,
@@ -308,8 +317,10 @@ void main() {
     });
 
     test('Merge method combines properties correctly', () {
-      const decorator1 = ClipDecorator(clipType: ClipType.rect, clipBehavior: Clip.antiAlias);
-      const decorator2 = ClipDecorator(clipType: ClipType.oval, clipBehavior: Clip.hardEdge);
+      const decorator1 =
+          ClipDecorator(clipType: ClipType.rect, clipBehavior: Clip.antiAlias);
+      const decorator2 =
+          ClipDecorator(clipType: ClipType.oval, clipBehavior: Clip.hardEdge);
 
       final result = decorator1.merge(decorator2);
 
@@ -318,8 +329,10 @@ void main() {
     });
 
     test('Lerp method interpolates correctly', () {
-      const decorator1 = ClipDecorator(clipType: ClipType.rect, clipBehavior: Clip.antiAlias);
-      const decorator2 = ClipDecorator(clipType: ClipType.rect, clipBehavior: Clip.hardEdge);
+      const decorator1 =
+          ClipDecorator(clipType: ClipType.rect, clipBehavior: Clip.antiAlias);
+      const decorator2 =
+          ClipDecorator(clipType: ClipType.rect, clipBehavior: Clip.hardEdge);
 
       final beforeResult = decorator1.lerp(decorator2, 0.49);
       final afterResult = decorator1.lerp(decorator2, 0.5);
@@ -331,48 +344,68 @@ void main() {
       expect(afterResult.clipBehavior, Clip.hardEdge);
     });
 
-    testWidgets('Build method creates ClipRect widget', (WidgetTester tester) async {
-      const decorator = ClipDecorator(clipType: ClipType.rect);
+    testWidgets(
+      'Build method creates ClipRect widget',
+      (WidgetTester tester) async {
+        const decorator = ClipDecorator(clipType: ClipType.rect);
 
-      await tester.pumpMaterialApp(decorator.build(EmptyMixData, Container()));
+        await tester
+            .pumpMaterialApp(decorator.build(EmptyMixData, Container()));
 
-      expect(find.byType(ClipRect), findsOneWidget);
-    });
+        expect(find.byType(ClipRect), findsOneWidget);
+      },
+    );
 
-    testWidgets('Build method creates ClipOval widget', (WidgetTester tester) async {
-      const decorator = ClipDecorator(clipType: ClipType.oval);
+    testWidgets(
+      'Build method creates ClipOval widget',
+      (WidgetTester tester) async {
+        const decorator = ClipDecorator(clipType: ClipType.oval);
 
-      await tester.pumpMaterialApp(decorator.build(EmptyMixData, Container()));
+        await tester
+            .pumpMaterialApp(decorator.build(EmptyMixData, Container()));
 
-      expect(find.byType(ClipOval), findsOneWidget);
-    });
+        expect(find.byType(ClipOval), findsOneWidget);
+      },
+    );
 
-    testWidgets('Build method creates ClipPath widget for triangle', (WidgetTester tester) async {
-      const decorator = ClipDecorator(clipType: ClipType.triangle);
+    testWidgets(
+      'Build method creates ClipPath widget for triangle',
+      (WidgetTester tester) async {
+        const decorator = ClipDecorator(clipType: ClipType.triangle);
 
-      await tester.pumpMaterialApp(decorator.build(EmptyMixData, Container()));
+        await tester
+            .pumpMaterialApp(decorator.build(EmptyMixData, Container()));
 
-      expect(find.byType(ClipPath), findsOneWidget);
-    });
+        expect(find.byType(ClipPath), findsOneWidget);
+      },
+    );
 
-    testWidgets('Build method creates ClipPath widget for path', (WidgetTester tester) async {
-      const decorator = ClipDecorator(clipType: ClipType.path);
+    testWidgets(
+      'Build method creates ClipPath widget for path',
+      (WidgetTester tester) async {
+        const decorator = ClipDecorator(clipType: ClipType.path);
 
-      await tester.pumpMaterialApp(decorator.build(EmptyMixData, Container()));
+        await tester
+            .pumpMaterialApp(decorator.build(EmptyMixData, Container()));
 
-      expect(find.byType(ClipPath), findsOneWidget);
-    });
+        expect(find.byType(ClipPath), findsOneWidget);
+      },
+    );
 
-    testWidgets('Build method creates ClipRRect widget', (WidgetTester tester) async {
-      const decorator = ClipDecorator(
-        clipType: ClipType.rRect,
-        borderRadius: BorderRadius.all(Radius.circular(10.0)),
-      );
+    testWidgets(
+      'Build method creates ClipRRect widget',
+      (WidgetTester tester) async {
+        const decorator = ClipDecorator(
+          clipType: ClipType.rRect,
+          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+        );
 
-      await tester.pumpMaterialApp(decorator.build(EmptyMixData, Container()));
+        await tester
+            .pumpMaterialApp(decorator.build(EmptyMixData, Container()));
 
-      expect(find.byType(ClipRRect), findsOneWidget);
-    });
+        expect(find.byType(ClipRRect), findsOneWidget);
+      },
+    );
   });
 }
 

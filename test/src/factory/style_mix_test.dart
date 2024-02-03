@@ -428,17 +428,20 @@ void main() {
       expect(updatedStyle.values.contains(variant2(attribute4)), isTrue);
     });
 
-    test('variantChooser returns the same style when no conditions are met', () {
-      const useVariant1 = false;
-      const useVariant2 = false;
+    test(
+      'variantChooser returns the same style when no conditions are met',
+      () {
+        const useVariant1 = false;
+        const useVariant2 = false;
 
-      final updatedStyle = style.variantSwitcher([
-        const SwitchCondition(useVariant1, variant1),
-        const SwitchCondition(useVariant2, variant2),
-      ]);
+        final updatedStyle = style.variantSwitcher([
+          const SwitchCondition(useVariant1, variant1),
+          const SwitchCondition(useVariant2, variant2),
+        ]);
 
-      expect(updatedStyle, equals(style));
-    });
+        expect(updatedStyle, equals(style));
+      },
+    );
 
     test('Returns both styles when both conditions are true', () {
       const useVariant1 = true;
@@ -451,8 +454,16 @@ void main() {
 
       expect(updatedStyle.values.contains(attribute4), isTrue, reason: '1');
       expect(updatedStyle.values.contains(attribute3), isTrue, reason: '2');
-      expect(updatedStyle.values.contains(variant1(attribute3)), isFalse, reason: '3');
-      expect(updatedStyle.values.contains(variant2(attribute4)), isFalse, reason: '4');
+      expect(
+        updatedStyle.values.contains(variant1(attribute3)),
+        isFalse,
+        reason: '3',
+      );
+      expect(
+        updatedStyle.values.contains(variant2(attribute4)),
+        isFalse,
+        reason: '4',
+      );
     });
   });
 }

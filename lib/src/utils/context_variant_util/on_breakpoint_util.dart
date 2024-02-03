@@ -24,9 +24,13 @@ final onLarge = onBreakpointToken(BreakpointToken.large);
 /// [minWidth] and [maxWidth] define the width constraints, while [orientation] specifies
 /// the orientation constraint. This function returns a [ContextVariant] which will apply
 /// when the screen size matches these constraints.
-ContextVariant onBreakpoint({minWidth = 0, maxWidth = double.infinity}) {
+ContextVariant onBreakpoint({
+  double minWidth = 0,
+  double maxWidth = double.infinity,
+}) {
   final constraints = Breakpoint(minWidth: minWidth, maxWidth: maxWidth);
-  final constraintName = 'minWidth-${constraints.minWidth}-maxWidth-${constraints.maxWidth}';
+  final constraintName =
+      'minWidth-${constraints.minWidth}-maxWidth-${constraints.maxWidth}';
 
   return ContextVariant('on-$constraintName', (context) {
     final size = context.screenSize;

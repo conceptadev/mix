@@ -42,7 +42,8 @@ class VisibilityDecorator extends WidgetDecorator<VisibilityDecorator> {
   get props => [visible];
 
   @override
-  Widget build(MixData mix, Widget child) => Visibility(key: key, visible: visible, child: child);
+  Widget build(MixData mix, Widget child) =>
+      Visibility(key: key, visible: visible, child: child);
 }
 
 class FlexibleDecorator extends WidgetDecorator<FlexibleDecorator>
@@ -97,7 +98,8 @@ class OpacityDecorator extends WidgetDecorator<OpacityDecorator> {
   get props => [opacity];
 
   @override
-  Widget build(MixData mix, Widget child) => Opacity(key: key, opacity: opacity, child: child);
+  Widget build(MixData mix, Widget child) =>
+      Opacity(key: key, opacity: opacity, child: child);
 }
 
 class RotateDecorator extends WidgetDecorator<RotateDecorator> {
@@ -139,7 +141,8 @@ class ScaleDecorator extends WidgetDecorator<ScaleDecorator> {
 enum ClipType { path, oval, rect, rRect, triangle }
 
 // TODO: Implement BorderRadiusGeometryDto
-class ClipDecorator<T> extends WidgetDecorator<ClipDecorator> with Mergeable<ClipDecorator> {
+class ClipDecorator<T> extends WidgetDecorator<ClipDecorator>
+    with Mergeable<ClipDecorator> {
   final ClipType clipType;
   final Clip? clipBehavior;
   final CustomClipper<T>? clipper;
@@ -162,7 +165,8 @@ class ClipDecorator<T> extends WidgetDecorator<ClipDecorator> with Mergeable<Cli
       clipType: lerpSnap(clipType, other.clipType, t),
       clipBehavior: lerpSnap(clipBehavior, other.clipBehavior, t),
       clipper: lerpSnap(clipper, other.clipper, t),
-      borderRadius: BorderRadiusGeometry.lerp(borderRadius, other.borderRadius, t),
+      borderRadius:
+          BorderRadiusGeometry.lerp(borderRadius, other.borderRadius, t),
     );
   }
 
@@ -249,7 +253,8 @@ class TriangleClipper extends CustomClipper<Path> {
   bool shouldReclip(TriangleClipper oldClipper) => false;
 }
 
-class ClipTypeUtility<T extends StyleAttribute> extends MixUtility<T, ClipDecorator> {
+class ClipTypeUtility<T extends StyleAttribute>
+    extends MixUtility<T, ClipDecorator> {
   final ClipType clipType;
 
   const ClipTypeUtility(this.clipType, super.builder);
@@ -280,7 +285,8 @@ class ClipTypeUtility<T extends StyleAttribute> extends MixUtility<T, ClipDecora
 }
 
 /// A utility class for creating [ClipDecorator]s.
-class ClipDecoratorUtility<T extends StyleAttribute> extends MixUtility<T, ClipDecorator> {
+class ClipDecoratorUtility<T extends StyleAttribute>
+    extends MixUtility<T, ClipDecorator> {
   const ClipDecoratorUtility(super.builder);
 
   ClipTypeUtility<T> get path {

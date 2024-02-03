@@ -48,7 +48,10 @@ void main() {
       expect(result.value.gradient, isA<GradientDto>());
       expect(result.value.shape, isA<BoxShape>());
 
-      expect(result.value.border, equals(BoxBorderDto.from(refBoxDecoration.border!)));
+      expect(
+        result.value.border,
+        equals(BoxBorderDto.from(refBoxDecoration.border!)),
+      );
       expect(
         result.value.borderRadius,
         equals(BorderRadiusGeometryDto.from(refBoxDecoration.borderRadius!)),
@@ -58,7 +61,10 @@ void main() {
         equals(refBoxDecoration.boxShadow?.map((e) => BoxShadowDto.from(e))),
       );
       expect(result.value.color, equals(ColorDto(refBoxDecoration.color!)));
-      expect(result.value.gradient, equals(GradientDto.from(refBoxDecoration.gradient!)));
+      expect(
+        result.value.gradient,
+        equals(GradientDto.from(refBoxDecoration.gradient!)),
+      );
       expect(result.value.shape, equals(refBoxDecoration.shape));
     });
     test('color setting', () {
@@ -82,7 +88,10 @@ void main() {
 
     test('borderRadius setting', () {
       final result = boxDecoration.borderRadius(10.0);
-      expect(result.value.borderRadius?.resolve(EmptyMixData), equals(BorderRadius.circular(10.0)));
+      expect(
+        result.value.borderRadius?.resolve(EmptyMixData),
+        equals(BorderRadius.circular(10.0)),
+      );
     });
 
     test('gradient setting', () {
@@ -117,7 +126,8 @@ void main() {
 
     test('elevation setting', () {
       final result = boxDecoration.elevation(9);
-      final boxShadows = result.value.boxShadow?.map((e) => e.resolve(EmptyMixData));
+      final boxShadows =
+          result.value.boxShadow?.map((e) => e.resolve(EmptyMixData));
       expect(boxShadows, equals(kElevationToShadow[9]!));
     });
   });
@@ -152,9 +162,7 @@ void main() {
       );
       expect(
         result.value.shadows,
-        equals(
-          const [boxShadow].map((e) => BoxShadowDto.from(e)).toList(),
-        ),
+        equals(const [boxShadow].map((e) => BoxShadowDto.from(e)).toList()),
       );
     });
 
@@ -181,9 +189,7 @@ void main() {
 
       expect(
         result.value.shadows,
-        equals(
-          const [boxShadow].map((e) => BoxShadowDto.from(e)).toList(),
-        ),
+        equals(const [boxShadow].map((e) => BoxShadowDto.from(e)).toList()),
       );
     });
 
