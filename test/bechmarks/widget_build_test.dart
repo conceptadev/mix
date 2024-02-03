@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
@@ -127,7 +129,7 @@ void main() {
     stopwatch.stop();
 
     final elapsedTime = stopwatch.elapsedMilliseconds / iterations;
-    print('Style.create: $elapsedTime ms');
+    log('Style.create: $elapsedTime ms');
   });
 
   // test performance for MixData.create
@@ -156,7 +158,7 @@ void main() {
     stopwatch.stop();
     final timeElapsed = stopwatch.elapsedMilliseconds / iterations;
 
-    print('MixData.create: $timeElapsed ms');
+    log('MixData.create: $timeElapsed ms');
   });
 }
 

@@ -1,5 +1,3 @@
-// ignore_for_file: prefer-returning-conditional-expressions
-
 import 'package:flutter/material.dart';
 
 import '../../core/attribute.dart';

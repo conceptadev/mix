@@ -42,7 +42,7 @@ class ScaleDecorator extends WidgetDecorator<ScaleDecorator> {
   get props => [scale];
 
   @override
-  Widget build(mix, child) {
+  Widget build(MixData mix, Widget child) {
     return Transform.scale(
       key: key,
       scale: scale,

@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:path/path.dart' as p;
@@ -30,5 +31,5 @@ void main() {
     }
   }
 
-  print('Import updates and file renaming completed.');
+  log('Import updates and file renaming completed.');
 }

@@ -22,32 +22,21 @@ dart_code_metrics:
     - "test/**"
   rules:
     prefer-match-file-name: false
-    no-object-declaration: false
+    # Remove later when cleaning up
     prefer-single-widget-per-file: false
-    parameters-ordering: false
+    # End of remove later
     match-getter-setter-field-names: false
     prefer-dedicated-media-query-methods: false
-    arguments-ordering:
-      child-last: true
-    avoid-dynamic: false
     avoid-shadowing: false
-    prefer-getter-over-method: false
+    
     enum-constants-ordering: false
-    prefer-widget-private-members: false
-    prefer-static-class: false
-    avoid-late-keyword: false
-    avoid-declaring-call-method: false
-    avoid-long-parameter-list: false
-    avoid-recursive-calls: false
-    no-magic-number: false
-    avoid-ignoring-return-values: false
-    prefer-commenting-analyzer-ignores: false
-    prefer-correct-identifier-length: false
+    
     avoid-unsafe-collection-methods: false
-    avoid-similar-names: false
-    no-equal-arguments: false
+    
     prefer-prefixed-global-constants: false
     avoid-returning-widgets: false
+    arguments-ordering:
+      child-last: true
     avoid-nested-conditional-expressions:
         acceptable-level: 3
     member-ordering:
@@ -67,6 +56,3 @@ dart_code_metrics:
           - build-method
     prefer-named-boolean-parameters:
       ignore-single: true
-
-
-      

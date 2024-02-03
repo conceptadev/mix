@@ -120,7 +120,6 @@ class BoxSpecTween extends Tween<BoxSpec?> {
     if (begin == null) return end;
     if (end == null) return begin;
 
-    // ignore: avoid-non-null-assertion
     return begin!.lerp(end!, t);
   }
 }

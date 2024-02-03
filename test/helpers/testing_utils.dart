@@ -282,7 +282,7 @@ class UtilityTestDtoAttribute<T extends Dto<V>, V>
 class CustomWidgetDecorator extends WidgetDecorator<CustomWidgetDecorator> {
   const CustomWidgetDecorator({super.key});
   @override
-  Widget build(mix, child) {
+  Widget build(MixData mix, Widget child) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: child,

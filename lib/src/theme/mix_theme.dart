@@ -1,5 +1,3 @@
-// ignore_for_file: avoid-non-null-assertion
-
 import 'package:flutter/material.dart';
 
 import '../helpers/compare_mixin.dart';
