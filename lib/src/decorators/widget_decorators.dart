@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import '../attributes/scalars/scalar_util.dart';
 import '../core/attribute.dart';
 import '../core/decorator.dart';
+import '../factory/mix_provider_data.dart';
 import '../helpers/lerp_helpers.dart';
 
 class AspectRatioDecorator extends WidgetDecorator<AspectRatioDecorator> {
@@ -24,7 +25,7 @@ class AspectRatioDecorator extends WidgetDecorator<AspectRatioDecorator> {
   get props => [aspectRatio];
 
   @override
-  Widget build(mix, child) =>
+  Widget build(MixData mix, Widget child) =>
       AspectRatio(key: key, aspectRatio: aspectRatio, child: child);
 }
 
@@ -41,7 +42,7 @@ class VisibilityDecorator extends WidgetDecorator<VisibilityDecorator> {
   get props => [visible];
 
   @override
-  Widget build(mix, child) =>
+  Widget build(MixData mix, Widget child) =>
       Visibility(key: key, visible: visible, child: child);
 }
 
@@ -71,7 +72,7 @@ class FlexibleDecorator extends WidgetDecorator<FlexibleDecorator>
   get props => [flex, fit];
 
   @override
-  Widget build(mix, Widget child) {
+  Widget build(MixData mix, Widget child) {
     return Flexible(
       key: key,
       flex: flex ?? 1,
@@ -97,7 +98,8 @@ class OpacityDecorator extends WidgetDecorator<OpacityDecorator> {
   get props => [opacity];
 
   @override
-  Widget build(mix, child) => Opacity(key: key, opacity: opacity, child: child);
+  Widget build(MixData mix, Widget child) =>
+      Opacity(key: key, opacity: opacity, child: child);
 }
 
 class RotateDecorator extends WidgetDecorator<RotateDecorator> {
@@ -113,7 +115,7 @@ class RotateDecorator extends WidgetDecorator<RotateDecorator> {
   get props => [quarterTurns];
 
   @override
-  Widget build(mix, child) {
+  Widget build(MixData mix, Widget child) {
     return RotatedBox(key: key, quarterTurns: quarterTurns, child: child);
   }
 }
@@ -131,7 +133,7 @@ class ScaleDecorator extends WidgetDecorator<ScaleDecorator> {
   get props => [scale];
 
   @override
-  Widget build(mix, child) {
+  Widget build(MixData mix, Widget child) {
     return Transform.scale(key: key, scale: scale, child: child);
   }
 }
@@ -185,7 +187,7 @@ class ClipDecorator<T> extends WidgetDecorator<ClipDecorator>
   get props => [clipType, clipBehavior, clipper, borderRadius];
 
   @override
-  Widget build(mix, child) {
+  Widget build(MixData mix, Widget child) {
     switch (clipType) {
       case ClipType.path:
         return ClipPath(

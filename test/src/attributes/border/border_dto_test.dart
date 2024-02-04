@@ -86,10 +86,10 @@ void main() {
     //  merge
     test('merge() Border', () {
       const borderDto1 = BoxBorderDto(
-        top: BorderSideDto(width: 1.0, color: ColorDto(Colors.red)),
-        bottom: BorderSideDto(width: 1.0, color: ColorDto(Colors.red)),
-        left: BorderSideDto(width: 1.0, color: ColorDto(Colors.red)),
-        right: BorderSideDto(width: 1.0, color: ColorDto(Colors.red)),
+        top: BorderSideDto(color: ColorDto(Colors.red), width: 1.0),
+        bottom: BorderSideDto(color: ColorDto(Colors.red), width: 1.0),
+        left: BorderSideDto(color: ColorDto(Colors.red), width: 1.0),
+        right: BorderSideDto(color: ColorDto(Colors.red), width: 1.0),
       );
 
       const borderDto2 = BoxBorderDto(
@@ -119,15 +119,15 @@ void main() {
   group('BorderSideDto', () {
     test('should correctly merge with another BorderSideDto', () {
       const borderSideDto1 = BorderSideDto(
-        width: 1.0,
         color: ColorDto(Colors.red),
         style: BorderStyle.solid,
+        width: 1.0,
       );
 
       const borderSideDto2 = BorderSideDto(
-        width: 2.0,
         color: ColorDto(Colors.blue),
         style: BorderStyle.solid,
+        width: 2.0,
       );
 
       final merged = borderSideDto1.merge(borderSideDto2);
@@ -140,14 +140,14 @@ void main() {
     // copywith
     test('copyWith should correctly copy the BorderSideDto', () {
       const borderSideDto = BorderSideDto(
-        width: 1.0,
         color: ColorDto(Colors.red),
         style: BorderStyle.solid,
+        width: 1.0,
       );
 
       final copied = borderSideDto.copyWith(
-        width: 2.0,
         color: const ColorDto(Colors.blue),
+        width: 2.0,
       );
 
       expect(copied.width, 2.0);
@@ -158,8 +158,8 @@ void main() {
     // from
     test('from should correctly create a BorderSideDto from a BorderSide', () {
       const borderSide = BorderSide(
-        width: 1.0,
         color: Colors.red,
+        width: 1.0,
         style: BorderStyle.solid,
       );
 
@@ -171,19 +171,21 @@ void main() {
     });
 
     // resolve
-    test('resolve should correctly create a BorderSide from a BorderSideDto',
-        () {
-      const borderSideDto = BorderSideDto(
-        width: 1.0,
-        color: ColorDto(Colors.red),
-        style: BorderStyle.solid,
-      );
+    test(
+      'resolve should correctly create a BorderSide from a BorderSideDto',
+      () {
+        const borderSideDto = BorderSideDto(
+          color: ColorDto(Colors.red),
+          style: BorderStyle.solid,
+          width: 1.0,
+        );
 
-      final resolved = borderSideDto.resolve(EmptyMixData);
+        final resolved = borderSideDto.resolve(EmptyMixData);
 
-      expect(resolved.width, borderSideDto.width);
-      expect(resolved.color, borderSideDto.color?.resolve(EmptyMixData));
-      expect(resolved.style, borderSideDto.style);
-    });
+        expect(resolved.width, borderSideDto.width);
+        expect(resolved.color, borderSideDto.color?.resolve(EmptyMixData));
+        expect(resolved.style, borderSideDto.style);
+      },
+    );
   });
 }

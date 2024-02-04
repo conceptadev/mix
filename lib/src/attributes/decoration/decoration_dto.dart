@@ -122,8 +122,8 @@ class BoxDecorationDto extends DecorationDto<BoxDecoration> {
       gradient: GradientDto.maybeFrom(decoration.gradient),
       boxShadow: decoration.boxShadow?.map(BoxShadowDto.from).toList(),
       shape: decoration.shape,
-      image: DecorationImageDto.maybeFrom(decoration.image),
       backgroundBlendMode: decoration.backgroundBlendMode,
+      image: DecorationImageDto.maybeFrom(decoration.image),
     );
   }
 
@@ -166,13 +166,13 @@ class BoxDecorationDto extends DecorationDto<BoxDecoration> {
   BoxDecoration resolve(MixData mix) {
     return BoxDecoration(
       color: color?.resolve(mix),
+      image: image?.resolve(mix),
       border: border?.resolve(mix),
       borderRadius: borderRadius?.resolve(mix),
       boxShadow: boxShadow?.map((e) => e.resolve(mix)).toList(),
       gradient: gradient?.resolve(mix),
       backgroundBlendMode: backgroundBlendMode,
       shape: shape ?? BoxShape.rectangle,
-      image: image?.resolve(mix),
     );
   }
 

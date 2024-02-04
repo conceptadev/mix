@@ -11,10 +11,10 @@ void main() {
         fontFamily: 'Roboto',
         fontFamilyFallback: ['Arial', 'Helvetica'],
         fontSize: 14.0,
-        fontWeight: FontWeight.bold,
-        fontStyle: FontStyle.italic,
         height: 1.2,
         leading: 5.0,
+        fontWeight: FontWeight.bold,
+        fontStyle: FontStyle.italic,
         forceStrutHeight: true,
       );
 
@@ -26,9 +26,9 @@ void main() {
 
     test('ShapeDecoration', () {
       const value = ShapeDecoration(
-        shape: CircleBorder(),
         gradient: RadialGradient(colors: [Colors.red, Colors.blue]),
         shadows: [BoxShadow(blurRadius: 5.0)],
+        shape: CircleBorder(),
       );
 
       final dto = ShapeDecorationDto.from(value);
@@ -56,8 +56,8 @@ void main() {
         color: Colors.blue,
         border: Border.all(),
         borderRadius: BorderRadius.circular(10.0),
-        gradient: const LinearGradient(colors: [Colors.red, Colors.blue]),
         boxShadow: const [BoxShadow(blurRadius: 5.0)],
+        gradient: const LinearGradient(colors: [Colors.red, Colors.blue]),
       );
 
       final dto = BoxDecorationDto.from(value);
@@ -112,7 +112,7 @@ void main() {
     });
 
     test('Shadow', () {
-      const value = BoxShadow(blurRadius: 10.0, color: Colors.black);
+      const value = BoxShadow(color: Colors.black, blurRadius: 10.0);
 
       final dto = BoxShadowDto.from(value);
 
@@ -126,7 +126,7 @@ void main() {
     });
 
     test('BoxShadow', () {
-      const value = BoxShadow(blurRadius: 5.0, color: Colors.grey);
+      const value = BoxShadow(color: Colors.grey, blurRadius: 5.0);
 
       final dto = BoxShadowDto.from(value);
 

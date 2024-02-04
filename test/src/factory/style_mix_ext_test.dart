@@ -6,65 +6,53 @@ void main() {
   final keyOne = UniqueKey();
   final keyTwo = UniqueKey();
   final keyThree = UniqueKey();
-  testWidgets('Style.container matches StyledContainer(style:Style)',
-      (tester) async {
-    final style = Style(
-      box.decoration(
-        border: Border.all(
-          color: Colors.red,
+  testWidgets(
+    'Style.container matches StyledContainer(style:Style)',
+    (tester) async {
+      final style = Style(
+        box.decoration(border: Border.all(color: Colors.red)),
+      );
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Column(
+            children: [
+              style.container(key: keyOne, child: const SizedBox()),
+              Box(style: style, key: keyTwo, child: const SizedBox()),
+              Box(
+                style: const Style.empty(),
+                key: keyThree,
+                child: const SizedBox(),
+              ),
+            ],
+          ),
         ),
-      ),
-    );
+      );
 
-    await tester.pumpWidget(
-      MaterialApp(
-        home: Column(
-          children: [
-            style.container(child: const SizedBox(), key: keyOne),
-            Box(
-              key: keyTwo,
-              style: style,
-              child: const SizedBox(),
-            ),
-            Box(
-              key: keyThree,
-              style: const Style.empty(),
-              child: const SizedBox(),
-            ),
-          ],
-        ),
-      ),
-    );
+      final containerOne = tester.widget<Box>(find.byKey(keyOne));
+      final containerTwo = tester.widget<Box>(find.byKey(keyTwo));
+      final containerThree = tester.widget<Box>(find.byKey(keyThree));
 
-    final containerOne = tester.widget<Box>(find.byKey(keyOne));
-    final containerTwo = tester.widget<Box>(find.byKey(keyTwo));
-    final containerThree = tester.widget<Box>(find.byKey(keyThree));
-
-    expect(containerOne.style, style);
-    expect(containerTwo.style, style);
-    expect(containerThree.style, isNot(style));
-  });
+      expect(containerOne.style, style);
+      expect(containerTwo.style, style);
+      expect(containerThree.style, isNot(style));
+    },
+  );
 
   testWidgets('Style.box matches StyledContainer(style:Style)', (tester) async {
     final style = Style(
-      box.decoration(
-        border: Border.all(color: Colors.red),
-      ),
+      box.decoration(border: Border.all(color: Colors.red)),
     );
 
     await tester.pumpWidget(
       MaterialApp(
         home: Column(
           children: [
-            style.box(child: const SizedBox(), key: keyOne),
+            style.box(key: keyOne, child: const SizedBox()),
+            Box(style: style, key: keyTwo, child: const SizedBox()),
             Box(
-              key: keyTwo,
-              style: style,
-              child: const SizedBox(),
-            ),
-            Box(
-              key: keyThree,
               style: const Style.empty(),
+              key: keyThree,
               child: const SizedBox(),
             ),
           ],
@@ -88,12 +76,8 @@ void main() {
       MaterialApp(
         home: Column(
           children: [
-            style.hbox(children: [const SizedBox()], key: keyOne),
-            HBox(
-              style: style,
-              key: keyTwo,
-              children: const [SizedBox()],
-            ),
+            style.hbox(key: keyOne, children: [const SizedBox()]),
+            HBox(style: style, key: keyTwo, children: const [SizedBox()]),
             HBox(
               style: const Style.empty(),
               key: keyThree,
@@ -115,24 +99,22 @@ void main() {
 
   testWidgets('Style.row matches StyledRow(style:Style)', (tester) async {
     final style = Style(
-      box.decoration(
-        border: Border.all(color: Colors.red),
-      ),
+      box.decoration(border: Border.all(color: Colors.red)),
     );
 
     await tester.pumpWidget(
       MaterialApp(
         home: Column(
           children: [
-            style.row(children: [const SizedBox()], key: keyOne),
+            style.row(key: keyOne, children: [const SizedBox()]),
             StyledRow(
-              key: keyTwo,
               style: style,
+              key: keyTwo,
               children: const [SizedBox()],
             ),
             StyledRow(
-              key: keyThree,
               style: const Style.empty(),
+              key: keyThree,
               children: const [SizedBox()],
             ),
           ],
@@ -157,16 +139,8 @@ void main() {
         home: Column(
           children: [
             style.text('text', key: keyOne),
-            StyledText(
-              'text',
-              key: keyTwo,
-              style: style,
-            ),
-            StyledText(
-              'text',
-              key: keyThree,
-              style: const Style.empty(),
-            ),
+            StyledText('text', style: style, key: keyTwo),
+            StyledText('text', style: const Style.empty(), key: keyThree),
           ],
         ),
       ),
@@ -188,12 +162,8 @@ void main() {
       MaterialApp(
         home: Column(
           children: [
-            style.vbox(children: [const SizedBox()], key: keyOne),
-            VBox(
-              style: style,
-              key: keyTwo,
-              children: const [SizedBox()],
-            ),
+            style.vbox(key: keyOne, children: [const SizedBox()]),
+            VBox(style: style, key: keyTwo, children: const [SizedBox()]),
             VBox(
               style: const Style.empty(),
               key: keyThree,
@@ -215,26 +185,22 @@ void main() {
 
   testWidgets('Style.column matches StyledColumn(style:Style)', (tester) async {
     final style = Style(
-      box.decoration(
-        border: Border.all(
-          color: Colors.red,
-        ),
-      ),
+      box.decoration(border: Border.all(color: Colors.red)),
     );
 
     await tester.pumpWidget(
       MaterialApp(
         home: Column(
           children: [
-            style.column(children: [const SizedBox()], key: keyOne),
+            style.column(key: keyOne, children: [const SizedBox()]),
             StyledColumn(
-              key: keyTwo,
               style: style,
+              key: keyTwo,
               children: const [SizedBox()],
             ),
             StyledColumn(
-              key: keyThree,
               style: const Style.empty(),
+              key: keyThree,
               children: const [SizedBox()],
             ),
           ],
@@ -259,15 +225,11 @@ void main() {
         home: Column(
           children: [
             style.icon(Icons.ac_unit, key: keyOne),
+            StyledIcon(Icons.ac_unit, style: style, key: keyTwo),
             StyledIcon(
               Icons.ac_unit,
-              key: keyTwo,
-              style: style,
-            ),
-            StyledIcon(
-              Icons.ac_unit,
-              key: keyThree,
               style: const Style.empty(),
+              key: keyThree,
             ),
           ],
         ),

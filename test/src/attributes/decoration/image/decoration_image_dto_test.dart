@@ -57,7 +57,9 @@ void main() {
       expect(mergedDto.fit, equals(BoxFit.fill));
       expect(mergedDto.alignment, equals(Alignment.bottomRight));
       expect(
-          mergedDto.centerSlice, equals(const Rect.fromLTRB(50, 60, 70, 80)));
+        mergedDto.centerSlice,
+        equals(const Rect.fromLTRB(50, 60, 70, 80)),
+      );
       expect(mergedDto.repeat, equals(ImageRepeat.repeatX));
       expect(mergedDto.filterQuality, equals(FilterQuality.low));
       expect(mergedDto.invertColors, equals(false));

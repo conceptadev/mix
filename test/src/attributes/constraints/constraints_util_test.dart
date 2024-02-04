@@ -8,10 +8,10 @@ void main() {
     const boxConstraints = BoxConstraintsUtility(UtilityTestAttribute.new);
     test('boxConstraints()', () {
       final result = boxConstraints(
-        minWidth: 50.0,
+        maxHeight: 200.0,
         maxWidth: 150.0,
         minHeight: 100.0,
-        maxHeight: 200.0,
+        minWidth: 50.0,
       );
 
       expect(result.value, isA<BoxConstraintsDto>());

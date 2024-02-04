@@ -6,25 +6,24 @@ import '../../helpers/testing_utils.dart';
 
 void main() {
   group('Variant', () {
-    testWidgets('should set attributes when variant matches, otherwise null',
-        (WidgetTester tester) async {
-      final style = Style(
-        icon.color.black(),
-        _foo(
-          box.height(10),
-          box.width(10),
-        ),
-      );
+    testWidgets(
+      'should set attributes when variant matches, otherwise null',
+      (WidgetTester tester) async {
+        final style = Style(
+          icon.color.black(),
+          _foo(box.height(10), box.width(10)),
+        );
 
-      await tester.pumpMaterialApp(
-        Row(
-          children: [
-            _buildDefaultTestCase(style, [_foo]),
-            _buildTestCaseToVerifyIfNull(style, [_bar]),
-          ],
-        ),
-      );
-    });
+        await tester.pumpMaterialApp(
+          Row(
+            children: [
+              _buildDefaultTestCase(style, [_foo]),
+              _buildTestCaseToVerifyIfNull(style, [_bar]),
+            ],
+          ),
+        );
+      },
+    );
   });
 
   group('MultiVariant', () {

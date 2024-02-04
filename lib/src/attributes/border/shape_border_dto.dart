@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../../../mix.dart';
+import '../../core/attribute.dart';
+import '../../factory/mix_provider_data.dart';
+import 'border_dto.dart';
+import 'border_radius_dto.dart';
 
 @immutable
 abstract class ShapeBorderDto<Value extends ShapeBorder> extends Dto<Value>

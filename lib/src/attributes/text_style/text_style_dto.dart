@@ -1,5 +1,3 @@
-// ignore_for_file: avoid-non-null-assertion
-
 import 'dart:ui';
 
 import 'package:flutter/material.dart';

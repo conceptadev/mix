@@ -13,11 +13,11 @@ void main() {
         MockBuildContext(),
         Style(
           const FlexSpecAttribute(
-            crossAxisAlignment: CrossAxisAlignment.center,
+            direction: Axis.horizontal,
             mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             verticalDirection: VerticalDirection.down,
-            direction: Axis.horizontal,
             textDirection: TextDirection.ltr,
             textBaseline: TextBaseline.alphabetic,
             clipBehavior: Clip.antiAlias,
@@ -53,11 +53,11 @@ void main() {
       );
 
       final copiedSpec = spec.copyWith(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        direction: Axis.vertical,
         mainAxisAlignment: MainAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,
         verticalDirection: VerticalDirection.up,
-        direction: Axis.vertical,
         textDirection: TextDirection.rtl,
         textBaseline: TextBaseline.ideographic,
         clipBehavior: Clip.none,
@@ -106,18 +106,9 @@ void main() {
       final lerpedSpec = spec1.lerp(spec2, t);
 
       expect(lerpedSpec.crossAxisAlignment, CrossAxisAlignment.end);
-      expect(
-        lerpedSpec.mainAxisAlignment,
-        MainAxisAlignment.end,
-      );
-      expect(
-        lerpedSpec.mainAxisSize,
-        MainAxisSize.max,
-      );
-      expect(
-        lerpedSpec.verticalDirection,
-        VerticalDirection.up,
-      );
+      expect(lerpedSpec.mainAxisAlignment, MainAxisAlignment.end);
+      expect(lerpedSpec.mainAxisSize, MainAxisSize.max);
+      expect(lerpedSpec.verticalDirection, VerticalDirection.up);
       expect(lerpedSpec.direction, Axis.vertical);
       expect(lerpedSpec.textDirection, TextDirection.rtl);
       expect(lerpedSpec.textBaseline, TextBaseline.ideographic);

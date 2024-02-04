@@ -79,21 +79,27 @@ void main() {
           clip.rrect(borderRadius: BorderRadius.circular(10.0));
 
       expect(
-          clipRRectDecorator.value.borderRadius, BorderRadius.circular(10.0));
+        clipRRectDecorator.value.borderRadius,
+        BorderRadius.circular(10.0),
+      );
     });
 
     test('clipOval creates ClipOvalDecorator correctly', () {
       final clipOvalDecorator = clip.oval();
 
-      expect(clipOvalDecorator.value.build(EmptyMixData, const Empty()),
-          isA<ClipOval>());
+      expect(
+        clipOvalDecorator.value.build(EmptyMixData, const Empty()),
+        isA<ClipOval>(),
+      );
     });
 
     test('clipPath creates ClipPathDecorator correctly', () {
       final clipPathDecorator = clip.path();
 
-      expect(clipPathDecorator.value.build(EmptyMixData, const Empty()),
-          isA<ClipPath>());
+      expect(
+        clipPathDecorator.value.build(EmptyMixData, const Empty()),
+        isA<ClipPath>(),
+      );
     });
 
     test('clipTriangle creates ClipPathDecorator correctly', () {

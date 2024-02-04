@@ -11,19 +11,11 @@ export 'package:mix/src/core/extensions/values_ext.dart';
 
 class MockBuildContext extends Mock implements BuildContext {}
 
-MixData MockMixData(
-  Style style,
-) {
-  return MixData.create(
-    MockBuildContext(),
-    style,
-  );
+MixData MockMixData(Style style) {
+  return MixData.create(MockBuildContext(), style);
 }
 
-final EmptyMixData = MixData.create(
-  MockBuildContext(),
-  const Style.empty(),
-);
+final EmptyMixData = MixData.create(MockBuildContext(), const Style.empty());
 
 MediaQuery createMediaQuery(Size size) {
   return MediaQuery(
@@ -47,7 +39,6 @@ Widget createBrightnessTheme(Brightness brightness) {
   return MixTheme(
     data: MixThemeData(),
     child: MaterialApp(
-      theme: ThemeData(brightness: brightness),
       home: Scaffold(
         body: Builder(
           builder: (BuildContext context) {
@@ -55,6 +46,7 @@ Widget createBrightnessTheme(Brightness brightness) {
           },
         ),
       ),
+      theme: ThemeData(brightness: brightness),
     ),
   );
 }
@@ -77,9 +69,7 @@ Widget createDirectionality(TextDirection direction) {
   );
 }
 
-Widget createWithMixTheme(
-  MixThemeData theme,
-) {
+Widget createWithMixTheme(MixThemeData theme) {
   return MixTheme(
     data: theme,
     child: MaterialApp(
@@ -98,7 +88,6 @@ extension WidgetTesterExt on WidgetTester {
   Future<void> pumpWithMix(
     Widget widget, {
     Style style = const Style.empty(),
-    MixThemeData theme = const MixThemeData.empty(),
   }) async {
     await pumpWithMixTheme(
       Builder(
@@ -119,12 +108,7 @@ extension WidgetTesterExt on WidgetTester {
     MixThemeData theme = const MixThemeData.empty(),
   }) async {
     await pumpWidget(
-      MaterialApp(
-        home: MixTheme(
-          data: theme,
-          child: widget,
-        ),
-      ),
+      MaterialApp(home: MixTheme(data: theme, child: widget)),
     );
   }
 
@@ -140,10 +124,10 @@ extension WidgetTesterExt on WidgetTester {
       MaterialApp(
         home: WidgetStateNotifier(
           data: data.copyWith(
-            state: state,
-            status: status,
-            hover: hover,
             focus: focus,
+            hover: hover,
+            status: status,
+            state: state,
           ),
           child: widget,
         ),
@@ -152,11 +136,7 @@ extension WidgetTesterExt on WidgetTester {
   }
 
   Future<void> pumpMaterialApp(Widget widget) async {
-    await pumpWidget(
-      MaterialApp(
-        home: widget,
-      ),
-    );
+    await pumpWidget(MaterialApp(home: widget));
   }
 
   Future<void> pumpStyledWidget(
@@ -164,28 +144,17 @@ extension WidgetTesterExt on WidgetTester {
     MixThemeData theme = const MixThemeData.empty(),
   }) async {
     await pumpWidget(
-      MaterialApp(
-        home: MixTheme(
-          data: theme,
-          child: widget,
-        ),
-      ),
+      MaterialApp(home: MixTheme(data: theme, child: widget)),
     );
   }
 }
 
 // ignore: constant_identifier_names
-const FillWidget = SizedBox(
-  height: 25,
-  width: 25,
-);
+const FillWidget = SizedBox(width: 25, height: 25);
 
 class WrapMixThemeWidget extends StatelessWidget {
-  const WrapMixThemeWidget({
-    required this.child,
-    this.theme,
-    Key? key,
-  }) : super(key: key);
+  const WrapMixThemeWidget({required this.child, this.theme, Key? key})
+      : super(key: key);
 
   final Widget child;
   final MixThemeData? theme;
@@ -194,10 +163,7 @@ class WrapMixThemeWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return MixTheme(
       data: theme ?? MixThemeData(),
-      child: Directionality(
-        textDirection: TextDirection.ltr,
-        child: child,
-      ),
+      child: Directionality(textDirection: TextDirection.ltr, child: child),
     );
   }
 }
@@ -282,14 +248,6 @@ class UtilityTestDtoAttribute<T extends Dto<V>, V>
 class CustomWidgetDecorator extends WidgetDecorator<CustomWidgetDecorator> {
   const CustomWidgetDecorator({super.key});
   @override
-  Widget build(mix, child) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: child,
-    );
-  }
-
-  @override
   CustomWidgetDecorator lerp(CustomWidgetDecorator? other, double t) {
     if (other == null) return this;
 
@@ -298,6 +256,10 @@ class CustomWidgetDecorator extends WidgetDecorator<CustomWidgetDecorator> {
 
   @override
   get props => [];
+  @override
+  Widget build(MixData mix, Widget child) {
+    return Padding(padding: const EdgeInsets.all(8.0), child: child);
+  }
 }
 
 class WidgetWithTestableBuild extends StyledWidget {
@@ -309,6 +271,7 @@ class WidgetWithTestableBuild extends StyledWidget {
   Widget build(BuildContext context) {
     return withMix(context, (_) {
       onBuild(context);
+
       return const SizedBox();
     });
   }

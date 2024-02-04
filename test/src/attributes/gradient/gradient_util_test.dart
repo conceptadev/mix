@@ -56,12 +56,12 @@ void main() {
       const transform = GradientRotation(0.0);
 
       final attribute = radialUtility(
-        colors: colors,
-        stops: stops,
         center: center,
-        radius: radius,
+        colors: colors,
         focal: focal,
         focalRadius: focalRadius,
+        radius: radius,
+        stops: stops,
         tileMode: tileMode,
         transform: transform,
       );
@@ -193,12 +193,12 @@ void main() {
       const transform = GradientRotation(0.0);
 
       final attribute = radialUtility(
-        colors: colors,
-        stops: stops,
         center: center,
-        radius: radius,
+        colors: colors,
         focal: focal,
         focalRadius: focalRadius,
+        radius: radius,
+        stops: stops,
         tileMode: tileMode,
         transform: transform,
       );
@@ -252,10 +252,10 @@ void main() {
       const transform = GradientRotation(0.0);
 
       final attribute = linearUtility(
-        colors: colors,
-        stops: stops,
         begin: begin,
+        colors: colors,
         end: end,
+        stops: stops,
         tileMode: tileMode,
         transform: transform,
       );
@@ -359,10 +359,10 @@ void main() {
       const transform = GradientRotation(0.0);
 
       final attribute = linearUtility(
-        colors: colors,
-        stops: stops,
         begin: begin,
+        colors: colors,
         end: end,
+        stops: stops,
         tileMode: tileMode,
         transform: transform,
       );
@@ -410,11 +410,11 @@ void main() {
       const transform = GradientRotation(0.0);
 
       final attribute = sweepUtility(
-        colors: colors,
-        stops: stops,
         center: center,
-        startAngle: startAngle,
+        colors: colors,
         endAngle: endAngle,
+        startAngle: startAngle,
+        stops: stops,
         tileMode: tileMode,
         transform: transform,
       );
@@ -524,11 +524,11 @@ void main() {
       const transform = GradientRotation(0.0);
 
       final attribute = sweepUtility(
-        colors: colors,
-        stops: stops,
         center: center,
-        startAngle: startAngle,
+        colors: colors,
         endAngle: endAngle,
+        startAngle: startAngle,
+        stops: stops,
         tileMode: tileMode,
         transform: transform,
       );

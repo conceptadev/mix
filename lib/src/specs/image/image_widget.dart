@@ -7,13 +7,6 @@ import '../../utils/helper_util.dart';
 import 'image_spec.dart';
 
 class StyledImage extends StyledWidget {
-  final ImageProvider<Object> image;
-  final ImageFrameBuilder? frameBuilder;
-  final ImageLoadingBuilder? loadingBuilder;
-  final ImageErrorWidgetBuilder? errorBuilder;
-  final String? semanticLabel;
-  final bool excludeFromSemantics;
-
   const StyledImage({
     super.key,
     super.style,
@@ -26,16 +19,23 @@ class StyledImage extends StyledWidget {
     required this.image,
   });
 
+  final ImageProvider<Object> image;
+  final ImageFrameBuilder? frameBuilder;
+  final ImageLoadingBuilder? loadingBuilder;
+  final ImageErrorWidgetBuilder? errorBuilder;
+  final String? semanticLabel;
+  final bool excludeFromSemantics;
+
   @override
   Widget build(BuildContext context) {
     return withMix(context, (mix) {
       return MixedImage(
         image: image,
-        errorBuilder: errorBuilder,
-        excludeFromSemantics: excludeFromSemantics,
         frameBuilder: frameBuilder,
         loadingBuilder: loadingBuilder,
+        errorBuilder: errorBuilder,
         semanticLabel: semanticLabel,
+        excludeFromSemantics: excludeFromSemantics,
       );
     });
   }
@@ -78,12 +78,12 @@ class MixedImage extends StatelessWidget {
       width: spec.width,
       height: spec.height,
       color: spec.color,
-      repeat: spec.repeat ?? ImageRepeat.noRepeat,
+      colorBlendMode: spec.colorBlendMode ?? BlendMode.clear,
       fit: spec.fit,
       alignment: spec.alignment ?? Alignment.center,
+      repeat: spec.repeat ?? ImageRepeat.noRepeat,
       centerSlice: spec.centerSlice,
       filterQuality: spec.filterQuality ?? FilterQuality.none,
-      colorBlendMode: spec.colorBlendMode ?? BlendMode.clear,
     );
 
     return shouldApplyDecorators(

@@ -15,18 +15,11 @@ void main() {
       final secondKey = UniqueKey();
       await tester.pumpWidget(Column(
         children: [
-          Pressable(
-            onPressed: () {},
-            child: Container(
-              key: firstKey,
-            ),
-          ),
+          Pressable(onPressed: null, child: Container(key: firstKey)),
           Pressable(
             onPressed: null,
             disabled: true,
-            child: Container(
-              key: secondKey,
-            ),
+            child: Container(key: secondKey),
           ),
         ],
       ));
@@ -45,102 +38,110 @@ void main() {
       expect(secondNotifier!.status, WidgetStatus.disabled);
     });
 
-    testWidgets('must be clickable when isDisabled is setted to false',
-        (tester) async {
-      int counter = 0;
+    testWidgets(
+      'must be clickable when isDisabled is setted to false',
+      (tester) async {
+        int counter = 0;
 
-      await tester.pumpWidget(
-        Pressable(
-          onPressed: () {
-            counter++;
-          },
-          disabled: false,
-          child: Container(),
-        ),
-      );
+        await tester.pumpWidget(
+          Pressable(
+            onPressed: () {
+              counter++;
+            },
+            disabled: false,
+            child: Container(),
+          ),
+        );
 
-      final pressableFinder = find.byType(Pressable);
-      expect(pressableFinder, findsOneWidget);
+        final pressableFinder = find.byType(Pressable);
+        expect(pressableFinder, findsOneWidget);
 
-      await tester.tap(pressableFinder);
-      await tester.pumpAndSettle();
+        await tester.tap(pressableFinder);
+        await tester.pumpAndSettle();
 
-      expect(counter, 1);
-    });
+        expect(counter, 1);
+      },
+    );
 
-    testWidgets('must be unclickable when isDisabled is setted to true',
-        (tester) async {
-      int counter = 0;
+    testWidgets(
+      'must be unclickable when isDisabled is setted to true',
+      (tester) async {
+        int counter = 0;
 
-      await tester.pumpWidget(
-        Pressable(
-          onPressed: () {
-            counter++;
-          },
-          disabled: true,
-          child: Container(),
-        ),
-      );
+        await tester.pumpWidget(
+          Pressable(
+            onPressed: () {
+              counter++;
+            },
+            disabled: true,
+            child: Container(),
+          ),
+        );
 
-      final pressableFinder = find.byType(Pressable);
-      expect(pressableFinder, findsOneWidget);
+        final pressableFinder = find.byType(Pressable);
+        expect(pressableFinder, findsOneWidget);
 
-      await tester.tap(pressableFinder);
-      await tester.pumpAndSettle();
+        await tester.tap(pressableFinder);
+        await tester.pumpAndSettle();
 
-      expect(counter, 0);
-    });
+        expect(counter, 0);
+      },
+    );
   });
 
   group('PressableBox', () {
-    testWidgets('must be clickable when isDisabled is setted to false',
-        (tester) async {
-      int counter = 0;
+    testWidgets(
+      'must be clickable when isDisabled is setted to false',
+      (tester) async {
+        int counter = 0;
 
-      await tester.pumpWidget(
-        PressableBox(
-          unpressDelay: Duration.zero,
-          animationDuration: Duration.zero,
-          onPressed: () {
-            counter++;
-          },
-          disabled: false,
-          child: Container(),
-        ),
-      );
+        await tester.pumpWidget(
+          PressableBox(
+            onPressed: () {
+              counter++;
+            },
+            unpressDelay: Duration.zero,
+            animationDuration: Duration.zero,
+            disabled: false,
+            child: Container(),
+          ),
+        );
 
-      final pressableFinder = find.byType(PressableBox);
-      expect(pressableFinder, findsOneWidget);
+        final pressableFinder = find.byType(PressableBox);
+        expect(pressableFinder, findsOneWidget);
 
-      await tester.tap(pressableFinder);
-      await tester.pumpAndSettle();
+        await tester.tap(pressableFinder);
+        await tester.pumpAndSettle();
 
-      expect(counter, 1);
-    });
+        expect(counter, 1);
+      },
+    );
 
-    testWidgets('must be unclickable when isDisabled is setted to true',
-        (tester) async {
-      int counter = 0;
+    testWidgets(
+      'must be unclickable when isDisabled is setted to true',
+      (tester) async {
+        int counter = 0;
 
-      await tester.pumpWidget(
-        PressableBox(
-          onPressed: () {
-            counter++;
-          },
-          unpressDelay: Duration.zero,
-          animationDuration: Duration.zero,
-          disabled: true,
-          child: Container(),
-        ),
-      );
+        await tester.pumpWidget(
+          PressableBox(
+            onPressed: () {
+              counter++;
+            },
+            unpressDelay: Duration.zero,
+            animationDuration: Duration.zero,
+            disabled: true,
+            child: Container(),
+          ),
+        );
 
-      final pressableFinder = find.byType(PressableBox);
-      expect(pressableFinder, findsOneWidget);
+        final pressableFinder = find.byType(PressableBox);
+        expect(pressableFinder, findsOneWidget);
 
-      await tester.tap(pressableFinder);
-      await tester.pumpAndSettle();
+        await tester.tap(pressableFinder);
+        await tester.pumpAndSettle();
 
-      expect(counter, 0);
-    });
+        expect(counter, 0);
+      },
+    );
   });
 }

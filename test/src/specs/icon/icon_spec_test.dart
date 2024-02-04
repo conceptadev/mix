@@ -12,9 +12,7 @@ void main() {
     test('resolve', () {
       final mix = MixData.create(
         MockBuildContext(),
-        Style(
-          IconSpecAttribute(color: Colors.red.toDto(), size: 20.0),
-        ),
+        Style(IconSpecAttribute(size: 20.0, color: Colors.red.toDto())),
       );
 
       final spec = IconSpec.of(mix);
@@ -24,10 +22,7 @@ void main() {
     });
 
     test('copyWith', () {
-      const spec = IconSpec(
-        color: Colors.red,
-        size: 20.0,
-      );
+      const spec = IconSpec(color: Colors.red, size: 20.0);
 
       final copiedSpec = spec.copyWith(color: Colors.blue, size: 30.0);
 
@@ -36,15 +31,9 @@ void main() {
     });
 
     test('lerp', () {
-      const spec1 = IconSpec(
-        color: Colors.red,
-        size: 20.0,
-      );
+      const spec1 = IconSpec(color: Colors.red, size: 20.0);
 
-      const spec2 = IconSpec(
-        color: Colors.blue,
-        size: 30.0,
-      );
+      const spec2 = IconSpec(color: Colors.blue, size: 30.0);
 
       const t = 0.5;
       final lerpedSpec = spec1.lerp(spec2, t);

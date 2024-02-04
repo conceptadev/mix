@@ -63,26 +63,28 @@ void main() {
       expect(opacityWidget.opacity, 0.5);
     });
 
-    testWidgets('can inherit style from the parent StyledWidget',
-        (WidgetTester tester) async {
-      await tester.pumpWidget(
-        Box(
-          style: Style(
-            image.width(152),
-            image.height(152),
-            image.color.black(),
+    testWidgets(
+      'can inherit style from the parent StyledWidget',
+      (WidgetTester tester) async {
+        await tester.pumpWidget(
+          Box(
+            style: Style(
+              image.width(152),
+              image.height(152),
+              image.color.black(),
+            ),
+            child: const StyledImage(
+              image: AssetImage('test_resources/logo.png'),
+            ),
           ),
-          child: const StyledImage(
-            image: AssetImage('test_resources/logo.png'),
-          ),
-        ),
-      );
+        );
 
-      final imageWidget = tester.element(find.byType(Image)).widget as Image;
+        final imageWidget = tester.element(find.byType(Image)).widget as Image;
 
-      expect(imageWidget.width, 152);
-      expect(imageWidget.height, 152);
-      expect(imageWidget.color, Colors.black);
-    });
+        expect(imageWidget.width, 152);
+        expect(imageWidget.height, 152);
+        expect(imageWidget.color, Colors.black);
+      },
+    );
   });
 }

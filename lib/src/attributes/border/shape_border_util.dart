@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 
-import '../../../mix.dart';
+import '../../core/attribute.dart';
+import '../scalars/scalar_util.dart';
+import 'border_dto.dart';
+import 'border_radius_dto.dart';
+import 'border_radius_util.dart';
+import 'border_util.dart';
 import 'shape_border_dto.dart';
 
 /// Utility for setting `ShapeBorder` values.

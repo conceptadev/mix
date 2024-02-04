@@ -11,9 +11,9 @@ void main() {
     test('border.top()', () {
       final result = border.top(
         color: Colors.red,
-        width: 10.0,
-        style: BorderStyle.solid,
         strokeAlign: 0.5,
+        style: BorderStyle.solid,
+        width: 10.0,
       );
 
       expect(result.value.top?.color?.value, Colors.red);
@@ -38,9 +38,9 @@ void main() {
     test('border.bottom()', () {
       final result = border.bottom(
         color: Colors.red,
-        width: 10.0,
-        style: BorderStyle.solid,
         strokeAlign: 0.5,
+        style: BorderStyle.solid,
+        width: 10.0,
       );
 
       expect(result.value.bottom?.color?.value, Colors.red);
@@ -65,9 +65,9 @@ void main() {
     test('border.left()', () {
       final result = border.left(
         color: Colors.red,
-        width: 10.0,
-        style: BorderStyle.solid,
         strokeAlign: 0.5,
+        style: BorderStyle.solid,
+        width: 10.0,
       );
       expect(result.value.left?.color?.value, Colors.red);
       expect(result.value.left?.width, 10.0);
@@ -91,9 +91,9 @@ void main() {
     test('border.right()', () {
       final result = border.right(
         color: Colors.red,
-        width: 10.0,
-        style: BorderStyle.solid,
         strokeAlign: 0.5,
+        style: BorderStyle.solid,
+        width: 10.0,
       );
       expect(result.value.right?.color?.value, Colors.red);
       expect(result.value.right?.width, 10.0);
@@ -117,9 +117,9 @@ void main() {
     test('border.horizontal()', () {
       final result = border.horizontal(
         color: Colors.blue,
-        width: 5.0,
-        style: BorderStyle.solid,
         strokeAlign: 0.3,
+        style: BorderStyle.solid,
+        width: 5.0,
       );
       expect(result.value.top?.color?.value, Colors.blue);
       expect(result.value.top?.width, 5.0);
@@ -151,9 +151,9 @@ void main() {
     test('border.vertical()', () {
       final result = border.vertical(
         color: Colors.green,
-        width: 7.0,
-        style: BorderStyle.solid,
         strokeAlign: 0.2,
+        style: BorderStyle.solid,
+        width: 7.0,
       );
       expect(result.value.left?.color?.value, Colors.green);
       expect(result.value.left?.width, 7.0);
@@ -185,9 +185,9 @@ void main() {
     test('border.all()', () {
       final result = border.all(
         color: Colors.purple,
-        width: 3.0,
-        style: BorderStyle.solid,
         strokeAlign: 0.1,
+        style: BorderStyle.solid,
+        width: 3.0,
       );
       expect(result.value.top?.color?.value, Colors.purple);
       expect(result.value.top?.width, 3.0);
@@ -242,9 +242,9 @@ void main() {
     test('borderDirectional.top()', () {
       final result = borderDirectional.top(
         color: Colors.red,
-        width: 10.0,
-        style: BorderStyle.solid,
         strokeAlign: 0.5,
+        style: BorderStyle.solid,
+        width: 10.0,
       );
 
       expect(result.value.top?.color?.value, Colors.red);
@@ -269,9 +269,9 @@ void main() {
     test('borderDirectional.bottom()', () {
       final result = borderDirectional.bottom(
         color: Colors.red,
-        width: 10.0,
-        style: BorderStyle.solid,
         strokeAlign: 0.5,
+        style: BorderStyle.solid,
+        width: 10.0,
       );
 
       expect(result.value.bottom?.color?.value, Colors.red);
@@ -296,9 +296,9 @@ void main() {
     test('borderDirectional.start()', () {
       final result = borderDirectional.start(
         color: Colors.red,
-        width: 10.0,
-        style: BorderStyle.solid,
         strokeAlign: 0.5,
+        style: BorderStyle.solid,
+        width: 10.0,
       );
       expect(result.value.start?.color?.value, Colors.red);
       expect(result.value.start?.width, 10.0);
@@ -322,9 +322,9 @@ void main() {
     test('borderDirectional.end()', () {
       final result = borderDirectional.end(
         color: Colors.red,
-        width: 10.0,
-        style: BorderStyle.solid,
         strokeAlign: 0.5,
+        style: BorderStyle.solid,
+        width: 10.0,
       );
       expect(result.value.end?.color?.value, Colors.red);
       expect(result.value.end?.width, 10.0);
@@ -348,9 +348,9 @@ void main() {
     test('borderDirectional.horizontal()', () {
       final result = borderDirectional.horizontal(
         color: Colors.blue,
-        width: 5.0,
-        style: BorderStyle.solid,
         strokeAlign: 0.3,
+        style: BorderStyle.solid,
+        width: 5.0,
       );
       expect(result.value.top?.color?.value, Colors.blue);
       expect(result.value.top?.width, 5.0);
@@ -382,9 +382,9 @@ void main() {
     test('borderDirectional.vertical()', () {
       final result = borderDirectional.vertical(
         color: Colors.green,
-        width: 7.0,
-        style: BorderStyle.solid,
         strokeAlign: 0.2,
+        style: BorderStyle.solid,
+        width: 7.0,
       );
       expect(result.value.start?.color?.value, Colors.green);
       expect(result.value.start?.width, 7.0);
@@ -416,9 +416,9 @@ void main() {
     test('borderDirectional.all()', () {
       final result = borderDirectional.all(
         color: Colors.purple,
-        width: 3.0,
-        style: BorderStyle.solid,
         strokeAlign: 0.1,
+        style: BorderStyle.solid,
+        width: 3.0,
       );
       expect(result.value.top?.color?.value, Colors.purple);
       expect(result.value.top?.width, 3.0);

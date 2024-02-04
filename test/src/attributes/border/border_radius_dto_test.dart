@@ -32,10 +32,10 @@ void main() {
 
     test('merge should combine two BorderRadiusGeometryDtos correctly', () {
       const borderRadius1 = BorderRadiusGeometryDto(
-        bottomLeft: Radius.circular(10),
-        bottomRight: Radius.circular(20),
         topLeft: Radius.circular(30),
         topRight: Radius.circular(40),
+        bottomLeft: Radius.circular(10),
+        bottomRight: Radius.circular(20),
       );
       const borderRadius2 = BorderRadiusGeometryDto(
         topLeft: Radius.circular(20),
@@ -126,10 +126,10 @@ void main() {
 
     test('merge should combine two BorderRadiusGeometryDtos correctly', () {
       const borderRadius1 = BorderRadiusGeometryDto(
-        bottomEnd: Radius.circular(10),
-        topEnd: Radius.circular(10),
         topStart: Radius.circular(10),
+        topEnd: Radius.circular(10),
         bottomStart: Radius.circular(10),
+        bottomEnd: Radius.circular(10),
       );
       const borderRadius2 = BorderRadiusGeometryDto(
         topStart: Radius.circular(20),
@@ -197,14 +197,20 @@ void main() {
   group('BorderSideDto', () {
     test('from constructor sets all values correctly', () {
       final attr = BorderSideDto(
-          color: Colors.red.toDto(), width: 1.0, style: BorderStyle.solid);
+        color: Colors.red.toDto(),
+        style: BorderStyle.solid,
+        width: 1.0,
+      );
       expect(attr.color?.value, Colors.red);
       expect(attr.width, 1.0);
       expect(attr.style, BorderStyle.solid);
     });
     test('resolve returns correct BorderSide', () {
       final attr = BorderSideDto(
-          color: Colors.red.toDto(), width: 1.0, style: BorderStyle.solid);
+        color: Colors.red.toDto(),
+        style: BorderStyle.solid,
+        width: 1.0,
+      );
       final borderSide = attr.resolve(EmptyMixData);
       expect(borderSide.color, Colors.red);
       expect(borderSide.width, 1.0);
@@ -212,16 +218,28 @@ void main() {
     });
     test('Equality holds when all attributes are the same', () {
       final attr1 = BorderSideDto(
-          color: Colors.red.toDto(), width: 1.0, style: BorderStyle.solid);
+        color: Colors.red.toDto(),
+        style: BorderStyle.solid,
+        width: 1.0,
+      );
       final attr2 = BorderSideDto(
-          color: Colors.red.toDto(), width: 1.0, style: BorderStyle.solid);
+        color: Colors.red.toDto(),
+        style: BorderStyle.solid,
+        width: 1.0,
+      );
       expect(attr1, attr2);
     });
     test('Equality fails when attributes are different', () {
       final attr1 = BorderSideDto(
-          color: Colors.red.toDto(), width: 1.0, style: BorderStyle.solid);
+        color: Colors.red.toDto(),
+        style: BorderStyle.solid,
+        width: 1.0,
+      );
       final attr2 = BorderSideDto(
-          color: Colors.blue.toDto(), width: 1.0, style: BorderStyle.solid);
+        color: Colors.blue.toDto(),
+        style: BorderStyle.solid,
+        width: 1.0,
+      );
       expect(attr1, isNot(attr2));
     });
   });

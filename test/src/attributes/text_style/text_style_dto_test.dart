@@ -16,31 +16,31 @@ void main() {
       final attr1 = TextStyleDto.only(
         color: Colors.red.toDto(),
         fontSize: 24.0,
-        decoration: TextDecoration.underline,
-        decorationColor: Colors.blue.toDto(),
-        decorationStyle: TextDecorationStyle.dashed,
         fontWeight: FontWeight.bold,
         fontStyle: FontStyle.italic,
         letterSpacing: 1.0,
         wordSpacing: 2.0,
-        height: 2.0,
-        locale: const Locale('en', 'US'),
         textBaseline: TextBaseline.ideographic,
+        decoration: TextDecoration.underline,
+        decorationColor: Colors.blue.toDto(),
+        decorationStyle: TextDecorationStyle.dashed,
+        locale: const Locale('en', 'US'),
+        height: 2.0,
       );
 
       final attr2 = TextStyleDto.only(
         color: Colors.blue.toDto(),
         fontSize: 30.0,
-        decoration: TextDecoration.lineThrough,
-        decorationColor: Colors.red.toDto(),
-        decorationStyle: TextDecorationStyle.dotted,
         fontWeight: FontWeight.w100,
         fontStyle: FontStyle.normal,
         letterSpacing: 2.0,
         wordSpacing: 3.0,
-        height: 3.0,
-        locale: const Locale('en', 'US'),
         textBaseline: TextBaseline.alphabetic,
+        decoration: TextDecoration.lineThrough,
+        decorationColor: Colors.red.toDto(),
+        decorationStyle: TextDecorationStyle.dotted,
+        locale: const Locale('en', 'US'),
+        height: 3.0,
       );
 
       final merged = attr1.merge(attr2).resolve(EmptyMixData);
@@ -62,16 +62,16 @@ void main() {
       final attr = TextStyleDto.only(
         color: Colors.red.toDto(),
         fontSize: 24.0,
-        decoration: TextDecoration.underline,
-        decorationColor: Colors.blue.toDto(),
-        decorationStyle: TextDecorationStyle.dashed,
         fontWeight: FontWeight.bold,
         fontStyle: FontStyle.italic,
         letterSpacing: 1.0,
         wordSpacing: 2.0,
-        height: 2.0,
-        locale: const Locale('en', 'US'),
         textBaseline: TextBaseline.ideographic,
+        decoration: TextDecoration.underline,
+        decorationColor: Colors.blue.toDto(),
+        decorationStyle: TextDecorationStyle.dashed,
+        locale: const Locale('en', 'US'),
+        height: 2.0,
       );
       final textStyle = attr.resolve(EmptyMixData);
       expect(textStyle.color, Colors.red);
@@ -84,11 +84,9 @@ void main() {
       expect(textStyle.letterSpacing, 1.0);
       expect(textStyle.wordSpacing, 2.0);
       expect(textStyle.height, 2.0);
-      expect(
-        textStyle.locale,
-        const Locale('en', 'US'),
-      );
+      expect(textStyle.locale, const Locale('en', 'US'));
       expect(textStyle.textBaseline, TextBaseline.ideographic);
+
       return const Placeholder();
     });
     test('Equality holds when all attributes are the same', () {

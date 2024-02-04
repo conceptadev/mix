@@ -104,4 +104,6 @@ class ZBox extends StyledWidget {
 
 // Default Stack used as a fallback
 // for styling properties in MixedStack.
-final _defaultStack = Stack();
+// ignore: prefer_const_constructors
+// TODO: Need to turn this into const for Flutter SDK support later
+const _defaultStack = Stack();

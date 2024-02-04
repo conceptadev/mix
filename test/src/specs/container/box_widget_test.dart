@@ -39,10 +39,10 @@ void main() {
     expect(
       containerWidget.decoration,
       BoxDecoration(
+        color: Colors.red,
         border:
             Border.all(color: Colors.red, width: 1, style: BorderStyle.solid),
         borderRadius: BorderRadius.circular(10),
-        color: Colors.red,
       ),
     );
   });

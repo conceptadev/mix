@@ -27,30 +27,21 @@ void main() {
       expect(instance.toString(), 'TestClass(1, A)');
     });
 
-    test('Should have correct equality', () {
+    test('Deep nested class Should have correct equality', () {
       final instance1 = DeepNestedClass(deepNestedMap, deepNestedList);
       final instance2 = DeepNestedClass(deepNestedMap, deepNestedList);
       final instance3 = DeepNestedClass(
         {
-          'key1': {
-            'innerKey1': 1,
-            'innerKey2': 999,
-          },
+          'key1': {'innerKey1': 1, 'innerKey2': 999},
         },
         [
           [
             ['value1', 'value2'],
-            [
-              'value3',
-              'value4',
-            ],
+            ['value3', 'value4'],
           ],
           [
             ['value5', 'value6'],
-            [
-              'value7',
-              'value8',
-            ],
+            ['value7', 'value8'],
           ],
         ],
       );
@@ -60,30 +51,21 @@ void main() {
       expect(instance2, isNot(instance3));
     });
 
-    test('Should have correct hashCode', () {
+    test('Deep nested class Should have correct hashCode', () {
       final instance1 = DeepNestedClass(deepNestedMap, deepNestedList);
       final instance2 = DeepNestedClass(deepNestedMap, deepNestedList);
       final instance3 = DeepNestedClass(
         {
-          'key1': {
-            'innerKey1': 1,
-            'innerKey2': 999,
-          },
+          'key1': {'innerKey1': 1, 'innerKey2': 999},
         },
         [
           [
             ['value1', 'value2'],
-            [
-              'value3',
-              'value4',
-            ],
+            ['value3', 'value4'],
           ],
           [
             ['value5', 'value6'],
-            [
-              'value7',
-              'value8',
-            ],
+            ['value7', 'value8'],
           ],
         ],
       );
@@ -92,7 +74,7 @@ void main() {
       expect(instance1.hashCode, isNot(instance3.hashCode));
     });
 
-    test('Should have correct toString', () {
+    test('Deep nested class Should have correct toString', () {
       final instance = DeepNestedClass(deepNestedMap, deepNestedList);
       expect(
         instance.toString(),
@@ -126,14 +108,8 @@ class DeepNestedClass with Comparable {
 }
 
 Map<String, Map<String, int>> deepNestedMap = {
-  'key1': {
-    'innerKey1': 1,
-    'innerKey2': 2,
-  },
-  'key2': {
-    'innerKey3': 3,
-    'innerKey4': 4,
-  },
+  'key1': {'innerKey1': 1, 'innerKey2': 2},
+  'key2': {'innerKey3': 3, 'innerKey4': 4},
 };
 
 List<List<List<String>>> deepNestedList = [

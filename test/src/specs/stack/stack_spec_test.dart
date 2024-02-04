@@ -11,10 +11,10 @@ void main() {
         MockBuildContext(),
         Style(
           const StackSpecAttribute(
-            fit: StackFit.expand,
-            clipBehavior: Clip.antiAlias,
             alignment: Alignment.center,
+            fit: StackFit.expand,
             textDirection: TextDirection.ltr,
+            clipBehavior: Clip.antiAlias,
           ),
         ),
       );
@@ -66,8 +66,10 @@ void main() {
       const t = 0.5;
       final lerpedSpec = spec1.lerp(spec2, t);
 
-      expect(lerpedSpec.alignment,
-          Alignment.lerp(Alignment.topLeft, Alignment.bottomRight, t));
+      expect(
+        lerpedSpec.alignment,
+        Alignment.lerp(Alignment.topLeft, Alignment.bottomRight, t),
+      );
       expect(lerpedSpec.fit, StackFit.expand);
       expect(lerpedSpec.textDirection, TextDirection.rtl);
       expect(lerpedSpec.clipBehavior, Clip.antiAlias);

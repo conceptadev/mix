@@ -43,10 +43,7 @@ void main() {
       final result = MockMixData(style);
       final value = result.resolvableOf<Color, TestColorAttribute>()!;
 
-      expect(
-        value,
-        Colors.red.withOpacity(0.5),
-      );
+      expect(value, Colors.red.withOpacity(0.5));
     });
 
     // withAlpha
@@ -67,10 +64,7 @@ void main() {
       final result = MockMixData(style);
       final value = result.resolvableOf<Color, TestColorAttribute>()!;
 
-      expect(
-        value,
-        Colors.red.withAlpha(50),
-      );
+      expect(value, Colors.red.withAlpha(50));
     });
 
     // darken
@@ -83,18 +77,12 @@ void main() {
 
     //  darken resolves
     test('darken resolves the correct value', () {
-      final style = Style(
-        colorUtility(Colors.red),
-        colorUtility.darken(10),
-      );
+      final style = Style(colorUtility(Colors.red), colorUtility.darken(10));
 
       final result = MockMixData(style);
       final value = result.resolvableOf<Color, TestColorAttribute>()!;
 
-      expect(
-        value,
-        Colors.red.darken(10),
-      );
+      expect(value, Colors.red.darken(10));
     });
 
     // lighten
@@ -115,10 +103,7 @@ void main() {
       final result = MockMixData(style);
       final value = result.resolvableOf<Color, TestColorAttribute>()!;
 
-      expect(
-        value,
-        Colors.red.lighten(10),
-      );
+      expect(value, Colors.red.lighten(10));
     });
 
     // saturate
@@ -139,10 +124,7 @@ void main() {
       final result = MockMixData(style);
       final value = result.resolvableOf<Color, TestColorAttribute>()!;
 
-      expect(
-        value,
-        Colors.red.saturate(10),
-      );
+      expect(value, Colors.red.saturate(10));
     });
 
     // desaturate
@@ -151,7 +133,9 @@ void main() {
 
       expect(attribute.value?.directives.length, 1);
       expect(
-          attribute.value?.directives.first, isA<DesaturateColorDirective>());
+        attribute.value?.directives.first,
+        isA<DesaturateColorDirective>(),
+      );
     });
 
     // desaturate resolves
@@ -164,10 +148,7 @@ void main() {
       final result = MockMixData(style);
       final value = result.resolvableOf<Color, TestColorAttribute>()!;
 
-      expect(
-        value,
-        Colors.red.desaturate(10),
-      );
+      expect(value, Colors.red.desaturate(10));
     });
 
     // tint
@@ -180,17 +161,11 @@ void main() {
 
     // tint resolves
     test('tint resolves the correct value', () {
-      final style = Style(
-        colorUtility(Colors.red),
-        colorUtility.tint(10),
-      );
+      final style = Style(colorUtility(Colors.red), colorUtility.tint(10));
 
       final result = MockMixData(style);
       final value = result.resolvableOf<Color, TestColorAttribute>()!;
-      expect(
-        value,
-        Colors.red.tint(10),
-      );
+      expect(value, Colors.red.tint(10));
     });
 
     // shade
@@ -203,18 +178,12 @@ void main() {
 
     // shade resolves
     test('shade resolves the correct value', () {
-      final style = Style(
-        colorUtility(Colors.red),
-        colorUtility.shade(10),
-      );
+      final style = Style(colorUtility(Colors.red), colorUtility.shade(10));
 
       final result = MockMixData(style);
       final value = result.resolvableOf<Color, TestColorAttribute>()!;
 
-      expect(
-        value,
-        Colors.red.shade(10),
-      );
+      expect(value, Colors.red.shade(10));
     });
 
     // brighten
@@ -235,10 +204,7 @@ void main() {
       final result = MockMixData(style);
       final value = result.resolvableOf<Color, TestColorAttribute>()!;
 
-      expect(
-        value,
-        Colors.red.brighten(10),
-      );
+      expect(value, Colors.red.brighten(10));
     });
 
     // lighten and darken and opacity
@@ -253,10 +219,7 @@ void main() {
       final result = MockMixData(style);
       final value = result.resolvableOf<Color, TestColorAttribute>()!;
 
-      expect(
-        value,
-        Colors.red.lighten(10).darken(10).withOpacity(0.5),
-      );
+      expect(value, Colors.red.lighten(10).darken(10).withOpacity(0.5));
     });
   });
 }

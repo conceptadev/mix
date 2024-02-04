@@ -48,11 +48,7 @@ void main() {
     });
 
     testWidgets('hover state', (tester) async {
-      await tester.pumpWithPressable(
-        Container(),
-        hover: true,
-        focus: true,
-      );
+      await tester.pumpWithPressable(Container(), focus: true, hover: true);
 
       final context = tester.element(find.byType(Container));
 
@@ -97,10 +93,7 @@ void main() {
       final onEnabledAttr = onEnabled(attribute1, attribute2, attribute3);
 
       expect(onEnabledAttr.when(context), true);
-      expect(
-        onEnabledAttr.value,
-        Style(attribute1, attribute2, attribute3),
-      );
+      expect(onEnabledAttr.value, Style(attribute1, attribute2, attribute3));
       expect(onEnabledAttr.variant.name, 'on-enabled');
       expect(onEnabledAttr.variant.when(context), true);
     });

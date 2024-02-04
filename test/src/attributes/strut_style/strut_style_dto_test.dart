@@ -11,10 +11,10 @@ void main() {
       const strutStyle = StrutStyleDto(
         fontFamily: 'Roboto',
         fontSize: 24.0,
-        height: 2.0,
-        leading: 1.0,
         fontWeight: FontWeight.bold,
         fontStyle: FontStyle.italic,
+        height: 2.0,
+        leading: 1.0,
         forceStrutHeight: true,
       );
 
@@ -31,7 +31,7 @@ void main() {
     test('merge returns merged object correctly', () {
       const strutStyle1 = StrutStyleDto(fontFamily: 'Roboto', fontSize: 24.0);
       const strutStyle2 =
-          StrutStyleDto(height: 2.0, leading: 1.0, fontWeight: FontWeight.bold);
+          StrutStyleDto(fontWeight: FontWeight.bold, height: 2.0, leading: 1.0);
       final merged = strutStyle1.merge(strutStyle2);
 
       expect(merged.fontFamily, 'Roboto');
@@ -46,10 +46,10 @@ void main() {
       const strutStyle = StrutStyleDto(
         fontFamily: 'Roboto',
         fontSize: 24.0,
-        height: 2.0,
-        leading: 1.0,
         fontWeight: FontWeight.bold,
         fontStyle: FontStyle.italic,
+        height: 2.0,
+        leading: 1.0,
       );
       final resolvedValue = strutStyle.resolve(EmptyMixData);
 

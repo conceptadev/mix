@@ -48,41 +48,41 @@ void main() {
 
       final mixData = MixData.create(context, const Style.empty());
 
-      expect(mixData.tokens.textStyleToken(redtextStyleToken),
-          const TextStyle(color: Colors.red));
-      expect(mixData.tokens.textStyleToken(greentextStyleToken),
-          const TextStyle(color: Colors.green));
-      expect(mixData.tokens.textStyleToken(bluetextStyleToken),
-          const TextStyle(color: Colors.blue));
+      expect(
+        mixData.tokens.textStyleToken(redtextStyleToken),
+        const TextStyle(color: Colors.red),
+      );
+      expect(
+        mixData.tokens.textStyleToken(greentextStyleToken),
+        const TextStyle(color: Colors.green),
+      );
+      expect(
+        mixData.tokens.textStyleToken(bluetextStyleToken),
+        const TextStyle(color: Colors.blue),
+      );
     });
   });
 
   testWidgets('Combined Test', (tester) async {
     final themeData = MixThemeData(
+      colors: {
+        $md.colorScheme.error: Colors.blue,
+        $md.colorScheme.background: Colors.red,
+      },
+      space: {$space.large: 100, $space.medium: 50},
       textStyles: {
         $md.textTheme.bodyText1:
             const TextStyle(color: Colors.red, fontSize: 10),
         $md.textTheme.bodyText2:
             const TextStyle(color: Colors.blue, fontSize: 20),
       },
-      colors: {
-        $md.colorScheme.error: Colors.blue,
-        $md.colorScheme.background: Colors.red,
-      },
-      radii: {
-        $radii.medium: const Radius.elliptical(10, 50),
-      },
-      space: {
-        $space.large: 100,
-        $space.medium: 50,
-      },
+      radii: {$radii.medium: const Radius.elliptical(10, 50)},
     );
 
     const key = Key('box');
 
     await tester.pumpWithMixTheme(
       Box(
-        key: key,
         style: Style(
           text.style.of($md.textTheme.bodyText1),
           text.style.of($md.textTheme.bodyText2),
@@ -93,25 +93,18 @@ void main() {
           box.padding.horizontal.of($space.medium),
           box.padding.horizontal.of($space.large),
         ),
-        child: const StyledText(
-          'Hello',
-        ),
+        key: key,
+        child: const StyledText('Hello'),
       ),
       theme: themeData,
     );
 
     final textWidget = tester.widget<Text>(
-      find.descendant(
-        of: find.byKey(key),
-        matching: find.byType(Text),
-      ),
+      find.descendant(of: find.byKey(key), matching: find.byType(Text)),
     );
 
     final containerWidget = tester.widget<Container>(
-      find.descendant(
-        of: find.byKey(key),
-        matching: find.byType(Container),
-      ),
+      find.descendant(of: find.byKey(key), matching: find.byType(Container)),
     );
 
     expect(

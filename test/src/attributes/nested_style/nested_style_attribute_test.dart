@@ -34,25 +34,27 @@ void main() {
         expect(mergedAttribute, same(attribute));
       });
 
-      test('should return a new object with merged values if other is not null',
-          () {
-        // Arrange
-        final styleMix1 = Style(
-          const MockDoubleScalarAttribute(1.0),
-          const MockIntScalarAttribute(2),
-        );
-        final styleMix2 = Style(const MockDoubleScalarAttribute(2.0));
+      test(
+        'should return a new object with merged values if other is not null',
+        () {
+          // Arrange
+          final styleMix1 = Style(
+            const MockDoubleScalarAttribute(1.0),
+            const MockIntScalarAttribute(2),
+          );
+          final styleMix2 = Style(const MockDoubleScalarAttribute(2.0));
 
-        final attribute1 = NestedStyleAttribute(styleMix1);
-        final attribute2 = NestedStyleAttribute(styleMix2);
+          final attribute1 = NestedStyleAttribute(styleMix1);
+          final attribute2 = NestedStyleAttribute(styleMix2);
 
-        // Act
-        final mergedAttribute = attribute1.merge(attribute2);
+          // Act
+          final mergedAttribute = attribute1.merge(attribute2);
 
-        // Assert
-        expect(mergedAttribute, isNot(same(attribute1)));
-        expect(mergedAttribute.value, equals(styleMix1.merge(styleMix2)));
-      });
+          // Assert
+          expect(mergedAttribute, isNot(same(attribute1)));
+          expect(mergedAttribute.value, equals(styleMix1.merge(styleMix2)));
+        },
+      );
     });
 
     test('props should return a list containing the value', () {

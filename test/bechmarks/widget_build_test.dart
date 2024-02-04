@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
@@ -18,8 +20,8 @@ class StyledContainerExample extends StatelessWidget {
 
     final borderAttribute = box.border.all(
       color: Colors.red,
-      width: 1,
       style: BorderStyle.solid,
+      width: 1,
     );
 
     final radiusAttribute = box.borderRadius(10);
@@ -36,10 +38,7 @@ class StyledContainerExample extends StatelessWidget {
         radiusAttribute,
         colorAttribute,
       ),
-      child: const SizedBox(
-        width: 100,
-        height: 100,
-      ),
+      child: const SizedBox(width: 100, height: 100),
     );
   }
 }
@@ -50,23 +49,20 @@ class ContainerExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(10),
-      margin: const EdgeInsets.all(15),
       alignment: Alignment.center,
-      clipBehavior: Clip.hardEdge,
+      padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
+        color: Colors.red,
         border: Border.all(
           color: Colors.red,
           width: 1,
           style: BorderStyle.solid,
         ),
         borderRadius: BorderRadius.circular(10),
-        color: Colors.red,
       ),
-      child: const SizedBox(
-        width: 100,
-        height: 100,
-      ),
+      margin: const EdgeInsets.all(15),
+      clipBehavior: Clip.hardEdge,
+      child: const SizedBox(width: 100, height: 100),
     );
   }
 }
@@ -82,6 +78,7 @@ void main() {
               await tester.pumpWidget(widget);
             }
             stopwatch.stop();
+
             return stopwatch.elapsedMilliseconds;
           }) ??
           0;
@@ -101,24 +98,28 @@ void main() {
     // print('StyledContainer: $elapsedStyledContainerTime ms');
     // print('Container: $elapsedContainerTime ms');
     // StyledContainer shoudl not b slower than 0.01 ms
-    expect(elapsedStyledContainerTime, lessThan(elapsedContainerTime + 0.02),
-        reason: 'StyledContainer is too slow');
+    expect(
+      elapsedStyledContainerTime,
+      lessThan(elapsedContainerTime + 0.02),
+      reason: 'StyledContainer is too slow',
+    );
   });
 
   // test perfromance for Style.create
   test('Style.create', () {
     const iterations = 10000;
     final stopwatch = Stopwatch()..start();
+    Style style = Style();
     for (int i = 0; i < iterations; i++) {
-      Style.create([
+      style = Style.create([
         box.padding(10),
         box.margin(15),
         box.alignment.center(),
         box.clipBehavior.hardEdge(),
         box.border.all(
           color: Colors.red,
-          width: 1,
           style: BorderStyle.solid,
+          width: 1,
         ),
         box.borderRadius(10),
         box.color(Colors.red),
@@ -127,15 +128,17 @@ void main() {
     stopwatch.stop();
 
     final elapsedTime = stopwatch.elapsedMilliseconds / iterations;
-    print('Style.create: $elapsedTime ms');
+    log('Style.create: $elapsedTime ms');
+    expect(style.isNotEmpty, true);
   });
 
   // test performance for MixData.create
   test('MixData.create', () {
     const iterations = 10000;
     final stopwatch = Stopwatch()..start();
+    MixData mixData = EmptyMixData;
     for (int i = 0; i < iterations; i++) {
-      MixData.create(
+      mixData = MixData.create(
         MockBuildContext(),
         Style(
           box.padding(10),
@@ -144,8 +147,8 @@ void main() {
           box.clipBehavior.hardEdge(),
           box.border.all(
             color: Colors.red,
-            width: 1,
             style: BorderStyle.solid,
+            width: 1,
           ),
           box.borderRadius(10),
           box.color(Colors.red),
@@ -156,7 +159,8 @@ void main() {
     stopwatch.stop();
     final timeElapsed = stopwatch.elapsedMilliseconds / iterations;
 
-    print('MixData.create: $timeElapsed ms');
+    log('MixData.create: $timeElapsed ms');
+    expect(mixData.attributes.isNotEmpty, true);
   });
 }
 
@@ -201,10 +205,7 @@ class StyleWidgetExpensiveAttributge extends StatelessWidget {
 
     return Box(
       style: mergedStyle,
-      child: const SizedBox(
-        width: 100,
-        height: 100,
-      ),
+      child: const SizedBox(width: 100, height: 100),
     );
   }
 }

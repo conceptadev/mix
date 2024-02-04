@@ -49,7 +49,6 @@ void main() {
     final theme = ThemeData.light(useMaterial3: true);
     await tester.pumpWidget(
       MaterialApp(
-        theme: theme,
         home: MixTheme(
           data: const MixThemeData.empty(),
           child: Builder(
@@ -58,6 +57,7 @@ void main() {
             },
           ),
         ),
+        theme: theme,
       ),
     );
 
@@ -74,10 +74,14 @@ void main() {
     expect(context.textTheme, Theme.of(context).textTheme);
     expect(context.mixTheme, const MixThemeData.empty());
     expect(context.isDarkMode, Theme.of(context).brightness == Brightness.dark);
-    expect(context.isLandscape,
-        MediaQuery.of(context).orientation == Orientation.landscape);
-    expect(context.isPortrait,
-        MediaQuery.of(context).orientation == Orientation.portrait);
+    expect(
+      context.isLandscape,
+      MediaQuery.of(context).orientation == Orientation.landscape,
+    );
+    expect(
+      context.isPortrait,
+      MediaQuery.of(context).orientation == Orientation.portrait,
+    );
 
     // addTearDown(tester.view.resetPhysicalSize);
   });

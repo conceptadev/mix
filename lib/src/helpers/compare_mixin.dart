@@ -1,3 +1,5 @@
+// ignore_for_file: avoid-dynamic
+
 import 'package:flutter/material.dart';
 
 import '../core/extensions/iterable_ext.dart';

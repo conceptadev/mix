@@ -396,8 +396,7 @@ class SwitchCondition<T> {
   const SwitchCondition(this.condition, this.value);
 }
 
-Style Function(Iterable<T> attributes)
-    _styleType<T extends SpecAttribute<T, dynamic>>() {
+Style Function(Iterable<T> attributes) _styleType<T extends SpecAttribute>() {
   return (Iterable<T> attributes) {
     final merged = attributes.reduce((value, element) => value.merge(element));
 

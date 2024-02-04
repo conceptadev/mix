@@ -7,40 +7,48 @@ on:
     branches: [main]
 
 jobs:
-  test_mix_repo:
+  test:
     runs-on: ubuntu-latest
-    name: Test Mix Repo
+    name: Test
     steps:
       - name: Checkout mix repo
         uses: actions/checkout@v2
-        with:
-          path: main
-
-      - name: Checkout remix_ui repo
-        uses: actions/checkout@v2
-        with:
-          repository: conceptadev/remix_ui
-          path: remix
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
           channel: "stable"
 
-      - run: cd main && flutter pub get
+      - run: flutter pub get
 
-      - uses: axel-op/dart-package-analyzer@v3
+      - uses: invertase/github-action-dart-analyzer@v1
         with:
-          githubToken: ${{ secrets.GITHUB_TOKEN }}
-          relativePath: main
+          fatal-infos: false
+
+      - name: Install DCM
+        uses: CQLabs/setup-dcm@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Run DCM
+        run: dcm analyze lib --fatal-style --fatal-performance --fatal-warnings
+
+      # - name: Run DCM
+      #   uses: CQLabs/dcm-action@v1
+      #   with:
+      #     github_token: ${{ secrets.GITHUB_TOKEN }}
+      #     folders: lib
+      #     pull_request_comment_on_fail: true
+          
         
-      - run: cd main && flutter test
+      - run: flutter test
+        
 
   analyze_breaking_changes:
     runs-on: ubuntu-latest
     name: Analyze Breaking Changes
 
-    needs: test_mix_repo
+    needs: test
     steps:
       - name: Checkout mix repo
         uses: actions/checkout@v2

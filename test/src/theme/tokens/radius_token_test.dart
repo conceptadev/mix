@@ -50,9 +50,13 @@ void main() {
 
       expect(mixData.tokens.radiiToken(redRadiusRef), const Radius.circular(1));
       expect(
-          mixData.tokens.radiiToken(greenRadiusRef), const Radius.circular(2));
+        mixData.tokens.radiiToken(greenRadiusRef),
+        const Radius.circular(2),
+      );
       expect(
-          mixData.tokens.radiiToken(blueRadiusRef), const Radius.circular(3));
+        mixData.tokens.radiiToken(blueRadiusRef),
+        const Radius.circular(3),
+      );
     });
   });
 
@@ -70,19 +74,13 @@ void main() {
     });
   });
 
-  group(
-    'UtilityWithRadiusTokens',
-    () {
-      test(
-        'tokens resolve',
-        () {
-          final radiiTokenUtil = UtilityWithRadiusTokens((value) => value);
+  group('UtilityWithRadiusTokens', () {
+    test('tokens resolve', () {
+      final radiiTokenUtil = UtilityWithRadiusTokens((value) => value);
 
-          expect(radiiTokenUtil.small(), RadiusToken.small());
-          expect(radiiTokenUtil.medium(), RadiusToken.medium());
-          expect(radiiTokenUtil.large(), RadiusToken.large());
-        },
-      );
-    },
-  );
+      expect(radiiTokenUtil.small(), RadiusToken.small());
+      expect(radiiTokenUtil.medium(), RadiusToken.medium());
+      expect(radiiTokenUtil.large(), RadiusToken.large());
+    });
+  });
 }

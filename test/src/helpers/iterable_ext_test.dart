@@ -11,7 +11,7 @@ void main() {
     expect(list.sorted((a, b) => b.compareTo(a)), [5, 4, 3, 2, 1]);
   });
 
-  test('Mock Iterable extension methods', () {
+  test('Mock Iterable extension methods empty list', () {
     final list = <int>[];
     expect(list.firstMaybeNull, null);
     expect(list.firstWhereOrNull((element) => element == 3), null);

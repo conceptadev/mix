@@ -17,9 +17,9 @@ void main() {
       textScaleFactor: 1.5,
       maxLines: 2,
       style: TextStyleDto.only(
-        fontFamily: 'Roboto',
         fontSize: 12,
         fontWeight: FontWeight.w500,
+        fontFamily: 'Roboto',
       ),
       textWidthBasis: TextWidthBasis.longestLine,
       textHeightBehavior: const TextHeightBehavior(
@@ -57,9 +57,9 @@ void main() {
         textScaleFactor: 1.5,
         maxLines: 2,
         style: TextStyleDto.only(
-          fontFamily: 'Helvetica',
           fontSize: 16,
           fontWeight: FontWeight.w200,
+          fontFamily: 'Helvetica',
         ),
         textWidthBasis: TextWidthBasis.longestLine,
         textHeightBehavior: const TextHeightBehavior(
