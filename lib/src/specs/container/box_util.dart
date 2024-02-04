@@ -295,6 +295,13 @@ class BoxSpecUtility extends SpecUtility<BoxSpecAttribute> {
     );
   }
 
+  BoxDecorationUtility<BoxSpecAttribute> get foregroundDecoration {
+    return BoxDecorationUtility(
+      (foregroundDecoration) =>
+          only(foregroundDecoration: foregroundDecoration),
+    );
+  }
+
   AlignmentUtility<BoxSpecAttribute> get alignment {
     return AlignmentUtility((alignment) => only(alignment: alignment));
   }
@@ -364,6 +371,7 @@ class BoxSpecUtility extends SpecUtility<BoxSpecAttribute> {
     SpacingDto? padding,
     SpacingDto? margin,
     DecorationDto? decoration,
+    DecorationDto? foregroundDecoration,
     BoxConstraintsDto? constraints,
     double? width,
     double? height,
@@ -376,6 +384,7 @@ class BoxSpecUtility extends SpecUtility<BoxSpecAttribute> {
       margin: margin,
       constraints: constraints,
       decoration: decoration,
+      foregroundDecoration: foregroundDecoration,
       transform: transform,
       clipBehavior: clipBehavior,
       width: width,

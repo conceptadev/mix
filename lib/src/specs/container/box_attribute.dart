@@ -13,6 +13,7 @@ class BoxSpecAttribute extends SpecAttribute<BoxSpecAttribute, BoxSpec> {
   final SpacingDto? margin;
   final BoxConstraintsDto? constraints;
   final DecorationDto? decoration;
+  final DecorationDto? foregroundDecoration;
   final Matrix4? transform;
   final Clip? clipBehavior;
   final double? width;
@@ -24,6 +25,7 @@ class BoxSpecAttribute extends SpecAttribute<BoxSpecAttribute, BoxSpec> {
     this.margin,
     this.constraints,
     this.decoration,
+    this.foregroundDecoration,
     this.transform,
     this.clipBehavior,
     this.width,
@@ -38,6 +40,7 @@ class BoxSpecAttribute extends SpecAttribute<BoxSpecAttribute, BoxSpec> {
       margin: margin?.resolve(mix),
       constraints: constraints?.resolve(mix),
       decoration: decoration?.resolve(mix),
+      foregroundDecoration: foregroundDecoration?.resolve(mix),
       transform: transform,
       clipBehavior: clipBehavior,
       width: width,
@@ -55,6 +58,9 @@ class BoxSpecAttribute extends SpecAttribute<BoxSpecAttribute, BoxSpec> {
       margin: margin?.merge(other.margin) ?? other.margin,
       constraints: constraints?.merge(other.constraints) ?? other.constraints,
       decoration: decoration?.merge(other.decoration) ?? other.decoration,
+      foregroundDecoration:
+          foregroundDecoration?.merge(other.foregroundDecoration) ??
+              other.foregroundDecoration,
       transform: other.transform ?? transform,
       clipBehavior: other.clipBehavior ?? clipBehavior,
       width: other.width ?? width,
@@ -69,6 +75,7 @@ class BoxSpecAttribute extends SpecAttribute<BoxSpecAttribute, BoxSpec> {
         margin,
         constraints,
         decoration,
+        foregroundDecoration,
         transform,
         clipBehavior,
         width,
