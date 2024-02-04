@@ -9,11 +9,9 @@ import '../../../helpers/testing_utils.dart';
 void main() {
   // Create a test that checks if all the values of these tokens match the ThemeData from the MaterialApp
   group('Material tokens', () {
+    // ignore: avoid-unused-generics
     Value refResolver<T extends MixToken<Value>, R extends TokenRef<T, Value>,
-        Value>(
-      R ref,
-      BuildContext context,
-    ) {
+        Value>(R ref, BuildContext context) {
       return ref.token.resolve(context);
     }
 

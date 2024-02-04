@@ -1,5 +1,7 @@
 // Used mostly for testing
 
+// ignore_for_file: unused-code
+
 import 'dart:math';
 
 import 'package:flutter/material.dart';
