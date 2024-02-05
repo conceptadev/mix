@@ -9,6 +9,7 @@ import '../core/attributes_map.dart';
 import '../helpers/compare_mixin.dart';
 import '../specs/container/box_attribute.dart';
 import '../specs/flex/flex_attribute.dart';
+import '../specs/icon/icon_attribute.dart';
 import '../specs/image/image_attribute.dart';
 import '../specs/stack/stack_attribute.dart';
 import '../specs/text/text_attribute.dart';
@@ -37,6 +38,7 @@ class Style with Comparable {
   static final stack = SpreadFunctionParams(_styleType<StackSpecAttribute>());
   static final text = SpreadFunctionParams(_styleType<TextSpecAttribute>());
   static final image = SpreadFunctionParams(_styleType<ImageSpecAttribute>());
+  static final icon = SpreadFunctionParams(_styleType<IconSpecAttribute>());
   static final box = SpreadFunctionParams(_styleType<BoxSpecAttribute>());
   static final flex = SpreadFunctionParams(_styleType<FlexSpecAttribute>());
 
