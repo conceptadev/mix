@@ -45,10 +45,7 @@ const themeConfig = {
   },
   head: () => {
     const { asPath, defaultLocale, locale } = useRouter();
-    const origin =
-      typeof window !== "undefined" && window.location.origin
-        ? window.location.origin
-        : "";
+    const origin = siteUrl;
 
     const { frontMatter } = useConfig();
     const url =
@@ -73,7 +70,7 @@ const themeConfig = {
     return (
       <>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>{title()}</title>
+
         <meta
           name="description"
           content={frontMatter.description || description}

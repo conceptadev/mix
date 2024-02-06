@@ -1,4 +1,6 @@
-demo/
-website/
-widgetbook/
-tool/
+demo
+website
+widgetbook
+tool
+assets
+build
