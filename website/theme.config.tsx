@@ -80,21 +80,25 @@ const themeConfig = {
         />
 
         {/* Open Graph */}
-        <meta property="og:site_name" content={packageName} />
-        <meta property="og:type" content="website" />
-        <meta property="og:image" content={ogImage()} />
-        <meta property="og:url" content={origin} />
-        <meta property="og:title" content={title()} />
+        <meta name="og:site_name" content={packageName} />
+        <meta name="og:type" content="website" />
+        <meta name="og:image" content={ogImage()} />
+        <meta name="og:url" content={origin} />
+        <meta name="og:title" content={title()} />
         <meta
-          property="og:description"
+          name="og:description"
           content={frontMatter.description || description}
         />
 
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
+        <meta
+          name="twitter:description"
+          content={frontMatter.description || description}
+        />
+        <meta name="twitter:site:domain" content={origin} />
+        <meta name="twitter:url" content={url} />
         <meta name="twitter:image" content={ogImage()} />
-        <meta name="twitter:site:domain" content={`${origin}`} />
-        <meta name="twitter:url" content={`${url}`} />
 
         {/* Icons */}
         <meta name="apple-mobile-web-app-title" content={packageName} />
