@@ -6,118 +6,6 @@ import '../../../helpers/testing_utils.dart';
 
 void main() {
   testWidgets(
-    'Verify if widgets are wrapped with Padding when there are 2 children',
-    (tester) async {
-      await tester.pumpWidget(
-        VBox(
-          style: Style(flex.gap(10)),
-          children: const [SizedBox(), SizedBox()],
-        ),
-      );
-
-      final mixedFlex = find.byType(MixedFlex);
-
-      expect(
-        find.descendant(of: mixedFlex, matching: find.byType(Padding)),
-        findsNWidgets(1),
-      );
-    },
-  );
-
-  testWidgets(
-    'Verify if widgets are wrapped with Padding when there are 1 children',
-    (tester) async {
-      await tester.pumpWidget(
-        VBox(style: Style(flex.gap(10)), children: const [SizedBox()]),
-      );
-
-      final mixedFlex = find.byType(MixedFlex);
-
-      expect(
-        find.descendant(of: mixedFlex, matching: find.byType(Padding)),
-        findsNWidgets(0),
-      );
-    },
-  );
-
-  test(
-    'Verify if widgets are wrapped with Padding when there are 3 children',
-    () {
-      var sut = MixedFlex(
-        mix: EmptyMixData,
-        direction: Axis.horizontal,
-        children: const [SizedBox(), SizedBox(), SizedBox()],
-      ).buildChildren(10);
-
-      expect(sut.length, 3);
-
-      for (var i = 0; i < sut.length; i++) {
-        expect(sut[i], i == sut.length - 1 ? isA<SizedBox>() : isA<Padding>());
-      }
-    },
-  );
-
-  test('Verify if widgets are wrapped with Padding when there is 1 child', () {
-    var sut = MixedFlex(
-      mix: EmptyMixData,
-      direction: Axis.horizontal,
-      children: const [SizedBox()],
-    ).buildChildren(10);
-
-    expect(sut.length, 1);
-
-    for (var i = 0; i < sut.length; i++) {
-      expect(sut[i], i == sut.length - 1 ? isA<SizedBox>() : isA<Padding>());
-    }
-  });
-
-  test(
-    'Verify if when MixedFlex has direction horizontal the padding is only in the right',
-    () {
-      var sut = MixedFlex(
-        mix: EmptyMixData,
-        direction: Axis.horizontal,
-        children: const [SizedBox(), SizedBox()],
-      ).buildChildren(10);
-
-      for (var i = 0; i < sut.length; i++) {
-        if (i == sut.length - 1) continue;
-
-        final paddingWidget = sut[i] as Padding;
-        final edgeInsets = paddingWidget.padding.resolve(TextDirection.ltr);
-
-        expect(edgeInsets.right, 10);
-        expect(edgeInsets.left, 0);
-        expect(edgeInsets.top, 0);
-        expect(edgeInsets.bottom, 0);
-      }
-    },
-  );
-
-  test(
-    'Verify if when MixedFlex has direction vertical the padding is only in the right',
-    () {
-      var sut = MixedFlex(
-        mix: EmptyMixData,
-        direction: Axis.vertical,
-        children: const [SizedBox(), SizedBox()],
-      ).buildChildren(10);
-
-      for (var i = 0; i < sut.length; i++) {
-        if (i == sut.length - 1) continue;
-
-        final paddingWidget = sut[i] as Padding;
-        final edgeInsets = paddingWidget.padding.resolve(TextDirection.ltr);
-
-        expect(edgeInsets.right, 0);
-        expect(edgeInsets.left, 0);
-        expect(edgeInsets.top, 0);
-        expect(edgeInsets.bottom, 10);
-      }
-    },
-  );
-
-  testWidgets(
     'HBox with gap() rendered correctly in complex widget tree',
     (tester) async {
       await tester.pumpMaterialApp(
@@ -158,6 +46,92 @@ void main() {
           ),
         ),
       );
+    },
+  );
+
+  testWidgets('should render correctly when Hbox has as its child a Spacer',
+      (WidgetTester tester) async {
+    await tester.binding.setSurfaceSize(const Size(400, 100));
+
+    await tester.pumpMaterialApp(
+      HBox(
+        style: Style(
+          flex.gap(10),
+        ),
+        children: const [
+          SizedBox(
+            key: Key('box1'),
+            height: 100.0,
+            width: 100.0,
+          ),
+          Spacer(),
+          SizedBox(
+            key: Key('box2'),
+            height: 100.0,
+            width: 100.0,
+          ),
+        ],
+      ),
+    );
+
+    final Finder container1Finder = find.byKey(const Key('box1'));
+    final Offset container1Offset = tester.getTopLeft(container1Finder);
+
+    expect(container1Offset.dx, 0);
+    expect(container1Offset.dy, 0);
+
+    final Finder containerFinder = find.byKey(const Key('box2'));
+    final Offset containerOffset = tester.getTopLeft(containerFinder);
+
+    expect(containerOffset.dx, 300);
+    expect(containerOffset.dy, 0);
+  });
+
+  testWidgets(
+    'should render correctly when gap is applied to Hbox with any MainAxisAlignment',
+    (WidgetTester tester) async {
+      const spacing = 10.0;
+      await tester.binding.setSurfaceSize(const Size(400, 100));
+
+      for (final e in MainAxisAlignment.values) {
+        await tester.pumpMaterialApp(
+          Column(
+            children: [
+              HBox(
+                style: Style(
+                  flex.gap(spacing),
+                  flex.mainAxisAlignment(e),
+                ),
+                children: const [
+                  SizedBox(height: 30, width: 30, key: Key('0')),
+                  SizedBox(height: 30, width: 30, key: Key('1')),
+                  SizedBox(height: 30, width: 30, key: Key('2')),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: e,
+                children: const [
+                  SizedBox(height: 30, width: 30, key: Key('3')),
+                  SizedBox(width: spacing),
+                  SizedBox(height: 30, width: 30, key: Key('4')),
+                  SizedBox(width: spacing),
+                  SizedBox(height: 30, width: 30, key: Key('5')),
+                ],
+              )
+            ],
+          ),
+        );
+
+        for (var i = 0; i < 3; i++) {
+          final Finder expectedWidget = find.byKey(Key('${i + 3}'));
+          final Offset expectedOffset = tester.getTopLeft(expectedWidget);
+
+          final Finder actualWidget = find.byKey(Key('$i'));
+          final Offset actualOffset = tester.getTopLeft(actualWidget);
+
+          expect(actualOffset.dx, expectedOffset.dx);
+        }
+      }
     },
   );
 }

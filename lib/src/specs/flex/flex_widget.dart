@@ -76,7 +76,7 @@ class MixedFlex extends StatelessWidget {
           spec.crossAxisAlignment ?? _defaultFlex.crossAxisAlignment,
       verticalDirection:
           spec.verticalDirection ?? _defaultFlex.verticalDirection,
-      children: buildChildren(gap),
+      children: _buildChildren(gap),
     );
 
     return shouldApplyDecorators(
@@ -86,21 +86,15 @@ class MixedFlex extends StatelessWidget {
     );
   }
 
-  @visibleForTesting
-  List<Widget> buildChildren(double? gap) {
+  List<Widget> _buildChildren(double? gap) {
     if (gap == null) return children;
 
-    return List.generate(
-      children.length,
-      (index) => index == children.length - 1
-          ? children[index]
-          : Padding(
-              padding: direction == Axis.horizontal
-                  ? EdgeInsets.only(right: gap)
-                  : EdgeInsets.only(bottom: gap),
-              child: children[index],
-            ),
-    );
+    return List.generate(children.length + children.length - 1, (index) {
+      if (index.isEven) return children[index ~/ 2];
+      return direction == Axis.horizontal
+          ? SizedBox(width: gap)
+          : SizedBox(height: gap);
+    });
   }
 }
 
