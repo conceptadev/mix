@@ -1,3 +1,12 @@
+# 1.0.0-beta.6
+
+* Add new job to pipeline by @tilucasoli
+* add new attribute to foregroundDecoration by @tilucasoli
+* Support to decoration image by @tilucasoli
+* Chore/dcm lint by @leoafarias
+* Implement `Style.icon` by @tilucasoli
+* Fix issue where the 'gap' attribute does not work as expected when there is a Flexible Widget by @tilucasoli
+
 # 1.0.0-beta.5
 
 * Better support for ShapeBorder by @leoafarias
