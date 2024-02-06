@@ -62,6 +62,18 @@ class MixedFlex extends StatelessWidget {
   final List<Type> decoratorOrder;
   final MixData mix;
 
+  List<Widget> _buildChildren(double? gap) {
+    if (gap == null) return children;
+
+    return List.generate(children.length + children.length - 1, (index) {
+      if (index.isEven) return children[index ~/ 2];
+
+      return direction == Axis.horizontal
+          ? SizedBox(width: gap)
+          : SizedBox(height: gap);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final spec = FlexSpec.of(mix);
@@ -84,17 +96,6 @@ class MixedFlex extends StatelessWidget {
       orderOfDecorators: decoratorOrder,
       child: current,
     );
-  }
-
-  List<Widget> _buildChildren(double? gap) {
-    if (gap == null) return children;
-
-    return List.generate(children.length + children.length - 1, (index) {
-      if (index.isEven) return children[index ~/ 2];
-      return direction == Axis.horizontal
-          ? SizedBox(width: gap)
-          : SizedBox(height: gap);
-    });
   }
 }
 
