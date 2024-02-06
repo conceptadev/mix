@@ -66,7 +66,7 @@ const themeConfig = {
         <meta name="twitter:image" content={socialCard} />
         <meta name="twitter:site:domain" content="fluttermix.com" />
         <meta name="twitter:url" content="https://fluttermix.com" />
-        <meta name="og:title" content={title ? title + " – Mix" : "Mix"} />
+        <meta name="og:title" content={title ? title : "Mix"} />
         <meta name="og:image" content={socialCard} />
         <meta name="apple-mobile-web-app-title" content="Mix" />
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
