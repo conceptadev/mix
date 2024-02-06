@@ -7,6 +7,13 @@ const packageName = "Mix";
 const siteUrl = "https://fluttermix.com";
 const description = "An expressive way to build design systems in Flutter.";
 
+const logo = (
+  <>
+    <Image height={32} width={32} alt="Mix Icon" src={"/assets/mix-icon.svg"} />
+    <span className="mr-2 font-extrabold mx-2 md:inline">Mix</span>
+  </>
+);
+
 const themeConfig = {
   useNextSeoProps() {
     const { asPath } = useRouter();
@@ -16,17 +23,7 @@ const themeConfig = {
       };
     }
   },
-  logo: (
-    <>
-      <Image
-        height={32}
-        width={32}
-        alt="Mix Icon"
-        src={"/assets/mix-icon.svg"}
-      />
-      <span className="mr-2 font-extrabold mx-2 md:inline">Mix</span>
-    </>
-  ),
+  logo: logo,
   project: {
     link: "https://github.com/conceptadev/mix",
   },
@@ -44,87 +41,48 @@ const themeConfig = {
     component: <CustomSearch />,
   },
   head: () => {
-    const { asPath, defaultLocale, locale } = useRouter();
-    const origin = siteUrl;
-
-    const { frontMatter } = useConfig();
-    const url =
-      origin + (defaultLocale === locale ? asPath : `/${locale}${asPath}`);
-
-    const ogImage = () => {
-      let ogImage = "main.png";
-      if (frontMatter.og_image) {
-        ogImage = frontMatter.og_image;
-      }
-
-      return `${origin}/assets/og/${ogImage}`;
-    };
-
-    const title = () => {
-      if (frontMatter.title) {
-        return frontMatter.title + " – " + packageName;
-      }
-      return packageName;
-    };
+    const { title, frontMatter } = useConfig();
+    const { route } = useRouter();
+    const socialCard =
+      route === "/" || !title
+        ? "https://fluttermix.com/og.jpeg"
+        : `https://fluttermix.com/api/og?title=${title}`;
 
     return (
       <>
+        <meta name="msapplication-TileColor" content="#fff" />
+        <meta name="theme-color" content="#fff" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
+        <meta httpEquiv="Content-Language" content="en" />
         <meta
           name="description"
           content={frontMatter.description || description}
         />
-
-        {/* Open Graph */}
-        <meta name="og:site_name" content={packageName} />
-        <meta name="og:type" content="website" />
-        <meta name="og:image" content={ogImage()} />
-        <meta name="og:url" content={origin} />
-        <meta name="og:title" content={title()} />
         <meta
           name="og:description"
           content={frontMatter.description || description}
         />
-
-        {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta
-          name="twitter:description"
-          content={frontMatter.description || description}
-        />
-        <meta name="twitter:site:domain" content={origin} />
-        <meta name="twitter:url" content={url} />
-        <meta name="twitter:image" content={ogImage()} />
-
-        {/* Icons */}
-        <meta name="apple-mobile-web-app-title" content={packageName} />
-
+        <meta name="twitter:image" content={socialCard} />
+        <meta name="twitter:site:domain" content="fluttermix.com" />
+        <meta name="twitter:url" content="https://fluttermix.com" />
+        <meta name="og:title" content={title ? title + " – Mix" : "Mix"} />
+        <meta name="og:image" content={socialCard} />
+        <meta name="apple-mobile-web-app-title" content="Mix" />
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        <link rel="icon" href="/favicon.png" type="image/png" />
         <link
-          rel="apple-touch-icon"
-          sizes="180x180"
-          href="/apple-icon-180x180.png"
+          rel="icon"
+          href="/favicon-dark.svg"
+          type="image/svg+xml"
+          media="(prefers-color-scheme: dark)"
         />
         <link
           rel="icon"
+          href="/favicon-dark.png"
           type="image/png"
-          sizes="192x192"
-          href="/android-icon-192x192.png"
+          media="(prefers-color-scheme: dark)"
         />
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="32x32"
-          href="/favicon-32x32.png"
-        />
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="16x16"
-          href="/favicon-16x16.png"
-        />
-        <link rel="manifest" href="/site.webmanifest" />
-        <meta name="msapplication-TileImage" content="/ms-icon-150x150.png" />
       </>
     );
   },
