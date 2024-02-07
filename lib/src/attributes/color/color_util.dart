@@ -22,6 +22,10 @@ class SingleColorUtility<T extends StyleAttribute> extends BaseColorUtility<T>
   const SingleColorUtility(super.builder, this.color);
 
   T call() => _buildColor(color);
+
+  @override
+  T directive(ColorDirective directive) =>
+      builder(ColorDto.raw(value: color, directives: [directive]));
 }
 
 mixin ColorDirectiveMixin<T extends StyleAttribute> on BaseColorUtility<T> {
@@ -215,6 +219,10 @@ class MaterialColorUtility<T extends StyleAttribute>
       SingleColorUtility(builder, color[900]!);
 
   T call() => _buildColor(color[500]!);
+
+  @override
+  T directive(ColorDirective directive) =>
+      builder(ColorDto.raw(value: color[500]!, directives: [directive]));
 }
 
 @immutable
@@ -232,6 +240,10 @@ class MaterialAccentColorUtility<T extends StyleAttribute>
       SingleColorUtility(builder, color[700]!);
 
   T call() => _buildColor(color[400]!);
+
+  @override
+  T directive(ColorDirective directive) =>
+      builder(ColorDto.raw(value: color[400]!, directives: [directive]));
 }
 
 typedef ColorModifier = Color Function(Color);
