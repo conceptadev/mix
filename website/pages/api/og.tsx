@@ -87,10 +87,10 @@ export default async function (req) {
           style={{
             position: "absolute",
             bottom: 90,
-            width: "50%",
+            width: "80%",
             left: 80,
             margin: 0,
-            fontSize: 30,
+            fontSize: 34,
           }}
         >
           An expressive way to effortlessly build design systems in Flutter.
