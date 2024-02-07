@@ -40,7 +40,8 @@ mixin ColorDirectiveMixin<T extends StyleAttribute> on BaseColorUtility<T> {
 }
 
 @immutable
-class ColorUtility<T extends StyleAttribute> extends BaseColorUtility<T> {
+class ColorUtility<T extends StyleAttribute> extends BaseColorUtility<T>
+    with ColorDirectiveMixin<T> {
   const ColorUtility(super.builder);
 
   MaterialColorUtility<T> get red => MaterialColorUtility(builder, Colors.red);
