@@ -5,7 +5,7 @@ import '../core/attribute.dart';
 import '../core/attributes_map.dart';
 import '../helpers/compare_mixin.dart';
 import '../theme/token_resolver.dart';
-import '../widgets/pressable/widget_state_util.dart';
+import '../widgets/pressable/pressable_util.dart';
 import 'mix_provider.dart';
 import 'style_mix.dart';
 
@@ -120,7 +120,7 @@ List<StyleAttribute> applyContextToVisualAttributes(
   List<WhenVariant> gestureVariantTypes = [];
 
   for (ContextVariantAttribute attr in contextVariants) {
-    if (attr.variant is WidgetStateVariant) {
+    if (attr.variant is PressableDataVariant) {
       gestureVariantTypes.add(attr);
     } else {
       contextVariantTypes.add(attr);
@@ -128,7 +128,8 @@ List<StyleAttribute> applyContextToVisualAttributes(
   }
 
   for (MultiVariantAttribute attr in multiVariants) {
-    if (attr.variant.variants.any((variant) => variant is WidgetStateVariant)) {
+    if (attr.variant.variants
+        .any((variant) => variant is PressableDataVariant)) {
       gestureVariantTypes.add(attr);
     } else {
       contextVariantTypes.add(attr);

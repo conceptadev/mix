@@ -123,7 +123,7 @@ extension WidgetTesterExt on WidgetTester {
       MaterialApp(
         home: PressableStateNotifier(
           data: data.copyWith(
-            focus: focus,
+            focused: focus,
             disabled: disabled,
             state: state,
           ),

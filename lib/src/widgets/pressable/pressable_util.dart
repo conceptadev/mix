@@ -23,7 +23,7 @@ final onFocused = ContextVariant(
   'on-focused',
 
   /// Applies the variant only when the GestureStateNotifier's focus property is true.
-  (context) => PressableStateNotifier.of(context)?.focus == true,
+  (context) => PressableStateNotifier.of(context)?.focused == true,
 );
 
 /// Applies styles when the widget is being hovered over.
@@ -37,25 +37,25 @@ final onHover = ContextVariant(
 
 /// Helper class for creating widget state-based context variants.
 @immutable
-class WidgetStateVariant extends ContextVariant {
-  const WidgetStateVariant(super.name, super.when);
+class PressableDataVariant extends ContextVariant {
+  const PressableDataVariant(super.name, super.when);
 }
 
-/// Creates a [WidgetStateVariant] based on the specified [state].
+/// Creates a [PressableDataVariant] based on the specified [state].
 ///
 /// This function constructs a WidgetStateVariant with a name based on the provided state and a condition that checks if the GestureStateNotifier in the context matches the given state.
-WidgetStateVariant _onState(PressableState state) {
-  return WidgetStateVariant(
+PressableDataVariant _onState(PressableState state) {
+  return PressableDataVariant(
     'on-${state.name.paramCase}',
     (context) => PressableStateNotifier.of(context)?.state == state,
   );
 }
 
-/// Creates a [WidgetStateVariant] based on the specified [status].
+/// Creates a [PressableDataVariant] based on the specified [status].
 ///
 /// Similar to `_onState`, this function creates a WidgetStateVariant with a condition that checks if the GestureStateNotifier in the context matches the provided status.
-WidgetStateVariant _onDisabled(bool disabled) {
-  return WidgetStateVariant(
+PressableDataVariant _onDisabled(bool disabled) {
+  return PressableDataVariant(
     'on-${disabled ? 'disabled' : 'enabled'}',
     (context) => PressableStateNotifier.of(context)?.disabled == disabled,
   );

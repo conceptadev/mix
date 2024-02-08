@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import '../../factory/style_mix.dart';
@@ -173,6 +174,8 @@ abstract class _PressableBuilderWidgetState<T extends _PressableBuilderWidget>
   bool _isFocused = false;
   bool _isPressed = false;
   bool _isLongPressed = false;
+  Offset _localCursorPosition = Offset.zero;
+  Alignment _cursorAlignment = Alignment.center;
   int _pressCount = 0;
 
   PressableState get _currentState {
@@ -187,19 +190,67 @@ abstract class _PressableBuilderWidgetState<T extends _PressableBuilderWidget>
     return PressableState.none;
   }
 
-  void handleFocusUpdate(bool hasFocus) {
+  void _handleFocusUpdate(bool hasFocus) {
     updateState(() {
       _isFocused = hasFocus;
     });
   }
 
-  void handleHoverUpdate(bool isHovered) {
+  void _handleHoverUpdate(bool isHovered) {
     updateState(() {
       _isHovered = isHovered;
     });
   }
 
-  void handlePressUpdate(bool isPressed) {
+  void _updateCursorPosition(Offset newLocalCursorPosition) {
+    if (newLocalCursorPosition != _localCursorPosition) {
+      setState(() {
+        _localCursorPosition = newLocalCursorPosition;
+        _updateCursorAlignment();
+      });
+    }
+  }
+
+  void _updateCursorAlignment() {
+    final size = context.size;
+    if (size != null) {
+      final ax = _localCursorPosition.dx / size.width;
+      final ay = _localCursorPosition.dy / size.height;
+      _cursorAlignment = Alignment(
+        ((ax - 0.5) * 2).clamp(-1.0, 1.0),
+        ((ay - 0.5) * 2).clamp(-1.0, 1.0),
+      );
+    }
+  }
+
+  void _handlePanUpdate(DragUpdateDetails event) {
+    _updateCursorPosition(event.localPosition);
+  }
+
+  void _handlePanDown(DragDownDetails details) {
+    _localCursorPosition = details.localPosition;
+    _updateCursorAlignment();
+  }
+
+  void _handlePanUp(DragEndDetails details) {
+    handleLongPressUpdate(true);
+  }
+
+  void _handleMouseHover(PointerHoverEvent event) {
+    _updateCursorPosition(event.localPosition);
+  }
+
+  void _handleOnMouseEnter(PointerEnterEvent event) {
+    _localCursorPosition = event.localPosition;
+    _updateCursorAlignment();
+  }
+
+  void _handleOnMouseExit(PointerExitEvent event) {
+    _localCursorPosition = Offset.zero;
+    _updateCursorAlignment();
+  }
+
+  void _handlePressUpdate(bool isPressed) {
     if (isPressed == _isPressed) return;
 
     updateState(() {
@@ -264,28 +315,36 @@ abstract class _PressableBuilderWidgetState<T extends _PressableBuilderWidget>
       enabled: isEnabled,
       focusNode: widget.focusNode,
       autofocus: widget.autofocus,
-      onShowFocusHighlight: handleFocusUpdate,
-      onShowHoverHighlight: handleHoverUpdate,
+      onShowFocusHighlight: _handleFocusUpdate,
+      onShowHoverHighlight: _handleHoverUpdate,
       onFocusChange: widget.onFocusChange,
+      onMouseEnter: _handleOnMouseEnter,
+      onMouseExit: _handleOnMouseExit,
+      onMouseHover: _handleMouseHover,
       child: PressableStateNotifier(
         data: PressableStateData(
-          focus: _isFocused,
+          focused: _isFocused,
           disabled: isDisabled,
           state: _currentState,
+          cursorAlignment: _cursorAlignment,
+          cursorOffset: _localCursorPosition,
         ),
         child: widget.child,
       ),
     );
 
     return GestureDetector(
-      onTapDown: isEnabled ? (_) => handlePressUpdate(true) : null,
-      onTapUp: isEnabled ? (_) => handlePressUpdate(false) : null,
+      onTapDown: isEnabled ? (_) => _handlePressUpdate(true) : null,
+      onTapUp: isEnabled ? (_) => _handlePressUpdate(false) : null,
       onTap: isEnabled ? handleOnPress : null,
-      onTapCancel: isEnabled ? () => handlePressUpdate(false) : null,
+      onTapCancel: isEnabled ? () => _handlePressUpdate(false) : null,
       onLongPressCancel: isEnabled ? () => handleLongPressUpdate(false) : null,
       onLongPress: isEnabled ? handleOnLongPress : null,
       onLongPressStart: isEnabled ? (_) => handleLongPressUpdate(true) : null,
       onLongPressEnd: isEnabled ? (_) => handleLongPressUpdate(false) : null,
+      onPanDown: isEnabled ? _handlePanDown : null,
+      onPanUpdate: isEnabled ? _handlePanUpdate : null,
+      onPanEnd: isEnabled ? _handlePanUp : null,
       behavior: widget.hitTestBehavior,
       child: focusableDetector,
     );

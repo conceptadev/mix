@@ -4,36 +4,46 @@ import '../../helpers/compare_mixin.dart';
 
 @immutable
 class PressableStateData with Comparable {
-  final bool focus;
+  final bool focused;
 
   final bool disabled;
   final PressableState state;
+  final Alignment cursorAlignment;
+  final Offset cursorOffset;
 
   const PressableStateData({
-    required this.focus,
+    required this.focused,
     required this.disabled,
     required this.state,
+    required this.cursorAlignment,
+    required this.cursorOffset,
   });
 
   const PressableStateData.none()
-      : focus = false,
+      : focused = false,
         disabled = true,
+        cursorOffset = Offset.zero,
+        cursorAlignment = Alignment.center,
         state = PressableState.none;
 
   PressableStateData copyWith({
-    bool? focus,
+    bool? focused,
     bool? disabled,
     PressableState? state,
+    Alignment? cursorAlignment,
+    Offset? cursorOffset,
   }) {
     return PressableStateData(
-      focus: focus ?? this.focus,
+      focused: focused ?? this.focused,
       disabled: disabled ?? this.disabled,
       state: state ?? this.state,
+      cursorAlignment: cursorAlignment ?? this.cursorAlignment,
+      cursorOffset: cursorOffset ?? this.cursorOffset,
     );
   }
 
   @override
-  get props => [focus, disabled, state];
+  get props => [focused, disabled, state];
 }
 
 enum PressableState {

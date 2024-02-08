@@ -20,6 +20,7 @@ class CustomFocusableActionDetector extends StatefulWidget {
     this.includeFocusSemantics = true,
     this.onMouseEnter,
     this.onMouseExit,
+    this.onMouseHover,
     required this.child,
   });
 
@@ -75,6 +76,11 @@ class CustomFocusableActionDetector extends StatefulWidget {
   ///
   /// Called with the [PointerExitEvent] when the mouse exits the widget.
   final void Function(PointerEnterEvent event)? onMouseEnter;
+
+  /// A function that will be called when the pointer hovers over the widget.
+  ///
+  /// Called with the [PointerHoverEvent] when the pointer hovers over the widget.
+  final void Function(PointerHoverEvent event)? onMouseHover;
 
   /// The cursor for a mouse pointer when it enters or is hovering over the
   /// widget.

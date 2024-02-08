@@ -7,9 +7,11 @@ import '../../../helpers/testing_utils.dart';
 void main() {
   group('PressableNotifier', () {
     const gestureData = PressableStateData(
-      focus: true,
+      focused: true,
       disabled: false,
       state: PressableState.pressed,
+      cursorAlignment: Alignment.center,
+      cursorOffset: Offset.zero,
     );
     test('constructor', () {
       final notifier = PressableStateNotifier(
@@ -18,7 +20,7 @@ void main() {
       );
 
       expect(notifier.data.state, PressableState.pressed);
-      expect(notifier.data.focus, true);
+      expect(notifier.data.focused, true);
       expect(notifier.child, isA<Container>());
     });
 
@@ -30,9 +32,11 @@ void main() {
 
       final otherNotifier = PressableStateNotifier(
         data: const PressableStateData(
-          focus: false,
+          focused: false,
           disabled: true,
           state: PressableState.none,
+          cursorAlignment: Alignment.center,
+          cursorOffset: Offset.zero,
         ),
         child: Container(),
       );
@@ -60,7 +64,7 @@ void main() {
 
       expect(notifier, isA<PressableStateData>());
       expect(notifier!.state, PressableState.pressed);
-      expect(notifier.focus, true);
+      expect(notifier.focused, true);
     });
   });
 }
