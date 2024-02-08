@@ -100,10 +100,10 @@ class Pressable extends _PressableBuilderWidget {
         );
 
   @override
-  _PressableWidgetState createState() => _PressableWidgetState();
+  PressableWidgetState createState() => PressableWidgetState();
 }
 
-class _PressableWidgetState extends _PressableBuilderWidgetState<Pressable> {}
+class PressableWidgetState extends _PressableBuilderWidgetState<Pressable> {}
 
 abstract class _PressableBuilderWidget extends StatefulWidget {
   const _PressableBuilderWidget({
@@ -216,10 +216,12 @@ abstract class _PressableBuilderWidgetState<T extends _PressableBuilderWidget>
     if (size != null) {
       final ax = _localCursorPosition.dx / size.width;
       final ay = _localCursorPosition.dy / size.height;
-      _cursorAlignment = Alignment(
-        ((ax - 0.5) * 2).clamp(-1.0, 1.0),
-        ((ay - 0.5) * 2).clamp(-1.0, 1.0),
-      );
+      setState(() {
+        _cursorAlignment = Alignment(
+          ((ax - 0.5) * 2).clamp(-1.0, 1.0),
+          ((ay - 0.5) * 2).clamp(-1.0, 1.0),
+        );
+      });
     }
   }
 
@@ -326,7 +328,7 @@ abstract class _PressableBuilderWidgetState<T extends _PressableBuilderWidget>
           focused: _isFocused,
           disabled: isDisabled,
           state: _currentState,
-          cursorPosition: PressableCursorPosition(
+          cursorPosition: CursorPosition(
             alignment: _cursorAlignment,
             offset: _localCursorPosition,
           ),

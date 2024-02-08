@@ -5,14 +5,11 @@ import '../../helpers/compare_mixin.dart';
 enum PressableDataAspect { focused, disabled, state, cursorPosition }
 
 @immutable
-class PressableCursorPosition {
+class CursorPosition {
   final Alignment alignment;
   final Offset offset;
 
-  const PressableCursorPosition({
-    required this.alignment,
-    required this.offset,
-  });
+  const CursorPosition({required this.alignment, required this.offset});
 }
 
 @immutable
@@ -21,7 +18,7 @@ class PressableStateData with Comparable {
 
   final bool disabled;
   final PressableState state;
-  final PressableCursorPosition cursorPosition;
+  final CursorPosition cursorPosition;
 
   const PressableStateData({
     required this.focused,
@@ -33,7 +30,7 @@ class PressableStateData with Comparable {
   const PressableStateData.none()
       : focused = false,
         disabled = true,
-        cursorPosition = const PressableCursorPosition(
+        cursorPosition = const CursorPosition(
           alignment: Alignment.center,
           offset: Offset.zero,
         ),
@@ -43,7 +40,7 @@ class PressableStateData with Comparable {
     bool? focused,
     bool? disabled,
     PressableState? state,
-    PressableCursorPosition? cursorPosition,
+    CursorPosition? cursorPosition,
   }) {
     return PressableStateData(
       focused: focused ?? this.focused,
@@ -80,7 +77,10 @@ class PressableDataNotifier extends InheritedModel<PressableDataAspect> {
       aspect: aspect,
     );
 
-    assert(model != null, 'PressableDataNotifier not found in widget tree.');
+    assert(
+      model != null,
+      'No Pressable data found in context. Make sure to wrap your widget a Pressable widget',
+    );
 
     return model!.data;
   }
@@ -89,7 +89,7 @@ class PressableDataNotifier extends InheritedModel<PressableDataAspect> {
     return of(context, aspect: PressableDataAspect.disabled).disabled;
   }
 
-  static PressableCursorPosition cursorPositionOf(BuildContext context) {
+  static CursorPosition cursorPositionOf(BuildContext context) {
     return of(context, aspect: PressableDataAspect.cursorPosition)
         .cursorPosition;
   }

@@ -18,12 +18,9 @@ class MixProvider extends InheritedWidget {
   /// Retrieves the nearest [MixData] from the widget tree. Throws if not found.
   static MixData of(BuildContext context) {
     final mixData = maybeOf(context);
-    if (mixData == null) {
-      throw StateError('MixProvider not found in widget tree. '
-          'Ensure that Mix is present in the widget tree and try again.');
-    }
+    assert(mixData != null, 'MixProvider not found in widget tree.');
 
-    return mixData;
+    return mixData!;
   }
 
   final MixData? data;

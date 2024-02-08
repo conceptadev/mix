@@ -38,12 +38,12 @@ void main() {
       final thirdNotifier = PressableDataNotifier.of(thirdContext);
 
       expect(onEnabledAttr.when(firstContext), false);
-      // expect(firstNotifier!.disabled, true);
-      // expect(onEnabledAttr.when(secondContext), false);
-      // expect(secondNotifier!.disabled, true);
+      expect(firstNotifier.disabled, true);
+      expect(onEnabledAttr.when(secondContext), false);
+      expect(secondNotifier.disabled, true);
 
-      // expect(onEnabledAttr.when(thirdContext), true);
-      // expect(thirdNotifier!.disabled, false);
+      expect(onEnabledAttr.when(thirdContext), true);
+      expect(thirdNotifier.disabled, false);
     });
 
     testWidgets(
