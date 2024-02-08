@@ -258,6 +258,7 @@ class _CustomFocusableActionDetectorState
       key: _mouseRegionKey,
       onEnter: _handleMouseEnter,
       onExit: _handleMouseExit,
+      onHover: widget.onMouseHover,
       cursor: widget.mouseCursor,
       child: Focus(
         focusNode: widget.focusNode,

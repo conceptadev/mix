@@ -216,12 +216,10 @@ abstract class _PressableBuilderWidgetState<T extends _PressableBuilderWidget>
     if (size != null) {
       final ax = _localCursorPosition.dx / size.width;
       final ay = _localCursorPosition.dy / size.height;
-      setState(() {
-        _cursorAlignment = Alignment(
-          ((ax - 0.5) * 2).clamp(-1.0, 1.0),
-          ((ay - 0.5) * 2).clamp(-1.0, 1.0),
-        );
-      });
+      _cursorAlignment = Alignment(
+        ((ax - 0.5) * 2).clamp(-1.0, 1.0),
+        ((ay - 0.5) * 2).clamp(-1.0, 1.0),
+      );
     }
   }
 
@@ -230,12 +228,11 @@ abstract class _PressableBuilderWidgetState<T extends _PressableBuilderWidget>
   }
 
   void _handlePanDown(DragDownDetails details) {
-    _localCursorPosition = details.localPosition;
-    _updateCursorAlignment();
+    _updateCursorPosition(details.localPosition);
   }
 
   void _handlePanUp(DragEndDetails details) {
-    handleLongPressUpdate(true);
+    _handlePressUpdate(true);
   }
 
   void _handleMouseHover(PointerHoverEvent event) {
@@ -243,13 +240,11 @@ abstract class _PressableBuilderWidgetState<T extends _PressableBuilderWidget>
   }
 
   void _handleOnMouseEnter(PointerEnterEvent event) {
-    _localCursorPosition = event.localPosition;
-    _updateCursorAlignment();
+    _updateCursorPosition(event.localPosition);
   }
 
   void _handleOnMouseExit(PointerExitEvent event) {
-    _localCursorPosition = Offset.zero;
-    _updateCursorAlignment();
+    // _updateCursorPosition(Offset.zero);
   }
 
   void _handlePressUpdate(bool isPressed) {
@@ -338,7 +333,6 @@ abstract class _PressableBuilderWidgetState<T extends _PressableBuilderWidget>
     );
 
     return GestureDetector(
-      onTapDown: isEnabled ? (_) => _handlePressUpdate(true) : null,
       onTapUp: isEnabled ? (_) => _handlePressUpdate(false) : null,
       onTap: isEnabled ? handleOnPress : null,
       onTapCancel: isEnabled ? () => _handlePressUpdate(false) : null,

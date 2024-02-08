@@ -128,6 +128,11 @@ class PressableDataNotifier extends InheritedModel<PressableDataAspect> {
       return true;
     }
 
+    if (oldWidget.data.cursorPosition != data.cursorPosition &&
+        dependencies.contains(PressableDataAspect.cursorPosition)) {
+      return true;
+    }
+
     return false;
   }
 }
