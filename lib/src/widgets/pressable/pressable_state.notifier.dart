@@ -3,71 +3,63 @@ import 'package:flutter/widgets.dart';
 import '../../helpers/compare_mixin.dart';
 
 @immutable
-class WidgetStateData with Comparable {
+class PressableStateData with Comparable {
   final bool focus;
-  final bool hover;
-  final WidgetStatus status;
-  final WidgetState state;
 
-  const WidgetStateData({
+  final bool disabled;
+  final PressableState state;
+
+  const PressableStateData({
     required this.focus,
-    required this.status,
+    required this.disabled,
     required this.state,
-    required this.hover,
   });
 
-  const WidgetStateData.none()
+  const PressableStateData.none()
       : focus = false,
-        hover = false,
-        status = WidgetStatus.disabled,
-        state = WidgetState.none;
+        disabled = true,
+        state = PressableState.none;
 
-  WidgetStateData copyWith({
+  PressableStateData copyWith({
     bool? focus,
-    bool? hover,
-    WidgetStatus? status,
-    WidgetState? state,
+    bool? disabled,
+    PressableState? state,
   }) {
-    return WidgetStateData(
+    return PressableStateData(
       focus: focus ?? this.focus,
-      status: status ?? this.status,
+      disabled: disabled ?? this.disabled,
       state: state ?? this.state,
-      hover: hover ?? this.hover,
     );
   }
 
   @override
-  get props => [focus, status, state, hover];
+  get props => [focus, disabled, state];
 }
 
-enum WidgetStatus {
-  enabled,
-  disabled,
-}
-
-enum WidgetState {
+enum PressableState {
   none,
+  hovered,
   pressed,
   longPressed,
 }
 
-class WidgetStateNotifier extends InheritedWidget {
-  const WidgetStateNotifier({
+class PressableStateNotifier extends InheritedWidget {
+  const PressableStateNotifier({
     super.key,
     required super.child,
     required this.data,
   });
 
-  static WidgetStateData? of(BuildContext context) {
+  static PressableStateData? of(BuildContext context) {
     return context
-        .dependOnInheritedWidgetOfExactType<WidgetStateNotifier>()
+        .dependOnInheritedWidgetOfExactType<PressableStateNotifier>()
         ?.data;
   }
 
-  final WidgetStateData data;
+  final PressableStateData data;
 
   @override
-  bool updateShouldNotify(WidgetStateNotifier oldWidget) {
+  bool updateShouldNotify(PressableStateNotifier oldWidget) {
     return oldWidget.data != data;
   }
 }

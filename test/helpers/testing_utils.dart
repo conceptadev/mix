@@ -114,19 +114,17 @@ extension WidgetTesterExt on WidgetTester {
 
   Future<void> pumpWithPressable(
     Widget widget, {
-    WidgetStateData data = const WidgetStateData.none(),
-    WidgetState state = WidgetState.none,
-    WidgetStatus status = WidgetStatus.enabled,
+    PressableStateData data = const PressableStateData.none(),
+    PressableState state = PressableState.none,
+    bool disabled = false,
     bool focus = false,
-    bool hover = false,
   }) async {
     await pumpWidget(
       MaterialApp(
-        home: WidgetStateNotifier(
+        home: PressableStateNotifier(
           data: data.copyWith(
             focus: focus,
-            hover: hover,
-            status: status,
+            disabled: disabled,
             state: state,
           ),
           child: widget,
