@@ -10,11 +10,13 @@ void main() {
       focused: true,
       disabled: false,
       state: PressableState.pressed,
-      cursorAlignment: Alignment.center,
-      cursorOffset: Offset.zero,
+      cursorPosition: PressableCursorPosition(
+        alignment: Alignment.center,
+        offset: Offset.zero,
+      ),
     );
     test('constructor', () {
-      final notifier = PressableStateNotifier(
+      final notifier = PressableDataNotifier(
         data: gestureData,
         child: Container(),
       );
@@ -25,30 +27,35 @@ void main() {
     });
 
     test('of', () {
-      final notifier = PressableStateNotifier(
+      final notifier = PressableDataNotifier(
         data: gestureData,
         child: Container(),
       );
 
-      final otherNotifier = PressableStateNotifier(
+      final otherNotifier = PressableDataNotifier(
         data: const PressableStateData(
           focused: false,
           disabled: true,
           state: PressableState.none,
-          cursorAlignment: Alignment.center,
-          cursorOffset: Offset.zero,
+          cursorPosition: PressableCursorPosition(
+            alignment: Alignment.center,
+            offset: Offset.zero,
+          ),
         ),
         child: Container(),
       );
 
-      final sameNotifier = PressableStateNotifier(
+      final sameNotifier = PressableDataNotifier(
         data: gestureData,
         child: Container(),
       );
 
       expect(notifier.updateShouldNotify(otherNotifier), true);
       expect(notifier.updateShouldNotify(sameNotifier), false);
-      expect(PressableStateNotifier.of(MockBuildContext()), null);
+      expect(
+        () => PressableDataNotifier.of(MockBuildContext()),
+        throwsAssertionError,
+      );
     });
 
     testWidgets('can get it from context', (tester) async {
@@ -60,10 +67,10 @@ void main() {
 
       final context = tester.element(find.byType(Container));
 
-      final notifier = PressableStateNotifier.of(context);
+      final notifier = PressableDataNotifier.of(context);
 
       expect(notifier, isA<PressableStateData>());
-      expect(notifier!.state, PressableState.pressed);
+      expect(notifier.state, PressableState.pressed);
       expect(notifier.focused, true);
     });
   });

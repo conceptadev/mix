@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../../factory/style_mix.dart';
 import '../../specs/container/box_widget.dart';
 import '../../utils/custon_focusable_action_detector.dart';
-import 'pressable_state.notifier.dart';
+import 'pressable_data.notifier.dart';
 
 class PressableBox extends StatelessWidget {
   const PressableBox({
@@ -321,13 +321,15 @@ abstract class _PressableBuilderWidgetState<T extends _PressableBuilderWidget>
       onMouseEnter: _handleOnMouseEnter,
       onMouseExit: _handleOnMouseExit,
       onMouseHover: _handleMouseHover,
-      child: PressableStateNotifier(
+      child: PressableDataNotifier(
         data: PressableStateData(
           focused: _isFocused,
           disabled: isDisabled,
           state: _currentState,
-          cursorAlignment: _cursorAlignment,
-          cursorOffset: _localCursorPosition,
+          cursorPosition: PressableCursorPosition(
+            alignment: _cursorAlignment,
+            offset: _localCursorPosition,
+          ),
         ),
         child: widget.child,
       ),

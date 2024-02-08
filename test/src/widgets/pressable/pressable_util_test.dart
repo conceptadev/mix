@@ -60,7 +60,7 @@ void main() {
 
       expect(onHoverAttr.when(context), true);
       expect(onHoverAttr.value, Style(attribute1, attribute2, attribute3));
-      expect(onHoverAttr.variant.name, 'on-hover');
+      expect(onHoverAttr.variant.name, 'on-hovered');
       expect(onHoverAttr.variant.when(context), true);
     });
 

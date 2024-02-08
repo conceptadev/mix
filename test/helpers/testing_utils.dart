@@ -121,7 +121,7 @@ extension WidgetTesterExt on WidgetTester {
   }) async {
     await pumpWidget(
       MaterialApp(
-        home: PressableStateNotifier(
+        home: PressableDataNotifier(
           data: data.copyWith(
             focused: focus,
             disabled: disabled,
