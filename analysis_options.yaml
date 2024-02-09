@@ -20,6 +20,8 @@ dart_code_metrics:
     - package:dart_code_metrics_presets/metrics_recommended.yaml
   metrics-excludes:
     - test/**
+  rules-excludes:
+    - test/**
   rules:
     # avoid-collection-mutating-methods: true
     newline-before-return: true
