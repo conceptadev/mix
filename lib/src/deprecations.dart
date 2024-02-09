@@ -15,7 +15,10 @@ import '../src/utils/context_variant_util/on_helper_util.dart';
 import '../src/utils/context_variant_util/on_orientation_util.dart';
 import '../src/utils/helper_util.dart';
 import '../src/variants/variant.dart';
+import 'attributes/scalars/scalar_util.dart';
 import 'core/attribute.dart';
+import 'decorators/widget_decorators.dart';
+import 'decorators/widget_decorators_util.dart';
 import 'factory/style_mix.dart';
 import 'widgets/pressable/pressable_util.dart';
 
