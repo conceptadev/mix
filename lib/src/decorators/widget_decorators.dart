@@ -15,10 +15,7 @@ class IntrinsicHeightDecorator
   const IntrinsicHeightDecorator({super.key});
 
   @override
-  IntrinsicHeightDecorator lerp(
-    covariant Decorator<Decorator>? other,
-    double t,
-  ) {
+  IntrinsicHeightDecorator lerp(IntrinsicWidthDecorator other, double t) {
     return this;
   }
 
@@ -34,10 +31,7 @@ class IntrinsicWidthDecorator extends WidgetDecorator<IntrinsicWidthDecorator> {
   const IntrinsicWidthDecorator({super.key});
 
   @override
-  IntrinsicWidthDecorator lerp(
-    covariant Decorator<Decorator>? other,
-    double t,
-  ) {
+  IntrinsicWidthDecorator lerp(IntrinsicWidthDecorator other, double t) {
     return this;
   }
 
