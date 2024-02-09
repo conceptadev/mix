@@ -78,10 +78,9 @@ void main() {
       final clipRRectDecorator =
           clip.rrect(borderRadius: BorderRadius.circular(10.0));
 
-      expect(
-        clipRRectDecorator.value.borderRadius,
-        BorderRadius.circular(10.0),
-      );
+      final decorator = clipRRectDecorator.value as ClipRRectDecorator;
+
+      expect(decorator.borderRadius, BorderRadius.circular(10.0));
     });
 
     test('clipOval creates ClipOvalDecorator correctly', () {
@@ -109,6 +108,64 @@ void main() {
           .build(EmptyMixData, const Empty()) as ClipPath;
 
       expect(widget.clipper, isA<TriangleClipper>());
+    });
+
+    test('clipRect creates ClipRectDecorator correctly', () {
+      final clipRectDecorator = clip.rect();
+
+      expect(
+        clipRectDecorator.value.build(EmptyMixData, const Empty()),
+        isA<ClipRect>(),
+      );
+    });
+
+    test('visibility creates VisibilityDecorator correctly', () {
+      final visibilityDecorator = visibility.on();
+
+      expect(visibilityDecorator.visible, true);
+    });
+
+    test('transform creates TransformDecorator correctly', () {
+      final transformDecorator = transform(Matrix4.identity());
+
+      expect(transformDecorator.transform, Matrix4.identity());
+    });
+
+    test('sizedBox creates SizedBoxDecorator correctly', () {
+      final sizedBoxDecorator = sizedBox(height: 100, width: 100);
+
+      final widget =
+          sizedBoxDecorator.build(EmptyMixData, const Empty()) as SizedBox;
+
+      expect(widget.width, 100);
+      expect(widget.height, 100);
+    });
+
+    test(
+      'fractionallySizedBox creates FractionallySizedBoxDecorator correctly',
+      () {
+        final fractionallySizedBoxDecorator = fractionallySizedBox(
+          heightFactor: 0.5,
+          widthFactor: 0.5,
+        );
+
+        final widget = fractionallySizedBoxDecorator.build(
+          EmptyMixData,
+          const Empty(),
+        ) as FractionallySizedBox;
+
+        expect(widget.widthFactor, 0.5);
+        expect(widget.heightFactor, 0.5);
+      },
+    );
+
+    // align
+    test('align creates AlignDecorator correctly', () {
+      final alignDecorator = align(alignment: Alignment.center);
+
+      final widget = alignDecorator.build(EmptyMixData, const Empty()) as Align;
+
+      expect(widget.alignment, Alignment.center);
     });
   });
 }

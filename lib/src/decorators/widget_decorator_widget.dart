@@ -7,25 +7,35 @@ import 'widget_decorators.dart';
 
 // Default order of decorators and their logic:
 const _defaultOrder = [
-  // 1. VisibilityDecorator: Placed first to control the overall visibility of the widget.
-  // If a widget is not visible, none of the other decorators need to process it.
+  // 1. VisibilityDecorator: Controls overall visibility. Early exit if not visible.
   VisibilityDecorator,
 
-  // 2. AspectRatioDecorator: Comes next to ensure the widget maintains its aspect ratio
-  // before any size transformations (like scaling) are applied.
+  // 2. SizedBox: Explicitly sets size before adjusting aspect ratio or scaling.
+  SizedBoxDecorator,
+
+  // 3. FractionallySizedBox: Adjusts size relative to parent's size after fixed sizing.
+  FractionallySizedBoxDecorator,
+
+  // 4. Align: Aligns the widget within its allocated space, crucial for positioning before transformations.
+  AlignDecorator,
+
+  // 5. AspectRatioDecorator: Ensures the widget's aspect ratio is maintained.
   AspectRatioDecorator,
 
-  // 3. ScaleDecorator: Applied after aspect ratio considerations to scale the widget.
-  // Scaling changes the size of the widget and should be done before applying shape-specific
-  // clipping to maintain proper proportions.
+  // 6. ScaleDecorator: Scales the widget, affecting its size post aspect ratio adjustments.
   ScaleDecorator,
 
-  // 4. ClipDecorator: Used after scaling to apply clipping paths or shapes (like ClipOval) to the
-  // scaled widget. This ensures that the clipping is applied to the widget's final size and shape.
-  ClipDecorator,
+  // 7. Transform: Applies transformations like rotate, scale, and translate.
+  TransformDecorator,
 
-  // 5. OpacityDecorator: Applied last as a visual effect. It alters the transparency of the
-  // widget without affecting its size, shape, or layout, making it ideal to be the final step.
+  // 8. Clip Decorators: Applies various clipping shapes after transformations to ensure correct final shape.
+  ClipOvalDecorator,
+  ClipRRectDecorator,
+  ClipPathDecorator,
+  ClipTriangleDecorator,
+  ClipRectDecorator,
+
+  // 9. OpacityDecorator: Modifies transparency, ideal as a final visual effect.
   OpacityDecorator,
 ];
 
@@ -49,8 +59,7 @@ class RenderWidgetDecorators extends StatelessWidget {
 
     if (decorators.isEmpty) return current;
 
-    Map<Object, WidgetDecorator> decoratorMap =
-        AttributeMap<WidgetDecorator>(decorators).toMap();
+    final decoratorMap = AttributeMap<WidgetDecorator>(decorators).toMap();
 
     final listOfDecorators = {
       ...orderOfDecorators,
