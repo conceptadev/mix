@@ -10,6 +10,39 @@ import '../core/decorator.dart';
 import '../factory/mix_provider_data.dart';
 import '../helpers/lerp_helpers.dart';
 
+class IntrinsicHeightDecorator
+    extends WidgetDecorator<IntrinsicHeightDecorator> {
+  const IntrinsicHeightDecorator({super.key});
+
+  @override
+  IntrinsicHeightDecorator lerp(IntrinsicWidthDecorator other, double t) {
+    return this;
+  }
+
+  @override
+  get props => [];
+
+  @override
+  Widget build(MixData mix, Widget child) =>
+      IntrinsicHeight(key: key, child: child);
+}
+
+class IntrinsicWidthDecorator extends WidgetDecorator<IntrinsicWidthDecorator> {
+  const IntrinsicWidthDecorator({super.key});
+
+  @override
+  IntrinsicWidthDecorator lerp(IntrinsicWidthDecorator other, double t) {
+    return this;
+  }
+
+  @override
+  get props => [];
+
+  @override
+  Widget build(MixData mix, Widget child) =>
+      IntrinsicWidth(key: key, child: child);
+}
+
 class AspectRatioDecorator extends WidgetDecorator<AspectRatioDecorator> {
   final double aspectRatio;
   const AspectRatioDecorator(this.aspectRatio, {super.key});
