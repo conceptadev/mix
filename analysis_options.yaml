@@ -18,9 +18,9 @@ dart_code_metrics:
   extends:
     - package:dart_code_metrics_presets/recommended.yaml
     - package:dart_code_metrics_presets/metrics_recommended.yaml
-  metrics-excludes:
+  metrics-exclude:
     - test/**
-  rules-excludes:
+  rules-exclude:
     - test/**
   rules:
     # avoid-collection-mutating-methods: true
