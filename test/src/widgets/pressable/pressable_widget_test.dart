@@ -13,14 +13,17 @@ void main() {
     testWidgets('Pressable', (tester) async {
       final firstKey = UniqueKey();
       final secondKey = UniqueKey();
+      final thirdKey = UniqueKey();
       await tester.pumpWidget(Column(
         children: [
-          Pressable(onPressed: null, child: Container(key: firstKey)),
+          Pressable(onPress: null, child: Container(key: firstKey)),
           Pressable(
-            onPressed: null,
             disabled: true,
+            onPress: null,
             child: Container(key: secondKey),
           ),
+          // Test with a onpress function
+          Pressable(onPress: () {}, child: Container(key: thirdKey)),
         ],
       ));
 
@@ -28,14 +31,19 @@ void main() {
 
       final firstContext = tester.element(find.byKey(firstKey));
       final secondContext = tester.element(find.byKey(secondKey));
+      final thirdContext = tester.element(find.byKey(thirdKey));
 
-      final firstNotifier = WidgetStateNotifier.of(firstContext);
-      final secondNotifier = WidgetStateNotifier.of(secondContext);
+      final firstNotifier = PressableDataNotifier.of(firstContext);
+      final secondNotifier = PressableDataNotifier.of(secondContext);
+      final thirdNotifier = PressableDataNotifier.of(thirdContext);
 
-      expect(onEnabledAttr.when(firstContext), true);
-      expect(firstNotifier!.status, WidgetStatus.enabled);
+      expect(onEnabledAttr.when(firstContext), false);
+      expect(firstNotifier.disabled, true);
       expect(onEnabledAttr.when(secondContext), false);
-      expect(secondNotifier!.status, WidgetStatus.disabled);
+      expect(secondNotifier.disabled, true);
+
+      expect(onEnabledAttr.when(thirdContext), true);
+      expect(thirdNotifier.disabled, false);
     });
 
     testWidgets(
@@ -45,10 +53,10 @@ void main() {
 
         await tester.pumpWidget(
           Pressable(
-            onPressed: () {
+            disabled: false,
+            onPress: () {
               counter++;
             },
-            disabled: false,
             child: Container(),
           ),
         );
@@ -70,10 +78,10 @@ void main() {
 
         await tester.pumpWidget(
           Pressable(
-            onPressed: () {
+            disabled: true,
+            onPress: () {
               counter++;
             },
-            disabled: true,
             child: Container(),
           ),
         );
@@ -97,10 +105,10 @@ void main() {
 
         await tester.pumpWidget(
           PressableBox(
-            onPressed: () {
+            unpressDelay: Duration.zero,
+            onPress: () {
               counter++;
             },
-            unpressDelay: Duration.zero,
             animationDuration: Duration.zero,
             disabled: false,
             child: Container(),
@@ -124,10 +132,10 @@ void main() {
 
         await tester.pumpWidget(
           PressableBox(
-            onPressed: () {
+            unpressDelay: Duration.zero,
+            onPress: () {
               counter++;
             },
-            unpressDelay: Duration.zero,
             animationDuration: Duration.zero,
             disabled: true,
             child: Container(),

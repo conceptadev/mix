@@ -47,16 +47,16 @@ class CustomButton extends StatelessWidget {
   const CustomButton({
     super.key,
     required this.title,
-    required this.onPressed,
+    required this.onPress,
   });
 
   final String title;
-  final void Function() onPressed;
+  final void Function() onPress;
 
   @override
   Widget build(BuildContext context) {
     return PressableBox(
-      onPressed: onPressed,
+      onPress: onPress,
       child: StyledText(
         title,
       ),
@@ -101,20 +101,20 @@ class CustomButton extends StatelessWidget {
   const CustomButton({
     super.key,
     required this.title,
-    required this.onPressed,
+    required this.onPress,
     this.type = CustomButtonType.primary,
     this.size = CustomButtonSize.large,
   });
 
   final String title;
-  final void Function() onPressed;
+  final void Function() onPress;
   final CustomButtonType type;
   final CustomButtonSize size;
 
   @override
   Widget build(BuildContext context) {
     return PressableBox(
-      onPressed: onPressed,
+      onPress: onPress,
       child: StyledText(
         title,
       ),
@@ -185,13 +185,13 @@ class CustomButton extends StatelessWidget {
   const CustomButton({
     super.key,
     required this.title,
-    required this.onPressed,
+    required this.onPress,
     this.type = CustomButtonType.primary,
     this.size = CustomButtonSize.large,
   });
 
   final String title;
-  final void Function() onPressed;
+  final void Function() onPress;
   final CustomButtonType type;
   final CustomButtonSize size;
 
@@ -199,7 +199,7 @@ class CustomButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final style = CustomButtonStyle(type, size);
     return PressableBox(
-      onPressed: onPressed,
+      onPress: onPress,
       style: style.container(),
       child: StyledText(
         title,

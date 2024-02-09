@@ -13,7 +13,7 @@ void main() {
     testWidgets('press state', (tester) async {
       await tester.pumpWithPressable(
         Container(),
-        state: WidgetState.pressed,
+        state: PressableState.pressed,
         focus: true,
       );
 
@@ -30,7 +30,7 @@ void main() {
     testWidgets('long press state', (tester) async {
       await tester.pumpWithPressable(
         Container(),
-        state: WidgetState.longPressed,
+        state: PressableState.longPressed,
         focus: true,
       );
 
@@ -48,7 +48,11 @@ void main() {
     });
 
     testWidgets('hover state', (tester) async {
-      await tester.pumpWithPressable(Container(), focus: true, hover: true);
+      await tester.pumpWithPressable(
+        Container(),
+        state: PressableState.hovered,
+        focus: true,
+      );
 
       final context = tester.element(find.byType(Container));
 
@@ -56,14 +60,14 @@ void main() {
 
       expect(onHoverAttr.when(context), true);
       expect(onHoverAttr.value, Style(attribute1, attribute2, attribute3));
-      expect(onHoverAttr.variant.name, 'on-hover');
+      expect(onHoverAttr.variant.name, 'on-hovered');
       expect(onHoverAttr.variant.when(context), true);
     });
 
     testWidgets('disabled state', (tester) async {
       await tester.pumpWithPressable(
         Container(),
-        status: WidgetStatus.disabled,
+        disabled: true,
         focus: true,
       );
 
@@ -84,7 +88,7 @@ void main() {
     testWidgets('enabled state', (tester) async {
       await tester.pumpWithPressable(
         Container(),
-        state: WidgetState.pressed,
+        state: PressableState.pressed,
         focus: true,
       );
 
@@ -102,7 +106,7 @@ void main() {
     testWidgets('focus state', (tester) async {
       await tester.pumpWithPressable(
         Container(),
-        state: WidgetState.pressed,
+        state: PressableState.pressed,
         focus: true,
       );
 
