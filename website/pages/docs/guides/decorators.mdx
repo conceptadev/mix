@@ -206,6 +206,23 @@ Visibility(
 );
 ```
 
+### IntrinsicHeight and IntrinsicWidth
+
+Decorates a `Box` with a `IntrinsicHeight` or `IntrinsicWidth` widget
+
+```dart
+final style = Style(
+  intrinsicHeight(), // or intrinsicWidth()
+);
+
+// Equivalent to
+IntrinsicHeight( // or IntrinsicWidth
+  child: Box(
+    child: const Text('Invisible box'),
+  ),
+);
+```
+
 **Helper methods**
 
 - `visibility.on()`: Wraps the **Box** with an **Visibility** widget that is visible

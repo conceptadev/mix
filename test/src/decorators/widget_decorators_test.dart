@@ -5,6 +5,44 @@ import 'package:mix/mix.dart';
 import '../../helpers/testing_utils.dart';
 
 void main() {
+  group('IntrinsicHeightDecorator Tests', () {
+    testWidgets(
+      'Build method creates AspectRatio widget with correct aspectRatio',
+      (WidgetTester tester) async {
+        const decorator = IntrinsicHeightDecorator();
+
+        await tester
+            .pumpMaterialApp(decorator.build(EmptyMixData, Container()));
+
+        final IntrinsicHeight intrinsicHeight =
+            tester.widget(find.byType(IntrinsicHeight));
+
+        expect(find.byType(IntrinsicHeight), findsOneWidget);
+
+        expect(intrinsicHeight.child, isA<Container>());
+      },
+    );
+  });
+
+  group('IntrinsicWidthDecorator Tests', () {
+    testWidgets(
+      'Build method creates AspectRatio widget with correct aspectRatio',
+      (WidgetTester tester) async {
+        const decorator = IntrinsicWidthDecorator();
+
+        await tester
+            .pumpMaterialApp(decorator.build(EmptyMixData, Container()));
+
+        final IntrinsicWidth intrinsicWidth =
+            tester.widget(find.byType(IntrinsicWidth));
+
+        expect(find.byType(IntrinsicWidth), findsOneWidget);
+
+        expect(intrinsicWidth.child, isA<Container>());
+      },
+    );
+  });
+
   group('AspectRatioDecorator Tests', () {
     test('Constructor assigns aspectRatio correctly', () {
       const aspectRatio = 2.0;

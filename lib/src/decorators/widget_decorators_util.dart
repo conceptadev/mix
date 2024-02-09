@@ -6,6 +6,8 @@ import 'widget_decorators.dart';
 
 T selfBuilder<T extends StyleAttribute>(T decorator) => decorator;
 
+final intrinsicWidth = IntrinsicWidthUtility((d) => d);
+final intrinsicHeight = IntrinsicHeightUtility((d) => d);
 const scale = ScaleUtility(selfBuilder);
 const opacity = OpacityUtility(selfBuilder);
 const rotate = RotateUtility(selfBuilder);
@@ -23,6 +25,18 @@ const transform = TransformUtility(selfBuilder);
 const align = AlignDecoratorUtility(selfBuilder);
 const fractionallySizedBox = FractionallySizedBoxDecoratorUtility(selfBuilder);
 const sizedBox = SizedBoxDecoratorUtility(selfBuilder);
+
+class IntrinsicHeightUtility<T extends StyleAttribute>
+    extends MixUtility<T, IntrinsicHeightDecorator> {
+  const IntrinsicHeightUtility(super.builder);
+  T call({Key? key}) => builder(IntrinsicHeightDecorator(key: key));
+}
+
+class IntrinsicWidthUtility<T extends StyleAttribute>
+    extends MixUtility<T, IntrinsicWidthDecorator> {
+  const IntrinsicWidthUtility(super.builder);
+  T call({Key? key}) => builder(IntrinsicWidthDecorator(key: key));
+}
 
 class ScaleUtility<T extends StyleAttribute>
     extends MixUtility<T, ScaleDecorator> {

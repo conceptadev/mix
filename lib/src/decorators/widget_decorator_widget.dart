@@ -62,6 +62,9 @@ const _defaultOrder = [
   // that it does not influence the layout or transformations, serving purely as a visual effect to alter the transparency
   // of the widget and its decorations.
   OpacityDecorator,
+
+  IntrinsicHeightDecorator,
+  IntrinsicWidthDecorator,
 ];
 
 class RenderWidgetDecorators extends StatelessWidget {
