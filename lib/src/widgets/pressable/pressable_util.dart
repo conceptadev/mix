@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../core/attribute.dart';
+import '../../factory/style_mix.dart';
 import '../../helpers/string_ext.dart';
 import '../../variants/variant.dart';
 import 'pressable_data.notifier.dart';
@@ -20,6 +22,8 @@ final onDisabled = _onDisabled(true);
 
 /// Applies styles when the widget is enabled.
 final onEnabled = _onDisabled(false);
+
+const onCursorPosition = CursorPositionBuilder.new;
 
 /// Applies styles when the widget has focus.dar
 final onFocused = ContextVariant(
@@ -53,4 +57,35 @@ PressableDataVariant _onDisabled(bool disabled) {
     'on-${disabled ? 'disabled' : 'enabled'}',
     (context) => PressableDataNotifier.isDisabledOf(context) == disabled,
   );
+}
+
+typedef StyleBuilder = Style Function(BuildContext context);
+
+@immutable
+abstract class StyleAttributeBuilder<Self extends StyleAttributeBuilder<Self>>
+    extends StyleAttribute {
+  const StyleAttributeBuilder();
+
+  Attribute builder(BuildContext context);
+
+  @override
+  Type get type => Self;
+}
+
+@immutable
+class CursorPositionBuilder
+    extends StyleAttributeBuilder<CursorPositionBuilder> {
+  final Attribute Function(CursorPosition cursorPosition, BuildContext context)
+      fn;
+  const CursorPositionBuilder(this.fn);
+
+  @override
+  Attribute builder(BuildContext context) {
+    final position = PressableDataNotifier.cursorPositionOf(context);
+
+    return fn(position, context);
+  }
+
+  @override
+  get props => [fn];
 }
