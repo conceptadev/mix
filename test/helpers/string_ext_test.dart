@@ -23,7 +23,6 @@ void main() {
       '!@#\$%^&*()': ['!@#\$%^&*()'], // Special characters only
       'Hello!World': [
         'Hello!',
-        // ignore: unnecessary-trailing-comma
         'World',
       ], // Words separated by a non-standard separator
     };
