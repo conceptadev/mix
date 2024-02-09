@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../factory/style_mix.dart';
 import '../../specs/container/box_widget.dart';
-import '../../utils/custon_focusable_action_detector.dart';
+import '../../utils/custom_focusable_action_detector.dart';
 import 'pressable_data.notifier.dart';
 
 class PressableBox extends StatelessWidget {
@@ -244,7 +244,7 @@ abstract class _PressableBuilderWidgetState<T extends _PressableBuilderWidget>
   }
 
   void _handleOnMouseExit(PointerExitEvent event) {
-    // _updateCursorPosition(Offset.zero);
+    _updateCursorPosition(event.localPosition);
   }
 
   void _handlePressUpdate(bool isPressed) {
@@ -297,6 +297,8 @@ abstract class _PressableBuilderWidgetState<T extends _PressableBuilderWidget>
     if (!mounted) return;
     widget.onPress?.call();
     if (widget.enableFeedback) Feedback.forTap(context);
+
+    _handlePressUpdate(true);
   }
 
   void handleOnLongPress() {
