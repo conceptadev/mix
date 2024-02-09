@@ -92,13 +92,16 @@ class AnimatedStyledIcon extends StyledWidget {
       final spec = mix.attributeOf<IconSpecAttribute>()?.resolve(mix) ??
           const IconSpec.empty();
 
-      return AnimatedIcon(
-        icon: icon,
-        progress: progress,
-        color: spec.color,
-        size: spec.size,
-        semanticLabel: semanticLabel,
-        textDirection: textDirection,
+      return shouldApplyDecorators(
+        mix: mix,
+        child: AnimatedIcon(
+          icon: icon,
+          progress: progress,
+          color: spec.color,
+          size: spec.size,
+          semanticLabel: semanticLabel,
+          textDirection: textDirection,
+        ),
       );
     });
   }

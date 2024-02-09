@@ -219,20 +219,23 @@ class AnimatedMixedBox extends StatelessWidget {
     // AnimatedContainer is utilized here to animate the transition of BoxSpec properties.
     // Each property from the BoxSpec is applied to the AnimatedContainer, allowing the
     // widget to animate changes smoothly over the specified duration and curve.
-    return AnimatedContainer(
-      alignment: spec.alignment,
-      padding: spec.padding,
-      decoration: spec.decoration,
-      foregroundDecoration: spec.foregroundDecoration,
-      width: spec.width,
-      height: spec.height,
-      constraints: spec.constraints,
-      margin: spec.margin,
-      transform: spec.transform,
-      clipBehavior: spec.clipBehavior ?? Clip.none,
-      curve: curve,
-      duration: duration,
-      child: child,
+    return shouldApplyDecorators(
+      mix: mix,
+      child: AnimatedContainer(
+        alignment: spec.alignment,
+        padding: spec.padding,
+        decoration: spec.decoration,
+        foregroundDecoration: spec.foregroundDecoration,
+        width: spec.width,
+        height: spec.height,
+        constraints: spec.constraints,
+        margin: spec.margin,
+        transform: spec.transform,
+        clipBehavior: spec.clipBehavior ?? Clip.none,
+        curve: curve,
+        duration: duration,
+        child: child,
+      ),
     );
   }
 }

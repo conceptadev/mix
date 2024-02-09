@@ -1,10 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-import '../../core/styled_widget.dart';
-import '../../factory/mix_provider.dart';
-import '../../factory/mix_provider_data.dart';
-import '../container/box_widget.dart';
-import 'stack_spec.dart';
+import '../../../mix.dart';
 
 /// [StyledStack] - A styled widget that creates a stack layout with a mix of styles.
 ///
@@ -61,12 +57,15 @@ class MixedStack extends StatelessWidget {
     final spec = StackSpec.of(mix);
 
     // The Stack widget is used here, applying the resolved styles from StackSpec.
-    return Stack(
-      alignment: spec.alignment ?? _defaultStack.alignment,
-      textDirection: spec.textDirection,
-      fit: spec.fit ?? _defaultStack.fit,
-      clipBehavior: spec.clipBehavior ?? _defaultStack.clipBehavior,
-      children: children ?? const [],
+    return shouldApplyDecorators(
+      mix: mix,
+      child: Stack(
+        alignment: spec.alignment ?? _defaultStack.alignment,
+        textDirection: spec.textDirection,
+        fit: spec.fit ?? _defaultStack.fit,
+        clipBehavior: spec.clipBehavior ?? _defaultStack.clipBehavior,
+        children: children ?? const [],
+      ),
     );
   }
 }
