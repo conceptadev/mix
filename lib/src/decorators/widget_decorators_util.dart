@@ -4,6 +4,8 @@ import '../attributes/scalars/scalar_util.dart';
 import '../core/attribute.dart';
 import 'widget_decorators.dart';
 
+final intrinsicWidth = IntrinsicWidthUtility((d) => d);
+final intrinsicHeight = IntrinsicHeightUtility((d) => d);
 final scale = ScaleUtility((d) => d);
 final opacity = OpacityUtility((d) => d);
 final rotate = RotateUtility((d) => d);
@@ -11,6 +13,18 @@ final clip = ClipDecoratorUtility((d) => d);
 final visibility = VisibilityUtility((d) => d);
 final aspectRatio = AspectRatioUtility((d) => d);
 final flexible = FlexibleDecoratorUtility((d) => d);
+
+class IntrinsicHeightUtility<T extends StyleAttribute>
+    extends MixUtility<T, IntrinsicHeightDecorator> {
+  const IntrinsicHeightUtility(super.builder);
+  T call({Key? key}) => builder(IntrinsicHeightDecorator(key: key));
+}
+
+class IntrinsicWidthUtility<T extends StyleAttribute>
+    extends MixUtility<T, IntrinsicWidthDecorator> {
+  const IntrinsicWidthUtility(super.builder);
+  T call({Key? key}) => builder(IntrinsicWidthDecorator(key: key));
+}
 
 class ScaleUtility<T extends StyleAttribute>
     extends MixUtility<T, ScaleDecorator> {

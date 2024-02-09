@@ -102,13 +102,18 @@ void main() {
       );
     });
 
-    test('clipTriangle creates ClipPathDecorator correctly', () {
-      final clipTriangleDecorator = clip.triangle();
+    test('intrinsicHeight creates IntrinsicHeightDecorator correctly', () {
+      final widget = intrinsicHeight().build(EmptyMixData, const Empty())
+          as IntrinsicHeight;
 
-      final widget = clipTriangleDecorator.value
-          .build(EmptyMixData, const Empty()) as ClipPath;
+      expect(widget, isA<IntrinsicHeight>());
+    });
 
-      expect(widget.clipper, isA<TriangleClipper>());
+    test('intrinsicWidth creates IntrinsicWidthDecorator correctly', () {
+      final widget =
+          intrinsicWidth().build(EmptyMixData, const Empty()) as IntrinsicWidth;
+
+      expect(widget, isA<IntrinsicWidth>());
     });
   });
 }
