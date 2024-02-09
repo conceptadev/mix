@@ -25,15 +25,15 @@ const _defaultOrder = [
   // Alignment is based on the size constraints established by previous decorators.
   AlignDecorator,
 
-  // // 5. IntrinsicHeightDecorator: Adjusts the widget's height to fit its child's intrinsic height,
-  // // ensuring that the widget does not force its children to conform to an unnatural height. This is particularly
-  // // useful for widgets that should size themselves based on content.
-  // IntrinsicHeightDecorator,
+  // 5. IntrinsicHeightDecorator: Adjusts the widget's height to fit its child's intrinsic height,
+  // ensuring that the widget does not force its children to conform to an unnatural height. This is particularly
+  // useful for widgets that should size themselves based on content.
+  IntrinsicHeightDecorator,
 
-  // // 6. IntrinsicWidthDecorator: Similar to the IntrinsicHeightDecorator, this adjusts the widget's width
-  // // to its child's intrinsic width. This decorator allows for content-driven width adjustments, making it ideal
-  // // for widgets that need to wrap their content tightly.
-  // IntrinsicWidthDecorator,
+  // 6. IntrinsicWidthDecorator: Similar to the IntrinsicHeightDecorator, this adjusts the widget's width
+  // to its child's intrinsic width. This decorator allows for content-driven width adjustments, making it ideal
+  // for widgets that need to wrap their content tightly.
+  IntrinsicWidthDecorator,
 
   // 7. AspectRatioDecorator: Maintains the widget's aspect ratio after sizing adjustments.
   // This decorator ensures that the widget scales correctly within its given aspect ratio constraints,
@@ -62,9 +62,6 @@ const _defaultOrder = [
   // that it does not influence the layout or transformations, serving purely as a visual effect to alter the transparency
   // of the widget and its decorations.
   OpacityDecorator,
-
-  IntrinsicHeightDecorator,
-  IntrinsicWidthDecorator,
 ];
 
 class RenderWidgetDecorators extends StatelessWidget {
