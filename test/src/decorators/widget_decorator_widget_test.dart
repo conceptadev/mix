@@ -52,26 +52,26 @@ void main() {
       );
       expect(clipFinder, findsOneWidget);
 
-      // final opacityFinder = find.descendant(
-      //   of: clipFinder,
-      //   matching: find.byType(Opacity),
-      // );
-      // expect(opacityFinder, findsOneWidget);
+      final opacityFinder = find.descendant(
+        of: clipFinder,
+        matching: find.byType(Opacity),
+      );
+      expect(opacityFinder, findsOneWidget);
 
-      // final customWidgetFinder = find.descendant(
-      //   of: opacityFinder,
-      //   matching: find.byType(Padding),
-      // );
+      final customWidgetFinder = find.descendant(
+        of: opacityFinder,
+        matching: find.byType(Padding),
+      );
 
-      // expect(customWidgetFinder, findsOneWidget);
+      expect(customWidgetFinder, findsOneWidget);
 
-      // expect(
-      //   find.descendant(
-      //     of: customWidgetFinder,
-      //     matching: find.text('child'),
-      //   ),
-      //   findsOneWidget,
-      // );
+      expect(
+        find.descendant(
+          of: customWidgetFinder,
+          matching: find.text('child'),
+        ),
+        findsOneWidget,
+      );
     });
 
     testWidgets(
