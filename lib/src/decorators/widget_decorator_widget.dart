@@ -27,6 +27,9 @@ const _defaultOrder = [
   // 5. OpacityDecorator: Applied last as a visual effect. It alters the transparency of the
   // widget without affecting its size, shape, or layout, making it ideal to be the final step.
   OpacityDecorator,
+
+  IntrinsicHeightDecorator,
+  IntrinsicWidthDecorator,
 ];
 
 class RenderWidgetDecorators extends StatelessWidget {
