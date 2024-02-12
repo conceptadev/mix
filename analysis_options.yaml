@@ -5,7 +5,6 @@ analyzer:
   exclude: 
     - "**/*.g.dart"
     - "**/*.freezed.dart"
-    - "tool/**"
 # For lint rules and documentation, see http://dart-lang.github.io/linter/lints.
 # Uncomment to specify additional rules.
 linter:

@@ -1,6 +1,5 @@
 import 'dart:developer';
 import 'dart:io';
-import 'package:path/path.dart' as p;
 
 String _join(String path1, String path2) {
   return path1 + Platform.pathSeparator + path2;
@@ -40,7 +39,7 @@ void main() {
   // Traverse the /lib/ directory
   for (final entity in filesList) {
     // Get the relative path using the path package
-    final relativePath = p.relative(entity.path, from: libDirectory.path);
+    final relativePath = getRelativePath(entity.path, libDirectory.path);
 
     if (relativePath.startsWith(_join('src', 'helpers'))) {
       continue;
@@ -60,4 +59,32 @@ void main() {
   exportFile.writeAsStringSync(outputString.toString());
 
   log('Exports file updated with ${outputString.length} exports.');
+}
+
+String joinPaths(List<String> parts) {
+  return parts.join(Platform.pathSeparator);
+}
+
+String getRelativePath(String filePath, String fromPath) {
+  // Normalize both paths to use the platform's path separator
+  final String normalizedFilePath = filePath
+      .replaceAll('/', Platform.pathSeparator)
+      .replaceAll('\\', Platform.pathSeparator);
+  final String normalizedFromPath = fromPath
+      .replaceAll('/', Platform.pathSeparator)
+      .replaceAll('\\', Platform.pathSeparator);
+
+  // Ensure the fromPath ends with a path separator for correct subtraction
+  final String fromPathWithSeparator =
+      normalizedFromPath.endsWith(Platform.pathSeparator)
+          ? normalizedFromPath
+          : '$normalizedFromPath${Platform.pathSeparator}';
+
+  if (normalizedFilePath.startsWith(fromPathWithSeparator)) {
+    // +1 to remove leading path separator
+    return normalizedFilePath.substring(fromPathWithSeparator.length);
+  } else {
+    // The filePath does not start with fromPath, handle accordingly
+    return filePath; // Or handle as error/exception based on requirements
+  }
 }

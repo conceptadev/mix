@@ -116,7 +116,7 @@ packages:
     source: hosted
     version: "1.8.0"
   path:
-    dependency: "direct dev"
+    dependency: transitive
     description:
       name: path
       sha256: db9d4f58c908a4ba5953fcee2ae317c94889433e5024c27ce74a37f94267945b
