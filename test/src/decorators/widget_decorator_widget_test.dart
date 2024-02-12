@@ -9,7 +9,7 @@ void main() {
     scale(2.0),
     opacity(0.5),
     visibility.on(),
-    clip.oval(),
+    clipOval(),
     aspectRatio(2.0),
     const CustomWidgetDecorator(),
   );
@@ -81,7 +81,7 @@ void main() {
           RenderWidgetDecorators(
             mix: mixData,
             orderOfDecorators: const [
-              ClipDecorator,
+              ClipOvalDecorator,
               AspectRatioDecorator,
               ScaleDecorator,
               OpacityDecorator,
@@ -150,7 +150,7 @@ void main() {
         await tester.pumpMaterialApp(
           RenderWidgetDecorators(
             mix: mixData,
-            orderOfDecorators: const [ClipDecorator, AspectRatioDecorator],
+            orderOfDecorators: const [ClipOvalDecorator, AspectRatioDecorator],
             child: const Text('child'),
           ),
         );
