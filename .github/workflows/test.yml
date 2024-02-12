@@ -64,9 +64,10 @@ jobs:
 
       - run: flutter test
 
-  analyze_changes:
+  
+    analyze_changes:
       runs-on: ubuntu-latest
-      name: Analyze Changes
+      name: Analyze Breaking Changes
       needs: test
       steps:
         - name: Checkout mix repo
@@ -92,23 +93,17 @@ jobs:
             dart pub add 'mix:{"git":{"url":"https://github.com/conceptadev/mix","ref": ${{ github.head_ref }}}}'
         
         - name: Verify if there are any undefined symbols
-          if: ${{ github.event_name != 'pull_request_target' || !contains(github.event.pull_request.labels.*.name, 'Behavior Change') }}
+          id: undefined_symbols
           run: |
             cd remix
             if flutter analyze lib | grep -q 'undefined'; then
               echo "A file contains undefined symbols. Please add a deprecated annotation before you remove it."
               exit 1
             fi
-          id: undefined_symbols
 
-        - name: Run flutter tests for behavior changes
-          if: ${{ github.event_name == 'pull_request_target' && contains(github.event.pull_request.labels.*.name, 'New Deprecation') }}
-          run: cd remix && flutter test
-          id: remix_test
-
-        - name: Add Label to Issue and Comment for Breaking Changes
-          if: ${{ failure() && steps.undefined_symbols.outcome == 'failure' }}
+        - name: Add Label to Issue
           uses: actions/github-script@v7
+          if: ${{ failure() && steps.undefined_symbols.conclusion == 'failure' }}
           with:
             script: |
               github.rest.issues.addLabels({
@@ -124,9 +119,12 @@ jobs:
                 body: 'Hello 😊, we have noticed a breaking change in our API. Please add the deprecated annotation before you remove it.'
               })
 
-        - name: Add Label to Issue and Comment for Behavior Changes
-          if: ${{ failure() && steps.remix_test.outcome == 'failure' }}
+        - run: cd remix && flutter test
+          id: remix_test
+
+        - name: Add Label to Issue and Comment
           uses: actions/github-script@v7
+          if: ${{ failure() && steps.remix_test.conclusion == 'failure' }}
           with:
             script: |
               github.rest.issues.addLabels({
@@ -139,5 +137,5 @@ jobs:
                 issue_number: context.issue.number,
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                body: "We have noticed a change in Mix's behavior. Are you sure about this?"
+                body: "We have noticed a change in Mix's behavior. Are you sure about this"
               })
