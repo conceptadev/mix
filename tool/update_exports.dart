@@ -1,11 +1,14 @@
 import 'dart:developer';
 import 'dart:io';
-
 import 'package:path/path.dart' as p;
+
+String _join(String path1, String path2) {
+  return path1 + Platform.pathSeparator + path2;
+}
 
 void main() {
   final libDirectory = Directory('lib');
-  final exportFilePath = p.join('lib', 'mix.dart');
+  final exportFilePath = _join('lib', 'mix.dart');
 
   if (!libDirectory.existsSync()) {
     log('The lib directory was not found.');
@@ -39,7 +42,7 @@ void main() {
     // Get the relative path using the path package
     final relativePath = p.relative(entity.path, from: libDirectory.path);
 
-    if (relativePath.startsWith(p.join('src', 'helpers'))) {
+    if (relativePath.startsWith(_join('src', 'helpers'))) {
       continue;
     }
 

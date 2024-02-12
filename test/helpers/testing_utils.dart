@@ -2,14 +2,21 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:meta/meta.dart';
 import 'package:mix/mix.dart';
 import 'package:mix/src/helpers/lerp_helpers.dart';
-import 'package:mockito/mockito.dart';
 
 export 'package:mix/src/core/extensions/values_ext.dart';
 
-class MockBuildContext extends Mock implements BuildContext {}
+class MockBuildContext extends BuildContext {
+  @override
+  dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
+
+  @override
+  T? dependOnInheritedWidgetOfExactType<T extends InheritedWidget>(
+      {Object? aspect}) {
+    return null;
+  }
+}
 
 MixData MockMixData(Style style) {
   return MixData.create(MockBuildContext(), style);
@@ -23,6 +30,7 @@ MediaQuery createMediaQuery(Size size) {
     child: MixTheme(
       data: MixThemeData(),
       child: MaterialApp(
+        useInheritedMediaQuery: true,
         home: Scaffold(
           body: Builder(
             builder: (BuildContext context) {
@@ -197,37 +205,6 @@ class MockInvalidAttribute extends Attribute {
 }
 
 const mockVariant = Variant('mock-variant');
-
-@isTestGroup
-void testScalarAttribute<T extends ScalarAttribute<T, V>, V>(
-  String groupName,
-  T Function(V value) builder,
-  List<V> values,
-) {
-  group(groupName, () {
-    for (var value1 in values) {
-      for (var value2 in values.where((v) => v != value1)) {
-        test('resolve $value1', () {
-          final attr = builder(value1);
-
-          expect(attr.value, equals(value1));
-        });
-
-        test('check equality between $value1 and $value2', () {
-          final attr1 = builder(value1);
-          final attr2 = builder(value2);
-          expect(attr1, isNot(equals(attr2)));
-        });
-
-        test('check self-equality for $value1', () {
-          final attr1 = builder(value1);
-          final attr2 = builder(value1);
-          expect(attr1, equals(attr2));
-        });
-      }
-    }
-  });
-}
 
 class UtilityTestAttribute<T>
     extends ScalarAttribute<UtilityTestAttribute<T>, T> {

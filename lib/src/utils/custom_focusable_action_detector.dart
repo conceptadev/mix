@@ -189,7 +189,7 @@ class _CustomFocusableActionDetectorState
     }
 
     bool canRequestFocus(CustomFocusableActionDetector target) {
-      final NavigationMode mode = MediaQuery.maybeNavigationModeOf(context) ??
+      final NavigationMode mode = MediaQuery.maybeOf(context)?.navigationMode ??
           NavigationMode.traditional;
       switch (mode) {
         case NavigationMode.traditional:
@@ -242,8 +242,8 @@ class _CustomFocusableActionDetectorState
   bool _hovering = false;
   bool _focused = false;
   bool get _canRequestFocus {
-    final NavigationMode mode =
-        MediaQuery.maybeNavigationModeOf(context) ?? NavigationMode.traditional;
+    final NavigationMode mode = MediaQuery.maybeOf(context)?.navigationMode ??
+        NavigationMode.traditional;
     switch (mode) {
       case NavigationMode.traditional:
         return widget.enabled;
