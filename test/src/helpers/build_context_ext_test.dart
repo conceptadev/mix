@@ -45,7 +45,7 @@ import 'package:mix/src/helpers/build_context_ext.dart';
 
 void main() {
   testWidgets('Mock BuildContext extension methods', (tester) async {
-    tester.view.physicalSize = const Size(400.0, 600.0);
+    tester.binding.window.physicalSizeTestValue = const Size(400.0, 600.0);
     final theme = ThemeData.light(useMaterial3: true);
     await tester.pumpWidget(
       MaterialApp(

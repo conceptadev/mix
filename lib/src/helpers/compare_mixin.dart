@@ -159,12 +159,21 @@ mixin Comparable {
 
         if (unit1 is Iterable || unit1 is Map) {
           if (!_equality.equals(unit1, unit2)) {
-            diff.add(props[i].toString());
+            final value = props[i]?.toString();
+            if (value != null) {
+              diff.add(value);
+            }
           }
         } else if (unit1?.runtimeType != unit2?.runtimeType) {
-          diff.add(props[i].toString());
+          final value = props[i]?.toString();
+          if (value != null) {
+            diff.add(value);
+          }
         } else if (unit1 != unit2) {
-          diff.add(props[i].toString());
+          final value = props[i]?.toString();
+          if (value != null) {
+            diff.add(value);
+          }
         }
       }
     } else {

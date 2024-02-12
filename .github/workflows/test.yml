@@ -42,12 +42,30 @@ jobs:
           fatal_warnings: true
         
       - run: flutter test
-        
+  test_min_sdk:
+    needs: test
+    runs-on: ubuntu-latest
+    name: Test Min SDK
+    steps:
+      - name: Checkout mix repo
+        uses: actions/checkout@v2
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.7.3"
+
+      - run: flutter pub get
+
+      - uses: invertase/github-action-dart-analyzer@v1
+        with:
+          fatal-infos: false
+
+      - run: flutter test
 
   analyze_breaking_changes:
     runs-on: ubuntu-latest
     name: Analyze Breaking Changes
-
     needs: test
     steps:
       - name: Checkout mix repo
