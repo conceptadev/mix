@@ -30,7 +30,7 @@ typedef Mix = Style;
 
 extension DeprecatedMixExtension<T extends Attribute> on Style {
   @Deprecated('Use applyVariant(value) instead')
-  Style withVariants(List<Variant> variants) => withManyVariants(variants);
+  Mix withVariants(List<Variant> variants) => withManyVariants(variants);
 
   @Deprecated('Use applyVariants(value) instead')
   Style withManyVariants(Iterable<Variant> variants) => applyVariants(variants);

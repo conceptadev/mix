@@ -23,11 +23,6 @@ class MixProvider extends InheritedWidget {
     return mixData!;
   }
 
-  final MixData? data;
-
-  @override
-  bool updateShouldNotify(MixProvider oldWidget) => data != oldWidget.data;
-
   /// Builds a [MixProvider] widget.
   ///
   /// The [context] and [style] are used to create a [MixData] instance.
@@ -40,7 +35,7 @@ class MixProvider extends InheritedWidget {
   /// Returns a [MixProvider] widget with the given [MixData] and child widget built by the [builder].
   /// If [inherit] is true and a [MixProvider] widget is found up the tree, the returned [MixProvider] widget's
   /// [MixData] will be a merge of the ancestor's and the newly created one.
-  static MixProvider build(
+  static MixProvider builda(
     BuildContext context, {
     required Style style,
     required MixBuilder builder,
@@ -52,4 +47,9 @@ class MixProvider extends InheritedWidget {
     // (if any) is merged with the provided data.
     return MixProvider(data: mixData, child: builder(mixData));
   }
+
+  final MixData? data;
+
+  @override
+  bool updateShouldNotify(MixProvider oldWidget) => data != oldWidget.data;
 }
