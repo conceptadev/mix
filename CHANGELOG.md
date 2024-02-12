@@ -1,4 +1,14 @@
-# 1.0.0-beta.6
+
+## 1.0.0-beta.7
+
+* Added color directives to single colors by @leoafarias
+* Improvements to Pressable by @leoafarias
+* Add IntrinsicHeight and IntrinsicWidth decorators by @tilucasoli
+* Implement support for decorations in AnimatedBox, AnimatedIcon and StyledStack by @tilucasoli
+* Added more widget decorators by @leoafarias
+* Sets minimum compat version by @leoafarias
+
+## 1.0.0-beta.6
 
 * Add new job to pipeline by @tilucasoli
 * add new attribute to foregroundDecoration by @tilucasoli
@@ -7,7 +17,7 @@
 * Implement `Style.icon` by @tilucasoli
 * Fix issue where the 'gap' attribute does not work as expected when there is a Flexible Widget by @tilucasoli
 
-# 1.0.0-beta.5
+## 1.0.0-beta.5
 
 * Better support for ShapeBorder by @leoafarias
 * Added backgroundBlendMode to decoration by @leoafarias
@@ -19,7 +29,7 @@
 * Create StyledImage by @tilucasoli
 * Dto merge issues by @leoafarias
 
-# 1.0.0-beta.4
+## 1.0.0-beta.4
 
 * Improvements on border, and borderRadius utitlies.
 * Fixes issue [#179](https://github.com/conceptadev/mix/issues/179)
