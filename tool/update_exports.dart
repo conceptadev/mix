@@ -83,8 +83,8 @@ String getRelativePath(String filePath, String fromPath) {
   if (normalizedFilePath.startsWith(fromPathWithSeparator)) {
     // +1 to remove leading path separator
     return normalizedFilePath.substring(fromPathWithSeparator.length);
-  } else {
-    // The filePath does not start with fromPath, handle accordingly
-    return filePath; // Or handle as error/exception based on requirements
   }
+
+  // The filePath does not start with fromPath, handle accordingly
+  return filePath; // Or handle as error/exception based on requirements
 }
