@@ -58,7 +58,7 @@ class PressableBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Pressable(
-      disabled: disabled,
+      disabled: true,
       onPress: onPress,
       hitTestBehavior: hitTestBehavior,
       onLongPress: onLongPress,

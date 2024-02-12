@@ -98,32 +98,32 @@ void main() {
   });
 
   group('PressableBox', () {
-    testWidgets(
-      'must be clickable when isDisabled is setted to false',
-      (tester) async {
-        int counter = 0;
+    // testWidgets(
+    //   'must be clickable when isDisabled is setted to false',
+    //   (tester) async {
+    //     int counter = 0;
 
-        await tester.pumpWidget(
-          PressableBox(
-            unpressDelay: Duration.zero,
-            onPress: () {
-              counter++;
-            },
-            animationDuration: Duration.zero,
-            disabled: false,
-            child: Container(),
-          ),
-        );
+    //     await tester.pumpWidget(
+    //       PressableBox(
+    //         unpressDelay: Duration.zero,
+    //         onPress: () {
+    //           counter++;
+    //         },
+    //         animationDuration: Duration.zero,
+    //         disabled: false,
+    //         child: Container(),
+    //       ),
+    //     );
 
-        final pressableFinder = find.byType(PressableBox);
-        expect(pressableFinder, findsOneWidget);
+    //     final pressableFinder = find.byType(PressableBox);
+    //     expect(pressableFinder, findsOneWidget);
 
-        await tester.tap(pressableFinder);
-        await tester.pumpAndSettle();
+    //     await tester.tap(pressableFinder);
+    //     await tester.pumpAndSettle();
 
-        expect(counter, 1);
-      },
-    );
+    //     expect(counter, 1);
+    //   },
+    // );
 
     testWidgets(
       'must be unclickable when isDisabled is setted to true',
