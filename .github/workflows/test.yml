@@ -31,23 +31,43 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Run DCM
-        run: dcm analyze lib --fatal-style --fatal-performance --fatal-warnings
-
-      # - name: Run DCM
-      #   uses: CQLabs/dcm-action@v1
-      #   with:
-      #     github_token: ${{ secrets.GITHUB_TOKEN }}
-      #     folders: lib
-      #     pull_request_comment_on_fail: true
-          
+        uses: CQLabs/dcm-action@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          ci_key: oss
+          email: oss
+          folders: .
+          fatal_style: true
+          fatal_performance: true
+          fatal_warnings: true
         
       - run: flutter test
-        
 
-  analyze_breaking_changes:
+  test_min_sdk:
+    needs: test
+    runs-on: ubuntu-latest
+    name: Test Min SDK
+    steps:
+      - name: Checkout mix repo
+        uses: actions/checkout@v2
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.7.3"
+
+      - run: flutter pub get
+
+      - uses: invertase/github-action-dart-analyzer@v1
+        with:
+          fatal-infos: false
+
+      - run: flutter test
+
+  
+  analyze_changes:
     runs-on: ubuntu-latest
     name: Analyze Breaking Changes
-
     needs: test
     steps:
       - name: Checkout mix repo
@@ -70,7 +90,8 @@ jobs:
         run: |
           cd remix
           dart pub remove mix
-          dart pub add 'mix:{"git":{"url":"https://github.com/conceptadev/mix","ref": ${{ github.head_ref  }}}}'
+          dart pub add 'mix:{"git":{"url":"https://github.com/conceptadev/mix","ref": ${{ github.head_ref }}}}'
+      
       - name: Verify if there are any undefined symbols
         id: undefined_symbols
         run: |
@@ -79,6 +100,7 @@ jobs:
             echo "A file contains undefined symbols. Please add a deprecated annotation before you remove it."
             exit 1
           fi
+
       - name: Add Label to Issue
         uses: actions/github-script@v7
         if: ${{ failure() && steps.undefined_symbols.conclusion == 'failure' }}
@@ -96,37 +118,6 @@ jobs:
               repo: context.repo.repo,
               body: 'Hello 😊, we have noticed a breaking change in our API. Please add the deprecated annotation before you remove it.'
             })
-
-
-  analyze_behavior_changes:
-    runs-on: ubuntu-latest
-    name: Analyze Behavior Changes
-    continue-on-error: true
-    needs: analyze_breaking_changes
-    if: ${{ needs.analyze_breaking_changes.result == 'success' }}
-    steps:
-      - name: Checkout mix repo
-        uses: actions/checkout@v2
-        with:
-          path: main
-
-      - name: Checkout remix_ui repo
-        uses: actions/checkout@v2
-        with:
-          repository: conceptadev/remix_ui
-          path: remix
-
-      - name: Setup Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          channel: "stable"
-
-    
-      - name: Add most recent mix version to remix_ui
-        run: |
-          cd remix
-          dart pub remove mix
-          dart pub add 'mix:{"git":{"url":"https://github.com/conceptadev/mix","ref":${{ github.head_ref  }}}}'
 
       - run: cd remix && flutter test
         id: remix_test

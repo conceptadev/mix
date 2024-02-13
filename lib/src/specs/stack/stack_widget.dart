@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import '../../core/styled_widget.dart';
 import '../../factory/mix_provider.dart';
 import '../../factory/mix_provider_data.dart';
+import '../../utils/helper_util.dart';
 import '../container/box_widget.dart';
 import 'stack_spec.dart';
 
@@ -61,12 +62,15 @@ class MixedStack extends StatelessWidget {
     final spec = StackSpec.of(mix);
 
     // The Stack widget is used here, applying the resolved styles from StackSpec.
-    return Stack(
-      alignment: spec.alignment ?? _defaultStack.alignment,
-      textDirection: spec.textDirection,
-      fit: spec.fit ?? _defaultStack.fit,
-      clipBehavior: spec.clipBehavior ?? _defaultStack.clipBehavior,
-      children: children ?? const [],
+    return shouldApplyDecorators(
+      mix: mix,
+      child: Stack(
+        alignment: spec.alignment ?? _defaultStack.alignment,
+        textDirection: spec.textDirection,
+        fit: spec.fit ?? _defaultStack.fit,
+        clipBehavior: spec.clipBehavior ?? _defaultStack.clipBehavior,
+        children: children ?? const [],
+      ),
     );
   }
 }
@@ -104,6 +108,4 @@ class ZBox extends StyledWidget {
 
 // Default Stack used as a fallback
 // for styling properties in MixedStack.
-// ignore: prefer_const_constructors
-// TODO: Need to turn this into const for Flutter SDK support later
-const _defaultStack = Stack();
+final _defaultStack = Stack();

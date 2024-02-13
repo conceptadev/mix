@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
-import 'package:mix/src/attributes/border/shape_border_dto.dart';
-import 'package:mix/src/attributes/border/shape_border_util.dart';
 
 import '../../../helpers/testing_utils.dart';
 

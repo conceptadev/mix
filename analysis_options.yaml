@@ -5,7 +5,6 @@ analyzer:
   exclude: 
     - "**/*.g.dart"
     - "**/*.freezed.dart"
-    - "tool/**"
 # For lint rules and documentation, see http://dart-lang.github.io/linter/lints.
 # Uncomment to specify additional rules.
 linter:
@@ -18,7 +17,9 @@ dart_code_metrics:
   extends:
     - package:dart_code_metrics_presets/recommended.yaml
     - package:dart_code_metrics_presets/metrics_recommended.yaml
-  metrics-excludes:
+  metrics-exclude:
+    - test/**
+  rules-exclude:
     - test/**
   rules:
     # avoid-collection-mutating-methods: true

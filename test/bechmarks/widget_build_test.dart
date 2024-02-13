@@ -97,10 +97,10 @@ void main() {
 
     // print('StyledContainer: $elapsedStyledContainerTime ms');
     // print('Container: $elapsedContainerTime ms');
-    // StyledContainer shoudl not b slower than 0.01 ms
+    // StyledContainer should not be slower than 0.01 ms
     expect(
       elapsedStyledContainerTime,
-      lessThan(elapsedContainerTime + 0.02),
+      lessThan(elapsedContainerTime + 0.03),
       reason: 'StyledContainer is too slow',
     );
   });

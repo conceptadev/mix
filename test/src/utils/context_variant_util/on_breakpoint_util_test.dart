@@ -21,6 +21,7 @@ void main() {
     });
 
     testWidgets('small screen context variant', (tester) async {
+      tester.binding.window.physicalSizeTestValue = smallScreenWidth;
       await tester.pumpWidget(createMediaQuery(smallScreenWidth));
       var context = tester.element(find.byType(Container));
 
@@ -28,9 +29,12 @@ void main() {
       expect(onSmall.when(context), true, reason: 'small');
       expect(onMedium.when(context), false, reason: 'medium');
       expect(onLarge.when(context), false, reason: 'large');
+
+      addTearDown(tester.binding.window.clearPhysicalSizeTestValue);
     });
 
     testWidgets('medium screen context variant', (tester) async {
+      tester.binding.window.physicalSizeTestValue = mediumScreenWidth;
       await tester.pumpWidget(createMediaQuery(mediumScreenWidth));
       var context = tester.element(find.byType(Container));
 
@@ -41,6 +45,7 @@ void main() {
     });
 
     testWidgets('large screen context variant', (tester) async {
+      tester.binding.window.physicalSizeTestValue = largeScreenWidth;
       await tester.pumpWidget(createMediaQuery(largeScreenWidth));
       var context = tester.element(find.byType(Container));
 
@@ -48,6 +53,8 @@ void main() {
       expect(onSmall.when(context), false, reason: 'small');
       expect(onMedium.when(context), false, reason: 'medium');
       expect(onLarge.when(context), true, reason: 'large');
+
+      addTearDown(tester.binding.window.clearPhysicalSizeTestValue);
     });
 
     test('have correct variant names', () {
