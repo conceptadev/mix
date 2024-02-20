@@ -10,7 +10,7 @@ void main() {
       focused: true,
       disabled: false,
       state: PressableState.pressed,
-      cursorPosition: CursorPosition(
+      mouseEvent: OnMouseHover(
         alignment: Alignment.center,
         offset: Offset.zero,
       ),
@@ -37,7 +37,7 @@ void main() {
           focused: false,
           disabled: true,
           state: PressableState.none,
-          cursorPosition: CursorPosition(
+          mouseEvent: OnMouseHover(
             alignment: Alignment.center,
             offset: Offset.zero,
           ),

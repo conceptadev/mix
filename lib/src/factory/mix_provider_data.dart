@@ -106,9 +106,7 @@ List<StyleAttribute> applyContextToVisualAttributes(
   BuildContext context,
   Style mix,
 ) {
-  final builtAttributes = mix.styles.values.map((attr) {
-    return attr is StyleAttributeBuilder ? attr.builder(context) : attr;
-  });
+  final builtAttributes = _applyStyleBuilder(context, mix.styles.values);
 
   Style style = Style.create(builtAttributes);
 
@@ -168,4 +166,18 @@ M? _mergeAttributes<M extends StyleAttribute>(Iterable<M> mergeables) {
   return mergeables.reduce((a, b) {
     return a is Mergeable ? (a as Mergeable).merge(b) : b;
   });
+}
+
+Iterable<Attribute> _applyStyleBuilder(
+  BuildContext context,
+  List<Attribute> attributes,
+) {
+  return attributes.map((attr) {
+    if (attr is StyleAttributeBuilder) {
+      return attr.builder(context);
+    }
+
+    return attr;
+    // ignore: avoid-inferrable-type-arguments
+  }).whereType<Attribute>();
 }

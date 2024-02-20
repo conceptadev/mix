@@ -5,53 +5,49 @@ import '../../helpers/compare_mixin.dart';
 enum PressableDataAspect { focused, disabled, state, cursorPosition }
 
 @immutable
-class CursorPosition {
+class OnMouseHover {
   final Alignment alignment;
   final Offset offset;
 
-  const CursorPosition({required this.alignment, required this.offset});
+  const OnMouseHover({required this.alignment, required this.offset});
 }
 
 @immutable
 class PressableStateData with Comparable {
   final bool focused;
-
   final bool disabled;
   final PressableState state;
-  final CursorPosition cursorPosition;
+  final OnMouseHover? mouseEvent;
 
   const PressableStateData({
     required this.focused,
     required this.disabled,
     required this.state,
-    required this.cursorPosition,
+    required this.mouseEvent,
   });
 
   const PressableStateData.none()
       : focused = false,
         disabled = true,
-        cursorPosition = const CursorPosition(
-          alignment: Alignment.center,
-          offset: Offset.zero,
-        ),
+        mouseEvent = null,
         state = PressableState.none;
 
   PressableStateData copyWith({
     bool? focused,
     bool? disabled,
     PressableState? state,
-    CursorPosition? cursorPosition,
+    OnMouseHover? mouseEvent,
   }) {
     return PressableStateData(
       focused: focused ?? this.focused,
       disabled: disabled ?? this.disabled,
       state: state ?? this.state,
-      cursorPosition: cursorPosition ?? this.cursorPosition,
+      mouseEvent: mouseEvent ?? this.mouseEvent,
     );
   }
 
   @override
-  get props => [focused, disabled, state, cursorPosition];
+  get props => [focused, disabled, state, mouseEvent];
 }
 
 enum PressableState {
@@ -89,9 +85,8 @@ class PressableDataNotifier extends InheritedModel<PressableDataAspect> {
     return of(context, aspect: PressableDataAspect.disabled).disabled;
   }
 
-  static CursorPosition cursorPositionOf(BuildContext context) {
-    return of(context, aspect: PressableDataAspect.cursorPosition)
-        .cursorPosition;
+  static OnMouseHover? mouseHoverOf(BuildContext context) {
+    return of(context, aspect: PressableDataAspect.cursorPosition).mouseEvent;
   }
 
   static bool isFocusedOf(BuildContext context) {
@@ -128,7 +123,7 @@ class PressableDataNotifier extends InheritedModel<PressableDataAspect> {
       return true;
     }
 
-    if (oldWidget.data.cursorPosition != data.cursorPosition &&
+    if (oldWidget.data.mouseEvent != data.mouseEvent &&
         dependencies.contains(PressableDataAspect.cursorPosition)) {
       return true;
     }

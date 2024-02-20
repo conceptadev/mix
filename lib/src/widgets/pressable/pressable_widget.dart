@@ -325,10 +325,12 @@ abstract class _PressableBuilderWidgetState<T extends _PressableBuilderWidget>
           focused: _isFocused,
           disabled: isDisabled,
           state: _currentState,
-          cursorPosition: CursorPosition(
-            alignment: _cursorAlignment,
-            offset: _localCursorPosition,
-          ),
+          mouseEvent: _isHovered
+              ? OnMouseHover(
+                  alignment: _cursorAlignment,
+                  offset: _localCursorPosition,
+                )
+              : null,
         ),
         child: widget.child,
       ),

@@ -23,7 +23,7 @@ final onDisabled = _onDisabled(true);
 /// Applies styles when the widget is enabled.
 final onEnabled = _onDisabled(false);
 
-const onCursorPosition = CursorPositionBuilder.new;
+const onMouseHover = OnMouseHoverBuilder.new;
 
 /// Applies styles when the widget has focus.dar
 final onFocused = ContextVariant(
@@ -66,24 +66,22 @@ abstract class StyleAttributeBuilder<Self extends StyleAttributeBuilder<Self>>
     extends StyleAttribute {
   const StyleAttributeBuilder();
 
-  Attribute builder(BuildContext context);
+  Attribute? builder(BuildContext context);
 
   @override
   Type get type => Self;
 }
 
 @immutable
-class CursorPositionBuilder
-    extends StyleAttributeBuilder<CursorPositionBuilder> {
-  final Attribute Function(CursorPosition cursorPosition, BuildContext context)
-      fn;
-  const CursorPositionBuilder(this.fn);
+class OnMouseHoverBuilder extends StyleAttributeBuilder<OnMouseHoverBuilder> {
+  final Attribute Function(OnMouseHover cursorPosition) fn;
+  const OnMouseHoverBuilder(this.fn);
 
   @override
-  Attribute builder(BuildContext context) {
-    final position = PressableDataNotifier.cursorPositionOf(context);
+  Attribute? builder(BuildContext context) {
+    final position = PressableDataNotifier.mouseHoverOf(context);
 
-    return fn(position, context);
+    return position == null ? null : fn(position);
   }
 
   @override
