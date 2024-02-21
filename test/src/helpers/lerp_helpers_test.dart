@@ -14,7 +14,7 @@ void main() {
     String from = 'Hello';
     String to = 'World';
     double t = 0.8;
-    String result = lerpSnap(from, to, t);
+    String? result = lerpSnap(from, to, t);
     expect(result, 'World');
   });
 }
