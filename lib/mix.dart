@@ -57,7 +57,6 @@ export 'src/decorators/sized_box_widget_decorator.dart';
 export 'src/decorators/transform_widget_decorator.dart';
 export 'src/decorators/visibility_widget_decorator.dart';
 export 'src/decorators/widget_decorator_widget.dart';
-export 'src/decorators/widget_decorators.dart';
 export 'src/decorators/widget_decorators_util.dart';
 export 'src/deprecations.dart';
 export 'src/factory/mix_provider.dart';
