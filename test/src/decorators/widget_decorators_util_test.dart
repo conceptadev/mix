@@ -11,7 +11,7 @@ void main() {
     const flexible = FlexibleDecoratorUtility(UtilityTestAttribute.new);
 
     const opacity = OpacityUtility(UtilityTestAttribute.new);
-    const rotate = RotateUtility(UtilityTestAttribute.new);
+    const rotate = RotatedBoxWidgetUtility(UtilityTestAttribute.new);
     const scale = ScaleUtility(UtilityTestAttribute.new);
     const clipPath = ClipPathUtility(UtilityTestAttribute.new);
     const clipRRect = ClipRRectUtility(UtilityTestAttribute.new);

@@ -6,7 +6,7 @@ import 'flexible_widget_decorator.dart';
 import 'fractionally_sized_box_widget_decorator.dart';
 import 'intrinsic_widget_decorator.dart';
 import 'opacity_widget_decorator.dart';
-import 'rotate_widget_decorator.dart';
+import 'rotated_box_widget_decorator.dart';
 import 'scale_widget_decorator.dart';
 import 'sized_box_widget_decorator.dart';
 import 'transform_widget_decorator.dart';
@@ -18,7 +18,7 @@ const intrinsicWidth = IntrinsicWidthWidgetUtility(selfBuilder);
 const intrinsicHeight = IntrinsicHeightWidgetUtility(selfBuilder);
 const scale = ScaleUtility(selfBuilder);
 const opacity = OpacityUtility(selfBuilder);
-const rotate = RotateUtility(selfBuilder);
+const rotate = RotatedBoxWidgetUtility(selfBuilder);
 
 const clipPath = ClipPathUtility(selfBuilder);
 const clipRRect = ClipRRectUtility(selfBuilder);

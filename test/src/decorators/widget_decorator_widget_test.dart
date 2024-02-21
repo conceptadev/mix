@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
-import 'package:mix/src/decorators/aspect_ratio_widget_decorator.dart';
-import 'package:mix/src/decorators/clip_widget_decorator.dart';
-import 'package:mix/src/decorators/opacity_widget_decorator.dart';
-import 'package:mix/src/decorators/scale_widget_decorator.dart';
-import 'package:mix/src/decorators/visibility_widget_decorator.dart';
 
 import '../../helpers/testing_utils.dart';
 

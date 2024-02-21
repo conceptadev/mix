@@ -34,12 +34,12 @@ class TransformWidgetSpec extends DecoratorSpec<TransformWidgetSpec> {
 
 class TransformWidgetDecorator
     extends WidgetDecorator<TransformWidgetDecorator, TransformWidgetSpec> {
-  final Matrix4 transform;
-  const TransformWidgetDecorator(this.transform);
+  final Matrix4? transform;
+  const TransformWidgetDecorator({this.transform});
 
   @override
   TransformWidgetDecorator merge(TransformWidgetDecorator? other) {
-    return TransformWidgetDecorator(other?.transform ?? transform);
+    return TransformWidgetDecorator(transform: other?.transform ?? transform);
   }
 
   @override
@@ -54,5 +54,5 @@ class TransformWidgetDecorator
 class TransformUtility<T extends StyleAttribute>
     extends MixUtility<T, TransformWidgetDecorator> {
   const TransformUtility(super.builder);
-  T call(Matrix4 value) => builder(TransformWidgetDecorator(value));
+  T call(Matrix4 value) => builder(TransformWidgetDecorator(transform: value));
 }
