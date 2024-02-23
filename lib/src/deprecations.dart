@@ -428,9 +428,6 @@ final roundedBE = borderRadiusDirectional.bottomEnd;
 @Deprecated('Use stack.alignment instead')
 final zAlignment = stack.alignment;
 
-@Deprecated('Use box.align instead')
-final align = box.alignment;
-
 @Deprecated('Use stack.fit instead')
 final zFit = stack.fit;
 
