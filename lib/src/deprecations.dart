@@ -110,8 +110,20 @@ final mainAxisSize = flex.mainAxisSize;
 @Deprecated('use flex.gap instead')
 final gap = flex.gap;
 
+@Deprecated('use flexible.expanded instead')
+final expanded = flexible.expanded;
+
 @Deprecated('use borderRadius instead')
 final rounded = borderRadius;
+
+@Deprecated('use border.width instead')
+final borderWidth = border.width;
+
+@Deprecated('use border.color instead')
+final borderColor = border.color;
+
+//TODO: O que faremos com animated? Esperamos a reunião com a XP para decidir?
+//TODO: Verificar se já é possivel fazer a substituição de animated por pressableBox
 
 // height
 @Deprecated('use height instead')
@@ -197,6 +209,8 @@ final textShadow = text.style.shadows;
 final overflow = text.overflow;
 @Deprecated('Use text.style.bold instead')
 final bold = text.style.bold;
+@Deprecated('Use text.overflow instead')
+final textOverflow = text.overflow;
 
 @Deprecated('Use icon.size instead')
 final iconSize = icon.size;
@@ -223,6 +237,9 @@ final px = padding.horizontal;
 final py = padding.vertical;
 @Deprecated('Use padding.as instead')
 final pi = padding.as;
+
+@Deprecated('Use padding.as instead')
+final paddingInsets = padding.as;
 
 @Deprecated('Use margin instead')
 final m = margin;
@@ -302,7 +319,6 @@ final paddingOnly = padding.only;
 final paddingDirectionalOnly = padding.only;
 @Deprecated('use padding.all instead')
 final paddingAll = padding.all;
-
 @Deprecated('Use border.top instead')
 final borderTop = border.top;
 @Deprecated('Use border.bottom instead')
@@ -412,6 +428,9 @@ final roundedBE = borderRadiusDirectional.bottomEnd;
 @Deprecated('Use stack.alignment instead')
 final zAlignment = stack.alignment;
 
+@Deprecated('Use box.align instead')
+final align = box.alignment;
+
 @Deprecated('Use stack.fit instead')
 final zFit = stack.fit;
 
@@ -452,7 +471,14 @@ class IconMix extends StyledIcon {
 }
 
 @Deprecated('Use text.style instead')
-final textStyle = text.style;
+final textStyle = text.style.as;
+
+@Deprecated('Use text.maxLines instead')
+final maxLines = text.maxLines;
+
+// TODO Será que não rolaria ser text.align?
+@Deprecated('Use text.textAlign instead')
+final textAlign = text.textAlign;
 
 @Deprecated('Use text.style.shadow instead')
 final shadow = text.style.shadow;
