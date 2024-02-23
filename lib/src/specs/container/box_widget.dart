@@ -221,6 +221,7 @@ class AnimatedMixedBox extends StatelessWidget {
     // widget to animate changes smoothly over the specified duration and curve.
     return shouldApplyDecorators(
       mix: mix,
+      animated: true,
       child: AnimatedContainer(
         alignment: spec.alignment,
         padding: spec.padding,

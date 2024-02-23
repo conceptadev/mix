@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 
 import '../core/decorator.dart';
 
-class ImplicitlyAnimatedWidgetDecorator<T extends DecoratorSpec<T>>
+class ImplicitlyAnimatedWidgetDecorator<T extends DecoratorSpec>
     extends ImplicitlyAnimatedWidget {
   const ImplicitlyAnimatedWidgetDecorator({
-    Key? key,
+    super.key,
     required this.spec,
     required this.child,
-    required Duration duration,
-    Curve curve = Curves.linear,
-  }) : super(key: key, duration: duration, curve: curve);
+    required super.duration,
+    super.curve,
+  });
 
   final T spec;
   final Widget child;
@@ -21,7 +21,7 @@ class ImplicitlyAnimatedWidgetDecorator<T extends DecoratorSpec<T>>
       _ImplicitlyAnimatedWidgetDecoratorState();
 }
 
-class _ImplicitlyAnimatedWidgetDecoratorState<T extends DecoratorSpec<T>>
+class _ImplicitlyAnimatedWidgetDecoratorState<T extends DecoratorSpec>
     extends AnimatedWidgetBaseState<ImplicitlyAnimatedWidgetDecorator<T>> {
   SpecTween<T>? _specTween;
 
@@ -44,7 +44,7 @@ class _ImplicitlyAnimatedWidgetDecoratorState<T extends DecoratorSpec<T>>
   }
 }
 
-class SpecTween<T extends DecoratorSpec<T>> extends Tween<T> {
+class SpecTween<T extends DecoratorSpec> extends Tween<T> {
   SpecTween({super.begin, super.end});
 
   @override

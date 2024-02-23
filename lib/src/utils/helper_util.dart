@@ -46,12 +46,23 @@ Widget shouldApplyDecorators({
   required MixData mix,
   required Widget child,
   List<Type> orderOfDecorators = const [],
+  bool animated = false,
 }) {
-  return mix.contains<WidgetDecorator>()
-      ? RenderWidgetDecorators(
-          mix: mix,
-          orderOfDecorators: orderOfDecorators,
-          child: child,
-        )
-      : child;
+  final hasDecorators = mix.contains<WidgetDecorator>();
+
+  if (!hasDecorators) return child;
+
+  if (animated) {
+    return AnimatedWidgetDecorators(
+      mix: mix,
+      orderOfDecorators: orderOfDecorators,
+      child: child,
+    );
+  }
+
+  return RenderWidgetDecorators(
+    mix: mix,
+    orderOfDecorators: orderOfDecorators,
+    child: child,
+  );
 }

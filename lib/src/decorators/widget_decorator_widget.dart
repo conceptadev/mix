@@ -7,6 +7,7 @@ import 'align_widget_decorator.dart';
 import 'aspect_ratio_widget_decorator.dart';
 import 'clip_widget_decorator.dart';
 import 'fractionally_sized_box_widget_decorator.dart';
+import 'implicitly_animated_decorator.dart';
 import 'intrinsic_widget_decorator.dart';
 import 'opacity_widget_decorator.dart';
 import 'scale_widget_decorator.dart';
@@ -87,26 +88,89 @@ class RenderWidgetDecorators extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget current = child;
-
     final decorators = mix.whereType<WidgetDecorator>();
 
-    if (decorators.isEmpty) return current;
+    return _decorateWidgetWithSpecs(child, decorators, orderOfDecorators, mix);
+  }
+}
 
-    final decoratorMap = AttributeMap<WidgetDecorator>(decorators).toMap();
+class AnimatedWidgetDecorators extends StatelessWidget {
+  const AnimatedWidgetDecorators({
+    required this.mix,
+    required this.child,
+    super.key,
+    this.orderOfDecorators = const [],
+    this.duration = const Duration(milliseconds: 300),
+    this.curve = Curves.linear,
+  });
 
-    final listOfDecorators = {
-      ...orderOfDecorators,
-      ..._defaultOrder,
-      ...decoratorMap.keys,
-    }.toList().reversed;
+  final MixData mix;
+  final Widget child;
+  final List<Type> orderOfDecorators;
+  final Duration duration;
+  final Curve curve;
 
-    for (final decoratorType in listOfDecorators) {
-      final decorator = decoratorMap.remove(decoratorType);
-      if (decorator == null) continue;
-      current = decorator.resolve(mix).build(current);
+  @override
+  Widget build(BuildContext context) {
+    final decorators = mix.whereType<WidgetDecorator>();
+
+    if (decorators.isEmpty) return child;
+
+    var current = child;
+
+    final specs = _resolveDecoratorSpecs(decorators, orderOfDecorators, mix);
+
+    for (final spec in specs) {
+      current = ImplicitlyAnimatedWidgetDecorator(
+        spec: spec,
+        duration: duration,
+        child: child,
+      );
     }
 
     return current;
   }
+}
+
+List<DecoratorSpec> _resolveDecoratorSpecs(
+  Iterable<WidgetDecorator> decorators,
+  List<Type> orderOfDecorators,
+  MixData mix,
+) {
+  final decoratorMap = AttributeMap<WidgetDecorator>(decorators).toMap();
+
+  final listOfDecorators = {
+    ...orderOfDecorators,
+    ..._defaultOrder,
+    ...decoratorMap.keys,
+  }.toList().reversed;
+
+  final specs = <DecoratorSpec>[];
+
+  for (final decoratorType in listOfDecorators) {
+    final decorator = decoratorMap.remove(decoratorType);
+    if (decorator == null) continue;
+    specs.add(decorator.resolve(mix));
+  }
+
+  return specs;
+}
+
+Widget _decorateWidgetWithSpecs(
+  Widget child,
+  Iterable<WidgetDecorator> decorators,
+  List<Type> orderOfDecorators,
+  MixData mix,
+) {
+  var current = child;
+
+  if (decorators.isEmpty) return child;
+
+  final specs = _resolveDecoratorSpecs(decorators, orderOfDecorators, mix);
+
+  for (final spec in specs) {
+    current = spec.build(current);
+  }
+
+  return current;
 }
