@@ -122,9 +122,6 @@ final borderWidth = border.width;
 @Deprecated('use border.color instead')
 final borderColor = border.color;
 
-//TODO: O que faremos com animated? Esperamos a reunião com a XP para decidir?
-//TODO: Verificar se já é possivel fazer a substituição de animated por pressableBox
-
 // height
 @Deprecated('use height instead')
 final h = height;
@@ -473,7 +470,6 @@ final textStyle = text.style.as;
 @Deprecated('Use text.maxLines instead')
 final maxLines = text.maxLines;
 
-// TODO Será que não rolaria ser text.align?
 @Deprecated('Use text.textAlign instead')
 final textAlign = text.textAlign;
 
