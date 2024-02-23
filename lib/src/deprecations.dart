@@ -20,6 +20,7 @@ import 'core/attribute.dart';
 import 'decorators/widget_decorators.dart';
 import 'decorators/widget_decorators_util.dart';
 import 'factory/style_mix.dart';
+import 'specs/image/image_util.dart';
 import 'widgets/pressable/pressable_util.dart';
 
 const kShortAliasDeprecation =
@@ -501,3 +502,93 @@ class ClipDecoratorUtility<T extends StyleAttribute>
     return ClipTriangleUtility(builder);
   }
 }
+
+@Deprecated('Use image.color instead')
+final imageColor = image.color;
+
+@Deprecated('Use image.blendMode instead')
+final imageColorBlendMode = image.blendMode;
+
+@Deprecated('Use image.fit instead')
+final imageFit = image.fit;
+
+@Deprecated('Use image.alignment instead')
+final imageAlignment = image.alignment;
+
+@Deprecated('Use image.repeat instead')
+final imageRepeat = image.repeat;
+
+@Deprecated('Use image.centerSlice instead')
+final imageCenterSlice = image.centerSlice;
+
+// show
+@Deprecated('Use visibility.on instead')
+final show = visibility.on;
+
+// hide
+@Deprecated('Use visibility.off instead')
+final hide = visibility.off;
+
+// TODO: Need to update these
+// // animated
+// @Deprecated('Use animated instead')
+// final animated = animation.animated;
+
+// // animationDuration
+// @Deprecated('Use animation.duration instead')
+// final animationDuration = animation.duration;
+
+// // animationCurve
+// @Deprecated('Use animation.curve instead')
+// final animationCurve = animation.curve;
+
+// textDirection
+@Deprecated('Use text.textDirection instead')
+final textDirection = text.textDirection;
+
+// textWidthBasis
+@Deprecated('Use text.widthBasis instead')
+final textWidthBasis = text.textWidthBasis;
+
+// softWrap
+@Deprecated('Use text.softWrap instead')
+final softWrap = text.softWrap;
+
+// textScaleFactor
+@Deprecated('Use text.scaleFactor instead')
+final textScaleFactor = text.textScaleFactor;
+
+// strutStyle
+@Deprecated('Use text.strutStyle instead')
+final strutStyle = text.strutStyle;
+
+// textBaseline
+@Deprecated('Use text.baseline instead')
+final textBaseline = text.style.textBaseline;
+
+// squared
+@Deprecated('Use borderRadius.circular instead')
+final squared = borderRadius.zero;
+
+// linearGradient
+@Deprecated('Use box.decoration.gradient.linear instead')
+final linearGradient = box.decoration.gradient.linear;
+
+// radialGradient
+@Deprecated('Use box.decoration.gradient.radial instead')
+final radialGradient = box.decoration.gradient.radial;
+
+// flexDirection
+@Deprecated('Use flexDirection instead')
+final flexDirection = flex.direction;
+
+// verticalDirection
+@Deprecated('Use verticalDirection instead')
+final verticalDirection = flex.verticalDirection;
+
+// @Deprecated('Use image.scale instead')
+// final imageScale = image.scale;
+
+// // inherit
+// @Deprecated('Use text.inherit instead')
+// final inherit = text.style.inherit;
