@@ -134,4 +134,30 @@ void main() {
       }
     },
   );
+
+  testWidgets(
+    'VBox should apply decorators only once',
+    (tester) async {
+      await tester.pumpMaterialApp(
+        HBox(
+          children: [
+            VBox(
+              style: Style(
+                flex.gap(10),
+                flexible.expanded(),
+              ),
+              children: const [
+                SizedBox(
+                  height: 10,
+                  width: 20,
+                ),
+              ],
+            ),
+          ],
+        ),
+      );
+
+      expect(find.byType(Flexible), findsOneWidget);
+    },
+  );
 }
