@@ -101,11 +101,18 @@ class ZBox extends StyledWidget {
   Widget build(BuildContext context) {
     // The withMix method is used to apply the styling context to both the box and the stack.
     return withMix(context, (mix) {
-      return MixedBox(child: MixedStack(children: children));
+      return MixedBox(
+        child: Builder(
+          builder: (BuildContext context) => MixedStack(
+            mix: MixData.inherited(context),
+            children: children,
+          ),
+        ),
+      );
     });
   }
 }
 
 // Default Stack used as a fallback
 // for styling properties in MixedStack.
-final _defaultStack = Stack();
+const _defaultStack = Stack();

@@ -46,4 +46,43 @@ void main() {
       ),
     );
   });
+
+  testWidgets(
+    'Box should apply decorators only once',
+    (tester) async {
+      await tester.pumpMaterialApp(
+        Box(
+          style: Style(
+            height(100),
+            width(100),
+            align(),
+          ),
+          child: const Box(),
+        ),
+      );
+
+      expect(find.byType(Align), findsOneWidget);
+    },
+  );
+
+  testWidgets(
+    'AnimatedBox should apply decorators only once',
+    (tester) async {
+      await tester.pumpMaterialApp(
+        AnimatedBox(
+          duration: Duration.zero,
+          style: Style(
+            height(100),
+            width(100),
+            align(),
+          ),
+          child: const AnimatedBox(
+            duration: Duration.zero,
+          ),
+        ),
+      );
+
+      expect(find.byType(Align), findsOneWidget);
+    },
+  );
 }
