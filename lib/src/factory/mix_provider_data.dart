@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meta/meta.dart';
 
 import '../attributes/variant_attribute.dart';
 import '../core/attribute.dart';
@@ -39,6 +40,7 @@ class MixData with Comparable {
     );
   }
 
+  @internal
   static MixData? inherited(BuildContext context) {
     final inheritedMix = MixProvider.maybeOf(context);
 
