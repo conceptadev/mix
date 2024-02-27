@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
 
+import '../../../helpers/testing_utils.dart';
+
 void main() {
   group('StyledImage', () {
     TestWidgetsFlutterBinding.ensureInitialized();
@@ -84,6 +86,24 @@ void main() {
         expect(imageWidget.width, 152);
         expect(imageWidget.height, 152);
         expect(imageWidget.color, Colors.black);
+      },
+    );
+
+    testWidgets(
+      'StyleImage should apply decorators only once',
+      (tester) async {
+        await tester.pumpMaterialApp(
+          StyledImage(
+            style: Style(
+              height(100),
+              width(100),
+              align(),
+            ),
+            image: const AssetImage('test_resources/logo.png'),
+          ),
+        );
+
+        expect(find.byType(Align), findsOneWidget);
       },
     );
   });
