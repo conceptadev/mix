@@ -7,7 +7,6 @@ import 'align_widget_decorator.dart';
 import 'aspect_ratio_widget_decorator.dart';
 import 'clip_widget_decorator.dart';
 import 'fractionally_sized_box_widget_decorator.dart';
-import 'implicitly_animated_decorator.dart';
 import 'intrinsic_widget_decorator.dart';
 import 'opacity_widget_decorator.dart';
 import 'scale_widget_decorator.dart';
@@ -94,44 +93,6 @@ class RenderWidgetDecorators extends StatelessWidget {
   }
 }
 
-class AnimatedWidgetDecorators extends StatelessWidget {
-  const AnimatedWidgetDecorators({
-    required this.mix,
-    required this.child,
-    super.key,
-    this.orderOfDecorators = const [],
-    this.duration = const Duration(milliseconds: 300),
-    this.curve = Curves.linear,
-  });
-
-  final MixData mix;
-  final Widget child;
-  final List<Type> orderOfDecorators;
-  final Duration duration;
-  final Curve curve;
-
-  @override
-  Widget build(BuildContext context) {
-    final decorators = mix.whereType<WidgetDecorator>();
-
-    if (decorators.isEmpty) return child;
-
-    var current = child;
-
-    final specs = _resolveDecoratorSpecs(decorators, orderOfDecorators, mix);
-
-    for (final spec in specs) {
-      current = ImplicitlyAnimatedWidgetDecorator(
-        spec: spec,
-        duration: duration,
-        child: child,
-      );
-    }
-
-    return current;
-  }
-}
-
 List<DecoratorSpec> _resolveDecoratorSpecs(
   Iterable<WidgetDecorator> decorators,
   List<Type> orderOfDecorators,
@@ -150,7 +111,7 @@ List<DecoratorSpec> _resolveDecoratorSpecs(
   for (final decoratorType in listOfDecorators) {
     final decorator = decoratorMap.remove(decoratorType);
     if (decorator == null) continue;
-    specs.add(decorator.resolve(mix));
+    specs.add(decorator.resolve(mix) as DecoratorSpec);
   }
 
   return specs;

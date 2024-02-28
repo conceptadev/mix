@@ -60,6 +60,7 @@ class Style with Comparable {
   /// There is no specific reason for only 20 parameters. This is just a
   /// reasonable number of parameters to support. If you need more than 20,
   /// consider breaking up your mixes into many style mixes that can be applied
+  /// or use the `Style.create` constructor.
   ///
   /// Example:
   /// ```dart
