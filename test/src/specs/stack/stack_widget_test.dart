@@ -57,4 +57,49 @@ void main() {
     expect(stackWidget.clipBehavior, Clip.antiAlias);
     expect(stackWidget.textDirection, TextDirection.ltr);
   });
+
+  testWidgets(
+    'StyledStack should apply decorators only once',
+    (tester) async {
+      await tester.pumpMaterialApp(
+        StyledStack(
+          style: Style(
+            flex.gap(10),
+            align(),
+          ),
+          children: const [
+            SizedBox(
+              height: 10,
+              width: 20,
+            ),
+          ],
+        ),
+      );
+
+      expect(find.byType(Align), findsOneWidget);
+    },
+  );
+
+  testWidgets(
+    'ZBox should apply decorators only once',
+    (tester) async {
+      await tester.pumpMaterialApp(
+        ZBox(
+          style: Style(
+            flex.gap(10),
+            stack.alignment.center(),
+            align(),
+          ),
+          children: const [
+            SizedBox(
+              height: 10,
+              width: 20,
+            ),
+          ],
+        ),
+      );
+
+      expect(find.byType(Align), findsOneWidget);
+    },
+  );
 }

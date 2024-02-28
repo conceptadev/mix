@@ -83,7 +83,7 @@ class MixedImage extends StatelessWidget {
       alignment: spec.alignment ?? Alignment.center,
       repeat: spec.repeat ?? ImageRepeat.noRepeat,
       centerSlice: spec.centerSlice,
-      filterQuality: spec.filterQuality ?? FilterQuality.none,
+      filterQuality: spec.filterQuality ?? FilterQuality.low,
     );
 
     return shouldApplyDecorators(

@@ -134,4 +134,138 @@ void main() {
       }
     },
   );
+
+  testWidgets(
+    'VBox should apply decorators only once',
+    (tester) async {
+      await tester.pumpMaterialApp(
+        VBox(
+          style: Style(
+            flex.gap(10),
+            align(),
+          ),
+          children: const [
+            SizedBox(
+              height: 10,
+              width: 20,
+            ),
+          ],
+        ),
+      );
+
+      expect(find.byType(Align), findsOneWidget);
+    },
+  );
+
+  testWidgets(
+    'HBox should apply decorators only once',
+    (tester) async {
+      await tester.pumpMaterialApp(
+        HBox(
+          style: Style(
+            flex.gap(10),
+            align(),
+          ),
+          children: const [
+            SizedBox(
+              height: 10,
+              width: 20,
+            ),
+          ],
+        ),
+      );
+
+      expect(find.byType(Align), findsOneWidget);
+    },
+  );
+
+  testWidgets(
+    'StyledRow should apply decorators only once',
+    (tester) async {
+      await tester.pumpMaterialApp(
+        VBox(
+          style: Style(
+            flex.gap(10),
+            align(),
+          ),
+          children: const [
+            SizedBox(
+              height: 10,
+              width: 20,
+            ),
+          ],
+        ),
+      );
+
+      expect(find.byType(Align), findsOneWidget);
+    },
+  );
+
+  testWidgets(
+    'StyledColumn should apply decorators only once',
+    (tester) async {
+      await tester.pumpMaterialApp(
+        StyledColumn(
+          style: Style(
+            flex.gap(10),
+            align(),
+          ),
+          children: const [
+            SizedBox(
+              height: 10,
+              width: 20,
+            ),
+          ],
+        ),
+      );
+
+      expect(find.byType(Align), findsOneWidget);
+    },
+  );
+
+  testWidgets(
+    'StyledFlex should apply decorators only once',
+    (tester) async {
+      await tester.pumpMaterialApp(
+        StyledFlex(
+          direction: Axis.horizontal,
+          style: Style(
+            flex.gap(10),
+            align(),
+          ),
+          children: const [
+            SizedBox(
+              height: 10,
+              width: 20,
+            ),
+          ],
+        ),
+      );
+
+      expect(find.byType(Align), findsOneWidget);
+    },
+  );
+
+  testWidgets(
+    'FlexBox should apply decorators only once',
+    (tester) async {
+      await tester.pumpMaterialApp(
+        FlexBox(
+          direction: Axis.horizontal,
+          style: Style(
+            flex.gap(10),
+            align(),
+          ),
+          children: const [
+            SizedBox(
+              height: 10,
+              width: 20,
+            ),
+          ],
+        ),
+      );
+
+      expect(find.byType(Align), findsOneWidget);
+    },
+  );
 }

@@ -184,7 +184,13 @@ class FlexBox extends StyledWidget {
     return withMix(context, (mix) {
       return MixedBox(
         mix: mix,
-        child: MixedFlex(mix: mix, direction: direction, children: children),
+        child: Builder(
+          builder: (BuildContext context) => MixedFlex(
+            mix: MixData.inherited(context)!,
+            direction: direction,
+            children: children,
+          ),
+        ),
       );
     });
   }

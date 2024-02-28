@@ -19,6 +19,7 @@ import 'core/attribute.dart';
 import 'decorators/clip_widget_decorator.dart';
 import 'decorators/widget_decorators_util.dart';
 import 'factory/style_mix.dart';
+import 'specs/image/image_util.dart';
 import 'widgets/pressable/pressable_util.dart';
 
 const kShortAliasDeprecation =
@@ -109,8 +110,17 @@ final mainAxisSize = flex.mainAxisSize;
 @Deprecated('use flex.gap instead')
 final gap = flex.gap;
 
+@Deprecated('use flexible.expanded instead')
+final expanded = flexible.expanded;
+
 @Deprecated('use borderRadius instead')
 final rounded = borderRadius;
+
+@Deprecated('use border.width instead')
+final borderWidth = border.width;
+
+@Deprecated('use border.color instead')
+final borderColor = border.color;
 
 // height
 @Deprecated('use height instead')
@@ -196,6 +206,8 @@ final textShadow = text.style.shadows;
 final overflow = text.overflow;
 @Deprecated('Use text.style.bold instead')
 final bold = text.style.bold;
+@Deprecated('Use text.overflow instead')
+final textOverflow = text.overflow;
 
 @Deprecated('Use icon.size instead')
 final iconSize = icon.size;
@@ -222,6 +234,9 @@ final px = padding.horizontal;
 final py = padding.vertical;
 @Deprecated('Use padding.as instead')
 final pi = padding.as;
+
+@Deprecated('Use padding.as instead')
+final paddingInsets = padding.as;
 
 @Deprecated('Use margin instead')
 final m = margin;
@@ -301,7 +316,6 @@ final paddingOnly = padding.only;
 final paddingDirectionalOnly = padding.only;
 @Deprecated('use padding.all instead')
 final paddingAll = padding.all;
-
 @Deprecated('Use border.top instead')
 final borderTop = border.top;
 @Deprecated('Use border.bottom instead')
@@ -451,7 +465,13 @@ class IconMix extends StyledIcon {
 }
 
 @Deprecated('Use text.style instead')
-final textStyle = text.style;
+final textStyle = text.style.as;
+
+@Deprecated('Use text.maxLines instead')
+final maxLines = text.maxLines;
+
+@Deprecated('Use text.textAlign instead')
+final textAlign = text.textAlign;
 
 @Deprecated('Use text.style.shadow instead')
 final shadow = text.style.shadow;
@@ -466,3 +486,93 @@ class ClipDecoratorUtility {
 
   const ClipDecoratorUtility();
 }
+
+@Deprecated('Use image.color instead')
+final imageColor = image.color;
+
+@Deprecated('Use image.blendMode instead')
+final imageColorBlendMode = image.blendMode;
+
+@Deprecated('Use image.fit instead')
+final imageFit = image.fit;
+
+@Deprecated('Use image.alignment instead')
+final imageAlignment = image.alignment;
+
+@Deprecated('Use image.repeat instead')
+final imageRepeat = image.repeat;
+
+@Deprecated('Use image.centerSlice instead')
+final imageCenterSlice = image.centerSlice;
+
+// show
+@Deprecated('Use visibility.on instead')
+final show = visibility.on;
+
+// hide
+@Deprecated('Use visibility.off instead')
+final hide = visibility.off;
+
+// TODO: Need to update these
+// // animated
+// @Deprecated('Use animated instead')
+// final animated = animation.animated;
+
+// // animationDuration
+// @Deprecated('Use animation.duration instead')
+// final animationDuration = animation.duration;
+
+// // animationCurve
+// @Deprecated('Use animation.curve instead')
+// final animationCurve = animation.curve;
+
+// textDirection
+@Deprecated('Use text.textDirection instead')
+final textDirection = text.textDirection;
+
+// textWidthBasis
+@Deprecated('Use text.widthBasis instead')
+final textWidthBasis = text.textWidthBasis;
+
+// softWrap
+@Deprecated('Use text.softWrap instead')
+final softWrap = text.softWrap;
+
+// textScaleFactor
+@Deprecated('Use text.scaleFactor instead')
+final textScaleFactor = text.textScaleFactor;
+
+// strutStyle
+@Deprecated('Use text.strutStyle instead')
+final strutStyle = text.strutStyle;
+
+// textBaseline
+@Deprecated('Use text.baseline instead')
+final textBaseline = text.style.textBaseline;
+
+// squared
+@Deprecated('Use borderRadius.circular instead')
+final squared = borderRadius.zero;
+
+// linearGradient
+@Deprecated('Use box.decoration.gradient.linear instead')
+final linearGradient = box.decoration.gradient.linear;
+
+// radialGradient
+@Deprecated('Use box.decoration.gradient.radial instead')
+final radialGradient = box.decoration.gradient.radial;
+
+// flexDirection
+@Deprecated('Use flexDirection instead')
+final flexDirection = flex.direction;
+
+// verticalDirection
+@Deprecated('Use verticalDirection instead')
+final verticalDirection = flex.verticalDirection;
+
+// @Deprecated('Use image.scale instead')
+// final imageScale = image.scale;
+
+// // inherit
+// @Deprecated('Use text.inherit instead')
+// final inherit = text.style.inherit;
