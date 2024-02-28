@@ -3,10 +3,9 @@ id: new-widgets
 title: "Supporting new Widgets"
 ---
 
-
 # Supporting new Widgets
 
-Mix is a powerful tool and to make it even more powerful, we can add support for new widgets and increase its funcionality for more and more cases. Therefore, This is a guide to help you to add support for new widgets.
+Mix is a powerful tool and to make it even more powerful, we can add support for new widgets and increase its functionality for more and more cases. Therefore, This is a guide to help you to add support for new widgets.
 
 To make this tutorial more real, we will add support for a widget from **Material**, the TextField. To be more specific, we will add support for the `decoration` attribute, that defines the most of the visual aspects of the TextField, and as result, we will be able to go from the default TextField, that looks like this:
 
@@ -18,7 +17,7 @@ and make it look like this:
 
 ## 1. Define the Spec
 
-As we are adding support for a new widget and it's its own attributes you want to costumize, we need to define the spec for it. The spec is a object that defines the attributes that the widget has and how to handle them. The spec for the `InputDecoration` is:
+As we are adding support for a new widget and it's its own attributes you want to customize, we need to define the spec for it. The spec is a object that defines the attributes that the widget has and how to handle them. The spec for the `InputDecoration` is:
 
 ```dart
 class InputDecorationSpec extends Spec<InputDecorationSpec> {
@@ -85,7 +84,7 @@ class InputDecorationSpec extends Spec<InputDecorationSpec> {
 
 at first look, it may look a little bit complex, but it's not. The `InputDecorationSpec` is a class that extends `Spec` and has a constructor that receives the attributes that the `InputDecoration` has, for this example I chose just four, the `border`, `filled`, `fillColor` and `contentPadding`. However for a real implementation, you should add all the attributes that the `InputDecoration` has.
 
-Looking at the rest of the class, you can see the named contructor `empty`, that returns a default implementation of the `InputDecorationSpec`, the `of` method that receives a `MixData` and returns a `InputDecorationSpec` with the values of the `MixData`. The `lerp` method is used to interpolate between two `InputDecorationSpec`.
+Looking at the rest of the class, you can see the named constructor `empty`, that returns a default implementation of the `InputDecorationSpec`, the `of` method that receives a `MixData` and returns a `InputDecorationSpec` with the values of the `MixData`. The `lerp` method is used to interpolate between two `InputDecorationSpec`.
 
 The Spec is the base of the support for a new widget and its attributes.
 
@@ -141,9 +140,9 @@ class InputDecorationSpecAttribute
 }
 ```
 
-Looking at its properties definition, you will see some changes in the property types, for example, now `fillColor` is a `ColorDto` and `contentPadding` is a `EdgeInsetsGeometryDto`, it's because the Mix uses a `Dto` classes to handle more complex types and supply some facilities to use them. 
+Looking at its properties definition, you will see some changes in the property types, for example, now `fillColor` is a `ColorDto` and `contentPadding` is a `EdgeInsetsGeometryDto`, it's because the Mix uses a `Dto` classes to handle more complex types and supply some facilities to use them.
 
-The `InputDecorationSpecAttribute` is a class that extends `SpecAttribute` and has a method `resolve` that is useful method to transform the `InputDecorationSpec` from the `MixData`. The `merge` method is used to merge two different declarations of the `InputDecorationSpecAttribute`, a good example of this is:
+The `InputDecorationSpecAttribute` is a class that extends `SpecAttribute` and has a method `resolve` that is a useful method to transform the `InputDecorationSpec` from the `MixData`. The `merge` method is used to merge two different declarations of the `InputDecorationSpecAttribute`, a good example of this is:
 
 ```dart
 final style = Style(
@@ -197,7 +196,7 @@ The `StyledTextField` is a class that extends `StyledWidget`. The `build` method
 
 Note that the `shouldApplyDecorators` method was used in the `build` method before the `TextField`, it's a method that make available the `decorators attributes` be applied to the widget.
 
-Now you already ready to use the `StyledTextField` in your app and costumize the `InputDecoration` of the `TextField` with Mix.
+Now you already ready to use the `StyledTextField` in your app and customize the `InputDecoration` of the `TextField` with Mix.
 
 ```dart
 final style = Style(
@@ -215,7 +214,7 @@ final style = Style(
 
 ## 4. Create the Utility
 
-In the last step, I told you that you are ready to use the `StyledTextField` in your app, it's true, but you can make it even better. You can create a utility to make it easier to use the attributes of the `InputDecoration`. The `InputDecorationUtility` is:
+In the last step, we mentioned that you're ready to use the `StyledTextField` in your app, which is true. However, there's an opportunity to enhance its usability further. By creating a utility, you can simplify the process of applying attributes to the `InputDecoration`, making it even more convenient to customize your text fields.
 
 ```dart
 class InputDecorationUtility extends SpecUtility<InputDecorationSpecAttribute> {
