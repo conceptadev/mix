@@ -1,0 +1,278 @@
+---
+id: new-widgets
+title: "Supporting new Widgets"
+---
+
+# Supporting new Widgets
+
+Mix is a powerful tool and to make it even more powerful, we can add support for new widgets and increase its functionality for more and more cases. Therefore, This is a guide to help you to add support for new widgets.
+
+To make this tutorial more real, we will add support for a widget from **Material**, the TextField. To be more specific, we will add support for the `decoration` attribute, that defines the most of the visual aspects of the TextField, and as result, we will be able to go from the default TextField, that looks like this:
+
+![alt text](./images/supporting-new-widgets-default-text-field.png)
+
+and make it look like this:
+
+![alt text](./images/supporting-new-widgets-final-text-field.png)
+
+## 1. Define the Spec
+
+As we are adding support for a new widget and it's its own attributes you want to customize, we need to define the spec for it. The spec is a object that defines the attributes that the widget has and how to handle them. The spec for the `InputDecoration` is:
+
+```dart
+class InputDecorationSpec extends Spec<InputDecorationSpec> {
+  final InputBorder? border;
+  final bool? filled;
+  final Color? fillColor;
+  final EdgeInsetsGeometry? contentPadding;
+
+  const InputDecorationSpec({
+    this.border,
+    this.filled,
+    this.fillColor,
+    this.contentPadding,
+  });
+
+  const InputDecorationSpec.empty()
+      : border = null,
+        filled = null,
+        fillColor = null,
+        contentPadding = null;
+
+  static InputDecorationSpec of(MixData mix) {
+    return mix.attributeOf<InputDecorationSpecAttribute>()?.resolve(mix) ??
+        const InputDecorationSpec.empty();
+  }
+
+  @override
+  InputDecorationSpec lerp(InputDecorationSpec? other, double t) {
+    return InputDecorationSpec(
+      border: other?.border,
+      filled: t < 0.5 ? filled : other?.filled,
+      fillColor: Color.lerp(fillColor, other?.fillColor, t),
+      contentPadding: EdgeInsetsGeometry.lerp(
+        contentPadding,
+        other?.contentPadding,
+        t,
+      ),
+    );
+  }
+
+  InputDecorationSpec copyWith({
+    InputBorder? border,
+    bool? filled,
+    Color? fillColor,
+    EdgeInsetsGeometry? contentPadding,
+  }) {
+    return InputDecorationSpec(
+      border: border ?? this.border,
+      filled: filled ?? this.filled,
+      fillColor: fillColor ?? this.fillColor,
+      contentPadding: contentPadding ?? this.contentPadding,
+    );
+  }
+
+  @override
+  get props => [
+        border,
+        filled,
+        fillColor,
+        contentPadding,
+      ];
+}
+```
+
+at first look, it may look a little bit complex, but it's not. The `InputDecorationSpec` is a class that extends `Spec` and has a constructor that receives the attributes that the `InputDecoration` has, for this example I chose just four, the `border`, `filled`, `fillColor` and `contentPadding`. However for a real implementation, you should add all the attributes that the `InputDecoration` has.
+
+Looking at the rest of the class, you can see the named constructor `empty`, that returns a default implementation of the `InputDecorationSpec`, the `of` method that receives a `MixData` and returns a `InputDecorationSpec` with the values of the `MixData`. The `lerp` method is used to interpolate between two `InputDecorationSpec`.
+
+The Spec is the base of the support for a new widget and its attributes.
+
+## 2. Create the Attribute
+
+The attribute is the class that will be used to handle the `InputDecorationSpec`. The `InputDecorationSpecAttribute` is:
+
+```dart
+class InputDecorationSpecAttribute
+    extends SpecAttribute<InputDecorationSpecAttribute, InputDecorationSpec> {
+  final InputBorder? border;
+  final bool? filled;
+  final ColorDto? fillColor;
+  final EdgeInsetsGeometryDto? contentPadding;
+
+  const InputDecorationSpecAttribute({
+    this.border,
+    this.filled,
+    this.fillColor,
+    this.contentPadding,
+  });
+
+  @override
+  InputDecorationSpec resolve(MixData mix) {
+    return InputDecorationSpec(
+      border: border,
+      filled: filled,
+      fillColor: fillColor?.resolve(mix),
+      contentPadding: contentPadding?.resolve(mix),
+    );
+  }
+
+  @override
+  InputDecorationSpecAttribute merge(
+      covariant InputDecorationSpecAttribute? other) {
+    if (other == null) return this;
+
+    return InputDecorationSpecAttribute(
+      border: other.border ?? border,
+      filled: other.filled ?? filled,
+      fillColor: other.fillColor ?? fillColor,
+      contentPadding: other.contentPadding ?? contentPadding,
+    );
+  }
+
+  @override
+  get props => [
+        border,
+        filled,
+        fillColor,
+        contentPadding,
+      ];
+}
+```
+
+Looking at its properties definition, you will see some changes in the property types, for example, now `fillColor` is a `ColorDto` and `contentPadding` is a `EdgeInsetsGeometryDto`, it's because the Mix uses a `Dto` classes to handle more complex types and supply some facilities to use them.
+
+The `InputDecorationSpecAttribute` is a class that extends `SpecAttribute` and has a method `resolve` that is a useful method to transform the `InputDecorationSpec` from the `MixData`. The `merge` method is used to merge two different declarations of the `InputDecorationSpecAttribute`, a good example of this is:
+
+```dart
+final style = Style(
+    InputDecorationSpecAttribute(
+      border: OutlineInputBorder(),
+      fillColor: ColorDto(Colors.blue),
+      filled: true,
+    ),
+    InputDecorationSpecAttribute(
+      fillColor: ColorDto(Colors.red),
+      contentPadding: EdgeInsetsGeometryDto.only(top: 10),
+    ),
+)
+```
+
+In this case, the `style` will have the `border` and `filled` from the first declaration, and the `fillColor` and `contentPadding` from the second declaration. be aware that the second declaration of `fillColor` will override the first one, so the final `InputDecorationSpec` will have the `fillColor` as `Colors.red`.
+
+## 3. Build the Custom Widget
+
+The custom widget is the widget that will use the `InputDecorationSpec` to build the widget. It's a class that extends `StyledWidget` and has a `build` method that receives a `BuildContext` and returns a `Widget`. For this example, the `CustomTextField` is:
+
+```dart
+class StyledTextField extends StyledWidget {
+  const StyledTextField({super.key, super.style});
+
+  @override
+  Widget build(BuildContext context) {
+    return withMix(
+      context,
+      (mix) {
+        final inputDecoration = InputDecorationSpec.of(mix);
+
+        return shouldApplyDecorators(
+          child: TextField(
+            decoration: InputDecoration(
+              border: inputDecoration.border,
+              filled: inputDecoration.filled,
+              fillColor: inputDecoration.fillColor,
+              contentPadding: inputDecoration.contentPadding,
+            ),
+          ),
+          mix: mix,
+        );
+      },
+    );
+  }
+}
+```
+
+The `StyledTextField` is a class that extends `StyledWidget`. The `build` method uses the `withMix` method to transform the style of the `StyledWidget` to a `MixData`, it also verify if exist some inheritable attributes from the parent widgets, but it's just happen if the `inherit` property is `true`. With the `MixData` instance in hands, you can use the `InputDecorationSpec.of` method to get the `InputDecorationSpec` from the `MixData`, now you are able to apply the `InputDecorationSpec` to the `TextField` and return it.
+
+Note that the `shouldApplyDecorators` method was used in the `build` method before the `TextField`, it's a method that make available the `decorators attributes` be applied to the widget.
+
+Now you already ready to use the `StyledTextField` in your app and customize the `InputDecoration` of the `TextField` with Mix.
+
+```dart
+final style = Style(
+  InputDecorationSpecAttribute(
+    border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(20),
+                borderSide: BorderSide.none,
+            ),
+    fillColor: ColorDto(Colors.blueAccent.shade200),
+    filled: true,
+    contentPadding: SpacingDto.all(24),
+  ),
+);
+```
+
+## 4. Create the Utility
+
+In the last step, we mentioned that you're ready to use the `StyledTextField` in your app, which is true. However, there's an opportunity to enhance its usability further. By creating a utility, you can simplify the process of applying attributes to the `InputDecoration`, making it even more convenient to customize your text fields.
+
+```dart
+class InputDecorationUtility extends SpecUtility<InputDecorationSpecAttribute> {
+  const InputDecorationUtility();
+
+  InputDecorationSpecAttribute _only({
+    InputBorder? border,
+    bool? filled,
+    ColorDto? fillColor,
+    SpacingDto? contentPadding,
+  }) {
+    return InputDecorationSpecAttribute(
+      border: border,
+      filled: filled,
+      fillColor: fillColor,
+      contentPadding: contentPadding,
+    );
+  }
+
+  ColorUtility<InputDecorationSpecAttribute> get fillColor {
+    return ColorUtility((color) => _only(fillColor: color));
+  }
+
+  BoolUtility<InputDecorationSpecAttribute> get filled {
+    return BoolUtility((boolean) => _only(filled: boolean));
+  }
+
+  SpacingUtility<InputDecorationSpecAttribute> get contentPadding {
+    return SpacingUtility((spacing) => _only(contentPadding: spacing));
+  }
+
+  InputDecorationSpecAttribute border(InputBorder inputBorder) {
+    return _only(border: inputBorder);
+  }
+}
+```
+
+The `InputDecorationUtility` is a class that extends `SpecUtility` and has methods to create the `InputDecorationSpecAttribute` with the attributes of the `InputDecoration`. The awesome thing about it is that each pre-defined Utility has some facilities to use the attributes, for example, the `filled` returns a `BoolUtility` that comes with `on` and `off` methods to make more readable the code, or the `fillColor` that returns a `ColorUtility` that comes with a bunch of methods to make it easier to use the `Color` attributes and do operations with them.
+
+To finish, you can create a variable to use the `InputDecorationUtility`, like this:
+
+```dart
+InputDecorationUtility get inputDecoration => const InputDecorationUtility();
+```
+
+So you can write the `Style` like this:
+
+```dart
+final style = Style(
+    inputDecoration.border(
+        OutlineInputBorder(
+        borderRadius: BorderRadius.circular(20),
+        borderSide: BorderSide.none,
+        ),
+    ),
+    inputDecoration.filled.on(),
+    inputDecoration.fillColor.,
+    inputDecoration.contentPadding.all(24),
+    scale(2),
+);
+```
