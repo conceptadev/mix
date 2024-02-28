@@ -69,17 +69,10 @@ const themeConfig = {
         <meta name="og:title" content={title ? title : "Mix"} />
         <meta name="og:image" content={socialCard} />
         <meta name="apple-mobile-web-app-title" content="Mix" />
-        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-        <link rel="icon" href="/favicon.png" type="image/png" />
+        <link rel="icon" href="/favicon.ico" type="image/png" />
         <link
           rel="icon"
-          href="/favicon-dark.svg"
-          type="image/svg+xml"
-          media="(prefers-color-scheme: dark)"
-        />
-        <link
-          rel="icon"
-          href="/favicon-dark.png"
+          href="/favicon.ico"
           type="image/png"
           media="(prefers-color-scheme: dark)"
         />
