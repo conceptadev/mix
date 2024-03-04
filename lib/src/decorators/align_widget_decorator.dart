@@ -14,8 +14,11 @@ class AlignDecoratorSpec extends DecoratorSpec<AlignDecoratorSpec> {
   final double? widthFactor;
   final double? heightFactor;
 
-  const AlignDecoratorSpec(
-      {this.alignment, this.widthFactor, this.heightFactor});
+  const AlignDecoratorSpec({
+    this.alignment,
+    this.widthFactor,
+    this.heightFactor,
+  });
 
   @override
   AlignDecoratorSpec lerp(AlignDecoratorSpec? other, double t) {

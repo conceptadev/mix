@@ -13,7 +13,9 @@ class IntrinsicHeightDecoratorSpec
 
   @override
   IntrinsicHeightDecoratorSpec lerp(
-      IntrinsicHeightDecoratorSpec? other, double t) {
+    IntrinsicHeightDecoratorSpec? other,
+    double t,
+  ) {
     // No properties to interpolate, return this instance
     return this;
   }
@@ -61,7 +63,9 @@ class IntrinsicWidthDecoratorSpec
 
   @override
   IntrinsicWidthDecoratorSpec lerp(
-      IntrinsicWidthDecoratorSpec? other, double t) {
+    IntrinsicWidthDecoratorSpec? other,
+    double t,
+  ) {
     // No properties to interpolate, return this instance
     return this;
   }
