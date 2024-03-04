@@ -7,7 +7,7 @@ environment:
   sdk: ">=2.19.2 <4.0.0"
   
 dependencies:
-  meta: ^1.10.0
+  meta: ^1.8.0
   flutter:
     sdk: flutter
 
