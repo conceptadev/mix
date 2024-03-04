@@ -8,15 +8,15 @@ import '../core/decorator.dart';
 import '../factory/mix_provider_data.dart';
 import '../helpers/lerp_helpers.dart';
 
-class ClipOvalWidgetSpec extends DecoratorSpec<ClipOvalWidgetSpec> {
+class ClipOvalDecoratorSpec extends DecoratorSpec<ClipOvalDecoratorSpec> {
   final CustomClipper<Rect>? clipper;
   final Clip? clipBehavior;
 
-  const ClipOvalWidgetSpec({this.clipper, this.clipBehavior});
+  const ClipOvalDecoratorSpec({this.clipper, this.clipBehavior});
 
   @override
-  ClipOvalWidgetSpec lerp(ClipOvalWidgetSpec? other, double t) {
-    return ClipOvalWidgetSpec(
+  ClipOvalDecoratorSpec lerp(ClipOvalDecoratorSpec? other, double t) {
+    return ClipOvalDecoratorSpec(
       clipper: lerpSnap(clipper, other?.clipper, t),
       clipBehavior:
           lerpSnap(clipBehavior, other?.clipBehavior, t) ?? clipBehavior,
@@ -24,11 +24,11 @@ class ClipOvalWidgetSpec extends DecoratorSpec<ClipOvalWidgetSpec> {
   }
 
   @override
-  ClipOvalWidgetSpec copyWith({
+  ClipOvalDecoratorSpec copyWith({
     CustomClipper<Rect>? clipper,
     Clip? clipBehavior,
   }) {
-    return ClipOvalWidgetSpec(
+    return ClipOvalDecoratorSpec(
       clipper: clipper ?? this.clipper,
       clipBehavior: clipBehavior ?? this.clipBehavior,
     );
@@ -47,39 +47,39 @@ class ClipOvalWidgetSpec extends DecoratorSpec<ClipOvalWidgetSpec> {
   }
 }
 
-class ClipOvalWidgetDecorator
-    extends WidgetDecorator<ClipOvalWidgetDecorator, ClipOvalWidgetSpec> {
+class ClipOvalDecoratorAttribute extends DecoratorAttribute<
+    ClipOvalDecoratorAttribute, ClipOvalDecoratorSpec> {
   final CustomClipper<Rect>? clipper;
   final Clip? clipBehavior;
 
-  const ClipOvalWidgetDecorator({this.clipper, this.clipBehavior});
+  const ClipOvalDecoratorAttribute({this.clipper, this.clipBehavior});
 
   @override
-  ClipOvalWidgetDecorator merge(ClipOvalWidgetDecorator? other) {
-    return ClipOvalWidgetDecorator(
+  ClipOvalDecoratorAttribute merge(ClipOvalDecoratorAttribute? other) {
+    return ClipOvalDecoratorAttribute(
       clipper: other?.clipper ?? clipper,
       clipBehavior: other?.clipBehavior ?? clipBehavior,
     );
   }
 
   @override
-  ClipOvalWidgetSpec resolve(MixData mix) {
-    return ClipOvalWidgetSpec(clipper: clipper, clipBehavior: clipBehavior);
+  ClipOvalDecoratorSpec resolve(MixData mix) {
+    return ClipOvalDecoratorSpec(clipper: clipper, clipBehavior: clipBehavior);
   }
 
   @override
   get props => [clipper, clipBehavior];
 }
 
-class ClipRectWidgetSpec extends DecoratorSpec<ClipRectWidgetSpec> {
+class ClipRectDecoratorSpec extends DecoratorSpec<ClipRectDecoratorSpec> {
   final CustomClipper<Rect>? clipper;
   final Clip? clipBehavior;
 
-  const ClipRectWidgetSpec({this.clipper, this.clipBehavior});
+  const ClipRectDecoratorSpec({this.clipper, this.clipBehavior});
 
   @override
-  ClipRectWidgetSpec lerp(ClipRectWidgetSpec? other, double t) {
-    return ClipRectWidgetSpec(
+  ClipRectDecoratorSpec lerp(ClipRectDecoratorSpec? other, double t) {
+    return ClipRectDecoratorSpec(
       clipper: lerpSnap(clipper, other?.clipper, t),
       clipBehavior:
           lerpSnap(clipBehavior, other?.clipBehavior, t) ?? clipBehavior,
@@ -87,11 +87,11 @@ class ClipRectWidgetSpec extends DecoratorSpec<ClipRectWidgetSpec> {
   }
 
   @override
-  ClipRectWidgetSpec copyWith({
+  ClipRectDecoratorSpec copyWith({
     CustomClipper<Rect>? clipper,
     Clip? clipBehavior,
   }) {
-    return ClipRectWidgetSpec(
+    return ClipRectDecoratorSpec(
       clipper: clipper ?? this.clipper,
       clipBehavior: clipBehavior ?? this.clipBehavior,
     );
@@ -113,44 +113,44 @@ class ClipRectWidgetSpec extends DecoratorSpec<ClipRectWidgetSpec> {
 /// A decorator that wraps a widget with a [ClipRect] widget.
 ///
 /// The [ClipRect] widget is used to clip a widget to a rectangle.
-class ClipRectWidgetDecorator
-    extends WidgetDecorator<ClipRectWidgetDecorator, ClipRectWidgetSpec> {
+class ClipRectDecoratorAttribute extends DecoratorAttribute<
+    ClipRectDecoratorAttribute, ClipRectDecoratorSpec> {
   final CustomClipper<Rect>? clipper;
   final Clip? clipBehavior;
 
-  const ClipRectWidgetDecorator({this.clipper, this.clipBehavior});
+  const ClipRectDecoratorAttribute({this.clipper, this.clipBehavior});
 
   @override
-  ClipRectWidgetDecorator merge(ClipRectWidgetDecorator? other) {
-    return ClipRectWidgetDecorator(
+  ClipRectDecoratorAttribute merge(ClipRectDecoratorAttribute? other) {
+    return ClipRectDecoratorAttribute(
       clipper: other?.clipper ?? clipper,
       clipBehavior: other?.clipBehavior ?? clipBehavior,
     );
   }
 
   @override
-  ClipRectWidgetSpec resolve(MixData mix) {
-    return ClipRectWidgetSpec(clipper: clipper, clipBehavior: clipBehavior);
+  ClipRectDecoratorSpec resolve(MixData mix) {
+    return ClipRectDecoratorSpec(clipper: clipper, clipBehavior: clipBehavior);
   }
 
   @override
   get props => [clipper, clipBehavior];
 }
 
-class ClipRRectWidgetSpec extends DecoratorSpec<ClipRRectWidgetSpec> {
+class ClipRRectDecoratorSpec extends DecoratorSpec<ClipRRectDecoratorSpec> {
   final BorderRadiusGeometry? borderRadius;
   final CustomClipper<RRect>? clipper;
   final Clip? clipBehavior;
 
-  const ClipRRectWidgetSpec({
+  const ClipRRectDecoratorSpec({
     this.borderRadius,
     this.clipper,
     this.clipBehavior,
   });
 
   @override
-  ClipRRectWidgetSpec lerp(ClipRRectWidgetSpec? other, double t) {
-    return ClipRRectWidgetSpec(
+  ClipRRectDecoratorSpec lerp(ClipRRectDecoratorSpec? other, double t) {
+    return ClipRRectDecoratorSpec(
       borderRadius:
           BorderRadiusGeometry.lerp(borderRadius, other?.borderRadius, t),
       clipper: lerpSnap(clipper, other?.clipper, t),
@@ -160,12 +160,12 @@ class ClipRRectWidgetSpec extends DecoratorSpec<ClipRRectWidgetSpec> {
   }
 
   @override
-  ClipRRectWidgetSpec copyWith({
+  ClipRRectDecoratorSpec copyWith({
     BorderRadiusGeometry? borderRadius,
     CustomClipper<RRect>? clipper,
     Clip? clipBehavior,
   }) {
-    return ClipRRectWidgetSpec(
+    return ClipRRectDecoratorSpec(
       borderRadius: borderRadius ?? this.borderRadius,
       clipper: clipper ?? this.clipper,
       clipBehavior: clipBehavior ?? this.clipBehavior,
@@ -186,21 +186,21 @@ class ClipRRectWidgetSpec extends DecoratorSpec<ClipRRectWidgetSpec> {
   }
 }
 
-class ClipRRectWidgetDecorator
-    extends WidgetDecorator<ClipRRectWidgetDecorator, ClipRRectWidgetSpec> {
+class ClipRRectDecoratorAttribute extends DecoratorAttribute<
+    ClipRRectDecoratorAttribute, ClipRRectDecoratorSpec> {
   final BorderRadiusGeometry? borderRadius;
   final CustomClipper<RRect>? clipper;
   final Clip? clipBehavior;
 
-  const ClipRRectWidgetDecorator({
+  const ClipRRectDecoratorAttribute({
     this.borderRadius,
     this.clipper,
     this.clipBehavior,
   });
 
   @override
-  ClipRRectWidgetDecorator merge(ClipRRectWidgetDecorator? other) {
-    return ClipRRectWidgetDecorator(
+  ClipRRectDecoratorAttribute merge(ClipRRectDecoratorAttribute? other) {
+    return ClipRRectDecoratorAttribute(
       borderRadius: other?.borderRadius ?? borderRadius,
       clipper: other?.clipper ?? clipper,
       clipBehavior: other?.clipBehavior ?? clipBehavior,
@@ -208,8 +208,8 @@ class ClipRRectWidgetDecorator
   }
 
   @override
-  ClipRRectWidgetSpec resolve(MixData mix) {
-    return ClipRRectWidgetSpec(
+  ClipRRectDecoratorSpec resolve(MixData mix) {
+    return ClipRRectDecoratorSpec(
       borderRadius: borderRadius,
       clipper: clipper,
       clipBehavior: clipBehavior ?? Clip.antiAlias,
@@ -221,15 +221,15 @@ class ClipRRectWidgetDecorator
 }
 
 @immutable
-class ClipPathWidgetSpec extends DecoratorSpec<ClipPathWidgetSpec> {
+class ClipPathDecoratorSpec extends DecoratorSpec<ClipPathDecoratorSpec> {
   final CustomClipper<Path>? clipper;
   final Clip? clipBehavior;
 
-  const ClipPathWidgetSpec({this.clipper, this.clipBehavior});
+  const ClipPathDecoratorSpec({this.clipper, this.clipBehavior});
 
   @override
-  ClipPathWidgetSpec lerp(ClipPathWidgetSpec? other, double t) {
-    return ClipPathWidgetSpec(
+  ClipPathDecoratorSpec lerp(ClipPathDecoratorSpec? other, double t) {
+    return ClipPathDecoratorSpec(
       clipper: lerpSnap(clipper, other?.clipper, t),
       clipBehavior:
           lerpSnap(clipBehavior, other?.clipBehavior, t) ?? clipBehavior,
@@ -237,11 +237,11 @@ class ClipPathWidgetSpec extends DecoratorSpec<ClipPathWidgetSpec> {
   }
 
   @override
-  ClipPathWidgetSpec copyWith({
+  ClipPathDecoratorSpec copyWith({
     CustomClipper<Path>? clipper,
     Clip? clipBehavior,
   }) {
-    return ClipPathWidgetSpec(
+    return ClipPathDecoratorSpec(
       clipper: clipper ?? this.clipper,
       clipBehavior: clipBehavior ?? this.clipBehavior,
     );
@@ -263,24 +263,24 @@ class ClipPathWidgetSpec extends DecoratorSpec<ClipPathWidgetSpec> {
 /// A decorator that wraps a widget with a [ClipPath] widget.
 ///
 /// The [ClipPath] widget is used to clip a widget using a custom clipper.
-class ClipPathWidgetDecorator
-    extends WidgetDecorator<ClipPathWidgetDecorator, ClipPathWidgetSpec> {
+class ClipPathDecoratorAttribute extends DecoratorAttribute<
+    ClipPathDecoratorAttribute, ClipPathDecoratorSpec> {
   final CustomClipper<Path>? clipper;
   final Clip? clipBehavior;
 
-  const ClipPathWidgetDecorator({this.clipper, this.clipBehavior});
+  const ClipPathDecoratorAttribute({this.clipper, this.clipBehavior});
 
   @override
-  ClipPathWidgetDecorator merge(ClipPathWidgetDecorator? other) {
-    return ClipPathWidgetDecorator(
+  ClipPathDecoratorAttribute merge(ClipPathDecoratorAttribute? other) {
+    return ClipPathDecoratorAttribute(
       clipper: other?.clipper ?? clipper,
       clipBehavior: other?.clipBehavior ?? clipBehavior,
     );
   }
 
   @override
-  ClipPathWidgetSpec resolve(MixData mix) {
-    return ClipPathWidgetSpec(
+  ClipPathDecoratorSpec resolve(MixData mix) {
+    return ClipPathDecoratorSpec(
       clipper: clipper,
       clipBehavior: clipBehavior ?? Clip.antiAlias,
     );
@@ -291,22 +291,23 @@ class ClipPathWidgetDecorator
 }
 
 @immutable
-class ClipTriangleWidgetSpec extends DecoratorSpec<ClipTriangleWidgetSpec> {
+class ClipTriangleDecoratorSpec
+    extends DecoratorSpec<ClipTriangleDecoratorSpec> {
   final Clip? clipBehavior;
 
-  const ClipTriangleWidgetSpec({this.clipBehavior});
+  const ClipTriangleDecoratorSpec({this.clipBehavior});
 
   @override
-  ClipTriangleWidgetSpec lerp(ClipTriangleWidgetSpec? other, double t) {
-    return ClipTriangleWidgetSpec(
+  ClipTriangleDecoratorSpec lerp(ClipTriangleDecoratorSpec? other, double t) {
+    return ClipTriangleDecoratorSpec(
       clipBehavior:
           lerpSnap(clipBehavior, other?.clipBehavior, t) ?? clipBehavior,
     );
   }
 
   @override
-  ClipTriangleWidgetSpec copyWith({Clip? clipBehavior}) {
-    return ClipTriangleWidgetSpec(
+  ClipTriangleDecoratorSpec copyWith({Clip? clipBehavior}) {
+    return ClipTriangleDecoratorSpec(
       clipBehavior: clipBehavior ?? this.clipBehavior,
     );
   }
@@ -327,22 +328,22 @@ class ClipTriangleWidgetSpec extends DecoratorSpec<ClipTriangleWidgetSpec> {
 /// A decorator that wraps a widget with a custom [ClipPath] widget with a [TriangleClipper].
 ///
 /// The [TriangleClipper] is used to clip a widget to a triangle shape.
-class ClipTriangleWidgetDecorator extends WidgetDecorator<
-    ClipTriangleWidgetDecorator, ClipTriangleWidgetSpec> {
+class ClipTriangleDecoratorAttribute extends DecoratorAttribute<
+    ClipTriangleDecoratorAttribute, ClipTriangleDecoratorSpec> {
   final Clip? clipBehavior;
 
-  const ClipTriangleWidgetDecorator({this.clipBehavior});
+  const ClipTriangleDecoratorAttribute({this.clipBehavior});
 
   @override
-  ClipTriangleWidgetDecorator merge(ClipTriangleWidgetDecorator? other) {
-    return ClipTriangleWidgetDecorator(
+  ClipTriangleDecoratorAttribute merge(ClipTriangleDecoratorAttribute? other) {
+    return ClipTriangleDecoratorAttribute(
       clipBehavior: other?.clipBehavior ?? clipBehavior,
     );
   }
 
   @override
-  ClipTriangleWidgetSpec resolve(MixData mix) {
-    return ClipTriangleWidgetSpec(clipBehavior: clipBehavior);
+  ClipTriangleDecoratorSpec resolve(MixData mix) {
+    return ClipTriangleDecoratorSpec(clipBehavior: clipBehavior);
   }
 
   @override
@@ -367,18 +368,18 @@ class TriangleClipper extends CustomClipper<Path> {
 }
 
 class ClipPathUtility<T extends StyleAttribute>
-    extends MixUtility<T, ClipPathWidgetDecorator> {
+    extends MixUtility<T, ClipPathDecoratorAttribute> {
   const ClipPathUtility(super.builder);
 
   T call({CustomClipper<Path>? clipper, Clip? clipBehavior}) {
     return builder(
-      ClipPathWidgetDecorator(clipper: clipper, clipBehavior: clipBehavior),
+      ClipPathDecoratorAttribute(clipper: clipper, clipBehavior: clipBehavior),
     );
   }
 }
 
 class ClipRRectUtility<T extends StyleAttribute>
-    extends MixUtility<T, ClipRRectWidgetDecorator> {
+    extends MixUtility<T, ClipRRectDecoratorAttribute> {
   const ClipRRectUtility(super.builder);
   T call({
     BorderRadius? borderRadius,
@@ -386,7 +387,7 @@ class ClipRRectUtility<T extends StyleAttribute>
     Clip? clipBehavior,
   }) {
     return builder(
-      ClipRRectWidgetDecorator(
+      ClipRRectDecoratorAttribute(
         borderRadius: borderRadius,
         clipper: clipper,
         clipBehavior: clipBehavior,
@@ -396,29 +397,29 @@ class ClipRRectUtility<T extends StyleAttribute>
 }
 
 class ClipOvalUtility<T extends StyleAttribute>
-    extends MixUtility<T, ClipOvalWidgetDecorator> {
+    extends MixUtility<T, ClipOvalDecoratorAttribute> {
   const ClipOvalUtility(super.builder);
   T call({CustomClipper<Rect>? clipper, Clip? clipBehavior}) {
     return builder(
-      ClipOvalWidgetDecorator(clipper: clipper, clipBehavior: clipBehavior),
+      ClipOvalDecoratorAttribute(clipper: clipper, clipBehavior: clipBehavior),
     );
   }
 }
 
 class ClipRectUtility<T extends StyleAttribute>
-    extends MixUtility<T, ClipRectWidgetDecorator> {
+    extends MixUtility<T, ClipRectDecoratorAttribute> {
   const ClipRectUtility(super.builder);
   T call({CustomClipper<Rect>? clipper, Clip? clipBehavior}) {
     return builder(
-      ClipRectWidgetDecorator(clipper: clipper, clipBehavior: clipBehavior),
+      ClipRectDecoratorAttribute(clipper: clipper, clipBehavior: clipBehavior),
     );
   }
 }
 
 class ClipTriangleUtility<T extends StyleAttribute>
-    extends MixUtility<T, ClipTriangleWidgetDecorator> {
+    extends MixUtility<T, ClipTriangleDecoratorAttribute> {
   const ClipTriangleUtility(super.builder);
   T call({Clip? clipBehavior}) {
-    return builder(ClipTriangleWidgetDecorator(clipBehavior: clipBehavior));
+    return builder(ClipTriangleDecoratorAttribute(clipBehavior: clipBehavior));
   }
 }

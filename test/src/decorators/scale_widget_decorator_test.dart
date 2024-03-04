@@ -5,26 +5,26 @@ import 'package:mix/mix.dart';
 import '../../helpers/testing_utils.dart';
 
 void main() {
-  group('ScaleWidgetSpec', () {
+  group('ScaleDecoratorSpec', () {
     test('Constructor assigns scale correctly', () {
       const scale = 1.5;
-      const decorator = ScaleWidgetSpec(scale);
+      const decorator = ScaleDecoratorSpec(scale);
 
       expect(decorator.scale, scale);
     });
 
     test('Lerp method interpolates correctly', () {
-      const start = ScaleWidgetSpec(1.0);
-      const end = ScaleWidgetSpec(2.0);
+      const start = ScaleDecoratorSpec(1.0);
+      const end = ScaleDecoratorSpec(2.0);
       final result = start.lerp(end, 0.5);
 
       expect(result.scale, 1.5);
     });
 
     test('Equality and hashcode test', () {
-      const decorator1 = ScaleWidgetSpec(1.0);
-      const decorator2 = ScaleWidgetSpec(1.0);
-      const decorator3 = ScaleWidgetSpec(1.5);
+      const decorator1 = ScaleDecoratorSpec(1.0);
+      const decorator2 = ScaleDecoratorSpec(1.0);
+      const decorator3 = ScaleDecoratorSpec(1.5);
 
       expect(decorator1, decorator2);
       expect(decorator1.hashCode, decorator2.hashCode);
@@ -36,7 +36,7 @@ void main() {
       'Build method creates Transform.scale widget with correct scale',
       (WidgetTester tester) async {
         const scale = 1.5;
-        const decorator = ScaleWidgetSpec(scale);
+        const decorator = ScaleDecoratorSpec(scale);
 
         await tester.pumpMaterialApp(decorator.build(Container()));
 
@@ -52,29 +52,29 @@ void main() {
     );
   });
 
-  group('ScaleWidgetDecorator', () {
+  group('ScaleDecoratorAttribute', () {
     test('merge', () {
-      const decorator = ScaleWidgetDecorator(1.5);
-      const other = ScaleWidgetDecorator(1.6);
+      const decorator = ScaleDecoratorAttribute(1.5);
+      const other = ScaleDecoratorAttribute(1.6);
       final result = decorator.merge(other);
       expect(result, other);
     });
 
     test('resolve', () {
-      const decorator = ScaleWidgetDecorator(1.5);
+      const decorator = ScaleDecoratorAttribute(1.5);
       final result = decorator.resolve(EmptyMixData);
-      expect(result, isA<ScaleWidgetSpec>());
+      expect(result, isA<ScaleDecoratorSpec>());
     });
 
     test('equality', () {
-      const decorator = ScaleWidgetDecorator(1.5);
-      const other = ScaleWidgetDecorator(1.5);
+      const decorator = ScaleDecoratorAttribute(1.5);
+      const other = ScaleDecoratorAttribute(1.5);
       expect(decorator, other);
     });
 
     test('inequality', () {
-      const decorator = ScaleWidgetDecorator(1.5);
-      const other = ScaleWidgetDecorator(2.0);
+      const decorator = ScaleDecoratorAttribute(1.5);
+      const other = ScaleDecoratorAttribute(2.0);
       expect(decorator, isNot(equals(other)));
     });
   });

@@ -6,14 +6,14 @@ import '../../helpers/testing_utils.dart';
 
 void main() {
   group(
-    'SizedBoxWidgetSpec',
+    'SizedBoxDecoratorSpec',
     () {
       test(
         'Constructor assigns width and height correctly',
         () {
           const width = 100.0;
           const height = 100.0;
-          const decorator = SizedBoxWidgetSpec(
+          const decorator = SizedBoxDecoratorSpec(
             width: width,
             height: height,
           );
@@ -26,11 +26,11 @@ void main() {
       test(
         'Lerp method interpolates correctly',
         () {
-          const start = SizedBoxWidgetSpec(
+          const start = SizedBoxDecoratorSpec(
             width: 100.0,
             height: 100.0,
           );
-          const end = SizedBoxWidgetSpec(
+          const end = SizedBoxDecoratorSpec(
             width: 200.0,
             height: 200.0,
           );
@@ -47,15 +47,15 @@ void main() {
       test(
         'Equality and hashcode test',
         () {
-          const decorator1 = SizedBoxWidgetSpec(
+          const decorator1 = SizedBoxDecoratorSpec(
             width: 100.0,
             height: 100.0,
           );
-          const decorator2 = SizedBoxWidgetSpec(
+          const decorator2 = SizedBoxDecoratorSpec(
             width: 100.0,
             height: 100.0,
           );
-          const decorator3 = SizedBoxWidgetSpec(
+          const decorator3 = SizedBoxDecoratorSpec(
             width: 100.0,
             height: 200.0,
           );
@@ -72,7 +72,7 @@ void main() {
         (WidgetTester tester) async {
           const width = 100.0;
           const height = 100.0;
-          const decorator = SizedBoxWidgetSpec(
+          const decorator = SizedBoxDecoratorSpec(
             width: width,
             height: height,
           );

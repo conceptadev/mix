@@ -12,20 +12,21 @@ import '../factory/mix_provider_data.dart';
 /// A decorator that wraps a widget with the [Opacity] widget.
 ///
 /// The [Opacity] widget is used to make a widget partially transparent.
-class OpacityWidgetSpec extends DecoratorSpec<OpacityWidgetSpec> {
+class OpacityDecoratorSpec extends DecoratorSpec<OpacityDecoratorSpec> {
   /// The [opacity] argument must not be null and
   /// must be between 0.0 and 1.0 (inclusive).
   final double opacity;
-  const OpacityWidgetSpec(this.opacity);
+  const OpacityDecoratorSpec(this.opacity);
 
   @override
-  OpacityWidgetSpec lerp(OpacityWidgetSpec? other, double t) {
-    return OpacityWidgetSpec(lerpDouble(opacity, other?.opacity, t) ?? opacity);
+  OpacityDecoratorSpec lerp(OpacityDecoratorSpec? other, double t) {
+    return OpacityDecoratorSpec(
+        lerpDouble(opacity, other?.opacity, t) ?? opacity);
   }
 
   @override
-  OpacityWidgetSpec copyWith({double? opacity}) {
-    return OpacityWidgetSpec(opacity ?? this.opacity);
+  OpacityDecoratorSpec copyWith({double? opacity}) {
+    return OpacityDecoratorSpec(opacity ?? this.opacity);
   }
 
   @override
@@ -42,19 +43,19 @@ class OpacityWidgetSpec extends DecoratorSpec<OpacityWidgetSpec> {
   }
 }
 
-class OpacityWidgetDecorator
-    extends WidgetDecorator<OpacityWidgetDecorator, OpacityWidgetSpec> {
+class OpacityDecoratorAttribute extends DecoratorAttribute<
+    OpacityDecoratorAttribute, OpacityDecoratorSpec> {
   final double opacity;
-  const OpacityWidgetDecorator(this.opacity);
+  const OpacityDecoratorAttribute(this.opacity);
 
   @override
-  OpacityWidgetDecorator merge(OpacityWidgetDecorator? other) {
-    return OpacityWidgetDecorator(other?.opacity ?? opacity);
+  OpacityDecoratorAttribute merge(OpacityDecoratorAttribute? other) {
+    return OpacityDecoratorAttribute(other?.opacity ?? opacity);
   }
 
   @override
-  OpacityWidgetSpec resolve(MixData mix) {
-    return OpacityWidgetSpec(opacity);
+  OpacityDecoratorSpec resolve(MixData mix) {
+    return OpacityDecoratorSpec(opacity);
   }
 
   @override
@@ -62,7 +63,7 @@ class OpacityWidgetDecorator
 }
 
 class OpacityUtility<T extends StyleAttribute>
-    extends MixUtility<T, OpacityWidgetDecorator> {
+    extends MixUtility<T, OpacityDecoratorAttribute> {
   const OpacityUtility(super.builder);
-  T call(double value) => builder(OpacityWidgetDecorator(value));
+  T call(double value) => builder(OpacityDecoratorAttribute(value));
 }

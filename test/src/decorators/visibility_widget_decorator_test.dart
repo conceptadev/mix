@@ -5,17 +5,17 @@ import 'package:mix/src/decorators/visibility_widget_decorator.dart';
 import '../../helpers/testing_utils.dart';
 
 void main() {
-  group('VisibilityWidgetSpec Tests', () {
+  group('VisibilityDecoratorSpec Tests', () {
     test('Constructor assigns visible correctly', () {
       const visible = true;
-      const decorator = VisibilityWidgetDecorator(visible);
+      const decorator = VisibilityDecoratorAttribute(visible);
 
       expect(decorator.visible, visible);
     });
 
     test('Lerp method interpolates correctly', () {
-      const start = VisibilityWidgetSpec(true);
-      const end = VisibilityWidgetSpec(false);
+      const start = VisibilityDecoratorSpec(true);
+      const end = VisibilityDecoratorSpec(false);
       final afterResult = start.lerp(end, 0.5);
       final beforeResult = start.lerp(end, 0.49);
 
@@ -24,9 +24,9 @@ void main() {
     });
 
     test('Equality and hashcode test', () {
-      const decorator1 = VisibilityWidgetSpec(true);
-      const decorator2 = VisibilityWidgetSpec(true);
-      const decorator3 = VisibilityWidgetSpec(false);
+      const decorator1 = VisibilityDecoratorSpec(true);
+      const decorator2 = VisibilityDecoratorSpec(true);
+      const decorator3 = VisibilityDecoratorSpec(false);
 
       expect(decorator1, decorator2);
       expect(decorator1.hashCode, decorator2.hashCode);
@@ -38,7 +38,7 @@ void main() {
       'Build method creates Visibility widget with correct visible property',
       (WidgetTester tester) async {
         const visible = true;
-        const decorator = VisibilityWidgetSpec(visible);
+        const decorator = VisibilityDecoratorSpec(visible);
 
         await tester.pumpMaterialApp(decorator.build(Container()));
 
@@ -52,30 +52,30 @@ void main() {
     );
   });
 
-  group('VisibilityWidgetDecorator', () {
+  group('VisibilityDecoratorAttribute', () {
     test('merge', () {
-      const decorator = VisibilityWidgetDecorator(true);
-      const other = VisibilityWidgetDecorator(true);
+      const decorator = VisibilityDecoratorAttribute(true);
+      const other = VisibilityDecoratorAttribute(true);
       final result = decorator.merge(other);
       expect(result, decorator);
     });
 
     test('resolve', () {
-      const decorator = VisibilityWidgetDecorator(true);
+      const decorator = VisibilityDecoratorAttribute(true);
       final result = decorator.resolve(EmptyMixData);
-      expect(result, isA<VisibilityWidgetSpec>());
+      expect(result, isA<VisibilityDecoratorSpec>());
     });
 
     // equality
     test('equality', () {
-      const decorator = VisibilityWidgetDecorator(true);
-      const other = VisibilityWidgetDecorator(true);
+      const decorator = VisibilityDecoratorAttribute(true);
+      const other = VisibilityDecoratorAttribute(true);
       expect(decorator, other);
     });
 
     test('inequality', () {
-      const decorator = VisibilityWidgetDecorator(true);
-      const other = VisibilityWidgetDecorator(false);
+      const decorator = VisibilityDecoratorAttribute(true);
+      const other = VisibilityDecoratorAttribute(false);
       expect(decorator, isNot(equals(other)));
     });
   });

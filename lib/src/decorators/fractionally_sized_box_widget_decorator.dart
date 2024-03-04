@@ -9,25 +9,25 @@ import '../core/attribute.dart';
 import '../core/decorator.dart';
 import '../factory/mix_provider_data.dart';
 
-class FractionallySizedBoxWidgetSpec
-    extends DecoratorSpec<FractionallySizedBoxWidgetSpec> {
+class FractionallySizedBoxDecoratorSpec
+    extends DecoratorSpec<FractionallySizedBoxDecoratorSpec> {
   final double? widthFactor;
   final double? heightFactor;
   final AlignmentGeometry? alignment;
 
-  const FractionallySizedBoxWidgetSpec({
+  const FractionallySizedBoxDecoratorSpec({
     this.widthFactor,
     this.heightFactor,
     this.alignment,
   });
 
   @override
-  FractionallySizedBoxWidgetSpec copyWith({
+  FractionallySizedBoxDecoratorSpec copyWith({
     double? widthFactor,
     double? heightFactor,
     AlignmentGeometry? alignment,
   }) {
-    return FractionallySizedBoxWidgetSpec(
+    return FractionallySizedBoxDecoratorSpec(
       widthFactor: widthFactor ?? this.widthFactor,
       heightFactor: heightFactor ?? this.heightFactor,
       alignment: alignment ?? this.alignment,
@@ -35,11 +35,11 @@ class FractionallySizedBoxWidgetSpec
   }
 
   @override
-  FractionallySizedBoxWidgetSpec lerp(
-    FractionallySizedBoxWidgetSpec? other,
+  FractionallySizedBoxDecoratorSpec lerp(
+    FractionallySizedBoxDecoratorSpec? other,
     double t,
   ) {
-    return FractionallySizedBoxWidgetSpec(
+    return FractionallySizedBoxDecoratorSpec(
       widthFactor: lerpDouble(widthFactor, other?.widthFactor, t),
       heightFactor: lerpDouble(heightFactor, other?.heightFactor, t),
       alignment: AlignmentGeometry.lerp(alignment, other?.alignment, t),
@@ -60,23 +60,23 @@ class FractionallySizedBoxWidgetSpec
   }
 }
 
-class FractionallySizedBoxWidgetDecorator extends WidgetDecorator<
-    FractionallySizedBoxWidgetDecorator, FractionallySizedBoxWidgetSpec> {
+class FractionallySizedBoxDecoratorAttribute extends DecoratorAttribute<
+    FractionallySizedBoxDecoratorAttribute, FractionallySizedBoxDecoratorSpec> {
   final double? widthFactor;
   final double? heightFactor;
   final AlignmentGeometry? alignment;
 
-  const FractionallySizedBoxWidgetDecorator({
+  const FractionallySizedBoxDecoratorAttribute({
     this.widthFactor,
     this.heightFactor,
     this.alignment,
   });
 
   @override
-  FractionallySizedBoxWidgetDecorator merge(
-    FractionallySizedBoxWidgetDecorator? other,
+  FractionallySizedBoxDecoratorAttribute merge(
+    FractionallySizedBoxDecoratorAttribute? other,
   ) {
-    return FractionallySizedBoxWidgetDecorator(
+    return FractionallySizedBoxDecoratorAttribute(
       widthFactor: other?.widthFactor ?? widthFactor,
       heightFactor: other?.heightFactor ?? heightFactor,
       alignment: other?.alignment ?? alignment,
@@ -84,8 +84,8 @@ class FractionallySizedBoxWidgetDecorator extends WidgetDecorator<
   }
 
   @override
-  FractionallySizedBoxWidgetSpec resolve(MixData mix) {
-    return FractionallySizedBoxWidgetSpec(
+  FractionallySizedBoxDecoratorSpec resolve(MixData mix) {
+    return FractionallySizedBoxDecoratorSpec(
       widthFactor: widthFactor,
       heightFactor: heightFactor,
       alignment: alignment,
@@ -97,7 +97,7 @@ class FractionallySizedBoxWidgetDecorator extends WidgetDecorator<
 }
 
 class FractionallySizedBoxDecoratorUtility<T extends StyleAttribute>
-    extends MixUtility<T, FractionallySizedBoxWidgetDecorator> {
+    extends MixUtility<T, FractionallySizedBoxDecoratorAttribute> {
   const FractionallySizedBoxDecoratorUtility(super.builder);
 
   T call({
@@ -106,7 +106,7 @@ class FractionallySizedBoxDecoratorUtility<T extends StyleAttribute>
     double? heightFactor,
   }) {
     return builder(
-      FractionallySizedBoxWidgetDecorator(
+      FractionallySizedBoxDecoratorAttribute(
         widthFactor: widthFactor,
         heightFactor: heightFactor,
         alignment: alignment,

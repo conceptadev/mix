@@ -8,21 +8,21 @@ import '../core/decorator.dart';
 import '../factory/mix_provider_data.dart';
 import '../helpers/lerp_helpers.dart';
 
-class RotatedBoxWidgetSpec extends DecoratorSpec<RotatedBoxWidgetSpec> {
+class RotatedBoxDecoratorSpec extends DecoratorSpec<RotatedBoxDecoratorSpec> {
   final int quarterTurns;
-  const RotatedBoxWidgetSpec(this.quarterTurns);
+  const RotatedBoxDecoratorSpec(this.quarterTurns);
 
   @override
-  RotatedBoxWidgetSpec lerp(RotatedBoxWidgetSpec? other, double t) {
+  RotatedBoxDecoratorSpec lerp(RotatedBoxDecoratorSpec? other, double t) {
     // Use lerpInt for interpolating between integers
-    return RotatedBoxWidgetSpec(
+    return RotatedBoxDecoratorSpec(
       lerpInt(quarterTurns, other?.quarterTurns ?? quarterTurns, t),
     );
   }
 
   @override
-  RotatedBoxWidgetSpec copyWith({int? quarterTurns}) {
-    return RotatedBoxWidgetSpec(quarterTurns ?? this.quarterTurns);
+  RotatedBoxDecoratorSpec copyWith({int? quarterTurns}) {
+    return RotatedBoxDecoratorSpec(quarterTurns ?? this.quarterTurns);
   }
 
   @override
@@ -34,31 +34,31 @@ class RotatedBoxWidgetSpec extends DecoratorSpec<RotatedBoxWidgetSpec> {
   }
 }
 
-class RotatedBoxWidgetDecorator
-    extends WidgetDecorator<RotatedBoxWidgetDecorator, RotatedBoxWidgetSpec> {
+class RotatedBoxDecoratorAttribute extends DecoratorAttribute<
+    RotatedBoxDecoratorAttribute, RotatedBoxDecoratorSpec> {
   final int quarterTurns;
-  const RotatedBoxWidgetDecorator(this.quarterTurns);
+  const RotatedBoxDecoratorAttribute(this.quarterTurns);
 
   @override
-  RotatedBoxWidgetDecorator merge(RotatedBoxWidgetDecorator? other) {
+  RotatedBoxDecoratorAttribute merge(RotatedBoxDecoratorAttribute? other) {
     // Merge by prioritizing the properties of the other instance if available
-    return RotatedBoxWidgetDecorator(other?.quarterTurns ?? quarterTurns);
+    return RotatedBoxDecoratorAttribute(other?.quarterTurns ?? quarterTurns);
   }
 
   @override
-  RotatedBoxWidgetSpec resolve(MixData mix) =>
-      RotatedBoxWidgetSpec(quarterTurns);
+  RotatedBoxDecoratorSpec resolve(MixData mix) =>
+      RotatedBoxDecoratorSpec(quarterTurns);
 
   @override
   List<Object?> get props => [quarterTurns];
 }
 
 class RotatedBoxWidgetUtility<T extends StyleAttribute>
-    extends MixUtility<T, RotatedBoxWidgetDecorator> {
+    extends MixUtility<T, RotatedBoxDecoratorAttribute> {
   const RotatedBoxWidgetUtility(super.builder);
-  T d90() => builder(const RotatedBoxWidgetDecorator(1));
-  T d180() => builder(const RotatedBoxWidgetDecorator(2));
-  T d270() => builder(const RotatedBoxWidgetDecorator(3));
+  T d90() => builder(const RotatedBoxDecoratorAttribute(1));
+  T d180() => builder(const RotatedBoxDecoratorAttribute(2));
+  T d270() => builder(const RotatedBoxDecoratorAttribute(3));
 
-  T call(int value) => builder(RotatedBoxWidgetDecorator(value));
+  T call(int value) => builder(RotatedBoxDecoratorAttribute(value));
 }

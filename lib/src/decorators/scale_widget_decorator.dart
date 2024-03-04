@@ -9,18 +9,18 @@ import '../core/attribute.dart';
 import '../core/decorator.dart';
 import '../factory/mix_provider_data.dart';
 
-class ScaleWidgetSpec extends DecoratorSpec<ScaleWidgetSpec> {
+class ScaleDecoratorSpec extends DecoratorSpec<ScaleDecoratorSpec> {
   final double scale;
-  const ScaleWidgetSpec(this.scale);
+  const ScaleDecoratorSpec(this.scale);
 
   @override
-  ScaleWidgetSpec lerp(ScaleWidgetSpec? other, double t) {
-    return ScaleWidgetSpec(lerpDouble(scale, other?.scale, t) ?? scale);
+  ScaleDecoratorSpec lerp(ScaleDecoratorSpec? other, double t) {
+    return ScaleDecoratorSpec(lerpDouble(scale, other?.scale, t) ?? scale);
   }
 
   @override
-  ScaleWidgetSpec copyWith({double? scale}) {
-    return ScaleWidgetSpec(scale ?? this.scale);
+  ScaleDecoratorSpec copyWith({double? scale}) {
+    return ScaleDecoratorSpec(scale ?? this.scale);
   }
 
   @override
@@ -32,19 +32,19 @@ class ScaleWidgetSpec extends DecoratorSpec<ScaleWidgetSpec> {
   }
 }
 
-class ScaleWidgetDecorator
-    extends WidgetDecorator<ScaleWidgetDecorator, ScaleWidgetSpec> {
+class ScaleDecoratorAttribute
+    extends DecoratorAttribute<ScaleDecoratorAttribute, ScaleDecoratorSpec> {
   final double scale;
-  const ScaleWidgetDecorator(this.scale);
+  const ScaleDecoratorAttribute(this.scale);
 
   @override
-  ScaleWidgetDecorator merge(ScaleWidgetDecorator? other) {
-    return ScaleWidgetDecorator(other?.scale ?? scale);
+  ScaleDecoratorAttribute merge(ScaleDecoratorAttribute? other) {
+    return ScaleDecoratorAttribute(other?.scale ?? scale);
   }
 
   @override
-  ScaleWidgetSpec resolve(MixData mix) {
-    return ScaleWidgetSpec(scale);
+  ScaleDecoratorSpec resolve(MixData mix) {
+    return ScaleDecoratorSpec(scale);
   }
 
   @override
@@ -52,7 +52,7 @@ class ScaleWidgetDecorator
 }
 
 class ScaleUtility<T extends StyleAttribute>
-    extends MixUtility<T, ScaleWidgetDecorator> {
+    extends MixUtility<T, ScaleDecoratorAttribute> {
   const ScaleUtility(super.builder);
-  T call(double value) => builder(ScaleWidgetDecorator(value));
+  T call(double value) => builder(ScaleDecoratorAttribute(value));
 }

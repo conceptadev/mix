@@ -6,10 +6,10 @@ import 'package:mix/mix.dart';
 import '../../helpers/testing_utils.dart';
 
 void main() {
-  group('TransformWidgetSpec', () {
+  group('TransformDecoratorSpec', () {
     test('lerp', () {
-      final spec = TransformWidgetSpec(transform: Matrix4.rotationX(0.5));
-      final other = TransformWidgetSpec(transform: Matrix4.rotationX(1.0));
+      final spec = TransformDecoratorSpec(transform: Matrix4.rotationX(0.5));
+      final other = TransformDecoratorSpec(transform: Matrix4.rotationX(1.0));
       final result = spec.lerp(other, 0.5);
       expect(
           result.transform,
@@ -20,16 +20,16 @@ void main() {
     });
 
     test('copyWith', () {
-      final spec = TransformWidgetSpec(transform: Matrix4.rotationX(0.5));
+      final spec = TransformDecoratorSpec(transform: Matrix4.rotationX(0.5));
       final result = spec.copyWith(
         transform: Matrix4.rotationX(0.1),
       );
-      expect(result, isA<TransformWidgetSpec>());
+      expect(result, isA<TransformDecoratorSpec>());
       expect(result.transform, Matrix4.rotationX(0.1));
     });
 
     testWidgets('build', (tester) async {
-      const decorator = TransformWidgetSpec();
+      const decorator = TransformDecoratorSpec();
 
       await tester.pumpMaterialApp(decorator.build(Container()));
 
@@ -42,50 +42,50 @@ void main() {
 
     // equality
     test('equality', () {
-      final spec = TransformWidgetSpec(transform: Matrix4.rotationX(0.5));
-      final other = TransformWidgetSpec(transform: Matrix4.rotationX(0.5));
+      final spec = TransformDecoratorSpec(transform: Matrix4.rotationX(0.5));
+      final other = TransformDecoratorSpec(transform: Matrix4.rotationX(0.5));
       expect(spec, other);
     });
 
     test('inequality', () {
-      final spec = TransformWidgetSpec(transform: Matrix4.rotationX(0.5));
-      final other = TransformWidgetSpec(transform: Matrix4.rotationX(1.0));
+      final spec = TransformDecoratorSpec(transform: Matrix4.rotationX(0.5));
+      final other = TransformDecoratorSpec(transform: Matrix4.rotationX(1.0));
       expect(spec, isNot(other));
     });
   });
 
   group(
-    'TransformWidgetDecorator',
+    'TransformDecoratorAttribute',
     () {
       test('merge', () {
-        const decorator = TransformWidgetDecorator();
-        const other = TransformWidgetDecorator();
+        const decorator = TransformDecoratorAttribute();
+        const other = TransformDecoratorAttribute();
         final result = decorator.merge(other);
         expect(result, decorator);
       });
 
       test('resolve', () {
         final decorator =
-            TransformWidgetDecorator(transform: Matrix4.rotationX(0.5));
+            TransformDecoratorAttribute(transform: Matrix4.rotationX(0.5));
         final result = decorator.resolve(EmptyMixData);
-        expect(result, isA<TransformWidgetSpec>());
+        expect(result, isA<TransformDecoratorSpec>());
         expect(result.transform, Matrix4.rotationX(0.5));
       });
 
       // equality
       test('equality', () {
         final decorator =
-            TransformWidgetDecorator(transform: Matrix4.rotationX(0.5));
+            TransformDecoratorAttribute(transform: Matrix4.rotationX(0.5));
         final other =
-            TransformWidgetDecorator(transform: Matrix4.rotationX(0.5));
+            TransformDecoratorAttribute(transform: Matrix4.rotationX(0.5));
         expect(decorator, other);
       });
 
       test('inequality', () {
         final decorator =
-            TransformWidgetDecorator(transform: Matrix4.rotationX(0.5));
+            TransformDecoratorAttribute(transform: Matrix4.rotationX(0.5));
         final other =
-            TransformWidgetDecorator(transform: Matrix4.rotationX(1.0));
+            TransformDecoratorAttribute(transform: Matrix4.rotationX(1.0));
         expect(decorator, isNot(equals(other)));
       });
     },

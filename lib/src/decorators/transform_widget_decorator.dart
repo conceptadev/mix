@@ -7,20 +7,20 @@ import '../core/attribute.dart';
 import '../core/decorator.dart';
 import '../factory/mix_provider_data.dart';
 
-class TransformWidgetSpec extends DecoratorSpec<TransformWidgetSpec> {
+class TransformDecoratorSpec extends DecoratorSpec<TransformDecoratorSpec> {
   final Matrix4? transform;
-  const TransformWidgetSpec({this.transform});
+  const TransformDecoratorSpec({this.transform});
 
   @override
-  TransformWidgetSpec lerp(TransformWidgetSpec? other, double t) {
-    return TransformWidgetSpec(
+  TransformDecoratorSpec lerp(TransformDecoratorSpec? other, double t) {
+    return TransformDecoratorSpec(
       transform: Matrix4Tween(begin: transform, end: other?.transform).lerp(t),
     );
   }
 
   @override
-  TransformWidgetSpec copyWith({Matrix4? transform}) {
-    return TransformWidgetSpec(transform: transform ?? this.transform);
+  TransformDecoratorSpec copyWith({Matrix4? transform}) {
+    return TransformDecoratorSpec(transform: transform ?? this.transform);
   }
 
   @override
@@ -32,19 +32,21 @@ class TransformWidgetSpec extends DecoratorSpec<TransformWidgetSpec> {
   }
 }
 
-class TransformWidgetDecorator
-    extends WidgetDecorator<TransformWidgetDecorator, TransformWidgetSpec> {
+class TransformDecoratorAttribute extends DecoratorAttribute<
+    TransformDecoratorAttribute, TransformDecoratorSpec> {
   final Matrix4? transform;
-  const TransformWidgetDecorator({this.transform});
+  const TransformDecoratorAttribute({this.transform});
 
   @override
-  TransformWidgetDecorator merge(TransformWidgetDecorator? other) {
-    return TransformWidgetDecorator(transform: other?.transform ?? transform);
+  TransformDecoratorAttribute merge(TransformDecoratorAttribute? other) {
+    return TransformDecoratorAttribute(
+      transform: other?.transform ?? transform,
+    );
   }
 
   @override
-  TransformWidgetSpec resolve(MixData mix) {
-    return TransformWidgetSpec(transform: transform);
+  TransformDecoratorSpec resolve(MixData mix) {
+    return TransformDecoratorSpec(transform: transform);
   }
 
   @override
@@ -52,7 +54,8 @@ class TransformWidgetDecorator
 }
 
 class TransformUtility<T extends StyleAttribute>
-    extends MixUtility<T, TransformWidgetDecorator> {
+    extends MixUtility<T, TransformDecoratorAttribute> {
   const TransformUtility(super.builder);
-  T call(Matrix4 value) => builder(TransformWidgetDecorator(transform: value));
+  T call(Matrix4 value) =>
+      builder(TransformDecoratorAttribute(transform: value));
 }

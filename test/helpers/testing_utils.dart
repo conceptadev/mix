@@ -246,10 +246,10 @@ class CustomWidgetDecoratorSpec
   }
 }
 
-class CustomWidgetDecorator
-    extends WidgetDecorator<CustomWidgetDecorator, CustomWidgetDecoratorSpec> {
+class CustomDecoratorAttribute extends DecoratorAttribute<
+    CustomDecoratorAttribute, CustomWidgetDecoratorSpec> {
   final bool? value;
-  const CustomWidgetDecorator([this.value = true]);
+  const CustomDecoratorAttribute([this.value = true]);
 
   @override
   CustomWidgetDecoratorSpec resolve(MixData mix) {
@@ -257,8 +257,8 @@ class CustomWidgetDecorator
   }
 
   @override
-  CustomWidgetDecorator merge(CustomWidgetDecorator? other) {
-    return CustomWidgetDecorator(other?.value ?? true);
+  CustomDecoratorAttribute merge(CustomDecoratorAttribute? other) {
+    return CustomDecoratorAttribute(other?.value ?? true);
   }
 
   @override

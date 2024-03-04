@@ -8,20 +8,20 @@ import '../core/decorator.dart';
 import '../factory/mix_provider_data.dart';
 import '../helpers/lerp_helpers.dart';
 
-class VisibilityWidgetSpec extends DecoratorSpec<VisibilityWidgetSpec> {
+class VisibilityDecoratorSpec extends DecoratorSpec<VisibilityDecoratorSpec> {
   final bool visible;
-  const VisibilityWidgetSpec(this.visible);
+  const VisibilityDecoratorSpec(this.visible);
 
   @override
-  VisibilityWidgetSpec lerp(VisibilityWidgetSpec? other, double t) {
-    return VisibilityWidgetSpec(
+  VisibilityDecoratorSpec lerp(VisibilityDecoratorSpec? other, double t) {
+    return VisibilityDecoratorSpec(
       lerpSnap(visible, other?.visible, t) ?? visible,
     );
   }
 
   @override
-  VisibilityWidgetSpec copyWith({bool? visible}) {
-    return VisibilityWidgetSpec(visible ?? this.visible);
+  VisibilityDecoratorSpec copyWith({bool? visible}) {
+    return VisibilityDecoratorSpec(visible ?? this.visible);
   }
 
   @override
@@ -33,19 +33,19 @@ class VisibilityWidgetSpec extends DecoratorSpec<VisibilityWidgetSpec> {
   }
 }
 
-class VisibilityWidgetDecorator
-    extends WidgetDecorator<VisibilityWidgetDecorator, VisibilityWidgetSpec> {
+class VisibilityDecoratorAttribute extends DecoratorAttribute<
+    VisibilityDecoratorAttribute, VisibilityDecoratorSpec> {
   final bool visible;
-  const VisibilityWidgetDecorator(this.visible);
+  const VisibilityDecoratorAttribute(this.visible);
 
   @override
-  VisibilityWidgetDecorator merge(VisibilityWidgetDecorator? other) {
-    return VisibilityWidgetDecorator(other?.visible ?? visible);
+  VisibilityDecoratorAttribute merge(VisibilityDecoratorAttribute? other) {
+    return VisibilityDecoratorAttribute(other?.visible ?? visible);
   }
 
   @override
-  VisibilityWidgetSpec resolve(MixData mix) {
-    return VisibilityWidgetSpec(visible);
+  VisibilityDecoratorSpec resolve(MixData mix) {
+    return VisibilityDecoratorSpec(visible);
   }
 
   @override
@@ -53,10 +53,10 @@ class VisibilityWidgetDecorator
 }
 
 class VisibilityUtility<T extends StyleAttribute>
-    extends MixUtility<T, VisibilityWidgetDecorator> {
+    extends MixUtility<T, VisibilityDecoratorAttribute> {
   const VisibilityUtility(super.builder);
-  T on() => builder(const VisibilityWidgetDecorator(true));
-  T off() => builder(const VisibilityWidgetDecorator(false));
+  T on() => builder(const VisibilityDecoratorAttribute(true));
+  T off() => builder(const VisibilityDecoratorAttribute(false));
 
-  T call(bool value) => builder(VisibilityWidgetDecorator(value));
+  T call(bool value) => builder(VisibilityDecoratorAttribute(value));
 }
