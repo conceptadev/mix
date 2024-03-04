@@ -149,7 +149,7 @@ void main() {
         expect(
           find.descendant(
             of: find.byKey(key),
-            matching: find.byType(RenderWidgetDecorators),
+            matching: find.byType(RenderDecoratorAttributes),
           ),
           findsOneWidget,
         );

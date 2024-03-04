@@ -26,6 +26,7 @@ void main() {
     const intrinsicWidth =
         IntrinsicWidthWidgetUtility(UtilityTestAttribute.new);
     const align = AlignWidgetUtility(UtilityTestAttribute.new);
+
     test('aspectRatio creates AspectRatioDecorator correctly', () {
       final aspectRatioDecorator = aspectRatio(2.0);
 
