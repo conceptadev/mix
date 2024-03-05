@@ -15,9 +15,8 @@ import '../src/utils/context_variant_util/on_helper_util.dart';
 import '../src/utils/context_variant_util/on_orientation_util.dart';
 import '../src/utils/helper_util.dart';
 import '../src/variants/variant.dart';
-import 'attributes/scalars/scalar_util.dart';
 import 'core/attribute.dart';
-import 'decorators/widget_decorators.dart';
+import 'decorators/clip_widget_decorator.dart';
 import 'decorators/widget_decorators_util.dart';
 import 'factory/style_mix.dart';
 import 'specs/image/image_util.dart';
@@ -376,7 +375,7 @@ final disabled = onDisabled;
 final enabled = onEnabled;
 
 @Deprecated('Use direct clip utility for example clip.rrect becomes clipRRect')
-final clip = ClipDecoratorUtility((value) => value);
+const clip = ClipDecoratorUtility();
 
 @Deprecated('Use onPressed instead')
 final press = onPressed;
@@ -478,29 +477,14 @@ final textAlign = text.textAlign;
 final shadow = text.style.shadow;
 
 /// A utility class for creating [ClipDecorator]s.
-class ClipDecoratorUtility<T extends StyleAttribute>
-    extends MixUtility<T, ClipDecorator> {
-  const ClipDecoratorUtility(super.builder);
+class ClipDecoratorUtility {
+  final ClipPathUtility path = const ClipPathUtility(selfBuilder);
+  final ClipOvalUtility oval = const ClipOvalUtility(selfBuilder);
+  final ClipRectUtility rect = const ClipRectUtility(selfBuilder);
+  final ClipRRectUtility rrect = const ClipRRectUtility(selfBuilder);
+  final ClipTriangleUtility triangle = const ClipTriangleUtility(selfBuilder);
 
-  ClipPathUtility<T> get path {
-    return ClipPathUtility(builder);
-  }
-
-  ClipOvalUtility<T> get oval {
-    return ClipOvalUtility(builder);
-  }
-
-  ClipRectUtility<T> get rect {
-    return ClipRectUtility(builder);
-  }
-
-  ClipRRectUtility<T> get rrect {
-    return ClipRRectUtility(builder);
-  }
-
-  ClipTriangleUtility<T> get triangle {
-    return ClipTriangleUtility(builder);
-  }
+  const ClipDecoratorUtility();
 }
 
 @Deprecated('Use image.color instead')

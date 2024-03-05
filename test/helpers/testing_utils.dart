@@ -220,21 +220,49 @@ class UtilityTestDtoAttribute<T extends Dto<V>, V>
   }
 }
 
-class CustomWidgetDecorator extends WidgetDecorator<CustomWidgetDecorator> {
-  const CustomWidgetDecorator({super.key});
+class CustomWidgetDecoratorSpec
+    extends DecoratorSpec<CustomWidgetDecoratorSpec> {
+  final bool value;
+  const CustomWidgetDecoratorSpec(this.value);
+
   @override
-  CustomWidgetDecorator lerp(CustomWidgetDecorator? other, double t) {
+  CustomWidgetDecoratorSpec copyWith({bool? value}) {
+    return CustomWidgetDecoratorSpec(value ?? this.value);
+  }
+
+  @override
+  CustomWidgetDecoratorSpec lerp(CustomWidgetDecoratorSpec? other, double t) {
     if (other == null) return this;
 
-    return lerpSnap(this, other, t);
+    return CustomWidgetDecoratorSpec(lerpSnap(value, other.value, t) ?? value);
   }
 
   @override
-  get props => [];
+  get props => [value];
+
   @override
-  Widget build(MixData mix, Widget child) {
+  Widget build(Widget child) {
     return Padding(padding: const EdgeInsets.all(8.0), child: child);
   }
+}
+
+class CustomDecoratorAttribute extends DecoratorAttribute<
+    CustomDecoratorAttribute, CustomWidgetDecoratorSpec> {
+  final bool? value;
+  const CustomDecoratorAttribute([this.value = true]);
+
+  @override
+  CustomWidgetDecoratorSpec resolve(MixData mix) {
+    return CustomWidgetDecoratorSpec(value ?? true);
+  }
+
+  @override
+  CustomDecoratorAttribute merge(CustomDecoratorAttribute? other) {
+    return CustomDecoratorAttribute(other?.value ?? true);
+  }
+
+  @override
+  get props => [value];
 }
 
 class WidgetWithTestableBuild extends StyledWidget {

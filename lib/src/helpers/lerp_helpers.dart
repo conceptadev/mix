@@ -38,7 +38,10 @@ int lerpInt(int? a, int? b, double t) {
 /// String result = lerpSnap(from, to, t);
 /// print(result); // Output: 'World'
 /// ```
-P lerpSnap<P>(P from, P to, double t) {
+P? lerpSnap<P>(P? from, P? to, double t) {
+  if (from == null) return to;
+  if (to == null) return from;
+
   return t < 0.5 ? from : to;
 }
 
