@@ -4,6 +4,5 @@
   "decorators": "Decorators",
   "theming": "Theming",
   "design-tokens": "Design Tokens",
-  "directives": "Directives",
-  "new-widgets": "Supporting new Widgets"
+  "directives": "Directives"
 }
