@@ -440,7 +440,7 @@ class _TestableRenderDecorator extends StatelessWidget {
         context,
         style,
       ),
-      child: const SizedBox(),
+      child: Container(),
     );
   }
 }
