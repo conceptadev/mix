@@ -21,7 +21,8 @@ class OpacityDecoratorSpec extends DecoratorSpec<OpacityDecoratorSpec> {
   @override
   OpacityDecoratorSpec lerp(OpacityDecoratorSpec? other, double t) {
     return OpacityDecoratorSpec(
-        lerpDouble(opacity, other?.opacity, t) ?? opacity);
+      lerpDouble(opacity, other?.opacity, t) ?? opacity,
+    );
   }
 
   @override

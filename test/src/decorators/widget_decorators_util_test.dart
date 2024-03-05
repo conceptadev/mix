@@ -201,4 +201,246 @@ void main() {
       expect(widget.alignment, Alignment.center);
     });
   });
+  group('Applying Decorators in Style', () {
+    testWidgets(
+      'Applying an intrinsicHeight must add an IntrinsicHeight in widget tree',
+      (tester) async {
+        await tester.pumpWidget(
+          _TestableRenderDecorator(
+            Style(
+              intrinsicHeight(),
+            ),
+          ),
+        );
+
+        _expectOneWidgetOfType<IntrinsicHeight>();
+      },
+    );
+
+    testWidgets(
+      'Applying a scale must add a ScaleTransition in widget tree',
+      (tester) async {
+        await tester.pumpWidget(
+          _TestableRenderDecorator(
+            Style(
+              scale(2.0),
+            ),
+          ),
+        );
+
+        _expectOneWidgetOfType<Transform>();
+      },
+    );
+
+    testWidgets(
+      'Applying an opacity must add an Opacity in widget tree',
+      (tester) async {
+        await tester.pumpWidget(
+          _TestableRenderDecorator(
+            Style(
+              opacity(0.5),
+            ),
+          ),
+        );
+
+        _expectOneWidgetOfType<Opacity>();
+      },
+    );
+
+    testWidgets(
+      'Applying a clipPath must add a ClipPath in widget tree',
+      (tester) async {
+        await tester.pumpWidget(
+          _TestableRenderDecorator(
+            Style(
+              clipPath(),
+            ),
+          ),
+        );
+
+        _expectOneWidgetOfType<ClipPath>();
+      },
+    );
+
+    testWidgets(
+      'Applying a clipRRect must add a ClipRRect in widget tree',
+      (tester) async {
+        await tester.pumpWidget(
+          _TestableRenderDecorator(
+            Style(
+              clipRRect(),
+            ),
+          ),
+        );
+
+        _expectOneWidgetOfType<ClipRRect>();
+      },
+    );
+
+    testWidgets(
+      'Applying a clipOval must add a ClipOval in widget tree',
+      (tester) async {
+        await tester.pumpWidget(
+          _TestableRenderDecorator(
+            Style(
+              clipOval(),
+            ),
+          ),
+        );
+
+        _expectOneWidgetOfType<ClipOval>();
+      },
+    );
+
+    testWidgets(
+      'Applying a clipRect must add a ClipRect in widget tree',
+      (tester) async {
+        await tester.pumpWidget(
+          _TestableRenderDecorator(
+            Style(
+              clipRect(),
+            ),
+          ),
+        );
+
+        _expectOneWidgetOfType<ClipRect>();
+      },
+    );
+
+    testWidgets(
+      'Applying a visibility must add a Visibility widget in the widget tree',
+      (tester) async {
+        await tester.pumpWidget(
+          _TestableRenderDecorator(
+            Style(
+              visibility.off(),
+            ),
+          ),
+        );
+
+        _expectOneWidgetOfType<Visibility>();
+      },
+    );
+
+    testWidgets(
+      'Applying an aspectRatio must add an AspectRatio widget in the widget tree',
+      (tester) async {
+        await tester.pumpWidget(
+          _TestableRenderDecorator(
+            Style(
+              aspectRatio(2),
+            ),
+          ),
+        );
+
+        _expectOneWidgetOfType<AspectRatio>();
+      },
+    );
+
+    testWidgets(
+      'Applying a flexible must add a Flexible widget in the widget tree',
+      (tester) async {
+        await tester.pumpWidget(
+          Column(
+            children: [
+              _TestableRenderDecorator(
+                Style(
+                  flexible(),
+                ),
+              ),
+            ],
+          ),
+        );
+
+        _expectOneWidgetOfType<Flexible>();
+      },
+    );
+
+    testWidgets(
+      'Applying a transform must add a Transform widget in the widget tree',
+      (tester) async {
+        await tester.pumpWidget(
+          _TestableRenderDecorator(
+            Style(
+              transform(Matrix4.identity()),
+            ),
+          ),
+        );
+
+        _expectOneWidgetOfType<Transform>();
+      },
+    );
+
+    testWidgets(
+      'Applying an align must add an Align widget in the widget tree',
+      (tester) async {
+        await tester.pumpWidget(
+          _TestableRenderDecorator(
+            Style(
+              align(),
+            ),
+          ),
+        );
+
+        _expectOneWidgetOfType<Align>();
+      },
+    );
+
+    testWidgets(
+      'Applying a fractionallySizedBox must add a FractionallySizedBox widget in the widget tree',
+      (tester) async {
+        await tester.pumpWidget(
+          _TestableRenderDecorator(
+            Style(
+              fractionallySizedBox(),
+            ),
+          ),
+        );
+
+        _expectOneWidgetOfType<FractionallySizedBox>();
+      },
+    );
+
+    testWidgets(
+      'Applying a sizedBox must add a SizedBox widget in the widget tree',
+      (tester) async {
+        await tester.pumpWidget(
+          _TestableRenderDecorator(
+            Style(
+              sizedBox(),
+            ),
+          ),
+        );
+
+        _expectOneWidgetOfType<SizedBox>();
+      },
+    );
+  });
+}
+
+void _expectOneWidgetOfType<T>() {
+  expect(
+    find.descendant(
+      of: find.byType(_TestableRenderDecorator),
+      matching: find.byType(T),
+    ),
+    findsOneWidget,
+  );
+}
+
+class _TestableRenderDecorator extends StatelessWidget {
+  const _TestableRenderDecorator(this.style);
+
+  final Style style;
+
+  @override
+  Widget build(BuildContext context) {
+    return RenderDecoratorAttributes(
+      mix: MixData.create(
+        context,
+        style,
+      ),
+      child: const SizedBox(),
+    );
+  }
 }
