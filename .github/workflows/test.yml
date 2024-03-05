@@ -8,6 +8,7 @@ on:
       - 'test_resources/**'
       - 'website/**'
       - 'assets/**'
+      - 'tool/**'
 
   pull_request:
     branches: [main]
@@ -16,6 +17,7 @@ on:
       - 'test_resources/**'
       - 'website/**'
       - 'assets/**'
+      - 'tool/**'
 
 jobs:
   test:
