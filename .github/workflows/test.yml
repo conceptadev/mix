@@ -3,8 +3,21 @@ name: Test Workflow
 on:
   push:
     branches: [main]
+    paths-ignore:
+      - 'examples/**'
+      - 'test_resources/**'
+      - 'website/**'
+      - 'assets/**'
+      - 'tool/**'
+
   pull_request:
     branches: [main]
+    paths-ignore:
+      - 'examples/**'
+      - 'test_resources/**'
+      - 'website/**'
+      - 'assets/**'
+      - 'tool/**'
 
 jobs:
   test:
