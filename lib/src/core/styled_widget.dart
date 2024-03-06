@@ -50,6 +50,27 @@ abstract class StyledWidget extends StatelessWidget {
   Widget build(BuildContext context);
 }
 
+/// A styled widget that builds its child using a [MixData] object.
+///
+/// `StyledWidgetBuilder` is a concrete implementation of [StyledWidget] that
+/// builds its child using a [withMix] method from [StyledWidget].
+/// This widget is useful for creating custom styled widgets.
+class StyledWidgetBuilder extends StyledWidget {
+  const StyledWidgetBuilder({
+    super.key,
+    super.inherit,
+    super.style,
+    required this.builder,
+  });
+
+  final Widget Function(MixData) builder;
+
+  @override
+  Widget build(BuildContext context) {
+    return withMix(context, builder);
+  }
+}
+
 /// An abstract widget that applies custom styles with animations.
 ///
 /// `AnimatedStyledWidget` extends [StyledWidget] to include animations in the

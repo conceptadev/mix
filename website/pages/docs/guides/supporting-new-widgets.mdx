@@ -164,7 +164,7 @@ In this case, the `style` will have the `border` and `filled` from the first dec
 
 ## 3. Build the Custom Widget
 
-The custom widget is the widget that will use the `InputDecorationSpec` to build the widget. It's a class that extends `StyledWidget` and has a `build` method that receives a `BuildContext` and returns a `Widget`. For this example, the `CustomTextField` is:
+The custom widget is the widget that will use the `InputDecorationSpec` to build the widget. It's a class that has a `StyledWidgetBuilder` in its composition. For this example, the `CustomTextField` is:
 
 ```dart
 class StyledTextField extends StyledWidget {
@@ -172,9 +172,9 @@ class StyledTextField extends StyledWidget {
 
   @override
   Widget build(BuildContext context) {
-    return withMix(
-      context,
-      (mix) {
+    return StyledWidgetBuilder(
+      style: style,
+      builder: (mix) {
         final inputDecoration = InputDecorationSpec.of(mix);
 
         return shouldApplyDecorators(
@@ -194,7 +194,7 @@ class StyledTextField extends StyledWidget {
 }
 ```
 
-The `StyledTextField` is a class that extends `StyledWidget`. The `build` method uses the `withMix` method to transform the style of the `StyledWidget` to a `MixData`, it also verify if exist some inheritable attributes from the parent widgets, but it's just happen if the `inherit` property is `true`. With the `MixData` instance in hands, you can use the `InputDecorationSpec.of` method to get the `InputDecorationSpec` from the `MixData`, now you are able to apply the `InputDecorationSpec` to the `TextField` and return it.
+The `StyledWidgetBuilder` is a class that extends `StyledWidget`. The `build` method uses the `withMix` method to transform the style received from StyledTextField to a `MixData`, it also verify if exist some inheritable attributes from the parent widgets, but it's just happen if the `inherit` property is `true`. With the `MixData` instance in hands, you can use the `InputDecorationSpec.of` method to get the `InputDecorationSpec` from the `MixData`, now you are able to apply the `InputDecorationSpec` to the `TextField` and return it.
 
 Note that the `shouldApplyDecorators` method was used in the `build` method before the `TextField`, it's a method that make available the `decorators attributes` be applied to the widget.
 
