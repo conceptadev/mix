@@ -7,7 +7,7 @@ typedef SpaceRef = double;
 
 extension SpaceRefExt on SpaceRef {
   double resolve(BuildContext context) {
-    final token = MixTheme.of(context).space.findByRef(this);
+    final token = MixTheme.of(context).spaces.findByRef(this);
 
     assert(
       token != null,
@@ -36,7 +36,7 @@ class SpaceToken extends MixToken<double> {
 
   @override
   double resolve(BuildContext context) {
-    final themeValue = MixTheme.of(context).space[this];
+    final themeValue = MixTheme.of(context).spaces[this];
     assert(
       themeValue != null,
       'SpaceToken $name is not defined in the theme',
