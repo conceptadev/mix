@@ -23,7 +23,7 @@ void main() {
       primaryColor: Colors.blue,
       $md.colorScheme.error: Colors.redAccent,
     },
-    space: {$spaces.small: 30},
+    spaces: {$spaces.small: 30},
     textStyles: {
       $md.textTheme.bodyLarge: const TextStyle(
         fontSize: 200,

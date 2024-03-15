@@ -18,13 +18,6 @@ extension SpaceRefExt on SpaceRef {
   }
 }
 
-const _xsmall = SpaceToken('mix.space.xsmall');
-const _small = SpaceToken('mix.space.small');
-const _medium = SpaceToken('mix.space.medium');
-const _large = SpaceToken('mix.space.large');
-const _xlarge = SpaceToken('mix.space.xlarge');
-const _xxlarge = SpaceToken('mix.space.xxlarge');
-
 /// A class representing a space token, which extends `MixToken` class
 /// and uses the `SizeTokenMixin` mixin.
 ///
@@ -32,13 +25,6 @@ const _xxlarge = SpaceToken('mix.space.xxlarge');
 /// size of UI elements.
 @immutable
 class SpaceToken extends MixToken<double> {
-  static const xsmall = _xsmall;
-  static const small = _small;
-  static const medium = _medium;
-  static const large = _large;
-  static const xlarge = _xlarge;
-  static const xxlarge = _xxlarge;
-
   /// A constant constructor that accepts a `String` argument named [name].
   /// Name needs to be unique per token
   ///
