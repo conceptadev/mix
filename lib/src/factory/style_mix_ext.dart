@@ -1,14 +1,13 @@
 // ignore_for_file: long-parameter-list
 import 'package:flutter/material.dart';
 
-import '../core/attribute.dart';
 import '../specs/container/box_widget.dart';
 import '../specs/flex/flex_widget.dart';
 import '../specs/icon/icon_widget.dart';
 import '../specs/text/text_widget.dart';
 import 'style_mix.dart';
 
-extension StyleExt<T extends Attribute> on Style {
+extension StyleExt on Style {
   Box container({
     required Widget child,
     bool inherit = false,
