@@ -68,16 +68,4 @@ void main() {
       expect(withSpaceTokens.xxlarge().value, SpaceToken.xxlarge());
     });
   });
-
-  group('SpaceTokenUtil', () {
-    test('SpaceTokenUtil returns correct value', () {
-      const spaceTokenUtil = SpaceTokenUtil();
-      expect(spaceTokenUtil.xsmall(), SpaceToken.xsmall());
-      expect(spaceTokenUtil.small(), SpaceToken.small());
-      expect(spaceTokenUtil.medium(), SpaceToken.medium());
-      expect(spaceTokenUtil.large(), SpaceToken.large());
-      expect(spaceTokenUtil.xlarge(), SpaceToken.xlarge());
-      expect(spaceTokenUtil.xxlarge(), SpaceToken.xxlarge());
-    });
-  });
 }

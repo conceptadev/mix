@@ -4,6 +4,15 @@ import 'package:mix/mix.dart';
 
 import '../../helpers/testing_utils.dart';
 
+extension on RadiusTokenUtil {
+  RadiusToken get small => const RadiusToken('radius-token-small');
+  RadiusToken get large => const RadiusToken('radius-token-large');
+}
+
+extension on SpaceTokenUtil {
+  SpaceToken get small => const SpaceToken('space-token-small');
+}
+
 void main() {
   const primaryColor = ColorToken('primary');
   final theme = MixThemeData(
@@ -14,7 +23,7 @@ void main() {
       primaryColor: Colors.blue,
       $md.colorScheme.error: Colors.redAccent,
     },
-    space: {$space.small: 30},
+    space: {$spaces.small: 30},
     textStyles: {
       $md.textTheme.bodyLarge: const TextStyle(
         fontSize: 200,
@@ -47,7 +56,7 @@ void main() {
             style: Style(
               box.color.of(primaryColor),
               box.borderRadius.all.of($radii.small),
-              box.padding.horizontal.of($space.small),
+              box.padding.horizontal.of($spaces.small),
               text.style.of($md.textTheme.bodyLarge),
             ),
             key: key,
@@ -71,7 +80,7 @@ void main() {
           ),
         );
 
-        expect(container.padding!.horizontal / 2, theme.space[$space.small]);
+        expect(container.padding!.horizontal / 2, theme.space[$spaces.small]);
 
         final textWidget = tester.widget<Text>(
           find.descendant(of: find.byKey(key), matching: find.byType(Text)),
