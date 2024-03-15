@@ -83,17 +83,17 @@ extension WithSpaceTokensExt<T extends StyleAttribute>
   T get xxl => call(40.0);
 
   @Deprecated('Use 4.0 instead')
-  T get xsmall => builder(4.0);
+  T xsmall() => call(4.0);
   @Deprecated('Use 8.0 instead')
-  T get small => builder(8.0);
+  T small() => call(8.0);
   @Deprecated('Use 16.0 instead')
-  T get medium => builder(16.0);
+  T medium() => call(16.0);
   @Deprecated('Use 24.0 instead')
-  T get large => builder(24.0);
+  T large() => call(24.0);
   @Deprecated('Use 32.0 instead')
-  T get xlarge => builder(32.0);
+  T xlarge() => call(32.0);
   @Deprecated('Use 40.0 instead')
-  T get xxlarge => builder(40.0);
+  T xxlarge() => call(40.0);
 }
 
 @Deprecated('use flex.mainAxisAlignment instead')
