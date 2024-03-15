@@ -82,18 +82,30 @@ extension WithSpaceTokensExt<T extends StyleAttribute>
   @Deprecated('Use 40.0 instead')
   T get xxl => call(40.0);
 
-  @Deprecated('Use 4.0 instead')
-  T xsmall() => call(4.0);
-  @Deprecated('Use 8.0 instead')
-  T small() => call(8.0);
-  @Deprecated('Use 16.0 instead')
-  T medium() => call(16.0);
-  @Deprecated('Use 24.0 instead')
-  T large() => call(24.0);
-  @Deprecated('Use 32.0 instead')
-  T xlarge() => call(32.0);
-  @Deprecated('Use 40.0 instead')
-  T xxlarge() => call(40.0);
+  @Deprecated(
+    'If are you using a custom theme, so you need to use the method [of], otherwise use the method .call(4.0)',
+  )
+  xsmall() => call(4.0);
+  @Deprecated(
+    'If are you using a custom theme, so you need to use the method [of], otherwise use the method .call(8.0)',
+  )
+  small() => call(8.0);
+  @Deprecated(
+    'If are you using a custom theme, so you need to use the method [of], otherwise use the method .call(16.0)',
+  )
+  medium() => call(16.0);
+  @Deprecated(
+    'If are you using a custom theme, so you need to use the method [of], otherwise use the method .call(24.0)',
+  )
+  large() => call(24.0);
+  @Deprecated(
+    'If are you using a custom theme, so you need to use the method [of], otherwise use the method .call(32.0)',
+  )
+  xlarge() => call(32.0);
+  @Deprecated(
+    'If are you using a custom theme, so you need to use the method [of], otherwise use the method .call(40.0)',
+  )
+  xxlarge() => call(40.0);
 }
 
 @Deprecated('use flex.mainAxisAlignment instead')
