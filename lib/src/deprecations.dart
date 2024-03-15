@@ -69,18 +69,31 @@ typedef MixContext = MixData;
 
 extension WithSpaceTokensExt<T extends StyleAttribute>
     on SpacingSideUtility<T> {
-  @Deprecated('Use xsmall instead')
-  T get xs => this.xsmall();
-  @Deprecated('Use small instead')
-  T get sm => this.small();
-  @Deprecated('Use medium instead')
-  T get md => this.medium();
-  @Deprecated('Use large instead')
-  T get lg => this.large();
-  @Deprecated('Use xlarge instead')
-  T get xl => xlarge();
-  @Deprecated('Use xxlarge instead')
-  T get xxl => xxlarge();
+  @Deprecated('Use 4.0 instead')
+  T get xs => call(4.0);
+  @Deprecated('Use 8.0 instead')
+  T get sm => call(8.0);
+  @Deprecated('Use 16.0 instead')
+  T get md => call(16.0);
+  @Deprecated('Use 24.0 instead')
+  T get lg => call(24.0);
+  @Deprecated('Use 32.0 instead')
+  T get xl => call(32.0);
+  @Deprecated('Use 40.0 instead')
+  T get xxl => call(40.0);
+
+  @Deprecated('Use 4.0 instead')
+  T get xsmall => builder(4.0);
+  @Deprecated('Use 8.0 instead')
+  T get small => builder(8.0);
+  @Deprecated('Use 16.0 instead')
+  T get medium => builder(16.0);
+  @Deprecated('Use 24.0 instead')
+  T get large => builder(24.0);
+  @Deprecated('Use 32.0 instead')
+  T get xlarge => builder(32.0);
+  @Deprecated('Use 40.0 instead')
+  T get xxlarge => builder(40.0);
 }
 
 @Deprecated('use flex.mainAxisAlignment instead')

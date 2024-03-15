@@ -59,7 +59,7 @@ class MixThemeData with Comparable {
   factory MixThemeData({
     Map<BreakpointToken, Breakpoint>? breakpoints,
     Map<ColorToken, Color>? colors,
-    Map<SpaceToken, double>? space,
+    Map<SpaceToken, double>? spaces,
     Map<TextStyleToken, TextStyle>? textStyles,
     Map<RadiusToken, Radius>? radii,
   }) {
@@ -69,7 +69,7 @@ class MixThemeData with Comparable {
       breakpoints:
           _breakpointTokenMap.merge(StyledTokens(breakpoints ?? const {})),
       radii: _radiusTokenMap.merge(StyledTokens(radii ?? const {})),
-      space: _spaceTokenMap.merge(StyledTokens(space ?? const {})),
+      space: StyledTokens(spaces ?? const {}),
     );
   }
 
@@ -84,7 +84,7 @@ class MixThemeData with Comparable {
       MixThemeData(
         breakpoints: breakpoints,
         colors: colors,
-        space: space,
+        spaces: space,
         textStyles: textStyles,
         radii: radii,
       ),
@@ -122,15 +122,6 @@ class MixThemeData with Comparable {
   @override
   get props => [space, breakpoints, colors, textStyles, radii];
 }
-
-final _spaceTokenMap = StyledTokens({
-  SpaceToken.xsmall: 4.0,
-  SpaceToken.small: 8.0,
-  SpaceToken.medium: 16.0,
-  SpaceToken.large: 24.0,
-  SpaceToken.xlarge: 32.0,
-  SpaceToken.xxlarge: 40.0,
-});
 
 final _radiusTokenMap = StyledTokens({
   RadiusToken.small: const Radius.circular(4),

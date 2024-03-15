@@ -79,7 +79,7 @@ void main() {
         $md.colorScheme.error: Colors.blue,
         $md.colorScheme.background: Colors.red,
       },
-      space: {
+      spaces: {
         $spaces.large: 100,
         $spaces.medium: 50,
       },
