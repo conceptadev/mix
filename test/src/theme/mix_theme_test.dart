@@ -80,7 +80,7 @@ void main() {
           ),
         );
 
-        expect(container.padding!.horizontal / 2, theme.space[$spaces.small]);
+        expect(container.padding!.horizontal / 2, theme.spaces[$spaces.small]);
 
         final textWidget = tester.widget<Text>(
           find.descendant(of: find.byKey(key), matching: find.byType(Text)),

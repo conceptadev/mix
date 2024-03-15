@@ -59,14 +59,4 @@ void main() {
       );
     });
   });
-
-  group('UtilityWithRadiusTokens', () {
-    test('tokens resolve', () {
-      final radiiTokenUtil = UtilityWithRadiusTokens((value) => value);
-
-      expect(radiiTokenUtil.small(), RadiusToken.small());
-      expect(radiiTokenUtil.medium(), RadiusToken.medium());
-      expect(radiiTokenUtil.large(), RadiusToken.large());
-    });
-  });
 }

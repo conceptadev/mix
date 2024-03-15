@@ -145,7 +145,7 @@ void main() {
 
     expect(
       containerWidget.padding!.horizontal / 2,
-      themeData.space[$spaces.large],
+      themeData.spaces[$spaces.large],
     );
   });
 }
