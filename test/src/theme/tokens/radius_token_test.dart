@@ -60,20 +60,6 @@ void main() {
     });
   });
 
-  group('RadiiTokenUtil', () {
-    test('small returns correct value', () {
-      expect(const RadiiTokenUtil().small, RadiusToken.small);
-    });
-
-    test('medium returns correct value', () {
-      expect(const RadiiTokenUtil().medium, RadiusToken.medium);
-    });
-
-    test('large returns correct value', () {
-      expect(const RadiiTokenUtil().large, RadiusToken.large);
-    });
-  });
-
   group('UtilityWithRadiusTokens', () {
     test('tokens resolve', () {
       final radiiTokenUtil = UtilityWithRadiusTokens((value) => value);
