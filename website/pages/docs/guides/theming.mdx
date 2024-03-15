@@ -3,17 +3,24 @@ id: theming
 title: "Theming"
 ---
 
-import { Callout } from "nextra-theme-docs";
+import { Bleed } from "nextra-theme-docs";
 
 # Theming
 
 ## Introduction
-Mix provides a powerful theming system that allows you to style your application consistently and efficiently, providing scalability and flexibility. The theming system is based on the concept of design tokens, which are key-value pairs that define visual properties like colors, text styles, and spacing. These tokens can be consistently applied across all your widgets, ensuring a consistent look and feel throughout your application. As a result, you can easily change the look and feel of your application by updating the design tokens, without having to modify each individual widget.
+Mix provides a powerful theming system that allows you to style your application consistently and efficiently, providing scalability and flexibility. The theming system is based on the concept of design tokens, which are key-value pairs that define visual properties like colors, text styles, and others. These tokens can be consistently applied across all your widgets, ensuring a consistent look and feel throughout your application. As a result, you can easily change the look and feel of your application by updating the design tokens, without having to modify each individual widget.
 
 ## Getting Started
 For this guide we will create a multi-theme single screen app that will allow us to express the power of Mix's theming system. The final result will looks like this:
 
-<img src="./images/two-themed-app.png" height="400"></img>
+
+<Bleed full>
+  <iframe
+    src="./images/two-themed-app.png"
+    height="400px"
+    title="Two themed app"
+  />
+</Bleed>
 
 As you can see in the image above, we have two different themes for the same screen, they are using different colors, text styles, fonts and border radius.
 The left one is using a light theme asdfawith blue as primary color, so it will be called `lightBlueTheme`, and the right one is using a dark theme with purple as primary color, so its name will be `darkPurpleTheme`.
@@ -272,7 +279,13 @@ The `ProfilePage` is not part of the design system, it's the why I'm not using t
 
 Now everything is set up, we can use the `ProfilePage` in our `MyApp` widget and see the result.
 
-<img src="./images/light-themed-app.png" height="400"></img>
+<Bleed full>
+  <iframe
+    src="./images/light-themed-app.png"
+    height="400px"
+    title="light-themed-app"
+  />
+</Bleed>
 
 ## One more thing... Material Design Tokens in Mix
 
