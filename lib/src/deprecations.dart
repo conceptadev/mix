@@ -85,27 +85,27 @@ extension WithSpaceTokensExt<T extends StyleAttribute>
   @Deprecated(
     'If are you using a custom theme, so you need to use the method [of], otherwise use the method .call(4.0)',
   )
-  xsmall() => call(4.0);
+  T xsmall() => call(4.0);
   @Deprecated(
     'If are you using a custom theme, so you need to use the method [of], otherwise use the method .call(8.0)',
   )
-  small() => call(8.0);
+  T small() => call(8.0);
   @Deprecated(
     'If are you using a custom theme, so you need to use the method [of], otherwise use the method .call(16.0)',
   )
-  medium() => call(16.0);
+  T medium() => call(16.0);
   @Deprecated(
     'If are you using a custom theme, so you need to use the method [of], otherwise use the method .call(24.0)',
   )
-  large() => call(24.0);
+  T large() => call(24.0);
   @Deprecated(
     'If are you using a custom theme, so you need to use the method [of], otherwise use the method .call(32.0)',
   )
-  xlarge() => call(32.0);
+  T xlarge() => call(32.0);
   @Deprecated(
     'If are you using a custom theme, so you need to use the method [of], otherwise use the method .call(40.0)',
   )
-  xxlarge() => call(40.0);
+  T xxlarge() => call(40.0);
 }
 
 @Deprecated('use flex.mainAxisAlignment instead')
