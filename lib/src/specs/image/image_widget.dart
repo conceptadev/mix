@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../core/styled_widget.dart';
-import '../../factory/mix_provider.dart';
 import '../../factory/mix_provider_data.dart';
-import '../../utils/helper_util.dart';
 import 'image_spec.dart';
 
 class StyledImage extends StyledWidget {
@@ -17,6 +15,7 @@ class StyledImage extends StyledWidget {
     this.semanticLabel,
     this.excludeFromSemantics = false,
     required this.image,
+    super.orderOfDecorators = const [],
   });
 
   final ImageProvider<Object> image;
@@ -30,6 +29,7 @@ class StyledImage extends StyledWidget {
   Widget build(BuildContext context) {
     return withMix(context, (mix) {
       return MixedImage(
+        mix: mix,
         image: image,
         frameBuilder: frameBuilder,
         loadingBuilder: loadingBuilder,
@@ -45,7 +45,7 @@ class MixedImage extends StatelessWidget {
   const MixedImage({
     super.key,
     this.decoratorOrder = const [],
-    this.mix,
+    required this.mix,
     required this.image,
     this.frameBuilder,
     this.loadingBuilder,
@@ -54,7 +54,7 @@ class MixedImage extends StatelessWidget {
     this.excludeFromSemantics = false,
   });
 
-  final MixData? mix;
+  final MixData mix;
   final ImageProvider<Object> image;
   final ImageFrameBuilder? frameBuilder;
   final ImageLoadingBuilder? loadingBuilder;
@@ -65,10 +65,9 @@ class MixedImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mix = this.mix ?? MixProvider.of(context);
     final spec = ImageSpec.of(mix);
 
-    final current = Image(
+    return Image(
       image: image,
       frameBuilder: frameBuilder,
       loadingBuilder: loadingBuilder,
@@ -84,12 +83,6 @@ class MixedImage extends StatelessWidget {
       repeat: spec.repeat ?? ImageRepeat.noRepeat,
       centerSlice: spec.centerSlice,
       filterQuality: spec.filterQuality ?? FilterQuality.low,
-    );
-
-    return shouldApplyDecorators(
-      mix: mix,
-      orderOfDecorators: decoratorOrder,
-      child: current,
     );
   }
 }

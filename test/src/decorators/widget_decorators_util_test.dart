@@ -435,7 +435,8 @@ class _TestableRenderDecorator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RenderDecoratorAttributes(
+    return RenderDecorators(
+      orderOfDecorators: const [],
       mix: MixData.create(
         context,
         style,

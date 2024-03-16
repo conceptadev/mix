@@ -51,7 +51,7 @@ Widget shouldApplyDecorators({
 
   if (!hasDecorators) return child;
 
-  return RenderDecoratorAttributes(
+  return RenderDecorators(
     mix: mix,
     orderOfDecorators: orderOfDecorators,
     child: child,

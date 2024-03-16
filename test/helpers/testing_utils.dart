@@ -266,7 +266,11 @@ class CustomDecoratorAttribute extends DecoratorAttribute<
 }
 
 class WidgetWithTestableBuild extends StyledWidget {
-  const WidgetWithTestableBuild(this.onBuild, {super.key});
+  const WidgetWithTestableBuild(
+    this.onBuild, {
+    super.key,
+    super.orderOfDecorators = const [],
+  });
 
   final void Function(BuildContext context) onBuild;
 

@@ -1,9 +1,7 @@
 import 'package:flutter/widgets.dart';
 
 import '../../core/styled_widget.dart';
-import '../../factory/mix_provider.dart';
 import '../../factory/mix_provider_data.dart';
-import '../../utils/helper_util.dart';
 import '../container/box_widget.dart';
 import 'stack_spec.dart';
 
@@ -25,6 +23,7 @@ class StyledStack extends StyledWidget {
     super.inherit,
     super.key,
     super.style,
+    super.orderOfDecorators = const [],
   });
 
   final List<Widget> children;
@@ -49,28 +48,23 @@ class StyledStack extends StyledWidget {
 ///   - [key]: The key for the widget.
 ///   - [children]: The list of widgets to stack.
 class MixedStack extends StatelessWidget {
-  const MixedStack({this.mix, super.key, this.children});
+  const MixedStack({required this.mix, super.key, this.children});
 
   final List<Widget>? children;
-  final MixData? mix;
+  final MixData mix;
 
   @override
   Widget build(BuildContext context) {
-    final mix = this.mix ?? MixProvider.of(context);
-
     // Resolve the StackSpecAttribute from the mix to apply specific stack-related styles.
     final spec = StackSpec.of(mix);
 
     // The Stack widget is used here, applying the resolved styles from StackSpec.
-    return shouldApplyDecorators(
-      mix: mix,
-      child: Stack(
-        alignment: spec.alignment ?? _defaultStack.alignment,
-        textDirection: spec.textDirection,
-        fit: spec.fit ?? _defaultStack.fit,
-        clipBehavior: spec.clipBehavior ?? _defaultStack.clipBehavior,
-        children: children ?? const [],
-      ),
+    return Stack(
+      alignment: spec.alignment ?? _defaultStack.alignment,
+      textDirection: spec.textDirection,
+      fit: spec.fit ?? _defaultStack.fit,
+      clipBehavior: spec.clipBehavior ?? _defaultStack.clipBehavior,
+      children: children ?? const [],
     );
   }
 }
@@ -93,6 +87,7 @@ class ZBox extends StyledWidget {
     super.inherit,
     super.key,
     super.style,
+    super.orderOfDecorators = const [],
   });
 
   final List<Widget> children;
@@ -102,12 +97,8 @@ class ZBox extends StyledWidget {
     // The withMix method is used to apply the styling context to both the box and the stack.
     return withMix(context, (mix) {
       return MixedBox(
-        child: Builder(
-          builder: (BuildContext context) => MixedStack(
-            mix: MixData.inherited(context),
-            children: children,
-          ),
-        ),
+        mix: mix,
+        child: MixedStack(mix: mix.toInheritable(), children: children),
       );
     });
   }

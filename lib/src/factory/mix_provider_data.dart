@@ -15,6 +15,8 @@ import 'style_mix.dart';
 /// decorators and token resolvers.
 @immutable
 class MixData with Comparable {
+  final AnimatedData animation;
+
   // Instance variables for widget attributes, widget decorators and token resolver.
   final AttributeMap _attributes;
 
@@ -26,6 +28,7 @@ class MixData with Comparable {
   MixData._({
     required MixTokenResolver resolver,
     required AttributeMap attributes,
+    required this.animation,
   })  : _attributes = attributes,
         _tokenResolver = resolver;
 
@@ -37,6 +40,9 @@ class MixData with Comparable {
     return MixData._(
       resolver: resolver,
       attributes: AttributeMap(attributeList),
+      animation: style is AnimatedStyle
+          ? style.animatedData
+          : const AnimatedData.notAnimated(),
     );
   }
 
@@ -44,18 +50,11 @@ class MixData with Comparable {
   static MixData? inherited(BuildContext context) {
     final inheritedMix = MixProvider.maybeOf(context);
 
-    if (inheritedMix == null) return null;
-
-    // Remove non-inheritable attributes
-    final inheritableAttributes = inheritedMix.attributes.values.where(
-      (attr) => attr.isInheritable,
-    );
-
-    return MixData._(
-      resolver: MixTokenResolver(context),
-      attributes: AttributeMap(inheritableAttributes),
-    );
+    return inheritedMix?.toInheritable();
   }
+
+  /// Alias for animation.isAnimated
+  bool get isAnimated => animation.isAnimated;
 
   /// Getter for [MixTokenResolver].
   ///
@@ -67,6 +66,19 @@ class MixData with Comparable {
   /// Returns [_attributes].
   @visibleForTesting
   AttributeMap get attributes => _attributes;
+
+  @internal
+  MixData toInheritable() {
+    final inheritableAttributes = _attributes.values.where(
+      (attr) => attr.isInheritable,
+    );
+
+    return MixData._(
+      resolver: _tokenResolver,
+      attributes: AttributeMap(inheritableAttributes),
+      animation: animation,
+    );
+  }
 
   /// Finds and returns an [VisualAttribute] of type [A], or null if not found.
   A? attributeOf<A extends StyleAttribute>() {
@@ -95,12 +107,13 @@ class MixData with Comparable {
     return MixData._(
       resolver: _tokenResolver,
       attributes: _attributes.merge(other._attributes),
+      animation: other.animation,
     );
   }
 
   /// Used for Comparable mixin.
   @override
-  get props => [_attributes];
+  get props => [_attributes, animation];
 }
 
 @visibleForTesting
@@ -165,4 +178,24 @@ M? _mergeAttributes<M extends StyleAttribute>(Iterable<M> mergeables) {
   return mergeables.reduce((a, b) {
     return a is Mergeable ? (a as Mergeable).merge(b) : b;
   });
+}
+
+class AnimatedData with Comparable {
+  final bool isAnimated;
+  final Duration duration;
+  final Curve curve;
+
+  const AnimatedData({
+    required this.isAnimated,
+    required this.duration,
+    required this.curve,
+  });
+
+  const AnimatedData.notAnimated()
+      : isAnimated = false,
+        duration = Duration.zero,
+        curve = Curves.linear;
+
+  @override
+  List<Object> get props => [isAnimated, duration, curve];
 }

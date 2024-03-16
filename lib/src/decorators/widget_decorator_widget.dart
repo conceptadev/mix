@@ -1,3 +1,5 @@
+// ignore_for_file: avoid-dynamic
+
 import 'package:flutter/material.dart';
 
 import '../core/attributes_map.dart';
@@ -73,12 +75,42 @@ const _defaultOrder = [
   OpacityDecoratorAttribute,
 ];
 
-class RenderDecoratorAttributes extends StatelessWidget {
-  const RenderDecoratorAttributes({
+class RenderDecorators extends StatelessWidget {
+  const RenderDecorators({
     required this.mix,
     required this.child,
     super.key,
-    this.orderOfDecorators = const [],
+    required this.orderOfDecorators,
+  });
+
+  final MixData mix;
+  final Widget child;
+  final List<Type> orderOfDecorators;
+  // final Widget Function(List<DecoratorSpec> specs) builder;
+
+  @override
+  Widget build(BuildContext context) {
+    final specs = resolveDecoratorSpecs(orderOfDecorators, mix);
+
+    var current = child;
+
+    for (final spec in specs) {
+      current = spec.build(current);
+    }
+
+    return current;
+  }
+}
+
+class RenderAnimatedDecorators extends ImplicitlyAnimatedWidget {
+  const RenderAnimatedDecorators({
+    required this.mix,
+    required this.child,
+    required this.orderOfDecorators,
+    super.key,
+    required super.duration,
+    super.curve = Curves.linear,
+    super.onEnd,
   });
 
   final MixData mix;
@@ -86,52 +118,81 @@ class RenderDecoratorAttributes extends StatelessWidget {
   final List<Type> orderOfDecorators;
 
   @override
-  Widget build(BuildContext context) {
-    final decorators = mix.whereType<DecoratorAttribute>();
+  RenderAnimatedDecoratorsState createState() =>
+      RenderAnimatedDecoratorsState();
+}
 
-    return _decorateWidgetWithSpecs(child, decorators, orderOfDecorators, mix);
+class RenderAnimatedDecoratorsState
+    extends AnimatedWidgetBaseState<RenderAnimatedDecorators> {
+  final Map<Type, DecoratorSpecTween> _specs = {};
+
+  @override
+  void forEachTween(TweenVisitor<dynamic> visitor) {
+    final specs = resolveDecoratorSpecs(widget.orderOfDecorators, widget.mix);
+
+    for (final spec in specs) {
+      final specType = spec.runtimeType;
+      final previousSpec = _specs[specType];
+
+      _specs[specType] = visitor(
+        previousSpec,
+        spec,
+        (dynamic value) => DecoratorSpecTween(begin: value as DecoratorSpec),
+      ) as DecoratorSpecTween;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    var current = widget.child;
+
+    for (final spec in _specs.keys) {
+      final evaluatedSpec = _specs[spec]!.evaluate(animation);
+      current = evaluatedSpec.build(current);
+    }
+
+    return current;
   }
 }
 
-List<DecoratorSpec> _resolveDecoratorSpecs(
-  Iterable<DecoratorAttribute> decorators,
+Set<DecoratorSpec> resolveDecoratorSpecs(
   List<Type> orderOfDecorators,
   MixData mix,
 ) {
+  final decorators = mix.whereType<DecoratorAttribute>();
+
+  if (decorators.isEmpty) return {};
   final decoratorMap = AttributeMap<DecoratorAttribute>(decorators).toMap();
 
   final listOfDecorators = {
+    // Prioritize the order of decorators provided by the user.
     ...orderOfDecorators,
+    // Add the default order of decorators.
     ..._defaultOrder,
+    // Add any remaining decorators that were not included in the order.
     ...decoratorMap.keys,
   }.toList().reversed;
 
   final specs = <DecoratorSpec>[];
 
   for (final decoratorType in listOfDecorators) {
+    // Resolve the decorator and add it to the list of specs.
     final decorator = decoratorMap.remove(decoratorType);
     if (decorator == null) continue;
     specs.add(decorator.resolve(mix) as DecoratorSpec);
   }
 
-  return specs;
+  return specs.toSet();
 }
 
-Widget _decorateWidgetWithSpecs(
-  Widget child,
-  Iterable<DecoratorAttribute> decorators,
-  List<Type> orderOfDecorators,
-  MixData mix,
-) {
-  var current = child;
+class DecoratorSpecTween extends Tween<DecoratorSpec> {
+  /// Creates an [EdgeInsetsGeometry] tween.
+  ///
+  /// The [begin] and [end] properties may be null; the null value
+  /// is treated as an [DecoratorSpec]
+  DecoratorSpecTween({super.begin, super.end});
 
-  if (decorators.isEmpty) return child;
-
-  final specs = _resolveDecoratorSpecs(decorators, orderOfDecorators, mix);
-
-  for (final spec in specs) {
-    current = spec.build(current);
-  }
-
-  return current;
+  /// Returns the value this variable has at the given animation clock value.
+  @override
+  DecoratorSpec lerp(double t) => DecoratorSpec.lerpValue(begin, end, t)!;
 }

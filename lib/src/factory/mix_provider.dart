@@ -43,7 +43,7 @@ class MixProvider extends InheritedWidget {
   static MixProvider build(
     BuildContext context, {
     required Style style,
-    required MixBuilder builder,
+    required Widget Function(MixData mix) builder,
   }) {
     MixData mixData = MixData.create(context, style);
 
