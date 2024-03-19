@@ -1,4 +1,9 @@
-import '../../../mix.dart';
+import '../../attributes/color/color_dto.dart';
+import '../../attributes/color/color_util.dart';
+import '../../attributes/scalars/scalar_util.dart';
+import '../../attributes/shadow/shadow_dto.dart';
+import '../../attributes/shadow/shadow_util.dart';
+import 'icon_attribute.dart';
 
 const icon = IconUtility();
 
