@@ -11,13 +11,46 @@ void main() {
     test('resolve', () {
       final mix = MixData.create(
         MockBuildContext(),
-        Style(IconSpecAttribute(size: 20.0, color: Colors.red.toDto())),
+        Style(
+          IconSpecAttribute(
+            size: 20.0,
+            color: Colors.red.toDto(),
+            applyTextScaling: true,
+            fill: 2,
+            grade: 2,
+            opticalSize: 2,
+            shadows: [
+              ShadowDto(
+                color: Colors.black.toDto(),
+              ),
+              ShadowDto(
+                color: Colors.black.toDto(),
+              ),
+            ],
+            textDirection: TextDirection.ltr,
+            weight: 2,
+          ),
+        ),
       );
 
       final spec = IconSpec.of(mix);
 
       expect(spec.color, Colors.red);
       expect(spec.size, 20.0);
+      expect(spec.applyTextScaling, isTrue);
+      expect(spec.grade, 2);
+      expect(spec.opticalSize, 2);
+      expect(spec.shadows, [
+        const Shadow(
+          color: Colors.black,
+        ),
+        const Shadow(
+          color: Colors.black,
+        ),
+      ]);
+      expect(spec.fill, 2);
+      expect(spec.textDirection, TextDirection.ltr);
+      expect(spec.weight, 2);
     });
 
     test('copyWith', () {
