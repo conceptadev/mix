@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../attributes/strut_style/strut_style_dto.dart';
 import '../../attributes/text_style/text_style_dto.dart';
 import '../../core/attribute.dart';
+import '../../core/directive.dart';
 import '../../factory/mix_provider_data.dart';
 import 'text_spec.dart';
 
@@ -17,6 +18,7 @@ class TextSpecAttribute extends SpecAttribute<TextSpecAttribute, TextSpec> {
   final TextHeightBehavior? textHeightBehavior;
   final TextDirection? textDirection;
   final bool? softWrap;
+  final TextDirective? directive;
 
   const TextSpecAttribute({
     this.overflow,
@@ -29,11 +31,13 @@ class TextSpecAttribute extends SpecAttribute<TextSpecAttribute, TextSpec> {
     this.textHeightBehavior,
     this.textDirection,
     this.softWrap,
+    this.directive,
   });
 
   @override
   TextSpec resolve(MixData mix) {
     return TextSpec(
+      directive: directive,
       overflow: overflow,
       strutStyle: strutStyle?.resolve(mix),
       textAlign: textAlign,
@@ -62,6 +66,7 @@ class TextSpecAttribute extends SpecAttribute<TextSpecAttribute, TextSpec> {
             textHeightBehavior: other.textHeightBehavior ?? textHeightBehavior,
             textDirection: other.textDirection ?? textDirection,
             softWrap: other.softWrap ?? softWrap,
+            directive: directive?.merge(other.directive) ?? other.directive,
           );
   }
 
@@ -77,5 +82,6 @@ class TextSpecAttribute extends SpecAttribute<TextSpecAttribute, TextSpec> {
         textHeightBehavior,
         textDirection,
         softWrap,
+        directive,
       ];
 }
