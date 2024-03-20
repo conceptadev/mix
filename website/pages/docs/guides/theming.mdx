@@ -8,10 +8,12 @@ import { Bleed } from "nextra-theme-docs";
 # Theming
 
 ## Introduction
+
 Mix provides a powerful theming system that allows you to style your application consistently and efficiently, providing scalability and flexibility. The theming system is based on the concept of design tokens, which are key-value pairs that define visual properties like colors, text styles, and others. These tokens can be consistently applied across all your widgets, ensuring a consistent look and feel throughout your application. As a result, you can easily change the look and feel of your application by updating the design tokens, without having to modify each individual widget.
 
 ## Getting Started
-For this guide we will create a multi-theme single screen app that will allow us to express the power of Mix's theming system. The final result will looks like this:
+
+For this guide we will create a multi-theme single screen app that will allow us to express the power of Mix's theming system. The final result will look like this:
 
 ![images](./images/two-themed-app.png)
 
@@ -35,7 +37,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MixTheme(
-      data: lightBlueTheme, \\ <- MixThemeData (In this guide we are using the lightBlueTheme or darkPurpleTheme) 
+      data: lightBlueTheme, \\ <- MixThemeData (In this guide we are using the lightBlueTheme or darkPurpleTheme)
       child: const MaterialApp(
         home: ProfilePage(),
       ),
@@ -72,8 +74,8 @@ final primaryColorToken = $colors.primary;
 ```
 
 ### Creating MixThemeData
-This object defines the values for the design tokens that will be used throughout your application, as we mentioned before, the themeData is a set of key-value pairs where the key is the design token and the value is the actual value of the token. To define a `MixThemeData` instance, you can use the following code:
 
+This object defines the values for the design tokens that will be used throughout your application, as we mentioned before, the themeData is a set of key-value pairs where the key is the design token and the value is the actual value of the token. To define a `MixThemeData` instance, you can use the following code:
 
 ```dart
 final lightBlueTheme = MixThemeData(
@@ -268,7 +270,7 @@ class ProfilePage extends StatelessWidget {
 
 ```
 
-The `ProfilePage` is not part of the design system, it's the why I'm not using the Mix primitive widgets to build it and it probably will be your case too. Mix is an awesome tool to style your components and make them more flexible, scalable and mantainable, but our goal is not to replace the Flutter widgets. It's important to say that because it creates a scenario where we need to use design tokens and transform it into values that can be used by the Flutter widgets, and that's why we are using the `resolve` method.
+The `ProfilePage` is not part of the design system, it's the why I'm not using the Mix primitive widgets to build it and it probably will be your case too. Mix is an awesome tool to style your components and make them more flexible, scalable and mantainable, but our goal is not to replace the Flutter widgets. It's important to say that because it creates a scenario where we need to use design tokens and transform them into values that can be used by the Flutter widgets, and that's why we are using the `resolve` method.
 
 Now everything is set up, we can use the `ProfilePage` in our `MyApp` widget and see the result.
 
@@ -278,7 +280,7 @@ Now everything is set up, we can use the `ProfilePage` in our `MyApp` widget and
 
 You can also use the Material Design Tokens in Mix, they are already implemented and you can use them in your application, but stay aware that they just cover ColorScheme and TextTheme tokens.
 
-Using the Material Design Tokens in Mix by implementing the following `MixThemeData`:
+Using the Material Design Tokens in Mix requires implementing the following `MixThemeData`:
 
 #### Configure Material tokens
 
