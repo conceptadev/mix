@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../../mix.dart';
+import '../decorators/widget_decorator_widget.dart';
+import '../factory/mix_provider.dart';
+import '../factory/mix_provider_data.dart';
+import '../factory/style_mix.dart';
 
 /// An abstract widget for applying custom styles.
 ///
