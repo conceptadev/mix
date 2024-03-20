@@ -37,7 +37,6 @@ class TextSpecAttribute extends SpecAttribute<TextSpecAttribute, TextSpec> {
   @override
   TextSpec resolve(MixData mix) {
     return TextSpec(
-      directive: directive,
       overflow: overflow,
       strutStyle: strutStyle?.resolve(mix),
       textAlign: textAlign,
@@ -48,6 +47,7 @@ class TextSpecAttribute extends SpecAttribute<TextSpecAttribute, TextSpec> {
       textHeightBehavior: textHeightBehavior,
       textDirection: textDirection,
       softWrap: softWrap,
+      directive: directive,
     );
   }
 

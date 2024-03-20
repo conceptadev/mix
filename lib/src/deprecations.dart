@@ -28,7 +28,7 @@ const kShortAliasDeprecation =
 @Deprecated('Use Style instead')
 typedef Mix = Style;
 
-extension DeprecatedMixExtension<T extends Attribute> on Style {
+extension DeprecatedMixExtension on Style {
   @Deprecated('Use applyVariant(value) instead')
   Style withVariants(List<Variant> variants) => withManyVariants(variants);
 
