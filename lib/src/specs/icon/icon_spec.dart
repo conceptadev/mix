@@ -10,7 +10,6 @@ class IconSpec extends Spec<IconSpec> {
   final double? weight;
   final double? grade;
   final double? opticalSize;
-  final String? semanticLabel;
   final TextDirection? textDirection;
   final bool? applyTextScaling;
   final List<Shadow>? shadows;
@@ -23,7 +22,6 @@ class IconSpec extends Spec<IconSpec> {
     this.grade,
     this.opticalSize,
     this.shadows,
-    this.semanticLabel,
     this.textDirection,
     this.applyTextScaling,
     this.fill,
@@ -36,7 +34,6 @@ class IconSpec extends Spec<IconSpec> {
         grade = null,
         opticalSize = null,
         shadows = null,
-        semanticLabel = null,
         textDirection = null,
         fill = null,
         applyTextScaling = null;
@@ -55,7 +52,6 @@ class IconSpec extends Spec<IconSpec> {
       grade: lerpDouble(grade, other.grade, t),
       opticalSize: lerpDouble(opticalSize, other.opticalSize, t),
       shadows: Shadow.lerpList(shadows, other.shadows, t),
-      semanticLabel: semanticLabel,
       textDirection: textDirection,
       applyTextScaling: applyTextScaling,
       fill: lerpDouble(fill, other.fill, t),
@@ -82,7 +78,6 @@ class IconSpec extends Spec<IconSpec> {
       grade: grade ?? this.grade,
       opticalSize: opticalSize ?? this.opticalSize,
       shadows: shadows ?? this.shadows,
-      semanticLabel: semanticLabel ?? this.semanticLabel,
       textDirection: textDirection ?? this.textDirection,
       applyTextScaling: applyTextScaling ?? this.applyTextScaling,
       fill: fill ?? this.fill,
@@ -97,7 +92,6 @@ class IconSpec extends Spec<IconSpec> {
         grade,
         opticalSize,
         shadows,
-        semanticLabel,
         textDirection,
         applyTextScaling,
         fill,
