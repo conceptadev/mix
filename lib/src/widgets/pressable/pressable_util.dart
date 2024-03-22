@@ -4,22 +4,23 @@ import '../../core/attribute.dart';
 import '../../factory/style_mix.dart';
 import '../../utils/context_variant_util/on_helper_util.dart';
 import '../../variants/variant.dart';
-import 'pressable_data.notifier.dart';
+import 'pressable_state.dart';
 
 /// Global context variants for handling common widget states and gestures.
 
 /// Applies styles when the widget is pressed.
 final onPressed = PressableStateVariant(
-  (context) => PressableState.stateOf(context) == PressableCurrentState.pressed,
+  (context) => PressableState.pressedOf(context),
 );
 
 /// Applies styles when the widget is long pressed.
-final onLongPressed = PressableStateVariant((context) =>
-    PressableState.stateOf(context) == PressableCurrentState.longPressed);
+final onLongPressed = PressableStateVariant(
+  (context) => PressableState.longPressedOf(context),
+);
 
 /// Applies styles when widget is hovered over.
 final onHover = PressableStateVariant(
-  (context) => PressableState.stateOf(context) == PressableCurrentState.hovered,
+  (context) => PressableState.hoveredOf(context),
 );
 
 /// Applies styles when the widget is disabled.
@@ -145,8 +146,9 @@ class OnMouseHoverBuilder extends StyleAttributeBuilder<OnMouseHoverBuilder> {
   @override
   Attribute? builder(BuildContext context) {
     final position = PressableState.pointerPositionOf(context);
+    final hover = PressableState.hoveredOf(context);
 
-    return position == null ? null : fn(position);
+    return position == null || !hover ? null : fn(position);
   }
 
   @override

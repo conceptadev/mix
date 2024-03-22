@@ -42,6 +42,22 @@ class AnimatedStyle extends Style {
       ),
     );
   }
+
+  /// Returns a new `Style` with the provided [styles] and [variants] merged with this mix's values.
+  ///
+  /// If [styles] or [variants] is null, the corresponding attribute map of this mix is used.
+  @override
+  AnimatedStyle copyWith({
+    AttributeMap<StyleAttribute>? styles,
+    AttributeMap<StyleVariantAttribute>? variants,
+    AnimatedData? animatedData,
+  }) {
+    return AnimatedStyle._(
+      styles: styles ?? this.styles,
+      variants: variants ?? this.variants,
+      animatedData: animatedData ?? this.animatedData,
+    );
+  }
 }
 
 /// A utility class for managing a collection of styling attributes and variants.
@@ -233,7 +249,7 @@ class Style with Comparable {
 
   /// Returns a `AnimatedStyle` from this `Style` with the provided [duration] and [curve].
   AnimatedStyle toAnimated({
-    required Duration duration,
+    Duration duration = const Duration(milliseconds: 150),
     Curve curve = Curves.linear,
   }) {
     return AnimatedStyle._(

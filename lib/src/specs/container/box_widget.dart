@@ -61,6 +61,7 @@ class Box extends StyledWidget {
               mix: mix,
               curve: mix.animation.curve,
               duration: mix.animation.duration,
+              child: child,
             )
           : MixedBox(mix: mix, child: child);
     });
@@ -156,6 +157,8 @@ class AnimatedMixedBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final spec = BoxSpec.of(mix);
+
+    print((spec.decoration as BoxDecoration).color?.toString() ?? 'none');
 
     // AnimatedContainer is utilized here to animate the transition of BoxSpec properties.
     // Each property from the BoxSpec is applied to the AnimatedContainer, allowing the

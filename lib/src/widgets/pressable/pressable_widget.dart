@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../../factory/style_mix.dart';
 import '../../specs/container/box_widget.dart';
 import '../../utils/custom_focusable_action_detector.dart';
-import 'pressable_data.notifier.dart';
+import 'pressable_state.dart';
 
 class PressableBox extends StatelessWidget {
   const PressableBox({
@@ -14,7 +14,7 @@ class PressableBox extends StatelessWidget {
     this.focusNode,
     this.autofocus = false,
     this.enableFeedback = false,
-    this.unpressDelay = const Duration(milliseconds: 150),
+    this.unpressDelay = const Duration(milliseconds: 200),
     this.onFocusChange,
     @Deprecated('Use onTap instead') VoidCallback? onPressed,
     VoidCallback? onPress,
@@ -185,6 +185,7 @@ abstract class _PressableBuilderWidgetState<T extends _PressableBuilderWidget>
   }
 
   void _handleHoverUpdate(bool isHovered) {
+    print('isHovered: $isHovered');
     updateState(() {
       _isHovered = isHovered;
     });
@@ -295,47 +296,40 @@ abstract class _PressableBuilderWidgetState<T extends _PressableBuilderWidget>
 
   @override
   Widget build(BuildContext context) {
-    return PressableState(
+    final focusableDetector = CustomFocusableActionDetector(
       enabled: isEnabled,
-      hovered: _isHovered,
-      focused: _isFocused,
-      pressed: _isPressed,
-      longPressed: _isLongPressed,
-      pointerPosition: _pointerPosition,
-      child: Builder(
-        builder: (context) {
-          final focusableDetector = CustomFocusableActionDetector(
-            enabled: isEnabled,
-            focusNode: widget.focusNode,
-            autofocus: widget.autofocus,
-            onShowFocusHighlight: _handleFocusUpdate,
-            onShowHoverHighlight: _handleHoverUpdate,
-            onFocusChange: widget.onFocusChange,
-            onMouseEnter: _handleOnMouseEnter,
-            onMouseExit: _handleOnMouseExit,
-            onMouseHover: _handleMouseHover,
-            child: widget.child,
-          );
-
-          return GestureDetector(
-            onTapUp: isEnabled ? (_) => _handlePressUpdate(false) : null,
-            onTap: isEnabled ? handleOnPress : null,
-            onTapCancel: isEnabled ? () => _handlePressUpdate(false) : null,
-            onLongPressCancel:
-                isEnabled ? () => handleLongPressUpdate(false) : null,
-            onLongPress: isEnabled ? handleOnLongPress : null,
-            onLongPressStart:
-                isEnabled ? (_) => handleLongPressUpdate(true) : null,
-            onLongPressEnd:
-                isEnabled ? (_) => handleLongPressUpdate(false) : null,
-            onPanDown: isEnabled ? _handlePanDown : null,
-            onPanUpdate: isEnabled ? _handlePanUpdate : null,
-            onPanEnd: isEnabled ? _handlePanUp : null,
-            behavior: widget.hitTestBehavior,
-            child: focusableDetector,
-          );
-        },
+      focusNode: widget.focusNode,
+      autofocus: widget.autofocus,
+      onShowFocusHighlight: _handleFocusUpdate,
+      onShowHoverHighlight: _handleHoverUpdate,
+      onFocusChange: widget.onFocusChange,
+      onMouseEnter: _handleOnMouseEnter,
+      onMouseExit: _handleOnMouseExit,
+      onMouseHover: _handleMouseHover,
+      child: PressableState(
+        enabled: isEnabled,
+        hovered: _isHovered,
+        focused: _isFocused,
+        pressed: _isPressed,
+        longPressed: _isLongPressed,
+        pointerPosition: _pointerPosition,
+        child: widget.child,
       ),
+    );
+
+    return GestureDetector(
+      onTapUp: isEnabled ? (_) => _handlePressUpdate(false) : null,
+      onTap: isEnabled ? handleOnPress : null,
+      onTapCancel: isEnabled ? () => _handlePressUpdate(false) : null,
+      onLongPressCancel: isEnabled ? () => handleLongPressUpdate(false) : null,
+      onLongPress: isEnabled ? handleOnLongPress : null,
+      onLongPressStart: isEnabled ? (_) => handleLongPressUpdate(true) : null,
+      onLongPressEnd: isEnabled ? (_) => handleLongPressUpdate(false) : null,
+      onPanDown: isEnabled ? _handlePanDown : null,
+      onPanUpdate: isEnabled ? _handlePanUpdate : null,
+      onPanEnd: isEnabled ? _handlePanUp : null,
+      behavior: widget.hitTestBehavior,
+      child: focusableDetector,
     );
   }
 }
