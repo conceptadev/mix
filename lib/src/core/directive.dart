@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 
+import '../helpers/compare_mixin.dart';
 import 'attribute.dart';
 
 typedef Modifier<T> = T Function(T value);
 
 /// The `Directive` abstract class provides the ability to modify or apply
 /// different behaviors to widgets and attributes.
-abstract class Directive extends StyleAttribute {
+abstract class Directive with Comparable {
   const Directive();
 }
 
-class TextDataDirective extends Directive with Mergeable<TextDataDirective> {
+class TextDirective extends Directive with Mergeable<TextDirective> {
   final List<Modifier<String>> _modifiers;
-  const TextDataDirective(this._modifiers);
+  const TextDirective(this._modifiers);
 
   @visibleForTesting
   int get length => _modifiers.length;
@@ -25,12 +26,9 @@ class TextDataDirective extends Directive with Mergeable<TextDataDirective> {
   }
 
   @override
-  TextDataDirective merge(TextDataDirective other) {
-    return TextDataDirective([..._modifiers, ...other._modifiers]);
+  TextDirective merge(TextDirective? other) {
+    return TextDirective([..._modifiers, ...?other?._modifiers]);
   }
-
-  @override
-  Object get type => TextDataDirective;
 
   @override
   get props => [_modifiers];

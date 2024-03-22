@@ -3,12 +3,13 @@ import 'package:mix/mix.dart';
 
 void main() {
   group('TextDataDirectiveUtility', () {
-    const textDirective = TextDataDirectiveUtility();
+    final textDirective = TextDirectiveUtility(
+        (directive) => TextSpecAttribute(directive: directive));
     test('merge returns merged object correctly', () {
       final attr1 = textDirective.uppercase();
       final attr2 = textDirective.capitalize();
       final merged = attr1.merge(attr2);
-      expect(merged.length, 2);
+      expect(merged.directive?.length, 2);
     });
 
     test('Equality holds when all properties are the same', () {
@@ -25,7 +26,7 @@ void main() {
     group('UppercaseDirective', () {
       test('modify returns correct value', () {
         final attribute = textDirective.uppercase();
-        final modified = attribute.apply('hello');
+        final modified = attribute.directive?.apply('hello');
         expect(modified, 'HELLO');
       });
     });
@@ -33,7 +34,7 @@ void main() {
     group('CapitalizeDirective', () {
       test('modify returns correct value', () {
         final attribute = text.capitalize();
-        final modified = attribute.apply('hello');
+        final modified = attribute.directive?.apply('hello');
         expect(modified, 'Hello');
       });
     });
@@ -41,7 +42,7 @@ void main() {
     group('LowercaseDirective', () {
       test('modify returns correct value', () {
         final attribute = text.lowercase();
-        final modified = attribute.apply('HELLO');
+        final modified = attribute.directive?.apply('HELLO');
         expect(modified, 'hello');
       });
     });
@@ -49,7 +50,7 @@ void main() {
     group('SentenceCaseDirective', () {
       test('modify returns correct value', () {
         final attribute = text.sentenceCase();
-        final modified = attribute.apply('hello');
+        final modified = attribute.directive?.apply('hello');
         expect(modified, 'Hello');
       });
     });
@@ -57,7 +58,7 @@ void main() {
     group('TitleCaseDirective', () {
       test('modify returns correct value', () {
         final attribute = text.titleCase();
-        final modified = attribute.apply('hello');
+        final modified = attribute.directive?.apply('hello');
         expect(modified, 'Hello');
       });
     });
