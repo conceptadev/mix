@@ -30,7 +30,6 @@ MediaQuery createMediaQuery(Size size) {
     child: MixTheme(
       data: MixThemeData(),
       child: MaterialApp(
-        useInheritedMediaQuery: true,
         home: Scaffold(
           body: Builder(
             builder: (BuildContext context) {

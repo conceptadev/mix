@@ -7,24 +7,24 @@ import '../../../helpers/testing_utils.dart';
 void main() {
   group('Orientation Utils', () {
     testWidgets('onPortrait context variant', (tester) async {
-      tester.binding.window.physicalSizeTestValue = const Size(400, 600);
+      tester.view.physicalSize = const Size(400, 600);
       await tester.pumpMaterialApp(Container());
       var context = tester.element(find.byType(Container));
 
       expect(onPortrait.when(context), true, reason: 'portrait');
       expect(onLandscape.when(context), false, reason: 'landscape');
 
-      addTearDown(tester.binding.window.clearPhysicalSizeTestValue);
+      addTearDown(tester.view.resetPhysicalSize);
     });
 
     testWidgets('onLandscape context variant', (tester) async {
-      tester.binding.window.physicalSizeTestValue = const Size(600, 400);
+      tester.view.physicalSize = const Size(600, 400);
       await tester.pumpMaterialApp(Container());
       var context = tester.element(find.byType(Container));
 
       expect(onPortrait.when(context), false, reason: 'portrait');
       expect(onLandscape.when(context), true, reason: 'landscape');
-      addTearDown(tester.binding.window.clearPhysicalSizeTestValue);
+      addTearDown(tester.view.resetPhysicalSize);
     });
     test('have correct variant names', () {
       expect(onPortrait.name, 'on-portrait');

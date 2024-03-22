@@ -109,7 +109,6 @@ void main() {
             onPress: () {
               counter++;
             },
-            animationDuration: Duration.zero,
             disabled: false,
             child: Container(),
           ),
@@ -136,7 +135,6 @@ void main() {
             onPress: () {
               counter++;
             },
-            animationDuration: Duration.zero,
             disabled: true,
             child: Container(),
           ),

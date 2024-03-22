@@ -20,7 +20,9 @@ class PressableBox extends StatelessWidget {
     VoidCallback? onPress,
     @Deprecated('Use hitTestBehavior instead') HitTestBehavior? behavior,
     this.hitTestBehavior,
+    @Deprecated('Use AnimatedStyle instead')
     this.animationDuration = const Duration(milliseconds: 125),
+    @Deprecated('Use AnimatedStyle instead')
     this.animationCurve = Curves.linear,
     this.disabled = false,
     required this.child,
@@ -66,12 +68,7 @@ class PressableBox extends StatelessWidget {
       autofocus: autofocus,
       focusNode: focusNode,
       unpressDelay: unpressDelay,
-      child: AnimatedBox(
-        style: style,
-        curve: animationCurve,
-        duration: animationDuration,
-        child: child,
-      ),
+      child: Box(style: style, child: child),
     );
   }
 }
