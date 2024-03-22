@@ -3,7 +3,6 @@
   "variants": "Variants",
   "decorators": "Decorators",
   "theming": "Theming",
-  "design-tokens": "Design Tokens",
   "directives": "Directives",
   "supporting-new-widgets": "Supporting new Widgets"
 }
