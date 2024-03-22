@@ -7,7 +7,6 @@ import 'fractionally_sized_box_widget_decorator.dart';
 import 'intrinsic_widget_decorator.dart';
 import 'opacity_widget_decorator.dart';
 import 'rotated_box_widget_decorator.dart';
-import 'scale_widget_decorator.dart';
 import 'sized_box_widget_decorator.dart';
 import 'transform_widget_decorator.dart';
 import 'visibility_widget_decorator.dart';
@@ -16,7 +15,8 @@ T selfBuilder<T extends StyleAttribute>(T decorator) => decorator;
 
 const intrinsicWidth = IntrinsicWidthWidgetUtility(selfBuilder);
 const intrinsicHeight = IntrinsicHeightWidgetUtility(selfBuilder);
-const scale = ScaleUtility(selfBuilder);
+final scale = transform.scale;
+final flip = transform.flip;
 const opacity = OpacityUtility(selfBuilder);
 const rotate = RotatedBoxWidgetUtility(selfBuilder);
 

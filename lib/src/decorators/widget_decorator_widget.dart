@@ -11,7 +11,6 @@ import 'clip_widget_decorator.dart';
 import 'fractionally_sized_box_widget_decorator.dart';
 import 'intrinsic_widget_decorator.dart';
 import 'opacity_widget_decorator.dart';
-import 'scale_widget_decorator.dart';
 import 'sized_box_widget_decorator.dart';
 import 'transform_widget_decorator.dart';
 import 'visibility_widget_decorator.dart';
@@ -50,11 +49,6 @@ const _defaultOrder = [
   // This decorator ensures that the widget scales correctly within its given aspect ratio constraints,
   // which is critical for preserving the visual integrity of images and other aspect-sensitive content.
   AspectRatioDecoratorAttribute,
-
-  // 8. ScaleDecorator: Scales the widget according to a given scale factor. This decorator is applied after
-  // the aspect ratio is considered to ensure the widget scales uniformly, affecting its overall size and maintaining
-  // the aspect ratio integrity.
-  ScaleDecoratorAttribute,
 
   // 9. TransformDecorator: Applies arbitrary transformations, such as rotation, scaling, and translation.
   // Transformations are applied after all sizing and positioning adjustments to modify the widget's appearance

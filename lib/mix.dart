@@ -52,7 +52,6 @@ export 'src/decorators/fractionally_sized_box_widget_decorator.dart';
 export 'src/decorators/intrinsic_widget_decorator.dart';
 export 'src/decorators/opacity_widget_decorator.dart';
 export 'src/decorators/rotated_box_widget_decorator.dart';
-export 'src/decorators/scale_widget_decorator.dart';
 export 'src/decorators/sized_box_widget_decorator.dart';
 export 'src/decorators/transform_widget_decorator.dart';
 export 'src/decorators/visibility_widget_decorator.dart';

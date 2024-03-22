@@ -87,7 +87,7 @@ void main() {
             orderOfDecorators: const [
               ClipOvalDecoratorAttribute,
               AspectRatioDecoratorAttribute,
-              ScaleDecoratorAttribute,
+              TransformDecoratorAttribute,
               OpacityDecoratorAttribute,
               VisibilityDecoratorAttribute,
             ],
