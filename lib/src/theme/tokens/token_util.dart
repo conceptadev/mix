@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
 import '../material/material_tokens.dart';
+import '../mix/mix_tokens.dart';
 import 'breakpoints_token.dart';
 
 const $md = MaterialTokens();
+const $mix = MixTokens();
 
 const $radius = RadiusTokenUtil();
 const $space = SpaceTokenUtil();
