@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../core/directive.dart';
 import '../../core/styled_widget.dart';
 import '../../factory/mix_provider.dart';
 import '../../factory/mix_provider_data.dart';
@@ -97,12 +96,10 @@ class MixedText extends StatelessWidget {
     final mix = this.mix ?? MixProvider.of(context);
     // Resolve the TextSpec for styling properties.
     final spec = TextSpec.of(mix);
-    // ModifyText attribute for potentially altering the text content.
-    final modifyText = mix.attributeOf<TextDataDirective>();
 
     // The Text widget is used here, applying the resolved styles and properties from TextSpec.
     final textWidget = Text(
-      modifyText?.apply(text) ?? text,
+      spec.directive?.apply(text) ?? text,
       style: spec.style,
       strutStyle: spec.strutStyle,
       textAlign: spec.textAlign,

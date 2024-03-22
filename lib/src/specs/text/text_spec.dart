@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 import '../../core/attribute.dart';
+import '../../core/directive.dart';
 import '../../factory/mix_provider_data.dart';
 import '../../helpers/lerp_helpers.dart';
 import 'text_attribute.dart';
@@ -18,6 +19,7 @@ class TextSpec extends Spec<TextSpec> {
   final TextStyle? style;
   final TextDirection? textDirection;
   final bool? softWrap;
+  final TextDirective? directive;
 
   const TextSpec({
     required this.overflow,
@@ -30,6 +32,7 @@ class TextSpec extends Spec<TextSpec> {
     this.textHeightBehavior,
     this.textDirection,
     this.softWrap,
+    this.directive,
   });
 
   // empty
@@ -43,6 +46,7 @@ class TextSpec extends Spec<TextSpec> {
         textWidthBasis = null,
         textHeightBehavior = null,
         textDirection = null,
+        directive = null,
         softWrap = null;
 
   static TextSpec of(MixData mix) =>
@@ -65,6 +69,7 @@ class TextSpec extends Spec<TextSpec> {
           lerpSnap(textHeightBehavior, other.textHeightBehavior, t),
       textDirection: lerpSnap(textDirection, other.textDirection, t),
       softWrap: lerpSnap(softWrap, other.softWrap, t),
+      directive: lerpSnap(directive, other.directive, t),
     );
   }
 
@@ -80,6 +85,7 @@ class TextSpec extends Spec<TextSpec> {
     TextWidthBasis? textWidthBasis,
     TextHeightBehavior? textHeightBehavior,
     TextDirection? textDirection,
+    TextDirective? directive,
   }) {
     return TextSpec(
       overflow: overflow ?? this.overflow,
@@ -92,6 +98,7 @@ class TextSpec extends Spec<TextSpec> {
       textHeightBehavior: textHeightBehavior ?? this.textHeightBehavior,
       textDirection: textDirection ?? this.textDirection,
       softWrap: softWrap ?? this.softWrap,
+      directive: directive ?? this.directive,
     );
   }
 
@@ -107,5 +114,6 @@ class TextSpec extends Spec<TextSpec> {
         textHeightBehavior,
         style,
         textDirection,
+        directive,
       ];
 }
