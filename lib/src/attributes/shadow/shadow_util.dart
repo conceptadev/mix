@@ -103,6 +103,15 @@ class ShadowUtility<T extends StyleAttribute> extends MixUtility<T, ShadowDto> {
   }
 }
 
+class ShadowListUtility<T extends StyleAttribute>
+    extends MixUtility<T, List<ShadowDto>> {
+  const ShadowListUtility(super.builder);
+
+  T call(List<BoxShadow> shadows) {
+    return builder(shadows.map(ShadowDto.from).toList());
+  }
+}
+
 /// Utility class for creating and manipulating a list of [BoxShadow] attributes.
 ///
 /// Allows for the creation of a list of box shadows, useful for applying multiple shadows to a single element.

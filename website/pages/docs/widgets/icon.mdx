@@ -56,7 +56,6 @@ The `icon` constant alias is an instance of `IconUtility`, which facilitates the
 Change the color of the icon:
 
 ```dart
-// Apply a color to the icon
 icon.color.red();
 ```
 
@@ -65,6 +64,59 @@ icon.color.red();
 Set the size of the icon:
 
 ```dart
-// Set the icon size to 24
 icon.size(24);
 ```
+
+// document , , , , , , 
+
+#### **weight**
+Set the stroke weight for drawing the icon:
+
+```dart
+icon.weight(24);
+```
+
+#### **grade**
+Set the grade (granular stroke weight) for drawing the icon:
+
+```dart
+icon.grade(10);
+```
+
+#### **opticalSize**
+Set the optical size for drawing the icon.:
+
+```dart
+icon.opticalSize(10);
+```
+
+#### **fill**
+Set the fill for drawing the icon:
+
+```dart
+icon.fill(0.7);
+```
+
+#### **applyTextScaling**
+Set to able the icon scale:
+
+```dart
+icon.applyTextScaling.on();
+```
+
+#### **shadow** and **shadows**
+Set the shadow that will be painted underneath the icon:
+
+```dart
+icon.shadow(10);
+
+icon.shadows([
+  ShadowDto(
+    color: ColorDto(
+      Colors.black,
+    ),
+  ),
+]);
+```
+
+
