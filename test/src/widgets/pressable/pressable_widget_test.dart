@@ -33,9 +33,9 @@ void main() {
       final secondContext = tester.element(find.byKey(secondKey));
       final thirdContext = tester.element(find.byKey(thirdKey));
 
-      final firstNotifier = PressableDataNotifier.of(firstContext);
-      final secondNotifier = PressableDataNotifier.of(secondContext);
-      final thirdNotifier = PressableDataNotifier.of(thirdContext);
+      final firstNotifier = PressableState.of(firstContext);
+      final secondNotifier = PressableState.of(secondContext);
+      final thirdNotifier = PressableState.of(thirdContext);
 
       expect(onEnabledAttr.when(firstContext), false);
       expect(firstNotifier.disabled, true);

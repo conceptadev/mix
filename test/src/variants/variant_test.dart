@@ -37,7 +37,7 @@ void main() {
       final result = multiVariant.remove([variant1, variant2]);
 
       expect(result, isA<Variant>());
-      expect((result).name, variant3.name);
+      expect((result as Variant).name, variant3.name);
     });
 
     test('matches should correctly match variants', () {
@@ -55,8 +55,8 @@ void main() {
     });
 
     test('when should correctly match context variants', () {
-      final variant1 = ContextVariant('variant1', (context) => true);
-      final variant2 = ContextVariant('variant2', (context) => false);
+      final variant1 = ContextVariant((context) => true);
+      final variant2 = ContextVariant((context) => false);
       final multiAndVariant = MultiVariant.and([variant1, variant2]);
       final multiOrVariant = MultiVariant.or([variant1, variant2]);
 

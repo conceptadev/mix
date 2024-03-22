@@ -123,7 +123,7 @@ List<StyleAttribute> applyContextToVisualAttributes(
   List<WhenVariant> gestureVariantTypes = [];
 
   for (ContextVariantAttribute attr in contextVariants) {
-    if (attr.variant is PressableDataVariant) {
+    if (attr.variant is PressableStateVariant) {
       gestureVariantTypes.add(attr);
     } else {
       contextVariantTypes.add(attr);
@@ -132,7 +132,7 @@ List<StyleAttribute> applyContextToVisualAttributes(
 
   for (MultiVariantAttribute attr in multiVariants) {
     if (attr.variant.variants
-        .any((variant) => variant is PressableDataVariant)) {
+        .any((variant) => variant is PressableStateVariant)) {
       gestureVariantTypes.add(attr);
     } else {
       contextVariantTypes.add(attr);

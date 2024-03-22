@@ -318,8 +318,8 @@ void main() {
         final b = style.applyVariants([extraVariant2]);
         final c = style.applyVariants([extraVariant1, extraVariant2]);
 
-        expect(a, b);
-        expect(a, c);
+        expect(a, b, reason: 'a and b');
+        expect(a, c, reason: 'a and c');
       },
     );
   });

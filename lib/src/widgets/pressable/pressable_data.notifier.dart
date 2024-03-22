@@ -1,133 +1,164 @@
+// ignore_for_file: avoid-inferrable-type-arguments
+
 import 'package:flutter/widgets.dart';
 
 import '../../helpers/compare_mixin.dart';
 
-enum PressableDataAspect { focused, disabled, state, cursorPosition }
-
-@immutable
-class OnMouseHover {
-  final Alignment alignment;
-  final Offset offset;
-
-  const OnMouseHover({required this.alignment, required this.offset});
+enum PressableStateAspect {
+  currentState,
+  enabled,
+  hovered,
+  focused,
+  pressed,
+  longPressed,
+  pointerPosition
 }
 
-@immutable
-class PressableStateData with Comparable {
-  final bool focused;
-  final bool disabled;
-  final PressableState state;
-  final OnMouseHover? mouseEvent;
-
-  const PressableStateData({
-    required this.focused,
-    required this.disabled,
-    required this.state,
-    required this.mouseEvent,
-  });
-
-  const PressableStateData.none()
-      : focused = false,
-        disabled = true,
-        mouseEvent = null,
-        state = PressableState.none;
-
-  PressableStateData copyWith({
-    bool? focused,
-    bool? disabled,
-    PressableState? state,
-    OnMouseHover? mouseEvent,
-  }) {
-    return PressableStateData(
-      focused: focused ?? this.focused,
-      disabled: disabled ?? this.disabled,
-      state: state ?? this.state,
-      mouseEvent: mouseEvent ?? this.mouseEvent,
-    );
-  }
-
-  @override
-  get props => [focused, disabled, state, mouseEvent];
-}
-
-enum PressableState {
-  none,
+enum PressableCurrentState {
+  idle,
   hovered,
   pressed,
   longPressed,
 }
 
-class PressableDataNotifier extends InheritedModel<PressableDataAspect> {
-  const PressableDataNotifier({
+class PressableState extends InheritedModel<PressableStateAspect> {
+  const PressableState({
     super.key,
     required super.child,
-    required this.data,
+    required this.enabled,
+    required this.hovered,
+    required this.focused,
+    required this.pressed,
+    required this.longPressed,
+    required this.pointerPosition,
   });
 
-  static PressableStateData of(
-    BuildContext context, {
-    PressableDataAspect? aspect,
-  }) {
-    final model = InheritedModel.inheritFrom<PressableDataNotifier>(
-      context,
-      aspect: aspect,
+  factory PressableState.none({Key? key, required Widget child}) {
+    return PressableState(
+      key: key,
+      enabled: false,
+      hovered: false,
+      focused: false,
+      pressed: false,
+      longPressed: false,
+      pointerPosition: null,
+      child: child,
     );
-
-    assert(
-      model != null,
-      'No Pressable data found in context. Make sure to wrap your widget a Pressable widget',
-    );
-
-    return model!.data;
   }
 
-  static bool isDisabledOf(BuildContext context) {
-    return of(context, aspect: PressableDataAspect.disabled).disabled;
+  static PressableState of(
+    BuildContext context, [
+    PressableStateAspect? aspect,
+  ]) {
+    final PressableState? result = maybeOf(context, aspect);
+    assert(result != null, 'Unable to find an instance of MyModel...');
+
+    return result!;
   }
 
-  static OnMouseHover? mouseHoverOf(BuildContext context) {
-    return of(context, aspect: PressableDataAspect.cursorPosition).mouseEvent;
+  static PressableState? maybeOf(
+    BuildContext context, [
+    PressableStateAspect? aspect,
+  ]) {
+    return InheritedModel.inheritFrom<PressableState>(context, aspect: aspect);
   }
 
-  static bool isFocusedOf(BuildContext context) {
-    return of(context, aspect: PressableDataAspect.focused).focused;
+  static PressableState aspectOf(
+    BuildContext context,
+    PressableStateAspect aspect,
+  ) {
+    return of(context, aspect);
   }
 
-  static PressableState stateOf(BuildContext context) {
-    return of(context, aspect: PressableDataAspect.state).state;
+  static bool enabledOf(BuildContext context) {
+    return of(context, PressableStateAspect.enabled).enabled;
   }
 
-  final PressableStateData data;
+  static bool hoveredOf(BuildContext context) {
+    return of(context, PressableStateAspect.hovered).hovered;
+  }
+
+  static bool focusedOf(BuildContext context) {
+    return of(context, PressableStateAspect.focused).focused;
+  }
+
+  static bool pressedOf(BuildContext context) {
+    return of(context, PressableStateAspect.pressed).pressed;
+  }
+
+  static bool longPressedOf(BuildContext context) {
+    return of(context, PressableStateAspect.longPressed).longPressed;
+  }
+
+  static PointerPosition? pointerPositionOf(BuildContext context) {
+    return of(context, PressableStateAspect.pointerPosition).pointerPosition;
+  }
+
+  static PressableCurrentState stateOf(BuildContext context) {
+    return of(context, PressableStateAspect.currentState).currentState;
+  }
+
+  final bool enabled;
+  final bool hovered;
+  final bool focused;
+  final bool pressed;
+  final bool longPressed;
+
+  final PointerPosition? pointerPosition;
+
+  PressableCurrentState get currentState {
+    if (enabled) {
+      // Long pressed has priority over pressed
+      // Due to delay of removing the _press state
+      if (longPressed) return PressableCurrentState.longPressed;
+
+      if (pressed) return PressableCurrentState.pressed;
+    }
+
+    if (hovered) return PressableCurrentState.hovered;
+
+    return PressableCurrentState.idle;
+  }
+
+  bool get disabled => !enabled;
 
   @override
-  bool updateShouldNotify(PressableDataNotifier oldWidget) {
-    return oldWidget.data != data;
+  bool updateShouldNotify(PressableState oldWidget) {
+    return oldWidget.enabled != enabled ||
+        oldWidget.hovered != hovered ||
+        oldWidget.focused != focused ||
+        oldWidget.pressed != pressed ||
+        oldWidget.longPressed != longPressed ||
+        oldWidget.pointerPosition != pointerPosition;
   }
 
   @override
   bool updateShouldNotifyDependent(
-    PressableDataNotifier oldWidget,
-    Set<PressableDataAspect> dependencies,
+    PressableState oldWidget,
+    Set<PressableStateAspect> dependencies,
   ) {
-    if (oldWidget.data.focused != data.focused &&
-        dependencies.contains(PressableDataAspect.focused)) {
-      return true;
-    }
-    if (oldWidget.data.disabled != data.disabled &&
-        dependencies.contains(PressableDataAspect.disabled)) {
-      return true;
-    }
-
-    if (oldWidget.data.state != data.state &&
-        dependencies.contains(PressableDataAspect.state)) {
-      return true;
-    }
-
-    if (oldWidget.data.mouseEvent != data.mouseEvent &&
-        dependencies.contains(PressableDataAspect.cursorPosition)) {
-      return true;
-    }
-
-    return false;
+    return dependencies.contains(PressableStateAspect.enabled) &&
+            oldWidget.enabled != enabled ||
+        dependencies.contains(PressableStateAspect.hovered) &&
+            oldWidget.hovered != hovered ||
+        dependencies.contains(PressableStateAspect.focused) &&
+            oldWidget.focused != focused ||
+        dependencies.contains(PressableStateAspect.pressed) &&
+            oldWidget.pressed != pressed ||
+        dependencies.contains(PressableStateAspect.longPressed) &&
+            oldWidget.longPressed != longPressed ||
+        dependencies.contains(PressableStateAspect.pointerPosition) &&
+            oldWidget.pointerPosition != pointerPosition ||
+        dependencies.contains(PressableStateAspect.currentState) &&
+            oldWidget.currentState != currentState;
   }
+}
+
+class PointerPosition with Comparable {
+  final Alignment alignment;
+  final Offset offset;
+  const PointerPosition({required this.alignment, required this.offset});
+
+  @override
+  get props => [alignment, offset];
 }

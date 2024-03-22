@@ -4,6 +4,10 @@ import 'package:mix/mix.dart';
 
 import '../../helpers/testing_utils.dart';
 
+const _foo = Variant('foo');
+const _bar = Variant('bar');
+const _fooBar = Variant('fooBar');
+
 void main() {
   group('VariantOperation', () {
     test('should add variant with & operator', () {
@@ -177,7 +181,3 @@ Widget _buildTestCaseToVerifyIfNull(Style style, List<Variant> variants) {
     },
   );
 }
-
-const _foo = Variant('foo');
-const _bar = Variant('bar');
-const _fooBar = Variant('fooBar');

@@ -5,6 +5,42 @@ import '../core/attribute.dart';
 import '../factory/style_mix.dart';
 import '../helpers/compare_mixin.dart';
 
+@immutable
+abstract class StyleVariant with Comparable {
+  const StyleVariant();
+
+  /// Combines this variant with another [variant] using an 'AND' operation.
+  ///
+  /// This operator returns a [MultiVariant] that represents a combination of both
+  /// variants. It is useful for defining styles that should be applied when
+  /// multiple conditions are met.
+  ///
+  /// Example:
+  /// ```dart
+  /// final combinedVariant = variant1 & variant2;
+  /// ```
+  MultiVariant operator &(covariant StyleVariant variant) =>
+      MultiVariant.and([this, variant]);
+
+  /// Combines this variant with another [variant] using an 'OR' operation.
+  ///
+  /// This operator returns a [MultiVariant] that represents either of the variants.
+  /// It is useful for defining styles that should be applied when any one of
+  /// multiple conditions is met.
+  ///
+  /// Example:
+  /// ```dart
+  /// final eitherVariant = variant1 | variant2;
+  /// ```
+  MultiVariant operator |(covariant StyleVariant variant) =>
+      MultiVariant.or([this, variant]);
+
+  /// Checks if this variant matches a set of provided variants.
+  /// Returns true if this variant is present in the provided [matchVariants].
+  bool matches(Iterable<StyleVariant> matchVariants) =>
+      matchVariants.contains(this);
+}
+
 /// An immutable class representing a styling variant.
 ///
 /// Variants encapsulate a set of styles that can be applied together under certain conditions
@@ -35,7 +71,7 @@ import '../helpers/compare_mixin.dart';
 ///    );
 /// ```
 @immutable
-class Variant with Comparable {
+class Variant extends StyleVariant {
   final String name;
 
   /// Constructs a `Variant` with the given [name].
@@ -43,34 +79,10 @@ class Variant with Comparable {
   /// The [name] parameter uniquely identifies the variant and is used in style resolution.
   const Variant(this.name);
 
-  /// Combines this variant with another [variant] using an 'AND' operation.
+  /// Creates a new [VariantAttribute] with the given [variant] and [style].
   ///
-  /// This operator returns a [MultiVariant] that represents a combination of both
-  /// variants. It is useful for defining styles that should be applied when
-  /// multiple conditions are met.
-  ///
-  /// Example:
-  /// ```dart
-  /// final combinedVariant = variant1 & variant2;
-  /// ```
-  MultiVariant operator &(Variant variant) => MultiVariant.and([this, variant]);
-
-  /// Combines this variant with another [variant] using an 'OR' operation.
-  ///
-  /// This operator returns a [MultiVariant] that represents either of the variants.
-  /// It is useful for defining styles that should be applied when any one of
-  /// multiple conditions is met.
-  ///
-  /// Example:
-  /// ```dart
-  /// final eitherVariant = variant1 | variant2;
-  /// ```
-  MultiVariant operator |(Variant variant) => MultiVariant.or([this, variant]);
-
-  /// Defines styles to be applied when this variant is active.
-  ///
-  /// You can define up to 20 styling [`Attribute`]s to be applied when this `Variant` is activated.
-  /// Null values are ignored and do not affect the resulting styling rules.
+  /// This method is used to create a new [VariantAttribute] instance with the given [variant] and [style].
+  /// It is used internally by the `Variant` class to create a new `VariantAttribute` when the variant is applied.
   VariantAttribute call([
     Attribute? p1,
     Attribute? p2,
@@ -101,16 +113,9 @@ class Variant with Comparable {
     return VariantAttribute(this, Style.create(params));
   }
 
-  bool matches(Iterable<Variant> matchVariants) {
-    return matchVariants.contains(this);
-  }
-
   @override
   get props => [name];
 }
-
-/// A typedef for a function that determines if a specific context condition is met.
-typedef WhenContextFunction = bool Function(BuildContext context);
 
 /// A variant of styling that is applied based on specific context conditions.
 ///
@@ -122,7 +127,6 @@ typedef WhenContextFunction = bool Function(BuildContext context);
 /// Creating an `onDark` variant that applies styles when the app's theme is in dark mode:
 /// ```dart
 /// final onDark = ContextVariant(
-///   'on-dark',
 ///   ( context) => Theme.of(context).brightness == Brightness.dark,
 /// )
 ///
@@ -137,21 +141,22 @@ typedef WhenContextFunction = bool Function(BuildContext context);
 /// This example defines a `ContextVariant` onDark, which checks if the current
 /// theme brightness is dark. If true, the associated styles are applied.
 @immutable
-class ContextVariant extends Variant {
+class ContextVariant extends StyleVariant {
   /// A function that defines the condition under which this variant should be applied.
   ///
   /// The [when] function takes a [BuildContext] and returns a boolean indicating whether
   /// the condition for this variant is met in the given context. This allows for dynamic
   /// styling changes based on runtime context conditions, such as theme brightness or screen size.
-  final WhenContextFunction when;
+  final bool Function(BuildContext context) when;
 
   /// Constructs a `ContextVariant` with a given [name] and a context condition function [when].
-  ///
-  /// The [name] uniquely identifies the variant and is used in style resolution, while the
-  /// [when] function determines the applicability of the variant based on the given context.
-  const ContextVariant(super.name, this.when);
+  const ContextVariant(this.when);
 
-  @override
+  /// Creates a new [ContextVariantAttribute] with the given [variant] and [style].
+  ///
+  /// This method is used to create a new [ContextVariantAttribute] instance with the given [variant] and [style].
+  /// It is used internally by the `ContextVariant` class to create a new `ContextVariantAttribute` when the variant is applied.
+
   ContextVariantAttribute call([
     Attribute? p1,
     Attribute? p2,
@@ -179,12 +184,11 @@ class ContextVariant extends Variant {
       p11, p12, p13, p14, p15, p16, p17, p18, p19, p20,
     ].whereType<Attribute>();
 
-    // Create a ContextVariantAttribute using the collected parameters.
     return ContextVariantAttribute(this, Style.create(params));
   }
 
   @override
-  get props => [name, when];
+  get props => [when];
 }
 
 enum MultiVariantOperator { and, or }
@@ -225,9 +229,9 @@ enum MultiVariantOperator { and, or }
 /// based on multiple conditions.
 
 @immutable
-class MultiVariant extends Variant {
+class MultiVariant extends StyleVariant {
   /// A list of [Variant] instances contained within this `MultiVariant`.
-  final List<Variant> variants;
+  final List<StyleVariant> variants;
 
   /// The type operator of this `MultiVariant`, defining its category or specific behavior.
   ///
@@ -235,30 +239,30 @@ class MultiVariant extends Variant {
   /// understanding and applying their behavior.
   final MultiVariantOperator operatorType;
 
-  const MultiVariant._(super.name, this.variants, {required this.operatorType});
+  const MultiVariant._(this.variants, {required this.operatorType});
 
   factory MultiVariant(
-    Iterable<Variant> variants, {
+    Iterable<StyleVariant> variants, {
     required MultiVariantOperator type,
   }) {
     final sortedVariants = variants.toList()
-      ..sort(((a, b) => a.name.compareTo(b.name)));
-    final combinedName = sortedVariants.map((e) => e.name).join('-');
+      ..sort(((a, b) =>
+          a.runtimeType.toString().compareTo(b.runtimeType.toString())));
 
-    return MultiVariant._(combinedName, sortedVariants, operatorType: type);
+    return MultiVariant._(sortedVariants, operatorType: type);
   }
 
   /// Factory constructor to create a `MultiVariant` where all provided variants need to be active (`MultiVariantType.and`).
   ///
   /// It initializes a `MultiVariant` with the given [variants] and sets the type to `MultiVariantType.and`.
-  factory MultiVariant.and(Iterable<Variant> variants) {
+  factory MultiVariant.and(Iterable<StyleVariant> variants) {
     return MultiVariant(variants, type: MultiVariantOperator.and);
   }
 
   /// Factory constructor to create a `MultiVariant` where any one of the provided variants needs to be active (`MultiVariantType.or`).
   ///
   /// It initializes a `MultiVariant` with the given [variants] and sets the type to `MultiVariantType.or`.
-  factory MultiVariant.or(Iterable<Variant> variants) {
+  factory MultiVariant.or(Iterable<StyleVariant> variants) {
     return MultiVariant(variants, type: MultiVariantOperator.or);
   }
 
@@ -275,7 +279,7 @@ class MultiVariant extends Variant {
   /// ```
   /// In this example, `updatedVariant` will be a combination of `variantB` and `variantC`.
   /// This is useful for procedurally applying variants based on runtime conditions.
-  Variant remove(Iterable<Variant> variantsToRemove) {
+  StyleVariant remove(Iterable<StyleVariant> variantsToRemove) {
     final updatedVariants = variants..removeWhere(variantsToRemove.contains);
 
     return updatedVariants.length == 1
@@ -307,36 +311,10 @@ class MultiVariant extends Variant {
             contextVariants.every((variant) => variant.when(context));
   }
 
-  /// Determines if the current `MultiVariant` matches a set of provided variants.
+  /// Creates a new [MultiVariantAttribute] with the given [variant] and [style].
   ///
-  /// This method evaluates whether the variants within this `MultiVariant` align with the given [matchVariants] based on its `type`:
-  /// - `MultiVariantType.and`: Returns true if every variant in this `MultiVariant` is present in [matchVariants].
-  /// - `MultiVariantType.or`: Returns true if at least one of the variants in this `MultiVariant` is present in [matchVariants].
-  ///
-  /// This method is particularly useful for checking if a composite style, represented by this `MultiVariant`,
-  /// should be applied based on a specific set of active variants.
-  ///
-  /// Example:
-  /// ```dart
-  /// final combinedVariant = MultiVariant.and([variantA, variantB]);
-  /// bool isMatched = combinedVariant.matches([variantA, variantB, variantC]);
-  /// ```
-  /// Here, `isMatched` will be true for `MultiVariantType.and` if both `variantA` and `variantB` are included in the provided list.
-  /// For `MultiVariantType.or`, `isMatched` would be true if either `variantA` or `variantB` is in the list.
-  @override
-  bool matches(Iterable<Variant> matchVariants) {
-    final list = variants.map((e) => e.matches(matchVariants)).toList();
-
-    return operatorType == MultiVariantOperator.and
-        ? list.every((e) => e)
-        : list.contains(true);
-  }
-
-  /// A method for creating a new `MultiVariantAttribute` instance.
-  ///
-  /// It takes up to 20 optional [Attribute] parameters and creates a new `MultiVariantAttribute` using these attributes.
-  /// This method allows for easy creation of a `MultiVariantAttribute` with custom attributes.
-  @override
+  /// This method is used to create a new [MultiVariantAttribute] instance with the given [variant] and [style].
+  /// It is used internally by the `MultiVariant` class to create a new `MultiVariantAttribute` when the variant is applied.
   MultiVariantAttribute call([
     Attribute? p1,
     Attribute? p2,
@@ -367,6 +345,31 @@ class MultiVariant extends Variant {
     return MultiVariantAttribute(this, Style.create(params));
   }
 
+  /// Determines if the current `MultiVariant` matches a set of provided variants.
+  ///
+  /// This method evaluates whether the variants within this `MultiVariant` align with the given [matchVariants] based on its `type`:
+  /// - `MultiVariantType.and`: Returns true if every variant in this `MultiVariant` is present in [matchVariants].
+  /// - `MultiVariantType.or`: Returns true if at least one of the variants in this `MultiVariant` is present in [matchVariants].
+  ///
+  /// This method is particularly useful for checking if a composite style, represented by this `MultiVariant`,
+  /// should be applied based on a specific set of active variants.
+  ///
+  /// Example:
+  /// ```dart
+  /// final combinedVariant = MultiVariant.and([variantA, variantB]);
+  /// bool isMatched = combinedVariant.matches([variantA, variantB, variantC]);
+  /// ```
+  /// Here, `isMatched` will be true for `MultiVariantType.and` if both `variantA` and `variantB` are included in the provided list.
+  /// For `MultiVariantType.or`, `isMatched` would be true if either `variantA` or `variantB` is in the list.
   @override
-  get props => [name, variants];
+  bool matches(Iterable<StyleVariant> matchVariants) {
+    final list = variants.map((e) => e.matches(matchVariants)).toList();
+
+    return operatorType == MultiVariantOperator.and
+        ? list.every((e) => e)
+        : list.contains(true);
+  }
+
+  @override
+  get props => [variants];
 }

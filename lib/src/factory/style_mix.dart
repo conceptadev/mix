@@ -33,7 +33,7 @@ class Style with Comparable {
   final AttributeMap<StyleAttribute> styles;
 
   /// The variant attributes contained in this mix.
-  final AttributeMap<VariantAttribute> variants;
+  final AttributeMap<StyleVariantAttribute> variants;
 
   static final stack = SpreadFunctionParams(_styleType<StackSpecAttribute>());
   static final text = SpreadFunctionParams(_styleType<TextSpecAttribute>());
@@ -105,13 +105,13 @@ class Style with Comparable {
   /// final style = Style.create([attribute1, attribute2]);
   /// ```
   factory Style.create(Iterable<Attribute> attributes) {
-    final applyVariants = <VariantAttribute>[];
+    final applyVariants = <StyleVariantAttribute>[];
     final styleList = <StyleAttribute>[];
 
     for (final attribute in attributes) {
       if (attribute is StyleAttribute) {
         styleList.add(attribute);
-      } else if (attribute is VariantAttribute) {
+      } else if (attribute is StyleVariantAttribute) {
         applyVariants.add(attribute);
       } else if (attribute is NestedStyleAttribute) {
         applyVariants.addAll(attribute.value.variants.values);
@@ -190,7 +190,7 @@ class Style with Comparable {
   ///
   /// Note:
   /// The attributes from the selected variant (`attr4` and `attr5`) are not applied to the `Style` instance until the `applyVariant` method is called.
-  SpreadFunctionParams<Variant, Style> get applyVariant =>
+  SpreadFunctionParams<StyleVariant, Style> get applyVariant =>
       SpreadFunctionParams(applyVariants);
 
   /// Allows to create a new `Style` by using this mix as a base and adding additional attributes.
@@ -209,7 +209,7 @@ class Style with Comparable {
   /// If [styles] or [variants] is null, the corresponding attribute map of this mix is used.
   Style copyWith({
     AttributeMap<StyleAttribute>? styles,
-    AttributeMap<VariantAttribute>? variants,
+    AttributeMap<StyleVariantAttribute>? variants,
   }) {
     return Style._(
       styles: styles ?? this.styles,
@@ -258,15 +258,15 @@ class Style with Comparable {
   ///
   /// Note:
   /// The attributes from the selected variants (`attr3`, `attr4`, and `attr5`) are not applied to the `Style` instance until the `applyVariants` method is called.
-  Style applyVariants(Iterable<Variant> selectedVariants) {
+  Style applyVariants(Iterable<StyleVariant> selectedVariants) {
     /// Return the original Style if no variants were selected
     if (selectedVariants.isEmpty) {
       return this;
     }
 
     /// Initializing two empty lists that store the matched and remaining `Variants`, respectively.
-    final matchedVariants = <VariantAttribute>[];
-    final remainingVariants = <VariantAttribute>[];
+    final matchedVariants = <StyleVariantAttribute>[];
+    final remainingVariants = <StyleVariantAttribute>[];
 
     /// Loop over all VariantAttributes in variants only once instead of a nested loop,
     /// checking if each one matches with the selected variants.
@@ -325,10 +325,10 @@ class Style with Comparable {
   /// The attributes `attr1` and `attr2` from the initial `Style` are ignored, and only the attributes within the specified variants are picked and applied to the new `Style`.
   @visibleForTesting
   Style pickVariants(
-    List<Variant> pickedVariants, {
+    List<StyleVariant> pickedVariants, {
     bool isRecursive = false,
   }) {
-    final matchedVariants = <VariantAttribute>[];
+    final matchedVariants = <StyleVariantAttribute>[];
 
     // Return an empty Style if the list of picked variants is empty
 
@@ -369,10 +369,10 @@ class Style with Comparable {
   /// - The `variantSwitcher` method is called on the `Style` instance with a map of conditions and variants.
   /// - The conditions `useHighContratst` and `useLargeFont` are hypothetical boolean values representing user preferences.
   /// - If a condition is true, the corresponding `Variant` is selected and applied to the `Style` instance, creating an `updatedStyle` instance with the selected variants.
-  Style variantSwitcher(List<SwitchCondition<Variant>> cases) {
-    List<Variant> variantsToApply = [];
+  Style variantSwitcher(List<SwitchCondition<StyleVariant>> cases) {
+    List<StyleVariant> variantsToApply = [];
 
-    for (SwitchCondition<Variant> conditionCase in cases) {
+    for (SwitchCondition<StyleVariant> conditionCase in cases) {
       if (conditionCase.condition) {
         variantsToApply.add(conditionCase.value);
       }

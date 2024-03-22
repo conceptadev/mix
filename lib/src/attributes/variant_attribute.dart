@@ -5,38 +5,42 @@ import '../factory/style_mix.dart';
 import '../variants/variant.dart';
 
 @immutable
-class VariantAttribute<T extends Variant> extends Attribute
-    with Mergeable<VariantAttribute<T>> {
-  final T variant;
+abstract class StyleVariantAttribute<V extends StyleVariant> extends Attribute
+    with Mergeable<StyleVariantAttribute<V>> {
+  final V variant;
   final Style _style;
-
-  const VariantAttribute(this.variant, Style style) : _style = style;
+  const StyleVariantAttribute(this.variant, Style style) : _style = style;
 
   Style get value => _style;
 
-  bool matches(Iterable<Variant> otherVariants) =>
-      otherVariants.contains(variant);
+  bool matches(Iterable<StyleVariant> otherVariants) =>
+      variant.matches(otherVariants);
 
   @override
-  VariantAttribute<T> merge(VariantAttribute<T> other) {
+  get props => [variant, _style];
+
+  @override
+  Object get type => ObjectKey(variant);
+}
+
+@immutable
+class VariantAttribute extends StyleVariantAttribute<Variant> {
+  const VariantAttribute(super.variant, super.style);
+
+  @override
+  VariantAttribute merge(VariantAttribute other) {
     if (other.variant != variant) throw throwArgumentError(other);
 
     return VariantAttribute(variant, _style.merge(other._style));
   }
-
-  @override
-  Object get type => ObjectKey(variant);
-
-  @override
-  get props => [variant, value];
 }
 
-mixin WhenVariant<T extends Variant> on VariantAttribute<T> {
+mixin WhenVariant<T extends StyleVariant> on StyleVariantAttribute<T> {
   bool when(BuildContext context);
 }
 
 @immutable
-class ContextVariantAttribute extends VariantAttribute<ContextVariant>
+class ContextVariantAttribute extends StyleVariantAttribute<ContextVariant>
     with WhenVariant<ContextVariant> {
   const ContextVariantAttribute(super.variant, super.style);
 
@@ -51,7 +55,7 @@ class ContextVariantAttribute extends VariantAttribute<ContextVariant>
   }
 }
 
-ArgumentError throwArgumentError<T extends VariantAttribute>(T other) {
+ArgumentError throwArgumentError<T extends StyleVariantAttribute>(T other) {
   throw ArgumentError.value(
     other.runtimeType,
     'other',
@@ -60,25 +64,26 @@ ArgumentError throwArgumentError<T extends VariantAttribute>(T other) {
 }
 
 @immutable
-class MultiVariantAttribute extends VariantAttribute<MultiVariant>
+class MultiVariantAttribute extends StyleVariantAttribute<MultiVariant>
     with WhenVariant<MultiVariant> {
   const MultiVariantAttribute(super.variant, super.style);
 
   // Remove all variants in given a list
-  VariantAttribute remove(Iterable<Variant> variantsToRemove) {
+  StyleVariantAttribute remove(Iterable<StyleVariant> variantsToRemove) {
     final variant = this.variant.remove(variantsToRemove);
     if (variant is MultiVariant) {
       return MultiVariantAttribute(variant, _style);
     } else if (variant is ContextVariant) {
       return ContextVariantAttribute(variant, _style);
+    } else if (variant is Variant) {
+      return VariantAttribute(variant, _style);
     }
-
-    return VariantAttribute(variant, _style);
+    throw ArgumentError.value(
+      variant,
+      'variant',
+      'Variant must be a Variant, ContextVariant, or MultiVariant',
+    );
   }
-
-  @override
-  bool matches(Iterable<Variant> otherVariants) =>
-      variant.matches(otherVariants);
 
   @override
   bool when(BuildContext context) => variant.when(context);

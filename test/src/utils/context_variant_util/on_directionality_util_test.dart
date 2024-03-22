@@ -21,9 +21,5 @@ void main() {
       expect(onRTL.when(context), false, reason: 'rtl');
       expect(onLTR.when(context), true, reason: 'ltr');
     });
-    test('have correct variant names', () {
-      expect(onRTL.name, 'on-rtl');
-      expect(onLTR.name, 'on-ltr');
-    });
   });
 }

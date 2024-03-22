@@ -63,7 +63,7 @@ void main() {
 
   // ContextVariantAttribute
   group('ContextVariantAttribute', () {
-    final variant = ContextVariant('custom_variant', (_) => true);
+    final variant = ContextVariant((_) => true);
 
     final style = Style(const MockIntScalarAttribute(8));
     test('Constructor assigns correct properties', () {
