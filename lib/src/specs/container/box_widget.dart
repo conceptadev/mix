@@ -158,8 +158,6 @@ class AnimatedMixedBox extends StatelessWidget {
   Widget build(BuildContext context) {
     final spec = BoxSpec.of(mix);
 
-    print((spec.decoration as BoxDecoration).color?.toString() ?? 'none');
-
     // AnimatedContainer is utilized here to animate the transition of BoxSpec properties.
     // Each property from the BoxSpec is applied to the AnimatedContainer, allowing the
     // widget to animate changes smoothly over the specified duration and curve.

@@ -185,7 +185,6 @@ abstract class _PressableBuilderWidgetState<T extends _PressableBuilderWidget>
   }
 
   void _handleHoverUpdate(bool isHovered) {
-    print('isHovered: $isHovered');
     updateState(() {
       _isHovered = isHovered;
     });
