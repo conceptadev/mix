@@ -6,7 +6,6 @@ import '../../core/styled_widget.dart';
 import '../../deprecations.dart';
 import '../../factory/mix_provider_data.dart';
 import '../../factory/style_mix.dart';
-import '../../utils/helper_util.dart';
 import '../container/box_widget.dart';
 import 'flex_spec.dart';
 
@@ -35,6 +34,7 @@ class StyledFlex extends StyledWidget {
     super.inherit,
     required this.direction,
     this.children = const <Widget>[],
+    super.orderOfDecorators = const [],
   });
 
   final List<Widget> children;
@@ -52,14 +52,12 @@ class MixedFlex extends StatelessWidget {
   const MixedFlex({
     super.key,
     required this.mix,
-    this.decoratorOrder = const [],
     required this.children,
     required this.direction,
   });
 
   final List<Widget> children;
   final Axis direction;
-  final List<Type> decoratorOrder;
   final MixData mix;
 
   List<Widget> _buildChildren(double? gap) {
@@ -79,7 +77,7 @@ class MixedFlex extends StatelessWidget {
     final spec = FlexSpec.of(mix);
     final gap = spec.gap;
 
-    final current = Flex(
+    return Flex(
       direction: direction,
       mainAxisAlignment:
           spec.mainAxisAlignment ?? _defaultFlex.mainAxisAlignment,
@@ -89,12 +87,6 @@ class MixedFlex extends StatelessWidget {
       verticalDirection:
           spec.verticalDirection ?? _defaultFlex.verticalDirection,
       children: _buildChildren(gap),
-    );
-
-    return shouldApplyDecorators(
-      mix: mix,
-      orderOfDecorators: decoratorOrder,
-      child: current,
     );
   }
 }
@@ -174,6 +166,7 @@ class FlexBox extends StyledWidget {
     super.inherit,
     required this.direction,
     required this.children,
+    super.orderOfDecorators = const [],
   });
 
   final List<Widget> children;
@@ -184,7 +177,11 @@ class FlexBox extends StyledWidget {
     return withMix(context, (mix) {
       return MixedBox(
         mix: mix,
-        child: MixedFlex(mix: mix, direction: direction, children: children),
+        child: MixedFlex(
+          mix: mix.toInheritable(),
+          direction: direction,
+          children: children,
+        ),
       );
     });
   }

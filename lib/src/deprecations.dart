@@ -15,11 +15,11 @@ import '../src/utils/context_variant_util/on_helper_util.dart';
 import '../src/utils/context_variant_util/on_orientation_util.dart';
 import '../src/utils/helper_util.dart';
 import '../src/variants/variant.dart';
-import 'attributes/scalars/scalar_util.dart';
 import 'core/attribute.dart';
-import 'decorators/widget_decorators.dart';
+import 'decorators/clip_widget_decorator.dart';
 import 'decorators/widget_decorators_util.dart';
 import 'factory/style_mix.dart';
+import 'specs/image/image_util.dart';
 import 'widgets/pressable/pressable_util.dart';
 
 const kShortAliasDeprecation =
@@ -28,18 +28,12 @@ const kShortAliasDeprecation =
 @Deprecated('Use Style instead')
 typedef Mix = Style;
 
-extension DeprecatedMixExtension<T extends Attribute> on Style {
+extension DeprecatedMixExtension on Style {
   @Deprecated('Use applyVariant(value) instead')
   Style withVariants(List<Variant> variants) => withManyVariants(variants);
 
   @Deprecated('Use applyVariants(value) instead')
   Style withManyVariants(Iterable<Variant> variants) => applyVariants(variants);
-
-  @Deprecated(
-    'Use merge() instead. You might have to turn into a Mix first. firstMixFactory.merge(secondMix)',
-  )
-  Style addAttributes(Iterable<Attribute> attributes) =>
-      merge(Style.create(attributes));
 
   @Deprecated('Use merge()  instead')
   SpreadFunctionParams<Style, Style> get apply =>
@@ -110,8 +104,17 @@ final mainAxisSize = flex.mainAxisSize;
 @Deprecated('use flex.gap instead')
 final gap = flex.gap;
 
+@Deprecated('use flexible.expanded instead')
+final expanded = flexible.expanded;
+
 @Deprecated('use borderRadius instead')
 final rounded = borderRadius;
+
+@Deprecated('use border.width instead')
+final borderWidth = border.width;
+
+@Deprecated('use border.color instead')
+final borderColor = border.color;
 
 // height
 @Deprecated('use height instead')
@@ -197,6 +200,8 @@ final textShadow = text.style.shadows;
 final overflow = text.overflow;
 @Deprecated('Use text.style.bold instead')
 final bold = text.style.bold;
+@Deprecated('Use text.overflow instead')
+final textOverflow = text.overflow;
 
 @Deprecated('Use icon.size instead')
 final iconSize = icon.size;
@@ -223,6 +228,9 @@ final px = padding.horizontal;
 final py = padding.vertical;
 @Deprecated('Use padding.as instead')
 final pi = padding.as;
+
+@Deprecated('Use padding.as instead')
+final paddingInsets = padding.as;
 
 @Deprecated('Use margin instead')
 final m = margin;
@@ -302,7 +310,6 @@ final paddingOnly = padding.only;
 final paddingDirectionalOnly = padding.only;
 @Deprecated('use padding.all instead')
 final paddingAll = padding.all;
-
 @Deprecated('Use border.top instead')
 final borderTop = border.top;
 @Deprecated('Use border.bottom instead')
@@ -344,10 +351,10 @@ final large = onLarge;
 final hover = onHover;
 
 @Deprecated('Use onFocused instead')
-final focus = onFocused;
+const focus = onFocused;
 
 @Deprecated('Use onFocused instead')
-final onFocus = onFocused;
+const onFocus = onFocused;
 
 @Deprecated('Use onPortrait instead')
 final portrait = onPortrait;
@@ -362,7 +369,7 @@ final disabled = onDisabled;
 final enabled = onEnabled;
 
 @Deprecated('Use direct clip utility for example clip.rrect becomes clipRRect')
-final clip = ClipDecoratorUtility((value) => value);
+const clip = ClipDecoratorUtility();
 
 @Deprecated('Use onPressed instead')
 final press = onPressed;
@@ -452,33 +459,108 @@ class IconMix extends StyledIcon {
 }
 
 @Deprecated('Use text.style instead')
-final textStyle = text.style;
+final textStyle = text.style.as;
+
+@Deprecated('Use text.maxLines instead')
+final maxLines = text.maxLines;
+
+@Deprecated('Use text.textAlign instead')
+final textAlign = text.textAlign;
 
 @Deprecated('Use text.style.shadow instead')
 final shadow = text.style.shadow;
 
 /// A utility class for creating [ClipDecorator]s.
-class ClipDecoratorUtility<T extends StyleAttribute>
-    extends MixUtility<T, ClipDecorator> {
-  const ClipDecoratorUtility(super.builder);
+class ClipDecoratorUtility {
+  final ClipPathUtility path = const ClipPathUtility(selfBuilder);
+  final ClipOvalUtility oval = const ClipOvalUtility(selfBuilder);
+  final ClipRectUtility rect = const ClipRectUtility(selfBuilder);
+  final ClipRRectUtility rrect = const ClipRRectUtility(selfBuilder);
+  final ClipTriangleUtility triangle = const ClipTriangleUtility(selfBuilder);
 
-  ClipPathUtility<T> get path {
-    return ClipPathUtility(builder);
-  }
-
-  ClipOvalUtility<T> get oval {
-    return ClipOvalUtility(builder);
-  }
-
-  ClipRectUtility<T> get rect {
-    return ClipRectUtility(builder);
-  }
-
-  ClipRRectUtility<T> get rrect {
-    return ClipRRectUtility(builder);
-  }
-
-  ClipTriangleUtility<T> get triangle {
-    return ClipTriangleUtility(builder);
-  }
+  const ClipDecoratorUtility();
 }
+
+@Deprecated('Use image.color instead')
+final imageColor = image.color;
+
+@Deprecated('Use image.blendMode instead')
+final imageColorBlendMode = image.blendMode;
+
+@Deprecated('Use image.fit instead')
+final imageFit = image.fit;
+
+@Deprecated('Use image.alignment instead')
+final imageAlignment = image.alignment;
+
+@Deprecated('Use image.repeat instead')
+final imageRepeat = image.repeat;
+
+@Deprecated('Use image.centerSlice instead')
+final imageCenterSlice = image.centerSlice;
+
+// show
+@Deprecated('Use visibility.on instead')
+final show = visibility.on;
+
+// hide
+@Deprecated('Use visibility.off instead')
+final hide = visibility.off;
+
+// TODO: Need to update these
+// // animated
+// @Deprecated('Use animated instead')
+// final animated = animation.animated;
+
+// // animationDuration
+// @Deprecated('Use animation.duration instead')
+// final animationDuration = animation.duration;
+
+// // animationCurve
+// @Deprecated('Use animation.curve instead')
+// final animationCurve = animation.curve;
+
+// textDirection
+@Deprecated('Use text.textDirection instead')
+final textDirection = text.textDirection;
+
+// textWidthBasis
+@Deprecated('Use text.widthBasis instead')
+final textWidthBasis = text.textWidthBasis;
+
+// softWrap
+@Deprecated('Use text.softWrap instead')
+final softWrap = text.softWrap;
+
+// textScaleFactor
+@Deprecated('Use text.scaleFactor instead')
+final textScaleFactor = text.textScaleFactor;
+
+// strutStyle
+@Deprecated('Use text.strutStyle instead')
+final strutStyle = text.strutStyle;
+
+// textBaseline
+@Deprecated('Use text.baseline instead')
+final textBaseline = text.style.textBaseline;
+
+// squared
+@Deprecated('Use borderRadius.circular instead')
+final squared = borderRadius.zero;
+
+
+
+// flexDirection
+@Deprecated('Use flexDirection instead')
+final flexDirection = flex.direction;
+
+// verticalDirection
+@Deprecated('Use verticalDirection instead')
+final verticalDirection = flex.verticalDirection;
+
+// @Deprecated('Use image.scale instead')
+// final imageScale = image.scale;
+
+// // inherit
+// @Deprecated('Use text.inherit instead')
+// final inherit = text.style.inherit;

@@ -30,7 +30,6 @@ MediaQuery createMediaQuery(Size size) {
     child: MixTheme(
       data: MixThemeData(),
       child: MaterialApp(
-        useInheritedMediaQuery: true,
         home: Scaffold(
           body: Builder(
             builder: (BuildContext context) {
@@ -222,25 +221,57 @@ class UtilityTestDtoAttribute<T extends Dto<V>, V>
   }
 }
 
-class CustomWidgetDecorator extends WidgetDecorator<CustomWidgetDecorator> {
-  const CustomWidgetDecorator({super.key});
-  @override
-  CustomWidgetDecorator lerp(CustomWidgetDecorator? other, double t) {
-    if (other == null) return this;
+class CustomWidgetDecoratorSpec
+    extends DecoratorSpec<CustomWidgetDecoratorSpec> {
+  final bool value;
+  const CustomWidgetDecoratorSpec(this.value);
 
-    return lerpSnap(this, other, t);
+  @override
+  CustomWidgetDecoratorSpec copyWith({bool? value}) {
+    return CustomWidgetDecoratorSpec(value ?? this.value);
   }
 
   @override
-  get props => [];
+  CustomWidgetDecoratorSpec lerp(CustomWidgetDecoratorSpec? other, double t) {
+    if (other == null) return this;
+
+    return CustomWidgetDecoratorSpec(lerpSnap(value, other.value, t) ?? value);
+  }
+
   @override
-  Widget build(MixData mix, Widget child) {
+  get props => [value];
+
+  @override
+  Widget build(Widget child) {
     return Padding(padding: const EdgeInsets.all(8.0), child: child);
   }
 }
 
+class CustomDecoratorAttribute extends DecoratorAttribute<
+    CustomDecoratorAttribute, CustomWidgetDecoratorSpec> {
+  final bool? value;
+  const CustomDecoratorAttribute([this.value = true]);
+
+  @override
+  CustomWidgetDecoratorSpec resolve(MixData mix) {
+    return CustomWidgetDecoratorSpec(value ?? true);
+  }
+
+  @override
+  CustomDecoratorAttribute merge(CustomDecoratorAttribute? other) {
+    return CustomDecoratorAttribute(other?.value ?? true);
+  }
+
+  @override
+  get props => [value];
+}
+
 class WidgetWithTestableBuild extends StyledWidget {
-  const WidgetWithTestableBuild(this.onBuild, {super.key});
+  const WidgetWithTestableBuild(
+    this.onBuild, {
+    super.key,
+    super.orderOfDecorators = const [],
+  });
 
   final void Function(BuildContext context) onBuild;
 

@@ -1,6 +1,7 @@
 // ignore_for_file: non_constant_identifier_names, constant_identifier_names, long-parameter-list, prefer-named-boolean-parameters
 
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:meta/meta.dart';
 
 import '../attributes/nested_style/nested_style_attribute.dart';
 import '../attributes/variant_attribute.dart';
@@ -15,6 +16,33 @@ import '../specs/stack/stack_attribute.dart';
 import '../specs/text/text_attribute.dart';
 import '../utils/helper_util.dart';
 import '../variants/variant.dart';
+import 'mix_provider_data.dart';
+
+class AnimatedStyle extends Style {
+  final AnimatedData animatedData;
+
+  const AnimatedStyle._({
+    required AttributeMap<StyleAttribute> styles,
+    required AttributeMap<StyleVariantAttribute> variants,
+    required this.animatedData,
+  }) : super._(styles: styles, variants: variants);
+
+  factory AnimatedStyle(
+    Style style, {
+    required Duration duration,
+    Curve curve = Curves.linear,
+  }) {
+    return AnimatedStyle._(
+      styles: style.styles,
+      variants: style.variants,
+      animatedData: AnimatedData(
+        isAnimated: true,
+        duration: duration,
+        curve: curve,
+      ),
+    );
+  }
+}
 
 /// A utility class for managing a collection of styling attributes and variants.
 ///
@@ -60,6 +88,7 @@ class Style with Comparable {
   /// There is no specific reason for only 20 parameters. This is just a
   /// reasonable number of parameters to support. If you need more than 20,
   /// consider breaking up your mixes into many style mixes that can be applied
+  /// or use the `Style.create` constructor.
   ///
   /// Example:
   /// ```dart
@@ -142,9 +171,7 @@ class Style with Comparable {
         : mixes.reduce((combinedStyle, mix) => combinedStyle.merge(mix));
   }
 
-  Style _addAttributes(List<Attribute> attributes) {
-    return merge(Style.create(attributes));
-  }
+  bool get isAnimated => this is AnimatedStyle;
 
   /// Returns a list of all attributes contained in this mix.
   ///
@@ -202,7 +229,28 @@ class Style with Comparable {
   /// final updatedStyle = style.mix(attr3, attr4);
   /// ```
   SpreadFunctionParams<Attribute, Style> get mix =>
-      SpreadFunctionParams(_addAttributes);
+      SpreadFunctionParams(addAttributes);
+
+  /// Returns a `AnimatedStyle` from this `Style` with the provided [duration] and [curve].
+  AnimatedStyle toAnimated({
+    required Duration duration,
+    Curve curve = Curves.linear,
+  }) {
+    return AnimatedStyle._(
+      styles: styles,
+      variants: variants,
+      animatedData: AnimatedData(
+        isAnimated: true,
+        duration: duration,
+        curve: curve,
+      ),
+    );
+  }
+
+  @internal
+  Style addAttributes(List<Attribute> attributes) {
+    return merge(Style.create(attributes));
+  }
 
   /// Returns a new `Style` with the provided [styles] and [variants] merged with this mix's values.
   ///

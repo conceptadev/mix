@@ -3,8 +3,21 @@ name: Test Workflow
 on:
   push:
     branches: [main]
+    paths-ignore:
+      - 'examples/**'
+      - 'test_resources/**'
+      - 'website/**'
+      - 'assets/**'
+      - 'tool/**'
+
   pull_request:
     branches: [main]
+    paths-ignore:
+      - 'examples/**'
+      - 'test_resources/**'
+      - 'website/**'
+      - 'assets/**'
+      - 'tool/**'
 
 jobs:
   test:
@@ -54,7 +67,7 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: "3.7.3"
+          flutter-version: "3.10.6"
 
       - run: flutter pub get
 

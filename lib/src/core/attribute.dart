@@ -97,7 +97,16 @@ mixin MultiChildRenderAttributeMixin<W extends MultiChildRenderObjectWidget>
 }
 
 @immutable
-abstract class Spec<T extends Spec<T>> extends ThemeExtension<T>
-    with Comparable {
+abstract class Spec<T extends Spec<T>> with Comparable {
   const Spec();
+
+  /// The extension's type.
+  Object get type => T;
+
+  /// Creates a copy of this spec with the given fields
+  /// replaced by the non-null parameter values.
+  T copyWith();
+
+  /// Linearly interpolate with another [Spec] object.
+  T lerp(covariant T? other, double t);
 }

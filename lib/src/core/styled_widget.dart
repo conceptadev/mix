@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../decorators/widget_decorator_widget.dart';
 import '../factory/mix_provider.dart';
 import '../factory/mix_provider_data.dart';
 import '../factory/style_mix.dart';
@@ -15,8 +16,12 @@ abstract class StyledWidget extends StatelessWidget {
   /// Constructor for a styled widget.
   ///
   /// Takes a [Style] object and an optional [inherit] flag.
-  const StyledWidget({Style? style, super.key, this.inherit = false})
-      : style = style ?? const Style.empty();
+  const StyledWidget({
+    Style? style,
+    super.key,
+    this.inherit = false,
+    required this.orderOfDecorators,
+  }) : style = style ?? const Style.empty();
 
   /// The style to apply to the widget.
   ///
@@ -30,24 +35,67 @@ abstract class StyledWidget extends StatelessWidget {
   /// [StyledWidget] ancestor in the widget tree. Defaults to false.
   final bool inherit;
 
+  final List<Type> orderOfDecorators;
+
   /// Applies a mix of inherited and local styles to the widget.
   ///
   /// Accepts a [BuildContext] and a [MixBuilder]. It computes the final style by
   /// merging the inherited style with the local style, then applies it to the widget.
   /// This method is typically used in the `build` method of widgets extending
   /// [StyledWidget] to provide the actual styled widget.
-  Widget withMix(BuildContext context, MixBuilder builder) {
+  Widget withMix(BuildContext context, Widget Function(MixData mix) builder) {
     final inheritedMix = inherit ? MixData.inherited(context) : null;
 
     final mixData = MixData.create(context, style);
 
     final mergedMixData = inheritedMix?.merge(mixData) ?? mixData;
 
-    return MixProvider(data: mergedMixData, child: builder(mergedMixData));
+    return MixProvider(
+      data: mergedMixData,
+      child: applyDecorators(mergedMixData, builder(mergedMixData)),
+    );
+  }
+
+  Widget applyDecorators(MixData mix, Widget child) {
+    return mix.animation.isAnimated
+        ? RenderAnimatedDecorators(
+            mix: mix,
+            orderOfDecorators: orderOfDecorators,
+            duration: mix.animation.duration,
+            curve: mix.animation.curve,
+            child: child,
+          )
+        : RenderDecorators(
+            mix: mix,
+            orderOfDecorators: orderOfDecorators,
+            child: child,
+          );
   }
 
   @override
   Widget build(BuildContext context);
+}
+
+/// A styled widget that builds its child using a [MixData] object.
+///
+/// `StyledWidgetBuilder` is a concrete implementation of [StyledWidget] that
+/// builds its child using a [withMix] method from [StyledWidget].
+/// This widget is useful for creating custom styled widgets.
+class StyledWidgetBuilder extends StyledWidget {
+  const StyledWidgetBuilder({
+    super.key,
+    super.inherit,
+    super.style,
+    required this.builder,
+    super.orderOfDecorators = const [],
+  });
+
+  final Widget Function(MixData) builder;
+
+  @override
+  Widget build(BuildContext context) {
+    return withMix(context, builder);
+  }
 }
 
 /// An abstract widget that applies custom styles with animations.
@@ -56,6 +104,7 @@ abstract class StyledWidget extends StatelessWidget {
 /// style application process. This widget is designed to create animated effects
 /// on styles applied to Flutter widgets. It should be extended by more concrete
 /// widgets that implement specific animated styled behaviors.
+@Deprecated('Now you can just use an AnimatedStyle instead')
 abstract class AnimatedStyledWidget extends StyledWidget {
   /// Creates an animated styled widget.
   ///
@@ -77,6 +126,7 @@ abstract class AnimatedStyledWidget extends StyledWidget {
     super.style,
     this.curve = Curves.linear,
     required this.duration,
+    super.orderOfDecorators = const [],
   });
 
   /// The curve used for the animation.
@@ -94,4 +144,15 @@ abstract class AnimatedStyledWidget extends StyledWidget {
 
   // Note: The build method will be implemented in subclasses, where the animation logic
   // will be applied based on the provided style, curve, and duration.
+
+  @override
+  Widget applyDecorators(MixData mix, Widget child) {
+    return RenderAnimatedDecorators(
+      mix: mix,
+      orderOfDecorators: orderOfDecorators,
+      duration: duration,
+      curve: curve,
+      child: child,
+    );
+  }
 }

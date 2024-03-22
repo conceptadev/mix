@@ -25,6 +25,7 @@ class TextUtility extends SpecUtility<TextSpecAttribute> {
     TextHeightBehavior? textHeightBehavior,
     TextDirection? textDirection,
     bool? softWrap,
+    TextDirective? directive,
   }) {
     return TextSpecAttribute(
       overflow: overflow,
@@ -37,10 +38,12 @@ class TextUtility extends SpecUtility<TextSpecAttribute> {
       textHeightBehavior: textHeightBehavior,
       textDirection: textDirection,
       softWrap: softWrap,
+      directive: directive,
     );
   }
 
-  TextDataDirectiveUtility get directive => const TextDataDirectiveUtility();
+  TextDirectiveUtility<TextSpecAttribute> get directive =>
+      TextDirectiveUtility((directive) => _only(directive: directive));
   TextOverflowUtility<TextSpecAttribute> get overflow {
     return TextOverflowUtility((overflow) => _only(overflow: overflow));
   }
@@ -89,9 +92,9 @@ class TextUtility extends SpecUtility<TextSpecAttribute> {
     );
   }
 
-  TextDataDirective capitalize() => directive.capitalize();
-  TextDataDirective uppercase() => directive.uppercase();
-  TextDataDirective lowercase() => directive.lowercase();
-  TextDataDirective titleCase() => directive.titleCase();
-  TextDataDirective sentenceCase() => directive.sentenceCase();
+  TextSpecAttribute capitalize() => directive.capitalize();
+  TextSpecAttribute uppercase() => directive.uppercase();
+  TextSpecAttribute lowercase() => directive.lowercase();
+  TextSpecAttribute titleCase() => directive.titleCase();
+  TextSpecAttribute sentenceCase() => directive.sentenceCase();
 }

@@ -287,6 +287,7 @@ final clipBehavior = box.clipBehavior;
 final elevation = box.elevation;
 
 final radialGradient = box.decoration.gradient.radial;
+final linearGradient = box.decoration.gradient.linear;
 
 class BoxSpecUtility extends SpecUtility<BoxSpecAttribute> {
   const BoxSpecUtility();

@@ -21,9 +21,9 @@ class PressableBox extends StatelessWidget {
     @Deprecated('Use hitTestBehavior instead') HitTestBehavior? behavior,
     this.hitTestBehavior,
     @Deprecated('Use AnimatedStyle instead')
-        this.animationDuration = const Duration(milliseconds: 125),
+    this.animationDuration = const Duration(milliseconds: 125),
     @Deprecated('Use AnimatedStyle instead')
-        this.animationCurve = Curves.linear,
+    this.animationCurve = Curves.linear,
     this.disabled = false,
     required this.child,
   }) : onPress = onPress ?? onPressed;

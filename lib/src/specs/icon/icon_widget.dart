@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import '../../core/styled_widget.dart';
 import '../../factory/mix_provider.dart';
 import '../../factory/mix_provider_data.dart';
-import '../../utils/helper_util.dart';
-import 'icon_attribute.dart';
 import 'icon_spec.dart';
 
 class StyledIcon extends StyledWidget {
@@ -15,6 +13,7 @@ class StyledIcon extends StyledWidget {
     super.key,
     super.inherit = true,
     this.textDirection,
+    super.orderOfDecorators = const [],
   });
 
   final IconData? icon;
@@ -54,18 +53,12 @@ class MixedIcon extends StatelessWidget {
     final mix = this.mix ?? MixProvider.of(context);
     final spec = IconSpec.of(mix);
 
-    final current = Icon(
+    return Icon(
       icon,
       size: spec.size,
       color: spec.color,
       semanticLabel: semanticLabel,
       textDirection: textDirection,
-    );
-
-    return shouldApplyDecorators(
-      mix: mix,
-      orderOfDecorators: decoratorOrder,
-      child: current,
     );
   }
 }
@@ -79,6 +72,7 @@ class AnimatedStyledIcon extends StyledWidget {
     required this.progress,
     super.inherit,
     this.textDirection,
+    super.orderOfDecorators = const [],
   });
 
   final AnimatedIconData icon;
@@ -89,19 +83,15 @@ class AnimatedStyledIcon extends StyledWidget {
   @override
   Widget build(BuildContext context) {
     return withMix(context, (mix) {
-      final spec = mix.attributeOf<IconSpecAttribute>()?.resolve(mix) ??
-          const IconSpec.empty();
+      final spec = IconSpec.of(mix);
 
-      return shouldApplyDecorators(
-        mix: mix,
-        child: AnimatedIcon(
-          icon: icon,
-          progress: progress,
-          color: spec.color,
-          size: spec.size,
-          semanticLabel: semanticLabel,
-          textDirection: textDirection,
-        ),
+      return AnimatedIcon(
+        icon: icon,
+        progress: progress,
+        color: spec.color,
+        size: spec.size,
+        semanticLabel: semanticLabel,
+        textDirection: textDirection,
       );
     });
   }

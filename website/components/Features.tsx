@@ -112,7 +112,7 @@ function Feature({ feature }: { feature: Feature }) {
       <div className="relative rounded-2xl px-4 pb-4 pt-16">
         <FeatureIcon icon={feature.icon} />
         <h3 className="mt-4 text-sm font-semibold leading-7 text-zinc-900 dark:text-white">
-          <Link href={feature.href}>
+          <Link href={feature.name}>
             <span className="absolute inset-0 rounded-2xl" />
             {feature.name}
           </Link>
@@ -130,7 +130,7 @@ export function Features() {
     <div className="my-16 xl:max-w-none">
       <div className="not-prose mt-4 grid grid-cols-1 gap-8 border-t border-zinc-900/5 pt-10 sm:grid-cols-2 xl:grid-cols-4 dark:border-white/5">
         {features.map((feature) => (
-          <Feature key={feature.href} feature={feature} />
+          <Feature key={feature.name} feature={feature} />
         ))}
       </div>
     </div>

@@ -11,22 +11,26 @@ void main() {
     visibility.on(),
     clipOval(),
     aspectRatio(2.0),
-    const CustomWidgetDecorator(),
+    const CustomDecoratorAttribute(),
   );
 
   final mixData = MixData.create(MockBuildContext(), style);
 
-  group('RenderWidgetDecorators', () {
+  group('RenderDecoratorAttributes', () {
     testWidgets('Renders decorators in the correct order', (tester) async {
       await tester.pumpMaterialApp(
-        RenderWidgetDecorators(mix: mixData, child: const Text('child')),
+        RenderDecorators(
+          mix: mixData,
+          orderOfDecorators: const [],
+          child: const Text('child'),
+        ),
       );
 
-      expect(find.byType(RenderWidgetDecorators), findsOneWidget);
+      expect(find.byType(RenderDecorators), findsOneWidget);
 
       expect(
         find.descendant(
-          of: find.byType(RenderWidgetDecorators),
+          of: find.byType(RenderDecorators),
           matching: find.byType(Visibility),
         ),
         findsOneWidget,
@@ -78,24 +82,24 @@ void main() {
       'Renders decorators in the correct order with many overrides',
       (tester) async {
         await tester.pumpMaterialApp(
-          RenderWidgetDecorators(
+          RenderDecorators(
             mix: mixData,
             orderOfDecorators: const [
-              ClipOvalDecorator,
-              AspectRatioDecorator,
-              ScaleDecorator,
-              OpacityDecorator,
-              VisibilityDecorator,
+              ClipOvalDecoratorAttribute,
+              AspectRatioDecoratorAttribute,
+              ScaleDecoratorAttribute,
+              OpacityDecoratorAttribute,
+              VisibilityDecoratorAttribute,
             ],
             child: const Text('child'),
           ),
         );
 
-        expect(find.byType(RenderWidgetDecorators), findsOneWidget);
+        expect(find.byType(RenderDecorators), findsOneWidget);
 
         expect(
           find.descendant(
-            of: find.byType(RenderWidgetDecorators),
+            of: find.byType(RenderDecorators),
             matching: find.byType(ClipOval),
           ),
           findsOneWidget,
@@ -148,18 +152,21 @@ void main() {
       'Renders decorators in the correct order with a few overrides',
       (tester) async {
         await tester.pumpMaterialApp(
-          RenderWidgetDecorators(
+          RenderDecorators(
             mix: mixData,
-            orderOfDecorators: const [ClipOvalDecorator, AspectRatioDecorator],
+            orderOfDecorators: const [
+              ClipOvalDecoratorAttribute,
+              AspectRatioDecoratorAttribute
+            ],
             child: const Text('child'),
           ),
         );
 
-        expect(find.byType(RenderWidgetDecorators), findsOneWidget);
+        expect(find.byType(RenderDecorators), findsOneWidget);
 
         expect(
           find.descendant(
-            of: find.byType(RenderWidgetDecorators),
+            of: find.byType(RenderDecorators),
             matching: find.byType(ClipOval),
           ),
           findsOneWidget,
@@ -288,7 +295,7 @@ void main() {
     );
 
     testWidgets(
-      'If there are no decorator attributes in Style, RenderWidgetDecorators shouldnt exist in the widget tree',
+      'If there are no decorator attributes in Style, RenderDecoratorAttributes shouldnt exist in the widget tree',
       (tester) async {
         const key = Key('box');
 
@@ -300,9 +307,9 @@ void main() {
         );
 
         expect(
-          find.descendant(
+          find.ancestor(
             of: find.byKey(key),
-            matching: find.byType(RenderWidgetDecorators),
+            matching: find.byType(RenderDecorators),
           ),
           findsNothing,
         );

@@ -1,3 +1,8 @@
+## 1.0.0-beta.8
+
+* Optimized analyze workflow by @leoafarias
+* Fix more than one decorator on Flex widgets when decorators are used by @tilucasoli
+* Feat/add deprecated apis by @tilucasoli
 
 ## 1.0.0-beta.7
 
