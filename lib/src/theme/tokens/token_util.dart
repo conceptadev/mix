@@ -4,11 +4,12 @@ import '../material/material_tokens.dart';
 import 'breakpoints_token.dart';
 
 const $md = MaterialTokens();
-const $radii = RadiusTokenUtil();
-const $spaces = SpaceTokenUtil();
-const $colors = ColorTokenUtil();
-const $breakpoints = BreakpointTokenUtil();
-const $textStyles = TextStyleTokenUtil();
+
+const $radius = RadiusTokenUtil();
+const $space = SpaceTokenUtil();
+const $color = ColorTokenUtil();
+const $breakpoint = BreakpointTokenUtil();
+const $textStyle = TextStyleTokenUtil();
 
 @immutable
 class RadiusTokenUtil {
