@@ -94,7 +94,7 @@ class MixedText extends StatelessWidget {
     final spec = TextSpec.of(mix);
 
     // The Text widget is used here, applying the resolved styles and properties from TextSpec.
-    final textWidget = Text(
+    return Text(
       spec.directive?.apply(text) ?? text,
       style: spec.style,
       strutStyle: spec.strutStyle,
