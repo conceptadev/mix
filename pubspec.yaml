@@ -5,6 +5,7 @@ homepage: https://github.com/leoafarias/mix
 
 environment:
   sdk: ">=2.19.2 <4.0.0"
+  flutter: ">=3.10.6 <4.0.0"
   
 dependencies:
   meta: ^1.8.0

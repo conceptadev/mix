@@ -35,12 +35,6 @@ extension DeprecatedMixExtension on Style {
   @Deprecated('Use applyVariants(value) instead')
   Style withManyVariants(Iterable<Variant> variants) => applyVariants(variants);
 
-  @Deprecated(
-    'Use merge() instead. You might have to turn into a Mix first. firstMixFactory.merge(secondMix)',
-  )
-  Style addAttributes(Iterable<Attribute> attributes) =>
-      merge(Style.create(attributes));
-
   @Deprecated('Use merge()  instead')
   SpreadFunctionParams<Style, Style> get apply =>
       const SpreadFunctionParams(Style.combine);

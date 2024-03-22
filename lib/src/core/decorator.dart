@@ -15,6 +15,14 @@ abstract class DecoratorSpec<Self extends DecoratorSpec<Self>>
     extends Spec<Self> {
   const DecoratorSpec();
 
+  static DecoratorSpec? lerpValue(
+    DecoratorSpec? begin,
+    DecoratorSpec? end,
+    double t,
+  ) {
+    return begin?.lerp(end, t) as DecoratorSpec?;
+  }
+
   Widget build(Widget child);
 }
 

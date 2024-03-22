@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../core/styled_widget.dart';
-import '../../factory/mix_provider.dart';
 import '../../factory/mix_provider_data.dart';
-import '../../utils/helper_util.dart';
 import 'text_spec.dart';
 
 /// [StyledText] - A styled widget for displaying text with a mix of styles.
@@ -43,6 +41,7 @@ class StyledText extends StyledWidget {
     super.key,
     super.inherit = true,
     this.locale,
+    super.orderOfDecorators = const [],
   });
 
   final String text;
@@ -54,6 +53,7 @@ class StyledText extends StyledWidget {
     return withMix(context, (mix) {
       return MixedText(
         text: text,
+        mix: mix,
         semanticsLabel: semanticsLabel,
         locale: locale,
       );
@@ -77,28 +77,24 @@ class StyledText extends StyledWidget {
 class MixedText extends StatelessWidget {
   const MixedText({
     required this.text,
-    this.mix,
+    required this.mix,
     this.semanticsLabel,
     this.locale,
-    this.decoratorOrder = const [],
     super.key,
   });
 
   final String text;
   final String? semanticsLabel;
   final Locale? locale;
-  final MixData? mix;
-  final List<Type> decoratorOrder;
+  final MixData mix;
 
   @override
   Widget build(BuildContext context) {
-    // Retrieve the mix from the context or use the provided mix.
-    final mix = this.mix ?? MixProvider.of(context);
     // Resolve the TextSpec for styling properties.
     final spec = TextSpec.of(mix);
 
     // The Text widget is used here, applying the resolved styles and properties from TextSpec.
-    final textWidget = Text(
+    return Text(
       spec.directive?.apply(text) ?? text,
       style: spec.style,
       strutStyle: spec.strutStyle,
@@ -112,12 +108,6 @@ class MixedText extends StatelessWidget {
       semanticsLabel: semanticsLabel,
       textWidthBasis: spec.textWidthBasis,
       textHeightBehavior: spec.textHeightBehavior,
-    );
-
-    return shouldApplyDecorators(
-      mix: mix,
-      orderOfDecorators: decoratorOrder,
-      child: textWidget,
     );
   }
 }

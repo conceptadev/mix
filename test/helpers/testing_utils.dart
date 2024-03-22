@@ -30,7 +30,6 @@ MediaQuery createMediaQuery(Size size) {
     child: MixTheme(
       data: MixThemeData(),
       child: MaterialApp(
-        useInheritedMediaQuery: true,
         home: Scaffold(
           body: Builder(
             builder: (BuildContext context) {
@@ -266,7 +265,11 @@ class CustomDecoratorAttribute extends DecoratorAttribute<
 }
 
 class WidgetWithTestableBuild extends StyledWidget {
-  const WidgetWithTestableBuild(this.onBuild, {super.key});
+  const WidgetWithTestableBuild(
+    this.onBuild, {
+    super.key,
+    super.orderOfDecorators = const [],
+  });
 
   final void Function(BuildContext context) onBuild;
 

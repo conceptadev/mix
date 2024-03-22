@@ -19,14 +19,18 @@ void main() {
   group('RenderDecoratorAttributes', () {
     testWidgets('Renders decorators in the correct order', (tester) async {
       await tester.pumpMaterialApp(
-        RenderDecoratorAttributes(mix: mixData, child: const Text('child')),
+        RenderDecorators(
+          mix: mixData,
+          orderOfDecorators: const [],
+          child: const Text('child'),
+        ),
       );
 
-      expect(find.byType(RenderDecoratorAttributes), findsOneWidget);
+      expect(find.byType(RenderDecorators), findsOneWidget);
 
       expect(
         find.descendant(
-          of: find.byType(RenderDecoratorAttributes),
+          of: find.byType(RenderDecorators),
           matching: find.byType(Visibility),
         ),
         findsOneWidget,
@@ -78,7 +82,7 @@ void main() {
       'Renders decorators in the correct order with many overrides',
       (tester) async {
         await tester.pumpMaterialApp(
-          RenderDecoratorAttributes(
+          RenderDecorators(
             mix: mixData,
             orderOfDecorators: const [
               ClipOvalDecoratorAttribute,
@@ -91,11 +95,11 @@ void main() {
           ),
         );
 
-        expect(find.byType(RenderDecoratorAttributes), findsOneWidget);
+        expect(find.byType(RenderDecorators), findsOneWidget);
 
         expect(
           find.descendant(
-            of: find.byType(RenderDecoratorAttributes),
+            of: find.byType(RenderDecorators),
             matching: find.byType(ClipOval),
           ),
           findsOneWidget,
@@ -148,7 +152,7 @@ void main() {
       'Renders decorators in the correct order with a few overrides',
       (tester) async {
         await tester.pumpMaterialApp(
-          RenderDecoratorAttributes(
+          RenderDecorators(
             mix: mixData,
             orderOfDecorators: const [
               ClipOvalDecoratorAttribute,
@@ -158,11 +162,11 @@ void main() {
           ),
         );
 
-        expect(find.byType(RenderDecoratorAttributes), findsOneWidget);
+        expect(find.byType(RenderDecorators), findsOneWidget);
 
         expect(
           find.descendant(
-            of: find.byType(RenderDecoratorAttributes),
+            of: find.byType(RenderDecorators),
             matching: find.byType(ClipOval),
           ),
           findsOneWidget,
@@ -303,9 +307,9 @@ void main() {
         );
 
         expect(
-          find.descendant(
+          find.ancestor(
             of: find.byKey(key),
-            matching: find.byType(RenderDecoratorAttributes),
+            matching: find.byType(RenderDecorators),
           ),
           findsNothing,
         );
