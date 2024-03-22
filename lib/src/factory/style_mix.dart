@@ -1,6 +1,7 @@
 // ignore_for_file: non_constant_identifier_names, constant_identifier_names, long-parameter-list, prefer-named-boolean-parameters
 
 import 'package:flutter/material.dart';
+import 'package:meta/meta.dart';
 
 import '../attributes/nested_style/nested_style_attribute.dart';
 import '../attributes/variant_attribute.dart';
@@ -246,6 +247,7 @@ class Style with Comparable {
     );
   }
 
+  @internal
   Style addAttributes(List<Attribute> attributes) {
     return merge(Style.create(attributes));
   }
