@@ -21,10 +21,13 @@ class TransformDecoratorSpec extends DecoratorSpec<TransformDecoratorSpec> {
   }
 
   @override
-  TransformDecoratorSpec copyWith({Matrix4? transform}) {
+  TransformDecoratorSpec copyWith({
+    Matrix4? transform,
+    Alignment? alignment,
+  }) {
     return TransformDecoratorSpec(
       transform: transform ?? this.transform,
-      alignment: alignment ?? alignment,
+      alignment: alignment ?? this.alignment,
     );
   }
 
