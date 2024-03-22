@@ -45,30 +45,4 @@ void main() {
       },
     );
   });
-
-  // group('ScaleDecoratorAttribute', () {
-  //   test('merge', () {
-  //     const decorator = ScaleDecoratorAttribute(1.5);
-  //     const other = ScaleDecoratorAttribute(1.6);
-  //     final result = decorator.merge(other);
-  //     expect(result, other);
-  //   });
-
-  //   test('resolve', () {
-  //     const decorator = ScaleDecoratorAttribute(1.5);
-  //     final result = decorator.resolve(EmptyMixData);
-  //     expect(result, isA<ScaleDecoratorSpec>());
-  //   });
-
-  //   test('equality', () {
-  //     const decorator = ScaleDecoratorAttribute(1.5);
-  //     const other = ScaleDecoratorAttribute(1.5);
-  //     expect(decorator, other);
-  //   });
-
-  //   test('inequality', () {
-  //     const decorator = ScaleDecoratorAttribute(1.5);
-  //     const other = ScaleDecoratorAttribute(2.0);
-  //     expect(decorator, isNot(equals(other)));
-  //   });
 }
