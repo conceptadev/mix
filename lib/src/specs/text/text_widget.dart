@@ -51,7 +51,6 @@ class StyledText extends StyledWidget {
   @override
   Widget build(BuildContext context) {
     return withMix(context, (mix) {
-
       return mix.isAnimated
           ? AnimatedMixedText(
               text: text,
@@ -179,10 +178,12 @@ class _ImplicitlyMixedTextState
   TextSpecTween? _textSpecTween;
 
   @override
+  // ignore: avoid-dynamic
   void forEachTween(TweenVisitor<dynamic> visitor) {
     _textSpecTween = visitor(
       _textSpecTween,
       widget.spec,
+      // ignore: avoid-dynamic
       (dynamic value) => TextSpecTween(begin: value as TextSpec),
     ) as TextSpecTween?;
   }
