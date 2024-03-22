@@ -45,6 +45,37 @@ P? lerpSnap<P>(P? from, P? to, double t) {
   return t < 0.5 ? from : to;
 }
 
+TextStyle? lerpTextStyle(TextStyle? from, TextStyle? other, double t) {
+  if (from == null && other == null) return null;
+  if (from == null) return other;
+  if (other == null) return from;
+
+  return TextStyle(
+    color: Color.lerp(from.color, other.color, t),
+    backgroundColor: Color.lerp(from.backgroundColor, other.backgroundColor, t),
+    fontSize: lerpDouble(from.fontSize, other.fontSize, t),
+    fontWeight: FontWeight.lerp(from.fontWeight, other.fontWeight, t),
+    fontStyle: t < 0.5 ? from.fontStyle : other.fontStyle,
+    letterSpacing: lerpDouble(from.letterSpacing, other.letterSpacing, t),
+    wordSpacing: lerpDouble(from.wordSpacing, other.wordSpacing, t),
+    textBaseline: t < 0.5 ? from.textBaseline : other.textBaseline,
+    height: lerpDouble(from.height, other.height, t),
+    locale: t < 0.5 ? from.locale : other.locale,
+    foreground: lerpSnap(from.foreground, other.foreground, t),
+    background: lerpSnap(from.background, other.background, t),
+    shadows: Shadow.lerpList(from.shadows, other.shadows, t),
+    fontFeatures: t < 0.5 ? from.fontFeatures : other.fontFeatures,
+    decoration: t < 0.5 ? from.decoration : other.decoration,
+    decorationColor: Color.lerp(from.decorationColor, other.decorationColor, t),
+    decorationStyle: t < 0.5 ? from.decorationStyle : other.decorationStyle,
+    decorationThickness:
+        lerpDouble(from.decorationThickness, other.decorationThickness, t),
+    fontFamily: t < 0.5 ? from.fontFamily : other.fontFamily,
+    fontFamilyFallback:
+        t < 0.5 ? from.fontFamilyFallback : other.fontFamilyFallback,
+  );
+}
+
 /// Linearly interpolates between two [StrutStyle] objects.
 ///
 /// The [lerpStrutStyle] function takes two [StrutStyle] objects, [a] and [b],

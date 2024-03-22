@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../attributes/nested_style/nested_style_attribute.dart';
 import '../../core/attribute.dart';
 import '../../factory/style_mix.dart';
 import '../../utils/context_variant_util/on_helper_util.dart';
@@ -139,20 +140,45 @@ class OnEnabledEventBuilder
 }
 
 @immutable
-class OnMouseHoverBuilder extends StyleAttributeBuilder<OnMouseHoverBuilder> {
-  final Attribute Function(PointerPosition event) fn;
-  const OnMouseHoverBuilder(this.fn);
+class OnMouseHoverBuilder extends StyleAttributeBuilder<OnMouseHoverBuilder>
+    with Mergeable<OnMouseHoverBuilder> {
+  final List<StyleAttribute Function(PointerPosition event)> builders;
+  const OnMouseHoverBuilder.raw(this.builders);
+
+  factory OnMouseHoverBuilder(
+    StyleAttribute Function(PointerPosition event) builder,
+  ) {
+    return OnMouseHoverBuilder.raw([builder]);
+  }
+
+  @override
+  OnMouseHoverBuilder merge(OnMouseHoverBuilder? other) {
+    if (other == null) return this;
+
+    return OnMouseHoverBuilder.raw([...builders, ...other.builders]);
+  }
 
   @override
   Attribute? builder(BuildContext context) {
     final position = PressableState.pointerPositionOf(context);
-    final hover = PressableState.hoveredOf(context);
 
-    return position == null || !hover ? null : fn(position);
+    if (position == null) {
+      return null;
+    }
+
+    final attributes = <NestedStyleAttribute>[];
+
+    for (final fn in builders) {
+      final attribute = fn(position);
+
+      attributes.add(NestedStyleAttribute(Style(attribute)));
+    }
+
+    return NestedStyleAttribute(Style.create(attributes));
   }
 
   @override
-  get props => [fn];
+  get props => [builders];
 }
 
 typedef StyleBuilder = Style Function(BuildContext context);

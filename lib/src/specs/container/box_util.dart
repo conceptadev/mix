@@ -335,6 +335,12 @@ class BoxSpecUtility extends SpecUtility<BoxSpecAttribute> {
     return Matrix4Utility((transform) => only(transform: transform));
   }
 
+  AlignmentUtility<BoxSpecAttribute> get transformAlignment {
+    return AlignmentUtility(
+      (transformAlignment) => only(alignment: transformAlignment),
+    );
+  }
+
   ClipUtility<BoxSpecAttribute> get clipBehavior {
     return ClipUtility((clipBehavior) => only(clipBehavior: clipBehavior));
   }

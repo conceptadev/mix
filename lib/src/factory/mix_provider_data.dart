@@ -15,7 +15,7 @@ import 'style_mix.dart';
 /// decorators and token resolvers.
 @immutable
 class MixData with Comparable {
-  final AnimatedData animation;
+  final AnimatedData? animation;
 
   // Instance variables for widget attributes, widget decorators and token resolver.
   final AttributeMap _attributes;
@@ -40,9 +40,7 @@ class MixData with Comparable {
     return MixData._(
       resolver: resolver,
       attributes: AttributeMap(attributeList),
-      animation: style is AnimatedStyle
-          ? style.animatedData
-          : const AnimatedData.notAnimated(),
+      animation: style is AnimatedStyle ? style.animatedData : null,
     );
   }
 
@@ -54,7 +52,7 @@ class MixData with Comparable {
   }
 
   /// Alias for animation.isAnimated
-  bool get isAnimated => animation.isAnimated;
+  bool get isAnimated => animation?.isAnimated ?? false;
 
   /// Getter for [MixTokenResolver].
   ///
@@ -107,7 +105,7 @@ class MixData with Comparable {
     return MixData._(
       resolver: _tokenResolver,
       attributes: _attributes.merge(other._attributes),
-      animation: other.animation,
+      animation: other.animation ?? animation,
     );
   }
 
@@ -193,11 +191,6 @@ class AnimatedData with Comparable {
     required this.duration,
     required this.curve,
   });
-
-  const AnimatedData.notAnimated()
-      : isAnimated = false,
-        duration = Duration.zero,
-        curve = Curves.linear;
 
   @override
   List<Object> get props => [isAnimated, duration, curve];
