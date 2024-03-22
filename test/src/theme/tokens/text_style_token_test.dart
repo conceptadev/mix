@@ -80,8 +80,8 @@ void main() {
         $md.colorScheme.background: Colors.red,
       },
       spaces: {
-        $spaces.large: 100,
-        $spaces.medium: 50,
+        $space.large: 100,
+        $space.medium: 50,
       },
       textStyles: {
         $md.textTheme.bodyText1:
@@ -90,8 +90,8 @@ void main() {
             const TextStyle(color: Colors.blue, fontSize: 20),
       },
       radii: {
-        $radii.medium: const Radius.elliptical(10, 50),
-        $radii.large: const Radius.elliptical(50, 50),
+        $radius.medium: const Radius.elliptical(10, 50),
+        $radius.large: const Radius.elliptical(50, 50),
       },
     );
 
@@ -104,10 +104,10 @@ void main() {
           text.style.of($md.textTheme.bodyText2),
           box.color.of($md.colorScheme.background),
           box.color.of($md.colorScheme.error),
-          box.borderRadius.all.of($radii.medium),
-          box.borderRadius.all.of($radii.large),
-          box.padding.horizontal.of($spaces.medium),
-          box.padding.horizontal.of($spaces.large),
+          box.borderRadius.all.of($radius.medium),
+          box.borderRadius.all.of($radius.large),
+          box.padding.horizontal.of($space.medium),
+          box.padding.horizontal.of($space.large),
         ),
         key: key,
         child: const StyledText('Hello'),
@@ -140,12 +140,12 @@ void main() {
 
     expect(
       (containerWidget.decoration as BoxDecoration).borderRadius,
-      BorderRadius.all(themeData.radii[$radii.large]!),
+      BorderRadius.all(themeData.radii[$radius.large]!),
     );
 
     expect(
       containerWidget.padding!.horizontal / 2,
-      themeData.spaces[$spaces.large],
+      themeData.spaces[$space.large],
     );
   });
 }

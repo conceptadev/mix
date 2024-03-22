@@ -17,13 +17,13 @@ void main() {
   const primaryColor = ColorToken('primary');
   final theme = MixThemeData(
     breakpoints: {
-      $breakpoints.small: const Breakpoint(minWidth: 0, maxWidth: 599),
+      $breakpoint.small: const Breakpoint(minWidth: 0, maxWidth: 599),
     },
     colors: {
       primaryColor: Colors.blue,
       $md.colorScheme.error: Colors.redAccent,
     },
-    spaces: {$spaces.small: 30},
+    spaces: {$space.small: 30},
     textStyles: {
       $md.textTheme.bodyLarge: const TextStyle(
         fontSize: 200,
@@ -31,8 +31,8 @@ void main() {
       ),
     },
     radii: {
-      $radii.small: const Radius.circular(200),
-      $radii.large: const Radius.circular(2000),
+      $radius.small: const Radius.circular(200),
+      $radius.large: const Radius.circular(2000),
     },
   );
 
@@ -55,8 +55,8 @@ void main() {
           Box(
             style: Style(
               box.color.of(primaryColor),
-              box.borderRadius.all.of($radii.small),
-              box.padding.horizontal.of($spaces.small),
+              box.borderRadius.all.of($radius.small),
+              box.padding.horizontal.of($space.small),
               text.style.of($md.textTheme.bodyLarge),
             ),
             key: key,
@@ -76,11 +76,11 @@ void main() {
           container.decoration,
           BoxDecoration(
             color: theme.colors[primaryColor],
-            borderRadius: BorderRadius.all(theme.radii[$radii.small]!),
+            borderRadius: BorderRadius.all(theme.radii[$radius.small]!),
           ),
         );
 
-        expect(container.padding!.horizontal / 2, theme.spaces[$spaces.small]);
+        expect(container.padding!.horizontal / 2, theme.spaces[$space.small]);
 
         final textWidget = tester.widget<Text>(
           find.descendant(of: find.byKey(key), matching: find.byType(Text)),
