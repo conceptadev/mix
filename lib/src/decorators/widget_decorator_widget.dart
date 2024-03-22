@@ -86,7 +86,6 @@ class RenderDecorators extends StatelessWidget {
   final MixData mix;
   final Widget child;
   final List<Type> orderOfDecorators;
-  // final Widget Function(List<DecoratorSpec> specs) builder;
 
   @override
   Widget build(BuildContext context) {
