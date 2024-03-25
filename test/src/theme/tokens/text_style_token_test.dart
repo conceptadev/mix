@@ -4,6 +4,16 @@ import 'package:mix/mix.dart';
 
 import '../../../helpers/testing_utils.dart';
 
+extension on RadiusTokenUtil {
+  RadiusToken get medium => const RadiusToken('radius-token-medium');
+  RadiusToken get large => const RadiusToken('radius-token-large');
+}
+
+extension on SpaceTokenUtil {
+  SpaceToken get medium => const SpaceToken('space-token-medium');
+  SpaceToken get large => const SpaceToken('space-token-large');
+}
+
 void main() {
   group('TextStyleToken', () {
     test('Constructor assigns name correctly', () {
@@ -69,14 +79,20 @@ void main() {
         $md.colorScheme.error: Colors.blue,
         $md.colorScheme.background: Colors.red,
       },
-      space: {$space.large: 100, $space.medium: 50},
+      spaces: {
+        $space.large: 100,
+        $space.medium: 50,
+      },
       textStyles: {
         $md.textTheme.bodyText1:
             const TextStyle(color: Colors.red, fontSize: 10),
         $md.textTheme.bodyText2:
             const TextStyle(color: Colors.blue, fontSize: 20),
       },
-      radii: {$radii.medium: const Radius.elliptical(10, 50)},
+      radii: {
+        $radius.medium: const Radius.elliptical(10, 50),
+        $radius.large: const Radius.elliptical(50, 50),
+      },
     );
 
     const key = Key('box');
@@ -88,8 +104,8 @@ void main() {
           text.style.of($md.textTheme.bodyText2),
           box.color.of($md.colorScheme.background),
           box.color.of($md.colorScheme.error),
-          box.borderRadius.all.of($radii.medium),
-          box.borderRadius.all.of($radii.large),
+          box.borderRadius.all.of($radius.medium),
+          box.borderRadius.all.of($radius.large),
           box.padding.horizontal.of($space.medium),
           box.padding.horizontal.of($space.large),
         ),
@@ -124,12 +140,12 @@ void main() {
 
     expect(
       (containerWidget.decoration as BoxDecoration).borderRadius,
-      BorderRadius.all(themeData.radii[$radii.large]!),
+      BorderRadius.all(themeData.radii[$radius.large]!),
     );
 
     expect(
       containerWidget.padding!.horizontal / 2,
-      themeData.space[$space.large],
+      themeData.spaces[$space.large],
     );
   });
 }
