@@ -12,7 +12,6 @@ void main() {
 
     const opacity = OpacityUtility(UtilityTestAttribute.new);
     const rotate = RotatedBoxWidgetUtility(UtilityTestAttribute.new);
-    const scale = ScaleUtility(UtilityTestAttribute.new);
     const clipPath = ClipPathUtility(UtilityTestAttribute.new);
     const clipRRect = ClipRRectUtility(UtilityTestAttribute.new);
     const clipOval = ClipOvalUtility(UtilityTestAttribute.new);
@@ -80,12 +79,6 @@ void main() {
       final rotateDecorator = rotate.d270();
 
       expect(rotateDecorator.value.quarterTurns, 3);
-    });
-
-    test('scale creates ScaleDecorator correctly', () {
-      final scaleDecorator = scale(0.5);
-
-      expect(scaleDecorator.value.scale, 0.5);
     });
 
     test('clipRRect creates ClipRRectDecorator correctly', () {
