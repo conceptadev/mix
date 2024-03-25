@@ -30,12 +30,12 @@ class AnimatedStyle extends Style {
   factory AnimatedStyle(
     Style style, {
     required Duration duration,
-    Curve curve = Curves.linear,
+    required Curve curve,
   }) {
     return AnimatedStyle._(
       styles: style.styles,
       variants: style.variants,
-      animatedData: AnimatedData(duration: duration, curve: curve),
+      animatedData: AnimatedData.withDefaults(duration: duration, curve: curve),
     );
   }
 
@@ -244,14 +244,11 @@ class Style with Comparable {
       SpreadFunctionParams(addAttributes);
 
   /// Returns a `AnimatedStyle` from this `Style` with the provided [duration] and [curve].
-  AnimatedStyle animate({
-    Duration duration = const Duration(milliseconds: 150),
-    Curve curve = Curves.linear,
-  }) {
+  AnimatedStyle animate({Duration? duration, Curve? curve}) {
     return AnimatedStyle._(
       styles: styles,
       variants: variants,
-      animatedData: AnimatedData(duration: duration, curve: curve),
+      animatedData: AnimatedData.withDefaults(duration: duration, curve: curve),
     );
   }
 
