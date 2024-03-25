@@ -52,7 +52,7 @@ class MixData with Comparable {
   }
 
   /// Alias for animation.isAnimated
-  bool get isAnimated => animation?.isAnimated ?? false;
+  bool get isAnimated => animation != null;
 
   /// Getter for [MixTokenResolver].
   ///
@@ -127,17 +127,16 @@ List<StyleAttribute> applyContextToVisualAttributes(
   final multiVariants = mix.variants.whereType<MultiVariantAttribute>();
 
   // Once there are no more context variants to apply, return the mix
-  if (contextVariants.isEmpty) {
-    // TODO: Clean this up
-    return style.styles.values.toList();
+  if (contextVariants.isEmpty && multiVariants.isEmpty) {
+    return style.styles.values;
   }
 
   List<WhenVariant> contextVariantTypes = [];
-  List<WhenVariant> gestureVariantTypes = [];
+  List<WhenVariant> pressableVariantTypes = [];
 
   for (ContextVariantAttribute attr in contextVariants) {
     if (attr.variant is PressableStateVariant) {
-      gestureVariantTypes.add(attr);
+      pressableVariantTypes.add(attr);
     } else {
       contextVariantTypes.add(attr);
     }
@@ -146,7 +145,7 @@ List<StyleAttribute> applyContextToVisualAttributes(
   for (MultiVariantAttribute attr in multiVariants) {
     if (attr.variant.variants
         .any((variant) => variant is PressableStateVariant)) {
-      gestureVariantTypes.add(attr);
+      pressableVariantTypes.add(attr);
     } else {
       contextVariantTypes.add(attr);
     }
@@ -156,9 +155,9 @@ List<StyleAttribute> applyContextToVisualAttributes(
     style = _applyVariants(context, style, variant);
   }
 
-  // Gesture Variants are applied after Context Variants
+  // Pressable Variants are applied after Context Variants
   // As they take precedence over Context Variants from a styling perspective
-  for (WhenVariant variant in gestureVariantTypes) {
+  for (WhenVariant variant in pressableVariantTypes) {
     style = _applyVariants(context, style, variant);
   }
 
@@ -182,18 +181,19 @@ M? _mergeAttributes<M extends StyleAttribute>(Iterable<M> mergeables) {
 }
 
 class AnimatedData with Comparable {
-  final bool isAnimated;
   final Duration duration;
   final Curve curve;
+  const AnimatedData({required this.duration, required this.curve});
 
-  const AnimatedData({
-    required this.isAnimated,
-    required this.duration,
-    required this.curve,
-  });
+  factory AnimatedData.withDefaults({Duration? duration, Curve? curve}) {
+    return AnimatedData(
+      duration: duration ?? const Duration(milliseconds: 150),
+      curve: curve ?? Curves.linear,
+    );
+  }
 
   @override
-  List<Object> get props => [isAnimated, duration, curve];
+  get props => [duration, curve];
 }
 
 Iterable<Attribute> _applyStyleBuilder(

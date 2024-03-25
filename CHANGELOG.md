@@ -1,3 +1,9 @@
+## 1.0.0-beta.10
+
+* Fixed: Issue with Pressable unpressDelay by @leoafarias
+* Fixed: Variant operators when no ContextVariants @leoafarias
+* Chore: Animation clean up by @leoafarias
+
 ## 1.0.0-beta.9
 
 * Added animated decorators by @leoafarias

@@ -7,6 +7,7 @@ import '../../attributes/constraints/constraints_dto.dart';
 import '../../attributes/constraints/constraints_util.dart';
 import '../../attributes/decoration/decoration_dto.dart';
 import '../../attributes/decoration/decoration_util.dart';
+import '../../attributes/gradient/gradient_util.dart';
 import '../../attributes/scalars/scalar_util.dart';
 import '../../attributes/shadow/shadow_util.dart';
 import '../../attributes/spacing/spacing_dto.dart';
@@ -321,6 +322,8 @@ class BoxSpecUtility extends SpecUtility<BoxSpecAttribute> {
   ColorUtility<BoxSpecAttribute> get color => decoration.color;
 
   ElevationUtility<BoxSpecAttribute> get elevation => decoration.elevation;
+
+  GradientUtility<BoxSpecAttribute> get gradient => decoration.gradient;
 
   ShapeDecorationUtility<BoxSpecAttribute> get shapeDecoration =>
       ShapeDecorationUtility((decoration) => only(decoration: decoration));
