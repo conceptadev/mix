@@ -1,3 +1,11 @@
+## 1.0.0-beta.9
+
+* Added animated decorators by @leoafarias
+* Added StyleBuilder by @leoafarias
+* Created flip, rotate and scale using transform by @tilucasoli
+* Added StyleWidgetBuilder by @tilucasoli
+* Added new Icon attributes by @tilucasoli
+
 ## 1.0.0-beta.8
 
 * Optimized analyze workflow by @leoafarias
