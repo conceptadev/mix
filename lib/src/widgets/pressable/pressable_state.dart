@@ -155,10 +155,10 @@ class PressableState extends InheritedModel<PressableStateAspect> {
 }
 
 class PointerPosition with Comparable {
-  final Alignment alignment;
+  final Alignment position;
   final Offset offset;
-  const PointerPosition({required this.alignment, required this.offset});
+  const PointerPosition({required this.position, required this.offset});
 
   @override
-  get props => [alignment, offset];
+  get props => [position, offset];
 }
