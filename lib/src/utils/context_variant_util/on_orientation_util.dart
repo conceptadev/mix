@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../helpers/string_ext.dart';
 import '../../variants/variant.dart';
 
 /// Variant for portrait orientation.
@@ -22,7 +21,6 @@ final onLandscape = onOrientation(Orientation.landscape);
 /// [orientation] - The device orientation (portrait or landscape) for which the variant is to be created.
 ContextVariant onOrientation(Orientation orientation) {
   return ContextVariant(
-    'on-${orientation.name.paramCase}',
     (context) => MediaQuery.of(context).orientation == orientation,
   );
 }

@@ -15,7 +15,7 @@ import 'style_mix.dart';
 /// decorators and token resolvers.
 @immutable
 class MixData with Comparable {
-  final AnimatedData animation;
+  final AnimatedData? animation;
 
   // Instance variables for widget attributes, widget decorators and token resolver.
   final AttributeMap _attributes;
@@ -40,9 +40,7 @@ class MixData with Comparable {
     return MixData._(
       resolver: resolver,
       attributes: AttributeMap(attributeList),
-      animation: style is AnimatedStyle
-          ? style.animatedData
-          : const AnimatedData.notAnimated(),
+      animation: style is AnimatedStyle ? style.animatedData : null,
     );
   }
 
@@ -54,7 +52,7 @@ class MixData with Comparable {
   }
 
   /// Alias for animation.isAnimated
-  bool get isAnimated => animation.isAnimated;
+  bool get isAnimated => animation?.isAnimated ?? false;
 
   /// Getter for [MixTokenResolver].
   ///
@@ -107,7 +105,7 @@ class MixData with Comparable {
     return MixData._(
       resolver: _tokenResolver,
       attributes: _attributes.merge(other._attributes),
-      animation: other.animation,
+      animation: other.animation ?? animation,
     );
   }
 
@@ -121,21 +119,24 @@ List<StyleAttribute> applyContextToVisualAttributes(
   BuildContext context,
   Style mix,
 ) {
-  Style style = Style.create(mix.styles.values);
+  final builtAttributes = _applyStyleBuilder(context, mix.styles.values);
+
+  Style style = Style.create(builtAttributes);
 
   final contextVariants = mix.variants.whereType<ContextVariantAttribute>();
   final multiVariants = mix.variants.whereType<MultiVariantAttribute>();
 
   // Once there are no more context variants to apply, return the mix
   if (contextVariants.isEmpty) {
-    return mix.styles.values.toList();
+    // TODO: Clean this up
+    return style.styles.values.toList();
   }
 
   List<WhenVariant> contextVariantTypes = [];
   List<WhenVariant> gestureVariantTypes = [];
 
   for (ContextVariantAttribute attr in contextVariants) {
-    if (attr.variant is PressableDataVariant) {
+    if (attr.variant is PressableStateVariant) {
       gestureVariantTypes.add(attr);
     } else {
       contextVariantTypes.add(attr);
@@ -144,7 +145,7 @@ List<StyleAttribute> applyContextToVisualAttributes(
 
   for (MultiVariantAttribute attr in multiVariants) {
     if (attr.variant.variants
-        .any((variant) => variant is PressableDataVariant)) {
+        .any((variant) => variant is PressableStateVariant)) {
       gestureVariantTypes.add(attr);
     } else {
       contextVariantTypes.add(attr);
@@ -191,11 +192,20 @@ class AnimatedData with Comparable {
     required this.curve,
   });
 
-  const AnimatedData.notAnimated()
-      : isAnimated = false,
-        duration = Duration.zero,
-        curve = Curves.linear;
-
   @override
   List<Object> get props => [isAnimated, duration, curve];
+}
+
+Iterable<Attribute> _applyStyleBuilder(
+  BuildContext context,
+  List<Attribute> attributes,
+) {
+  return attributes.map((attr) {
+    if (attr is StyleAttributeBuilder) {
+      return attr.builder(context);
+    }
+
+    return attr;
+    // ignore: avoid-inferrable-type-arguments
+  }).whereType<Attribute>();
 }

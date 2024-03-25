@@ -21,9 +21,5 @@ void main() {
       expect(onLight.when(context), false, reason: 'light');
       expect(onDark.when(context), true, reason: 'dark');
     });
-    test('have correct variant names', () {
-      expect(onLight.name, 'on-light');
-      expect(onDark.name, 'on-dark');
-    });
   });
 }

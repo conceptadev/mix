@@ -26,9 +26,5 @@ void main() {
       expect(onLandscape.when(context), true, reason: 'landscape');
       addTearDown(tester.view.resetPhysicalSize);
     });
-    test('have correct variant names', () {
-      expect(onPortrait.name, 'on-portrait');
-      expect(onLandscape.name, 'on-landscape');
-    });
   });
 }

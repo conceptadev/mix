@@ -110,3 +110,14 @@ abstract class Spec<T extends Spec<T>> with Comparable {
   /// Linearly interpolate with another [Spec] object.
   T lerp(covariant T? other, double t);
 }
+
+@immutable
+abstract class StyleAttributeBuilder<Self extends StyleAttributeBuilder<Self>>
+    extends StyleAttribute {
+  const StyleAttributeBuilder();
+
+  Attribute? builder(BuildContext context);
+
+  @override
+  Type get type => Self;
+}

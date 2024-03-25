@@ -1,5 +1,4 @@
 import '../../helpers/build_context_ext.dart';
-import '../../helpers/string_ext.dart';
 import '../../theme/mix_theme.dart';
 import '../../theme/tokens/breakpoints_token.dart';
 import '../../variants/variant.dart';
@@ -29,10 +28,8 @@ ContextVariant onBreakpoint({
   double maxWidth = double.infinity,
 }) {
   final constraints = Breakpoint(minWidth: minWidth, maxWidth: maxWidth);
-  final constraintName =
-      'minWidth-${constraints.minWidth}-maxWidth-${constraints.maxWidth}';
 
-  return ContextVariant('on-$constraintName', (context) {
+  return ContextVariant((context) {
     final size = context.screenSize;
 
     return constraints.matches(size);
@@ -45,7 +42,7 @@ ContextVariant onBreakpoint({
 /// and returns a [ContextVariant] that applies when the current screen size matches
 /// the specified breakpoint.
 ContextVariant onBreakpointToken(BreakpointToken token) {
-  return ContextVariant('on-${token.name.paramCase}', (context) {
+  return ContextVariant((context) {
     final size = context.screenSize;
 
     final selectedbreakpoint = token.resolve(context);

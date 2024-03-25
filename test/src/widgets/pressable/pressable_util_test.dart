@@ -13,7 +13,7 @@ void main() {
     testWidgets('press state', (tester) async {
       await tester.pumpWithPressable(
         Container(),
-        state: PressableState.pressed,
+        pressed: true,
         focus: true,
       );
 
@@ -23,14 +23,14 @@ void main() {
 
       expect(onPressAttr.when(context), true);
       expect(onPressAttr.value, Style(attribute1, attribute2, attribute3));
-      expect(onPressAttr.variant.name, 'on-pressed');
+
       expect(onPressAttr.variant.when(context), true);
     });
 
     testWidgets('long press state', (tester) async {
       await tester.pumpWithPressable(
         Container(),
-        state: PressableState.longPressed,
+        longPressed: true,
         focus: true,
       );
 
@@ -43,14 +43,14 @@ void main() {
         onLongPressAttr.value,
         Style(attribute1, attribute2, attribute3),
       );
-      expect(onLongPressAttr.variant.name, 'on-long-pressed');
+
       expect(onLongPressAttr.variant.when(context), true);
     });
 
     testWidgets('hover state', (tester) async {
       await tester.pumpWithPressable(
         Container(),
-        state: PressableState.hovered,
+        hovered: true,
         focus: true,
       );
 
@@ -60,7 +60,7 @@ void main() {
 
       expect(onHoverAttr.when(context), true);
       expect(onHoverAttr.value, Style(attribute1, attribute2, attribute3));
-      expect(onHoverAttr.variant.name, 'on-hovered');
+
       expect(onHoverAttr.variant.when(context), true);
     });
 
@@ -80,7 +80,7 @@ void main() {
         onDisabledAttr.value,
         Style(attribute1, attribute2, attribute3),
       );
-      expect(onDisabledAttr.variant.name, 'on-disabled');
+
       expect(onDisabledAttr.variant.when(context), true);
     });
 
@@ -88,7 +88,7 @@ void main() {
     testWidgets('enabled state', (tester) async {
       await tester.pumpWithPressable(
         Container(),
-        state: PressableState.pressed,
+        disabled: false,
         focus: true,
       );
 
@@ -98,7 +98,7 @@ void main() {
 
       expect(onEnabledAttr.when(context), true);
       expect(onEnabledAttr.value, Style(attribute1, attribute2, attribute3));
-      expect(onEnabledAttr.variant.name, 'on-enabled');
+
       expect(onEnabledAttr.variant.when(context), true);
     });
 
@@ -106,7 +106,7 @@ void main() {
     testWidgets('focus state', (tester) async {
       await tester.pumpWithPressable(
         Container(),
-        state: PressableState.pressed,
+        pressed: true,
         focus: true,
       );
 
@@ -116,7 +116,7 @@ void main() {
 
       expect(onFocusAttr.when(context), true);
       expect(onFocusAttr.value, Style(attribute1, attribute2, attribute3));
-      expect(onFocusAttr.variant.name, 'on-focused');
+
       expect(onFocusAttr.variant.when(context), true);
     });
   });

@@ -286,6 +286,9 @@ final clipBehavior = box.clipBehavior;
 /// - [BoxShadow]
 final elevation = box.elevation;
 
+final radialGradient = box.decoration.gradient.radial;
+final linearGradient = box.decoration.gradient.linear;
+
 class BoxSpecUtility extends SpecUtility<BoxSpecAttribute> {
   const BoxSpecUtility();
 
@@ -330,6 +333,12 @@ class BoxSpecUtility extends SpecUtility<BoxSpecAttribute> {
 
   Matrix4Utility<BoxSpecAttribute> get transform {
     return Matrix4Utility((transform) => only(transform: transform));
+  }
+
+  AlignmentUtility<BoxSpecAttribute> get transformAlignment {
+    return AlignmentUtility(
+      (transformAlignment) => only(alignment: transformAlignment),
+    );
   }
 
   ClipUtility<BoxSpecAttribute> get clipBehavior {

@@ -9,6 +9,7 @@ import 'box_spec.dart';
 
 class BoxSpecAttribute extends SpecAttribute<BoxSpecAttribute, BoxSpec> {
   final AlignmentGeometry? alignment;
+  final AlignmentGeometry? transformAlignment;
   final SpacingDto? padding;
   final SpacingDto? margin;
   final BoxConstraintsDto? constraints;
@@ -27,6 +28,7 @@ class BoxSpecAttribute extends SpecAttribute<BoxSpecAttribute, BoxSpec> {
     this.decoration,
     this.foregroundDecoration,
     this.transform,
+    this.transformAlignment,
     this.clipBehavior,
     this.width,
     this.height,
@@ -42,6 +44,7 @@ class BoxSpecAttribute extends SpecAttribute<BoxSpecAttribute, BoxSpec> {
       decoration: decoration?.resolve(mix),
       foregroundDecoration: foregroundDecoration?.resolve(mix),
       transform: transform,
+      transformAlignment: transformAlignment,
       clipBehavior: clipBehavior,
       width: width,
       height: height,
@@ -62,6 +65,7 @@ class BoxSpecAttribute extends SpecAttribute<BoxSpecAttribute, BoxSpec> {
           foregroundDecoration?.merge(other.foregroundDecoration) ??
               other.foregroundDecoration,
       transform: other.transform ?? transform,
+      transformAlignment: other.transformAlignment ?? transformAlignment,
       clipBehavior: other.clipBehavior ?? clipBehavior,
       width: other.width ?? width,
       height: other.height ?? height,
@@ -77,6 +81,7 @@ class BoxSpecAttribute extends SpecAttribute<BoxSpecAttribute, BoxSpec> {
         decoration,
         foregroundDecoration,
         transform,
+        transformAlignment,
         clipBehavior,
         width,
         height,

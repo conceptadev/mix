@@ -54,7 +54,8 @@ class TextSpec extends Spec<TextSpec> {
       const TextSpec.empty();
 
   @override
-  TextSpec lerp(TextSpec other, double t) {
+  TextSpec lerp(TextSpec? other, double t) {
+    if (other == null) return this;
     // Define a helper method for snapping
 
     return TextSpec(
@@ -63,7 +64,7 @@ class TextSpec extends Spec<TextSpec> {
       textAlign: lerpSnap(textAlign, other.textAlign, t),
       textScaleFactor: lerpDouble(textScaleFactor, other.textScaleFactor, t),
       maxLines: lerpSnap(maxLines, other.maxLines, t),
-      style: TextStyle.lerp(style, other.style, t),
+      style: lerpTextStyle(style, other.style, t),
       textWidthBasis: lerpSnap(textWidthBasis, other.textWidthBasis, t),
       textHeightBehavior:
           lerpSnap(textHeightBehavior, other.textHeightBehavior, t),

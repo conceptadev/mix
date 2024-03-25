@@ -121,19 +121,21 @@ extension WidgetTesterExt on WidgetTester {
 
   Future<void> pumpWithPressable(
     Widget widget, {
-    PressableStateData data = const PressableStateData.none(),
-    PressableState state = PressableState.none,
     bool disabled = false,
     bool focus = false,
+    bool pressed = false,
+    bool hovered = false,
+    bool longPressed = false,
   }) async {
     await pumpWidget(
       MaterialApp(
-        home: PressableDataNotifier(
-          data: data.copyWith(
-            focused: focus,
-            disabled: disabled,
-            state: state,
-          ),
+        home: PressableState(
+          enabled: !disabled,
+          focused: focus,
+          pressed: pressed,
+          hovered: hovered,
+          longPressed: longPressed,
+          pointerPosition: null,
           child: widget,
         ),
       ),

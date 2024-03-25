@@ -51,12 +51,21 @@ class StyledText extends StyledWidget {
   @override
   Widget build(BuildContext context) {
     return withMix(context, (mix) {
-      return MixedText(
-        text: text,
-        mix: mix,
-        semanticsLabel: semanticsLabel,
-        locale: locale,
-      );
+      return mix.isAnimated
+          ? AnimatedMixedText(
+              text: text,
+              mix: mix,
+              curve: mix.animation!.curve,
+              duration: mix.animation!.duration,
+              semanticsLabel: semanticsLabel,
+              locale: locale,
+            )
+          : MixedText(
+              text: text,
+              mix: mix,
+              semanticsLabel: semanticsLabel,
+              locale: locale,
+            );
     });
   }
 }
@@ -110,4 +119,101 @@ class MixedText extends StatelessWidget {
       textHeightBehavior: spec.textHeightBehavior,
     );
   }
+}
+
+class AnimatedMixedText extends StatelessWidget {
+  const AnimatedMixedText({
+    required this.text,
+    required this.mix,
+    required this.curve,
+    required this.duration,
+    this.semanticsLabel,
+    this.locale,
+    super.key,
+  });
+
+  final String text;
+  final String? semanticsLabel;
+  final Locale? locale;
+  final MixData mix;
+  final Curve curve;
+  final Duration duration;
+
+  @override
+  Widget build(BuildContext context) {
+    final spec = TextSpec.of(mix);
+
+    return ImplicitlyMixedText(
+      text: text,
+      spec: spec,
+      semanticsLabel: semanticsLabel,
+      duration: duration,
+    );
+  }
+}
+
+class ImplicitlyMixedText extends ImplicitlyAnimatedWidget {
+  const ImplicitlyMixedText({
+    required this.text,
+    required this.spec,
+    this.semanticsLabel,
+    this.locale,
+    super.key,
+    required super.duration,
+    super.curve = Curves.linear,
+  });
+
+  final String text;
+  final String? semanticsLabel;
+  final Locale? locale;
+  final TextSpec spec;
+
+  @override
+  AnimatedWidgetBaseState<ImplicitlyMixedText> createState() =>
+      _ImplicitlyMixedTextState();
+}
+
+class _ImplicitlyMixedTextState
+    extends AnimatedWidgetBaseState<ImplicitlyMixedText> {
+  TextSpecTween? _textSpecTween;
+
+  @override
+  // ignore: avoid-dynamic
+  void forEachTween(TweenVisitor<dynamic> visitor) {
+    _textSpecTween = visitor(
+      _textSpecTween,
+      widget.spec,
+      // ignore: avoid-dynamic
+      (dynamic value) => TextSpecTween(begin: value as TextSpec),
+    ) as TextSpecTween?;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final spec = _textSpecTween!.evaluate(animation);
+
+    return Text(
+      spec.directive?.apply(widget.text) ?? widget.text,
+      style: spec.style,
+      strutStyle: spec.strutStyle,
+      textAlign: spec.textAlign,
+      textDirection: spec.textDirection,
+      locale: widget.locale,
+      softWrap: spec.softWrap,
+      overflow: spec.overflow,
+      textScaleFactor: spec.textScaleFactor,
+      maxLines: spec.maxLines,
+      semanticsLabel: widget.semanticsLabel,
+      textWidthBasis: spec.textWidthBasis,
+      textHeightBehavior: spec.textHeightBehavior,
+    );
+  }
+}
+
+class TextSpecTween extends Tween<TextSpec> {
+  TextSpecTween({TextSpec? begin, TextSpec? end})
+      : super(begin: begin, end: end);
+
+  @override
+  TextSpec lerp(double t) => begin!.lerp(end, t);
 }

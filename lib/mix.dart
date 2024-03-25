@@ -107,6 +107,6 @@ export 'src/utils/custom_focusable_action_detector.dart';
 export 'src/utils/helper_util.dart';
 export 'src/utils/style_recipe.dart';
 export 'src/variants/variant.dart';
-export 'src/widgets/pressable/pressable_data.notifier.dart';
+export 'src/widgets/pressable/pressable_state.dart';
 export 'src/widgets/pressable/pressable_util.dart';
 export 'src/widgets/pressable/pressable_widget.dart';
