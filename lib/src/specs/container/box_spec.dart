@@ -10,6 +10,7 @@ import 'box_attribute.dart';
 class BoxSpec extends Spec<BoxSpec> {
   final AlignmentGeometry? alignment;
   final EdgeInsetsGeometry? padding;
+  final AlignmentGeometry? transformAlignment;
   final EdgeInsetsGeometry? margin;
   final BoxConstraints? constraints;
   final Decoration? decoration;
@@ -27,6 +28,7 @@ class BoxSpec extends Spec<BoxSpec> {
     required this.decoration,
     required this.foregroundDecoration,
     required this.transform,
+    required this.transformAlignment,
     required this.clipBehavior,
     required this.width,
     required this.height,
@@ -39,6 +41,7 @@ class BoxSpec extends Spec<BoxSpec> {
         constraints = null,
         decoration = null,
         foregroundDecoration = null,
+        transformAlignment = null,
         transform = null,
         width = null,
         height = null,
@@ -60,6 +63,7 @@ class BoxSpec extends Spec<BoxSpec> {
     double? width,
     double? height,
     Matrix4? transform,
+    AlignmentGeometry? transformAlignment,
     Clip? clipBehavior,
     Color? color,
   }) {
@@ -71,6 +75,7 @@ class BoxSpec extends Spec<BoxSpec> {
       decoration: decoration ?? this.decoration,
       foregroundDecoration: foregroundDecoration ?? this.foregroundDecoration,
       transform: transform ?? this.transform,
+      transformAlignment: transformAlignment ?? this.transformAlignment,
       clipBehavior: clipBehavior ?? this.clipBehavior,
       width: width ?? this.width,
       height: height ?? this.height,
@@ -91,6 +96,11 @@ class BoxSpec extends Spec<BoxSpec> {
         t,
       ),
       transform: Matrix4Tween(begin: transform, end: other.transform).lerp(t),
+      transformAlignment: AlignmentGeometry.lerp(
+        transformAlignment,
+        other.transformAlignment,
+        t,
+      ),
       clipBehavior: lerpSnap(clipBehavior, other.clipBehavior, t),
       width: lerpDouble(width, other.width, t),
       height: lerpDouble(height, other.height, t),
@@ -108,6 +118,7 @@ class BoxSpec extends Spec<BoxSpec> {
         decoration,
         foregroundDecoration,
         transform,
+        transformAlignment,
         clipBehavior,
       ];
 }

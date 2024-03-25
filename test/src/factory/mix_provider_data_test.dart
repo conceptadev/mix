@@ -5,7 +5,7 @@ import 'package:mix/mix.dart';
 import '../../helpers/testing_utils.dart';
 
 void main() {
-  final autoApplyVariant = ContextVariant('mock', (context) => true);
+  final autoApplyVariant = ContextVariant((context) => true);
   test('MixData create', () {
     final mixData = MixData.create(
       MockBuildContext(),

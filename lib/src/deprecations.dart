@@ -351,10 +351,10 @@ final large = onLarge;
 final hover = onHover;
 
 @Deprecated('Use onFocused instead')
-final focus = onFocused;
+const focus = onFocused;
 
 @Deprecated('Use onFocused instead')
-final onFocus = onFocused;
+const onFocus = onFocused;
 
 @Deprecated('Use onPortrait instead')
 final portrait = onPortrait;
@@ -548,13 +548,7 @@ final textBaseline = text.style.textBaseline;
 @Deprecated('Use borderRadius.circular instead')
 final squared = borderRadius.zero;
 
-// linearGradient
-@Deprecated('Use box.decoration.gradient.linear instead')
-final linearGradient = box.decoration.gradient.linear;
 
-// radialGradient
-@Deprecated('Use box.decoration.gradient.radial instead')
-final radialGradient = box.decoration.gradient.radial;
 
 // flexDirection
 @Deprecated('Use flexDirection instead')

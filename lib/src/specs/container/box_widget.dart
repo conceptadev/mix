@@ -59,8 +59,9 @@ class Box extends StyledWidget {
       return mix.isAnimated
           ? AnimatedMixedBox(
               mix: mix,
-              curve: mix.animation.curve,
-              duration: mix.animation.duration,
+              curve: mix.animation!.curve,
+              duration: mix.animation!.duration,
+              child: child,
             )
           : MixedBox(mix: mix, child: child);
     });
@@ -120,6 +121,7 @@ class MixedBox extends StatelessWidget {
       constraints: spec.constraints,
       margin: spec.margin,
       transform: spec.transform,
+      transformAlignment: spec.transformAlignment,
       clipBehavior: spec.clipBehavior ?? Clip.none,
       child: child,
     );
@@ -170,6 +172,7 @@ class AnimatedMixedBox extends StatelessWidget {
       constraints: spec.constraints,
       margin: spec.margin,
       transform: spec.transform,
+      transformAlignment: spec.transformAlignment,
       clipBehavior: spec.clipBehavior ?? Clip.none,
       curve: curve,
       duration: duration,

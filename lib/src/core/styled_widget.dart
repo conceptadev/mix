@@ -57,12 +57,12 @@ abstract class StyledWidget extends StatelessWidget {
   }
 
   Widget applyDecorators(MixData mix, Widget child) {
-    return mix.animation.isAnimated
+    return mix.isAnimated
         ? RenderAnimatedDecorators(
             mix: mix,
             orderOfDecorators: orderOfDecorators,
-            duration: mix.animation.duration,
-            curve: mix.animation.curve,
+            duration: mix.animation!.duration,
+            curve: mix.animation!.curve,
             child: child,
           )
         : RenderDecorators(

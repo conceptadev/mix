@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../../factory/style_mix.dart';
 import '../../specs/container/box_widget.dart';
 import '../../utils/custom_focusable_action_detector.dart';
-import 'pressable_data.notifier.dart';
+import 'pressable_state.dart';
 
 class PressableBox extends StatelessWidget {
   const PressableBox({
@@ -14,7 +14,7 @@ class PressableBox extends StatelessWidget {
     this.focusNode,
     this.autofocus = false,
     this.enableFeedback = false,
-    this.unpressDelay = const Duration(milliseconds: 150),
+    this.unpressDelay = const Duration(milliseconds: 200),
     this.onFocusChange,
     @Deprecated('Use onTap instead') VoidCallback? onPressed,
     VoidCallback? onPress,
@@ -171,21 +171,12 @@ abstract class _PressableBuilderWidgetState<T extends _PressableBuilderWidget>
   bool _isFocused = false;
   bool _isPressed = false;
   bool _isLongPressed = false;
-  Offset _localCursorPosition = Offset.zero;
-  Alignment _cursorAlignment = Alignment.center;
+
+  PointerPosition? _pointerPosition = const PointerPosition(
+    alignment: Alignment.center,
+    offset: Offset.zero,
+  );
   int _pressCount = 0;
-
-  PressableState get _currentState {
-    // Long pressed has priority over pressed
-    // Due to delay of removing the _press state
-    if (_isLongPressed) return PressableState.longPressed;
-
-    if (_isPressed) return PressableState.pressed;
-
-    if (_isHovered) return PressableState.hovered;
-
-    return PressableState.none;
-  }
 
   void _handleFocusUpdate(bool hasFocus) {
     updateState(() {
@@ -199,25 +190,25 @@ abstract class _PressableBuilderWidgetState<T extends _PressableBuilderWidget>
     });
   }
 
-  void _updateCursorPosition(Offset newLocalCursorPosition) {
-    if (newLocalCursorPosition != _localCursorPosition) {
-      setState(() {
-        _localCursorPosition = newLocalCursorPosition;
-        _updateCursorAlignment();
-      });
-    }
-  }
+  void _updateCursorPosition(Offset cursorOffset) {
+    setState(() {
+      final size = context.size;
+      if (size != null) {
+        final ax = cursorOffset.dx / size.width;
+        final ay = cursorOffset.dy / size.height;
+        final cursorAlignment = Alignment(
+          ((ax - 0.5) * 2).clamp(-1.0, 1.0),
+          ((ay - 0.5) * 2).clamp(-1.0, 1.0),
+        );
 
-  void _updateCursorAlignment() {
-    final size = context.size;
-    if (size != null) {
-      final ax = _localCursorPosition.dx / size.width;
-      final ay = _localCursorPosition.dy / size.height;
-      _cursorAlignment = Alignment(
-        ((ax - 0.5) * 2).clamp(-1.0, 1.0),
-        ((ay - 0.5) * 2).clamp(-1.0, 1.0),
-      );
-    }
+        setState(() {
+          _pointerPosition = PointerPosition(
+            alignment: cursorAlignment,
+            offset: cursorOffset,
+          );
+        });
+      }
+    });
   }
 
   void _handlePanUpdate(DragUpdateDetails event) {
@@ -288,14 +279,11 @@ abstract class _PressableBuilderWidgetState<T extends _PressableBuilderWidget>
         (widget.onPress != null || widget.onLongPress != null);
   }
 
-  bool get isDisabled => !isEnabled;
-
   void handleOnPress() {
     if (!mounted) return;
+    _handlePressUpdate(true);
     widget.onPress?.call();
     if (widget.enableFeedback) Feedback.forTap(context);
-
-    _handlePressUpdate(true);
   }
 
   void handleOnLongPress() {
@@ -317,16 +305,13 @@ abstract class _PressableBuilderWidgetState<T extends _PressableBuilderWidget>
       onMouseEnter: _handleOnMouseEnter,
       onMouseExit: _handleOnMouseExit,
       onMouseHover: _handleMouseHover,
-      child: PressableDataNotifier(
-        data: PressableStateData(
-          focused: _isFocused,
-          disabled: isDisabled,
-          state: _currentState,
-          cursorPosition: CursorPosition(
-            alignment: _cursorAlignment,
-            offset: _localCursorPosition,
-          ),
-        ),
+      child: PressableState(
+        enabled: isEnabled,
+        hovered: _isHovered,
+        focused: _isFocused,
+        pressed: _isPressed,
+        longPressed: _isLongPressed,
+        pointerPosition: _pointerPosition,
         child: widget.child,
       ),
     );
