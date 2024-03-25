@@ -3,6 +3,7 @@
   "variants": "Variants",
   "decorators": "Decorators",
   "theming": "Theming",
+  "animations": "How to create animation using Mix",
   "directives": "Directives",
   "supporting-new-widgets": "Supporting new Widgets"
 }

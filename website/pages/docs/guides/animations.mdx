@@ -1,0 +1,106 @@
+---
+id: animations
+title: "How to create animation using Mix"
+---
+
+# How to create animation using Mix
+
+In this tutorial, we will learn how to create animations using Mix. First, we need to understand how Mix styles work. All the stylizations begin with the `Style` class. 
+
+## Style class
+The `Style` class is a container for all the stylizations that you want to apply to a widget. You can add multiple stylizations to a `Style` object, and then apply it to a widget. As example, we will create a red rounded container.
+    
+```dart
+Box(
+    style: Style(
+        height(50),
+        width(50),
+        backgroundColor(Colors.red),
+        borderRadius(10),
+    ),
+);
+```
+
+At this point, we have a red rounded container. If you have any experience with Mix it's not new to you. Now, let's see how we can animate this container.
+
+## AnimatedStyle class
+The `AnimatedStyle` is a subclass of `Style` that allows you to animate the stylizations based on differences between two `Style` objects, that could be applied using variants. To show how it works, let's create a simple animation that changes the color and size of the container when the user taps on it.
+
+```dart
+PressableBox(
+    onPress: () => {
+        // Do something...
+    },
+    child: Box(
+        style: AnimatedStyle(
+            Style(
+                height(50),
+                width(50),
+                backgroundColor(Colors.blue),
+                borderRadius(10),
+                onHover(
+                    height(100),
+                    width(100),
+                    backgroundColor(Colors.red),
+                ),
+            ),
+            duration: Durations.long1,
+            curve: Curves.decelerate,
+        ),
+    ),
+);
+```
+
+Note that different from the `Style` class, the `AnimatedStyle` class receives besides the style, the `duration` and `curve` parameters. The `duration` parameter is the time that the animation will take to complete, and the `curve` parameter is the curve that the animation will follow. 
+
+## Start point and end point
+A important thing to keep in mind is that animations will only work if you define a start point for each attribute. If you don't define a start point, the animation will not work.
+
+### Don't 
+In the example below, the animation will not work because we didn't define a start point for the `backgroundColor` attribute.
+
+```dart
+PressableBox(
+    onPress: () => {
+        // Do something...
+    },
+    child: Box(
+        style: AnimatedStyle(
+            Style(
+                height(50),
+                width(50),
+                onHover(
+                    backgroundColor(Colors.blue),
+                ),
+            ),
+            duration: Durations.long1,
+            curve: Curves.decelerate,
+        ),
+    ),
+);
+```
+
+### Do 
+Different from the previous example, the animation will work because we defined a start point for the `backgroundColor` attribute.
+
+```dart
+PressableBox(
+    onPress: () => {
+        // Do something...
+    },
+    child: Box(
+        style: AnimatedStyle(
+            Style(
+                height(50),
+                width(50),
+                backgroundColor(Colors.red),
+                onHover(
+                    backgroundColor(Colors.blue),
+                ),
+            ),
+            duration: Durations.long1,
+            curve: Curves.decelerate,
+        ),
+    ),
+);
+```
