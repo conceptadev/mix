@@ -142,12 +142,10 @@ class OnEnabledEventBuilder
 @immutable
 class OnMouseHoverBuilder extends StyleAttributeBuilder<OnMouseHoverBuilder>
     with Mergeable<OnMouseHoverBuilder> {
-  final List<StyleAttribute Function(PointerPosition event)> builders;
+  final List<Style Function(PointerPosition event)> builders;
   const OnMouseHoverBuilder.raw(this.builders);
 
-  factory OnMouseHoverBuilder(
-    StyleAttribute Function(PointerPosition event) builder,
-  ) {
+  factory OnMouseHoverBuilder(Style Function(PointerPosition event) builder) {
     return OnMouseHoverBuilder.raw([builder]);
   }
 
@@ -166,30 +164,17 @@ class OnMouseHoverBuilder extends StyleAttributeBuilder<OnMouseHoverBuilder>
       return null;
     }
 
-    final attributes = <NestedStyleAttribute>[];
+    final styles = <Style>[];
 
     for (final fn in builders) {
-      final attribute = fn(position);
+      final style = fn(position);
 
-      attributes.add(NestedStyleAttribute(Style(attribute)));
+      styles.add(style);
     }
 
-    return NestedStyleAttribute(Style.create(attributes));
+    return NestedStyleAttribute(Style.combine(styles));
   }
 
   @override
   get props => [builders];
-}
-
-typedef StyleBuilder = Style Function(BuildContext context);
-
-@immutable
-abstract class StyleAttributeBuilder<Self extends StyleAttributeBuilder<Self>>
-    extends StyleAttribute {
-  const StyleAttributeBuilder();
-
-  Attribute? builder(BuildContext context);
-
-  @override
-  Type get type => Self;
 }
