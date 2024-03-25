@@ -65,7 +65,7 @@ void main() {
         expect(pressableFinder, findsOneWidget);
 
         await tester.tap(pressableFinder);
-        await tester.pumpAndSettle();
+        await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
         expect(counter, 1);
       },
