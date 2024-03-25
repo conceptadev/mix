@@ -465,6 +465,8 @@ class OffsetUtility<T extends StyleAttribute> extends MixUtility<T, Offset> {
   const OffsetUtility(super.builder);
 
   T call(double dx, double dy) => builder(Offset(dx, dy));
+
+  T zero() => builder(Offset.zero);
 }
 
 class FontSizeUtility<T extends StyleAttribute> extends SizingUtility<T> {
