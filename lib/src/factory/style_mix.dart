@@ -35,11 +35,7 @@ class AnimatedStyle extends Style {
     return AnimatedStyle._(
       styles: style.styles,
       variants: style.variants,
-      animatedData: AnimatedData(
-        isAnimated: true,
-        duration: duration,
-        curve: curve,
-      ),
+      animatedData: AnimatedData(duration: duration, curve: curve),
     );
   }
 
@@ -255,11 +251,7 @@ class Style with Comparable {
     return AnimatedStyle._(
       styles: styles,
       variants: variants,
-      animatedData: AnimatedData(
-        isAnimated: true,
-        duration: duration,
-        curve: curve,
-      ),
+      animatedData: AnimatedData(duration: duration, curve: curve),
     );
   }
 
