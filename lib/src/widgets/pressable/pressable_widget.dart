@@ -14,7 +14,7 @@ class PressableBox extends StatelessWidget {
     this.focusNode,
     this.autofocus = false,
     this.enableFeedback = false,
-    this.unpressDelay = const Duration(milliseconds: 200),
+    this.unpressDelay,
     this.onFocusChange,
     @Deprecated('Use onTap instead') VoidCallback? onPressed,
     VoidCallback? onPress,
@@ -50,7 +50,7 @@ class PressableBox extends StatelessWidget {
   final bool disabled;
   final FocusNode? focusNode;
   final bool autofocus;
-  final Duration unpressDelay;
+  final Duration? unpressDelay;
   final Function(bool focus)? onFocusChange;
   final Duration animationDuration;
   final Curve animationCurve;
@@ -79,7 +79,7 @@ class Pressable extends _PressableBuilderWidget {
     required super.child,
     super.disabled,
     super.enableFeedback,
-    @Deprecated('Use onTap instead') VoidCallback? onPressed,
+    @Deprecated('Use onPress instead') VoidCallback? onPressed,
     VoidCallback? onPress,
     @Deprecated('Use hitTestBehavior instead') HitTestBehavior? behavior,
     HitTestBehavior? hitTestBehavior,
@@ -89,11 +89,12 @@ class Pressable extends _PressableBuilderWidget {
     super.focusNode,
     super.onKey,
     super.onKeyEvent,
-    super.unpressDelay,
+    Duration? unpressDelay,
   }) : super(
           onPress: onPress ?? onPressed,
           hitTestBehavior:
               hitTestBehavior ?? behavior ?? HitTestBehavior.opaque,
+          unpressDelay: unpressDelay ?? const Duration(milliseconds: 150),
         );
 
   @override
@@ -116,7 +117,7 @@ abstract class _PressableBuilderWidget extends StatefulWidget {
     this.onKey,
     this.onKeyEvent,
     this.hitTestBehavior = HitTestBehavior.opaque,
-    this.unpressDelay,
+    required this.unpressDelay,
   });
 
   final Widget child;
@@ -162,7 +163,7 @@ abstract class _PressableBuilderWidget extends StatefulWidget {
   final HitTestBehavior hitTestBehavior;
 
   /// The duration to wait after the press is released before the state of pressed is removed
-  final Duration? unpressDelay;
+  final Duration unpressDelay;
 }
 
 abstract class _PressableBuilderWidgetState<T extends _PressableBuilderWidget>
@@ -173,7 +174,7 @@ abstract class _PressableBuilderWidgetState<T extends _PressableBuilderWidget>
   bool _isLongPressed = false;
 
   PointerPosition? _pointerPosition = const PointerPosition(
-    alignment: Alignment.center,
+    position: Alignment.center,
     offset: Offset.zero,
   );
   int _pressCount = 0;
@@ -203,7 +204,7 @@ abstract class _PressableBuilderWidgetState<T extends _PressableBuilderWidget>
 
         setState(() {
           _pointerPosition = PointerPosition(
-            alignment: cursorAlignment,
+            position: cursorAlignment,
             offset: cursorOffset,
           );
         });
@@ -265,7 +266,7 @@ abstract class _PressableBuilderWidgetState<T extends _PressableBuilderWidget>
   Future<void> unpressAfterDelay(int initialPressCount) async {
     final delay = widget.unpressDelay;
 
-    if (delay != null && delay != Duration.zero) {
+    if (delay != Duration.zero) {
       await Future.delayed(delay);
     }
 
