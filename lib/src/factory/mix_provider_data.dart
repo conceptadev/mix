@@ -183,11 +183,17 @@ M? _mergeAttributes<M extends StyleAttribute>(Iterable<M> mergeables) {
 class AnimatedData with Comparable {
   final Duration duration;
   final Curve curve;
-
   const AnimatedData({required this.duration, required this.curve});
 
+  factory AnimatedData.withDefaults({Duration? duration, Curve? curve}) {
+    return AnimatedData(
+      duration: duration ?? const Duration(milliseconds: 150),
+      curve: curve ?? Curves.linear,
+    );
+  }
+
   @override
-  List<Object> get props => [duration, curve];
+  get props => [duration, curve];
 }
 
 Iterable<Attribute> _applyStyleBuilder(

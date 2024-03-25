@@ -123,13 +123,13 @@ class BoxSpec extends Spec<BoxSpec> {
       ];
 }
 
-class BoxSpecTween extends Tween<BoxSpec?> {
+class BoxSpecTween extends Tween<BoxSpec> {
   BoxSpecTween({super.begin, super.end});
 
   @override
-  BoxSpec? lerp(double t) {
-    if (begin == null) return end;
-    if (end == null) return begin;
+  BoxSpec lerp(double t) {
+    if (begin == null && end == null) return const BoxSpec.empty();
+    if (begin == null) return end!;
 
     return begin!.lerp(end!, t);
   }

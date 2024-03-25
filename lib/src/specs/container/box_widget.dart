@@ -106,11 +106,18 @@ class MixedBox extends StatelessWidget {
   final MixData mix;
   @override
   Widget build(BuildContext context) {
-    // Get MixData from this widget or the nearest MixProvider.
+    return BoxSpecWidget(spec: BoxSpec.of(mix), child: child);
+  }
+}
 
-    // Retrieve styling properties from MixData. Use default properties if MixData is not provided.
-    final spec = BoxSpec.of(mix);
+class BoxSpecWidget extends StatelessWidget {
+  const BoxSpecWidget({required this.spec, super.key, this.child});
 
+  final Widget? child;
+  final BoxSpec spec;
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       alignment: spec.alignment,
       padding: spec.padding,
