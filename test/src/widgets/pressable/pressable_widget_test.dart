@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
@@ -149,5 +150,151 @@ void main() {
         expect(counter, 0);
       },
     );
+
+    testWidgets('must change to attributes in onHover variant when hovered',
+        (WidgetTester tester) async {
+      await pumpTestCase(
+        tester: tester,
+        condition: onHover,
+        action: () => tester.hover(find.byType(PressableBox)),
+      );
+    });
+
+    testWidgets(
+        'must change to attributes inside onLongPressed variant when long pressed',
+        (WidgetTester tester) async {
+      await pumpTestCase(
+        tester: tester,
+        condition: onLongPressed,
+        action: () => tester.longPress(find.byType(PressableBox)),
+      );
+    });
+
+    testWidgets('must restyle using attributes inside onPressed when pressed',
+        (WidgetTester tester) async {
+      await pumpTestCase(
+        tester: tester,
+        duration: Durations.medium1,
+        condition: onPressed,
+        action: () async {
+          await tester.tap(find.byType(PressableBox));
+          await tester.pump();
+        },
+      );
+    });
+
+    testWidgets(
+        'must restyle using attributes inside (onLongPressed | onHover) when hovered)',
+        (WidgetTester tester) async {
+      await pumpTestCase(
+        tester: tester,
+        condition: (onLongPressed | onHover),
+        action: () => tester.hover(find.byType(PressableBox)),
+      );
+    });
+
+    testWidgets(
+        'must restyle using attributes inside (onLongPressed | onHover) when long pressed)',
+        (WidgetTester tester) async {
+      await pumpTestCase(
+        tester: tester,
+        condition: (onLongPressed | onHover),
+        action: () => tester.longPress(find.byType(PressableBox)),
+      );
+    });
+
+    testWidgets(
+        'must restyle using attributes inside (onLongPressed | onHover) when long pressed and hovered',
+        (WidgetTester tester) async {
+      await pumpTestCase(
+        tester: tester,
+        condition: (onLongPressed | onHover),
+        action: () async {
+          await tester.hover(find.byType(PressableBox));
+          await tester.longPress(find.byType(PressableBox));
+        },
+      );
+    });
+
+    testWidgets(
+        'must restyle using attributes inside (onLongPressed | onPressed) when long pressed',
+        (WidgetTester tester) async {
+      await pumpTestCase(
+        tester: tester,
+        condition: (onLongPressed | onPressed),
+        action: () async {
+          await tester.longPress(find.byType(PressableBox));
+        },
+      );
+    });
+
+    testWidgets(
+        'must restyle using attributes inside (onLongPressed | onPressed) when pressed',
+        (WidgetTester tester) async {
+      await pumpTestCase(
+        tester: tester,
+        duration: Durations.medium1,
+        condition: (onLongPressed | onPressed),
+        action: () async {
+          await tester.tap(find.byType(PressableBox));
+          await tester.pump();
+        },
+      );
+    });
   });
+}
+
+extension WidgetTesterExt on WidgetTester {
+  Future<void> hover(FinderBase<Element> finder) async {
+    FocusManager.instance.highlightStrategy =
+        FocusHighlightStrategy.alwaysTraditional;
+
+    final gesture = await createGesture(kind: PointerDeviceKind.mouse);
+
+    await gesture.addPointer(location: Offset.zero);
+    await pump();
+    await gesture.moveTo(getCenter(finder));
+
+    await pumpAndSettle();
+
+    addTearDown(gesture.removePointer);
+  }
+}
+
+Future<void> pumpTestCase({
+  required WidgetTester tester,
+  Duration duration = Duration.zero,
+  required condition,
+  required Future<void> Function() action,
+}) async {
+  await tester.pumpWidget(
+    PressableBox(
+      unpressDelay: duration,
+      onPress: () {},
+      disabled: false,
+      style: Style(
+        opacity(0.5),
+        height(50),
+        width(50),
+        condition(
+          opacity(1),
+        ),
+      ),
+      child: const SizedBox(),
+    ),
+  );
+
+  final opacityFinder = find.byType(Opacity);
+  expect(opacityFinder, findsOneWidget);
+
+  final oldValue = tester.widget<Opacity>(opacityFinder).opacity;
+  expect(oldValue, 0.5);
+
+  await action();
+  final newValue = tester.widget<Opacity>(opacityFinder).opacity;
+
+  expect(opacityFinder, findsOneWidget);
+  expect(newValue, 1);
+
+  await tester.pumpAndSettle(Durations.medium1);
 }
