@@ -343,7 +343,7 @@ void main() {
 }
 
 extension WidgetTesterExt on WidgetTester {
-  Future<void> hover(FinderBase<Element> finder) async {
+  Future<void> hover(Finder finder) async {
     FocusManager.instance.highlightStrategy =
         FocusHighlightStrategy.alwaysTraditional;
 
