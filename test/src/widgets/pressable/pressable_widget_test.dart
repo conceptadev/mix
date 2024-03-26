@@ -174,7 +174,7 @@ void main() {
         (WidgetTester tester) async {
       await pumpTestCase(
         tester: tester,
-        duration: Durations.medium1,
+        duration: const Duration(milliseconds: 250),
         condition: onPressed,
         action: () async {
           await tester.tap(find.byType(PressableBox));
@@ -208,7 +208,7 @@ void main() {
         (WidgetTester tester) async {
       await pumpTestCase(
         tester: tester,
-        duration: Durations.medium1,
+        duration: const Duration(milliseconds: 250),
         condition: (onLongPressed | onHover),
         action: () async {
           await tester.tap(find.byType(PressableBox));
@@ -223,7 +223,7 @@ void main() {
         (WidgetTester tester) async {
       await pumpTestCase(
         tester: tester,
-        duration: Durations.medium1,
+        duration: const Duration(milliseconds: 250),
         condition: (onHover | onPressed),
         action: () async {
           await tester.tap(find.byType(PressableBox));
@@ -237,7 +237,7 @@ void main() {
         (WidgetTester tester) async {
       await pumpTestCase(
         tester: tester,
-        duration: Durations.medium1,
+        duration: const Duration(milliseconds: 250),
         condition: (onHover | onPressed),
         action: () async {
           await tester.hover(find.byType(PressableBox));
@@ -250,7 +250,7 @@ void main() {
         (WidgetTester tester) async {
       await pumpTestCase(
         tester: tester,
-        duration: Durations.medium1,
+        duration: const Duration(milliseconds: 250),
         condition: (onHover | onPressed),
         action: () async {
           await tester.longPress(find.byType(PressableBox));
@@ -264,7 +264,7 @@ void main() {
         (WidgetTester tester) async {
       await pumpTestCase(
         tester: tester,
-        duration: Durations.medium1,
+        duration: const Duration(milliseconds: 250),
         condition: (onLongPressed | onPressed),
         action: () async {
           await tester.tap(find.byType(PressableBox));
@@ -303,7 +303,7 @@ void main() {
         (WidgetTester tester) async {
       await pumpTestCase(
         tester: tester,
-        duration: Durations.medium1,
+        duration: const Duration(milliseconds: 250),
         condition: (onHover & onPressed),
         action: () async {
           await tester.hover(find.byType(PressableBox));
@@ -395,5 +395,5 @@ Future<void> pumpTestCase({
   expect(opacityFinder, findsOneWidget);
   expect(newValue, finalExpectedOpacity);
 
-  await tester.pumpAndSettle(Durations.medium1);
+  await tester.pumpAndSettle(const Duration(milliseconds: 250));
 }
