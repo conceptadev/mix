@@ -297,6 +297,48 @@ void main() {
         finalExpectedOpacity: 0.5,
       );
     });
+
+    testWidgets(
+        'must restyle using attributes inside (onHover & onPressed) when hovered & pressed',
+        (WidgetTester tester) async {
+      await pumpTestCase(
+        tester: tester,
+        duration: Durations.medium1,
+        condition: (onHover & onPressed),
+        action: () async {
+          await tester.hover(find.byType(PressableBox));
+          await tester.pump();
+          await tester.tap(find.byType(PressableBox));
+          await tester.pump();
+        },
+      );
+    });
+
+    testWidgets(
+        'must restyle using attributes inside (onHover & onLongPress) when hovered & longPressed',
+        (WidgetTester tester) async {
+      await pumpTestCase(
+        tester: tester,
+        condition: (onHover & onLongPressed),
+        action: () async {
+          await tester.hover(find.byType(PressableBox));
+          await tester.pump();
+
+          // Custom way to long press
+          final gesture = await tester.createGesture();
+          await gesture.addPointer(
+            location: tester.getCenter(find.byType(PressableBox)),
+          );
+
+          await gesture.down(
+            tester.getCenter(find.byType(PressableBox)),
+          );
+          addTearDown(gesture.removePointer);
+
+          await tester.pump(kLongPressTimeout);
+        },
+      );
+    });
   });
 }
 
