@@ -184,7 +184,7 @@ void main() {
     });
 
     testWidgets(
-        'must restyle using attributes inside (onLongPressed | onHover) when hovered)',
+        'must restyle using attributes inside (onLongPressed | onHover) when hovered',
         (WidgetTester tester) async {
       await pumpTestCase(
         tester: tester,
@@ -194,7 +194,7 @@ void main() {
     });
 
     testWidgets(
-        'must restyle using attributes inside (onLongPressed | onHover) when long pressed)',
+        'must restyle using attributes inside (onLongPressed | onHover) when long pressed',
         (WidgetTester tester) async {
       await pumpTestCase(
         tester: tester,
@@ -204,14 +204,71 @@ void main() {
     });
 
     testWidgets(
-        'must restyle using attributes inside (onLongPressed | onHover) when long pressed and hovered',
+        'must NOT restyle using attributes inside (onLongPressed | onHover) when Pressed',
         (WidgetTester tester) async {
       await pumpTestCase(
         tester: tester,
+        duration: Durations.medium1,
         condition: (onLongPressed | onHover),
         action: () async {
+          await tester.tap(find.byType(PressableBox));
+          await tester.pump();
+        },
+        finalExpectedOpacity: 0.5,
+      );
+    });
+
+    testWidgets(
+        'must restyle using attributes inside (onHover | onPressed) when pressed',
+        (WidgetTester tester) async {
+      await pumpTestCase(
+        tester: tester,
+        duration: Durations.medium1,
+        condition: (onHover | onPressed),
+        action: () async {
+          await tester.tap(find.byType(PressableBox));
+          await tester.pump();
+        },
+      );
+    });
+
+    testWidgets(
+        'must restyle using attributes inside (onHover | onPressed) when hovered',
+        (WidgetTester tester) async {
+      await pumpTestCase(
+        tester: tester,
+        duration: Durations.medium1,
+        condition: (onHover | onPressed),
+        action: () async {
           await tester.hover(find.byType(PressableBox));
+        },
+      );
+    });
+
+    testWidgets(
+        'must NOT restyle using attributes inside (onHover | onPressed) when long pressed',
+        (WidgetTester tester) async {
+      await pumpTestCase(
+        tester: tester,
+        duration: Durations.medium1,
+        condition: (onHover | onPressed),
+        action: () async {
           await tester.longPress(find.byType(PressableBox));
+        },
+        finalExpectedOpacity: 0.5,
+      );
+    });
+
+    testWidgets(
+        'must restyle using attributes inside (onLongPressed | onPressed) when pressed',
+        (WidgetTester tester) async {
+      await pumpTestCase(
+        tester: tester,
+        duration: Durations.medium1,
+        condition: (onLongPressed | onPressed),
+        action: () async {
+          await tester.tap(find.byType(PressableBox));
+          await tester.pump();
         },
       );
     });
@@ -229,16 +286,15 @@ void main() {
     });
 
     testWidgets(
-        'must restyle using attributes inside (onLongPressed | onPressed) when pressed',
+        'must NOT restyle using attributes inside (onLongPressed | onPressed) when hovered',
         (WidgetTester tester) async {
       await pumpTestCase(
         tester: tester,
-        duration: Durations.medium1,
         condition: (onLongPressed | onPressed),
         action: () async {
-          await tester.tap(find.byType(PressableBox));
-          await tester.pump();
+          await tester.hover(find.byType(PressableBox));
         },
+        finalExpectedOpacity: 0.5,
       );
     });
   });
@@ -266,6 +322,7 @@ Future<void> pumpTestCase({
   Duration duration = Duration.zero,
   required condition,
   required Future<void> Function() action,
+  double finalExpectedOpacity = 1,
 }) async {
   await tester.pumpWidget(
     PressableBox(
@@ -294,7 +351,7 @@ Future<void> pumpTestCase({
   final newValue = tester.widget<Opacity>(opacityFinder).opacity;
 
   expect(opacityFinder, findsOneWidget);
-  expect(newValue, 1);
+  expect(newValue, finalExpectedOpacity);
 
   await tester.pumpAndSettle(Durations.medium1);
 }
