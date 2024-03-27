@@ -233,6 +233,20 @@ void main() {
     });
 
     testWidgets(
+        'must restyle using attributes inside (onHover | onPressed | onLongPressed) when pressed',
+        (WidgetTester tester) async {
+      await pumpTestCase(
+        tester: tester,
+        duration: const Duration(milliseconds: 250),
+        condition: (onPressed | onHover | onLongPressed),
+        action: () async {
+          await tester.tap(find.byType(PressableBox));
+          await tester.pump();
+        },
+      );
+    });
+
+    testWidgets(
         'must restyle using attributes inside (onHover | onPressed) when hovered',
         (WidgetTester tester) async {
       await pumpTestCase(
