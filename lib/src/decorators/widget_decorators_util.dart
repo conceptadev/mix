@@ -11,7 +11,7 @@ import 'sized_box_widget_decorator.dart';
 import 'transform_widget_decorator.dart';
 import 'visibility_widget_decorator.dart';
 
-T selfBuilder<T extends StyleAttribute>(T decorator) => decorator;
+T selfBuilder<T extends StyleAttribute>(T value) => value;
 
 const intrinsicWidth = IntrinsicWidthWidgetUtility(selfBuilder);
 const intrinsicHeight = IntrinsicHeightWidgetUtility(selfBuilder);

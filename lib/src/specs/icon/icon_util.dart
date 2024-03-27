@@ -3,9 +3,11 @@ import '../../attributes/color/color_util.dart';
 import '../../attributes/scalars/scalar_util.dart';
 import '../../attributes/shadow/shadow_dto.dart';
 import '../../attributes/shadow/shadow_util.dart';
+import '../../core/attribute.dart';
+import '../../decorators/widget_decorators_util.dart';
 import 'icon_attribute.dart';
 
-const icon = IconUtility();
+const icon = IconUtility(selfBuilder);
 
 /// Utility class for building [IconSpecAttribute]s
 ///
@@ -15,10 +17,50 @@ const icon = IconUtility();
 /// final icon = IconUtility();
 ///
 /// final iconSpec = icon.size(24);
-class IconUtility extends SpecUtility<IconSpecAttribute> {
-  const IconUtility();
+class IconUtility<T extends SpecAttribute>
+    extends SpecUtility<T, IconSpecAttribute> {
+  const IconUtility(super.builder);
 
-  IconSpecAttribute _only({
+  ColorUtility<T> get color {
+    return ColorUtility((color) => only(color: color));
+  }
+
+  DoubleUtility<T> get size {
+    return DoubleUtility((size) => only(size: size));
+  }
+
+  DoubleUtility<T> get weight {
+    return DoubleUtility((size) => only(size: size));
+  }
+
+  DoubleUtility<T> get grade {
+    return DoubleUtility((grade) => only(grade: grade));
+  }
+
+  DoubleUtility<T> get opticalSize {
+    return DoubleUtility((opticalSize) => only(opticalSize: opticalSize));
+  }
+
+  ShadowUtility<T> get shadow {
+    return ShadowUtility((shadow) => only(shadows: [shadow]));
+  }
+
+  ShadowListUtility<T> get shadows {
+    return ShadowListUtility((shadows) => only(shadows: shadows));
+  }
+
+  DoubleUtility<T> get fill {
+    return DoubleUtility((fill) => only(fill: fill));
+  }
+
+  BoolUtility<T> get applyTextScaling {
+    return BoolUtility(
+      (applyTextScaling) => only(applyTextScaling: applyTextScaling),
+    );
+  }
+
+  @override
+  T only({
     ColorDto? color,
     double? size,
     double? weight,
@@ -28,53 +70,17 @@ class IconUtility extends SpecUtility<IconSpecAttribute> {
     double? fill,
     bool? applyTextScaling,
   }) {
-    return IconSpecAttribute(
-      size: size,
-      color: color,
-      weight: weight,
-      grade: grade,
-      opticalSize: opticalSize,
-      shadows: shadows,
-      fill: fill,
-      applyTextScaling: applyTextScaling,
-    );
-  }
-
-  ColorUtility<IconSpecAttribute> get color {
-    return ColorUtility((color) => IconSpecAttribute(color: color));
-  }
-
-  DoubleUtility<IconSpecAttribute> get size {
-    return DoubleUtility((size) => _only(size: size));
-  }
-
-  DoubleUtility<IconSpecAttribute> get weight {
-    return DoubleUtility((size) => _only(size: size));
-  }
-
-  DoubleUtility<IconSpecAttribute> get grade {
-    return DoubleUtility((grade) => _only(grade: grade));
-  }
-
-  DoubleUtility<IconSpecAttribute> get opticalSize {
-    return DoubleUtility((opticalSize) => _only(opticalSize: opticalSize));
-  }
-
-  ShadowUtility<IconSpecAttribute> get shadow {
-    return ShadowUtility((shadow) => IconSpecAttribute(shadows: [shadow]));
-  }
-
-  ShadowListUtility<IconSpecAttribute> get shadows {
-    return ShadowListUtility((shadows) => IconSpecAttribute(shadows: shadows));
-  }
-
-  DoubleUtility<IconSpecAttribute> get fill {
-    return DoubleUtility((fill) => _only(fill: fill));
-  }
-
-  BoolUtility<IconSpecAttribute> get applyTextScaling {
-    return BoolUtility(
-      (applyTextScaling) => _only(applyTextScaling: applyTextScaling),
+    return builder(
+      IconSpecAttribute(
+        size: size,
+        color: color,
+        weight: weight,
+        grade: grade,
+        opticalSize: opticalSize,
+        shadows: shadows,
+        fill: fill,
+        applyTextScaling: applyTextScaling,
+      ),
     );
   }
 }

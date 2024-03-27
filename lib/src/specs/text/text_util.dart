@@ -6,15 +6,75 @@ import '../../attributes/strut_style/strut_style_util.dart';
 import '../../attributes/text_directives_util.dart';
 import '../../attributes/text_style/text_style_dto.dart';
 import '../../attributes/text_style/text_style_util.dart';
+import '../../core/attribute.dart';
 import '../../core/directive.dart';
+import '../../decorators/widget_decorators_util.dart';
 import 'text_attribute.dart';
 
-const text = TextUtility();
+const text = TextUtility(selfBuilder);
 
-class TextUtility extends SpecUtility<TextSpecAttribute> {
-  const TextUtility();
+class TextUtility<T extends SpecAttribute>
+    extends SpecUtility<T, TextSpecAttribute> {
+  const TextUtility(super.builder);
 
-  TextSpecAttribute _only({
+  TextDirectiveUtility<T> get directive =>
+      TextDirectiveUtility((directive) => only(directive: directive));
+  TextOverflowUtility<T> get overflow {
+    return TextOverflowUtility((overflow) => only(overflow: overflow));
+  }
+
+  StrutStyleUtility<T> get strutStyle {
+    return StrutStyleUtility((strutStyle) => only(strutStyle: strutStyle));
+  }
+
+  TextAlignUtility<T> get textAlign {
+    return TextAlignUtility((textAlign) => only(textAlign: textAlign));
+  }
+
+  IntUtility<T> get maxLines {
+    return IntUtility((maxLines) => only(maxLines: maxLines));
+  }
+
+  TextStyleUtility<T> get style {
+    return TextStyleUtility((style) => only(style: style));
+  }
+
+  TextWidthBasisUtility<T> get textWidthBasis {
+    return TextWidthBasisUtility(
+      (textWidthBasis) => only(textWidthBasis: textWidthBasis),
+    );
+  }
+
+  TextHeightBehaviorUtility<T> get textHeightBehavior {
+    return TextHeightBehaviorUtility(
+      (textHeightBehavior) => only(textHeightBehavior: textHeightBehavior),
+    );
+  }
+
+  TextDirectionUtility<T> get textDirection {
+    return TextDirectionUtility(
+      (textDirection) => only(textDirection: textDirection),
+    );
+  }
+
+  BoolUtility<T> get softWrap {
+    return BoolUtility((softWrap) => only(softWrap: softWrap));
+  }
+
+  DoubleUtility<T> get textScaleFactor {
+    return DoubleUtility(
+      (textScaleFactor) => only(textScaleFactor: textScaleFactor),
+    );
+  }
+
+  T capitalize() => directive.capitalize();
+  T uppercase() => directive.uppercase();
+  T lowercase() => directive.lowercase();
+  T titleCase() => directive.titleCase();
+  T sentenceCase() => directive.sentenceCase();
+
+  @override
+  T only({
     TextOverflow? overflow,
     StrutStyleDto? strutStyle,
     TextAlign? textAlign,
@@ -27,74 +87,20 @@ class TextUtility extends SpecUtility<TextSpecAttribute> {
     bool? softWrap,
     TextDirective? directive,
   }) {
-    return TextSpecAttribute(
-      overflow: overflow,
-      strutStyle: strutStyle,
-      textAlign: textAlign,
-      textScaleFactor: textScaleFactor,
-      maxLines: maxLines,
-      style: style,
-      textWidthBasis: textWidthBasis,
-      textHeightBehavior: textHeightBehavior,
-      textDirection: textDirection,
-      softWrap: softWrap,
-      directive: directive,
+    return builder(
+      TextSpecAttribute(
+        overflow: overflow,
+        strutStyle: strutStyle,
+        textAlign: textAlign,
+        textScaleFactor: textScaleFactor,
+        maxLines: maxLines,
+        style: style,
+        textWidthBasis: textWidthBasis,
+        textHeightBehavior: textHeightBehavior,
+        textDirection: textDirection,
+        softWrap: softWrap,
+        directive: directive,
+      ),
     );
   }
-
-  TextDirectiveUtility<TextSpecAttribute> get directive =>
-      TextDirectiveUtility((directive) => _only(directive: directive));
-  TextOverflowUtility<TextSpecAttribute> get overflow {
-    return TextOverflowUtility((overflow) => _only(overflow: overflow));
-  }
-
-  StrutStyleUtility<TextSpecAttribute> get strutStyle {
-    return StrutStyleUtility((strutStyle) => _only(strutStyle: strutStyle));
-  }
-
-  TextAlignUtility<TextSpecAttribute> get textAlign {
-    return TextAlignUtility((textAlign) => _only(textAlign: textAlign));
-  }
-
-  IntUtility<TextSpecAttribute> get maxLines {
-    return IntUtility((maxLines) => _only(maxLines: maxLines));
-  }
-
-  TextStyleUtility<TextSpecAttribute> get style {
-    return TextStyleUtility((style) => _only(style: style));
-  }
-
-  TextWidthBasisUtility<TextSpecAttribute> get textWidthBasis {
-    return TextWidthBasisUtility(
-      (textWidthBasis) => _only(textWidthBasis: textWidthBasis),
-    );
-  }
-
-  TextHeightBehaviorUtility<TextSpecAttribute> get textHeightBehavior {
-    return TextHeightBehaviorUtility(
-      (textHeightBehavior) => _only(textHeightBehavior: textHeightBehavior),
-    );
-  }
-
-  TextDirectionUtility<TextSpecAttribute> get textDirection {
-    return TextDirectionUtility(
-      (textDirection) => _only(textDirection: textDirection),
-    );
-  }
-
-  BoolUtility<TextSpecAttribute> get softWrap {
-    return BoolUtility((softWrap) => _only(softWrap: softWrap));
-  }
-
-  DoubleUtility<TextSpecAttribute> get textScaleFactor {
-    return DoubleUtility(
-      (textScaleFactor) => _only(textScaleFactor: textScaleFactor),
-    );
-  }
-
-  TextSpecAttribute capitalize() => directive.capitalize();
-  TextSpecAttribute uppercase() => directive.uppercase();
-  TextSpecAttribute lowercase() => directive.lowercase();
-  TextSpecAttribute titleCase() => directive.titleCase();
-  TextSpecAttribute sentenceCase() => directive.sentenceCase();
 }
