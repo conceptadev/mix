@@ -303,12 +303,23 @@ class MultiVariant extends StyleVariant {
   /// ```
   /// `isApplicable` will be true if either `contextVariantA` or `contextVariantB` is applicable in the given context.
   bool when(BuildContext context) {
-    final contextVariants = variants.whereType<ContextVariant>();
+    var resultArray = <bool>[];
+
+    for (final variant in variants) {
+      if (variant is MultiVariant) {
+        resultArray.add(variant.when(context));
+      }
+      if (variant is ContextVariant) {
+        resultArray.add(variant.when(context));
+      }
+      if (variant is Variant) {
+        resultArray.add(false);
+      }
+    }
 
     return operatorType == MultiVariantOperator.or
-        ? contextVariants.any((variant) => variant.when(context))
-        : contextVariants.length == variants.length &&
-            contextVariants.every((variant) => variant.when(context));
+        ? resultArray.fold(false, (v1, v2) => v1 || v2)
+        : resultArray.isNotEmpty && resultArray.every((e) => e);
   }
 
   /// Creates a new [MultiVariantAttribute] with the given [variant] and [style].
