@@ -1,3 +1,8 @@
+## 1.0.0-beta.11
+
+* Removed SpacingDto all method by @leoafarias
+* Allow extension of spec utils by @leoafarias
+
 ## 1.0.0-beta.10
 
 * Fixed: Issue with Pressable unpressDelay by @leoafarias
