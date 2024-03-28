@@ -347,11 +347,11 @@ class MultiVariant extends StyleVariant {
   /// `isApplicable` will be true if either `contextVariantA` or `contextVariantB` is applicable in the given context.
   @override
   bool when(BuildContext context) {
-    var resultArray = variants.map((e) => e.when(context));
+    var list = variants.map((e) => e.when(context));
 
     return operatorType == MultiVariantOperator.or
-        ? resultArray.fold(false, (v1, v2) => v1 || v2)
-        : resultArray.isNotEmpty && resultArray.every((e) => e);
+        ? list.contains(true)
+        : list.every((e) => e);
   }
 
   /// Determines if the current `MultiVariant` matches a set of provided variants.
@@ -374,9 +374,9 @@ class MultiVariant extends StyleVariant {
   bool matches(Iterable<StyleVariant> matchVariants) {
     final list = variants.map((e) => e.matches(matchVariants)).toList();
 
-    return operatorType == MultiVariantOperator.and
-        ? list.every((e) => e)
-        : list.contains(true);
+    return operatorType == MultiVariantOperator.or
+        ? list.contains(true)
+        : list.every((e) => e);
   }
 
   @override
