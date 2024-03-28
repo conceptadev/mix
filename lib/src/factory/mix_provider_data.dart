@@ -6,7 +6,6 @@ import '../core/attribute.dart';
 import '../core/attributes_map.dart';
 import '../helpers/compare_mixin.dart';
 import '../theme/token_resolver.dart';
-import '../widgets/pressable/pressable_util.dart';
 import 'mix_provider.dart';
 import 'style_mix.dart';
 
@@ -131,45 +130,31 @@ List<StyleAttribute> applyContextToVisualAttributes(
     return style.styles.values;
   }
 
-  List<WhenVariant> contextVariantTypes = [];
-  List<WhenVariant> pressableVariantTypes = [];
+  List<StyleVariantAttribute> contextVariantTypes = [];
 
   for (ContextVariantAttribute attr in contextVariants) {
-    if (attr.variant is PressableStateVariant) {
-      pressableVariantTypes.add(attr);
-    } else {
-      contextVariantTypes.add(attr);
-    }
+    contextVariantTypes.add(attr);
   }
 
   for (MultiVariantAttribute attr in multiVariants) {
-    if (attr.variant.variants
-        .any((variant) => variant is PressableStateVariant)) {
-      pressableVariantTypes.add(attr);
-    } else {
-      contextVariantTypes.add(attr);
-    }
+    contextVariantTypes.add(attr);
   }
 
-  for (WhenVariant variant in contextVariantTypes) {
-    style = _applyVariants(context, style, variant);
-  }
-
-  // Pressable Variants are applied after Context Variants
-  // As they take precedence over Context Variants from a styling perspective
-  for (WhenVariant variant in pressableVariantTypes) {
+  for (final variant in contextVariantTypes) {
     style = _applyVariants(context, style, variant);
   }
 
   return applyContextToVisualAttributes(context, style);
 }
 
-Style _applyVariants<T extends WhenVariant>(
+Style _applyVariants(
   BuildContext context,
   Style style,
-  T variant,
+  StyleVariantAttribute variantAttribute,
 ) {
-  return variant.when(context) ? style.merge(variant.value) : style;
+  return variantAttribute.variant.when(context)
+      ? style.merge(variantAttribute.value)
+      : style;
 }
 
 M? _mergeAttributes<M extends StyleAttribute>(Iterable<M> mergeables) {

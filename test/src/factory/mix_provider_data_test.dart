@@ -534,6 +534,7 @@ void _testApplyContextToVisualAttributes({
   required bool isExpectedToApply,
 }) {
   final style = Style(
+    box.color.black(),
     condition(
       icon.color.black(),
     ),
@@ -544,11 +545,12 @@ void _testApplyContextToVisualAttributes({
     style,
   );
 
-  final expectedStyle = Style(
-    icon.color.black(),
-  );
+  final expectedStyle = Style.create([
+    box.color.black(),
+    if (isExpectedToApply) icon.color.black(),
+  ]);
 
-  expect(attributeList, isExpectedToApply ? expectedStyle.styles.values : []);
+  expect(attributeList, expectedStyle.styles.values);
 }
 
 class _NonInheritableAttribute

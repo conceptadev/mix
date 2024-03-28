@@ -21,7 +21,7 @@ void main() {
 
       final onPressAttr = onPressed(attribute1, attribute2, attribute3);
 
-      expect(onPressAttr.when(context), true);
+      expect(onPressAttr.variant.when(context), true);
       expect(onPressAttr.value, Style(attribute1, attribute2, attribute3));
 
       expect(onPressAttr.variant.when(context), true);
@@ -38,7 +38,7 @@ void main() {
 
       final onLongPressAttr = onLongPressed(attribute1, attribute2, attribute3);
 
-      expect(onLongPressAttr.when(context), true);
+      expect(onLongPressAttr.variant.when(context), true);
       expect(
         onLongPressAttr.value,
         Style(attribute1, attribute2, attribute3),
@@ -58,7 +58,6 @@ void main() {
 
       final onHoverAttr = onHover(attribute1, attribute2, attribute3);
 
-      expect(onHoverAttr.when(context), true);
       expect(onHoverAttr.value, Style(attribute1, attribute2, attribute3));
 
       expect(onHoverAttr.variant.when(context), true);
@@ -75,7 +74,6 @@ void main() {
 
       final onDisabledAttr = onDisabled(attribute1, attribute2, attribute3);
 
-      expect(onDisabledAttr.when(context), true);
       expect(
         onDisabledAttr.value,
         Style(attribute1, attribute2, attribute3),
@@ -96,7 +94,6 @@ void main() {
 
       final onEnabledAttr = onEnabled(attribute1, attribute2, attribute3);
 
-      expect(onEnabledAttr.when(context), true);
       expect(onEnabledAttr.value, Style(attribute1, attribute2, attribute3));
 
       expect(onEnabledAttr.variant.when(context), true);
@@ -114,7 +111,6 @@ void main() {
 
       final onFocusAttr = onFocused(attribute1, attribute2, attribute3);
 
-      expect(onFocusAttr.when(context), true);
       expect(onFocusAttr.value, Style(attribute1, attribute2, attribute3));
 
       expect(onFocusAttr.variant.when(context), true);
