@@ -15,8 +15,11 @@ abstract class MixUtility<Attr extends StyleAttribute, Value> {
   UtilityBuilder<Attr, Value> get builder => _builder;
 }
 
-abstract class SpecUtility<S extends SpecAttribute> {
-  const SpecUtility();
+abstract class SpecUtility<Attr extends SpecAttribute,
+    Value extends SpecAttribute> extends MixUtility<Attr, Value> {
+  const SpecUtility(super.builder);
+
+  Attr only();
 }
 
 abstract class DtoUtility<Attr extends StyleAttribute, D extends Dto<Value>,

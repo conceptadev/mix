@@ -4,7 +4,7 @@ import 'package:mix/mix.dart';
 
 void main() {
   group('BoxUtility', () {
-    const boxUtility = BoxSpecUtility();
+    const boxUtility = BoxSpecUtility(selfBuilder);
     test('call() returns correct instance', () {
       const constraints = BoxConstraintsDto(
         minWidth: 50,

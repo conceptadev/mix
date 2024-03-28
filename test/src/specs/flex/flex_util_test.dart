@@ -4,7 +4,7 @@ import 'package:mix/mix.dart';
 
 void main() {
   group('FlexUtility', () {
-    const flexUtility = FlexSpecUtility();
+    const flexUtility = FlexSpecUtility(selfBuilder);
     test('call() returns correct instance', () {
       final flex = flexUtility.only(
         direction: Axis.horizontal,

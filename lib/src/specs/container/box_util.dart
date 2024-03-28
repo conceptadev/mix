@@ -12,9 +12,11 @@ import '../../attributes/scalars/scalar_util.dart';
 import '../../attributes/shadow/shadow_util.dart';
 import '../../attributes/spacing/spacing_dto.dart';
 import '../../attributes/spacing/spacing_util.dart';
+import '../../core/attribute.dart';
+import '../../decorators/widget_decorators_util.dart';
 import 'box_attribute.dart';
 
-const box = BoxSpecUtility();
+const box = BoxSpecUtility(selfBuilder);
 
 /// 'border' - A Utility for defining border values for a [Box] widget
 ///
@@ -290,95 +292,95 @@ final elevation = box.elevation;
 final radialGradient = box.decoration.gradient.radial;
 final linearGradient = box.decoration.gradient.linear;
 
-class BoxSpecUtility extends SpecUtility<BoxSpecAttribute> {
-  const BoxSpecUtility();
+class BoxSpecUtility<T extends SpecAttribute>
+    extends SpecUtility<T, BoxSpecAttribute> {
+  const BoxSpecUtility(super.builder);
 
-  BoxDecorationUtility<BoxSpecAttribute> get decoration {
+  BoxDecorationUtility<T> get decoration {
     return BoxDecorationUtility(
       (decoration) => only(decoration: decoration),
     );
   }
 
-  BoxDecorationUtility<BoxSpecAttribute> get foregroundDecoration {
+  BoxDecorationUtility<T> get foregroundDecoration {
     return BoxDecorationUtility(
       (foregroundDecoration) =>
           only(foregroundDecoration: foregroundDecoration),
     );
   }
 
-  AlignmentUtility<BoxSpecAttribute> get alignment {
+  AlignmentUtility<T> get alignment {
     return AlignmentUtility((alignment) => only(alignment: alignment));
   }
 
-  SpacingUtility<BoxSpecAttribute> get padding {
+  SpacingUtility<T> get padding {
     return SpacingUtility((padding) => only(padding: padding));
   }
 
-  SpacingUtility<BoxSpecAttribute> get margin {
+  SpacingUtility<T> get margin {
     return SpacingUtility((margin) => only(margin: margin));
   }
 
   // We use BoxDecoration for better Decoration support to avoid weird issues
-  ColorUtility<BoxSpecAttribute> get color => decoration.color;
+  ColorUtility<T> get color => decoration.color;
 
-  ElevationUtility<BoxSpecAttribute> get elevation => decoration.elevation;
+  ElevationUtility<T> get elevation => decoration.elevation;
 
-  GradientUtility<BoxSpecAttribute> get gradient => decoration.gradient;
+  GradientUtility<T> get gradient => decoration.gradient;
 
-  ShapeDecorationUtility<BoxSpecAttribute> get shapeDecoration =>
+  ShapeDecorationUtility<T> get shapeDecoration =>
       ShapeDecorationUtility((decoration) => only(decoration: decoration));
 
-  BoxConstraintsUtility<BoxSpecAttribute> get constraints {
+  BoxConstraintsUtility<T> get constraints {
     return BoxConstraintsUtility(
       (constraints) => only(constraints: constraints),
     );
   }
 
-  Matrix4Utility<BoxSpecAttribute> get transform {
+  Matrix4Utility<T> get transform {
     return Matrix4Utility((transform) => only(transform: transform));
   }
 
-  AlignmentUtility<BoxSpecAttribute> get transformAlignment {
+  AlignmentUtility<T> get transformAlignment {
     return AlignmentUtility(
       (transformAlignment) => only(alignment: transformAlignment),
     );
   }
 
-  ClipUtility<BoxSpecAttribute> get clipBehavior {
+  ClipUtility<T> get clipBehavior {
     return ClipUtility((clipBehavior) => only(clipBehavior: clipBehavior));
   }
 
-  BorderRadiusGeometryUtility<BoxSpecAttribute> get borderRadius =>
-      decoration.borderRadius;
+  BorderRadiusGeometryUtility<T> get borderRadius => decoration.borderRadius;
 
-  BorderRadiusDirectionalUtility<BoxSpecAttribute>
-      get borderRadiusDirectional => decoration.borderRadiusDirectional;
+  BorderRadiusDirectionalUtility<T> get borderRadiusDirectional =>
+      decoration.borderRadiusDirectional;
 
-  BorderUtility<BoxSpecAttribute> get border => decoration.border;
+  BorderUtility<T> get border => decoration.border;
 
-  BorderDirectionalUtility<BoxSpecAttribute> get borderDirectional =>
+  BorderDirectionalUtility<T> get borderDirectional =>
       decoration.borderDirectional;
 
-  BoxShadowListUtility<BoxSpecAttribute> get shadows => decoration.boxShadows;
+  BoxShadowListUtility<T> get shadows => decoration.boxShadows;
 
-  BoxShadowUtility<BoxSpecAttribute> get shadow => decoration.boxShadow;
+  BoxShadowUtility<T> get shadow => decoration.boxShadow;
 
   ///  Constraints utilities
-  DoubleUtility<BoxSpecAttribute> get maxWidth => constraints.maxWidth;
+  DoubleUtility<T> get maxWidth => constraints.maxWidth;
 
-  DoubleUtility<BoxSpecAttribute> get minWidth => constraints.minWidth;
+  DoubleUtility<T> get minWidth => constraints.minWidth;
 
-  DoubleUtility<BoxSpecAttribute> get maxHeight => constraints.maxHeight;
+  DoubleUtility<T> get maxHeight => constraints.maxHeight;
 
-  DoubleUtility<BoxSpecAttribute> get minHeight => constraints.minHeight;
+  DoubleUtility<T> get minHeight => constraints.minHeight;
 
-  DoubleUtility<BoxSpecAttribute> get width =>
-      DoubleUtility((width) => only(width: width));
+  DoubleUtility<T> get width => DoubleUtility((width) => only(width: width));
 
-  DoubleUtility<BoxSpecAttribute> get height =>
+  DoubleUtility<T> get height =>
       DoubleUtility((height) => only(height: height));
 
-  BoxSpecAttribute only({
+  @override
+  T only({
     AlignmentGeometry? alignment,
     SpacingDto? padding,
     SpacingDto? margin,
@@ -390,17 +392,19 @@ class BoxSpecUtility extends SpecUtility<BoxSpecAttribute> {
     Matrix4? transform,
     Clip? clipBehavior,
   }) {
-    return BoxSpecAttribute(
-      alignment: alignment,
-      padding: padding,
-      margin: margin,
-      constraints: constraints,
-      decoration: decoration,
-      foregroundDecoration: foregroundDecoration,
-      transform: transform,
-      clipBehavior: clipBehavior,
-      width: width,
-      height: height,
+    return builder(
+      BoxSpecAttribute(
+        alignment: alignment,
+        padding: padding,
+        margin: margin,
+        constraints: constraints,
+        decoration: decoration,
+        foregroundDecoration: foregroundDecoration,
+        transform: transform,
+        clipBehavior: clipBehavior,
+        width: width,
+        height: height,
+      ),
     );
   }
 }
