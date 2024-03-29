@@ -122,25 +122,14 @@ List<StyleAttribute> applyContextToVisualAttributes(
 
   Style style = Style.create(builtAttributes);
 
-  final contextVariants = mix.variants.whereType<ContextVariantAttribute>();
-  final multiVariants = mix.variants.whereType<MultiVariantAttribute>();
+  final variantAttributes = mix.variants.whereType<StyleVariantAttribute>();
 
   // Once there are no more context variants to apply, return the mix
-  if (contextVariants.isEmpty && multiVariants.isEmpty) {
+  if (variantAttributes.isEmpty) {
     return style.styles.values;
   }
 
-  List<StyleVariantAttribute> contextVariantTypes = [];
-
-  for (ContextVariantAttribute attr in contextVariants) {
-    contextVariantTypes.add(attr);
-  }
-
-  for (MultiVariantAttribute attr in multiVariants) {
-    contextVariantTypes.add(attr);
-  }
-
-  for (final variant in contextVariantTypes) {
+  for (final variant in variantAttributes) {
     style = _applyVariants(context, style, variant);
   }
 
