@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'mix_provider_data.dart';
 import 'style_mix.dart';
 
-typedef MixBuilder = Widget Function(MixData mix);
-
 /// Provides [MixData] to the widget tree.
 class MixProvider extends InheritedWidget {
   /// Stores [MixData] and wraps a [child] widget.
@@ -13,6 +11,10 @@ class MixProvider extends InheritedWidget {
   /// Retrieves the nearest [MixData] from the widget tree. Returns null if not found.
   static MixData? maybeOf(BuildContext context) {
     return context.dependOnInheritedWidgetOfExactType<MixProvider>()?.data;
+  }
+
+  static MixData? maybeOfInherited(BuildContext context) {
+    return maybeOf(context)?.toInheritable();
   }
 
   /// Retrieves the nearest [MixData] from the widget tree. Throws if not found.

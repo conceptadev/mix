@@ -243,6 +243,8 @@ class Style with Comparable {
   SpreadFunctionParams<Attribute, Style> get mix =>
       SpreadFunctionParams(addAttributes);
 
+  MixData of(BuildContext context) => MixData.create(context, this);
+
   /// Returns a `AnimatedStyle` from this `Style` with the provided [duration] and [curve].
   AnimatedStyle animate({Duration? duration, Curve? curve}) {
     return AnimatedStyle._(
