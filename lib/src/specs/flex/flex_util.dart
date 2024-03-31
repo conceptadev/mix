@@ -96,7 +96,14 @@ class FlexSpecUtility<T extends SpecAttribute>
     return SpacingSideUtility((gap) => only(gap: gap));
   }
 
+  /// Shorthand for setting the direction to horizontal.
+  T row() => direction.horizontal();
+
+  /// Shorthand for setting the direction to vertical.
+  T column() => direction.vertical();
+
   /// Creates a `FlexSpecAttribute` with the specified properties.
+  @override
   T only({
     Axis? direction,
     MainAxisAlignment? mainAxisAlignment,
@@ -120,10 +127,4 @@ class FlexSpecUtility<T extends SpecAttribute>
       gap: gap,
     ));
   }
-
-  /// Shorthand for setting the direction to horizontal.
-  T row() => direction.horizontal();
-
-  /// Shorthand for setting the direction to vertical.
-  T column() => direction.vertical();
 }

@@ -118,3 +118,11 @@ class TextSpec extends Spec<TextSpec> {
         directive,
       ];
 }
+
+class TextSpecTween extends Tween<TextSpec> {
+  TextSpecTween({TextSpec? begin, TextSpec? end})
+      : super(begin: begin, end: end);
+
+  @override
+  TextSpec lerp(double t) => begin!.lerp(end, t);
+}

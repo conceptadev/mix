@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 
 import '../../core/styled_widget.dart';
-import '../../factory/mix_provider_data.dart';
+import '../container/box_spec.dart';
 import '../container/box_widget.dart';
 import 'stack_spec.dart';
 
@@ -32,32 +32,21 @@ class StyledStack extends StyledWidget {
   Widget build(BuildContext context) {
     // The withMix method applies the current styling context and creates a MixedStack.
     return withMix(context, (mix) {
-      return MixedStack(mix: mix, children: children);
+      final spec = StackSpec.of(mix);
+
+      return MixedStack(spec: spec, children: children);
     });
   }
 }
 
-/// [MixedStack] - A StatelessWidget that applies a given [MixData] to a Stack.
-///
-/// This widget is used to render a stack layout with the styling attributes defined in the `MixData`.
-/// It is particularly useful for creating layered UIs where each layer's position and styling
-/// can be controlled through a `Style`.
-///
-/// Parameters:
-///   - [mix]: The `MixData` representing the current styling context.
-///   - [key]: The key for the widget.
-///   - [children]: The list of widgets to stack.
 class MixedStack extends StatelessWidget {
-  const MixedStack({required this.mix, super.key, this.children});
+  const MixedStack({required this.spec, super.key, this.children});
 
   final List<Widget>? children;
-  final MixData mix;
+  final StackSpec spec;
 
   @override
   Widget build(BuildContext context) {
-    // Resolve the StackSpecAttribute from the mix to apply specific stack-related styles.
-    final spec = StackSpec.of(mix);
-
     // The Stack widget is used here, applying the resolved styles from StackSpec.
     return Stack(
       alignment: spec.alignment ?? _defaultStack.alignment,
@@ -96,9 +85,12 @@ class ZBox extends StyledWidget {
   Widget build(BuildContext context) {
     // The withMix method is used to apply the styling context to both the box and the stack.
     return withMix(context, (mix) {
+      final boxSpec = BoxSpec.of(mix);
+      final stackSpec = StackSpec.of(mix);
+
       return MixedBox(
-        mix: mix,
-        child: MixedStack(mix: mix.toInheritable(), children: children),
+        spec: boxSpec,
+        child: MixedStack(spec: stackSpec, children: children),
       );
     });
   }

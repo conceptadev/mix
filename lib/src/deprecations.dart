@@ -548,8 +548,6 @@ final textBaseline = text.style.textBaseline;
 @Deprecated('Use borderRadius.circular instead')
 final squared = borderRadius.zero;
 
-
-
 // flexDirection
 @Deprecated('Use flexDirection instead')
 final flexDirection = flex.direction;
