@@ -39,20 +39,20 @@ abstract class StyledWidget extends StatelessWidget {
 
   /// Applies a mix of inherited and local styles to the widget.
   ///
-  /// Accepts a [BuildContext] and a [MixBuilder]. It computes the final style by
+  /// Accepts a [BuildContext] and a [MixData] builder. It computes the final style by
   /// merging the inherited style with the local style, then applies it to the widget.
   /// This method is typically used in the `build` method of widgets extending
   /// [StyledWidget] to provide the actual styled widget.
   Widget withMix(BuildContext context, Widget Function(MixData mix) builder) {
-    final inheritedMix = inherit ? MixData.inherited(context) : null;
+    final inheritedMix = inherit ? MixProvider.maybeOfInherited(context) : null;
 
-    final mixData = MixData.create(context, style);
+    final mix = style.of(context);
 
-    final mergedMixData = inheritedMix?.merge(mixData) ?? mixData;
+    final mergedMix = inheritedMix?.merge(mix) ?? mix;
 
     return MixProvider(
-      data: mergedMixData,
-      child: applyDecorators(mergedMixData, builder(mergedMixData)),
+      data: mergedMix,
+      child: applyDecorators(mergedMix, builder(mergedMix)),
     );
   }
 
@@ -98,61 +98,17 @@ class StyledWidgetBuilder extends StyledWidget {
   }
 }
 
-/// An abstract widget that applies custom styles with animations.
-///
-/// `AnimatedStyledWidget` extends [StyledWidget] to include animations in the
-/// style application process. This widget is designed to create animated effects
-/// on styles applied to Flutter widgets. It should be extended by more concrete
-/// widgets that implement specific animated styled behaviors.
-@Deprecated('Now you can just use an AnimatedStyle instead')
-abstract class AnimatedStyledWidget extends StyledWidget {
-  /// Creates an animated styled widget.
-  ///
-  /// This constructor initializes the widget with an optional [style], [inherit] flag,
-  /// animation [curve], and a required animation [duration]. The [curve] defines the
-  /// nature of the animation's progression and [duration] specifies the length of time
-  /// the animation will run.
-  ///
-  /// The [style] and [inherit] parameters are passed to the superclass [StyledWidget].
-  /// If [inherit] is true, the widget will merge its style with its nearest [StyledWidget]
-  /// ancestor's style.
-  ///
-  /// The [curve] parameter defaults to [Curves.linear], representing a steady animation
-  /// pace. The [duration] parameter is required and determines how long the animation
-  /// takes to complete.
-  const AnimatedStyledWidget({
+class MixBuilder extends StyledWidget {
+  const MixBuilder({
     super.key,
     super.inherit,
     super.style,
-    this.curve = Curves.linear,
-    required this.duration,
+    required this.builder,
     super.orderOfDecorators = const [],
   });
 
-  /// The curve used for the animation.
-  ///
-  /// Specifies how the animation speed transitions over the course of the [duration].
-  /// By default, it's set to [Curves.linear], indicating a uniform animation speed.
-  /// Custom curves can be provided to create different animation effects.
-  final Curve curve;
-
-  /// The duration of the animation.
-  ///
-  /// Determines the total time it takes for the animation to complete from start to end.
-  /// This duration is essential to control the speed and responsiveness of the animation.
-  final Duration duration;
-
-  // Note: The build method will be implemented in subclasses, where the animation logic
-  // will be applied based on the provided style, curve, and duration.
+  final Widget Function(MixData) builder;
 
   @override
-  Widget applyDecorators(MixData mix, Widget child) {
-    return RenderAnimatedDecorators(
-      mix: mix,
-      orderOfDecorators: orderOfDecorators,
-      duration: duration,
-      curve: curve,
-      child: child,
-    );
-  }
+  Widget build(BuildContext context) => withMix(context, builder);
 }

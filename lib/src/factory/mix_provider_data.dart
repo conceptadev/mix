@@ -7,7 +7,6 @@ import '../core/attributes_map.dart';
 import '../helpers/compare_mixin.dart';
 import '../theme/token_resolver.dart';
 import '../widgets/pressable/pressable_util.dart';
-import 'mix_provider.dart';
 import 'style_mix.dart';
 
 /// This class is used for encapsulating all [MixData] related operations.
@@ -44,13 +43,6 @@ class MixData with Comparable {
     );
   }
 
-  @internal
-  static MixData? inherited(BuildContext context) {
-    final inheritedMix = MixProvider.maybeOf(context);
-
-    return inheritedMix?.toInheritable();
-  }
-
   /// Alias for animation.isAnimated
   bool get isAnimated => animation != null;
 
@@ -71,11 +63,7 @@ class MixData with Comparable {
       (attr) => attr.isInheritable,
     );
 
-    return MixData._(
-      resolver: _tokenResolver,
-      attributes: AttributeMap(inheritableAttributes),
-      animation: animation,
-    );
+    return copyWith(attributes: AttributeMap(inheritableAttributes));
   }
 
   /// Finds and returns an [VisualAttribute] of type [A], or null if not found.
@@ -106,6 +94,18 @@ class MixData with Comparable {
       resolver: _tokenResolver,
       attributes: _attributes.merge(other._attributes),
       animation: other.animation ?? animation,
+    );
+  }
+
+  MixData copyWith({
+    AttributeMap? attributes,
+    AnimatedData? animation,
+    MixTokenResolver? resolver,
+  }) {
+    return MixData._(
+      resolver: resolver ?? _tokenResolver,
+      attributes: attributes ?? _attributes,
+      animation: animation ?? this.animation,
     );
   }
 

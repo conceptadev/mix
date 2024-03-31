@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../core/styled_widget.dart';
-import '../../factory/mix_provider_data.dart';
 import 'text_spec.dart';
 
 /// [StyledText] - A styled widget for displaying text with a mix of styles.
@@ -51,18 +50,20 @@ class StyledText extends StyledWidget {
   @override
   Widget build(BuildContext context) {
     return withMix(context, (mix) {
+      final spec = TextSpec.of(mix);
+
       return mix.isAnimated
           ? AnimatedMixedText(
               text: text,
-              mix: mix,
-              curve: mix.animation!.curve,
-              duration: mix.animation!.duration,
+              spec: spec,
               semanticsLabel: semanticsLabel,
               locale: locale,
+              duration: mix.animation!.duration,
+              curve: mix.animation!.curve,
             )
           : MixedText(
               text: text,
-              mix: mix,
+              spec: spec,
               semanticsLabel: semanticsLabel,
               locale: locale,
             );
@@ -70,23 +71,10 @@ class StyledText extends StyledWidget {
   }
 }
 
-/// [MixedText] - A StatelessWidget for rendering text with styling defined in [MixData].
-///
-/// This widget applies the styling rules from `MixData` to a [Text] widget. It is
-/// used internally by [StyledText] to render text according to the specified styles.
-/// It offers granular control over various text properties like style, alignment,
-/// direction, and more, based on the attributes defined in the `MixData`.
-///
-/// Parameters:
-///   - [text]: The text string to display.
-///   - [mix]: The `MixData` representing the current styling context.
-///   - [semanticsLabel]: An optional semantics label for the text.
-///   - [locale]: The locale used for the text.
-///   - [key]: The key for the widget.
 class MixedText extends StatelessWidget {
   const MixedText({
     required this.text,
-    required this.mix,
+    required this.spec,
     this.semanticsLabel,
     this.locale,
     super.key,
@@ -95,13 +83,10 @@ class MixedText extends StatelessWidget {
   final String text;
   final String? semanticsLabel;
   final Locale? locale;
-  final MixData mix;
+  final TextSpec spec;
 
   @override
   Widget build(BuildContext context) {
-    // Resolve the TextSpec for styling properties.
-    final spec = TextSpec.of(mix);
-
     // The Text widget is used here, applying the resolved styles and properties from TextSpec.
     return Text(
       spec.directive?.apply(text) ?? text,
@@ -121,39 +106,8 @@ class MixedText extends StatelessWidget {
   }
 }
 
-class AnimatedMixedText extends StatelessWidget {
+class AnimatedMixedText extends ImplicitlyAnimatedWidget {
   const AnimatedMixedText({
-    required this.text,
-    required this.mix,
-    required this.curve,
-    required this.duration,
-    this.semanticsLabel,
-    this.locale,
-    super.key,
-  });
-
-  final String text;
-  final String? semanticsLabel;
-  final Locale? locale;
-  final MixData mix;
-  final Curve curve;
-  final Duration duration;
-
-  @override
-  Widget build(BuildContext context) {
-    final spec = TextSpec.of(mix);
-
-    return ImplicitlyMixedText(
-      text: text,
-      spec: spec,
-      semanticsLabel: semanticsLabel,
-      duration: duration,
-    );
-  }
-}
-
-class ImplicitlyMixedText extends ImplicitlyAnimatedWidget {
-  const ImplicitlyMixedText({
     required this.text,
     required this.spec,
     this.semanticsLabel,
@@ -169,12 +123,12 @@ class ImplicitlyMixedText extends ImplicitlyAnimatedWidget {
   final TextSpec spec;
 
   @override
-  AnimatedWidgetBaseState<ImplicitlyMixedText> createState() =>
-      _ImplicitlyMixedTextState();
+  AnimatedWidgetBaseState<AnimatedMixedText> createState() =>
+      _AnimatedMixedTextState();
 }
 
-class _ImplicitlyMixedTextState
-    extends AnimatedWidgetBaseState<ImplicitlyMixedText> {
+class _AnimatedMixedTextState
+    extends AnimatedWidgetBaseState<AnimatedMixedText> {
   TextSpecTween? _textSpecTween;
 
   @override
@@ -208,12 +162,4 @@ class _ImplicitlyMixedTextState
       textHeightBehavior: spec.textHeightBehavior,
     );
   }
-}
-
-class TextSpecTween extends Tween<TextSpec> {
-  TextSpecTween({TextSpec? begin, TextSpec? end})
-      : super(begin: begin, end: end);
-
-  @override
-  TextSpec lerp(double t) => begin!.lerp(end, t);
 }

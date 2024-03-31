@@ -4,8 +4,8 @@ import 'package:flutter/widgets.dart';
 
 import '../../core/styled_widget.dart';
 import '../../deprecations.dart';
-import '../../factory/mix_provider_data.dart';
 import '../../factory/style_mix.dart';
+import '../container/box_spec.dart';
 import '../container/box_widget.dart';
 import 'flex_spec.dart';
 
@@ -43,7 +43,9 @@ class StyledFlex extends StyledWidget {
   @override
   Widget build(BuildContext context) {
     return withMix(context, (mix) {
-      return MixedFlex(mix: mix, direction: direction, children: children);
+      final spec = FlexSpec.of(mix);
+
+      return MixedFlex(spec: spec, direction: direction, children: children);
     });
   }
 }
@@ -51,14 +53,14 @@ class StyledFlex extends StyledWidget {
 class MixedFlex extends StatelessWidget {
   const MixedFlex({
     super.key,
-    required this.mix,
+    required this.spec,
     required this.children,
     required this.direction,
   });
 
   final List<Widget> children;
   final Axis direction;
-  final MixData mix;
+  final FlexSpec spec;
 
   List<Widget> _buildChildren(double? gap) {
     if (gap == null) return children;
@@ -74,7 +76,6 @@ class MixedFlex extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final spec = FlexSpec.of(mix);
     final gap = spec.gap;
 
     return Flex(
@@ -175,13 +176,12 @@ class FlexBox extends StyledWidget {
   @override
   Widget build(BuildContext context) {
     return withMix(context, (mix) {
+      final box = BoxSpec.of(mix);
+      final flex = FlexSpec.of(mix);
+
       return MixedBox(
-        mix: mix,
-        child: MixedFlex(
-          mix: mix.toInheritable(),
-          direction: direction,
-          children: children,
-        ),
+        spec: box,
+        child: MixedFlex(spec: flex, direction: direction, children: children),
       );
     });
   }

@@ -51,7 +51,7 @@ class PressableState extends InheritedModel<PressableStateAspect> {
     PressableStateAspect? aspect,
   ]) {
     final PressableState? result = maybeOf(context, aspect);
-    assert(result != null, 'Unable to find an instance of MyModel...');
+    assert(result != null, 'Unable to find an instance of PressableState...');
 
     return result!;
   }
