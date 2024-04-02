@@ -10,22 +10,22 @@ import 'pressable_state.dart';
 /// Global context variants for handling common widget states and gestures.
 
 /// Applies styles when the widget is pressed.
-final onPressed = PressableStateVariant(
+final onPressed = ContextVariant(
   (context) => PressableState.pressedOf(context),
 );
 
 /// Applies styles when the widget is long pressed.
-final onLongPressed = PressableStateVariant(
+final onLongPressed = ContextVariant(
   (context) => PressableState.longPressedOf(context),
 );
 
 /// Applies styles when widget is hovered over.
-final onHover = PressableStateVariant(
+final onHover = ContextVariant(
   (context) => PressableState.hoveredOf(context),
 );
 
 /// Applies styles when the widget is disabled.
-final onEnabled = PressableStateVariant(
+final onEnabled = ContextVariant(
   (context) => PressableState.enabledOf(context),
 );
 
@@ -35,7 +35,7 @@ final onDisabled = onNot(onEnabled);
 const onMouseHover = OnMouseHoverBuilder.new;
 
 /// Applies styles when the widget has focus.dar
-const onFocused = PressableStateVariant(PressableState.focusedOf);
+const onFocused = ContextVariant(PressableState.focusedOf);
 
 const onPressedEvent = OnPressedEventBuilder.new;
 const onLongPressedEvent = OnLongPressedEventBuilder.new;
@@ -43,12 +43,6 @@ const onHoverEvent = OnHoverEventBuilder.new;
 const onEnabledEvent = OnEnabledEventBuilder.new;
 const onDisabledEvent = OnDisabledEventBuilder.new;
 const onFocusedEvent = OnFocusedEventBuilder.new;
-
-/// Helper class for creating widget state-based context variants.
-@immutable
-class PressableStateVariant extends ContextVariant {
-  const PressableStateVariant(super.when);
-}
 
 @immutable
 class OnDisabledEventBuilder

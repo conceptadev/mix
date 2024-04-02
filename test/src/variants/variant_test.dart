@@ -86,8 +86,8 @@ void main() {
       test(
           'MultiVariant.or with 2 PressableStateVariant (false & false) should return true',
           () {
-        final variant1 = PressableStateVariant((context) => false);
-        final variant2 = PressableStateVariant((context) => false);
+        final variant1 = ContextVariant((context) => false);
+        final variant2 = ContextVariant((context) => false);
         final multiVariant = MultiVariant.or([variant1, variant2]);
 
         final expectValue = multiVariant.when(MockBuildContext());
@@ -99,8 +99,8 @@ void main() {
       test(
           'MultiVariant.or with 2 PressableStateVariant (false & true) should return true',
           () {
-        final variant1 = PressableStateVariant((context) => false);
-        final variant2 = PressableStateVariant((context) => true);
+        final variant1 = ContextVariant((context) => false);
+        final variant2 = ContextVariant((context) => true);
         final multiVariant = MultiVariant.or([variant1, variant2]);
 
         final expectValue = multiVariant.when(MockBuildContext());
@@ -112,8 +112,8 @@ void main() {
       test(
           'MultiVariant.or with 2 PressableStateVariant (true & true) should return true',
           () {
-        final variant1 = PressableStateVariant((context) => true);
-        final variant2 = PressableStateVariant((context) => true);
+        final variant1 = ContextVariant((context) => true);
+        final variant2 = ContextVariant((context) => true);
         final multiVariant = MultiVariant.or([variant1, variant2]);
 
         final expectValue = multiVariant.when(MockBuildContext());
@@ -123,10 +123,10 @@ void main() {
       });
 
       test(
-          'MultiVariant.and with 2 PressableStateVariant (false & false) should return false',
+          'MultiVariant.and with 2 ContextVariant (false & false) should return false',
           () {
-        final variant1 = PressableStateVariant((context) => false);
-        final variant2 = PressableStateVariant((context) => false);
+        final variant1 = ContextVariant((context) => false);
+        final variant2 = ContextVariant((context) => false);
         final multiVariant = MultiVariant.and([variant1, variant2]);
 
         final expectValue = multiVariant.when(MockBuildContext());
@@ -136,10 +136,10 @@ void main() {
       });
 
       test(
-          'MultiVariant.and with 2 PressableStateVariant (false & true) should return false',
+          'MultiVariant.and with 2 ContextVariant (false & true) should return false',
           () {
-        final variant1 = PressableStateVariant((context) => false);
-        final variant2 = PressableStateVariant((context) => true);
+        final variant1 = ContextVariant((context) => false);
+        final variant2 = ContextVariant((context) => true);
         final multiVariant = MultiVariant.and([variant1, variant2]);
 
         final expectValue = multiVariant.when(MockBuildContext());
@@ -149,10 +149,10 @@ void main() {
       });
 
       test(
-          'MultiVariant.and with 2 PressableStateVariant (true & true) should return true',
+          'MultiVariant.and with 2 ContextVariant (true & true) should return true',
           () {
-        final variant1 = PressableStateVariant((context) => true);
-        final variant2 = PressableStateVariant((context) => true);
+        final variant1 = ContextVariant((context) => true);
+        final variant2 = ContextVariant((context) => true);
         final multiVariant = MultiVariant.and([variant1, variant2]);
 
         final expectValue = multiVariant.when(MockBuildContext());
@@ -161,7 +161,7 @@ void main() {
         expect(multiVariant.operatorType, MultiVariantOperator.and);
       });
 
-      test('Mv.or(v1, Mv.or(v2,v3)) with 3 PressableStateVariant', () {
+      test('Mv.or(v1, Mv.or(v2,v3)) with 3 ContextVariant', () {
         void testCase({
           required bool v1,
           required bool v2,
@@ -192,7 +192,7 @@ void main() {
         testCase(v1: false, v2: false, v3: false, expected: isFalse);
       });
 
-      test('Mv.and(v1, Mv.and(v2,v3)) with 3 PressableStateVariant', () {
+      test('Mv.and(v1, Mv.and(v2,v3)) with 3 ContextVariant', () {
         void testCase({
           required bool v1,
           required bool v2,
@@ -223,7 +223,7 @@ void main() {
         testCase(v1: false, v2: false, v3: false, expected: isFalse);
       });
 
-      test('Mv.or(v1, Mv.and(v2,v3)) with 3 PressableStateVariant', () {
+      test('Mv.or(v1, Mv.and(v2,v3)) with 3 ContextVariant', () {
         void testCase({
           required bool v1,
           required bool v2,
@@ -254,7 +254,7 @@ void main() {
         testCase(v1: false, v2: false, v3: false, expected: isFalse);
       });
 
-      test('Mv.and(v1, Mv.or(v2,v3)) with 3 PressableStateVariant', () {
+      test('Mv.and(v1, Mv.or(v2,v3)) with 3 ContextVariant', () {
         void testCase({
           required bool v1,
           required bool v2,
@@ -301,9 +301,9 @@ void _testWhenWithThreeVariants({
   required _ConditionBuilder condition,
   required Matcher expectedValue,
 }) {
-  final variant1 = PressableStateVariant((context) => v1);
-  final variant2 = PressableStateVariant((context) => v2);
-  final variant3 = PressableStateVariant((context) => v3);
+  final variant1 = ContextVariant((context) => v1);
+  final variant2 = ContextVariant((context) => v2);
+  final variant3 = ContextVariant((context) => v3);
 
   final multiVariant = condition(variant1, variant2, variant3);
 
