@@ -5,6 +5,7 @@ import '../attributes/variant_attribute.dart';
 import '../core/attribute.dart';
 import '../core/attributes_map.dart';
 import '../helpers/compare_mixin.dart';
+import '../helpers/constants.dart';
 import '../theme/token_resolver.dart';
 import '../widgets/pressable/pressable_util.dart';
 import 'style_mix.dart';
@@ -187,7 +188,7 @@ class AnimatedData with Comparable {
 
   factory AnimatedData.withDefaults({Duration? duration, Curve? curve}) {
     return AnimatedData(
-      duration: duration ?? const Duration(milliseconds: 150),
+      duration: duration ?? kDefaultAnimationDuration,
       curve: curve ?? Curves.linear,
     );
   }

@@ -44,17 +44,17 @@ class IconSpec extends Spec<IconSpec> {
   }
 
   @override
-  IconSpec lerp(IconSpec other, double t) {
+  IconSpec lerp(IconSpec? other, double t) {
     return IconSpec(
-      color: Color.lerp(color, other.color, t),
-      size: lerpDouble(size, other.size, t),
-      weight: lerpDouble(weight, other.weight, t),
-      grade: lerpDouble(grade, other.grade, t),
-      opticalSize: lerpDouble(opticalSize, other.opticalSize, t),
-      shadows: Shadow.lerpList(shadows, other.shadows, t),
+      color: Color.lerp(color, other?.color, t),
+      size: lerpDouble(size, other?.size, t),
+      weight: lerpDouble(weight, other?.weight, t),
+      grade: lerpDouble(grade, other?.grade, t),
+      opticalSize: lerpDouble(opticalSize, other?.opticalSize, t),
+      shadows: Shadow.lerpList(shadows, other?.shadows, t),
       textDirection: textDirection,
       applyTextScaling: applyTextScaling,
-      fill: lerpDouble(fill, other.fill, t),
+      fill: lerpDouble(fill, other?.fill, t),
     );
   }
 
