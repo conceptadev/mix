@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../../core/styled_widget.dart';
 import '../../deprecations.dart';
 import '../../factory/mix_provider.dart';
-import '../../helpers/constants.dart';
 import 'box_spec.dart';
 
 typedef StyledContainer = Box;
@@ -100,7 +99,7 @@ class AnimatedMixedBox extends ImplicitlyAnimatedWidget {
     required this.spec,
     super.key,
     this.child,
-    super.duration = kDefaultAnimationDuration,
+    required super.duration,
     super.curve = Curves.linear,
     super.onEnd,
   });
