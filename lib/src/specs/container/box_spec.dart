@@ -84,26 +84,30 @@ class BoxSpec extends Spec<BoxSpec> {
 
   @override
   BoxSpec lerp(BoxSpec? other, double t) {
+    if (other == null) return this;
+
     return BoxSpec(
-      alignment: AlignmentGeometry.lerp(alignment, other?.alignment, t),
-      padding: EdgeInsetsGeometry.lerp(padding, other?.padding, t),
-      margin: EdgeInsetsGeometry.lerp(margin, other?.margin, t),
-      constraints: BoxConstraints.lerp(constraints, other?.constraints, t),
-      decoration: Decoration.lerp(decoration, other?.decoration, t),
+      alignment: AlignmentGeometry.lerp(alignment, other.alignment, t),
+      padding: EdgeInsetsGeometry.lerp(padding, other.padding, t),
+      margin: EdgeInsetsGeometry.lerp(margin, other.margin, t),
+      constraints: BoxConstraints.lerp(constraints, other.constraints, t),
+      decoration: Decoration.lerp(decoration, other.decoration, t),
       foregroundDecoration: Decoration.lerp(
         foregroundDecoration,
-        other?.foregroundDecoration,
+        other.foregroundDecoration,
         t,
       ),
-      transform: Matrix4Tween(begin: transform, end: other?.transform).lerp(t),
+      transform: transform != null && other.transform != null
+          ? Matrix4Tween(begin: transform, end: other.transform).lerp(t)
+          : lerpSnap(transform, other.transform, t),
       transformAlignment: AlignmentGeometry.lerp(
         transformAlignment,
-        other?.transformAlignment,
+        other.transformAlignment,
         t,
       ),
-      clipBehavior: lerpSnap(clipBehavior, other?.clipBehavior, t),
-      width: lerpDouble(width, other?.width, t),
-      height: lerpDouble(height, other?.height, t),
+      clipBehavior: lerpSnap(clipBehavior, other.clipBehavior, t),
+      width: lerpDouble(width, other.width, t),
+      height: lerpDouble(height, other.height, t),
     );
   }
 
@@ -123,7 +127,7 @@ class BoxSpec extends Spec<BoxSpec> {
       ];
 }
 
-class BoxSpecTween extends Tween<BoxSpec> {
+class BoxSpecTween extends Tween<BoxSpec?> {
   BoxSpecTween({super.begin, super.end});
 
   @override

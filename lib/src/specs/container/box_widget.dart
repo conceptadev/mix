@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../core/styled_widget.dart';
 import '../../deprecations.dart';
 import '../../factory/mix_provider.dart';
+import '../../helpers/constants.dart';
 import 'box_spec.dart';
 
 typedef StyledContainer = Box;
@@ -55,16 +56,16 @@ class Box extends StyledWidget {
     // This method uses `withMix` to get the `MixData` and then applies it to `MixedBox`,
     // effectively styling the [child].
     return withMix(context, (mix) {
-      final style = BoxSpec.of(mix);
+      final spec = BoxSpec.of(mix);
 
       return mix.isAnimated
           ? AnimatedMixedBox(
-              style: style,
+              spec: spec,
               duration: mix.animation!.duration,
               curve: mix.animation!.curve,
               child: child,
             )
-          : MixedBox(spec: style, child: child);
+          : MixedBox(spec: spec, child: child);
     });
   }
 }
@@ -96,16 +97,16 @@ class MixedBox extends StatelessWidget {
 
 class AnimatedMixedBox extends ImplicitlyAnimatedWidget {
   const AnimatedMixedBox({
-    required this.style,
+    required this.spec,
     super.key,
     this.child,
-    required super.duration,
+    super.duration = kDefaultAnimationDuration,
     super.curve = Curves.linear,
     super.onEnd,
   });
 
   final Widget? child;
-  final BoxSpec style;
+  final BoxSpec spec;
 
   @override
   AnimatedWidgetBaseState<AnimatedMixedBox> createState() =>
@@ -121,9 +122,9 @@ class _AnimatedBoxSpecWidgetState
   void forEachTween(TweenVisitor<dynamic> visitor) {
     _boxSpec = visitor(
       _boxSpec,
-      widget.style,
+      widget.spec,
       // ignore: avoid-dynamic
-      (dynamic value) => BoxSpecTween(begin: value as BoxSpec),
+      (dynamic value) => BoxSpecTween(begin: value as BoxSpec?),
     ) as BoxSpecTween?;
   }
 

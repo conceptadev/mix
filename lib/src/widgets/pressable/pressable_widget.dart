@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import '../../factory/style_mix.dart';
+import '../../helpers/constants.dart';
 import '../../specs/container/box_widget.dart';
 import '../../utils/custom_focusable_action_detector.dart';
 import 'pressable_state.dart';
@@ -21,7 +22,7 @@ class PressableBox extends StatelessWidget {
     @Deprecated('Use hitTestBehavior instead') HitTestBehavior? behavior,
     this.hitTestBehavior,
     @Deprecated('Use AnimatedStyle instead')
-    this.animationDuration = const Duration(milliseconds: 125),
+    this.animationDuration = kDefaultAnimationDuration,
     @Deprecated('Use AnimatedStyle instead')
     this.animationCurve = Curves.linear,
     this.disabled = false,
@@ -94,7 +95,7 @@ class Pressable extends _PressableBuilderWidget {
           onPress: onPress ?? onPressed,
           hitTestBehavior:
               hitTestBehavior ?? behavior ?? HitTestBehavior.opaque,
-          unpressDelay: unpressDelay ?? const Duration(milliseconds: 150),
+          unpressDelay: unpressDelay ?? kDefaultAnimationDuration,
         );
 
   @override
