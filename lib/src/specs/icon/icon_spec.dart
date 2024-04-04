@@ -1,5 +1,7 @@
 import 'dart:ui';
 
+import 'package:flutter/material.dart';
+
 import '../../core/attribute.dart';
 import '../../factory/mix_provider_data.dart';
 import 'icon_attribute.dart';
@@ -96,4 +98,12 @@ class IconSpec extends Spec<IconSpec> {
         applyTextScaling,
         fill,
       ];
+}
+
+class IconSpecTween extends Tween<IconSpec> {
+  IconSpecTween({IconSpec? begin, IconSpec? end})
+      : super(begin: begin, end: end);
+
+  @override
+  IconSpec lerp(double t) => begin!.lerp(end, t);
 }

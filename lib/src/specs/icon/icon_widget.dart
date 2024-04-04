@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../core/styled_widget.dart';
-import '../../factory/mix_provider.dart';
-import '../../factory/mix_provider_data.dart';
 import 'icon_spec.dart';
 
 class StyledIcon extends StyledWidget {
@@ -23,11 +21,23 @@ class StyledIcon extends StyledWidget {
   @override
   Widget build(BuildContext context) {
     return withMix(context, (mix) {
-      return MixedIcon(
-        icon,
-        semanticLabel: semanticLabel,
-        textDirection: textDirection,
-      );
+      final spec = IconSpec.of(mix);
+
+      return mix.isAnimated
+          ? AnimatedMixedIcon(
+              icon: icon,
+              spec: spec,
+              semanticLabel: semanticLabel,
+              textDirection: textDirection,
+              curve: mix.animation!.curve,
+              duration: mix.animation!.duration,
+            )
+          : MixedIcon(
+              icon,
+              spec: spec,
+              semanticLabel: semanticLabel,
+              textDirection: textDirection,
+            );
     });
   }
 }
@@ -35,7 +45,7 @@ class StyledIcon extends StyledWidget {
 class MixedIcon extends StatelessWidget {
   const MixedIcon(
     this.icon, {
-    this.mix,
+    this.spec,
     this.semanticLabel,
     super.key,
     this.textDirection,
@@ -43,25 +53,22 @@ class MixedIcon extends StatelessWidget {
   });
 
   final IconData? icon;
-  final MixData? mix;
+  final IconSpec? spec;
   final String? semanticLabel;
   final TextDirection? textDirection;
   final List<Type> decoratorOrder;
 
   @override
   Widget build(BuildContext context) {
-    final mix = this.mix ?? MixProvider.of(context);
-    final spec = IconSpec.of(mix);
-
     return Icon(
       icon,
-      size: spec.size,
-      fill: spec.fill,
-      weight: spec.weight,
-      grade: spec.grade,
-      opticalSize: spec.opticalSize,
-      color: spec.color,
-      shadows: spec.shadows,
+      size: spec?.size,
+      fill: spec?.fill,
+      weight: spec?.weight,
+      grade: spec?.grade,
+      opticalSize: spec?.opticalSize,
+      color: spec?.color,
+      shadows: spec?.shadows,
       semanticLabel: semanticLabel,
       textDirection: textDirection,
     );
@@ -99,5 +106,57 @@ class AnimatedStyledIcon extends StyledWidget {
         textDirection: textDirection,
       );
     });
+  }
+}
+
+class AnimatedMixedIcon extends ImplicitlyAnimatedWidget {
+  const AnimatedMixedIcon({
+    required this.icon,
+    required this.spec,
+    super.key,
+    this.semanticLabel,
+    this.textDirection,
+    this.decoratorOrder = const [],
+    Curve curve = Curves.linear,
+    required Duration duration,
+    VoidCallback? onEnd,
+  }) : super(curve: curve, duration: duration, onEnd: onEnd);
+
+  final IconData? icon;
+  final IconSpec spec;
+  final String? semanticLabel;
+  final TextDirection? textDirection;
+  final List<Type> decoratorOrder;
+
+  @override
+  // ignore: library_private_types_in_public_api
+  _AnimatedMixedIconState createState() => _AnimatedMixedIconState();
+}
+
+class _AnimatedMixedIconState
+    extends AnimatedWidgetBaseState<AnimatedMixedIcon> {
+  IconSpecTween? _spec;
+
+  @override
+  // ignore: avoid-dynamic
+  void forEachTween(TweenVisitor<dynamic> visitor) {
+    _spec = visitor(
+      _spec,
+      widget.spec,
+      // ignore: avoid-dynamic
+      (dynamic value) => IconSpecTween(begin: value as IconSpec?),
+    ) as IconSpecTween?;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final spec = _spec?.evaluate(animation);
+
+    return MixedIcon(
+      widget.icon,
+      spec: spec,
+      semanticLabel: widget.semanticLabel,
+      textDirection: widget.textDirection,
+    );
   }
 }
