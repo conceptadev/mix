@@ -40,19 +40,19 @@ class StyledStack extends StyledWidget {
 }
 
 class MixedStack extends StatelessWidget {
-  const MixedStack({required this.spec, super.key, this.children});
+  const MixedStack({this.spec, super.key, this.children});
 
   final List<Widget>? children;
-  final StackSpec spec;
+  final StackSpec? spec;
 
   @override
   Widget build(BuildContext context) {
     // The Stack widget is used here, applying the resolved styles from StackSpec.
     return Stack(
-      alignment: spec.alignment ?? _defaultStack.alignment,
-      textDirection: spec.textDirection,
-      fit: spec.fit ?? _defaultStack.fit,
-      clipBehavior: spec.clipBehavior ?? _defaultStack.clipBehavior,
+      alignment: spec?.alignment ?? _defaultStack.alignment,
+      textDirection: spec?.textDirection,
+      fit: spec?.fit ?? _defaultStack.fit,
+      clipBehavior: spec?.clipBehavior ?? _defaultStack.clipBehavior,
       children: children ?? const [],
     );
   }

@@ -109,7 +109,7 @@ class MixedText extends StatelessWidget {
 class AnimatedMixedText extends ImplicitlyAnimatedWidget {
   const AnimatedMixedText({
     required this.text,
-    required this.spec,
+    this.spec,
     this.semanticsLabel,
     this.locale,
     super.key,
@@ -120,7 +120,7 @@ class AnimatedMixedText extends ImplicitlyAnimatedWidget {
   final String text;
   final String? semanticsLabel;
   final Locale? locale;
-  final TextSpec spec;
+  final TextSpec? spec;
 
   @override
   AnimatedWidgetBaseState<AnimatedMixedText> createState() =>
@@ -146,20 +146,11 @@ class _AnimatedMixedTextState
   Widget build(BuildContext context) {
     final spec = _textSpecTween!.evaluate(animation);
 
-    return Text(
-      spec.directive?.apply(widget.text) ?? widget.text,
-      style: spec.style,
-      strutStyle: spec.strutStyle,
-      textAlign: spec.textAlign,
-      textDirection: spec.textDirection,
-      locale: widget.locale,
-      softWrap: spec.softWrap,
-      overflow: spec.overflow,
-      textScaleFactor: spec.textScaleFactor,
-      maxLines: spec.maxLines,
+    return MixedText(
+      text: widget.text,
+      spec: spec,
       semanticsLabel: widget.semanticsLabel,
-      textWidthBasis: spec.textWidthBasis,
-      textHeightBehavior: spec.textHeightBehavior,
+      locale: widget.locale,
     );
   }
 }

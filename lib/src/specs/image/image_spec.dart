@@ -101,3 +101,11 @@ class ImageSpec extends Spec<ImageSpec> {
         colorBlendMode,
       ];
 }
+
+class ImageSpecTween extends Tween<ImageSpec> {
+  ImageSpecTween({ImageSpec? begin, ImageSpec? end})
+      : super(begin: begin, end: end);
+
+  @override
+  ImageSpec lerp(double t) => begin!.lerp(end, t);
+}

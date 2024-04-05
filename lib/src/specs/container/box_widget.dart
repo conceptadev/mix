@@ -73,22 +73,22 @@ class MixedBox extends StatelessWidget {
   const MixedBox({required this.spec, super.key, this.child});
 
   final Widget? child;
-  final BoxSpec spec;
+  final BoxSpec? spec;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      alignment: spec.alignment,
-      padding: spec.padding,
-      decoration: spec.decoration,
-      foregroundDecoration: spec.foregroundDecoration,
-      width: spec.width,
-      height: spec.height,
-      constraints: spec.constraints,
-      margin: spec.margin,
-      transform: spec.transform,
-      transformAlignment: spec.transformAlignment,
-      clipBehavior: spec.clipBehavior ?? Clip.none,
+      alignment: spec?.alignment,
+      padding: spec?.padding,
+      decoration: spec?.decoration,
+      foregroundDecoration: spec?.foregroundDecoration,
+      width: spec?.width,
+      height: spec?.height,
+      constraints: spec?.constraints,
+      margin: spec?.margin,
+      transform: spec?.transform,
+      transformAlignment: spec?.transformAlignment,
+      clipBehavior: spec?.clipBehavior ?? Clip.none,
       child: child,
     );
   }
@@ -131,19 +131,6 @@ class _AnimatedBoxSpecWidgetState
   Widget build(BuildContext context) {
     final spec = _boxSpec?.evaluate(animation);
 
-    return Container(
-      alignment: spec?.alignment,
-      padding: spec?.padding,
-      decoration: spec?.decoration,
-      foregroundDecoration: spec?.foregroundDecoration,
-      width: spec?.width,
-      height: spec?.height,
-      constraints: spec?.constraints,
-      margin: spec?.margin,
-      transform: spec?.transform,
-      transformAlignment: spec?.transformAlignment,
-      clipBehavior: spec?.clipBehavior ?? Clip.none,
-      child: widget.child,
-    );
+    return MixedBox(spec: spec, child: widget.child);
   }
 }
