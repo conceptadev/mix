@@ -1,3 +1,9 @@
+## 1.0.0-beta.12
+
+* Chore/consolidated spec widgets by @leoafarias
+* Fix box, and default animation by @leoafarias
+* Finished widget spec implementations by @leoafarias
+
 ## 1.0.0-beta.11
 
 * Removed SpacingDto all method by @leoafarias
