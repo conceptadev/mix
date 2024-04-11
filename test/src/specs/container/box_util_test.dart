@@ -15,7 +15,7 @@ void main() {
 
       const spacing = SpacingDto.only(top: 10, bottom: 10, left: 10, right: 10);
 
-      final container = boxUtility.only(
+      final container = boxUtility.call(
         alignment: Alignment.center,
         padding: spacing,
         margin: spacing,

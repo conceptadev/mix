@@ -298,27 +298,27 @@ class BoxSpecUtility<T extends SpecAttribute>
 
   BoxDecorationUtility<T> get decoration {
     return BoxDecorationUtility(
-      (decoration) => only(decoration: decoration),
+      (decoration) => call(decoration: decoration),
     );
   }
 
   BoxDecorationUtility<T> get foregroundDecoration {
     return BoxDecorationUtility(
       (foregroundDecoration) =>
-          only(foregroundDecoration: foregroundDecoration),
+          call(foregroundDecoration: foregroundDecoration),
     );
   }
 
   AlignmentUtility<T> get alignment {
-    return AlignmentUtility((alignment) => only(alignment: alignment));
+    return AlignmentUtility((alignment) => call(alignment: alignment));
   }
 
   SpacingUtility<T> get padding {
-    return SpacingUtility((padding) => only(padding: padding));
+    return SpacingUtility((padding) => call(padding: padding));
   }
 
   SpacingUtility<T> get margin {
-    return SpacingUtility((margin) => only(margin: margin));
+    return SpacingUtility((margin) => call(margin: margin));
   }
 
   // We use BoxDecoration for better Decoration support to avoid weird issues
@@ -329,26 +329,26 @@ class BoxSpecUtility<T extends SpecAttribute>
   GradientUtility<T> get gradient => decoration.gradient;
 
   ShapeDecorationUtility<T> get shapeDecoration =>
-      ShapeDecorationUtility((decoration) => only(decoration: decoration));
+      ShapeDecorationUtility((decoration) => call(decoration: decoration));
 
   BoxConstraintsUtility<T> get constraints {
     return BoxConstraintsUtility(
-      (constraints) => only(constraints: constraints),
+      (constraints) => call(constraints: constraints),
     );
   }
 
   Matrix4Utility<T> get transform {
-    return Matrix4Utility((transform) => only(transform: transform));
+    return Matrix4Utility((transform) => call(transform: transform));
   }
 
   AlignmentUtility<T> get transformAlignment {
     return AlignmentUtility(
-      (transformAlignment) => only(alignment: transformAlignment),
+      (transformAlignment) => call(alignment: transformAlignment),
     );
   }
 
   ClipUtility<T> get clipBehavior {
-    return ClipUtility((clipBehavior) => only(clipBehavior: clipBehavior));
+    return ClipUtility((clipBehavior) => call(clipBehavior: clipBehavior));
   }
 
   BorderRadiusGeometryUtility<T> get borderRadius => decoration.borderRadius;
@@ -374,13 +374,13 @@ class BoxSpecUtility<T extends SpecAttribute>
 
   DoubleUtility<T> get minHeight => constraints.minHeight;
 
-  DoubleUtility<T> get width => DoubleUtility((width) => only(width: width));
+  DoubleUtility<T> get width => DoubleUtility((width) => call(width: width));
 
   DoubleUtility<T> get height =>
-      DoubleUtility((height) => only(height: height));
+      DoubleUtility((height) => call(height: height));
 
   @override
-  T only({
+  T call({
     AlignmentGeometry? alignment,
     SpacingDto? padding,
     SpacingDto? margin,

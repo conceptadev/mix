@@ -51,8 +51,8 @@ class PressableState extends InheritedModel<PressableStateAspect> {
     PressableStateAspect? aspect,
   ]) {
     final PressableState? result = maybeOf(context, aspect);
-    assert(result != null, 'Unable to find an instance of PressableState...');
-
+    assert(result != null,
+        'No PressableState found in the widget tree. Probably you are trying to use ContextVariant, like `onPressed` or `onHover`, outside of the Pressable widget.');
     return result!;
   }
 

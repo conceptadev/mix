@@ -11,59 +11,59 @@ import '../../core/directive.dart';
 import '../../decorators/widget_decorators_util.dart';
 import 'text_attribute.dart';
 
-const text = TextUtility(selfBuilder);
+const text = TextSpecUtility(selfBuilder);
 
-class TextUtility<T extends SpecAttribute>
+class TextSpecUtility<T extends SpecAttribute>
     extends SpecUtility<T, TextSpecAttribute> {
-  const TextUtility(super.builder);
+  const TextSpecUtility(super.builder);
 
   TextDirectiveUtility<T> get directive =>
-      TextDirectiveUtility((directive) => only(directive: directive));
+      TextDirectiveUtility((directive) => call(directive: directive));
   TextOverflowUtility<T> get overflow {
-    return TextOverflowUtility((overflow) => only(overflow: overflow));
+    return TextOverflowUtility((overflow) => call(overflow: overflow));
   }
 
   StrutStyleUtility<T> get strutStyle {
-    return StrutStyleUtility((strutStyle) => only(strutStyle: strutStyle));
+    return StrutStyleUtility((strutStyle) => call(strutStyle: strutStyle));
   }
 
   TextAlignUtility<T> get textAlign {
-    return TextAlignUtility((textAlign) => only(textAlign: textAlign));
+    return TextAlignUtility((textAlign) => call(textAlign: textAlign));
   }
 
   IntUtility<T> get maxLines {
-    return IntUtility((maxLines) => only(maxLines: maxLines));
+    return IntUtility((maxLines) => call(maxLines: maxLines));
   }
 
   TextStyleUtility<T> get style {
-    return TextStyleUtility((style) => only(style: style));
+    return TextStyleUtility((style) => call(style: style));
   }
 
   TextWidthBasisUtility<T> get textWidthBasis {
     return TextWidthBasisUtility(
-      (textWidthBasis) => only(textWidthBasis: textWidthBasis),
+      (textWidthBasis) => call(textWidthBasis: textWidthBasis),
     );
   }
 
   TextHeightBehaviorUtility<T> get textHeightBehavior {
     return TextHeightBehaviorUtility(
-      (textHeightBehavior) => only(textHeightBehavior: textHeightBehavior),
+      (textHeightBehavior) => call(textHeightBehavior: textHeightBehavior),
     );
   }
 
   TextDirectionUtility<T> get textDirection {
     return TextDirectionUtility(
-      (textDirection) => only(textDirection: textDirection),
+      (textDirection) => call(textDirection: textDirection),
     );
   }
 
   BoolUtility<T> get softWrap {
-    return BoolUtility((softWrap) => only(softWrap: softWrap));
+    return BoolUtility((softWrap) => call(softWrap: softWrap));
   }
 
   DoubleUtility<T> get textScaleFactor {
     return DoubleUtility(
-      (textScaleFactor) => only(textScaleFactor: textScaleFactor),
+      (textScaleFactor) => call(textScaleFactor: textScaleFactor),
     );
   }
 
@@ -74,7 +74,7 @@ class TextUtility<T extends SpecAttribute>
   T sentenceCase() => directive.sentenceCase();
 
   @override
-  T only({
+  T call({
     TextOverflow? overflow,
     StrutStyleDto? strutStyle,
     TextAlign? textAlign,

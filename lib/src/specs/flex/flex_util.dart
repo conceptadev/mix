@@ -25,7 +25,7 @@ class FlexSpecUtility<T extends SpecAttribute>
   ///
   /// Returns an `AxisUtility` to set the axis to horizontal or vertical.
   AxisUtility<T> get direction {
-    return AxisUtility((direction) => only(direction: direction));
+    return AxisUtility((direction) => call(direction: direction));
   }
 
   /// Sets the main axis alignment.
@@ -33,7 +33,7 @@ class FlexSpecUtility<T extends SpecAttribute>
   /// Returns a `MainAxisAlignmentUtility` to set the alignment.
   MainAxisAlignmentUtility<T> get mainAxisAlignment {
     return MainAxisAlignmentUtility(
-      (mainAxisAlignment) => only(mainAxisAlignment: mainAxisAlignment),
+      (mainAxisAlignment) => call(mainAxisAlignment: mainAxisAlignment),
     );
   }
 
@@ -42,7 +42,7 @@ class FlexSpecUtility<T extends SpecAttribute>
   /// Returns a `CrossAxisAlignmentUtility` to set the alignment.
   CrossAxisAlignmentUtility<T> get crossAxisAlignment {
     return CrossAxisAlignmentUtility(
-      (crossAxisAlignment) => only(crossAxisAlignment: crossAxisAlignment),
+      (crossAxisAlignment) => call(crossAxisAlignment: crossAxisAlignment),
     );
   }
 
@@ -51,7 +51,7 @@ class FlexSpecUtility<T extends SpecAttribute>
   /// Returns a `MainAxisSizeUtility` to set the size.
   MainAxisSizeUtility<T> get mainAxisSize {
     return MainAxisSizeUtility(
-      (mainAxisSize) => only(mainAxisSize: mainAxisSize),
+      (mainAxisSize) => call(mainAxisSize: mainAxisSize),
     );
   }
 
@@ -60,7 +60,7 @@ class FlexSpecUtility<T extends SpecAttribute>
   /// Returns a `VerticalDirectionUtility` to set the direction.
   VerticalDirectionUtility<T> get verticalDirection {
     return VerticalDirectionUtility(
-      (verticalDirection) => only(verticalDirection: verticalDirection),
+      (verticalDirection) => call(verticalDirection: verticalDirection),
     );
   }
 
@@ -69,7 +69,7 @@ class FlexSpecUtility<T extends SpecAttribute>
   /// Returns a `TextDirectionUtility` to set the direction.
   TextDirectionUtility<T> get textDirection {
     return TextDirectionUtility(
-      (textDirection) => only(textDirection: textDirection),
+      (textDirection) => call(textDirection: textDirection),
     );
   }
 
@@ -78,7 +78,7 @@ class FlexSpecUtility<T extends SpecAttribute>
   /// Returns a `TextBaselineUtility` to set the alignment.
   TextBaselineUtility<T> get textBaseline {
     return TextBaselineUtility(
-      (textBaseline) => only(textBaseline: textBaseline),
+      (textBaseline) => call(textBaseline: textBaseline),
     );
   }
 
@@ -86,14 +86,14 @@ class FlexSpecUtility<T extends SpecAttribute>
   ///
   /// Returns a `ClipUtility` to set the behavior.
   ClipUtility<T> get clipBehavior {
-    return ClipUtility((clipBehavior) => only(clipBehavior: clipBehavior));
+    return ClipUtility((clipBehavior) => call(clipBehavior: clipBehavior));
   }
 
   /// Sets the gap (spacing) between children.
   ///
   /// Returns a `SpacingSideUtility` to set the gap.
   SpacingSideUtility<T> get gap {
-    return SpacingSideUtility((gap) => only(gap: gap));
+    return SpacingSideUtility((gap) => call(gap: gap));
   }
 
   /// Shorthand for setting the direction to horizontal.
@@ -104,7 +104,7 @@ class FlexSpecUtility<T extends SpecAttribute>
 
   /// Creates a `FlexSpecAttribute` with the specified properties.
   @override
-  T only({
+  T call({
     Axis? direction,
     MainAxisAlignment? mainAxisAlignment,
     CrossAxisAlignment? crossAxisAlignment,

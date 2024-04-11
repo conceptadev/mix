@@ -19,7 +19,7 @@ abstract class SpecUtility<Attr extends SpecAttribute,
     Value extends SpecAttribute> extends MixUtility<Attr, Value> {
   const SpecUtility(super.builder);
 
-  Attr only();
+  Attr call();
 }
 
 abstract class DtoUtility<Attr extends StyleAttribute, D extends Dto<Value>,

@@ -6,7 +6,7 @@ void main() {
   group('FlexUtility', () {
     const flexUtility = FlexSpecUtility(selfBuilder);
     test('call() returns correct instance', () {
-      final flex = flexUtility.only(
+      final flex = flexUtility.call(
         direction: Axis.horizontal,
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,

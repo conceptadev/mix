@@ -14,45 +14,45 @@ class ImageUtility<T extends SpecAttribute>
   const ImageUtility(super.builder);
 
   ColorUtility<T> get color {
-    return ColorUtility((color) => only(color: color));
+    return ColorUtility((color) => call(color: color));
   }
 
   ImageRepeatUtility<T> get repeat {
-    return ImageRepeatUtility((repeat) => only(repeat: repeat));
+    return ImageRepeatUtility((repeat) => call(repeat: repeat));
   }
 
   BoxFitUtility<T> get fit {
-    return BoxFitUtility((fit) => only(fit: fit));
+    return BoxFitUtility((fit) => call(fit: fit));
   }
 
   DoubleUtility<T> get width {
-    return DoubleUtility((width) => only(width: width));
+    return DoubleUtility((width) => call(width: width));
   }
 
   DoubleUtility<T> get height {
-    return DoubleUtility((height) => only(height: height));
+    return DoubleUtility((height) => call(height: height));
   }
 
   AlignmentUtility<T> get alignment {
-    return AlignmentUtility((alignment) => only(alignment: alignment));
+    return AlignmentUtility((alignment) => call(alignment: alignment));
   }
 
   RectUtility<T> get centerSlice {
-    return RectUtility((rect) => only(centerSlice: rect));
+    return RectUtility((rect) => call(centerSlice: rect));
   }
 
   FilterQualityUtility<T> get filterQuality {
     return FilterQualityUtility(
-      (filterQuality) => only(filterQuality: filterQuality),
+      (filterQuality) => call(filterQuality: filterQuality),
     );
   }
 
   BlendModeUtility<T> get blendMode {
-    return BlendModeUtility((blendMode) => only(blendMode: blendMode));
+    return BlendModeUtility((blendMode) => call(blendMode: blendMode));
   }
 
   @override
-  T only({
+  T call({
     double? width,
     double? height,
     ColorDto? color,

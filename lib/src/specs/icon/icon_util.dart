@@ -7,7 +7,7 @@ import '../../core/attribute.dart';
 import '../../decorators/widget_decorators_util.dart';
 import 'icon_attribute.dart';
 
-const icon = IconUtility(selfBuilder);
+const icon = IconSpecUtility(selfBuilder);
 
 /// Utility class for building [IconSpecAttribute]s
 ///
@@ -17,50 +17,50 @@ const icon = IconUtility(selfBuilder);
 /// final icon = IconUtility();
 ///
 /// final iconSpec = icon.size(24);
-class IconUtility<T extends SpecAttribute>
+class IconSpecUtility<T extends SpecAttribute>
     extends SpecUtility<T, IconSpecAttribute> {
-  const IconUtility(super.builder);
+  const IconSpecUtility(super.builder);
 
   ColorUtility<T> get color {
-    return ColorUtility((color) => only(color: color));
+    return ColorUtility((color) => call(color: color));
   }
 
   DoubleUtility<T> get size {
-    return DoubleUtility((size) => only(size: size));
+    return DoubleUtility((size) => call(size: size));
   }
 
   DoubleUtility<T> get weight {
-    return DoubleUtility((size) => only(size: size));
+    return DoubleUtility((size) => call(size: size));
   }
 
   DoubleUtility<T> get grade {
-    return DoubleUtility((grade) => only(grade: grade));
+    return DoubleUtility((grade) => call(grade: grade));
   }
 
   DoubleUtility<T> get opticalSize {
-    return DoubleUtility((opticalSize) => only(opticalSize: opticalSize));
+    return DoubleUtility((opticalSize) => call(opticalSize: opticalSize));
   }
 
   ShadowUtility<T> get shadow {
-    return ShadowUtility((shadow) => only(shadows: [shadow]));
+    return ShadowUtility((shadow) => call(shadows: [shadow]));
   }
 
   ShadowListUtility<T> get shadows {
-    return ShadowListUtility((shadows) => only(shadows: shadows));
+    return ShadowListUtility((shadows) => call(shadows: shadows));
   }
 
   DoubleUtility<T> get fill {
-    return DoubleUtility((fill) => only(fill: fill));
+    return DoubleUtility((fill) => call(fill: fill));
   }
 
   BoolUtility<T> get applyTextScaling {
     return BoolUtility(
-      (applyTextScaling) => only(applyTextScaling: applyTextScaling),
+      (applyTextScaling) => call(applyTextScaling: applyTextScaling),
     );
   }
 
   @override
-  T only({
+  T call({
     ColorDto? color,
     double? size,
     double? weight,

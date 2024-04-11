@@ -12,25 +12,25 @@ class StackSpecUtility<T extends SpecAttribute>
   const StackSpecUtility(super.builder);
 
   AlignmentUtility<T> get alignment {
-    return AlignmentUtility((alignment) => only(alignment: alignment));
+    return AlignmentUtility((alignment) => call(alignment: alignment));
   }
 
   StackFitUtility<T> get fit {
-    return StackFitUtility((fit) => only(fit: fit));
+    return StackFitUtility((fit) => call(fit: fit));
   }
 
   TextDirectionUtility<T> get textDirection {
     return TextDirectionUtility(
-      (textDirection) => only(textDirection: textDirection),
+      (textDirection) => call(textDirection: textDirection),
     );
   }
 
   ClipUtility<T> get clipBehavior {
-    return ClipUtility((clipBehavior) => only(clipBehavior: clipBehavior));
+    return ClipUtility((clipBehavior) => call(clipBehavior: clipBehavior));
   }
 
   @override
-  T only({
+  T call({
     AlignmentGeometry? alignment,
     StackFit? fit,
     TextDirection? textDirection,
