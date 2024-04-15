@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../attributes/variant_attribute.dart';
 import '../core/attribute.dart';
+import '../core/extensions/iterable_ext.dart';
 import '../factory/style_mix.dart';
 import '../helpers/compare_mixin.dart';
 
@@ -11,16 +12,16 @@ enum VariantPriority {
   high(2),
   highest(3);
 
-  const VariantPriority(this.value);
-
   final int value;
+
+  const VariantPriority(this.value);
 }
 
 @immutable
 abstract class StyleVariant with Comparable {
-  const StyleVariant({this.priority = VariantPriority.normal});
-
   final VariantPriority priority;
+
+  const StyleVariant({this.priority = VariantPriority.normal});
 
   /// Combines this variant with another [variant] using an 'AND' operation.
   ///
@@ -90,10 +91,7 @@ class Variant extends StyleVariant {
   /// Constructs a `Variant` with the given [name].
   ///
   /// The [name] parameter uniquely identifies the variant and is used in style resolution.
-  const Variant(
-    this.name, {
-    super.priority,
-  });
+  const Variant(this.name, {super.priority});
 
   /// Creates a new [VariantAttribute] with the given [variant] and [style].
   ///
@@ -265,11 +263,18 @@ class MultiVariant extends StyleVariant {
     Iterable<StyleVariant> variants, {
     required MultiVariantOperator type,
   }) {
-    final sortedVariants = variants.toList()
-      ..sort(((a, b) =>
-          a.runtimeType.toString().compareTo(b.runtimeType.toString())));
+    final sortedVariants = variants.toList();
 
-    return MultiVariant._(sortedVariants, operatorType: type);
+    final highestPriority = variants
+        .sorted((a, b) => a.priority.value.compareTo(b.priority.value))
+        .first
+        .priority;
+
+    return MultiVariant._(
+      sortedVariants,
+      operatorType: type,
+      priority: highestPriority,
+    );
   }
 
   /// Factory constructor to create a `MultiVariant` where all provided variants need to be active (`MultiVariantType.and`).
