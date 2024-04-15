@@ -138,8 +138,9 @@ void main() {
       final updatedStyle = style.applyVariant(variantAttr1);
 
       expect(updatedStyle.styles.length, 3);
-      expect(style.styles.length, 2);
       expect(updatedStyle.variants.length, 0);
+
+      expect(style.styles.length, 2);
       expect(style.variants.length, 1);
     });
 
@@ -231,6 +232,94 @@ void main() {
       final updatedStyle = style.applyVariant(variantAttr1);
 
       expect(updatedStyle, style);
+    });
+  });
+
+  group('Style.priority', () {
+    const attr1 = MockBooleanScalarAttribute(true);
+    const attr2 = MockDoubleScalarAttribute(1.0);
+
+    const variantLow = Variant('low', priority: VariantPriority.low);
+    const variantNormal = Variant('variant1', priority: VariantPriority.normal);
+    const variantHigh = Variant('variant1', priority: VariantPriority.high);
+
+    void testPriorityOrder({
+      required Variant x1,
+      required Variant y2,
+      required Variant z3,
+      required Iterable<StyleVariant> appliedVariants,
+      required expectedValue,
+    }) {
+      final style = Style(
+        attr1,
+        attr2,
+        x1(
+          const MockIntScalarAttribute(1),
+        ),
+        y2(
+          const MockIntScalarAttribute(2),
+        ),
+        z3(
+          const MockIntScalarAttribute(3),
+        ),
+      ).applyVariants(appliedVariants);
+
+      expect(style.styles.length, 3);
+
+      final currentValue =
+          style.styles.attributeOfType<MockIntScalarAttribute>()?.value;
+
+      expect(currentValue, expectedValue);
+    }
+
+    test('testing all priorities', () {
+      testPriorityOrder(
+        x1: variantLow,
+        y2: variantNormal,
+        z3: variantHigh,
+        appliedVariants: [variantLow, variantNormal, variantHigh],
+        expectedValue: 3,
+      );
+
+      testPriorityOrder(
+        x1: variantLow,
+        y2: variantHigh,
+        z3: variantNormal,
+        appliedVariants: [variantLow, variantNormal, variantHigh],
+        expectedValue: 2,
+      );
+
+      testPriorityOrder(
+        x1: variantNormal,
+        y2: variantHigh,
+        z3: variantLow,
+        appliedVariants: [variantLow, variantNormal, variantHigh],
+        expectedValue: 2,
+      );
+
+      testPriorityOrder(
+        x1: variantNormal,
+        y2: variantLow,
+        z3: variantHigh,
+        appliedVariants: [variantLow, variantNormal, variantHigh],
+        expectedValue: 3,
+      );
+
+      testPriorityOrder(
+        x1: variantHigh,
+        y2: variantLow,
+        z3: variantNormal,
+        appliedVariants: [variantLow, variantNormal, variantHigh],
+        expectedValue: 1,
+      );
+
+      testPriorityOrder(
+        x1: variantHigh,
+        y2: variantNormal,
+        z3: variantLow,
+        appliedVariants: [variantLow, variantNormal, variantHigh],
+        expectedValue: 1,
+      );
     });
   });
 

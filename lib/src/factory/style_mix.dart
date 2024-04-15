@@ -162,6 +162,12 @@ class Style with Comparable {
       }
     }
 
+    applyVariants.sort(
+      (a, b) => a.variant.priority.value.compareTo(
+        b.variant.priority.value,
+      ),
+    );
+
     return Style._(
       styles: AttributeMap(styleList),
       variants: AttributeMap(applyVariants),

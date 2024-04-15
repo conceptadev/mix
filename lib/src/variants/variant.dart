@@ -5,9 +5,22 @@ import '../core/attribute.dart';
 import '../factory/style_mix.dart';
 import '../helpers/compare_mixin.dart';
 
+enum VariantPriority {
+  low(0),
+  normal(1),
+  high(2),
+  highest(3);
+
+  const VariantPriority(this.value);
+
+  final int value;
+}
+
 @immutable
 abstract class StyleVariant with Comparable {
-  const StyleVariant();
+  const StyleVariant({this.priority = VariantPriority.normal});
+
+  final VariantPriority priority;
 
   /// Combines this variant with another [variant] using an 'AND' operation.
   ///
@@ -77,7 +90,10 @@ class Variant extends StyleVariant {
   /// Constructs a `Variant` with the given [name].
   ///
   /// The [name] parameter uniquely identifies the variant and is used in style resolution.
-  const Variant(this.name);
+  const Variant(
+    this.name, {
+    super.priority,
+  });
 
   /// Creates a new [VariantAttribute] with the given [variant] and [style].
   ///
@@ -150,7 +166,7 @@ class ContextVariant extends StyleVariant {
   final bool Function(BuildContext context) when;
 
   /// Constructs a `ContextVariant` with a given [name] and a context condition function [when].
-  const ContextVariant(this.when);
+  const ContextVariant(this.when, {super.priority});
 
   /// Creates a new [ContextVariantAttribute] with the given [variant] and [style].
   ///
@@ -239,7 +255,11 @@ class MultiVariant extends StyleVariant {
   /// understanding and applying their behavior.
   final MultiVariantOperator operatorType;
 
-  const MultiVariant._(this.variants, {required this.operatorType});
+  const MultiVariant._(
+    this.variants, {
+    required this.operatorType,
+    super.priority,
+  });
 
   factory MultiVariant(
     Iterable<StyleVariant> variants, {
