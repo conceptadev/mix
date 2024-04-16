@@ -38,12 +38,12 @@ void main() {
       final secondNotifier = PressableState.of(secondContext);
       final thirdNotifier = PressableState.of(thirdContext);
 
-      expect(onEnabledAttr.when(firstContext), false);
+      expect(onEnabledAttr.variant.when(firstContext), false);
       expect(firstNotifier.disabled, true);
-      expect(onEnabledAttr.when(secondContext), false);
+      expect(onEnabledAttr.variant.when(secondContext), false);
       expect(secondNotifier.disabled, true);
 
-      expect(onEnabledAttr.when(thirdContext), true);
+      expect(onEnabledAttr.variant.when(thirdContext), true);
       expect(thirdNotifier.disabled, false);
     });
 
@@ -225,6 +225,20 @@ void main() {
         tester: tester,
         duration: const Duration(milliseconds: 250),
         condition: (onHover | onPressed),
+        action: () async {
+          await tester.tap(find.byType(PressableBox));
+          await tester.pump();
+        },
+      );
+    });
+
+    testWidgets(
+        'must restyle using attributes inside (onHover | onPressed | onLongPressed) when pressed',
+        (WidgetTester tester) async {
+      await pumpTestCase(
+        tester: tester,
+        duration: const Duration(milliseconds: 250),
+        condition: (onPressed | onHover | onLongPressed),
         action: () async {
           await tester.tap(find.byType(PressableBox));
           await tester.pump();

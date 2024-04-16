@@ -98,7 +98,7 @@ void main() {
     test('when() returns correct instance', () {
       final variantAttribute = ContextVariantAttribute(variant, style);
 
-      final result = variantAttribute.when(MockBuildContext());
+      final result = variantAttribute.variant.when(MockBuildContext());
 
       expect(result, isTrue);
     });
