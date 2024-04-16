@@ -53,6 +53,8 @@ abstract class StyleVariant with Comparable {
   /// Returns true if this variant is present in the provided [matchVariants].
   bool matches(Iterable<StyleVariant> matchVariants) =>
       matchVariants.contains(this);
+
+  bool when(BuildContext context);
 }
 
 /// An immutable class representing a styling variant.
@@ -128,6 +130,9 @@ class Variant extends StyleVariant {
   }
 
   @override
+  bool when(BuildContext context) => false;
+
+  @override
   get props => [name];
 }
 
@@ -161,10 +166,11 @@ class ContextVariant extends StyleVariant {
   /// The [when] function takes a [BuildContext] and returns a boolean indicating whether
   /// the condition for this variant is met in the given context. This allows for dynamic
   /// styling changes based on runtime context conditions, such as theme brightness or screen size.
-  final bool Function(BuildContext context) when;
+
+  final bool Function(BuildContext context) whenBuilder;
 
   /// Constructs a `ContextVariant` with a given [name] and a context condition function [when].
-  const ContextVariant(this.when, {super.priority});
+  const ContextVariant(this.whenBuilder, {super.priority});
 
   /// Creates a new [ContextVariantAttribute] with the given [variant] and [style].
   ///
@@ -202,7 +208,10 @@ class ContextVariant extends StyleVariant {
   }
 
   @override
-  get props => [when];
+  bool when(BuildContext context) => whenBuilder(context);
+
+  @override
+  get props => [whenBuilder];
 }
 
 enum MultiVariantOperator { and, or }
@@ -312,30 +321,6 @@ class MultiVariant extends StyleVariant {
         : MultiVariant(updatedVariants, type: operatorType);
   }
 
-  /// Evaluates if the `MultiVariant` should be applied based on the build context.
-  ///
-  /// For `MultiVariantType.or`, it returns true if any of the context-aware variants (`ContextVariant`)
-  /// evaluates true in the given [context]. For `MultiVariantType.and`, it returns true only if all context-aware
-  /// variants evaluate true, and if all variants in the `MultiVariant` are context-aware.
-  ///
-  /// This method enables context-sensitive styling, allowing the application of styles based on runtime
-  /// conditions like screen size, orientation, or theme.
-  ///
-  /// Example:
-  /// ```dart
-  /// final combinedVariant = MultiVariant.or([contextVariantA, contextVariantB]);
-  /// bool isApplicable = combinedVariant.when(context);
-  /// ```
-  /// `isApplicable` will be true if either `contextVariantA` or `contextVariantB` is applicable in the given context.
-  bool when(BuildContext context) {
-    final contextVariants = variants.whereType<ContextVariant>();
-
-    return operatorType == MultiVariantOperator.or
-        ? contextVariants.any((variant) => variant.when(context))
-        : contextVariants.length == variants.length &&
-            contextVariants.every((variant) => variant.when(context));
-  }
-
   /// Creates a new [MultiVariantAttribute] with the given [variant] and [style].
   ///
   /// This method is used to create a new [MultiVariantAttribute] instance with the given [variant] and [style].
@@ -370,6 +355,30 @@ class MultiVariant extends StyleVariant {
     return MultiVariantAttribute(this, Style.create(params));
   }
 
+  /// Evaluates if the `MultiVariant` should be applied based on the build context.
+  ///
+  /// For `MultiVariantType.or`, it returns true if any of the context-aware variants (`ContextVariant`)
+  /// evaluates true in the given [context]. For `MultiVariantType.and`, it returns true only if all context-aware
+  /// variants evaluate true, and if all variants in the `MultiVariant` are context-aware.
+  ///
+  /// This method enables context-sensitive styling, allowing the application of styles based on runtime
+  /// conditions like screen size, orientation, or theme.
+  ///
+  /// Example:
+  /// ```dart
+  /// final combinedVariant = MultiVariant.or([contextVariantA, contextVariantB]);
+  /// bool isApplicable = combinedVariant.when(context);
+  /// ```
+  /// `isApplicable` will be true if either `contextVariantA` or `contextVariantB` is applicable in the given context.
+  @override
+  bool when(BuildContext context) {
+    var list = variants.map((e) => e.when(context));
+
+    return operatorType == MultiVariantOperator.or
+        ? list.contains(true)
+        : list.every((e) => e);
+  }
+
   /// Determines if the current `MultiVariant` matches a set of provided variants.
   ///
   /// This method evaluates whether the variants within this `MultiVariant` align with the given [matchVariants] based on its `type`:
@@ -390,9 +399,9 @@ class MultiVariant extends StyleVariant {
   bool matches(Iterable<StyleVariant> matchVariants) {
     final list = variants.map((e) => e.matches(matchVariants)).toList();
 
-    return operatorType == MultiVariantOperator.and
-        ? list.every((e) => e)
-        : list.contains(true);
+    return operatorType == MultiVariantOperator.or
+        ? list.contains(true)
+        : list.every((e) => e);
   }
 
   @override

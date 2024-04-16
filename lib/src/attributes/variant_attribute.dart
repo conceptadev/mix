@@ -35,17 +35,9 @@ class VariantAttribute extends StyleVariantAttribute<Variant> {
   }
 }
 
-mixin WhenVariant<T extends StyleVariant> on StyleVariantAttribute<T> {
-  bool when(BuildContext context);
-}
-
 @immutable
-class ContextVariantAttribute extends StyleVariantAttribute<ContextVariant>
-    with WhenVariant<ContextVariant> {
+class ContextVariantAttribute extends StyleVariantAttribute<ContextVariant> {
   const ContextVariantAttribute(super.variant, super.style);
-
-  @override
-  bool when(BuildContext context) => variant.when(context);
 
   @override
   ContextVariantAttribute merge(ContextVariantAttribute other) {
@@ -64,8 +56,7 @@ ArgumentError throwArgumentError<T extends StyleVariantAttribute>(T other) {
 }
 
 @immutable
-class MultiVariantAttribute extends StyleVariantAttribute<MultiVariant>
-    with WhenVariant<MultiVariant> {
+class MultiVariantAttribute extends StyleVariantAttribute<MultiVariant> {
   const MultiVariantAttribute(super.variant, super.style);
 
   // Remove all variants in given a list
@@ -84,9 +75,6 @@ class MultiVariantAttribute extends StyleVariantAttribute<MultiVariant>
       'Variant must be a Variant, ContextVariant, or MultiVariant',
     );
   }
-
-  @override
-  bool when(BuildContext context) => variant.when(context);
 
   @override
   MultiVariantAttribute merge(MultiVariantAttribute other) {
