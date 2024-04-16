@@ -24,28 +24,28 @@ interface Feature {
 
 const features: Array<Feature> = [
   {
-    href: "/",
+    href: "/docs/overview/utility-first",
     name: "Intuitive Style Semantics",
     description:
       "Transform simple elements into elegant, complex designs, enabling flexible and scalable UIs.",
     icon: HandMetalIcon,
   },
   {
-    href: "/",
+    href: "/docs/guides/variants",
     name: "First-class Variant Support",
     description:
       "Seamlessly create condition and responsive styling variants, allow you to design composable widgets.",
     icon: VenetianMaskIcon,
   },
   {
-    href: "/",
+    href: "/docs/guides/theming",
     name: "Design Tokens & Theming",
     description:
       "Define consistent style properties across widgets inspired by modern design principles for a unified UI.",
     icon: PaintBucketIcon,
   },
   {
-    href: "/",
+    href: "/docs/overview/utility-first",
     name: "Utility-First",
     description:
       "Craft your styling with simple, reusable functions for easy customization and API extension.",
@@ -112,7 +112,7 @@ function Feature({ feature }: { feature: Feature }) {
       <div className="relative rounded-2xl px-4 pb-4 pt-16">
         <FeatureIcon icon={feature.icon} />
         <h3 className="mt-4 text-sm font-semibold leading-7 text-zinc-900 dark:text-white">
-          <Link href={feature.name}>
+          <Link href={feature.href}>
             <span className="absolute inset-0 rounded-2xl" />
             {feature.name}
           </Link>
