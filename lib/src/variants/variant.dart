@@ -2,12 +2,26 @@ import 'package:flutter/material.dart';
 
 import '../attributes/variant_attribute.dart';
 import '../core/attribute.dart';
+import '../core/extensions/iterable_ext.dart';
 import '../factory/style_mix.dart';
 import '../helpers/compare_mixin.dart';
 
+enum VariantPriority {
+  low(0),
+  normal(1),
+  high(2),
+  highest(3);
+
+  final int value;
+
+  const VariantPriority(this.value);
+}
+
 @immutable
 abstract class StyleVariant with Comparable {
-  const StyleVariant();
+  final VariantPriority priority;
+
+  const StyleVariant({this.priority = VariantPriority.normal});
 
   /// Combines this variant with another [variant] using an 'AND' operation.
   ///
@@ -79,7 +93,7 @@ class Variant extends StyleVariant {
   /// Constructs a `Variant` with the given [name].
   ///
   /// The [name] parameter uniquely identifies the variant and is used in style resolution.
-  const Variant(this.name);
+  const Variant(this.name, {super.priority});
 
   /// Creates a new [VariantAttribute] with the given [variant] and [style].
   ///
@@ -156,7 +170,7 @@ class ContextVariant extends StyleVariant {
   final bool Function(BuildContext context) whenBuilder;
 
   /// Constructs a `ContextVariant` with a given [name] and a context condition function [when].
-  const ContextVariant(this.whenBuilder);
+  const ContextVariant(this.whenBuilder, {super.priority});
 
   /// Creates a new [ContextVariantAttribute] with the given [variant] and [style].
   ///
@@ -248,17 +262,28 @@ class MultiVariant extends StyleVariant {
   /// understanding and applying their behavior.
   final MultiVariantOperator operatorType;
 
-  const MultiVariant._(this.variants, {required this.operatorType});
+  const MultiVariant._(
+    this.variants, {
+    required this.operatorType,
+    super.priority,
+  });
 
   factory MultiVariant(
     Iterable<StyleVariant> variants, {
     required MultiVariantOperator type,
   }) {
-    final sortedVariants = variants.toList()
-      ..sort(((a, b) =>
-          a.runtimeType.toString().compareTo(b.runtimeType.toString())));
+    final sortedVariants = variants.toList();
 
-    return MultiVariant._(sortedVariants, operatorType: type);
+    final highestPriority = variants
+        .sorted((a, b) => a.priority.value.compareTo(b.priority.value))
+        .first
+        .priority;
+
+    return MultiVariant._(
+      sortedVariants,
+      operatorType: type,
+      priority: highestPriority,
+    );
   }
 
   /// Factory constructor to create a `MultiVariant` where all provided variants need to be active (`MultiVariantType.and`).
