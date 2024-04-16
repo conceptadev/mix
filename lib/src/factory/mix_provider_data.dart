@@ -7,7 +7,6 @@ import '../core/attributes_map.dart';
 import '../helpers/compare_mixin.dart';
 import '../helpers/constants.dart';
 import '../theme/token_resolver.dart';
-import '../widgets/pressable/pressable_util.dart';
 import 'style_mix.dart';
 
 /// This class is used for encapsulating all [MixData] related operations.
@@ -120,57 +119,28 @@ List<StyleAttribute> applyContextToVisualAttributes(
   BuildContext context,
   Style mix,
 ) {
-  final builtAttributes = _applyStyleBuilder(context, mix.styles.values);
+  if (mix.variants.isEmpty) {
+    return mix.styles.values;
+  }
 
+  final builtAttributes = _applyStyleBuilder(context, mix.styles.values);
   Style style = Style.create(builtAttributes);
 
-  final contextVariants = mix.variants.whereType<ContextVariantAttribute>();
-  final multiVariants = mix.variants.whereType<MultiVariantAttribute>();
-
-  // Once there are no more context variants to apply, return the mix
-  if (contextVariants.isEmpty && multiVariants.isEmpty) {
-    return style.styles.values;
-  }
-
-  List<WhenVariant> contextVariantTypes = [];
-  List<WhenVariant> pressableVariantTypes = [];
-
-  for (ContextVariantAttribute attr in contextVariants) {
-    if (attr.variant is PressableStateVariant) {
-      pressableVariantTypes.add(attr);
-    } else {
-      contextVariantTypes.add(attr);
-    }
-  }
-
-  for (MultiVariantAttribute attr in multiVariants) {
-    if (attr.variant.variants
-        .any((variant) => variant is PressableStateVariant)) {
-      pressableVariantTypes.add(attr);
-    } else {
-      contextVariantTypes.add(attr);
-    }
-  }
-
-  for (WhenVariant variant in contextVariantTypes) {
-    style = _applyVariants(context, style, variant);
-  }
-
-  // Pressable Variants are applied after Context Variants
-  // As they take precedence over Context Variants from a styling perspective
-  for (WhenVariant variant in pressableVariantTypes) {
+  for (final variant in mix.variants.values) {
     style = _applyVariants(context, style, variant);
   }
 
   return applyContextToVisualAttributes(context, style);
 }
 
-Style _applyVariants<T extends WhenVariant>(
+Style _applyVariants(
   BuildContext context,
   Style style,
-  T variant,
+  StyleVariantAttribute variantAttribute,
 ) {
-  return variant.when(context) ? style.merge(variant.value) : style;
+  return variantAttribute.variant.when(context)
+      ? style.merge(variantAttribute.value)
+      : style;
 }
 
 M? _mergeAttributes<M extends StyleAttribute>(Iterable<M> mergeables) {
