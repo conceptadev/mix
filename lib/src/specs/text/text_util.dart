@@ -11,11 +11,11 @@ import '../../core/directive.dart';
 import '../../decorators/widget_decorators_util.dart';
 import 'text_attribute.dart';
 
-const text = TextUtility(selfBuilder);
+const text = TextSpecUtility(selfBuilder);
 
-class TextUtility<T extends SpecAttribute>
+class TextSpecUtility<T extends SpecAttribute>
     extends SpecUtility<T, TextSpecAttribute> {
-  const TextUtility(super.builder);
+  const TextSpecUtility(super.builder);
 
   TextDirectiveUtility<T> get directive =>
       TextDirectiveUtility((directive) => only(directive: directive));

@@ -54,6 +54,17 @@ class AnimatedStyle extends Style {
       animatedData: animatedData ?? this.animatedData,
     );
   }
+
+  @override
+  Style applyVariants(Iterable<StyleVariant> selectedVariants) {
+    final newStyle = super.applyVariants(selectedVariants);
+
+    return AnimatedStyle._(
+      styles: newStyle.styles,
+      variants: newStyle.variants,
+      animatedData: animatedData,
+    );
+  }
 }
 
 /// A utility class for managing a collection of styling attributes and variants.
