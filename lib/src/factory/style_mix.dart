@@ -58,6 +58,7 @@ class AnimatedStyle extends Style {
   @override
   Style applyVariants(Iterable<StyleVariant> selectedVariants) {
     final newStyle = super.applyVariants(selectedVariants);
+
     return AnimatedStyle._(
       styles: newStyle.styles,
       variants: newStyle.variants,
