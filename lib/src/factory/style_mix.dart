@@ -8,7 +8,7 @@ import '../attributes/variant_attribute.dart';
 import '../core/attribute.dart';
 import '../core/attributes_map.dart';
 import '../helpers/compare_mixin.dart';
-import '../specs/container/box_attribute.dart';
+import '../specs/box/box_attribute.dart';
 import '../specs/flex/flex_attribute.dart';
 import '../specs/icon/icon_attribute.dart';
 import '../specs/image/image_attribute.dart';

@@ -63,16 +63,18 @@ class ImageSpecUtility<T extends SpecAttribute>
     BlendMode? blendMode,
     FilterQuality? filterQuality,
   }) {
-    return builder(ImageSpecAttribute(
-      centerSlice: centerSlice,
-      width: width,
-      height: height,
-      color: color,
-      repeat: repeat,
-      fit: fit,
-      alignment: alignment,
-      colorBlendMode: blendMode,
-      filterQuality: filterQuality,
-    ));
+    return builder(
+      ImageSpecAttribute(
+        centerSlice: centerSlice,
+        width: width,
+        height: height,
+        color: color,
+        repeat: repeat,
+        fit: fit,
+        alignment: alignment,
+        colorBlendMode: blendMode,
+        filterQuality: filterQuality,
+      ),
+    );
   }
 }

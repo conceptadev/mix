@@ -2,7 +2,6 @@
 
 import '../src/attributes/spacing/spacing_util.dart';
 import '../src/factory/mix_provider_data.dart';
-import '../src/specs/container/box_util.dart';
 import '../src/specs/flex/flex_util.dart';
 import '../src/specs/icon/icon_util.dart';
 import '../src/specs/icon/icon_widget.dart';
@@ -19,6 +18,7 @@ import 'core/attribute.dart';
 import 'decorators/clip_widget_decorator.dart';
 import 'decorators/widget_decorators_util.dart';
 import 'factory/style_mix.dart';
+import 'specs/box/box_util.dart';
 import 'specs/image/image_util.dart';
 import 'widgets/pressable/pressable_util.dart';
 

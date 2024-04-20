@@ -24,13 +24,13 @@ abstract class SpecUtility<Attr extends SpecAttribute,
 
 abstract class DtoUtility<Attr extends StyleAttribute, D extends Dto<Value>,
     Value> extends MixUtility<Attr, D> {
-  @protected
-  final UtilityBuilder<D, Value> valueToDto;
+  final UtilityBuilder<D, Value> _valueToDto;
 
-  const DtoUtility(super.builder, {required this.valueToDto});
+  const DtoUtility(super.builder, {required D Function(Value) valueToDto})
+      : _valueToDto = valueToDto;
 
   /// Returns a new [StyleAttribute] with the given [value].
-  Attr as(Value value) => _builder(valueToDto(value));
+  Attr as(Value value) => _builder(_valueToDto(value));
 }
 
 abstract class ScalarUtility<Return extends StyleAttribute, Param>
