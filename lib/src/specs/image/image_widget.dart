@@ -15,6 +15,9 @@ class StyledImage extends StyledWidget {
     this.semanticLabel,
     this.excludeFromSemantics = false,
     required this.image,
+    this.gaplessPlayback = false,
+    this.isAntiAlias = false,
+    this.matchTextDirection = false,
     super.orderOfDecorators = const [],
   });
 
@@ -24,6 +27,9 @@ class StyledImage extends StyledWidget {
   final ImageErrorWidgetBuilder? errorBuilder;
   final String? semanticLabel;
   final bool excludeFromSemantics;
+  final bool gaplessPlayback;
+  final bool isAntiAlias;
+  final bool matchTextDirection;
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +47,9 @@ class StyledImage extends StyledWidget {
               excludeFromSemantics: excludeFromSemantics,
               duration: mix.animation!.duration,
               curve: mix.animation!.curve,
+              gaplessPlayback: gaplessPlayback,
+              isAntiAlias: isAntiAlias,
+              matchTextDirection: matchTextDirection,
             )
           : MixedImage(
               spec: spec,
@@ -50,6 +59,9 @@ class StyledImage extends StyledWidget {
               errorBuilder: errorBuilder,
               semanticLabel: semanticLabel,
               excludeFromSemantics: excludeFromSemantics,
+              gaplessPlayback: gaplessPlayback,
+              isAntiAlias: isAntiAlias,
+              matchTextDirection: matchTextDirection,
             );
     });
   }
@@ -66,6 +78,9 @@ class MixedImage extends StatelessWidget {
     this.errorBuilder,
     this.semanticLabel,
     this.excludeFromSemantics = false,
+    this.gaplessPlayback = false,
+    this.isAntiAlias = false,
+    this.matchTextDirection = false,
   });
 
   final ImageSpec? spec;
@@ -76,6 +91,9 @@ class MixedImage extends StatelessWidget {
   final String? semanticLabel;
   final bool excludeFromSemantics;
   final List<Type> decoratorOrder;
+  final bool gaplessPlayback;
+  final bool isAntiAlias;
+  final bool matchTextDirection;
 
   @override
   Widget build(BuildContext context) {
@@ -94,6 +112,9 @@ class MixedImage extends StatelessWidget {
       alignment: spec?.alignment ?? Alignment.center,
       repeat: spec?.repeat ?? ImageRepeat.noRepeat,
       centerSlice: spec?.centerSlice,
+      matchTextDirection: matchTextDirection,
+      gaplessPlayback: gaplessPlayback,
+      isAntiAlias: isAntiAlias,
       filterQuality: spec?.filterQuality ?? FilterQuality.low,
     );
   }
@@ -112,6 +133,9 @@ class AnimatedMixedImage extends ImplicitlyAnimatedWidget {
     super.duration = kDefaultAnimationDuration,
     super.curve = Curves.linear,
     super.onEnd,
+    this.gaplessPlayback = false,
+    this.isAntiAlias = false,
+    this.matchTextDirection = false,
   });
 
   final ImageSpec? spec;
@@ -121,6 +145,9 @@ class AnimatedMixedImage extends ImplicitlyAnimatedWidget {
   final ImageErrorWidgetBuilder? errorBuilder;
   final String? semanticLabel;
   final bool excludeFromSemantics;
+  final bool gaplessPlayback;
+  final bool isAntiAlias;
+  final bool matchTextDirection;
 
   @override
   AnimatedWidgetBaseState<AnimatedMixedImage> createState() =>
