@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
 
@@ -553,6 +554,26 @@ void main() {
         isFalse,
         reason: '4',
       );
+    });
+  });
+  group('AnimatedStyle applyVariants', () {
+    test(
+        'when a variant is applied an AnimatedStyle continues an AnimatedStyle',
+        () {
+      final style = AnimatedStyle(
+        Style(
+          attribute1,
+          attribute2,
+        ),
+        curve: Curves.easeInOut,
+        duration: const Duration(milliseconds: 200),
+      );
+
+      expect(style.isAnimated, true);
+
+      final updatedStyle = style.applyVariants([variantAttr1]);
+
+      expect(updatedStyle.isAnimated, true);
     });
   });
 }

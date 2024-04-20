@@ -62,16 +62,27 @@ class DecorationImageUtility<T extends StyleAttribute>
     return BoolUtility((isAntiAlias) => _only(isAntiAlias: isAntiAlias));
   }
 
-  ImageProviderUtility<T> get image {
-    return ImageProviderUtility((image) => _only(image: image));
+  T provider(ImageProvider image) => _only(image: image);
+
+  T call({
+    ImageProvider? image,
+    BoxFit? fit,
+    AlignmentGeometry? alignment,
+    Rect? centerSlice,
+    ImageRepeat? repeat,
+    FilterQuality? filterQuality,
+    bool? invertColors,
+    bool? isAntiAlias,
+  }) {
+    return _only(
+      image: image,
+      fit: fit,
+      alignment: alignment,
+      centerSlice: centerSlice,
+      repeat: repeat,
+      filterQuality: filterQuality,
+      invertColors: invertColors,
+      isAntiAlias: isAntiAlias,
+    );
   }
-
-  T call(ImageProvider image) => builder(DecorationImageDto(image: image));
-}
-
-class ImageProviderUtility<T extends StyleAttribute>
-    extends MixUtility<T, ImageProvider> {
-  const ImageProviderUtility(super.builder);
-
-  T call(ImageProvider image) => builder(image);
 }

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../factory/style_mix.dart';
 import '../../helpers/constants.dart';
-import '../../specs/container/box_widget.dart';
+import '../../specs/box/box_widget.dart';
 import '../../utils/custom_focusable_action_detector.dart';
 import 'pressable_state.dart';
 

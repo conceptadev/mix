@@ -7,11 +7,11 @@ import '../../core/attribute.dart';
 import '../../decorators/widget_decorators_util.dart';
 import 'image_attribute.dart';
 
-const image = ImageUtility(selfBuilder);
+const image = ImageSpecUtility(selfBuilder);
 
-class ImageUtility<T extends SpecAttribute>
+class ImageSpecUtility<T extends SpecAttribute>
     extends SpecUtility<T, ImageSpecAttribute> {
-  const ImageUtility(super.builder);
+  const ImageSpecUtility(super.builder);
 
   ColorUtility<T> get color {
     return ColorUtility((color) => only(color: color));
@@ -63,16 +63,18 @@ class ImageUtility<T extends SpecAttribute>
     BlendMode? blendMode,
     FilterQuality? filterQuality,
   }) {
-    return builder(ImageSpecAttribute(
-      centerSlice: centerSlice,
-      width: width,
-      height: height,
-      color: color,
-      repeat: repeat,
-      fit: fit,
-      alignment: alignment,
-      colorBlendMode: blendMode,
-      filterQuality: filterQuality,
-    ));
+    return builder(
+      ImageSpecAttribute(
+        centerSlice: centerSlice,
+        width: width,
+        height: height,
+        color: color,
+        repeat: repeat,
+        fit: fit,
+        alignment: alignment,
+        colorBlendMode: blendMode,
+        filterQuality: filterQuality,
+      ),
+    );
   }
 }

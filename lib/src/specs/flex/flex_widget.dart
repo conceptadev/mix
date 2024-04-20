@@ -5,8 +5,8 @@ import 'package:flutter/widgets.dart';
 import '../../core/styled_widget.dart';
 import '../../deprecations.dart';
 import '../../factory/style_mix.dart';
-import '../container/box_spec.dart';
-import '../container/box_widget.dart';
+import '../box/box_spec.dart';
+import '../box/box_widget.dart';
 import 'flex_spec.dart';
 
 /// A flexible layout widget enhanced with `Style` for simplified styling.

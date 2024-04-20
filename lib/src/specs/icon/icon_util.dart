@@ -7,7 +7,7 @@ import '../../core/attribute.dart';
 import '../../decorators/widget_decorators_util.dart';
 import 'icon_attribute.dart';
 
-const icon = IconUtility(selfBuilder);
+const icon = IconSpecUtility(selfBuilder);
 
 /// Utility class for building [IconSpecAttribute]s
 ///
@@ -17,9 +17,9 @@ const icon = IconUtility(selfBuilder);
 /// final icon = IconUtility();
 ///
 /// final iconSpec = icon.size(24);
-class IconUtility<T extends SpecAttribute>
+class IconSpecUtility<T extends SpecAttribute>
     extends SpecUtility<T, IconSpecAttribute> {
-  const IconUtility(super.builder);
+  const IconSpecUtility(super.builder);
 
   ColorUtility<T> get color {
     return ColorUtility((color) => only(color: color));

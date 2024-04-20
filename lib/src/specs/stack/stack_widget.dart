@@ -1,8 +1,8 @@
 import 'package:flutter/widgets.dart';
 
 import '../../core/styled_widget.dart';
-import '../container/box_spec.dart';
-import '../container/box_widget.dart';
+import '../box/box_spec.dart';
+import '../box/box_widget.dart';
 import 'stack_spec.dart';
 
 /// [StyledStack] - A styled widget that creates a stack layout with a mix of styles.
