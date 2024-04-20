@@ -37,14 +37,14 @@ class MixThemeData with Comparable {
   final StyledTokens<ColorToken, Color> colors;
   final StyledTokens<TextStyleToken, TextStyle> textStyles;
   final StyledTokens<BreakpointToken, Breakpoint> breakpoints;
-  final StyledTokens<SpaceToken, double> space;
+  final StyledTokens<SpaceToken, double> spaces;
 
   const MixThemeData.raw({
     required this.textStyles,
     required this.colors,
     required this.breakpoints,
     required this.radii,
-    required this.space,
+    required this.spaces,
   });
 
   const MixThemeData.empty()
@@ -53,13 +53,13 @@ class MixThemeData with Comparable {
           colors: const StyledTokens.empty(),
           breakpoints: const StyledTokens.empty(),
           radii: const StyledTokens.empty(),
-          space: const StyledTokens.empty(),
+          spaces: const StyledTokens.empty(),
         );
 
   factory MixThemeData({
     Map<BreakpointToken, Breakpoint>? breakpoints,
     Map<ColorToken, Color>? colors,
-    Map<SpaceToken, double>? space,
+    Map<SpaceToken, double>? spaces,
     Map<TextStyleToken, TextStyle>? textStyles,
     Map<RadiusToken, Radius>? radii,
   }) {
@@ -68,15 +68,15 @@ class MixThemeData with Comparable {
       colors: StyledTokens(colors ?? const {}),
       breakpoints:
           _breakpointTokenMap.merge(StyledTokens(breakpoints ?? const {})),
-      radii: _radiusTokenMap.merge(StyledTokens(radii ?? const {})),
-      space: _spaceTokenMap.merge(StyledTokens(space ?? const {})),
+      radii: StyledTokens(radii ?? const {}),
+      spaces: StyledTokens(spaces ?? const {}),
     );
   }
 
   factory MixThemeData.withMaterial({
     Map<BreakpointToken, Breakpoint>? breakpoints,
     Map<ColorToken, Color>? colors,
-    Map<SpaceToken, double>? space,
+    Map<SpaceToken, double>? spaces,
     Map<TextStyleToken, TextStyle>? textStyles,
     Map<RadiusToken, Radius>? radii,
   }) {
@@ -84,7 +84,7 @@ class MixThemeData with Comparable {
       MixThemeData(
         breakpoints: breakpoints,
         colors: colors,
-        space: space,
+        spaces: spaces,
         textStyles: textStyles,
         radii: radii,
       ),
@@ -94,7 +94,7 @@ class MixThemeData with Comparable {
   MixThemeData copyWith({
     Map<BreakpointToken, Breakpoint>? breakpoints,
     Map<ColorToken, Color>? colors,
-    Map<SpaceToken, double>? space,
+    Map<SpaceToken, double>? spaces,
     Map<TextStyleToken, TextStyle>? textStyles,
     Map<RadiusToken, Radius>? radii,
   }) {
@@ -105,7 +105,7 @@ class MixThemeData with Comparable {
       breakpoints:
           breakpoints == null ? this.breakpoints : StyledTokens(breakpoints),
       radii: radii == null ? this.radii : StyledTokens(radii),
-      space: space == null ? this.space : StyledTokens(space),
+      spaces: spaces == null ? this.spaces : StyledTokens(spaces),
     );
   }
 
@@ -115,28 +115,13 @@ class MixThemeData with Comparable {
       colors: colors.merge(other.colors),
       breakpoints: breakpoints.merge(other.breakpoints),
       radii: radii.merge(other.radii),
-      space: space.merge(other.space),
+      spaces: spaces.merge(other.spaces),
     );
   }
 
   @override
-  get props => [space, breakpoints, colors, textStyles, radii];
+  get props => [spaces, breakpoints, colors, textStyles, radii];
 }
-
-final _spaceTokenMap = StyledTokens({
-  SpaceToken.xsmall: 4.0,
-  SpaceToken.small: 8.0,
-  SpaceToken.medium: 16.0,
-  SpaceToken.large: 24.0,
-  SpaceToken.xlarge: 32.0,
-  SpaceToken.xxlarge: 40.0,
-});
-
-final _radiusTokenMap = StyledTokens({
-  RadiusToken.small: const Radius.circular(4),
-  RadiusToken.medium: const Radius.circular(8),
-  RadiusToken.large: const Radius.circular(16),
-});
 
 final _breakpointTokenMap = StyledTokens({
   BreakpointToken.xsmall: const Breakpoint(maxWidth: 599),

@@ -419,24 +419,6 @@ class SpacingSideUtility<T extends StyleAttribute>
   /// Creates a `SpacingSideUtility` with a builder function.
   const SpacingSideUtility(super.builder);
 
-  /// Applies the xsmall spacing size from design tokens.
-  T xsmall() => builder(SpaceToken.xsmall());
-
-  /// Applies the small spacing size from design tokens.
-  T small() => builder(SpaceToken.small());
-
-  /// Applies the medium spacing size from design tokens.
-  T medium() => builder(SpaceToken.medium());
-
-  /// Applies the large spacing size from design tokens.
-  T large() => builder(SpaceToken.large());
-
-  /// Applies the xlarge spacing size from design tokens.
-  T xlarge() => builder(SpaceToken.xlarge());
-
-  /// Applies the xxlarge spacing size from design tokens.
-  T xxlarge() => builder(SpaceToken.xxlarge());
-
   /// Applies a custom spacing value
   T call(double value) => builder(value);
 

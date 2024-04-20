@@ -1,83 +1,62 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
 
 import '../../../helpers/testing_utils.dart';
 
 void main() {
-  group('SpaceToken tests', () {
-    test('SpaceToken.xsmall() returns correct value', () {
-      expect(const SpaceToken('mix.space.xsmall'), SpaceToken.xsmall);
-      expect('mix.space.xsmall', SpaceToken.xsmall.name);
-      expect('mix.space.xsmall'.hashCode, SpaceToken.xsmall.name.hashCode);
-
-      expect(SpaceToken.xsmall(), lessThan(0));
-      expect(SpaceToken.xsmall(), -1.0 * SpaceToken.xsmall.hashCode);
+  group('SpaceToken Tests', () {
+    // Constructor Test
+    test('Constructor assigns name correctly', () {
+      const spaceToken = SpaceToken('testName');
+      expect(spaceToken.name, 'testName');
     });
 
-    test('SpaceToken.small() returns correct value', () {
-      expect(const SpaceToken('mix.space.small'), SpaceToken.small);
-      expect('mix.space.small', SpaceToken.small.name);
-      expect('mix.space.small'.hashCode, SpaceToken.small.name.hashCode);
+    // Equality Operator Test
+    test('Equality operator works correctly', () {
+      const spaceToken1 = SpaceToken('testName');
+      const spaceToken2 = SpaceToken('testName');
 
-      expect(SpaceToken.small(), lessThan(0));
-      expect(SpaceToken.small(), -1.0 * SpaceToken.small.hashCode);
+      const spaceToken3 = SpaceToken('differentName');
+
+      expect(spaceToken1 == spaceToken2, isTrue);
+
+      expect(spaceToken1 == spaceToken3, isFalse);
+      expect(spaceToken1 == Object(), isFalse);
     });
 
-    test('SpaceToken.medium() returns correct value', () {
-      expect(const SpaceToken('mix.space.medium'), SpaceToken.medium);
-      expect('mix.space.medium', SpaceToken.medium.name);
-      expect('mix.space.medium'.hashCode, SpaceToken.medium.name.hashCode);
+    // HashCode Test
+    test('hashCode is consistent with name', () {
+      const spaceToken1 = SpaceToken('testName');
+      const spaceToken2 = SpaceToken('testName');
+      const spaceToken3 = SpaceToken('differentName');
 
-      expect(SpaceToken.medium(), lessThan(0));
-      expect(SpaceToken.medium(), -1.0 * SpaceToken.medium.hashCode);
+      expect(spaceToken1.hashCode, spaceToken2.hashCode);
+      expect(spaceToken1.hashCode, isNot(spaceToken3.hashCode));
     });
 
-    test('SpaceToken.large() returns correct value', () {
-      expect(const SpaceToken('mix.space.large'), SpaceToken.large);
-      expect('mix.space.large', SpaceToken.large.name);
-      expect('mix.space.large'.hashCode, SpaceToken.large.name.hashCode);
-    });
+    testWidgets('Test it resolves correctly', (tester) async {
+      const smallSpaceToken = SpaceToken('small');
+      const mediumSpaceToken = SpaceToken('medium');
+      const largeSpaceToken = SpaceToken('large');
 
-    test('SpaceToken.xlarge() returns correct value', () {
-      expect(const SpaceToken('mix.space.xlarge'), SpaceToken.xlarge);
-      expect('mix.space.xlarge', SpaceToken.xlarge.name);
-      expect('mix.space.xlarge'.hashCode, SpaceToken.xlarge.name.hashCode);
+      final theme = MixThemeData(
+        spaces: {
+          smallSpaceToken: 4,
+          mediumSpaceToken: 8,
+          largeSpaceToken: 16,
+        },
+      );
 
-      expect(SpaceToken.xlarge(), lessThan(0));
-      expect(SpaceToken.xlarge(), -1.0 * SpaceToken.xlarge.hashCode);
-    });
+      await tester.pumpWidget(createWithMixTheme(theme));
 
-    test('SpaceToken.xxlarge() returns correct value', () {
-      expect(const SpaceToken('mix.space.xxlarge'), SpaceToken.xxlarge);
-      expect('mix.space.xxlarge', SpaceToken.xxlarge.name);
-      expect('mix.space.xxlarge'.hashCode, SpaceToken.xxlarge.name.hashCode);
+      final context = tester.element(find.byType(Container));
 
-      expect(SpaceToken.xxlarge(), lessThan(0));
-      expect(SpaceToken.xxlarge(), -1.0 * SpaceToken.xxlarge.hashCode);
-    });
-  });
+      final mixData = MixData.create(context, const Style.empty());
 
-  group('WithSpaceTokens tests', () {
-    test('WithSpaceTokens returns correct value', () {
-      const withSpaceTokens = SpacingSideUtility(UtilityTestAttribute.new);
-      expect(withSpaceTokens.xsmall().value, SpaceToken.xsmall());
-      expect(withSpaceTokens.small().value, SpaceToken.small());
-      expect(withSpaceTokens.medium().value, SpaceToken.medium());
-      expect(withSpaceTokens.large().value, SpaceToken.large());
-      expect(withSpaceTokens.xlarge().value, SpaceToken.xlarge());
-      expect(withSpaceTokens.xxlarge().value, SpaceToken.xxlarge());
-    });
-  });
-
-  group('SpaceTokenUtil', () {
-    test('SpaceTokenUtil returns correct value', () {
-      const spaceTokenUtil = SpaceTokenUtil();
-      expect(spaceTokenUtil.xsmall(), SpaceToken.xsmall());
-      expect(spaceTokenUtil.small(), SpaceToken.small());
-      expect(spaceTokenUtil.medium(), SpaceToken.medium());
-      expect(spaceTokenUtil.large(), SpaceToken.large());
-      expect(spaceTokenUtil.xlarge(), SpaceToken.xlarge());
-      expect(spaceTokenUtil.xxlarge(), SpaceToken.xxlarge());
+      expect(mixData.tokens.spaceToken(smallSpaceToken), 4);
+      expect(mixData.tokens.spaceToken(mediumSpaceToken), 8);
+      expect(mixData.tokens.spaceToken(largeSpaceToken), 16);
     });
   });
 }

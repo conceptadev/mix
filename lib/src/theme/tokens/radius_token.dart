@@ -4,15 +4,7 @@ import 'package:flutter/widgets.dart';
 import '../mix_theme.dart';
 import 'mix_token.dart';
 
-const _small = RadiusToken('mix.radii.small');
-const _medium = RadiusToken('mix.radii.medium');
-const _large = RadiusToken('mix.radii.large');
-
 class RadiusToken extends MixToken<Radius> {
-  static const small = _small;
-  static const medium = _medium;
-  static const large = _large;
-
   const RadiusToken(super.name);
 
   @override
@@ -59,7 +51,7 @@ class RadiusRef extends Radius with TokenRef<RadiusToken, Radius> {
   int get hashCode => token.hashCode;
 }
 
-// // Helper class to wrap functions that can return
+// Helper class to wrap functions that can return
 // a Radius token that resmebles the WithSpaceToken
 @immutable
 class UtilityWithRadiusTokens<T> {
@@ -73,12 +65,6 @@ class UtilityWithRadiusTokens<T> {
     // Need to accept a type with positional params, and convert it into a function that accepts a double and returns T
     return UtilityWithRadiusTokens((Radius value) => fn(value));
   }
-
-  T small() => call(RadiusToken.small());
-
-  T medium() => call(RadiusToken.medium());
-
-  T large() => call(RadiusToken.large());
 
   T call(Radius value) => _fn(value);
 }
