@@ -62,5 +62,16 @@ class DecorationImageUtility<T extends StyleAttribute>
     return BoolUtility((isAntiAlias) => _only(isAntiAlias: isAntiAlias));
   }
 
+  ImageProviderUtility<T> get image {
+    return ImageProviderUtility((image) => _only(image: image));
+  }
+
   T call(ImageProvider image) => builder(DecorationImageDto(image: image));
+}
+
+class ImageProviderUtility<T extends StyleAttribute>
+    extends MixUtility<T, ImageProvider> {
+  const ImageProviderUtility(super.builder);
+
+  T call(ImageProvider image) => builder(image);
 }
