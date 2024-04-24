@@ -54,7 +54,7 @@ void main() {
       textHeightBehavior: textSpec.textHeightBehavior,
     );
     const mixedTextKey = Key('mixed_text');
-    const mixedText = MixedText(
+    const mixedText = TextSpecWidget(
       key: mixedTextKey,
       text: 'Mixed Text',
       spec: textSpec,

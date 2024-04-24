@@ -53,7 +53,7 @@ class StyledText extends StyledWidget {
       final spec = TextSpec.of(mix);
 
       return mix.isAnimated
-          ? AnimatedMixedText(
+          ? AnimatedTextSpec(
               text: text,
               spec: spec,
               semanticsLabel: semanticsLabel,
@@ -61,7 +61,7 @@ class StyledText extends StyledWidget {
               duration: mix.animation!.duration,
               curve: mix.animation!.curve,
             )
-          : MixedText(
+          : TextSpecWidget(
               text: text,
               spec: spec,
               semanticsLabel: semanticsLabel,
@@ -71,8 +71,8 @@ class StyledText extends StyledWidget {
   }
 }
 
-class MixedText extends StatelessWidget {
-  const MixedText({
+class TextSpecWidget extends StatelessWidget {
+  const TextSpecWidget({
     required this.text,
     required this.spec,
     this.semanticsLabel,
@@ -106,8 +106,8 @@ class MixedText extends StatelessWidget {
   }
 }
 
-class AnimatedMixedText extends ImplicitlyAnimatedWidget {
-  const AnimatedMixedText({
+class AnimatedTextSpec extends ImplicitlyAnimatedWidget {
+  const AnimatedTextSpec({
     required this.text,
     this.spec,
     this.semanticsLabel,
@@ -123,12 +123,12 @@ class AnimatedMixedText extends ImplicitlyAnimatedWidget {
   final TextSpec? spec;
 
   @override
-  AnimatedWidgetBaseState<AnimatedMixedText> createState() =>
+  AnimatedWidgetBaseState<AnimatedTextSpec> createState() =>
       _AnimatedMixedTextState();
 }
 
 class _AnimatedMixedTextState
-    extends AnimatedWidgetBaseState<AnimatedMixedText> {
+    extends AnimatedWidgetBaseState<AnimatedTextSpec> {
   TextSpecTween? _textSpecTween;
 
   @override
@@ -146,7 +146,7 @@ class _AnimatedMixedTextState
   Widget build(BuildContext context) {
     final spec = _textSpecTween!.evaluate(animation);
 
-    return MixedText(
+    return TextSpecWidget(
       text: widget.text,
       spec: spec,
       semanticsLabel: widget.semanticsLabel,

@@ -24,7 +24,7 @@ class StyledIcon extends StyledWidget {
       final spec = IconSpec.of(mix);
 
       return mix.isAnimated
-          ? AnimatedMixedIcon(
+          ? AnimatedIconSpecWidget(
               icon: icon,
               spec: spec,
               semanticLabel: semanticLabel,
@@ -32,7 +32,7 @@ class StyledIcon extends StyledWidget {
               curve: mix.animation!.curve,
               duration: mix.animation!.duration,
             )
-          : MixedIcon(
+          : IconSpecWidget(
               icon,
               spec: spec,
               semanticLabel: semanticLabel,
@@ -42,8 +42,8 @@ class StyledIcon extends StyledWidget {
   }
 }
 
-class MixedIcon extends StatelessWidget {
-  const MixedIcon(
+class IconSpecWidget extends StatelessWidget {
+  const IconSpecWidget(
     this.icon, {
     this.spec,
     this.semanticLabel,
@@ -109,8 +109,8 @@ class AnimatedStyledIcon extends StyledWidget {
   }
 }
 
-class AnimatedMixedIcon extends ImplicitlyAnimatedWidget {
-  const AnimatedMixedIcon({
+class AnimatedIconSpecWidget extends ImplicitlyAnimatedWidget {
+  const AnimatedIconSpecWidget({
     required this.icon,
     required this.spec,
     super.key,
@@ -134,7 +134,7 @@ class AnimatedMixedIcon extends ImplicitlyAnimatedWidget {
 }
 
 class _AnimatedMixedIconState
-    extends AnimatedWidgetBaseState<AnimatedMixedIcon> {
+    extends AnimatedWidgetBaseState<AnimatedIconSpecWidget> {
   IconSpecTween? _spec;
 
   @override
@@ -152,7 +152,7 @@ class _AnimatedMixedIconState
   Widget build(BuildContext context) {
     final spec = _spec?.evaluate(animation);
 
-    return MixedIcon(
+    return IconSpecWidget(
       widget.icon,
       spec: spec,
       semanticLabel: widget.semanticLabel,

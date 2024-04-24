@@ -30,17 +30,17 @@ class StyledStack extends StyledWidget {
 
   @override
   Widget build(BuildContext context) {
-    // The withMix method applies the current styling context and creates a MixedStack.
+    // The withMix method applies the current styling context and creates a StackSpecWidget.
     return withMix(context, (mix) {
       final spec = StackSpec.of(mix);
 
-      return MixedStack(spec: spec, children: children);
+      return StackSpecWidget(spec: spec, children: children);
     });
   }
 }
 
-class MixedStack extends StatelessWidget {
-  const MixedStack({this.spec, super.key, this.children});
+class StackSpecWidget extends StatelessWidget {
+  const StackSpecWidget({this.spec, super.key, this.children});
 
   final List<Widget>? children;
   final StackSpec? spec;
@@ -88,16 +88,16 @@ class ZBox extends StyledWidget {
       final boxSpec = BoxSpec.of(mix);
       final stackSpec = StackSpec.of(mix);
 
-      return MixedBox(
+      return BoxSpecWidget(
         spec: boxSpec,
-        child: MixedStack(spec: stackSpec, children: children),
+        child: StackSpecWidget(spec: stackSpec, children: children),
       );
     });
   }
 }
 
 // Default Stack used as a fallback
-// for styling properties in MixedStack.
+// for styling properties in StackSpecWidget.
 
 // TODO: This is a temporary solution to avoid errors with more recent versions of Flutter.
 // ignore: prefer_const_constructors

@@ -45,13 +45,17 @@ class StyledFlex extends StyledWidget {
     return withMix(context, (mix) {
       final spec = FlexSpec.of(mix);
 
-      return MixedFlex(spec: spec, direction: direction, children: children);
+      return FlexSpecWidget(
+        spec: spec,
+        direction: direction,
+        children: children,
+      );
     });
   }
 }
 
-class MixedFlex extends StatelessWidget {
-  const MixedFlex({
+class FlexSpecWidget extends StatelessWidget {
+  const FlexSpecWidget({
     super.key,
     required this.spec,
     required this.children,
@@ -179,9 +183,13 @@ class FlexBox extends StyledWidget {
       final box = BoxSpec.of(mix);
       final flex = FlexSpec.of(mix);
 
-      return MixedBox(
+      return BoxSpecWidget(
         spec: box,
-        child: MixedFlex(spec: flex, direction: direction, children: children),
+        child: FlexSpecWidget(
+          spec: flex,
+          direction: direction,
+          children: children,
+        ),
       );
     });
   }
