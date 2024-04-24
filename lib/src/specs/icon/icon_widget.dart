@@ -130,10 +130,10 @@ class AnimatedIconSpecWidget extends ImplicitlyAnimatedWidget {
 
   @override
   // ignore: library_private_types_in_public_api
-  _AnimatedMixedIconState createState() => _AnimatedMixedIconState();
+  _AnimatedIconSpecState createState() => _AnimatedIconSpecState();
 }
 
-class _AnimatedMixedIconState
+class _AnimatedIconSpecState
     extends AnimatedWidgetBaseState<AnimatedIconSpecWidget> {
   IconSpecTween? _spec;
 
