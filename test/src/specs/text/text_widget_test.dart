@@ -55,8 +55,8 @@ void main() {
     );
     const mixedTextKey = Key('mixed_text');
     const mixedText = TextSpecWidget(
+      'Mixed Text',
       key: mixedTextKey,
-      text: 'Mixed Text',
       spec: textSpec,
     );
 

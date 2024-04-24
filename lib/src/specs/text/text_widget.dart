@@ -53,8 +53,8 @@ class StyledText extends StyledWidget {
       final spec = TextSpec.of(mix);
 
       return mix.isAnimated
-          ? AnimatedTextSpec(
-              text: text,
+          ? AnimatedTextSpecWidget(
+              text,
               spec: spec,
               semanticsLabel: semanticsLabel,
               locale: locale,
@@ -62,7 +62,7 @@ class StyledText extends StyledWidget {
               curve: mix.animation!.curve,
             )
           : TextSpecWidget(
-              text: text,
+              text,
               spec: spec,
               semanticsLabel: semanticsLabel,
               locale: locale,
@@ -72,8 +72,8 @@ class StyledText extends StyledWidget {
 }
 
 class TextSpecWidget extends StatelessWidget {
-  const TextSpecWidget({
-    required this.text,
+  const TextSpecWidget(
+    this.text, {
     required this.spec,
     this.semanticsLabel,
     this.locale,
@@ -106,9 +106,9 @@ class TextSpecWidget extends StatelessWidget {
   }
 }
 
-class AnimatedTextSpec extends ImplicitlyAnimatedWidget {
-  const AnimatedTextSpec({
-    required this.text,
+class AnimatedTextSpecWidget extends ImplicitlyAnimatedWidget {
+  const AnimatedTextSpecWidget(
+    this.text, {
     this.spec,
     this.semanticsLabel,
     this.locale,
@@ -123,12 +123,12 @@ class AnimatedTextSpec extends ImplicitlyAnimatedWidget {
   final TextSpec? spec;
 
   @override
-  AnimatedWidgetBaseState<AnimatedTextSpec> createState() =>
-      _AnimatedMixedTextState();
+  AnimatedWidgetBaseState<AnimatedTextSpecWidget> createState() =>
+      _AnimatedTextSpecWidgetState();
 }
 
-class _AnimatedMixedTextState
-    extends AnimatedWidgetBaseState<AnimatedTextSpec> {
+class _AnimatedTextSpecWidgetState
+    extends AnimatedWidgetBaseState<AnimatedTextSpecWidget> {
   TextSpecTween? _textSpecTween;
 
   @override
@@ -147,7 +147,7 @@ class _AnimatedMixedTextState
     final spec = _textSpecTween!.evaluate(animation);
 
     return TextSpecWidget(
-      text: widget.text,
+      widget.text,
       spec: spec,
       semanticsLabel: widget.semanticsLabel,
       locale: widget.locale,
