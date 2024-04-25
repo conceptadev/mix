@@ -35,13 +35,13 @@ To use a variant in a style, you can call it as a function on a `Style` passing 
 const outlined = Variant('outlined');
 
 final style = Style(
-  padding(20),
-  borderRadius(10),
-  backgroundColor.black(),
+  box.padding(20),
+  box.borderRadius(10),
+  box.color.black(),
   text.style.color.white(),
   outlined(
-    backgroundColor.transparent(),
-    border.color.black(),
+    box.color.transparent(),
+    box.border.color.black(),
     text.style.color.black(),
   ),
 );
@@ -55,14 +55,14 @@ To apply a variant, you can use the `applyVariant` method on a `Style`.
 const outlined = Variant('outlined');
 
 final style = Style(
-  padding(20),
-  borderRadius(10),
-  backgroundColor.black(),
+  box.padding(20),
+  box.borderRadius(10),
+  box.color.black(),
 
   text.style.color.white(),
   outlined(
-    backgroundColor.transparent(),
-    border.color.black(),
+    box.color.transparent(),
+   box.border.color.black(),
     text.style.color.black(),
   ),
 );
@@ -74,10 +74,10 @@ final outlinedStyle = style.applyVariant(outlined);
 
 ```dart highlight="2-4"
 final outlinedStyle = Style(
-  padding(20),
-  borderRadius(10),
-  backgroundColor.transparent(),
-  border.color.black(),
+  box.padding(20),
+  box.borderRadius(10),
+  box.color.transparent(),
+  box.border.color.black(),
   text.style.color.black(),
 );
 ```
@@ -108,24 +108,24 @@ To use a context variant in a style, you can call it as a function on a `Style` 
 
 ```dart {6-9}
 final style = Style(
-  padding(20),
-  borderRadius(10),
-  backgroundColor.black(),
+  box.padding(20),
+  box.borderRadius(10),
+  box.color.black(),
   text.style.color.white(),
   onDark(
-    backgroundColor.white(),
+    box.color.white(),
     text.style.color.black(),
   ),
 );
 ```
 
-When the `onDark` variant is applied, it will override the `backgroundColor` and `text.style.color` attributes. When this happens the style will be equivalent to the following:
+When the `onDark` variant is applied, it will override the `box.color` and `text.style.color` attributes. When this happens the style will be equivalent to the following:
 
 ```dart highlight="2-4"
 final style = Style(
-  padding(20),
-  borderRadius(10),
-  backgroundColor.white(),
+  box.padding(20),
+  box.borderRadius(10),
+  box.color.white(),
   text.style.color.black(),
 );
 ```
@@ -140,11 +140,11 @@ The `|` operator is used in case you want to apply the variant when any of the v
 
 ```dart highlight="3-7"
 final style = Style(
-  padding(20),
+  box.padding(20),
   (onSmall | onMedium)( // Whether it's small OR medium
-    width(300),
-    height(400),
-    backgroundColor.white(),
+    box.width(300),
+    box.height(400),
+    box.color.white(),
   ),
 );
 ```
@@ -153,10 +153,10 @@ When the `onSmall` variant or `onMedium` variant is applied, the resulted `Style
 
 ```dart highlight="2-4"
 Style(
-  padding(20),
-  width(300),
-  height(400),
-  backgroundColor.white(),
+  box.padding(20),
+  box.width(300),
+  box.height(400),
+  box.color.white(),
 );
 ```
 
@@ -166,7 +166,7 @@ The `&` operator is used in case you want to apply the variant when all of the v
 
 ```dart highlight="3-6"
 final style = Style(
-  padding(20),
+  box.padding(20),
   // When it's hovering AND pressing
   (onHover & onPress)(
     text.style.color.black(),
@@ -179,7 +179,7 @@ In this scenery only when the onHover variant and onPress are applied, the resul
 
 ```dart highlight="2-4"
 Style(
-  padding(20),
+  box.padding(20),
   text.style.color.black(),
   text.style.bold(),
 );

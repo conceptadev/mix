@@ -184,13 +184,13 @@ class ProfileButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Box(
       style: Style(
-        height(50),
-        width(double.infinity),
-        backgroundColor.of($colors.primary),
+        box.height(50),
+        box.width(double.infinity),
+        box.color.of($colors.primary),
+        box.alignment.center(),
+        box.borderRadius.all.of($radii.large),
         text.style.of($textStyles.headline3),
-        alignment.center(),
         text.style.color.of($colors.onPrimary),
-        borderRadius.all.of($radii.large),
       ),
       child: StyledText(
         label,
@@ -214,7 +214,7 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: $colors.surface.resolve(context),
+        box.color: $colors.surface.resolve(context),
         title: Text(
           'Profile',
           style: $textStyles.headline2.resolve(context).copyWith(
@@ -222,7 +222,7 @@ class ProfilePage extends StatelessWidget {
               ),
         ),
       ),
-      backgroundColor: $colors.surface.resolve(context),
+      box.color: $colors.surface.resolve(context),
       body: SafeArea(
         minimum: const EdgeInsets.all(16),
         child: Column(
@@ -307,7 +307,7 @@ Mix provides an easy utility that you can use called `$md`, this is a namespace 
 Box(
   style: Style(
     text.style.of($md.textTheme.headline1),
-    backgroundColor.of($md.colorScheme.primary),
+    box.color.of($md.colorScheme.primary),
   ),
   child: Text('Hello World'),
 )

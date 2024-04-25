@@ -328,6 +328,9 @@ class BoxSpecUtility<T extends SpecAttribute>
 
   GradientUtility<T> get gradient => decoration.gradient;
 
+  RadialGradientUtility<T> get radialGradient => gradient.radial;
+  LinearGradientUtility<T> get linearGradient => gradient.linear;
+
   ShapeDecorationUtility<T> get shapeDecoration =>
       ShapeDecorationUtility((decoration) => only(decoration: decoration));
 

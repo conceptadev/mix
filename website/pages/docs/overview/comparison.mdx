@@ -24,21 +24,21 @@ class CustomMixWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final style = Style(
-      height(100),
-      margin.vertical(10),
-      elevation(10),
-      borderRadius(10),
-      backgroundColor($md.colorScheme.primary()),
+      box.height(100),
+      box.margin.vertical(10),
+      box.elevation(10),
+      box.borderRadius(10),
+      box.color($md.colorScheme.primary()),
       text.style.as($button()),
       text.style.color($md.colorScheme.onPrimary()),
       onHover(
         elevation(2),
-        padding(20),
-        backgroundColor($md.colorScheme.secondary()),
+        box.padding(20),
+        box.color($md.colorScheme.secondary()),
         text.style(color: $md.colorScheme.onSecondary()),
       ),
     );
-    return GestureBox(
+    return PressableBox(
       style: style,
       child: const StyledText('Custom Widget'),
     );

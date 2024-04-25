@@ -5,8 +5,6 @@ analyzer:
   exclude: 
     - "**/*.g.dart"
     - "**/*.freezed.dart"
-# For lint rules and documentation, see http://dart-lang.github.io/linter/lints.
-# Uncomment to specify additional rules.
 linter:
   rules:
     # TODO: Turn this to true when all public apis are documented 
@@ -28,9 +26,7 @@ dart_code_metrics:
         only-in-src: true
     prefer-match-file-name: false
     prefer-correct-callback-field-name: false
-    # Remove later when cleaning up
     prefer-single-widget-per-file: false
-    # End of remove later
     match-getter-setter-field-names: false
     prefer-dedicated-media-query-methods: false
     avoid-shadowing: false

@@ -23,10 +23,10 @@ Creating a Mix style is a seamless process. Start by constructing a `Style` obje
 
 ```dart
 final style = Style(
-  height(100),
-  width(100),
-  backgroundColor.purple(),
-  borderRadius(10),
+  box.height(100),
+  box.width(100),
+  box.color.purple(),
+  box.borderRadius(10),
 );
 ```
 
@@ -46,15 +46,15 @@ Simply use the `mix()` method on a Style instance. For example:
 
 ```dart
 final baseStyle = Style(
-  height(100),
-  width(100),
-  backgroundColor.purple(),
-  borderRadius(10),
+  box.height(100),
+  box.width(100),
+  box.color.purple(),
+  box.borderRadius(10),
 );
 
 final newStyle = baseStyle.mix(
-  border.width(2),
-  border.color.black(),
+  box.border.width(2),
+  box.border.color.black(),
 );
 ```
 
@@ -66,11 +66,11 @@ In this example, the `newStyle` inherits all attributes from the `baseStyle`, an
 
 ```dart
 final newStyle = baseStyle.mix(
-  backgroundColor.blue(),
+  box.color.blue(),
 );
 ```
 
-In this example, the `newStyle` will inherit all attributes from the `baseStyle`, except for the `backgroundColor` attribute, which will be overridden by the new value.
+In this example, the `newStyle` will inherit all attributes from the `baseStyle`, except for the `box.color` attribute, which will be overridden by the new value.
 
 #### **Combining Styles**
 
@@ -89,8 +89,8 @@ Use the `merge()` method on a Style instance. For example:
 
 ```dart
 final otherStyle = Style(
-  border.width(2),
-  border.color.black(),
+  box.border.width(2),
+  box.border.color.black(),
 );
 
 final newStyle = baseStyle.merge(otherStyle);
@@ -102,20 +102,20 @@ In this example, the `newStyle` will inherit all attributes from both the `baseS
 
 To apply styles individually, use `apply()`. This gives you control over their order.
 
-In this example, the `backgroundColor` attribute of the `baseStyle` is overridden by the `backgroundColor` attribute of the `newStyle`:
+In this example, the `box.color` attribute of the `baseStyle` is overridden by the `box.color` attribute of the `newStyle`:
 
 ```dart
 final newStyle = Style(
   apply(baseStyle),
-  backgroundColor.blue(),
+  box.color.blue(),
 );
 ```
 
-However, if you add `apply` after the `backgroundColor` attribute, the `backgroundColor` will be overridden by the `baseStyle`:
+However, if you add `apply` after the `box.color` attribute, the `box.color` will be overridden by the `baseStyle`:
 
 ```dart
 final newStyle = Style(
-  backgroundColor.blue(),
+  box.color.blue(),
   apply(baseStyle),
 );
 ```
