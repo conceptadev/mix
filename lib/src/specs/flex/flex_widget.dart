@@ -42,8 +42,8 @@ class StyledFlex extends StyledWidget {
 
   @override
   Widget build(BuildContext context) {
-    return withMix(context, (mix) {
-      final spec = FlexSpec.of(mix);
+    return withMix(context, (context) {
+      final spec = FlexSpec.of(context);
 
       return FlexSpecWidget(
         spec: spec,

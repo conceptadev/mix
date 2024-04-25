@@ -43,7 +43,10 @@ abstract class StyledWidget extends StatelessWidget {
   /// merging the inherited style with the local style, then applies it to the widget.
   /// This method is typically used in the `build` method of widgets extending
   /// [StyledWidget] to provide the actual styled widget.
-  Widget withMix(BuildContext context, Widget Function(MixData mix) builder) {
+  Widget withMix(
+    BuildContext context,
+    Widget Function(BuildContext context) builder,
+  ) {
     final inheritedMix = inherit ? MixProvider.maybeOfInherited(context) : null;
 
     final mix = style.of(context);
@@ -52,7 +55,10 @@ abstract class StyledWidget extends StatelessWidget {
 
     return MixProvider(
       data: mergedMix,
-      child: applyDecorators(mergedMix, builder(mergedMix)),
+      child: applyDecorators(
+        mergedMix,
+        Builder(builder: (newContext) => builder(newContext)),
+      ),
     );
   }
 
@@ -91,7 +97,7 @@ class MixBuilder extends StyledWidget {
     super.orderOfDecorators = const [],
   });
 
-  final Widget Function(MixData) builder;
+  final Widget Function(BuildContext) builder;
 
   @override
   Widget build(BuildContext context) => withMix(context, builder);

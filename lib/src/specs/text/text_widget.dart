@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../core/styled_widget.dart';
+import '../../factory/mix_provider.dart';
 import 'text_spec.dart';
 
 /// [StyledText] - A styled widget for displaying text with a mix of styles.
@@ -49,8 +50,9 @@ class StyledText extends StyledWidget {
 
   @override
   Widget build(BuildContext context) {
-    return withMix(context, (mix) {
-      final spec = TextSpec.of(mix);
+    return withMix(context, (context) {
+      final mix = MixProvider.of(context);
+      final spec = TextSpec.of(context);
 
       return mix.isAnimated
           ? AnimatedTextSpecWidget(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../core/styled_widget.dart';
+import '../../factory/mix_provider.dart';
 import 'icon_spec.dart';
 
 class StyledIcon extends StyledWidget {
@@ -20,8 +21,9 @@ class StyledIcon extends StyledWidget {
 
   @override
   Widget build(BuildContext context) {
-    return withMix(context, (mix) {
-      final spec = IconSpec.of(mix);
+    return withMix(context, (context) {
+      final spec = IconSpec.of(context);
+      final mix = MixProvider.of(context);
 
       return mix.isAnimated
           ? AnimatedIconSpecWidget(
@@ -94,8 +96,8 @@ class AnimatedStyledIcon extends StyledWidget {
 
   @override
   Widget build(BuildContext context) {
-    return withMix(context, (mix) {
-      final spec = IconSpec.of(mix);
+    return withMix(context, (context) {
+      final spec = IconSpec.of(context);
 
       return AnimatedIcon(
         icon: icon,

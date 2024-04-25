@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 import '../../core/attribute.dart';
+import '../../factory/mix_provider.dart';
 import '../../factory/mix_provider_data.dart';
 import 'icon_attribute.dart';
 
@@ -40,7 +41,14 @@ class IconSpec extends Spec<IconSpec> {
         fill = null,
         applyTextScaling = null;
 
-  static IconSpec of(MixData mix) {
+  static IconSpec of(BuildContext context) {
+    final mix = MixProvider.of(context);
+
+    return mix.attributeOf<IconSpecAttribute>()?.resolve(mix) ??
+        const IconSpec.empty();
+  }
+
+  static IconSpec from(MixData mix) {
     return mix.attributeOf<IconSpecAttribute>()?.resolve(mix) ??
         const IconSpec.empty();
   }

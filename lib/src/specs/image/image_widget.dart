@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../core/styled_widget.dart';
+import '../../factory/mix_provider.dart';
 import '../../helpers/constants.dart';
 import 'image_spec.dart';
 
@@ -33,8 +34,9 @@ class StyledImage extends StyledWidget {
 
   @override
   Widget build(BuildContext context) {
-    return withMix(context, (mix) {
-      final spec = ImageSpec.of(mix);
+    return withMix(context, (context) {
+      final mix = MixProvider.of(context);
+      final spec = ImageSpec.of(context);
 
       return mix.isAnimated
           ? AnimatedImageSpecWidget(

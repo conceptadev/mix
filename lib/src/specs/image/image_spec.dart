@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import '../../core/attribute.dart';
+import '../../factory/mix_provider.dart';
 import '../../factory/mix_provider_data.dart';
 import '../../helpers/lerp_helpers.dart';
 import 'image_attribute.dart';
@@ -42,7 +43,14 @@ class ImageSpec extends Spec<ImageSpec> {
         colorBlendMode = BlendMode.clear,
         fit = null;
 
-  static ImageSpec of(MixData mix) {
+  static ImageSpec of(BuildContext context) {
+    final mix = MixProvider.of(context);
+
+    return mix.attributeOf<ImageSpecAttribute>()?.resolve(mix) ??
+        const ImageSpec.empty();
+  }
+
+  static ImageSpec from(MixData mix) {
     return mix.attributeOf<ImageSpecAttribute>()?.resolve(mix) ??
         const ImageSpec.empty();
   }

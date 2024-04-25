@@ -31,8 +31,8 @@ class StyledStack extends StyledWidget {
   @override
   Widget build(BuildContext context) {
     // The withMix method applies the current styling context and creates a StackSpecWidget.
-    return withMix(context, (mix) {
-      final spec = StackSpec.of(mix);
+    return withMix(context, (context) {
+      final spec = StackSpec.of(context);
 
       return StackSpecWidget(spec: spec, children: children);
     });

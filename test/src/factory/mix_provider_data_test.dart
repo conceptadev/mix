@@ -118,11 +118,8 @@ void main() {
               Style(const _NonInheritableAttribute(), icon.color.black()),
             ),
             child: Builder(builder: (context) {
-              final inheritedMix = MixProvider.maybeOfInherited(context);
+              final iconSpec = IconSpec.of(context);
 
-              final iconSpec = IconSpec.of(inheritedMix!);
-
-              expect(inheritedMix.attributes.length, 1);
               expect(iconSpec.color, Colors.black);
 
               return const SizedBox();

@@ -26,7 +26,7 @@ void main() {
         ),
       );
 
-      final spec = FlexSpec.of(mix);
+      final spec = FlexSpec.from(mix);
 
       expect(spec.crossAxisAlignment, CrossAxisAlignment.center);
       expect(spec.mainAxisAlignment, MainAxisAlignment.center);
