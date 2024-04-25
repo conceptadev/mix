@@ -19,6 +19,7 @@ import 'decorators/clip_widget_decorator.dart';
 import 'decorators/widget_decorators_util.dart';
 import 'factory/style_mix.dart';
 import 'specs/box/box_util.dart';
+import 'specs/box/box_widget.dart';
 import 'specs/image/image_util.dart';
 import 'widgets/pressable/pressable_util.dart';
 
@@ -27,6 +28,9 @@ const kShortAliasDeprecation =
 
 @Deprecated('Use Style instead')
 typedef Mix = Style;
+
+@Deprecated('Use Box instead')
+typedef StyledContainer = Box;
 
 extension DeprecatedMixExtension on Style {
   @Deprecated('Use applyVariant(value) instead')

@@ -5,8 +5,6 @@ import '../../deprecations.dart';
 import '../../factory/mix_provider.dart';
 import 'box_spec.dart';
 
-typedef StyledContainer = Box;
-
 /// A [Container] equivalent widget for applying styles using Mix.
 ///
 /// `Box` is a concrete implementation of [StyledWidget] that applies custom styles
