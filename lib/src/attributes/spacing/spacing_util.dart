@@ -72,24 +72,20 @@ class SpacingUtility<T extends StyleAttribute>
 class SpacingDirectionalUtility<T extends StyleAttribute>
     extends DtoUtility<T, SpacingDto, EdgeInsetsGeometry> {
   late final all = SpacingSideUtility(
-    (value) => only(top: value, bottom: value, start: value, end: value),
+    (v) => only(top: v, bottom: v, start: v, end: v),
   );
 
-  late final start = SpacingSideUtility((value) => only(start: value));
+  late final start = SpacingSideUtility((v) => only(start: v));
 
-  late final end = SpacingSideUtility((value) => only(end: value));
+  late final end = SpacingSideUtility((v) => only(end: v));
 
-  late final top = SpacingSideUtility((value) => only(top: value));
+  late final top = SpacingSideUtility((v) => only(top: v));
 
-  late final bottom = SpacingSideUtility((value) => only(bottom: value));
+  late final bottom = SpacingSideUtility((v) => only(bottom: v));
 
-  late final vertical = SpacingSideUtility(
-    (value) => only(top: value, bottom: value),
-  );
+  late final vertical = SpacingSideUtility((v) => only(top: v, bottom: v));
 
-  late final horizontal = SpacingSideUtility(
-    (double value) => only(start: value, end: value),
-  );
+  late final horizontal = SpacingSideUtility((v) => only(start: v, end: v));
 
   SpacingDirectionalUtility(super.builder) : super(valueToDto: SpacingDto.from);
 
