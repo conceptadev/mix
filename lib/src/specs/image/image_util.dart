@@ -7,49 +7,24 @@ import '../../core/attribute.dart';
 import '../../decorators/widget_decorators_util.dart';
 import 'image_attribute.dart';
 
-const image = ImageSpecUtility(selfBuilder);
+final image = ImageSpecUtility(selfBuilder);
+
+final $image = ImageSpecUtility(selfBuilder);
 
 class ImageSpecUtility<T extends SpecAttribute>
     extends SpecUtility<T, ImageSpecAttribute> {
-  const ImageSpecUtility(super.builder);
+  late final color = ColorUtility((v) => only(color: v));
+  late final repeat = ImageRepeatUtility((v) => only(repeat: v));
+  late final fit = BoxFitUtility((v) => only(fit: v));
+  late final width = DoubleUtility((v) => only(width: v));
+  late final height = DoubleUtility((v) => only(height: v));
+  late final alignment = AlignmentUtility((v) => only(alignment: v));
+  late final centerSlice = RectUtility((v) => only(centerSlice: v));
+  late final filterQuality =
+      FilterQualityUtility((v) => only(filterQuality: v));
+  late final blendMode = BlendModeUtility((v) => only(blendMode: v));
 
-  ColorUtility<T> get color {
-    return ColorUtility((color) => only(color: color));
-  }
-
-  ImageRepeatUtility<T> get repeat {
-    return ImageRepeatUtility((repeat) => only(repeat: repeat));
-  }
-
-  BoxFitUtility<T> get fit {
-    return BoxFitUtility((fit) => only(fit: fit));
-  }
-
-  DoubleUtility<T> get width {
-    return DoubleUtility((width) => only(width: width));
-  }
-
-  DoubleUtility<T> get height {
-    return DoubleUtility((height) => only(height: height));
-  }
-
-  AlignmentUtility<T> get alignment {
-    return AlignmentUtility((alignment) => only(alignment: alignment));
-  }
-
-  RectUtility<T> get centerSlice {
-    return RectUtility((rect) => only(centerSlice: rect));
-  }
-
-  FilterQualityUtility<T> get filterQuality {
-    return FilterQualityUtility(
-      (filterQuality) => only(filterQuality: filterQuality),
-    );
-  }
-
-  BlendModeUtility<T> get blendMode {
-    return BlendModeUtility((blendMode) => only(blendMode: blendMode));
-  }
+  ImageSpecUtility(super.builder);
 
   @override
   T only({

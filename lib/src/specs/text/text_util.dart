@@ -11,67 +11,34 @@ import '../../core/directive.dart';
 import '../../decorators/widget_decorators_util.dart';
 import 'text_attribute.dart';
 
-const text = TextSpecUtility(selfBuilder);
+final text = TextSpecUtility(selfBuilder);
+
+final $text = TextSpecUtility(selfBuilder);
 
 class TextSpecUtility<T extends SpecAttribute>
     extends SpecUtility<T, TextSpecAttribute> {
-  const TextSpecUtility(super.builder);
+  late final directive = TextDirectiveUtility((v) => only(directive: v));
+  late final overflow = TextOverflowUtility((v) => only(overflow: v));
+  late final strutStyle = StrutStyleUtility((v) => only(strutStyle: v));
+  late final textAlign = TextAlignUtility((v) => only(textAlign: v));
+  late final maxLines = IntUtility((v) => only(maxLines: v));
+  late final style = TextStyleUtility((v) => only(style: v));
+  late final textWidthBasis =
+      TextWidthBasisUtility((v) => only(textWidthBasis: v));
+  late final textHeightBehavior =
+      TextHeightBehaviorUtility((v) => only(textHeightBehavior: v));
+  late final textDirection =
+      TextDirectionUtility((v) => only(textDirection: v));
+  late final softWrap = BoolUtility((v) => only(softWrap: v));
+  late final textScaleFactor = DoubleUtility((v) => only(textScaleFactor: v));
 
-  TextDirectiveUtility<T> get directive =>
-      TextDirectiveUtility((directive) => only(directive: directive));
-  TextOverflowUtility<T> get overflow {
-    return TextOverflowUtility((overflow) => only(overflow: overflow));
-  }
+  late final capitalize = directive.capitalize;
+  late final uppercase = directive.uppercase;
+  late final lowercase = directive.lowercase;
+  late final titleCase = directive.titleCase;
+  late final sentenceCase = directive.sentenceCase;
 
-  StrutStyleUtility<T> get strutStyle {
-    return StrutStyleUtility((strutStyle) => only(strutStyle: strutStyle));
-  }
-
-  TextAlignUtility<T> get textAlign {
-    return TextAlignUtility((textAlign) => only(textAlign: textAlign));
-  }
-
-  IntUtility<T> get maxLines {
-    return IntUtility((maxLines) => only(maxLines: maxLines));
-  }
-
-  TextStyleUtility<T> get style {
-    return TextStyleUtility((style) => only(style: style));
-  }
-
-  TextWidthBasisUtility<T> get textWidthBasis {
-    return TextWidthBasisUtility(
-      (textWidthBasis) => only(textWidthBasis: textWidthBasis),
-    );
-  }
-
-  TextHeightBehaviorUtility<T> get textHeightBehavior {
-    return TextHeightBehaviorUtility(
-      (textHeightBehavior) => only(textHeightBehavior: textHeightBehavior),
-    );
-  }
-
-  TextDirectionUtility<T> get textDirection {
-    return TextDirectionUtility(
-      (textDirection) => only(textDirection: textDirection),
-    );
-  }
-
-  BoolUtility<T> get softWrap {
-    return BoolUtility((softWrap) => only(softWrap: softWrap));
-  }
-
-  DoubleUtility<T> get textScaleFactor {
-    return DoubleUtility(
-      (textScaleFactor) => only(textScaleFactor: textScaleFactor),
-    );
-  }
-
-  T capitalize() => directive.capitalize();
-  T uppercase() => directive.uppercase();
-  T lowercase() => directive.lowercase();
-  T titleCase() => directive.titleCase();
-  T sentenceCase() => directive.sentenceCase();
+  TextSpecUtility(super.builder);
 
   @override
   T only({

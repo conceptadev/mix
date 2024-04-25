@@ -107,6 +107,10 @@ class AlignmentUtility<T extends StyleAttribute>
 class DoubleUtility<T extends StyleAttribute> extends ScalarUtility<T, double> {
   const DoubleUtility(super.builder);
 
+  T zero() => builder(0);
+
+  T infinity() => builder(double.infinity);
+
   @override
   T call(double value) => builder(value);
 }
@@ -232,6 +236,8 @@ class FlexFitUtility<T extends StyleAttribute>
   T tight() => builder(FlexFit.tight);
   T loose() => builder(FlexFit.loose);
 }
+
+/// Utility for setting `TextHeightBehavior` values.
 
 class TextHeightBehaviorUtility<T extends StyleAttribute>
     extends ScalarUtility<T, TextHeightBehavior> {
