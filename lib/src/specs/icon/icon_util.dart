@@ -7,57 +7,25 @@ import '../../core/attribute.dart';
 import '../../decorators/widget_decorators_util.dart';
 import 'icon_attribute.dart';
 
-const icon = IconSpecUtility(selfBuilder);
+final icon = IconSpecUtility(selfBuilder);
 
-/// Utility class for building [IconSpecAttribute]s
-///
-/// Example:
-///
-/// ```dart
-/// final icon = IconUtility();
-///
-/// final iconSpec = icon.size(24);
+final $icon = IconSpecUtility(selfBuilder);
+
 class IconSpecUtility<T extends SpecAttribute>
     extends SpecUtility<T, IconSpecAttribute> {
-  const IconSpecUtility(super.builder);
+  late final color = ColorUtility((v) => only(color: v));
+  late final size = DoubleUtility((v) => only(size: v));
+  late final weight = DoubleUtility((v) => only(size: v));
+  late final grade = DoubleUtility((v) => only(grade: v));
+  late final opticalSize = DoubleUtility((v) => only(opticalSize: v));
+  late final shadow = ShadowUtility((v) => only(shadows: [v]));
+  late final shadows = ShadowListUtility((v) => only(shadows: v));
+  late final fill = DoubleUtility((v) => only(fill: v));
+  late final applyTextScaling = BoolUtility(
+    (v) => only(applyTextScaling: v),
+  );
 
-  ColorUtility<T> get color {
-    return ColorUtility((color) => only(color: color));
-  }
-
-  DoubleUtility<T> get size {
-    return DoubleUtility((size) => only(size: size));
-  }
-
-  DoubleUtility<T> get weight {
-    return DoubleUtility((size) => only(size: size));
-  }
-
-  DoubleUtility<T> get grade {
-    return DoubleUtility((grade) => only(grade: grade));
-  }
-
-  DoubleUtility<T> get opticalSize {
-    return DoubleUtility((opticalSize) => only(opticalSize: opticalSize));
-  }
-
-  ShadowUtility<T> get shadow {
-    return ShadowUtility((shadow) => only(shadows: [shadow]));
-  }
-
-  ShadowListUtility<T> get shadows {
-    return ShadowListUtility((shadows) => only(shadows: shadows));
-  }
-
-  DoubleUtility<T> get fill {
-    return DoubleUtility((fill) => only(fill: fill));
-  }
-
-  BoolUtility<T> get applyTextScaling {
-    return BoolUtility(
-      (applyTextScaling) => only(applyTextScaling: applyTextScaling),
-    );
-  }
+  IconSpecUtility(super.builder);
 
   @override
   T only({

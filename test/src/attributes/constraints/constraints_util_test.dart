@@ -5,7 +5,7 @@ import '../../../helpers/testing_utils.dart';
 
 void main() {
   group('BoxConstraintsUtility', () {
-    const boxConstraints = BoxConstraintsUtility(UtilityTestAttribute.new);
+    final boxConstraints = BoxConstraintsUtility(UtilityTestAttribute.new);
     test('boxConstraints()', () {
       final result = boxConstraints(
         maxHeight: 200.0,

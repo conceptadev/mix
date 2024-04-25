@@ -6,7 +6,7 @@ import '../../../helpers/testing_utils.dart';
 
 void main() {
   group('BorderUtility', () {
-    const border = BorderUtility(UtilityTestAttribute.new);
+    final border = BorderUtility(UtilityTestAttribute.new);
 
     test('border.top()', () {
       final result = border.top(
@@ -236,7 +236,7 @@ void main() {
   // BorderDirectionalUtility
 
   group('BorderDirectionalUtility', () {
-    const borderDirectional =
+    final borderDirectional =
         BorderDirectionalUtility(UtilityTestAttribute.new);
 
     test('borderDirectional.top()', () {
