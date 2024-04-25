@@ -669,7 +669,7 @@ class RadiusUtility<T extends StyleAttribute> extends MixUtility<T, Radius> {
 
   T call(double radius) => _builder(Radius.circular(radius));
 
-  T of(RadiusToken ref) => _builder(ref());
+  T ref(RadiusToken ref) => _builder(ref());
 }
 
 /// Utility for setting `TextDecorationStyle` values.

@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 
 import '../../core/attribute.dart';
@@ -241,7 +239,7 @@ class TextStyleUtility<T extends StyleAttribute>
       call(fontFamilyFallback: fallback);
 
   /// Allows to pass a [TextStyleToken] to the utility directly.
-  T of(TextStyleToken token) => builder(TextStyleDto.of(token));
+  T ref(TextStyleToken token) => builder(TextStyleDto.ref(token));
 
   /// Callable method for setting multiple values at once.
   ///
