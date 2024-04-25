@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../../core/attribute.dart';
 import '../../core/directive.dart';
+import '../../factory/mix_provider.dart';
 import '../../factory/mix_provider_data.dart';
 import '../../helpers/lerp_helpers.dart';
 import 'text_attribute.dart';
@@ -49,7 +50,14 @@ class TextSpec extends Spec<TextSpec> {
         directive = null,
         softWrap = null;
 
-  static TextSpec of(MixData mix) =>
+  static TextSpec of(BuildContext context) {
+    final mix = MixProvider.of(context);
+
+    return mix.attributeOf<TextSpecAttribute>()?.resolve(mix) ??
+        const TextSpec.empty();
+  }
+
+  static TextSpec from(MixData mix) =>
       mix.attributeOf<TextSpecAttribute>()?.resolve(mix) ??
       const TextSpec.empty();
 

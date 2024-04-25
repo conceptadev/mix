@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 import '../../core/attribute.dart';
+import '../../factory/mix_provider.dart';
 import '../../factory/mix_provider_data.dart';
 import '../../helpers/lerp_helpers.dart';
 import 'box_attribute.dart';
@@ -47,7 +48,14 @@ class BoxSpec extends Spec<BoxSpec> {
         height = null,
         clipBehavior = null;
 
-  static BoxSpec of(MixData mix) {
+  static BoxSpec of(BuildContext context) {
+    final mix = MixProvider.of(context);
+
+    return mix.attributeOf<BoxSpecAttribute>()?.resolve(mix) ??
+        const BoxSpec.empty();
+  }
+
+  static BoxSpec from(MixData mix) {
     return mix.attributeOf<BoxSpecAttribute>()?.resolve(mix) ??
         const BoxSpec.empty();
   }

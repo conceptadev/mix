@@ -102,7 +102,7 @@ void main() {
     );
 
     const boxKey = Key('box');
-    final box = MixedBox(key: boxKey, spec: boxSpec);
+    final box = BoxSpecWidget(key: boxKey, spec: boxSpec);
 
     await tester.pumpWidget(
       MaterialApp(

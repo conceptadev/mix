@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../core/styled_widget.dart';
+import '../../factory/mix_provider.dart';
 import 'text_spec.dart';
 
 /// [StyledText] - A styled widget for displaying text with a mix of styles.
@@ -49,20 +50,21 @@ class StyledText extends StyledWidget {
 
   @override
   Widget build(BuildContext context) {
-    return withMix(context, (mix) {
-      final spec = TextSpec.of(mix);
+    return withMix(context, (context) {
+      final mix = MixProvider.of(context);
+      final spec = TextSpec.of(context);
 
       return mix.isAnimated
-          ? AnimatedMixedText(
-              text: text,
+          ? AnimatedTextSpecWidget(
+              text,
               spec: spec,
               semanticsLabel: semanticsLabel,
               locale: locale,
               duration: mix.animation!.duration,
               curve: mix.animation!.curve,
             )
-          : MixedText(
-              text: text,
+          : TextSpecWidget(
+              text,
               spec: spec,
               semanticsLabel: semanticsLabel,
               locale: locale,
@@ -71,9 +73,9 @@ class StyledText extends StyledWidget {
   }
 }
 
-class MixedText extends StatelessWidget {
-  const MixedText({
-    required this.text,
+class TextSpecWidget extends StatelessWidget {
+  const TextSpecWidget(
+    this.text, {
     required this.spec,
     this.semanticsLabel,
     this.locale,
@@ -106,9 +108,9 @@ class MixedText extends StatelessWidget {
   }
 }
 
-class AnimatedMixedText extends ImplicitlyAnimatedWidget {
-  const AnimatedMixedText({
-    required this.text,
+class AnimatedTextSpecWidget extends ImplicitlyAnimatedWidget {
+  const AnimatedTextSpecWidget(
+    this.text, {
     this.spec,
     this.semanticsLabel,
     this.locale,
@@ -123,12 +125,12 @@ class AnimatedMixedText extends ImplicitlyAnimatedWidget {
   final TextSpec? spec;
 
   @override
-  AnimatedWidgetBaseState<AnimatedMixedText> createState() =>
-      _AnimatedMixedTextState();
+  AnimatedWidgetBaseState<AnimatedTextSpecWidget> createState() =>
+      _AnimatedTextSpecWidgetState();
 }
 
-class _AnimatedMixedTextState
-    extends AnimatedWidgetBaseState<AnimatedMixedText> {
+class _AnimatedTextSpecWidgetState
+    extends AnimatedWidgetBaseState<AnimatedTextSpecWidget> {
   TextSpecTween? _textSpecTween;
 
   @override
@@ -146,8 +148,8 @@ class _AnimatedMixedTextState
   Widget build(BuildContext context) {
     final spec = _textSpecTween!.evaluate(animation);
 
-    return MixedText(
-      text: widget.text,
+    return TextSpecWidget(
+      widget.text,
       spec: spec,
       semanticsLabel: widget.semanticsLabel,
       locale: widget.locale,

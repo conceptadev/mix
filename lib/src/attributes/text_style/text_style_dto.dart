@@ -264,7 +264,7 @@ class TextStyleDto extends Dto<TextStyle> with Mergeable<TextStyleDto> {
 
   factory TextStyleDto(TextStyleData value) => TextStyleDto._([value]);
 
-  factory TextStyleDto.of(TextStyleToken token) {
+  factory TextStyleDto.ref(TextStyleToken token) {
     return TextStyleDto(TextStyleData.tokenRef(token()));
   }
 
