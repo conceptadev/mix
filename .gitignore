@@ -16,7 +16,14 @@ doc/
 *.iws
 .idea/
 
-# FVM
+# Ignoring native folders of the example as they can be re-generated easily using:
+# flutter create --platforms=android,ios,web,windows,macos .
+**/example/android/
+**/example/ios/
+**/example/web/
+**/example/windows/
+**/example/macos/
+**/example/linux/
 
 # The .vscode folder contains launch configuration and tasks you configure in
 # VS Code which you may wish to be included in version control, so this line
@@ -85,7 +92,3 @@ node_modules
 
 # FVM Version Cache
 .fvm/
-**/**.context.md
-
-# FVM Version Cache
-.fvm/versions
