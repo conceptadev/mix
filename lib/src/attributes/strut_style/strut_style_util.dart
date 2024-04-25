@@ -7,37 +7,23 @@ import 'strut_style_dto.dart';
 @immutable
 class StrutStyleUtility<T extends StyleAttribute>
     extends DtoUtility<T, StrutStyleDto, StrutStyle> {
-  const StrutStyleUtility(super.builder)
-      : super(valueToDto: StrutStyleDto.from);
+  late final fontFamily = FontFamilyUtility((v) => only(fontFamily: v));
 
-  FontFamilyUtility<T> get fontFamily {
-    return FontFamilyUtility((fontFamily) => call(fontFamily: fontFamily));
-  }
+  late final fontSize = FontSizeUtility((v) => only(fontSize: v));
 
-  FontSizeUtility<T> get fontSize {
-    return FontSizeUtility((fontSize) => call(fontSize: fontSize));
-  }
+  late final fontWeight = FontWeightUtility((v) => only(fontWeight: v));
 
-  FontWeightUtility<T> get fontWeight {
-    return FontWeightUtility((fontWeight) => call(fontWeight: fontWeight));
-  }
+  late final fontStyle = FontStyleUtility((v) => only(fontStyle: v));
 
-  FontStyleUtility<T> get fontStyle {
-    return FontStyleUtility((fontStyle) => call(fontStyle: fontStyle));
-  }
+  late final forceStrutHeight = BoolUtility((v) => only(forceStrutHeight: v));
 
-  BoolUtility<T> get forceStrutHeight {
-    return BoolUtility(
-      (forceStrutHeight) => call(forceStrutHeight: forceStrutHeight),
-    );
-  }
+  StrutStyleUtility(super.builder) : super(valueToDto: StrutStyleDto.from);
 
-  T height(double height) => call(height: height);
+  T height(double v) => only(height: v);
 
-  T leading(double leading) => call(leading: leading);
+  T leading(double v) => only(leading: v);
 
-  T fontFamilyFallback(List<String> fontFamilyFallback) =>
-      call(fontFamilyFallback: fontFamilyFallback);
+  T fontFamilyFallback(List<String> v) => only(fontFamilyFallback: v);
 
   T call({
     String? fontFamily,
@@ -49,7 +35,7 @@ class StrutStyleUtility<T extends StyleAttribute>
     double? leading,
     bool? forceStrutHeight,
   }) {
-    final strutStyle = StrutStyleDto(
+    return only(
       fontFamily: fontFamily,
       fontFamilyFallback: fontFamilyFallback,
       fontSize: fontSize,
@@ -59,7 +45,30 @@ class StrutStyleUtility<T extends StyleAttribute>
       leading: leading,
       forceStrutHeight: forceStrutHeight,
     );
+  }
 
-    return builder(strutStyle);
+  @override
+  T only({
+    String? fontFamily,
+    List<String>? fontFamilyFallback,
+    double? fontSize,
+    FontWeight? fontWeight,
+    FontStyle? fontStyle,
+    double? height,
+    double? leading,
+    bool? forceStrutHeight,
+  }) {
+    return builder(
+      StrutStyleDto(
+        fontFamily: fontFamily,
+        fontFamilyFallback: fontFamilyFallback,
+        fontSize: fontSize,
+        fontWeight: fontWeight,
+        fontStyle: fontStyle,
+        height: height,
+        leading: leading,
+        forceStrutHeight: forceStrutHeight,
+      ),
+    );
   }
 }

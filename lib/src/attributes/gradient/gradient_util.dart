@@ -41,22 +41,11 @@ import 'gradient_dto.dart';
 /// ```
 class GradientUtility<T extends StyleAttribute>
     extends MixUtility<T, GradientDto> {
-  const GradientUtility(super.builder);
+  late final radial = RadialGradientUtility(builder);
+  late final linear = LinearGradientUtility(builder);
+  late final sweep = SweepGradientUtility(builder);
 
-  /// Returns a [RadialGradientUtility] for creating radial gradients.
-  RadialGradientUtility<T> get radial {
-    return RadialGradientUtility(builder);
-  }
-
-  /// Returns a [LinearGradientUtility] for creating linear gradients.
-  LinearGradientUtility<T> get linear {
-    return LinearGradientUtility(builder);
-  }
-
-  /// Returns a [SweepGradientUtility] for creating sweep gradients.
-  SweepGradientUtility<T> get sweep {
-    return SweepGradientUtility(builder);
-  }
+  GradientUtility(super.builder);
 
   /// Converts a [Gradient] object to the specific type [T].
   ///
@@ -97,160 +86,26 @@ class GradientUtility<T extends StyleAttribute>
 /// * [GradientDto], a class for creating gradient values.
 @immutable
 class RadialGradientUtility<T extends StyleAttribute>
-    extends MixUtility<T, RadialGradientDto> {
-  const RadialGradientUtility(super.builder);
+    extends DtoUtility<T, RadialGradientDto, RadialGradient> {
+  late final center = AlignmentUtility((v) => only(center: v));
 
-  /// Returns an [AlignmentUtility] for setting the center of the radial gradient.
-  ///
-  /// Example usage:
-  ///
-  /// ```dart
-  /// final gradient = RadialGradientUtility<StyleAttribute>(builder);
-  /// final attribute = gradient.center.center();
-  /// ```
-  ///
-  /// Attribute now holds a [GradientAttribute] with a [RadialGradientDto]
-  /// that has a center value of Alignment.center.
-  ///
-  /// See also:
-  /// * [AlignmentUtility], a utility class for creating and manipulating [AlignmentGeometry] attributes.
-  AlignmentUtility<T> get center {
-    return AlignmentUtility((center) => call(center: center));
-  }
+  late final focal = AlignmentUtility((v) => only(focal: v));
 
-  /// Returns an [AlignmentUtility] for setting the focal point of the radial gradient.
-  ///
-  /// Example usage:
-  ///
-  /// ```dart
-  /// final gradient = RadialGradientUtility<StyleAttribute>(builder);
-  /// final attribute = gradient.focal.center();
-  /// ```
-  ///
-  /// Attribute now holds a [GradientAttribute] with a [RadialGradientDto]
-  /// that has a focal value of Alignment.center.
-  ///
-  /// See also:
-  /// * [AlignmentUtility], a utility class for creating and manipulating [AlignmentGeometry] attributes.
-  AlignmentUtility<T> get focal {
-    return AlignmentUtility((focal) => call(focal: focal));
-  }
+  late final tileMode = TileModeUtility((v) => only(tileMode: v));
 
-  /// Returns a [TileModeUtility] for setting the tile mode of the radial gradient.
-  ///
-  /// Example usage:
-  ///
-  /// ```dart
-  /// final gradient = RadialGradientUtility<StyleAttribute>(builder);
-  /// final attribute = gradient.tileMode.clamp();
-  /// ```
-  ///
-  /// Attribute now holds a [GradientAttribute] with a [RadialGradientDto]
-  /// that has a tileMode value of TileMode.clamp.
-  ///
-  /// See also:
-  /// * [TileModeUtility], a utility class for creating and manipulating [TileMode] attributes.
-  TileModeUtility<T> get tileMode {
-    return TileModeUtility((tileMode) => call(tileMode: tileMode));
-  }
+  late final transform = GradientTransformUtility((v) => only(transform: v));
 
-  /// Returns a [GradientTransformUtility] for setting the transform of the radial gradient.
-  ///
-  /// Example usage:
-  ///
-  /// ```dart
-  /// final gradient = RadialGradientUtility<StyleAttribute>(builder);
-  /// final attribute = gradient.transform.rotate(pi / 4);
-  /// ```
-  ///
-  /// Attribute now holds a [GradientAttribute] with a [RadialGradientDto]
-  /// that has a transform value of a Matrix4 rotation of pi / 4.
-  ///
-  /// See also:
-  /// * [GradientTransformUtility], a utility class for creating and manipulating [GradientTransform] attributes.
-  GradientTransformUtility<T> get transform {
-    return GradientTransformUtility((transform) => call(transform: transform));
-  }
+  RadialGradientUtility(super.builder)
+      : super(valueToDto: RadialGradientDto.from);
 
-  /// Method for setting the focal radius of the radial gradient.
-  ///
-  /// Example usage:
-  ///
-  /// ```dart
-  /// final gradient = RadialGradientUtility<StyleAttribute>(builder);
-  /// final attribute = gradient.focalRadius(0.2);
-  /// ```
-  ///
-  /// Attribute now holds a [GradientAttribute] with a [RadialGradientDto]
-  /// that has a focalRadius value of 0.2.
-  T focalRadius(double focalRadius) => call(focalRadius: focalRadius);
+  T focalRadius(double v) => only(focalRadius: v);
 
-  /// Function for setting the radius of the radial gradient.
-  ///
-  /// Example usage:
-  ///
-  /// ```dart
-  /// final gradient = RadialGradientUtility<StyleAttribute>(builder);
-  /// final attribute = gradient.radius(0.5);
-  /// ```
-  ///
-  /// Attribute now holds a [GradientAttribute] with a [RadialGradientDto]
-  /// that has a radius value of 0.5.
-  T radius(double radius) => call(radius: radius);
+  T radius(double v) => only(radius: v);
 
-  /// Sets the colors of the radial gradient.
-  ///
-  /// Example usage:
-  ///
-  /// ```dart
-  /// final gradient = RadialGradientUtility<StyleAttribute>(builder);
-  /// final attribute = gradient.colors([Colors.red, Colors.blue]);
-  /// ```
-  ///
-  /// Attribute now holds a [GradientAttribute] with a [RadialGradientDto]
-  /// that has a colors value of [Colors.red, Colors.blue].
-  T colors(List<Color> colors) => call(colors: colors);
+  T colors(List<Color> v) => call(colors: v);
 
-  /// Sets the stops of the radial gradient.
-  ///
-  /// Example usage:
-  ///
-  /// ```dart
-  /// final gradient = RadialGradientUtility<StyleAttribute>(builder);
-  /// final attribute = gradient.stops([0.0, 1.0]);
-  /// ```
-  ///
-  /// Attribute now holds a [GradientAttribute] with a [RadialGradientDto]
-  /// that has a stops value of [0.0, 1.0].
-  T stops(List<double> stops) => call(stops: stops);
+  T stops(List<double> v) => only(stops: v);
 
-  /// Converts the provided [RadialGradient] to the specified type [T].
-  ///
-  /// Example usage:
-  ///
-  /// ```dart
-  /// final gradient = RadialGradientUtility<StyleAttribute>(builder);
-  /// final gradient = RadialGradient(center: Alignment.center, radius: 0.5);
-  /// final attribute = gradient.as(gradient);
-  /// ```
-  ///
-  /// Attribute now holds a [GradientAttribute] with a [RadialGradientDto]
-  /// that has a center value of Alignment.center and a radius of 0.5.
-  T as(RadialGradient gradient) {
-    return builder(RadialGradientDto.from(gradient));
-  }
-
-  /// Creates a [RadialGradientDto] with the provided parameters and calls the [builder] function.
-  ///
-  /// Example usage:
-  ///
-  /// ```dart
-  /// final gradient = RadialGradientUtility<StyleAttribute>(builder);
-  /// final attribute = gradient(center: Alignment.center, radius: 0.5);
-  /// ```
-  ///
-  /// Attribute now holds a [GradientAttribute] with a [RadialGradientDto]
-  /// that has a center value of Alignment.center and a radius of 0.5.
   T call({
     List<Color>? colors,
     List<double>? stops,
@@ -261,18 +116,41 @@ class RadialGradientUtility<T extends StyleAttribute>
     TileMode? tileMode,
     GradientTransform? transform,
   }) {
-    final gradient = RadialGradientDto(
+    return only(
       center: center,
       radius: radius,
-      tileMode: tileMode,
-      focal: focal,
-      focalRadius: focalRadius,
-      transform: transform,
       colors: colors?.map(ColorDto.new).toList(),
       stops: stops,
+      focal: focal,
+      focalRadius: focalRadius,
+      tileMode: tileMode,
+      transform: transform,
     );
+  }
 
-    return builder(gradient);
+  @override
+  T only({
+    AlignmentGeometry? center,
+    double? radius,
+    List<ColorDto>? colors,
+    List<double>? stops,
+    AlignmentGeometry? focal,
+    double? focalRadius,
+    TileMode? tileMode,
+    GradientTransform? transform,
+  }) {
+    return builder(
+      RadialGradientDto(
+        center: center,
+        radius: radius,
+        tileMode: tileMode,
+        focal: focal,
+        focalRadius: focalRadius,
+        transform: transform,
+        colors: colors,
+        stops: stops,
+      ),
+    );
   }
 }
 
@@ -297,166 +175,18 @@ class RadialGradientUtility<T extends StyleAttribute>
 /// * [GradientDto], a class for creating gradient values.
 @immutable
 class LinearGradientUtility<T extends StyleAttribute>
-    extends MixUtility<T, LinearGradientDto> {
-  const LinearGradientUtility(super.builder);
+    extends DtoUtility<T, LinearGradientDto, LinearGradient> {
+  late final begin = AlignmentUtility((v) => only(begin: v));
+  late final end = AlignmentUtility((v) => only(end: v));
+  late final tileMode = TileModeUtility((v) => only(tileMode: v));
+  late final transform = GradientTransformUtility((v) => only(transform: v));
+  LinearGradientUtility(super.builder)
+      : super(valueToDto: LinearGradientDto.from);
 
-  /// Returns an [AlignmentUtility] for setting the begin of the linear gradient.
-  ///
-  /// Example usage:
-  ///
-  /// ```dart
-  /// final gradient = LinearGradientUtility<StyleAttribute>(builder);
-  /// final attribute = gradient.begin.topLeft();
-  ///
-  /// ```
-  /// Attribute now holds a [GradientAttribute] with a [LinearGradientDto]
-  /// that has a begin value of Alignment.topLeft.
-  ///
-  /// See also:
-  /// * [AlignmentUtility], a utility class for creating and manipulating [AlignmentGeometry] attributes.
-  /// * [AlignmentGeometry], a class for creating alignment values.
-  /// * [Alignment], a class for creating alignment values.
-  AlignmentUtility<T> get begin {
-    return AlignmentUtility((AlignmentGeometry begin) {
-      return builder(LinearGradientDto(begin: begin));
-    });
-  }
+  T colors(List<Color> v) => call(colors: v);
 
-  /// Returns an [AlignmentUtility] for setting the end of the linear gradient.
-  ///
-  /// Example usage:
-  ///
-  /// ```dart
-  /// final gradient = LinearGradientUtility<StyleAttribute>(builder);
-  /// final attribute = gradient.end.bottomRight();
-  /// ```
-  ///
-  /// Attribute now holds a [GradientAttribute] with a [LinearGradientDto]
-  /// that has an end value of Alignment.bottomRight.
-  ///
-  /// See also:
-  /// * [AlignmentUtility], a utility class for creating and manipulating [AlignmentGeometry] attributes.
-  /// * [AlignmentGeometry], a class for creating alignment values.
-  /// * [Alignment], a class for creating alignment values.
-  AlignmentUtility<T> get end {
-    return AlignmentUtility((AlignmentGeometry end) {
-      return builder(LinearGradientDto(end: end));
-    });
-  }
+  T stops(List<double> v) => only(stops: v);
 
-  /// Returns a [TileModeUtility] for setting the tile mode of the linear gradient.
-  ///
-  /// Example usage:
-  ///
-  /// ```dart
-  /// final gradient = LinearGradientUtility<StyleAttribute>(builder);
-  /// final attribute = gradient.tileMode.clamp();
-  ///
-  /// ```
-  /// Attribute now holds a [GradientAttribute] with a [LinearGradientDto]
-  /// that has a tileMode value of TileMode.clamp.
-  ///
-  /// See also:
-  /// * [TileModeUtility], a utility class for creating and manipulating [TileMode] attributes.
-  /// * [TileMode], an enum for setting the tile mode of a gradient.
-  ///
-  TileModeUtility<T> get tileMode {
-    return TileModeUtility(
-      (tileMode) => builder(LinearGradientDto(tileMode: tileMode)),
-    );
-  }
-
-  /// Returns a [GradientTransformUtility] for setting the transform of the linear gradient.
-  ///
-  /// Example usage:
-  ///
-  /// ```dart
-  /// final gradient = LinearGradientUtility<StyleAttribute>(builder);
-  /// final attribute = gradient.transform.rotate(pi / 4);
-  ///
-  /// ```
-  /// Attribute now holds a [GradientAttribute] with a [LinearGradientDto]
-  /// that has a transform value of a Matrix4 rotation of pi / 4.
-  ///
-  /// See also:
-  /// * [GradientTransformUtility], a utility class for creating and manipulating [GradientTransform] attributes.
-  /// * [Matrix4], a class for creating 4D matrices.
-  GradientTransformUtility<T> get transform {
-    return GradientTransformUtility((GradientTransform transform) {
-      return builder(LinearGradientDto(transform: transform));
-    });
-  }
-
-  /// Sets the colors of the linear gradient.
-  ///
-  /// Example usage:
-  ///
-  /// ```dart
-  /// final gradient = LinearGradientUtility<StyleAttribute>(builder);
-  /// final attribute = gradient.colors([Colors.red, Colors.blue]);
-  /// ```
-  ///
-  /// Attribute now holds a [GradientAttribute] with a [LinearGradientDto]
-  /// that has a colors value of [Colors.red, Colors.blue].
-  ///
-  /// See also:
-  /// * [LinearGradient], a class for creating linear gradients.
-  /// * [LinearGradientDto], a class for creating linear gradient values.
-  T colors(List<Color> colors) => call(colors: colors);
-
-  /// Sets the stops of the linear gradient.
-  ///
-  /// Example usage:
-  ///
-  /// ```dart
-  /// final gradient = LinearGradientUtility<StyleAttribute>(builder);
-  /// final attribute = gradient.stops([0.0, 1.0]);
-  /// ```
-  ///
-  /// Attribute now holds a [GradientAttribute] with a [LinearGradientDto]
-  /// that has a stops value of [0.0, 1.0].
-  ///
-  /// See also:
-  /// * [LinearGradient], a class for creating linear gradients.
-  /// * [LinearGradientDto], a class for creating linear gradient values.
-  T stops(List<double> stops) => builder(LinearGradientDto(stops: stops));
-
-  /// Converts the provided [LinearGradient] to the specified type [T].
-  ///
-  /// Example usage:
-  ///
-  /// ```dart
-  /// final gradient = LinearGradientUtility<StyleAttribute>(builder);
-  /// final gradient = LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight);
-  ///
-  /// final attribute = gradient.as(gradient);
-  /// ```
-  ///
-  /// Attribute now holds a [GradientAttribute] with a [LinearGradientDto]
-  /// that has a begin value of Alignment.topLeft and an end value of Alignment.bottomRight.
-  ///
-  /// See also:
-  /// * [LinearGradient], a class for creating linear gradients.
-  /// * [LinearGradientDto], a class for creating linear gradient values.
-  T as(LinearGradient gradient) {
-    return builder(LinearGradientDto.from(gradient));
-  }
-
-  /// Creates a [LinearGradientDto] with the provided parameters and calls the [builder] function.
-  ///
-  /// Example usage:
-  ///
-  /// ```dart
-  /// final gradient = LinearGradientUtility<StyleAttribute>(builder);
-  /// final attribute = gradient(begin: Alignment.topLeft, end: Alignment.bottomRight);
-  /// ```
-  ///
-  /// Attribute now holds a [GradientAttribute] with a [LinearGradientDto]
-  /// that has a begin value of Alignment.topLeft and an end value of Alignment.bottomRight.
-  ///
-  /// See also:
-  /// * [LinearGradient], a class for creating linear gradients.
-  /// * [LinearGradientDto], a class for creating linear gradient values.
   T call({
     List<Color>? colors,
     List<double>? stops,
@@ -475,6 +205,27 @@ class LinearGradientUtility<T extends StyleAttribute>
     );
 
     return builder(gradient);
+  }
+
+  @override
+  T only({
+    List<ColorDto>? colors,
+    List<double>? stops,
+    AlignmentGeometry? begin,
+    AlignmentGeometry? end,
+    TileMode? tileMode,
+    GradientTransform? transform,
+  }) {
+    return builder(
+      LinearGradientDto(
+        begin: begin,
+        end: end,
+        tileMode: tileMode,
+        transform: transform,
+        colors: colors,
+        stops: stops,
+      ),
+    );
   }
 }
 
@@ -501,132 +252,21 @@ class LinearGradientUtility<T extends StyleAttribute>
 /// * [GradientDto], a class for creating gradient values.
 class SweepGradientUtility<T extends StyleAttribute>
     extends DtoUtility<T, SweepGradientDto, SweepGradient> {
-  const SweepGradientUtility(super.builder)
+  late final transform = GradientTransformUtility((v) => only(transform: v));
+  late final center = AlignmentUtility((v) => only(center: v));
+  late final tileMode = TileModeUtility((v) => only(tileMode: v));
+
+  SweepGradientUtility(super.builder)
       : super(valueToDto: SweepGradientDto.from);
 
-  /// Returns an [AlignmentUtility] for setting the center of the sweep gradient.
-  ///
-  /// Example usage:
-  ///
-  /// ```dart
-  /// final gradient = SweepGradientUtility<StyleAttribute>(builder);
-  /// final attribute = gradient.center.center();
-  /// ```
-  ///
-  /// Attribute now holds a [GradientAttribute] with a [SweepGradientDto]
-  /// that has a center value of Alignment.center.
-  ///
-  /// See also:
-  /// * [AlignmentUtility], a utility class for creating and manipulating [AlignmentGeometry] attributes.
-  AlignmentUtility<T> get center {
-    return AlignmentUtility((AlignmentGeometry center) {
-      return builder(SweepGradientDto(center: center));
-    });
-  }
+  T endAngle(double v) => call(endAngle: v);
 
-  /// Returns a [TileModeUtility] for setting the tile mode of the sweep gradient.
-  ///
-  /// Example usage:
-  ///
-  /// ```dart
-  /// final gradient = SweepGradientUtility<StyleAttribute>(builder);
-  /// final attribute = gradient.tileMode.clamp();
-  /// ```
-  ///
-  /// Attribute now holds a [GradientAttribute] with a [SweepGradientDto]
-  /// that has a tileMode value of TileMode.clamp.
-  ///
-  /// See also:
-  /// * [TileModeUtility], a utility class for creating and manipulating [TileMode] attributes.
-  TileModeUtility<T> get tileMode {
-    return TileModeUtility((TileMode tileMode) {
-      return builder(SweepGradientDto(tileMode: tileMode));
-    });
-  }
+  T startAngle(double v) => call(startAngle: v);
 
-  /// Returns a [GradientTransformUtility] for setting the transform of the sweep gradient.
-  ///
-  /// Example usage:
-  ///
-  /// ```dart
-  /// final gradient = SweepGradientUtility<StyleAttribute>(builder);
-  /// final attribute = gradient.transform.rotate(pi / 4);
-  /// ```
-  ///
-  /// Attribute now holds a [GradientAttribute] with a [SweepGradientDto]
-  /// that has a transform value of a Matrix4 rotation of pi / 4.
-  ///
-  /// See also:
-  /// * [GradientTransformUtility], a utility class for creating and manipulating [GradientTransform] attributes.
-  GradientTransformUtility<T> get transform {
-    return GradientTransformUtility((GradientTransform transform) {
-      return builder(SweepGradientDto(transform: transform));
-    });
-  }
+  T colors(List<Color> v) => call(colors: v);
 
-  /// Method for setting the end angle of the sweep gradient.
-  ///
-  /// Example usage:
-  ///
-  /// ```dart
-  /// final gradient = SweepGradientUtility<StyleAttribute>(builder);
-  /// final attribute = gradient.endAngle(pi);
-  /// ```
-  ///
-  /// Attribute now holds a [GradientAttribute] with a [SweepGradientDto]
-  /// that has an endAngle value of pi (3.14159...).
-  T endAngle(double endAngle) => call(endAngle: endAngle);
+  T stops(List<double> v) => call(stops: v);
 
-  /// Method for setting the start angle of the sweep gradient.
-  ///
-  /// Example usage:
-  ///
-  /// ```dart
-  /// final gradient = SweepGradientUtility<StyleAttribute>(builder);
-  /// final attribute = gradient.startAngle(0.0);
-  /// ```
-  ///
-  /// Attribute now holds a [GradientAttribute] with a [SweepGradientDto]
-  /// that has a startAngle value of 0.0.
-  T startAngle(double startAngle) => call(startAngle: startAngle);
-
-  /// Sets the colors of the sweep gradient.
-  ///
-  /// Example usage:
-  ///
-  /// ```dart
-  /// final gradient = SweepGradientUtility<StyleAttribute>(builder);
-  /// final attribute = gradient.colors([Colors.red, Colors.blue]);
-  /// ```
-  ///
-  /// Attribute now holds a [GradientAttribute] with a [SweepGradientDto]
-  /// that has a colors value of [Colors.red, Colors.blue].
-  T colors(List<Color> colors) => call(colors: colors);
-
-  /// Sets the stops of the sweep gradient.
-  ///
-  /// Example usage:
-  ///
-  /// ```dart
-  /// final gradient = SweepGradientUtility<StyleAttribute>(builder);
-  /// final attribute = gradient.stops([0.0, 1.0]);
-  /// ```
-  ///
-  /// Attribute now holds a [GradientAttribute] with a [SweepGradientDto]
-  /// that has a stops value of [0.0, 1.0].
-  T stops(List<double> stops) => call(stops: stops);
-
-  /// Creates a [SweepGradientDto] with the provided parameters and calls the [builder] function.
-  ///
-  /// Example usage:
-  ///
-  /// ```dart
-  /// final gradient = SweepGradientUtility<StyleAttribute>(builder);
-  /// final attribute = gradient(center: Alignment.center, startAngle: 0.0, endAngle: pi);
-  /// ```
-  ///
-  /// Attribute now holds a [GradientAttribute] with a [SweepGradientDto]
-  /// that has a center value of Alignment.center, a startAngle of 0.0, and an endAngle of pi.
   T call({
     List<Color>? colors,
     List<double>? stops,
@@ -636,33 +276,37 @@ class SweepGradientUtility<T extends StyleAttribute>
     TileMode? tileMode,
     GradientTransform? transform,
   }) {
-    final gradient = SweepGradientDto(
+    return only(
       center: center,
       startAngle: startAngle,
       endAngle: endAngle,
-      tileMode: tileMode,
-      transform: transform,
       colors: colors?.map(ColorDto.new).toList(),
       stops: stops,
+      tileMode: tileMode,
+      transform: transform,
     );
-
-    return builder(gradient);
   }
 
-  /// Converts the provided [SweepGradient] to the specified type [T].
-  ///
-  /// Example usage:
-  ///
-  /// ```dart
-  /// final gradient = SweepGradientUtility<StyleAttribute>(builder);
-  /// final gradient = SweepGradient(center: Alignment.center, startAngle: 0.0, endAngle: pi);
-  /// final attribute = gradient.as(gradient);
-  /// ```
-  ///
-  /// Attribute now holds a [GradientAttribute] with a [SweepGradientDto]
-  /// that has a center value of Alignment.center, a startAngle of 0.0, and an endAngle of pi.
   @override
-  T as(SweepGradient gradient) {
-    return builder(SweepGradientDto.from(gradient));
+  T only({
+    AlignmentGeometry? center,
+    double? startAngle,
+    double? endAngle,
+    List<ColorDto>? colors,
+    List<double>? stops,
+    TileMode? tileMode,
+    GradientTransform? transform,
+  }) {
+    return builder(
+      SweepGradientDto(
+        center: center,
+        startAngle: startAngle,
+        endAngle: endAngle,
+        tileMode: tileMode,
+        transform: transform,
+        colors: colors,
+        stops: stops,
+      ),
+    );
   }
 }

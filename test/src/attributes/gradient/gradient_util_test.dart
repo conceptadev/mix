@@ -6,7 +6,7 @@ import '../../../helpers/testing_utils.dart';
 
 void main() {
   group('GradientUtility', () {
-    const utility = GradientUtility(UtilityTestDtoAttribute.new);
+    final utility = GradientUtility(UtilityTestDtoAttribute.new);
     test('GradientUtility.from for RadialGradient', () {
       const gradient = RadialGradient(colors: []);
       final attribute = utility.as(gradient);
@@ -33,7 +33,7 @@ void main() {
   });
 
   group('RadialGradientUtility', () {
-    const radialUtility = RadialGradientUtility(UtilityTestDtoAttribute.new);
+    final radialUtility = RadialGradientUtility(UtilityTestDtoAttribute.new);
 
     test('.from for RadialGradient', () {
       const gradient = RadialGradient(colors: []);
@@ -230,7 +230,7 @@ void main() {
 
   // LinearGradientUtility
   group('LinearGradientUtility', () {
-    const linearUtility = LinearGradientUtility(UtilityTestDtoAttribute.new);
+    final linearUtility = LinearGradientUtility(UtilityTestDtoAttribute.new);
 
     test('.from for LinearGradient', () {
       const gradient = LinearGradient(colors: []);
@@ -390,7 +390,7 @@ void main() {
 
   // SweepGradientUtility
   group('SweepGradientUtility', () {
-    const sweepUtility = SweepGradientUtility(UtilityTestDtoAttribute.new);
+    final sweepUtility = SweepGradientUtility(UtilityTestDtoAttribute.new);
 
     test('.from for SweepGradient', () {
       const gradient = SweepGradient(colors: []);

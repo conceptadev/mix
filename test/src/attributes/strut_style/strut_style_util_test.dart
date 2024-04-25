@@ -8,7 +8,7 @@ import '../../../helpers/testing_utils.dart';
 
 void main() {
   group('StrutStyleUtility', () {
-    const strutStyleUtility = StrutStyleUtility(UtilityTestAttribute.new);
+    final strutStyleUtility = StrutStyleUtility(UtilityTestAttribute.new);
     test('callable', () {
       final strutStyle = strutStyleUtility(
         fontFamily: 'Roboto',

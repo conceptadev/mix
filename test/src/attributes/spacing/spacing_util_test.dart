@@ -6,7 +6,7 @@ import '../../../helpers/testing_utils.dart';
 
 void main() {
   group('Spacing Utils', () {
-    const spacingUtils = SpacingUtility(UtilityTestAttribute.new);
+    final spacingUtils = SpacingUtility(UtilityTestAttribute.new);
     test('padding()', () {
       expect(
         spacingUtils(10).value,

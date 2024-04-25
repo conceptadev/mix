@@ -100,14 +100,14 @@ void main() {
     await tester.pumpWithMixTheme(
       Box(
         style: Style(
-          text.style.of($md.textTheme.bodyText1),
-          text.style.of($md.textTheme.bodyText2),
-          box.color.of($md.colorScheme.background),
-          box.color.of($md.colorScheme.error),
-          box.borderRadius.all.of($radius.medium),
-          box.borderRadius.all.of($radius.large),
-          box.padding.horizontal.of($space.medium),
-          box.padding.horizontal.of($space.large),
+          text.style.ref($md.textTheme.bodyText1),
+          text.style.ref($md.textTheme.bodyText2),
+          box.color.ref($md.colorScheme.background),
+          box.color.ref($md.colorScheme.error),
+          box.borderRadius.all.ref($radius.medium),
+          box.borderRadius.all.ref($radius.large),
+          box.padding.horizontal.ref($space.medium),
+          box.padding.horizontal.ref($space.large),
         ),
         key: key,
         child: const StyledText('Hello'),
