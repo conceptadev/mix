@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../../../mix.dart';
+import '../../core/attribute.dart';
+import '../../factory/mix_provider.dart';
+import '../../factory/mix_provider_data.dart';
+import 'stack_attribute.dart';
 
 class StackSpec extends Spec<StackSpec> {
   final AlignmentGeometry? alignment;
