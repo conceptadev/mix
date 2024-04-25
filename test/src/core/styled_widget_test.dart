@@ -12,7 +12,7 @@ void main() {
       tester.pumpWidget(
         Box(
           style: Style(height(100)),
-          child: StyledWidgetBuilder(
+          child: MixBuilder(
             inherit: true,
             builder: (mix) {
               expect(mix.attributeOf<BoxSpecAttribute>()!.height, 100);
@@ -29,7 +29,7 @@ void main() {
         tester.pumpWidget(
           Box(
             style: Style(height(100)),
-            child: StyledWidgetBuilder(
+            child: MixBuilder(
               inherit: false,
               builder: (mix) {
                 expect(mix.attributeOf<BoxSpecAttribute>(), isNull);
@@ -45,7 +45,7 @@ void main() {
       '''When a parent StyledWidgetBuilder has no Style, the MixData in StyledWidgetBuilder.builder should have no attributes''',
       (tester) async {
         tester.pumpWidget(
-          StyledWidgetBuilder(
+          MixBuilder(
             builder: (mix) {
               expect(mix.attributes.length, isZero);
               return const SizedBox();
@@ -67,7 +67,7 @@ void main() {
         final mixData = MixData.create(MockBuildContext(), style);
 
         tester.pumpWidget(
-          StyledWidgetBuilder(
+          MixBuilder(
             inherit: true,
             style: style,
             builder: (mix) {
