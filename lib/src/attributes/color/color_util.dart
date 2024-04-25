@@ -169,7 +169,7 @@ class ColorUtility<T extends StyleAttribute> extends BaseColorUtility<T>
   SingleColorUtility<T> get white10 =>
       SingleColorUtility(builder, const Color(0x1AFFFFFF));
 
-  T of(ColorToken ref) => _buildColor(ref());
+  T ref(ColorToken ref) => _buildColor(ref());
 
   T call(Color color) => _buildColor(color);
 }

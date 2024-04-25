@@ -11,7 +11,7 @@ typedef StyledContainer = Box;
 ///
 /// `Box` is a concrete implementation of [StyledWidget] that applies custom styles
 /// to a single child widget using the styling capabilities inherited from
-/// [StyledWidget]. It wraps the child in a `MixedBox`, which is responsible for
+/// [StyledWidget]. It wraps the child in a `BoxSpecWidget`, which is responsible for
 /// rendering the styled output.
 ///
 /// The primary purpose of `Box` is to provide a flexible and reusable way to style
@@ -34,7 +34,7 @@ typedef StyledContainer = Box;
 ///
 /// See also:
 /// * [Style], which defines the visual properties to be applied.
-/// * [MixedBox], which is used internally by `Box` to render the styled widget.
+/// * [BoxSpecWidget], which is used internally by `Box` to render the styled widget.
 /// * [Container], which is the Flutter equivalent widget.
 class Box extends StyledWidget {
   const Box({
@@ -51,26 +51,27 @@ class Box extends StyledWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Apply styling from StyledWidget to a MixedBox.
-    // This method uses `withMix` to get the `MixData` and then applies it to `MixedBox`,
+    // Apply styling from StyledWidget to a BoxSpecWidget.
+    // This method uses `withMix` to get the `MixData` and then applies it to `BoxSpecWidget`,
     // effectively styling the [child].
-    return withMix(context, (mix) {
-      final spec = BoxSpec.of(mix);
+    return withMix(context, (context) {
+      final mix = MixProvider.of(context);
+      final spec = BoxSpec.of(context);
 
       return mix.isAnimated
-          ? AnimatedMixedBox(
+          ? AnimatedBoxSpecWidget(
               spec: spec,
               duration: mix.animation!.duration,
               curve: mix.animation!.curve,
               child: child,
             )
-          : MixedBox(spec: spec, child: child);
+          : BoxSpecWidget(spec: spec, child: child);
     });
   }
 }
 
-class MixedBox extends StatelessWidget {
-  const MixedBox({required this.spec, super.key, this.child});
+class BoxSpecWidget extends StatelessWidget {
+  const BoxSpecWidget({required this.spec, super.key, this.child});
 
   final Widget? child;
   final BoxSpec? spec;
@@ -94,8 +95,8 @@ class MixedBox extends StatelessWidget {
   }
 }
 
-class AnimatedMixedBox extends ImplicitlyAnimatedWidget {
-  const AnimatedMixedBox({
+class AnimatedBoxSpecWidget extends ImplicitlyAnimatedWidget {
+  const AnimatedBoxSpecWidget({
     required this.spec,
     super.key,
     this.child,
@@ -108,12 +109,12 @@ class AnimatedMixedBox extends ImplicitlyAnimatedWidget {
   final BoxSpec spec;
 
   @override
-  AnimatedWidgetBaseState<AnimatedMixedBox> createState() =>
+  AnimatedWidgetBaseState<AnimatedBoxSpecWidget> createState() =>
       _AnimatedBoxSpecWidgetState();
 }
 
 class _AnimatedBoxSpecWidgetState
-    extends AnimatedWidgetBaseState<AnimatedMixedBox> {
+    extends AnimatedWidgetBaseState<AnimatedBoxSpecWidget> {
   BoxSpecTween? _boxSpec;
 
   @override
@@ -131,6 +132,6 @@ class _AnimatedBoxSpecWidgetState
   Widget build(BuildContext context) {
     final spec = _boxSpec?.evaluate(animation);
 
-    return MixedBox(spec: spec, child: widget.child);
+    return BoxSpecWidget(spec: spec, child: widget.child);
   }
 }
