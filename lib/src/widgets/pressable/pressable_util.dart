@@ -12,21 +12,25 @@ import 'pressable_state.dart';
 /// Applies styles when the widget is pressed.
 final onPressed = ContextVariant(
   (context) => PressableState.pressedOf(context),
+  priority: VariantPriority.highest,
 );
 
 /// Applies styles when the widget is long pressed.
 final onLongPressed = ContextVariant(
   (context) => PressableState.longPressedOf(context),
+  priority: VariantPriority.highest,
 );
 
 /// Applies styles when widget is hovered over.
 final onHover = ContextVariant(
   (context) => PressableState.hoveredOf(context),
+  priority: VariantPriority.highest,
 );
 
 /// Applies styles when the widget is disabled.
 final onEnabled = ContextVariant(
   (context) => PressableState.enabledOf(context),
+  priority: VariantPriority.highest,
 );
 
 /// Applies styles when the widget is enabled.
@@ -35,7 +39,10 @@ final onDisabled = onNot(onEnabled);
 const onMouseHover = OnMouseHoverBuilder.new;
 
 /// Applies styles when the widget has focus.dar
-const onFocused = ContextVariant(PressableState.focusedOf);
+const onFocused = ContextVariant(
+  PressableState.focusedOf,
+  priority: VariantPriority.highest,
+);
 
 const onPressedEvent = OnPressedEventBuilder.new;
 const onLongPressedEvent = OnLongPressedEventBuilder.new;

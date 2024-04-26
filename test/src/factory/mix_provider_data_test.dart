@@ -8,7 +8,11 @@ import '../../helpers/testing_utils.dart';
 
 void main() {
   group('MixData', () {
-    final autoApplyVariant = ContextVariant((context) => true);
+    final autoApplyVariant = ContextVariant(
+      (context) => true,
+      priority: VariantPriority.high,
+    );
+
     test('MixData create', () {
       final mixData = MixData.create(
         MockBuildContext(),
@@ -195,12 +199,18 @@ void main() {
       group('must respect the condition', () {
         test('with single ContextVariant', () {
           _testApplyContextToVisualAttributes(
-            condition: ContextVariant((context) => false),
+            condition: ContextVariant(
+              (context) => false,
+              priority: VariantPriority.high,
+            ),
             isExpectedToApply: false,
           );
 
           _testApplyContextToVisualAttributes(
-            condition: ContextVariant((context) => true),
+            condition: ContextVariant(
+              (context) => true,
+              priority: VariantPriority.high,
+            ),
             isExpectedToApply: true,
           );
         });
@@ -213,8 +223,14 @@ void main() {
           }) {
             _testApplyContextToVisualAttributes(
               condition: MultiVariant.or([
-                ContextVariant((context) => v1),
-                ContextVariant((context) => v2)
+                ContextVariant(
+                  (context) => v1,
+                  priority: VariantPriority.high,
+                ),
+                ContextVariant(
+                  (context) => v2,
+                  priority: VariantPriority.high,
+                )
               ]),
               isExpectedToApply: equalsTo,
             );
@@ -234,8 +250,14 @@ void main() {
           }) {
             _testApplyContextToVisualAttributes(
               condition: MultiVariant.and([
-                ContextVariant((context) => v1),
-                ContextVariant((context) => v2)
+                ContextVariant(
+                  (context) => v1,
+                  priority: VariantPriority.high,
+                ),
+                ContextVariant(
+                  (context) => v2,
+                  priority: VariantPriority.high,
+                )
               ]),
               isExpectedToApply: equalsTo,
             );
@@ -258,10 +280,19 @@ void main() {
           }) {
             _testApplyContextToVisualAttributes(
               condition: MultiVariant.and([
-                ContextVariant((context) => v1),
+                ContextVariant(
+                  (context) => v1,
+                  priority: VariantPriority.high,
+                ),
                 MultiVariant.and([
-                  ContextVariant((context) => v2),
-                  ContextVariant((context) => v3)
+                  ContextVariant(
+                    (context) => v2,
+                    priority: VariantPriority.high,
+                  ),
+                  ContextVariant(
+                    (context) => v3,
+                    priority: VariantPriority.high,
+                  )
                 ]),
               ]),
               isExpectedToApply: equalsTo,
@@ -289,10 +320,16 @@ void main() {
           }) {
             _testApplyContextToVisualAttributes(
               condition: MultiVariant.or([
-                ContextVariant((context) => v1),
+                ContextVariant((context) => v1, priority: VariantPriority.high),
                 MultiVariant.or([
-                  ContextVariant((context) => v2),
-                  ContextVariant((context) => v3)
+                  ContextVariant(
+                    (context) => v2,
+                    priority: VariantPriority.high,
+                  ),
+                  ContextVariant(
+                    (context) => v3,
+                    priority: VariantPriority.high,
+                  )
                 ]),
               ]),
               isExpectedToApply: equalsTo,
@@ -320,10 +357,16 @@ void main() {
           }) {
             _testApplyContextToVisualAttributes(
               condition: MultiVariant.and([
-                ContextVariant((context) => v1),
+                ContextVariant((context) => v1, priority: VariantPriority.high),
                 MultiVariant.or([
-                  ContextVariant((context) => v2),
-                  ContextVariant((context) => v3)
+                  ContextVariant(
+                    (context) => v2,
+                    priority: VariantPriority.high,
+                  ),
+                  ContextVariant(
+                    (context) => v3,
+                    priority: VariantPriority.high,
+                  )
                 ]),
               ]),
               isExpectedToApply: equalsTo,
@@ -351,10 +394,16 @@ void main() {
           }) {
             _testApplyContextToVisualAttributes(
               condition: MultiVariant.or([
-                ContextVariant((context) => v1),
+                ContextVariant((context) => v1, priority: VariantPriority.high),
                 MultiVariant.and([
-                  ContextVariant((context) => v2),
-                  ContextVariant((context) => v3)
+                  ContextVariant(
+                    (context) => v2,
+                    priority: VariantPriority.high,
+                  ),
+                  ContextVariant(
+                    (context) => v3,
+                    priority: VariantPriority.high,
+                  )
                 ]),
               ]),
               isExpectedToApply: equalsTo,
@@ -379,7 +428,7 @@ void main() {
             _testApplyContextToVisualAttributes(
               condition: MultiVariant.or([
                 const Variant('1'),
-                ContextVariant((context) => v1),
+                ContextVariant((context) => v1, priority: VariantPriority.high),
               ]),
               isExpectedToApply: equalsTo,
             );
@@ -397,7 +446,10 @@ void main() {
             _testApplyContextToVisualAttributes(
               condition: MultiVariant.or([
                 const Variant('1'),
-                ContextVariant((context) => v1),
+                ContextVariant(
+                  (context) => v1,
+                  priority: VariantPriority.high,
+                ),
               ]),
               isExpectedToApply: equalsTo,
             );
@@ -415,7 +467,10 @@ void main() {
             _testApplyContextToVisualAttributes(
               condition: MultiVariant.and([
                 const Variant('1'),
-                ContextVariant((context) => v1),
+                ContextVariant(
+                  (context) => v1,
+                  priority: VariantPriority.high,
+                ),
               ]),
               isExpectedToApply: equalsTo,
             );
@@ -437,7 +492,10 @@ void main() {
                 const Variant('1'),
                 MultiVariant.and([
                   const Variant('2'),
-                  ContextVariant((context) => v1),
+                  ContextVariant(
+                    (context) => v1,
+                    priority: VariantPriority.high,
+                  ),
                 ]),
               ]),
               isExpectedToApply: equalsTo,
@@ -458,10 +516,16 @@ void main() {
           }) {
             _testApplyContextToVisualAttributes(
               condition: MultiVariant.and([
-                ContextVariant((context) => v1),
+                ContextVariant(
+                  (context) => v1,
+                  priority: VariantPriority.high,
+                ),
                 MultiVariant.and([
                   const Variant('1'),
-                  ContextVariant((context) => v2),
+                  ContextVariant(
+                    (context) => v2,
+                    priority: VariantPriority.high,
+                  ),
                 ]),
               ]),
               isExpectedToApply: equalsTo,
@@ -484,10 +548,16 @@ void main() {
           }) {
             _testApplyContextToVisualAttributes(
               condition: MultiVariant.and([
-                ContextVariant((context) => v1),
+                ContextVariant(
+                  (context) => v1,
+                  priority: VariantPriority.high,
+                ),
                 MultiVariant.or([
                   const Variant('1'),
-                  ContextVariant((context) => v2),
+                  ContextVariant(
+                    (context) => v2,
+                    priority: VariantPriority.high,
+                  ),
                 ]),
               ]),
               isExpectedToApply: equalsTo,
@@ -510,10 +580,16 @@ void main() {
           }) {
             _testApplyContextToVisualAttributes(
               condition: MultiVariant.or([
-                ContextVariant((context) => v1),
+                ContextVariant(
+                  (context) => v1,
+                  priority: VariantPriority.high,
+                ),
                 MultiVariant.or([
                   const Variant('1'),
-                  ContextVariant((context) => v2),
+                  ContextVariant(
+                    (context) => v2,
+                    priority: VariantPriority.high,
+                  ),
                 ]),
               ]),
               isExpectedToApply: equalsTo,

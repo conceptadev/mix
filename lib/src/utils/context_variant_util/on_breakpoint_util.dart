@@ -29,11 +29,14 @@ ContextVariant onBreakpoint({
 }) {
   final constraints = Breakpoint(minWidth: minWidth, maxWidth: maxWidth);
 
-  return ContextVariant((context) {
-    final size = context.screenSize;
+  return ContextVariant(
+    (context) {
+      final size = context.screenSize;
 
-    return constraints.matches(size);
-  });
+      return constraints.matches(size);
+    },
+    priority: VariantPriority.normal,
+  );
 }
 
 /// Creates a [ContextVariant] based on a specific [token].
@@ -42,11 +45,14 @@ ContextVariant onBreakpoint({
 /// and returns a [ContextVariant] that applies when the current screen size matches
 /// the specified breakpoint.
 ContextVariant onBreakpointToken(BreakpointToken token) {
-  return ContextVariant((context) {
-    final size = context.screenSize;
+  return ContextVariant(
+    (context) {
+      final size = context.screenSize;
 
-    final selectedbreakpoint = token.resolve(context);
+      final selectedbreakpoint = token.resolve(context);
 
-    return selectedbreakpoint.matches(size);
-  });
+      return selectedbreakpoint.matches(size);
+    },
+    priority: VariantPriority.normal,
+  );
 }

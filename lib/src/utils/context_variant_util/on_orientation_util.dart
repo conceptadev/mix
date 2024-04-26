@@ -22,5 +22,6 @@ final onLandscape = onOrientation(Orientation.landscape);
 ContextVariant onOrientation(Orientation orientation) {
   return ContextVariant(
     (context) => MediaQuery.of(context).orientation == orientation,
+    priority: VariantPriority.normal,
   );
 }

@@ -8,5 +8,8 @@ import '../../variants/variant.dart';
 ///
 /// [variant] - The [ContextVariant] whose condition is to be negated.
 ContextVariant onNot(ContextVariant variant) {
-  return ContextVariant((context) => !variant.when(context));
+  return ContextVariant(
+    (context) => !variant.when(context),
+    priority: VariantPriority.normal,
+  );
 }

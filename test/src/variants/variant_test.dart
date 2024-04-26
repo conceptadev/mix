@@ -55,8 +55,14 @@ void main() {
     });
 
     test('when should correctly match context variants', () {
-      final variant1 = ContextVariant((context) => true);
-      final variant2 = ContextVariant((context) => false);
+      final variant1 = ContextVariant(
+        (context) => true,
+        priority: VariantPriority.normal,
+      );
+      final variant2 = ContextVariant(
+        (context) => false,
+        priority: VariantPriority.normal,
+      );
       final multiAndVariant = MultiVariant.and([variant1, variant2]);
       final multiOrVariant = MultiVariant.or([variant1, variant2]);
 
@@ -86,8 +92,14 @@ void main() {
       test(
           'MultiVariant.or with 2 PressableStateVariant (false & false) should return true',
           () {
-        final variant1 = ContextVariant((context) => false);
-        final variant2 = ContextVariant((context) => false);
+        final variant1 = ContextVariant(
+          (context) => false,
+          priority: VariantPriority.normal,
+        );
+        final variant2 = ContextVariant(
+          (context) => false,
+          priority: VariantPriority.normal,
+        );
         final multiVariant = MultiVariant.or([variant1, variant2]);
 
         final expectValue = multiVariant.when(MockBuildContext());
@@ -99,8 +111,14 @@ void main() {
       test(
           'MultiVariant.or with 2 PressableStateVariant (false & true) should return true',
           () {
-        final variant1 = ContextVariant((context) => false);
-        final variant2 = ContextVariant((context) => true);
+        final variant1 = ContextVariant(
+          (context) => false,
+          priority: VariantPriority.normal,
+        );
+        final variant2 = ContextVariant(
+          (context) => true,
+          priority: VariantPriority.normal,
+        );
         final multiVariant = MultiVariant.or([variant1, variant2]);
 
         final expectValue = multiVariant.when(MockBuildContext());
@@ -112,8 +130,10 @@ void main() {
       test(
           'MultiVariant.or with 2 PressableStateVariant (true & true) should return true',
           () {
-        final variant1 = ContextVariant((context) => true);
-        final variant2 = ContextVariant((context) => true);
+        final variant1 =
+            ContextVariant((context) => true, priority: VariantPriority.normal);
+        final variant2 =
+            ContextVariant((context) => true, priority: VariantPriority.normal);
         final multiVariant = MultiVariant.or([variant1, variant2]);
 
         final expectValue = multiVariant.when(MockBuildContext());
@@ -125,8 +145,14 @@ void main() {
       test(
           'MultiVariant.and with 2 ContextVariant (false & false) should return false',
           () {
-        final variant1 = ContextVariant((context) => false);
-        final variant2 = ContextVariant((context) => false);
+        final variant1 = ContextVariant(
+          (context) => false,
+          priority: VariantPriority.normal,
+        );
+        final variant2 = ContextVariant(
+          (context) => false,
+          priority: VariantPriority.normal,
+        );
         final multiVariant = MultiVariant.and([variant1, variant2]);
 
         final expectValue = multiVariant.when(MockBuildContext());
@@ -138,8 +164,14 @@ void main() {
       test(
           'MultiVariant.and with 2 ContextVariant (false & true) should return false',
           () {
-        final variant1 = ContextVariant((context) => false);
-        final variant2 = ContextVariant((context) => true);
+        final variant1 = ContextVariant(
+          (context) => false,
+          priority: VariantPriority.normal,
+        );
+        final variant2 = ContextVariant(
+          (context) => true,
+          priority: VariantPriority.normal,
+        );
         final multiVariant = MultiVariant.and([variant1, variant2]);
 
         final expectValue = multiVariant.when(MockBuildContext());
@@ -151,8 +183,14 @@ void main() {
       test(
           'MultiVariant.and with 2 ContextVariant (true & true) should return true',
           () {
-        final variant1 = ContextVariant((context) => true);
-        final variant2 = ContextVariant((context) => true);
+        final variant1 = ContextVariant(
+          (context) => true,
+          priority: VariantPriority.normal,
+        );
+        final variant2 = ContextVariant(
+          (context) => true,
+          priority: VariantPriority.normal,
+        );
         final multiVariant = MultiVariant.and([variant1, variant2]);
 
         final expectValue = multiVariant.when(MockBuildContext());
@@ -301,9 +339,18 @@ void _testWhenWithThreeVariants({
   required _ConditionBuilder condition,
   required Matcher expectedValue,
 }) {
-  final variant1 = ContextVariant((context) => v1);
-  final variant2 = ContextVariant((context) => v2);
-  final variant3 = ContextVariant((context) => v3);
+  final variant1 = ContextVariant(
+    (context) => v1,
+    priority: VariantPriority.normal,
+  );
+  final variant2 = ContextVariant(
+    (context) => v2,
+    priority: VariantPriority.normal,
+  );
+  final variant3 = ContextVariant(
+    (context) => v3,
+    priority: VariantPriority.normal,
+  );
 
   final multiVariant = condition(variant1, variant2, variant3);
 

@@ -93,7 +93,7 @@ class Variant extends StyleVariant {
   /// Constructs a `Variant` with the given [name].
   ///
   /// The [name] parameter uniquely identifies the variant and is used in style resolution.
-  const Variant(this.name, {super.priority});
+  const Variant(this.name) : super(priority: VariantPriority.normal);
 
   /// Creates a new [VariantAttribute] with the given [variant] and [style].
   ///
@@ -170,7 +170,7 @@ class ContextVariant extends StyleVariant {
   final bool Function(BuildContext context) whenBuilder;
 
   /// Constructs a `ContextVariant` with a given [name] and a context condition function [when].
-  const ContextVariant(this.whenBuilder, {super.priority});
+  const ContextVariant(this.whenBuilder, {required super.priority});
 
   /// Creates a new [ContextVariantAttribute] with the given [variant] and [style].
   ///

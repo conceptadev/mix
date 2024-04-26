@@ -17,7 +17,10 @@ final onLight = onBrightness(Brightness.light);
 /// brightness matches the specified [brightness]. It is useful for defining
 /// brightness-specific styles or behaviors in the application.
 ContextVariant onBrightness(Brightness brightness) {
-  return ContextVariant((context) {
-    return Theme.of(context).brightness == brightness;
-  });
+  return ContextVariant(
+    (context) {
+      return Theme.of(context).brightness == brightness;
+    },
+    priority: VariantPriority.normal,
+  );
 }

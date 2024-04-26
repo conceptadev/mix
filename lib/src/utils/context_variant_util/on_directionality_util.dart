@@ -18,5 +18,6 @@ final onLTR = onDirectionality(TextDirection.ltr);
 ContextVariant onDirectionality(TextDirection direction) {
   return ContextVariant(
     (context) => Directionality.of(context) == direction,
+    priority: VariantPriority.normal,
   );
 }

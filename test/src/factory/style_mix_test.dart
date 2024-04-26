@@ -240,37 +240,51 @@ void main() {
     const attr1 = MockBooleanScalarAttribute(true);
     const attr2 = MockDoubleScalarAttribute(1.0);
 
-    const variantLow = Variant('low', priority: VariantPriority.low);
-    const variantNormal = Variant('variant1', priority: VariantPriority.normal);
-    const variantHigh = Variant('variant1', priority: VariantPriority.high);
+    final variantLow = ContextVariant(
+      (context) => true,
+      priority: VariantPriority.low,
+    );
+
+    final variantNormal = ContextVariant(
+      (context) => true,
+      priority: VariantPriority.normal,
+    );
+
+    final variantHigh = ContextVariant(
+      (context) => true,
+      priority: VariantPriority.high,
+    );
 
     void testPriorityOrder({
-      required Variant x1,
-      required Variant y2,
-      required Variant z3,
-      required Iterable<StyleVariant> appliedVariants,
+      required ContextVariant x1,
+      required ContextVariant y2,
+      required ContextVariant z3,
       required expectedValue,
     }) {
-      final style = Style(
-        attr1,
-        attr2,
-        x1(
-          const MockIntScalarAttribute(1),
+      final style = applyContextToVisualAttributes(
+        MockBuildContext(),
+        Style(
+          attr1,
+          attr2,
+          x1(
+            const MockIntScalarAttribute(1),
+          ),
+          y2(
+            const MockIntScalarAttribute(2),
+          ),
+          z3(
+            const MockIntScalarAttribute(3),
+          ),
         ),
-        y2(
-          const MockIntScalarAttribute(2),
-        ),
-        z3(
-          const MockIntScalarAttribute(3),
-        ),
-      ).applyVariants(appliedVariants);
+      );
 
-      expect(style.styles.length, 3);
+      expect(style.length, 3);
 
-      final currentValue =
-          style.styles.attributeOfType<MockIntScalarAttribute>()?.value;
+      final attribute =
+          style.firstWhere((element) => element is MockIntScalarAttribute)
+              as MockIntScalarAttribute;
 
-      expect(currentValue, expectedValue);
+      expect(attribute.value, expectedValue);
     }
 
     test('testing all priorities', () {
@@ -278,7 +292,6 @@ void main() {
         x1: variantLow,
         y2: variantNormal,
         z3: variantHigh,
-        appliedVariants: [variantLow, variantNormal, variantHigh],
         expectedValue: 3,
       );
 
@@ -286,7 +299,6 @@ void main() {
         x1: variantLow,
         y2: variantHigh,
         z3: variantNormal,
-        appliedVariants: [variantLow, variantNormal, variantHigh],
         expectedValue: 2,
       );
 
@@ -294,7 +306,6 @@ void main() {
         x1: variantNormal,
         y2: variantHigh,
         z3: variantLow,
-        appliedVariants: [variantLow, variantNormal, variantHigh],
         expectedValue: 2,
       );
 
@@ -302,7 +313,6 @@ void main() {
         x1: variantNormal,
         y2: variantLow,
         z3: variantHigh,
-        appliedVariants: [variantLow, variantNormal, variantHigh],
         expectedValue: 3,
       );
 
@@ -310,7 +320,6 @@ void main() {
         x1: variantHigh,
         y2: variantLow,
         z3: variantNormal,
-        appliedVariants: [variantLow, variantNormal, variantHigh],
         expectedValue: 1,
       );
 
@@ -318,7 +327,6 @@ void main() {
         x1: variantHigh,
         y2: variantNormal,
         z3: variantLow,
-        appliedVariants: [variantLow, variantNormal, variantHigh],
         expectedValue: 1,
       );
     });
