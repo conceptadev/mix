@@ -38,12 +38,12 @@ void main() {
       final secondNotifier = PressableState.of(secondContext);
       final thirdNotifier = PressableState.of(thirdContext);
 
-      expect(onEnabledAttr.variant.when(firstContext), false);
+      expect(onEnabledAttr.variant.build(firstContext), false);
       expect(firstNotifier.disabled, true);
-      expect(onEnabledAttr.variant.when(secondContext), false);
+      expect(onEnabledAttr.variant.build(secondContext), false);
       expect(secondNotifier.disabled, true);
 
-      expect(onEnabledAttr.variant.when(thirdContext), true);
+      expect(onEnabledAttr.variant.build(thirdContext), true);
       expect(thirdNotifier.disabled, false);
     });
 

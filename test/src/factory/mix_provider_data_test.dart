@@ -8,7 +8,7 @@ import '../../helpers/testing_utils.dart';
 
 void main() {
   group('MixData', () {
-    final autoApplyVariant = ContextVariant((context) => true);
+    final autoApplyVariant = MockContextVariantCondition(true);
     test('MixData create', () {
       final mixData = MixData.create(
         MockBuildContext(),
@@ -192,12 +192,12 @@ void main() {
       group('must respect the condition', () {
         test('with single ContextVariant', () {
           _testApplyContextToVisualAttributes(
-            condition: ContextVariant((context) => false),
+            condition: MockContextVariantCondition(false),
             isExpectedToApply: false,
           );
 
           _testApplyContextToVisualAttributes(
-            condition: ContextVariant((context) => true),
+            condition: MockContextVariantCondition(true),
             isExpectedToApply: true,
           );
         });
@@ -210,8 +210,8 @@ void main() {
           }) {
             _testApplyContextToVisualAttributes(
               condition: MultiVariant.or([
-                ContextVariant((context) => v1),
-                ContextVariant((context) => v2)
+                MockContextVariantCondition(v1),
+                MockContextVariantCondition(v2)
               ]),
               isExpectedToApply: equalsTo,
             );
@@ -231,8 +231,8 @@ void main() {
           }) {
             _testApplyContextToVisualAttributes(
               condition: MultiVariant.and([
-                ContextVariant((context) => v1),
-                ContextVariant((context) => v2)
+                MockContextVariantCondition(v1),
+                MockContextVariantCondition(v2)
               ]),
               isExpectedToApply: equalsTo,
             );
@@ -255,10 +255,10 @@ void main() {
           }) {
             _testApplyContextToVisualAttributes(
               condition: MultiVariant.and([
-                ContextVariant((context) => v1),
+                MockContextVariantCondition(v1),
                 MultiVariant.and([
-                  ContextVariant((context) => v2),
-                  ContextVariant((context) => v3)
+                  MockContextVariantCondition(v2),
+                  MockContextVariantCondition(v3)
                 ]),
               ]),
               isExpectedToApply: equalsTo,
@@ -286,10 +286,10 @@ void main() {
           }) {
             _testApplyContextToVisualAttributes(
               condition: MultiVariant.or([
-                ContextVariant((context) => v1),
+                MockContextVariantCondition(v1),
                 MultiVariant.or([
-                  ContextVariant((context) => v2),
-                  ContextVariant((context) => v3)
+                  MockContextVariantCondition(v2),
+                  MockContextVariantCondition(v3)
                 ]),
               ]),
               isExpectedToApply: equalsTo,
@@ -317,10 +317,10 @@ void main() {
           }) {
             _testApplyContextToVisualAttributes(
               condition: MultiVariant.and([
-                ContextVariant((context) => v1),
+                MockContextVariantCondition(v1),
                 MultiVariant.or([
-                  ContextVariant((context) => v2),
-                  ContextVariant((context) => v3)
+                  MockContextVariantCondition(v2),
+                  MockContextVariantCondition(v3)
                 ]),
               ]),
               isExpectedToApply: equalsTo,
@@ -348,10 +348,10 @@ void main() {
           }) {
             _testApplyContextToVisualAttributes(
               condition: MultiVariant.or([
-                ContextVariant((context) => v1),
+                MockContextVariantCondition(v1),
                 MultiVariant.and([
-                  ContextVariant((context) => v2),
-                  ContextVariant((context) => v3)
+                  MockContextVariantCondition(v2),
+                  MockContextVariantCondition(v3)
                 ]),
               ]),
               isExpectedToApply: equalsTo,
@@ -376,7 +376,7 @@ void main() {
             _testApplyContextToVisualAttributes(
               condition: MultiVariant.or([
                 const Variant('1'),
-                ContextVariant((context) => v1),
+                MockContextVariantCondition(v1),
               ]),
               isExpectedToApply: equalsTo,
             );
@@ -394,7 +394,7 @@ void main() {
             _testApplyContextToVisualAttributes(
               condition: MultiVariant.or([
                 const Variant('1'),
-                ContextVariant((context) => v1),
+                MockContextVariantCondition(v1),
               ]),
               isExpectedToApply: equalsTo,
             );
@@ -412,7 +412,7 @@ void main() {
             _testApplyContextToVisualAttributes(
               condition: MultiVariant.and([
                 const Variant('1'),
-                ContextVariant((context) => v1),
+                MockContextVariantCondition(v1),
               ]),
               isExpectedToApply: equalsTo,
             );
@@ -434,7 +434,7 @@ void main() {
                 const Variant('1'),
                 MultiVariant.and([
                   const Variant('2'),
-                  ContextVariant((context) => v1),
+                  MockContextVariantCondition(v1),
                 ]),
               ]),
               isExpectedToApply: equalsTo,
@@ -455,10 +455,10 @@ void main() {
           }) {
             _testApplyContextToVisualAttributes(
               condition: MultiVariant.and([
-                ContextVariant((context) => v1),
+                MockContextVariantCondition(v1),
                 MultiVariant.and([
                   const Variant('1'),
-                  ContextVariant((context) => v2),
+                  MockContextVariantCondition(v2),
                 ]),
               ]),
               isExpectedToApply: equalsTo,
@@ -481,10 +481,10 @@ void main() {
           }) {
             _testApplyContextToVisualAttributes(
               condition: MultiVariant.and([
-                ContextVariant((context) => v1),
+                MockContextVariantCondition(v1),
                 MultiVariant.or([
                   const Variant('1'),
-                  ContextVariant((context) => v2),
+                  MockContextVariantCondition(v2),
                 ]),
               ]),
               isExpectedToApply: equalsTo,
@@ -507,10 +507,10 @@ void main() {
           }) {
             _testApplyContextToVisualAttributes(
               condition: MultiVariant.or([
-                ContextVariant((context) => v1),
+                MockContextVariantCondition(v1),
                 MultiVariant.or([
                   const Variant('1'),
-                  ContextVariant((context) => v2),
+                  MockContextVariantCondition(v2),
                 ]),
               ]),
               isExpectedToApply: equalsTo,

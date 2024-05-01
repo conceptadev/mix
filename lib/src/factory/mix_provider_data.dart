@@ -138,7 +138,7 @@ Style _applyVariants(
   Style style,
   StyleVariantAttribute variantAttribute,
 ) {
-  return variantAttribute.variant.when(context)
+  return variantAttribute.variant.build(context)
       ? style.merge(variantAttribute.value)
       : style;
 }

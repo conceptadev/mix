@@ -55,13 +55,13 @@ void main() {
     });
 
     test('when should correctly match context variants', () {
-      final variant1 = ContextVariant((context) => true);
-      final variant2 = ContextVariant((context) => false);
+      final variant1 = MockContextVariantCondition(true);
+      final variant2 = MockContextVariantCondition(false);
       final multiAndVariant = MultiVariant.and([variant1, variant2]);
       final multiOrVariant = MultiVariant.or([variant1, variant2]);
 
-      expect(multiAndVariant.when(MockBuildContext()), isFalse);
-      expect(multiOrVariant.when(MockBuildContext()), isTrue);
+      expect(multiAndVariant.build(MockBuildContext()), isFalse);
+      expect(multiOrVariant.build(MockBuildContext()), isTrue);
     });
 
     test('MultiVariant.and should correctly create a MultiVariant', () {
@@ -86,11 +86,11 @@ void main() {
       test(
           'MultiVariant.or with 2 PressableStateVariant (false & false) should return true',
           () {
-        final variant1 = ContextVariant((context) => false);
-        final variant2 = ContextVariant((context) => false);
+        final variant1 = MockContextVariantCondition(false);
+        final variant2 = MockContextVariantCondition(false);
         final multiVariant = MultiVariant.or([variant1, variant2]);
 
-        final expectValue = multiVariant.when(MockBuildContext());
+        final expectValue = multiVariant.build(MockBuildContext());
 
         expect(expectValue, isFalse);
         expect(multiVariant.operatorType, MultiVariantOperator.or);
@@ -99,11 +99,11 @@ void main() {
       test(
           'MultiVariant.or with 2 PressableStateVariant (false & true) should return true',
           () {
-        final variant1 = ContextVariant((context) => false);
-        final variant2 = ContextVariant((context) => true);
+        final variant1 = MockContextVariantCondition(false);
+        final variant2 = MockContextVariantCondition(true);
         final multiVariant = MultiVariant.or([variant1, variant2]);
 
-        final expectValue = multiVariant.when(MockBuildContext());
+        final expectValue = multiVariant.build(MockBuildContext());
 
         expect(expectValue, isTrue);
         expect(multiVariant.operatorType, MultiVariantOperator.or);
@@ -112,11 +112,11 @@ void main() {
       test(
           'MultiVariant.or with 2 PressableStateVariant (true & true) should return true',
           () {
-        final variant1 = ContextVariant((context) => true);
-        final variant2 = ContextVariant((context) => true);
+        final variant1 = MockContextVariantCondition(true);
+        final variant2 = MockContextVariantCondition(true);
         final multiVariant = MultiVariant.or([variant1, variant2]);
 
-        final expectValue = multiVariant.when(MockBuildContext());
+        final expectValue = multiVariant.build(MockBuildContext());
 
         expect(expectValue, isTrue);
         expect(multiVariant.operatorType, MultiVariantOperator.or);
@@ -125,11 +125,11 @@ void main() {
       test(
           'MultiVariant.and with 2 ContextVariant (false & false) should return false',
           () {
-        final variant1 = ContextVariant((context) => false);
-        final variant2 = ContextVariant((context) => false);
+        final variant1 = MockContextVariantCondition(false);
+        final variant2 = MockContextVariantCondition(false);
         final multiVariant = MultiVariant.and([variant1, variant2]);
 
-        final expectValue = multiVariant.when(MockBuildContext());
+        final expectValue = multiVariant.build(MockBuildContext());
 
         expect(expectValue, isFalse);
         expect(multiVariant.operatorType, MultiVariantOperator.and);
@@ -138,11 +138,11 @@ void main() {
       test(
           'MultiVariant.and with 2 ContextVariant (false & true) should return false',
           () {
-        final variant1 = ContextVariant((context) => false);
-        final variant2 = ContextVariant((context) => true);
+        final variant1 = MockContextVariantCondition(false);
+        final variant2 = MockContextVariantCondition(true);
         final multiVariant = MultiVariant.and([variant1, variant2]);
 
-        final expectValue = multiVariant.when(MockBuildContext());
+        final expectValue = multiVariant.build(MockBuildContext());
 
         expect(expectValue, isFalse);
         expect(multiVariant.operatorType, MultiVariantOperator.and);
@@ -151,11 +151,11 @@ void main() {
       test(
           'MultiVariant.and with 2 ContextVariant (true & true) should return true',
           () {
-        final variant1 = ContextVariant((context) => true);
-        final variant2 = ContextVariant((context) => true);
+        final variant1 = MockContextVariantCondition(true);
+        final variant2 = MockContextVariantCondition(true);
         final multiVariant = MultiVariant.and([variant1, variant2]);
 
-        final expectValue = multiVariant.when(MockBuildContext());
+        final expectValue = multiVariant.build(MockBuildContext());
 
         expect(expectValue, isTrue);
         expect(multiVariant.operatorType, MultiVariantOperator.and);
@@ -301,13 +301,13 @@ void _testWhenWithThreeVariants({
   required _ConditionBuilder condition,
   required Matcher expectedValue,
 }) {
-  final variant1 = ContextVariant((context) => v1);
-  final variant2 = ContextVariant((context) => v2);
-  final variant3 = ContextVariant((context) => v3);
+  final variant1 = MockContextVariantCondition(v1);
+  final variant2 = MockContextVariantCondition(v2);
+  final variant3 = MockContextVariantCondition(v3);
 
   final multiVariant = condition(variant1, variant2, variant3);
 
-  final expectValue = multiVariant.when(MockBuildContext());
+  final expectValue = multiVariant.build(MockBuildContext());
 
   expect(expectValue, expectedValue);
 }

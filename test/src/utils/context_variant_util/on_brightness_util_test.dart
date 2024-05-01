@@ -10,16 +10,16 @@ void main() {
       await tester.pumpWidget(createBrightnessTheme(Brightness.light));
       var context = tester.element(find.byType(Container));
 
-      expect(onLight.when(context), true, reason: 'light');
-      expect(onDark.when(context), false, reason: 'dark');
+      expect(onLight.build(context), true, reason: 'light');
+      expect(onDark.build(context), false, reason: 'dark');
     });
 
     testWidgets('onDark context variant', (widgetTester) async {
       await widgetTester.pumpWidget(createBrightnessTheme(Brightness.dark));
       var context = widgetTester.element(find.byType(Container));
 
-      expect(onLight.when(context), false, reason: 'light');
-      expect(onDark.when(context), true, reason: 'dark');
+      expect(onLight.build(context), false, reason: 'light');
+      expect(onDark.build(context), true, reason: 'dark');
     });
   });
 }

@@ -129,6 +129,18 @@ final style = Style(
   text.style.color.black(),
 );
 ```
+### Prioritization
+
+When applying multiple variants to a `Style`, the last variant will always have priority over the previous ones. However, you can use the `priority` parameter to change the priority of a `ContextVariant`, then the highest priority will be last. The `priority` is a required parameter for `ContextVariant` that can be set when defining the variant. look at the following example:
+
+```dart
+final contextVariant = ContextVariant(
+      (context) => // Your condition here,
+      priority: VariantPriority.normal // set the priority here,
+    );
+```
+
+The `priority` parameter can be set to `VariantPriority.low`, `VariantPriority.medium`, `VariantPriority.high` or `VariantPriority.highest`. A good example of this is when you are using a variants that involves some kind of gesture, like `onHover` and `onPress`. In this case, those variants will always have the highest priority. It happens because Mix needs to make sure that the defined styles will be applied correctly.
 
 ## Conditional operators
 

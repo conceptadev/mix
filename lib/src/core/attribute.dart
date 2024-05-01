@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../factory/mix_provider_data.dart';
 import '../helpers/compare_mixin.dart';
+import '../variants/variant.dart';
 
 @immutable
 abstract class Attribute with Comparable {
@@ -112,12 +113,34 @@ abstract class Spec<T extends Spec<T>> with Comparable {
 }
 
 @immutable
-abstract class StyleAttributeBuilder<Self extends StyleAttributeBuilder<Self>>
-    extends StyleAttribute {
-  const StyleAttributeBuilder();
+abstract class StyleAttributeBuilder<Param> extends StyleAttribute {
+  final Key? key;
+  final Attribute Function(Param param) fn;
+  const StyleAttributeBuilder(this.fn, {required this.key});
 
   Attribute? builder(BuildContext context);
 
   @override
-  Type get type => Self;
+  Object get type => '${runtimeType}_${key?.toString() ?? 'default'}';
+
+  @override
+  List<Object?> get props => [key];
+}
+
+@immutable
+class ContectVariantEventBuilder<T extends ContextVariant>
+    extends StyleAttributeBuilder<bool> {
+  final T variant;
+
+  const ContectVariantEventBuilder(
+    super.fn, {
+    required this.variant,
+    required super.key,
+  });
+
+  @override
+  Attribute builder(BuildContext context) => fn(variant.build(context));
+
+  @override
+  List<Object?> get props => [key, variant];
 }

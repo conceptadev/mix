@@ -14,10 +14,10 @@ void main() {
       await tester.pumpWidget(createMediaQuery(xSmallScreenWidth));
       var context = tester.element(find.byType(Container));
 
-      expect(onXSmall.when(context), true, reason: 'xsmall');
-      expect(onSmall.when(context), false, reason: 'small');
-      expect(onMedium.when(context), false, reason: 'medium');
-      expect(onLarge.when(context), false, reason: 'large');
+      expect(onXSmall.build(context), true, reason: 'xsmall');
+      expect(onSmall.build(context), false, reason: 'small');
+      expect(onMedium.build(context), false, reason: 'medium');
+      expect(onLarge.build(context), false, reason: 'large');
     });
 
     testWidgets('small screen context variant', (tester) async {
@@ -25,10 +25,10 @@ void main() {
       await tester.pumpWidget(createMediaQuery(smallScreenWidth));
       var context = tester.element(find.byType(Container));
 
-      expect(onXSmall.when(context), false, reason: 'xsmall');
-      expect(onSmall.when(context), true, reason: 'small');
-      expect(onMedium.when(context), false, reason: 'medium');
-      expect(onLarge.when(context), false, reason: 'large');
+      expect(onXSmall.build(context), false, reason: 'xsmall');
+      expect(onSmall.build(context), true, reason: 'small');
+      expect(onMedium.build(context), false, reason: 'medium');
+      expect(onLarge.build(context), false, reason: 'large');
 
       addTearDown(tester.view.resetPhysicalSize);
     });
@@ -38,10 +38,10 @@ void main() {
       await tester.pumpWidget(createMediaQuery(mediumScreenWidth));
       var context = tester.element(find.byType(Container));
 
-      expect(onXSmall.when(context), false, reason: 'xsmall');
-      expect(onSmall.when(context), false, reason: 'small');
-      expect(onMedium.when(context), true, reason: 'medium');
-      expect(onLarge.when(context), false, reason: 'large');
+      expect(onXSmall.build(context), false, reason: 'xsmall');
+      expect(onSmall.build(context), false, reason: 'small');
+      expect(onMedium.build(context), true, reason: 'medium');
+      expect(onLarge.build(context), false, reason: 'large');
     });
 
     testWidgets('large screen context variant', (tester) async {
@@ -49,10 +49,10 @@ void main() {
       await tester.pumpWidget(createMediaQuery(largeScreenWidth));
       var context = tester.element(find.byType(Container));
 
-      expect(onXSmall.when(context), false, reason: 'xsmall');
-      expect(onSmall.when(context), false, reason: 'small');
-      expect(onMedium.when(context), false, reason: 'medium');
-      expect(onLarge.when(context), true, reason: 'large');
+      expect(onXSmall.build(context), false, reason: 'xsmall');
+      expect(onSmall.build(context), false, reason: 'small');
+      expect(onMedium.build(context), false, reason: 'medium');
+      expect(onLarge.build(context), true, reason: 'large');
 
       addTearDown(tester.view.resetPhysicalSize);
     });
