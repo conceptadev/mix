@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
@@ -24,7 +26,7 @@ void main() {
                 image.filterQuality.high(),
                 image.blendMode.colorDodge(),
               ),
-              image: const AssetImage('test_resources/logo.png'),
+              image: FileImage(File('test_resources/logo.png')),
             ),
           ),
         ),
@@ -53,7 +55,7 @@ void main() {
                 image.height(152),
                 opacity(0.5),
               ),
-              image: const AssetImage('test_resources/logo.png'),
+              image: FileImage(File('test_resources/logo.png')),
             ),
           ),
         ),
@@ -75,8 +77,8 @@ void main() {
               image.height(152),
               image.color.black(),
             ),
-            child: const StyledImage(
-              image: AssetImage('test_resources/logo.png'),
+            child: StyledImage(
+              image: FileImage(File('test_resources/logo.png')),
             ),
           ),
         );
@@ -95,11 +97,11 @@ void main() {
         await tester.pumpMaterialApp(
           StyledImage(
             style: Style(
-              height(100),
-              width(100),
+              box.height(100),
+              box.width(100),
               align(),
             ),
-            image: const AssetImage('test_resources/logo.png'),
+            image: FileImage(File('test_resources/logo.png')),
           ),
         );
 

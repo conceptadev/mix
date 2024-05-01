@@ -1,181 +1,91 @@
 import 'package:flutter/material.dart';
 
-import '../../attributes/nested_style/nested_style_attribute.dart';
 import '../../core/attribute.dart';
-import '../../factory/style_mix.dart';
-import '../../utils/context_variant_util/on_helper_util.dart';
 import '../../variants/variant.dart';
 import 'pressable_state.dart';
 
 /// Global context variants for handling common widget states and gestures.
+mixin ContextVariantEventMixin<T extends ContextVariant> on ContextVariant {
+  ContectVariantEventBuilder<T> onEvent(Attribute Function(bool) fn) {
+    return ContectVariantEventBuilder(fn, variant: this as T, key: key);
+  }
+}
 
 /// Applies styles when the widget is pressed.
-final onPressed = ContextVariant(
-  (context) => PressableState.pressedOf(context),
-  priority: VariantPriority.highest,
-);
+class OnPressedVariant extends ContextVariant
+    with ContextVariantEventMixin<OnPressedVariant> {
+  const OnPressedVariant({super.key})
+      : super(priority: VariantPriority.highest);
+
+  @override
+  bool build(BuildContext context) => PressableState.pressedOf(context);
+}
 
 /// Applies styles when the widget is long pressed.
-final onLongPressed = ContextVariant(
-  (context) => PressableState.longPressedOf(context),
-  priority: VariantPriority.highest,
-);
+class OnLongPressedVariant extends ContextVariant
+    with ContextVariantEventMixin<OnLongPressedVariant> {
+  const OnLongPressedVariant({super.key})
+      : super(priority: VariantPriority.highest);
+
+  @override
+  bool build(BuildContext context) => PressableState.longPressedOf(context);
+}
+
+@immutable
 
 /// Applies styles when widget is hovered over.
-final onHover = ContextVariant(
-  (context) => PressableState.hoveredOf(context),
-  priority: VariantPriority.highest,
-);
+class OnHoverVariant extends ContextVariant
+    with ContextVariantEventMixin<OnHoverVariant> {
+  const OnHoverVariant({super.key}) : super(priority: VariantPriority.highest);
 
-/// Applies styles when the widget is disabled.
-final onEnabled = ContextVariant(
-  (context) => PressableState.enabledOf(context),
-  priority: VariantPriority.highest,
-);
+  @override
+  bool build(BuildContext context) => PressableState.hoveredOf(context);
+}
 
 /// Applies styles when the widget is enabled.
-final onDisabled = onNot(onEnabled);
+class OnEnabledVariant extends ContextVariant
+    with ContextVariantEventMixin<OnEnabledVariant> {
+  const OnEnabledVariant({super.key})
+      : super(priority: VariantPriority.highest);
 
+  @override
+  bool build(BuildContext context) => PressableState.enabledOf(context);
+}
+
+/// Applies styles when the widget is disabled.
+class OnDisabledVariant extends ContextVariant
+    with ContextVariantEventMixin<OnDisabledVariant> {
+  const OnDisabledVariant({super.key})
+      : super(priority: VariantPriority.highest);
+
+  @override
+  bool build(BuildContext context) => !PressableState.enabledOf(context);
+}
+
+/// Applies styles when the widget has focus.
+class OnFocusedVariant extends ContextVariant
+    with ContextVariantEventMixin<OnFocusedVariant> {
+  const OnFocusedVariant({super.key})
+      : super(priority: VariantPriority.highest);
+
+  @override
+  bool build(BuildContext context) => PressableState.focusedOf(context);
+}
+
+const onPressed = OnPressedVariant();
+const onLongPressed = OnLongPressedVariant();
+const onHover = OnHoverVariant();
+const onEnabled = OnEnabledVariant();
+const onDisabled = OnDisabledVariant();
+const onFocused = OnFocusedVariant();
 const onMouseHover = OnMouseHoverBuilder.new;
 
-/// Applies styles when the widget has focus.dar
-const onFocused = ContextVariant(
-  PressableState.focusedOf,
-  priority: VariantPriority.highest,
-);
-
-const onPressedEvent = OnPressedEventBuilder.new;
-const onLongPressedEvent = OnLongPressedEventBuilder.new;
-const onHoverEvent = OnHoverEventBuilder.new;
-const onEnabledEvent = OnEnabledEventBuilder.new;
-const onDisabledEvent = OnDisabledEventBuilder.new;
-const onFocusedEvent = OnFocusedEventBuilder.new;
-
 @immutable
-class OnDisabledEventBuilder
-    extends StyleAttributeBuilder<OnDisabledEventBuilder> {
-  final Attribute Function(bool disabled) fn;
-  const OnDisabledEventBuilder(this.fn);
+class OnMouseHoverBuilder extends StyleAttributeBuilder<PointerPosition?> {
+  const OnMouseHoverBuilder(super.fn, {super.key});
 
   @override
   Attribute builder(BuildContext context) {
-    return fn(!PressableState.enabledOf(context));
+    return fn(PressableState.pointerPositionOf(context));
   }
-
-  @override
-  get props => [fn];
-}
-
-@immutable
-class OnFocusedEventBuilder
-    extends StyleAttributeBuilder<OnFocusedEventBuilder> {
-  final Attribute Function(bool focused) fn;
-  const OnFocusedEventBuilder(this.fn);
-
-  @override
-  Attribute builder(BuildContext context) {
-    return fn(PressableState.focusedOf(context));
-  }
-
-  @override
-  get props => [fn];
-}
-
-@immutable
-class OnPressedEventBuilder
-    extends StyleAttributeBuilder<OnPressedEventBuilder> {
-  final Attribute Function(bool pressed) fn;
-  const OnPressedEventBuilder(this.fn);
-
-  @override
-  Attribute builder(BuildContext context) {
-    return fn(PressableState.pressedOf(context));
-  }
-
-  @override
-  get props => [fn];
-}
-
-@immutable
-class OnLongPressedEventBuilder
-    extends StyleAttributeBuilder<OnLongPressedEventBuilder> {
-  final Attribute Function(bool longPressed) fn;
-  const OnLongPressedEventBuilder(this.fn);
-
-  @override
-  Attribute builder(BuildContext context) {
-    return fn(PressableState.longPressedOf(context));
-  }
-
-  @override
-  get props => [fn];
-}
-
-@immutable
-class OnHoverEventBuilder extends StyleAttributeBuilder<OnHoverEventBuilder> {
-  final Attribute Function(bool hovered) fn;
-  const OnHoverEventBuilder(this.fn);
-
-  @override
-  Attribute builder(BuildContext context) {
-    return fn(PressableState.hoveredOf(context));
-  }
-
-  @override
-  get props => [fn];
-}
-
-@immutable
-class OnEnabledEventBuilder
-    extends StyleAttributeBuilder<OnEnabledEventBuilder> {
-  final Attribute Function(bool enabled) fn;
-  const OnEnabledEventBuilder(this.fn);
-
-  @override
-  Attribute builder(BuildContext context) {
-    return fn(PressableState.enabledOf(context));
-  }
-
-  @override
-  get props => [fn];
-}
-
-@immutable
-class OnMouseHoverBuilder extends StyleAttributeBuilder<OnMouseHoverBuilder>
-    with Mergeable<OnMouseHoverBuilder> {
-  final List<Style Function(PointerPosition event)> builders;
-  const OnMouseHoverBuilder.raw(this.builders);
-
-  factory OnMouseHoverBuilder(Style Function(PointerPosition event) builder) {
-    return OnMouseHoverBuilder.raw([builder]);
-  }
-
-  @override
-  OnMouseHoverBuilder merge(OnMouseHoverBuilder? other) {
-    if (other == null) return this;
-
-    return OnMouseHoverBuilder.raw([...builders, ...other.builders]);
-  }
-
-  @override
-  Attribute? builder(BuildContext context) {
-    final position = PressableState.pointerPositionOf(context);
-
-    if (position == null) {
-      return null;
-    }
-
-    final styles = <Style>[];
-
-    for (final fn in builders) {
-      final style = fn(position);
-
-      styles.add(style);
-    }
-
-    return NestedStyleAttribute(Style.combine(styles));
-  }
-
-  @override
-  get props => [builders];
 }

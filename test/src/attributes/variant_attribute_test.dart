@@ -63,8 +63,8 @@ void main() {
 
   // ContextVariantAttribute
   group('ContextVariantAttribute', () {
-    final variant = ContextVariant(
-      (_) => true,
+    final variant = MockContextVariantCondition(
+      true,
       priority: VariantPriority.high,
     );
 
@@ -101,7 +101,7 @@ void main() {
     test('when() returns correct instance', () {
       final variantAttribute = ContextVariantAttribute(variant, style);
 
-      final result = variantAttribute.variant.when(MockBuildContext());
+      final result = variantAttribute.variant.build(MockBuildContext());
 
       expect(result, isTrue);
     });

@@ -10,16 +10,16 @@ void main() {
       await tester.pumpWidget(createDirectionality(TextDirection.rtl));
       var context = tester.element(find.byType(Container));
 
-      expect(onRTL.when(context), true, reason: 'rtl');
-      expect(onLTR.when(context), false, reason: 'ltr');
+      expect(onRTL.build(context), true, reason: 'rtl');
+      expect(onLTR.build(context), false, reason: 'ltr');
     });
 
     testWidgets('onLTR context variant', (tester) async {
       await tester.pumpWidget(createDirectionality(TextDirection.ltr));
       var context = tester.element(find.byType(Container));
 
-      expect(onRTL.when(context), false, reason: 'rtl');
-      expect(onLTR.when(context), true, reason: 'ltr');
+      expect(onRTL.build(context), false, reason: 'rtl');
+      expect(onLTR.build(context), true, reason: 'ltr');
     });
   });
 }

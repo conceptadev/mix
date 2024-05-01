@@ -180,9 +180,28 @@ class MockDoubleScalarAttribute
   const MockDoubleScalarAttribute(super.value);
 }
 
+class MockContextVariantCondition extends ContextVariant {
+  final bool condition;
+  MockContextVariantCondition(this.condition, {super.priority})
+      : super(key: ValueKey(condition));
+
+  @override
+  List<Object?> get props => [key, condition];
+
+  @override
+  bool build(BuildContext context) => condition;
+}
+
 class MockIntScalarAttribute
     extends ScalarAttribute<MockIntScalarAttribute, int> {
   const MockIntScalarAttribute(super.value);
+}
+
+class MockContextVariant extends ContextVariant {
+  const MockContextVariant({super.key});
+
+  @override
+  bool build(BuildContext context) => true;
 }
 
 class MockBooleanScalarAttribute

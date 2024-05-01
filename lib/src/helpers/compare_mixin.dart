@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 
+import '../../mix.dart';
 import '../core/extensions/iterable_ext.dart';
 import 'deep_collection_equality.dart';
 
@@ -109,7 +110,7 @@ String mapPropsToString(Type runtimeType, List<Object?> props) {
       if (buffer.length > runtimeType.toString().length + 1) {
         buffer.write(', ');
       }
-      buffer.write(value);
+      buffer.write(value.toString());
     }
   }
 
@@ -143,41 +144,21 @@ mixin Comparable {
 
   // Returns a list of properties that differ between this object and another.
   @visibleForTesting
-  List<String> getDiff(Object other) {
-    final diff = <String>[];
+  List<Object?> getDiff(Comparable other) {
+    final diff = <Object?>[];
 
     // Return if there are no differences.
     if (this == other) return diff;
 
-    if (other is Comparable) {
-      final otherProps = other.props;
-      final length = props.length;
+    final otherProps = other.props;
+    final length = props.length;
 
-      for (int i = 0; i < length; i++) {
-        final unit1 = props[i];
-        final unit2 = otherProps[i];
+    for (int i = 0; i < length; i++) {
+      final unit1 = props[i];
+      final unit2 = otherProps[i];
 
-        if (unit1 is Iterable || unit1 is Map) {
-          if (!_equality.equals(unit1, unit2)) {
-            final value = props[i]?.toString();
-            if (value != null) {
-              diff.add(value);
-            }
-          }
-        } else if (unit1?.runtimeType != unit2?.runtimeType) {
-          final value = props[i]?.toString();
-          if (value != null) {
-            diff.add(value);
-          }
-        } else if (unit1 != unit2) {
-          final value = props[i]?.toString();
-          if (value != null) {
-            diff.add(value);
-          }
-        }
-      }
-    } else {
-      diff.add('other is not EquatableMixin');
+      final differences = compareObjects(unit1, unit2);
+      diff.addAll(differences);
     }
 
     return diff;
@@ -188,4 +169,45 @@ mixin Comparable {
   String toString() {
     return stringify ? mapPropsToString(runtimeType, props) : '$runtimeType';
   }
+}
+
+List<Object?> compareObjects(Object? obj1, Object? obj2) {
+  final List<Object?> differences = [];
+
+  if (obj1 == obj2) return differences;
+
+  if (obj1 == null || obj2 == null) {
+    differences.add('null');
+  } else if (obj1 is Comparable && obj2 is Comparable) {
+    final value = obj1.getDiff(obj2);
+    if (value.isNotEmpty) {
+      differences.addAll(value);
+    }
+  } else if (obj1 is Iterable && obj2 is Iterable) {
+    if (!_equality.equals(obj1, obj2)) {
+      // compare each item in the iterable and add it
+      for (int i = 0; i < obj1.length; i++) {
+        final value = compareObjects(obj1.elementAt(i), obj2.elementAt(i));
+        if (value.isNotEmpty) {
+          differences.addAll(value);
+        }
+      }
+    }
+  } else if (obj1 is Map && obj2 is Map) {
+    if (!_equality.equals(obj1, obj2)) {
+      // compare each item in the map and add it
+      for (final key in obj1.keys) {
+        final value = compareObjects(obj1[key], obj2[key]);
+        if (value.isNotEmpty) {
+          differences.addAll(value);
+        }
+      }
+    }
+  } else if (obj1.runtimeType != obj2.runtimeType) {
+    differences.add(obj1);
+  } else if (obj1 != obj2) {
+    differences.add(obj1);
+  }
+
+  return differences;
 }

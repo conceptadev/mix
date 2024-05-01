@@ -7,26 +7,13 @@ import '../../helpers/testing_utils.dart';
 void main() {
   group('ContextVariant', () {
     test('Equality holds when all properties are the same', () {
-      bool contextFunction(BuildContext context) => true;
-      final variant1 = ContextVariant(
-        contextFunction,
-        priority: VariantPriority.normal,
-      );
-      final variant2 = ContextVariant(
-        contextFunction,
-        priority: VariantPriority.normal,
-      );
+      final variant1 = MockContextVariantCondition(true);
+      final variant2 = MockContextVariantCondition(true);
       expect(variant1, variant2);
     });
     test('Equality fails when properties are different', () {
-      final variant1 = ContextVariant(
-        (context) => true,
-        priority: VariantPriority.normal,
-      );
-      final variant2 = ContextVariant(
-        (context) => true,
-        priority: VariantPriority.normal,
-      );
+      final variant1 = MockContextVariantCondition(true);
+      final variant2 = MockContextVariantCondition(false);
       expect(variant1, isNot(variant2));
     });
   });
@@ -36,14 +23,14 @@ void main() {
       await tester.pumpWidget(createBrightnessTheme(Brightness.light));
       var context = tester.element(find.byType(Container));
 
-      expect(onLight.when(context), true, reason: 'light');
-      expect(onDark.when(context), false, reason: 'dark');
+      expect(onLight.build(context), true, reason: 'light');
+      expect(onDark.build(context), false, reason: 'dark');
 
       final notLight = onNot(onLight);
       final notDark = onNot(onDark);
 
-      expect(notLight.when(context), false, reason: 'not light');
-      expect(notDark.when(context), true, reason: 'not dark');
+      expect(notLight.build(context), false, reason: 'not light');
+      expect(notDark.build(context), true, reason: 'not dark');
     });
   });
 }

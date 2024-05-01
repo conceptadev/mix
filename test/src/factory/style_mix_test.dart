@@ -240,18 +240,18 @@ void main() {
     const attr1 = MockBooleanScalarAttribute(true);
     const attr2 = MockDoubleScalarAttribute(1.0);
 
-    final variantLow = ContextVariant(
-      (context) => true,
+    final variantLow = MockContextVariantCondition(
+      true,
       priority: VariantPriority.low,
     );
 
-    final variantNormal = ContextVariant(
-      (context) => true,
+    final variantNormal = MockContextVariantCondition(
+      true,
       priority: VariantPriority.normal,
     );
 
-    final variantHigh = ContextVariant(
-      (context) => true,
+    final variantHigh = MockContextVariantCondition(
+      true,
       priority: VariantPriority.high,
     );
 
