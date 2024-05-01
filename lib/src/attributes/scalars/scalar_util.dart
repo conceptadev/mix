@@ -3,16 +3,10 @@ import 'package:flutter/material.dart';
 import '../../core/attribute.dart';
 import '../../theme/tokens/radius_token.dart';
 
-typedef UtilityBuilder<ReturnType, ParamType> = ReturnType Function(
-  ParamType value,
-);
-
 abstract class MixUtility<Attr extends StyleAttribute, Value> {
-  final UtilityBuilder<Attr, Value> _builder;
-  const MixUtility(this._builder);
-
   @protected
-  UtilityBuilder<Attr, Value> get builder => _builder;
+  final Attr Function(Value) builder;
+  const MixUtility(this.builder);
 }
 
 abstract class SpecUtility<Attr extends SpecAttribute,
@@ -24,22 +18,25 @@ abstract class SpecUtility<Attr extends SpecAttribute,
 
 abstract class DtoUtility<Attr extends StyleAttribute, D extends Dto<Value>,
     Value> extends MixUtility<Attr, D> {
-  final UtilityBuilder<D, Value> _valueToDto;
-
+  final D Function(Value) _fromValue;
   const DtoUtility(super.builder, {required D Function(Value) valueToDto})
-      : _valueToDto = valueToDto;
+      : _fromValue = valueToDto;
+
+  /// Should contain all the named parameters of a [Dto] class
+  /// to build the [StyleAttribute].
+  Attr only();
 
   /// Returns a new [StyleAttribute] with the given [value].
-  Attr as(Value value) => _builder(_valueToDto(value));
+  Attr as(Value value) => builder(_fromValue(value));
 }
 
 abstract class ScalarUtility<Return extends StyleAttribute, Param>
     extends MixUtility<Return, Param> {
   const ScalarUtility(super.builder);
 
-  Return as(Param value) => _builder(value);
+  Return as(Param value) => builder(value);
 
-  Return call(Param value) => _builder(value);
+  Return call(Param value) => builder(value);
 }
 
 /// AlignmentUtility - A utility class for defining alignment attributes for widgets.
@@ -109,6 +106,10 @@ class AlignmentUtility<T extends StyleAttribute>
 /// ```
 class DoubleUtility<T extends StyleAttribute> extends ScalarUtility<T, double> {
   const DoubleUtility(super.builder);
+
+  T zero() => builder(0);
+
+  T infinity() => builder(double.infinity);
 
   @override
   T call(double value) => builder(value);
@@ -235,6 +236,8 @@ class FlexFitUtility<T extends StyleAttribute>
   T tight() => builder(FlexFit.tight);
   T loose() => builder(FlexFit.loose);
 }
+
+/// Utility for setting `TextHeightBehavior` values.
 
 class TextHeightBehaviorUtility<T extends StyleAttribute>
     extends ScalarUtility<T, TextHeightBehavior> {
@@ -563,8 +566,8 @@ class BlendModeUtility<T extends StyleAttribute>
 class BoxShapeUtility<T extends StyleAttribute>
     extends ScalarUtility<T, BoxShape> {
   const BoxShapeUtility(super.builder);
-  T circle() => _builder(BoxShape.circle);
-  T rectangle() => _builder(BoxShape.rectangle);
+  T circle() => builder(BoxShape.circle);
+  T rectangle() => builder(BoxShape.rectangle);
 }
 
 /// Utility for setting `FontWeight` values.
@@ -584,17 +587,17 @@ class BoxShapeUtility<T extends StyleAttribute>
 class FontWeightUtility<T extends StyleAttribute>
     extends ScalarUtility<T, FontWeight> {
   const FontWeightUtility(super.builder);
-  T bold() => _builder(FontWeight.bold);
-  T normal() => _builder(FontWeight.normal);
-  T w100() => _builder(FontWeight.w100);
-  T w200() => _builder(FontWeight.w200);
-  T w300() => _builder(FontWeight.w300);
-  T w400() => _builder(FontWeight.w400);
-  T w500() => _builder(FontWeight.w500);
-  T w600() => _builder(FontWeight.w600);
-  T w700() => _builder(FontWeight.w700);
-  T w800() => _builder(FontWeight.w800);
-  T w900() => _builder(FontWeight.w900);
+  T bold() => builder(FontWeight.bold);
+  T normal() => builder(FontWeight.normal);
+  T w100() => builder(FontWeight.w100);
+  T w200() => builder(FontWeight.w200);
+  T w300() => builder(FontWeight.w300);
+  T w400() => builder(FontWeight.w400);
+  T w500() => builder(FontWeight.w500);
+  T w600() => builder(FontWeight.w600);
+  T w700() => builder(FontWeight.w700);
+  T w800() => builder(FontWeight.w800);
+  T w900() => builder(FontWeight.w900);
 }
 
 /// Utility for setting `TextDecoration` values.
@@ -616,10 +619,10 @@ class TextDecorationUtility<T extends StyleAttribute>
     extends ScalarUtility<T, TextDecoration> {
   const TextDecorationUtility(super.builder);
 
-  T underline() => _builder(TextDecoration.underline);
-  T overline() => _builder(TextDecoration.overline);
-  T lineThrough() => _builder(TextDecoration.lineThrough);
-  T none() => _builder(TextDecoration.none);
+  T underline() => builder(TextDecoration.underline);
+  T overline() => builder(TextDecoration.overline);
+  T lineThrough() => builder(TextDecoration.lineThrough);
+  T none() => builder(TextDecoration.none);
 }
 
 /// Utility for setting `FontStyle` values.
@@ -639,8 +642,8 @@ class FontStyleUtility<T extends StyleAttribute>
     extends ScalarUtility<T, FontStyle> {
   const FontStyleUtility(super.builder);
 
-  T italic() => _builder(FontStyle.italic);
-  T normal() => _builder(FontStyle.normal);
+  T italic() => builder(FontStyle.italic);
+  T normal() => builder(FontStyle.normal);
 }
 
 /// Utility for setting `Radius` values.
@@ -661,15 +664,15 @@ class FontStyleUtility<T extends StyleAttribute>
 class RadiusUtility<T extends StyleAttribute> extends MixUtility<T, Radius> {
   const RadiusUtility(super.builder);
 
-  T zero() => _builder(Radius.zero);
+  T zero() => builder(Radius.zero);
 
-  T elliptical(double x, double y) => _builder(Radius.elliptical(x, y));
+  T elliptical(double x, double y) => builder(Radius.elliptical(x, y));
 
-  T circular(double radius) => _builder(Radius.circular(radius));
+  T circular(double radius) => builder(Radius.circular(radius));
 
-  T call(double radius) => _builder(Radius.circular(radius));
+  T call(double radius) => builder(Radius.circular(radius));
 
-  T of(RadiusToken ref) => _builder(ref());
+  T ref(RadiusToken ref) => builder(ref());
 }
 
 /// Utility for setting `TextDecorationStyle` values.
@@ -692,11 +695,11 @@ class TextDecorationStyleUtility<T extends StyleAttribute>
     extends ScalarUtility<T, TextDecorationStyle> {
   const TextDecorationStyleUtility(super.builder);
 
-  T solid() => _builder(TextDecorationStyle.solid);
-  T double() => _builder(TextDecorationStyle.double);
-  T dotted() => _builder(TextDecorationStyle.dotted);
-  T dashed() => _builder(TextDecorationStyle.dashed);
-  T wavy() => _builder(TextDecorationStyle.wavy);
+  T solid() => builder(TextDecorationStyle.solid);
+  T double() => builder(TextDecorationStyle.double);
+  T dotted() => builder(TextDecorationStyle.dotted);
+  T dashed() => builder(TextDecorationStyle.dashed);
+  T wavy() => builder(TextDecorationStyle.wavy);
 }
 
 /// Utility for setting `TextBaseline` values.
@@ -716,8 +719,8 @@ class TextBaselineUtility<T extends StyleAttribute>
     extends ScalarUtility<T, TextBaseline> {
   const TextBaselineUtility(super.builder);
 
-  T alphabetic() => _builder(TextBaseline.alphabetic);
-  T ideographic() => _builder(TextBaseline.ideographic);
+  T alphabetic() => builder(TextBaseline.alphabetic);
+  T ideographic() => builder(TextBaseline.ideographic);
 }
 
 /// Utility for setting `TextOverflow` values.
@@ -737,9 +740,9 @@ class TextBaselineUtility<T extends StyleAttribute>
 class TextOverflowUtility<T extends StyleAttribute>
     extends ScalarUtility<T, TextOverflow> {
   const TextOverflowUtility(super.builder);
-  T clip() => _builder(TextOverflow.clip);
-  T ellipsis() => _builder(TextOverflow.ellipsis);
-  T fade() => _builder(TextOverflow.fade);
+  T clip() => builder(TextOverflow.clip);
+  T ellipsis() => builder(TextOverflow.ellipsis);
+  T fade() => builder(TextOverflow.fade);
 }
 
 /// Utility for setting `TextWidthBasis` values.
@@ -758,8 +761,8 @@ class TextOverflowUtility<T extends StyleAttribute>
 class TextWidthBasisUtility<T extends StyleAttribute>
     extends ScalarUtility<T, TextWidthBasis> {
   const TextWidthBasisUtility(super.builder);
-  T parent() => _builder(TextWidthBasis.parent);
-  T longestLine() => _builder(TextWidthBasis.longestLine);
+  T parent() => builder(TextWidthBasis.parent);
+  T longestLine() => builder(TextWidthBasis.longestLine);
 }
 
 /// Utility for setting `TextAlign` values.
@@ -782,45 +785,45 @@ class TextWidthBasisUtility<T extends StyleAttribute>
 class TextAlignUtility<T extends StyleAttribute>
     extends ScalarUtility<T, TextAlign> {
   const TextAlignUtility(super.builder);
-  T left() => _builder(TextAlign.left);
-  T right() => _builder(TextAlign.right);
-  T center() => _builder(TextAlign.center);
-  T justify() => _builder(TextAlign.justify);
-  T start() => _builder(TextAlign.start);
-  T end() => _builder(TextAlign.end);
+  T left() => builder(TextAlign.left);
+  T right() => builder(TextAlign.right);
+  T center() => builder(TextAlign.center);
+  T justify() => builder(TextAlign.justify);
+  T start() => builder(TextAlign.start);
+  T end() => builder(TextAlign.end);
 }
 
 class RectUtility<T extends StyleAttribute> extends ScalarUtility<T, Rect> {
   const RectUtility(super.builder);
-  T largest() => _builder(Rect.largest);
-  T zero() => _builder(Rect.zero);
+  T largest() => builder(Rect.largest);
+  T zero() => builder(Rect.zero);
 
   T fromCenter({
     required Offset center,
     required double width,
     required double height,
   }) =>
-      _builder(Rect.fromCenter(center: center, width: width, height: height));
+      builder(Rect.fromCenter(center: center, width: width, height: height));
 
   T fromLTRB(double left, double top, double right, double bottom) =>
-      _builder(Rect.fromLTRB(left, top, right, bottom));
+      builder(Rect.fromLTRB(left, top, right, bottom));
 
   T fromLTWH(double left, double top, double width, double height) =>
-      _builder(Rect.fromLTWH(left, top, width, height));
+      builder(Rect.fromLTWH(left, top, width, height));
 
   T fromCircle({required Offset center, required double radius}) =>
-      _builder(Rect.fromCircle(center: center, radius: radius));
+      builder(Rect.fromCircle(center: center, radius: radius));
 
   T fromPoints({required Offset a, required Offset b}) =>
-      _builder(Rect.fromPoints(a, b));
+      builder(Rect.fromPoints(a, b));
 }
 
 class FilterQualityUtility<T extends StyleAttribute>
     extends ScalarUtility<T, FilterQuality> {
   const FilterQualityUtility(super.builder);
 
-  T none() => _builder(FilterQuality.none);
-  T low() => _builder(FilterQuality.low);
-  T medium() => _builder(FilterQuality.medium);
-  T high() => _builder(FilterQuality.high);
+  T none() => builder(FilterQuality.none);
+  T low() => builder(FilterQuality.low);
+  T medium() => builder(FilterQuality.medium);
+  T high() => builder(FilterQuality.high);
 }

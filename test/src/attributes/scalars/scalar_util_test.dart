@@ -225,7 +225,7 @@ void main() {
   // ShapeBorderUtility
 
   group('ShapeBorderUtility', () {
-    const utility = ShapeBorderUtility(UtilityTestAttribute.new);
+    final utility = ShapeBorderUtility(UtilityTestAttribute.new);
 
     // circle()
     test('circle() returns correct instance', () {

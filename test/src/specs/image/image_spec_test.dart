@@ -9,7 +9,7 @@ import '../../../helpers/testing_utils.dart';
 void main() {
   group('ImageSpec', () {
     test('resolve returns correct recipe', () {
-      final recipe = ImageSpec.of(EmptyMixData);
+      final recipe = ImageSpec.from(EmptyMixData);
 
       expect(recipe.width, null);
       expect(recipe.height, null);

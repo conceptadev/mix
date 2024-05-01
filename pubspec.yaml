@@ -18,6 +18,6 @@ dev_dependencies:
     sdk: flutter
   dart_code_metrics_presets: 2.9.0
 
-flutter:
-  assets:
-    - test_resources/
+# flutter:
+  # assets:
+

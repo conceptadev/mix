@@ -43,7 +43,10 @@ abstract class StyledWidget extends StatelessWidget {
   /// merging the inherited style with the local style, then applies it to the widget.
   /// This method is typically used in the `build` method of widgets extending
   /// [StyledWidget] to provide the actual styled widget.
-  Widget withMix(BuildContext context, Widget Function(MixData mix) builder) {
+  Widget withMix(
+    BuildContext context,
+    Widget Function(BuildContext context) builder,
+  ) {
     final inheritedMix = inherit ? MixProvider.maybeOfInherited(context) : null;
 
     final mix = style.of(context);
@@ -52,7 +55,10 @@ abstract class StyledWidget extends StatelessWidget {
 
     return MixProvider(
       data: mergedMix,
-      child: applyDecorators(mergedMix, builder(mergedMix)),
+      child: applyDecorators(
+        mergedMix,
+        Builder(builder: (newContext) => builder(newContext)),
+      ),
     );
   }
 
@@ -78,11 +84,12 @@ abstract class StyledWidget extends StatelessWidget {
 
 /// A styled widget that builds its child using a [MixData] object.
 ///
-/// `StyledWidgetBuilder` is a concrete implementation of [StyledWidget] that
+/// `SpecBuilder` is a concrete implementation of [StyledWidget] that
 /// builds its child using a [withMix] method from [StyledWidget].
 /// This widget is useful for creating custom styled widgets.
-class StyledWidgetBuilder extends StyledWidget {
-  const StyledWidgetBuilder({
+
+class SpecBuilder extends StyledWidget {
+  const SpecBuilder({
     super.key,
     super.inherit,
     super.style,
@@ -90,24 +97,7 @@ class StyledWidgetBuilder extends StyledWidget {
     super.orderOfDecorators = const [],
   });
 
-  final Widget Function(MixData) builder;
-
-  @override
-  Widget build(BuildContext context) {
-    return withMix(context, builder);
-  }
-}
-
-class MixBuilder extends StyledWidget {
-  const MixBuilder({
-    super.key,
-    super.inherit,
-    super.style,
-    required this.builder,
-    super.orderOfDecorators = const [],
-  });
-
-  final Widget Function(MixData) builder;
+  final Widget Function(BuildContext) builder;
 
   @override
   Widget build(BuildContext context) => withMix(context, builder);

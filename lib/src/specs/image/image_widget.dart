@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../core/styled_widget.dart';
+import '../../factory/mix_provider.dart';
 import '../../helpers/constants.dart';
 import 'image_spec.dart';
 
@@ -33,11 +34,12 @@ class StyledImage extends StyledWidget {
 
   @override
   Widget build(BuildContext context) {
-    return withMix(context, (mix) {
-      final spec = ImageSpec.of(mix);
+    return withMix(context, (context) {
+      final mix = MixProvider.of(context);
+      final spec = ImageSpec.of(context);
 
       return mix.isAnimated
-          ? AnimatedMixedImage(
+          ? AnimatedImageSpecWidget(
               spec: spec,
               image: image,
               frameBuilder: frameBuilder,
@@ -51,7 +53,7 @@ class StyledImage extends StyledWidget {
               isAntiAlias: isAntiAlias,
               matchTextDirection: matchTextDirection,
             )
-          : MixedImage(
+          : ImageSpecWidget(
               spec: spec,
               image: image,
               frameBuilder: frameBuilder,
@@ -67,8 +69,8 @@ class StyledImage extends StyledWidget {
   }
 }
 
-class MixedImage extends StatelessWidget {
-  const MixedImage({
+class ImageSpecWidget extends StatelessWidget {
+  const ImageSpecWidget({
     super.key,
     this.decoratorOrder = const [],
     this.spec,
@@ -120,8 +122,8 @@ class MixedImage extends StatelessWidget {
   }
 }
 
-class AnimatedMixedImage extends ImplicitlyAnimatedWidget {
-  const AnimatedMixedImage({
+class AnimatedImageSpecWidget extends ImplicitlyAnimatedWidget {
+  const AnimatedImageSpecWidget({
     this.spec,
     required this.image,
     this.frameBuilder,
@@ -150,12 +152,12 @@ class AnimatedMixedImage extends ImplicitlyAnimatedWidget {
   final bool matchTextDirection;
 
   @override
-  AnimatedWidgetBaseState<AnimatedMixedImage> createState() =>
-      _AnimatedMixedImageState();
+  AnimatedWidgetBaseState<AnimatedImageSpecWidget> createState() =>
+      _AnimateImageSpecState();
 }
 
-class _AnimatedMixedImageState
-    extends AnimatedWidgetBaseState<AnimatedMixedImage> {
+class _AnimateImageSpecState
+    extends AnimatedWidgetBaseState<AnimatedImageSpecWidget> {
   ImageSpecTween? _spec;
 
   // forEachTween
@@ -174,7 +176,7 @@ class _AnimatedMixedImageState
   Widget build(BuildContext context) {
     final spec = _spec?.evaluate(animation);
 
-    return MixedImage(
+    return ImageSpecWidget(
       spec: spec,
       image: widget.image,
       frameBuilder: widget.frameBuilder,

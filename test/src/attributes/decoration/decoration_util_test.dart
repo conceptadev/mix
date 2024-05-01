@@ -6,24 +6,8 @@ import '../../../helpers/attribute_generator.dart';
 import '../../../helpers/testing_utils.dart';
 
 void main() {
-  // DecorationUtility
-  group('DecorationUtility', () {
-    const decorationUtility = DecorationUtility(UtilityTestAttribute.new);
-
-    // box
-    test('box returns correct instance', () {
-      final box = decorationUtility.box;
-      expect(box, isA<BoxDecorationUtility>());
-    });
-
-    // shape
-    test('shape returns correct instance', () {
-      final shape = decorationUtility.shape;
-      expect(shape, isA<ShapeDecorationUtility>());
-    });
-  });
   group('BoxDecorationUtility', () {
-    const boxDecoration = BoxDecorationUtility(UtilityTestAttribute.new);
+    final boxDecoration = BoxDecorationUtility(UtilityTestAttribute.new);
     test('call', () {
       final refBoxDecoration = RandomGenerator.boxDecoration();
 
@@ -132,7 +116,7 @@ void main() {
 
   // ShapeDecorationUtility
   group('ShapeDecorationUtility', () {
-    const shapeDecoration = ShapeDecorationUtility(UtilityTestAttribute.new);
+    final shapeDecoration = ShapeDecorationUtility(UtilityTestAttribute.new);
     const boxShadow = BoxShadow(
       color: Colors.black,
       offset: Offset(5.0, 5.0),

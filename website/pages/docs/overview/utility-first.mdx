@@ -24,10 +24,10 @@ Utilities are designed to be descriptive and easy to understand. This makes it e
 
 ```dart
 final style = Style(
-  width(100),
-  padding(10),
-  alignment.center(),
-  backgroundColor.red(),
+  box.width(100),
+  box.padding(10),
+  box.alignment.center(),
+  box.color.red(),
 );
 ```
 
@@ -54,11 +54,11 @@ Aliases are utilities that are meant to be used as a shorthand for other utiliti
 
 ### Example
 
-`border` is an alias to `box.border` which itself is an alias to `box.decoration.border`. This allows you to use `border` instead of `box.decoration.border` to apply a border to a widget.
+`box.border` is an alias to `box.decoration.border`. This allows you to use `box.border` instead of `box.decoration.border` to apply a border to a widget.
 
 ```dart
 // A utility to define a box border.
-border.color.red();
+box.border.color.red();
 
 // The same as
 box.decoration.border.color.red();
@@ -71,7 +71,7 @@ utility to a variable. For example:
 
 ```dart
 // Custom alias for border top styling
-final bt = border.top;
+final bt = box.border.top;
 
 // As a method
 bt.color.red();
@@ -84,7 +84,7 @@ You can also create aliases for specific values of a utility. For example:
 
 ```dart
 // Custom alias for alignment.center
-final borderRedTop = border.top.color.red;
+final borderRedTop = box.border.top.color.red;
 
 // Usage
 borderRedTop();

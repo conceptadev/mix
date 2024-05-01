@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../core/attribute.dart';
-import '../../core/extensions/values_ext.dart';
 import '../border/border_dto.dart';
 import '../border/border_radius_dto.dart';
 import '../border/border_radius_util.dart';
@@ -19,30 +18,53 @@ import 'decoration_dto.dart';
 import 'image/decoration_image_dto.dart';
 import 'image/decoration_image_util.dart';
 
-class DecorationUtility<T extends StyleAttribute>
-    extends DtoUtility<T, DecorationDto, Decoration> {
-  const DecorationUtility(super.builder)
-      : super(valueToDto: DecorationDto.from);
-
-  BoxDecorationUtility<T> get box {
-    return BoxDecorationUtility((BoxDecorationDto boxDecoration) {
-      return builder(boxDecoration);
-    });
-  }
-
-  ShapeDecorationUtility<T> get shape {
-    return ShapeDecorationUtility((ShapeDecorationDto shapeDecoration) {
-      return builder(shapeDecoration);
-    });
-  }
-}
-
 class BoxDecorationUtility<T extends StyleAttribute>
     extends DtoUtility<T, BoxDecorationDto, BoxDecoration> {
-  const BoxDecorationUtility(super.builder)
+  late final gradient = GradientUtility((v) => only(gradient: v));
+  late final boxShadow = BoxShadowUtility((v) => only(boxShadow: [v]));
+  late final boxShadows = BoxShadowListUtility((v) => only(boxShadow: v));
+  late final color = ColorUtility((v) => only(color: v));
+  late final border = BorderUtility((v) => only(border: v));
+
+  late final borderRadius = BorderRadiusGeometryUtility(
+    (v) => only(borderRadius: v),
+  );
+
+  late final backgroundBlendMode =
+      BlendModeUtility((v) => only(backgroundBlendMode: v));
+  late final borderDirectional =
+      BorderDirectionalUtility((v) => only(border: v));
+  late final borderRadiusDirectional =
+      BorderRadiusDirectionalUtility((v) => only(borderRadius: v));
+  late final shape = BoxShapeUtility((v) => only(shape: v));
+  late final elevation = ElevationUtility((v) => only(boxShadow: v));
+  late final image = DecorationImageUtility((v) => only(image: v));
+
+  BoxDecorationUtility(super.builder)
       : super(valueToDto: BoxDecorationDto.from);
 
-  T _only({
+  T call({
+    Color? color,
+    BoxBorder? border,
+    BorderRadiusGeometry? borderRadius,
+    Gradient? gradient,
+    List<BoxShadow>? boxShadow,
+    BoxShape? shape,
+    BlendMode? backgroundBlendMode,
+  }) {
+    return only(
+      color: ColorDto.maybeFrom(color),
+      border: BoxBorderDto.maybeFrom(border),
+      borderRadius: BorderRadiusGeometryDto.maybeFrom(borderRadius),
+      gradient: GradientDto.maybeFrom(gradient),
+      boxShadow: boxShadow?.map(BoxShadowDto.from).toList(),
+      shape: shape,
+      backgroundBlendMode: backgroundBlendMode,
+    );
+  }
+
+  @override
+  T only({
     ColorDto? color,
     BoxBorderDto? border,
     BorderRadiusGeometryDto? borderRadius,
@@ -65,98 +87,34 @@ class BoxDecorationUtility<T extends StyleAttribute>
       ),
     );
   }
-
-  ColorUtility<T> get color {
-    return ColorUtility((ColorDto color) => _only(color: color));
-  }
-
-  BorderUtility<T> get border {
-    return BorderUtility((border) => _only(border: border));
-  }
-
-  BlendModeUtility<T> get backgroundBlendMode {
-    return BlendModeUtility(
-      (blendMode) => _only(backgroundBlendMode: blendMode),
-    );
-  }
-
-  BorderDirectionalUtility<T> get borderDirectional {
-    return BorderDirectionalUtility((borderDirectional) {
-      return _only(border: borderDirectional);
-    });
-  }
-
-  BorderRadiusGeometryUtility<T> get borderRadius {
-    return BorderRadiusGeometryUtility(
-      (borderRadius) => _only(borderRadius: borderRadius),
-    );
-  }
-
-  BorderRadiusDirectionalUtility<T> get borderRadiusDirectional {
-    return BorderRadiusDirectionalUtility(
-      (borderRadiusDirectional) => _only(borderRadius: borderRadiusDirectional),
-    );
-  }
-
-  BoxShapeUtility<T> get shape {
-    return BoxShapeUtility((BoxShape shape) => _only(shape: shape));
-  }
-
-  ElevationUtility<T> get elevation {
-    return ElevationUtility((List<BoxShadowDto> boxShadow) {
-      return _only(boxShadow: boxShadow);
-    });
-  }
-
-  GradientUtility<T> get gradient {
-    return GradientUtility((GradientDto gradient) {
-      return _only(gradient: gradient);
-    });
-  }
-
-  BoxShadowListUtility<T> get boxShadows {
-    return BoxShadowListUtility((List<BoxShadowDto> boxShadows) {
-      return _only(boxShadow: boxShadows);
-    });
-  }
-
-  BoxShadowUtility<T> get boxShadow {
-    return BoxShadowUtility((BoxShadowDto boxShadow) {
-      return _only(boxShadow: [boxShadow]);
-    });
-  }
-
-  DecorationImageUtility<T> get image {
-    return DecorationImageUtility((image) => _only(image: image));
-  }
-
-  T call({
-    Color? color,
-    BoxBorder? border,
-    BorderRadiusGeometry? borderRadius,
-    Gradient? gradient,
-    List<BoxShadow>? boxShadow,
-    BoxShape? shape,
-    BlendMode? backgroundBlendMode,
-  }) {
-    return _only(
-      color: ColorDto.maybeFrom(color),
-      border: border?.toDto(),
-      borderRadius: borderRadius?.toDto(),
-      gradient: gradient?.toDto(),
-      boxShadow: boxShadow?.toDto(),
-      shape: shape,
-      backgroundBlendMode: backgroundBlendMode,
-    );
-  }
 }
 
 class ShapeDecorationUtility<T extends StyleAttribute>
     extends DtoUtility<T, ShapeDecorationDto, ShapeDecoration> {
-  const ShapeDecorationUtility(super.builder)
+  late final color = ColorUtility<T>((v) => only(color: v));
+  late final gradient = GradientUtility<T>((v) => only(gradient: v));
+  late final shadows = BoxShadowListUtility<T>((v) => only(shadows: v));
+  late final shape = ShapeBorderUtility<T>((v) => only(shape: v));
+
+  ShapeDecorationUtility(super.builder)
       : super(valueToDto: ShapeDecorationDto.from);
 
-  T _only({
+  T call({
+    Color? color,
+    Gradient? gradient,
+    List<BoxShadow>? shadows,
+    ShapeBorder? shape,
+  }) {
+    return only(
+      color: ColorDto.maybeFrom(color),
+      gradient: GradientDto.maybeFrom(gradient),
+      shadows: shadows?.map(BoxShadowDto.from).toList(),
+      shape: ShapeBorderDto.maybeFrom(shape),
+    );
+  }
+
+  @override
+  T only({
     ColorDto? color,
     GradientDto? gradient,
     List<BoxShadowDto>? shadows,
@@ -169,38 +127,6 @@ class ShapeDecorationUtility<T extends StyleAttribute>
         gradient: gradient,
         shadows: shadows,
       ),
-    );
-  }
-
-  ColorUtility<T> get color {
-    return ColorUtility((ColorDto color) => _only(color: color));
-  }
-
-  GradientUtility<T> get gradient {
-    return GradientUtility((GradientDto gradient) => _only(gradient: gradient));
-  }
-
-  BoxShadowListUtility<T> get shadows {
-    return BoxShadowListUtility(
-      (List<BoxShadowDto> shadows) => _only(shadows: shadows),
-    );
-  }
-
-  ShapeBorderUtility<T> get shape {
-    return ShapeBorderUtility((shape) => _only(shape: shape));
-  }
-
-  T call({
-    Color? color,
-    Gradient? gradient,
-    List<BoxShadow>? shadows,
-    ShapeBorder? shape,
-  }) {
-    return _only(
-      color: ColorDto.maybeFrom(color),
-      gradient: GradientDto.maybeFrom(gradient),
-      shadows: shadows?.map(BoxShadowDto.from).toList(),
-      shape: ShapeBorderDto.maybeFrom(shape),
     );
   }
 }

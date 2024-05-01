@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 import '../../core/attribute.dart';
+import '../../factory/mix_provider.dart';
 import '../../factory/mix_provider_data.dart';
 import '../../helpers/lerp_helpers.dart';
 import 'flex_attribute.dart';
@@ -41,7 +42,14 @@ class FlexSpec extends Spec<FlexSpec> {
         clipBehavior = null,
         gap = null;
 
-  static FlexSpec of(MixData mix) {
+  static FlexSpec of(BuildContext context) {
+    final mix = MixProvider.of(context);
+
+    return mix.attributeOf<FlexSpecAttribute>()?.resolve(mix) ??
+        const FlexSpec.empty();
+  }
+
+  static FlexSpec from(MixData mix) {
     return mix.attributeOf<FlexSpecAttribute>()?.resolve(mix) ??
         const FlexSpec.empty();
   }

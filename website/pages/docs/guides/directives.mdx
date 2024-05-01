@@ -10,7 +10,7 @@ A prime example is the TextDirective, which allows for text case transformations
 const TextMix(
   'Hello World',
   style:  Style(
-    upperCase(),
+    text.upperCase(),
   ),
 ),
 ```
@@ -23,8 +23,8 @@ Mix provides a range of directives, which allow for a variety of transformations
 
 #### Text Directives
 
-- `capitalize()`: Capitalizes the first letter of each word.
-- `upperCase()`: Converts all characters to uppercase.
-- `lowerCase()`: Converts all characters to lowercase.
-- `titleCase()`: Transforms the first letter of each word in a sentence to uppercase.
-- `sentenceCase()`: Transforms the first letter of the first word in a sentence to uppercase.
+- `text.capitalize()`: Capitalizes the first letter of each word.
+- `text.upperCase()`: Converts all characters to uppercase.
+- `text.lowerCase()`: Converts all characters to lowercase.
+- `text.titleCase()`: Transforms the first letter of each word in a sentence to uppercase.
+- `text.sentenceCase()`: Transforms the first letter of the first word in a sentence to uppercase.

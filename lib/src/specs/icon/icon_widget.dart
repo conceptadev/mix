@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../core/styled_widget.dart';
+import '../../factory/mix_provider.dart';
 import 'icon_spec.dart';
 
 class StyledIcon extends StyledWidget {
@@ -20,11 +21,12 @@ class StyledIcon extends StyledWidget {
 
   @override
   Widget build(BuildContext context) {
-    return withMix(context, (mix) {
-      final spec = IconSpec.of(mix);
+    return withMix(context, (context) {
+      final spec = IconSpec.of(context);
+      final mix = MixProvider.of(context);
 
       return mix.isAnimated
-          ? AnimatedMixedIcon(
+          ? AnimatedIconSpecWidget(
               icon: icon,
               spec: spec,
               semanticLabel: semanticLabel,
@@ -32,7 +34,7 @@ class StyledIcon extends StyledWidget {
               curve: mix.animation!.curve,
               duration: mix.animation!.duration,
             )
-          : MixedIcon(
+          : IconSpecWidget(
               icon,
               spec: spec,
               semanticLabel: semanticLabel,
@@ -42,8 +44,8 @@ class StyledIcon extends StyledWidget {
   }
 }
 
-class MixedIcon extends StatelessWidget {
-  const MixedIcon(
+class IconSpecWidget extends StatelessWidget {
+  const IconSpecWidget(
     this.icon, {
     this.spec,
     this.semanticLabel,
@@ -94,8 +96,8 @@ class AnimatedStyledIcon extends StyledWidget {
 
   @override
   Widget build(BuildContext context) {
-    return withMix(context, (mix) {
-      final spec = IconSpec.of(mix);
+    return withMix(context, (context) {
+      final spec = IconSpec.of(context);
 
       return AnimatedIcon(
         icon: icon,
@@ -109,8 +111,8 @@ class AnimatedStyledIcon extends StyledWidget {
   }
 }
 
-class AnimatedMixedIcon extends ImplicitlyAnimatedWidget {
-  const AnimatedMixedIcon({
+class AnimatedIconSpecWidget extends ImplicitlyAnimatedWidget {
+  const AnimatedIconSpecWidget({
     required this.icon,
     required this.spec,
     super.key,
@@ -130,11 +132,11 @@ class AnimatedMixedIcon extends ImplicitlyAnimatedWidget {
 
   @override
   // ignore: library_private_types_in_public_api
-  _AnimatedMixedIconState createState() => _AnimatedMixedIconState();
+  _AnimatedIconSpecState createState() => _AnimatedIconSpecState();
 }
 
-class _AnimatedMixedIconState
-    extends AnimatedWidgetBaseState<AnimatedMixedIcon> {
+class _AnimatedIconSpecState
+    extends AnimatedWidgetBaseState<AnimatedIconSpecWidget> {
   IconSpecTween? _spec;
 
   @override
@@ -152,7 +154,7 @@ class _AnimatedMixedIconState
   Widget build(BuildContext context) {
     final spec = _spec?.evaluate(animation);
 
-    return MixedIcon(
+    return IconSpecWidget(
       widget.icon,
       spec: spec,
       semanticLabel: widget.semanticLabel,

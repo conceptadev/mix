@@ -11,10 +11,10 @@ Using Box is straightforward and efficient. You simply wrap your desired child w
 ```dart
 Box(
   style: Style(
-    backgroundColor.blue(),
-    borderRadius.all(8),
-    padding.vertical(20),
-    elevation(2),
+    box.color.blue(),
+    box.borderRadius.all(8),
+    box.padding.vertical(20),
+    box.elevation(2),
   ),
   child: Text('Styled Box'),
 );
@@ -47,18 +47,18 @@ You can find all the Box utilities under the `box` utility. With this you can ea
 
 ### Constraints
 
-- **`width`**: Sets the width of the box.
-- **`height`**: Sets the height of the box.
-- **`maxWidth`**: Sets the maximum width the box can have.
-- **`minWidth`**: Sets the minimum width the box must have.
-- **`maxHeight`**: Sets the maximum height the box can have.
-- **`minHeight`**: Sets the minimum height the box must have.
+- **`box.width`**: Sets the width of the box.
+- **`box.height`**: Sets the height of the box.
+- **`box.maxWidth`**: Sets the maximum width the box can have.
+- **`box.minWidth`**: Sets the minimum width the box must have.
+- **`box.maxHeight`**: Sets the maximum height the box can have.
+- **`box.minHeight`**: Sets the minimum height the box must have.
 
 ### Spacing
 
 There are a few utilities make use of the `SpacingUtility`, like `padding` and `margin`. These utilities allow you to specify spacing in a variety of ways, including shorthand notation, individual sides, and horizontal and vertical axes.
 
-#### **`padding`**
+#### **`box.padding`**
 
 Padding creates space between the box's content and its border.
 
@@ -68,13 +68,13 @@ Allows quick, concise spacing definitions. The order and number of values dictat
 
 ```dart
 // Uniform padding of 10 units on all sides.
-padding(10)
+box.padding(10)
 // 10 units vertical (top and bottom), 20 units horizontal (left and right).
-padding(10, 20)
+box.padding(10, 20)
 // 10 units top, 20 units horizontal, 30 units bottom.
-padding(10, 20, 30)
+box.padding(10, 20, 30)
 // 10 units top, 20 units right, 30 units bottom, 40 units left.
-padding(10, 20, 30, 40)
+box.padding(10, 20, 30, 40)
 ```
 
 <Callout type="info">
@@ -89,7 +89,7 @@ The shorthand methods simplify the code, making it more readable and easier to w
 Apply equal padding to all sides of the box.
 
 ```dart
-padding.all(8);
+box.padding.all(8);
 ```
 
 ##### **Individual Sides**
@@ -99,18 +99,18 @@ Two methods for individual side padding: direct method naming or the only method
 **Using side name method**
 
 ```dart
-padding.top(8);
-padding.bottom(8);
-padding.left(8);
-padding.right(8);
-padding.start(8);
-padding.end(8);
+box.padding.top(8);
+box.padding.bottom(8);
+box.padding.left(8);
+box.padding.right(8);
+box.padding.start(8);
+box.padding.end(8);
 ```
 
 This approach is important because it also allows you easy access to `design tokens` for padding. For example, if you want to use the `small` design token for padding, you can do so like this:
 
 ```dart
-padding.top.small();
+box.padding.top.small();
 ```
 
 **Using `only` method**
@@ -118,7 +118,7 @@ padding.top.small();
 Apply padding to specific sides of the box. You can specify which sides to apply padding to by passing the corresponding parameters. You can also specify directional values like `start` and `end` for left and right padding.
 
 ```dart
-padding.only(
+box.padding.only(
     top: 16,
     bottom: 16,
     left: 8, // or start: 8,
@@ -131,13 +131,11 @@ padding.only(
 Define padding along horizontal or vertical axes.
 
 ```dart
-padding.horizontal(8);
-// padding.horizontal.small();
-padding.vertical(8);
-// padding.vertical.small();
+box.padding.horizontal(8);
+box.padding.vertical(8);
 ```
 
-#### **`margin`**
+#### **`box.margin`**
 
 Margin controls the outer space of the Box. Mix provides a variety of options for defining margins.
 
@@ -147,13 +145,13 @@ Allows quick, concise spacing definitions. The order and number of values dictat
 
 ```dart
 // Applies a uniform margin of 10 units on all sides.
-margin(10)
+box.margin(10)
 // 10 units on top and bottom, 20 units on left and right sides.
-margin(10, 20)
+box.margin(10, 20)
 // 10 units top, 20 units horizontal, 30 units bottom.
-margin(10, 20, 30)
+box.margin(10, 20, 30)
 // 10 units top, 20 units right, 30 units bottom, 40 units left.
-margin(10, 20, 30, 40)
+box.margin(10, 20, 30, 40)
 ```
 
 Shorthand methods make the code concise and readable, retaining the powerful customization options.
@@ -163,7 +161,7 @@ Shorthand methods make the code concise and readable, retaining the powerful cus
 Set an equal margin to all sides:
 
 ```dart
-margin.all(8);
+box.margin.all(8);
 ```
 
 ##### **Individual Sides**
@@ -173,18 +171,18 @@ Two methods for individual side padding: direct method naming or the only method
 **Using side name method**
 
 ```dart
-margin.top(8);
-margin.bottom(8);
-margin.left(8);
-margin.right(8);
-margin.start(8);
-margin.end(8);
+box.margin.top(8);
+box.margin.bottom(8);
+box.margin.left(8);
+box.margin.right(8);
+box.margin.start(8);
+box.margin.end(8);
 ```
 
 Access design tokens directly for margin, enhancing the ability to maintain consistent spacing throughout your app:
 
 ```dart
-margin.top.small();
+box.margin.top.small();
 ```
 
 **Using `only` method**
@@ -192,7 +190,7 @@ margin.top.small();
 Specify margins for individual sides:
 
 ```dart
-margin.only(
+box.margin.only(
     top: 16,
     bottom: 16,
     left: 8, // or start: 8,
@@ -205,15 +203,13 @@ margin.only(
 Define padding along horizontal or vertical axes.
 
 ```dart
-margin.horizontal(8);
-// margin.horizontal.small();
-margin.vertical(8);
-// margin.vertical.small();
+box.margin.horizontal(8);
+box.margin.vertical(8);
 ```
 
 ### Decoration
 
-#### **`border`**
+#### **`box.border`**
 
 The border utility enables you to define the border styling for a Box widget. Through the use of `BoxBorderUtility`, developers can add precision and clarity in laying out borders on their UI components.
 
@@ -223,7 +219,7 @@ Apply a border with equal style, width, and color on all four sides.
 
 ```dart
 // Solid red border of 2 logical pixels on all sides.
-border(
+box.border(
   color: Colors.red,
   width: 2,
   style: BorderStyle.solid,
@@ -231,7 +227,7 @@ border(
 )
 
 // You can also use the .all method, which allows you a few benefits in syntax.
-border.all(
+box.border.all(
   color: Colors.red,
   width: 2,
   style: BorderStyle.solid,
@@ -239,10 +235,10 @@ border.all(
 )
 
 // You can also call directly its parameters like
-border.all.color.red();
-border.all.width(2);
-border.all.style.solid();
-border.all.strokeAlign(0.5);
+box.border.all.color.red();
+box.border.all.width(2);
+box.border.all.style.solid();
+box.border.all.strokeAlign(0.5);
 ```
 
 ##### **Individual Sides**
@@ -251,7 +247,7 @@ Apply borders to individual sides. This allows you to set different colors, widt
 
 ```dart
 // Red border on the top side only.
-border.top(
+box.border.top(
   color: Colors.red,
   width: 2,
   style: BorderStyle.solid,
@@ -263,10 +259,10 @@ border.top(
 Using individual sides border also allow you access parameter specific utilities.
 
 ```dart
-border.top.color.red();
-border.top.width(2);
-border.top.style.solid();
-border.top.strokeAlign(0.5);
+box.border.top.color.red();
+box.border.top.width(2);
+box.border.top.style.solid();
+box.border.top.strokeAlign(0.5);
 ```
 
 ##### **Horizontal and Vertical**
@@ -275,18 +271,18 @@ Apply border to either the horizontal or vertical sides of a Box. Useful for cre
 
 ```dart
 // Borders on the left and right sides.
-border.horizontal(
+box.border.horizontal(
   color: Colors.green,
   width: 1,
   style: BorderStyle.solid,
 );
-// or border.vertical
+// or box.border.vertical
 
 // You can also use the .horizontal and .vertical methods, which allows you a few benefits in syntax.
-border.horizontal.color.green();
+box.border.horizontal.color.green();
 ```
 
-#### **`borderRadius`**
+#### **`box.borderRadius`**
 
 The `borderRadius` utility is used for setting the border radius of UI elements in a Flutter application. This utility helps in defining how rounded the corners of an element should be, and it simplifies the application of border radius to widgets.
 
@@ -298,16 +294,16 @@ Most methods of the `borderRadius` return a `RadiusUtility`, that allow more con
 
 ```dart
 // The callable method withing the RadiusUtility defaults a circular radius.
-borderRadius.all(10.0);
+box.borderRadius.all(10.0);
 
 // But you can also use other methods
-borderRadius.all.circular(10.0);
+box.borderRadius.all.circular(10.0);
 
 // Allows to set x and y coordinates for the radius.
-borderRadius.all.elliptical(10.0, 8.0);
+box.borderRadius.all.elliptical(10.0, 8.0);
 
 // Sets the radius to Radius.zero
-borderRadius.all.zero();
+box.borderRadius.all.zero();
 ```
 
 ##### **Uniform Border Radius**
@@ -316,7 +312,7 @@ Sets a uniform radius for all corners:
 
 ```dart
 // Sets a border radius of 10 logical pixels for all corners.
-borderRadius.all(10.0);
+box.borderRadius.all(10.0);
 ```
 
 ##### **Individual Corners**
@@ -325,26 +321,26 @@ Specify the radius of individual corners, returning a `BorderSideUtility` for ea
 
 ```dart
 // Sets a radius to bottomLeft corner.
-borderRadius.bottomLeft(10.0);
+box.borderRadius.bottomLeft(10.0);
 
 // Sets a radius to topLeft corner.
-borderRadius.topRight(10.0);
+box.borderRadius.topRight(10.0);
 ```
 
 Also use the same for directional corners:
 
 ```dart
 // Sets a radius to topStart corner.
-borderRadius.topStart(10.0);
+box.borderRadius.topStart(10.0);
 
 // Sets a radius to bottomEnd corner.
-borderRadius.bottomEnd(10.0);
+box.borderRadius.bottomEnd(10.0);
 
 // Sets a radius to topEnd corner.
-borderRadius.topEnd(10.0);
+box.borderRadius.topEnd(10.0);
 
 // Sets a radius to bottomStart corner.
-borderRadius.bottomStart(10.0);
+box.borderRadius.bottomStart(10.0);
 ```
 
 ##### **Specific Pairs or Axes**
@@ -353,25 +349,25 @@ Convenient methods are provided for setting border radius to specific pairs of c
 
 ```dart
 // Sets radius of topLeft and topRight corners.
-borderRadius.top(10.0);
+box.borderRadius.top(10.0);
 
 // Sets radius of topLeft and bottomLeft corners.
-borderRadius.left(10.0);
+box.borderRadius.left(10.0);
 
 // Sets radius of topRight and bottomRight corners.
-borderRadius.right(10.0);
+box.borderRadius.right(10.0);
 
 // Sets radius of bottomLeft and bottomRight corners.
-borderRadius.bottom(10.0);
+box.borderRadius.bottom(10.0);
 ```
 
-- **`backgroundColor`**: Sets the background color of the box.
-- **`elevation`**: Sets the elevation of the box.
+- **`box.color`**: Sets the background color of the box.
+- **`box.elevation`**: Sets the elevation of the box.
 
 ### Alignment
 
-- **`alignment`**: Sets the alignment of the box.
+- **`box.alignment`**: Sets the alignment of the box.
 
 ### ClipBehavior
 
-- **`clipBehavior`**: Sets the clip behavior of the box.
+- **`box.clipBehavior`**: Sets the clip behavior of the box.
