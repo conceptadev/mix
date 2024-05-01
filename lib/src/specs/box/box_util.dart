@@ -11,9 +11,10 @@ import '../../core/attribute.dart';
 import '../../decorators/widget_decorators_util.dart';
 import 'box_attribute.dart';
 
-final box = BoxSpecUtility(selfBuilder);
+@Deprecated(r'use $box instead')
+final box = $box;
 
-final $box = box;
+final $box = BoxSpecUtility(selfBuilder);
 
 @Deprecated('use box.border instead')
 final border = box.border;

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../attributes/nested_style/nested_style_attribute.dart';
 import '../factory/mix_provider_data.dart';
+import '../factory/style_mix.dart';
 import '../helpers/compare_mixin.dart';
 import '../variants/variant.dart';
 
@@ -115,7 +117,7 @@ abstract class Spec<T extends Spec<T>> with Comparable {
 @immutable
 abstract class StyleAttributeBuilder<Param> extends StyleAttribute {
   final Key? key;
-  final Attribute Function(Param param) fn;
+  final Style Function(Param param) fn;
   const StyleAttributeBuilder(this.fn, {required this.key});
 
   Attribute? builder(BuildContext context);
@@ -139,7 +141,8 @@ class ContectVariantEventBuilder<T extends ContextVariant>
   });
 
   @override
-  Attribute builder(BuildContext context) => fn(variant.build(context));
+  Attribute builder(BuildContext context) =>
+      NestedStyleAttribute(fn(variant.build(context)));
 
   @override
   List<Object?> get props => [key, variant];

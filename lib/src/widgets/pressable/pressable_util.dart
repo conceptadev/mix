@@ -1,12 +1,22 @@
 import 'package:flutter/material.dart';
 
+import '../../attributes/nested_style/nested_style_attribute.dart';
 import '../../core/attribute.dart';
+import '../../factory/style_mix.dart';
 import '../../variants/variant.dart';
 import 'pressable_state.dart';
 
+const onPressed = OnPressedVariant();
+const onLongPressed = OnLongPressedVariant();
+const onHover = OnHoverVariant();
+const onEnabled = OnEnabledVariant();
+const onDisabled = OnDisabledVariant();
+const onFocused = OnFocusedVariant();
+const onMouseHover = OnMouseHoverBuilder.new;
+
 /// Global context variants for handling common widget states and gestures.
 mixin ContextVariantEventMixin<T extends ContextVariant> on ContextVariant {
-  ContectVariantEventBuilder<T> onEvent(Attribute Function(bool) fn) {
+  ContectVariantEventBuilder<T> onEvent(Style Function(bool) fn) {
     return ContectVariantEventBuilder(fn, variant: this as T, key: key);
   }
 }
@@ -72,20 +82,14 @@ class OnFocusedVariant extends ContextVariant
   bool build(BuildContext context) => PressableState.focusedOf(context);
 }
 
-const onPressed = OnPressedVariant();
-const onLongPressed = OnLongPressedVariant();
-const onHover = OnHoverVariant();
-const onEnabled = OnEnabledVariant();
-const onDisabled = OnDisabledVariant();
-const onFocused = OnFocusedVariant();
-const onMouseHover = OnMouseHoverBuilder.new;
-
 @immutable
 class OnMouseHoverBuilder extends StyleAttributeBuilder<PointerPosition?> {
   const OnMouseHoverBuilder(super.fn, {super.key});
 
   @override
   Attribute builder(BuildContext context) {
-    return fn(PressableState.pointerPositionOf(context));
+    return NestedStyleAttribute(
+      fn(PressableState.pointerPositionOf(context)),
+    );
   }
 }
