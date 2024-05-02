@@ -67,7 +67,7 @@ class OnBreakpointTokenVariant extends ContextVariant {
   bool build(BuildContext context) {
     final size = context.screenSize;
 
-      final selectedbreakpoint = token.resolve(context);
+    final selectedbreakpoint = token.resolve(context);
 
     return selectedbreakpoint.matches(size);
   }

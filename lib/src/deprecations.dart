@@ -377,7 +377,7 @@ final light = onLight;
 final large = onLarge;
 
 @Deprecated('Use onHover instead')
-final hover = onHover;
+const hover = onHover;
 
 @Deprecated('Use onFocused instead')
 const focus = onFocused;
@@ -392,19 +392,19 @@ final portrait = onPortrait;
 final landscape = onLandscape;
 
 @Deprecated('Use onDisabled instead')
-final disabled = onDisabled;
+const disabled = onDisabled;
 
 @Deprecated('Use onEnabled instead')
-final enabled = onEnabled;
+const enabled = onEnabled;
 
 @Deprecated('Use direct clip utility for example clip.rrect becomes clipRRect')
 const clip = ClipDecoratorUtility();
 
 @Deprecated('Use onPressed instead')
-final press = onPressed;
+const press = onPressed;
 
 @Deprecated('Use onPressed instead')
-final onPress = onPressed;
+const onPress = onPressed;
 
 @Deprecated('Use onNot instead')
 const not = onNot;

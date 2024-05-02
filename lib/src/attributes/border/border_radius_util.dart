@@ -117,23 +117,6 @@ class BorderRadiusGeometryUtility<T extends StyleAttribute>
     return all.zero();
   }
 
-  // Only specific corners
-  T only({
-    Radius? topLeft,
-    Radius? topRight,
-    Radius? bottomLeft,
-    Radius? bottomRight,
-  }) {
-    return builder(
-      BorderRadiusGeometryDto(
-        topLeft: topLeft,
-        topRight: topRight,
-        bottomLeft: bottomLeft,
-        bottomRight: bottomRight,
-      ),
-    );
-  }
-
   T call(double p1, [double? p2, double? p3, double? p4]) {
     double topLeft = p1;
     double topRight = p1;
@@ -164,6 +147,24 @@ class BorderRadiusGeometryUtility<T extends StyleAttribute>
       topRight: topRight.toRadius(),
       bottomLeft: bottomLeft.toRadius(),
       bottomRight: bottomRight.toRadius(),
+    );
+  }
+
+  // Only specific corners
+  @override
+  T only({
+    Radius? topLeft,
+    Radius? topRight,
+    Radius? bottomLeft,
+    Radius? bottomRight,
+  }) {
+    return builder(
+      BorderRadiusGeometryDto(
+        topLeft: topLeft,
+        topRight: topRight,
+        bottomLeft: bottomLeft,
+        bottomRight: bottomRight,
+      ),
     );
   }
 }
@@ -284,6 +285,7 @@ class BorderRadiusDirectionalUtility<T extends StyleAttribute>
   /// The [bottomEnd] parameter represents the radius of the bottom-right corner.
   ///
   /// Returns the created [T] object.
+  @override
   T only({
     Radius? topStart,
     Radius? topEnd,
