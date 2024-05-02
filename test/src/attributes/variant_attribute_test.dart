@@ -146,12 +146,18 @@ void main() {
     });
 
     test('remove() returns correct instance when removing all variants', () {
-      final multiVariantAttribute = MultiVariantAttribute(multiVariant, style);
+      final multiVariant = MultiVariant(const [variant1, variant2],
+          type: MultiVariantOperator.or);
+      final multiVariantAttribute = multiVariant(apply(style));
+
+      final attribute = multiVariantAttribute.remove([variant1, variant2])
+          as MultiVariantAttribute;
 
       expect(
-        () => multiVariantAttribute.remove([variant1, variant2]),
-        throwsArgumentError,
+        attribute.variant.variants,
+        isEmpty,
       );
+      expect(attribute.variant, isA<MultiVariant>());
     });
 
     test('merge() returns correct instance', () {

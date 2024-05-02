@@ -277,6 +277,9 @@ class MultiVariant extends StyleVariant {
     final sortedByPriority =
         variants.sorted((a, b) => a.priority.value.compareTo(b.priority.value));
 
+    // if any of the variant are nested MultiVariant, we need to flatten them
+    // but according to the operator type if needed
+
     final highestPriority = sortedByPriority.isNotEmpty
         ? sortedByPriority.first.priority
         : VariantPriority.normal;
