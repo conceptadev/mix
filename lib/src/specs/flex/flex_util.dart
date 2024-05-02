@@ -6,6 +6,7 @@ import '../../core/attribute.dart';
 import '../../decorators/widget_decorators_util.dart';
 import 'flex_attribute.dart';
 
+@Deprecated(r'use $flex')
 final flex = FlexSpecUtility(selfBuilder);
 
 final $flex = FlexSpecUtility(selfBuilder);

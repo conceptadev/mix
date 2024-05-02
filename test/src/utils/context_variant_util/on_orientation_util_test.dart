@@ -26,5 +26,14 @@ void main() {
       expect(onLandscape.build(context), true, reason: 'landscape');
       addTearDown(tester.view.resetPhysicalSize);
     });
+
+    test('OnOrientation equality', () {
+      final variantPortrait1 = OnOrientationVariant(Orientation.portrait);
+      final variantPortrait2 = OnOrientationVariant(Orientation.portrait);
+      final variantLandscape = OnOrientationVariant(Orientation.landscape);
+
+      expect(variantPortrait1, equals(variantPortrait2));
+      expect(variantPortrait1, isNot(equals(variantLandscape)));
+    });
   });
 }

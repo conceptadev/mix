@@ -5,6 +5,7 @@ import '../../core/attribute.dart';
 import '../../decorators/widget_decorators_util.dart';
 import 'stack_attribute.dart';
 
+@Deprecated(r'use $stack instead')
 final stack = StackSpecUtility(selfBuilder);
 
 final $stack = StackSpecUtility(selfBuilder);

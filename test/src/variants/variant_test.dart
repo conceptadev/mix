@@ -10,8 +10,8 @@ void main() {
       'should set attributes when variant matches, otherwise null',
       (WidgetTester tester) async {
         final style = Style(
-          icon.color.black(),
-          _foo(box.height(10), box.width(10)),
+          $icon.color.black(),
+          _foo($box.height(10), $box.width(10)),
         );
 
         await tester.pumpMaterialApp(

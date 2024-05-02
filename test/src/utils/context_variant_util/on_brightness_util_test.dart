@@ -21,5 +21,14 @@ void main() {
       expect(onLight.build(context), false, reason: 'light');
       expect(onDark.build(context), true, reason: 'dark');
     });
+
+    test('OnBrightnessVariant equality', () {
+      final variantLight1 = OnBrightnessVariant(Brightness.light);
+      final variantLight2 = OnBrightnessVariant(Brightness.light);
+      final variantDark = OnBrightnessVariant(Brightness.dark);
+
+      expect(variantLight1, equals(variantLight2));
+      expect(variantLight1, isNot(equals(variantDark)));
+    });
   });
 }

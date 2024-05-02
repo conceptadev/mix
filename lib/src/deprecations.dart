@@ -10,7 +10,6 @@ import '../src/specs/text/text_util.dart';
 import '../src/specs/text/text_widget.dart';
 import '../src/utils/context_variant_util/on_breakpoint_util.dart';
 import '../src/utils/context_variant_util/on_brightness_util.dart';
-import '../src/utils/context_variant_util/on_helper_util.dart';
 import '../src/utils/context_variant_util/on_orientation_util.dart';
 import '../src/utils/helper_util.dart';
 import '../src/variants/variant.dart';
@@ -21,6 +20,7 @@ import 'factory/style_mix.dart';
 import 'specs/box/box_util.dart';
 import 'specs/box/box_widget.dart';
 import 'specs/image/image_util.dart';
+import 'utils/context_variant_util/on_not_util.dart';
 import 'widgets/pressable/pressable_util.dart';
 
 const kShortAliasDeprecation =
@@ -31,6 +31,17 @@ typedef Mix = Style;
 
 @Deprecated('Use Box instead')
 typedef StyledContainer = Box;
+
+@Deprecated('StyleRecipe is now deprecated, create a custom Spec')
+abstract class StyleRecipe<T extends StyleRecipe<T>> {
+  const StyleRecipe();
+
+  StyleRecipe<T> merge(covariant StyleRecipe<T>? other);
+
+  StyleRecipe<T> applyVariants(List<Variant> variants);
+
+  StyleRecipe<T> copyWith();
+}
 
 extension DeprecatedMixExtension on Style {
   @Deprecated('Use applyVariant(value) instead')
@@ -112,26 +123,26 @@ extension WithSpaceTokensExt<T extends StyleAttribute>
   T xxlarge() => call(40.0);
 }
 
-@Deprecated('use flex.mainAxisAlignment instead')
-final mainAxis = flex.mainAxisAlignment;
+@Deprecated(r'use $flex.mainAxisAlignment instead')
+final mainAxis = $flex.mainAxisAlignment;
 
-@Deprecated('use flex.direction instead')
-final directionAxis = flex.direction;
+@Deprecated(r'use $flex.direction instead')
+final directionAxis = $flex.direction;
 
-@Deprecated('use flex.crossAxisAlignment instead')
-final crossAxis = flex.crossAxisAlignment;
+@Deprecated(r'use $flex.crossAxisAlignment instead')
+final crossAxis = $flex.crossAxisAlignment;
 
-@Deprecated('use flex.mainAxisAlignment instead')
-final mainAxisAlignment = flex.mainAxisAlignment;
+@Deprecated(r'use $flex.mainAxisAlignment instead')
+final mainAxisAlignment = $flex.mainAxisAlignment;
 
-@Deprecated('use flex.crossAxisAlignment instead')
-final crossAxisAlignment = flex.crossAxisAlignment;
+@Deprecated(r'use $flex.crossAxisAlignment instead')
+final crossAxisAlignment = $flex.crossAxisAlignment;
 
-@Deprecated('use flex.mainAxisSize instead')
-final mainAxisSize = flex.mainAxisSize;
+@Deprecated(r'use $flex.mainAxisSize instead')
+final mainAxisSize = $flex.mainAxisSize;
 
-@Deprecated('use flex.gap instead')
-final gap = flex.gap;
+@Deprecated(r'use $flex.gap instead')
+final gap = $flex.gap;
 
 @Deprecated('use flexible.expanded instead')
 final expanded = flexible.expanded;
@@ -536,19 +547,6 @@ final show = visibility.on;
 @Deprecated('Use visibility.off instead')
 final hide = visibility.off;
 
-// TODO: Need to update these
-// // animated
-// @Deprecated('Use animated instead')
-// final animated = animation.animated;
-
-// // animationDuration
-// @Deprecated('Use animation.duration instead')
-// final animationDuration = animation.duration;
-
-// // animationCurve
-// @Deprecated('Use animation.curve instead')
-// final animationCurve = animation.curve;
-
 // textDirection
 @Deprecated('Use text.textDirection instead')
 final textDirection = text.textDirection;
@@ -579,15 +577,8 @@ final squared = borderRadius.zero;
 
 // flexDirection
 @Deprecated('Use flexDirection instead')
-final flexDirection = flex.direction;
+final flexDirection = $flex.direction;
 
 // verticalDirection
 @Deprecated('Use verticalDirection instead')
-final verticalDirection = flex.verticalDirection;
-
-// @Deprecated('Use image.scale instead')
-// final imageScale = image.scale;
-
-// // inherit
-// @Deprecated('Use text.inherit instead')
-// final inherit = text.style.inherit;
+final verticalDirection = $flex.verticalDirection;

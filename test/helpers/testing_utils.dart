@@ -42,14 +42,16 @@ MediaQuery createMediaQuery(Size size) {
   );
 }
 
-Widget createBrightnessTheme(Brightness brightness) {
+Widget createBrightnessTheme(Brightness brightness, {Widget? child}) {
   return MixTheme(
     data: MixThemeData(),
     child: MaterialApp(
       home: Scaffold(
         body: Builder(
           builder: (BuildContext context) {
-            return Container();
+            return Container(
+              child: child,
+            );
           },
         ),
       ),
@@ -112,10 +114,10 @@ extension WidgetTesterExt on WidgetTester {
 
   Future<void> pumpWithMixTheme(
     Widget widget, {
-    MixThemeData theme = const MixThemeData.empty(),
+    MixThemeData? theme,
   }) async {
     await pumpWidget(
-      MaterialApp(home: MixTheme(data: theme, child: widget)),
+      MaterialApp(home: MixTheme(data: theme ?? MixThemeData(), child: widget)),
     );
   }
 

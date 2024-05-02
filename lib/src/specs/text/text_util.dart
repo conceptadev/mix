@@ -11,6 +11,7 @@ import '../../core/directive.dart';
 import '../../decorators/widget_decorators_util.dart';
 import 'text_attribute.dart';
 
+@Deprecated(r'use $text instead')
 final text = TextSpecUtility(selfBuilder);
 
 final $text = TextSpecUtility(selfBuilder);

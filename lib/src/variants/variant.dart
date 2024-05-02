@@ -274,10 +274,12 @@ class MultiVariant extends StyleVariant {
   }) {
     final sortedVariants = variants.toList();
 
-    final highestPriority = variants
-        .sorted((a, b) => a.priority.value.compareTo(b.priority.value))
-        .first
-        .priority;
+    final sortedByPriority =
+        variants.sorted((a, b) => a.priority.value.compareTo(b.priority.value));
+
+    final highestPriority = sortedByPriority.isNotEmpty
+        ? sortedByPriority.first.priority
+        : VariantPriority.normal;
 
     return MultiVariant._(
       sortedVariants,
@@ -314,7 +316,8 @@ class MultiVariant extends StyleVariant {
   /// In this example, `updatedVariant` will be a combination of `variantB` and `variantC`.
   /// This is useful for procedurally applying variants based on runtime conditions.
   StyleVariant remove(Iterable<StyleVariant> variantsToRemove) {
-    final updatedVariants = variants..removeWhere(variantsToRemove.contains);
+    final updatedVariants = [...variants]
+      ..removeWhere(variantsToRemove.contains);
 
     return updatedVariants.length == 1
         ? updatedVariants.first

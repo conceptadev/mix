@@ -106,4 +106,67 @@ void main() {
       expect(result, isTrue);
     });
   });
+
+  group('StyleVariantAttribute', () {
+    const variant = Variant('custom_variant');
+    final style = Style(const MockIntScalarAttribute(8));
+
+    test('matches() returns true when variant matches', () {
+      final variantAttribute = VariantAttribute(variant, style);
+
+      expect(variantAttribute.matches([variant]), isTrue);
+    });
+
+    test('matches() returns false when variant does not match', () {
+      final variantAttribute = VariantAttribute(variant, style);
+      const otherVariant = Variant('other_variant');
+
+      expect(variantAttribute.matches([otherVariant]), isFalse);
+    });
+  });
+
+// MultiVariantAttribute
+  group('MultiVariantAttribute', () {
+    const variant1 = Variant('variant1');
+    const variant2 = Variant('variant2');
+    final multiVariant = MultiVariant(
+      const [variant1, variant2],
+      type: MultiVariantOperator.or,
+    );
+    final style = Style(const MockIntScalarAttribute(8));
+
+    test('remove() returns correct instance when removing a variant', () {
+      final multiVariantAttribute = MultiVariantAttribute(multiVariant, style);
+
+      final result = multiVariantAttribute.remove([variant1]);
+
+      expect(result, isA<VariantAttribute>());
+      expect(result.variant, variant2);
+      expect(result.value, style);
+    });
+
+    test('remove() returns correct instance when removing all variants', () {
+      final multiVariantAttribute = MultiVariantAttribute(multiVariant, style);
+
+      expect(
+        () => multiVariantAttribute.remove([variant1, variant2]),
+        throwsArgumentError,
+      );
+    });
+
+    test('merge() returns correct instance', () {
+      final multiVariantAttribute = MultiVariantAttribute(multiVariant, style);
+
+      final otherStyle = Style(const MockIntScalarAttribute(10));
+      final otherAttribute = MultiVariantAttribute(multiVariant, otherStyle);
+
+      final result = multiVariantAttribute.merge(otherAttribute);
+
+      expect(result, isA<MultiVariantAttribute>());
+      expect(result.variant, multiVariant);
+      expect(result.value, style.merge(otherStyle));
+    });
+  });
 }
+
+// StyleVariantAttribute

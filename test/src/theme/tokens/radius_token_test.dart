@@ -59,4 +59,61 @@ void main() {
       );
     });
   });
+
+  test('RadiusResolver resolves correctly', () {
+    final radiusResolver =
+        RadiusResolver((context) => const Radius.circular(5));
+    final context = MockBuildContext();
+
+    final resolvedValue = radiusResolver.resolve(context);
+
+    expect(resolvedValue, const Radius.circular(5));
+  });
+
+  test('RadiusRef equality operator works correctly', () {
+    const radiusToken1 = RadiusToken('testToken');
+    const radiusToken2 = RadiusToken('testToken');
+    const radiusToken3 = RadiusToken('differentToken');
+
+    const radiusRef1 = RadiusRef(radiusToken1);
+    const radiusRef2 = RadiusRef(radiusToken2);
+    const radiusRef3 = RadiusRef(radiusToken3);
+
+    expect(radiusRef1 == radiusRef2, isTrue);
+    expect(radiusRef1 == radiusRef3, isFalse);
+    expect(radiusRef1 == Object(), isFalse);
+  });
+
+  test('RadiusRef hashCode is consistent with token', () {
+    const radiusToken1 = RadiusToken('testToken');
+    const radiusToken2 = RadiusToken('testToken');
+    const radiusToken3 = RadiusToken('differentToken');
+
+    const radiusRef1 = RadiusRef(radiusToken1);
+    const radiusRef2 = RadiusRef(radiusToken2);
+    const radiusRef3 = RadiusRef(radiusToken3);
+
+    expect(radiusRef1.hashCode, radiusRef2.hashCode);
+    expect(radiusRef1.hashCode, isNot(radiusRef3.hashCode));
+  });
+
+  test('UtilityWithRadiusTokens calls the provided function correctly', () {
+    final utility =
+        UtilityWithRadiusTokens<String>((value) => 'Radius: $value');
+
+    final result = utility(const Radius.circular(10));
+
+    expect(result, 'Radius: Radius.circular(10.0)');
+  });
+
+  test(
+      'UtilityWithRadiusTokens.shorthand calls the provided function correctly',
+      () {
+    final utility =
+        UtilityWithRadiusTokens.shorthand((p1, [p2, p3, p4]) => 'Radius: $p1');
+
+    final result = utility(const Radius.circular(10));
+
+    expect(result, 'Radius: Radius.circular(10.0)');
+  });
 }

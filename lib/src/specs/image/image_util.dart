@@ -7,6 +7,7 @@ import '../../core/attribute.dart';
 import '../../decorators/widget_decorators_util.dart';
 import 'image_attribute.dart';
 
+@Deprecated(r'use $image')
 final image = ImageSpecUtility(selfBuilder);
 
 final $image = ImageSpecUtility(selfBuilder);
