@@ -10,7 +10,7 @@ void main() {
     'Style.container matches StyledContainer(style:Style)',
     (tester) async {
       final style = Style(
-        box.decoration(border: Border.all(color: Colors.red)),
+        $box.decoration(border: Border.all(color: Colors.red)),
       );
 
       await tester.pumpWidget(
@@ -41,7 +41,7 @@ void main() {
 
   testWidgets('Style.box matches StyledContainer(style:Style)', (tester) async {
     final style = Style(
-      box.decoration(border: Border.all(color: Colors.red)),
+      $box.decoration(border: Border.all(color: Colors.red)),
     );
 
     await tester.pumpWidget(
@@ -70,7 +70,7 @@ void main() {
   });
 
   testWidgets('Style.hbox matches HBox(style:Style)', (tester) async {
-    final style = Style(box.decoration(border: Border.all(color: Colors.red)));
+    final style = Style($box.decoration(border: Border.all(color: Colors.red)));
 
     await tester.pumpWidget(
       MaterialApp(
@@ -99,7 +99,7 @@ void main() {
 
   testWidgets('Style.row matches StyledRow(style:Style)', (tester) async {
     final style = Style(
-      box.decoration(border: Border.all(color: Colors.red)),
+      $box.decoration(border: Border.all(color: Colors.red)),
     );
 
     await tester.pumpWidget(
@@ -132,7 +132,7 @@ void main() {
   });
 
   testWidgets('Style.text matches StyledText(style:Style)', (tester) async {
-    final style = Style(text.style(color: Colors.red));
+    final style = Style($text.style(color: Colors.red));
 
     await tester.pumpWidget(
       MaterialApp(
@@ -156,7 +156,7 @@ void main() {
   });
 
   testWidgets('Style.vbox matches VBox(style:Style)', (tester) async {
-    final style = Style(box.decoration(border: Border.all(color: Colors.red)));
+    final style = Style($box.decoration(border: Border.all(color: Colors.red)));
 
     await tester.pumpWidget(
       MaterialApp(
@@ -185,7 +185,7 @@ void main() {
 
   testWidgets('Style.column matches StyledColumn(style:Style)', (tester) async {
     final style = Style(
-      box.decoration(border: Border.all(color: Colors.red)),
+      $box.decoration(border: Border.all(color: Colors.red)),
     );
 
     await tester.pumpWidget(
@@ -218,7 +218,7 @@ void main() {
   });
 
   testWidgets('Style.icon matches StyledIcon(style:Style)', (tester) async {
-    final style = Style(icon.color.red());
+    final style = Style($icon.color.red());
 
     await tester.pumpWidget(
       MaterialApp(

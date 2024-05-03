@@ -6,12 +6,12 @@ import '../../../helpers/testing_utils.dart';
 
 void main() {
   testWidgets('Box', (WidgetTester tester) async {
-    final paddingAttr = box.padding(10);
-    final marginAttr = box.margin(15);
-    final alignmentAttr = box.alignment.center();
-    final clipAttr = box.clipBehavior.hardEdge();
+    final paddingAttr = $box.padding(10);
+    final marginAttr = $box.margin(15);
+    final alignmentAttr = $box.alignment.center();
+    final clipAttr = $box.clipBehavior.hardEdge();
 
-    final boxDecorationAttr = box.decoration(
+    final boxDecorationAttr = $box.decoration(
       border: Border.all(color: Colors.red, width: 1, style: BorderStyle.solid),
       borderRadius: BorderRadius.circular(10),
       color: Colors.red,
@@ -53,8 +53,8 @@ void main() {
       await tester.pumpMaterialApp(
         Box(
           style: Style(
-            height(100),
-            width(100),
+            $box.height(100),
+            $box.width(100),
             align(),
           ),
           child: const Box(),

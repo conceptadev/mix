@@ -1,73 +1,63 @@
 import 'package:flutter/material.dart';
 
 import '../../helpers/build_context_ext.dart';
-import '../../theme/mix_theme.dart';
 import '../../theme/tokens/breakpoints_token.dart';
 import '../../variants/variant.dart';
 
-/// Global breakpoint context variants based on predefined screen sizes.
-/// These can be used to apply styles or layouts conditionally depending on the screen size.
-
-/// Variant for small screens.
-final onSmall = OnBreakpointTokenVariant(BreakpointToken.small);
-
-/// Variant for extra small screens.
-final onXSmall = OnBreakpointTokenVariant(BreakpointToken.xsmall);
-
-/// Variant for medium screens.
-final onMedium = OnBreakpointTokenVariant(BreakpointToken.medium);
-
-/// Variant for large screens.
-final onLarge = OnBreakpointTokenVariant(BreakpointToken.large);
-
-/// Creates a [ContextVariant] for custom breakpoint constraints.
+/// Represents a variant of a context based on a specific breakpoint.
 ///
-/// [minWidth] and [maxWidth] define the width constraints, while [orientation] specifies
-/// the orientation constraint. This function returns a [ContextVariant] which will apply
-/// when the screen size matches these constraints.
-///
-OnBreakPointVariant onBreakpoint({
-  double minWidth = 0,
-  double maxWidth = double.infinity,
-}) {
-  final constraints = Breakpoint(minWidth: minWidth, maxWidth: maxWidth);
-
-  return OnBreakPointVariant(breakpoint: constraints);
-}
-
+/// This class extends [ContextVariant] and is used to determine whether a given
+/// [BuildContext] matches the specified [breakpoint].
 class OnBreakPointVariant extends ContextVariant {
+  /// The breakpoint used to determine the context variant.
   final Breakpoint breakpoint;
 
-  OnBreakPointVariant({required this.breakpoint})
-      : super(key: ValueKey(breakpoint));
+  /// Creates a new [OnBreakPointVariant] with the specified [breakpoint].
+  ///
+  /// The [breakpoint] is used as the [key] for the [ContextVariant].
+  OnBreakPointVariant(this.breakpoint) : super(key: ValueKey(breakpoint));
 
+  /// Returns a list containing the [key] and [breakpoint] properties.
   @override
   List<Object?> get props => [key, breakpoint];
 
+  /// Determines whether the given [BuildContext] matches this variant's [breakpoint].
+  ///
+  /// Returns `true` if the [context]'s screen size matches the [breakpoint],
+  /// and `false` otherwise.
   @override
   bool build(BuildContext context) {
     return breakpoint.matches(context.screenSize);
   }
 }
 
-/// Creates a [ContextVariant] based on a specific [token].
+/// A variant of [ContextVariant] based on a [BreakpointToken].
 ///
-/// This function uses the [token] to retrieve breakpoint settings from [MixTheme],
-/// and returns a [ContextVariant] that applies when the current screen size matches
-/// the specified breakpoint.
+/// This class determines whether the selected breakpoint matches the current
+/// screen size within the given [BuildContext].
 class OnBreakpointTokenVariant extends ContextVariant {
+  /// The [BreakpointToken] associated with this variant.
   final BreakpointToken token;
 
+  /// Creates a new [OnBreakpointTokenVariant] with the given [token].
+  ///
+  /// The [key] is set to a [ValueKey] based on the [token].
   OnBreakpointTokenVariant(this.token) : super(key: ValueKey(token));
 
+  /// The properties used for equality comparison.
+  ///
+  /// Returns a list containing the [key] and [token].
   @override
   List<Object?> get props => [key, token];
 
+  /// Determines whether the selected breakpoint matches the current screen size.
+  ///
+  /// Returns `true` if the breakpoint resolved from [token] matches the screen
+  /// size obtained from the [context], and `false` otherwise.
   @override
   bool build(BuildContext context) {
     final size = context.screenSize;
-
-      final selectedbreakpoint = token.resolve(context);
+    final selectedbreakpoint = token.resolve(context);
 
     return selectedbreakpoint.matches(size);
   }

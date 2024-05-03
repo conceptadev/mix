@@ -7,6 +7,8 @@ abstract class MixUtility<Attr extends StyleAttribute, Value> {
   @protected
   final Attr Function(Value) builder;
   const MixUtility(this.builder);
+
+  static T selfBuilder<T>(T value) => value;
 }
 
 abstract class SpecUtility<Attr extends SpecAttribute,

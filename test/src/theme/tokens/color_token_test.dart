@@ -59,4 +59,80 @@ void main() {
       expect(mixData.tokens.colorToken(bluecolorToken), Colors.blueAccent);
     });
   });
+
+  group('ColorResolver Tests', () {
+    testWidgets('ColorResolver resolves color dynamically', (tester) async {
+      const colorToken = ColorToken('dynamicColor');
+      final theme = MixThemeData(
+        colors: {
+          colorToken: ColorResolver((context) {
+            final brightness = MediaQuery.of(context).platformBrightness;
+            return brightness == Brightness.dark ? Colors.white : Colors.black;
+          }),
+        },
+      );
+      // set brightness to dark on the next pump widget
+      await tester.pumpWidget(
+        MediaQuery(
+          data: const MediaQueryData(platformBrightness: Brightness.dark),
+          child: MixTheme(
+            data: theme,
+            child: Container(),
+          ),
+        ),
+      );
+
+      final context = tester.element(find.byType(Container));
+      final mixData = MixData.create(context, const Style.empty());
+
+      expect(mixData.tokens.colorToken(colorToken), Colors.white);
+
+      await tester.pumpWidget(
+        MediaQuery(
+          data: const MediaQueryData(platformBrightness: Brightness.light),
+          child: MixTheme(
+            data: theme,
+            child: Container(),
+          ),
+        ),
+      );
+      expect(mixData.tokens.colorToken(colorToken), Colors.black);
+    });
+
+    testWidgets('ColorResolver returns transparent color when null',
+        (tester) async {
+      const colorToken = ColorToken('nullColor');
+      final theme = MixThemeData(
+        colors: {
+          colorToken: ColorResolver((_) => Colors.transparent),
+        },
+      );
+
+      await tester.pumpWidget(createWithMixTheme(theme));
+
+      final context = tester.element(find.byType(Container));
+      final mixData = MixData.create(context, const Style.empty());
+
+      expect(mixData.tokens.colorToken(colorToken), Colors.transparent);
+    });
+  });
+
+  group('ColorRef Tests', () {
+    test('ColorRef equality works correctly', () {
+      const colorToken = ColorToken('testColor');
+      const colorRef1 = ColorRef(colorToken);
+      const colorRef2 = ColorRef(colorToken);
+
+      expect(colorRef1 == colorRef2, isTrue);
+      expect(colorRef1 == Object(), isFalse);
+    });
+
+    test('ColorRef hashCode is consistent with token', () {
+      const colorToken = ColorToken('testColor');
+      const colorRef1 = ColorRef(colorToken);
+      const colorRef2 = ColorRef(colorToken);
+
+      expect(colorRef1.hashCode, colorRef2.hashCode);
+    });
+  });
 }

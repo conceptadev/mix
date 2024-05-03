@@ -11,7 +11,7 @@ void main() {
         (tester) async {
       tester.pumpWidget(
         Box(
-          style: Style(height(100)),
+          style: Style($box.height(100)),
           child: SpecBuilder(
             inherit: true,
             builder: (context) {
@@ -29,7 +29,7 @@ void main() {
       (tester) async {
         tester.pumpWidget(
           Box(
-            style: Style(height(100)),
+            style: Style($box.height(100)),
             child: SpecBuilder(
               inherit: false,
               builder: (context) {
@@ -62,9 +62,9 @@ void main() {
       '''When a parent StyledWidget has a Style, the MixData in StyledWidgetBuilder.builder should have the same attributes''',
       (tester) async {
         final style = Style(
-          height(100),
-          width(100),
-          backgroundColor(Colors.red),
+          $box.height(100),
+          $box.width(100),
+          $box.color(Colors.red),
         );
 
         final mixData = MixData.create(MockBuildContext(), style);

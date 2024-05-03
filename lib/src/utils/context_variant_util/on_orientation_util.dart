@@ -2,36 +2,29 @@ import 'package:flutter/material.dart';
 
 import '../../variants/variant.dart';
 
-/// Variant for portrait orientation.
+/// A variant of [ContextVariant] based on an [Orientation] value.
 ///
-/// This global variant is used to apply styles or behaviors when the device is in portrait orientation.
-final onPortrait = OnOrientationVariant(Orientation.portrait);
-
-/// Variant for landscape orientation.
-///
-/// This global variant is used to apply styles or behaviors when the device is in landscape orientation.
-final onLandscape = OnOrientationVariant(Orientation.landscape);
-
-/// Creates a [ContextVariant] that the user can select when is applied
-/// based on the current device orientation.
-const onOrientation = OnOrientationVariant.new;
-
-/// Creates a [ContextVariant] for a specific [orientation].
-///
-/// This function returns a [ContextVariant] that applies when the current
-/// orientation of the device matches the specified [orientation]. It is useful
-/// for defining orientation-specific styles or behaviors in the application.
-///
-/// [orientation] - The device orientation (portrait or landscape) for which the variant is to be created.
-
+/// This class determines whether the current [Orientation] within the given
+/// [BuildContext] matches the specified [orientation].
 class OnOrientationVariant extends ContextVariant {
+  /// The [Orientation] associated with this variant.
   final Orientation orientation;
 
+  /// Creates a new [OnOrientationVariant] with the given [orientation].
+  ///
+  /// The [key] is set to a [ValueKey] based on the [orientation].
   OnOrientationVariant(this.orientation) : super(key: ValueKey(orientation));
 
+  /// The properties used for equality comparison.
+  ///
+  /// Returns a list containing the [key] and [orientation].
   @override
   List<Object?> get props => [key, orientation];
 
+  /// Determines whether the current [Orientation] matches the specified [orientation].
+  ///
+  /// Returns `true` if the [Orientation] obtained from the [context] matches the
+  /// [orientation] associated with this variant, and `false` otherwise.
   @override
   bool build(BuildContext context) {
     return MediaQuery.of(context).orientation == orientation;

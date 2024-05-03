@@ -16,10 +16,10 @@ abstract class BaseColorUtility<T extends StyleAttribute>
 }
 
 @immutable
-class SingleColorUtility<T extends StyleAttribute> extends BaseColorUtility<T>
-    with ColorDirectiveMixin<T> {
-  final Color color;
-  const SingleColorUtility(super.builder, this.color);
+class FoundationColorUtility<T extends StyleAttribute, C extends Color>
+    extends BaseColorUtility<T> with ColorDirectiveMixin<T> {
+  final C color;
+  const FoundationColorUtility(super.builder, this.color);
 
   T call() => _buildColor(color);
 
@@ -27,6 +27,11 @@ class SingleColorUtility<T extends StyleAttribute> extends BaseColorUtility<T>
   T directive(ColorDirective directive) =>
       builder(ColorDto.raw(value: color, directives: [directive]));
 }
+
+typedef SimpleColorUtility<T extends StyleAttribute>
+    = FoundationColorUtility<T, Color>;
+typedef MaterialSingleColorUtility<T extends StyleAttribute>
+    = FoundationColorUtility<T, MaterialColor>;
 
 mixin ColorDirectiveMixin<T extends StyleAttribute> on BaseColorUtility<T> {
   T directive(ColorDirective directive) =>
@@ -118,56 +123,54 @@ class ColorUtility<T extends StyleAttribute> extends BaseColorUtility<T>
   MaterialAccentColorUtility<T> get deepOrangeAccent =>
       MaterialAccentColorUtility(builder, Colors.deepOrangeAccent);
 
-  SingleColorUtility<T> get transparent =>
-      SingleColorUtility(builder, Colors.transparent);
+  SimpleColorUtility<T> get transparent =>
+      SimpleColorUtility(builder, Colors.transparent);
 
-  SingleColorUtility<T> get black =>
-      SingleColorUtility(builder, const Color(0xFF000000));
+  SimpleColorUtility<T> get black => SimpleColorUtility(builder, Colors.black);
 
-  SingleColorUtility<T> get black87 =>
-      SingleColorUtility(builder, const Color(0xDD000000));
+  SimpleColorUtility<T> get black87 =>
+      SimpleColorUtility(builder, Colors.black87);
 
-  SingleColorUtility<T> get black54 =>
-      SingleColorUtility(builder, const Color(0x8A000000));
+  SimpleColorUtility<T> get black54 =>
+      SimpleColorUtility(builder, Colors.black54);
 
-  SingleColorUtility<T> get black45 =>
-      SingleColorUtility(builder, const Color(0x73000000));
+  SimpleColorUtility<T> get black45 =>
+      SimpleColorUtility(builder, Colors.black45);
 
-  SingleColorUtility<T> get black38 =>
-      SingleColorUtility(builder, const Color(0x61000000));
+  SimpleColorUtility<T> get black38 =>
+      SimpleColorUtility(builder, Colors.black38);
 
-  SingleColorUtility<T> get black26 =>
-      SingleColorUtility(builder, const Color(0x42000000));
+  SimpleColorUtility<T> get black26 =>
+      SimpleColorUtility(builder, Colors.black26);
 
-  SingleColorUtility<T> get black12 =>
-      SingleColorUtility(builder, const Color(0x1F000000));
+  SimpleColorUtility<T> get black12 =>
+      SimpleColorUtility(builder, Colors.black12);
 
-  SingleColorUtility<T> get white =>
-      SingleColorUtility(builder, const Color(0xFFFFFFFF));
+  SimpleColorUtility<T> get white => SimpleColorUtility(builder, Colors.white);
 
-  SingleColorUtility<T> get white70 =>
-      SingleColorUtility(builder, const Color(0xB3FFFFFF));
+  SimpleColorUtility<T> get white70 =>
+      SimpleColorUtility(builder, Colors.white70);
 
-  SingleColorUtility<T> get white60 =>
-      SingleColorUtility(builder, const Color(0x99FFFFFF));
+  SimpleColorUtility<T> get white60 =>
+      SimpleColorUtility(builder, Colors.white60);
 
-  SingleColorUtility<T> get white54 =>
-      SingleColorUtility(builder, const Color(0x8AFFFFFF));
+  SimpleColorUtility<T> get white54 =>
+      SimpleColorUtility(builder, Colors.white54);
 
-  SingleColorUtility<T> get white38 =>
-      SingleColorUtility(builder, const Color(0x62FFFFFF));
+  SimpleColorUtility<T> get white38 =>
+      SimpleColorUtility(builder, Colors.white38);
 
-  SingleColorUtility<T> get white30 =>
-      SingleColorUtility(builder, const Color(0x4DFFFFFF));
+  SimpleColorUtility<T> get white30 =>
+      SimpleColorUtility(builder, Colors.white30);
 
-  SingleColorUtility<T> get white24 =>
-      SingleColorUtility(builder, const Color(0x3DFFFFFF));
+  SimpleColorUtility<T> get white24 =>
+      SimpleColorUtility(builder, Colors.white24);
 
-  SingleColorUtility<T> get white12 =>
-      SingleColorUtility(builder, const Color(0x1FFFFFFF));
+  SimpleColorUtility<T> get white12 =>
+      SimpleColorUtility(builder, Colors.white12);
 
-  SingleColorUtility<T> get white10 =>
-      SingleColorUtility(builder, const Color(0x1AFFFFFF));
+  SimpleColorUtility<T> get white10 =>
+      SimpleColorUtility(builder, Colors.white10);
 
   T ref(ColorToken ref) => _buildColor(ref());
 
@@ -175,75 +178,54 @@ class ColorUtility<T extends StyleAttribute> extends BaseColorUtility<T>
 }
 
 @immutable
-abstract class ColorSwatchUtility<T extends StyleAttribute>
-    extends BaseColorUtility<T> with ColorDirectiveMixin<T> {
-  final ColorSwatch<int> color;
-  const ColorSwatchUtility(super.builder, this.color);
-
-  @override
-  T _buildColor(Color color) => builder(ColorDto(color));
-}
-
-@immutable
 class MaterialColorUtility<T extends StyleAttribute>
-    extends ColorSwatchUtility<T> {
+    extends FoundationColorUtility<T, MaterialColor> {
   const MaterialColorUtility(super.builder, super.color);
 
-  SingleColorUtility<T> get shade50 => SingleColorUtility(builder, color[50]!);
+  SimpleColorUtility<T> get shade50 =>
+      SimpleColorUtility(builder, color.shade50);
 
-  SingleColorUtility<T> get shade100 =>
-      SingleColorUtility(builder, color[100]!);
+  SimpleColorUtility<T> get shade100 =>
+      SimpleColorUtility(builder, color.shade100);
 
-  SingleColorUtility<T> get shade200 =>
-      SingleColorUtility(builder, color[200]!);
+  SimpleColorUtility<T> get shade200 =>
+      SimpleColorUtility(builder, color.shade200);
 
-  SingleColorUtility<T> get shade300 =>
-      SingleColorUtility(builder, color[300]!);
+  SimpleColorUtility<T> get shade300 =>
+      SimpleColorUtility(builder, color.shade300);
 
-  SingleColorUtility<T> get shade400 =>
-      SingleColorUtility(builder, color[400]!);
+  SimpleColorUtility<T> get shade400 =>
+      SimpleColorUtility(builder, color.shade400);
 
-  SingleColorUtility<T> get shade500 =>
-      SingleColorUtility(builder, color[500]!);
+  SimpleColorUtility<T> get shade500 =>
+      SimpleColorUtility(builder, color.shade500);
 
-  SingleColorUtility<T> get shade600 =>
-      SingleColorUtility(builder, color[600]!);
+  SimpleColorUtility<T> get shade600 =>
+      SimpleColorUtility(builder, color.shade600);
 
-  SingleColorUtility<T> get shade700 =>
-      SingleColorUtility(builder, color[700]!);
+  SimpleColorUtility<T> get shade700 =>
+      SimpleColorUtility(builder, color.shade700);
 
-  SingleColorUtility<T> get shade800 =>
-      SingleColorUtility(builder, color[800]!);
+  SimpleColorUtility<T> get shade800 =>
+      SimpleColorUtility(builder, color.shade800);
 
-  SingleColorUtility<T> get shade900 =>
-      SingleColorUtility(builder, color[900]!);
-
-  T call() => _buildColor(color[500]!);
-
-  @override
-  T directive(ColorDirective directive) =>
-      builder(ColorDto.raw(value: color[500]!, directives: [directive]));
+  SimpleColorUtility<T> get shade900 =>
+      SimpleColorUtility(builder, color.shade900);
 }
 
 @immutable
 class MaterialAccentColorUtility<T extends StyleAttribute>
-    extends ColorSwatchUtility<T> {
+    extends FoundationColorUtility<T, MaterialAccentColor> {
   const MaterialAccentColorUtility(super.builder, super.color);
 
-  SingleColorUtility<T> get shade100 =>
-      SingleColorUtility(builder, color[100]!);
-  SingleColorUtility<T> get shade200 =>
-      SingleColorUtility(builder, color[200]!);
-  SingleColorUtility<T> get shade400 =>
-      SingleColorUtility(builder, color[400]!);
-  SingleColorUtility<T> get shade700 =>
-      SingleColorUtility(builder, color[700]!);
-
-  T call() => _buildColor(color[400]!);
-
-  @override
-  T directive(ColorDirective directive) =>
-      builder(ColorDto.raw(value: color[400]!, directives: [directive]));
+  SimpleColorUtility<T> get shade100 =>
+      SimpleColorUtility(builder, color.shade100);
+  SimpleColorUtility<T> get shade200 =>
+      SimpleColorUtility(builder, color.shade200);
+  SimpleColorUtility<T> get shade400 =>
+      SimpleColorUtility(builder, color.shade400);
+  SimpleColorUtility<T> get shade700 =>
+      SimpleColorUtility(builder, color.shade700);
 }
 
 typedef ColorModifier = Color Function(Color);

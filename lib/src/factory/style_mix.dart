@@ -8,13 +8,13 @@ import '../attributes/variant_attribute.dart';
 import '../core/attribute.dart';
 import '../core/attributes_map.dart';
 import '../helpers/compare_mixin.dart';
+import '../helpers/helper_util.dart';
 import '../specs/box/box_attribute.dart';
 import '../specs/flex/flex_attribute.dart';
 import '../specs/icon/icon_attribute.dart';
 import '../specs/image/image_attribute.dart';
 import '../specs/stack/stack_attribute.dart';
 import '../specs/text/text_attribute.dart';
-import '../utils/helper_util.dart';
 import '../variants/variant.dart';
 import 'mix_provider_data.dart';
 
@@ -23,7 +23,7 @@ class AnimatedStyle extends Style {
 
   const AnimatedStyle._({
     required AttributeMap<StyleAttribute> styles,
-    required AttributeMap<StyleVariantAttribute> variants,
+    required AttributeMap<VariantAttribute> variants,
     required this.animatedData,
   }) : super._(styles: styles, variants: variants);
 
@@ -45,7 +45,7 @@ class AnimatedStyle extends Style {
   @override
   AnimatedStyle copyWith({
     AttributeMap<StyleAttribute>? styles,
-    AttributeMap<StyleVariantAttribute>? variants,
+    AttributeMap<VariantAttribute>? variants,
     AnimatedData? animatedData,
   }) {
     return AnimatedStyle._(
@@ -84,7 +84,7 @@ class Style with Comparable {
   final AttributeMap<StyleAttribute> styles;
 
   /// The variant attributes contained in this mix.
-  final AttributeMap<StyleVariantAttribute> variants;
+  final AttributeMap<VariantAttribute> variants;
 
   static final stack = SpreadFunctionParams(_styleType<StackSpecAttribute>());
   static final text = SpreadFunctionParams(_styleType<TextSpecAttribute>());
@@ -157,13 +157,13 @@ class Style with Comparable {
   /// final style = Style.create([attribute1, attribute2]);
   /// ```
   factory Style.create(Iterable<Attribute> attributes) {
-    final applyVariants = <StyleVariantAttribute>[];
+    final applyVariants = <VariantAttribute>[];
     final styleList = <StyleAttribute>[];
 
     for (final attribute in attributes) {
       if (attribute is StyleAttribute) {
         styleList.add(attribute);
-      } else if (attribute is StyleVariantAttribute) {
+      } else if (attribute is VariantAttribute) {
         applyVariants.add(attribute);
       } else if (attribute is NestedStyleAttribute) {
         applyVariants.addAll(attribute.value.variants.values);
@@ -172,10 +172,6 @@ class Style with Comparable {
         throw UnsupportedError('Unsupported attribute type: $attribute');
       }
     }
-
-    applyVariants.sort(
-      (a, b) => a.variant.priority.value.compareTo(b.variant.priority.value),
-    );
 
     return Style._(
       styles: AttributeMap(styleList),
@@ -279,7 +275,7 @@ class Style with Comparable {
   /// If [styles] or [variants] is null, the corresponding attribute map of this mix is used.
   Style copyWith({
     AttributeMap<StyleAttribute>? styles,
-    AttributeMap<StyleVariantAttribute>? variants,
+    AttributeMap<VariantAttribute>? variants,
   }) {
     return Style._(
       styles: styles ?? this.styles,
@@ -335,17 +331,20 @@ class Style with Comparable {
     }
 
     /// Initializing two empty lists that store the matched and remaining `Variants`, respectively.
-    final matchedVariants = <StyleVariantAttribute>[];
-    final remainingVariants = <StyleVariantAttribute>[];
+    final matchedVariants = <VariantAttribute>[];
+    final remainingVariants = <VariantAttribute>[];
 
     /// Loop over all VariantAttributes in variants only once instead of a nested loop,
     /// checking if each one matches with the selected variants.
     /// If it does, add it to the matchedVariants, else add it to remainingVariants.
-    for (final attr in variants.values) {
-      if (attr.matches(selectedVariants)) {
-        matchedVariants.add(attr);
+    for (final variant in variants.values) {
+      if (variant.matches(selectedVariants)) {
+        matchedVariants.add(variant);
       } else {
-        remainingVariants.add(attr);
+        final remainingVariant = variant.removeVariants(selectedVariants);
+        if (remainingVariant != null) {
+          remainingVariants.add(remainingVariant);
+        }
       }
     }
 
@@ -398,7 +397,7 @@ class Style with Comparable {
     List<StyleVariant> pickedVariants, {
     bool isRecursive = false,
   }) {
-    final matchedVariants = <StyleVariantAttribute>[];
+    final matchedVariants = <VariantAttribute>[];
 
     // Return an empty Style if the list of picked variants is empty
 

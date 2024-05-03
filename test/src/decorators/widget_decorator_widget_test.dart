@@ -301,7 +301,7 @@ void main() {
 
         await tester.pumpWidget(
           Box(
-            style: Style(backgroundColor.red(), height(100), width(100)),
+            style: Style($box.color.red(), $box.height(100), $box.width(100)),
             key: key,
           ),
         );

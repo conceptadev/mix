@@ -15,7 +15,7 @@ void main() {
               Row(
                 children: [
                   HBox(
-                    style: Style(flex.gap(10)),
+                    style: Style($flex.gap(10)),
                     children: const [StyledText('test'), StyledText('case')],
                   ),
                 ],
@@ -37,7 +37,7 @@ void main() {
               Column(
                 children: [
                   VBox(
-                    style: Style(flex.gap(10)),
+                    style: Style($flex.gap(10)),
                     children: const [StyledText('test'), StyledText('case')],
                   ),
                 ],
@@ -56,7 +56,7 @@ void main() {
     await tester.pumpMaterialApp(
       HBox(
         style: Style(
-          flex.gap(10),
+          $flex.gap(10),
         ),
         children: const [
           SizedBox(
@@ -99,8 +99,8 @@ void main() {
             children: [
               HBox(
                 style: Style(
-                  flex.gap(spacing),
-                  flex.mainAxisAlignment(e),
+                  $flex.gap(spacing),
+                  $flex.mainAxisAlignment(e),
                 ),
                 children: const [
                   SizedBox(height: 30, width: 30, key: Key('0')),
@@ -141,7 +141,7 @@ void main() {
       await tester.pumpMaterialApp(
         VBox(
           style: Style(
-            flex.gap(10),
+            $flex.gap(10),
             align(),
           ),
           children: const [
@@ -163,7 +163,7 @@ void main() {
       await tester.pumpMaterialApp(
         HBox(
           style: Style(
-            flex.gap(10),
+            $flex.gap(10),
             align(),
           ),
           children: const [
@@ -185,7 +185,7 @@ void main() {
       await tester.pumpMaterialApp(
         VBox(
           style: Style(
-            flex.gap(10),
+            $flex.gap(10),
             align(),
           ),
           children: const [
@@ -207,7 +207,7 @@ void main() {
       await tester.pumpMaterialApp(
         StyledColumn(
           style: Style(
-            flex.gap(10),
+            $flex.gap(10),
             align(),
           ),
           children: const [
@@ -230,7 +230,7 @@ void main() {
         StyledFlex(
           direction: Axis.horizontal,
           style: Style(
-            flex.gap(10),
+            $flex.gap(10),
             align(),
           ),
           children: const [
@@ -253,7 +253,7 @@ void main() {
         FlexBox(
           direction: Axis.horizontal,
           style: Style(
-            flex.gap(10),
+            $flex.gap(10),
             align(),
           ),
           children: const [

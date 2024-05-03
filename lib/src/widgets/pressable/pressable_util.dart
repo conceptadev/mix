@@ -1,30 +1,31 @@
 import 'package:flutter/material.dart';
 
+import '../../attributes/nested_style/nested_style_attribute.dart';
 import '../../core/attribute.dart';
+import '../../factory/style_mix.dart';
 import '../../variants/variant.dart';
 import 'pressable_state.dart';
 
 /// Global context variants for handling common widget states and gestures.
 mixin ContextVariantEventMixin<T extends ContextVariant> on ContextVariant {
-  ContectVariantEventBuilder<T> onEvent(Attribute Function(bool) fn) {
-    return ContectVariantEventBuilder(fn, variant: this as T, key: key);
+  ContectVariantEventBuilder<T> onEvent(Style Function(bool) fn) {
+    return ContectVariantEventBuilder(fn, variant: this as T);
   }
 }
 
 /// Applies styles when the widget is pressed.
-class OnPressedVariant extends ContextVariant
-    with ContextVariantEventMixin<OnPressedVariant> {
-  const OnPressedVariant({super.key})
-      : super(priority: VariantPriority.highest);
+class OnPressVariant extends ContextVariant
+    with ContextVariantEventMixin<OnPressVariant> {
+  const OnPressVariant({super.key}) : super(priority: VariantPriority.highest);
 
   @override
   bool build(BuildContext context) => PressableState.pressedOf(context);
 }
 
 /// Applies styles when the widget is long pressed.
-class OnLongPressedVariant extends ContextVariant
-    with ContextVariantEventMixin<OnLongPressedVariant> {
-  const OnLongPressedVariant({super.key})
+class OnLongPressVariant extends ContextVariant
+    with ContextVariantEventMixin<OnLongPressVariant> {
+  const OnLongPressVariant({super.key})
       : super(priority: VariantPriority.highest);
 
   @override
@@ -63,29 +64,25 @@ class OnDisabledVariant extends ContextVariant
 }
 
 /// Applies styles when the widget has focus.
-class OnFocusedVariant extends ContextVariant
-    with ContextVariantEventMixin<OnFocusedVariant> {
-  const OnFocusedVariant({super.key})
-      : super(priority: VariantPriority.highest);
+class OnFocusVariant extends ContextVariant
+    with ContextVariantEventMixin<OnFocusVariant> {
+  const OnFocusVariant({super.key}) : super(priority: VariantPriority.highest);
 
   @override
   bool build(BuildContext context) => PressableState.focusedOf(context);
 }
 
-const onPressed = OnPressedVariant();
-const onLongPressed = OnLongPressedVariant();
-const onHover = OnHoverVariant();
-const onEnabled = OnEnabledVariant();
-const onDisabled = OnDisabledVariant();
-const onFocused = OnFocusedVariant();
-const onMouseHover = OnMouseHoverBuilder.new;
-
 @immutable
-class OnMouseHoverBuilder extends StyleAttributeBuilder<PointerPosition?> {
-  const OnMouseHoverBuilder(super.fn, {super.key});
+class OnMouseHoverBuilder extends ContextVariantBuilder<PointerPosition?> {
+  const OnMouseHoverBuilder(super.fn);
 
   @override
   Attribute builder(BuildContext context) {
-    return fn(PressableState.pointerPositionOf(context));
+    return NestedStyleAttribute(
+      fn(PressableState.pointerPositionOf(context)),
+    );
   }
+
+  @override
+  get props => [];
 }

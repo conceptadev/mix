@@ -6,6 +6,8 @@ import '../../../helpers/testing_utils.dart';
 
 void main() {
   group('Brightness Utils', () {
+    final onLight = OnBrightnessVariant(Brightness.light);
+    final onDark = OnBrightnessVariant(Brightness.dark);
     testWidgets('onLight context variant', (tester) async {
       await tester.pumpWidget(createBrightnessTheme(Brightness.light));
       var context = tester.element(find.byType(Container));
@@ -20,6 +22,15 @@ void main() {
 
       expect(onLight.build(context), false, reason: 'light');
       expect(onDark.build(context), true, reason: 'dark');
+    });
+
+    test('OnBrightnessVariant equality', () {
+      final variantLight1 = OnBrightnessVariant(Brightness.light);
+      final variantLight2 = OnBrightnessVariant(Brightness.light);
+      final variantDark = OnBrightnessVariant(Brightness.dark);
+
+      expect(variantLight1, equals(variantLight2));
+      expect(variantLight1, isNot(equals(variantDark)));
     });
   });
 }

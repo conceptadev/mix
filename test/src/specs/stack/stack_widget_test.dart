@@ -7,10 +7,10 @@ import '../../../helpers/testing_utils.dart';
 void main() {
   testWidgets('Stack', (tester) async {
     final style = Style(
-      stack.fit.expand(),
-      stack.alignment.topCenter(),
-      stack.clipBehavior.antiAlias(),
-      stack.textDirection.ltr(),
+      $stack.fit.expand(),
+      $stack.alignment.topCenter(),
+      $stack.clipBehavior.antiAlias(),
+      $stack.textDirection.ltr(),
     );
     await tester.pumpMaterialApp(
       StyledStack(
@@ -34,11 +34,11 @@ void main() {
 
   testWidgets('ZBox', (tester) async {
     final style = Style(
-      stack.fit.expand(),
-      stack.alignment.topCenter(),
-      stack.textDirection.ltr(),
-      stack.clipBehavior.antiAlias(),
-      backgroundColor(Colors.red),
+      $stack.fit.expand(),
+      $stack.alignment.topCenter(),
+      $stack.textDirection.ltr(),
+      $stack.clipBehavior.antiAlias(),
+      $box.color(Colors.red),
     );
 
     await tester.pumpMaterialApp(ZBox(style: style, children: const []));
@@ -64,7 +64,7 @@ void main() {
       await tester.pumpMaterialApp(
         StyledStack(
           style: Style(
-            flex.gap(10),
+            $flex.gap(10),
             align(),
           ),
           children: const [
@@ -86,8 +86,8 @@ void main() {
       await tester.pumpMaterialApp(
         ZBox(
           style: Style(
-            flex.gap(10),
-            stack.alignment.center(),
+            $flex.gap(10),
+            $stack.alignment.center(),
             align(),
           ),
           children: const [

@@ -5,14 +5,14 @@ import 'package:mix/mix.dart';
 void main() {
   test('mapPropsToString', () {
     final firstStyle = Style(
-      box.alignment.center(),
-      box.borderRadius.all(10),
-      box.color.red(),
+      $box.alignment.center(),
+      $box.borderRadius.all(10),
+      $box.color.red(),
     );
     final secondStyle = Style(
-      box.alignment.center(),
-      box.borderRadius.all(10),
-      box.color.red(),
+      $box.alignment.center(),
+      $box.borderRadius.all(10),
+      $box.color.red(),
     );
 
     expect(firstStyle.toString(), secondStyle.toString());
@@ -22,16 +22,15 @@ void main() {
     final firstStyle = Style(
       // box.alignment.center(),
       // box.borderRadius.all(10),
-      box.color.blue(),
+      $box.color.blue(),
     );
     final secondStyle = Style(
       // box.alignment.center(),
       // box.borderRadius.all(10),
-      box.color.red(),
+      $box.color.red(),
     );
 
     final diff = firstStyle.getDiff(secondStyle);
-    print(diff);
 
     expect(diff.length, 1);
   });

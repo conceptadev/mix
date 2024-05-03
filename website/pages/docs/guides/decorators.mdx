@@ -4,6 +4,10 @@ import { Callout } from "nextra-theme-docs";
 
 Decorators in Mix extend functionality by defining the widget composition tree structure, providing support for core widgets, external widgets, and third-party widgets without compromising the simplicity of core Mix.
 
+## $with
+
+You can find all available decorators within the `$with` utility. This provides a single place to access all decorator functions.
+
 ## Understanding the Mechanics
 
 Take the `scale` attribute, for instance. The Container widget doesn't inherently possess the ability to scale. But, by employing a Transform widget as a decorator, we can introduce this effect.
@@ -50,7 +54,10 @@ class ScaleDecorator extends WidgetDecorator<ScaleDecorator> {
     );
   }
 }
+
 ```
+
+You can then create an extension of the
 
 ### Crafting a decorator utility
 
@@ -64,7 +71,7 @@ ScaleDecorator scale(double scale, {Key? key}) => ScaleDecorator(scale, key: key
 
 ```dart {2}
 final style = Style(
-  scale(0.5),
+  $with.scale(0.5),
 );
 
 Box(

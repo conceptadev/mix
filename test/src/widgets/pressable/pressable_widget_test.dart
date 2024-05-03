@@ -387,8 +387,8 @@ Future<void> pumpTestCase({
       disabled: false,
       style: Style(
         opacity(0.5),
-        height(50),
-        width(50),
+        $box.height(50),
+        $box.width(50),
         condition(
           opacity(1),
         ),

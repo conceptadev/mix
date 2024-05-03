@@ -4,6 +4,7 @@ import 'package:meta/meta.dart';
 import '../attributes/variant_attribute.dart';
 import '../core/attribute.dart';
 import '../core/attributes_map.dart';
+import '../core/extensions/iterable_ext.dart';
 import '../helpers/compare_mixin.dart';
 import '../helpers/constants.dart';
 import '../theme/token_resolver.dart';
@@ -123,10 +124,14 @@ List<StyleAttribute> applyContextToVisualAttributes(
     return mix.styles.values;
   }
 
+  final prioritizedVariants = mix.variants.values.sorted(
+    (a, b) => a.priority.value.compareTo(b.priority.value),
+  );
+
   final builtAttributes = _applyStyleBuilder(context, mix.styles.values);
   Style style = Style.create(builtAttributes);
 
-  for (final variant in mix.variants.values) {
+  for (final variant in prioritizedVariants) {
     style = _applyVariants(context, style, variant);
   }
 
@@ -136,7 +141,7 @@ List<StyleAttribute> applyContextToVisualAttributes(
 Style _applyVariants(
   BuildContext context,
   Style style,
-  StyleVariantAttribute variantAttribute,
+  VariantAttribute variantAttribute,
 ) {
   return variantAttribute.variant.build(context)
       ? style.merge(variantAttribute.value)
@@ -172,7 +177,7 @@ Iterable<Attribute> _applyStyleBuilder(
   List<Attribute> attributes,
 ) {
   return attributes.map((attr) {
-    if (attr is StyleAttributeBuilder) {
+    if (attr is ContextVariantBuilder) {
       return attr.builder(context);
     }
 

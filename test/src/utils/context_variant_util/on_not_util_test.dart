@@ -6,7 +6,9 @@ import '../../../helpers/testing_utils.dart';
 
 void main() {
   group('Not Utils', () {
-    testWidgets('reverts when of context variant', (tester) async {
+    const onNot = OnNotVariant.new;
+    testWidgets('onNot reverses the result of a context variant',
+        (tester) async {
       await tester.pumpWidget(createBrightnessTheme(Brightness.light));
       var context = tester.element(find.byType(Container));
 
@@ -18,6 +20,18 @@ void main() {
 
       expect(notLight.build(context), false, reason: 'not light');
       expect(notDark.build(context), true, reason: 'not dark');
+    });
+
+    test('OnNotVariant equality', () {
+      final variantLight = OnBrightnessVariant(Brightness.light);
+      final variantDark = OnBrightnessVariant(Brightness.dark);
+
+      final notLight1 = OnNotVariant(variantLight);
+      final notLight2 = OnNotVariant(variantLight);
+      final notDark = OnNotVariant(variantDark);
+
+      expect(notLight1, equals(notLight2));
+      expect(notLight1, isNot(equals(notDark)));
     });
   });
 }

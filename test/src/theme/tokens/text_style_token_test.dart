@@ -100,14 +100,14 @@ void main() {
     await tester.pumpWithMixTheme(
       Box(
         style: Style(
-          text.style.ref($md.textTheme.bodyText1),
-          text.style.ref($md.textTheme.bodyText2),
-          box.color.ref($md.colorScheme.background),
-          box.color.ref($md.colorScheme.error),
-          box.borderRadius.all.ref($radius.medium),
-          box.borderRadius.all.ref($radius.large),
-          box.padding.horizontal.ref($space.medium),
-          box.padding.horizontal.ref($space.large),
+          $text.style.ref($md.textTheme.bodyText1),
+          $text.style.ref($md.textTheme.bodyText2),
+          $box.color.ref($md.colorScheme.background),
+          $box.color.ref($md.colorScheme.error),
+          $box.borderRadius.all.ref($radius.medium),
+          $box.borderRadius.all.ref($radius.large),
+          $box.padding.horizontal.ref($space.medium),
+          $box.padding.horizontal.ref($space.large),
         ),
         key: key,
         child: const StyledText('Hello'),
@@ -147,5 +147,222 @@ void main() {
       containerWidget.padding!.horizontal / 2,
       themeData.spaces[$space.large],
     );
+  });
+
+  group('TextStyleResolver', () {
+    testWidgets('resolve method is called correctly', (tester) async {
+      var resolverCalled = false;
+      final resolver = TextStyleResolver((_) {
+        resolverCalled = true;
+        return const TextStyle();
+      });
+
+      await tester.pumpWidget(
+        MixTheme(
+          data: MixThemeData(
+              textStyles: {const TextStyleToken('test'): resolver}),
+          child: Container(),
+        ),
+      );
+
+      final context = tester.element(find.byType(Container));
+      resolver.resolve(context);
+
+      expect(resolverCalled, isTrue);
+    });
+  });
+
+  group('TextStyleRef', () {
+    test('copyWith throws TokenFieldAccessError', () {
+      const ref = TextStyleRef(TextStyleToken('test'));
+      expect(
+        () => ref.copyWith(),
+        throwsA(isA<TokenFieldAccessError>()),
+      );
+    });
+
+    test('fontFamily throws TokenFieldAccessError', () {
+      const ref = TextStyleRef(TextStyleToken('test'));
+      expect(
+        () => ref.fontFamily,
+        throwsA(isA<TokenFieldAccessError>()),
+      );
+    });
+
+    test('inherit throws TokenFieldAccessError', () {
+      const ref = TextStyleRef(TextStyleToken('test'));
+      expect(
+        () => ref.inherit,
+        throwsA(isA<TokenFieldAccessError>()),
+      );
+    });
+
+    test('color throws TokenFieldAccessError', () {
+      const ref = TextStyleRef(TextStyleToken('test'));
+      expect(
+        () => ref.color,
+        throwsA(isA<TokenFieldAccessError>()),
+      );
+    });
+
+    test('backgroundColor throws TokenFieldAccessError', () {
+      const ref = TextStyleRef(TextStyleToken('test'));
+      expect(
+        () => ref.backgroundColor,
+        throwsA(isA<TokenFieldAccessError>()),
+      );
+    });
+
+    test('fontSize throws TokenFieldAccessError', () {
+      const ref = TextStyleRef(TextStyleToken('test'));
+      expect(
+        () => ref.fontSize,
+        throwsA(isA<TokenFieldAccessError>()),
+      );
+    });
+
+    test('fontWeight throws TokenFieldAccessError', () {
+      const ref = TextStyleRef(TextStyleToken('test'));
+      expect(
+        () => ref.fontWeight,
+        throwsA(isA<TokenFieldAccessError>()),
+      );
+    });
+
+    test('fontStyle throws TokenFieldAccessError', () {
+      const ref = TextStyleRef(TextStyleToken('test'));
+      expect(
+        () => ref.fontStyle,
+        throwsA(isA<TokenFieldAccessError>()),
+      );
+    });
+
+    test('letterSpacing throws TokenFieldAccessError', () {
+      const ref = TextStyleRef(TextStyleToken('test'));
+      expect(
+        () => ref.letterSpacing,
+        throwsA(isA<TokenFieldAccessError>()),
+      );
+    });
+
+    test('wordSpacing throws TokenFieldAccessError', () {
+      const ref = TextStyleRef(TextStyleToken('test'));
+      expect(
+        () => ref.wordSpacing,
+        throwsA(isA<TokenFieldAccessError>()),
+      );
+    });
+
+    test('textBaseline throws TokenFieldAccessError', () {
+      const ref = TextStyleRef(TextStyleToken('test'));
+      expect(
+        () => ref.textBaseline,
+        throwsA(isA<TokenFieldAccessError>()),
+      );
+    });
+
+    test('height throws TokenFieldAccessError', () {
+      const ref = TextStyleRef(TextStyleToken('test'));
+      expect(
+        () => ref.height,
+        throwsA(isA<TokenFieldAccessError>()),
+      );
+    });
+
+    test('leadingDistribution throws TokenFieldAccessError', () {
+      const ref = TextStyleRef(TextStyleToken('test'));
+      expect(
+        () => ref.leadingDistribution,
+        throwsA(isA<TokenFieldAccessError>()),
+      );
+    });
+
+    test('locale throws TokenFieldAccessError', () {
+      const ref = TextStyleRef(TextStyleToken('test'));
+      expect(
+        () => ref.locale,
+        throwsA(isA<TokenFieldAccessError>()),
+      );
+    });
+
+    test('foreground throws TokenFieldAccessError', () {
+      const ref = TextStyleRef(TextStyleToken('test'));
+      expect(
+        () => ref.foreground,
+        throwsA(isA<TokenFieldAccessError>()),
+      );
+    });
+
+    test('background throws TokenFieldAccessError', () {
+      const ref = TextStyleRef(TextStyleToken('test'));
+      expect(
+        () => ref.background,
+        throwsA(isA<TokenFieldAccessError>()),
+      );
+    });
+
+    test('shadows throws TokenFieldAccessError', () {
+      const ref = TextStyleRef(TextStyleToken('test'));
+      expect(
+        () => ref.shadows,
+        throwsA(isA<TokenFieldAccessError>()),
+      );
+    });
+
+    test('fontFeatures throws TokenFieldAccessError', () {
+      const ref = TextStyleRef(TextStyleToken('test'));
+      expect(
+        () => ref.fontFeatures,
+        throwsA(isA<TokenFieldAccessError>()),
+      );
+    });
+
+    test('fontVariations throws TokenFieldAccessError', () {
+      const ref = TextStyleRef(TextStyleToken('test'));
+      expect(
+        () => ref.fontVariations,
+        throwsA(isA<TokenFieldAccessError>()),
+      );
+    });
+
+    test('decoration throws TokenFieldAccessError', () {
+      const ref = TextStyleRef(TextStyleToken('test'));
+      expect(
+        () => ref.decoration,
+        throwsA(isA<TokenFieldAccessError>()),
+      );
+    });
+
+    test('decorationColor throws TokenFieldAccessError', () {
+      const ref = TextStyleRef(TextStyleToken('test'));
+      expect(
+        () => ref.decorationColor,
+        throwsA(isA<TokenFieldAccessError>()),
+      );
+    });
+
+    test('decorationStyle throws TokenFieldAccessError', () {
+      const ref = TextStyleRef(TextStyleToken('test'));
+      expect(
+        () => ref.decorationStyle,
+        throwsA(isA<TokenFieldAccessError>()),
+      );
+    });
+
+    test('decorationThickness throws TokenFieldAccessError', () {
+      const ref = TextStyleRef(TextStyleToken('test'));
+      expect(
+        () => ref.decorationThickness,
+        throwsA(isA<TokenFieldAccessError>()),
+      );
+    });
+
+    test('debugLabel throws TokenFieldAccessError', () {
+      const ref = TextStyleRef(TextStyleToken('test'));
+      expect(
+        () => ref.debugLabel,
+        throwsA(isA<TokenFieldAccessError>()),
+      );
+    });
   });
 }

@@ -4,12 +4,7 @@ import '../../attributes/color/color_dto.dart';
 import '../../attributes/color/color_util.dart';
 import '../../attributes/scalars/scalar_util.dart';
 import '../../core/attribute.dart';
-import '../../decorators/widget_decorators_util.dart';
 import 'image_attribute.dart';
-
-final image = ImageSpecUtility(selfBuilder);
-
-final $image = ImageSpecUtility(selfBuilder);
 
 class ImageSpecUtility<T extends SpecAttribute>
     extends SpecUtility<T, ImageSpecAttribute> {

@@ -8,66 +8,7 @@ import '../../attributes/scalars/scalar_util.dart';
 import '../../attributes/spacing/spacing_dto.dart';
 import '../../attributes/spacing/spacing_util.dart';
 import '../../core/attribute.dart';
-import '../../decorators/widget_decorators_util.dart';
 import 'box_attribute.dart';
-
-final box = BoxSpecUtility(selfBuilder);
-
-final $box = box;
-
-@Deprecated('use box.border instead')
-final border = box.border;
-
-@Deprecated('use box.borderDirectional instead')
-final borderDirectional = box.borderDirectional;
-
-@Deprecated('use box.borderRadius instead')
-final borderRadius = box.borderRadius;
-
-@Deprecated('use box.borderRadiusDirectional instead')
-final borderRadiusDirectional = box.borderRadiusDirectional;
-
-@Deprecated('use box.color instead')
-final backgroundColor = box.color;
-
-@Deprecated('use box.width instead')
-final width = box.width;
-
-@Deprecated('use box.height instead')
-final height = box.height;
-
-@Deprecated('use box.minHeight instead')
-final minHeight = box.minHeight;
-
-@Deprecated('use box.maxHeight instead')
-final maxHeight = box.maxHeight;
-
-@Deprecated('use box.minWidth instead')
-final minWidth = box.minWidth;
-
-@Deprecated('use box.maxWidth instead')
-final maxWidth = box.maxWidth;
-
-@Deprecated('use box.padding instead')
-final padding = box.padding;
-
-@Deprecated('use box.margin instead')
-final margin = box.margin;
-
-@Deprecated('use box.alignment instead')
-final alignment = box.alignment;
-
-@Deprecated('use box.clipBehavior instead')
-final clipBehavior = box.clipBehavior;
-
-@Deprecated('use box.elevation instead')
-final elevation = box.elevation;
-
-@Deprecated('use box.radialGradient instead')
-final radialGradient = box.radialGradient;
-
-@Deprecated('use box.linearGradient instead')
-final linearGradient = box.linearGradient;
 
 class BoxSpecUtility<T extends SpecAttribute>
     extends SpecUtility<T, BoxSpecAttribute> {

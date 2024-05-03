@@ -156,14 +156,14 @@ void main() {
       expect(a.styles.length, 2);
       expect(a.variants.length, 1);
 
-      expect(b.styles.length, 2);
-      expect(b.variants.length, 1);
+      expect(b.styles.length, 3);
+      expect(b.variants.length, 0);
 
       expect(c.styles.length, 3);
       expect(c.variants.length, 0);
 
-      expect(b, a);
-      expect(c == b, false);
+      expect(a, isNot(b));
+      expect(c, b);
     });
 
     test('with matching multivariant `or` ', () {
@@ -173,6 +173,8 @@ void main() {
       final firstStyle = style.applyVariant(variantAttr1);
       final secondStyle = style.applyVariant(variantAttr2);
       final thirdStyle = style.applyVariant(variantAttr1, variantAttr2);
+
+      $with.scale(1);
 
       expect(firstStyle.styles.length, 3);
       expect(firstStyle.variants.length, 0);
@@ -256,78 +258,82 @@ void main() {
     );
 
     void testPriorityOrder({
-      required ContextVariant x1,
-      required ContextVariant y2,
-      required ContextVariant z3,
-      required expectedValue,
+      required ContextVariant first,
+      required ContextVariant second,
+      required ContextVariant third,
+      required String expectedValue,
     }) {
+      final whichItemIsHigh = [variantLow, variantNormal, variantHigh]
+              .indexWhere((e) => e.priority == VariantPriority.high) -
+          1;
+      final reason = '$whichItemIsHigh should return $expectedValue';
       final style = applyContextToVisualAttributes(
         MockBuildContext(),
         Style(
           attr1,
           attr2,
-          x1(
-            const MockIntScalarAttribute(1),
+          first(
+            const MockStringScalarAttribute('first'),
           ),
-          y2(
-            const MockIntScalarAttribute(2),
+          second(
+            const MockStringScalarAttribute('second'),
           ),
-          z3(
-            const MockIntScalarAttribute(3),
+          third(
+            const MockStringScalarAttribute('third'),
           ),
         ),
       );
 
-      expect(style.length, 3);
+      expect(style.length, 3, reason: reason);
 
       final attribute =
-          style.firstWhere((element) => element is MockIntScalarAttribute)
-              as MockIntScalarAttribute;
+          style.firstWhere((element) => element is MockStringScalarAttribute)
+              as MockStringScalarAttribute;
 
-      expect(attribute.value, expectedValue);
+      expect(attribute.value, expectedValue, reason: reason);
     }
 
     test('testing all priorities', () {
       testPriorityOrder(
-        x1: variantLow,
-        y2: variantNormal,
-        z3: variantHigh,
-        expectedValue: 3,
+        first: variantLow,
+        second: variantNormal,
+        third: variantHigh,
+        expectedValue: 'third',
       );
 
       testPriorityOrder(
-        x1: variantLow,
-        y2: variantHigh,
-        z3: variantNormal,
-        expectedValue: 2,
+        first: variantLow,
+        second: variantHigh,
+        third: variantNormal,
+        expectedValue: 'second',
       );
 
       testPriorityOrder(
-        x1: variantNormal,
-        y2: variantHigh,
-        z3: variantLow,
-        expectedValue: 2,
+        first: variantNormal,
+        second: variantHigh,
+        third: variantLow,
+        expectedValue: 'second',
       );
 
       testPriorityOrder(
-        x1: variantNormal,
-        y2: variantLow,
-        z3: variantHigh,
-        expectedValue: 3,
+        first: variantNormal,
+        second: variantLow,
+        third: variantHigh,
+        expectedValue: 'third',
       );
 
       testPriorityOrder(
-        x1: variantHigh,
-        y2: variantLow,
-        z3: variantNormal,
-        expectedValue: 1,
+        first: variantHigh,
+        second: variantLow,
+        third: variantNormal,
+        expectedValue: 'first',
       );
 
       testPriorityOrder(
-        x1: variantHigh,
-        y2: variantNormal,
-        z3: variantLow,
-        expectedValue: 1,
+        first: variantHigh,
+        second: variantNormal,
+        third: variantLow,
+        expectedValue: 'first',
       );
     });
   });
@@ -379,23 +385,28 @@ void main() {
         const variantAttr3 = Variant('variantAttr3');
 
         final style = Style(
-          box.color.red(),
-          (variantAttr1 & variantAttr2 & variantAttr3)(icon.color.black()),
+          $box.color.red(),
+          (variantAttr1 & variantAttr2 & variantAttr3)($icon.color.black()),
         );
 
-        final a = style.applyVariants([variantAttr3]);
-        final b = style.applyVariants([variantAttr2]);
+        final a = style.applyVariants([variantAttr1]);
+        final b = style.applyVariants([variantAttr3]);
         final c = style.applyVariants([variantAttr1]);
         final d = style.applyVariants([variantAttr2, variantAttr3]);
         final e = style.applyVariants([variantAttr1, variantAttr3]);
         final f = style.applyVariants([variantAttr2, variantAttr1]);
 
-        expect(a, style);
-        expect(a, b);
+        final ab = a.applyVariants([variantAttr3]);
+        final ba = b.applyVariants([variantAttr1]);
+
+        expect(ab, ba);
         expect(a, c);
-        expect(a, d);
-        expect(a, e);
-        expect(a, f);
+        expect(a, isNot(d));
+        expect(a.styles, d.styles);
+        expect(a, isNot(e));
+        expect(a.styles, e.styles);
+        expect(a, isNot(f));
+        expect(a.styles, f.styles);
       },
     );
 
@@ -408,16 +419,16 @@ void main() {
         const extraVariant2 = Variant('extraVariant2');
 
         final style = Style(
-          box.color.red(),
-          (variantAttr1 | variantAttr2 | variantAttr3)(icon.color.black()),
+          $box.color.red(),
+          (variantAttr1 | variantAttr2 | variantAttr3)($icon.color.black()),
         );
 
         final a = style.applyVariants([extraVariant1]);
         final b = style.applyVariants([extraVariant2]);
         final c = style.applyVariants([extraVariant1, extraVariant2]);
 
-        expect(a, b, reason: 'a and b');
-        expect(a, c, reason: 'a and c');
+        expect(a, equals(b), reason: 'a and b');
+        expect(a, equals(c), reason: 'a and c');
       },
     );
   });
