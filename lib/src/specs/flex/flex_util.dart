@@ -3,13 +3,7 @@ import 'package:flutter/material.dart';
 import '../../attributes/scalars/scalar_util.dart';
 import '../../attributes/spacing/spacing_util.dart';
 import '../../core/attribute.dart';
-import '../../decorators/widget_decorators_util.dart';
 import 'flex_attribute.dart';
-
-@Deprecated(r'use $flex')
-final flex = FlexSpecUtility(selfBuilder);
-
-final $flex = FlexSpecUtility(selfBuilder);
 
 class FlexSpecUtility<T extends SpecAttribute>
     extends SpecUtility<T, FlexSpecAttribute> {

@@ -4,13 +4,7 @@ import '../../attributes/scalars/scalar_util.dart';
 import '../../attributes/shadow/shadow_dto.dart';
 import '../../attributes/shadow/shadow_util.dart';
 import '../../core/attribute.dart';
-import '../../decorators/widget_decorators_util.dart';
 import 'icon_attribute.dart';
-
-@Deprecated(r'use $icon')
-final icon = IconSpecUtility(selfBuilder);
-
-final $icon = IconSpecUtility(selfBuilder);
 
 class IconSpecUtility<T extends SpecAttribute>
     extends SpecUtility<T, IconSpecAttribute> {

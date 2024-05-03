@@ -8,10 +8,7 @@ import '../../attributes/scalars/scalar_util.dart';
 import '../../attributes/spacing/spacing_dto.dart';
 import '../../attributes/spacing/spacing_util.dart';
 import '../../core/attribute.dart';
-import '../../decorators/widget_decorators_util.dart';
 import 'box_attribute.dart';
-
-final $box = BoxSpecUtility(selfBuilder);
 
 class BoxSpecUtility<T extends SpecAttribute>
     extends SpecUtility<T, BoxSpecAttribute> {

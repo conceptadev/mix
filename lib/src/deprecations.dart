@@ -3,10 +3,7 @@
 import '../src/attributes/spacing/spacing_util.dart';
 import '../src/factory/mix_provider_data.dart';
 import '../src/specs/flex/flex_util.dart';
-import '../src/specs/icon/icon_util.dart';
 import '../src/specs/icon/icon_widget.dart';
-import '../src/specs/stack/stack_util.dart';
-import '../src/specs/text/text_util.dart';
 import '../src/specs/text/text_widget.dart';
 import '../src/variants/variant.dart';
 import 'core/attribute.dart';
@@ -14,9 +11,8 @@ import 'decorators/clip_widget_decorator.dart';
 import 'decorators/widget_decorators_util.dart';
 import 'factory/style_mix.dart';
 import 'helpers/helper_util.dart';
-import 'specs/box/box_util.dart';
 import 'specs/box/box_widget.dart';
-import 'specs/image/image_util.dart';
+import 'specs/spec_util.dart';
 import 'utils/context_variant_util/on_util.dart';
 
 const kShortAliasDeprecation =
@@ -238,6 +234,18 @@ final overflow = $text.overflow;
 final bold = $text.style.bold;
 @Deprecated(r'Use $text.overflow instead')
 final textOverflow = $text.overflow;
+
+@Deprecated(r'use $icon')
+final icon = $icon;
+
+@Deprecated(r'use $image')
+final image = $image;
+
+@Deprecated(r'use $stack instead')
+final stack = $stack;
+
+@Deprecated(r'use $text instead')
+final text = $text;
 
 @Deprecated(r'Use $icon.size instead')
 final iconSize = $icon.size;
@@ -617,6 +625,9 @@ final squared = $box.borderRadius.zero;
 // flexDirection
 @Deprecated(r'Use $flex.direction; instead')
 final flexDirection = $flex.direction;
+
+@Deprecated(r'use $flex')
+final flex = FlexSpecUtility(selfBuilder);
 
 // verticalDirection
 @Deprecated('Use verticalDirection instead')

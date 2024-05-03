@@ -2,13 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../attributes/scalars/scalar_util.dart';
 import '../../core/attribute.dart';
-import '../../decorators/widget_decorators_util.dart';
 import 'stack_attribute.dart';
-
-@Deprecated(r'use $stack instead')
-final stack = StackSpecUtility(selfBuilder);
-
-final $stack = StackSpecUtility(selfBuilder);
 
 class StackSpecUtility<T extends SpecAttribute>
     extends SpecUtility<T, StackSpecAttribute> {

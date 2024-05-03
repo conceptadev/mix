@@ -8,13 +8,7 @@ import '../../attributes/text_style/text_style_dto.dart';
 import '../../attributes/text_style/text_style_util.dart';
 import '../../core/attribute.dart';
 import '../../core/directive.dart';
-import '../../decorators/widget_decorators_util.dart';
 import 'text_attribute.dart';
-
-@Deprecated(r'use $text instead')
-final text = TextSpecUtility(selfBuilder);
-
-final $text = TextSpecUtility(selfBuilder);
 
 class TextSpecUtility<T extends SpecAttribute>
     extends SpecUtility<T, TextSpecAttribute> {

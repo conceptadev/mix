@@ -174,6 +174,8 @@ void main() {
       final secondStyle = style.applyVariant(variantAttr2);
       final thirdStyle = style.applyVariant(variantAttr1, variantAttr2);
 
+      $with.scale(1);
+
       expect(firstStyle.styles.length, 3);
       expect(firstStyle.variants.length, 0);
 
@@ -389,24 +391,22 @@ void main() {
 
         final a = style.applyVariants([variantAttr1]);
         final b = style.applyVariants([variantAttr3]);
-        // final c = style.applyVariants([variantAttr1]);
-        // final d = style.applyVariants([variantAttr2, variantAttr3]);
-        // final e = style.applyVariants([variantAttr1, variantAttr3]);
-        // final f = style.applyVariants([variantAttr2, variantAttr1]);
+        final c = style.applyVariants([variantAttr1]);
+        final d = style.applyVariants([variantAttr2, variantAttr3]);
+        final e = style.applyVariants([variantAttr1, variantAttr3]);
+        final f = style.applyVariants([variantAttr2, variantAttr1]);
 
         final ab = a.applyVariants([variantAttr3]);
         final ba = b.applyVariants([variantAttr1]);
 
-        print('\n\n');
-
-        print(ab.getDiff(ba));
-
-        // expect(a, style);
         expect(ab, ba);
-        // expect(a, c);
-        // expect(a, d);
-        // expect(a, e);
-        // expect(a, f);
+        expect(a, c);
+        expect(a, isNot(d));
+        expect(a.styles, d.styles);
+        expect(a, isNot(e));
+        expect(a.styles, e.styles);
+        expect(a, isNot(f));
+        expect(a.styles, f.styles);
       },
     );
 

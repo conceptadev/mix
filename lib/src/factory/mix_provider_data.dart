@@ -141,7 +141,7 @@ List<StyleAttribute> applyContextToVisualAttributes(
 Style _applyVariants(
   BuildContext context,
   Style style,
-  StyleVariantAttribute variantAttribute,
+  VariantAttribute variantAttribute,
 ) {
   return variantAttribute.variant.build(context)
       ? style.merge(variantAttribute.value)

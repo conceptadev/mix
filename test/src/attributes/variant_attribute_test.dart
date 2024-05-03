@@ -5,7 +5,7 @@ import 'package:mix/mix.dart';
 import '../../helpers/testing_utils.dart';
 
 void main() {
-  // VariantAttribute
+  // StyleVariantAttribute
   group('VariantAttribute', () {
     const variant = Variant('custom_variant');
     final style = Style(const MockIntScalarAttribute(8));
@@ -38,8 +38,8 @@ void main() {
     });
   });
 
-  // ContextVariantAttribute
-  group('ContextVariantAttribute', () {
+  // StyleVariantAttribute
+  group('StyleVariantAttribute', () {
     final variant = MockContextVariantCondition(
       true,
       priority: VariantPriority.high,
@@ -47,7 +47,7 @@ void main() {
 
     final style = Style(const MockIntScalarAttribute(8));
     test('Constructor assigns correct properties', () {
-      final variantAttribute = ContextVariantAttribute(variant, style);
+      final variantAttribute = VariantAttribute(variant, style);
 
       expect(variantAttribute.variant, variant);
       expect(variantAttribute.value, style);
@@ -55,28 +55,28 @@ void main() {
 
     // mergeKey
     test('mergeKey returns correct instance', () {
-      final variantAttribute = ContextVariantAttribute(variant, style);
+      final variantAttribute = VariantAttribute(variant, style);
 
       expect(variantAttribute.type, ObjectKey(variant));
     });
 
     // merge()
     test('merge() returns correct instance', () {
-      final variantAttribute = ContextVariantAttribute(variant, style);
+      final variantAttribute = VariantAttribute(variant, style);
 
       final otherStyle = Style(const MockIntScalarAttribute(10));
-      final otherAttribute = ContextVariantAttribute(variant, otherStyle);
+      final otherAttribute = VariantAttribute(variant, otherStyle);
 
       final result = variantAttribute.merge(otherAttribute);
 
-      expect(result, isA<ContextVariantAttribute>());
+      expect(result, isA<VariantAttribute>());
       expect(result.variant, variant);
       expect(result.value, style.merge(otherStyle));
     });
 
     // when()
     test('when() returns correct instance', () {
-      final variantAttribute = ContextVariantAttribute(variant, style);
+      final variantAttribute = VariantAttribute(variant, style);
 
       final result = variantAttribute.variant.build(MockBuildContext());
 
@@ -113,9 +113,9 @@ void main() {
     final style = Style(const MockIntScalarAttribute(8));
 
     test('remove() returns correct instance when removing a variant', () {
-      final multiVariantAttribute = MultiVariantAttribute(multiVariant, style);
+      final multiVariantAttribute = VariantAttribute(multiVariant, style);
 
-      final result = multiVariantAttribute.remaining([variant1]);
+      final result = multiVariantAttribute.removeVariants([variant1]);
 
       expect(result, isA<VariantAttribute>());
       expect(result?.variant, variant2);
@@ -126,8 +126,8 @@ void main() {
       final multiVariant = MultiVariant.or(const [variant1, variant2]);
       final multiVariantAttribute = multiVariant(apply(style));
 
-      final attribute = multiVariantAttribute.remaining([variant1, variant2])
-          as MultiVariantAttribute?;
+      final attribute =
+          multiVariantAttribute.removeVariants([variant1, variant2]);
 
       expect(
         attribute,
@@ -136,14 +136,14 @@ void main() {
     });
 
     test('merge() returns correct instance', () {
-      final multiVariantAttribute = MultiVariantAttribute(multiVariant, style);
+      final multiVariantAttribute = VariantAttribute(multiVariant, style);
 
       final otherStyle = Style(const MockIntScalarAttribute(10));
-      final otherAttribute = MultiVariantAttribute(multiVariant, otherStyle);
+      final otherAttribute = VariantAttribute(multiVariant, otherStyle);
 
       final result = multiVariantAttribute.merge(otherAttribute);
 
-      expect(result, isA<MultiVariantAttribute>());
+      expect(result, isA<VariantAttribute>());
       expect(result.variant, multiVariant);
       expect(result.value, style.merge(otherStyle));
     });

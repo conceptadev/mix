@@ -88,7 +88,7 @@ abstract class ContextVariant extends StyleVariant {
 
   const ContextVariant({this.key, this.priority = VariantPriority.normal});
 
-  ContextVariantAttribute call([
+  VariantAttribute call([
     Attribute? p1,
     Attribute? p2,
     Attribute? p3,
@@ -115,7 +115,7 @@ abstract class ContextVariant extends StyleVariant {
       p11, p12, p13, p14, p15, p16, p17, p18, p19, p20,
     ].whereType<Attribute>();
 
-    return ContextVariantAttribute(this, Style.create(params));
+    return VariantAttribute(this, Style.create(params));
   }
 
   @override
@@ -196,7 +196,7 @@ class MultiVariant extends StyleVariant {
         : MultiVariant(remainingVariants, type: operatorType);
   }
 
-  MultiVariantAttribute call([
+  VariantAttribute call([
     Attribute? p1,
     Attribute? p2,
     Attribute? p3,
@@ -223,7 +223,7 @@ class MultiVariant extends StyleVariant {
       p11, p12, p13, p14, p15, p16, p17, p18, p19, p20,
     ].whereType<Attribute>();
 
-    return MultiVariantAttribute(this, Style.create(params));
+    return VariantAttribute(this, Style.create(params));
   }
 
   @override
