@@ -1,26 +1,3 @@
-// @immutable
-// class VariantAttribute<T extends Variant> extends Attribute
-//     with Mergeable<VariantAttribute<T>> {
-//   final T variant;
-//   final Style _style;
-
-//   const VariantAttribute(this.variant, Style style) : _style = style;
-
-//   Key get mergeKey => ObjectKey(variant);
-
-//   Style get value => _style;
-
-//   @override
-//   VariantAttribute<T> merge(covariant VariantAttribute<T> other) {
-//     if (other.variant != variant) throw throwArgumentError(other);
-
-//     return VariantAttribute(variant, _style.merge(other._style));
-//   }
-
-//   @override
-//   get props => [variant, value];
-// }
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
@@ -138,26 +115,24 @@ void main() {
     test('remove() returns correct instance when removing a variant', () {
       final multiVariantAttribute = MultiVariantAttribute(multiVariant, style);
 
-      final result = multiVariantAttribute.remove([variant1]);
+      final result = multiVariantAttribute.remaining([variant1]);
 
       expect(result, isA<VariantAttribute>());
-      expect(result.variant, variant2);
-      expect(result.value, style);
+      expect(result?.variant, variant2);
+      expect(result?.value, style);
     });
 
     test('remove() returns correct instance when removing all variants', () {
-      final multiVariant = MultiVariant(const [variant1, variant2],
-          type: MultiVariantOperator.or);
+      final multiVariant = MultiVariant.or(const [variant1, variant2]);
       final multiVariantAttribute = multiVariant(apply(style));
 
-      final attribute = multiVariantAttribute.remove([variant1, variant2])
-          as MultiVariantAttribute;
+      final attribute = multiVariantAttribute.remaining([variant1, variant2])
+          as MultiVariantAttribute?;
 
       expect(
-        attribute.variant.variants,
-        isEmpty,
+        attribute,
+        isNull,
       );
-      expect(attribute.variant, isA<MultiVariant>());
     });
 
     test('merge() returns correct instance', () {

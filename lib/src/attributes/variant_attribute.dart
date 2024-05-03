@@ -5,7 +5,7 @@ import '../factory/style_mix.dart';
 import '../variants/variant.dart';
 
 @immutable
-abstract class StyleVariantAttribute<V extends StyleVariant> extends Attribute
+class StyleVariantAttribute<V extends StyleVariant> extends Attribute
     with Mergeable<StyleVariantAttribute<V>> {
   final V variant;
   final Style _style;
@@ -13,8 +13,17 @@ abstract class StyleVariantAttribute<V extends StyleVariant> extends Attribute
 
   Style get value => _style;
 
+  VariantPriority get priority => variant.priority;
+
   bool matches(Iterable<StyleVariant> otherVariants) =>
       variant.matches(otherVariants);
+
+  @override
+  StyleVariantAttribute<V> merge(covariant StyleVariantAttribute<V> other) {
+    if (other.variant != variant) throw throwArgumentError(other);
+
+    return StyleVariantAttribute(variant, _style.merge(other._style));
+  }
 
   @override
   get props => [variant, _style];
@@ -60,8 +69,11 @@ class MultiVariantAttribute extends StyleVariantAttribute<MultiVariant> {
   const MultiVariantAttribute(super.variant, super.style);
 
   // Remove all variants in given a list
-  StyleVariantAttribute remove(Iterable<StyleVariant> variantsToRemove) {
+  StyleVariantAttribute? remaining(Iterable<StyleVariant> variantsToRemove) {
     final variant = this.variant.remove(variantsToRemove);
+    if (variant == null) {
+      return null;
+    }
     if (variant is MultiVariant) {
       return MultiVariantAttribute(variant, _style);
     } else if (variant is ContextVariant) {

@@ -143,8 +143,8 @@ mixin Comparable {
 
   // Returns a list of properties that differ between this object and another.
   @visibleForTesting
-  List<Object?> getDiff(Comparable other) {
-    final diff = <Object?>[];
+  Map<String, String> getDiff(Comparable other) {
+    final diff = <String, String>{};
 
     // Return if there are no differences.
     if (this == other) return diff;
@@ -157,7 +157,12 @@ mixin Comparable {
       final unit2 = otherProps[i];
 
       final differences = compareObjects(unit1, unit2);
-      diff.addAll(differences);
+      if (differences.isNotEmpty) {
+        final propName = unit1?.runtimeType.toString() ??
+            unit2?.runtimeType.toString() ??
+            'N/A';
+        diff[propName] = differences.toString();
+      }
     }
 
     return diff;
@@ -170,23 +175,24 @@ mixin Comparable {
   }
 }
 
-List<Object?> compareObjects(Object? obj1, Object? obj2) {
-  final List<Object?> differences = [];
+Map<String, String?> compareObjects(Object? obj1, Object? obj2) {
+  final Map<String, String?> differences = {};
 
   if (obj1 == obj2) return differences;
 
   if (obj1 == null || obj2 == null) {
-    differences.add('null');
+    differences[obj1.runtimeType.toString()] = obj2.runtimeType.toString();
   } else if (obj1 is Comparable && obj2 is Comparable) {
     final value = obj1.getDiff(obj2);
     if (value.isNotEmpty) {
-      differences.addAll(value);
+      differences[obj1.runtimeType.toString()] = value.toString();
     }
   } else if (obj1 is Iterable && obj2 is Iterable) {
     if (!_equality.equals(obj1, obj2)) {
       // compare each item in the iterable and add it
       for (int i = 0; i < obj1.length; i++) {
-        final value = compareObjects(obj1.elementAt(i), obj2.elementAt(i));
+        final value =
+            compareObjects(obj1.elementAtOrNull(i), obj2.elementAtOrNull(i));
         if (value.isNotEmpty) {
           differences.addAll(value);
         }
@@ -203,9 +209,9 @@ List<Object?> compareObjects(Object? obj1, Object? obj2) {
       }
     }
   } else if (obj1.runtimeType != obj2.runtimeType) {
-    differences.add(obj1);
+    differences[obj1.runtimeType.toString()] = obj2.runtimeType.toString();
   } else if (obj1 != obj2) {
-    differences.add(obj1);
+    differences[obj1.toString()] = obj2.toString();
   }
 
   return differences;

@@ -16,6 +16,12 @@ extension IterableExt<T> on Iterable<T> {
     return null;
   }
 
+  T? elementAtOrNull(int index) {
+    if (index < 0 || index >= length) return null;
+
+    return elementAt(index);
+  }
+
   Iterable<T> sorted([Comparator<T>? compare]) {
     List<T> newList = List.of(this);
     newList.sort(compare);

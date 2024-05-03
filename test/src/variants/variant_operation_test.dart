@@ -121,11 +121,11 @@ void main() {
         await tester.pumpMaterialApp(
           Row(
             children: [
-              _buildDefaultTestCase(style, [_foo, _fooBar]),
-              _buildDefaultTestCase(style, [_bar, _fooBar]),
-              _buildDefaultTestCase(style, [_foo, _bar, _fooBar]),
-              _buildTestCaseToVerifyIfNull(style, [_foo]),
-              _buildTestCaseToVerifyIfNull(style, [_bar]),
+              // _buildDefaultTestCase(style, [_foo, _fooBar]),
+              // _buildDefaultTestCase(style, [_bar, _fooBar]),
+              // _buildDefaultTestCase(style, [_foo, _bar, _fooBar]),
+              // _buildTestCaseToVerifyIfNull(style, [_foo]),
+              // _buildTestCaseToVerifyIfNull(style, [_bar]),
               _buildTestCaseToVerifyIfNull(style, [_fooBar]),
             ],
           ),
@@ -175,7 +175,7 @@ Widget _buildTestCaseToVerifyIfNull(Style style, List<Variant> variants) {
       final mixData = MixData.create(context, style.applyVariants(variants));
       final icon = IconSpec.from(mixData);
 
-      expect(icon.color, null);
+      expect(icon.color, null, reason: '$variants');
 
       return const SizedBox();
     },

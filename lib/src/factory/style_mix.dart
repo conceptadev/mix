@@ -8,13 +8,13 @@ import '../attributes/variant_attribute.dart';
 import '../core/attribute.dart';
 import '../core/attributes_map.dart';
 import '../helpers/compare_mixin.dart';
+import '../helpers/helper_util.dart';
 import '../specs/box/box_attribute.dart';
 import '../specs/flex/flex_attribute.dart';
 import '../specs/icon/icon_attribute.dart';
 import '../specs/image/image_attribute.dart';
 import '../specs/stack/stack_attribute.dart';
 import '../specs/text/text_attribute.dart';
-import '../utils/helper_util.dart';
 import '../variants/variant.dart';
 import 'mix_provider_data.dart';
 
@@ -172,10 +172,6 @@ class Style with Comparable {
         throw UnsupportedError('Unsupported attribute type: $attribute');
       }
     }
-
-    applyVariants.sort(
-      (a, b) => a.variant.priority.value.compareTo(b.variant.priority.value),
-    );
 
     return Style._(
       styles: AttributeMap(styleList),
@@ -341,11 +337,18 @@ class Style with Comparable {
     /// Loop over all VariantAttributes in variants only once instead of a nested loop,
     /// checking if each one matches with the selected variants.
     /// If it does, add it to the matchedVariants, else add it to remainingVariants.
-    for (final attr in variants.values) {
-      if (attr.matches(selectedVariants)) {
-        matchedVariants.add(attr);
+    for (final variant in variants.values) {
+      if (variant.matches(selectedVariants)) {
+        matchedVariants.add(variant);
       } else {
-        remainingVariants.add(attr);
+        if (variant is MultiVariantAttribute) {
+          final remainingVariant = variant.remaining(selectedVariants);
+          if (remainingVariant != null) {
+            remainingVariants.add(remainingVariant);
+          }
+        } else {
+          remainingVariants.add(variant);
+        }
       }
     }
 
