@@ -15,11 +15,7 @@ import 'sized_box_widget_decorator.dart';
 import 'transform_widget_decorator.dart';
 import 'visibility_widget_decorator.dart';
 
-T selfBuilder<T extends StyleAttribute>(T value) => value;
-
-final $with = WidgetDecoratorUtilility(selfBuilder);
-
-class WidgetDecoratorUtilility<T extends StyleAttribute>
+class WithDecoratorUtility<T extends StyleAttribute>
     extends MixUtility<T, Decorator> {
   late final intrinsicWidth = IntrinsicWidthWidgetUtility(builder);
   late final intrinsicHeight = IntrinsicHeightWidgetUtility(builder);
@@ -48,5 +44,5 @@ class WidgetDecoratorUtilility<T extends StyleAttribute>
   });
 
   late final _flexible = FlexibleDecoratorUtility(builder);
-  WidgetDecoratorUtilility(super.builder);
+  WithDecoratorUtility(super.builder);
 }

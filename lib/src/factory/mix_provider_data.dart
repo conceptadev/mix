@@ -177,7 +177,7 @@ Iterable<Attribute> _applyStyleBuilder(
   List<Attribute> attributes,
 ) {
   return attributes.map((attr) {
-    if (attr is StyleAttributeBuilder) {
+    if (attr is ContextVariantBuilder) {
       return attr.builder(context);
     }
 

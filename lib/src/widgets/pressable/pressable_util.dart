@@ -9,7 +9,7 @@ import 'pressable_state.dart';
 /// Global context variants for handling common widget states and gestures.
 mixin ContextVariantEventMixin<T extends ContextVariant> on ContextVariant {
   ContectVariantEventBuilder<T> onEvent(Style Function(bool) fn) {
-    return ContectVariantEventBuilder(fn, variant: this as T, key: key);
+    return ContectVariantEventBuilder(fn, variant: this as T);
   }
 }
 
@@ -73,8 +73,8 @@ class OnFocusVariant extends ContextVariant
 }
 
 @immutable
-class OnMouseHoverBuilder extends StyleAttributeBuilder<PointerPosition?> {
-  const OnMouseHoverBuilder(super.fn, {super.key});
+class OnMouseHoverBuilder extends ContextVariantBuilder<PointerPosition?> {
+  const OnMouseHoverBuilder(super.fn);
 
   @override
   Attribute builder(BuildContext context) {
@@ -82,4 +82,7 @@ class OnMouseHoverBuilder extends StyleAttributeBuilder<PointerPosition?> {
       fn(PressableState.pointerPositionOf(context)),
     );
   }
+
+  @override
+  get props => [];
 }

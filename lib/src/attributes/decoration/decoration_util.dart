@@ -26,7 +26,7 @@ class BoxDecorationUtility<T extends StyleAttribute>
   late final color = ColorUtility((v) => only(color: v));
   late final border = BorderUtility((v) => only(border: v));
 
-  late final borderRadius = BorderRadiusGeometryUtility(
+  late final borderRadius = BorderRadiusUtility(
     (v) => only(borderRadius: v),
   );
 

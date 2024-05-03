@@ -2,18 +2,16 @@
 
 import '../src/attributes/spacing/spacing_util.dart';
 import '../src/factory/mix_provider_data.dart';
-import '../src/specs/flex/flex_util.dart';
 import '../src/specs/icon/icon_widget.dart';
 import '../src/specs/text/text_widget.dart';
 import '../src/variants/variant.dart';
+import 'attributes/scalars/scalar_util.dart';
 import 'core/attribute.dart';
 import 'decorators/clip_widget_decorator.dart';
-import 'decorators/widget_decorators_util.dart';
 import 'factory/style_mix.dart';
 import 'helpers/helper_util.dart';
 import 'specs/box/box_widget.dart';
 import 'specs/spec_util.dart';
-import 'utils/context_variant_util/on_util.dart';
 
 const kShortAliasDeprecation =
     'Short aliases will be deprecated, you can create your own. Example: final p = padding;';
@@ -565,13 +563,15 @@ final textAlign = $text.textAlign;
 @Deprecated(r'Use $text.style.shadow instead')
 final shadow = $text.style.shadow;
 
+const _selfBuilder = MixUtility.selfBuilder;
+
 @Deprecated('used temporarily for migration')
 class ClipDecoratorUtility {
-  final ClipPathUtility path = const ClipPathUtility(selfBuilder);
-  final ClipOvalUtility oval = const ClipOvalUtility(selfBuilder);
-  final ClipRectUtility rect = const ClipRectUtility(selfBuilder);
-  final ClipRRectUtility rrect = const ClipRRectUtility(selfBuilder);
-  final ClipTriangleUtility triangle = const ClipTriangleUtility(selfBuilder);
+  final ClipPathUtility path = const ClipPathUtility(_selfBuilder);
+  final ClipOvalUtility oval = const ClipOvalUtility(_selfBuilder);
+  final ClipRectUtility rect = const ClipRectUtility(_selfBuilder);
+  final ClipRRectUtility rrect = const ClipRRectUtility(_selfBuilder);
+  final ClipTriangleUtility triangle = const ClipTriangleUtility(_selfBuilder);
 
   const ClipDecoratorUtility();
 }
@@ -627,7 +627,7 @@ final squared = $box.borderRadius.zero;
 final flexDirection = $flex.direction;
 
 @Deprecated(r'use $flex')
-final flex = FlexSpecUtility(selfBuilder);
+final flex = $flex;
 
 // verticalDirection
 @Deprecated('Use verticalDirection instead')

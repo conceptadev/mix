@@ -115,29 +115,33 @@ abstract class Spec<T extends Spec<T>> with Comparable {
 }
 
 @immutable
-abstract class StyleAttributeBuilder<Param> extends StyleAttribute {
+abstract class ContextVariantBuilder<Param> extends StyleAttribute {
   final Key? key;
   final Style Function(Param param) fn;
-  const StyleAttributeBuilder(this.fn, {required this.key});
+  const ContextVariantBuilder(this.fn, {this.key});
 
   Attribute? builder(BuildContext context);
 
-  @override
-  Object get type => '${runtimeType}_${key?.toString() ?? 'default'}';
+  Style Function(Param param) mergeFn(Style Function(Param param) other) {
+    return (Param param) => fn(param).merge(other(param));
+  }
 
   @override
-  List<Object?> get props => [key];
+  Object get type => '$runtimeType${key?.toString() ?? ''}';
+
+  @override
+  get props => [key];
 }
 
 @immutable
 class ContectVariantEventBuilder<T extends ContextVariant>
-    extends StyleAttributeBuilder<bool> {
+    extends ContextVariantBuilder<bool> {
   final T variant;
 
   const ContectVariantEventBuilder(
     super.fn, {
     required this.variant,
-    required super.key,
+    super.key,
   });
 
   @override
@@ -145,5 +149,5 @@ class ContectVariantEventBuilder<T extends ContextVariant>
       NestedStyleAttribute(fn(variant.build(context)));
 
   @override
-  List<Object?> get props => [key, variant];
+  List<Object?> get props => [variant, key];
 }

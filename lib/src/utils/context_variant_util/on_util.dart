@@ -8,8 +8,6 @@ import 'on_directionality_util.dart';
 import 'on_not_util.dart';
 import 'on_orientation_util.dart';
 
-final $on = OnContextVariantUtility();
-
 class OnContextVariantUtility {
   late final small = OnBreakpointTokenVariant(BreakpointToken.small);
 

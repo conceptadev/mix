@@ -8,46 +8,16 @@ import 'border_radius_dto.dart';
 /// Utility class for creating and manipulating attributes with [BorderRadiusGeometry]
 ///
 /// Allows setting of radius for a border. This class provides a convenient way to configure and apply border radius to [T]
-///
 /// Accepts a builder function that returns [T] and takes a [BorderRadiusGeometryDto] as a parameter.
-///
-/// Example usage:
-///
-/// ```dart
-/// final attribute = borderRadius(10.0);
-/// ```
-///
-/// See also:
-/// * [BorderRadiusGeometryDto], the data transfer object for [BorderRadiusGeometry]
-/// * [MixUtility], the utility class that [BorderRadiusGeometryUtility] extends
-/// * [RadiusUtility], the utility class for manipulating [Radius]
-/// * [RadiusAttribute], the attribute class for [Radius]
-/// * [BorderRadiusDirectionalUtility], the utility class for manipulating [BorderRadiusDirectional]
-class BorderRadiusGeometryUtility<T extends StyleAttribute>
+class BorderRadiusUtility<T extends StyleAttribute>
     extends DtoUtility<T, BorderRadiusGeometryDto, BorderRadiusGeometry> {
-  const BorderRadiusGeometryUtility(super.builder)
+  const BorderRadiusUtility(super.builder)
       : super(valueToDto: BorderRadiusGeometryDto.from);
-
-  BorderRadiusDirectionalUtility<T> get _directional {
-    return BorderRadiusDirectionalUtility(builder);
-  }
 
   /// Returns a [RadiusUtility] to manipulate [Radius] for bottomLeft corner.
   RadiusUtility<T> get bottomLeft {
     return RadiusUtility((radius) => only(bottomLeft: radius));
   }
-
-  /// Returns a [RadiusUtility] to manipulate [Radius] for topStart corner.
-  RadiusUtility<T> get topStart => _directional.topStart;
-
-  /// Returns a [RadiusUtility] to manipulate [Radius] for topEnd corner.
-  RadiusUtility<T> get topEnd => _directional.topEnd;
-
-  /// Returns a [RadiusUtility] to manipulate [Radius] for bottomStart corner.
-  RadiusUtility<T> get bottomStart => _directional.bottomStart;
-
-  /// Returns a [RadiusUtility] to manipulate [Radius] for bottomEnd corner.
-  RadiusUtility<T> get bottomEnd => _directional.bottomEnd;
 
   /// Returns a [RadiusUtility] to manipulate [Radius] for bottomRight corner.
   RadiusUtility<T> get bottomRight {

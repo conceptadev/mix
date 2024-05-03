@@ -14,10 +14,10 @@ The `Style` class is a container for all the stylizations you want to apply to a
 ```dart
 Box(
     style: Style(
-        box.height(50),
-        box.width(50),
-        box.color(Colors.red),
-        box.borderRadius(10),
+        $box.height(50),
+        $box.width(50),
+        $box.color(Colors.red),
+        $box.borderRadius(10),
     ),
 );
 ```
@@ -36,14 +36,14 @@ PressableBox(
     child: Box(
         style: AnimatedStyle(
             Style(
-                box.height(50),
-                box.width(50),
-                box.color(Colors.blue),
-                box.borderRadius(10),
+                $box.height(50),
+                $box.width(50),
+                $box.color(Colors.blue),
+                $box.borderRadius(10),
                 onHover(
-                    box.height(100),
-                    box.width(100),
-                    box.color(Colors.red),
+                    $box.height(100),
+                    $box.width(100),
+                    $box.color(Colors.red),
                 ),
             ),
             duration: Durations.long1,
@@ -68,10 +68,10 @@ PressableBox(
     },
     child: Box(
         style: Style(
-            box.height(100),
-            box.width(100),
-            box.color(Colors.red),
-            box.borderRadius(20),
+            $box.height(100),
+            $box.width(100),
+            $box.color(Colors.red),
+            $box.borderRadius(20),
         ).animate(
             duration: Durations.long1,
             curve: Curves.linear,
@@ -88,7 +88,7 @@ An important thing to keep in mind is that animations will only work if you defi
 
 ### Don't
 
-In the example below, the animation will not work because we didn't define a start point for the `box.color` attribute.
+In the example below, the animation will not work because we didn't define a start point for the `$box.color` attribute.
 
 ```dart
 PressableBox(
@@ -98,10 +98,10 @@ PressableBox(
     child: Box(
         style: AnimatedStyle(
             Style(
-                box.height(50),
-                box.width(50),
+                $box.height(50),
+                $box.width(50),
                 onHover(
-                    box.color(Colors.blue),
+                    $box.color(Colors.blue),
                 ),
             ),
             duration: Durations.long1,
@@ -113,7 +113,7 @@ PressableBox(
 
 ### Do
 
-Unlike the previous example, the animation will work because we defined a start point for the `box.color` attribute.
+Unlike the previous example, the animation will work because we defined a start point for the `$box.color` attribute.
 
 ```dart
 PressableBox(
@@ -123,11 +123,11 @@ PressableBox(
     child: Box(
         style: AnimatedStyle(
             Style(
-                box.height(50),
-                box.width(50),
-                box.color(Colors.red),
+                $box.height(50),
+                $box.width(50),
+                $box.color(Colors.red),
                 onHover(
-                    box.color(Colors.blue),
+                    $box.color(Colors.blue),
                 ),
             ),
             duration: Durations.long1,

@@ -27,7 +27,7 @@ class RoundedRectanbleBorderUtility<T extends StyleAttribute>
     extends DtoUtility<T, RoundedRectangleBorderDto, RoundedRectangleBorder> {
   late final side = BorderSideUtility((v) => only(side: v));
 
-  late final borderRadius = BorderRadiusGeometryUtility(
+  late final borderRadius = BorderRadiusUtility(
     (v) => only(borderRadius: v),
   );
 
@@ -74,7 +74,7 @@ class BeveledRectangleBorderUtility<T extends StyleAttribute>
     extends DtoUtility<T, BeveledRectangleBorderDto, BeveledRectangleBorder> {
   late final side = BorderSideUtility((v) => only(side: v));
 
-  late final borderRadius = BorderRadiusGeometryUtility(
+  late final borderRadius = BorderRadiusUtility(
     (v) => only(borderRadius: v),
   );
 
@@ -118,7 +118,7 @@ class ContinuousRectangleBorderUtility<T extends StyleAttribute>
         ContinuousRectangleBorder> {
   late final side = BorderSideUtility((v) => only(side: v));
 
-  late final borderRadius = BorderRadiusGeometryUtility(
+  late final borderRadius = BorderRadiusUtility(
     (v) => only(borderRadius: v),
   );
 
