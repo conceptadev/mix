@@ -31,7 +31,6 @@ void main() {
     );
 
     final diff = firstStyle.getDiff(secondStyle);
-    print(diff);
 
     expect(diff.length, 1);
   });

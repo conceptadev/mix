@@ -95,9 +95,6 @@ void main() {
     final elapsedStyledContainerTime = styledContainerTime / iterationCount;
     final elapsedContainerTime = containerTime / iterationCount;
 
-    // print('StyledContainer: $elapsedStyledContainerTime ms');
-    // print('Container: $elapsedContainerTime ms');
-
     expect(
       elapsedStyledContainerTime,
       lessThan(elapsedContainerTime + 0.04),
