@@ -13,20 +13,20 @@ class StyledContainerExample extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final paddingAttr = box.padding(10);
-    final marginAttr = box.margin(15);
-    final alignmentAttr = box.alignment.center();
-    final clipAttr = box.clipBehavior.hardEdge();
+    final paddingAttr = $box.padding(10);
+    final marginAttr = $box.margin(15);
+    final alignmentAttr = $box.alignment.center();
+    final clipAttr = $box.clipBehavior.hardEdge();
 
-    final borderAttribute = box.border.all(
+    final borderAttribute = $box.border.all(
       color: Colors.red,
       style: BorderStyle.solid,
       width: 1,
     );
 
-    final radiusAttribute = box.borderRadius(10);
+    final radiusAttribute = $box.borderRadius(10);
 
-    final colorAttribute = box.color(Colors.red);
+    final colorAttribute = $box.color(Colors.red);
 
     return Box(
       style: Style(
@@ -112,17 +112,17 @@ void main() {
     Style style = Style();
     for (int i = 0; i < iterations; i++) {
       style = Style.create([
-        box.padding(10),
-        box.margin(15),
-        box.alignment.center(),
-        box.clipBehavior.hardEdge(),
-        box.border.all(
+        $box.padding(10),
+        $box.margin(15),
+        $box.alignment.center(),
+        $box.clipBehavior.hardEdge(),
+        $box.border.all(
           color: Colors.red,
           style: BorderStyle.solid,
           width: 1,
         ),
-        box.borderRadius(10),
-        box.color(Colors.red),
+        $box.borderRadius(10),
+        $box.color(Colors.red),
       ]);
     }
     stopwatch.stop();
@@ -141,17 +141,17 @@ void main() {
       mixData = MixData.create(
         MockBuildContext(),
         Style(
-          box.padding(10),
-          box.margin(15),
-          box.alignment.center(),
-          box.clipBehavior.hardEdge(),
-          box.border.all(
+          $box.padding(10),
+          $box.margin(15),
+          $box.alignment.center(),
+          $box.clipBehavior.hardEdge(),
+          $box.border.all(
             color: Colors.red,
             style: BorderStyle.solid,
             width: 1,
           ),
-          box.borderRadius(10),
-          box.color(Colors.red),
+          $box.borderRadius(10),
+          $box.color(Colors.red),
         ),
       );
     }
@@ -169,10 +169,10 @@ class StyleWidgetExpensiveAttributge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final paddingAttr = box.padding(10);
-    final marginAttr = box.margin(15);
-    final alignmentAttr = box.alignment.center();
-    final clipAttr = box.clipBehavior.hardEdge();
+    final paddingAttr = $box.padding(10);
+    final marginAttr = $box.margin(15);
+    final alignmentAttr = $box.alignment.center();
+    final clipAttr = $box.clipBehavior.hardEdge();
 
     // final borderAttribute = box.border.all(
     //   color: Colors.red,
@@ -182,7 +182,7 @@ class StyleWidgetExpensiveAttributge extends StatelessWidget {
 
     // final radiusAttribute = box.borderRadius(10);
 
-    final colorAttribute = box.color(Colors.red);
+    final colorAttribute = $box.color(Colors.red);
 
     Style buildStyle() {
       return Style(

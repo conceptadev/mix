@@ -2,17 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../../variants/variant.dart';
 
-/// A [ContextVariant] that evaluates to `true`
-/// when the current [Orientation] is [Orientation.portrait].
-final onPortrait = OnOrientationVariant(Orientation.portrait);
-
-/// A [ContextVariant] that evaluates to `true`
-/// when the current [Orientation] is [Orientation.landscape].
-final onLandscape = OnOrientationVariant(Orientation.landscape);
-
-/// Creates an [OnOrientationVariant] with the specified [orientation].
-const onOrientation = OnOrientationVariant.new;
-
 /// A variant of [ContextVariant] based on an [Orientation] value.
 ///
 /// This class determines whether the current [Orientation] within the given

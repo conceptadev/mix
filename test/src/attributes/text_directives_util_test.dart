@@ -33,7 +33,7 @@ void main() {
 
     group('CapitalizeDirective', () {
       test('modify returns correct value', () {
-        final attribute = text.capitalize();
+        final attribute = $text.capitalize();
         final modified = attribute.directive?.apply('hello');
         expect(modified, 'Hello');
       });
@@ -41,7 +41,7 @@ void main() {
 
     group('LowercaseDirective', () {
       test('modify returns correct value', () {
-        final attribute = text.lowercase();
+        final attribute = $text.lowercase();
         final modified = attribute.directive?.apply('HELLO');
         expect(modified, 'hello');
       });
@@ -49,7 +49,7 @@ void main() {
 
     group('SentenceCaseDirective', () {
       test('modify returns correct value', () {
-        final attribute = text.sentenceCase();
+        final attribute = $text.sentenceCase();
         final modified = attribute.directive?.apply('hello');
         expect(modified, 'Hello');
       });
@@ -57,7 +57,7 @@ void main() {
 
     group('TitleCaseDirective', () {
       test('modify returns correct value', () {
-        final attribute = text.titleCase();
+        final attribute = $text.titleCase();
         final modified = attribute.directive?.apply('hello');
         expect(modified, 'Hello');
       });
@@ -65,13 +65,13 @@ void main() {
 
     group('TextDirective', () {
       test('Equality holds when all properties are the same', () {
-        final attr1 = text.uppercase();
-        final attr2 = text.uppercase();
+        final attr1 = $text.uppercase();
+        final attr2 = $text.uppercase();
         expect(attr1, attr2);
       });
       test('Equality fails when properties are different', () {
-        final attr1 = text.uppercase();
-        final attr2 = text.lowercase();
+        final attr1 = $text.uppercase();
+        final attr2 = $text.lowercase();
         expect(attr1, isNot(attr2));
       });
     });

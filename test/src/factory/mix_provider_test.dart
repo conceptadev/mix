@@ -8,7 +8,7 @@ void main() {
   group('MixProvider', () {
     testWidgets('toInheritable()', (tester) async {
       final style = Style(
-        icon.color.black(),
+        $icon.color.black(),
         scale(2),
       );
 
@@ -20,7 +20,7 @@ void main() {
       final expectedMixData = MixData.create(
         MockBuildContext(),
         Style(
-          icon.color.black(),
+          $icon.color.black(),
         ),
       );
 

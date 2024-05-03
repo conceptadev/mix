@@ -54,10 +54,10 @@ void main() {
         await tester.pumpWithMixTheme(
           Box(
             style: Style(
-              box.color.ref(primaryColor),
-              box.borderRadius.all.ref($radius.small),
-              box.padding.horizontal.ref($space.small),
-              text.style.ref($md.textTheme.bodyLarge),
+              $box.color.ref(primaryColor),
+              $box.borderRadius.all.ref($radius.small),
+              $box.padding.horizontal.ref($space.small),
+              $text.style.ref($md.textTheme.bodyLarge),
             ),
             key: key,
             child: const StyledText('Hello'),

@@ -12,8 +12,8 @@ void main() {
         StyledText(
           'test',
           style: Style(
-            height(100),
-            width(100),
+            $box.height(100),
+            $box.width(100),
             align(),
           ),
         ),

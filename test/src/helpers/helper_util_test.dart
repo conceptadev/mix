@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
+import 'package:mix/src/helpers/helper_util.dart';
 
 import '../../helpers/testing_utils.dart';
 
@@ -19,7 +20,7 @@ void main() {
 
     test('returns RenderDecorators when DecoratorAttribute is present', () {
       final style = Style(
-        $decorator.opacity(0.5),
+        $with.opacity(0.5),
       );
 
       final mix = style.of(MockBuildContext());

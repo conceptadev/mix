@@ -16,15 +16,15 @@ void main() {
           home: Scaffold(
             body: StyledImage(
               style: Style(
-                image.width(152),
-                image.height(152),
-                image.color.black(),
-                image.repeat(),
-                image.fit.fill(),
-                image.centerSlice.fromLTRB(1, 2, 3, 4),
-                image.alignment.bottomLeft(),
-                image.filterQuality.high(),
-                image.blendMode.colorDodge(),
+                $image.width(152),
+                $image.height(152),
+                $image.color.black(),
+                $image.repeat(),
+                $image.fit.fill(),
+                $image.centerSlice.fromLTRB(1, 2, 3, 4),
+                $image.alignment.bottomLeft(),
+                $image.filterQuality.high(),
+                $image.blendMode.colorDodge(),
               ),
               image: FileImage(File('test_resources/logo.png')),
             ),
@@ -51,8 +51,8 @@ void main() {
           home: Scaffold(
             body: StyledImage(
               style: Style(
-                image.width(152),
-                image.height(152),
+                $image.width(152),
+                $image.height(152),
                 opacity(0.5),
               ),
               image: FileImage(File('test_resources/logo.png')),
@@ -73,9 +73,9 @@ void main() {
         await tester.pumpWidget(
           Box(
             style: Style(
-              image.width(152),
-              image.height(152),
-              image.color.black(),
+              $image.width(152),
+              $image.height(152),
+              $image.color.black(),
             ),
             child: StyledImage(
               image: FileImage(File('test_resources/logo.png')),
@@ -97,8 +97,8 @@ void main() {
         await tester.pumpMaterialApp(
           StyledImage(
             style: Style(
-              box.height(100),
-              box.width(100),
+              $box.height(100),
+              $box.width(100),
               align(),
             ),
             image: FileImage(File('test_resources/logo.png')),

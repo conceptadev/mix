@@ -6,6 +6,8 @@ import '../../../helpers/testing_utils.dart';
 
 void main() {
   group('Directionality Utils', () {
+    final onRTL = OnDirectionalityVariant(TextDirection.rtl);
+    final onLTR = OnDirectionalityVariant(TextDirection.ltr);
     testWidgets('onRTL context variant', (tester) async {
       await tester.pumpWidget(createDirectionality(TextDirection.rtl));
       var context = tester.element(find.byType(Container));

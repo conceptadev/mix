@@ -115,7 +115,7 @@ void main() {
           MixProvider(
             data: MixData.create(
               MockBuildContext(),
-              Style(const _NonInheritableAttribute(), icon.color.black()),
+              Style(const _NonInheritableAttribute(), $icon.color.black()),
             ),
             child: Builder(builder: (context) {
               final iconSpec = IconSpec.of(context);
@@ -134,7 +134,7 @@ void main() {
           'must return the same Style that was inputted when there is not ContextVariant in the Style (simple variant)',
           () {
         final style = Style(
-          icon.color.black(),
+          $icon.color.black(),
         );
 
         final attributeList =
@@ -532,9 +532,9 @@ void _testApplyContextToVisualAttributes({
   required bool isExpectedToApply,
 }) {
   final style = Style(
-    box.color.black(),
+    $box.color.black(),
     condition(
-      icon.color.black(),
+      $icon.color.black(),
     ),
   );
 
@@ -544,8 +544,8 @@ void _testApplyContextToVisualAttributes({
   );
 
   final expectedStyle = Style.create([
-    box.color.black(),
-    if (isExpectedToApply) icon.color.black(),
+    $box.color.black(),
+    if (isExpectedToApply) $icon.color.black(),
   ]);
 
   expect(attributeList, expectedStyle.styles.values);

@@ -6,6 +6,8 @@ import '../../../helpers/testing_utils.dart';
 
 void main() {
   group('Brightness Utils', () {
+    final onLight = OnBrightnessVariant(Brightness.light);
+    final onDark = OnBrightnessVariant(Brightness.dark);
     testWidgets('onLight context variant', (tester) async {
       await tester.pumpWidget(createBrightnessTheme(Brightness.light));
       var context = tester.element(find.byType(Container));

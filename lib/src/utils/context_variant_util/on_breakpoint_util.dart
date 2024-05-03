@@ -4,18 +4,6 @@ import '../../helpers/build_context_ext.dart';
 import '../../theme/tokens/breakpoints_token.dart';
 import '../../variants/variant.dart';
 
-/// Context variant that applies styles based on the BreakpointToken.small screen size.
-final onSmall = OnBreakpointTokenVariant(BreakpointToken.small);
-
-/// Context variant that applies styles based on the BreakpointToken.xsmall screen size.
-final onXSmall = OnBreakpointTokenVariant(BreakpointToken.xsmall);
-
-/// Context variant that applies styles based on the BreakpointToken.medium screen size.
-final onMedium = OnBreakpointTokenVariant(BreakpointToken.medium);
-
-/// Context variant that applies styles based on the BreakpointToken.large screen size.
-final onLarge = OnBreakpointTokenVariant(BreakpointToken.large);
-
 /// Represents a variant of a context based on a specific breakpoint.
 ///
 /// This class extends [ContextVariant] and is used to determine whether a given
@@ -27,8 +15,7 @@ class OnBreakPointVariant extends ContextVariant {
   /// Creates a new [OnBreakPointVariant] with the specified [breakpoint].
   ///
   /// The [breakpoint] is used as the [key] for the [ContextVariant].
-  OnBreakPointVariant({required this.breakpoint})
-      : super(key: ValueKey(breakpoint));
+  OnBreakPointVariant(this.breakpoint) : super(key: ValueKey(breakpoint));
 
   /// Returns a list containing the [key] and [breakpoint] properties.
   @override

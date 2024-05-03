@@ -14,7 +14,7 @@ void main() {
 
         await tester.pumpMaterialApp(
           Box(
-            style: Style(icon.color(color), icon.size(size)),
+            style: Style($icon.color(color), $icon.size(size)),
             child: const StyledIcon(Icons.access_time_filled_outlined),
           ),
         );
@@ -34,8 +34,8 @@ void main() {
           StyledIcon(
             Icons.access_time_filled_outlined,
             style: Style(
-              box.height(100),
-              box.width(50),
+              $box.height(100),
+              $box.width(50),
               scale(1),
               opacity(0.5),
               rotate(1),

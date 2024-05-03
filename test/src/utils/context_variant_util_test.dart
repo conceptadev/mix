@@ -5,6 +5,7 @@ import 'package:mix/mix.dart';
 import '../../helpers/testing_utils.dart';
 
 void main() {
+  const onNot = OnNotVariant.new;
   group('ContextVariant', () {
     test('Equality holds when all properties are the same', () {
       final variant1 = MockContextVariantCondition(true);
@@ -19,6 +20,8 @@ void main() {
   });
 
   group('Not Utils', () {
+    final onLight = OnBrightnessVariant(Brightness.light);
+    final onDark = OnBrightnessVariant(Brightness.dark);
     testWidgets('reverts when of context variant', (tester) async {
       await tester.pumpWidget(createBrightnessTheme(Brightness.light));
       var context = tester.element(find.byType(Container));

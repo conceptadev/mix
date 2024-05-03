@@ -12,8 +12,8 @@ void main() {
         StyledIcon(
           Icons.ac_unit,
           style: Style(
-            height(100),
-            width(100),
+            $box.height(100),
+            $box.width(100),
             align(),
           ),
         ),
@@ -30,8 +30,8 @@ void main() {
         AnimatedStyledIcon(
           AnimatedIcons.add_event,
           style: Style(
-            height(100),
-            width(100),
+            $box.height(100),
+            $box.width(100),
             align(),
           ),
           progress: const AlwaysStoppedAnimation(0.0),

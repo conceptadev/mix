@@ -8,20 +8,16 @@ import '../src/specs/icon/icon_widget.dart';
 import '../src/specs/stack/stack_util.dart';
 import '../src/specs/text/text_util.dart';
 import '../src/specs/text/text_widget.dart';
-import '../src/utils/context_variant_util/on_breakpoint_util.dart';
-import '../src/utils/context_variant_util/on_brightness_util.dart';
-import '../src/utils/context_variant_util/on_orientation_util.dart';
-import '../src/utils/helper_util.dart';
 import '../src/variants/variant.dart';
 import 'core/attribute.dart';
 import 'decorators/clip_widget_decorator.dart';
 import 'decorators/widget_decorators_util.dart';
 import 'factory/style_mix.dart';
+import 'helpers/helper_util.dart';
 import 'specs/box/box_util.dart';
 import 'specs/box/box_widget.dart';
 import 'specs/image/image_util.dart';
-import 'utils/context_variant_util/on_not_util.dart';
-import 'widgets/pressable/pressable_util.dart';
+import 'utils/context_variant_util/on_util.dart';
 
 const kShortAliasDeprecation =
     'Short aliases will be deprecated, you can create your own. Example: final p = padding;';
@@ -144,335 +140,386 @@ final mainAxisSize = $flex.mainAxisSize;
 @Deprecated(r'use $flex.gap instead')
 final gap = $flex.gap;
 
-@Deprecated('use flexible.expanded instead')
-final expanded = flexible.expanded;
+@Deprecated(r'use $with.flexible.expanded instead')
+final expanded = $with.flexible.expanded;
 
-@Deprecated('use borderRadius instead')
-final rounded = borderRadius;
+@Deprecated(r'use $box.borderRadius instead')
+final rounded = $box.borderRadius;
 
-@Deprecated('use border.width instead')
-final borderWidth = border.width;
+@Deprecated(r'use $box.border.width instead')
+final borderWidth = $box.border.width;
 
-@Deprecated('use border.color instead')
-final borderColor = border.color;
+@Deprecated(r'use $box.border.color instead')
+final borderColor = $box.border.color;
 
 // height
-@Deprecated('use height instead')
-final h = height;
+@Deprecated(r'use $box.height instead')
+final h = $box.height;
 
-@Deprecated('use width instead')
-final w = width;
+@Deprecated(r'use $box.width instead')
+final w = $box.width;
 
-@Deprecated('use maxHeight instead')
-final maxH = maxHeight;
+@Deprecated(r'use $box.maxHeight instead')
+final maxH = $box.maxHeight;
 
-@Deprecated('use maxWidth instead')
-final maxW = maxWidth;
+@Deprecated(r'use $box.maxWidth instead')
+final maxW = $box.maxWidth;
 
-@Deprecated('use minHeight instead')
-final minH = minHeight;
+@Deprecated(r'use $box.minHeight instead')
+final minH = $box.minHeight;
 
-@Deprecated('use minWidth instead')
-final minW = minWidth;
+@Deprecated(r'use $box.minWidth instead')
+final minW = $box.minWidth;
 
-@Deprecated('Use border.top instead')
-final bt = border.top;
+@Deprecated(r'Use $box.border.top instead')
+final bt = $box.border.top;
 
-@Deprecated('Use border.bottom instead')
-final bb = border.bottom;
+@Deprecated(r'Use $box.border.bottom instead')
+final bb = $box.border.bottom;
 
-@Deprecated('Use border.left instead')
-final bl = border.left;
+@Deprecated(r'Use $box.border.left instead')
+final bl = $box.border.left;
 
-@Deprecated('Use border.right instead')
-final br = border.right;
+@Deprecated(r'Use $box.border.right instead')
+final br = $box.border.right;
 
-@Deprecated('Use borderDirectional.start instead')
-final bs = borderDirectional.start;
+@Deprecated(r'Use $box.borderDirectional.start instead')
+final bs = $box.borderDirectional.start;
 
-@Deprecated('Use borderDirectional.end instead')
-final be = borderDirectional.end;
+@Deprecated(r'Use $box.borderDirectional.end instead')
+final be = $box.borderDirectional.end;
 
-@Deprecated('Use backgroundColor instead')
-final bgColor = backgroundColor;
+@Deprecated(r'Use $box.color instead')
+final bgColor = $box.color;
 
-@Deprecated('Use text.style instead')
-final font = text.style;
-@Deprecated('Use text.style.fontWeight instead')
-final fontWeight = text.style.fontWeight;
-@Deprecated('Use text.style.letterSpacing instead')
-final letterSpacing = text.style.letterSpacing;
-@Deprecated('Use text.style.debugLabel instead')
-final debugLabel = text.style.debugLabel;
-@Deprecated('Use text.style.height instead')
-final textHeight = text.style.height;
-@Deprecated('Use text.style.wordSpacing instead')
-final wordSpacing = text.style.wordSpacing;
-@Deprecated('Use text.style.fontStyle instead')
-final fontStyle = text.style.fontStyle;
-@Deprecated('Use text.style.fontSize instead')
-final fontSize = text.style.fontSize;
-@Deprecated('Use text.style.color instead')
-final textColor = text.style.color;
-@Deprecated('Use text.style.backgroundColor instead')
-final textBgColor = text.style.backgroundColor;
-@Deprecated('Use text.style.foreground instead')
-final textForeground = text.style.foreground;
-@Deprecated('Use text.style.background instead')
-final textBackground = text.style.background;
-@Deprecated('Use text.style.shadows instead')
-final textShadows = text.style.shadows;
-@Deprecated('Use text.style.fontFeatures instead')
-final fontFeatures = text.style.fontFeatures;
-@Deprecated('Use text.style.decoration instead')
-final textDecoration = text.style.decoration;
-@Deprecated('Use text.style.decorationColor instead')
-final textDecorationColor = text.style.decorationColor;
-@Deprecated('Use text.style.decorationStyle instead')
-final textDecorationStyle = text.style.decorationStyle;
-@Deprecated('Use text.style.decorationThickness instead')
-final textDecorationThickness = text.style.decorationThickness;
-@Deprecated('Use text.style.fontFamilyFallback instead')
-final fontFamilyFallback = text.style.fontFamilyFallback;
-@Deprecated('Use text.style.shadows instead')
-final textShadow = text.style.shadows;
-@Deprecated('Use text.overflow instead')
-final overflow = text.overflow;
-@Deprecated('Use text.style.bold instead')
-final bold = text.style.bold;
-@Deprecated('Use text.overflow instead')
-final textOverflow = text.overflow;
+@Deprecated(r'Use $text.style instead')
+final font = $text.style;
+@Deprecated(r'Use $text.style.fontWeight instead')
+final fontWeight = $text.style.fontWeight;
+@Deprecated(r'Use $text.style.letterSpacing instead')
+final letterSpacing = $text.style.letterSpacing;
+@Deprecated(r'Use $text.style.debugLabel instead')
+final debugLabel = $text.style.debugLabel;
+@Deprecated(r'Use $text.style.height instead')
+final textHeight = $text.style.height;
+@Deprecated(r'Use $text.style.wordSpacing instead')
+final wordSpacing = $text.style.wordSpacing;
+@Deprecated(r'Use $text.style.fontStyle instead')
+final fontStyle = $text.style.fontStyle;
+@Deprecated(r'Use $text.style.fontSize instead')
+final fontSize = $text.style.fontSize;
+@Deprecated(r'Use $text.style.color instead')
+final textColor = $text.style.color;
+@Deprecated(r'Use $text.style.backgroundColor instead')
+final textBgColor = $text.style.backgroundColor;
+@Deprecated(r'Use $text.style.foreground instead')
+final textForeground = $text.style.foreground;
+@Deprecated(r'Use $text.style.background instead')
+final textBackground = $text.style.background;
+@Deprecated(r'Use $text.style.shadows instead')
+final textShadows = $text.style.shadows;
+@Deprecated(r'Use $text.style.fontFeatures instead')
+final fontFeatures = $text.style.fontFeatures;
+@Deprecated(r'Use $text.style.decoration instead')
+final textDecoration = $text.style.decoration;
+@Deprecated(r'Use $text.style.decorationColor instead')
+final textDecorationColor = $text.style.decorationColor;
+@Deprecated(r'Use $text.style.decorationStyle instead')
+final textDecorationStyle = $text.style.decorationStyle;
+@Deprecated(r'Use $text.style.decorationThickness instead')
+final textDecorationThickness = $text.style.decorationThickness;
+@Deprecated(r'Use $text.style.fontFamilyFallback instead')
+final fontFamilyFallback = $text.style.fontFamilyFallback;
+@Deprecated(r'Use $text.style.shadows instead')
+final textShadow = $text.style.shadows;
+@Deprecated(r'Use $text.overflow instead')
+final overflow = $text.overflow;
+@Deprecated(r'Use $text.style.bold instead')
+final bold = $text.style.bold;
+@Deprecated(r'Use $text.overflow instead')
+final textOverflow = $text.overflow;
 
-@Deprecated('Use icon.size instead')
-final iconSize = icon.size;
-@Deprecated('Use icon.color instead')
-final iconColor = icon.color;
+@Deprecated(r'Use $icon.size instead')
+final iconSize = $icon.size;
+@Deprecated(r'Use $icon.color instead')
+final iconColor = $icon.color;
 
-@Deprecated('Use padding instead')
-final p = padding;
-@Deprecated('Use padding.top instead')
-final pt = padding.top;
-@Deprecated('Use padding.bottom instead')
-final pb = padding.bottom;
-@Deprecated('Use padding.right instead')
-final pr = padding.right;
-@Deprecated('Use padding.left instead')
-final pl = padding.left;
-@Deprecated('Use padding.start instead')
-final ps = padding.start;
-@Deprecated('Use padding.end instead')
-final pe = padding.end;
-@Deprecated('Use padding.horizontal instead')
-final px = padding.horizontal;
-@Deprecated('Use padding.vertical instead')
-final py = padding.vertical;
-@Deprecated('Use padding.as instead')
-final pi = padding.as;
+@Deprecated(r'Use $box.padding instead')
+final p = $box.padding;
+@Deprecated(r'Use $box.padding.top instead')
+final pt = $box.padding.top;
+@Deprecated(r'Use $box.padding.bottom instead')
+final pb = $box.padding.bottom;
+@Deprecated(r'Use $box.padding.right instead')
+final pr = $box.padding.right;
+@Deprecated(r'Use $box.padding.left instead')
+final pl = $box.padding.left;
+@Deprecated(r'Use $box.padding.start instead')
+final ps = $box.padding.start;
+@Deprecated(r'Use $box.padding.end instead')
+final pe = $box.padding.end;
+@Deprecated(r'Use $box.padding.horizontal instead')
+final px = $box.padding.horizontal;
+@Deprecated(r'Use $box.padding.vertical instead')
+final py = $box.padding.vertical;
+@Deprecated(r'Use $box.padding.as instead')
+final pi = $box.padding.as;
 
-@Deprecated('Use padding.as instead')
-final paddingInsets = padding.as;
+@Deprecated(r'Use $box.padding.as instead')
+final paddingInsets = $box.padding.as;
 
-@Deprecated('Use margin instead')
-final m = margin;
-@Deprecated('Use margin.top instead')
-final mt = margin.top;
-@Deprecated('Use margin.bottom instead')
-final mb = margin.bottom;
-@Deprecated('Use margin.right instead')
-final mr = margin.right;
-@Deprecated('Use margin.left instead')
-final ml = margin.left;
-@Deprecated('Use margin.start instead')
-final ms = margin.start;
-@Deprecated('Use margin.end instead')
-final me = margin.end;
-@Deprecated('Use margin.horizontal instead')
-final mx = margin.horizontal;
-@Deprecated('Use margin.vertical instead')
-final my = margin.vertical;
-@Deprecated('Use margin.as instead')
-final mi = margin.as;
+@Deprecated(r'Use $box.margin instead')
+final m = $box.margin;
+@Deprecated(r'Use $box.margin.top instead')
+final mt = $box.margin.top;
+@Deprecated(r'Use $box.margin.bottom instead')
+final mb = $box.margin.bottom;
+@Deprecated(r'Use $box.margin.right instead')
+final mr = $box.margin.right;
+@Deprecated(r'Use $box.margin.left instead')
+final ml = $box.margin.left;
+@Deprecated(r'Use $box.margin.start instead')
+final ms = $box.margin.start;
+@Deprecated(r'Use $box.margin.end instead')
+final me = $box.margin.end;
+@Deprecated(r'Use $box.margin.horizontal instead')
+final mx = $box.margin.horizontal;
+@Deprecated(r'Use $box.margin.vertical instead')
+final my = $box.margin.vertical;
+@Deprecated(r'Use $box.margin.as instead')
+final mi = $box.margin.as;
 
-@Deprecated('Use margin.top instead')
-final marginTop = margin.top;
-@Deprecated('Use margin.bottom instead')
-final marginBottom = margin.bottom;
-@Deprecated('Use margin.left instead')
-final marginLeft = margin.left;
-@Deprecated('Use margin.right instead')
-final marginRight = margin.right;
-@Deprecated('Use margin.start instead')
-final marginStart = margin.start;
-@Deprecated('Use margin.end instead')
-final marginEnd = margin.end;
-@Deprecated('Use margin.horizontal instead')
-final marginHorizontal = margin.horizontal;
-@Deprecated('Use margin.vertical instead')
-final marginVertical = margin.vertical;
-@Deprecated('Use margin.as instead')
-final marginFrom = margin.as;
+@Deprecated(r'Use $box.margin.top instead')
+final marginTop = $box.margin.top;
+@Deprecated(r'Use $box.margin.bottom instead')
+final marginBottom = $box.margin.bottom;
+@Deprecated(r'Use $box.margin.left instead')
+final marginLeft = $box.margin.left;
+@Deprecated(r'Use $box.margin.right instead')
+final marginRight = $box.margin.right;
+@Deprecated(r'Use $box.margin.start instead')
+final marginStart = $box.margin.start;
+@Deprecated(r'Use $box.margin.end instead')
+final marginEnd = $box.margin.end;
+@Deprecated(r'Use $box.margin.horizontal instead')
+final marginHorizontal = $box.margin.horizontal;
+@Deprecated(r'Use $box.margin.vertical instead')
+final marginVertical = $box.margin.vertical;
+@Deprecated(r'Use $box.margin.as instead')
+final marginFrom = $box.margin.as;
 @Deprecated(kShortAliasDeprecation)
 final marginX = marginHorizontal;
 @Deprecated(kShortAliasDeprecation)
 final marginY = marginVertical;
-@Deprecated('use margin.only instead')
-final marginOnly = margin.only;
-@Deprecated('use margin.only instead')
-final marginDirectionalOnly = margin.only;
-@Deprecated('use margin.all instead')
-final marginAll = margin.all;
+@Deprecated(r'use $box.margin.only instead')
+final marginOnly = $box.margin.only;
+@Deprecated(r'use $box.margin.only instead')
+final marginDirectionalOnly = $box.margin.only;
+@Deprecated(r'use $box.margin.all instead')
+final marginAll = $box.margin.all;
 
-@Deprecated('Use padding.top instead')
-final paddingTop = padding.top;
-@Deprecated('Use padding.bottom instead')
-final paddingBottom = padding.bottom;
-@Deprecated('Use padding.left instead')
-final paddingLeft = padding.left;
-@Deprecated('Use padding.right instead')
-final paddingRight = padding.right;
-@Deprecated('Use padding.start instead')
-final paddingStart = padding.start;
-@Deprecated('Use padding.end instead')
-final paddingEnd = padding.end;
-@Deprecated('Use padding.horizontal instead')
-final paddingHorizontal = padding.horizontal;
-@Deprecated('Use padding.vertical instead')
-final paddingVertical = padding.vertical;
-@Deprecated('Use padding.as instead')
-final paddingFrom = padding.as;
-@Deprecated('Use padding.horizontal instead')
-final paddingX = padding.horizontal;
-@Deprecated('Use padding.vertical instead')
-final paddingY = padding.vertical;
-@Deprecated('use padding.only instead')
-final paddingOnly = padding.only;
-@Deprecated('use padding.only instead')
-final paddingDirectionalOnly = padding.only;
-@Deprecated('use padding.all instead')
-final paddingAll = padding.all;
-@Deprecated('Use border.top instead')
-final borderTop = border.top;
-@Deprecated('Use border.bottom instead')
-final borderBottom = border.bottom;
-@Deprecated('Use border.left instead')
-final borderLeft = border.left;
-@Deprecated('Use border.right instead')
-final borderRight = border.right;
-@Deprecated('Use borderDirectional.start instead')
-final borderStart = borderDirectional.start;
-@Deprecated('Use borderDirectional.end instead')
-final borderEnd = borderDirectional.end;
-@Deprecated('Use border.horizontal instead')
-final borderHorizontal = border.horizontal;
-@Deprecated('Use border.vertical instead')
-final borderVertical = border.vertical;
-@Deprecated('Use border.all instead')
-final borderAll = border.all;
+@Deprecated(r'Use $box.padding.top instead')
+final paddingTop = $box.padding.top;
+@Deprecated(r'Use $box.padding.bottom instead')
+final paddingBottom = $box.padding.bottom;
+@Deprecated(r'Use $box.padding.left instead')
+final paddingLeft = $box.padding.left;
+@Deprecated(r'Use $box.padding.right instead')
+final paddingRight = $box.padding.right;
+@Deprecated(r'Use $box.padding.start instead')
+final paddingStart = $box.padding.start;
+@Deprecated(r'Use $box.padding.end instead')
+final paddingEnd = $box.padding.end;
+@Deprecated(r'Use $box.padding.horizontal instead')
+final paddingHorizontal = $box.padding.horizontal;
+@Deprecated(r'Use $box.padding.vertical instead')
+final paddingVertical = $box.padding.vertical;
+@Deprecated(r'Use $box.padding.as instead')
+final paddingFrom = $box.padding.as;
+@Deprecated(r'Use $box.padding.horizontal instead')
+final paddingX = $box.padding.horizontal;
+@Deprecated(r'Use $box.padding.vertical instead')
+final paddingY = $box.padding.vertical;
+@Deprecated(r'use $box.padding.only instead')
+final paddingOnly = $box.padding.only;
+@Deprecated(r'use $box.padding.only instead')
+final paddingDirectionalOnly = $box.padding.only;
+@Deprecated(r'use $box.padding.all instead')
+final paddingAll = $box.padding.all;
+@Deprecated(r'Use $box.border.top instead')
+final borderTop = $box.border.top;
+@Deprecated(r'Use $box.border.bottom instead')
+final borderBottom = $box.border.bottom;
+@Deprecated(r'Use $box.border.left instead')
+final borderLeft = $box.border.left;
+@Deprecated(r'Use $box.border.right instead')
+final borderRight = $box.border.right;
+@Deprecated(r'Use $box.borderDirectional.start instead')
+final borderStart = $box.borderDirectional.start;
+@Deprecated(r'Use $box.borderDirectional.end instead')
+final borderEnd = $box.borderDirectional.end;
+@Deprecated(r'Use $box.border.horizontal instead')
+final borderHorizontal = $box.border.horizontal;
+@Deprecated(r'Use $box.border.vertical instead')
+final borderVertical = $box.border.vertical;
+@Deprecated(r'Use $box.border.all instead')
+final borderAll = $box.border.all;
 
-@Deprecated('Use onXSmall instead')
-final xsmall = onXSmall;
+@Deprecated(r'Use $on.xsmall instead')
+final xsmall = $on.xsmall;
 
-@Deprecated('Use onSmall instead')
-final small = onSmall;
+@Deprecated(r'Use $on.small instead')
+final small = $on.small;
 
-@Deprecated('Use onMedium instead')
-final medium = onMedium;
+@Deprecated(r'Use $on.medium instead')
+final medium = $on.medium;
 
-@Deprecated('Use onDark instead')
-final dark = onDark;
+@Deprecated(r'Use $on.dark instead')
+final dark = $on.dark;
 
-@Deprecated('Use onLight instead')
-final light = onLight;
+@Deprecated(r'Use $on.light instead')
+final light = $on.light;
 
-@Deprecated('Use onLarge instead')
-final large = onLarge;
+@Deprecated(r'Use $on.large instead')
+final large = $on.large;
 
-@Deprecated('Use onHover instead')
-const hover = onHover;
+@Deprecated(r'used $on.small instead')
+final onSmall = $on.small;
 
-@Deprecated('Use onFocused instead')
-const focus = onFocused;
+@Deprecated(r'used $on.xsmall instead')
+final onXSmall = $on.xsmall;
 
-@Deprecated('Use onFocused instead')
-const onFocus = onFocused;
+@Deprecated(r'used $on.medium instead')
+final onMedium = $on.medium;
 
-@Deprecated('Use onPortrait instead')
-final portrait = onPortrait;
+@Deprecated(r'used $on.large instead')
+final onLarge = $on.large;
 
-@Deprecated('Use onLandscape instead')
-final landscape = onLandscape;
+@Deprecated(r'Use $on.hover instead')
+final hover = $on.hover;
 
-@Deprecated('Use onDisabled instead')
-const disabled = onDisabled;
+@Deprecated(r'Use $on.focus instead')
+final focus = $on.focus;
 
-@Deprecated('Use onEnabled instead')
-const enabled = onEnabled;
+@Deprecated(r'Use $on.focus instead')
+final onFocus = $on.focus;
+
+@Deprecated(r'Use $on.portrait instead')
+final portrait = $on.portrait;
+
+@Deprecated(r'Use $on.landscape instead')
+final landscape = $on.landscape;
+
+@Deprecated(r'Use $on.portrait instead')
+final onPortrait = $on.portrait;
+
+@Deprecated(r'Use $on.landscape instead')
+final onLandscape = $on.landscape;
+
+@Deprecated(r'Use $on.disabled instead')
+final disabled = $on.disabled;
+
+@Deprecated(r'Use $on.enabled instead')
+final enabled = $on.enabled;
+
+@Deprecated(r'Use $on.press instead')
+final onPressed = $on.press;
+
+@Deprecated(r'Use $on.longPress instead')
+final onLongPressed = $on.longPress;
+
+@Deprecated(r'Use $on.hover instead')
+final onHover = $on.hover;
+
+@Deprecated(r'Use $on.enabled instead')
+final onEnabled = $on.enabled;
+
+@Deprecated(r'Use $on.disabled instead')
+final onDisabled = $on.disabled;
+
+@Deprecated(r'Use $on.focus instead')
+final onfocus = $on.focus;
+
+@Deprecated(r'Use $on.mouse instead')
+final onMouseHover = $on.mouse;
+
+@Deprecated(r'Use $on.dark instead')
+final onDark = $on.dark;
+
+@Deprecated(r'Use $on.light instead')
+final onLight = $on.light;
 
 @Deprecated('Use direct clip utility for example clip.rrect becomes clipRRect')
 const clip = ClipDecoratorUtility();
 
-@Deprecated('Use onPressed instead')
-const press = onPressed;
+@Deprecated(r'Use $on.Pressed instead')
+final press = $on.press;
 
-@Deprecated('Use onPressed instead')
-const onPress = onPressed;
+@Deprecated(r'Use $on.Pressed instead')
+final onPress = $on.press;
 
-@Deprecated('Use onNot instead')
-const not = onNot;
+@Deprecated(r'Use $on.rtl instead')
+final onRTL = $on.rtl;
 
-@Deprecated('Use borderRadius instead')
-final r = borderRadius;
+@Deprecated(r'Use $on ltr instead')
+final onLTR = $on.ltr;
 
-@Deprecated('Use borderRadius.horizontal instead')
+@Deprecated(r'Use $on.Not instead')
+final not = $on.not;
+
+@Deprecated(r'Use $box.borderRadius instead')
+final r = $box.borderRadius;
+
+@Deprecated(r'Use $box.borderRadius.horizontal instead')
 dynamic get roundedH => UnimplementedError();
 
-@Deprecated('use borderRadius.vertical instead')
+@Deprecated(r'use $box.borderRadius.vertical instead')
 dynamic get roundedV => UnimplementedError();
 
 @Deprecated(kShortAliasDeprecation)
 dynamic get roundedDH => UnimplementedError();
 
 @Deprecated(kShortAliasDeprecation)
-final roundedTL = borderRadius.topLeft;
+final roundedTL = $box.borderRadius.topLeft;
 
 @Deprecated(kShortAliasDeprecation)
-final roundedTR = borderRadius.topRight;
+final roundedTR = $box.borderRadius.topRight;
 
 @Deprecated(kShortAliasDeprecation)
-final roundedBL = borderRadius.bottomLeft;
+final roundedBL = $box.borderRadius.bottomLeft;
 
 @Deprecated(kShortAliasDeprecation)
-final roundedBR = borderRadius.bottomRight;
+final roundedBR = $box.borderRadius.bottomRight;
 
 @Deprecated(kShortAliasDeprecation)
-final roundedTS = borderRadiusDirectional.topStart;
+final roundedTS = $box.borderRadiusDirectional.topStart;
 
 @Deprecated(kShortAliasDeprecation)
-final roundedTE = borderRadiusDirectional.topEnd;
+final roundedTE = $box.borderRadiusDirectional.topEnd;
 
 @Deprecated(kShortAliasDeprecation)
-final roundedBS = borderRadiusDirectional.bottomStart;
+final roundedBS = $box.borderRadiusDirectional.bottomStart;
 
 @Deprecated(kShortAliasDeprecation)
-final roundedBE = borderRadiusDirectional.bottomEnd;
+final roundedBE = $box.borderRadiusDirectional.bottomEnd;
 
-@Deprecated('Use stack.alignment instead')
-final zAlignment = stack.alignment;
+@Deprecated(r'Use $stack.alignment instead')
+final zAlignment = $stack.alignment;
 
-@Deprecated('Use stack.fit instead')
-final zFit = stack.fit;
+@Deprecated(r'Use $stack.fit instead')
+final zFit = $stack.fit;
 
-@Deprecated('Use stack.clipBehavior instead')
-final zClip = stack.clipBehavior;
+@Deprecated(r'Use $stack.clipBehavior instead')
+final zClip = $stack.clipBehavior;
 
-@Deprecated('Use text.directive')
-final directives = text.directive;
+@Deprecated(r'Use $text.directive')
+final directives = $text.directive;
 
-@Deprecated('Use text.directive')
-final directive = text.directive;
+@Deprecated(r'Use $text.directive')
+final directive = $text.directive;
 
 @Deprecated('Locale is now passed to StyledText widget')
-final locale = text.style.locale;
+final locale = $text.style.locale;
 
 @Deprecated('Use StyledText instead')
 class TextMix extends StyledText {
@@ -498,19 +545,19 @@ class IconMix extends StyledIcon {
   }) : super(style: mix);
 }
 
-@Deprecated('Use text.style instead')
-final textStyle = text.style.as;
+@Deprecated(r'Use $text.style instead')
+final textStyle = $text.style.as;
 
-@Deprecated('Use text.maxLines instead')
-final maxLines = text.maxLines;
+@Deprecated(r'Use $text.maxLines instead')
+final maxLines = $text.maxLines;
 
-@Deprecated('Use text.textAlign instead')
-final textAlign = text.textAlign;
+@Deprecated(r'Use $text.textAlign instead')
+final textAlign = $text.textAlign;
 
-@Deprecated('Use text.style.shadow instead')
-final shadow = text.style.shadow;
+@Deprecated(r'Use $text.style.shadow instead')
+final shadow = $text.style.shadow;
 
-/// A utility class for creating [ClipDecorator]s.
+@Deprecated('used temporarily for migration')
 class ClipDecoratorUtility {
   final ClipPathUtility path = const ClipPathUtility(selfBuilder);
   final ClipOvalUtility oval = const ClipOvalUtility(selfBuilder);
@@ -521,64 +568,161 @@ class ClipDecoratorUtility {
   const ClipDecoratorUtility();
 }
 
-@Deprecated('Use image.color instead')
-final imageColor = image.color;
+@Deprecated(r'Use $image.color instead')
+final imageColor = $image.color;
 
-@Deprecated('Use image.blendMode instead')
-final imageColorBlendMode = image.blendMode;
+@Deprecated(r'Use $image.blendMode instead')
+final imageColorBlendMode = $image.blendMode;
 
-@Deprecated('Use image.fit instead')
-final imageFit = image.fit;
+@Deprecated(r'Use $image.fit instead')
+final imageFit = $image.fit;
 
-@Deprecated('Use image.alignment instead')
-final imageAlignment = image.alignment;
+@Deprecated(r'Use $image.alignment instead')
+final imageAlignment = $image.alignment;
 
-@Deprecated('Use image.repeat instead')
-final imageRepeat = image.repeat;
+@Deprecated(r'Use $image.repeat instead')
+final imageRepeat = $image.repeat;
 
-@Deprecated('Use image.centerSlice instead')
-final imageCenterSlice = image.centerSlice;
-
-// show
-@Deprecated('Use visibility.on instead')
-final show = visibility.on;
-
-// hide
-@Deprecated('Use visibility.off instead')
-final hide = visibility.off;
+@Deprecated(r'Use $image.centerSlice instead')
+final imageCenterSlice = $image.centerSlice;
 
 // textDirection
-@Deprecated('Use text.textDirection instead')
-final textDirection = text.textDirection;
+@Deprecated(r'Use $text.textDirection instead')
+final textDirection = $text.textDirection;
 
 // textWidthBasis
-@Deprecated('Use text.widthBasis instead')
-final textWidthBasis = text.textWidthBasis;
+@Deprecated(r'Use $text.widthBasis instead')
+final textWidthBasis = $text.textWidthBasis;
 
 // softWrap
-@Deprecated('Use text.softWrap instead')
-final softWrap = text.softWrap;
+@Deprecated(r'Use $text.softWrap instead')
+final softWrap = $text.softWrap;
 
 // textScaleFactor
-@Deprecated('Use text.scaleFactor instead')
-final textScaleFactor = text.textScaleFactor;
+@Deprecated(r'Use $text.scaleFactor instead')
+final textScaleFactor = $text.textScaleFactor;
 
 // strutStyle
-@Deprecated('Use text.strutStyle instead')
-final strutStyle = text.strutStyle;
+@Deprecated(r'Use $text.strutStyle instead')
+final strutStyle = $text.strutStyle;
 
 // textBaseline
-@Deprecated('Use text.baseline instead')
-final textBaseline = text.style.textBaseline;
+@Deprecated(r'Use $text.baseline instead')
+final textBaseline = $text.style.textBaseline;
 
 // squared
-@Deprecated('Use borderRadius.circular instead')
-final squared = borderRadius.zero;
+@Deprecated(r'Use $box.borderRadius.circular instead')
+final squared = $box.borderRadius.zero;
 
 // flexDirection
-@Deprecated('Use flexDirection instead')
+@Deprecated(r'Use $flex.direction; instead')
 final flexDirection = $flex.direction;
 
 // verticalDirection
 @Deprecated('Use verticalDirection instead')
 final verticalDirection = $flex.verticalDirection;
+
+@Deprecated(r'use $box.border instead')
+final border = $box.border;
+
+@Deprecated(r'use $box.borderDirectional instead')
+final borderDirectional = $box.borderDirectional;
+
+@Deprecated(r'use $box.borderRadius instead')
+final borderRadius = $box.borderRadius;
+
+@Deprecated(r'use $box.borderRadiusDirectional instead')
+final borderRadiusDirectional = $box.borderRadiusDirectional;
+
+@Deprecated(r'use $box.color instead')
+final backgroundColor = $box.color;
+
+@Deprecated(r'use $box.width instead')
+final width = $box.width;
+
+@Deprecated(r'use $box.height instead')
+final height = $box.height;
+
+@Deprecated(r'use $box.minHeight instead')
+final minHeight = $box.minHeight;
+
+@Deprecated(r'use $box.maxHeight instead')
+final maxHeight = $box.maxHeight;
+
+@Deprecated(r'use $box.minWidth instead')
+final minWidth = $box.minWidth;
+
+@Deprecated(r'use $box.maxWidth instead')
+final maxWidth = $box.maxWidth;
+
+@Deprecated(r'use $box.padding instead')
+final padding = $box.padding;
+
+@Deprecated(r'use $box.margin instead')
+final margin = $box.margin;
+
+@Deprecated(r'use $box.alignment instead')
+final alignment = $box.alignment;
+
+@Deprecated(r'use $box.clipBehavior instead')
+final clipBehavior = $box.clipBehavior;
+
+@Deprecated(r'use $box.elevation instead')
+final elevation = $box.elevation;
+
+@Deprecated(r'use $box.radialGradient instead')
+final radialGradient = $box.radialGradient;
+
+@Deprecated(r'use $box.linearGradient instead')
+final linearGradient = $box.linearGradient;
+
+@Deprecated(r'use $box instead')
+final box = $box;
+
+@Deprecated(r'use $with.intrinsicWidth instead')
+final intrinsicWidth = $with.intrinsicWidth;
+
+@Deprecated(r'use $with.intrinsicHeight instead')
+final intrinsicHeight = $with.intrinsicHeight;
+
+@Deprecated(r'use $with.scale instead')
+final scale = $with.scale;
+
+@Deprecated(r'use $with.flip instead')
+final flip = $with.flip;
+@Deprecated(r'use $with.opacity instead')
+final opacity = $with.opacity;
+@Deprecated(r'use $with.rotate instead')
+final rotate = $with.rotate;
+@Deprecated(r'use $with.clipPath instead')
+final clipPath = $with.clipPath;
+@Deprecated(r'use $with.clipRRect instead')
+final clipRRect = $with.clipRRect;
+@Deprecated(r'use $with.clipOval instead')
+final clipOval = $with.clipOval;
+@Deprecated(r'use $with.clipRect instead')
+final clipRect = $with.clipRect;
+@Deprecated(r'use $with.clipTriangle instead')
+final clipTriangle = $with.clipTriangle;
+
+@Deprecated(r'use $with.visibility instead')
+final visibility = $with.visibility;
+// show
+@Deprecated(r'Use $with.show instead')
+final show = $with.show;
+
+// hide
+@Deprecated(r'Use $with.hide instead')
+final hide = $with.hide;
+@Deprecated(r'use $with.aspectRatio instead')
+final aspectRatio = $with.aspectRatio;
+@Deprecated(r'use $with.flexible instead')
+final flexible = $with.flexible;
+@Deprecated(r'use $with.transform instead')
+final transform = $with.transform;
+@Deprecated(r'use $with.align instead')
+final align = $with.align;
+@Deprecated(r'use $with.fractionallySizedBox instead')
+final fractionallySizedBox = $with.fractionallySizedBox;
+@Deprecated(r'use $with.sizedBox instead')
+final sizedBox = $with.sizedBox;

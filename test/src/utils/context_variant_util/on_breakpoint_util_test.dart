@@ -6,6 +6,11 @@ import '../../../helpers/testing_utils.dart';
 
 // Act as an expert in dart and someone with deep understanding of effective dart documentation guidelines. You have been tasked to create comments in the code that help document it for other developers and users when they look at the code. Your comments should be detailed complete, but still concise.
 void main() {
+  final onXSmall = OnBreakpointTokenVariant(BreakpointToken.xsmall);
+  final onSmall = OnBreakpointTokenVariant(BreakpointToken.small);
+  final onMedium = OnBreakpointTokenVariant(BreakpointToken.medium);
+  final onLarge = OnBreakpointTokenVariant(BreakpointToken.large);
+
   group('OnBreakpointToken Utils', () {
     const xSmallScreenWidth = Size(320, 480);
     const smallScreenWidth = Size(640, 480);
@@ -100,13 +105,13 @@ void main() {
       await tester.pumpWidget(createMediaQuery(size1));
       var context = tester.element(find.byType(Container));
       final breakpoint1 = OnBreakPointVariant(
-        breakpoint: const Breakpoint(maxWidth: 100, minWidth: 50),
+        const Breakpoint(maxWidth: 100, minWidth: 50),
       );
       final breakpoint2 = OnBreakPointVariant(
-        breakpoint: const Breakpoint(maxWidth: 200, minWidth: 50),
+        const Breakpoint(maxWidth: 200, minWidth: 50),
       );
       final breakpoint3 = OnBreakPointVariant(
-        breakpoint: const Breakpoint(maxWidth: 300, minWidth: 50),
+        const Breakpoint(maxWidth: 300, minWidth: 50),
       );
 
       expect(breakpoint1.build(context), true, reason: 'size1 breakpoint1');
@@ -152,16 +157,16 @@ void main() {
 
     test('OnBreakPoint equality', () {
       final breakpoint1 = OnBreakPointVariant(
-        breakpoint: const Breakpoint(maxWidth: 100, minWidth: 50),
+        const Breakpoint(maxWidth: 100, minWidth: 50),
       );
       final breakpoint2 = OnBreakPointVariant(
-        breakpoint: const Breakpoint(maxWidth: 100, minWidth: 50),
+        const Breakpoint(maxWidth: 100, minWidth: 50),
       );
       final breakpoint3 = OnBreakPointVariant(
-        breakpoint: const Breakpoint(maxWidth: 200, minWidth: 50),
+        const Breakpoint(maxWidth: 200, minWidth: 50),
       );
       final breakpoint4 = OnBreakPointVariant(
-        breakpoint: const Breakpoint(maxWidth: 200, minWidth: 50),
+        const Breakpoint(maxWidth: 200, minWidth: 50),
       );
 
       expect(breakpoint1, equals(breakpoint2));

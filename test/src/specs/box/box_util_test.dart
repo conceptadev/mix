@@ -60,7 +60,7 @@ void main() {
     });
 
     test('constraints() returns correct instance', () {
-      expect(box.constraints, isA<BoxConstraintsUtility>());
+      expect($box.constraints, isA<BoxConstraintsUtility>());
     });
 
     test('shape() returns correct instance', () {

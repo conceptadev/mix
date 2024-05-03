@@ -9,6 +9,8 @@ void main() {
   group('Decorators: ', () {
     const aspectRatio = AspectRatioUtility(UtilityTestAttribute.new);
     const flexible = FlexibleDecoratorUtility(UtilityTestAttribute.new);
+    const visibility = VisibilityUtility(UtilityTestAttribute.new);
+    const transform = TransformUtility(UtilityTestAttribute.new);
 
     const opacity = OpacityUtility(UtilityTestAttribute.new);
     const rotate = RotatedBoxWidgetUtility(UtilityTestAttribute.new);
@@ -146,14 +148,13 @@ void main() {
 
     test('visibility creates VisibilityDecorator correctly', () {
       final visibilityDecorator = visibility.on();
-
-      expect(visibilityDecorator.visible, true);
+      expect(visibilityDecorator.value.visible, true);
     });
 
     test('transform creates TransformDecorator correctly', () {
       final transformDecorator = transform(Matrix4.identity());
 
-      expect(transformDecorator.transform, Matrix4.identity());
+      expect(transformDecorator.value.transform, Matrix4.identity());
     });
     test('sizedBox creates SizedBoxDecorator correctly', () {
       final sizedBoxDecorator = sizedBox(height: 100, width: 100);

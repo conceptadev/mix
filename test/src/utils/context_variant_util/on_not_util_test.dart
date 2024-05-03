@@ -6,6 +6,7 @@ import '../../../helpers/testing_utils.dart';
 
 void main() {
   group('Not Utils', () {
+    const onNot = OnNotVariant.new;
     testWidgets('onNot reverses the result of a context variant',
         (tester) async {
       await tester.pumpWidget(createBrightnessTheme(Brightness.light));

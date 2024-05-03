@@ -2,17 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../../variants/variant.dart';
 
-/// A [ContextVariant] that evaluates to `true`
-/// when the current [Brightness] is [Brightness.dark].
-final onDark = OnBrightnessVariant(Brightness.dark);
-
-/// A [ContextVariant] that evaluates to `true`
-/// when the current [Brightness] is [Brightness.light].
-final onLight = OnBrightnessVariant(Brightness.light);
-
-/// Creates an [OnBrightnessVariant] with the specified [brightness].
-const onBrightness = OnBrightnessVariant.new;
-
 /// A variant of [ContextVariant] based on a [Brightness] value.
 ///
 /// This class determines whether the current [Brightness] within the given

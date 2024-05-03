@@ -66,5 +66,5 @@ class AttributeMap<T extends Attribute> with Comparable {
   Map<Object, T> toMap() => _map?.cast() ?? {};
 
   @override
-  get props => [_map];
+  get props => [values];
 }

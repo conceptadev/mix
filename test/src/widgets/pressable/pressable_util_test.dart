@@ -6,6 +6,10 @@ import 'package:mix/mix.dart';
 import '../../../helpers/testing_utils.dart';
 
 void main() {
+  const onPressed = OnPressVariant();
+  const onLongPressed = OnLongPressVariant();
+  const onFocused = OnFocusVariant();
+  const onEnabled = OnEnabledVariant();
   group('Pressable Util', () {
     const attribute1 = MockBooleanScalarAttribute(true);
     const attribute2 = MockStringScalarAttribute('attribute2');
