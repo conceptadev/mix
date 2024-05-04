@@ -1,3 +1,4 @@
+import '../attributes/nested_style/nested_style_util.dart';
 import '../attributes/scalars/scalar_util.dart';
 import '../decorators/widget_decorators_util.dart';
 import '../utils/context_variant_util/on_util.dart';
@@ -16,6 +17,8 @@ final $text = TextSpecUtility(MixUtility.selfBuilder);
 final $stack = StackSpecUtility(MixUtility.selfBuilder);
 final $with = WithDecoratorUtility(MixUtility.selfBuilder);
 final $on = OnContextVariantUtility();
+
+const $apply = NestedStyleUtility();
 
 class MixUtilities {
   final BoxSpecUtility box = $box;

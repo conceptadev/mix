@@ -17,12 +17,12 @@ To use `PressableBox`, simply wrap your widget with it and specify the interacti
 ```dart
 PressableBox(
 style: Style(
-  box.color.blue(),
-    onPressed(
-      box.color.red(),
+  $box.color.blue(),
+    $on.press(
+      $box.color.red(),
     ),
-    onHover(
-      box.color.green(),
+    $on.hover(
+      $box.color.green(),
     ),
   ),
 onPress: () => print('Pressed!'),
@@ -36,9 +36,9 @@ In the example above, the `PressableBox` will apply a blue background color to t
 
 `PressableBox` integrates with various context variant utilities that apply styles based on different widget states and gestures. Here are a few of the interaction states and their corresponding styling hooks:
 
-- `onPressed`: Styles applied when the widget is being pressed.
-- `onLongPressed`: Styles applied when the widget is being long-pressed.
-- `onDisabled`: Styles applied when the widget is disabled and therefore non-interactive.
-- `onEnabled`: Styles applied when the widget is enabled and interactive.
-- `onFocused`: Styles applied when the widget gains focus.
-- `onHover`: Styles applied when a pointer has hovered over a widget.
+- `$on.press`: Styles applied when the widget is being pressed.
+- `$on.longPress`: Styles applied when the widget is being long-pressed.
+- `$on.disabled`: Styles applied when the widget is disabled and therefore non-interactive.
+- `$on.enabled`: Styles applied when the widget is enabled and interactive.
+- `$on.focus`: Styles applied when the widget gains focus.
+- `$on.hover`: Styles applied when a pointer has hovered over a widget.

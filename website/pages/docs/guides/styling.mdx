@@ -23,10 +23,10 @@ Creating a Mix style is a seamless process. Start by constructing a `Style` obje
 
 ```dart
 final style = Style(
-  box.height(100),
-  box.width(100),
-  box.color.purple(),
-  box.borderRadius(10),
+  $box.height(100),
+  $box.width(100),
+  $box.color.purple(),
+  $box.borderRadius(10),
 );
 ```
 
@@ -46,15 +46,15 @@ Simply use the `mix()` method on a Style instance. For example:
 
 ```dart
 final baseStyle = Style(
-  box.height(100),
-  box.width(100),
-  box.color.purple(),
-  box.borderRadius(10),
+  $box.height(100),
+  $box.width(100),
+  $box.color.purple(),
+  $box.borderRadius(10),
 );
 
 final newStyle = baseStyle.mix(
-  box.border.width(2),
-  box.border.color.black(),
+  $box.border.width(2),
+  $box.border.color.black(),
 );
 ```
 
@@ -66,7 +66,7 @@ In this example, the `newStyle` inherits all attributes from the `baseStyle`, an
 
 ```dart
 final newStyle = baseStyle.mix(
-  box.color.blue(),
+  $box.color.blue(),
 );
 ```
 
@@ -89,8 +89,8 @@ Use the `merge()` method on a Style instance. For example:
 
 ```dart
 final otherStyle = Style(
-  box.border.width(2),
-  box.border.color.black(),
+  $box.border.width(2),
+  $box.border.color.black(),
 );
 
 final newStyle = baseStyle.merge(otherStyle);
@@ -106,8 +106,8 @@ In this example, the `box.color` attribute of the `baseStyle` is overridden by t
 
 ```dart
 final newStyle = Style(
-  apply(baseStyle),
-  box.color.blue(),
+  $apply(baseStyle),
+  $box.color.blue(),
 );
 ```
 
@@ -115,8 +115,8 @@ However, if you add `apply` after the `box.color` attribute, the `box.color` wil
 
 ```dart
 final newStyle = Style(
-  box.color.blue(),
-  apply(baseStyle),
+  $box.color.blue(),
+  $apply(baseStyle),
 );
 ```
 

@@ -24,18 +24,18 @@ class CustomMixWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final style = Style(
-      box.height(100),
-      box.margin.vertical(10),
-      box.elevation(10),
-      box.borderRadius(10),
-      box.color($md.colorScheme.primary()),
-      text.style.as($button()),
-      text.style.color($md.colorScheme.onPrimary()),
-      onHover(
-        elevation(2),
-        box.padding(20),
-        box.color($md.colorScheme.secondary()),
-        text.style(color: $md.colorScheme.onSecondary()),
+      $box.height(100),
+      $box.margin.vertical(10),
+      $box.elevation(10),
+      $box.borderRadius(10),
+      $box.color($md.colorScheme.primary()),
+      $text.style.as($button()),
+      $text.style.color($md.colorScheme.onPrimary()),
+      $on.hover(
+        $box.elevation(2),
+        $box.padding(20),
+        $box.color($md.colorScheme.secondary()),
+        $text.style(color: $md.colorScheme.onSecondary()),
       ),
     );
     return PressableBox(

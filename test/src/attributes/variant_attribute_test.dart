@@ -124,7 +124,7 @@ void main() {
 
     test('remove() returns correct instance when removing all variants', () {
       final multiVariant = MultiVariant.or(const [variant1, variant2]);
-      final multiVariantAttribute = multiVariant(apply(style));
+      final multiVariantAttribute = multiVariant($apply(style));
 
       final attribute =
           multiVariantAttribute.removeVariants([variant1, variant2]);

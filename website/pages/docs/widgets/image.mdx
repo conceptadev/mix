@@ -16,11 +16,11 @@ To use `StyledImage`, you need to pass the `ImageProvider` and apply the style u
 StyledImage(
   image: const AssetImage('assets/image.jpg'),
   style: Style(
-    image.width(152),
-    image.height(152),
-    image.fit.fill(),
-    image.alignment.bottomLeft(),
-    image.blendMode.colorDodge(),
+    $image.width(152),
+    $image.height(152),
+    $image.fit.fill(),
+    $image.alignment.bottomLeft(),
+    $image.blendMode.colorDodge(),
   ),
 ),
 ```
@@ -32,8 +32,8 @@ The **StyledImage** widget has the `inherit` flag set to `true` by default. This
 ```dart
 Box(
   Style(
-    image.height(30),
-    image.color.blue(),
+    $image.height(30),
+    $image.color.blue(),
   ),
   child: StyledImage(image: const AssetImage('some_image.jpg')),
 );
@@ -43,7 +43,7 @@ In the this example, the `StyledImage` widget will inherit the image height and 
 
 ## Utilities
 
-The `image` constant alias is an instance of `ImageUtility`, which facilitates the construction of `ImageSpec` attributes. These attributes are used to style and manage properties of image widgets.
+The `$image` constant alias is an instance of `ImageUtility`, which facilitates the construction of `ImageSpec` attributes. These attributes are used to style and manage properties of image widgets.
 
 #### **color**
 
@@ -51,62 +51,69 @@ Change the color of the image:
 
 ```dart
 // Apply a color to the image
-image.color.red();
+$image.color.red();
 ```
 
 #### **width**
+
 Specifies the width of the image.
 
 ```dart
-image.width(100);
+$image.width(100);
 ```
 
 #### **height**
+
 Specifies the height of the image.
 
 ```dart
-image.height(100);
+$image.height(100);
 ```
 
 #### **repeat**
+
 Determines how the image should be repeated over the space of the widget.
 
 ```dart
-image.repeat.repeat();
+$image.repeat.repeat();
 ```
 
 #### **fit**
+
 Defines how the image should be inscribed into the space allocated during layout.
 
 ```dart
-image.fit.cover();
+$image.fit.cover();
 ```
 
 #### **alignment**
+
 Specifies the alignment of the image within its bounds.
 
 ```dart
-image.alignment.center();
+$image.alignment.center();
 ```
 
 #### **centerSlice**
+
 Slices the image for nine-patch effects.
 
 ```dart
-image.centerSlice.fromLTWH(10, 10, 20, 20);
+$image.centerSlice.fromLTWH(10, 10, 20, 20);
 ```
 
 #### **blendMode**
+
 Specifies the blending mode applied to the image's color and the underlying widget's color.
 
 ```dart
-image.blendMode.multiply();
+$image.blendMode.multiply();
 ```
 
 #### **filterQuality**
+
 Determines the quality of the filtering operations applied to the image.
 
 ```dart
-image.filterQuality.high();
+$image.filterQuality.high();
 ```
-

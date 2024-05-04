@@ -20,7 +20,16 @@ abstract class DecoratorSpec<Self extends DecoratorSpec<Self>>
     DecoratorSpec? end,
     double t,
   ) {
-    return begin?.lerp(end, t) as DecoratorSpec?;
+    if (begin != null && end != null) {
+      assert(
+        begin.runtimeType == end.runtimeType,
+        'You can only lerp the same type of DecoratorSpec',
+      );
+
+      return begin.lerp(end, t) as DecoratorSpec?;
+    }
+
+    return begin ?? end;
   }
 
   Widget build(Widget child);

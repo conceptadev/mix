@@ -41,7 +41,8 @@ class InputDecorationSpec extends Spec<InputDecorationSpec> {
         fillColor = null,
         contentPadding = null;
 
-  static InputDecorationSpec of(MixData mix) {
+  static InputDecorationSpec of(BuildContext context) {
+    final mix = MixProvider.of(context);
     return mix.attributeOf<InputDecorationSpecAttribute>()?.resolve(mix) ??
         const InputDecorationSpec.empty();
   }
@@ -172,10 +173,10 @@ class StyledTextField extends StyledWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StyledWidgetBuilder(
+    return SpecBuilder(
       style: style,
-      builder: (mix) {
-        final inputDecoration = InputDecorationSpec.of(mix);
+      builder: (context) {
+        final inputDecoration = InputDecorationSpec.of(context);
 
         return shouldApplyDecorators(
           child: TextField(
@@ -259,22 +260,22 @@ The `InputDecorationUtility` is a class that extends `SpecUtility` and has metho
 To finish, you can create a variable to use the `InputDecorationUtility`, like this:
 
 ```dart
-InputDecorationUtility get inputDecoration => const InputDecorationUtility();
+final $inputDecoration = const InputDecorationUtility();
 ```
 
 So you can write the `Style` like this:
 
 ```dart
 final style = Style(
-    inputDecoration.border(
+    $inputDecoration.border(
         OutlineInputBorder(
         borderRadius: BorderRadius.circular(20),
         borderSide: BorderSide.none,
         ),
     ),
-    inputDecoration.filled.on(),
-    inputDecoration.fillColor.,
-    inputDecoration.contentPadding.all(24),
-    scale(2),
+    $inputDecoration.filled.on(),
+    $inputDecoration.fillColor.,
+    $inputDecoration.contentPadding.all(24),
+    $with.scale(2),
 );
 ```

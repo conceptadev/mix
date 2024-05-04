@@ -24,10 +24,10 @@ Utilities are designed to be descriptive and easy to understand. This makes it e
 
 ```dart
 final style = Style(
-  box.width(100),
-  box.padding(10),
-  box.alignment.center(),
-  box.color.red(),
+  $box.width(100),
+  $box.padding(10),
+  $box.alignment.center(),
+  $box.color.red(),
 );
 ```
 
@@ -39,13 +39,13 @@ As there are many ways to use an utility to achieve the same result, normally th
 
 ```dart
 // Chaining style is the most common way to use utilities.
-box.alignment.center();
+$box.alignment.center();
 
 // As this seems similar to the above, this allows you to pass an `Alignment` as a parameter.
-box.alignment(Alignment.center);
+$box.alignment(Alignment.center);
 
 // Gives you direct control over the `x` and `y` values of an `Alignment` object.
-box.alignment.only(x: 0.0, y: 0.0);
+$box.alignment.only(x: 0.0, y: 0.0);
 ```
 
 ## Utility Aliases
@@ -54,14 +54,14 @@ Aliases are utilities that are meant to be used as a shorthand for other utiliti
 
 ### Example
 
-`box.border` is an alias to `box.decoration.border`. This allows you to use `box.border` instead of `box.decoration.border` to apply a border to a widget.
+`$box.border` is an alias to `$box.decoration.border`. This allows you to use `$box.border` instead of `$box.decoration.border` to apply a border to a widget.
 
 ```dart
 // A utility to define a box border.
-box.border.color.red();
+$box.border.color.red();
 
 // The same as
-box.decoration.border.color.red();
+$box.decoration.border.color.red();
 ```
 
 ### Creating aliases
@@ -71,7 +71,7 @@ utility to a variable. For example:
 
 ```dart
 // Custom alias for border top styling
-final bt = box.border.top;
+final bt = $box.border.top;
 
 // As a method
 bt.color.red();
@@ -84,7 +84,7 @@ You can also create aliases for specific values of a utility. For example:
 
 ```dart
 // Custom alias for alignment.center
-final borderRedTop = box.border.top.color.red;
+final borderRedTop = $box.border.top.color.red;
 
 // Usage
 borderRedTop();

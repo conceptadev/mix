@@ -10,8 +10,8 @@ To use `StyledIcon`, simply pass the icon data and apply the style using the `St
 StyledIcon(
   Icons.star,
   style: Style(
-    icon.size(30),
-    icon.color.blue(),
+    $icon.size(30),
+    $icon.color.blue(),
   ),
 );
 ```
@@ -23,8 +23,8 @@ The **StyledIcon** widget has the `inherit` flag set to `true` by default. This 
 ```dart
 Box(
   Style(
-    icon.size(30),
-    icon.color.blue(),
+    $icon.size(30),
+    $icon.color.blue(),
   ),
   child: StyledIcon(Icons.star),
 );
@@ -41,22 +41,22 @@ AnimatedStyledIcon(
   AnimatedIcons.menu_close,
   progress: animationController, // Animation<double>
   style: Style(
-    icon.size(60),
-    icon.color.green(),
+    $icon.size(60),
+    $icon.color.green(),
   ),
 );
 ```
 
 ## Utilities
 
-The `icon` constant alias is an instance of `IconUtility`, which facilitates the construction of `IconSpec` attributes. These attributes are used to style and manage properties of icon widgets.
+The `$icon` constant alias is an instance of `IconUtility`, which facilitates the construction of `IconSpec` attributes. These attributes are used to style and manage properties of icon widgets.
 
 #### **color**
 
 Change the color of the icon:
 
 ```dart
-icon.color.red();
+$icon.color.red();
 ```
 
 #### **size**
@@ -64,53 +64,59 @@ icon.color.red();
 Set the size of the icon:
 
 ```dart
-icon.size(24);
+$icon.size(24);
 ```
 
-// document , , , , , , 
+// document , , , , , ,
 
 #### **weight**
+
 Set the stroke weight for drawing the icon:
 
 ```dart
-icon.weight(24);
+$icon.weight(24);
 ```
 
 #### **grade**
+
 Set the grade (granular stroke weight) for drawing the icon:
 
 ```dart
-icon.grade(10);
+$icon.grade(10);
 ```
 
 #### **opticalSize**
-Set the optical size for drawing the icon.:
+
+Set the optical size for drawing the $$icon.:
 
 ```dart
-icon.opticalSize(10);
+$icon.opticalSize(10);
 ```
 
 #### **fill**
+
 Set the fill for drawing the icon:
 
 ```dart
-icon.fill(0.7);
+$icon.fill(0.7);
 ```
 
 #### **applyTextScaling**
+
 Set to able the icon scale:
 
 ```dart
-icon.applyTextScaling.on();
+$icon.applyTextScaling.on();
 ```
 
 #### **shadow** and **shadows**
+
 Set the shadow that will be painted underneath the icon:
 
 ```dart
-icon.shadow(10);
+$icon.shadow(10);
 
-icon.shadows([
+$icon.shadows([
   ShadowDto(
     color: ColorDto(
       Colors.black,
@@ -118,5 +124,3 @@ icon.shadows([
   ),
 ]);
 ```
-
-

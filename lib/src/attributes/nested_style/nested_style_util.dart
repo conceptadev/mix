@@ -1,8 +1,6 @@
 import '../../factory/style_mix.dart';
 import 'nested_style_attribute.dart';
 
-const apply = NestedStyleUtility();
-
 /// A utility class for creating and applying nested styles.
 ///
 /// The `NestedStyleUtility` provides methods to create `NestedStyleAttribute`

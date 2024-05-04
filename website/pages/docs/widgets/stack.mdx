@@ -13,11 +13,11 @@ Create an instance of `ZBox` and provide it with a style and a list of widgets f
 ```dart
 ZBox(
   style: Style(
-    stack.alignment.bottomLeft(),
-    stack.fit.loose(),
-    box.width(300),
-    box.height(300),
-    box.color.blue(),
+    $stack.alignment.bottomLeft(),
+    $stack.fit.loose(),
+    $box.width(300),
+    $box.height(300),
+    $box.color.blue(),
   ),
   children: [...],
 );
@@ -31,10 +31,10 @@ Align layers within the stacked layout:
 
 ```dart
 // Align at the bottom center of the stack
-stack.alignment.bottomCenter();
+$stack.alignment.bottomCenter();
 
 // Align at the top right of the stack
-stack.alignment.topRight();
+$stack.alignment.topRight();
 ```
 
 ### **fit**
@@ -43,10 +43,10 @@ Determine how layers are sized within the stack:
 
 ```dart
 // StackFit.loose
-stack.fit.loose();
+$stack.fit.loose();
 
 // StackFit.expand
-stack.fit.expand();
+$stack.fit.expand();
 ```
 
 ### **textDirection**
@@ -55,10 +55,10 @@ Indicate the text direction in the stack for correct placement of elements:
 
 ```dart
 // Left-to-right text direction
-stack.textDirection.ltr();
+$stack.textDirection.ltr();
 
 // Right-to-left text direction
-stack.textDirection.rtl();
+$stack.textDirection.rtl();
 ```
 
 ### **clipBehavior**
@@ -67,8 +67,8 @@ Control how children outside the stack’s bounds are clipped:
 
 ```dart
 // Clip.hardEdge
-stack.clipBehavior.hardEdge();
+$stack.clipBehavior.hardEdge();
 
 // Clip.none
-stack.clipBehavior.none();
+$stack.clipBehavior.none();
 ```

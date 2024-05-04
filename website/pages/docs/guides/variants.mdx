@@ -35,14 +35,14 @@ To use a variant in a style, you can call it as a function on a `Style` passing 
 const outlined = Variant('outlined');
 
 final style = Style(
-  box.padding(20),
-  box.borderRadius(10),
-  box.color.black(),
-  text.style.color.white(),
+  $box.padding(20),
+  $box.borderRadius(10),
+  $box.color.black(),
+  $text.style.color.white(),
   outlined(
-    box.color.transparent(),
-    box.border.color.black(),
-    text.style.color.black(),
+    $box.color.transparent(),
+    $box.border.color.black(),
+    $text.style.color.black(),
   ),
 );
 ```
@@ -55,15 +55,15 @@ To apply a variant, you can use the `applyVariant` method on a `Style`.
 const outlined = Variant('outlined');
 
 final style = Style(
-  box.padding(20),
-  box.borderRadius(10),
-  box.color.black(),
+  $box.padding(20),
+  $box.borderRadius(10),
+  $box.color.black(),
 
-  text.style.color.white(),
+  $text.style.color.white(),
   outlined(
-    box.color.transparent(),
-   box.border.color.black(),
-    text.style.color.black(),
+    $box.color.transparent(),
+   $box.border.color.black(),
+    $text.style.color.black(),
   ),
 );
 
@@ -74,11 +74,11 @@ final outlinedStyle = style.applyVariant(outlined);
 
 ```dart highlight="2-4"
 final outlinedStyle = Style(
-  box.padding(20),
-  box.borderRadius(10),
-  box.color.transparent(),
-  box.border.color.black(),
-  text.style.color.black(),
+  $box.padding(20),
+  $box.borderRadius(10),
+  $box.color.transparent(),
+  $box.border.color.black(),
+  $text.style.color.black(),
 );
 ```
 
@@ -91,10 +91,14 @@ Context variants are automatically applied based on the `BuildContext`. They are
 To define a context variant, you can use the `ContextVariant` constructor and pass a `when` function.
 
 ```dart
-final onDark = ContextVariant(
-  'on-dark',
-  (context) => Theme.of(context).brightness == Brightness.dark;
-);
+class OnDarkVariant extends ContextVariant {
+  const OnDarkVariant();
+
+  @override
+  bool build(BuildContext context) {
+    return Theme.of(context).brightness == Brightness.dark;
+  }
+}
 ```
 
 <Callout type="info">
@@ -108,36 +112,41 @@ To use a context variant in a style, you can call it as a function on a `Style` 
 
 ```dart {6-9}
 final style = Style(
-  box.padding(20),
-  box.borderRadius(10),
-  box.color.black(),
-  text.style.color.white(),
-  onDark(
-    box.color.white(),
-    text.style.color.black(),
+  $box.padding(20),
+  $box.borderRadius(10),
+  $box.color.black(),
+  $text.style.color.white(),
+  $on.dark(
+    $box.color.white(),
+    $text.style.color.black(),
   ),
 );
 ```
 
-When the `onDark` variant is applied, it will override the `box.color` and `text.style.color` attributes. When this happens the style will be equivalent to the following:
+When the `$on.dark` variant is applied, it will override the `box.color` and `text.style.color` attributes. When this happens the style will be equivalent to the following:
 
 ```dart highlight="2-4"
 final style = Style(
-  box.padding(20),
-  box.borderRadius(10),
-  box.color.white(),
-  text.style.color.black(),
+  $box.padding(20),
+  $box.borderRadius(10),
+  $box.color.white(),
+  $text.style.color.black(),
 );
 ```
+
 ### Prioritization
 
 When applying multiple variants to a `Style`, the last variant will always have priority over the previous ones. However, you can use the `priority` parameter to change the priority of a `ContextVariant`, then the highest priority will be last. The `priority` is a required parameter for `ContextVariant` that can be set when defining the variant. look at the following example:
 
 ```dart
-final contextVariant = ContextVariant(
-      (context) => // Your condition here,
-      priority: VariantPriority.normal // set the priority here,
-    );
+class OnCustomVariant extends ContextVariant {
+  const OnCustomVariant(): super(priority: VariantPriority.high);
+
+  @override
+  bool build(BuildContext context) {
+    // your condition here
+  }
+}
 ```
 
 The `priority` parameter can be set to `VariantPriority.low`, `VariantPriority.medium`, `VariantPriority.high` or `VariantPriority.highest`. A good example of this is when you are using a variants that involves some kind of gesture, like `onHover` and `onPress`. In this case, those variants will always have the highest priority. It happens because Mix needs to make sure that the defined styles will be applied correctly.
@@ -152,23 +161,23 @@ The `|` operator is used in case you want to apply the variant when any of the v
 
 ```dart highlight="3-7"
 final style = Style(
-  box.padding(20),
-  (onSmall | onMedium)( // Whether it's small OR medium
-    box.width(300),
-    box.height(400),
-    box.color.white(),
+  $box.padding(20),
+  ($on.small | $on.medium)( // Whether it's small OR medium
+    $box.width(300),
+    $box.height(400),
+    $box.color.white(),
   ),
 );
 ```
 
-When the `onSmall` variant or `onMedium` variant is applied, the resulted `Style` will be equivalent to the following:
+When the `$on.small` variant or `$on.medium` variant is applied, the resulted `Style` will be equivalent to the following:
 
 ```dart highlight="2-4"
 Style(
-  box.padding(20),
-  box.width(300),
-  box.height(400),
-  box.color.white(),
+  $box.padding(20),
+  $box.width(300),
+  $box.height(400),
+  $box.color.white(),
 );
 ```
 
@@ -178,11 +187,11 @@ The `&` operator is used in case you want to apply the variant when all of the v
 
 ```dart highlight="3-6"
 final style = Style(
-  box.padding(20),
+  $box.padding(20),
   // When it's hovering AND pressing
   (onHover & onPress)(
-    text.style.color.black(),
-    text.style.bold(),
+    $text.style.color.black(),
+    $text.style.bold(),
   ),
 );
 ```
@@ -191,9 +200,9 @@ In this scenery only when the onHover variant and onPress are applied, the resul
 
 ```dart highlight="2-4"
 Style(
-  box.padding(20),
-  text.style.color.black(),
-  text.style.bold(),
+  $box.padding(20),
+  $text.style.color.black(),
+  $text.style.bold(),
 );
 ```
 
@@ -203,10 +212,10 @@ You can combine operators `|` and `&` to create more complex conditions:
 
 ```dart
 final style = Style(
-  box.height(100),
-  box.width(100),
-  (onHover | onPress & onDark)(
-    box.color.red(),
+  $box.height(100),
+  $box.width(100),
+  (onHover | onPress & $on.dark)(
+    $box.color.red(),
   ),
 );
 ```
@@ -214,7 +223,7 @@ final style = Style(
 <Callout type="info">
   The operator that has preference is the first readed operator, so in this case
   the `onHover` variant will be applied first, then the `onPress` and finally
-  the `onDark` variant.
+  the `$on.dark` variant.
 </Callout>
 
 To understand how this works, let's see the following example:
@@ -223,18 +232,18 @@ To understand how this works, let's see the following example:
 
 ```dart
 Style(
-  box.height(100),
-  box.width(100),
+  $box.height(100),
+  $box.width(100),
 );
 ```
 
-2. However, applying the `onHover` variant and the `onDark` variant, the resulting `Style` is different because it satisfies the logic condition in the variant.
+2. However, applying the `onHover` variant and the `$on.dark` variant, the resulting `Style` is different because it satisfies the logic condition in the variant.
 
 ```dart
 Style(
-  box.height(100),
-  box.width(100),
-  box.color.red(),
+  $box.height(100),
+  $box.width(100),
+  $box.color.red(),
 );
 ```
 
@@ -243,11 +252,11 @@ Style(
 While not a traditional negation operator, `onNot` allows you to compose a variant that is applied when the `ContextVariant` apply condition returns false.
 
 ```dart {1, 4-6}
-final onDisabled = onNot(onEnabled);
+final onDisabled = $on.not($on.enabled);
 
 final style = Style(
   onDisabled(
-    scale(1.2),
+    $with.scale(1.2),
   ),
 );
 ```
@@ -258,15 +267,15 @@ Mix provides a set of pre-defined context variants for adaptive styling:
 
 ### Orientation
 
-- **`onPortrait()`:** Applies styles when the device is in portrait orientation.
-- **`onLandscape()`:** Applies styles when the device is in landscape orientation.
+- **`$on.portrait()`:** Applies styles when the device is in portrait orientation.
+- **`$on.landscape()`:** Applies styles when the device is in landscape orientation.
 
 ### Breakpoints
 
-- **`onSmall()`:** Applies styles when the screen is at least the "small" breakpoint.
-- **`onXSmall()`:** Applies styles when the screen is at least the "extra small" breakpoint.
-- **`onMedium()`:** Applies styles when the screen is at least the "medium" breakpoint.
-- **`onLarge()`:** Applies styles when the screen is at least the "large" breakpoint.
+- **`$on.xsmall()`:** Applies styles when the screen is at least the "extra small" breakpoint.
+- **`$on.small()`:** Applies styles when the screen is at least the "small" breakpoint.
+- **`$on.medium()`:** Applies styles when the screen is at least the "medium" breakpoint.
+- **`$on.large()`:** Applies styles when the screen is at least the "large" breakpoint.
 
 ### Custom Breakpoints
 
@@ -274,21 +283,21 @@ Mix provides a set of pre-defined context variants for adaptive styling:
 
 ### Directionality
 
-- **`onRTL()`:** Applies styles when the text direction is right-to-left (RTL).
-- **`onLTR()`:** Applies styles when the text direction is left-to-right (LTR).
+- **`$on.rtl()`:** Applies styles when the text direction is right-to-left (RTL).
+- **`$on.ltr()`:** Applies styles when the text direction is left-to-right (LTR).
 
 ### Brightness
 
-- **`onDark()`:** Applies styles when the theme is in dark mode.
-- **`onLight()`:** Applies styles when the theme is in light mode.
+- **`$on.dark()`:** Applies styles when the theme is in dark mode.
+- **`$on.light()`:** Applies styles when the theme is in light mode.
 
 ### Widget State
 
 For the following variants, the widget must be wrapped in a `Pressable` widget or use the `GestureBox` widget.
 
-- **`onHover()`:** Applies styles when the widget is hovered.
-- **`onPressed()`:** Applies styles when the widget is pressed.
-- **`onLongPressed()`:** Applies styles when the widget is long pressed.
-- **`onFocused()`:** Applies styles when the widget is focused.
-- **`onDisabled()`:** Applies styles when the widget is disabled.
-- **`onEnabled()`:** Applies styles when the widget is enabled.
+- **`$on.hover()`:** Applies styles when the widget is hovered.
+- **`$on.press()`:** Applies styles when the widget is pressed.
+- **`$on.longPress()`:** Applies styles when the widget is long pressed.
+- **`$on.focus()`:** Applies styles when the widget is focused.
+- **`$on.disabled()`:** Applies styles when the widget is disabled.
+- **`$on.enabled()`:** Applies styles when the widget is enabled.

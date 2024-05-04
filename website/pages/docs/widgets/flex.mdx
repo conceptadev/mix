@@ -11,9 +11,9 @@ This is equivalent to the **Flex** widget in Flutter. Everything you are able to
 ```dart
 FlexBox(
   style: Style(
-    box.color.blue(),
-    flex.direction.horizontal(),
-    flex.mainAxisAlignment.spaceBetween(),
+    $box.color.blue(),
+    $flex.direction.horizontal(),
+    $flex.mainAxisAlignment.spaceBetween(),
   ),
   children: [
     Box(
@@ -36,8 +36,8 @@ Equivalent to `Row` widget, but also accepts **Box** styling attributes.
 ```dart
 HBox(
   style: Style(
-    box.color.blue(),
-    flex.mainAxisAlignment.spaceBetween(),
+    $box.color.blue(),
+    $flex.mainAxisAlignment.spaceBetween(),
   ),
   children: [...],
 )
@@ -50,8 +50,8 @@ Equivalent to `Column` widget, but also accepts **Box** styling attributes.
 ```dart
 VBox(
   style: Style(
-    box.color.blue(),
-    flex.mainAxisAlignment.spaceBetween(),
+    $box.color.blue(),
+    $flex.mainAxisAlignment.spaceBetween(),
   ),
   children: [...],
 )
@@ -67,10 +67,10 @@ Control the axis along which the `Flex`, `Row`, or `Column` distributes space an
 
 ```dart
 // Set the direction to horizontal.
-flex.direction.horizontal();
+$flex.direction.horizontal();
 
 // Set the direction to vertical.
-flex.direction.vertical();
+$flex.direction.vertical();
 ```
 
 ### **mainAxisAlignment**
@@ -79,10 +79,10 @@ Customize how children are aligned along the main axis.
 
 ```dart
 // Align children at the start of the main axis.
-flex.mainAxisAlignment.start();
+$flex.mainAxisAlignment.start();
 
 // Space children evenly across the main axis.
-flex.mainAxisAlignment.spaceEvenly();
+$flex.mainAxisAlignment.spaceEvenly();
 ```
 
 ### **crossAxisAlignment**
@@ -91,10 +91,10 @@ Align children within the cross-axis of the flex container.
 
 ```dart
 // Align children to the center of the cross axis.
-flex.crossAxisAlignment.center();
+$flex.crossAxisAlignment.center();
 
 // Stretch children to fill the cross axis.
-flex.crossAxisAlignment.stretch();
+$flex.crossAxisAlignment.stretch();
 ```
 
 ### **mainAxisSize**
@@ -103,10 +103,10 @@ Define the size of the main axis.
 
 ```dart
 // Set the main axis to take only as much space as its children need.
-flex.mainAxisSize.min();
+$flex.mainAxisSize.min();
 
 // Set the main axis to take as much space as available.
-flex.mainAxisSize.max();
+$flex.mainAxisSize.max();
 ```
 
 ### **verticalDirection**
@@ -115,10 +115,10 @@ Specify the vertical ordering of children.
 
 ```dart
 // Order children from top to bottom.
-flex.verticalDirection.up();
+$flex.verticalDirection.up();
 
 // Order children from bottom to top.
-flex.verticalDirection.down();
+$flex.verticalDirection.down();
 ```
 
 ### **textDirection**
@@ -127,10 +127,10 @@ Control the direction of text and children positioning if relevant.
 
 ```dart
 // Set text and children positioning to left-to-right.
-flex.textDirection.ltr();
+$flex.textDirection.ltr();
 
 // Set text and children positioning to right-to-left.
-flex.textDirection.rtl();
+$flex.textDirection.rtl();
 ```
 
 ### **textBaseline**
@@ -139,10 +139,10 @@ Adjust the alignment of children relative to the text baseline.
 
 ```dart
 // Align children by their alphabetic baseline.
-flex.textBaseline.alphabetic();
+$flex.textBaseline.alphabetic();
 
 // Align children by their ideographic baseline.
-flex.textBaseline.ideographic();
+$flex.textBaseline.ideographic();
 ```
 
 ### **clipBehavior**
@@ -151,10 +151,10 @@ Define how the flex container should clip its content.
 
 ```dart
 // Do not clip any overflow of children.
-flex.clipBehavior.none();
+$flex.clipBehavior.none();
 
 // Clip any overflow of children to the container's bounds.
-flex.clipBehavior.hardEdge();
+$flex.clipBehavior.hardEdge();
 ```
 
 ### **gap**
@@ -163,5 +163,5 @@ Set the space (gap) between each child in the flex container.
 
 ```dart
 // Set a gap of 8 logical pixels between children.
-flex.gap(8);
+$flex.gap(8);
 ```

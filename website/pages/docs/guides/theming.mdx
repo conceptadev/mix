@@ -184,13 +184,13 @@ class ProfileButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Box(
       style: Style(
-        box.height(50),
-        box.width(double.infinity),
-        box.color.of($colors.primary),
-        box.alignment.center(),
-        box.borderRadius.all.of($radii.large),
-        text.style.of($textStyles.headline3),
-        text.style.color.of($colors.onPrimary),
+        $box.height(50),
+        $box.width(double.infinity),
+        $box.color.ref($colors.primary),
+        $box.alignment.center(),
+        $box.borderRadius.all.ref($radii.large),
+        $text.style.ref($textStyles.headline3),
+        $text.style.color.ref($colors.onPrimary),
       ),
       child: StyledText(
         label,
@@ -214,7 +214,7 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        box.color: $colors.surface.resolve(context),
+        backgroundColor: $colors.surface.resolve(context),
         title: Text(
           'Profile',
           style: $textStyles.headline2.resolve(context).copyWith(
@@ -222,7 +222,7 @@ class ProfilePage extends StatelessWidget {
               ),
         ),
       ),
-      box.color: $colors.surface.resolve(context),
+      backgroundColor: $colors.surface.resolve(context),
       body: SafeArea(
         minimum: const EdgeInsets.all(16),
         child: Column(
@@ -306,8 +306,8 @@ Mix provides an easy utility that you can use called `$md`, this is a namespace 
 ```dart
 Box(
   style: Style(
-    text.style.of($md.textTheme.headline1),
-    box.color.of($md.colorScheme.primary),
+    $text.style.ref($md.textTheme.headline1),
+    $box.color.ref($md.colorScheme.primary),
   ),
   child: Text('Hello World'),
 )

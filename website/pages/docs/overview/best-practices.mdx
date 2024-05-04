@@ -137,42 +137,42 @@ class CustomButtonStyle {
   Style container() => Style(
         borderRadius(8),
         CustomButtonSize.medium(
-          box.padding.horizontal(16),
-          box.padding.vertical(8),
+          $box.padding.horizontal(16),
+          $box.padding.vertical(8),
         ),
         CustomButtonSize.large(
-          box.padding.horizontal(24),
-          box.padding.vertical(16),
+          $box.padding.horizontal(24),
+          $box.padding.vertical(16),
         ),
         CustomButtonType.primary(
-          box.color.black(),
+          $box.color.black(),
         ),
         CustomButtonType.destructive(
-          box.color.redAccent(),
+          $box.color.redAccent(),
         ),
         CustomButtonType.link(
-          box.color.transparent(),
+          $box.color.transparent(),
         ),
       ).applyVariants([type, size]);
 
   Style label() => Style(
-        text.style.color.white(),
-        text.style.bold(),
+        $text.style.color.white(),
+        $text.style.bold(),
         CustomButtonSize.medium(
-          text.style.fontSize(14),
+          $text.style.fontSize(14),
         ),
         CustomButtonSize.large(
-          text.style.fontSize(18),
+          $text.style.fontSize(18),
         ),
         CustomButtonType.primary(
-          text.style.color.white(),
+          $text.style.color.white(),
         ),
         CustomButtonType.destructive(
-          text.style.color.white(),
+          $text.style.color.white(),
         ),
         CustomButtonType.link(
-          text.style.color.black(),
-          text.style.decoration.underline(),
+          $text.style.color.black(),
+          $text.style.decoration.underline(),
         ),
       ).applyVariants([type, size]);
 }
@@ -211,4 +211,3 @@ class CustomButton extends StatelessWidget {
 ```
 
 Congratulations! You are now ready to use your `CustomButton` component, fully aligned with the Mix framework's conventions.
-
