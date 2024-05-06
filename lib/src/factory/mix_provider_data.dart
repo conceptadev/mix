@@ -4,6 +4,7 @@ import 'package:meta/meta.dart';
 import '../attributes/variant_attribute.dart';
 import '../core/attribute.dart';
 import '../core/attributes_map.dart';
+import '../core/decorator.dart';
 import '../core/extensions/iterable_ext.dart';
 import '../helpers/compare_mixin.dart';
 import '../helpers/constants.dart';
@@ -62,7 +63,7 @@ class MixData with Comparable {
   @internal
   MixData toInheritable() {
     final inheritableAttributes = _attributes.values.where(
-      (attr) => attr.isInheritable,
+      (attr) => attr is! DecoratorAttribute,
     );
 
     return copyWith(attributes: AttributeMap(inheritableAttributes));

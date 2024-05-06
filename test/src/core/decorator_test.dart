@@ -8,12 +8,6 @@ import 'package:mix/src/factory/mix_provider_data.dart';
 import '../../helpers/testing_utils.dart';
 
 void main() {
-  group('Decorator', () {
-    test('isInheritable should be false', () {
-      expect(const _TestDecorator(2).isInheritable, isFalse);
-    });
-  });
-
   group('DecoratorSpec', () {
     test('lerpValue should return null when both begin and end are null', () {
       expect(DecoratorSpec.lerpValue(null, null, 0.5), isNull);

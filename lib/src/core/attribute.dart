@@ -10,9 +10,6 @@ abstract class Attribute with Comparable {
   // Used as the key to determine how
   // attributes get merged
   Object get mergeKey;
-
-  // Used to determine if the attribute is inheritable
-  bool get isInheritable => true;
 }
 
 @immutable
