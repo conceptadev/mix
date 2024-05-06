@@ -108,5 +108,84 @@ void main() {
         expect(find.byType(Align), findsOneWidget);
       },
     );
+
+    testWidgets('AnimatedStyledImage should animate ImageSpec properties',
+        (WidgetTester tester) async {
+      final imageProvider = FileImage(File('test_resources/logo.png'));
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: StyledImage(
+              image: imageProvider,
+              style: Style(
+                $image.width(100),
+                $image.height(100),
+              ).animate(
+                duration: const Duration(milliseconds: 500),
+              ),
+            ),
+          ),
+        ),
+      );
+
+      expect(find.byType(Image), findsOneWidget);
+      expect(tester.widget<Image>(find.byType(Image)).width, 100);
+      expect(tester.widget<Image>(find.byType(Image)).height, 100);
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: StyledImage(
+              image: imageProvider,
+              style: Style(
+                $image.width(200),
+                $image.height(200),
+              ).animate(duration: const Duration(milliseconds: 500)),
+            ),
+          ),
+        ),
+      );
+
+      await tester.pump(const Duration(milliseconds: 250));
+      expect(tester.widget<Image>(find.byType(Image)).width, 150);
+      expect(tester.widget<Image>(find.byType(Image)).height, 150);
+
+      await tester.pump(const Duration(milliseconds: 250));
+      expect(tester.widget<Image>(find.byType(Image)).width, 200);
+      expect(tester.widget<Image>(find.byType(Image)).height, 200);
+    });
+
+    testWidgets('ImageSpecWidget should apply ImageSpec properties',
+        (WidgetTester tester) async {
+      const spec = ImageSpec(
+        width: 150,
+        height: 150,
+        color: Colors.red,
+        fit: BoxFit.cover,
+        repeat: ImageRepeat.noRepeat,
+        alignment: Alignment.bottomLeft,
+        centerSlice: Rect.fromLTRB(1, 2, 3, 4),
+        filterQuality: FilterQuality.high,
+        colorBlendMode: BlendMode.colorDodge,
+      );
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: ImageSpecWidget(
+              spec: spec,
+              image: FileImage(File('test_resources/logo.png')),
+            ),
+          ),
+        ),
+      );
+
+      final imageWidget = tester.widget<Image>(find.byType(Image));
+      expect(imageWidget.width, 150);
+      expect(imageWidget.height, 150);
+      expect(imageWidget.color, Colors.red);
+      expect(imageWidget.fit, BoxFit.cover);
+    });
   });
 }

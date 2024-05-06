@@ -138,13 +138,5 @@ void main() {
       expect(result.transform, Matrix4.rotationZ(0.5));
       expect(result.alignment, Alignment.center);
     });
-
-    test('flip', () {
-      final utility =
-          TransformUtility<TransformDecoratorAttribute>((attr) => attr);
-      final result = utility.flip(true, false);
-      expect(result.transform, Matrix4.diagonal3Values(-1.0, 1.0, 1.0));
-      expect(result.alignment, Alignment.center);
-    });
   });
 }

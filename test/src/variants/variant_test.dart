@@ -55,10 +55,10 @@ void main() {
     });
 
     test('when should correctly match context variants', () {
-      final variant1 = MockContextVariantCondition(true);
-      final variant2 = MockContextVariantCondition(false);
-      final multiAndVariant = MultiVariant.and([variant1, variant2]);
-      final multiOrVariant = MultiVariant.or([variant1, variant2]);
+      const variant1 = MockContextVariantCondition(true);
+      const variant2 = MockContextVariantCondition(false);
+      final multiAndVariant = MultiVariant.and(const [variant1, variant2]);
+      final multiOrVariant = MultiVariant.or(const [variant1, variant2]);
 
       expect(multiAndVariant.when(MockBuildContext()), isFalse);
       expect(multiOrVariant.when(MockBuildContext()), isTrue);
@@ -86,9 +86,9 @@ void main() {
       test(
           'MultiVariant.or with 2 PressableStateVariant (false & false) should return true',
           () {
-        final variant1 = MockContextVariantCondition(false);
-        final variant2 = MockContextVariantCondition(false);
-        final multiVariant = MultiVariant.or([variant1, variant2]);
+        const variant1 = MockContextVariantCondition(false);
+        const variant2 = MockContextVariantCondition(false);
+        final multiVariant = MultiVariant.or(const [variant1, variant2]);
 
         final expectValue = multiVariant.when(MockBuildContext());
 
@@ -99,9 +99,9 @@ void main() {
       test(
           'MultiVariant.or with 2 PressableStateVariant (false & true) should return true',
           () {
-        final variant1 = MockContextVariantCondition(false);
-        final variant2 = MockContextVariantCondition(true);
-        final multiVariant = MultiVariant.or([variant1, variant2]);
+        const variant1 = MockContextVariantCondition(false);
+        const variant2 = MockContextVariantCondition(true);
+        final multiVariant = MultiVariant.or(const [variant1, variant2]);
 
         final expectValue = multiVariant.when(MockBuildContext());
 
@@ -112,9 +112,9 @@ void main() {
       test(
           'MultiVariant.or with 2 PressableStateVariant (true & true) should return true',
           () {
-        final variant1 = MockContextVariantCondition(true);
-        final variant2 = MockContextVariantCondition(true);
-        final multiVariant = MultiVariant.or([variant1, variant2]);
+        const variant1 = MockContextVariantCondition(true);
+        const variant2 = MockContextVariantCondition(true);
+        final multiVariant = MultiVariant.or(const [variant1, variant2]);
 
         final expectValue = multiVariant.when(MockBuildContext());
 
@@ -125,9 +125,9 @@ void main() {
       test(
           'MultiVariant.and with 2 ContextVariant (false & false) should return false',
           () {
-        final variant1 = MockContextVariantCondition(false);
-        final variant2 = MockContextVariantCondition(false);
-        final multiVariant = MultiVariant.and([variant1, variant2]);
+        const variant1 = MockContextVariantCondition(false);
+        const variant2 = MockContextVariantCondition(false);
+        final multiVariant = MultiVariant.and(const [variant1, variant2]);
 
         final expectValue = multiVariant.when(MockBuildContext());
 
@@ -138,9 +138,9 @@ void main() {
       test(
           'MultiVariant.and with 2 ContextVariant (false & true) should return false',
           () {
-        final variant1 = MockContextVariantCondition(false);
-        final variant2 = MockContextVariantCondition(true);
-        final multiVariant = MultiVariant.and([variant1, variant2]);
+        const variant1 = MockContextVariantCondition(false);
+        const variant2 = MockContextVariantCondition(true);
+        final multiVariant = MultiVariant.and(const [variant1, variant2]);
 
         final expectValue = multiVariant.when(MockBuildContext());
 
@@ -151,9 +151,9 @@ void main() {
       test(
           'MultiVariant.and with 2 ContextVariant (true & true) should return true',
           () {
-        final variant1 = MockContextVariantCondition(true);
-        final variant2 = MockContextVariantCondition(true);
-        final multiVariant = MultiVariant.and([variant1, variant2]);
+        const variant1 = MockContextVariantCondition(true);
+        const variant2 = MockContextVariantCondition(true);
+        final multiVariant = MultiVariant.and(const [variant1, variant2]);
 
         final expectValue = multiVariant.when(MockBuildContext());
 
@@ -284,6 +284,43 @@ void main() {
         testCase(v1: false, v2: false, v3: true, expected: isFalse);
         testCase(v1: false, v2: false, v3: false, expected: isFalse);
       });
+    });
+
+    test('mergeKey should correctly represent the MultiVariant', () {
+      const variant1 = Variant('variant1');
+      const variant2 = Variant('variant2');
+      final multiAndVariant = MultiVariant.and(const [variant1, variant2]);
+      final multiOrVariant = MultiVariant.or(const [variant1, variant2]);
+
+      expect(multiAndVariant.mergeKey.toString(),
+          contains('MultiVariant.MultiVariantOperator.and'));
+      expect(multiAndVariant.mergeKey.toString(), contains('variant1'));
+      expect(multiAndVariant.mergeKey.toString(), contains('variant2'));
+
+      expect(multiOrVariant.mergeKey.toString(),
+          contains('MultiVariant.MultiVariantOperator.or'));
+      expect(multiOrVariant.mergeKey.toString(), contains('variant1'));
+      expect(multiOrVariant.mergeKey.toString(), contains('variant2'));
+    });
+
+    test('priority should return the highest priority of context variants', () {
+      const variant1 = MockContextVariant(VariantPriority.low);
+      const variant2 = MockContextVariant(VariantPriority.high);
+      const variant3 = MockContextVariant(VariantPriority.normal);
+      final multiVariant =
+          MultiVariant.and(const [variant1, variant2, variant3]);
+
+      expect(multiVariant.priority, VariantPriority.high);
+    });
+
+    test(
+        'priority should return normal priority if no context variants are present',
+        () {
+      const variant1 = Variant('variant1');
+      const variant2 = Variant('variant2');
+      final multiVariant = MultiVariant.and(const [variant1, variant2]);
+
+      expect(multiVariant.priority, VariantPriority.normal);
     });
   });
 }

@@ -77,6 +77,20 @@ class TransformUtility<T extends StyleAttribute>
     extends MixUtility<T, TransformDecoratorAttribute> {
   const TransformUtility(super.builder);
 
+  T _flip(bool x, bool y) => builder(
+        TransformDecoratorAttribute(
+          transform: Matrix4.diagonal3Values(
+            x ? -1.0 : 1.0,
+            y ? -1.0 : 1.0,
+            1.0,
+          ),
+          alignment: Alignment.center,
+        ),
+      );
+
+  T flipX() => _flip(true, false);
+  T flipY() => _flip(false, true);
+
   T call(Matrix4 value) =>
       builder(TransformDecoratorAttribute(transform: value));
 
@@ -90,17 +104,6 @@ class TransformUtility<T extends StyleAttribute>
   T rotate(double value) => builder(
         TransformDecoratorAttribute(
           transform: Matrix4.rotationZ(value),
-          alignment: Alignment.center,
-        ),
-      );
-
-  T flip(bool x, bool y) => builder(
-        TransformDecoratorAttribute(
-          transform: Matrix4.diagonal3Values(
-            x ? -1.0 : 1.0,
-            y ? -1.0 : 1.0,
-            1.0,
-          ),
           alignment: Alignment.center,
         ),
       );

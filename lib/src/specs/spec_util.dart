@@ -15,17 +15,17 @@ final $image = ImageSpecUtility(MixUtility.selfBuilder);
 final $icon = IconSpecUtility(MixUtility.selfBuilder);
 final $text = TextSpecUtility(MixUtility.selfBuilder);
 final $stack = StackSpecUtility(MixUtility.selfBuilder);
-final $with = WithDecoratorUtility(MixUtility.selfBuilder);
+final $with = WithDecoratorUtility();
 final $on = OnContextVariantUtility();
 
 const $apply = NestedStyleUtility();
 
-class MixUtilities {
+class AllMixUtilities {
   final BoxSpecUtility box = $box;
   final FlexSpecUtility flex = $flex;
   final ImageSpecUtility image = $image;
   final IconSpecUtility icon = $icon;
   final TextSpecUtility text = $text;
   final StackSpecUtility stack = $stack;
-  MixUtilities();
+  AllMixUtilities();
 }

@@ -205,10 +205,9 @@ class MockIntScalarAttribute
 }
 
 class MockContextVariant extends ContextVariant {
-  const MockContextVariant();
-
   @override
-  final priority = VariantPriority.normal;
+  final VariantPriority priority;
+  const MockContextVariant([this.priority = VariantPriority.normal]);
 
   @override
   bool when(BuildContext context) => true;

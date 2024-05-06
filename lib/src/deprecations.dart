@@ -417,17 +417,16 @@ final portrait = $on.portrait;
 @Deprecated(r'Use $on.landscape instead')
 final landscape = $on.landscape;
 
-@Deprecated(r'Use $on.portrait instead')
-final onPortrait = $on.portrait;
-
-@Deprecated(r'Use $on.landscape instead')
-final onLandscape = $on.landscape;
-
 @Deprecated(r'Use $on.disabled instead')
 final disabled = $on.disabled;
 
 @Deprecated(r'Use $on.enabled instead')
 final enabled = $on.enabled;
+@Deprecated(r'Use $on.portrait instead')
+final onPortrait = $on.portrait;
+
+@Deprecated(r'Use $on.landscape instead')
+final onLandscape = $on.landscape;
 
 @Deprecated(r'Use $on.press instead')
 final onPressed = $on.press;
@@ -474,51 +473,6 @@ final onLTR = $on.ltr;
 @Deprecated(r'Use $on.Not instead')
 final not = $on.not;
 
-@Deprecated(r'Use $box.borderRadius instead')
-final r = $box.borderRadius;
-
-@Deprecated(r'Use $box.borderRadius.horizontal instead')
-dynamic get roundedH => UnimplementedError();
-
-@Deprecated(r'use $box.borderRadius.vertical instead')
-dynamic get roundedV => UnimplementedError();
-
-@Deprecated(kShortAliasDeprecation)
-dynamic get roundedDH => UnimplementedError();
-
-@Deprecated(kShortAliasDeprecation)
-final roundedTL = $box.borderRadius.topLeft;
-
-@Deprecated(kShortAliasDeprecation)
-final roundedTR = $box.borderRadius.topRight;
-
-@Deprecated(kShortAliasDeprecation)
-final roundedBL = $box.borderRadius.bottomLeft;
-
-@Deprecated(kShortAliasDeprecation)
-final roundedBR = $box.borderRadius.bottomRight;
-
-@Deprecated(kShortAliasDeprecation)
-final roundedTS = $box.borderRadiusDirectional.topStart;
-
-@Deprecated(kShortAliasDeprecation)
-final roundedTE = $box.borderRadiusDirectional.topEnd;
-
-@Deprecated(kShortAliasDeprecation)
-final roundedBS = $box.borderRadiusDirectional.bottomStart;
-
-@Deprecated(kShortAliasDeprecation)
-final roundedBE = $box.borderRadiusDirectional.bottomEnd;
-
-@Deprecated(r'Use $stack.alignment instead')
-final zAlignment = $stack.alignment;
-
-@Deprecated(r'Use $stack.fit instead')
-final zFit = $stack.fit;
-
-@Deprecated(r'Use $stack.clipBehavior instead')
-final zClip = $stack.clipBehavior;
-
 @Deprecated(r'Use $text.directive')
 final directives = $text.directive;
 
@@ -527,33 +481,6 @@ final directive = $text.directive;
 
 @Deprecated('Locale is now passed to StyledText widget')
 final locale = $text.style.locale;
-
-@Deprecated('Use StyledText instead')
-class TextMix extends StyledText {
-  const TextMix(
-    super.text, {
-    super.semanticsLabel,
-    Mix? mix,
-    super.key,
-    super.inherit = true,
-    super.locale,
-  }) : super(style: mix);
-}
-
-@Deprecated('Use StyledIcon instead')
-class IconMix extends StyledIcon {
-  const IconMix(
-    super.icon, {
-    super.semanticLabel,
-    required Mix mix,
-    super.key,
-    super.inherit = true,
-    super.textDirection,
-  }) : super(style: mix);
-}
-
-@Deprecated(r'Use $text.style instead')
-final textStyle = $text.style.as;
 
 @Deprecated(r'Use $text.maxLines instead')
 final maxLines = $text.maxLines;
@@ -564,75 +491,12 @@ final textAlign = $text.textAlign;
 @Deprecated(r'Use $text.style.shadow instead')
 final shadow = $text.style.shadow;
 
-const _selfBuilder = MixUtility.selfBuilder;
-
-@Deprecated('used temporarily for migration')
-class ClipDecoratorUtility {
-  final ClipPathUtility path = const ClipPathUtility(_selfBuilder);
-  final ClipOvalUtility oval = const ClipOvalUtility(_selfBuilder);
-  final ClipRectUtility rect = const ClipRectUtility(_selfBuilder);
-  final ClipRRectUtility rrect = const ClipRRectUtility(_selfBuilder);
-  final ClipTriangleUtility triangle = const ClipTriangleUtility(_selfBuilder);
-
-  const ClipDecoratorUtility();
-}
-
-@Deprecated(r'Use $image.color instead')
-final imageColor = $image.color;
-
-@Deprecated(r'Use $image.blendMode instead')
-final imageColorBlendMode = $image.blendMode;
-
-@Deprecated(r'Use $image.fit instead')
-final imageFit = $image.fit;
-
-@Deprecated(r'Use $image.alignment instead')
-final imageAlignment = $image.alignment;
-
-@Deprecated(r'Use $image.repeat instead')
-final imageRepeat = $image.repeat;
-
-@Deprecated(r'Use $image.centerSlice instead')
-final imageCenterSlice = $image.centerSlice;
-
-// textDirection
-@Deprecated(r'Use $text.textDirection instead')
-final textDirection = $text.textDirection;
-
-// textWidthBasis
-@Deprecated(r'Use $text.widthBasis instead')
-final textWidthBasis = $text.textWidthBasis;
-
-// softWrap
-@Deprecated(r'Use $text.softWrap instead')
-final softWrap = $text.softWrap;
-
-// textScaleFactor
-@Deprecated(r'Use $text.scaleFactor instead')
-final textScaleFactor = $text.textScaleFactor;
-
-// strutStyle
-@Deprecated(r'Use $text.strutStyle instead')
-final strutStyle = $text.strutStyle;
-
-// textBaseline
-@Deprecated(r'Use $text.baseline instead')
-final textBaseline = $text.style.textBaseline;
-
-// squared
-@Deprecated(r'Use $box.borderRadius.circular instead')
-final squared = $box.borderRadius.zero;
-
 // flexDirection
 @Deprecated(r'Use $flex.direction; instead')
 final flexDirection = $flex.direction;
 
 @Deprecated(r'use $flex')
 final flex = $flex;
-
-// verticalDirection
-@Deprecated('Use verticalDirection instead')
-final verticalDirection = $flex.verticalDirection;
 
 @Deprecated(r'use $box.border instead')
 final border = $box.border;
@@ -700,8 +564,6 @@ final intrinsicHeight = $with.intrinsicHeight;
 @Deprecated(r'use $with.scale instead')
 final scale = $with.scale;
 
-@Deprecated(r'use $with.flip instead')
-final flip = $with.flip;
 @Deprecated(r'use $with.opacity instead')
 final opacity = $with.opacity;
 @Deprecated(r'use $with.rotate instead')
@@ -716,15 +578,6 @@ final clipOval = $with.clipOval;
 final clipRect = $with.clipRect;
 @Deprecated(r'use $with.clipTriangle instead')
 final clipTriangle = $with.clipTriangle;
-
-@Deprecated(r'use $with.visibility instead')
-final visibility = $with.visibility;
-// show
-@Deprecated(r'Use $with.show instead')
-final show = $with.show;
-
-@Deprecated(r'use $material instead')
-const $md = $material;
 
 @Deprecated(r'use $token.radii')
 final $radius = $token.radius;
@@ -741,9 +594,6 @@ final $breakpoint = $token.breakpoint;
 @Deprecated(r'use $token.textStyle')
 final $textStyle = $token.textStyle;
 
-// hide
-@Deprecated(r'Use $with.hide instead')
-final hide = $with.hide;
 @Deprecated(r'use $with.aspectRatio instead')
 final aspectRatio = $with.aspectRatio;
 @Deprecated(r'use $with.flexible instead')
@@ -756,3 +606,142 @@ final align = $with.align;
 final fractionallySizedBox = $with.fractionallySizedBox;
 @Deprecated(r'use $with.sizedBox instead')
 final sizedBox = $with.sizedBox;
+
+@Deprecated(r'Use $box.borderRadius instead')
+final r = $box.borderRadius;
+
+@Deprecated(kShortAliasDeprecation)
+final roundedTL = $box.borderRadius.topLeft;
+
+@Deprecated(kShortAliasDeprecation)
+final roundedTR = $box.borderRadius.topRight;
+
+@Deprecated(kShortAliasDeprecation)
+final roundedBL = $box.borderRadius.bottomLeft;
+
+@Deprecated(kShortAliasDeprecation)
+final roundedBR = $box.borderRadius.bottomRight;
+
+@Deprecated(kShortAliasDeprecation)
+final roundedTS = $box.borderRadiusDirectional.topStart;
+
+@Deprecated(kShortAliasDeprecation)
+final roundedTE = $box.borderRadiusDirectional.topEnd;
+
+@Deprecated(kShortAliasDeprecation)
+final roundedBS = $box.borderRadiusDirectional.bottomStart;
+
+@Deprecated(kShortAliasDeprecation)
+final roundedBE = $box.borderRadiusDirectional.bottomEnd;
+
+@Deprecated(r'Use $stack.alignment instead')
+final zAlignment = $stack.alignment;
+
+@Deprecated(r'Use $stack.fit instead')
+final zFit = $stack.fit;
+
+@Deprecated(r'Use $stack.clipBehavior instead')
+final zClip = $stack.clipBehavior;
+
+@Deprecated('Use StyledText instead')
+class TextMix extends StyledText {
+  const TextMix(
+    super.text, {
+    super.semanticsLabel,
+    Mix? mix,
+    super.key,
+    super.inherit = true,
+    super.locale,
+  }) : super(style: mix);
+}
+
+@Deprecated('Use StyledIcon instead')
+class IconMix extends StyledIcon {
+  const IconMix(
+    super.icon, {
+    super.semanticLabel,
+    required Mix mix,
+    super.key,
+    super.inherit = true,
+    super.textDirection,
+  }) : super(style: mix);
+}
+
+@Deprecated(r'Use $text.style instead')
+final textStyle = $text.style.as;
+
+const _selfBuilder = MixUtility.selfBuilder;
+
+@Deprecated('used temporarily for migration')
+class ClipDecoratorUtility {
+  final ClipPathUtility path = const ClipPathUtility(_selfBuilder);
+  final ClipOvalUtility oval = const ClipOvalUtility(_selfBuilder);
+  final ClipRectUtility rect = const ClipRectUtility(_selfBuilder);
+  final ClipRRectUtility rrect = const ClipRRectUtility(_selfBuilder);
+  final ClipTriangleUtility triangle = const ClipTriangleUtility(_selfBuilder);
+
+  const ClipDecoratorUtility();
+}
+
+@Deprecated(r'Use $image.color instead')
+final imageColor = $image.color;
+
+@Deprecated(r'Use $image.blendMode instead')
+final imageColorBlendMode = $image.blendMode;
+
+@Deprecated(r'Use $image.fit instead')
+final imageFit = $image.fit;
+
+@Deprecated(r'Use $image.alignment instead')
+final imageAlignment = $image.alignment;
+
+@Deprecated(r'Use $image.repeat instead')
+final imageRepeat = $image.repeat;
+
+@Deprecated(r'Use $image.centerSlice instead')
+final imageCenterSlice = $image.centerSlice;
+
+// textDirection
+@Deprecated(r'Use $text.textDirection instead')
+final textDirection = $text.textDirection;
+
+// textWidthBasis
+@Deprecated(r'Use $text.widthBasis instead')
+final textWidthBasis = $text.textWidthBasis;
+
+// softWrap
+@Deprecated(r'Use $text.softWrap instead')
+final softWrap = $text.softWrap;
+
+// textScaleFactor
+@Deprecated(r'Use $text.scaleFactor instead')
+final textScaleFactor = $text.textScaleFactor;
+
+// strutStyle
+@Deprecated(r'Use $text.strutStyle instead')
+final strutStyle = $text.strutStyle;
+
+// textBaseline
+@Deprecated(r'Use $text.baseline instead')
+final textBaseline = $text.style.textBaseline;
+
+// squared
+@Deprecated(r'Use $box.borderRadius.circular instead')
+final squared = $box.borderRadius.zero;
+
+// verticalDirection
+@Deprecated('Use verticalDirection instead')
+final verticalDirection = $flex.verticalDirection;
+
+@Deprecated(r'use $with.visibility instead')
+final visibility = $with.visibility;
+// show
+@Deprecated(r'Use $with.show instead')
+final show = $with.show;
+
+@Deprecated(r'use $material instead')
+const $md = $material;
+
+// hide
+@Deprecated(r'Use $with.hide instead')
+final hide = $with.hide;

@@ -19,6 +19,7 @@ class StyledImage extends StyledWidget {
     this.gaplessPlayback = false,
     this.isAntiAlias = false,
     this.matchTextDirection = false,
+    this.opacity,
     super.orderOfDecorators = const [],
   });
 
@@ -31,6 +32,7 @@ class StyledImage extends StyledWidget {
   final bool gaplessPlayback;
   final bool isAntiAlias;
   final bool matchTextDirection;
+  final Animation<double>? opacity;
 
   @override
   Widget build(BuildContext context) {
@@ -52,6 +54,7 @@ class StyledImage extends StyledWidget {
               gaplessPlayback: gaplessPlayback,
               isAntiAlias: isAntiAlias,
               matchTextDirection: matchTextDirection,
+              opacity: opacity,
             )
           : ImageSpecWidget(
               spec: spec,
@@ -63,6 +66,7 @@ class StyledImage extends StyledWidget {
               excludeFromSemantics: excludeFromSemantics,
               gaplessPlayback: gaplessPlayback,
               isAntiAlias: isAntiAlias,
+              opacity: opacity,
               matchTextDirection: matchTextDirection,
             );
     });
@@ -82,6 +86,7 @@ class ImageSpecWidget extends StatelessWidget {
     this.excludeFromSemantics = false,
     this.gaplessPlayback = false,
     this.isAntiAlias = false,
+    this.opacity,
     this.matchTextDirection = false,
   });
 
@@ -96,6 +101,7 @@ class ImageSpecWidget extends StatelessWidget {
   final bool gaplessPlayback;
   final bool isAntiAlias;
   final bool matchTextDirection;
+  final Animation<double>? opacity;
 
   @override
   Widget build(BuildContext context) {
@@ -109,6 +115,7 @@ class ImageSpecWidget extends StatelessWidget {
       width: spec?.width,
       height: spec?.height,
       color: spec?.color,
+      opacity: opacity,
       colorBlendMode: spec?.colorBlendMode ?? BlendMode.clear,
       fit: spec?.fit,
       alignment: spec?.alignment ?? Alignment.center,
@@ -138,6 +145,7 @@ class AnimatedImageSpecWidget extends ImplicitlyAnimatedWidget {
     this.gaplessPlayback = false,
     this.isAntiAlias = false,
     this.matchTextDirection = false,
+    this.opacity,
   });
 
   final ImageSpec? spec;
@@ -150,6 +158,7 @@ class AnimatedImageSpecWidget extends ImplicitlyAnimatedWidget {
   final bool gaplessPlayback;
   final bool isAntiAlias;
   final bool matchTextDirection;
+  final Animation<double>? opacity;
 
   @override
   AnimatedWidgetBaseState<AnimatedImageSpecWidget> createState() =>
@@ -184,6 +193,10 @@ class _AnimateImageSpecState
       errorBuilder: widget.errorBuilder,
       semanticLabel: widget.semanticLabel,
       excludeFromSemantics: widget.excludeFromSemantics,
+      gaplessPlayback: widget.gaplessPlayback,
+      isAntiAlias: widget.isAntiAlias,
+      opacity: widget.opacity,
+      matchTextDirection: widget.matchTextDirection,
     );
   }
 }
