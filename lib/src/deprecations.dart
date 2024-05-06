@@ -5,6 +5,7 @@ import '../src/factory/mix_provider_data.dart';
 import '../src/specs/icon/icon_widget.dart';
 import '../src/specs/text/text_widget.dart';
 import '../src/variants/variant.dart';
+import 'attributes/nested_style/nested_style_util.dart';
 import 'attributes/scalars/scalar_util.dart';
 import 'core/attribute.dart';
 import 'decorators/clip_widget_decorator.dart';
@@ -39,7 +40,7 @@ extension DeprecatedMixExtension on Style {
   Style withVariants(List<Variant> variants) => withManyVariants(variants);
 
   @Deprecated('Use applyVariants(value) instead')
-  Style withManyVariants(Iterable<Variant> variants) => applyVariants(variants);
+  Style withManyVariants(List<Variant> variants) => applyVariants(variants);
 
   @Deprecated('Use merge()  instead')
   SpreadFunctionParams<Style, Style> get apply =>
@@ -52,10 +53,10 @@ extension DeprecatedMixExtension on Style {
   Style combineAll(List<Style> mixes) => Style.combine(mixes);
 
   @Deprecated('not needed as record implementation is more elegant')
-  Style variantSwitcher(List<SwitchCondition<IVariant>> cases) {
-    List<IVariant> variantsToApply = [];
+  Style variantSwitcher(List<SwitchCondition<Variant>> cases) {
+    List<Variant> variantsToApply = [];
 
-    for (SwitchCondition<IVariant> conditionCase in cases) {
+    for (SwitchCondition<Variant> conditionCase in cases) {
       if (conditionCase.condition) {
         variantsToApply.add(conditionCase.value);
       }
@@ -85,6 +86,9 @@ extension DeprecatedMixExtension on Style {
 /// This refers to the deprecated class MixData and it's here for the purpose of maintaining compatibility.
 @Deprecated('Use MixData instead.')
 typedef MixContext = MixData;
+
+@Deprecated('Call the style directly instead')
+const apply = NestedStyleUtility();
 
 extension WithSpaceTokensExt<T extends StyleAttribute>
     on SpacingSideUtility<T> {
