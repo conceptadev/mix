@@ -40,25 +40,6 @@ void main() {
   });
 }
 
-class _TestDecorator
-    extends DecoratorAttribute<_TestDecorator, _TestDecoratorSpec> {
-  final double value;
-  const _TestDecorator(this.value);
-
-  @override
-  _TestDecoratorSpec resolve(MixData mix) {
-    return const _TestDecoratorSpec(0);
-  }
-
-  @override
-  get props => [];
-
-  @override
-  _TestDecorator merge(_TestDecorator? other) {
-    return _TestDecorator(other?.value ?? value);
-  }
-}
-
 class _TestDecoratorSpec extends DecoratorSpec<_TestDecoratorSpec> {
   final double value;
   const _TestDecoratorSpec(this.value);

@@ -554,7 +554,4 @@ void _testApplyContextToVisualAttributes({
 class _NonInheritableAttribute
     extends ScalarAttribute<MockIntScalarAttribute, int?> {
   const _NonInheritableAttribute() : super(null);
-
-  @override
-  bool get isInheritable => false;
 }
