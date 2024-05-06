@@ -46,13 +46,14 @@ void main() {
   });
 }
 
-class _TestDecorator extends Decorator<_TestDecorator, double> {
+class _TestDecorator
+    extends DecoratorAttribute<_TestDecorator, _TestDecoratorSpec> {
   final double value;
   const _TestDecorator(this.value);
 
   @override
-  double resolve(MixData mix) {
-    return 0;
+  _TestDecoratorSpec resolve(MixData mix) {
+    return const _TestDecoratorSpec(0);
   }
 
   @override
