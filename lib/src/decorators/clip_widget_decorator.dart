@@ -367,7 +367,7 @@ class TriangleClipper extends CustomClipper<Path> {
   bool shouldReclip(TriangleClipper oldClipper) => false;
 }
 
-class ClipPathUtility<T extends StyleAttribute>
+class ClipPathUtility<T extends Attribute>
     extends MixUtility<T, ClipPathDecoratorAttribute> {
   const ClipPathUtility(super.builder);
 
@@ -378,7 +378,7 @@ class ClipPathUtility<T extends StyleAttribute>
   }
 }
 
-class ClipRRectUtility<T extends StyleAttribute>
+class ClipRRectUtility<T extends Attribute>
     extends MixUtility<T, ClipRRectDecoratorAttribute> {
   const ClipRRectUtility(super.builder);
   T call({
@@ -396,7 +396,7 @@ class ClipRRectUtility<T extends StyleAttribute>
   }
 }
 
-class ClipOvalUtility<T extends StyleAttribute>
+class ClipOvalUtility<T extends Attribute>
     extends MixUtility<T, ClipOvalDecoratorAttribute> {
   const ClipOvalUtility(super.builder);
   T call({CustomClipper<Rect>? clipper, Clip? clipBehavior}) {
@@ -406,7 +406,7 @@ class ClipOvalUtility<T extends StyleAttribute>
   }
 }
 
-class ClipRectUtility<T extends StyleAttribute>
+class ClipRectUtility<T extends Attribute>
     extends MixUtility<T, ClipRectDecoratorAttribute> {
   const ClipRectUtility(super.builder);
   T call({CustomClipper<Rect>? clipper, Clip? clipBehavior}) {
@@ -416,7 +416,7 @@ class ClipRectUtility<T extends StyleAttribute>
   }
 }
 
-class ClipTriangleUtility<T extends StyleAttribute>
+class ClipTriangleUtility<T extends Attribute>
     extends MixUtility<T, ClipTriangleDecoratorAttribute> {
   const ClipTriangleUtility(super.builder);
   T call({Clip? clipBehavior}) {

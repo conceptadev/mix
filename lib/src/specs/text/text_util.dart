@@ -10,7 +10,7 @@ import '../../core/attribute.dart';
 import '../../core/directive.dart';
 import 'text_attribute.dart';
 
-class TextSpecUtility<T extends SpecAttribute>
+class TextSpecUtility<T extends Attribute>
     extends SpecUtility<T, TextSpecAttribute> {
   late final directive = TextDirectiveUtility((v) => only(directive: v));
   late final overflow = TextOverflowUtility((v) => only(overflow: v));

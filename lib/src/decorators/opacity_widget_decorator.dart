@@ -63,7 +63,7 @@ class OpacityDecoratorAttribute extends DecoratorAttribute<
   get props => [opacity];
 }
 
-class OpacityUtility<T extends StyleAttribute>
+class OpacityUtility<T extends Attribute>
     extends MixUtility<T, OpacityDecoratorAttribute> {
   const OpacityUtility(super.builder);
   T call(double value) => builder(OpacityDecoratorAttribute(value));

@@ -59,7 +59,7 @@ class AspectRatioDecoratorSpec extends DecoratorSpec<AspectRatioDecoratorSpec> {
   }
 }
 
-class AspectRatioUtility<T extends StyleAttribute>
+class AspectRatioUtility<T extends Attribute>
     extends MixUtility<T, AspectRatioDecoratorAttribute> {
   const AspectRatioUtility(super.builder);
   T call(double value) {

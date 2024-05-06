@@ -4,7 +4,7 @@ import '../../attributes/scalars/scalar_util.dart';
 import '../../core/attribute.dart';
 import 'stack_attribute.dart';
 
-class StackSpecUtility<T extends SpecAttribute>
+class StackSpecUtility<T extends Attribute>
     extends SpecUtility<T, StackSpecAttribute> {
   late final alignment = AlignmentUtility((v) => only(alignment: v));
   late final fit = StackFitUtility((v) => only(fit: v));

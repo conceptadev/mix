@@ -8,15 +8,15 @@ import 'color_directives.dart';
 import 'color_dto.dart';
 
 @immutable
-abstract class BaseColorUtility<T extends StyleAttribute>
-    extends StyleUtility<T, ColorDto> {
+abstract class BaseColorUtility<T extends Attribute>
+    extends MixUtility<T, ColorDto> {
   const BaseColorUtility(super.builder);
 
   T _buildColor(Color color) => builder(ColorDto(color));
 }
 
 @immutable
-class FoundationColorUtility<T extends StyleAttribute, C extends Color>
+class FoundationColorUtility<T extends Attribute, C extends Color>
     extends BaseColorUtility<T> with ColorDirectiveMixin<T> {
   final C color;
   const FoundationColorUtility(super.builder, this.color);
@@ -28,12 +28,12 @@ class FoundationColorUtility<T extends StyleAttribute, C extends Color>
       builder(ColorDto.raw(value: color, directives: [directive]));
 }
 
-typedef SimpleColorUtility<T extends StyleAttribute>
+typedef SimpleColorUtility<T extends Attribute>
     = FoundationColorUtility<T, Color>;
-typedef MaterialSingleColorUtility<T extends StyleAttribute>
+typedef MaterialSingleColorUtility<T extends Attribute>
     = FoundationColorUtility<T, MaterialColor>;
 
-mixin ColorDirectiveMixin<T extends StyleAttribute> on BaseColorUtility<T> {
+mixin ColorDirectiveMixin<T extends Attribute> on BaseColorUtility<T> {
   T directive(ColorDirective directive) =>
       builder(ColorDto.directive(directive));
   T withOpacity(double opacity) => directive(OpacityColorDirective(opacity));
@@ -49,7 +49,7 @@ mixin ColorDirectiveMixin<T extends StyleAttribute> on BaseColorUtility<T> {
 }
 
 @immutable
-class ColorUtility<T extends StyleAttribute> extends BaseColorUtility<T>
+class ColorUtility<T extends Attribute> extends BaseColorUtility<T>
     with ColorDirectiveMixin<T> {
   const ColorUtility(super.builder);
 
@@ -178,7 +178,7 @@ class ColorUtility<T extends StyleAttribute> extends BaseColorUtility<T>
 }
 
 @immutable
-class MaterialColorUtility<T extends StyleAttribute>
+class MaterialColorUtility<T extends Attribute>
     extends FoundationColorUtility<T, MaterialColor> {
   const MaterialColorUtility(super.builder, super.color);
 
@@ -214,7 +214,7 @@ class MaterialColorUtility<T extends StyleAttribute>
 }
 
 @immutable
-class MaterialAccentColorUtility<T extends StyleAttribute>
+class MaterialAccentColorUtility<T extends Attribute>
     extends FoundationColorUtility<T, MaterialAccentColor> {
   const MaterialAccentColorUtility(super.builder, super.color);
 

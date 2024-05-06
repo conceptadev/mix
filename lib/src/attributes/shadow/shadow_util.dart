@@ -16,7 +16,7 @@ import 'shadow_dto.dart';
 ///
 /// The [BoxShadowUtility] class is part of a larger set of utilities for working
 /// with style attributes in a Flutter application.
-class BoxShadowUtility<T extends StyleAttribute>
+class BoxShadowUtility<T extends Attribute>
     extends DtoUtility<T, BoxShadowDto, BoxShadow> {
   /// A utility for setting the color of a box shadow.
   late final color = ColorUtility<T>((v) => only(color: v));
@@ -73,7 +73,7 @@ class BoxShadowUtility<T extends StyleAttribute>
   }
 }
 
-class ShadowUtility<T extends StyleAttribute>
+class ShadowUtility<T extends Attribute>
     extends DtoUtility<T, ShadowDto, Shadow> {
   late final color = ColorUtility<T>((v) => only(color: v));
   late final offset = OffsetUtility<T>((v) => only(offset: v));
@@ -98,8 +98,8 @@ class ShadowUtility<T extends StyleAttribute>
   }
 }
 
-class ShadowListUtility<T extends StyleAttribute>
-    extends StyleUtility<T, List<ShadowDto>> {
+class ShadowListUtility<T extends Attribute>
+    extends MixUtility<T, List<ShadowDto>> {
   const ShadowListUtility(super.builder);
 
   T call(List<BoxShadow> shadows) {
@@ -107,8 +107,8 @@ class ShadowListUtility<T extends StyleAttribute>
   }
 }
 
-class BoxShadowListUtility<T extends StyleAttribute>
-    extends StyleUtility<T, List<BoxShadowDto>> {
+class BoxShadowListUtility<T extends Attribute>
+    extends MixUtility<T, List<BoxShadowDto>> {
   const BoxShadowListUtility(super.builder);
 
   T call(List<BoxShadow> shadows) {
@@ -116,8 +116,8 @@ class BoxShadowListUtility<T extends StyleAttribute>
   }
 }
 
-class ElevationUtility<T extends StyleAttribute>
-    extends StyleUtility<T, List<BoxShadowDto>> {
+class ElevationUtility<T extends Attribute>
+    extends MixUtility<T, List<BoxShadowDto>> {
   const ElevationUtility(super.builder);
 
   T call(int value) {

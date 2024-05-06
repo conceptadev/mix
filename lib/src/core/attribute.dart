@@ -9,7 +9,7 @@ abstract class Attribute with Comparable {
 
   // Used as the key to determine how
   // attributes get merged
-  Object get mergeKey;
+  Object get mergeKey => runtimeType;
 }
 
 @immutable
@@ -39,29 +39,29 @@ mixin Resolvable<Value> {
   Value resolve(MixData mix);
 }
 
-/// A mixin that provides the ability to merge with another object of the same type.
+/// Provides the ability to merge this object with another of the same type.
 ///
-/// The `Mergeable` mixin defines a single method `merge` that takes another object
-/// of the same type and returns a new object that represents the merged result.
+/// Defines a single method, [merge], which takes another object of type [T]
+/// and returns a new object representing the merged result.
 ///
-/// This mixin is typically used by [Dto] or [Attribute] that
-/// need to be merged with other instances of the same type.
+/// Typically used by classes like [Dto] or [Attribute] that need to merge
+/// instances of the same type.
 ///
-/// Example usage:
+/// Example:
 /// ```dart
 /// class MyClass with Mergeable<MyClass> {
-///   int id;
-///   String name;
+///   final int id;
+///   final String name;
 ///
-///   MyClass merge(covariant MyClass other) {
-///     return MyClass()
-///       ..id = other.id ?? id
-///       ..name = other.name ?? name;
+///   const MyClass(this.id, this.name)
+///
+///   MyClass merge(MyClass? other) {
+///     return MyClass(other?.id ?? id, other?.name ?? name);
 ///   }
 /// }
 /// ```
-/// The `merge` method should be implemented by classes that mix in this mixin.
 mixin Mergeable<T> {
+  /// Merges this object with [other], returning a new object of type [T].
   T merge(covariant T? other);
 }
 

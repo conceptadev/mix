@@ -96,7 +96,7 @@ class FractionallySizedBoxDecoratorAttribute extends DecoratorAttribute<
   get props => [widthFactor, heightFactor, alignment];
 }
 
-class FractionallySizedBoxDecoratorUtility<T extends StyleAttribute>
+class FractionallySizedBoxDecoratorUtility<T extends Attribute>
     extends MixUtility<T, FractionallySizedBoxDecoratorAttribute> {
   const FractionallySizedBoxDecoratorUtility(super.builder);
 

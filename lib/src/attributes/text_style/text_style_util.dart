@@ -11,7 +11,7 @@ import '../shadow/shadow_dto.dart';
 import '../shadow/shadow_util.dart';
 import 'text_style_dto.dart';
 
-class TextStyleUtility<T extends StyleAttribute>
+class TextStyleUtility<T extends Attribute>
     extends DtoUtility<T, TextStyleDto, TextStyle> {
   late final color = ColorUtility((v) => only(color: v));
 

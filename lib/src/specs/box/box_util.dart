@@ -10,7 +10,7 @@ import '../../attributes/spacing/spacing_util.dart';
 import '../../core/attribute.dart';
 import 'box_attribute.dart';
 
-class BoxSpecUtility<T extends SpecAttribute>
+class BoxSpecUtility<T extends Attribute>
     extends SpecUtility<T, BoxSpecAttribute> {
   late final decoration = BoxDecorationUtility((v) => only(decoration: v));
   late final foregroundDecoration =
@@ -43,6 +43,11 @@ class BoxSpecUtility<T extends SpecAttribute>
   late final height = DoubleUtility((v) => only(height: v));
 
   BoxSpecUtility(super.builder);
+
+  // @override
+  // BoxSpecUtility<VariantAttribute> call(Variant variant) {
+  //   return BoxSpecUtility((v) => VariantAttribute(variant, Style(v)));
+  // }
 
   @override
   T only({

@@ -18,7 +18,7 @@ import 'decoration_dto.dart';
 import 'image/decoration_image_dto.dart';
 import 'image/decoration_image_util.dart';
 
-class BoxDecorationUtility<T extends StyleAttribute>
+class BoxDecorationUtility<T extends Attribute>
     extends DtoUtility<T, BoxDecorationDto, BoxDecoration> {
   late final gradient = GradientUtility((v) => only(gradient: v));
   late final boxShadow = BoxShadowUtility((v) => only(boxShadow: [v]));
@@ -89,7 +89,7 @@ class BoxDecorationUtility<T extends StyleAttribute>
   }
 }
 
-class ShapeDecorationUtility<T extends StyleAttribute>
+class ShapeDecorationUtility<T extends Attribute>
     extends DtoUtility<T, ShapeDecorationDto, ShapeDecoration> {
   late final color = ColorUtility<T>((v) => only(color: v));
   late final gradient = GradientUtility<T>((v) => only(gradient: v));

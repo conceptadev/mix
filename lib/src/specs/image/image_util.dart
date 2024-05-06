@@ -6,7 +6,7 @@ import '../../attributes/scalars/scalar_util.dart';
 import '../../core/attribute.dart';
 import 'image_attribute.dart';
 
-class ImageSpecUtility<T extends SpecAttribute>
+class ImageSpecUtility<T extends Attribute>
     extends SpecUtility<T, ImageSpecAttribute> {
   late final color = ColorUtility((v) => only(color: v));
   late final repeat = ImageRepeatUtility((v) => only(repeat: v));

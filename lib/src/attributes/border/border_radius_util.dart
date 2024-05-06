@@ -8,7 +8,7 @@ import 'border_radius_dto.dart';
 ///
 /// Allows setting of radius for a border. This class provides a convenient way to configure and apply border radius to [T]
 /// Accepts a builder function that returns [T] and takes a [BorderRadiusGeometryDto] as a parameter.
-class BorderRadiusUtility<T extends StyleAttribute>
+class BorderRadiusUtility<T extends Attribute>
     extends DtoUtility<T, BorderRadiusGeometryDto, BorderRadiusGeometry> {
   const BorderRadiusUtility(super.builder)
       : super(valueToDto: BorderRadiusGeometryDto.from);
@@ -138,7 +138,7 @@ class BorderRadiusUtility<T extends StyleAttribute>
   }
 }
 
-class BorderRadiusDirectionalUtility<T extends StyleAttribute>
+class BorderRadiusDirectionalUtility<T extends Attribute>
     extends DtoUtility<T, BorderRadiusGeometryDto, BorderRadiusGeometry> {
   const BorderRadiusDirectionalUtility(super.builder)
       : super(valueToDto: BorderRadiusGeometryDto.from);

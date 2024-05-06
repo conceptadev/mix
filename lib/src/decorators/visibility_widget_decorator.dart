@@ -52,7 +52,7 @@ class VisibilityDecoratorAttribute extends DecoratorAttribute<
   get props => [visible];
 }
 
-class VisibilityUtility<T extends StyleAttribute>
+class VisibilityUtility<T extends Attribute>
     extends MixUtility<T, VisibilityDecoratorAttribute> {
   const VisibilityUtility(super.builder);
   T on() => builder(const VisibilityDecoratorAttribute(true));

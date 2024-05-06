@@ -53,7 +53,7 @@ class RotatedBoxDecoratorAttribute extends DecoratorAttribute<
   List<Object?> get props => [quarterTurns];
 }
 
-class RotatedBoxWidgetUtility<T extends StyleAttribute>
+class RotatedBoxWidgetUtility<T extends Attribute>
     extends MixUtility<T, RotatedBoxDecoratorAttribute> {
   const RotatedBoxWidgetUtility(super.builder);
   T d90() => builder(const RotatedBoxDecoratorAttribute(1));

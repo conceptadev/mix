@@ -6,7 +6,7 @@ import '../color/color_util.dart';
 import '../scalars/scalar_util.dart';
 import 'border_dto.dart';
 
-class BorderSideUtility<T extends StyleAttribute>
+class BorderSideUtility<T extends Attribute>
     extends DtoUtility<T, BorderSideDto, BorderSide> {
   late final color = ColorUtility((v) => only(color: v));
 
@@ -52,7 +52,7 @@ class BorderSideUtility<T extends StyleAttribute>
   }
 }
 
-class BorderUtility<T extends StyleAttribute>
+class BorderUtility<T extends Attribute>
     extends DtoUtility<T, BoxBorderDto, BoxBorder> {
   late final start = _directional.start;
 
@@ -132,7 +132,7 @@ class BorderUtility<T extends StyleAttribute>
   }
 }
 
-class BorderDirectionalUtility<T extends StyleAttribute>
+class BorderDirectionalUtility<T extends Attribute>
     extends DtoUtility<T, BoxBorderDto, BoxBorder> {
   late final all = BorderSideUtility((v) => builder(_fromBorderSide(v)));
 

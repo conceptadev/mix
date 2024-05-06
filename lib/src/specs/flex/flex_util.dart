@@ -5,7 +5,7 @@ import '../../attributes/spacing/spacing_util.dart';
 import '../../core/attribute.dart';
 import 'flex_attribute.dart';
 
-class FlexSpecUtility<T extends SpecAttribute>
+class FlexSpecUtility<T extends Attribute>
     extends SpecUtility<T, FlexSpecAttribute> {
   late final direction = AxisUtility((v) => only(direction: v));
   late final mainAxisAlignment =
@@ -25,6 +25,8 @@ class FlexSpecUtility<T extends SpecAttribute>
   late final column = direction.vertical;
 
   FlexSpecUtility(super.builder);
+
+  
 
   @override
   T only({
