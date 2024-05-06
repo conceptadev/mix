@@ -42,7 +42,7 @@ Create styles by combining and merging multiple Style instances. This technique,
 
 #### **Mixing Attributes**
 
-You can mix new attributes into the style by calling it as a function and passing the attributes as parameters. For example:
+Simply use the `add()` or `addAll()` method on a Style instance. For example:
 
 ```dart
 final baseStyle = Style(
@@ -52,7 +52,7 @@ final baseStyle = Style(
   $box.borderRadius(10),
 );
 
-final newStyle = baseStyle(
+final newStyle = baseStyle.add(
   $box.border.width(2),
   $box.border.color.black(),
 );
@@ -62,10 +62,10 @@ In this example, the `newStyle` inherits all attributes from the `baseStyle`, an
 
 #### **Overriding Attributes**
 
-**Taking Control** You can also override specific attributes of a style by passing new values as parameters method. For instance:
+**Taking Control** You can also override specific attributes of a style by passing new values to the `mix()` method. For instance:
 
 ```dart
-final newStyle = baseStyle(
+final newStyle = baseStyle.add(
   $box.color.blue(),
 );
 ```
