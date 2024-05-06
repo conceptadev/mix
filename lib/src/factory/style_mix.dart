@@ -131,10 +131,6 @@ class Style with Comparable {
         : mixes.reduce((combinedStyle, mix) => combinedStyle.merge(mix));
   }
 
-  Style _addAttributes(Iterable<Attribute> attributes) {
-    return merge(Style.create(attributes));
-  }
-
   bool get isAnimated => this is AnimatedStyle;
 
   /// Returns a list of all attributes contained in this mix.
@@ -152,6 +148,17 @@ class Style with Comparable {
   ///
   /// This includes both visual and variant attributes.
   int get length => values.length;
+
+  /// Allows to create a new `Style` by using this mix as a base and adding additional attributes.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// final style = Style(attr1, attr2);
+  /// final updatedStyle = style.add(attr3, attr4);
+  /// ```
+  SpreadFunctionParams<Attribute, Style> get add =>
+      SpreadFunctionParams(addAll);
 
   /// Selects a single or positional params list of [Variant] and returns a new `Style` with the selected variants.
   ///
@@ -183,6 +190,10 @@ class Style with Comparable {
   /// The attributes from the selected variant (`attr4` and `attr5`) are not applied to the `Style` instance until the `applyVariant` method is called.
   SpreadFunctionParams<Variant, Style> get applyVariant =>
       SpreadFunctionParams(applyVariants);
+
+  Style addAll(Iterable<Attribute> attributes) {
+    return merge(Style.create(attributes));
+  }
 
   MixData of(BuildContext context) => MixData.create(context, this);
 
@@ -294,39 +305,11 @@ class Style with Comparable {
     return mergedStyle.applyVariants(selectedVariants);
   }
 
-  /// Similar to the main constructor of Style.
+  /// Returns a new `NestedStyleAttribute` instance that wraps the current `Style` instance.
   ///
-  /// This is done in order to have a positional param list.
-  /// 20 is just a suggestion , the number of params can be increased/decreased as needed.
-  NestedStyleAttribute call([
-    Attribute? p1,
-    Attribute? p2,
-    Attribute? p3,
-    Attribute? p4,
-    Attribute? p5,
-    Attribute? p6,
-    Attribute? p7,
-    Attribute? p8,
-    Attribute? p9,
-    Attribute? p10,
-    Attribute? p11,
-    Attribute? p12,
-    Attribute? p13,
-    Attribute? p14,
-    Attribute? p15,
-    Attribute? p16,
-    Attribute? p17,
-    Attribute? p18,
-    Attribute? p19,
-    Attribute? p20,
-  ]) {
-    final params = [
-      p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, //
-      p11, p12, p13, p14, p15, p16, p17, p18, p19, p20,
-    ].whereType<Attribute>();
-
-    return NestedStyleAttribute(_addAttributes(params));
-  }
+  /// This method is used to create a nested style attribute, which can be used to apply a `Style` instance
+  /// as an attribute within another `Style` instance.
+  NestedStyleAttribute call() => NestedStyleAttribute(this);
 
   /// Picks and applies only the attributes within the specified [Variant] instances, and returns a new `Style`.
   ///
