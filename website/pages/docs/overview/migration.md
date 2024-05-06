@@ -37,7 +37,7 @@ Keep in mind that the ideia is to reserve the old `Pressable` to more advanced c
 
 Decorators cannot be inherited by any children. The reason is that abstract class `Attribute` has gained a new property, `isInheritable`, witch can be set to false if you want your custom attributes to be non-inheritable, such as Decorators.
 
-#### Operators `and` (`&`) and `or` (`|`) 
+#### Operators `and` (`&`) and `or` (`|`)
 
 The operators have been redesigned to allow for concatenation and grouping, enabling the creation of conditions like, `(primary | secondary) & onHover`. For details, refer to the [variants guide](https://www.fluttermix.com/docs/guides/variants#combining-operators)
 
@@ -48,7 +48,8 @@ A bunch of `StyledWidgets` are now allow to receive decorators' attributes, incl
 #### Theming
 
 The `MixTheme` feature has been improved and now offer better API. It can applied to main attributes using the method `.of`, as shown in the following code:
-```dart 
+
+```dart
 const primaryColor = ColorToken('primary');
 final theme = MixThemeData(
     colors: {
@@ -58,11 +59,11 @@ final theme = MixThemeData(
 
 // ... body method ...
 MixTheme(
-    data: theme, 
+    data: theme,
     Box(
         key: key,
         style: Style(
-            box.color.of(primaryColor),
+            $box.color.ref(primaryColor),
         ),
     )
 )
