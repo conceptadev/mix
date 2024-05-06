@@ -12,7 +12,7 @@ abstract class Decorator<Self extends Decorator<Self, Value>, Value>
 }
 
 abstract class DecoratorSpec<Self extends DecoratorSpec<Self>>
-    extends Spec<DecoratorSpec> {
+    extends Spec<Self> {
   const DecoratorSpec();
 
   static DecoratorSpec? lerpValue(
@@ -26,7 +26,7 @@ abstract class DecoratorSpec<Self extends DecoratorSpec<Self>>
         'You can only lerp the same type of DecoratorSpec',
       );
 
-      return begin.lerp(end, t);
+      return begin.lerp(end, t) as DecoratorSpec?;
     }
 
     return begin ?? end;
