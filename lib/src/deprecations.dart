@@ -51,6 +51,19 @@ extension DeprecatedMixExtension on Style {
   @Deprecated('Use combine instead')
   Style combineAll(List<Style> mixes) => Style.combine(mixes);
 
+  @Deprecated('not needed as record implementation is more elegant')
+  Style variantSwitcher(List<SwitchCondition<IVariant>> cases) {
+    List<IVariant> variantsToApply = [];
+
+    for (SwitchCondition<IVariant> conditionCase in cases) {
+      if (conditionCase.condition) {
+        variantsToApply.add(conditionCase.value);
+      }
+    }
+
+    return applyVariants(variantsToApply);
+  }
+
   @Deprecated('Use applyVariant(value) instead')
   Style withMaybeVariant(Variant? variant) {
     if (variant == null) return this;
@@ -745,3 +758,11 @@ const $md = $material;
 // hide
 @Deprecated(r'Use $with.hide instead')
 final hide = $with.hide;
+
+class SwitchCondition<T> {
+  final bool condition;
+  final T value;
+
+  // ignore: prefer-named-boolean-parameters
+  const SwitchCondition(this.condition, this.value);
+}

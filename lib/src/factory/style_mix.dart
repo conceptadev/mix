@@ -369,6 +369,8 @@ class Style with Comparable {
     return mergedStyle.applyVariants(selectedVariants);
   }
 
+  NestedStyleAttribute call() => NestedStyleAttribute(this);
+
   /// Picks and applies only the attributes within the specified [Variant] instances, and returns a new `Style`.
   ///
   /// Unlike `applyVariants`, `pickVariants` ignores all other attributes initially present in the `Style`.
@@ -415,56 +417,8 @@ class Style with Comparable {
     return pickedStyle.pickVariants(pickedVariants, isRecursive: true);
   }
 
-  /// Selects variants based on a [cases] map and returns a new `Style` with the selected variants.
-  ///
-  /// The [cases] list contains [SwitchCondition] instances, each of which contains a boolean [condition] and a [Variant].
-  /// If a condition is true, the corresponding [Variant] is selected.
-  ///
-  /// Example:
-  /// ```dart
-  /// final highContrastVariant = Variant('highContrast');
-  /// final largeFontVariant = Variant('largeFont');
-  ///
-  /// final style = Style();
-  /// final updatedStyle = style.variantSwitcher([
-  ///   const ConditionChooser(useHighContrast, highContrastVariant),
-  ///   const ConditionChooser(useLargeFont, largeFontVariant)
-  /// ]);
-  /// ```
-  ///
-  /// In this example:
-  /// - Two `Variant` instances are created to represent high contrast and large font styling preferences.
-  /// - An initial `Style` instance is created.
-  /// - The `variantSwitcher` method is called on the `Style` instance with a map of conditions and variants.
-  /// - The conditions `useHighContratst` and `useLargeFont` are hypothetical boolean values representing user preferences.
-  /// - If a condition is true, the corresponding `Variant` is selected and applied to the `Style` instance, creating an `updatedStyle` instance with the selected variants.
-  Style variantSwitcher(List<SwitchCondition<IVariant>> cases) {
-    List<IVariant> variantsToApply = [];
-
-    for (SwitchCondition<IVariant> conditionCase in cases) {
-      if (conditionCase.condition) {
-        variantsToApply.add(conditionCase.value);
-      }
-    }
-
-    return applyVariants(variantsToApply);
-  }
-
   @override
   get props => [styles, variants];
-}
-
-/// A class representing a condition-value pair.
-///
-/// This class is immutable, meaning that once an instance is created, it cannot be changed.
-/// This is useful in cases where you want to ensure that the condition-value pair remains constant,
-/// such as when using it in a switch statement.
-@immutable
-class SwitchCondition<T> {
-  final bool condition;
-  final T value;
-
-  const SwitchCondition(this.condition, this.value);
 }
 
 Style Function(Iterable<T> attributes) _styleType<T extends SpecAttribute>() {
