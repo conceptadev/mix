@@ -21,11 +21,11 @@ void main() {
     },
     colors: {
       primaryColor: Colors.blue,
-      $md.colorScheme.error: Colors.redAccent,
+      $material.colorScheme.error: Colors.redAccent,
     },
     spaces: {$space.small: 30},
     textStyles: {
-      $md.textTheme.bodyLarge: const TextStyle(
+      $material.textTheme.bodyLarge: const TextStyle(
         fontSize: 200,
         fontWeight: FontWeight.w300,
       ),
@@ -57,7 +57,7 @@ void main() {
               $box.color.ref(primaryColor),
               $box.borderRadius.all.ref($radius.small),
               $box.padding.horizontal.ref($space.small),
-              $text.style.ref($md.textTheme.bodyLarge),
+              $text.style.ref($material.textTheme.bodyLarge),
             ),
             key: key,
             child: const StyledText('Hello'),
@@ -86,7 +86,8 @@ void main() {
           find.descendant(of: find.byKey(key), matching: find.byType(Text)),
         );
 
-        expect(textWidget.style, theme.textStyles[$md.textTheme.bodyLarge]);
+        expect(
+            textWidget.style, theme.textStyles[$material.textTheme.bodyLarge]);
       },
     );
 

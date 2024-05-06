@@ -11,6 +11,7 @@ abstract class Directive with Comparable {
   const Directive();
 }
 
+@immutable
 class TextDirective extends Directive with Mergeable<TextDirective> {
   final List<Modifier<String>> _modifiers;
   const TextDirective(this._modifiers);

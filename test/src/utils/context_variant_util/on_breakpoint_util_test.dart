@@ -20,10 +20,10 @@ void main() {
       await tester.pumpWidget(createMediaQuery(xSmallScreenWidth));
       var context = tester.element(find.byType(Container));
 
-      expect(onXSmall.build(context), true, reason: 'xsmall');
-      expect(onSmall.build(context), false, reason: 'small');
-      expect(onMedium.build(context), false, reason: 'medium');
-      expect(onLarge.build(context), false, reason: 'large');
+      expect(onXSmall.when(context), true, reason: 'xsmall');
+      expect(onSmall.when(context), false, reason: 'small');
+      expect(onMedium.when(context), false, reason: 'medium');
+      expect(onLarge.when(context), false, reason: 'large');
     });
 
     test('Check equality', () {
@@ -62,10 +62,10 @@ void main() {
       await tester.pumpWidget(createMediaQuery(smallScreenWidth));
       var context = tester.element(find.byType(Container));
 
-      expect(onXSmall.build(context), false, reason: 'xsmall');
-      expect(onSmall.build(context), true, reason: 'small');
-      expect(onMedium.build(context), false, reason: 'medium');
-      expect(onLarge.build(context), false, reason: 'large');
+      expect(onXSmall.when(context), false, reason: 'xsmall');
+      expect(onSmall.when(context), true, reason: 'small');
+      expect(onMedium.when(context), false, reason: 'medium');
+      expect(onLarge.when(context), false, reason: 'large');
 
       addTearDown(tester.view.resetPhysicalSize);
     });
@@ -75,10 +75,10 @@ void main() {
       await tester.pumpWidget(createMediaQuery(mediumScreenWidth));
       var context = tester.element(find.byType(Container));
 
-      expect(onXSmall.build(context), false, reason: 'xsmall');
-      expect(onSmall.build(context), false, reason: 'small');
-      expect(onMedium.build(context), true, reason: 'medium');
-      expect(onLarge.build(context), false, reason: 'large');
+      expect(onXSmall.when(context), false, reason: 'xsmall');
+      expect(onSmall.when(context), false, reason: 'small');
+      expect(onMedium.when(context), true, reason: 'medium');
+      expect(onLarge.when(context), false, reason: 'large');
     });
 
     testWidgets('large screen context variant', (tester) async {
@@ -86,10 +86,10 @@ void main() {
       await tester.pumpWidget(createMediaQuery(largeScreenWidth));
       var context = tester.element(find.byType(Container));
 
-      expect(onXSmall.build(context), false, reason: 'xsmall');
-      expect(onSmall.build(context), false, reason: 'small');
-      expect(onMedium.build(context), false, reason: 'medium');
-      expect(onLarge.build(context), true, reason: 'large');
+      expect(onXSmall.when(context), false, reason: 'xsmall');
+      expect(onSmall.when(context), false, reason: 'small');
+      expect(onMedium.when(context), false, reason: 'medium');
+      expect(onLarge.when(context), true, reason: 'large');
 
       addTearDown(tester.view.resetPhysicalSize);
     });
@@ -114,9 +114,9 @@ void main() {
         const Breakpoint(maxWidth: 300, minWidth: 50),
       );
 
-      expect(breakpoint1.build(context), true, reason: 'size1 breakpoint1');
-      expect(breakpoint2.build(context), true, reason: 'size1 breakpoint2');
-      expect(breakpoint3.build(context), true, reason: 'size1 breakpoint3');
+      expect(breakpoint1.when(context), true, reason: 'size1 breakpoint1');
+      expect(breakpoint2.when(context), true, reason: 'size1 breakpoint2');
+      expect(breakpoint3.when(context), true, reason: 'size1 breakpoint3');
 
       tester.view.resetPhysicalSize();
 
@@ -126,9 +126,9 @@ void main() {
 
       context = tester.element(find.byType(Container));
 
-      expect(breakpoint1.build(context), false, reason: 'size2 breakpoint1');
-      expect(breakpoint2.build(context), true, reason: 'size2 breakpoint2');
-      expect(breakpoint3.build(context), true, reason: 'size2 breakpoint3');
+      expect(breakpoint1.when(context), false, reason: 'size2 breakpoint1');
+      expect(breakpoint2.when(context), true, reason: 'size2 breakpoint2');
+      expect(breakpoint3.when(context), true, reason: 'size2 breakpoint3');
 
       tester.view.resetPhysicalSize();
 
@@ -137,9 +137,9 @@ void main() {
       await tester.pumpWidget(createMediaQuery(size3));
       context = tester.element(find.byType(Container));
 
-      expect(breakpoint1.build(context), false, reason: 'size3 breakpoint1');
-      expect(breakpoint2.build(context), false, reason: 'size3 breakpoint2');
-      expect(breakpoint3.build(context), true, reason: 'size3 breakpoint3');
+      expect(breakpoint1.when(context), false, reason: 'size3 breakpoint1');
+      expect(breakpoint2.when(context), false, reason: 'size3 breakpoint2');
+      expect(breakpoint3.when(context), true, reason: 'size3 breakpoint3');
 
       tester.view.resetPhysicalSize();
 
@@ -149,9 +149,9 @@ void main() {
 
       context = tester.element(find.byType(Container));
 
-      expect(breakpoint1.build(context), false, reason: 'size4 breakpoint1');
-      expect(breakpoint2.build(context), false, reason: 'size4 breakpoint2');
-      expect(breakpoint3.build(context), false, reason: 'size4 breakpoint3');
+      expect(breakpoint1.when(context), false, reason: 'size4 breakpoint1');
+      expect(breakpoint2.when(context), false, reason: 'size4 breakpoint2');
+      expect(breakpoint3.when(context), false, reason: 'size4 breakpoint3');
       addTearDown(tester.view.resetPhysicalSize);
     });
 

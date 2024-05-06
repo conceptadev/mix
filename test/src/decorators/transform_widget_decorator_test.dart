@@ -81,6 +81,29 @@ void main() {
         expect(decorator, other);
       });
 
+      test('merge with null', () {
+        final decorator =
+            TransformDecoratorAttribute(transform: Matrix4.rotationX(0.5));
+        final result = decorator.merge(null);
+        expect(result, decorator);
+      });
+
+      test('equality', () {
+        final decorator1 =
+            TransformDecoratorAttribute(transform: Matrix4.rotationX(0.5));
+        final decorator2 =
+            TransformDecoratorAttribute(transform: Matrix4.rotationX(0.5));
+        expect(decorator1, decorator2);
+      });
+
+      test('inequality', () {
+        final decorator1 =
+            TransformDecoratorAttribute(transform: Matrix4.rotationX(0.5));
+        final decorator2 =
+            TransformDecoratorAttribute(transform: Matrix4.rotationX(1.0));
+        expect(decorator1, isNot(decorator2));
+      });
+
       test('inequality', () {
         final decorator =
             TransformDecoratorAttribute(transform: Matrix4.rotationX(0.5));
@@ -90,4 +113,38 @@ void main() {
       });
     },
   );
+
+  group('TransformUtility', () {
+    test('call', () {
+      final utility =
+          TransformUtility<TransformDecoratorAttribute>((attr) => attr);
+      final matrix = Matrix4.rotationX(0.5);
+      final result = utility(matrix);
+      expect(result.transform, matrix);
+    });
+
+    test('scale', () {
+      final utility =
+          TransformUtility<TransformDecoratorAttribute>((attr) => attr);
+      final result = utility.scale(2.0);
+      expect(result.transform, Matrix4.diagonal3Values(2.0, 2.0, 1.0));
+      expect(result.alignment, Alignment.center);
+    });
+
+    test('rotate', () {
+      final utility =
+          TransformUtility<TransformDecoratorAttribute>((attr) => attr);
+      final result = utility.rotate(0.5);
+      expect(result.transform, Matrix4.rotationZ(0.5));
+      expect(result.alignment, Alignment.center);
+    });
+
+    test('flip', () {
+      final utility =
+          TransformUtility<TransformDecoratorAttribute>((attr) => attr);
+      final result = utility.flip(true, false);
+      expect(result.transform, Matrix4.diagonal3Values(-1.0, 1.0, 1.0));
+      expect(result.alignment, Alignment.center);
+    });
+  });
 }

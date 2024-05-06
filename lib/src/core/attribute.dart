@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 
-import '../attributes/nested_style/nested_style_attribute.dart';
 import '../factory/mix_provider_data.dart';
-import '../factory/style_mix.dart';
 import '../helpers/compare_mixin.dart';
-import '../variants/variant.dart';
 
 @immutable
 abstract class Attribute with Comparable {
   const Attribute();
 
-  // Used as a merge type
-  Object get type;
+  // Used as the key to determine how
+  // attributes get merged
+  Object get mergeKey;
 
   // Used to determine if the attribute is inheritable
   bool get isInheritable => true;
@@ -86,17 +84,7 @@ abstract class SpecAttribute<Self, Value> extends StyleAttribute
   Self merge(Self? other);
 
   @override
-  Type get type => Self;
-}
-
-mixin SingleChildRenderAttributeMixin<W extends RenderObjectWidget>
-    on StyleAttribute {
-  W build(MixData mix, Widget child);
-}
-
-mixin MultiChildRenderAttributeMixin<W extends MultiChildRenderObjectWidget>
-    on StyleAttribute {
-  W render(MixData mix, List<Widget> children);
+  Type get mergeKey => Self;
 }
 
 @immutable
@@ -112,42 +100,4 @@ abstract class Spec<T extends Spec<T>> with Comparable {
 
   /// Linearly interpolate with another [Spec] object.
   T lerp(covariant T? other, double t);
-}
-
-@immutable
-abstract class ContextVariantBuilder<Param> extends StyleAttribute {
-  final Key? key;
-  final Style Function(Param param) fn;
-  const ContextVariantBuilder(this.fn, {this.key});
-
-  Attribute? builder(BuildContext context);
-
-  Style Function(Param param) mergeFn(Style Function(Param param) other) {
-    return (Param param) => fn(param).merge(other(param));
-  }
-
-  @override
-  Object get type => '$runtimeType${key?.toString() ?? ''}';
-
-  @override
-  get props => [key];
-}
-
-@immutable
-class ContectVariantEventBuilder<T extends ContextVariant>
-    extends ContextVariantBuilder<bool> {
-  final T variant;
-
-  const ContectVariantEventBuilder(
-    super.fn, {
-    required this.variant,
-    super.key,
-  });
-
-  @override
-  Attribute builder(BuildContext context) =>
-      NestedStyleAttribute(fn(variant.build(context)));
-
-  @override
-  List<Object?> get props => [variant, key];
 }

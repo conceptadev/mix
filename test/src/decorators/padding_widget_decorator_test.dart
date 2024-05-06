@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mix/src/attributes/spacing/spacing_dto.dart';
 import 'package:mix/src/decorators/padding_widget_decorator.dart';
+
+import '../../helpers/testing_utils.dart';
 
 void main() {
   group('PaddingSpec', () {
@@ -66,6 +69,45 @@ void main() {
 
       final paddingWidget = tester.widget<Padding>(find.byType(Padding));
       expect(paddingWidget.padding, equals(padding));
+    });
+  });
+  group('PaddingDecoratorAttribute', () {
+    test('merge returns correct PaddingDecoratorAttribute', () {
+      const padding1 = SpacingDto.all(10.0);
+      const padding2 = SpacingDto.all(20.0);
+      const attribute1 = PaddingDecoratorAttribute(padding1);
+      const attribute2 = PaddingDecoratorAttribute(padding2);
+
+      final result = attribute1.merge(attribute2);
+
+      expect(result.padding, equals(padding2));
+    });
+
+    test('merge returns original PaddingDecoratorAttribute when other is null',
+        () {
+      const padding = SpacingDto.all(10.0);
+      const attribute = PaddingDecoratorAttribute(padding);
+
+      final result = attribute.merge(null);
+
+      expect(result.padding, equals(padding));
+    });
+
+    test('resolve returns correct PaddingSpec', () {
+      const padding = SpacingDto.all(10.0);
+      const attribute = PaddingDecoratorAttribute(padding);
+      final mixData = EmptyMixData;
+
+      final result = attribute.resolve(mixData);
+
+      expect(result.padding, equals(const EdgeInsets.all(10.0)));
+    });
+
+    test('props returns list with padding', () {
+      const padding = SpacingDto.all(10.0);
+      const attribute = PaddingDecoratorAttribute(padding);
+
+      expect(attribute.props, equals([padding]));
     });
   });
 }

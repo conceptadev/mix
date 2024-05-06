@@ -8,6 +8,7 @@ import '../core/extensions/iterable_ext.dart';
 import '../helpers/compare_mixin.dart';
 import '../helpers/constants.dart';
 import '../theme/token_resolver.dart';
+import '../variants/context_variant.dart';
 import 'style_mix.dart';
 
 /// This class is used for encapsulating all [MixData] related operations.
@@ -143,7 +144,7 @@ Style _applyVariants(
   Style style,
   VariantAttribute variantAttribute,
 ) {
-  return variantAttribute.variant.build(context)
+  return variantAttribute.variant.when(context)
       ? style.merge(variantAttribute.value)
       : style;
 }
@@ -178,10 +179,9 @@ Iterable<Attribute> _applyStyleBuilder(
 ) {
   return attributes.map((attr) {
     if (attr is ContextVariantBuilder) {
-      return attr.builder(context);
+      return attr.build(context);
     }
 
     return attr;
-    // ignore: avoid-inferrable-type-arguments
-  }).whereType<Attribute>();
+  });
 }

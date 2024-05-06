@@ -30,6 +30,9 @@ class SpacingDto extends EdgeInsetsGeometryDto<SpacingDto> {
           end: end,
         );
 
+  const SpacingDto.all(double value)
+      : this.only(top: value, bottom: value, left: value, right: value);
+
   static SpacingDto from(EdgeInsetsGeometry edgeInsets) {
     if (edgeInsets is EdgeInsetsDirectional) {
       return SpacingDto._(

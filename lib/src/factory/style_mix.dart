@@ -56,7 +56,7 @@ class AnimatedStyle extends Style {
   }
 
   @override
-  Style applyVariants(Iterable<StyleVariant> selectedVariants) {
+  Style applyVariants(Iterable<IVariant> selectedVariants) {
     final newStyle = super.applyVariants(selectedVariants);
 
     return AnimatedStyle._(
@@ -240,7 +240,7 @@ class Style with Comparable {
   ///
   /// Note:
   /// The attributes from the selected variant (`attr4` and `attr5`) are not applied to the `Style` instance until the `applyVariant` method is called.
-  SpreadFunctionParams<StyleVariant, Style> get applyVariant =>
+  SpreadFunctionParams<IVariant, Style> get applyVariant =>
       SpreadFunctionParams(applyVariants);
 
   /// Allows to create a new `Style` by using this mix as a base and adding additional attributes.
@@ -324,7 +324,7 @@ class Style with Comparable {
   ///
   /// Note:
   /// The attributes from the selected variants (`attr3`, `attr4`, and `attr5`) are not applied to the `Style` instance until the `applyVariants` method is called.
-  Style applyVariants(Iterable<StyleVariant> selectedVariants) {
+  Style applyVariants(Iterable<IVariant> selectedVariants) {
     /// Return the original Style if no variants were selected
     if (selectedVariants.isEmpty) {
       return this;
@@ -394,7 +394,7 @@ class Style with Comparable {
   /// The attributes `attr1` and `attr2` from the initial `Style` are ignored, and only the attributes within the specified variants are picked and applied to the new `Style`.
   @visibleForTesting
   Style pickVariants(
-    List<StyleVariant> pickedVariants, {
+    List<IVariant> pickedVariants, {
     bool isRecursive = false,
   }) {
     final matchedVariants = <VariantAttribute>[];
@@ -438,10 +438,10 @@ class Style with Comparable {
   /// - The `variantSwitcher` method is called on the `Style` instance with a map of conditions and variants.
   /// - The conditions `useHighContratst` and `useLargeFont` are hypothetical boolean values representing user preferences.
   /// - If a condition is true, the corresponding `Variant` is selected and applied to the `Style` instance, creating an `updatedStyle` instance with the selected variants.
-  Style variantSwitcher(List<SwitchCondition<StyleVariant>> cases) {
-    List<StyleVariant> variantsToApply = [];
+  Style variantSwitcher(List<SwitchCondition<IVariant>> cases) {
+    List<IVariant> variantsToApply = [];
 
-    for (SwitchCondition<StyleVariant> conditionCase in cases) {
+    for (SwitchCondition<IVariant> conditionCase in cases) {
       if (conditionCase.condition) {
         variantsToApply.add(conditionCase.value);
       }

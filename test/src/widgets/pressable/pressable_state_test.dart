@@ -54,10 +54,10 @@ void main() {
                   child: Builder(
                     builder: (BuildContext context) {
                       final bool enabled = PressableState.enabledOf(context);
-                      final bool hovered = PressableState.hoveredOf(context);
-                      final bool pressed = PressableState.pressedOf(context);
+                      final bool hovered = PressableState.hoverOf(context);
+                      final bool pressed = PressableState.pressOf(context);
                       final bool longPressed =
-                          PressableState.longPressedOf(context);
+                          PressableState.longPressOf(context);
                       final PressableCurrentState state =
                           PressableState.stateOf(context);
                       return Column(
@@ -242,15 +242,15 @@ class _PressableStateTestWidgetState extends State<PressableStateTestWidget> {
                   ),
                   const TrackingText(
                     text: 'Hovered',
-                    stateBuilder: PressableState.hoveredOf,
+                    stateBuilder: PressableState.hoverOf,
                   ),
                   const TrackingText(
                     text: 'Pressed',
-                    stateBuilder: PressableState.pressedOf,
+                    stateBuilder: PressableState.pressOf,
                   ),
                   const TrackingText(
                     text: 'LongPressed',
-                    stateBuilder: PressableState.longPressedOf,
+                    stateBuilder: PressableState.longPressOf,
                   ),
                   TrackingText(
                     text: 'Current State',

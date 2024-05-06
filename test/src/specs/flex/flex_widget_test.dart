@@ -142,7 +142,7 @@ void main() {
         VBox(
           style: Style(
             $flex.gap(10),
-            align(),
+            $with.align(),
           ),
           children: const [
             SizedBox(
@@ -164,7 +164,7 @@ void main() {
         HBox(
           style: Style(
             $flex.gap(10),
-            align(),
+            $with.align(),
           ),
           children: const [
             SizedBox(
@@ -186,7 +186,7 @@ void main() {
         VBox(
           style: Style(
             $flex.gap(10),
-            align(),
+            $with.align(),
           ),
           children: const [
             SizedBox(
@@ -208,7 +208,7 @@ void main() {
         StyledColumn(
           style: Style(
             $flex.gap(10),
-            align(),
+            $with.align(),
           ),
           children: const [
             SizedBox(
@@ -231,7 +231,7 @@ void main() {
           direction: Axis.horizontal,
           style: Style(
             $flex.gap(10),
-            align(),
+            $with.align(),
           ),
           children: const [
             SizedBox(
@@ -254,7 +254,7 @@ void main() {
           direction: Axis.horizontal,
           style: Style(
             $flex.gap(10),
-            align(),
+            $with.align(),
           ),
           children: const [
             SizedBox(

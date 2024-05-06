@@ -5,104 +5,109 @@ import 'package:mix/mix.dart';
 import '../../helpers/testing_utils.dart';
 
 void main() {
-  group('SpecAttribute Tests', () {
-    test('SpecAttribute type should return correct type', () {
-      const attribute = _MockSpecAttribute();
-      expect(attribute.type, _MockSpecAttribute);
+  group('ContextVariantBuilder', () {
+    test('merge should return the same object if other is null', () {
+      const variant = _MockContextVariant();
+      fn(BuildContext context) => Style();
+      final builder = ContextVariantBuilder(fn, variant);
+
+      final mergedBuilder = builder.merge(null);
+
+      expect(mergedBuilder, same(builder));
     });
 
-    test('SpecAttribute merge should correctly merge with another attribute',
-        () {
-      const attribute1 = _MockSpecAttribute(value: 10);
-      const attribute2 = _MockSpecAttribute(value: 20);
-      final merged = attribute1.merge(attribute2);
+    test('merge should throw ArgumentError if variant is not the same', () {
+      const variant1 = _MockContextVariant();
+      const variant2 = _MockContextVariant2();
+      fn1(BuildContext context) => Style();
+      fn2(BuildContext context) => Style();
+      final builder1 = ContextVariantBuilder(fn1, variant1);
+      final builder2 = ContextVariantBuilder(fn2, variant2);
 
-      expect(merged.value, 20);
-    });
-  });
-
-  group('StyleAttributeBuilder Tests', () {
-    test('StyleAttributeBuilder type should include key when provided', () {
-      final builder = _MockStyleAttributeBuilder((param) => Style(),
-          key: const Key('testKey'));
-      expect(builder.type, '_MockStyleAttributeBuilder[<\'testKey\'>]');
-    });
-
-    test('StyleAttributeBuilder type should return default when key is null',
-        () {
-      final builder = _MockStyleAttributeBuilder((param) => Style());
-      expect(builder.type, '_MockStyleAttributeBuilder');
-    });
-
-    test('StyleAttributeBuilder builder should build correct attribute', () {
-      final builder = _MockStyleAttributeBuilder((param) => Style());
-      final attribute = builder.builder(MockBuildContext());
-
-      expect(attribute, isA<NestedStyleAttribute>());
-    });
-  });
-
-  group('ContectVariantEventBuilder Tests', () {
-    test('ContectVariantEventBuilder props should include key and variant', () {
-      const variant = MockContextVariantCondition(true);
-      final builder = ContectVariantEventBuilder((bool condition) => Style(),
-          variant: variant, key: const Key('testKey'));
-
-      expect(builder.props, containsAll([const Key('testKey'), variant]));
+      expect(() => builder1.merge(builder2), throwsArgumentError);
     });
 
     test(
-        'ContectVariantEventBuilder builder should build correct attribute based on context',
+        'merge should return a new ContextVariantBuilder with merged functions',
         () {
-      const variant = MockContextVariantCondition(true);
-      final builder = ContectVariantEventBuilder((bool condition) => Style(),
-          variant: variant, key: const Key('testKey'));
-      final attribute = builder.builder(MockBuildContext());
+      const variant = _MockContextVariant();
+      fn1(BuildContext context) => Style(const MockIntScalarAttribute(1));
+      fn2(BuildContext context) => Style(const MockDoubleScalarAttribute(2.0));
+      final builder1 = ContextVariantBuilder(fn1, variant);
+      final builder2 = ContextVariantBuilder(fn2, variant);
+
+      final mergedBuilder = builder1.merge(builder2);
+
+      expect(mergedBuilder, isNot(same(builder1)));
+      expect(mergedBuilder, isNot(same(builder2)));
+      expect(mergedBuilder.variant, equals(variant));
+      expect(
+          mergedBuilder.fn(MockBuildContext()),
+          equals(Style(const MockIntScalarAttribute(1),
+              const MockDoubleScalarAttribute(2.0))));
+    });
+
+    test(
+        'mergeKey should return a string containing runtimeType and variant mergeKey',
+        () {
+      const variant = _MockContextVariant();
+      fn(BuildContext context) => Style();
+      final builder = ContextVariantBuilder(fn, variant);
+
+      final mergeKey = builder.mergeKey;
+
+      expect(mergeKey, equals('ContextVariantBuilder.${variant.mergeKey}'));
+    });
+
+    test('props should return a list containing the variant', () {
+      const variant = _MockContextVariant();
+      fn(BuildContext context) => Style();
+      final builder = ContextVariantBuilder(fn, variant);
+
+      final props = builder.props;
+
+      expect(props, isList);
+      expect(props, contains(variant));
+    });
+
+    test('build should return a NestedStyleAttribute with the result of fn',
+        () {
+      const variant = _MockContextVariant();
+      final style = Style(const MockIntScalarAttribute(1));
+      fn(BuildContext context) => style;
+      final builder = ContextVariantBuilder(fn, variant);
+
+      final attribute =
+          builder.build(MockBuildContext()) as NestedStyleAttribute;
 
       expect(attribute, isA<NestedStyleAttribute>());
+      expect(attribute.value, equals(style));
     });
   });
 }
 
-class _MockSpecAttribute extends SpecAttribute<_MockSpecAttribute, int> {
-  final int value;
-
-  const _MockSpecAttribute({this.value = 0});
+class _MockContextVariant extends ContextVariant {
+  const _MockContextVariant();
 
   @override
-  int resolve(MixData mix) {
-    return value;
-  }
+  final priority = VariantPriority.normal;
 
   @override
-  get props => [];
+  Object get mergeKey => 'MockContextVariant';
 
   @override
-  _MockSpecAttribute merge(_MockSpecAttribute? other) {
-    return _MockSpecAttribute(value: other?.value ?? value);
-  }
+  bool when(BuildContext context) => true;
 }
 
-class _MockStyleAttributeBuilder extends ContextVariantBuilder<int> {
-  const _MockStyleAttributeBuilder(Style Function(int param) fn, {Key? key})
-      : super(fn, key: key);
+class _MockContextVariant2 extends ContextVariant {
+  const _MockContextVariant2();
 
   @override
-  Attribute? builder(BuildContext context) {
-    return NestedStyleAttribute(fn(0));
-  }
+  final priority = VariantPriority.normal;
 
   @override
-  get props => [];
-}
-
-class MockContextVariantCondition extends ContextVariant {
-  final bool result;
-
-  const MockContextVariantCondition(this.result);
+  Object get mergeKey => 'MockContextVariant2';
 
   @override
-  bool build(BuildContext context) {
-    return result;
-  }
+  bool when(BuildContext context) => true;
 }

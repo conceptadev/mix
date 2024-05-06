@@ -65,7 +65,7 @@ void main() {
         StyledStack(
           style: Style(
             $flex.gap(10),
-            align(),
+            $with.align(),
           ),
           children: const [
             SizedBox(
@@ -88,7 +88,7 @@ void main() {
           style: Style(
             $flex.gap(10),
             $stack.alignment.center(),
-            align(),
+            $with.align(),
           ),
           children: const [
             SizedBox(

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../core/attribute.dart';
-import '../../core/extensions/values_ext.dart';
 import '../scalars/scalar_util.dart';
 import 'border_radius_dto.dart';
 
@@ -113,10 +112,10 @@ class BorderRadiusUtility<T extends StyleAttribute>
     }
 
     return only(
-      topLeft: topLeft.toRadius(),
-      topRight: topRight.toRadius(),
-      bottomLeft: bottomLeft.toRadius(),
-      bottomRight: bottomRight.toRadius(),
+      topLeft: Radius.circular(topLeft),
+      topRight: Radius.circular(topRight),
+      bottomLeft: Radius.circular(bottomLeft),
+      bottomRight: Radius.circular(bottomRight),
     );
   }
 
@@ -239,10 +238,10 @@ class BorderRadiusDirectionalUtility<T extends StyleAttribute>
 
     return builder(
       BorderRadiusGeometryDto(
-        topStart: topStart.toRadius(),
-        topEnd: topEnd.toRadius(),
-        bottomStart: bottomStart.toRadius(),
-        bottomEnd: bottomEnd.toRadius(),
+        topStart: Radius.circular(topStart),
+        topEnd: Radius.circular(topEnd),
+        bottomStart: Radius.circular(bottomStart),
+        bottomEnd: Radius.circular(bottomEnd),
       ),
     );
   }

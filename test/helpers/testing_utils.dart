@@ -184,14 +184,19 @@ class MockDoubleScalarAttribute
 
 class MockContextVariantCondition extends ContextVariant {
   final bool condition;
-  MockContextVariantCondition(this.condition, {super.priority})
-      : super(key: ValueKey(condition));
+  @override
+  final VariantPriority priority;
+  const MockContextVariantCondition(this.condition,
+      {this.priority = VariantPriority.normal});
 
   @override
-  List<Object?> get props => [key, condition];
+  List<Object?> get props => [condition];
 
   @override
-  bool build(BuildContext context) => condition;
+  Object get mergeKey => '$runtimeType.${priority.name}';
+
+  @override
+  bool when(BuildContext context) => condition;
 }
 
 class MockIntScalarAttribute
@@ -200,10 +205,13 @@ class MockIntScalarAttribute
 }
 
 class MockContextVariant extends ContextVariant {
-  const MockContextVariant({super.key});
+  const MockContextVariant();
 
   @override
-  bool build(BuildContext context) => true;
+  final priority = VariantPriority.normal;
+
+  @override
+  bool when(BuildContext context) => true;
 }
 
 class MockBooleanScalarAttribute
@@ -220,7 +228,7 @@ class MockInvalidAttribute extends Attribute {
   const MockInvalidAttribute();
 
   @override
-  Type get type => MockInvalidAttribute;
+  Type get mergeKey => MockInvalidAttribute;
 
   @override
   get props => [];

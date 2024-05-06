@@ -5,7 +5,7 @@ import '../factory/style_mix.dart';
 import '../variants/variant.dart';
 
 @immutable
-class VariantAttribute<V extends StyleVariant> extends Attribute
+class VariantAttribute<V extends IVariant> extends Attribute
     with Mergeable<VariantAttribute<V>> {
   final V variant;
   final Style _style;
@@ -15,11 +15,11 @@ class VariantAttribute<V extends StyleVariant> extends Attribute
 
   VariantPriority get priority => variant.priority;
 
-  bool matches(Iterable<StyleVariant> otherVariants) =>
+  bool matches(Iterable<IVariant> otherVariants) =>
       variant.matches(otherVariants);
 
-  VariantAttribute? removeVariants(Iterable<StyleVariant> variantsToRemove) {
-    StyleVariant? remainingVariant;
+  VariantAttribute? removeVariants(Iterable<IVariant> variantsToRemove) {
+    IVariant? remainingVariant;
     if (variant is MultiVariant) {
       remainingVariant = (variant as MultiVariant).remaining(variantsToRemove);
     } else {
@@ -44,7 +44,7 @@ class VariantAttribute<V extends StyleVariant> extends Attribute
   get props => [variant, _style];
 
   @override
-  Object get type => ObjectKey(variant);
+  Object get mergeKey => variant.mergeKey;
 }
 
 ArgumentError throwArgumentError<T extends VariantAttribute>(T other) {

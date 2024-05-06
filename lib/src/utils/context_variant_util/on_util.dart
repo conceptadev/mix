@@ -9,24 +9,24 @@ import 'on_not_util.dart';
 import 'on_orientation_util.dart';
 
 class OnContextVariantUtility {
-  late final small = OnBreakpointTokenVariant(BreakpointToken.small);
+  late final small = const OnBreakpointTokenVariant(BreakpointToken.small);
 
-  late final xsmall = OnBreakpointTokenVariant(BreakpointToken.xsmall);
+  late final xsmall = const OnBreakpointTokenVariant(BreakpointToken.xsmall);
 
-  late final medium = OnBreakpointTokenVariant(BreakpointToken.medium);
+  late final medium = const OnBreakpointTokenVariant(BreakpointToken.medium);
 
-  late final large = OnBreakpointTokenVariant(BreakpointToken.large);
+  late final large = const OnBreakpointTokenVariant(BreakpointToken.large);
 
   late final breakpoint = OnBreakPointVariant.new;
 
-  late final light = OnBrightnessVariant(Brightness.light);
-  late final dark = OnBrightnessVariant(Brightness.dark);
+  late final light = const OnBrightnessVariant(Brightness.light);
+  late final dark = const OnBrightnessVariant(Brightness.dark);
 
-  late final ltr = OnDirectionalityVariant(TextDirection.ltr);
-  late final rtl = OnDirectionalityVariant(TextDirection.rtl);
+  late final ltr = const OnDirectionalityVariant(TextDirection.ltr);
+  late final rtl = const OnDirectionalityVariant(TextDirection.rtl);
 
-  late final landscape = OnOrientationVariant(Orientation.landscape);
-  late final portrait = OnOrientationVariant(Orientation.portrait);
+  late final landscape = const OnOrientationVariant(Orientation.landscape);
+  late final portrait = const OnOrientationVariant(Orientation.portrait);
 
   late final press = const OnPressVariant();
   late final hover = const OnHoverVariant();
@@ -34,8 +34,6 @@ class OnContextVariantUtility {
   late final enabled = const OnEnabledVariant();
   late final disabled = const OnDisabledVariant();
   late final longPress = const OnLongPressVariant();
-
-  late final mouse = OnMouseHoverBuilder.new;
 
   /// Creates an [OnNotVariant] with the specified [variant].
   ///

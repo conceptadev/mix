@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
 
@@ -20,7 +19,7 @@ void main() {
     test('mergeKey returns correct instance', () {
       final variantAttribute = VariantAttribute(variant, style);
 
-      expect(variantAttribute.type, const ObjectKey(variant));
+      expect(variantAttribute.mergeKey, variant.mergeKey);
     });
 
     // merge()
@@ -40,7 +39,7 @@ void main() {
 
   // StyleVariantAttribute
   group('StyleVariantAttribute', () {
-    final variant = MockContextVariantCondition(
+    const variant = MockContextVariantCondition(
       true,
       priority: VariantPriority.high,
     );
@@ -57,7 +56,7 @@ void main() {
     test('mergeKey returns correct instance', () {
       final variantAttribute = VariantAttribute(variant, style);
 
-      expect(variantAttribute.type, ObjectKey(variant));
+      expect(variantAttribute.mergeKey, variant.mergeKey);
     });
 
     // merge()
@@ -78,7 +77,7 @@ void main() {
     test('when() returns correct instance', () {
       final variantAttribute = VariantAttribute(variant, style);
 
-      final result = variantAttribute.variant.build(MockBuildContext());
+      final result = variantAttribute.variant.when(MockBuildContext());
 
       expect(result, isTrue);
     });

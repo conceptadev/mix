@@ -12,6 +12,7 @@ import 'factory/style_mix.dart';
 import 'helpers/helper_util.dart';
 import 'specs/box/box_widget.dart';
 import 'specs/spec_util.dart';
+import 'theme/tokens/token_util.dart';
 
 const kShortAliasDeprecation =
     'Short aliases will be deprecated, you can create your own. Example: final p = padding;';
@@ -446,8 +447,8 @@ final onDisabled = $on.disabled;
 @Deprecated(r'Use $on.focus instead')
 final onfocus = $on.focus;
 
-@Deprecated(r'Use $on.mouse instead')
-final onMouseHover = $on.mouse;
+@Deprecated(r'Use $on.hover.event instead')
+final onMouseHover = $on.hover.event;
 
 @Deprecated(r'Use $on.dark instead')
 final onDark = $on.dark;
@@ -721,6 +722,24 @@ final visibility = $with.visibility;
 // show
 @Deprecated(r'Use $with.show instead')
 final show = $with.show;
+
+@Deprecated(r'use $material instead')
+const $md = $material;
+
+@Deprecated(r'use $token.radii')
+final $radius = $token.radius;
+
+@Deprecated(r'use $token.space')
+final $space = $token.space;
+
+@Deprecated(r'use $token.color')
+final $color = $token.color;
+
+@Deprecated(r'use $token.breakpoint')
+final $breakpoint = $token.breakpoint;
+
+@Deprecated(r'use $token.textStyle')
+final $textStyle = $token.textStyle;
 
 // hide
 @Deprecated(r'Use $with.hide instead')

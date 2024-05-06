@@ -371,7 +371,7 @@ void main() {
         await tester.pumpWidget(
           _TestableRenderDecorator(
             Style(
-              align(),
+              $with.align(),
             ),
           ),
         );

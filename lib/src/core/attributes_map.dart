@@ -22,7 +22,7 @@ class AttributeMap<T extends Attribute> with Comparable {
   ) {
     final map = LinkedHashMap<Object, Attr>();
     for (final attribute in attributes) {
-      final type = attribute.type;
+      final type = attribute.mergeKey;
 
       // If value cannot be merged just overwrite it
       if (attribute is! Mergeable) {
@@ -51,7 +51,8 @@ class AttributeMap<T extends Attribute> with Comparable {
 
   List<T> get values => _map?.values.toList() ?? [];
 
-  bool containsType(T attribute) => _map?.containsKey(attribute.type) ?? false;
+  bool containsType(T attribute) =>
+      _map?.containsKey(attribute.mergeKey) ?? false;
 
   bool containsValue(T attribute) => _map?.containsValue(attribute) ?? false;
 

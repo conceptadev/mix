@@ -23,7 +23,7 @@ class TextSpec extends Spec<TextSpec> {
   final TextDirective? directive;
 
   const TextSpec({
-    required this.overflow,
+    this.overflow,
     this.strutStyle,
     this.textAlign,
     this.textScaleFactor,

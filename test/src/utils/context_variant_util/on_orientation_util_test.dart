@@ -11,8 +11,8 @@ void main() {
       await tester.pumpMaterialApp(Container());
       var context = tester.element(find.byType(Container));
 
-      expect(onPortrait.build(context), true, reason: 'portrait');
-      expect(onLandscape.build(context), false, reason: 'landscape');
+      expect(onPortrait.when(context), true, reason: 'portrait');
+      expect(onLandscape.when(context), false, reason: 'landscape');
 
       addTearDown(tester.view.resetPhysicalSize);
     });
@@ -22,8 +22,8 @@ void main() {
       await tester.pumpMaterialApp(Container());
       var context = tester.element(find.byType(Container));
 
-      expect(onPortrait.build(context), false, reason: 'portrait');
-      expect(onLandscape.build(context), true, reason: 'landscape');
+      expect(onPortrait.when(context), false, reason: 'portrait');
+      expect(onLandscape.when(context), true, reason: 'landscape');
       addTearDown(tester.view.resetPhysicalSize);
     });
 

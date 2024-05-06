@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../core/attribute.dart';
-import '../../core/extensions/values_ext.dart';
 import '../color/color_dto.dart';
 import '../color/color_util.dart';
 import '../scalars/scalar_util.dart';
@@ -124,7 +123,9 @@ class ElevationUtility<T extends StyleAttribute>
   T call(int value) {
     assert(kElevationToShadow.containsKey(value), 'Invalid elevation value');
 
-    return builder(kElevationToShadow[value]!.toDto());
+    final boxShadows = kElevationToShadow[value]!.map(BoxShadowDto.from);
+
+    return builder(boxShadows.toList());
   }
 
   // Convenience methods for common elevation values.

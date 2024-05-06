@@ -5,14 +5,14 @@ import 'package:mix/mix.dart';
 import '../../../helpers/testing_utils.dart';
 
 void main() {
-  group('IconMixAttribute', () {
+  group('IconSpecAttribute', () {
     test('resolve should return an instance of IconSpec', () {
       const attribute = IconSpecAttribute();
       final resolvedSpec = attribute.resolve(EmptyMixData);
       expect(resolvedSpec, isA<IconSpec>());
     });
 
-    test('merge should return a new instance of IconMixAttribute', () {
+    test('merge should return a new instance of IconSpecAttribute', () {
       const shadows = [
         ShadowDto(
           color: ColorDto(

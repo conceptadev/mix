@@ -7,7 +7,7 @@ import 'package:mix/mix.dart';
 import '../../../helpers/testing_utils.dart';
 
 void main() {
-  group('IconMix', () {
+  group('IconSpec', () {
     test('resolve', () {
       final mix = MixData.create(
         MockBuildContext(),
@@ -72,6 +72,43 @@ void main() {
 
       expect(lerpedSpec.color, Color.lerp(Colors.red, Colors.blue, t));
       expect(lerpedSpec.size, lerpDouble(20.0, 30.0, t));
+    });
+
+    test('IconSpec.empty() constructor', () {
+      const spec = IconSpec.empty();
+
+      expect(spec.color, isNull);
+      expect(spec.size, isNull);
+      expect(spec.weight, isNull);
+      expect(spec.grade, isNull);
+      expect(spec.opticalSize, isNull);
+      expect(spec.shadows, isNull);
+      expect(spec.textDirection, isNull);
+      expect(spec.applyTextScaling, isNull);
+      expect(spec.fill, isNull);
+    });
+
+    test('IconSpec.of(BuildContext context)', () {
+      final mixData = MixData.create(
+        MockBuildContext(),
+        Style(IconSpecAttribute(size: 20.0, color: Colors.red.toDto())),
+      );
+
+      final spec = IconSpec.from(mixData);
+
+      expect(spec.color, Colors.red);
+      expect(spec.size, 20.0);
+    });
+
+    test('IconSpecTween lerp', () {
+      const spec1 = IconSpec(color: Colors.red, size: 20.0);
+      const spec2 = IconSpec(color: Colors.blue, size: 30.0);
+
+      final tween = IconSpecTween(begin: spec1, end: spec2);
+
+      final lerpedSpec = tween.lerp(0.5);
+      expect(lerpedSpec.color, Color.lerp(Colors.red, Colors.blue, 0.5));
+      expect(lerpedSpec.size, lerpDouble(20.0, 30.0, 0.5));
     });
   });
 }

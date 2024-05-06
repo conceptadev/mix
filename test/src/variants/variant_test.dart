@@ -60,8 +60,8 @@ void main() {
       final multiAndVariant = MultiVariant.and([variant1, variant2]);
       final multiOrVariant = MultiVariant.or([variant1, variant2]);
 
-      expect(multiAndVariant.build(MockBuildContext()), isFalse);
-      expect(multiOrVariant.build(MockBuildContext()), isTrue);
+      expect(multiAndVariant.when(MockBuildContext()), isFalse);
+      expect(multiOrVariant.when(MockBuildContext()), isTrue);
     });
 
     test('MultiVariant.and should correctly create a MultiVariant', () {
@@ -90,7 +90,7 @@ void main() {
         final variant2 = MockContextVariantCondition(false);
         final multiVariant = MultiVariant.or([variant1, variant2]);
 
-        final expectValue = multiVariant.build(MockBuildContext());
+        final expectValue = multiVariant.when(MockBuildContext());
 
         expect(expectValue, isFalse);
         expect(multiVariant.operatorType, MultiVariantOperator.or);
@@ -103,7 +103,7 @@ void main() {
         final variant2 = MockContextVariantCondition(true);
         final multiVariant = MultiVariant.or([variant1, variant2]);
 
-        final expectValue = multiVariant.build(MockBuildContext());
+        final expectValue = multiVariant.when(MockBuildContext());
 
         expect(expectValue, isTrue);
         expect(multiVariant.operatorType, MultiVariantOperator.or);
@@ -116,7 +116,7 @@ void main() {
         final variant2 = MockContextVariantCondition(true);
         final multiVariant = MultiVariant.or([variant1, variant2]);
 
-        final expectValue = multiVariant.build(MockBuildContext());
+        final expectValue = multiVariant.when(MockBuildContext());
 
         expect(expectValue, isTrue);
         expect(multiVariant.operatorType, MultiVariantOperator.or);
@@ -129,7 +129,7 @@ void main() {
         final variant2 = MockContextVariantCondition(false);
         final multiVariant = MultiVariant.and([variant1, variant2]);
 
-        final expectValue = multiVariant.build(MockBuildContext());
+        final expectValue = multiVariant.when(MockBuildContext());
 
         expect(expectValue, isFalse);
         expect(multiVariant.operatorType, MultiVariantOperator.and);
@@ -142,7 +142,7 @@ void main() {
         final variant2 = MockContextVariantCondition(true);
         final multiVariant = MultiVariant.and([variant1, variant2]);
 
-        final expectValue = multiVariant.build(MockBuildContext());
+        final expectValue = multiVariant.when(MockBuildContext());
 
         expect(expectValue, isFalse);
         expect(multiVariant.operatorType, MultiVariantOperator.and);
@@ -155,7 +155,7 @@ void main() {
         final variant2 = MockContextVariantCondition(true);
         final multiVariant = MultiVariant.and([variant1, variant2]);
 
-        final expectValue = multiVariant.build(MockBuildContext());
+        final expectValue = multiVariant.when(MockBuildContext());
 
         expect(expectValue, isTrue);
         expect(multiVariant.operatorType, MultiVariantOperator.and);
@@ -289,9 +289,9 @@ void main() {
 }
 
 typedef _ConditionBuilder = MultiVariant Function(
-  StyleVariant v1,
-  StyleVariant v2,
-  StyleVariant v3,
+  IVariant v1,
+  IVariant v2,
+  IVariant v3,
 );
 
 void _testWhenWithThreeVariants({
@@ -307,7 +307,7 @@ void _testWhenWithThreeVariants({
 
   final multiVariant = condition(variant1, variant2, variant3);
 
-  final expectValue = multiVariant.build(MockBuildContext());
+  final expectValue = multiVariant.when(MockBuildContext());
 
   expect(expectValue, expectedValue);
 }

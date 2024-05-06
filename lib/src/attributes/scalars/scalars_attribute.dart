@@ -10,7 +10,7 @@ abstract class ScalarAttribute<Self extends ScalarAttribute<Self, Value>, Value>
   const ScalarAttribute(this.value);
 
   @override
-  Type get type => Self;
+  Type get mergeKey => Self;
 
   @override
   get props => [value];

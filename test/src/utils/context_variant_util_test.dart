@@ -26,14 +26,14 @@ void main() {
       await tester.pumpWidget(createBrightnessTheme(Brightness.light));
       var context = tester.element(find.byType(Container));
 
-      expect(onLight.build(context), true, reason: 'light');
-      expect(onDark.build(context), false, reason: 'dark');
+      expect(onLight.when(context), true, reason: 'light');
+      expect(onDark.when(context), false, reason: 'dark');
 
       final notLight = onNot(onLight);
       final notDark = onNot(onDark);
 
-      expect(notLight.build(context), false, reason: 'not light');
-      expect(notDark.build(context), true, reason: 'not dark');
+      expect(notLight.when(context), false, reason: 'not light');
+      expect(notDark.when(context), true, reason: 'not dark');
     });
   });
 

@@ -74,19 +74,23 @@ class PressableState extends InheritedModel<PressableStateAspect> {
     return of(context, PressableStateAspect.enabled).enabled;
   }
 
-  static bool hoveredOf(BuildContext context) {
+  static bool disabledOf(BuildContext context) {
+    return !enabledOf(context);
+  }
+
+  static bool hoverOf(BuildContext context) {
     return of(context, PressableStateAspect.hovered).hovered;
   }
 
-  static bool focusedOf(BuildContext context) {
+  static bool focusOf(BuildContext context) {
     return of(context, PressableStateAspect.focused).focused;
   }
 
-  static bool pressedOf(BuildContext context) {
+  static bool pressOf(BuildContext context) {
     return of(context, PressableStateAspect.pressed).pressed;
   }
 
-  static bool longPressedOf(BuildContext context) {
+  static bool longPressOf(BuildContext context) {
     return of(context, PressableStateAspect.longPressed).longPressed;
   }
 

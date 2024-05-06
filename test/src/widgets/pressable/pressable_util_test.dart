@@ -25,10 +25,10 @@ void main() {
 
       final onPressAttr = onPressed(attribute1, attribute2, attribute3);
 
-      expect(onPressAttr.variant.build(context), true);
+      expect(onPressAttr.variant.when(context), true);
       expect(onPressAttr.value, Style(attribute1, attribute2, attribute3));
 
-      expect(onPressAttr.variant.build(context), true);
+      expect(onPressAttr.variant.when(context), true);
     });
 
     testWidgets('long press state', (tester) async {
@@ -42,13 +42,13 @@ void main() {
 
       final onLongPressAttr = onLongPressed(attribute1, attribute2, attribute3);
 
-      expect(onLongPressAttr.variant.build(context), true);
+      expect(onLongPressAttr.variant.when(context), true);
       expect(
         onLongPressAttr.value,
         Style(attribute1, attribute2, attribute3),
       );
 
-      expect(onLongPressAttr.variant.build(context), true);
+      expect(onLongPressAttr.variant.when(context), true);
     });
 
     testWidgets('hover state', (tester) async {
@@ -64,7 +64,7 @@ void main() {
 
       expect(onHoverAttr.value, Style(attribute1, attribute2, attribute3));
 
-      expect(onHoverAttr.variant.build(context), true);
+      expect(onHoverAttr.variant.when(context), true);
     });
 
     testWidgets('disabled state', (tester) async {
@@ -83,7 +83,7 @@ void main() {
         Style(attribute1, attribute2, attribute3),
       );
 
-      expect(onDisabledAttr.variant.build(context), true);
+      expect(onDisabledAttr.variant.when(context), true);
     });
 
     // onEnabled
@@ -100,7 +100,7 @@ void main() {
 
       expect(onEnabledAttr.value, Style(attribute1, attribute2, attribute3));
 
-      expect(onEnabledAttr.variant.build(context), true);
+      expect(onEnabledAttr.variant.when(context), true);
     });
 
     // onFocus
@@ -117,7 +117,7 @@ void main() {
 
       expect(onFocusAttr.value, Style(attribute1, attribute2, attribute3));
 
-      expect(onFocusAttr.variant.build(context), true);
+      expect(onFocusAttr.variant.when(context), true);
     });
   });
 }

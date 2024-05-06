@@ -6,17 +6,17 @@ import '../../helpers/testing_utils.dart';
 
 void main() {
   final style = Style(
-    scale(2.0),
-    opacity(0.5),
-    visibility.on(),
-    clipOval(),
-    aspectRatio(2.0),
+    $with.scale(2.0),
+    $with.opacity(0.5),
+    $with.visibility.on(),
+    $with.clipOval(),
+    $with.aspectRatio(2.0),
     const CustomDecoratorAttribute(),
   );
 
   final mixData = MixData.create(MockBuildContext(), style);
 
-  group('RenderDecoratorAttributes', () {
+  group('RenderDecorators', () {
     testWidgets('Renders decorators in the correct order', (tester) async {
       await tester.pumpMaterialApp(
         RenderDecorators(
@@ -76,6 +76,38 @@ void main() {
         ),
         findsOneWidget,
       );
+    });
+
+    testWidgets('Renders child when no decorators are provided',
+        (tester) async {
+      final mixData = MixData.create(MockBuildContext(), Style());
+
+      await tester.pumpMaterialApp(
+        RenderDecorators(
+          mix: mixData,
+          orderOfDecorators: const [],
+          child: const Text('child'),
+        ),
+      );
+
+      expect(find.text('child'), findsOneWidget);
+      expect(find.byType(RenderDecorators), findsOneWidget);
+    });
+
+    testWidgets('Renders child when orderOfDecorators is empty',
+        (tester) async {
+      final mixData = MixData.create(MockBuildContext(), style);
+
+      await tester.pumpMaterialApp(
+        RenderDecorators(
+          mix: mixData,
+          orderOfDecorators: const [],
+          child: const Text('child'),
+        ),
+      );
+
+      expect(find.text('child'), findsOneWidget);
+      expect(find.byType(RenderDecorators), findsOneWidget);
     });
 
     testWidgets(
@@ -223,6 +255,28 @@ void main() {
     );
   });
 
+  group('RenderAnimatedDecorators', () {
+    testWidgets('Renders animated decorators', (tester) async {
+      final mixData = MixData.create(MockBuildContext(), style);
+
+      await tester.pumpMaterialApp(
+        RenderAnimatedDecorators(
+          mix: mixData,
+          orderOfDecorators: const [],
+          duration: const Duration(milliseconds: 300),
+          child: const Text('child'),
+        ),
+      );
+
+      expect(find.text('child'), findsOneWidget);
+      expect(find.byType(RenderAnimatedDecorators), findsOneWidget);
+
+      // Trigger animation and pump frames
+      await tester.pump(const Duration(milliseconds: 150));
+      await tester.pump(const Duration(milliseconds: 150));
+    });
+  });
+
   group('Decorators attributes', () {
     testWidgets(
       'should be applied to the first one. The children wont inherit even though the second one is set to inherit',
@@ -232,11 +286,11 @@ void main() {
         await tester.pumpWidget(
           Box(
             style: Style(
-              scale(2.0),
-              opacity(0.5),
-              visibility.on(),
-              clipOval(),
-              aspectRatio(2.0),
+              $with.scale(2.0),
+              $with.opacity(0.5),
+              $with.visibility.on(),
+              $with.clipOval(),
+              $with.aspectRatio(2.0),
             ),
             child: Box(
               key: key,
@@ -315,5 +369,45 @@ void main() {
         );
       },
     );
+  });
+
+  group('resolveDecoratorSpecs', () {
+    test('Returns empty set when no decorators are provided', () {
+      final result = resolveDecoratorSpecs(const [], EmptyMixData);
+      expect(result, isEmpty);
+    });
+
+    test('Returns resolved decorator specs in the correct order', () {
+      final style = Style(
+        $with.scale(2.0),
+        $with.opacity(0.5),
+        $with.visibility.on(),
+        $with.clipOval(),
+        $with.aspectRatio(2.0),
+      );
+
+      final mix = style.of(MockBuildContext());
+      final result = resolveDecoratorSpecs(
+        [
+          ClipOvalDecoratorAttribute,
+          AspectRatioDecoratorAttribute,
+          TransformDecoratorAttribute,
+          OpacityDecoratorAttribute,
+          VisibilityDecoratorAttribute,
+        ],
+        mix,
+      );
+
+      expect(result, {
+        const VisibilityDecoratorSpec(true),
+        const OpacityDecoratorSpec(0.5),
+        TransformDecoratorSpec(
+          transform: Matrix4.diagonal3Values(2.0, 2.0, 1.0),
+          alignment: Alignment.center,
+        ),
+        const AspectRatioDecoratorSpec(2.0),
+        const ClipOvalDecoratorSpec(),
+      });
+    });
   });
 }

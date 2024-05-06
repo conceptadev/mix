@@ -4,6 +4,7 @@ import '../attributes/variant_attribute.dart';
 import '../core/attribute.dart';
 import '../factory/style_mix.dart';
 import '../helpers/compare_mixin.dart';
+import 'context_variant.dart';
 
 enum VariantPriority {
   low(0),
@@ -17,25 +18,35 @@ enum VariantPriority {
 }
 
 @immutable
-abstract class StyleVariant with Comparable {
-  const StyleVariant();
+abstract class IVariant with Comparable {
+  const IVariant();
 
+  /// This is the priority at which the variants are applied.
+  /// In the case of some context variants that are due to
+  /// widget interactivity, they should be applied
+  /// at a higher priority than media query variants, for example.
   VariantPriority get priority;
 
-  MultiVariant operator &(covariant StyleVariant variant) =>
+  /// This key determines how variants should be merged.
+  /// For the most part, it's basically the runtimeType.
+  /// However, for some context variants and multivariants, it is different
+  /// as they can have different merge rules.
+  Object get mergeKey;
+
+  MultiVariant operator &(covariant IVariant variant) =>
       MultiVariant.and([this, variant]);
 
-  MultiVariant operator |(covariant StyleVariant variant) =>
+  MultiVariant operator |(covariant IVariant variant) =>
       MultiVariant.or([this, variant]);
 
-  bool matches(Iterable<StyleVariant> matchVariants) =>
+  bool matches(Iterable<IVariant> matchVariants) =>
       matchVariants.contains(this);
 
-  bool build(BuildContext context);
+  bool when(BuildContext context);
 }
 
 @immutable
-class Variant extends StyleVariant {
+class Variant extends IVariant {
   final String name;
 
   @override
@@ -74,73 +85,30 @@ class Variant extends StyleVariant {
   }
 
   @override
+  bool when(BuildContext context) => false;
+  @override
+  Object get mergeKey => '$runtimeType.$name';
+
+  @override
   get props => [name];
-
-  @override
-  bool build(BuildContext context) => false;
-}
-
-@immutable
-abstract class ContextVariant extends StyleVariant {
-  final Key? key;
-  @override
-  final VariantPriority priority;
-
-  const ContextVariant({this.key, this.priority = VariantPriority.normal});
-
-  VariantAttribute call([
-    Attribute? p1,
-    Attribute? p2,
-    Attribute? p3,
-    Attribute? p4,
-    Attribute? p5,
-    Attribute? p6,
-    Attribute? p7,
-    Attribute? p8,
-    Attribute? p9,
-    Attribute? p10,
-    Attribute? p11,
-    Attribute? p12,
-    Attribute? p13,
-    Attribute? p14,
-    Attribute? p15,
-    Attribute? p16,
-    Attribute? p17,
-    Attribute? p18,
-    Attribute? p19,
-    Attribute? p20,
-  ]) {
-    final params = [
-      p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, //
-      p11, p12, p13, p14, p15, p16, p17, p18, p19, p20,
-    ].whereType<Attribute>();
-
-    return VariantAttribute(this, Style.create(params));
-  }
-
-  @override
-  get props => [key, priority];
-
-  @override
-  bool build(BuildContext context);
 }
 
 enum MultiVariantOperator { and, or }
 
 @immutable
-class MultiVariant extends StyleVariant {
-  final List<StyleVariant> variants;
+class MultiVariant extends IVariant {
+  final List<IVariant> variants;
 
   final MultiVariantOperator operatorType;
 
   const MultiVariant._(this.variants, {required this.operatorType});
 
   factory MultiVariant(
-    Iterable<StyleVariant> variants, {
+    Iterable<IVariant> variants, {
     required MultiVariantOperator type,
   }) {
     final multiVariants = <MultiVariant>[];
-    final otherVariants = <StyleVariant>[];
+    final otherVariants = <IVariant>[];
 
     for (var variant in variants) {
       if (variant is MultiVariant) {
@@ -159,20 +127,20 @@ class MultiVariant extends StyleVariant {
     return MultiVariant._(combinedVariants.toList(), operatorType: type);
   }
 
-  factory MultiVariant.and(Iterable<StyleVariant> variants) {
+  factory MultiVariant.and(Iterable<IVariant> variants) {
     return MultiVariant(variants, type: MultiVariantOperator.and);
   }
 
-  factory MultiVariant.or(Iterable<StyleVariant> variants) {
+  factory MultiVariant.or(Iterable<IVariant> variants) {
     return MultiVariant(variants, type: MultiVariantOperator.or);
   }
 
-  StyleVariant? remaining(Iterable<StyleVariant> variantsToRemove) {
+  IVariant? remaining(Iterable<IVariant> variantsToRemove) {
     return remove(variantsToRemove);
   }
 
-  StyleVariant? remove(Iterable<StyleVariant> variantsToRemove) {
-    final remainingVariants = <StyleVariant>[];
+  IVariant? remove(Iterable<IVariant> variantsToRemove) {
+    final remainingVariants = <IVariant>[];
 
     for (var variant in variants) {
       if (variant is MultiVariant) {
@@ -227,13 +195,26 @@ class MultiVariant extends StyleVariant {
   }
 
   @override
-  bool matches(Iterable<StyleVariant> matchVariants) {
+  bool matches(Iterable<IVariant> matchVariants) {
     final list = variants.map((e) => e.matches(matchVariants)).toList();
 
     return operatorType == MultiVariantOperator.or
         ? list.contains(true)
         : list.every((e) => e);
   }
+
+  @override
+  bool when(BuildContext context) {
+    var conditions = variants.map((e) => e.when(context));
+
+    return operatorType == MultiVariantOperator.or
+        ? conditions.contains(true)
+        : conditions.every((e) => e);
+  }
+
+  @override
+  Object get mergeKey =>
+      '$runtimeType.$operatorType.${variants.map((e) => e.mergeKey)}';
 
   @override
   VariantPriority get priority {
@@ -253,13 +234,4 @@ class MultiVariant extends StyleVariant {
 
   @override
   get props => [variants, operatorType];
-
-  @override
-  bool build(BuildContext context) {
-    var conditions = variants.map((e) => e.build(context));
-
-    return operatorType == MultiVariantOperator.or
-        ? conditions.contains(true)
-        : conditions.every((e) => e);
-  }
 }

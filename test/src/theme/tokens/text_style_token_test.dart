@@ -76,17 +76,17 @@ void main() {
   testWidgets('Combined Test', (tester) async {
     final themeData = MixThemeData(
       colors: {
-        $md.colorScheme.error: Colors.blue,
-        $md.colorScheme.background: Colors.red,
+        $material.colorScheme.error: Colors.blue,
+        $material.colorScheme.background: Colors.red,
       },
       spaces: {
         $space.large: 100,
         $space.medium: 50,
       },
       textStyles: {
-        $md.textTheme.bodyText1:
+        $material.textTheme.bodyText1:
             const TextStyle(color: Colors.red, fontSize: 10),
-        $md.textTheme.bodyText2:
+        $material.textTheme.bodyText2:
             const TextStyle(color: Colors.blue, fontSize: 20),
       },
       radii: {
@@ -100,10 +100,10 @@ void main() {
     await tester.pumpWithMixTheme(
       Box(
         style: Style(
-          $text.style.ref($md.textTheme.bodyText1),
-          $text.style.ref($md.textTheme.bodyText2),
-          $box.color.ref($md.colorScheme.background),
-          $box.color.ref($md.colorScheme.error),
+          $text.style.ref($material.textTheme.bodyText1),
+          $text.style.ref($material.textTheme.bodyText2),
+          $box.color.ref($material.colorScheme.background),
+          $box.color.ref($material.colorScheme.error),
           $box.borderRadius.all.ref($radius.medium),
           $box.borderRadius.all.ref($radius.large),
           $box.padding.horizontal.ref($space.medium),
@@ -125,17 +125,17 @@ void main() {
 
     expect(
       textWidget.style!.color,
-      themeData.textStyles[$md.textTheme.bodyText2]!.color,
+      themeData.textStyles[$material.textTheme.bodyText2]!.color,
     );
 
     expect(
       textWidget.style!.fontSize,
-      themeData.textStyles[$md.textTheme.bodyText2]!.fontSize,
+      themeData.textStyles[$material.textTheme.bodyText2]!.fontSize,
     );
 
     expect(
       (containerWidget.decoration as BoxDecoration).color,
-      themeData.colors[$md.colorScheme.error],
+      themeData.colors[$material.colorScheme.error],
     );
 
     expect(

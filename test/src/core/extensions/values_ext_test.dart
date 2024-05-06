@@ -151,4 +151,88 @@ void main() {
       expect(value.toDto(), dto);
     });
   });
+
+  test('EdgeInsetsGeometry toDto', () {
+    const value = EdgeInsets.all(10.0);
+    final dto = SpacingDto.from(value);
+
+    expect(value.toDto(), isA<SpacingDto>());
+    expect(value.toDto(), dto);
+  });
+
+  test('Gradient toDto', () {
+    const linearGradient = LinearGradient(colors: [Colors.red, Colors.blue]);
+    expect(linearGradient.toDto(), isA<LinearGradientDto>());
+
+    const radialGradient = RadialGradient(colors: [Colors.red, Colors.blue]);
+    expect(radialGradient.toDto(), isA<RadialGradientDto>());
+
+    const sweepGradient = SweepGradient(colors: [Colors.red, Colors.blue]);
+    expect(sweepGradient.toDto(), isA<SweepGradientDto>());
+  });
+
+  test('Matrix4 merge', () {
+    final matrix1 = Matrix4.identity();
+    final matrix2 = Matrix4.rotationZ(0.5);
+
+    final mergedMatrix = matrix1.merge(matrix2);
+
+    expect(mergedMatrix, isNot(equals(matrix1)));
+    expect(mergedMatrix, equals(matrix2));
+  });
+
+  test('List<Shadow> toDto', () {
+    const shadows = [
+      Shadow(color: Colors.black, blurRadius: 10.0),
+      Shadow(color: Colors.grey, blurRadius: 5.0),
+    ];
+
+    final dtos = shadows.toDto();
+
+    expect(dtos, isA<List<ShadowDto>>());
+    expect(dtos.length, equals(shadows.length));
+  });
+
+  test('List<BoxShadow> toDto', () {
+    const boxShadows = [
+      BoxShadow(color: Colors.black, blurRadius: 10.0),
+      BoxShadow(color: Colors.grey, blurRadius: 5.0),
+    ];
+
+    final dtos = boxShadows.toDto();
+
+    expect(dtos, isA<List<BoxShadowDto>>());
+    expect(dtos.length, equals(boxShadows.length));
+  });
+
+  test('double toRadius', () {
+    const value = 10.0;
+    final radius = value.toRadius();
+
+    expect(radius, isA<Radius>());
+    expect(radius, equals(const Radius.circular(10.0)));
+  });
+
+  test('Decoration toDto with unsupported type', () {
+    const unsupportedDecoration = _MockDecoration();
+
+    expect(() => unsupportedDecoration.toDto(), throwsUnimplementedError);
+  });
+
+  test('BorderRadiusGeometry toDto', () {
+    final value = BorderRadius.circular(10.0);
+    final dto = BorderRadiusGeometryDto.from(value);
+
+    expect(value.toDto(), isA<BorderRadiusGeometryDto>());
+    expect(value.toDto(), dto);
+  });
+}
+
+class _MockDecoration extends Decoration {
+  const _MockDecoration();
+
+  @override
+  BoxPainter createBoxPainter([VoidCallback? onChanged]) {
+    throw UnimplementedError();
+  }
 }

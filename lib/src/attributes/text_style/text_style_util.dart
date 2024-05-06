@@ -3,7 +3,6 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 import '../../core/attribute.dart';
-import '../../core/extensions/values_ext.dart';
 import '../../theme/tokens/text_style_token.dart';
 import '../color/color_dto.dart';
 import '../color/color_util.dart';
@@ -45,7 +44,7 @@ class TextStyleUtility<T extends StyleAttribute>
 
   T letterSpacing(double v) => only(letterSpacing: v);
 
-  T shadows(List<Shadow> v) => only(shadows: v.map((e) => e.toDto()).toList());
+  T shadows(List<Shadow> v) => only(shadows: v.map(ShadowDto.from).toList());
 
   T italic() => fontStyle.italic();
 
@@ -102,7 +101,7 @@ class TextStyleUtility<T extends StyleAttribute>
       decorationColor: ColorDto.maybeFrom(decorationColor),
       decorationStyle: decorationStyle,
       textBaseline: textBaseline,
-      shadows: shadows?.map((e) => e.toDto()).toList(),
+      shadows: shadows?.map(ShadowDto.from).toList(),
       fontFeatures: fontFeatures,
       foreground: foreground,
       background: background,

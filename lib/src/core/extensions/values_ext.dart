@@ -10,12 +10,10 @@ import '../../attributes/spacing/spacing_dto.dart';
 import '../../attributes/strut_style/strut_style_dto.dart';
 import '../../attributes/text_style/text_style_dto.dart';
 
-// @nodoc
 extension StrutStyleExt on StrutStyle {
   StrutStyleDto toDto() => StrutStyleDto.from(this);
 }
 
-// @nodoc
 extension GradientExt on Gradient {
   // toDto
   GradientDto toDto() {
@@ -27,42 +25,34 @@ extension GradientExt on Gradient {
   }
 }
 
-// @nodoc
 extension LinearGradientExt on LinearGradient {
   LinearGradientDto toDto() => LinearGradientDto.from(this);
 }
 
-// @nodoc
 extension RadialGradientExt on RadialGradient {
   RadialGradientDto toDto() => RadialGradientDto.from(this);
 }
 
-// @nodoc
 extension SweepGradientExt on SweepGradient {
   SweepGradientDto toDto() => SweepGradientDto.from(this);
 }
 
-// @nodoc
 extension BoxBorderExt on BoxBorder {
   BoxBorderDto toDto() => BoxBorderDto.from(this);
 }
 
-// @nodoc
 extension EdgeInsetsGeometryExt on EdgeInsetsGeometry {
   SpacingDto toDto() => SpacingDto.from(this);
 }
 
-// @nodoc
 extension DoubleExt on double {
   Radius toRadius() => Radius.circular(this);
 }
 
-// @nodoc
 extension BoxConstraintsExt on BoxConstraints {
   BoxConstraintsDto toDto() => BoxConstraintsDto.from(this);
 }
 
-// @nodoc
 extension DecorationExt on Decoration {
   DecorationDto toDto() {
     if (this is BoxDecoration) return (this as BoxDecoration).toDto();
@@ -72,24 +62,20 @@ extension DecorationExt on Decoration {
   }
 }
 
-// @nodoc
 extension BoxDecorationExt on BoxDecoration {
   BoxDecorationDto toDto() => BoxDecorationDto.from(this);
 }
 
-// @nodoc
 extension ShapeDecorationExt on ShapeDecoration {
   ShapeDecorationDto toDto() => ShapeDecorationDto.from(this);
 }
 
-// @nodoc
 extension BorderRadiusGeometryExt on BorderRadiusGeometry {
   BorderRadiusGeometryDto toDto() {
     return BorderRadiusGeometryDto.from(this);
   }
 }
 
-// @nodoc
 extension Matrix4Ext on Matrix4 {
   /// Merge [other] into this matrix.
   Matrix4 merge(Matrix4? other) {
@@ -99,36 +85,30 @@ extension Matrix4Ext on Matrix4 {
   }
 }
 
-// @nodoc
 extension BorderSideExt on BorderSide {
   BorderSideDto toDto() => BorderSideDto.from(this);
 }
 
-// @nodoc
 extension ShadowExt on Shadow {
   ShadowDto toDto() => ShadowDto.from(this);
 }
 
-// @nodoc
 extension ListShadowExt on List<Shadow> {
   List<ShadowDto> toDto() {
     return map((e) => e.toDto()).toList();
   }
 }
 
-// @nodoc
 extension BoxShadowExt on BoxShadow {
   BoxShadowDto toDto() => BoxShadowDto.from(this);
 }
 
-// @nodoc
 extension ListBoxShadowExt on List<BoxShadow> {
   List<BoxShadowDto> toDto() {
     return map((e) => e.toDto()).toList();
   }
 }
 
-// @nodoc
 extension TextStyleExt on TextStyle {
   TextStyleDto toDto() => TextStyleDto.as(this);
 }

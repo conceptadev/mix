@@ -99,7 +99,7 @@ void main() {
             style: Style(
               $box.height(100),
               $box.width(100),
-              align(),
+              $with.align(),
             ),
             image: FileImage(File('test_resources/logo.png')),
           ),
