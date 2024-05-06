@@ -8,7 +8,7 @@ import '../../helpers/testing_utils.dart';
 
 void main() {
   group('MixData', () {
-    final autoApplyVariant = MockContextVariantCondition(true);
+    const autoApplyVariant = MockContextVariantCondition(true);
     test('MixData create', () {
       final mixData = MixData.create(
         MockBuildContext(),
@@ -192,12 +192,12 @@ void main() {
       group('must respect the condition', () {
         test('with single ContextVariant', () {
           _testApplyContextToVisualAttributes(
-            condition: MockContextVariantCondition(false),
+            condition: const MockContextVariantCondition(false),
             isExpectedToApply: false,
           );
 
           _testApplyContextToVisualAttributes(
-            condition: MockContextVariantCondition(true),
+            condition: const MockContextVariantCondition(true),
             isExpectedToApply: true,
           );
         });

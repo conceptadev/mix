@@ -15,7 +15,7 @@ import 'color_directives.dart';
 /// * [Color], which is the Flutter equivalent class.
 /// {@category DTO}
 @immutable
-class ColorDto extends Dto<Color> with Mergeable<ColorDto> {
+class ColorDto extends Dto<Color> {
   final Color? value;
   final List<ColorDirective> directives;
 

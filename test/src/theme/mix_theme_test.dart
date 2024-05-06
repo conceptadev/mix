@@ -4,26 +4,17 @@ import 'package:mix/mix.dart';
 
 import '../../helpers/testing_utils.dart';
 
-extension on RadiusTokenUtil {
-  RadiusToken get small => const RadiusToken('radius-token-small');
-  RadiusToken get large => const RadiusToken('radius-token-large');
-}
-
-extension on SpaceTokenUtil {
-  SpaceToken get small => const SpaceToken('space-token-small');
-}
-
 void main() {
   const primaryColor = ColorToken('primary');
   final theme = MixThemeData(
     breakpoints: {
-      $breakpoint.small: const Breakpoint(minWidth: 0, maxWidth: 599),
+      $token.breakpoint.small: const Breakpoint(minWidth: 0, maxWidth: 599),
     },
     colors: {
       primaryColor: Colors.blue,
       $material.colorScheme.error: Colors.redAccent,
     },
-    spaces: {$space.small: 30},
+    spaces: {$token.space.small: 30},
     textStyles: {
       $material.textTheme.bodyLarge: const TextStyle(
         fontSize: 200,
@@ -31,8 +22,8 @@ void main() {
       ),
     },
     radii: {
-      $radius.small: const Radius.circular(200),
-      $radius.large: const Radius.circular(2000),
+      $token.radius.small: const Radius.circular(200),
+      $token.radius.large: const Radius.circular(2000),
     },
   );
 
@@ -55,8 +46,8 @@ void main() {
           Box(
             style: Style(
               $box.color.ref(primaryColor),
-              $box.borderRadius.all.ref($radius.small),
-              $box.padding.horizontal.ref($space.small),
+              $box.borderRadius.all.ref($token.radius.small),
+              $box.padding.horizontal.ref($token.space.small),
               $text.style.ref($material.textTheme.bodyLarge),
             ),
             key: key,
@@ -76,11 +67,12 @@ void main() {
           container.decoration,
           BoxDecoration(
             color: theme.colors[primaryColor],
-            borderRadius: BorderRadius.all(theme.radii[$radius.small]!),
+            borderRadius: BorderRadius.all(theme.radii[$token.radius.small]!),
           ),
         );
 
-        expect(container.padding!.horizontal / 2, theme.spaces[$space.small]);
+        expect(container.padding!.horizontal / 2,
+            theme.spaces[$token.space.small]);
 
         final textWidget = tester.widget<Text>(
           find.descendant(of: find.byKey(key), matching: find.byType(Text)),

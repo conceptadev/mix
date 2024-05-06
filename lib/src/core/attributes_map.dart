@@ -31,7 +31,7 @@ class AttributeMap<T extends Attribute> with Comparable {
       }
 
       // If there is no saved attribute, just add it
-      final savedAttribute = map[type] as Mergeable<Attr>?;
+      final savedAttribute = map[type] as Mergeable?;
       if (savedAttribute == null) {
         map[type] = attribute;
       } else {
@@ -52,11 +52,11 @@ class AttributeMap<T extends Attribute> with Comparable {
   List<T> get values => _map?.values.toList() ?? [];
 
   bool containsType(T attribute) =>
-      _map?.containsKey(attribute.mergeKey) ?? false;
+      _map?.containsKey(attribute.runtimeType) ?? false;
 
   bool containsValue(T attribute) => _map?.containsValue(attribute) ?? false;
 
-  Attr? attributeOfType<Attr extends StyleAttribute>() => _map?[T] as Attr?;
+  Attr? attributeOfType<Attr extends StyleAttribute>() => _map?[Attr] as Attr?;
 
   Iterable<Attr> whereType<Attr extends T>() => _map?.values.whereType() ?? [];
 

@@ -16,7 +16,8 @@ abstract class Attribute with Comparable {
 }
 
 @immutable
-abstract class Dto<Value> with Comparable, Resolvable<Value> {
+abstract class Dto<Value>
+    with Comparable, Resolvable<Value>, Mergeable<Dto<Value>> {
   const Dto();
 }
 

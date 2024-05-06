@@ -6,8 +6,7 @@ import 'border_dto.dart';
 import 'border_radius_dto.dart';
 
 @immutable
-abstract class ShapeBorderDto<Value extends ShapeBorder> extends Dto<Value>
-    with Mergeable<ShapeBorderDto> {
+abstract class ShapeBorderDto<Value extends ShapeBorder> extends Dto<Value> {
   const ShapeBorderDto();
 
   static ShapeBorderDto from(ShapeBorder shapeBorder) {
@@ -34,20 +33,8 @@ abstract class ShapeBorderDto<Value extends ShapeBorder> extends Dto<Value>
     return shapeBorder == null ? null : from(shapeBorder);
   }
 
-  ShapeBorderDto<Value> _merge(covariant ShapeBorderDto<Value>? other);
-
   @override
-  ShapeBorderDto merge(covariant ShapeBorderDto? other) {
-    if (other == null) return this;
-
-    if (runtimeType == other.runtimeType) {
-      return _merge(other as ShapeBorderDto<Value>);
-    }
-
-    // TODO: Submit warning here about merging different types of ShapeBorder.
-
-    return other;
-  }
+  ShapeBorderDto<Value> merge(covariant ShapeBorderDto<Value>? other);
 
   @override
   Value resolve(MixData mix);
@@ -99,7 +86,7 @@ class RoundedRectangleBorderDto
   }
 
   @override
-  RoundedRectangleBorderDto _merge(RoundedRectangleBorderDto? other) {
+  RoundedRectangleBorderDto merge(RoundedRectangleBorderDto? other) {
     if (other == null) return this;
 
     return RoundedRectangleBorderDto(
@@ -135,7 +122,7 @@ class CircleBorderDto extends OutlinedBorderDto<CircleBorder> {
   }
 
   @override
-  CircleBorderDto _merge(CircleBorderDto? other) {
+  CircleBorderDto merge(CircleBorderDto? other) {
     if (other == null) return this;
 
     return CircleBorderDto(
@@ -171,7 +158,7 @@ class BeveledRectangleBorderDto
   }
 
   @override
-  BeveledRectangleBorderDto _merge(BeveledRectangleBorderDto? other) {
+  BeveledRectangleBorderDto merge(BeveledRectangleBorderDto? other) {
     if (other == null) return this;
 
     return BeveledRectangleBorderDto(
@@ -207,7 +194,7 @@ class ContinuousRectangleBorderDto
   }
 
   @override
-  ContinuousRectangleBorderDto _merge(ContinuousRectangleBorderDto? other) {
+  ContinuousRectangleBorderDto merge(ContinuousRectangleBorderDto? other) {
     if (other == null) return this;
 
     return ContinuousRectangleBorderDto(
@@ -237,7 +224,7 @@ class StadiumBorderDto extends OutlinedBorderDto<StadiumBorder> {
   }
 
   @override
-  StadiumBorderDto _merge(StadiumBorderDto? other) {
+  StadiumBorderDto merge(StadiumBorderDto? other) {
     if (other == null) return this;
 
     return StadiumBorderDto(side: side?.merge(other.side) ?? other.side);

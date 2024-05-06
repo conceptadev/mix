@@ -1,5 +1,7 @@
 // ignore_for_file: no_leading_underscores_for_local_identifiers
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 
 import '../../core/attribute.dart';
@@ -27,8 +29,7 @@ import 'image/decoration_image_dto.dart';
 ///
 /// {@category DTO}
 @immutable
-abstract class DecorationDto<Value extends Decoration> extends Dto<Value>
-    with Mergeable<DecorationDto> {
+abstract class DecorationDto<Value extends Decoration> extends Dto<Value> {
   final ColorDto? color;
   final GradientDto? gradient;
   final List<BoxShadowDto>? boxShadow;
@@ -52,37 +53,8 @@ abstract class DecorationDto<Value extends Decoration> extends Dto<Value>
     );
   }
 
-  DecorationDto<Value> _mergeDecoration(covariant DecorationDto<Value>? other);
-
-  /// Returns true if this decoration is mergeable with other.
-  bool isMergeable();
-
   @override
-  DecorationDto merge(covariant DecorationDto? other) {
-    if (other == null) return this;
-
-    if (runtimeType == other.runtimeType) {
-      return _mergeDecoration(other as DecorationDto<Value>);
-    }
-
-    assert(isMergeable(), 'This decoration is not mergeable with other');
-
-    if (other is BoxDecorationDto) {
-      return BoxDecorationDto(
-        color: color,
-        gradient: gradient,
-        boxShadow: boxShadow,
-      )._mergeDecoration(other);
-    } else if (other is ShapeDecorationDto) {
-      return ShapeDecorationDto(
-        color: color,
-        gradient: gradient,
-        shadows: boxShadow,
-      )._mergeDecoration(other);
-    }
-
-    throw ArgumentError.value(other, 'other', 'Unsupported decoration type');
-  }
+  DecorationDto<Value> merge(covariant DecorationDto<Value>? other);
 }
 
 /// Represents a Data transfer object of [BoxDecoration]
@@ -136,7 +108,7 @@ class BoxDecorationDto extends DecorationDto<BoxDecoration> {
 
   /// Merges this [BoxDecorationDto] with `other` [BoxDecorationDto]
   @override
-  BoxDecorationDto _mergeDecoration(BoxDecorationDto? other) {
+  BoxDecorationDto merge(BoxDecorationDto? other) {
     if (other == null) return this;
 
     return BoxDecorationDto(
@@ -150,15 +122,6 @@ class BoxDecorationDto extends DecorationDto<BoxDecoration> {
       backgroundBlendMode: other.backgroundBlendMode ?? backgroundBlendMode,
       image: image?.merge(other.image) ?? other.image,
     );
-  }
-
-  @override
-  bool isMergeable() {
-    // is only mergeable if no other properties are set besides: color, boxShadow, and gradient
-    return border == null &&
-        borderRadius == null &&
-        shape == null &&
-        backgroundBlendMode == null;
   }
 
   /// Resolves this [BoxDecorationDto] with a given [MixData] to a [BoxDecoration]
@@ -212,24 +175,29 @@ class ShapeDecorationDto extends DecorationDto<ShapeDecoration> {
     return decoration == null ? null : from(decoration);
   }
 
-  @override
-  ShapeDecorationDto _mergeDecoration(ShapeDecorationDto? other) {
-    if (other == null) return this;
-
-    return ShapeDecorationDto(
-      color: color?.merge(other.color) ?? other.color,
-      shape: shape?.merge(other.shape) ?? other.shape,
-      gradient: gradient?.merge(other.gradient) ?? other.gradient,
-      shadows: boxShadow?.merge(other.boxShadow) ?? other.boxShadow,
-    );
-  }
-
   List<BoxShadowDto>? get shadows => boxShadow;
 
   @override
-  bool isMergeable() {
-    // is only mergeable if no other properties are set besides: color, boxShadow, and gradient
-    return shape == null;
+  ShapeDecorationDto merge(ShapeDecorationDto? other) {
+    if (other == null) return this;
+
+    final shapesAreNotNull = shape != null && other.shape != null;
+    final sameRuntimeType = shape?.runtimeType == other.shape?.runtimeType;
+
+    ShapeBorderDto? shapeBorder;
+    if (shapesAreNotNull && !sameRuntimeType) {
+      log('ShapeDecorationDto: Merging different shape types: ${shape!} and ${other.shape!}, is not possible');
+      shapeBorder = other.shape;
+    } else {
+      shapeBorder = shape?.merge(other.shape) ?? other.shape;
+    }
+
+    return ShapeDecorationDto(
+      color: color?.merge(other.color) ?? other.color,
+      shape: shapeBorder,
+      gradient: gradient?.merge(other.gradient) ?? other.gradient,
+      shadows: boxShadow?.merge(other.boxShadow) ?? other.boxShadow,
+    );
   }
 
   @override

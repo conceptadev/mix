@@ -154,74 +154,13 @@ void main() {
         shadows: [otherBoxShadowDto],
       );
 
-      final merged = shapeDeco1.merge(shapeDeco2) as ShapeDecorationDto;
+      final merged = shapeDeco1.merge(shapeDeco2);
 
       expect(merged, isA<ShapeDecorationDto>());
       expect(merged.shape, isA<BeveledRectangleBorderDto>());
       expect(merged.color, const ColorDto(Colors.blue));
       expect(merged.gradient, otherLinearGradientDto);
       expect(merged.shadows, [otherBoxShadowDto]);
-    });
-
-    // Test merging BoxDecorationDto with ShapeDecorationDto
-    test('BoxDecorationDto merge with ShapeDecorationDto', () {
-      const boxDeco = BoxDecorationDto(
-        color: ColorDto(Colors.red),
-        gradient: linearGradientDto,
-        boxShadow: [boxShadowDto],
-      );
-
-      const shapeDeco = ShapeDecorationDto(
-        color: ColorDto(Colors.blue),
-        shape: RoundedRectangleBorderDto(),
-      );
-
-      final merged = boxDeco.merge(shapeDeco) as ShapeDecorationDto;
-
-      expect(merged, isA<ShapeDecorationDto>());
-      expect(merged.shape, isA<RoundedRectangleBorderDto>());
-      expect(merged.color, const ColorDto(Colors.blue));
-      expect(merged.gradient, linearGradientDto);
-      expect(merged.shadows, [boxShadowDto]);
-    });
-
-    // Test merging ShapeDecorationDto with BoxDecorationDto
-    test('ShapeDecorationDto merge with BoxDecorationDto', () {
-      const shapeDeco = ShapeDecorationDto(
-        color: ColorDto(Colors.red),
-        gradient: linearGradientDto,
-        shadows: [boxShadowDto],
-      );
-
-      const boxDeco = BoxDecorationDto(
-        color: ColorDto(Colors.blue),
-        shape: BoxShape.circle,
-      );
-
-      final merged = shapeDeco.merge(boxDeco) as BoxDecorationDto;
-
-      expect(merged, isA<BoxDecorationDto>());
-      expect(merged.color, const ColorDto(Colors.blue));
-      expect(merged.gradient, linearGradientDto);
-      expect(merged.boxShadow, [boxShadowDto]);
-      expect(merged.shape, BoxShape.circle);
-    });
-
-    test('ShapeDecorationDto cannot merge with BoxDecoration', () {
-      const shapeDeco = ShapeDecorationDto(
-        color: ColorDto(Colors.red),
-        // Cannot merge because it has shape
-        shape: RoundedRectangleBorderDto(),
-        gradient: linearGradientDto,
-        shadows: [boxShadowDto],
-      );
-
-      const boxDeco = BoxDecorationDto(
-        color: ColorDto(Colors.blue),
-        shape: BoxShape.circle,
-      );
-
-      expect(() => shapeDeco.merge(boxDeco), throwsAssertionError);
     });
   });
 }

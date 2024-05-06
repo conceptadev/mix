@@ -6,7 +6,7 @@ import '../color/color_dto.dart';
 
 @immutable
 abstract class ShadowDtoImpl<Self extends ShadowDtoImpl<Self, Value>,
-    Value extends Shadow> extends Dto<Value> with Mergeable<Self> {
+    Value extends Shadow> extends Dto<Value> {
   final ColorDto? color;
   final Offset? offset;
   final double? blurRadius;

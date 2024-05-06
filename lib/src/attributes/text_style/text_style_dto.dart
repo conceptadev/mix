@@ -10,7 +10,7 @@ import '../color/color_dto.dart';
 import '../shadow/shadow_dto.dart';
 
 @immutable
-class TextStyleData extends Dto<TextStyle> with Mergeable<TextStyleData> {
+class TextStyleData extends Dto<TextStyle> {
   final String? fontFamily;
   final FontWeight? fontWeight;
   final FontStyle? fontStyle;
@@ -210,7 +210,7 @@ class TextStyleData extends Dto<TextStyle> with Mergeable<TextStyleData> {
 }
 
 @immutable
-class TextStyleDto extends Dto<TextStyle> with Mergeable<TextStyleDto> {
+class TextStyleDto extends Dto<TextStyle> {
   final List<TextStyleData> value;
   const TextStyleDto._(this.value);
 

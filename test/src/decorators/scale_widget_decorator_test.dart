@@ -8,7 +8,7 @@ void main() {
   group('ScaleDecoratorSpec', () {
     test('Constructor assigns scale correctly', () {
       const scale = 1.5;
-      final decorator = transform.scale(scale);
+      final decorator = $with.transform.scale(scale);
 
       final spec = decorator.resolve(
         MockMixData(
@@ -24,7 +24,7 @@ void main() {
       (WidgetTester tester) async {
         const scale = 1.5;
 
-        final decorator = transform.scale(scale);
+        final decorator = $with.transform.scale(scale);
 
         final spec = decorator.resolve(
           MockMixData(

@@ -53,7 +53,7 @@ void main() {
               style: Style(
                 $image.width(152),
                 $image.height(152),
-                opacity(0.5),
+                $with.opacity(0.5),
               ),
               image: FileImage(File('test_resources/logo.png')),
             ),
