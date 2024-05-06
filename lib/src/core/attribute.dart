@@ -92,6 +92,8 @@ abstract class SpecAttribute<Value> extends StyleAttribute
 abstract class Spec<T extends Spec<T>> with Comparable {
   const Spec();
 
+  Type get type => T;
+
   /// Creates a copy of this spec with the given fields
   /// replaced by the non-null parameter values.
   T copyWith();
