@@ -310,6 +310,8 @@ void main() {
       expect(utility.clamp().value, TileMode.clamp);
       expect(utility.mirror().value, TileMode.mirror);
       expect(utility.repeated().value, TileMode.repeated);
+
+      expect(utility.decal().value, isA<TileMode>());
     });
   });
 

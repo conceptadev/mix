@@ -84,15 +84,12 @@ abstract class SpecAttribute<Self, Value> extends StyleAttribute
   Self merge(Self? other);
 
   @override
-  Type get mergeKey => Self;
+  Object get mergeKey => Self;
 }
 
 @immutable
 abstract class Spec<T extends Spec<T>> with Comparable {
   const Spec();
-
-  /// The extension's type.
-  Object get type => T;
 
   /// Creates a copy of this spec with the given fields
   /// replaced by the non-null parameter values.
