@@ -8,9 +8,6 @@ class _TestAttribute extends StyleAttribute {
   @override
   get props => [dto];
 
-  @override
-  Object get mergeKey => 'TestAttribute';
-
   const _TestAttribute(this.dto);
 }
 

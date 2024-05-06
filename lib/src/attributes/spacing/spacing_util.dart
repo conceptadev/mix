@@ -103,7 +103,7 @@ class SpacingDirectionalUtility<T extends StyleAttribute>
 
 @immutable
 class SpacingSideUtility<T extends StyleAttribute>
-    extends MixUtility<T, double> {
+    extends StyleUtility<T, double> {
   const SpacingSideUtility(super.builder);
 
   T call(double value) => builder(value);

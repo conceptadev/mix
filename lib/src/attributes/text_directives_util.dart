@@ -4,7 +4,7 @@ import '../helpers/string_ext.dart';
 import 'scalars/scalar_util.dart';
 
 class TextDirectiveUtility<T extends StyleAttribute>
-    extends MixUtility<T, TextDirective> {
+    extends StyleUtility<T, TextDirective> {
   const TextDirectiveUtility(super.builder);
   T _wrap(Modifier<String> modifier) => builder(TextDirective([modifier]));
 

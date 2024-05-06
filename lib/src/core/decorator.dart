@@ -4,7 +4,7 @@ import '../factory/mix_provider_data.dart';
 import 'attribute.dart';
 
 abstract class Decorator<Self extends Decorator<Self, Value>, Value>
-    extends SpecAttribute<Self, Value> {
+    extends SpecAttribute<Value> {
   const Decorator();
 
   @override

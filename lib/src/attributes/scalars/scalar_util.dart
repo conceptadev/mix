@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
 import '../../core/attribute.dart';
+import '../../core/decorator.dart';
 import '../../theme/tokens/radius_token.dart';
 
-abstract class MixUtility<Attr extends StyleAttribute, Value> {
+abstract class MixUtility<Attr extends Attribute, Value> {
   @protected
   final Attr Function(Value) builder;
   const MixUtility(this.builder);
@@ -11,15 +12,27 @@ abstract class MixUtility<Attr extends StyleAttribute, Value> {
   static T selfBuilder<T>(T value) => value;
 }
 
-abstract class SpecUtility<Attr extends SpecAttribute,
-    Value extends SpecAttribute> extends MixUtility<Attr, Value> {
+abstract class StyleUtility<Attr extends StyleAttribute, Value>
+    extends MixUtility<Attr, Value> {
+  const StyleUtility(super.builder);
+}
+
+abstract class SpecUtility<Attr extends Attribute, Value extends SpecAttribute>
+    extends MixUtility<Attr, Value> {
   const SpecUtility(super.builder);
 
   Attr only();
 }
 
+abstract class DecoratorUtility<
+    T extends StyleAttribute,
+    D extends DecoratorAttribute<D, Value>,
+    Value extends DecoratorSpec<Value>> extends StyleUtility<T, D> {
+  const DecoratorUtility(super.builder);
+}
+
 abstract class DtoUtility<Attr extends StyleAttribute, D extends Dto<Value>,
-    Value> extends MixUtility<Attr, D> {
+    Value> extends StyleUtility<Attr, D> {
   final D Function(Value) _fromValue;
   const DtoUtility(super.builder, {required D Function(Value) valueToDto})
       : _fromValue = valueToDto;
@@ -33,7 +46,7 @@ abstract class DtoUtility<Attr extends StyleAttribute, D extends Dto<Value>,
 }
 
 abstract class ScalarUtility<Return extends StyleAttribute, Param>
-    extends MixUtility<Return, Param> {
+    extends StyleUtility<Return, Param> {
   const ScalarUtility(super.builder);
 
   Return as(Param value) => builder(value);

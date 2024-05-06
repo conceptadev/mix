@@ -99,7 +99,7 @@ class ShadowUtility<T extends StyleAttribute>
 }
 
 class ShadowListUtility<T extends StyleAttribute>
-    extends MixUtility<T, List<ShadowDto>> {
+    extends StyleUtility<T, List<ShadowDto>> {
   const ShadowListUtility(super.builder);
 
   T call(List<BoxShadow> shadows) {
@@ -108,7 +108,7 @@ class ShadowListUtility<T extends StyleAttribute>
 }
 
 class BoxShadowListUtility<T extends StyleAttribute>
-    extends MixUtility<T, List<BoxShadowDto>> {
+    extends StyleUtility<T, List<BoxShadowDto>> {
   const BoxShadowListUtility(super.builder);
 
   T call(List<BoxShadow> shadows) {
@@ -117,7 +117,7 @@ class BoxShadowListUtility<T extends StyleAttribute>
 }
 
 class ElevationUtility<T extends StyleAttribute>
-    extends MixUtility<T, List<BoxShadowDto>> {
+    extends StyleUtility<T, List<BoxShadowDto>> {
   const ElevationUtility(super.builder);
 
   T call(int value) {

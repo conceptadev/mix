@@ -469,7 +469,8 @@ class SwitchCondition<T> {
 
 Style Function(Iterable<T> attributes) _styleType<T extends SpecAttribute>() {
   return (Iterable<T> attributes) {
-    final merged = attributes.reduce((value, element) => value.merge(element));
+    final merged =
+        attributes.reduce((value, element) => value.merge(element) as T);
 
     return Style(merged);
   };

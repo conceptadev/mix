@@ -10,6 +10,8 @@ void main() {
   const onLongPressed = OnLongPressVariant();
   const onFocused = OnFocusVariant();
   const onEnabled = OnEnabledVariant();
+  const onDisabled = OnDisabledVariant();
+  const onHover = OnHoverVariant();
   group('Pressable Util', () {
     const attribute1 = MockBooleanScalarAttribute(true);
     const attribute2 = MockStringScalarAttribute('attribute2');

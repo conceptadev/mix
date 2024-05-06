@@ -9,7 +9,7 @@ void main() {
     testWidgets('toInheritable()', (tester) async {
       final style = Style(
         $icon.color.black(),
-        scale(2),
+        $with.scale(2),
       );
 
       final mixData = MixData.create(

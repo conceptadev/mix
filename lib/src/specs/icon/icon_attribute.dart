@@ -6,7 +6,7 @@ import '../../core/attribute.dart';
 import '../../factory/mix_provider_data.dart';
 import 'icon_spec.dart';
 
-class IconSpecAttribute extends SpecAttribute<IconSpecAttribute, IconSpec> {
+class IconSpecAttribute extends SpecAttribute<IconSpec> {
   final ColorDto? color;
   final double? size;
   final double? weight;

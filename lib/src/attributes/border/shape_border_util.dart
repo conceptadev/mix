@@ -9,7 +9,7 @@ import 'border_util.dart';
 import 'shape_border_dto.dart';
 
 class ShapeBorderUtility<T extends StyleAttribute>
-    extends MixUtility<T, ShapeBorderDto> {
+    extends StyleUtility<T, ShapeBorderDto> {
   late final roundedRectangle = RoundedRectanbleBorderUtility(builder);
 
   late final circle = CircleBorderUtility(builder);

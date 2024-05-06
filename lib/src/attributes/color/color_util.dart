@@ -9,7 +9,7 @@ import 'color_dto.dart';
 
 @immutable
 abstract class BaseColorUtility<T extends StyleAttribute>
-    extends MixUtility<T, ColorDto> {
+    extends StyleUtility<T, ColorDto> {
   const BaseColorUtility(super.builder);
 
   T _buildColor(Color color) => builder(ColorDto(color));

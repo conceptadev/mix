@@ -70,21 +70,21 @@ mixin Mergeable<T> {
 @immutable
 abstract class StyleAttribute extends Attribute {
   const StyleAttribute();
+
+  @override
+  Type get mergeKey => runtimeType;
 }
 
 /// An abstract class representing a resolvable attribute.
 ///
 /// This class extends the [StyleAttribute] class and provides a generic type [Self] and [Value].
 /// The [Self] type represents the concrete implementation of the attribute, while the [Value] type represents the resolvable value.
-abstract class SpecAttribute<Self, Value> extends StyleAttribute
-    with Resolvable<Value>, Mergeable<Self> {
+abstract class SpecAttribute<Value> extends StyleAttribute
+    with Resolvable<Value>, Mergeable {
   const SpecAttribute();
 
   @override
-  Self merge(Self? other);
-
-  @override
-  Object get mergeKey => Self;
+  SpecAttribute<Value> merge(covariant SpecAttribute<Value>? other);
 }
 
 @immutable

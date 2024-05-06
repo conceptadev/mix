@@ -4,7 +4,7 @@ import '../../core/attribute.dart';
 import '../../factory/mix_provider_data.dart';
 import 'flex_spec.dart';
 
-class FlexSpecAttribute extends SpecAttribute<FlexSpecAttribute, FlexSpec> {
+class FlexSpecAttribute extends SpecAttribute<FlexSpec> {
   final Axis? direction;
   final MainAxisAlignment? mainAxisAlignment;
   final CrossAxisAlignment? crossAxisAlignment;

@@ -90,7 +90,7 @@ class AlignDecoratorAttribute
   get props => [alignment, widthFactor, heightFactor];
 }
 
-class AlignWidgetUtility<T extends StyleAttribute>
+class AlignWidgetUtility<T extends Attribute>
     extends MixUtility<T, AlignDecoratorAttribute> {
   const AlignWidgetUtility(super.builder);
   T call({
