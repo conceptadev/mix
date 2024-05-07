@@ -8,9 +8,21 @@ In our pursuit of API usability and efficiency, we introduced several deprecatio
 
 The major updates are:
 
-#### `Mix` Class Renaming
+#### `Mix` evolve to `Style`
+The `Mix` class is now `Style`. Several methods in the renamed class, including `withVariants`, `withMaybeVariants` among others, are deprecated to boost performance and reduce potential confusion.
 
-The `Mix` class is now `Style`. Several methods in the renamed class, including `withVariants`, `withManyVariants` among others, are deprecated to boost performance and reduce potential confusion.
+| before 1.0.0 | 1.0.0 |
+| ------- | ------ |
+| `Mix`   | `Style` |
+| `Mix.withVariant` | `Style.applyVariant` |
+| `Mix.withManyVariants` | `Style.applyVariants` |
+| `withMaybeVariant` or `withMaybeVariants` | removed |
+
+
+Another important change is that the `Style` doesn't contain generic type anymore. Therefore, in the new version it is no longer possible.
+
+#### `MixContextBuilder` was renamed to `SpecBuilder`
+The `MixContextBuilder` was renamed to `SpecBuilder` to better reflect its purpose. The `MixContextBuilder` is now deprecated.
 
 #### Widget Updates
 
@@ -18,7 +30,7 @@ The `Mix` class is now `Style`. Several methods in the renamed class, including 
 
 #### Short Aliases
 
-To enhance readability, short aliases and shorthand property/method names are replaced with fully named counterparts.
+To enhance readability, short aliases and shorthand property/method names are replaced with fully named counterparts. You can find the full list of removed aliases in the [deprecations file](https://github.com/conceptadev/mix/blob/main/lib/src/deprecations.dart)
 
 #### Decorators
 
@@ -28,14 +40,14 @@ Decorators' order was previously determined by their addition sequence. Now, we 
 
 #### The new PressableBox
 
-To provide a more consistent way to use the gesture APIs, we developed a new widget that merges the functionalities of Box and `Pressable`. Thus, the new `PressableBox` can receive a style like a Box and also accept interactions and its variants, similar to a `Pressable`. For more information, see the [PressableBox guide](https://www.fluttermix.com/docs/widgets/pressable-box).
+To provide a more consistent way to use the gesture APIs, we developed a new widget that merges the functionalities of `Box` and `Pressable`. Thus, the new `PressableBox` can receive a style like a `Box` and also accept interactions and its variants, similar to a `Pressable`. For more information, see the [PressableBox guide](https://www.fluttermix.com/docs/widgets/pressable-box).
 Keep in mind that the ideia is to reserve the old `Pressable` to more advanced cases.
 
 ### Behavior changes
 
 #### Decorators
 
-Decorators cannot be inherited by any children. The reason is that abstract class `Attribute` has gained a new property, `isInheritable`, witch can be set to false if you want your custom attributes to be non-inheritable, such as Decorators.
+Decorators cannot be inherited by any children. The reason is that abstract class `Attribute` has gained a new property, `isInheritable`, which can be set to false if you want your custom attributes to be non-inheritable, such as Decorators.
 
 #### Operators `and` (`&`) and `or` (`|`)
 
