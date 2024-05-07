@@ -6,7 +6,7 @@ import '../scalars/scalar_util.dart';
 import 'spacing_dto.dart';
 
 @immutable
-class SpacingUtility<T extends StyleAttribute>
+class SpacingUtility<T extends Attribute>
     extends DtoUtility<T, SpacingDto, EdgeInsetsGeometry> {
   late final directional = SpacingDirectionalUtility(builder);
 
@@ -64,7 +64,7 @@ class SpacingUtility<T extends StyleAttribute>
 }
 
 @immutable
-class SpacingDirectionalUtility<T extends StyleAttribute>
+class SpacingDirectionalUtility<T extends Attribute>
     extends DtoUtility<T, SpacingDto, EdgeInsetsGeometry> {
   late final all = SpacingSideUtility(
     (v) => only(top: v, bottom: v, start: v, end: v),
@@ -102,8 +102,7 @@ class SpacingDirectionalUtility<T extends StyleAttribute>
 }
 
 @immutable
-class SpacingSideUtility<T extends StyleAttribute>
-    extends MixUtility<T, double> {
+class SpacingSideUtility<T extends Attribute> extends MixUtility<T, double> {
   const SpacingSideUtility(super.builder);
 
   T call(double value) => builder(value);

@@ -4,6 +4,7 @@ import 'package:meta/meta.dart';
 import '../attributes/variant_attribute.dart';
 import '../core/attribute.dart';
 import '../core/attributes_map.dart';
+import '../core/decorator.dart';
 import '../core/extensions/iterable_ext.dart';
 import '../helpers/compare_mixin.dart';
 import '../helpers/constants.dart';
@@ -62,7 +63,7 @@ class MixData with Comparable {
   @internal
   MixData toInheritable() {
     final inheritableAttributes = _attributes.values.where(
-      (attr) => attr.isInheritable,
+      (attr) => attr is! DecoratorAttribute,
     );
 
     return copyWith(attributes: AttributeMap(inheritableAttributes));
@@ -84,7 +85,7 @@ class MixData with Comparable {
     return _attributes.values.any((attr) => attr is T);
   }
 
-  Value? resolvableOf<Value, A extends SpecAttribute<A, Value>>() {
+  Value? resolvableOf<Value, A extends SpecAttribute<Value>>() {
     final attribute = _attributes.attributeOfType<A>();
 
     return attribute?.resolve(this);
@@ -129,8 +130,7 @@ List<StyleAttribute> applyContextToVisualAttributes(
     (a, b) => a.priority.value.compareTo(b.priority.value),
   );
 
-  final builtAttributes = _applyStyleBuilder(context, mix.styles.values);
-  Style style = Style.create(builtAttributes);
+  Style style = Style.create(mix.styles.values);
 
   for (final variant in prioritizedVariants) {
     style = _applyVariants(context, style, variant);
@@ -144,6 +144,10 @@ Style _applyVariants(
   Style style,
   VariantAttribute variantAttribute,
 ) {
+  if (variantAttribute is ContextVariantBuilder) {
+    return style.merge(variantAttribute.build(context));
+  }
+
   return variantAttribute.variant.when(context)
       ? style.merge(variantAttribute.value)
       : style;
@@ -171,17 +175,4 @@ class AnimatedData with Comparable {
 
   @override
   get props => [duration, curve];
-}
-
-Iterable<Attribute> _applyStyleBuilder(
-  BuildContext context,
-  List<Attribute> attributes,
-) {
-  return attributes.map((attr) {
-    if (attr is ContextVariantBuilder) {
-      return attr.build(context);
-    }
-
-    return attr;
-  });
 }

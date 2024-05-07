@@ -65,7 +65,7 @@ class FlexibleDecoratorAttribute extends DecoratorAttribute<
   get props => [flex, fit];
 }
 
-class FlexibleDecoratorUtility<T extends StyleAttribute>
+class FlexibleDecoratorUtility<T extends Attribute>
     extends MixUtility<T, FlexibleDecoratorAttribute> {
   const FlexibleDecoratorUtility(super.builder);
   FlexFitUtility<T> get fit => FlexFitUtility((fit) => call(fit: fit));

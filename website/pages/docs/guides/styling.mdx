@@ -42,7 +42,7 @@ Create styles by combining and merging multiple Style instances. This technique,
 
 #### **Mixing Attributes**
 
-Simply use the `mix()` method on a Style instance. For example:
+Simply use the `add()` or `addAll()` method on a Style instance. For example:
 
 ```dart
 final baseStyle = Style(
@@ -52,7 +52,7 @@ final baseStyle = Style(
   $box.borderRadius(10),
 );
 
-final newStyle = baseStyle.mix(
+final newStyle = baseStyle.add(
   $box.border.width(2),
   $box.border.color.black(),
 );
@@ -65,7 +65,7 @@ In this example, the `newStyle` inherits all attributes from the `baseStyle`, an
 **Taking Control** You can also override specific attributes of a style by passing new values to the `mix()` method. For instance:
 
 ```dart
-final newStyle = baseStyle.mix(
+final newStyle = baseStyle.add(
   $box.color.blue(),
 );
 ```
@@ -97,26 +97,25 @@ final newStyle = baseStyle.merge(otherStyle);
 ```
 
 In this example, the `newStyle` will inherit all attributes from both the `baseStyle` and the `otherStyle`, with the `otherStyle` taking priority over the `baseStyle` in case of conflicts.
-
 #### Applying Styles
 
-To apply styles individually, use `apply()`. This gives you control over their order.
+To apply styles individually, to another style you can just call them inside the new style. This gives you control over their order.
 
 In this example, the `box.color` attribute of the `baseStyle` is overridden by the `box.color` attribute of the `newStyle`:
 
 ```dart
 final newStyle = Style(
-  $apply(baseStyle),
+  baseStyle(),
   $box.color.blue(),
 );
 ```
 
-However, if you add `apply` after the `box.color` attribute, the `box.color` will be overridden by the `baseStyle`:
+However, if you call it after the `$box.color` attribute, the `$box.color` will be overridden by the `baseStyle`:
 
 ```dart
 final newStyle = Style(
   $box.color.blue(),
-  $apply(baseStyle),
+  baseStyle(),
 );
 ```
 

@@ -8,20 +8,20 @@ void main() {
   const onNot = OnNotVariant.new;
   group('ContextVariant', () {
     test('Equality holds when all properties are the same', () {
-      final variant1 = MockContextVariantCondition(true);
-      final variant2 = MockContextVariantCondition(true);
+      const variant1 = MockContextVariantCondition(true);
+      const variant2 = MockContextVariantCondition(true);
       expect(variant1, variant2);
     });
     test('Equality fails when properties are different', () {
-      final variant1 = MockContextVariantCondition(true);
-      final variant2 = MockContextVariantCondition(false);
+      const variant1 = MockContextVariantCondition(true);
+      const variant2 = MockContextVariantCondition(false);
       expect(variant1, isNot(variant2));
     });
   });
 
   group('Not Utils', () {
-    final onLight = OnBrightnessVariant(Brightness.light);
-    final onDark = OnBrightnessVariant(Brightness.dark);
+    const onLight = OnBrightnessVariant(Brightness.light);
+    const onDark = OnBrightnessVariant(Brightness.dark);
     testWidgets('reverts when of context variant', (tester) async {
       await tester.pumpWidget(createBrightnessTheme(Brightness.light));
       var context = tester.element(find.byType(Container));
@@ -38,7 +38,7 @@ void main() {
   });
 
   group('Style different kinds of variants', () {
-    final variantLow = MockContextVariantCondition(
+    const variantLow = MockContextVariantCondition(
       true,
       priority: VariantPriority.low,
     );
@@ -65,7 +65,7 @@ void main() {
     });
 
     test('with MultiVariant(ContextVariant & Variant)', () {
-      final variantLow = MockContextVariantCondition(
+      const variantLow = MockContextVariantCondition(
         true,
         priority: VariantPriority.low,
       );
@@ -88,7 +88,7 @@ void main() {
 
     test('only ContextVariant inside a Variant', () {
       // It's working
-      final variantLow = MockContextVariantCondition(
+      const variantLow = MockContextVariantCondition(
         true,
         priority: VariantPriority.low,
       );
@@ -113,7 +113,7 @@ void main() {
     });
 
     test('only Variant inside a ContextVariant', () {
-      final variantLow = MockContextVariantCondition(
+      const variantLow = MockContextVariantCondition(
         true,
         priority: VariantPriority.low,
       );

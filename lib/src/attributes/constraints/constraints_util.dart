@@ -4,7 +4,7 @@ import '../../core/attribute.dart';
 import '../scalars/scalar_util.dart';
 import 'constraints_dto.dart';
 
-class BoxConstraintsUtility<T extends StyleAttribute>
+class BoxConstraintsUtility<T extends Attribute>
     extends DtoUtility<T, BoxConstraintsDto, BoxConstraints> {
   late final maxWidth = DoubleUtility((v) => only(maxWidth: v));
   late final minWidth = DoubleUtility((v) => only(minWidth: v));

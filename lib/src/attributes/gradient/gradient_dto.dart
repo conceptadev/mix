@@ -18,8 +18,7 @@ import '../color/color_dto.dart';
 ///
 /// {@category DTO}
 @immutable
-abstract class GradientDto<T extends Gradient> extends Dto<T>
-    with Mergeable<GradientDto<T>> {
+abstract class GradientDto<T extends Gradient> extends Dto<T> {
   final List<double>? stops;
 
   final List<ColorDto>? colors;

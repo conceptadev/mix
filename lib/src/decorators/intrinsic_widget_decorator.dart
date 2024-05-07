@@ -107,13 +107,13 @@ class IntrinsicWidthDecoratorAttribute extends DecoratorAttribute<
   List<Object?> get props => []; // No properties to include in props
 }
 
-class IntrinsicHeightWidgetUtility<T extends StyleAttribute>
+class IntrinsicHeightWidgetUtility<T extends Attribute>
     extends MixUtility<T, IntrinsicHeightDecoratorAttribute> {
   const IntrinsicHeightWidgetUtility(super.builder);
   T call() => builder(const IntrinsicHeightDecoratorAttribute());
 }
 
-class IntrinsicWidthWidgetUtility<T extends StyleAttribute>
+class IntrinsicWidthWidgetUtility<T extends Attribute>
     extends MixUtility<T, IntrinsicWidthDecoratorAttribute> {
   const IntrinsicWidthWidgetUtility(super.builder);
   T call() => builder(const IntrinsicWidthDecoratorAttribute());

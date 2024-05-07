@@ -73,7 +73,7 @@ class TransformDecoratorAttribute extends DecoratorAttribute<
   List<Object?> get props => [transform, alignment];
 }
 
-class TransformUtility<T extends StyleAttribute>
+class TransformUtility<T extends Attribute>
     extends MixUtility<T, TransformDecoratorAttribute> {
   const TransformUtility(super.builder);
 

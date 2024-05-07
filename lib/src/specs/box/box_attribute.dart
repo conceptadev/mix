@@ -7,7 +7,7 @@ import '../../core/attribute.dart';
 import '../../factory/mix_provider_data.dart';
 import 'box_spec.dart';
 
-class BoxSpecAttribute extends SpecAttribute<BoxSpecAttribute, BoxSpec> {
+class BoxSpecAttribute extends SpecAttribute<BoxSpec> {
   final AlignmentGeometry? alignment;
   final AlignmentGeometry? transformAlignment;
   final SpacingDto? padding;

@@ -5,7 +5,7 @@ import '../../factory/mix_provider_data.dart';
 import '../color/color_dto.dart';
 
 @immutable
-class BoxBorderDto extends Dto<BoxBorder> with Mergeable<BoxBorderDto> {
+class BoxBorderDto extends Dto<BoxBorder> {
   final BorderSideDto? top;
   final BorderSideDto? bottom;
 
@@ -122,7 +122,7 @@ class BoxBorderDto extends Dto<BoxBorder> with Mergeable<BoxBorderDto> {
 }
 
 @immutable
-class BorderSideDto extends Dto<BorderSide> with Mergeable<BorderSideDto> {
+class BorderSideDto extends Dto<BorderSide> {
   final ColorDto? color;
   final double? width;
   final BorderStyle? style;

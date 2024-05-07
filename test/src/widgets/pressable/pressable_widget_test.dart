@@ -28,7 +28,7 @@ void main() {
         ],
       ));
 
-      final onEnabledAttr = onEnabled(attribute1, attribute2, attribute3);
+      final onEnabledAttr = $on.enabled(attribute1, attribute2, attribute3);
 
       final firstContext = tester.element(find.byKey(firstKey));
       final secondContext = tester.element(find.byKey(secondKey));
@@ -151,31 +151,31 @@ void main() {
       },
     );
 
-    testWidgets('must change to attributes in onHover variant when hovered',
+    testWidgets(r'must change to attributes in $on.hover variant when hovered',
         (WidgetTester tester) async {
       await pumpTestCase(
         tester: tester,
-        condition: onHover,
+        condition: $on.hover,
         action: () => tester.hover(find.byType(PressableBox)),
       );
     });
 
     testWidgets(
-        'must change to attributes inside onLongPressed variant when long pressed',
+        r'must change to attributes inside $on.longPress variant when long pressed',
         (WidgetTester tester) async {
       await pumpTestCase(
         tester: tester,
-        condition: onLongPressed,
+        condition: $on.longPress,
         action: () => tester.longPress(find.byType(PressableBox)),
       );
     });
 
-    testWidgets('must restyle using attributes inside onPressed when pressed',
+    testWidgets(r'must restyle using attributes inside $on.press when pressed',
         (WidgetTester tester) async {
       await pumpTestCase(
         tester: tester,
         duration: const Duration(milliseconds: 250),
-        condition: onPressed,
+        condition: $on.press,
         action: () async {
           await tester.tap(find.byType(PressableBox));
           await tester.pump();
@@ -184,32 +184,32 @@ void main() {
     });
 
     testWidgets(
-        'must restyle using attributes inside (onLongPressed | onHover) when hovered',
+        r'must restyle using attributes inside ($on.longPress | $on.hover) when hovered',
         (WidgetTester tester) async {
       await pumpTestCase(
         tester: tester,
-        condition: (onLongPressed | onHover),
+        condition: ($on.longPress | $on.hover),
         action: () => tester.hover(find.byType(PressableBox)),
       );
     });
 
     testWidgets(
-        'must restyle using attributes inside (onLongPressed | onHover) when long pressed',
+        r'must restyle using attributes inside ($on.longPress | $on.hover) when long pressed',
         (WidgetTester tester) async {
       await pumpTestCase(
         tester: tester,
-        condition: (onLongPressed | onHover),
+        condition: ($on.longPress | $on.hover),
         action: () => tester.longPress(find.byType(PressableBox)),
       );
     });
 
     testWidgets(
-        'must NOT restyle using attributes inside (onLongPressed | onHover) when Pressed',
+        r'must NOT restyle using attributes inside ($on.longPress | $on.hover) when Pressed',
         (WidgetTester tester) async {
       await pumpTestCase(
         tester: tester,
         duration: const Duration(milliseconds: 250),
-        condition: (onLongPressed | onHover),
+        condition: ($on.longPress | $on.hover),
         action: () async {
           await tester.tap(find.byType(PressableBox));
           await tester.pump();
@@ -219,12 +219,12 @@ void main() {
     });
 
     testWidgets(
-        'must restyle using attributes inside (onHover | onPressed) when pressed',
+        r'must restyle using attributes inside ($on.hover | $on.press) when pressed',
         (WidgetTester tester) async {
       await pumpTestCase(
         tester: tester,
         duration: const Duration(milliseconds: 250),
-        condition: (onHover | onPressed),
+        condition: ($on.hover | $on.press),
         action: () async {
           await tester.tap(find.byType(PressableBox));
           await tester.pump();
@@ -233,12 +233,12 @@ void main() {
     });
 
     testWidgets(
-        'must restyle using attributes inside (onHover | onPressed | onLongPressed) when pressed',
+        r'must restyle using attributes inside ($on.hover | $on.press | $on.longPress) when pressed',
         (WidgetTester tester) async {
       await pumpTestCase(
         tester: tester,
         duration: const Duration(milliseconds: 250),
-        condition: (onPressed | onHover | onLongPressed),
+        condition: ($on.press | $on.hover | $on.longPress),
         action: () async {
           await tester.tap(find.byType(PressableBox));
           await tester.pump();
@@ -247,12 +247,12 @@ void main() {
     });
 
     testWidgets(
-        'must restyle using attributes inside (onHover | onPressed) when hovered',
+        r'must restyle using attributes inside ($on.hover | $on.press) when hovered',
         (WidgetTester tester) async {
       await pumpTestCase(
         tester: tester,
         duration: const Duration(milliseconds: 250),
-        condition: (onHover | onPressed),
+        condition: ($on.hover | $on.press),
         action: () async {
           await tester.hover(find.byType(PressableBox));
         },
@@ -260,12 +260,12 @@ void main() {
     });
 
     testWidgets(
-        'must NOT restyle using attributes inside (onHover | onPressed) when long pressed',
+        r'must NOT restyle using attributes inside ($on.hover | $on.press) when long pressed',
         (WidgetTester tester) async {
       await pumpTestCase(
         tester: tester,
         duration: const Duration(milliseconds: 250),
-        condition: (onHover | onPressed),
+        condition: ($on.hover | $on.press),
         action: () async {
           await tester.longPress(find.byType(PressableBox));
         },
@@ -274,12 +274,12 @@ void main() {
     });
 
     testWidgets(
-        'must restyle using attributes inside (onLongPressed | onPressed) when pressed',
+        r'must restyle using attributes inside ($on.longPress | $on.press) when pressed',
         (WidgetTester tester) async {
       await pumpTestCase(
         tester: tester,
         duration: const Duration(milliseconds: 250),
-        condition: (onLongPressed | onPressed),
+        condition: ($on.longPress | $on.press),
         action: () async {
           await tester.tap(find.byType(PressableBox));
           await tester.pump();
@@ -288,11 +288,11 @@ void main() {
     });
 
     testWidgets(
-        'must restyle using attributes inside (onLongPressed | onPressed) when long pressed',
+        r'must restyle using attributes inside ($on.longPress | $on.press) when long pressed',
         (WidgetTester tester) async {
       await pumpTestCase(
         tester: tester,
-        condition: (onLongPressed | onPressed),
+        condition: ($on.longPress | $on.press),
         action: () async {
           await tester.longPress(find.byType(PressableBox));
         },
@@ -300,11 +300,11 @@ void main() {
     });
 
     testWidgets(
-        'must NOT restyle using attributes inside (onLongPressed | onPressed) when hovered',
+        r'must NOT restyle using attributes inside ($on.longPress | $on.press) when hovered',
         (WidgetTester tester) async {
       await pumpTestCase(
         tester: tester,
-        condition: (onLongPressed | onPressed),
+        condition: ($on.longPress | $on.press),
         action: () async {
           await tester.hover(find.byType(PressableBox));
         },
@@ -313,12 +313,12 @@ void main() {
     });
 
     testWidgets(
-        'must restyle using attributes inside (onHover & onPressed) when hovered & pressed',
+        r'must restyle using attributes inside ($on.hover & $on.press) when hovered & pressed',
         (WidgetTester tester) async {
       await pumpTestCase(
         tester: tester,
         duration: const Duration(milliseconds: 250),
-        condition: (onHover & onPressed),
+        condition: ($on.hover & $on.press),
         action: () async {
           await tester.hover(find.byType(PressableBox));
           await tester.pump();
@@ -329,11 +329,11 @@ void main() {
     });
 
     testWidgets(
-        'must restyle using attributes inside (onHover & onLongPress) when hovered & longPressed',
+        r'must restyle using attributes inside ($on.hover & onLongPress) when hovered & longPressed',
         (WidgetTester tester) async {
       await pumpTestCase(
         tester: tester,
-        condition: (onHover & onLongPressed),
+        condition: ($on.hover & $on.longPress),
         action: () async {
           await tester.hover(find.byType(PressableBox));
           await tester.pump();
@@ -386,11 +386,11 @@ Future<void> pumpTestCase({
       onPress: () {},
       disabled: false,
       style: Style(
-        opacity(0.5),
+        $with.opacity(0.5),
         $box.height(50),
         $box.width(50),
         condition(
-          opacity(1),
+          $with.opacity(1),
         ),
       ),
       child: const SizedBox(),

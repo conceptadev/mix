@@ -6,10 +6,10 @@ import '../../../helpers/testing_utils.dart';
 
 // Act as an expert in dart and someone with deep understanding of effective dart documentation guidelines. You have been tasked to create comments in the code that help document it for other developers and users when they look at the code. Your comments should be detailed complete, but still concise.
 void main() {
-  final onXSmall = OnBreakpointTokenVariant(BreakpointToken.xsmall);
-  final onSmall = OnBreakpointTokenVariant(BreakpointToken.small);
-  final onMedium = OnBreakpointTokenVariant(BreakpointToken.medium);
-  final onLarge = OnBreakpointTokenVariant(BreakpointToken.large);
+  const onXSmall = OnBreakpointTokenVariant(BreakpointToken.xsmall);
+  const onSmall = OnBreakpointTokenVariant(BreakpointToken.small);
+  const onMedium = OnBreakpointTokenVariant(BreakpointToken.medium);
+  const onLarge = OnBreakpointTokenVariant(BreakpointToken.large);
 
   group('OnBreakpointToken Utils', () {
     const xSmallScreenWidth = Size(320, 480);
@@ -27,14 +27,14 @@ void main() {
     });
 
     test('Check equality', () {
-      final xsmall1 = OnBreakpointTokenVariant(BreakpointToken.xsmall);
-      final xsmall2 = OnBreakpointTokenVariant(BreakpointToken.xsmall);
-      final small1 = OnBreakpointTokenVariant(BreakpointToken.small);
-      final small2 = OnBreakpointTokenVariant(BreakpointToken.small);
-      final medium1 = OnBreakpointTokenVariant(BreakpointToken.medium);
-      final medium2 = OnBreakpointTokenVariant(BreakpointToken.medium);
-      final large1 = OnBreakpointTokenVariant(BreakpointToken.large);
-      final large2 = OnBreakpointTokenVariant(BreakpointToken.large);
+      const xsmall1 = OnBreakpointTokenVariant(BreakpointToken.xsmall);
+      const xsmall2 = OnBreakpointTokenVariant(BreakpointToken.xsmall);
+      const small1 = OnBreakpointTokenVariant(BreakpointToken.small);
+      const small2 = OnBreakpointTokenVariant(BreakpointToken.small);
+      const medium1 = OnBreakpointTokenVariant(BreakpointToken.medium);
+      const medium2 = OnBreakpointTokenVariant(BreakpointToken.medium);
+      const large1 = OnBreakpointTokenVariant(BreakpointToken.large);
+      const large2 = OnBreakpointTokenVariant(BreakpointToken.large);
 
       expect(xsmall1, equals(xsmall2));
       expect(xsmall1, isNot(equals(small1)));
@@ -104,14 +104,14 @@ void main() {
 
       await tester.pumpWidget(createMediaQuery(size1));
       var context = tester.element(find.byType(Container));
-      final breakpoint1 = OnBreakPointVariant(
-        const Breakpoint(maxWidth: 100, minWidth: 50),
+      const breakpoint1 = OnBreakPointVariant(
+        Breakpoint(maxWidth: 100, minWidth: 50),
       );
-      final breakpoint2 = OnBreakPointVariant(
-        const Breakpoint(maxWidth: 200, minWidth: 50),
+      const breakpoint2 = OnBreakPointVariant(
+        Breakpoint(maxWidth: 200, minWidth: 50),
       );
-      final breakpoint3 = OnBreakPointVariant(
-        const Breakpoint(maxWidth: 300, minWidth: 50),
+      const breakpoint3 = OnBreakPointVariant(
+        Breakpoint(maxWidth: 300, minWidth: 50),
       );
 
       expect(breakpoint1.when(context), true, reason: 'size1 breakpoint1');
@@ -156,17 +156,17 @@ void main() {
     });
 
     test('OnBreakPoint equality', () {
-      final breakpoint1 = OnBreakPointVariant(
-        const Breakpoint(maxWidth: 100, minWidth: 50),
+      const breakpoint1 = OnBreakPointVariant(
+        Breakpoint(maxWidth: 100, minWidth: 50),
       );
-      final breakpoint2 = OnBreakPointVariant(
-        const Breakpoint(maxWidth: 100, minWidth: 50),
+      const breakpoint2 = OnBreakPointVariant(
+        Breakpoint(maxWidth: 100, minWidth: 50),
       );
-      final breakpoint3 = OnBreakPointVariant(
-        const Breakpoint(maxWidth: 200, minWidth: 50),
+      const breakpoint3 = OnBreakPointVariant(
+        Breakpoint(maxWidth: 200, minWidth: 50),
       );
-      final breakpoint4 = OnBreakPointVariant(
-        const Breakpoint(maxWidth: 200, minWidth: 50),
+      const breakpoint4 = OnBreakPointVariant(
+        Breakpoint(maxWidth: 200, minWidth: 50),
       );
 
       expect(breakpoint1, equals(breakpoint2));

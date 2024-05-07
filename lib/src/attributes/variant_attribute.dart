@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:meta/meta.dart';
 
 import '../core/attribute.dart';
 import '../factory/style_mix.dart';
@@ -34,10 +34,10 @@ class VariantAttribute<V extends IVariant> extends Attribute
   }
 
   @override
-  VariantAttribute<V> merge(covariant VariantAttribute<V> other) {
-    if (other.variant != variant) throw throwArgumentError(other);
+  VariantAttribute<V> merge(covariant VariantAttribute<V>? other) {
+    if (other?.variant != variant) throw throwArgumentError(other);
 
-    return VariantAttribute(variant, _style.merge(other._style));
+    return VariantAttribute(variant, _style.merge(other?._style));
   }
 
   @override
@@ -47,7 +47,7 @@ class VariantAttribute<V extends IVariant> extends Attribute
   Object get mergeKey => variant.mergeKey;
 }
 
-ArgumentError throwArgumentError<T extends VariantAttribute>(T other) {
+ArgumentError throwArgumentError<T extends VariantAttribute>(T? other) {
   throw ArgumentError.value(
     other.runtimeType,
     'other',

@@ -6,6 +6,8 @@ import '../../../helpers/testing_utils.dart';
 
 void main() {
   group('Orientation Utils', () {
+    const onPortrait = OnOrientationVariant(Orientation.portrait);
+    const onLandscape = OnOrientationVariant(Orientation.landscape);
     testWidgets('onPortrait context variant', (tester) async {
       tester.view.physicalSize = const Size(400, 600);
       await tester.pumpMaterialApp(Container());
@@ -28,9 +30,9 @@ void main() {
     });
 
     test('OnOrientation equality', () {
-      final variantPortrait1 = OnOrientationVariant(Orientation.portrait);
-      final variantPortrait2 = OnOrientationVariant(Orientation.portrait);
-      final variantLandscape = OnOrientationVariant(Orientation.landscape);
+      const variantPortrait1 = OnOrientationVariant(Orientation.portrait);
+      const variantPortrait2 = OnOrientationVariant(Orientation.portrait);
+      const variantLandscape = OnOrientationVariant(Orientation.landscape);
 
       expect(variantPortrait1, equals(variantPortrait2));
       expect(variantPortrait1, isNot(equals(variantLandscape)));

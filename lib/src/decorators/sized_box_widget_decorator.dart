@@ -64,7 +64,7 @@ class SizedBoxDecoratorAttribute extends DecoratorAttribute<
   get props => [width, height];
 }
 
-class SizedBoxDecoratorUtility<T extends StyleAttribute>
+class SizedBoxDecoratorUtility<T extends Attribute>
     extends MixUtility<T, SizedBoxDecoratorAttribute> {
   const SizedBoxDecoratorUtility(super.builder);
 

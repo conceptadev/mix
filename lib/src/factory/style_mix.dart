@@ -1,7 +1,6 @@
 // ignore_for_file: non_constant_identifier_names, constant_identifier_names, long-parameter-list, prefer-named-boolean-parameters
 
 import 'package:flutter/material.dart';
-import 'package:meta/meta.dart';
 
 import '../attributes/nested_style/nested_style_attribute.dart';
 import '../attributes/variant_attribute.dart';
@@ -9,63 +8,8 @@ import '../core/attribute.dart';
 import '../core/attributes_map.dart';
 import '../helpers/compare_mixin.dart';
 import '../helpers/helper_util.dart';
-import '../specs/box/box_attribute.dart';
-import '../specs/flex/flex_attribute.dart';
-import '../specs/icon/icon_attribute.dart';
-import '../specs/image/image_attribute.dart';
-import '../specs/stack/stack_attribute.dart';
-import '../specs/text/text_attribute.dart';
 import '../variants/variant.dart';
 import 'mix_provider_data.dart';
-
-class AnimatedStyle extends Style {
-  final AnimatedData animatedData;
-
-  const AnimatedStyle._({
-    required AttributeMap<StyleAttribute> styles,
-    required AttributeMap<VariantAttribute> variants,
-    required this.animatedData,
-  }) : super._(styles: styles, variants: variants);
-
-  factory AnimatedStyle(
-    Style style, {
-    required Duration duration,
-    required Curve curve,
-  }) {
-    return AnimatedStyle._(
-      styles: style.styles,
-      variants: style.variants,
-      animatedData: AnimatedData.withDefaults(duration: duration, curve: curve),
-    );
-  }
-
-  /// Returns a new `Style` with the provided [styles] and [variants] merged with this mix's values.
-  ///
-  /// If [styles] or [variants] is null, the corresponding attribute map of this mix is used.
-  @override
-  AnimatedStyle copyWith({
-    AttributeMap<StyleAttribute>? styles,
-    AttributeMap<VariantAttribute>? variants,
-    AnimatedData? animatedData,
-  }) {
-    return AnimatedStyle._(
-      styles: styles ?? this.styles,
-      variants: variants ?? this.variants,
-      animatedData: animatedData ?? this.animatedData,
-    );
-  }
-
-  @override
-  Style applyVariants(Iterable<IVariant> selectedVariants) {
-    final newStyle = super.applyVariants(selectedVariants);
-
-    return AnimatedStyle._(
-      styles: newStyle.styles,
-      variants: newStyle.variants,
-      animatedData: animatedData,
-    );
-  }
-}
 
 /// A utility class for managing a collection of styling attributes and variants.
 ///
@@ -85,13 +29,6 @@ class Style with Comparable {
 
   /// The variant attributes contained in this mix.
   final AttributeMap<VariantAttribute> variants;
-
-  static final stack = SpreadFunctionParams(_styleType<StackSpecAttribute>());
-  static final text = SpreadFunctionParams(_styleType<TextSpecAttribute>());
-  static final image = SpreadFunctionParams(_styleType<ImageSpecAttribute>());
-  static final icon = SpreadFunctionParams(_styleType<IconSpecAttribute>());
-  static final box = SpreadFunctionParams(_styleType<BoxSpecAttribute>());
-  static final flex = SpreadFunctionParams(_styleType<FlexSpecAttribute>());
 
   /// A constant, empty mix for use with const constructor widgets.
   ///
@@ -212,6 +149,17 @@ class Style with Comparable {
   /// This includes both visual and variant attributes.
   int get length => values.length;
 
+  /// Allows to create a new `Style` by using this mix as a base and adding additional attributes.
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// final style = Style(attr1, attr2);
+  /// final updatedStyle = style.add(attr3, attr4);
+  /// ```
+  SpreadFunctionParams<Attribute, Style> get add =>
+      SpreadFunctionParams(addAll);
+
   /// Selects a single or positional params list of [Variant] and returns a new `Style` with the selected variants.
   ///
   /// If the [applyVariant] is not initially part of the `Style`, this method returns this mix without any changes.
@@ -240,19 +188,12 @@ class Style with Comparable {
   ///
   /// Note:
   /// The attributes from the selected variant (`attr4` and `attr5`) are not applied to the `Style` instance until the `applyVariant` method is called.
-  SpreadFunctionParams<IVariant, Style> get applyVariant =>
+  SpreadFunctionParams<Variant, Style> get applyVariant =>
       SpreadFunctionParams(applyVariants);
 
-  /// Allows to create a new `Style` by using this mix as a base and adding additional attributes.
-  ///
-  /// Example:
-  ///
-  /// ```dart
-  /// final style = Style(attr1, attr2);
-  /// final updatedStyle = style.mix(attr3, attr4);
-  /// ```
-  SpreadFunctionParams<Attribute, Style> get mix =>
-      SpreadFunctionParams(addAttributes);
+  Style addAll(Iterable<Attribute> attributes) {
+    return merge(Style.create(attributes));
+  }
 
   MixData of(BuildContext context) => MixData.create(context, this);
 
@@ -263,11 +204,6 @@ class Style with Comparable {
       variants: variants,
       animatedData: AnimatedData.withDefaults(duration: duration, curve: curve),
     );
-  }
-
-  @internal
-  Style addAttributes(List<Attribute> attributes) {
-    return merge(Style.create(attributes));
   }
 
   /// Returns a new `Style` with the provided [styles] and [variants] merged with this mix's values.
@@ -324,7 +260,7 @@ class Style with Comparable {
   ///
   /// Note:
   /// The attributes from the selected variants (`attr3`, `attr4`, and `attr5`) are not applied to the `Style` instance until the `applyVariants` method is called.
-  Style applyVariants(Iterable<IVariant> selectedVariants) {
+  Style applyVariants(List<Variant> selectedVariants) {
     /// Return the original Style if no variants were selected
     if (selectedVariants.isEmpty) {
       return this;
@@ -368,6 +304,12 @@ class Style with Comparable {
     /// Apply all variants and return the final Style.
     return mergedStyle.applyVariants(selectedVariants);
   }
+
+  /// Returns a new `NestedStyleAttribute` instance that wraps the current `Style` instance.
+  ///
+  /// This method is used to create a nested style attribute, which can be used to apply a `Style` instance
+  /// as an attribute within another `Style` instance.
+  NestedStyleAttribute call() => NestedStyleAttribute(this);
 
   /// Picks and applies only the attributes within the specified [Variant] instances, and returns a new `Style`.
   ///
@@ -415,62 +357,55 @@ class Style with Comparable {
     return pickedStyle.pickVariants(pickedVariants, isRecursive: true);
   }
 
-  /// Selects variants based on a [cases] map and returns a new `Style` with the selected variants.
-  ///
-  /// The [cases] list contains [SwitchCondition] instances, each of which contains a boolean [condition] and a [Variant].
-  /// If a condition is true, the corresponding [Variant] is selected.
-  ///
-  /// Example:
-  /// ```dart
-  /// final highContrastVariant = Variant('highContrast');
-  /// final largeFontVariant = Variant('largeFont');
-  ///
-  /// final style = Style();
-  /// final updatedStyle = style.variantSwitcher([
-  ///   const ConditionChooser(useHighContrast, highContrastVariant),
-  ///   const ConditionChooser(useLargeFont, largeFontVariant)
-  /// ]);
-  /// ```
-  ///
-  /// In this example:
-  /// - Two `Variant` instances are created to represent high contrast and large font styling preferences.
-  /// - An initial `Style` instance is created.
-  /// - The `variantSwitcher` method is called on the `Style` instance with a map of conditions and variants.
-  /// - The conditions `useHighContratst` and `useLargeFont` are hypothetical boolean values representing user preferences.
-  /// - If a condition is true, the corresponding `Variant` is selected and applied to the `Style` instance, creating an `updatedStyle` instance with the selected variants.
-  Style variantSwitcher(List<SwitchCondition<IVariant>> cases) {
-    List<IVariant> variantsToApply = [];
-
-    for (SwitchCondition<IVariant> conditionCase in cases) {
-      if (conditionCase.condition) {
-        variantsToApply.add(conditionCase.value);
-      }
-    }
-
-    return applyVariants(variantsToApply);
-  }
-
   @override
   get props => [styles, variants];
 }
 
-/// A class representing a condition-value pair.
-///
-/// This class is immutable, meaning that once an instance is created, it cannot be changed.
-/// This is useful in cases where you want to ensure that the condition-value pair remains constant,
-/// such as when using it in a switch statement.
-@immutable
-class SwitchCondition<T> {
-  final bool condition;
-  final T value;
+class AnimatedStyle extends Style {
+  final AnimatedData animatedData;
 
-  const SwitchCondition(this.condition, this.value);
-}
+  const AnimatedStyle._({
+    required AttributeMap<StyleAttribute> styles,
+    required AttributeMap<VariantAttribute> variants,
+    required this.animatedData,
+  }) : super._(styles: styles, variants: variants);
 
-Style Function(Iterable<T> attributes) _styleType<T extends SpecAttribute>() {
-  return (Iterable<T> attributes) {
-    final merged = attributes.reduce((value, element) => value.merge(element));
+  factory AnimatedStyle(
+    Style style, {
+    required Duration duration,
+    required Curve curve,
+  }) {
+    return AnimatedStyle._(
+      styles: style.styles,
+      variants: style.variants,
+      animatedData: AnimatedData.withDefaults(duration: duration, curve: curve),
+    );
+  }
 
-    return Style(merged);
-  };
+  /// Returns a new `Style` with the provided [styles] and [variants] merged with this mix's values.
+  ///
+  /// If [styles] or [variants] is null, the corresponding attribute map of this mix is used.
+  @override
+  AnimatedStyle copyWith({
+    AttributeMap<StyleAttribute>? styles,
+    AttributeMap<VariantAttribute>? variants,
+    AnimatedData? animatedData,
+  }) {
+    return AnimatedStyle._(
+      styles: styles ?? this.styles,
+      variants: variants ?? this.variants,
+      animatedData: animatedData ?? this.animatedData,
+    );
+  }
+
+  @override
+  Style applyVariants(List<Variant> selectedVariants) {
+    final newStyle = super.applyVariants(selectedVariants);
+
+    return AnimatedStyle._(
+      styles: newStyle.styles,
+      variants: newStyle.variants,
+      animatedData: animatedData,
+    );
+  }
 }

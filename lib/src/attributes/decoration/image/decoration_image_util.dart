@@ -4,7 +4,7 @@ import '../../../core/attribute.dart';
 import '../../scalars/scalar_util.dart';
 import 'decoration_image_dto.dart';
 
-class DecorationImageUtility<T extends StyleAttribute>
+class DecorationImageUtility<T extends Attribute>
     extends DtoUtility<T, DecorationImageDto, DecorationImage> {
   const DecorationImageUtility(super.builder)
       : super(valueToDto: DecorationImageDto.from);

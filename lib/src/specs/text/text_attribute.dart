@@ -7,7 +7,7 @@ import '../../core/directive.dart';
 import '../../factory/mix_provider_data.dart';
 import 'text_spec.dart';
 
-class TextSpecAttribute extends SpecAttribute<TextSpecAttribute, TextSpec> {
+class TextSpecAttribute extends SpecAttribute<TextSpec> {
   final TextOverflow? overflow;
   final StrutStyleDto? strutStyle;
   final TextAlign? textAlign;

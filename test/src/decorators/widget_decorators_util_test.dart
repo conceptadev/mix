@@ -202,7 +202,7 @@ void main() {
         await tester.pumpWidget(
           _TestableRenderDecorator(
             Style(
-              intrinsicHeight(),
+              $with.intrinsicHeight(),
             ),
           ),
         );
@@ -217,7 +217,7 @@ void main() {
         await tester.pumpWidget(
           _TestableRenderDecorator(
             Style(
-              scale(2.0),
+              $with.scale(2.0),
             ),
           ),
         );
@@ -232,7 +232,7 @@ void main() {
         await tester.pumpWidget(
           _TestableRenderDecorator(
             Style(
-              opacity(0.5),
+              $with.opacity(0.5),
             ),
           ),
         );
@@ -247,7 +247,7 @@ void main() {
         await tester.pumpWidget(
           _TestableRenderDecorator(
             Style(
-              clipPath(),
+              $with.clipPath(),
             ),
           ),
         );
@@ -262,7 +262,7 @@ void main() {
         await tester.pumpWidget(
           _TestableRenderDecorator(
             Style(
-              clipRRect(),
+              $with.clipRRect(),
             ),
           ),
         );
@@ -277,7 +277,7 @@ void main() {
         await tester.pumpWidget(
           _TestableRenderDecorator(
             Style(
-              clipOval(),
+              $with.clipOval(),
             ),
           ),
         );
@@ -292,7 +292,7 @@ void main() {
         await tester.pumpWidget(
           _TestableRenderDecorator(
             Style(
-              clipRect(),
+              $with.clipRect(),
             ),
           ),
         );
@@ -307,7 +307,7 @@ void main() {
         await tester.pumpWidget(
           _TestableRenderDecorator(
             Style(
-              visibility.off(),
+              $with.visibility.off(),
             ),
           ),
         );
@@ -322,7 +322,7 @@ void main() {
         await tester.pumpWidget(
           _TestableRenderDecorator(
             Style(
-              aspectRatio(2),
+              $with.aspectRatio(2),
             ),
           ),
         );
@@ -339,7 +339,7 @@ void main() {
             children: [
               _TestableRenderDecorator(
                 Style(
-                  flexible(),
+                  $with.flexible(),
                 ),
               ),
             ],
@@ -356,7 +356,7 @@ void main() {
         await tester.pumpWidget(
           _TestableRenderDecorator(
             Style(
-              transform(Matrix4.identity()),
+              $with.transform(Matrix4.identity()),
             ),
           ),
         );
@@ -386,7 +386,7 @@ void main() {
         await tester.pumpWidget(
           _TestableRenderDecorator(
             Style(
-              fractionallySizedBox(),
+              $with.fractionallySizedBox(),
             ),
           ),
         );
@@ -401,7 +401,7 @@ void main() {
         await tester.pumpWidget(
           _TestableRenderDecorator(
             Style(
-              sizedBox(),
+              $with.sizedBox(),
             ),
           ),
         );

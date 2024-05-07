@@ -127,7 +127,7 @@ void main() {
     }
     stopwatch.stop();
 
-    final elapsedTime = stopwatch.elapsedMilliseconds / iterations;
+    // final elapsedTime = stopwatch.elapsedMilliseconds / iterations;
     expect(style.isNotEmpty, true);
   });
 

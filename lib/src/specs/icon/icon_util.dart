@@ -6,7 +6,7 @@ import '../../attributes/shadow/shadow_util.dart';
 import '../../core/attribute.dart';
 import 'icon_attribute.dart';
 
-class IconSpecUtility<T extends SpecAttribute>
+class IconSpecUtility<T extends Attribute>
     extends SpecUtility<T, IconSpecAttribute> {
   late final color = ColorUtility((v) => only(color: v));
   late final size = DoubleUtility((v) => only(size: v));

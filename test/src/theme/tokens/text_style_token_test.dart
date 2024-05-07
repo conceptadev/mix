@@ -4,16 +4,6 @@ import 'package:mix/mix.dart';
 
 import '../../../helpers/testing_utils.dart';
 
-extension on RadiusTokenUtil {
-  RadiusToken get medium => const RadiusToken('radius-token-medium');
-  RadiusToken get large => const RadiusToken('radius-token-large');
-}
-
-extension on SpaceTokenUtil {
-  SpaceToken get medium => const SpaceToken('space-token-medium');
-  SpaceToken get large => const SpaceToken('space-token-large');
-}
-
 void main() {
   group('TextStyleToken', () {
     test('Constructor assigns name correctly', () {
@@ -80,8 +70,8 @@ void main() {
         $material.colorScheme.background: Colors.red,
       },
       spaces: {
-        $space.large: 100,
-        $space.medium: 50,
+        $token.space.large: 100,
+        $token.space.medium: 50,
       },
       textStyles: {
         $material.textTheme.bodyText1:
@@ -90,8 +80,8 @@ void main() {
             const TextStyle(color: Colors.blue, fontSize: 20),
       },
       radii: {
-        $radius.medium: const Radius.elliptical(10, 50),
-        $radius.large: const Radius.elliptical(50, 50),
+        $token.radius.medium: const Radius.elliptical(10, 50),
+        $token.radius.large: const Radius.elliptical(50, 50),
       },
     );
 
@@ -104,10 +94,10 @@ void main() {
           $text.style.ref($material.textTheme.bodyText2),
           $box.color.ref($material.colorScheme.background),
           $box.color.ref($material.colorScheme.error),
-          $box.borderRadius.all.ref($radius.medium),
-          $box.borderRadius.all.ref($radius.large),
-          $box.padding.horizontal.ref($space.medium),
-          $box.padding.horizontal.ref($space.large),
+          $box.borderRadius.all.ref($token.radius.medium),
+          $box.borderRadius.all.ref($token.radius.large),
+          $box.padding.horizontal.ref($token.space.medium),
+          $box.padding.horizontal.ref($token.space.large),
         ),
         key: key,
         child: const StyledText('Hello'),
@@ -140,12 +130,12 @@ void main() {
 
     expect(
       (containerWidget.decoration as BoxDecoration).borderRadius,
-      BorderRadius.all(themeData.radii[$radius.large]!),
+      BorderRadius.all(themeData.radii[$token.radius.large]!),
     );
 
     expect(
       containerWidget.padding!.horizontal / 2,
-      themeData.spaces[$space.large],
+      themeData.spaces[$token.space.large],
     );
   });
 
