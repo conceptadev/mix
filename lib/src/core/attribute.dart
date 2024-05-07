@@ -70,7 +70,7 @@ abstract class StyleAttribute extends Attribute {
   const StyleAttribute();
 
   @override
-  Type get mergeKey => runtimeType;
+  Object get mergeKey => runtimeType;
 }
 
 /// An abstract class representing a resolvable attribute.

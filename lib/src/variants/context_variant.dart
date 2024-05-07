@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../attributes/nested_style/nested_style_attribute.dart';
 import '../attributes/variant_attribute.dart';
 import '../core/attribute.dart';
 import '../factory/style_mix.dart';
@@ -81,11 +80,11 @@ abstract class MediaQueryContextVariant extends ContextVariant {
 }
 
 @immutable
-class ContextVariantBuilder extends Attribute {
-  final ContextVariant variant;
+class ContextVariantBuilder extends VariantAttribute<ContextVariant> {
   final Style Function(BuildContext context) fn;
 
-  const ContextVariantBuilder(this.fn, this.variant);
+  const ContextVariantBuilder(this.fn, ContextVariant variant)
+      : super(variant, const Style.empty());
 
   Style Function(BuildContext context) mergeFn(
     Style Function(BuildContext context) other,
@@ -93,6 +92,7 @@ class ContextVariantBuilder extends Attribute {
     return (BuildContext context) => fn(context).merge(other(context));
   }
 
+  @override
   ContextVariantBuilder merge(ContextVariantBuilder? other) {
     if (other == null) return this;
     if (other.variant != variant) {
@@ -103,9 +103,16 @@ class ContextVariantBuilder extends Attribute {
   }
 
   @override
+  @protected
+  Style get value => throw UnimplementedError(
+        'This is a ContextVariantBuilder you need to call build(context)',
+      );
+
+  @override
   Object get mergeKey => '$runtimeType.${variant.mergeKey}';
 
   @override
   get props => [variant];
-  Attribute build(BuildContext context) => NestedStyleAttribute(fn(context));
+
+  Style build(BuildContext context) => fn(context);
 }

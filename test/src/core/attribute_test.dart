@@ -77,11 +77,10 @@ void main() {
       fn(BuildContext context) => style;
       final builder = ContextVariantBuilder(fn, variant);
 
-      final attribute =
-          builder.build(MockBuildContext()) as NestedStyleAttribute;
+      final builtStyle = builder.build(MockBuildContext());
 
-      expect(attribute, isA<NestedStyleAttribute>());
-      expect(attribute.value, equals(style));
+      expect(builtStyle, isA<Style>());
+      expect(builtStyle, equals(style));
     });
   });
 }

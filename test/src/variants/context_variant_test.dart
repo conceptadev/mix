@@ -111,8 +111,8 @@ void main() {
 
       final result = builder.build(MockBuildContext());
 
-      expect(result, isA<NestedStyleAttribute>());
-      expect((result as NestedStyleAttribute).value, equals(style));
+      expect(result, isA<Style>());
+      expect(result, equals(style));
     });
   });
 }
