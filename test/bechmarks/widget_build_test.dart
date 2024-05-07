@@ -173,14 +173,6 @@ class StyleWidgetExpensiveAttributge extends StatelessWidget {
     final alignmentAttr = $box.alignment.center();
     final clipAttr = $box.clipBehavior.hardEdge();
 
-    // final borderAttribute = box.border.all(
-    //   color: Colors.red,
-    //   width: 1,
-    //   style: BorderStyle.solid,
-    // );
-
-    // final radiusAttribute = box.borderRadius(10);
-
     final colorAttribute = $box.color(Colors.red);
 
     Style buildStyle() {
