@@ -13,26 +13,35 @@ class CustomMixWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final style = Style(
-      height(100),
-      marginVertical(10),
-      elevation(10),
-      borderRadius(10),
-      backgroundColor($md.colorScheme.primary()),
-      $text.style($button()),
-      $text.style.color($md.colorScheme.onPrimary()),
+      $box.height(50),
+      $box.width(90),
+      $box.margin.vertical(10),
+      $box.elevation.three(),
+      $box.borderRadius(10),
+      $box.color.black87(),
+      $box.alignment.center(),
+      $text.style.fontSize(20),
+      $text.style.fontWeight.bold(),
+      $text.style.color.white(),
       $on.hover(
-        elevation(2),
-        padding(20),
-        backgroundColor($md.colorScheme.secondary()),
-        $text.style.color($md.colorScheme.onSecondary()),
+        $box.elevation.four(),
+        $with.scale(1.1),
+      ),
+      $on.press(
+        $box.elevation.four(),
+        $box.color.red(),
       ),
     );
-    return Box(
-      mix: style,
-      child: const TextMix('Custom Widget'),
+    return PressableBox(
+      style: style,
+      onPress: () {
+        // An Amazing action
+      },
+      child: const StyledText('Mix'),
     );
   }
 }
+
 ```
 
 ## Without Mix
