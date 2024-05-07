@@ -32,9 +32,9 @@ const features: Array<Feature> = [
   },
   {
     href: "/docs/guides/variants",
-    name: "First-class Variant Support",
+    name: "First-class Variants",
     description:
-      "Seamlessly create condition and responsive styling variants, allow you to design composable widgets.",
+      "Seamlessly create condition and responsive styling variants, allow you to create reactive styling and variations.",
     icon: VenetianMaskIcon,
   },
   {

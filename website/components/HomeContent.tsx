@@ -11,14 +11,14 @@ const HomeContent = () => {
         <div className="content-container">
           <Logo />
           <h1 className="headline">
-            Style Widgets
+            An Expressive Styling
             <br className="" />
-            Intuitively
+            System for Flutter
           </h1>
           <p className="subtitle">
-            An expressive way to effortlessly
+            Effortlessly style your widgets
             <br className="sm:block hidden" />
-            build design systems in Flutter.
+            and build design systems.
           </p>
 
           <div className="not-prose mb-16 mt-6 flex gap-3">
