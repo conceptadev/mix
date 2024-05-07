@@ -8,6 +8,7 @@ import '../src/variants/variant.dart';
 import 'attributes/nested_style/nested_style_util.dart';
 import 'attributes/scalars/scalar_util.dart';
 import 'core/attribute.dart';
+import 'core/styled_widget.dart';
 import 'decorators/clip_widget_decorator.dart';
 import 'factory/style_mix.dart';
 import 'helpers/helper_util.dart';
@@ -23,6 +24,9 @@ typedef Mix = Style;
 
 @Deprecated('Use Box instead')
 typedef StyledContainer = Box;
+
+@Deprecated('Use SpecBuilder instead')
+typedef MixContextBuilder = SpecBuilder;
 
 @Deprecated('StyleRecipe is now deprecated, create a custom Spec')
 abstract class StyleRecipe<T extends StyleRecipe<T>> {

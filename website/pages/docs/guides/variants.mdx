@@ -123,7 +123,7 @@ final style = Style(
 );
 ```
 
-When the `$on.dark` variant is applied, it will override the `box.color` and `text.style.color` attributes. When this happens the style will be equivalent to the following:
+When the `$on.dark` variant is applied, it will override the `$box.color` and `$text.style.color` attributes. When this happens the style will be equivalent to the following:
 
 ```dart highlight="2-4"
 final style = Style(
@@ -255,7 +255,7 @@ While not a traditional negation operator, `onNot` allows you to compose a varia
 final onDisabled = $on.not($on.enabled);
 
 final style = Style(
-  onDisabled(
+  $on.disabled(
     $with.scale(1.2),
   ),
 );
@@ -279,7 +279,7 @@ Mix provides a set of pre-defined context variants for adaptive styling:
 
 ### Custom Breakpoints
 
-- **`onBreakpoint({minWidth, maxWidth})`:** Create custom context variants for specific screen size ranges.
+- **`$on.breakpoint({minWidth, maxWidth})`:** Create custom context variants for specific screen size ranges.
 
 ### Directionality
 

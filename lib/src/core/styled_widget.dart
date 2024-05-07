@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
 import '../decorators/widget_decorator_widget.dart';
+import '../deprecations.dart';
 import '../factory/mix_provider.dart';
 import '../factory/mix_provider_data.dart';
 import '../factory/style_mix.dart';
+import '../variants/variant.dart';
 
 /// An abstract widget for applying custom styles.
 ///
@@ -90,11 +92,14 @@ abstract class StyledWidget extends StatelessWidget {
 
 class SpecBuilder extends StyledWidget {
   const SpecBuilder({
-    super.key,
-    super.inherit,
-    super.style,
     required this.builder,
+    super.style,
+    @Deprecated('Use the the style parameter instead') Mix? mix,
+    @Deprecated('Apply the variants directly to the style')
+    List<Variant>? variants,
+    super.inherit,
     super.orderOfDecorators = const [],
+    super.key,
   });
 
   final Widget Function(BuildContext) builder;

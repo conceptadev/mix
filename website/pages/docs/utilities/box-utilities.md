@@ -25,73 +25,73 @@ $box.padding(10);
 
 $box.padding(10, 20);
 
-box.padding(10, 20, 30);
+$box.padding(10, 20, 30);
 
-box.padding(10, 20, 30, 40);
+$box.padding(10, 20, 30, 40);
 ```
 
-### box.padding.all
+### $box.padding.all
 
 Sets the padding of the box on all sides.
 
 ```dart
-box.padding.all(10)
+$box.padding.all(10)
 ```
 
-### box.padding.top
+### $box.padding.top
 
 Sets the padding of the box on the top side.
 
 ```dart
-box.padding.top(10)
+$box.padding.top(10)
 ```
 
-### box.padding.bottom
+### $box.padding.bottom
 
 Sets the padding of the box on the bottom side.
 
 ```dart
-box.padding.bottom(10)
+$box.padding.bottom(10)
 ```
 
-### box.padding.left
+### $box.padding.left
 
 Sets the padding of the box on the left side.
 
 ```dart
-box.padding.left(10)
+$box.padding.left(10)
 ```
 
-### box.padding.right
+### $box.padding.right
 
 Sets the padding of the box on the right side.
 
 ```dart
-box.padding.right(10)
+$box.padding.right(10)
 ```
 
-### box.padding.horizontal
+### $box.padding.horizontal
 
 Sets the padding of the box on the horizontal (left and right) sides.
 
 ```dart
-box.padding.horizontal(10)
+$box.padding.horizontal(10)
 ```
 
-### box.padding.vertical
+### $box.padding.vertical
 
 Sets the padding of the box on the vertical (top and bottom) sides.
 
 ```dart
-box.padding.vertical(10)
+$box.padding.vertical(10)
 ```
 
-### box.padding.only
+### $box.padding.only
 
 Sets the padding of the box on the specified sides.
 
 ```dart
-box.padding.only(
+$box.padding.only(
     top: 10,
     bottom: 20,
     left: 30,
@@ -101,39 +101,39 @@ box.padding.only(
 
 ## Constraints
 
-### box.maxWidth
+### $box.maxWidth
 
 Sets the maximum width the box can have.
 
 ```dart
-box.maxWidth(200)
+$box.maxWidth(200)
 ```
 
-### box.minWidth
+### $box.minWidth
 
 Sets the minimum width the box must have.
 
 ```dart
-box.minWidth(100)
+$box.minWidth(100)
 ```
 
-### box.maxHeight
+### $box.maxHeight
 
 Sets the maximum height the box can have.
 
 ```dart
-box.maxHeight(200)
+$box.maxHeight(200)
 ```
 
-### box.minHeight
+### $box.minHeight
 
 Sets the minimum height the box must have.
 
 ```dart
-box.minHeight(100)
+$box.minHeight(100)
 ```
 
-## box.color
+## $box.color
 
 Sets the background color of the box.
 
