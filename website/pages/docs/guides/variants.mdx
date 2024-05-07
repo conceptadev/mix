@@ -255,7 +255,7 @@ While not a traditional negation operator, `onNot` allows you to compose a varia
 final onDisabled = $on.not($on.enabled);
 
 final style = Style(
-  onDisabled(
+  $on.disabled(
     $with.scale(1.2),
   ),
 );
@@ -279,7 +279,7 @@ Mix provides a set of pre-defined context variants for adaptive styling:
 
 ### Custom Breakpoints
 
-- **`onBreakpoint({minWidth, maxWidth})`:** Create custom context variants for specific screen size ranges.
+- **`$on.breakpoint({minWidth, maxWidth})`:** Create custom context variants for specific screen size ranges.
 
 ### Directionality
 
