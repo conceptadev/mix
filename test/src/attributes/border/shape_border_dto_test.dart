@@ -23,7 +23,7 @@ void main() {
           ),
           side: BorderSideDto(color: ColorDto(Colors.blue), width: 2.0),
         ),
-      );
+      ) as RoundedRectangleBorderDto;
 
       expect(merged.borderRadius!.topLeft, const Radius.circular(25));
       expect(merged.borderRadius!.topRight, const Radius.circular(20));
@@ -75,7 +75,7 @@ void main() {
           side: BorderSideDto(color: ColorDto(Colors.blue), width: 2.0),
           eccentricity: 0.75,
         ),
-      );
+      ) as CircleBorderDto;
 
       expect(merged.eccentricity, 0.75);
       expect(merged.side!.color, const ColorDto(Colors.blue));
@@ -115,7 +115,7 @@ void main() {
           ),
           side: BorderSideDto(color: ColorDto(Colors.blue), width: 2.0),
         ),
-      );
+      ) as BeveledRectangleBorderDto;
 
       expect(merged.borderRadius!.topLeft, const Radius.circular(25));
       expect(merged.borderRadius!.topRight, const Radius.circular(20));
@@ -165,7 +165,7 @@ void main() {
         const StadiumBorderDto(
           side: BorderSideDto(color: ColorDto(Colors.blue), width: 2.0),
         ),
-      );
+      ) as StadiumBorderDto;
 
       expect(merged.side!.color, const ColorDto(Colors.blue));
       expect(merged.side!.width, 2.0);
@@ -204,7 +204,7 @@ void main() {
             ),
             side: BorderSideDto(color: ColorDto(Colors.blue), width: 2.0),
           ),
-        );
+        ) as ContinuousRectangleBorderDto;
 
         expect(merged.borderRadius!.topLeft, const Radius.circular(25));
         expect(merged.borderRadius!.topRight, const Radius.circular(20));

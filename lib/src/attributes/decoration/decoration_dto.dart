@@ -1,7 +1,5 @@
 // ignore_for_file: no_leading_underscores_for_local_identifiers
 
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 
 import '../../core/attribute.dart';
@@ -53,8 +51,62 @@ abstract class DecorationDto<Value extends Decoration> extends Dto<Value> {
     );
   }
 
+  T toDtoType<T extends DecorationDto>() {
+    if (runtimeType == T) {
+      return this as T;
+    }
+
+    if (T == BoxDecorationDto) {
+      return BoxDecorationDto(
+        color: color,
+        gradient: gradient,
+        boxShadow: boxShadow,
+      ) as T;
+    }
+
+    if (T == ShapeDecorationDto) {
+      return ShapeDecorationDto(
+        color: color,
+        gradient: gradient,
+        shadows: boxShadow,
+      ) as T;
+    }
+
+    throw ArgumentError.value(T, 'T', 'Unsupported decoration type');
+  }
+
+  DecorationDto<Value> mergeDecoration(covariant DecorationDto<Value>? other);
+
   @override
-  DecorationDto<Value> merge(covariant DecorationDto<Value>? other);
+  DecorationDto<Value> merge(covariant DecorationDto<Value>? other) {
+    if (other == null) return this;
+
+    if (runtimeType == other.runtimeType) {
+      return mergeDecoration(other);
+    }
+
+    final otherDecor = other;
+    final thisDecor = this;
+    if (otherDecor is BoxDecorationDto) {
+      final thisDto = thisDecor.toDtoType<BoxDecorationDto>();
+
+      return thisDto.mergeDecoration(otherDecor as BoxDecorationDto)
+          as DecorationDto<Value>;
+    }
+
+    if (otherDecor is ShapeDecorationDto) {
+      final thisDto = thisDecor.toDtoType<ShapeDecorationDto>();
+
+      return thisDto.mergeDecoration(otherDecor as ShapeDecorationDto)
+          as DecorationDto<Value>;
+    }
+
+    throw ArgumentError.value(
+      otherDecor,
+      'other',
+      'Unsupported decoration type',
+    );
+  }
 }
 
 /// Represents a Data transfer object of [BoxDecoration]
@@ -108,7 +160,7 @@ class BoxDecorationDto extends DecorationDto<BoxDecoration> {
 
   /// Merges this [BoxDecorationDto] with `other` [BoxDecorationDto]
   @override
-  BoxDecorationDto merge(BoxDecorationDto? other) {
+  BoxDecorationDto mergeDecoration(BoxDecorationDto? other) {
     if (other == null) return this;
 
     return BoxDecorationDto(
@@ -178,23 +230,12 @@ class ShapeDecorationDto extends DecorationDto<ShapeDecoration> {
   List<BoxShadowDto>? get shadows => boxShadow;
 
   @override
-  ShapeDecorationDto merge(ShapeDecorationDto? other) {
+  ShapeDecorationDto mergeDecoration(ShapeDecorationDto? other) {
     if (other == null) return this;
-
-    final shapesAreNotNull = shape != null && other.shape != null;
-    final sameRuntimeType = shape?.runtimeType == other.shape?.runtimeType;
-
-    ShapeBorderDto? shapeBorder;
-    if (shapesAreNotNull && !sameRuntimeType) {
-      log('ShapeDecorationDto: Merging different shape types: ${shape!} and ${other.shape!}, is not possible');
-      shapeBorder = other.shape;
-    } else {
-      shapeBorder = shape?.merge(other.shape) ?? other.shape;
-    }
 
     return ShapeDecorationDto(
       color: color?.merge(other.color) ?? other.color,
-      shape: shapeBorder,
+      shape: shape?.merge(other.shape) ?? other.shape,
       gradient: gradient?.merge(other.gradient) ?? other.gradient,
       shadows: boxShadow?.merge(other.boxShadow) ?? other.boxShadow,
     );

@@ -34,11 +34,8 @@ abstract class DtoUtility<Attr extends Attribute, D extends Dto<Value>, Value>
   const DtoUtility(super.builder, {required D Function(Value) valueToDto})
       : _fromValue = valueToDto;
 
-  /// Should contain all the named parameters of a [Dto] class
-  /// to build the [StyleAttribute].
   Attr only();
 
-  /// Returns a new [StyleAttribute] with the given [value].
   Attr as(Value value) => builder(_fromValue(value));
 }
 
@@ -51,378 +48,340 @@ abstract class ScalarUtility<Return extends Attribute, Param>
   Return call(Param value) => builder(value);
 }
 
-/// AlignmentUtility - A utility class for defining alignment attributes for widgets.
+/// A utility class for creating [Attribute] instances from [AlignmentGeometry] values.
 ///
-/// This class extends `ScalarUtility<T, AlignmentGeometry>`, allowing it to handle alignment attributes
-/// using generic types. It provides methods to set various predefined alignments as well as custom alignments.
+/// This class extends [ScalarUtility] and provides methods to create [Attribute] instances
+/// from predefined [Alignment] values or custom [Alignment] and [AlignmentDirectional] values.
 class AlignmentUtility<T extends Attribute>
     extends ScalarUtility<T, AlignmentGeometry> {
-  // Constructor accepting a builder function to create instances of T.
   const AlignmentUtility(super.builder);
 
-  /// Sets the alignment to top left.
+  /// Creates an [Attribute] instance with [Alignment.topLeft].
   T topLeft() => builder(Alignment.topLeft);
 
-  /// Sets the alignment to top center.
+  /// Creates an [Attribute] instance with [Alignment.topCenter].
   T topCenter() => builder(Alignment.topCenter);
 
-  /// Sets the alignment to top right.
+  /// Creates an [Attribute] instance with [Alignment.topRight].
   T topRight() => builder(Alignment.topRight);
 
-  /// Sets the alignment to center left.
+  /// Creates an [Attribute] instance with [Alignment.centerLeft].
   T centerLeft() => builder(Alignment.centerLeft);
 
-  /// Sets the alignment to center.
+  /// Creates an [Attribute] instance with [Alignment.center].
   T center() => builder(Alignment.center);
 
-  /// Sets the alignment to center right.
+  /// Creates an [Attribute] instance with [Alignment.centerRight].
   T centerRight() => builder(Alignment.centerRight);
 
-  /// Sets the alignment to bottom left.
+  /// Creates an [Attribute] instance with [Alignment.bottomLeft].
   T bottomLeft() => builder(Alignment.bottomLeft);
 
-  /// Sets the alignment to bottom center.
+  /// Creates an [Attribute] instance with [Alignment.bottomCenter].
   T bottomCenter() => builder(Alignment.bottomCenter);
 
-  /// Sets the alignment to bottom right.
+  /// Creates an [Attribute] instance with [Alignment.bottomRight].
   T bottomRight() => builder(Alignment.bottomRight);
 
-  /// Sets a custom alignment based on the provided x, y, or start values.
+  /// Creates an [Attribute] instance with a custom [Alignment] or [AlignmentDirectional] value.
   ///
-  /// The `x` and `start` parameters are mutually exclusive to avoid conflicts.
-  /// The `x` parameter sets a specific horizontal alignment, while `start` aligns based on text direction (LTR/RTL).
-  /// The `y` parameter sets the vertical alignment.
+  /// If [start] is provided, an [AlignmentDirectional] is created. Otherwise, an [Alignment] is created.
   ///
-  /// - `x`: Horizontal alignment value, ignored if `start` is provided.
-  /// - `y`: Vertical alignment value.
-  /// - `start`: Horizontal alignment based on text direction, overrides `x` if provided.
+  /// Throws an [AssertionError] if both [x] and [start] are provided.
   T only({double? x, double? y, double? start}) {
     assert(x == null || start == null,
         'Cannot provide both an x and a start parameter.');
 
-    // If `start` is provided, it creates an AlignmentDirectional, otherwise a regular Alignment.
     return start == null
         ? builder(Alignment(x ?? 0, y ?? 0))
         : builder(AlignmentDirectional(start, y ?? 0));
   }
 }
 
-/// Utility for creating `double` values.
+/// A utility class for creating [Attribute] instances from [double] values.
 ///
-/// Includes predefined values such as zero and infinity.
-///
-/// Example:
-/// ```dart
-/// final utility = DoubleUtility(builder);
-/// final tenValue = utility(10);
-/// ```
+/// This class extends [ScalarUtility] and provides methods to create [Attribute] instances
+/// from predefined [double] values or custom [double] values.
 class DoubleUtility<T extends Attribute> extends ScalarUtility<T, double> {
   const DoubleUtility(super.builder);
 
+  /// Creates an [Attribute] instance with a value of 0.
   T zero() => builder(0);
 
+  /// Creates an [Attribute] instance with a value of [double.infinity].
   T infinity() => builder(double.infinity);
 
+  /// Creates an [Attribute] instance from a custom [double] value.
   @override
   T call(double value) => builder(value);
 }
 
-/// Utility for Size values. Includes predefined values such as zero and infinity.
+/// An abstract utility class for creating [Attribute] instances from [double] values representing sizes.
 ///
-/// Example:
-/// ```dart
-/// final utility = SizeUtility(builder);
-/// final oneHundred = utility(100);
-/// ```
-/// See also:
-/// * [DoubleUtility]
+/// This class extends [DoubleUtility] and serves as a base for more specific sizing utilities.
 abstract class SizingUtility<T extends Attribute> extends DoubleUtility<T> {
   const SizingUtility(super.builder);
 }
 
-/// Utility for creating `int` values.
+/// A utility class for creating [Attribute] instances from [int] values.
 ///
-/// Includes a predefined value for zero.
-///
-/// Example:
-/// ```dart
-/// final utility = IntUtility(builder);
-/// final zeroValue = utility.zero();
-/// final tenValue = utility(10);
-/// // zeroValue is 0
-/// ```
+/// This class extends [ScalarUtility] and provides methods to create [Attribute] instances
+/// from predefined [int] values or custom [int] values.
 class IntUtility<T extends Attribute> extends ScalarUtility<T, int> {
   const IntUtility(super.builder);
 
+  /// Creates an [Attribute] instance with a value of 0.
   T zero() => builder(0);
 
+  /// Creates an [Attribute] instance from a custom [int] value.
   @override
   T call(int value) => builder(value);
 }
 
-/// Utility for creating `bool` values.
+/// A utility class for creating [Attribute] instances from [bool] values.
 ///
-/// Simplifies setting boolean values to true or false.
-///
-/// Example:
-/// ```dart
-/// final boolUtility = BoolUtility(builder);
-/// final enabled = boolUtility.on();
-/// final disabled = boolUtility.off();
-/// final boolValue = boolUtility(true);
-/// ```
+/// This class extends [ScalarUtility] and provides methods to create [Attribute] instances
+/// from predefined [bool] values or custom [bool] values.
 class BoolUtility<T extends Attribute> extends ScalarUtility<T, bool> {
   const BoolUtility(super.builder);
 
+  /// Creates an [Attribute] instance with a value of `true`.
   T on() => builder(true);
+
+  /// Creates an [Attribute] instance with a value of `false`.
   T off() => builder(false);
 
+  /// Creates an [Attribute] instance from a custom [bool] value.
   @override
   T call(bool value) => builder(value);
 }
 
-/// Utility for setting `VerticalDirection` values.
+/// A utility class for creating [Attribute] instances from [VerticalDirection] values.
 ///
-/// Useful for defining the direction of vertical arrangements.
-///
-/// Example:
-/// ```dart
-/// final verticalDirection = VerticalDirectionUtility(builder);
-///
-/// VerticalDirection.up:
-/// final up = verticalDirection.up();
-///
-/// VerticalDirection.down:
-/// final down = verticalDirection.down();
-/// ```
-/// See [VerticalDirection] for more information.
+/// This class extends [ScalarUtility] and provides methods to create [Attribute] instances
+/// from predefined [VerticalDirection] values.
 class VerticalDirectionUtility<T extends Attribute>
     extends ScalarUtility<T, VerticalDirection> {
   const VerticalDirectionUtility(super.builder);
+
+  /// Creates an [Attribute] instance with [VerticalDirection.up].
   T up() => builder(VerticalDirection.up);
+
+  /// Creates an [Attribute] instance with [VerticalDirection.down].
   T down() => builder(VerticalDirection.down);
 }
 
+/// A utility class for creating [Attribute] instances from [BorderStyle] values.
+///
+/// This class extends [ScalarUtility] and provides methods to create [Attribute] instances
+/// from predefined [BorderStyle] values.
 class BorderStyleUtility<T extends Attribute>
     extends ScalarUtility<T, BorderStyle> {
   const BorderStyleUtility(super.builder);
+
+  /// Creates an [Attribute] instance with [BorderStyle.none].
   T none() => builder(BorderStyle.none);
+
+  /// Creates an [Attribute] instance with [BorderStyle.solid].
   T solid() => builder(BorderStyle.solid);
 }
 
-/// Utility for setting Clip`values.
+/// A utility class for creating [Attribute] instances from [Clip] values.
 ///
-/// Useful for defining the clipping behavior of widgets.
-/// Includes predefined values of `Clip` such as `none`, `hardEdge`, and `antiAlias`.
-/// Example:
-/// ```dart
-/// final clip = ClipUtility(builder);
-/// final noneClip = clip.none();
-/// final hardEdge = clip.hardEdge();
-/// final antiAlias = clip.antiAlias();
-/// ```
-/// See [Clip] for more information.
+/// This class extends [ScalarUtility] and provides methods to create [Attribute] instances
+/// from predefined [Clip] values.
 class ClipUtility<T extends Attribute> extends ScalarUtility<T, Clip> {
   const ClipUtility(super.builder);
+
+  /// Creates an [Attribute] instance with [Clip.antiAliasWithSaveLayer].
   T antiAliasWithSaveLayer() => builder(Clip.antiAliasWithSaveLayer);
+
+  /// Creates an [Attribute] instance with [Clip.none].
   T none() => builder(Clip.none);
+
+  /// Creates an [Attribute] instance with [Clip.hardEdge].
   T hardEdge() => builder(Clip.hardEdge);
+
+  /// Creates an [Attribute] instance with [Clip.antiAlias].
   T antiAlias() => builder(Clip.antiAlias);
 }
 
-/// Utility for setting `FlexFit` values.
+/// A utility class for creating [Attribute] instances from [FlexFit] values.
 ///
-/// Useful for defining the fit of a widget within a flex layout.
-/// Includes predefined values of `FlexFit` such as `tight` and `loose`.
-/// Example:
-/// ```dart
-/// final flexFit = FlexFitUtility(builder);
-/// final tight = flexFit.tight();
-/// final loose = flexFit.loose();
-/// ```
-/// See [FlexFit] for more information.
+/// This class extends [ScalarUtility] and provides methods to create [Attribute] instances
+/// from predefined [FlexFit] values.
 class FlexFitUtility<T extends Attribute> extends ScalarUtility<T, FlexFit> {
   const FlexFitUtility(super.builder);
+
+  /// Creates an [Attribute] instance with [FlexFit.tight].
   T tight() => builder(FlexFit.tight);
+
+  /// Creates an [Attribute] instance with [FlexFit.loose].
   T loose() => builder(FlexFit.loose);
 }
 
-/// Utility for setting `TextHeightBehavior` values.
-
+/// A utility class for creating [Attribute] instances from [TextHeightBehavior] values.
+///
+/// This class extends [ScalarUtility] and provides a constructor to create instances
+/// of this utility class.
 class TextHeightBehaviorUtility<T extends Attribute>
     extends ScalarUtility<T, TextHeightBehavior> {
   const TextHeightBehaviorUtility(super.builder);
 }
 
-/// Utility for setting `Axis` values.
+/// A utility class for creating [Attribute] instances from [Axis] values.
 ///
-/// Useful for defining the direction of flex layouts.
-/// Includes predefined values of `Axis` such as `horizontal` and `vertical`.
-/// Example:
-/// ```dart
-/// final axis = AxisUtility(builder);
-/// final horizontal = axis.horizontal();
-/// final vertical = axis.vertical();
-/// ```
-/// See [Axis] for more information.
+/// This class extends [ScalarUtility] and provides methods to create [Attribute] instances
+/// from predefined [Axis] values.
 class AxisUtility<T extends Attribute> extends ScalarUtility<T, Axis> {
   const AxisUtility(super.builder);
+
+  /// Creates an [Attribute] instance with [Axis.horizontal].
   T horizontal() => builder(Axis.horizontal);
+
+  /// Creates an [Attribute] instance with [Axis.vertical].
   T vertical() => builder(Axis.vertical);
 }
 
-/// Utility for setting `StackFit` values.
+/// A utility class for creating [Attribute] instances from [StackFit] values.
 ///
-/// Useful for defining the fit of a widget within a stack layout.
-/// Includes predefined values of `StackFit` such as `loose` and `expand`.
-/// Example:
-/// ```dart
-/// final stackFit = StackFitUtility(builder);
-/// final loose = stackFit.loose();
-/// final expand = stackFit.expand();
-/// ```
-/// See [StackFit] for more information.
+/// This class extends [ScalarUtility] and provides methods to create [Attribute] instances
+/// from predefined [StackFit] values.
 class StackFitUtility<T extends Attribute> extends ScalarUtility<T, StackFit> {
   const StackFitUtility(super.builder);
+
+  /// Creates an [Attribute] instance with [StackFit.loose].
   T loose() => builder(StackFit.loose);
+
+  /// Creates an [Attribute] instance with [StackFit.expand].
   T expand() => builder(StackFit.expand);
+
+  /// Creates an [Attribute] instance with [StackFit.passthrough].
   T passthrough() => builder(StackFit.passthrough);
 }
 
-/// Utility for setting `TextDirection` values.
+/// A utility class for creating [Attribute] instances from [TextDirection] values.
 ///
-/// Useful for defining the direction of text.
-/// Includes predefined values of `TextDirection` such as `ltr` and `rtl`.
-/// Example:
-/// ```dart
-/// final textDirection = TextDirectionUtility(builder);
-/// final ltr = textDirection.ltr();
-/// final rtl = textDirection.rtl();
-/// ```
-/// See [TextDirection] for more information.
+/// This class extends [ScalarUtility] and provides methods to create [Attribute] instances
+/// from predefined [TextDirection] values.
 class TextDirectionUtility<T extends Attribute>
     extends ScalarUtility<T, TextDirection> {
   const TextDirectionUtility(super.builder);
+
+  /// Creates an [Attribute] instance with [TextDirection.rtl].
   T rtl() => builder(TextDirection.rtl);
+
+  /// Creates an [Attribute] instance with [TextDirection.ltr].
   T ltr() => builder(TextDirection.ltr);
 }
 
-/// Utility for setting `TileMode` values.
+/// A utility class for creating [Attribute] instances from [TileMode] values.
 ///
-/// Useful for defining the tiling behavior of images.
-/// Includes predefined values of `TileMode` such as `clamp` and `mirror`.
-/// Example:
-/// ```dart
-/// final tileMode = TileModeUtility(builder);
-/// final clamp = tileMode.clamp();
-/// final mirror = tileMode.mirror();
-/// ```
-/// See [TileMode] for more information.
+/// This class extends [ScalarUtility] and provides methods to create [Attribute] instances
+/// from predefined [TileMode] values.
 class TileModeUtility<T extends Attribute> extends ScalarUtility<T, TileMode> {
   const TileModeUtility(super.builder);
+
+  /// Creates an [Attribute] instance with [TileMode.clamp].
   T clamp() => builder(TileMode.clamp);
+
+  /// Creates an [Attribute] instance with [TileMode.mirror].
   T mirror() => builder(TileMode.mirror);
+
+  /// Creates an [Attribute] instance with [TileMode.repeated].
   T repeated() => builder(TileMode.repeated);
+
+  /// Creates an [Attribute] instance with [TileMode.decal].
   T decal() => builder(TileMode.decal);
 }
 
-/// Utility for setting `GradientTransform` values.
+/// A utility class for creating [Attribute] instances from [GradientTransform] values.
 ///
-/// Useful for defining the transformation of gradients.
-/// Includes subclasses of `GradientTransform` such `GradientRotation`.
-/// Example:
-/// ```dart
-/// final gradientTransform = GradientTransformUtility(builder);
-/// final rotate90 = gradientTransform.rotate(90);
-/// ```
-/// See [GradientTransform] for more information.
+/// This class extends [ScalarUtility] and provides a method to create [Attribute] instances
+/// from [GradientRotation] values.
 class GradientTransformUtility<T extends Attribute>
     extends ScalarUtility<T, GradientTransform> {
   const GradientTransformUtility(super.builder);
 
+  /// Creates an [Attribute] instance with a [GradientRotation] value.
   T rotate(double radians) => builder(GradientRotation(radians));
 }
 
-/// Utility for setting `Matrix4` values.
+/// A utility class for creating [Attribute] instances from [Matrix4] values.
 ///
-/// Useful for defining the transformation of widgets.
-/// Example:
-/// ```dart
-/// final matrix4 = Matrix4Utility(builder);
-/// final identity = matrix4.identity();
-/// final rotateX = matrix4.rotationX(0.5);
-/// final rotateY = matrix4.rotationY(0.5);
-/// final rotateZ = matrix4.rotationZ(0.5);
-/// final translation = matrix4.translationValues(10, 10, 10);
-/// final scale = matrix4.scale(2, 2, 2);
-/// ```
-/// See [Matrix4] for more information.
+/// This class extends [ScalarUtility] and provides methods to create [Attribute] instances
+/// from predefined [Matrix4] values or custom [Matrix4] values.
 class Matrix4Utility<T extends Attribute> extends ScalarUtility<T, Matrix4> {
   const Matrix4Utility(super.builder);
 
+  /// Creates an [Attribute] instance with [Matrix4.identity].
   T identity() => builder(Matrix4.identity());
+
+  /// Creates an [Attribute] instance with a [Matrix4] rotated around the x-axis.
   T rotationX(double radians) => builder(Matrix4.rotationX(radians));
+
+  /// Creates an [Attribute] instance with a [Matrix4] rotated around the y-axis.
   T rotationY(double radians) => builder(Matrix4.rotationY(radians));
+
+  /// Creates an [Attribute] instance with a [Matrix4] rotated around the z-axis.
   T rotationZ(double radians) => builder(Matrix4.rotationZ(radians));
+
+  /// Creates an [Attribute] instance with a [Matrix4] translated by the given values.
   T translationValues(double x, double y, double z) =>
       builder(Matrix4.translationValues(x, y, z));
 }
 
-/// Utility for setting `MainAxisAlignment` values.
+/// A utility class for creating [Attribute] instances from [MainAxisAlignment] values.
 ///
-/// Useful for defining the alignment of widgets within a flex layout.
-/// Includes predefined values of `MainAxisAlignment` such as `start` and `end`.
-/// Example:
-/// ```dart
-/// final mainAxisAlignment = MainAxisAlignmentUtility(builder);
-/// final start = mainAxisAlignment.start();
-/// final end = mainAxisAlignment.end();
-/// ```
-/// See [MainAxisAlignment] for more information.
+/// This class extends [ScalarUtility] and provides methods to create [Attribute] instances
+/// from predefined [MainAxisAlignment] values.
 class MainAxisAlignmentUtility<T extends Attribute>
     extends ScalarUtility<T, MainAxisAlignment> {
   const MainAxisAlignmentUtility(super.builder);
+
+  /// Creates an [Attribute] instance with [MainAxisAlignment.spaceBetween].
   T spaceBetween() => builder(MainAxisAlignment.spaceBetween);
+
+  /// Creates an [Attribute] instance with [MainAxisAlignment.spaceAround].
   T spaceAround() => builder(MainAxisAlignment.spaceAround);
+
+  /// Creates an [Attribute] instance with [MainAxisAlignment.spaceEvenly].
   T spaceEvenly() => builder(MainAxisAlignment.spaceEvenly);
 
+  /// Creates an [Attribute] instance with [MainAxisAlignment.start].
   T start() => builder(MainAxisAlignment.start);
+
+  /// Creates an [Attribute] instance with [MainAxisAlignment.end].
   T end() => builder(MainAxisAlignment.end);
+
+  /// Creates an [Attribute] instance with [MainAxisAlignment.center].
   T center() => builder(MainAxisAlignment.center);
 }
 
-/// Utility for setting `CrossAxisAlignment` values.
+/// A utility class for creating [Attribute] instances from [CrossAxisAlignment] values.
 ///
-/// Useful for defining the alignment of widgets within a flex layout.
-/// Includes predefined values of `CrossAxisAlignment` such as `start` and `end`.
-/// Example:
-/// ```dart
-/// final crossAxisAlignment = CrossAxisAlignmentUtility(builder);
-/// final start = crossAxisAlignment.start();
-/// final end = crossAxisAlignment.end();
-/// ```
-/// See [CrossAxisAlignment] for more information.
+/// This class extends [ScalarUtility] and provides methods to create [Attribute] instances
+/// from predefined [CrossAxisAlignment] values.
 class CrossAxisAlignmentUtility<T extends Attribute>
     extends ScalarUtility<T, CrossAxisAlignment> {
   const CrossAxisAlignmentUtility(super.builder);
+
+  /// Creates an [Attribute] instance with [CrossAxisAlignment.start].
   T start() => builder(CrossAxisAlignment.start);
+
+  /// Creates an [Attribute] instance with [CrossAxisAlignment.end].
   T end() => builder(CrossAxisAlignment.end);
+
+  /// Creates an [Attribute] instance with [CrossAxisAlignment.center].
   T center() => builder(CrossAxisAlignment.center);
+
+  /// Creates an [Attribute] instance with [CrossAxisAlignment.stretch].
   T stretch() => builder(CrossAxisAlignment.stretch);
+
+  /// Creates an [Attribute] instance with [CrossAxisAlignment.baseline].
   T baseline() => builder(CrossAxisAlignment.baseline);
 }
 
-/// Utility for setting `MainAxisSize` values.
-///
-/// Useful for defining the size of widgets within a flex layout.
-/// Includes predefined values of `MainAxisSize` such as `min` and `max`.
-/// Example:
-/// ```dart
-/// final mainAxisSize = MainAxisSizeUtility(builder);
-/// final min = mainAxisSize.min();
-/// final max = mainAxisSize.max();
-/// ```
-/// See [MainAxisSize] for more information.
 class MainAxisSizeUtility<T extends Attribute>
     extends ScalarUtility<T, MainAxisSize> {
   const MainAxisSizeUtility(super.builder);
@@ -430,30 +389,10 @@ class MainAxisSizeUtility<T extends Attribute>
   T max() => builder(MainAxisSize.max);
 }
 
-/// Utility for setting FontFamily names in other attributes
-///
-/// Example:
-/// ```dart
-/// final fontFamily = FontFamilyUtility(builder);
-/// final fontFamilyValue = fontFamily("Roboto");
-/// ```
 class FontFamilyUtility<T extends Attribute> extends ScalarUtility<T, String> {
   const FontFamilyUtility(super.builder);
 }
 
-/// Utility for setting `ImageRepeat` values.
-///
-/// Useful for defining the tiling behavior of images.
-/// Includes predefined values of `ImageRepeat` such as `repeat` and `repeatX`.
-/// Example:
-/// ```dart
-/// final imageRepeat = ImageRepeatUtility(builder);
-/// final repeat = imageRepeat.repeat();
-/// final repeatX = imageRepeat.repeatX();
-/// final repeatY = imageRepeat.repeatY();
-/// final noRepeat = imageRepeat.noRepeat();
-/// ```
-/// See [ImageRepeat] for more information.
 class ImageRepeatUtility<T extends Attribute>
     extends MixUtility<T, ImageRepeat> {
   const ImageRepeatUtility(super.builder);
@@ -465,14 +404,6 @@ class ImageRepeatUtility<T extends Attribute>
   T repeatY() => builder(ImageRepeat.repeatY);
 }
 
-/// Utility for setting `Offset` values.
-///
-/// Useful for defining the offset of widgets.
-/// Example:
-/// ```dart
-/// final offset = OffsetUtility(builder);
-/// final offsetValue = offset(10, 10);
-/// ```
 class OffsetUtility<T extends Attribute> extends MixUtility<T, Offset> {
   const OffsetUtility(super.builder);
 
@@ -485,21 +416,6 @@ class FontSizeUtility<T extends Attribute> extends SizingUtility<T> {
   const FontSizeUtility(super.builder);
 }
 
-/// Utility for setting `BoxFit` values.
-///
-/// Useful for defining BoxFit values for widgets
-/// Example:
-/// ```dart
-/// final boxFit = BoxFitUtility(builder);
-/// final fill = boxFit.fill();
-/// final contain = boxFit.contain();
-/// final cover = boxFit.cover();
-/// final fitWidth = boxFit.fitWidth();
-/// final fitHeight = boxFit.fitHeight();
-/// final none = boxFit.none();
-/// final scaleDown = boxFit.scaleDown();
-/// ```
-/// See [BoxFit] for more information.
 class BoxFitUtility<T extends Attribute> extends ScalarUtility<T, BoxFit> {
   const BoxFitUtility(super.builder);
   T fill() => builder(BoxFit.fill);
@@ -511,16 +427,6 @@ class BoxFitUtility<T extends Attribute> extends ScalarUtility<T, BoxFit> {
   T scaleDown() => builder(BoxFit.scaleDown);
 }
 
-/// Utility for setting `BlendMode` values.
-///
-/// Useful for defining BlendMode values for widgets
-/// Example:
-/// ```dart
-/// final blendMode = BlendModeUtility(builder);
-/// final clear = blendMode.clear();
-/// final src = blendMode.src();
-/// ```
-///
 class BlendModeUtility<T extends Attribute>
     extends ScalarUtility<T, BlendMode> {
   const BlendModeUtility(super.builder);
@@ -556,39 +462,12 @@ class BlendModeUtility<T extends Attribute>
   T luminosity() => builder(BlendMode.luminosity);
 }
 
-/// Utility for setting `BoxShape` values.
-///
-/// Useful for defining BoxShape values for widgets
-///
-/// Example:
-///
-/// ```dart
-/// final boxShape = BoxShapeUtility(builder);
-/// final circle = boxShape.circle();
-/// final rectangle = boxShape.rectangle();
-/// ```
-///
-/// See [BoxShape] for more information.
 class BoxShapeUtility<T extends Attribute> extends ScalarUtility<T, BoxShape> {
   const BoxShapeUtility(super.builder);
   T circle() => builder(BoxShape.circle);
   T rectangle() => builder(BoxShape.rectangle);
 }
 
-/// Utility for setting `FontWeight` values.
-///
-/// Useful for defining FontWeight values for widgets
-///
-/// Example:
-///
-/// ```dart
-/// final fontWeight = FontWeightUtility(builder);
-/// final bold = fontWeight.bold();
-/// final normal = fontWeight.normal();
-/// final w100 = fontWeight.w100();
-/// ```
-///
-/// See [FontWeight] for more information.
 class FontWeightUtility<T extends Attribute>
     extends ScalarUtility<T, FontWeight> {
   const FontWeightUtility(super.builder);
@@ -605,21 +484,6 @@ class FontWeightUtility<T extends Attribute>
   T w900() => builder(FontWeight.w900);
 }
 
-/// Utility for setting `TextDecoration` values.
-///
-/// Useful for defining TextDecoration values for widgets
-///
-/// Example:
-///
-/// ```dart
-/// final textDecoration = TextDecorationUtility(builder);
-/// final underline = textDecoration.underline();
-/// final overline = textDecoration.overline();
-/// final lineThrough = textDecoration.lineThrough();
-/// final none = textDecoration.none();
-/// ```
-///
-/// See [TextDecoration] for more information.
 class TextDecorationUtility<T extends Attribute>
     extends ScalarUtility<T, TextDecoration> {
   const TextDecorationUtility(super.builder);
@@ -630,19 +494,6 @@ class TextDecorationUtility<T extends Attribute>
   T none() => builder(TextDecoration.none);
 }
 
-/// Utility for setting `FontStyle` values.
-///
-/// Useful for defining FontStyle values for widgets
-///
-/// Example:
-///
-/// ```dart
-/// final fontStyle = FontStyleUtility(builder);
-/// final italic = fontStyle.italic();
-/// final normal = fontStyle.normal();
-/// ```
-///
-/// See [FontStyle] for more information.
 class FontStyleUtility<T extends Attribute>
     extends ScalarUtility<T, FontStyle> {
   const FontStyleUtility(super.builder);
@@ -651,21 +502,6 @@ class FontStyleUtility<T extends Attribute>
   T normal() => builder(FontStyle.normal);
 }
 
-/// Utility for setting `Radius` values.
-///
-/// Useful for defining Radius values for widgets
-///
-/// Example:
-///
-/// ```dart
-/// final radius = RadiusUtility(builder);
-/// final zero = radius.zero();
-/// final circular = radius.circular(10);
-/// final elliptical = radius.elliptical(10, 10);
-/// final circular = radius(10);
-/// ```
-///
-/// See [Radius] for more information.
 class RadiusUtility<T extends Attribute> extends MixUtility<T, Radius> {
   const RadiusUtility(super.builder);
 
@@ -680,22 +516,6 @@ class RadiusUtility<T extends Attribute> extends MixUtility<T, Radius> {
   T ref(RadiusToken ref) => builder(ref());
 }
 
-/// Utility for setting `TextDecorationStyle` values.
-///
-/// Useful for defining TextDecorationStyle values for widgets
-///
-/// Example:
-///
-/// ```dart
-/// final textDecorationStyle = TextDecorationStyleUtility(builder);
-/// final solid = textDecorationStyle.solid();
-/// final double = textDecorationStyle.double();
-/// final dotted = textDecorationStyle.dotted();
-/// final dashed = textDecorationStyle.dashed();
-/// final wavy = textDecorationStyle.wavy();
-/// ```
-///
-/// See [TextDecorationStyle] for more information.
 class TextDecorationStyleUtility<T extends Attribute>
     extends ScalarUtility<T, TextDecorationStyle> {
   const TextDecorationStyleUtility(super.builder);
@@ -707,19 +527,6 @@ class TextDecorationStyleUtility<T extends Attribute>
   T wavy() => builder(TextDecorationStyle.wavy);
 }
 
-/// Utility for setting `TextBaseline` values.
-///
-/// Useful for defining TextBaseline values for widgets
-///
-/// Example:
-///
-/// ```dart
-/// final textBaseline = TextBaselineUtility(builder);
-/// final alphabetic = textBaseline.alphabetic();
-/// final ideographic = textBaseline.ideographic();
-/// ```
-///
-/// See [TextBaseline] for more information.
 class TextBaselineUtility<T extends Attribute>
     extends ScalarUtility<T, TextBaseline> {
   const TextBaselineUtility(super.builder);
@@ -728,20 +535,6 @@ class TextBaselineUtility<T extends Attribute>
   T ideographic() => builder(TextBaseline.ideographic);
 }
 
-/// Utility for setting `TextOverflow` values.
-///
-/// Useful for defining TextOverflow values for widgets
-///
-/// Example:
-///
-/// ```dart
-/// final textOverflow = TextOverflowUtility(builder);
-/// final clip = textOverflow.clip();
-/// final ellipsis = textOverflow.ellipsis();
-/// final fade = textOverflow.fade();
-/// ```
-///
-/// See [TextOverflow] for more information.
 class TextOverflowUtility<T extends Attribute>
     extends ScalarUtility<T, TextOverflow> {
   const TextOverflowUtility(super.builder);
@@ -750,19 +543,6 @@ class TextOverflowUtility<T extends Attribute>
   T fade() => builder(TextOverflow.fade);
 }
 
-/// Utility for setting `TextWidthBasis` values.
-///
-/// Useful for defining TextWidthBasis values for widgets
-///
-/// Example:
-///
-/// ```dart
-/// final textWidthBasis = TextWidthBasisUtility(builder);
-/// final parent = textWidthBasis.parent();
-/// final longestLine = textWidthBasis.longestLine();
-/// ```
-///
-/// See [TextWidthBasis] for more information.
 class TextWidthBasisUtility<T extends Attribute>
     extends ScalarUtility<T, TextWidthBasis> {
   const TextWidthBasisUtility(super.builder);
@@ -770,23 +550,6 @@ class TextWidthBasisUtility<T extends Attribute>
   T longestLine() => builder(TextWidthBasis.longestLine);
 }
 
-/// Utility for setting `TextAlign` values.
-///
-/// Useful for defining TextAlign values for widgets
-///
-/// Example:
-///
-/// ```dart
-/// final textAlign = TextAlignUtility(builder);
-/// final left = textAlign.left();
-/// final right = textAlign.right();
-/// final center = textAlign.center();
-/// final justify = textAlign.justify();
-/// final start = textAlign.start();
-/// final end = textAlign.end();
-/// ```
-///
-/// See [TextAlign] for more information.
 class TextAlignUtility<T extends Attribute>
     extends ScalarUtility<T, TextAlign> {
   const TextAlignUtility(super.builder);

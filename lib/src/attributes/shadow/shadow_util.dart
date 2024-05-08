@@ -6,37 +6,32 @@ import '../color/color_util.dart';
 import '../scalars/scalar_util.dart';
 import 'shadow_dto.dart';
 
-/// Utility class for working with box shadows.
+/// A utility class for working with [BoxShadow] attributes.
 ///
-/// This class provides a set of utilities for working with box shadows, including
-/// creating and manipulating box shadow objects. It uses a builder pattern to
-/// create new box shadow objects, and provides methods for setting the various
-/// properties of a box shadow, such as color, offset, blur radius, and spread
-/// radius.
-///
-/// The [BoxShadowUtility] class is part of a larger set of utilities for working
-/// with style attributes in a Flutter application.
+/// This class provides methods to create and modify [BoxShadow] instances
+/// using a fluent API.
 class BoxShadowUtility<T extends Attribute>
     extends DtoUtility<T, BoxShadowDto, BoxShadow> {
-  /// A utility for setting the color of a box shadow.
+  /// A utility for setting the [BoxShadow.color] property.
   late final color = ColorUtility<T>((v) => only(color: v));
 
-  /// A utility for setting the offset of a box shadow.
+  /// A utility for setting the [BoxShadow.offset] property.
   late final offset = OffsetUtility<T>((v) => call(offset: v));
 
-  /// A utility for setting the blur radius of a box shadow.
+  /// A utility for setting the [BoxShadow.blurRadius] property.
   late final blurRadius = DoubleUtility<T>((v) => call(blurRadius: v));
 
-  /// A utility for setting the spread radius of a box shadow.
+  /// A utility for setting the [BoxShadow.spreadRadius] property.
   late final spreadRadius = DoubleUtility<T>((v) => call(spreadRadius: v));
 
   /// Creates a new [BoxShadowUtility] instance.
+  ///
+  /// The [builder] function is used to create new instances of [T].
   BoxShadowUtility(super.builder) : super(valueToDto: BoxShadowDto.from);
 
-  /// Creates a new box shadow with the specified properties.
+  /// Creates a new [Attribute] with the specified properties.
   ///
-  /// The [color], [offset], [blurRadius], and [spreadRadius] parameters are
-  /// used to set the properties of the new box shadow.
+  /// Any properties not specified will retain their current values.
   T call({
     Color? color,
     Offset? offset,
@@ -51,10 +46,9 @@ class BoxShadowUtility<T extends Attribute>
     );
   }
 
-  /// Creates a new box shadow with the specified properties.
+  /// Creates a new [Attribute] with the specified properties.
   ///
-  /// This method is similar to the [call] method, but it allows you to specify
-  /// the properties of the box shadow using named parameters.
+  /// Any properties not specified will be set to their default values.
   @override
   T only({
     ColorDto? color,
@@ -73,15 +67,31 @@ class BoxShadowUtility<T extends Attribute>
   }
 }
 
+/// A utility class for working with [Shadow] attributes.
+///
+/// This class provides methods to create and modify [Shadow] instances
+/// using a fluent API.
 class ShadowUtility<T extends Attribute>
     extends DtoUtility<T, ShadowDto, Shadow> {
+  /// A utility for setting the [Shadow.color] property.
   late final color = ColorUtility<T>((v) => only(color: v));
+
+  /// A utility for setting the [Shadow.offset] property.
   late final offset = OffsetUtility<T>((v) => only(offset: v));
 
+  /// Creates a new [ShadowUtility] instance.
+  ///
+  /// The [builder] function is used to create new instances of [T].
   ShadowUtility(super.builder) : super(valueToDto: ShadowDto.from);
 
+  /// Sets the [Shadow.blurRadius] property.
+  ///
+  /// Returns a new [Attribute] with the updated property.
   T blurRadius(double v) => only(blurRadius: v);
 
+  /// Creates a new [Attribute] with the specified properties.
+  ///
+  /// Any properties not specified will retain their current values.
   T call({Color? color, Offset? offset, double? blurRadius}) {
     return only(
       color: ColorDto.maybeFrom(color),
@@ -90,6 +100,9 @@ class ShadowUtility<T extends Attribute>
     );
   }
 
+  /// Creates a new [Attribute] with the specified properties.
+  ///
+  /// Any properties not specified will be set to their default values.
   @override
   T only({ColorDto? color, Offset? offset, double? blurRadius}) {
     return builder(
@@ -98,28 +111,56 @@ class ShadowUtility<T extends Attribute>
   }
 }
 
+/// A utility class for building [Attribute] instances from a list of [ShadowDto] objects.
+///
+/// This class extends [MixUtility] and provides a convenient way to create [Attribute]
+/// instances by transforming a list of [BoxShadow] objects into a list of [ShadowDto] objects.
 class ShadowListUtility<T extends Attribute>
     extends MixUtility<T, List<ShadowDto>> {
   const ShadowListUtility(super.builder);
 
+  /// Creates an [Attribute] instance from a list of [BoxShadow] objects.
+  ///
+  /// This method maps each [BoxShadow] object to a [ShadowDto] object and passes the
+  /// resulting list to the [builder] function to create the [Attribute] instance.
   T call(List<BoxShadow> shadows) {
     return builder(shadows.map(ShadowDto.from).toList());
   }
 }
 
+/// A utility class for building [Attribute] instances from a list of [BoxShadowDto] objects.
+///
+/// This class extends [MixUtility] and provides a convenient way to create [Attribute]
+/// instances by transforming a list of [BoxShadow] objects into a list of [BoxShadowDto] objects.
 class BoxShadowListUtility<T extends Attribute>
     extends MixUtility<T, List<BoxShadowDto>> {
   const BoxShadowListUtility(super.builder);
 
+  /// Creates an [Attribute] instance from a list of [BoxShadow] objects.
+  ///
+  /// This method maps each [BoxShadow] object to a [BoxShadowDto] object and passes the
+  /// resulting list to the [builder] function to create the [Attribute] instance.
   T call(List<BoxShadow> shadows) {
     return builder(shadows.map(BoxShadowDto.from).toList());
   }
 }
 
+/// A utility class for building [Attribute] instances from elevation values.
+///
+/// This class extends [MixUtility] and provides methods to create [Attribute] instances
+/// based on predefined elevation values, which are mapped to corresponding lists of
+/// [BoxShadowDto] objects using the [kElevationToShadow] map.
 class ElevationUtility<T extends Attribute>
     extends MixUtility<T, List<BoxShadowDto>> {
   const ElevationUtility(super.builder);
 
+  /// Creates an [Attribute] instance from an elevation value.
+  ///
+  /// Retrieves the corresponding list of [BoxShadow] objects from the [kElevationToShadow]
+  /// map, maps each [BoxShadow] to a [BoxShadowDto], and passes the resulting list to
+  /// the [builder] function to create the [Attribute] instance.
+  ///
+  /// Throws an [AssertionError] if the provided [value] is not a valid elevation value.
   T call(int value) {
     assert(kElevationToShadow.containsKey(value), 'Invalid elevation value');
 
@@ -128,16 +169,36 @@ class ElevationUtility<T extends Attribute>
     return builder(boxShadows.toList());
   }
 
-  // Convenience methods for common elevation values.
+  /// Creates an [T] instance with no elevation.
   T none() => call(0);
+
+  /// Creates an [T] instance with an elevation of 1.
   T one() => call(1);
+
+  /// Creates an [T] instance with an elevation of 2.
   T two() => call(2);
+
+  /// Creates an [T] instance with an elevation of 3.
   T three() => call(3);
+
+  /// Creates an [T] instance with an elevation of 4.
   T four() => call(4);
+
+  /// Creates an [T] instance with an elevation of 6.
   T six() => call(6);
+
+  /// Creates an [T] instance with an elevation of 8.
   T eight() => call(8);
+
+  /// Creates an [T] instance with an elevation of 9.
   T nine() => call(9);
+
+  /// Creates an [T] instance with an elevation of 12.
   T twelve() => call(12);
+
+  /// Creates an [T] instance with an elevation of 16.
   T sixteen() => call(16);
+
+  /// Creates an [T] instance with an elevation of 24.
   T twentyFour() => call(24);
 }

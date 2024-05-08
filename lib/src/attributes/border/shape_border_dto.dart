@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 
 import '../../core/attribute.dart';
@@ -33,8 +35,20 @@ abstract class ShapeBorderDto<Value extends ShapeBorder> extends Dto<Value> {
     return shapeBorder == null ? null : from(shapeBorder);
   }
 
+  ShapeBorderDto<Value> mergeShape(covariant ShapeBorderDto<Value>? other);
+
   @override
-  ShapeBorderDto<Value> merge(covariant ShapeBorderDto<Value>? other);
+  ShapeBorderDto merge(covariant ShapeBorderDto? other) {
+    if (other == null) return this;
+
+    if (runtimeType != other.runtimeType) {
+      log('Warning: Cannot merge $runtimeType with ${other.runtimeType}, will return {$this}');
+
+      return this;
+    }
+
+    return mergeShape(other as ShapeBorderDto<Value>);
+  }
 
   @override
   Value resolve(MixData mix);
@@ -86,7 +100,7 @@ class RoundedRectangleBorderDto
   }
 
   @override
-  RoundedRectangleBorderDto merge(RoundedRectangleBorderDto? other) {
+  RoundedRectangleBorderDto mergeShape(RoundedRectangleBorderDto? other) {
     if (other == null) return this;
 
     return RoundedRectangleBorderDto(
@@ -122,7 +136,7 @@ class CircleBorderDto extends OutlinedBorderDto<CircleBorder> {
   }
 
   @override
-  CircleBorderDto merge(CircleBorderDto? other) {
+  CircleBorderDto mergeShape(CircleBorderDto? other) {
     if (other == null) return this;
 
     return CircleBorderDto(
@@ -158,7 +172,7 @@ class BeveledRectangleBorderDto
   }
 
   @override
-  BeveledRectangleBorderDto merge(BeveledRectangleBorderDto? other) {
+  BeveledRectangleBorderDto mergeShape(BeveledRectangleBorderDto? other) {
     if (other == null) return this;
 
     return BeveledRectangleBorderDto(
@@ -194,7 +208,7 @@ class ContinuousRectangleBorderDto
   }
 
   @override
-  ContinuousRectangleBorderDto merge(ContinuousRectangleBorderDto? other) {
+  ContinuousRectangleBorderDto mergeShape(ContinuousRectangleBorderDto? other) {
     if (other == null) return this;
 
     return ContinuousRectangleBorderDto(
@@ -224,7 +238,7 @@ class StadiumBorderDto extends OutlinedBorderDto<StadiumBorder> {
   }
 
   @override
-  StadiumBorderDto merge(StadiumBorderDto? other) {
+  StadiumBorderDto mergeShape(StadiumBorderDto? other) {
     if (other == null) return this;
 
     return StadiumBorderDto(side: side?.merge(other.side) ?? other.side);
