@@ -20,13 +20,9 @@ void main() {
 
   test('getDiff', () {
     final firstStyle = Style(
-      // box.alignment.center(),
-      // box.borderRadius.all(10),
       $box.color.blue(),
     );
     final secondStyle = Style(
-      // box.alignment.center(),
-      // box.borderRadius.all(10),
       $box.color.red(),
     );
 

@@ -13,23 +13,28 @@ class CustomMixWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final style = Style(
-      height(100),
-      marginVertical(10),
-      elevation(10),
-      borderRadius(10),
-      backgroundColor($md.colorScheme.primary()),
-      text.style($button()),
-      text.style.color($md.colorScheme.onPrimary()),
-      onHover(
-        elevation(2),
-        padding(20),
-        backgroundColor($md.colorScheme.secondary()),
-        text.style.color($md.colorScheme.onSecondary()),
+      $box.height(100),
+      $box.margin.vertical(10),
+      $box.elevation(10),
+      $box.borderRadius(10),
+      $box.color.ref($material.colorScheme.primary),
+      $text.style.ref($material.textTheme.button),
+      $text.style.color.ref($material.colorScheme.onPrimary),
+      $with.scale(1),
+      $on.hover(
+        $box.elevation(2),
+        $box.padding(20),
+        $with.scale(1.1),
+        $box.color.ref($material.colorScheme.secondary),
+        $text.style.color.ref($material.colorScheme.onSecondary),
       ),
     );
-    return Box(
-      mix: style,
-      child: const TextMix('Custom Widget'),
+    return PressableBox(
+      onPress: () {
+        // do something
+      },
+      style: style,
+      child: const StyledText('Custom Widget'),
     );
   }
 }
@@ -78,17 +83,21 @@ class _CustomWidgetState extends State<CustomWidget> {
             color: _isHover ? colorScheme.secondary : colorScheme.primary,
             borderRadius: BorderRadius.circular(10),
           ),
-          child: Text(
-            'Custom Widget',
-            style: Theme.of(context).textTheme.button?.copyWith(
-                  color: _isHover
-                      ? colorScheme.onSecondary
-                      : colorScheme.onPrimary,
-                ),
+          child: Transform.scale(
+            scale: _isHover ? 1.1 : 1,
+            child: Text(
+              'Custom Widget',
+              style: Theme.of(context).textTheme.button?.copyWith(
+                    color: _isHover
+                        ? colorScheme.onSecondary
+                        : colorScheme.onPrimary,
+                  ),
+            ),
           ),
         ),
       ),
     );
   }
 }
+
 ```
