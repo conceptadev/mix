@@ -1,3 +1,16 @@
+## 1.0.0-beta.13
+
+* Fixed: Issue with multiple conditions in ContextVariant by @tilucasoli
+* Feature: Implemented Variant Priorities by @tilucasoli
+* Enhancement: Cleaned up pre-implemented Design Tokens by @tilucasoli
+* Feature: Added missing image props by @leoafarias
+* Docs: Updated documentation for better user guidance by @leoafarias
+* Cleanup: Removed typedef StyledContainer for cleaner code base by @tilucasoli
+* Feature: Added padding widget decorator for easier layout designs by @leoafarias
+* Enhancement: Added spec variant utility features by @leoafarias
+* Docs: updates and adjustments by @tilucasoli
+* Enhancement: Improved DTO merge behavior for better functionality by @leoafarias
+
 ## 1.0.0-beta.12
 
 * Chore/consolidated spec widgets by @leoafarias
