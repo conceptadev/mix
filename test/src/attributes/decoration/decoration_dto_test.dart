@@ -154,10 +154,10 @@ void main() {
         shadows: [otherBoxShadowDto],
       );
 
-      final merged = shapeDeco1.merge(shapeDeco2);
+      final merged = shapeDeco1.merge(shapeDeco2) as ShapeDecorationDto;
 
       expect(merged, isA<ShapeDecorationDto>());
-      expect(merged.shape, isA<BeveledRectangleBorderDto>());
+      expect(merged.shape, isA<RoundedRectangleBorderDto>());
       expect(merged.color, const ColorDto(Colors.blue));
       expect(merged.gradient, otherLinearGradientDto);
       expect(merged.shadows, [otherBoxShadowDto]);
