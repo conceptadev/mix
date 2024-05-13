@@ -19,13 +19,6 @@ import 'image/decoration_image_dto.dart';
 ///
 /// This class needs to have the different properties that are not found in the [Decorators] class.
 /// In order to support merging of [Decoration] values, and reusable of common properties.
-///
-/// See also:
-/// * [Decoration], which is the Flutter equivalent class.
-/// * [BoxDecoration], which is the Flutter equivalent class.
-/// * [ShapeDecoration], which is the Flutter equivalent class.
-///
-/// {@category DTO}
 @immutable
 abstract class DecorationDto<Value extends Decoration> extends Dto<Value> {
   final ColorDto? color;
@@ -51,61 +44,23 @@ abstract class DecorationDto<Value extends Decoration> extends Dto<Value> {
     );
   }
 
-  T toDtoType<T extends DecorationDto>() {
-    if (runtimeType == T) {
-      return this as T;
-    }
-
-    if (T == BoxDecorationDto) {
-      return BoxDecorationDto(
-        color: color,
-        gradient: gradient,
-        boxShadow: boxShadow,
-      ) as T;
-    }
-
-    if (T == ShapeDecorationDto) {
-      return ShapeDecorationDto(
-        color: color,
-        gradient: gradient,
-        shadows: boxShadow,
-      ) as T;
-    }
-
-    throw ArgumentError.value(T, 'T', 'Unsupported decoration type');
-  }
-
-  DecorationDto<Value> mergeDecoration(covariant DecorationDto<Value>? other);
+  /// Used to merge [DecorationDto] of the same type of implementation
+  DecorationDto<Value> mergeImpl(covariant DecorationDto<Value>? other);
 
   @override
-  DecorationDto<Value> merge(covariant DecorationDto<Value>? other) {
+  DecorationDto merge(DecorationDto? other) {
     if (other == null) return this;
-
     if (runtimeType == other.runtimeType) {
-      return mergeDecoration(other);
+      return mergeImpl(other as DecorationDto<Value>);
     }
 
-    final otherDecor = other;
-    final thisDecor = this;
-    if (otherDecor is BoxDecorationDto) {
-      final thisDto = thisDecor.toDtoType<BoxDecorationDto>();
-
-      return thisDto.mergeDecoration(otherDecor as BoxDecorationDto)
-          as DecorationDto<Value>;
+    if (other is BoxDecorationDto) {
+      return (this as ShapeDecorationDto).toBoxDecorationDto().mergeImpl(other);
+    } else if (other is ShapeDecorationDto) {
+      return (this as BoxDecorationDto).toShapeDecorationDto().mergeImpl(other);
     }
 
-    if (otherDecor is ShapeDecorationDto) {
-      final thisDto = thisDecor.toDtoType<ShapeDecorationDto>();
-
-      return thisDto.mergeDecoration(otherDecor as ShapeDecorationDto)
-          as DecorationDto<Value>;
-    }
-
-    throw ArgumentError.value(
-      otherDecor,
-      'other',
-      'Unsupported decoration type',
-    );
+    throw ArgumentError.value(other, 'other', 'Unsupported decoration type');
   }
 }
 
@@ -158,9 +113,44 @@ class BoxDecorationDto extends DecorationDto<BoxDecoration> {
     return decoration == null ? null : from(decoration);
   }
 
+  @visibleForTesting
+  ShapeDecorationDto toShapeDecorationDto() {
+    final ShapeBorderDto? shapeBorder;
+    switch (shape) {
+      case BoxShape.circle:
+        if (border != null) {
+          assert(border!.isUniform);
+          shapeBorder = CircleBorderDto(side: border!.top);
+        } else {
+          shapeBorder = const CircleBorderDto();
+        }
+        break;
+      case BoxShape.rectangle:
+        assert(
+          border == null || border!.isUniform,
+          'Border to use with ShapeDecoration must be uniform.',
+        );
+        shapeBorder = RoundedRectangleBorderDto(
+          borderRadius: borderRadius,
+          side: border?.top,
+        );
+
+        break;
+      default:
+        shapeBorder = null;
+    }
+
+    return ShapeDecorationDto(
+      color: color,
+      shape: shapeBorder,
+      gradient: gradient,
+      shadows: boxShadow,
+    );
+  }
+
   /// Merges this [BoxDecorationDto] with `other` [BoxDecorationDto]
   @override
-  BoxDecorationDto mergeDecoration(BoxDecorationDto? other) {
+  BoxDecorationDto mergeImpl(BoxDecorationDto? other) {
     if (other == null) return this;
 
     return BoxDecorationDto(
@@ -229,8 +219,41 @@ class ShapeDecorationDto extends DecorationDto<ShapeDecoration> {
 
   List<BoxShadowDto>? get shadows => boxShadow;
 
+  @visibleForTesting
+  BoxDecorationDto toBoxDecorationDto() {
+    BoxShape? boxShape;
+    BoxBorderDto? boxBorder;
+    BorderRadiusGeometryDto? borderRadius;
+
+    if (shape is CircleBorderDto) {
+      boxShape = BoxShape.circle;
+      boxBorder = BoxBorderDto.fromSide((shape as CircleBorderDto).side);
+    } else if (shape is RoundedRectangleBorderDto) {
+      boxShape = BoxShape.rectangle;
+      borderRadius = (shape as RoundedRectangleBorderDto).borderRadius;
+
+      boxBorder =
+          BoxBorderDto.fromSide((shape as RoundedRectangleBorderDto).side);
+    } else {
+      // BeveledRectangleBorder cannot be accurately represented as a BoxDecoration
+      // Return the original ShapeDecorationDto
+      boxShape = null;
+      boxBorder = null;
+      borderRadius = null;
+    }
+
+    return BoxDecorationDto(
+      color: color,
+      border: boxBorder,
+      borderRadius: borderRadius,
+      gradient: gradient,
+      boxShadow: boxShadow,
+      shape: boxShape,
+    );
+  }
+
   @override
-  ShapeDecorationDto mergeDecoration(ShapeDecorationDto? other) {
+  ShapeDecorationDto mergeImpl(ShapeDecorationDto? other) {
     if (other == null) return this;
 
     return ShapeDecorationDto(

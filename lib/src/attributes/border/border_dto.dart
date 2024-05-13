@@ -25,6 +25,8 @@ class BoxBorderDto extends Dto<BoxBorder> {
     this.end,
   });
 
+  const BoxBorderDto.fromSide(BorderSideDto? side)
+      : this(top: side, bottom: side, left: side, right: side);
   static BoxBorderDto from(BoxBorder border) {
     if (border is Border) {
       return BoxBorderDto(
@@ -55,9 +57,47 @@ class BoxBorderDto extends Dto<BoxBorder> {
     return border == null ? null : from(border);
   }
 
+  bool get _colorIsUniform {
+    final topColor = top?.color;
+
+    return left?.color == topColor &&
+        bottom?.color == topColor &&
+        right?.color == topColor;
+  }
+
+  bool get _widthIsUniform {
+    final topWidth = top?.width;
+
+    return left?.width == topWidth &&
+        bottom?.width == topWidth &&
+        right?.width == topWidth;
+  }
+
+  bool get _styleIsUniform {
+    final topStyle = top?.style;
+
+    return left?.style == topStyle &&
+        bottom?.style == topStyle &&
+        right?.style == topStyle;
+  }
+
+  bool get _strokeAlignIsUniform {
+    final topStrokeAlign = top?.strokeAlign;
+
+    return left?.strokeAlign == topStrokeAlign &&
+        bottom?.strokeAlign == topStrokeAlign &&
+        right?.strokeAlign == topStrokeAlign;
+  }
+
   bool get _hasStartOrEnd => start != null || end != null;
 
   bool get _hasLeftOrRight => left != null || right != null;
+
+  bool get isUniform =>
+      _colorIsUniform &&
+      _widthIsUniform &&
+      _styleIsUniform &&
+      _strokeAlignIsUniform;
 
   bool get isDirectional => _hasStartOrEnd && !_hasLeftOrRight;
 
@@ -134,6 +174,8 @@ class BorderSideDto extends Dto<BorderSide> {
     this.style,
     this.width,
   });
+
+  const BorderSideDto.none() : this();
 
   static BorderSideDto from(BorderSide side) {
     return BorderSideDto(
