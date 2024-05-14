@@ -15,19 +15,13 @@ class PressableBox extends StatelessWidget {
     this.focusNode,
     this.autofocus = false,
     this.enableFeedback = false,
-    this.unpressDelay,
+    this.unpressDelay = kDefaultAnimationDuration,
     this.onFocusChange,
-    @Deprecated('Use onTap instead') VoidCallback? onPressed,
-    VoidCallback? onPress,
-    @Deprecated('Use hitTestBehavior instead') HitTestBehavior? behavior,
-    this.hitTestBehavior,
-    @Deprecated('Use AnimatedStyle instead')
-    this.animationDuration = kDefaultAnimationDuration,
-    @Deprecated('Use AnimatedStyle instead')
-    this.animationCurve = Curves.linear,
+    this.onPress,
+    this.hitTestBehavior = HitTestBehavior.opaque,
     this.disabled = false,
     required this.child,
-  }) : onPress = onPress ?? onPressed;
+  });
 
   /// Should gestures provide audible and/or haptic feedback
   ///
@@ -51,12 +45,10 @@ class PressableBox extends StatelessWidget {
   final bool disabled;
   final FocusNode? focusNode;
   final bool autofocus;
-  final Duration? unpressDelay;
+  final Duration unpressDelay;
   final Function(bool focus)? onFocusChange;
-  final Duration animationDuration;
-  final Curve animationCurve;
 
-  final HitTestBehavior? hitTestBehavior;
+  final HitTestBehavior hitTestBehavior;
 
   @override
   Widget build(BuildContext context) {
@@ -80,23 +72,16 @@ class Pressable extends _PressableBuilderWidget {
     required super.child,
     super.disabled,
     super.enableFeedback,
-    @Deprecated('Use onPress instead') VoidCallback? onPressed,
-    VoidCallback? onPress,
-    @Deprecated('Use hitTestBehavior instead') HitTestBehavior? behavior,
-    HitTestBehavior? hitTestBehavior,
+    super.onPress,
+    super.hitTestBehavior,
     super.onLongPress,
     super.onFocusChange,
     super.autofocus,
     super.focusNode,
     super.onKey,
     super.onKeyEvent,
-    Duration? unpressDelay,
-  }) : super(
-          onPress: onPress ?? onPressed,
-          hitTestBehavior:
-              hitTestBehavior ?? behavior ?? HitTestBehavior.opaque,
-          unpressDelay: unpressDelay ?? kDefaultAnimationDuration,
-        );
+    super.unpressDelay = kDefaultAnimationDuration,
+  });
 
   @override
   PressableWidgetState createState() => PressableWidgetState();

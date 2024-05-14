@@ -27,25 +27,18 @@ extension StyleExt on Style {
     bool inherit = false,
     Key? key,
     Style? style,
-    @Deprecated('Use the style parameter instead') Style? mix,
   }) {
-    return container(
-      inherit: inherit,
-      key: key,
-      style: style ?? mix,
-      child: child,
-    );
+    return container(inherit: inherit, key: key, style: style, child: child);
   }
 
   HBox hbox({
     required List<Widget> children,
     bool inherit = false,
     Key? key,
-    @Deprecated('Use the style parameter instead') Style? mix,
     Style? style,
   }) {
     return HBox(
-      style: merge(style ?? mix),
+      style: merge(style),
       key: key,
       inherit: inherit,
       children: children,
@@ -56,11 +49,10 @@ extension StyleExt on Style {
     required List<Widget> children,
     bool inherit = false,
     Key? key,
-    @Deprecated('Use the style parameter instead') Style? mix,
     Style? style,
   }) {
     return StyledRow(
-      style: merge(style ?? mix),
+      style: merge(style),
       key: key,
       inherit: inherit,
       children: children,
@@ -71,14 +63,13 @@ extension StyleExt on Style {
     String text, {
     bool inherit = false,
     Key? key,
-    @Deprecated('Use the style parameter instead') Style? mix,
     String? semanticsLabel,
     Style? style,
   }) {
     return StyledText(
       text,
       semanticsLabel: semanticsLabel,
-      style: merge(style ?? mix),
+      style: merge(style),
       key: key,
       inherit: inherit,
     );
@@ -88,11 +79,10 @@ extension StyleExt on Style {
     required List<Widget> children,
     bool inherit = false,
     Key? key,
-    @Deprecated('Use the style parameter instead') Style? mix,
     Style? style,
   }) {
     return VBox(
-      style: merge(style ?? mix),
+      style: merge(style),
       key: key,
       inherit: inherit,
       children: children,
@@ -103,11 +93,10 @@ extension StyleExt on Style {
     required List<Widget> children,
     bool inherit = false,
     Key? key,
-    @Deprecated('Use the style parameter instead') Style? mix,
     Style? style,
   }) {
     return StyledColumn(
-      style: merge(style ?? mix),
+      style: merge(style),
       key: key,
       inherit: inherit,
       children: children,
@@ -118,14 +107,8 @@ extension StyleExt on Style {
     IconData icon, {
     bool inherit = false,
     Key? key,
-    @Deprecated('Use the style parameter instead') Style? mix,
     Style? style,
   }) {
-    return StyledIcon(
-      icon,
-      style: merge(style ?? mix),
-      key: key,
-      inherit: inherit,
-    );
+    return StyledIcon(icon, style: merge(style), key: key, inherit: inherit);
   }
 }

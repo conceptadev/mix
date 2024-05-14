@@ -27,7 +27,7 @@ class StyledIcon extends StyledWidget {
 
       return mix.isAnimated
           ? AnimatedIconSpecWidget(
-              icon: icon,
+              icon,
               spec: spec,
               semanticLabel: semanticLabel,
               textDirection: textDirection,
@@ -112,8 +112,8 @@ class AnimatedStyledIcon extends StyledWidget {
 }
 
 class AnimatedIconSpecWidget extends ImplicitlyAnimatedWidget {
-  const AnimatedIconSpecWidget({
-    required this.icon,
+  const AnimatedIconSpecWidget(
+    this.icon, {
     required this.spec,
     super.key,
     this.semanticLabel,
