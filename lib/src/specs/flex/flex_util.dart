@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../attributes/scalars/scalar_util.dart';
 import '../../attributes/spacing/spacing_util.dart';
 import '../../core/attribute.dart';
+import '../../core/dto.dart';
 import 'flex_attribute.dart';
 
 class FlexSpecUtility<T extends Attribute>
@@ -25,8 +26,6 @@ class FlexSpecUtility<T extends Attribute>
   late final column = direction.vertical;
 
   FlexSpecUtility(super.builder);
-
-  
 
   @override
   T only({

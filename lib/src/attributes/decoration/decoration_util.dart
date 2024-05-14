@@ -41,7 +41,7 @@ class BoxDecorationUtility<T extends Attribute>
   late final image = DecorationImageUtility((v) => only(image: v));
 
   BoxDecorationUtility(super.builder)
-      : super(valueToDto: BoxDecorationDto.from);
+      : super(valueToDto: (value) => value.toDto());
 
   T call({
     Color? color,
@@ -53,11 +53,11 @@ class BoxDecorationUtility<T extends Attribute>
     BlendMode? backgroundBlendMode,
   }) {
     return only(
-      color: ColorDto.maybeFrom(color),
-      border: BoxBorderDto.maybeFrom(border),
-      borderRadius: BorderRadiusGeometryDto.maybeFrom(borderRadius),
-      gradient: GradientDto.maybeFrom(gradient),
-      boxShadow: boxShadow?.map(BoxShadowDto.from).toList(),
+      color: color?.toDto(),
+      border: border?.toDto(),
+      borderRadius: borderRadius?.toDto(),
+      gradient: gradient?.toDto(),
+      boxShadow: boxShadow?.map((e) => e.toDto()).toList(),
       shape: shape,
       backgroundBlendMode: backgroundBlendMode,
     );
@@ -97,7 +97,7 @@ class ShapeDecorationUtility<T extends Attribute>
   late final shape = ShapeBorderUtility<T>((v) => only(shape: v));
 
   ShapeDecorationUtility(super.builder)
-      : super(valueToDto: ShapeDecorationDto.from);
+      : super(valueToDto: (value) => value.toDto());
 
   T call({
     Color? color,
@@ -106,10 +106,10 @@ class ShapeDecorationUtility<T extends Attribute>
     ShapeBorder? shape,
   }) {
     return only(
-      color: ColorDto.maybeFrom(color),
-      gradient: GradientDto.maybeFrom(gradient),
-      shadows: shadows?.map(BoxShadowDto.from).toList(),
-      shape: ShapeBorderDto.maybeFrom(shape),
+      color: color?.toDto(),
+      gradient: gradient?.toDto(),
+      shadows: shadows?.map((e) => e.toDto()).toList(),
+      shape: shape?.toDto(),
     );
   }
 

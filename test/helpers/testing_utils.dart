@@ -16,6 +16,12 @@ class MockBuildContext extends BuildContext {
       {Object? aspect}) {
     return null;
   }
+
+  @override
+  InheritedElement?
+      getElementForInheritedWidgetOfExactType<T extends InheritedWidget>() {
+    return null;
+  }
 }
 
 MixData MockMixData(Style style) {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../attributes/color/color_dto.dart';
 import '../../core/attribute.dart';
+import '../../core/dto.dart';
 import '../../factory/mix_provider_data.dart';
 import 'image_spec.dart';
 

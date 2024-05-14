@@ -5,8 +5,8 @@ import 'package:mix/mix.dart';
 import '../../../helpers/testing_utils.dart';
 
 void main() {
-  const borderRadius = BorderRadiusUtility(UtilityTestAttribute.new);
-  const borderRadiusDirectional =
+  final borderRadius = BorderRadiusUtility(UtilityTestAttribute.new);
+  final borderRadiusDirectional =
       BorderRadiusDirectionalUtility(UtilityTestAttribute.new);
   group('BorderRadiusUtility', () {
     test('zero returns zero radius for all corners', () {

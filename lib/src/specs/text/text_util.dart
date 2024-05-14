@@ -7,6 +7,7 @@ import '../../attributes/text_directives_util.dart';
 import '../../attributes/text_style/text_style_dto.dart';
 import '../../attributes/text_style/text_style_util.dart';
 import '../../core/attribute.dart';
+import '../../core/dto.dart';
 import '../../core/directive.dart';
 import 'text_attribute.dart';
 

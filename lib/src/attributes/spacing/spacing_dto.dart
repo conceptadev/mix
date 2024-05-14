@@ -33,34 +33,6 @@ class SpacingDto extends EdgeInsetsGeometryDto<SpacingDto> {
   const SpacingDto.all(double value)
       : this.only(top: value, bottom: value, left: value, right: value);
 
-  static SpacingDto from(EdgeInsetsGeometry edgeInsets) {
-    if (edgeInsets is EdgeInsetsDirectional) {
-      return SpacingDto._(
-        top: edgeInsets.top,
-        bottom: edgeInsets.bottom,
-        start: edgeInsets.start,
-        end: edgeInsets.end,
-      );
-    } else if (edgeInsets is EdgeInsets) {
-      return SpacingDto._(
-        top: edgeInsets.top,
-        bottom: edgeInsets.bottom,
-        left: edgeInsets.left,
-        right: edgeInsets.right,
-      );
-    }
-
-    throw ArgumentError.value(
-      edgeInsets,
-      'edgeInsets',
-      'Must be either EdgeInsets or EdgeInsetsDirectional',
-    );
-  }
-
-  static SpacingDto? maybeFrom(EdgeInsetsGeometry? edgeInsets) {
-    return edgeInsets == null ? null : from(edgeInsets);
-  }
-
   @override
   SpacingDto merge(SpacingDto? other) {
     if (other == null) return this;
@@ -90,5 +62,33 @@ class SpacingDto extends EdgeInsetsGeometryDto<SpacingDto> {
             right: mix.tokens.spaceTokenRef(right ?? 0),
             bottom: mix.tokens.spaceTokenRef(bottom ?? 0),
           );
+  }
+}
+
+extension EdgeInsetsGeometryExt on EdgeInsetsGeometry {
+  SpacingDto toDto() {
+    if (this is EdgeInsetsDirectional) {
+      return (this as EdgeInsetsDirectional).toDto();
+    } else if (this is EdgeInsets) {
+      return (this as EdgeInsets).toDto();
+    }
+
+    throw ArgumentError.value(
+      this,
+      'edgeInsets',
+      'Must be either EdgeInsets or EdgeInsetsDirectional',
+    );
+  }
+}
+
+extension EdgeInsetsExt on EdgeInsets {
+  SpacingDto toDto() {
+    return SpacingDto._(top: top, bottom: bottom, left: left, right: right);
+  }
+}
+
+extension EdgeInsetsDirectionalExt on EdgeInsetsDirectional {
+  SpacingDto toDto() {
+    return SpacingDto._(top: top, bottom: bottom, start: start, end: end);
   }
 }

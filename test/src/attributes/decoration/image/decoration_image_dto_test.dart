@@ -29,9 +29,9 @@ void main() {
         invertColors: true,
         isAntiAlias: true,
       );
-      final result = DecorationImageDto.maybeFrom(decorationImage);
+      final result = decorationImage.toDto();
       expect(result, isNotNull);
-      expect(result!.image, equals(imageProvider));
+      expect(result.image, equals(imageProvider));
       expect(result.fit, equals(BoxFit.cover));
       expect(result.alignment, equals(Alignment.topLeft));
       expect(result.centerSlice, equals(const Rect.fromLTRB(10, 20, 30, 40)));

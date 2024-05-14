@@ -27,7 +27,7 @@ void main() {
         blurRadius: 10.0,
       );
 
-      final shadowDto = ShadowDto.from(shadow);
+      final shadowDto = shadow.toDto();
 
       expect(shadowDto.blurRadius, 10.0);
       expect(shadowDto.color?.resolve(EmptyMixData), Colors.blue);
@@ -41,11 +41,11 @@ void main() {
         blurRadius: 10.0,
       );
 
-      final shadowDto = ShadowDto.maybeFrom(shadow);
+      final shadowDto = shadow.toDto();
 
-      expect(shadowDto?.blurRadius, 10.0);
-      expect(shadowDto?.color?.resolve(EmptyMixData), Colors.blue);
-      expect(shadowDto?.offset, const Offset(10, 10));
+      expect(shadowDto.blurRadius, 10.0);
+      expect(shadowDto.color?.resolve(EmptyMixData), Colors.blue);
+      expect(shadowDto.offset, const Offset(10, 10));
     });
 
     test('resolve() returns correct instance', () {
@@ -106,7 +106,7 @@ void main() {
         spreadRadius: 5.0,
       );
 
-      final boxShadowDto = BoxShadowDto.from(boxShadow);
+      final boxShadowDto = boxShadow.toDto();
 
       expect(boxShadowDto.blurRadius, 10.0);
       expect(boxShadowDto.color?.resolve(EmptyMixData), Colors.blue);
@@ -122,12 +122,12 @@ void main() {
         spreadRadius: 5.0,
       );
 
-      final boxShadowDto = BoxShadowDto.maybeFrom(boxShadow);
+      final boxShadowDto = boxShadow.toDto();
 
-      expect(boxShadowDto?.blurRadius, 10.0);
-      expect(boxShadowDto?.color?.resolve(EmptyMixData), Colors.blue);
-      expect(boxShadowDto?.offset, const Offset(10, 10));
-      expect(boxShadowDto?.spreadRadius, 5.0);
+      expect(boxShadowDto.blurRadius, 10.0);
+      expect(boxShadowDto.color?.resolve(EmptyMixData), Colors.blue);
+      expect(boxShadowDto.offset, const Offset(10, 10));
+      expect(boxShadowDto.spreadRadius, 5.0);
     });
 
     test('resolve() returns correct instance', () {

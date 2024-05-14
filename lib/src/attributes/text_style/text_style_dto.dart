@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-import '../../core/attribute.dart';
+import '../../core/dto.dart';
 import '../../core/extensions/iterable_ext.dart';
 import '../../factory/mix_provider_data.dart';
 import '../../theme/tokens/text_style_token.dart';
@@ -88,11 +88,11 @@ class TextStyleData extends Dto<TextStyle> {
         ? TextStyleData.tokenRef(style)
         : TextStyleData(
             background: style.background,
-            backgroundColor: ColorDto.maybeFrom(style.backgroundColor),
-            color: ColorDto.maybeFrom(style.color),
+            backgroundColor: style.backgroundColor?.toDto(),
+            color: style.color?.toDto(),
             debugLabel: style.debugLabel,
             decoration: style.decoration,
-            decorationColor: ColorDto.maybeFrom(style.decorationColor),
+            decorationColor: style.decorationColor?.toDto(),
             decorationStyle: style.decorationStyle,
             decorationThickness: style.decorationThickness,
             fontFamily: style.fontFamily,
@@ -105,14 +105,10 @@ class TextStyleData extends Dto<TextStyle> {
             height: style.height,
             letterSpacing: style.letterSpacing,
             locale: style.locale,
-            shadows: style.shadows?.map(ShadowDto.from).toList(),
+            shadows: style.shadows?.map((e) => e.toDto()).toList(),
             textBaseline: style.textBaseline,
             wordSpacing: style.wordSpacing,
           );
-  }
-
-  static TextStyleData? maybeFrom(TextStyle? style) {
-    return style == null ? null : TextStyleData.from(style);
   }
 
   bool get isTokenRef => ref != null;
@@ -297,4 +293,8 @@ class TextStyleDto extends Dto<TextStyle> {
 
   @override
   get props => [value];
+}
+
+extension TextStyleExt on TextStyle {
+  TextStyleDto toDto() => TextStyleDto.as(this);
 }

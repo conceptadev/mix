@@ -27,7 +27,7 @@ class BoxShadowUtility<T extends Attribute>
   /// Creates a new [BoxShadowUtility] instance.
   ///
   /// The [builder] function is used to create new instances of [T].
-  BoxShadowUtility(super.builder) : super(valueToDto: BoxShadowDto.from);
+  BoxShadowUtility(super.builder) : super(valueToDto: (value) => value.toDto());
 
   /// Creates a new [Attribute] with the specified properties.
   ///
@@ -39,7 +39,7 @@ class BoxShadowUtility<T extends Attribute>
     double? spreadRadius,
   }) {
     return only(
-      color: ColorDto.maybeFrom(color),
+      color: color?.toDto(),
       offset: offset,
       blurRadius: blurRadius,
       spreadRadius: spreadRadius,
@@ -82,7 +82,7 @@ class ShadowUtility<T extends Attribute>
   /// Creates a new [ShadowUtility] instance.
   ///
   /// The [builder] function is used to create new instances of [T].
-  ShadowUtility(super.builder) : super(valueToDto: ShadowDto.from);
+  ShadowUtility(super.builder) : super(valueToDto: (value) => value.toDto());
 
   /// Sets the [Shadow.blurRadius] property.
   ///
@@ -94,7 +94,7 @@ class ShadowUtility<T extends Attribute>
   /// Any properties not specified will retain their current values.
   T call({Color? color, Offset? offset, double? blurRadius}) {
     return only(
-      color: ColorDto.maybeFrom(color),
+      color: color?.toDto(),
       offset: offset,
       blurRadius: blurRadius,
     );
@@ -123,8 +123,8 @@ class ShadowListUtility<T extends Attribute>
   ///
   /// This method maps each [BoxShadow] object to a [ShadowDto] object and passes the
   /// resulting list to the [builder] function to create the [Attribute] instance.
-  T call(List<BoxShadow> shadows) {
-    return builder(shadows.map(ShadowDto.from).toList());
+  T call(List<Shadow> shadows) {
+    return builder(shadows.map((e) => e.toDto()).toList());
   }
 }
 
@@ -141,7 +141,7 @@ class BoxShadowListUtility<T extends Attribute>
   /// This method maps each [BoxShadow] object to a [BoxShadowDto] object and passes the
   /// resulting list to the [builder] function to create the [Attribute] instance.
   T call(List<BoxShadow> shadows) {
-    return builder(shadows.map(BoxShadowDto.from).toList());
+    return builder(shadows.map((e) => e.toDto()).toList());
   }
 }
 
@@ -164,7 +164,7 @@ class ElevationUtility<T extends Attribute>
   T call(int value) {
     assert(kElevationToShadow.containsKey(value), 'Invalid elevation value');
 
-    final boxShadows = kElevationToShadow[value]!.map(BoxShadowDto.from);
+    final boxShadows = kElevationToShadow[value]!.map((e) => e.toDto());
 
     return builder(boxShadows.toList());
   }

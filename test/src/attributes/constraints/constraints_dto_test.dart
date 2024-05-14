@@ -13,7 +13,7 @@ void main() {
         minHeight: 100,
         maxHeight: 200,
       );
-      final constraintsDto = BoxConstraintsDto.from(constraints);
+      final constraintsDto = constraints.toDto();
 
       expect(constraints.minWidth, 50);
       expect(constraints.maxWidth, 150);

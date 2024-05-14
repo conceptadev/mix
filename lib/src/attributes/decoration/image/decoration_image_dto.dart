@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-import '../../../core/attribute.dart';
+import '../../../core/dto.dart';
 import '../../../factory/mix_provider_data.dart';
 
 @immutable
@@ -24,23 +24,6 @@ class DecorationImageDto extends Dto<DecorationImage> {
     this.invertColors,
     this.isAntiAlias,
   });
-
-  static DecorationImageDto from(DecorationImage image) {
-    return DecorationImageDto(
-      image: image.image,
-      fit: image.fit,
-      alignment: image.alignment,
-      centerSlice: image.centerSlice,
-      repeat: image.repeat,
-      filterQuality: image.filterQuality,
-      invertColors: image.invertColors,
-      isAntiAlias: image.isAntiAlias,
-    );
-  }
-
-  static DecorationImageDto? maybeFrom(DecorationImage? image) {
-    return image != null ? from(image) : null;
-  }
 
   @override
   DecorationImageDto merge(covariant DecorationImageDto? other) {
@@ -88,4 +71,19 @@ class DecorationImageDto extends Dto<DecorationImage> {
         invertColors,
         isAntiAlias,
       ];
+}
+
+extension DecorationImageExt on DecorationImage {
+  DecorationImageDto toDto() {
+    return DecorationImageDto(
+      image: image,
+      fit: fit,
+      alignment: alignment,
+      centerSlice: centerSlice,
+      repeat: repeat,
+      filterQuality: filterQuality,
+      invertColors: invertColors,
+      isAntiAlias: isAntiAlias,
+    );
+  }
 }

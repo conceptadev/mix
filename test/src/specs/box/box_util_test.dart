@@ -105,7 +105,7 @@ void main() {
       final decorationDTO = container.decoration as BoxDecorationDto;
       expect(
         decorationDTO.borderRadius,
-        BorderRadiusGeometryDto.from(BorderRadius.circular(10)),
+        BorderRadius.circular(10).toDto(),
       );
     });
 
@@ -125,7 +125,7 @@ void main() {
           container.foregroundDecoration as BoxDecorationDto;
       expect(
         foregroundDecorationDTO.borderRadius,
-        BorderRadiusGeometryDto.from(BorderRadius.circular(10)),
+        BorderRadius.circular(10).toDto(),
         reason: 'The BorderRadius is not correct',
       );
     });

@@ -30,7 +30,7 @@ class SpacingUtility<T extends Attribute>
 
   late final end = SpacingSideUtility((v) => only(end: v));
 
-  SpacingUtility(super.builder) : super(valueToDto: SpacingDto.from);
+  SpacingUtility(super.builder) : super(valueToDto: (value) => value.toDto());
 
   T call(double p1, [double? p2, double? p3, double? p4]) {
     return only(
@@ -82,7 +82,8 @@ class SpacingDirectionalUtility<T extends Attribute>
 
   late final horizontal = SpacingSideUtility((v) => only(start: v, end: v));
 
-  SpacingDirectionalUtility(super.builder) : super(valueToDto: SpacingDto.from);
+  SpacingDirectionalUtility(super.builder)
+      : super(valueToDto: (value) => value.toDto());
 
   T call(double p1, [double? p2, double? p3, double? p4]) {
     return only(

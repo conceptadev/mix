@@ -23,7 +23,7 @@ void main() {
           ),
           side: BorderSideDto(color: ColorDto(Colors.blue), width: 2.0),
         ),
-      ) as RoundedRectangleBorderDto;
+      );
 
       expect(merged.borderRadius!.topLeft, const Radius.circular(25));
       expect(merged.borderRadius!.topRight, const Radius.circular(20));
@@ -75,7 +75,7 @@ void main() {
           side: BorderSideDto(color: ColorDto(Colors.blue), width: 2.0),
           eccentricity: 0.75,
         ),
-      ) as CircleBorderDto;
+      );
 
       expect(merged.eccentricity, 0.75);
       expect(merged.side!.color, const ColorDto(Colors.blue));
@@ -115,7 +115,7 @@ void main() {
           ),
           side: BorderSideDto(color: ColorDto(Colors.blue), width: 2.0),
         ),
-      ) as BeveledRectangleBorderDto;
+      );
 
       expect(merged.borderRadius!.topLeft, const Radius.circular(25));
       expect(merged.borderRadius!.topRight, const Radius.circular(20));
@@ -165,7 +165,7 @@ void main() {
         const StadiumBorderDto(
           side: BorderSideDto(color: ColorDto(Colors.blue), width: 2.0),
         ),
-      ) as StadiumBorderDto;
+      );
 
       expect(merged.side!.color, const ColorDto(Colors.blue));
       expect(merged.side!.width, 2.0);
@@ -204,7 +204,7 @@ void main() {
             ),
             side: BorderSideDto(color: ColorDto(Colors.blue), width: 2.0),
           ),
-        ) as ContinuousRectangleBorderDto;
+        );
 
         expect(merged.borderRadius!.topLeft, const Radius.circular(25));
         expect(merged.borderRadius!.topRight, const Radius.circular(20));
@@ -256,15 +256,12 @@ void main() {
       const continuousRectangleBorder = ContinuousRectangleBorder();
       const stadiumBorder = StadiumBorder();
 
-      expect(ShapeBorderDto.maybeFrom(roundedRectangleBorder),
-          isA<RoundedRectangleBorderDto>());
-      expect(ShapeBorderDto.maybeFrom(circleBorder), isA<CircleBorderDto>());
-      expect(ShapeBorderDto.maybeFrom(beveledRectangleBorder),
-          isA<BeveledRectangleBorderDto>());
-      expect(ShapeBorderDto.maybeFrom(continuousRectangleBorder),
+      expect(roundedRectangleBorder.toDto(), isA<RoundedRectangleBorderDto>());
+      expect(circleBorder.toDto(), isA<CircleBorderDto>());
+      expect(beveledRectangleBorder.toDto(), isA<BeveledRectangleBorderDto>());
+      expect(continuousRectangleBorder.toDto(),
           isA<ContinuousRectangleBorderDto>());
-      expect(ShapeBorderDto.maybeFrom(stadiumBorder), isA<StadiumBorderDto>());
-      expect(ShapeBorderDto.maybeFrom(null), isNull);
+      expect(stadiumBorder.toDto(), isA<StadiumBorderDto>());
     });
   });
 
@@ -279,14 +276,12 @@ void main() {
       const continuousRectangleBorder = ContinuousRectangleBorder();
       const stadiumBorder = StadiumBorder();
 
-      expect(OutlinedBorderDto.from(roundedRectangleBorder),
-          isA<RoundedRectangleBorderDto>());
-      expect(OutlinedBorderDto.from(circleBorder), isA<CircleBorderDto>());
-      expect(OutlinedBorderDto.from(beveledRectangleBorder),
-          isA<BeveledRectangleBorderDto>());
-      expect(OutlinedBorderDto.from(continuousRectangleBorder),
+      expect(roundedRectangleBorder.toDto(), isA<RoundedRectangleBorderDto>());
+      expect(circleBorder.toDto(), isA<CircleBorderDto>());
+      expect(beveledRectangleBorder.toDto(), isA<BeveledRectangleBorderDto>());
+      expect(continuousRectangleBorder.toDto(),
           isA<ContinuousRectangleBorderDto>());
-      expect(OutlinedBorderDto.from(stadiumBorder), isA<StadiumBorderDto>());
+      expect(stadiumBorder.toDto(), isA<StadiumBorderDto>());
     });
 
     test('resolve method should create the correct OutlinedBorder instance',
@@ -318,19 +313,18 @@ void main() {
         side: const BorderSide(color: Colors.red),
       );
 
-      final roundedRectangleBorderDto =
-          RoundedRectangleBorderDto.from(roundedRectangleBorder);
+      final roundedRectangleBorderDto = roundedRectangleBorder.toDto();
 
       expect(roundedRectangleBorderDto.borderRadius,
-          equals(BorderRadiusGeometryDto.from(BorderRadius.circular(10))));
+          equals(BorderRadius.circular(10).toDto()));
       expect(roundedRectangleBorderDto.side,
-          equals(BorderSideDto.from(const BorderSide(color: Colors.red))));
+          equals(const BorderSide(color: Colors.red).toDto()));
     });
 
     test('merge method should handle null values correctly', () {
       final roundedRectangleBorderDto = RoundedRectangleBorderDto(
-        borderRadius: BorderRadiusGeometryDto.from(BorderRadius.circular(10)),
-        side: BorderSideDto.from(const BorderSide(color: Colors.red)),
+        borderRadius: BorderRadius.circular(10).toDto(),
+        side: const BorderSide(color: Colors.red).toDto(),
       );
 
       final mergedDto = roundedRectangleBorderDto.merge(null);
@@ -348,16 +342,16 @@ void main() {
         eccentricity: 0.8,
       );
 
-      final circleBorderDto = CircleBorderDto.from(circleBorder);
+      final circleBorderDto = circleBorder.toDto();
 
       expect(circleBorderDto.side,
-          equals(BorderSideDto.from(const BorderSide(color: Colors.blue))));
+          equals(const BorderSide(color: Colors.blue).toDto()));
       expect(circleBorderDto.eccentricity, equals(0.8));
     });
 
     test('merge method should handle null values correctly', () {
       final circleBorderDto = CircleBorderDto(
-        side: BorderSideDto.from(const BorderSide(color: Colors.blue)),
+        side: const BorderSide(color: Colors.blue).toDto(),
         eccentricity: 0.8,
       );
 
@@ -377,19 +371,18 @@ void main() {
         side: const BorderSide(color: Colors.green),
       );
 
-      final beveledRectangleBorderDto =
-          BeveledRectangleBorderDto.from(beveledRectangleBorder);
+      final beveledRectangleBorderDto = beveledRectangleBorder.toDto();
 
       expect(beveledRectangleBorderDto.borderRadius,
-          equals(BorderRadiusGeometryDto.from(BorderRadius.circular(10))));
+          equals(BorderRadius.circular(10).toDto()));
       expect(beveledRectangleBorderDto.side,
-          equals(BorderSideDto.from(const BorderSide(color: Colors.green))));
+          equals(const BorderSide(color: Colors.green).toDto()));
     });
 
     test('merge method should handle null values correctly', () {
       final beveledRectangleBorderDto = BeveledRectangleBorderDto(
-        borderRadius: BorderRadiusGeometryDto.from(BorderRadius.circular(10)),
-        side: BorderSideDto.from(const BorderSide(color: Colors.green)),
+        borderRadius: BorderRadius.circular(10).toDto(),
+        side: const BorderSide(color: Colors.green).toDto(),
       );
 
       final mergedDto = beveledRectangleBorderDto.merge(null);
@@ -408,19 +401,18 @@ void main() {
         side: const BorderSide(color: Colors.orange),
       );
 
-      final continuousRectangleBorderDto =
-          ContinuousRectangleBorderDto.from(continuousRectangleBorder);
+      final continuousRectangleBorderDto = continuousRectangleBorder.toDto();
 
       expect(continuousRectangleBorderDto.borderRadius,
-          equals(BorderRadiusGeometryDto.from(BorderRadius.circular(10))));
+          equals(BorderRadius.circular(10).toDto()));
       expect(continuousRectangleBorderDto.side,
-          equals(BorderSideDto.from(const BorderSide(color: Colors.orange))));
+          equals(const BorderSide(color: Colors.orange).toDto()));
     });
 
     test('merge method should handle null values correctly', () {
       final continuousRectangleBorderDto = ContinuousRectangleBorderDto(
-        borderRadius: BorderRadiusGeometryDto.from(BorderRadius.circular(10)),
-        side: BorderSideDto.from(const BorderSide(color: Colors.orange)),
+        borderRadius: BorderRadius.circular(10).toDto(),
+        side: const BorderSide(color: Colors.orange).toDto(),
       );
 
       final mergedDto = continuousRectangleBorderDto.merge(null);
@@ -438,15 +430,15 @@ void main() {
         side: BorderSide(color: Colors.purple),
       );
 
-      final stadiumBorderDto = StadiumBorderDto.from(stadiumBorder);
+      final stadiumBorderDto = stadiumBorder.toDto();
 
       expect(stadiumBorderDto.side,
-          equals(BorderSideDto.from(const BorderSide(color: Colors.purple))));
+          equals(const BorderSide(color: Colors.purple).toDto()));
     });
 
     test('merge method should handle null values correctly', () {
       final stadiumBorderDto = StadiumBorderDto(
-        side: BorderSideDto.from(const BorderSide(color: Colors.purple)),
+        side: const BorderSide(color: Colors.purple).toDto(),
       );
 
       final mergedDto = stadiumBorderDto.merge(null);

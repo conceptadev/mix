@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../core/attribute.dart';
+import '../../core/dto.dart';
 import '../../core/extensions/iterable_ext.dart';
 import '../../factory/mix_provider_data.dart';
 import '../color/color_dto.dart';
@@ -26,29 +26,6 @@ abstract class GradientDto<T extends Gradient> extends Dto<T> {
   final GradientTransform? transform;
 
   const GradientDto({this.stops, this.colors, this.transform});
-
-  /// Creates a [GradientDto] from a given [gradient].
-  /// Throws an [UnimplementedError] if the gradient type is unknown.
-  static GradientDto from(Gradient gradient) {
-    if (gradient is LinearGradient) {
-      return LinearGradientDto.from(gradient);
-    }
-    if (gradient is RadialGradient) {
-      return RadialGradientDto.from(gradient);
-    }
-    if (gradient is SweepGradient) {
-      return SweepGradientDto.from(gradient);
-    }
-
-    throw UnimplementedError('Unknown gradient type: $gradient');
-  }
-
-  /// Creates a [GradientDto] from a given [gradient].
-  ///
-  /// Returns null if the gradient is null.
-  static GradientDto? maybeFrom(Gradient? gradient) {
-    return gradient == null ? null : from(gradient);
-  }
 
   /// Resolves [GradientDto] given a [MixData] into a [Gradient
   @override
@@ -89,25 +66,6 @@ class LinearGradientDto extends GradientDto<LinearGradient> {
     super.colors,
     super.stops,
   });
-
-  /// Creates a [LinearGradientDto] from a given [gradient].
-  static LinearGradientDto from(LinearGradient gradient) {
-    return LinearGradientDto(
-      begin: gradient.begin,
-      end: gradient.end,
-      tileMode: gradient.tileMode,
-      transform: gradient.transform,
-      colors: gradient.colors.map(ColorDto.new).toList(),
-      stops: gradient.stops,
-    );
-  }
-
-  /// Creates a [LinearGradientDto] from a given [gradient].
-  ///
-  /// Returns null if the gradient is null.
-  static LinearGradientDto? maybeFrom(LinearGradient? gradient) {
-    return gradient == null ? null : from(gradient);
-  }
 
   /// Resolves [LinearGradientDto] given a [MixData] into a [LinearGradient]
   @override
@@ -195,27 +153,6 @@ class RadialGradientDto extends GradientDto<RadialGradient> {
     super.stops,
   });
 
-  /// Creates a [RadialGradientDto] from a given [RadialGradient].
-  static RadialGradientDto from(RadialGradient gradient) {
-    return RadialGradientDto(
-      center: gradient.center,
-      radius: gradient.radius,
-      tileMode: gradient.tileMode,
-      focal: gradient.focal,
-      focalRadius: gradient.focalRadius,
-      transform: gradient.transform,
-      colors: gradient.colors.map(ColorDto.new).toList(),
-      stops: gradient.stops,
-    );
-  }
-
-  /// Creates a [RadialGradientDto] from a given [RadialGradient].
-  ///
-  /// Returns null if the gradient is null.
-  static RadialGradientDto? maybeFrom(RadialGradient? gradient) {
-    return gradient == null ? null : from(gradient);
-  }
-
   /// Resolves [RadialGradientDto] given a [MixData] into a [RadialGradient
   @override
   RadialGradient resolve(MixData mix) {
@@ -283,26 +220,6 @@ class SweepGradientDto extends GradientDto<SweepGradient> {
     super.stops,
   });
 
-  /// Creates a [SweepGradientDto] from a given [SweepGradient].
-  static SweepGradientDto from(SweepGradient gradient) {
-    return SweepGradientDto(
-      center: gradient.center,
-      startAngle: gradient.startAngle,
-      endAngle: gradient.endAngle,
-      tileMode: gradient.tileMode,
-      transform: gradient.transform,
-      colors: gradient.colors.map(ColorDto.new).toList(),
-      stops: gradient.stops,
-    );
-  }
-
-  /// Creates a [SweepGradientDto] from a given [SweepGradient].
-  ///
-  /// Returns null if the gradient is null.
-  static SweepGradientDto? maybeFrom(SweepGradient? gradient) {
-    return gradient == null ? null : from(gradient);
-  }
-
   /// Resolves [SweepGradientDto] given a [MixData] into a [SweepGradient]
   @override
   SweepGradient resolve(MixData mix) {
@@ -336,4 +253,57 @@ class SweepGradientDto extends GradientDto<SweepGradient> {
   @override
   List<Object?> get props =>
       [center, startAngle, endAngle, colors, stops, tileMode, transform];
+}
+
+extension GradientExt on Gradient {
+  // toDto
+  GradientDto toDto() {
+    if (this is LinearGradient) return (this as LinearGradient).toDto();
+    if (this is RadialGradient) return (this as RadialGradient).toDto();
+    if (this is SweepGradient) return (this as SweepGradient).toDto();
+
+    throw UnimplementedError();
+  }
+}
+
+extension LinearGradientExt on LinearGradient {
+  LinearGradientDto toDto() {
+    return LinearGradientDto(
+      begin: begin,
+      end: end,
+      tileMode: tileMode,
+      transform: transform,
+      colors: colors.map((e) => e.toDto()).toList(),
+      stops: stops,
+    );
+  }
+}
+
+extension RadialGradientExt on RadialGradient {
+  RadialGradientDto toDto() {
+    return RadialGradientDto(
+      center: center,
+      radius: radius,
+      tileMode: tileMode,
+      focal: focal,
+      focalRadius: focalRadius,
+      transform: transform,
+      colors: colors.map((e) => e.toDto()).toList(),
+      stops: stops,
+    );
+  }
+}
+
+extension SweepGradientExt on SweepGradient {
+  SweepGradientDto toDto() {
+    return SweepGradientDto(
+      center: center,
+      startAngle: startAngle,
+      endAngle: endAngle,
+      tileMode: tileMode,
+      transform: transform,
+      colors: colors.map((e) => e.toDto()).toList(),
+      stops: stops,
+    );
+  }
 }

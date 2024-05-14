@@ -20,7 +20,7 @@ void main() {
         shape: refBoxDecoration.shape,
       );
 
-      expect(result.value, equals(BoxDecorationDto.from(refBoxDecoration)));
+      expect(result.value, equals(refBoxDecoration.toDto()));
 
       expect(result.value, isA<BoxDecorationDto>());
       expect(result.value.border, isA<BoxBorderDto>());
@@ -32,20 +32,20 @@ void main() {
 
       expect(
         result.value.border,
-        equals(BoxBorderDto.from(refBoxDecoration.border!)),
+        equals(refBoxDecoration.border!.toDto()),
       );
       expect(
         result.value.borderRadius,
-        equals(BorderRadiusGeometryDto.from(refBoxDecoration.borderRadius!)),
+        equals(refBoxDecoration.borderRadius!.toDto()),
       );
       expect(
         result.value.boxShadow,
-        equals(refBoxDecoration.boxShadow?.map((e) => BoxShadowDto.from(e))),
+        equals(refBoxDecoration.boxShadow?.map((e) => e.toDto())),
       );
-      expect(result.value.color, equals(ColorDto(refBoxDecoration.color!)));
+      expect(result.value.color, equals(refBoxDecoration.color!.toDto()));
       expect(
         result.value.gradient,
-        equals(GradientDto.from(refBoxDecoration.gradient!)),
+        equals(refBoxDecoration.gradient!.toDto()),
       );
       expect(result.value.shape, equals(refBoxDecoration.shape));
     });
@@ -140,11 +140,11 @@ void main() {
       expect(result.value.color, equals(Colors.blue.toDto()));
       expect(
         result.value.gradient,
-        equals(GradientDto.from(linearGradient)),
+        equals(linearGradient.toDto()),
       );
       expect(
         result.value.shadows,
-        equals(const [boxShadow].map((e) => BoxShadowDto.from(e)).toList()),
+        equals(const [boxShadow].map((e) => e.toDto()).toList()),
       );
     });
 
@@ -161,7 +161,7 @@ void main() {
 
       expect(
         result.value.gradient,
-        equals(GradientDto.from(linearGradient)),
+        equals(linearGradient.toDto()),
       );
     });
 
@@ -171,7 +171,7 @@ void main() {
 
       expect(
         result.value.shadows,
-        equals(const [boxShadow].map((e) => BoxShadowDto.from(e)).toList()),
+        equals(const [boxShadow].map((e) => e.toDto()).toList()),
       );
     });
 

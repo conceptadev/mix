@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../core/attribute.dart';
+import '../../core/dto.dart';
 import '../../factory/mix_provider_data.dart';
 
 @immutable
@@ -24,23 +24,6 @@ class StrutStyleDto extends Dto<StrutStyle> {
     this.leading,
     this.forceStrutHeight,
   });
-
-  static StrutStyleDto from(StrutStyle strutStyle) {
-    return StrutStyleDto(
-      fontFamily: strutStyle.fontFamily,
-      fontFamilyFallback: strutStyle.fontFamilyFallback,
-      fontSize: strutStyle.fontSize,
-      fontWeight: strutStyle.fontWeight,
-      fontStyle: strutStyle.fontStyle,
-      height: strutStyle.height,
-      leading: strutStyle.leading,
-      forceStrutHeight: strutStyle.forceStrutHeight,
-    );
-  }
-
-  static StrutStyleDto? maybeFrom(StrutStyle? strutStyle) {
-    return strutStyle == null ? null : from(strutStyle);
-  }
 
   @override
   StrutStyleDto merge(StrutStyleDto? other) {
@@ -85,4 +68,19 @@ class StrutStyleDto extends Dto<StrutStyle> {
         leading,
         forceStrutHeight,
       ];
+}
+
+extension StrutStyleExt on StrutStyle {
+  StrutStyleDto toDto() {
+    return StrutStyleDto(
+      fontFamily: fontFamily,
+      fontFamilyFallback: fontFamilyFallback,
+      fontSize: fontSize,
+      fontWeight: fontWeight,
+      fontStyle: fontStyle,
+      height: height,
+      leading: leading,
+      forceStrutHeight: forceStrutHeight,
+    );
+  }
 }

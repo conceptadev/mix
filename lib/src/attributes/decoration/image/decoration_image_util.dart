@@ -6,8 +6,8 @@ import 'decoration_image_dto.dart';
 
 class DecorationImageUtility<T extends Attribute>
     extends DtoUtility<T, DecorationImageDto, DecorationImage> {
-  const DecorationImageUtility(super.builder)
-      : super(valueToDto: DecorationImageDto.from);
+  DecorationImageUtility(super.builder)
+      : super(valueToDto: (value) => value.toDto());
 
   BoxFitUtility<T> get fit {
     return BoxFitUtility((fit) => only(fit: fit));

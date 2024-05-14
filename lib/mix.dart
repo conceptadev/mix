@@ -40,7 +40,7 @@ export 'src/core/attribute.dart';
 export 'src/core/attributes_map.dart';
 export 'src/core/decorator.dart';
 export 'src/core/directive.dart';
-export 'src/core/extensions/color_ext.dart';
+export 'src/core/dto.dart';
 export 'src/core/extensions/iterable_ext.dart';
 export 'src/core/extensions/values_ext.dart';
 export 'src/core/styled_widget.dart';

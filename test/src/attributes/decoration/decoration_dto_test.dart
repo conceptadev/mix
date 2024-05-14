@@ -59,168 +59,44 @@ void main() {
       expect(merged.color, decoration1.color);
       expect(merged.gradient, decoration2.gradient);
     });
-    test('toBoxDecorationDto converts CircleBorder correctly', () {
-      const shapeDecorationDto = ShapeDecorationDto(
-        color: ColorDto(Colors.blue),
-        shape: CircleBorderDto(
-            side: BorderSideDto(color: ColorDto(Colors.red), width: 2.0)),
-        gradient: LinearGradientDto(
-            colors: [ColorDto(Colors.yellow), ColorDto(Colors.green)]),
-        shadows: [BoxShadowDto(color: ColorDto(Colors.black), blurRadius: 4.0)],
-      );
+    test('resolve returns correct ShapeDecoration with default values', () {
+      const shapeDecoration = ShapeDecoration(shape: CircleBorder());
+      const attr = ShapeDecorationDto(shape: CircleBorderDto());
 
-      final boxDecorationDto = shapeDecorationDto.toBoxDecorationDto();
-
-      expect(
-        boxDecorationDto.color,
-        equals(
-          const ColorDto(Colors.blue),
-        ),
-      );
-      expect(boxDecorationDto.shape, equals(BoxShape.circle));
-      expect(
-          boxDecorationDto.border,
-          equals(
-            const BoxBorderDto.fromSide(
-              BorderSideDto(color: ColorDto(Colors.red), width: 2.0),
-            ),
-          ));
-      expect(
-        boxDecorationDto.gradient,
-        equals(
-          const LinearGradientDto(
-              colors: [ColorDto(Colors.yellow), ColorDto(Colors.green)]),
-        ),
-      );
-      expect(
-          boxDecorationDto.boxShadow,
-          equals([
-            const BoxShadowDto(color: ColorDto(Colors.black), blurRadius: 4.0)
-          ]));
+      final decoration = attr.resolve(EmptyMixData);
+      expect(decoration, shapeDecoration);
     });
+    test('resolve returns correct ShapeDecoration with specific values', () {
+      final boxShadow = RandomGenerator.boxShadow();
 
-    test('toBoxDecorationDto converts RoundedRectangleBorder correctly', () {
-      final shapeDecorationDto = ShapeDecorationDto(
-        color: const ColorDto(Colors.blue),
-        shape: RoundedRectangleBorderDto(
-          borderRadius: BorderRadiusGeometryDto.from(
-            const BorderRadius.all(
-              Radius.circular(10),
-            ),
-          ),
-          side: const BorderSideDto(color: ColorDto(Colors.red), width: 2.0),
-        ),
-        gradient: const LinearGradientDto(
-            colors: [ColorDto(Colors.yellow), ColorDto(Colors.green)]),
-        shadows: const [
-          BoxShadowDto(color: ColorDto(Colors.black), blurRadius: 4.0)
-        ],
+      final decoration1 = ShapeDecorationDto(
+        shape: const CircleBorderDto(),
+        gradient: linearGradientDto,
+        shadows: [boxShadow.toDto()],
       );
 
-      final boxDecorationDto = shapeDecorationDto.toBoxDecorationDto();
+      final resolvedValue = decoration1.resolve(EmptyMixData);
 
-      expect(
-        boxDecorationDto.color,
-        equals(
-          const ColorDto(Colors.blue),
-        ),
-      );
-      expect(boxDecorationDto.shape, equals(BoxShape.rectangle));
-      expect(
-          boxDecorationDto.borderRadius,
-          equals(
-            BorderRadiusGeometryDto.from(
-              BorderRadius.circular(10),
-            ),
-          ));
-      expect(
-          boxDecorationDto.border,
-          equals(
-            const BoxBorderDto.fromSide(
-              BorderSideDto(color: ColorDto(Colors.red), width: 2.0),
-            ),
-          ));
-      expect(
-        boxDecorationDto.gradient,
-        equals(
-          const LinearGradientDto(
-              colors: [ColorDto(Colors.yellow), ColorDto(Colors.green)]),
-        ),
-      );
-      expect(
-          boxDecorationDto.boxShadow,
-          equals([
-            const BoxShadowDto(color: ColorDto(Colors.black), blurRadius: 4.0)
-          ]));
+      expect(decoration1.gradient, linearGradientDto);
+      expect(decoration1.color, isNull);
+      expect(decoration1.shape, const CircleBorderDto());
+      expect(decoration1.shadows, [boxShadow.toDto()]);
+
+      expect(resolvedValue.gradient, linearGradient);
+      expect(resolvedValue.color, isNull);
+      expect(resolvedValue.shape, const CircleBorder());
+      expect(resolvedValue.shadows, [boxShadow]);
     });
-
-    test(
-        'toBoxDecorationDto returns original ShapeDecorationDto for unsupported ShapeBorder',
-        () {
-      final shapeDecorationDto = ShapeDecorationDto(
-        color: const ColorDto(Colors.blue),
-        shape: BeveledRectangleBorderDto(
-          borderRadius: BorderRadiusGeometryDto.from(
-            const BorderRadius.all(
-              Radius.circular(10),
-            ),
-          ),
-          side: const BorderSideDto(color: ColorDto(Colors.red), width: 2.0),
-        ),
-        gradient: const LinearGradientDto(
-            colors: [ColorDto(Colors.yellow), ColorDto(Colors.green)]),
-        shadows: const [
-          BoxShadowDto(color: ColorDto(Colors.black), blurRadius: 4.0)
-        ],
-      );
-
-      final boxDecorationDto = shapeDecorationDto.toBoxDecorationDto();
-
-      expect(boxDecorationDto.color, equals(shapeDecorationDto.color));
-      expect(boxDecorationDto.shape, isNull);
-      expect(boxDecorationDto.borderRadius, isNull);
-      expect(boxDecorationDto.border, isNull);
-      expect(boxDecorationDto.gradient, equals(shapeDecorationDto.gradient));
-      expect(boxDecorationDto.boxShadow, equals(shapeDecorationDto.boxShadow));
+    test('Equality holds when all properties are the same', () {
+      final decoration1 = ShapeDecorationDto(color: Colors.red.toDto());
+      final decoration2 = ShapeDecorationDto(color: Colors.red.toDto());
+      expect(decoration1, decoration2);
     });
-  });
-  test('resolve returns correct ShapeDecoration with default values', () {
-    const shapeDecoration = ShapeDecoration(shape: CircleBorder());
-    const attr = ShapeDecorationDto(shape: CircleBorderDto());
-
-    final decoration = attr.resolve(EmptyMixData);
-    expect(decoration, shapeDecoration);
-  });
-  test('resolve returns correct ShapeDecoration with specific values', () {
-    final boxShadow = RandomGenerator.boxShadow();
-
-    final decoration1 = ShapeDecorationDto(
-      shape: const CircleBorderDto(),
-      gradient: linearGradientDto,
-      shadows: [boxShadow.toDto()],
-    );
-
-    final resolvedValue = decoration1.resolve(EmptyMixData);
-
-    expect(decoration1.gradient, linearGradientDto);
-    expect(decoration1.color, isNull);
-    expect(decoration1.shape, const CircleBorderDto());
-    expect(decoration1.shadows, [boxShadow.toDto()]);
-
-    expect(resolvedValue.gradient, linearGradient);
-    expect(resolvedValue.color, isNull);
-    expect(resolvedValue.shape, const CircleBorder());
-    expect(resolvedValue.shadows, [boxShadow]);
-  });
-  test('Equality holds when all properties are the same', () {
-    final decoration1 = ShapeDecorationDto(color: Colors.red.toDto());
-    final decoration2 = ShapeDecorationDto(color: Colors.red.toDto());
-    expect(decoration1, decoration2);
-  });
-  test('Equality fails when properties are different', () {
-    final decoration1 = ShapeDecorationDto(color: Colors.red.toDto());
-    final decoration2 = ShapeDecorationDto(color: Colors.blue.toDto());
-    expect(decoration1, isNot(decoration2));
+    test('Equality fails when properties are different', () {
+      final decoration1 = ShapeDecorationDto(color: Colors.red.toDto());
+      final decoration2 = ShapeDecorationDto(color: Colors.blue.toDto());
+      expect(decoration1, isNot(decoration2));
+    });
   });
 
   group('DecorationDto Merge Tests', () {
@@ -263,7 +139,6 @@ void main() {
       expect(merged.boxShadow, [otherBoxShadowDto]);
     });
 
-    // Test for merging two ShapeDecorationDto instances
     test('ShapeDecorationDto merges with another ShapeDecorationDto', () {
       const shapeDeco1 = ShapeDecorationDto(
         color: ColorDto(Colors.red),
@@ -278,7 +153,53 @@ void main() {
         shadows: [otherBoxShadowDto],
       );
 
-      final merged = shapeDeco1.merge(shapeDeco2) as ShapeDecorationDto;
+      final merged = shapeDeco1.merge(shapeDeco2);
+
+      expect(merged, isA<ShapeDecorationDto>());
+      expect(merged.shape, isA<BeveledRectangleBorderDto>());
+      expect(merged.color, const ColorDto(Colors.blue));
+      expect(merged.gradient, otherLinearGradientDto);
+      expect(merged.shadows, [otherBoxShadowDto]);
+    });
+
+    test('ShapeDecorationDto merges with BoxDecorationDto', () {
+      const shapeDeco = ShapeDecorationDto(
+        color: ColorDto(Colors.red),
+        shape: CircleBorderDto(),
+        gradient: linearGradientDto,
+        shadows: [boxShadowDto],
+      );
+      const boxDeco = BoxDecorationDto(
+        color: ColorDto(Colors.blue),
+        gradient: otherLinearGradientDto,
+        boxShadow: [otherBoxShadowDto],
+      );
+
+      final merged = const DecorationMergeDtoStrategy(shapeDeco, boxDeco)
+          .merge() as BoxDecorationDto;
+
+      expect(merged, isA<BoxDecorationDto>());
+      expect(merged.shape, BoxShape.circle);
+      expect(merged.color, const ColorDto(Colors.blue));
+      expect(merged.gradient, otherLinearGradientDto);
+      expect(merged.boxShadow, [otherBoxShadowDto]);
+    });
+
+    test('BoxDecorationDto merges with ShapeDecorationDto', () {
+      const boxDeco = BoxDecorationDto(
+        color: ColorDto(Colors.red),
+        gradient: linearGradientDto,
+        boxShadow: [boxShadowDto],
+      );
+      const shapeDeco = ShapeDecorationDto(
+        color: ColorDto(Colors.blue),
+        shape: RoundedRectangleBorderDto(),
+        gradient: otherLinearGradientDto,
+        shadows: [otherBoxShadowDto],
+      );
+
+      final merged = const DecorationMergeDtoStrategy(boxDeco, shapeDeco)
+          .merge() as ShapeDecorationDto;
 
       expect(merged, isA<ShapeDecorationDto>());
       expect(merged.shape, isA<RoundedRectangleBorderDto>());
@@ -288,182 +209,182 @@ void main() {
     });
   });
 
-  group('toShapeDecorationDto', () {
-    test('converts BoxShape.circle correctly', () {
-      const boxDecorationDto = BoxDecorationDto(
+  test('Advanced behavior', () {
+    final boxDecorStyle = Style(
+      $box.color(Colors.green),
+      $box.border.all(color: Colors.red),
+      $box.padding.vertical(5),
+      $box.padding.horizontal(10),
+    );
+
+    final shapeDecorStyle = boxDecorStyle.add(
+      $box.shapeDecoration.shape.circle(),
+    );
+
+    final ctx = MockBuildContext();
+
+    final boxDecorSpec = BoxSpec.from(
+      boxDecorStyle.of(ctx),
+    ).decoration as BoxDecoration?;
+
+    final shapeDecorSpec = BoxSpec.from(
+      shapeDecorStyle.of(ctx),
+    ).decoration as ShapeDecoration?;
+
+    expect((boxDecorSpec!.color), Colors.green);
+    expect((boxDecorSpec.border), isA<BoxBorder>());
+
+    expect((shapeDecorSpec!.color), Colors.green);
+    expect((shapeDecorSpec.shape), isA<CircleBorder>());
+    // expect(
+    //   (shapeDecorSpec.shape),
+    //   const CircleBorder(
+    //     side: BorderSide(color: Colors.red),
+    //   ),
+    // );
+  });
+
+  group('DecorationMergeDtoStrategy', () {
+    const linearGradientDto = LinearGradientDto(
+      colors: [ColorDto(Colors.red), ColorDto(Colors.blue)],
+    );
+    const otherLinearGradientDto = LinearGradientDto(
+      colors: [ColorDto(Colors.yellow), ColorDto(Colors.green)],
+    );
+
+    const boxShadowDto = BoxShadowDto(
+      color: ColorDto(Colors.black),
+      offset: Offset(1, 1),
+      blurRadius: 5.0,
+      spreadRadius: 5.0,
+    );
+    const otherBoxShadowDto = BoxShadowDto(
+      color: ColorDto(Colors.black),
+      offset: Offset(2, 2),
+      blurRadius: 10.0,
+      spreadRadius: 10.0,
+    );
+    test('merges two BoxDecorationDto instances correctly', () {
+      const boxDeco1 = BoxDecorationDto(
+        color: ColorDto(Colors.red),
+        gradient: linearGradientDto,
+        boxShadow: [boxShadowDto],
+      );
+      const boxDeco2 = BoxDecorationDto(
         color: ColorDto(Colors.blue),
-        shape: BoxShape.circle,
-        border: BoxBorderDto.fromSide(
-            BorderSideDto(color: ColorDto(Colors.red), width: 2.0)),
-        gradient: LinearGradientDto(
-            colors: [ColorDto(Colors.yellow), ColorDto(Colors.green)]),
-        boxShadow: [
-          BoxShadowDto(color: ColorDto(Colors.black), blurRadius: 4.0)
-        ],
+        gradient: otherLinearGradientDto,
+        boxShadow: [otherBoxShadowDto],
       );
 
-      final shapeDecorationDto = boxDecorationDto.toShapeDecorationDto();
+      const strategy = DecorationMergeDtoStrategy(boxDeco1, boxDeco2);
+      final merged = strategy.merge() as BoxDecorationDto;
 
-      expect(
-        shapeDecorationDto.color,
-        equals(
-          const ColorDto(Colors.blue),
-        ),
-      );
-      expect(
-          shapeDecorationDto.shape,
-          equals(
-            const CircleBorderDto(
-              side: BorderSideDto(color: ColorDto(Colors.red), width: 2.0),
-            ),
-          ));
-      expect(
-        shapeDecorationDto.gradient,
-        equals(
-          const LinearGradientDto(
-              colors: [ColorDto(Colors.yellow), ColorDto(Colors.green)]),
-        ),
-      );
-      expect(
-          shapeDecorationDto.shadows,
-          equals([
-            const BoxShadowDto(color: ColorDto(Colors.black), blurRadius: 4.0)
-          ]));
+      expect(merged, isA<BoxDecorationDto>());
+      expect(merged.color, const ColorDto(Colors.blue));
+      expect(merged.gradient, otherLinearGradientDto);
+      expect(merged.boxShadow, [otherBoxShadowDto]);
     });
 
-    test('converts BoxShape.rectangle correctly', () {
-      final boxDecorationDto = BoxDecorationDto(
-        color: const ColorDto(Colors.blue),
-        shape: BoxShape.rectangle,
-        borderRadius: BorderRadiusGeometryDto.from(BorderRadius.circular(10)),
-        border: const BoxBorderDto.fromSide(
-            BorderSideDto(color: ColorDto(Colors.red), width: 2.0)),
-        gradient: const LinearGradientDto(
-            colors: [ColorDto(Colors.yellow), ColorDto(Colors.green)]),
-        boxShadow: const [
-          BoxShadowDto(color: ColorDto(Colors.black), blurRadius: 4.0)
-        ],
+    test('merges two ShapeDecorationDto instances correctly', () {
+      const shapeDeco1 = ShapeDecorationDto(
+        color: ColorDto(Colors.red),
+        shape: RoundedRectangleBorderDto(),
+        gradient: linearGradientDto,
+        shadows: [boxShadowDto],
       );
-
-      final shapeDecorationDto = boxDecorationDto.toShapeDecorationDto();
-
-      expect(
-        shapeDecorationDto.color,
-        equals(
-          const ColorDto(Colors.blue),
-        ),
-      );
-      expect(
-        shapeDecorationDto.shape,
-        equals(RoundedRectangleBorderDto(
-          borderRadius: BorderRadiusGeometryDto.from(BorderRadius.circular(10)),
-          side: const BorderSideDto(color: ColorDto(Colors.red), width: 2.0),
-        )),
-      );
-      expect(
-        shapeDecorationDto.gradient,
-        equals(
-          const LinearGradientDto(
-              colors: [ColorDto(Colors.yellow), ColorDto(Colors.green)]),
-        ),
-      );
-      expect(
-          shapeDecorationDto.shadows,
-          equals([
-            const BoxShadowDto(color: ColorDto(Colors.black), blurRadius: 4.0)
-          ]));
-    });
-
-    test('handles null values correctly', () {
-      const boxDecorationDto = BoxDecorationDto(
-        color: null,
-        shape: null,
-        borderRadius: null,
-        border: null,
-        gradient: null,
-        boxShadow: null,
-      );
-
-      final shapeDecorationDto = boxDecorationDto.toShapeDecorationDto();
-
-      expect(shapeDecorationDto.color, isNull);
-      expect(shapeDecorationDto.shape, isNull);
-      expect(shapeDecorationDto.gradient, isNull);
-      expect(shapeDecorationDto.shadows, isNull);
-    });
-
-    test('converts BoxShape.rectangle with uniform border correctly', () {
-      const boxDecorationDto = BoxDecorationDto(
+      const shapeDeco2 = ShapeDecorationDto(
         color: ColorDto(Colors.blue),
-        shape: BoxShape.rectangle,
-        border: BoxBorderDto.fromSide(
-          BorderSideDto(color: ColorDto(Colors.red), width: 2.0),
-        ),
-        gradient: LinearGradientDto(
-            colors: [ColorDto(Colors.yellow), ColorDto(Colors.green)]),
-        boxShadow: [
-          BoxShadowDto(color: ColorDto(Colors.black), blurRadius: 4.0)
-        ],
+        shape: BeveledRectangleBorderDto(),
+        gradient: otherLinearGradientDto,
+        shadows: [otherBoxShadowDto],
       );
 
-      final shapeDecorationDto = boxDecorationDto.toShapeDecorationDto();
+      const strategy = DecorationMergeDtoStrategy(shapeDeco1, shapeDeco2);
+      final merged = strategy.merge() as ShapeDecorationDto;
 
-      expect(
-        shapeDecorationDto.color,
-        equals(
-          const ColorDto(Colors.blue),
-        ),
-      );
-      expect(
-        shapeDecorationDto.shape,
-        equals(const RoundedRectangleBorderDto(
-          side: BorderSideDto(color: ColorDto(Colors.red), width: 2.0),
-        )),
-      );
-      expect(
-        shapeDecorationDto.gradient,
-        equals(
-          const LinearGradientDto(
-            colors: [ColorDto(Colors.yellow), ColorDto(Colors.green)],
-          ),
-        ),
-      );
-      expect(
-          shapeDecorationDto.shadows,
-          equals([
-            const BoxShadowDto(color: ColorDto(Colors.black), blurRadius: 4.0)
-          ]));
+      expect(merged, isA<ShapeDecorationDto>());
+      expect(merged.shape, isA<BeveledRectangleBorderDto>());
+      expect(merged.color, const ColorDto(Colors.blue));
+      expect(merged.gradient, otherLinearGradientDto);
+      expect(merged.shadows, [otherBoxShadowDto]);
     });
 
-    test('throws assertion error for non-uniform border with BoxShape.circle',
-        () {
-      const boxDecorationDto = BoxDecorationDto(
+    test('merges ShapeDecorationDto with BoxDecorationDto correctly', () {
+      const shapeDeco = ShapeDecorationDto(
+        color: ColorDto(Colors.red),
+        shape: CircleBorderDto(),
+        gradient: linearGradientDto,
+        shadows: [boxShadowDto],
+      );
+      const boxDeco = BoxDecorationDto(
         color: ColorDto(Colors.blue),
-        shape: BoxShape.circle,
-        border: BoxBorderDto(
-          top: BorderSideDto(color: ColorDto(Colors.red), width: 2.0),
-          bottom: BorderSideDto(color: ColorDto(Colors.green), width: 4.0),
-        ),
+        gradient: otherLinearGradientDto,
+        boxShadow: [otherBoxShadowDto],
       );
 
-      expect(() => boxDecorationDto.toShapeDecorationDto(),
-          throwsA(isA<AssertionError>()));
+      const strategy = DecorationMergeDtoStrategy(shapeDeco, boxDeco);
+      final merged =
+          strategy.mergeStrategy(shapeDeco, boxDeco) as BoxDecorationDto;
+
+      expect(merged, isA<BoxDecorationDto>());
+      expect(merged.shape, BoxShape.circle);
+      expect(merged.color, const ColorDto(Colors.blue));
+      expect(merged.gradient, otherLinearGradientDto);
+      expect(merged.boxShadow, [otherBoxShadowDto]);
     });
 
-    test(
-        'throws assertion error for non-uniform border with BoxShape.rectangle',
-        () {
-      const boxDecorationDto = BoxDecorationDto(
+    test('merges BoxDecorationDto with ShapeDecorationDto correctly', () {
+      const boxDeco = BoxDecorationDto(
+        color: ColorDto(Colors.red),
+        gradient: linearGradientDto,
+        boxShadow: [boxShadowDto],
+      );
+      const shapeDeco = ShapeDecorationDto(
         color: ColorDto(Colors.blue),
-        shape: BoxShape.rectangle,
-        border: BoxBorderDto(
-          top: BorderSideDto(color: ColorDto(Colors.red), width: 2.0),
-          bottom: BorderSideDto(color: ColorDto(Colors.green), width: 4.0),
-        ),
+        shape: RoundedRectangleBorderDto(),
+        gradient: otherLinearGradientDto,
+        shadows: [otherBoxShadowDto],
       );
 
-      expect(() => boxDecorationDto.toShapeDecorationDto(),
-          throwsA(isA<AssertionError>()));
+      const strategy = DecorationMergeDtoStrategy(boxDeco, shapeDeco);
+      final merged =
+          strategy.mergeStrategy(boxDeco, shapeDeco) as ShapeDecorationDto;
+
+      expect(merged, isA<ShapeDecorationDto>());
+      expect(merged.shape, isA<RoundedRectangleBorderDto>());
+      expect(merged.color, const ColorDto(Colors.blue));
+      expect(merged.gradient, otherLinearGradientDto);
+      expect(merged.shadows, [otherBoxShadowDto]);
+    });
+
+    test('throws MergeStrategyException for incompatible types', () {
+      const boxDeco = BoxDecorationDto();
+      const otherDto = _OtherDecorationDto();
+
+      const strategy = DecorationMergeDtoStrategy(boxDeco, otherDto);
+
+      expect(
+        () => strategy.mergeStrategy(boxDeco, otherDto),
+        throwsA(isA<MergeStrategyException>()),
+      );
     });
   });
+}
+
+class _OtherDecorationDto extends DecorationDto {
+  const _OtherDecorationDto()
+      : super(color: null, gradient: null, boxShadow: null);
+
+  @override
+  DecorationDto merge(DecorationDto? other) {
+    throw UnimplementedError();
+  }
+
+  @override
+  Decoration resolve(MixData mix) {
+    throw UnimplementedError();
+  }
+
+  @override
+  get props => [];
 }
