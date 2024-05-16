@@ -178,7 +178,7 @@ class StyledTextField extends StyledWidget {
       builder: (context) {
         final inputDecoration = InputDecorationSpec.of(context);
 
-        return shouldApplyDecorators(
+        return shouldApplyModifiers(
           child: TextField(
             decoration: InputDecoration(
               border: inputDecoration.border,
@@ -197,7 +197,7 @@ class StyledTextField extends StyledWidget {
 
 The `StyledWidgetBuilder` is a class that extends `StyledWidget`. The `build` method uses the `withMix` method to transform the style received from StyledTextField to a `MixData`, it also verify if exist some inheritable attributes from the parent widgets, but it's just happen if the `inherit` property is `true`. With the `MixData` instance in hands, you can use the `InputDecorationSpec.of` method to get the `InputDecorationSpec` from the `MixData`, now you are able to apply the `InputDecorationSpec` to the `TextField` and return it.
 
-Note that the `shouldApplyDecorators` method was used in the `build` method before the `TextField`, it's a method that make available the `decorators attributes` be applied to the widget.
+Note that the `shouldApplyModifiers` method was used in the `build` method before the `TextField`, it's a method that make available the `modifiers attributes` be applied to the widget.
 
 Now you already ready to use the `StyledTextField` in your app and customize the `InputDecoration` of the `TextField` with Mix.
 

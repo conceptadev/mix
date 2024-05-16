@@ -39,7 +39,7 @@ class Box extends StyledWidget {
     super.key,
     super.inherit,
     this.child,
-    super.orderOfDecorators = const [],
+    super.orderOfModifiers = const [],
   });
 
   /// The child widget that will receive the styles.

@@ -45,7 +45,7 @@ void main() {
       expect(imageWidget.colorBlendMode, BlendMode.colorDodge);
     });
 
-    testWidgets('can receive a decorator', (WidgetTester tester) async {
+    testWidgets('can receive a modifier', (WidgetTester tester) async {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -92,7 +92,7 @@ void main() {
     );
 
     testWidgets(
-      'StyleImage should apply decorators only once',
+      'StyleImage should apply modifiers only once',
       (tester) async {
         await tester.pumpMaterialApp(
           StyledImage(

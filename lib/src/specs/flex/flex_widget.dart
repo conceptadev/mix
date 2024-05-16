@@ -33,7 +33,7 @@ class StyledFlex extends StyledWidget {
     super.inherit,
     required this.direction,
     this.children = const <Widget>[],
-    super.orderOfDecorators = const [],
+    super.orderOfModifiers = const [],
   });
 
   final List<Widget> children;
@@ -170,7 +170,7 @@ class FlexBox extends StyledWidget {
     super.inherit,
     required this.direction,
     required this.children,
-    super.orderOfDecorators = const [],
+    super.orderOfModifiers = const [],
   });
 
   final List<Widget> children;

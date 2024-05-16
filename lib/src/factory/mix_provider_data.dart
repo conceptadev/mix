@@ -4,8 +4,8 @@ import 'package:meta/meta.dart';
 import '../attributes/variant_attribute.dart';
 import '../core/attribute.dart';
 import '../core/attributes_map.dart';
-import '../core/decorator.dart';
 import '../core/extensions/iterable_ext.dart';
+import '../core/modifier.dart';
 import '../helpers/compare_mixin.dart';
 import '../helpers/constants.dart';
 import '../theme/token_resolver.dart';
@@ -14,12 +14,12 @@ import 'style_mix.dart';
 
 /// This class is used for encapsulating all [MixData] related operations.
 /// It contains a mixture of properties and methods useful for handling different attributes,
-/// decorators and token resolvers.
+/// modifiers and token resolvers.
 @immutable
 class MixData {
   final AnimatedData? animation;
 
-  // Instance variables for widget attributes, widget decorators and token resolver.
+  // Instance variables for widget attributes, widget modifiers and token resolver.
   final AttributeMap _attributes;
 
   final MixTokenResolver _tokenResolver;
@@ -63,7 +63,7 @@ class MixData {
   @internal
   MixData toInheritable() {
     final inheritableAttributes = _attributes.values.where(
-      (attr) => attr is! DecoratorAttribute,
+      (attr) => attr is! WidgetModifierAttribute,
     );
 
     return copyWith(attributes: AttributeMap(inheritableAttributes));

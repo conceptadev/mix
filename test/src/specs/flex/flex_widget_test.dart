@@ -136,7 +136,7 @@ void main() {
   );
 
   testWidgets(
-    'VBox should apply decorators only once',
+    'VBox should apply modifiers only once',
     (tester) async {
       await tester.pumpMaterialApp(
         VBox(
@@ -158,7 +158,7 @@ void main() {
   );
 
   testWidgets(
-    'HBox should apply decorators only once',
+    'HBox should apply modifiers only once',
     (tester) async {
       await tester.pumpMaterialApp(
         HBox(
@@ -180,7 +180,7 @@ void main() {
   );
 
   testWidgets(
-    'StyledRow should apply decorators only once',
+    'StyledRow should apply modifiers only once',
     (tester) async {
       await tester.pumpMaterialApp(
         VBox(
@@ -202,7 +202,7 @@ void main() {
   );
 
   testWidgets(
-    'StyledColumn should apply decorators only once',
+    'StyledColumn should apply modifiers only once',
     (tester) async {
       await tester.pumpMaterialApp(
         StyledColumn(
@@ -224,7 +224,7 @@ void main() {
   );
 
   testWidgets(
-    'StyledFlex should apply decorators only once',
+    'StyledFlex should apply modifiers only once',
     (tester) async {
       await tester.pumpMaterialApp(
         StyledFlex(
@@ -247,7 +247,7 @@ void main() {
   );
 
   testWidgets(
-    'FlexBox should apply decorators only once',
+    'FlexBox should apply modifiers only once',
     (tester) async {
       await tester.pumpMaterialApp(
         FlexBox(

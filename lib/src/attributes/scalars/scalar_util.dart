@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../core/attribute.dart';
-import '../../core/decorator.dart';
 import '../../core/dto.dart';
+import '../../core/modifier.dart';
 import '../../theme/tokens/radius_token.dart';
 
 abstract class MixUtility<Attr extends Attribute, Value> {
@@ -22,11 +22,11 @@ abstract class SpecUtility<Attr extends Attribute, Value extends SpecAttribute>
   // SpecUtility<VariantAttribute, Value> call(Variant variant);
 }
 
-abstract class DecoratorUtility<
+abstract class WidgetModifierUtility<
     T extends Attribute,
-    D extends DecoratorAttribute<D, Value>,
-    Value extends DecoratorSpec<Value>> extends MixUtility<T, D> {
-  const DecoratorUtility(super.builder);
+    D extends WidgetModifierAttribute<D, Value>,
+    Value extends WidgetModifierSpec<Value>> extends MixUtility<T, D> {
+  const WidgetModifierUtility(super.builder);
 }
 
 abstract class DtoUtility<Attr extends Attribute, D extends Dto<Value>, Value>

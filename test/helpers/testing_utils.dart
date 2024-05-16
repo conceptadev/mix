@@ -307,21 +307,21 @@ class UtilityTestDtoAttribute<T extends Dto<V>, V>
   }
 }
 
-class CustomWidgetDecoratorSpec
-    extends DecoratorSpec<CustomWidgetDecoratorSpec> {
+class CustomWidgetModifierSpec
+    extends WidgetModifierSpec<CustomWidgetModifierSpec> {
   final bool value;
-  const CustomWidgetDecoratorSpec(this.value);
+  const CustomWidgetModifierSpec(this.value);
 
   @override
-  CustomWidgetDecoratorSpec copyWith({bool? value}) {
-    return CustomWidgetDecoratorSpec(value ?? this.value);
+  CustomWidgetModifierSpec copyWith({bool? value}) {
+    return CustomWidgetModifierSpec(value ?? this.value);
   }
 
   @override
-  CustomWidgetDecoratorSpec lerp(CustomWidgetDecoratorSpec? other, double t) {
+  CustomWidgetModifierSpec lerp(CustomWidgetModifierSpec? other, double t) {
     if (other == null) return this;
 
-    return CustomWidgetDecoratorSpec(lerpSnap(value, other.value, t) ?? value);
+    return CustomWidgetModifierSpec(lerpSnap(value, other.value, t) ?? value);
   }
 
   @override
@@ -333,19 +333,19 @@ class CustomWidgetDecoratorSpec
   }
 }
 
-class CustomDecoratorAttribute extends DecoratorAttribute<
-    CustomDecoratorAttribute, CustomWidgetDecoratorSpec> {
+class CustomModifierAttribute extends WidgetModifierAttribute<
+    CustomModifierAttribute, CustomWidgetModifierSpec> {
   final bool? value;
-  const CustomDecoratorAttribute([this.value = true]);
+  const CustomModifierAttribute([this.value = true]);
 
   @override
-  CustomWidgetDecoratorSpec resolve(MixData mix) {
-    return CustomWidgetDecoratorSpec(value ?? true);
+  CustomWidgetModifierSpec resolve(MixData mix) {
+    return CustomWidgetModifierSpec(value ?? true);
   }
 
   @override
-  CustomDecoratorAttribute merge(CustomDecoratorAttribute? other) {
-    return CustomDecoratorAttribute(other?.value ?? true);
+  CustomModifierAttribute merge(CustomModifierAttribute? other) {
+    return CustomModifierAttribute(other?.value ?? true);
   }
 
   @override
@@ -356,7 +356,7 @@ class WidgetWithTestableBuild extends StyledWidget {
   const WidgetWithTestableBuild(
     this.onBuild, {
     super.key,
-    super.orderOfDecorators = const [],
+    super.orderOfModifiers = const [],
   });
 
   final void Function(BuildContext context) onBuild;

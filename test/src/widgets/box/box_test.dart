@@ -127,7 +127,7 @@ void main() {
     );
 
     testWidgets(
-      'should create a RenderWidgetDecorators widget and all its decorators widgets in the decendant widget tree',
+      'should create a RenderWidgetModifiers widget and all its modifiers widgets in the decendant widget tree',
       (tester) async {
         const key = Key('box');
 
@@ -149,7 +149,7 @@ void main() {
         expect(
           find.descendant(
             of: find.byKey(key),
-            matching: find.byType(RenderDecorators),
+            matching: find.byType(RenderModifiers),
           ),
           findsOneWidget,
         );

@@ -1,5 +1,5 @@
 import '../attributes/scalars/scalar_util.dart';
-import '../decorators/widget_decorators_util.dart';
+import '../modifiers/widget_modifiers_util.dart';
 import '../utils/context_variant_util/on_util.dart';
 import 'box/box_util.dart';
 import 'flex/flex_util.dart';
@@ -14,7 +14,7 @@ final $image = ImageSpecUtility(MixUtility.selfBuilder);
 final $icon = IconSpecUtility(MixUtility.selfBuilder);
 final $text = TextSpecUtility(MixUtility.selfBuilder);
 final $stack = StackSpecUtility(MixUtility.selfBuilder);
-final $with = WithDecoratorUtility();
+final $with = WithModifierUtility();
 final $on = OnContextVariantUtility();
 
 class AllMixUtilities {

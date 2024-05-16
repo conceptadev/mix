@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../decorators/widget_decorator_widget.dart';
 import '../factory/mix_provider.dart';
 import '../factory/mix_provider_data.dart';
 import '../factory/style_mix.dart';
+import '../modifiers/render_widget_modifier.dart';
 
 /// An abstract widget for applying custom styles.
 ///
@@ -20,7 +20,7 @@ abstract class StyledWidget extends StatelessWidget {
     Style? style,
     super.key,
     this.inherit = false,
-    required this.orderOfDecorators,
+    required this.orderOfModifiers,
   }) : style = style ?? const Style.empty();
 
   /// The style to apply to the widget.
@@ -35,7 +35,7 @@ abstract class StyledWidget extends StatelessWidget {
   /// [StyledWidget] ancestor in the widget tree. Defaults to false.
   final bool inherit;
 
-  final List<Type> orderOfDecorators;
+  final List<Type> orderOfModifiers;
 
   /// Applies a mix of inherited and local styles to the widget.
   ///
@@ -55,25 +55,25 @@ abstract class StyledWidget extends StatelessWidget {
 
     return MixProvider(
       data: mergedMix,
-      child: applyDecorators(
+      child: applyModifiers(
         mergedMix,
         Builder(builder: (newContext) => builder(newContext)),
       ),
     );
   }
 
-  Widget applyDecorators(MixData mix, Widget child) {
+  Widget applyModifiers(MixData mix, Widget child) {
     return mix.isAnimated
-        ? RenderAnimatedDecorators(
+        ? RenderAnimatedModifiers(
             mix: mix,
-            orderOfDecorators: orderOfDecorators,
+            orderOfModifiers: orderOfModifiers,
             duration: mix.animation!.duration,
             curve: mix.animation!.curve,
             child: child,
           )
-        : RenderDecorators(
+        : RenderModifiers(
             mix: mix,
-            orderOfDecorators: orderOfDecorators,
+            orderOfModifiers: orderOfModifiers,
             child: child,
           );
   }
@@ -93,7 +93,7 @@ class SpecBuilder extends StyledWidget {
     required this.builder,
     super.style,
     super.inherit,
-    super.orderOfDecorators = const [],
+    super.orderOfModifiers = const [],
     super.key,
   });
 

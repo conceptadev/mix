@@ -1,8 +1,8 @@
 import 'package:flutter/widgets.dart';
 
-import '../core/decorator.dart';
-import '../decorators/widget_decorator_widget.dart';
+import '../core/modifier.dart';
 import '../factory/mix_provider_data.dart';
+import '../modifiers/render_widget_modifier.dart';
 
 typedef FunctionWithParams<ParamT, ReturnT> = ReturnT Function(
   List<ParamT> params,
@@ -78,37 +78,37 @@ class SpreadFunctionParams<ParamT, ReturnT> {
   }
 }
 
-/// Conditionally applies decorators to [child] based on the presence of
-/// [DecoratorAttribute] in [mix].
+/// Conditionally applies modifiers to [child] based on the presence of
+/// [WidgetModifierAttribute] in [mix].
 ///
-/// If [mix] contains [DecoratorAttribute], this returns [child] wrapped in a
-/// [RenderDecorators] widget. The order of decorators is determined by
-/// [orderOfDecorators].
+/// If [mix] contains [WidgetModifierAttribute], this returns [child] wrapped in a
+/// [RenderModifiers] widget. The order of modifiers is determined by
+/// [orderOfModifiers].
 ///
-/// If [mix] does not contain [DecoratorAttribute], this returns [child]
+/// If [mix] does not contain [WidgetModifierAttribute], this returns [child]
 /// unmodified.
 ///
 /// Example:
 ///
 /// ```dart
-/// Widget myWidget = shouldApplyDecorators(
+/// Widget myWidget = shouldApplyModifiers(
 ///   mix: myMix,
 ///   child: Text('Hello'),
-///   orderOfDecorators: [BorderDecorator, ShadowDecorator],
+///   orderOfModifiers: [BorderModifier, ShadowModifier],
 /// );
 /// ```
-Widget shouldApplyDecorators({
+Widget shouldApplyModifiers({
   required MixData mix,
   required Widget child,
-  List<Type> orderOfDecorators = const [],
+  List<Type> orderOfModifiers = const [],
 }) {
-  final hasDecorators = mix.contains<DecoratorAttribute>();
+  final hasModifiers = mix.contains<WidgetModifierAttribute>();
 
-  if (!hasDecorators) return child;
+  if (!hasModifiers) return child;
 
-  return RenderDecorators(
+  return RenderModifiers(
     mix: mix,
-    orderOfDecorators: orderOfDecorators,
+    orderOfModifiers: orderOfModifiers,
     child: child,
   );
 }

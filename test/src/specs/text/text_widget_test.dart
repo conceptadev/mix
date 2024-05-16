@@ -6,7 +6,7 @@ import '../../../helpers/testing_utils.dart';
 
 void main() {
   testWidgets(
-    'StyledText should apply decorators only once',
+    'StyledText should apply modifiers only once',
     (tester) async {
       await tester.pumpMaterialApp(
         StyledText(

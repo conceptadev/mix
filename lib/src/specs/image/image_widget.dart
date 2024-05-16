@@ -20,7 +20,7 @@ class StyledImage extends StyledWidget {
     this.isAntiAlias = false,
     this.matchTextDirection = false,
     this.opacity,
-    super.orderOfDecorators = const [],
+    super.orderOfModifiers = const [],
   });
 
   final ImageProvider<Object> image;
@@ -76,7 +76,7 @@ class StyledImage extends StyledWidget {
 class ImageSpecWidget extends StatelessWidget {
   const ImageSpecWidget({
     super.key,
-    this.decoratorOrder = const [],
+    this.modifierOrder = const [],
     this.spec,
     required this.image,
     this.frameBuilder,
@@ -97,7 +97,7 @@ class ImageSpecWidget extends StatelessWidget {
   final ImageErrorWidgetBuilder? errorBuilder;
   final String? semanticLabel;
   final bool excludeFromSemantics;
-  final List<Type> decoratorOrder;
+  final List<Type> modifierOrder;
   final bool gaplessPlayback;
   final bool isAntiAlias;
   final bool matchTextDirection;

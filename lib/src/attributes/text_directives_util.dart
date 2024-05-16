@@ -6,7 +6,7 @@ import 'scalars/scalar_util.dart';
 class TextDirectiveUtility<T extends Attribute>
     extends MixUtility<T, TextDirective> {
   const TextDirectiveUtility(super.builder);
-  T _wrap(Modifier<String> modifier) => builder(TextDirective([modifier]));
+  T _wrap(TextModifier<String> modifier) => builder(TextDirective([modifier]));
 
   T capitalize() => _wrap(_capitalize);
   T uppercase() => _wrap(_uppercase);
@@ -14,7 +14,7 @@ class TextDirectiveUtility<T extends Attribute>
   T titleCase() => _wrap(_titleCase);
   T sentenceCase() => _wrap(_sentenceCase);
 
-  T call(Modifier<String> modifier) => builder(TextDirective([modifier]));
+  T call(TextModifier<String> modifier) => builder(TextDirective([modifier]));
 }
 
 String _capitalize(String value) => value.capitalize;
