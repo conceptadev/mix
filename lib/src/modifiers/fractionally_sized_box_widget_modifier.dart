@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 import '../attributes/scalars/scalar_util.dart';
 import '../core/attribute.dart';
-import '../core/decorator.dart';
+import '../core/modifier.dart';
 import '../factory/mix_provider_data.dart';
 
 class FractionallySizedBoxDecoratorSpec

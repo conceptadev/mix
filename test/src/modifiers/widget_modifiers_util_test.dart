@@ -6,7 +6,7 @@ import '../../empty_widget.dart';
 import '../../helpers/testing_utils.dart';
 
 void main() {
-  group('Decorators: ', () {
+  group('Modifiers: ', () {
     const aspectRatio = AspectRatioUtility(UtilityTestAttribute.new);
     const flexible = FlexibleDecoratorUtility(UtilityTestAttribute.new);
     const visibility = VisibilityUtility(UtilityTestAttribute.new);
@@ -87,9 +87,9 @@ void main() {
       final clipRRectDecorator =
           clipRRect(borderRadius: BorderRadius.circular(10.0));
 
-      final decorator = clipRRectDecorator.value;
+      final modifier = clipRRectDecorator.value;
 
-      expect(decorator.borderRadius, BorderRadius.circular(10.0));
+      expect(modifier.borderRadius, BorderRadius.circular(10.0));
     });
 
     test('clipOval creates ClipOvalDecorator correctly', () {
@@ -195,7 +195,7 @@ void main() {
       expect(widget.alignment, Alignment.center);
     });
   });
-  group('Applying Decorators in Style', () {
+  group('Applying Modifiers in Style', () {
     testWidgets(
       'Applying an intrinsicHeight must add an IntrinsicHeight in widget tree',
       (tester) async {
@@ -429,8 +429,8 @@ class _TestableRenderDecorator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RenderDecorators(
-      orderOfDecorators: const [],
+    return RenderModifiers(
+      orderOfModifiers: const [],
       mix: MixData.create(
         context,
         style,

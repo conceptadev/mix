@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mix/src/modifiers/fractionally_sized_box_widget_decorator.dart';
+import 'package:mix/src/modifiers/fractionally_sized_box_widget_modifier.dart';
 
 import '../../helpers/testing_utils.dart';
 
@@ -10,13 +10,13 @@ void main() {
     test('Constructor assigns widthFactor and heightFactor correctly', () {
       const widthFactor = 0.5;
       const heightFactor = 0.5;
-      const decorator = FractionallySizedBoxDecoratorSpec(
+      const modifier = FractionallySizedBoxDecoratorSpec(
         widthFactor: widthFactor,
         heightFactor: heightFactor,
       );
 
-      expect(decorator.widthFactor, widthFactor);
-      expect(decorator.heightFactor, heightFactor);
+      expect(modifier.widthFactor, widthFactor);
+      expect(modifier.heightFactor, heightFactor);
     });
 
     test('Lerp method interpolates correctly', () {
@@ -35,23 +35,23 @@ void main() {
     });
 
     test('Equality and hashcode test', () {
-      const decorator1 = FractionallySizedBoxDecoratorSpec(
+      const modifier1 = FractionallySizedBoxDecoratorSpec(
         widthFactor: 0.5,
         heightFactor: 0.5,
       );
-      const decorator2 = FractionallySizedBoxDecoratorSpec(
+      const modifier2 = FractionallySizedBoxDecoratorSpec(
         widthFactor: 0.5,
         heightFactor: 0.5,
       );
-      const decorator3 = FractionallySizedBoxDecoratorSpec(
+      const modifier3 = FractionallySizedBoxDecoratorSpec(
         widthFactor: 0.5,
         heightFactor: 0.6,
       );
 
-      expect(decorator1, decorator2);
-      expect(decorator1.hashCode, decorator2.hashCode);
-      expect(decorator1 == decorator3, false);
-      expect(decorator1.hashCode == decorator3.hashCode, false);
+      expect(modifier1, modifier2);
+      expect(modifier1.hashCode, modifier2.hashCode);
+      expect(modifier1 == modifier3, false);
+      expect(modifier1.hashCode == modifier3.hashCode, false);
     });
 
     testWidgets(
@@ -59,13 +59,13 @@ void main() {
       (WidgetTester tester) async {
         const widthFactor = 0.5;
         const heightFactor = 0.5;
-        const decorator = FractionallySizedBoxDecoratorSpec(
+        const modifier = FractionallySizedBoxDecoratorSpec(
           widthFactor: widthFactor,
           heightFactor: heightFactor,
         );
 
         await tester.pumpMaterialApp(
-          decorator.build(Container()),
+          modifier.build(Container()),
         );
 
         final FractionallySizedBox fractionallySizedBoxWidget =
@@ -82,7 +82,7 @@ void main() {
   // FractionallySizedBoxDecoratorAttribute
   group('FractionallySizedBoxDecoratorAttribute', () {
     test('merge', () {
-      const decorator = FractionallySizedBoxDecoratorAttribute(
+      const modifier = FractionallySizedBoxDecoratorAttribute(
         widthFactor: 0.5,
         heightFactor: 0.5,
       );
@@ -90,21 +90,21 @@ void main() {
         widthFactor: 0.5,
         heightFactor: 0.5,
       );
-      final result = decorator.merge(other);
-      expect(result, decorator);
+      final result = modifier.merge(other);
+      expect(result, modifier);
     });
 
     test('resolve', () {
-      const decorator = FractionallySizedBoxDecoratorAttribute(
+      const modifier = FractionallySizedBoxDecoratorAttribute(
         widthFactor: 0.5,
         heightFactor: 0.5,
       );
-      final result = decorator.resolve(EmptyMixData);
+      final result = modifier.resolve(EmptyMixData);
       expect(result, isA<FractionallySizedBoxDecoratorSpec>());
     });
 
     test('equality', () {
-      const decorator = FractionallySizedBoxDecoratorAttribute(
+      const modifier = FractionallySizedBoxDecoratorAttribute(
         widthFactor: 0.5,
         heightFactor: 0.5,
       );
@@ -112,11 +112,11 @@ void main() {
         widthFactor: 0.5,
         heightFactor: 0.5,
       );
-      expect(decorator, other);
+      expect(modifier, other);
     });
 
     test('inequality', () {
-      const decorator = FractionallySizedBoxDecoratorAttribute(
+      const modifier = FractionallySizedBoxDecoratorAttribute(
         widthFactor: 0.5,
         heightFactor: 0.5,
       );
@@ -124,7 +124,7 @@ void main() {
         widthFactor: 0.5,
         heightFactor: 0.6,
       );
-      expect(decorator, isNot(equals(other)));
+      expect(modifier, isNot(equals(other)));
     });
   });
 }

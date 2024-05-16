@@ -32,9 +32,9 @@ The `MixContextBuilder` was renamed to `SpecBuilder` to better reflect its purpo
 
 To enhance readability, short aliases and shorthand property/method names are replaced with fully named counterparts. You can find the full list of removed aliases in the [deprecations file](https://github.com/conceptadev/mix/blob/main/lib/src/deprecations.dart)
 
-#### Decorators
+#### Modifiers
 
-Decorators' order was previously determined by their addition sequence. Now, we enforce specific ordering but also allow customizable orders. This might cause behavior changes in rare cases. For details, refer to the [modifiers guide](https://fluttermix.com/docs/guides/modifiers).
+Modifiers' order was previously determined by their addition sequence. Now, we enforce specific ordering but also allow customizable orders. This might cause behavior changes in rare cases. For details, refer to the [modifiers guide](https://fluttermix.com/docs/guides/modifiers).
 
 ### StyledWidgets updates
 
@@ -45,17 +45,17 @@ Keep in mind that the ideia is to reserve the old `Pressable` to more advanced c
 
 ### Behavior changes
 
-#### Decorators
+#### Modifiers
 
-Decorators cannot be inherited by any children. The reason is that abstract class `Attribute` has gained a new property, `isInheritable`, which can be set to false if you want your custom attributes to be non-inheritable, such as Decorators.
+Modifiers cannot be inherited by any children. The reason is that abstract class `Attribute` has gained a new property, `isInheritable`, which can be set to false if you want your custom attributes to be non-inheritable, such as Modifiers.
 
 #### Operators `and` (`&`) and `or` (`|`)
 
 The operators have been redesigned to allow for concatenation and grouping, enabling the creation of conditions like, `(primary | secondary) & onHover`. For details, refer to the [variants guide](https://www.fluttermix.com/docs/guides/variants#combining-operators)
 
-#### StyledWidgets and Decorators
+#### StyledWidgets and Modifiers
 
-A bunch of `StyledWidgets` are now allow to receive modifiers' attributes, including `StyledIcon`, `StyledFlex` and `StyledIcon`. Additionally, when a decorator is not applied to a Style, a `RenderWidgetDecorators` will not be present in the widget tree. This simplification makes the widget easier to debug.
+A bunch of `StyledWidgets` are now allow to receive modifiers' attributes, including `StyledIcon`, `StyledFlex` and `StyledIcon`. Additionally, when a modifier is not applied to a Style, a `RenderWidgetModifiers` will not be present in the widget tree. This simplification makes the widget easier to debug.
 
 #### Theming
 

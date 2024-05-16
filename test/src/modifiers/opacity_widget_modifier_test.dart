@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mix/src/modifiers/opacity_widget_decorator.dart';
+import 'package:mix/src/modifiers/opacity_widget_modifier.dart';
 
 import '../../helpers/testing_utils.dart';
 
@@ -8,9 +8,9 @@ void main() {
   group('OpacityDecoratorSpec Tests', () {
     test('Constructor assigns opacity correctly', () {
       const opacity = 0.5;
-      const decorator = OpacityDecoratorSpec(opacity);
+      const modifier = OpacityDecoratorSpec(opacity);
 
-      expect(decorator.opacity, opacity);
+      expect(modifier.opacity, opacity);
     });
 
     test('Lerp method interpolates correctly', () {
@@ -22,23 +22,23 @@ void main() {
     });
 
     test('Equality and hashcode test', () {
-      const decorator1 = OpacityDecoratorSpec(0.5);
-      const decorator2 = OpacityDecoratorSpec(0.5);
-      const decorator3 = OpacityDecoratorSpec(0.8);
+      const modifier1 = OpacityDecoratorSpec(0.5);
+      const modifier2 = OpacityDecoratorSpec(0.5);
+      const modifier3 = OpacityDecoratorSpec(0.8);
 
-      expect(decorator1, decorator2);
-      expect(decorator1.hashCode, decorator2.hashCode);
-      expect(decorator1 == decorator3, false);
-      expect(decorator1.hashCode == decorator3.hashCode, false);
+      expect(modifier1, modifier2);
+      expect(modifier1.hashCode, modifier2.hashCode);
+      expect(modifier1 == modifier3, false);
+      expect(modifier1.hashCode == modifier3.hashCode, false);
     });
 
     testWidgets(
       'Build method creates Opacity widget with correct opacity',
       (WidgetTester tester) async {
         const opacity = 0.5;
-        const decorator = OpacityDecoratorSpec(opacity);
+        const modifier = OpacityDecoratorSpec(opacity);
 
-        await tester.pumpMaterialApp(decorator.build(Container()));
+        await tester.pumpMaterialApp(modifier.build(Container()));
 
         final Opacity opacityWidget = tester.widget(find.byType(Opacity));
 
@@ -51,28 +51,28 @@ void main() {
 
   group('OpacityDecoratorAttribute', () {
     test('merge', () {
-      const decorator = OpacityDecoratorAttribute(0.5);
+      const modifier = OpacityDecoratorAttribute(0.5);
       const other = OpacityDecoratorAttribute(0.5);
-      final result = decorator.merge(other);
-      expect(result, decorator);
+      final result = modifier.merge(other);
+      expect(result, modifier);
     });
 
     test('resolve', () {
-      const decorator = OpacityDecoratorAttribute(0.5);
-      final result = decorator.resolve(EmptyMixData);
+      const modifier = OpacityDecoratorAttribute(0.5);
+      final result = modifier.resolve(EmptyMixData);
       expect(result, isA<OpacityDecoratorSpec>());
     });
 
     test('equality', () {
-      const decorator = OpacityDecoratorAttribute(0.5);
+      const modifier = OpacityDecoratorAttribute(0.5);
       const other = OpacityDecoratorAttribute(0.5);
-      expect(decorator, other);
+      expect(modifier, other);
     });
 
     test('inequality', () {
-      const decorator = OpacityDecoratorAttribute(0.5);
+      const modifier = OpacityDecoratorAttribute(0.5);
       const other = OpacityDecoratorAttribute(0.8);
-      expect(decorator == other, false);
+      expect(modifier == other, false);
     });
   });
 }

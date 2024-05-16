@@ -12,7 +12,7 @@ class StyledIcon extends StyledWidget {
     super.key,
     super.inherit = true,
     this.textDirection,
-    super.orderOfDecorators = const [],
+    super.orderOfModifiers = const [],
   });
 
   final IconData? icon;
@@ -51,14 +51,14 @@ class IconSpecWidget extends StatelessWidget {
     this.semanticLabel,
     super.key,
     this.textDirection,
-    this.decoratorOrder = const [],
+    this.modifierOrder = const [],
   });
 
   final IconData? icon;
   final IconSpec? spec;
   final String? semanticLabel;
   final TextDirection? textDirection;
-  final List<Type> decoratorOrder;
+  final List<Type> modifierOrder;
 
   @override
   Widget build(BuildContext context) {
@@ -86,7 +86,7 @@ class AnimatedStyledIcon extends StyledWidget {
     required this.progress,
     super.inherit,
     this.textDirection,
-    super.orderOfDecorators = const [],
+    super.orderOfModifiers = const [],
   });
 
   final AnimatedIconData icon;
@@ -118,7 +118,7 @@ class AnimatedIconSpecWidget extends ImplicitlyAnimatedWidget {
     super.key,
     this.semanticLabel,
     this.textDirection,
-    this.decoratorOrder = const [],
+    this.modifierOrder = const [],
     Curve curve = Curves.linear,
     required Duration duration,
     VoidCallback? onEnd,
@@ -128,7 +128,7 @@ class AnimatedIconSpecWidget extends ImplicitlyAnimatedWidget {
   final IconSpec spec;
   final String? semanticLabel;
   final TextDirection? textDirection;
-  final List<Type> decoratorOrder;
+  final List<Type> modifierOrder;
 
   @override
   // ignore: library_private_types_in_public_api

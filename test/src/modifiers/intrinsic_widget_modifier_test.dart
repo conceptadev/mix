@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mix/src/modifiers/intrinsic_widget_decorator.dart';
+import 'package:mix/src/modifiers/intrinsic_widget_modifier.dart';
 
 import '../../helpers/testing_utils.dart';
 
@@ -21,9 +21,9 @@ void main() {
     });
 
     testWidgets('build', (tester) async {
-      const decorator = IntrinsicHeightDecoratorSpec();
+      const modifier = IntrinsicHeightDecoratorSpec();
 
-      await tester.pumpMaterialApp(decorator.build(Container()));
+      await tester.pumpMaterialApp(modifier.build(Container()));
 
       final IntrinsicHeight intrinsicHeight =
           tester.widget(find.byType(IntrinsicHeight));
@@ -44,23 +44,23 @@ void main() {
   // IntrinsicHeightDecoratorAttribute
   group('IntrinsicHeightDecoratorAttribute', () {
     test('merge', () {
-      const decorator = IntrinsicHeightDecoratorAttribute();
+      const modifier = IntrinsicHeightDecoratorAttribute();
       const other = IntrinsicHeightDecoratorAttribute();
-      final result = decorator.merge(other);
-      expect(result, decorator);
+      final result = modifier.merge(other);
+      expect(result, modifier);
     });
 
     test('resolve', () {
-      const decorator = IntrinsicHeightDecoratorAttribute();
-      final result = decorator.resolve(EmptyMixData);
+      const modifier = IntrinsicHeightDecoratorAttribute();
+      final result = modifier.resolve(EmptyMixData);
       expect(result, isA<IntrinsicHeightDecoratorSpec>());
     });
 
     // equality
     test('equality', () {
-      const decorator = IntrinsicHeightDecoratorAttribute();
+      const modifier = IntrinsicHeightDecoratorAttribute();
       const other = IntrinsicHeightDecoratorAttribute();
-      expect(decorator, other);
+      expect(modifier, other);
     });
   });
 
@@ -87,9 +87,9 @@ void main() {
     });
 
     testWidgets('build', (tester) async {
-      const decorator = IntrinsicWidthDecoratorSpec();
+      const modifier = IntrinsicWidthDecoratorSpec();
 
-      await tester.pumpMaterialApp(decorator.build(Container()));
+      await tester.pumpMaterialApp(modifier.build(Container()));
 
       final IntrinsicWidth intrinsicWidth =
           tester.widget(find.byType(IntrinsicWidth));
@@ -103,23 +103,23 @@ void main() {
   // IntrinsicWidthDecoratorAttribute
   group('IntrinsicWidthDecoratorAttribute', () {
     test('merge', () {
-      const decorator = IntrinsicWidthDecoratorAttribute();
+      const modifier = IntrinsicWidthDecoratorAttribute();
       const other = IntrinsicWidthDecoratorAttribute();
-      final result = decorator.merge(other);
-      expect(result, decorator);
+      final result = modifier.merge(other);
+      expect(result, modifier);
     });
 
     test('resolve', () {
-      const decorator = IntrinsicWidthDecoratorAttribute();
-      final result = decorator.resolve(EmptyMixData);
+      const modifier = IntrinsicWidthDecoratorAttribute();
+      final result = modifier.resolve(EmptyMixData);
       expect(result, isA<IntrinsicWidthDecoratorSpec>());
     });
 
     // equality
     test('equality', () {
-      const decorator = IntrinsicWidthDecoratorAttribute();
+      const modifier = IntrinsicWidthDecoratorAttribute();
       const other = IntrinsicWidthDecoratorAttribute();
-      expect(decorator, other);
+      expect(modifier, other);
     });
   });
 }

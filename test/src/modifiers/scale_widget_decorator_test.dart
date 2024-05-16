@@ -8,11 +8,11 @@ void main() {
   group('ScaleDecoratorSpec', () {
     test('Constructor assigns scale correctly', () {
       const scale = 1.5;
-      final decorator = $with.transform.scale(scale);
+      final modifier = $with.transform.scale(scale);
 
-      final spec = decorator.resolve(
+      final spec = modifier.resolve(
         MockMixData(
-          Style(decorator),
+          Style(modifier),
         ),
       );
 
@@ -24,11 +24,11 @@ void main() {
       (WidgetTester tester) async {
         const scale = 1.5;
 
-        final decorator = $with.transform.scale(scale);
+        final modifier = $with.transform.scale(scale);
 
-        final spec = decorator.resolve(
+        final spec = modifier.resolve(
           MockMixData(
-            Style(decorator),
+            Style(modifier),
           ),
         );
 

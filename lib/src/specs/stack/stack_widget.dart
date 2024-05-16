@@ -23,7 +23,7 @@ class StyledStack extends StyledWidget {
     super.inherit,
     super.key,
     super.style,
-    super.orderOfDecorators = const [],
+    super.orderOfModifiers = const [],
   });
 
   final List<Widget> children;
@@ -76,7 +76,7 @@ class ZBox extends StyledWidget {
     super.inherit,
     super.key,
     super.style,
-    super.orderOfDecorators = const [],
+    super.orderOfModifiers = const [],
   });
 
   final List<Widget> children;

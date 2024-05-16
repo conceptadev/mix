@@ -45,7 +45,7 @@ void main() {
       expect(imageWidget.colorBlendMode, BlendMode.colorDodge);
     });
 
-    testWidgets('can receive a decorator', (WidgetTester tester) async {
+    testWidgets('can receive a modifier', (WidgetTester tester) async {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(

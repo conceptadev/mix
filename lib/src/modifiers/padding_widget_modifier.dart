@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 
 import '../attributes/spacing/spacing_dto.dart';
-import '../core/decorator.dart';
+import '../core/modifier.dart';
 import '../factory/mix_provider_data.dart';
 
 class PaddingSpec extends DecoratorSpec<PaddingSpec> {

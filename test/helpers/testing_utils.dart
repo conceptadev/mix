@@ -356,7 +356,7 @@ class WidgetWithTestableBuild extends StyledWidget {
   const WidgetWithTestableBuild(
     this.onBuild, {
     super.key,
-    super.orderOfDecorators = const [],
+    super.orderOfModifiers = const [],
   });
 
   final void Function(BuildContext context) onBuild;

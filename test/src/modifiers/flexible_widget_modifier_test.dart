@@ -9,10 +9,10 @@ void main() {
     test('Constructor assigns flex and fit correctly', () {
       const flex = 2;
       const fit = FlexFit.tight;
-      const decorator = FlexibleDecoratorSpec(flex: flex, fit: fit);
+      const modifier = FlexibleDecoratorSpec(flex: flex, fit: fit);
 
-      expect(decorator.flex, flex);
-      expect(decorator.fit, fit);
+      expect(modifier.flex, flex);
+      expect(modifier.fit, fit);
     });
 
     test('Lerp method interpolates correctly', () {
@@ -25,14 +25,14 @@ void main() {
     });
 
     test('Equality and hashcode test', () {
-      const decorator1 = FlexibleDecoratorSpec(flex: 1, fit: FlexFit.tight);
-      const decorator2 = FlexibleDecoratorSpec(flex: 1, fit: FlexFit.tight);
-      const decorator3 = FlexibleDecoratorSpec(flex: 2, fit: FlexFit.loose);
+      const modifier1 = FlexibleDecoratorSpec(flex: 1, fit: FlexFit.tight);
+      const modifier2 = FlexibleDecoratorSpec(flex: 1, fit: FlexFit.tight);
+      const modifier3 = FlexibleDecoratorSpec(flex: 2, fit: FlexFit.loose);
 
-      expect(decorator1, decorator2);
-      expect(decorator1.hashCode, decorator2.hashCode);
-      expect(decorator1 == decorator3, false);
-      expect(decorator1.hashCode == decorator3.hashCode, false);
+      expect(modifier1, modifier2);
+      expect(modifier1.hashCode, modifier2.hashCode);
+      expect(modifier1 == modifier3, false);
+      expect(modifier1.hashCode == modifier3.hashCode, false);
     });
 
     testWidgets(
@@ -40,10 +40,10 @@ void main() {
       (WidgetTester tester) async {
         const flex = 2;
         const fit = FlexFit.tight;
-        const decorator = FlexibleDecoratorSpec(flex: flex, fit: fit);
+        const modifier = FlexibleDecoratorSpec(flex: flex, fit: fit);
 
         await tester.pumpMaterialApp(
-          Row(children: [decorator.build(Container())]),
+          Row(children: [modifier.build(Container())]),
         );
 
         final Flexible flexibleWidget = tester.widget(find.byType(Flexible));
@@ -58,29 +58,29 @@ void main() {
 
   group('FlexibleDecoratorAttribute', () {
     test('merge', () {
-      const decorator = FlexibleDecoratorAttribute(flex: 1, fit: FlexFit.tight);
+      const modifier = FlexibleDecoratorAttribute(flex: 1, fit: FlexFit.tight);
       const other = FlexibleDecoratorAttribute(flex: 1, fit: FlexFit.tight);
-      final result = decorator.merge(other);
-      expect(result, decorator);
+      final result = modifier.merge(other);
+      expect(result, modifier);
     });
 
     test('resolve', () {
-      const decorator = FlexibleDecoratorAttribute(flex: 1, fit: FlexFit.tight);
-      final result = decorator.resolve(EmptyMixData);
+      const modifier = FlexibleDecoratorAttribute(flex: 1, fit: FlexFit.tight);
+      final result = modifier.resolve(EmptyMixData);
       expect(result, isA<FlexibleDecoratorSpec>());
     });
 
     // equality
     test('equality', () {
-      const decorator = FlexibleDecoratorAttribute(flex: 1, fit: FlexFit.tight);
+      const modifier = FlexibleDecoratorAttribute(flex: 1, fit: FlexFit.tight);
       const other = FlexibleDecoratorAttribute(flex: 1, fit: FlexFit.tight);
-      expect(decorator, other);
+      expect(modifier, other);
     });
 
     test('inequality', () {
-      const decorator = FlexibleDecoratorAttribute(flex: 1, fit: FlexFit.tight);
+      const modifier = FlexibleDecoratorAttribute(flex: 1, fit: FlexFit.tight);
       const other = FlexibleDecoratorAttribute(flex: 2, fit: FlexFit.loose);
-      expect(decorator, isNot(other));
+      expect(modifier, isNot(other));
     });
   });
 }

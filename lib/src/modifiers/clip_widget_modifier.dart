@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../attributes/scalars/scalar_util.dart';
 import '../core/attribute.dart';
-import '../core/decorator.dart';
+import '../core/modifier.dart';
 import '../factory/mix_provider_data.dart';
 import '../helpers/lerp_helpers.dart';
 
@@ -110,7 +110,7 @@ class ClipRectDecoratorSpec extends DecoratorSpec<ClipRectDecoratorSpec> {
   }
 }
 
-/// A decorator that wraps a widget with a [ClipRect] widget.
+/// A modifier that wraps a widget with a [ClipRect] widget.
 ///
 /// The [ClipRect] widget is used to clip a widget to a rectangle.
 class ClipRectDecoratorAttribute extends DecoratorAttribute<
@@ -260,7 +260,7 @@ class ClipPathDecoratorSpec extends DecoratorSpec<ClipPathDecoratorSpec> {
   }
 }
 
-/// A decorator that wraps a widget with a [ClipPath] widget.
+/// A modifier that wraps a widget with a [ClipPath] widget.
 ///
 /// The [ClipPath] widget is used to clip a widget using a custom clipper.
 class ClipPathDecoratorAttribute extends DecoratorAttribute<
@@ -325,7 +325,7 @@ class ClipTriangleDecoratorSpec
   }
 }
 
-/// A decorator that wraps a widget with a custom [ClipPath] widget with a [TriangleClipper].
+/// A modifier that wraps a widget with a custom [ClipPath] widget with a [TriangleClipper].
 ///
 /// The [TriangleClipper] is used to clip a widget to a triangle shape.
 class ClipTriangleDecoratorAttribute extends DecoratorAttribute<

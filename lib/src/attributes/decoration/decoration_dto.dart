@@ -18,7 +18,7 @@ import 'image/decoration_image_dto.dart';
 ///
 /// This DTO is used to resolve a [Decoration] value from a [MixData] instance.
 ///
-/// This class needs to have the different properties that are not found in the [Decorators] class.
+/// This class needs to have the different properties that are not found in the [Modifiers] class.
 /// In order to support merging of [Decoration] values, and reusable of common properties.
 @immutable
 abstract class DecorationDto<Value extends Decoration> extends Dto<Value> {

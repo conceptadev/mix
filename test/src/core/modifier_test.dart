@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mix/src/core/decorator.dart';
+import 'package:mix/src/core/modifier.dart';
 import 'package:mix/src/factory/mix_provider_data.dart';
 
 import '../../helpers/testing_utils.dart';

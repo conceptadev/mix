@@ -3,17 +3,17 @@
 import 'package:flutter/material.dart';
 
 import '../core/attributes_map.dart';
-import '../core/decorator.dart';
+import '../core/modifier.dart';
 import '../factory/mix_provider_data.dart';
-import 'align_widget_decorator.dart';
-import 'aspect_ratio_widget_decorator.dart';
-import 'clip_widget_decorator.dart';
-import 'fractionally_sized_box_widget_decorator.dart';
-import 'intrinsic_widget_decorator.dart';
-import 'opacity_widget_decorator.dart';
-import 'sized_box_widget_decorator.dart';
-import 'transform_widget_decorator.dart';
-import 'visibility_widget_decorator.dart';
+import 'align_widget_modifier.dart';
+import 'aspect_ratio_widget_modifier.dart';
+import 'clip_widget_modifier.dart';
+import 'fractionally_sized_box_widget_modifier.dart';
+import 'intrinsic_widget_modifier.dart';
+import 'opacity_widget_modifier.dart';
+import 'sized_box_widget_modifier.dart';
+import 'transform_widget_modifier.dart';
+import 'visibility_widget_modifier.dart';
 
 // Default order of modifiers and their logic:
 const _defaultOrder = [
@@ -26,7 +26,7 @@ const _defaultOrder = [
   SizedBoxDecoratorAttribute,
 
   // 3. FractionallySizedBoxDecorator: Adjusts the widget's size relative to its parent's size,
-  // allowing for responsive layouts that scale with the parent widget. This decorator is applied after
+  // allowing for responsive layouts that scale with the parent widget. This modifier is applied after
   // explicit sizing to refine the widget's dimensions based on available space.
   FractionallySizedBoxDecoratorAttribute,
 
@@ -41,12 +41,12 @@ const _defaultOrder = [
   IntrinsicHeightDecoratorAttribute,
 
   // 6. IntrinsicWidthDecorator: Similar to the IntrinsicHeightDecorator, this adjusts the widget's width
-  // to its child's intrinsic width. This decorator allows for content-driven width adjustments, making it ideal
+  // to its child's intrinsic width. This modifier allows for content-driven width adjustments, making it ideal
   // for widgets that need to wrap their content tightly.
   IntrinsicWidthDecoratorAttribute,
 
   // 7. AspectRatioDecorator: Maintains the widget's aspect ratio after sizing adjustments.
-  // This decorator ensures that the widget scales correctly within its given aspect ratio constraints,
+  // This modifier ensures that the widget scales correctly within its given aspect ratio constraints,
   // which is critical for preserving the visual integrity of images and other aspect-sensitive content.
   AspectRatioDecoratorAttribute,
 
@@ -55,7 +55,7 @@ const _defaultOrder = [
   // and position in more complex ways without altering the logical layout.
   TransformDecoratorAttribute,
 
-  // 10. Clip Decorators: Applies clipping in various shapes to the transformed widget, shaping the final appearance.
+  // 10. Clip Modifiers: Applies clipping in various shapes to the transformed widget, shaping the final appearance.
   // Clipping is one of the last steps to ensure it is applied to the widget's final size, position, and transformation state.
   ClipOvalDecoratorAttribute,
   ClipRRectDecoratorAttribute,
@@ -69,21 +69,21 @@ const _defaultOrder = [
   OpacityDecoratorAttribute,
 ];
 
-class RenderDecorators extends StatelessWidget {
-  const RenderDecorators({
+class RenderModifiers extends StatelessWidget {
+  const RenderModifiers({
     required this.mix,
     required this.child,
     super.key,
-    required this.orderOfDecorators,
+    required this.orderOfModifiers,
   });
 
   final MixData mix;
   final Widget child;
-  final List<Type> orderOfDecorators;
+  final List<Type> orderOfModifiers;
 
   @override
   Widget build(BuildContext context) {
-    final specs = resolveDecoratorSpecs(orderOfDecorators, mix);
+    final specs = resolveDecoratorSpecs(orderOfModifiers, mix);
 
     var current = child;
 
@@ -95,11 +95,11 @@ class RenderDecorators extends StatelessWidget {
   }
 }
 
-class RenderAnimatedDecorators extends ImplicitlyAnimatedWidget {
-  const RenderAnimatedDecorators({
+class RenderAnimatedModifiers extends ImplicitlyAnimatedWidget {
+  const RenderAnimatedModifiers({
     required this.mix,
     required this.child,
-    required this.orderOfDecorators,
+    required this.orderOfModifiers,
     super.key,
     required super.duration,
     super.curve = Curves.linear,
@@ -108,20 +108,19 @@ class RenderAnimatedDecorators extends ImplicitlyAnimatedWidget {
 
   final MixData mix;
   final Widget child;
-  final List<Type> orderOfDecorators;
+  final List<Type> orderOfModifiers;
 
   @override
-  RenderAnimatedDecoratorsState createState() =>
-      RenderAnimatedDecoratorsState();
+  RenderAnimatedModifiersState createState() => RenderAnimatedModifiersState();
 }
 
-class RenderAnimatedDecoratorsState
-    extends AnimatedWidgetBaseState<RenderAnimatedDecorators> {
+class RenderAnimatedModifiersState
+    extends AnimatedWidgetBaseState<RenderAnimatedModifiers> {
   final Map<Type, DecoratorSpecTween> _specs = {};
 
   @override
   void forEachTween(TweenVisitor<dynamic> visitor) {
-    final specs = resolveDecoratorSpecs(widget.orderOfDecorators, widget.mix);
+    final specs = resolveDecoratorSpecs(widget.orderOfModifiers, widget.mix);
 
     for (final spec in specs) {
       final specType = spec.runtimeType;
@@ -149,30 +148,30 @@ class RenderAnimatedDecoratorsState
 }
 
 Set<DecoratorSpec> resolveDecoratorSpecs(
-  List<Type> orderOfDecorators,
+  List<Type> orderOfModifiers,
   MixData mix,
 ) {
   final modifiers = mix.whereType<DecoratorAttribute>();
 
   if (modifiers.isEmpty) return {};
-  final decoratorMap = AttributeMap<DecoratorAttribute>(modifiers).toMap();
+  final modifierMap = AttributeMap<DecoratorAttribute>(modifiers).toMap();
 
-  final listOfDecorators = {
+  final listOfModifiers = {
     // Prioritize the order of modifiers provided by the user.
-    ...orderOfDecorators,
+    ...orderOfModifiers,
     // Add the default order of modifiers.
     ..._defaultOrder,
     // Add any remaining modifiers that were not included in the order.
-    ...decoratorMap.keys,
+    ...modifierMap.keys,
   }.toList().reversed;
 
   final specs = <DecoratorSpec>[];
 
-  for (final decoratorType in listOfDecorators) {
-    // Resolve the decorator and add it to the list of specs.
-    final decorator = decoratorMap.remove(decoratorType);
-    if (decorator == null) continue;
-    specs.add(decorator.resolve(mix) as DecoratorSpec);
+  for (final modifierType in listOfModifiers) {
+    // Resolve the modifier and add it to the list of specs.
+    final modifier = modifierMap.remove(modifierType);
+    if (modifier == null) continue;
+    specs.add(modifier.resolve(mix) as DecoratorSpec);
   }
 
   return specs.toSet();

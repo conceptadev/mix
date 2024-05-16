@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/src/attributes/scalars/scalar_util.dart';
-import 'package:mix/src/modifiers/sized_box_widget_decorator.dart';
+import 'package:mix/src/modifiers/sized_box_widget_modifier.dart';
 
 import '../../helpers/testing_utils.dart';
 
@@ -14,13 +14,13 @@ void main() {
         () {
           const width = 100.0;
           const height = 100.0;
-          const decorator = SizedBoxDecoratorSpec(
+          const modifier = SizedBoxDecoratorSpec(
             width: width,
             height: height,
           );
 
-          expect(decorator.width, width);
-          expect(decorator.height, height);
+          expect(modifier.width, width);
+          expect(modifier.height, height);
         },
       );
 
@@ -48,23 +48,23 @@ void main() {
       test(
         'Equality and hashcode test',
         () {
-          const decorator1 = SizedBoxDecoratorSpec(
+          const modifier1 = SizedBoxDecoratorSpec(
             width: 100.0,
             height: 100.0,
           );
-          const decorator2 = SizedBoxDecoratorSpec(
+          const modifier2 = SizedBoxDecoratorSpec(
             width: 100.0,
             height: 100.0,
           );
-          const decorator3 = SizedBoxDecoratorSpec(
+          const modifier3 = SizedBoxDecoratorSpec(
             width: 100.0,
             height: 200.0,
           );
 
-          expect(decorator1, decorator2);
-          expect(decorator1.hashCode, decorator2.hashCode);
-          expect(decorator1 == decorator3, false);
-          expect(decorator1.hashCode == decorator3.hashCode, false);
+          expect(modifier1, modifier2);
+          expect(modifier1.hashCode, modifier2.hashCode);
+          expect(modifier1 == modifier3, false);
+          expect(modifier1.hashCode == modifier3.hashCode, false);
         },
       );
 
@@ -73,13 +73,13 @@ void main() {
         (WidgetTester tester) async {
           const width = 100.0;
           const height = 100.0;
-          const decorator = SizedBoxDecoratorSpec(
+          const modifier = SizedBoxDecoratorSpec(
             width: width,
             height: height,
           );
 
           await tester.pumpMaterialApp(
-            decorator.build(
+            modifier.build(
               Container(),
             ),
           );

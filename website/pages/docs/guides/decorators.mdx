@@ -1,16 +1,16 @@
 import { Callout } from "nextra-theme-docs";
 
-# Decorators
+# Modifiers
 
-Decorators in Mix extend functionality by defining the widget composition tree structure, providing support for core widgets, external widgets, and third-party widgets without compromising the simplicity of core Mix.
+Modifiers in Mix extend functionality by defining the widget composition tree structure, providing support for core widgets, external widgets, and third-party widgets without compromising the simplicity of core Mix.
 
 ## $with
 
-You can find all available modifiers within the `$with` utility. This provides a single place to access all decorator functions.
+You can find all available modifiers within the `$with` utility. This provides a single place to access all modifier functions.
 
 ## Understanding the Mechanics
 
-Take the `scale` attribute, for instance. The Container widget doesn't inherently possess the ability to scale. But, by employing a Transform widget as a decorator, we can introduce this effect.
+Take the `scale` attribute, for instance. The Container widget doesn't inherently possess the ability to scale. But, by employing a Transform widget as a modifier, we can introduce this effect.
 
 ```dart
 Transform.scale(
@@ -22,15 +22,15 @@ Transform.scale(
 ```
 
 <Callout emoji="⚠️">
-  Important Note: Decorators are a special kind of attribute that can't be
+  Important Note: Modifiers are a special kind of attribute that can't be
   inherited for any child widgets.
 </Callout>
 
-### Creating a decorator
+### Creating a modifier
 
 We can achieve the same effect by creating a custom `**WidgetDecorator**`.
 
-Creating a decorator is like creating a `**StatelessWidget**`. Extend `**WidgetDecorator**`. Define the properties you want to modify and the widget you want to decorate.
+Creating a modifier is like creating a `**StatelessWidget**`. Extend `**WidgetDecorator**`. Define the properties you want to modify and the widget you want to decorate.
 
 ```dart {2, 15-19}
 class ScaleDecorator extends WidgetDecorator<ScaleDecorator> {
@@ -59,15 +59,15 @@ class ScaleDecorator extends WidgetDecorator<ScaleDecorator> {
 
 You can then create an extension of the
 
-### Crafting a decorator utility
+### Crafting a modifier utility
 
-To simplify decorator usage, you can design a utility function that automatically creates the decorator for you.
+To simplify modifier usage, you can design a utility function that automatically creates the modifier for you.
 
 ```dart
 ScaleDecorator scale(double scale, {Key? key}) => ScaleDecorator(scale, key: key);
 ```
 
-### Using a decorator
+### Using a modifier
 
 ```dart {2}
 final style = Style(

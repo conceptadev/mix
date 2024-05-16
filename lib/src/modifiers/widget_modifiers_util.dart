@@ -1,17 +1,17 @@
 import '../attributes/scalars/scalar_util.dart';
 import '../attributes/spacing/spacing_util.dart';
-import 'align_widget_decorator.dart';
-import 'aspect_ratio_widget_decorator.dart';
-import 'clip_widget_decorator.dart';
-import 'flexible_widget_decorator.dart';
-import 'fractionally_sized_box_widget_decorator.dart';
-import 'intrinsic_widget_decorator.dart';
-import 'opacity_widget_decorator.dart';
-import 'padding_widget_decorator.dart';
-import 'rotated_box_widget_decorator.dart';
-import 'sized_box_widget_decorator.dart';
-import 'transform_widget_decorator.dart';
-import 'visibility_widget_decorator.dart';
+import 'align_widget_modifier.dart';
+import 'aspect_ratio_widget_modifier.dart';
+import 'clip_widget_modifier.dart';
+import 'flexible_widget_modifier.dart';
+import 'fractionally_sized_box_widget_modifier.dart';
+import 'intrinsic_widget_modifier.dart';
+import 'opacity_widget_modifier.dart';
+import 'padding_widget_modifier.dart';
+import 'rotated_box_widget_modifier.dart';
+import 'sized_box_widget_modifier.dart';
+import 'transform_widget_modifier.dart';
+import 'visibility_widget_modifier.dart';
 
 class WithDecoratorUtility {
   late final intrinsicWidth =

@@ -6,10 +6,10 @@ import 'package:flutter/material.dart';
 
 import '../attributes/scalars/scalar_util.dart';
 import '../core/attribute.dart';
-import '../core/decorator.dart';
+import '../core/modifier.dart';
 import '../factory/mix_provider_data.dart';
 
-/// A decorator that wraps a widget with the [Opacity] widget.
+/// A modifier that wraps a widget with the [Opacity] widget.
 ///
 /// The [Opacity] widget is used to make a widget partially transparent.
 class OpacityDecoratorSpec extends DecoratorSpec<OpacityDecoratorSpec> {

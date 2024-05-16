@@ -12,11 +12,11 @@ void main() {
     const clipBehavior = Clip.antiAlias;
 
     test('Constructor assigns clipper correctly', () {
-      const decorator =
+      const modifier =
           ClipPathDecoratorSpec(clipBehavior: clipBehavior, clipper: clipper);
 
-      expect(decorator.clipper, clipper);
-      expect(decorator.clipBehavior, clipBehavior);
+      expect(modifier.clipper, clipper);
+      expect(modifier.clipBehavior, clipBehavior);
     });
 
     test('Lerp method interpolates correctly', () {
@@ -44,9 +44,9 @@ void main() {
     testWidgets(
       'Build method creates ClipPath widget with correct clipper',
       (WidgetTester tester) async {
-        const decorator = ClipPathDecoratorSpec(clipper: clipper);
+        const modifier = ClipPathDecoratorSpec(clipper: clipper);
 
-        await tester.pumpMaterialApp(decorator.build(Container()));
+        await tester.pumpMaterialApp(modifier.build(Container()));
 
         final ClipPath clipPathWidget = tester.widget(find.byType(ClipPath));
 
@@ -66,18 +66,18 @@ void main() {
     const clipBehavior2 = Clip.antiAliasWithSaveLayer;
 
     test('merge', () {
-      const decorator = ClipPathDecoratorAttribute(
+      const modifier = ClipPathDecoratorAttribute(
           clipper: clipper, clipBehavior: clipBehavior);
       const other = ClipPathDecoratorAttribute(
           clipper: clipper2, clipBehavior: clipBehavior2);
-      final result = decorator.merge(other);
+      final result = modifier.merge(other);
       expect(result, other);
     });
 
     test('resolve', () {
-      const decorator = ClipPathDecoratorAttribute(
+      const modifier = ClipPathDecoratorAttribute(
           clipper: clipper, clipBehavior: clipBehavior);
-      final result = decorator.resolve(EmptyMixData);
+      final result = modifier.resolve(EmptyMixData);
       expect(result, isA<ClipPathDecoratorSpec>());
       expect(result.clipper, clipper);
       expect(result.clipBehavior, clipBehavior);
@@ -93,15 +93,15 @@ void main() {
     const clipBehavior2 = Clip.antiAliasWithSaveLayer;
 
     test('Constructor assigns borderRadius correctly', () {
-      final decorator = ClipRRectDecoratorSpec(
+      final modifier = ClipRRectDecoratorSpec(
         borderRadius: borderRadius,
         clipBehavior: clipBehavior,
         clipper: clipper,
       );
 
-      expect(decorator.borderRadius, borderRadius);
-      expect(decorator.clipBehavior, clipBehavior);
-      expect(decorator.clipper, clipper);
+      expect(modifier.borderRadius, borderRadius);
+      expect(modifier.clipBehavior, clipBehavior);
+      expect(modifier.clipper, clipper);
     });
 
     test('Lerp method interpolates correctly', () {
@@ -123,26 +123,26 @@ void main() {
     });
 
     test('Equality and hashcode test', () {
-      final decorator1 = ClipRRectDecoratorSpec(
+      final modifier1 = ClipRRectDecoratorSpec(
         borderRadius: borderRadius,
         clipBehavior: clipBehavior,
         clipper: clipper,
       );
-      final decorator2 = ClipRRectDecoratorSpec(
+      final modifier2 = ClipRRectDecoratorSpec(
         borderRadius: borderRadius,
         clipBehavior: clipBehavior,
         clipper: clipper,
       );
-      final decorator3 = ClipRRectDecoratorSpec(
+      final modifier3 = ClipRRectDecoratorSpec(
         borderRadius: borderRadius2,
         clipBehavior: clipBehavior2,
         clipper: clipper2,
       );
 
-      expect(decorator1, decorator2);
-      expect(decorator1.hashCode, decorator2.hashCode);
-      expect(decorator1 == decorator3, false);
-      expect(decorator1.hashCode == decorator3.hashCode, false);
+      expect(modifier1, modifier2);
+      expect(modifier1.hashCode, modifier2.hashCode);
+      expect(modifier1 == modifier3, false);
+      expect(modifier1.hashCode == modifier3.hashCode, false);
     });
   });
 
@@ -156,7 +156,7 @@ void main() {
     const clipBehavior2 = Clip.antiAliasWithSaveLayer;
 
     test('merge', () {
-      final decorator = ClipRRectDecoratorAttribute(
+      final modifier = ClipRRectDecoratorAttribute(
         borderRadius: borderRadius,
         clipper: clipper,
         clipBehavior: clipBehavior,
@@ -166,17 +166,17 @@ void main() {
         clipper: clipper2,
         clipBehavior: clipBehavior2,
       );
-      final result = decorator.merge(other);
+      final result = modifier.merge(other);
       expect(result, other);
     });
 
     test('resolve', () {
-      final decorator = ClipRRectDecoratorAttribute(
+      final modifier = ClipRRectDecoratorAttribute(
         borderRadius: borderRadius,
         clipper: clipper,
         clipBehavior: clipBehavior,
       );
-      final result = decorator.resolve(EmptyMixData);
+      final result = modifier.resolve(EmptyMixData);
       expect(result, isA<ClipRRectDecoratorSpec>());
       expect(result.borderRadius, borderRadius);
       expect(result.clipBehavior, clipBehavior);
@@ -192,13 +192,13 @@ void main() {
     const clipper2 = _OtherRectClipper();
 
     test('Constructor assigns clipper correctly', () {
-      const decorator = ClipOvalDecoratorSpec(
+      const modifier = ClipOvalDecoratorSpec(
         clipBehavior: clipBehavior,
         clipper: clipper,
       );
 
-      expect(decorator.clipper, clipper);
-      expect(decorator.clipBehavior, clipBehavior);
+      expect(modifier.clipper, clipper);
+      expect(modifier.clipBehavior, clipBehavior);
     });
 
     test('Lerp method interpolates correctly', () {
@@ -213,25 +213,25 @@ void main() {
     });
 
     test('Equality and hashcode test', () {
-      const decorator1 =
+      const modifier1 =
           ClipOvalDecoratorSpec(clipBehavior: clipBehavior, clipper: clipper);
-      const decorator2 =
+      const modifier2 =
           ClipOvalDecoratorSpec(clipBehavior: clipBehavior, clipper: clipper);
-      const decorator3 =
+      const modifier3 =
           ClipOvalDecoratorSpec(clipBehavior: clipBehavior2, clipper: clipper2);
 
-      expect(decorator1, decorator2);
-      expect(decorator1.hashCode, decorator2.hashCode);
-      expect(decorator1 == decorator3, false);
-      expect(decorator1.hashCode == decorator3.hashCode, false);
+      expect(modifier1, modifier2);
+      expect(modifier1.hashCode, modifier2.hashCode);
+      expect(modifier1 == modifier3, false);
+      expect(modifier1.hashCode == modifier3.hashCode, false);
     });
 
     testWidgets(
       'Build method creates ClipOval widget with correct clipper',
       (WidgetTester tester) async {
-        const decorator = ClipOvalDecoratorSpec(clipper: clipper);
+        const modifier = ClipOvalDecoratorSpec(clipper: clipper);
 
-        await tester.pumpMaterialApp(decorator.build(Container()));
+        await tester.pumpMaterialApp(modifier.build(Container()));
 
         final ClipOval clipOvalWidget = tester.widget(find.byType(ClipOval));
 
@@ -251,7 +251,7 @@ void main() {
     const clipper2 = _OtherRectClipper();
 
     test('merge', () {
-      const decorator = ClipOvalDecoratorAttribute(
+      const modifier = ClipOvalDecoratorAttribute(
         clipper: clipper,
         clipBehavior: clipBehavior,
       );
@@ -259,16 +259,16 @@ void main() {
         clipper: clipper2,
         clipBehavior: clipBehavior2,
       );
-      final result = decorator.merge(other);
+      final result = modifier.merge(other);
       expect(result, other);
     });
 
     test('resolve', () {
-      const decorator = ClipOvalDecoratorAttribute(
+      const modifier = ClipOvalDecoratorAttribute(
         clipper: clipper,
         clipBehavior: clipBehavior,
       );
-      final result = decorator.resolve(EmptyMixData);
+      final result = modifier.resolve(EmptyMixData);
       expect(result, isA<ClipOvalDecoratorSpec>());
       expect(result.clipper, clipper);
       expect(result.clipBehavior, clipBehavior);
@@ -283,13 +283,13 @@ void main() {
     const clipper2 = _OtherRectClipper();
 
     test('Constructor assigns clipper correctly', () {
-      const decorator = ClipRectDecoratorSpec(
+      const modifier = ClipRectDecoratorSpec(
         clipBehavior: clipBehavior,
         clipper: clipper,
       );
 
-      expect(decorator.clipper, clipper);
-      expect(decorator.clipBehavior, clipBehavior);
+      expect(modifier.clipper, clipper);
+      expect(modifier.clipBehavior, clipBehavior);
     });
 
     test('Lerp method interpolates correctly', () {
@@ -304,25 +304,25 @@ void main() {
     });
 
     test('Equality and hashcode test', () {
-      const decorator1 =
+      const modifier1 =
           ClipRectDecoratorSpec(clipBehavior: clipBehavior, clipper: clipper);
-      const decorator2 =
+      const modifier2 =
           ClipRectDecoratorSpec(clipBehavior: clipBehavior, clipper: clipper);
-      const decorator3 =
+      const modifier3 =
           ClipRectDecoratorSpec(clipBehavior: clipBehavior2, clipper: clipper2);
 
-      expect(decorator1, decorator2);
-      expect(decorator1.hashCode, decorator2.hashCode);
-      expect(decorator1 == decorator3, false);
-      expect(decorator1.hashCode == decorator3.hashCode, false);
+      expect(modifier1, modifier2);
+      expect(modifier1.hashCode, modifier2.hashCode);
+      expect(modifier1 == modifier3, false);
+      expect(modifier1.hashCode == modifier3.hashCode, false);
     });
 
     testWidgets(
       'Build method creates ClipRect widget with correct clipper',
       (WidgetTester tester) async {
-        const decorator = ClipRectDecoratorSpec(clipper: clipper);
+        const modifier = ClipRectDecoratorSpec(clipper: clipper);
 
-        await tester.pumpMaterialApp(decorator.build(Container()));
+        await tester.pumpMaterialApp(modifier.build(Container()));
 
         final ClipRect clipRectWidget = tester.widget(find.byType(ClipRect));
 
@@ -342,7 +342,7 @@ void main() {
     const clipper2 = _OtherRectClipper();
 
     test('merge', () {
-      const decorator = ClipRectDecoratorAttribute(
+      const modifier = ClipRectDecoratorAttribute(
         clipper: clipper,
         clipBehavior: clipBehavior,
       );
@@ -350,16 +350,16 @@ void main() {
         clipper: clipper2,
         clipBehavior: clipBehavior2,
       );
-      final result = decorator.merge(other);
+      final result = modifier.merge(other);
       expect(result, other);
     });
 
     test('resolve', () {
-      const decorator = ClipRectDecoratorAttribute(
+      const modifier = ClipRectDecoratorAttribute(
         clipper: clipper,
         clipBehavior: clipBehavior,
       );
-      final result = decorator.resolve(EmptyMixData);
+      final result = modifier.resolve(EmptyMixData);
       expect(result, isA<ClipRectDecoratorSpec>());
       expect(result.clipper, clipper);
       expect(result.clipBehavior, clipBehavior);
@@ -372,9 +372,9 @@ void main() {
     const clipBehavior2 = Clip.antiAliasWithSaveLayer;
 
     test('Constructor assigns clipper correctly', () {
-      const decorator = ClipTriangleDecoratorSpec(clipBehavior: clipBehavior);
+      const modifier = ClipTriangleDecoratorSpec(clipBehavior: clipBehavior);
 
-      expect(decorator.clipBehavior, clipBehavior);
+      expect(modifier.clipBehavior, clipBehavior);
     });
 
     test('Lerp method interpolates correctly', () {
@@ -386,22 +386,22 @@ void main() {
     });
 
     test('Equality and hashcode test', () {
-      const decorator1 = ClipTriangleDecoratorSpec(clipBehavior: clipBehavior);
-      const decorator2 = ClipTriangleDecoratorSpec(clipBehavior: clipBehavior);
-      const decorator3 = ClipTriangleDecoratorSpec(clipBehavior: clipBehavior2);
+      const modifier1 = ClipTriangleDecoratorSpec(clipBehavior: clipBehavior);
+      const modifier2 = ClipTriangleDecoratorSpec(clipBehavior: clipBehavior);
+      const modifier3 = ClipTriangleDecoratorSpec(clipBehavior: clipBehavior2);
 
-      expect(decorator1, decorator2);
-      expect(decorator1.hashCode, decorator2.hashCode);
-      expect(decorator1 == decorator3, false);
-      expect(decorator1.hashCode == decorator3.hashCode, false);
+      expect(modifier1, modifier2);
+      expect(modifier1.hashCode, modifier2.hashCode);
+      expect(modifier1 == modifier3, false);
+      expect(modifier1.hashCode == modifier3.hashCode, false);
     });
 
     testWidgets(
       'Build method creates ClipPath widget with correct clipper',
       (WidgetTester tester) async {
-        const decorator = ClipTriangleDecoratorSpec(clipBehavior: clipBehavior);
+        const modifier = ClipTriangleDecoratorSpec(clipBehavior: clipBehavior);
 
-        await tester.pumpMaterialApp(decorator.build(Container()));
+        await tester.pumpMaterialApp(modifier.build(Container()));
 
         final ClipPath clipPathWidget = tester.widget(find.byType(ClipPath));
 
@@ -419,17 +419,17 @@ void main() {
     const clipBehavior2 = Clip.antiAliasWithSaveLayer;
 
     test('merge', () {
-      const decorator =
+      const modifier =
           ClipTriangleDecoratorAttribute(clipBehavior: clipBehavior);
       const other = ClipTriangleDecoratorAttribute(clipBehavior: clipBehavior2);
-      final result = decorator.merge(other);
+      final result = modifier.merge(other);
       expect(result, other);
     });
 
     test('resolve', () {
-      const decorator =
+      const modifier =
           ClipTriangleDecoratorAttribute(clipBehavior: clipBehavior);
-      final result = decorator.resolve(EmptyMixData);
+      final result = modifier.resolve(EmptyMixData);
       expect(result, isA<ClipTriangleDecoratorSpec>());
       expect(result.clipBehavior, clipBehavior);
     });

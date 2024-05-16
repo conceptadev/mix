@@ -6,7 +6,7 @@
 * Feature: Added missing image props by @leoafarias
 * Docs: Updated documentation for better user guidance by @leoafarias
 * Cleanup: Removed typedef StyledContainer for cleaner code base by @tilucasoli
-* Feature: Added padding widget decorator for easier layout designs by @leoafarias
+* Feature: Added padding widget modifier for easier layout designs by @leoafarias
 * Enhancement: Added spec variant utility features by @leoafarias
 * Docs: updates and adjustments by @tilucasoli
 * Enhancement: Improved DTO merge behavior for better functionality by @leoafarias
@@ -39,7 +39,7 @@
 ## 1.0.0-beta.8
 
 * Optimized analyze workflow by @leoafarias
-* Fix more than one decorator on Flex widgets when modifiers are used by @tilucasoli
+* Fix more than one modifier on Flex widgets when modifiers are used by @tilucasoli
 * Feat/add deprecated apis by @tilucasoli
 
 ## 1.0.0-beta.7
@@ -106,7 +106,7 @@ Visit our documentation site for more information [https://fluttermix.com](https
 ## 0.0.4
 
 * Optimization improvements
-* Added clip decorator
+* Added clip modifier
 * Fixed some bugs.
 
 ## 0.0.3

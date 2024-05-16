@@ -6,19 +6,19 @@ import 'package:mix/src/helpers/helper_util.dart';
 import '../../helpers/testing_utils.dart';
 
 void main() {
-  group('shouldApplyDecorators', () {
+  group('shouldApplyModifiers', () {
     test('returns child when no DecoratorAttribute is present', () {
       final style = Style();
 
       final mix = style.of(MockBuildContext());
       final child = Container();
 
-      final result = shouldApplyDecorators(mix: mix, child: child);
+      final result = shouldApplyModifiers(mix: mix, child: child);
 
       expect(result, equals(child));
     });
 
-    test('returns RenderDecorators when DecoratorAttribute is present', () {
+    test('returns RenderModifiers when DecoratorAttribute is present', () {
       final style = Style(
         $with.opacity(0.5),
       );
@@ -26,10 +26,10 @@ void main() {
       final mix = style.of(MockBuildContext());
       final child = Container();
 
-      final result = shouldApplyDecorators(mix: mix, child: child);
+      final result = shouldApplyModifiers(mix: mix, child: child);
 
-      expect(result, isA<RenderDecorators>());
-      expect((result as RenderDecorators).mix, equals(mix));
+      expect(result, isA<RenderModifiers>());
+      expect((result as RenderModifiers).mix, equals(mix));
       expect((result).child, equals(child));
     });
   });

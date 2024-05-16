@@ -29,9 +29,9 @@ void main() {
     });
 
     testWidgets('build', (tester) async {
-      const decorator = TransformDecoratorSpec();
+      const modifier = TransformDecoratorSpec();
 
-      await tester.pumpMaterialApp(decorator.build(Container()));
+      await tester.pumpMaterialApp(modifier.build(Container()));
 
       final Transform transform = tester.widget(find.byType(Transform));
 
@@ -58,58 +58,58 @@ void main() {
     'TransformDecoratorAttribute',
     () {
       test('merge', () {
-        const decorator = TransformDecoratorAttribute();
+        const modifier = TransformDecoratorAttribute();
         const other = TransformDecoratorAttribute();
-        final result = decorator.merge(other);
-        expect(result, decorator);
+        final result = modifier.merge(other);
+        expect(result, modifier);
       });
 
       test('resolve', () {
-        final decorator =
+        final modifier =
             TransformDecoratorAttribute(transform: Matrix4.rotationX(0.5));
-        final result = decorator.resolve(EmptyMixData);
+        final result = modifier.resolve(EmptyMixData);
         expect(result, isA<TransformDecoratorSpec>());
         expect(result.transform, Matrix4.rotationX(0.5));
       });
 
       // equality
       test('equality', () {
-        final decorator =
+        final modifier =
             TransformDecoratorAttribute(transform: Matrix4.rotationX(0.5));
         final other =
             TransformDecoratorAttribute(transform: Matrix4.rotationX(0.5));
-        expect(decorator, other);
+        expect(modifier, other);
       });
 
       test('merge with null', () {
-        final decorator =
+        final modifier =
             TransformDecoratorAttribute(transform: Matrix4.rotationX(0.5));
-        final result = decorator.merge(null);
-        expect(result, decorator);
+        final result = modifier.merge(null);
+        expect(result, modifier);
       });
 
       test('equality', () {
-        final decorator1 =
+        final modifier1 =
             TransformDecoratorAttribute(transform: Matrix4.rotationX(0.5));
-        final decorator2 =
+        final modifier2 =
             TransformDecoratorAttribute(transform: Matrix4.rotationX(0.5));
-        expect(decorator1, decorator2);
+        expect(modifier1, modifier2);
       });
 
       test('inequality', () {
-        final decorator1 =
+        final modifier1 =
             TransformDecoratorAttribute(transform: Matrix4.rotationX(0.5));
-        final decorator2 =
+        final modifier2 =
             TransformDecoratorAttribute(transform: Matrix4.rotationX(1.0));
-        expect(decorator1, isNot(decorator2));
+        expect(modifier1, isNot(modifier2));
       });
 
       test('inequality', () {
-        final decorator =
+        final modifier =
             TransformDecoratorAttribute(transform: Matrix4.rotationX(0.5));
         final other =
             TransformDecoratorAttribute(transform: Matrix4.rotationX(1.0));
-        expect(decorator, isNot(equals(other)));
+        expect(modifier, isNot(equals(other)));
       });
     },
   );

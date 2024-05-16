@@ -16,21 +16,21 @@ void main() {
 
   final mixData = MixData.create(MockBuildContext(), style);
 
-  group('RenderDecorators', () {
+  group('RenderModifiers', () {
     testWidgets('Renders modifiers in the correct order', (tester) async {
       await tester.pumpMaterialApp(
-        RenderDecorators(
+        RenderModifiers(
           mix: mixData,
-          orderOfDecorators: const [],
+          orderOfModifiers: const [],
           child: const Text('child'),
         ),
       );
 
-      expect(find.byType(RenderDecorators), findsOneWidget);
+      expect(find.byType(RenderModifiers), findsOneWidget);
 
       expect(
         find.descendant(
-          of: find.byType(RenderDecorators),
+          of: find.byType(RenderModifiers),
           matching: find.byType(Visibility),
         ),
         findsOneWidget,
@@ -82,40 +82,39 @@ void main() {
       final mixData = MixData.create(MockBuildContext(), Style());
 
       await tester.pumpMaterialApp(
-        RenderDecorators(
+        RenderModifiers(
           mix: mixData,
-          orderOfDecorators: const [],
+          orderOfModifiers: const [],
           child: const Text('child'),
         ),
       );
 
       expect(find.text('child'), findsOneWidget);
-      expect(find.byType(RenderDecorators), findsOneWidget);
+      expect(find.byType(RenderModifiers), findsOneWidget);
     });
 
-    testWidgets('Renders child when orderOfDecorators is empty',
-        (tester) async {
+    testWidgets('Renders child when orderOfModifiers is empty', (tester) async {
       final mixData = MixData.create(MockBuildContext(), style);
 
       await tester.pumpMaterialApp(
-        RenderDecorators(
+        RenderModifiers(
           mix: mixData,
-          orderOfDecorators: const [],
+          orderOfModifiers: const [],
           child: const Text('child'),
         ),
       );
 
       expect(find.text('child'), findsOneWidget);
-      expect(find.byType(RenderDecorators), findsOneWidget);
+      expect(find.byType(RenderModifiers), findsOneWidget);
     });
 
     testWidgets(
       'Renders modifiers in the correct order with many overrides',
       (tester) async {
         await tester.pumpMaterialApp(
-          RenderDecorators(
+          RenderModifiers(
             mix: mixData,
-            orderOfDecorators: const [
+            orderOfModifiers: const [
               ClipOvalDecoratorAttribute,
               AspectRatioDecoratorAttribute,
               TransformDecoratorAttribute,
@@ -126,11 +125,11 @@ void main() {
           ),
         );
 
-        expect(find.byType(RenderDecorators), findsOneWidget);
+        expect(find.byType(RenderModifiers), findsOneWidget);
 
         expect(
           find.descendant(
-            of: find.byType(RenderDecorators),
+            of: find.byType(RenderModifiers),
             matching: find.byType(ClipOval),
           ),
           findsOneWidget,
@@ -183,9 +182,9 @@ void main() {
       'Renders modifiers in the correct order with a few overrides',
       (tester) async {
         await tester.pumpMaterialApp(
-          RenderDecorators(
+          RenderModifiers(
             mix: mixData,
-            orderOfDecorators: const [
+            orderOfModifiers: const [
               ClipOvalDecoratorAttribute,
               AspectRatioDecoratorAttribute
             ],
@@ -193,11 +192,11 @@ void main() {
           ),
         );
 
-        expect(find.byType(RenderDecorators), findsOneWidget);
+        expect(find.byType(RenderModifiers), findsOneWidget);
 
         expect(
           find.descendant(
-            of: find.byType(RenderDecorators),
+            of: find.byType(RenderModifiers),
             matching: find.byType(ClipOval),
           ),
           findsOneWidget,
@@ -254,21 +253,21 @@ void main() {
     );
   });
 
-  group('RenderAnimatedDecorators', () {
+  group('RenderAnimatedModifiers', () {
     testWidgets('Renders animated modifiers', (tester) async {
       final mixData = MixData.create(MockBuildContext(), style);
 
       await tester.pumpMaterialApp(
-        RenderAnimatedDecorators(
+        RenderAnimatedModifiers(
           mix: mixData,
-          orderOfDecorators: const [],
+          orderOfModifiers: const [],
           duration: const Duration(milliseconds: 300),
           child: const Text('child'),
         ),
       );
 
       expect(find.text('child'), findsOneWidget);
-      expect(find.byType(RenderAnimatedDecorators), findsOneWidget);
+      expect(find.byType(RenderAnimatedModifiers), findsOneWidget);
 
       // Trigger animation and pump frames
       await tester.pump(const Duration(milliseconds: 150));
@@ -276,7 +275,7 @@ void main() {
     });
   });
 
-  group('Decorators attributes', () {
+  group('Modifiers attributes', () {
     testWidgets(
       'should be applied to the first one. The children wont inherit even though the second one is set to inherit',
       (tester) async {
@@ -348,7 +347,7 @@ void main() {
     );
 
     testWidgets(
-      'If there are no decorator attributes in Style, RenderDecoratorAttributes shouldnt exist in the widget tree',
+      'If there are no modifier attributes in Style, RenderDecoratorAttributes shouldnt exist in the widget tree',
       (tester) async {
         const key = Key('box');
 
@@ -362,7 +361,7 @@ void main() {
         expect(
           find.ancestor(
             of: find.byKey(key),
-            matching: find.byType(RenderDecorators),
+            matching: find.byType(RenderModifiers),
           ),
           findsNothing,
         );
@@ -376,7 +375,7 @@ void main() {
       expect(result, isEmpty);
     });
 
-    test('Returns resolved decorator specs in the correct order', () {
+    test('Returns resolved modifier specs in the correct order', () {
       final style = Style(
         $with.scale(2.0),
         $with.opacity(0.5),

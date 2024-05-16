@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mix/src/modifiers/aspect_ratio_widget_decorator.dart';
+import 'package:mix/src/modifiers/aspect_ratio_widget_modifier.dart';
 
 import '../../helpers/testing_utils.dart';
 
@@ -8,9 +8,9 @@ void main() {
   group('AspectRatioDecoratorSpec', () {
     test('Constructor assigns aspectRatio correctly', () {
       const aspectRatio = 2.0;
-      const decorator = AspectRatioDecoratorSpec(aspectRatio);
+      const modifier = AspectRatioDecoratorSpec(aspectRatio);
 
-      expect(decorator.aspectRatio, aspectRatio);
+      expect(modifier.aspectRatio, aspectRatio);
     });
 
     test('Lerp method interpolates correctly', () {
@@ -22,23 +22,23 @@ void main() {
     });
 
     test('Equality and hashcode test', () {
-      const decorator1 = AspectRatioDecoratorSpec(1.0);
-      const decorator2 = AspectRatioDecoratorSpec(1.0);
-      const decorator3 = AspectRatioDecoratorSpec(2.0);
+      const modifier1 = AspectRatioDecoratorSpec(1.0);
+      const modifier2 = AspectRatioDecoratorSpec(1.0);
+      const modifier3 = AspectRatioDecoratorSpec(2.0);
 
-      expect(decorator1, decorator2);
-      expect(decorator1.hashCode, decorator2.hashCode);
-      expect(decorator1 == decorator3, false);
-      expect(decorator1.hashCode == decorator3.hashCode, false);
+      expect(modifier1, modifier2);
+      expect(modifier1.hashCode, modifier2.hashCode);
+      expect(modifier1 == modifier3, false);
+      expect(modifier1.hashCode == modifier3.hashCode, false);
     });
 
     testWidgets(
       'Build method creates AspectRatio widget with correct aspectRatio',
       (WidgetTester tester) async {
         const aspectRatio = 2.0;
-        const decorator = AspectRatioDecoratorSpec(aspectRatio);
+        const modifier = AspectRatioDecoratorSpec(aspectRatio);
 
-        await tester.pumpMaterialApp(decorator.build(Container()));
+        await tester.pumpMaterialApp(modifier.build(Container()));
 
         final AspectRatio aspectRatioWidget =
             tester.widget(find.byType(AspectRatio));
@@ -54,28 +54,28 @@ void main() {
 
   group('AspectRatioDecoratorAttribute', () {
     test('merge', () {
-      const decorator = AspectRatioDecoratorAttribute(1.0);
+      const modifier = AspectRatioDecoratorAttribute(1.0);
       const other = AspectRatioDecoratorAttribute(1.0);
-      final result = decorator.merge(other);
-      expect(result, decorator);
+      final result = modifier.merge(other);
+      expect(result, modifier);
     });
 
     test('resolve', () {
-      const decorator = AspectRatioDecoratorAttribute(1.0);
-      final result = decorator.resolve(EmptyMixData);
+      const modifier = AspectRatioDecoratorAttribute(1.0);
+      final result = modifier.resolve(EmptyMixData);
       expect(result, isA<AspectRatioDecoratorSpec>());
     });
 
     test('equality', () {
-      const decorator = AspectRatioDecoratorAttribute(1.0);
+      const modifier = AspectRatioDecoratorAttribute(1.0);
       const other = AspectRatioDecoratorAttribute(1.0);
-      expect(decorator, other);
+      expect(modifier, other);
     });
 
     test('inequality', () {
-      const decorator = AspectRatioDecoratorAttribute(1.0);
+      const modifier = AspectRatioDecoratorAttribute(1.0);
       const other = AspectRatioDecoratorAttribute(2.0);
-      expect(decorator, isNot(equals(other)));
+      expect(modifier, isNot(equals(other)));
     });
   });
 }

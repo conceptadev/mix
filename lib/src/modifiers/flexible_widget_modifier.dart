@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../attributes/scalars/scalar_util.dart';
 import '../core/attribute.dart';
-import '../core/decorator.dart';
+import '../core/modifier.dart';
 import '../factory/mix_provider_data.dart';
 import '../helpers/lerp_helpers.dart';
 
@@ -39,7 +39,7 @@ class FlexibleDecoratorSpec extends DecoratorSpec<FlexibleDecoratorSpec> {
   }
 }
 
-/// A decorator that wraps a widget with the [Flexible] widget.
+/// A modifier that wraps a widget with the [Flexible] widget.
 ///
 /// The [Flexible] widget is used to create a flexible space in a [Row], [Column], or [Flex] widget.
 class FlexibleDecoratorAttribute extends DecoratorAttribute<

@@ -49,7 +49,7 @@ void main() {
         expect(
           find.descendant(
             of: find.byKey(key),
-            matching: find.byType(RenderDecorators),
+            matching: find.byType(RenderModifiers),
           ),
           findsOneWidget,
         );

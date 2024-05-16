@@ -41,7 +41,7 @@ class StyledText extends StyledWidget {
     super.key,
     super.inherit = true,
     this.locale,
-    super.orderOfDecorators = const [],
+    super.orderOfModifiers = const [],
   });
 
   final String text;
