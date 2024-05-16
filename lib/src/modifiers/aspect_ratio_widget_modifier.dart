@@ -12,7 +12,7 @@ import '../factory/mix_provider_data.dart';
 /// A modifier that wraps a widget with the [AspectRatio] widget.
 ///
 /// The [AspectRatio] widget sizes its child to match a given aspect ratio.
-class AspectRatioModifierAttribute extends ModifierAttribute<
+class AspectRatioModifierAttribute extends WidgetModifierAttribute<
     AspectRatioModifierAttribute, AspectRatioModifierSpec> {
   /// The aspect ratio to use when sizing the child.
   ///
@@ -34,7 +34,8 @@ class AspectRatioModifierAttribute extends ModifierAttribute<
   get props => [aspectRatio];
 }
 
-class AspectRatioModifierSpec extends ModifierSpec<AspectRatioModifierSpec> {
+class AspectRatioModifierSpec
+    extends WidgetModifierSpec<AspectRatioModifierSpec> {
   final double aspectRatio;
   const AspectRatioModifierSpec(this.aspectRatio);
 

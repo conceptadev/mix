@@ -9,7 +9,7 @@ import '../core/attribute.dart';
 import '../core/modifier.dart';
 import '../factory/mix_provider_data.dart';
 
-class AlignModifierSpec extends ModifierSpec<AlignModifierSpec> {
+class AlignModifierSpec extends WidgetModifierSpec<AlignModifierSpec> {
   final AlignmentGeometry? alignment;
   final double? widthFactor;
   final double? heightFactor;
@@ -57,7 +57,7 @@ class AlignModifierSpec extends ModifierSpec<AlignModifierSpec> {
 }
 
 class AlignModifierAttribute
-    extends ModifierAttribute<AlignModifierAttribute, AlignModifierSpec> {
+    extends WidgetModifierAttribute<AlignModifierAttribute, AlignModifierSpec> {
   final AlignmentGeometry? alignment;
   final double? widthFactor;
   final double? heightFactor;

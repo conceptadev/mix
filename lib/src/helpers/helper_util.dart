@@ -2,7 +2,7 @@ import 'package:flutter/widgets.dart';
 
 import '../core/modifier.dart';
 import '../factory/mix_provider_data.dart';
-import '../modifiers/widget_modifier_widget.dart';
+import '../modifiers/render_widget_modifier.dart';
 
 typedef FunctionWithParams<ParamT, ReturnT> = ReturnT Function(
   List<ParamT> params,
@@ -79,13 +79,13 @@ class SpreadFunctionParams<ParamT, ReturnT> {
 }
 
 /// Conditionally applies modifiers to [child] based on the presence of
-/// [ModifierAttribute] in [mix].
+/// [WidgetModifierAttribute] in [mix].
 ///
-/// If [mix] contains [ModifierAttribute], this returns [child] wrapped in a
+/// If [mix] contains [WidgetModifierAttribute], this returns [child] wrapped in a
 /// [RenderModifiers] widget. The order of modifiers is determined by
 /// [orderOfModifiers].
 ///
-/// If [mix] does not contain [ModifierAttribute], this returns [child]
+/// If [mix] does not contain [WidgetModifierAttribute], this returns [child]
 /// unmodified.
 ///
 /// Example:
@@ -102,7 +102,7 @@ Widget shouldApplyModifiers({
   required Widget child,
   List<Type> orderOfModifiers = const [],
 }) {
-  final hasModifiers = mix.contains<ModifierAttribute>();
+  final hasModifiers = mix.contains<WidgetModifierAttribute>();
 
   if (!hasModifiers) return child;
 

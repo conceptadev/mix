@@ -12,7 +12,7 @@ import '../factory/mix_provider_data.dart';
 /// A modifier that wraps a widget with the [Opacity] widget.
 ///
 /// The [Opacity] widget is used to make a widget partially transparent.
-class OpacityModifierSpec extends ModifierSpec<OpacityModifierSpec> {
+class OpacityModifierSpec extends WidgetModifierSpec<OpacityModifierSpec> {
   /// The [opacity] argument must not be null and
   /// must be between 0.0 and 1.0 (inclusive).
   final double opacity;
@@ -44,8 +44,8 @@ class OpacityModifierSpec extends ModifierSpec<OpacityModifierSpec> {
   }
 }
 
-class OpacityModifierAttribute
-    extends ModifierAttribute<OpacityModifierAttribute, OpacityModifierSpec> {
+class OpacityModifierAttribute extends WidgetModifierAttribute<
+    OpacityModifierAttribute, OpacityModifierSpec> {
   final double opacity;
   const OpacityModifierAttribute(this.opacity);
 

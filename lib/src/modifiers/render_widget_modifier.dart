@@ -129,7 +129,8 @@ class RenderAnimatedModifiersState
       _specs[specType] = visitor(
         previousSpec,
         spec,
-        (dynamic value) => ModifierSpecTween(begin: value as ModifierSpec),
+        (dynamic value) =>
+            ModifierSpecTween(begin: value as WidgetModifierSpec),
       ) as ModifierSpecTween;
     }
   }
@@ -147,14 +148,14 @@ class RenderAnimatedModifiersState
   }
 }
 
-Set<ModifierSpec> resolveModifierSpecs(
+Set<WidgetModifierSpec> resolveModifierSpecs(
   List<Type> orderOfModifiers,
   MixData mix,
 ) {
-  final modifiers = mix.whereType<ModifierAttribute>();
+  final modifiers = mix.whereType<WidgetModifierAttribute>();
 
   if (modifiers.isEmpty) return {};
-  final modifierMap = AttributeMap<ModifierAttribute>(modifiers).toMap();
+  final modifierMap = AttributeMap<WidgetModifierAttribute>(modifiers).toMap();
 
   final listOfModifiers = {
     // Prioritize the order of modifiers provided by the user.
@@ -165,26 +166,27 @@ Set<ModifierSpec> resolveModifierSpecs(
     ...modifierMap.keys,
   }.toList().reversed;
 
-  final specs = <ModifierSpec>[];
+  final specs = <WidgetModifierSpec>[];
 
   for (final modifierType in listOfModifiers) {
     // Resolve the modifier and add it to the list of specs.
     final modifier = modifierMap.remove(modifierType);
     if (modifier == null) continue;
-    specs.add(modifier.resolve(mix) as ModifierSpec);
+    specs.add(modifier.resolve(mix) as WidgetModifierSpec);
   }
 
   return specs.toSet();
 }
 
-class ModifierSpecTween extends Tween<ModifierSpec> {
+class ModifierSpecTween extends Tween<WidgetModifierSpec> {
   /// Creates an [EdgeInsetsGeometry] tween.
   ///
   /// The [begin] and [end] properties may be null; the null value
-  /// is treated as an [ModifierSpec]
+  /// is treated as an [WidgetModifierSpec]
   ModifierSpecTween({super.begin, super.end});
 
   /// Returns the value this variable has at the given animation clock value.
   @override
-  ModifierSpec lerp(double t) => ModifierSpec.lerpValue(begin, end, t)!;
+  WidgetModifierSpec lerp(double t) =>
+      WidgetModifierSpec.lerpValue(begin, end, t)!;
 }

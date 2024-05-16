@@ -10,7 +10,7 @@ import '../core/modifier.dart';
 import '../factory/mix_provider_data.dart';
 
 class FractionallySizedBoxModifierSpec
-    extends ModifierSpec<FractionallySizedBoxModifierSpec> {
+    extends WidgetModifierSpec<FractionallySizedBoxModifierSpec> {
   final double? widthFactor;
   final double? heightFactor;
   final AlignmentGeometry? alignment;
@@ -60,7 +60,7 @@ class FractionallySizedBoxModifierSpec
   }
 }
 
-class FractionallySizedBoxModifierAttribute extends ModifierAttribute<
+class FractionallySizedBoxModifierAttribute extends WidgetModifierAttribute<
     FractionallySizedBoxModifierAttribute, FractionallySizedBoxModifierSpec> {
   final double? widthFactor;
   final double? heightFactor;

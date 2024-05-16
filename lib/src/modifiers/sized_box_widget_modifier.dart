@@ -9,7 +9,7 @@ import '../core/attribute.dart';
 import '../core/modifier.dart';
 import '../factory/mix_provider_data.dart';
 
-class SizedBoxModifierSpec extends ModifierSpec<SizedBoxModifierSpec> {
+class SizedBoxModifierSpec extends WidgetModifierSpec<SizedBoxModifierSpec> {
   final double? width;
   final double? height;
 
@@ -40,8 +40,8 @@ class SizedBoxModifierSpec extends ModifierSpec<SizedBoxModifierSpec> {
   }
 }
 
-class SizedBoxModifierAttribute
-    extends ModifierAttribute<SizedBoxModifierAttribute, SizedBoxModifierSpec> {
+class SizedBoxModifierAttribute extends WidgetModifierAttribute<
+    SizedBoxModifierAttribute, SizedBoxModifierSpec> {
   final double? width;
   final double? height;
 

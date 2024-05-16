@@ -8,7 +8,8 @@ import '../core/modifier.dart';
 import '../factory/mix_provider_data.dart';
 import '../helpers/lerp_helpers.dart';
 
-class VisibilityModifierSpec extends ModifierSpec<VisibilityModifierSpec> {
+class VisibilityModifierSpec
+    extends WidgetModifierSpec<VisibilityModifierSpec> {
   final bool visible;
   const VisibilityModifierSpec(this.visible);
 
@@ -33,7 +34,7 @@ class VisibilityModifierSpec extends ModifierSpec<VisibilityModifierSpec> {
   }
 }
 
-class VisibilityModifierAttribute extends ModifierAttribute<
+class VisibilityModifierAttribute extends WidgetModifierAttribute<
     VisibilityModifierAttribute, VisibilityModifierSpec> {
   final bool visible;
   const VisibilityModifierAttribute(this.visible);

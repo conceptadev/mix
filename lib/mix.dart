@@ -55,7 +55,7 @@ export 'src/modifiers/rotated_box_widget_modifier.dart';
 export 'src/modifiers/sized_box_widget_modifier.dart';
 export 'src/modifiers/transform_widget_modifier.dart';
 export 'src/modifiers/visibility_widget_modifier.dart';
-export 'src/modifiers/widget_modifier_widget.dart';
+export 'src/modifiers/render_widget_modifier.dart';
 export 'src/modifiers/widget_modifiers_util.dart';
 export 'src/factory/mix_provider.dart';
 export 'src/factory/mix_provider_data.dart';

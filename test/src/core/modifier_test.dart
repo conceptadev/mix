@@ -10,7 +10,7 @@ import '../../helpers/testing_utils.dart';
 void main() {
   group('ModifierSpec', () {
     test('lerpValue should return null when both begin and end are null', () {
-      expect(ModifierSpec.lerpValue(null, null, 0.5), isNull);
+      expect(WidgetModifierSpec.lerpValue(null, null, 0.5), isNull);
     });
 
     test(
@@ -19,11 +19,12 @@ void main() {
       const begin = _TestModifierSpec(1);
       const end = _TestModifierSpec(2);
       expect(
-        ModifierSpec.lerpValue(begin, end, 0.5),
+        WidgetModifierSpec.lerpValue(begin, end, 0.5),
         isA<_TestModifierSpec>(),
       );
       expect(
-        (ModifierSpec.lerpValue(begin, end, 0.5) as _TestModifierSpec?)?.value,
+        (WidgetModifierSpec.lerpValue(begin, end, 0.5) as _TestModifierSpec?)
+            ?.value,
         1.5,
       );
     });
@@ -39,7 +40,7 @@ void main() {
   });
 }
 
-class _TestModifierSpec extends ModifierSpec<_TestModifierSpec> {
+class _TestModifierSpec extends WidgetModifierSpec<_TestModifierSpec> {
   final double value;
   const _TestModifierSpec(this.value);
 
@@ -65,7 +66,7 @@ class _TestModifierSpec extends ModifierSpec<_TestModifierSpec> {
 }
 
 class _TestModifierAttribute
-    extends ModifierAttribute<_TestModifierAttribute, _TestModifierSpec> {
+    extends WidgetModifierAttribute<_TestModifierAttribute, _TestModifierSpec> {
   final double value;
   const _TestModifierAttribute(this.value);
 

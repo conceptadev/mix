@@ -22,11 +22,11 @@ abstract class SpecUtility<Attr extends Attribute, Value extends SpecAttribute>
   // SpecUtility<VariantAttribute, Value> call(Variant variant);
 }
 
-abstract class ModifierUtility<
+abstract class WidgetModifierUtility<
     T extends Attribute,
-    D extends ModifierAttribute<D, Value>,
-    Value extends ModifierSpec<Value>> extends MixUtility<T, D> {
-  const ModifierUtility(super.builder);
+    D extends WidgetModifierAttribute<D, Value>,
+    Value extends WidgetModifierSpec<Value>> extends MixUtility<T, D> {
+  const WidgetModifierUtility(super.builder);
 }
 
 abstract class DtoUtility<Attr extends Attribute, D extends Dto<Value>, Value>

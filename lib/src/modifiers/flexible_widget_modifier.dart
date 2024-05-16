@@ -8,7 +8,7 @@ import '../core/modifier.dart';
 import '../factory/mix_provider_data.dart';
 import '../helpers/lerp_helpers.dart';
 
-class FlexibleModifierSpec extends ModifierSpec<FlexibleModifierSpec> {
+class FlexibleModifierSpec extends WidgetModifierSpec<FlexibleModifierSpec> {
   final int? flex;
   final FlexFit? fit;
   const FlexibleModifierSpec({this.flex, this.fit});
@@ -42,8 +42,8 @@ class FlexibleModifierSpec extends ModifierSpec<FlexibleModifierSpec> {
 /// A modifier that wraps a widget with the [Flexible] widget.
 ///
 /// The [Flexible] widget is used to create a flexible space in a [Row], [Column], or [Flex] widget.
-class FlexibleModifierAttribute
-    extends ModifierAttribute<FlexibleModifierAttribute, FlexibleModifierSpec> {
+class FlexibleModifierAttribute extends WidgetModifierAttribute<
+    FlexibleModifierAttribute, FlexibleModifierSpec> {
   final int? flex;
   final FlexFit? fit;
   const FlexibleModifierAttribute({this.flex, this.fit});

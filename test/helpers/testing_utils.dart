@@ -307,7 +307,8 @@ class UtilityTestDtoAttribute<T extends Dto<V>, V>
   }
 }
 
-class CustomWidgetModifierSpec extends ModifierSpec<CustomWidgetModifierSpec> {
+class CustomWidgetModifierSpec
+    extends WidgetModifierSpec<CustomWidgetModifierSpec> {
   final bool value;
   const CustomWidgetModifierSpec(this.value);
 
@@ -332,8 +333,8 @@ class CustomWidgetModifierSpec extends ModifierSpec<CustomWidgetModifierSpec> {
   }
 }
 
-class CustomModifierAttribute extends ModifierAttribute<CustomModifierAttribute,
-    CustomWidgetModifierSpec> {
+class CustomModifierAttribute extends WidgetModifierAttribute<
+    CustomModifierAttribute, CustomWidgetModifierSpec> {
   final bool? value;
   const CustomModifierAttribute([this.value = true]);
 

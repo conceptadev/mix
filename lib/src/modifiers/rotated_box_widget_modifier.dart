@@ -8,7 +8,8 @@ import '../core/modifier.dart';
 import '../factory/mix_provider_data.dart';
 import '../helpers/lerp_helpers.dart';
 
-class RotatedBoxModifierSpec extends ModifierSpec<RotatedBoxModifierSpec> {
+class RotatedBoxModifierSpec
+    extends WidgetModifierSpec<RotatedBoxModifierSpec> {
   final int quarterTurns;
   const RotatedBoxModifierSpec(this.quarterTurns);
 
@@ -34,7 +35,7 @@ class RotatedBoxModifierSpec extends ModifierSpec<RotatedBoxModifierSpec> {
   }
 }
 
-class RotatedBoxModifierAttribute extends ModifierAttribute<
+class RotatedBoxModifierAttribute extends WidgetModifierAttribute<
     RotatedBoxModifierAttribute, RotatedBoxModifierSpec> {
   final int quarterTurns;
   const RotatedBoxModifierAttribute(this.quarterTurns);

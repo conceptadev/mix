@@ -8,7 +8,7 @@ import '../core/modifier.dart';
 import '../factory/mix_provider_data.dart';
 
 class IntrinsicHeightModifierSpec
-    extends ModifierSpec<IntrinsicHeightModifierSpec> {
+    extends WidgetModifierSpec<IntrinsicHeightModifierSpec> {
   const IntrinsicHeightModifierSpec();
 
   @override
@@ -35,7 +35,7 @@ class IntrinsicHeightModifierSpec
   }
 }
 
-class IntrinsicHeightModifierAttribute extends ModifierAttribute<
+class IntrinsicHeightModifierAttribute extends WidgetModifierAttribute<
     IntrinsicHeightModifierAttribute, IntrinsicHeightModifierSpec> {
   const IntrinsicHeightModifierAttribute();
 
@@ -58,7 +58,7 @@ class IntrinsicHeightModifierAttribute extends ModifierAttribute<
 }
 
 class IntrinsicWidthModifierSpec
-    extends ModifierSpec<IntrinsicWidthModifierSpec> {
+    extends WidgetModifierSpec<IntrinsicWidthModifierSpec> {
   const IntrinsicWidthModifierSpec();
 
   @override
@@ -85,7 +85,7 @@ class IntrinsicWidthModifierSpec
   }
 }
 
-class IntrinsicWidthModifierAttribute extends ModifierAttribute<
+class IntrinsicWidthModifierAttribute extends WidgetModifierAttribute<
     IntrinsicWidthModifierAttribute, IntrinsicWidthModifierSpec> {
   const IntrinsicWidthModifierAttribute();
 

@@ -6,7 +6,7 @@ import '../attributes/spacing/spacing_dto.dart';
 import '../core/modifier.dart';
 import '../factory/mix_provider_data.dart';
 
-class PaddingSpec extends ModifierSpec<PaddingSpec> {
+class PaddingSpec extends WidgetModifierSpec<PaddingSpec> {
   final EdgeInsetsGeometry padding;
   const PaddingSpec(this.padding);
 
@@ -32,7 +32,7 @@ class PaddingSpec extends ModifierSpec<PaddingSpec> {
 }
 
 class PaddingModifierAttribute
-    extends ModifierAttribute<PaddingModifierAttribute, PaddingSpec> {
+    extends WidgetModifierAttribute<PaddingModifierAttribute, PaddingSpec> {
   final SpacingDto padding;
   const PaddingModifierAttribute(this.padding);
 

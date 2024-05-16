@@ -7,7 +7,7 @@ import '../core/attribute.dart';
 import '../core/modifier.dart';
 import '../factory/mix_provider_data.dart';
 
-class TransformModifierSpec extends ModifierSpec<TransformModifierSpec> {
+class TransformModifierSpec extends WidgetModifierSpec<TransformModifierSpec> {
   final Matrix4? transform;
   final Alignment? alignment;
 
@@ -41,7 +41,7 @@ class TransformModifierSpec extends ModifierSpec<TransformModifierSpec> {
   }
 }
 
-class TransformModifierAttribute extends ModifierAttribute<
+class TransformModifierAttribute extends WidgetModifierAttribute<
     TransformModifierAttribute, TransformModifierSpec> {
   final Matrix4? transform;
   final Alignment? alignment;

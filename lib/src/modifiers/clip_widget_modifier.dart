@@ -8,7 +8,7 @@ import '../core/modifier.dart';
 import '../factory/mix_provider_data.dart';
 import '../helpers/lerp_helpers.dart';
 
-class ClipOvalModifierSpec extends ModifierSpec<ClipOvalModifierSpec> {
+class ClipOvalModifierSpec extends WidgetModifierSpec<ClipOvalModifierSpec> {
   final CustomClipper<Rect>? clipper;
   final Clip? clipBehavior;
 
@@ -47,8 +47,8 @@ class ClipOvalModifierSpec extends ModifierSpec<ClipOvalModifierSpec> {
   }
 }
 
-class ClipOvalModifierAttribute
-    extends ModifierAttribute<ClipOvalModifierAttribute, ClipOvalModifierSpec> {
+class ClipOvalModifierAttribute extends WidgetModifierAttribute<
+    ClipOvalModifierAttribute, ClipOvalModifierSpec> {
   final CustomClipper<Rect>? clipper;
   final Clip? clipBehavior;
 
@@ -71,7 +71,7 @@ class ClipOvalModifierAttribute
   get props => [clipper, clipBehavior];
 }
 
-class ClipRectModifierSpec extends ModifierSpec<ClipRectModifierSpec> {
+class ClipRectModifierSpec extends WidgetModifierSpec<ClipRectModifierSpec> {
   final CustomClipper<Rect>? clipper;
   final Clip? clipBehavior;
 
@@ -113,8 +113,8 @@ class ClipRectModifierSpec extends ModifierSpec<ClipRectModifierSpec> {
 /// A modifier that wraps a widget with a [ClipRect] widget.
 ///
 /// The [ClipRect] widget is used to clip a widget to a rectangle.
-class ClipRectModifierAttribute
-    extends ModifierAttribute<ClipRectModifierAttribute, ClipRectModifierSpec> {
+class ClipRectModifierAttribute extends WidgetModifierAttribute<
+    ClipRectModifierAttribute, ClipRectModifierSpec> {
   final CustomClipper<Rect>? clipper;
   final Clip? clipBehavior;
 
@@ -137,7 +137,7 @@ class ClipRectModifierAttribute
   get props => [clipper, clipBehavior];
 }
 
-class ClipRRectModifierSpec extends ModifierSpec<ClipRRectModifierSpec> {
+class ClipRRectModifierSpec extends WidgetModifierSpec<ClipRRectModifierSpec> {
   final BorderRadiusGeometry? borderRadius;
   final CustomClipper<RRect>? clipper;
   final Clip? clipBehavior;
@@ -186,7 +186,7 @@ class ClipRRectModifierSpec extends ModifierSpec<ClipRRectModifierSpec> {
   }
 }
 
-class ClipRRectModifierAttribute extends ModifierAttribute<
+class ClipRRectModifierAttribute extends WidgetModifierAttribute<
     ClipRRectModifierAttribute, ClipRRectModifierSpec> {
   final BorderRadiusGeometry? borderRadius;
   final CustomClipper<RRect>? clipper;
@@ -221,7 +221,7 @@ class ClipRRectModifierAttribute extends ModifierAttribute<
 }
 
 @immutable
-class ClipPathModifierSpec extends ModifierSpec<ClipPathModifierSpec> {
+class ClipPathModifierSpec extends WidgetModifierSpec<ClipPathModifierSpec> {
   final CustomClipper<Path>? clipper;
   final Clip? clipBehavior;
 
@@ -263,8 +263,8 @@ class ClipPathModifierSpec extends ModifierSpec<ClipPathModifierSpec> {
 /// A modifier that wraps a widget with a [ClipPath] widget.
 ///
 /// The [ClipPath] widget is used to clip a widget using a custom clipper.
-class ClipPathModifierAttribute
-    extends ModifierAttribute<ClipPathModifierAttribute, ClipPathModifierSpec> {
+class ClipPathModifierAttribute extends WidgetModifierAttribute<
+    ClipPathModifierAttribute, ClipPathModifierSpec> {
   final CustomClipper<Path>? clipper;
   final Clip? clipBehavior;
 
@@ -291,7 +291,8 @@ class ClipPathModifierAttribute
 }
 
 @immutable
-class ClipTriangleModifierSpec extends ModifierSpec<ClipTriangleModifierSpec> {
+class ClipTriangleModifierSpec
+    extends WidgetModifierSpec<ClipTriangleModifierSpec> {
   final Clip? clipBehavior;
 
   const ClipTriangleModifierSpec({this.clipBehavior});
@@ -327,7 +328,7 @@ class ClipTriangleModifierSpec extends ModifierSpec<ClipTriangleModifierSpec> {
 /// A modifier that wraps a widget with a custom [ClipPath] widget with a [TriangleClipper].
 ///
 /// The [TriangleClipper] is used to clip a widget to a triangle shape.
-class ClipTriangleModifierAttribute extends ModifierAttribute<
+class ClipTriangleModifierAttribute extends WidgetModifierAttribute<
     ClipTriangleModifierAttribute, ClipTriangleModifierSpec> {
   final Clip? clipBehavior;
 

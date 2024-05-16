@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../factory/mix_provider.dart';
 import '../factory/mix_provider_data.dart';
 import '../factory/style_mix.dart';
-import '../modifiers/widget_modifier_widget.dart';
+import '../modifiers/render_widget_modifier.dart';
 
 /// An abstract widget for applying custom styles.
 ///
