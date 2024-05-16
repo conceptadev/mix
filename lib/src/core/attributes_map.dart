@@ -24,19 +24,13 @@ class AttributeMap<T extends Attribute> with Comparable {
     for (final attribute in attributes) {
       final type = attribute.mergeKey;
 
-      // If value cannot be merged just overwrite it
-      if (attribute is! Mergeable) {
-        map[type] = attribute;
-        continue;
-      }
-
       // If there is no saved attribute, just add it
       final savedAttribute = map[type];
       if (savedAttribute == null) {
         map[type] = attribute;
       } else {
         // If there is a saved attribute, merge it with the new one
-        map[type] = savedAttribute.merge(attribute);
+        map[type] = savedAttribute.merge(attribute) as Attr;
       }
     }
 
