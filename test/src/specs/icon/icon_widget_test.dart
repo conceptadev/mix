@@ -160,7 +160,7 @@ void main() {
 
     await tester.pumpMaterialApp(
       const AnimatedIconSpecWidget(
-        icon: Icons.ac_unit,
+        Icons.ac_unit,
         spec: spec1,
         duration: Duration(milliseconds: 500),
       ),
@@ -173,7 +173,7 @@ void main() {
 
     await tester.pumpMaterialApp(
       const AnimatedIconSpecWidget(
-        icon: Icons.ac_unit,
+        Icons.ac_unit,
         spec: spec2,
         duration: Duration(milliseconds: 500),
       ),
@@ -200,7 +200,7 @@ void main() {
 
     await tester.pumpMaterialApp(
       const AnimatedIconSpecWidget(
-        icon: Icons.ac_unit,
+        Icons.ac_unit,
         spec: spec,
         duration: Duration(milliseconds: 500),
         semanticLabel: 'Custom Animated Icon',

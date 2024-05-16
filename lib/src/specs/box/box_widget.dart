@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../core/styled_widget.dart';
-import '../../deprecations.dart';
 import '../../factory/mix_provider.dart';
 import 'box_spec.dart';
 
@@ -36,7 +35,6 @@ import 'box_spec.dart';
 /// * [Container], which is the Flutter equivalent widget.
 class Box extends StyledWidget {
   const Box({
-    @Deprecated('Use the the style parameter instead') Mix? mix,
     super.style,
     super.key,
     super.inherit,
