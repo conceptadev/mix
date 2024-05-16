@@ -6,7 +6,7 @@ import '../../../helpers/testing_utils.dart';
 
 void main() {
   testWidgets(
-    'Icon should apply decorators only once',
+    'Icon should apply modifiers only once',
     (tester) async {
       await tester.pumpMaterialApp(
         StyledIcon(
@@ -24,7 +24,7 @@ void main() {
   );
 
   testWidgets(
-    'AnimatedStyledIcon should apply decorators only once',
+    'AnimatedStyledIcon should apply modifiers only once',
     (tester) async {
       await tester.pumpMaterialApp(
         AnimatedStyledIcon(

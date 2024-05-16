@@ -14,12 +14,12 @@ import 'style_mix.dart';
 
 /// This class is used for encapsulating all [MixData] related operations.
 /// It contains a mixture of properties and methods useful for handling different attributes,
-/// decorators and token resolvers.
+/// modifiers and token resolvers.
 @immutable
 class MixData with Comparable {
   final AnimatedData? animation;
 
-  // Instance variables for widget attributes, widget decorators and token resolver.
+  // Instance variables for widget attributes, widget modifiers and token resolver.
   final AttributeMap _attributes;
 
   final MixTokenResolver _tokenResolver;

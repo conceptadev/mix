@@ -34,7 +34,7 @@ To enhance readability, short aliases and shorthand property/method names are re
 
 #### Decorators
 
-Decorators' order was previously determined by their addition sequence. Now, we enforce specific ordering but also allow customizable orders. This might cause behavior changes in rare cases. For details, refer to the [decorators guide](https://fluttermix.com/docs/guides/decorators).
+Decorators' order was previously determined by their addition sequence. Now, we enforce specific ordering but also allow customizable orders. This might cause behavior changes in rare cases. For details, refer to the [modifiers guide](https://fluttermix.com/docs/guides/modifiers).
 
 ### StyledWidgets updates
 
@@ -55,7 +55,7 @@ The operators have been redesigned to allow for concatenation and grouping, enab
 
 #### StyledWidgets and Decorators
 
-A bunch of `StyledWidgets` are now allow to receive decorators' attributes, including `StyledIcon`, `StyledFlex` and `StyledIcon`. Additionally, when a decorator is not applied to a Style, a `RenderWidgetDecorators` will not be present in the widget tree. This simplification makes the widget easier to debug.
+A bunch of `StyledWidgets` are now allow to receive modifiers' attributes, including `StyledIcon`, `StyledFlex` and `StyledIcon`. Additionally, when a decorator is not applied to a Style, a `RenderWidgetDecorators` will not be present in the widget tree. This simplification makes the widget easier to debug.
 
 #### Theming
 
@@ -94,7 +94,7 @@ In the 1.0.0 version, the `$` symbol is now used to access API from the Mix pack
 
 #### The new Namespaces `$on` and `$with`
 
-Two new namespaces were added to the Mix package: `$on` and `$with`. The `$on` namespace is used to access ContextVariants, like `$on.hover`, `$on.focus`, and `$on.press`. While the `$with` namespace is used to access all the decorators provided by Mix. 
+Two new namespaces were added to the Mix package: `$on` and `$with`. The `$on` namespace is used to access ContextVariants, like `$on.hover`, `$on.focus`, and `$on.press`. While the `$with` namespace is used to access all the modifiers provided by Mix. 
 
 ```dart
 PressableBox(

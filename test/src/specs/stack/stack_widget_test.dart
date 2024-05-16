@@ -59,7 +59,7 @@ void main() {
   });
 
   testWidgets(
-    'StyledStack should apply decorators only once',
+    'StyledStack should apply modifiers only once',
     (tester) async {
       await tester.pumpMaterialApp(
         StyledStack(
@@ -81,7 +81,7 @@ void main() {
   );
 
   testWidgets(
-    'ZBox should apply decorators only once',
+    'ZBox should apply modifiers only once',
     (tester) async {
       await tester.pumpMaterialApp(
         ZBox(

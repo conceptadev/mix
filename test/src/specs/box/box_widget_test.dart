@@ -48,7 +48,7 @@ void main() {
   });
 
   testWidgets(
-    'Box should apply decorators only once',
+    'Box should apply modifiers only once',
     (tester) async {
       await tester.pumpMaterialApp(
         Box(

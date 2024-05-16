@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 
 import '../core/decorator.dart';
-import '../decorators/widget_decorator_widget.dart';
+import '../modifiers/widget_decorator_widget.dart';
 import '../factory/mix_provider_data.dart';
 
 typedef FunctionWithParams<ParamT, ReturnT> = ReturnT Function(
@@ -78,11 +78,11 @@ class SpreadFunctionParams<ParamT, ReturnT> {
   }
 }
 
-/// Conditionally applies decorators to [child] based on the presence of
+/// Conditionally applies modifiers to [child] based on the presence of
 /// [DecoratorAttribute] in [mix].
 ///
 /// If [mix] contains [DecoratorAttribute], this returns [child] wrapped in a
-/// [RenderDecorators] widget. The order of decorators is determined by
+/// [RenderDecorators] widget. The order of modifiers is determined by
 /// [orderOfDecorators].
 ///
 /// If [mix] does not contain [DecoratorAttribute], this returns [child]

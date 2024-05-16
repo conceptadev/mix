@@ -17,7 +17,7 @@ void main() {
   final mixData = MixData.create(MockBuildContext(), style);
 
   group('RenderDecorators', () {
-    testWidgets('Renders decorators in the correct order', (tester) async {
+    testWidgets('Renders modifiers in the correct order', (tester) async {
       await tester.pumpMaterialApp(
         RenderDecorators(
           mix: mixData,
@@ -78,8 +78,7 @@ void main() {
       );
     });
 
-    testWidgets('Renders child when no decorators are provided',
-        (tester) async {
+    testWidgets('Renders child when no modifiers are provided', (tester) async {
       final mixData = MixData.create(MockBuildContext(), Style());
 
       await tester.pumpMaterialApp(
@@ -111,7 +110,7 @@ void main() {
     });
 
     testWidgets(
-      'Renders decorators in the correct order with many overrides',
+      'Renders modifiers in the correct order with many overrides',
       (tester) async {
         await tester.pumpMaterialApp(
           RenderDecorators(
@@ -181,7 +180,7 @@ void main() {
 
     //  Allow for only a few overrides
     testWidgets(
-      'Renders decorators in the correct order with a few overrides',
+      'Renders modifiers in the correct order with a few overrides',
       (tester) async {
         await tester.pumpMaterialApp(
           RenderDecorators(
@@ -256,7 +255,7 @@ void main() {
   });
 
   group('RenderAnimatedDecorators', () {
-    testWidgets('Renders animated decorators', (tester) async {
+    testWidgets('Renders animated modifiers', (tester) async {
       final mixData = MixData.create(MockBuildContext(), style);
 
       await tester.pumpMaterialApp(
@@ -372,7 +371,7 @@ void main() {
   });
 
   group('resolveDecoratorSpecs', () {
-    test('Returns empty set when no decorators are provided', () {
+    test('Returns empty set when no modifiers are provided', () {
       final result = resolveDecoratorSpecs(const [], EmptyMixData);
       expect(result, isEmpty);
     });

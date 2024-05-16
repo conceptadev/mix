@@ -1,5 +1,5 @@
 import '../attributes/scalars/scalar_util.dart';
-import '../decorators/widget_decorators_util.dart';
+import '../modifiers/widget_decorators_util.dart';
 import '../utils/context_variant_util/on_util.dart';
 import 'box/box_util.dart';
 import 'flex/flex_util.dart';

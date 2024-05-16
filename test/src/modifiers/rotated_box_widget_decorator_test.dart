@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mix/src/decorators/rotated_box_widget_decorator.dart';
+import 'package:mix/src/modifiers/rotated_box_widget_decorator.dart';
 
 import '../../helpers/testing_utils.dart';
 

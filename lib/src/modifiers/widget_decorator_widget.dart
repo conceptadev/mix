@@ -15,7 +15,7 @@ import 'sized_box_widget_decorator.dart';
 import 'transform_widget_decorator.dart';
 import 'visibility_widget_decorator.dart';
 
-// Default order of decorators and their logic:
+// Default order of modifiers and their logic:
 const _defaultOrder = [
   // 1. VisibilityDecorator: Controls overall visibility. If the widget is set to be invisible,
   // none of the subsequent decorations are processed, providing an early exit and optimizing performance.
@@ -32,7 +32,7 @@ const _defaultOrder = [
 
   // 4. AlignDecorator: Aligns the widget within its allocated space, which is especially important
   // for positioning the widget correctly before applying any transformations that could affect its position.
-  // Alignment is based on the size constraints established by previous decorators.
+  // Alignment is based on the size constraints established by previous modifiers.
   AlignDecoratorAttribute,
 
   // 5. IntrinsicHeightDecorator: Adjusts the widget's height to fit its child's intrinsic height,
@@ -152,17 +152,17 @@ Set<DecoratorSpec> resolveDecoratorSpecs(
   List<Type> orderOfDecorators,
   MixData mix,
 ) {
-  final decorators = mix.whereType<DecoratorAttribute>();
+  final modifiers = mix.whereType<DecoratorAttribute>();
 
-  if (decorators.isEmpty) return {};
-  final decoratorMap = AttributeMap<DecoratorAttribute>(decorators).toMap();
+  if (modifiers.isEmpty) return {};
+  final decoratorMap = AttributeMap<DecoratorAttribute>(modifiers).toMap();
 
   final listOfDecorators = {
-    // Prioritize the order of decorators provided by the user.
+    // Prioritize the order of modifiers provided by the user.
     ...orderOfDecorators,
-    // Add the default order of decorators.
+    // Add the default order of modifiers.
     ..._defaultOrder,
-    // Add any remaining decorators that were not included in the order.
+    // Add any remaining modifiers that were not included in the order.
     ...decoratorMap.keys,
   }.toList().reversed;
 

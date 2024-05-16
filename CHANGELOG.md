@@ -30,7 +30,7 @@
 
 ## 1.0.0-beta.9
 
-* Added animated decorators by @leoafarias
+* Added animated modifiers by @leoafarias
 * Added StyleBuilder by @leoafarias
 * Created flip, rotate and scale using transform by @tilucasoli
 * Added StyleWidgetBuilder by @tilucasoli
@@ -39,16 +39,16 @@
 ## 1.0.0-beta.8
 
 * Optimized analyze workflow by @leoafarias
-* Fix more than one decorator on Flex widgets when decorators are used by @tilucasoli
+* Fix more than one decorator on Flex widgets when modifiers are used by @tilucasoli
 * Feat/add deprecated apis by @tilucasoli
 
 ## 1.0.0-beta.7
 
 * Added color directives to single colors by @leoafarias
 * Improvements to Pressable by @leoafarias
-* Add IntrinsicHeight and IntrinsicWidth decorators by @tilucasoli
+* Add IntrinsicHeight and IntrinsicWidth modifiers by @tilucasoli
 * Implement support for decorations in AnimatedBox, AnimatedIcon and StyledStack by @tilucasoli
-* Added more widget decorators by @leoafarias
+* Added more widget modifiers by @leoafarias
 * Sets minimum compat version by @leoafarias
 
 ## 1.0.0-beta.6

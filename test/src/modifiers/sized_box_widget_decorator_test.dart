@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/src/attributes/scalars/scalar_util.dart';
-import 'package:mix/src/decorators/sized_box_widget_decorator.dart';
+import 'package:mix/src/modifiers/sized_box_widget_decorator.dart';
 
 import '../../helpers/testing_utils.dart';
 

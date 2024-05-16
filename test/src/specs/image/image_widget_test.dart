@@ -92,7 +92,7 @@ void main() {
     );
 
     testWidgets(
-      'StyleImage should apply decorators only once',
+      'StyleImage should apply modifiers only once',
       (tester) async {
         await tester.pumpMaterialApp(
           StyledImage(

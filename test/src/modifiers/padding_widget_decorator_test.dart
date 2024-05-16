@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/src/attributes/spacing/spacing_dto.dart';
-import 'package:mix/src/decorators/padding_widget_decorator.dart';
+import 'package:mix/src/modifiers/padding_widget_decorator.dart';
 
 import '../../helpers/testing_utils.dart';
 

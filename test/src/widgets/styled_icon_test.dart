@@ -26,7 +26,7 @@ void main() {
     );
 
     testWidgets(
-      'should apply decorators when they are defined in the style',
+      'should apply modifiers when they are defined in the style',
       (tester) async {
         const key = Key('box');
 
