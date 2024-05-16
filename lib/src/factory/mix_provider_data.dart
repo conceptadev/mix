@@ -16,7 +16,7 @@ import 'style_mix.dart';
 /// It contains a mixture of properties and methods useful for handling different attributes,
 /// modifiers and token resolvers.
 @immutable
-class MixData with Comparable {
+class MixData {
   final AnimatedData? animation;
 
   // Instance variables for widget attributes, widget modifiers and token resolver.
@@ -27,7 +27,7 @@ class MixData with Comparable {
   /// A Private constructor for the [MixData] class that initializes its main variables.
   ///
   /// It takes in [attributes] and [resolver] as required parameters.
-  MixData._({
+  const MixData._({
     required MixTokenResolver resolver,
     required AttributeMap attributes,
     required this.animation,
@@ -112,9 +112,17 @@ class MixData with Comparable {
     );
   }
 
-  /// Used for Comparable mixin.
   @override
-  get props => [_attributes, animation];
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is MixData &&
+        other._attributes == _attributes &&
+        other.animation == animation;
+  }
+
+  @override
+  int get hashCode => _attributes.hashCode ^ animation.hashCode;
 }
 
 @visibleForTesting

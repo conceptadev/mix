@@ -2,11 +2,11 @@
 
 import 'dart:collection';
 
-import '../helpers/compare_mixin.dart';
+import '../helpers/deep_collection_equality.dart';
 import 'attribute.dart';
 
 // @nodoc
-class AttributeMap<T extends Attribute> with Comparable {
+class AttributeMap<T extends Attribute> {
   final LinkedHashMap<Object, T>? _map;
 
   const AttributeMap._(this._map);
@@ -61,5 +61,15 @@ class AttributeMap<T extends Attribute> with Comparable {
   Map<Object, T> toMap() => _map?.cast() ?? {};
 
   @override
-  get props => [values];
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! AttributeMap<T>) return false;
+
+    const deepEquality = DeepCollectionEquality();
+
+    return deepEquality.equals(values, other.values);
+  }
+
+  @override
+  int get hashCode => const DeepCollectionEquality().hash(values);
 }
