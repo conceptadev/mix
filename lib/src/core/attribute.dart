@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../factory/mix_provider_data.dart';
 import '../helpers/compare_mixin.dart';
 import 'dto.dart';
 
@@ -42,9 +43,10 @@ abstract class StyledAttribute extends Attribute {
 ///
 /// This class extends the [StyledAttribute] class and provides a generic type [Self] and [Value].
 /// The [Self] type represents the concrete implementation of the attribute, while the [Value] type represents the resolvable value.
-abstract class SpecAttribute<Value> extends StyledAttribute
-    implements Dto<Value> {
+abstract class SpecAttribute<Value> extends StyledAttribute {
   const SpecAttribute();
+
+  Value resolve(MixData mix);
 
   @override
   SpecAttribute<Value> merge(covariant SpecAttribute<Value>? other);
