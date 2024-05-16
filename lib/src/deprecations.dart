@@ -94,7 +94,7 @@ typedef MixContext = MixData;
 @Deprecated('Call the style directly instead')
 const apply = NestedStyleUtility();
 
-extension WithSpaceTokensExt<T extends StyleAttribute>
+extension WithSpaceTokensExt<T extends StyledAttribute>
     on SpacingSideUtility<T> {
   @Deprecated('Use 4.0 instead')
   T get xs => call(4.0);

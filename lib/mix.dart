@@ -24,7 +24,6 @@ export 'src/attributes/gradient/gradient_util.dart';
 export 'src/attributes/nested_style/nested_style_attribute.dart';
 export 'src/attributes/nested_style/nested_style_util.dart';
 export 'src/attributes/scalars/scalar_util.dart';
-export 'src/attributes/scalars/scalars_attribute.dart';
 export 'src/attributes/shadow/shadow_dto.dart';
 export 'src/attributes/shadow/shadow_util.dart';
 export 'src/attributes/spacing/edge_insets_dto.dart';

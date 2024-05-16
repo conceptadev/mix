@@ -153,7 +153,7 @@ void main() {
         shadows: [otherBoxShadowDto],
       );
 
-      final merged = shapeDeco1.merge(shapeDeco2);
+      final merged = shapeDeco1.merge(shapeDeco2) as ShapeDecorationDto;
 
       expect(merged, isA<ShapeDecorationDto>());
       expect(merged.shape, isA<BeveledRectangleBorderDto>());
@@ -175,8 +175,7 @@ void main() {
         boxShadow: [otherBoxShadowDto],
       );
 
-      final merged = const DecorationMergeDtoStrategy(shapeDeco, boxDeco)
-          .merge() as BoxDecorationDto;
+      final merged = shapeDeco.merge(boxDeco) as BoxDecorationDto;
 
       expect(merged, isA<BoxDecorationDto>());
       expect(merged.shape, BoxShape.circle);
@@ -198,8 +197,7 @@ void main() {
         shadows: [otherBoxShadowDto],
       );
 
-      final merged = const DecorationMergeDtoStrategy(boxDeco, shapeDeco)
-          .merge() as ShapeDecorationDto;
+      final merged = boxDeco.merge(shapeDeco) as ShapeDecorationDto;
 
       expect(merged, isA<ShapeDecorationDto>());
       expect(merged.shape, isA<RoundedRectangleBorderDto>());
@@ -236,12 +234,12 @@ void main() {
 
     expect((shapeDecorSpec!.color), Colors.green);
     expect((shapeDecorSpec.shape), isA<CircleBorder>());
-    // expect(
-    //   (shapeDecorSpec.shape),
-    //   const CircleBorder(
-    //     side: BorderSide(color: Colors.red),
-    //   ),
-    // );
+    expect(
+      shapeDecorSpec.shape,
+      const CircleBorder(
+        side: BorderSide(color: Colors.red),
+      ),
+    );
   });
 
   group('DecorationMergeDtoStrategy', () {
@@ -276,8 +274,7 @@ void main() {
         boxShadow: [otherBoxShadowDto],
       );
 
-      const strategy = DecorationMergeDtoStrategy(boxDeco1, boxDeco2);
-      final merged = strategy.merge() as BoxDecorationDto;
+      final merged = boxDeco1.merge(boxDeco2) as BoxDecorationDto;
 
       expect(merged, isA<BoxDecorationDto>());
       expect(merged.color, const ColorDto(Colors.blue));
@@ -299,8 +296,7 @@ void main() {
         shadows: [otherBoxShadowDto],
       );
 
-      const strategy = DecorationMergeDtoStrategy(shapeDeco1, shapeDeco2);
-      final merged = strategy.merge() as ShapeDecorationDto;
+      final merged = shapeDeco1.merge(shapeDeco2) as ShapeDecorationDto;
 
       expect(merged, isA<ShapeDecorationDto>());
       expect(merged.shape, isA<BeveledRectangleBorderDto>());
@@ -322,9 +318,7 @@ void main() {
         boxShadow: [otherBoxShadowDto],
       );
 
-      const strategy = DecorationMergeDtoStrategy(shapeDeco, boxDeco);
-      final merged =
-          strategy.mergeStrategy(shapeDeco, boxDeco) as BoxDecorationDto;
+      final merged = shapeDeco.merge(boxDeco) as BoxDecorationDto;
 
       expect(merged, isA<BoxDecorationDto>());
       expect(merged.shape, BoxShape.circle);
@@ -334,10 +328,12 @@ void main() {
     });
 
     test('merges BoxDecorationDto with ShapeDecorationDto correctly', () {
-      const boxDeco = BoxDecorationDto(
-        color: ColorDto(Colors.red),
+      final borderDto = Border.all(color: Colors.blue).toDto();
+      final boxDeco = BoxDecorationDto(
+        color: Colors.red.toDto(),
         gradient: linearGradientDto,
-        boxShadow: [boxShadowDto],
+        border: borderDto,
+        boxShadow: const [boxShadowDto],
       );
       const shapeDeco = ShapeDecorationDto(
         color: ColorDto(Colors.blue),
@@ -346,12 +342,11 @@ void main() {
         shadows: [otherBoxShadowDto],
       );
 
-      const strategy = DecorationMergeDtoStrategy(boxDeco, shapeDeco);
-      final merged =
-          strategy.mergeStrategy(boxDeco, shapeDeco) as ShapeDecorationDto;
+      final merged = boxDeco.merge(shapeDeco) as ShapeDecorationDto;
 
       expect(merged, isA<ShapeDecorationDto>());
       expect(merged.shape, isA<RoundedRectangleBorderDto>());
+      expect((merged.shape as RoundedRectangleBorderDto).side, borderDto.top);
       expect(merged.color, const ColorDto(Colors.blue));
       expect(merged.gradient, otherLinearGradientDto);
       expect(merged.shadows, [otherBoxShadowDto]);
@@ -361,11 +356,9 @@ void main() {
       const boxDeco = BoxDecorationDto();
       const otherDto = _OtherDecorationDto();
 
-      const strategy = DecorationMergeDtoStrategy(boxDeco, otherDto);
-
       expect(
-        () => strategy.mergeStrategy(boxDeco, otherDto),
-        throwsA(isA<MergeStrategyException>()),
+        () => boxDeco.merge(otherDto),
+        throwsA(isA<UnimplementedError>()),
       );
     });
   });
@@ -376,10 +369,11 @@ class _OtherDecorationDto extends DecorationDto {
       : super(color: null, gradient: null, boxShadow: null);
 
   @override
-  DecorationDto merge(DecorationDto? other) {
-    throw UnimplementedError();
+  _OtherDecorationDto mergeDecoration(DecorationDto other) {
+    return this;
   }
 
+  @override
   @override
   Decoration resolve(MixData mix) {
     throw UnimplementedError();

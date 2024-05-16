@@ -4,12 +4,15 @@ import '../helpers/compare_mixin.dart';
 import 'dto.dart';
 
 @immutable
-abstract class Attribute with Comparable {
+abstract class Attribute with Comparable, Mergeable {
   const Attribute();
 
   // Used as the key to determine how
   // attributes get merged
   Object get mergeKey => runtimeType;
+
+  @override
+  Attribute merge(covariant Attribute? other);
 }
 
 /// Provides the ability to merge this object with another of the same type.
@@ -25,8 +28,11 @@ mixin Mergeable<T> {
 }
 
 @immutable
-abstract class StyleAttribute extends Attribute {
-  const StyleAttribute();
+abstract class StyledAttribute extends Attribute {
+  const StyledAttribute();
+
+  @override
+  StyledAttribute merge(covariant StyledAttribute? other);
 
   @override
   Object get mergeKey => runtimeType;
@@ -34,9 +40,9 @@ abstract class StyleAttribute extends Attribute {
 
 /// An abstract class representing a resolvable attribute.
 ///
-/// This class extends the [StyleAttribute] class and provides a generic type [Self] and [Value].
+/// This class extends the [StyledAttribute] class and provides a generic type [Self] and [Value].
 /// The [Self] type represents the concrete implementation of the attribute, while the [Value] type represents the resolvable value.
-abstract class SpecAttribute<Value> extends StyleAttribute
+abstract class SpecAttribute<Value> extends StyledAttribute
     implements Dto<Value> {
   const SpecAttribute();
 

@@ -1,6 +1,5 @@
 // ignore_for_file: non_constant_identifier_names
 
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
 
@@ -13,11 +12,11 @@ void main() {
       final mixData = MixData.create(
         MockBuildContext(),
         Style(
-          const MockIntScalarAttribute(1),
-          const MockStringScalarAttribute('test'),
-          const MockDoubleScalarAttribute(3.0),
-          const MockBooleanScalarAttribute(false),
-          autoApplyVariant(const MockDoubleScalarAttribute(2.0)),
+          const MockSpecIntAttribute(1),
+          const MockSpecStringAttribute('test'),
+          const MockSpecDoubleAttribute(3.0),
+          const MockSpecBooleanAttribute(false),
+          autoApplyVariant(const MockSpecDoubleAttribute(2.0)),
         ),
       );
 
@@ -30,25 +29,25 @@ void main() {
       expect(mixData.tokens, isInstanceOf<MixTokenResolver>());
       expect(mixData.attributes.length, 4);
       expect(
-        mixData.attributeOf<MockIntScalarAttribute>(),
-        isInstanceOf<MockIntScalarAttribute>(),
+        mixData.attributeOf<MockSpecIntAttribute>(),
+        isInstanceOf<MockSpecIntAttribute>(),
       );
       expect(
-        mixData.attributeOf<MockStringScalarAttribute>(),
-        const MockStringScalarAttribute('test'),
+        mixData.attributeOf<MockSpecStringAttribute>(),
+        const MockSpecStringAttribute('test'),
       );
       expect(
-        mixData.attributeOf<MockStringScalarAttribute>(),
-        isInstanceOf<MockStringScalarAttribute>(),
+        mixData.attributeOf<MockSpecStringAttribute>(),
+        isInstanceOf<MockSpecStringAttribute>(),
       );
       expect(
-        mixData.attributeOf<MockDoubleScalarAttribute>(),
-        const MockDoubleScalarAttribute(2.0),
+        mixData.attributeOf<MockSpecDoubleAttribute>(),
+        const MockSpecDoubleAttribute(2.0),
       );
 
       expect(
-        mixData.attributeOf<MockBooleanScalarAttribute>(),
-        const MockBooleanScalarAttribute(false),
+        mixData.attributeOf<MockSpecBooleanAttribute>(),
+        const MockSpecBooleanAttribute(false),
       );
     });
 
@@ -56,19 +55,19 @@ void main() {
       final mixData = MixData.create(
         MockBuildContext(),
         Style(
-          const MockIntScalarAttribute(1),
-          const MockStringScalarAttribute('test'),
-          const MockDoubleScalarAttribute(3.0),
-          const MockBooleanScalarAttribute(true),
-          autoApplyVariant(const MockDoubleScalarAttribute(2.0)),
+          const MockSpecIntAttribute(1),
+          const MockSpecStringAttribute('test'),
+          const MockSpecDoubleAttribute(3.0),
+          const MockSpecBooleanAttribute(true),
+          autoApplyVariant(const MockSpecDoubleAttribute(2.0)),
         ),
       );
 
       final mixData2 = MixData.create(
         MockBuildContext(),
         Style(
-          const MockDoubleScalarAttribute(5.0),
-          autoApplyVariant(const MockDoubleScalarAttribute(4.0)),
+          const MockSpecDoubleAttribute(5.0),
+          autoApplyVariant(const MockSpecDoubleAttribute(4.0)),
         ),
       );
 
@@ -77,57 +76,36 @@ void main() {
       expect(mergedMixData, isInstanceOf<MixData>());
       expect(mergedMixData.attributes.length, 4);
       expect(
-        mergedMixData.attributeOf<MockIntScalarAttribute>(),
-        isInstanceOf<MockIntScalarAttribute>(),
+        mergedMixData.attributeOf<MockSpecIntAttribute>(),
+        isInstanceOf<MockSpecIntAttribute>(),
       );
       expect(
-        mergedMixData.attributeOf<MockStringScalarAttribute>(),
-        isInstanceOf<MockStringScalarAttribute>(),
+        mergedMixData.attributeOf<MockSpecStringAttribute>(),
+        isInstanceOf<MockSpecStringAttribute>(),
       );
       expect(
-        mergedMixData.attributeOf<MockDoubleScalarAttribute>(),
-        isInstanceOf<MockDoubleScalarAttribute>(),
-      );
-
-      expect(
-        mergedMixData.attributeOf<MockBooleanScalarAttribute>(),
-        const MockBooleanScalarAttribute(true),
+        mergedMixData.attributeOf<MockSpecDoubleAttribute>(),
+        isInstanceOf<MockSpecDoubleAttribute>(),
       );
 
       expect(
-        mergedMixData.attributeOf<MockIntScalarAttribute>(),
-        const MockIntScalarAttribute(1),
+        mergedMixData.attributeOf<MockSpecBooleanAttribute>(),
+        const MockSpecBooleanAttribute(true),
+      );
+
+      expect(
+        mergedMixData.attributeOf<MockSpecIntAttribute>(),
+        const MockSpecIntAttribute(1),
       );
       expect(
-        mergedMixData.attributeOf<MockStringScalarAttribute>(),
-        const MockStringScalarAttribute('test'),
+        mergedMixData.attributeOf<MockSpecStringAttribute>(),
+        const MockSpecStringAttribute('test'),
       );
       expect(
-        mergedMixData.attributeOf<MockDoubleScalarAttribute>(),
-        const MockDoubleScalarAttribute(4.0),
+        mergedMixData.attributeOf<MockSpecDoubleAttribute>(),
+        const MockSpecDoubleAttribute(4.0),
       );
     });
-
-    testWidgets(
-      'MixData.inherited shouldnt have attributes non inheritable',
-      (WidgetTester tester) async {
-        await tester.pumpWidget(
-          MixProvider(
-            data: MixData.create(
-              MockBuildContext(),
-              Style(const _NonInheritableAttribute(), $icon.color.black()),
-            ),
-            child: Builder(builder: (context) {
-              final iconSpec = IconSpec.of(context);
-
-              expect(iconSpec.color, Colors.black);
-
-              return const SizedBox();
-            }),
-          ),
-        );
-      },
-    );
 
     group('applyContextToVisualAttributes', () {
       test(
@@ -549,9 +527,4 @@ void _testApplyContextToVisualAttributes({
   ]);
 
   expect(attributeList, expectedStyle.styles.values);
-}
-
-class _NonInheritableAttribute
-    extends ScalarAttribute<MockIntScalarAttribute, int?> {
-  const _NonInheritableAttribute() : super(null);
 }

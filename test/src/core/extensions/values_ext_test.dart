@@ -228,12 +228,3 @@ void main() {
     expect(dto.resolve(EmptyMixData), value);
   });
 }
-
-class _MockDecoration extends Decoration {
-  const _MockDecoration();
-
-  @override
-  BoxPainter createBoxPainter([VoidCallback? onChanged]) {
-    throw UnimplementedError();
-  }
-}

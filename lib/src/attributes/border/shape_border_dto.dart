@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/dto.dart';
@@ -9,8 +10,59 @@ import 'border_radius_dto.dart';
 abstract class ShapeBorderDto<Value extends ShapeBorder> extends Dto<Value> {
   const ShapeBorderDto();
 
+  ShapeBorderDto mergeBorder(covariant ShapeBorderDto? other);
+
+  @nonVirtual
   @override
-  ShapeBorderDto<Value> merge(covariant ShapeBorderDto<Value>? other);
+  ShapeBorderDto merge(ShapeBorderDto? other) {
+    if (other == null) return this;
+
+    if (runtimeType == other.runtimeType) {
+      return mergeBorder(other);
+    }
+    final thisBorder = this;
+    if (thisBorder is BorderRadiusOutlinedBorderDto &&
+        other is BorderRadiusOutlinedBorderDto) {
+      if (other is RoundedRectangleBorderDto) {
+        final thisBorder = this as BorderRadiusOutlinedBorderDto;
+
+        return RoundedRectangleBorderDto(
+          borderRadius: thisBorder.borderRadius,
+          side: thisBorder.side,
+        ).merge(other);
+      }
+
+      if (other is BeveledRectangleBorderDto) {
+        final thisBorder = this as BorderRadiusOutlinedBorderDto;
+
+        return BeveledRectangleBorderDto(
+          borderRadius: thisBorder.borderRadius,
+          side: thisBorder.side,
+        ).merge(other);
+      }
+
+      if (other is ContinuousRectangleBorderDto) {
+        final thisBorder = this as BorderRadiusOutlinedBorderDto;
+
+        return ContinuousRectangleBorderDto(
+          borderRadius: thisBorder.borderRadius,
+          side: thisBorder.side,
+        ).merge(other);
+      }
+    } else if (this is OutlinedBorderDto && other is OutlinedBorderDto) {
+      final thisBorder = this as OutlinedBorderDto;
+      if (other is CircleBorderDto) {
+        // no need to add remainnig value as a is not a CircleBorderDto
+        return CircleBorderDto(side: thisBorder.side).merge(other);
+      } else if (other is StadiumBorderDto) {
+        return StadiumBorderDto(side: thisBorder.side).merge(other);
+      }
+    }
+
+    throw UnimplementedError(
+      'Merging $runtimeType and $runtimeType is not implemented. Please implement it!',
+    );
+  }
 
   @override
   Value resolve(MixData mix);
@@ -24,7 +76,7 @@ abstract class OutlinedBorderDto<Value extends OutlinedBorder>
   const OutlinedBorderDto({this.side});
 
   @override
-  OutlinedBorderDto<Value> merge(covariant OutlinedBorderDto<Value>? other);
+  OutlinedBorderDto<Value> mergeBorder(OutlinedBorderDto<Value>? other);
 
   @override
   Value resolve(MixData mix);
@@ -41,7 +93,7 @@ abstract class BorderRadiusOutlinedBorderDto<Value extends OutlinedBorder>
   const BorderRadiusOutlinedBorderDto({this.borderRadius, super.side});
 
   @override
-  BorderRadiusOutlinedBorderDto<Value> merge(
+  BorderRadiusOutlinedBorderDto<Value> mergeBorder(
     covariant BorderRadiusOutlinedBorderDto<Value>? other,
   );
 
@@ -55,7 +107,7 @@ class RoundedRectangleBorderDto
   const RoundedRectangleBorderDto({super.borderRadius, super.side});
 
   @override
-  RoundedRectangleBorderDto merge(RoundedRectangleBorderDto? other) {
+  RoundedRectangleBorderDto mergeBorder(RoundedRectangleBorderDto? other) {
     if (other == null) return this;
 
     return RoundedRectangleBorderDto(
@@ -81,7 +133,7 @@ class CircleBorderDto extends OutlinedBorderDto<CircleBorder> {
   const CircleBorderDto({super.side, this.eccentricity});
 
   @override
-  CircleBorderDto merge(CircleBorderDto? other) {
+  CircleBorderDto mergeBorder(CircleBorderDto? other) {
     if (other == null) return this;
 
     return CircleBorderDto(
@@ -108,13 +160,11 @@ class BeveledRectangleBorderDto
   const BeveledRectangleBorderDto({super.borderRadius, super.side});
 
   @override
-  BeveledRectangleBorderDto merge(BeveledRectangleBorderDto? other) {
-    if (other == null) return this;
-
+  BeveledRectangleBorderDto mergeBorder(BeveledRectangleBorderDto? other) {
     return BeveledRectangleBorderDto(
       borderRadius:
-          borderRadius?.merge(other.borderRadius) ?? other.borderRadius,
-      side: side?.merge(other.side) ?? other.side,
+          borderRadius?.merge(other?.borderRadius) ?? other?.borderRadius,
+      side: side?.merge(other?.side) ?? other?.side,
     );
   }
 
@@ -132,13 +182,13 @@ class ContinuousRectangleBorderDto
   const ContinuousRectangleBorderDto({super.borderRadius, super.side});
 
   @override
-  ContinuousRectangleBorderDto merge(ContinuousRectangleBorderDto? other) {
-    if (other == null) return this;
-
+  ContinuousRectangleBorderDto mergeBorder(
+    ContinuousRectangleBorderDto? other,
+  ) {
     return ContinuousRectangleBorderDto(
       borderRadius:
-          borderRadius?.merge(other.borderRadius) ?? other.borderRadius,
-      side: side?.merge(other.side) ?? other.side,
+          borderRadius?.merge(other?.borderRadius) ?? other?.borderRadius,
+      side: side?.merge(other?.side) ?? other?.side,
     );
   }
 
@@ -155,62 +205,13 @@ class StadiumBorderDto extends OutlinedBorderDto<StadiumBorder> {
   const StadiumBorderDto({super.side});
 
   @override
-  StadiumBorderDto merge(StadiumBorderDto? other) {
-    if (other == null) return this;
-
-    return StadiumBorderDto(side: side?.merge(other.side) ?? other.side);
+  StadiumBorderDto mergeBorder(StadiumBorderDto? other) {
+    return StadiumBorderDto(side: side?.merge(other?.side) ?? other?.side);
   }
 
   @override
   StadiumBorder resolve(MixData mix) {
     return StadiumBorder(side: side?.resolve(mix) ?? BorderSide.none);
-  }
-}
-
-/// Merges [ShapeBorderDto] instances based on their runtime types.
-class ShapeBorderMergeDtoStrategy extends DtoMergeStrategy<ShapeBorderDto> {
-  /// Creates a new instance with the given [a] and [b].
-  const ShapeBorderMergeDtoStrategy(super.a, super.b);
-
-  /// Merges two [ShapeBorderDto] instances.
-  ///
-  /// If both [a] and [b] are [OutlinedBorderDto], merges them using [_mergeOutlinedBorder].
-  ///
-  /// If [a] and [b] have incompatible types, logs a warning and returns [a] without merging.
-  @override
-  ShapeBorderDto mergeStrategy(ShapeBorderDto a, ShapeBorderDto b) {
-    if (a is BorderRadiusOutlinedBorderDto &&
-        b is BorderRadiusOutlinedBorderDto) {
-      if (b is RoundedRectangleBorderDto) {
-        return RoundedRectangleBorderDto(
-          borderRadius: a.borderRadius,
-          side: a.side,
-        ).merge(b);
-      }
-
-      if (b is BeveledRectangleBorderDto) {
-        return BeveledRectangleBorderDto(
-          borderRadius: a.borderRadius,
-          side: a.side,
-        ).merge(b);
-      }
-
-      if (b is ContinuousRectangleBorderDto) {
-        return ContinuousRectangleBorderDto(
-          borderRadius: a.borderRadius,
-          side: a.side,
-        ).merge(b);
-      }
-    } else if (a is OutlinedBorderDto && b is OutlinedBorderDto) {
-      if (b is CircleBorderDto) {
-        // no need to add remainnig value as a is not a CircleBorderDto
-        return CircleBorderDto(side: a.side).merge(b);
-      } else if (b is StadiumBorderDto) {
-        return StadiumBorderDto(side: a.side).merge(b);
-      }
-    }
-
-    throw MergeStrategyException(a, b);
   }
 }
 

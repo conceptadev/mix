@@ -184,7 +184,7 @@ class WrapMixThemeWidget extends StatelessWidget {
 }
 
 class MockDoubleScalarAttribute
-    extends ScalarAttribute<MockDoubleScalarAttribute, double> {
+    extends TestScalarAttribute<MockDoubleScalarAttribute, double> {
   const MockDoubleScalarAttribute(super.value);
 }
 
@@ -206,7 +206,7 @@ class MockContextVariantCondition extends ContextVariant {
 }
 
 class MockIntScalarAttribute
-    extends ScalarAttribute<MockIntScalarAttribute, int> {
+    extends TestScalarAttribute<MockIntScalarAttribute, int> {
   const MockIntScalarAttribute(super.value);
 }
 
@@ -220,12 +220,62 @@ class MockContextVariant extends ContextVariant {
 }
 
 class MockBooleanScalarAttribute
-    extends ScalarAttribute<MockBooleanScalarAttribute, bool> {
+    extends TestScalarAttribute<MockBooleanScalarAttribute, bool> {
   const MockBooleanScalarAttribute(super.value);
 }
 
+abstract class _MockSpecAttribute<T> extends SpecAttribute<T> {
+  final T _value;
+  const _MockSpecAttribute(this._value);
+
+  @override
+  T resolve(MixData mix) => _value;
+
+  @override
+  _MockSpecAttribute<T> merge(_MockSpecAttribute<T>? other);
+
+  @override
+  get props => [_value];
+}
+
+class MockSpecBooleanAttribute extends _MockSpecAttribute<bool> {
+  const MockSpecBooleanAttribute(super.value);
+
+  @override
+  MockSpecBooleanAttribute merge(MockSpecBooleanAttribute? other) {
+    return MockSpecBooleanAttribute(other?._value ?? _value);
+  }
+}
+
+class MockSpecIntAttribute extends _MockSpecAttribute<int> {
+  const MockSpecIntAttribute(super.value);
+
+  @override
+  MockSpecIntAttribute merge(MockSpecIntAttribute? other) {
+    return MockSpecIntAttribute(other?._value ?? _value);
+  }
+}
+
+class MockSpecDoubleAttribute extends _MockSpecAttribute<double> {
+  const MockSpecDoubleAttribute(super.value);
+
+  @override
+  MockSpecDoubleAttribute merge(MockSpecDoubleAttribute? other) {
+    return MockSpecDoubleAttribute(other?._value ?? _value);
+  }
+}
+
+class MockSpecStringAttribute extends _MockSpecAttribute<String> {
+  const MockSpecStringAttribute(super.value);
+
+  @override
+  MockSpecStringAttribute merge(MockSpecStringAttribute? other) {
+    return MockSpecStringAttribute(other?._value ?? _value);
+  }
+}
+
 class MockStringScalarAttribute
-    extends ScalarAttribute<MockStringScalarAttribute, String> {
+    extends TestScalarAttribute<MockStringScalarAttribute, String> {
   const MockStringScalarAttribute(super.value);
 }
 
@@ -233,7 +283,9 @@ class MockInvalidAttribute extends Attribute {
   const MockInvalidAttribute();
 
   @override
-  Type get mergeKey => MockInvalidAttribute;
+  MockInvalidAttribute merge(MockInvalidAttribute? other) {
+    return const MockInvalidAttribute();
+  }
 
   @override
   get props => [];
@@ -242,12 +294,12 @@ class MockInvalidAttribute extends Attribute {
 const mockVariant = Variant('mock-variant');
 
 class UtilityTestAttribute<T>
-    extends ScalarAttribute<UtilityTestAttribute<T>, T> {
+    extends TestScalarAttribute<UtilityTestAttribute<T>, T> {
   const UtilityTestAttribute(super.value);
 }
 
 class UtilityTestDtoAttribute<T extends Dto<V>, V>
-    extends ScalarAttribute<UtilityTestDtoAttribute<T, V>, T> {
+    extends TestScalarAttribute<UtilityTestDtoAttribute<T, V>, T> {
   const UtilityTestDtoAttribute(super.value);
 
   V resolve(MixData mix) {
@@ -316,5 +368,20 @@ class WidgetWithTestableBuild extends StyledWidget {
 
       return const SizedBox();
     });
+  }
+}
+
+abstract class TestScalarAttribute<
+    Self extends TestScalarAttribute<Self, Value>,
+    Value> extends StyledAttribute {
+  final Value value;
+  const TestScalarAttribute(this.value);
+
+  @override
+  get props => [value];
+
+  @override
+  Self merge(Self? other) {
+    return other ?? this as Self;
   }
 }

@@ -96,20 +96,15 @@ class BoxSpecAttribute extends SpecAttribute<BoxSpec> {
   BoxSpecAttribute merge(BoxSpecAttribute? other) {
     if (other == null) return this;
 
-    final decorationStrategy =
-        DecorationMergeDtoStrategy(decoration, other.decoration);
-    final foregroundDecorationStrategy = DecorationMergeDtoStrategy(
-      foregroundDecoration,
-      other.foregroundDecoration,
-    );
-
     return BoxSpecAttribute(
       alignment: other.alignment ?? alignment,
       padding: padding?.merge(other.padding) ?? other.padding,
       margin: margin?.merge(other.margin) ?? other.margin,
       constraints: constraints?.merge(other.constraints) ?? other.constraints,
-      decoration: decorationStrategy.merge(),
-      foregroundDecoration: foregroundDecorationStrategy.merge(),
+      decoration: decoration?.merge(other.decoration) ?? other.decoration,
+      foregroundDecoration:
+          foregroundDecoration?.merge(other.foregroundDecoration) ??
+              other.foregroundDecoration,
       transform: other.transform ?? transform,
       transformAlignment: other.transformAlignment ?? transformAlignment,
       clipBehavior: other.clipBehavior ?? clipBehavior,

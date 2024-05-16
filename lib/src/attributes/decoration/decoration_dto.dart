@@ -1,5 +1,6 @@
 // ignore_for_file: no_leading_underscores_for_local_identifiers
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/dto.dart';
@@ -31,19 +32,34 @@ abstract class DecorationDto<Value extends Decoration> extends Dto<Value> {
     required this.boxShadow,
   });
 
+  DecorationDto mergeDecoration(covariant DecorationDto? other);
+
   @override
-  DecorationDto<Value> merge(covariant DecorationDto<Value>? other);
+  @nonVirtual
+  DecorationDto merge(DecorationDto? other) {
+    if (other == null) return this;
+
+    if (runtimeType == other.runtimeType) {
+      return mergeDecoration(other);
+    }
+    if (other is BoxDecorationDto) {
+      // Recursive call
+      return _toBoxDecorationDto(this as ShapeDecorationDto).merge(other);
+    }
+
+    if (other is ShapeDecorationDto) {
+      // Recursive call
+      return _toShapeDecorationDto(this as BoxDecorationDto).merge(other);
+    }
+
+    throw UnimplementedError('Merging of $this and $other is not supported.');
+  }
 }
 
 /// Represents a Data transfer object of [BoxDecoration]
 ///
 /// This is used to allow for resolvable value tokens, and also the correct
 /// merge and combining behavior. It allows to be merged, and resolved to a `[BoxDecoration]
-///
-/// See also:
-/// * [BoxDecoration], which is the Flutter counterpart of this class.
-/// * [DecorationDto], which is the base class for this class.
-/// {@category DTO}
 @immutable
 class BoxDecorationDto extends DecorationDto<BoxDecoration> {
   final BoxBorderDto? border;
@@ -63,21 +79,18 @@ class BoxDecorationDto extends DecorationDto<BoxDecoration> {
     this.image,
   });
 
-  /// Merges this [BoxDecorationDto] with `other` [BoxDecorationDto]
   @override
-  BoxDecorationDto merge(BoxDecorationDto? other) {
-    if (other == null) return this;
-
+  BoxDecorationDto mergeDecoration(BoxDecorationDto? other) {
     return BoxDecorationDto(
-      color: color?.merge(other.color) ?? other.color,
-      border: border?.merge(other.border) ?? other.border,
+      color: color?.merge(other?.color) ?? other?.color,
+      border: border?.merge(other?.border) ?? other?.border,
       borderRadius:
-          borderRadius?.merge(other.borderRadius) ?? other.borderRadius,
-      gradient: gradient?.merge(other.gradient) ?? other.gradient,
-      boxShadow: boxShadow?.merge(other.boxShadow) ?? other.boxShadow,
-      shape: other.shape ?? shape,
-      backgroundBlendMode: other.backgroundBlendMode ?? backgroundBlendMode,
-      image: image?.merge(other.image) ?? other.image,
+          borderRadius?.merge(other?.borderRadius) ?? other?.borderRadius,
+      gradient: gradient?.merge(other?.gradient) ?? other?.gradient,
+      boxShadow: boxShadow?.merge(other?.boxShadow) ?? other?.boxShadow,
+      shape: other?.shape ?? shape,
+      backgroundBlendMode: other?.backgroundBlendMode ?? backgroundBlendMode,
+      image: image?.merge(other?.image) ?? other?.image,
     );
   }
 
@@ -122,16 +135,12 @@ class ShapeDecorationDto extends DecorationDto<ShapeDecoration> {
   List<BoxShadowDto>? get shadows => boxShadow;
 
   @override
-  ShapeDecorationDto merge(ShapeDecorationDto? other) {
-    if (other == null) return this;
-
-    final shapeStrategy = ShapeBorderMergeDtoStrategy(shape, other.shape);
-
+  ShapeDecorationDto mergeDecoration(ShapeDecorationDto? other) {
     return ShapeDecorationDto(
-      color: color?.merge(other.color) ?? other.color,
-      shape: shapeStrategy.merge(),
-      gradient: gradient?.merge(other.gradient) ?? other.gradient,
-      shadows: boxShadow?.merge(other.boxShadow) ?? other.boxShadow,
+      color: color?.merge(other?.color) ?? other?.color,
+      shape: shape?.merge(other?.shape) ?? other?.shape,
+      gradient: gradient?.merge(other?.gradient) ?? other?.gradient,
+      shadows: boxShadow?.merge(other?.boxShadow) ?? other?.boxShadow,
     );
   }
 
@@ -149,130 +158,78 @@ class ShapeDecorationDto extends DecorationDto<ShapeDecoration> {
   List<Object?> get props => [color, shape, gradient, shadows];
 }
 
-/// Merges [DecorationDto] instances based on their runtime types.
-class DecorationMergeDtoStrategy extends DtoMergeStrategy<DecorationDto> {
-  /// Creates a new instance with the given [a] and [b].
-  const DecorationMergeDtoStrategy(super.a, super.b);
+/// Converts a [ShapeDecorationDto] to a [BoxDecorationDto].
+BoxDecorationDto _toBoxDecorationDto(ShapeDecorationDto dto) {
+  BoxShape? boxShape;
+  BoxBorderDto? boxBorder;
+  BorderRadiusGeometryDto? borderRadius;
 
-  /// Converts a [ShapeDecorationDto] to a [BoxDecorationDto].
-  BoxDecorationDto _toBoxDecorationDto(ShapeDecorationDto dto) {
-    BoxShape? boxShape;
-    BoxBorderDto? boxBorder;
-    BorderRadiusGeometryDto? borderRadius;
+  final shape = dto.shape;
 
-    if (dto.shape is CircleBorderDto) {
-      boxShape = BoxShape.circle;
-      boxBorder = BoxBorderDto.fromSide((dto.shape as CircleBorderDto).side);
-    } else if (dto.shape is RoundedRectangleBorderDto) {
-      boxShape = BoxShape.rectangle;
-      borderRadius = (dto.shape as RoundedRectangleBorderDto).borderRadius;
+  if (shape is CircleBorderDto) {
+    boxShape = BoxShape.circle;
+    boxBorder = BoxBorderDto.fromSide(shape.side);
+  } else if (shape is RoundedRectangleBorderDto) {
+    boxShape = BoxShape.rectangle;
+    borderRadius = shape.borderRadius;
 
-      boxBorder =
-          BoxBorderDto.fromSide((dto.shape as RoundedRectangleBorderDto).side);
-    } else {
-      // BeveledRectangleBorder cannot be accurately represented as a BoxDecoration
-      // Return the original ShapeDecorationDto
-      boxShape = null;
-      boxBorder = null;
-      borderRadius = null;
-    }
-
-    return BoxDecorationDto(
-      color: dto.color,
-      border: boxBorder,
-      borderRadius: borderRadius,
-      gradient: dto.gradient,
-      boxShadow: dto.boxShadow,
-      shape: boxShape,
-    );
+    boxBorder = BoxBorderDto.fromSide(shape.side);
+  } else {
+    // BeveledRectangleBorder cannot be accurately represented as a BoxDecoration
+    // Return the original ShapeDecorationDto
+    boxShape = null;
+    boxBorder = null;
+    borderRadius = null;
   }
 
-  /// Converts a [BoxDecorationDto] to a [ShapeDecorationDto].
-  ShapeDecorationDto _toShapeDecorationDto(BoxDecorationDto dto) {
-    final ShapeBorderDto? shapeBorder;
-    assert(
-      dto.border == null || dto.border!.isUniform,
-      'Border to use with ShapeDecoration must be uniform.',
-    );
-    switch (dto.shape) {
-      case BoxShape.circle:
-        if (dto.border != null) {
-          shapeBorder = CircleBorderDto(side: dto.border!.top);
-        } else {
-          shapeBorder = const CircleBorderDto();
-        }
-        break;
-      case BoxShape.rectangle:
+  return BoxDecorationDto(
+    color: dto.color,
+    border: boxBorder,
+    borderRadius: borderRadius,
+    gradient: dto.gradient,
+    boxShadow: dto.boxShadow,
+    shape: boxShape,
+  );
+}
+
+/// Converts a [BoxDecorationDto] to a [ShapeDecorationDto].
+ShapeDecorationDto _toShapeDecorationDto(BoxDecorationDto dto) {
+  ShapeBorderDto? shapeBorder;
+  assert(
+    dto.border == null || dto.border!.isUniform,
+    'Border to use with ShapeDecoration must be uniform.',
+  );
+  switch (dto.shape) {
+    case BoxShape.circle:
+      if (dto.border != null) {
+        shapeBorder = CircleBorderDto(side: dto.border!.top);
+      } else {
+        shapeBorder = const CircleBorderDto();
+      }
+      break;
+    case BoxShape.rectangle:
+      shapeBorder = RoundedRectangleBorderDto(
+        borderRadius: dto.borderRadius,
+        side: dto.border?.top,
+      );
+
+      break;
+    default:
+      if (dto.borderRadius != null || dto.border != null) {
         shapeBorder = RoundedRectangleBorderDto(
           borderRadius: dto.borderRadius,
           side: dto.border?.top,
         );
-
-        break;
-      default:
-        shapeBorder = null;
-    }
-
-    return ShapeDecorationDto(
-      color: dto.color,
-      shape: shapeBorder,
-      gradient: dto.gradient,
-      shadows: dto.boxShadow,
-    );
+      }
+      break;
   }
 
-  /// Merges two [BoxDecorationDto] instances.
-  BoxDecorationDto _mergeBoxDecoration(
-    BoxDecorationDto a,
-    BoxDecorationDto b,
-  ) {
-    return BoxDecorationDto(
-      color: a.color?.merge(b.color) ?? b.color,
-      border: a.border?.merge(b.border) ?? b.border,
-      borderRadius: a.borderRadius?.merge(b.borderRadius) ?? b.borderRadius,
-      gradient: a.gradient?.merge(b.gradient) ?? b.gradient,
-      boxShadow: a.boxShadow?.merge(b.boxShadow) ?? b.boxShadow,
-      shape: b.shape ?? a.shape,
-      backgroundBlendMode: b.backgroundBlendMode ?? a.backgroundBlendMode,
-      image: a.image?.merge(b.image) ?? b.image,
-    );
-  }
-
-  /// Merges two [ShapeDecorationDto] instances.
-  ShapeDecorationDto _mergeShapeDecoration(
-    ShapeDecorationDto a,
-    ShapeDecorationDto b,
-  ) {
-    return ShapeDecorationDto(
-      color: a.color?.merge(b.color) ?? b.color,
-      shape: a.shape?.merge(b.shape) ?? b.shape,
-      gradient: a.gradient?.merge(b.gradient) ?? b.gradient,
-      shadows: a.boxShadow?.merge(b.boxShadow) ?? b.boxShadow,
-    );
-  }
-
-  /// Merges two [DecorationDto] instances.
-  ///
-  /// If both [a] and [b] are [BoxDecorationDto], merges them using [_mergeBoxDecoration].
-  /// If both [a] and [b] are [ShapeDecorationDto], merges them using [_mergeShapeDecoration].
-  /// If [a] is [ShapeDecorationDto] and [b] is [BoxDecorationDto], converts [a] to [BoxDecorationDto] and merges them.
-  /// If [a] is [BoxDecorationDto] and [b] is [ShapeDecorationDto], converts [a] to [ShapeDecorationDto] and merges them.
-  ///
-  /// If [a] and [b] have incompatible types, throws a [MergeStrategyException].
-  @override
-  DecorationDto mergeStrategy(DecorationDto a, DecorationDto b) {
-    if (a is BoxDecorationDto && b is BoxDecorationDto) {
-      return _mergeBoxDecoration(a, b);
-    } else if (a is ShapeDecorationDto && b is ShapeDecorationDto) {
-      return _mergeShapeDecoration(a, b);
-    } else if (a is ShapeDecorationDto && b is BoxDecorationDto) {
-      return _mergeBoxDecoration(_toBoxDecorationDto(a), b);
-    } else if (a is BoxDecorationDto && b is ShapeDecorationDto) {
-      return _mergeShapeDecoration(_toShapeDecorationDto(a), b);
-    }
-
-    throw MergeStrategyException(a, b);
-  }
+  return ShapeDecorationDto(
+    color: dto.color,
+    shape: shapeBorder,
+    gradient: dto.gradient,
+    shadows: dto.boxShadow,
+  );
 }
 
 extension BoxDecorationExt on BoxDecoration {
