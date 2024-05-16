@@ -8,19 +8,52 @@ import '../../factory/mix_provider_data.dart';
 import '../../helpers/lerp_helpers.dart';
 import 'box_attribute.dart';
 
+/// A specification class that defines layout and styling attributes for a box.
+///
+/// Use [BoxSpec] to configure various properties such as alignment, padding,
+/// margin, width, height, decoration, and more for a box.
+///
+/// To retrieve an instance of [BoxSpec], use the [BoxSpec.of] method with a
+/// [BuildContext], or the [BoxSpec.from] method with [MixData].
 class BoxSpec extends Spec<BoxSpec> {
+  /// Aligns the child within the box.
   final AlignmentGeometry? alignment;
+
+  /// Adds empty space inside the box.
   final EdgeInsetsGeometry? padding;
-  final AlignmentGeometry? transformAlignment;
+
+  /// Adds empty space around the box.
   final EdgeInsetsGeometry? margin;
+
+  /// Applies additional constraints to the child.
   final BoxConstraints? constraints;
+
+  /// Paints a decoration behind the child.
   final Decoration? decoration;
+
+  /// Paints a decoration in front of the child.
   final Decoration? foregroundDecoration;
+
+  /// Applies a transformation matrix before painting the box.
   final Matrix4? transform;
+
+  /// Aligns the origin of the coordinate system for the [transform].
+  final AlignmentGeometry? transformAlignment;
+
+  /// Defines the clip behavior for the box when [BoxConstraints] has a negative
+  /// minimum extent.
   final Clip? clipBehavior;
+
+  /// Specifies the width of the box.
   final double? width;
+
+  /// Specifies the height of the box.
   final double? height;
 
+  /// Creates a [BoxSpec] with the given properties.
+  ///
+  /// All parameters are required to ensure explicit configuration of each
+  /// attribute.
   const BoxSpec({
     required this.alignment,
     required this.padding,
@@ -35,6 +68,10 @@ class BoxSpec extends Spec<BoxSpec> {
     required this.height,
   });
 
+  /// Creates an empty [BoxSpec] with all properties set to null.
+  ///
+  /// This can be used as a default value when no specific box specification
+  /// is needed.
   const BoxSpec.empty()
       : alignment = null,
         padding = null,
@@ -48,6 +85,9 @@ class BoxSpec extends Spec<BoxSpec> {
         height = null,
         clipBehavior = null;
 
+  /// Retrieves the [BoxSpec] from the nearest [MixProvider] ancestor.
+  ///
+  /// If no ancestor is found, returns [BoxSpec.empty].
   static BoxSpec of(BuildContext context) {
     final mix = MixProvider.of(context);
 
@@ -55,11 +95,18 @@ class BoxSpec extends Spec<BoxSpec> {
         const BoxSpec.empty();
   }
 
+  /// Retrieves the [BoxSpec] from the given [MixData].
+  ///
+  /// If not found, returns [BoxSpec.empty].
   static BoxSpec from(MixData mix) {
     return mix.attributeOf<BoxSpecAttribute>()?.resolve(mix) ??
         const BoxSpec.empty();
   }
 
+  /// Returns a new [BoxSpec] with the specified properties replaced.
+  ///
+  /// This method is useful for creating modified copies of an existing
+  /// [BoxSpec] with some attributes changed.
   @override
   BoxSpec copyWith({
     AlignmentGeometry? alignment,
@@ -73,7 +120,6 @@ class BoxSpec extends Spec<BoxSpec> {
     Matrix4? transform,
     AlignmentGeometry? transformAlignment,
     Clip? clipBehavior,
-    Color? color,
   }) {
     return BoxSpec(
       alignment: alignment ?? this.alignment,
@@ -90,6 +136,10 @@ class BoxSpec extends Spec<BoxSpec> {
     );
   }
 
+  /// Linearly interpolates between two [BoxSpec] instances.
+  ///
+  /// The parameter [t] represents the interpolation factor, typically ranging
+  /// from 0.0 to 1.0.
   @override
   BoxSpec lerp(BoxSpec? other, double t) {
     if (other == null) return this;
@@ -119,8 +169,11 @@ class BoxSpec extends Spec<BoxSpec> {
     );
   }
 
+  /// Returns a list of properties that constitute this [BoxSpec].
+  ///
+  /// This is typically used for equality comparisons.
   @override
-  get props => [
+  List<Object?> get props => [
         alignment,
         width,
         height,
@@ -135,9 +188,17 @@ class BoxSpec extends Spec<BoxSpec> {
       ];
 }
 
+/// A tween that interpolates between two [BoxSpec] instances.
+///
+/// This class can be used in animations to smoothly transition between
+/// different box specifications.
 class BoxSpecTween extends Tween<BoxSpec?> {
+  /// Creates a [BoxSpecTween] with the optional [begin] and [end] values.
   BoxSpecTween({super.begin, super.end});
 
+  /// Returns the interpolated [BoxSpec] at the given progress [t].
+  ///
+  /// The parameter [t] typically ranges from 0.0 to 1.0.
   @override
   BoxSpec lerp(double t) {
     if (begin == null && end == null) return const BoxSpec.empty();

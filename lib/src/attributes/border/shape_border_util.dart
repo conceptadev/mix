@@ -32,13 +32,10 @@ class RoundedRectanbleBorderUtility<T extends Attribute>
   );
 
   RoundedRectanbleBorderUtility(super.builder)
-      : super(valueToDto: RoundedRectangleBorderDto.from);
+      : super(valueToDto: (value) => value.toDto());
 
   T call({BorderSide? side, BorderRadiusGeometry? borderRadius}) {
-    return only(
-      side: BorderSideDto.maybeFrom(side),
-      borderRadius: BorderRadiusGeometryDto.maybeFrom(borderRadius),
-    );
+    return only(side: side?.toDto(), borderRadius: borderRadius?.toDto());
   }
 
   @override
@@ -55,13 +52,11 @@ class CircleBorderUtility<T extends Attribute>
 
   late final side = BorderSideUtility((v) => only(side: v));
 
-  CircleBorderUtility(super.builder) : super(valueToDto: CircleBorderDto.from);
+  CircleBorderUtility(super.builder)
+      : super(valueToDto: (value) => value.toDto());
 
   T call({BorderSide? side, double? eccentricity}) {
-    return only(
-      side: BorderSideDto.maybeFrom(side),
-      eccentricity: eccentricity,
-    );
+    return only(side: side?.toDto(), eccentricity: eccentricity);
   }
 
   @override
@@ -79,13 +74,10 @@ class BeveledRectangleBorderUtility<T extends Attribute>
   );
 
   BeveledRectangleBorderUtility(super.builder)
-      : super(valueToDto: BeveledRectangleBorderDto.from);
+      : super(valueToDto: (value) => value.toDto());
 
   T call({BorderSide? side, BorderRadiusGeometry? borderRadius}) {
-    return only(
-      side: BorderSideDto.maybeFrom(side),
-      borderRadius: BorderRadiusGeometryDto.maybeFrom(borderRadius),
-    );
+    return only(side: side?.toDto(), borderRadius: borderRadius?.toDto());
   }
 
   @override
@@ -101,10 +93,10 @@ class StadiumBorderUtility<T extends Attribute>
   late final side = BorderSideUtility((v) => only(side: v));
 
   StadiumBorderUtility(super.builder)
-      : super(valueToDto: StadiumBorderDto.from);
+      : super(valueToDto: (value) => value.toDto());
 
   T call({BorderSide? side}) {
-    return only(side: BorderSideDto.maybeFrom(side));
+    return only(side: side?.toDto());
   }
 
   @override
@@ -122,13 +114,10 @@ class ContinuousRectangleBorderUtility<T extends Attribute> extends DtoUtility<
   );
 
   ContinuousRectangleBorderUtility(super.builder)
-      : super(valueToDto: ContinuousRectangleBorderDto.from);
+      : super(valueToDto: (value) => value.toDto());
 
   T call({BorderSide? side, BorderRadiusGeometry? borderRadius}) {
-    return only(
-      side: BorderSideDto.maybeFrom(side),
-      borderRadius: BorderRadiusGeometryDto.maybeFrom(borderRadius),
-    );
+    return only(side: side?.toDto(), borderRadius: borderRadius?.toDto());
   }
 
   @override

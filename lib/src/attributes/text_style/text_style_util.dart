@@ -44,7 +44,7 @@ class TextStyleUtility<T extends Attribute>
 
   T letterSpacing(double v) => only(letterSpacing: v);
 
-  T shadows(List<Shadow> v) => only(shadows: v.map(ShadowDto.from).toList());
+  T shadows(List<Shadow> v) => only(shadows: v.map((e) => e.toDto()).toList());
 
   T italic() => fontStyle.italic();
 
@@ -90,18 +90,18 @@ class TextStyleUtility<T extends Attribute>
     double? height,
   }) {
     return only(
-      color: ColorDto.maybeFrom(color),
+      color: color?.toDto(),
       fontWeight: fontWeight,
       fontStyle: fontStyle,
       decoration: decoration,
       fontSize: fontSize,
       letterSpacing: letterSpacing,
       wordSpacing: wordSpacing,
-      backgroundColor: ColorDto.maybeFrom(backgroundColor),
-      decorationColor: ColorDto.maybeFrom(decorationColor),
+      backgroundColor: backgroundColor?.toDto(),
+      decorationColor: decorationColor?.toDto(),
       decorationStyle: decorationStyle,
       textBaseline: textBaseline,
-      shadows: shadows?.map(ShadowDto.from).toList(),
+      shadows: shadows?.map((e) => e.toDto()).toList(),
       fontFeatures: fontFeatures,
       foreground: foreground,
       background: background,

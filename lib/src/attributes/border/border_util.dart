@@ -12,7 +12,8 @@ class BorderSideUtility<T extends Attribute>
 
   late final style = BorderStyleUtility((v) => only(style: v));
 
-  BorderSideUtility(super.builder) : super(valueToDto: BorderSideDto.from);
+  BorderSideUtility(super.builder)
+      : super(valueToDto: (value) => value.toDto());
 
   T width(double v) => call(width: v);
 
@@ -27,7 +28,7 @@ class BorderSideUtility<T extends Attribute>
     double? strokeAlign,
   }) {
     return only(
-      color: ColorDto.maybeFrom(color),
+      color: color?.toDto(),
       width: width,
       style: style,
       strokeAlign: strokeAlign,
@@ -81,7 +82,7 @@ class BorderUtility<T extends Attribute>
 
   late final _directional = BorderDirectionalUtility((v) => builder(v));
 
-  BorderUtility(super.builder) : super(valueToDto: BoxBorderDto.from);
+  BorderUtility(super.builder) : super(valueToDto: (value) => value.toDto());
 
   BoxBorderDto _symmetric({
     BorderSideDto? vertical,
@@ -152,7 +153,7 @@ class BorderDirectionalUtility<T extends Attribute>
   );
 
   BorderDirectionalUtility(super.builder)
-      : super(valueToDto: BoxBorderDto.from);
+      : super(valueToDto: (value) => value.toDto());
 
   BoxBorderDto _symmetric({
     BorderSideDto? vertical,

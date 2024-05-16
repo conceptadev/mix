@@ -2,8 +2,13 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
 
-class _TestAttribute extends StyleAttribute {
+class _TestAttribute extends StyledAttribute {
   final DecorationImageDto? dto;
+
+  @override
+  _TestAttribute merge(covariant _TestAttribute? other) {
+    return other == null ? this : _TestAttribute(dto?.merge(other.dto));
+  }
 
   @override
   get props => [dto];

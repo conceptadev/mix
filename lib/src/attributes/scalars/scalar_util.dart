@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../core/attribute.dart';
 import '../../core/decorator.dart';
+import '../../core/dto.dart';
 import '../../theme/tokens/radius_token.dart';
 
 abstract class MixUtility<Attr extends Attribute, Value> {

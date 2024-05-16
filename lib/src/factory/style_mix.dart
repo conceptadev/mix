@@ -25,7 +25,7 @@ import 'mix_provider_data.dart';
 /// ```
 class Style with Comparable {
   /// Visual attributes contained in this mix.
-  final AttributeMap<StyleAttribute> styles;
+  final AttributeMap<StyledAttribute> styles;
 
   /// The variant attributes contained in this mix.
   final AttributeMap<VariantAttribute> variants;
@@ -95,10 +95,10 @@ class Style with Comparable {
   /// ```
   factory Style.create(Iterable<Attribute> attributes) {
     final applyVariants = <VariantAttribute>[];
-    final styleList = <StyleAttribute>[];
+    final styleList = <StyledAttribute>[];
 
     for (final attribute in attributes) {
-      if (attribute is StyleAttribute) {
+      if (attribute is StyledAttribute) {
         styleList.add(attribute);
       } else if (attribute is VariantAttribute) {
         applyVariants.add(attribute);
@@ -210,7 +210,7 @@ class Style with Comparable {
   ///
   /// If [styles] or [variants] is null, the corresponding attribute map of this mix is used.
   Style copyWith({
-    AttributeMap<StyleAttribute>? styles,
+    AttributeMap<StyledAttribute>? styles,
     AttributeMap<VariantAttribute>? variants,
   }) {
     return Style._(
@@ -365,7 +365,7 @@ class AnimatedStyle extends Style {
   final AnimatedData animatedData;
 
   const AnimatedStyle._({
-    required AttributeMap<StyleAttribute> styles,
+    required AttributeMap<StyledAttribute> styles,
     required AttributeMap<VariantAttribute> variants,
     required this.animatedData,
   }) : super._(styles: styles, variants: variants);
@@ -387,7 +387,7 @@ class AnimatedStyle extends Style {
   /// If [styles] or [variants] is null, the corresponding attribute map of this mix is used.
   @override
   AnimatedStyle copyWith({
-    AttributeMap<StyleAttribute>? styles,
+    AttributeMap<StyledAttribute>? styles,
     AttributeMap<VariantAttribute>? variants,
     AnimatedData? animatedData,
   }) {

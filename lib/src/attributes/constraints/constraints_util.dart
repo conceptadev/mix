@@ -12,7 +12,7 @@ class BoxConstraintsUtility<T extends Attribute>
   late final maxHeight = DoubleUtility((v) => only(maxHeight: v));
 
   BoxConstraintsUtility(super.builder)
-      : super(valueToDto: BoxConstraintsDto.from);
+      : super(valueToDto: (value) => value.toDto());
 
   T call({
     double? minWidth,

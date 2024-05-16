@@ -10,8 +10,8 @@ import 'border_radius_dto.dart';
 /// Accepts a builder function that returns [T] and takes a [BorderRadiusGeometryDto] as a parameter.
 class BorderRadiusUtility<T extends Attribute>
     extends DtoUtility<T, BorderRadiusGeometryDto, BorderRadiusGeometry> {
-  const BorderRadiusUtility(super.builder)
-      : super(valueToDto: BorderRadiusGeometryDto.from);
+  BorderRadiusUtility(super.builder)
+      : super(valueToDto: (value) => value.toDto());
 
   /// Returns a [RadiusUtility] to manipulate [Radius] for bottomLeft corner.
   RadiusUtility<T> get bottomLeft {
@@ -140,8 +140,8 @@ class BorderRadiusUtility<T extends Attribute>
 
 class BorderRadiusDirectionalUtility<T extends Attribute>
     extends DtoUtility<T, BorderRadiusGeometryDto, BorderRadiusGeometry> {
-  const BorderRadiusDirectionalUtility(super.builder)
-      : super(valueToDto: BorderRadiusGeometryDto.from);
+  BorderRadiusDirectionalUtility(super.builder)
+      : super(valueToDto: (value) => value.toDto());
 
   /// Returns a [RadiusUtility] to manipulate [Radius] for all corners.
   RadiusUtility<T> get all {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../core/attribute.dart';
+import '../../core/dto.dart';
 import '../../factory/mix_provider_data.dart';
 import '../color/color_dto.dart';
 
@@ -25,39 +25,50 @@ class BoxBorderDto extends Dto<BoxBorder> {
     this.end,
   });
 
-  static BoxBorderDto from(BoxBorder border) {
-    if (border is Border) {
-      return BoxBorderDto(
-        top: BorderSideDto.from(border.top),
-        bottom: BorderSideDto.from(border.bottom),
-        left: BorderSideDto.from(border.left),
-        right: BorderSideDto.from(border.right),
-      );
-    }
+  const BoxBorderDto.fromSide(BorderSideDto? side)
+      : this(top: side, bottom: side, left: side, right: side);
 
-    if (border is BorderDirectional) {
-      return BoxBorderDto(
-        top: BorderSideDto.from(border.top),
-        bottom: BorderSideDto.from(border.bottom),
-        start: BorderSideDto.from(border.start),
-        end: BorderSideDto.from(border.end),
-      );
-    }
+  bool get _colorIsUniform {
+    final topColor = top?.color;
 
-    throw ArgumentError.value(
-      border,
-      'border',
-      'Border type is not supported',
-    );
+    return left?.color == topColor &&
+        bottom?.color == topColor &&
+        right?.color == topColor;
   }
 
-  static BoxBorderDto? maybeFrom(BoxBorder? border) {
-    return border == null ? null : from(border);
+  bool get _widthIsUniform {
+    final topWidth = top?.width;
+
+    return left?.width == topWidth &&
+        bottom?.width == topWidth &&
+        right?.width == topWidth;
+  }
+
+  bool get _styleIsUniform {
+    final topStyle = top?.style;
+
+    return left?.style == topStyle &&
+        bottom?.style == topStyle &&
+        right?.style == topStyle;
+  }
+
+  bool get _strokeAlignIsUniform {
+    final topStrokeAlign = top?.strokeAlign;
+
+    return left?.strokeAlign == topStrokeAlign &&
+        bottom?.strokeAlign == topStrokeAlign &&
+        right?.strokeAlign == topStrokeAlign;
   }
 
   bool get _hasStartOrEnd => start != null || end != null;
 
   bool get _hasLeftOrRight => left != null || right != null;
+
+  bool get isUniform =>
+      _colorIsUniform &&
+      _widthIsUniform &&
+      _styleIsUniform &&
+      _strokeAlignIsUniform;
 
   bool get isDirectional => _hasStartOrEnd && !_hasLeftOrRight;
 
@@ -135,18 +146,7 @@ class BorderSideDto extends Dto<BorderSide> {
     this.width,
   });
 
-  static BorderSideDto from(BorderSide side) {
-    return BorderSideDto(
-      color: ColorDto(side.color),
-      strokeAlign: side.strokeAlign,
-      style: side.style,
-      width: side.width,
-    );
-  }
-
-  static BorderSideDto? maybeFrom(BorderSide? side) {
-    return side == null ? null : from(side);
-  }
+  const BorderSideDto.none() : this();
 
   BorderSideDto copyWith({
     ColorDto? color,
@@ -188,4 +188,54 @@ class BorderSideDto extends Dto<BorderSide> {
 
   @override
   get props => [color, width, style, strokeAlign];
+}
+
+extension BoxBorderExt on BoxBorder {
+  BoxBorderDto toDto() {
+    if (this is Border) {
+      return (this as Border).toDto();
+    }
+    if (this is BorderDirectional) {
+      return (this as BorderDirectional).toDto();
+    }
+
+    throw ArgumentError.value(
+      this,
+      'border',
+      'Border type is not supported',
+    );
+  }
+}
+
+extension BorderDirectionalExt on BorderDirectional {
+  BoxBorderDto toDto() {
+    return BoxBorderDto(
+      top: top.toDto(),
+      bottom: bottom.toDto(),
+      start: start.toDto(),
+      end: end.toDto(),
+    );
+  }
+}
+
+extension BorderExt on Border {
+  BoxBorderDto toDto() {
+    return BoxBorderDto(
+      top: top.toDto(),
+      bottom: bottom.toDto(),
+      left: left.toDto(),
+      right: right.toDto(),
+    );
+  }
+}
+
+extension BorderSideExt on BorderSide {
+  BorderSideDto toDto() {
+    return BorderSideDto(
+      color: color.toDto(),
+      strokeAlign: strokeAlign,
+      style: style,
+      width: width,
+    );
+  }
 }

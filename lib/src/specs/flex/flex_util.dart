@@ -26,8 +26,6 @@ class FlexSpecUtility<T extends Attribute>
 
   FlexSpecUtility(super.builder);
 
-  
-
   @override
   T only({
     Axis? direction,

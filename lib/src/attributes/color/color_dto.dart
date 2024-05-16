@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../core/attribute.dart';
+import '../../core/dto.dart';
 import '../../factory/mix_provider_data.dart';
 import '../../theme/tokens/color_token.dart';
 import 'color_directives.dart';
@@ -25,9 +25,6 @@ class ColorDto extends Dto<Color> {
 
   ColorDto.directive(ColorDirective directive)
       : this.raw(directives: [directive]);
-
-  static ColorDto? maybeFrom(Color? value) =>
-      value == null ? null : ColorDto(value);
 
   @override
   Color resolve(MixData mix) {
@@ -56,4 +53,8 @@ class ColorDto extends Dto<Color> {
 
   @override
   List<Object?> get props => [value, directives];
+}
+
+extension ColorExt on Color {
+  ColorDto toDto() => ColorDto(this);
 }

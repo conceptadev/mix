@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../core/attribute.dart';
+import '../../core/dto.dart';
 import '../../factory/mix_provider_data.dart';
 import '../color/color_dto.dart';
 
@@ -31,22 +31,6 @@ abstract class ShadowDtoImpl<Self extends ShadowDtoImpl<Self, Value>,
 @immutable
 class ShadowDto extends ShadowDtoImpl<ShadowDto, Shadow> {
   const ShadowDto({super.blurRadius, super.color, super.offset});
-
-  /// Creates a [ShadowDto] from a [Shadow]
-  static ShadowDto from(Shadow shadow) {
-    return ShadowDto(
-      blurRadius: shadow.blurRadius,
-      color: ColorDto.maybeFrom(shadow.color),
-      offset: shadow.offset,
-    );
-  }
-
-  /// Creates a [ShadowDto] from a [Shadow]
-  ///
-  /// Returns null if [shadow] is null
-  static ShadowDto? maybeFrom(Shadow? shadow) {
-    return shadow == null ? null : from(shadow);
-  }
 
   /// Resolves this [ShadowDto] with a given [MixData] to a [Shadow]
   @override
@@ -94,21 +78,6 @@ class BoxShadowDto extends ShadowDtoImpl<BoxShadowDto, BoxShadow> {
     this.spreadRadius,
   });
 
-  /// Creates a [BoxShadowDto] from a [BoxShadow]
-  static BoxShadowDto from(BoxShadow shadow) {
-    return BoxShadowDto(
-      color: ColorDto.maybeFrom(shadow.color),
-      offset: shadow.offset,
-      blurRadius: shadow.blurRadius,
-      spreadRadius: shadow.spreadRadius,
-    );
-  }
-
-  /// Creates a [BoxShadowDto] from a [BoxShadow]
-  static BoxShadowDto? maybeFrom(BoxShadow? shadow) {
-    return shadow == null ? null : from(shadow);
-  }
-
   /// Resolves this [BoxShadowDto] with a given [MixData] to a [BoxShadow]
   @override
   BoxShadow resolve(MixData mix) {
@@ -137,4 +106,37 @@ class BoxShadowDto extends ShadowDtoImpl<BoxShadowDto, BoxShadow> {
 
   @override
   get props => [color, offset, blurRadius, spreadRadius];
+}
+
+extension ShadowExt on Shadow {
+  ShadowDto toDto() {
+    return ShadowDto(
+      blurRadius: blurRadius,
+      color: ColorDto(color),
+      offset: offset,
+    );
+  }
+}
+
+extension BoxShadowExt on BoxShadow {
+  BoxShadowDto toDto() {
+    return BoxShadowDto(
+      color: ColorDto(color),
+      offset: offset,
+      blurRadius: blurRadius,
+      spreadRadius: spreadRadius,
+    );
+  }
+}
+
+extension ListShadowExt on List<Shadow> {
+  List<ShadowDto> toDto() {
+    return map((e) => e.toDto()).toList();
+  }
+}
+
+extension ListBoxShadowExt on List<BoxShadow> {
+  List<BoxShadowDto> toDto() {
+    return map((e) => e.toDto()).toList();
+  }
 }

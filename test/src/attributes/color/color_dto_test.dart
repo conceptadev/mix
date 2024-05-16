@@ -47,16 +47,11 @@ void main() {
       },
     );
 
-    // Testing maybeFrom method
-    test('ColorDto.maybeFrom should handle null correctly', () {
-      expect(ColorDto.maybeFrom(null), isNull);
-    });
-
     test('ColorDto.maybeFrom should return a ColorDto for non-null input', () {
       const color = Colors.red;
-      final colorDto = ColorDto.maybeFrom(color);
+      final colorDto = color.toDto();
       expect(colorDto, isA<ColorDto>());
-      expect(colorDto!.value, color);
+      expect(colorDto.value, color);
     });
 
     // Testing merge method

@@ -46,17 +46,17 @@ void main() {
     });
 
     test('contains returns correct value', () {
-      final mixableMap = AttributeMap<StyleAttribute>([attr1]);
+      final mixableMap = AttributeMap<StyledAttribute>([attr1]);
       expect(mixableMap.containsType(attr1), isTrue);
       expect(mixableMap.containsType(attr2), isFalse);
     });
 
     test('attributeOfType retrieves correct attribute', () {
       const attr1 = MockIntScalarAttribute(2);
-      const attr2 = MockBooleanScalarAttribute(true);
+      const attr2 = MockSpecBooleanAttribute(true);
       final mixableMap = AttributeMap([attr1, attr2]);
       final retrievedAttribute =
-          mixableMap.attributeOfType<MockBooleanScalarAttribute>();
+          mixableMap.attributeOfType<MockSpecBooleanAttribute>();
 
       expect(retrievedAttribute, isNotNull);
       expect(retrievedAttribute, attr2);
@@ -77,8 +77,8 @@ void main() {
       const attr1 = MockIntScalarAttribute(2);
       const attr2 = MockBooleanScalarAttribute(true);
 
-      final mixableMap1 = AttributeMap<StyleAttribute>([attr1]);
-      final mixableMap2 = AttributeMap<StyleAttribute>([attr2]);
+      final mixableMap1 = AttributeMap<StyledAttribute>([attr1]);
+      final mixableMap2 = AttributeMap<StyledAttribute>([attr2]);
       final mergedMap = mixableMap1.merge(mixableMap2);
       expect(mergedMap.values, containsAll([attr1, attr2]));
     });

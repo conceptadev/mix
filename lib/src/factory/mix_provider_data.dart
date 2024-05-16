@@ -70,14 +70,14 @@ class MixData with Comparable {
   }
 
   /// Finds and returns an [VisualAttribute] of type [A], or null if not found.
-  A? attributeOf<A extends StyleAttribute>() {
+  A? attributeOf<A extends SpecAttribute>() {
     final attributes = _attributes.whereType<A>();
     if (attributes.isEmpty) return null;
 
     return _mergeAttributes(attributes) ?? attributes.last;
   }
 
-  Iterable<A> whereType<A extends StyleAttribute>() {
+  Iterable<A> whereType<A extends StyledAttribute>() {
     return _attributes.whereType();
   }
 
@@ -118,7 +118,7 @@ class MixData with Comparable {
 }
 
 @visibleForTesting
-List<StyleAttribute> applyContextToVisualAttributes(
+List<StyledAttribute> applyContextToVisualAttributes(
   BuildContext context,
   Style mix,
 ) {
@@ -153,11 +153,11 @@ Style _applyVariants(
       : style;
 }
 
-M? _mergeAttributes<M extends StyleAttribute>(Iterable<M> mergeables) {
+M? _mergeAttributes<M extends SpecAttribute>(Iterable<M> mergeables) {
   if (mergeables.isEmpty) return null;
 
   return mergeables.reduce((a, b) {
-    return a is Mergeable ? (a as Mergeable).merge(b) : b;
+    return a.merge(b) as M;
   });
 }
 

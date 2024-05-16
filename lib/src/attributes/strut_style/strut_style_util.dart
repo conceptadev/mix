@@ -17,7 +17,8 @@ class StrutStyleUtility<T extends Attribute>
 
   late final forceStrutHeight = BoolUtility((v) => only(forceStrutHeight: v));
 
-  StrutStyleUtility(super.builder) : super(valueToDto: StrutStyleDto.from);
+  StrutStyleUtility(super.builder)
+      : super(valueToDto: (value) => value.toDto());
 
   T height(double v) => only(height: v);
 

@@ -95,7 +95,7 @@ class RadialGradientUtility<T extends Attribute>
   late final transform = GradientTransformUtility((v) => only(transform: v));
 
   RadialGradientUtility(super.builder)
-      : super(valueToDto: RadialGradientDto.from);
+      : super(valueToDto: (value) => value.toDto());
 
   T focalRadius(double v) => only(focalRadius: v);
 
@@ -180,7 +180,7 @@ class LinearGradientUtility<T extends Attribute>
   late final tileMode = TileModeUtility((v) => only(tileMode: v));
   late final transform = GradientTransformUtility((v) => only(transform: v));
   LinearGradientUtility(super.builder)
-      : super(valueToDto: LinearGradientDto.from);
+      : super(valueToDto: (value) => value.toDto());
 
   T colors(List<Color> v) => call(colors: v);
 
@@ -256,7 +256,7 @@ class SweepGradientUtility<T extends Attribute>
   late final tileMode = TileModeUtility((v) => only(tileMode: v));
 
   SweepGradientUtility(super.builder)
-      : super(valueToDto: SweepGradientDto.from);
+      : super(valueToDto: (value) => value.toDto());
 
   T endAngle(double v) => call(endAngle: v);
 

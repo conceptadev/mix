@@ -30,9 +30,9 @@ void main() {
         stops: [0.0, 1.0],
       );
 
-      final linearGradientDto = GradientDto.from(linearGradient);
-      final radialGradientDto = GradientDto.from(radialGradient);
-      final sweepGradientDto = GradientDto.from(sweepGradient);
+      final linearGradientDto = linearGradient.toDto();
+      final radialGradientDto = radialGradient.toDto();
+      final sweepGradientDto = sweepGradient.toDto();
 
       expect(linearGradientDto, isA<LinearGradientDto>());
       expect(radialGradientDto, isA<RadialGradientDto>());
@@ -77,7 +77,7 @@ void main() {
           colors: [Colors.red, Colors.blue],
           stops: [0.0, 1.0],
         );
-        final gradientDto = LinearGradientDto.from(linearGradient);
+        final gradientDto = linearGradient.toDto();
 
         expect(gradientDto.begin, linearGradient.begin);
         expect(gradientDto.end, linearGradient.end);
@@ -185,7 +185,7 @@ void main() {
           colors: [Colors.red, Colors.blue],
           stops: [0.0, 1.0],
         );
-        final gradientDto = RadialGradientDto.from(radialGradient);
+        final gradientDto = radialGradient.toDto();
 
         expect(gradientDto.center, radialGradient.center);
         expect(gradientDto.radius, radialGradient.radius);
@@ -295,7 +295,7 @@ void main() {
           colors: [Colors.red, Colors.blue],
           stops: [0.0, 1.0],
         );
-        final gradientDto = SweepGradientDto.from(sweepGradient);
+        final gradientDto = sweepGradient.toDto();
 
         expect(gradientDto.center, sweepGradient.center);
         expect(gradientDto.startAngle, sweepGradient.startAngle);

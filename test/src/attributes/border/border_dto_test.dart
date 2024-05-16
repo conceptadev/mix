@@ -163,7 +163,7 @@ void main() {
         style: BorderStyle.solid,
       );
 
-      final borderSideDto = BorderSideDto.from(borderSide);
+      final borderSideDto = borderSide.toDto();
 
       expect(borderSideDto.width, borderSide.width);
       expect(borderSideDto.color, ColorDto(borderSide.color));
