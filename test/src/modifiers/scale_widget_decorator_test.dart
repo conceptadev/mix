@@ -5,7 +5,7 @@ import 'package:mix/mix.dart';
 import '../../helpers/testing_utils.dart';
 
 void main() {
-  group('ScaleDecoratorSpec', () {
+  group('ScaleModifierSpec', () {
     test('Constructor assigns scale correctly', () {
       const scale = 1.5;
       final modifier = $with.transform.scale(scale);

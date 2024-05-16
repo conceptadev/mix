@@ -8,22 +8,22 @@ import '../core/modifier.dart';
 import '../factory/mix_provider_data.dart';
 import '../helpers/lerp_helpers.dart';
 
-class FlexibleDecoratorSpec extends DecoratorSpec<FlexibleDecoratorSpec> {
+class FlexibleModifierSpec extends ModifierSpec<FlexibleModifierSpec> {
   final int? flex;
   final FlexFit? fit;
-  const FlexibleDecoratorSpec({this.flex, this.fit});
+  const FlexibleModifierSpec({this.flex, this.fit});
 
   @override
-  FlexibleDecoratorSpec lerp(FlexibleDecoratorSpec? other, double t) {
-    return FlexibleDecoratorSpec(
+  FlexibleModifierSpec lerp(FlexibleModifierSpec? other, double t) {
+    return FlexibleModifierSpec(
       flex: lerpInt(flex, other?.flex, t),
       fit: lerpSnap(fit, other?.fit, t),
     );
   }
 
   @override
-  FlexibleDecoratorSpec copyWith({int? flex, FlexFit? fit}) {
-    return FlexibleDecoratorSpec(flex: flex ?? this.flex, fit: fit ?? this.fit);
+  FlexibleModifierSpec copyWith({int? flex, FlexFit? fit}) {
+    return FlexibleModifierSpec(flex: flex ?? this.flex, fit: fit ?? this.fit);
   }
 
   @override
@@ -42,41 +42,41 @@ class FlexibleDecoratorSpec extends DecoratorSpec<FlexibleDecoratorSpec> {
 /// A modifier that wraps a widget with the [Flexible] widget.
 ///
 /// The [Flexible] widget is used to create a flexible space in a [Row], [Column], or [Flex] widget.
-class FlexibleDecoratorAttribute extends DecoratorAttribute<
-    FlexibleDecoratorAttribute, FlexibleDecoratorSpec> {
+class FlexibleModifierAttribute
+    extends ModifierAttribute<FlexibleModifierAttribute, FlexibleModifierSpec> {
   final int? flex;
   final FlexFit? fit;
-  const FlexibleDecoratorAttribute({this.flex, this.fit});
+  const FlexibleModifierAttribute({this.flex, this.fit});
 
   @override
-  FlexibleDecoratorAttribute merge(FlexibleDecoratorAttribute? other) {
-    return FlexibleDecoratorAttribute(
+  FlexibleModifierAttribute merge(FlexibleModifierAttribute? other) {
+    return FlexibleModifierAttribute(
       flex: other?.flex ?? flex,
       fit: other?.fit ?? fit,
     );
   }
 
   @override
-  FlexibleDecoratorSpec resolve(MixData mix) {
-    return FlexibleDecoratorSpec(flex: flex, fit: fit);
+  FlexibleModifierSpec resolve(MixData mix) {
+    return FlexibleModifierSpec(flex: flex, fit: fit);
   }
 
   @override
   get props => [flex, fit];
 }
 
-class FlexibleDecoratorUtility<T extends Attribute>
-    extends MixUtility<T, FlexibleDecoratorAttribute> {
-  const FlexibleDecoratorUtility(super.builder);
+class FlexibleModifierUtility<T extends Attribute>
+    extends MixUtility<T, FlexibleModifierAttribute> {
+  const FlexibleModifierUtility(super.builder);
   FlexFitUtility<T> get fit => FlexFitUtility((fit) => call(fit: fit));
   IntUtility<T> get flex => IntUtility((flex) => call(flex: flex));
   T tight({int? flex}) =>
-      builder(FlexibleDecoratorAttribute(flex: flex, fit: FlexFit.tight));
+      builder(FlexibleModifierAttribute(flex: flex, fit: FlexFit.tight));
   T loose({int? flex}) =>
-      builder(FlexibleDecoratorAttribute(flex: flex, fit: FlexFit.loose));
+      builder(FlexibleModifierAttribute(flex: flex, fit: FlexFit.loose));
   T expanded({int? flex}) => tight(flex: flex);
 
   T call({int? flex, FlexFit? fit}) {
-    return builder(FlexibleDecoratorAttribute(flex: flex, fit: fit));
+    return builder(FlexibleModifierAttribute(flex: flex, fit: fit));
   }
 }

@@ -11,7 +11,7 @@ void main() {
     $with.visibility.on(),
     $with.clipOval(),
     $with.aspectRatio(2.0),
-    const CustomDecoratorAttribute(),
+    const CustomModifierAttribute(),
   );
 
   final mixData = MixData.create(MockBuildContext(), style);
@@ -115,11 +115,11 @@ void main() {
           RenderModifiers(
             mix: mixData,
             orderOfModifiers: const [
-              ClipOvalDecoratorAttribute,
-              AspectRatioDecoratorAttribute,
-              TransformDecoratorAttribute,
-              OpacityDecoratorAttribute,
-              VisibilityDecoratorAttribute,
+              ClipOvalModifierAttribute,
+              AspectRatioModifierAttribute,
+              TransformModifierAttribute,
+              OpacityModifierAttribute,
+              VisibilityModifierAttribute,
             ],
             child: const Text('child'),
           ),
@@ -185,8 +185,8 @@ void main() {
           RenderModifiers(
             mix: mixData,
             orderOfModifiers: const [
-              ClipOvalDecoratorAttribute,
-              AspectRatioDecoratorAttribute
+              ClipOvalModifierAttribute,
+              AspectRatioModifierAttribute
             ],
             child: const Text('child'),
           ),
@@ -347,7 +347,7 @@ void main() {
     );
 
     testWidgets(
-      'If there are no modifier attributes in Style, RenderDecoratorAttributes shouldnt exist in the widget tree',
+      'If there are no modifier attributes in Style, RenderModifierAttributes shouldnt exist in the widget tree',
       (tester) async {
         const key = Key('box');
 
@@ -369,9 +369,9 @@ void main() {
     );
   });
 
-  group('resolveDecoratorSpecs', () {
+  group('resolveModifierSpecs', () {
     test('Returns empty set when no modifiers are provided', () {
-      final result = resolveDecoratorSpecs(const [], EmptyMixData);
+      final result = resolveModifierSpecs(const [], EmptyMixData);
       expect(result, isEmpty);
     });
 
@@ -385,26 +385,26 @@ void main() {
       );
 
       final mix = style.of(MockBuildContext());
-      final result = resolveDecoratorSpecs(
+      final result = resolveModifierSpecs(
         [
-          ClipOvalDecoratorAttribute,
-          AspectRatioDecoratorAttribute,
-          TransformDecoratorAttribute,
-          OpacityDecoratorAttribute,
-          VisibilityDecoratorAttribute,
+          ClipOvalModifierAttribute,
+          AspectRatioModifierAttribute,
+          TransformModifierAttribute,
+          OpacityModifierAttribute,
+          VisibilityModifierAttribute,
         ],
         mix,
       );
 
       expect(result, {
-        const VisibilityDecoratorSpec(true),
-        const OpacityDecoratorSpec(0.5),
-        TransformDecoratorSpec(
+        const VisibilityModifierSpec(true),
+        const OpacityModifierSpec(0.5),
+        TransformModifierSpec(
           transform: Matrix4.diagonal3Values(2.0, 2.0, 1.0),
           alignment: Alignment.center,
         ),
-        const AspectRatioDecoratorSpec(2.0),
-        const ClipOvalDecoratorSpec(),
+        const AspectRatioModifierSpec(2.0),
+        const ClipOvalModifierSpec(),
       });
     });
   });

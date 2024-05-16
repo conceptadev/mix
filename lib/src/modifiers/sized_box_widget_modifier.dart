@@ -9,23 +9,23 @@ import '../core/attribute.dart';
 import '../core/modifier.dart';
 import '../factory/mix_provider_data.dart';
 
-class SizedBoxDecoratorSpec extends DecoratorSpec<SizedBoxDecoratorSpec> {
+class SizedBoxModifierSpec extends ModifierSpec<SizedBoxModifierSpec> {
   final double? width;
   final double? height;
 
-  const SizedBoxDecoratorSpec({this.width, this.height});
+  const SizedBoxModifierSpec({this.width, this.height});
 
   @override
-  SizedBoxDecoratorSpec lerp(SizedBoxDecoratorSpec? other, double t) {
-    return SizedBoxDecoratorSpec(
+  SizedBoxModifierSpec lerp(SizedBoxModifierSpec? other, double t) {
+    return SizedBoxModifierSpec(
       width: lerpDouble(width, other?.width, t),
       height: lerpDouble(height, other?.height, t),
     );
   }
 
   @override
-  SizedBoxDecoratorSpec copyWith({double? width, double? height}) {
-    return SizedBoxDecoratorSpec(
+  SizedBoxModifierSpec copyWith({double? width, double? height}) {
+    return SizedBoxModifierSpec(
       width: width ?? this.width,
       height: height ?? this.height,
     );
@@ -40,21 +40,21 @@ class SizedBoxDecoratorSpec extends DecoratorSpec<SizedBoxDecoratorSpec> {
   }
 }
 
-class SizedBoxDecoratorAttribute extends DecoratorAttribute<
-    SizedBoxDecoratorAttribute, SizedBoxDecoratorSpec> {
+class SizedBoxModifierAttribute
+    extends ModifierAttribute<SizedBoxModifierAttribute, SizedBoxModifierSpec> {
   final double? width;
   final double? height;
 
-  const SizedBoxDecoratorAttribute({this.width, this.height});
+  const SizedBoxModifierAttribute({this.width, this.height});
 
   @override
-  SizedBoxDecoratorSpec resolve(MixData mix) {
-    return SizedBoxDecoratorSpec(width: width, height: height);
+  SizedBoxModifierSpec resolve(MixData mix) {
+    return SizedBoxModifierSpec(width: width, height: height);
   }
 
   @override
-  SizedBoxDecoratorAttribute merge(SizedBoxDecoratorAttribute? other) {
-    return SizedBoxDecoratorAttribute(
+  SizedBoxModifierAttribute merge(SizedBoxModifierAttribute? other) {
+    return SizedBoxModifierAttribute(
       width: other?.width ?? width,
       height: other?.height ?? height,
     );
@@ -64,11 +64,11 @@ class SizedBoxDecoratorAttribute extends DecoratorAttribute<
   get props => [width, height];
 }
 
-class SizedBoxDecoratorUtility<T extends Attribute>
-    extends MixUtility<T, SizedBoxDecoratorAttribute> {
-  const SizedBoxDecoratorUtility(super.builder);
+class SizedBoxModifierUtility<T extends Attribute>
+    extends MixUtility<T, SizedBoxModifierAttribute> {
+  const SizedBoxModifierUtility(super.builder);
 
   T call({double? width, double? height}) {
-    return builder(SizedBoxDecoratorAttribute(width: width, height: height));
+    return builder(SizedBoxModifierAttribute(width: width, height: height));
   }
 }

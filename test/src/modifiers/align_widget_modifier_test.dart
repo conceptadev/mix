@@ -5,60 +5,60 @@ import 'package:mix/src/modifiers/align_widget_modifier.dart';
 import '../../helpers/testing_utils.dart';
 
 void main() {
-  group('AlignDecoratorAttribute', () {
+  group('AlignModifierAttribute', () {
     test('merge', () {
-      const modifier = AlignDecoratorAttribute();
-      const other = AlignDecoratorAttribute();
+      const modifier = AlignModifierAttribute();
+      const other = AlignModifierAttribute();
       final result = modifier.merge(other);
       expect(result, modifier);
     });
 
     test('resolve', () {
-      const modifier = AlignDecoratorAttribute();
+      const modifier = AlignModifierAttribute();
       final result = modifier.resolve(EmptyMixData);
-      expect(result, isA<AlignDecoratorSpec>());
+      expect(result, isA<AlignModifierSpec>());
     });
 
     // equality
     test('equality', () {
-      const modifier = AlignDecoratorAttribute(
+      const modifier = AlignModifierAttribute(
           alignment: Alignment.center, widthFactor: 0.5, heightFactor: 0.5);
-      const other = AlignDecoratorAttribute(
+      const other = AlignModifierAttribute(
           alignment: Alignment.center, widthFactor: 0.5, heightFactor: 0.5);
       expect(modifier, other);
     });
 
     test('inequality', () {
-      const modifier = AlignDecoratorAttribute(
+      const modifier = AlignModifierAttribute(
           alignment: Alignment.topCenter, widthFactor: 0.5, heightFactor: 0.5);
-      const other = AlignDecoratorAttribute(
+      const other = AlignModifierAttribute(
           alignment: Alignment.center, widthFactor: 0.5, heightFactor: 0.5);
       expect(modifier, isNot(equals(other)));
     });
   });
 
-  group('AlignDecoratorSpec Tests', () {
+  group('AlignModifierSpec Tests', () {
     const alignment = Alignment.center;
     const alignment2 = Alignment.bottomRight;
 
     test('Constructor assigns alignment correctly', () {
-      const modifier = AlignDecoratorSpec(alignment: alignment);
+      const modifier = AlignModifierSpec(alignment: alignment);
 
       expect(modifier.alignment, alignment);
     });
 
     test('Lerp method interpolates correctly', () {
-      const start = AlignDecoratorSpec(alignment: alignment);
-      const end = AlignDecoratorSpec(alignment: alignment2);
+      const start = AlignModifierSpec(alignment: alignment);
+      const end = AlignModifierSpec(alignment: alignment2);
       final result = start.lerp(end, 0.5);
 
       expect(result.alignment, const Alignment(0.5, 0.5));
     });
 
     test('Equality and hashcode test', () {
-      const modifier1 = AlignDecoratorSpec(alignment: alignment);
-      const modifier2 = AlignDecoratorSpec(alignment: alignment);
-      const modifier3 = AlignDecoratorSpec(alignment: alignment2);
+      const modifier1 = AlignModifierSpec(alignment: alignment);
+      const modifier2 = AlignModifierSpec(alignment: alignment);
+      const modifier3 = AlignModifierSpec(alignment: alignment2);
 
       expect(modifier1, modifier2);
       expect(modifier1.hashCode, modifier2.hashCode);
@@ -69,7 +69,7 @@ void main() {
     testWidgets(
       'Build method creates Align widget with correct alignment',
       (WidgetTester tester) async {
-        const modifier = AlignDecoratorSpec(alignment: alignment);
+        const modifier = AlignModifierSpec(alignment: alignment);
 
         await tester.pumpMaterialApp(modifier.build(Container()));
 

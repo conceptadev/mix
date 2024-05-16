@@ -5,26 +5,26 @@ import 'package:mix/src/modifiers/rotated_box_widget_modifier.dart';
 import '../../helpers/testing_utils.dart';
 
 void main() {
-  group('RotateDecoratorSpec', () {
+  group('RotateModifierSpec', () {
     test('Constructor assigns quarterTurns correctly', () {
       const quarterTurns = 1;
-      const modifier = RotatedBoxDecoratorSpec(quarterTurns);
+      const modifier = RotatedBoxModifierSpec(quarterTurns);
 
       expect(modifier.quarterTurns, quarterTurns);
     });
 
     test('Lerp method interpolates correctly', () {
-      const start = RotatedBoxDecoratorSpec(0);
-      const end = RotatedBoxDecoratorSpec(4);
+      const start = RotatedBoxModifierSpec(0);
+      const end = RotatedBoxModifierSpec(4);
       final result = start.lerp(end, 0.5);
 
       expect(result.quarterTurns, 2);
     });
 
     test('Equality and hashcode test', () {
-      const modifier1 = RotatedBoxDecoratorSpec(1);
-      const modifier2 = RotatedBoxDecoratorSpec(1);
-      const modifier3 = RotatedBoxDecoratorSpec(2);
+      const modifier1 = RotatedBoxModifierSpec(1);
+      const modifier2 = RotatedBoxModifierSpec(1);
+      const modifier3 = RotatedBoxModifierSpec(2);
 
       expect(modifier1, modifier2);
       expect(modifier1.hashCode, modifier2.hashCode);
@@ -36,7 +36,7 @@ void main() {
       'Build method creates RotatedBox widget with correct quarterTurns',
       (WidgetTester tester) async {
         const quarterTurns = 1;
-        const modifier = RotatedBoxDecoratorSpec(quarterTurns);
+        const modifier = RotatedBoxModifierSpec(quarterTurns);
 
         await tester.pumpMaterialApp(modifier.build(Container()));
 
@@ -50,30 +50,30 @@ void main() {
     );
   });
 
-  group('RotateDecoratorAttribute', () {
+  group('RotateModifierAttribute', () {
     test('merge', () {
-      const modifier = RotatedBoxDecoratorAttribute(1);
-      const other = RotatedBoxDecoratorAttribute(1);
+      const modifier = RotatedBoxModifierAttribute(1);
+      const other = RotatedBoxModifierAttribute(1);
       final result = modifier.merge(other);
       expect(result, modifier);
     });
 
     test('resolve', () {
-      const modifier = RotatedBoxDecoratorAttribute(1);
+      const modifier = RotatedBoxModifierAttribute(1);
       final result = modifier.resolve(EmptyMixData);
-      expect(result, isA<RotatedBoxDecoratorSpec>());
+      expect(result, isA<RotatedBoxModifierSpec>());
     });
 
     test('equality', () {
-      const modifier = RotatedBoxDecoratorAttribute(1);
-      const other = RotatedBoxDecoratorAttribute(1);
+      const modifier = RotatedBoxModifierAttribute(1);
+      const other = RotatedBoxModifierAttribute(1);
       expect(modifier, other);
     });
 
     // inequality
     test('inequality', () {
-      const modifier = RotatedBoxDecoratorAttribute(1);
-      const other = RotatedBoxDecoratorAttribute(2);
+      const modifier = RotatedBoxModifierAttribute(1);
+      const other = RotatedBoxModifierAttribute(2);
       expect(modifier, isNot(other));
     });
   });

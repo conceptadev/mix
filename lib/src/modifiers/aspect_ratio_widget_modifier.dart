@@ -12,42 +12,42 @@ import '../factory/mix_provider_data.dart';
 /// A modifier that wraps a widget with the [AspectRatio] widget.
 ///
 /// The [AspectRatio] widget sizes its child to match a given aspect ratio.
-class AspectRatioDecoratorAttribute extends DecoratorAttribute<
-    AspectRatioDecoratorAttribute, AspectRatioDecoratorSpec> {
+class AspectRatioModifierAttribute extends ModifierAttribute<
+    AspectRatioModifierAttribute, AspectRatioModifierSpec> {
   /// The aspect ratio to use when sizing the child.
   ///
   /// For example, a 16:9 aspect ratio would have a value of 16.0 / 9.0.
   final double aspectRatio;
-  const AspectRatioDecoratorAttribute(this.aspectRatio);
+  const AspectRatioModifierAttribute(this.aspectRatio);
 
   @override
-  AspectRatioDecoratorAttribute merge(AspectRatioDecoratorAttribute? other) {
-    return AspectRatioDecoratorAttribute(other?.aspectRatio ?? aspectRatio);
+  AspectRatioModifierAttribute merge(AspectRatioModifierAttribute? other) {
+    return AspectRatioModifierAttribute(other?.aspectRatio ?? aspectRatio);
   }
 
   @override
-  AspectRatioDecoratorSpec resolve(MixData mix) {
-    return AspectRatioDecoratorSpec(aspectRatio);
+  AspectRatioModifierSpec resolve(MixData mix) {
+    return AspectRatioModifierSpec(aspectRatio);
   }
 
   @override
   get props => [aspectRatio];
 }
 
-class AspectRatioDecoratorSpec extends DecoratorSpec<AspectRatioDecoratorSpec> {
+class AspectRatioModifierSpec extends ModifierSpec<AspectRatioModifierSpec> {
   final double aspectRatio;
-  const AspectRatioDecoratorSpec(this.aspectRatio);
+  const AspectRatioModifierSpec(this.aspectRatio);
 
   @override
-  AspectRatioDecoratorSpec lerp(AspectRatioDecoratorSpec? other, double t) {
-    return AspectRatioDecoratorSpec(
+  AspectRatioModifierSpec lerp(AspectRatioModifierSpec? other, double t) {
+    return AspectRatioModifierSpec(
       lerpDouble(aspectRatio, other?.aspectRatio, t) ?? aspectRatio,
     );
   }
 
   @override
-  AspectRatioDecoratorSpec copyWith({double? aspectRatio}) {
-    return AspectRatioDecoratorSpec(aspectRatio ?? this.aspectRatio);
+  AspectRatioModifierSpec copyWith({double? aspectRatio}) {
+    return AspectRatioModifierSpec(aspectRatio ?? this.aspectRatio);
   }
 
   @override
@@ -60,9 +60,9 @@ class AspectRatioDecoratorSpec extends DecoratorSpec<AspectRatioDecoratorSpec> {
 }
 
 class AspectRatioUtility<T extends Attribute>
-    extends MixUtility<T, AspectRatioDecoratorAttribute> {
+    extends MixUtility<T, AspectRatioModifierAttribute> {
   const AspectRatioUtility(super.builder);
   T call(double value) {
-    return builder(AspectRatioDecoratorAttribute(value));
+    return builder(AspectRatioModifierAttribute(value));
   }
 }

@@ -28,18 +28,18 @@ Transform.scale(
 
 ### Creating a modifier
 
-We can achieve the same effect by creating a custom `**WidgetDecorator**`.
+We can achieve the same effect by creating a custom `**WidgetModifier**`.
 
-Creating a modifier is like creating a `**StatelessWidget**`. Extend `**WidgetDecorator**`. Define the properties you want to modify and the widget you want to decorate.
+Creating a modifier is like creating a `**StatelessWidget**`. Extend `**WidgetModifier**`. Define the properties you want to modify and the widget you want to decorate.
 
 ```dart {2, 15-19}
-class ScaleDecorator extends WidgetDecorator<ScaleDecorator> {
+class ScaleModifier extends WidgetModifier<ScaleModifier> {
   final double scale;
-  const ScaleDecorator(this.scale, {super.key});
+  const ScaleModifier(this.scale, {super.key});
 
   @override
-  ScaleDecorator lerp(ScaleDecorator? other, double t) {
-    return ScaleDecorator(lerpDouble(scale, other?.scale, t) ?? scale);
+  ScaleModifier lerp(ScaleModifier? other, double t) {
+    return ScaleModifier(lerpDouble(scale, other?.scale, t) ?? scale);
   }
 
   @override
@@ -64,7 +64,7 @@ You can then create an extension of the
 To simplify modifier usage, you can design a utility function that automatically creates the modifier for you.
 
 ```dart
-ScaleDecorator scale(double scale, {Key? key}) => ScaleDecorator(scale, key: key);
+ScaleModifier scale(double scale, {Key? key}) => ScaleModifier(scale, key: key);
 ```
 
 ### Using a modifier
@@ -84,7 +84,7 @@ Box(
 
 Mix comes with a set of built-in modifiers that can be used out of the box.
 
-### Scale Decorator
+### Scale Modifier
 
 Decorates a `Box` with a `Transform.scale` widget
 

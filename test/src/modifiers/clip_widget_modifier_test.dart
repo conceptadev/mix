@@ -5,7 +5,7 @@ import 'package:mix/mix.dart';
 import '../../helpers/testing_utils.dart';
 
 void main() {
-  group('ClipPathDecoratorSpec', () {
+  group('ClipPathModifierSpec', () {
     const clipper = _PathClipper();
     const clipper2 = _OtherPathClipper();
 
@@ -13,15 +13,15 @@ void main() {
 
     test('Constructor assigns clipper correctly', () {
       const modifier =
-          ClipPathDecoratorSpec(clipBehavior: clipBehavior, clipper: clipper);
+          ClipPathModifierSpec(clipBehavior: clipBehavior, clipper: clipper);
 
       expect(modifier.clipper, clipper);
       expect(modifier.clipBehavior, clipBehavior);
     });
 
     test('Lerp method interpolates correctly', () {
-      const start = ClipPathDecoratorSpec(clipper: clipper);
-      const end = ClipPathDecoratorSpec(clipper: clipper2);
+      const start = ClipPathModifierSpec(clipper: clipper);
+      const end = ClipPathModifierSpec(clipper: clipper2);
       final result = start.lerp(end, 0.5);
 
       expect(result.clipper, clipper2);
@@ -29,11 +29,11 @@ void main() {
 
     test('Equality and hashcode test', () {
       const spec1 =
-          ClipPathDecoratorSpec(clipBehavior: clipBehavior, clipper: clipper);
+          ClipPathModifierSpec(clipBehavior: clipBehavior, clipper: clipper);
       const spec2 =
-          ClipPathDecoratorSpec(clipBehavior: clipBehavior, clipper: clipper);
+          ClipPathModifierSpec(clipBehavior: clipBehavior, clipper: clipper);
       const spec3 =
-          ClipPathDecoratorSpec(clipBehavior: clipBehavior, clipper: clipper2);
+          ClipPathModifierSpec(clipBehavior: clipBehavior, clipper: clipper2);
 
       expect(spec1, spec2);
       expect(spec1.hashCode, spec2.hashCode);
@@ -44,7 +44,7 @@ void main() {
     testWidgets(
       'Build method creates ClipPath widget with correct clipper',
       (WidgetTester tester) async {
-        const modifier = ClipPathDecoratorSpec(clipper: clipper);
+        const modifier = ClipPathModifierSpec(clipper: clipper);
 
         await tester.pumpMaterialApp(modifier.build(Container()));
 
@@ -58,33 +58,33 @@ void main() {
     );
   });
 
-  // ClipPathDecoratorAttribute
-  group('ClipPathDecoratorAttribute', () {
+  // ClipPathModifierAttribute
+  group('ClipPathModifierAttribute', () {
     const clipper = _PathClipper();
     const clipper2 = _OtherPathClipper();
     const clipBehavior = Clip.antiAlias;
     const clipBehavior2 = Clip.antiAliasWithSaveLayer;
 
     test('merge', () {
-      const modifier = ClipPathDecoratorAttribute(
+      const modifier = ClipPathModifierAttribute(
           clipper: clipper, clipBehavior: clipBehavior);
-      const other = ClipPathDecoratorAttribute(
+      const other = ClipPathModifierAttribute(
           clipper: clipper2, clipBehavior: clipBehavior2);
       final result = modifier.merge(other);
       expect(result, other);
     });
 
     test('resolve', () {
-      const modifier = ClipPathDecoratorAttribute(
+      const modifier = ClipPathModifierAttribute(
           clipper: clipper, clipBehavior: clipBehavior);
       final result = modifier.resolve(EmptyMixData);
-      expect(result, isA<ClipPathDecoratorSpec>());
+      expect(result, isA<ClipPathModifierSpec>());
       expect(result.clipper, clipper);
       expect(result.clipBehavior, clipBehavior);
     });
   });
 
-  group('ClipRRectDecoratorSpec', () {
+  group('ClipRRectModifierSpec', () {
     final borderRadius = BorderRadius.circular(10.0);
     final borderRadius2 = BorderRadius.circular(20.0);
     const clipper = _RRectClipper();
@@ -93,7 +93,7 @@ void main() {
     const clipBehavior2 = Clip.antiAliasWithSaveLayer;
 
     test('Constructor assigns borderRadius correctly', () {
-      final modifier = ClipRRectDecoratorSpec(
+      final modifier = ClipRRectModifierSpec(
         borderRadius: borderRadius,
         clipBehavior: clipBehavior,
         clipper: clipper,
@@ -105,12 +105,12 @@ void main() {
     });
 
     test('Lerp method interpolates correctly', () {
-      final start = ClipRRectDecoratorSpec(
+      final start = ClipRRectModifierSpec(
         borderRadius: borderRadius,
         clipBehavior: clipBehavior,
         clipper: clipper,
       );
-      final end = ClipRRectDecoratorSpec(
+      final end = ClipRRectModifierSpec(
         borderRadius: borderRadius2,
         clipBehavior: clipBehavior2,
         clipper: clipper2,
@@ -123,17 +123,17 @@ void main() {
     });
 
     test('Equality and hashcode test', () {
-      final modifier1 = ClipRRectDecoratorSpec(
+      final modifier1 = ClipRRectModifierSpec(
         borderRadius: borderRadius,
         clipBehavior: clipBehavior,
         clipper: clipper,
       );
-      final modifier2 = ClipRRectDecoratorSpec(
+      final modifier2 = ClipRRectModifierSpec(
         borderRadius: borderRadius,
         clipBehavior: clipBehavior,
         clipper: clipper,
       );
-      final modifier3 = ClipRRectDecoratorSpec(
+      final modifier3 = ClipRRectModifierSpec(
         borderRadius: borderRadius2,
         clipBehavior: clipBehavior2,
         clipper: clipper2,
@@ -146,8 +146,8 @@ void main() {
     });
   });
 
-  // ClipRRectDecoratorAttribute
-  group('ClipRRectDecoratorAttribute', () {
+  // ClipRRectModifierAttribute
+  group('ClipRRectModifierAttribute', () {
     final borderRadius = BorderRadius.circular(10.0);
     final borderRadius2 = BorderRadius.circular(20.0);
     const clipper = _RRectClipper();
@@ -156,12 +156,12 @@ void main() {
     const clipBehavior2 = Clip.antiAliasWithSaveLayer;
 
     test('merge', () {
-      final modifier = ClipRRectDecoratorAttribute(
+      final modifier = ClipRRectModifierAttribute(
         borderRadius: borderRadius,
         clipper: clipper,
         clipBehavior: clipBehavior,
       );
-      final other = ClipRRectDecoratorAttribute(
+      final other = ClipRRectModifierAttribute(
         borderRadius: borderRadius2,
         clipper: clipper2,
         clipBehavior: clipBehavior2,
@@ -171,28 +171,28 @@ void main() {
     });
 
     test('resolve', () {
-      final modifier = ClipRRectDecoratorAttribute(
+      final modifier = ClipRRectModifierAttribute(
         borderRadius: borderRadius,
         clipper: clipper,
         clipBehavior: clipBehavior,
       );
       final result = modifier.resolve(EmptyMixData);
-      expect(result, isA<ClipRRectDecoratorSpec>());
+      expect(result, isA<ClipRRectModifierSpec>());
       expect(result.borderRadius, borderRadius);
       expect(result.clipBehavior, clipBehavior);
       expect(result.clipper, clipper);
     });
   });
 
-  // ClipOvalDecoratorSpec
-  group('ClipOvalDecoratorSpec', () {
+  // ClipOvalModifierSpec
+  group('ClipOvalModifierSpec', () {
     const clipBehavior = Clip.antiAlias;
     const clipBehavior2 = Clip.antiAliasWithSaveLayer;
     const clipper = _RectClipper();
     const clipper2 = _OtherRectClipper();
 
     test('Constructor assigns clipper correctly', () {
-      const modifier = ClipOvalDecoratorSpec(
+      const modifier = ClipOvalModifierSpec(
         clipBehavior: clipBehavior,
         clipper: clipper,
       );
@@ -203,9 +203,9 @@ void main() {
 
     test('Lerp method interpolates correctly', () {
       const start =
-          ClipOvalDecoratorSpec(clipBehavior: clipBehavior, clipper: clipper);
+          ClipOvalModifierSpec(clipBehavior: clipBehavior, clipper: clipper);
       const end =
-          ClipOvalDecoratorSpec(clipBehavior: clipBehavior2, clipper: clipper2);
+          ClipOvalModifierSpec(clipBehavior: clipBehavior2, clipper: clipper2);
       final result = start.lerp(end, 0.5);
 
       expect(result.clipper, clipper2);
@@ -214,11 +214,11 @@ void main() {
 
     test('Equality and hashcode test', () {
       const modifier1 =
-          ClipOvalDecoratorSpec(clipBehavior: clipBehavior, clipper: clipper);
+          ClipOvalModifierSpec(clipBehavior: clipBehavior, clipper: clipper);
       const modifier2 =
-          ClipOvalDecoratorSpec(clipBehavior: clipBehavior, clipper: clipper);
+          ClipOvalModifierSpec(clipBehavior: clipBehavior, clipper: clipper);
       const modifier3 =
-          ClipOvalDecoratorSpec(clipBehavior: clipBehavior2, clipper: clipper2);
+          ClipOvalModifierSpec(clipBehavior: clipBehavior2, clipper: clipper2);
 
       expect(modifier1, modifier2);
       expect(modifier1.hashCode, modifier2.hashCode);
@@ -229,7 +229,7 @@ void main() {
     testWidgets(
       'Build method creates ClipOval widget with correct clipper',
       (WidgetTester tester) async {
-        const modifier = ClipOvalDecoratorSpec(clipper: clipper);
+        const modifier = ClipOvalModifierSpec(clipper: clipper);
 
         await tester.pumpMaterialApp(modifier.build(Container()));
 
@@ -243,19 +243,19 @@ void main() {
     );
   });
 
-  // ClipOvalDecoratorAttribute
-  group('ClipOvalDecoratorAttribute', () {
+  // ClipOvalModifierAttribute
+  group('ClipOvalModifierAttribute', () {
     const clipBehavior = Clip.antiAlias;
     const clipBehavior2 = Clip.antiAliasWithSaveLayer;
     const clipper = _RectClipper();
     const clipper2 = _OtherRectClipper();
 
     test('merge', () {
-      const modifier = ClipOvalDecoratorAttribute(
+      const modifier = ClipOvalModifierAttribute(
         clipper: clipper,
         clipBehavior: clipBehavior,
       );
-      const other = ClipOvalDecoratorAttribute(
+      const other = ClipOvalModifierAttribute(
         clipper: clipper2,
         clipBehavior: clipBehavior2,
       );
@@ -264,26 +264,26 @@ void main() {
     });
 
     test('resolve', () {
-      const modifier = ClipOvalDecoratorAttribute(
+      const modifier = ClipOvalModifierAttribute(
         clipper: clipper,
         clipBehavior: clipBehavior,
       );
       final result = modifier.resolve(EmptyMixData);
-      expect(result, isA<ClipOvalDecoratorSpec>());
+      expect(result, isA<ClipOvalModifierSpec>());
       expect(result.clipper, clipper);
       expect(result.clipBehavior, clipBehavior);
     });
   });
 
-  // ClipRectDecoratorSpec
-  group('ClipRectDecoratorSpec', () {
+  // ClipRectModifierSpec
+  group('ClipRectModifierSpec', () {
     const clipBehavior = Clip.hardEdge;
     const clipBehavior2 = Clip.antiAliasWithSaveLayer;
     const clipper = _RectClipper();
     const clipper2 = _OtherRectClipper();
 
     test('Constructor assigns clipper correctly', () {
-      const modifier = ClipRectDecoratorSpec(
+      const modifier = ClipRectModifierSpec(
         clipBehavior: clipBehavior,
         clipper: clipper,
       );
@@ -294,9 +294,9 @@ void main() {
 
     test('Lerp method interpolates correctly', () {
       const start =
-          ClipRectDecoratorSpec(clipBehavior: clipBehavior, clipper: clipper);
+          ClipRectModifierSpec(clipBehavior: clipBehavior, clipper: clipper);
       const end =
-          ClipRectDecoratorSpec(clipBehavior: clipBehavior2, clipper: clipper2);
+          ClipRectModifierSpec(clipBehavior: clipBehavior2, clipper: clipper2);
       final result = start.lerp(end, 0.5);
 
       expect(result.clipper, clipper2);
@@ -305,11 +305,11 @@ void main() {
 
     test('Equality and hashcode test', () {
       const modifier1 =
-          ClipRectDecoratorSpec(clipBehavior: clipBehavior, clipper: clipper);
+          ClipRectModifierSpec(clipBehavior: clipBehavior, clipper: clipper);
       const modifier2 =
-          ClipRectDecoratorSpec(clipBehavior: clipBehavior, clipper: clipper);
+          ClipRectModifierSpec(clipBehavior: clipBehavior, clipper: clipper);
       const modifier3 =
-          ClipRectDecoratorSpec(clipBehavior: clipBehavior2, clipper: clipper2);
+          ClipRectModifierSpec(clipBehavior: clipBehavior2, clipper: clipper2);
 
       expect(modifier1, modifier2);
       expect(modifier1.hashCode, modifier2.hashCode);
@@ -320,7 +320,7 @@ void main() {
     testWidgets(
       'Build method creates ClipRect widget with correct clipper',
       (WidgetTester tester) async {
-        const modifier = ClipRectDecoratorSpec(clipper: clipper);
+        const modifier = ClipRectModifierSpec(clipper: clipper);
 
         await tester.pumpMaterialApp(modifier.build(Container()));
 
@@ -334,19 +334,19 @@ void main() {
     );
   });
 
-  // ClipRectDecoratorAttribute
-  group('ClipRectDecoratorAttribute', () {
+  // ClipRectModifierAttribute
+  group('ClipRectModifierAttribute', () {
     const clipBehavior = Clip.hardEdge;
     const clipBehavior2 = Clip.antiAliasWithSaveLayer;
     const clipper = _RectClipper();
     const clipper2 = _OtherRectClipper();
 
     test('merge', () {
-      const modifier = ClipRectDecoratorAttribute(
+      const modifier = ClipRectModifierAttribute(
         clipper: clipper,
         clipBehavior: clipBehavior,
       );
-      const other = ClipRectDecoratorAttribute(
+      const other = ClipRectModifierAttribute(
         clipper: clipper2,
         clipBehavior: clipBehavior2,
       );
@@ -355,40 +355,40 @@ void main() {
     });
 
     test('resolve', () {
-      const modifier = ClipRectDecoratorAttribute(
+      const modifier = ClipRectModifierAttribute(
         clipper: clipper,
         clipBehavior: clipBehavior,
       );
       final result = modifier.resolve(EmptyMixData);
-      expect(result, isA<ClipRectDecoratorSpec>());
+      expect(result, isA<ClipRectModifierSpec>());
       expect(result.clipper, clipper);
       expect(result.clipBehavior, clipBehavior);
     });
   });
 
-  // ClipTriangleDecoratorSpec
-  group('ClipTriangleDecoratorSpec', () {
+  // ClipTriangleModifierSpec
+  group('ClipTriangleModifierSpec', () {
     const clipBehavior = Clip.antiAlias;
     const clipBehavior2 = Clip.antiAliasWithSaveLayer;
 
     test('Constructor assigns clipper correctly', () {
-      const modifier = ClipTriangleDecoratorSpec(clipBehavior: clipBehavior);
+      const modifier = ClipTriangleModifierSpec(clipBehavior: clipBehavior);
 
       expect(modifier.clipBehavior, clipBehavior);
     });
 
     test('Lerp method interpolates correctly', () {
-      const start = ClipTriangleDecoratorSpec(clipBehavior: clipBehavior);
-      const end = ClipTriangleDecoratorSpec(clipBehavior: clipBehavior2);
+      const start = ClipTriangleModifierSpec(clipBehavior: clipBehavior);
+      const end = ClipTriangleModifierSpec(clipBehavior: clipBehavior2);
       final result = start.lerp(end, 0.5);
 
       expect(result.clipBehavior, clipBehavior2);
     });
 
     test('Equality and hashcode test', () {
-      const modifier1 = ClipTriangleDecoratorSpec(clipBehavior: clipBehavior);
-      const modifier2 = ClipTriangleDecoratorSpec(clipBehavior: clipBehavior);
-      const modifier3 = ClipTriangleDecoratorSpec(clipBehavior: clipBehavior2);
+      const modifier1 = ClipTriangleModifierSpec(clipBehavior: clipBehavior);
+      const modifier2 = ClipTriangleModifierSpec(clipBehavior: clipBehavior);
+      const modifier3 = ClipTriangleModifierSpec(clipBehavior: clipBehavior2);
 
       expect(modifier1, modifier2);
       expect(modifier1.hashCode, modifier2.hashCode);
@@ -399,7 +399,7 @@ void main() {
     testWidgets(
       'Build method creates ClipPath widget with correct clipper',
       (WidgetTester tester) async {
-        const modifier = ClipTriangleDecoratorSpec(clipBehavior: clipBehavior);
+        const modifier = ClipTriangleModifierSpec(clipBehavior: clipBehavior);
 
         await tester.pumpMaterialApp(modifier.build(Container()));
 
@@ -413,24 +413,24 @@ void main() {
     );
   });
 
-  // ClipTriangleDecoratorAttribute
-  group('ClipTriangleDecoratorAttribute', () {
+  // ClipTriangleModifierAttribute
+  group('ClipTriangleModifierAttribute', () {
     const clipBehavior = Clip.antiAlias;
     const clipBehavior2 = Clip.antiAliasWithSaveLayer;
 
     test('merge', () {
       const modifier =
-          ClipTriangleDecoratorAttribute(clipBehavior: clipBehavior);
-      const other = ClipTriangleDecoratorAttribute(clipBehavior: clipBehavior2);
+          ClipTriangleModifierAttribute(clipBehavior: clipBehavior);
+      const other = ClipTriangleModifierAttribute(clipBehavior: clipBehavior2);
       final result = modifier.merge(other);
       expect(result, other);
     });
 
     test('resolve', () {
       const modifier =
-          ClipTriangleDecoratorAttribute(clipBehavior: clipBehavior);
+          ClipTriangleModifierAttribute(clipBehavior: clipBehavior);
       final result = modifier.resolve(EmptyMixData);
-      expect(result, isA<ClipTriangleDecoratorSpec>());
+      expect(result, isA<ClipTriangleModifierSpec>());
       expect(result.clipBehavior, clipBehavior);
     });
   });

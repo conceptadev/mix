@@ -5,12 +5,12 @@ import 'package:mix/src/modifiers/fractionally_sized_box_widget_modifier.dart';
 import '../../helpers/testing_utils.dart';
 
 void main() {
-  // FractionallySizedBoxDecoratorSpec
-  group('FractionallySizedBoxDecoratorSpec', () {
+  // FractionallySizedBoxModifierSpec
+  group('FractionallySizedBoxModifierSpec', () {
     test('Constructor assigns widthFactor and heightFactor correctly', () {
       const widthFactor = 0.5;
       const heightFactor = 0.5;
-      const modifier = FractionallySizedBoxDecoratorSpec(
+      const modifier = FractionallySizedBoxModifierSpec(
         widthFactor: widthFactor,
         heightFactor: heightFactor,
       );
@@ -20,11 +20,11 @@ void main() {
     });
 
     test('Lerp method interpolates correctly', () {
-      const start = FractionallySizedBoxDecoratorSpec(
+      const start = FractionallySizedBoxModifierSpec(
         widthFactor: 0.5,
         heightFactor: 0.5,
       );
-      const end = FractionallySizedBoxDecoratorSpec(
+      const end = FractionallySizedBoxModifierSpec(
         widthFactor: 1.0,
         heightFactor: 1.0,
       );
@@ -35,15 +35,15 @@ void main() {
     });
 
     test('Equality and hashcode test', () {
-      const modifier1 = FractionallySizedBoxDecoratorSpec(
+      const modifier1 = FractionallySizedBoxModifierSpec(
         widthFactor: 0.5,
         heightFactor: 0.5,
       );
-      const modifier2 = FractionallySizedBoxDecoratorSpec(
+      const modifier2 = FractionallySizedBoxModifierSpec(
         widthFactor: 0.5,
         heightFactor: 0.5,
       );
-      const modifier3 = FractionallySizedBoxDecoratorSpec(
+      const modifier3 = FractionallySizedBoxModifierSpec(
         widthFactor: 0.5,
         heightFactor: 0.6,
       );
@@ -59,7 +59,7 @@ void main() {
       (WidgetTester tester) async {
         const widthFactor = 0.5;
         const heightFactor = 0.5;
-        const modifier = FractionallySizedBoxDecoratorSpec(
+        const modifier = FractionallySizedBoxModifierSpec(
           widthFactor: widthFactor,
           heightFactor: heightFactor,
         );
@@ -79,14 +79,14 @@ void main() {
     );
   });
 
-  // FractionallySizedBoxDecoratorAttribute
-  group('FractionallySizedBoxDecoratorAttribute', () {
+  // FractionallySizedBoxModifierAttribute
+  group('FractionallySizedBoxModifierAttribute', () {
     test('merge', () {
-      const modifier = FractionallySizedBoxDecoratorAttribute(
+      const modifier = FractionallySizedBoxModifierAttribute(
         widthFactor: 0.5,
         heightFactor: 0.5,
       );
-      const other = FractionallySizedBoxDecoratorAttribute(
+      const other = FractionallySizedBoxModifierAttribute(
         widthFactor: 0.5,
         heightFactor: 0.5,
       );
@@ -95,20 +95,20 @@ void main() {
     });
 
     test('resolve', () {
-      const modifier = FractionallySizedBoxDecoratorAttribute(
+      const modifier = FractionallySizedBoxModifierAttribute(
         widthFactor: 0.5,
         heightFactor: 0.5,
       );
       final result = modifier.resolve(EmptyMixData);
-      expect(result, isA<FractionallySizedBoxDecoratorSpec>());
+      expect(result, isA<FractionallySizedBoxModifierSpec>());
     });
 
     test('equality', () {
-      const modifier = FractionallySizedBoxDecoratorAttribute(
+      const modifier = FractionallySizedBoxModifierAttribute(
         widthFactor: 0.5,
         heightFactor: 0.5,
       );
-      const other = FractionallySizedBoxDecoratorAttribute(
+      const other = FractionallySizedBoxModifierAttribute(
         widthFactor: 0.5,
         heightFactor: 0.5,
       );
@@ -116,11 +116,11 @@ void main() {
     });
 
     test('inequality', () {
-      const modifier = FractionallySizedBoxDecoratorAttribute(
+      const modifier = FractionallySizedBoxModifierAttribute(
         widthFactor: 0.5,
         heightFactor: 0.5,
       );
-      const other = FractionallySizedBoxDecoratorAttribute(
+      const other = FractionallySizedBoxModifierAttribute(
         widthFactor: 0.5,
         heightFactor: 0.6,
       );

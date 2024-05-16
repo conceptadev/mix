@@ -71,22 +71,22 @@ void main() {
       expect(paddingWidget.padding, equals(padding));
     });
   });
-  group('PaddingDecoratorAttribute', () {
-    test('merge returns correct PaddingDecoratorAttribute', () {
+  group('PaddingModifierAttribute', () {
+    test('merge returns correct PaddingModifierAttribute', () {
       const padding1 = SpacingDto.all(10.0);
       const padding2 = SpacingDto.all(20.0);
-      const attribute1 = PaddingDecoratorAttribute(padding1);
-      const attribute2 = PaddingDecoratorAttribute(padding2);
+      const attribute1 = PaddingModifierAttribute(padding1);
+      const attribute2 = PaddingModifierAttribute(padding2);
 
       final result = attribute1.merge(attribute2);
 
       expect(result.padding, equals(padding2));
     });
 
-    test('merge returns original PaddingDecoratorAttribute when other is null',
+    test('merge returns original PaddingModifierAttribute when other is null',
         () {
       const padding = SpacingDto.all(10.0);
-      const attribute = PaddingDecoratorAttribute(padding);
+      const attribute = PaddingModifierAttribute(padding);
 
       final result = attribute.merge(null);
 
@@ -95,7 +95,7 @@ void main() {
 
     test('resolve returns correct PaddingSpec', () {
       const padding = SpacingDto.all(10.0);
-      const attribute = PaddingDecoratorAttribute(padding);
+      const attribute = PaddingModifierAttribute(padding);
       final mixData = EmptyMixData;
 
       final result = attribute.resolve(mixData);
@@ -105,7 +105,7 @@ void main() {
 
     test('props returns list with padding', () {
       const padding = SpacingDto.all(10.0);
-      const attribute = PaddingDecoratorAttribute(padding);
+      const attribute = PaddingModifierAttribute(padding);
 
       expect(attribute.props, equals([padding]));
     });

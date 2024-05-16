@@ -7,15 +7,15 @@ import '../../helpers/testing_utils.dart';
 void main() {
   // clipPath, clipRRect, clipOval, clipRect, clipTriangle
 
-  // FractionallySizedBoxDecoratorSpec
-  group('FractionallySizedBoxDecoratorSpec Tests', () {
+  // FractionallySizedBoxModifierSpec
+  group('FractionallySizedBoxModifierSpec Tests', () {
     const widthFactor = 0.5;
     const heightFactor = 0.5;
     const widthFactor2 = 0.8;
     const heightFactor2 = 0.8;
 
     test('Constructor assigns widthFactor and heightFactor correctly', () {
-      const modifier = FractionallySizedBoxDecoratorSpec(
+      const modifier = FractionallySizedBoxModifierSpec(
         widthFactor: widthFactor,
         heightFactor: heightFactor,
       );
@@ -25,11 +25,11 @@ void main() {
     });
 
     test('Lerp method interpolates correctly', () {
-      const start = FractionallySizedBoxDecoratorSpec(
+      const start = FractionallySizedBoxModifierSpec(
         widthFactor: widthFactor,
         heightFactor: heightFactor,
       );
-      const end = FractionallySizedBoxDecoratorSpec(
+      const end = FractionallySizedBoxModifierSpec(
         widthFactor: widthFactor2,
         heightFactor: heightFactor2,
       );
@@ -40,15 +40,15 @@ void main() {
     });
 
     test('Equality and hashcode test', () {
-      const modifier1 = FractionallySizedBoxDecoratorSpec(
+      const modifier1 = FractionallySizedBoxModifierSpec(
         widthFactor: widthFactor,
         heightFactor: heightFactor,
       );
-      const modifier2 = FractionallySizedBoxDecoratorSpec(
+      const modifier2 = FractionallySizedBoxModifierSpec(
         widthFactor: widthFactor,
         heightFactor: heightFactor,
       );
-      const modifier3 = FractionallySizedBoxDecoratorSpec(
+      const modifier3 = FractionallySizedBoxModifierSpec(
         widthFactor: widthFactor2,
         heightFactor: heightFactor2,
       );
@@ -62,7 +62,7 @@ void main() {
     testWidgets(
       'Build method creates FractionallySizedBox widget with correct factors',
       (WidgetTester tester) async {
-        const modifier = FractionallySizedBoxDecoratorSpec(
+        const modifier = FractionallySizedBoxModifierSpec(
           widthFactor: widthFactor,
           heightFactor: heightFactor,
         );
@@ -81,23 +81,23 @@ void main() {
     );
   });
 
-  // SizedBoxDecoratorSpec
-  group('SizedBoxDecoratorSpec Tests', () {
+  // SizedBoxModifierSpec
+  group('SizedBoxModifierSpec Tests', () {
     const width = 100.0;
     const height = 100.0;
     const width2 = 200.0;
     const height2 = 200.0;
 
     test('Constructor assigns width and height correctly', () {
-      const modifier = SizedBoxDecoratorSpec(width: width, height: height);
+      const modifier = SizedBoxModifierSpec(width: width, height: height);
 
       expect(modifier.width, width);
       expect(modifier.height, height);
     });
 
     test('Lerp method interpolates correctly', () {
-      const start = SizedBoxDecoratorSpec(width: width, height: height);
-      const end = SizedBoxDecoratorSpec(width: width2, height: height2);
+      const start = SizedBoxModifierSpec(width: width, height: height);
+      const end = SizedBoxModifierSpec(width: width2, height: height2);
       final result = start.lerp(end, 0.5);
 
       expect(result.width, 150.0);
@@ -105,9 +105,9 @@ void main() {
     });
 
     test('Equality and hashcode test', () {
-      const modifier1 = SizedBoxDecoratorSpec(width: width, height: height);
-      const modifier2 = SizedBoxDecoratorSpec(width: width, height: height);
-      const modifier3 = SizedBoxDecoratorSpec(width: width2, height: height2);
+      const modifier1 = SizedBoxModifierSpec(width: width, height: height);
+      const modifier2 = SizedBoxModifierSpec(width: width, height: height);
+      const modifier3 = SizedBoxModifierSpec(width: width2, height: height2);
 
       expect(modifier1, modifier2);
       expect(modifier1.hashCode, modifier2.hashCode);
@@ -118,7 +118,7 @@ void main() {
     testWidgets(
       'Build method creates SizedBox widget with correct width and height',
       (WidgetTester tester) async {
-        const modifier = SizedBoxDecoratorSpec(width: width, height: height);
+        const modifier = SizedBoxModifierSpec(width: width, height: height);
 
         await tester.pumpMaterialApp(modifier.build(Container()));
 
@@ -132,20 +132,20 @@ void main() {
     );
   });
 
-  //  TransformDecoratorSpec
-  group('TransformDecoratorSpec Tests', () {
+  //  TransformModifierSpec
+  group('TransformModifierSpec Tests', () {
     final transform = Matrix4.identity();
     final transform2 = Matrix4.rotationZ(0.5);
 
     test('Constructor assigns transform correctly', () {
-      final modifier = TransformDecoratorSpec(transform: transform);
+      final modifier = TransformModifierSpec(transform: transform);
 
       expect(modifier.transform, transform);
     });
 
     test('Lerp method interpolates correctly', () {
-      final start = TransformDecoratorSpec(transform: transform);
-      final end = TransformDecoratorSpec(transform: transform2);
+      final start = TransformModifierSpec(transform: transform);
+      final end = TransformModifierSpec(transform: transform2);
       final result = start.lerp(end, 0.5);
 
       expect(
@@ -155,9 +155,9 @@ void main() {
     });
 
     test('Equality and hashcode test', () {
-      final modifier1 = TransformDecoratorSpec(transform: transform);
-      final modifier2 = TransformDecoratorSpec(transform: transform);
-      final modifier3 = TransformDecoratorSpec(transform: transform2);
+      final modifier1 = TransformModifierSpec(transform: transform);
+      final modifier2 = TransformModifierSpec(transform: transform);
+      final modifier3 = TransformModifierSpec(transform: transform2);
 
       expect(modifier1, modifier2);
       expect(modifier1.hashCode, modifier2.hashCode);
@@ -168,7 +168,7 @@ void main() {
     testWidgets(
       'Build method creates Transform widget with correct transform',
       (WidgetTester tester) async {
-        final modifier = TransformDecoratorSpec(transform: transform);
+        final modifier = TransformModifierSpec(transform: transform);
 
         await tester.pumpMaterialApp(modifier.build(Container()));
 

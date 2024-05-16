@@ -79,13 +79,13 @@ class SpreadFunctionParams<ParamT, ReturnT> {
 }
 
 /// Conditionally applies modifiers to [child] based on the presence of
-/// [DecoratorAttribute] in [mix].
+/// [ModifierAttribute] in [mix].
 ///
-/// If [mix] contains [DecoratorAttribute], this returns [child] wrapped in a
+/// If [mix] contains [ModifierAttribute], this returns [child] wrapped in a
 /// [RenderModifiers] widget. The order of modifiers is determined by
 /// [orderOfModifiers].
 ///
-/// If [mix] does not contain [DecoratorAttribute], this returns [child]
+/// If [mix] does not contain [ModifierAttribute], this returns [child]
 /// unmodified.
 ///
 /// Example:
@@ -94,7 +94,7 @@ class SpreadFunctionParams<ParamT, ReturnT> {
 /// Widget myWidget = shouldApplyModifiers(
 ///   mix: myMix,
 ///   child: Text('Hello'),
-///   orderOfModifiers: [BorderDecorator, ShadowDecorator],
+///   orderOfModifiers: [BorderModifier, ShadowModifier],
 /// );
 /// ```
 Widget shouldApplyModifiers({
@@ -102,7 +102,7 @@ Widget shouldApplyModifiers({
   required Widget child,
   List<Type> orderOfModifiers = const [],
 }) {
-  final hasModifiers = mix.contains<DecoratorAttribute>();
+  final hasModifiers = mix.contains<ModifierAttribute>();
 
   if (!hasModifiers) return child;
 

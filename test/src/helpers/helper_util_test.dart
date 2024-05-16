@@ -7,7 +7,7 @@ import '../../helpers/testing_utils.dart';
 
 void main() {
   group('shouldApplyModifiers', () {
-    test('returns child when no DecoratorAttribute is present', () {
+    test('returns child when no ModifierAttribute is present', () {
       final style = Style();
 
       final mix = style.of(MockBuildContext());
@@ -18,7 +18,7 @@ void main() {
       expect(result, equals(child));
     });
 
-    test('returns RenderModifiers when DecoratorAttribute is present', () {
+    test('returns RenderModifiers when ModifierAttribute is present', () {
       final style = Style(
         $with.opacity(0.5),
       );

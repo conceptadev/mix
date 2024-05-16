@@ -8,41 +8,40 @@ import 'package:mix/src/factory/mix_provider_data.dart';
 import '../../helpers/testing_utils.dart';
 
 void main() {
-  group('DecoratorSpec', () {
+  group('ModifierSpec', () {
     test('lerpValue should return null when both begin and end are null', () {
-      expect(DecoratorSpec.lerpValue(null, null, 0.5), isNull);
+      expect(ModifierSpec.lerpValue(null, null, 0.5), isNull);
     });
 
     test(
         'lerpValue should return the result of lerp when begin and end are not null',
         () {
-      const begin = _TestDecoratorSpec(1);
-      const end = _TestDecoratorSpec(2);
+      const begin = _TestModifierSpec(1);
+      const end = _TestModifierSpec(2);
       expect(
-        DecoratorSpec.lerpValue(begin, end, 0.5),
-        isA<_TestDecoratorSpec>(),
+        ModifierSpec.lerpValue(begin, end, 0.5),
+        isA<_TestModifierSpec>(),
       );
       expect(
-        (DecoratorSpec.lerpValue(begin, end, 0.5) as _TestDecoratorSpec?)
-            ?.value,
+        (ModifierSpec.lerpValue(begin, end, 0.5) as _TestModifierSpec?)?.value,
         1.5,
       );
     });
   });
 
-  group('DecoratorAttribute', () {
-    test('resolve should return a DecoratorSpec', () {
-      const attribute = _TestDecoratorAttribute(2);
+  group('ModifierAttribute', () {
+    test('resolve should return a ModifierSpec', () {
+      const attribute = _TestModifierAttribute(2);
 
-      expect(attribute.resolve(EmptyMixData), isA<_TestDecoratorSpec>());
+      expect(attribute.resolve(EmptyMixData), isA<_TestModifierSpec>());
       expect(attribute.resolve(EmptyMixData).value, 2);
     });
   });
 }
 
-class _TestDecoratorSpec extends DecoratorSpec<_TestDecoratorSpec> {
+class _TestModifierSpec extends ModifierSpec<_TestModifierSpec> {
   final double value;
-  const _TestDecoratorSpec(this.value);
+  const _TestModifierSpec(this.value);
 
   @override
   Widget build(Widget child) {
@@ -50,36 +49,36 @@ class _TestDecoratorSpec extends DecoratorSpec<_TestDecoratorSpec> {
   }
 
   @override
-  _TestDecoratorSpec copyWith({double? value}) {
-    return _TestDecoratorSpec(value ?? this.value);
+  _TestModifierSpec copyWith({double? value}) {
+    return _TestModifierSpec(value ?? this.value);
   }
 
   @override
   get props => [];
 
   @override
-  _TestDecoratorSpec lerp(_TestDecoratorSpec? other, double t) {
+  _TestModifierSpec lerp(_TestModifierSpec? other, double t) {
     if (other == null) return this;
 
-    return _TestDecoratorSpec(lerpDouble(value, other.value, t)!);
+    return _TestModifierSpec(lerpDouble(value, other.value, t)!);
   }
 }
 
-class _TestDecoratorAttribute
-    extends DecoratorAttribute<_TestDecoratorAttribute, _TestDecoratorSpec> {
+class _TestModifierAttribute
+    extends ModifierAttribute<_TestModifierAttribute, _TestModifierSpec> {
   final double value;
-  const _TestDecoratorAttribute(this.value);
+  const _TestModifierAttribute(this.value);
 
   @override
-  _TestDecoratorSpec resolve(MixData mix) {
-    return _TestDecoratorSpec(value);
+  _TestModifierSpec resolve(MixData mix) {
+    return _TestModifierSpec(value);
   }
 
   @override
   get props => [];
 
   @override
-  _TestDecoratorAttribute merge(_TestDecoratorAttribute? other) {
-    return _TestDecoratorAttribute(other?.value ?? value);
+  _TestModifierAttribute merge(_TestModifierAttribute? other) {
+    return _TestModifierAttribute(other?.value ?? value);
   }
 }

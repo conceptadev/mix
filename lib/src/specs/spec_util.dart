@@ -14,7 +14,7 @@ final $image = ImageSpecUtility(MixUtility.selfBuilder);
 final $icon = IconSpecUtility(MixUtility.selfBuilder);
 final $text = TextSpecUtility(MixUtility.selfBuilder);
 final $stack = StackSpecUtility(MixUtility.selfBuilder);
-final $with = WithDecoratorUtility();
+final $with = WithModifierUtility();
 final $on = OnContextVariantUtility();
 
 class AllMixUtilities {

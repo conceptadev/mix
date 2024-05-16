@@ -7,14 +7,14 @@ import '../../helpers/testing_utils.dart';
 
 void main() {
   group(
-    'SizedBoxDecoratorSpec',
+    'SizedBoxModifierSpec',
     () {
       test(
         'Constructor assigns width and height correctly',
         () {
           const width = 100.0;
           const height = 100.0;
-          const modifier = SizedBoxDecoratorSpec(
+          const modifier = SizedBoxModifierSpec(
             width: width,
             height: height,
           );
@@ -27,11 +27,11 @@ void main() {
       test(
         'Lerp method interpolates correctly',
         () {
-          const start = SizedBoxDecoratorSpec(
+          const start = SizedBoxModifierSpec(
             width: 100.0,
             height: 100.0,
           );
-          const end = SizedBoxDecoratorSpec(
+          const end = SizedBoxModifierSpec(
             width: 200.0,
             height: 200.0,
           );
@@ -48,15 +48,15 @@ void main() {
       test(
         'Equality and hashcode test',
         () {
-          const modifier1 = SizedBoxDecoratorSpec(
+          const modifier1 = SizedBoxModifierSpec(
             width: 100.0,
             height: 100.0,
           );
-          const modifier2 = SizedBoxDecoratorSpec(
+          const modifier2 = SizedBoxModifierSpec(
             width: 100.0,
             height: 100.0,
           );
-          const modifier3 = SizedBoxDecoratorSpec(
+          const modifier3 = SizedBoxModifierSpec(
             width: 100.0,
             height: 200.0,
           );
@@ -73,7 +73,7 @@ void main() {
         (WidgetTester tester) async {
           const width = 100.0;
           const height = 100.0;
-          const modifier = SizedBoxDecoratorSpec(
+          const modifier = SizedBoxModifierSpec(
             width: width,
             height: height,
           );
@@ -113,22 +113,19 @@ void main() {
     },
   );
 
-  group('SizedBoxDecoratorAttribute', () {
+  group('SizedBoxModifierAttribute', () {
     test('Constructor assigns width and height correctly', () {
       const width = 100.0;
       const height = 100.0;
-      const attribute =
-          SizedBoxDecoratorAttribute(width: width, height: height);
+      const attribute = SizedBoxModifierAttribute(width: width, height: height);
 
       expect(attribute.width, width);
       expect(attribute.height, height);
     });
 
     test('Merge method merges correctly', () {
-      const attribute1 =
-          SizedBoxDecoratorAttribute(width: 100.0, height: 100.0);
-      const attribute2 =
-          SizedBoxDecoratorAttribute(width: 200.0, height: 200.0);
+      const attribute1 = SizedBoxModifierAttribute(width: 100.0, height: 100.0);
+      const attribute2 = SizedBoxModifierAttribute(width: 200.0, height: 200.0);
       final result = attribute1.merge(attribute2);
 
       expect(result.width, 200.0);
@@ -136,7 +133,7 @@ void main() {
     });
 
     test('Resolve method resolves correctly', () {
-      const attribute = SizedBoxDecoratorAttribute(width: 100.0, height: 100.0);
+      const attribute = SizedBoxModifierAttribute(width: 100.0, height: 100.0);
 
       final result = attribute.resolve(EmptyMixData);
 
@@ -145,12 +142,9 @@ void main() {
     });
 
     test('Equality and hashcode test', () {
-      const attribute1 =
-          SizedBoxDecoratorAttribute(width: 100.0, height: 100.0);
-      const attribute2 =
-          SizedBoxDecoratorAttribute(width: 100.0, height: 100.0);
-      const attribute3 =
-          SizedBoxDecoratorAttribute(width: 100.0, height: 200.0);
+      const attribute1 = SizedBoxModifierAttribute(width: 100.0, height: 100.0);
+      const attribute2 = SizedBoxModifierAttribute(width: 100.0, height: 100.0);
+      const attribute3 = SizedBoxModifierAttribute(width: 100.0, height: 200.0);
 
       expect(attribute1, attribute2);
       expect(attribute1.hashCode, attribute2.hashCode);
@@ -159,11 +153,11 @@ void main() {
     });
   });
 
-  group('SizedBoxDecoratorUtility', () {
-    test('Call method returns correct SizedBoxDecoratorAttribute', () {
+  group('SizedBoxModifierUtility', () {
+    test('Call method returns correct SizedBoxModifierAttribute', () {
       const width = 100.0;
       const height = 100.0;
-      const utility = SizedBoxDecoratorUtility(MixUtility.selfBuilder);
+      const utility = SizedBoxModifierUtility(MixUtility.selfBuilder);
       final result = utility(width: width, height: height);
 
       expect(result.width, width);

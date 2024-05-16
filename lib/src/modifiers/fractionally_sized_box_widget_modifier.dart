@@ -9,25 +9,25 @@ import '../core/attribute.dart';
 import '../core/modifier.dart';
 import '../factory/mix_provider_data.dart';
 
-class FractionallySizedBoxDecoratorSpec
-    extends DecoratorSpec<FractionallySizedBoxDecoratorSpec> {
+class FractionallySizedBoxModifierSpec
+    extends ModifierSpec<FractionallySizedBoxModifierSpec> {
   final double? widthFactor;
   final double? heightFactor;
   final AlignmentGeometry? alignment;
 
-  const FractionallySizedBoxDecoratorSpec({
+  const FractionallySizedBoxModifierSpec({
     this.widthFactor,
     this.heightFactor,
     this.alignment,
   });
 
   @override
-  FractionallySizedBoxDecoratorSpec copyWith({
+  FractionallySizedBoxModifierSpec copyWith({
     double? widthFactor,
     double? heightFactor,
     AlignmentGeometry? alignment,
   }) {
-    return FractionallySizedBoxDecoratorSpec(
+    return FractionallySizedBoxModifierSpec(
       widthFactor: widthFactor ?? this.widthFactor,
       heightFactor: heightFactor ?? this.heightFactor,
       alignment: alignment ?? this.alignment,
@@ -35,11 +35,11 @@ class FractionallySizedBoxDecoratorSpec
   }
 
   @override
-  FractionallySizedBoxDecoratorSpec lerp(
-    FractionallySizedBoxDecoratorSpec? other,
+  FractionallySizedBoxModifierSpec lerp(
+    FractionallySizedBoxModifierSpec? other,
     double t,
   ) {
-    return FractionallySizedBoxDecoratorSpec(
+    return FractionallySizedBoxModifierSpec(
       widthFactor: lerpDouble(widthFactor, other?.widthFactor, t),
       heightFactor: lerpDouble(heightFactor, other?.heightFactor, t),
       alignment: AlignmentGeometry.lerp(alignment, other?.alignment, t),
@@ -60,23 +60,23 @@ class FractionallySizedBoxDecoratorSpec
   }
 }
 
-class FractionallySizedBoxDecoratorAttribute extends DecoratorAttribute<
-    FractionallySizedBoxDecoratorAttribute, FractionallySizedBoxDecoratorSpec> {
+class FractionallySizedBoxModifierAttribute extends ModifierAttribute<
+    FractionallySizedBoxModifierAttribute, FractionallySizedBoxModifierSpec> {
   final double? widthFactor;
   final double? heightFactor;
   final AlignmentGeometry? alignment;
 
-  const FractionallySizedBoxDecoratorAttribute({
+  const FractionallySizedBoxModifierAttribute({
     this.widthFactor,
     this.heightFactor,
     this.alignment,
   });
 
   @override
-  FractionallySizedBoxDecoratorAttribute merge(
-    FractionallySizedBoxDecoratorAttribute? other,
+  FractionallySizedBoxModifierAttribute merge(
+    FractionallySizedBoxModifierAttribute? other,
   ) {
-    return FractionallySizedBoxDecoratorAttribute(
+    return FractionallySizedBoxModifierAttribute(
       widthFactor: other?.widthFactor ?? widthFactor,
       heightFactor: other?.heightFactor ?? heightFactor,
       alignment: other?.alignment ?? alignment,
@@ -84,8 +84,8 @@ class FractionallySizedBoxDecoratorAttribute extends DecoratorAttribute<
   }
 
   @override
-  FractionallySizedBoxDecoratorSpec resolve(MixData mix) {
-    return FractionallySizedBoxDecoratorSpec(
+  FractionallySizedBoxModifierSpec resolve(MixData mix) {
+    return FractionallySizedBoxModifierSpec(
       widthFactor: widthFactor,
       heightFactor: heightFactor,
       alignment: alignment,
@@ -96,9 +96,9 @@ class FractionallySizedBoxDecoratorAttribute extends DecoratorAttribute<
   get props => [widthFactor, heightFactor, alignment];
 }
 
-class FractionallySizedBoxDecoratorUtility<T extends Attribute>
-    extends MixUtility<T, FractionallySizedBoxDecoratorAttribute> {
-  const FractionallySizedBoxDecoratorUtility(super.builder);
+class FractionallySizedBoxModifierUtility<T extends Attribute>
+    extends MixUtility<T, FractionallySizedBoxModifierAttribute> {
+  const FractionallySizedBoxModifierUtility(super.builder);
 
   T call({
     AlignmentGeometry? alignment,
@@ -106,7 +106,7 @@ class FractionallySizedBoxDecoratorUtility<T extends Attribute>
     double? heightFactor,
   }) {
     return builder(
-      FractionallySizedBoxDecoratorAttribute(
+      FractionallySizedBoxModifierAttribute(
         widthFactor: widthFactor,
         heightFactor: heightFactor,
         alignment: alignment,

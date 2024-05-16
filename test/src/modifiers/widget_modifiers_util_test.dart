@@ -8,7 +8,7 @@ import '../../helpers/testing_utils.dart';
 void main() {
   group('Modifiers: ', () {
     const aspectRatio = AspectRatioUtility(UtilityTestAttribute.new);
-    const flexible = FlexibleDecoratorUtility(UtilityTestAttribute.new);
+    const flexible = FlexibleModifierUtility(UtilityTestAttribute.new);
     const visibility = VisibilityUtility(UtilityTestAttribute.new);
     const transform = TransformUtility(UtilityTestAttribute.new);
 
@@ -19,107 +19,107 @@ void main() {
     const clipOval = ClipOvalUtility(UtilityTestAttribute.new);
     const clipRect = ClipRectUtility(UtilityTestAttribute.new);
     const clipTriangle = ClipTriangleUtility(UtilityTestAttribute.new);
-    const sizedBox = SizedBoxDecoratorUtility(UtilityTestAttribute.new);
+    const sizedBox = SizedBoxModifierUtility(UtilityTestAttribute.new);
     const fractionallySizedBox =
-        FractionallySizedBoxDecoratorUtility(UtilityTestAttribute.new);
+        FractionallySizedBoxModifierUtility(UtilityTestAttribute.new);
     const intrinsicHeight =
         IntrinsicHeightWidgetUtility(UtilityTestAttribute.new);
     const intrinsicWidth =
         IntrinsicWidthWidgetUtility(UtilityTestAttribute.new);
     const align = AlignWidgetUtility(UtilityTestAttribute.new);
 
-    test('aspectRatio creates AspectRatioDecorator correctly', () {
-      final aspectRatioDecorator = aspectRatio(2.0);
+    test('aspectRatio creates AspectRatioModifier correctly', () {
+      final aspectRatioModifier = aspectRatio(2.0);
 
-      expect(aspectRatioDecorator.value.aspectRatio, 2.0);
+      expect(aspectRatioModifier.value.aspectRatio, 2.0);
     });
 
-    test('expanded creates FlexibleDecoratorUtility correctly', () {
-      const flexible = FlexibleDecoratorUtility(UtilityTestAttribute.new);
-      final flexibleDecorator = flexible.expanded();
+    test('expanded creates FlexibleModifierUtility correctly', () {
+      const flexible = FlexibleModifierUtility(UtilityTestAttribute.new);
+      final flexibleModifier = flexible.expanded();
 
-      expect(flexibleDecorator.value.fit, FlexFit.tight);
+      expect(flexibleModifier.value.fit, FlexFit.tight);
     });
 
-    test('default flexible creates FlexibleDecoratorUtility correctly', () {
-      final flexibleDecorator = flexible();
-      final widget = flexibleDecorator.value
+    test('default flexible creates FlexibleModifierUtility correctly', () {
+      final flexibleModifier = flexible();
+      final widget = flexibleModifier.value
           .resolve(EmptyMixData)
           .build(const Empty()) as Flexible;
 
-      expect(flexibleDecorator.value.fit, null);
+      expect(flexibleModifier.value.fit, null);
       expect(widget, isA<Flexible>());
       expect(widget.fit, FlexFit.loose);
       expect(widget.flex, 1);
     });
 
-    test('opacity creates OpacityDecorator correctly', () {
-      final opacityDecorator = opacity(0.5);
+    test('opacity creates OpacityModifier correctly', () {
+      final opacityModifier = opacity(0.5);
 
-      expect(opacityDecorator.value.opacity, 0.5);
+      expect(opacityModifier.value.opacity, 0.5);
     });
 
-    test('rotate creates RotateDecorator correctly', () {
-      final rotateDecorator = rotate(2);
+    test('rotate creates RotateModifier correctly', () {
+      final rotateModifier = rotate(2);
 
-      expect(rotateDecorator.value.quarterTurns, 2);
+      expect(rotateModifier.value.quarterTurns, 2);
     });
 
-    test('rotate90 creates RotateDecorator correctly', () {
-      final rotateDecorator = rotate.d90();
+    test('rotate90 creates RotateModifier correctly', () {
+      final rotateModifier = rotate.d90();
 
-      expect(rotateDecorator.value.quarterTurns, 1);
+      expect(rotateModifier.value.quarterTurns, 1);
     });
 
-    test('rotate180 creates RotateDecorator correctly', () {
-      final rotateDecorator = rotate.d180();
+    test('rotate180 creates RotateModifier correctly', () {
+      final rotateModifier = rotate.d180();
 
-      expect(rotateDecorator.value.quarterTurns, 2);
+      expect(rotateModifier.value.quarterTurns, 2);
     });
 
-    test('rotate270 creates RotateDecorator correctly', () {
-      final rotateDecorator = rotate.d270();
+    test('rotate270 creates RotateModifier correctly', () {
+      final rotateModifier = rotate.d270();
 
-      expect(rotateDecorator.value.quarterTurns, 3);
+      expect(rotateModifier.value.quarterTurns, 3);
     });
 
-    test('clipRRect creates ClipRRectDecorator correctly', () {
-      final clipRRectDecorator =
+    test('clipRRect creates ClipRRectModifier correctly', () {
+      final clipRRectModifier =
           clipRRect(borderRadius: BorderRadius.circular(10.0));
 
-      final modifier = clipRRectDecorator.value;
+      final modifier = clipRRectModifier.value;
 
       expect(modifier.borderRadius, BorderRadius.circular(10.0));
     });
 
-    test('clipOval creates ClipOvalDecorator correctly', () {
-      final clipOvalDecorator = clipOval();
+    test('clipOval creates ClipOvalModifier correctly', () {
+      final clipOvalModifier = clipOval();
 
       expect(
-        clipOvalDecorator.value.resolve(EmptyMixData).build(const Empty()),
+        clipOvalModifier.value.resolve(EmptyMixData).build(const Empty()),
         isA<ClipOval>(),
       );
     });
-    test('clipPath creates ClipPathDecorator correctly', () {
-      final clipPathDecorator = clipPath();
+    test('clipPath creates ClipPathModifier correctly', () {
+      final clipPathModifier = clipPath();
 
       expect(
-        clipPathDecorator.value.resolve(EmptyMixData).build(const Empty()),
+        clipPathModifier.value.resolve(EmptyMixData).build(const Empty()),
         isA<ClipPath>(),
       );
     });
 
     // clipTriangle
-    test('clipTriangle creates ClipTriangleDecorator correctly', () {
-      final clipTriangleDecorator = clipTriangle();
+    test('clipTriangle creates ClipTriangleModifier correctly', () {
+      final clipTriangleModifier = clipTriangle();
 
       expect(
-        clipTriangleDecorator.value.resolve(EmptyMixData).build(const Empty()),
+        clipTriangleModifier.value.resolve(EmptyMixData).build(const Empty()),
         isA<ClipPath>(),
       );
     });
 
-    test('intrinsicHeight creates IntrinsicHeightDecorator correctly', () {
+    test('intrinsicHeight creates IntrinsicHeightModifier correctly', () {
       final widget = intrinsicHeight()
           .value
           .resolve(EmptyMixData)
@@ -128,7 +128,7 @@ void main() {
       expect(widget, isA<IntrinsicHeight>());
     });
 
-    test('intrinsicWidth creates IntrinsicWidthDecorator correctly', () {
+    test('intrinsicWidth creates IntrinsicWidthModifier correctly', () {
       final widget = intrinsicWidth()
           .value
           .resolve(EmptyMixData)
@@ -137,29 +137,29 @@ void main() {
       expect(widget, isA<IntrinsicWidth>());
     });
 
-    test('clipRect creates ClipRectDecorator correctly', () {
-      final clipRectDecorator = clipRect();
+    test('clipRect creates ClipRectModifier correctly', () {
+      final clipRectModifier = clipRect();
 
       expect(
-        clipRectDecorator.value.resolve(EmptyMixData).build(const Empty()),
+        clipRectModifier.value.resolve(EmptyMixData).build(const Empty()),
         isA<ClipRect>(),
       );
     });
 
-    test('visibility creates VisibilityDecorator correctly', () {
-      final visibilityDecorator = visibility.on();
-      expect(visibilityDecorator.value.visible, true);
+    test('visibility creates VisibilityModifier correctly', () {
+      final visibilityModifier = visibility.on();
+      expect(visibilityModifier.value.visible, true);
     });
 
-    test('transform creates TransformDecorator correctly', () {
-      final transformDecorator = transform(Matrix4.identity());
+    test('transform creates TransformModifier correctly', () {
+      final transformModifier = transform(Matrix4.identity());
 
-      expect(transformDecorator.value.transform, Matrix4.identity());
+      expect(transformModifier.value.transform, Matrix4.identity());
     });
-    test('sizedBox creates SizedBoxDecorator correctly', () {
-      final sizedBoxDecorator = sizedBox(height: 100, width: 100);
+    test('sizedBox creates SizedBoxModifier correctly', () {
+      final sizedBoxModifier = sizedBox(height: 100, width: 100);
 
-      final widget = sizedBoxDecorator.value
+      final widget = sizedBoxModifier.value
           .resolve(EmptyMixData)
           .build(const Empty()) as SizedBox;
 
@@ -168,14 +168,14 @@ void main() {
     });
 
     test(
-      'fractionallySizedBox creates FractionallySizedBoxDecorator correctly',
+      'fractionallySizedBox creates FractionallySizedBoxModifier correctly',
       () {
-        final fractionallySizedBoxDecorator = fractionallySizedBox(
+        final fractionallySizedBoxModifier = fractionallySizedBox(
           heightFactor: 0.5,
           widthFactor: 0.5,
         );
 
-        final widget = fractionallySizedBoxDecorator.value
+        final widget = fractionallySizedBoxModifier.value
             .resolve(EmptyMixData)
             .build(const Empty()) as FractionallySizedBox;
 
@@ -185,10 +185,10 @@ void main() {
     );
 
     // align
-    test('align creates AlignDecorator correctly', () {
-      final alignDecorator = align(alignment: Alignment.center);
+    test('align creates AlignModifier correctly', () {
+      final alignModifier = align(alignment: Alignment.center);
 
-      final widget = alignDecorator.value
+      final widget = alignModifier.value
           .resolve(EmptyMixData)
           .build(const Empty()) as Align;
 
@@ -200,7 +200,7 @@ void main() {
       'Applying an intrinsicHeight must add an IntrinsicHeight in widget tree',
       (tester) async {
         await tester.pumpWidget(
-          _TestableRenderDecorator(
+          _TestableRenderModifier(
             Style(
               $with.intrinsicHeight(),
             ),
@@ -215,7 +215,7 @@ void main() {
       'Applying a scale must add a ScaleTransition in widget tree',
       (tester) async {
         await tester.pumpWidget(
-          _TestableRenderDecorator(
+          _TestableRenderModifier(
             Style(
               $with.scale(2.0),
             ),
@@ -230,7 +230,7 @@ void main() {
       'Applying an opacity must add an Opacity in widget tree',
       (tester) async {
         await tester.pumpWidget(
-          _TestableRenderDecorator(
+          _TestableRenderModifier(
             Style(
               $with.opacity(0.5),
             ),
@@ -245,7 +245,7 @@ void main() {
       'Applying a clipPath must add a ClipPath in widget tree',
       (tester) async {
         await tester.pumpWidget(
-          _TestableRenderDecorator(
+          _TestableRenderModifier(
             Style(
               $with.clipPath(),
             ),
@@ -260,7 +260,7 @@ void main() {
       'Applying a clipRRect must add a ClipRRect in widget tree',
       (tester) async {
         await tester.pumpWidget(
-          _TestableRenderDecorator(
+          _TestableRenderModifier(
             Style(
               $with.clipRRect(),
             ),
@@ -275,7 +275,7 @@ void main() {
       'Applying a clipOval must add a ClipOval in widget tree',
       (tester) async {
         await tester.pumpWidget(
-          _TestableRenderDecorator(
+          _TestableRenderModifier(
             Style(
               $with.clipOval(),
             ),
@@ -290,7 +290,7 @@ void main() {
       'Applying a clipRect must add a ClipRect in widget tree',
       (tester) async {
         await tester.pumpWidget(
-          _TestableRenderDecorator(
+          _TestableRenderModifier(
             Style(
               $with.clipRect(),
             ),
@@ -305,7 +305,7 @@ void main() {
       'Applying a visibility must add a Visibility widget in the widget tree',
       (tester) async {
         await tester.pumpWidget(
-          _TestableRenderDecorator(
+          _TestableRenderModifier(
             Style(
               $with.visibility.off(),
             ),
@@ -320,7 +320,7 @@ void main() {
       'Applying an aspectRatio must add an AspectRatio widget in the widget tree',
       (tester) async {
         await tester.pumpWidget(
-          _TestableRenderDecorator(
+          _TestableRenderModifier(
             Style(
               $with.aspectRatio(2),
             ),
@@ -337,7 +337,7 @@ void main() {
         await tester.pumpWidget(
           Column(
             children: [
-              _TestableRenderDecorator(
+              _TestableRenderModifier(
                 Style(
                   $with.flexible(),
                 ),
@@ -354,7 +354,7 @@ void main() {
       'Applying a transform must add a Transform widget in the widget tree',
       (tester) async {
         await tester.pumpWidget(
-          _TestableRenderDecorator(
+          _TestableRenderModifier(
             Style(
               $with.transform(Matrix4.identity()),
             ),
@@ -369,7 +369,7 @@ void main() {
       'Applying an align must add an Align widget in the widget tree',
       (tester) async {
         await tester.pumpWidget(
-          _TestableRenderDecorator(
+          _TestableRenderModifier(
             Style(
               $with.align(),
             ),
@@ -384,7 +384,7 @@ void main() {
       'Applying a fractionallySizedBox must add a FractionallySizedBox widget in the widget tree',
       (tester) async {
         await tester.pumpWidget(
-          _TestableRenderDecorator(
+          _TestableRenderModifier(
             Style(
               $with.fractionallySizedBox(),
             ),
@@ -399,7 +399,7 @@ void main() {
       'Applying a sizedBox must add a SizedBox widget in the widget tree',
       (tester) async {
         await tester.pumpWidget(
-          _TestableRenderDecorator(
+          _TestableRenderModifier(
             Style(
               $with.sizedBox(),
             ),
@@ -415,15 +415,15 @@ void main() {
 void _expectOneWidgetOfType<T>() {
   expect(
     find.descendant(
-      of: find.byType(_TestableRenderDecorator),
+      of: find.byType(_TestableRenderModifier),
       matching: find.byType(T),
     ),
     findsOneWidget,
   );
 }
 
-class _TestableRenderDecorator extends StatelessWidget {
-  const _TestableRenderDecorator(this.style);
+class _TestableRenderModifier extends StatelessWidget {
+  const _TestableRenderModifier(this.style);
 
   final Style style;
 

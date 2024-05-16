@@ -7,13 +7,13 @@ import '../core/attribute.dart';
 import '../core/modifier.dart';
 import '../factory/mix_provider_data.dart';
 
-class IntrinsicHeightDecoratorSpec
-    extends DecoratorSpec<IntrinsicHeightDecoratorSpec> {
-  const IntrinsicHeightDecoratorSpec();
+class IntrinsicHeightModifierSpec
+    extends ModifierSpec<IntrinsicHeightModifierSpec> {
+  const IntrinsicHeightModifierSpec();
 
   @override
-  IntrinsicHeightDecoratorSpec lerp(
-    IntrinsicHeightDecoratorSpec? other,
+  IntrinsicHeightModifierSpec lerp(
+    IntrinsicHeightModifierSpec? other,
     double t,
   ) {
     // No properties to interpolate, return this instance
@@ -21,7 +21,7 @@ class IntrinsicHeightDecoratorSpec
   }
 
   @override
-  IntrinsicHeightDecoratorSpec copyWith() {
+  IntrinsicHeightModifierSpec copyWith() {
     // No properties to copy, return this instance
     return this;
   }
@@ -35,35 +35,35 @@ class IntrinsicHeightDecoratorSpec
   }
 }
 
-class IntrinsicHeightDecoratorAttribute extends DecoratorAttribute<
-    IntrinsicHeightDecoratorAttribute, IntrinsicHeightDecoratorSpec> {
-  const IntrinsicHeightDecoratorAttribute();
+class IntrinsicHeightModifierAttribute extends ModifierAttribute<
+    IntrinsicHeightModifierAttribute, IntrinsicHeightModifierSpec> {
+  const IntrinsicHeightModifierAttribute();
 
   @override
-  IntrinsicHeightDecoratorAttribute merge(
-    IntrinsicHeightDecoratorAttribute? other,
+  IntrinsicHeightModifierAttribute merge(
+    IntrinsicHeightModifierAttribute? other,
   ) {
     // Since there are no properties to merge, return this instance
     return this;
   }
 
   @override
-  IntrinsicHeightDecoratorSpec resolve(MixData mix) {
+  IntrinsicHeightModifierSpec resolve(MixData mix) {
     // Return an instance of IntrinsicHeightSpec
-    return const IntrinsicHeightDecoratorSpec();
+    return const IntrinsicHeightModifierSpec();
   }
 
   @override
   List<Object?> get props => []; // No properties to include in props
 }
 
-class IntrinsicWidthDecoratorSpec
-    extends DecoratorSpec<IntrinsicWidthDecoratorSpec> {
-  const IntrinsicWidthDecoratorSpec();
+class IntrinsicWidthModifierSpec
+    extends ModifierSpec<IntrinsicWidthModifierSpec> {
+  const IntrinsicWidthModifierSpec();
 
   @override
-  IntrinsicWidthDecoratorSpec lerp(
-    IntrinsicWidthDecoratorSpec? other,
+  IntrinsicWidthModifierSpec lerp(
+    IntrinsicWidthModifierSpec? other,
     double t,
   ) {
     // No properties to interpolate, return this instance
@@ -71,7 +71,7 @@ class IntrinsicWidthDecoratorSpec
   }
 
   @override
-  IntrinsicWidthDecoratorSpec copyWith() {
+  IntrinsicWidthModifierSpec copyWith() {
     // No properties to copy, return this instance
     return this;
   }
@@ -85,22 +85,22 @@ class IntrinsicWidthDecoratorSpec
   }
 }
 
-class IntrinsicWidthDecoratorAttribute extends DecoratorAttribute<
-    IntrinsicWidthDecoratorAttribute, IntrinsicWidthDecoratorSpec> {
-  const IntrinsicWidthDecoratorAttribute();
+class IntrinsicWidthModifierAttribute extends ModifierAttribute<
+    IntrinsicWidthModifierAttribute, IntrinsicWidthModifierSpec> {
+  const IntrinsicWidthModifierAttribute();
 
   @override
-  IntrinsicWidthDecoratorAttribute merge(
-    IntrinsicWidthDecoratorAttribute? other,
+  IntrinsicWidthModifierAttribute merge(
+    IntrinsicWidthModifierAttribute? other,
   ) {
     // Since there are no properties to merge, return this instance
     return this;
   }
 
   @override
-  IntrinsicWidthDecoratorSpec resolve(MixData mix) {
+  IntrinsicWidthModifierSpec resolve(MixData mix) {
     // Return an instance of InstrinsicWidthSpec
-    return const IntrinsicWidthDecoratorSpec();
+    return const IntrinsicWidthModifierSpec();
   }
 
   @override
@@ -108,13 +108,13 @@ class IntrinsicWidthDecoratorAttribute extends DecoratorAttribute<
 }
 
 class IntrinsicHeightWidgetUtility<T extends Attribute>
-    extends MixUtility<T, IntrinsicHeightDecoratorAttribute> {
+    extends MixUtility<T, IntrinsicHeightModifierAttribute> {
   const IntrinsicHeightWidgetUtility(super.builder);
-  T call() => builder(const IntrinsicHeightDecoratorAttribute());
+  T call() => builder(const IntrinsicHeightModifierAttribute());
 }
 
 class IntrinsicWidthWidgetUtility<T extends Attribute>
-    extends MixUtility<T, IntrinsicWidthDecoratorAttribute> {
+    extends MixUtility<T, IntrinsicWidthModifierAttribute> {
   const IntrinsicWidthWidgetUtility(super.builder);
-  T call() => builder(const IntrinsicWidthDecoratorAttribute());
+  T call() => builder(const IntrinsicWidthModifierAttribute());
 }
