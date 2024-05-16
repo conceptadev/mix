@@ -31,7 +31,7 @@ class AttributeMap<T extends Attribute> with Comparable {
       }
 
       // If there is no saved attribute, just add it
-      final savedAttribute = map[type] as Mergeable?;
+      final savedAttribute = map[type];
       if (savedAttribute == null) {
         map[type] = attribute;
       } else {

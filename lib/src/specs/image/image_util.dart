@@ -4,7 +4,6 @@ import '../../attributes/color/color_dto.dart';
 import '../../attributes/color/color_util.dart';
 import '../../attributes/scalars/scalar_util.dart';
 import '../../core/attribute.dart';
-import '../../core/dto.dart';
 import 'image_attribute.dart';
 
 class ImageSpecUtility<T extends Attribute>

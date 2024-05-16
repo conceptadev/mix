@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import '../../core/attribute.dart';
 import '../../core/dto.dart';
 import '../../core/extensions/iterable_ext.dart';
 import '../../helpers/compare_mixin.dart';

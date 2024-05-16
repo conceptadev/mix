@@ -3,7 +3,6 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 import '../../core/attribute.dart';
-import '../../core/dto.dart';
 import '../../factory/mix_provider.dart';
 import '../../factory/mix_provider_data.dart';
 import '../../helpers/lerp_helpers.dart';
