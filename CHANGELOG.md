@@ -113,7 +113,7 @@ Visit our documentation site for more information [https://fluttermix.com](https
 
 * Global Mix for reusability of design tokens and mixes across DS.
 * `withMix` utility to add nested mixes and combine them.
-* Attribute decorators, create attributes that modify a widget value.
+* Attribute modifiers, create attributes that modify a widget value.
 
 ## 0.0.2
 
