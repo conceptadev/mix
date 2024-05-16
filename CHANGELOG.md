@@ -6,7 +6,7 @@
 * Feature: Added missing image props by @leoafarias
 * Docs: Updated documentation for better user guidance by @leoafarias
 * Cleanup: Removed typedef StyledContainer for cleaner code base by @tilucasoli
-* Feature: Added padding widget modifier for easier layout designs by @leoafarias
+* Feature: Added padding widget decorator for easier layout designs by @leoafarias
 * Enhancement: Added spec variant utility features by @leoafarias
 * Docs: updates and adjustments by @tilucasoli
 * Enhancement: Improved DTO merge behavior for better functionality by @leoafarias
@@ -30,7 +30,7 @@
 
 ## 1.0.0-beta.9
 
-* Added animated modifiers by @leoafarias
+* Added animated decorators by @leoafarias
 * Added StyleBuilder by @leoafarias
 * Created flip, rotate and scale using transform by @tilucasoli
 * Added StyleWidgetBuilder by @tilucasoli
@@ -39,16 +39,16 @@
 ## 1.0.0-beta.8
 
 * Optimized analyze workflow by @leoafarias
-* Fix more than one modifier on Flex widgets when modifiers are used by @tilucasoli
+* Fix more than one decorator on Flex widgets when decorators are used by @tilucasoli
 * Feat/add deprecated apis by @tilucasoli
 
 ## 1.0.0-beta.7
 
 * Added color directives to single colors by @leoafarias
 * Improvements to Pressable by @leoafarias
-* Add IntrinsicHeight and IntrinsicWidth modifiers by @tilucasoli
+* Add IntrinsicHeight and IntrinsicWidth decorators by @tilucasoli
 * Implement support for decorations in AnimatedBox, AnimatedIcon and StyledStack by @tilucasoli
-* Added more widget modifiers by @leoafarias
+* Added more widget decorators by @leoafarias
 * Sets minimum compat version by @leoafarias
 
 ## 1.0.0-beta.6
@@ -106,14 +106,14 @@ Visit our documentation site for more information [https://fluttermix.com](https
 ## 0.0.4
 
 * Optimization improvements
-* Added clip modifier
+* Added clip decorator
 * Fixed some bugs.
 
 ## 0.0.3
 
 * Global Mix for reusability of design tokens and mixes across DS.
 * `withMix` utility to add nested mixes and combine them.
-* Attribute modifiers, create attributes that modify a widget value.
+* Attribute decorators, create attributes that modify a widget value.
 
 ## 0.0.2
 
