@@ -1,3 +1,9 @@
+## 1.0.0-beta.14
+
+* Remove deprecated code by @tilucasoli
+* Improved BoxDecoration/ShapeDecoration merge support by @leoafarias
+* Rename Decorators to Modifiers to avoid semantic conflict with dart "decorators" by @tilucasoli
+
 ## 1.0.0-beta.13
 
 * Fixed: Issue with multiple conditions in ContextVariant by @tilucasoli
