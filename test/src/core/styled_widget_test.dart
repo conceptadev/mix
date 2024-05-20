@@ -5,9 +5,9 @@ import 'package:mix/mix.dart';
 import '../../helpers/testing_utils.dart';
 
 void main() {
-  group('StyledWidgetBuilder', () {
+  group('SpecBuilder', () {
     testWidgets(
-        '''When a parent StyledWidget has a Style and inherited property is true, the StyledWidgetBuilder.builder should have access to the parent's style attributes in the MixData''',
+        '''When a parent StyledWidget has a Style and inherited property is true, the SpecBuilder.builder should have access to the parent's style attributes in the MixData''',
         (tester) async {
       tester.pumpWidget(
         Box(
@@ -25,7 +25,7 @@ void main() {
     });
 
     testWidgets(
-      '''When a parent StyledWidget has a Style and inherited property is false, the StyledWidgetBuilder.builder should not have access to the parent's style attributes in the MixData''',
+      '''When a parent StyledWidget has a Style and inherited property is false, the SpecBuilder.builder should not have access to the parent's style attributes in the MixData''',
       (tester) async {
         tester.pumpWidget(
           Box(
@@ -44,7 +44,7 @@ void main() {
     );
 
     testWidgets(
-      '''When a parent StyledWidgetBuilder has no Style, the MixData in StyledWidgetBuilder.builder should have no attributes''',
+      '''When a parent SpecBuilder has no Style, the MixData in SpecBuilder.builder should have no attributes''',
       (tester) async {
         tester.pumpWidget(
           SpecBuilder(
@@ -59,7 +59,7 @@ void main() {
     );
 
     testWidgets(
-      '''When a parent StyledWidget has a Style, the MixData in StyledWidgetBuilder.builder should have the same attributes''',
+      '''When a parent StyledWidget has a Style, the MixData in SpecBuilder.builder should have the same attributes''',
       (tester) async {
         final style = Style(
           $box.height(100),

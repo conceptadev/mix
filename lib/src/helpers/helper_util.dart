@@ -1,9 +1,3 @@
-import 'package:flutter/widgets.dart';
-
-import '../core/modifier.dart';
-import '../factory/mix_provider_data.dart';
-import '../modifiers/render_widget_modifier.dart';
-
 typedef FunctionWithParams<ParamT, ReturnT> = ReturnT Function(
   List<ParamT> params,
 );
@@ -76,39 +70,4 @@ class SpreadFunctionParams<ParamT, ReturnT> {
       p20,
     ].whereType<ParamT>().toList());
   }
-}
-
-/// Conditionally applies modifiers to [child] based on the presence of
-/// [WidgetModifierAttribute] in [mix].
-///
-/// If [mix] contains [WidgetModifierAttribute], this returns [child] wrapped in a
-/// [RenderModifiers] widget. The order of modifiers is determined by
-/// [orderOfModifiers].
-///
-/// If [mix] does not contain [WidgetModifierAttribute], this returns [child]
-/// unmodified.
-///
-/// Example:
-///
-/// ```dart
-/// Widget myWidget = shouldApplyModifiers(
-///   mix: myMix,
-///   child: Text('Hello'),
-///   orderOfModifiers: [BorderModifier, ShadowModifier],
-/// );
-/// ```
-Widget shouldApplyModifiers({
-  required MixData mix,
-  required Widget child,
-  List<Type> orderOfModifiers = const [],
-}) {
-  final hasModifiers = mix.contains<WidgetModifierAttribute>();
-
-  if (!hasModifiers) return child;
-
-  return RenderModifiers(
-    mix: mix,
-    orderOfModifiers: orderOfModifiers,
-    child: child,
-  );
 }

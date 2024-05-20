@@ -1,39 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mix/mix.dart';
 import 'package:mix/src/helpers/helper_util.dart';
 
-import '../../helpers/testing_utils.dart';
-
 void main() {
-  group('shouldApplyModifiers', () {
-    test('returns child when no ModifierAttribute is present', () {
-      final style = Style();
-
-      final mix = style.of(MockBuildContext());
-      final child = Container();
-
-      final result = shouldApplyModifiers(mix: mix, child: child);
-
-      expect(result, equals(child));
-    });
-
-    test('returns RenderModifiers when ModifierAttribute is present', () {
-      final style = Style(
-        $with.opacity(0.5),
-      );
-
-      final mix = style.of(MockBuildContext());
-      final child = Container();
-
-      final result = shouldApplyModifiers(mix: mix, child: child);
-
-      expect(result, isA<RenderModifiers>());
-      expect((result as RenderModifiers).mix, equals(mix));
-      expect((result).child, equals(child));
-    });
-  });
-
   group('SpreadFunctionParams', () {
     test('calls the function with provided parameters', () {
       fn(List<int> params) => params.reduce((a, b) => a + b);
