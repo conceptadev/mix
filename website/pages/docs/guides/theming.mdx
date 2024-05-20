@@ -37,7 +37,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MixTheme(
-      data: lightBlueTheme, \\ <- MixThemeData (In this guide we are using the lightBlueTheme or darkPurpleTheme)
+      data:
+          lightBlueTheme, // <- MixThemeData (In this guide we are using the lightBlueTheme or darkPurpleTheme)
       child: const MaterialApp(
         home: ProfilePage(),
       ),
@@ -65,12 +66,21 @@ extension ColorTokenUtilExt on ColorTokenUtil {
   ColorToken get onSurfaceVariant =>
       const ColorToken('on-surface-variant-color');
 }
+
+extension TextStyleTokenUtilExt on TextStyleTokenUtil {
+  TextStyleToken get headline1 => const TextStyleToken('headline1');
+  TextStyleToken get headline2 => const TextStyleToken('headline2');
+  TextStyleToken get headline3 => const TextStyleToken('headline3');
+  TextStyleToken get body => const TextStyleToken('body');
+  TextStyleToken get callout => const TextStyleToken('callout');
+}
 ```
 
-After that, you just need to use that variable `$colors` to access the color tokens. This happens because inside Mix framework, we already instanciated the `ColorTokenUtil`.
+After that, you just need to use that variable `$token.{tokenCategory}` to access the design tokens. This happens because inside Mix framework, we already instanciated the `TokenUtil` classes.
 
 ```dart
-final primaryColorToken = $colors.primary;
+final primaryColorToken = $token.color.primary;
+final headline1TextStyleToken = $token.textStyle.headline1;
 ```
 
 ### Creating MixThemeData
@@ -80,41 +90,41 @@ This object defines the values for the design tokens that will be used throughou
 ```dart
 final lightBlueTheme = MixThemeData(
   colors: {
-    $colors.primary: const Color(0xFF0093B9),
-    $colors.onPrimary: const Color(0xFFFAFAFA),
-    $colors.surface: const Color(0xFFFAFAFA),
-    $colors.onSurface: const Color(0xFF141C24),
-    $colors.onSurfaceVariant: const Color(0xFF405473),
+    $token.color.primary: const Color(0xFF0093B9),
+    $token.color.onPrimary: const Color(0xFFFAFAFA),
+    $token.color.surface: const Color(0xFFFAFAFA),
+    $token.color.onSurface: const Color(0xFF141C24),
+    $token.color.onSurfaceVariant: const Color(0xFF405473),
   },
   textStyles: {
-    $textStyles.headline1: GoogleFonts.plusJakartaSans(
+    $token.textStyle.headline1: GoogleFonts.plusJakartaSans(
       fontSize: 22,
       fontWeight: FontWeight.bold,
     ),
-    $textStyles.headline2: GoogleFonts.plusJakartaSans(
+    $token.textStyle.headline2: GoogleFonts.plusJakartaSans(
       fontSize: 18,
       fontWeight: FontWeight.bold,
     ),
-    $textStyles.headline3: GoogleFonts.plusJakartaSans(
+    $token.textStyle.headline3: GoogleFonts.plusJakartaSans(
       fontSize: 14,
       fontWeight: FontWeight.bold,
     ),
-    $textStyles.body: GoogleFonts.plusJakartaSans(
+    $token.textStyle.body: GoogleFonts.plusJakartaSans(
       fontSize: 16,
       fontWeight: FontWeight.normal,
     ),
-    $textStyles.callout: GoogleFonts.plusJakartaSans(
+    $token.textStyle.callout: GoogleFonts.plusJakartaSans(
       fontSize: 14,
       fontWeight: FontWeight.normal,
     ),
   },
   radii: {
-    $radii.large: const Radius.circular(100),
-    $radii.medium: const Radius.circular(12),
+    $token.radius.large: const Radius.circular(100),
+    $token.radius.medium: const Radius.circular(12),
   },
-  space: {
-    $spaces.medium: 16,
-    $spaces.large: 24,
+  spaces: {
+    $token.space.medium: 16,
+    $token.space.large: 24,
   },
 );
 ```
@@ -124,41 +134,41 @@ You could do the same for the `darkPurpleTheme`:
 ```dart
 final darkPurpleTheme = MixThemeData(
   colors: {
-    $colors.primary: const Color(0xFF617AFA),
-    $colors.onPrimary: const Color(0xFFFAFAFA),
-    $colors.surface: const Color(0xFF1C1C21),
-    $colors.onSurface: const Color(0xFFFAFAFA),
-    $colors.onSurfaceVariant: const Color(0xFFD6D6DE),
+    $token.color.primary: const Color(0xFF617AFA),
+    $token.color.onPrimary: const Color(0xFFFAFAFA),
+    $token.color.surface: const Color(0xFF1C1C21),
+    $token.color.onSurface: const Color(0xFFFAFAFA),
+    $token.color.onSurfaceVariant: const Color(0xFFD6D6DE),
   },
   textStyles: {
-    $textStyles.headline1: GoogleFonts.spaceGrotesk(
+    $token.textStyle.headline1: GoogleFonts.spaceGrotesk(
       fontSize: 22,
       fontWeight: FontWeight.bold,
     ),
-    $textStyles.headline2: GoogleFonts.spaceGrotesk(
+    $token.textStyle.headline2: GoogleFonts.spaceGrotesk(
       fontSize: 18,
       fontWeight: FontWeight.bold,
     ),
-    $textStyles.headline3: GoogleFonts.spaceGrotesk(
+    $token.textStyle.headline3: GoogleFonts.spaceGrotesk(
       fontSize: 14,
       fontWeight: FontWeight.bold,
     ),
-    $textStyles.body: GoogleFonts.spaceGrotesk(
+    $token.textStyle.body: GoogleFonts.spaceGrotesk(
       fontSize: 16,
       fontWeight: FontWeight.normal,
     ),
-    $textStyles.callout: GoogleFonts.spaceGrotesk(
+    $token.textStyle.callout: GoogleFonts.spaceGrotesk(
       fontSize: 14,
       fontWeight: FontWeight.normal,
     ),
   },
   radii: {
-    $radii.large: const Radius.circular(12),
-    $radii.medium: const Radius.circular(8),
+    $token.radius.large: const Radius.circular(12),
+    $token.radius.medium: const Radius.circular(8),
   },
-  space: {
-    $spaces.medium: 16,
-    $spaces.large: 24,
+  spaces: {
+    $token.space.medium: 16,
+    $token.space.large: 24,
   },
 );
 ```
@@ -186,11 +196,11 @@ class ProfileButton extends StatelessWidget {
       style: Style(
         $box.height(50),
         $box.width(double.infinity),
-        $box.color.ref($colors.primary),
+        $box.color.ref($token.color.primary),
         $box.alignment.center(),
-        $box.borderRadius.all.ref($radii.large),
-        $text.style.ref($textStyles.headline3),
-        $text.style.color.ref($colors.onPrimary),
+        $box.borderRadius.all.ref($token.radius.large),
+        $text.style.ref($token.textStyle.headline3),
+        $text.style.color.ref($token.color.onPrimary),
       ),
       child: StyledText(
         label,
@@ -214,15 +224,15 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: $colors.surface.resolve(context),
+        backgroundColor: $token.color.surface.resolve(context),
         title: Text(
           'Profile',
-          style: $textStyles.headline2.resolve(context).copyWith(
-                color: $colors.onSurface.resolve(context),
+          style: $token.textStyle.headline2.resolve(context).copyWith(
+                color: $token.color.onSurface.resolve(context),
               ),
         ),
       ),
-      backgroundColor: $colors.surface.resolve(context),
+      backgroundColor: $token.color.surface.resolve(context),
       body: SafeArea(
         minimum: const EdgeInsets.all(16),
         child: Column(
@@ -230,31 +240,31 @@ class ProfilePage extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.all(
-                $radii.medium.resolve(context),
+                $token.radius.medium.resolve(context),
               ),
               child: Image.network(
                 'https://placehold.co/358x292@2x.png',
               ),
             ),
-            SizedBox(height: $spaces.large.resolve(context)),
+            SizedBox(height: $token.space.large.resolve(context)),
             Text(
               'Hollywood Academy',
-              style: $textStyles.headline1.resolve(context).copyWith(
-                    color: $colors.onSurface.resolve(context),
+              style: $token.textStyle.headline1.resolve(context).copyWith(
+                    color: $token.color.onSurface.resolve(context),
                   ),
             ),
-            SizedBox(height: $spaces.medium.resolve(context)),
+            SizedBox(height: $token.space.medium.resolve(context)),
             Text(
               'Education · Los Angeles, California',
-              style: $textStyles.callout.resolve(context).copyWith(
-                    color: $colors.onSurfaceVariant.resolve(context),
+              style: $token.textStyle.callout.resolve(context).copyWith(
+                    color: $token.color.onSurfaceVariant.resolve(context),
                   ),
             ),
-            SizedBox(height: $spaces.medium.resolve(context)),
+            SizedBox(height: $token.space.medium.resolve(context)),
             Text(
               'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry`s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
-              style: $textStyles.body.resolve(context).copyWith(
-                    color: $colors.onSurfaceVariant.resolve(context),
+              style: $token.textStyle.body.resolve(context).copyWith(
+                    color: $token.color.onSurfaceVariant.resolve(context),
                   ),
             ),
             const Spacer(),
@@ -267,7 +277,6 @@ class ProfilePage extends StatelessWidget {
     );
   }
 }
-
 ```
 
 The `ProfilePage` is not part of the design system, it's the why I'm not using the Mix primitive widgets to build it and it probably will be your case too. Mix is an awesome tool to style your components and make them more flexible, scalable and mantainable, but our goal is not to replace the Flutter widgets. It's important to say that because it creates a scenario where we need to use design tokens and transform them into values that can be used by the Flutter widgets, and that's why we are using the `resolve` method.
@@ -292,7 +301,7 @@ class MyApp extends StatelessWidget {
       title: 'Mix App',
       home: MixTheme(
         data: MixThemeData.withMaterial(),
-        child: MyHomePage(),
+        child: ProfilePage(),
       ),
     );
   }
@@ -306,9 +315,9 @@ Mix provides an easy utility that you can use called `$md`, this is a namespace 
 ```dart
 Box(
   style: Style(
-    $text.style.ref($md.textTheme.headline1),
-    $box.color.ref($md.colorScheme.primary),
+    $text.style.ref($material.textTheme.headline1),
+    $box.color.ref($material.colorScheme.primary),
   ),
   child: Text('Hello World'),
-)
+);
 ```
