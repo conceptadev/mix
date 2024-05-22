@@ -18,8 +18,7 @@ class ClipOvalModifierSpec extends WidgetModifierSpec<ClipOvalModifierSpec> {
   ClipOvalModifierSpec lerp(ClipOvalModifierSpec? other, double t) {
     return ClipOvalModifierSpec(
       clipper: lerpSnap(clipper, other?.clipper, t),
-      clipBehavior:
-          lerpSnap(clipBehavior, other?.clipBehavior, t) ?? clipBehavior,
+      clipBehavior: lerpSnap(clipBehavior, other?.clipBehavior, t),
     );
   }
 

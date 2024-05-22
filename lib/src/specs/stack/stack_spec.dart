@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../core/attribute.dart';
 import '../../factory/mix_provider.dart';
 import '../../factory/mix_provider_data.dart';
+import '../../helpers/lerp_helpers.dart';
 import 'stack_attribute.dart';
 
 class StackSpec extends Spec<StackSpec> {
@@ -40,9 +41,9 @@ class StackSpec extends Spec<StackSpec> {
   StackSpec lerp(StackSpec other, double t) {
     return StackSpec(
       alignment: AlignmentGeometry.lerp(alignment, other.alignment, t),
-      fit: t < 0.5 ? fit : other.fit,
-      textDirection: t < 0.5 ? textDirection : other.textDirection,
-      clipBehavior: t < 0.5 ? clipBehavior : other.clipBehavior,
+      fit: lerpSnap(fit, other.fit, t),
+      textDirection: lerpSnap(textDirection, other.textDirection, t),
+      clipBehavior: lerpSnap(clipBehavior, other.clipBehavior, t),
     );
   }
 

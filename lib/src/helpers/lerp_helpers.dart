@@ -76,6 +76,12 @@ TextStyle? lerpTextStyle(TextStyle? from, TextStyle? other, double t) {
   );
 }
 
+Matrix4? lerpMatrix4(Matrix4? from, Matrix4? other, double t) {
+  return from != null && other != null
+      ? Matrix4Tween(begin: from, end: other).lerp(t)
+      : lerpSnap(from, other, t);
+}
+
 /// Linearly interpolates between two [StrutStyle] objects.
 ///
 /// The [lerpStrutStyle] function takes two [StrutStyle] objects, [a] and [b],

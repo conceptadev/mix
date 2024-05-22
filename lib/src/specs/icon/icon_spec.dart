@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../../core/attribute.dart';
 import '../../factory/mix_provider.dart';
 import '../../factory/mix_provider_data.dart';
+import '../../helpers/lerp_helpers.dart';
 import 'icon_attribute.dart';
 
 class IconSpec extends Spec<IconSpec> {
@@ -62,8 +63,8 @@ class IconSpec extends Spec<IconSpec> {
       grade: lerpDouble(grade, other?.grade, t),
       opticalSize: lerpDouble(opticalSize, other?.opticalSize, t),
       shadows: Shadow.lerpList(shadows, other?.shadows, t),
-      textDirection: textDirection,
-      applyTextScaling: applyTextScaling,
+      textDirection: lerpSnap(textDirection, other?.textDirection, t),
+      applyTextScaling: lerpSnap(applyTextScaling, other?.applyTextScaling, t),
       fill: lerpDouble(fill, other?.fill, t),
     );
   }

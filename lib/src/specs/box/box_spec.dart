@@ -155,9 +155,7 @@ class BoxSpec extends Spec<BoxSpec> {
         other.foregroundDecoration,
         t,
       ),
-      transform: transform != null && other.transform != null
-          ? Matrix4Tween(begin: transform, end: other.transform).lerp(t)
-          : lerpSnap(transform, other.transform, t),
+      transform: lerpMatrix4(transform, other.transform, t),
       transformAlignment: AlignmentGeometry.lerp(
         transformAlignment,
         other.transformAlignment,
