@@ -6,6 +6,7 @@ import '../attributes/scalars/scalar_util.dart';
 import '../core/attribute.dart';
 import '../core/modifier.dart';
 import '../factory/mix_provider_data.dart';
+import '../helpers/lerp_helpers.dart';
 
 class TransformModifierSpec extends WidgetModifierSpec<TransformModifierSpec> {
   final Matrix4? transform;
@@ -16,7 +17,7 @@ class TransformModifierSpec extends WidgetModifierSpec<TransformModifierSpec> {
   @override
   TransformModifierSpec lerp(TransformModifierSpec? other, double t) {
     return TransformModifierSpec(
-      transform: Matrix4Tween(begin: transform, end: other?.transform).lerp(t),
+      transform: lerpMatrix4(transform, other?.transform, t),
     );
   }
 
