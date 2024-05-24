@@ -84,6 +84,7 @@ class FlexSpec extends Spec<FlexSpec> {
     TextBaseline? textBaseline,
     Clip? clipBehavior,
     double? gap,
+    AnimatedData? animatedData,
   }) {
     return FlexSpec(
       crossAxisAlignment: crossAxisAlignment ?? this.crossAxisAlignment,
@@ -95,6 +96,7 @@ class FlexSpec extends Spec<FlexSpec> {
       textBaseline: textBaseline ?? this.textBaseline,
       clipBehavior: clipBehavior ?? this.clipBehavior,
       gap: gap ?? this.gap,
+      animatedData: animatedData ?? this.animatedData,
     );
   }
 

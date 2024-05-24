@@ -83,6 +83,7 @@ class ImageSpec extends Spec<ImageSpec> {
     Rect? centerSlice,
     FilterQuality? filterQuality,
     BlendMode? colorBlendMode,
+    AnimatedData? animatedData,
   }) {
     return ImageSpec(
       width: width ?? this.width,
@@ -94,6 +95,7 @@ class ImageSpec extends Spec<ImageSpec> {
       centerSlice: centerSlice ?? this.centerSlice,
       filterQuality: filterQuality ?? this.filterQuality,
       colorBlendMode: colorBlendMode ?? this.colorBlendMode,
+      animatedData: animatedData ?? this.animatedData,
     );
   }
 

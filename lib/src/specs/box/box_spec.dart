@@ -121,6 +121,7 @@ class BoxSpec extends Spec<BoxSpec> {
     Matrix4? transform,
     AlignmentGeometry? transformAlignment,
     Clip? clipBehavior,
+    AnimatedData? animatedData,
   }) {
     return BoxSpec(
       alignment: alignment ?? this.alignment,
@@ -134,7 +135,7 @@ class BoxSpec extends Spec<BoxSpec> {
       clipBehavior: clipBehavior ?? this.clipBehavior,
       width: width ?? this.width,
       height: height ?? this.height,
-      animatedData: animatedData ?? animatedData,
+      animatedData: animatedData ?? this.animatedData,
     );
   }
 

@@ -82,6 +82,7 @@ class IconSpec extends Spec<IconSpec> {
     List<Shadow>? shadows,
     String? semanticLabel,
     bool? applyTextScaling,
+    AnimatedData? animatedData,
   }) {
     return IconSpec(
       color: color ?? this.color,
@@ -93,6 +94,7 @@ class IconSpec extends Spec<IconSpec> {
       textDirection: textDirection ?? this.textDirection,
       applyTextScaling: applyTextScaling ?? this.applyTextScaling,
       fill: fill ?? this.fill,
+      animatedData: animatedData ?? this.animatedData,
     );
   }
 

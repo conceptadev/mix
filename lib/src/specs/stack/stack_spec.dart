@@ -54,12 +54,14 @@ class StackSpec extends Spec<StackSpec> {
     StackFit? fit,
     TextDirection? textDirection,
     Clip? clipBehavior,
+    AnimatedData? animatedData,
   }) {
     return StackSpec(
       alignment: alignment ?? this.alignment,
       fit: fit ?? this.fit,
       textDirection: textDirection ?? this.textDirection,
       clipBehavior: clipBehavior ?? this.clipBehavior,
+      animatedData: animatedData ?? this.animatedData,
     );
   }
 

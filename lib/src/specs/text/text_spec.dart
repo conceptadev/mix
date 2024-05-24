@@ -96,6 +96,7 @@ class TextSpec extends Spec<TextSpec> {
     TextHeightBehavior? textHeightBehavior,
     TextDirection? textDirection,
     TextDirective? directive,
+    AnimatedData? animatedData,
   }) {
     return TextSpec(
       overflow: overflow ?? this.overflow,
@@ -109,6 +110,7 @@ class TextSpec extends Spec<TextSpec> {
       textDirection: textDirection ?? this.textDirection,
       softWrap: softWrap ?? this.softWrap,
       directive: directive ?? this.directive,
+      animatedData: animatedData ?? this.animatedData,
     );
   }
 
