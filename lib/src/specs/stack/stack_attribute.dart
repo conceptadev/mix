@@ -30,6 +30,7 @@ class StackSpecAttribute extends SpecAttribute<StackSpec> {
       fit: _fit,
       textDirection: _textDirection,
       clipBehavior: _clipBehavior,
+      animatedData: mix.animation,
     );
   }
 

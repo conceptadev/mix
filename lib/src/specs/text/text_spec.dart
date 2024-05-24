@@ -34,6 +34,7 @@ class TextSpec extends Spec<TextSpec> {
     this.textDirection,
     this.softWrap,
     this.directive,
+    super.animatedData,
   });
 
   // empty

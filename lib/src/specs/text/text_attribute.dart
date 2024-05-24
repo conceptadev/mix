@@ -48,6 +48,7 @@ class TextSpecAttribute extends SpecAttribute<TextSpec> {
       textDirection: textDirection,
       softWrap: softWrap,
       directive: directive,
+      animatedData: mix.animation,
     );
   }
 

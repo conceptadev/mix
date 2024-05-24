@@ -29,6 +29,7 @@ class IconSpec extends Spec<IconSpec> {
     this.textDirection,
     this.applyTextScaling,
     this.fill,
+    super.animatedData,
   });
 
   const IconSpec.empty()

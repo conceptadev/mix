@@ -66,6 +66,7 @@ class BoxSpec extends Spec<BoxSpec> {
     required this.clipBehavior,
     required this.width,
     required this.height,
+    super.animatedData,
   });
 
   /// Creates an empty [BoxSpec] with all properties set to null.
@@ -133,6 +134,7 @@ class BoxSpec extends Spec<BoxSpec> {
       clipBehavior: clipBehavior ?? this.clipBehavior,
       width: width ?? this.width,
       height: height ?? this.height,
+      animatedData: animatedData ?? animatedData,
     );
   }
 

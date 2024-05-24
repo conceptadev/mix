@@ -54,9 +54,13 @@ abstract class SpecAttribute<Value> extends StyledAttribute {
 
 @immutable
 abstract class Spec<T extends Spec<T>> with Comparable {
-  const Spec();
+  final AnimatedData? animatedData;
+
+  const Spec({this.animatedData});
 
   Type get type => T;
+
+  bool get isAnimated => animatedData != null;
 
   /// Creates a copy of this spec with the given fields
   /// replaced by the non-null parameter values.

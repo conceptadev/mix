@@ -83,6 +83,7 @@ class BoxSpecAttribute extends SpecAttribute<BoxSpec> {
       clipBehavior: clipBehavior,
       width: width,
       height: height,
+      animatedData: mix.animation,
     );
   }
 

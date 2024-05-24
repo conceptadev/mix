@@ -40,6 +40,7 @@ class ImageSpecAttribute extends SpecAttribute<ImageSpec> {
       centerSlice: centerSlice,
       filterQuality: filterQuality,
       colorBlendMode: colorBlendMode,
+      animatedData: mix.animation,
     );
   }
 

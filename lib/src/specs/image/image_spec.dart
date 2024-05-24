@@ -30,6 +30,7 @@ class ImageSpec extends Spec<ImageSpec> {
     required this.centerSlice,
     required this.filterQuality,
     required this.colorBlendMode,
+    super.animatedData,
   });
 
   const ImageSpec.empty()

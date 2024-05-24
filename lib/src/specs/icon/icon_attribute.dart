@@ -41,6 +41,7 @@ class IconSpecAttribute extends SpecAttribute<IconSpec> {
       textDirection: textDirection,
       applyTextScaling: applyTextScaling,
       fill: fill,
+      animatedData: mix.animation,
     );
   }
 

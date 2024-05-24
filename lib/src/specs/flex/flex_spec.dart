@@ -29,6 +29,7 @@ class FlexSpec extends Spec<FlexSpec> {
     required this.textBaseline,
     required this.clipBehavior,
     required this.gap,
+    super.animatedData,
   });
 
   const FlexSpec.empty()

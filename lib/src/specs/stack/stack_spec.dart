@@ -17,6 +17,7 @@ class StackSpec extends Spec<StackSpec> {
     this.fit,
     this.textDirection,
     this.clipBehavior,
+    super.animatedData,
   });
 
   const StackSpec.empty()

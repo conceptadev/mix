@@ -51,14 +51,13 @@ class Box extends StyledWidget {
     // This method uses `withMix` to get the `MixData` and then applies it to `BoxSpecWidget`,
     // effectively styling the [child].
     return withMix(context, (context) {
-      final mix = Mix.of(context);
       final spec = BoxSpec.of(context);
 
-      return mix.isAnimated
+      return spec.isAnimated
           ? AnimatedBoxSpecWidget(
               spec: spec,
-              duration: mix.animation!.duration,
-              curve: mix.animation!.curve,
+              duration: spec.animatedData!.duration,
+              curve: spec.animatedData!.curve,
               child: child,
             )
           : BoxSpecWidget(spec: spec, child: child);
