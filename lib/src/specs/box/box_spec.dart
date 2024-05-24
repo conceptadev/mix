@@ -85,11 +85,11 @@ class BoxSpec extends Spec<BoxSpec> {
         height = null,
         clipBehavior = null;
 
-  /// Retrieves the [BoxSpec] from the nearest [MixProvider] ancestor.
+  /// Retrieves the [BoxSpec] from the nearest [Mix] ancestor.
   ///
   /// If no ancestor is found, returns [BoxSpec.empty].
   static BoxSpec of(BuildContext context) {
-    final mix = MixProvider.of(context);
+    final mix = Mix.of(context);
 
     return mix.attributeOf<BoxSpecAttribute>()?.resolve(mix) ??
         const BoxSpec.empty();

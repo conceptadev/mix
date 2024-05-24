@@ -51,7 +51,7 @@ class TextSpec extends Spec<TextSpec> {
         softWrap = null;
 
   static TextSpec of(BuildContext context) {
-    final mix = MixProvider.of(context);
+    final mix = Mix.of(context);
 
     return mix.attributeOf<TextSpecAttribute>()?.resolve(mix) ??
         const TextSpec.empty();

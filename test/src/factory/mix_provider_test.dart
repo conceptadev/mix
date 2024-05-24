@@ -5,7 +5,7 @@ import 'package:mix/mix.dart';
 import '../../helpers/testing_utils.dart';
 
 void main() {
-  group('MixProvider', () {
+  group('Mix', () {
     testWidgets('toInheritable()', (tester) async {
       final style = Style(
         $icon.color.black(),
@@ -25,11 +25,11 @@ void main() {
       );
 
       tester.pumpWidget(
-        MixProvider(
+        Mix(
           data: mixData,
           child: Builder(
             builder: (context) {
-              final inheritedMixData = MixProvider.of(context).toInheritable();
+              final inheritedMixData = Mix.of(context).toInheritable();
               expect(inheritedMixData, expectedMixData);
               return Container();
             },

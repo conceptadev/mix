@@ -37,7 +37,7 @@ class StyledImage extends StyledWidget {
   @override
   Widget build(BuildContext context) {
     return withMix(context, (context) {
-      final mix = MixProvider.of(context);
+      final mix = Mix.of(context);
       final spec = ImageSpec.of(context);
 
       return mix.isAnimated

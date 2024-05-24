@@ -26,7 +26,7 @@ class StackSpec extends Spec<StackSpec> {
         clipBehavior = null;
 
   static StackSpec of(BuildContext context) {
-    final mix = MixProvider.of(context);
+    final mix = Mix.of(context);
 
     return mix.attributeOf<StackSpecAttribute>()?.resolve(mix) ??
         const StackSpec.empty();

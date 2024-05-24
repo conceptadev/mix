@@ -23,7 +23,7 @@ class StyledIcon extends StyledWidget {
   Widget build(BuildContext context) {
     return withMix(context, (context) {
       final spec = IconSpec.of(context);
-      final mix = MixProvider.of(context);
+      final mix = Mix.of(context);
 
       return mix.isAnimated
           ? AnimatedIconSpecWidget(

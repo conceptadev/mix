@@ -44,7 +44,7 @@ class ImageSpec extends Spec<ImageSpec> {
         fit = null;
 
   static ImageSpec of(BuildContext context) {
-    final mix = MixProvider.of(context);
+    final mix = Mix.of(context);
 
     return mix.attributeOf<ImageSpecAttribute>()?.resolve(mix) ??
         const ImageSpec.empty();

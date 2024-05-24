@@ -43,7 +43,7 @@ class FlexSpec extends Spec<FlexSpec> {
         gap = null;
 
   static FlexSpec of(BuildContext context) {
-    final mix = MixProvider.of(context);
+    final mix = Mix.of(context);
 
     return mix.attributeOf<FlexSpecAttribute>()?.resolve(mix) ??
         const FlexSpec.empty();

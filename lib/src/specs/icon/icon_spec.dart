@@ -43,7 +43,7 @@ class IconSpec extends Spec<IconSpec> {
         applyTextScaling = null;
 
   static IconSpec of(BuildContext context) {
-    final mix = MixProvider.of(context);
+    final mix = Mix.of(context);
 
     return mix.attributeOf<IconSpecAttribute>()?.resolve(mix) ??
         const IconSpec.empty();
