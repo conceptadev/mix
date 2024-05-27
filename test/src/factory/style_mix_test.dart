@@ -530,4 +530,20 @@ void main() {
       expect(updatedStyle.isAnimated, true);
     });
   });
+
+  group('Style.asAttribute', () {
+    test('should merge with the attributes in parent style', () {
+      final sut = Style(
+        attribute1,
+        Style.asAttribute(attribute2),
+      );
+
+      final expectedStyle = Style(
+        attribute1,
+        attribute2,
+      );
+
+      expect(sut, expectedStyle);
+    });
+  });
 }

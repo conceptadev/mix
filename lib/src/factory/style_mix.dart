@@ -131,6 +131,10 @@ class Style with Comparable {
         : mixes.reduce((combinedStyle, mix) => combinedStyle.merge(mix));
   }
 
+  static get asAttribute => const SpreadFunctionParams<Attribute, Attribute>(
+        NestedStyleAttribute.fromList,
+      );
+
   bool get isAnimated => this is AnimatedStyle;
 
   /// Returns a list of all attributes contained in this mix.
