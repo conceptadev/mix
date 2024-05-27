@@ -63,6 +63,7 @@ class BoxSpecAttribute extends SpecAttribute<BoxSpec> {
     this.clipBehavior,
     this.width,
     this.height,
+    super.animated,
   });
 
   /// Resolves this [BoxSpecAttribute] into a [BoxSpec] using the provided [MixData].
@@ -71,7 +72,7 @@ class BoxSpecAttribute extends SpecAttribute<BoxSpec> {
   /// this attribute's properties.
   @override
   BoxSpec resolve(MixData mix) {
-    return BoxSpec(
+    return BoxSpec.exhaustive(
       alignment: alignment,
       padding: padding?.resolve(mix),
       margin: margin?.resolve(mix),
@@ -83,7 +84,7 @@ class BoxSpecAttribute extends SpecAttribute<BoxSpec> {
       clipBehavior: clipBehavior,
       width: width,
       height: height,
-      animatedData: mix.animation,
+      animated: mix.animation,
     );
   }
 
@@ -111,6 +112,7 @@ class BoxSpecAttribute extends SpecAttribute<BoxSpec> {
       clipBehavior: other.clipBehavior ?? clipBehavior,
       width: other.width ?? width,
       height: other.height ?? height,
+      animated: other.animated ?? animated,
     );
   }
 
@@ -131,5 +133,6 @@ class BoxSpecAttribute extends SpecAttribute<BoxSpec> {
         clipBehavior,
         width,
         height,
+        animated,
       ];
 }

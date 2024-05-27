@@ -26,11 +26,12 @@ class ImageSpecAttribute extends SpecAttribute<ImageSpec> {
     this.alignment,
     this.colorBlendMode,
     this.filterQuality,
+    super.animated,
   });
 
   @override
   ImageSpec resolve(MixData mix) {
-    return ImageSpec(
+    return ImageSpec.exhaustive(
       width: width,
       height: height,
       color: color?.resolve(mix),
@@ -40,7 +41,7 @@ class ImageSpecAttribute extends SpecAttribute<ImageSpec> {
       centerSlice: centerSlice,
       filterQuality: filterQuality,
       colorBlendMode: colorBlendMode,
-      animatedData: mix.animation,
+      animated: mix.animation,
     );
   }
 
@@ -58,6 +59,7 @@ class ImageSpecAttribute extends SpecAttribute<ImageSpec> {
       alignment: other.alignment ?? alignment,
       colorBlendMode: other.colorBlendMode ?? colorBlendMode,
       filterQuality: other.filterQuality ?? filterQuality,
+      animated: other.animated ?? animated,
     );
   }
 
@@ -72,5 +74,6 @@ class ImageSpecAttribute extends SpecAttribute<ImageSpec> {
         alignment,
         filterQuality,
         colorBlendMode,
+        animated,
       ];
 }

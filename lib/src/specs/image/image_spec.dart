@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+import '../../attributes/animated/animated_data.dart';
 import '../../core/attribute.dart';
 import '../../factory/mix_provider.dart';
 import '../../factory/mix_provider_data.dart';
@@ -21,6 +22,19 @@ class ImageSpec extends Spec<ImageSpec> {
   final BlendMode? colorBlendMode;
 
   const ImageSpec({
+    this.width,
+    this.height,
+    this.color,
+    this.repeat,
+    this.fit,
+    this.alignment,
+    this.centerSlice,
+    this.filterQuality,
+    this.colorBlendMode,
+    super.animated,
+  });
+
+  const ImageSpec.exhaustive({
     required this.width,
     required this.height,
     required this.color,
@@ -30,44 +44,35 @@ class ImageSpec extends Spec<ImageSpec> {
     required this.centerSlice,
     required this.filterQuality,
     required this.colorBlendMode,
-    super.animatedData,
+    required super.animated,
   });
-
-  const ImageSpec.empty()
-      : width = null,
-        height = null,
-        color = null,
-        repeat = null,
-        alignment = null,
-        centerSlice = null,
-        filterQuality = FilterQuality.none,
-        colorBlendMode = BlendMode.clear,
-        fit = null;
 
   static ImageSpec of(BuildContext context) {
     final mix = Mix.of(context);
 
-    return mix.attributeOf<ImageSpecAttribute>()?.resolve(mix) ??
-        const ImageSpec.empty();
+    return ImageSpec.from(mix);
   }
 
   static ImageSpec from(MixData mix) {
     return mix.attributeOf<ImageSpecAttribute>()?.resolve(mix) ??
-        const ImageSpec.empty();
+        const ImageSpec();
   }
 
   @override
   ImageSpec lerp(ImageSpec? other, double t) {
+    if (other == null) return this;
+
     return ImageSpec(
-      width: lerpDouble(width, other?.width, t),
-      height: lerpDouble(height, other?.height, t),
-      color: Color.lerp(color, other?.color, t),
-      repeat: lerpSnap(repeat, other?.repeat, t),
-      fit: lerpSnap(fit, other?.fit, t),
-      alignment: AlignmentGeometry.lerp(alignment, other?.alignment, t),
-      centerSlice: lerpSnap(centerSlice, other?.centerSlice, t),
-      filterQuality: lerpSnap(filterQuality, other?.filterQuality, t),
-      colorBlendMode: lerpSnap(colorBlendMode, other?.colorBlendMode, t),
+      width: lerpDouble(width, other.width, t),
+      height: lerpDouble(height, other.height, t),
+      color: Color.lerp(color, other.color, t),
+      repeat: lerpSnap(repeat, other.repeat, t),
+      fit: lerpSnap(fit, other.fit, t),
+      alignment: AlignmentGeometry.lerp(alignment, other.alignment, t),
+      centerSlice: lerpSnap(centerSlice, other.centerSlice, t),
+      filterQuality: lerpSnap(filterQuality, other.filterQuality, t),
+      colorBlendMode: lerpSnap(colorBlendMode, other.colorBlendMode, t),
+      animated: other.animated ?? animated,
     );
   }
 
@@ -83,7 +88,7 @@ class ImageSpec extends Spec<ImageSpec> {
     Rect? centerSlice,
     FilterQuality? filterQuality,
     BlendMode? colorBlendMode,
-    AnimatedData? animatedData,
+    AnimatedData? animated,
   }) {
     return ImageSpec(
       width: width ?? this.width,
@@ -95,7 +100,7 @@ class ImageSpec extends Spec<ImageSpec> {
       centerSlice: centerSlice ?? this.centerSlice,
       filterQuality: filterQuality ?? this.filterQuality,
       colorBlendMode: colorBlendMode ?? this.colorBlendMode,
-      animatedData: animatedData ?? this.animatedData,
+      animated: animated ?? this.animated,
     );
   }
 
@@ -110,6 +115,7 @@ class ImageSpec extends Spec<ImageSpec> {
         alignment,
         filterQuality,
         colorBlendMode,
+        animated,
       ];
 }
 

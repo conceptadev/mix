@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
+import '../../attributes/animated/animated_data.dart';
 import '../../core/attribute.dart';
 import '../../factory/mix_provider.dart';
 import '../../factory/mix_provider_data.dart';
@@ -55,6 +56,25 @@ class BoxSpec extends Spec<BoxSpec> {
   /// All parameters are required to ensure explicit configuration of each
   /// attribute.
   const BoxSpec({
+    this.alignment,
+    this.padding,
+    this.margin,
+    this.constraints,
+    this.decoration,
+    this.foregroundDecoration,
+    this.transform,
+    this.transformAlignment,
+    this.clipBehavior,
+    this.width,
+    this.height,
+    super.animated,
+  });
+
+  /// Creates a [BoxSpec] with all properties required
+  ///
+  /// All parameters are required to ensure explicit configuration of each
+  /// attribute.
+  const BoxSpec.exhaustive({
     required this.alignment,
     required this.padding,
     required this.margin,
@@ -66,25 +86,8 @@ class BoxSpec extends Spec<BoxSpec> {
     required this.clipBehavior,
     required this.width,
     required this.height,
-    super.animatedData,
+    required super.animated,
   });
-
-  /// Creates an empty [BoxSpec] with all properties set to null.
-  ///
-  /// This can be used as a default value when no specific box specification
-  /// is needed.
-  const BoxSpec.empty()
-      : alignment = null,
-        padding = null,
-        margin = null,
-        constraints = null,
-        decoration = null,
-        foregroundDecoration = null,
-        transformAlignment = null,
-        transform = null,
-        width = null,
-        height = null,
-        clipBehavior = null;
 
   /// Retrieves the [BoxSpec] from the nearest [Mix] ancestor.
   ///
@@ -92,16 +95,14 @@ class BoxSpec extends Spec<BoxSpec> {
   static BoxSpec of(BuildContext context) {
     final mix = Mix.of(context);
 
-    return mix.attributeOf<BoxSpecAttribute>()?.resolve(mix) ??
-        const BoxSpec.empty();
+    return BoxSpec.from(mix);
   }
 
   /// Retrieves the [BoxSpec] from the given [MixData].
   ///
   /// If not found, returns [BoxSpec.empty].
   static BoxSpec from(MixData mix) {
-    return mix.attributeOf<BoxSpecAttribute>()?.resolve(mix) ??
-        const BoxSpec.empty();
+    return mix.attributeOf<BoxSpecAttribute>()?.resolve(mix) ?? const BoxSpec();
   }
 
   /// Returns a new [BoxSpec] with the specified properties replaced.
@@ -121,7 +122,7 @@ class BoxSpec extends Spec<BoxSpec> {
     Matrix4? transform,
     AlignmentGeometry? transformAlignment,
     Clip? clipBehavior,
-    AnimatedData? animatedData,
+    AnimatedData? animated,
   }) {
     return BoxSpec(
       alignment: alignment ?? this.alignment,
@@ -135,7 +136,7 @@ class BoxSpec extends Spec<BoxSpec> {
       clipBehavior: clipBehavior ?? this.clipBehavior,
       width: width ?? this.width,
       height: height ?? this.height,
-      animatedData: animatedData ?? this.animatedData,
+      animated: animated ?? this.animated,
     );
   }
 
@@ -167,6 +168,8 @@ class BoxSpec extends Spec<BoxSpec> {
       clipBehavior: lerpSnap(clipBehavior, other.clipBehavior, t),
       width: lerpDouble(width, other.width, t),
       height: lerpDouble(height, other.height, t),
+      // Animated data does not have to be lerped
+      animated: other.animated ?? animated,
     );
   }
 
@@ -186,6 +189,7 @@ class BoxSpec extends Spec<BoxSpec> {
         transform,
         transformAlignment,
         clipBehavior,
+        animated,
       ];
 }
 
@@ -202,7 +206,7 @@ class BoxSpecTween extends Tween<BoxSpec?> {
   /// The parameter [t] typically ranges from 0.0 to 1.0.
   @override
   BoxSpec lerp(double t) {
-    if (begin == null && end == null) return const BoxSpec.empty();
+    if (begin == null && end == null) return const BoxSpec();
     if (begin == null) return end!;
 
     return begin!.lerp(end!, t);

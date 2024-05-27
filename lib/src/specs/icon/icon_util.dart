@@ -1,3 +1,4 @@
+import '../../attributes/animated/animated_data.dart';
 import '../../attributes/color/color_dto.dart';
 import '../../attributes/color/color_util.dart';
 import '../../attributes/scalars/scalar_util.dart';
@@ -32,6 +33,7 @@ class IconSpecUtility<T extends Attribute>
     List<ShadowDto>? shadows,
     double? fill,
     bool? applyTextScaling,
+    AnimatedDataDto? animated,
   }) {
     return builder(
       IconSpecAttribute(
@@ -43,6 +45,7 @@ class IconSpecUtility<T extends Attribute>
         shadows: shadows,
         fill: fill,
         applyTextScaling: applyTextScaling,
+        animated: animated,
       ),
     );
   }

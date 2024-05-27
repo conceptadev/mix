@@ -5,19 +5,17 @@ import '../../factory/mix_provider_data.dart';
 import 'stack_spec.dart';
 
 class StackSpecAttribute extends SpecAttribute<StackSpec> {
-  final Clip? _clipBehavior;
-  final TextDirection? _textDirection;
-  final StackFit? _fit;
-  final AlignmentGeometry? _alignment;
+  final Clip? clipBehavior;
+  final TextDirection? textDirection;
+  final StackFit? fit;
+  final AlignmentGeometry? alignment;
   const StackSpecAttribute({
-    AlignmentGeometry? alignment,
-    StackFit? fit,
-    TextDirection? textDirection,
-    Clip? clipBehavior,
-  })  : _clipBehavior = clipBehavior,
-        _textDirection = textDirection,
-        _fit = fit,
-        _alignment = alignment;
+    this.alignment,
+    this.fit,
+    this.textDirection,
+    this.clipBehavior,
+    super.animated,
+  });
 
   static StackSpecAttribute of(MixData mix) {
     return mix.attributeOf() ?? const StackSpecAttribute();
@@ -25,12 +23,12 @@ class StackSpecAttribute extends SpecAttribute<StackSpec> {
 
   @override
   StackSpec resolve(MixData mix) {
-    return StackSpec(
-      alignment: _alignment,
-      fit: _fit,
-      textDirection: _textDirection,
-      clipBehavior: _clipBehavior,
-      animatedData: mix.animation,
+    return StackSpec.exhaustive(
+      alignment: alignment,
+      fit: fit,
+      textDirection: textDirection,
+      clipBehavior: clipBehavior,
+      animated: mix.animation,
     );
   }
 
@@ -39,13 +37,15 @@ class StackSpecAttribute extends SpecAttribute<StackSpec> {
     if (other == null) return this;
 
     return StackSpecAttribute(
-      alignment: other._alignment ?? _alignment,
-      fit: other._fit ?? _fit,
-      textDirection: other._textDirection ?? _textDirection,
-      clipBehavior: other._clipBehavior ?? _clipBehavior,
+      alignment: other.alignment ?? alignment,
+      fit: other.fit ?? fit,
+      textDirection: other.textDirection ?? textDirection,
+      clipBehavior: other.clipBehavior ?? clipBehavior,
+      animated: other.animated ?? animated,
     );
   }
 
   @override
-  List<Object?> get props => [_alignment, _fit, _textDirection, _clipBehavior];
+  List<Object?> get props =>
+      [alignment, fit, textDirection, clipBehavior, animated];
 }

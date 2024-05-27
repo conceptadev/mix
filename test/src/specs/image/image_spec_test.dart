@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
+import 'package:mix/src/attributes/animated/animated_data.dart';
 
 import '../../../helpers/testing_utils.dart';
 
@@ -100,11 +101,12 @@ void main() {
         centerSlice: Rect.zero,
         filterQuality: FilterQuality.low,
         colorBlendMode: BlendMode.srcOver,
+        animated: AnimatedData.withDefaults(),
       );
 
       final props = spec.props;
 
-      expect(props.length, 9);
+      expect(props.length, 10);
       expect(props[0], 100);
       expect(props[1], 200);
       expect(props[2], Colors.red);
@@ -114,6 +116,7 @@ void main() {
       expect(props[6], Alignment.bottomCenter);
       expect(props[7], FilterQuality.low);
       expect(props[8], BlendMode.srcOver);
+      expect(props[9], const AnimatedData.withDefaults());
     });
   });
 }

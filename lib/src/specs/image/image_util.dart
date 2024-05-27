@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../attributes/animated/animated_data.dart';
 import '../../attributes/color/color_dto.dart';
 import '../../attributes/color/color_util.dart';
 import '../../attributes/scalars/scalar_util.dart';
@@ -32,6 +33,7 @@ class ImageSpecUtility<T extends Attribute>
     Rect? centerSlice,
     BlendMode? blendMode,
     FilterQuality? filterQuality,
+    AnimatedDataDto? animated,
   }) {
     return builder(
       ImageSpecAttribute(
@@ -44,6 +46,7 @@ class ImageSpecUtility<T extends Attribute>
         alignment: alignment,
         colorBlendMode: blendMode,
         filterQuality: filterQuality,
+        animated: animated,
       ),
     );
   }

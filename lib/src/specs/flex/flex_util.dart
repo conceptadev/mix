@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../attributes/animated/animated_data.dart';
 import '../../attributes/scalars/scalar_util.dart';
 import '../../attributes/spacing/spacing_util.dart';
 import '../../core/attribute.dart';
@@ -37,6 +38,7 @@ class FlexSpecUtility<T extends Attribute>
     TextBaseline? textBaseline,
     Clip? clipBehavior,
     double? gap,
+    AnimatedDataDto? animated,
   }) {
     return builder(FlexSpecAttribute(
       direction: direction,
@@ -48,6 +50,7 @@ class FlexSpecUtility<T extends Attribute>
       textBaseline: textBaseline,
       clipBehavior: clipBehavior,
       gap: gap,
+      animated: animated,
     ));
   }
 }

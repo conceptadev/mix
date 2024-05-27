@@ -27,11 +27,12 @@ class IconSpecAttribute extends SpecAttribute<IconSpec> {
     this.fill,
     this.textDirection,
     this.applyTextScaling,
+    super.animated,
   });
 
   @override
   IconSpec resolve(MixData mix) {
-    return IconSpec(
+    return IconSpec.exhaustive(
       color: color?.resolve(mix),
       size: size,
       weight: weight,
@@ -41,7 +42,7 @@ class IconSpecAttribute extends SpecAttribute<IconSpec> {
       textDirection: textDirection,
       applyTextScaling: applyTextScaling,
       fill: fill,
-      animatedData: mix.animation,
+      animated: mix.animation,
     );
   }
 
@@ -59,6 +60,7 @@ class IconSpecAttribute extends SpecAttribute<IconSpec> {
       fill: other.fill ?? fill,
       textDirection: other.textDirection ?? textDirection,
       applyTextScaling: other.applyTextScaling ?? applyTextScaling,
+      animated: other.animated ?? animated,
     );
   }
 
@@ -72,5 +74,6 @@ class IconSpecAttribute extends SpecAttribute<IconSpec> {
         shadows,
         textDirection,
         applyTextScaling,
+        animated,
       ];
 }

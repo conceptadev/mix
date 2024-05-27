@@ -56,8 +56,8 @@ class Box extends StyledWidget {
       return spec.isAnimated
           ? AnimatedBoxSpecWidget(
               spec: spec,
-              duration: spec.animatedData!.duration,
-              curve: spec.animatedData!.curve,
+              duration: spec.animated!.duration,
+              curve: spec.animated!.curve,
               child: child,
             )
           : BoxSpecWidget(spec: spec, child: child);

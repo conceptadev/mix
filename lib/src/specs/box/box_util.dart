@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../attributes/animated/animated_data.dart';
 import '../../attributes/constraints/constraints_dto.dart';
 import '../../attributes/constraints/constraints_util.dart';
 import '../../attributes/decoration/decoration_dto.dart';
@@ -87,6 +88,7 @@ class BoxSpecUtility<T extends Attribute>
     double? height,
     Matrix4? transform,
     Clip? clipBehavior,
+    AnimatedDataDto? animated,
   }) {
     return builder(
       BoxSpecAttribute(
@@ -100,6 +102,7 @@ class BoxSpecUtility<T extends Attribute>
         clipBehavior: clipBehavior,
         width: width,
         height: height,
+        animated: animated,
       ),
     );
   }
