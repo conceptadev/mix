@@ -41,7 +41,7 @@ class ImageSpecAttribute extends SpecAttribute<ImageSpec> {
       centerSlice: centerSlice,
       filterQuality: filterQuality,
       colorBlendMode: colorBlendMode,
-      animated: mix.animation,
+      animated: animated?.resolve(mix) ?? mix.animation,
     );
   }
 
