@@ -390,12 +390,12 @@ class AnimatedStyle extends Style {
   AnimatedStyle copyWith({
     AttributeMap<StyledAttribute>? styles,
     AttributeMap<VariantAttribute>? variants,
-    AnimatedData? animatedData,
+    AnimatedData? animated,
   }) {
     return AnimatedStyle._(
       styles: styles ?? this.styles,
       variants: variants ?? this.variants,
-      animated: animatedData ?? animated,
+      animated: animated ?? this.animated,
     );
   }
 
