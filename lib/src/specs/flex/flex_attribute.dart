@@ -44,7 +44,7 @@ class FlexSpecAttribute extends SpecAttribute<FlexSpec> {
       textBaseline: textBaseline,
       clipBehavior: clipBehavior,
       gap: gap,
-      animated: mix.animation,
+      animated: animated?.resolve(mix) ?? mix.animation,
     );
   }
 

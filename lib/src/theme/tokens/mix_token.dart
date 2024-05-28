@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import '../../core/dto.dart';
-import '../../core/extensions/iterable_ext.dart';
 import '../../helpers/compare_mixin.dart';
+import '../../helpers/iterable_ext.dart';
 import 'color_token.dart';
 import 'radius_token.dart';
 import 'text_style_token.dart';

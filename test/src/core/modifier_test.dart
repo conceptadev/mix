@@ -16,7 +16,7 @@ void main() {
     test(
         'lerpValue should return the result of lerp when begin and end are not null',
         () {
-      const begin = _TestModifierSpec(1);
+      const begin = _TestModifierSpec(1, animated: null);
       const end = _TestModifierSpec(2);
       expect(
         WidgetModifierSpec.lerpValue(begin, end, 0.5),
@@ -42,7 +42,10 @@ void main() {
 
 class _TestModifierSpec extends WidgetModifierSpec<_TestModifierSpec> {
   final double value;
-  const _TestModifierSpec(this.value);
+  const _TestModifierSpec(
+    this.value, {
+    super.animated,
+  });
 
   @override
   Widget build(Widget child) {

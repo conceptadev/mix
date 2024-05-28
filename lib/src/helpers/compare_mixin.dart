@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 
-import '../core/extensions/iterable_ext.dart';
+import 'iterable_ext.dart';
 import 'deep_collection_equality.dart';
 
 /// Returns a `hashCode` for [props].

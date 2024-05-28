@@ -28,7 +28,7 @@ class StackSpecAttribute extends SpecAttribute<StackSpec> {
       fit: fit,
       textDirection: textDirection,
       clipBehavior: clipBehavior,
-      animated: mix.animation,
+      animated: animated?.resolve(mix) ?? mix.animation,
     );
   }
 

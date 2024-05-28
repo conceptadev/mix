@@ -5,7 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
 import 'package:mix/src/helpers/lerp_helpers.dart';
 
-export 'package:mix/src/core/extensions/values_ext.dart';
+export 'package:mix/src/helpers/values_ext.dart';
 
 class MockBuildContext extends BuildContext {
   @override
@@ -310,7 +310,10 @@ class UtilityTestDtoAttribute<T extends Dto<V>, V>
 class CustomWidgetModifierSpec
     extends WidgetModifierSpec<CustomWidgetModifierSpec> {
   final bool value;
-  const CustomWidgetModifierSpec(this.value);
+  const CustomWidgetModifierSpec(
+    this.value, {
+    super.animated,
+  });
 
   @override
   CustomWidgetModifierSpec copyWith({bool? value}) {
