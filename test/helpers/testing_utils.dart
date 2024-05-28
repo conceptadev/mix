@@ -310,7 +310,10 @@ class UtilityTestDtoAttribute<T extends Dto<V>, V>
 class CustomWidgetModifierSpec
     extends WidgetModifierSpec<CustomWidgetModifierSpec> {
   final bool value;
-  const CustomWidgetModifierSpec(this.value);
+  const CustomWidgetModifierSpec(
+    this.value, {
+    super.animated,
+  });
 
   @override
   CustomWidgetModifierSpec copyWith({bool? value}) {

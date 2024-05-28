@@ -59,7 +59,7 @@ abstract class SpecAttribute<Value> extends StyledAttribute {
 abstract class Spec<T extends Spec<T>> with Comparable {
   final AnimatedData? animated;
 
-  const Spec({this.animated});
+  const Spec({required this.animated});
 
   Type get type => T;
 
