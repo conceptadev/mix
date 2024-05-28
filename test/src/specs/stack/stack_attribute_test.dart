@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
+import 'package:mix/src/attributes/animated/animated_data.dart';
 
 import '../../../helpers/testing_utils.dart';
 
@@ -66,14 +67,16 @@ void main() {
         fit: StackFit.expand,
         textDirection: TextDirection.ltr,
         clipBehavior: Clip.antiAlias,
+        animated: AnimatedDataDto.withDefaults(),
       );
       final props = attribute.props;
 
-      expect(props.length, 4);
+      expect(props.length, 5);
       expect(props[0], Alignment.center);
       expect(props[1], StackFit.expand);
       expect(props[2], TextDirection.ltr);
       expect(props[3], Clip.antiAlias);
+      expect(props[4], const AnimatedDataDto.withDefaults());
     });
   });
 }

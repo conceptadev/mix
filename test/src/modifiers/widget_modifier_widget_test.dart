@@ -294,7 +294,7 @@ void main() {
               key: key,
               inherit: true,
               child: Builder(builder: (context) {
-                final inheritedMix = MixProvider.maybeOf(context)!;
+                final inheritedMix = Mix.maybeOf(context)!;
 
                 expect(inheritedMix.attributes.length, 0);
 

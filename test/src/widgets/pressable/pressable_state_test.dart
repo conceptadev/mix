@@ -110,6 +110,25 @@ void main() {
         findsOneWidget);
   });
 
+  test('PressableState.none() returns a PressableState with correct values',
+      () {
+    final PressableState state = PressableState.none(
+      key: const Key('none'),
+      child: const Text('none'),
+    );
+
+    expect(state.enabled, false);
+    expect(state.hovered, false);
+    expect(state.pressed, false);
+    expect(state.longPressed, false);
+    expect(state.focused, false);
+    expect(state.pointerPosition, null);
+
+    expect(state.key, const Key('none'));
+    expect(state.hashCode, isNot(0));
+    expect(state.runtimeType, PressableState);
+  });
+
   testWidgets('PressableState updates inherit model',
       (WidgetTester tester) async {
     final PressableStateTestWidgetController controller =

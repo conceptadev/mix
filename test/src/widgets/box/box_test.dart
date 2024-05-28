@@ -14,7 +14,7 @@ void main() {
             style: Style($icon.color.black()),
             child: Box(
               child: WidgetWithTestableBuild((context) {
-                final inheritedStyle = MixProvider.maybeOf(context);
+                final inheritedStyle = Mix.maybeOf(context);
 
                 expect(inheritedStyle?.attributes.length, 0);
               }),
@@ -33,7 +33,7 @@ void main() {
             child: Box(
               inherit: true,
               child: Builder(builder: (context) {
-                final inheritedStyle = MixProvider.maybeOf(context)!;
+                final inheritedStyle = Mix.maybeOf(context)!;
                 final iconSpec = IconSpec.from(inheritedStyle);
 
                 expect(inheritedStyle.attributes.length, 1);
@@ -57,7 +57,7 @@ void main() {
               style: Style($box.height(100), $box.width(100)),
               inherit: true,
               child: Builder(builder: (context) {
-                final inheritedStyle = MixProvider.maybeOf(context)!;
+                final inheritedStyle = Mix.maybeOf(context)!;
                 final iconSpec = IconSpec.from(inheritedStyle);
                 final boxSpec = BoxSpec.from(inheritedStyle);
 
@@ -84,7 +84,7 @@ void main() {
               style: Style($box.height(100), $box.width(100)),
               inherit: true,
               child: Builder(builder: (context) {
-                final inheritedStyle = MixProvider.maybeOf(context)!;
+                final inheritedStyle = Mix.maybeOf(context)!;
                 final iconSpec = IconSpec.from(inheritedStyle);
                 final boxSpec = BoxSpec.from(inheritedStyle);
 
@@ -111,7 +111,7 @@ void main() {
               style: Style($box.width(100)),
               inherit: true,
               child: Builder(builder: (context) {
-                final inheritedStyle = MixProvider.maybeOf(context)!;
+                final inheritedStyle = Mix.maybeOf(context)!;
                 final boxSpec = BoxSpec.from(inheritedStyle);
 
                 expect(inheritedStyle.attributes.length, 1);

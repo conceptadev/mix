@@ -42,7 +42,7 @@ class InputDecorationSpec extends Spec<InputDecorationSpec> {
         contentPadding = null;
 
   static InputDecorationSpec of(BuildContext context) {
-    final mix = MixProvider.of(context);
+    final mix = Mix.of(context);
     return mix.attributeOf<InputDecorationSpecAttribute>()?.resolve(mix) ??
         const InputDecorationSpec.empty();
   }

@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
+import '../../attributes/animated/animated_data.dart';
 import '../../core/attribute.dart';
 import '../../core/directive.dart';
 import '../../factory/mix_provider.dart';
@@ -34,32 +35,32 @@ class TextSpec extends Spec<TextSpec> {
     this.textDirection,
     this.softWrap,
     this.directive,
+    super.animated,
   });
 
-  // empty
-  const TextSpec.empty()
-      : overflow = null,
-        strutStyle = null,
-        textAlign = null,
-        textScaleFactor = null,
-        maxLines = null,
-        style = null,
-        textWidthBasis = null,
-        textHeightBehavior = null,
-        textDirection = null,
-        directive = null,
-        softWrap = null;
+  const TextSpec.exhaustive({
+    required this.overflow,
+    required this.strutStyle,
+    required this.textAlign,
+    required this.textScaleFactor,
+    required this.maxLines,
+    required this.style,
+    required this.textWidthBasis,
+    required this.textHeightBehavior,
+    required this.textDirection,
+    required this.softWrap,
+    required this.directive,
+    required super.animated,
+  });
 
   static TextSpec of(BuildContext context) {
-    final mix = MixProvider.of(context);
+    final mix = Mix.of(context);
 
-    return mix.attributeOf<TextSpecAttribute>()?.resolve(mix) ??
-        const TextSpec.empty();
+    return TextSpec.from(mix);
   }
 
   static TextSpec from(MixData mix) =>
-      mix.attributeOf<TextSpecAttribute>()?.resolve(mix) ??
-      const TextSpec.empty();
+      mix.attributeOf<TextSpecAttribute>()?.resolve(mix) ?? const TextSpec();
 
   @override
   TextSpec lerp(TextSpec? other, double t) {
@@ -79,6 +80,7 @@ class TextSpec extends Spec<TextSpec> {
       textDirection: lerpSnap(textDirection, other.textDirection, t),
       softWrap: lerpSnap(softWrap, other.softWrap, t),
       directive: lerpSnap(directive, other.directive, t),
+      animated: other.animated ?? animated,
     );
   }
 
@@ -95,6 +97,7 @@ class TextSpec extends Spec<TextSpec> {
     TextHeightBehavior? textHeightBehavior,
     TextDirection? textDirection,
     TextDirective? directive,
+    AnimatedData? animated,
   }) {
     return TextSpec(
       overflow: overflow ?? this.overflow,
@@ -108,6 +111,7 @@ class TextSpec extends Spec<TextSpec> {
       textDirection: textDirection ?? this.textDirection,
       softWrap: softWrap ?? this.softWrap,
       directive: directive ?? this.directive,
+      animated: animated ?? this.animated,
     );
   }
 
@@ -124,6 +128,7 @@ class TextSpec extends Spec<TextSpec> {
         style,
         textDirection,
         directive,
+        animated,
       ];
 }
 

@@ -251,7 +251,7 @@ void main() {
     await tester.pumpWidget(
       const MaterialApp(
         home: AnimatedBoxSpecWidget(
-          spec: BoxSpec.empty(),
+          spec: BoxSpec(),
           duration: Duration(milliseconds: 500),
           child: childWidget,
         ),

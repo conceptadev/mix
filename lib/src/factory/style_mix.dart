@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 
+import '../attributes/animated/animated_data.dart';
 import '../attributes/nested_style/nested_style_attribute.dart';
 import '../attributes/variant_attribute.dart';
 import '../core/attribute.dart';
@@ -206,7 +207,7 @@ class Style with Comparable {
     return AnimatedStyle._(
       styles: styles,
       variants: variants,
-      animatedData: AnimatedData.withDefaults(duration: duration, curve: curve),
+      animated: AnimatedData(duration: duration, curve: curve),
     );
   }
 
@@ -366,12 +367,12 @@ class Style with Comparable {
 }
 
 class AnimatedStyle extends Style {
-  final AnimatedData animatedData;
+  final AnimatedData animated;
 
   const AnimatedStyle._({
     required AttributeMap<StyledAttribute> styles,
     required AttributeMap<VariantAttribute> variants,
-    required this.animatedData,
+    required this.animated,
   }) : super._(styles: styles, variants: variants);
 
   factory AnimatedStyle(
@@ -382,7 +383,7 @@ class AnimatedStyle extends Style {
     return AnimatedStyle._(
       styles: style.styles,
       variants: style.variants,
-      animatedData: AnimatedData.withDefaults(duration: duration, curve: curve),
+      animated: AnimatedData(duration: duration, curve: curve),
     );
   }
 
@@ -393,12 +394,12 @@ class AnimatedStyle extends Style {
   AnimatedStyle copyWith({
     AttributeMap<StyledAttribute>? styles,
     AttributeMap<VariantAttribute>? variants,
-    AnimatedData? animatedData,
+    AnimatedData? animated,
   }) {
     return AnimatedStyle._(
       styles: styles ?? this.styles,
       variants: variants ?? this.variants,
-      animatedData: animatedData ?? this.animatedData,
+      animated: animated ?? this.animated,
     );
   }
 
@@ -409,7 +410,7 @@ class AnimatedStyle extends Style {
     return AnimatedStyle._(
       styles: newStyle.styles,
       variants: newStyle.variants,
-      animatedData: animatedData,
+      animated: animated,
     );
   }
 }

@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
+import '../../attributes/animated/animated_data.dart';
 import '../../core/attribute.dart';
 import '../../factory/mix_provider.dart';
 import '../../factory/mix_provider_data.dart';
@@ -20,6 +21,19 @@ class FlexSpec extends Spec<FlexSpec> {
   final double? gap;
 
   const FlexSpec({
+    this.crossAxisAlignment,
+    this.mainAxisAlignment,
+    this.mainAxisSize,
+    this.verticalDirection,
+    this.direction,
+    this.textDirection,
+    this.textBaseline,
+    this.clipBehavior,
+    this.gap,
+    super.animated,
+  });
+
+  const FlexSpec.exhaustive({
     required this.crossAxisAlignment,
     required this.mainAxisAlignment,
     required this.mainAxisSize,
@@ -29,33 +43,24 @@ class FlexSpec extends Spec<FlexSpec> {
     required this.textBaseline,
     required this.clipBehavior,
     required this.gap,
+    required super.animated,
   });
 
-  const FlexSpec.empty()
-      : crossAxisAlignment = null,
-        mainAxisAlignment = null,
-        mainAxisSize = null,
-        verticalDirection = null,
-        direction = null,
-        textDirection = null,
-        textBaseline = null,
-        clipBehavior = null,
-        gap = null;
-
   static FlexSpec of(BuildContext context) {
-    final mix = MixProvider.of(context);
+    final mix = Mix.of(context);
 
-    return mix.attributeOf<FlexSpecAttribute>()?.resolve(mix) ??
-        const FlexSpec.empty();
+    return FlexSpec.from(mix);
   }
 
   static FlexSpec from(MixData mix) {
     return mix.attributeOf<FlexSpecAttribute>()?.resolve(mix) ??
-        const FlexSpec.empty();
+        const FlexSpec();
   }
 
   @override
-  FlexSpec lerp(FlexSpec other, double t) {
+  FlexSpec lerp(FlexSpec? other, double t) {
+    if (other == null) return this;
+
     return FlexSpec(
       crossAxisAlignment:
           lerpSnap(crossAxisAlignment, other.crossAxisAlignment, t),
@@ -69,6 +74,7 @@ class FlexSpec extends Spec<FlexSpec> {
       textBaseline: lerpSnap(textBaseline, other.textBaseline, t),
       clipBehavior: lerpSnap(clipBehavior, other.clipBehavior, t),
       gap: lerpDouble(gap, other.gap, t),
+      animated: other.animated ?? animated,
     );
   }
 
@@ -83,6 +89,7 @@ class FlexSpec extends Spec<FlexSpec> {
     TextBaseline? textBaseline,
     Clip? clipBehavior,
     double? gap,
+    AnimatedData? animated,
   }) {
     return FlexSpec(
       crossAxisAlignment: crossAxisAlignment ?? this.crossAxisAlignment,
@@ -94,6 +101,7 @@ class FlexSpec extends Spec<FlexSpec> {
       textBaseline: textBaseline ?? this.textBaseline,
       clipBehavior: clipBehavior ?? this.clipBehavior,
       gap: gap ?? this.gap,
+      animated: animated ?? this.animated,
     );
   }
 
@@ -108,5 +116,6 @@ class FlexSpec extends Spec<FlexSpec> {
         textBaseline,
         clipBehavior,
         gap,
+        animated,
       ];
 }

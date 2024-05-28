@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../attributes/animated/animated_data.dart';
 import '../../core/attribute.dart';
 import '../../factory/mix_provider.dart';
 import '../../factory/mix_provider_data.dart';
@@ -17,33 +18,38 @@ class StackSpec extends Spec<StackSpec> {
     this.fit,
     this.textDirection,
     this.clipBehavior,
+    super.animated,
   });
 
-  const StackSpec.empty()
-      : alignment = null,
-        fit = null,
-        textDirection = null,
-        clipBehavior = null;
+  const StackSpec.exhaustive({
+    required this.alignment,
+    required this.fit,
+    required this.textDirection,
+    required this.clipBehavior,
+    required super.animated,
+  });
 
   static StackSpec of(BuildContext context) {
-    final mix = MixProvider.of(context);
+    final mix = Mix.of(context);
 
-    return mix.attributeOf<StackSpecAttribute>()?.resolve(mix) ??
-        const StackSpec.empty();
+    return StackSpec.from(mix);
   }
 
   static StackSpec from(MixData mix) {
     return mix.attributeOf<StackSpecAttribute>()?.resolve(mix) ??
-        const StackSpec.empty();
+        const StackSpec();
   }
 
   @override
-  StackSpec lerp(StackSpec other, double t) {
+  StackSpec lerp(StackSpec? other, double t) {
+    if (other == null) return this;
+
     return StackSpec(
       alignment: AlignmentGeometry.lerp(alignment, other.alignment, t),
       fit: lerpSnap(fit, other.fit, t),
       textDirection: lerpSnap(textDirection, other.textDirection, t),
       clipBehavior: lerpSnap(clipBehavior, other.clipBehavior, t),
+      animated: other.animated ?? animated,
     );
   }
 
@@ -53,15 +59,18 @@ class StackSpec extends Spec<StackSpec> {
     StackFit? fit,
     TextDirection? textDirection,
     Clip? clipBehavior,
+    AnimatedData? animated,
   }) {
     return StackSpec(
       alignment: alignment ?? this.alignment,
       fit: fit ?? this.fit,
       textDirection: textDirection ?? this.textDirection,
       clipBehavior: clipBehavior ?? this.clipBehavior,
+      animated: animated ?? this.animated,
     );
   }
 
   @override
-  List<Object?> get props => [alignment, fit, textDirection, clipBehavior];
+  List<Object?> get props =>
+      [alignment, fit, textDirection, clipBehavior, animated];
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../attributes/animated/animated_data.dart';
 import '../../attributes/scalars/scalar_util.dart';
 import '../../attributes/strut_style/strut_style_dto.dart';
 import '../../attributes/strut_style/strut_style_util.dart';
@@ -48,6 +49,7 @@ class TextSpecUtility<T extends Attribute>
     TextDirection? textDirection,
     bool? softWrap,
     TextDirective? directive,
+    AnimatedDataDto? animated,
   }) {
     return builder(
       TextSpecAttribute(
@@ -62,6 +64,7 @@ class TextSpecUtility<T extends Attribute>
         textDirection: textDirection,
         softWrap: softWrap,
         directive: directive,
+        animated: animated,
       ),
     );
   }
