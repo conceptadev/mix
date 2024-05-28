@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
+import '../attributes/animated/animated_data.dart';
 import '../attributes/variant_attribute.dart';
 import '../core/attribute.dart';
 import '../core/attributes_map.dart';
 import '../core/extensions/iterable_ext.dart';
 import '../core/modifier.dart';
-import '../helpers/compare_mixin.dart';
-import '../helpers/constants.dart';
 import '../theme/token_resolver.dart';
 import '../variants/context_variant.dart';
 import 'style_mix.dart';
@@ -42,7 +41,7 @@ class MixData {
     return MixData._(
       resolver: resolver,
       attributes: AttributeMap(attributeList),
-      animation: style is AnimatedStyle ? style.animatedData : null,
+      animation: style is AnimatedStyle ? style.animated : null,
     );
   }
 
@@ -167,20 +166,4 @@ M? _mergeAttributes<M extends SpecAttribute>(Iterable<M> mergeables) {
   return mergeables.reduce((a, b) {
     return a.merge(b) as M;
   });
-}
-
-class AnimatedData with Comparable {
-  final Duration duration;
-  final Curve curve;
-  const AnimatedData({required this.duration, required this.curve});
-
-  factory AnimatedData.withDefaults({Duration? duration, Curve? curve}) {
-    return AnimatedData(
-      duration: duration ?? kDefaultAnimationDuration,
-      curve: curve ?? Curves.linear,
-    );
-  }
-
-  @override
-  get props => [duration, curve];
 }

@@ -25,6 +25,7 @@ class FlexSpecAttribute extends SpecAttribute<FlexSpec> {
     this.textBaseline,
     this.clipBehavior,
     this.gap,
+    super.animated,
   });
 
   static FlexSpecAttribute of(MixData mix) {
@@ -33,7 +34,7 @@ class FlexSpecAttribute extends SpecAttribute<FlexSpec> {
 
   @override
   FlexSpec resolve(MixData mix) {
-    return FlexSpec(
+    return FlexSpec.exhaustive(
       crossAxisAlignment: crossAxisAlignment,
       mainAxisAlignment: mainAxisAlignment,
       mainAxisSize: mainAxisSize,
@@ -43,6 +44,7 @@ class FlexSpecAttribute extends SpecAttribute<FlexSpec> {
       textBaseline: textBaseline,
       clipBehavior: clipBehavior,
       gap: gap,
+      animated: mix.animation,
     );
   }
 
@@ -60,6 +62,7 @@ class FlexSpecAttribute extends SpecAttribute<FlexSpec> {
       textBaseline: other.textBaseline ?? textBaseline,
       clipBehavior: other.clipBehavior ?? clipBehavior,
       gap: other.gap ?? gap,
+      animated: other.animated ?? animated,
     );
   }
 
@@ -74,5 +77,6 @@ class FlexSpecAttribute extends SpecAttribute<FlexSpec> {
         textBaseline,
         clipBehavior,
         gap,
+        animated,
       ];
 }

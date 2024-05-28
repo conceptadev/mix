@@ -32,11 +32,12 @@ class TextSpecAttribute extends SpecAttribute<TextSpec> {
     this.textDirection,
     this.softWrap,
     this.directive,
+    super.animated,
   });
 
   @override
   TextSpec resolve(MixData mix) {
-    return TextSpec(
+    return TextSpec.exhaustive(
       overflow: overflow,
       strutStyle: strutStyle?.resolve(mix),
       textAlign: textAlign,
@@ -48,6 +49,7 @@ class TextSpecAttribute extends SpecAttribute<TextSpec> {
       textDirection: textDirection,
       softWrap: softWrap,
       directive: directive,
+      animated: mix.animation,
     );
   }
 
@@ -67,6 +69,7 @@ class TextSpecAttribute extends SpecAttribute<TextSpec> {
             textDirection: other.textDirection ?? textDirection,
             softWrap: other.softWrap ?? softWrap,
             directive: directive?.merge(other.directive) ?? other.directive,
+            animated: other.animated ?? animated,
           );
   }
 
@@ -83,5 +86,6 @@ class TextSpecAttribute extends SpecAttribute<TextSpec> {
         textDirection,
         softWrap,
         directive,
+        animated,
       ];
 }

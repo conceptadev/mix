@@ -19,7 +19,7 @@ import 'box_spec.dart';
 /// ## Inheriting Styles
 ///
 /// If the [inherit] property is set to `true`, `Box` will merge its defined style with
-/// the style from the nearest [MixProvider] ancestor in the widget tree. This is
+/// the style from the nearest [Mix] ancestor in the widget tree. This is
 /// useful for cascading styles down the widget tree.
 ///
 /// ## Performance Considerations
@@ -51,14 +51,13 @@ class Box extends StyledWidget {
     // This method uses `withMix` to get the `MixData` and then applies it to `BoxSpecWidget`,
     // effectively styling the [child].
     return withMix(context, (context) {
-      final mix = MixProvider.of(context);
       final spec = BoxSpec.of(context);
 
-      return mix.isAnimated
+      return spec.isAnimated
           ? AnimatedBoxSpecWidget(
               spec: spec,
-              duration: mix.animation!.duration,
-              curve: mix.animation!.curve,
+              duration: spec.animated!.duration,
+              curve: spec.animated!.curve,
               child: child,
             )
           : BoxSpecWidget(spec: spec, child: child);

@@ -15,7 +15,7 @@ void main() {
           child: SpecBuilder(
             inherit: true,
             builder: (context) {
-              final mix = MixProvider.of(context);
+              final mix = Mix.of(context);
               expect(mix.attributeOf<BoxSpecAttribute>()!.height, 100);
               return const SizedBox();
             },
@@ -33,7 +33,7 @@ void main() {
             child: SpecBuilder(
               inherit: false,
               builder: (context) {
-                final mix = MixProvider.of(context);
+                final mix = Mix.of(context);
                 expect(mix.attributeOf<BoxSpecAttribute>(), isNull);
                 return const SizedBox();
               },
@@ -49,7 +49,7 @@ void main() {
         tester.pumpWidget(
           SpecBuilder(
             builder: (context) {
-              final mix = MixProvider.of(context);
+              final mix = Mix.of(context);
               expect(mix.attributes.length, isZero);
               return const SizedBox();
             },
@@ -74,7 +74,7 @@ void main() {
             inherit: true,
             style: style,
             builder: (context) {
-              final mix = MixProvider.of(context);
+              final mix = Mix.of(context);
               expect(mixData, mix);
               return const SizedBox();
             },

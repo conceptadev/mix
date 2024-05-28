@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../attributes/animated/animated_data.dart';
 import '../../attributes/scalars/scalar_util.dart';
 import '../../core/attribute.dart';
 import 'stack_attribute.dart';
@@ -20,6 +21,7 @@ class StackSpecUtility<T extends Attribute>
     StackFit? fit,
     TextDirection? textDirection,
     Clip? clipBehavior,
+    AnimatedDataDto? animated,
   }) {
     return builder(
       StackSpecAttribute(
@@ -27,6 +29,7 @@ class StackSpecUtility<T extends Attribute>
         fit: fit,
         textDirection: textDirection,
         clipBehavior: clipBehavior,
+        animated: animated,
       ),
     );
   }

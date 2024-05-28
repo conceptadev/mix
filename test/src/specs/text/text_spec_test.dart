@@ -29,7 +29,7 @@ void main() {
       );
 
       final spec = mix.attributeOf<TextSpecAttribute>()?.resolve(mix) ??
-          const TextSpec.empty();
+          const TextSpec();
 
       expect(spec.overflow, TextOverflow.ellipsis);
       expect(spec.strutStyle, const StrutStyle(fontSize: 20.0));
@@ -167,7 +167,7 @@ void main() {
     });
 
     test('TextSpec.empty() constructor', () {
-      const spec = TextSpec.empty();
+      const spec = TextSpec();
 
       expect(spec.overflow, isNull);
       expect(spec.strutStyle, isNull);

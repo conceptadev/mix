@@ -75,7 +75,7 @@ void main() {
     });
 
     test('IconSpec.empty() constructor', () {
-      const spec = IconSpec.empty();
+      const spec = IconSpec();
 
       expect(spec.color, isNull);
       expect(spec.size, isNull);

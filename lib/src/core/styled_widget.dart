@@ -47,13 +47,13 @@ abstract class StyledWidget extends StatelessWidget {
     BuildContext context,
     Widget Function(BuildContext context) builder,
   ) {
-    final inheritedMix = inherit ? MixProvider.maybeOfInherited(context) : null;
+    final inheritedMix = inherit ? Mix.maybeOfInherited(context) : null;
 
     final mix = style.of(context);
 
     final mergedMix = inheritedMix?.merge(mix) ?? mix;
 
-    return MixProvider(
+    return Mix(
       data: mergedMix,
       child: applyModifiers(
         mergedMix,

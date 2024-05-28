@@ -4,6 +4,8 @@ import '../../core/attribute.dart';
 import '../../core/dto.dart';
 import '../../core/modifier.dart';
 import '../../theme/tokens/radius_token.dart';
+import '../animated/animated_data.dart';
+import '../animated/animated_util.dart';
 
 abstract class MixUtility<Attr extends Attribute, Value> {
   @protected
@@ -17,7 +19,10 @@ abstract class SpecUtility<Attr extends Attribute, Value extends SpecAttribute>
     extends MixUtility<Attr, Value> {
   const SpecUtility(super.builder);
 
-  Attr only();
+  AnimatedUtility<Attr> get animated =>
+      AnimatedUtility((value) => only(animated: value));
+
+  Attr only({AnimatedDataDto? animated});
 
   // SpecUtility<VariantAttribute, Value> call(Variant variant);
 }
@@ -43,8 +48,6 @@ abstract class DtoUtility<Attr extends Attribute, D extends Dto<Value>, Value>
 abstract class ScalarUtility<Return extends Attribute, Param>
     extends MixUtility<Return, Param> {
   const ScalarUtility(super.builder);
-
-  Return as(Param value) => builder(value);
 
   Return call(Param value) => builder(value);
 }
@@ -111,10 +114,26 @@ class DoubleUtility<T extends Attribute> extends ScalarUtility<T, double> {
 
   /// Creates an [Attribute] instance with a value of [double.infinity].
   T infinity() => builder(double.infinity);
+}
 
-  /// Creates an [Attribute] instance from a custom [double] value.
-  @override
-  T call(double value) => builder(value);
+/// A utilyt class for creating [Attribute] instances from [Duration] values.
+///
+/// This class extends [ScalarUtility] and provides methods to create [Attribute] instances
+/// from predefined [Duration] values or custom [Duration] values.
+class DurationUtility<T extends Attribute> extends ScalarUtility<T, Duration> {
+  const DurationUtility(super.builder);
+
+  T zero() => builder(Duration.zero);
+
+  T microseconds(int microseconds) =>
+      builder(Duration(microseconds: microseconds));
+
+  T milliseconds(int milliseconds) =>
+      builder(Duration(milliseconds: milliseconds));
+
+  T seconds(int seconds) => builder(Duration(seconds: seconds));
+
+  T minutes(int minutes) => builder(Duration(minutes: minutes));
 }
 
 /// An abstract utility class for creating [Attribute] instances from [double] values representing sizes.
@@ -139,6 +158,44 @@ class IntUtility<T extends Attribute> extends ScalarUtility<T, int> {
   T call(int value) => builder(value);
 }
 
+/// A utility class for creating [Attribute] instances from [Curve] values.
+///
+/// This class extends [ScalarUtility] and provides methods to create [Attribute] instances
+/// from predefined [Curve] values or custom [Curve] values.
+class CurveUtility<T extends Attribute> extends ScalarUtility<T, Curve> {
+  const CurveUtility(super.builder);
+
+  /// Creates an [Attribute] instance with [Curves.linear].
+  T linear() => builder(Curves.linear);
+
+  /// Creates an [Attribute] instance with [Curves.decelerate].
+  T decelerate() => builder(Curves.decelerate);
+
+  /// Creates an [Attribute] instance with [Curves.fastOutSlowIn].
+  T fastOutSlowIn() => builder(Curves.fastOutSlowIn);
+
+  /// Creates an [Attribute] instance with [Curves.bounceIn].
+  T bounceIn() => builder(Curves.bounceIn);
+
+  /// Creates an [Attribute] instance with [Curves.bounceOut].
+  T bounceOut() => builder(Curves.bounceOut);
+
+  /// Creates an [Attribute] instance with [Curves.bounceInOut].
+  T bounceInOut() => builder(Curves.bounceInOut);
+
+  /// Creates an [Attribute] instance with [Curves.ease].
+  T ease() => builder(Curves.ease);
+
+  /// Creates an [Attribute] instance with [Curves.easeIn].
+  T easeIn() => builder(Curves.easeIn);
+
+  /// Creates an [Attribute] instance with [Curves.easeOut].
+  T easeOut() => builder(Curves.easeOut);
+
+  /// Creates an [Attribute] instance with [Curves.easeInOut].
+  T easeInOut() => builder(Curves.easeInOut);
+}
+
 /// A utility class for creating [Attribute] instances from [bool] values.
 ///
 /// This class extends [ScalarUtility] and provides methods to create [Attribute] instances
@@ -151,10 +208,6 @@ class BoolUtility<T extends Attribute> extends ScalarUtility<T, bool> {
 
   /// Creates an [Attribute] instance with a value of `false`.
   T off() => builder(false);
-
-  /// Creates an [Attribute] instance from a custom [bool] value.
-  @override
-  T call(bool value) => builder(value);
 }
 
 /// A utility class for creating [Attribute] instances from [VerticalDirection] values.
@@ -407,6 +460,8 @@ class ImageRepeatUtility<T extends Attribute>
 
 class OffsetUtility<T extends Attribute> extends MixUtility<T, Offset> {
   const OffsetUtility(super.builder);
+
+  T infinite() => builder(Offset.infinite);
 
   T call(double dx, double dy) => builder(Offset(dx, dy));
 

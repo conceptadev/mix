@@ -51,7 +51,7 @@ class StyledText extends StyledWidget {
   @override
   Widget build(BuildContext context) {
     return withMix(context, (context) {
-      final mix = MixProvider.of(context);
+      final mix = Mix.of(context);
       final spec = TextSpec.of(context);
 
       return mix.isAnimated

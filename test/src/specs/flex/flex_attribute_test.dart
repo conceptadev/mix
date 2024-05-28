@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
+import 'package:mix/src/attributes/animated/animated_data.dart';
 
 import '../../../helpers/testing_utils.dart';
 
@@ -93,10 +94,11 @@ void main() {
         textBaseline: TextBaseline.alphabetic,
         clipBehavior: Clip.antiAlias,
         gap: 10.0,
+        animated: AnimatedDataDto.withDefaults(),
       );
       final props = attribute.props;
 
-      expect(props.length, 9);
+      expect(props.length, 10);
       expect(props[0], Axis.horizontal);
       expect(props[1], MainAxisAlignment.center);
       expect(props[2], CrossAxisAlignment.start);
@@ -106,6 +108,10 @@ void main() {
       expect(props[6], TextBaseline.alphabetic);
       expect(props[7], Clip.antiAlias);
       expect(props[8], 10.0);
+      expect(
+        props[9],
+        const AnimatedDataDto.withDefaults(),
+      );
     });
   });
 }
