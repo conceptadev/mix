@@ -20,10 +20,10 @@ class VariantAttribute<V extends IVariant> extends Attribute {
   VariantAttribute? removeVariants(Iterable<IVariant> variantsToRemove) {
     IVariant? remainingVariant;
     if (variant is MultiVariant) {
-      remainingVariant = (variant as MultiVariant).remaining(variantsToRemove);
+      remainingVariant = (variant as MultiVariant).remove(variantsToRemove);
     } else {
       if (!variantsToRemove.contains(variant)) {
-        remainingVariant = variant;
+        return this;
       }
     }
 
