@@ -5,7 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
 import 'package:mix/src/helpers/lerp_helpers.dart';
 
-export 'package:mix/src/core/extensions/values_ext.dart';
+export 'package:mix/src/helpers/values_ext.dart';
 
 class MockBuildContext extends BuildContext {
   @override

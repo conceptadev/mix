@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import '../attribute.dart';
+import '../core/attribute.dart';
 
 // @nodoc
 extension IterableExt<T> on Iterable<T> {

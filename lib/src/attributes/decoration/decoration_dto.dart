@@ -4,8 +4,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/dto.dart';
-import '../../core/extensions/iterable_ext.dart';
 import '../../factory/mix_provider_data.dart';
+import '../../helpers/iterable_ext.dart';
 import '../border/border_dto.dart';
 import '../border/border_radius_dto.dart';
 import '../border/shape_border_dto.dart';
