@@ -19,7 +19,7 @@ class PressableBox extends StatelessWidget {
     this.onFocusChange,
     this.onPress,
     this.hitTestBehavior = HitTestBehavior.opaque,
-    this.disabled = false,
+    this.enabled = true,
     required this.child,
   });
 
@@ -42,7 +42,7 @@ class PressableBox extends StatelessWidget {
 
   final Style? style;
   final Widget child;
-  final bool disabled;
+  final bool enabled;
   final FocusNode? focusNode;
   final bool autofocus;
   final Duration unpressDelay;
@@ -53,7 +53,7 @@ class PressableBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Pressable(
-      disabled: disabled,
+      enabled: enabled,
       onPress: onPress,
       hitTestBehavior: hitTestBehavior,
       onLongPress: onLongPress,
@@ -70,7 +70,7 @@ class Pressable extends _PressableBuilderWidget {
   const Pressable({
     super.key,
     required super.child,
-    super.disabled,
+    super.enabled,
     super.enableFeedback,
     super.onPress,
     super.hitTestBehavior,
@@ -93,7 +93,7 @@ abstract class _PressableBuilderWidget extends StatefulWidget {
   const _PressableBuilderWidget({
     super.key,
     required this.child,
-    this.disabled = false,
+    this.enabled = true,
     this.enableFeedback = false,
     this.onPress,
     this.onLongPress,
@@ -108,7 +108,7 @@ abstract class _PressableBuilderWidget extends StatefulWidget {
 
   final Widget child;
 
-  final bool disabled;
+  final bool enabled;
 
   /// Should gestures provide audible and/or haptic feedback
   ///
@@ -261,11 +261,6 @@ abstract class _PressableBuilderWidgetState<T extends _PressableBuilderWidget>
     }
   }
 
-  bool get isEnabled {
-    return !widget.disabled &&
-        (widget.onPress != null || widget.onLongPress != null);
-  }
-
   void handleOnPress() {
     if (!mounted) return;
     _handlePressUpdate(true);
@@ -283,7 +278,7 @@ abstract class _PressableBuilderWidgetState<T extends _PressableBuilderWidget>
   @override
   Widget build(BuildContext context) {
     final focusableDetector = CustomFocusableActionDetector(
-      enabled: isEnabled,
+      enabled: widget.enabled,
       focusNode: widget.focusNode,
       autofocus: widget.autofocus,
       onShowFocusHighlight: _handleFocusUpdate,
@@ -293,7 +288,7 @@ abstract class _PressableBuilderWidgetState<T extends _PressableBuilderWidget>
       onMouseExit: _handleOnMouseExit,
       onMouseHover: _handleMouseHover,
       child: PressableState(
-        enabled: isEnabled,
+        enabled: widget.enabled,
         hovered: _isHovered,
         focused: _isFocused,
         pressed: _isPressed,
@@ -304,16 +299,19 @@ abstract class _PressableBuilderWidgetState<T extends _PressableBuilderWidget>
     );
 
     return GestureDetector(
-      onTapUp: isEnabled ? (_) => _handlePressUpdate(false) : null,
-      onTap: isEnabled ? handleOnPress : null,
-      onTapCancel: isEnabled ? () => _handlePressUpdate(false) : null,
-      onLongPressCancel: isEnabled ? () => handleLongPressUpdate(false) : null,
-      onLongPress: isEnabled ? handleOnLongPress : null,
-      onLongPressStart: isEnabled ? (_) => handleLongPressUpdate(true) : null,
-      onLongPressEnd: isEnabled ? (_) => handleLongPressUpdate(false) : null,
-      onPanDown: isEnabled ? _handlePanDown : null,
-      onPanUpdate: isEnabled ? _handlePanUpdate : null,
-      onPanEnd: isEnabled ? _handlePanUp : null,
+      onTapUp: widget.enabled ? (_) => _handlePressUpdate(false) : null,
+      onTap: widget.enabled ? handleOnPress : null,
+      onTapCancel: widget.enabled ? () => _handlePressUpdate(false) : null,
+      onLongPressCancel:
+          widget.enabled ? () => handleLongPressUpdate(false) : null,
+      onLongPress: widget.enabled ? handleOnLongPress : null,
+      onLongPressStart:
+          widget.enabled ? (_) => handleLongPressUpdate(true) : null,
+      onLongPressEnd:
+          widget.enabled ? (_) => handleLongPressUpdate(false) : null,
+      onPanDown: widget.enabled ? _handlePanDown : null,
+      onPanUpdate: widget.enabled ? _handlePanUpdate : null,
+      onPanEnd: widget.enabled ? _handlePanUp : null,
       behavior: widget.hitTestBehavior,
       child: focusableDetector,
     );
