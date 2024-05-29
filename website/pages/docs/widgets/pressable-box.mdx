@@ -18,13 +18,13 @@ To use `PressableBox`, simply wrap your widget with it and specify the interacti
 PressableBox(
   style: Style(
     $box.color.blue(),
-      $on.press(
-        $box.color.red(),
-      ),
-      $on.hover(
-        $box.color.green(),
-      ),
+    $on.press(
+      $box.color.red(),
     ),
+    $on.hover(
+      $box.color.green(),
+    ),
+  ),
   onPress: () => print('Pressed!'),
   child: StyledText('Press Me'),
 );
