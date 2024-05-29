@@ -5,7 +5,7 @@ import 'attribute.dart';
 
 abstract class WidgetModifierSpec<Self extends WidgetModifierSpec<Self>>
     extends Spec<Self> {
-  const WidgetModifierSpec();
+  const WidgetModifierSpec({super.animated});
 
   static WidgetModifierSpec? lerpValue(
     WidgetModifierSpec? begin,

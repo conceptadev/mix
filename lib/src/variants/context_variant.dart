@@ -60,11 +60,10 @@ abstract class WidgetContextVariant<Value> extends ContextVariant {
   const WidgetContextVariant();
 
   ContextVariantBuilder event(Style Function(Value) fn) {
-    Style contextGetter(BuildContext context) {
-      return fn(builder(context));
-    }
-
-    return ContextVariantBuilder(contextGetter, this);
+    return ContextVariantBuilder(
+      (BuildContext context) => fn(builder(context)),
+      this,
+    );
   }
 
   @protected
