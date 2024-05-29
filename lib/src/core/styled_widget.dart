@@ -55,10 +55,7 @@ abstract class StyledWidget extends StatelessWidget {
 
     return Mix(
       data: mergedMix,
-      child: applyModifiers(
-        mergedMix,
-        Builder(builder: (newContext) => builder(newContext)),
-      ),
+      child: applyModifiers(mergedMix, Builder(builder: builder)),
     );
   }
 

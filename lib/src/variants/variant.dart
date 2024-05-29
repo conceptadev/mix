@@ -135,10 +135,6 @@ class MultiVariant extends IVariant {
     return MultiVariant(variants, type: MultiVariantOperator.or);
   }
 
-  IVariant? remaining(Iterable<IVariant> variantsToRemove) {
-    return remove(variantsToRemove);
-  }
-
   IVariant? remove(Iterable<IVariant> variantsToRemove) {
     final remainingVariants = <IVariant>[];
 
