@@ -17,14 +17,22 @@ void main() {
       final thirdKey = UniqueKey();
       await tester.pumpWidget(Column(
         children: [
-          Pressable(onPress: null, child: Container(key: firstKey)),
           Pressable(
-            disabled: true,
+            onPress: null,
+            enabled: false,
+            child: Container(key: firstKey),
+          ),
+          Pressable(
+            enabled: false,
             onPress: null,
             child: Container(key: secondKey),
           ),
           // Test with a onpress function
-          Pressable(onPress: () {}, child: Container(key: thirdKey)),
+          Pressable(
+            onPress: () {},
+            enabled: true,
+            child: Container(key: thirdKey),
+          ),
         ],
       ));
 
@@ -48,13 +56,13 @@ void main() {
     });
 
     testWidgets(
-      'must be clickable when isDisabled is setted to false',
+      'must be clickable when enabled is setted to true',
       (tester) async {
         int counter = 0;
 
         await tester.pumpWidget(
           Pressable(
-            disabled: false,
+            enabled: true,
             onPress: () {
               counter++;
             },
@@ -73,13 +81,13 @@ void main() {
     );
 
     testWidgets(
-      'must be unclickable when isDisabled is setted to true',
+      'must be unclickable when enabled is setted to false',
       (tester) async {
         int counter = 0;
 
         await tester.pumpWidget(
           Pressable(
-            disabled: true,
+            enabled: false,
             onPress: () {
               counter++;
             },
@@ -100,7 +108,7 @@ void main() {
 
   group('PressableBox', () {
     testWidgets(
-      'must be clickable when isDisabled is setted to false',
+      'must be clickable when enable is setted to true',
       (tester) async {
         int counter = 0;
 
@@ -110,7 +118,7 @@ void main() {
             onPress: () {
               counter++;
             },
-            disabled: false,
+            enabled: true,
             child: Container(),
           ),
         );
@@ -126,7 +134,7 @@ void main() {
     );
 
     testWidgets(
-      'must be unclickable when isDisabled is setted to true',
+      'must be unclickable when enable is setted to false',
       (tester) async {
         int counter = 0;
 
@@ -136,7 +144,7 @@ void main() {
             onPress: () {
               counter++;
             },
-            disabled: true,
+            enabled: false,
             child: Container(),
           ),
         );
@@ -384,7 +392,7 @@ Future<void> pumpTestCase({
     PressableBox(
       unpressDelay: duration,
       onPress: () {},
-      disabled: false,
+      enabled: true,
       style: Style(
         $with.opacity(0.5),
         $box.height(50),
