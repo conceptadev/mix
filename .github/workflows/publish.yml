@@ -18,7 +18,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
   publish:
-    needs: test
+    needs: shared-job
     permissions:
       id-token: write # Required for authentication using OIDC
     runs-on: ubuntu-latest
