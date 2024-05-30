@@ -13,12 +13,12 @@ The `Style` class is a container for all the stylizations you want to apply to a
 
 ```dart
 Box(
-    style: Style(
-        $box.height(50),
-        $box.width(50),
-        $box.color(Colors.red),
-        $box.borderRadius(10),
-    ),
+  style: Style(
+    $box.height(50),
+    $box.width(50),
+    $box.color(Colors.red),
+    $box.borderRadius(10),
+  ),
 );
 ```
 
@@ -30,26 +30,26 @@ The `AnimatedStyle` class is a subclass of `Style` that allows you to animate th
 
 ```dart
 PressableBox(
-    onPress: () => {
-        // This function will be triggered when the box is pressed.
-    },
-    child: Box(
-        style: AnimatedStyle(
-            Style(
-                $box.height(50),
-                $box.width(50),
-                $box.color(Colors.blue),
-                $box.borderRadius(10),
-                $on.hover(
-                    $box.height(100),
-                    $box.width(100),
-                    $box.color(Colors.red),
-                ),
-            ),
-            duration: Durations.long1,
-            curve: Curves.decelerate,
+  onPress: () => {
+    // This function will be triggered when the box is pressed.
+  },
+  child: Box(
+    style: AnimatedStyle(
+      Style(
+        $box.height(50),
+        $box.width(50),
+        $box.color(Colors.blue),
+        $box.borderRadius(10),
+        $on.hover(
+          $box.height(100),
+          $box.width(100),
+          $box.color(Colors.red),
         ),
+      ),
+      duration: Durations.long1,
+      curve: Curves.decelerate,
     ),
+  ),
 );
 ```
 
@@ -63,20 +63,20 @@ Let's modify our initial red, rounded container example to animate its size on p
 
 ```dart
 PressableBox(
-    onPress: () => {
-        // Action to perform when the box is pressed.
-    },
-    child: Box(
-        style: Style(
-            $box.height(100),
-            $box.width(100),
-            $box.color(Colors.red),
-            $box.borderRadius(20),
-        ).animate(
-            duration: Durations.long1,
-            curve: Curves.linear,
-        )
-    ),
+  onPress: () => {
+    // Action to perform when the box is pressed.
+  },
+  child: Box(
+    style: Style(
+      $box.height(100),
+      $box.width(100),
+      $box.color(Colors.red),
+      $box.borderRadius(20),
+    ).animate(
+      duration: Durations.long1,
+      curve: Curves.linear,
+    )
+  ),
 );
 ```
 
@@ -92,22 +92,22 @@ In the example below, the animation will not work because we didn't define a sta
 
 ```dart
 PressableBox(
-    onPress: () => {
-        // Intended action when the box is pressed.
-    },
-    child: Box(
-        style: AnimatedStyle(
-            Style(
-                $box.height(50),
-                $box.width(50),
-                $on.hover(
-                    $box.color(Colors.blue),
-                ),
-            ),
-            duration: Durations.long1,
-            curve: Curves.decelerate,
+  onPress: () => {
+    // Intended action when the box is pressed.
+  },
+  child: Box(
+    style: AnimatedStyle(
+      Style(
+        $box.height(50),
+        $box.width(50),
+        $on.hover(
+          $box.color(Colors.blue),
         ),
+      ),
+      duration: Durations.long1,
+      curve: Curves.decelerate,
     ),
+  ),
 );
 ```
 
@@ -117,22 +117,22 @@ Unlike the previous example, the animation will work because we defined a start 
 
 ```dart
 PressableBox(
-    onPress: () => {
-        // Action to perform when the box is pressed.
-    },
-    child: Box(
-        style: AnimatedStyle(
-            Style(
-                $box.height(50),
-                $box.width(50),
-                $box.color(Colors.red),
-                $on.hover(
-                    $box.color(Colors.blue),
-                ),
-            ),
-            duration: Durations.long1,
-            curve: Curves.decelerate,
+  onPress: () => {
+    // Action to perform when the box is pressed.
+  },
+  child: Box(
+    style: AnimatedStyle(
+      Style(
+        $box.height(50),
+        $box.width(50),
+        $box.color(Colors.red),
+        $on.hover(
+          $box.color(Colors.blue),
         ),
+      ),
+      duration: Durations.long1,
+      curve: Curves.decelerate,
     ),
+  ),
 );
 ```

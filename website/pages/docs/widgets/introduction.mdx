@@ -15,11 +15,11 @@ As already mentioned, the `Box` widget is equivalent to Flutter's `Container`. Y
 
 ```dart
 Box(
-    style: Style(
-        $box.width(100),
-        $box.height(100),
-        $box.backgroundColor(Colors.blue),
-    )
+  style: Style(
+    $box.width(100),
+    $box.height(100),
+    $box.backgroundColor(Colors.blue),
+  )
 )
 ```
 
@@ -28,13 +28,13 @@ The `PressableBox` widget is merge between a `Container` and `GestureDetector`. 
 
 ```dart
 PressableBox(
-    onPress: () => {// Do something},
-    style: Style(
+  onPress: () => {// Do something},
+  style: Style(
     $box.color.blue(),
     $box.width(100),
     $box.height(100),
-    ),
-    child: // <- Enter the child parameter,
+  ),
+  child: // <- Enter the child parameter,
 )
 ```
 
@@ -43,11 +43,11 @@ It's a widget that can apply text styles to a `Text` widget. You can read more a
 
 ```dart
 StyledText(
-    'Hello, World!',
-    style: Style(
-        $text.style.color(Colors.blue),
-        $text.style.fontSize(20),
-    )
+  'Hello, World!',
+  style: Style(
+    $text.style.color(Colors.blue),
+    $text.style.fontSize(20),
+  )
 )
 ```
 
@@ -56,11 +56,11 @@ StyledIcon's a widget equivalent to an `Icon` widget. You can read more about it
 
 ```dart
 StyledIcon(
-    Icons.ac_unit,
-    style: Style(
-        $icon.color(Colors.blue),
-        $icon.size(30),
-    )
+  Icons.ac_unit,
+  style: Style(
+    $icon.color(Colors.blue),
+    $icon.size(30),
+  )
 )
 ```
 
@@ -69,12 +69,12 @@ It's a widget that can apply styles to an `Image` widget. You can read more abou
 
 ```dart
 StyledImage(
-    style: Style(
-        $box.color.blue(),
-        $flex.direction.horizontal(),
-        $flex.mainAxisAlignment.spaceBetween(),
-    ),
-    image: // <-- Enter the ImageProvider here,
+  style: Style(
+    $box.color.blue(),
+    $flex.direction.horizontal(),
+    $flex.mainAxisAlignment.spaceBetween(),
+  ),
+  image: // <-- Enter the ImageProvider here,
 )
 ```
 
@@ -83,23 +83,23 @@ These are equivalent to the `Flex`, `Row` and `Column` widget in Flutter. Everyt
 
 ```dart
 FlexBox(
-    direction: Axis.horizontal,
-    style: Style(
-        $box.color.blue(),
-        $flex.direction.horizontal(),
-        $flex.mainAxisAlignment.spaceBetween(),
+  direction: Axis.horizontal,
+  style: Style(
+    $box.color.blue(),
+    $flex.direction.horizontal(),
+    $flex.mainAxisAlignment.spaceBetween(),
+  ),
+  children: [
+    Box(
+      child: Text('Box 1'),
     ),
-    children: [
-        Box(
-        child: Text('Box 1'),
-        ),
-        Box(
-        child: Text('Box 2'),
-        ),
-        Box(
-        child: Text('Box 3'),
-        ),
-    ],
+    Box(
+      child: Text('Box 2'),
+    ),
+    Box(
+      child: Text('Box 3'),
+    ),
+  ],
 )
 ```
 
@@ -108,23 +108,23 @@ This is a widget that allows you to layout widgets like a `Stack` widget. You ca
 
 ```dart
 ZBox(
-    style: Style(
-        $stack.alignment.centerLeft(),
-        $box.width(200),
-        $box.height(200),
+  style: Style(
+    $stack.alignment.centerLeft(),
+    $box.width(200),
+    $box.height(200),
+  ),
+  children: [
+    Container(
+      color: Colors.red,
+      width: 100,
+      height: 100,
     ),
-    children: [
-        Container(
-        color: Colors.red,
-        width: 100,
-        height: 100,
-        ),
-        Container(
-        color: Colors.blue,
-        width: 50,
-        height: 50,
-        ),
-    ],
+    Container(
+      color: Colors.blue,
+      width: 50,
+      height: 50,
+    ),
+  ],
 )
 ```
 

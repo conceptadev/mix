@@ -92,10 +92,10 @@ Sets the padding of the box on the specified sides.
 
 ```dart
 $box.padding.only(
-    top: 10,
-    bottom: 20,
-    left: 30,
-    right: 40
+  top: 10,
+  bottom: 20,
+  left: 30,
+  right: 40
 );
 ```
 
@@ -196,10 +196,10 @@ Styles all sides of `Border`.
 
 ```dart
 $box.border(
-    color: Colors.red,
-    width: 2,
-    style: BorderStyle.solid,
-    strokeAlign: 0.5
+  color: Colors.red,
+  width: 2,
+  style: BorderStyle.solid,
+  strokeAlign: 0.5
 );
 ```
 
@@ -312,10 +312,10 @@ Styles all sides of `BorderDirectional`.
 
 ```dart
 $box.borderDirectional(
-    color: Colors.red,
-    width: 2,
-    style: BorderStyle.solid,
-    strokeAlign: 0.5
+  color: Colors.red,
+  width: 2,
+  style: BorderStyle.solid,
+  strokeAlign: 0.5
 );
 ```
 
@@ -572,10 +572,10 @@ The same as calling `BorderRadius.only` of a `BoxDecoration.$box.borderRadius`.
 
 ```dart
 $box.borderRadius.only(
-    topLeft: Radius.circular(10),
-    topRight: Radius.circular(20),
-    bottomLeft: Radius.circular(30),
-    bottomRight: Radius.circular(40)
+  topLeft: Radius.circular(10),
+  topRight: Radius.circular(20),
+  bottomLeft: Radius.circular(30),
+  bottomRight: Radius.circular(40)
 );
 ```
 
@@ -708,9 +708,9 @@ Similar to using `BorderRadiusDirectional.only` of a `BoxDecoration.$box.borderR
 ```dart
 
 $box.borderRadiusDirectional.only(
-    topStart: Radius.circular(10),
-    topEnd: Radius.circular(20),
-    bottomStart: Radius.circular(10),
-    bottomEnd: Radius.circular(20)
+  topStart: Radius.circular(10),
+  topEnd: Radius.circular(20),
+  bottomStart: Radius.circular(10),
+  bottomEnd: Radius.circular(20)
 );
 ```
