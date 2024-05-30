@@ -26,10 +26,6 @@ class SpacingUtility<T extends Attribute>
 
   late final right = SpacingSideUtility((v) => only(right: v));
 
-  late final start = SpacingSideUtility((v) => only(start: v));
-
-  late final end = SpacingSideUtility((v) => only(end: v));
-
   SpacingUtility(super.builder) : super(valueToDto: (value) => value.toDto());
 
   T call(double p1, [double? p2, double? p3, double? p4]) {
