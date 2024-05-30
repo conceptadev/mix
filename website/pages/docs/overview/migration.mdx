@@ -64,20 +64,20 @@ The `MixTheme` feature has been improved and now offer better API. It can applie
 ```dart
 const primaryColor = ColorToken('primary');
 final theme = MixThemeData(
-    colors: {
-        primaryColor: Colors.blue,
-    },
+  colors: {
+    primaryColor: Colors.blue,
+  },
 );
 
 // ... body method ...
 MixTheme(
-    data: theme,
-    Box(
-        key: key,
-        style: Style(
-            $box.color.ref(primaryColor),
-        ),
-    )
+  data: theme,
+  Box(
+    key: key,
+    style: Style(
+      $box.color.ref(primaryColor),
+    ),
+  )
 )
 ```
 ### The use of $
@@ -98,23 +98,23 @@ Two new namespaces were added to the Mix package: `$on` and `$with`. The `$on` n
 
 ```dart
 PressableBox(
-    onPress: () {},
-    style: Style(
-        $box.width(200),
-        $box.height(200),
-        $box.color.blue(),
+  onPress: () {},
+  style: Style(
+    $box.width(200),
+    $box.height(200),
+    $box.color.blue(),
 
-        $with.scale(2), // <-- Modifier
-        $with.opacity(0.5),
-        
-        $on.hover( // <-- ContextVariant
-            $box.color.red(),
-        ),
-        $on.press(
-            $box.color.green(),
-        ),
+    $with.scale(2), // <-- Modifier
+    $with.opacity(0.5),
+    
+    $on.hover( // <-- ContextVariant
+      $box.color.red(),
     ),
-    child: Box(),
+    $on.press(
+      $box.color.green(),
+    ),
+  ),
+  child: Box(),
 )
 
 ```
