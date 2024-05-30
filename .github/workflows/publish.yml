@@ -6,7 +6,7 @@ on:
       - 'v[0-9]+.[0-9]+.[0-9]+*'
 
 jobs:
-  test:
+  shared-job:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout mix repo
