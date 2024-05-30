@@ -1,7 +1,7 @@
 {
   "styling": "Styling",
   "variants": "Variants",
-  "modifiers": "Modifiers",
+  "widget-modifiers": "Widget Modifiers",
   "theming": "Theming",
   "animations": "How to create animation using Mix",
   "directives": "Directives",
