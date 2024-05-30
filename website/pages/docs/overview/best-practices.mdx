@@ -9,14 +9,14 @@ import { FileTree } from "nextra/components";
 
 # Best Practices
 
-As you start to build your app with Mix, you'll want to follow some best practices to ensure your code is aligned with the framework's conventions.
+As you start to build your app with Mix, you'll want to follow some best practices to ensure your code aligns with the framework's conventions.
 
 <Callout type="info">
   Guidelines in this guide are crafted for scalability and maintainability in
   Mix, and will evolve with community insights.
 </Callout>
 
-To get started, We'll create a button based on the Shadcn's [Button](https://ui.shadcn.com/docs/components/button) component. We'll call it a `CustomButton`.
+To get started, we'll create a button based on Shadcn's [Button](https://ui.shadcn.com/docs/components/button) component. We'll call it `CustomButton`.
 
 ## File Structure
 
@@ -76,7 +76,7 @@ class CustomButtonType extends Variant {
   const CustomButtonType._(super.name);
 
   static const primary = CustomButtonType._('custom.button.primary');
-  static const destructive = CustomButtonType._('custom.button.desctructive');
+  static const destructive = CustomButtonType._('custom.button.destructive');
   static const link = CustomButtonType._('custom.button.link');
 }
 
@@ -90,7 +90,7 @@ class CustomButtonSize extends Variant {
 
 By defining variants, we create a set of predefined styles that can be easily applied to the `CustomButton`. This approach offers several advantages:
 
-- **Consistency**: Variants allows you to maintain a simple API to style your component. You can easily apply a set of predefined styles to your component, ensuring consistency across your application.
+- **Consistency**: Variants allow you to maintain a simple API to style your component. You can easily apply a set of predefined styles to your component, ensuring consistency across your application.
 - **Flexibility**: They allow for customization without altering the core component logic. You can introduce new styles or modify existing ones without impacting the button's basic functionality.
 - **Ease of Use**: With variants, the component's API becomes more intuitive and easier to use, as developers can pick from a set of predefined options.
 

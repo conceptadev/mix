@@ -28,7 +28,7 @@ $text.strutStyle.fontSize(10)
 
 ### $text.strutStyle.fontWeight
 
-Useful for defining FontWeight values for widgets
+Useful for defining `FontWeight` values for widgets
 
 ```dart
 $text.strutStyle.fontWeight(FontWeight.w500)
@@ -50,14 +50,14 @@ $text.strutStyle.forceStrutHeight.on()
 ```
 
 ### $text.strutStyle.height
-The minimum height of the strut, as a multiple of fontSize.
+The minimum height of the strut, as a multiple of `fontSize`.
 
 ```dart
 $text.strutStyle.height(1.5)
 ```
 
 ### $text.strutStyle.leading
-The additional leading to apply to the strut as a multiple of fontSize, independent of height and leadingDistribution.
+The additional leading to apply to the strut as a multiple of `fontSize`, independent of `height` and `leadingDistribution`.
 
 ```dart
 $text.strutStyle.leading(10)
@@ -189,7 +189,7 @@ $text.style.backgroundColor.blueAccent()
 ```
 
 ### $text.style.fontFeatures
-A list of FontFeatures that affect how the font selects glyphs.
+A list of `FontFeatures` that affect how the font selects glyphs.
 
 ```dart
 $text.style.fontFeatures([const FontFeature.tabularFigures()])
@@ -292,7 +292,7 @@ $text.textWidthBasis.longestLine()
 ```
 
 ## $text.textHeightBehavior
-Defines how to apply TextStyle.height over and under text.
+Defines how to apply `TextStyle.height` over and under text.
 
 ```dart
 $text.textHeightBehavior(
