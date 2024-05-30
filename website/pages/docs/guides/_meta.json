@@ -2,8 +2,8 @@
   "styling": "Styling",
   "variants": "Variants",
   "widget-modifiers": "Widget Modifiers",
-  "theming": "Theming",
-  "animations": "How to create animation using Mix",
+  "design-token": "Design Tokens",
+  "animations": "Animations",
   "directives": "Directives",
   "supporting-new-widgets": "Supporting new Widgets"
 }

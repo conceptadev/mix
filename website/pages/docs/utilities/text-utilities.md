@@ -46,21 +46,21 @@ $text.strutStyle.fontStyle.italic()
 Whether the strut height should be forced
 
 ```dart
- $text.strutStyle.forceStrutHeight.on()
+$text.strutStyle.forceStrutHeight.on()
 ```
 
 ### $text.strutStyle.height
 The minimum height of the strut, as a multiple of fontSize.
 
 ```dart
- $text.strutStyle.height(1.5)
+$text.strutStyle.height(1.5)
 ```
 
 ### $text.strutStyle.leading
 The additional leading to apply to the strut as a multiple of fontSize, independent of height and leadingDistribution.
 
 ```dart
- $text.strutStyle.leading(10)
+$text.strutStyle.leading(10)
 ```
 
 ### $text.strutStyle.fontFamilyFallback
@@ -148,16 +148,16 @@ A list of Shadows that will be painted underneath the text.
 
 ```dart
 $text.style.shadows(const [
-    Shadow(
-        color: Colors.black,
-        offset: Offset(10, 10),
-        blurRadius: 10,
-    ),
-    Shadow(
-        color: Colors.red,
-        offset: Offset(0, -10),
-        blurRadius: 100,
-    ),
+  Shadow(
+    color: Colors.black,
+    offset: Offset(10, 10),
+    blurRadius: 10,
+  ),
+  Shadow(
+    color: Colors.red,
+    offset: Offset(0, -10),
+    blurRadius: 100,
+  ),
 ]),
 ```
 
@@ -166,9 +166,9 @@ Instead of a list of Shadows this utility receive only one shadow model that wil
 
 ```dart
 $text.style.shadow(
-    color: Colors.black,
-    offset: Offset(10, 10),
-    blurRadius: 10,
+  color: Colors.black,
+  offset: Offset(10, 10),
+  blurRadius: 10,
 ),
 ```
 
@@ -242,10 +242,10 @@ The paint drawn as a foreground for the text.
 
 ```dart
 $text.style.foreground(
-    Paint()
-      ..style = PaintingStyle.stroke
-      ..color = Colors.black
-      ..strokeWidth = 2,
+  Paint()
+    ..style = PaintingStyle.stroke
+    ..color = Colors.black
+    ..strokeWidth = 2,
 )
 ```
 
@@ -254,10 +254,10 @@ The paint drawn as a background for the text.
 
 ```dart
 $text.style.background(
-    Paint()
-      ..style = PaintingStyle.stroke
-      ..color = Colors.black
-      ..strokeWidth = 2,
+  Paint()
+    ..style = PaintingStyle.stroke
+    ..color = Colors.black
+    ..strokeWidth = 2,
 )
 ```
 
@@ -296,11 +296,11 @@ Defines how to apply TextStyle.height over and under text.
 
 ```dart
 $text.textHeightBehavior(
-    const TextHeightBehavior(
-        applyHeightToFirstAscent: true,
-        applyHeightToLastDescent: true,
-        leadingDistribution: TextLeadingDistribution.even,
-    ),
+  const TextHeightBehavior(
+    applyHeightToFirstAscent: true,
+    applyHeightToLastDescent: true,
+    leadingDistribution: TextLeadingDistribution.even,
+  ),
 )
 ```
 

@@ -15,6 +15,14 @@
     "title": "Guides",
     "display": "children"
   },
+  "-- Tutorials": {
+    "type": "separator",
+    "title": "Tutorials"
+  },
+  "tutorials": {
+    "title": "Tutorials",
+    "display": "children"
+  },
   "-- Widgets": {
     "type": "separator",
     "title": "Widgets"

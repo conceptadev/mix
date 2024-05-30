@@ -1,0 +1,271 @@
+import { Callout } from "nextra-theme-docs";
+
+# Modifiers
+
+Modifiers in Mix extend functionality by defining the widget composition tree structure, providing support for core widgets, external widgets, and third-party widgets without compromising the simplicity of core Mix.
+
+## $with
+
+You can find all available modifiers within the `$with` utility. This provides a single place to access all modifier functions.
+
+## Understanding the Mechanics
+
+Take the `scale` attribute, for instance. The Container widget doesn't inherently possess the ability to scale. But, by employing a Transform widget as a modifier, we can introduce this effect.
+
+```dart
+Transform.scale(
+  scale: 0.5,
+  child: Container(
+    child: const Text("Half sized box"),
+  ),
+)
+```
+
+<Callout emoji="⚠️">
+  Important Note: Modifiers are a special kind of attribute that can't be
+  inherited for any child widgets.
+</Callout>
+
+### Creating a modifier
+
+We can achieve the same effect by creating a custom `**WidgetModifier**`.
+
+Creating a modifier is like creating a `**StatelessWidget**`. Extend `**WidgetModifier**`. Define the properties you want to modify and the widget you want to decorate.
+
+```dart {2, 15-19}
+class ScaleModifier extends WidgetModifier<ScaleModifier> {
+  final double scale;
+  const ScaleModifier(this.scale, {super.key});
+
+  @override
+  ScaleModifier lerp(ScaleModifier? other, double t) {
+    return ScaleModifier(lerpDouble(scale, other?.scale, t) ?? scale);
+  }
+
+  @override
+  get props => [scale];
+
+  @override
+  Widget build(MixData mix, Widget child) {
+    return Transform.scale(
+      key: key,
+      scale: scale,
+      child: child,
+    );
+  }
+}
+
+```
+
+You can then create an extension of the
+
+### Crafting a modifier utility
+
+To simplify modifier usage, you can design a utility function that automatically creates the modifier for you.
+
+```dart
+ScaleModifier scale(double scale, {Key? key}) => ScaleModifier(scale, key: key);
+```
+
+### Using a modifier
+
+```dart {2}
+final style = Style(
+  $with.scale(0.5),
+);
+
+Box(
+  style: style,
+  child: const Text('Half sized box'),
+);
+```
+
+## Built-in modifiers
+
+Mix comes with a set of built-in modifiers that can be used out of the box.
+
+### Scale Modifier
+
+Decorates a `Box` with a `Transform.scale` widget
+
+```dart
+final style = Style(
+  $with.scale(0.5),
+);
+
+// Equivalent to
+Transform.scale(
+  scale: 0.5,
+  child: Box(
+    child: const Text('Half sized box'),
+  ),
+);
+```
+
+### Opacity
+
+Decorates a `Box` with an `Opacity` widget
+
+```dart
+final style = Style(
+  $with.opacity(0.5),
+);
+
+// Equivalent to
+Opacity(
+  opacity: 0.5,
+  child: Box(
+    child: const Text('Half transparent box'),
+  ),
+);
+```
+
+### Rotate
+
+Decorates a `Box` with a `Transform.rotate` widget. The parameter is quarter turns.
+
+```dart
+final style = Style(
+  $with.rotate(1),
+);
+
+// Equivalent to
+RotatedBox(
+  quarterTurns: 1,
+  child: Box(
+    child: const Text('Rotated box'),
+  ),
+);
+```
+
+**Helper methods**
+
+- `$with.rotate(1)`: 90 degrees
+- `$with.rotate.d90()`: 90 degrees
+- `$with.rotate(2)`: 180 degrees
+- `$with.rotate.d180()`: 180 degrees
+- `$with.rotate(3)`: 270 degrees
+- `$with.rotate.d270()`: 270 degrees
+
+### Aspect Ratio
+
+Decorates a `Box` with an `AspectRatio` widget
+
+```dart
+final style = Style(
+  $with.aspectRatio(6/9),
+);
+
+// Equivalent to
+AspectRatio(
+  aspectRatio: 6/9,
+  child: Box(
+    child: const Text('Aspect ratio box'),
+  ),
+);
+```
+
+### Clip
+
+Decorates a `Box` with different types of `Clip` widgets
+
+```dart
+final style = Style(
+  $with.clipOval(),
+);
+
+Box(
+  style: style,
+  child: const Text('Oval box'),
+);
+
+// Equivalent to
+ClipOval(
+  child: Box(
+    child: const Text('Oval box'),
+  ),
+);
+```
+
+**Helper methods**
+
+- `$with.clipOval()`: Wraps with a **ClipOval** widget
+- `$with.clipRrect()`: Wraps with a **ClipRRect** widget
+- `$with.clipRect()`: Wraps with a **ClipRect** widget
+- `$with.clipPath()`: Wraps with a **ClipPath** widget
+- `$with.clipTriangle()`: Wraps with a **ClipPath** widget that clips to a triangle
+
+### Visibility
+
+Decorates a `Box` with a `Visibility` widget
+
+```dart
+final style = Style(
+  $with.visibility(false),
+);
+
+// Equivalent to
+Visibility(
+  visible: false,
+  child: Box(
+    child: const Text('Invisible box'),
+  ),
+);
+```
+
+### IntrinsicHeight and IntrinsicWidth
+
+Decorates a `Box` with a `IntrinsicHeight` or `IntrinsicWidth` widget
+
+```dart
+final style = Style(
+  $with.intrinsicHeight(), // or intrinsicWidth()
+);
+
+// Equivalent to
+IntrinsicHeight( // or IntrinsicWidth
+  child: Box(
+    child: const Text('Invisible box'),
+  ),
+);
+```
+
+**Helper methods**
+
+- `$with.show()`: Wraps the **Box** with an **Visibility** widget that is visible
+- `$with.hide()`: Wraps the **Box** with an **Visibility** widget that is invisible
+- `$with.visibility.on()`: Wraps the **Box** with an **Visibility** widget that is visible
+- `$with.visibility.off()`: Wraps the **`**Box**`** with an **`**Visibility**`** widget that is invisible
+
+### Flexible
+
+Decorates a `Flex` Styled widget like `FlexBox`, `HBox`, `VBox`, with a `Flexible` widget
+
+```dart
+final style = Style(
+  $with.flexible(flex:1, fit: FlexFit.tight),
+);
+```
+
+- `$with.flexible(flex:1, fit: FlexFit.tight)`: Wraps the `Flex` Styled widget with a `Flexible` widget
+
+**Helper methods**
+
+- `$with.flexible.expanded()`: Equivalent to **Expanded** widget, or `flexible(fit: FlexFit.tight)`
+- `$with.flexible.loose()`: Equivalent to **Flexible** widget, or `flexible(fit: FlexFit.loose)`
+- `$with.flexible.tight()`: Equivalent to `flexible(fit: FlexFit.tight)`
+- `$with.expanded()`: Equivalent to **Expanded** widget, or `flexible(fit: FlexFit.tight)`
+
+This is equivalent to wrapping the `Flex` Styled widget with a `Flexible` widget.
+
+```dart
+Flexible(
+  flex: 1,
+  fit: FlexFit.tight,
+  child: FlexBox(
+    children: [
+      const Text('Flexible box'),
+    ],
+  ),
+);
+```
