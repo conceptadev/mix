@@ -2,7 +2,7 @@ import { Callout, Tabs } from "nextra/components";
 
 # Box - The Styled Container
 
-Box is a versatile and robust widget, crafted to streamline and enrich the styling process in Flutter. This widget is akin to Flutter's native Container, but it incorporates the advanced capabilities of the Mix styling system, offering a more nuanced and flexible approach to design.
+Box is a versatile and robust widget, designed to streamline and enrich the styling process in Flutter. This widget is similar to Flutter's native Container, but it incorporates the advanced capabilities of the Mix styling system, offering a more nuanced and flexible approach to design.
 
 ### Usage
 
@@ -24,7 +24,7 @@ In this example, Box adeptly applies a series of styles – a blue background, u
 
 ### Composition and Decoration
 
-Mix excels in the composability of styles. Utilizing modifiers such as `scale`, `opacity`, and `rotate`, you can add rich visual effects to your widgets, often with just a single line of code.
+Mix excels in the composability of styles. Utilizing modifiers such as scale, opacity, and rotate, you can add rich visual effects to your widgets, often with just a single line of code.
 
 ```dart
 Box(
@@ -43,7 +43,7 @@ The `Box` widget accepts a range of intuitive utilities, enhancing the ease of s
 
 ### General
 
-You can find all the Box utilities under the `box` utility. With this you can easily find all the utilities in one place, and this can be helpful when wanting to have better control over the types. However you can find some aliases for them to simplify the usage.
+You can find all the Box utilities under the `$box` utility. With this, you can easily find all the utilities in one place, which can be helpful when wanting to have better control over the types. However, you can find some aliases for them to simplify the usage.
 
 ### Constraints
 
@@ -56,7 +56,7 @@ You can find all the Box utilities under the `box` utility. With this you can ea
 
 ### Spacing
 
-There are a few utilities make use of the `SpacingUtility`, like `padding` and `margin`. These utilities allow you to specify spacing in a variety of ways, including shorthand notation, individual sides, and horizontal and vertical axes.
+There are a few utilities that make use of the `SpacingUtility`, like `padding` and `margin`. These utilities allow you to specify spacing in a variety of ways, including shorthand notation, individual sides, and horizontal and vertical axes.
 
 #### **`$box.padding`**
 
@@ -94,7 +94,7 @@ $box.padding.all(8);
 
 ##### **Individual Sides**
 
-Two methods for individual side padding: direct method naming or the only method.
+There are two methods for individual side padding: direct method naming or the only method.
 
 **Using side name method**
 
@@ -107,7 +107,7 @@ $box.padding.start(8);
 $box.padding.end(8);
 ```
 
-This approach is important because it also allows you easy access to `design tokens` for padding. For example, if you want to use the `small` design token for padding, you can do so like this:
+This approach is important because it also allows you easy access to design tokens for padding. For example, if you want to use the `small` design token for padding, you can do so like this:
 
 ```dart
 $box.padding.top.small();
@@ -115,7 +115,7 @@ $box.padding.top.small();
 
 **Using `only` method**
 
-Apply padding to specific sides of the box. You can specify which sides to apply padding to by passing the corresponding parameters. You can also specify directional values like `start` and `end` for left and right padding.
+Apply padding to specific sides of the box. You can specify which sides to apply padding to by passing the corresponding parameters. You can also specify directional values like `start` and `end` for `left` and `right` padding.
 
 ```dart
 $box.padding.only(
@@ -166,7 +166,7 @@ $box.margin.all(8);
 
 ##### **Individual Sides**
 
-Two methods for individual side padding: direct method naming or the only method.
+There are two methods for individual side padding: direct method naming or the only method.
 
 **Using side name method**
 
@@ -212,6 +212,8 @@ $box.margin.vertical(8);
 #### **`$box.border`**
 
 The border utility enables you to define the border styling for a Box widget. Through the use of `BoxBorderUtility`, developers can add precision and clarity in laying out borders on their UI components.
+
+
 
 ##### **Uniform Border**
 

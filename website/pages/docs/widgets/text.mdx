@@ -1,6 +1,6 @@
 # StyledText
 
-A wrapped `Text` widget, but with the ability to style the text using the Mix style attributes. This simplifies the process of applying consistent and reusable styling across `Text` widgets.
+`StyledText` is a wrapped `Text` widget that allows you to style the text using Mix style attributes. This simplifies the process of applying consistent and reusable styling across `Text` widgets.
 
 ## Usage
 
@@ -16,7 +16,7 @@ StyledText(
 
 ## Inheritance
 
-The **StyledText** widget has the **inherit** flag true by default. That means that the style attributes will be inherited from the parent widget. However, remember that modifiers attributes cannot be inherited.
+The `StyledText` widget has the `inherit` parameter set to true by default. This means that the style attributes will be inherited from the parent widget. However, remember that modifier attributes cannot be inherited.
 
 ```dart
 Box(
@@ -32,7 +32,7 @@ In this example all `StyledText` widgets will inherit the style attributes from 
 
 ## Utilities
 
-The `text` constant is an instance of `TextUtility`, which facilitates the construction of `TextSpecAttribute` objects. These objects are leveraged to style and manage visuals of text widgets.
+The `$text` variable is an instance of `TextSpecUtility`, which facilitates the construction of `TextSpecAttribute` objects. These objects are used to style and manage the visuals of `StyledText` and `AnimatedTextSpecWidget`.
 
 #### **overflow**
 
@@ -135,7 +135,7 @@ $text.textScaleFactor(1.5);
 
 #### **`style`**
 
-Allows to style `TextStyle` attributes efficiently, creating a cohesive and maintainable text styling semantics.
+This allows you to style `TextStyle` attributes efficiently, creating cohesive and maintainable text styling semantics.
 
 **color**
 

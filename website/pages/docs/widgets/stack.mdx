@@ -4,11 +4,11 @@ title: ZBox
 
 # ZBox (Stack)
 
-`ZBox` is a composite styled widget that merges the layout capabilities of a `Box` with the stacking functionality of `StyledStack`. It is designed for use cases where you require a styled stacking layout, encapsulated within a box-shaped container with alignment and other style properties.
+`ZBox` is a composite styled widget that combines the layout capabilities of a `Box` with the stacking functionality of `StyledStack`. It is designed for use cases where you need a styled stacking layout, encapsulated within a box-shaped container with alignment and other style properties.
 
 ## Usage
 
-Create an instance of `ZBox` and provide it with a style and a list of widgets for your stacked layout:
+To use `ZBox`, create an instance and provide it with a style and a list of widgets for your stacked layout:
 
 ```dart
 ZBox(
@@ -25,9 +25,11 @@ ZBox(
 
 ## Utilities
 
+The `$stack` variable is an instance of `StackSpecUtility`, which facilitates the construction of `StackSpecAttribute` objects. These objects are used to style and manage the visuals of `ZBox` and `StyledStack`.
+
 ### **alignment**
 
-Align layers within the stacked layout:
+This utility aligns layers within the stacked layout:
 
 ```dart
 // Align at the bottom center of the stack
@@ -39,7 +41,7 @@ $stack.alignment.topRight();
 
 ### **fit**
 
-Determine how layers are sized within the stack:
+This utility determines how layers are sized within the stack:
 
 ```dart
 // StackFit.loose
@@ -51,7 +53,7 @@ $stack.fit.expand();
 
 ### **textDirection**
 
-Indicate the text direction in the stack for correct placement of elements:
+This utility indicates the text direction in the stack for correct placement of elements:
 
 ```dart
 // Left-to-right text direction
@@ -63,7 +65,7 @@ $stack.textDirection.rtl();
 
 ### **clipBehavior**
 
-Control how children outside the stack’s bounds are clipped:
+This utility controls how children outside the stack's bounds are clipped:
 
 ```dart
 // Clip.hardEdge
