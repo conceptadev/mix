@@ -94,7 +94,7 @@ $box.padding.all(8);
 
 ##### **Individual Sides**
 
-There are two methods for individual side padding: direct method naming or the only method.
+There are two ways to set individual side padding: direct method naming or the only method.
 
 **Using side name method**
 
@@ -105,6 +105,8 @@ $box.padding.left(8);
 $box.padding.right(8);
 $box.padding.start(8);
 $box.padding.end(8);
+
+$box.padding.only(left: 10, right: 10)
 ```
 
 This approach is important because it also allows you easy access to design tokens for padding. For example, if you want to use the `small` design token for padding, you can do so like this:
@@ -166,7 +168,7 @@ $box.margin.all(8);
 
 ##### **Individual Sides**
 
-There are two methods for individual side padding: direct method naming or the only method.
+There are two ways to set individual side margin: direct method naming or the only method.
 
 **Using side name method**
 
@@ -177,6 +179,8 @@ $box.margin.left(8);
 $box.margin.right(8);
 $box.margin.start(8);
 $box.margin.end(8);
+
+$box.margin.only(left: 10, right: 10),
 ```
 
 Access design tokens directly for margin, enhancing the ability to maintain consistent spacing throughout your app:
@@ -212,8 +216,6 @@ $box.margin.vertical(8);
 #### **`$box.border`**
 
 The border utility enables you to define the border styling for a Box widget. Through the use of `BoxBorderUtility`, developers can add precision and clarity in laying out borders on their UI components.
-
-
 
 ##### **Uniform Border**
 

@@ -74,7 +74,7 @@ extension TextStyleTokenUtilExt on TextStyleTokenUtil {
 }
 ```
 
-After that, you simply need to use the variable `$token.{tokenCategory}` to access the design tokens. This is possible because the `TokenUtil` classes have already been instantiated within the Mix framework.
+After that, you simply need to use the property `$token.{tokenCategory}` to access the design tokens.
 
 ```dart
 final primaryColorToken = $token.color.primary;
