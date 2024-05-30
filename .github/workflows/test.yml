@@ -23,7 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Test Action
-        uses: ./.github/actions/composite-action
+        uses: ./.github/actions/composite-action/test-action.yml
 
   test_min_sdk:
     needs: shared-job
