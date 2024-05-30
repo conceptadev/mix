@@ -6,22 +6,11 @@ on:
       - 'v[0-9]+.[0-9]+.[0-9]+*'
 
 jobs:
-  test:
+  shared-job:
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v2
-      - uses: subosito/flutter-action@v2
-        with:
-          channel: "stable"
-
-      - run: flutter --version
-      - run: flutter pub get
-
-      - uses: axel-op/dart-package-analyzer@v3
-        with:
-          githubToken: ${{ secrets.GITHUB_TOKEN }}
-      - run: flutter test
+      - name: Test Action
+        uses: ./.github/actions/composite-action
 
   publish:
     needs: test
