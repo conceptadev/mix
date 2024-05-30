@@ -13,7 +13,7 @@ jobs:
         uses: ./.github/actions/composite-action
 
   publish:
-    needs: test
+    needs: shared-job
     permissions:
       id-token: write # Required for authentication using OIDC
     runs-on: ubuntu-latest
