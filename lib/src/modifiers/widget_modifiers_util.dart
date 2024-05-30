@@ -6,6 +6,7 @@ import 'clip_widget_modifier.dart';
 import 'flexible_widget_modifier.dart';
 import 'fractionally_sized_box_widget_modifier.dart';
 import 'intrinsic_widget_modifier.dart';
+import 'mouse_cursor_modifier.dart';
 import 'opacity_widget_modifier.dart';
 import 'padding_widget_modifier.dart';
 import 'rotated_box_widget_modifier.dart';
@@ -39,6 +40,7 @@ class WithModifierUtility {
       const FractionallySizedBoxModifierUtility(MixUtility.selfBuilder);
   late final sizedBox = const SizedBoxModifierUtility(MixUtility.selfBuilder);
   late final padding = SpacingUtility(PaddingModifierAttribute.new);
+  late final cursor = const MouseCursorWidgetUtility(MixUtility.selfBuilder);
 
   late final _flexible = const FlexibleModifierUtility(MixUtility.selfBuilder);
   WithModifierUtility();
