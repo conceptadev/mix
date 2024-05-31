@@ -21,39 +21,14 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    name: Test
     steps:
       - name: Checkout mix repo
         uses: actions/checkout@v2
 
-      - name: Setup Flutter
-        uses: subosito/flutter-action@v2
+      - name: Run Tests
+        uses: ./.github/actions/test/
         with:
-          channel: "stable"
-
-      - run: flutter pub get
-
-      - uses: invertase/github-action-dart-analyzer@v1
-        with:
-          fatal-infos: false
-
-      - name: Install DCM
-        uses: CQLabs/setup-dcm@v1
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Run DCM
-        uses: CQLabs/dcm-action@v1
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          ci_key: oss
-          email: oss
-          folders: .
-          fatal_style: true
-          fatal_performance: true
-          fatal_warnings: true
-        
-      - run: flutter test
+          token: ${{ secrets.GITHUB_TOKEN }}
 
   test_min_sdk:
     needs: test

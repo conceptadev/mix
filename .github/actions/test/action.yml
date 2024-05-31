@@ -1,0 +1,45 @@
+name: "Run Tests"
+
+on:
+  workflow_call:
+    inputs:
+      token:
+        required: true
+        type: string
+
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout mix repo
+      uses: actions/checkout@v2
+
+    - name: Setup Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        channel: "stable"
+
+    - run: flutter pub get
+      shell: bash
+
+    - uses: invertase/github-action-dart-analyzer@v1
+      with:
+        fatal-infos: false
+
+    - name: Install DCM
+      uses: CQLabs/setup-dcm@v1
+      with:
+        github_token: ${{ inputs.token }}
+
+    - name: Run DCM
+      uses: CQLabs/dcm-action@v1
+      with:
+        github_token: ${{ inputs.token }}
+        ci_key: oss
+        email: oss
+        folders: .
+        fatal_style: true
+        fatal_performance: true
+        fatal_warnings: true
+      
+    - run: flutter test
+      shell: bash
