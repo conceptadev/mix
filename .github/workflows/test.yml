@@ -19,7 +19,7 @@ on:
       - 'tool/**'
 
 jobs:
-  shared-job:
+  test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout mix repo
@@ -31,7 +31,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
   test_min_sdk:
-    needs: shared-job
+    needs: test
     runs-on: ubuntu-latest
     name: Test Min SDK
     steps:
