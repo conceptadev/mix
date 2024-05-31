@@ -26,7 +26,7 @@ jobs:
         uses: actions/checkout@v2
 
       - run: pwd
-      - run: ls
+      - run: ls -a
 
       - name: Test Action
         uses: ./.github/actions/composite-action/action.yml
