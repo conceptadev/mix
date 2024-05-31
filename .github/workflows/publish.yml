@@ -11,6 +11,8 @@ jobs:
     steps:
       - name: Checkout mix repo
         uses: actions/checkout@v2
+      - run: pwd
+      - run: ls
 
       - name: Run Tests
         uses: ./.github/actions/test/
