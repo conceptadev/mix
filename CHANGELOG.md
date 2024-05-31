@@ -1,3 +1,10 @@
+## 1.0.0-beta.15
+
+* Docs: Update documentation for better user guidance by @leoafarias and @tilucasoli
+* Feature: Move the animationData to inside the Spec classes by @tilucasoli and @leoafarias
+* Feature: Implement Style.asAttribute by @tilucasoli
+* Enhancement: Rename disabled parameter to enabled by @tilucasoli
+
 ## 1.0.0-beta.14
 
 * Remove deprecated code by @tilucasoli
