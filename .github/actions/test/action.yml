@@ -1,5 +1,4 @@
-name: "Test Action"
-description: "Run DCM and Tests"
+name: "Run Tests"
 
 on:
   workflow_call:
