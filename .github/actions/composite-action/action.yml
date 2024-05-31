@@ -3,6 +3,10 @@ description: "Run DCM and Tests"
 
 on:
   workflow_call:
+    inputs:
+      token:
+        required: true
+        type: string
 
 runs:
   using: "composite"
@@ -24,12 +28,12 @@ runs:
     - name: Install DCM
       uses: CQLabs/setup-dcm@v1
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
+        github_token: ${{ inputs.token }}
 
     - name: Run DCM
       uses: CQLabs/dcm-action@v1
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
+        github_token: ${{ inputs.token }}
         ci_key: oss
         email: oss
         folders: .

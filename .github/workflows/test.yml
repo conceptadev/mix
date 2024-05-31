@@ -30,6 +30,8 @@ jobs:
 
       - name: Test Action
         uses: ./.github/actions/composite-action/
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
   test_min_sdk:
     needs: shared-job
