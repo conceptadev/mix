@@ -1,0 +1,3 @@
+class CustomAnnotation {
+  const CustomAnnotation();
+}

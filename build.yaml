@@ -1,0 +1,15 @@
+targets:
+  $default:
+    builders:
+      mix:custom_builder:
+        generate_for:
+          - lib/**/*.dart
+
+builders:
+  custom_builder:
+    target: ":custom_builder"
+    import: "package:mix/builder/builder.dart"
+    builder_factories: ["customBuilder"]
+    build_extensions: {".dart": [".g.dart"]}
+    auto_apply: dependents
+    build_to: cache

@@ -9,14 +9,20 @@ environment:
   
 dependencies:
   meta: ^1.8.0
+  build: ^2.4.1
+  code_builder: ^4.10.0
+  source_gen: ^1.5.0
   flutter:
     sdk: flutter
+  analyzer: ^6.4.1
 
 dev_dependencies:
   flutter_lints: 2.0.3
   flutter_test:
     sdk: flutter
   dart_code_metrics_presets: 2.9.0
+
+  build_runner: ^2.4.9
 
 # flutter:
   # assets:
