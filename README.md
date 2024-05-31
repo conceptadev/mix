@@ -3,72 +3,115 @@
   <img alt="Mix logo" src="https://raw.githubusercontent.com/leoafarias/mix/main/assets/light.svg">
 </picture>
 
----
-
 ![GitHub stars](https://img.shields.io/github/stars/conceptadev/mix?style=for-the-badge&logo=GitHub&logoColor=black&labelColor=white&color=dddddd)
 [![Pub Version](https://img.shields.io/pub/v/mix?label=version&style=for-the-badge)](https://pub.dev/packages/mix/changelog)
 ![Pub Likes](https://img.shields.io/pub/likes/mix?label=Pub%20Likes&style=for-the-badge)
 ![Pub Points](https://img.shields.io/pub/points/mix?label=Pub%20Points&style=for-the-badge) [![Github All Contributors](https://img.shields.io/github/all-contributors/leoafarias/mix?style=for-the-badge)](https://github.com/leoafarias/mix/graphs/contributors) [![MIT Licence](https://img.shields.io/github/license/leoafarias/mix?style=for-the-badge&longCache=true)](https://opensource.org/licenses/mit-license.php) [![Awesome Flutter](https://img.shields.io/badge/awesome-flutter-purple?longCache=true&style=for-the-badge)](https://github.com/Solido/awesome-flutter)
 
-![og](https://github.com/conceptadev/mix/assets/435833/4a88bae6-706a-424d-ab24-079eda6db92f)
+Mix is a simple and intuitive styling system for Flutter, enabling the creation of beautiful and consistent UIs with ease.
 
-## Read about our 1.0 Beta release [here](https://github.com/conceptadev/mix/releases/tag/v1.0.0-beta.1)
+Mix brings industry-proven design system concepts to Flutter. It separates style semantics from widgets while maintaining an easy-to-understand and manageable relationship between them.
 
-Mix offers a novel approach to styling in Flutter, targeting the specific challenges developers encounter with traditional methods. It emphasizes the separation of presentation from logic, akin to the division of HTML and CSS in web development, ensuring maintainable and readable code.
-
-- **Comprehensive Styling**: By extending beyond Flutter's theme system, Mix for composability across broader range of visual properties. This comprehensive approach guarantees consistent styling across all widgets, including custom ones.
-
-- **Streamlined Code Structure**: Mix reduces the need for inline styling and resolves the complexity associated with subclassing and widget composition. Its advanced features facilitate a clean, organized, and efficient codebase.
+-  Easily compose, merge, and apply styles across widgets.
+-  Write cleaner, more maintainable styling definitions.
+-  Apply styles conditionally based on the BuildContext.
 
 ## Why Mix?
 
-- **Separation of Concerns**: Mix distinctly separates styling from widget logic. This not only enhances code clarity but also makes the UI design process more intuitive and efficient.
+Flutter developers often face challenges when it comes to styling widgets and maintaining a consistent look and feel across their apps. Flutter is heavily dependent on the Material Design System and theming, and that can be challenging, especially when creating your own design system.
 
-- **Flexible and Modular Styling**: Through its compositional approach, Mix allows for the creation of complex styles from simple, reusable elements. This promotes modularity and flexibility, making UI development faster and more scalable.
+Mix addresses these challenges by creating a styling system that uses utility functions for a more intuitive and composable way to style. This approach can be kept consistent across widgets and files.
 
-- **Enhanced Custom Widget Support**: Addressing the limitations of ThemeData, Mix ensures that custom widgets receive the same level of styling support as standard Flutter widgets, maintaining a unified aesthetic throughout the application.
+## Goals with Mix
 
-**Mix offers primitive building blocks to help developers create beautiful and consistent UI.**
+- Define visual properties outside the widget's build method while still allowing access to the BuildContext. This is done by having the style definition resolved during widget build, similar to how the current `Theme.of` works, but with much more flexibility.
+- Ensure consistent styling throughout your app. By having separate style definitions, you can reuse not only specific values, like colors and typography, but also entire style definitions across other styles.
+- Quickly adapt to changing design requirements. By promoting style composability and inheritance, you can more easily maintain a `DRY` approach to managing your design system.
+- Create adaptive designs and layouts by leveraging style variants, which are based on existing styles but can be applied conditionally or responsively.
+- Type-safe composability. Mix leverages the power of Dart's type system and class to create a type-safe styling experience.
 
-## Goals
+## Guiding Principles
 
-Provide simple API to compose design and layout attributes for widgets. That can easily be extended, overridden, and combined; we call this a **Mix**.
-
-- Visual attributes should be defined outside of a BuildContext by a composable API shared across the design system.
-- Style consistently with a global context
-- Allow to respond to changing requirements quickly
-- Create adaptive designs and layouts with ease
-
-## Principles
-
-- **Abstract Flutter API, and not modify its behavior.**
-- Development efficiency is gained by the ease of use, consistency, and reusability, not coding speed.
-- Composability should be a priority. Styles, Attributes, Variants, etc.
-- Designer friendly (use simple standard semantics when possible).
+-  **Simple Abstraction**: A low-cost layer over the Flutter API, letting you style widgets without altering their core behavior, ensuring they remain compatible and predictable.
+-  **Consistent**: Even though we are creating a new styling system, we should always keep the styling API consistent with its Flutter equivalents.
+-  **Composable**: Styles should be easily composable by combining simple, reusable elements, promoting code reuse and maintainability.
+-  **Extensible**: Mix should allow for reasonable overrides and reuse of its utilities, making it easy to fit your own needs.
 
 ## Key Features
 
-### Powerful Style Semantics
+### **Powerful Styling API**:
 
-Mix's compositional approach allows for the creation of complex styles from simple, reusable elements. This promotes modularity and flexibility, making UI development faster and more scalable.
+Styles are easily defined using the `Style` class, which allows you to define a style's properties and values. Here's an example of defining a style:
 
-### First-Class Variant Support
+```dart
+final style = Style(
+  $box.height(100),
+  $box.width(100),
+  $box.color.purple(),
+  $box.borderRadius(10),
+);
+```
 
-As a first-class feature, Variants in Mix enable the design of flexible and composable widget styling. They can be applied both conditionally and responsively for dynamic UI adaptation.
+Learn more about [styling](https://fluttermix.com/docs/guides/styling)
 
-### Design Tokens & Theming
+### **First-Class Variant Support**:
 
-Inspired by constraint-based design principles projects like [Theme UI](https://theme-ui.com/), and [Styled System](https://github.com/styled-system/styled-system), Mix's theming system allows for definition of style properties that can be used across any widget. This ensures consistent styling across the entire application.
+First-class support for variants, allowing you to define styling variations that can be applied conditionally or responsively.
 
-### Utility-First
+```dart {1, 8-12, 15}
+const onOutlined = Variant('outlined');
 
-Mix style attributes consist of simple and reusable functions, allowing for complete control over the styling API while also facilitating easy customization and extension of its API
+final baseStyle = Style(
+  $box.borderRadius(10),
+  $box.color.black(),
+  $text.style.color.white(),
 
-### Developer experience
+  onOutlined(
+    $box.color.transparent(),
+    $box.border.color.black(),
+    $text.style.color.black(),
+  ),
+);
 
-Mix is designed to optimize developer experience, offering an intuitive, efficient, and flexible framework for Flutter UI design, significantly enhancing productivity and creativity.
+final outlinedStyle = baseStyle.applyVariant(onOutlined);
+```
 
-[Read our docs for more information](https://www.fluttermix.com)
+Learn more about [variants](https://fluttermix.com/docs/guides/variants)
+
+### **BuildContext Responsive Styling**:
+
+Mix allows you to define styles that are context-aware, allowing you to apply styles conditionally based on the BuildContext.
+
+```dart {4-7}
+final style = Style(
+  $box.color.black(),
+  $text.style.color.white(),
+  $on.dark(
+    $box.color.white(),
+    $text.style.color.black(),
+  ),
+);
+```
+
+Learn more about [context variants](https://fluttermix.com/docs/guides/variants#context-variants)
+
+### **Design Tokens and Theming**:
+
+Mix goes beyond the Material `Theme` definitions by allowing the definition of design tokens and properties that can be used across all styling utilities.
+
+### **Utility-First Approach**:
+
+A complete set of utility primitives allows you to define styling properties and values in a more intuitive and composable way.
+
+```dart
+$box.padding(20); /// Padding 20 on all sides
+$box.padding(20, 10); /// Padding 20 on top and bottom, 10 on left and right
+
+$box.padding.top(20); /// Padding 20 on top
+$box.padding.horizontal(20); /// Padding 20 on left and right
+```
+
+Learn more about [utilities](https://fluttermix.com/docs/overview/utility-first)
 
 ## Contributors
 
