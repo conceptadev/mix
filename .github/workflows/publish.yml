@@ -13,7 +13,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Test Action
-        uses: ./.github/actions/composite-action
+        uses: ./.github/actions/composite-action/action.yml
 
   publish:
     needs: shared-job
