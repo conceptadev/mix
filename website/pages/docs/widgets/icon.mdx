@@ -18,7 +18,7 @@ StyledIcon(
 
 ## Inheritance
 
-The **StyledIcon** widget has the `inherit` flag set to `true` by default. This means that the style attributes will be inherited from its closest `Style` ancestor in the widget tree.
+The **StyledIcon** widget has the `inherit` flag set to `true` by default. This means that the style attributes will be inherited from its nearest `Style` ancestor in the widget tree.
 
 ```dart
 Box(
@@ -30,11 +30,11 @@ Box(
 );
 ```
 
-In the above example, the `StyledIcon` widget will inherit the icon size and color style from the `Box` widget. However, remember that modifiers attributes cannot be inherited.
+In the above example, the `StyledIcon` widget will inherit the icon size and color style from the `Box` widget. However, remember that `modifier` attributes cannot be inherited.
 
 ## AnimatedStyledIcon
 
-An `AnimatedStyledIcon` allows you to use `AnimatedIconData` with a controllable animation progress and applies styles in the same way as `StyledIcon`.
+An `AnimatedStyledIcon` allows you to use `AnimatedIconData` with controllable animation progress, and it applies styles in the same manner as `StyledIcon`.
 
 ```dart
 AnimatedStyledIcon(
@@ -49,7 +49,7 @@ AnimatedStyledIcon(
 
 ## Utilities
 
-The `$icon` constant alias is an instance of `IconUtility`, which facilitates the construction of `IconSpec` attributes. These attributes are used to style and manage properties of icon widgets.
+The `$icon` constant alias is an instance of `IconSpecUtility`, which facilitates the construction of `IconSpecAttribute` objects. These attributes are used to style and manage properties of `StyledIcon` and `AnimatedStyledIcon`.
 
 #### **color**
 

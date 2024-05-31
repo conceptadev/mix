@@ -13,7 +13,7 @@ Design tokens are the core of any design system. They are the smallest pieces of
 
 ## Getting Started
 
-Mix has a built-in support for design tokens. It naturally integrates with five types of them: `color`, `textStyle`, `space`, `radius`, and `breakpoint`. These tokens are used to define the visual properties in key-value pairs, where the key is the token name and the value is the actual value of the token.
+Mix has built-in support for design tokens. It naturally integrates with five types of them: `color`, `textStyle`, `space`, `radius`, and `breakpoint`. These tokens are used to define the visual properties in key-value pairs, where the key is the token name and the value is the actual value of the token.
 
 ```dart {1,5}
 final primary = ColorToken('primary');
@@ -30,7 +30,7 @@ final docTheme = MixThemeData(
 
 ## MixTheme and MixThemeData
 
-As the same way we use `Theme` and `ThemeData` in Flutter, Mix has `MixTheme` and `MixThemeData`. `MixTheme` is a widget that wraps the application and provides the design tokens to all its child widgets. `MixThemeData` is a class that defines the values for the design tokens that will be used throughout the application.
+In the same way we use `Theme` and `ThemeData` in Flutter, Mix has `MixTheme` and `MixThemeData`. `MixTheme` is a widget that wraps the application and provides the design tokens to all its child widgets. `MixThemeData` is a class that defines the values for the design tokens that will be used throughout the application.
 
 ```dart {1,5}
 MixTheme(
@@ -41,7 +41,7 @@ MixTheme(
 
 ## Applying design tokens
 
-After defining the design tokens, you can use them in your application to style your widgets. All attributes that accept a token as a value have a `ref` method that allows you to access the token value. for instance:
+After defining the design tokens, you can use them in your application to style your widgets. All attributes that accept a token as a value have a `ref` method that allows you to access the token value. For instance:
 
 ```dart
 $box.color.ref(ColorToken)
@@ -65,7 +65,7 @@ Box(
 );
 ```
 
-Mix's tokens also are flexible enought to be used in Flutter's widgets, you just need to use the `resolve` method to get the token value.
+Mix's tokens are also flexible enough to be used in Flutter's widgets, you just need to use the `resolve` method to get the token value.
 
 ```dart
 Container(
@@ -77,4 +77,4 @@ Container(
 
 ## Next Steps
 
-Now that you know how design tokens work in Mix, you can start defining your own tokens and using them in your application. For a step by step tutorial on how to theming your app with Mix, check the [Theming](/docs/tutorials/theming) guide.
+Now that you know how design tokens work in Mix, you can start defining your own tokens and using them in your application. For a step-by-step tutorial on how to theme your app with Mix, check the [Theming](/docs/tutorials/theming) guide.
