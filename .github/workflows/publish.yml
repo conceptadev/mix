@@ -11,11 +11,11 @@ jobs:
     steps:
       - name: Checkout mix repo
         uses: actions/checkout@v2
-      - run: pwd
-      - run: ls
 
       - name: Test Action
-        uses: ./.github/actions/composite-action/action.yml
+        uses: ./.github/actions/test-script/
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
   publish:
     needs: shared-job

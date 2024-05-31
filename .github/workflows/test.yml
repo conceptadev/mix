@@ -25,11 +25,8 @@ jobs:
       - name: Checkout mix repo
         uses: actions/checkout@v2
 
-      - run: pwd
-      - run: ls -a
-
       - name: Test Action
-        uses: ./.github/actions/composite-action/
+        uses: ./.github/actions/test-script/
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
