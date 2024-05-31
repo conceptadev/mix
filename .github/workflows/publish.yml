@@ -19,8 +19,7 @@ jobs:
 
   publish:
     needs: test
-    permissions:
-      id-token: write # Required for authentication using OIDC
+    environment: Production
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
