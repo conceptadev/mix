@@ -24,10 +24,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: subosito/flutter-action@v2
+      - name: 'Publish Package'
+        uses: k-paxian/dart-package-publisher@master
         with:
-          channel: "stable"
-      - name: Install dependencies
-        run: flutter pub get
-      - name: Publish
-        run: dart pub publish --force
+          accessToken: ${{ secrets.OAUTH_ACCESS_TOKEN }}
+          refreshToken: ${{ secrets.OAUTH_REFRESH_TOKEN }}
+
+
