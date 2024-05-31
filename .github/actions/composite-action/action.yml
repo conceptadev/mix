@@ -20,6 +20,7 @@ runs:
         channel: "stable"
 
     - run: flutter pub get
+      shell: bash
 
     - uses: invertase/github-action-dart-analyzer@v1
       with:
@@ -42,3 +43,4 @@ runs:
         fatal_warnings: true
       
     - run: flutter test
+      shell: bash
