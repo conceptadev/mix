@@ -7,7 +7,7 @@ import { Callout } from "nextra-theme-docs";
 
 # Variants
 
-Variants are a fundamental feature in Mix, streamlining the styling of widgets by defining styling variations that can be applied both conditionally and responsively for dynamic UI adaptation
+Variants are a fundamental feature in Mix, streamlining the styling of widgets by defining styling variations that can be applied both conditionally and responsively for dynamic UI adaptation.
 
 ## Key Concepts
 
@@ -29,7 +29,7 @@ const outlined = Variant('outlined');
 
 ### Using a Variant in a Style
 
-To use a variant in a style, you can call it as a function on a `Style` passing the attributes.
+To use a variant in a style, you can call it as a function on a `Style`, passing the attributes.
 
 ```dart {1, 8-12}
 const outlined = Variant('outlined');
@@ -58,7 +58,6 @@ final style = Style(
   $box.padding(20),
   $box.borderRadius(10),
   $box.color.black(),
-
   $text.style.color.white(),
   outlined(
     $box.color.transparent(),
@@ -102,13 +101,12 @@ class OnDarkVariant extends ContextVariant {
 ```
 
 <Callout type="info">
-  Defining the name of a context variant with `on` is a convention, but not a
-  requirement. That helps identify that this is a `ContextVariant`.
+  Defining the name of a context variant with `on` is a convention, but not a requirement. This helps identify that this is a `ContextVariant`.
 </Callout>
 
 ### Using a Context Variant in a Style
 
-To use a context variant in a style, you can call it as a function on a `Style` passing the attributes.
+To use a context variant in a style, you can call it as a function on a `Style`, passing the attributes.
 
 ```dart {6-9}
 final style = Style(
@@ -123,7 +121,7 @@ final style = Style(
 );
 ```
 
-When the `$on.dark` variant is applied, it will override the `$box.color` and `$text.style.color` attributes. When this happens the style will be equivalent to the following:
+When the `$on.dark` variant is applied, it will override the `$box.color` and `$text.style.color` attributes. When this happens, the style will be equivalent to the following:
 
 ```dart highlight="2-4"
 final style = Style(
@@ -136,7 +134,7 @@ final style = Style(
 
 ### Prioritization
 
-When applying multiple variants to a `Style`, the last variant will always have priority over the previous ones. However, you can use the `priority` parameter to change the priority of a `ContextVariant`, then the highest priority will be last. The `priority` is a required parameter for `ContextVariant` that can be set when defining the variant. look at the following example:
+When applying multiple variants to a `Style`, the last variant will always have priority over the previous ones. However, you can use the `priority` parameter to change the priority of a `ContextVariant`. Then, the highest priority will be last. The `priority` is a required parameter for `ContextVariant` that can be set when defining the variant. Look at the following example:
 
 ```dart
 class OnCustomVariant extends ContextVariant {
@@ -149,7 +147,7 @@ class OnCustomVariant extends ContextVariant {
 }
 ```
 
-The `priority` parameter can be set to `VariantPriority.low`, `VariantPriority.medium`, `VariantPriority.high` or `VariantPriority.highest`. A good example of this is when you are using a variants that involves some kind of gesture, like `onHover` and `onPress`. In this case, those variants will always have the highest priority. It happens because Mix needs to make sure that the defined styles will be applied correctly.
+The `priority` parameter can be set to `VariantPriority.low`, `VariantPriority.medium`, `VariantPriority.high`, or `VariantPriority.highest`. A good example of this is when you are using variants that involve some kind of gesture, like `onHover` and `onPress`. In this case, those variants will always have the highest priority. This happens because Mix needs to make sure that the defined styles will be applied correctly.
 
 ## Conditional operators
 
@@ -170,7 +168,7 @@ final style = Style(
 );
 ```
 
-When the `$on.small` variant or `$on.medium` variant is applied, the resulted `Style` will be equivalent to the following:
+When the `$on.small` variant or `$on.medium` variant is applied, the resulting `Style` will be equivalent to the following:
 
 ```dart highlight="2-4"
 Style(
@@ -196,7 +194,7 @@ final style = Style(
 );
 ```
 
-In this scenery only when the onHover variant and onPress are applied, the resulted `Style` will be equivalent to the following:
+In this scenario, only when the onHover variant and onPress are applied, the resulting `Style` will be equivalent to the following:
 
 ```dart highlight="2-4"
 Style(
@@ -221,14 +219,12 @@ final style = Style(
 ```
 
 <Callout type="info">
-  The operator that has preference is the first readed operator, so in this case
-  the `onHover` variant will be applied first, then the `onPress` and finally
-  the `$on.dark` variant.
+  The operator that has preference is the first read operator, so in this case, the `onHover` variant will be applied first, then the `onPress`, and finally the `$on.dark` variant.
 </Callout>
 
 To understand how this works, let's see the following example:
 
-1. When the `onHover` variant is applied, the resulted `Style` will be equivalent to:
+1. When the `onHover` variant is applied, the resulting `Style` will be equivalent to:
 
 ```dart
 Style(

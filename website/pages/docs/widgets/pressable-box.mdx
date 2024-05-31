@@ -6,7 +6,7 @@ title: PressableBox
 
 A widget that builds on Flutter's interactivity foundation to provide a pressable area with customizable style and behavior.
 
-It is designed as a flexible and style-friendly alternative to the traditional `GestureDetector` widgets.
+It is designed as a flexible and style-friendly alternative to traditional `GestureDetector` widgets.
 
 With `PressableBox`, you can apply visual changes when user interactions like pressing or focusing occur, and integrate these seamlessly into your styled components.
 
@@ -34,7 +34,7 @@ In the example above, the `PressableBox` will apply a blue background color to t
 
 ### Enabled and Disabled 
 
-Both Pressable and PressableBox have the parameter `enabled` that allows you to enable or disable the widget. When the widget is disabled, it will not trigger any interaction and the styles defined in the `$on.disabled` will be applied. 
+Both `Pressable` and `PressableBox` have the parameter `enabled` that allows you to enable or disable the widget. When the widget is disabled, it will not trigger any interaction and the styles defined in the `$on.disabled` will be applied.
 
 ## Interaction States
 
@@ -49,7 +49,7 @@ Both Pressable and PressableBox have the parameter `enabled` that allows you to 
 
 ### Interaction events
 
-All the interaction states have corresponding callbacks that can be used to handle the interaction events, you can do this throught the method `event`. For example:
+All the interaction states have corresponding callbacks that can be used to handle the interaction events. You can do this through the `event` method. For example:
 
 ```dart
 PressableBox(
@@ -75,7 +75,7 @@ PressableBox(
 
 ```
 
-Using the `event` method in `hover`, you can access the `PointerEvent` and apply styles based on the event. The same can be done for the other interaction states as well. The only difference is that the parameter of the `every` method varies depending on the interaction state.
+Using the `event` method in `hover`, you can access the `PointerEvent` and apply styles based on the event. The same can be done for the other interaction states as well. The only difference is that the parameter of the `event` method varies depending on the interaction state.
 
 - `$on.press.event(Style Function(bool))`: It is triggered when the widget is being pressed
 - `$on.longPress.event(Style Function(bool))`: It is triggered when the widget is being long-pressed.
