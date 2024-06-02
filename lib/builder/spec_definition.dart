@@ -1,0 +1,3 @@
+class SpecDefinition {
+  const SpecDefinition();
+}
