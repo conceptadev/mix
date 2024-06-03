@@ -1,9 +1,10 @@
 targets:
   $default:
     builders:
-      your_package_name:spec_definition_builder:
+      mix|spec_definition_builder:
         generate_for:
-          - lib/**/*.dart
+        # change this later
+          - lib/builder/**/*.dart
 
 builders:
   spec_definition_builder:
@@ -12,4 +13,3 @@ builders:
     build_extensions: {".dart": [".spec.g.dart", ".util.g.dart", ".attribute.g.dart"]}
     auto_apply: dependents
     build_to: source
-    

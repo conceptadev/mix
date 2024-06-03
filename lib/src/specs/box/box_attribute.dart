@@ -72,7 +72,7 @@ class BoxSpecAttribute extends SpecAttribute<BoxSpec> {
   /// this attribute's properties.
   @override
   BoxSpec resolve(MixData mix) {
-    return BoxSpec.exhaustive(
+    return BoxSpec(
       alignment: alignment,
       padding: padding?.resolve(mix),
       margin: margin?.resolve(mix),

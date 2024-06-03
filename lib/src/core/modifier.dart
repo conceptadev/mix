@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 
+import '../attributes/animated/animated_data.dart';
 import '../factory/mix_provider_data.dart';
 import 'attribute.dart';
 
 abstract class WidgetModifierSpec<Self extends WidgetModifierSpec<Self>>
     extends Spec<Self> {
-  const WidgetModifierSpec({super.animated});
+  @override
+  final AnimatedData? animated;
+  const WidgetModifierSpec({this.animated});
 
   static WidgetModifierSpec? lerpValue(
     WidgetModifierSpec? begin,

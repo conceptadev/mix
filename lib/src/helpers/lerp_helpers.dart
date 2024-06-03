@@ -17,11 +17,7 @@ import 'package:flutter/material.dart';
 /// print(result); // Output: 13
 /// ```
 int lerpInt(int? a, int? b, double t) {
-  if (a == null && b == null) return 0;
-  if (a == null) return b!.round();
-  if (b == null) return a.round();
-
-  return ((1 - t) * a + t * b).round();
+  return ((1 - t) * (a ?? 0) + t * (b ?? 0)).round();
 }
 
 /// Snaps between two values based on a threshold.

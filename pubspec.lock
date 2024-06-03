@@ -170,7 +170,7 @@ packages:
     source: hosted
     version: "2.9.0"
   dart_style:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: dart_style
       sha256: "99e066ce75c89d6b29903d788a7bb9369cf754f7b24bf70bf4b6d6d6b26853b9"
