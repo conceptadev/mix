@@ -169,7 +169,7 @@ class BoxSpec extends Spec<BoxSpec> {
       width: lerpDouble(width, other.width, t),
       height: lerpDouble(height, other.height, t),
       // Animated data does not have to be lerped
-      animated: other.animated ?? animated,
+      animated: lerpSnap(animated, other.animated, t),
     );
   }
 

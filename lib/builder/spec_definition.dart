@@ -1,3 +1,5 @@
 class SpecDefinition {
-  const SpecDefinition();
+  final String? name;
+
+  const SpecDefinition({this.name});
 }

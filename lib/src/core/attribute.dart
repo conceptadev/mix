@@ -56,10 +56,10 @@ abstract class SpecAttribute<Value> extends StyledAttribute {
 }
 
 @immutable
-abstract class Spec<T extends Spec<T>> with Comparable {
+abstract class Spec<T extends Spec<T>> {
   final AnimatedData? animated;
 
-  const Spec({required this.animated});
+  const Spec({this.animated});
 
   Type get type => T;
 
@@ -71,4 +71,11 @@ abstract class Spec<T extends Spec<T>> with Comparable {
 
   /// Linearly interpolate with another [Spec] object.
   T lerp(covariant T? other, double t);
+
+  // equality
+  @override
+  bool operator ==(Object other);
+
+  @override
+  int get hashCode;
 }
