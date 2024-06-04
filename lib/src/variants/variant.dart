@@ -18,7 +18,7 @@ enum VariantPriority {
 }
 
 @immutable
-abstract class IVariant with Comparable {
+abstract class IVariant with EqualityMixin {
   const IVariant();
 
   /// This is the priority at which the variants are applied.

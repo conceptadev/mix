@@ -87,7 +87,7 @@ void main() {
   });
 }
 
-class TestClass with Comparable {
+class TestClass with EqualityMixin {
   final int id;
   final String name;
 
@@ -97,7 +97,7 @@ class TestClass with Comparable {
   List<Object?> get props => [id, name];
 }
 
-class DeepNestedClass with Comparable {
+class DeepNestedClass with EqualityMixin {
   final Map<String, Map<String, int>> deepNestedMap;
   final List<List<List<String>>> deepNestedList;
 

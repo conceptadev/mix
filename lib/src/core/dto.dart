@@ -5,7 +5,7 @@ import '../helpers/compare_mixin.dart';
 import 'attribute.dart';
 
 @immutable
-abstract class Dto<Value> with Comparable, Mergeable {
+abstract class Dto<Value> with EqualityMixin, MergeableMixin {
   const Dto();
 
   Value resolve(MixData mix);

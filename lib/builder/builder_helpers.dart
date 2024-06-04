@@ -2,37 +2,64 @@ import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:code_builder/code_builder.dart';
 
-final _dtoMap = <String, String>{
+import 'types.dart';
+
+final _dtoMap = {
   'EdgeInsetsGeometry': 'SpacingDto',
   'BoxConstraints': 'BoxConstraintsDto',
   'Decoration': 'DecorationDto',
+  'Color': 'ColorDto',
+  'AnimatedData': 'AnimatedDataDto',
 };
+
+Expression _getLerpExpression(String name, String type) {
+  final expression = [refer(name), refer('other.$name'), refer('t')];
+
+  switch (type) {
+    case 'double':
+      return DartTypes.ui.lerpDouble(expression);
+    case 'int':
+      return DartTypes.ui
+          .lerpDouble(expression)
+          .nullSafeProperty('toInt')
+          .call([]).nullSafeProperty(name);
+    case 'EdgeInsetsGeometry':
+      return FlutterTypes.widgets.edgeInsetsGeometry
+          .property('lerp')(expression);
+    case 'BoxConstraints':
+      return FlutterTypes.widgets.boxConstraints.property('lerp')(expression);
+    case 'Decoration':
+      return FlutterTypes.widgets.decoration.property('lerp')(expression);
+    case 'AlignmentGeometry':
+      return FlutterTypes.widgets.alignmentGeometry
+          .property('lerp')(expression);
+    case 'Matrix4':
+      return FlutterTypes.widgets.matrix4Tween
+          .newInstance(
+            [],
+            {'begin': refer(name), 'end': refer('other.$name')},
+          )
+          .property('lerp')
+          .call([refer('t')]);
+
+    default:
+      return CodeExpression(Code('t < 0.5 ? $name : other.$name'));
+  }
+}
 
 class FieldInfo {
   final String name;
-  final String type;
+
   final bool isNullable;
-
-  final bool isStatic;
-
-  final bool isLate;
-  final bool isFinal;
-  final bool isConst;
   final bool isSuper;
-  final String typeRef;
-
-  final List<Expression> annotations;
+  final String type;
+  final List<String> annotations;
   final String? documentationComment;
 
-  FieldInfo({
+  const FieldInfo({
     required this.name,
     required this.type,
-    required this.typeRef,
     required this.isNullable,
-    required this.isStatic,
-    required this.isLate,
-    required this.isFinal,
-    required this.isConst,
     required this.isSuper,
     this.annotations = const [],
     required this.documentationComment,
@@ -41,52 +68,97 @@ class FieldInfo {
   factory FieldInfo.fromElement(FieldElement field) {
     return FieldInfo(
       name: field.name,
-      type: field.type.getDisplayString(withNullability: true),
-      typeRef: field.type.getDisplayString(withNullability: false),
+      type: field.type.getDisplayString(withNullability: false),
       isNullable: field.type.nullabilitySuffix == NullabilitySuffix.question,
-      isLate: field.isLate,
-      isStatic: field.isStatic,
-      isConst: field.isConst,
-      isFinal: field.isFinal,
-      documentationComment: field.documentationComment,
       isSuper: false,
+      documentationComment: field.documentationComment,
     );
   }
 
-  Field toField({
-    bool dtoType = false,
-    List<String> docs = const [],
-  }) {
-    return Field(
-      (b) {
-        b
-          ..name = name
-          ..type = dtoType ? refer(this.dtoType) : refer(type)
-          ..static = isStatic
-          ..late = isLate
-          ..modifier = isFinal
-              ? FieldModifier.final$
-              : isConst
-                  ? FieldModifier.constant
-                  : FieldModifier.var$
-          ..annotations.addAll(annotations)
-          ..docs.addAll([...docs, documentationComment ?? '']);
-      },
-    );
+  bool get hasComment => documentationComment != null;
+
+  String get typeAsNullable => type + (isNullable ? '?' : '');
+
+  Expression get lerpExpression => _getLerpExpression(name, type);
+
+  bool get hasDto => _dtoMap[type] != null;
+
+  String get dtoType => (_dtoMap[type] ?? type) + (isNullable ? '?' : '');
+
+  Map<String, dynamic> toMap() {
+    return {
+      'name': name,
+      'isNullable': isNullable,
+      'isSuper': isSuper,
+      'type': type,
+      'annotations': annotations,
+      'documentationComment': documentationComment,
+      'hasDto': hasDto,
+      'dtoType': dtoType,
+      'lerpExpression': lerpExpression,
+      'typeAsNullable': typeAsNullable,
+      'hasComment': hasComment,
+    };
+  }
+}
+
+extension ListFieldInfoExt on List<FieldInfo> {
+  List<FieldInfo> get nonSuper {
+    return where((f) => !f.isSuper).toList();
   }
 
-  Parameter toParameter() {
-    return Parameter(
-      (b) => b
-        ..name = name
-        ..toThis = true
-        ..named = true
-        ..required = false
-        ..toSuper = isSuper,
-    );
+  List<Field> get classFields {
+    return nonSuper.map(_fieldInfoFieldBuilder).toList();
   }
 
-  bool get hasDto => _dtoMap[typeRef] != null;
+  List<Field> get classDtoFields {
+    return nonSuper.map(_fieldInfoDtoFieldBuilder).toList();
+  }
 
-  String get dtoType => (_dtoMap[typeRef] ?? typeRef) + (isNullable ? '?' : '');
+  List<Parameter> get constructorParams {
+    return map(_fieldAsNamedConstructorParamBuilder).toList();
+  }
+
+  List<Parameter> get methodParams {
+    return map(_fieldAsNamedMethodParamBuilder).toList();
+  }
+}
+
+Field _fieldInfoFieldBuilder(FieldInfo field) {
+  return Field((b) {
+    b
+      ..name = field.name
+      ..type = refer(field.typeAsNullable)
+      ..modifier = FieldModifier.final$
+      ..annotations.addAll(field.annotations.map(refer))
+      ..docs.add(field.documentationComment ?? '');
+  });
+}
+
+Field _fieldInfoDtoFieldBuilder(FieldInfo field) {
+  return Field((b) {
+    b
+      ..name = field.name
+      ..type = refer(field.dtoType)
+      ..modifier = FieldModifier.final$;
+  });
+}
+
+Parameter _fieldAsNamedConstructorParamBuilder(FieldInfo field) {
+  return Parameter((b) {
+    b.name = field.name;
+    b.toThis = !field.isSuper;
+    b.named = true;
+    b.required = false;
+    b.toSuper = field.isSuper;
+  });
+}
+
+Parameter _fieldAsNamedMethodParamBuilder(FieldInfo field) {
+  return Parameter((builder) {
+    builder.name = field.name;
+    builder.named = true;
+    builder.required = false;
+    builder.type = refer('${field.type}?');
+  });
 }

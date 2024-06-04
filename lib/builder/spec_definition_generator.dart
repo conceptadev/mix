@@ -1,3 +1,4 @@
+import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:dart_style/dart_style.dart';
@@ -5,15 +6,19 @@ import 'package:source_gen/source_gen.dart';
 
 import 'builder_helpers.dart';
 import 'spec_definition.dart';
+import 'types.dart';
 
-Builder specDefinitionBuilder(BuilderOptions options) =>
-    SpecDefinitionBuilder();
+Builder specDefinitionBuilder(BuilderOptions _) => SpecDefinitionBuilder();
+
+final _emitter = DartEmitter(allocator: Allocator(), orderDirectives: true);
+final _dartFormatter = DartFormatter(fixes: StyleFix.all);
 
 class SpecDefinitionBuilder implements Builder {
   final typeChecker = const TypeChecker.fromRuntime(SpecDefinition);
+
   @override
   Map<String, List<String>> get buildExtensions => {
-        '.dart': ['.spec.g.dart', '.util.g.dart', '.attribute.g.dart']
+        '.dart': ['_spec.g.dart', '_util.g.dart', '_attribute.g.dart'],
       };
 
   @override
@@ -31,420 +36,369 @@ class SpecDefinitionBuilder implements Builder {
       final baseClassName =
           annotation?.getField('name')?.toStringValue() ?? classElement.name;
       final specClassName = '${baseClassName}Spec';
+
+      final outputSpecId = buildStep.inputId.changeExtension('_spec.g.dart');
+      final outputUtilId = buildStep.inputId.changeExtension('_util.g.dart');
+      final outputAttributeId =
+          buildStep.inputId.changeExtension('_attribute.g.dart');
+
+      const animatedField = FieldInfo(
+        name: 'animated',
+        type: 'AnimatedData',
+        isNullable: true,
+        isSuper: true,
+        documentationComment: '',
+      );
+
       final fields = classElement.fields
           .where((field) => !field.isSynthetic)
           .map(FieldInfo.fromElement)
-          .toList();
+          .toList()
+        ..add(animatedField);
+      // ..sort((a, b) => a.name.compareTo(b.name));
 
       final constructor = classElement.unnamedConstructor;
-      final isConst = constructor?.isConst ?? false;
 
-      final constructorParameters = constructor?.parameters ?? [];
-      // Check if any constructor parameter has the `required` keyword
-      final hasRequiredParameter =
-          constructorParameters.any((parameter) => parameter.isRequiredNamed);
-      if (hasRequiredParameter) {
-        throw InvalidGenerationSourceError(
-          'Spec definition parameters cannot have the `required` keyword.',
-          element: constructor,
-        );
-      }
+      validOrThrowIfHasRequiredFields(classElement, fields);
+      validOrThrowIfHasRequiredParameters(constructor);
 
-      // Check if any field is required (non-nullable)
-      final hasRequiredField = fields.any((field) => !field.isNullable);
-      if (hasRequiredField) {
-        throw InvalidGenerationSourceError(
-          'All fields of a Spec definition in the class must be nullable.',
-          element: classElement,
-        );
-      }
+      final specLibrary = Library(
+        (b) => b
+          ..body.addAll([
+            specClassBuilder(specClassName, fields),
+            specTweenClassBuilder(specClassName),
+          ])
+          ..directives.add(
+            Directive.import(outputAttributeId.pathSegments.last),
+          ),
+      );
 
-      final classBuilder = Class((b) {
-        b.name = specClassName;
-        b.extend = refer('Spec<$specClassName>');
-        b.docs.add('/// A spec for $baseClassName.');
-        b.docs.add('///');
-        b.docs.add(
-            '/// To retrieve an instance of [$specClassName], use the [$specClassName.of] method with a');
-        b.docs.add(
-            '/// [BuildContext], or the [$specClassName.from] method with [MixData]');
+      final attributeLibrary = Library(
+        (b) => b
+          ..body.addAll([specAttributeClassBuilder(specClassName, fields)])
+          ..directives.add(Directive.import(outputSpecId.pathSegments.last)),
+      );
 
-        b.fields.addAll(
-          fields.map((f) => f.toField()),
-        );
-
-        b.constructors.add(
-          Constructor((b) => b
-            ..constant = isConst
-            ..docs.add('/// Creates a [$specClassName] with the given fields')
-            ..docs.add('///')
-            ..docs.add('// All parameters are optional')
-            ..optionalParameters.addAll(
-              fields.map((f) => f.toParameter()),
-            )),
-        );
-
-        b.methods.addAll([
-          _generateCopyWithMethod(specClassName, fields),
-          _generateToStringMethod(specClassName, fields),
-          _generateEqualityOperator(specClassName, fields),
-          _generateHashCodeGetter(specClassName, fields),
-          _generateLerpMethod(specClassName, fields),
-          _generateOfStaticMethod(specClassName),
-          _generateFromStaticMethod(specClassName),
-        ]);
-      });
-
-      final outputSpecId = buildStep.inputId.changeExtension('.spec.g.dart');
-      final outputUtilId = buildStep.inputId.changeExtension('.util.g.dart');
-      final outputAttributeId =
-          buildStep.inputId.changeExtension('.attribute.g.dart');
-
-      final emitter = DartEmitter();
-      final format = DartFormatter().format;
-      final specFileCode = '''
-        // This file is automatically generated. DO NOT EDIT, all your changes would be lost.
-        // 
-        // DO NOT MODIFY
-        
-        // ignore_for_file: prefer_relative_imports
-        import 'dart:ui';
-
-        import 'package:flutter/foundation.dart';
-        import 'package:flutter/widgets.dart';
-        import 'package:mix/mix.dart';
-        import 'package:flutter/widgets.dart';
-        import '${outputAttributeId.pathSegments.last}';
-
-        ${classBuilder.accept(emitter)}
-
-        ${_generateSpecTween(specClassName).accept(emitter)}
-      ''';
-
-      final attributeFileCode = '''
-        // This file is automatically generated. DO NOT EDIT, all your changes would be lost.
-        // 
-        // DO NOT MODIFY
-        
-        // ignore_for_file: prefer_relative_imports
-        import 'package:flutter/widgets.dart';
-        import 'package:mix/mix.dart';
-
-        import '${outputSpecId.pathSegments.last}';
-
-        ${_generateSpecAttribute(specClassName, fields).accept(emitter)}
-        ''';
-
-      await buildStep.writeAsString(outputSpecId, format(specFileCode));
+      await buildStep.writeAsString(
+        outputSpecId,
+        _dartFormatter.format('${specLibrary.accept(_emitter)}'),
+      );
       await buildStep.writeAsString(outputUtilId, '');
       await buildStep.writeAsString(
-          outputAttributeId, format(attributeFileCode));
+        outputAttributeId,
+        _dartFormatter.format('${attributeLibrary.accept(_emitter)}'),
+      );
     }
   }
 }
 
-Class _generateSpecAttribute(String specClassName, List<FieldInfo> fields) {
-  // Map to store the DTO references
+Class specClassBuilder(String specClassName, List<FieldInfo> fields) {
+  final specRef = MixTypes.spec.symbol!;
 
-  final specAttributeClassName = '${specClassName}Attribute';
-  return Class((b) {
-    b.name = specAttributeClassName;
-    b.extend = refer('SpecAttribute<$specClassName>');
-    b.docs.add('/// Represents the attributes of a [$specClassName].');
-    b.docs.add('///');
-    b.docs
-        .add('/// This class encapsulates properties defining the layout and');
-    b.docs.add('/// appearance of a [$specClassName].');
-    b.docs.add('///');
-    b.docs.add(
-        '/// Use this class to configure the attributes of a [$specClassName] and pass it to');
-    b.docs.add('/// the [$specClassName] constructor.');
+  return Class((builder) {
+    builder.name = specClassName;
+    builder.extend = refer('$specRef<$specClassName>');
+    builder.docs.addAll([
+      '/// A specification that defines the visual properties of $specClassName.',
+      '///',
+      '/// To retrieve an instance of [$specClassName], use the [$specClassName.of] method with a',
+      '/// [BuildContext], or the [$specClassName.from] method with [MixData]',
+    ]);
 
-    // Fields
-    for (var field in fields) {
-      b.fields.add(field.toField(dtoType: true));
-    }
+    builder.fields.addAll(fields.classFields);
 
-    // Constructor
-    b.constructors.add(
-      Constructor(
-        (b) => b
-          ..constant = true
-          ..optionalParameters.addAll(fields.map((field) => Parameter((b) => b
-            ..name = field.name
-            ..named = true
-            ..toThis = true)))
-          ..optionalParameters.add(
-            Parameter(
-              (b) => b
-                ..name = 'animated'
-                ..named = true
-                ..toSuper = true,
-            ),
-          ),
-      ),
+    builder.constructors.add(
+      Constructor((builder) {
+        builder.constant = true;
+        builder.optionalParameters.addAll(fields.constructorParams);
+        builder.docs.addAll([
+          '/// Creates a [$specClassName] with the given fields',
+          '///',
+          '// All parameters are optional',
+        ]);
+      }),
     );
 
-    // resolve method
-    b.methods.add(Method((b) => b
-      ..name = 'resolve'
-      ..annotations.add(refer('override'))
-      ..returns = refer(specClassName)
-      ..requiredParameters.add(Parameter((b) => b
-        ..name = 'mix'
-        ..type = refer('MixData')))
-      ..body = Code('''
-        return $specClassName(
-          ${fields.map((field) {
-        final fieldName = field.name;
-
-        if (field.hasDto) {
-          return '$fieldName: $fieldName?.resolve(mix)';
-        } else {
-          return '$fieldName: $fieldName';
-        }
-      }).join(', ')},);
-      ''')));
-
-    // merge method
-    b.methods.add(
-      Method(
-        (b) => b
-          ..name = 'merge'
-          ..annotations.add(refer('override'))
-          ..returns = refer(specAttributeClassName)
-          ..requiredParameters.add(Parameter((b) => b
-            ..name = 'other'
-            ..type = refer('${specClassName}Attribute?')))
-          ..body = Code('''
-        if (other == null) return this;
-
-        return $specAttributeClassName(
-          ${fields.map((field) {
-            final fieldName = field.name;
-
-            if (field.hasDto) {
-              return '$fieldName: $fieldName?.merge(other.$fieldName) ?? other.$fieldName';
-            } else {
-              return '$fieldName: other.$fieldName ?? $fieldName';
-            }
-          }).join(', ')},);
-      '''),
-      ),
-    );
-
-    // props getter
-    b.methods.addAll([
-      _generateEqualityOperator(specAttributeClassName, fields),
-      _generateHashCodeGetter(specAttributeClassName, fields)
+    builder.methods.addAll([
+      ofStaticMethodBuilder(specClassName),
+      fromStaticMethodBuilder(specClassName),
+      copyWithMethodBuilder(specClassName, fields),
+      lerpMethodBuilder(specClassName, fields),
+      propsGetterMethodBuilder(specClassName, fields),
     ]);
   });
 }
 
-Method _generateOfStaticMethod(String specClassName) {
-  return Method((b) => b
-    ..name = 'of'
-    ..returns = refer(specClassName)
-    ..static = true
-    ..requiredParameters.add(Parameter((b) => b
-      ..name = 'context'
-      ..type = refer('BuildContext')))
-    ..docs.add(
-        '/// Retrieves the [$specClassName] from the nearest [Mix] ancestor.')
-    ..docs.add('///')
-    ..docs.add('/// If no ancestor is found, returns [$specClassName].')
-    ..body = Code('''
-      final mix = Mix.of(context);
-      return $specClassName.from(mix);
-    '''));
-}
+Class specAttributeClassBuilder(String className, List<FieldInfo> fields) {
+  final specAttributeClassName = '${className}Attribute';
 
-Class _generateSpecTween(String specClassName) {
-  return Class((b) {
-    b.name = '${specClassName}Tween';
-    b.extend = refer('Tween<$specClassName?>');
-    b.docs.add(
-        '/// A tween that interpolates between two [$specClassName] instances.');
-    b.docs.add('///');
-    b.docs.add(
-        '/// This class can be used in animations to smoothly transition between');
-    b.docs.add('/// different $specClassName specifications.');
+  return Class((builder) {
+    builder.name = specAttributeClassName;
+    builder.extend = refer('SpecAttribute<$className>');
+    builder.docs.addAll([
+      '/// Represents the attributes of a [$className].',
+      '///',
+      '/// This class encapsulates properties defining the layout and',
+      '/// appearance of a [$className].',
+      '///',
+      '/// Use this class to configure the attributes of a [$className] and pass it to',
+      '/// the [$className] constructor.',
+    ]);
 
+    builder.fields.addAll(fields.classDtoFields);
     // Constructor
-    b.constructors.add(
-      Constructor(
-        (b) => b
-          ..optionalParameters.addAll([
-            Parameter(
-              (b) => b
-                ..name = 'super.begin'
-                ..named = true,
-            ),
-            Parameter(
-              (b) => b
-                ..name = 'super.end'
-                ..named = true,
-            ),
-          ]),
-      ),
+    builder.constructors.add(
+      Constructor((builder) {
+        builder.constant = true;
+        builder.optionalParameters.addAll(fields.constructorParams);
+      }),
     );
 
-    // lerp method
-    b.methods.add(Method((b) => b
-      ..name = 'lerp'
-      ..annotations.add(refer('override'))
-      ..returns = refer(specClassName)
-      ..requiredParameters.add(Parameter((b) => b
-        ..name = 't'
-        ..type = refer('double')))
-      ..body = Code('''
-              if (begin == null && end == null) return const $specClassName();
-              if (begin == null) return end!;
-              
-              return begin!.lerp(end!, t);
-            ''')));
+    builder.methods.addAll([
+      resolveMethodBuilder(className, fields),
+      mergeMethodBuilder(specAttributeClassName, fields),
+      propsGetterMethodBuilder(specAttributeClassName, fields),
+    ]);
   });
 }
 
-Method _generateFromStaticMethod(String specClassName) {
-  return Method((b) => b
-    ..name = 'from'
-    ..returns = refer(specClassName)
-    ..static = true
-    ..requiredParameters.add(Parameter((b) => b
-      ..name = 'mix'
-      ..type = refer('MixData')))
-    ..docs.add('/// Retrieves the [$specClassName] from a MixData.')
-    ..docs.add('///')
-    ..docs.add('/// returns [$specClassName].')
-    ..body = Code('''
-      return mix.attributeOf<${specClassName}Attribute>()?.resolve(mix) ?? const $specClassName();
-    '''));
-}
-
-Method _generateCopyWithMethod(String className, List<FieldInfo> fields) {
-  return Method(
-    (b) => b
-      ..name = 'copyWith'
+Method resolveMethodBuilder(String typeToResolve, List<FieldInfo> fields) {
+  return Method((builder) {
+    builder
+      ..name = 'resolve'
       ..annotations.add(refer('override'))
-      ..returns = refer(className)
-      ..optionalParameters.addAll(fields.map((field) => Parameter((b) => b
-        ..name = field.name
-        ..named = true
-        ..required = false
-        ..type = refer('${field.typeRef}?'))))
-      ..body = Code('''
-          return $className(
-            ${fields.map((field) => '${field.name}: ${field.name} ?? this.${field.name}').join(', ')},
-          );
-        '''),
-  );
+      ..returns = refer(typeToResolve)
+      ..requiredParameters.add(Parameter((b) => b
+        ..name = 'mix'
+        ..type = MixTypes.mixData));
+    builder.body = Code('''
+      return $typeToResolve(
+        ${fields.map((field) {
+      final fieldName = field.name;
+      if (field.hasDto) {
+        return '$fieldName: $fieldName?.resolve(mix)';
+      }
+
+      return '$fieldName: $fieldName';
+    }).join(', ')},
+      );
+    ''');
+  });
 }
 
-Method _generateToStringMethod(String className, List<FieldInfo> fields) {
-  return Method((b) => b
-    ..name = 'toString'
-    ..annotations.add(refer('override'))
-    ..returns = refer('String')
-    ..body = Code('''
-          return '$className(${fields.map((field) => '${field.name}: \$${field.name}').join(', ')})';
-        '''));
+Method mergeMethodBuilder(String className, List<FieldInfo> fields) {
+  return Method((b) {
+    b.annotations.add(refer('override'));
+    b.name = 'merge';
+    b.returns = refer(className);
+    b.requiredParameters.add(Parameter((b) {
+      b.name = 'other';
+      b.type = refer('$className?');
+    }));
+    b.body = Code('''
+        if (other == null) return this;
+
+        return $className(
+          ${fields.map((field) {
+      final fieldName = field.name;
+      if (field.hasDto) {
+        return '$fieldName: $fieldName?.merge(other.$fieldName) ?? other.$fieldName';
+      }
+
+      return '$fieldName: other.$fieldName ?? $fieldName';
+    }).join(', ')},);
+      ''');
+  });
 }
 
-Method _generateLerpMethod(String className, List<FieldInfo> fields) {
-  final lerpStatements = fields.map((field) {
-    final fieldName = field.name;
-    final fieldType = field.typeRef;
+Method ofStaticMethodBuilder(String className) {
+  return Method((builder) {
+    builder.docs.addAll([
+      '/// Retrieves the [$className] from the nearest [Mix] ancestor.',
+      '///',
+      '/// If no ancestor is found, returns [$className].',
+    ]);
+    builder.name = 'of';
+    builder.returns = refer(className);
+    builder.static = true;
+    builder.requiredParameters.add(Parameter((b) {
+      b.name = 'context';
+      b.type = refer('BuildContext');
+    }));
+    builder.body = Code('''
+      final mix = Mix.of(context);
 
-    final lerpSnapDef = 't < 0.5 ? $fieldName : other.$fieldName';
-    final lerpIntDef =
-        'lerpDouble($fieldName, other.$fieldName, t)?.toInt() ?? other.age';
+      return $className.from(mix);
+    ''');
+  });
+}
 
-    String lerpExpression;
-    if (fieldType == 'double') {
-      lerpExpression =
-          'lerpDouble($fieldName, other.$fieldName, t) ?? other.$fieldName';
-    } else if (fieldType == 'int') {
-      lerpExpression = lerpIntDef;
-    } else if (fieldType.startsWith('EdgeInsetsGeometry')) {
-      lerpExpression =
-          'EdgeInsetsGeometry.lerp($fieldName, other.$fieldName, t)';
-    } else if (fieldType.startsWith('BoxConstraints')) {
-      lerpExpression = 'BoxConstraints.lerp($fieldName, other.$fieldName, t)';
-    } else if (fieldType.startsWith('Decoration')) {
-      lerpExpression = 'Decoration.lerp($fieldName, other.$fieldName, t)';
-    } else if (fieldType.startsWith('AlignmentGeometry')) {
-      lerpExpression =
-          'AlignmentGeometry.lerp($fieldName, other.$fieldName, t)';
-    } else if (fieldType.startsWith('Matrix4')) {
-      lerpExpression =
-          'Matrix4Tween(begin: $fieldName, end: other.$fieldName).lerp(t)';
-    } else {
-      lerpExpression = lerpSnapDef;
-    }
+Class specTweenClassBuilder(String className) {
+  return Class((builder) {
+    builder.docs.addAll([
+      '/// A tween that interpolates between two [$className] instances.',
+      '///',
+      '/// This class can be used in animations to smoothly transition between',
+      '/// different $className specifications.',
+    ]);
+    builder.name = '${className}Tween';
+    builder.extend = refer('Tween<$className?>');
 
-    return '$fieldName: $lerpExpression';
+    final constructorParams = [
+      Parameter((b) {
+        b.name = 'super.begin';
+        b.named = true;
+      }),
+      Parameter((b) {
+        b.name = 'super.end';
+        b.named = true;
+      }),
+    ];
+
+    // Constructor
+    builder.constructors.add(
+      Constructor((builder) {
+        builder.optionalParameters.addAll(constructorParams);
+      }),
+    );
+
+    // lerp method
+    builder.methods.add(Method((b) {
+      b.name = 'lerp';
+      b.annotations.add(refer('override'));
+      b.returns = refer(className);
+      b.requiredParameters.add(Parameter((b) {
+        b.name = 't';
+        b.type = refer('double');
+      }));
+      b.body = Code('''
+              if (begin == null && end == null) return const $className();
+              if (begin == null) return end!;
+              
+              return begin!.lerp(end!, t);
+            ''');
+    }));
+  });
+}
+
+Method fromStaticMethodBuilder(String specClassName) {
+  return Method((builder) {
+    builder.docs.addAll([
+      '/// Retrieves the [$specClassName] from a MixData.',
+    ]);
+    builder.name = 'from';
+    builder.returns = refer(specClassName);
+    builder.static = true;
+    builder.requiredParameters.add(
+      Parameter((builder) {
+        builder.name = 'mix';
+        builder.type = MixTypes.mixData;
+      }),
+    );
+    builder.body = Code('''
+        return mix.attributeOf<${specClassName}Attribute>()?.resolve(mix) ?? const $specClassName();
+      ''');
+  });
+}
+
+Method copyWithMethodBuilder(String className, List<FieldInfo> fields) {
+  return Method((builder) {
+    builder.docs.addAll([
+      '/// Creates a copy of this [$className] but with the given fields',
+      '/// replaced with the new values.',
+    ]);
+    builder.annotations.add(refer('override'));
+    builder.name = 'copyWith';
+    builder.returns = refer(className);
+    builder.optionalParameters.addAll(fields.methodParams);
+    builder.body = Code('''
+        return $className(
+          ${fields.map((field) => '${field.name}: ${field.name} ?? this.${field.name}').join(', ')},
+        );
+      ''');
+  });
+}
+
+Method toStringMethodBuilder(String className, List<FieldInfo> fields) {
+  return Method((builder) {
+    builder.annotations.add(refer('override'));
+    builder.name = 'toString';
+    builder.returns = refer('String');
+    builder.body = Code('''
+          return '$className(${fields.map((field) => '${field.name}: \${field.name}').join(', ')})';
+        ''');
+  });
+}
+
+Method lerpMethodBuilder(String className, List<FieldInfo> fields) {
+  final lerpStatements = fields.map((f) {
+    return '${f.name}: ${f.lerpExpression.accept(_emitter)}';
   }).join(', ');
 
-  return Method(
-    (b) => b
-      ..name = 'lerp'
-      ..annotations.add(refer('override'))
-      ..returns = refer(className)
-      ..requiredParameters.addAll([
-        Parameter((b) => b
-          ..name = 'other'
-          ..type = refer('$className?')),
-        Parameter((b) => b
-          ..name = 't'
-          ..type = refer('double')),
-      ])
-      ..body = Code('''
-          if (other == null) return this;
+  return Method((builder) {
+    builder.annotations.add(refer('override'));
+    builder.name = 'lerp';
+    builder.returns = refer(className);
+    builder.requiredParameters.add(Parameter((builder) {
+      builder.name = 'other';
+      builder.type = refer('$className?');
+    }));
+    builder.requiredParameters.add(Parameter((builder) {
+      builder.name = 't';
+      builder.type = refer('double');
+    }));
+    builder.body = Code('''
+    if (other == null) return this;
 
-          return $className(
-            $lerpStatements,
-          );
-        '''),
-  );
+    return $className(
+      $lerpStatements,
+    );
+  ''');
+  });
 }
 
-Method _generateEqualityOperator(String className, List<FieldInfo> fields) {
-  final equalityChecks = fields.map((field) {
-    final fieldType = field.type;
-
-    if (fieldType.startsWith('List<')) {
-      return 'listEquals(other.${field.name}, ${field.name})';
-    } else if (fieldType.startsWith('Map<')) {
-      return 'mapEquals(other.${field.name}, ${field.name})';
-    } else if (fieldType.startsWith('Set<')) {
-      return 'setEquals(other.${field.name}, ${field.name})';
-    } else {
-      return 'other.${field.name} == ${field.name}';
-    }
-  }).join(' && ');
-
-  return Method((b) => b
-    ..name = 'operator =='
-    ..annotations.add(refer('override'))
-    ..returns = refer('bool')
-    ..requiredParameters.add(Parameter((b) => b
-      ..name = 'other'
-      ..type = refer('Object')))
-    ..body = Code('''
-          if (identical(this, other)) return true;
-
-          return other is $className && $equalityChecks;
-        '''));
+Method propsGetterMethodBuilder(String className, List<FieldInfo> fields) {
+  return Method((builder) {
+    builder.docs.addAll([
+      '/// The list of properties that constitute the state of this [$className].',
+      '///',
+      '/// This property is used by the [==] operator and the [hashCode] getter to',
+      '/// compare two [$className] instances for equality.',
+    ]);
+    builder.annotations.add(refer('override'));
+    builder.name = 'props';
+    builder.type = MethodType.getter;
+    builder.returns = refer('List<Object?>');
+    builder.body = Code('''
+    return [
+      ${fields.map((field) => field.name).join(', ')},
+    ];
+  ''');
+  });
 }
 
-Method _generateHashCodeGetter(String className, List<FieldInfo> fields) {
-  return Method((b) => b
-    ..name = 'hashCode'
-    ..annotations.add(refer('override'))
-    ..returns = refer('int')
-    ..type = MethodType.getter
-    ..body = Code('''
-          return ${fields.map((field) => '${field.name}.hashCode').join(' ^ ')};
-        '''));
+void validOrThrowIfHasRequiredParameters(ConstructorElement? constructor) {
+  final constructorParameters = constructor?.parameters ?? [];
+  final hasRequiredParameter =
+      constructorParameters.any((parameter) => parameter.isRequiredNamed);
+  if (hasRequiredParameter) {
+    throw InvalidGenerationSourceError(
+      'Spec definition parameters cannot have the `required` keyword.',
+      element: constructor,
+    );
+  }
+}
+
+void validOrThrowIfHasRequiredFields(
+  ClassElement classElement,
+  List<FieldInfo> fields,
+) {
+  // Check if any field is required (non-nullable)
+  final hasRequiredField = fields.any((field) => !field.isNullable);
+  if (hasRequiredField) {
+    throw InvalidGenerationSourceError(
+      'All fields of a Spec definition in the class must be nullable.',
+      element: classElement,
+    );
+  }
 }

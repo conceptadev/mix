@@ -2,8 +2,8 @@
 
 import 'package:flutter/material.dart';
 
-import 'iterable_ext.dart';
 import 'deep_collection_equality.dart';
+import 'iterable_ext.dart';
 
 /// Returns a `hashCode` for [props].
 /// This function uses the Jenkins hash function to generate a hash code for the given properties.
@@ -53,7 +53,7 @@ bool _equals(List? list1, List? list2) {
 
 // Checks if the given object is Comparable.
 bool _isEquatable(dynamic object) {
-  return object is Comparable;
+  return object is EqualityMixin;
 }
 
 /// Jenkins Hash Functions
@@ -121,7 +121,7 @@ String mapPropsToString(Type runtimeType, List<Object?> props) {
 /// A mixin that helps implement equality
 /// without needing to explicitly override [operator ==] and [hashCode].
 /// This mixin provides a standard implementation of equality and hash code based on the properties of the object.
-mixin Comparable {
+mixin EqualityMixin {
   // The properties based on which equality and hash code are computed.
   List<Object?> get props;
 
@@ -132,7 +132,7 @@ mixin Comparable {
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        other is Comparable &&
+        other is EqualityMixin &&
             runtimeType == other.runtimeType &&
             _equals(props, other.props);
   }
@@ -143,7 +143,7 @@ mixin Comparable {
 
   // Returns a list of properties that differ between this object and another.
   @visibleForTesting
-  Map<String, String> getDiff(Comparable other) {
+  Map<String, String> getDiff(EqualityMixin other) {
     final diff = <String, String>{};
 
     // Return if there are no differences.
@@ -182,7 +182,7 @@ Map<String, String?> compareObjects(Object? obj1, Object? obj2) {
 
   if (obj1 == null || obj2 == null) {
     differences[obj1.runtimeType.toString()] = obj2.runtimeType.toString();
-  } else if (obj1 is Comparable && obj2 is Comparable) {
+  } else if (obj1 is EqualityMixin && obj2 is EqualityMixin) {
     final value = obj1.getDiff(obj2);
     if (value.isNotEmpty) {
       differences[obj1.runtimeType.toString()] = value.toString();

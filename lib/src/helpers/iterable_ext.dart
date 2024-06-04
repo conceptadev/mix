@@ -44,7 +44,7 @@ extension ListExt<T> on List<T> {
       if (index < listLength && index < otherLength) {
         final currentValue = this[index];
         final otherValue = other[index];
-        if (currentValue is Mergeable) {
+        if (currentValue is MergeableMixin) {
           return currentValue.merge(otherValue);
         }
 

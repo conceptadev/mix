@@ -24,7 +24,7 @@ import 'mix_provider_data.dart';
 /// final style = Style(attribute1, attribute2, attribute3);
 /// final updatedStyle = style.variant(myVariant);
 /// ```
-class Style with Comparable {
+class Style with EqualityMixin {
   /// Visual attributes contained in this mix.
   final AttributeMap<StyledAttribute> styles;
 

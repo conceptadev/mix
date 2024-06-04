@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../spec_definition.dart';
+import '../../spec_definition.dart';
 
 @SpecDefinition(name: 'BoxTest')
 class BoxDef {

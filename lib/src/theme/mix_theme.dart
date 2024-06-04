@@ -32,7 +32,7 @@ class MixTheme extends InheritedWidget {
 }
 
 @immutable
-class MixThemeData with Comparable {
+class MixThemeData with EqualityMixin {
   final StyledTokens<RadiusToken, Radius> radii;
   final StyledTokens<ColorToken, Color> colors;
   final StyledTokens<TextStyleToken, TextStyle> textStyles;

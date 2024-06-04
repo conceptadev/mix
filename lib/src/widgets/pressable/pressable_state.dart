@@ -158,7 +158,7 @@ class PressableState extends InheritedModel<PressableStateAspect> {
   }
 }
 
-class PointerPosition with Comparable {
+class PointerPosition with EqualityMixin {
   final Alignment position;
   final Offset offset;
   const PointerPosition({required this.position, required this.offset});

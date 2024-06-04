@@ -32,7 +32,7 @@ class AnimatedDataDto extends Dto<AnimatedData> {
   get props => [duration, curve];
 }
 
-class AnimatedData with Comparable {
+class AnimatedData with EqualityMixin {
   final Curve? _curve;
   final Duration? _duration;
   const AnimatedData({required Duration? duration, required Curve? curve})

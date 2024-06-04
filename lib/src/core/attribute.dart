@@ -6,7 +6,7 @@ import '../helpers/compare_mixin.dart';
 import 'dto.dart';
 
 @immutable
-abstract class Attribute with Comparable, Mergeable {
+abstract class Attribute with MergeableMixin, EqualityMixin {
   const Attribute();
 
   // Used as the key to determine how
@@ -24,7 +24,7 @@ abstract class Attribute with Comparable, Mergeable {
 ///
 /// Typically used by classes like [Dto] or [Attribute] that need to merge
 /// instances of the same type.
-mixin Mergeable<T> {
+mixin MergeableMixin<T> {
   /// Merges this object with [other], returning a new object of type [T].
   T merge(covariant T? other);
 }
@@ -56,7 +56,7 @@ abstract class SpecAttribute<Value> extends StyledAttribute {
 }
 
 @immutable
-abstract class Spec<T extends Spec<T>> {
+abstract class Spec<T extends Spec<T>> with EqualityMixin {
   final AnimatedData? animated;
 
   const Spec({this.animated});
@@ -71,11 +71,4 @@ abstract class Spec<T extends Spec<T>> {
 
   /// Linearly interpolate with another [Spec] object.
   T lerp(covariant T? other, double t);
-
-  // equality
-  @override
-  bool operator ==(Object other);
-
-  @override
-  int get hashCode;
 }
