@@ -7,7 +7,7 @@ class AttributesOrderInStyle extends DartLintRule {
   AttributesOrderInStyle() : super(code: _code);
 
   static const _code = LintCode(
-    name: 'order-attributes-in-style',
+    name: 'order_attributes_in_style',
     problemMessage:
         'Ensure that the attributes are ordered on groups of the same Type in the Style constructor',
   );
