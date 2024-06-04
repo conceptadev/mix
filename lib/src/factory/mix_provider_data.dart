@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
 import '../attributes/animated/animated_data.dart';
-import '../attributes/variant_attribute.dart';
 import '../core/attribute.dart';
 import '../core/attributes_map.dart';
 import '../core/modifier.dart';
 import '../helpers/iterable_ext.dart';
 import '../theme/token_resolver.dart';
 import '../variants/context_variant.dart';
+import '../variants/variant_attribute.dart';
 import 'style_mix.dart';
 
 /// This class is used for encapsulating all [MixData] related operations.

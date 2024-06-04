@@ -2,7 +2,7 @@ import 'package:meta/meta.dart';
 
 import '../core/attribute.dart';
 import '../factory/style_mix.dart';
-import '../variants/variant.dart';
+import 'variant.dart';
 
 @immutable
 class VariantAttribute<V extends IVariant> extends Attribute {

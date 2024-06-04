@@ -1,7 +1,7 @@
-import '../core/attribute.dart';
-import '../core/directive.dart';
-import '../helpers/string_ext.dart';
-import 'scalars/scalar_util.dart';
+import '../../attributes/scalars/scalar_util.dart';
+import '../../core/attribute.dart';
+import '../../core/directive.dart';
+import '../../helpers/string_ext.dart';
 
 class TextDirectiveUtility<T extends Attribute>
     extends MixUtility<T, TextDirective> {

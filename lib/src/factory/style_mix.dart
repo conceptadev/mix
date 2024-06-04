@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 
 import '../attributes/animated/animated_data.dart';
 import '../attributes/nested_style/nested_style_attribute.dart';
-import '../attributes/variant_attribute.dart';
 import '../core/attribute.dart';
 import '../core/attributes_map.dart';
 import '../helpers/compare_mixin.dart';
 import '../helpers/helper_util.dart';
 import '../variants/variant.dart';
+import '../variants/variant_attribute.dart';
 import 'mix_provider_data.dart';
 
 /// A utility class for managing a collection of styling attributes and variants.

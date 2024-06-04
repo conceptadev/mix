@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../attributes/variant_attribute.dart';
 import '../core/attribute.dart';
 import '../factory/style_mix.dart';
 import '../helpers/compare_mixin.dart';
 import 'context_variant.dart';
+import 'variant_attribute.dart';
 
 enum VariantPriority {
   low(0),
