@@ -4,7 +4,13 @@
 
 // ignore_for_file: prefer_relative_imports
 import 'package:flutter/widgets.dart';
-import 'package:mix/mix.dart';
+
+import '../../attributes/constraints/constraints_dto.dart';
+import '../../attributes/decoration/decoration_dto.dart';
+import '../../attributes/spacing/spacing_dto.dart';
+import '../../core/attribute.dart';
+import '../../factory/mix_provider_data.dart';
+import 'box_spec.dart';
 
 /// Represents the attributes of a [BoxSpec].
 ///

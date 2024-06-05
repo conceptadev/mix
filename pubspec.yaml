@@ -14,9 +14,8 @@ dependencies:
   build: ^2.4.1
   code_builder: ^4.10.0
   source_gen: ^1.5.0
-  
+  analyzer: ">=6.2.0 <7.0.0"
   dart_style: ^2.3.6
-  analyzer: ^6.2.0
   
 
 dev_dependencies:

@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
 
-import 'box_spec_attribute.g.dart';
+import 'box_attribute.g.dart';
 
 /// A specification that defines the visual properties of BoxTestSpec.
 ///

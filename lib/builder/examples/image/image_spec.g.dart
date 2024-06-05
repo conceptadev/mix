@@ -1,6 +1,5 @@
 import 'dart:ui';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
 
@@ -140,37 +139,6 @@ class ImageTestSpec extends Spec<ImageTestSpec> {
       repeat,
       width,
     ];
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is ImageTestSpec &&
-        other.alignment == alignment &&
-        other.animated == animated &&
-        other.centerSlice == centerSlice &&
-        other.color == color &&
-        other.colorBlendMode == colorBlendMode &&
-        other.filterQuality == filterQuality &&
-        other.fit == fit &&
-        other.height == height &&
-        other.repeat == repeat &&
-        other.width == width;
-  }
-
-  @override
-  int get hashCode {
-    return alignment.hashCode ^
-        animated.hashCode ^
-        centerSlice.hashCode ^
-        color.hashCode ^
-        colorBlendMode.hashCode ^
-        filterQuality.hashCode ^
-        fit.hashCode ^
-        height.hashCode ^
-        repeat.hashCode ^
-        width.hashCode;
   }
 }
 

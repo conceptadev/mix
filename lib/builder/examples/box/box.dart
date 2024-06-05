@@ -5,7 +5,7 @@ import '../../helpers/annotations.dart';
 @MixSpec(name: 'BoxTest')
 class BoxDef {
   const BoxDef({
-    /// Aligns the child within the box.
+    @MixProperty(description: 'Aligns the child within the box.')
     AlignmentGeometry? alignment,
 
     /// Adds empty space inside the box.

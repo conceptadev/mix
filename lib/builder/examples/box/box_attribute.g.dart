@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
 
-import 'box_spec_spec.g.dart';
+import 'box_spec.g.dart';
 
 /// Represents the attributes of a [BoxTestSpec].
 ///

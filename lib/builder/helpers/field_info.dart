@@ -2,7 +2,7 @@ import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:code_builder/code_builder.dart';
 
-import 'types.dart';
+import '../types.dart';
 
 final _dtoMap = {
   'EdgeInsetsGeometry': 'SpacingDto',
@@ -75,7 +75,8 @@ class FieldInfo {
   }
 
   factory FieldInfo.fromParam(ParameterElement param) {
-    print(param);
+    print(param.metadata
+        .where((element) => element.element is ConstructorElement));
 
     return FieldInfo(
       name: param.name,

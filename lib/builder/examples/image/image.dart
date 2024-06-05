@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import '../../spec_definition.dart';
+import '../../helpers/annotations.dart';
 
-@SpecDefinition(name: 'ImageTest')
+@MixSpec(name: 'ImageTest')
 class ImageDef {
   const ImageDef({
     double? width,
