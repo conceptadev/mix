@@ -4,7 +4,7 @@ targets:
       mix|spec_definition_builder:
         generate_for:
         # change this later
-          - lib/builder/examples/**/box.dart
+          - lib/builder/examples/**/*.dart
 
 builders:
   spec_definition_builder:

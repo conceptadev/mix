@@ -49,12 +49,11 @@ Expression _getLerpExpression(String name, String type) {
 
 class FieldInfo {
   final String name;
-
   final bool isNullable;
   final bool isSuper;
   final String type;
   final List<String> annotations;
-  final String? documentationComment;
+  final String? docComment;
 
   const FieldInfo({
     required this.name,
@@ -62,20 +61,42 @@ class FieldInfo {
     required this.isNullable,
     required this.isSuper,
     this.annotations = const [],
-    required this.documentationComment,
+    required this.docComment,
   });
 
-  factory FieldInfo.fromElement(FieldElement field) {
+  factory FieldInfo.fromField(FieldElement field) {
     return FieldInfo(
       name: field.name,
       type: field.type.getDisplayString(withNullability: false),
       isNullable: field.type.nullabilitySuffix == NullabilitySuffix.question,
       isSuper: false,
-      documentationComment: field.documentationComment,
+      docComment: field.documentationComment,
     );
   }
 
-  bool get hasComment => documentationComment != null;
+  factory FieldInfo.fromParam(ParameterElement param) {
+    print(param);
+
+    return FieldInfo(
+      name: param.name,
+      type: param.type.getDisplayString(withNullability: false),
+      isNullable: param.type.nullabilitySuffix == NullabilitySuffix.question,
+      isSuper: false,
+      docComment: param.documentationComment,
+    );
+  }
+
+  static FieldInfo animatedField() {
+    return const FieldInfo(
+      name: 'animated',
+      type: 'AnimatedData',
+      isNullable: true,
+      isSuper: true,
+      docComment: '',
+    );
+  }
+
+  bool get hasComment => docComment != null;
 
   String get typeAsNullable => type + (isNullable ? '?' : '');
 
@@ -92,7 +113,7 @@ class FieldInfo {
       'isSuper': isSuper,
       'type': type,
       'annotations': annotations,
-      'documentationComment': documentationComment,
+      'documentationComment': docComment,
       'hasDto': hasDto,
       'dtoType': dtoType,
       'lerpExpression': lerpExpression,
@@ -131,7 +152,7 @@ Field _fieldInfoFieldBuilder(FieldInfo field) {
       ..type = refer(field.typeAsNullable)
       ..modifier = FieldModifier.final$
       ..annotations.addAll(field.annotations.map(refer))
-      ..docs.add(field.documentationComment ?? '');
+      ..docs.add(field.docComment ?? '');
   });
 }
 

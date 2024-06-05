@@ -1,9 +1,10 @@
 import 'dart:ui';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
 
-import 'box_attribute.g.dart';
+import 'box_spec_attribute.g.dart';
 
 /// A specification that defines the visual properties of BoxTestSpec.
 ///
@@ -15,52 +16,43 @@ class BoxTestSpec extends Spec<BoxTestSpec> {
 // All parameters are optional
   const BoxTestSpec({
     this.alignment,
-    this.padding,
-    this.margin,
+    super.animated,
+    this.clipBehavior,
     this.constraints,
     this.decoration,
     this.foregroundDecoration,
+    this.height,
+    this.mapTest,
+    this.margin,
+    this.padding,
     this.transform,
     this.transformAlignment,
-    this.clipBehavior,
     this.width,
-    this.height,
-    super.animated,
   });
 
-  /// Aligns the child within the box.
   final AlignmentGeometry? alignment;
 
-  /// Adds empty space inside the box.
-  final EdgeInsetsGeometry? padding;
-
-  /// Adds empty space around the box.
-  final EdgeInsetsGeometry? margin;
-
-  /// Applies additional constraints to the child.
-  final BoxConstraints? constraints;
-
-  /// Paints a decoration behind the child.
-  final Decoration? decoration;
-
-  /// Paints a decoration in front of the child.
-  final Decoration? foregroundDecoration;
-
-  /// Applies a transformation matrix before painting the box.
-  final Matrix4? transform;
-
-  /// Aligns the origin of the coordinate system for the [transform].
-  final AlignmentGeometry? transformAlignment;
-
-  /// Defines the clip behavior for the box when [BoxConstraints] has a negative
-  /// minimum extent.
   final Clip? clipBehavior;
 
-  /// Specifies the width of the box.
-  final double? width;
+  final BoxConstraints? constraints;
 
-  /// Specifies the height of the box.
+  final Decoration? decoration;
+
+  final Decoration? foregroundDecoration;
+
   final double? height;
+
+  final Map<String, dynamic>? mapTest;
+
+  final EdgeInsetsGeometry? margin;
+
+  final EdgeInsetsGeometry? padding;
+
+  final Matrix4? transform;
+
+  final AlignmentGeometry? transformAlignment;
+
+  final double? width;
 
   /// Retrieves the [BoxTestSpec] from the nearest [Mix] ancestor.
   ///
@@ -82,31 +74,33 @@ class BoxTestSpec extends Spec<BoxTestSpec> {
   @override
   BoxTestSpec copyWith({
     AlignmentGeometry? alignment,
-    EdgeInsetsGeometry? padding,
-    EdgeInsetsGeometry? margin,
+    AnimatedData? animated,
+    Clip? clipBehavior,
     BoxConstraints? constraints,
     Decoration? decoration,
     Decoration? foregroundDecoration,
+    double? height,
+    Map<String, dynamic>? mapTest,
+    EdgeInsetsGeometry? margin,
+    EdgeInsetsGeometry? padding,
     Matrix4? transform,
     AlignmentGeometry? transformAlignment,
-    Clip? clipBehavior,
     double? width,
-    double? height,
-    AnimatedData? animated,
   }) {
     return BoxTestSpec(
       alignment: alignment ?? this.alignment,
-      padding: padding ?? this.padding,
-      margin: margin ?? this.margin,
+      animated: animated ?? this.animated,
+      clipBehavior: clipBehavior ?? this.clipBehavior,
       constraints: constraints ?? this.constraints,
       decoration: decoration ?? this.decoration,
       foregroundDecoration: foregroundDecoration ?? this.foregroundDecoration,
+      height: height ?? this.height,
+      mapTest: mapTest ?? this.mapTest,
+      margin: margin ?? this.margin,
+      padding: padding ?? this.padding,
       transform: transform ?? this.transform,
       transformAlignment: transformAlignment ?? this.transformAlignment,
-      clipBehavior: clipBehavior ?? this.clipBehavior,
       width: width ?? this.width,
-      height: height ?? this.height,
-      animated: animated ?? this.animated,
     );
   }
 
@@ -123,16 +117,8 @@ class BoxTestSpec extends Spec<BoxTestSpec> {
         other.alignment,
         t,
       ),
-      padding: EdgeInsetsGeometry.lerp(
-        padding,
-        other.padding,
-        t,
-      ),
-      margin: EdgeInsetsGeometry.lerp(
-        margin,
-        other.margin,
-        t,
-      ),
+      animated: t < 0.5 ? animated : other.animated,
+      clipBehavior: t < 0.5 ? clipBehavior : other.clipBehavior,
       constraints: BoxConstraints.lerp(
         constraints,
         other.constraints,
@@ -148,6 +134,22 @@ class BoxTestSpec extends Spec<BoxTestSpec> {
         other.foregroundDecoration,
         t,
       ),
+      height: lerpDouble(
+        height,
+        other.height,
+        t,
+      ),
+      mapTest: t < 0.5 ? mapTest : other.mapTest,
+      margin: EdgeInsetsGeometry.lerp(
+        margin,
+        other.margin,
+        t,
+      ),
+      padding: EdgeInsetsGeometry.lerp(
+        padding,
+        other.padding,
+        t,
+      ),
       transform: Matrix4Tween(
         begin: transform,
         end: other.transform,
@@ -157,18 +159,11 @@ class BoxTestSpec extends Spec<BoxTestSpec> {
         other.transformAlignment,
         t,
       ),
-      clipBehavior: t < 0.5 ? clipBehavior : other.clipBehavior,
       width: lerpDouble(
         width,
         other.width,
         t,
       ),
-      height: lerpDouble(
-        height,
-        other.height,
-        t,
-      ),
-      animated: t < 0.5 ? animated : other.animated,
     );
   }
 
@@ -180,25 +175,66 @@ class BoxTestSpec extends Spec<BoxTestSpec> {
   List<Object?> get props {
     return [
       alignment,
-      padding,
-      margin,
+      animated,
+      clipBehavior,
       constraints,
       decoration,
       foregroundDecoration,
+      height,
+      mapTest,
+      margin,
+      padding,
       transform,
       transformAlignment,
-      clipBehavior,
       width,
-      height,
-      animated,
     ];
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is BoxTestSpec &&
+        other.alignment == alignment &&
+        other.animated == animated &&
+        other.clipBehavior == clipBehavior &&
+        other.constraints == constraints &&
+        other.decoration == decoration &&
+        other.foregroundDecoration == foregroundDecoration &&
+        other.height == height &&
+        mapEquals(
+          mapTest,
+          other.mapTest,
+        ) &&
+        other.margin == margin &&
+        other.padding == padding &&
+        other.transform == transform &&
+        other.transformAlignment == transformAlignment &&
+        other.width == width;
+  }
+
+  @override
+  int get hashCode {
+    return alignment.hashCode ^
+        animated.hashCode ^
+        clipBehavior.hashCode ^
+        constraints.hashCode ^
+        decoration.hashCode ^
+        foregroundDecoration.hashCode ^
+        height.hashCode ^
+        mapTest.hashCode ^
+        margin.hashCode ^
+        padding.hashCode ^
+        transform.hashCode ^
+        transformAlignment.hashCode ^
+        width.hashCode;
   }
 }
 
 /// A tween that interpolates between two [BoxTestSpec] instances.
 ///
 /// This class can be used in animations to smoothly transition between
-/// different BoxTestSpec specifications.
+/// different [BoxTestSpec] specifications.
 class BoxTestSpecTween extends Tween<BoxTestSpec?> {
   BoxTestSpecTween({
     super.begin,

@@ -12,33 +12,6 @@ import 'gradient_dto.dart';
 /// It also provides a method for converting a generic [Gradient] object to a specific type [T].
 ///
 /// Accepts a [builder] function that takes a [GradientDto] and returns an object of type [T].
-///
-/// Example usage:
-/// ```dart
-/// final gradient = GradientUtility(builder);
-///
-/// final linearGradient = gradient.linear(
-///   begin: Alignment.topLeft,
-///   end: Alignment.bottomRight,
-///   colors: [Colors.red, Colors.blue],
-/// );
-///
-/// final radialGradient = gradient.radial(
-///   center: Alignment.center,
-///   radius: 0.5,
-///   colors: [Colors.red, Colors.blue],
-/// );
-///
-/// final sweepGradient = gradient.sweep(
-///   center: Alignment.center,
-///   startAngle: 0.0,
-///   endAngle: 0.5,
-///   colors: [Colors.red, Colors.blue],
-/// );
-///
-///
-/// final gradientAttribute = gradient.as(linearGradient);
-/// ```
 class GradientUtility<T extends Attribute> extends MixUtility<T, GradientDto> {
   late final radial = RadialGradientUtility(builder);
   late final linear = LinearGradientUtility(builder);
@@ -66,23 +39,6 @@ class GradientUtility<T extends Attribute> extends MixUtility<T, GradientDto> {
 /// Utility class for creating and manipulating [RadialGradient] attributes.
 ///
 /// Accepts a [builder] function that takes a [RadialGradientDto] and returns an object of type [T].
-///
-/// Example usage:
-///
-/// ```dart
-/// final gradient = RadialGradientUtility<StyleAttribute>(builder);
-/// final radialGradient = gradient(
-///   center: Alignment.center,
-///   radius: 0.5,
-///   colors: [Colors.red, Colors.blue],
-/// );
-/// ```
-///
-/// See also:
-/// * [RadialGradient], a class for creating radial gradients.
-/// * [RadialGradientDto], a class for creating radial gradient values.
-/// * [GradientAttribute], a class for creating gradient attributes.
-/// * [GradientDto], a class for creating gradient values.
 @immutable
 class RadialGradientUtility<T extends Attribute>
     extends DtoUtility<T, RadialGradientDto, RadialGradient> {
@@ -156,22 +112,6 @@ class RadialGradientUtility<T extends Attribute>
 /// Utility class for creating and manipulating [LinearGradient] attributes.
 ///
 /// Accepts a [builder] function that takes a [LinearGradientDto] and returns an object of type [T].
-///
-/// Example usage:
-///
-// final gradient = LinearGradientUtility<StyleAttribute>(builder);
-// final linearGradient = gradient(
-//   begin: Alignment.topLeft,
-//   end: Alignment.bottomRight,
-//   colors: [Colors.red, Colors.blue],
-// );
-///
-///
-/// See also:
-/// * [LinearGradient], a class for creating linear gradients.
-/// * [LinearGradientDto], a class for creating linear gradient values.
-/// * [GradientAttribute], a class for creating gradient attributes.
-/// * [GradientDto], a class for creating gradient values.
 @immutable
 class LinearGradientUtility<T extends Attribute>
     extends DtoUtility<T, LinearGradientDto, LinearGradient> {
@@ -231,24 +171,6 @@ class LinearGradientUtility<T extends Attribute>
 /// Utility class for creating and manipulating [SweepGradient] attributes.
 ///
 /// Accepts a [builder] function that takes a [SweepGradientDto] and returns an object of type [T].
-///
-/// Example usage:
-///
-/// ```dart
-/// final gradient = SweepGradientUtility<StyleAttribute>(builder);
-/// final sweepGradient = gradient(
-///   center: Alignment.center,
-///   startAngle: 0.0,
-///   endAngle: pi,
-///   colors: [Colors.red, Colors.blue],
-/// );
-/// ```
-///
-/// See also:
-/// * [SweepGradient], a class for creating sweep gradients.
-/// * [SweepGradientDto], a class for creating sweep gradient values.
-/// * [GradientAttribute], a class for creating gradient attributes.
-/// * [GradientDto], a class for creating gradient values.
 class SweepGradientUtility<T extends Attribute>
     extends DtoUtility<T, SweepGradientDto, SweepGradient> {
   late final transform = GradientTransformUtility((v) => only(transform: v));

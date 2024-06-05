@@ -1,9 +1,10 @@
 import 'dart:ui';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
 
-import 'box_spec.g.dart';
+import 'box_spec_spec.g.dart';
 
 /// Represents the attributes of a [BoxTestSpec].
 ///
@@ -15,24 +16,23 @@ import 'box_spec.g.dart';
 class BoxTestSpecAttribute extends SpecAttribute<BoxTestSpec> {
   const BoxTestSpecAttribute({
     this.alignment,
-    this.padding,
-    this.margin,
+    super.animated,
+    this.clipBehavior,
     this.constraints,
     this.decoration,
     this.foregroundDecoration,
+    this.height,
+    this.mapTest,
+    this.margin,
+    this.padding,
     this.transform,
     this.transformAlignment,
-    this.clipBehavior,
     this.width,
-    this.height,
-    super.animated,
   });
 
   final AlignmentGeometry? alignment;
 
-  final SpacingDto? padding;
-
-  final SpacingDto? margin;
+  final Clip? clipBehavior;
 
   final BoxConstraintsDto? constraints;
 
@@ -40,31 +40,36 @@ class BoxTestSpecAttribute extends SpecAttribute<BoxTestSpec> {
 
   final DecorationDto? foregroundDecoration;
 
+  final double? height;
+
+  final Map<String, dynamic>? mapTest;
+
+  final SpacingDto? margin;
+
+  final SpacingDto? padding;
+
   final Matrix4? transform;
 
   final AlignmentGeometry? transformAlignment;
 
-  final Clip? clipBehavior;
-
   final double? width;
-
-  final double? height;
 
   @override
   BoxTestSpec resolve(MixData mix) {
     return BoxTestSpec(
       alignment: alignment,
-      padding: padding?.resolve(mix),
-      margin: margin?.resolve(mix),
+      animated: animated?.resolve(mix),
+      clipBehavior: clipBehavior,
       constraints: constraints?.resolve(mix),
       decoration: decoration?.resolve(mix),
       foregroundDecoration: foregroundDecoration?.resolve(mix),
+      height: height,
+      mapTest: mapTest,
+      margin: margin?.resolve(mix),
+      padding: padding?.resolve(mix),
       transform: transform,
       transformAlignment: transformAlignment,
-      clipBehavior: clipBehavior,
       width: width,
-      height: height,
-      animated: animated?.resolve(mix),
     );
   }
 
@@ -74,19 +79,20 @@ class BoxTestSpecAttribute extends SpecAttribute<BoxTestSpec> {
 
     return BoxTestSpecAttribute(
       alignment: other.alignment ?? alignment,
-      padding: padding?.merge(other.padding) ?? other.padding,
-      margin: margin?.merge(other.margin) ?? other.margin,
+      animated: animated?.merge(other.animated) ?? other.animated,
+      clipBehavior: other.clipBehavior ?? clipBehavior,
       constraints: constraints?.merge(other.constraints) ?? other.constraints,
       decoration: decoration?.merge(other.decoration) ?? other.decoration,
       foregroundDecoration:
           foregroundDecoration?.merge(other.foregroundDecoration) ??
               other.foregroundDecoration,
+      height: other.height ?? height,
+      mapTest: other.mapTest ?? mapTest,
+      margin: margin?.merge(other.margin) ?? other.margin,
+      padding: padding?.merge(other.padding) ?? other.padding,
       transform: other.transform ?? transform,
       transformAlignment: other.transformAlignment ?? transformAlignment,
-      clipBehavior: other.clipBehavior ?? clipBehavior,
       width: other.width ?? width,
-      height: other.height ?? height,
-      animated: animated?.merge(other.animated) ?? other.animated,
     );
   }
 
@@ -98,17 +104,18 @@ class BoxTestSpecAttribute extends SpecAttribute<BoxTestSpec> {
   List<Object?> get props {
     return [
       alignment,
-      padding,
-      margin,
+      animated,
+      clipBehavior,
       constraints,
       decoration,
       foregroundDecoration,
+      height,
+      mapTest,
+      margin,
+      padding,
       transform,
       transformAlignment,
-      clipBehavior,
       width,
-      height,
-      animated,
     ];
   }
 }

@@ -5,6 +5,7 @@ import 'package:dart_style/dart_style.dart';
 import 'package:source_gen/source_gen.dart';
 
 import 'builder_helpers.dart';
+import 'builders/class_builders.dart';
 import 'spec_definition.dart';
 import 'types.dart';
 
@@ -17,9 +18,11 @@ class SpecDefinitionBuilder implements Builder {
   final typeChecker = const TypeChecker.fromRuntime(SpecDefinition);
 
   @override
-  Map<String, List<String>> get buildExtensions => {
-        '.dart': ['_spec.g.dart', '_util.g.dart', '_attribute.g.dart'],
-      };
+  Map<String, List<String>> get buildExtensions {
+    return {
+      '.dart': ['_spec.g.dart', '_util.g.dart', '_attribute.g.dart'],
+    };
+  }
 
   @override
   Future<void> build(BuildStep buildStep) async {
@@ -33,40 +36,33 @@ class SpecDefinitionBuilder implements Builder {
 
     for (final classElement in annotatedClasses) {
       final annotation = typeChecker.firstAnnotationOfExact(classElement);
-      final baseClassName =
+      final specName =
           annotation?.getField('name')?.toStringValue() ?? classElement.name;
-      final specClassName = '${baseClassName}Spec';
+      final specClassName = '${specName}Spec';
 
       final outputSpecId = buildStep.inputId.changeExtension('_spec.g.dart');
       final outputUtilId = buildStep.inputId.changeExtension('_util.g.dart');
       final outputAttributeId =
           buildStep.inputId.changeExtension('_attribute.g.dart');
 
-      const animatedField = FieldInfo(
-        name: 'animated',
-        type: 'AnimatedData',
-        isNullable: true,
-        isSuper: true,
-        documentationComment: '',
-      );
-
-      final fields = classElement.fields
-          .where((field) => !field.isSynthetic)
-          .map(FieldInfo.fromElement)
-          .toList()
-        ..add(animatedField);
-      // ..sort((a, b) => a.name.compareTo(b.name));
-
       final constructor = classElement.unnamedConstructor;
+      final constructorParameters = constructor?.parameters ?? [];
 
-      validOrThrowIfHasRequiredFields(classElement, fields);
+      final fields = constructorParameters
+          .where((field) => !field.isSynthetic)
+          .map(FieldInfo.fromParam)
+          .toList()
+        ..add(FieldInfo.animatedField())
+        ..sort((a, b) => a.name.compareTo(b.name));
+
+      validateOrThrowHasAnyFields(classElement, classElement.fields);
       validOrThrowIfHasRequiredParameters(constructor);
 
       final specLibrary = Library(
         (b) => b
           ..body.addAll([
-            specClassBuilder(specClassName, fields),
-            specTweenClassBuilder(specClassName),
+            classSpecBuilder(specClassName, fields),
+            classSpecTweenBuilder(specClassName),
           ])
           ..directives.add(
             Directive.import(outputAttributeId.pathSegments.last),
@@ -75,7 +71,7 @@ class SpecDefinitionBuilder implements Builder {
 
       final attributeLibrary = Library(
         (b) => b
-          ..body.addAll([specAttributeClassBuilder(specClassName, fields)])
+          ..body.addAll([classSpecAttributeBuilder(specClassName, fields)])
           ..directives.add(Directive.import(outputSpecId.pathSegments.last)),
       );
 
@@ -92,7 +88,7 @@ class SpecDefinitionBuilder implements Builder {
   }
 }
 
-Class specClassBuilder(String specClassName, List<FieldInfo> fields) {
+Class classSpecBuilder(String specClassName, List<FieldInfo> fields) {
   final specRef = MixTypes.spec.symbol!;
 
   return Class((builder) {
@@ -119,17 +115,25 @@ Class specClassBuilder(String specClassName, List<FieldInfo> fields) {
       }),
     );
 
+    final classUtil = ClassGeneratorUtil(
+      className: specClassName,
+      fields: fields,
+      emitter: _emitter,
+    );
+
     builder.methods.addAll([
-      ofStaticMethodBuilder(specClassName),
-      fromStaticMethodBuilder(specClassName),
-      copyWithMethodBuilder(specClassName, fields),
-      lerpMethodBuilder(specClassName, fields),
-      propsGetterMethodBuilder(specClassName, fields),
+      classUtil.staticMethodOfBuilder(),
+      classUtil.staticMethodFromBuilder(),
+      classUtil.methodCopyWithBuilder(),
+      classUtil.methodLerpBuilder(),
+      classUtil.methodEqualityOperatorBuilder(),
+      classUtil.getterPropsBuilder(),
+      classUtil.getterHashcodeBuilder(),
     ]);
   });
 }
 
-Class specAttributeClassBuilder(String className, List<FieldInfo> fields) {
+Class classSpecAttributeBuilder(String className, List<FieldInfo> fields) {
   final specAttributeClassName = '${className}Attribute';
 
   return Class((builder) {
@@ -154,25 +158,31 @@ Class specAttributeClassBuilder(String className, List<FieldInfo> fields) {
       }),
     );
 
+    final classUtil = ClassGeneratorUtil(
+      className: specAttributeClassName,
+      fields: fields,
+      emitter: _emitter,
+    );
+
     builder.methods.addAll([
-      resolveMethodBuilder(className, fields),
-      mergeMethodBuilder(specAttributeClassName, fields),
-      propsGetterMethodBuilder(specAttributeClassName, fields),
+      classUtil.methodResolveBuilder(className),
+      classUtil.methodMergeBuilder(),
+      classUtil.getterPropsBuilder(),
     ]);
   });
 }
 
-Method resolveMethodBuilder(String typeToResolve, List<FieldInfo> fields) {
+Method methodResolveBuilder(String resolveToType, List<FieldInfo> fields) {
   return Method((builder) {
     builder
       ..name = 'resolve'
       ..annotations.add(refer('override'))
-      ..returns = refer(typeToResolve)
+      ..returns = refer(resolveToType)
       ..requiredParameters.add(Parameter((b) => b
         ..name = 'mix'
         ..type = MixTypes.mixData));
     builder.body = Code('''
-      return $typeToResolve(
+      return $resolveToType(
         ${fields.map((field) {
       final fieldName = field.name;
       if (field.hasDto) {
@@ -186,7 +196,7 @@ Method resolveMethodBuilder(String typeToResolve, List<FieldInfo> fields) {
   });
 }
 
-Method mergeMethodBuilder(String className, List<FieldInfo> fields) {
+Method methodMergeBuilder(String className, List<FieldInfo> fields) {
   return Method((b) {
     b.annotations.add(refer('override'));
     b.name = 'merge';
@@ -211,7 +221,7 @@ Method mergeMethodBuilder(String className, List<FieldInfo> fields) {
   });
 }
 
-Method ofStaticMethodBuilder(String className) {
+Method staticMethodOfBuilder(String className) {
   return Method((builder) {
     builder.docs.addAll([
       '/// Retrieves the [$className] from the nearest [Mix] ancestor.',
@@ -233,13 +243,13 @@ Method ofStaticMethodBuilder(String className) {
   });
 }
 
-Class specTweenClassBuilder(String className) {
+Class classSpecTweenBuilder(String className) {
   return Class((builder) {
     builder.docs.addAll([
       '/// A tween that interpolates between two [$className] instances.',
       '///',
       '/// This class can be used in animations to smoothly transition between',
-      '/// different $className specifications.',
+      '/// different [$className] specifications.',
     ]);
     builder.name = '${className}Tween';
     builder.extend = refer('Tween<$className?>');
@@ -281,7 +291,7 @@ Class specTweenClassBuilder(String className) {
   });
 }
 
-Method fromStaticMethodBuilder(String specClassName) {
+Method staticMethodFromBuilder(String specClassName) {
   return Method((builder) {
     builder.docs.addAll([
       '/// Retrieves the [$specClassName] from a MixData.',
@@ -301,7 +311,7 @@ Method fromStaticMethodBuilder(String specClassName) {
   });
 }
 
-Method copyWithMethodBuilder(String className, List<FieldInfo> fields) {
+Method methodCopyWithBuilder(String className, List<FieldInfo> fields) {
   return Method((builder) {
     builder.docs.addAll([
       '/// Creates a copy of this [$className] but with the given fields',
@@ -319,7 +329,7 @@ Method copyWithMethodBuilder(String className, List<FieldInfo> fields) {
   });
 }
 
-Method toStringMethodBuilder(String className, List<FieldInfo> fields) {
+Method methodToStringBuilder(String className, List<FieldInfo> fields) {
   return Method((builder) {
     builder.annotations.add(refer('override'));
     builder.name = 'toString';
@@ -330,7 +340,7 @@ Method toStringMethodBuilder(String className, List<FieldInfo> fields) {
   });
 }
 
-Method lerpMethodBuilder(String className, List<FieldInfo> fields) {
+Method methodLerpBuilder(String className, List<FieldInfo> fields) {
   final lerpStatements = fields.map((f) {
     return '${f.name}: ${f.lerpExpression.accept(_emitter)}';
   }).join(', ');
@@ -357,7 +367,7 @@ Method lerpMethodBuilder(String className, List<FieldInfo> fields) {
   });
 }
 
-Method propsGetterMethodBuilder(String className, List<FieldInfo> fields) {
+Method getterPropsBuilder(String className, List<FieldInfo> fields) {
   return Method((builder) {
     builder.docs.addAll([
       '/// The list of properties that constitute the state of this [$className].',
@@ -401,4 +411,77 @@ void validOrThrowIfHasRequiredFields(
       element: classElement,
     );
   }
+}
+
+void validateOrThrowHasAnyFields(
+  ClassElement classElement,
+  List<FieldElement> fields,
+) {
+  // Check if any field is required (non-nullable)
+  final hasFields = fields.isNotEmpty;
+  if (hasFields) {
+    throw InvalidGenerationSourceError(
+      'Spec definition must only have contructor parameters',
+      element: classElement,
+    );
+  }
+}
+
+Method methodEqualityOperatorBuilder(String className, List<FieldInfo> fields) {
+  final equalityChecks = fields.map((field) {
+    final fieldType = field.type;
+
+    if (fieldType.startsWith('List<')) {
+      final listEqualsRef = FlutterTypes.foundation.listEquals([
+        refer(field.name),
+        refer('other.${field.name}'),
+      ]);
+
+      return listEqualsRef.accept(_emitter);
+
+      // return 'listEquals(other.${field.name}, ${field.name})';
+    } else if (fieldType.startsWith('Map<')) {
+      final mapEqualsRef = FlutterTypes.foundation.mapEquals([
+        refer(field.name),
+        refer('other.${field.name}'),
+      ]);
+
+      return mapEqualsRef.accept(_emitter);
+      // return 'mapEquals(other.${field.name}, ${field.name})';
+    } else if (fieldType.startsWith('Set<')) {
+      final setEqualsRef = FlutterTypes.foundation.setEquals([
+        refer(field.name),
+        refer('other.${field.name}'),
+      ]);
+
+      return setEqualsRef.accept(_emitter);
+      // return 'setEquals(other.${field.name}, ${field.name})';
+    }
+
+    return 'other.${field.name} == ${field.name}';
+  }).join(' && ');
+
+  return Method((b) => b
+    ..name = 'operator =='
+    ..annotations.add(refer('override'))
+    ..returns = refer('bool')
+    ..requiredParameters.add(Parameter((b) => b
+      ..name = 'other'
+      ..type = refer('Object')))
+    ..body = Code('''
+          if (identical(this, other)) return true;
+
+          return other is $className && $equalityChecks;
+        '''));
+}
+
+Method getterHashcodeBuilder(String _, List<FieldInfo> fields) {
+  return Method((b) => b
+    ..name = 'hashCode'
+    ..annotations.add(refer('override'))
+    ..returns = refer('int')
+    ..type = MethodType.getter
+    ..body = Code('''
+          return ${fields.map((field) => '${field.name}.hashCode').join(' ^ ')};
+        '''));
 }
