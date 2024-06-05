@@ -9,7 +9,7 @@ class AvoidVariantInsideContextvariant extends DartLintRule {
   AvoidVariantInsideContextvariant() : super(code: _code);
 
   static const _code = LintCode(
-    name: 'avoid_variant_inside_contextvariant',
+    name: 'avoid_variant_inside_context_variant',
     problemMessage:
         'Ensure that variants are not applied inside the contextVariant scope but rather combined using the & operator.',
     errorSeverity: ErrorSeverity.ERROR,

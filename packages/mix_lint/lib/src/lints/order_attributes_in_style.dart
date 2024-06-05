@@ -9,7 +9,7 @@ class AttributesOrderInStyle extends DartLintRule {
   static const _code = LintCode(
     name: 'order_attributes_in_style',
     problemMessage:
-        'Ensure that the attributes are ordered on groups of the same Type in the Style constructor',
+        'Ensure that the attributes are ordered on groups of the same category in the Style constructor',
   );
 
   final _whiteList = ['Style.asAttribute'];
