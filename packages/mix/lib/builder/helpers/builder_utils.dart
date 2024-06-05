@@ -68,7 +68,7 @@ class SpecDefinitionContext {
 
 class SpecDefinitionOptions {
   final String name;
-  final List<FieldInfo> fields;
+  final List<MixPropertyInfo> fields;
   const SpecDefinitionOptions({required this.name, required this.fields});
 
   static SpecDefinitionOptions? fromClassElement(ClassElement classElement) {
@@ -88,9 +88,9 @@ class SpecDefinitionOptions {
 
     final fields = params
         .where((field) => !field.isSynthetic)
-        .map(FieldInfo.fromParam)
+        .map(MixPropertyInfo.fromParam)
         .toList()
-      ..add(FieldInfo.animatedField())
+      ..add(MixPropertyInfo.animatedField())
       ..sort((a, b) => a.name.compareTo(b.name));
 
     return SpecDefinitionOptions(name: name, fields: fields);

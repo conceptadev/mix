@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:meta/meta.dart';
 
 import '../attributes/animated/animated_data.dart';
 import '../core/attribute.dart';
@@ -59,7 +58,6 @@ class MixData {
   @visibleForTesting
   AttributeMap get attributes => _attributes;
 
-  @internal
   MixData toInheritable() {
     final inheritableAttributes = _attributes.values.where(
       (attr) => attr is! WidgetModifierAttribute,

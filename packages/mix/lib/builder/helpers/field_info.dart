@@ -2,6 +2,7 @@ import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:code_builder/code_builder.dart';
 
+import '../../src/helpers/iterable_ext.dart';
 import '../types.dart';
 
 final _dtoMap = {
@@ -47,7 +48,7 @@ Expression _getLerpExpression(String name, String type) {
   }
 }
 
-class FieldInfo {
+class MixPropertyInfo {
   final String name;
   final bool isNullable;
   final bool isSuper;
@@ -55,7 +56,7 @@ class FieldInfo {
   final List<String> annotations;
   final String? docComment;
 
-  const FieldInfo({
+  const MixPropertyInfo({
     required this.name,
     required this.type,
     required this.isNullable,
@@ -64,8 +65,8 @@ class FieldInfo {
     required this.docComment,
   });
 
-  factory FieldInfo.fromField(FieldElement field) {
-    return FieldInfo(
+  factory MixPropertyInfo.fromField(FieldElement field) {
+    return MixPropertyInfo(
       name: field.name,
       type: field.type.getDisplayString(withNullability: false),
       isNullable: field.type.nullabilitySuffix == NullabilitySuffix.question,
@@ -74,11 +75,31 @@ class FieldInfo {
     );
   }
 
-  factory FieldInfo.fromParam(ParameterElement param) {
-    print(param.metadata
-        .where((element) => element.element is ConstructorElement));
+  factory MixPropertyInfo.fromParam(ParameterElement param) {
+    final mixPropertyAnnotation = param.metadata
+        .whereType<ElementAnnotation>()
+        .firstWhereOrNull((annotation) =>
+            annotation
+                .computeConstantValue()
+                ?.type
+                ?.getDisplayString(withNullability: false) ==
+            'MixProperty');
 
-    return FieldInfo(
+    final comment = mixPropertyAnnotation
+        ?.computeConstantValue()
+        ?.getField('description')
+        ?.toStringValue();
+
+    final defaultValue = mixPropertyAnnotation
+        ?.computeConstantValue()
+        ?.getField('defaultValue')
+        ?.toStringValue();
+
+    if (comment != null) {
+      print(comment);
+    }
+
+    return MixPropertyInfo(
       name: param.name,
       type: param.type.getDisplayString(withNullability: false),
       isNullable: param.type.nullabilitySuffix == NullabilitySuffix.question,
@@ -87,8 +108,8 @@ class FieldInfo {
     );
   }
 
-  static FieldInfo animatedField() {
-    return const FieldInfo(
+  static MixPropertyInfo animatedField() {
+    return const MixPropertyInfo(
       name: 'animated',
       type: 'AnimatedData',
       isNullable: true,
@@ -124,8 +145,8 @@ class FieldInfo {
   }
 }
 
-extension ListFieldInfoExt on List<FieldInfo> {
-  List<FieldInfo> get nonSuper {
+extension ListFieldInfoExt on List<MixPropertyInfo> {
+  List<MixPropertyInfo> get nonSuper {
     return where((f) => !f.isSuper).toList();
   }
 
@@ -146,7 +167,7 @@ extension ListFieldInfoExt on List<FieldInfo> {
   }
 }
 
-Field _fieldInfoFieldBuilder(FieldInfo field) {
+Field _fieldInfoFieldBuilder(MixPropertyInfo field) {
   return Field((b) {
     b
       ..name = field.name
@@ -157,7 +178,7 @@ Field _fieldInfoFieldBuilder(FieldInfo field) {
   });
 }
 
-Field _fieldInfoDtoFieldBuilder(FieldInfo field) {
+Field _fieldInfoDtoFieldBuilder(MixPropertyInfo field) {
   return Field((b) {
     b
       ..name = field.name
@@ -166,7 +187,7 @@ Field _fieldInfoDtoFieldBuilder(FieldInfo field) {
   });
 }
 
-Parameter _fieldAsNamedConstructorParamBuilder(FieldInfo field) {
+Parameter _fieldAsNamedConstructorParamBuilder(MixPropertyInfo field) {
   return Parameter((b) {
     b.name = field.name;
     b.toThis = !field.isSuper;
@@ -176,7 +197,7 @@ Parameter _fieldAsNamedConstructorParamBuilder(FieldInfo field) {
   });
 }
 
-Parameter _fieldAsNamedMethodParamBuilder(FieldInfo field) {
+Parameter _fieldAsNamedMethodParamBuilder(MixPropertyInfo field) {
   return Parameter((builder) {
     builder.name = field.name;
     builder.named = true;

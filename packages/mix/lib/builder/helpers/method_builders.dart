@@ -7,7 +7,7 @@ import 'field_info.dart';
 
 Method MethodResolveBuilder({
   required String resolveToType,
-  required List<FieldInfo> fields,
+  required List<MixPropertyInfo> fields,
 }) {
   return Method((builder) {
     builder
@@ -34,7 +34,7 @@ Method MethodResolveBuilder({
 
 Method MethodMergeBuilder({
   required String className,
-  required List<FieldInfo> fields,
+  required List<MixPropertyInfo> fields,
 }) {
   return Method((b) {
     b.annotations.add(refer('override'));
@@ -102,7 +102,7 @@ Method StaticMethodFromBuilder({required String className}) {
 
 Method MethodCopyWithBuilder({
   required String className,
-  required List<FieldInfo> fields,
+  required List<MixPropertyInfo> fields,
 }) {
   return Method((builder) {
     builder.docs.addAll([
@@ -123,7 +123,7 @@ Method MethodCopyWithBuilder({
 
 Method MethodToStringBuilder({
   required String className,
-  required List<FieldInfo> fields,
+  required List<MixPropertyInfo> fields,
 }) {
   return Method((builder) {
     builder.annotations.add(refer('override'));
@@ -137,7 +137,7 @@ Method MethodToStringBuilder({
 
 Method MethodLerpBuilder({
   required String className,
-  required List<FieldInfo> fields,
+  required List<MixPropertyInfo> fields,
   required DartEmitter emitter,
 }) {
   final lerpStatements = fields.map((f) {
@@ -168,7 +168,7 @@ Method MethodLerpBuilder({
 
 Method GetterPropsBuilder({
   required String className,
-  required List<FieldInfo> fields,
+  required List<MixPropertyInfo> fields,
 }) {
   return Method((builder) {
     builder.docs.addAll([
@@ -191,7 +191,7 @@ Method GetterPropsBuilder({
 
 Method MethodEqualityOperatorBuilder({
   required String className,
-  required List<FieldInfo> fields,
+  required List<MixPropertyInfo> fields,
   required DartEmitter emitter,
 }) {
   final equalityChecks = fields.map((field) {
@@ -241,7 +241,7 @@ Method MethodEqualityOperatorBuilder({
         '''));
 }
 
-Method GetterHashcodeBuilder({required List<FieldInfo> fields}) {
+Method GetterHashcodeBuilder({required List<MixPropertyInfo> fields}) {
   return Method((b) => b
     ..name = 'hashCode'
     ..annotations.add(refer('override'))

@@ -9,7 +9,6 @@ import 'dart:core' as core;
 import 'dart:typed_data';
 
 import 'package:code_builder/code_builder.dart';
-import 'package:meta/meta.dart' as meta;
 
 /// Common type references used throughout code generation.
 abstract class DartTypes {

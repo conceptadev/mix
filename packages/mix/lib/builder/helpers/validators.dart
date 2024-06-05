@@ -13,7 +13,7 @@ void validOrThrowIfHasRequiredParameters(List<ParameterElement> params) {
   }
 }
 
-void validOrThrowIfHasRequiredFields(List<FieldInfo> fields) {
+void validOrThrowIfHasRequiredFields(List<MixPropertyInfo> fields) {
   // Check if any field is required (non-nullable)
   final hasRequiredField = fields.any((field) => !field.isNullable);
   if (hasRequiredField) {
