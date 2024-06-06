@@ -7,7 +7,7 @@ class ExternalizeVariantInstantiation extends DartLintRule {
   ExternalizeVariantInstantiation() : super(code: _code);
 
   static const _code = LintCode(
-    name: 'externalize_variant_instantiation',
+    name: 'mix_externalize_variant_instantiation',
     problemMessage:
         'Ensure that Variant instances are not created directly inside Style constructors. Instead, instantiate Variant outside and pass it as a parameter',
   );

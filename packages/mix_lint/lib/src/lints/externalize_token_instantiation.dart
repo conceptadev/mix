@@ -7,7 +7,7 @@ class ExternalizeTokenInstantiation extends DartLintRule {
   ExternalizeTokenInstantiation() : super(code: _code);
 
   static const _code = LintCode(
-    name: 'externalize_token_instantiation',
+    name: 'mix_externalize_token_instantiation',
     problemMessage:
         'Ensure that Tokens instances are not created directly inside Style constructors. Instead, instantiate Tokens outside and pass it as a parameter',
   );

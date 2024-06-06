@@ -1,9 +1,9 @@
 import 'package:custom_lint_builder/custom_lint_builder.dart';
 
-import 'src/rules/attributes_order.dart';
-import 'src/rules/avoid_variant_inside_contextvariant.dart';
-import 'src/rules/externalize_token_instantiation.dart';
-import 'src/rules/externalize_variant_instantiation.dart';
+import 'src/lints/avoid_variant_inside_context_variant.dart';
+import 'src/lints/externalize_token_instantiation.dart';
+import 'src/lints/externalize_variant_instantiation.dart';
+import 'src/lints/order_attributes_in_style.dart';
 
 PluginBase createPlugin() => _MixLint();
 
