@@ -3,59 +3,55 @@
 import 'package:build/build.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:dart_style/dart_style.dart';
+import 'package:mix_builder/src/helpers/field_info.dart';
 
-import 'helpers/builder_utils.dart';
-import 'helpers/field_info.dart';
-import 'helpers/method_builders.dart';
-import 'types.dart';
+import 'src/helpers/builder_utils.dart';
+import 'src/helpers/method_builders.dart';
+import 'src/helpers/mix_property.dart';
+import 'src/types.dart';
 
 Builder specDefinitionBuilder(BuilderOptions _) =>
     const SpecDefinitionBuilder();
 
-final _emitter = DartEmitter(allocator: Allocator(), orderDirectives: true);
-final _dartFormatter = DartFormatter(fixes: StyleFix.all);
+final _emitter = DartEmitter(
+  allocator: Allocator(),
+  orderDirectives: true,
+  useNullSafetySyntax: true,
+);
+final _dartFormatter = DartFormatter();
 
 class SpecDefinitionBuilder implements Builder {
   const SpecDefinitionBuilder();
   @override
   Map<String, List<String>> get buildExtensions {
     return {
-      '.dart': ['_spec.g.dart', '_util.g.dart', '_attribute.g.dart'],
+      '.dart': [
+        '.g.dart',
+      ],
     };
   }
 
   @override
   Future<void> build(BuildStep buildStep) async {
-    final specDefinitions = await loadSpecDefinitions(buildStep);
+    final specDefinitions =
+        await loadSpecDefinitions(buildStep, _emitter, _dartFormatter);
 
     for (final specDefinition in specDefinitions) {
-      final outputSpecId = specDefinition.outputSpecFileId;
-      final outputAttributeId = specDefinition.outputAttributeFileId;
-
       final specLibrary = Library(
         (b) => b
           ..body.addAll([
-            ClassSpecBuilder(specDefinition),
+            UtilityClassBuilder(specDefinition),
+            MixinSpecBuilder(specDefinition),
+            ClassSpecAttributeBuilder(specDefinition),
             ClassSpecTweenBuilder(specDefinition),
-          ])
-          ..directives
-              .add(Directive.import(outputAttributeId.pathSegments.last)),
+          ]),
       );
 
-      final attributeLibrary = Library(
-        (b) => b
-          ..body.addAll([ClassSpecAttributeBuilder(specDefinition)])
-          ..directives.add(Directive.import(outputSpecId.pathSegments.last)),
-      );
+      final outputSpecId = buildStep.inputId.changeExtension('.g.dart');
 
       await buildStep.writeAsString(
         outputSpecId,
         _dartFormatter.format('${specLibrary.accept(_emitter)}'),
-      );
-      await buildStep.writeAsString(specDefinition.outputUtilFileId, '');
-      await buildStep.writeAsString(
-        outputAttributeId,
-        _dartFormatter.format('${attributeLibrary.accept(_emitter)}'),
       );
     }
   }
@@ -65,7 +61,7 @@ Class ClassSpecBuilder(SpecDefinitionContext context) {
   final specRef = MixTypes.spec.symbol!;
 
   final specClassName = context.options.specClassName;
-  final fields = context.options.fields;
+  final fields = context.fields;
 
   return Class((b) {
     b.name = specClassName;
@@ -98,9 +94,33 @@ Class ClassSpecBuilder(SpecDefinitionContext context) {
       MethodLerpBuilder(
         className: specClassName,
         fields: fields,
-        emitter: _emitter,
+        emitter: context.emitter,
       ),
       GetterPropsBuilder(className: specClassName, fields: fields),
+    ]);
+  });
+}
+
+Mixin MixinSpecBuilder(SpecDefinitionContext context) {
+  final specClassName = context.options.specClassName;
+  final specClassMixinName = context.options.specClassMixinName;
+  final fields = context.fields;
+
+  return Mixin((b) {
+    b.name = specClassMixinName;
+    b.on = refer('Spec<$specClassName>');
+
+    b.methods.addAll([
+      MethodCopyWithBuilder(
+          className: specClassName, fields: fields, isInternalRef: true),
+      MethodLerpBuilder(
+          className: specClassName,
+          fields: fields,
+          emitter: context.emitter,
+          isInternalRef: true),
+      GetterPropsBuilder(
+          className: specClassName, fields: fields, isInternalRef: true),
+      GetterSelfBuilder(className: specClassName),
     ]);
   });
 }
@@ -108,7 +128,7 @@ Class ClassSpecBuilder(SpecDefinitionContext context) {
 Class ClassSpecAttributeBuilder(SpecDefinitionContext context) {
   final specClassName = context.options.specClassName;
   final specAttributeClassName = context.options.specAttributeClassName;
-  final fields = context.options.fields;
+  final fields = context.fields;
   final extendsType = 'SpecAttribute<$specClassName>';
 
   return Class((b) {
@@ -188,5 +208,91 @@ Class ClassSpecTweenBuilder(SpecDefinitionContext context) {
               return begin!.lerp(end!, t);
             ''');
     }));
+  });
+}
+
+Class UtilityClassBuilder(SpecDefinitionContext context) {
+  final specClassName = context.options.specClassName;
+  final specAttributeClassName = context.options.specAttributeClassName;
+  final fields = context.fields;
+  final utilityClassName = '${specClassName}Utility';
+  final extendsType = 'SpecUtility<T, $specAttributeClassName>';
+
+  return Class((b) {
+    b.name = utilityClassName;
+    b.extend = refer(extendsType);
+    b.docs.addAll([
+      '/// Utility class for configuring [$specAttributeClassName] properties.',
+      '///',
+      '/// This class provides methods to set individual properties of a [$specAttributeClassName].',
+      '///',
+      '/// Use the methods of this class to configure specific properties of a [$specAttributeClassName].',
+    ]);
+
+    b.types.add(refer('T extends Attribute'));
+
+    b.fields.addAll(fields.utilityFields);
+
+    b.constructors.add(
+      Constructor((builder) {
+        builder.requiredParameters.add(
+          Parameter((b) {
+            b.name = 'super.builder';
+          }),
+        );
+        ;
+      }),
+    );
+
+    b.methods.add(
+      MethodOnlyBuilder(
+        className: specAttributeClassName,
+        fields: fields,
+      ),
+    );
+  });
+}
+
+extension UtilityFieldsExtension on List<ParameterInfo> {
+  Iterable<Field> get utilityFields {
+    final fields = <Field>[];
+    for (final field in this) {
+      final utilityFieldName = field.name;
+      final utilityFieldType = field.utilityType;
+      fields.add(
+        Field(
+          (b) => b
+            ..modifier = FieldModifier.final$
+            ..late = true
+            ..name = utilityFieldName
+            ..assignment =
+                Code('$utilityFieldType((v) => only(${field.name}: v))'),
+        ),
+      );
+    }
+
+    return fields;
+  }
+}
+
+Method MethodOnlyBuilder({
+  required String className,
+  required List<ParameterInfo> fields,
+}) {
+  final fieldStatements = fields.map((e) {
+    final fieldName = e.name;
+
+    return Code('${fieldName}: $fieldName,');
+  });
+  return Method((b) {
+    b.annotations.add(refer('override'));
+    b.name = 'only';
+    b.returns = refer('T');
+    b.optionalParameters.addAll(fields.methodDtoParams);
+    b.body = Block.of([
+      Code('return builder($className('),
+      Block.of(fieldStatements),
+      Code('),);'),
+    ]);
   });
 }

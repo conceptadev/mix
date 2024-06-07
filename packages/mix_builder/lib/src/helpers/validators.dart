@@ -1,7 +1,6 @@
 import 'package:analyzer/dart/element/element.dart';
+import 'package:mix_builder/src/helpers/field_info.dart';
 import 'package:source_gen/source_gen.dart';
-
-import 'field_info.dart';
 
 void validOrThrowIfHasRequiredParameters(List<ParameterElement> params) {
   final hasRequiredParameter =
@@ -13,9 +12,9 @@ void validOrThrowIfHasRequiredParameters(List<ParameterElement> params) {
   }
 }
 
-void validOrThrowIfHasRequiredFields(List<MixPropertyInfo> fields) {
+void validOrThrowIfHasRequiredFields(List<ParameterInfo> fields) {
   // Check if any field is required (non-nullable)
-  final hasRequiredField = fields.any((field) => !field.isNullable);
+  final hasRequiredField = fields.any((field) => !field.nullable);
   if (hasRequiredField) {
     throw InvalidGenerationSourceError(
       'All fields of a Spec definition in the class must be nullable.',
@@ -23,12 +22,12 @@ void validOrThrowIfHasRequiredFields(List<MixPropertyInfo> fields) {
   }
 }
 
-void validateOrThrowHasAnyFields(List<FieldElement> fields) {
-  // Check if any field is required (non-nullable)
-  final hasFields = fields.isNotEmpty;
-  if (hasFields) {
-    throw InvalidGenerationSourceError(
-      'Spec definition must only have contructor parameters',
-    );
-  }
-}
+// void validateOrThrowHasAnyFields(List<FieldElement> fields) {
+//   // Check if any field is required (non-nullable)
+//   final hasFields = fields.isNotEmpty;
+//   if (hasFields) {
+//     throw InvalidGenerationSourceError(
+//       'Spec definition must only have contructor parameters',
+//     );
+//   }
+// }

@@ -1,0 +1,14 @@
+targets:
+  $default:
+    builders:
+      spec_definition:
+        enabled: true
+
+builders:
+  spec_definition:
+    import: "package:mix_builder/spec_definition_builder.dart"
+    builder_factories: ["specDefinitionBuilder"]
+    build_extensions: {".dart": ["g.dart"]}
+    auto_apply: dependents
+    build_to: source
+    

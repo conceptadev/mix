@@ -4,12 +4,4 @@ targets:
       mix|spec_definition_builder:
         generate_for:
         # change this later
-          - lib/builder/examples/**/*.dart
-
-builders:
-  spec_definition_builder:
-    import: "package:mix/builder/spec_definition_generator.dart"
-    builder_factories: ["specDefinitionBuilder"]
-    build_extensions: {".dart": ["_spec.g.dart", "_util.g.dart", "_attribute.g.dart"]}
-    auto_apply: dependents
-    build_to: source
+          - lib/src/**/spec_builder/image_spec.dart
