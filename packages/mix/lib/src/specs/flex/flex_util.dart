@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../../attributes/animated/animated_data.dart';
+import '../../attributes/animated/animated_data_dto.dart';
 import '../../attributes/scalars/scalar_util.dart';
 import '../../attributes/spacing/spacing_util.dart';
 import '../../core/attribute.dart';
+import '../../core/spec.dart';
 import 'flex_attribute.dart';
 
 class FlexSpecUtility<T extends Attribute>

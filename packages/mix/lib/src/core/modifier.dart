@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../factory/mix_provider_data.dart';
-import 'attribute.dart';
+import 'spec.dart';
 
 abstract class WidgetModifierSpec<Self extends WidgetModifierSpec<Self>>
     extends Spec<Self> {

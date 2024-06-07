@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../../attributes/animated/animated_data.dart';
+import '../../attributes/animated/animated_data_dto.dart';
 import '../../attributes/scalars/scalar_util.dart';
 import '../../core/attribute.dart';
+import '../../core/spec.dart';
 import 'stack_attribute.dart';
 
 class StackSpecUtility<T extends Attribute>

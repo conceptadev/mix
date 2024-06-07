@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../../attributes/animated/animated_data.dart';
-import '../../core/attribute.dart';
+import '../../core/models/animated_data.dart';
+import '../../core/spec.dart';
 import '../../factory/mix_provider.dart';
 import '../../factory/mix_provider_data.dart';
-import '../../helpers/lerp_helpers.dart';
+import '../../internal/lerp_helpers.dart';
 import 'stack_attribute.dart';
 
 class StackSpec extends Spec<StackSpec> {

@@ -1,13 +1,9 @@
 import 'dart:developer';
 import 'dart:io';
 
-String _join(String path1, String path2) {
-  return path1 + Platform.pathSeparator + path2;
-}
-
 void main() {
   final libDirectory = Directory('lib');
-  final exportFilePath = _join('lib', 'mix.dart');
+  final exportFilePath = _joinPaths('lib', 'mix.dart');
 
   if (!libDirectory.existsSync()) {
     log('The lib directory was not found.');
@@ -39,15 +35,12 @@ void main() {
   // Traverse the /lib/ directory
   for (final entity in filesList) {
     // Get the relative path using the path package
-    final relativePath = getRelativePath(entity.path, libDirectory.path);
 
-    if (relativePath.startsWith(_join('src', 'helpers'))) {
+    if (_isInternal(entity.path) || !_isDartFile(entity.path)) {
       continue;
     }
 
-    if (!relativePath.endsWith('.dart')) {
-      continue;
-    }
+    final relativePath = _getRelativePath(entity.path, libDirectory.path);
 
     if (relativePath.startsWith('mix.dart')) {
       continue;
@@ -61,11 +54,19 @@ void main() {
   log('Exports file updated with ${outputString.length} exports.');
 }
 
-String joinPaths(List<String> parts) {
-  return parts.join(Platform.pathSeparator);
+bool _isInternal(String path) {
+  return path.contains('/internal/');
 }
 
-String getRelativePath(String filePath, String fromPath) {
+bool _isDartFile(String path) {
+  return path.endsWith('.dart');
+}
+
+String _joinPaths(String path1, String path2) {
+  return path1 + Platform.pathSeparator + path2;
+}
+
+String _getRelativePath(String filePath, String fromPath) {
   // Normalize both paths to use the platform's path separator
   final String normalizedFilePath = filePath
       .replaceAll('/', Platform.pathSeparator)

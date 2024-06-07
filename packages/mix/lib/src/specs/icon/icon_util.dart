@@ -1,10 +1,11 @@
-import '../../attributes/animated/animated_data.dart';
+import '../../attributes/animated/animated_data_dto.dart';
 import '../../attributes/color/color_dto.dart';
 import '../../attributes/color/color_util.dart';
 import '../../attributes/scalars/scalar_util.dart';
 import '../../attributes/shadow/shadow_dto.dart';
 import '../../attributes/shadow/shadow_util.dart';
 import '../../core/attribute.dart';
+import '../../core/spec.dart';
 import 'icon_attribute.dart';
 
 class IconSpecUtility<T extends Attribute>

@@ -8,7 +8,7 @@ import 'package:flutter/widgets.dart';
 import '../../attributes/constraints/constraints_dto.dart';
 import '../../attributes/decoration/decoration_dto.dart';
 import '../../attributes/spacing/spacing_dto.dart';
-import '../../core/attribute.dart';
+import '../../core/spec.dart';
 import '../../factory/mix_provider_data.dart';
 import 'box_spec.dart';
 

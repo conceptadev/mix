@@ -20,16 +20,14 @@ final _utilityMap = {
   'BoxConstraints': 'BoxConstraintsUtility',
   'Decoration': 'DecorationUtility',
   'Color': 'ColorUtility',
-  'AnimatedData': 'AnimatedDataUtility',
+  'AnimatedData': 'AnimatedUtility',
   'double': 'DoubleUtility',
   'bool': 'BoolUtility',
   'int': 'IntUtility',
   'TextStyle': 'TextStyleUtility',
   'StrutStyle': 'StrutStyleUtility',
   'Clip': 'ClipUtility',
-  // TextOverflow
   'TextOverflow': 'TextOverflowUtility',
-  // TextWidthBasis
   'TextWidthBasis': 'TextWidthBasisUtility',
   'TextAlign': 'TextAlignUtility',
   'TextHeightBehavior': 'TextHeightBehaviorUtility',
@@ -37,6 +35,8 @@ final _utilityMap = {
   'VerticalDirection': 'VerticalDirectionUtility',
   'TextBaseline': 'TextBaselineUtility',
   'TextDecoration': 'TextDecorationUtility',
+  'Matrix4': 'Matrix4Utility',
+  'AlignmentGeometry': 'AlignmentUtility',
 };
 
 /// Class field info relevant for code generation.
@@ -130,7 +130,9 @@ class ParameterInfo extends FieldInfo {
 
   String get dtoType => (_dtoType ?? asRequiredType) + (nullable ? '?' : '');
 
-  String get utilityType => _utilityMap[asRequiredType] ?? 'NULL';
+  bool get hasUtility => _utilityMap[asRequiredType] != null;
+
+  String? get utilityType => _utilityMap[asRequiredType];
 
   /// Returns the field info for the constructor parameter in the relevant class.
   static FieldInfo? _classFieldInfo(

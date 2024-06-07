@@ -1,9 +1,9 @@
 import 'package:flutter/animation.dart';
 
+import '../../core/models/animated_data.dart';
 import '../../core/dto.dart';
 import '../../factory/mix_provider_data.dart';
-import '../../helpers/compare_mixin.dart';
-import '../../helpers/constants.dart';
+import '../../internal/constants.dart';
 
 class AnimatedDataDto extends Dto<AnimatedData> {
   final Duration? duration;
@@ -30,29 +30,4 @@ class AnimatedDataDto extends Dto<AnimatedData> {
 
   @override
   get props => [duration, curve];
-}
-
-class AnimatedData with EqualityMixin {
-  final Curve? _curve;
-  final Duration? _duration;
-  const AnimatedData({required Duration? duration, required Curve? curve})
-      : _curve = curve,
-        _duration = duration;
-
-  const AnimatedData.withDefaults()
-      : _duration = kDefaultAnimationDuration,
-        _curve = Curves.linear;
-
-  // Se default in case is not set
-  Duration get duration => _duration ?? kDefaultAnimationDuration;
-
-  // set default in case its not set
-  Curve get curve => _curve ?? Curves.linear;
-
-  AnimatedDataDto toDto() {
-    return AnimatedDataDto(duration: duration, curve: curve);
-  }
-
-  @override
-  get props => [_duration, _curve];
 }

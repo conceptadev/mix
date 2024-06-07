@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../core/attribute.dart';
 import '../factory/style_mix.dart';
-import '../helpers/compare_mixin.dart';
+import '../internal/compare_mixin.dart';
 import 'context_variant.dart';
 import 'variant_attribute.dart';
 

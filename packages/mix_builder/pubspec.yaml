@@ -19,6 +19,7 @@ dependencies:
   analyzer: ^6.2.0
   dart_style: ^2.3.6
   collection: ^1.17.1
+  glob: ^2.1.2
   
 
 dev_dependencies:

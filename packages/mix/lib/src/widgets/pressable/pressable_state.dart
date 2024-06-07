@@ -2,7 +2,7 @@
 
 import 'package:flutter/widgets.dart';
 
-import '../../helpers/compare_mixin.dart';
+import '../../internal/compare_mixin.dart';
 
 enum PressableStateAspect {
   currentState,

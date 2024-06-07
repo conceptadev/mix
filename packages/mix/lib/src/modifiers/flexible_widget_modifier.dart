@@ -6,7 +6,7 @@ import '../attributes/scalars/scalar_util.dart';
 import '../core/attribute.dart';
 import '../core/modifier.dart';
 import '../factory/mix_provider_data.dart';
-import '../helpers/lerp_helpers.dart';
+import '../internal/lerp_helpers.dart';
 
 class FlexibleModifierSpec extends WidgetModifierSpec<FlexibleModifierSpec> {
   final int? flex;

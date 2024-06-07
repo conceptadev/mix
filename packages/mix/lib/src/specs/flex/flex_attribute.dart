@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../core/attribute.dart';
+import '../../core/spec.dart';
 import '../../factory/mix_provider_data.dart';
 import 'flex_spec.dart';
 

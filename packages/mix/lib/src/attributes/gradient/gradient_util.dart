@@ -31,7 +31,7 @@ class GradientUtility<T extends Attribute> extends MixUtility<T, GradientDto> {
       return sweep.as(gradient);
     }
     throw UnimplementedError(
-      'Cannot create GradientAttribute from gradient of type ${gradient.runtimeType}',
+      'Cannot create $T from gradient of type ${gradient.runtimeType}',
     );
   }
 }

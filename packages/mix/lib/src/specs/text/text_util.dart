@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../attributes/animated/animated_data.dart';
+import '../../attributes/animated/animated_data_dto.dart';
 import '../../attributes/scalars/scalar_util.dart';
 import '../../attributes/strut_style/strut_style_dto.dart';
 import '../../attributes/strut_style/strut_style_util.dart';
@@ -8,6 +8,7 @@ import '../../attributes/text_style/text_style_dto.dart';
 import '../../attributes/text_style/text_style_util.dart';
 import '../../core/attribute.dart';
 import '../../core/directive.dart';
+import '../../core/spec.dart';
 import 'text_attribute.dart';
 import 'text_directives_util.dart';
 

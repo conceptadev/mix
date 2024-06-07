@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mix/src/helpers/lerp_helpers.dart';
+import 'package:mix/src/internal/lerp_helpers.dart';
 
 void main() {
   test('Linearly interpolates between two integers', () {

@@ -1,7 +1,9 @@
 import 'dart:ui';
 
 import 'package:flutter/widgets.dart';
-import 'package:mix/mix.dart';
+import 'package:mix/foundation.dart';
+
+import '../factory/mix_provider_data.dart';
 
 /// Utility class for configuring [BoxDefAttribute] properties.
 ///
@@ -12,7 +14,7 @@ class BoxDefUtility<T extends Attribute>
     extends SpecUtility<T, BoxDefAttribute> {
   BoxDefUtility(super.builder);
 
-  late final alignment = NULL((v) => only(alignment: v));
+  late final alignment = AlignmentUtility((v) => only(alignment: v));
 
   late final padding = SpacingUtility((v) => only(padding: v));
 
@@ -25,9 +27,10 @@ class BoxDefUtility<T extends Attribute>
   late final foregroundDecoration =
       DecorationUtility((v) => only(foregroundDecoration: v));
 
-  late final transform = NULL((v) => only(transform: v));
+  late final transform = Matrix4Utility((v) => only(transform: v));
 
-  late final transformAlignment = NULL((v) => only(transformAlignment: v));
+  late final transformAlignment =
+      AlignmentUtility((v) => only(transformAlignment: v));
 
   late final clipBehavior = ClipUtility((v) => only(clipBehavior: v));
 
@@ -35,7 +38,7 @@ class BoxDefUtility<T extends Attribute>
 
   late final height = DoubleUtility((v) => only(height: v));
 
-  late final animated = AnimatedDataUtility((v) => only(animated: v));
+  late final animated = AnimatedUtility((v) => only(animated: v));
 
   @override
   T only({

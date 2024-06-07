@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
-import '../../attributes/animated/animated_data.dart';
+import '../../attributes/animated/animated_data_dto.dart';
 import '../../attributes/color/color_dto.dart';
 import '../../attributes/color/color_util.dart';
 import '../../attributes/scalars/scalar_util.dart';
 import '../../core/attribute.dart';
+import '../../core/spec.dart';
 import 'image_attribute.dart';
 
 class ImageSpecUtility<T extends Attribute>

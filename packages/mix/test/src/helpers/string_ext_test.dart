@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mix/src/helpers/string_ext.dart';
+import 'package:mix/src/internal/string_ext.dart';
 
 void main() {
   group('StringExt', () {

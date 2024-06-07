@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../variants/context_variant.dart';
+import '../context_variant.dart';
 
 /// A variant of [ContextVariant] based on a [Brightness] value.
 ///

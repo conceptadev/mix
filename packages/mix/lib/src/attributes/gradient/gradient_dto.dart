@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../core/dto.dart';
 import '../../factory/mix_provider_data.dart';
-import '../../helpers/iterable_ext.dart';
+import '../../internal/iterable_ext.dart';
 import '../color/color_dto.dart';
 
 /// Represents a base Data transfer object of [Gradient]

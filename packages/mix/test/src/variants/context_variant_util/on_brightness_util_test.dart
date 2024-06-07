@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mix/src/utils/context_variant_util/on_brightness_util.dart';
+import 'package:mix/src/variants/context_variant_util/on_brightness_util.dart';
 
 import '../../../helpers/testing_utils.dart';
 

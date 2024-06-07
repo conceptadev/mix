@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../helpers/build_context_ext.dart';
+import '../../internal/build_context_ext.dart';
 import '../../theme/tokens/breakpoints_token.dart';
-import '../../variants/context_variant.dart';
+import '../context_variant.dart';
 
 /// Represents a variant of a context based on a specific breakpoint.
 ///
