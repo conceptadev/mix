@@ -6,6 +6,13 @@ on:
       token:
         required: true
         type: string
+      run-dcm:
+        required: false
+        type: boolean
+        default: true
+      flutter-version:
+        required: false
+        default: ""
 
 runs:
   using: "composite"
@@ -17,6 +24,7 @@ runs:
       uses: subosito/flutter-action@v2
       with:
         channel: "stable"
+        flutter-version: ${{ inputs.flutter-version }}
 
     - name: Setup Melos
       uses: bluefireteam/melos-action@v3
@@ -26,12 +34,14 @@ runs:
         fatal-infos: false
 
     - name: Install DCM
+      if: ${{ inputs.run-dcm }}
       uses: CQLabs/setup-dcm@v1
       with:
         github_token: ${{ inputs.token }}
         folders: packages/*/lib
 
     - name: Run DCM
+      if: ${{ inputs.run-dcm }}
       uses: CQLabs/dcm-action@v1
       with:
         github_token: ${{ inputs.token }}
