@@ -1,7 +1,6 @@
 targets:
   $default:
     builders:
-      mix|spec_definition_builder:
+      mix_builder|spec:
         generate_for:
-        # change this later
-          - lib/src/**/spec_builder/image_spec.dart
+          - lib/**/*.dart

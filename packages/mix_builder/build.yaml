@@ -1,23 +1,7 @@
-targets:
-  $default:
-    builders:
-      spec_definition:
-        enabled: true
-      foundation_export:
-        enabled: true
-
 builders:
-  spec_definition:
-    import: "package:mix_builder/spec_definition_generator.dart"
-    builder_factories: ["specDefinitionBuilder"]
-    build_extensions: {".dart": ["g.dart"]}
+  spec:
+    import: "package:mix_builder/builder.dart"
+    builder_factories: ["specDefinition"]
+    build_extensions: {".dart": [".spec.dart"]}
     auto_apply: dependents
     build_to: source
-  foundation_export:
-    import: "package:mix_builder/export_generator.dart"
-    builder_factories: ["foundationExportBuilder"]
-    build_extensions: {r'$lib$': ["foundation.dart"]}
-    auto_apply: root_package
-    build_to: source
-  
-    

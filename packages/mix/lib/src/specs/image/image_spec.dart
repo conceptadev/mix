@@ -1,12 +1,10 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import '../../core/models/animated_data.dart';
+import '../../core/models/mix_data.dart';
 import '../../core/spec.dart';
 import '../../factory/mix_provider.dart';
-import '../../factory/mix_provider_data.dart';
 import '../../internal/lerp_helpers.dart';
 import 'image_attribute.dart';
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../core/spec.dart';
-import '../../factory/mix_provider_data.dart';
+import '../../core/models/mix_data.dart';
 import 'flex_spec.dart';
 
 class FlexSpecAttribute extends SpecAttribute<FlexSpec> {

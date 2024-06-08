@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../core/spec.dart';
-import '../../factory/mix_provider_data.dart';
+import '../../core/models/mix_data.dart';
 import 'stack_spec.dart';
 
 class StackSpecAttribute extends SpecAttribute<StackSpec> {

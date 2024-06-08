@@ -2,18 +2,9 @@ import 'package:analyzer/dart/constant/value.dart' show DartObject;
 import 'package:analyzer/dart/element/element.dart'
     show ClassElement, FieldElement, ParameterElement;
 import 'package:analyzer/dart/element/nullability_suffix.dart';
+import 'package:code_builder/code_builder.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 import 'package:source_gen/source_gen.dart' show ConstantReader, TypeChecker;
-
-final _dtoMap = {
-  'EdgeInsetsGeometry': 'SpacingDto',
-  'BoxConstraints': 'BoxConstraintsDto',
-  'Decoration': 'DecorationDto',
-  'Color': 'ColorDto',
-  'AnimatedData': 'AnimatedDataDto',
-  'TextStyle': 'TextStyleDto',
-  'StrutStyle': 'StrutStyleDto',
-};
 
 final _utilityMap = {
   'EdgeInsetsGeometry': 'SpacingUtility',
@@ -27,6 +18,7 @@ final _utilityMap = {
   'TextStyle': 'TextStyleUtility',
   'StrutStyle': 'StrutStyleUtility',
   'Clip': 'ClipUtility',
+  'BoxDecoration': 'BoxDecorationUtility',
   'TextOverflow': 'TextOverflowUtility',
   'TextWidthBasis': 'TextWidthBasisUtility',
   'TextAlign': 'TextAlignUtility',
@@ -37,6 +29,16 @@ final _utilityMap = {
   'TextDecoration': 'TextDecorationUtility',
   'Matrix4': 'Matrix4Utility',
   'AlignmentGeometry': 'AlignmentUtility',
+};
+
+final _dtoMap = {
+  'EdgeInsetsGeometry': 'SpacingDto',
+  'BoxConstraints': 'BoxConstraintsDto',
+  'Decoration': 'DecorationDto',
+  'Color': 'ColorDto',
+  'AnimatedData': 'AnimatedDataDto',
+  'TextStyle': 'TextStyleDto',
+  'StrutStyle': 'StrutStyleDto',
 };
 
 /// Class field info relevant for code generation.
@@ -75,7 +77,7 @@ class ParameterInfo extends FieldInfo {
     required super.type,
     required super.nullable,
     required this.isSuper,
-    required this.propertyAnnotation,
+    required this.annotation,
     required super.documentationComment,
   }) {}
   factory ParameterInfo.parameter(
@@ -95,7 +97,7 @@ class ParameterInfo extends FieldInfo {
       nullable: nullable,
       fieldInfo: fieldInfo,
       isSuper: param.isSuperFormal,
-      propertyAnnotation: annotation,
+      annotation: annotation,
       documentationComment: fieldInfo?.documentationComment,
     );
   }
@@ -118,21 +120,25 @@ class ParameterInfo extends FieldInfo {
   final bool isPositioned;
 
   /// Annotation provided by the user with `MixProperty`.
-  final MixProperty propertyAnnotation;
+  final MixProperty annotation;
 
   /// Returns whether the field has a DTO type associated with it.
-  bool get hasDto => _dtoType != null;
+  bool get hasDto => dtoType != null;
 
   /// Returns the DTO type associated with the field, if any.
   /// If a DTO type is explicitly specified in the `MixProperty` annotation, that is returned.
   /// Otherwise, the DTO type is inferred from the field type using a mapping defined in `_dtoMap`.
-  String? get _dtoType => propertyAnnotation.dtoName ?? _dtoMap[asRequiredType];
 
-  String get dtoType => (_dtoType ?? asRequiredType) + (nullable ? '?' : '');
+  String? get _dto => annotation.dtoName ?? _dtoMap[asRequiredType];
+  Reference? get dtoType => _dto == null ? null : refer(_dto!);
 
-  bool get hasUtility => _utilityMap[asRequiredType] != null;
+  bool get hasUtility => utilityType != null;
 
-  String? get utilityType => _utilityMap[asRequiredType];
+  Reference? get utilityType =>
+      refer(annotation.utilityName ?? _utilityMap[asRequiredType]!);
+
+  Expression? get utilityExpression =>
+      utilityType?.call([CodeExpression(Code('(v) => only(${name}: v)'))]);
 
   /// Returns the field info for the constructor parameter in the relevant class.
   static FieldInfo? _classFieldInfo(
@@ -172,20 +178,29 @@ class ParameterInfo extends FieldInfo {
 
     final reader = ConstantReader(annotation);
 
-    final dtoType = reader
-        .peek('dtoType')
-        ?.typeValue
-        .getDisplayString(withNullability: true);
+    final dtoType = reader.peek('dtoType')?.typeValue.element?.name;
 
-    final dtpName = dtoType ?? reader.peek('dtoName')?.stringValue;
+    final dtoName = dtoType ?? reader.peek('dtoName')?.stringValue;
+
+    final utilityType = reader.peek('utilityType')?.typeValue.element?.name;
+
+    final utilityName = utilityType ?? reader.peek('utilityName')?.stringValue;
+
+    final utilityProps = reader
+        .peek('utilityProps')
+        ?.listValue
+        .map((e) => e.toStringValue()!)
+        .toList();
 
     return MixProperty(
-      dtoName: dtpName ?? defaults.dtoName,
+      dtoName: dtoName,
+      utilityName: utilityName,
+      utilityProps: utilityProps,
     );
   }
 
   @override
   String toString() {
-    return 'ParameterInfo(isSuper: $isSuper, fieldInfo: $fieldInfo, isPositioned: $isPositioned, propertyAnnotation: $propertyAnnotation)';
+    return 'ParameterInfo(isSuper: $isSuper, fieldInfo: $fieldInfo, isPositioned: $isPositioned, propertyAnnotation: $annotation)';
   }
 }

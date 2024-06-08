@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../core/dto.dart';
-import '../../factory/mix_provider_data.dart';
+import '../../core/models/mix_data.dart';
 import '../../internal/iterable_ext.dart';
 import '../color/color_dto.dart';
 

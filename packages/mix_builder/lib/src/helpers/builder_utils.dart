@@ -7,7 +7,7 @@ import 'package:dart_style/dart_style.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 import 'package:mix_builder/src/helpers/field_info.dart';
 import 'package:mix_builder/src/helpers/helpers.dart';
-import 'package:mix_builder/src/types.dart';
+import 'package:mix_builder/src/helpers/types.dart';
 import 'package:source_gen/source_gen.dart';
 
 Future<List<ClassElement>> getAnnotatedClasses(
@@ -24,34 +24,42 @@ Future<List<ClassElement>> getAnnotatedClasses(
       .toList();
 }
 
-Future<List<SpecDefinitionContext>> loadSpecDefinitions(
-  BuildStep buildStep,
+class ReferenceTrackingAllocator implements Allocator {
+  final Set<Reference> _usedReferences = {};
+
+  @override
+  String allocate(Reference reference) {
+    _usedReferences.add(reference);
+    return reference.symbol!;
+  }
+
+  bool hasReference(Reference reference) {
+    return _usedReferences.contains(reference);
+  }
+
+  @override
+  Iterable<Directive> get imports => const [];
+}
+
+Future<SpecDefinitionContext> loadSpecDefinitions(
+  ClassElement classElement,
   DartEmitter emitter,
   DartFormatter formatter,
 ) async {
-  final annotatedClasses =
-      await getAnnotatedClasses(buildStep, _specDefinitionTypeChecker);
+  final annotation =
+      _specDefinitionTypeChecker.firstAnnotationOfExact(classElement)!;
 
-  final contexts = <SpecDefinitionContext>[];
+  final fields = sortedConstructorFields(classElement, null);
+  final specDefinition = SpecDefinitionContext(
+    emitter: emitter,
+    formatter: formatter,
+    fields: fields,
+    options: SpecDefinitionOptions(
+      name: annotation.getField('name')?.toStringValue() ?? classElement.name,
+    ),
+  );
 
-  for (final classElement in annotatedClasses) {
-    final annotation =
-        _specDefinitionTypeChecker.firstAnnotationOfExact(classElement)!;
-
-    final fields = sortedConstructorFields(classElement, null);
-    final specDefinition = SpecDefinitionContext(
-      emitter: emitter,
-      formatter: formatter,
-      fields: fields,
-      options: SpecDefinitionOptions(
-        name: annotation.getField('name')?.toStringValue() ?? classElement.name,
-      ),
-    );
-
-    contexts.add(specDefinition);
-  }
-
-  return contexts;
+  return specDefinition;
 }
 
 const _specDefinitionTypeChecker = TypeChecker.fromRuntime(MixSpec);
@@ -68,6 +76,18 @@ class SpecDefinitionContext {
     required this.formatter,
     required this.emitter,
   });
+
+  bool hasReference(Reference reference) {
+    return (emitter.allocator as ReferenceTrackingAllocator)
+        .hasReference(reference);
+  }
+
+  String generate(Library library) {
+    final output = formatter.format('${library.accept(emitter)}');
+
+    // Analyze output
+    return output;
+  }
 }
 
 class SpecDefinitionOptions {
@@ -95,12 +115,9 @@ Expression getLerpExpression(String name, String type) {
 
   switch (typeRef) {
     case 'double':
-      return DartTypes.ui.lerpDouble(expression);
+      return HelperTypes.lerpDouble(expression);
     case 'int':
-      return DartTypes.ui
-          .lerpDouble(expression)
-          .nullSafeProperty('toInt')
-          .call([]).nullSafeProperty(name);
+      return HelperTypes.lerpInt(expression);
     case 'EdgeInsetsGeometry':
       return FlutterTypes.widgets.edgeInsetsGeometry
           .property('lerp')(expression);
@@ -122,5 +139,14 @@ Expression getLerpExpression(String name, String type) {
 
     default:
       return CodeExpression(Code('t < 0.5 ? $name : other.$name'));
+  }
+}
+
+extension ReferenceExt on Reference {
+  TypeReference get nullable {
+    return TypeReference((b) => b
+      ..symbol = symbol
+      ..url = url
+      ..isNullable = true);
   }
 }

@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 
 /// Linearly interpolates between two integers.
@@ -16,8 +14,9 @@ import 'package:flutter/material.dart';
 /// int result = lerpInt(a, b, t);
 /// print(result); // Output: 13
 /// ```
-int lerpInt(int? a, int? b, double t) {
-  return ((1 - t) * (a ?? 0) + t * (b ?? 0)).round();
+///
+int? lerpInt(int? a, int? b, double t) {
+  return lerpDouble(a, b, t)?.round();
 }
 
 /// Snaps between two values based on a threshold.
@@ -39,6 +38,10 @@ P? lerpSnap<P>(P? from, P? to, double t) {
   if (to == null) return from;
 
   return t < 0.5 ? from : to;
+}
+
+double? lerpDouble(num? a, num? b, double t) {
+  return ((1 - t) * (a ?? 0) + t * (b ?? 0));
 }
 
 TextStyle? lerpTextStyle(TextStyle? from, TextStyle? other, double t) {

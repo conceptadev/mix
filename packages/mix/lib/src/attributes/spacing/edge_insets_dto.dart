@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../core/dto.dart';
-import '../../factory/mix_provider_data.dart';
+import '../../core/models/mix_data.dart';
 
 @immutable
 abstract class EdgeInsetsGeometryDto<Self extends EdgeInsetsGeometryDto<Self>>

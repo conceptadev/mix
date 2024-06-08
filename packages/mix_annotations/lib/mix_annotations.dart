@@ -9,6 +9,15 @@ class MixSpec {
 class MixProperty {
   final Type? dtoType;
   final String? dtoName;
+  final Type? utilityType;
+  final String? utilityName;
+  final List<String>? utilityProps;
 
-  const MixProperty({this.dtoType, this.dtoName});
+  const MixProperty({
+    this.dtoType,
+    this.dtoName,
+    this.utilityType,
+    this.utilityName,
+    this.utilityProps,
+  });
 }

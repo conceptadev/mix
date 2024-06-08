@@ -1,71 +1,65 @@
 // ignore_for_file: non_constant_identifier_names
 
+import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:dart_style/dart_style.dart';
-import 'package:mix_builder/src/helpers/field_info.dart';
+import 'package:mix_annotations/mix_annotations.dart';
+import 'package:source_gen/source_gen.dart';
 
-import 'src/helpers/builder_utils.dart';
-import 'src/helpers/method_builders.dart';
-import 'src/helpers/mix_property.dart';
-import 'src/types.dart';
+import 'helpers/builder_utils.dart';
+import 'helpers/method_builders.dart';
+import 'helpers/mix_property.dart';
+import 'helpers/types.dart';
 
-Builder specDefinitionBuilder(BuilderOptions _) =>
-    const SpecDefinitionBuilder();
-
-final _emitter = DartEmitter(
-  allocator: Allocator(),
-  orderDirectives: true,
-  useNullSafetySyntax: true,
-);
-final _dartFormatter = DartFormatter();
-
-class SpecDefinitionBuilder implements Builder {
+class SpecDefinitionBuilder extends GeneratorForAnnotation<MixSpec> {
   const SpecDefinitionBuilder();
-  @override
-  Map<String, List<String>> get buildExtensions {
-    return {
-      '.dart': [
-        '.g.dart',
-      ],
-    };
-  }
 
   @override
-  Future<void> build(BuildStep buildStep) async {
-    final specDefinitions =
-        await loadSpecDefinitions(buildStep, _emitter, _dartFormatter);
-
-    for (final specDefinition in specDefinitions) {
-      final specLibrary = Library(
-        (b) => b
-          ..body.addAll([
-            UtilityClassBuilder(specDefinition),
-            MixinSpecBuilder(specDefinition),
-            ClassSpecAttributeBuilder(specDefinition),
-            ClassSpecTweenBuilder(specDefinition),
-          ]),
-      );
-
-      final outputSpecId = buildStep.inputId.changeExtension('.g.dart');
-
-      await buildStep.writeAsString(
-        outputSpecId,
-        _dartFormatter.format('${specLibrary.accept(_emitter)}'),
+  Future<String> generateForAnnotatedElement(
+    Element element,
+    ConstantReader reader,
+    BuildStep buildStep,
+  ) async {
+    if (element is! ClassElement) {
+      throw InvalidGenerationSourceError(
+        'The annotation can only be applied to a class.',
+        element: element,
       );
     }
+
+    final specDefinition = await loadSpecDefinitions(
+        element,
+        DartEmitter(
+          allocator: ReferenceTrackingAllocator(),
+          orderDirectives: true,
+          useNullSafetySyntax: true,
+        ),
+        DartFormatter());
+
+    final specLibrary = Library((b) => b
+      ..body.addAll([
+        UtilityClassBuilder(specDefinition),
+        MixinSpecBuilder(specDefinition),
+        ClassSpecAttributeBuilder(specDefinition),
+        ClassSpecTweenBuilder(specDefinition),
+      ]));
+
+    return specDefinition.generate(specLibrary);
   }
 }
 
 Class ClassSpecBuilder(SpecDefinitionContext context) {
-  final specRef = MixTypes.spec.symbol!;
+  final specRef = MixTypes.foundation.spec;
 
   final specClassName = context.options.specClassName;
   final fields = context.fields;
 
   return Class((b) {
     b.name = specClassName;
-    b.extend = refer('$specRef<$specClassName>');
+    b.extend = TypeReference((b) => b
+      ..symbol = specRef.symbol
+      ..types.add(refer(specClassName)));
     b.docs.addAll([
       '/// A specification that defines the visual properties of $specClassName.',
       '///',
@@ -106,9 +100,11 @@ Mixin MixinSpecBuilder(SpecDefinitionContext context) {
   final specClassMixinName = context.options.specClassMixinName;
   final fields = context.fields;
 
+  final specRef = MixTypes.foundation.spec.symbol!;
+
   return Mixin((b) {
     b.name = specClassMixinName;
-    b.on = refer('Spec<$specClassName>');
+    b.on = refer('$specRef<$specClassName>');
 
     b.methods.addAll([
       MethodCopyWithBuilder(
@@ -122,6 +118,8 @@ Mixin MixinSpecBuilder(SpecDefinitionContext context) {
           className: specClassName, fields: fields, isInternalRef: true),
       GetterSelfBuilder(className: specClassName),
     ]);
+
+    b.methods.addAll(MethodLerpHelpers(context));
   });
 }
 
@@ -216,11 +214,16 @@ Class UtilityClassBuilder(SpecDefinitionContext context) {
   final specAttributeClassName = context.options.specAttributeClassName;
   final fields = context.fields;
   final utilityClassName = '${specClassName}Utility';
-  final extendsType = 'SpecUtility<T, $specAttributeClassName>';
+
+  final specUtilityRef = MixTypes.foundation.specUtility;
+  final extendsType = TypeReference((b) => b
+    ..symbol = specUtilityRef.symbol
+    ..types.add(refer('T'))
+    ..types.add(refer(specAttributeClassName)));
 
   return Class((b) {
     b.name = utilityClassName;
-    b.extend = refer(extendsType);
+    b.extend = extendsType;
     b.docs.addAll([
       '/// Utility class for configuring [$specAttributeClassName] properties.',
       '///',
@@ -250,49 +253,5 @@ Class UtilityClassBuilder(SpecDefinitionContext context) {
         fields: fields,
       ),
     );
-  });
-}
-
-extension UtilityFieldsExtension on List<ParameterInfo> {
-  Iterable<Field> get utilityFields {
-    final fields = <Field>[];
-    for (final field in this) {
-      final utilityFieldName = field.name;
-      final utilityFieldType = field.utilityType;
-      fields.add(
-        Field(
-          (b) => b
-            ..modifier = FieldModifier.final$
-            ..late = true
-            ..name = utilityFieldName
-            ..assignment =
-                Code('$utilityFieldType((v) => only(${field.name}: v))'),
-        ),
-      );
-    }
-
-    return fields;
-  }
-}
-
-Method MethodOnlyBuilder({
-  required String className,
-  required List<ParameterInfo> fields,
-}) {
-  final fieldStatements = fields.map((e) {
-    final fieldName = e.name;
-
-    return Code('${fieldName}: $fieldName,');
-  });
-  return Method((b) {
-    b.annotations.add(refer('override'));
-    b.name = 'only';
-    b.returns = refer('T');
-    b.optionalParameters.addAll(fields.methodDtoParams);
-    b.body = Block.of([
-      Code('return builder($className('),
-      Block.of(fieldStatements),
-      Code('),);'),
-    ]);
   });
 }

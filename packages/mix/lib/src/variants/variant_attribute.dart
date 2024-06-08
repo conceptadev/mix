@@ -1,4 +1,4 @@
-import 'package:meta/meta.dart';
+import 'package:flutter/foundation.dart';
 
 import '../core/attribute.dart';
 import '../factory/style_mix.dart';

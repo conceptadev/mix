@@ -2,7 +2,7 @@ import 'package:flutter/animation.dart';
 
 import '../../core/models/animated_data.dart';
 import '../../core/dto.dart';
-import '../../factory/mix_provider_data.dart';
+import '../../core/models/mix_data.dart';
 import '../../internal/constants.dart';
 
 class AnimatedDataDto extends Dto<AnimatedData> {

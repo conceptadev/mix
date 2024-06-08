@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../factory/mix_provider_data.dart';
+import '../../core/models/mix_data.dart';
 import 'edge_insets_dto.dart';
 
 @immutable

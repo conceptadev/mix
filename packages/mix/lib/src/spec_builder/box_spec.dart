@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 
-import '../core/spec.dart';
-import 'box_spec.g.dart';
+import '../../mix.dart';
+
+part 'box_spec.spec.dart';
 
 @MixSpec()
 class BoxDef extends Spec<BoxDef> with BoxDefMixin {
@@ -16,12 +17,27 @@ class BoxDef extends Spec<BoxDef> with BoxDefMixin {
   final EdgeInsetsGeometry? margin;
 
   /// Applies additional constraints to the child.
+  @MixProperty(utilityProps: ['maxWidth', 'minWidth', 'maxHeight', 'minHeight'])
   final BoxConstraints? constraints;
 
   /// Paints a decoration behind the child.
+  @MixProperty(
+    utilityType: BoxDecorationUtility,
+    utilityProps: [
+      'color',
+      'border',
+      'borderRadius',
+      'gradient',
+      'boxShadows',
+      'boxShadow',
+      'borderRadiusDirectional',
+      'borderDirectional'
+    ],
+  )
   final Decoration? decoration;
 
   /// Paints a decoration in front of the child.
+  @MixProperty(utilityType: BoxDecorationUtility)
   final Decoration? foregroundDecoration;
 
   /// Applies a transformation matrix before painting the box.

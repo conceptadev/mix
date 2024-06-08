@@ -1,9 +1,10 @@
-import 'dart:ui';
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
-import 'package:flutter/widgets.dart';
-import 'package:mix/foundation.dart';
+part of 'box_spec.dart';
 
-import '../factory/mix_provider_data.dart';
+// **************************************************************************
+// Generator: SpecDefinitionBuilder
+// **************************************************************************
 
 /// Utility class for configuring [BoxDefAttribute] properties.
 ///
@@ -22,10 +23,34 @@ class BoxDefUtility<T extends Attribute>
 
   late final constraints = BoxConstraintsUtility((v) => only(constraints: v));
 
-  late final decoration = DecorationUtility((v) => only(decoration: v));
+  late final maxWidth = constraints.maxWidth;
+
+  late final minWidth = constraints.minWidth;
+
+  late final maxHeight = constraints.maxHeight;
+
+  late final minHeight = constraints.minHeight;
+
+  late final decoration = BoxDecorationUtility((v) => only(decoration: v));
+
+  late final color = decoration.color;
+
+  late final border = decoration.border;
+
+  late final borderRadius = decoration.borderRadius;
+
+  late final gradient = decoration.gradient;
+
+  late final boxShadows = decoration.boxShadows;
+
+  late final boxShadow = decoration.boxShadow;
+
+  late final borderRadiusDirectional = decoration.borderRadiusDirectional;
+
+  late final borderDirectional = decoration.borderDirectional;
 
   late final foregroundDecoration =
-      DecorationUtility((v) => only(foregroundDecoration: v));
+      BoxDecorationUtility((v) => only(foregroundDecoration: v));
 
   late final transform = Matrix4Utility((v) => only(transform: v));
 
@@ -156,12 +181,12 @@ mixin BoxDefMixin on Spec<BoxDef> {
         t,
       ),
       clipBehavior: t < 0.5 ? _$this.clipBehavior : other._$this.clipBehavior,
-      width: lerpDouble(
+      width: _lerpDouble(
         _$this.width,
         other._$this.width,
         t,
       ),
-      height: lerpDouble(
+      height: _lerpDouble(
         _$this.height,
         other._$this.height,
         t,
@@ -193,6 +218,13 @@ mixin BoxDefMixin on Spec<BoxDef> {
   }
 
   BoxDef get _$this => this as BoxDef;
+  double? _lerpDouble(
+    num? a,
+    num? b,
+    double t,
+  ) {
+    return ((1 - t) * (a ?? 0) + t * (b ?? 0));
+  }
 }
 
 /// Represents the attributes of a [BoxDef].

@@ -4,8 +4,8 @@ import 'package:code_builder/code_builder.dart';
 import 'package:mix_builder/src/helpers/builder_utils.dart';
 import 'package:mix_builder/src/helpers/field_info.dart';
 
-import '../types.dart';
 import 'mix_property.dart';
+import 'types.dart';
 
 Method GetterSelfBuilder({
   required String className,
@@ -32,7 +32,7 @@ Method MethodResolveBuilder({
       ..returns = refer(resolveToType)
       ..requiredParameters.add(Parameter((b) => b
         ..name = 'mix'
-        ..type = MixTypes.mixData));
+        ..type = MixTypes.foundation.mixData));
     builder.body = Code('''
       return $resolveToType(
         ${fields.map((field) {
@@ -130,6 +130,106 @@ Method MethodToStringBuilder({
   });
 }
 
+List<Method> MethodLerpHelpers(SpecDefinitionContext context) {
+  final lerpInt = Method((b) {
+    b.name = '_lerpInt';
+    b.returns = refer('int?');
+    b.requiredParameters.add(Parameter((b) {
+      b.name = 'a';
+      b.type = refer('int?');
+    }));
+    b.requiredParameters.add(Parameter((b) {
+      b.name = 'b';
+      b.type = refer('int?');
+    }));
+    b.requiredParameters.add(Parameter((b) {
+      b.name = 't';
+      b.type = refer('double');
+    }));
+    b.body = Code('''
+     return ((1 - t) * (a ?? 0) + t * (b ?? 0))?.toInt();
+    ''');
+  });
+
+  final lerpDouble = Method((b) {
+    b.name = '_lerpDouble';
+    b.returns = refer('double?');
+    b.requiredParameters.add(Parameter((b) {
+      b.name = 'a';
+      b.type = refer('num?');
+    }));
+    b.requiredParameters.add(Parameter((b) {
+      b.name = 'b';
+      b.type = refer('num?');
+    }));
+    b.requiredParameters.add(Parameter((b) {
+      b.name = 't';
+      b.type = refer('double');
+    }));
+    b.body = Code('''
+      return ((1 - t) * (a ?? 0) + t * (b ?? 0));
+    ''');
+  });
+
+  final methods = <Method>[];
+
+  if (context.hasReference(HelperTypes.lerpDouble)) {
+    methods.add(lerpDouble);
+  }
+
+  if (context.hasReference(HelperTypes.lerpInt)) {
+    methods.add(lerpInt);
+  }
+
+  return methods;
+}
+
+Method MethodLerpDoubleBuilder() {
+  return Method((builder) {
+    builder
+      ..name = '_lerpDouble'
+      ..returns = refer('double?')
+      ..requiredParameters.add(Parameter((b) {
+        b.name = 'a';
+        b.type = refer('num?');
+      }))
+      ..requiredParameters.add(Parameter((b) {
+        b.name = 'b';
+        b.type = refer('num?');
+      }))
+      ..requiredParameters.add(Parameter((b) {
+        b.name = 't';
+        b.type = refer('double');
+      }));
+    builder.body = Code('''
+      return ((1 - t) * (a ?? 0) + t * (b ?? 0));
+    ''');
+  });
+}
+
+Method MethodLerpIntBuilder() {
+  return Method((builder) {
+    builder
+      ..name = '_lerpInt'
+      ..returns = refer('int?')
+      ..requiredParameters.add(Parameter((b) {
+        b.name = 'a';
+        b.type = refer('int?');
+      }))
+      ..requiredParameters.add(Parameter((b) {
+        b.name = 'b';
+        b.type = refer('int?');
+      }))
+      ..requiredParameters.add(Parameter((b) {
+        b.name = 't';
+        b.type = refer('double');
+      }));
+    builder.body = Code('''
+      return _lerpDouble(a, b, t)?.round();
+    ''');
+  });
+}
+
 Method MethodLerpBuilder({
   required String className,
   required List<ParameterInfo> fields,
@@ -166,6 +266,28 @@ Method MethodLerpBuilder({
   });
 }
 
+Method MethodOnlyBuilder({
+  required String className,
+  required List<ParameterInfo> fields,
+}) {
+  final fieldStatements = fields.map((e) {
+    final fieldName = e.name;
+
+    return Code('${fieldName}: $fieldName,');
+  });
+  return Method((b) {
+    b.annotations.add(refer('override'));
+    b.name = 'only';
+    b.returns = refer('T');
+    b.optionalParameters.addAll(fields.methodDtoParams);
+    b.body = Block.of([
+      Code('return builder($className('),
+      Block.of(fieldStatements),
+      Code('),);'),
+    ]);
+  });
+}
+
 Method GetterPropsBuilder({
   required String className,
   required List<ParameterInfo> fields,
@@ -194,6 +316,7 @@ Method GetterPropsBuilder({
   });
 }
 
+// Create a definitino of _lerpDouble, that mimics a custom lerpDouble
 Method MethodEqualityOperatorBuilder({
   required String className,
   required List<ParameterInfo> fields,
@@ -301,7 +424,7 @@ Method StaticMethodFromBuilder({required String className}) {
     builder.requiredParameters.add(
       Parameter((builder) {
         builder.name = 'mix';
-        builder.type = MixTypes.mixData;
+        builder.type = MixTypes.foundation.mixData;
       }),
     );
     builder.body = Code('''

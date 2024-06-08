@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../attributes/color/color_dto.dart';
 import '../../core/spec.dart';
-import '../../factory/mix_provider_data.dart';
+import '../../core/models/mix_data.dart';
 import 'image_spec.dart';
 
 class ImageSpecAttribute extends SpecAttribute<ImageSpec> {

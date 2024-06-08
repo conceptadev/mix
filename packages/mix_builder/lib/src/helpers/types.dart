@@ -35,6 +35,13 @@ abstract class DartTypes {
   DartTypes._();
 }
 
+abstract class HelperTypes {
+  static final lerpDouble = refer('_lerpDouble');
+  static final lerpInt = refer('_lerpInt');
+
+  const HelperTypes();
+}
+
 abstract class FlutterTypes {
   static const foundation = _FlutterFoundation();
 
@@ -57,45 +64,36 @@ class _FlutterFoundation {
   Reference get listEquals => const Reference('listEquals', _url);
 }
 
-// final _dtoMap = {
-//   'EdgeInsetsGeometry': 'SpacingDto',
-//   'BoxConstraints': 'BoxConstraintsDto',
-//   'Decoration': 'DecorationDto',
-//   'Color': 'ColorDto',
-//   'AnimatedData': 'AnimatedDataDto',
-//   'TextStyle': 'TextStyleDto',
-//   'StrutStyle': 'StrutStyleDto',
-// };
-
-// final _utilityMap = {
-//   'EdgeInsetsGeometry': 'SpacingUtility',
-//   'BoxConstraints': 'BoxConstraintsUtility',
-//   'Decoration': 'DecorationUtility',
-//   'Color': 'ColorUtility',
-//   'AnimatedData': 'AnimatedUtility',
-//   'double': 'DoubleUtility',
-//   'bool': 'BoolUtility',
-//   'int': 'IntUtility',
-//   'TextStyle': 'TextStyleUtility',
-//   'StrutStyle': 'StrutStyleUtility',
-//   'Clip': 'ClipUtility',
-//   'TextOverflow': 'TextOverflowUtility',
-//   'TextWidthBasis': 'TextWidthBasisUtility',
-//   'TextAlign': 'TextAlignUtility',
-//   'TextHeightBehavior': 'TextHeightBehaviorUtility',
-//   'TextDirection': 'TextDirectionUtility',
-//   'VerticalDirection': 'VerticalDirectionUtility',
-//   'TextBaseline': 'TextBaselineUtility',
-//   'TextDecoration': 'TextDecorationUtility',
-//   'Matrix4': 'Matrix4Utility',
-//   'AlignmentGeometry': 'AlignmentUtility',
-// };
-
 class MixTypes {
-  static const spec = Reference('Spec', 'package:mix/foundation.dart');
-  static const mix = Reference('Mix', 'package:mix/foundation.dart');
-  static const mixData = Reference('MixData', 'package:mix/foundation.dart');
+  static final foundation = _MixTypeFoundation();
+  static final utilities = _MixTypeUtility();
+  static final dtos = _MixTypeDto();
   const MixTypes._();
+}
+
+class _MixTypeFoundation {
+  _MixTypeFoundation();
+
+  final spec = Reference('Spec', 'package:mix/mix.dart');
+  final mix = Reference('Mix', 'package:mix/mix.dart');
+  final mixData = Reference('MixData', 'package:mix/mix.dart');
+  final specUtility = Reference('SpecUtility', 'package:mix/mix.dart');
+  final attribute = Reference('Attribute', 'package:mix/mix.dart');
+}
+
+class _MixTypeDto {
+  _MixTypeDto();
+
+  // Reference? get(core.String type) {
+  //   return Reference(type, 'package:mix/mix.dart');
+  // }
+}
+
+class _MixTypeUtility {
+  _MixTypeUtility();
+  // Reference? get(core.String type) {
+  //   return Reference(type, 'package:mix/mix.dart');
+  // }
 }
 
 class _FlutterWidgets {

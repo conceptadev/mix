@@ -55,12 +55,12 @@ class BoxSpecUtility<T extends Attribute>
   /// Utilities for configuring various properties of the [BoxSpecAttribute.decoration].
   late final color = decoration.color;
   late final elevation = decoration.elevation;
-  late final gradient = decoration.gradient;
   late final radialGradient = gradient.radial;
   late final linearGradient = gradient.linear;
   late final shapeDecoration =
       ShapeDecorationUtility((v) => only(decoration: v));
   late final borderRadius = decoration.borderRadius;
+  late final gradient = decoration.gradient;
   late final borderRadiusDirectional = decoration.borderRadiusDirectional;
   late final border = decoration.border;
   late final borderDirectional = decoration.borderDirectional;

@@ -3,7 +3,7 @@ import 'dart:ui';
 import '../../attributes/color/color_dto.dart';
 import '../../attributes/shadow/shadow_dto.dart';
 import '../../core/spec.dart';
-import '../../factory/mix_provider_data.dart';
+import '../../core/models/mix_data.dart';
 import 'icon_spec.dart';
 
 class IconSpecAttribute extends SpecAttribute<IconSpec> {

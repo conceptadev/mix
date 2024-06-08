@@ -9,7 +9,7 @@ import '../../attributes/constraints/constraints_dto.dart';
 import '../../attributes/decoration/decoration_dto.dart';
 import '../../attributes/spacing/spacing_dto.dart';
 import '../../core/spec.dart';
-import '../../factory/mix_provider_data.dart';
+import '../../core/models/mix_data.dart';
 import 'box_spec.dart';
 
 /// Represents the attributes of a [BoxSpec].
