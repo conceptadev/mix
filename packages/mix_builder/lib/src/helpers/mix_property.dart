@@ -14,7 +14,7 @@ extension ListFieldInfoExt on List<ParameterInfo> {
       return Field((b) {
         b
           ..name = e.name
-          ..type = refer(e.asNullableType)
+          ..type = refer(e.asRequiredType).nullable
           ..modifier = FieldModifier.final$
           ..docs.add(e.documentationComment ?? '');
       });
@@ -51,7 +51,7 @@ extension ListFieldInfoExt on List<ParameterInfo> {
         builder.name = e.name;
         builder.named = true;
         builder.required = false;
-        builder.type = refer('${e.asNullableType}');
+        builder.type = refer(e.asRequiredType).nullable;
       });
     }).toList();
   }

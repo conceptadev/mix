@@ -73,6 +73,7 @@ class BoxDef extends Spec<BoxDef> with BoxDefMixable {
   final Decoration? decoration;
 
   /// Paints a decoration in front of the child.
+  @MixableField(utility: MixableFieldUtility(type: BoxDecorationUtility))
   final Decoration? foregroundDecoration;
 
   /// Applies a transformation matrix before painting the box.

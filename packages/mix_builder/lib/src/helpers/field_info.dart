@@ -92,8 +92,6 @@ class FieldInfo {
   /// Type name with nullability flag.
   final String type;
 
-  String get asNullableType => nullable ? type : '$type?';
-
   String get asRequiredType => nullable ? type.replaceFirst('?', '') : type;
 
   /// True if the type is `dynamic`.
