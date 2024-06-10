@@ -3,7 +3,7 @@ import 'package:mix_annotations/mix_annotations.dart';
 
 import '../../mix.dart';
 
-part 'icon_spec.spec.dart';
+part 'icon_spec.g.dart';
 
 @MixableSpec()
 class IconDef extends Spec<IconDef> with IconDefMixable {

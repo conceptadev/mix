@@ -6,137 +6,6 @@ part of 'box_spec.dart';
 // Generator: SpecDefinitionBuilder
 // **************************************************************************
 
-/// Utility class for configuring [BoxDefAttribute] properties.
-///
-/// This class provides methods to set individual properties of a [BoxDefAttribute].
-///
-/// Use the methods of this class to configure specific properties of a [BoxDefAttribute].
-class BoxDefUtility<T extends Attribute>
-    extends SpecUtility<T, BoxDefAttribute> {
-  BoxDefUtility(super.builder);
-
-  /// Utility for defining [BoxDefAttribute.alignment]
-  late final alignment = AlignmentUtility((v) => only(alignment: v));
-
-  /// Utility for defining [BoxDefAttribute.padding]
-  late final padding = SpacingUtility((v) => only(padding: v));
-
-  /// Utility for defining [BoxDefAttribute.margin]
-  late final margin = SpacingUtility((v) => only(margin: v));
-
-  /// Utility for defining [BoxDefAttribute.constraints]
-  late final constraints = BoxConstraintsUtility((v) => only(constraints: v));
-
-  /// Utility for defining [BoxDefAttribute.constraints.maxWidth]
-  late final maxWidth = constraints.maxWidth;
-
-  /// Utility for defining [BoxDefAttribute.constraints.minWidth]
-  late final minWidth = constraints.minWidth;
-
-  /// Utility for defining [BoxDefAttribute.constraints.maxHeight]
-  late final maxHeight = constraints.maxHeight;
-
-  /// Utility for defining [BoxDefAttribute.constraints.minHeight]
-  late final minHeight = constraints.minHeight;
-
-  /// Utility for defining [BoxDefAttribute.decoration]
-  late final decoration = BoxDecorationUtility((v) => only(decoration: v));
-
-  /// Utility for defining [BoxDefAttribute.decoration]
-  late final shapeDecoration =
-      ShapeDecorationUtility((v) => only(decoration: v));
-
-  /// Utility for defining [BoxDefAttribute.decoration.color]
-  late final color = decoration.color;
-
-  /// Utility for defining [BoxDefAttribute.decoration.border]
-  late final border = decoration.border;
-
-  /// Utility for defining [BoxDefAttribute.decoration.borderRadius]
-  late final borderRadius = decoration.borderRadius;
-
-  /// Utility for defining [BoxDefAttribute.decoration.gradient]
-  late final gradient = decoration.gradient;
-
-  /// Utility for defining [BoxDefAttribute.decoration.gradient.radial]
-  late final radialGradient = decoration.gradient.radial;
-
-  /// Utility for defining [BoxDefAttribute.decoration.gradient.linear]
-  late final linearGradient = decoration.gradient.linear;
-
-  /// Utility for defining [BoxDefAttribute.decoration.boxShadows]
-  late final shadows = decoration.boxShadows;
-
-  /// Utility for defining [BoxDefAttribute.decoration.boxShadow]
-  late final shadow = decoration.boxShadow;
-
-  /// Utility for defining [BoxDefAttribute.decoration.elevation]
-  late final elevation = decoration.elevation;
-
-  /// Utility for defining [BoxDefAttribute.decoration.borderRadiusDirectional]
-  late final borderRadiusDirectional = decoration.borderRadiusDirectional;
-
-  /// Utility for defining [BoxDefAttribute.decoration.borderDirectional]
-  late final borderDirectional = decoration.borderDirectional;
-
-  /// Utility for defining [BoxDefAttribute.foregroundDecoration]
-  late final foregroundDecoration =
-      DecorationUtility((v) => only(foregroundDecoration: v));
-
-  /// Utility for defining [BoxDefAttribute.transform]
-  late final transform = Matrix4Utility((v) => only(transform: v));
-
-  /// Utility for defining [BoxDefAttribute.transformAlignment]
-  late final transformAlignment =
-      AlignmentUtility((v) => only(transformAlignment: v));
-
-  /// Utility for defining [BoxDefAttribute.clipBehavior]
-  late final clipBehavior = ClipUtility((v) => only(clipBehavior: v));
-
-  /// Utility for defining [BoxDefAttribute.width]
-  late final width = DoubleUtility((v) => only(width: v));
-
-  /// Utility for defining [BoxDefAttribute.height]
-  late final height = DoubleUtility((v) => only(height: v));
-
-  /// Utility for defining [BoxDefAttribute.animated]
-  late final animated = AnimatedUtility((v) => only(animated: v));
-
-  /// Returns a new [BoxDefAttribute] with the specified properties.
-  @override
-  T only({
-    AlignmentGeometry? alignment,
-    SpacingDto? padding,
-    SpacingDto? margin,
-    BoxConstraintsDto? constraints,
-    DecorationDto? decoration,
-    DecorationDto? foregroundDecoration,
-    Matrix4? transform,
-    AlignmentGeometry? transformAlignment,
-    Clip? clipBehavior,
-    double? width,
-    double? height,
-    AnimatedDataDto? animated,
-  }) {
-    return builder(
-      BoxDefAttribute(
-        alignment: alignment,
-        padding: padding,
-        margin: margin,
-        constraints: constraints,
-        decoration: decoration,
-        foregroundDecoration: foregroundDecoration,
-        transform: transform,
-        transformAlignment: transformAlignment,
-        clipBehavior: clipBehavior,
-        width: width,
-        height: height,
-        animated: animated,
-      ),
-    );
-  }
-}
-
 mixin BoxDefMixable on Spec<BoxDef> {
   /// Retrieves the [BoxDef] from a MixData.
   static BoxDef from(MixData mix) {
@@ -273,7 +142,12 @@ mixin BoxDefMixable on Spec<BoxDef> {
     num? b,
     double t,
   ) {
-    return ((1 - t) * (a ?? 0) + t * (b ?? 0));
+    if (a == b || (a?.isNaN ?? false) && (b?.isNaN ?? false)) {
+      return a?.toDouble();
+    }
+    a ??= 0.0;
+    b ??= 0.0;
+    return a * (1.0 - t) + b * t;
   }
 }
 
@@ -382,6 +256,137 @@ class BoxDefAttribute extends SpecAttribute<BoxDef> {
       height,
       animated,
     ];
+  }
+}
+
+/// Utility class for configuring [BoxDefAttribute] properties.
+///
+/// This class provides methods to set individual properties of a [BoxDefAttribute].
+///
+/// Use the methods of this class to configure specific properties of a [BoxDefAttribute].
+class BoxDefUtility<T extends Attribute>
+    extends SpecUtility<T, BoxDefAttribute> {
+  BoxDefUtility(super.builder);
+
+  /// Utility for defining [BoxDefAttribute.alignment]
+  late final alignment = AlignmentUtility((v) => only(alignment: v));
+
+  /// Utility for defining [BoxDefAttribute.padding]
+  late final padding = SpacingUtility((v) => only(padding: v));
+
+  /// Utility for defining [BoxDefAttribute.margin]
+  late final margin = SpacingUtility((v) => only(margin: v));
+
+  /// Utility for defining [BoxDefAttribute.constraints]
+  late final constraints = BoxConstraintsUtility((v) => only(constraints: v));
+
+  /// Utility for defining [BoxDefAttribute.constraints.maxWidth]
+  late final maxWidth = constraints.maxWidth;
+
+  /// Utility for defining [BoxDefAttribute.constraints.minWidth]
+  late final minWidth = constraints.minWidth;
+
+  /// Utility for defining [BoxDefAttribute.constraints.maxHeight]
+  late final maxHeight = constraints.maxHeight;
+
+  /// Utility for defining [BoxDefAttribute.constraints.minHeight]
+  late final minHeight = constraints.minHeight;
+
+  /// Utility for defining [BoxDefAttribute.decoration]
+  late final decoration = BoxDecorationUtility((v) => only(decoration: v));
+
+  /// Utility for defining [BoxDefAttribute.decoration]
+  late final shapeDecoration =
+      ShapeDecorationUtility((v) => only(decoration: v));
+
+  /// Utility for defining [BoxDefAttribute.decoration.color]
+  late final color = decoration.color;
+
+  /// Utility for defining [BoxDefAttribute.decoration.border]
+  late final border = decoration.border;
+
+  /// Utility for defining [BoxDefAttribute.decoration.borderRadius]
+  late final borderRadius = decoration.borderRadius;
+
+  /// Utility for defining [BoxDefAttribute.decoration.gradient]
+  late final gradient = decoration.gradient;
+
+  /// Utility for defining [BoxDefAttribute.decoration.gradient.radial]
+  late final radialGradient = decoration.gradient.radial;
+
+  /// Utility for defining [BoxDefAttribute.decoration.gradient.linear]
+  late final linearGradient = decoration.gradient.linear;
+
+  /// Utility for defining [BoxDefAttribute.decoration.boxShadows]
+  late final shadows = decoration.boxShadows;
+
+  /// Utility for defining [BoxDefAttribute.decoration.boxShadow]
+  late final shadow = decoration.boxShadow;
+
+  /// Utility for defining [BoxDefAttribute.decoration.elevation]
+  late final elevation = decoration.elevation;
+
+  /// Utility for defining [BoxDefAttribute.decoration.borderRadiusDirectional]
+  late final borderRadiusDirectional = decoration.borderRadiusDirectional;
+
+  /// Utility for defining [BoxDefAttribute.decoration.borderDirectional]
+  late final borderDirectional = decoration.borderDirectional;
+
+  /// Utility for defining [BoxDefAttribute.foregroundDecoration]
+  late final foregroundDecoration =
+      DecorationUtility((v) => only(foregroundDecoration: v));
+
+  /// Utility for defining [BoxDefAttribute.transform]
+  late final transform = Matrix4Utility((v) => only(transform: v));
+
+  /// Utility for defining [BoxDefAttribute.transformAlignment]
+  late final transformAlignment =
+      AlignmentUtility((v) => only(transformAlignment: v));
+
+  /// Utility for defining [BoxDefAttribute.clipBehavior]
+  late final clipBehavior = ClipUtility((v) => only(clipBehavior: v));
+
+  /// Utility for defining [BoxDefAttribute.width]
+  late final width = DoubleUtility((v) => only(width: v));
+
+  /// Utility for defining [BoxDefAttribute.height]
+  late final height = DoubleUtility((v) => only(height: v));
+
+  /// Utility for defining [BoxDefAttribute.animated]
+  late final animated = AnimatedUtility((v) => only(animated: v));
+
+  /// Returns a new [BoxDefAttribute] with the specified properties.
+  @override
+  T only({
+    AlignmentGeometry? alignment,
+    SpacingDto? padding,
+    SpacingDto? margin,
+    BoxConstraintsDto? constraints,
+    DecorationDto? decoration,
+    DecorationDto? foregroundDecoration,
+    Matrix4? transform,
+    AlignmentGeometry? transformAlignment,
+    Clip? clipBehavior,
+    double? width,
+    double? height,
+    AnimatedDataDto? animated,
+  }) {
+    return builder(
+      BoxDefAttribute(
+        alignment: alignment,
+        padding: padding,
+        margin: margin,
+        constraints: constraints,
+        decoration: decoration,
+        foregroundDecoration: foregroundDecoration,
+        transform: transform,
+        transformAlignment: transformAlignment,
+        clipBehavior: clipBehavior,
+        width: width,
+        height: height,
+        animated: animated,
+      ),
+    );
   }
 }
 

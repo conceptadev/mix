@@ -69,6 +69,7 @@ final _dtoMap = {
   'BorderRadiusGeometry': 'BorderRadiusGeometryDto',
   'BorderSide': 'BorderSideDto',
   'BorderRadiusDirectional': 'BorderRadiusDirectionalDto',
+  'TextDirective': 'TextDirectiveDto'
 };
 
 /// Class field info relevant for code generation.
@@ -119,6 +120,7 @@ class ParameterInfo extends FieldInfo {
     final type = param.type.getDisplayString(withNullability: true);
     final annotation = _readFieldAnnotation(param, classElement);
     final fieldInfo = _classFieldInfo(param.name, classElement);
+    // check if ParameterElement contains a mixin
 
     return ParameterInfo(
       name: param.name,

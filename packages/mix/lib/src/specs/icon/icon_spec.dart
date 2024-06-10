@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 
+import '../../attributes/animated/animated_data_dto.dart';
+import '../../attributes/color/color_dto.dart';
+import '../../attributes/color/color_util.dart';
+import '../../attributes/scalars/scalar_util.dart';
+import '../../attributes/shadow/shadow_dto.dart';
+import '../../attributes/shadow/shadow_util.dart';
+import '../../core/attribute.dart';
 import '../../core/models/animated_data.dart';
 import '../../core/models/mix_data.dart';
 import '../../core/spec.dart';
 import '../../factory/mix_provider.dart';
 import '../../internal/lerp_helpers.dart';
-import 'icon_attribute.dart';
 
 class IconSpec extends Spec<IconSpec> {
   final Color? color;
@@ -121,4 +127,120 @@ class IconSpecTween extends Tween<IconSpec> {
 
   @override
   IconSpec lerp(double t) => begin!.lerp(end, t);
+}
+
+class IconSpecUtility<T extends Attribute>
+    extends SpecUtility<T, IconSpecAttribute> {
+  late final color = ColorUtility((v) => only(color: v));
+  late final size = DoubleUtility((v) => only(size: v));
+  late final weight = DoubleUtility((v) => only(size: v));
+  late final grade = DoubleUtility((v) => only(grade: v));
+  late final opticalSize = DoubleUtility((v) => only(opticalSize: v));
+  late final shadow = ShadowUtility((v) => only(shadows: [v]));
+  late final shadows = ShadowListUtility((v) => only(shadows: v));
+  late final fill = DoubleUtility((v) => only(fill: v));
+  late final applyTextScaling = BoolUtility(
+    (v) => only(applyTextScaling: v),
+  );
+
+  IconSpecUtility(super.builder);
+
+  @override
+  T only({
+    ColorDto? color,
+    double? size,
+    double? weight,
+    double? grade,
+    double? opticalSize,
+    List<ShadowDto>? shadows,
+    double? fill,
+    bool? applyTextScaling,
+    AnimatedDataDto? animated,
+  }) {
+    return builder(
+      IconSpecAttribute(
+        size: size,
+        color: color,
+        weight: weight,
+        grade: grade,
+        opticalSize: opticalSize,
+        shadows: shadows,
+        fill: fill,
+        applyTextScaling: applyTextScaling,
+        animated: animated,
+      ),
+    );
+  }
+}
+
+class IconSpecAttribute extends SpecAttribute<IconSpec> {
+  final ColorDto? color;
+  final double? size;
+  final double? weight;
+  final double? grade;
+  final double? opticalSize;
+  final List<ShadowDto>? shadows;
+  final TextDirection? textDirection;
+  final double? fill;
+  final bool? applyTextScaling;
+
+  const IconSpecAttribute({
+    this.size,
+    this.color,
+    this.weight,
+    this.grade,
+    this.opticalSize,
+    this.shadows,
+    this.fill,
+    this.textDirection,
+    this.applyTextScaling,
+    super.animated,
+  });
+
+  @override
+  IconSpec resolve(MixData mix) {
+    return IconSpec.exhaustive(
+      color: color?.resolve(mix),
+      size: size,
+      weight: weight,
+      grade: grade,
+      opticalSize: opticalSize,
+      shadows: shadows?.map((e) => e.resolve(mix)).toList(),
+      textDirection: textDirection,
+      applyTextScaling: applyTextScaling,
+      fill: fill,
+      animated: animated?.resolve(mix) ?? mix.animation,
+    );
+  }
+
+  @override
+  IconSpecAttribute merge(covariant IconSpecAttribute? other) {
+    if (other == null) return this;
+
+    return IconSpecAttribute(
+      size: other.size ?? size,
+      color: color?.merge(other.color) ?? other.color,
+      weight: other.weight ?? weight,
+      grade: other.grade ?? grade,
+      opticalSize: other.opticalSize ?? opticalSize,
+      shadows: other.shadows ?? shadows,
+      fill: other.fill ?? fill,
+      textDirection: other.textDirection ?? textDirection,
+      applyTextScaling: other.applyTextScaling ?? applyTextScaling,
+      animated: other.animated ?? animated,
+    );
+  }
+
+  @override
+  get props => [
+        size,
+        color,
+        weight,
+        grade,
+        opticalSize,
+        shadows,
+        textDirection,
+        applyTextScaling,
+        animated,
+      ];
 }

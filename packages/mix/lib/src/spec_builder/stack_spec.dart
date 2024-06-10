@@ -3,7 +3,7 @@ import 'package:mix_annotations/mix_annotations.dart';
 
 import '../../mix.dart';
 
-part 'stack_spec.spec.dart';
+part 'stack_spec.g.dart';
 
 @MixableSpec()
 class StackDef extends Spec<StackDef> with StackDefMixable {

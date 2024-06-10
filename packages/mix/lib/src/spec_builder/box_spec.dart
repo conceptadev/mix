@@ -3,7 +3,7 @@ import 'package:mix_annotations/mix_annotations.dart';
 
 import '../../mix.dart';
 
-part 'box_spec.spec.dart';
+part 'box_spec.g.dart';
 
 @MixableSpec()
 class BoxDef extends Spec<BoxDef> with BoxDefMixable {

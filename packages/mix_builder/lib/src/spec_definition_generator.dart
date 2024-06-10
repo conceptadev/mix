@@ -39,9 +39,9 @@ class SpecDefinitionBuilder extends GeneratorForAnnotation<MixableSpec> {
 
     final specLibrary = Library((b) => b
       ..body.addAll([
-        UtilityClassBuilder(specDefinition),
         MixinSpecBuilder(specDefinition),
         ClassSpecAttributeBuilder(specDefinition),
+        UtilityClassBuilder(specDefinition),
         ClassSpecTweenBuilder(specDefinition),
       ]));
 

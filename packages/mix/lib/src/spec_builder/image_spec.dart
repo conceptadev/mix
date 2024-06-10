@@ -4,7 +4,7 @@ import 'package:mix_annotations/mix_annotations.dart';
 
 import '../../mix.dart';
 
-part 'image_spec.spec.dart';
+part 'image_spec.g.dart';
 
 @MixableSpec()
 class ImageDef extends Spec<ImageDef> with ImageDefMixable {

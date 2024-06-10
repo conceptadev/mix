@@ -1,6 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
 
+import '../../../helpers/testing_utils.dart';
+
 void main() {
   group('TextDataDirectiveUtility', () {
     final textDirective = TextDirectiveUtility(
@@ -26,7 +28,7 @@ void main() {
     group('UppercaseDirective', () {
       test('modify returns correct value', () {
         final attribute = textDirective.uppercase();
-        final modified = attribute.directive?.apply('hello');
+        final modified = attribute.directive?.resolve(EmptyMixData)('hello');
         expect(modified, 'HELLO');
       });
     });
@@ -34,7 +36,7 @@ void main() {
     group('CapitalizeDirective', () {
       test('modify returns correct value', () {
         final attribute = $text.capitalize();
-        final modified = attribute.directive?.apply('hello');
+        final modified = attribute.directive?.resolve(EmptyMixData)('hello');
         expect(modified, 'Hello');
       });
     });
@@ -42,7 +44,7 @@ void main() {
     group('LowercaseDirective', () {
       test('modify returns correct value', () {
         final attribute = $text.lowercase();
-        final modified = attribute.directive?.apply('HELLO');
+        final modified = attribute.directive?.resolve(EmptyMixData)('HELLO');
         expect(modified, 'hello');
       });
     });
@@ -50,7 +52,7 @@ void main() {
     group('SentenceCaseDirective', () {
       test('modify returns correct value', () {
         final attribute = $text.sentenceCase();
-        final modified = attribute.directive?.apply('hello');
+        final modified = attribute.directive?.resolve(EmptyMixData)('hello');
         expect(modified, 'Hello');
       });
     });
@@ -58,7 +60,7 @@ void main() {
     group('TitleCaseDirective', () {
       test('modify returns correct value', () {
         final attribute = $text.titleCase();
-        final modified = attribute.directive?.apply('hello');
+        final modified = attribute.directive?.resolve(EmptyMixData)('hello');
         expect(modified, 'Hello');
       });
     });

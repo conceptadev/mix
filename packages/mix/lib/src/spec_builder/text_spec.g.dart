@@ -6,89 +6,6 @@ part of 'text_spec.dart';
 // Generator: SpecDefinitionBuilder
 // **************************************************************************
 
-/// Utility class for configuring [TextDefAttribute] properties.
-///
-/// This class provides methods to set individual properties of a [TextDefAttribute].
-///
-/// Use the methods of this class to configure specific properties of a [TextDefAttribute].
-class TextDefUtility<T extends Attribute>
-    extends SpecUtility<T, TextDefAttribute> {
-  TextDefUtility(super.builder);
-
-  /// Utility for defining [TextDefAttribute.overflow]
-  late final overflow = TextOverflowUtility((v) => only(overflow: v));
-
-  /// Utility for defining [TextDefAttribute.strutStyle]
-  late final strutStyle = StrutStyleUtility((v) => only(strutStyle: v));
-
-  /// Utility for defining [TextDefAttribute.textAlign]
-  late final textAlign = TextAlignUtility((v) => only(textAlign: v));
-
-  /// Utility for defining [TextDefAttribute.textScaleFactor]
-  late final textScaleFactor = DoubleUtility((v) => only(textScaleFactor: v));
-
-  /// Utility for defining [TextDefAttribute.maxLines]
-  late final maxLines = IntUtility((v) => only(maxLines: v));
-
-  /// Utility for defining [TextDefAttribute.style]
-  late final style = TextStyleUtility((v) => only(style: v));
-
-  /// Utility for defining [TextDefAttribute.textWidthBasis]
-  late final textWidthBasis =
-      TextWidthBasisUtility((v) => only(textWidthBasis: v));
-
-  /// Utility for defining [TextDefAttribute.textHeightBehavior]
-  late final textHeightBehavior =
-      TextHeightBehaviorUtility((v) => only(textHeightBehavior: v));
-
-  /// Utility for defining [TextDefAttribute.textDirection]
-  late final textDirection =
-      TextDirectionUtility((v) => only(textDirection: v));
-
-  /// Utility for defining [TextDefAttribute.softWrap]
-  late final softWrap = BoolUtility((v) => only(softWrap: v));
-
-  /// Utility for defining [TextDefAttribute.directive]
-  late final directive = TextDirectiveUtility((v) => only(directive: v));
-
-  /// Utility for defining [TextDefAttribute.animated]
-  late final animated = AnimatedUtility((v) => only(animated: v));
-
-  /// Returns a new [TextDefAttribute] with the specified properties.
-  @override
-  T only({
-    TextOverflow? overflow,
-    StrutStyleDto? strutStyle,
-    TextAlign? textAlign,
-    double? textScaleFactor,
-    int? maxLines,
-    TextStyleDto? style,
-    TextWidthBasis? textWidthBasis,
-    TextHeightBehavior? textHeightBehavior,
-    TextDirection? textDirection,
-    bool? softWrap,
-    TextDirective? directive,
-    AnimatedDataDto? animated,
-  }) {
-    return builder(
-      TextDefAttribute(
-        overflow: overflow,
-        strutStyle: strutStyle,
-        textAlign: textAlign,
-        textScaleFactor: textScaleFactor,
-        maxLines: maxLines,
-        style: style,
-        textWidthBasis: textWidthBasis,
-        textHeightBehavior: textHeightBehavior,
-        textDirection: textDirection,
-        softWrap: softWrap,
-        directive: directive,
-        animated: animated,
-      ),
-    );
-  }
-}
-
 mixin TextDefMixable on Spec<TextDef> {
   /// Retrieves the [TextDef] from a MixData.
   static TextDef from(MixData mix) {
@@ -116,7 +33,7 @@ mixin TextDefMixable on Spec<TextDef> {
     TextHeightBehavior? textHeightBehavior,
     TextDirection? textDirection,
     bool? softWrap,
-    TextDirective? directive,
+    TextDirectiveDto? directive,
     AnimatedData? animated,
   }) {
     return TextDef(
@@ -197,7 +114,12 @@ mixin TextDefMixable on Spec<TextDef> {
     num? b,
     double t,
   ) {
-    return ((1 - t) * (a ?? 0) + t * (b ?? 0));
+    if (a == b || (a?.isNaN ?? false) && (b?.isNaN ?? false)) {
+      return a?.toDouble();
+    }
+    a ??= 0.0;
+    b ??= 0.0;
+    return a * (1.0 - t) + b * t;
   }
 
   int? _lerpInt(
@@ -255,7 +177,7 @@ class TextDefAttribute extends SpecAttribute<TextDef> {
 
   final bool? softWrap;
 
-  final TextDirective? directive;
+  final TextDirectiveDto? directive;
 
   @override
   TextDef resolve(MixData mix) {
@@ -315,6 +237,89 @@ class TextDefAttribute extends SpecAttribute<TextDef> {
       directive,
       animated,
     ];
+  }
+}
+
+/// Utility class for configuring [TextDefAttribute] properties.
+///
+/// This class provides methods to set individual properties of a [TextDefAttribute].
+///
+/// Use the methods of this class to configure specific properties of a [TextDefAttribute].
+class TextDefUtility<T extends Attribute>
+    extends SpecUtility<T, TextDefAttribute> {
+  TextDefUtility(super.builder);
+
+  /// Utility for defining [TextDefAttribute.overflow]
+  late final overflow = TextOverflowUtility((v) => only(overflow: v));
+
+  /// Utility for defining [TextDefAttribute.strutStyle]
+  late final strutStyle = StrutStyleUtility((v) => only(strutStyle: v));
+
+  /// Utility for defining [TextDefAttribute.textAlign]
+  late final textAlign = TextAlignUtility((v) => only(textAlign: v));
+
+  /// Utility for defining [TextDefAttribute.textScaleFactor]
+  late final textScaleFactor = DoubleUtility((v) => only(textScaleFactor: v));
+
+  /// Utility for defining [TextDefAttribute.maxLines]
+  late final maxLines = IntUtility((v) => only(maxLines: v));
+
+  /// Utility for defining [TextDefAttribute.style]
+  late final style = TextStyleUtility((v) => only(style: v));
+
+  /// Utility for defining [TextDefAttribute.textWidthBasis]
+  late final textWidthBasis =
+      TextWidthBasisUtility((v) => only(textWidthBasis: v));
+
+  /// Utility for defining [TextDefAttribute.textHeightBehavior]
+  late final textHeightBehavior =
+      TextHeightBehaviorUtility((v) => only(textHeightBehavior: v));
+
+  /// Utility for defining [TextDefAttribute.textDirection]
+  late final textDirection =
+      TextDirectionUtility((v) => only(textDirection: v));
+
+  /// Utility for defining [TextDefAttribute.softWrap]
+  late final softWrap = BoolUtility((v) => only(softWrap: v));
+
+  /// Utility for defining [TextDefAttribute.directive]
+  late final directive;
+
+  /// Utility for defining [TextDefAttribute.animated]
+  late final animated = AnimatedUtility((v) => only(animated: v));
+
+  /// Returns a new [TextDefAttribute] with the specified properties.
+  @override
+  T only({
+    TextOverflow? overflow,
+    StrutStyleDto? strutStyle,
+    TextAlign? textAlign,
+    double? textScaleFactor,
+    int? maxLines,
+    TextStyleDto? style,
+    TextWidthBasis? textWidthBasis,
+    TextHeightBehavior? textHeightBehavior,
+    TextDirection? textDirection,
+    bool? softWrap,
+    TextDirectiveDto? directive,
+    AnimatedDataDto? animated,
+  }) {
+    return builder(
+      TextDefAttribute(
+        overflow: overflow,
+        strutStyle: strutStyle,
+        textAlign: textAlign,
+        textScaleFactor: textScaleFactor,
+        maxLines: maxLines,
+        style: style,
+        textWidthBasis: textWidthBasis,
+        textHeightBehavior: textHeightBehavior,
+        textDirection: textDirection,
+        softWrap: softWrap,
+        directive: directive,
+        animated: animated,
+      ),
+    );
   }
 }
 

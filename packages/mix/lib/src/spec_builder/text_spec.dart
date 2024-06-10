@@ -3,7 +3,7 @@ import 'package:mix_annotations/mix_annotations.dart';
 
 import '../../mix.dart';
 
-part 'text_spec.spec.dart';
+part 'text_spec.g.dart';
 
 @MixableSpec()
 class TextDef extends Spec<TextDef> with TextDefMixable {
@@ -24,7 +24,7 @@ class TextDef extends Spec<TextDef> with TextDefMixable {
     MixableFieldProperty('titleCase'),
     MixableFieldProperty('sentenceCase'),
   ])
-  final TextDirective? directive;
+  final TextDirectiveDto? directive;
 
   const TextDef({
     this.overflow,

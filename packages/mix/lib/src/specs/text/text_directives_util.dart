@@ -4,9 +4,9 @@ import '../../core/directive.dart';
 import '../../internal/string_ext.dart';
 
 class TextDirectiveUtility<T extends Attribute>
-    extends MixUtility<T, TextDirective> {
+    extends MixUtility<T, TextDirectiveDto> {
   const TextDirectiveUtility(super.builder);
-  T _wrap(TextModifier<String> modifier) => builder(TextDirective([modifier]));
+  T _wrap(TextDirective modifier) => builder(TextDirectiveDto([modifier]));
 
   T capitalize() => _wrap(_capitalize);
   T uppercase() => _wrap(_uppercase);
@@ -14,7 +14,7 @@ class TextDirectiveUtility<T extends Attribute>
   T titleCase() => _wrap(_titleCase);
   T sentenceCase() => _wrap(_sentenceCase);
 
-  T call(TextModifier<String> modifier) => builder(TextDirective([modifier]));
+  T call(TextDirective modifier) => builder(TextDirectiveDto([modifier]));
 }
 
 String _capitalize(String value) => value.capitalize;

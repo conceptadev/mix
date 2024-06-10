@@ -3,7 +3,7 @@ import 'package:mix_annotations/mix_annotations.dart';
 
 import '../../mix.dart';
 
-part 'flex_spec.spec.dart';
+part 'flex_spec.g.dart';
 
 @MixableSpec()
 class FlexDef extends Spec<FlexDef> with FlexDefMixable {

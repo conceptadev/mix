@@ -72,8 +72,13 @@ Method MethodMergeBuilder({
           '$propName: $fieldName?.merge(other.$fieldName) ?? other.$fieldName,',
         );
       }
+    } else {
+      if (field.isListType) {
+        return Code('$propName: $fieldName?? other.$fieldName,');
+      } else {
+        return Code('$propName: other.$fieldName ?? $fieldName,');
+      }
     }
-    return Code('$propName: other.$fieldName ?? $fieldName,');
   });
   return Method((b) {
     b.annotations.add(refer('override'));
@@ -181,7 +186,12 @@ List<Method> MethodLerpHelpers(SpecDefinitionContext context) {
       b.type = refer('double');
     }));
     b.body = Code('''
-      return ((1 - t) * (a ?? 0) + t * (b ?? 0));
+      if (a == b || (a?.isNaN ?? false) && (b?.isNaN ?? false)) {
+        return a?.toDouble();
+      }
+      a ??= 0.0;
+      b ??= 0.0;
+      return a * (1.0 - t) + b * t;
     ''');
   });
 

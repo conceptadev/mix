@@ -79,6 +79,7 @@ void _libraryExport() {
 
     if (_isInternal(entity.path) ||
         !_isDartFile(entity.path) ||
+        _isGeneratedFile(entity.path) ||
         _hasAnyLibSuffix(entity.path)) {
       continue;
     }
@@ -107,6 +108,10 @@ bool _isInternal(String path) {
 
 bool _isDartFile(String path) {
   return path.endsWith('.dart');
+}
+
+bool _isGeneratedFile(String path) {
+  return path.endsWith('.g.dart');
 }
 
 String _joinPaths(String path1, String path2, [String? path3, String? path4]) {
@@ -174,6 +179,10 @@ Future<void> _exportNamespace(String namespace,
       continue;
     }
     if (_isInternal(filePath)) {
+      continue;
+    }
+
+    if (_isGeneratedFile(filePath)) {
       continue;
     }
 

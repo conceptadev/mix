@@ -6,80 +6,6 @@ part of 'flex_spec.dart';
 // Generator: SpecDefinitionBuilder
 // **************************************************************************
 
-/// Utility class for configuring [FlexDefAttribute] properties.
-///
-/// This class provides methods to set individual properties of a [FlexDefAttribute].
-///
-/// Use the methods of this class to configure specific properties of a [FlexDefAttribute].
-class FlexDefUtility<T extends Attribute>
-    extends SpecUtility<T, FlexDefAttribute> {
-  FlexDefUtility(super.builder);
-
-  /// Utility for defining [FlexDefAttribute.crossAxisAlignment]
-  late final crossAxisAlignment =
-      CrossAxisAlignmentUtility((v) => only(crossAxisAlignment: v));
-
-  /// Utility for defining [FlexDefAttribute.mainAxisAlignment]
-  late final mainAxisAlignment =
-      MainAxisAlignmentUtility((v) => only(mainAxisAlignment: v));
-
-  /// Utility for defining [FlexDefAttribute.mainAxisSize]
-  late final mainAxisSize = MainAxisSizeUtility((v) => only(mainAxisSize: v));
-
-  /// Utility for defining [FlexDefAttribute.verticalDirection]
-  late final verticalDirection =
-      VerticalDirectionUtility((v) => only(verticalDirection: v));
-
-  /// Utility for defining [FlexDefAttribute.direction]
-  late final direction = AxisUtility((v) => only(direction: v));
-
-  /// Utility for defining [FlexDefAttribute.textDirection]
-  late final textDirection =
-      TextDirectionUtility((v) => only(textDirection: v));
-
-  /// Utility for defining [FlexDefAttribute.textBaseline]
-  late final textBaseline = TextBaselineUtility((v) => only(textBaseline: v));
-
-  /// Utility for defining [FlexDefAttribute.clipBehavior]
-  late final clipBehavior = ClipUtility((v) => only(clipBehavior: v));
-
-  /// Utility for defining [FlexDefAttribute.gap]
-  late final gap = DoubleUtility((v) => only(gap: v));
-
-  /// Utility for defining [FlexDefAttribute.animated]
-  late final animated = AnimatedUtility((v) => only(animated: v));
-
-  /// Returns a new [FlexDefAttribute] with the specified properties.
-  @override
-  T only({
-    CrossAxisAlignment? crossAxisAlignment,
-    MainAxisAlignment? mainAxisAlignment,
-    MainAxisSize? mainAxisSize,
-    VerticalDirection? verticalDirection,
-    Axis? direction,
-    TextDirection? textDirection,
-    TextBaseline? textBaseline,
-    Clip? clipBehavior,
-    double? gap,
-    AnimatedDataDto? animated,
-  }) {
-    return builder(
-      FlexDefAttribute(
-        crossAxisAlignment: crossAxisAlignment,
-        mainAxisAlignment: mainAxisAlignment,
-        mainAxisSize: mainAxisSize,
-        verticalDirection: verticalDirection,
-        direction: direction,
-        textDirection: textDirection,
-        textBaseline: textBaseline,
-        clipBehavior: clipBehavior,
-        gap: gap,
-        animated: animated,
-      ),
-    );
-  }
-}
-
 mixin FlexDefMixable on Spec<FlexDef> {
   /// Retrieves the [FlexDef] from a MixData.
   static FlexDef from(MixData mix) {
@@ -177,7 +103,12 @@ mixin FlexDefMixable on Spec<FlexDef> {
     num? b,
     double t,
   ) {
-    return ((1 - t) * (a ?? 0) + t * (b ?? 0));
+    if (a == b || (a?.isNaN ?? false) && (b?.isNaN ?? false)) {
+      return a?.toDouble();
+    }
+    a ??= 0.0;
+    b ??= 0.0;
+    return a * (1.0 - t) + b * t;
   }
 }
 
@@ -272,6 +203,80 @@ class FlexDefAttribute extends SpecAttribute<FlexDef> {
       gap,
       animated,
     ];
+  }
+}
+
+/// Utility class for configuring [FlexDefAttribute] properties.
+///
+/// This class provides methods to set individual properties of a [FlexDefAttribute].
+///
+/// Use the methods of this class to configure specific properties of a [FlexDefAttribute].
+class FlexDefUtility<T extends Attribute>
+    extends SpecUtility<T, FlexDefAttribute> {
+  FlexDefUtility(super.builder);
+
+  /// Utility for defining [FlexDefAttribute.crossAxisAlignment]
+  late final crossAxisAlignment =
+      CrossAxisAlignmentUtility((v) => only(crossAxisAlignment: v));
+
+  /// Utility for defining [FlexDefAttribute.mainAxisAlignment]
+  late final mainAxisAlignment =
+      MainAxisAlignmentUtility((v) => only(mainAxisAlignment: v));
+
+  /// Utility for defining [FlexDefAttribute.mainAxisSize]
+  late final mainAxisSize = MainAxisSizeUtility((v) => only(mainAxisSize: v));
+
+  /// Utility for defining [FlexDefAttribute.verticalDirection]
+  late final verticalDirection =
+      VerticalDirectionUtility((v) => only(verticalDirection: v));
+
+  /// Utility for defining [FlexDefAttribute.direction]
+  late final direction = AxisUtility((v) => only(direction: v));
+
+  /// Utility for defining [FlexDefAttribute.textDirection]
+  late final textDirection =
+      TextDirectionUtility((v) => only(textDirection: v));
+
+  /// Utility for defining [FlexDefAttribute.textBaseline]
+  late final textBaseline = TextBaselineUtility((v) => only(textBaseline: v));
+
+  /// Utility for defining [FlexDefAttribute.clipBehavior]
+  late final clipBehavior = ClipUtility((v) => only(clipBehavior: v));
+
+  /// Utility for defining [FlexDefAttribute.gap]
+  late final gap = DoubleUtility((v) => only(gap: v));
+
+  /// Utility for defining [FlexDefAttribute.animated]
+  late final animated = AnimatedUtility((v) => only(animated: v));
+
+  /// Returns a new [FlexDefAttribute] with the specified properties.
+  @override
+  T only({
+    CrossAxisAlignment? crossAxisAlignment,
+    MainAxisAlignment? mainAxisAlignment,
+    MainAxisSize? mainAxisSize,
+    VerticalDirection? verticalDirection,
+    Axis? direction,
+    TextDirection? textDirection,
+    TextBaseline? textBaseline,
+    Clip? clipBehavior,
+    double? gap,
+    AnimatedDataDto? animated,
+  }) {
+    return builder(
+      FlexDefAttribute(
+        crossAxisAlignment: crossAxisAlignment,
+        mainAxisAlignment: mainAxisAlignment,
+        mainAxisSize: mainAxisSize,
+        verticalDirection: verticalDirection,
+        direction: direction,
+        textDirection: textDirection,
+        textBaseline: textBaseline,
+        clipBehavior: clipBehavior,
+        gap: gap,
+        animated: animated,
+      ),
+    );
   }
 }
 

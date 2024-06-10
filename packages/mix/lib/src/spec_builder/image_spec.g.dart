@@ -6,77 +6,6 @@ part of 'image_spec.dart';
 // Generator: SpecDefinitionBuilder
 // **************************************************************************
 
-/// Utility class for configuring [ImageDefAttribute] properties.
-///
-/// This class provides methods to set individual properties of a [ImageDefAttribute].
-///
-/// Use the methods of this class to configure specific properties of a [ImageDefAttribute].
-class ImageDefUtility<T extends Attribute>
-    extends SpecUtility<T, ImageDefAttribute> {
-  ImageDefUtility(super.builder);
-
-  /// Utility for defining [ImageDefAttribute.width]
-  late final width = DoubleUtility((v) => only(width: v));
-
-  /// Utility for defining [ImageDefAttribute.height]
-  late final height = DoubleUtility((v) => only(height: v));
-
-  /// Utility for defining [ImageDefAttribute.color]
-  late final color = ColorUtility((v) => only(color: v));
-
-  /// Utility for defining [ImageDefAttribute.repeat]
-  late final repeat = ImageRepeatUtility((v) => only(repeat: v));
-
-  /// Utility for defining [ImageDefAttribute.fit]
-  late final fit = BoxFitUtility((v) => only(fit: v));
-
-  /// Utility for defining [ImageDefAttribute.alignment]
-  late final alignment = AlignmentUtility((v) => only(alignment: v));
-
-  /// Utility for defining [ImageDefAttribute.centerSlice]
-  late final centerSlice = RectUtility((v) => only(centerSlice: v));
-
-  /// Utility for defining [ImageDefAttribute.filterQuality]
-  late final filterQuality =
-      FilterQualityUtility((v) => only(filterQuality: v));
-
-  /// Utility for defining [ImageDefAttribute.colorBlendMode]
-  late final colorBlendMode = BlendModeUtility((v) => only(colorBlendMode: v));
-
-  /// Utility for defining [ImageDefAttribute.animated]
-  late final animated = AnimatedUtility((v) => only(animated: v));
-
-  /// Returns a new [ImageDefAttribute] with the specified properties.
-  @override
-  T only({
-    double? width,
-    double? height,
-    ColorDto? color,
-    ImageRepeat? repeat,
-    BoxFit? fit,
-    AlignmentGeometry? alignment,
-    Rect? centerSlice,
-    FilterQuality? filterQuality,
-    BlendMode? colorBlendMode,
-    AnimatedDataDto? animated,
-  }) {
-    return builder(
-      ImageDefAttribute(
-        width: width,
-        height: height,
-        color: color,
-        repeat: repeat,
-        fit: fit,
-        alignment: alignment,
-        centerSlice: centerSlice,
-        filterQuality: filterQuality,
-        colorBlendMode: colorBlendMode,
-        animated: animated,
-      ),
-    );
-  }
-}
-
 mixin ImageDefMixable on Spec<ImageDef> {
   /// Retrieves the [ImageDef] from a MixData.
   static ImageDef from(MixData mix) {
@@ -181,7 +110,12 @@ mixin ImageDefMixable on Spec<ImageDef> {
     num? b,
     double t,
   ) {
-    return ((1 - t) * (a ?? 0) + t * (b ?? 0));
+    if (a == b || (a?.isNaN ?? false) && (b?.isNaN ?? false)) {
+      return a?.toDouble();
+    }
+    a ??= 0.0;
+    b ??= 0.0;
+    return a * (1.0 - t) + b * t;
   }
 }
 
@@ -276,6 +210,77 @@ class ImageDefAttribute extends SpecAttribute<ImageDef> {
       colorBlendMode,
       animated,
     ];
+  }
+}
+
+/// Utility class for configuring [ImageDefAttribute] properties.
+///
+/// This class provides methods to set individual properties of a [ImageDefAttribute].
+///
+/// Use the methods of this class to configure specific properties of a [ImageDefAttribute].
+class ImageDefUtility<T extends Attribute>
+    extends SpecUtility<T, ImageDefAttribute> {
+  ImageDefUtility(super.builder);
+
+  /// Utility for defining [ImageDefAttribute.width]
+  late final width = DoubleUtility((v) => only(width: v));
+
+  /// Utility for defining [ImageDefAttribute.height]
+  late final height = DoubleUtility((v) => only(height: v));
+
+  /// Utility for defining [ImageDefAttribute.color]
+  late final color = ColorUtility((v) => only(color: v));
+
+  /// Utility for defining [ImageDefAttribute.repeat]
+  late final repeat = ImageRepeatUtility((v) => only(repeat: v));
+
+  /// Utility for defining [ImageDefAttribute.fit]
+  late final fit = BoxFitUtility((v) => only(fit: v));
+
+  /// Utility for defining [ImageDefAttribute.alignment]
+  late final alignment = AlignmentUtility((v) => only(alignment: v));
+
+  /// Utility for defining [ImageDefAttribute.centerSlice]
+  late final centerSlice = RectUtility((v) => only(centerSlice: v));
+
+  /// Utility for defining [ImageDefAttribute.filterQuality]
+  late final filterQuality =
+      FilterQualityUtility((v) => only(filterQuality: v));
+
+  /// Utility for defining [ImageDefAttribute.colorBlendMode]
+  late final colorBlendMode = BlendModeUtility((v) => only(colorBlendMode: v));
+
+  /// Utility for defining [ImageDefAttribute.animated]
+  late final animated = AnimatedUtility((v) => only(animated: v));
+
+  /// Returns a new [ImageDefAttribute] with the specified properties.
+  @override
+  T only({
+    double? width,
+    double? height,
+    ColorDto? color,
+    ImageRepeat? repeat,
+    BoxFit? fit,
+    AlignmentGeometry? alignment,
+    Rect? centerSlice,
+    FilterQuality? filterQuality,
+    BlendMode? colorBlendMode,
+    AnimatedDataDto? animated,
+  }) {
+    return builder(
+      ImageDefAttribute(
+        width: width,
+        height: height,
+        color: color,
+        repeat: repeat,
+        fit: fit,
+        alignment: alignment,
+        centerSlice: centerSlice,
+        filterQuality: filterQuality,
+        colorBlendMode: colorBlendMode,
+        animated: animated,
+      ),
+    );
   }
 }
 

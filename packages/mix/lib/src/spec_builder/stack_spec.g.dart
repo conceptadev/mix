@@ -6,52 +6,6 @@ part of 'stack_spec.dart';
 // Generator: SpecDefinitionBuilder
 // **************************************************************************
 
-/// Utility class for configuring [StackDefAttribute] properties.
-///
-/// This class provides methods to set individual properties of a [StackDefAttribute].
-///
-/// Use the methods of this class to configure specific properties of a [StackDefAttribute].
-class StackDefUtility<T extends Attribute>
-    extends SpecUtility<T, StackDefAttribute> {
-  StackDefUtility(super.builder);
-
-  /// Utility for defining [StackDefAttribute.alignment]
-  late final alignment = AlignmentUtility((v) => only(alignment: v));
-
-  /// Utility for defining [StackDefAttribute.fit]
-  late final fit = StackFitUtility((v) => only(fit: v));
-
-  /// Utility for defining [StackDefAttribute.textDirection]
-  late final textDirection =
-      TextDirectionUtility((v) => only(textDirection: v));
-
-  /// Utility for defining [StackDefAttribute.clipBehavior]
-  late final clipBehavior = ClipUtility((v) => only(clipBehavior: v));
-
-  /// Utility for defining [StackDefAttribute.animated]
-  late final animated = AnimatedUtility((v) => only(animated: v));
-
-  /// Returns a new [StackDefAttribute] with the specified properties.
-  @override
-  T only({
-    AlignmentGeometry? alignment,
-    StackFit? fit,
-    TextDirection? textDirection,
-    Clip? clipBehavior,
-    AnimatedDataDto? animated,
-  }) {
-    return builder(
-      StackDefAttribute(
-        alignment: alignment,
-        fit: fit,
-        textDirection: textDirection,
-        clipBehavior: clipBehavior,
-        animated: animated,
-      ),
-    );
-  }
-}
-
 mixin StackDefMixable on Spec<StackDef> {
   /// Retrieves the [StackDef] from a MixData.
   static StackDef from(MixData mix) {
@@ -185,6 +139,52 @@ class StackDefAttribute extends SpecAttribute<StackDef> {
       clipBehavior,
       animated,
     ];
+  }
+}
+
+/// Utility class for configuring [StackDefAttribute] properties.
+///
+/// This class provides methods to set individual properties of a [StackDefAttribute].
+///
+/// Use the methods of this class to configure specific properties of a [StackDefAttribute].
+class StackDefUtility<T extends Attribute>
+    extends SpecUtility<T, StackDefAttribute> {
+  StackDefUtility(super.builder);
+
+  /// Utility for defining [StackDefAttribute.alignment]
+  late final alignment = AlignmentUtility((v) => only(alignment: v));
+
+  /// Utility for defining [StackDefAttribute.fit]
+  late final fit = StackFitUtility((v) => only(fit: v));
+
+  /// Utility for defining [StackDefAttribute.textDirection]
+  late final textDirection =
+      TextDirectionUtility((v) => only(textDirection: v));
+
+  /// Utility for defining [StackDefAttribute.clipBehavior]
+  late final clipBehavior = ClipUtility((v) => only(clipBehavior: v));
+
+  /// Utility for defining [StackDefAttribute.animated]
+  late final animated = AnimatedUtility((v) => only(animated: v));
+
+  /// Returns a new [StackDefAttribute] with the specified properties.
+  @override
+  T only({
+    AlignmentGeometry? alignment,
+    StackFit? fit,
+    TextDirection? textDirection,
+    Clip? clipBehavior,
+    AnimatedDataDto? animated,
+  }) {
+    return builder(
+      StackDefAttribute(
+        alignment: alignment,
+        fit: fit,
+        textDirection: textDirection,
+        clipBehavior: clipBehavior,
+        animated: animated,
+      ),
+    );
   }
 }
 

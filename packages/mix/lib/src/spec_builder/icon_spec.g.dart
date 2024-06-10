@@ -6,77 +6,6 @@ part of 'icon_spec.dart';
 // Generator: SpecDefinitionBuilder
 // **************************************************************************
 
-/// Utility class for configuring [IconDefAttribute] properties.
-///
-/// This class provides methods to set individual properties of a [IconDefAttribute].
-///
-/// Use the methods of this class to configure specific properties of a [IconDefAttribute].
-class IconDefUtility<T extends Attribute>
-    extends SpecUtility<T, IconDefAttribute> {
-  IconDefUtility(super.builder);
-
-  /// Utility for defining [IconDefAttribute.color]
-  late final color = ColorUtility((v) => only(color: v));
-
-  /// Utility for defining [IconDefAttribute.size]
-  late final size = DoubleUtility((v) => only(size: v));
-
-  /// Utility for defining [IconDefAttribute.weight]
-  late final weight = DoubleUtility((v) => only(weight: v));
-
-  /// Utility for defining [IconDefAttribute.grade]
-  late final grade = DoubleUtility((v) => only(grade: v));
-
-  /// Utility for defining [IconDefAttribute.opticalSize]
-  late final opticalSize = DoubleUtility((v) => only(opticalSize: v));
-
-  /// Utility for defining [IconDefAttribute.shadows]
-  late final shadows = ShadowListUtility((v) => only(shadows: v));
-
-  /// Utility for defining [IconDefAttribute.textDirection]
-  late final textDirection =
-      TextDirectionUtility((v) => only(textDirection: v));
-
-  /// Utility for defining [IconDefAttribute.applyTextScaling]
-  late final applyTextScaling = BoolUtility((v) => only(applyTextScaling: v));
-
-  /// Utility for defining [IconDefAttribute.fill]
-  late final fill = DoubleUtility((v) => only(fill: v));
-
-  /// Utility for defining [IconDefAttribute.animated]
-  late final animated = AnimatedUtility((v) => only(animated: v));
-
-  /// Returns a new [IconDefAttribute] with the specified properties.
-  @override
-  T only({
-    ColorDto? color,
-    double? size,
-    double? weight,
-    double? grade,
-    double? opticalSize,
-    List<ShadowDto>? shadows,
-    TextDirection? textDirection,
-    bool? applyTextScaling,
-    double? fill,
-    AnimatedDataDto? animated,
-  }) {
-    return builder(
-      IconDefAttribute(
-        color: color,
-        size: size,
-        weight: weight,
-        grade: grade,
-        opticalSize: opticalSize,
-        shadows: shadows,
-        textDirection: textDirection,
-        applyTextScaling: applyTextScaling,
-        fill: fill,
-        animated: animated,
-      ),
-    );
-  }
-}
-
 mixin IconDefMixable on Spec<IconDef> {
   /// Retrieves the [IconDef] from a MixData.
   static IconDef from(MixData mix) {
@@ -188,7 +117,12 @@ mixin IconDefMixable on Spec<IconDef> {
     num? b,
     double t,
   ) {
-    return ((1 - t) * (a ?? 0) + t * (b ?? 0));
+    if (a == b || (a?.isNaN ?? false) && (b?.isNaN ?? false)) {
+      return a?.toDouble();
+    }
+    a ??= 0.0;
+    b ??= 0.0;
+    return a * (1.0 - t) + b * t;
   }
 }
 
@@ -283,6 +217,77 @@ class IconDefAttribute extends SpecAttribute<IconDef> {
       fill,
       animated,
     ];
+  }
+}
+
+/// Utility class for configuring [IconDefAttribute] properties.
+///
+/// This class provides methods to set individual properties of a [IconDefAttribute].
+///
+/// Use the methods of this class to configure specific properties of a [IconDefAttribute].
+class IconDefUtility<T extends Attribute>
+    extends SpecUtility<T, IconDefAttribute> {
+  IconDefUtility(super.builder);
+
+  /// Utility for defining [IconDefAttribute.color]
+  late final color = ColorUtility((v) => only(color: v));
+
+  /// Utility for defining [IconDefAttribute.size]
+  late final size = DoubleUtility((v) => only(size: v));
+
+  /// Utility for defining [IconDefAttribute.weight]
+  late final weight = DoubleUtility((v) => only(weight: v));
+
+  /// Utility for defining [IconDefAttribute.grade]
+  late final grade = DoubleUtility((v) => only(grade: v));
+
+  /// Utility for defining [IconDefAttribute.opticalSize]
+  late final opticalSize = DoubleUtility((v) => only(opticalSize: v));
+
+  /// Utility for defining [IconDefAttribute.shadows]
+  late final shadows = ShadowListUtility((v) => only(shadows: v));
+
+  /// Utility for defining [IconDefAttribute.textDirection]
+  late final textDirection =
+      TextDirectionUtility((v) => only(textDirection: v));
+
+  /// Utility for defining [IconDefAttribute.applyTextScaling]
+  late final applyTextScaling = BoolUtility((v) => only(applyTextScaling: v));
+
+  /// Utility for defining [IconDefAttribute.fill]
+  late final fill = DoubleUtility((v) => only(fill: v));
+
+  /// Utility for defining [IconDefAttribute.animated]
+  late final animated = AnimatedUtility((v) => only(animated: v));
+
+  /// Returns a new [IconDefAttribute] with the specified properties.
+  @override
+  T only({
+    ColorDto? color,
+    double? size,
+    double? weight,
+    double? grade,
+    double? opticalSize,
+    List<ShadowDto>? shadows,
+    TextDirection? textDirection,
+    bool? applyTextScaling,
+    double? fill,
+    AnimatedDataDto? animated,
+  }) {
+    return builder(
+      IconDefAttribute(
+        color: color,
+        size: size,
+        weight: weight,
+        grade: grade,
+        opticalSize: opticalSize,
+        shadows: shadows,
+        textDirection: textDirection,
+        applyTextScaling: applyTextScaling,
+        fill: fill,
+        animated: animated,
+      ),
+    );
   }
 }
 

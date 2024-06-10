@@ -16,7 +16,9 @@ import 'package:flutter/material.dart';
 /// ```
 ///
 int? lerpInt(int? a, int? b, double t) {
-  return lerpDouble(a, b, t)?.round();
+  a ??= 0;
+  b ??= 0;
+  return (a + (b - a) * t).round();
 }
 
 /// Snaps between two values based on a threshold.
@@ -41,7 +43,12 @@ P? lerpSnap<P>(P? from, P? to, double t) {
 }
 
 double? lerpDouble(num? a, num? b, double t) {
-  return ((1 - t) * (a ?? 0) + t * (b ?? 0));
+  if (a == b || (a?.isNaN ?? false) && (b?.isNaN ?? false)) {
+    return a?.toDouble();
+  }
+  a ??= 0.0;
+  b ??= 0.0;
+  return a * (1.0 - t) + b * t;
 }
 
 TextStyle? lerpTextStyle(TextStyle? from, TextStyle? other, double t) {
