@@ -40,7 +40,11 @@ Method MethodResolveBuilder({
       final fieldName = isInternalRef ? field.asInternalRef : field.name;
 
       if (field.hasDto) {
-        return '$propName: $fieldName?.resolve(mix)';
+        if (field.isListType) {
+          return '$propName: $fieldName?.map((e) => e.resolve(mix)).toList()';
+        } else {
+          return '$propName: $fieldName?.resolve(mix)';
+        }
       }
 
       return '$propName: $fieldName';
@@ -59,8 +63,15 @@ Method MethodMergeBuilder({
     final propName = field.name;
     final fieldName = isInternalRef ? field.asInternalRef : field.name;
     if (field.hasDto) {
-      return Code(
-          '$propName: $fieldName?.merge(other.$fieldName) ?? other.$fieldName,');
+      if (field.isListType) {
+        return Code(
+          '$propName: Dto.mergeList($fieldName, other.$fieldName),',
+        );
+      } else {
+        return Code(
+          '$propName: $fieldName?.merge(other.$fieldName) ?? other.$fieldName,',
+        );
+      }
     }
     return Code('$propName: other.$fieldName ?? $fieldName,');
   });
@@ -147,7 +158,10 @@ List<Method> MethodLerpHelpers(SpecDefinitionContext context) {
       b.type = refer('double');
     }));
     b.body = Code('''
-     return ((1 - t) * (a ?? 0) + t * (b ?? 0))?.toInt();
+      a ??= 0;
+      b ??= 0;
+      
+      return (a + (b - a) * t).round();
     ''');
   });
 
@@ -279,6 +293,7 @@ Method MethodOnlyBuilder({
     b.annotations.add(refer('override'));
     b.name = 'only';
     b.returns = refer('T');
+    b.docs.add('/// Returns a new [$className] with the specified properties.');
     b.optionalParameters.addAll(fields.methodDtoParams);
     b.body = Block.of([
       Code('return builder($className('),
@@ -393,33 +408,37 @@ Method GetterHashcodeBuilder({
   );
 }
 
-Method StaticMethodOfBuilder({required String className}) {
+Method StaticMethodOfBuilder({
+  required String specName,
+  required String mixinName,
+}) {
   return Method((builder) {
     builder.docs.addAll([
-      '/// Retrieves the [$className] from the nearest [Mix] ancestor.',
+      '/// Retrieves the [$specName] from the nearest [Mix] ancestor.',
       '///',
-      '/// If no ancestor is found, returns [$className].',
+      '/// If no ancestor is found, returns [$specName].',
     ]);
     builder.name = 'of';
-    builder.returns = refer(className);
+    builder.returns = refer(specName);
     builder.static = true;
     builder.requiredParameters.add(Parameter((b) {
       b.name = 'context';
       b.type = refer('BuildContext');
     }));
     builder.body = Code('''
-      final mix = Mix.of(context);
-
-      return $className.from(mix);
+      return $mixinName.from(Mix.of(context));
     ''');
   });
 }
 
-Method StaticMethodFromBuilder({required String className}) {
+Method StaticMethodFromBuilder({
+  required String specName,
+  required String attributeName,
+}) {
   return Method((builder) {
-    builder.docs.addAll(['/// Retrieves the [$className] from a MixData.']);
+    builder.docs.addAll(['/// Retrieves the [$specName] from a MixData.']);
     builder.name = 'from';
-    builder.returns = refer(className);
+    builder.returns = refer(specName);
     builder.static = true;
     builder.requiredParameters.add(
       Parameter((builder) {
@@ -428,7 +447,7 @@ Method StaticMethodFromBuilder({required String className}) {
       }),
     );
     builder.body = Code('''
-        return mix.attributeOf<${className}Attribute>()?.resolve(mix) ?? const $className();
+        return mix.attributeOf<$attributeName>()?.resolve(mix) ?? const $specName();
       ''');
   });
 }

@@ -12,7 +12,7 @@ import 'helpers/method_builders.dart';
 import 'helpers/mix_property.dart';
 import 'helpers/types.dart';
 
-class SpecDefinitionBuilder extends GeneratorForAnnotation<MixSpec> {
+class SpecDefinitionBuilder extends GeneratorForAnnotation<MixableSpec> {
   const SpecDefinitionBuilder();
 
   @override
@@ -82,8 +82,6 @@ Class ClassSpecBuilder(SpecDefinitionContext context) {
     );
 
     b.methods.addAll([
-      StaticMethodOfBuilder(className: specClassName),
-      StaticMethodFromBuilder(className: specClassName),
       MethodCopyWithBuilder(className: specClassName, fields: fields),
       MethodLerpBuilder(
         className: specClassName,
@@ -98,6 +96,7 @@ Class ClassSpecBuilder(SpecDefinitionContext context) {
 Mixin MixinSpecBuilder(SpecDefinitionContext context) {
   final specClassName = context.options.specClassName;
   final specClassMixinName = context.options.specClassMixinName;
+  final attributeName = context.options.specAttributeClassName;
   final fields = context.fields;
 
   final specRef = MixTypes.foundation.spec.symbol!;
@@ -107,6 +106,14 @@ Mixin MixinSpecBuilder(SpecDefinitionContext context) {
     b.on = refer('$specRef<$specClassName>');
 
     b.methods.addAll([
+      StaticMethodFromBuilder(
+        specName: specClassName,
+        attributeName: attributeName,
+      ),
+      StaticMethodOfBuilder(
+        specName: specClassName,
+        mixinName: specClassMixinName,
+      ),
       MethodCopyWithBuilder(
           className: specClassName, fields: fields, isInternalRef: true),
       MethodLerpBuilder(
@@ -234,7 +241,7 @@ Class UtilityClassBuilder(SpecDefinitionContext context) {
 
     b.types.add(refer('T extends Attribute'));
 
-    b.fields.addAll(fields.utilityFields);
+    b.fields.addAll(fields.getUtilityFields(specAttributeClassName));
 
     b.constructors.add(
       Constructor((builder) {

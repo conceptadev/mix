@@ -4,6 +4,7 @@ import 'package:analyzer/dart/element/element.dart'
 import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:mix_annotations/mix_annotations.dart';
+import 'package:mix_builder/src/helpers/settings.dart';
 import 'package:source_gen/source_gen.dart' show ConstantReader, TypeChecker;
 
 final _utilityMap = {
@@ -29,6 +30,26 @@ final _utilityMap = {
   'TextDecoration': 'TextDecorationUtility',
   'Matrix4': 'Matrix4Utility',
   'AlignmentGeometry': 'AlignmentUtility',
+  'ImageRepeat': 'ImageRepeatUtility',
+  'BoxFit': 'BoxFitUtility',
+  'FilterQuality': 'FilterQualityUtility',
+  'Rect': 'RectUtility',
+  'BlendMode': 'BlendModeUtility',
+  'CrossAxisAlignment': 'CrossAxisAlignmentUtility',
+  'MainAxisAlignment': 'MainAxisAlignmentUtility',
+  'MainAxisSize': 'MainAxisSizeUtility',
+  'Axis': 'AxisUtility',
+  'List<Shadow>': 'ShadowListUtility',
+  'TextDirective': 'TextDirectiveUtility',
+  'StackFit': 'StackFitUtility',
+  'BoxBorder': 'BoxBorderUtility',
+  'Border': 'BorderUtility',
+  'BorderDirectional': 'BorderDirectionalUtility',
+  'ShapeBorder': 'ShapeBorderUtility',
+  'BorderSide': 'BorderSideUtility',
+  'BorderRadiusGeometry': 'BorderRadiusGeometryUtility',
+  'BorderRadiusDirectional': 'BorderRadiusDirectionalUtility',
+  'BorderRadius': 'BorderRadiusUtility',
 };
 
 final _dtoMap = {
@@ -38,7 +59,16 @@ final _dtoMap = {
   'Color': 'ColorDto',
   'AnimatedData': 'AnimatedDataDto',
   'TextStyle': 'TextStyleDto',
+  'ShapeBorder': 'ShapeBorderDto',
   'StrutStyle': 'StrutStyleDto',
+  'Shadow': 'ShadowDto',
+  'BoxShadow': 'BoxShadowDto',
+  'Gradient': 'GradientDto',
+  'List<Shadow>': 'List<ShadowDto>',
+  'BoxBorder': 'BoxBorderDto',
+  'BorderRadiusGeometry': 'BorderRadiusGeometryDto',
+  'BorderSide': 'BorderSideDto',
+  'BorderRadiusDirectional': 'BorderRadiusDirectionalDto',
 };
 
 /// Class field info relevant for code generation.
@@ -120,25 +150,29 @@ class ParameterInfo extends FieldInfo {
   final bool isPositioned;
 
   /// Annotation provided by the user with `MixProperty`.
-  final MixProperty annotation;
+  final MixableField annotation;
 
   /// Returns whether the field has a DTO type associated with it.
   bool get hasDto => dtoType != null;
+
+  bool get isListType => type.startsWith('List<');
 
   /// Returns the DTO type associated with the field, if any.
   /// If a DTO type is explicitly specified in the `MixProperty` annotation, that is returned.
   /// Otherwise, the DTO type is inferred from the field type using a mapping defined in `_dtoMap`.
 
-  String? get _dto => annotation.dtoName ?? _dtoMap[asRequiredType];
+  String? get _dto => annotation.dto?.typeAsString ?? _dtoMap[asRequiredType];
   Reference? get dtoType => _dto == null ? null : refer(_dto!);
 
   bool get hasUtility => utilityType != null;
 
-  Reference? get utilityType =>
-      refer(annotation.utilityName ?? _utilityMap[asRequiredType]!);
+  String get utilityName => annotation.utility?.alias ?? name;
+  Reference? get utilityType {
+    final utilityType =
+        annotation.utility?.typeAsString ?? _utilityMap[asRequiredType];
 
-  Expression? get utilityExpression =>
-      utilityType?.call([CodeExpression(Code('(v) => only(${name}: v)'))]);
+    return utilityType == null ? null : refer(utilityType);
+  }
 
   /// Returns the field info for the constructor parameter in the relevant class.
   static FieldInfo? _classFieldInfo(
@@ -158,19 +192,18 @@ class ParameterInfo extends FieldInfo {
     );
   }
 
-  /// Restores the `CopyWithField` annotation provided by the user.
-  static MixProperty _readFieldAnnotation(
+  static MixableField _readFieldAnnotation(
     ParameterElement element,
     ClassElement classElement,
   ) {
-    const defaults = MixProperty();
+    const defaults = MixableField();
 
     final fieldElement = classElement.getField(element.name);
     if (fieldElement is! FieldElement) {
       return defaults;
     }
 
-    const checker = TypeChecker.fromRuntime(MixProperty);
+    const checker = TypeChecker.fromRuntime(MixableField);
     final annotation = checker.firstAnnotationOf(fieldElement);
     if (annotation is! DartObject) {
       return defaults;
@@ -178,29 +211,79 @@ class ParameterInfo extends FieldInfo {
 
     final reader = ConstantReader(annotation);
 
-    final dtoType = reader.peek('dtoType')?.typeValue.element?.name;
-
-    final dtoName = dtoType ?? reader.peek('dtoName')?.stringValue;
-
-    final utilityType = reader.peek('utilityType')?.typeValue.element?.name;
-
-    final utilityName = utilityType ?? reader.peek('utilityName')?.stringValue;
-
-    final utilityProps = reader
-        .peek('utilityProps')
-        ?.listValue
-        .map((e) => e.toStringValue()!)
-        .toList();
-
-    return MixProperty(
-      dtoName: dtoName,
-      utilityName: utilityName,
-      utilityProps: utilityProps,
-    );
+    return _getMixableField(reader);
   }
 
   @override
   String toString() {
     return 'ParameterInfo(isSuper: $isSuper, fieldInfo: $fieldInfo, isPositioned: $isPositioned, propertyAnnotation: $annotation)';
   }
+}
+
+MixableField _getMixableField(ConstantReader reader) {
+  final dto = reader.peek('dto');
+  final utility = reader.peek('utility');
+  return MixableField(
+    dto: dto == null ? null : _getMixableDto(dto),
+    utility: utility == null ? null : _getMixableFieldUtility(utility),
+  );
+}
+
+MixableSpec readSpecAnnotation(
+  Settings settings,
+  ConstantReader reader,
+) {
+  final utilityName = reader.peek('utilityName')?.stringValue;
+  final attributeName = reader.peek('attributeName')?.stringValue;
+
+  return MixableSpec(
+    utilityName: utilityName,
+    attributeName: attributeName,
+  );
+}
+
+MixableDto? _getMixableDto(ConstantReader? reader) {
+  if (reader == null) return null;
+  final dtoType = reader.peek('type')?.typeValue.element?.name;
+  final dtoName = reader.peek('alias')?.stringValue;
+
+  return MixableDto(
+    type: dtoType,
+    alias: dtoName,
+  );
+}
+
+MixableFieldUtility _getMixableFieldUtility(ConstantReader reader) {
+  final utilityType = reader.peek('type')?.typeValue.element?.name;
+  final utilityAlias = reader.peek('alias')?.stringValue;
+
+  final fields =
+      reader.peek('properties')?.listValue.map(ConstantReader.new).toList();
+
+  final extraUtilities =
+      reader.peek('extraUtilities')?.listValue.map(ConstantReader.new).toList();
+
+  return MixableFieldUtility(
+    type: utilityType,
+    alias: utilityAlias,
+    extraUtilities: extraUtilities?.map(_getMixableFieldUtility).toList(),
+    properties: fields?.map(_getMixableFieldProperty).toList(),
+  );
+}
+
+MixableFieldProperty _getMixableFieldProperty(ConstantReader reader) {
+  final alias = reader.peek('alias')?.stringValue;
+  final property = reader.read('property').stringValue;
+  final properties = reader
+      .peek('properties')
+      ?.listValue
+      .map(ConstantReader.new)
+      .map(_getMixableFieldProperty)
+      .toList();
+
+  return MixableFieldProperty(
+    property,
+    alias: alias,
+    properties: properties,
+  );
 }

@@ -1,8 +1,6 @@
 import 'package:analyzer/dart/element/element.dart'
     show ClassElement, ConstructorElement;
-import 'package:mix_annotations/mix_annotations.dart';
 import 'package:mix_builder/src/helpers/field_info.dart';
-import 'package:mix_builder/src/helpers/settings.dart';
 import 'package:source_gen/source_gen.dart'
     show ConstantReader, InvalidGenerationSourceError;
 
@@ -51,18 +49,6 @@ List<ParameterInfo> sortedConstructorFields(
   }
 
   return fields;
-}
-
-/// Restores the `CopyWith` annotation provided by the user.
-MixSpec readSpecAnnotation(
-  Settings settings,
-  ConstantReader reader,
-) {
-  final name = reader.peek('name')?.stringValue;
-
-  return MixSpec(
-    name: name,
-  );
 }
 
 /// Returns parameter names or full parameters declaration declared by this class or an empty string.

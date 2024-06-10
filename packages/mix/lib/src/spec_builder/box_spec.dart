@@ -5,8 +5,8 @@ import '../../mix.dart';
 
 part 'box_spec.spec.dart';
 
-@MixSpec()
-class BoxDef extends Spec<BoxDef> with BoxDefMixin {
+@MixableSpec()
+class BoxDef extends Spec<BoxDef> with BoxDefMixable {
   /// Aligns the child within the box.
   final AlignmentGeometry? alignment;
 
@@ -17,27 +17,62 @@ class BoxDef extends Spec<BoxDef> with BoxDefMixin {
   final EdgeInsetsGeometry? margin;
 
   /// Applies additional constraints to the child.
-  @MixProperty(utilityProps: ['maxWidth', 'minWidth', 'maxHeight', 'minHeight'])
+  @MixableField(
+    utility: MixableFieldUtility(
+      properties: [
+        MixableFieldProperty('maxWidth'),
+        MixableFieldProperty('minWidth'),
+        MixableFieldProperty('maxHeight'),
+        MixableFieldProperty('minHeight')
+      ],
+    ),
+  )
   final BoxConstraints? constraints;
 
   /// Paints a decoration behind the child.
-  @MixProperty(
-    utilityType: BoxDecorationUtility,
-    utilityProps: [
-      'color',
-      'border',
-      'borderRadius',
-      'gradient',
-      'boxShadows',
-      'boxShadow',
-      'borderRadiusDirectional',
-      'borderDirectional'
-    ],
+  @MixableField(
+    utility: MixableFieldUtility(
+      type: BoxDecorationUtility,
+      extraUtilities: [
+        MixableFieldUtility(
+          alias: 'shapeDecoration',
+          type: ShapeDecorationUtility,
+        )
+      ],
+      properties: [
+        MixableFieldProperty('color'),
+        MixableFieldProperty('border'),
+        MixableFieldProperty('borderRadius'),
+        MixableFieldProperty(
+          'gradient',
+          properties: [
+            MixableFieldProperty(
+              'radial',
+              alias: 'radialGradient',
+            ),
+            MixableFieldProperty(
+              'linear',
+              alias: 'linearGradient',
+            )
+          ],
+        ),
+        MixableFieldProperty(
+          'boxShadows',
+          alias: 'shadows',
+        ),
+        MixableFieldProperty(
+          'boxShadow',
+          alias: 'shadow',
+        ),
+        MixableFieldProperty('elevation'),
+        MixableFieldProperty('borderRadiusDirectional'),
+        MixableFieldProperty('borderDirectional'),
+      ],
+    ),
   )
   final Decoration? decoration;
 
   /// Paints a decoration in front of the child.
-  @MixProperty(utilityType: BoxDecorationUtility)
   final Decoration? foregroundDecoration;
 
   /// Applies a transformation matrix before painting the box.

@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:mix_annotations/mix_annotations.dart';
 
-class ImageSpecDefinition {
+import '../../mix.dart';
+
+part 'image_spec.spec.dart';
+
+@MixableSpec()
+class ImageDef extends Spec<ImageDef> with ImageDefMixable {
   /// width of the image.
   final double? width;
 
@@ -29,7 +35,7 @@ class ImageSpecDefinition {
   /// Combine the image with the color.
   final BlendMode? colorBlendMode;
 
-  const ImageSpecDefinition({
+  const ImageDef({
     this.width,
     this.height,
     this.color,
@@ -39,5 +45,6 @@ class ImageSpecDefinition {
     this.centerSlice,
     this.filterQuality,
     this.colorBlendMode,
+    super.animated,
   });
 }

@@ -7,6 +7,7 @@ import 'package:dart_style/dart_style.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 import 'package:mix_builder/src/helpers/field_info.dart';
 import 'package:mix_builder/src/helpers/helpers.dart';
+import 'package:mix_builder/src/helpers/settings.dart';
 import 'package:mix_builder/src/helpers/types.dart';
 import 'package:source_gen/source_gen.dart';
 
@@ -53,6 +54,7 @@ Future<SpecDefinitionContext> loadSpecDefinitions(
   final specDefinition = SpecDefinitionContext(
     emitter: emitter,
     formatter: formatter,
+    annotation: readSpecAnnotation(Settings(), ConstantReader(annotation)),
     fields: fields,
     options: SpecDefinitionOptions(
       name: annotation.getField('name')?.toStringValue() ?? classElement.name,
@@ -62,19 +64,21 @@ Future<SpecDefinitionContext> loadSpecDefinitions(
   return specDefinition;
 }
 
-const _specDefinitionTypeChecker = TypeChecker.fromRuntime(MixSpec);
+const _specDefinitionTypeChecker = TypeChecker.fromRuntime(MixableSpec);
 
 class SpecDefinitionContext {
   final SpecDefinitionOptions options;
   final List<ParameterInfo> fields;
   final DartFormatter formatter;
   final DartEmitter emitter;
+  final MixableSpec annotation;
 
   const SpecDefinitionContext({
     required this.options,
     required this.fields,
     required this.formatter,
     required this.emitter,
+    required this.annotation,
   });
 
   bool hasReference(Reference reference) {
@@ -99,7 +103,7 @@ class SpecDefinitionOptions {
 
   String get specClassName => '${name}';
 
-  String get specClassMixinName => '${specClassName}Mixin';
+  String get specClassMixinName => '${specClassName}Mixable';
 
   String get specAttributeClassName => '${specClassName}Attribute';
 

@@ -3,4 +3,4 @@ targets:
     builders:
       mix_builder|spec:
         generate_for:
-          - lib/**/*.dart
+          - lib/**/*_spec.dart
