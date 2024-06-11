@@ -1,8 +1,7 @@
 import 'package:analyzer/dart/element/element.dart'
     show ClassElement, ConstructorElement;
 import 'package:mix_builder/src/helpers/field_info.dart';
-import 'package:source_gen/source_gen.dart'
-    show ConstantReader, InvalidGenerationSourceError;
+import 'package:source_gen/source_gen.dart' show InvalidGenerationSourceError;
 
 /// Generates a list of `FieldInfo` for each class field that will be a part of the code generation process.
 /// The resulting array is sorted by the field name. `Throws` on error.
