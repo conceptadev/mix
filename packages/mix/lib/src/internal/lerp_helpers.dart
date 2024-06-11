@@ -15,9 +15,10 @@ import 'package:flutter/material.dart';
 /// print(result); // Output: 13
 /// ```
 ///
-int? lerpInt(int? a, int? b, double t) {
+int lerpInt(int? a, int? b, double t) {
   a ??= 0;
   b ??= 0;
+
   return (a + (b - a) * t).round();
 }
 
@@ -48,6 +49,7 @@ double? lerpDouble(num? a, num? b, double t) {
   }
   a ??= 0.0;
   b ??= 0.0;
+
   return a * (1.0 - t) + b * t;
 }
 

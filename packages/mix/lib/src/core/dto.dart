@@ -10,8 +10,6 @@ import 'models/mix_data.dart';
 abstract class Dto<Value> with EqualityMixin, MergeableMixin {
   const Dto();
 
-  Value resolve(MixData mix);
-
   static List<T>? mergeList<T extends Dto>(List<T>? list, List<T>? other) {
     if (other == null) return list;
     if (list == null) return other;
@@ -35,4 +33,6 @@ abstract class Dto<Value> with EqualityMixin, MergeableMixin {
       return other[index];
     });
   }
+
+  Value resolve(MixData mix);
 }

@@ -27,7 +27,7 @@ class BoxSpec extends Spec<BoxSpec> with BoxSpecMixable {
         MixableFieldProperty('maxWidth'),
         MixableFieldProperty('minWidth'),
         MixableFieldProperty('maxHeight'),
-        MixableFieldProperty('minHeight')
+        MixableFieldProperty('minHeight'),
       ],
     ),
   )
@@ -37,12 +37,6 @@ class BoxSpec extends Spec<BoxSpec> with BoxSpecMixable {
   @MixableField(
     utility: MixableFieldUtility(
       type: BoxDecorationUtility,
-      extraUtilities: [
-        MixableFieldUtility(
-          alias: 'shapeDecoration',
-          type: ShapeDecorationUtility,
-        )
-      ],
       properties: [
         MixableFieldProperty('color'),
         MixableFieldProperty('border'),
@@ -50,37 +44,28 @@ class BoxSpec extends Spec<BoxSpec> with BoxSpecMixable {
         MixableFieldProperty(
           'gradient',
           properties: [
-            MixableFieldProperty(
-              'radial',
-              alias: 'radialGradient',
-            ),
-            MixableFieldProperty(
-              'linear',
-              alias: 'linearGradient',
-            )
+            MixableFieldProperty('radial', alias: 'radialGradient'),
+            MixableFieldProperty('linear', alias: 'linearGradient'),
           ],
         ),
-        MixableFieldProperty(
-          'boxShadows',
-          alias: 'shadows',
-        ),
-        MixableFieldProperty(
-          'boxShadow',
-          alias: 'shadow',
-        ),
+        MixableFieldProperty('boxShadows', alias: 'shadows'),
+        MixableFieldProperty('boxShadow', alias: 'shadow'),
         MixableFieldProperty('elevation'),
         MixableFieldProperty('borderRadiusDirectional'),
         MixableFieldProperty('borderDirectional'),
+      ],
+      extraUtilities: [
+        MixableFieldUtility(
+          alias: 'shapeDecoration',
+          type: ShapeDecorationUtility,
+        ),
       ],
     ),
   )
   final Decoration? decoration;
 
   /// Paints a decoration in front of the child.
-  @MixableField(
-      utility: MixableFieldUtility(
-    type: BoxDecorationUtility,
-  ))
+  @MixableField(utility: MixableFieldUtility(type: BoxDecorationUtility))
   final Decoration? foregroundDecoration;
 
   /// Applies a transformation matrix before painting the box.

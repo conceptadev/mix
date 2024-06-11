@@ -10,7 +10,7 @@ final _namespaces = [
   'util',
   'token',
   'widget',
-  'modifier'
+  'modifier',
 ];
 
 final _dirNamespace = ['core', 'material'];
@@ -155,11 +155,12 @@ String _getRelativePath(String filePath, String fromPath) {
   return relativePath.join('/');
 }
 
-Future<void> _exportNamespace(String namespace,
-    {
-    /// Is the namespace a directory
-    bool isDirectory = false,
-    String? exportName}) async {
+Future<void> _exportNamespace(
+  String namespace, {
+  /// Is the namespace a directory
+  bool isDirectory = false,
+  String? exportName,
+}) async {
   final outputString = StringBuffer();
 
   outputString
@@ -209,10 +210,7 @@ Future<void> _exportNamespace(String namespace,
 }
 
 bool _hasNamespaceSuffix(String path, String namespace) {
-  final validSuffixes = [
-    '_$namespace.dart',
-    '_$namespace.g.dart',
-  ];
+  final validSuffixes = ['_$namespace.dart', '_$namespace.g.dart'];
 
   return validSuffixes.any(path.endsWith);
 }

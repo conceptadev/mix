@@ -20,10 +20,10 @@ import 'image/decoration_image_util.dart';
 
 class DecorationUtility<T extends Attribute>
     extends MixUtility<T, DecorationDto> {
-  DecorationUtility(super.builder);
-
   late final box = BoxDecorationUtility(builder);
   late final shape = ShapeDecorationUtility(builder);
+
+  DecorationUtility(super.builder);
 
   T as(Decoration decoration) {
     if (decoration is BoxDecoration) {

@@ -147,21 +147,6 @@ class TextSpecLegacyTween extends Tween<TextSpecLegacy> {
 }
 
 class TextSpecLegacyAttribute extends SpecAttribute<TextSpecLegacy> {
-  const TextSpecLegacyAttribute({
-    this.overflow,
-    this.strutStyle,
-    this.textAlign,
-    this.textScaleFactor,
-    this.maxLines,
-    this.style,
-    this.textWidthBasis,
-    this.textHeightBehavior,
-    this.textDirection,
-    this.softWrap,
-    this.directive,
-    super.animated,
-  });
-
   final TextOverflow? overflow;
 
   final StrutStyleDto? strutStyle;
@@ -183,6 +168,21 @@ class TextSpecLegacyAttribute extends SpecAttribute<TextSpecLegacy> {
   final bool? softWrap;
 
   final TextDirectiveDto? directive;
+
+  const TextSpecLegacyAttribute({
+    this.overflow,
+    this.strutStyle,
+    this.textAlign,
+    this.textScaleFactor,
+    this.maxLines,
+    this.style,
+    this.textWidthBasis,
+    this.textHeightBehavior,
+    this.textDirection,
+    this.softWrap,
+    this.directive,
+    super.animated,
+  });
 
   @override
   TextSpecLegacy resolve(MixData mix) {

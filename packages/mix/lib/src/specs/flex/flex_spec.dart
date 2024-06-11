@@ -8,12 +8,13 @@ part 'flex_spec.g.dart';
 @MixableSpec()
 class FlexSpec extends Spec<FlexSpec> with FlexSpecMixable {
   @MixableField(
-      utility: MixableFieldUtility(
-    properties: [
-      MixableFieldProperty('horizontal', alias: 'row'),
-      MixableFieldProperty('vertical', alias: 'column'),
-    ],
-  ))
+    utility: MixableFieldUtility(
+      properties: [
+        MixableFieldProperty('horizontal', alias: 'row'),
+        MixableFieldProperty('vertical', alias: 'column'),
+      ],
+    ),
+  )
   final Axis? direction;
   final MainAxisAlignment? mainAxisAlignment;
   final CrossAxisAlignment? crossAxisAlignment;

@@ -238,9 +238,8 @@ extension DecorationExt on Decoration {
       return (this as BoxDecoration).toDto();
     } else if (this is ShapeDecoration) {
       return (this as ShapeDecoration).toDto();
-    } else {
-      throw Exception('Unknown decoration type: $runtimeType');
     }
+    throw Exception('Unknown decoration type: $runtimeType');
   }
 }
 
