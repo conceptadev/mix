@@ -6,31 +6,42 @@ on:
       token:
         required: true
         type: string
+      run-dcm:
+        required: false
+        type: boolean
+        default: true
+      flutter-version:
+        required: false
+        default: ""
 
 runs:
   using: "composite"
   steps:
     - name: Checkout mix repo
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
 
     - name: Setup Flutter
       uses: subosito/flutter-action@v2
       with:
         channel: "stable"
+        flutter-version: ${{ inputs.flutter-version }}
 
-    - run: flutter pub get
-      shell: bash
+    - name: Setup Melos
+      uses: bluefireteam/melos-action@v3
 
     - uses: invertase/github-action-dart-analyzer@v1
       with:
         fatal-infos: false
 
     - name: Install DCM
+      if: ${{ inputs.run-dcm }}
       uses: CQLabs/setup-dcm@v1
       with:
         github_token: ${{ inputs.token }}
+        folders: packages/*/lib
 
     - name: Run DCM
+      if: ${{ inputs.run-dcm }}
       uses: CQLabs/dcm-action@v1
       with:
         github_token: ${{ inputs.token }}
@@ -41,5 +52,5 @@ runs:
         fatal_performance: true
         fatal_warnings: true
       
-    - run: flutter test
+    - run: melos exec --ignore="mix_lint" --scope="packages/**" flutter test
       shell: bash
