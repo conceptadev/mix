@@ -60,5 +60,9 @@ runs:
       shell: bash
 
     - name: Run custom_lint
-      run: custom_lint
+      run: melos exec --depends-on="flutter" --depends-on="firebase_core"
+      shell: bash
+
+    - name: Verify if mix_lint_test is up to date with mix_lint
+      run: cd scripts && ./compare_files.sh ../packages/mix_lint/lib/src/lints ../packages/mix_lint_test/test/lints
       shell: bash
