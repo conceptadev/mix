@@ -15,7 +15,7 @@ dependencies:
   mix: 
     path: ../../packages/mix
   custom_lint:
-  google_fonts: ^6.2.1 
+  google_fonts: ^6.0.0 
 
   cupertino_icons: ^1.0.6
 
