@@ -36,6 +36,7 @@ class ShadowDto extends ShadowDtoImpl<ShadowDto, Shadow> {
   @override
   Shadow resolve(MixData mix) {
     const defaultValue = Shadow();
+
     return Shadow(
       color: color?.resolve(mix) ?? defaultValue.color,
       offset: offset ?? defaultValue.offset,

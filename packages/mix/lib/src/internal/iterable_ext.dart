@@ -33,18 +33,16 @@ extension ListExt<T> on List<T> {
     if (other == null) return this;
     if (isEmpty) return other;
 
-    return List.generate(
-      max(length, other.length),
-      (index) {
-        if (index < length) {
-          final currentValue = this[index];
-          final otherValue = index < other.length ? other[index] : null;
+    return List.generate(max(length, other.length), (index) {
+      if (index < length) {
+        final currentValue = this[index];
+        final otherValue = index < other.length ? other[index] : null;
 
-          return otherValue ?? currentValue;
-        }
-        return other[index];
-      },
-    );
+        return otherValue ?? currentValue;
+      }
+
+      return other[index];
+    });
   }
 }
 
@@ -52,16 +50,14 @@ List<T>? merge<T>(List<T>? a, List<T>? b) {
   if (b == null) return a;
   if (a == null) return b;
 
-  return List.generate(
-    max(a.length, b.length),
-    (index) {
-      if (index < a.length) {
-        final currentValue = a[index];
-        final otherValue = index < b.length ? b[index] : null;
+  return List.generate(max(a.length, b.length), (index) {
+    if (index < a.length) {
+      final currentValue = a[index];
+      final otherValue = index < b.length ? b[index] : null;
 
-        return otherValue ?? currentValue;
-      }
-      return b[index];
-    },
-  );
+      return otherValue ?? currentValue;
+    }
+
+    return b[index];
+  });
 }

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../core/dto.dart';
-import '../../factory/mix_provider_data.dart';
-import '../../helpers/iterable_ext.dart';
+import '../../core/models/mix_data.dart';
+import '../../internal/iterable_ext.dart';
 import '../color/color_dto.dart';
 
 /// Represents a base Data transfer object of [Gradient]
@@ -90,7 +90,7 @@ class LinearGradientDto extends GradientDto<LinearGradient> {
       end: other.end ?? end,
       tileMode: other.tileMode ?? tileMode,
       transform: other.transform ?? transform,
-      colors: colors?.merge(other.colors) ?? other.colors,
+      colors: Dto.mergeList(colors, other.colors),
       stops: stops?.merge(other.stops) ?? other.stops,
     );
   }

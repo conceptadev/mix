@@ -22,8 +22,6 @@ class SpacingDto extends Dto<EdgeInsetsGeometry> {
     this.end,
   });
 
-  bool get isDirectional => start != null || end != null;
-
   const SpacingDto.only({
     double? top,
     double? bottom,
@@ -42,6 +40,8 @@ class SpacingDto extends Dto<EdgeInsetsGeometry> {
 
   const SpacingDto.all(double value)
       : this.only(top: value, bottom: value, left: value, right: value);
+
+  bool get isDirectional => start != null || end != null;
 
   @override
   SpacingDto merge(SpacingDto? other) {
