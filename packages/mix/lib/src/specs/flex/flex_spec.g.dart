@@ -6,23 +6,24 @@ part of 'flex_spec.dart';
 // Generator: SpecDefinitionBuilder
 // **************************************************************************
 
-mixin FlexDefMixable on Spec<FlexDef> {
-  /// Retrieves the [FlexDef] from a MixData.
-  static FlexDef from(MixData mix) {
-    return mix.attributeOf<FlexDefAttribute>()?.resolve(mix) ?? const FlexDef();
+mixin FlexSpecMixable on Spec<FlexSpec> {
+  /// Retrieves the [FlexSpec] from a MixData.
+  static FlexSpec from(MixData mix) {
+    return mix.attributeOf<FlexSpecAttribute>()?.resolve(mix) ??
+        const FlexSpec();
   }
 
-  /// Retrieves the [FlexDef] from the nearest [Mix] ancestor.
+  /// Retrieves the [FlexSpec] from the nearest [Mix] ancestor.
   ///
-  /// If no ancestor is found, returns [FlexDef].
-  static FlexDef of(BuildContext context) {
-    return FlexDefMixable.from(Mix.of(context));
+  /// If no ancestor is found, returns [FlexSpec].
+  static FlexSpec of(BuildContext context) {
+    return FlexSpecMixable.from(Mix.of(context));
   }
 
-  /// Creates a copy of this [FlexDef] but with the given fields
+  /// Creates a copy of this [FlexSpec] but with the given fields
   /// replaced with the new values.
   @override
-  FlexDef copyWith({
+  FlexSpec copyWith({
     CrossAxisAlignment? crossAxisAlignment,
     MainAxisAlignment? mainAxisAlignment,
     MainAxisSize? mainAxisSize,
@@ -34,7 +35,7 @@ mixin FlexDefMixable on Spec<FlexDef> {
     double? gap,
     AnimatedData? animated,
   }) {
-    return FlexDef(
+    return FlexSpec(
       crossAxisAlignment: crossAxisAlignment ?? _$this.crossAxisAlignment,
       mainAxisAlignment: mainAxisAlignment ?? _$this.mainAxisAlignment,
       mainAxisSize: mainAxisSize ?? _$this.mainAxisSize,
@@ -49,13 +50,13 @@ mixin FlexDefMixable on Spec<FlexDef> {
   }
 
   @override
-  FlexDef lerp(
-    FlexDef? other,
+  FlexSpec lerp(
+    FlexSpec? other,
     double t,
   ) {
     if (other == null) return _$this;
 
-    return FlexDef(
+    return FlexSpec(
       crossAxisAlignment:
           t < 0.5 ? _$this.crossAxisAlignment : other._$this.crossAxisAlignment,
       mainAxisAlignment:
@@ -77,10 +78,10 @@ mixin FlexDefMixable on Spec<FlexDef> {
     );
   }
 
-  /// The list of properties that constitute the state of this [FlexDef].
+  /// The list of properties that constitute the state of this [FlexSpec].
   ///
   /// This property is used by the [==] operator and the [hashCode] getter to
-  /// compare two [FlexDef] instances for equality.
+  /// compare two [FlexSpec] instances for equality.
   @override
   List<Object?> get props {
     return [
@@ -97,7 +98,7 @@ mixin FlexDefMixable on Spec<FlexDef> {
     ];
   }
 
-  FlexDef get _$this => this as FlexDef;
+  FlexSpec get _$this => this as FlexSpec;
   double? _lerpDouble(
     num? a,
     num? b,
@@ -112,15 +113,15 @@ mixin FlexDefMixable on Spec<FlexDef> {
   }
 }
 
-/// Represents the attributes of a [FlexDef].
+/// Represents the attributes of a [FlexSpec].
 ///
 /// This class encapsulates properties defining the layout and
-/// appearance of a [FlexDef].
+/// appearance of a [FlexSpec].
 ///
-/// Use this class to configure the attributes of a [FlexDef] and pass it to
-/// the [FlexDef] constructor.
-class FlexDefAttribute extends SpecAttribute<FlexDef> {
-  const FlexDefAttribute({
+/// Use this class to configure the attributes of a [FlexSpec] and pass it to
+/// the [FlexSpec] constructor.
+class FlexSpecAttribute extends SpecAttribute<FlexSpec> {
+  const FlexSpecAttribute({
     this.crossAxisAlignment,
     this.mainAxisAlignment,
     this.mainAxisSize,
@@ -152,8 +153,8 @@ class FlexDefAttribute extends SpecAttribute<FlexDef> {
   final double? gap;
 
   @override
-  FlexDef resolve(MixData mix) {
-    return FlexDef(
+  FlexSpec resolve(MixData mix) {
+    return FlexSpec(
       crossAxisAlignment: crossAxisAlignment,
       mainAxisAlignment: mainAxisAlignment,
       mainAxisSize: mainAxisSize,
@@ -168,10 +169,10 @@ class FlexDefAttribute extends SpecAttribute<FlexDef> {
   }
 
   @override
-  FlexDefAttribute merge(FlexDefAttribute? other) {
+  FlexSpecAttribute merge(FlexSpecAttribute? other) {
     if (other == null) return this;
 
-    return FlexDefAttribute(
+    return FlexSpecAttribute(
       crossAxisAlignment: other.crossAxisAlignment ?? crossAxisAlignment,
       mainAxisAlignment: other.mainAxisAlignment ?? mainAxisAlignment,
       mainAxisSize: other.mainAxisSize ?? mainAxisSize,
@@ -185,10 +186,10 @@ class FlexDefAttribute extends SpecAttribute<FlexDef> {
     );
   }
 
-  /// The list of properties that constitute the state of this [FlexDefAttribute].
+  /// The list of properties that constitute the state of this [FlexSpecAttribute].
   ///
   /// This property is used by the [==] operator and the [hashCode] getter to
-  /// compare two [FlexDefAttribute] instances for equality.
+  /// compare two [FlexSpecAttribute] instances for equality.
   @override
   List<Object?> get props {
     return [
@@ -206,50 +207,56 @@ class FlexDefAttribute extends SpecAttribute<FlexDef> {
   }
 }
 
-/// Utility class for configuring [FlexDefAttribute] properties.
+/// Utility class for configuring [FlexSpecAttribute] properties.
 ///
-/// This class provides methods to set individual properties of a [FlexDefAttribute].
+/// This class provides methods to set individual properties of a [FlexSpecAttribute].
 ///
-/// Use the methods of this class to configure specific properties of a [FlexDefAttribute].
-class FlexDefUtility<T extends Attribute>
-    extends SpecUtility<T, FlexDefAttribute> {
-  FlexDefUtility(super.builder);
+/// Use the methods of this class to configure specific properties of a [FlexSpecAttribute].
+class FlexSpecUtility<T extends Attribute>
+    extends SpecUtility<T, FlexSpecAttribute> {
+  FlexSpecUtility(super.builder);
 
-  /// Utility for defining [FlexDefAttribute.crossAxisAlignment]
+  /// Utility for defining [FlexSpecAttribute.crossAxisAlignment]
   late final crossAxisAlignment =
       CrossAxisAlignmentUtility((v) => only(crossAxisAlignment: v));
 
-  /// Utility for defining [FlexDefAttribute.mainAxisAlignment]
+  /// Utility for defining [FlexSpecAttribute.mainAxisAlignment]
   late final mainAxisAlignment =
       MainAxisAlignmentUtility((v) => only(mainAxisAlignment: v));
 
-  /// Utility for defining [FlexDefAttribute.mainAxisSize]
+  /// Utility for defining [FlexSpecAttribute.mainAxisSize]
   late final mainAxisSize = MainAxisSizeUtility((v) => only(mainAxisSize: v));
 
-  /// Utility for defining [FlexDefAttribute.verticalDirection]
+  /// Utility for defining [FlexSpecAttribute.verticalDirection]
   late final verticalDirection =
       VerticalDirectionUtility((v) => only(verticalDirection: v));
 
-  /// Utility for defining [FlexDefAttribute.direction]
+  /// Utility for defining [FlexSpecAttribute.direction]
   late final direction = AxisUtility((v) => only(direction: v));
 
-  /// Utility for defining [FlexDefAttribute.textDirection]
+  /// Utility for defining [FlexSpecAttribute.direction.horizontal]
+  late final row = direction.horizontal;
+
+  /// Utility for defining [FlexSpecAttribute.direction.vertical]
+  late final column = direction.vertical;
+
+  /// Utility for defining [FlexSpecAttribute.textDirection]
   late final textDirection =
       TextDirectionUtility((v) => only(textDirection: v));
 
-  /// Utility for defining [FlexDefAttribute.textBaseline]
+  /// Utility for defining [FlexSpecAttribute.textBaseline]
   late final textBaseline = TextBaselineUtility((v) => only(textBaseline: v));
 
-  /// Utility for defining [FlexDefAttribute.clipBehavior]
+  /// Utility for defining [FlexSpecAttribute.clipBehavior]
   late final clipBehavior = ClipUtility((v) => only(clipBehavior: v));
 
-  /// Utility for defining [FlexDefAttribute.gap]
+  /// Utility for defining [FlexSpecAttribute.gap]
   late final gap = DoubleUtility((v) => only(gap: v));
 
-  /// Utility for defining [FlexDefAttribute.animated]
+  /// Utility for defining [FlexSpecAttribute.animated]
   late final animated = AnimatedUtility((v) => only(animated: v));
 
-  /// Returns a new [FlexDefAttribute] with the specified properties.
+  /// Returns a new [FlexSpecAttribute] with the specified properties.
   @override
   T only({
     CrossAxisAlignment? crossAxisAlignment,
@@ -264,7 +271,7 @@ class FlexDefUtility<T extends Attribute>
     AnimatedDataDto? animated,
   }) {
     return builder(
-      FlexDefAttribute(
+      FlexSpecAttribute(
         crossAxisAlignment: crossAxisAlignment,
         mainAxisAlignment: mainAxisAlignment,
         mainAxisSize: mainAxisSize,
@@ -280,19 +287,19 @@ class FlexDefUtility<T extends Attribute>
   }
 }
 
-/// A tween that interpolates between two [FlexDef] instances.
+/// A tween that interpolates between two [FlexSpec] instances.
 ///
 /// This class can be used in animations to smoothly transition between
-/// different [FlexDef] specifications.
-class FlexDefTween extends Tween<FlexDef?> {
-  FlexDefTween({
+/// different [FlexSpec] specifications.
+class FlexSpecTween extends Tween<FlexSpec?> {
+  FlexSpecTween({
     super.begin,
     super.end,
   });
 
   @override
-  FlexDef lerp(double t) {
-    if (begin == null && end == null) return const FlexDef();
+  FlexSpec lerp(double t) {
+    if (begin == null && end == null) return const FlexSpec();
     if (begin == null) return end!;
 
     return begin!.lerp(end!, t);

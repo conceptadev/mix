@@ -19,7 +19,7 @@ void main() {
         ),
       );
 
-      final mixture = StackSpecAttribute.of(mix).resolve(mix);
+      final mixture = const StackSpecAttribute().resolve(mix);
 
       expect(mixture.alignment, Alignment.center);
       expect(mixture.fit, StackFit.expand);

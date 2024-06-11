@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'dto.dart';
 import 'models/mix_data.dart';
 
-typedef TextDirective = String Function(String value);
+typedef Modifier<T> = T Function(T value);
 
 @immutable
 class TextDirectiveDto extends Dto<TextDirective> {
-  final List<TextDirective> _modifiers;
+  final List<Modifier<String>> _modifiers;
   const TextDirectiveDto(this._modifiers);
 
   @visibleForTesting
@@ -15,12 +15,12 @@ class TextDirectiveDto extends Dto<TextDirective> {
 
   @override
   TextDirective resolve(MixData mix) {
-    return (String content) {
+    return TextDirective((String content) {
       return _modifiers.fold(
         content,
         (previousValue, modifier) => modifier(previousValue),
       );
-    };
+    });
   }
 
   @override
@@ -30,4 +30,11 @@ class TextDirectiveDto extends Dto<TextDirective> {
 
   @override
   get props => [_modifiers];
+}
+
+class TextDirective {
+  final Modifier<String> _modifier;
+  const TextDirective(this._modifier);
+
+  String apply(String content) => _modifier(content);
 }

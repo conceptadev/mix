@@ -6,31 +6,31 @@ part of 'stack_spec.dart';
 // Generator: SpecDefinitionBuilder
 // **************************************************************************
 
-mixin StackDefMixable on Spec<StackDef> {
-  /// Retrieves the [StackDef] from a MixData.
-  static StackDef from(MixData mix) {
-    return mix.attributeOf<StackDefAttribute>()?.resolve(mix) ??
-        const StackDef();
+mixin StackSpecMixable on Spec<StackSpec> {
+  /// Retrieves the [StackSpec] from a MixData.
+  static StackSpec from(MixData mix) {
+    return mix.attributeOf<StackSpecAttribute>()?.resolve(mix) ??
+        const StackSpec();
   }
 
-  /// Retrieves the [StackDef] from the nearest [Mix] ancestor.
+  /// Retrieves the [StackSpec] from the nearest [Mix] ancestor.
   ///
-  /// If no ancestor is found, returns [StackDef].
-  static StackDef of(BuildContext context) {
-    return StackDefMixable.from(Mix.of(context));
+  /// If no ancestor is found, returns [StackSpec].
+  static StackSpec of(BuildContext context) {
+    return StackSpecMixable.from(Mix.of(context));
   }
 
-  /// Creates a copy of this [StackDef] but with the given fields
+  /// Creates a copy of this [StackSpec] but with the given fields
   /// replaced with the new values.
   @override
-  StackDef copyWith({
+  StackSpec copyWith({
     AlignmentGeometry? alignment,
     StackFit? fit,
     TextDirection? textDirection,
     Clip? clipBehavior,
     AnimatedData? animated,
   }) {
-    return StackDef(
+    return StackSpec(
       alignment: alignment ?? _$this.alignment,
       fit: fit ?? _$this.fit,
       textDirection: textDirection ?? _$this.textDirection,
@@ -40,13 +40,13 @@ mixin StackDefMixable on Spec<StackDef> {
   }
 
   @override
-  StackDef lerp(
-    StackDef? other,
+  StackSpec lerp(
+    StackSpec? other,
     double t,
   ) {
     if (other == null) return _$this;
 
-    return StackDef(
+    return StackSpec(
       alignment: AlignmentGeometry.lerp(
         _$this.alignment,
         other._$this.alignment,
@@ -60,10 +60,10 @@ mixin StackDefMixable on Spec<StackDef> {
     );
   }
 
-  /// The list of properties that constitute the state of this [StackDef].
+  /// The list of properties that constitute the state of this [StackSpec].
   ///
   /// This property is used by the [==] operator and the [hashCode] getter to
-  /// compare two [StackDef] instances for equality.
+  /// compare two [StackSpec] instances for equality.
   @override
   List<Object?> get props {
     return [
@@ -75,18 +75,18 @@ mixin StackDefMixable on Spec<StackDef> {
     ];
   }
 
-  StackDef get _$this => this as StackDef;
+  StackSpec get _$this => this as StackSpec;
 }
 
-/// Represents the attributes of a [StackDef].
+/// Represents the attributes of a [StackSpec].
 ///
 /// This class encapsulates properties defining the layout and
-/// appearance of a [StackDef].
+/// appearance of a [StackSpec].
 ///
-/// Use this class to configure the attributes of a [StackDef] and pass it to
-/// the [StackDef] constructor.
-class StackDefAttribute extends SpecAttribute<StackDef> {
-  const StackDefAttribute({
+/// Use this class to configure the attributes of a [StackSpec] and pass it to
+/// the [StackSpec] constructor.
+class StackSpecAttribute extends SpecAttribute<StackSpec> {
+  const StackSpecAttribute({
     this.alignment,
     this.fit,
     this.textDirection,
@@ -103,8 +103,8 @@ class StackDefAttribute extends SpecAttribute<StackDef> {
   final Clip? clipBehavior;
 
   @override
-  StackDef resolve(MixData mix) {
-    return StackDef(
+  StackSpec resolve(MixData mix) {
+    return StackSpec(
       alignment: alignment,
       fit: fit,
       textDirection: textDirection,
@@ -114,10 +114,10 @@ class StackDefAttribute extends SpecAttribute<StackDef> {
   }
 
   @override
-  StackDefAttribute merge(StackDefAttribute? other) {
+  StackSpecAttribute merge(StackSpecAttribute? other) {
     if (other == null) return this;
 
-    return StackDefAttribute(
+    return StackSpecAttribute(
       alignment: other.alignment ?? alignment,
       fit: other.fit ?? fit,
       textDirection: other.textDirection ?? textDirection,
@@ -126,10 +126,10 @@ class StackDefAttribute extends SpecAttribute<StackDef> {
     );
   }
 
-  /// The list of properties that constitute the state of this [StackDefAttribute].
+  /// The list of properties that constitute the state of this [StackSpecAttribute].
   ///
   /// This property is used by the [==] operator and the [hashCode] getter to
-  /// compare two [StackDefAttribute] instances for equality.
+  /// compare two [StackSpecAttribute] instances for equality.
   @override
   List<Object?> get props {
     return [
@@ -142,32 +142,32 @@ class StackDefAttribute extends SpecAttribute<StackDef> {
   }
 }
 
-/// Utility class for configuring [StackDefAttribute] properties.
+/// Utility class for configuring [StackSpecAttribute] properties.
 ///
-/// This class provides methods to set individual properties of a [StackDefAttribute].
+/// This class provides methods to set individual properties of a [StackSpecAttribute].
 ///
-/// Use the methods of this class to configure specific properties of a [StackDefAttribute].
-class StackDefUtility<T extends Attribute>
-    extends SpecUtility<T, StackDefAttribute> {
-  StackDefUtility(super.builder);
+/// Use the methods of this class to configure specific properties of a [StackSpecAttribute].
+class StackSpecUtility<T extends Attribute>
+    extends SpecUtility<T, StackSpecAttribute> {
+  StackSpecUtility(super.builder);
 
-  /// Utility for defining [StackDefAttribute.alignment]
+  /// Utility for defining [StackSpecAttribute.alignment]
   late final alignment = AlignmentUtility((v) => only(alignment: v));
 
-  /// Utility for defining [StackDefAttribute.fit]
+  /// Utility for defining [StackSpecAttribute.fit]
   late final fit = StackFitUtility((v) => only(fit: v));
 
-  /// Utility for defining [StackDefAttribute.textDirection]
+  /// Utility for defining [StackSpecAttribute.textDirection]
   late final textDirection =
       TextDirectionUtility((v) => only(textDirection: v));
 
-  /// Utility for defining [StackDefAttribute.clipBehavior]
+  /// Utility for defining [StackSpecAttribute.clipBehavior]
   late final clipBehavior = ClipUtility((v) => only(clipBehavior: v));
 
-  /// Utility for defining [StackDefAttribute.animated]
+  /// Utility for defining [StackSpecAttribute.animated]
   late final animated = AnimatedUtility((v) => only(animated: v));
 
-  /// Returns a new [StackDefAttribute] with the specified properties.
+  /// Returns a new [StackSpecAttribute] with the specified properties.
   @override
   T only({
     AlignmentGeometry? alignment,
@@ -177,7 +177,7 @@ class StackDefUtility<T extends Attribute>
     AnimatedDataDto? animated,
   }) {
     return builder(
-      StackDefAttribute(
+      StackSpecAttribute(
         alignment: alignment,
         fit: fit,
         textDirection: textDirection,
@@ -188,19 +188,19 @@ class StackDefUtility<T extends Attribute>
   }
 }
 
-/// A tween that interpolates between two [StackDef] instances.
+/// A tween that interpolates between two [StackSpec] instances.
 ///
 /// This class can be used in animations to smoothly transition between
-/// different [StackDef] specifications.
-class StackDefTween extends Tween<StackDef?> {
-  StackDefTween({
+/// different [StackSpec] specifications.
+class StackSpecTween extends Tween<StackSpec?> {
+  StackSpecTween({
     super.begin,
     super.end,
   });
 
   @override
-  StackDef lerp(double t) {
-    if (begin == null && end == null) return const StackDef();
+  StackSpec lerp(double t) {
+    if (begin == null && end == null) return const StackSpec();
     if (begin == null) return end!;
 
     return begin!.lerp(end!, t);

@@ -6,23 +6,24 @@ part of 'text_spec.dart';
 // Generator: SpecDefinitionBuilder
 // **************************************************************************
 
-mixin TextDefMixable on Spec<TextDef> {
-  /// Retrieves the [TextDef] from a MixData.
-  static TextDef from(MixData mix) {
-    return mix.attributeOf<TextDefAttribute>()?.resolve(mix) ?? const TextDef();
+mixin TextSpecMixable on Spec<TextSpec> {
+  /// Retrieves the [TextSpec] from a MixData.
+  static TextSpec from(MixData mix) {
+    return mix.attributeOf<TextSpecAttribute>()?.resolve(mix) ??
+        const TextSpec();
   }
 
-  /// Retrieves the [TextDef] from the nearest [Mix] ancestor.
+  /// Retrieves the [TextSpec] from the nearest [Mix] ancestor.
   ///
-  /// If no ancestor is found, returns [TextDef].
-  static TextDef of(BuildContext context) {
-    return TextDefMixable.from(Mix.of(context));
+  /// If no ancestor is found, returns [TextSpec].
+  static TextSpec of(BuildContext context) {
+    return TextSpecMixable.from(Mix.of(context));
   }
 
-  /// Creates a copy of this [TextDef] but with the given fields
+  /// Creates a copy of this [TextSpec] but with the given fields
   /// replaced with the new values.
   @override
-  TextDef copyWith({
+  TextSpec copyWith({
     TextOverflow? overflow,
     StrutStyle? strutStyle,
     TextAlign? textAlign,
@@ -33,10 +34,10 @@ mixin TextDefMixable on Spec<TextDef> {
     TextHeightBehavior? textHeightBehavior,
     TextDirection? textDirection,
     bool? softWrap,
-    TextDirectiveDto? directive,
+    TextDirective? directive,
     AnimatedData? animated,
   }) {
-    return TextDef(
+    return TextSpec(
       overflow: overflow ?? _$this.overflow,
       strutStyle: strutStyle ?? _$this.strutStyle,
       textAlign: textAlign ?? _$this.textAlign,
@@ -53,13 +54,13 @@ mixin TextDefMixable on Spec<TextDef> {
   }
 
   @override
-  TextDef lerp(
-    TextDef? other,
+  TextSpec lerp(
+    TextSpec? other,
     double t,
   ) {
     if (other == null) return _$this;
 
-    return TextDef(
+    return TextSpec(
       overflow: t < 0.5 ? _$this.overflow : other._$this.overflow,
       strutStyle: t < 0.5 ? _$this.strutStyle : other._$this.strutStyle,
       textAlign: t < 0.5 ? _$this.textAlign : other._$this.textAlign,
@@ -86,10 +87,10 @@ mixin TextDefMixable on Spec<TextDef> {
     );
   }
 
-  /// The list of properties that constitute the state of this [TextDef].
+  /// The list of properties that constitute the state of this [TextSpec].
   ///
   /// This property is used by the [==] operator and the [hashCode] getter to
-  /// compare two [TextDef] instances for equality.
+  /// compare two [TextSpec] instances for equality.
   @override
   List<Object?> get props {
     return [
@@ -108,7 +109,7 @@ mixin TextDefMixable on Spec<TextDef> {
     ];
   }
 
-  TextDef get _$this => this as TextDef;
+  TextSpec get _$this => this as TextSpec;
   double? _lerpDouble(
     num? a,
     num? b,
@@ -134,15 +135,15 @@ mixin TextDefMixable on Spec<TextDef> {
   }
 }
 
-/// Represents the attributes of a [TextDef].
+/// Represents the attributes of a [TextSpec].
 ///
 /// This class encapsulates properties defining the layout and
-/// appearance of a [TextDef].
+/// appearance of a [TextSpec].
 ///
-/// Use this class to configure the attributes of a [TextDef] and pass it to
-/// the [TextDef] constructor.
-class TextDefAttribute extends SpecAttribute<TextDef> {
-  const TextDefAttribute({
+/// Use this class to configure the attributes of a [TextSpec] and pass it to
+/// the [TextSpec] constructor.
+class TextSpecAttribute extends SpecAttribute<TextSpec> {
+  const TextSpecAttribute({
     this.overflow,
     this.strutStyle,
     this.textAlign,
@@ -180,8 +181,8 @@ class TextDefAttribute extends SpecAttribute<TextDef> {
   final TextDirectiveDto? directive;
 
   @override
-  TextDef resolve(MixData mix) {
-    return TextDef(
+  TextSpec resolve(MixData mix) {
+    return TextSpec(
       overflow: overflow,
       strutStyle: strutStyle?.resolve(mix),
       textAlign: textAlign,
@@ -192,16 +193,16 @@ class TextDefAttribute extends SpecAttribute<TextDef> {
       textHeightBehavior: textHeightBehavior,
       textDirection: textDirection,
       softWrap: softWrap,
-      directive: directive,
+      directive: directive?.resolve(mix),
       animated: animated?.resolve(mix),
     );
   }
 
   @override
-  TextDefAttribute merge(TextDefAttribute? other) {
+  TextSpecAttribute merge(TextSpecAttribute? other) {
     if (other == null) return this;
 
-    return TextDefAttribute(
+    return TextSpecAttribute(
       overflow: other.overflow ?? overflow,
       strutStyle: strutStyle?.merge(other.strutStyle) ?? other.strutStyle,
       textAlign: other.textAlign ?? textAlign,
@@ -212,15 +213,15 @@ class TextDefAttribute extends SpecAttribute<TextDef> {
       textHeightBehavior: other.textHeightBehavior ?? textHeightBehavior,
       textDirection: other.textDirection ?? textDirection,
       softWrap: other.softWrap ?? softWrap,
-      directive: other.directive ?? directive,
+      directive: directive?.merge(other.directive) ?? other.directive,
       animated: animated?.merge(other.animated) ?? other.animated,
     );
   }
 
-  /// The list of properties that constitute the state of this [TextDefAttribute].
+  /// The list of properties that constitute the state of this [TextSpecAttribute].
   ///
   /// This property is used by the [==] operator and the [hashCode] getter to
-  /// compare two [TextDefAttribute] instances for equality.
+  /// compare two [TextSpecAttribute] instances for equality.
   @override
   List<Object?> get props {
     return [
@@ -240,55 +241,70 @@ class TextDefAttribute extends SpecAttribute<TextDef> {
   }
 }
 
-/// Utility class for configuring [TextDefAttribute] properties.
+/// Utility class for configuring [TextSpecAttribute] properties.
 ///
-/// This class provides methods to set individual properties of a [TextDefAttribute].
+/// This class provides methods to set individual properties of a [TextSpecAttribute].
 ///
-/// Use the methods of this class to configure specific properties of a [TextDefAttribute].
-class TextDefUtility<T extends Attribute>
-    extends SpecUtility<T, TextDefAttribute> {
-  TextDefUtility(super.builder);
+/// Use the methods of this class to configure specific properties of a [TextSpecAttribute].
+class TextSpecUtility<T extends Attribute>
+    extends SpecUtility<T, TextSpecAttribute> {
+  TextSpecUtility(super.builder);
 
-  /// Utility for defining [TextDefAttribute.overflow]
+  /// Utility for defining [TextSpecAttribute.overflow]
   late final overflow = TextOverflowUtility((v) => only(overflow: v));
 
-  /// Utility for defining [TextDefAttribute.strutStyle]
+  /// Utility for defining [TextSpecAttribute.strutStyle]
   late final strutStyle = StrutStyleUtility((v) => only(strutStyle: v));
 
-  /// Utility for defining [TextDefAttribute.textAlign]
+  /// Utility for defining [TextSpecAttribute.textAlign]
   late final textAlign = TextAlignUtility((v) => only(textAlign: v));
 
-  /// Utility for defining [TextDefAttribute.textScaleFactor]
+  /// Utility for defining [TextSpecAttribute.textScaleFactor]
   late final textScaleFactor = DoubleUtility((v) => only(textScaleFactor: v));
 
-  /// Utility for defining [TextDefAttribute.maxLines]
+  /// Utility for defining [TextSpecAttribute.maxLines]
   late final maxLines = IntUtility((v) => only(maxLines: v));
 
-  /// Utility for defining [TextDefAttribute.style]
+  /// Utility for defining [TextSpecAttribute.style]
   late final style = TextStyleUtility((v) => only(style: v));
 
-  /// Utility for defining [TextDefAttribute.textWidthBasis]
+  /// Utility for defining [TextSpecAttribute.textWidthBasis]
   late final textWidthBasis =
       TextWidthBasisUtility((v) => only(textWidthBasis: v));
 
-  /// Utility for defining [TextDefAttribute.textHeightBehavior]
+  /// Utility for defining [TextSpecAttribute.textHeightBehavior]
   late final textHeightBehavior =
       TextHeightBehaviorUtility((v) => only(textHeightBehavior: v));
 
-  /// Utility for defining [TextDefAttribute.textDirection]
+  /// Utility for defining [TextSpecAttribute.textDirection]
   late final textDirection =
       TextDirectionUtility((v) => only(textDirection: v));
 
-  /// Utility for defining [TextDefAttribute.softWrap]
+  /// Utility for defining [TextSpecAttribute.softWrap]
   late final softWrap = BoolUtility((v) => only(softWrap: v));
 
-  /// Utility for defining [TextDefAttribute.directive]
-  late final directive;
+  /// Utility for defining [TextSpecAttribute.directive]
+  late final directive = TextDirectiveUtility((v) => only(directive: v));
 
-  /// Utility for defining [TextDefAttribute.animated]
+  /// Utility for defining [TextSpecAttribute.directive.uppercase]
+  late final uppercase = directive.uppercase;
+
+  /// Utility for defining [TextSpecAttribute.directive.lowercase]
+  late final lowercase = directive.lowercase;
+
+  /// Utility for defining [TextSpecAttribute.directive.capitalize]
+  late final capitalize = directive.capitalize;
+
+  /// Utility for defining [TextSpecAttribute.directive.titleCase]
+  late final titleCase = directive.titleCase;
+
+  /// Utility for defining [TextSpecAttribute.directive.sentenceCase]
+  late final sentenceCase = directive.sentenceCase;
+
+  /// Utility for defining [TextSpecAttribute.animated]
   late final animated = AnimatedUtility((v) => only(animated: v));
 
-  /// Returns a new [TextDefAttribute] with the specified properties.
+  /// Returns a new [TextSpecAttribute] with the specified properties.
   @override
   T only({
     TextOverflow? overflow,
@@ -305,7 +321,7 @@ class TextDefUtility<T extends Attribute>
     AnimatedDataDto? animated,
   }) {
     return builder(
-      TextDefAttribute(
+      TextSpecAttribute(
         overflow: overflow,
         strutStyle: strutStyle,
         textAlign: textAlign,
@@ -323,19 +339,19 @@ class TextDefUtility<T extends Attribute>
   }
 }
 
-/// A tween that interpolates between two [TextDef] instances.
+/// A tween that interpolates between two [TextSpec] instances.
 ///
 /// This class can be used in animations to smoothly transition between
-/// different [TextDef] specifications.
-class TextDefTween extends Tween<TextDef?> {
-  TextDefTween({
+/// different [TextSpec] specifications.
+class TextSpecTween extends Tween<TextSpec?> {
+  TextSpecTween({
     super.begin,
     super.end,
   });
 
   @override
-  TextDef lerp(double t) {
-    if (begin == null && end == null) return const TextDef();
+  TextSpec lerp(double t) {
+    if (begin == null && end == null) return const TextSpec();
     if (begin == null) return end!;
 
     return begin!.lerp(end!, t);

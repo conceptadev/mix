@@ -17,12 +17,12 @@ import '../../internal/lerp_helpers.dart';
 
 /// A specification class that defines layout and styling attributes for a box.
 ///
-/// Use [BoxSpec] to configure various properties such as alignment, padding,
+/// Use [BoxSpecLegacy] to configure various properties such as alignment, padding,
 /// margin, width, height, decoration, and more for a box.
 ///
-/// To retrieve an instance of [BoxSpec], use the [BoxSpec.of] method with a
-/// [BuildContext], or the [BoxSpec.from] method with [MixData].
-class BoxSpec extends Spec<BoxSpec> {
+/// To retrieve an instance of [BoxSpecLegacy], use the [BoxSpecLegacy.of] method with a
+/// [BuildContext], or the [BoxSpecLegacy.from] method with [MixData].
+class BoxSpecLegacy extends Spec<BoxSpecLegacy> {
   /// Aligns the child within the box.
   final AlignmentGeometry? alignment;
 
@@ -57,11 +57,11 @@ class BoxSpec extends Spec<BoxSpec> {
   /// Specifies the height of the box.
   final double? height;
 
-  /// Creates a [BoxSpec] with the given properties.
+  /// Creates a [BoxSpecLegacy] with the given properties.
   ///
   /// All parameters are required to ensure explicit configuration of each
   /// attribute.
-  const BoxSpec({
+  const BoxSpecLegacy({
     this.alignment,
     this.padding,
     this.margin,
@@ -76,11 +76,11 @@ class BoxSpec extends Spec<BoxSpec> {
     super.animated,
   });
 
-  /// Creates a [BoxSpec] with all properties required
+  /// Creates a [BoxSpecLegacy] with all properties required
   ///
   /// All parameters are required to ensure explicit configuration of each
   /// attribute.
-  const BoxSpec.exhaustive({
+  const BoxSpecLegacy.exhaustive({
     required this.alignment,
     required this.padding,
     required this.margin,
@@ -95,28 +95,29 @@ class BoxSpec extends Spec<BoxSpec> {
     required super.animated,
   });
 
-  /// Retrieves the [BoxSpec] from the nearest [Mix] ancestor.
+  /// Retrieves the [BoxSpecLegacy] from the nearest [Mix] ancestor.
   ///
-  /// If no ancestor is found, returns [BoxSpec.empty].
-  static BoxSpec of(BuildContext context) {
+  /// If no ancestor is found, returns [BoxSpecLegacy.empty].
+  static BoxSpecLegacy of(BuildContext context) {
     final mix = Mix.of(context);
 
-    return BoxSpec.from(mix);
+    return BoxSpecLegacy.from(mix);
   }
 
-  /// Retrieves the [BoxSpec] from the given [MixData].
+  /// Retrieves the [BoxSpecLegacy] from the given [MixData].
   ///
-  /// If not found, returns [BoxSpec.empty].
-  static BoxSpec from(MixData mix) {
-    return mix.attributeOf<BoxSpecAttribute>()?.resolve(mix) ?? const BoxSpec();
+  /// If not found, returns [BoxSpecLegacy.empty].
+  static BoxSpecLegacy from(MixData mix) {
+    return mix.attributeOf<BoxSpecLegacyAttribute>()?.resolve(mix) ??
+        const BoxSpecLegacy();
   }
 
-  /// Returns a new [BoxSpec] with the specified properties replaced.
+  /// Returns a new [BoxSpecLegacy] with the specified properties replaced.
   ///
   /// This method is useful for creating modified copies of an existing
-  /// [BoxSpec] with some attributes changed.
+  /// [BoxSpecLegacy] with some attributes changed.
   @override
-  BoxSpec copyWith({
+  BoxSpecLegacy copyWith({
     AlignmentGeometry? alignment,
     EdgeInsetsGeometry? padding,
     EdgeInsetsGeometry? margin,
@@ -130,7 +131,7 @@ class BoxSpec extends Spec<BoxSpec> {
     Clip? clipBehavior,
     AnimatedData? animated,
   }) {
-    return BoxSpec(
+    return BoxSpecLegacy(
       alignment: alignment ?? this.alignment,
       padding: padding ?? this.padding,
       margin: margin ?? this.margin,
@@ -146,15 +147,15 @@ class BoxSpec extends Spec<BoxSpec> {
     );
   }
 
-  /// Linearly interpolates between two [BoxSpec] instances.
+  /// Linearly interpolates between two [BoxSpecLegacy] instances.
   ///
   /// The parameter [t] represents the interpolation factor, typically ranging
   /// from 0.0 to 1.0.
   @override
-  BoxSpec lerp(BoxSpec? other, double t) {
+  BoxSpecLegacy lerp(BoxSpecLegacy? other, double t) {
     if (other == null) return this;
 
-    return BoxSpec(
+    return BoxSpecLegacy(
       alignment: AlignmentGeometry.lerp(alignment, other.alignment, t),
       padding: EdgeInsetsGeometry.lerp(padding, other.padding, t),
       margin: EdgeInsetsGeometry.lerp(margin, other.margin, t),
@@ -179,7 +180,7 @@ class BoxSpec extends Spec<BoxSpec> {
     );
   }
 
-  /// Returns a list of properties that constitute this [BoxSpec].
+  /// Returns a list of properties that constitute this [BoxSpecLegacy].
   ///
   /// This is typically used for equality comparisons.
   @override
@@ -199,67 +200,67 @@ class BoxSpec extends Spec<BoxSpec> {
       ];
 }
 
-/// A tween that interpolates between two [BoxSpec] instances.
+/// A tween that interpolates between two [BoxSpecLegacy] instances.
 ///
 /// This class can be used in animations to smoothly transition between
 /// different box specifications.
-class BoxSpecTween extends Tween<BoxSpec?> {
-  /// Creates a [BoxSpecTween] with the optional [begin] and [end] values.
-  BoxSpecTween({super.begin, super.end});
+class BoxSpecLegacyTween extends Tween<BoxSpecLegacy?> {
+  /// Creates a [BoxSpecLegacyTween] with the optional [begin] and [end] values.
+  BoxSpecLegacyTween({super.begin, super.end});
 
-  /// Returns the interpolated [BoxSpec] at the given progress [t].
+  /// Returns the interpolated [BoxSpecLegacy] at the given progress [t].
   ///
   /// The parameter [t] typically ranges from 0.0 to 1.0.
   @override
-  BoxSpec lerp(double t) {
-    if (begin == null && end == null) return const BoxSpec();
+  BoxSpecLegacy lerp(double t) {
+    if (begin == null && end == null) return const BoxSpecLegacy();
     if (begin == null) return end!;
 
     return begin!.lerp(end!, t);
   }
 }
 
-/// Provides utility methods for configuring [BoxSpecAttribute]s.
+/// Provides utility methods for configuring [BoxSpecLegacyAttribute]s.
 ///
 /// Use this class to define reusable styling and layout configurations
-/// for [BoxSpec]s.
-class BoxSpecUtility<T extends Attribute>
-    extends SpecUtility<T, BoxSpecAttribute> {
-  /// Utilities for configuring the [BoxSpecAttribute.decoration].
+/// for [BoxSpecLegacy]s.
+class BoxSpecLegacyUtility<T extends Attribute>
+    extends SpecUtility<T, BoxSpecLegacyAttribute> {
+  /// Utilities for configuring the [BoxSpecLegacyAttribute.decoration].
   late final decoration = BoxDecorationUtility((v) => only(decoration: v));
 
-  /// Utilities for configuring the [BoxSpecAttribute.foregroundDecoration].
+  /// Utilities for configuring the [BoxSpecLegacyAttribute.foregroundDecoration].
   late final foregroundDecoration =
       BoxDecorationUtility((v) => only(foregroundDecoration: v));
 
-  /// Utilities for configuring the [BoxSpecAttribute.alignment].
+  /// Utilities for configuring the [BoxSpecLegacyAttribute.alignment].
   late final alignment = AlignmentUtility((v) => only(alignment: v));
 
-  /// Utilities for configuring the [BoxSpecAttribute.padding].
+  /// Utilities for configuring the [BoxSpecLegacyAttribute.padding].
   late final padding = SpacingUtility((v) => only(padding: v));
 
-  /// Utilities for configuring the [BoxSpecAttribute.margin].
+  /// Utilities for configuring the [BoxSpecLegacyAttribute.margin].
   late final margin = SpacingUtility((v) => only(margin: v));
 
-  /// Utilities for configuring the [BoxSpecAttribute.constraints].
+  /// Utilities for configuring the [BoxSpecLegacyAttribute.constraints].
   late final constraints = BoxConstraintsUtility((v) => only(constraints: v));
 
-  /// Utilities for configuring the [BoxSpecAttribute.transform].
+  /// Utilities for configuring the [BoxSpecLegacyAttribute.transform].
   late final transform = Matrix4Utility((v) => only(transform: v));
 
-  /// Utilities for configuring the [BoxSpecAttribute.transformAlignment].
+  /// Utilities for configuring the [BoxSpecLegacyAttribute.transformAlignment].
   late final transformAlignment = AlignmentUtility((v) => only(alignment: v));
 
-  /// Utilities for configuring the [BoxSpecAttribute.clipBehavior].
+  /// Utilities for configuring the [BoxSpecLegacyAttribute.clipBehavior].
   late final clipBehavior = ClipUtility((v) => only(clipBehavior: v));
 
-  /// Utilities for configuring the [BoxSpecAttribute.width].
+  /// Utilities for configuring the [BoxSpecLegacyAttribute.width].
   late final width = DoubleUtility((v) => only(width: v));
 
-  /// Utilities for configuring the [BoxSpecAttribute.height].
+  /// Utilities for configuring the [BoxSpecLegacyAttribute.height].
   late final height = DoubleUtility((v) => only(height: v));
 
-  /// Utilities for configuring various properties of the [BoxSpecAttribute.decoration].
+  /// Utilities for configuring various properties of the [BoxSpecLegacyAttribute.decoration].
   late final color = decoration.color;
   late final elevation = decoration.elevation;
   late final radialGradient = gradient.radial;
@@ -274,16 +275,16 @@ class BoxSpecUtility<T extends Attribute>
   late final shadows = decoration.boxShadows;
   late final shadow = decoration.boxShadow;
 
-  /// Utilities for configuring various properties of the [BoxSpecAttribute.constraints].
+  /// Utilities for configuring various properties of the [BoxSpecLegacyAttribute.constraints].
   late final maxWidth = constraints.maxWidth;
   late final minWidth = constraints.minWidth;
   late final maxHeight = constraints.maxHeight;
   late final minHeight = constraints.minHeight;
 
-  /// Creates a new [BoxSpecUtility] with the given [builder].
-  BoxSpecUtility(super.builder);
+  /// Creates a new [BoxSpecLegacyUtility] with the given [builder].
+  BoxSpecLegacyUtility(super.builder);
 
-  /// Returns a new [BoxSpecAttribute] with the specified properties.
+  /// Returns a new [BoxSpecLegacyAttribute] with the specified properties.
   @override
   T only({
     AlignmentGeometry? alignment,
@@ -299,7 +300,7 @@ class BoxSpecUtility<T extends Attribute>
     AnimatedDataDto? animated,
   }) {
     return builder(
-      BoxSpecAttribute(
+      BoxSpecLegacyAttribute(
         alignment: alignment,
         padding: padding,
         margin: margin,
@@ -316,14 +317,14 @@ class BoxSpecUtility<T extends Attribute>
   }
 }
 
-/// Represents the attributes of a [BoxSpec].
+/// Represents the attributes of a [BoxSpecLegacy].
 ///
 /// This class encapsulates properties defining the layout and
-/// appearance of a [BoxSpec].
+/// appearance of a [BoxSpecLegacy].
 ///
-/// Use this class to configure the attributes of a [BoxSpec] and pass it to
-/// the [BoxSpec] constructor.
-class BoxSpecAttribute extends SpecAttribute<BoxSpec> {
+/// Use this class to configure the attributes of a [BoxSpecLegacy] and pass it to
+/// the [BoxSpecLegacy] constructor.
+class BoxSpecLegacyAttribute extends SpecAttribute<BoxSpecLegacy> {
   /// Aligns the child within the box.
   final AlignmentGeometry? alignment;
 
@@ -358,7 +359,7 @@ class BoxSpecAttribute extends SpecAttribute<BoxSpec> {
   /// Specifies the height of the box.
   final double? height;
 
-  const BoxSpecAttribute({
+  const BoxSpecLegacyAttribute({
     this.alignment,
     this.padding,
     this.margin,
@@ -374,8 +375,8 @@ class BoxSpecAttribute extends SpecAttribute<BoxSpec> {
   });
 
   @override
-  BoxSpec resolve(MixData mix) {
-    return BoxSpec(
+  BoxSpecLegacy resolve(MixData mix) {
+    return BoxSpecLegacy(
       alignment: alignment,
       padding: padding?.resolve(mix),
       margin: margin?.resolve(mix),
@@ -392,10 +393,10 @@ class BoxSpecAttribute extends SpecAttribute<BoxSpec> {
   }
 
   @override
-  BoxSpecAttribute merge(BoxSpecAttribute? other) {
+  BoxSpecLegacyAttribute merge(BoxSpecLegacyAttribute? other) {
     if (other == null) return this;
 
-    return BoxSpecAttribute(
+    return BoxSpecLegacyAttribute(
       alignment: other.alignment ?? alignment,
       padding: padding?.merge(other.padding) ?? other.padding,
       margin: margin?.merge(other.margin) ?? other.margin,
@@ -413,10 +414,10 @@ class BoxSpecAttribute extends SpecAttribute<BoxSpec> {
     );
   }
 
-  /// The list of properties that constitute the state of this [BoxSpecAttribute].
+  /// The list of properties that constitute the state of this [BoxSpecLegacyAttribute].
   ///
   /// This property is used by the [==] operator and the [hashCode] getter to
-  /// compare two [BoxSpecAttribute] instances for equality.
+  /// compare two [BoxSpecLegacyAttribute] instances for equality.
   @override
   List<Object?> get props {
     return [

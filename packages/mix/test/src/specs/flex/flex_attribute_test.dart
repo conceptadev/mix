@@ -7,7 +7,7 @@ import '../../../helpers/testing_utils.dart';
 void main() {
   group('FlexMixAttribute', () {
     test('of returns correct FlexMixAttribute', () {
-      final attribute = FlexSpecAttribute.of(EmptyMixData);
+      const attribute = FlexSpecAttribute();
 
       expect(attribute.direction, null);
       expect(attribute.mainAxisAlignment, null);

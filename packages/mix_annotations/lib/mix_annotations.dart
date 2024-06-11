@@ -14,8 +14,12 @@ class MixableSpec {
   });
 }
 
+class MixableDto {
+  const MixableDto();
+}
+
 class MixableField {
-  final MixableDto? dto;
+  final MixableFieldDto? dto;
   final MixableFieldUtility? utility;
 
   const MixableField({
@@ -24,11 +28,11 @@ class MixableField {
   });
 }
 
-class MixableDto {
+class MixableFieldDto {
   final Object? type;
   final String? alias;
 
-  const MixableDto({
+  const MixableFieldDto({
     this.type,
     this.alias,
   });

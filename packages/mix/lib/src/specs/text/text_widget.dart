@@ -91,7 +91,7 @@ class TextSpecWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     // The Text widget is used here, applying the resolved styles and properties from TextSpec.
     return Text(
-      spec.directive?.call(text) ?? text,
+      spec.directive?.apply(text) ?? text,
       style: spec.style,
       strutStyle: spec.strutStyle,
       textAlign: spec.textAlign,
@@ -146,7 +146,7 @@ class _AnimatedTextSpecWidgetState
 
   @override
   Widget build(BuildContext context) {
-    final spec = _textSpecTween!.evaluate(animation);
+    final spec = _textSpecTween!.evaluate(animation)!;
 
     return TextSpecWidget(
       widget.text,

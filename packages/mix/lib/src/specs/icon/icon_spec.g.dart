@@ -6,23 +6,24 @@ part of 'icon_spec.dart';
 // Generator: SpecDefinitionBuilder
 // **************************************************************************
 
-mixin IconDefMixable on Spec<IconDef> {
-  /// Retrieves the [IconDef] from a MixData.
-  static IconDef from(MixData mix) {
-    return mix.attributeOf<IconDefAttribute>()?.resolve(mix) ?? const IconDef();
+mixin IconSpecMixable on Spec<IconSpec> {
+  /// Retrieves the [IconSpec] from a MixData.
+  static IconSpec from(MixData mix) {
+    return mix.attributeOf<IconSpecAttribute>()?.resolve(mix) ??
+        const IconSpec();
   }
 
-  /// Retrieves the [IconDef] from the nearest [Mix] ancestor.
+  /// Retrieves the [IconSpec] from the nearest [Mix] ancestor.
   ///
-  /// If no ancestor is found, returns [IconDef].
-  static IconDef of(BuildContext context) {
-    return IconDefMixable.from(Mix.of(context));
+  /// If no ancestor is found, returns [IconSpec].
+  static IconSpec of(BuildContext context) {
+    return IconSpecMixable.from(Mix.of(context));
   }
 
-  /// Creates a copy of this [IconDef] but with the given fields
+  /// Creates a copy of this [IconSpec] but with the given fields
   /// replaced with the new values.
   @override
-  IconDef copyWith({
+  IconSpec copyWith({
     Color? color,
     double? size,
     double? weight,
@@ -34,7 +35,7 @@ mixin IconDefMixable on Spec<IconDef> {
     double? fill,
     AnimatedData? animated,
   }) {
-    return IconDef(
+    return IconSpec(
       color: color ?? _$this.color,
       size: size ?? _$this.size,
       weight: weight ?? _$this.weight,
@@ -49,13 +50,13 @@ mixin IconDefMixable on Spec<IconDef> {
   }
 
   @override
-  IconDef lerp(
-    IconDef? other,
+  IconSpec lerp(
+    IconSpec? other,
     double t,
   ) {
     if (other == null) return _$this;
 
-    return IconDef(
+    return IconSpec(
       color: t < 0.5 ? _$this.color : other._$this.color,
       size: _lerpDouble(
         _$this.size,
@@ -91,10 +92,10 @@ mixin IconDefMixable on Spec<IconDef> {
     );
   }
 
-  /// The list of properties that constitute the state of this [IconDef].
+  /// The list of properties that constitute the state of this [IconSpec].
   ///
   /// This property is used by the [==] operator and the [hashCode] getter to
-  /// compare two [IconDef] instances for equality.
+  /// compare two [IconSpec] instances for equality.
   @override
   List<Object?> get props {
     return [
@@ -111,7 +112,7 @@ mixin IconDefMixable on Spec<IconDef> {
     ];
   }
 
-  IconDef get _$this => this as IconDef;
+  IconSpec get _$this => this as IconSpec;
   double? _lerpDouble(
     num? a,
     num? b,
@@ -126,15 +127,15 @@ mixin IconDefMixable on Spec<IconDef> {
   }
 }
 
-/// Represents the attributes of a [IconDef].
+/// Represents the attributes of a [IconSpec].
 ///
 /// This class encapsulates properties defining the layout and
-/// appearance of a [IconDef].
+/// appearance of a [IconSpec].
 ///
-/// Use this class to configure the attributes of a [IconDef] and pass it to
-/// the [IconDef] constructor.
-class IconDefAttribute extends SpecAttribute<IconDef> {
-  const IconDefAttribute({
+/// Use this class to configure the attributes of a [IconSpec] and pass it to
+/// the [IconSpec] constructor.
+class IconSpecAttribute extends SpecAttribute<IconSpec> {
+  const IconSpecAttribute({
     this.color,
     this.size,
     this.weight,
@@ -166,8 +167,8 @@ class IconDefAttribute extends SpecAttribute<IconDef> {
   final double? fill;
 
   @override
-  IconDef resolve(MixData mix) {
-    return IconDef(
+  IconSpec resolve(MixData mix) {
+    return IconSpec(
       color: color?.resolve(mix),
       size: size,
       weight: weight,
@@ -182,10 +183,10 @@ class IconDefAttribute extends SpecAttribute<IconDef> {
   }
 
   @override
-  IconDefAttribute merge(IconDefAttribute? other) {
+  IconSpecAttribute merge(IconSpecAttribute? other) {
     if (other == null) return this;
 
-    return IconDefAttribute(
+    return IconSpecAttribute(
       color: color?.merge(other.color) ?? other.color,
       size: other.size ?? size,
       weight: other.weight ?? weight,
@@ -199,10 +200,10 @@ class IconDefAttribute extends SpecAttribute<IconDef> {
     );
   }
 
-  /// The list of properties that constitute the state of this [IconDefAttribute].
+  /// The list of properties that constitute the state of this [IconSpecAttribute].
   ///
   /// This property is used by the [==] operator and the [hashCode] getter to
-  /// compare two [IconDefAttribute] instances for equality.
+  /// compare two [IconSpecAttribute] instances for equality.
   @override
   List<Object?> get props {
     return [
@@ -220,47 +221,47 @@ class IconDefAttribute extends SpecAttribute<IconDef> {
   }
 }
 
-/// Utility class for configuring [IconDefAttribute] properties.
+/// Utility class for configuring [IconSpecAttribute] properties.
 ///
-/// This class provides methods to set individual properties of a [IconDefAttribute].
+/// This class provides methods to set individual properties of a [IconSpecAttribute].
 ///
-/// Use the methods of this class to configure specific properties of a [IconDefAttribute].
-class IconDefUtility<T extends Attribute>
-    extends SpecUtility<T, IconDefAttribute> {
-  IconDefUtility(super.builder);
+/// Use the methods of this class to configure specific properties of a [IconSpecAttribute].
+class IconSpecUtility<T extends Attribute>
+    extends SpecUtility<T, IconSpecAttribute> {
+  IconSpecUtility(super.builder);
 
-  /// Utility for defining [IconDefAttribute.color]
+  /// Utility for defining [IconSpecAttribute.color]
   late final color = ColorUtility((v) => only(color: v));
 
-  /// Utility for defining [IconDefAttribute.size]
+  /// Utility for defining [IconSpecAttribute.size]
   late final size = DoubleUtility((v) => only(size: v));
 
-  /// Utility for defining [IconDefAttribute.weight]
+  /// Utility for defining [IconSpecAttribute.weight]
   late final weight = DoubleUtility((v) => only(weight: v));
 
-  /// Utility for defining [IconDefAttribute.grade]
+  /// Utility for defining [IconSpecAttribute.grade]
   late final grade = DoubleUtility((v) => only(grade: v));
 
-  /// Utility for defining [IconDefAttribute.opticalSize]
+  /// Utility for defining [IconSpecAttribute.opticalSize]
   late final opticalSize = DoubleUtility((v) => only(opticalSize: v));
 
-  /// Utility for defining [IconDefAttribute.shadows]
+  /// Utility for defining [IconSpecAttribute.shadows]
   late final shadows = ShadowListUtility((v) => only(shadows: v));
 
-  /// Utility for defining [IconDefAttribute.textDirection]
+  /// Utility for defining [IconSpecAttribute.textDirection]
   late final textDirection =
       TextDirectionUtility((v) => only(textDirection: v));
 
-  /// Utility for defining [IconDefAttribute.applyTextScaling]
+  /// Utility for defining [IconSpecAttribute.applyTextScaling]
   late final applyTextScaling = BoolUtility((v) => only(applyTextScaling: v));
 
-  /// Utility for defining [IconDefAttribute.fill]
+  /// Utility for defining [IconSpecAttribute.fill]
   late final fill = DoubleUtility((v) => only(fill: v));
 
-  /// Utility for defining [IconDefAttribute.animated]
+  /// Utility for defining [IconSpecAttribute.animated]
   late final animated = AnimatedUtility((v) => only(animated: v));
 
-  /// Returns a new [IconDefAttribute] with the specified properties.
+  /// Returns a new [IconSpecAttribute] with the specified properties.
   @override
   T only({
     ColorDto? color,
@@ -275,7 +276,7 @@ class IconDefUtility<T extends Attribute>
     AnimatedDataDto? animated,
   }) {
     return builder(
-      IconDefAttribute(
+      IconSpecAttribute(
         color: color,
         size: size,
         weight: weight,
@@ -291,19 +292,19 @@ class IconDefUtility<T extends Attribute>
   }
 }
 
-/// A tween that interpolates between two [IconDef] instances.
+/// A tween that interpolates between two [IconSpec] instances.
 ///
 /// This class can be used in animations to smoothly transition between
-/// different [IconDef] specifications.
-class IconDefTween extends Tween<IconDef?> {
-  IconDefTween({
+/// different [IconSpec] specifications.
+class IconSpecTween extends Tween<IconSpec?> {
+  IconSpecTween({
     super.begin,
     super.end,
   });
 
   @override
-  IconDef lerp(double t) {
-    if (begin == null && end == null) return const IconDef();
+  IconSpec lerp(double t) {
+    if (begin == null && end == null) return const IconSpec();
     if (begin == null) return end!;
 
     return begin!.lerp(end!, t);

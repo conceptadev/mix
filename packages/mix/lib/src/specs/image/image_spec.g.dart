@@ -6,24 +6,24 @@ part of 'image_spec.dart';
 // Generator: SpecDefinitionBuilder
 // **************************************************************************
 
-mixin ImageDefMixable on Spec<ImageDef> {
-  /// Retrieves the [ImageDef] from a MixData.
-  static ImageDef from(MixData mix) {
-    return mix.attributeOf<ImageDefAttribute>()?.resolve(mix) ??
-        const ImageDef();
+mixin ImageSpecMixable on Spec<ImageSpec> {
+  /// Retrieves the [ImageSpec] from a MixData.
+  static ImageSpec from(MixData mix) {
+    return mix.attributeOf<ImageSpecAttribute>()?.resolve(mix) ??
+        const ImageSpec();
   }
 
-  /// Retrieves the [ImageDef] from the nearest [Mix] ancestor.
+  /// Retrieves the [ImageSpec] from the nearest [Mix] ancestor.
   ///
-  /// If no ancestor is found, returns [ImageDef].
-  static ImageDef of(BuildContext context) {
-    return ImageDefMixable.from(Mix.of(context));
+  /// If no ancestor is found, returns [ImageSpec].
+  static ImageSpec of(BuildContext context) {
+    return ImageSpecMixable.from(Mix.of(context));
   }
 
-  /// Creates a copy of this [ImageDef] but with the given fields
+  /// Creates a copy of this [ImageSpec] but with the given fields
   /// replaced with the new values.
   @override
-  ImageDef copyWith({
+  ImageSpec copyWith({
     double? width,
     double? height,
     Color? color,
@@ -35,7 +35,7 @@ mixin ImageDefMixable on Spec<ImageDef> {
     BlendMode? colorBlendMode,
     AnimatedData? animated,
   }) {
-    return ImageDef(
+    return ImageSpec(
       width: width ?? _$this.width,
       height: height ?? _$this.height,
       color: color ?? _$this.color,
@@ -50,13 +50,13 @@ mixin ImageDefMixable on Spec<ImageDef> {
   }
 
   @override
-  ImageDef lerp(
-    ImageDef? other,
+  ImageSpec lerp(
+    ImageSpec? other,
     double t,
   ) {
     if (other == null) return _$this;
 
-    return ImageDef(
+    return ImageSpec(
       width: _lerpDouble(
         _$this.width,
         other._$this.width,
@@ -84,10 +84,10 @@ mixin ImageDefMixable on Spec<ImageDef> {
     );
   }
 
-  /// The list of properties that constitute the state of this [ImageDef].
+  /// The list of properties that constitute the state of this [ImageSpec].
   ///
   /// This property is used by the [==] operator and the [hashCode] getter to
-  /// compare two [ImageDef] instances for equality.
+  /// compare two [ImageSpec] instances for equality.
   @override
   List<Object?> get props {
     return [
@@ -104,7 +104,7 @@ mixin ImageDefMixable on Spec<ImageDef> {
     ];
   }
 
-  ImageDef get _$this => this as ImageDef;
+  ImageSpec get _$this => this as ImageSpec;
   double? _lerpDouble(
     num? a,
     num? b,
@@ -119,15 +119,15 @@ mixin ImageDefMixable on Spec<ImageDef> {
   }
 }
 
-/// Represents the attributes of a [ImageDef].
+/// Represents the attributes of a [ImageSpec].
 ///
 /// This class encapsulates properties defining the layout and
-/// appearance of a [ImageDef].
+/// appearance of a [ImageSpec].
 ///
-/// Use this class to configure the attributes of a [ImageDef] and pass it to
-/// the [ImageDef] constructor.
-class ImageDefAttribute extends SpecAttribute<ImageDef> {
-  const ImageDefAttribute({
+/// Use this class to configure the attributes of a [ImageSpec] and pass it to
+/// the [ImageSpec] constructor.
+class ImageSpecAttribute extends SpecAttribute<ImageSpec> {
+  const ImageSpecAttribute({
     this.width,
     this.height,
     this.color,
@@ -159,8 +159,8 @@ class ImageDefAttribute extends SpecAttribute<ImageDef> {
   final BlendMode? colorBlendMode;
 
   @override
-  ImageDef resolve(MixData mix) {
-    return ImageDef(
+  ImageSpec resolve(MixData mix) {
+    return ImageSpec(
       width: width,
       height: height,
       color: color?.resolve(mix),
@@ -175,10 +175,10 @@ class ImageDefAttribute extends SpecAttribute<ImageDef> {
   }
 
   @override
-  ImageDefAttribute merge(ImageDefAttribute? other) {
+  ImageSpecAttribute merge(ImageSpecAttribute? other) {
     if (other == null) return this;
 
-    return ImageDefAttribute(
+    return ImageSpecAttribute(
       width: other.width ?? width,
       height: other.height ?? height,
       color: color?.merge(other.color) ?? other.color,
@@ -192,10 +192,10 @@ class ImageDefAttribute extends SpecAttribute<ImageDef> {
     );
   }
 
-  /// The list of properties that constitute the state of this [ImageDefAttribute].
+  /// The list of properties that constitute the state of this [ImageSpecAttribute].
   ///
   /// This property is used by the [==] operator and the [hashCode] getter to
-  /// compare two [ImageDefAttribute] instances for equality.
+  /// compare two [ImageSpecAttribute] instances for equality.
   @override
   List<Object?> get props {
     return [
@@ -213,47 +213,47 @@ class ImageDefAttribute extends SpecAttribute<ImageDef> {
   }
 }
 
-/// Utility class for configuring [ImageDefAttribute] properties.
+/// Utility class for configuring [ImageSpecAttribute] properties.
 ///
-/// This class provides methods to set individual properties of a [ImageDefAttribute].
+/// This class provides methods to set individual properties of a [ImageSpecAttribute].
 ///
-/// Use the methods of this class to configure specific properties of a [ImageDefAttribute].
-class ImageDefUtility<T extends Attribute>
-    extends SpecUtility<T, ImageDefAttribute> {
-  ImageDefUtility(super.builder);
+/// Use the methods of this class to configure specific properties of a [ImageSpecAttribute].
+class ImageSpecUtility<T extends Attribute>
+    extends SpecUtility<T, ImageSpecAttribute> {
+  ImageSpecUtility(super.builder);
 
-  /// Utility for defining [ImageDefAttribute.width]
+  /// Utility for defining [ImageSpecAttribute.width]
   late final width = DoubleUtility((v) => only(width: v));
 
-  /// Utility for defining [ImageDefAttribute.height]
+  /// Utility for defining [ImageSpecAttribute.height]
   late final height = DoubleUtility((v) => only(height: v));
 
-  /// Utility for defining [ImageDefAttribute.color]
+  /// Utility for defining [ImageSpecAttribute.color]
   late final color = ColorUtility((v) => only(color: v));
 
-  /// Utility for defining [ImageDefAttribute.repeat]
+  /// Utility for defining [ImageSpecAttribute.repeat]
   late final repeat = ImageRepeatUtility((v) => only(repeat: v));
 
-  /// Utility for defining [ImageDefAttribute.fit]
+  /// Utility for defining [ImageSpecAttribute.fit]
   late final fit = BoxFitUtility((v) => only(fit: v));
 
-  /// Utility for defining [ImageDefAttribute.alignment]
+  /// Utility for defining [ImageSpecAttribute.alignment]
   late final alignment = AlignmentUtility((v) => only(alignment: v));
 
-  /// Utility for defining [ImageDefAttribute.centerSlice]
+  /// Utility for defining [ImageSpecAttribute.centerSlice]
   late final centerSlice = RectUtility((v) => only(centerSlice: v));
 
-  /// Utility for defining [ImageDefAttribute.filterQuality]
+  /// Utility for defining [ImageSpecAttribute.filterQuality]
   late final filterQuality =
       FilterQualityUtility((v) => only(filterQuality: v));
 
-  /// Utility for defining [ImageDefAttribute.colorBlendMode]
+  /// Utility for defining [ImageSpecAttribute.colorBlendMode]
   late final colorBlendMode = BlendModeUtility((v) => only(colorBlendMode: v));
 
-  /// Utility for defining [ImageDefAttribute.animated]
+  /// Utility for defining [ImageSpecAttribute.animated]
   late final animated = AnimatedUtility((v) => only(animated: v));
 
-  /// Returns a new [ImageDefAttribute] with the specified properties.
+  /// Returns a new [ImageSpecAttribute] with the specified properties.
   @override
   T only({
     double? width,
@@ -268,7 +268,7 @@ class ImageDefUtility<T extends Attribute>
     AnimatedDataDto? animated,
   }) {
     return builder(
-      ImageDefAttribute(
+      ImageSpecAttribute(
         width: width,
         height: height,
         color: color,
@@ -284,19 +284,19 @@ class ImageDefUtility<T extends Attribute>
   }
 }
 
-/// A tween that interpolates between two [ImageDef] instances.
+/// A tween that interpolates between two [ImageSpec] instances.
 ///
 /// This class can be used in animations to smoothly transition between
-/// different [ImageDef] specifications.
-class ImageDefTween extends Tween<ImageDef?> {
-  ImageDefTween({
+/// different [ImageSpec] specifications.
+class ImageSpecTween extends Tween<ImageSpec?> {
+  ImageSpecTween({
     super.begin,
     super.end,
   });
 
   @override
-  ImageDef lerp(double t) {
-    if (begin == null && end == null) return const ImageDef();
+  ImageSpec lerp(double t) {
+    if (begin == null && end == null) return const ImageSpec();
     if (begin == null) return end!;
 
     return begin!.lerp(end!, t);

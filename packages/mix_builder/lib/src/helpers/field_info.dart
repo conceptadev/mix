@@ -242,12 +242,12 @@ MixableSpec readSpecAnnotation(
   );
 }
 
-MixableDto? _getMixableDto(ConstantReader? reader) {
+MixableFieldDto? _getMixableDto(ConstantReader? reader) {
   if (reader == null) return null;
   final dtoType = reader.peek('type')?.typeValue.element?.name;
   final dtoName = reader.peek('alias')?.stringValue;
 
-  return MixableDto(
+  return MixableFieldDto(
     type: dtoType,
     alias: dtoName,
   );
