@@ -1,6 +1,7 @@
 name: mix
 
 environment:
-  sdk: '>=3.0.0 <4.0.0'
+  sdk: ">=2.19.2 <4.0.0"
+  flutter: ">=3.10.6"
 dev_dependencies:
   melos: ^6.0.0
