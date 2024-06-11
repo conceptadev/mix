@@ -60,7 +60,7 @@ runs:
       shell: bash
 
     - name: Run custom_lint
-      run: melos exec --depends-on="mix_lint"
+      run: melos exec --depends-on="mix_lint" custom_lint
       shell: bash
 
     - name: Verify if mix_lint_test is up to date with mix_lint
