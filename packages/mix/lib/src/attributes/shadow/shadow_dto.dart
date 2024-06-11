@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../core/dto.dart';
-import '../../factory/mix_provider_data.dart';
+import '../../core/models/mix_data.dart';
 import '../color/color_dto.dart';
 
 @immutable
@@ -35,12 +35,11 @@ class ShadowDto extends ShadowDtoImpl<ShadowDto, Shadow> {
   /// Resolves this [ShadowDto] with a given [MixData] to a [Shadow]
   @override
   Shadow resolve(MixData mix) {
-    const defaultShadow = Shadow();
-
+    const defaultValue = Shadow();
     return Shadow(
-      color: color?.resolve(mix) ?? defaultShadow.color,
-      offset: offset ?? defaultShadow.offset,
-      blurRadius: blurRadius ?? defaultShadow.blurRadius,
+      color: color?.resolve(mix) ?? defaultValue.color,
+      offset: offset ?? defaultValue.offset,
+      blurRadius: blurRadius ?? defaultValue.blurRadius,
     );
   }
 

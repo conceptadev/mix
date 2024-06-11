@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../core/dto.dart';
-import '../../factory/mix_provider_data.dart';
 
 @immutable
 abstract class EdgeInsetsGeometryDto<Self extends EdgeInsetsGeometryDto<Self>>
@@ -25,10 +24,4 @@ abstract class EdgeInsetsGeometryDto<Self extends EdgeInsetsGeometryDto<Self>>
   });
 
   bool get isDirectional => start != null || end != null;
-
-  @override
-  EdgeInsetsGeometry resolve(MixData mix);
-
-  @override
-  get props => [top, bottom, left, right, start, end];
 }

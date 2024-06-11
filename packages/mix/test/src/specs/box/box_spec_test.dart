@@ -12,16 +12,6 @@ void main() {
       final mix = MixData.create(
         MockBuildContext(),
         Style(
-          // const AlignmentGeometryAttribute(Alignment.center),
-          // const PaddingAttribute(SpacingDto.only(top: 8, bottom: 16)),
-          // const MarginAttribute(SpacingDto.only(top: 10.0, bottom: 12.0)),
-          // const BoxConstraintsDto(
-          //   BoxConstraintsDto(maxWidth: 300.0, minHeight: 200.0),
-          // ),
-          // const DecorationAttribute(
-          //   BoxDecorationDto(color: ColorDto(Colors.blue)),
-          // ),
-          // TransformAttribute(Matrix4.translationValues(10.0, 10.0, 0.0)),
           BoxSpecAttribute(
             alignment: Alignment.center,
             padding: const SpacingDto.only(top: 8, bottom: 16),

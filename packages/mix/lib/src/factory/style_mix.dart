@@ -2,15 +2,15 @@
 
 import 'package:flutter/material.dart';
 
-import '../attributes/animated/animated_data.dart';
 import '../attributes/nested_style/nested_style_attribute.dart';
-import '../attributes/variant_attribute.dart';
+import '../core/models/animated_data.dart';
 import '../core/attribute.dart';
 import '../core/attributes_map.dart';
-import '../helpers/compare_mixin.dart';
-import '../helpers/helper_util.dart';
+import '../internal/compare_mixin.dart';
+import '../internal/helper_util.dart';
 import '../variants/variant.dart';
-import 'mix_provider_data.dart';
+import '../variants/variant_attribute.dart';
+import '../core/models/mix_data.dart';
 
 /// A utility class for managing a collection of styling attributes and variants.
 ///
@@ -24,7 +24,7 @@ import 'mix_provider_data.dart';
 /// final style = Style(attribute1, attribute2, attribute3);
 /// final updatedStyle = style.variant(myVariant);
 /// ```
-class Style with Comparable {
+class Style with EqualityMixin {
   /// Visual attributes contained in this mix.
   final AttributeMap<StyledAttribute> styles;
 

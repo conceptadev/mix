@@ -1,35 +1,40 @@
 import 'package:flutter/material.dart';
 
-import 'attribute.dart';
+import 'dto.dart';
+import 'models/mix_data.dart';
 
-typedef TextModifier<T> = T Function(T value);
-
-/// The `Directive` abstract class provides the ability to modify or apply
-/// different behaviors to widgets and attributes.
-abstract class Directive extends Attribute {
-  const Directive();
-}
+typedef Modifier<T> = T Function(T value);
 
 @immutable
-class TextDirective extends Directive {
-  final List<TextModifier<String>> _modifiers;
-  const TextDirective(this._modifiers);
+class TextDirectiveDto extends Dto<TextDirective> {
+  final List<Modifier<String>> _modifiers;
+  const TextDirectiveDto(this._modifiers);
 
   @visibleForTesting
   int get length => _modifiers.length;
 
-  String apply(String value) {
-    return _modifiers.fold(
-      value,
-      (previousValue, modifier) => modifier(previousValue),
-    );
+  @override
+  TextDirective resolve(MixData mix) {
+    return TextDirective((String content) {
+      return _modifiers.fold(
+        content,
+        (previousValue, modifier) => modifier(previousValue),
+      );
+    });
   }
 
   @override
-  TextDirective merge(TextDirective? other) {
-    return TextDirective([..._modifiers, ...?other?._modifiers]);
+  TextDirectiveDto merge(TextDirectiveDto? other) {
+    return TextDirectiveDto([..._modifiers, ...?other?._modifiers]);
   }
 
   @override
   get props => [_modifiers];
+}
+
+class TextDirective {
+  final Modifier<String> _modifier;
+  const TextDirective(this._modifier);
+
+  String apply(String content) => _modifier(content);
 }
