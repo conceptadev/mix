@@ -54,3 +54,11 @@ runs:
       
     - run: melos exec --ignore="mix_lint" --scope="packages/**" flutter test
       shell: bash
+
+    - name: Install custom_lint
+      run: dart pub global activate custom_lint
+      shell: bash
+
+    - name: Run custom_lint
+      run: custom_lint
+      shell: bash

@@ -1,0 +1,28 @@
+name: mix_lint_test
+description: A sample command-line application.
+version: 1.0.0
+# repository: https://github.com/my_org/my_repo
+
+environment:
+  sdk: '>=3.2.0 <4.0.0'
+  flutter: '>=3.16.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # path: ^1.8.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  lints: ^3.0.0
+  test: ^1.24.0
+  custom_lint: ^0.6.0
+  analyzer: ^6.0.0
+  analyzer_plugin: ^0.11.2
+  mix: 
+    path: ../mix
+  mix_lint:
+    path: ../mix_lint
+  # custom_lint_builder: ^0.6.0

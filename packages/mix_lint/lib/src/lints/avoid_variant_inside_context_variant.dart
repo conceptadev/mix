@@ -31,7 +31,6 @@ class AvoidVariantInsideContextvariant extends DartLintRule {
           ?.thisOrAncestorOfType<FunctionExpressionInvocation>();
 
       if (parent == null) return;
-      print(parent);
 
       final simpleIdentifiers = <SimpleIdentifier>[];
       final visitor = RecursiveSimpleIdentifierVisitor(
