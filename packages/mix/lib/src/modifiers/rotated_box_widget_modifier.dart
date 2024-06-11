@@ -17,7 +17,7 @@ class RotatedBoxModifierSpec
   RotatedBoxModifierSpec lerp(RotatedBoxModifierSpec? other, double t) {
     // Use lerpInt for interpolating between integers
     return RotatedBoxModifierSpec(
-      lerpInt(quarterTurns, other?.quarterTurns, t) ?? quarterTurns,
+      lerpInt(quarterTurns, other?.quarterTurns, t),
     );
   }
 
