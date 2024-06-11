@@ -62,19 +62,23 @@ mixin TextSpecMixable on Spec<TextSpec> {
 
     return TextSpec(
       overflow: t < 0.5 ? _$this.overflow : other._$this.overflow,
-      strutStyle: t < 0.5 ? _$this.strutStyle : other._$this.strutStyle,
+      strutStyle: _lerpStrutStyle(
+        _$this.strutStyle,
+        other._$this.strutStyle,
+        t,
+      ),
       textAlign: t < 0.5 ? _$this.textAlign : other._$this.textAlign,
       textScaleFactor: _lerpDouble(
         _$this.textScaleFactor,
         other._$this.textScaleFactor,
         t,
       ),
-      maxLines: _lerpInt(
-        _$this.maxLines,
-        other._$this.maxLines,
+      maxLines: t < 0.5 ? _$this.maxLines : other._$this.maxLines,
+      style: _lerpTextStyle(
+        _$this.style,
+        other._$this.style,
         t,
       ),
-      style: t < 0.5 ? _$this.style : other._$this.style,
       textWidthBasis:
           t < 0.5 ? _$this.textWidthBasis : other._$this.textWidthBasis,
       textHeightBehavior:
@@ -123,15 +127,37 @@ mixin TextSpecMixable on Spec<TextSpec> {
     return a * (1.0 - t) + b * t;
   }
 
-  int? _lerpInt(
-    int? a,
-    int? b,
+  StrutStyle? _lerpStrutStyle(
+    StrutStyle? a,
+    StrutStyle? b,
     double t,
   ) {
-    a ??= 0;
-    b ??= 0;
+    if (a == null && b == null) return null;
+    if (a == null) return b;
+    if (b == null) return a;
 
-    return (a + (b - a) * t).round();
+    return StrutStyle(
+      fontFamily: t < 0.5 ? a.fontFamily : b.fontFamily,
+      fontFamilyFallback: t < 0.5 ? a.fontFamilyFallback : b.fontFamilyFallback,
+      fontSize: _lerpDouble(a.fontSize, b.fontSize, t),
+      height: _lerpDouble(a.height, b.height, t),
+      leading: _lerpDouble(a.leading, b.leading, t),
+      fontWeight: FontWeight.lerp(a.fontWeight, b.fontWeight, t),
+      fontStyle: t < 0.5 ? a.fontStyle : b.fontStyle,
+      forceStrutHeight: t < 0.5 ? a.forceStrutHeight : b.forceStrutHeight,
+      debugLabel: a.debugLabel ?? b.debugLabel,
+      leadingDistribution:
+          t < 0.5 ? a.leadingDistribution : b.leadingDistribution,
+    );
+  }
+
+  TextStyle? _lerpTextStyle(
+    TextStyle? a,
+    TextStyle? b,
+    double t,
+  ) {
+    return TextStyle.lerp(a, b, t)
+        ?.copyWith(shadows: Shadow.lerpList(a?.shadows, b?.shadows, t));
   }
 }
 
@@ -194,7 +220,7 @@ class TextSpecAttribute extends SpecAttribute<TextSpec> {
       textDirection: textDirection,
       softWrap: softWrap,
       directive: directive?.resolve(mix),
-      animated: animated?.resolve(mix),
+      animated: animated?.resolve(mix) ?? mix.animation,
     );
   }
 

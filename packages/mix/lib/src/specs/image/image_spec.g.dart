@@ -67,7 +67,11 @@ mixin ImageSpecMixable on Spec<ImageSpec> {
         other._$this.height,
         t,
       ),
-      color: t < 0.5 ? _$this.color : other._$this.color,
+      color: Color.lerp(
+        _$this.color,
+        other._$this.color,
+        t,
+      ),
       repeat: t < 0.5 ? _$this.repeat : other._$this.repeat,
       fit: t < 0.5 ? _$this.fit : other._$this.fit,
       alignment: AlignmentGeometry.lerp(
@@ -170,7 +174,7 @@ class ImageSpecAttribute extends SpecAttribute<ImageSpec> {
       centerSlice: centerSlice,
       filterQuality: filterQuality,
       colorBlendMode: colorBlendMode,
-      animated: animated?.resolve(mix),
+      animated: animated?.resolve(mix) ?? mix.animation,
     );
   }
 

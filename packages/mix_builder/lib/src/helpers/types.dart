@@ -35,13 +35,6 @@ abstract class DartTypes {
   DartTypes._();
 }
 
-abstract class HelperTypes {
-  static final lerpDouble = refer('_lerpDouble');
-  static final lerpInt = refer('_lerpInt');
-
-  const HelperTypes();
-}
-
 abstract class FlutterTypes {
   static const foundation = _FlutterFoundation();
 
@@ -193,6 +186,9 @@ class _UI {
 
   /// Creates a lerpDouble reference.
   Reference get lerpDouble => const Reference('lerpDouble', _url);
+
+  /// Creates a Color reference.
+  Reference get color => const Reference('Color', _url);
 }
 
 /// `dart:core` types

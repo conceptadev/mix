@@ -14,6 +14,9 @@ class IconSpec extends Spec<IconSpec> with IconSpecMixable {
   final double? opticalSize;
   final TextDirection? textDirection;
   final bool? applyTextScaling;
+
+  @MixableField()
+  // TODO: add shadow utility
   final List<Shadow>? shadows;
   final double? fill;
 
@@ -33,4 +36,8 @@ class IconSpec extends Spec<IconSpec> with IconSpecMixable {
     this.fill,
     super.animated,
   });
+}
+
+extension IconSpecUtilityExt<T extends Attribute> on IconSpecUtility<T> {
+  ShadowUtility get shadow => ShadowUtility((v) => only(shadows: [v]));
 }

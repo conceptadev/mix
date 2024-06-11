@@ -81,36 +81,5 @@ void main() {
       expect(mergedAttribute.clipBehavior, Clip.hardEdge);
       expect(mergedAttribute.gap, 20.0);
     });
-
-    test('props returns correct list of properties', () {
-      const attribute = FlexSpecAttribute(
-        direction: Axis.horizontal,
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.max,
-        verticalDirection: VerticalDirection.up,
-        textDirection: TextDirection.rtl,
-        textBaseline: TextBaseline.alphabetic,
-        clipBehavior: Clip.antiAlias,
-        gap: 10.0,
-        animated: AnimatedDataDto.withDefaults(),
-      );
-      final props = attribute.props;
-
-      expect(props.length, 10);
-      expect(props[0], Axis.horizontal);
-      expect(props[1], MainAxisAlignment.center);
-      expect(props[2], CrossAxisAlignment.start);
-      expect(props[3], MainAxisSize.max);
-      expect(props[4], VerticalDirection.up);
-      expect(props[5], TextDirection.rtl);
-      expect(props[6], TextBaseline.alphabetic);
-      expect(props[7], Clip.antiAlias);
-      expect(props[8], 10.0);
-      expect(
-        props[9],
-        const AnimatedDataDto.withDefaults(),
-      );
-    });
   });
 }

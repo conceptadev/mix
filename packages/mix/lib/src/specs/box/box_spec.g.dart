@@ -1,14 +1,26 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
 part of 'box_spec.dart';
 
+// **************************************************************************
+// Generator: SpecDefinitionBuilder
+// **************************************************************************
+
 mixin BoxSpecMixable on Spec<BoxSpec> {
+  /// Retrieves the [BoxSpec] from a MixData.
   static BoxSpec from(MixData mix) {
     return mix.attributeOf<BoxSpecAttribute>()?.resolve(mix) ?? const BoxSpec();
   }
 
+  /// Retrieves the [BoxSpec] from the nearest [Mix] ancestor.
+  ///
+  /// If no ancestor is found, returns [BoxSpec].
   static BoxSpec of(BuildContext context) {
     return BoxSpecMixable.from(Mix.of(context));
   }
 
+  /// Creates a copy of this [BoxSpec] but with the given fields
+  /// replaced with the new values.
   @override
   BoxSpec copyWith({
     AlignmentGeometry? alignment,
@@ -102,6 +114,10 @@ mixin BoxSpecMixable on Spec<BoxSpec> {
     );
   }
 
+  /// The list of properties that constitute the state of this [BoxSpec].
+  ///
+  /// This property is used by the [==] operator and the [hashCode] getter to
+  /// compare two [BoxSpec] instances for equality.
   @override
   List<Object?> get props {
     return [
@@ -135,6 +151,13 @@ mixin BoxSpecMixable on Spec<BoxSpec> {
   }
 }
 
+/// Represents the attributes of a [BoxSpec].
+///
+/// This class encapsulates properties defining the layout and
+/// appearance of a [BoxSpec].
+///
+/// Use this class to configure the attributes of a [BoxSpec] and pass it to
+/// the [BoxSpec] constructor.
 class BoxSpecAttribute extends SpecAttribute<BoxSpec> {
   const BoxSpecAttribute({
     this.alignment,
@@ -187,7 +210,7 @@ class BoxSpecAttribute extends SpecAttribute<BoxSpec> {
       clipBehavior: clipBehavior,
       width: width,
       height: height,
-      animated: animated?.resolve(mix),
+      animated: animated?.resolve(mix) ?? mix.animation,
     );
   }
 
@@ -213,6 +236,10 @@ class BoxSpecAttribute extends SpecAttribute<BoxSpec> {
     );
   }
 
+  /// The list of properties that constitute the state of this [BoxSpecAttribute].
+  ///
+  /// This property is used by the [==] operator and the [hashCode] getter to
+  /// compare two [BoxSpecAttribute] instances for equality.
   @override
   List<Object?> get props {
     return [
@@ -232,69 +259,103 @@ class BoxSpecAttribute extends SpecAttribute<BoxSpec> {
   }
 }
 
+/// Utility class for configuring [BoxSpecAttribute] properties.
+///
+/// This class provides methods to set individual properties of a [BoxSpecAttribute].
+///
+/// Use the methods of this class to configure specific properties of a [BoxSpecAttribute].
 class BoxSpecUtility<T extends Attribute>
     extends SpecUtility<T, BoxSpecAttribute> {
   BoxSpecUtility(super.builder);
 
+  /// Utility for defining [BoxSpecAttribute.alignment]
   late final alignment = AlignmentUtility((v) => only(alignment: v));
 
+  /// Utility for defining [BoxSpecAttribute.padding]
   late final padding = SpacingUtility((v) => only(padding: v));
 
+  /// Utility for defining [BoxSpecAttribute.margin]
   late final margin = SpacingUtility((v) => only(margin: v));
 
+  /// Utility for defining [BoxSpecAttribute.constraints]
   late final constraints = BoxConstraintsUtility((v) => only(constraints: v));
 
+  /// Utility for defining [BoxSpecAttribute.constraints.maxWidth]
   late final maxWidth = constraints.maxWidth;
 
+  /// Utility for defining [BoxSpecAttribute.constraints.minWidth]
   late final minWidth = constraints.minWidth;
 
+  /// Utility for defining [BoxSpecAttribute.constraints.maxHeight]
   late final maxHeight = constraints.maxHeight;
 
+  /// Utility for defining [BoxSpecAttribute.constraints.minHeight]
   late final minHeight = constraints.minHeight;
 
+  /// Utility for defining [BoxSpecAttribute.decoration]
   late final decoration = BoxDecorationUtility((v) => only(decoration: v));
 
+  /// Utility for defining [BoxSpecAttribute.decoration]
   late final shapeDecoration =
       ShapeDecorationUtility((v) => only(decoration: v));
 
+  /// Utility for defining [BoxSpecAttribute.decoration.color]
   late final color = decoration.color;
 
+  /// Utility for defining [BoxSpecAttribute.decoration.border]
   late final border = decoration.border;
 
-  late final borderRadius = decoration.borderRadius;
-
-  late final gradient = decoration.gradient;
-
-  late final radialGradient = decoration.gradient.radial;
-
-  late final linearGradient = decoration.gradient.linear;
-
-  late final shadows = decoration.boxShadows;
-
-  late final shadow = decoration.boxShadow;
-
-  late final elevation = decoration.elevation;
-
-  late final borderRadiusDirectional = decoration.borderRadiusDirectional;
-
+  /// Utility for defining [BoxSpecAttribute.decoration.borderDirectional]
   late final borderDirectional = decoration.borderDirectional;
 
+  /// Utility for defining [BoxSpecAttribute.decoration.borderRadius]
+  late final borderRadius = decoration.borderRadius;
+
+  /// Utility for defining [BoxSpecAttribute.decoration.borderRadiusDirectional]
+  late final borderRadiusDirectional = decoration.borderRadiusDirectional;
+
+  /// Utility for defining [BoxSpecAttribute.decoration.gradient]
+  late final gradient = decoration.gradient;
+
+  /// Utility for defining [BoxSpecAttribute.decoration.gradient.radial]
+  late final radialGradient = decoration.gradient.radial;
+
+  /// Utility for defining [BoxSpecAttribute.decoration.gradient.linear]
+  late final linearGradient = decoration.gradient.linear;
+
+  /// Utility for defining [BoxSpecAttribute.decoration.boxShadows]
+  late final shadows = decoration.boxShadows;
+
+  /// Utility for defining [BoxSpecAttribute.decoration.boxShadow]
+  late final shadow = decoration.boxShadow;
+
+  /// Utility for defining [BoxSpecAttribute.decoration.elevation]
+  late final elevation = decoration.elevation;
+
+  /// Utility for defining [BoxSpecAttribute.foregroundDecoration]
   late final foregroundDecoration =
       BoxDecorationUtility((v) => only(foregroundDecoration: v));
 
+  /// Utility for defining [BoxSpecAttribute.transform]
   late final transform = Matrix4Utility((v) => only(transform: v));
 
+  /// Utility for defining [BoxSpecAttribute.transformAlignment]
   late final transformAlignment =
       AlignmentUtility((v) => only(transformAlignment: v));
 
+  /// Utility for defining [BoxSpecAttribute.clipBehavior]
   late final clipBehavior = ClipUtility((v) => only(clipBehavior: v));
 
+  /// Utility for defining [BoxSpecAttribute.width]
   late final width = DoubleUtility((v) => only(width: v));
 
+  /// Utility for defining [BoxSpecAttribute.height]
   late final height = DoubleUtility((v) => only(height: v));
 
+  /// Utility for defining [BoxSpecAttribute.animated]
   late final animated = AnimatedUtility((v) => only(animated: v));
 
+  /// Returns a new [BoxSpecAttribute] with the specified properties.
   @override
   T only({
     AlignmentGeometry? alignment,
@@ -329,6 +390,10 @@ class BoxSpecUtility<T extends Attribute>
   }
 }
 
+/// A tween that interpolates between two [BoxSpec] instances.
+///
+/// This class can be used in animations to smoothly transition between
+/// different [BoxSpec] specifications.
 class BoxSpecTween extends Tween<BoxSpec?> {
   BoxSpecTween({
     super.begin,

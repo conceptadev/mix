@@ -7,19 +7,14 @@ import '../../../helpers/testing_utils.dart';
 void main() {
   group('StackSpec', () {
     test('resolve', () {
-      final mix = MixData.create(
-        MockBuildContext(),
-        Style(
-          const StackSpecAttribute(
-            alignment: Alignment.center,
-            fit: StackFit.expand,
-            textDirection: TextDirection.ltr,
-            clipBehavior: Clip.antiAlias,
-          ),
-        ),
+      const attribute = StackSpecAttribute(
+        alignment: Alignment.center,
+        fit: StackFit.expand,
+        textDirection: TextDirection.ltr,
+        clipBehavior: Clip.antiAlias,
       );
 
-      final mixture = const StackSpecAttribute().resolve(mix);
+      final mixture = attribute.resolve(EmptyMixData);
 
       expect(mixture.alignment, Alignment.center);
       expect(mixture.fit, StackFit.expand);

@@ -164,7 +164,7 @@ class FlexSpecAttribute extends SpecAttribute<FlexSpec> {
       textBaseline: textBaseline,
       clipBehavior: clipBehavior,
       gap: gap,
-      animated: animated?.resolve(mix),
+      animated: animated?.resolve(mix) ?? mix.animation,
     );
   }
 
@@ -251,7 +251,7 @@ class FlexSpecUtility<T extends Attribute>
   late final clipBehavior = ClipUtility((v) => only(clipBehavior: v));
 
   /// Utility for defining [FlexSpecAttribute.gap]
-  late final gap = DoubleUtility((v) => only(gap: v));
+  late final gap = SpacingSideUtility((v) => only(gap: v));
 
   /// Utility for defining [FlexSpecAttribute.animated]
   late final animated = AnimatedUtility((v) => only(animated: v));

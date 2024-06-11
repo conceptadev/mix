@@ -10,7 +10,7 @@ import '../../core/spec.dart';
 import '../../factory/mix_provider.dart';
 import '../../internal/lerp_helpers.dart';
 
-class FlexSpecLegacy extends Spec<FlexSpecLegacy> {
+class FlexSpec extends Spec<FlexSpec> {
   final Axis? direction;
   final MainAxisAlignment? mainAxisAlignment;
   final CrossAxisAlignment? crossAxisAlignment;
@@ -21,7 +21,7 @@ class FlexSpecLegacy extends Spec<FlexSpecLegacy> {
   final Clip? clipBehavior;
   final double? gap;
 
-  const FlexSpecLegacy({
+  const FlexSpec({
     this.crossAxisAlignment,
     this.mainAxisAlignment,
     this.mainAxisSize,
@@ -34,7 +34,7 @@ class FlexSpecLegacy extends Spec<FlexSpecLegacy> {
     super.animated,
   });
 
-  const FlexSpecLegacy.exhaustive({
+  const FlexSpec.exhaustive({
     required this.crossAxisAlignment,
     required this.mainAxisAlignment,
     required this.mainAxisSize,
@@ -47,22 +47,22 @@ class FlexSpecLegacy extends Spec<FlexSpecLegacy> {
     required super.animated,
   });
 
-  static FlexSpecLegacy of(BuildContext context) {
+  static FlexSpec of(BuildContext context) {
     final mix = Mix.of(context);
 
-    return FlexSpecLegacy.from(mix);
+    return FlexSpec.from(mix);
   }
 
-  static FlexSpecLegacy from(MixData mix) {
-    return mix.attributeOf<FlexSpecLegacyAttribute>()?.resolve(mix) ??
-        const FlexSpecLegacy();
+  static FlexSpec from(MixData mix) {
+    return mix.attributeOf<FlexSpecAttribute>()?.resolve(mix) ??
+        const FlexSpec();
   }
 
   @override
-  FlexSpecLegacy lerp(FlexSpecLegacy? other, double t) {
+  FlexSpec lerp(FlexSpec? other, double t) {
     if (other == null) return this;
 
-    return FlexSpecLegacy(
+    return FlexSpec(
       crossAxisAlignment:
           lerpSnap(crossAxisAlignment, other.crossAxisAlignment, t),
       mainAxisAlignment:
@@ -80,7 +80,7 @@ class FlexSpecLegacy extends Spec<FlexSpecLegacy> {
   }
 
   @override
-  FlexSpecLegacy copyWith({
+  FlexSpec copyWith({
     Axis? direction,
     MainAxisAlignment? mainAxisAlignment,
     CrossAxisAlignment? crossAxisAlignment,
@@ -92,7 +92,7 @@ class FlexSpecLegacy extends Spec<FlexSpecLegacy> {
     double? gap,
     AnimatedData? animated,
   }) {
-    return FlexSpecLegacy(
+    return FlexSpec(
       crossAxisAlignment: crossAxisAlignment ?? this.crossAxisAlignment,
       mainAxisAlignment: mainAxisAlignment ?? this.mainAxisAlignment,
       mainAxisSize: mainAxisSize ?? this.mainAxisSize,
@@ -121,8 +121,8 @@ class FlexSpecLegacy extends Spec<FlexSpecLegacy> {
       ];
 }
 
-class FlexSpecLegacyUtility<T extends Attribute>
-    extends SpecUtility<T, FlexSpecLegacyAttribute> {
+class FlexSpecUtility<T extends Attribute>
+    extends SpecUtility<T, FlexSpecAttribute> {
   late final direction = AxisUtility((v) => only(direction: v));
   late final mainAxisAlignment =
       MainAxisAlignmentUtility((v) => only(mainAxisAlignment: v));
@@ -140,7 +140,7 @@ class FlexSpecLegacyUtility<T extends Attribute>
   late final row = direction.horizontal;
   late final column = direction.vertical;
 
-  FlexSpecLegacyUtility(super.builder);
+  FlexSpecUtility(super.builder);
 
   @override
   T only({
@@ -155,7 +155,7 @@ class FlexSpecLegacyUtility<T extends Attribute>
     double? gap,
     AnimatedDataDto? animated,
   }) {
-    return builder(FlexSpecLegacyAttribute(
+    return builder(FlexSpecAttribute(
       direction: direction,
       mainAxisAlignment: mainAxisAlignment,
       crossAxisAlignment: crossAxisAlignment,
@@ -170,7 +170,7 @@ class FlexSpecLegacyUtility<T extends Attribute>
   }
 }
 
-class FlexSpecLegacyAttribute extends SpecAttribute<FlexSpecLegacy> {
+class FlexSpecAttribute extends SpecAttribute<FlexSpec> {
   final Axis? direction;
   final MainAxisAlignment? mainAxisAlignment;
   final CrossAxisAlignment? crossAxisAlignment;
@@ -181,7 +181,7 @@ class FlexSpecLegacyAttribute extends SpecAttribute<FlexSpecLegacy> {
   final Clip? clipBehavior;
   final double? gap;
 
-  const FlexSpecLegacyAttribute({
+  const FlexSpecAttribute({
     this.direction,
     this.mainAxisAlignment,
     this.crossAxisAlignment,
@@ -194,13 +194,13 @@ class FlexSpecLegacyAttribute extends SpecAttribute<FlexSpecLegacy> {
     super.animated,
   });
 
-  static FlexSpecLegacyAttribute of(MixData mix) {
-    return mix.attributeOf() ?? const FlexSpecLegacyAttribute();
+  static FlexSpecAttribute of(MixData mix) {
+    return mix.attributeOf() ?? const FlexSpecAttribute();
   }
 
   @override
-  FlexSpecLegacy resolve(MixData mix) {
-    return FlexSpecLegacy.exhaustive(
+  FlexSpec resolve(MixData mix) {
+    return FlexSpec.exhaustive(
       crossAxisAlignment: crossAxisAlignment,
       mainAxisAlignment: mainAxisAlignment,
       mainAxisSize: mainAxisSize,
@@ -215,10 +215,10 @@ class FlexSpecLegacyAttribute extends SpecAttribute<FlexSpecLegacy> {
   }
 
   @override
-  FlexSpecLegacyAttribute merge(covariant FlexSpecLegacyAttribute? other) {
+  FlexSpecAttribute merge(covariant FlexSpecAttribute? other) {
     if (other == null) return this;
 
-    return FlexSpecLegacyAttribute(
+    return FlexSpecAttribute(
       direction: other.direction ?? direction,
       mainAxisAlignment: other.mainAxisAlignment ?? mainAxisAlignment,
       crossAxisAlignment: other.crossAxisAlignment ?? crossAxisAlignment,

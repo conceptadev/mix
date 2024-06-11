@@ -57,7 +57,11 @@ mixin IconSpecMixable on Spec<IconSpec> {
     if (other == null) return _$this;
 
     return IconSpec(
-      color: t < 0.5 ? _$this.color : other._$this.color,
+      color: Color.lerp(
+        _$this.color,
+        other._$this.color,
+        t,
+      ),
       size: _lerpDouble(
         _$this.size,
         other._$this.size,
@@ -178,7 +182,7 @@ class IconSpecAttribute extends SpecAttribute<IconSpec> {
       textDirection: textDirection,
       applyTextScaling: applyTextScaling,
       fill: fill,
-      animated: animated?.resolve(mix),
+      animated: animated?.resolve(mix) ?? mix.animation,
     );
   }
 

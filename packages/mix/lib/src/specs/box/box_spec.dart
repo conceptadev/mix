@@ -7,6 +7,10 @@ part 'box_spec.g.dart';
 
 @MixableSpec()
 class BoxSpec extends Spec<BoxSpec> with BoxSpecMixable {
+  static const of = BoxSpecMixable.of;
+
+  static const from = BoxSpecMixable.from;
+
   /// Aligns the child within the box.
   final AlignmentGeometry? alignment;
 
@@ -15,10 +19,6 @@ class BoxSpec extends Spec<BoxSpec> with BoxSpecMixable {
 
   /// Adds empty space around the box.
   final EdgeInsetsGeometry? margin;
-
-  static const of = BoxSpecMixable.of;
-
-  static const from = BoxSpecMixable.from;
 
   /// Applies additional constraints to the child.
   @MixableField(
@@ -40,7 +40,9 @@ class BoxSpec extends Spec<BoxSpec> with BoxSpecMixable {
       properties: [
         MixableFieldProperty('color'),
         MixableFieldProperty('border'),
+        MixableFieldProperty('borderDirectional'),
         MixableFieldProperty('borderRadius'),
+        MixableFieldProperty('borderRadiusDirectional'),
         MixableFieldProperty(
           'gradient',
           properties: [
@@ -51,8 +53,6 @@ class BoxSpec extends Spec<BoxSpec> with BoxSpecMixable {
         MixableFieldProperty('boxShadows', alias: 'shadows'),
         MixableFieldProperty('boxShadow', alias: 'shadow'),
         MixableFieldProperty('elevation'),
-        MixableFieldProperty('borderRadiusDirectional'),
-        MixableFieldProperty('borderDirectional'),
       ],
       extraUtilities: [
         MixableFieldUtility(

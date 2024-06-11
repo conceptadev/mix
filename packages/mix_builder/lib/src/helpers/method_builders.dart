@@ -3,6 +3,7 @@
 import 'package:code_builder/code_builder.dart';
 import 'package:mix_builder/src/helpers/builder_utils.dart';
 import 'package:mix_builder/src/helpers/field_info.dart';
+import 'package:mix_builder/src/helpers/lerp_method_builders.dart';
 
 import 'mix_property.dart';
 import 'types.dart';
@@ -43,6 +44,9 @@ Method MethodResolveBuilder({
         if (field.isListType) {
           return '$propName: $fieldName?.map((e) => e.resolve(mix)).toList()';
         } else {
+          if (field.dtoType?.symbol == 'AnimatedDataDto') {
+            return '$propName: $fieldName?.resolve(mix) ?? mix.animation';
+          }
           return '$propName: $fieldName?.resolve(mix)';
         }
       }
@@ -147,111 +151,24 @@ Method MethodToStringBuilder({
 }
 
 List<Method> MethodLerpHelpers(SpecDefinitionContext context) {
-  final lerpInt = Method((b) {
-    b.name = '_lerpInt';
-    b.returns = refer('int?');
-    b.requiredParameters.add(Parameter((b) {
-      b.name = 'a';
-      b.type = refer('int?');
-    }));
-    b.requiredParameters.add(Parameter((b) {
-      b.name = 'b';
-      b.type = refer('int?');
-    }));
-    b.requiredParameters.add(Parameter((b) {
-      b.name = 't';
-      b.type = refer('double');
-    }));
-    b.body = Code('''
-      a ??= 0;
-      b ??= 0;
-      
-      return (a + (b - a) * t).round();
-    ''');
-  });
-
-  final lerpDouble = Method((b) {
-    b.name = '_lerpDouble';
-    b.returns = refer('double?');
-    b.requiredParameters.add(Parameter((b) {
-      b.name = 'a';
-      b.type = refer('num?');
-    }));
-    b.requiredParameters.add(Parameter((b) {
-      b.name = 'b';
-      b.type = refer('num?');
-    }));
-    b.requiredParameters.add(Parameter((b) {
-      b.name = 't';
-      b.type = refer('double');
-    }));
-    b.body = Code('''
-      if (a == b || (a?.isNaN ?? false) && (b?.isNaN ?? false)) {
-        return a?.toDouble();
-      }
-      a ??= 0.0;
-      b ??= 0.0;
-      return a * (1.0 - t) + b * t;
-    ''');
-  });
-
   final methods = <Method>[];
 
-  if (context.hasReference(HelperTypes.lerpDouble)) {
-    methods.add(lerpDouble);
+  if (context.hasReference(LerpMethodsHelper.lerpDoubleRef)) {
+    methods.add(LerpMethodsHelper.lerpDouble);
   }
 
-  if (context.hasReference(HelperTypes.lerpInt)) {
-    methods.add(lerpInt);
+  if (context.hasReference(LerpMethodsHelper.lerpStrutStyleRef)) {
+    methods.add(LerpMethodsHelper.lerpStrutStyle);
+    if (!context.hasReference(LerpMethodsHelper.lerpDoubleRef)) {
+      methods.add(LerpMethodsHelper.lerpDouble);
+    }
+  }
+
+  if (context.hasReference(LerpMethodsHelper.lerpTextStyleRef)) {
+    methods.add(LerpMethodsHelper.lerpTextStyle);
   }
 
   return methods;
-}
-
-Method MethodLerpDoubleBuilder() {
-  return Method((builder) {
-    builder
-      ..name = '_lerpDouble'
-      ..returns = refer('double?')
-      ..requiredParameters.add(Parameter((b) {
-        b.name = 'a';
-        b.type = refer('num?');
-      }))
-      ..requiredParameters.add(Parameter((b) {
-        b.name = 'b';
-        b.type = refer('num?');
-      }))
-      ..requiredParameters.add(Parameter((b) {
-        b.name = 't';
-        b.type = refer('double');
-      }));
-    builder.body = Code('''
-      return ((1 - t) * (a ?? 0) + t * (b ?? 0));
-    ''');
-  });
-}
-
-Method MethodLerpIntBuilder() {
-  return Method((builder) {
-    builder
-      ..name = '_lerpInt'
-      ..returns = refer('int?')
-      ..requiredParameters.add(Parameter((b) {
-        b.name = 'a';
-        b.type = refer('int?');
-      }))
-      ..requiredParameters.add(Parameter((b) {
-        b.name = 'b';
-        b.type = refer('int?');
-      }))
-      ..requiredParameters.add(Parameter((b) {
-        b.name = 't';
-        b.type = refer('double');
-      }));
-    builder.body = Code('''
-      return _lerpDouble(a, b, t)?.round();
-    ''');
-  });
 }
 
 Method MethodLerpBuilder({
@@ -341,7 +258,6 @@ Method GetterPropsBuilder({
   });
 }
 
-// Create a definitino of _lerpDouble, that mimics a custom lerpDouble
 Method MethodEqualityOperatorBuilder({
   required String className,
   required List<ParameterInfo> fields,

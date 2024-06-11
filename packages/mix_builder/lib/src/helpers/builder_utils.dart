@@ -7,6 +7,7 @@ import 'package:dart_style/dart_style.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 import 'package:mix_builder/src/helpers/field_info.dart';
 import 'package:mix_builder/src/helpers/helpers.dart';
+import 'package:mix_builder/src/helpers/lerp_method_builders.dart';
 import 'package:mix_builder/src/helpers/settings.dart';
 import 'package:mix_builder/src/helpers/types.dart';
 import 'package:source_gen/source_gen.dart';
@@ -119,9 +120,13 @@ Expression getLerpExpression(String name, String type) {
 
   switch (typeRef) {
     case 'double':
-      return HelperTypes.lerpDouble(expression);
-    case 'int':
-      return HelperTypes.lerpInt(expression);
+      return LerpMethodsHelper.lerpDoubleRef(expression);
+    case 'StrutStyle':
+      return LerpMethodsHelper.lerpStrutStyleRef(expression);
+    case 'TextStyle':
+      return LerpMethodsHelper.lerpTextStyleRef(expression);
+    case 'Color':
+      return DartTypes.ui.color.property('lerp')(expression);
     case 'EdgeInsetsGeometry':
       return FlutterTypes.widgets.edgeInsetsGeometry
           .property('lerp')(expression);

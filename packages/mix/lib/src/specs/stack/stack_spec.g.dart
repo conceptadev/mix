@@ -109,7 +109,7 @@ class StackSpecAttribute extends SpecAttribute<StackSpec> {
       fit: fit,
       textDirection: textDirection,
       clipBehavior: clipBehavior,
-      animated: animated?.resolve(mix),
+      animated: animated?.resolve(mix) ?? mix.animation,
     );
   }
 

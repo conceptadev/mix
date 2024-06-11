@@ -23,6 +23,7 @@ class FlexSpec extends Spec<FlexSpec> with FlexSpecMixable {
   final TextDirection? textDirection;
   final TextBaseline? textBaseline;
   final Clip? clipBehavior;
+  @MixableField(utility: MixableFieldUtility(type: SpacingSideUtility))
   final double? gap;
 
   static const of = FlexSpecMixable.of;
