@@ -8,10 +8,8 @@ environment:
   flutter: ">=3.10.6"
   
 dependencies:
-  mix:
-    path: ../mix
-  mix_annotations:
-    path: ../mix_annotations
+  mix: ^1.0.0
+  mix_annotations: ^0.0.1
 
   build: ^2.4.1
   code_builder: ^4.10.0
