@@ -1,0 +1,33 @@
+name: themed_button
+description: "A new Flutter project."
+
+publish_to: "none"
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.4.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  mix: 
+    path: ../../packages/mix
+  custom_lint:
+  google_fonts: ^6.2.1 
+  cupertino_icons: ^1.0.6
+  widgetbook: ^3.7.1
+  widgetbook_annotation: ^3.1.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^3.0.0
+  mix_lint: 
+    path: ../../packages/mix_lint
+  widgetbook_generator: ^3.7.0
+  build_runner: ^2.4.11
+
+flutter:
+  uses-material-design: true

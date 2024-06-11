@@ -1,0 +1,63 @@
+import 'package:flutter/material.dart';
+import 'package:mix/mix.dart';
+import 'package:todo_list/style/components/checkbox.dart';
+import 'package:todo_list/style/design_tokens.dart';
+import 'package:todo_list/style/patterns/scale_effect.dart';
+
+class CheckboxTileVariant {
+  static const checked = Variant("checked");
+  static const unchecked = Variant("unchecked");
+}
+
+class TodoCheckboxListTile extends StatelessWidget {
+  final String text;
+  final bool checked;
+  final Function(bool) onChanged;
+
+  const TodoCheckboxListTile({
+    super.key,
+    required this.text,
+    required this.checked,
+    required this.onChanged,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Pressable(
+      onPress: () => onChanged(!checked),
+      child: StyledRow(
+        style: Style(
+          $flex.gap(32),
+          $flex.mainAxisAlignment.spaceBetween(),
+          scaleEffect(0.98),
+        ).animate(
+          duration: Durations.short3,
+          curve: Curves.easeOut,
+        ),
+        children: [
+          StyledText(
+            text,
+            style: Style(
+              $text.style.ref($token.textStyle.heading3),
+              $text.style.color.ref($token.color.onSurface),
+              CheckboxTileVariant.checked(
+                $text.style.decoration.lineThrough(),
+                $text.style.color.ref($token.color.onSurfaceVariant),
+              ),
+            )
+                .applyVariant(
+                  checked
+                      ? CheckboxTileVariant.checked
+                      : CheckboxTileVariant.unchecked,
+                )
+                .animate(duration: Durations.short2),
+          ),
+          TodoCheckbox(
+            onChanged: onChanged,
+            value: checked,
+          )
+        ],
+      ),
+    );
+  }
+}
