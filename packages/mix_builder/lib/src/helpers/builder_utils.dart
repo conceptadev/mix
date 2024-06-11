@@ -6,9 +6,7 @@ import 'package:code_builder/code_builder.dart';
 import 'package:dart_style/dart_style.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 import 'package:mix_builder/src/helpers/field_info.dart';
-import 'package:mix_builder/src/helpers/helpers.dart';
-import 'package:mix_builder/src/helpers/lerp_method_builders.dart';
-import 'package:mix_builder/src/helpers/settings.dart';
+import 'package:mix_builder/src/helpers/private_class_helpers.dart';
 import 'package:mix_builder/src/helpers/types.dart';
 import 'package:source_gen/source_gen.dart';
 
@@ -43,44 +41,23 @@ class ReferenceTrackingAllocator implements Allocator {
   Iterable<Directive> get imports => const [];
 }
 
-Future<SpecDefinitionContext> loadSpecDefinitions(
-  ClassElement classElement,
-  DartEmitter emitter,
-  DartFormatter formatter,
-) async {
-  final annotation =
-      _specDefinitionTypeChecker.firstAnnotationOfExact(classElement)!;
+abstract class AnnotationContext<T> {
+  final ClassElement element;
 
-  final fields = sortedConstructorFields(classElement, null);
-  final specDefinition = SpecDefinitionContext(
-    emitter: emitter,
-    formatter: formatter,
-    annotation: readSpecAnnotation(Settings(), ConstantReader(annotation)),
-    fields: fields,
-    options: SpecDefinitionOptions(
-      name: annotation.getField('name')?.toStringValue() ?? classElement.name,
-    ),
-  );
-
-  return specDefinition;
-}
-
-const _specDefinitionTypeChecker = TypeChecker.fromRuntime(MixableSpec);
-
-class SpecDefinitionContext {
-  final SpecDefinitionOptions options;
   final List<ParameterInfo> fields;
   final DartFormatter formatter;
   final DartEmitter emitter;
-  final MixableSpec annotation;
+  final T annotation;
 
-  const SpecDefinitionContext({
-    required this.options,
+  const AnnotationContext({
+    required this.element,
     required this.fields,
     required this.formatter,
     required this.emitter,
     required this.annotation,
   });
+
+  String get name => element.name;
 
   bool hasReference(Reference reference) {
     return (emitter.allocator as ReferenceTrackingAllocator)
@@ -95,20 +72,36 @@ class SpecDefinitionContext {
   }
 }
 
-class SpecDefinitionOptions {
-  final String name;
-
-  const SpecDefinitionOptions({
-    required this.name,
+class SpecAnnotationContext extends AnnotationContext<MixableSpec> {
+  const SpecAnnotationContext({
+    required super.element,
+    required super.fields,
+    required super.formatter,
+    required super.emitter,
+    required super.annotation,
   });
 
-  String get specClassName => '${name}';
+  String get specClassName => name;
 
   String get specClassMixinName => '${specClassName}Mixable';
 
   String get specAttributeClassName => '${specClassName}Attribute';
 
   String get specUtilClassName => '${specClassName}Utility';
+}
+
+class DtoAnnotationContext extends AnnotationContext<MixableDto> {
+  const DtoAnnotationContext({
+    required super.element,
+    required super.fields,
+    required super.formatter,
+    required super.emitter,
+    required super.annotation,
+  });
+
+  String get dtoClassName => name;
+
+  String get dtoClassMixinName => '${dtoClassName}Mixable';
 }
 
 Expression getLerpExpression(String name, String type) {
@@ -120,11 +113,11 @@ Expression getLerpExpression(String name, String type) {
 
   switch (typeRef) {
     case 'double':
-      return LerpMethodsHelper.lerpDoubleRef(expression);
+      return PrivateMethodHelper.lerpDoubleRef(expression);
     case 'StrutStyle':
-      return LerpMethodsHelper.lerpStrutStyleRef(expression);
+      return PrivateMethodHelper.lerpStrutStyleRef(expression);
     case 'TextStyle':
-      return LerpMethodsHelper.lerpTextStyleRef(expression);
+      return PrivateMethodHelper.lerpTextStyleRef(expression);
     case 'Color':
       return DartTypes.ui.color.property('lerp')(expression);
     case 'EdgeInsetsGeometry':

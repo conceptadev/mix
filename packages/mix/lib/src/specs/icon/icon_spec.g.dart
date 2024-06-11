@@ -117,18 +117,6 @@ mixin IconSpecMixable on Spec<IconSpec> {
   }
 
   IconSpec get _$this => this as IconSpec;
-  double? _lerpDouble(
-    num? a,
-    num? b,
-    double t,
-  ) {
-    if (a == b || (a?.isNaN ?? false) && (b?.isNaN ?? false)) {
-      return a?.toDouble();
-    }
-    a ??= 0.0;
-    b ??= 0.0;
-    return a * (1.0 - t) + b * t;
-  }
 }
 
 /// Represents the attributes of a [IconSpec].
@@ -313,4 +301,17 @@ class IconSpecTween extends Tween<IconSpec?> {
 
     return begin!.lerp(end!, t);
   }
+}
+
+double? _lerpDouble(
+  num? a,
+  num? b,
+  double t,
+) {
+  if (a == b || (a?.isNaN ?? false) && (b?.isNaN ?? false)) {
+    return a?.toDouble();
+  }
+  a ??= 0.0;
+  b ??= 0.0;
+  return a * (1.0 - t) + b * t;
 }

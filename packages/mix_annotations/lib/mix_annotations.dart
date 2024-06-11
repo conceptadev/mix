@@ -15,7 +15,10 @@ class MixableSpec {
 }
 
 class MixableDto {
-  const MixableDto();
+  /// If true it will merge the items in the list in its position
+  /// if false list items will just be added to the list
+  final bool mergeLists;
+  const MixableDto({this.mergeLists = true});
 }
 
 class MixableField {

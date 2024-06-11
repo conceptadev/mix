@@ -1,13 +1,44 @@
 import 'package:code_builder/code_builder.dart';
 import 'package:mix_builder/src/helpers/builder_utils.dart';
 
-class LerpMethodsHelper {
-  const LerpMethodsHelper._();
+class PrivateMethodHelper {
+  const PrivateMethodHelper._();
 
   static final lerpDoubleRef = refer('_lerpDouble');
 
   static final lerpTextStyleRef = refer('_lerpTextStyle');
   static final lerpStrutStyleRef = refer('_lerpStrutStyle');
+
+  static final mergeListTRef = refer('_mergeListT');
+
+  static final mergeListT = Method((b) {
+    b.name = mergeListTRef.symbol;
+    b.types.add(TypeReference((b) => b.symbol = 'T'));
+    b.returns = refer('List<T>').nullable;
+    b.requiredParameters.add(Parameter((b) {
+      b.name = 'a';
+      b.type = refer('List<T>').nullable;
+    }));
+    b.requiredParameters.add(Parameter((b) {
+      b.name = 'b';
+      b.type = refer('List<T>').nullable;
+    }));
+    b.body = Code('''
+      if (b == null) return a ?? [];
+      if (a == null) return b;
+
+      final mergedList = [...a];
+      for (int i = 0; i < b.length; i++) {
+        if (i < mergedList.length) {
+          mergedList[i] = b[i] ?? mergedList[i];
+        } else {
+          mergedList.add(b[i]);
+        }
+      }
+
+      return mergedList;
+    ''');
+  });
 
   static final lerpDouble = Method((b) {
     b.name = lerpDoubleRef.symbol;

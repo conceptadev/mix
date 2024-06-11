@@ -114,51 +114,6 @@ mixin TextSpecMixable on Spec<TextSpec> {
   }
 
   TextSpec get _$this => this as TextSpec;
-  double? _lerpDouble(
-    num? a,
-    num? b,
-    double t,
-  ) {
-    if (a == b || (a?.isNaN ?? false) && (b?.isNaN ?? false)) {
-      return a?.toDouble();
-    }
-    a ??= 0.0;
-    b ??= 0.0;
-    return a * (1.0 - t) + b * t;
-  }
-
-  StrutStyle? _lerpStrutStyle(
-    StrutStyle? a,
-    StrutStyle? b,
-    double t,
-  ) {
-    if (a == null && b == null) return null;
-    if (a == null) return b;
-    if (b == null) return a;
-
-    return StrutStyle(
-      fontFamily: t < 0.5 ? a.fontFamily : b.fontFamily,
-      fontFamilyFallback: t < 0.5 ? a.fontFamilyFallback : b.fontFamilyFallback,
-      fontSize: _lerpDouble(a.fontSize, b.fontSize, t),
-      height: _lerpDouble(a.height, b.height, t),
-      leading: _lerpDouble(a.leading, b.leading, t),
-      fontWeight: FontWeight.lerp(a.fontWeight, b.fontWeight, t),
-      fontStyle: t < 0.5 ? a.fontStyle : b.fontStyle,
-      forceStrutHeight: t < 0.5 ? a.forceStrutHeight : b.forceStrutHeight,
-      debugLabel: a.debugLabel ?? b.debugLabel,
-      leadingDistribution:
-          t < 0.5 ? a.leadingDistribution : b.leadingDistribution,
-    );
-  }
-
-  TextStyle? _lerpTextStyle(
-    TextStyle? a,
-    TextStyle? b,
-    double t,
-  ) {
-    return TextStyle.lerp(a, b, t)
-        ?.copyWith(shadows: Shadow.lerpList(a?.shadows, b?.shadows, t));
-  }
 }
 
 /// Represents the attributes of a [TextSpec].
@@ -382,4 +337,50 @@ class TextSpecTween extends Tween<TextSpec?> {
 
     return begin!.lerp(end!, t);
   }
+}
+
+double? _lerpDouble(
+  num? a,
+  num? b,
+  double t,
+) {
+  if (a == b || (a?.isNaN ?? false) && (b?.isNaN ?? false)) {
+    return a?.toDouble();
+  }
+  a ??= 0.0;
+  b ??= 0.0;
+  return a * (1.0 - t) + b * t;
+}
+
+StrutStyle? _lerpStrutStyle(
+  StrutStyle? a,
+  StrutStyle? b,
+  double t,
+) {
+  if (a == null && b == null) return null;
+  if (a == null) return b;
+  if (b == null) return a;
+
+  return StrutStyle(
+    fontFamily: t < 0.5 ? a.fontFamily : b.fontFamily,
+    fontFamilyFallback: t < 0.5 ? a.fontFamilyFallback : b.fontFamilyFallback,
+    fontSize: _lerpDouble(a.fontSize, b.fontSize, t),
+    height: _lerpDouble(a.height, b.height, t),
+    leading: _lerpDouble(a.leading, b.leading, t),
+    fontWeight: FontWeight.lerp(a.fontWeight, b.fontWeight, t),
+    fontStyle: t < 0.5 ? a.fontStyle : b.fontStyle,
+    forceStrutHeight: t < 0.5 ? a.forceStrutHeight : b.forceStrutHeight,
+    debugLabel: a.debugLabel ?? b.debugLabel,
+    leadingDistribution:
+        t < 0.5 ? a.leadingDistribution : b.leadingDistribution,
+  );
+}
+
+TextStyle? _lerpTextStyle(
+  TextStyle? a,
+  TextStyle? b,
+  double t,
+) {
+  return TextStyle.lerp(a, b, t)
+      ?.copyWith(shadows: Shadow.lerpList(a?.shadows, b?.shadows, t));
 }

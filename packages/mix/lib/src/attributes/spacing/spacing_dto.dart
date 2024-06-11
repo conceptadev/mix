@@ -1,18 +1,28 @@
 import 'package:flutter/material.dart';
 
+import '../../core/dto.dart';
 import '../../core/models/mix_data.dart';
-import 'edge_insets_dto.dart';
 
 @immutable
-class SpacingDto extends EdgeInsetsGeometryDto<SpacingDto> {
+class SpacingDto extends Dto<EdgeInsetsGeometry> {
+  final double? top;
+  final double? bottom;
+  final double? left;
+  final double? right;
+
+  // Directional
+  final double? start;
+  final double? end;
   const SpacingDto._({
-    super.top,
-    super.bottom,
-    super.left,
-    super.right,
-    super.start,
-    super.end,
+    this.top,
+    this.bottom,
+    this.left,
+    this.right,
+    this.start,
+    this.end,
   });
+
+  bool get isDirectional => start != null || end != null;
 
   const SpacingDto.only({
     double? top,
@@ -63,6 +73,9 @@ class SpacingDto extends EdgeInsetsGeometryDto<SpacingDto> {
             bottom: mix.tokens.spaceTokenRef(bottom ?? 0),
           );
   }
+
+  @override
+  get props => [top, bottom, left, right, start, end];
 }
 
 extension EdgeInsetsGeometryExt on EdgeInsetsGeometry {

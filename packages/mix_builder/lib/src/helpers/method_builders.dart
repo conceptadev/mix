@@ -1,9 +1,10 @@
 // ignore_for_file: non_constant_identifier_names
 
+import 'package:analyzer/dart/element/element.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:mix_builder/src/helpers/builder_utils.dart';
 import 'package:mix_builder/src/helpers/field_info.dart';
-import 'package:mix_builder/src/helpers/lerp_method_builders.dart';
+import 'package:mix_builder/src/helpers/private_class_helpers.dart';
 
 import 'mix_property.dart';
 import 'types.dart';
@@ -21,11 +22,29 @@ Method GetterSelfBuilder({
   });
 }
 
+final _defaultValues = {
+  'LinearGradient': 'LinearGradient(colors:[])',
+  'RadialGradient': 'RadialGradient(colors:[])',
+  'SweepGradient': 'SweepGradient(colors:[])',
+};
 Method MethodResolveBuilder({
   required String resolveToType,
   required List<ParameterInfo> fields,
   bool isInternalRef = false,
+  List<ParameterElement> requiredParamsOfResolver = const [],
 }) {
+  final defaultResolver = _defaultValues[resolveToType] ?? '';
+
+  if (requiredParamsOfResolver.isNotEmpty && defaultResolver.isEmpty) {
+    throw ArgumentError('Default value for $resolveToType is not defined');
+  }
+  final _defaultResolverExpression = defaultResolver.isEmpty
+      ? ' '
+      : 'final defaultValue = ${_defaultValues[resolveToType]};';
+
+  String defaultExpression(String fieldName) =>
+      requiredParamsOfResolver.isNotEmpty ? '?? defaultValue.$fieldName' : '';
+
   return Method((builder) {
     builder
       ..name = 'resolve'
@@ -35,23 +54,27 @@ Method MethodResolveBuilder({
         ..name = 'mix'
         ..type = MixTypes.foundation.mixData));
     builder.body = Code('''
+      $_defaultResolverExpression
+      
       return $resolveToType(
         ${fields.map((field) {
       final propName = field.name;
       final fieldName = isInternalRef ? field.asInternalRef : field.name;
 
+      final fallbackExpression = defaultExpression(field.name);
+
       if (field.hasDto) {
         if (field.isListType) {
-          return '$propName: $fieldName?.map((e) => e.resolve(mix)).toList()';
+          return '$propName: $fieldName?.map((e) => e.resolve(mix)).toList() $fallbackExpression';
         } else {
           if (field.dtoType?.symbol == 'AnimatedDataDto') {
             return '$propName: $fieldName?.resolve(mix) ?? mix.animation';
           }
-          return '$propName: $fieldName?.resolve(mix)';
+          return '$propName: $fieldName?.resolve(mix) $fallbackExpression';
         }
       }
 
-      return '$propName: $fieldName';
+      return '$propName: $fieldName $fallbackExpression';
     }).join(', ')},
       );
     ''');
@@ -60,31 +83,43 @@ Method MethodResolveBuilder({
 
 Method MethodMergeBuilder({
   required String className,
-  required List<ParameterInfo> fields,
+  required AnnotationContext context,
   bool isInternalRef = false,
+  bool shouldMergeLists = false,
 }) {
+  final fields = context.fields;
+  final emitter = context.emitter;
+
   final fieldStatements = fields.map((field) {
     final propName = field.name;
-    final fieldName = isInternalRef ? field.asInternalRef : field.name;
+    final thisName = isInternalRef ? field.asInternalRef : field.name;
     if (field.hasDto) {
       if (field.isListType) {
         return Code(
-          '$propName: Dto.mergeList($fieldName, other.$fieldName),',
+          '$propName: Dto.mergeList($thisName, other.$thisName),',
         );
       } else {
         return Code(
-          '$propName: $fieldName?.merge(other.$fieldName) ?? other.$fieldName,',
+          '$propName: $thisName?.merge(other.$propName) ?? other.$propName,',
         );
       }
     } else {
       if (field.isListType) {
-        return Code('$propName: $fieldName?? other.$fieldName,');
+        if (shouldMergeLists) {
+          return Code('$propName: ${PrivateMethodHelper.mergeListTRef.call([
+                refer(thisName),
+                refer('other.$propName')
+              ]).accept(emitter)}');
+        } else {
+          return Code('$propName: [...?$thisName,...other.$propName],');
+        }
       } else {
-        return Code('$propName: other.$fieldName ?? $fieldName,');
+        return Code('$propName: other.$propName ?? $thisName,');
       }
     }
   });
   return Method((b) {
+    final thisRef = isInternalRef ? ParameterInfo.internalRefPrefix : 'this';
     b.annotations.add(refer('override'));
     b.name = 'merge';
     b.returns = refer(className);
@@ -93,7 +128,7 @@ Method MethodMergeBuilder({
       b.type = refer('$className?');
     }));
     b.body = Block.of([
-      Code('if (other == null) return this;'),
+      Code('if (other == null) return $thisRef;'),
       Code(''),
       Code('return $className('),
       Block.of(fieldStatements),
@@ -150,22 +185,26 @@ Method MethodToStringBuilder({
   });
 }
 
-List<Method> MethodLerpHelpers(SpecDefinitionContext context) {
+List<Method> MethodPrivateHelpers(AnnotationContext context) {
   final methods = <Method>[];
 
-  if (context.hasReference(LerpMethodsHelper.lerpDoubleRef)) {
-    methods.add(LerpMethodsHelper.lerpDouble);
+  if (context.hasReference(PrivateMethodHelper.lerpDoubleRef)) {
+    methods.add(PrivateMethodHelper.lerpDouble);
   }
 
-  if (context.hasReference(LerpMethodsHelper.lerpStrutStyleRef)) {
-    methods.add(LerpMethodsHelper.lerpStrutStyle);
-    if (!context.hasReference(LerpMethodsHelper.lerpDoubleRef)) {
-      methods.add(LerpMethodsHelper.lerpDouble);
+  if (context.hasReference(PrivateMethodHelper.mergeListTRef)) {
+    methods.add(PrivateMethodHelper.mergeListT);
+  }
+
+  if (context.hasReference(PrivateMethodHelper.lerpStrutStyleRef)) {
+    methods.add(PrivateMethodHelper.lerpStrutStyle);
+    if (!context.hasReference(PrivateMethodHelper.lerpDoubleRef)) {
+      methods.add(PrivateMethodHelper.lerpDouble);
     }
   }
 
-  if (context.hasReference(LerpMethodsHelper.lerpTextStyleRef)) {
-    methods.add(LerpMethodsHelper.lerpTextStyle);
+  if (context.hasReference(PrivateMethodHelper.lerpTextStyleRef)) {
+    methods.add(PrivateMethodHelper.lerpTextStyle);
   }
 
   return methods;

@@ -5,6 +5,8 @@ import 'package:build/build.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:dart_style/dart_style.dart';
 import 'package:mix_annotations/mix_annotations.dart';
+import 'package:mix_builder/src/helpers/helpers.dart';
+import 'package:mix_builder/src/helpers/settings.dart';
 import 'package:source_gen/source_gen.dart';
 
 import 'helpers/builder_utils.dart';
@@ -28,7 +30,7 @@ class SpecDefinitionBuilder extends GeneratorForAnnotation<MixableSpec> {
       );
     }
 
-    final specDefinition = await loadSpecDefinitions(
+    final context = await _loadContext(
         element,
         DartEmitter(
           allocator: ReferenceTrackingAllocator(),
@@ -39,64 +41,21 @@ class SpecDefinitionBuilder extends GeneratorForAnnotation<MixableSpec> {
 
     final specLibrary = Library((b) => b
       ..body.addAll([
-        MixinSpecBuilder(specDefinition),
-        ClassSpecAttributeBuilder(specDefinition),
-        UtilityClassBuilder(specDefinition),
-        ClassSpecTweenBuilder(specDefinition),
+        MixinSpecBuilder(context),
+        ClassSpecAttributeBuilder(context),
+        UtilityClassBuilder(context),
+        ClassSpecTweenBuilder(context),
+        ...MethodPrivateHelpers(context),
       ]));
 
-    return specDefinition.generate(specLibrary);
+    return context.generate(specLibrary);
   }
 }
 
-Class ClassSpecBuilder(SpecDefinitionContext context) {
-  final specRef = MixTypes.foundation.spec;
-
-  final specClassName = context.options.specClassName;
-  final fields = context.fields;
-
-  return Class((b) {
-    b.name = specClassName;
-    b.extend = TypeReference((b) => b
-      ..symbol = specRef.symbol
-      ..types.add(refer(specClassName)));
-    b.docs.addAll([
-      '/// A specification that defines the visual properties of $specClassName.',
-      '///',
-      '/// To retrieve an instance of [$specClassName], use the [$specClassName.of] method with a',
-      '/// [BuildContext], or the [$specClassName.from] method with [MixData]',
-    ]);
-
-    b.fields.addAll(fields.classFields);
-
-    b.constructors.add(
-      Constructor((builder) {
-        builder.constant = true;
-        builder.optionalParameters.addAll(fields.constructorParams);
-        builder.docs.addAll([
-          '/// Creates a [$specClassName] with the given fields',
-          '///',
-          '// All parameters are optional',
-        ]);
-      }),
-    );
-
-    b.methods.addAll([
-      MethodCopyWithBuilder(className: specClassName, fields: fields),
-      MethodLerpBuilder(
-        className: specClassName,
-        fields: fields,
-        emitter: context.emitter,
-      ),
-      GetterPropsBuilder(className: specClassName, fields: fields),
-    ]);
-  });
-}
-
-Mixin MixinSpecBuilder(SpecDefinitionContext context) {
-  final specClassName = context.options.specClassName;
-  final specClassMixinName = context.options.specClassMixinName;
-  final attributeName = context.options.specAttributeClassName;
+Mixin MixinSpecBuilder(SpecAnnotationContext context) {
+  final specClassName = context.specClassName;
+  final specClassMixinName = context.specClassMixinName;
+  final attributeName = context.specAttributeClassName;
   final fields = context.fields;
 
   final specRef = MixTypes.foundation.spec.symbol!;
@@ -125,14 +84,12 @@ Mixin MixinSpecBuilder(SpecDefinitionContext context) {
           className: specClassName, fields: fields, isInternalRef: true),
       GetterSelfBuilder(className: specClassName),
     ]);
-
-    b.methods.addAll(MethodLerpHelpers(context));
   });
 }
 
-Class ClassSpecAttributeBuilder(SpecDefinitionContext context) {
-  final specClassName = context.options.specClassName;
-  final specAttributeClassName = context.options.specAttributeClassName;
+Class ClassSpecAttributeBuilder(SpecAnnotationContext context) {
+  final specClassName = context.specClassName;
+  final specAttributeClassName = context.specAttributeClassName;
   final fields = context.fields;
   final extendsType = 'SpecAttribute<$specClassName>';
 
@@ -159,15 +116,18 @@ Class ClassSpecAttributeBuilder(SpecDefinitionContext context) {
     );
 
     b.methods.addAll([
-      MethodResolveBuilder(resolveToType: specClassName, fields: fields),
-      MethodMergeBuilder(className: specAttributeClassName, fields: fields),
+      MethodResolveBuilder(
+        resolveToType: specClassName,
+        fields: fields,
+      ),
+      MethodMergeBuilder(className: specAttributeClassName, context: context),
       GetterPropsBuilder(className: specAttributeClassName, fields: fields),
     ]);
   });
 }
 
-Class ClassSpecTweenBuilder(SpecDefinitionContext context) {
-  final specClassName = context.options.specClassName;
+Class ClassSpecTweenBuilder(SpecAnnotationContext context) {
+  final specClassName = context.specClassName;
 
   return Class((builder) {
     builder.docs.addAll([
@@ -216,9 +176,9 @@ Class ClassSpecTweenBuilder(SpecDefinitionContext context) {
   });
 }
 
-Class UtilityClassBuilder(SpecDefinitionContext context) {
-  final specClassName = context.options.specClassName;
-  final specAttributeClassName = context.options.specAttributeClassName;
+Class UtilityClassBuilder(SpecAnnotationContext context) {
+  final specClassName = context.specClassName;
+  final specAttributeClassName = context.specAttributeClassName;
   final fields = context.fields;
   final utilityClassName = '${specClassName}Utility';
 
@@ -261,4 +221,39 @@ Class UtilityClassBuilder(SpecDefinitionContext context) {
       ),
     );
   });
+}
+
+Future<SpecAnnotationContext> _loadContext(
+  ClassElement classElement,
+  DartEmitter emitter,
+  DartFormatter formatter,
+) async {
+  final annotation =
+      _specDefinitionTypeChecker.firstAnnotationOfExact(classElement)!;
+
+  final fields = sortedConstructorFields(classElement, null);
+  final specDefinition = SpecAnnotationContext(
+    element: classElement,
+    emitter: emitter,
+    formatter: formatter,
+    annotation: _readSpecAnnotation(Settings(), ConstantReader(annotation)),
+    fields: fields,
+  );
+
+  return specDefinition;
+}
+
+const _specDefinitionTypeChecker = TypeChecker.fromRuntime(MixableSpec);
+
+MixableSpec _readSpecAnnotation(
+  Settings settings,
+  ConstantReader reader,
+) {
+  final utilityName = reader.peek('utilityName')?.stringValue;
+  final attributeName = reader.peek('attributeName')?.stringValue;
+
+  return MixableSpec(
+    utilityName: utilityName,
+    attributeName: attributeName,
+  );
 }

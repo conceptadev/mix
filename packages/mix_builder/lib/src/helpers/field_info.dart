@@ -3,8 +3,8 @@ import 'package:analyzer/dart/element/element.dart'
     show ClassElement, FieldElement, ParameterElement;
 import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:code_builder/code_builder.dart';
+import 'package:collection/collection.dart';
 import 'package:mix_annotations/mix_annotations.dart';
-import 'package:mix_builder/src/helpers/settings.dart';
 import 'package:source_gen/source_gen.dart' show ConstantReader, TypeChecker;
 
 final _utilityMap = {
@@ -65,12 +65,15 @@ final _dtoMap = {
   'BoxShadow': 'BoxShadowDto',
   'Gradient': 'GradientDto',
   'List<Shadow>': 'List<ShadowDto>',
+  'List<Color>': 'List<ColorDto>',
   'BoxBorder': 'BoxBorderDto',
   'BorderRadiusGeometry': 'BorderRadiusGeometryDto',
   'BorderSide': 'BorderSideDto',
   'BorderRadiusDirectional': 'BorderRadiusDirectionalDto',
   'TextDirective': 'TextDirectiveDto'
 };
+
+final _dtoValues = _dtoMap.values.toSet();
 
 /// Class field info relevant for code generation.
 class FieldInfo {
@@ -155,13 +158,19 @@ class ParameterInfo extends FieldInfo {
   /// Returns whether the field has a DTO type associated with it.
   bool get hasDto => dtoType != null;
 
+  bool get isDto =>
+      _dtoValues.firstWhereOrNull((e) => e == asRequiredType) != null;
+
   bool get isListType => type.startsWith('List<');
 
   /// Returns the DTO type associated with the field, if any.
   /// If a DTO type is explicitly specified in the `MixProperty` annotation, that is returned.
   /// Otherwise, the DTO type is inferred from the field type using a mapping defined in `_dtoMap`.
 
-  String? get _dto => annotation.dto?.typeAsString ?? _dtoMap[asRequiredType];
+  String? get _dto =>
+      (annotation.dto?.typeAsString ?? _dtoMap[asRequiredType]) ??
+      _dtoValues.firstWhereOrNull((e) => e == asRequiredType);
+
   Reference? get dtoType => _dto == null ? null : refer(_dto!);
 
   bool get hasUtility => utilityType != null;
@@ -226,19 +235,6 @@ MixableField _getMixableField(ConstantReader reader) {
   return MixableField(
     dto: dto == null ? null : _getMixableDto(dto),
     utility: utility == null ? null : _getMixableFieldUtility(utility),
-  );
-}
-
-MixableSpec readSpecAnnotation(
-  Settings settings,
-  ConstantReader reader,
-) {
-  final utilityName = reader.peek('utilityName')?.stringValue;
-  final attributeName = reader.peek('attributeName')?.stringValue;
-
-  return MixableSpec(
-    utilityName: utilityName,
-    attributeName: attributeName,
   );
 }
 

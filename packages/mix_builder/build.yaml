@@ -2,6 +2,12 @@ builders:
   spec:
     import: "package:mix_builder/builder.dart"
     builder_factories: ["specDefinition"]
-    build_extensions: {".dart": [".spec.dart"]}
+    build_extensions: {".dart": [".g.dart"]}
+    auto_apply: dependents
+    build_to: source
+  dto:
+    import: "package:mix_builder/builder.dart"
+    builder_factories: ["dtoDefinition"]
+    build_extensions: {".dart": [".g.dart"]}
     auto_apply: dependents
     build_to: source
