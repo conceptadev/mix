@@ -5,7 +5,6 @@ import 'package:todo_list/pages/controller/task_controller.dart';
 import 'package:todo_list/style/design_tokens.dart';
 
 import '../style/components/button.dart';
-import '../utils/adaptative_dialog.dart';
 
 class AddTaskPage extends StatefulWidget {
   const AddTaskPage({super.key, required this.controller});
@@ -49,7 +48,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
                   text: 'Save',
                   onPressed: () {
                     if (_value.isEmpty) {
-                      showToDoDialog(context);
+                      // showToDoDialog(context);
                       return;
                     }
                     setState(() {

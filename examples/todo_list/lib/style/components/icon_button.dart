@@ -32,7 +32,7 @@ class TodoIconButton extends StatelessWidget {
           $box.color.ref($token.color.surfaceContainer),
         ),
       ).animate(
-        duration: Durations.short2,
+        duration: const Duration(milliseconds: 150),
       ),
       child: StyledIcon(
         icon,
@@ -42,7 +42,7 @@ class TodoIconButton extends StatelessWidget {
             $with.scale(1.1),
           ),
         ).animate(
-          duration: Durations.short2,
+          duration: const Duration(milliseconds: 150),
         ),
       ),
     );

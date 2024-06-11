@@ -31,7 +31,7 @@ class TodoCheckboxListTile extends StatelessWidget {
           $flex.mainAxisAlignment.spaceBetween(),
           scaleEffect(0.98),
         ).animate(
-          duration: Durations.short3,
+          duration: const Duration(milliseconds: 200),
           curve: Curves.easeOut,
         ),
         children: [
@@ -50,7 +50,7 @@ class TodoCheckboxListTile extends StatelessWidget {
                       ? CheckboxTileVariant.checked
                       : CheckboxTileVariant.unchecked,
                 )
-                .animate(duration: Durations.short2),
+                .animate(duration: const Duration(milliseconds: 100)),
           ),
           TodoCheckbox(
             onChanged: onChanged,

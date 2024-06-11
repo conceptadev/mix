@@ -24,7 +24,7 @@ class TodoButton extends StatelessWidget {
         $box.borderRadius(6),
         scaleEffect(),
       ).animate(
-        duration: Durations.short2,
+        duration: const Duration(milliseconds: 150),
       ),
       child: StyledText(
         text,

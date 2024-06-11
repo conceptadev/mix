@@ -39,7 +39,7 @@ class TodoCheckbox extends StatelessWidget {
             value ? _CheckboxVariant.checked : _CheckboxVariant.unchecked,
           )
           .animate(
-            duration: Durations.short2,
+            duration: const Duration(milliseconds: 150),
           ),
       child: StyledIcon(
         Icons.check,
@@ -57,7 +57,7 @@ class TodoCheckbox extends StatelessWidget {
               value ? _CheckboxVariant.checked : _CheckboxVariant.unchecked,
             )
             .animate(
-              duration: Durations.short4,
+              duration: const Duration(milliseconds: 300),
             ),
       ),
     );
