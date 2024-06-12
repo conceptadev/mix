@@ -244,14 +244,21 @@ packages:
     source: hosted
     version: "1.9.1"
   mix:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       path: "../mix"
       relative: true
     source: path
-    version: "1.0.0"
+    version: "1.0.0-beta.15"
+  mix_annotations:
+    dependency: "direct main"
+    description:
+      path: "../mix_annotations"
+      relative: true
+    source: path
+    version: "0.0.1"
   mix_lint:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       path: "../mix_lint"
       relative: true
@@ -415,5 +422,5 @@ packages:
     source: hosted
     version: "3.1.2"
 sdks:
-  dart: ">=3.0.0 <4.0.0"
+  dart: ">=3.0.6 <4.0.0"
   flutter: ">=3.10.6"
