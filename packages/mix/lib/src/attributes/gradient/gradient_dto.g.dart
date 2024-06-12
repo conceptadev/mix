@@ -27,15 +27,16 @@ mixin LinearGradientDtoMixable on Dto<LinearGradient> {
     if (other == null) return _$this;
 
     return LinearGradientDto(
-        begin: other.begin ?? _$this.begin,
-        end: other.end ?? _$this.end,
-        tileMode: other.tileMode ?? _$this.tileMode,
-        transform: other.transform ?? _$this.transform,
-        colors: Dto.mergeList(_$this.colors, other._$this.colors),
-        stops: _mergeListT(
-          _$this.stops,
-          other.stops,
-        ));
+      begin: other.begin ?? _$this.begin,
+      end: other.end ?? _$this.end,
+      tileMode: other.tileMode ?? _$this.tileMode,
+      transform: other.transform ?? _$this.transform,
+      colors: Dto.mergeList(_$this.colors, other._$this.colors),
+      stops: _mergeListT(
+        _$this.stops,
+        other.stops,
+      ),
+    );
   }
 
   /// The list of properties that constitute the state of this [LinearGradientDto].
@@ -180,17 +181,18 @@ mixin RadialGradientDtoMixable on Dto<RadialGradient> {
     if (other == null) return _$this;
 
     return RadialGradientDto(
-        center: other.center ?? _$this.center,
-        radius: other.radius ?? _$this.radius,
-        tileMode: other.tileMode ?? _$this.tileMode,
-        focal: other.focal ?? _$this.focal,
-        focalRadius: other.focalRadius ?? _$this.focalRadius,
-        transform: other.transform ?? _$this.transform,
-        colors: Dto.mergeList(_$this.colors, other._$this.colors),
-        stops: _mergeListT(
-          _$this.stops,
-          other.stops,
-        ));
+      center: other.center ?? _$this.center,
+      radius: other.radius ?? _$this.radius,
+      tileMode: other.tileMode ?? _$this.tileMode,
+      focal: other.focal ?? _$this.focal,
+      focalRadius: other.focalRadius ?? _$this.focalRadius,
+      transform: other.transform ?? _$this.transform,
+      colors: Dto.mergeList(_$this.colors, other._$this.colors),
+      stops: _mergeListT(
+        _$this.stops,
+        other.stops,
+      ),
+    );
   }
 
   /// The list of properties that constitute the state of this [RadialGradientDto].
@@ -352,16 +354,17 @@ mixin SweepGradientDtoMixable on Dto<SweepGradient> {
     if (other == null) return _$this;
 
     return SweepGradientDto(
-        center: other.center ?? _$this.center,
-        startAngle: other.startAngle ?? _$this.startAngle,
-        endAngle: other.endAngle ?? _$this.endAngle,
-        tileMode: other.tileMode ?? _$this.tileMode,
-        transform: other.transform ?? _$this.transform,
-        colors: Dto.mergeList(_$this.colors, other._$this.colors),
-        stops: _mergeListT(
-          _$this.stops,
-          other.stops,
-        ));
+      center: other.center ?? _$this.center,
+      startAngle: other.startAngle ?? _$this.startAngle,
+      endAngle: other.endAngle ?? _$this.endAngle,
+      tileMode: other.tileMode ?? _$this.tileMode,
+      transform: other.transform ?? _$this.transform,
+      colors: Dto.mergeList(_$this.colors, other._$this.colors),
+      stops: _mergeListT(
+        _$this.stops,
+        other.stops,
+      ),
+    );
   }
 
   /// The list of properties that constitute the state of this [SweepGradientDto].

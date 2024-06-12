@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 
+// ignore: avoid-importing-entrypoint-exports
 import '../../../mix.dart';
 
 part 'image_spec.g.dart';

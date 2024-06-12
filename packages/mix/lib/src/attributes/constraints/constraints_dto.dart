@@ -1,6 +1,7 @@
 import 'package:flutter/rendering.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 
+// ignore: avoid-importing-entrypoint-exports
 import '../../../mix.dart';
 
 part 'constraints_dto.g.dart';

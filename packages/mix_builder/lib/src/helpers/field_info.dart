@@ -57,6 +57,11 @@ final _utilityMap = {
   'BorderStyle': 'BorderStyleUtility',
   'DecorationImage': 'DecorationImageUtility',
   'ImageProvider<Object>': 'ImageProviderUtility',
+  'FontStyle': 'FontStyleUtility',
+  'FontWeight': 'FontWeightUtility',
+  'FontFamily': 'FontFamilyUtility',
+  'String': 'StringUtility',
+  'List<String>': 'StringListUtility',
 };
 
 final _dtoMap = {

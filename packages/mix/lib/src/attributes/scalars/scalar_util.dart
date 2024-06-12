@@ -59,16 +59,10 @@ class ListDtoUtility<T extends Attribute, D extends Dto<Value>, Value> {
   }
 }
 
-abstract base class ListUtility<T extends Attribute, V>
-    extends MixUtility<T, List<V>> {
+final class ListUtility<T extends Attribute, V> extends MixUtility<T, List<V>> {
   const ListUtility(super.builder);
 
   T call(List<V> values) => builder(values);
-}
-
-final class DoubleListUtility<T extends Attribute>
-    extends ListUtility<T, double> {
-  const DoubleListUtility(super.builder);
 }
 
 /// A utility class for creating [Attribute] instances from [AlignmentGeometry] values.
@@ -121,6 +115,17 @@ final class AlignmentUtility<T extends Attribute>
   }
 }
 
+final class StringUtility<T extends Attribute>
+    extends ScalarUtility<T, String> {
+  const StringUtility(super.builder);
+  
+}
+
+final class StringListUtility<T extends Attribute>
+    extends ListUtility<T, String> {
+  const StringListUtility(super.builder);
+}
+
 /// A utility class for creating [Attribute] instances from [double] values.
 ///
 /// This class extends [ScalarUtility] and provides methods to create [Attribute] instances
@@ -134,6 +139,11 @@ final class DoubleUtility<T extends Attribute>
 
   /// Creates an [Attribute] instance with a value of [double.infinity].
   T infinity() => builder(double.infinity);
+}
+
+final class DoubleListUtility<T extends Attribute>
+    extends ListUtility<T, double> {
+  const DoubleListUtility(super.builder);
 }
 
 /// A utilyt class for creating [Attribute] instances from [Duration] values.
@@ -161,8 +171,12 @@ final class DurationUtility<T extends Attribute>
 ///
 /// This class extends [DoubleUtility] and serves as a base for more specific sizing utilities.
 abstract base class SizingUtility<T extends Attribute>
-    extends DoubleUtility<T> {
-  const SizingUtility(super.builder);
+    extends ScalarUtility<T, double> {
+  SizingUtility(super.builder);
+}
+
+final class FontSizeUtility<T extends Attribute> extends SizingUtility<T> {
+  FontSizeUtility(super.builder);
 }
 
 /// A utility class for creating [Attribute] instances from [int] values.
@@ -505,10 +519,6 @@ final class OffsetUtility<T extends Attribute> extends MixUtility<T, Offset> {
   T call(double dx, double dy) => builder(Offset(dx, dy));
 
   T zero() => builder(Offset.zero);
-}
-
-final class FontSizeUtility<T extends Attribute> extends SizingUtility<T> {
-  const FontSizeUtility(super.builder);
 }
 
 final class BoxFitUtility<T extends Attribute>

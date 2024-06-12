@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mix/src/attributes/strut_style/strut_style_dto.dart';
-import 'package:mix/src/attributes/strut_style/strut_style_util.dart';
+import 'package:mix/mix.dart';
+
 
 import '../../../helpers/attribute_generator.dart';
 import '../../../helpers/testing_utils.dart';

@@ -12,7 +12,6 @@ export '../attributes/nested_style/nested_style_util.dart';
 export '../attributes/scalars/scalar_util.dart';
 export '../attributes/shadow/shadow_util.dart';
 export '../attributes/spacing/spacing_util.dart';
-export '../attributes/strut_style/strut_style_util.dart';
 export '../attributes/text_style/text_style_util.dart';
 export '../modifiers/widget_modifiers_util.dart';
 export '../specs/spec_util.dart';

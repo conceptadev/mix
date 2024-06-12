@@ -99,13 +99,10 @@ Method MethodMergeBuilder({
     final thisName = isInternalRef ? field.asInternalRef : field.name;
     if (field.hasDto) {
       if (field.isListType) {
-        return Code(
-          '$propName: Dto.mergeList($thisName, other.$thisName),',
-        );
+        return Code('$propName: Dto.mergeList($thisName, other.$thisName)');
       } else {
         return Code(
-          '$propName: $thisName?.merge(other.$propName) ?? other.$propName,',
-        );
+            '$propName: $thisName?.merge(other.$propName) ?? other.$propName');
       }
     } else {
       if (field.isListType) {
@@ -115,10 +112,10 @@ Method MethodMergeBuilder({
                 refer('other.$propName')
               ]).accept(emitter)}');
         } else {
-          return Code('$propName: [...?$thisName,...other.$propName],');
+          return Code('$propName: [...?$thisName,...?other.$propName]');
         }
       } else {
-        return Code('$propName: other.$propName ?? $thisName,');
+        return Code('$propName: other.$propName ?? $thisName');
       }
     }
   });
@@ -132,11 +129,13 @@ Method MethodMergeBuilder({
       b.type = refer('$className?');
     }));
     b.body = Block.of([
-      Code('if (other == null) return $thisRef;'),
-      Code(''),
-      Code('return $className('),
-      Block.of(fieldStatements),
-      Code(');'),
+      Code('''
+        if (other == null) return $thisRef;
+
+        return $className(
+          ${fieldStatements.join(',')},
+        );
+      ''')
     ]);
   });
 }
@@ -149,7 +148,7 @@ Method MethodCopyWithBuilder({
   final fieldStatements = fields.map((field) {
     final fieldName =
         isInternalRef ? field.asInternalRef : 'this.${field.name}';
-    return Code('${field.name}: ${field.name} ?? $fieldName,');
+    return Code('${field.name}: ${field.name} ?? $fieldName');
   });
   return Method((builder) {
     builder.docs.addAll([
@@ -161,9 +160,11 @@ Method MethodCopyWithBuilder({
     builder.returns = refer(className);
     builder.optionalParameters.addAll(fields.methodParams);
     builder.body = Block.of([
-      Code('return $className('),
-      Block.of(fieldStatements),
-      Code(');'),
+      Code('''
+      return $className(
+        ${fieldStatements.join(',')},
+      );
+      ''')
     ]);
   });
 }
