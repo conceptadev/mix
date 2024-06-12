@@ -1,3 +1,6 @@
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 
 import '../../core/attribute.dart';
@@ -5,7 +8,7 @@ import '../../core/dto.dart';
 import '../../core/modifier.dart';
 import '../../theme/tokens/radius_token.dart';
 
-abstract class MixUtility<Attr extends Attribute, Value> {
+abstract base class MixUtility<Attr extends Attribute, Value> {
   @protected
   final Attr Function(Value) builder;
   const MixUtility(this.builder);
@@ -13,17 +16,17 @@ abstract class MixUtility<Attr extends Attribute, Value> {
   static T selfBuilder<T>(T value) => value;
 }
 
-abstract class WidgetModifierUtility<
+abstract base class WidgetModifierUtility<
     T extends Attribute,
     D extends WidgetModifierAttribute<D, Value>,
     Value extends WidgetModifierSpec<Value>> extends MixUtility<T, D> {
   const WidgetModifierUtility(super.builder);
 }
 
-abstract class DtoUtility<Attr extends Attribute, D extends Dto<Value>, Value>
-    extends MixUtility<Attr, D> {
+abstract base class DtoUtility<Attr extends Attribute, D extends Dto<Value>,
+    Value> extends MixUtility<Attr, D> {
   final D Function(Value) _fromValue;
-  const DtoUtility(super.builder, {required D Function(Value) valueToDto})
+  DtoUtility(super.builder, {required D Function(Value) valueToDto})
       : _fromValue = valueToDto;
 
   Attr only();
@@ -31,18 +34,48 @@ abstract class DtoUtility<Attr extends Attribute, D extends Dto<Value>, Value>
   Attr as(Value value) => builder(_fromValue(value));
 }
 
-abstract class ScalarUtility<Return extends Attribute, Param>
+abstract base class ScalarUtility<Return extends Attribute, Param>
     extends MixUtility<Return, Param> {
   const ScalarUtility(super.builder);
 
   Return call(Param value) => builder(value);
 }
 
+class ListDtoUtility<T extends Attribute, D extends Dto<Value>, Value> {
+  final T Function(List<D>) builder;
+  final D Function(Value) valueToDto;
+  const ListDtoUtility(this.builder, this.valueToDto);
+
+  /// Creates an [Attribute] instance from a list of [BoxShadow] objects.
+  ///
+  /// This method maps each [BoxShadow] object to a [ShadowDto] object and passes the
+  /// resulting list to the [builder] function to create the [Attribute] instance.
+// ListDtoUtility<T, ColorDto, Color>(
+//     (v) => only(colors: v),
+//     (v) => v.toDto(),
+//   );
+  T call(List<Value> values) {
+    return builder(values.map(valueToDto).toList());
+  }
+}
+
+abstract base class ListUtility<T extends Attribute, V>
+    extends MixUtility<T, List<V>> {
+  const ListUtility(super.builder);
+
+  T call(List<V> values) => builder(values);
+}
+
+final class DoubleListUtility<T extends Attribute>
+    extends ListUtility<T, double> {
+  const DoubleListUtility(super.builder);
+}
+
 /// A utility class for creating [Attribute] instances from [AlignmentGeometry] values.
 ///
 /// This class extends [ScalarUtility] and provides methods to create [Attribute] instances
 /// from predefined [Alignment] values or custom [Alignment] and [AlignmentDirectional] values.
-class AlignmentUtility<T extends Attribute>
+final class AlignmentUtility<T extends Attribute>
     extends ScalarUtility<T, AlignmentGeometry> {
   const AlignmentUtility(super.builder);
 
@@ -92,7 +125,8 @@ class AlignmentUtility<T extends Attribute>
 ///
 /// This class extends [ScalarUtility] and provides methods to create [Attribute] instances
 /// from predefined [double] values or custom [double] values.
-class DoubleUtility<T extends Attribute> extends ScalarUtility<T, double> {
+final class DoubleUtility<T extends Attribute>
+    extends ScalarUtility<T, double> {
   const DoubleUtility(super.builder);
 
   /// Creates an [Attribute] instance with a value of 0.
@@ -106,7 +140,8 @@ class DoubleUtility<T extends Attribute> extends ScalarUtility<T, double> {
 ///
 /// This class extends [ScalarUtility] and provides methods to create [Attribute] instances
 /// from predefined [Duration] values or custom [Duration] values.
-class DurationUtility<T extends Attribute> extends ScalarUtility<T, Duration> {
+final class DurationUtility<T extends Attribute>
+    extends ScalarUtility<T, Duration> {
   const DurationUtility(super.builder);
 
   T zero() => builder(Duration.zero);
@@ -125,7 +160,8 @@ class DurationUtility<T extends Attribute> extends ScalarUtility<T, Duration> {
 /// An abstract utility class for creating [Attribute] instances from [double] values representing sizes.
 ///
 /// This class extends [DoubleUtility] and serves as a base for more specific sizing utilities.
-abstract class SizingUtility<T extends Attribute> extends DoubleUtility<T> {
+abstract base class SizingUtility<T extends Attribute>
+    extends DoubleUtility<T> {
   const SizingUtility(super.builder);
 }
 
@@ -133,7 +169,7 @@ abstract class SizingUtility<T extends Attribute> extends DoubleUtility<T> {
 ///
 /// This class extends [ScalarUtility] and provides methods to create [Attribute] instances
 /// from predefined [int] values or custom [int] values.
-class IntUtility<T extends Attribute> extends ScalarUtility<T, int> {
+final class IntUtility<T extends Attribute> extends ScalarUtility<T, int> {
   const IntUtility(super.builder);
 
   /// Creates an [Attribute] instance with a value of 0.
@@ -148,7 +184,7 @@ class IntUtility<T extends Attribute> extends ScalarUtility<T, int> {
 ///
 /// This class extends [ScalarUtility] and provides methods to create [Attribute] instances
 /// from predefined [Curve] values or custom [Curve] values.
-class CurveUtility<T extends Attribute> extends ScalarUtility<T, Curve> {
+final class CurveUtility<T extends Attribute> extends ScalarUtility<T, Curve> {
   const CurveUtility(super.builder);
 
   /// Creates an [Attribute] instance with [Curves.linear].
@@ -186,7 +222,7 @@ class CurveUtility<T extends Attribute> extends ScalarUtility<T, Curve> {
 ///
 /// This class extends [ScalarUtility] and provides methods to create [Attribute] instances
 /// from predefined [bool] values or custom [bool] values.
-class BoolUtility<T extends Attribute> extends ScalarUtility<T, bool> {
+final class BoolUtility<T extends Attribute> extends ScalarUtility<T, bool> {
   const BoolUtility(super.builder);
 
   /// Creates an [Attribute] instance with a value of `true`.
@@ -200,7 +236,7 @@ class BoolUtility<T extends Attribute> extends ScalarUtility<T, bool> {
 ///
 /// This class extends [ScalarUtility] and provides methods to create [Attribute] instances
 /// from predefined [VerticalDirection] values.
-class VerticalDirectionUtility<T extends Attribute>
+final class VerticalDirectionUtility<T extends Attribute>
     extends ScalarUtility<T, VerticalDirection> {
   const VerticalDirectionUtility(super.builder);
 
@@ -215,7 +251,7 @@ class VerticalDirectionUtility<T extends Attribute>
 ///
 /// This class extends [ScalarUtility] and provides methods to create [Attribute] instances
 /// from predefined [BorderStyle] values.
-class BorderStyleUtility<T extends Attribute>
+final class BorderStyleUtility<T extends Attribute>
     extends ScalarUtility<T, BorderStyle> {
   const BorderStyleUtility(super.builder);
 
@@ -226,11 +262,23 @@ class BorderStyleUtility<T extends Attribute>
   T solid() => builder(BorderStyle.solid);
 }
 
+final class ImageProviderUtility<T extends Attribute>
+    extends ScalarUtility<T, ImageProvider> {
+  const ImageProviderUtility(super.builder);
+
+  /// Creates an [Attribute] instance with [ImageProvider.network].
+  /// @param url The URL of the image.
+  T network(String url) => builder(NetworkImage(url));
+  T file(File file) => builder(FileImage(file));
+  T asset(String asset) => builder(AssetImage(asset));
+  T memory(Uint8List bytes) => builder(MemoryImage(bytes));
+}
+
 /// A utility class for creating [Attribute] instances from [Clip] values.
 ///
 /// This class extends [ScalarUtility] and provides methods to create [Attribute] instances
 /// from predefined [Clip] values.
-class ClipUtility<T extends Attribute> extends ScalarUtility<T, Clip> {
+final class ClipUtility<T extends Attribute> extends ScalarUtility<T, Clip> {
   const ClipUtility(super.builder);
 
   /// Creates an [Attribute] instance with [Clip.antiAliasWithSaveLayer].
@@ -250,7 +298,8 @@ class ClipUtility<T extends Attribute> extends ScalarUtility<T, Clip> {
 ///
 /// This class extends [ScalarUtility] and provides methods to create [Attribute] instances
 /// from predefined [FlexFit] values.
-class FlexFitUtility<T extends Attribute> extends ScalarUtility<T, FlexFit> {
+final class FlexFitUtility<T extends Attribute>
+    extends ScalarUtility<T, FlexFit> {
   const FlexFitUtility(super.builder);
 
   /// Creates an [Attribute] instance with [FlexFit.tight].
@@ -264,7 +313,7 @@ class FlexFitUtility<T extends Attribute> extends ScalarUtility<T, FlexFit> {
 ///
 /// This class extends [ScalarUtility] and provides a constructor to create instances
 /// of this utility class.
-class TextHeightBehaviorUtility<T extends Attribute>
+final class TextHeightBehaviorUtility<T extends Attribute>
     extends ScalarUtility<T, TextHeightBehavior> {
   const TextHeightBehaviorUtility(super.builder);
 }
@@ -273,7 +322,7 @@ class TextHeightBehaviorUtility<T extends Attribute>
 ///
 /// This class extends [ScalarUtility] and provides methods to create [Attribute] instances
 /// from predefined [Axis] values.
-class AxisUtility<T extends Attribute> extends ScalarUtility<T, Axis> {
+final class AxisUtility<T extends Attribute> extends ScalarUtility<T, Axis> {
   const AxisUtility(super.builder);
 
   /// Creates an [Attribute] instance with [Axis.horizontal].
@@ -287,7 +336,8 @@ class AxisUtility<T extends Attribute> extends ScalarUtility<T, Axis> {
 ///
 /// This class extends [ScalarUtility] and provides methods to create [Attribute] instances
 /// from predefined [StackFit] values.
-class StackFitUtility<T extends Attribute> extends ScalarUtility<T, StackFit> {
+final class StackFitUtility<T extends Attribute>
+    extends ScalarUtility<T, StackFit> {
   const StackFitUtility(super.builder);
 
   /// Creates an [Attribute] instance with [StackFit.loose].
@@ -304,7 +354,7 @@ class StackFitUtility<T extends Attribute> extends ScalarUtility<T, StackFit> {
 ///
 /// This class extends [ScalarUtility] and provides methods to create [Attribute] instances
 /// from predefined [TextDirection] values.
-class TextDirectionUtility<T extends Attribute>
+final class TextDirectionUtility<T extends Attribute>
     extends ScalarUtility<T, TextDirection> {
   const TextDirectionUtility(super.builder);
 
@@ -319,7 +369,8 @@ class TextDirectionUtility<T extends Attribute>
 ///
 /// This class extends [ScalarUtility] and provides methods to create [Attribute] instances
 /// from predefined [TileMode] values.
-class TileModeUtility<T extends Attribute> extends ScalarUtility<T, TileMode> {
+final class TileModeUtility<T extends Attribute>
+    extends ScalarUtility<T, TileMode> {
   const TileModeUtility(super.builder);
 
   /// Creates an [Attribute] instance with [TileMode.clamp].
@@ -339,7 +390,7 @@ class TileModeUtility<T extends Attribute> extends ScalarUtility<T, TileMode> {
 ///
 /// This class extends [ScalarUtility] and provides a method to create [Attribute] instances
 /// from [GradientRotation] values.
-class GradientTransformUtility<T extends Attribute>
+final class GradientTransformUtility<T extends Attribute>
     extends ScalarUtility<T, GradientTransform> {
   const GradientTransformUtility(super.builder);
 
@@ -351,7 +402,8 @@ class GradientTransformUtility<T extends Attribute>
 ///
 /// This class extends [ScalarUtility] and provides methods to create [Attribute] instances
 /// from predefined [Matrix4] values or custom [Matrix4] values.
-class Matrix4Utility<T extends Attribute> extends ScalarUtility<T, Matrix4> {
+final class Matrix4Utility<T extends Attribute>
+    extends ScalarUtility<T, Matrix4> {
   const Matrix4Utility(super.builder);
 
   /// Creates an [Attribute] instance with [Matrix4.identity].
@@ -375,7 +427,7 @@ class Matrix4Utility<T extends Attribute> extends ScalarUtility<T, Matrix4> {
 ///
 /// This class extends [ScalarUtility] and provides methods to create [Attribute] instances
 /// from predefined [MainAxisAlignment] values.
-class MainAxisAlignmentUtility<T extends Attribute>
+final class MainAxisAlignmentUtility<T extends Attribute>
     extends ScalarUtility<T, MainAxisAlignment> {
   const MainAxisAlignmentUtility(super.builder);
 
@@ -402,7 +454,7 @@ class MainAxisAlignmentUtility<T extends Attribute>
 ///
 /// This class extends [ScalarUtility] and provides methods to create [Attribute] instances
 /// from predefined [CrossAxisAlignment] values.
-class CrossAxisAlignmentUtility<T extends Attribute>
+final class CrossAxisAlignmentUtility<T extends Attribute>
     extends ScalarUtility<T, CrossAxisAlignment> {
   const CrossAxisAlignmentUtility(super.builder);
 
@@ -422,18 +474,19 @@ class CrossAxisAlignmentUtility<T extends Attribute>
   T baseline() => builder(CrossAxisAlignment.baseline);
 }
 
-class MainAxisSizeUtility<T extends Attribute>
+final class MainAxisSizeUtility<T extends Attribute>
     extends ScalarUtility<T, MainAxisSize> {
   const MainAxisSizeUtility(super.builder);
   T min() => builder(MainAxisSize.min);
   T max() => builder(MainAxisSize.max);
 }
 
-class FontFamilyUtility<T extends Attribute> extends ScalarUtility<T, String> {
+final class FontFamilyUtility<T extends Attribute>
+    extends ScalarUtility<T, String> {
   const FontFamilyUtility(super.builder);
 }
 
-class ImageRepeatUtility<T extends Attribute>
+final class ImageRepeatUtility<T extends Attribute>
     extends MixUtility<T, ImageRepeat> {
   const ImageRepeatUtility(super.builder);
 
@@ -444,7 +497,7 @@ class ImageRepeatUtility<T extends Attribute>
   T repeatY() => builder(ImageRepeat.repeatY);
 }
 
-class OffsetUtility<T extends Attribute> extends MixUtility<T, Offset> {
+final class OffsetUtility<T extends Attribute> extends MixUtility<T, Offset> {
   const OffsetUtility(super.builder);
 
   T infinite() => builder(Offset.infinite);
@@ -454,11 +507,12 @@ class OffsetUtility<T extends Attribute> extends MixUtility<T, Offset> {
   T zero() => builder(Offset.zero);
 }
 
-class FontSizeUtility<T extends Attribute> extends SizingUtility<T> {
+final class FontSizeUtility<T extends Attribute> extends SizingUtility<T> {
   const FontSizeUtility(super.builder);
 }
 
-class BoxFitUtility<T extends Attribute> extends ScalarUtility<T, BoxFit> {
+final class BoxFitUtility<T extends Attribute>
+    extends ScalarUtility<T, BoxFit> {
   const BoxFitUtility(super.builder);
   T fill() => builder(BoxFit.fill);
   T contain() => builder(BoxFit.contain);
@@ -469,7 +523,7 @@ class BoxFitUtility<T extends Attribute> extends ScalarUtility<T, BoxFit> {
   T scaleDown() => builder(BoxFit.scaleDown);
 }
 
-class BlendModeUtility<T extends Attribute>
+final class BlendModeUtility<T extends Attribute>
     extends ScalarUtility<T, BlendMode> {
   const BlendModeUtility(super.builder);
 
@@ -504,13 +558,14 @@ class BlendModeUtility<T extends Attribute>
   T luminosity() => builder(BlendMode.luminosity);
 }
 
-class BoxShapeUtility<T extends Attribute> extends ScalarUtility<T, BoxShape> {
+final class BoxShapeUtility<T extends Attribute>
+    extends ScalarUtility<T, BoxShape> {
   const BoxShapeUtility(super.builder);
   T circle() => builder(BoxShape.circle);
   T rectangle() => builder(BoxShape.rectangle);
 }
 
-class FontWeightUtility<T extends Attribute>
+final class FontWeightUtility<T extends Attribute>
     extends ScalarUtility<T, FontWeight> {
   const FontWeightUtility(super.builder);
   T bold() => builder(FontWeight.bold);
@@ -526,7 +581,7 @@ class FontWeightUtility<T extends Attribute>
   T w900() => builder(FontWeight.w900);
 }
 
-class TextDecorationUtility<T extends Attribute>
+final class TextDecorationUtility<T extends Attribute>
     extends ScalarUtility<T, TextDecoration> {
   const TextDecorationUtility(super.builder);
 
@@ -536,7 +591,7 @@ class TextDecorationUtility<T extends Attribute>
   T none() => builder(TextDecoration.none);
 }
 
-class FontStyleUtility<T extends Attribute>
+final class FontStyleUtility<T extends Attribute>
     extends ScalarUtility<T, FontStyle> {
   const FontStyleUtility(super.builder);
 
@@ -544,7 +599,7 @@ class FontStyleUtility<T extends Attribute>
   T normal() => builder(FontStyle.normal);
 }
 
-class RadiusUtility<T extends Attribute> extends MixUtility<T, Radius> {
+final class RadiusUtility<T extends Attribute> extends MixUtility<T, Radius> {
   const RadiusUtility(super.builder);
 
   T zero() => builder(Radius.zero);
@@ -558,7 +613,7 @@ class RadiusUtility<T extends Attribute> extends MixUtility<T, Radius> {
   T ref(RadiusToken ref) => builder(ref());
 }
 
-class TextDecorationStyleUtility<T extends Attribute>
+final class TextDecorationStyleUtility<T extends Attribute>
     extends ScalarUtility<T, TextDecorationStyle> {
   const TextDecorationStyleUtility(super.builder);
 
@@ -569,7 +624,7 @@ class TextDecorationStyleUtility<T extends Attribute>
   T wavy() => builder(TextDecorationStyle.wavy);
 }
 
-class TextBaselineUtility<T extends Attribute>
+final class TextBaselineUtility<T extends Attribute>
     extends ScalarUtility<T, TextBaseline> {
   const TextBaselineUtility(super.builder);
 
@@ -577,7 +632,7 @@ class TextBaselineUtility<T extends Attribute>
   T ideographic() => builder(TextBaseline.ideographic);
 }
 
-class TextOverflowUtility<T extends Attribute>
+final class TextOverflowUtility<T extends Attribute>
     extends ScalarUtility<T, TextOverflow> {
   const TextOverflowUtility(super.builder);
   T clip() => builder(TextOverflow.clip);
@@ -585,14 +640,14 @@ class TextOverflowUtility<T extends Attribute>
   T fade() => builder(TextOverflow.fade);
 }
 
-class TextWidthBasisUtility<T extends Attribute>
+final class TextWidthBasisUtility<T extends Attribute>
     extends ScalarUtility<T, TextWidthBasis> {
   const TextWidthBasisUtility(super.builder);
   T parent() => builder(TextWidthBasis.parent);
   T longestLine() => builder(TextWidthBasis.longestLine);
 }
 
-class TextAlignUtility<T extends Attribute>
+final class TextAlignUtility<T extends Attribute>
     extends ScalarUtility<T, TextAlign> {
   const TextAlignUtility(super.builder);
   T left() => builder(TextAlign.left);
@@ -603,7 +658,7 @@ class TextAlignUtility<T extends Attribute>
   T end() => builder(TextAlign.end);
 }
 
-class RectUtility<T extends Attribute> extends ScalarUtility<T, Rect> {
+final class RectUtility<T extends Attribute> extends ScalarUtility<T, Rect> {
   const RectUtility(super.builder);
   T largest() => builder(Rect.largest);
   T zero() => builder(Rect.zero);
@@ -628,7 +683,7 @@ class RectUtility<T extends Attribute> extends ScalarUtility<T, Rect> {
       builder(Rect.fromPoints(a, b));
 }
 
-class FilterQualityUtility<T extends Attribute>
+final class FilterQualityUtility<T extends Attribute>
     extends ScalarUtility<T, FilterQuality> {
   const FilterQualityUtility(super.builder);
 

@@ -5,10 +5,9 @@ import '../scalars/scalar_util.dart';
 import 'border_dto.dart';
 import 'border_radius_dto.dart';
 import 'border_radius_util.dart';
-import 'border_util.dart';
 import 'shape_border_dto.dart';
 
-class ShapeBorderUtility<T extends Attribute>
+final class ShapeBorderUtility<T extends Attribute>
     extends MixUtility<T, ShapeBorderDto> {
   late final roundedRectangle = RoundedRectanbleBorderUtility(builder);
 
@@ -23,7 +22,7 @@ class ShapeBorderUtility<T extends Attribute>
   ShapeBorderUtility(super.builder);
 }
 
-class RoundedRectanbleBorderUtility<T extends Attribute>
+final class RoundedRectanbleBorderUtility<T extends Attribute>
     extends DtoUtility<T, RoundedRectangleBorderDto, RoundedRectangleBorder> {
   late final side = BorderSideUtility((v) => only(side: v));
 
@@ -46,7 +45,7 @@ class RoundedRectanbleBorderUtility<T extends Attribute>
   }
 }
 
-class CircleBorderUtility<T extends Attribute>
+final class CircleBorderUtility<T extends Attribute>
     extends DtoUtility<T, CircleBorderDto, CircleBorder> {
   late final eccentricity = DoubleUtility((v) => only(eccentricity: v));
 
@@ -65,7 +64,7 @@ class CircleBorderUtility<T extends Attribute>
   }
 }
 
-class BeveledRectangleBorderUtility<T extends Attribute>
+final class BeveledRectangleBorderUtility<T extends Attribute>
     extends DtoUtility<T, BeveledRectangleBorderDto, BeveledRectangleBorder> {
   late final side = BorderSideUtility((v) => only(side: v));
 
@@ -88,7 +87,7 @@ class BeveledRectangleBorderUtility<T extends Attribute>
   }
 }
 
-class StadiumBorderUtility<T extends Attribute>
+final class StadiumBorderUtility<T extends Attribute>
     extends DtoUtility<T, StadiumBorderDto, StadiumBorder> {
   late final side = BorderSideUtility((v) => only(side: v));
 
@@ -105,8 +104,9 @@ class StadiumBorderUtility<T extends Attribute>
   }
 }
 
-class ContinuousRectangleBorderUtility<T extends Attribute> extends DtoUtility<
-    T, ContinuousRectangleBorderDto, ContinuousRectangleBorder> {
+final class ContinuousRectangleBorderUtility<T extends Attribute>
+    extends DtoUtility<T, ContinuousRectangleBorderDto,
+        ContinuousRectangleBorder> {
   late final side = BorderSideUtility((v) => only(side: v));
 
   late final borderRadius = BorderRadiusUtility(

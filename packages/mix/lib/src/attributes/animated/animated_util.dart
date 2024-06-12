@@ -5,7 +5,7 @@ import '../../core/models/animated_data.dart';
 import '../scalars/scalar_util.dart';
 import 'animated_data_dto.dart';
 
-class AnimatedUtility<T extends Attribute>
+final class AnimatedUtility<T extends Attribute>
     extends DtoUtility<T, AnimatedDataDto, AnimatedData> {
   AnimatedUtility(super.builder) : super(valueToDto: (value) => value.toDto());
 

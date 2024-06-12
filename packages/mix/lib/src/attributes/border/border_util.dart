@@ -1,59 +1,10 @@
 import 'package:flutter/material.dart';
 
 import '../../core/attribute.dart';
-import '../color/color_dto.dart';
-import '../color/color_util.dart';
 import '../scalars/scalar_util.dart';
 import 'border_dto.dart';
 
-class BorderSideUtility<T extends Attribute>
-    extends DtoUtility<T, BorderSideDto, BorderSide> {
-  late final color = ColorUtility((v) => only(color: v));
-
-  late final style = BorderStyleUtility((v) => only(style: v));
-
-  BorderSideUtility(super.builder)
-      : super(valueToDto: (value) => value.toDto());
-
-  T width(double v) => call(width: v);
-
-  T strokeAlign(double v) => call(strokeAlign: v);
-
-  T none() => call(style: BorderStyle.none);
-
-  T call({
-    Color? color,
-    double? width,
-    BorderStyle? style,
-    double? strokeAlign,
-  }) {
-    return only(
-      color: color?.toDto(),
-      width: width,
-      style: style,
-      strokeAlign: strokeAlign,
-    );
-  }
-
-  @override
-  T only({
-    ColorDto? color,
-    double? width,
-    BorderStyle? style,
-    double? strokeAlign,
-  }) {
-    return builder(
-      BorderSideDto(
-        color: color,
-        strokeAlign: strokeAlign,
-        style: style,
-        width: width,
-      ),
-    );
-  }
-}
-
-class BorderUtility<T extends Attribute>
+final class BorderUtility<T extends Attribute>
     extends DtoUtility<T, BoxBorderDto, BoxBorder> {
   late final start = _directional.start;
 
@@ -133,7 +84,7 @@ class BorderUtility<T extends Attribute>
   }
 }
 
-class BorderDirectionalUtility<T extends Attribute>
+final class BorderDirectionalUtility<T extends Attribute>
     extends DtoUtility<T, BoxBorderDto, BoxBorder> {
   late final all = BorderSideUtility((v) => builder(_fromBorderSide(v)));
 

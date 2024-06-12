@@ -10,15 +10,13 @@ import '../border/shape_border_util.dart';
 import '../color/color_dto.dart';
 import '../color/color_util.dart';
 import '../gradient/gradient_dto.dart';
-import '../gradient/gradient_util.dart';
 import '../scalars/scalar_util.dart';
 import '../shadow/shadow_dto.dart';
 import '../shadow/shadow_util.dart';
 import 'decoration_dto.dart';
 import 'image/decoration_image_dto.dart';
-import 'image/decoration_image_util.dart';
 
-class DecorationUtility<T extends Attribute>
+final class DecorationUtility<T extends Attribute>
     extends MixUtility<T, DecorationDto> {
   late final box = BoxDecorationUtility(builder);
   late final shape = ShapeDecorationUtility(builder);
@@ -37,7 +35,7 @@ class DecorationUtility<T extends Attribute>
   }
 }
 
-class BoxDecorationUtility<T extends Attribute>
+final class BoxDecorationUtility<T extends Attribute>
     extends DtoUtility<T, BoxDecorationDto, BoxDecoration> {
   late final gradient = GradientUtility((v) => only(gradient: v));
   late final boxShadow = BoxShadowUtility((v) => only(boxShadow: [v]));
@@ -108,7 +106,7 @@ class BoxDecorationUtility<T extends Attribute>
   }
 }
 
-class ShapeDecorationUtility<T extends Attribute>
+final class ShapeDecorationUtility<T extends Attribute>
     extends DtoUtility<T, ShapeDecorationDto, ShapeDecoration> {
   late final color = ColorUtility<T>((v) => only(color: v));
   late final gradient = GradientUtility<T>((v) => only(gradient: v));

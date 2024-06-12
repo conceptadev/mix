@@ -99,6 +99,10 @@ class DtoAnnotationContext extends AnnotationContext<MixableDto> {
     required super.annotation,
   });
 
+  String? get resolvedType =>
+      element.allSupertypes.firstOrNull?.typeArguments.first
+          .getDisplayString(withNullability: false);
+
   String get dtoClassName => name;
 
   String get dtoClassMixinName => '${dtoClassName}Mixable';

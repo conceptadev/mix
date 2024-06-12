@@ -72,6 +72,7 @@ class _MixTypeFoundation {
   final mix = Reference('Mix', 'package:mix/mix.dart');
   final mixData = Reference('MixData', 'package:mix/mix.dart');
   final specUtility = Reference('SpecUtility', 'package:mix/mix.dart');
+  final dtoUtility = Reference('DtoUtility', 'package:mix/mix.dart');
   final attribute = Reference('Attribute', 'package:mix/mix.dart');
 }
 

@@ -6,7 +6,7 @@ import '../../../mix.dart';
 part 'box_spec.g.dart';
 
 @MixableSpec()
-class BoxSpec extends Spec<BoxSpec> with BoxSpecMixable {
+final class BoxSpec extends Spec<BoxSpec> with BoxSpecMixable {
   static const of = BoxSpecMixable.of;
 
   static const from = BoxSpecMixable.from;

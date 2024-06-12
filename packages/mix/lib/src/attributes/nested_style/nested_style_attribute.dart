@@ -5,7 +5,7 @@ import '../../factory/style_mix.dart';
 
 /// Allows to pass down Mixes as attributes for use with helpers.
 @immutable
-class NestedStyleAttribute extends Attribute {
+final class NestedStyleAttribute extends Attribute {
   final Style value;
 
   const NestedStyleAttribute(this.value);

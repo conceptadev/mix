@@ -8,7 +8,7 @@ import '../core/models/mix_data.dart';
 import '../core/modifier.dart';
 import '../internal/lerp_helpers.dart';
 
-class RotatedBoxModifierSpec
+final class RotatedBoxModifierSpec
     extends WidgetModifierSpec<RotatedBoxModifierSpec> {
   final int quarterTurns;
   const RotatedBoxModifierSpec(this.quarterTurns);
@@ -35,7 +35,7 @@ class RotatedBoxModifierSpec
   }
 }
 
-class RotatedBoxModifierAttribute extends WidgetModifierAttribute<
+final class RotatedBoxModifierAttribute extends WidgetModifierAttribute<
     RotatedBoxModifierAttribute, RotatedBoxModifierSpec> {
   final int quarterTurns;
   const RotatedBoxModifierAttribute(this.quarterTurns);
@@ -54,7 +54,7 @@ class RotatedBoxModifierAttribute extends WidgetModifierAttribute<
   List<Object?> get props => [quarterTurns];
 }
 
-class RotatedBoxWidgetUtility<T extends Attribute>
+final class RotatedBoxWidgetUtility<T extends Attribute>
     extends MixUtility<T, RotatedBoxModifierAttribute> {
   const RotatedBoxWidgetUtility(super.builder);
   T d90() => builder(const RotatedBoxModifierAttribute(1));

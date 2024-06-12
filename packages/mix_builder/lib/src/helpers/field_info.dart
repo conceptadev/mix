@@ -3,7 +3,6 @@ import 'package:analyzer/dart/element/element.dart'
     show ClassElement, FieldElement, ParameterElement;
 import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:code_builder/code_builder.dart';
-import 'package:collection/collection.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 import 'package:source_gen/source_gen.dart' show ConstantReader, TypeChecker;
 
@@ -50,6 +49,14 @@ final _utilityMap = {
   'BorderRadiusGeometry': 'BorderRadiusGeometryUtility',
   'BorderRadiusDirectional': 'BorderRadiusDirectionalUtility',
   'BorderRadius': 'BorderRadiusUtility',
+  'GradientTransform': 'GradientTransformUtility',
+  'Gradient': 'GradientUtility',
+  'TileMode': 'TileModeUtility',
+  'List<double>': 'DoubleListUtility',
+  'List<Color>': 'ColorListUtility',
+  'BorderStyle': 'BorderStyleUtility',
+  'DecorationImage': 'DecorationImageUtility',
+  'ImageProvider<Object>': 'ImageProviderUtility',
 };
 
 final _dtoMap = {
@@ -73,7 +80,10 @@ final _dtoMap = {
   'TextDirective': 'TextDirectiveDto'
 };
 
-final _dtoValues = _dtoMap.values.toSet();
+/// Replace keys and values from teh _dtoMap
+final _invertedDtoMap = {
+  for (var entry in _dtoMap.entries) entry.value: entry.key
+};
 
 /// Class field info relevant for code generation.
 class FieldInfo {
@@ -94,6 +104,8 @@ class FieldInfo {
 
   /// Type name with nullability flag.
   final String type;
+
+  String get asNameRef => nullable ? name : name + '?';
 
   String get asRequiredType => nullable ? type.replaceFirst('?', '') : type;
 
@@ -158,8 +170,7 @@ class ParameterInfo extends FieldInfo {
   /// Returns whether the field has a DTO type associated with it.
   bool get hasDto => dtoType != null;
 
-  bool get isDto =>
-      _dtoValues.firstWhereOrNull((e) => e == asRequiredType) != null;
+  bool get isDto => _invertedDtoMap[asRequiredType] != null;
 
   bool get isListType => type.startsWith('List<');
 
@@ -169,16 +180,32 @@ class ParameterInfo extends FieldInfo {
 
   String? get _dto =>
       (annotation.dto?.typeAsString ?? _dtoMap[asRequiredType]) ??
-      _dtoValues.firstWhereOrNull((e) => e == asRequiredType);
+      (isDto ? asRequiredType : null);
 
   Reference? get dtoType => _dto == null ? null : refer(_dto!);
 
   bool get hasUtility => utilityType != null;
 
+  String get asResolvedType {
+    if (isDto) {
+      final value = _invertedDtoMap[asRequiredType];
+      if (value == null) {
+        throw Exception('No resolved type found for $asRequiredType');
+      }
+      return value;
+    }
+    return asRequiredType;
+  }
+
   String get utilityName => annotation.utility?.alias ?? name;
   Reference? get utilityType {
-    final utilityType =
-        annotation.utility?.typeAsString ?? _utilityMap[asRequiredType];
+    String? utilityType = annotation.utility?.typeAsString;
+
+    if (isDto) {
+      utilityType ??= _utilityMap[asResolvedType];
+    } else {
+      utilityType ??= _utilityMap[asRequiredType];
+    }
 
     return utilityType == null ? null : refer(utilityType);
   }

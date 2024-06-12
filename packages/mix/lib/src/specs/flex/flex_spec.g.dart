@@ -6,7 +6,7 @@ part of 'flex_spec.dart';
 // Generator: SpecDefinitionBuilder
 // **************************************************************************
 
-mixin FlexSpecMixable on Spec<FlexSpec> {
+base mixin FlexSpecMixable on Spec<FlexSpec> {
   /// Retrieves the [FlexSpec] from a MixData.
   static FlexSpec from(MixData mix) {
     return mix.attributeOf<FlexSpecAttribute>()?.resolve(mix) ??
@@ -108,7 +108,7 @@ mixin FlexSpecMixable on Spec<FlexSpec> {
 ///
 /// Use this class to configure the attributes of a [FlexSpec] and pass it to
 /// the [FlexSpec] constructor.
-class FlexSpecAttribute extends SpecAttribute<FlexSpec> {
+final class FlexSpecAttribute extends SpecAttribute<FlexSpec> {
   const FlexSpecAttribute({
     this.crossAxisAlignment,
     this.mainAxisAlignment,
@@ -200,7 +200,7 @@ class FlexSpecAttribute extends SpecAttribute<FlexSpec> {
 /// This class provides methods to set individual properties of a [FlexSpecAttribute].
 ///
 /// Use the methods of this class to configure specific properties of a [FlexSpecAttribute].
-class FlexSpecUtility<T extends Attribute>
+final class FlexSpecUtility<T extends Attribute>
     extends SpecUtility<T, FlexSpecAttribute> {
   FlexSpecUtility(super.builder);
 

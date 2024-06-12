@@ -62,6 +62,7 @@ Mixin MixinSpecBuilder(SpecAnnotationContext context) {
 
   return Mixin((b) {
     b.name = specClassMixinName;
+    b.base = true;
     b.on = refer('$specRef<$specClassName>');
 
     b.methods.addAll([
@@ -95,6 +96,7 @@ Class ClassSpecAttributeBuilder(SpecAnnotationContext context) {
 
   return Class((b) {
     b.name = specAttributeClassName;
+    b.modifier = ClassModifier.final$;
     b.extend = refer(extendsType);
     b.docs.addAll([
       '/// Represents the attributes of a [$specClassName].',
@@ -191,6 +193,7 @@ Class UtilityClassBuilder(SpecAnnotationContext context) {
   return Class((b) {
     b.name = utilityClassName;
     b.extend = extendsType;
+    b.modifier = ClassModifier.final$;
     b.docs.addAll([
       '/// Utility class for configuring [$specAttributeClassName] properties.',
       '///',

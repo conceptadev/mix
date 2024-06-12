@@ -6,7 +6,7 @@ part of 'box_spec.dart';
 // Generator: SpecDefinitionBuilder
 // **************************************************************************
 
-mixin BoxSpecMixable on Spec<BoxSpec> {
+base mixin BoxSpecMixable on Spec<BoxSpec> {
   /// Retrieves the [BoxSpec] from a MixData.
   static BoxSpec from(MixData mix) {
     return mix.attributeOf<BoxSpecAttribute>()?.resolve(mix) ?? const BoxSpec();
@@ -146,7 +146,7 @@ mixin BoxSpecMixable on Spec<BoxSpec> {
 ///
 /// Use this class to configure the attributes of a [BoxSpec] and pass it to
 /// the [BoxSpec] constructor.
-class BoxSpecAttribute extends SpecAttribute<BoxSpec> {
+final class BoxSpecAttribute extends SpecAttribute<BoxSpec> {
   const BoxSpecAttribute({
     this.alignment,
     this.padding,
@@ -252,7 +252,7 @@ class BoxSpecAttribute extends SpecAttribute<BoxSpec> {
 /// This class provides methods to set individual properties of a [BoxSpecAttribute].
 ///
 /// Use the methods of this class to configure specific properties of a [BoxSpecAttribute].
-class BoxSpecUtility<T extends Attribute>
+final class BoxSpecUtility<T extends Attribute>
     extends SpecUtility<T, BoxSpecAttribute> {
   BoxSpecUtility(super.builder);
 

@@ -5,7 +5,7 @@ import '../scalars/scalar_util.dart';
 import 'strut_style_dto.dart';
 
 @immutable
-class StrutStyleUtility<T extends Attribute>
+final class StrutStyleUtility<T extends Attribute>
     extends DtoUtility<T, StrutStyleDto, StrutStyle> {
   late final fontFamily = FontFamilyUtility((v) => only(fontFamily: v));
 

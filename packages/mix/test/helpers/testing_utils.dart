@@ -183,7 +183,7 @@ class WrapMixThemeWidget extends StatelessWidget {
   }
 }
 
-class MockDoubleScalarAttribute
+final class MockDoubleScalarAttribute
     extends TestScalarAttribute<MockDoubleScalarAttribute, double> {
   const MockDoubleScalarAttribute(super.value);
 }
@@ -205,7 +205,7 @@ class MockContextVariantCondition extends ContextVariant {
   bool when(BuildContext context) => condition;
 }
 
-class MockIntScalarAttribute
+final class MockIntScalarAttribute
     extends TestScalarAttribute<MockIntScalarAttribute, int> {
   const MockIntScalarAttribute(super.value);
 }
@@ -219,12 +219,12 @@ class MockContextVariant extends ContextVariant {
   bool when(BuildContext context) => true;
 }
 
-class MockBooleanScalarAttribute
+final class MockBooleanScalarAttribute
     extends TestScalarAttribute<MockBooleanScalarAttribute, bool> {
   const MockBooleanScalarAttribute(super.value);
 }
 
-abstract class _MockSpecAttribute<T> extends SpecAttribute<T> {
+abstract base class _MockSpecAttribute<T> extends SpecAttribute<T> {
   final T _value;
   const _MockSpecAttribute(this._value);
 
@@ -238,7 +238,7 @@ abstract class _MockSpecAttribute<T> extends SpecAttribute<T> {
   get props => [_value];
 }
 
-class MockSpecBooleanAttribute extends _MockSpecAttribute<bool> {
+final class MockSpecBooleanAttribute extends _MockSpecAttribute<bool> {
   const MockSpecBooleanAttribute(super.value);
 
   @override
@@ -247,7 +247,7 @@ class MockSpecBooleanAttribute extends _MockSpecAttribute<bool> {
   }
 }
 
-class MockSpecIntAttribute extends _MockSpecAttribute<int> {
+final class MockSpecIntAttribute extends _MockSpecAttribute<int> {
   const MockSpecIntAttribute(super.value);
 
   @override
@@ -256,7 +256,7 @@ class MockSpecIntAttribute extends _MockSpecAttribute<int> {
   }
 }
 
-class MockSpecDoubleAttribute extends _MockSpecAttribute<double> {
+final class MockSpecDoubleAttribute extends _MockSpecAttribute<double> {
   const MockSpecDoubleAttribute(super.value);
 
   @override
@@ -265,7 +265,7 @@ class MockSpecDoubleAttribute extends _MockSpecAttribute<double> {
   }
 }
 
-class MockSpecStringAttribute extends _MockSpecAttribute<String> {
+final class MockSpecStringAttribute extends _MockSpecAttribute<String> {
   const MockSpecStringAttribute(super.value);
 
   @override
@@ -274,12 +274,12 @@ class MockSpecStringAttribute extends _MockSpecAttribute<String> {
   }
 }
 
-class MockStringScalarAttribute
+final class MockStringScalarAttribute
     extends TestScalarAttribute<MockStringScalarAttribute, String> {
   const MockStringScalarAttribute(super.value);
 }
 
-class MockInvalidAttribute extends Attribute {
+final class MockInvalidAttribute extends Attribute {
   const MockInvalidAttribute();
 
   @override
@@ -293,12 +293,12 @@ class MockInvalidAttribute extends Attribute {
 
 const mockVariant = Variant('mock-variant');
 
-class UtilityTestAttribute<T>
+final class UtilityTestAttribute<T>
     extends TestScalarAttribute<UtilityTestAttribute<T>, T> {
   const UtilityTestAttribute(super.value);
 }
 
-class UtilityTestDtoAttribute<T extends Dto<V>, V>
+final class UtilityTestDtoAttribute<T extends Dto<V>, V>
     extends TestScalarAttribute<UtilityTestDtoAttribute<T, V>, T> {
   const UtilityTestDtoAttribute(super.value);
 
@@ -307,7 +307,7 @@ class UtilityTestDtoAttribute<T extends Dto<V>, V>
   }
 }
 
-class CustomWidgetModifierSpec
+final class CustomWidgetModifierSpec
     extends WidgetModifierSpec<CustomWidgetModifierSpec> {
   final bool value;
   const CustomWidgetModifierSpec(
@@ -336,7 +336,7 @@ class CustomWidgetModifierSpec
   }
 }
 
-class CustomModifierAttribute extends WidgetModifierAttribute<
+final class CustomModifierAttribute extends WidgetModifierAttribute<
     CustomModifierAttribute, CustomWidgetModifierSpec> {
   final bool? value;
   const CustomModifierAttribute([this.value = true]);
@@ -374,7 +374,7 @@ class WidgetWithTestableBuild extends StyledWidget {
   }
 }
 
-abstract class TestScalarAttribute<
+abstract base class TestScalarAttribute<
     Self extends TestScalarAttribute<Self, Value>,
     Value> extends StyledAttribute {
   final Value value;

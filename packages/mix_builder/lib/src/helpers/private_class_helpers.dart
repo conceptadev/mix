@@ -24,7 +24,7 @@ class PrivateMethodHelper {
       b.type = refer('List<T>').nullable;
     }));
     b.body = Code('''
-      if (b == null) return a ?? [];
+      if (b == null) return a;
       if (a == null) return b;
 
       final mergedList = [...a];

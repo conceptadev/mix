@@ -84,8 +84,7 @@ extension ListFieldInfoExt on List<ParameterInfo> {
             ..late = true
             ..docs.add(comment)
             ..name = field.utilityName
-            ..assignment =
-                _utilityExpression(field.utilityName, field.utilityType),
+            ..assignment = _utilityExpression(field),
         ),
       );
 
@@ -105,8 +104,8 @@ extension ListFieldInfoExt on List<ParameterInfo> {
               ..late = true
               ..docs.add(comment)
               ..name = extraUtil.alias
-              ..assignment = _utilityExpression(
-                  field.utilityName, refer(extraUtil.typeAsString!)),
+              ..assignment = refer(extraUtil.typeAsString!).call(
+                  [CodeExpression(Code('(v) => only(${field.name}: v)'))]).code,
           ),
         );
       }
@@ -126,9 +125,13 @@ extension ListFieldInfoExt on List<ParameterInfo> {
   }
 }
 
-Code? _utilityExpression(String fieldName, Reference? utilityType) =>
-    utilityType
-        ?.call([CodeExpression(Code('(v) => only(${fieldName}: v)'))]).code;
+Code? _utilityExpression(ParameterInfo field) {
+  final utilityType = field.utilityType;
+  final fieldName = field.name;
+
+  return utilityType
+      ?.call([CodeExpression(Code('(v) => only(${fieldName}: v)'))]).code;
+}
 
 List<Field> getUtilityPropertiesAsFields(
   String utilityPath,

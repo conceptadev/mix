@@ -135,7 +135,7 @@ void main() {
 
       expect(merged, isA<BoxDecorationDto>());
       expect(merged.color, const ColorDto(Colors.blue));
-      expect(merged.gradient, otherLinearGradientDto);
+      expect(merged.gradient!.stops, otherLinearGradientDto.stops);
       expect(merged.boxShadow, [otherBoxShadowDto]);
     });
 

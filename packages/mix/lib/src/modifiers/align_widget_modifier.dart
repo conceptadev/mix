@@ -9,7 +9,7 @@ import '../core/attribute.dart';
 import '../core/models/mix_data.dart';
 import '../core/modifier.dart';
 
-class AlignModifierSpec extends WidgetModifierSpec<AlignModifierSpec> {
+final class AlignModifierSpec extends WidgetModifierSpec<AlignModifierSpec> {
   final AlignmentGeometry? alignment;
   final double? widthFactor;
   final double? heightFactor;
@@ -56,7 +56,7 @@ class AlignModifierSpec extends WidgetModifierSpec<AlignModifierSpec> {
   }
 }
 
-class AlignModifierAttribute
+final class AlignModifierAttribute
     extends WidgetModifierAttribute<AlignModifierAttribute, AlignModifierSpec> {
   final AlignmentGeometry? alignment;
   final double? widthFactor;
@@ -90,7 +90,7 @@ class AlignModifierAttribute
   get props => [alignment, widthFactor, heightFactor];
 }
 
-class AlignWidgetUtility<T extends Attribute>
+final class AlignWidgetUtility<T extends Attribute>
     extends MixUtility<T, AlignModifierAttribute> {
   const AlignWidgetUtility(super.builder);
   T call({
