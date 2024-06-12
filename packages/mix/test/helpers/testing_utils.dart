@@ -3,9 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
-import 'package:mix/src/helpers/lerp_helpers.dart';
+import 'package:mix/src/internal/lerp_helpers.dart';
 
-export 'package:mix/src/helpers/values_ext.dart';
+export 'package:mix/src/internal/values_ext.dart';
 
 class MockBuildContext extends BuildContext {
   @override

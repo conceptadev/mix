@@ -3,8 +3,8 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 import '../../core/dto.dart';
-import '../../factory/mix_provider_data.dart';
-import '../../helpers/iterable_ext.dart';
+import '../../core/models/mix_data.dart';
+import '../../internal/iterable_ext.dart';
 import '../../theme/tokens/text_style_token.dart';
 import '../color/color_dto.dart';
 import '../shadow/shadow_dto.dart';

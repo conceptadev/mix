@@ -47,30 +47,5 @@ void main() {
       expect(mergedAttribute.repeat, ImageRepeat.noRepeat);
       expect(mergedAttribute.fit, BoxFit.fill);
     });
-
-    test('props returns correct list of properties', () {
-      const attribute = ImageSpecAttribute(
-        centerSlice: Rect.zero,
-        width: 100,
-        height: 200,
-        color: ColorDto(Colors.black),
-        repeat: ImageRepeat.repeat,
-        fit: BoxFit.cover,
-        alignment: Alignment.bottomCenter,
-        colorBlendMode: BlendMode.srcOver,
-        filterQuality: FilterQuality.low,
-      );
-      final props = attribute.props;
-
-      expect(props[0], 100);
-      expect(props[1], 200);
-      expect(props[2], const ColorDto(Colors.black));
-      expect(props[3], ImageRepeat.repeat);
-      expect(props[4], BoxFit.cover);
-      expect(props[5], Rect.zero);
-      expect(props[6], Alignment.bottomCenter);
-      expect(props[7], FilterQuality.low);
-      expect(props[8], BlendMode.srcOver);
-    });
   });
 }

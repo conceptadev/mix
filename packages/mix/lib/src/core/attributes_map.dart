@@ -2,8 +2,9 @@
 
 import 'dart:collection';
 
-import '../helpers/deep_collection_equality.dart';
+import '../internal/deep_collection_equality.dart';
 import 'attribute.dart';
+import 'spec.dart';
 
 // @nodoc
 class AttributeMap<T extends Attribute> {

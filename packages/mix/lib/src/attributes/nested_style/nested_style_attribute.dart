@@ -25,5 +25,5 @@ class NestedStyleAttribute extends Attribute {
   Type get mergeKey => NestedStyleAttribute;
 
   @override
-  get props => [value];
+  List<Object?> get props => [value];
 }

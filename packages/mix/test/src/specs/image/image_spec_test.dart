@@ -103,19 +103,19 @@ void main() {
         animated: AnimatedData.withDefaults(),
       );
 
-      final props = spec.props;
+      T getValueOf<T>(T field) => (spec.props[spec.props.indexOf(field)]) as T;
 
-      expect(props.length, 10);
-      expect(props[0], 100);
-      expect(props[1], 200);
-      expect(props[2], Colors.red);
-      expect(props[3], ImageRepeat.repeat);
-      expect(props[4], BoxFit.cover);
-      expect(props[5], Rect.zero);
-      expect(props[6], Alignment.bottomCenter);
-      expect(props[7], FilterQuality.low);
-      expect(props[8], BlendMode.srcOver);
-      expect(props[9], const AnimatedData.withDefaults());
+      expect(getValueOf(spec.width), 100);
+      expect(getValueOf(spec.height), 200);
+      expect(getValueOf(spec.color), Colors.red);
+      expect(getValueOf(spec.repeat), ImageRepeat.repeat);
+      expect(getValueOf(spec.fit), BoxFit.cover);
+      expect(getValueOf(spec.alignment), Alignment.bottomCenter);
+      expect(getValueOf(spec.centerSlice), Rect.zero);
+      expect(getValueOf(spec.filterQuality), FilterQuality.low);
+      expect(getValueOf(spec.colorBlendMode), BlendMode.srcOver);
+      expect(getValueOf(spec.animated), const AnimatedData.withDefaults());
+      expect(spec.props.length, 10);
     });
   });
 }

@@ -10,7 +10,7 @@ void main() {
       'of returns default attribute when mix does not have StackMixAttribute',
       () {
         final mix = MixData.create(MockBuildContext(), Style());
-        final attribute = StackSpecAttribute.of(mix);
+        const attribute = StackSpecAttribute();
 
         final resolved = attribute.resolve(mix);
 

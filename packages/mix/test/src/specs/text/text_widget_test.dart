@@ -169,7 +169,7 @@ void main() {
   });
 
   testWidgets('TextSpecWidget should apply TextSpec.directive', (tester) async {
-    final spec = TextSpec(directive: TextDirective([(v) => v.toUpperCase()]));
+    final spec = TextSpec(directive: TextDirective((v) => v.toUpperCase()));
 
     await tester.pumpMaterialApp(
       TextSpecWidget(

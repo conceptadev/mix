@@ -1,12 +1,12 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mix/src/helpers/lerp_helpers.dart';
+import 'package:mix/src/internal/lerp_helpers.dart';
 
 void main() {
   test('Linearly interpolates between two integers', () {
     int a = 10;
     int b = 20;
     double t = 0.3;
-    int result = lerpInt(a, b, t);
+    int? result = lerpInt(a, b, t);
     expect(result, 13);
   });
 

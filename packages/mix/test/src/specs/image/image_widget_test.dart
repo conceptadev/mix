@@ -24,7 +24,7 @@ void main() {
                 $image.centerSlice.fromLTRB(1, 2, 3, 4),
                 $image.alignment.bottomLeft(),
                 $image.filterQuality.high(),
-                $image.blendMode.colorDodge(),
+                $image.colorBlendMode.colorDodge(),
               ),
               image: FileImage(File('test_resources/logo.png')),
             ),

@@ -3,8 +3,8 @@
 import 'package:flutter/material.dart';
 
 import '../attributes/spacing/spacing_dto.dart';
+import '../core/models/mix_data.dart';
 import '../core/modifier.dart';
-import '../factory/mix_provider_data.dart';
 
 class PaddingSpec extends WidgetModifierSpec<PaddingSpec> {
   final EdgeInsetsGeometry padding;

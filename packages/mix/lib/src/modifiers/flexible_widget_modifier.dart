@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import '../attributes/scalars/scalar_util.dart';
 import '../core/attribute.dart';
 import '../core/modifier.dart';
-import '../factory/mix_provider_data.dart';
-import '../helpers/lerp_helpers.dart';
+import '../core/models/mix_data.dart';
+import '../internal/lerp_helpers.dart';
 
 class FlexibleModifierSpec extends WidgetModifierSpec<FlexibleModifierSpec> {
   final int? flex;

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../helpers/compare_mixin.dart';
+import '../internal/compare_mixin.dart';
 import 'material/material_theme.dart';
 import 'tokens/breakpoints_token.dart';
 import 'tokens/color_token.dart';
@@ -32,7 +32,7 @@ class MixTheme extends InheritedWidget {
 }
 
 @immutable
-class MixThemeData with Comparable {
+class MixThemeData with EqualityMixin {
   final StyledTokens<RadiusToken, Radius> radii;
   final StyledTokens<ColorToken, Color> colors;
   final StyledTokens<TextStyleToken, TextStyle> textStyles;

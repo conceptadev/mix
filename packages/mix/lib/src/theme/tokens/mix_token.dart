@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import '../../core/dto.dart';
-import '../../helpers/compare_mixin.dart';
-import '../../helpers/iterable_ext.dart';
+import '../../internal/compare_mixin.dart';
+import '../../internal/iterable_ext.dart';
 import 'color_token.dart';
 import 'radius_token.dart';
 import 'text_style_token.dart';
@@ -50,7 +50,7 @@ mixin WithTokenResolver<V> {
 
 typedef BuildContextResolver<T> = T Function(BuildContext context);
 
-class StyledTokens<T extends MixToken<V>, V> with Comparable {
+class StyledTokens<T extends MixToken<V>, V> with EqualityMixin {
   final Map<T, V> _map;
 
   const StyledTokens(this._map);
