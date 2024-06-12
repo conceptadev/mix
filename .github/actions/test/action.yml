@@ -52,5 +52,18 @@ runs:
         fatal_performance: true
         fatal_warnings: true
       
-    - run: melos exec --ignore="mix_lint" --ignore="mix_builder" --scope="packages/**" flutter test
+    - run: melos exec --ignore="mix_lint" --ignore="mix_lint_test" --ignore="mix_builder" --scope="packages/**" flutter test
+
+      shell: bash
+
+    - name: Install custom_lint
+      run: dart pub global activate custom_lint
+      shell: bash
+
+    - name: Run custom_lint
+      run: melos exec --depends-on="mix_lint" custom_lint
+      shell: bash
+
+    - name: Verify if mix_lint_test is up to date with mix_lint
+      run: cd scripts && ./compare_files.sh ../packages/mix_lint/lib/src/lints ../packages/mix_lint_test/test/lints
       shell: bash
