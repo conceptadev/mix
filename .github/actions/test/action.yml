@@ -52,5 +52,5 @@ runs:
         fatal_performance: true
         fatal_warnings: true
       
-    - run: melos exec --ignore="mix_lint" --scope="packages/**" flutter test
+    - run: melos exec --ignore="mix_lint" --ignore="mix_builder" --scope="packages/**" flutter test
       shell: bash

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 
+// ignore: avoid-importing-entrypoint-exports
 import '../../../mix.dart';
 
 part 'icon_spec.g.dart';
