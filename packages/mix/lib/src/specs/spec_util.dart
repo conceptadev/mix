@@ -1,12 +1,12 @@
 import '../attributes/scalars/scalar_util.dart';
 import '../modifiers/widget_modifiers_util.dart';
-import '../utils/context_variant_util/on_util.dart';
-import 'box/box_util.dart';
-import 'flex/flex_util.dart';
-import 'icon/icon_util.dart';
-import 'image/image_util.dart';
-import 'stack/stack_util.dart';
-import 'text/text_util.dart';
+import '../variants/context_variant_util/on_util.dart';
+import 'box/box_spec.dart';
+import 'flex/flex_spec.dart';
+import 'icon/icon_spec.dart';
+import 'image/image_spec.dart';
+import 'stack/stack_spec.dart';
+import 'text/text_spec.dart';
 
 final $box = BoxSpecUtility(MixUtility.selfBuilder);
 final $flex = FlexSpecUtility(MixUtility.selfBuilder);

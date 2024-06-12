@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 
 import '../attributes/scalars/scalar_util.dart';
 import '../core/attribute.dart';
+import '../core/models/mix_data.dart';
 import '../core/modifier.dart';
-import '../factory/mix_provider_data.dart';
 
 class FractionallySizedBoxModifierSpec
     extends WidgetModifierSpec<FractionallySizedBoxModifierSpec> {

@@ -2,7 +2,7 @@
 
 import 'package:flutter/widgets.dart';
 
-import '../../helpers/compare_mixin.dart';
+import '../../internal/compare_mixin.dart';
 
 enum PressableStateAspect {
   currentState,
@@ -158,7 +158,7 @@ class PressableState extends InheritedModel<PressableStateAspect> {
   }
 }
 
-class PointerPosition with Comparable {
+class PointerPosition with EqualityMixin {
   final Alignment position;
   final Offset offset;
   const PointerPosition({required this.position, required this.offset});

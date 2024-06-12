@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 
 import '../../../core/dto.dart';
-import '../../../factory/mix_provider_data.dart';
+import '../../../core/models/mix_data.dart';
 
 @immutable
 class DecorationImageDto extends Dto<DecorationImage> {

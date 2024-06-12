@@ -1,0 +1,3 @@
+class Settings {
+  const Settings();
+}

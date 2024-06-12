@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mix/src/helpers/deep_collection_equality.dart';
+import 'package:mix/src/internal/deep_collection_equality.dart';
 
 void main() {
   group('DeepEqualityChecker hash code', () {
@@ -123,9 +123,9 @@ void main() {
     });
 
     test('checks custom object equality', () {
-      const obj1 = CustomObject(id: 1, value: 'Test');
-      const obj2 = CustomObject(id: 1, value: 'Test');
-      const obj3 = CustomObject(id: 2, value: 'Test');
+      const obj1 = _CustomObject(id: 1, value: 'Test');
+      const obj2 = _CustomObject(id: 1, value: 'Test');
+      const obj3 = _CustomObject(id: 2, value: 'Test');
 
       expect(deepEquality.equals(obj1, obj2), isTrue);
       expect(deepEquality.equals(obj1, obj3), isFalse);
@@ -178,8 +178,8 @@ void main() {
     test(
       'custom objects with the same properties produce the same hash code',
       () {
-        var object1 = const CustomObject(id: 1, value: 'test');
-        var object2 = const CustomObject(id: 1, value: 'test');
+        var object1 = const _CustomObject(id: 1, value: 'test');
+        var object2 = const _CustomObject(id: 1, value: 'test');
         expect(deepEquality.hash(object1), deepEquality.hash(object2));
       },
     );
@@ -217,49 +217,49 @@ void main() {
     });
 
     test('checks nested custom object equality', () {
-      const nestedObj1 = AnotherCustomObject(
+      const nestedObj1 = _AnotherCustomObject(
         id: 1,
         name: 'Nested',
         children: [
-          AnotherCustomObject(id: 2, name: 'Child', children: []),
-          AnotherCustomObject(id: 3, name: 'Child3', children: []),
-          AnotherCustomObject(
+          _AnotherCustomObject(id: 2, name: 'Child', children: []),
+          _AnotherCustomObject(id: 3, name: 'Child3', children: []),
+          _AnotherCustomObject(
             id: 4,
             name: 'Child2',
             children: [
-              AnotherCustomObject(id: 5, name: 'Child3', children: []),
+              _AnotherCustomObject(id: 5, name: 'Child3', children: []),
             ],
           ),
         ],
       );
 
-      const nestedObj2 = AnotherCustomObject(
+      const nestedObj2 = _AnotherCustomObject(
         id: 1,
         name: 'Nested',
         children: [
-          AnotherCustomObject(id: 2, name: 'Child', children: []),
-          AnotherCustomObject(id: 3, name: 'Child3', children: []),
-          AnotherCustomObject(
+          _AnotherCustomObject(id: 2, name: 'Child', children: []),
+          _AnotherCustomObject(id: 3, name: 'Child3', children: []),
+          _AnotherCustomObject(
             id: 4,
             name: 'Child2',
             children: [
-              AnotherCustomObject(id: 5, name: 'Child3', children: []),
+              _AnotherCustomObject(id: 5, name: 'Child3', children: []),
             ],
           ),
         ],
       );
 
-      const nestedObjDifferent = AnotherCustomObject(
+      const nestedObjDifferent = _AnotherCustomObject(
         id: 1,
         name: 'Nested',
         children: [
-          AnotherCustomObject(id: 2, name: 'Child', children: []),
-          AnotherCustomObject(id: 3, name: 'Child3', children: []),
-          AnotherCustomObject(
+          _AnotherCustomObject(id: 2, name: 'Child', children: []),
+          _AnotherCustomObject(id: 3, name: 'Child3', children: []),
+          _AnotherCustomObject(
             id: 4,
             name: 'ChildX',
             children: [
-              AnotherCustomObject(id: 5, name: 'Child3', children: []),
+              _AnotherCustomObject(id: 5, name: 'Child3', children: []),
             ],
           ),
         ],
@@ -272,29 +272,29 @@ void main() {
 }
 
 // A dummy custom object class for testing purposes
-class CustomObject {
+class _CustomObject {
   final int id;
   final String value;
 
-  const CustomObject({required this.id, required this.value});
+  const _CustomObject({required this.id, required this.value});
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is CustomObject && other.id == id && other.value == value;
+    return other is _CustomObject && other.id == id && other.value == value;
   }
 
   @override
   int get hashCode => id.hashCode ^ value.hashCode;
 }
 
-class AnotherCustomObject {
+class _AnotherCustomObject {
   final int id;
   final String name;
-  final List<AnotherCustomObject> children;
+  final List<_AnotherCustomObject> children;
 
-  const AnotherCustomObject({
+  const _AnotherCustomObject({
     required this.id,
     required this.name,
     this.children = const [],
@@ -303,7 +303,7 @@ class AnotherCustomObject {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is AnotherCustomObject &&
+      other is _AnotherCustomObject &&
           runtimeType == other.runtimeType &&
           id == other.id &&
           name == other.name &&

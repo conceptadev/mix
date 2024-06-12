@@ -3,8 +3,8 @@
 import 'package:flutter/material.dart';
 
 import '../core/attributes_map.dart';
+import '../core/models/mix_data.dart';
 import '../core/modifier.dart';
-import '../factory/mix_provider_data.dart';
 import 'align_widget_modifier.dart';
 import 'aspect_ratio_widget_modifier.dart';
 import 'clip_widget_modifier.dart';

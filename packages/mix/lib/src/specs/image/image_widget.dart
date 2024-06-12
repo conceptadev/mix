@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../core/styled_widget.dart';
 import '../../factory/mix_provider.dart';
-import '../../helpers/constants.dart';
+import '../../internal/constants.dart';
 import 'image_spec.dart';
 
 class StyledImage extends StyledWidget {

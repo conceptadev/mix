@@ -4,8 +4,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/dto.dart';
-import '../../factory/mix_provider_data.dart';
-import '../../helpers/iterable_ext.dart';
+import '../../core/models/mix_data.dart';
+import '../../internal/iterable_ext.dart';
 import '../border/border_dto.dart';
 import '../border/border_radius_dto.dart';
 import '../border/shape_border_dto.dart';
@@ -230,6 +230,17 @@ ShapeDecorationDto _toShapeDecorationDto(BoxDecorationDto dto) {
     gradient: dto.gradient,
     shadows: dto.boxShadow,
   );
+}
+
+extension DecorationExt on Decoration {
+  DecorationDto toDto() {
+    if (this is BoxDecoration) {
+      return (this as BoxDecoration).toDto();
+    } else if (this is ShapeDecoration) {
+      return (this as ShapeDecoration).toDto();
+    }
+    throw Exception('Unknown decoration type: $runtimeType');
+  }
 }
 
 extension BoxDecorationExt on BoxDecoration {

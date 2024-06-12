@@ -1,7 +1,7 @@
 import 'package:flutter/rendering.dart';
 
 import '../../core/dto.dart';
-import '../../factory/mix_provider_data.dart';
+import '../../core/models/mix_data.dart';
 
 abstract class ConstraintsDto<Self extends ConstraintsDto<Self, Value>,
     Value extends Constraints> extends Dto<Value> {

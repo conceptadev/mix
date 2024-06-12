@@ -4,8 +4,6 @@ import '../../core/attribute.dart';
 import '../../core/dto.dart';
 import '../../core/modifier.dart';
 import '../../theme/tokens/radius_token.dart';
-import '../animated/animated_data.dart';
-import '../animated/animated_util.dart';
 
 abstract class MixUtility<Attr extends Attribute, Value> {
   @protected
@@ -13,18 +11,6 @@ abstract class MixUtility<Attr extends Attribute, Value> {
   const MixUtility(this.builder);
 
   static T selfBuilder<T>(T value) => value;
-}
-
-abstract class SpecUtility<Attr extends Attribute, Value extends SpecAttribute>
-    extends MixUtility<Attr, Value> {
-  const SpecUtility(super.builder);
-
-  AnimatedUtility<Attr> get animated =>
-      AnimatedUtility((value) => only(animated: value));
-
-  Attr only({AnimatedDataDto? animated});
-
-  // SpecUtility<VariantAttribute, Value> call(Variant variant);
 }
 
 abstract class WidgetModifierUtility<

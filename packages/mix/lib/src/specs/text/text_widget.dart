@@ -146,7 +146,7 @@ class _AnimatedTextSpecWidgetState
 
   @override
   Widget build(BuildContext context) {
-    final spec = _textSpecTween!.evaluate(animation);
+    final spec = _textSpecTween!.evaluate(animation)!;
 
     return TextSpecWidget(
       widget.text,

@@ -18,6 +18,25 @@ import 'decoration_dto.dart';
 import 'image/decoration_image_dto.dart';
 import 'image/decoration_image_util.dart';
 
+class DecorationUtility<T extends Attribute>
+    extends MixUtility<T, DecorationDto> {
+  late final box = BoxDecorationUtility(builder);
+  late final shape = ShapeDecorationUtility(builder);
+
+  DecorationUtility(super.builder);
+
+  T as(Decoration decoration) {
+    if (decoration is BoxDecoration) {
+      return box.as(decoration);
+    } else if (decoration is ShapeDecoration) {
+      return shape.as(decoration);
+    }
+    throw UnimplementedError(
+      'Cannot create $T from decoration of type ${decoration.runtimeType}',
+    );
+  }
+}
+
 class BoxDecorationUtility<T extends Attribute>
     extends DtoUtility<T, BoxDecorationDto, BoxDecoration> {
   late final gradient = GradientUtility((v) => only(gradient: v));
