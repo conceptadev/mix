@@ -27,10 +27,10 @@ mixin StrutStyleDtoMixable on Dto<StrutStyle> {
 
     return StrutStyleDto(
       fontFamily: other.fontFamily ?? _$this.fontFamily,
-      fontFamilyFallback: [
-        ...?_$this.fontFamilyFallback,
-        ...?other.fontFamilyFallback
-      ],
+      fontFamilyFallback: _mergeListT(
+        _$this.fontFamilyFallback,
+        other.fontFamilyFallback,
+      ),
       fontSize: other.fontSize ?? _$this.fontSize,
       fontWeight: other.fontWeight ?? _$this.fontWeight,
       fontStyle: other.fontStyle ?? _$this.fontStyle,
@@ -59,6 +59,24 @@ mixin StrutStyleDtoMixable on Dto<StrutStyle> {
   }
 
   StrutStyleDto get _$this => this as StrutStyleDto;
+  List<T>? _mergeListT<T>(
+    List<T>? a,
+    List<T>? b,
+  ) {
+    if (b == null) return a;
+    if (a == null) return b;
+
+    final mergedList = [...a];
+    for (int i = 0; i < b.length; i++) {
+      if (i < mergedList.length) {
+        mergedList[i] = b[i] ?? mergedList[i];
+      } else {
+        mergedList.add(b[i]);
+      }
+    }
+
+    return mergedList;
+  }
 }
 
 extension StrutStyleExt on StrutStyle {

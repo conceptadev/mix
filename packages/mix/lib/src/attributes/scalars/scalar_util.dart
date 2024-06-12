@@ -8,7 +8,7 @@ import '../../core/dto.dart';
 import '../../core/modifier.dart';
 import '../../theme/tokens/radius_token.dart';
 
-abstract base class MixUtility<Attr extends Attribute, Value> {
+abstract class MixUtility<Attr extends Attribute, Value> {
   @protected
   final Attr Function(Value) builder;
   const MixUtility(this.builder);
@@ -118,7 +118,6 @@ final class AlignmentUtility<T extends Attribute>
 final class StringUtility<T extends Attribute>
     extends ScalarUtility<T, String> {
   const StringUtility(super.builder);
-  
 }
 
 final class StringListUtility<T extends Attribute>

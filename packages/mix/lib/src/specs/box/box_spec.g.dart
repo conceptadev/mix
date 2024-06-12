@@ -254,7 +254,7 @@ final class BoxSpecAttribute extends SpecAttribute<BoxSpec> {
 /// Use the methods of this class to configure specific properties of a [BoxSpecAttribute].
 final class BoxSpecUtility<T extends Attribute>
     extends SpecUtility<T, BoxSpecAttribute> {
-  BoxSpecUtility(super.builder);
+  BoxSpecUtility([super.builder]);
 
   /// Utility for defining [BoxSpecAttribute.alignment]
   late final alignment = AlignmentUtility((v) => only(alignment: v));

@@ -202,7 +202,7 @@ final class FlexSpecAttribute extends SpecAttribute<FlexSpec> {
 /// Use the methods of this class to configure specific properties of a [FlexSpecAttribute].
 final class FlexSpecUtility<T extends Attribute>
     extends SpecUtility<T, FlexSpecAttribute> {
-  FlexSpecUtility(super.builder);
+  FlexSpecUtility([super.builder]);
 
   /// Utility for defining [FlexSpecAttribute.crossAxisAlignment]
   late final crossAxisAlignment =

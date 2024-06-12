@@ -43,7 +43,7 @@ class SpecDefinitionBuilder extends GeneratorForAnnotation<MixableSpec> {
       ..body.addAll([
         MixinSpecBuilder(context),
         ClassSpecAttributeBuilder(context),
-        UtilityClassBuilder(context),
+        _UtilityClassBuilder(context),
         ClassSpecTweenBuilder(context),
         ...MethodPrivateHelpers(context),
       ]));
@@ -178,7 +178,7 @@ Class ClassSpecTweenBuilder(SpecAnnotationContext context) {
   });
 }
 
-Class UtilityClassBuilder(SpecAnnotationContext context) {
+Class _UtilityClassBuilder(SpecAnnotationContext context) {
   final specClassName = context.specClassName;
   final specAttributeClassName = context.specAttributeClassName;
   final fields = context.fields;
@@ -210,7 +210,7 @@ Class UtilityClassBuilder(SpecAnnotationContext context) {
       Constructor((builder) {
         builder.requiredParameters.add(
           Parameter((b) {
-            b.name = 'super.builder';
+            b.name = '[super.builder]';
           }),
         );
         ;

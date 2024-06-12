@@ -41,8 +41,12 @@ abstract base class SpecAttribute<Value> extends StyledAttribute {
 }
 
 abstract base class SpecUtility<Attr extends Attribute,
-    Value extends SpecAttribute> extends MixUtility<Attr, Value> {
-  const SpecUtility(super.builder);
+    Value extends SpecAttribute> implements MixUtility<Attr, Value> {
+  final Attr Function(Value)? _builder;
+  const SpecUtility([this._builder]);
 
   Attr only({AnimatedDataDto? animated});
+  @override
+  Attr Function(Value) get builder =>
+      _builder ?? (Value value) => value as Attr;
 }

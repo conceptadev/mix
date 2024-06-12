@@ -149,7 +149,7 @@ final class StackSpecAttribute extends SpecAttribute<StackSpec> {
 /// Use the methods of this class to configure specific properties of a [StackSpecAttribute].
 final class StackSpecUtility<T extends Attribute>
     extends SpecUtility<T, StackSpecAttribute> {
-  StackSpecUtility(super.builder);
+  StackSpecUtility([super.builder]);
 
   /// Utility for defining [StackSpecAttribute.alignment]
   late final alignment = AlignmentUtility((v) => only(alignment: v));
